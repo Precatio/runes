@@ -128,6 +128,29 @@ export interface LinguisticResultData {
   comparison?: string;
   sound_laws_applied?: string[];
   markers?: MarkerData[];
+  // Computed without AI: Rundata's reading, the comparison, attested word forms and orthography
+  rundata?: {
+    signum: string; place: string; parish: string; transliteration: string; normalization: string;
+    normalization_ows: string; translation_en: string; style: string | null; dating: string;
+    carvers: { name: string; kind: string; uncertain: boolean }[];
+  } | null;
+  reading_comparison?: ReadingComparison | null;
+  form_check?: { items: { form: string; attested: number }[]; attested: number; total: number; share: number | null } | null;
+  orthography?: {
+    n_words: number; usable: boolean; note: string;
+    ranking: { carver: string; similarity: number; n_inscriptions: number; precision: number }[];
+  } | null;
+  signum?: string;
+  corrected?: boolean; // the reading was corrected by hand after the AI reading
+}
+
+export interface ReadingSegment { op: "equal" | "replace" | "delete" | "insert"; ours: string[]; rundata: string[] }
+export interface ReadingComparison {
+  char_agreement: number; word_agreement: number; coverage: number;
+  words_ours: number; words_rundata: number; same_words: number;
+  unreadable_rundata: number; segments: ReadingSegment[];
+  normalization_agreement?: number; normalization_segments?: ReadingSegment[];
+  summary: string;
 }
 
 // One saved groove analysis (all slices + provenance), kept per project for reproducibility

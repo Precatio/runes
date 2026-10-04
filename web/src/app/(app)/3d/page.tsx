@@ -46,6 +46,7 @@ function ThreeDPageContent() {
     setLatest2DSource,
     setLatest2DResults,
     setStoneReportInput,
+    setPhoneticsImage,
   } = useAnalysis();
   const router = useRouter();
 
@@ -394,6 +395,32 @@ function ThreeDPageContent() {
   const autoPoints: ViewerPoint[] = autoResult
     ? autoResult.slices.flatMap((sl, i) => (sl.accepted && sl.point ? [{ position: sl.point, color: LABEL_COLORS[autoLabels[i] ?? "unknown"] }] : []))
     : [];
+
+  // Relief images computed from the scan (raking light from four directions, depth), for reading the runes
+  const [reliefBusy, setReliefBusy] = useState(false);
+  const sendReliefToPhonetics = async () => {
+    const session = sessionRef.current;
+    const view = viewDirRef.current;
+    if (!session) return;
+    setReliefBusy(true);
+    try {
+      const fields: Record<string, number> = view ? {
+        normal_x: view.toward[0], normal_y: view.toward[1], normal_z: view.toward[2],
+        up_x: view.up[0], up_y: view.up[1], up_z: view.up[2],
+      } : {};
+      const data = await session.postJSON<{ relief: string; depth: string; raking: Record<string, string> }>("/api/3d/render_relief", fields);
+      setPhoneticsImage({
+        source: `${metaText || file?.name || "3D-modell"} – sedd från den aktuella vyn`,
+        images: { "Relief (alla ljusriktningar)": data.relief, "Djup under stenytan": data.depth,
+          ...Object.fromEntries(Object.entries(data.raking).map(([k, v]) => [`Strykljus från ${k}`, v])) },
+      });
+      router.push("/phonetics");
+    } catch (e) {
+      alert(errorText(e, "Reliefbilden kunde inte räknas fram."));
+    } finally {
+      setReliefBusy(false);
+    }
+  };
 
   const handleSnapshot2D = async () => {
     const canvas = document.querySelector('canvas');
@@ -967,6 +994,15 @@ function ThreeDPageContent() {
                 className="w-full mt-4 py-2.5 bg-white border border-[#b7410e] text-[#b7410e] hover:bg-[#b7410e] hover:text-white active:scale-[0.98] disabled:opacity-40 font-semibold text-sm rounded-xl transition-all shadow-sm flex justify-center items-center gap-2"
               >
                 📸 Ta 2D-Ögonblicksbild (Binariserad)
+              </button>
+              <button
+                type="button"
+                onClick={sendReliefToPhonetics}
+                disabled={!meshInfo || reliefBusy}
+                title="Strykljus och djup räknade ur skanningen, sedda från den ristade sidan som vetter mot dig"
+                className="w-full mt-2 py-2.5 bg-white border border-slate-300 text-slate-800 hover:border-slate-900 disabled:opacity-40 font-semibold text-sm rounded-xl transition-all"
+              >
+                {reliefBusy ? "Räknar fram reliefbilder …" : "Läs runorna i Språk & Fonetik"}
               </button>
             </div>
 

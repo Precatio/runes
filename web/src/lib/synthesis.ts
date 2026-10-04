@@ -37,12 +37,13 @@ export interface SynthesisResult {
   sources: string[];
   ai_used: boolean;
   evidence?: {
-    orthography?: { ranking: OrthographyItem[]; n_words: number; usable: boolean;
+    orthography?: { ranking: OrthographyItem[]; n_words: number; usable: boolean; source?: string;
       evaluation: { top1_accuracy: number; top3_accuracy: number; chance_top1: number; n_carvers: number; signed_top1: number | null } } | null;
     groove?: { ranking: { group: string; n: number; distance: number }[]; evaluation?: { top1_accuracy: number; chance_top1: number; n_stones: number; n_groups: number } | null;
       reference_size?: number; reliability?: number } | null;
     measurements_by_feature?: Record<string, { n: number; summary: Record<Metric, Summary> }> | null;
     style_check?: { ai_style: string; ai_confidence?: number; rundata_style: string | null; agrees: boolean; note: string };
+    reading_check?: { char_agreement: number; word_agreement: number; coverage: number; summary: string };
     rundata?: { carver_raw: string; style: string | null; dating: string; material: string; place: string } | null;
   };
 }
@@ -70,6 +71,11 @@ export async function runSynthesis(project: ProjectData, analysisId: string | nu
       slices: project.grooveAnalyses?.length ? [] : project.slices,
       corpus: (corpusEntries ?? []).map(e => ({ signum: e.signum, feature_type: e.feature_type, means: e.means, slices: metricsOnly(e.slices) })),
       corpus_note: corpusEntries === null ? "logga in för att jämföra med den delade mätkorpusen." : null,
+      // The app's own reading (Språk & Fonetik) – used when Rundata has no usable text
+      reading: project.linguisticResults?.transliteration ? {
+        transliteration: project.linguisticResults.transliteration,
+        normalization: project.linguisticResults.normalization,
+      } : null,
       two_d: project.twoDResults ? {
         predicted_style: project.twoDResults.predicted_style,
         confidence: project.twoDResults.confidence,

@@ -165,3 +165,36 @@ def test_synthesis_weighs_checks_and_reports_conflicts(client, monkeypatch):
     # Without corpus or measurements, the missing evidence is explained
     r3 = client.post("/api/synthesis/analyze", json={"signum": "U 344", "corpus_note": "logga in"}).json()
     assert any(m.startswith("Huggteknik: logga in") for m in r3["missing"])
+
+
+@needs_rundata
+def test_reading_compared_with_rundata(client):
+    from src.reading import compare
+
+    from api.rundata import store
+    rd = store().get("U 344")["transliteration"]
+    partial = compare("in ulfʀ hafiʀ o onklati þru kialt takat", rd)
+    assert partial["char_agreement"] > 0.9 and partial["coverage"] < 0.5  # right, but only part of the text
+    unrelated = compare("kuþ hialbi ant", rd)
+    assert unrelated["char_agreement"] < 0.4 and unrelated["word_agreement"] == 0
+
+    r = client.post("/api/phonetics/compare", json={
+        "signum": "U 344", "transliteration": "in ulfʀ hafiʀ o onklati þru kialt takat",
+        "normalization": "En UlfR hafiR a Ænglandi þry giald takit xyzord"}).json()
+    assert r["rundata"]["signum"] == "U 344" and "stämmer i stort sett" in r["comparison"]
+    assert any(i["form"] == "xyzord" and i["attested"] == 0 for i in r["form_check"]["items"])
+    assert r["orthography"]["ranking"]
+
+
+@needs_rundata
+def test_own_reading_used_in_synthesis_for_new_finds(client, monkeypatch):
+    from api.rundata import store
+
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    balle = store().get("U 729")
+    r = client.post("/api/synthesis/analyze", json={
+        "signum": "U Fv2099;1",
+        "reading": {"transliteration": balle["transliteration"], "normalization": balle["normalization"]}}).json()
+    top = r["candidates"][0]
+    assert top["name"] == "Balle" and top["sources"] == ["Ortografi (vår läsning)"]
+    assert any("egen AI-läsning" in m for m in r["missing"])

@@ -148,6 +148,7 @@ export default function SynthesisPage() {
                   <li className="flex justify-between"><span>Stenart / vittring</span><span>{project.metaStone || "–"} / {project.metaWeathering || "–"}</span></li>
                   <li className="flex justify-between"><span>Sparade analyser</span><span>{analyses.length}</span></li>
                   <li className="flex justify-between"><span>2D-stilanalys</span><span>{project.twoDResults?.predicted_style ?? "–"}</span></li>
+                  <li className="flex justify-between"><span>Egen läsning</span><span>{project.linguisticResults?.transliteration ? "ja" : <Link href="/phonetics" className="underline">nej</Link>}</span></li>
                   <li className="flex justify-between"><span>Mätkorpus</span><span>{user ? "jämförs" : "logga in"}</span></li>
                 </ul>
               </div>
@@ -319,7 +320,8 @@ function EvidenceDetails({ r }: { r: SynthesisResult }) {
       <h3 className="text-xl font-bold text-slate-900 mb-4">Beläggen i detalj</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <h3 className={h3}>Ortografi</h3>
+          <h3 className={h3}>{o?.source ?? "Ortografi"}</h3>
+          {r.evidence?.reading_check && <p className="text-xs text-slate-600 mb-2">Vår läsning mot Rundata: {r.evidence.reading_check.summary}</p>}
           {o ? (
             <>
               <table className="w-full text-xs">

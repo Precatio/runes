@@ -1,7 +1,7 @@
 // Input for the stone report (POST /api/reports/stone): one stone, its groove analyses with raw profiles
 // and slice positions, and – if the model is still in the analysis engine's memory – its mesh id, so that
 // the report can include surface figures computed from the scan.
-import type { AnalysisProvenance, PaleographicCrop, ProjectData, ThreeDAnalysisResult, TwoDResultData } from "@/lib/db";
+import type { AnalysisProvenance, LinguisticResultData, PaleographicCrop, ProjectData, ThreeDAnalysisResult, TwoDResultData } from "@/lib/db";
 import type { AutoAnalysisResult, AutoLabel } from "@/lib/mesh";
 import { METRICS, type FeatureType, type Metric, type SliceMetrics } from "@/lib/metrics";
 import type { SynthesisResult } from "@/lib/synthesis";
@@ -22,7 +22,11 @@ export interface StoneReportInput {
   counts?: AutoAnalysisResult["counts"];
   twoD?: { image?: string; result?: TwoDResultData | null; crops?: { tag: string; formPng?: string }[]; caption?: string };
   synthesis?: SynthesisResult; // attribution section of the report
+  reading?: LinguisticResultData; // the app's own reading (Språk & Fonetik)
 }
+
+// Markers (image polygons) are not needed in the report
+const readingOf = (r?: LinguisticResultData) => (r ? { ...r, markers: undefined } : undefined);
 
 type Meta = { stone: string; weathering: string; text: string; ornamentation: string; period: string; carver: string; location: string };
 
@@ -76,6 +80,7 @@ export function fromSession(args: {
     counts: autoResult?.counts,
     twoD: project ? { image: project.twoDImage, result: project.twoDResults, crops: cropsOf(project.paleographicCrops) } : undefined,
     synthesis: project?.synthesis?.result,
+    reading: readingOf(project?.linguisticResults),
   };
 }
 
@@ -101,6 +106,7 @@ export function fromProject(project: ProjectData): StoneReportInput | null {
     analyses,
     twoD: { image: project.twoDImage, result: project.twoDResults, crops: cropsOf(project.paleographicCrops) },
     synthesis: project.synthesis?.result,
+    reading: readingOf(project.linguisticResults),
   };
 }
 

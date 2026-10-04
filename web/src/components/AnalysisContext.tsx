@@ -34,6 +34,14 @@ interface AnalysisContextType {
   setActiveProjectId: (id: string | null) => void;
   stoneReportInput: StoneReportInput | null;
   setStoneReportInput: (data: StoneReportInput | null) => void;
+  // Images handed to Språk & Fonetik (relief from the 3D view, a view from the RTI viewer)
+  phoneticsImage: PhoneticsImage | null;
+  setPhoneticsImage: (data: PhoneticsImage | null) => void;
+}
+
+export interface PhoneticsImage {
+  source: string;
+  images: Record<string, string>; // label -> data URL; the first is shown first
 }
 
 const AnalysisContext = createContext<AnalysisContextType | undefined>(undefined);
@@ -51,6 +59,7 @@ export function AnalysisProvider({ children }: { children: React.ReactNode }) {
   const [latest2DSource, setLatest2DSource] = useState<TwoDSource | null>(null);
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
   const [stoneReportInput, setStoneReportInput] = useState<StoneReportInput | null>(null);
+  const [phoneticsImage, setPhoneticsImage] = useState<PhoneticsImage | null>(null);
 
   return (
     <AnalysisContext.Provider value={{
@@ -64,6 +73,7 @@ export function AnalysisProvider({ children }: { children: React.ReactNode }) {
       latest2DSource, setLatest2DSource,
       activeProjectId, setActiveProjectId,
       stoneReportInput, setStoneReportInput,
+      phoneticsImage, setPhoneticsImage,
     }}>
       {children}
     </AnalysisContext.Provider>

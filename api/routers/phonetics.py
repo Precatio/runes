@@ -1,6 +1,12 @@
+from functools import lru_cache
+
 from api.config import GEMINI_PRO_MODEL
 from api.errors import ai_error
+from api.rundata import store
+from api.routers.orthography import model as orthography_model
 from api.uploads import decode_base64_image
+from src.reading import Lexicon, compare
+from src.synthesis import smoothed_precision
 from fastapi import APIRouter, HTTPException, Header, Response
 from pydantic import BaseModel
 from typing import Optional
@@ -23,17 +29,72 @@ class Marker(BaseModel):
     description: str
     polygon: list[list[int]]
 
-class PhoneticsResponse(BaseModel):
+class LinguisticAI(BaseModel):
+    """Det språkmodellen får fylla i. Rundata och jämförelsen läggs till av servern."""
     transliteration: str
     normalization: str
     phonetic_ipa: str
     translation: str
     linguistic_analysis: str
+    sound_laws_applied: Optional[list[str]] = None
+
+
+class PhoneticsResponse(LinguisticAI):
+    # Rundatas läsning (fakta ur databasen, inte AI) och den framräknade jämförelsen
     academic_reading: Optional[str] = None
     comparison: Optional[str] = None
-    sound_laws_applied: Optional[list[str]] = None
+    rundata: Optional[dict] = None
+    reading_comparison: Optional[dict] = None
+    form_check: Optional[dict] = None
+    orthography: Optional[dict] = None
     markers: Optional[list[Marker]] = None
     tokens_used: int = 0
+
+
+@lru_cache(maxsize=1)
+def lexicon() -> Lexicon:
+    return Lexicon(store().inscriptions)
+
+
+def reference_checks(signum: str, transliteration: str, normalization: str) -> dict:
+    """Allt som räknas fram utan AI: Rundatas läsning, jämförelsen, ordformerna och ortografin."""
+    rec = store().get(signum) if signum and signum.lower() not in ("okänd", "okänt") else None
+    out: dict = {"rundata": None, "reading_comparison": None, "academic_reading": None, "comparison": None}
+    if rec and rec.get("transliteration"):
+        out["rundata"] = {k: rec.get(k, "") for k in ("signum", "place", "parish", "transliteration", "normalization",
+                                                      "normalization_ows", "translation_en", "style", "dating")}
+        out["rundata"]["carvers"] = rec["carvers"]
+        out["academic_reading"] = (f"Rundata ({rec['signum']}): {rec['transliteration']} – "
+                                   f"{rec.get('normalization', '').replace(chr(34), '')} – ”{rec.get('translation_en', '')}”")
+        if transliteration:
+            c = compare(transliteration, rec["transliteration"], normalization, rec.get("normalization", ""))
+            out["reading_comparison"] = c
+            out["comparison"] = c["summary"]
+    elif signum and signum.lower() not in ("okänd", "okänt"):
+        out["comparison"] = f"Signumet {signum} finns inte i Rundata, eller saknar translitterering – läsningen kan inte jämföras."
+    out["form_check"] = lexicon().check(normalization) if normalization else None
+    if transliteration:
+        m = orthography_model()
+        rk = m.rank_text(transliteration, normalization, 5, exclude_signum=rec["signum"] if rec else None)
+        per = (m.evaluate() or {}).get("per_carver", {})
+        out["orthography"] = {
+            "n_words": rk["n_words"], "usable": rk["n_words"] >= 8,
+            "ranking": [{**r, "precision": smoothed_precision(per.get(r["carver"]))} for r in rk["ranking"]],
+            "note": "Vår läsning jämförd med ristarnas stavning i Rundata (stenen själv utesluten).",
+        }
+    return out
+
+
+class CompareRequest(BaseModel):
+    signum: str = ""
+    transliteration: str = ""
+    normalization: str = ""
+
+
+@router.post("/compare")
+def compare_reading(req: CompareRequest):
+    """Jämför en (t.ex. manuellt rättad) läsning med Rundata – utan AI."""
+    return reference_checks(req.signum, req.transliteration, req.normalization)
 
 @router.post("/analyze", response_model=PhoneticsResponse)
 def analyze_phonetics(
@@ -109,6 +170,9 @@ D. Eftermedeltida traditioner & Dalarunor (ca 1500 - 1900-tal)
 Steg 1: Epok- & Typologibestämning (inklusive regional särart, e.g. Gutniska ljudlagar)
 Steg 2: Ljudlagshärledning (VILKA historiska ljudlagar appliceras? ex. i-omljud, monoftongering). Fyll i listan 'sound_laws_applied'.
 Steg 3: Fonetisk & Fonematisk Rekonstruktion (IPA & normalisering) baserat MÅLMEDVETET på lagarna från Steg 2.
+        Normalisera vikingatida svenska inskrifter till runsvenska på samma sätt som Samnordisk runtextdatabas
+        (t.ex. "En Ulfr hafiR a Ænglandi þry giald takit"), med egennamn med versal. Översätt till modern svenska.
+        Hitta inte på uppgifter om tidigare forskning – den jämförelsen görs separat mot Rundata.
 Steg 4: Semantisk & Grammatisk Analys
 Steg 5: Kontextuell & Flerskiktad Tolkning (Juridiskt, Sakralt, Socio-Geopolitiskt, Konstnärligt)
 
@@ -119,12 +183,16 @@ Arbeta alltid med högsta filologiska exakthet, objektivitet och akademiska käl
         region_ctx = request.region if request.region else "Okänd region"
         epoch_ctx = request.epoch if request.epoch else "Okänd epok"
         
+        # The signum is NOT given to the model: it would recall the published reading from memory instead of
+        # interpreting what was read on the image. The comparison with Rundata is made afterwards, without AI.
         step2_prompt = (
-            f'Här är den blinda läsningen (direkt från stenen): "{raw_transliteration}"\n'
-            f'Signum för denna sten är: {request.signum}\n'
+            f'Här är den blinda läsningen (direkt från bilden): "{raw_transliteration}"\n'
             f'Geografisk region: {region_ctx}\n'
             f'Tidsperiod/Epok: {epoch_ctx}\n\n'
-            'Använd din analyspipeline. Börja med att identifiera ljudlagarna (Chain-of-Thought) i "sound_laws_applied" INNAN du gör normaliseringen. Svara EXAKT med ett JSON-objekt där dina insikter mappas enligt schemat.'
+            'Tolka ENDAST denna läsning. Lägg inte till ord som inte finns i läsningen och fyll inte i luckor ur '
+            'kända inskrifter; markera osäkra eller ofullständiga ord. Fältet "transliteration" ska vara läsningen '
+            'ovan oförändrad. Använd din analyspipeline. Börja med att identifiera ljudlagarna i '
+            '"sound_laws_applied" INNAN du gör normaliseringen. Svara EXAKT med ett JSON-objekt enligt schemat.'
         )
         
         gen2_resp = client.models.generate_content(
@@ -134,7 +202,7 @@ Arbeta alltid med högsta filologiska exakthet, objektivitet och akademiska käl
                 system_instruction=step2_instruction,
                 temperature=0.0,
                 response_mime_type="application/json",
-                response_schema=PhoneticsResponse
+                response_schema=LinguisticAI
             )
         )
         
@@ -146,7 +214,10 @@ Arbeta alltid med högsta filologiska exakthet, objektivitet och akademiska käl
         if raw_text.endswith("```"):
             raw_text = raw_text[:-3]
             
-        parsed = json.loads(raw_text.strip())
+        parsed = LinguisticAI(**json.loads(raw_text.strip())).model_dump()
+        # The transliteration is always the blind reading from step 1 – what was actually seen on the image
+        parsed["transliteration"] = raw_transliteration
+        parsed.update(reference_checks(request.signum, parsed["transliteration"], parsed["normalization"]))
         parsed["markers"] = markers_data
         
         t1 = gen1_resp.usage_metadata.total_token_count if getattr(gen1_resp, "usage_metadata", None) else 0

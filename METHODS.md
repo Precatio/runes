@@ -186,6 +186,30 @@ sparas i projektet och blir då avsnittet "Attribuering" i stenrapporten.
 **Verktygsklassning** (pik-/bredmejsel, tröskel 85°, +5° vid hög vittring, +2° vid måttlig vittring, +2° för
 sandsten/kalksten) är en tumregel som inte är kalibrerad mot referensmaterial och redovisas som sådan.
 
+### 7a. Språk och läsning
+
+Källkod: `api/routers/phonetics.py`, `src/reading.py`.
+
+* **Blind läsning:** en språkmodell läser runorna från bilden utan att få signumet (steg 1). Även tolkningen
+  (steg 2: normalisering till runsvenska, översättning, IPA, ljudlagar) görs utan signum, eftersom modellen
+  annars återger den publicerade läsningen ur minnet i stället för det som syns på bilden. Translitterationen
+  i resultatet är alltid den blinda läsningen.
+* **Jämförelse med Rundata (utan AI):** translitterationerna jämförs ord för ord och runa för runa
+  (difflib). *Överensstämmelse* = andelen av våra runor och ord som finns i Rundatas läsning, *täckning* =
+  andelen av Rundatas text som vår läsning omfattar (en beskuren bild kan stämma helt men täcka lite). Bara
+  sammanhängande träffar på minst tre runor räknas, skiljetecken och textkritiska tecken ignoreras och
+  Rundatas oläsliga tecken redovisas separat.
+* **Ordformer:** varje form i vår normalisering slås upp bland Rundatas normaliserade former i
+  vikingatida inskrifter; obelagda former flaggas för granskning.
+* **Ortografi för vår läsning:** samma modell som i avsnitt 6, med stenen själv utesluten. Används i
+  syntesen när Rundata saknar en användbar text (t.ex. nyfynd), med 30 % lägre tillförlitlighet.
+* Läsningen kan rättas för hand och jämföras igen; den märks då som rättad.
+* **Bilder att läsa:** foto, 2D-analysens bild, RTI-vy eller reliefbilder ur 3D-skanningen (strykljus från
+  fyra riktningar, ett kombinerat relief där varje spår blir mörkt oavsett riktning, och djup under
+  stenytan), räknade från den sida som vetter mot betraktaren i 3D-vyn.
+* **Uppläsning:** en modern talsyntes läser normaliseringen. Det är inte en rekonstruktion av uttalet;
+  IPA-raden är modellens förslag och ljudlagarna är inte kontrollerade.
+
 ### 7b. 2D-analys och runformer
 
 * AI-bedömningen av en bild (stilgrupp Pr1–Pr5, RAK, Fp eller **Osäker**, runformer, translitterering) är en

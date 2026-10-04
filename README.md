@@ -11,7 +11,8 @@ Ett av appens huvudsakliga mål är **runristarattribuering** – att med hjälp
 
 **Analys**
 *   **3D-huggspårsanalys:** V-vinkel, asymmetri, djup, bredd, bottenradie och ytråhet i STL/OBJ/PLY-skanningar – manuellt, med ett klick per snitt eller helt automatiskt (alla spår på den ristade sidan hittas, mäts och granskas). Varje snitt redovisas med standardavvikelse och konfidensintervall. Runor och ornamentik mäts separat. Strykljus med valfri ljusriktning, lättare visningsmodell för stora skanningar, export till CSV/JSON och full proveniens (filens SHA-256, parametrar, metodversion).
-*   **2D-paleografi och fonetik:** AI-stöd för stilgrupp, runformer, translitterering och ljudvärden. Bilder från uppladdning, K-samsök, 3D-vyn, RTI-visaren eller 3D-analysens ristningskarta. Runutsnitt normaliseras och jämförs med samma runa på andra stenar (formlikhet), och kopplas till spårmåtten när de kommer från en ristningskarta.
+*   **Språk och läsning:** blind AI-läsning från foto, RTI-vy eller reliefbilder ur 3D-skanningen, jämförd med Rundata utan AI (överensstämmelse, täckning, skillnader ord för ord), kontroll av ordformer mot Rundatas korpus och ortografisk jämförelse av läsningen. Läsningen kan rättas för hand och går vidare till syntesen och stenrapporten.
+*   **2D-paleografi:** AI-stöd för stilgrupp och runformer. Bilder från uppladdning, K-samsök, 3D-vyn, RTI-visaren eller 3D-analysens ristningskarta. Runutsnitt normaliseras och jämförs med samma runa på andra stenar (formlikhet), och kopplas till spårmåtten när de kommer från en ristningskarta.
 *   **RTI-visare:** öppna PTM-filer och flytta ljuset fritt, med "diffuse gain"-förstärkning för svaga ristningar.
 
 **Forskning**

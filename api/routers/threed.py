@@ -464,3 +464,69 @@ def render_depth_map(
         return {"image_base64": f"data:image/png;base64,{img_str}"}
     except Exception as e:
         raise server_error(e, "Djupkartan kunde inte skapas.", status_code=400)
+
+
+def _estimated_normal(mesh) -> np.ndarray:
+    """Den ristade sidans normal när ingen vy är angiven: minsta variansriktningen (stenens tjocklek),
+    vänd mot den sida där mest yta pekar."""
+    pts = mesh.vertices - mesh.vertices.mean(axis=0)
+    _, vecs = np.linalg.eigh(pts.T @ pts)
+    n = vecs[:, 0]
+    if float((mesh.face_normals @ n * mesh.area_faces).sum()) < 0:
+        n = -n
+    return n
+
+
+@router.post("/render_relief")
+def render_relief(
+    file: UploadFile = File(None),
+    mesh_id: str = Form(None),
+    normal_x: float = Form(None),
+    normal_y: float = Form(None),
+    normal_z: float = Form(None),
+    up_x: float = Form(None),
+    up_y: float = Form(None),
+    up_z: float = Form(None),
+):
+    """Bilder av den ristade ytan för läsning: strykljus från fyra håll, ett kombinerat relief och djup
+    under stenytan. Utan normal används stenens tunnaste riktning."""
+    from PIL import Image
+    from src.stone_report import Surface
+
+    entry = resolve_mesh(file, mesh_id)
+    if entry.info.get("mock"):
+        raise HTTPException(status_code=400, detail=NO_MESH)
+    normal = [normal_x, normal_y, normal_z] if normal_x is not None else _estimated_normal(entry.mesh)
+    up = [up_x, up_y, up_z] if up_x is not None else None
+    try:
+        surf = Surface(entry.mesh, normal, up, max_px=1600)
+    except Exception as e:
+        raise server_error(e, "Ytan kunde inte räknas fram ur modellen.", status_code=500)
+
+    def png(gray: np.ndarray) -> str:
+        img = np.nan_to_num(gray, nan=1.0)
+        pil = Image.fromarray((np.flipud(np.clip(img, 0, 1)) * 255).astype(np.uint8))
+        # Small scans give small images; enlarge so that the runes can be read
+        scale = 1200 / max(pil.size)
+        if scale > 1:
+            pil = pil.resize((round(pil.width * scale), round(pil.height * scale)), Image.LANCZOS)
+        buf = io.BytesIO()
+        pil.save(buf, format="PNG", optimize=True)
+        return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode("ascii")
+
+    views = {name: surf.shaded(az, 20) for name, az in
+             (("nordväst", 315), ("nordost", 45), ("sydost", 135), ("sydväst", 225))}
+    # Relief: the darkest of the four directions makes every groove dark whatever its direction
+    relief = np.nanmin(np.stack(list(views.values())), axis=0)
+    relief = (relief - np.nanpercentile(relief, 1)) / max(np.nanpercentile(relief, 99) - np.nanpercentile(relief, 1), 1e-6)
+    depth = np.clip(-surf.residual, 0, None)
+    ref = float(np.nanpercentile(depth[surf.inner], 99)) if surf.inner.any() else 1.0
+    depth_img = 1 - np.clip(depth / max(ref, 1e-6), 0, 1)
+    depth_img[~surf.inner] = np.nan
+    return {
+        "relief": png(relief),
+        "depth": png(depth_img),
+        "raking": {name: png(v) for name, v in views.items()},
+        "resolution_mm": surf.res,
+        "normal": [float(v) for v in surf.hf.n],
+    }

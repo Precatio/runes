@@ -183,4 +183,12 @@ def test_stone_report_with_surface_figures(client, stone_id):
     syn = client.post("/api/synthesis/analyze", json={
         "signum": "U 344", "analyses": [{"id": "a", "feature_type": "rune", "slices": acc}]}).json()
     r3 = client.post("/api/reports/stone", json={**body, "synthesis": syn}).json()
-    assert "4.7 Attribuering" in r3["markdown"] and "Åsmund" in r3["markdown"]
+    assert "Attribuering" in r3["markdown"] and "Åsmund" in r3["markdown"]
+    # The app's own reading becomes a reading section, compared with Rundata
+    reading = client.post("/api/phonetics/compare", json={
+        "signum": "U 344", "transliteration": "in ulfʀ hafiʀ o onklati þru kialt takat",
+        "normalization": "En UlfR hafiR a Ænglandi þry giald takit"}).json()
+    reading.update({"transliteration": "in ulfʀ hafiʀ o onklati þru kialt takat",
+                    "normalization": "En UlfR hafiR a Ænglandi þry giald takit", "translation": "Och Ulf har tagit"})
+    r4 = client.post("/api/reports/stone", json={**body, "reading": reading}).json()
+    assert "Läsning av bilden" in r4["markdown"] and "**in ulfʀ hafiʀ" in r4["markdown"]

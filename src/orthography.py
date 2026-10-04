@@ -117,6 +117,7 @@ class OrthographyModel:
         self.records = []
         self.feats = []
         names = name_forms(inscriptions)
+        self.names = names
         for rec in inscriptions:
             if rec.get("period") != "V":
                 continue
@@ -156,6 +157,17 @@ class OrthographyModel:
         norms[norms == 0] = 1
         self.X = sparse.diags(1 / norms) @ X
         self.vocab = vocab
+        self.idf = idf
+
+    def vectorize(self, f: dict) -> np.ndarray:
+        """Särdragsvektor (normerad) för en inskrift utanför modellen, t.ex. en egen läsning."""
+        x = np.zeros(len(self.vocab))
+        for k, v in f["counts"].items():
+            i = self.vocab.get(k)
+            if i is not None:
+                x[i] = ((1 + math.log(v)) if k.startswith("ng:") and v > 0 else v) * self.idf[i]
+        n = np.linalg.norm(x)
+        return x / n if n else x
 
     # ---- likhet -------------------------------------------------------------
 
@@ -215,6 +227,24 @@ class OrthographyModel:
                         for k in order],
             "n_words": self.feats[i]["n_words"],
             "known_attribution": [c for c in self.records[i]["carvers"] if c["kind"] in ("S", "A")],
+        }
+
+    def rank_text(self, transliteration: str, normalization: str = "", limit: int = 10,
+                  exclude_signum: str | None = None):
+        """Ristarrangordning för en godtycklig translittererad text (t.ex. appens egen läsning).
+        Egennamn tas bort som i modellen: via normaliseringen om den kan paras ord för ord, annars
+        via namnformer kända från Rundata."""
+        f = features({"transliteration": transliteration, "normalization": normalization}, self.names)
+        labels = self._labelled()
+        # A stone already in the model must not be part of its own carver's profile
+        names, C, sizes = self._centroids(labels, exclude=self.index.get(exclude_signum or ""))
+        x = self.vectorize(f)
+        sims = C @ x
+        order = np.argsort(-sims)[:limit]
+        return {
+            "ranking": [{"carver": names[k], "similarity": float(sims[k]), "n_inscriptions": sizes[names[k]]}
+                        for k in order],
+            "n_words": f["n_words"],
         }
 
     @lru_cache(maxsize=1)

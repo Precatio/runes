@@ -21,6 +21,7 @@ from api.rundata import context_text, store
 from api.routers.orthography import model as orthography_model
 from api.routers.threed import tool_heuristic
 from src import synthesis as syn
+from src.reading import compare as compare_reading
 from src.research_gaps import carver_home
 from src.stats import METRIC_LABELS, METRICS, summarize
 from src.styles import SOURCE as STYLE_SOURCE, dating_text
@@ -60,6 +61,8 @@ class SynthesisRequest(BaseModel):
     # Mätkorpusen [{signum, feature_type, means, slices}] – jämförelsen görs här, inklusive sten mot sten
     corpus: List[dict] = Field(default_factory=list)
     corpus_note: Optional[str] = None  # t.ex. "logga in för att jämföra med korpusen"
+    # Appens egen läsning från Språk & Fonetik: {transliteration, normalization}
+    reading: Optional[dict] = None
 
 
 class Evidence(BaseModel):
@@ -170,6 +173,15 @@ def collect_evidence(req: SynthesisRequest) -> dict:
             "style_dating": dating_text(rec["style"]),
         }
         evidence["orthography"] = syn.orthography(orthography_model(), rec, home)
+    # Our own reading stands in when Rundata has no usable text (new finds, short or missing texts)
+    if req.reading and not (evidence["orthography"] or {}).get("usable"):
+        own = syn.orthography_from_reading(orthography_model(), req.reading, req.signum, home, rec)
+        if own and own["usable"]:
+            evidence["orthography"] = own
+    if req.reading and rec and rec.get("transliteration") and req.reading.get("transliteration"):
+        c = compare_reading(req.reading["transliteration"], rec["transliteration"],
+                    req.reading.get("normalization") or "", rec.get("normalization", ""))
+        evidence["reading_check"] = {k: c[k] for k in ("char_agreement", "word_agreement", "coverage", "summary")}
 
     # Measurements: the real slices of the selected analysis; the old per-save summaries only as fallback
     selected = _selected_analysis(req)
@@ -266,6 +278,10 @@ def evidence_text(evidence: dict, req: SynthesisRequest, candidates: Optional[li
 
     lines.append("\n--- ORTOGRAFISK JÄMFÖRELSE ---")
     o = evidence.get("orthography")
+    if o and o.get("source"):
+        lines.append("Bygger på appens egen AI-läsning av bilden (Rundata saknar användbar text) – osäkrare.")
+    if evidence.get("reading_check"):
+        lines.append(f"Appens läsning mot Rundata: {evidence['reading_check']['summary']}")
     if o:
         ev = o["evaluation"] or {}
         lines.append(f"Metodens träffsäkerhet (korsvaliderad): rätt ristare först i {ev.get('top1_accuracy', 0):.0%} "

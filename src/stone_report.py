@@ -566,6 +566,7 @@ def build_facts(req: dict, rundata_lookup) -> dict:
         "counts": req.get("counts"),
         "two_d": req.get("two_d") or {},
         "synthesis": req.get("synthesis") or None,
+        "reading": req.get("reading") or None,
         "date": datetime.date.today().isoformat(),
     }
 
@@ -593,6 +594,11 @@ def facts_text(f: dict) -> str:
                          f"({ev['n_stones']} stenar, {ev['n_groups']} ristare, slumpnivå {ev['chance_top1']:.0%})")
     else:
         lines.append("Mätkorpusen räcker inte för en jämförelse med ristare (minst två ristare med två uppmätta stenar krävs).")
+    rd = f.get("reading")
+    if rd and rd.get("transliteration"):
+        lines.append(f"Appens läsning av bilden (AI): {rd['transliteration']}")
+        if rd.get("comparison"):
+            lines.append(f"Läsningen mot Rundata: {rd['comparison']}")
     sy = f.get("synthesis")
     if sy:
         if sy.get("outcome"):
@@ -887,9 +893,38 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
             blocks.append(fig(forms, f"{signum}. Normaliserade runformer ur bilden (svartvita, lika stora), "
                                      "underlag för formjämförelser.", "runformer"))
 
+    rd = f.get("reading")
+    if rd and rd.get("transliteration"):
+        blocks.append(h(2, "4.7 Läsning av bilden"))
+        blocks.append(p("Runorna lästes från bilden av en språkmodell utan tillgång till tidigare läsningar ("
+                        "blind läsning); normalisering, översättning och fonetisk rekonstruktion är modellens "
+                        "tolkning. Jämförelsen med Rundata och kontrollen av ordformerna är framräknade utan AI."
+                        + (" Läsningen har därefter rättats manuellt." if rd.get("corrected") else "")))
+        blocks.append(inscription(rd.get("transliteration", ""), rd.get("normalization", ""), "",
+                                  rd.get("translation", ""), "appens läsning (AI)"))
+        if rd.get("comparison"):
+            blocks.append(p(rd["comparison"]))
+        cmp = rd.get("reading_comparison") or {}
+        diffs = [sg for sg in cmp.get("segments", []) if sg["op"] != "equal"]
+        if diffs:
+            label = {"replace": "olika", "delete": "bara vår läsning", "insert": "bara Rundata"}
+            blocks.append(tab(["Skillnad", "Vår läsning", "Rundata"],
+                              [[label.get(sg["op"], sg["op"]), " ".join(sg["ours"]) or "–", " ".join(sg["rundata"]) or "–"]
+                               for sg in diffs[:40]],
+                              f"Skillnader mellan vår läsning och Rundatas för {signum} (ord för ord)."))
+        fc = rd.get("form_check") or {}
+        if fc.get("items"):
+            missing = sorted({i["form"] for i in fc["items"] if not i["attested"]})
+            blocks.append(p(f"{fc['attested']} av {fc['total']} normaliserade ordformer är belagda i Rundatas "
+                            "vikingatida inskrifter." + (f" Inte belagda: {', '.join(missing)}." if missing else "")))
+        if rd.get("phonetic_ipa"):
+            blocks.append(p(f"Fonetisk rekonstruktion (AI): [{rd['phonetic_ipa']}]", ai=True))
+        if rd.get("sound_laws_applied"):
+            blocks.append(p("Ljudlagar som modellen anger: " + "; ".join(rd["sound_laws_applied"]) + ".", ai=True))
+
     sy = f.get("synthesis")
     if sy and sy.get("candidates") is not None:
-        blocks.append(h(2, "4.7 Attribuering"))
+        blocks.append(h(2, "4.8 Attribuering"))
         blocks.append(p("Beläggen från Rundata, ortografisk stilometri och huggteknik vägs samman; ortografi och "
                         "huggteknik vägs efter metodens korsvaliderade träffsäkerhet i fallet. Kandidaterna prövas mot "
                         "geografi, ristarens stilgrupper och, där ristarens stenar är uppmätta, sten mot sten med "

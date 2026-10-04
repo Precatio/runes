@@ -81,6 +81,31 @@ def orthography(model, rec: dict, home: dict) -> dict | None:
     }
 
 
+def orthography_from_reading(model, reading: dict, signum: str, home: dict, rec: dict | None) -> dict | None:
+    """Ortografin för appens egen läsning – när Rundata saknar en användbar text (t.ex. nyfynd).
+    En AI-läsning är osäkrare än en publicerad, så tillförlitligheten sänks med 30 %."""
+    translit = (reading or {}).get("transliteration") or ""
+    if not translit.strip():
+        return None
+    rk = model.rank_text(translit, reading.get("normalization") or "", 5,
+                         exclude_signum=rec["signum"] if rec else None)
+    ev = model.evaluate() or {}
+    per = ev.get("per_carver", {})
+    length = _length_factor(rk["n_words"])
+    prov = (signum or "").split(" ")[0]
+    items = []
+    for r in rk["ranking"]:
+        precision = smoothed_precision(per.get(r["carver"]))
+        in_area = prov in home.get(r["carver"], {})
+        items.append({**r, "precision": precision, "predicted": (per.get(r["carver"]) or {}).get("predicted", 0),
+                      "in_area": in_area, "reliability": round(0.7 * precision * (1.0 if in_area else 0.5) * length, 3)})
+    return {
+        "ranking": items, "n_words": rk["n_words"], "usable": rk["n_words"] >= MIN_WORDS, "source": "Ortografi (vår läsning)",
+        "evaluation": {k: ev.get(k) for k in ("top1_accuracy", "top3_accuracy", "chance_top1", "n_carvers",
+                                              "n_inscriptions")} | {"signed_top1": (ev.get("signed_only") or {}).get("top1_accuracy")},
+    }
+
+
 # ---- groove technique ----------------------------------------------------------------------
 
 def _reference(corpus: list[dict], lookup, signum: str, feature_type: str):
@@ -222,7 +247,7 @@ def build_candidates(ev: dict) -> list[dict]:
         for rank, r in enumerate(o["ranking"][:3], start=1):
             w = (2 if rank == 1 else 1) * r["reliability"]
             area = "" if r["in_area"] else ", utanför ristarens kända landskap"
-            add(r["carver"], "Ortografi",
+            add(r["carver"], o.get("source", "Ortografi"),
                 f"Plats {rank} (likhet {_d(r['similarity'])}; modellen har rätt i omkring {round(r['precision'] * 100)} % "
                 f"när den föreslår ristaren, {r['predicted']} förslag; {o['n_words']} ord{area}).", w, rank)
 
@@ -287,10 +312,14 @@ def conflicts(ev: dict, candidates: list[dict]) -> list[str]:
 def missing_notes(ev: dict, corpus_note: str | None) -> list[str]:
     notes = []
     if not ev.get("rundata"):
-        notes.append("Signumet finns inte i Rundata: ingen litteraturuppgift, ortografi eller geografi.")
+        notes.append("Signumet finns inte i Rundata: ingen litteraturuppgift eller geografi"
+                     + ("." if ev.get("orthography") else
+                        "; ortografin kräver en egen läsning från Språk & Fonetik."))
     o = ev.get("orthography")
     if ev.get("rundata") and not o:
         notes.append("Ortografi: inskriften ingår inte i den ortografiska modellen (för få läsbara ord eller fel period).")
+    elif o and o.get("source") and o["usable"]:
+        notes.append("Ortografi: Rundata saknar användbar text, så appens egen AI-läsning används (vikten sänkt 30 %).")
     elif o and not o["usable"]:
         notes.append(f"Ortografi: bara {o['n_words']} läsbara ord – för kort text för en pålitlig jämförelse; vägs inte in.")
     g = ev.get("groove") or {}
