@@ -6,7 +6,8 @@ import { toJpeg } from 'html-to-image';
 import { useLanguage } from "@/components/LanguageContext";
 import { useAnalysis } from "@/components/AnalysisContext";
 import { useSettings } from "@/components/SettingsContext";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { dataURLToFile } from "@/lib/images";
 import Link from "next/link";
 import { db, ProjectData } from "@/lib/db";
 import GrooveResultsPanel from "@/components/GrooveResultsPanel";
@@ -14,7 +15,7 @@ import AutoGrooveReview from "@/components/AutoGrooveReview";
 import type { SliceMarker, Vec3, ViewDirection, ViewerPoint } from "@/components/ThreeDViewer";
 import { MeshSession, type AutoAnalysisResult, type AutoLabel, type MeshInfo } from "@/lib/mesh";
 import type { ThreeDAnalysisResult } from "@/lib/db";
-import type { SliceMetrics } from "@/lib/metrics";
+import { METRICS, type SliceMetrics } from "@/lib/metrics";
 import { FEATURE_TYPES, type FeatureType } from "@/lib/metrics";
 import dynamic from 'next/dynamic';
 import { API_URL } from "@/lib/api";
@@ -39,8 +40,30 @@ function ThreeDPageContent() {
     setLatest3DMeta: setMeta,
     activeProjectId,
     setActiveProjectId,
-    setLatest2DImage
+    setLatest2DImage,
+    setLatest2DFile,
+    setLatest2DSource,
+    setLatest2DResults,
   } = useAnalysis();
+  const router = useRouter();
+
+  // Send the groove map of the automatic analysis to the 2D page, with the measured slices,
+  // so that rune crops drawn there get the groove measurements inside them
+  const sendGrooveMapToTwoD = async (labels: AutoLabel[]) => {
+    if (!autoResult) return;
+    const W = autoResult.image_width, H = autoResult.image_height;
+    const autoSlices = autoResult.slices.flatMap((sl, i) => (sl.accepted && labels[i] !== "excluded"
+      ? [{ x: sl.img_x / W, y: sl.img_y / H, metrics: Object.fromEntries(METRICS.map(m => [m, sl[m] as number])) }]
+      : []));
+    setLatest2DImage(autoResult.groove_map_base64);
+    setLatest2DFile(await dataURLToFile(autoResult.groove_map_base64, "ristningskarta.png"));
+    setLatest2DSource({
+      kind: "groove-map", description: metaText || file?.name, autoSlices,
+      methodVersion: autoResult.provenance.method_version,
+    });
+    setLatest2DResults(null);
+    router.push("/2d");
+  };
 
   const [activeProject, setActiveProject] = useState<ProjectData | null>(null);
 
@@ -413,8 +436,12 @@ function ThreeDPageContent() {
     ctx.putImageData(imgData, 0, 0);
     
     const binarizedBase64 = tempCanvas.toDataURL('image/png');
-    setLatest2DImage(binarizedBase64); // Send to 2D image preview context
-    alert("2D-Ögonblicksbild fångad och binariserad! Gå till 'Paleografi / 2D Bild' för att arbeta med bilden.");
+    // Send image, file and source to the 2D analysis (the file is needed to analyse it there)
+    setLatest2DImage(binarizedBase64);
+    setLatest2DFile(await dataURLToFile(binarizedBase64, "3d_ogonblicksbild.png"));
+    setLatest2DSource({ kind: "3d-snapshot", description: metaText || file?.name });
+    setLatest2DResults(null);
+    router.push("/2d");
   };
 
   const handleAutoSnapRequest = async (points: [number, number, number][]): Promise<[number, number, number][]> => {
@@ -1002,6 +1029,7 @@ function ThreeDPageContent() {
               labels={autoLabels}
               onLabelsChange={setAutoLabels}
               onUse={(r, ft) => { setFeatureType(ft); setResults(r); }}
+              onSendToTwoD={() => sendGrooveMapToTwoD(autoLabels)}
             />
           )}
 

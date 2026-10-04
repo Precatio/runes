@@ -23,6 +23,7 @@ interface Props {
   labels: AutoLabel[];
   onLabelsChange: (labels: AutoLabel[]) => void;
   onUse: (result: ThreeDAnalysisResult, featureType: FeatureType) => void;
+  onSendToTwoD?: () => void;
 }
 
 function quickStats(values: number[]) {
@@ -32,7 +33,7 @@ function quickStats(values: number[]) {
   return { mean, sd };
 }
 
-export default function AutoGrooveReview({ result, signum, metaStone, metaWeathering, labels, onLabelsChange, onUse }: Props) {
+export default function AutoGrooveReview({ result, signum, metaStone, metaWeathering, labels, onLabelsChange, onUse, onSendToTwoD }: Props) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [tool, setTool] = useState<AutoLabel>("rune");
   const [drag, setDrag] = useState<{ x0: number; y0: number; x1: number; y1: number } | null>(null);
@@ -150,9 +151,17 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
             ett huggspår (mäts inte). Dra en ruta för att märka punkter, klicka på en punkt för att se dess profil.
           </p>
         </div>
-        <button onClick={exportCSV} className="px-3 py-2 bg-white border border-slate-300 hover:border-slate-900 text-xs font-bold rounded-xl">
-          Exportera alla snitt (CSV)
-        </button>
+        <div className="flex flex-wrap gap-2">
+          {onSendToTwoD && (
+            <button onClick={onSendToTwoD} title="Ristningskartan visar spårdjupet oberoende av belysning och färg. Runutsnitt som ritas där får huggspårsmåtten inom utsnittet."
+              className="px-3 py-2 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl">
+              Öppna ristningskartan i 2D
+            </button>
+          )}
+          <button onClick={exportCSV} className="px-3 py-2 bg-white border border-slate-300 hover:border-slate-900 text-xs font-bold rounded-xl">
+            Exportera alla snitt (CSV)
+          </button>
+        </div>
       </div>
 
       <div className="flex flex-wrap items-center gap-2">

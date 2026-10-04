@@ -112,6 +112,7 @@ export interface AutoSlice extends Partial<SliceMetrics> {
 export interface AutoAnalysisResult {
   slices: AutoSlice[];
   image_base64: string;
+  groove_map_base64: string;
   image_width: number;
   image_height: number;
   angle_color_range: [number, number];

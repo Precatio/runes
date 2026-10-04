@@ -17,6 +17,8 @@ export interface Translations {
     styles: string;
     corpus: string;
     compare: string;
+    gaps: string;
+    reports: string;
     rti: string;
     group_analysis: string;
     group_research: string;
@@ -74,6 +76,8 @@ export const translations: Record<Language, Translations> = {
       styles: "Stilgrupper",
       corpus: "Mätkorpus",
       compare: "Jämför stenar",
+      gaps: "Forskningsluckor",
+      reports: "Rapporter",
       rti: "RTI-visare",
       group_analysis: "Analys",
       group_research: "Forskning",
@@ -129,6 +133,8 @@ export const translations: Record<Language, Translations> = {
       styles: "Style groups",
       corpus: "Measurement corpus",
       compare: "Compare stones",
+      gaps: "Research gaps",
+      reports: "Reports",
       rti: "RTI viewer",
       group_analysis: "Analysis",
       group_research: "Research",

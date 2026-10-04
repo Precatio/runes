@@ -39,10 +39,10 @@ def save_mesh_upload(file: UploadFile) -> str:
     return tmp_path
 
 
-async def read_image_upload(file: UploadFile) -> bytes:
+def read_image_upload(file: UploadFile) -> bytes:
     if file.content_type and not file.content_type.startswith("image/"):
         raise HTTPException(status_code=400, detail="Filen måste vara en bild.")
-    data = await file.read(MAX_IMAGE_BYTES + 1)
+    data = file.file.read(MAX_IMAGE_BYTES + 1)
     if len(data) > MAX_IMAGE_BYTES:
         raise HTTPException(status_code=413, detail=f"Bilden är för stor (max {MAX_IMAGE_BYTES // MB} MB).")
     return data

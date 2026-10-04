@@ -7,6 +7,11 @@ import os
 DEFAULT_WINDOW_MM = 25.0
 
 
+def raw_profile(x, z, digits: int = 4) -> dict:
+    """Rå tvärsnittsprofil (x, z i mm) för lagring, så att snittet kan räknas om med senare metoder."""
+    return {"x": [round(float(v), digits) for v in x], "z": [round(float(v), digits) for v in z]}
+
+
 def section_points(triangles: np.ndarray, plane_origin, plane_normal) -> np.ndarray:
     """Skärningspunkter mellan ett plan och trianglar (k, 3, 3): ändpunkterna för varje snittsegment."""
     d = (triangles - plane_origin) @ plane_normal  # (k, 3) signed distances
@@ -290,6 +295,7 @@ def analyze_path(mesh, path_points, up_vector, window_mm=DEFAULT_WINDOW_MM, face
         tangents[1:-1] = path_points[2:] - path_points[:-2]
         
     results_list = []
+    profiles = []
     plot_data_list = []
     distances = []
     depths = []
@@ -309,6 +315,7 @@ def analyze_path(mesh, path_points, up_vector, window_mm=DEFAULT_WINDOW_MM, face
             res = calculate_v_angle(x_2d, z_2d)
             if np.isfinite(res["apex_vinkel_deg"]) and np.isfinite(res["fit_r2"]) and res["apex_vinkel_deg"] > 0:
                 results_list.append(res)
+                profiles.append((x_2d, z_2d))
                 distances.append(current_distance)
                 depths.append(res["spårdjup_mm"])
                 # Keep the first valid one for plotting purposes
@@ -340,8 +347,8 @@ def analyze_path(mesh, path_points, up_vector, window_mm=DEFAULT_WINDOW_MM, face
     slices = [
         {**{k: float(r[k]) for k in ("apex_vinkel_deg", "asymmetri_deg", "spårdjup_mm", "spårbredd_mm",
                                      "djup_bredd_kvot", "bottenradie_mm", "ytråhet_mm")},
-         "position_mm": float(dist)}
-        for r, dist in zip(results_list, distances)
+         "position_mm": float(dist), "fit_r2": float(r["fit_r2"]), "profile": raw_profile(*prof)}
+        for r, dist, prof in zip(results_list, distances, profiles)
     ]
 
     return avg_results, plot_data_list[0] if len(plot_data_list) > 0 else None, depth_profile, slices

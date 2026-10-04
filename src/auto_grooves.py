@@ -19,7 +19,7 @@ from scipy import ndimage
 from scipy.spatial import cKDTree
 from skimage.morphology import remove_small_objects, skeletonize
 
-from src.slice_analysis import calculate_v_angle, extract_2d_profile_from_mesh
+from src.slice_analysis import calculate_v_angle, extract_2d_profile_from_mesh, raw_profile
 from src.stats import METRICS
 
 ANGLE_COLOR_RANGE = (30.0, 130.0)
@@ -206,6 +206,23 @@ def _overlay_png(hf: Heightfield, mask: np.ndarray, wide: np.ndarray, slices: li
     return base64.b64encode(buf.getvalue()).decode("ascii"), img.width, img.height, scale
 
 
+def _groove_map_png(hf: Heightfield, residual: np.ndarray, inner: np.ndarray, threshold: float,
+                    size: tuple[int, int]) -> str:
+    """Ristningskarta: spårdjupet som gråskala (mörkt = djupt), utan belysning och färg.
+    Samma storlek och orientering som granskningsbilden, så att koordinaterna stämmer."""
+    from PIL import Image
+
+    depth = np.clip(-residual, 0, None)
+    ref_depth = float(np.percentile(depth[depth > threshold], 95)) if (depth > threshold).any() else 1.0
+    v = np.clip(depth / max(ref_depth, 1e-6), 0, 1)
+    gray = (255 * (1 - v)).astype(np.uint8)
+    gray[~hf.region] = 255
+    img = Image.fromarray(np.flipud(gray)).resize(size, Image.LANCZOS)
+    buf = io.BytesIO()
+    img.save(buf, format="PNG", optimize=True)
+    return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode("ascii")
+
+
 def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 3.0,
                     min_depth_mm: float = 0.3, scale_mm: float = 20.0, edge_margin_mm: float = 5.0,
                     min_fit_r2: float = 0.8, max_cells: int = 6_000_000, face_tree: cKDTree | None = None,
@@ -317,12 +334,11 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
         else:
             rec["accepted"] = True
             rec["reason"] = None
-            step = max(1, len(s) // 80)
-            rec["profile"] = {"x": [round(float(v), 3) for v in s[::step]],
-                              "z": [round(float(v - z.min()), 3) for v in z[::step]]}
+            rec["profile"] = raw_profile(s, z)
         slices.append(rec)
 
     image_b64, width, height, scale = _overlay_png(hf, mask, wide_area, slices)
+    groove_map = _groove_map_png(hf, residual, inner, threshold, (width, height))
     for rec in slices:
         rec.pop("_iy", None)
         rec.pop("_ix", None)
@@ -331,6 +347,7 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
     return {
         "slices": slices,
         "image_base64": f"data:image/png;base64,{image_b64}",
+        "groove_map_base64": groove_map,
         "image_width": width,
         "image_height": height,
         "angle_color_range": list(ANGLE_COLOR_RANGE),

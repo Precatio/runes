@@ -74,6 +74,35 @@ def summarize(req: SummarizeRequest):
             "tool_heuristic": tool_heuristic(means["apex_vinkel_deg"], req.meta_stone, req.meta_weathering)}
 
 
+class RecomputeRequest(BaseModel):
+    profiles: list[dict]
+
+
+@router.post("/recompute")
+def recompute(req: RecomputeRequest):
+    """Räknar om sparade råprofiler med den aktuella mätmetoden."""
+    from api.config import METHOD_VERSION
+    from src.slice_analysis import calculate_v_angle
+
+    if len(req.profiles) > 2000:
+        raise HTTPException(status_code=400, detail="Högst 2 000 profiler per anrop.")
+    slices, failed = [], 0
+    for p in req.profiles:
+        try:
+            x, z = np.asarray(p["x"], float), np.asarray(p["z"], float)
+            order = np.argsort(x)
+            res = calculate_v_angle(x[order], z[order])
+            if not all(np.isfinite(res[k]) for k in METRICS):
+                raise ValueError
+            slices.append({k: float(res[k]) for k in METRICS} | {"fit_r2": float(res["fit_r2"])})
+        except Exception:
+            slices.append(None)
+            failed += 1
+    ok = [s for s in slices if s]
+    return {"method_version": METHOD_VERSION, "slices": slices, "failed": failed,
+            "summary": summarize_slices(ok) if ok else None}
+
+
 @router.post("/compare")
 def compare(req: CompareRequest):
     if len(req.a.slices) < 2 or len(req.b.slices) < 2:

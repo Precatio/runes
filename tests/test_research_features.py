@@ -1,0 +1,83 @@
+import base64
+import os
+
+import numpy as np
+import pytest
+from fastapi.testclient import TestClient
+
+from api.main import app
+from api.rundata import DATA_PATH
+from src.graphemes import cosine, extract
+from src.stats import METRICS
+from src.synthetic_runes import RUNES, render
+
+needs_rundata = pytest.mark.skipif(not os.path.exists(DATA_PATH), reason="data/rundata.json saknas")
+
+
+@pytest.fixture(scope="module")
+def client():
+    return TestClient(app)
+
+
+def test_rune_forms_recognised_despite_lighting_and_scale():
+    items = [(r, extract(render(r, seed=k * 7 + len(r), dark_strokes=(k % 3 != 0)))["feature_vector"])
+             for r in RUNES for k in range(6)]
+    hits = 0
+    for i, (r, v) in enumerate(items):
+        best = max((cosine(v, w), j) for j, (_, w) in enumerate(items) if j != i)[1]
+        hits += items[best][0] == r
+    assert hits / len(items) >= 0.7  # chance is 20 %
+
+
+def test_extract_features_endpoint(client):
+    img = "data:image/png;base64," + base64.b64encode(render("ᚱ")).decode()
+    body = client.post("/api/2d/extract_features", json={"image_base64": img}).json()
+    assert body["feature_version"] == "grapheme-2" and body["form_png"].startswith("data:image/png")
+
+
+def test_recompute_reproduces_measurement(client):
+    r = client.post("/api/3d/analyze", data={"use_mock": "true", "origin_x": 0, "origin_y": 0, "origin_z": 0,
+                                              "dir_x": 0, "dir_y": 1, "dir_z": 0, "slice_count": 3}).json()
+    profiles = [s["profile"] for s in r["slices"]]
+    rc = client.post("/api/stats/recompute", json={"profiles": profiles}).json()
+    for a, b in zip(r["slices"], rc["slices"]):
+        assert abs(a["apex_vinkel_deg"] - b["apex_vinkel_deg"]) < 0.01  # profiles are stored rounded to 0.1 µm
+
+
+@needs_rundata
+def test_research_gaps(client):
+    r = client.post("/api/research/gaps", json={"measured_signa": ["So 113"]}).json()
+    totals = r["coverage"]["totals"]
+    assert totals["total"] > 2000 and totals["carver"] < totals["total"] and totals["measured"] == 1
+    h = r["hypotheses"]
+    assert h["new"] and {"carver", "similarity", "carver_precision", "in_carver_area"} <= h["new"][0].keys()
+    assert all(x["n_words"] >= 8 for x in h["new"])
+    assert r["measurement_priorities"][0]["inscriptions"] >= 5
+    assert "Axelson" in r["source_note"]
+
+
+@needs_rundata
+def test_synthesis_style_check(client, monkeypatch):
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    r = client.post("/api/synthesis/analyze", json={"signum": "U 11", "two_d": {"predicted_style": "Pr3"}}).json()
+    sc = r["evidence"]["style_check"]
+    assert sc["rundata_style"] == "Pr4" and sc["agrees"] is False
+
+
+@needs_rundata
+def test_academic_report(client):
+    rng = np.random.default_rng(3)
+    entries = []
+    for sig, mu in [("U 729", 70), ("U 707", 72), ("U 1022", 95), ("U 1034", 97)]:
+        vals = rng.normal([mu, 3, 2, 6, .33, .2, .05], [2, 1, .2, .4, .02, .03, .01])
+        entries.append({"signum": sig, "means": dict(zip(METRICS, vals)), "slices": [{}] * 4,
+                        "feature_type": "rune", "method_version": "groove-3", "contributorName": "Test"})
+    r = client.post("/api/reports/academic", json={"entries": entries, "use_ai": False}).json()
+    assert "Tabell 2" in r["markdown"] and "Balle" in r["markdown"] and r["figures"]
+    assert r["latex"].startswith(r"\documentclass")
+    d = client.post("/api/reports/academic", json={"entries": entries, "use_ai": False, "format": "docx"})
+    assert d.status_code == 200 and d.content[:2] == b"PK"
+    # AI text from the preview is reused as-is, without a new AI call
+    ai = {"abstract": "SAMMANFATTNINGSTEST", "introduction": "INLEDNINGSTEST", "discussion": "DISKUSSIONSTEST"}
+    r = client.post("/api/reports/academic", json={"entries": entries, "use_ai": True, "ai_text": ai}).json()
+    assert r["ai_used"] and "SAMMANFATTNINGSTEST" in r["markdown"] and "DISKUSSIONSTEST" in r["markdown"]

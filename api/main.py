@@ -2,7 +2,7 @@ import os
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.routers import chat, threed, twod, raa, synthesis, phonetics, rundata, stats, orthography
+from api.routers import chat, threed, twod, raa, synthesis, phonetics, rundata, stats, orthography, research, reports
 
 app = FastAPI(title="Runforskning API")
 
@@ -26,6 +26,8 @@ app.include_router(phonetics.router, prefix="/api/phonetics", tags=["phonetics"]
 app.include_router(rundata.router, prefix="/api/rundata", tags=["rundata"])
 app.include_router(stats.router, prefix="/api/stats", tags=["stats"])
 app.include_router(orthography.router, prefix="/api/orthography", tags=["orthography"])
+app.include_router(research.router, prefix="/api/research", tags=["research"])
+app.include_router(reports.router, prefix="/api/reports", tags=["reports"])
 
 @app.get("/")
 def read_root():

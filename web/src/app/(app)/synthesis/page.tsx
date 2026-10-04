@@ -24,6 +24,9 @@ interface SynthesisResult {
   summary: string;
   sources: string[];
   ai_used: boolean;
+  evidence?: {
+    style_check?: { ai_style: string; ai_confidence?: number; rundata_style: string | null; agrees: boolean; note: string };
+  };
 }
 
 const STRENGTH_STYLE: Record<Candidate["strength"], string> = {
@@ -87,6 +90,11 @@ export default function SynthesisPage() {
         slices: selectedProject.slices,
         feature_type: latest?.feature_type,
         groove_attribution: grooveAttribution,
+        two_d: selectedProject.twoDResults ? {
+          predicted_style: selectedProject.twoDResults.predicted_style,
+          confidence: selectedProject.twoDResults.confidence,
+          reasoning: selectedProject.twoDResults.reasoning,
+        } : undefined,
       };
 
       const res = await fetch(`${API_URL}/api/synthesis/analyze`, {
@@ -156,6 +164,7 @@ export default function SynthesisPage() {
                   <li className="flex justify-between"><span>Stenart:</span> <span>{selectedProject.metaStone || "-"}</span></li>
                   <li className="flex justify-between"><span>Sparade 3D-snitt:</span> <span>{selectedProject.slices.length} st</span></li>
                   <li className="flex justify-between"><span>Fullständiga analyser:</span> <span>{selectedProject.grooveAnalyses?.length ?? 0} st</span></li>
+                  <li className="flex justify-between"><span>2D-stilanalys:</span> <span>{selectedProject.twoDResults?.predicted_style ?? "–"}</span></li>
                 </ul>
               </div>
             )}
@@ -205,6 +214,17 @@ export default function SynthesisPage() {
                     ))}
                   </div>
                 )}
+                {results.evidence?.style_check && (() => {
+                  const sc = results.evidence!.style_check!;
+                  return (
+                    <div className={`mt-5 rounded-2xl px-4 py-3 text-sm ${sc.rundata_style ? (sc.agrees ? "bg-emerald-50 text-emerald-800" : "bg-amber-50 text-amber-800") : "bg-slate-100 text-slate-700"}`}>
+                      <strong>Stilgrupp:</strong> AI-bedömning från 2D-analysen {sc.ai_style}
+                      {sc.ai_confidence != null && ` (självskattning ${sc.ai_confidence} %, okalibrerad)`};
+                      Rundata {sc.rundata_style ?? "saknar uppgift"}
+                      {sc.rundata_style && (sc.agrees ? " – stämmer." : " – skiljer sig, granska ornamentiken.")}
+                    </div>
+                  );
+                })()}
                 <p className="text-[11px] text-slate-500 mt-4">
                   Styrka: stark = signerad i Rundata eller stöd från alla tre källorna; måttlig = attribuerad i litteraturen eller stöd från två källor; svag = en källa.
                 </p>

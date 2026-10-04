@@ -45,7 +45,7 @@ Regler:
 """
 
 @router.post("", response_model=ChatResponse)
-async def chat_with_ai(
+def chat_with_ai(
     request: ChatRequest,
     x_gemini_api_key: Optional[str] = Header(None, alias="X-Gemini-Api-Key")
 ):

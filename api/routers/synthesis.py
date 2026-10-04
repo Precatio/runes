@@ -50,6 +50,8 @@ class SynthesisRequest(BaseModel):
     feature_type: Optional[str] = None
     # Resultat från /api/stats/attribute mot den delade korpusen (valfritt)
     groove_attribution: Optional[dict] = None
+    # AI:ns stilbedömning från 2D-analysen (valfritt): predicted_style, confidence, reasoning
+    two_d: Optional[dict] = None
 
 
 class Evidence(BaseModel):
@@ -139,6 +141,16 @@ def collect_evidence(req: SynthesisRequest) -> dict:
         angle = summary["apex_vinkel_deg"]["mean"]
         if angle is not None:
             evidence["tool_heuristic"] = tool_heuristic(angle, req.stoneType, req.weathering)
+    if req.two_d and req.two_d.get("predicted_style"):
+        ai_style = str(req.two_d["predicted_style"])
+        rd_style = (evidence.get("rundata") or {}).get("style")
+        evidence["style_check"] = {
+            "ai_style": ai_style,
+            "ai_confidence": req.two_d.get("confidence"),
+            "rundata_style": rd_style,
+            "agrees": bool(rd_style) and ai_style == rd_style,
+            "note": "AI-bedömning från foto/ristningskarta, okalibrerad.",
+        }
     ga = req.groove_attribution or {}
     if ga.get("ranking"):
         evidence["groove"] = {"ranking": ga["ranking"][:5], "evaluation": ga.get("evaluation"),
@@ -237,6 +249,13 @@ def evidence_text(evidence: dict, req: SynthesisRequest) -> str:
     else:
         lines.append("Ingen jämförelse mot mätkorpusen (för lite referensdata eller ej begärd).")
 
+    sc = evidence.get("style_check")
+    if sc:
+        lines.append("\n--- STILGRUPP: AI-BEDÖMNING (2D) MOT RUNDATA ---")
+        verdict = ("stämmer med Rundata" if sc["agrees"] else
+                   "skiljer sig från Rundata" if sc["rundata_style"] else "Rundata saknar stilgrupp")
+        lines.append(f"AI (okalibrerad, från bild): {sc['ai_style']}; Rundata: {sc['rundata_style'] or 'uppgift saknas'} – {verdict}.")
+
     lines.append("\n--- ANVÄNDARENS UPPGIFTER ---")
     lines.append(f"Stenart: {req.stoneType}; vittring: {req.weathering}; plats: {req.location or 'okänd'}")
     if req.style_analysis:
@@ -280,7 +299,7 @@ Svara med JSON:
 
 
 @router.post("/analyze", response_model=SynthesisResponse)
-async def analyze_synthesis(
+def analyze_synthesis(
     request: SynthesisRequest,
     x_gemini_api_key: Optional[str] = Header(None, alias="X-Gemini-Api-Key"),
 ):
@@ -364,7 +383,7 @@ def _method_html(provenance: Optional[dict]) -> str:
 
 
 @router.post("/report", response_model=ReportResponse)
-async def generate_report(
+def generate_report(
     request: ReportRequest,
     x_gemini_api_key: Optional[str] = Header(None, alias="X-Gemini-Api-Key"),
 ):

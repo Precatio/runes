@@ -1,16 +1,14 @@
 from api.config import GEMINI_PRO_MODEL
 from api.errors import ai_error, server_error
 from api.uploads import read_image_upload, decode_base64_image
+from src import graphemes
 from src.styles import STYLE_GROUPS
 from fastapi import APIRouter, HTTPException, UploadFile, File, Header
 from pydantic import BaseModel
-from typing import Optional
+from typing import Literal, Optional
 from google import genai
 from google.genai import types
 import os
-import numpy as np
-import cv2
-from skimage.feature import hog
 from dotenv import load_dotenv
 
 load_dotenv(override=True)
@@ -22,19 +20,32 @@ class Marker(BaseModel):
     description: str
     polygon: list[list[int]]
 
-class TwoDAnalysisResponse(BaseModel):
-    predicted_style: str
+StyleCode = Literal["RAK", "Fp", "Pr1", "Pr2", "Pr3", "Pr4", "Pr5", "Osäker"]
+
+
+class TwoDAIResult(BaseModel):
+    """Schema the model must follow (the style code is restricted to Gräslund's groups)."""
+    predicted_style: StyleCode
     confidence: int
     reasoning: str
     rune_types: str
     markers: list[Marker]
+
+
+class TwoDAnalysisResponse(TwoDAIResult):
     tokens_used: int = 0
+    model: str = ""
+
 
 class ExtractFeaturesRequest(BaseModel):
     image_base64: str
-    
+
+
 class ExtractFeaturesResponse(BaseModel):
     feature_vector: list[float]
+    form_png: str
+    aspect: float
+    feature_version: str
 
 STYLE_REFERENCE = "\n".join(
     f"- {g['code']}: {g['features']}" + (f" (ca {g['from']}–{g['to']})" if g["from"] else "")
@@ -47,7 +58,7 @@ I din stilanalys (ornamentik) utgår du ifrån Anne-Sofie Gräslunds kronologisk
 Din uppgift är att analysera en uppladdad 2D-bild (ett foto eller en uppmålning) av en runsten.
 
 Du måste identifiera vilken av Anne-Sofie Gräslunds stilgrupper (RAK, Fp, Pr1, Pr2, Pr3, Pr4, Pr5) som stenen med störst sannolikhet tillhör.
-Använd koderna exakt så (RAK, Fp, Pr1–Pr5). Referens (ungefärliga dateringar som överlappar):
+Använd koderna exakt så (RAK, Fp, Pr1–Pr5). Om bilden inte visar ornamentik som går att bedöma, svara "Osäker". Referens (ungefärliga dateringar som överlappar):
 """ + STYLE_REFERENCE + """
 Om bilden innehåller ett rundjur med huvud är det ALDRIG Rak. Var noggrann och variera din bedömning baserat på faktiska visuella bevis i bilden. Undvik att defaulta till Rak.
 
@@ -66,7 +77,7 @@ Du måste svara EXAKT enligt det angivna JSON-schemat.
 """
 
 @router.post("/analyze", response_model=TwoDAnalysisResponse)
-async def analyze_2d_image(
+def analyze_2d_image(
     file: UploadFile = File(...),
     x_gemini_api_key: Optional[str] = Header(None, alias="X-Gemini-Api-Key")
 ):
@@ -77,7 +88,7 @@ async def analyze_2d_image(
     client = genai.Client(api_key=api_key)
     
     # Läs fil och konvertera till base64/bytes
-    contents = await read_image_upload(file)
+    contents = read_image_upload(file)
     
     try:
         response = client.models.generate_content(
@@ -90,13 +101,14 @@ async def analyze_2d_image(
                 system_instruction=SYSTEM_INSTRUCTION,
                 temperature=0.2,
                 response_mime_type="application/json",
-                response_schema=TwoDAnalysisResponse,
+                response_schema=TwoDAIResult,
             )
         )
         # GenAI client automatically parses JSON to string if schema is provided, but since we specified response_schema it should be a JSON string we can just return (FastAPI will parse and validate via response_model).
         import json
         data = json.loads(response.text)
         data["tokens_used"] = response.usage_metadata.total_token_count if getattr(response, "usage_metadata", None) else 0
+        data["model"] = GEMINI_PRO_MODEL
         return TwoDAnalysisResponse(**data)
     except HTTPException:
         raise
@@ -104,36 +116,12 @@ async def analyze_2d_image(
         raise ai_error(e)
 
 @router.post("/extract_features", response_model=ExtractFeaturesResponse)
-async def extract_features(request: ExtractFeaturesRequest):
+def extract_features(request: ExtractFeaturesRequest):
+    """Normaliserad runform och formbeskrivning för jämförelse av runutsnitt (se src/graphemes.py)."""
+    image_bytes = decode_base64_image(request.image_base64)
     try:
-        # Strip header if present (e.g., "data:image/jpeg;base64,...")
-        image_bytes = decode_base64_image(request.image_base64)
-        np_arr = np.frombuffer(image_bytes, np.uint8)
-        img = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-        
-        if img is None:
-            raise ValueError("Kunde inte avkoda bilden.")
-            
-        # Convert to grayscale
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        
-        # Resize to standard size (e.g. 64x64) for consistent HOG features
-        resized = cv2.resize(gray, (64, 64))
-        
-        # Compute HOG features
-        # pixels_per_cell=(8,8), cells_per_block=(2,2), orientations=9
-        features = hog(resized, orientations=9, pixels_per_cell=(8, 8),
-                       cells_per_block=(2, 2), block_norm='L2-Hys', transform_sqrt=True, feature_vector=True)
-                       
-        # Include aspect ratio as a feature (width / height)
-        aspect_ratio = img.shape[1] / max(img.shape[0], 1)
-        
-        # Combine HOG features with aspect ratio (weighted slightly to be significant)
-        feature_vector = features.tolist()
-        feature_vector.append(aspect_ratio * 0.5)
-        
-        return ExtractFeaturesResponse(feature_vector=feature_vector)
-    except HTTPException:
-        raise
+        return ExtractFeaturesResponse(**graphemes.extract(image_bytes))
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
     except Exception as e:
-        raise server_error(e, "Fel vid vektorisering.")
+        raise server_error(e, "Fel vid beskrivning av runformen.")

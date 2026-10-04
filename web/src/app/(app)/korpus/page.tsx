@@ -4,7 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import PlotlyGraph from "@/components/PlotlyGraph";
 import { useAuth } from "@/components/AuthContext";
-import { corpus, corpusToRows, CORPUS_LICENSE, type CorpusEntry } from "@/lib/corpus";
+import { corpus, corpusToRows, CORPUS_LICENSE, CURRENT_METHOD, datasetPackage, quality, type CorpusEntry, type RecomputeResult } from "@/lib/corpus";
+import { useSettings } from "@/components/SettingsContext";
 import { downloadFile, toCSV } from "@/lib/export";
 import { FEATURE_TYPES, METRICS, METRIC_DIGITS, METRIC_LABELS, formatSummary, type FeatureType } from "@/lib/metrics";
 import { rundata, type Carver } from "@/lib/rundata";
@@ -18,6 +19,9 @@ function labelFrom(carvers: Carver[]): string | null {
 
 export default function CorpusPage() {
   const { user, loginWithGoogle } = useAuth();
+  const { userName, userInstitution } = useSettings();
+  const [recomputed, setRecomputed] = useState<Record<string, RecomputeResult | string>>({});
+  const [busy, setBusy] = useState<string | null>(null);
   const [entries, setEntries] = useState<CorpusEntry[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -78,10 +82,51 @@ export default function CorpusPage() {
     }
   };
 
-  const remove = async (id: string) => {
+  const remove = async (entry: CorpusEntry) => {
     if (!confirm("Ta bort din mätning ur korpusen?")) return;
-    await corpus.remove(id);
-    setEntries(es => es.filter(e => e.id !== id));
+    await corpus.remove(entry);
+    setEntries(es => es.filter(e => e.id !== entry.id));
+  };
+
+  const verify = async (entry: CorpusEntry) => {
+    const comment = prompt(`Verifiera mätningen av ${entry.signum}. Kommentar (valfri):`);
+    if (comment === null) return;
+    try {
+      const v = await corpus.verify(entry, { name: userName, institution: userInstitution, comment: comment || undefined });
+      setEntries(es => es.map(e => (e.id === entry.id ? { ...e, verifications: [...(e.verifications ?? []), v] } : e)));
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Verifieringen misslyckades.");
+    }
+  };
+
+  const recompute = async (entry: CorpusEntry) => {
+    setBusy(entry.id);
+    try {
+      const r = await corpus.recompute(entry);
+      setRecomputed(prev => ({ ...prev, [entry.id]: r }));
+    } catch (err) {
+      setRecomputed(prev => ({ ...prev, [entry.id]: err instanceof Error ? err.message : "Omräkningen misslyckades." }));
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const applyRecompute = async (entry: CorpusEntry) => {
+    const r = recomputed[entry.id];
+    if (!r || typeof r === "string") return;
+    await corpus.applyRecompute(entry, r);
+    setEntries(await corpus.list());
+    setRecomputed(prev => { const n = { ...prev }; delete n[entry.id]; return n; });
+  };
+
+  const exportDataset = async (includeRaw: boolean) => {
+    setBusy("dataset");
+    try {
+      const pkg = await datasetPackage(entries, includeRaw);
+      downloadFile(`runforskning_matkorpus_${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(pkg, null, 1), "application/json");
+    } finally {
+      setBusy(null);
+    }
   };
 
   if (!user) {
@@ -114,6 +159,11 @@ export default function CorpusPage() {
             className="px-4 py-2 text-xs font-bold rounded-xl bg-white border border-slate-300 hover:border-slate-900 disabled:opacity-40">
             Exportera CSV
           </button>
+          <button onClick={() => exportDataset(true)} disabled={entries.length === 0 || busy === "dataset"}
+            title="JSON-paket med metadata, licens, citering och råprofiler – för arkivering, t.ex. på Zenodo"
+            className="px-4 py-2 text-xs font-bold rounded-xl bg-white border border-slate-300 hover:border-slate-900 disabled:opacity-40">
+            {busy === "dataset" ? "Packar..." : "Exportera dataset"}
+          </button>
         </div>
       </div>
       {error && <p className="text-red-700 font-semibold">{error}</p>}
@@ -128,7 +178,7 @@ export default function CorpusPage() {
                 <th className="p-2">Signum</th><th className="p-2">Spår</th><th className="p-2">Ristare (Rundata)</th>
                 <th className="p-2">Snitt</th>
                 {(["apex_vinkel_deg", "spårdjup_mm", "spårbredd_mm"] as const).map(m => <th key={m} className="p-2">{METRIC_LABELS[m]}</th>)}
-                <th className="p-2">Bidragsgivare</th><th className="p-2"></th>
+                <th className="p-2">Kvalitet</th><th className="p-2">Bidragsgivare</th><th className="p-2"></th>
               </tr>
             </thead>
             <tbody>
@@ -141,10 +191,51 @@ export default function CorpusPage() {
                   {(["apex_vinkel_deg", "spårdjup_mm", "spårbredd_mm"] as const).map(m => (
                     <td key={m} className="p-2 font-mono text-xs">{formatSummary(e.summary[m], METRIC_DIGITS[m])}</td>
                   ))}
-                  <td className="p-2 text-xs text-slate-600">{e.contributorName}{e.institution && `, ${e.institution}`}<br />{e.createdAt.slice(0, 10)} · {e.method_version}</td>
-                  <td className="p-2 text-right">
+                  <td className="p-2">
+                    {(() => {
+                      const q = quality(e);
+                      const badge = (ok: boolean, label: string, title: string) => (
+                        <span title={title} className={`inline-block mr-1 mb-1 px-1.5 py-0.5 rounded text-[10px] font-bold ${ok ? "bg-emerald-100 text-emerald-800" : "bg-slate-100 text-slate-400"}`}>{label}</span>
+                      );
+                      return (
+                        <div className="max-w-[170px]">
+                          {badge(q.raw, "Rådata", "Råa tvärsnittsprofiler finns – kan räknas om")}
+                          {badge(q.scan, "Skanning", "Instrument och upplösning/noggrannhet angivna")}
+                          {badge(q.enoughSlices, "≥5 snitt", "Minst fem tvärsnitt")}
+                          {badge(q.currentMethod, e.method_version, `Aktuell metod är ${CURRENT_METHOD}`)}
+                          {badge(q.verified, `Verifierad ${e.verifications?.length ?? 0}`, (e.verifications ?? []).map(v => `${v.name}: ${v.comment ?? ""}`).join("\n") || "Inte verifierad av någon annan")}
+                          {(e.rune_forms ?? 0) > 0 && badge(true, `${e.rune_forms} runformer`, "Runformer från 2D-analysen")}
+                        </div>
+                      );
+                    })()}
+                  </td>
+                  <td className="p-2 text-xs text-slate-600">{e.contributorName}{e.institution && `, ${e.institution}`}<br />{e.createdAt.slice(0, 10)}{e.scan?.device && <><br />{e.scan.device}{e.scan.resolution_mm ? `, ${e.scan.resolution_mm} mm` : ""}</>}</td>
+                  <td className="p-2 text-right text-xs space-y-1">
+                    {(e.raw_profile_chunks ?? 0) > 0 && (
+                      <button onClick={() => recompute(e)} disabled={busy === e.id} className="block ml-auto font-semibold text-slate-700 hover:underline">
+                        {busy === e.id ? "Räknar..." : "Räkna om"}
+                      </button>
+                    )}
+                    {(() => {
+                      const r = recomputed[e.id];
+                      if (!r) return null;
+                      if (typeof r === "string") return <div className="text-red-700">{r}</div>;
+                      const before = e.summary.apex_vinkel_deg?.mean, after = r.summary?.apex_vinkel_deg.mean;
+                      return (
+                        <div className="text-slate-600">
+                          {r.method_version}: {after != null ? after.toFixed(1) : "–"}° (sparat {before != null ? before.toFixed(1) : "–"}°)
+                          {r.failed > 0 && `, ${r.failed} misslyckade`}
+                          {e.contributorUid === user.uid && r.method_version !== e.method_version && (
+                            <button onClick={() => applyRecompute(e)} className="block ml-auto font-semibold text-[#b7410e] hover:underline">Uppdatera posten</button>
+                          )}
+                        </div>
+                      );
+                    })()}
+                    {e.contributorUid !== user.uid && !(e.verifications ?? []).some(v => v.uid === user.uid) && (
+                      <button onClick={() => verify(e)} className="block ml-auto font-semibold text-emerald-700 hover:underline">Verifiera</button>
+                    )}
                     {e.contributorUid === user.uid && (
-                      <button onClick={() => remove(e.id)} className="text-xs text-red-700 font-semibold hover:underline">Ta bort</button>
+                      <button onClick={() => remove(e)} className="block ml-auto font-semibold text-red-700 hover:underline">Ta bort</button>
                     )}
                   </td>
                 </tr>

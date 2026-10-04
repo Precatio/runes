@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { parsePTM, relight, type PTM } from "@/lib/ptm";
+import { useAnalysis } from "@/components/AnalysisContext";
+import { dataURLToFile } from "@/lib/images";
 
 const MAX_BYTES = 400 * 1024 * 1024;
 
@@ -15,6 +18,8 @@ export default function RTIPage() {
   const [gain, setGain] = useState(1);
   const [grayscale, setGrayscale] = useState(false);
   const [dragging, setDragging] = useState(false);
+  const router = useRouter();
+  const { setLatest2DImage, setLatest2DFile, setLatest2DSource, setLatest2DResults } = useAnalysis();
 
   const load = async (file: File | undefined) => {
     if (!file) return;
@@ -66,6 +71,17 @@ export default function RTIPage() {
     a.href = url;
     a.download = `${fileName.replace(/\.[^.]+$/, "")}_ljus${azimuth.toFixed(0)}-${elevation.toFixed(0)}.png`;
     a.click();
+  };
+
+  // Send the current relit view to the 2D analysis
+  const sendToTwoD = async () => {
+    const url = canvasRef.current?.toDataURL("image/png");
+    if (!url) return;
+    setLatest2DImage(url);
+    setLatest2DFile(await dataURLToFile(url, "rti_vy.png"));
+    setLatest2DSource({ kind: "rti", description: `${fileName}, ljus ${azimuth.toFixed(0)}°/${elevation.toFixed(0)}°` });
+    setLatest2DResults(null);
+    router.push("/2d");
   };
 
   return (
@@ -121,6 +137,10 @@ export default function RTIPage() {
           <button onClick={savePNG} disabled={!ptm}
             className="w-full py-2.5 bg-slate-900 text-white text-sm font-bold rounded-xl disabled:opacity-40">
             Spara vy som PNG
+          </button>
+          <button onClick={sendToTwoD} disabled={!ptm}
+            className="w-full py-2.5 bg-white border border-slate-300 hover:border-slate-900 text-sm font-bold rounded-xl disabled:opacity-40">
+            Analysera vyn i 2D
           </button>
         </div>
 

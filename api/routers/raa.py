@@ -34,7 +34,7 @@ class ExtractSignumResponse(BaseModel):
     signum: str
 
 @router.post("/extract-signum", response_model=ExtractSignumResponse)
-async def extract_signum(
+def extract_signum(
     request: ExtractSignumRequest,
     x_gemini_api_key: Optional[str] = Header(None, alias="X-Gemini-Api-Key")
 ):
@@ -92,7 +92,7 @@ def rundata_response(rec: dict) -> RaaResponse:
 
 
 @router.post("/fetch", response_model=RaaResponse)
-async def fetch_raa_data(
+def fetch_raa_data(
     request: RaaRequest,
     x_gemini_api_key: Optional[str] = Header(None, alias="X-Gemini-Api-Key")
 ):

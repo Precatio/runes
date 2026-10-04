@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useContext, useState } from "react";
-import { TwoDResultData, LinguisticResultData, ThreeDAnalysisResult } from "@/lib/db";
+import { TwoDResultData, LinguisticResultData, ThreeDAnalysisResult, TwoDSource } from "@/lib/db";
 
 export interface MetaData {
   stone: string;
@@ -27,6 +27,8 @@ interface AnalysisContextType {
   setLatest2DImage: (data: string | null) => void;
   latest2DFile: File | null;
   setLatest2DFile: (data: File | null) => void;
+  latest2DSource: TwoDSource | null;
+  setLatest2DSource: (data: TwoDSource | null) => void;
   activeProjectId: string | null;
   setActiveProjectId: (id: string | null) => void;
 }
@@ -43,6 +45,7 @@ export function AnalysisProvider({ children }: { children: React.ReactNode }) {
   const [latest2DResults, setLatest2DResults] = useState<TwoDResultData | null>(null);
   const [latest2DImage, setLatest2DImage] = useState<string | null>(null);
   const [latest2DFile, setLatest2DFile] = useState<File | null>(null);
+  const [latest2DSource, setLatest2DSource] = useState<TwoDSource | null>(null);
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
 
   return (
@@ -54,6 +57,7 @@ export function AnalysisProvider({ children }: { children: React.ReactNode }) {
       latest2DResults, setLatest2DResults,
       latest2DImage, setLatest2DImage,
       latest2DFile, setLatest2DFile,
+      latest2DSource, setLatest2DSource,
       activeProjectId, setActiveProjectId
     }}>
       {children}

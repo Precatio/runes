@@ -226,6 +226,9 @@ class OrthographyModel:
         idx = list(labels)
         top1 = top3 = 0
         signed_n = signed_top1 = 0
+        predicted: Counter = Counter()
+        predicted_correct: Counter = Counter()
+        actual: Counter = Counter()
         groups: dict[str, list[int]] = {}
         for i, g in labels.items():
             groups.setdefault(g, []).append(i)
@@ -246,6 +249,9 @@ class OrthographyModel:
             order = [g for _, g in sims]
             top1 += order[0] == g_true
             top3 += g_true in order[:3]
+            predicted[order[0]] += 1
+            predicted_correct[order[0]] += order[0] == g_true
+            actual[g_true] += 1
             if self._kinds[i] == "S":
                 signed_n += 1
                 signed_top1 += order[0] == g_true
@@ -254,6 +260,13 @@ class OrthographyModel:
             # Attribuerade (A) inskrifter kan ha attribuerats just på grund av ortografin,
             # så siffran för enbart signerade inskrifter är det mer rättvisande måttet.
             "signed_only": {"n": signed_n, "top1_accuracy": signed_top1 / signed_n if signed_n else None},
+            # Precision: when the model names this carver first, how often is it right?
+            "per_carver": {
+                g: {"inscriptions": actual[g], "predicted": predicted[g],
+                    "precision": predicted_correct[g] / predicted[g] if predicted[g] else None,
+                    "recall": predicted_correct[g] / actual[g] if actual[g] else None}
+                for g in names
+            },
             "n_inscriptions": n,
             "n_carvers": len(names),
             "top1_accuracy": top1 / n,

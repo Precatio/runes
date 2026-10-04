@@ -69,13 +69,36 @@ export interface ThreeDAnalysisResult {
   depth_profile?: { distances: number[]; depths: number[] };
 }
 
+export interface GrooveSummaryLite {
+  n: number;
+  angle_mean: number;
+  angle_sd: number;
+  depth_mean: number;
+  width_mean: number;
+}
+
 export interface PaleographicCrop {
   id: string;
   tag: string;
-  imageBase64: string;
-  coordinates: number[]; // [xmin, ymin, xmax, ymax]
-  featureVector?: number[]; // Added for Phase 2 HOG features
+  imageBase64: string; // small thumbnail (≤ 256 px) – the project document has a 1 MB limit
+  coordinates: number[]; // [xmin, ymin, xmax, ymax] as fractions of the image
+  featureVector?: number[];
+  featureVersion?: string; // vectors are only compared within the same version
+  formPng?: string; // normalised black-and-white rune form used for the comparison
+  sourceKind?: TwoDSourceKind;
+  grooveSummary?: GrooveSummaryLite; // groove measurements inside the crop (groove map only)
   createdAt: string;
+}
+
+export type TwoDSourceKind = "upload" | "ksamsok" | "3d-snapshot" | "groove-map" | "rti";
+
+export interface TwoDSource {
+  kind: TwoDSourceKind;
+  description?: string;
+  url?: string;
+  // Groove map only: accepted automatic slices with positions as fractions of the image
+  autoSlices?: { x: number; y: number; metrics: Record<string, number> }[];
+  methodVersion?: string;
 }
 
 export interface MarkerData {
@@ -91,6 +114,8 @@ export interface TwoDResultData {
   reasoning: string;
   rune_types: string;
   markers?: MarkerData[];
+  model?: string;
+  source?: TwoDSourceKind;
 }
 
 export interface LinguisticResultData {

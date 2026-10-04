@@ -11,13 +11,15 @@ Ett av appens huvudsakliga mål är **runristarattribuering** – att med hjälp
 
 **Analys**
 *   **3D-huggspårsanalys:** V-vinkel, asymmetri, djup, bredd, bottenradie och ytråhet i STL/OBJ/PLY-skanningar – manuellt, med ett klick per snitt eller helt automatiskt (alla spår på den ristade sidan hittas, mäts och granskas). Varje snitt redovisas med standardavvikelse och konfidensintervall. Runor och ornamentik mäts separat. Strykljus med valfri ljusriktning, lättare visningsmodell för stora skanningar, export till CSV/JSON och full proveniens (filens SHA-256, parametrar, metodversion).
-*   **2D-paleografi och fonetik:** AI-stöd för stilgrupp, runformer, translitterering och ljudvärden.
+*   **2D-paleografi och fonetik:** AI-stöd för stilgrupp, runformer, translitterering och ljudvärden. Bilder från uppladdning, K-samsök, 3D-vyn, RTI-visaren eller 3D-analysens ristningskarta. Runutsnitt normaliseras och jämförs med samma runa på andra stenar (formlikhet), och kopplas till spårmåtten när de kommer från en ristningskarta.
 *   **RTI-visare:** öppna PTM-filer och flytta ljuset fritt, med "diffuse gain"-förstärkning för svaga ristningar.
 
 **Forskning**
 *   **Inskrifter (Rundata):** hela Samnordisk runtextdatabas inbyggd – sök på signum, plats, text, ristare, stilgrupp och period.
 *   **Ortografisk stilometri:** stavning, skiljetecken och bindrunor jämförs med Rundatas korpus; ristarrangordning med redovisad, korsvaliderad träffsäkerhet.
-*   **Delad mätkorpus:** forskare publicerar huggspårsmätningar (CC BY 4.0) som blir referens för attribuering, ristarprofiler och Ward-klustring.
+*   **Delad mätkorpus:** forskare publicerar huggspårsmätningar (CC BY 4.0) som blir referens för attribuering, ristarprofiler och Ward-klustring. Posterna kan bära skanningsmetadata, stenens skick, råa tvärsnittsprofiler (för omräkning med nya metodversioner) och runformer; andra forskare kan verifiera dem. Export som datapaket.
+*   **Forskningsluckor:** täckning per landskap (ristare, stilgrupp, datering, tolkning, mätningar), ortografiska ristarhypoteser för oattribuerade stenar, attribueringar att ompröva och vilka ristare som mest behöver mätas.
+*   **Akademisk rapport:** manusutkast ur korpusen med framräknade tabeller och figurer, export till Word, LaTeX och Markdown; AI-skrivna avsnitt märks.
 *   **Jämför stenar:** permutationstest per mått och samlat, effektstorlek och överlagrade profiler.
 *   **Syntes och rapport:** väger samman Rundata, ortografi och huggteknik till belägg utan påhittade sannolikheter; AI skriver bara löptext.
 *   **Karta och stilgrupper:** geografisk spridning per period, stilgrupp och ristare; Gräslunds kronologi med fördelningen i Rundata.

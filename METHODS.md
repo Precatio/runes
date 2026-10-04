@@ -108,6 +108,23 @@ antal snitt och 95 % konfidensintervall (t-fördelning). Spridningen mellan snit
 * **Träffsäkerheten redovisas alltid** med lämna-en-ute-korsvalidering (andel stenar där rätt ristare hamnar
   först respektive bland de tre första, jämfört med slumpnivån).
 
+### 4b. Vad som lagras i korpusen
+
+* Varje post har mått per snitt, sammanfattning, proveniens (filens SHA-256, parametrar, metodversion) och
+  valfritt **skanningsmetadata** (utrustning, upplösning, noggrannhet, datum, skannat av, länk/DOI, licens) och
+  **stenens skick** (vittring, lav, ommålning).
+* **Råa tvärsnittsprofiler** (x/z i mm, fyra decimaler) kan bifogas. De lagras i delar under
+  `corpus/{id}/raw` och gör att en post kan **räknas om med en senare metodversion**
+  (`POST /api/stats/recompute`). Omräkning av de lagrade profilerna återger de ursprungliga vinklarna inom
+  0,01°. Bara bidragsgivaren kan ersätta sina mått med omräknade.
+* **Runformer** från 2D-analysen (normaliserad form och särdragsvektor, se 7b) kan bifogas under
+  `corpus/{id}/runeforms`, med spårmått för runan om den markerats på en ristningskarta från 3D-analysen.
+* Andra forskare kan lägga till en **verifiering** (namn, institution, kommentar); den egna posten kan inte
+  verifieras av bidragsgivaren. Kvalitetsmärken visar råprofiler, skanningsuppgifter, minst fem snitt, aktuell
+  metodversion och verifiering.
+* Korpusen kan exporteras som ett **datapaket** (JSON med licens, citering, bidragsgivare och alla poster,
+  valfritt med råprofiler) för arkivering.
+
 ## 5. Klustring
 
 Hierarkisk klustring med Wards metod och euklidiska avstånd på standardiserade medelvärden per sten –
@@ -146,6 +163,54 @@ bara löptext; den instrueras att inte hitta på uppgifter eller sannolikheter, 
 
 **Verktygsklassning** (pik-/bredmejsel, tröskel 85°, +5° vid hög vittring, +2° vid måttlig vittring, +2° för
 sandsten/kalksten) är en tumregel som inte är kalibrerad mot referensmaterial och redovisas som sådan.
+
+### 7b. 2D-analys och runformer
+
+* AI-bedömningen av en bild (stilgrupp Pr1–Pr5, RAK, Fp eller **Osäker**, runformer, translitterering) är en
+  hypotes. Modellens säkerhet är dess egen skattning och **inte kalibrerad**. Om stenen har en stilgrupp i
+  Rundata visas den bredvid, och syntesen redovisar om AI:n och Rundata är överens.
+* **Runformer** (`src/graphemes.py`, särdragsversion `grapheme-2`): utsnittet kontrastförstärks (CLAHE),
+  binäriseras (Otsu; minoritetsklassen räknas som ristning), beskärs till ristningen och läggs i en kvadrat
+  med bibehållna proportioner, 64 × 64 px. Särdrag: HOG, täthet i 4 × 4 zoner och logaritmerat
+  höjd/bredd-förhållande. Likhet: cosinus.
+* **Validering:** på syntetiskt ritade runor (ᛁ ᛏ ᚴ ᚱ ᛋ med slumpad stavtjocklek, lutning och brus,
+  `src/synthetic_runes.py`) hamnar närmaste granne på rätt runa i 85 % av fallen. Den tidigare metoden låg
+  på slumpnivå. Resultatet är ett mått på **formlikhet**, inte på samma ristare; på riktiga stenar påverkas
+  det av vittring, belysning och utsnittets noggrannhet.
+* Jämförelser görs bara mellan utsnitt med samma särdragsversion och, om angivet, samma runtyp
+  (långkvist, kortkvist, stungen m.fl.).
+* Bilder kan komma från uppladdning, K-samsök, en ögonblicksbild av 3D-vyn, RTI-visaren eller
+  **ristningskartan** från den automatiska spåranalysen (residualdjup, djupt = mörkt). Ristningskartan har
+  samma pixelkoordinater som analysens granskningsbild, så ett runutsnitt där kopplas till de uppmätta
+  snitten inom utsnittet.
+
+### 7c. Forskningsluckor
+
+Källkod: `src/research_gaps.py`. Underlag: Rundatas svenska vikingatida runstenar (2 321).
+
+* **Täckning** per landskap: andel med ristare, säker stilgrupp, datering, osäker tolkning, försvunna stenar
+  och stenar i mätkorpusen. Ristaruppgifterna för Sö, U, Vs och Gs bygger främst på Axelson (1993); i andra
+  landskap kan attribueringar finnas i litteraturen utan att stå i Rundata.
+* **Ortografiska hypoteser:** stenar utan ristare i Rundata vars stavning liknar en ristares profil
+  (cosinus ≥ 0,6, marginal ≥ 0,05 till nästa, minst åtta läsbara ord). Förslagen rangordnas efter den
+  ristarens korsvaliderade träffsäkerhet × likhet, och nedvärderas om stenen ligger utanför ristarens
+  kända landskap. Det är förslag att pröva, inte attribueringar.
+* **Att ompröva:** attribuerade stenar där ortografin pekar på en annan ristare.
+* **Mätprioriteringar:** ristare med många inskrifter men få uppmätta stenar (mål: fem per ristare), så att
+  attribueringen mot mätkorpusen får ett underlag.
+
+### 7d. Akademisk rapport
+
+Källkod: `src/academic.py`, `POST /api/reports/academic`. Rapporten byggs för ett urval av korpusen (en
+ristare, ett landskap, valda stenar eller hela korpusen):
+
+* **Material, metod, tabeller och figurer räknas fram ur data**: medelvärden och spridning per mått, per
+  sten och per ristare, figurer över V-vinkel och Ward-dendrogram, samt metodversioner och referenser.
+* AI kan skriva **sammanfattning, inledning och diskussion**, men får bara en faktatext med de framräknade
+  resultaten som underlag. Dessa avsnitt märks som AI-text. Utan AI-nyckel lämnas de för författaren att
+  skriva.
+* Export: Markdown, LaTeX (med figurfilerna) och Word (.docx). Rapporten är ett manusutkast som måste
+  granskas innan den används.
 
 ## 8. Jämförbarhet med tidigare forskning
 

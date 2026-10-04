@@ -36,7 +36,7 @@ class PhoneticsResponse(BaseModel):
     tokens_used: int = 0
 
 @router.post("/analyze", response_model=PhoneticsResponse)
-async def analyze_phonetics(
+def analyze_phonetics(
     request: PhoneticsRequest,
     x_gemini_api_key: Optional[str] = Header(None, alias="X-Gemini-Api-Key")
 ):
@@ -164,7 +164,7 @@ class SpeakRequest(BaseModel):
     text: str
 
 @router.post("/speak")
-async def generate_speech(
+def generate_speech(
     request: SpeakRequest,
     x_openai_api_key: Optional[str] = Header(None, alias="X-OpenAI-Api-Key")
 ):

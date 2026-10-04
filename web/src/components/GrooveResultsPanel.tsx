@@ -5,7 +5,9 @@ import Link from "next/link";
 import type { ThreeDAnalysisResult } from "@/lib/db";
 import { METRICS, METRIC_DIGITS, METRIC_LABELS, FEATURE_TYPES, type FeatureType } from "@/lib/metrics";
 import { downloadFile, safeFilename, toCSV } from "@/lib/export";
-import { corpus, CORPUS_LICENSE } from "@/lib/corpus";
+import { corpus, CORPUS_LICENSE, type StoneCondition } from "@/lib/corpus";
+import { db, type PaleographicCrop } from "@/lib/db";
+import { useAnalysis } from "@/components/AnalysisContext";
 import { stats, type GrooveAttribution } from "@/lib/stats";
 import { useAuth } from "@/components/AuthContext";
 import { useSettings } from "@/components/SettingsContext";
@@ -24,6 +26,19 @@ export default function GrooveResultsPanel({ results, signum, featureType }: Pro
   const [showContribute, setShowContribute] = useState(false);
   const [scanner, setScanner] = useState("");
   const [notes, setNotes] = useState("");
+  const [resolution, setResolution] = useState("");
+  const [accuracy, setAccuracy] = useState("");
+  const [scanDate, setScanDate] = useState("");
+  const [scannedBy, setScannedBy] = useState("");
+  const [scanUrl, setScanUrl] = useState("");
+  const [scanLicense, setScanLicense] = useState("");
+  const [weathering, setWeathering] = useState<StoneCondition["weathering"] | "">("");
+  const [lichen, setLichen] = useState(false);
+  const [paint, setPaint] = useState(false);
+  const [includeRaw, setIncludeRaw] = useState(true);
+  const [includeForms, setIncludeForms] = useState(true);
+  const [projectCrops, setProjectCrops] = useState<PaleographicCrop[]>([]);
+  const { activeProjectId } = useAnalysis();
   const [consent, setConsent] = useState(false);
   const [contributing, setContributing] = useState(false);
   const [contributed, setContributed] = useState(false);
@@ -70,6 +85,16 @@ export default function GrooveResultsPanel({ results, signum, featureType }: Pro
     }
   };
 
+  const openContribute = async () => {
+    setShowContribute(v => !v);
+    if (activeProjectId) {
+      const p = await db.getProject(activeProjectId);
+      setProjectCrops((p?.paleographicCrops ?? []).filter(c => c.featureVersion));
+    }
+  };
+
+  const num = (v: string) => (v.trim() ? Number(v.replace(",", ".")) : undefined);
+
   const contribute = async () => {
     if (!summary || !provenance) return;
     setContributing(true);
@@ -88,7 +113,13 @@ export default function GrooveResultsPanel({ results, signum, featureType }: Pro
         provenance,
         scanner: scanner || undefined,
         notes: notes || undefined,
-      });
+        scan: {
+          device: scanner || undefined, resolution_mm: num(resolution), accuracy_mm: num(accuracy),
+          date: scanDate || undefined, scanned_by: scannedBy || undefined, url: scanUrl || undefined,
+          license: scanLicense || undefined,
+        },
+        condition: { weathering: weathering || undefined, lichen, paint },
+      }, { includeRaw, runeForms: includeForms ? projectCrops : [] });
       setContributed(true);
       setShowContribute(false);
     } catch (e) {
@@ -189,7 +220,7 @@ export default function GrooveResultsPanel({ results, signum, featureType }: Pro
             className="px-4 py-2 bg-white border border-slate-300 hover:border-slate-900 text-slate-800 text-xs font-bold rounded-xl">
             Exportera allt (JSON)
           </button>
-          <button onClick={() => setShowContribute(v => !v)} disabled={!user || !summary || contributed}
+          <button onClick={openContribute} disabled={!user || !summary || contributed}
             className="px-4 py-2 bg-[#b7410e] hover:bg-[#9a350b] text-white text-xs font-bold rounded-xl disabled:opacity-40">
             {contributed ? "Tillagd i korpusen ✓" : "Bidra till korpusen"}
           </button>
@@ -203,8 +234,35 @@ export default function GrooveResultsPanel({ results, signum, featureType }: Pro
               Bilder och 3D-filen delas inte.
             </p>
             {!signum && <p className="text-red-700 font-semibold">Ange ett signum innan du bidrar.</p>}
-            <input value={scanner} onChange={e => setScanner(e.target.value)} placeholder="Skanner och upplösning (t.ex. Artec Space Spider, 0,1 mm)"
-              className="w-full liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm outline-none" />
+            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 pt-1">Skanning</div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <input value={scanner} onChange={e => setScanner(e.target.value)} placeholder="Instrument (t.ex. Artec Space Spider)" className="liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm outline-none" />
+              <input value={scannedBy} onChange={e => setScannedBy(e.target.value)} placeholder="Skannad av" className="liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm outline-none" />
+              <input value={resolution} onChange={e => setResolution(e.target.value)} placeholder="Upplösning (mm), t.ex. 0,1" className="liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm outline-none" />
+              <input value={accuracy} onChange={e => setAccuracy(e.target.value)} placeholder="Noggrannhet (mm), t.ex. 0,05" className="liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm outline-none" />
+              <input type="date" value={scanDate} onChange={e => setScanDate(e.target.value)} className="liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm outline-none" />
+              <input value={scanLicense} onChange={e => setScanLicense(e.target.value)} placeholder="Skanningens licens (t.ex. CC BY 4.0)" className="liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm outline-none" />
+              <input value={scanUrl} onChange={e => setScanUrl(e.target.value)} placeholder="Var skanningen finns (DOI eller länk)" className="sm:col-span-2 liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm outline-none" />
+            </div>
+            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 pt-1">Stenens skick vid mätningen</div>
+            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-700">
+              <select value={weathering} onChange={e => setWeathering(e.target.value as StoneCondition["weathering"] | "")} className="liquid-glass-input-wrapper rounded-lg px-2 py-1.5 text-xs outline-none">
+                <option value="">Vittring: ej angiven</option><option value="låg">Låg vittring</option><option value="medel">Måttlig vittring</option><option value="hög">Hög vittring</option>
+              </select>
+              <label className="flex items-center gap-1.5"><input type="checkbox" checked={lichen} onChange={e => setLichen(e.target.checked)} /> Lav/påväxt</label>
+              <label className="flex items-center gap-1.5"><input type="checkbox" checked={paint} onChange={e => setPaint(e.target.checked)} /> Ommålad</label>
+            </div>
+            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 pt-1">Data som följer med</div>
+            <label className="flex items-start gap-2 text-xs text-slate-600">
+              <input type="checkbox" checked={includeRaw} onChange={e => setIncludeRaw(e.target.checked)} className="mt-0.5" />
+              Råa tvärsnittsprofiler (rekommenderas) – gör att mätningen kan räknas om när mätmetoden förbättras.
+            </label>
+            {projectCrops.length > 0 && (
+              <label className="flex items-start gap-2 text-xs text-slate-600">
+                <input type="checkbox" checked={includeForms} onChange={e => setIncludeForms(e.target.checked)} className="mt-0.5" />
+                {projectCrops.length} runformer från 2D-analysen i projektet{projectCrops.some(c => c.grooveSummary) ? ", med huggspårsmått per runa" : ""}.
+              </label>
+            )}
             <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Anteckningar (vilken runa/del av ornamentiken, skick ...)"
               className="w-full liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm outline-none min-h-[60px]" />
             <label className="flex items-start gap-2 text-xs text-slate-600">
