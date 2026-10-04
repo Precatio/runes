@@ -143,6 +143,11 @@ export interface LinguisticResultData {
   } | null;
   signum?: string;
   corrected?: boolean; // the reading was corrected by hand after the AI reading
+  validation?: {
+    status: "bekräftad" | "delvis" | "ej bekräftad" | "annan inskrift" | "ej prövbar";
+    reliable: boolean; own_agreement: number | null; consistency: number | null; text: string;
+    known_matches: { signum: string; place: string; char_agreement: number; coverage: number }[];
+  } | null;
 }
 
 export interface ReadingSegment { op: "equal" | "replace" | "delete" | "insert"; ours: string[]; rundata: string[] }

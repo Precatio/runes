@@ -22,7 +22,7 @@ from api.routers.orthography import model as orthography_model
 from api.routers.threed import tool_heuristic
 from src import synthesis as syn
 from src.inscription_types import CATEGORIES, category_check
-from src.reading import compare as compare_reading
+from src.reading import compare as compare_reading, validate as validate_reading
 from api.routers.research import _categories as research_categories
 from src.research_gaps import carver_home
 from src.stats import METRIC_LABELS, METRICS, summarize
@@ -188,7 +188,11 @@ def collect_evidence(req: SynthesisRequest) -> dict:
         }
         evidence["orthography"] = syn.orthography(orthography_model(), rec, home)
     # Our own reading stands in when Rundata has no usable text (new finds, short or missing texts)
-    if req.reading and not (evidence["orthography"] or {}).get("usable"):
+    if req.reading and req.reading.get("transliteration"):
+        evidence["reading_validation"] = validate_reading(req.reading["transliteration"], rec, s.inscriptions,
+                                                          req.reading.get("others") or [])
+    reading_ok = (evidence.get("reading_validation") or {}).get("reliable")
+    if req.reading and reading_ok and not (evidence["orthography"] or {}).get("usable"):
         own = syn.orthography_from_reading(orthography_model(), req.reading, req.signum, home, rec)
         if own and own["usable"]:
             evidence["orthography"] = own

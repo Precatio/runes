@@ -16,6 +16,11 @@ def server_error(e: Exception, message: str, status_code: int = 500) -> HTTPExce
 
 def ai_error(e: Exception, message: str = "Ett oväntat fel uppstod i AI-motorn.") -> HTTPException:
     text = str(e).lower()
+    if "402" in text or "prepayment" in text or "credits are depleted" in text:
+        logger.warning("AI credits depleted: %r", e)
+        return HTTPException(status_code=402, detail=(
+            "AI-kontots förbetalda krediter är slut. Fyll på i Google AI Studio (ai.studio/projects) eller använd en "
+            "annan API-nyckel under Inställningar."))
     if "429" in text or "quota" in text or "exhausted" in text:
         logger.warning("AI quota exceeded: %r", e)
         return HTTPException(status_code=429, detail=QUOTA_MESSAGE)

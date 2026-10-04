@@ -189,6 +189,17 @@ Källkod: `api/routers/phonetics.py`, `src/reading.py`.
   vikingatida inskrifter; obelagda former flaggas för granskning.
 * **Ortografi för vår läsning:** samma modell som i avsnitt 6, med stenen själv utesluten. Används i
   syntesen när Rundata saknar en användbar text (t.ex. nyfynd), med 30 % lägre tillförlitlighet.
+* **Validering – får läsningen visas som stenens text?** (`src/reading.py`, `validate`): läsningen prövas utan AI
+  mot (1) stenens text i Rundata, (2) alla kända inskrifter i Rundata (trigramfilter och samma
+  överensstämmelsemått) och (3) andra läsningar av samma bild. Status: *bekräftad* (≥ 80 % av runorna i stenens
+  läsning), *delvis* (50–80 %), *ej bekräftad* (< 50 %), *annan inskrift* (liknar en annan känd inskrift minst
+  60 % och tydligt mer än stenens egen – modellen har troligen återgett en inlärd text) eller *ej prövbar* (Rundata
+  saknar text; då krävs att flera läsningar stämmer minst 80 % med varandra). Bara bekräftade, delvis bekräftade
+  och samstämmiga läsningar visas som läsning, med normalisering och översättning, och bara de används som
+  belägg i syntesen. I rapporter redovisas en obekräftad läsning aldrig som stenens text.
+* **Erfarenhet:** i testet med Sö 113 gav tre blinda läsningar tre olika, trovärdiga men påhittade texter (6–24 %
+  av runorna stämde), en av dem Jellingestenens text (DR 42, 95 % lika). Språkmodeller kan alltså inte läsa runor
+  tillförlitligt; reliefbilderna är ett bättre underlag för en mänsklig läsning.
 * Läsningen kan rättas för hand och jämföras igen; den märks då som rättad.
 * **Bilder att läsa:** foto, 2D-analysens bild, RTI-vy eller reliefbilder ur 3D-skanningen (strykljus från
   fyra riktningar, ett kombinerat relief där varje spår blir mörkt oavsett riktning, och djup under
@@ -418,6 +429,34 @@ Stenrapporten får dessutom, när underlaget finns:
   skillnaderna ord för ord, kontrollen av ordformer och, märkta som AI, IPA och ljudlagar,
 * **Attribuering** – den sparade syntesen: utfallet mot litteraturen, kandidattabellen, kontrollerna
   (geografi, stilgrupper, bergart, språkdrag, sten mot sten), motsägelser och saknade belägg.
+
+### 14c. Fullständig stenanalys (arbetsgång)
+
+Sidan **Stenanalys** och skriptet `scripts/full_stone_analysis.py` kör hela kedjan för en skanning och ett
+signum, med samma beräkningar som de enskilda verktygen:
+
+1. Uppladdning och **bilder ur skanningen** (avsnitt 1d). Den ristade sidan skattas som stenens tunnaste
+   riktning; den andra sidan kan väljas.
+2. **Automatisk spåranalys** med flera känsligheter (standard 3 och 5). Den första är huvudanalysen, de övriga
+   en känslighetsanalys som redovisas med granskningsbilder.
+3. **2D-bildanalys** av strykljuset från nordväst.
+4. **Blind läsning** i en eller flera orienteringar (standard 0° och 180°), validerad mot Rundata, kända
+   inskrifter och varandra (avsnitt 7).
+5. **Syntes och attribuering** med berggrund (avsnitt 10 och 12); med inloggning även mot mätkorpusen.
+6. **Stenrapport** (14b) med bilaga A (alla tvärsnitt) och bilaga B: arbetsgångens steg och utfall,
+   känslighetsanalysen, granskningsbilder, relief, 2D-motiveringen, alla läsningar med status och de fel
+   eller begränsningar som uppstod.
+
+Misslyckas ett AI-steg (ingen nyckel, slut på krediter, tidsgräns) fortsätter arbetsgången, och felet
+redovisas i bilaga B. Resultatet kan sparas i ett projekt; bara en validerad läsning sparas som projektets
+läsning.
+
+Från terminalen (analysmotorn måste köras):
+
+```bash
+.venv/bin/python -m scripts.full_stone_analysis "skanning.stl" --signum "Sö 113" --out utdata/So113 \
+    --stone Gråsten --weathering Medel --author "Namn" --sensitivity 3,5 --orientations 0,180
+```
 
 ## 15. Jämförbarhet med tidigare forskning
 

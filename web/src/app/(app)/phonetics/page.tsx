@@ -92,6 +92,8 @@ export default function PhoneticsPage() {
   const [editTranslit, setEditTranslit] = useState("");
   const [editNorm, setEditNorm] = useState("");
   const [comparing, setComparing] = useState(false);
+  // An unconfirmed reading hides the model's interpretation until the user asks for it
+  const [showInterpretation, setShowInterpretation] = useState(false);
 
 
   const { user } = useAuth();
@@ -807,12 +809,23 @@ export default function PhoneticsPage() {
             
             {results && !loading && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+
+                {results.validation && <ValidationBanner v={results.validation} />}
                 
                 <div className="liquid-glass-island rounded-[32px] p-6 shadow-sm border border-slate-900/10 bg-white">
                   <div className="text-slate-500 text-[11px] uppercase tracking-wider font-bold mb-2">{results.corrected ? "Vår translitterering (rättad manuellt)" : "Vår translitterering (AI, blind läsning)"}</div>
                   <div className="text-lg font-serif font-bold text-slate-900">{results.transliteration}</div>
                 </div>
                 
+                {results.validation && !results.validation.reliable && (
+                  <div className="md:col-span-2 -mt-2">
+                    <button onClick={() => setShowInterpretation(!showInterpretation)}
+                      className="text-xs font-semibold text-slate-600 underline">
+                      {showInterpretation ? "Dölj modellens tolkning" : "Visa ändå modellens tolkning (normalisering, översättning, IPA) – obekräftad"}
+                    </button>
+                  </div>
+                )}
+                {(!results.validation || results.validation.reliable || showInterpretation) && (<>
                 <div className="liquid-glass-island rounded-[32px] p-6 shadow-sm border border-slate-900/10 bg-white">
                   <div className="text-slate-500 text-[11px] uppercase tracking-wider font-bold mb-2">{results.corrected ? "Normalisering, runsvenska (rättad manuellt)" : "Normalisering, runsvenska (AI)"}</div>
                   <div className="text-lg font-serif italic text-[#b7410e]">{results.normalization}</div>
@@ -871,6 +884,8 @@ export default function PhoneticsPage() {
                     {results.linguistic_analysis}
                   </p>
                 </div>
+
+                </>)}
 
                 <RundataPanel results={results} />
 
@@ -1046,6 +1061,34 @@ function RundataPanel({ results }: { results: LinguisticResultData }) {
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+function ValidationBanner({ v }: { v: NonNullable<LinguisticResultData["validation"]> }) {
+  const tone = v.reliable ? "bg-emerald-50 border-emerald-300 text-emerald-900" : "bg-red-50 border-red-300 text-red-900";
+  const title = {
+    "bekräftad": "Läsningen bekräftas av Rundata",
+    "delvis": "Läsningen bekräftas delvis",
+    "ej bekräftad": "Läsningen kunde inte bekräftas – modellen har troligen inte läst bilden",
+    "annan inskrift": "Läsningen är troligen en annan, känd inskrift återgiven ur minnet",
+    "ej prövbar": v.reliable ? "Läsningen är samstämmig men obekräftad" : "Läsningen kan inte prövas och är obekräftad",
+  }[v.status];
+  return (
+    <div className={`md:col-span-2 rounded-[24px] border px-5 py-4 ${tone}`}>
+      <div className="font-bold">{title}</div>
+      <p className="text-sm mt-1">{v.text}</p>
+      {v.known_matches.length > 0 && !v.reliable && (
+        <p className="text-xs mt-1 opacity-80">
+          Mest lika kända inskrifter: {v.known_matches.map(k => `${k.signum} (${Math.round(k.char_agreement * 100)} %)`).join(", ")}
+        </p>
+      )}
+      {!v.reliable && (
+        <p className="text-xs mt-2">
+          Språkmodeller kan inte läsa runor tillförlitligt och återger ofta inlärda texter. Använd reliefbilderna för en
+          egen läsning och rätta translitterationen nedan – den prövas då på nytt.
+        </p>
+      )}
     </div>
   );
 }

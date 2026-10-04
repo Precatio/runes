@@ -5,7 +5,7 @@ from api.errors import ai_error
 from api.rundata import store
 from api.routers.orthography import model as orthography_model
 from api.uploads import decode_base64_image
-from src.reading import Lexicon, compare, runes_to_latin
+from src.reading import Lexicon, compare, runes_to_latin, validate
 from src.synthesis import smoothed_precision
 from fastapi import APIRouter, HTTPException, Header, Response
 from pydantic import BaseModel
@@ -44,6 +44,7 @@ class PhoneticsResponse(LinguisticAI):
     academic_reading: Optional[str] = None
     comparison: Optional[str] = None
     rundata: Optional[dict] = None
+    validation: Optional[dict] = None
     reading_comparison: Optional[dict] = None
     form_check: Optional[dict] = None
     orthography: Optional[dict] = None
@@ -56,7 +57,8 @@ def lexicon() -> Lexicon:
     return Lexicon(store().inscriptions)
 
 
-def reference_checks(signum: str, transliteration: str, normalization: str) -> dict:
+def reference_checks(signum: str, transliteration: str, normalization: str,
+                     other_readings: Optional[list[str]] = None) -> dict:
     """Allt som räknas fram utan AI: Rundatas läsning, jämförelsen, ordformerna och ortografin."""
     rec = store().get(signum) if signum and signum.lower() not in ("okänd", "okänt") else None
     out: dict = {"rundata": None, "reading_comparison": None, "academic_reading": None, "comparison": None}
@@ -73,6 +75,8 @@ def reference_checks(signum: str, transliteration: str, normalization: str) -> d
     elif signum and signum.lower() not in ("okänd", "okänt"):
         out["comparison"] = f"Signumet {signum} finns inte i Rundata, eller saknar translitterering – läsningen kan inte jämföras."
     out["form_check"] = lexicon().check(normalization) if normalization else None
+    # May the reading be presented as the stone's text? (Rundata, known inscriptions, consistency)
+    out["validation"] = validate(transliteration, rec, store().inscriptions, other_readings) if transliteration else None
     if transliteration:
         m = orthography_model()
         rk = m.rank_text(transliteration, normalization, 5, exclude_signum=rec["signum"] if rec else None)
@@ -89,12 +93,13 @@ class CompareRequest(BaseModel):
     signum: str = ""
     transliteration: str = ""
     normalization: str = ""
+    other_readings: list[str] = []  # other readings of the same image, for the consistency check
 
 
 @router.post("/compare")
 def compare_reading(req: CompareRequest):
     """Jämför en (t.ex. manuellt rättad) läsning med Rundata – utan AI."""
-    return reference_checks(req.signum, req.transliteration, req.normalization)
+    return reference_checks(req.signum, req.transliteration, req.normalization, req.other_readings)
 
 @router.post("/analyze", response_model=PhoneticsResponse)
 def analyze_phonetics(

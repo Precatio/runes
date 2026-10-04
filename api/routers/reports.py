@@ -16,6 +16,7 @@ from api.errors import logger
 from api import mesh_cache
 from api.rundata import store
 from src import academic, stone_report
+from src.reading import validate as validate_reading
 from src.synthesis import site_geology
 
 router = APIRouter()
@@ -112,6 +113,8 @@ class StoneReportRequest(BaseModel):
     two_d: Optional[dict] = None
     synthesis: Optional[dict] = None  # result of /api/synthesis/analyze
     reading: Optional[dict] = None  # result of /api/phonetics/analyze (the app's own reading)
+    # The full stone analysis: steps, sensitivity analysis with review images, all readings, notes (appendix B)
+    workflow: Optional[dict] = None
     use_ai: bool = True
     format: Literal["json", "docx"] = "json"
     ai_text: Optional[dict[str, str]] = None
@@ -140,6 +143,10 @@ def stone_report_endpoint(req: StoneReportRequest,
         raise HTTPException(status_code=400, detail="Högst 3000 tvärsnitt per rapport.")
     facts = stone_report.build_facts(req.model_dump(), store().get)
     facts["geology"] = site_geology(facts["rundata"])
+    rd = req.reading or {}
+    if rd.get("transliteration"):
+        facts["reading_validation"] = rd.get("validation") or validate_reading(
+            rd["transliteration"], facts["rundata"], store().inscriptions, rd.get("others") or [])
 
     surface, surface_note = None, None
     entry = mesh_cache.peek(req.mesh_id) if req.mesh_id else None

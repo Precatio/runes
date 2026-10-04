@@ -569,6 +569,7 @@ def build_facts(req: dict, rundata_lookup) -> dict:
         "two_d": req.get("two_d") or {},
         "synthesis": req.get("synthesis") or None,
         "reading": req.get("reading") or None,
+        "workflow": req.get("workflow") or None,
         "date": datetime.date.today().isoformat(),
     }
 
@@ -597,10 +598,14 @@ def facts_text(f: dict) -> str:
     else:
         lines.append("Mätkorpusen räcker inte för en jämförelse med ristare (minst två ristare med två uppmätta stenar krävs).")
     rd = f.get("reading")
+    rv = f.get("reading_validation") or {}
     if rd and rd.get("transliteration"):
-        lines.append(f"Appens läsning av bilden (AI): {rd['transliteration']}")
-        if rd.get("comparison"):
-            lines.append(f"Läsningen mot Rundata: {rd['comparison']}")
+        if rv.get("reliable", True):
+            lines.append(f"Appens läsning av bilden (AI): {runes_to_latin(rd['transliteration'])}")
+            if rd.get("comparison"):
+                lines.append(f"Läsningen mot Rundata: {rd['comparison']}")
+        else:
+            lines.append(f"Appens blinda AI-läsning kunde inte bekräftas och får inte användas som läsning: {rv.get('text')}")
     sy = f.get("synthesis")
     if sy:
         if sy.get("outcome"):
@@ -650,6 +655,70 @@ def _flat_params(params: dict) -> list[list[str]]:
             v = fmt(v, 3)
         rows.append([str(k), str(v)])
     return rows
+
+
+def workflow_appendix(wf: dict, signum: str, fig, tab) -> list[dict]:
+    """Bilaga B: hur analysen gjordes – arbetsgång, spåranalysens känslighet, granskningsbilder, alla
+    blinda läsningar och de fel eller begränsningar som uppstod. Gör artikeln granskningsbar."""
+    out = [h(1, "Bilaga B. Arbetsgång"),
+           p(wf.get("intro") or (
+               f"Analysen gjordes {wf.get('date', '')} med Runforsknings fullständiga stenanalys: bilder ur skanningen, "
+               "automatisk spåranalys med känslighetsanalys, 2D-bildanalys, blind läsning jämförd med Rundata, syntes och "
+               "stenrapport. Varje steg använder samma beräkningar som de enskilda verktygen i appen."))]
+    steps = wf.get("steps") or []
+    if steps:
+        out.append(tab(["Steg", "Utfall"], [[st.get("name", ""), st.get("result", "")] for st in steps],
+                       "Arbetsgångens steg och utfall."))
+    sens = wf.get("sensitivity") or []
+    if sens:
+        out.append(h(2, "B.1 Spåranalysens känslighet"))
+        out.append(p("Den automatiska spåranalysen kördes med flera känsligheter. Känsligheten styr tröskeln för vad som "
+                     "räknas som ett spår (känslighet × brusnivå, minst 0,3 mm). Artikelns huvudanalys använder "
+                     f"känslighet {sens[0].get('sensitivity')}."))
+        out.append(tab(["Känslighet", "Tröskel (mm)", "Kandidater", "Godkända", "För breda partier (mm²)", "V-vinkel (°)",
+                        "Djup (mm)", "Bredd (mm)"],
+                       [[str(x.get("sensitivity")), fmt(x.get("threshold_mm"), 2), str(x.get("candidates", "–")),
+                         str(x.get("accepted", "–")), fmt(x.get("wide_area_mm2"), 0),
+                         f"{fmt(x.get('angle_mean'), 1)} ± {fmt(x.get('angle_sd'), 1)}", fmt(x.get("depth_mean"), 2),
+                         fmt(x.get("width_mean"), 2)] for x in sens],
+                       f"Automatisk spåranalys av {signum} med olika känslighet."))
+        for x in sens:
+            img = to_png_b64(x["review_png"], 1800) if x.get("review_png") else None
+            if img:
+                out.append(fig(img, f"{signum}. Granskningsbild, känslighet {x.get('sensitivity')}: godkända snitt (färgade "
+                                    "efter V-vinkel), spår (rött) och partier bedömda som för breda för ett huggspår (blått), "
+                                    "som inte mäts.", f"granskning-k{x.get('sensitivity')}"))
+    if wf.get("relief_png"):
+        img = to_png_b64(wf["relief_png"], 1800)
+        if img:
+            out.append(fig(img, f"{signum}. Relief ur skanningen: det mörkaste av fyra strykljus, så att varje spår blir "
+                                "mörkt oavsett riktning.", "relief"))
+    if wf.get("two_d_reasoning"):
+        out.append(h(2, "B.2 2D-bildanalys"))
+        out.append(p(f"Bildanalysens motivering (förkortad): {wf['two_d_reasoning'][:600].rstrip()} …", ai=True))
+    readings = wf.get("readings") or []
+    if readings:
+        out.append(h(2, "B.3 Blinda läsningar"))
+        out.append(p("Språkmodellen läste runorna utan att få veta signumet. Jämförelsen med Rundata är framräknad utan AI. "
+                     "Den första läsningen är den som redovisas i resultatavsnittet."))
+        rows = []
+        for r in readings:
+            t = runes_to_latin(r.get("transliteration") or "")
+            c = r.get("reading_comparison") or {}
+            pc = lambda v: f"{round(v * 100)} %" if isinstance(v, (int, float)) else "–"
+            rows.append([r.get("label", ""), (t[:70] + " …") if len(t) > 70 else (t or r.get("error") or "–"),
+                         pc(c.get("char_agreement")), pc(c.get("word_agreement")), pc(c.get("coverage")),
+                         (r.get("validation") or {}).get("status", "–")])
+        out.append(tab(["Läsning", "Translitterering (början)", "Runor som stämmer", "Ord som stämmer", "Täckning", "Status"], rows,
+                       f"Blinda AI-läsningar av {signum} jämförda med Rundatas läsning."))
+        found = [r["validation"]["text"] for r in readings if (r.get("validation") or {}).get("status") == "annan inskrift"]
+        if found:
+            out.append(p(" ".join(dict.fromkeys(found))))
+    notes = wf.get("notes") or []
+    if notes:
+        out.append(h(2, "B.4 Fel och begränsningar"))
+        out.append(bullets(notes))
+    return out
 
 
 def build_document(f: dict, author: str, institution: str, ai: dict | None, surface: Surface | None,
@@ -899,12 +968,24 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
                                      "underlag för formjämförelser.", "runformer"))
 
     rd = f.get("reading")
-    if rd and rd.get("transliteration"):
+    rv = f.get("reading_validation") or {}
+    if rd and rd.get("transliteration") and not rv.get("reliable", True):
+        # An unconfirmed AI reading is never presented as the stone's text
+        blocks.append(h(2, "4.7 Läsning av bilden"))
+        blocks.append(p("En språkmodell läste runorna från bilden utan tillgång till tidigare läsningar (blind läsning). "
+                        "Läsningen prövades utan AI mot Rundata, mot alla kända inskrifter och mot andra läsningar av samma "
+                        f"bild. {rv.get('text', '')}"))
+        blocks.append(p("Den blinda läsningen återges därför inte som läsning av stenen, och ingen normalisering, "
+                        "översättning eller fonetisk rekonstruktion redovisas. Stenens text i avsnitt 2 är Rundatas."
+                        + (" Alla läsningar och jämförelser finns i bilaga B." if f.get("workflow") else "")
+                        + " Reliefbilderna ur skanningen (figur 1 och 2) är ett bättre underlag för en runologs läsning."))
+    elif rd and rd.get("transliteration"):
         blocks.append(h(2, "4.7 Läsning av bilden"))
         blocks.append(p("Runorna lästes från bilden av en språkmodell utan tillgång till tidigare läsningar ("
                         "blind läsning); normalisering, översättning och fonetisk rekonstruktion är modellens "
                         "tolkning. Jämförelsen med Rundata och kontrollen av ordformerna är framräknade utan AI."
-                        + (" Läsningen har därefter rättats manuellt." if rd.get("corrected") else "")))
+                        + (" Läsningen har därefter rättats manuellt." if rd.get("corrected") else "")
+                        + (f" {rv['text']}" if rv.get("text") else "")))
         blocks.append(inscription(runes_to_latin(rd.get("transliteration", "")), rd.get("normalization", ""), "",
                                   rd.get("translation", ""), "appens läsning (AI)"))
         if rd.get("comparison"):
@@ -987,7 +1068,7 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
     blocks.append(bullets(sorted(refs, key=lambda r: r.replace(" &", "~"))))
 
     if all_slices:
-        blocks.append(h(1, "Bilaga. Mått per tvärsnitt"))
+        blocks.append(h(1, "Bilaga A. Mått per tvärsnitt" if f.get("workflow") else "Bilaga. Mått per tvärsnitt"))
         letter = {i: marked.get(i, "") for i in range(len(all_slices))}
         ft_of = [ft for ft in order for _ in groups[ft]]
         blocks.append(tab(["#", "Spår", "Profil"] + [METRIC_LABELS[m] for m in METRICS] + ["R²"],
@@ -995,6 +1076,10 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
                            + [fmt(s[m], DIGITS[m]) for m in METRICS] + [fmt(s.get("fit_r2"), 2)]
                            for i, s in enumerate(all_slices)],
                           f"Alla godkända tvärsnitt för {signum}."))
+    wf = f.get("workflow")
+    if wf:
+        blocks += workflow_appendix(wf, signum, fig, tab)
+
     if any(b.get("ai") for b in blocks):
         blocks.append(p("Avsnitt markerade som AI-genererade är formulerade av en språkmodell utifrån de framräknade "
                         "resultaten och ska granskas av författaren."))

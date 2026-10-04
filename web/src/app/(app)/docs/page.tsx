@@ -55,6 +55,13 @@ export default function DocsPage() {
           </h2>
           <div className="prose prose-slate text-slate-700 max-w-none text-[15px] leading-relaxed space-y-4">
             
+            <div className="bg-[#b7410e]/5 border border-[#b7410e]/20 rounded-xl p-4 my-4">
+              <p className="text-sm text-slate-800 leading-relaxed">
+                <strong>Snabbast:</strong> sidan <strong>Stenanalys</strong> kör hela kedjan nedan för en skanning och ett signum
+                och ger en färdig artikel med alla figurer och en bilaga om hur analysen gjordes.
+              </p>
+            </div>
+
             <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">1. Mät huggspår i 3D</h3>
             <p>
               Öppna <strong>3D-Huggspårsanalys</strong> och ladda upp en skanning (<code>.stl</code>, <code>.obj</code> eller{" "}
@@ -75,7 +82,9 @@ export default function DocsPage() {
             <p>
               I <strong>Språk &amp; Fonetik</strong> läser AI:n runorna blint från en bild (foto, RTI-vy eller relief ur 3D).
               Ange signum så jämförs läsningen med Rundata utan AI: hur stor del som stämmer, hur mycket av texten den täcker
-              och vilka ord som skiljer sig. Ordformerna kontrolleras mot Rundatas korpus. Rätta läsningen vid behov och spara
+              och vilka ord som skiljer sig. Ordformerna kontrolleras mot Rundatas korpus. Språkmodeller kan inte läsa runor
+              tillförlitligt och återger ibland kända inskrifter ur minnet; därför valideras varje läsning, och en obekräftad
+              läsning visas med en varning i stället för som text. Rätta läsningen vid behov och spara
               den i projektet. <strong>2D-Bildanalys</strong> bedömer stilgrupp och runformer; <strong>RTI-visaren</strong> låter dig
               flytta ljuset över en PTM-fil.
             </p>

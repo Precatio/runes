@@ -374,6 +374,9 @@ def missing_notes(ev: dict, corpus_note: str | None) -> list[str]:
         notes.append("Ortografi: Rundata saknar användbar text, så appens egen AI-läsning används (vikten sänkt 30 %).")
     elif o and not o["usable"]:
         notes.append(f"Ortografi: bara {o['n_words']} läsbara ord – för kort text för en pålitlig jämförelse; vägs inte in.")
+    rv = ev.get("reading_validation")
+    if rv and not rv["reliable"]:
+        notes.append(f"Egen läsning: {rv['text']} Den används inte som belägg.")
     g = ev.get("groove") or {}
     if corpus_note:
         notes.append(f"Huggteknik: {corpus_note}")

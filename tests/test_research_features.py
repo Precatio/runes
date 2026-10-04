@@ -191,13 +191,23 @@ def test_own_reading_used_in_synthesis_for_new_finds(client, monkeypatch):
     from api.rundata import store
 
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    # A known text is recognised as such and is not used as a reading of a new find
     balle = store().get("U 729")
     r = client.post("/api/synthesis/analyze", json={
         "signum": "U Fv2099;1",
         "reading": {"transliteration": balle["transliteration"], "normalization": balle["normalization"]}}).json()
-    top = r["candidates"][0]
-    assert top["name"] == "Balle" and top["sources"] == ["Ortografi (vår läsning)"]
-    assert any("egen AI-läsning" in m for m in r["missing"])
+    assert r["evidence"]["reading_validation"]["status"] == "annan inskrift"
+    assert not any(c["sources"] == ["Ortografi (vår läsning)"] for c in r["candidates"])
+    assert any("Egen läsning" in m for m in r["missing"])
+    # A new text, read the same way twice, counts as consistent and is used (with lower weight)
+    from src.research_gaps import certain_carvers
+    balle_texts = [x["transliteration"] for x in store().inscriptions
+                   if certain_carvers(x) == ["Balle"] and len(x["transliteration"].split()) > 8][:9]
+    novel = " ".join(w for t in balle_texts for w in [x for x in t.split() if len(x) > 3][2:4])
+    r = client.post("/api/synthesis/analyze", json={
+        "signum": "U Fv2099;1", "reading": {"transliteration": novel, "normalization": "", "others": [novel]}}).json()
+    assert r["evidence"]["reading_validation"]["status"] == "ej prövbar"
+    assert r["evidence"]["reading_validation"]["reliable"] is True
 
 
 @needs_rundata
@@ -284,3 +294,29 @@ def test_runic_characters_are_transliterated():
     assert runes_to_latin("ᚦᛅᛁᛦ᛫ᛋᛁᛏᚢ") == "þaiR · situ"
     assert runes_to_latin("þaiR situ") == "þaiR situ"  # Latin text is unchanged
     assert compare("ᚦᛅᛁᛦ᛫ᛋᛁᛏᚢ᛫ᛋᛏᛁᚾ", ": þaiR : situ : stin : suniR")["char_agreement"] == 1.0
+
+
+
+@needs_rundata
+def test_unconfirmed_reading_is_never_presented_as_the_stones_text(client):
+    from api.rundata import store
+    from src.reading import validate
+
+    s = store()
+    so113 = s.get("Sö 113")
+    jelling = s.get("DR 42")["transliteration"]
+    v = validate(jelling, so113, s.inscriptions)
+    assert v["status"] == "annan inskrift" and v["known_matches"][0]["signum"] == "DR 42"
+    assert validate(so113["transliteration"], so113, s.inscriptions)["status"] == "bekräftad"
+    invented = "auk huat skata han hafþi krufit þar uar an falkin hakun baþ mik rata"
+    assert validate(invented, so113, s.inscriptions)["reliable"] is False
+
+    reading = {"transliteration": invented, "normalization": "Ok hvat skatta hann hafði grofit",
+               "translation": "Och vilken skatt han än hade grävt ner", "phonetic_ipa": "ɔk hwat"}
+    slices = [{"apex_vinkel_deg": 100 + i, "asymmetri_deg": 3, "spårdjup_mm": 2, "spårbredd_mm": 6,
+               "djup_bredd_kvot": .33, "bottenradie_mm": .2, "ytråhet_mm": .05, "position_mm": i} for i in range(5)]
+    rep = client.post("/api/reports/stone", json={"signum": "Sö 113", "use_ai": False, "reading": reading,
+                                                  "analyses": [{"feature_type": "rune", "slices": slices}]}).json()
+    md = rep["markdown"]
+    assert "kunde inte bekräftas" in md
+    assert "hafþi" not in md and "skatt" not in md and "ɔk hwat" not in md  # nothing of the invented text
