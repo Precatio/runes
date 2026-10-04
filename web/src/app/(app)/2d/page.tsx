@@ -23,6 +23,7 @@ const SOURCE_LABEL: Record<TwoDSourceKind, string> = {
   upload: "Uppladdad bild",
   ksamsok: "Bild från K-samsök",
   "3d-snapshot": "Ögonblicksbild från 3D",
+  "3d-relief": "Relief ur 3D-skanningen",
   "groove-map": "Ristningskarta från 3D-analysen",
   rti: "Vy från RTI-visaren",
 };
@@ -73,7 +74,7 @@ export default function TwoDPage() {
   const { geminiKey, addUsedTokens } = useSettings();
   const signum = latest3DMeta.text;
   const sourceKind: TwoDSourceKind = source?.kind ?? "upload";
-  const isBinarySource = sourceKind === "groove-map" || sourceKind === "3d-snapshot";
+  const isBinarySource = sourceKind === "groove-map" || sourceKind === "3d-snapshot" || sourceKind === "3d-relief";
 
   // ---- data loading ------------------------------------------------------------------------
   const loadAllCrops = async () => {

@@ -89,7 +89,7 @@ function ThreeDPageContent() {
   const [sliceCount, setSliceCount] = useState(3); // Averaging
   const [pathPoints, setPathPoints] = useState<[number, number, number][] | null>(null);
   // How the cross-section was chosen; analysing without a selection would slice through the stone's centre
-  const [selection, setSelection] = useState<"none" | "line" | "path" | "manual">("none");
+  const [selection, setSelection] = useState<"none" | "line" | "path">("none");
   
   // Metadata & Context
   const metaStone = meta.stone;
@@ -110,10 +110,6 @@ function ThreeDPageContent() {
   const location = meta.location;
   
   // Advanced UI
-  const [showAdvanced, setShowAdvanced] = useState(false);
-  const [cutoffDepth, setCutoffDepth] = useState(0.0);
-  const [layerThickness, setLayerThickness] = useState(100.0);
-  const [slicerMode, setSlicerMode] = useState<'flat' | 'peeling'>('flat');
 
   // RAA Fetching
   const [fetchingRaa, setFetchingRaa] = useState(false);
@@ -396,81 +392,57 @@ function ThreeDPageContent() {
     ? autoResult.slices.flatMap((sl, i) => (sl.accepted && sl.point ? [{ position: sl.point, color: LABEL_COLORS[autoLabels[i] ?? "unknown"] }] : []))
     : [];
 
-  // Relief images computed from the scan (raking light from four directions, depth), for reading the runes
-  const [reliefBusy, setReliefBusy] = useState(false);
-  const sendReliefToPhonetics = async () => {
+  // Images computed from the scan itself (raking light from four directions, combined relief, depth below the
+  // stone surface), seen from the carved side that faces the camera. Independent of zoom and screen lighting.
+  const [reliefBusy, setReliefBusy] = useState<"" | "2d" | "phonetics">("");
+  const fetchRelief = async () => {
     const session = sessionRef.current;
+    if (!session) throw new Error("Ladda upp en 3D-fil först.");
     const view = viewDirRef.current;
-    if (!session) return;
-    setReliefBusy(true);
+    const fields: Record<string, number> = view ? {
+      normal_x: view.toward[0], normal_y: view.toward[1], normal_z: view.toward[2],
+      up_x: view.up[0], up_y: view.up[1], up_z: view.up[2],
+    } : {};
+    const data = await session.postJSON<{ relief: string; depth: string; raking: Record<string, string>; resolution_mm: number }>(
+      "/api/3d/render_relief", fields);
+    const images: Record<string, string> = {
+      "Relief (alla ljusriktningar)": data.relief, "Djup under stenytan": data.depth,
+      ...Object.fromEntries(Object.entries(data.raking).map(([k, v]) => [`Strykljus från ${k}`, v])),
+    };
+    return { images, resolution: data.resolution_mm };
+  };
+
+  const sendReliefToPhonetics = async () => {
+    setReliefBusy("phonetics");
     try {
-      const fields: Record<string, number> = view ? {
-        normal_x: view.toward[0], normal_y: view.toward[1], normal_z: view.toward[2],
-        up_x: view.up[0], up_y: view.up[1], up_z: view.up[2],
-      } : {};
-      const data = await session.postJSON<{ relief: string; depth: string; raking: Record<string, string> }>("/api/3d/render_relief", fields);
-      setPhoneticsImage({
-        source: `${metaText || file?.name || "3D-modell"} – sedd från den aktuella vyn`,
-        images: { "Relief (alla ljusriktningar)": data.relief, "Djup under stenytan": data.depth,
-          ...Object.fromEntries(Object.entries(data.raking).map(([k, v]) => [`Strykljus från ${k}`, v])) },
-      });
+      const { images } = await fetchRelief();
+      setPhoneticsImage({ source: `${metaText || file?.name || "3D-modell"} – sedd från den aktuella vyn`, images });
       router.push("/phonetics");
     } catch (e) {
       alert(errorText(e, "Reliefbilden kunde inte räknas fram."));
     } finally {
-      setReliefBusy(false);
+      setReliefBusy("");
     }
   };
 
-  const handleSnapshot2D = async () => {
-    const canvas = document.querySelector('canvas');
-    if (!canvas) return;
-    
-    // Create a temporary canvas matching the original size
-    const tempCanvas = document.createElement('canvas');
-    tempCanvas.width = canvas.width;
-    tempCanvas.height = canvas.height;
-    const ctx = tempCanvas.getContext('2d');
-    if (!ctx) return;
-    
-    // Draw the 3D canvas onto our 2D canvas
-    ctx.drawImage(canvas, 0, 0);
-    
-    // Binarization (Adaptive Thresholding)
-    const imgData = ctx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
-    const data = imgData.data;
-    
-    // Simple global threshold to start with (since shader already outputs grayscale high contrast)
-    // The peeling shader outputs very dark for carved areas, light for surface.
-    // We want white background, black runes.
-    for (let i = 0; i < data.length; i += 4) {
-      const r = data[i];
-      const g = data[i+1];
-      const b = data[i+2];
-      
-      // Calculate luminance
-      const lum = 0.299 * r + 0.587 * g + 0.114 * b;
-      
-      if (lum < 100) {
-        // Dark areas (runes) -> Black
-        data[i] = data[i+1] = data[i+2] = 0;
-      } else {
-        // Light areas (surface/background) -> White
-        data[i] = data[i+1] = data[i+2] = 255;
-      }
-      // Keep alpha as is (fully opaque)
-      data[i+3] = 255;
+  const sendReliefToTwoD = async () => {
+    setReliefBusy("2d");
+    try {
+      const { images, resolution } = await fetchRelief();
+      const relief = images["Relief (alla ljusriktningar)"];
+      setLatest2DImage(relief);
+      setLatest2DFile(await dataURLToFile(relief, "relief.png"));
+      setLatest2DSource({
+        kind: "3d-relief",
+        description: `${metaText || file?.name || "3D-modell"}, relief ur skanningen (${resolution.toFixed(2).replace(".", ",")} mm/px före skalning)`,
+      });
+      setLatest2DResults(null);
+      router.push("/2d");
+    } catch (e) {
+      alert(errorText(e, "Reliefbilden kunde inte räknas fram."));
+    } finally {
+      setReliefBusy("");
     }
-    
-    ctx.putImageData(imgData, 0, 0);
-    
-    const binarizedBase64 = tempCanvas.toDataURL('image/png');
-    // Send image, file and source to the 2D analysis (the file is needed to analyse it there)
-    setLatest2DImage(binarizedBase64);
-    setLatest2DFile(await dataURLToFile(binarizedBase64, "3d_ogonblicksbild.png"));
-    setLatest2DSource({ kind: "3d-snapshot", description: metaText || file?.name });
-    setLatest2DResults(null);
-    router.push("/2d");
   };
 
   const handleAutoSnapRequest = async (points: [number, number, number][]): Promise<[number, number, number][]> => {
@@ -910,99 +882,27 @@ function ThreeDPageContent() {
               </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-900/10">
-              <button 
-                type="button" 
-                onClick={() => setShowAdvanced(!showAdvanced)}
-                className="text-slate-500 hover:text-slate-900 text-xs font-bold uppercase tracking-wider flex items-center gap-2"
+            <div className="pt-4 border-t border-slate-900/10 space-y-2">
+              <div className="text-xs font-bold uppercase tracking-wider text-slate-500">Bilder ur skanningen</div>
+              <p className="text-[11px] text-slate-500">
+                Strykljus, relief och djup räknas direkt ur 3D-modellen, sett från den ristade sidan som vetter mot dig –
+                oberoende av zoom och skärmens belysning.
+              </p>
+              <button
+                type="button"
+                onClick={sendReliefToTwoD}
+                disabled={!meshInfo || !!reliefBusy}
+                className="w-full py-2.5 bg-white border border-[#b7410e] text-[#b7410e] hover:bg-[#b7410e] hover:text-white disabled:opacity-40 font-semibold text-sm rounded-xl transition-all"
               >
-                {showAdvanced ? "Dölj manuella vektorer" : "Visa manuella vektorer"}
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className={`w-4 h-4 transition-transform ${showAdvanced ? "rotate-180" : ""}`}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                </svg>
-              </button>
-              
-              {showAdvanced && (
-                <div className="space-y-4 mt-4 animate-in slide-in-from-top-2">
-                  {[
-                    { label: t.threed.origin, state: origin, set: setOrigin },
-                    { label: t.threed.direction, state: direction, set: setDirection },
-                    { label: t.threed.up_vector, state: up, set: setUp },
-                  ].map((vec, i) => (
-                    <div key={i}>
-                      <label className="block text-slate-500 text-[10px] mb-1.5 font-bold uppercase tracking-wider">{vec.label}</label>
-                      <div className="flex gap-2">
-                        <input type="number" step="0.1" value={vec.state[0]} onChange={e => { vec.set([+e.target.value, vec.state[1], vec.state[2]]); setSelection("manual"); }} className="w-full liquid-glass-input-wrapper rounded-xl px-2.5 py-2 text-slate-900 text-center text-xs font-semibold outline-none transition-all" />
-                        <input type="number" step="0.1" value={vec.state[1]} onChange={e => { vec.set([vec.state[0], +e.target.value, vec.state[2]]); setSelection("manual"); }} className="w-full liquid-glass-input-wrapper rounded-xl px-2.5 py-2 text-slate-900 text-center text-xs font-semibold outline-none transition-all" />
-                        <input type="number" step="0.1" value={vec.state[2]} onChange={e => { vec.set([vec.state[0], vec.state[1], +e.target.value]); setSelection("manual"); }} className="w-full liquid-glass-input-wrapper rounded-xl px-2.5 py-2 text-slate-900 text-center text-xs font-semibold outline-none transition-all" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div className="pt-4 border-t border-slate-900/10 space-y-4">
-              
-              {/* Slicer Mode Toggle */}
-              <div className="flex bg-slate-900/5 p-1 rounded-xl">
-                <button
-                  type="button"
-                  onClick={() => setSlicerMode('flat')}
-                  className={`flex-1 py-1.5 text-[11px] font-bold rounded-lg transition-all uppercase tracking-wider ${slicerMode === 'flat' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
-                >
-                  🔪 Platt
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSlicerMode('peeling')}
-                  className={`flex-1 py-1.5 text-[11px] font-bold rounded-lg transition-all uppercase tracking-wider ${slicerMode === 'peeling' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
-                >
-                  🍎 Ytföljande
-                </button>
-              </div>
-
-              <div>
-                <label className="flex justify-between block text-slate-500 text-[12px] mb-2 font-bold uppercase tracking-wider">
-                  <span>Skala av ytan (%)</span>
-                  <span>{cutoffDepth.toFixed(0)}</span>
-                </label>
-                <input 
-                  type="range" min="0" max="100" step="1" 
-                  value={cutoffDepth} 
-                  onChange={e => setCutoffDepth(parseFloat(e.target.value))} 
-                  className="w-full accent-slate-900 cursor-pointer" 
-                />
-              </div>
-              <div>
-                <label className="flex justify-between block text-slate-500 text-[12px] mb-2 font-bold uppercase tracking-wider">
-                  <span>Skikttjocklek (%)</span>
-                  <span>{layerThickness.toFixed(0)}</span>
-                </label>
-                <input 
-                  type="range" min="1" max="100" step="1" 
-                  value={layerThickness} 
-                  onChange={e => setLayerThickness(parseFloat(e.target.value))} 
-                  className="w-full accent-slate-900 cursor-pointer" 
-                />
-              </div>
-
-              <button 
-                type="button" 
-                onClick={handleSnapshot2D}
-                disabled={!file}
-                className="w-full mt-4 py-2.5 bg-white border border-[#b7410e] text-[#b7410e] hover:bg-[#b7410e] hover:text-white active:scale-[0.98] disabled:opacity-40 font-semibold text-sm rounded-xl transition-all shadow-sm flex justify-center items-center gap-2"
-              >
-                📸 Ta 2D-Ögonblicksbild (Binariserad)
+                {reliefBusy === "2d" ? "Räknar fram reliefbild …" : "Skicka reliefbild till 2D-analysen"}
               </button>
               <button
                 type="button"
                 onClick={sendReliefToPhonetics}
-                disabled={!meshInfo || reliefBusy}
-                title="Strykljus och djup räknade ur skanningen, sedda från den ristade sidan som vetter mot dig"
-                className="w-full mt-2 py-2.5 bg-white border border-slate-300 text-slate-800 hover:border-slate-900 disabled:opacity-40 font-semibold text-sm rounded-xl transition-all"
+                disabled={!meshInfo || !!reliefBusy}
+                className="w-full py-2.5 bg-white border border-slate-300 text-slate-800 hover:border-slate-900 disabled:opacity-40 font-semibold text-sm rounded-xl transition-all"
               >
-                {reliefBusy ? "Räknar fram reliefbilder …" : "Läs runorna i Språk & Fonetik"}
+                {reliefBusy === "phonetics" ? "Räknar fram reliefbilder …" : "Läs runorna i Språk & Fonetik"}
               </button>
             </div>
 
@@ -1052,9 +952,6 @@ function ThreeDPageContent() {
               autoPoints={measureMode === "auto" ? autoPoints : undefined}
               viewDirRef={viewDirRef}
               onAutoSnapRequest={handleAutoSnapRequest}
-              cutoffDepth={cutoffDepth}
-              layerThickness={layerThickness}
-              slicerMode={slicerMode}
             />
           </div>
 

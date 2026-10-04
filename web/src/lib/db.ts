@@ -90,7 +90,8 @@ export interface PaleographicCrop {
   createdAt: string;
 }
 
-export type TwoDSourceKind = "upload" | "ksamsok" | "3d-snapshot" | "groove-map" | "rti";
+// "3d-snapshot" is kept for analyses saved before the screen snapshot was replaced by the computed relief
+export type TwoDSourceKind = "upload" | "ksamsok" | "3d-snapshot" | "3d-relief" | "groove-map" | "rti";
 
 export interface TwoDSource {
   kind: TwoDSourceKind;

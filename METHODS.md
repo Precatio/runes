@@ -225,7 +225,7 @@ Källkod: `api/routers/phonetics.py`, `src/reading.py`.
   det av vittring, belysning och utsnittets noggrannhet.
 * Jämförelser görs bara mellan utsnitt med samma särdragsversion och, om angivet, samma runtyp
   (långkvist, kortkvist, stungen m.fl.).
-* Bilder kan komma från uppladdning, K-samsök, en ögonblicksbild av 3D-vyn, RTI-visaren eller
+* Bilder kan komma från uppladdning, K-samsök, en reliefbild räknad ur 3D-skanningen, RTI-visaren eller
   **ristningskartan** från den automatiska spåranalysen (residualdjup, djupt = mörkt). Ristningskartan har
   samma pixelkoordinater som analysens granskningsbild, så ett runutsnitt där kopplas till de uppmätta
   snitten inom utsnittet.
