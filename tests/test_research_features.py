@@ -246,3 +246,33 @@ def test_language_traits_and_synthesis_checks(client, monkeypatch):
     assert top["language"]["comparable"] >= 2 and "Åsmund" in top["language"]["text"]
     lang = client.get("/api/research/language/U 344", params={"carver": "Åsmund"}).json()
     assert lang["traits"] and lang["comparison"]["rows"]
+
+
+@needs_rundata
+def test_similarity_significance(client):
+    r = client.get("/api/orthography/carvers/U 729", params={"limit": 3}).json()
+    sig = r["ranking"][0]["significance"]
+    assert 0 < sig["p_value"] <= 1 and sig["p_adjusted"] >= sig["p_value"] and sig["n_null"] > 100
+    # A higher similarity can never be less significant than a lower one
+    from api.routers.orthography import model
+    m = model()
+    assert m.significance("Balle", 0.9)["p_value"] <= m.significance("Balle", 0.5)["p_value"]
+
+
+@needs_rundata
+def test_inscription_categories_per_carver(client):
+    from api.rundata import store
+    from src.inscription_types import categories
+
+    assert "magisk" in categories(store().get("Sö 140"))  # Siði Þórr – may Thor safeguard
+    assert "magisk" not in categories(store().get("U 1022"))  # Vígi is a personal name here
+    data = client.get("/api/research/categories").json()
+    keys = {c["key"] for c in data["categories"]}
+    assert {"minne", "magisk", "grans", "bro_vag"} <= keys
+    asmund = next(r for r in data["carvers"] if r["carver"] == "Åsmund")
+    assert asmund["counts"]["kristen"]["direction"] == "över" and asmund["counts"]["kristen"]["q"] < 0.05
+    magic = asmund["counts"]["magisk"]
+    assert magic["k"] == 0 and magic["p_zero"] > 0.5  # absence of a rare type is expected
+    hits = client.get("/api/rundata/search", params={"carver": "Åsmund", "category": "kristen", "certain": True,
+                                                    "limit": 1}).json()
+    assert hits["total"] == asmund["counts"]["kristen"]["k"]  # the links show exactly the counted inscriptions

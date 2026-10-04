@@ -73,7 +73,8 @@ export function GeologyBox({ signum, compact = false }: { signum: string; compac
 }
 
 export function LanguageTraits({ signum, carver }: { signum: string; carver?: string }) {
-  const [data, setData] = useState<{ traits: LanguageTrait[]; comparison?: LanguageComparison } | null>(null);
+  const [data, setData] = useState<{ traits: LanguageTrait[]; comparison?: LanguageComparison;
+    categories?: { key: string; label: string; definition: string }[] } | null>(null);
   const [busy, setBusy] = useState(false);
   const load = async () => {
     setBusy(true);
@@ -94,6 +95,12 @@ export function LanguageTraits({ signum, carver }: { signum: string; carver?: st
   if (data.comparison) return <LanguageTable comparison={data.comparison} />;
   return (
     <ul className="text-xs space-y-1">
+      {data.categories && data.categories.length > 0 && (
+        <li className="mb-1">
+          <span className="text-slate-500">Inskriftstyp:</span>{" "}
+          {data.categories.map((c, i) => <span key={c.key} title={c.definition} className="font-semibold">{i > 0 && ", "}{c.label}</span>)}
+        </li>
+      )}
       {data.traits.length === 0 && <li className="text-slate-500">Inga bestämbara språkdrag (för kort eller skadad text).</li>}
       {data.traits.map(t => (
         <li key={t.trait} title={t.definition}>

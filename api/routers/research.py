@@ -101,11 +101,27 @@ def stone_language(signum: str, carver: str = ""):
     rec = store().get(signum)
     if not rec:
         raise HTTPException(status_code=404, detail=f"Signum '{signum}' finns inte i Rundata.")
+    from src.inscription_types import CATEGORIES, categories
     names = orthography_model().names
     t = traits(rec, names)
-    out = {"signum": rec["signum"], "traits": [{"trait": k, "group": TRAITS[k][0], "label": TRAITS[k][1],
+    out = {"signum": rec["signum"],
+           "categories": [{"key": k, "label": CATEGORIES[k][0], "definition": CATEGORIES[k][1]} for k in categories(rec)],
+           "traits": [{"trait": k, "group": TRAITS[k][0], "label": TRAITS[k][1],
                                                 "definition": TRAITS[k][2], "value": v} for k, v in t.items()]}
     if carver:
         out["comparison"] = compare(t, carver_profile(carver, store().inscriptions, certain_carvers, names,
                                                       exclude=rec["signum"]))
     return out
+
+
+@lru_cache(maxsize=1)
+def _categories() -> dict:
+    from src.inscription_types import carver_categories
+    from src.research_gaps import certain_carvers
+    return carver_categories(store().inscriptions, certain_carvers)
+
+
+@router.get("/categories")
+def inscription_categories():
+    """Inskrifternas syfte och innehåll per ristare, med test mot genomsnittet."""
+    return _categories()

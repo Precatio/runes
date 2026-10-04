@@ -35,6 +35,10 @@ from src.synthesis import language_check, material_check, smoothed_precision
 VERDICTS = ("stämmer", "nytt", "motsäger")
 
 
+def _p(v: float) -> str:
+    return "< 0,001" if v < 0.001 else f"{v:.3f}".replace(".", ",")
+
+
 def _d(v: float, digits: int = 2) -> str:
     return f"{v:.{digits}f}".replace(".", ",")
 
@@ -145,7 +149,13 @@ def orthographic_findings(model, inscriptions: list[dict], min_words=8, min_marg
                       f"{rk['n_words']} läsbara ord", f"marginal {_d(margin)} till {second['carver']}"]
         if not in_area:
             ev_reasons.append("stenen ligger utanför ristarens kända område")
-        ours = f"Ortografin pekar på {top['carver']} (likhet {_d(top['similarity'])}, därefter {second['carver']})"
+        sig = top.get("significance")
+        ours = (f"Ortografin pekar på {top['carver']} (likhet {_d(top['similarity'])}"
+                + (f", p {_p(sig['p_value'])}" if sig else "") + f"; därefter {second['carver']})")
+        if sig:
+            ev_reasons.append(f"{round(sig['p_value'] * 100, 1)} % av andra ristares inskrifter är minst lika lika "
+                              f"{top['carver']}s profil (p {_p(sig['p_value'])}; justerat för att den bästa av "
+                              f"{sig['n_carvers']} ristare valts: p {_p(sig['p_adjusted'])})")
         attributed = [c["name"] for c in rec["carvers"] if c["kind"] in ("S", "A") and not c["uncertain"]]
         if not has_carver(rec):
             if top["similarity"] < min_similarity or margin < min_margin:

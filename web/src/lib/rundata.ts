@@ -76,7 +76,7 @@ export interface OrthographyEvaluation {
 }
 
 export interface CarverRanking {
-  ranking: { carver: string; similarity: number; n_inscriptions: number }[];
+  ranking: { carver: string; similarity: number; n_inscriptions: number; significance?: { p_value: number; p_adjusted: number; n_null: number; own_percentile: number | null; n_carvers: number } | null }[];
   n_words: number;
   known_attribution: Carver[];
   evaluation: OrthographyEvaluation;

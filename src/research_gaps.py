@@ -112,6 +112,8 @@ def orthographic_hypotheses(model, inscriptions: list[dict], min_similarity=0.6,
         item = {
             "signum": rec["signum"], "place": rec["place"], "province": p, "style": rec["style"],
             "carver": top["carver"], "similarity": round(top["similarity"], 3), "margin": round(margin, 3),
+            "p_value": (top.get("significance") or {}).get("p_value"),
+            "p_adjusted": (top.get("significance") or {}).get("p_adjusted"),
             "runner_up": second["carver"], "n_words": rk["n_words"], "in_carver_area": in_home,
             "carver_area": [k for k, _ in home_provinces.most_common(3)],
             # How often the model is right when it names this carver (cross-validated)

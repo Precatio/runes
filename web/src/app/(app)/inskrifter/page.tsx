@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { GeologyBox, LanguageTraits } from "@/components/StoneContext";
+import { SIMILARITY_HELP, fmtP } from "@/lib/significance";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   CARVER_KIND,
@@ -186,7 +187,11 @@ function InscriptionDetail({ signum, meta }: { signum: string; meta: RundataMeta
                   {ranking.ranking.map((r, i) => (
                     <div key={r.carver} className="flex justify-between items-center bg-white/60 rounded-xl px-3 py-2 text-sm">
                       <Link href={`/inskrifter?carver=${encodeURIComponent(r.carver)}`} className="font-semibold text-slate-800 hover:text-[#b7410e]">{i + 1}. {r.carver}</Link>
-                      <span className="text-xs font-mono text-slate-500">likhet {r.similarity.toFixed(2)} · {r.n_inscriptions} inskr.</span>
+                      <span className="text-xs font-mono text-slate-500" title={SIMILARITY_HELP}>
+                        likhet {r.similarity.toFixed(2).replace(".", ",")}
+                        {r.significance && <> · p {fmtP(r.significance.p_value)} (just. {fmtP(r.significance.p_adjusted)})</>}
+                        {" "}· {r.n_inscriptions} inskr.
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -195,6 +200,7 @@ function InscriptionDetail({ signum, meta }: { signum: string; meta: RundataMeta
                   {ranking.evaluation.signed_only.top1_accuracy !== null && <> ({(ranking.evaluation.signed_only.top1_accuracy * 100).toFixed(0)} % för enbart signerade)</>}
                   {" "}bland {ranking.evaluation.n_carvers} ristare; slumpnivå {(ranking.evaluation.chance_top1 * 100).toFixed(0)} %.
                   {ranking.n_words < 10 && " Kort text – tolka med extra försiktighet."}
+                  {" "}{SIMILARITY_HELP}
                 </p>
               </div>
             )}
@@ -238,6 +244,11 @@ const GAP_LABEL: Record<string, string> = {
   lost: "försvunna runstenar",
 };
 
+const CATEGORY_LABEL: Record<string, string> = {
+  minne: "minnesinskrift", sjalvminne: "självminne", bro_vag: "bro- och vägbygge", kristen: "kristen bön eller formel",
+  fard: "utlandsfärd", arv: "arv och ägande", ting: "ting och offentlighet", magisk: "magisk eller rituell", grans: "gränsmärke",
+};
+
 function InscriptionsContent() {
   const params = useSearchParams();
   const router = useRouter();
@@ -250,11 +261,13 @@ function InscriptionsContent() {
   const [carver, setCarver] = useState(params.get("carver") ?? "");
   const [gap, setGap] = useState(params.get("gap") ?? "");
   const [signa, setSigna] = useState(params.get("signa") ?? "");
+  const [category, setCategory] = useState(params.get("category") ?? "");
+  const [certain, setCertain] = useState(params.get("certain") === "1");
   const [carvers, setCarvers] = useState<string[]>([]);
   const [offset, setOffset] = useState(0);
   const [response, setResponse] = useState<{ key: string; total: number; results: Inscription[] } | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const queryKey = JSON.stringify({ q, province, period, style, carver, gap, signa, offset });
+  const queryKey = JSON.stringify({ q, province, period, style, carver, gap, signa, category, certain, offset });
   const results = response;
   const loading = response?.key !== queryKey;
 
@@ -270,6 +283,8 @@ function InscriptionsContent() {
     setCarver(params.get("carver") ?? "");
     setGap(params.get("gap") ?? "");
     setSigna(params.get("signa") ?? "");
+    setCategory(params.get("category") ?? "");
+    setCertain(params.get("certain") === "1");
     setOffset(0);
   }
 
@@ -281,11 +296,11 @@ function InscriptionsContent() {
   useEffect(() => {
     if (signum) return;
     let cancelled = false;
-    rundata.search({ q, province, period, style, carver, gap: gap || undefined, signa: signa || undefined, limit: PAGE, offset })
+    rundata.search({ q, province, period, style, carver, gap: gap || undefined, signa: signa || undefined, category: category || undefined, certain: certain || undefined, limit: PAGE, offset })
       .then(r => { if (!cancelled) { setResponse({ key: queryKey, ...r }); setError(null); } })
       .catch(e => { if (!cancelled) setError(e instanceof Error ? e.message : "Sökningen misslyckades."); });
     return () => { cancelled = true; };
-  }, [queryKey, q, province, period, style, carver, gap, signa, offset, signum]);
+  }, [queryKey, q, province, period, style, carver, gap, signa, category, certain, offset, signum]);
 
   const select = "liquid-glass-input-wrapper rounded-xl px-3 py-2 text-slate-900 text-sm font-semibold outline-none";
 
@@ -331,14 +346,16 @@ function InscriptionsContent() {
             </select>
           </div>
 
-          {(gap || signa) && (
+          {(gap || signa || category) && (
             <div className="flex flex-wrap items-center gap-2 text-sm">
               <span className="px-3 py-1.5 rounded-xl bg-slate-900 text-white font-semibold">
-                Urval: {gap ? GAP_LABEL[gap] ?? gap : ""}{gap && signa ? ", " : ""}{signa ? `uppmätta stenar (${signa.split(",").filter(Boolean).length})` : ""}
+                Urval: {[gap ? GAP_LABEL[gap] ?? gap : "", signa ? `uppmätta stenar (${signa.split(",").filter(Boolean).length})` : "",
+                  category ? `inskriftstyp: ${CATEGORY_LABEL[category] ?? category}` : ""].filter(Boolean).join(", ")}
+                {carver && ` av ${carver}`}{certain && " (säker ensam ristare, runstenar)"}
                 {province && ` i ${province}`}
               </span>
               <span className="text-xs text-slate-500">från Forskningsluckor</span>
-              <button onClick={() => { setGap(""); setSigna(""); setOffset(0); router.push("/inskrifter" + (province ? `?province=${encodeURIComponent(province)}` : "")); }}
+              <button onClick={() => { setGap(""); setSigna(""); setCategory(""); setCertain(false); setOffset(0); router.push("/inskrifter" + (province ? `?province=${encodeURIComponent(province)}` : "")); }}
                 className="px-3 py-1.5 rounded-xl bg-white border border-slate-300 text-xs font-bold hover:border-slate-900">Ta bort urvalet</button>
             </div>
           )}

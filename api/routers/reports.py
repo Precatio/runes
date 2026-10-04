@@ -21,6 +21,13 @@ from src.synthesis import site_geology
 router = APIRouter()
 
 
+def _as_object(value) -> dict:
+    """The model sometimes wraps its JSON object in a list; anything else counts as no answer."""
+    if isinstance(value, list):
+        value = next((v for v in value if isinstance(v, dict)), {})
+    return value if isinstance(value, dict) else {}
+
+
 class Scope(BaseModel):
     type: Literal["carver", "province", "corpus", "stones"] = "corpus"
     value: Optional[str] = None
@@ -54,7 +61,7 @@ Svara med JSON:
     resp = client.models.generate_content(
         model=GEMINI_PRO_MODEL, contents=prompt,
         config=types.GenerateContentConfig(temperature=0.2, response_mime_type="application/json"))
-    return json.loads(resp.text)
+    return _as_object(json.loads(resp.text))
 
 
 @router.post("/academic")

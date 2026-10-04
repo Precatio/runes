@@ -21,10 +21,12 @@ export interface Candidate {
   stone_tests?: { tests: { signum: string; n: number; p_value: number | null; compatible: boolean }[]; compatible: number; n: number; text: string };
   material?: { material: string; fits: boolean | null; text: string } | null;
   language?: (LanguageComparison & { fits: boolean | null }) | null;
+  category?: { categories: string[]; fits: boolean | null; text: string } | null;
 }
 
 export interface OrthographyItem {
   carver: string; similarity: number; n_inscriptions: number; precision: number; in_area: boolean; reliability: number;
+  significance?: { p_value: number; p_adjusted: number; n_null: number; own_percentile: number | null; n_carvers: number } | null;
 }
 
 export interface SynthesisResult {

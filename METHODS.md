@@ -140,6 +140,15 @@ Källkod: `src/orthography.py`. Underlag: Rundatas vikingatida inskrifter med mi
   inte avslöjar svaret och beställarnamn inte styr resultatet.
 * **Likhet:** cosinuslikhet. **Ristarrangordning:** närmaste centroid bland ristare med minst fem säkra
   inskrifter.
+* **Vad "likhet" betyder:** cosinuslikheten (0–1) mellan inskriftens särdragsvektor (TF-IDF, normerad) och
+  ristarens medelvektor. Det är ett deskriptivt mått, inte en sannolikhet. Rangordningen är en
+  närmaste-centroid-klassificerare.
+* **Signifikans för likheten:** p = andelen av andra ristares säkra inskrifter som är minst lika lika
+  ristarens profil (empirisk nollfördelning, (k + 1)/(n + 1)). Eftersom den mest lika av alla ristare väljs
+  anges även p justerat för antalet ristare (Bonferroni). Dessutom anges hur typisk likheten är för
+  ristarens egna inskrifter (lämna-en-ute). Formelspråket gör många inskrifter lika: även signerade stenar
+  får sällan justerat p under 0,05, så en enskild likhet är ett svagt belägg. Metodens samlade
+  träffsäkerhet (nedan) är det bättre måttet.
 * **Utvärdering** (lämna-en-ute, 27 ristare, 459 inskrifter, Rundata 2014): rätt ristare först i 61 %,
   bland de tre första i 71 %; för enbart signerade inskrifter (n = 135) först i 60 %. Slumpnivå 4 %.
   Attribuerade inskrifter kan ha attribuerats just på grund av ortografin, därför redovisas siffran för
@@ -248,6 +257,21 @@ inskrifter (stenen själv utesluten). Stenen stämmer i ett drag när värdet ä
 förekommer i minst hälften av ristarens inskrifter med ordet. Dragen påverkas också av dialekt, tid och
 beställare. De redovisas som kontroll och vägs inte in i kandidaternas poäng, eftersom stavningsdragen
 delvis överlappar den ortografiska jämförelsen.
+
+### 7i. Inskrifternas syfte per ristare
+
+Källkod: `src/inscription_types.py`, `GET /api/research/categories`. Varje vikingatida runsten med text
+får en eller flera kategorier med regler på Rundatas normalisering, engelska översättning och
+translitterering: minnesinskrift, självminne, bro- och vägbygge, kristen bön eller formel, utlandsfärd,
+arv och ägande, ting och offentlighet, magisk eller rituell (Þórr vígi, vígi þessi kuml, siði Þórr,
+förbannelser, futharkrader, alu) och gränsmärke. Gränsmärken finns i praktiken inte bland de svenska
+runstenarna i Rundata; där översätts *merki* (minnesmärke) med "landmark", vilket inte är en gräns.
+
+För ristare med minst fem säkra inskrifter testas varje kategori mot genomsnittet (tvåsidigt
+binomialtest, Benjamini–Hochberg-justerat q). När en ristare saknar en kategori anges sannolikheten för 0
+av en slump, (1 − basnivå)^n. För sällsynta typer (magiska inskrifter 0,5 %) är 0 därför väntat även för
+ristare med många stenar. I syntesen flaggas en stens typ bara när ristarens frånvaro är osannolik
+(sannolikhet för 0 under 5 %).
 
 ### 7b. 2D-analys och runformer
 

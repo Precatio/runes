@@ -12,6 +12,7 @@ from typing import Optional
 from fastapi import HTTPException
 
 from src import research_gaps as gaps
+from src.inscription_types import categories as inscription_categories, is_runestone_any
 from src.signum import fold_signum
 
 # Filters with the same definitions as the research-gaps overview (Swedish Viking Age runestones)
@@ -64,7 +65,7 @@ class RundataStore:
 
     def search(self, q: str = "", carver: str = "", style: str = "", period: str = "",
                province: str = "", has_coords: bool = False, limit: int = 50, offset: int = 0,
-               gap: str = "", signa: str = ""):
+               gap: str = "", signa: str = "", category: str = "", certain: bool = False):
         q_l, carver_l = q.lower().strip(), carver.lower().strip()
         gap_test = GAP_FILTERS.get(gap)
         wanted = {fold_signum(x) for x in signa.split(",") if x.strip()} if signa else None
@@ -73,6 +74,12 @@ class RundataStore:
             if gap_test and not gap_test(rec):
                 continue
             if wanted is not None and fold_signum(rec["signum"]) not in wanted:
+                continue
+            # Same population as the category statistics: Viking Age runestones
+            if category and (not is_runestone_any(rec) or category not in inscription_categories(rec)):
+                continue
+            # Only inscriptions where the carver is the single certain (signed or attributed) carver
+            if certain and carver_l and [c.lower() for c in gaps.certain_carvers(rec)] != [carver_l]:
                 continue
             if has_coords and rec["lat"] is None:
                 continue

@@ -16,6 +16,7 @@ import numpy as np
 
 from src import geology
 from src.language_profile import carver_profile, compare as compare_language, traits as language_traits
+from src.orthography import OrthographyModel
 from src.research_gaps import certain_carvers, province
 from src.stats import METRICS, attribute, multivariate_permutation_test, summarize
 from src.styles import BY_CODE
@@ -287,7 +288,9 @@ def build_candidates(ev: dict) -> list[dict]:
             w = (2 if rank == 1 else 1) * r["reliability"]
             area = "" if r["in_area"] else ", utanför ristarens kända landskap"
             add(r["carver"], o.get("source", "Ortografi"),
-                f"Plats {rank} (likhet {_d(r['similarity'])}; modellen har rätt i omkring {round(r['precision'] * 100)} % "
+                f"Plats {rank} (likhet {_d(r['similarity'])}"
+                + (f", {OrthographyModel.p_text(r.get('significance'))}" if r.get("significance") else "")
+                + f"; modellen har rätt i omkring {round(r['precision'] * 100)} % "
                 f"när den föreslår ristaren, {r['predicted']} förslag; {o['n_words']} ord{area}).", w, rank)
 
     g = ev.get("groove") or {}
@@ -339,6 +342,9 @@ def conflicts(ev: dict, candidates: list[dict]) -> list[str]:
         st = cand.get("styles") or {}
         if st.get("fits") is False:
             out.append(f"{cand['name']}: stenens stilgrupp {rec['style']} förekommer inte på ristarens säkra stenar.")
+        cat = cand.get("category") or {}
+        if cat.get("fits") is False:
+            out.append(f"{cand['name']}: {cat['text'].split('. ')[-1]}")
         lang = cand.get("language") or {}
         if lang.get("fits") is False:
             out.append(f"{cand['name']}: bara {lang['agree']} av {lang['comparable']} språkdrag stämmer med ristarens inskrifter.")

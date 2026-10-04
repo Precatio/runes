@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { API_URL } from "@/lib/api";
 import { corpus } from "@/lib/corpus";
 import { db } from "@/lib/db";
 import { useAuth } from "@/components/AuthContext";
 import { GeologyBox, LanguageTraits } from "@/components/StoneContext";
+import { SIMILARITY_HELP, fmtP } from "@/lib/significance";
 
 interface ProvinceRow {
   code: string; name: string; axelson: boolean; total: number; carver: number; style: number; dated: number;
@@ -14,6 +15,7 @@ interface ProvinceRow {
 }
 interface Hypothesis extends StoneExtras {
   signum: string; place: string; province: string; style: string | null; carver: string; similarity: number;
+  p_value: number | null; p_adjusted: number | null;
   margin: number; runner_up: string; n_words: number; in_carver_area: boolean; carver_area: string[];
   carver_precision: number | null; short_text: boolean; attributed_to?: string[];
 }
@@ -69,7 +71,14 @@ interface Findings {
   method_note: string;
 }
 
-type Tab = "findings" | "hypotheses" | "reconsider" | "priorities" | "uninterpreted" | "style";
+type Tab = "findings" | "categories" | "hypotheses" | "reconsider" | "priorities" | "uninterpreted" | "style";
+
+interface CategoryStats {
+  categories: { key: string; label: string; definition: string; base_rate: number; count: number }[];
+  n_inscriptions: number;
+  carvers: { carver: string; n: number; counts: Record<string, { k: number; share: number; expected: number; p: number; q: number; p_zero: number | null; direction: "över" | "under" | "som genomsnittet" }> }[];
+  method: string;
+}
 
 // ---- sorting -------------------------------------------------------------------------------
 type SortValue = string | number | boolean | null | undefined;
@@ -189,6 +198,7 @@ export default function GapsPage() {
   const t = data.coverage.totals;
   const tabs: [Tab, string, number][] = [
     ["findings", "Våra resultat mot forskningen", found.findings.length],
+    ["categories", "Inskrifternas syfte per ristare", 9],
     ["hypotheses", "Ortografiska hypoteser", data.hypotheses.new.length],
     ["reconsider", "Ompröva attribuering", data.hypotheses.reconsider.length],
     ["priorities", "Mätningar som gör mest nytta", data.measurement_priorities.length],
@@ -244,6 +254,7 @@ export default function GapsPage() {
 
       <div className="liquid-glass-island rounded-[32px] p-5">
         {tab === "findings" && <FindingsPanel data={found} loggedIn={!!user} />}
+        {tab === "categories" && <CategoryPanel />}
         {(tab === "hypotheses" || tab === "reconsider") && (
           <HypothesisTable key={tab} reconsider={tab === "reconsider"} ev={data.hypotheses.evaluation}
             rows={tab === "hypotheses" ? data.hypotheses.new : data.hypotheses.reconsider} />
@@ -277,6 +288,73 @@ function BarLink({ value, total, color, has, missing }: { value: number; total: 
         </Link>
       )}
     </div>
+  );
+}
+
+function CategoryPanel() {
+  const [data, setData] = useState<CategoryStats | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    fetch(`${API_URL}/api/research/categories`).then(r => (r.ok ? r.json() : Promise.reject(new Error(`Fel ${r.status}`))))
+      .then(setData).catch(e => setError(e instanceof Error ? e.message : "Kunde inte hämta kategorierna."));
+  }, []);
+  const rows = data?.carvers ?? [];
+  const get: Record<string, (r: CategoryStats["carvers"][number]) => SortValue> = { carver: r => r.carver, n: r => r.n };
+  for (const c of data?.categories ?? []) get[c.key] = r => r.counts[c.key]?.share;
+  const { sorted, header } = useSorted(rows, get, { key: "n", desc: true });
+  if (error) return <p className="text-red-700 font-semibold">{error}</p>;
+  if (!data) return <p className="text-slate-500">Räknar …</p>;
+  const pctTxt = (v: number) => `${(v * 100).toFixed(v < 0.01 ? 1 : 0).replace(".", ",")} %`;
+  return (
+    <>
+      <p className="text-sm text-slate-600 mb-3 max-w-4xl">
+        Vad inskrifterna handlar om, katalogiserat med regler på Rundatas normalisering och översättning ({data.n_inscriptions}{" "}
+        vikingatida runstenar med text). Kategorierna kan överlappa. För varje ristare med minst fem säkra inskrifter jämförs
+        andelen med genomsnittet. <span className="text-emerald-700 font-semibold">Grönt</span> = fler och{" "}
+        <span className="text-amber-700 font-semibold">orange</span> = färre än väntat (q &lt; 0,05). Vid 0 visas sannolikheten att
+        få 0 av en slump om ristaren följde genomsnittet – för sällsynta typer som magiska inskrifter är 0 därför oftast väntat.
+        Klicka på en siffra för att se inskrifterna.
+      </p>
+      <div className="flex flex-wrap gap-2 mb-4 text-xs">
+        {data.categories.map(c => (
+          <span key={c.key} title={c.definition} className="px-2 py-1 rounded-lg bg-white border border-slate-200">
+            <strong>{c.label}</strong> {c.count} ({pctTxt(c.base_rate)})
+          </span>
+        ))}
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className={TH_ROW}>
+              {header("carver", "Ristare")}{header("n", "Inskrifter")}
+              {data.categories.map(c => <Fragment key={c.key}>{header(c.key, c.label, `${c.definition} Genomsnitt ${pctTxt(c.base_rate)}.`)}</Fragment>)}
+            </tr>
+          </thead>
+          <tbody>
+            {sorted.map(r => (
+              <tr key={r.carver} className="border-t border-slate-900/5">
+                <td className="p-2 font-semibold"><Link href={`/inskrifter?carver=${encodeURIComponent(r.carver)}`} className={CELL_LINK}>{r.carver}</Link></td>
+                <td className="p-2">{r.n}</td>
+                {data.categories.map(c => {
+                  const v = r.counts[c.key];
+                  const color = v.direction === "över" ? "text-emerald-700 font-bold" : v.direction === "under" ? "text-amber-700 font-bold" : "text-slate-700";
+                  const tip = `${v.k} av ${r.n} (${pctTxt(v.share)}); väntat ${v.expected.toFixed(1).replace(".", ",")}; p ${fmtP(v.p)}, q ${fmtP(v.q)}` +
+                    (v.p_zero != null ? `; sannolikhet för 0 av en slump ${Math.round(v.p_zero * 100)} %` : "");
+                  return (
+                    <td key={c.key} className="p-2 text-xs" title={tip}>
+                      {v.k > 0
+                        ? <Link href={`/inskrifter?carver=${encodeURIComponent(r.carver)}&category=${c.key}&certain=1`} className={`${color} ${CELL_LINK}`}>{v.k}</Link>
+                        : <span className={color}>0{v.p_zero != null && <span className="text-slate-400 font-normal"> ({Math.round(v.p_zero * 100)} %)</span>}</span>}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-[11px] text-slate-500 mt-3">{data.method}</p>
+    </>
   );
 }
 
@@ -450,7 +528,7 @@ function FindingRow({ f, open, onToggle }: { f: Finding; open: boolean; onToggle
 function HypothesisTable({ rows, reconsider, ev }: { rows: Hypothesis[]; reconsider: boolean; ev: Gaps["hypotheses"]["evaluation"] }) {
   const { sorted, header } = useSorted(rows, {
     signum: h => h.signum, place: h => h.place, attributed: h => h.attributed_to?.join(", "), carver: h => h.carver,
-    similarity: h => h.similarity, margin: h => h.margin, precision: h => h.carver_precision,
+    similarity: h => h.similarity, margin: h => h.margin, precision: h => h.carver_precision, p: h => h.p_adjusted,
     area: h => h.in_carver_area, words: h => h.n_words, material: h => h.material,
     language: h => (h.language?.comparable ? h.language.agree / h.language.comparable : null),
   }, { key: "precision", desc: true });
@@ -469,7 +547,7 @@ function HypothesisTable({ rows, reconsider, ev }: { rows: Hypothesis[]; reconsi
             <tr className={TH_ROW}>
               {header("signum", "Sten")}{header("place", "Plats")}
               {reconsider && header("attributed", "Rundata")}
-              {header("carver", "Ortografin pekar mot")}{header("similarity", "Likhet")}{header("margin", "Marginal")}
+              {header("carver", "Ortografin pekar mot")}{header("similarity", "Likhet", SIMILARITY_HELP)}{header("p", "p (just.)", SIMILARITY_HELP)}{header("margin", "Marginal")}
               {header("precision", "Precision")}{header("area", "Inom ristarens område")}{header("words", "Ord")}
               {header("material", "Bergart", "✓ = bergarten förekommer på ristarens stenar, ! = sällan")}
               {header("language", "Språkdrag", "Jämförbara språkdrag som stämmer med ristaren")}
@@ -483,6 +561,7 @@ function HypothesisTable({ rows, reconsider, ev }: { rows: Hypothesis[]; reconsi
                 {reconsider && <td className="p-2">{h.attributed_to?.join(", ")}</td>}
                 <td className="p-2 font-semibold">{h.carver} <span className="text-slate-400 font-normal">(sedan {h.runner_up})</span></td>
                 <td className="p-2 font-mono text-xs">{fmt(h.similarity)}</td>
+                <td className="p-2 font-mono text-xs">{fmtP(h.p_value)} <span className="text-slate-400">({fmtP(h.p_adjusted)})</span></td>
                 <td className="p-2 font-mono text-xs">{fmt(h.margin)}</td>
                 <td className="p-2 font-mono text-xs">{h.carver_precision != null ? `${Math.round(h.carver_precision * 100)} %` : "–"}</td>
                 <td className="p-2 text-xs">{h.in_carver_area ? "Ja" : <span className="text-amber-700">Nej ({h.carver_area.join(", ")}) – kan vara regional stavning</span>}</td>

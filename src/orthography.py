@@ -213,6 +213,59 @@ class OrthographyModel:
         C /= np.maximum(np.linalg.norm(C, axis=1, keepdims=True), 1e-12)
         return names, C, {g: len(groups[g]) for g in names}
 
+    # ---- signifikans för likheten ------------------------------------------------
+
+    def _reference_sims(self):
+        """Likheten mellan varje ristares profil och (a) andra ristares inskrifter – nollfördelningen –
+        och (b) ristarens egna inskrifter, var och en utesluten ur profilen (lämna-en-ute)."""
+        if getattr(self, "_ref_sims", None) is not None:
+            return self._ref_sims
+        labels = self._labelled()
+        groups: dict[str, list[int]] = {}
+        for i, g in labels.items():
+            groups.setdefault(g, []).append(i)
+        out = {}
+        for g, idx in groups.items():
+            total = np.asarray(self.X[idx].sum(axis=0)).ravel()
+            centre = total / max(np.linalg.norm(total), 1e-12)
+            others = [i for i, h in labels.items() if h != g]
+            null = (self.X[others] @ centre) if others else np.array([])
+            own = []
+            for i in idx:
+                x = self.X[i].toarray().ravel()
+                rest = total - x
+                n = np.linalg.norm(rest)
+                if n > 0:
+                    own.append(float(x @ (rest / n)))
+            out[g] = {"null": np.sort(np.asarray(null).ravel()), "own": np.sort(np.array(own))}
+        self._ref_sims = out
+        return out
+
+    def significance(self, carver: str, similarity: float) -> dict | None:
+        """Hur ovanligt hög likheten är. p = andelen av andra ristares inskrifter som är minst lika lika
+        ristarens profil (empiriskt, med +1-korrektion). Eftersom den mest lika av alla ristare väljs
+        redovisas även p justerat för antalet ristare (Bonferroni). own = andelen av ristarens egna
+        inskrifter (lämna-en-ute) med lägre likhet – hur typisk likheten är för ristaren själv."""
+        ref = self._reference_sims().get(carver)
+        if ref is None or not len(ref["null"]):
+            return None
+        null, own = ref["null"], ref["own"]
+        k = len(null) - int(np.searchsorted(null, similarity, side="left"))
+        p = (k + 1) / (len(null) + 1)
+        n_carvers = len(self._reference_sims())
+        return {
+            "p_value": round(p, 5), "p_adjusted": round(min(1.0, p * n_carvers), 5), "n_null": int(len(null)),
+            "own_percentile": round(float(np.searchsorted(own, similarity) / len(own)), 3) if len(own) else None,
+            "n_carvers": n_carvers,
+        }
+
+    @staticmethod
+    def p_text(sig: dict | None) -> str:
+        if not sig:
+            return ""
+        f = lambda v: "< 0,001" if v < 0.001 else f"{v:.3f}".replace(".", ",")
+        return f"p {f(sig['p_value'])}, justerat för {sig['n_carvers']} ristare {f(sig['p_adjusted'])}"
+
     def rank_carvers(self, signum: str, limit: int = 10):
         i = self.index.get(signum)
         if i is None:
@@ -223,7 +276,8 @@ class OrthographyModel:
         sims = C @ x
         order = np.argsort(-sims)[:limit]
         return {
-            "ranking": [{"carver": names[k], "similarity": float(sims[k]), "n_inscriptions": sizes[names[k]]}
+            "ranking": [{"carver": names[k], "similarity": float(sims[k]), "n_inscriptions": sizes[names[k]],
+                         "significance": self.significance(names[k], float(sims[k]))}
                         for k in order],
             "n_words": self.feats[i]["n_words"],
             "known_attribution": [c for c in self.records[i]["carvers"] if c["kind"] in ("S", "A")],
@@ -242,7 +296,8 @@ class OrthographyModel:
         sims = C @ x
         order = np.argsort(-sims)[:limit]
         return {
-            "ranking": [{"carver": names[k], "similarity": float(sims[k]), "n_inscriptions": sizes[names[k]]}
+            "ranking": [{"carver": names[k], "similarity": float(sims[k]), "n_inscriptions": sizes[names[k]],
+                         "significance": self.significance(names[k], float(sims[k]))}
                         for k in order],
             "n_words": f["n_words"],
         }

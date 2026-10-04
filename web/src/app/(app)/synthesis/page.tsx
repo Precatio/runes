@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useAnalysis } from "@/components/AnalysisContext";
 import { useAuth } from "@/components/AuthContext";
 import { LanguageTable } from "@/components/StoneContext";
+import { SIMILARITY_HELP, fmtP } from "@/lib/significance";
 import { useSettings } from "@/components/SettingsContext";
 import { corpus } from "@/lib/corpus";
 import { db, type ProjectData } from "@/lib/db";
@@ -299,6 +300,7 @@ function CandidateCard({ c }: { c: Candidate }) {
           {c.geography && <Check label="Geografi" ok={c.geography.plausible} text={c.geography.text} />}
           {c.styles && <Check label="Stilgrupp och datering" ok={c.styles.fits} text={c.styles.text} />}
           {c.material && <Check label="Bergart" ok={c.material.fits} text={c.material.text} />}
+          {c.category && <Check label="Inskriftstyp" ok={c.category.fits} text={c.category.text} />}
           {c.stone_tests && (
             <Check label="Sten mot sten (huggteknik)" ok={c.stone_tests.n ? c.stone_tests.compatible > 0 : null}
               text={`${c.stone_tests.text}${c.stone_tests.tests.length ? ": " + c.stone_tests.tests.map(t => `${t.signum} p ${t.p_value != null && t.p_value < 0.001 ? "< 0,001" : "= " + num(t.p_value, 3)}`).join(", ") : ""}.`} />
@@ -343,10 +345,11 @@ function EvidenceDetails({ r }: { r: SynthesisResult }) {
           {o ? (
             <>
               <table className="w-full text-xs">
-                <thead><tr className="text-left text-slate-500"><th className="py-1">Ristare</th><th>Likhet</th><th>Precision</th><th>Område</th><th>Vikt</th></tr></thead>
+                <thead><tr className="text-left text-slate-500"><th className="py-1">Ristare</th><th title={SIMILARITY_HELP}>Likhet</th><th title={SIMILARITY_HELP}>p (just.)</th><th>Precision</th><th>Område</th><th>Vikt</th></tr></thead>
                 <tbody>{o.ranking.map(x => (
                   <tr key={x.carver} className="border-t border-slate-900/5">
-                    <td className="py-1 font-semibold">{x.carver}</td><td>{num(x.similarity)}</td><td>{pct(x.precision)}</td>
+                    <td className="py-1 font-semibold">{x.carver}</td><td>{num(x.similarity)}</td>
+                    <td>{x.significance ? `${fmtP(x.significance.p_value)} (${fmtP(x.significance.p_adjusted)})` : "–"}</td><td>{pct(x.precision)}</td>
                     <td>{x.in_area ? "inom" : <span className="text-amber-700">utanför</span>}</td><td>{num(x.reliability)}</td>
                   </tr>
                 ))}</tbody>

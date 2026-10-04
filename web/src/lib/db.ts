@@ -139,7 +139,7 @@ export interface LinguisticResultData {
   form_check?: { items: { form: string; attested: number }[]; attested: number; total: number; share: number | null } | null;
   orthography?: {
     n_words: number; usable: boolean; note: string;
-    ranking: { carver: string; similarity: number; n_inscriptions: number; precision: number }[];
+    ranking: { carver: string; similarity: number; n_inscriptions: number; precision: number; significance?: { p_value: number; p_adjusted: number; n_null: number; own_percentile: number | null; n_carvers: number } | null }[];
   } | null;
   signum?: string;
   corrected?: boolean; // the reading was corrected by hand after the AI reading

@@ -34,9 +34,12 @@ def search(
     offset: int = Query(0, ge=0),
     gap: str = Query("", pattern="^(|runestone|carver|no_carver|style|no_style|dated|uncertain_interpretation|lost)$"),
     signa: str = Query("", max_length=20000),  # comma-separated, e.g. the measured stones
+    category: str = Query("", pattern="^(|minne|sjalvminne|bro_vag|kristen|fard|arv|ting|magisk|grans)$"),
+    certain: bool = False,
 ):
     return store().search(q=q, carver=carver, style=style, period=period or "", province=province,
-                          has_coords=has_coords, limit=limit, offset=offset, gap=gap, signa=signa)
+                          has_coords=has_coords, limit=limit, offset=offset, gap=gap, signa=signa,
+                          category=category, certain=certain)
 
 
 @router.get("/find")

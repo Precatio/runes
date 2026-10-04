@@ -21,12 +21,21 @@ from api.rundata import context_text, store
 from api.routers.orthography import model as orthography_model
 from api.routers.threed import tool_heuristic
 from src import synthesis as syn
+from src.inscription_types import CATEGORIES, category_check
 from src.reading import compare as compare_reading
+from api.routers.research import _categories as research_categories
 from src.research_gaps import carver_home
 from src.stats import METRIC_LABELS, METRICS, summarize
 from src.styles import SOURCE as STYLE_SOURCE, dating_text
 
 router = APIRouter()
+
+
+def _as_object(value) -> dict:
+    """The model sometimes wraps its JSON object in a list; anything else counts as no answer."""
+    if isinstance(value, list):
+        value = next((v for v in value if isinstance(v, dict)), {})
+    return value if isinstance(value, dict) else {}
 
 
 class SliceData(BaseModel):
@@ -86,6 +95,7 @@ class AttributionCandidate(BaseModel):
     stone_tests: Optional[dict] = None  # permutationstest mot kandidatens uppmätta stenar
     material: Optional[dict] = None  # stenens bergart mot ristarens stenar
     language: Optional[dict] = None  # språkdrag (fonetisk stil och språkbruk) mot ristarens inskrifter
+    category: Optional[dict] = None  # inskriftens typ (minne, bro, bön, magisk …) mot ristarens
     first_in: List[str] = Field(default_factory=list)  # källor där kandidaten kommer först
 
 
@@ -247,6 +257,8 @@ def enrich_candidates(evidence: dict, candidates: list[dict]) -> list[dict]:
             c["styles"] = syn.carver_styles(rec, c["name"], s.inscriptions)
             c["material"] = syn.material_check(rec, c["name"], s.inscriptions)
             c["language"] = syn.language_check(rec, c["name"], s.inscriptions, names)
+            row = next((r for r in research_categories()["carvers"] if r["carver"] == c["name"]), None)
+            c["category"] = category_check(rec, row, CATEGORIES)
         if stones.get(c["name"]) and evidence.get("_query"):
             c["stone_tests"] = syn.stone_tests(evidence["_query"], stones[c["name"]])
     return candidates
@@ -328,7 +340,7 @@ def evidence_text(evidence: dict, req: SynthesisRequest, candidates: Optional[li
         lines.append(geo["text"] + " " + geo["caveat"])
     for c in candidates or []:
         checks = [x["text"] for x in (c.get("literature"), c.get("geography"), c.get("styles"), c.get("material"),
-                                      c.get("language"), c.get("stone_tests")) if x]
+                                      c.get("language"), c.get("category"), c.get("stone_tests")) if x]
         if checks:
             lines.append(f"\n--- KONTROLLER FÖR {c['name'].upper()} ({c['strength']} belägg) ---")
             lines += checks
@@ -375,7 +387,7 @@ Svara med JSON:
         contents=prompt,
         config=types.GenerateContentConfig(temperature=0.2, response_mime_type="application/json"),
     )
-    return json.loads(resp.text)
+    return _as_object(json.loads(resp.text))
 
 
 @router.post("/analyze", response_model=SynthesisResponse)

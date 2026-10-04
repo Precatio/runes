@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { db, ProjectData, type LinguisticResultData, type ReadingSegment } from "@/lib/db";
 import { rundata, type Inscription } from "@/lib/rundata";
 import { fromProject } from "@/lib/stoneReport";
+import { SIMILARITY_HELP, fmtP } from "@/lib/significance";
 import { useAnalysis } from "@/components/AnalysisContext";
 import { useSettings } from "@/components/SettingsContext";
 import { useAuth } from "@/components/AuthContext";
@@ -1032,11 +1033,12 @@ function RundataPanel({ results }: { results: LinguisticResultData }) {
               {o.note} {o.usable ? "" : `Bara ${o.n_words} läsbara ord – för kort för en pålitlig jämförelse.`}
             </p>
             <table className="w-full text-xs">
-              <thead><tr className="text-left text-slate-500"><th className="py-1">Ristare</th><th>Likhet</th><th>Precision</th></tr></thead>
+              <thead><tr className="text-left text-slate-500"><th className="py-1">Ristare</th><th title={SIMILARITY_HELP}>Likhet</th><th title={SIMILARITY_HELP}>p (just.)</th><th>Precision</th></tr></thead>
               <tbody>{o.ranking.map(r => (
                 <tr key={r.carver} className="border-t border-slate-900/5">
                   <td className="py-1 font-semibold">{r.carver}</td>
                   <td>{r.similarity.toFixed(2).replace(".", ",")}</td>
+                  <td>{r.significance ? `${fmtP(r.significance.p_value)} (${fmtP(r.significance.p_adjusted)})` : "–"}</td>
                   <td>{pct(r.precision)}</td>
                 </tr>
               ))}</tbody>
