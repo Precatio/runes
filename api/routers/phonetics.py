@@ -5,7 +5,7 @@ from api.errors import ai_error
 from api.rundata import store
 from api.routers.orthography import model as orthography_model
 from api.uploads import decode_base64_image
-from src.reading import Lexicon, compare
+from src.reading import Lexicon, compare, runes_to_latin
 from src.synthesis import smoothed_precision
 from fastapi import APIRouter, HTTPException, Header, Response
 from pydantic import BaseModel
@@ -129,25 +129,37 @@ Om bilden visar 3 runor, svara med exakt 3 runor.
 VIKTIGT: Om det finns en inritad färgstark linje (oftast röd, halvgenomskinlig) i bilden är detta en "läs-väg" från användaren. Du SKA då endast läsa de runor som ligger längs med och i direkt anslutning till denna linje. Följ linjens riktning. Om ingen linje finns, läs runorna i den ordning som är mest logisk för ristningen.
 
 Du måste också identifiera visuellt var du hittar dessa runor/ord. Skapa en "markers"-lista. 
-Var extremt noggrann och generera så många markörer som möjligt! Sätt en separat form (polygon) kring VARJE enskilt runord eller tydlig sekvens du lyckas tyda, samt kring specifika visuella detaljer (t.ex. skador, skiljetecken, särpräglade enskilda runor). Sträva efter att ge mycket detaljerade bevis.
-För varje markör, ange en 'label' (t.ex. "Runord: kuþ", eller "Skiljetecken: Kors"), en mycket djupgående och detaljerad 'description' (t.ex. "Tydligt inristat i bandet, stungen k-runa (g), u-runa och stungenn th-runa (ð) indikerar ordet Guð. Runorna är djupt huggna."), och dess utbredning i 'polygon' med en lista av koordinater i formatet [[y1, x1], [y2, x2], ...] normaliserat till 0-1000. Använd fler än 4 punkter för att noggrant rama in runornas eller skadans specifika form snarare än en inexakt rektangel.
+Sätt en separat form (polygon) kring varje runord eller tydlig sekvens du läser, och kring viktiga detaljer (skador, skiljetecken, särpräglade runor). Högst 40 markörer, så att svaret inte blir för långt.
+För varje markör, ange en 'label' (t.ex. "Runord: kuþ", eller "Skiljetecken: Kors"), en mycket djupgående och detaljerad 'description' (t.ex. "Tydligt inristat i bandet, stungen k-runa (g), u-runa och stungenn th-runa (ð) indikerar ordet Guð. Runorna är djupt huggna."), och dess utbredning i 'polygon' med en lista av koordinater i formatet [[y1, x1], [y2, x2], ...] normaliserat till 0-1000. Använd 4–8 punkter per polygon.
+
+Skriv translitterationen med LATINSKA bokstäver enligt Samnordisk runtextdatabas (gemener, þ för thurs-runan,
+R för yr-runan, ' eller : för skiljetecken, - för oläslig runa), inte med runtecken.
 
 Svara EXAKT med ett JSON-objekt med två nycklar: "raw_transliteration" (sträng) och "markers" (lista av markörer).
 """
         step1_prompt = "Translitterera de runor som syns i bilden."
 
-        gen1_resp = client.models.generate_content(
-            model=GEMINI_PRO_MODEL,
-            contents=[
-                types.Part.from_bytes(data=image_bytes, mime_type=mime_type),
-                step1_prompt
-            ],
-            config=types.GenerateContentConfig(
-                system_instruction=step1_instruction,
-                temperature=0.0,
-                response_mime_type="application/json"
+        def blind_read():
+            return client.models.generate_content(
+                model=GEMINI_PRO_MODEL,
+                contents=[
+                    types.Part.from_bytes(data=image_bytes, mime_type=mime_type),
+                    step1_prompt
+                ],
+                config=types.GenerateContentConfig(
+                    system_instruction=step1_instruction,
+                    temperature=0.0,
+                    response_mime_type="application/json"
+                )
             )
-        )
+
+        # Long answers are sometimes cut off by the server; one retry
+        try:
+            gen1_resp = blind_read()
+        except Exception as e:
+            if "disconnected" not in str(e).lower() and "timeout" not in str(e).lower():
+                raise
+            gen1_resp = blind_read()
         
         step1_parsed = json.loads(gen1_resp.text)
         raw_transliteration = step1_parsed.get("raw_transliteration", "")
@@ -216,7 +228,8 @@ Arbeta alltid med högsta filologiska exakthet, objektivitet och akademiska käl
             
         parsed = LinguisticAI(**json.loads(raw_text.strip())).model_dump()
         # The transliteration is always the blind reading from step 1 – what was actually seen on the image
-        parsed["transliteration"] = raw_transliteration
+        # Runic characters are converted to Rundata's Latin transliteration
+        parsed["transliteration"] = runes_to_latin(raw_transliteration)
         parsed.update(reference_checks(request.signum, parsed["transliteration"], parsed["normalization"]))
         parsed["markers"] = markers_data
         
@@ -229,6 +242,10 @@ Arbeta alltid med högsta filologiska exakthet, objektivitet och akademiska käl
     except HTTPException:
         raise
     except Exception as e:
+        if "disconnected" in str(e).lower():
+            raise HTTPException(status_code=504, detail=(
+                "Språkmodellen svarade inte inom tidsgränsen (ca 60 s hos Google). Försök igen, eller beskär bilden "
+                "till en del av inskriften så att svaret blir kortare."))
         raise ai_error(e, "Fonetisk analys misslyckades.")
 
 class SpeakRequest(BaseModel):

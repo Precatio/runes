@@ -18,9 +18,30 @@ MARKUP = re.compile(r"[()\[\]{}<>?/^\"«»]")
 SECTION = re.compile(r"§\w+")
 
 
+# Younger futhark (and common variants) in Unicode -> Rundata's Latin transliteration
+RUNE_TO_LATIN = {
+    "ᚠ": "f", "ᚡ": "f", "ᚢ": "u", "ᚣ": "y", "ᚤ": "y", "ᚥ": "w", "ᚦ": "þ", "ᚧ": "þ", "ᚨ": "a", "ᚩ": "o", "ᚬ": "o",
+    "ᚭ": "o", "ᚮ": "o", "ᚯ": "ø", "ᚰ": "o", "ᚱ": "r", "ᚴ": "k", "ᚵ": "g", "ᚶ": "g", "ᚷ": "g", "ᚸ": "g", "ᚼ": "h",
+    "ᚽ": "h", "ᚺ": "h", "ᚻ": "h", "ᚾ": "n", "ᚿ": "n", "ᛀ": "n", "ᛁ": "i", "ᛂ": "e", "ᛃ": "j", "ᛄ": "j", "ᛅ": "a",
+    "ᛆ": "a", "ᛇ": "æ", "ᛈ": "p", "ᛉ": "R", "ᛊ": "s", "ᛋ": "s", "ᛌ": "s", "ᛍ": "c", "ᛎ": "z", "ᛏ": "t", "ᛐ": "t",
+    "ᛑ": "d", "ᛒ": "b", "ᛓ": "b", "ᛔ": "p", "ᛕ": "p", "ᛖ": "e", "ᛗ": "m", "ᛘ": "m", "ᛙ": "m", "ᛚ": "l", "ᛛ": "l",
+    "ᛜ": "ng", "ᛝ": "ng", "ᛞ": "d", "ᛟ": "o", "ᛠ": "ea", "ᛡ": "io", "ᛢ": "q", "ᛣ": "k", "ᛤ": "k", "ᛥ": "st",
+    "ᛦ": "R", "ᛧ": "y", "ᛨ": "q", "ᛩ": "q", "ᛪ": "x",
+    "᛫": " · ", "᛬": " : ", "᛭": " + ",
+}
+
+
+def runes_to_latin(text: str) -> str:
+    """Runic Unicode to Latin transliteration (Rundata style); Latin text is returned unchanged."""
+    if not any(ch in RUNE_TO_LATIN for ch in text or ""):
+        return text or ""
+    out = "".join(RUNE_TO_LATIN.get(ch, ch) for ch in text)
+    return re.sub(r"\s+", " ", out).strip()
+
+
 def _canon(text: str) -> str:
     """Enhetlig translitterering: ʀ som R, övrigt med gemener (R och r är olika runor)."""
-    text = (text or "").replace("ʀ", "R").replace("ᛦ", "R")
+    text = runes_to_latin(text or "").replace("ʀ", "R")
     return "".join(ch if ch == "R" else ch.lower() for ch in text)
 
 

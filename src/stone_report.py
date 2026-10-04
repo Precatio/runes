@@ -22,6 +22,7 @@ from collections import defaultdict
 import numpy as np
 
 from src.academic import DIGITS, FEATURE_NAMES, bullets, figure, fmt, h, p, table
+from src.reading import runes_to_latin
 from src.slice_analysis import calculate_v_angle
 from src.stats import METRICS, METRIC_LABELS, attribute, compare_stones, summarize
 
@@ -29,6 +30,7 @@ ACCENT = "#b7410e"
 GROUP_COLORS = {"rune": "#b7410e", "ornament": "#1f6f8b", "unknown": "#64748b"}
 FEATURE_TITLES = {"rune": "Runor", "ornament": "Ornamentik", "unknown": "Ej angivet"}
 LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+PERIODS = {"V": "vikingatid (V)", "M": "medeltid (M)", "U": "urnordisk tid (U)"}
 
 # Sveriges runinskrifter per landskap (signum utan tillägg som Fv, DR m.m.)
 SRI = {
@@ -604,7 +606,7 @@ def facts_text(f: dict) -> str:
         if sy.get("outcome"):
             lines.append(f"Syntes mot litteraturen: {sy['outcome']['text']}")
         for c in (sy.get("candidates") or [])[:3]:
-            lines.append(f"Kandidat {c['name']}: {c['strength']} belägg (källor: {', '.join(c.get('sources') or [])})")
+            lines.append(f"Kandidat {c['name']}: {c['strength']}a belägg (källor: {', '.join(c.get('sources') or [])})")
         for c in sy.get("conflicts") or []:
             lines.append(f"Motsägelse: {c}")
     td = f["two_d"].get("result") or {}
@@ -701,7 +703,7 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
         ["Föremål och material", ", ".join(x for x in [rec.get("object"), rec.get("material") or meta.get("stone")] if x) or "–"],
         ["Ristare (Rundata)", _carvers_text(rec)],
         ["Stilgrupp (Rundata)", (rec.get("style") or "–") + (" (osäker)" if rec.get("style_uncertain") else "")],
-        ["Datering (Rundata)", rec.get("dating") or meta.get("period") or "–"],
+        ["Datering (Rundata)", PERIODS.get(rec.get("dating") or "", rec.get("dating")) or meta.get("period") or "–"],
         ["Ornamentik", meta.get("ornamentation") or "–"],
         ["Skick", ", ".join(x for x in [
             f"vittring {cond.get('weathering') or meta.get('weathering')}" if (cond.get("weathering") or meta.get("weathering")) else "",
@@ -903,7 +905,7 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
                         "blind läsning); normalisering, översättning och fonetisk rekonstruktion är modellens "
                         "tolkning. Jämförelsen med Rundata och kontrollen av ordformerna är framräknade utan AI."
                         + (" Läsningen har därefter rättats manuellt." if rd.get("corrected") else "")))
-        blocks.append(inscription(rd.get("transliteration", ""), rd.get("normalization", ""), "",
+        blocks.append(inscription(runes_to_latin(rd.get("transliteration", "")), rd.get("normalization", ""), "",
                                   rd.get("translation", ""), "appens läsning (AI)"))
         if rd.get("comparison"):
             blocks.append(p(rd["comparison"]))
@@ -921,7 +923,7 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
             blocks.append(p(f"{fc['attested']} av {fc['total']} normaliserade ordformer är belagda i Rundatas "
                             "vikingatida inskrifter." + (f" Inte belagda: {', '.join(missing)}." if missing else "")))
         if rd.get("phonetic_ipa"):
-            blocks.append(p(f"Fonetisk rekonstruktion (AI): [{rd['phonetic_ipa']}]", ai=True))
+            blocks.append(p(f"Fonetisk rekonstruktion (AI): [{rd['phonetic_ipa'].strip().strip('[]/').strip()}]", ai=True))
         if rd.get("sound_laws_applied"):
             blocks.append(p("Ljudlagar som modellen anger: " + "; ".join(rd["sound_laws_applied"]) + ".", ai=True))
 
@@ -996,4 +998,10 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
     if any(b.get("ai") for b in blocks):
         blocks.append(p("Avsnitt markerade som AI-genererade är formulerade av en språkmodell utifrån de framräknade "
                         "resultaten och ska granskas av författaren."))
+    # Result subsections are optional (e.g. no ornament to compare); number the ones present consecutively
+    k = 0
+    for b in blocks:
+        if b["type"] == "heading" and b["level"] == 2 and re.match(r"^4\.\d+ ", b["text"]):
+            k += 1
+            b["text"] = re.sub(r"^4\.\d+", f"4.{k}", b["text"])
     return blocks

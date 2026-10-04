@@ -276,3 +276,11 @@ def test_inscription_categories_per_carver(client):
     hits = client.get("/api/rundata/search", params={"carver": "Åsmund", "category": "kristen", "certain": True,
                                                     "limit": 1}).json()
     assert hits["total"] == asmund["counts"]["kristen"]["k"]  # the links show exactly the counted inscriptions
+
+
+def test_runic_characters_are_transliterated():
+    from src.reading import compare, runes_to_latin
+
+    assert runes_to_latin("ᚦᛅᛁᛦ᛫ᛋᛁᛏᚢ") == "þaiR · situ"
+    assert runes_to_latin("þaiR situ") == "þaiR situ"  # Latin text is unchanged
+    assert compare("ᚦᛅᛁᛦ᛫ᛋᛁᛏᚢ᛫ᛋᛏᛁᚾ", ": þaiR : situ : stin : suniR")["char_agreement"] == 1.0

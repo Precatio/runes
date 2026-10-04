@@ -21,7 +21,8 @@ from src.research_gaps import certain_carvers, province
 from src.stats import METRICS, attribute, multivariate_permutation_test, summarize
 from src.styles import BY_CODE
 
-MIN_WORDS = 8  # shorter texts give unreliable orthographic rankings
+MIN_WORDS = 8
+STRENGTH_PLURAL = {"stark": "starka", "måttlig": "måttliga", "svag": "svaga"}  # shorter texts give unreliable orthographic rankings
 
 
 def _d(v: float, digits: int = 2) -> str:
@@ -405,13 +406,13 @@ def outcome(rec: dict | None, candidates: list[dict], conflict_list: list[str] |
         else:
             text = f"Litteraturen anger {top['name']}; inga oberoende belägg talar för eller emot."
     elif lv["verdict"] == "nytt":
-        text = (f"Rundata anger ingen ristare. Beläggen pekar på {top['name']} ({top['strength']} belägg) – "
+        text = (f"Rundata anger ingen ristare. Beläggen pekar på {top['name']} ({STRENGTH_PLURAL[top['strength']]} belägg) – "
                 "en hypotes att pröva, inte en attribuering.")
     elif lv["verdict"] == "motsäger":
         text = (f"Beläggen pekar på {top['name']} medan {lv['text'][0].lower() + lv['text'][1:]} "
                 "Värt en omprövning om beläggen är starka.")
     else:
-        text = f"Starkast belägg för {top['name']} ({top['strength']})."
+        text = f"Starkast belägg för {top['name']} ({STRENGTH_PLURAL[top['strength']]} belägg)."
     if conflict_list:
         text += f" {len(conflict_list)} motsägelse{'r' if len(conflict_list) > 1 else ''} mellan källorna redovisas."
     return {"verdict": lv["verdict"], "text": text, "support": support}

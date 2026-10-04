@@ -342,7 +342,7 @@ def evidence_text(evidence: dict, req: SynthesisRequest, candidates: Optional[li
         checks = [x["text"] for x in (c.get("literature"), c.get("geography"), c.get("styles"), c.get("material"),
                                       c.get("language"), c.get("category"), c.get("stone_tests")) if x]
         if checks:
-            lines.append(f"\n--- KONTROLLER FÖR {c['name'].upper()} ({c['strength']} belägg) ---")
+            lines.append(f"\n--- KONTROLLER FÖR {c['name'].upper()} ({c['strength']}a belägg) ---")
             lines += checks
     if conflict_list:
         lines.append("\n--- MOTSÄGELSER MELLAN KÄLLORNA ---")

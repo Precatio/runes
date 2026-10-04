@@ -285,7 +285,7 @@ function CandidateCard({ c }: { c: Candidate }) {
         <div className="flex gap-2 items-center">
           {c.literature && <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full border ${VERDICT_STYLE[c.literature.verdict]}`}>{c.literature.verdict}</span>}
           <span className={`text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border ${STRENGTH_STYLE[c.strength]}`}>
-            {c.strength} belägg{c.score != null && ` · ${num(c.score, 1)}`}
+            {c.strength}a belägg{c.score != null && ` · ${num(c.score, 1)}`}
           </span>
         </div>
       </div>
