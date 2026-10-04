@@ -614,6 +614,17 @@ def facts_text(f: dict) -> str:
             lines.append(f"Kandidat {c['name']}: {c['strength']}a belägg (källor: {', '.join(c.get('sources') or [])})")
         for c in sy.get("conflicts") or []:
             lines.append(f"Motsägelse: {c}")
+    rs = f.get("research") or {}
+    if rs.get("purpose"):
+        lines.append("Inskriftens syfte: " + ", ".join(f"{c['label']} ({round(c['base_rate'] * 100)} % av runstenarna)" for c in rs["purpose"]))
+    for c in rs.get("carvers") or []:
+        cats = "; ".join(f"{x['label']} {x['k']} av {x['n']}" for x in c["categories"])
+        lines.append(f"{c['carver']}: stilgrupp {c['style']} i {c['style_k']} av {c['style_n']} inskrifter med stilgrupp"
+                     + (f"; {cats}" if cats else ""))
+    st = rs.get("status") or {}
+    if st and not st.get("carver"):
+        lines.append("Forskningsluckor: stenen saknar ristare i Rundata" + ("" if rs.get("hypothesis") else
+                     " och finns inte bland de ortografiska hypoteserna."))
     td = f["two_d"].get("result") or {}
     if td.get("predicted_style"):
         lines.append(f"AI-bedömning av stilgrupp från bild (okalibrerad): {td['predicted_style']}")
@@ -721,6 +732,54 @@ def workflow_appendix(wf: dict, signum: str, fig, tab) -> list[dict]:
     return out
 
 
+def research_blocks(rs: dict, signum: str, tab, synthesis: dict | None) -> list[dict]:
+    """Inskriftens syfte och stenens läge i Forskningsluckor (Rundatas täckning, hypoteser, prioriteringar)."""
+    out = []
+    purpose = rs.get("purpose") or []
+    if purpose:
+        out.append(h(2, "Inskriftens syfte"))
+        out.append(p(f"{signum} hör enligt appens katalogisering till "
+                     + ", ".join(f"{c['label'].lower()} ({c['definition'][0].lower() + c['definition'][1:].rstrip('.')}; "
+                                 f"{round(c['base_rate'] * 100)} % av de vikingatida runstenarna med text)" for c in purpose)
+                     + ". Kategorierna sätts med regler på Rundatas normalisering och översättning."))
+    st, prov = rs["status"], rs["province"]
+    out.append(h(2, "Stenen i forskningsläget"))
+    yes = lambda b: "ja" if b else "nej"
+    rows = [
+        ["Ristare i Rundata", st["carver_text"] or "ingen angiven"],
+        ["Säker stilgrupp", f"{yes(st['style'])}{' (' + st['style_text'] + ')' if st['style_text'] else ''}"],
+        ["Osäker tolkning", yes(st["uncertain_interpretation"])],
+        ["Daterad med årtal", yes(st["dated_by_year"])],
+        ["Försvunnen", yes(st["lost"])],
+    ]
+    if prov.get("total"):
+        rows.append([f"{prov['name']}: runstenar med ristare", f"{prov['carver']} av {prov['total']} ({round(100 * prov['carver'] / prov['total'])} %)"
+                     + (" – ristaruppgifterna bygger främst på Axelson (1993)" if prov.get("axelson") else "")])
+        rows.append([f"{prov['name']}: osäkert tolkade / försvunna", f"{prov['uncertain_interpretation']} / {prov['lost']}"])
+    hyp, rec_ = rs.get("hypothesis"), rs.get("reconsider")
+    if hyp:
+        rows.append(["Ortografisk hypotes", f"{hyp['carver']} (likhet {fmt(hyp['similarity'], 2)}, precision "
+                     f"{round((hyp.get('carver_precision') or 0) * 100)} %)"])
+    if rec_:
+        rows.append(["Att ompröva", f"Rundata anger {', '.join(rec_.get('attributed_to') or [])}; ortografin pekar på {rec_['carver']}"])
+    for pr in rs.get("priorities") or []:
+        rows.append(["Mätprioritering", f"föreslås för att mäta {pr['carver']} ({pr['inscriptions']} inskrifter, {pr['measured']} uppmätta)"])
+    for fd in rs.get("findings") or []:
+        rows.append([f"Mot forskningen ({fd['method']})", f"{fd['verdict']}: {fd['assessment']}"])
+    out.append(tab(["", ""], rows, f"{signum} i Forskningsluckor."))
+    if not st["carver"] and not hyp:
+        o = ((synthesis or {}).get("evidence") or {}).get("orthography") or {}
+        r = o.get("ranking") or []
+        why = ""
+        if len(r) >= 2:
+            why = (f" Den ortografiska jämförelsen skiljer inte tydligt mellan ristarna: {r[0]['carver']} "
+                   f"{fmt(r[0]['similarity'], 2)} mot {r[1]['carver']} {fmt(r[1]['similarity'], 2)}, en marginal under 0,05.")
+        out.append(p("Stenen saknar ristare i Rundata men finns inte bland Forskningsluckors ortografiska hypoteser, som "
+                     "kräver likhet minst 0,6, marginal minst 0,05 och minst åtta läsbara ord." + why))
+    out.append(p(rs.get("source_note", "")))
+    return out
+
+
 def build_document(f: dict, author: str, institution: str, ai: dict | None, surface: Surface | None,
                    title: str | None = None) -> list[dict]:
     ai = ai or {}
@@ -798,6 +857,9 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
     blocks.append(p(f"Inskriften är utgiven i Sveriges runinskrifter ({sri_short(sri)}). Tidigare tolkningar och attribueringar bör kontrolleras där och i senare "
                     "litteratur innan resultaten nedan ställs mot dem." if sri else
                     "Hänvisa till stenens utgåva och senare litteratur här."))
+    rs = f.get("research")
+    if rs:
+        blocks += research_blocks(rs, signum, tab, f.get("synthesis"))
 
     # 3. Material and method
     blocks.append(h(1, "3. Material och metod"))
@@ -1031,6 +1093,16 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
                         checks.append(f"{c['name']}, {label}: {c[key]['text']}")
             if checks:
                 blocks.append(bullets(checks))
+        cand_rows = (rs or {}).get("carvers") or []
+        if cand_rows:
+            cats = [c["label"] for c in (rs.get("purpose") or [])]
+            pc = lambda k, n: f"{k} av {n} ({round(100 * k / n)} %)" if n else "–"
+            blocks.append(tab(["Ristare", f"Stilgrupp {cand_rows[0]['style'] or '–'}"] + cats,
+                              [[c["carver"], pc(c["style_k"], c["style_n"])]
+                               + [next((pc(x["k"], x["n"]) for x in c["categories"] if x["label"] == lab), "–") for lab in cats]
+                               for c in cand_rows],
+                              f"Hur ofta kandidaterna ristade i {signum}s stilgrupp och inskriftstyp (säkra inskrifter i "
+                              "Rundata; stilgrupp av inskrifter med säker stilgrupp, typ av vikingatida runstenar med text)."))
         if sy.get("conflicts"):
             blocks.append(p("Motsägelser mellan källorna:"))
             blocks.append(bullets(sy["conflicts"]))

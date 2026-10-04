@@ -172,6 +172,16 @@ def main(argv=None):
     if not synthesis.get("ai_used") and not a.no_ai:
         notes.append("Syntesens AI-text var inte tillgänglig (ingen nyckel, slut på kvot eller tidsgräns); texterna är framräknade.")
 
+    # What Forskningsluckor knows about the stone, its purpose, and the candidates' style (also in the report)
+    if a.signum:
+        names = ",".join(c["name"] for c in (synthesis.get("candidates") or [])[:3])
+        r = requests.get(f"{api}/api/research/stone/{a.signum}", params={"candidates": names}, timeout=300)
+        if r.ok:
+            ctx = r.json()
+            purpose = ", ".join(c["label"].lower() for c in ctx["purpose"]) or "ingen kategori"
+            styles = "; ".join(f"{c['carver']} {c['style'] or '–'} i {c['style_k']} av {c['style_n']}" for c in ctx["carvers"])
+            steps.append({"name": "Forskningsläge och syfte", "result": f"Syfte: {purpose}" + (f". Stilgrupp hos kandidaterna: {styles}" if styles else "")})
+
     # 6. Stone report with the workflow appendix
     log("6/6 Stenrapport …")
     workflow = {"date": datetime.date.today().isoformat(), "steps": steps, "sensitivity": sensitivity,

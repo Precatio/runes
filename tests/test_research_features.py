@@ -320,3 +320,22 @@ def test_unconfirmed_reading_is_never_presented_as_the_stones_text(client):
     md = rep["markdown"]
     assert "kunde inte bekräftas" in md
     assert "hafþi" not in md and "skatt" not in md and "ɔk hwat" not in md  # nothing of the invented text
+
+
+@needs_rundata
+def test_stone_research_context_in_report(client, monkeypatch):
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    ctx = client.get("/api/research/stone/Sö 113", params={"candidates": "Traen"}).json()
+    assert ctx["province"]["code"] == "Sö" and ctx["status"]["carver"] is False
+    assert [c["key"] for c in ctx["purpose"]] == ["minne"]
+    traen = ctx["carvers"][0]
+    assert traen["style"] == "RAK" and 0 < traen["style_k"] < traen["style_n"]
+
+    slices = [{"apex_vinkel_deg": 100 + i, "asymmetri_deg": 3, "spårdjup_mm": 2, "spårbredd_mm": 6,
+               "djup_bredd_kvot": .33, "bottenradie_mm": .2, "ytråhet_mm": .05, "position_mm": i} for i in range(5)]
+    syn = client.post("/api/synthesis/analyze", json={"signum": "Sö 113", "include_geology": False,
+                                                       "analyses": [{"id": "a", "feature_type": "rune", "slices": slices}]}).json()
+    md = client.post("/api/reports/stone", json={"signum": "Sö 113", "use_ai": False, "synthesis": syn,
+                                                 "analyses": [{"feature_type": "rune", "slices": slices}]}).json()["markdown"]
+    assert "Inskriftens syfte" in md and "Stenen i forskningsläget" in md and "Minnesinskrift" in md
+    assert "Stilgrupp RAK" in md  # how often the candidates carved in the stone's style

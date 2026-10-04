@@ -443,7 +443,12 @@ signum, med samma beräkningar som de enskilda verktygen:
 4. **Blind läsning** i en eller flera orienteringar (standard 0° och 180°), validerad mot Rundata, kända
    inskrifter och varandra (avsnitt 7).
 5. **Syntes och attribuering** med berggrund (avsnitt 10 och 12); med inloggning även mot mätkorpusen.
-6. **Stenrapport** (14b) med bilaga A (alla tvärsnitt) och bilaga B: arbetsgångens steg och utfall,
+6. **Forskningsläge och syfte** (`GET /api/research/stone/{signum}`): det Forskningsluckor vet om stenen
+   (landskapets täckning, stenens luckor i Rundata, om den finns bland ortografiska hypoteser, omprövningar
+   eller mätprioriteringar och hur appens resultat bedöms mot forskningen), inskriftens syfte (avsnitt 9) och,
+   för de tre troligaste ristarna, hur ofta de ristade i stenens stilgrupp och inskriftstyp.
+7. **Stenrapport** (14b), med avsnitten "Inskriftens syfte" och "Stenen i forskningsläget", en tabell över
+   kandidaternas stilgrupper och inskriftstyper, bilaga A (alla tvärsnitt) och bilaga B: arbetsgångens steg och utfall,
    känslighetsanalysen, granskningsbilder, relief, 2D-motiveringen, alla läsningar med status och de fel
    eller begränsningar som uppstod.
 

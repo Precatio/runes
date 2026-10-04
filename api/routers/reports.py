@@ -8,6 +8,7 @@ from fastapi.responses import Response
 from pydantic import BaseModel, Field
 
 from api import llm
+from api.routers.research import stone_context
 from api.errors import logger
 from api import mesh_cache
 from api.rundata import store
@@ -141,6 +142,9 @@ def stone_report_endpoint(req: StoneReportRequest,
         raise HTTPException(status_code=400, detail="Högst 3000 tvärsnitt per rapport.")
     facts = stone_report.build_facts(req.model_dump(), store().get)
     facts["geology"] = site_geology(facts["rundata"])
+    # What Forskningsluckor knows about the stone, and the style and inscription types of the top candidates
+    names = [c["name"] for c in ((req.synthesis or {}).get("candidates") or [])[:3]]
+    facts["research"] = stone_context(facts["signum"], names) if facts.get("rundata") else None
     rd = req.reading or {}
     if rd.get("transliteration"):
         facts["reading_validation"] = rd.get("validation") or validate_reading(

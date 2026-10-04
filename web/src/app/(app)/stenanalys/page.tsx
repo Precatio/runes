@@ -28,7 +28,7 @@ interface Reading extends LinguisticResultData { label: string; error?: string }
 const STEPS: [string, string][] = [
   ["upload", "Ladda upp skanningen"], ["images", "Bilder ur skanningen"], ["grooves", "Spåranalys och känslighet"],
   ["twod", "2D-bildanalys"], ["reading", "Blind läsning och validering"], ["synthesis", "Syntes och attribuering"],
-  ["report", "Stenrapport"],
+  ["research", "Forskningsläge och syfte"], ["report", "Stenrapport"],
 ];
 
 const field = "liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm font-semibold outline-none w-full mt-1";
@@ -234,7 +234,27 @@ export default function StoneAnalysisPage() {
       if (useAI && !synthesis.ai_used) notes.push("Syntesens AI-text var inte tillgänglig (ingen nyckel, slut på kvot eller tidsgräns); texterna är framräknade.");
       mark("synthesis", "klart", synthesis.outcome?.text);
 
-      // 7. Report
+      // 7. What Forskningsluckor knows about the stone; purpose; how often the candidates carved in its style
+      if (signum.trim() && rec) {
+        mark("research", "pågår");
+        const names = synthesis.candidates.slice(0, 3).map(c => c.name).join(",");
+        const rr0 = await fetch(`${API_URL}/api/research/stone/${encodeURIComponent(signum.trim())}?candidates=${encodeURIComponent(names)}`);
+        if (rr0.ok) {
+          const ctx: { purpose: { label: string }[]; carvers: { carver: string; style: string | null; style_k: number; style_n: number }[];
+            status: { carver: boolean } } = await rr0.json();
+          const purpose = ctx.purpose.map(c => c.label.toLowerCase()).join(", ") || "ingen kategori";
+          const styles = ctx.carvers.map(c => `${c.carver} ${c.style ?? "–"} i ${c.style_k} av ${c.style_n}`).join("; ");
+          const text = `Syfte: ${purpose}${styles ? `. Stilgrupp hos kandidaterna: ${styles}` : ""}`;
+          wfSteps.push({ name: "Forskningsläge och syfte", result: text });
+          mark("research", "klart", text);
+        } else {
+          mark("research", "misslyckades", await detail(rr0, "Forskningsläget kunde inte hämtas"));
+        }
+      } else {
+        mark("research", "hoppades över", "inget signum i Rundata");
+      }
+
+      // 8. Report
       mark("report", "pågår");
       const body = {
         signum, author: userName, institution: userInstitution,
