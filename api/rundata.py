@@ -11,7 +11,20 @@ from typing import Optional
 
 from fastapi import HTTPException
 
+from src import research_gaps as gaps
 from src.signum import fold_signum
+
+# Filters with the same definitions as the research-gaps overview (Swedish Viking Age runestones)
+GAP_FILTERS = {
+    "runestone": gaps.is_runestone,
+    "carver": lambda r: gaps.is_runestone(r) and gaps.has_carver(r),
+    "no_carver": lambda r: gaps.is_runestone(r) and not gaps.has_carver(r),
+    "style": lambda r: gaps.is_runestone(r) and gaps.has_style(r),
+    "no_style": lambda r: gaps.is_runestone(r) and not gaps.has_style(r),
+    "dated": lambda r: gaps.is_runestone(r) and gaps.is_dated_by_year(r),
+    "uncertain_interpretation": lambda r: gaps.is_runestone(r) and gaps.uncertain_interpretation(r),
+    "lost": lambda r: gaps.is_runestone(r) and r["flags"]["lost"],
+}
 
 DATA_PATH = os.environ.get(
     "RUNDATA_PATH",
@@ -50,10 +63,17 @@ class RundataStore:
         return found
 
     def search(self, q: str = "", carver: str = "", style: str = "", period: str = "",
-               province: str = "", has_coords: bool = False, limit: int = 50, offset: int = 0):
+               province: str = "", has_coords: bool = False, limit: int = 50, offset: int = 0,
+               gap: str = "", signa: str = ""):
         q_l, carver_l = q.lower().strip(), carver.lower().strip()
+        gap_test = GAP_FILTERS.get(gap)
+        wanted = {fold_signum(x) for x in signa.split(",") if x.strip()} if signa else None
         results = []
         for rec in self.inscriptions:
+            if gap_test and not gap_test(rec):
+                continue
+            if wanted is not None and fold_signum(rec["signum"]) not in wanted:
+                continue
             if has_coords and rec["lat"] is None:
                 continue
             if province and rec["signum"].split(" ")[0] != province:

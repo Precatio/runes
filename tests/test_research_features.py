@@ -198,3 +198,19 @@ def test_own_reading_used_in_synthesis_for_new_finds(client, monkeypatch):
     top = r["candidates"][0]
     assert top["name"] == "Balle" and top["sources"] == ["Ortografi (vår läsning)"]
     assert any("egen AI-läsning" in m for m in r["missing"])
+
+
+@needs_rundata
+def test_gap_filters_match_the_coverage_table(client):
+    from api.rundata import store
+    from src.research_gaps import coverage
+
+    rows = {r["code"]: r for r in coverage(store().inscriptions, set())["per_province"]}
+    for gap, key in [("runestone", "total"), ("carver", "carver"), ("style", "style"), ("dated", "dated"),
+                     ("uncertain_interpretation", "uncertain_interpretation"), ("lost", "lost")]:
+        for prov in ("U", "Sö", "Ög"):
+            got = client.get("/api/rundata/search", params={"province": prov, "gap": gap, "limit": 1}).json()["total"]
+            assert got == rows[prov][key], (gap, prov)
+    no_carver = client.get("/api/rundata/search", params={"province": "Sö", "gap": "no_carver", "limit": 1}).json()["total"]
+    assert no_carver == rows["Sö"]["total"] - rows["Sö"]["carver"]
+    assert client.get("/api/rundata/search", params={"signa": "U 344,So 212", "limit": 5}).json()["total"] == 2

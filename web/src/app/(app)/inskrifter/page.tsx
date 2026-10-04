@@ -215,6 +215,18 @@ function InscriptionDetail({ signum, meta }: { signum: string; meta: RundataMeta
   );
 }
 
+// Filters from the research-gaps overview (same definitions as there)
+const GAP_LABEL: Record<string, string> = {
+  runestone: "vikingatida runstenar",
+  carver: "runstenar med ristare",
+  no_carver: "runstenar utan ristare",
+  style: "runstenar med säker stilgrupp",
+  no_style: "runstenar utan säker stilgrupp",
+  dated: "runstenar daterade med årtal",
+  uncertain_interpretation: "osäkert tolkade runstenar",
+  lost: "försvunna runstenar",
+};
+
 function InscriptionsContent() {
   const params = useSearchParams();
   const router = useRouter();
@@ -225,11 +237,13 @@ function InscriptionsContent() {
   const [period, setPeriod] = useState(params.get("period") ?? "");
   const [style, setStyle] = useState(params.get("style") ?? "");
   const [carver, setCarver] = useState(params.get("carver") ?? "");
+  const [gap, setGap] = useState(params.get("gap") ?? "");
+  const [signa, setSigna] = useState(params.get("signa") ?? "");
   const [carvers, setCarvers] = useState<string[]>([]);
   const [offset, setOffset] = useState(0);
   const [response, setResponse] = useState<{ key: string; total: number; results: Inscription[] } | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const queryKey = JSON.stringify({ q, province, period, style, carver, offset });
+  const queryKey = JSON.stringify({ q, province, period, style, carver, gap, signa, offset });
   const results = response;
   const loading = response?.key !== queryKey;
 
@@ -243,6 +257,8 @@ function InscriptionsContent() {
     setPeriod(params.get("period") ?? "");
     setStyle(params.get("style") ?? "");
     setCarver(params.get("carver") ?? "");
+    setGap(params.get("gap") ?? "");
+    setSigna(params.get("signa") ?? "");
     setOffset(0);
   }
 
@@ -254,11 +270,11 @@ function InscriptionsContent() {
   useEffect(() => {
     if (signum) return;
     let cancelled = false;
-    rundata.search({ q, province, period, style, carver, limit: PAGE, offset })
+    rundata.search({ q, province, period, style, carver, gap: gap || undefined, signa: signa || undefined, limit: PAGE, offset })
       .then(r => { if (!cancelled) { setResponse({ key: queryKey, ...r }); setError(null); } })
       .catch(e => { if (!cancelled) setError(e instanceof Error ? e.message : "Sökningen misslyckades."); });
     return () => { cancelled = true; };
-  }, [queryKey, q, province, period, style, carver, offset, signum]);
+  }, [queryKey, q, province, period, style, carver, gap, signa, offset, signum]);
 
   const select = "liquid-glass-input-wrapper rounded-xl px-3 py-2 text-slate-900 text-sm font-semibold outline-none";
 
@@ -304,6 +320,17 @@ function InscriptionsContent() {
             </select>
           </div>
 
+          {(gap || signa) && (
+            <div className="flex flex-wrap items-center gap-2 text-sm">
+              <span className="px-3 py-1.5 rounded-xl bg-slate-900 text-white font-semibold">
+                Urval: {gap ? GAP_LABEL[gap] ?? gap : ""}{gap && signa ? ", " : ""}{signa ? `uppmätta stenar (${signa.split(",").filter(Boolean).length})` : ""}
+                {province && ` i ${province}`}
+              </span>
+              <span className="text-xs text-slate-500">från Forskningsluckor</span>
+              <button onClick={() => { setGap(""); setSigna(""); setOffset(0); router.push("/inskrifter" + (province ? `?province=${encodeURIComponent(province)}` : "")); }}
+                className="px-3 py-1.5 rounded-xl bg-white border border-slate-300 text-xs font-bold hover:border-slate-900">Ta bort urvalet</button>
+            </div>
+          )}
           {error && <p className="text-red-700 font-semibold">{error}</p>}
           {results && (
             <div className="liquid-glass-island rounded-[32px] p-4">

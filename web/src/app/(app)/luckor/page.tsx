@@ -121,6 +121,7 @@ export default function GapsPage() {
   const { user } = useAuth();
   const [data, setData] = useState<Gaps | null>(null);
   const [found, setFound] = useState<Findings | null>(null);
+  const [measuredSigna, setMeasuredSigna] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("findings");
 
@@ -148,7 +149,7 @@ export default function GapsPage() {
             corpus: entries.map(e => ({ signum: e.signum, feature_type: e.feature_type, means: e.means })), styles,
           }),
         ]);
-        if (!cancelled) { setData(gaps); setFound(findings); }
+        if (!cancelled) { setData(gaps); setFound(findings); setMeasuredSigna([...new Set(entries.map(e => e.signum))]); }
       } catch (e) {
         if (!cancelled) setError(e instanceof Error ? e.message : "Kunde inte hämta översikten.");
       }
@@ -181,25 +182,30 @@ export default function GapsPage() {
 
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
         {[
-          ["Runstenar", `${t.total}`, ""],
-          ["Med ristare", `${pct(t.carver, t.total)} %`, `${t.total - t.carver} saknar`],
-          ["Med säker stilgrupp", `${pct(t.style, t.total)} %`, `${t.total - t.style} saknar`],
-          ["Daterade med årtal", `${t.dated}`, `${pct(t.dated, t.total)} %`],
-          ["Uppmätta i korpusen", `${t.measured}`, user ? "" : "logga in för att se"],
-        ].map(([label, value, sub]) => (
-          <div key={label} className="liquid-glass-island rounded-[24px] p-5">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500">{label}</div>
-            <div className="text-3xl font-bold text-slate-900 mt-1">{value}</div>
-            {sub && <div className="text-xs text-slate-500 mt-0.5">{sub}</div>}
-          </div>
-        ))}
+          ["Runstenar", `${t.total}`, "", gapHref("runestone")],
+          ["Med ristare", `${pct(t.carver, t.total)} %`, `${t.total - t.carver} saknar`, gapHref("no_carver")],
+          ["Med säker stilgrupp", `${pct(t.style, t.total)} %`, `${t.total - t.style} saknar`, gapHref("no_style")],
+          ["Daterade med årtal", `${t.dated}`, `${pct(t.dated, t.total)} %`, gapHref("dated")],
+          ["Uppmätta i korpusen", `${t.measured}`, user ? "" : "logga in för att se", measuredSigna.length ? signaHref(measuredSigna) : ""],
+        ].map(([label, value, sub, href]) => {
+          const body = (
+            <>
+              <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500">{label}</div>
+              <div className="text-3xl font-bold text-slate-900 mt-1">{value}</div>
+              {sub && <div className="text-xs text-slate-500 mt-0.5">{sub}</div>}
+            </>
+          );
+          return href
+            ? <Link key={label} href={href} className="liquid-glass-island rounded-[24px] p-5 hover:ring-2 hover:ring-slate-900/20 transition">{body}</Link>
+            : <div key={label} className="liquid-glass-island rounded-[24px] p-5">{body}</div>;
+        })}
       </div>
 
       <div className="rounded-2xl bg-amber-50 border border-amber-200 px-5 py-3 text-sm text-amber-900">
         <strong>Läs med källkritik:</strong> {data.source_note}
       </div>
 
-      <ProvinceTable rows={data.coverage.per_province} />
+      <ProvinceTable rows={data.coverage.per_province} measuredSigna={measuredSigna} />
 
       <div className="flex flex-wrap gap-2">
         {tabs.map(([key, label, n]) => (
@@ -229,7 +235,26 @@ export default function GapsPage() {
 
 const TH_ROW = "text-left text-[11px] uppercase tracking-wider text-slate-500";
 
-function ProvinceTable({ rows }: { rows: ProvinceRow[] }) {
+// Links to the inscriptions behind a number: same definitions as in the table
+const gapHref = (gap: string, province?: string) =>
+  `/inskrifter?gap=${gap}${province ? `&province=${encodeURIComponent(province)}` : ""}`;
+const signaHref = (signa: string[]) => `/inskrifter?signa=${encodeURIComponent(signa.join(","))}`;
+const CELL_LINK = "hover:text-[#b7410e] hover:underline decoration-[#b7410e]/40 underline-offset-2";
+
+function BarLink({ value, total, color, has, missing }: { value: number; total: number; color: string; has: string; missing: string }) {
+  return (
+    <div className="flex items-center gap-2">
+      <Link href={has} title={`Visa de ${value} som har uppgiften`} className="flex-1"><Bar value={value} total={total} color={color} /></Link>
+      {total - value > 0 && (
+        <Link href={missing} title={`Visa de ${total - value} som saknar uppgiften`} className="text-[11px] text-slate-500 whitespace-nowrap hover:text-[#b7410e]">
+          {total - value} saknar
+        </Link>
+      )}
+    </div>
+  );
+}
+
+function ProvinceTable({ rows, measuredSigna }: { rows: ProvinceRow[]; measuredSigna: string[] }) {
   const { sorted, header } = useSorted(rows, {
     name: r => r.name, total: r => r.total, carver: r => r.carver / r.total, style: r => r.style / r.total,
     uncertain: r => r.uncertain_interpretation, lost: r => r.lost, measured: r => r.measured,
@@ -250,12 +275,17 @@ function ProvinceTable({ rows }: { rows: ProvinceRow[] }) {
                 <Link href={`/inskrifter?province=${encodeURIComponent(r.code)}`} className="hover:text-[#b7410e]">{r.name}</Link>
                 {r.axelson && <span className="ml-2 text-[10px] font-bold text-slate-400" title="Ristaruppgifter främst ur Axelson 1993">AXELSON</span>}
               </td>
-              <td className="p-2">{r.total}</td>
-              <td className="p-2"><Bar value={r.carver} total={r.total} color="#b7410e" /></td>
-              <td className="p-2"><Bar value={r.style} total={r.total} color="#0369a1" /></td>
-              <td className="p-2">{r.uncertain_interpretation}</td>
-              <td className="p-2">{r.lost}</td>
-              <td className="p-2">{r.measured}</td>
+              <td className="p-2"><Link href={gapHref("runestone", r.code)} className={CELL_LINK}>{r.total}</Link></td>
+              <td className="p-2"><BarLink value={r.carver} total={r.total} color="#b7410e" has={gapHref("carver", r.code)} missing={gapHref("no_carver", r.code)} /></td>
+              <td className="p-2"><BarLink value={r.style} total={r.total} color="#0369a1" has={gapHref("style", r.code)} missing={gapHref("no_style", r.code)} /></td>
+              <td className="p-2"><Link href={gapHref("uncertain_interpretation", r.code)} className={CELL_LINK}>{r.uncertain_interpretation}</Link></td>
+              <td className="p-2"><Link href={gapHref("lost", r.code)} className={CELL_LINK}>{r.lost}</Link></td>
+              <td className="p-2">
+                {(() => {
+                  const here = measuredSigna.filter(sg => sg.split(" ")[0] === r.code);
+                  return here.length ? <Link href={signaHref(here)} className={CELL_LINK}>{r.measured}</Link> : r.measured;
+                })()}
+              </td>
             </tr>
           ))}
         </tbody>
