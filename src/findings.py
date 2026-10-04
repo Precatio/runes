@@ -30,7 +30,7 @@ import numpy as np
 from src.research_gaps import (AXELSON_PROVINCES, carver_home, certain_carvers, has_carver, has_style,
                                is_runestone, model_carvers, province)
 from src.stats import METRICS, attribute
-from src.synthesis import smoothed_precision
+from src.synthesis import language_check, material_check, smoothed_precision
 
 VERDICTS = ("stämmer", "nytt", "motsäger")
 
@@ -86,6 +86,21 @@ def assessment(verdict: str, evidence: float, novelty: float, relevance_: float,
     if evidence >= 0.5 and score >= 0.15:
         return "Värd en omprövning"
     return "Avvikelse – troligen osäkerhet i metoden"
+
+
+def stone_extras(rec: dict, carver: str | None, inscriptions: list[dict], names) -> dict:
+    """Bergart och språkdrag för en sten, jämförda med den föreslagna ristaren."""
+    out = {"material": rec.get("material") or None, "material_fit": None, "language": None}
+    if carver:
+        m = material_check(rec, carver, inscriptions)
+        if m:
+            out["material_fit"] = m["fits"]
+            out["material_text"] = m["text"]
+        lang = language_check(rec, carver, inscriptions, names)
+        if lang:
+            out["language"] = {"agree": lang["agree"], "comparable": lang["comparable"], "text": lang["text"],
+                               "fits": lang["fits"]}
+    return out
 
 
 def _finding(rec, method, verdict, ours, existing, evidence, novelty, rel, reasons, independent, **extra) -> dict:
@@ -257,6 +272,15 @@ def style_findings(styles: list[dict], lookup, inscriptions: list[dict]) -> list
                             {"belägg": ev_reasons, "nyhet": [nov], "relevans": rel_reasons},
                             independent=True, suggested=ai))
     return out
+
+
+def add_extras(findings: list[dict], lookup, inscriptions: list[dict], names) -> list[dict]:
+    for f in findings:
+        rec = lookup(f["signum"])
+        if rec:
+            f.update(stone_extras(rec, f.get("suggested") if f["method"] != "stilgrupp (AI, bild)" else None,
+                                  inscriptions, names))
+    return findings
 
 
 def summarize(findings: list[dict]) -> dict:

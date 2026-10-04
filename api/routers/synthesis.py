@@ -63,6 +63,8 @@ class SynthesisRequest(BaseModel):
     corpus_note: Optional[str] = None  # t.ex. "logga in för att jämföra med korpusen"
     # Appens egen läsning från Språk & Fonetik: {transliteration, normalization}
     reading: Optional[dict] = None
+    # Berggrunden på platsen ur SGU:s karta (nätverksanrop, några sekunder första gången)
+    include_geology: bool = True
 
 
 class Evidence(BaseModel):
@@ -82,6 +84,8 @@ class AttributionCandidate(BaseModel):
     geography: Optional[dict] = None
     styles: Optional[dict] = None  # ristarens stilgrupper och datering
     stone_tests: Optional[dict] = None  # permutationstest mot kandidatens uppmätta stenar
+    material: Optional[dict] = None  # stenens bergart mot ristarens stenar
+    language: Optional[dict] = None  # språkdrag (fonetisk stil och språkbruk) mot ristarens inskrifter
     first_in: List[str] = Field(default_factory=list)  # källor där kandidaten kommer först
 
 
@@ -201,6 +205,8 @@ def collect_evidence(req: SynthesisRequest) -> dict:
     evidence["analysis_used"] = {"id": (selected or {}).get("id"), "feature_type": feature_type,
                                  "n": len(query_slices), "saved_at": (selected or {}).get("savedAt")}
 
+    if req.include_geology:
+        evidence["geology"] = syn.site_geology(rec)
     if req.two_d and req.two_d.get("predicted_style"):
         ai_style = str(req.two_d["predicted_style"])
         rd_style = (evidence.get("rundata") or {}).get("style")
@@ -234,10 +240,13 @@ def enrich_candidates(evidence: dict, candidates: list[dict]) -> list[dict]:
     stones = evidence.get("_candidate_stones") or {}
     for c in candidates:
         c["literature"] = syn.literature_verdict(rec, c["name"])
+    names = orthography_model().names
     for c in candidates[:3]:
         if rec:
             c["geography"] = syn.geography(rec, c["name"], s.inscriptions, home)
             c["styles"] = syn.carver_styles(rec, c["name"], s.inscriptions)
+            c["material"] = syn.material_check(rec, c["name"], s.inscriptions)
+            c["language"] = syn.language_check(rec, c["name"], s.inscriptions, names)
         if stones.get(c["name"]) and evidence.get("_query"):
             c["stone_tests"] = syn.stone_tests(evidence["_query"], stones[c["name"]])
     return candidates
@@ -313,8 +322,13 @@ def evidence_text(evidence: dict, req: SynthesisRequest, candidates: Optional[li
                    "skiljer sig från Rundata" if sc["rundata_style"] else "Rundata saknar stilgrupp")
         lines.append(f"AI (okalibrerad, från bild): {sc['ai_style']}; Rundata: {sc['rundata_style'] or 'uppgift saknas'} – {verdict}.")
 
+    geo = evidence.get("geology")
+    if geo:
+        lines.append("\n--- BERGGRUND PÅ PLATSEN (SGU) ---")
+        lines.append(geo["text"] + " " + geo["caveat"])
     for c in candidates or []:
-        checks = [x["text"] for x in (c.get("literature"), c.get("geography"), c.get("styles"), c.get("stone_tests")) if x]
+        checks = [x["text"] for x in (c.get("literature"), c.get("geography"), c.get("styles"), c.get("material"),
+                                      c.get("language"), c.get("stone_tests")) if x]
         if checks:
             lines.append(f"\n--- KONTROLLER FÖR {c['name'].upper()} ({c['strength']} belägg) ---")
             lines += checks

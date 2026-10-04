@@ -14,6 +14,8 @@ from collections import Counter
 
 import numpy as np
 
+from src import geology
+from src.language_profile import carver_profile, compare as compare_language, traits as language_traits
 from src.research_gaps import certain_carvers, province
 from src.stats import METRICS, attribute, multivariate_permutation_test, summarize
 from src.styles import BY_CODE
@@ -203,6 +205,43 @@ def carver_styles(rec: dict | None, carver: str, inscriptions: list[dict]) -> di
     return {"styles": dict(styles), "span": list(span) if span else None, "fits": fits, "text": text}
 
 
+def material_check(rec: dict, carver: str, inscriptions: list[dict]) -> dict | None:
+    """Stenens bergart mot bergarterna på ristarens säkra stenar (Rundata)."""
+    material = (rec or {}).get("material") or ""
+    prof = geology.carver_materials(carver, inscriptions, certain_carvers)
+    if not material or prof["n"] < 3:
+        return None
+    fams = geology.families(material)
+    used = {f for f, share in prof["families"].items() if share >= 0.1}
+    fits = bool(fams & used) if fams else None
+    listing = ", ".join(f"{m} ({n})" for m, n in prof["materials"][:4])
+    text = f"Stenen: {material}. Säkra stenar av {carver} med uppgift ({prof['n']}): {listing}."
+    if fits is False:
+        text += " Bergarten förekommer sällan eller aldrig hos ristaren."
+    return {"material": material, "fits": fits, "carver": prof, "text": text}
+
+
+def language_check(rec: dict, carver: str, inscriptions: list[dict], names) -> dict | None:
+    stone = language_traits(rec, names)
+    if not stone:
+        return None
+    profile = carver_profile(carver, inscriptions, certain_carvers, names, exclude=rec["signum"])
+    if profile["n_inscriptions"] < 3:
+        return None
+    c = compare_language(stone, profile)
+    c["fits"] = None if c["comparable"] < 2 else c["agree"] / c["comparable"] >= 0.5
+    return c
+
+
+def site_geology(rec: dict | None) -> dict | None:
+    if not rec or rec.get("lat") is None or not geology.enabled():
+        return None
+    try:
+        return geology.bedrock(rec["lat"], rec["lon"], rec.get("material") or "")
+    except Exception:
+        return None
+
+
 def literature_verdict(rec: dict | None, carver: str) -> dict:
     cs = (rec or {}).get("carvers") or []
     names = {c["name"]: c for c in cs}
@@ -300,6 +339,12 @@ def conflicts(ev: dict, candidates: list[dict]) -> list[str]:
         st = cand.get("styles") or {}
         if st.get("fits") is False:
             out.append(f"{cand['name']}: stenens stilgrupp {rec['style']} förekommer inte på ristarens säkra stenar.")
+        lang = cand.get("language") or {}
+        if lang.get("fits") is False:
+            out.append(f"{cand['name']}: bara {lang['agree']} av {lang['comparable']} språkdrag stämmer med ristarens inskrifter.")
+        mat = cand.get("material") or {}
+        if mat.get("fits") is False:
+            out.append(f"{cand['name']}: stenens bergart ({mat['material']}) förekommer sällan hos ristaren.")
         tests = cand.get("stone_tests") or {}
         if tests.get("n") and tests["compatible"] == 0:
             out.append(f"{cand['name']}: huggtekniken skiljer sig signifikant från alla {tests['n']} uppmätta stenar av ristaren.")

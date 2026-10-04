@@ -210,6 +210,45 @@ Källkod: `api/routers/phonetics.py`, `src/reading.py`.
 * **Uppläsning:** en modern talsyntes läser normaliseringen. Det är inte en rekonstruktion av uttalet;
   IPA-raden är modellens förslag och ljudlagarna är inte kontrollerade.
 
+### 7g. Bergart och berggrund
+
+Källkod: `src/geology.py`, `GET /api/research/geology/{signum}`.
+
+* Stenens material i Rundata (fältbenämningar som "röd granit", "gråsten", "kalksten") förs till
+  bergartsfamiljer (granit och närstående, gnejs och migmatit, sandsten, kalksten och marmor, basiska,
+  vulkaniska, kvartsit, metasediment). "Gråsten" räknas till både granit och gnejs.
+* Berggrunden hämtas ur SGU:s berggrundskarta 1:50 000–1:250 000 (WMS GetFeatureInfo) på platsen och i
+  ett rutnät med 2,5 km mellanrum inom 10 km (49 provpunkter). Svaren cachas.
+* Utfall: samma familj **på platsen**, **i närheten** (andel provpunkter), **inte i närheten** eller okänt.
+* Källkritik: runstenar är ofta flyttblock eller transporterade (t.ex. Öl 1 av smålandsporfyr på Ölands
+  sand- och kalksten). En avvikelse är en ledtråd om stenens ursprung, inte ett fel. Kartan täcker bara
+  Sverige.
+* I syntesen och Forskningsluckor jämförs även stenens bergart med bergarterna på ristarens säkra stenar.
+
+### 7h. Språkdrag (fonetisk stil och språkbruk)
+
+Källkod: `src/language_profile.py`, `GET /api/research/language/{signum}`. Dragen läses ur Rundata genom
+att translitterationen paras ord för ord med normaliseringen:
+
+| Grupp | Drag | Definition |
+|---|---|---|
+| Ljud | Diftongen ai i *sten* | stæinn skrivet ai/ia (bevarad) eller i/e (monoftongerad) |
+| Ljud | Diftongen au i *och* | ok skrivet auk eller uk/ok/ak |
+| Ljud | Nasal före konsonant | n/m utskrivet eller utelämnat (bonta mot buta, kumbl mot kubl) |
+| Ljud | h-bortfall | h i hans, hialpi skrivet eller inte |
+| Ljud | Stungna runor | e, g, d, y används |
+| Bruk | *efter* | första vokal och slut i æftiR |
+| Bruk | *denna* | þina, þino, þana, þena |
+| Bruk | Kristen bön, själsbön | Guð hialpi …, and/sálu |
+| Bruk | Ristarsignatur | risti, hjó, markaði … |
+| Bruk | *runor* | runaR, runa, runar |
+
+Ett drag räknas bara där inskriften har ordet. Ristarens profil är fördelningen över dennes säkra
+inskrifter (stenen själv utesluten). Stenen stämmer i ett drag när värdet är ristarens vanligaste eller
+förekommer i minst hälften av ristarens inskrifter med ordet. Dragen påverkas också av dialekt, tid och
+beställare. De redovisas som kontroll och vägs inte in i kandidaternas poäng, eftersom stavningsdragen
+delvis överlappar den ortografiska jämförelsen.
+
 ### 7b. 2D-analys och runformer
 
 * AI-bedömningen av en bild (stilgrupp Pr1–Pr5, RAK, Fp eller **Osäker**, runformer, translitterering) är en

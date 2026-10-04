@@ -3,6 +3,7 @@ import { API_URL } from "@/lib/api";
 import type { CorpusEntry } from "@/lib/corpus";
 import type { GrooveAnalysisRecord, ProjectData } from "@/lib/db";
 import { METRICS, type Metric, type Summary } from "@/lib/metrics";
+import type { Geology, LanguageComparison } from "@/components/StoneContext";
 
 export type LiteratureVerdict = "stämmer" | "stämmer delvis" | "nytt" | "motsäger" | "okänt" | "inget";
 
@@ -18,6 +19,8 @@ export interface Candidate {
   geography?: { in_area: boolean; nearest_km: number | null; provinces: Record<string, number>; plausible: boolean; text: string };
   styles?: { styles: Record<string, number>; span: [number, number] | null; fits: boolean | null; text: string };
   stone_tests?: { tests: { signum: string; n: number; p_value: number | null; compatible: boolean }[]; compatible: number; n: number; text: string };
+  material?: { material: string; fits: boolean | null; text: string } | null;
+  language?: (LanguageComparison & { fits: boolean | null }) | null;
 }
 
 export interface OrthographyItem {
@@ -44,6 +47,7 @@ export interface SynthesisResult {
     measurements_by_feature?: Record<string, { n: number; summary: Record<Metric, Summary> }> | null;
     style_check?: { ai_style: string; ai_confidence?: number; rundata_style: string | null; agrees: boolean; note: string };
     reading_check?: { char_agreement: number; word_agreement: number; coverage: number; summary: string };
+    geology?: Omit<Geology, "signum" | "place"> | null;
     rundata?: { carver_raw: string; style: string | null; dating: string; material: string; place: string } | null;
   };
 }

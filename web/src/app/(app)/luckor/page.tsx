@@ -6,15 +6,41 @@ import { API_URL } from "@/lib/api";
 import { corpus } from "@/lib/corpus";
 import { db } from "@/lib/db";
 import { useAuth } from "@/components/AuthContext";
+import { GeologyBox, LanguageTraits } from "@/components/StoneContext";
 
 interface ProvinceRow {
   code: string; name: string; axelson: boolean; total: number; carver: number; style: number; dated: number;
   uncertain_interpretation: number; lost: number; measured: number;
 }
-interface Hypothesis {
+interface Hypothesis extends StoneExtras {
   signum: string; place: string; province: string; style: string | null; carver: string; similarity: number;
   margin: number; runner_up: string; n_words: number; in_carver_area: boolean; carver_area: string[];
   carver_precision: number | null; short_text: boolean; attributed_to?: string[];
+}
+
+// Rock type and language traits of the stone, compared with the suggested carver
+interface StoneExtras {
+  material: string | null; material_fit: boolean | null; material_text?: string;
+  language: { agree: number; comparable: number; text: string; fits: boolean | null } | null;
+}
+
+function MaterialCell({ x }: { x: StoneExtras }) {
+  if (!x.material) return <span className="text-slate-400">–</span>;
+  const mark = x.material_fit === true ? "✓" : x.material_fit === false ? "!" : "";
+  return (
+    <span title={x.material_text ?? ""} className={x.material_fit === false ? "text-amber-800" : ""}>
+      {x.material} {mark && <span className={`font-bold ${x.material_fit ? "text-emerald-700" : "text-amber-700"}`}>{mark}</span>}
+    </span>
+  );
+}
+
+function LanguageCell({ x }: { x: StoneExtras }) {
+  if (!x.language || !x.language.comparable) return <span className="text-slate-400">–</span>;
+  return (
+    <span title={x.language.text} className={x.language.fits === false ? "text-amber-800 font-semibold" : ""}>
+      {x.language.agree}/{x.language.comparable}
+    </span>
+  );
 }
 interface Priority {
   carver: string; inscriptions: number; signed: number; measured: number; measured_signa: string[];
@@ -31,7 +57,7 @@ interface Gaps {
 }
 
 type Verdict = "stämmer" | "nytt" | "motsäger";
-interface Finding {
+interface Finding extends StoneExtras {
   signum: string; place: string; province: string; method: string; verdict: Verdict; ours: string; existing: string;
   evidence: number; novelty: number; relevance: number; score: number; assessment: string; suggested?: string;
   reasons: { belägg: string[]; nyhet: string[]; relevans: string[] };
@@ -308,6 +334,7 @@ function FindingsPanel({ data, loggedIn }: { data: Findings; loggedIn: boolean }
     signum: f => f.signum, place: f => f.place, method: f => f.method, verdict: f => f.verdict,
     suggested: f => f.suggested, existing: f => f.existing, evidence: f => f.evidence, novelty: f => f.novelty,
     relevance: f => f.relevance, score: f => f.score, assessment: f => f.assessment,
+    material: f => f.material, language: f => (f.language?.comparable ? f.language.agree / f.language.comparable : null),
   }, { key: "score", desc: true });
   const c = data.summary.counts;
   return (
@@ -347,6 +374,8 @@ function FindingsPanel({ data, loggedIn }: { data: Findings; loggedIn: boolean }
             <tr className={TH_ROW}>
               {header("signum", "Sten")}{header("method", "Metod")}{header("verdict", "Mot forskningen")}
               {header("suggested", "Vårt resultat")}{header("existing", "Rundata")}
+              {header("material", "Bergart", "Stenens material i Rundata; ✓ = förekommer på den föreslagna ristarens stenar, ! = sällan")}
+              {header("language", "Språkdrag", "Hur många jämförbara språkdrag (ljud och språkbruk) som stämmer med den föreslagna ristaren")}
               {header("evidence", "Belägg", "Hur pålitlig analysen är i just detta fall")}
               {header("novelty", "Nyhet", "Hur mycket fyndet tillför jämfört med Rundata")}
               {header("relevance", "Relevans", "Landskapets kunskapsläge, ristarens betydelse, om stenen finns kvar")}
@@ -381,6 +410,8 @@ function FindingRow({ f, open, onToggle }: { f: Finding; open: boolean; onToggle
         <td className="p-2"><span className={`px-2 py-0.5 rounded-lg border text-xs font-bold ${VERDICT_STYLE[f.verdict]}`}>{f.verdict}</span></td>
         <td className="p-2 text-xs max-w-[260px]">{f.ours}</td>
         <td className="p-2 text-xs">{f.existing}</td>
+        <td className="p-2 text-xs"><MaterialCell x={f} /></td>
+        <td className="p-2 text-xs"><LanguageCell x={f} /></td>
         <td className="p-2"><Score value={f.evidence} /></td>
         <td className="p-2"><Score value={f.novelty} /></td>
         <td className="p-2"><Score value={f.relevance} /></td>
@@ -389,7 +420,7 @@ function FindingRow({ f, open, onToggle }: { f: Finding; open: boolean; onToggle
       </tr>
       {open && (
         <tr className="bg-white/50">
-          <td colSpan={10} className="p-3 text-xs text-slate-700">
+          <td colSpan={12} className="p-3 text-xs text-slate-700">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {(["belägg", "nyhet", "relevans"] as const).map(k => (
                 <div key={k}>
@@ -397,6 +428,17 @@ function FindingRow({ f, open, onToggle }: { f: Finding; open: boolean; onToggle
                   <ul className="list-disc pl-4 space-y-0.5">{f.reasons[k].map((r, i) => <li key={i}>{r}</li>)}</ul>
                 </div>
               ))}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3 pt-3 border-t border-slate-900/5">
+              <div className="space-y-2">
+                <div className="font-bold uppercase tracking-wider text-[10px] text-slate-500">Bergart</div>
+                <p>{f.material_text ?? (f.material ? `Stenen: ${f.material}.` : "Rundata anger inget material.")}</p>
+                <GeologyBox signum={f.signum} />
+              </div>
+              <div className="space-y-2">
+                <div className="font-bold uppercase tracking-wider text-[10px] text-slate-500">Språkdrag (fonetisk stil och språkbruk)</div>
+                {f.suggested && f.method !== "stilgrupp (AI, bild)" ? <LanguageTraits signum={f.signum} carver={f.suggested} /> : <LanguageTraits signum={f.signum} />}
+              </div>
             </div>
           </td>
         </tr>
@@ -409,7 +451,8 @@ function HypothesisTable({ rows, reconsider, ev }: { rows: Hypothesis[]; reconsi
   const { sorted, header } = useSorted(rows, {
     signum: h => h.signum, place: h => h.place, attributed: h => h.attributed_to?.join(", "), carver: h => h.carver,
     similarity: h => h.similarity, margin: h => h.margin, precision: h => h.carver_precision,
-    area: h => h.in_carver_area, words: h => h.n_words,
+    area: h => h.in_carver_area, words: h => h.n_words, material: h => h.material,
+    language: h => (h.language?.comparable ? h.language.agree / h.language.comparable : null),
   }, { key: "precision", desc: true });
   return (
     <>
@@ -428,6 +471,8 @@ function HypothesisTable({ rows, reconsider, ev }: { rows: Hypothesis[]; reconsi
               {reconsider && header("attributed", "Rundata")}
               {header("carver", "Ortografin pekar mot")}{header("similarity", "Likhet")}{header("margin", "Marginal")}
               {header("precision", "Precision")}{header("area", "Inom ristarens område")}{header("words", "Ord")}
+              {header("material", "Bergart", "✓ = bergarten förekommer på ristarens stenar, ! = sällan")}
+              {header("language", "Språkdrag", "Jämförbara språkdrag som stämmer med ristaren")}
             </tr>
           </thead>
           <tbody>
@@ -442,6 +487,8 @@ function HypothesisTable({ rows, reconsider, ev }: { rows: Hypothesis[]; reconsi
                 <td className="p-2 font-mono text-xs">{h.carver_precision != null ? `${Math.round(h.carver_precision * 100)} %` : "–"}</td>
                 <td className="p-2 text-xs">{h.in_carver_area ? "Ja" : <span className="text-amber-700">Nej ({h.carver_area.join(", ")}) – kan vara regional stavning</span>}</td>
                 <td className="p-2 text-xs">{h.n_words}{h.short_text && <span className="text-amber-700"> kort</span>}</td>
+                <td className="p-2 text-xs"><MaterialCell x={h} /></td>
+                <td className="p-2 text-xs"><LanguageCell x={h} /></td>
               </tr>
             ))}
           </tbody>

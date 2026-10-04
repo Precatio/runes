@@ -214,3 +214,35 @@ def test_gap_filters_match_the_coverage_table(client):
     no_carver = client.get("/api/rundata/search", params={"province": "Sö", "gap": "no_carver", "limit": 1}).json()["total"]
     assert no_carver == rows["Sö"]["total"] - rows["Sö"]["carver"]
     assert client.get("/api/rundata/search", params={"signa": "U 344,So 212", "limit": 5}).json()["total"] == 2
+
+
+def test_geology_compares_material_with_bedrock(monkeypatch, tmp_path):
+    from src import geology
+
+    monkeypatch.setattr(geology, "CACHE_PATH", str(tmp_path / "geo.json"))
+    monkeypatch.setattr(geology, "_cache", {})
+    # Granite at the site, sandstone 5 km north
+    monkeypatch.setattr(geology, "query_point", lambda lat, lon: {
+        "rock": "Sandsten" if lat > 59.64 else "Granit", "unit": "", "minerals": "", "texture": "", "colour": ""})
+    assert geology.bedrock(59.6, 18.1, "röd granit")["verdict"] == "på platsen"
+    near = geology.bedrock(59.6, 18.1, "röd sandsten")
+    assert near["verdict"] == "i närheten" and near["families_nearby"]["sandsten"] > 0
+    assert geology.bedrock(59.6, 18.1, "kalksten")["verdict"] == "inte i närheten"
+    assert geology.families("gnejsgranit") == {"granitoid", "gnejs"}
+
+
+@needs_rundata
+def test_language_traits_and_synthesis_checks(client, monkeypatch):
+    from api.rundata import store
+    from api.routers.orthography import model
+    from src.language_profile import TRAITS, traits
+
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    t = traits(store().get("U 729"), model().names)
+    assert t["ai_sten"] in ("ai bevarad", "monoftong") and set(t) <= set(TRAITS)
+    r = client.post("/api/synthesis/analyze", json={"signum": "U 344", "include_geology": False}).json()
+    top = r["candidates"][0]
+    assert top["name"] == "Åsmund" and top["material"]["fits"] is True
+    assert top["language"]["comparable"] >= 2 and "Åsmund" in top["language"]["text"]
+    lang = client.get("/api/research/language/U 344", params={"carver": "Åsmund"}).json()
+    assert lang["traits"] and lang["comparison"]["rows"]

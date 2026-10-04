@@ -712,6 +712,9 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
     if rec.get("other"):
         facts_rows.append(["Övrigt (Rundata)", rec["other"]])
     blocks.append(tab(["", ""], facts_rows, f"Uppgifter om {signum}."))
+    geo = f.get("geology")
+    if geo and geo.get("verdict") != "okänt":
+        blocks.append(p(f"Berggrund: {geo['text']} {geo['caveat']} (Källa: {geo['source']})"))
     if rec.get("transliteration"):
         blocks.append(h(2, "Inskriften"))
         blocks.append(inscription(rec.get("transliteration", ""), _names(rec.get("normalization", "")),
@@ -939,7 +942,8 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
                               f"Attribueringskandidater för {signum}."))
             checks = []
             for c in cands[:3]:
-                for key, label in (("geography", "geografi"), ("styles", "stilgrupper"), ("stone_tests", "sten mot sten")):
+                for key, label in (("geography", "geografi"), ("styles", "stilgrupper"), ("material", "bergart"),
+                                   ("language", "språkdrag"), ("stone_tests", "sten mot sten")):
                     if c.get(key):
                         checks.append(f"{c['name']}, {label}: {c[key]['text']}")
             if checks:

@@ -16,6 +16,7 @@ from api.errors import logger
 from api import mesh_cache
 from api.rundata import store
 from src import academic, stone_report
+from src.synthesis import site_geology
 
 router = APIRouter()
 
@@ -131,6 +132,7 @@ def stone_report_endpoint(req: StoneReportRequest,
     if sum(len(a.get("slices") or []) for a in req.analyses) > 3000:
         raise HTTPException(status_code=400, detail="Högst 3000 tvärsnitt per rapport.")
     facts = stone_report.build_facts(req.model_dump(), store().get)
+    facts["geology"] = site_geology(facts["rundata"])
 
     surface, surface_note = None, None
     entry = mesh_cache.peek(req.mesh_id) if req.mesh_id else None

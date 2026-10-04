@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
+import { GeologyBox, LanguageTraits } from "@/components/StoneContext";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   CARVER_KIND,
@@ -133,6 +134,16 @@ function InscriptionDetail({ signum, meta }: { signum: string; meta: RundataMeta
           <Field label="Översättning (engelska)">{rec.translation_en}</Field>
           <Field label="Övrigt">{rec.other}</Field>
           <Field label="Referenser">{rec.references}</Field>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2 border-t border-slate-900/5">
+          <div className="space-y-2">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Bergart och berggrund</div>
+            {rec.lat != null && rec.material ? <GeologyBox signum={rec.signum} /> : <p className="text-xs text-slate-500">Material eller koordinater saknas i Rundata.</p>}
+          </div>
+          <div className="space-y-2">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Språkdrag (fonetisk stil och språkbruk)</div>
+            <LanguageTraits signum={rec.signum} />
+          </div>
         </div>
         <Attribution meta={meta} />
       </div>

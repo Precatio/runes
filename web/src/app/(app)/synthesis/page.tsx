@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAnalysis } from "@/components/AnalysisContext";
 import { useAuth } from "@/components/AuthContext";
+import { LanguageTable } from "@/components/StoneContext";
 import { useSettings } from "@/components/SettingsContext";
 import { corpus } from "@/lib/corpus";
 import { db, type ProjectData } from "@/lib/db";
@@ -228,6 +229,14 @@ export default function SynthesisPage() {
                 <div className={card}>
                   <h3 className={h3}>Material och vittring</h3>
                   <p className="text-[15px] text-slate-800 leading-relaxed">{results.geology_analysis}</p>
+                  {ev?.geology && (
+                    <div className="mt-3 rounded-xl bg-white/70 border border-slate-200 px-3 py-2 text-xs text-slate-700">
+                      <div className="font-bold uppercase tracking-wider text-[10px] text-slate-500 mb-0.5">Berggrund (SGU): {ev.geology.verdict}</div>
+                      <p>{ev.geology.text}</p>
+                      {ev.geology.at_site && <p className="mt-1">På platsen: {ev.geology.at_site.rock} – {ev.geology.at_site.unit}</p>}
+                      <p className="mt-1 text-slate-500">{ev.geology.caveat}</p>
+                    </div>
+                  )}
                 </div>
                 <div className={card}>
                   <h3 className={h3}>Datering</h3>
@@ -289,11 +298,20 @@ function CandidateCard({ c }: { c: Candidate }) {
           {c.literature && <Check label="Litteraturen" ok={c.literature.verdict.startsWith("stämmer") ? true : c.literature.verdict === "motsäger" ? false : null} text={c.literature.text} />}
           {c.geography && <Check label="Geografi" ok={c.geography.plausible} text={c.geography.text} />}
           {c.styles && <Check label="Stilgrupp och datering" ok={c.styles.fits} text={c.styles.text} />}
+          {c.material && <Check label="Bergart" ok={c.material.fits} text={c.material.text} />}
           {c.stone_tests && (
             <Check label="Sten mot sten (huggteknik)" ok={c.stone_tests.n ? c.stone_tests.compatible > 0 : null}
               text={`${c.stone_tests.text}${c.stone_tests.tests.length ? ": " + c.stone_tests.tests.map(t => `${t.signum} p ${t.p_value != null && t.p_value < 0.001 ? "< 0,001" : "= " + num(t.p_value, 3)}`).join(", ") : ""}.`} />
           )}
         </div>
+      )}
+      {c.language && c.language.comparable > 0 && (
+        <details className="mt-3 text-xs text-slate-700">
+          <summary className={`cursor-pointer font-semibold ${c.language.fits === false ? "text-amber-800" : ""}`}>
+            Språkdrag: {c.language.agree} av {c.language.comparable} stämmer med ristarens inskrifter
+          </summary>
+          <div className="mt-2"><LanguageTable comparison={c.language} /></div>
+        </details>
       )}
       {c.reasoning && <p className="text-sm text-slate-600 italic mt-3">{c.reasoning}</p>}
     </div>
