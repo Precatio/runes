@@ -700,7 +700,7 @@ def workflow_appendix(wf: dict, signum: str, fig, tab) -> list[dict]:
     if readings:
         out.append(h(2, "B.3 Blinda läsningar"))
         out.append(p("Språkmodellen läste runorna utan att få veta signumet. Jämförelsen med Rundata är framräknad utan AI. "
-                     "Den första läsningen är den som redovisas i resultatavsnittet."))
+                     "Den första läsningen prövas i resultatavsnittet och redovisas där bara om den bekräftas."))
         rows = []
         for r in readings:
             t = runes_to_latin(r.get("transliteration") or "")
