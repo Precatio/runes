@@ -296,6 +296,7 @@ def analyze_path(mesh, path_points, up_vector, window_mm=DEFAULT_WINDOW_MM, face
         
     results_list = []
     profiles = []
+    frames = []
     plot_data_list = []
     distances = []
     depths = []
@@ -316,6 +317,7 @@ def analyze_path(mesh, path_points, up_vector, window_mm=DEFAULT_WINDOW_MM, face
             if np.isfinite(res["apex_vinkel_deg"]) and np.isfinite(res["fit_r2"]) and res["apex_vinkel_deg"] > 0:
                 results_list.append(res)
                 profiles.append((x_2d, z_2d))
+                frames.append((p, t))
                 distances.append(current_distance)
                 depths.append(res["spårdjup_mm"])
                 # Keep the first valid one for plotting purposes
@@ -347,8 +349,9 @@ def analyze_path(mesh, path_points, up_vector, window_mm=DEFAULT_WINDOW_MM, face
     slices = [
         {**{k: float(r[k]) for k in ("apex_vinkel_deg", "asymmetri_deg", "spårdjup_mm", "spårbredd_mm",
                                      "djup_bredd_kvot", "bottenradie_mm", "ytråhet_mm")},
-         "position_mm": float(dist), "fit_r2": float(r["fit_r2"]), "profile": raw_profile(*prof)}
-        for r, dist, prof in zip(results_list, distances, profiles)
+         "position_mm": float(dist), "fit_r2": float(r["fit_r2"]), "profile": raw_profile(*prof),
+         "point": [float(v) for v in pt], "direction": [float(v) for v in tg], "up": [float(v) for v in up_vector]}
+        for r, dist, prof, (pt, tg) in zip(results_list, distances, profiles, frames)
     ]
 
     return avg_results, plot_data_list[0] if len(plot_data_list) > 0 else None, depth_profile, slices

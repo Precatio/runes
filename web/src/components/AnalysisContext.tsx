@@ -1,6 +1,7 @@
 "use client";
 import React, { createContext, useContext, useState } from "react";
 import { TwoDResultData, LinguisticResultData, ThreeDAnalysisResult, TwoDSource } from "@/lib/db";
+import type { StoneReportInput } from "@/lib/stoneReport";
 
 export interface MetaData {
   stone: string;
@@ -31,6 +32,8 @@ interface AnalysisContextType {
   setLatest2DSource: (data: TwoDSource | null) => void;
   activeProjectId: string | null;
   setActiveProjectId: (id: string | null) => void;
+  stoneReportInput: StoneReportInput | null;
+  setStoneReportInput: (data: StoneReportInput | null) => void;
 }
 
 const AnalysisContext = createContext<AnalysisContextType | undefined>(undefined);
@@ -47,6 +50,7 @@ export function AnalysisProvider({ children }: { children: React.ReactNode }) {
   const [latest2DFile, setLatest2DFile] = useState<File | null>(null);
   const [latest2DSource, setLatest2DSource] = useState<TwoDSource | null>(null);
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
+  const [stoneReportInput, setStoneReportInput] = useState<StoneReportInput | null>(null);
 
   return (
     <AnalysisContext.Provider value={{
@@ -58,7 +62,8 @@ export function AnalysisProvider({ children }: { children: React.ReactNode }) {
       latest2DImage, setLatest2DImage,
       latest2DFile, setLatest2DFile,
       latest2DSource, setLatest2DSource,
-      activeProjectId, setActiveProjectId
+      activeProjectId, setActiveProjectId,
+      stoneReportInput, setStoneReportInput,
     }}>
       {children}
     </AnalysisContext.Provider>

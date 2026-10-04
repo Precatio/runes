@@ -1,3 +1,4 @@
+import os
 import pytest
 from fastapi.testclient import TestClient
 
@@ -151,3 +152,30 @@ def test_errors_do_not_leak_exception_text():
     assert secret not in server_error(RuntimeError(secret), "Fel.").detail
     assert ai_error(RuntimeError("429 RESOURCE_EXHAUSTED")).status_code == 429
     assert secret not in ai_error(RuntimeError(secret)).detail
+
+
+@pytest.mark.skipif(not os.path.exists(os.path.join(os.path.dirname(__file__), "..", "data", "rundata.json")),
+                    reason="data/rundata.json saknas")
+def test_stone_report_with_surface_figures(client, stone_id):
+    import numpy as np
+
+    n = [0, -np.sin(np.radians(20)), np.cos(np.radians(20))]
+    auto = client.post("/api/3d/auto_analyze", data={"mesh_id": stone_id, "normal_x": n[0], "normal_y": n[1],
+                                                      "normal_z": n[2]}).json()
+    acc = [s for s in auto["slices"] if s["accepted"]]
+    body = {"signum": "U 344", "mesh_id": stone_id, "counts": auto["counts"], "use_ai": False,
+            "analyses": [{"feature_type": "rune", "slices": acc, "provenance": auto["provenance"]}]}
+    r = client.post("/api/reports/stone", json=body)
+    assert r.status_code == 200
+    rep = r.json()
+    assert rep["surface"] is True
+    names = [f["name"] for f in rep["figures"]]
+    assert any("strykljus" in x for x in names) and any("tvarsnitt" in x for x in names)
+    # Runological conventions: transliteration in bold, normalisation in italics, the SRI edition cited
+    assert "**in ulfr hafiR" in rep["markdown"] and "*En UlfR" in rep["markdown"]
+    assert "Upplands runinskrifter" in rep["markdown"]
+    # Without the model in memory the report is still made, without surface figures
+    r2 = client.post("/api/reports/stone", json={**body, "mesh_id": "0" * 64}).json()
+    assert r2["surface"] is False and r2["surface_note"]
+    d = client.post("/api/reports/stone", json={**body, "format": "docx"})
+    assert d.content[:2] == b"PK"

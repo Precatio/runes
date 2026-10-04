@@ -7,6 +7,7 @@ from typing import Optional
 import requests
 import json
 import os
+import re
 from google import genai
 from google.genai import types
 
@@ -31,7 +32,11 @@ class ExtractSignumRequest(BaseModel):
     filename: str
 
 class ExtractSignumResponse(BaseModel):
-    signum: str
+    signum: Optional[str] = None  # None when the filename has no recognisable signum
+
+
+# Landskapskod (1–3 bokstäver, t.ex. U, Sö, Ög, DR, N) följd av ett nummer, eventuellt med tillägg
+SIGNUM_PATTERN = re.compile(r"^[A-ZÅÄÖ][A-Za-zåäöÅÄÖ]{0,2}\s(\d+[A-Za-z]?\s?\$?|(Fv|ATA|NOR|SB|SL|SR)[\w;:\- ]+)$")
 
 @router.post("/extract-signum", response_model=ExtractSignumResponse)
 def extract_signum(
@@ -54,7 +59,7 @@ def extract_signum(
     - "So 113_1_4 thin_closed holes.stl" -> "Sö 113"
     - "U_11_mesh.obj" -> "U 11"
     - "Vg59.stl" -> "Vg 59"
-    Svara ENDAST med signumet. Inget annat.
+    Svara ENDAST med signumet. Om filnamnet inte innehåller något signum, svara INGET.
     """
     
     try:
@@ -63,8 +68,9 @@ def extract_signum(
             contents=prompt,
             config=types.GenerateContentConfig(temperature=0.1)
         )
-        signum = gen_resp.text.strip()
-        return ExtractSignumResponse(signum=signum)
+        signum = gen_resp.text.strip().strip('"').strip()
+        # The model sometimes answers with words like "Saknas" – only accept something shaped like a signum
+        return ExtractSignumResponse(signum=signum if SIGNUM_PATTERN.match(signum) else None)
     except HTTPException:
         raise
     except Exception as e:

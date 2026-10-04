@@ -361,6 +361,7 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
         },
         "parameters": {
             "normal": [float(v) for v in hf.n],
+            "up": [float(v) for v in hf.v],
             "resolution_mm": res,
             "reference_scale_mm": scale_mm,
             "noise_mm": noise,

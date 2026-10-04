@@ -125,10 +125,14 @@ def provenance(mesh_info: dict, parameters: dict, feature_type: str) -> dict:
     }
 
 
-def _slice_record(res: dict, position_mm: float, x=None, z=None) -> dict:
+def _slice_record(res: dict, position_mm: float, x=None, z=None, point=None, direction=None, up=None) -> dict:
     rec = {**{k: float(res[k]) for k in METRICS}, "position_mm": float(position_mm), "fit_r2": float(res["fit_r2"])}
     if x is not None:
         rec["profile"] = raw_profile(x, z)
+    # Where the slice lies on the model, so that reports can show it on the surface
+    for key, v in (("point", point), ("direction", direction), ("up", up)):
+        if v is not None:
+            rec[key] = [float(c) for c in v]
     return rec
 
 
@@ -166,7 +170,8 @@ def measure_slices(entry: MeshEntry, origin, direction, up, slice_count: int, sp
             continue
         if not all(np.isfinite(res[k]) for k in (*METRICS, "fit_r2")):
             continue  # too few points for a wall fit
-        slices.append(_slice_record(res, offset, x_2d, z_2d))
+        slices.append(_slice_record(res, offset, x_2d, z_2d, origin + groove_direction * offset,
+                                    groove_direction, up))
         if i == slice_count // 2 or main is None:
             main = {"x_2d": x_2d, "z_2d": z_2d, "res": res}
     return slices, main

@@ -145,10 +145,10 @@ export const corpus = {
     }
     const id = `c_${crypto.randomUUID()}`;
     // Raw profiles go to a subcollection; the main document keeps the metrics only
-    const rawProfiles: RawProfile[] = entry.slices.map(s => (s as SliceMetrics & { profile?: RawProfile }).profile ?? null);
+    const rawProfiles: RawProfile[] = entry.slices.map(s => s.profile ?? null);
     const slices = entry.slices.map(s => {
-      const { profile: _drop, ...rest } = s as SliceMetrics & { profile?: RawProfile };
-      void _drop;
+      const { profile: _p, point: _pt, direction: _d, up: _u, ...rest } = s;
+      void _p; void _pt; void _d; void _u;
       return rest as SliceMetrics;
     });
     const chunks = extras.includeRaw && rawProfiles.some(Boolean) ? chunkProfiles(rawProfiles) : [];

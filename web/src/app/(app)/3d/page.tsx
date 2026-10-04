@@ -11,6 +11,7 @@ import { dataURLToFile } from "@/lib/images";
 import Link from "next/link";
 import { db, ProjectData } from "@/lib/db";
 import GrooveResultsPanel from "@/components/GrooveResultsPanel";
+import { fromSession } from "@/lib/stoneReport";
 import AutoGrooveReview from "@/components/AutoGrooveReview";
 import type { SliceMarker, Vec3, ViewDirection, ViewerPoint } from "@/components/ThreeDViewer";
 import { MeshSession, type AutoAnalysisResult, type AutoLabel, type MeshInfo } from "@/lib/mesh";
@@ -44,6 +45,7 @@ function ThreeDPageContent() {
     setLatest2DFile,
     setLatest2DSource,
     setLatest2DResults,
+    setStoneReportInput,
   } = useAnalysis();
   const router = useRouter();
 
@@ -1031,6 +1033,31 @@ function ThreeDPageContent() {
               onUse={(r, ft) => { setFeatureType(ft); setResults(r); }}
               onSendToTwoD={() => sendGrooveMapToTwoD(autoLabels)}
             />
+          )}
+
+          {(results || (autoResult && autoResult.counts.accepted > 0)) && (
+            <div className="liquid-glass-island rounded-[28px] px-6 py-4 flex flex-wrap items-center gap-3">
+              <div className="flex-1 min-w-[240px]">
+                <p className="text-sm font-bold text-slate-900">Stenrapport</p>
+                <p className="text-xs text-slate-600">
+                  Ett artikelutkast om stenen med strykljus, djupkarta, snittpositioner, tvärsnittsprofiler och mått –
+                  räknat direkt ur skanningen{autoResult ? ", med runor och ornamentik var för sig" : ""}.
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  const input = fromSession({
+                    meta, meshId: meshInfo?.mesh_id, autoResult, autoLabels, results, featureType, project: activeProject,
+                  });
+                  if (!input) { alert("Det finns inga godkända tvärsnitt att rapportera."); return; }
+                  setStoneReportInput(input);
+                  router.push("/rapporter?typ=sten");
+                }}
+                className="px-5 py-2.5 bg-[#b7410e] hover:bg-[#9a350b] text-white text-sm font-bold rounded-xl"
+              >
+                Skapa stenrapport
+              </button>
+            </div>
           )}
 
           {results && (

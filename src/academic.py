@@ -308,6 +308,15 @@ def to_markdown(blocks: list[dict]) -> str:
             out += ["", f"*{b['caption']}*", ""]
         elif t == "figure":
             out += [f"![{b['caption']}]({b['name']})", "", f"*{b['caption']}*", ""]
+        elif t == "inscription":
+            out += [f"> **{b['transliteration']}**", ">"]
+            if b["normalization"]:
+                out += [f"> *{b['normalization']}*", ">"]
+            if b["normalization_ows"]:
+                out += [f"> *{b['normalization_ows']}*", ">"]
+            if b["translation"]:
+                out += [f"> ”{b['translation']}”"]
+            out += [""]
     return "\n".join(out)
 
 
@@ -332,6 +341,12 @@ def to_html(blocks: list[dict]) -> str:
         elif t == "figure":
             out.append(f"<figure><img src=\"data:image/png;base64,{b['png']}\" alt=\"{e(b['caption'])}\"/>"
                        f"<figcaption>{e(b['caption'])}</figcaption></figure>")
+        elif t == "inscription":
+            parts = [f"<p><strong>{e(b['transliteration'])}</strong></p>"]
+            parts += [f"<p><em>{e(x)}</em></p>" for x in (b["normalization"], b["normalization_ows"]) if x]
+            if b["translation"]:
+                parts.append(f"<p>”{e(b['translation'])}”</p>")
+            out.append(f"<blockquote class=\"inscription\">{''.join(parts)}</blockquote>")
     return "\n".join(out)
 
 
@@ -365,6 +380,12 @@ def to_latex(blocks: list[dict]) -> str:
         elif t == "figure":
             out += [r"\begin{figure}[h]", r"\centering", rf"\includegraphics[width=\linewidth]{{{b['name']}}}",
                     rf"\caption{{{_tex(b['caption'])}}}", r"\end{figure}"]
+        elif t == "inscription":
+            out += [r"\begin{quote}", rf"\textbf{{{_tex(b['transliteration'])}}}\\[0.5ex]"]
+            out += [rf"\emph{{{_tex(x)}}}\\[0.5ex]" for x in (b["normalization"], b["normalization_ows"]) if x]
+            if b["translation"]:
+                out.append(rf"''{_tex(b['translation'])}''")
+            out.append(r"\end{quote}")
     out.append(r"\end{document}")
     return "\n".join(out)
 
@@ -400,6 +421,13 @@ def to_docx(blocks: list[dict]) -> bytes:
         elif t == "figure":
             doc.add_picture(io.BytesIO(base64.b64decode(b["png"])), width=Inches(6))
             doc.add_paragraph(b["caption"]).runs[0].italic = True
+        elif t == "inscription":
+            doc.add_paragraph(style="Quote").add_run(b["transliteration"]).bold = True
+            for x in (b["normalization"], b["normalization_ows"]):
+                if x:
+                    doc.add_paragraph(style="Quote").add_run(x).italic = True
+            if b["translation"]:
+                doc.add_paragraph(f"”{b['translation']}”", style="Quote")
     buf = io.BytesIO()
     doc.save(buf)
     return buf.getvalue()

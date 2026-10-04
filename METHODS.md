@@ -212,6 +212,60 @@ ristare, ett landskap, valda stenar eller hela korpusen):
 * Export: Markdown, LaTeX (med figurfilerna) och Word (.docx). Rapporten är ett manusutkast som måste
   granskas innan den används.
 
+### 7e. Stenrapport (en sten)
+
+Källkod: `src/stone_report.py`, `POST /api/reports/stone`. Uppläggningen följer två traditioner:
+
+* **Runologisk presentation** som i *Sveriges runinskrifter* och i stilmallen för *Futhark: International
+  Journal of Runic Studies*: signum utskrivet i sin helhet och utan kursiv, translitterering i **fetstil**,
+  normalisering (runsvenska och fornvästnordiska) i *kursiv*, översättning inom citattecken, ristare med S/A,
+  stilgrupp (Gräslund), datering och hänvisning till stenens utgåva i SRI. Allt hämtas ur Rundata.
+* **Arkeometrisk redovisning**: material och metod med 3D-dokumentationens paradata (skanner,
+  upplösning, noggrannhet, vem som skannat, modellens kontrollsumma, licens), analysparametrar,
+  kvalitetskontroll (godkända och underkända snitt med skäl), resultat, diskussion, källkritik, data och
+  reproducerbarhet, samt en bilaga med varje tvärsnitts mått.
+
+Figurerna räknas direkt ur 3D-modellen och snittens råprofiler (inget är retuscherat):
+
+1. digitalt strykljus från fyra riktningar (20° över ytan),
+2. djup under en rekonstruerad stenyta (morfologisk stängning, 20 mm; kantzonen utelämnad),
+3. tvärsnittens positioner färgade efter V-vinkel, med bokstäver som hänvisar till profilfiguren,
+4. spårdjup, spårbredd och ytråhet per tvärsnitt över ytan,
+5. representativa tvärsnitt (från minsta till största vinkel) med anpassade spårväggar i lika skala,
+6. alla tvärsnitt överlagrade med median och interkvartilområde,
+7. måttens fördelningar, 8. samband mellan bredd, djup och vinkel,
+9. runor mot ornamentik (permutationstest), 10. jämförelse med stenar med säker ristare i mätkorpusen,
+
+och, om det finns, bilden och runformerna från 2D-analysen. Figurerna 1–4 kräver att skanningen finns i
+analysmotorns minne (samma fil inläst i 3D-vyn); annars utelämnas de och rapporten säger det. Snittens
+positioner och råprofiler sparas med varje analys (automatisk, ett klick per snitt och spårbana).
+
+### 7f. Våra resultat mot befintlig forskning
+
+Källkod: `src/findings.py`, `POST /api/research/findings`. Appens resultat ställs mot Rundata, som får
+representera den publicerade forskningen:
+
+| Metod | Stämmer | Nytt | Motsäger |
+|---|---|---|---|
+| Ortografi (lämna-en-ute) | rätt ristare först | stark hypotes för sten utan ristare | attribuerad (A) ristare inte bland de tre första |
+| Huggteknik (mätkorpusen, runor) | närmaste ristare = Rundatas | sten utan ristare får en närmaste ristare | närmaste ristare ≠ Rundatas |
+| Stilgrupp (AI, bild) | samma som Rundata | Rundata saknar säker stilgrupp | annan stilgrupp |
+
+Varje fynd får en **uppskattning** = belägg × nyhet × relevans (var och en 0–1, skälen redovisas):
+
+* **Belägg**: ortografi – modellens korsvaliderade precision för den föreslagna ristaren, halverad utanför
+  ristarens kända landskap, lägre för korta texter och liten marginal; huggteknik – korsvaliderad
+  träffsäkerhet och avståndet till nästa ristare; AI-stilgrupp – högst 0,35 eftersom den är okalibrerad.
+* **Nyhet**: bekräftelser lågt (0,05–0,3; en oberoende metod som huggteknik väger mer än ortografi,
+  eftersom attribueringar kan bygga på ortografin), nya attribueringar högt (0,85 i Axelsons område,
+  0,55–0,6 utanför, där attribueringar kan finnas i litteraturen utan att stå i Rundata), avvikelser mot
+  attribuerade stenar 0,7 men mot signerade 0,05 – där talar avvikelsen mot metoden, inte mot ristaren.
+* **Relevans**: andelen stenar med ristare i landskapet (lägre andel = större behov), ristarens antal
+  säkra inskrifter, och om stenen finns kvar att undersöka.
+
+Bedömningen ("Sannolikt ny och relevant kunskap", "Värd en omprövning", "Oberoende bekräftelse" m.fl.)
+är en tumregel för att prioritera fortsatt arbete, inte en granskning av forskningsläget.
+
 ## 8. Jämförbarhet med tidigare forskning
 
 Laila Kitzler Åhfeldts metod (Arkeologiska forskningslaboratoriet, Stockholms universitet; Kitzler Åhfeldt

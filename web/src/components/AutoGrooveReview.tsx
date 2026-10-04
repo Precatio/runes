@@ -85,6 +85,11 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
       const slices: SliceMetrics[] = picked.map(s => ({
         ...(Object.fromEntries(METRICS.map(m => [m, s[m] as number])) as Record<Metric, number>),
         position_mm: s.position_mm,
+        fit_r2: s.fit_r2,
+        profile: s.profile,
+        point: s.point,
+        direction: s.direction,
+        up: s.up,
       }));
       const res = await fetch(`${API_URL}/api/stats/summarize`, {
         method: "POST",

@@ -172,6 +172,29 @@ export interface ReportData {
 }
 
 const STORAGE_KEY = "vitki_projects";
+const FIRESTORE_DOC_LIMIT = 900_000; // characters; Firestore's hard limit is 1 MB per document
+
+// Raw slice profiles and positions are the heavy part of a project; drop them when a copy must be small
+function withoutSliceDetail(project: ProjectData): ProjectData {
+  return {
+    ...project,
+    grooveAnalyses: project.grooveAnalyses?.map(a => ({
+      ...a,
+      slices: a.slices.map(sl => {
+        const { profile: _p, point: _pt, direction: _d, up: _u, ...rest } = sl;
+        void _p; void _pt; void _d; void _u;
+        return rest;
+      }),
+    })),
+  };
+}
+
+// The local copy keeps images and raw profiles that Firestore cannot hold. Use it when it is the same
+// version as the one in Firestore; a newer Firestore version (edited elsewhere) wins.
+function preferRicher(remote: ProjectData, local?: ProjectData): ProjectData {
+  if (local && local.updatedAt === remote.updatedAt) return { ...remote, ...local };
+  return remote;
+}
 const REPORT_STORAGE_KEY = "vitki_reports";
 
 // Dual-layer Database (Firestore + LocalStorage fallback)
@@ -193,8 +216,8 @@ export const db = {
     const data = localStorage.getItem(STORAGE_KEY);
     const localProjects: ProjectData[] = data ? JSON.parse(data) : [];
     
-    // Merge, preferring Firestore versions if IDs overlap
-    const merged = [...firestoreProjects];
+    // Merge, preferring Firestore versions if IDs overlap (with the richer local copy of the same version)
+    const merged = firestoreProjects.map(fp => preferRicher(fp, localProjects.find(lp => lp.id === fp.id)));
     for (const lp of localProjects) {
       if (!merged.find(p => p.id === lp.id)) {
         merged.push(lp);
@@ -212,7 +235,8 @@ export const db = {
         const docRef = doc(firestore, `users/${user.uid}/projects`, id);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          return docSnap.data() as ProjectData;
+          const local: ProjectData[] = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+          return preferRicher(docSnap.data() as ProjectData, local.find(p => p.id === id));
         }
       } catch (error) {
         console.error("Failed to fetch project from Firestore:", error);
@@ -258,10 +282,13 @@ export const db = {
       try {
         const docRef = doc(firestore, `users/${user.uid}/projects`, projectId);
         // Strip heavy base64 images before saving to Firestore to avoid 1MB document limit
-        const firestoreProject = { ...savedProject };
+        let firestoreProject = { ...savedProject };
         delete firestoreProject.plotImage;
         delete firestoreProject.threeImage;
         delete firestoreProject.twoDImage;
+        if (JSON.stringify(firestoreProject).length > FIRESTORE_DOC_LIMIT) {
+          firestoreProject = withoutSliceDetail(firestoreProject);
+        }
         
         await setDoc(docRef, firestoreProject);
       } catch (error) {
@@ -280,7 +307,18 @@ export const db = {
       projects.push(savedProject);
     }
     
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+    } catch {
+      // Browser storage full: keep the project, without raw profiles
+      console.warn("Lokal lagring full – tvärsnittsprofilerna sparas inte lokalt för detta projekt.");
+      projects[index !== -1 ? index : projects.length - 1] = withoutSliceDetail(savedProject);
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+      } catch (e) {
+        console.error("Kunde inte spara projektet lokalt:", e);
+      }
+    }
     
     return savedProject;
   },

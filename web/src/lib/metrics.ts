@@ -40,7 +40,15 @@ export interface Summary {
   max: number | null;
 }
 
-export type SliceMetrics = Record<Metric, number> & { position_mm: number };
+export type SliceMetrics = Record<Metric, number> & {
+  position_mm: number;
+  fit_r2?: number;
+  // Raw cross-section and where it lies on the model (for recomputation and report figures)
+  profile?: { x: number[]; z: number[] };
+  point?: [number, number, number];
+  direction?: [number, number, number];
+  up?: [number, number, number];
+};
 
 export const FEATURE_TYPES = {
   rune: "Runa",

@@ -81,3 +81,39 @@ def test_academic_report(client):
     ai = {"abstract": "SAMMANFATTNINGSTEST", "introduction": "INLEDNINGSTEST", "discussion": "DISKUSSIONSTEST"}
     r = client.post("/api/reports/academic", json={"entries": entries, "use_ai": True, "ai_text": ai}).json()
     assert r["ai_used"] and "SAMMANFATTNINGSTEST" in r["markdown"] and "DISKUSSIONSTEST" in r["markdown"]
+
+
+@needs_rundata
+def test_findings_compare_with_rundata(client):
+    from api.rundata import store
+    from src.research_gaps import certain_carvers, has_carver, is_runestone
+
+    recs = [r for r in store().inscriptions if is_runestone(r) and r["signum"].startswith("U ")]
+    by = {}
+    for r in recs:
+        cs = certain_carvers(r)
+        if len(cs) == 1 and cs[0] in ("Öpir 1", "Åsmund", "Balle"):
+            by.setdefault(cs[0], []).append(r["signum"])
+    rng = np.random.default_rng(5)
+    centre = {"Öpir 1": 95, "Åsmund": 80, "Balle": 70}
+    corpus = []
+    for carver, signa in by.items():
+        for sig in signa[:3]:
+            vals = rng.normal([centre[carver], 3, 2, 6, .33, .2, .05], [1, .3, .05, .1, .01, .01, .002])
+            corpus.append({"signum": sig, "feature_type": "rune", "means": dict(zip(METRICS, vals))})
+    unattributed = next(r["signum"] for r in recs if not has_carver(r) and not r["flags"]["lost"])
+    vals = rng.normal([95, 3, 2, 6, .33, .2, .05], [1, .3, .05, .1, .01, .01, .002])
+    corpus.append({"signum": unattributed, "feature_type": "rune", "means": dict(zip(METRICS, vals))})
+
+    r = client.post("/api/research/findings", json={
+        "corpus": corpus, "styles": [{"signum": "U 11", "style": "Pr3", "confidence": 80}]}).json()
+    tech = [f for f in r["findings"] if f["method"] == "huggteknik"]
+    new = [f for f in tech if f["signum"] == unattributed]
+    assert new and new[0]["verdict"] == "nytt" and new[0]["suggested"] == "Öpir 1"
+    assert any(f["verdict"] == "stämmer" for f in tech)
+    style = [f for f in r["findings"] if f["method"].startswith("stilgrupp")]
+    assert style[0]["verdict"] == "motsäger"  # Rundata: Pr4
+    for f in r["findings"]:
+        assert 0 <= f["evidence"] <= 1 and 0 <= f["novelty"] <= 1 and 0 <= f["relevance"] <= 1
+        assert f["verdict"] in ("stämmer", "nytt", "motsäger") and f["reasons"]["belägg"]
+    assert r["summary"]["counts"]["nytt"] > 0
