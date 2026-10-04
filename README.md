@@ -10,7 +10,7 @@ Ett av appens huvudsakliga mål är **runristarattribuering** – att med hjälp
 ## Funktioner
 
 **Analys**
-*   **3D-huggspårsanalys:** V-vinkel, asymmetri, djup, bredd, bottenradie och ytråhet i STL/OBJ/PLY-skanningar, per snitt med standardavvikelse och konfidensintervall. Runor och ornamentik mäts separat. Strykljus med valfri ljusriktning, lättare visningsmodell för stora skanningar, export till CSV/JSON och full proveniens (filens SHA-256, parametrar, metodversion).
+*   **3D-huggspårsanalys:** V-vinkel, asymmetri, djup, bredd, bottenradie och ytråhet i STL/OBJ/PLY-skanningar – manuellt, med ett klick per snitt eller helt automatiskt (alla spår på den ristade sidan hittas, mäts och granskas). Varje snitt redovisas med standardavvikelse och konfidensintervall. Runor och ornamentik mäts separat. Strykljus med valfri ljusriktning, lättare visningsmodell för stora skanningar, export till CSV/JSON och full proveniens (filens SHA-256, parametrar, metodversion).
 *   **2D-paleografi och fonetik:** AI-stöd för stilgrupp, runformer, translitterering och ljudvärden.
 *   **RTI-visare:** öppna PTM-filer och flytta ljuset fritt, med "diffuse gain"-förstärkning för svaga ristningar.
 
@@ -68,6 +68,7 @@ Kräver Python 3.11+ (utvecklas på 3.13) och Node.js 20+.
 | `MAX_MESH_UPLOAD_MB` / `MAX_IMAGE_UPLOAD_MB` | api | `500` / `20` | Storleksgränser för uppladdningar |
 | `MAX_VIEW_FACES` | api | `1500000` | Max antal ytor i den förenklade visningsmodellen för stora skanningar |
 | `RUNDATA_PATH` | api | `data/rundata.json` | Sökväg till den byggda Rundata-filen |
+| `MESH_CACHE_SIZE` | api | `2` | Antal uppladdade 3D-modeller som hålls i analysmotorns minne |
 
 API-nycklar som anges i webbappens inställningar sparas bara lokalt i webbläsaren.
 

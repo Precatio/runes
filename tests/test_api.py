@@ -14,23 +14,120 @@ def test_root(client):
     assert client.get("/").status_code == 200
 
 
+MOCK_SLICE = {"use_mock": "true", "origin_x": "0", "origin_y": "0", "origin_z": "0",
+              "dir_x": "0", "dir_y": "1", "dir_z": "0"}
+
+
 def test_3d_rejects_unsupported_extension(client):
-    r = client.post("/api/3d/analyze", files={"file": ("x.txt", b"hello")})
+    r = client.post("/api/3d/upload", files={"file": ("x.txt", b"hello")})
     assert r.status_code == 400
 
 
 def test_3d_rejects_oversized_mesh(client, monkeypatch):
     monkeypatch.setattr(uploads, "MAX_MESH_BYTES", 10)
-    r = client.post("/api/3d/analyze", files={"file": ("big.stl", b"x" * 100)})
+    r = client.post("/api/3d/upload", files={"file": ("big.stl", b"x" * 100)})
     assert r.status_code == 413
 
 
-def test_3d_mock_analysis(client):
+def test_3d_never_falls_back_to_mock_data(client):
+    # No file, no mesh_id and no explicit use_mock: the user is told what is missing
+    for path, data in [
+        ("/api/3d/analyze", {k: v for k, v in MOCK_SLICE.items() if k != "use_mock"}),
+        ("/api/3d/auto_snap_path", {"path_points_json": "[[0,0,0],[0,1,0]]"}),
+        ("/api/3d/auto_analyze", {"normal_x": "0", "normal_y": "0", "normal_z": "1"}),
+        ("/api/3d/auto_slice", {"point_x": "0", "point_y": "0", "point_z": "0"}),
+    ]:
+        r = client.post(path, data=data)
+        assert r.status_code == 400, path
+        assert "Ladda upp" in r.json()["detail"]
+
+
+def test_3d_analysis_requires_a_selected_slice(client):
     r = client.post("/api/3d/analyze", data={"use_mock": "true"})
+    assert r.status_code == 422
+
+
+def test_3d_unknown_mesh_id(client):
+    r = client.post("/api/3d/analyze", data={**MOCK_SLICE, "use_mock": "false", "mesh_id": "0" * 64})
+    assert r.status_code == 404
+
+
+def test_3d_explicit_mock_analysis(client):
+    r = client.post("/api/3d/analyze", data=MOCK_SLICE)
     assert r.status_code == 200
     body = r.json()
     assert {"apex_vinkel_deg", "troligt_verktyg", "apex_idx"} <= body["results"].keys()
     assert {"x", "z", "fit_left", "fit_right"} <= body["plot_data"].keys()
+    assert body["provenance"]["mesh"]["mock"] is True
+
+
+@pytest.fixture(scope="module")
+def stone_id(client):
+    from src.synthetic import rune_stone
+
+    stl = rune_stone(opening_angle_deg=70, depth_mm=4, tilt_deg=20).export(file_type="stl")
+    r = client.post("/api/3d/upload", files={"file": ("stone.stl", stl)})
+    assert r.status_code == 200
+    return r.json()["mesh_id"]
+
+
+def test_upload_returns_reusable_mesh_id(client, stone_id):
+    assert len(stone_id) == 64
+    r = client.post("/api/3d/view_model", data={"mesh_id": stone_id, "max_faces": "20000"})
+    assert r.status_code == 200 and r.headers["x-mesh-id"] == stone_id
+
+
+def test_auto_analyze_measures_known_angle(client, stone_id):
+    import numpy as np
+
+    n = [0, -np.sin(np.radians(20)), np.cos(np.radians(20))]
+    r = client.post("/api/3d/auto_analyze", data={"mesh_id": stone_id, "normal_x": n[0], "normal_y": n[1],
+                                                   "normal_z": n[2]})
+    assert r.status_code == 200
+    body = r.json()
+    assert body["counts"]["accepted"] >= 20
+    assert abs(body["summary"]["apex_vinkel_deg"]["mean"] - 70) < 3
+    assert body["image_base64"].startswith("data:image/png;base64,")
+    accepted = [s for s in body["slices"] if s["accepted"]]
+    assert {"img_x", "img_y", "point", "direction", "profile"} <= accepted[0].keys()
+
+
+def test_auto_slice_one_click(client, stone_id):
+    import numpy as np
+
+    # Click near the vertical staff at x = -50 (stone tilted 20° about x; mesh is centred by bounds)
+    from src.synthetic import rune_stone
+
+    m = rune_stone(opening_angle_deg=70, depth_mm=4, tilt_deg=20)
+    centre = (m.bounds[0] + m.bounds[1]) / 2
+    target = np.array([-49.0, 0.0])
+    p = m.vertices[np.argmin(np.linalg.norm(m.vertices[:, :2] - [target[0], 0], axis=1))] - centre
+    r = client.post("/api/3d/auto_slice", data={"mesh_id": stone_id, "point_x": p[0], "point_y": p[1],
+                                                 "point_z": p[2]})
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert abs(body["results"]["apex_vinkel_deg"] - 70) < 5
+    assert body["provenance"]["parameters"]["mode"] == "one-click"
+
+
+def test_auto_slice_on_flat_surface_explains(client, stone_id):
+    from src.synthetic import rune_stone
+    import numpy as np
+
+    m = rune_stone(opening_angle_deg=70, depth_mm=4, tilt_deg=20)
+    centre = (m.bounds[0] + m.bounds[1]) / 2
+    p = m.vertices[np.argmin(np.linalg.norm(m.vertices[:, :2] - [70, 50], axis=1))] - centre
+    r = client.post("/api/3d/auto_slice", data={"mesh_id": stone_id, "point_x": p[0], "point_y": p[1],
+                                                 "point_z": p[2]})
+    assert r.status_code == 422 and "spår" in r.json()["detail"]
+
+
+def test_summarize_selection(client):
+    slices = [{m: v for m, v in zip(
+        ["apex_vinkel_deg", "asymmetri_deg", "spårdjup_mm", "spårbredd_mm", "djup_bredd_kvot", "bottenradie_mm",
+         "ytråhet_mm"], [70 + i, 3, 2, 6, .33, .2, .05])} for i in range(4)]
+    r = client.post("/api/stats/summarize", json={"slices": slices})
+    assert r.status_code == 200 and r.json()["n"] == 4
 
 
 def test_2d_rejects_non_image(client):

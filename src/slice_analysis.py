@@ -4,24 +4,75 @@ import trimesh
 import matplotlib.pyplot as plt
 import os
 
-def extract_2d_profile_from_mesh(mesh, plane_origin, groove_direction, up_vector):
+DEFAULT_WINDOW_MM = 25.0
+
+
+def section_points(triangles: np.ndarray, plane_origin, plane_normal) -> np.ndarray:
+    """Skärningspunkter mellan ett plan och trianglar (k, 3, 3): ändpunkterna för varje snittsegment."""
+    d = (triangles - plane_origin) @ plane_normal  # (k, 3) signed distances
+    pts = []
+    for i, j in ((0, 1), (1, 2), (2, 0)):
+        di, dj = d[:, i], d[:, j]
+        cross = (di * dj) < 0
+        if cross.any():
+            t = di[cross] / (di[cross] - dj[cross])
+            pi, pj = triangles[cross, i], triangles[cross, j]
+            pts.append(pi + t[:, None] * (pj - pi))
+    if not pts:
+        return np.empty((0, 3))
+    # Adjacent triangles share edges, so each point appears twice
+    return np.unique(np.round(np.vstack(pts), 6), axis=0)
+
+
+def extract_2d_profile_from_mesh(mesh, plane_origin, groove_direction, up_vector, window_mm=DEFAULT_WINDOW_MM,
+                                 face_tree=None):
+    """Tvärsnittsprofil genom spåret.
+
+    Bara punkter inom ±window_mm från mätpunkten (i sidled och höjdled) tas med. Utan fönstret
+    skulle snittet genom en sluten skanning även innehålla stenens baksida och kanter.
+    Med face_tree (KD-träd över triangelcentra) snittas bara närliggande trianglar, vilket ger
+    samma resultat men går mycket snabbare på stora skanningar."""
     N = groove_direction / np.linalg.norm(groove_direction)
     Z_dir = up_vector / np.linalg.norm(up_vector)
     X_dir = np.cross(N, Z_dir)
     X_dir = X_dir / np.linalg.norm(X_dir)
     Z_dir = np.cross(X_dir, N)
-    
-    slice_path = mesh.section(plane_origin=plane_origin, plane_normal=N)
-    if slice_path is None or len(slice_path.vertices) < 4:
+    plane_origin = np.asarray(plane_origin, dtype=float)
+
+    if face_tree is not None and window_mm:
+        idx = face_tree.query_ball_point(plane_origin, window_mm * 1.5 + 2.0)
+        points_3d = section_points(mesh.vertices[mesh.faces[idx]], plane_origin, N) if idx else np.empty((0, 3))
+    else:
+        slice_path = mesh.section(plane_origin=plane_origin, plane_normal=N)
+        points_3d = slice_path.vertices if slice_path is not None else np.empty((0, 3))
+    if len(points_3d) < 4:
         raise ValueError("Ogiltigt snitt.")
-        
-    points_3d = slice_path.vertices
+
     relative_points = points_3d - plane_origin
     x_2d = np.dot(relative_points, X_dir)
     z_2d = np.dot(relative_points, Z_dir)
-    
+
+    if window_mm:
+        keep = (np.abs(x_2d) <= window_mm) & (np.abs(z_2d) <= window_mm)
+        x_2d, z_2d = x_2d[keep], z_2d[keep]
+        if len(x_2d) < 4:
+            raise ValueError("För få punkter i snittet nära mätpunkten.")
+
     sort_idx = np.argsort(x_2d)
     return x_2d[sort_idx], z_2d[sort_idx]
+
+WALL_BAND = (0.2, 0.8)
+
+
+def _wall_band(xw, zw, z_bottom, z_top):
+    """Väggpunkter mellan 20 % och 80 % av höjden från botten till spårkanten (minst tre punkter)."""
+    span = z_top - z_bottom
+    if span <= 0:
+        return xw, zw
+    lo, hi = z_bottom + WALL_BAND[0] * span, z_bottom + WALL_BAND[1] * span
+    keep = (zw >= lo) & (zw <= hi)
+    return (xw[keep], zw[keep]) if keep.sum() >= 3 else (xw, zw)
+
 
 def calculate_v_angle(x, z):
     # Använd lätt utjämning för att hitta en mer stabil apex och axlar
@@ -59,6 +110,12 @@ def calculate_v_angle(x, z):
         x_right, z_right = x[apex_idx+1:], z[apex_idx+1:]
         left_shoulder, right_shoulder = 0, len(x)-1
     
+    # Anpassa väggarna bara mellan 20 % och 80 % av spårdjupet: den rundade botten och
+    # spårkanten (läppen) planar annars ut väggarna och ger för stor vinkel (metod groove-3).
+    z_bottom = z[apex_idx]
+    x_left, z_left = _wall_band(x_left, z_left, z_bottom, z[left_shoulder])
+    x_right, z_right = _wall_band(x_right, z_right, z_bottom, z[right_shoulder])
+
     res_left = linregress(x_left, z_left)
     res_right = linregress(x_right, z_right)
     
@@ -71,7 +128,14 @@ def calculate_v_angle(x, z):
     cos_theta = np.clip(cos_theta, -1.0, 1.0)
     
     depth = abs(np.min(z[left_shoulder:right_shoulder]) - np.max(z[left_shoulder:right_shoulder]))
-    width = abs(x[right_shoulder] - x[left_shoulder])
+    # Bredd: där väggarnas linjer når stenytans nivå precis utanför spårkanterna (medel av sidorna)
+    rim_left = np.max(z[max(0, left_shoulder - 3):left_shoulder + 1])
+    rim_right = np.max(z[right_shoulder:right_shoulder + 4])
+    rim = 0.5 * (rim_left + rim_right)
+    if k1 < 0 < k2:
+        width = abs((rim - res_right.intercept) / k2 - (rim - res_left.intercept) / k1)
+    else:
+        width = abs(x[right_shoulder] - x[left_shoulder])
     dw_ratio = depth / width if width > 0 else 0
     
     # Calculate R_b (Bottenradie) using parabolic fit near apex
@@ -99,6 +163,7 @@ def calculate_v_angle(x, z):
         "djup_bredd_kvot": dw_ratio,
         "bottenradie_mm": Rb,
         "ytråhet_mm": Ra,
+        "fit_r2": float(min(res_left.rvalue ** 2, res_right.rvalue ** 2)),
         "fit_left": (res_left.slope, res_left.intercept),
         "fit_right": (res_right.slope, res_right.intercept),
         "apex_idx": apex_idx,
@@ -182,13 +247,13 @@ def find_auto_slice(mesh, click_point, radius=5.0):
     
     return p1.tolist(), p2.tolist()
 
-def snap_path_to_bottom(mesh, path_points, up_vector, search_radius=3.0):
+def snap_path_to_bottom(mesh, path_points, up_vector, search_radius=3.0, vertex_tree=None):
     from scipy.spatial import cKDTree
     snapped = []
     up_vector = np.array(up_vector)
     up_vector = up_vector / np.linalg.norm(up_vector)
     
-    kdtree = cKDTree(mesh.vertices)
+    kdtree = vertex_tree or cKDTree(mesh.vertices)
     for p in path_points:
         indices = kdtree.query_ball_point(p, r=search_radius)
         if len(indices) == 0:
@@ -209,7 +274,7 @@ def snap_path_to_bottom(mesh, path_points, up_vector, search_radius=3.0):
             
     return snapped
 
-def analyze_path(mesh, path_points, up_vector):
+def analyze_path(mesh, path_points, up_vector, window_mm=DEFAULT_WINDOW_MM, face_tree=None):
     if len(path_points) < 2:
         raise ValueError("Bananalys kräver minst 2 punkter.")
         
@@ -240,9 +305,9 @@ def analyze_path(mesh, path_points, up_vector):
             current_distance += np.linalg.norm(path_points[i] - path_points[i-1])
             
         try:
-            x_2d, z_2d = extract_2d_profile_from_mesh(mesh, p, t, up_vector)
+            x_2d, z_2d = extract_2d_profile_from_mesh(mesh, p, t, up_vector, window_mm=window_mm, face_tree=face_tree)
             res = calculate_v_angle(x_2d, z_2d)
-            if res["apex_vinkel_deg"] > 0:
+            if np.isfinite(res["apex_vinkel_deg"]) and np.isfinite(res["fit_r2"]) and res["apex_vinkel_deg"] > 0:
                 results_list.append(res)
                 distances.append(current_distance)
                 depths.append(res["spårdjup_mm"])

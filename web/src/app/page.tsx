@@ -13,7 +13,7 @@ const GITHUB = "https://github.com/Precatio/runes";
 
 const STATS = [
   { value: "6 753", label: "inskrifter ur Samnordisk runtextdatabas" },
-  { value: "7", label: "huggspårsmått per tvärsnitt, med spridning" },
+  { value: "±0,6°", label: "vinkelfel på syntetiska stenar med kända spår" },
   { value: "60 %", label: "rätt ristare först i ortografisk test (slump 4 %)" },
   { value: "GPL-3.0", label: "fri och öppen källkod" },
 ];
@@ -25,7 +25,7 @@ const FEATURE_GROUPS = [
       {
         name: "3D-huggspårsanalys",
         href: "/3d",
-        text: "V-vinkel, asymmetri, djup, bredd, bottenradie och ytråhet i STL-, OBJ- och PLY-skanningar. Varje snitt redovisas för sig med standardavvikelse och konfidensintervall. Runor och ornamentik mäts separat.",
+        text: "V-vinkel, asymmetri, djup, bredd, bottenradie och ytråhet i STL-, OBJ- och PLY-skanningar – manuellt, med ett klick per snitt eller helt automatiskt med granskning. Runor och ornamentik mäts separat, med spridning per snitt.",
       },
       {
         name: "Strykljus och RTI",

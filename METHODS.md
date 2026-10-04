@@ -4,34 +4,85 @@ Den här filen beskriver exakt hur Runforskning räknar, så att resultat kan gr
 Alla beräkningar finns i `src/` och testas i `tests/`. Varje analys sparar en **proveniens** (programversion,
 mätmetodens version, SHA-256 för 3D-filen, alla parametrar och tidpunkt) som följer med i export och rapporter.
 
-## 1. Huggspårsmått (mätmetod `groove-2`)
+## 1. Huggspårsmått (mätmetod `groove-3`)
 
 Källkod: `src/slice_analysis.py`.
 
 1. **Tvärsnitt.** Mesh-filen centreras på mittpunkten av sin omslutande låda (samma som i webbläsaren).
-   Ett plan läggs vinkelrätt mot spårets riktning och skär nätet; skärningen projiceras till en 2D-profil
-   (x = position tvärs spåret, z = höjd längs den angivna uppåtvektorn).
-2. **Apex.** Profilen jämnas ut med ett glidande medelvärde (5 punkter). Apex är den lägsta punkten.
-3. **Spårkanter (axlar).** Från apex söks utåt tills lutningen |dz/dx| understiger 0,15 – där börjar den plana
-   stenytan. Ligger en kant närmare än 5 punkter från apex används 15 punkter som reserv.
-4. **Väggar.** Vänster och höger vägg (mellan kant och apex) anpassas var för sig med linjär regression.
-5. **Mått:**
+   Ett plan läggs vinkelrätt mot spårets riktning och skär nätet. Bara skärningspunkter inom ±25 mm från
+   mätpunkten, i sidled och höjdled, tas med (fönster) – annars kommer stenens baksida och kanter med i
+   snittet genom en sluten skanning. Profilen uttrycks i x (tvärs spåret) och z (längs ytans normal).
+2. **Uppåtriktning.** Vid manuell mätning används medelvärdet av ytnormalen i de klickade punkterna, vid
+   ett klick och automatisk analys den lokala ytnormalen (se avsnitt 1b och 1c).
+3. **Apex.** Profilen jämnas ut med ett glidande medelvärde (5 punkter). Apex är den lägsta punkten.
+4. **Spårkanter (axlar).** Från apex söks utåt tills lutningen |dz/dx| understiger 0,15.
+5. **Väggar.** Varje vägg anpassas med linjär regression, men **bara mellan 20 % och 80 % av höjden** från
+   botten till spårkanten. Den rundade botten och spårkantens läpp planar annars ut väggarna och ger för
+   stor vinkel (minst tre punkter, annars används hela väggen).
+6. **Mått:**
 
 | Mått | Definition |
 |---|---|
 | V-vinkel (°) | Öppningsvinkeln mellan väggarnas regressionslinjer, mätt från apex. |
 | Asymmetri (°) | \|arctan(1/\|k₁\|) − arctan(1/\|k₂\|)\|, skillnaden mellan väggarnas vinkel mot lodlinjen. |
 | Spårdjup (mm) | Höjdskillnaden mellan högsta och lägsta punkt mellan kanterna. |
-| Spårbredd (mm) | Avståndet mellan kanterna. |
+| Spårbredd (mm) | Avståndet mellan väggarnas linjer i höjd med stenytan precis utanför spårkanterna (medel av sidorna). |
 | Djup/bredd | Spårdjup / spårbredd. |
 | Bottenradie (mm) | 1/(2a) för en andragradskurva anpassad till ±5 punkter kring apex. |
 | Ytråhet (mm) | Medelabsolutavvikelsen från väggarnas regressionslinjer. |
+| Väggpassning (R²) | Den sämre av väggarnas förklaringsgrad; används för kvalitetsgranskning. |
 
-Flera snitt läggs med 1 mm mellanrum längs spåret (eller längs en ritad bana). Varje snitt redovisas för sig.
+**Validering.** På syntetiska stenar med kända V-spår (öppningsvinkel 50–110°, djup 2–4 mm, välvd yta,
+mätbrus 0,03 mm, `src/synthetic.py`) mäts vinkeln inom ±0,6° och bredden inom ±1 % (djup 4 mm). Testerna
+körs automatiskt (`tests/`).
 
-**Versionshistorik.** `groove-1` (före 2026-10-04) beräknade vinkeln mellan väggarnas riktningsvektorer åt
-samma håll och gav därför 180° minus den verkliga öppningsvinkeln (en spårfixtur på 75° rapporterades som
-103,5°). Mätningar gjorda med `groove-1` ska räknas om (180° − värdet) eller göras om.
+**Versionshistorik.**
+* `groove-1` (före 2026-10-04) gav 180° minus den verkliga öppningsvinkeln.
+* `groove-2` (2026-10-04) rättade vinkeln, men anpassade väggarna över hela höjden, mätte bredden mellan
+  spårkanterna och tog med hela snittet genom nätet. På smala spår blev vinkeln ca 10° för stor.
+* `groove-3` (2026-10-04): väggband 20–80 %, bredd vid stenytan och fönster runt mätpunkten.
+  Mätningar med äldre versioner är inte direkt jämförbara och bör göras om.
+
+### 1b. Ett klick per snitt
+
+Källkod: `src/auto_grooves.py` (`auto_slice`). Användaren klickar en gång i ett spår.
+
+1. Punkterna inom 15 mm runt klicket ger en lokal ytnormal (minsta variansriktningen), orienterad utåt med
+   den klickade ytans normal. Normalen förfinas med lutningen hos en spårfri referensyta (avsnitt 1c, steg 2).
+2. Ett lokalt höjdfält beräknas. Spårets riktning tas från höjdfältets Hessian (riktningen med minst
+   krökning) på den skala (1–7,5 mm) där dalformen är tydligast (skalnormaliserad krökning).
+3. Riktningen förfinas genom att spårets botten följs några millimeter åt båda hållen och en linje anpassas
+   genom bottenpunkterna. Mätpunkten flyttas till botten.
+4. Snitten mäts sedan exakt som i avsnitt 1. Hittas ingen dalform säger programmet till i stället för att mäta.
+
+### 1c. Automatisk spåranalys
+
+Källkod: `src/auto_grooves.py` (`analyze_grooves`). Användaren vrider den ristade sidan mot sig; kamerans
+riktning blir ytans normal och kamerans upp-riktning orienterar granskningsbilden.
+
+1. **Höjdfält:** alla hörn och triangelcentra projiceras på planet vinkelrätt mot normalen, i ett rutnät med
+   skanningens medelkantlängd som upplösning (högst 6 miljoner celler). Den högsta punkten per cell väljs, så
+   att baksidan inte kommer med.
+2. **Referensyta:** morfologisk stängning (dilatation följd av erosion, 20 mm) fyller fördjupningar smalare
+   än ca 20 mm men bevarar plana, lutande och svagt välvda ytor; en lätt gaussisk utjämning (1 mm) dämpar brus.
+3. **Spår:** celler som ligger mer än `max(0,3 mm, k · brus)` under referensytan, där brus = 1,4826 · MAD av
+   avvikelserna och k = 3 (känslighet "normal"). Partier inom 10 mm från skanningens kant, branta partier
+   (> 45°) och små fläckar (< 10 mm²) utesluts.
+4. **Mittlinjer:** spåren tunnas ut till ett skelett. Punkter nära korsningar och ändar utesluts, liksom
+   partier bredare än ett huggspår (standard 16 mm) – t.ex. sänkta fält eller avflagningar.
+5. **Mätning:** med jämna mellanrum (standard 3 mm) längs mittlinjerna tas riktningen från mittlinjen och
+   förfinas genom att botten följs (som i 1b). Tvärsnittet mäts **genom mesh-filen** med samma metod som i
+   avsnitt 1 – höjdfältet används bara för att hitta spåren.
+6. **Kvalitetsgranskning:** snitt sorteras bort vid orimlig vinkel (≤ 15° eller ≥ 170°), väggpassning
+   R² < 0,8, djup under tröskeln, ej funnen spårkant eller botten utanför mittlinjen. Skälen redovisas.
+7. **Granskning:** forskaren ser alla mätpunkter på en reliefbild, märker områden som runor eller
+   ornamentik eller utesluter dem, och väljer vilket urval som blir resultatet.
+
+**Validering.** På de syntetiska stenarna ger den automatiska analysen samma noggrannhet som avsnitt 1
+(t.ex. 70,0 ± 0,9° för spår på 70°, oberoende av hur stenen lutar). På skanningen av Sö 113 (6,1 miljoner
+trianglar) godkändes ca 250 av 1 000 kandidatsnitt; ett klick på samma ställen gav i median 6° skillnad i
+vinkel och 10° i spårriktning, vilket speglar hur oregelbundna verkliga, vittrade spår är. Resultaten bör
+därför redovisas med spridning och, för jämförelser, med samma mätsätt för alla stenar.
 
 ## 2. Osäkerhet
 

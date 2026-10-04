@@ -10,4 +10,6 @@ APP_NAME = "Runforskning (Aagaard Research)"
 APP_VERSION = "2.0.0"
 # Version av mätmetoden. Höjs när beräkningen ändras så att gamla och nya mätningar kan skiljas åt.
 # groove-2: V-vinkeln mäts som öppningsvinkel mellan väggarna (rättad 2026-10-04; groove-1 gav 180° - V).
-METHOD_VERSION = "groove-2"
+# groove-3: väggarna anpassas mellan 20 och 80 % av djupet, bredden mäts mellan väggarnas linjer vid
+#           spårkanten och snittet begränsas till ett fönster runt mätpunkten (2026-10-04).
+METHOD_VERSION = "groove-3"

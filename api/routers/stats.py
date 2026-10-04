@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
 from api.rundata import store
-from src.stats import METRICS, attribute, compare_stones, ward_clustering
+from src.stats import METRICS, attribute, compare_stones, summarize_slices, ward_clustering
 
 router = APIRouter()
 
@@ -52,6 +52,26 @@ def carver_label(signum: Optional[str]) -> Optional[str]:
         return None
     cs = [c for c in rec["carvers"] if c["kind"] in ("S", "A") and not c["uncertain"]]
     return cs[0]["name"] if len(cs) == 1 else None
+
+
+class SummarizeRequest(BaseModel):
+    slices: list[dict]
+    meta_stone: str = "Granit"
+    meta_weathering: str = "Låg"
+
+
+@router.post("/summarize")
+def summarize(req: SummarizeRequest):
+    """Sammanfattning (medel, SD, n, 95 % KI) och verktygsheuristik för ett urval snitt."""
+    from api.routers.threed import tool_heuristic
+
+    slices = [s for s in req.slices if all(isinstance(s.get(m), (int, float)) for m in METRICS)]
+    if not slices:
+        raise HTTPException(status_code=400, detail="Urvalet innehåller inga mätbara snitt.")
+    summary = summarize_slices(slices)
+    means = {m: summary[m]["mean"] for m in METRICS}
+    return {"summary": summary, "means": means, "n": len(slices),
+            "tool_heuristic": tool_heuristic(means["apex_vinkel_deg"], req.meta_stone, req.meta_weathering)}
 
 
 @router.post("/compare")

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useEffectEvent, Suspense } from "react";
+import { useState, useEffect, useEffectEvent, useRef, Suspense } from "react";
 import PlotlyGraph from "@/components/PlotlyGraph";
 import { toJpeg } from 'html-to-image';
 import { useLanguage } from "@/components/LanguageContext";
@@ -10,6 +10,11 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { db, ProjectData } from "@/lib/db";
 import GrooveResultsPanel from "@/components/GrooveResultsPanel";
+import AutoGrooveReview from "@/components/AutoGrooveReview";
+import type { SliceMarker, Vec3, ViewDirection, ViewerPoint } from "@/components/ThreeDViewer";
+import { MeshSession, type AutoAnalysisResult, type AutoLabel, type MeshInfo } from "@/lib/mesh";
+import type { ThreeDAnalysisResult } from "@/lib/db";
+import type { SliceMetrics } from "@/lib/metrics";
 import { FEATURE_TYPES, type FeatureType } from "@/lib/metrics";
 import dynamic from 'next/dynamic';
 import { API_URL } from "@/lib/api";
@@ -57,6 +62,8 @@ function ThreeDPageContent() {
   const [up, setUp] = useState([0.0, 0.0, 1.0]);
   const [sliceCount, setSliceCount] = useState(3); // Averaging
   const [pathPoints, setPathPoints] = useState<[number, number, number][] | null>(null);
+  // How the cross-section was chosen; analysing without a selection would slice through the stone's centre
+  const [selection, setSelection] = useState<"none" | "line" | "path" | "manual">("none");
   
   // Metadata & Context
   const metaStone = meta.stone;
@@ -89,6 +96,32 @@ function ThreeDPageContent() {
   // Lighter, pre-centred model for display of very large scans; analysis always uses the original file
   const [viewFile, setViewFile] = useState<File | null>(null);
   const [preparingView, setPreparingView] = useState(false);
+
+  // The scan is uploaded once to the analysis engine and referred to by id
+  const sessionRef = useRef<MeshSession | null>(null);
+  const [meshInfo, setMeshInfo] = useState<MeshInfo | null>(null);
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+
+  type MeasureMode = "manual" | "oneclick" | "auto";
+  const [measureMode, setMeasureMode] = useState<MeasureMode>("oneclick");
+  const viewDirRef = useRef<ViewDirection | null>(null);
+
+  // One click per slice
+  const [clickMarkers, setClickMarkers] = useState<SliceMarker[]>([]);
+  const [clickSlices, setClickSlices] = useState<SliceMetrics[]>([]);
+  const [clickSelections, setClickSelections] = useState<Record<string, unknown>[]>([]);
+  const [clickBusy, setClickBusy] = useState(false);
+  const [clickMessage, setClickMessage] = useState<string | null>(null);
+
+  // Automatic analysis
+  const [autoResult, setAutoResult] = useState<AutoAnalysisResult | null>(null);
+  const [autoLabels, setAutoLabels] = useState<AutoLabel[]>([]);
+  const [autoBusy, setAutoBusy] = useState(false);
+  const [autoError, setAutoError] = useState<string | null>(null);
+  const [autoSpacing, setAutoSpacing] = useState(3);
+  const [autoSensitivity, setAutoSensitivity] = useState(3);
+  const [autoMaxWidth, setAutoMaxWidth] = useState(16);
   const { t } = useLanguage();
   const { geminiKey } = useSettings();
 
@@ -208,61 +241,134 @@ function ThreeDPageContent() {
     alert(`3D-data sparat till projekt: ${saved.name}`);
   };
 
+  const errorText = (err: unknown, fallback: string) => (err instanceof Error ? err.message : fallback);
+
   const handleAnalyze = async (e: React.FormEvent) => {
     e.preventDefault();
+    const session = sessionRef.current;
+    if (!session) return;
     setLoading(true);
     setResults(null);
-
-    const formData = new FormData();
-    if (file) {
-      formData.append("file", file);
-    }
-    
-    formData.append("origin_x", origin[0].toString());
-    formData.append("origin_y", origin[1].toString());
-    formData.append("origin_z", origin[2].toString());
-    formData.append("dir_x", direction[0].toString());
-    formData.append("dir_y", direction[1].toString());
-    formData.append("dir_z", direction[2].toString());
-    formData.append("up_x", up[0].toString());
-    formData.append("up_y", up[1].toString());
-    formData.append("up_z", up[2].toString());
-    formData.append("slice_count", sliceCount.toString());
-    formData.append("slice_spacing_mm", "1.0");
-    formData.append("meta_stone", metaStone);
-    formData.append("meta_weathering", metaWeathering);
-    formData.append("meta_text", metaText);
-    formData.append("feature_type", featureType);
-
-    let endpoint = `${API_URL}/api/3d/analyze`;
-    if (pathPoints && pathPoints.length > 2) {
-      endpoint = `${API_URL}/api/3d/analyze_path`;
-      formData.append("path_points_json", JSON.stringify(pathPoints));
-    }
-
+    const common = {
+      up_x: up[0], up_y: up[1], up_z: up[2],
+      meta_stone: metaStone, meta_weathering: metaWeathering, feature_type: featureType,
+    };
     try {
-      const res = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "X-Gemini-Api-Key": geminiKey
-        },
-        body: formData,
-      });
-
-      if (!res.ok) {
-        const err = await res.json().catch(() => null);
-        throw new Error(err?.detail || "Analys misslyckades");
-      }
-
-      const data = await res.json();
+      const data = pathPoints && pathPoints.length > 2
+        ? await session.postJSON<ThreeDAnalysisResult>("/api/3d/analyze_path", { ...common, path_points_json: JSON.stringify(pathPoints) })
+        : await session.postJSON<ThreeDAnalysisResult>("/api/3d/analyze", {
+            ...common,
+            origin_x: origin[0], origin_y: origin[1], origin_z: origin[2],
+            dir_x: direction[0], dir_y: direction[1], dir_z: direction[2],
+            slice_count: sliceCount, slice_spacing_mm: 1.0, meta_text: metaText,
+          });
       setResults(data);
     } catch (err) {
       console.error(err);
-      alert(err instanceof Error ? err.message : "Något gick fel vid 3D-analysen.");
+      alert(errorText(err, "Något gick fel vid 3D-analysen."));
     } finally {
       setLoading(false);
     }
   };
+
+  // ---- One click per slice -------------------------------------------------------------
+  const summarizeSlices = async (slices: SliceMetrics[]) => {
+    const res = await fetch(`${API_URL}/api/stats/summarize`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ slices, meta_stone: metaStone, meta_weathering: metaWeathering }),
+    });
+    if (!res.ok) throw new Error((await res.json().catch(() => null))?.detail || "Sammanfattningen misslyckades");
+    return res.json();
+  };
+
+  const handleSingleClick = async (point: Vec3, normal: Vec3) => {
+    const session = sessionRef.current;
+    if (!session || clickBusy) return;
+    setClickBusy(true);
+    setClickMessage(null);
+    try {
+      const data = await session.postJSON<ThreeDAnalysisResult & { selection: { origin: Vec3; direction: Vec3; up: Vec3; across: Vec3; window_mm: number } }>(
+        "/api/3d/auto_slice",
+        {
+          point_x: point[0], point_y: point[1], point_z: point[2],
+          normal_x: normal[0], normal_y: normal[1], normal_z: normal[2],
+          slice_count: sliceCount, meta_stone: metaStone, meta_weathering: metaWeathering, feature_type: featureType,
+        },
+      );
+      const sel = data.selection;
+      const half = (data.results.spårbredd_mm || sel.window_mm / 2) * 0.75;
+      const marker: SliceMarker = {
+        from: sel.origin.map((v, i) => v - sel.across[i] * half) as Vec3,
+        to: sel.origin.map((v, i) => v + sel.across[i] * half) as Vec3,
+      };
+      const allSlices = [...clickSlices, ...(data.slices ?? [])];
+      const selections = [...clickSelections, { click: point, ...sel }];
+      const summary = await summarizeSlices(allSlices);
+      setClickMarkers([...clickMarkers, marker]);
+      setClickSlices(allSlices);
+      setClickSelections(selections);
+      setResults({
+        ...data,
+        results: { ...data.results, ...summary.means, troligt_verktyg: summary.tool_heuristic.label },
+        summary: summary.summary,
+        slices: allSlices,
+        tool_heuristic: summary.tool_heuristic,
+        provenance: data.provenance && {
+          ...data.provenance,
+          parameters: { mode: "one-click", clicks: selections.length, slices_per_click: sliceCount, selections },
+        },
+      });
+    } catch (err) {
+      setClickMessage(errorText(err, "Kunde inte mäta vid klicket."));
+    } finally {
+      setClickBusy(false);
+    }
+  };
+
+  const clearClicks = () => {
+    setClickMarkers([]);
+    setClickSlices([]);
+    setClickSelections([]);
+    setClickMessage(null);
+    setResults(null);
+  };
+
+  // ---- Automatic analysis ----------------------------------------------------------------
+  const runAutoAnalysis = async () => {
+    const session = sessionRef.current;
+    const view = viewDirRef.current;
+    if (!session) return;
+    if (!view) {
+      setAutoError("3D-vyn är inte redo ännu. Vänta tills stenen visas och försök igen.");
+      return;
+    }
+    setAutoBusy(true);
+    setAutoError(null);
+    setAutoResult(null);
+    try {
+      const data = await session.postJSON<AutoAnalysisResult>("/api/3d/auto_analyze", {
+        normal_x: view.toward[0], normal_y: view.toward[1], normal_z: view.toward[2],
+        up_x: view.up[0], up_y: view.up[1], up_z: view.up[2],
+        spacing_mm: autoSpacing, sensitivity: autoSensitivity, max_halfwidth_mm: autoMaxWidth / 2,
+        meta_stone: metaStone, meta_weathering: metaWeathering,
+      });
+      setAutoResult(data);
+      setAutoLabels(data.slices.map(sl => (sl.accepted ? "unknown" : "excluded")));
+      if (data.counts.accepted === 0) {
+        setAutoError("Inga spår kunde mätas på den sida som vetter mot dig. Kontrollera att den ristade sidan är vänd mot kameran, eller prova högre känslighet.");
+      }
+    } catch (err) {
+      setAutoError(errorText(err, "Den automatiska analysen misslyckades."));
+    } finally {
+      setAutoBusy(false);
+    }
+  };
+
+  const LABEL_COLORS: Record<AutoLabel, string> = { rune: "#b7410e", ornament: "#0369a1", unknown: "#0f172a", excluded: "#94a3b8" };
+  const autoPoints: ViewerPoint[] = autoResult
+    ? autoResult.slices.flatMap((sl, i) => (sl.accepted && sl.point ? [{ position: sl.point, color: LABEL_COLORS[autoLabels[i] ?? "unknown"] }] : []))
+    : [];
 
   const handleSnapshot2D = async () => {
     const canvas = document.querySelector('canvas');
@@ -312,26 +418,11 @@ function ThreeDPageContent() {
   };
 
   const handleAutoSnapRequest = async (points: [number, number, number][]): Promise<[number, number, number][]> => {
-    const formData = new FormData();
-    if (file) {
-      formData.append("file", file);
-    } else {
-      formData.append("use_mock", "true");
-    }
-    formData.append("path_points_json", JSON.stringify(points));
-    formData.append("up_x", up[0].toString());
-    formData.append("up_y", up[1].toString());
-    formData.append("up_z", up[2].toString());
-
-    const res = await fetch(`${API_URL}/api/3d/auto_snap_path`, {
-      method: "POST",
-      body: formData,
+    const session = sessionRef.current;
+    if (!session) throw new Error("Ladda upp en 3D-fil först.");
+    const data = await session.postJSON<{ snapped_path: [number, number, number][] }>("/api/3d/auto_snap_path", {
+      path_points_json: JSON.stringify(points), up_x: up[0], up_y: up[1], up_z: up[2],
     });
-
-    if (!res.ok) {
-      throw new Error("Kunde inte snappa banan mot botten.");
-    }
-    const data = await res.json();
     return data.snapped_path;
   };
 
@@ -404,15 +495,12 @@ function ThreeDPageContent() {
 
   const LARGE_FILE_BYTES = 150 * 1024 * 1024;
 
-  const prepareViewModel = async (selectedFile: File) => {
+  const prepareViewModel = async (session: MeshSession, name: string) => {
     setPreparingView(true);
     try {
-      const fd = new FormData();
-      fd.append("file", selectedFile);
-      const res = await fetch(`${API_URL}/api/3d/view_model`, { method: "POST", body: fd });
-      if (!res.ok) throw new Error("Kunde inte skapa visningsmodell");
+      const res = await session.post("/api/3d/view_model", {});
       const blob = await res.blob();
-      setViewFile(new File([blob], selectedFile.name.replace(/\.[^.]+$/, "") + "_visning.stl", { type: "model/stl" }));
+      setViewFile(new File([blob], name.replace(/\.[^.]+$/, "") + "_visning.stl", { type: "model/stl" }));
     } catch (err) {
       console.error(err);
       setViewFile(null);
@@ -425,8 +513,35 @@ function ThreeDPageContent() {
     setFile(selectedFile);
     setViewFile(null);
     setRaaSource(null);
+    setSelection("none");
+    setPathPoints(null);
+    setResults(null);
+    setMeshInfo(null);
+    setUploadError(null);
+    setClickMarkers([]);
+    setClickSlices([]);
+    setClickSelections([]);
+    setAutoResult(null);
+    sessionRef.current = null;
     if (!selectedFile) return;
-    if (selectedFile.size > LARGE_FILE_BYTES) prepareViewModel(selectedFile);
+
+    const session = new MeshSession(selectedFile, fraction => setUploadProgress(fraction));
+    sessionRef.current = session;
+    const isLarge = selectedFile.size > LARGE_FILE_BYTES;
+    if (isLarge) setPreparingView(true);
+    setUploadProgress(0);
+    session.ensure()
+      .then(info => {
+        if (sessionRef.current !== session) return;
+        setMeshInfo(info);
+        if (isLarge) prepareViewModel(session, selectedFile.name);
+      })
+      .catch(err => {
+        if (sessionRef.current !== session) return;
+        setUploadError(errorText(err, "Uppladdningen misslyckades."));
+        setPreparingView(false);
+      })
+      .finally(() => setUploadProgress(null));
 
     try {
       const res = await fetch(`${API_URL}/api/raa/extract-signum`, {
@@ -446,6 +561,24 @@ function ThreeDPageContent() {
       }
     }
   };
+
+  // What is still missing before a measurement can be made, for the status box
+  const uploadDone = !!meshInfo;
+  const steps: { done: boolean; text: string }[] = [
+    {
+      done: uploadDone,
+      text: !file ? "Ladda upp en 3D-skanning (STL, OBJ eller PLY)."
+        : uploadError ? `Uppladdningen misslyckades: ${uploadError}`
+        : uploadProgress !== null && uploadProgress < 1 ? `Laddar upp till analysmotorn … ${Math.round(uploadProgress * 100)} %`
+        : !uploadDone ? "Analysmotorn läser in modellen …"
+        : `Modellen är inläst (${meshInfo!.faces.toLocaleString("sv-SE")} ytor).`,
+    },
+    measureMode === "manual"
+      ? { done: selection !== "none", text: selection !== "none" ? "Spår markerat." : "Håll Shift och klicka två punkter tvärs över ett spår, eller flera längs spåret." }
+      : measureMode === "oneclick"
+      ? { done: clickMarkers.length > 0, text: clickMarkers.length > 0 ? `${clickMarkers.length} snitt mätta (${clickSlices.length} tvärsnitt).` : "Håll Shift och klicka mitt i ett spår – varje klick mäter ett snitt." }
+      : { done: !!autoResult, text: autoResult ? "Automatisk analys klar – granska resultatet nedan." : "Vrid stenen så att den ristade sidan vetter mot dig och starta analysen." },
+  ];
 
   const getPlotData = () => {
     const d = results?.plot_data;
@@ -544,6 +677,64 @@ function ThreeDPageContent() {
                 />
               </div>
             </div>
+
+            {file && (
+              <div>
+                <label className="block text-slate-500 text-[12px] mb-2 font-bold uppercase tracking-wider">Mätsätt</label>
+                <div className="grid grid-cols-3 gap-1 bg-slate-900/5 p-1 rounded-xl">
+                  {([["oneclick", "Ett klick"], ["manual", "Manuellt"], ["auto", "Automatiskt"]] as const).map(([mode, name]) => (
+                    <button key={mode} type="button" onClick={() => setMeasureMode(mode)}
+                      className={`py-2 rounded-lg text-xs font-bold transition-all ${measureMode === mode ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-800"}`}>
+                      {name}
+                    </button>
+                  ))}
+                </div>
+                <p className="text-[11px] text-slate-500 mt-1.5">
+                  {measureMode === "oneclick" && "Klicka i ett spår – appen hittar riktning och botten och mäter direkt."}
+                  {measureMode === "manual" && "Du väljer själv snittets läge med två punkter, eller en bana längs spåret."}
+                  {measureMode === "auto" && "Appen hittar alla spår på den sida som vetter mot dig och mäter med jämna mellanrum."}
+                </p>
+              </div>
+            )}
+
+            <div className="rounded-xl border border-slate-200 bg-white/70 p-3 space-y-1.5">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Status</div>
+              {steps.map((st, i) => (
+                <div key={i} className={`flex gap-2 text-xs ${st.done ? "text-emerald-700" : i === 0 && uploadError ? "text-red-700" : "text-slate-700"}`}>
+                  <span className="font-bold w-4 flex-shrink-0">{st.done ? "✓" : `${i + 1}.`}</span>
+                  <span>{st.text}</span>
+                </div>
+              ))}
+              {measureMode === "oneclick" && clickBusy && <div className="text-xs text-slate-600">Mäter …</div>}
+              {measureMode === "oneclick" && clickMessage && <div className="text-xs text-amber-800">{clickMessage}</div>}
+            </div>
+
+            {measureMode === "auto" && file && (
+              <div className="space-y-3 rounded-xl border border-slate-200 bg-white/70 p-3">
+                <div className="grid grid-cols-3 gap-2">
+                  <label className="text-[11px] font-bold text-slate-500">Avstånd
+                    <select value={autoSpacing} onChange={e => setAutoSpacing(+e.target.value)} className="mt-1 w-full liquid-glass-input-wrapper rounded-lg px-2 py-1.5 text-xs font-semibold outline-none">
+                      {[2, 3, 5, 8].map(v => <option key={v} value={v}>{v} mm</option>)}
+                    </select>
+                  </label>
+                  <label className="text-[11px] font-bold text-slate-500">Känslighet
+                    <select value={autoSensitivity} onChange={e => setAutoSensitivity(+e.target.value)} className="mt-1 w-full liquid-glass-input-wrapper rounded-lg px-2 py-1.5 text-xs font-semibold outline-none">
+                      <option value={4}>Låg</option><option value={3}>Normal</option><option value={2}>Hög</option>
+                    </select>
+                  </label>
+                  <label className="text-[11px] font-bold text-slate-500">Max bredd
+                    <select value={autoMaxWidth} onChange={e => setAutoMaxWidth(+e.target.value)} className="mt-1 w-full liquid-glass-input-wrapper rounded-lg px-2 py-1.5 text-xs font-semibold outline-none">
+                      {[10, 16, 24, 32].map(v => <option key={v} value={v}>{v} mm</option>)}
+                    </select>
+                  </label>
+                </div>
+                <button type="button" onClick={runAutoAnalysis} disabled={!uploadDone || autoBusy}
+                  className="w-full py-3 bg-slate-900 hover:bg-black text-white font-semibold text-sm rounded-xl disabled:opacity-40 flex justify-center items-center gap-2">
+                  {autoBusy ? (<><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Analyserar stenen …</>) : "Kör automatisk analys"}
+                </button>
+                {autoError && <p className="text-xs text-amber-800">{autoError}</p>}
+              </div>
+            )}
 
             {(preparingView || viewFile) && (
               <p className="text-[11px] text-slate-500 -mt-5">
@@ -685,9 +876,9 @@ function ThreeDPageContent() {
                     <div key={i}>
                       <label className="block text-slate-500 text-[10px] mb-1.5 font-bold uppercase tracking-wider">{vec.label}</label>
                       <div className="flex gap-2">
-                        <input type="number" step="0.1" value={vec.state[0]} onChange={e => vec.set([+e.target.value, vec.state[1], vec.state[2]])} className="w-full liquid-glass-input-wrapper rounded-xl px-2.5 py-2 text-slate-900 text-center text-xs font-semibold outline-none transition-all" />
-                        <input type="number" step="0.1" value={vec.state[1]} onChange={e => vec.set([vec.state[0], +e.target.value, vec.state[2]])} className="w-full liquid-glass-input-wrapper rounded-xl px-2.5 py-2 text-slate-900 text-center text-xs font-semibold outline-none transition-all" />
-                        <input type="number" step="0.1" value={vec.state[2]} onChange={e => vec.set([vec.state[0], vec.state[1], +e.target.value])} className="w-full liquid-glass-input-wrapper rounded-xl px-2.5 py-2 text-slate-900 text-center text-xs font-semibold outline-none transition-all" />
+                        <input type="number" step="0.1" value={vec.state[0]} onChange={e => { vec.set([+e.target.value, vec.state[1], vec.state[2]]); setSelection("manual"); }} className="w-full liquid-glass-input-wrapper rounded-xl px-2.5 py-2 text-slate-900 text-center text-xs font-semibold outline-none transition-all" />
+                        <input type="number" step="0.1" value={vec.state[1]} onChange={e => { vec.set([vec.state[0], +e.target.value, vec.state[2]]); setSelection("manual"); }} className="w-full liquid-glass-input-wrapper rounded-xl px-2.5 py-2 text-slate-900 text-center text-xs font-semibold outline-none transition-all" />
+                        <input type="number" step="0.1" value={vec.state[2]} onChange={e => { vec.set([vec.state[0], vec.state[1], +e.target.value]); setSelection("manual"); }} className="w-full liquid-glass-input-wrapper rounded-xl px-2.5 py-2 text-slate-900 text-center text-xs font-semibold outline-none transition-all" />
                       </div>
                     </div>
                   ))}
@@ -750,9 +941,11 @@ function ThreeDPageContent() {
               </button>
             </div>
 
+            {measureMode === "manual" && (
             <button 
               type="submit" 
-              disabled={loading || !file}
+              disabled={loading || !uploadDone || selection === "none"}
+              title={!file ? "Ladda upp en 3D-fil först" : !uploadDone ? "Väntar på att modellen ska läsas in" : selection === "none" ? "Markera ett spår först" : undefined}
               className="w-full py-3.5 bg-slate-900 hover:bg-black active:scale-[0.98] disabled:opacity-40 text-white font-semibold text-sm rounded-2xl transition-all shadow-lg flex justify-center items-center gap-2 mt-4"
             >
               {loading ? (
@@ -762,6 +955,7 @@ function ThreeDPageContent() {
                 </>
               ) : t.threed.analyze_btn}
             </button>
+            )}
           </form>
         </div>
 
@@ -771,22 +965,45 @@ function ThreeDPageContent() {
           {/* Interactive 3D Viewer */}
           <div className="liquid-glass-island rounded-[36px] p-2 h-[600px] xl:h-[700px] flex-shrink-0 relative group shadow-sm border border-white/50">
             <ThreeDViewer 
-              file={viewFile ?? file} 
+              file={viewFile ?? (preparingView ? null : file)} 
               preCentered={!!viewFile}
-              onVectorSelected={(o, d) => {
+              emptyMessage={preparingView ? "Stor fil – skapar en lättare visningsmodell (kan ta en minut)..." : undefined}
+              onVectorSelected={(o, d, normal) => {
                 setOrigin(o);
                 setDirection(d);
+                if (normal) setUp(normal);
                 setPathPoints(null);
+                setSelection("line");
               }}
-              onPathSelected={(pts) => {
+              onPathSelected={(pts, normal) => {
                 setPathPoints(pts);
+                if (normal) setUp(normal);
+                setSelection("path");
               }}
+              clickMode={measureMode === "oneclick" ? "single" : measureMode === "auto" ? "view" : "points"}
+              onSingleClick={handleSingleClick}
+              onClearMarkers={clearClicks}
+              markers={measureMode === "oneclick" ? clickMarkers : undefined}
+              autoPoints={measureMode === "auto" ? autoPoints : undefined}
+              viewDirRef={viewDirRef}
               onAutoSnapRequest={handleAutoSnapRequest}
               cutoffDepth={cutoffDepth}
               layerThickness={layerThickness}
               slicerMode={slicerMode}
             />
           </div>
+
+          {measureMode === "auto" && autoResult && autoResult.counts.accepted > 0 && (
+            <AutoGrooveReview
+              result={autoResult}
+              signum={metaText}
+              metaStone={metaStone}
+              metaWeathering={metaWeathering}
+              labels={autoLabels}
+              onLabelsChange={setAutoLabels}
+              onUse={(r, ft) => { setFeatureType(ft); setResults(r); }}
+            />
+          )}
 
           {results && (
             <GrooveResultsPanel results={results} signum={metaText} featureType={featureType} />

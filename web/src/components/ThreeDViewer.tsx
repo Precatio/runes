@@ -1,6 +1,6 @@
 "use client";
-import React, { useState, useEffect, useEffectEvent, useMemo, useRef } from 'react';
-import { Canvas } from '@react-three/fiber';
+import React, { useState, useEffect, useEffectEvent, useMemo, useRef, Suspense } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Environment, Bounds, TransformControls, useBounds } from '@react-three/drei';
 import * as THREE from 'three';
 import { STLLoader, OBJLoader, PLYLoader, mergeBufferGeometries } from 'three-stdlib';
@@ -90,16 +90,47 @@ const peelingFragmentShader = `
 `;
 
 
+export type Vec3 = [number, number, number];
+
+export interface SliceMarker {
+  from: Vec3;
+  to: Vec3;
+  color?: string;
+}
+
+export interface ViewDirection {
+  toward: Vec3; // from the stone towards the camera
+  up: Vec3;     // the screen's up direction
+}
+
+export interface ViewerPoint {
+  position: Vec3;
+  color: string;
+}
+
 interface ThreeDViewerProps {
   file: File | null;
-  onVectorSelected: (origin: [number, number, number], direction: [number, number, number]) => void;
-  onPathSelected?: (points: [number, number, number][]) => void;
+  // All coordinates are in the model's own (centred) coordinate system, as used by the backend.
+  // `up` is the averaged surface normal at the clicked points.
+  onVectorSelected: (origin: Vec3, direction: Vec3, up?: Vec3) => void;
+  onPathSelected?: (points: Vec3[], up?: Vec3) => void;
+  // "points": Shift-click points/paths; "single": every Shift-click is reported via onSingleClick;
+  // "view": no measuring clicks (e.g. during automatic analysis)
+  clickMode?: 'points' | 'single' | 'view';
+  onSingleClick?: (point: Vec3, normal: Vec3) => void;
+  onClearMarkers?: () => void;
+  markers?: SliceMarker[];
+  autoPoints?: ViewerPoint[];
+  // Updated every frame with the camera's direction and screen-up, in model coordinates
+  viewDirRef?: React.MutableRefObject<ViewDirection | null>;
   onAutoSnapRequest?: (points: [number, number, number][]) => Promise<[number, number, number][]>;
   cutoffDepth?: number;
   layerThickness?: number;
   slicerMode?: 'flat' | 'peeling';
   // The file is already centred by the backend (lighter view model of a large scan)
   preCentered?: boolean;
+  // Shown instead of the upload hint when no file is displayed yet
+  emptyMessage?: string;
 }
 
 function SplineLine({ points, color = "red" }: { points: THREE.Vector3[], color?: string }) {
@@ -133,9 +164,10 @@ interface DraggablePointProps {
   onDragStart?: () => void;
   onDragEnd: (pos: THREE.Vector3) => void;
   setDragging: (dragging: boolean) => void;
+  toLocal: (world: THREE.Vector3) => THREE.Vector3;
 }
 
-function DraggablePoint({ position, color, size, onDragStart, onDragEnd, setDragging }: DraggablePointProps) {
+function DraggablePoint({ position, color, size, onDragStart, onDragEnd, setDragging, toLocal }: DraggablePointProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   
   return (
@@ -155,7 +187,7 @@ function DraggablePoint({ position, color, size, onDragStart, onDragEnd, setDrag
         if (meshRef.current) {
           const worldPos = new THREE.Vector3();
           meshRef.current.getWorldPosition(worldPos);
-          onDragEnd(worldPos);
+          onDragEnd(toLocal(worldPos));
         }
       }}
     >
@@ -296,10 +328,39 @@ function StoneMesh({ geometry, onClick, resetCounter, topografyMode, planeNormal
   );
 }
 
+function ViewDirTracker({ groupRef, viewDirRef }: {
+  groupRef: React.RefObject<THREE.Group | null>;
+  viewDirRef?: React.MutableRefObject<ViewDirection | null>;
+}) {
+  const { camera } = useThree();
+  const tmp = useMemo(() => ({ dir: new THREE.Vector3(), up: new THREE.Vector3(), q: new THREE.Quaternion() }), []);
+  useFrame(() => {
+    if (!viewDirRef || !groupRef.current) return;
+    camera.getWorldDirection(tmp.dir);
+    tmp.dir.negate(); // from the stone towards the camera
+    tmp.up.set(0, 1, 0).applyQuaternion(camera.quaternion); // screen up in world space
+    groupRef.current.getWorldQuaternion(tmp.q).invert();
+    tmp.dir.applyQuaternion(tmp.q).normalize();
+    tmp.up.applyQuaternion(tmp.q).normalize();
+    viewDirRef.current = { toward: [tmp.dir.x, tmp.dir.y, tmp.dir.z], up: [tmp.up.x, tmp.up.y, tmp.up.z] };
+  });
+  return null;
+}
+
+function averageNormal(normals: THREE.Vector3[]): Vec3 | undefined {
+  if (normals.length === 0) return undefined;
+  const sum = new THREE.Vector3();
+  for (const n of normals) sum.add(n);
+  if (sum.lengthSq() === 0) return undefined;
+  sum.normalize();
+  return [sum.x, sum.y, sum.z];
+}
+
 function MeshModel({ 
   file, onVectorSelected, onPathSelected, onAutoSnapRequest, resetCounter, setDragging, setLoading, clearCounter, snapCounter, newLineCounter,
   topografyMode, planeNormal, topoOffset, topoSensitivity, topoOpacity, cutoffDepth, layerThickness,
-  meshRotation, slicerMode = 'flat', preCentered = false
+  meshRotation, slicerMode = 'flat', preCentered = false,
+  clickMode = 'points', onSingleClick, markers, autoPoints, viewDirRef
 }: ThreeDViewerProps & { 
   resetCounter: number, setDragging: (d: boolean) => void, setLoading: (l: boolean) => void, clearCounter: number, snapCounter: number, newLineCounter: number,
   topografyMode: boolean, planeNormal: THREE.Vector3, topoOffset: number, topoSensitivity: number, topoOpacity: number, cutoffDepth: number, layerThickness: number,
@@ -307,6 +368,9 @@ function MeshModel({
 }) {
   const [url, setUrl] = useState<string | null>(null);
   const [lines, setLines] = useState<THREE.Vector3[][]>([]);
+  // Surface normal at each clicked point (parallel to `lines`), used as the slice's up vector
+  const [normals, setNormals] = useState<THREE.Vector3[][]>([]);
+  const groupRef = useRef<THREE.Group>(null);
   const [activeLineIndex, setActiveLineIndex] = useState<number>(-1);
   const [geometry, setGeometry] = useState<THREE.BufferGeometry | null>(null);
   const [relativeDepthRange, setRelativeDepthRange] = useState({ min: -1, max: 0 });
@@ -315,6 +379,7 @@ function MeshModel({
   if (clearCounter !== prevClearCounter) {
     setPrevClearCounter(clearCounter);
     setLines([]);
+    setNormals([]);
     setActiveLineIndex(-1);
   }
 
@@ -355,7 +420,8 @@ function MeshModel({
       const objectUrl = URL.createObjectURL(file);
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setUrl(objectUrl);
-      setLines([]); 
+      setLines([]);
+      setNormals([]);
       setActiveLineIndex(-1);
       return () => URL.revokeObjectURL(objectUrl);
     }
@@ -366,8 +432,11 @@ function MeshModel({
   useEffect(() => {
     if (!url) return;
     setLoading(true);
+    // A newer file may replace this one mid-load (e.g. a lighter view model); ignore stale results
+    let cancelled = false;
 
     const finish = (geo: THREE.BufferGeometry | null) => {
+      if (cancelled) return;
       if (geo) {
         geo.computeVertexNormals();
         // Centre like the backend does, so clicked coordinates match the analysis
@@ -377,7 +446,8 @@ function MeshModel({
       setLoading(false);
     };
     const fail = (err: unknown) => {
-      console.error(err);
+      if (cancelled) return;
+      console.error("Kunde inte läsa 3D-filen", err);
       setLoading(false);
     };
 
@@ -405,6 +475,7 @@ function MeshModel({
       setLoading(false);
       alert("Filformatet stöds inte! Ladda upp en .stl-, .obj- eller .ply-fil.");
     }
+    return () => { cancelled = true; };
   }, [url, extension, preCentered, setLoading]);
 
   const boundingSphereRadius = useMemo(() => {
@@ -462,11 +533,12 @@ function MeshModel({
         
         onVectorSelected(
           [origin.x, origin.y, origin.z],
-          [direction.x, direction.y, direction.z]
+          [direction.x, direction.y, direction.z],
+          averageNormal(normals[activeLineIndex] ?? []),
         );
       } else if (activeLine.length > 2 && onPathSelected) {
-        const pointsArray = activeLine.map(p => [p.x, p.y, p.z] as [number, number, number]);
-        onPathSelected(pointsArray);
+        const pointsArray = activeLine.map(p => [p.x, p.y, p.z] as Vec3);
+        onPathSelected(pointsArray, averageNormal(normals[activeLineIndex] ?? []));
       }
     }
   });
@@ -475,37 +547,39 @@ function MeshModel({
     notifySelection();
   }, [lines, activeLineIndex]);
 
-  const handleClick = async (e: import('@react-three/fiber').ThreeEvent<MouseEvent>) => {
-    if (!e.shiftKey) return;
-    
+  // World coordinates -> the model's own coordinates (undoes the "Vänd X/Y/Z" rotation)
+  const toLocal = (world: THREE.Vector3) =>
+    groupRef.current ? groupRef.current.worldToLocal(world.clone()) : world.clone();
+
+  const handleClick = (e: import('@react-three/fiber').ThreeEvent<MouseEvent>) => {
+    if (!e.shiftKey || clickMode === 'view') return;
     e.stopPropagation();
-    const p = e.point;    if (e.altKey) {
-      setLines(prev => {
-        const newLines = [...prev, [p.clone()]];
-        setActiveLineIndex(newLines.length - 1);
-        return newLines;
-      });
+    const p = toLocal(e.point);
+    // The face normal is in the mesh's object space, which equals the model coordinates
+    const n = e.face?.normal ? e.face.normal.clone().normalize() : new THREE.Vector3(0, 0, 1);
+
+    if (clickMode === 'single') {
+      onSingleClick?.([p.x, p.y, p.z], [n.x, n.y, n.z]);
+      return;
+    }
+
+    const startNew = e.altKey || activeLineIndex < 0 || activeLineIndex >= lines.length;
+    if (startNew) {
+      const index = lines.length;
+      setLines([...lines, [p]]);
+      setNormals([...normals, [n]]);
+      setActiveLineIndex(index);
     } else {
-      setLines(prev => {
-        if (activeLineIndex >= 0 && activeLineIndex < prev.length) {
-          const newLines = [...prev];
-          const activeLine = [...newLines[activeLineIndex]];
-          activeLine.push(p.clone());
-          newLines[activeLineIndex] = activeLine;
-          return newLines;
-        } else {
-          const newLines = [[p.clone()]];
-          setActiveLineIndex(0);
-          return newLines;
-        }
-      });
+      setLines(lines.map((line, i) => (i === activeLineIndex ? [...line, p] : line)));
+      setNormals(normals.map((ns, i) => (i === activeLineIndex ? [...ns, n] : ns)));
     }
   };
 
   if (!geometry) return null;
 
   return (
-    <group rotation={meshRotation}>
+    <group rotation={meshRotation} ref={groupRef}>
+      <ViewDirTracker groupRef={groupRef} viewDirRef={viewDirRef} />
       {geometry && (
         <Bounds fit margin={1.2}>
           <StoneMesh 
@@ -540,6 +614,7 @@ function MeshModel({
                 size={pointSize}
                 color={color}
                 setDragging={setDragging}
+                toLocal={toLocal}
                 onDragStart={() => setActiveLineIndex(lineIdx)}
                 onDragEnd={(newPos: THREE.Vector3) => {
                   setLines(prev => {
@@ -555,11 +630,33 @@ function MeshModel({
           </group>
         );
       })}
+
+      {markers?.map((m, i) => (
+        <SplineLine key={`marker-${i}`} points={[new THREE.Vector3(...m.from), new THREE.Vector3(...m.to)]} color={m.color ?? "#16a34a"} />
+      ))}
+      {autoPoints && autoPoints.length > 0 && <PointCloud points={autoPoints} size={pointSize * 0.6} />}
     </group>
   );
 }
 
-export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, onAutoSnapRequest, cutoffDepth = 0, layerThickness = 100, slicerMode = 'flat', preCentered = false }: ThreeDViewerProps) {
+function PointCloud({ points, size }: { points: ViewerPoint[]; size: number }) {
+  const geometry = useMemo(() => {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(points.flatMap(p => p.position), 3));
+    const color = new THREE.Color();
+    g.setAttribute('color', new THREE.Float32BufferAttribute(points.flatMap(p => color.set(p.color).toArray()), 3));
+    return g;
+  }, [points]);
+  useEffect(() => () => geometry.dispose(), [geometry]);
+  return (
+    <points geometry={geometry}>
+      <pointsMaterial size={size} vertexColors depthTest={false} transparent sizeAttenuation />
+    </points>
+  );
+}
+
+export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, onAutoSnapRequest, cutoffDepth = 0, layerThickness = 100, slicerMode = 'flat', preCentered = false, emptyMessage,
+  clickMode = 'points', onSingleClick, onClearMarkers, markers, autoPoints, viewDirRef }: ThreeDViewerProps) {
   const [resetCounter, setResetCounter] = useState(0);
   const [clearCounter, setClearCounter] = useState(0);
   const [snapCounter, setSnapCounter] = useState(0);
@@ -607,7 +704,7 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 mb-3 opacity-50">
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
           </svg>
-          Ladda upp en 3D-fil för att se stenen
+          {emptyMessage ?? "Ladda upp en 3D-fil för att se stenen"}
         </div>
       )}
 
@@ -622,105 +719,65 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
 
       {file && (
         <>
-          <div className="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur-md px-4 py-2.5 rounded-2xl text-xs font-semibold text-slate-800 shadow-md border border-white/50 pointer-events-none flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 text-[#b7410e]">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605" />
-            </svg>
-            {file.name}
-          </div>
-
-          <div className="absolute top-4 right-4 z-10 flex gap-2">
-            <button 
-              onClick={() => setNewLineCounter(c => c + 1)}
-              className="bg-white/90 backdrop-blur-md px-3 py-2.5 rounded-xl transition-all flex items-center justify-center shadow-md border text-slate-700 border-white/50 hover:bg-white text-xs font-bold"
-              title="Avsluta nuvarande linje och börja på en ny runa"
-            >
-              Ny Linje
-            </button>
-
-            <button 
-              onClick={() => setClearCounter(c => c + 1)}
-              className="bg-white/90 backdrop-blur-md px-3 py-2.5 rounded-xl transition-all flex items-center justify-center shadow-md border text-slate-700 border-white/50 hover:bg-white text-xs font-bold"
-              title="Ta bort alla utplacerade linjer"
-            >
-              Rensa Allt
-            </button>
-            
-            {onAutoSnapRequest && (
-              <button 
-                onClick={() => setSnapCounter(c => c + 1)}
-                className="bg-white/90 backdrop-blur-md px-3 py-2.5 rounded-xl transition-all flex items-center justify-center shadow-md border text-slate-700 border-white/50 hover:text-[#b7410e] hover:bg-white text-xs font-bold"
-                title="Fäst banan mot djupaste botten"
-              >
-                Auto-Snap
-              </button>
-            )}
-
-            <div className="flex bg-white/90 backdrop-blur-md rounded-xl shadow-md border border-white/50 overflow-hidden text-xs font-bold divide-x divide-slate-200">
-              <button 
-                onClick={() => setMeshRotation(prev => [prev[0] + Math.PI/2, prev[1], prev[2]])}
-                className="px-3 py-2.5 text-slate-700 hover:bg-white hover:text-[#b7410e] transition-all"
-                title="Rotera 90° runt X-axeln"
-              >
-                Vänd X
-              </button>
-              <button 
-                onClick={() => setMeshRotation(prev => [prev[0], prev[1] + Math.PI/2, prev[2]])}
-                className="px-3 py-2.5 text-slate-700 hover:bg-white hover:text-[#b7410e] transition-all"
-                title="Rotera 90° runt Y-axeln"
-              >
-                Vänd Y
-              </button>
-              <button 
-                onClick={() => setMeshRotation(prev => [prev[0], prev[1], prev[2] + Math.PI/2])}
-                className="px-3 py-2.5 text-slate-700 hover:bg-white hover:text-[#b7410e] transition-all"
-                title="Rotera 90° runt Z-axeln"
-              >
-                Vänd Z
-              </button>
+          {/* Toolbar: one wrapping row, so the file name and buttons never overlap */}
+          <div className="absolute top-3 left-3 right-3 z-10 flex flex-wrap items-start justify-between gap-2 pointer-events-none">
+            <div className="max-w-[45%] min-w-0 bg-white/90 backdrop-blur-md px-3 py-2 rounded-xl text-xs font-semibold text-slate-800 shadow-md border border-white/50 flex items-center gap-2" title={file.name}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 text-[#b7410e] flex-shrink-0">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+              </svg>
+              <span className="truncate">{file.name}</span>
             </div>
 
-            <button 
-              onClick={() => setShowSettings(!showSettings)}
-              className={`bg-white/90 backdrop-blur-md p-2.5 rounded-xl transition-all flex items-center justify-center shadow-md border ${showSettings ? "text-[#b7410e] border-[#b7410e]/30" : "text-slate-700 border-white/50 hover:bg-white"}`}
-              title="Ljussättning (Kontrast/Ljusstyrka)"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
-              </svg>
-            </button>
+            <div className="relative flex flex-wrap justify-end gap-2 pointer-events-auto ml-auto">
+              {clickMode === 'points' ? (
+                <>
+                  <button type="button" onClick={() => setNewLineCounter(c => c + 1)} className="bg-white/90 backdrop-blur-md px-3 py-2 rounded-xl shadow-md border border-white/50 text-slate-700 hover:bg-white hover:text-[#b7410e] text-xs font-bold whitespace-nowrap transition-all" title="Avsluta nuvarande linje och börja en ny">Ny linje</button>
+                  <button type="button" onClick={() => setClearCounter(c => c + 1)} className="bg-white/90 backdrop-blur-md px-3 py-2 rounded-xl shadow-md border border-white/50 text-slate-700 hover:bg-white hover:text-[#b7410e] text-xs font-bold whitespace-nowrap transition-all" title="Ta bort alla utplacerade punkter och linjer">Rensa</button>
+                  {onAutoSnapRequest && (
+                    <button type="button" onClick={() => setSnapCounter(c => c + 1)} className="bg-white/90 backdrop-blur-md px-3 py-2 rounded-xl shadow-md border border-white/50 text-slate-700 hover:bg-white hover:text-[#b7410e] text-xs font-bold whitespace-nowrap transition-all" title="Flytta banans punkter till spårets botten">Auto-snap</button>
+                  )}
+                </>
+              ) : clickMode === 'single' && onClearMarkers ? (
+                <button type="button" onClick={onClearMarkers} className="bg-white/90 backdrop-blur-md px-3 py-2 rounded-xl shadow-md border border-white/50 text-slate-700 hover:bg-white hover:text-[#b7410e] text-xs font-bold whitespace-nowrap transition-all" title="Ta bort alla snitt som lagts med ett klick">Rensa snitt</button>
+              ) : null}
 
-            <button 
-              onClick={toggleTopography}
-              disabled={isCompilingTopo}
-              className={`bg-white/90 backdrop-blur-md p-2.5 rounded-xl transition-all flex items-center justify-center shadow-md border ${topografyMode ? "text-[#b7410e] border-[#b7410e]/30 bg-orange-50" : "text-slate-700 border-white/50 hover:bg-white"} ${isCompilingTopo ? "opacity-70 cursor-wait" : ""}`}
-              title="Topografi (Djupkarta)"
-            >
-              {isCompilingTopo ? (
-                <div className="w-5 h-5 border-2 border-slate-300 border-t-[#b7410e] rounded-full animate-spin" />
-              ) : (
+              <div className="flex bg-white/90 backdrop-blur-md rounded-xl shadow-md border border-white/50 overflow-hidden text-xs font-bold divide-x divide-slate-200">
+                {(['X', 'Y', 'Z'] as const).map((axis, i) => (
+                  <button key={axis} type="button"
+                    onClick={() => setMeshRotation(prev => prev.map((v, k) => (k === i ? v + Math.PI / 2 : v)) as [number, number, number])}
+                    className="px-2.5 py-2 text-slate-700 hover:bg-white hover:text-[#b7410e] transition-all"
+                    title={`Rotera 90° runt ${axis}-axeln`}>
+                    ↻{axis}
+                  </button>
+                ))}
+              </div>
+
+              <button type="button" onClick={() => setShowSettings(!showSettings)}
+                className={`bg-white/90 backdrop-blur-md p-2 rounded-xl shadow-md border transition-all flex items-center justify-center ${showSettings ? "text-[#b7410e] border-[#b7410e]/30" : "text-slate-700 border-white/50 hover:bg-white"}`}
+                title="Ljus och strykljus">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+                </svg>
+              </button>
+
+              <button type="button" onClick={toggleTopography} disabled={isCompilingTopo}
+                className={`bg-white/90 backdrop-blur-md p-2 rounded-xl shadow-md border transition-all flex items-center justify-center ${topografyMode ? "text-[#b7410e] border-[#b7410e]/30 bg-orange-50" : "text-slate-700 border-white/50 hover:bg-white"}`}
+                title="Topografi (djupfärgning)">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" />
                 </svg>
-              )}
-            </button>
+              </button>
 
-            <button 
-              onClick={() => {
-                setResetCounter(c => c + 1);
-                setMeshRotation([0,0,0]);
-              }}
-              className="bg-white/90 backdrop-blur-md p-2.5 rounded-xl text-slate-700 hover:text-[#b7410e] hover:bg-white shadow-md border border-white/50 transition-all flex items-center justify-center"
-              title="Återställ Vy"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-              </svg>
-            </button>
-          </div>
+              <button type="button" onClick={() => { setResetCounter(c => c + 1); setMeshRotation([0, 0, 0]); }}
+                className="bg-white/90 backdrop-blur-md p-2 rounded-xl shadow-md border transition-all flex items-center justify-center text-slate-700 border-white/50 hover:text-[#b7410e] hover:bg-white"
+                title="Återställ vy">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+              </button>
 
           {showSettings && (
-            <div className="absolute top-20 right-4 z-10 bg-white/90 backdrop-blur-md p-4 rounded-xl shadow-lg border border-white/50 w-56 animate-in fade-in slide-in-from-top-2">
+            <div className="absolute right-0 top-full mt-2 bg-white/95 backdrop-blur-md p-4 rounded-xl shadow-lg border border-white/50 w-60 max-h-[70vh] overflow-y-auto pointer-events-auto animate-in fade-in slide-in-from-top-2">
               <div className="mb-4">
                   <label className="flex justify-between text-[10px] font-bold text-slate-500 uppercase mb-2">
                     <span>Direktljus (Ljusstyrka)</span>
@@ -811,9 +868,18 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
                 )}
               </div>
             )}
+            </div>
+          </div>
 
-          <div className="absolute bottom-4 right-4 z-10 bg-white/80 backdrop-blur-md px-3 py-2 rounded-xl text-[10px] font-bold text-slate-500 uppercase tracking-wide border border-white/50 pointer-events-none">
-            🖱️ Vänsterklick: Rotera &nbsp;&bull;&nbsp; 🖱️ Högerklick: Panorera &nbsp;&bull;&nbsp; 📜 Scroll: Zooma &nbsp;&bull;&nbsp; ⌨️ Shift + Klick: Lägg till mätpunkt
+          <div className="absolute bottom-3 left-3 right-3 z-10 flex justify-end pointer-events-none">
+            <div className="bg-white/85 backdrop-blur-md px-3 py-2 rounded-xl text-[11px] font-semibold text-slate-600 border border-white/50 leading-relaxed text-right">
+              Dra: rotera · Högerdra: panorera · Scroll: zooma ·{" "}
+              {clickMode === 'single'
+                ? <strong className="text-slate-800">Shift + klick mitt i ett spår: mät ett snitt</strong>
+                : clickMode === 'view'
+                ? <strong className="text-slate-800">Vrid den ristade sidan mot dig innan analysen</strong>
+                : <strong className="text-slate-800">Shift + klick: lägg till mätpunkt (Alt + Shift: ny linje)</strong>}
+            </div>
           </div>
         </>
       )}
@@ -822,6 +888,9 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
         <Canvas camera={{ fov: 45, near: 0.1, far: 10000000 }} gl={{ preserveDrawingBuffer: true }}>
           <ambientLight intensity={rakingMode ? Math.min(ambientIntensity, 0.08) : ambientIntensity} />
           <directionalLight position={lightPosition} intensity={rakingMode ? Math.max(lightIntensity, 2.5) : lightIntensity} />
+          {/* Keep loading inside the 3D scene: react-three-fiber otherwise lifts suspense to the page,
+              which remounts the whole viewer and loses the WebGL context */}
+          <Suspense fallback={null}>
           {!rakingMode && <Environment preset="city" />}
           
           <CameraCapturer 
@@ -851,8 +920,14 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
               meshRotation={meshRotation}
               slicerMode={slicerMode}
               preCentered={preCentered}
+              clickMode={clickMode}
+              onSingleClick={onSingleClick}
+              markers={markers}
+              autoPoints={autoPoints}
+              viewDirRef={viewDirRef}
             />
           )}
+          </Suspense>
           <OrbitControls makeDefault enabled={!dragging} />
         </Canvas>
       </ErrorBoundary>
@@ -860,7 +935,6 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
   );
 }
 
-import { useThree } from '@react-three/fiber';
 
 function CameraCapturer({ trigger, onCapture }: { trigger: number, onCapture: (dir: THREE.Vector3) => void }) {
   const { camera } = useThree();
