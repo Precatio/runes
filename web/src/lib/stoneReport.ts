@@ -4,6 +4,7 @@
 import type { AnalysisProvenance, PaleographicCrop, ProjectData, ThreeDAnalysisResult, TwoDResultData } from "@/lib/db";
 import type { AutoAnalysisResult, AutoLabel } from "@/lib/mesh";
 import { METRICS, type FeatureType, type Metric, type SliceMetrics } from "@/lib/metrics";
+import type { SynthesisResult } from "@/lib/synthesis";
 
 export interface StoneReportAnalysis {
   feature_type: FeatureType;
@@ -20,6 +21,7 @@ export interface StoneReportInput {
   analyses: StoneReportAnalysis[];
   counts?: AutoAnalysisResult["counts"];
   twoD?: { image?: string; result?: TwoDResultData | null; crops?: { tag: string; formPng?: string }[]; caption?: string };
+  synthesis?: SynthesisResult; // attribution section of the report
 }
 
 type Meta = { stone: string; weathering: string; text: string; ornamentation: string; period: string; carver: string; location: string };
@@ -73,6 +75,7 @@ export function fromSession(args: {
     analyses,
     counts: autoResult?.counts,
     twoD: project ? { image: project.twoDImage, result: project.twoDResults, crops: cropsOf(project.paleographicCrops) } : undefined,
+    synthesis: project?.synthesis?.result,
   };
 }
 
@@ -97,6 +100,7 @@ export function fromProject(project: ProjectData): StoneReportInput | null {
     view: Array.isArray(p?.normal) ? { normal: p!.normal as number[], up: Array.isArray(p?.up) ? p!.up as number[] : undefined } : undefined,
     analyses,
     twoD: { image: project.twoDImage, result: project.twoDResults, crops: cropsOf(project.paleographicCrops) },
+    synthesis: project.synthesis?.result,
   };
 }
 

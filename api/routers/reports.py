@@ -102,6 +102,7 @@ class StoneReportRequest(BaseModel):
     view: Optional[dict] = None  # {normal, up} for the carved face
     corpus: list[dict] = Field(default_factory=list)
     two_d: Optional[dict] = None
+    synthesis: Optional[dict] = None  # result of /api/synthesis/analyze
     use_ai: bool = True
     format: Literal["json", "docx"] = "json"
     ai_text: Optional[dict[str, str]] = None

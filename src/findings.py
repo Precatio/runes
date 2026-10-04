@@ -30,6 +30,7 @@ import numpy as np
 from src.research_gaps import (AXELSON_PROVINCES, carver_home, certain_carvers, has_carver, has_style,
                                is_runestone, model_carvers, province)
 from src.stats import METRICS, attribute
+from src.synthesis import smoothed_precision
 
 VERDICTS = ("stämmer", "nytt", "motsäger")
 
@@ -120,11 +121,12 @@ def orthographic_findings(model, inscriptions: list[dict], min_words=8, min_marg
             continue
         top, second = rk["ranking"][0], rk["ranking"][1]
         margin = top["similarity"] - second["similarity"]
-        precision = per_carver.get(top["carver"], {}).get("precision") or 0.0
+        precision = smoothed_precision(per_carver.get(top["carver"]))
         in_area = province(rec) in home.get(top["carver"], {})
         length = 1.0 if rk["n_words"] >= 12 else 0.7
         evidence = precision * (1.0 if in_area else 0.5) * length * min(1.0, 0.5 + margin * 5)
-        ev_reasons = [f"modellen har rätt i {round(precision * 100)} % av fallen när den föreslår {top['carver']}",
+        ev_reasons = [f"modellen har rätt i omkring {round(precision * 100)} % av fallen när den föreslår {top['carver']} "
+                      f"({per_carver.get(top['carver'], {}).get('predicted', 0)} förslag)",
                       f"{rk['n_words']} läsbara ord", f"marginal {_d(margin)} till {second['carver']}"]
         if not in_area:
             ev_reasons.append("stenen ligger utanför ristarens kända område")

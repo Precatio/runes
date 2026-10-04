@@ -147,19 +147,41 @@ Källkod: `src/orthography.py`. Underlag: Rundatas vikingatida inskrifter med mi
 
 ## 7. Syntes och AI
 
-Kandidaterna i syntesen räknas fram deterministiskt (`api/routers/synthesis.py`):
+Källkod: `src/synthesis.py`, `api/routers/synthesis.py`. Kandidaterna räknas fram deterministiskt:
 
 | Källa | Vikt |
 |---|---|
 | Rundata: signerad (S) | 4 (2 om osäker) |
 | Rundata: attribuerad (A) | 2 (1 om osäker) |
 | Rundata: parsten/liknar (P/L) | 1 |
-| Ortografi plats 1 / 2–3 | 2 / 1 |
-| Huggteknik plats 1 / 2–3 | 2 / 1 |
+| Ortografi plats 1 / 2–3 | 2 / 1 × tillförlitlighet |
+| Huggteknik plats 1 / 2–3 | 2 / 1 × tillförlitlighet |
 
-Styrka: **stark** = summa ≥ 4 eller stöd från alla tre källorna; **måttlig** = summa ≥ 3, eller ≥ 2 från två
-källor; annars **svag**. Inga procentsatser anges. AI-modellen (Gemini) får beläggen som underlag och skriver
-bara löptext; den instrueras att inte hitta på uppgifter eller sannolikheter, och syntesen fungerar utan AI.
+* **Ortografins tillförlitlighet** = modellens precision för den föreslagna ristaren (korsvaliderad,
+  Laplace-utjämnad: (rätt + 1)/(förslag + 2)) × 0,5 om stenen ligger utanför ristarens kända landskap ×
+  textlängd (1 vid ≥ 12 läsbara ord, 0,7 vid 8–11). Texter under 8 ord vägs inte in.
+* **Huggteknikens tillförlitlighet** = korsvaliderad träffsäkerhet över slumpnivån,
+  (träff − slump)/(1 − slump). Är metoden inte bättre än slumpen vägs den inte in. Jämförelsen görs med
+  den valda analysen (runor som standard), mot stenar med samma spårtyp och säker ristare; stenen själv
+  ingår aldrig i referensen.
+
+Styrka: **stark** = summa ≥ 4 eller ≥ 3 från tre källor; **måttlig** = ≥ 2,5 eller ≥ 1,5 från två källor;
+annars **svag**. Inga procentsatser anges.
+
+De tre främsta kandidaterna prövas dessutom mot:
+
+* **litteraturen** – stämmer, nytt (Rundata saknar ristare) eller motsäger,
+* **geografi** – avstånd till ristarens närmaste säkra sten och ristarens kända landskap,
+* **stilgrupper** – stilgrupperna på ristarens säkra stenar och den datering de motsvarar enligt Gräslund;
+  avviker stenens stilgrupp flaggas det,
+* **sten mot sten** – permutationstest av alla mått samtidigt mot var och en av kandidatens uppmätta
+  stenar (upp till fem, 1 000 permutationer).
+
+Motsägelser mellan källorna (t.ex. Rundata mot ortografi, ortografi mot huggteknik, geografi eller
+stilgrupp som inte passar) och belägg som saknas redovisas uttryckligen. Utfallet mot litteraturen räknar
+bara en oberoende källa som stöd när kandidaten kommer först där. AI-modellen (Gemini) får beläggen som
+underlag och skriver bara löptext; utan AI ersätts texterna av framräknade formuleringar. Syntesen kan
+sparas i projektet och blir då avsnittet "Attribuering" i stenrapporten.
 
 **Verktygsklassning** (pik-/bredmejsel, tröskel 85°, +5° vid hög vittring, +2° vid måttlig vittring, +2° för
 sandsten/kalksten) är en tumregel som inte är kalibrerad mot referensmaterial och redovisas som sådan.

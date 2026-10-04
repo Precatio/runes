@@ -565,6 +565,7 @@ def build_facts(req: dict, rundata_lookup) -> dict:
         "method_versions": sorted({pv.get("method_version", "okänd") for pv in provenances}) or ["okänd"],
         "counts": req.get("counts"),
         "two_d": req.get("two_d") or {},
+        "synthesis": req.get("synthesis") or None,
         "date": datetime.date.today().isoformat(),
     }
 
@@ -592,6 +593,14 @@ def facts_text(f: dict) -> str:
                          f"({ev['n_stones']} stenar, {ev['n_groups']} ristare, slumpnivå {ev['chance_top1']:.0%})")
     else:
         lines.append("Mätkorpusen räcker inte för en jämförelse med ristare (minst två ristare med två uppmätta stenar krävs).")
+    sy = f.get("synthesis")
+    if sy:
+        if sy.get("outcome"):
+            lines.append(f"Syntes mot litteraturen: {sy['outcome']['text']}")
+        for c in (sy.get("candidates") or [])[:3]:
+            lines.append(f"Kandidat {c['name']}: {c['strength']} belägg (källor: {', '.join(c.get('sources') or [])})")
+        for c in sy.get("conflicts") or []:
+            lines.append(f"Motsägelse: {c}")
     td = f["two_d"].get("result") or {}
     if td.get("predicted_style"):
         lines.append(f"AI-bedömning av stilgrupp från bild (okalibrerad): {td['predicted_style']}")
@@ -877,6 +886,35 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
         if forms:
             blocks.append(fig(forms, f"{signum}. Normaliserade runformer ur bilden (svartvita, lika stora), "
                                      "underlag för formjämförelser.", "runformer"))
+
+    sy = f.get("synthesis")
+    if sy and sy.get("candidates") is not None:
+        blocks.append(h(2, "4.7 Attribuering"))
+        blocks.append(p("Beläggen från Rundata, ortografisk stilometri och huggteknik vägs samman; ortografi och "
+                        "huggteknik vägs efter metodens korsvaliderade träffsäkerhet i fallet. Kandidaterna prövas mot "
+                        "geografi, ristarens stilgrupper och, där ristarens stenar är uppmätta, sten mot sten med "
+                        "permutationstest. Inga sannolikheter anges."))
+        if sy.get("outcome"):
+            blocks.append(p(sy["outcome"]["text"]))
+        cands = sy.get("candidates") or []
+        if cands:
+            blocks.append(tab(["Ristare", "Belägg", "Poäng", "Källor", "Mot Rundata"],
+                              [[c["name"], c["strength"], fmt(c.get("score"), 1), ", ".join(c.get("sources") or []),
+                                (c.get("literature") or {}).get("verdict", "–")] for c in cands],
+                              f"Attribueringskandidater för {signum}."))
+            checks = []
+            for c in cands[:3]:
+                for key, label in (("geography", "geografi"), ("styles", "stilgrupper"), ("stone_tests", "sten mot sten")):
+                    if c.get(key):
+                        checks.append(f"{c['name']}, {label}: {c[key]['text']}")
+            if checks:
+                blocks.append(bullets(checks))
+        if sy.get("conflicts"):
+            blocks.append(p("Motsägelser mellan källorna:"))
+            blocks.append(bullets(sy["conflicts"]))
+        if sy.get("missing"):
+            blocks.append(p("Belägg som saknas:"))
+            blocks.append(bullets(sy["missing"]))
 
     # 5. Discussion
     blocks.append(h(1, "5. Diskussion"))

@@ -20,7 +20,9 @@ from api.errors import ai_error, logger
 from api.rundata import context_text, store
 from api.routers.orthography import model as orthography_model
 from api.routers.threed import tool_heuristic
-from src.stats import METRIC_LABELS, summarize
+from src import synthesis as syn
+from src.research_gaps import carver_home
+from src.stats import METRIC_LABELS, METRICS, summarize
 from src.styles import SOURCE as STYLE_SOURCE, dating_text
 
 router = APIRouter()
@@ -52,11 +54,18 @@ class SynthesisRequest(BaseModel):
     groove_attribution: Optional[dict] = None
     # AI:ns stilbedömning från 2D-analysen (valfritt): predicted_style, confidence, reasoning
     two_d: Optional[dict] = None
+    # Projektets sparade 3D-analyser [{id, feature_type, slices, savedAt}] och vilken som ska jämföras
+    analyses: List[dict] = Field(default_factory=list)
+    analysis_id: Optional[str] = None
+    # Mätkorpusen [{signum, feature_type, means, slices}] – jämförelsen görs här, inklusive sten mot sten
+    corpus: List[dict] = Field(default_factory=list)
+    corpus_note: Optional[str] = None  # t.ex. "logga in för att jämföra med korpusen"
 
 
 class Evidence(BaseModel):
     source: str
     description: str
+    weight: Optional[float] = None
 
 
 class AttributionCandidate(BaseModel):
@@ -64,10 +73,21 @@ class AttributionCandidate(BaseModel):
     strength: str  # "stark" | "måttlig" | "svag"
     evidence: List[Evidence]
     reasoning: str = ""
+    score: Optional[float] = None
+    sources: List[str] = Field(default_factory=list)
+    literature: Optional[dict] = None  # stämmer / nytt / motsäger mot Rundata
+    geography: Optional[dict] = None
+    styles: Optional[dict] = None  # ristarens stilgrupper och datering
+    stone_tests: Optional[dict] = None  # permutationstest mot kandidatens uppmätta stenar
+    first_in: List[str] = Field(default_factory=list)  # källor där kandidaten kommer först
 
 
 class SynthesisResponse(BaseModel):
     candidates: List[AttributionCandidate]
+    conflicts: List[str] = Field(default_factory=list)
+    missing: List[str] = Field(default_factory=list)
+    outcome: Optional[dict] = None
+    analysis_used: Optional[dict] = None
     geology_analysis: str
     theory_analysis: str
     dating_analysis: str
@@ -119,10 +139,29 @@ def _fmt(stat: dict, digits: int) -> str:
     return out
 
 
+def _legacy_slices(slices: List[SliceData]) -> list[dict]:
+    return [{metric: getattr(sl, field) for field, metric in SLICE_FIELDS.items()} for sl in slices]
+
+
+def _selected_analysis(req: SynthesisRequest) -> Optional[dict]:
+    if not req.analyses:
+        return None
+    if req.analysis_id:
+        for a in req.analyses:
+            if a.get("id") == req.analysis_id:
+                return a
+    wanted = req.feature_type or "rune"
+    same = [a for a in req.analyses if (a.get("feature_type") or "unknown") == wanted]
+    return (same or req.analyses)[-1]
+
+
 def collect_evidence(req: SynthesisRequest) -> dict:
-    rec = store().get(req.signum)
+    s = store()
+    rec = s.get(req.signum)
     evidence: dict = {"signum": rec["signum"] if rec else req.signum, "rundata": None,
-                      "orthography": None, "groove": None, "measurements": None, "tool_heuristic": None}
+                      "orthography": None, "groove": None, "measurements": None, "tool_heuristic": None,
+                      "measurements_by_feature": None, "_rec": rec}
+    home = carver_home(s.inscriptions)
     if rec:
         evidence["rundata"] = {
             "carvers": rec["carvers"], "carver_raw": rec["carver_raw"], "style": rec["style"],
@@ -130,17 +169,26 @@ def collect_evidence(req: SynthesisRequest) -> dict:
             "place": rec["place"], "parish": rec["parish"], "context": context_text(rec),
             "style_dating": dating_text(rec["style"]),
         }
-        model = orthography_model()
-        if rec["signum"] in model.index:
-            ranking = model.rank_carvers(rec["signum"], 5)
-            evidence["orthography"] = {"ranking": ranking["ranking"], "n_words": ranking["n_words"],
-                                       "evaluation": model.evaluate()}
-    if req.slices:
-        summary = groove_summary(req.slices)
+        evidence["orthography"] = syn.orthography(orthography_model(), rec, home)
+
+    # Measurements: the real slices of the selected analysis; the old per-save summaries only as fallback
+    selected = _selected_analysis(req)
+    query_slices = syn.complete(selected.get("slices") or []) if selected else []
+    if not query_slices and req.slices:
+        query_slices = syn.complete(_legacy_slices(req.slices))
+    if query_slices:
+        summary = {m: summarize([x[m] for x in query_slices]) for m in METRICS}
         evidence["measurements"] = summary
         angle = summary["apex_vinkel_deg"]["mean"]
         if angle is not None:
             evidence["tool_heuristic"] = tool_heuristic(angle, req.stoneType, req.weathering)
+    if req.analyses:
+        evidence["measurements_by_feature"] = syn.measurement_summary(req.analyses)
+    feature_type = (selected or {}).get("feature_type") or req.feature_type or "rune"
+    evidence["_query"] = query_slices
+    evidence["analysis_used"] = {"id": (selected or {}).get("id"), "feature_type": feature_type,
+                                 "n": len(query_slices), "saved_at": (selected or {}).get("savedAt")}
+
     if req.two_d and req.two_d.get("predicted_style"):
         ai_style = str(req.two_d["predicted_style"])
         rd_style = (evidence.get("rundata") or {}).get("style")
@@ -151,62 +199,52 @@ def collect_evidence(req: SynthesisRequest) -> dict:
             "agrees": bool(rd_style) and ai_style == rd_style,
             "note": "AI-bedömning från foto/ristningskarta, okalibrerad.",
         }
-    ga = req.groove_attribution or {}
-    if ga.get("ranking"):
-        evidence["groove"] = {"ranking": ga["ranking"][:5], "evaluation": ga.get("evaluation"),
-                              "reference_size": ga.get("reference_size")}
+    if req.corpus and query_slices:
+        g = syn.groove(query_slices, feature_type, req.corpus, s.get, req.signum)
+        evidence["_candidate_stones"] = g.pop("_stones", {})
+        evidence["groove"] = g
+    elif (req.groove_attribution or {}).get("ranking"):
+        # Older clients send a ready attribution; its weight follows its cross-validation
+        ga = req.groove_attribution
+        ev = ga.get("evaluation") or {}
+        rel = max(0.0, (ev["top1_accuracy"] - ev["chance_top1"]) / (1 - ev["chance_top1"])) if ev else 0.0
+        evidence["groove"] = {"ranking": ga["ranking"][:5], "evaluation": ev or None,
+                              "reference_size": ga.get("reference_size"), "reliability": round(rel, 3)}
     return evidence
 
 
+def enrich_candidates(evidence: dict, candidates: list[dict]) -> list[dict]:
+    """Prövar kandidaterna mot litteraturen och de tre främsta mot geografi, stilgrupper och
+    kandidatens uppmätta stenar."""
+    s = store()
+    rec = evidence.get("_rec")
+    home = carver_home(s.inscriptions)
+    stones = evidence.get("_candidate_stones") or {}
+    for c in candidates:
+        c["literature"] = syn.literature_verdict(rec, c["name"])
+    for c in candidates[:3]:
+        if rec:
+            c["geography"] = syn.geography(rec, c["name"], s.inscriptions, home)
+            c["styles"] = syn.carver_styles(rec, c["name"], s.inscriptions)
+        if stones.get(c["name"]) and evidence.get("_query"):
+            c["stone_tests"] = syn.stone_tests(evidence["_query"], stones[c["name"]])
+    return candidates
+
+
+def public_evidence(evidence: dict) -> dict:
+    return {k: v for k, v in evidence.items() if not k.startswith("_")}
+
+
 def build_candidates(evidence: dict) -> List[AttributionCandidate]:
-    cands: dict[str, dict] = {}
-
-    def add(name, source, description, weight):
-        c = cands.setdefault(name, {"name": name, "evidence": [], "score": 0})
-        c["evidence"].append({"source": source, "description": description})
-        c["score"] += weight
-
-    rd = evidence.get("rundata") or {}
-    for c in rd.get("carvers", []):
-        if c["kind"] == "S":
-            add(c["name"], "Rundata",
-                "Inskriften är signerad av ristaren" + (" (osäker läsning)" if c["uncertain"] else "") + ".",
-                2 if c["uncertain"] else 4)
-        elif c["kind"] == "A":
-            add(c["name"], "Rundata",
-                "Attribuerad till ristaren i litteraturen" + (" (osäker)" if c["uncertain"] else "") + ".",
-                1 if c["uncertain"] else 2)
-        elif c["kind"] in ("P", "L"):
-            add(c["name"], "Rundata", "Parsten till eller liknar ristarens signerade inskrifter.", 1)
-
-    orth = evidence.get("orthography") or {}
-    for rank, r in enumerate(orth.get("ranking", [])[:3], start=1):
-        add(r["carver"], "Ortografi",
-            f"Plats {rank} i ortografisk jämförelse (cosinuslikhet {r['similarity']:.2f}, "
-            f"jämfört med {r['n_inscriptions']} inskrifter av ristaren).", 2 if rank == 1 else 1)
-
-    groove = evidence.get("groove") or {}
-    for rank, r in enumerate(groove.get("ranking", [])[:3], start=1):
-        add(r["group"], "Huggteknik",
-            f"Plats {rank} i jämförelse med uppmätta stenar (Mahalanobisavstånd {r['distance']:.2f}, "
-            f"n={r['n']} stenar).", 2 if rank == 1 else 1)
-
-    out = []
-    for c in cands.values():
-        sources = {e["source"] for e in c["evidence"]}
-        if c["score"] >= 4 or len(sources) >= 3:
-            strength = "stark"
-        elif c["score"] >= 3 or (c["score"] >= 2 and len(sources) >= 2):
-            strength = "måttlig"
-        else:
-            strength = "svag"
-        out.append((c["score"], len(sources),
-                    AttributionCandidate(name=c["name"], strength=strength, evidence=c["evidence"])))
-    out.sort(key=lambda t: (-t[0], -t[1], t[2].name))
-    return [t[2] for t in out[:6]]
+    return [AttributionCandidate(**c) for c in build_candidate_dicts(evidence)]
 
 
-def evidence_text(evidence: dict, req: SynthesisRequest) -> str:
+def build_candidate_dicts(evidence: dict) -> list[dict]:
+    return enrich_candidates(evidence, syn.build_candidates(evidence))
+
+
+def evidence_text(evidence: dict, req: SynthesisRequest, candidates: Optional[list] = None,
+                  conflict_list: Optional[list] = None) -> str:
     lines = []
     rd = evidence.get("rundata")
     lines.append("--- RUNDATA (Samnordisk runtextdatabas) ---")
@@ -232,8 +270,11 @@ def evidence_text(evidence: dict, req: SynthesisRequest) -> str:
         ev = o["evaluation"] or {}
         lines.append(f"Metodens träffsäkerhet (korsvaliderad): rätt ristare först i {ev.get('top1_accuracy', 0):.0%} "
                      f"av fallen bland {ev.get('n_carvers')} ristare (slump {ev.get('chance_top1', 0):.0%}).")
+        if not o.get("usable", True):
+            lines.append(f"Bara {o.get('n_words')} läsbara ord – för kort text, vägs inte in.")
         for r in o["ranking"]:
-            lines.append(f"- {r['carver']}: likhet {r['similarity']:.2f}")
+            extra = f", precision {r['precision']:.0%}" if "precision" in r else ""
+            lines.append(f"- {r['carver']}: likhet {r['similarity']:.2f}{extra}")
     else:
         lines.append("Ej tillgänglig för denna inskrift.")
 
@@ -255,6 +296,15 @@ def evidence_text(evidence: dict, req: SynthesisRequest) -> str:
         verdict = ("stämmer med Rundata" if sc["agrees"] else
                    "skiljer sig från Rundata" if sc["rundata_style"] else "Rundata saknar stilgrupp")
         lines.append(f"AI (okalibrerad, från bild): {sc['ai_style']}; Rundata: {sc['rundata_style'] or 'uppgift saknas'} – {verdict}.")
+
+    for c in candidates or []:
+        checks = [x["text"] for x in (c.get("literature"), c.get("geography"), c.get("styles"), c.get("stone_tests")) if x]
+        if checks:
+            lines.append(f"\n--- KONTROLLER FÖR {c['name'].upper()} ({c['strength']} belägg) ---")
+            lines += checks
+    if conflict_list:
+        lines.append("\n--- MOTSÄGELSER MELLAN KÄLLORNA ---")
+        lines += conflict_list
 
     lines.append("\n--- ANVÄNDARENS UPPGIFTER ---")
     lines.append(f"Stenart: {req.stoneType}; vittring: {req.weathering}; plats: {req.location or 'okänd'}")
@@ -304,8 +354,12 @@ def analyze_synthesis(
     x_gemini_api_key: Optional[str] = Header(None, alias="X-Gemini-Api-Key"),
 ):
     evidence = collect_evidence(request)
-    candidates = build_candidates(evidence)
-    block = evidence_text(evidence, request)
+    cand_dicts = build_candidate_dicts(evidence)
+    conflict_list = syn.conflicts(evidence, cand_dicts)
+    missing = syn.missing_notes(evidence, request.corpus_note)
+    result = syn.outcome(evidence.get("_rec"), cand_dicts, conflict_list)
+    candidates = [AttributionCandidate(**c) for c in cand_dicts]
+    block = evidence_text(evidence, request, cand_dicts, conflict_list)
 
     rd = evidence.get("rundata")
     sources = [store().meta["attribution"]] if rd else []
@@ -326,16 +380,24 @@ def analyze_synthesis(
     for c in candidates:
         c.reasoning = reasoning.get(c.name) or fallback_reasoning(c)
 
-    no_ai = "AI-tolkning ej tillgänglig – se beläggen nedan."
-    material = f"Material enligt Rundata: {rd['material']}." if rd and rd["material"] else no_ai
-    dating = f"Rundata: {rd['dating'] or 'ingen datering'}. {rd['style_dating']}" if rd else no_ai
+    # Deterministic texts when there is no AI
+    material = (f"Material enligt Rundata: {rd['material']}." if rd and rd["material"] else "Material saknas i Rundata.") \
+        + f" Angiven stenart: {request.stoneType}; vittring: {request.weathering}."
+    dating = (f"Rundata: {rd['dating'] or 'ingen datering'}. {rd['style_dating']}" if rd else "Stenen finns inte i Rundata.")
+    if cand_dicts and cand_dicts[0].get("styles"):
+        dating += f" {cand_dicts[0]['name']}: {cand_dicts[0]['styles']['text']}"
+    theory = result["text"] + (" " + " ".join(conflict_list) if conflict_list else " Inga motsägelser mellan källorna.")
     return SynthesisResponse(
         candidates=candidates,
+        conflicts=conflict_list,
+        missing=missing,
+        outcome=result,
+        analysis_used=evidence.get("analysis_used"),
         geology_analysis=parsed.get("geology_analysis") or material,
-        theory_analysis=parsed.get("theory_analysis") or no_ai,
+        theory_analysis=parsed.get("theory_analysis") or theory,
         dating_analysis=parsed.get("dating_analysis") or dating,
-        summary=parsed.get("summary") or no_ai,
-        evidence=evidence,
+        summary=parsed.get("summary") or result["text"],
+        evidence=public_evidence(evidence),
         sources=sources,
         ai_used=ai_used,
     )

@@ -117,3 +117,51 @@ def test_findings_compare_with_rundata(client):
         assert 0 <= f["evidence"] <= 1 and 0 <= f["novelty"] <= 1 and 0 <= f["relevance"] <= 1
         assert f["verdict"] in ("stämmer", "nytt", "motsäger") and f["reasons"]["belägg"]
     assert r["summary"]["counts"]["nytt"] > 0
+
+
+@needs_rundata
+def test_synthesis_weighs_checks_and_reports_conflicts(client, monkeypatch):
+    from api.rundata import store
+    from src.research_gaps import certain_carvers, is_runestone
+
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    rng = np.random.default_rng(2)
+
+    def slices(mu, n=8):
+        return [dict(zip(METRICS, rng.normal([mu, 3, 2, 6, .33, .2, .05], [1.5, .5, .1, .2, .01, .01, .002])))
+                | {"position_mm": i} for i in range(n)]
+
+    by = {}
+    for r in store().inscriptions:
+        cs = certain_carvers(r)
+        if is_runestone(r) and r["signum"].startswith("U ") and len(cs) == 1 and cs[0] in ("Öpir 1", "Åsmund", "Balle"):
+            by.setdefault(cs[0], []).append(r["signum"])
+    centre = {"Öpir 1": 95, "Åsmund": 80, "Balle": 70}
+    corpus = []
+    for carver, signa in by.items():
+        for sig in signa[:3]:
+            x = slices(centre[carver])
+            corpus.append({"signum": sig, "feature_type": "rune", "slices": x,
+                           "means": {m: float(np.mean([a[m] for a in x])) for m in METRICS}})
+
+    # U 344 is attributed to Åsmund; the measurements look like Åsmund's
+    r = client.post("/api/synthesis/analyze", json={
+        "signum": "U 344", "corpus": corpus,
+        "analyses": [{"id": "orn", "feature_type": "ornament", "slices": slices(95)},
+                     {"id": "run", "feature_type": "rune", "slices": slices(80)}]}).json()
+    assert r["analysis_used"]["id"] == "run" and r["analysis_used"]["n"] == 8  # runes, not the last saved
+    top = r["candidates"][0]
+    assert top["name"] == "Åsmund" and top["literature"]["verdict"] == "stämmer"
+    assert "Huggteknik" in top["first_in"] and top["stone_tests"]["compatible"] >= 2
+    assert top["geography"]["in_area"] and top["styles"]["styles"]
+    assert r["outcome"]["verdict"] == "stämmer" and "huggteknik" in r["outcome"]["support"]
+
+    # Measurements like Öpir's on Åsmund's stone: the conflict is spelled out without AI
+    r2 = client.post("/api/synthesis/analyze", json={
+        "signum": "U 344", "corpus": corpus,
+        "analyses": [{"id": "run", "feature_type": "rune", "slices": slices(95)}]}).json()
+    assert any("huggtekniken liknar Öpir 1" in c for c in r2["conflicts"])
+
+    # Without corpus or measurements, the missing evidence is explained
+    r3 = client.post("/api/synthesis/analyze", json={"signum": "U 344", "corpus_note": "logga in"}).json()
+    assert any(m.startswith("Huggteknik: logga in") for m in r3["missing"])

@@ -140,6 +140,14 @@ export interface GrooveAnalysisRecord {
   savedAt: string;
 }
 
+// A synthesis run, saved with the project so that it can be reopened and used in the stone report
+export interface SavedSynthesis {
+  result: import("@/lib/synthesis").SynthesisResult;
+  analysisId: string | null;
+  featureType: string;
+  savedAt: string;
+}
+
 export interface ProjectData {
   id: string;
   name: string;
@@ -159,6 +167,7 @@ export interface ProjectData {
   linguisticResults?: LinguisticResultData;
   paleographicCrops?: PaleographicCrop[];
   grooveAnalyses?: GrooveAnalysisRecord[];
+  synthesis?: SavedSynthesis;
   createdAt: string;
   updatedAt: string;
 }

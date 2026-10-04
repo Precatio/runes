@@ -179,3 +179,8 @@ def test_stone_report_with_surface_figures(client, stone_id):
     assert r2["surface"] is False and r2["surface_note"]
     d = client.post("/api/reports/stone", json={**body, "format": "docx"})
     assert d.content[:2] == b"PK"
+    # The saved synthesis becomes the report's attribution section
+    syn = client.post("/api/synthesis/analyze", json={
+        "signum": "U 344", "analyses": [{"id": "a", "feature_type": "rune", "slices": acc}]}).json()
+    r3 = client.post("/api/reports/stone", json={**body, "synthesis": syn}).json()
+    assert "4.7 Attribuering" in r3["markdown"] and "Åsmund" in r3["markdown"]

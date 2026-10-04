@@ -61,7 +61,7 @@ export default function StoneReportPanel() {
         corpus: corpusEntries.map(e => ({ signum: e.signum, feature_type: e.feature_type, means: e.means })),
         // Weathering from the 3D page's metadata unless set here
         condition: { ...condition, weathering: condition.weathering ?? input!.meta.weathering?.toLowerCase() },
-        two_d: input!.twoD ?? null, use_ai: useAI, format, ai_text: aiText,
+        two_d: input!.twoD ?? null, synthesis: input!.synthesis ?? null, use_ai: useAI, format, ai_text: aiText,
       }),
     });
   };
@@ -129,6 +129,7 @@ export default function StoneReportPanel() {
               <Badge ok={hasProfiles(input)} yes="tvärsnittsprofiler" no="profiler saknas – inga profilfigurer" />
               <Badge ok={hasPositions(input)} yes="snittpositioner" no="positioner saknas – snitten visas inte på ytan" />
               <Badge ok={!!input.meshId} yes="3D-modell kopplad" no="ingen 3D-modell – inga ytbilder" />
+              <Badge ok={!!input.synthesis} yes="attribueringssyntes" no="ingen sparad syntes – inget attribueringsavsnitt" />
             </div>
             {input.meshId && (
               <p className="text-xs text-slate-500">
