@@ -1,0 +1,886 @@
+{
+  "result": {
+    "totalHits": 12141,
+    "records": [
+      {
+        "record": {
+          "@graph": [
+            {
+              "ksam:mediaLicense": {
+                "@id": "http://kulturarvsdata.se/resurser/license#cc0"
+              },
+              "ksam:link": {
+                "@value": "https://pub.raa.se/dokumentation/d9f5cfdb-cd0c-46b0-a7d2-af80dfab05ff/original/1",
+                "@language": "sv"
+              },
+              "@type": "ksam:Media",
+              "ksam:mediaLicenseUrl": {
+                "@id": "https://creativecommons.org/publicdomain/zero/1.0/"
+              },
+              "@id": "_:e343a58370d73e5f218d20c3304a9d0f",
+              "ksam:mediaType": {
+                "@value": "image/jpeg",
+                "@language": "sv"
+              }
+            },
+            {
+              "ksam:type": {
+                "@value": "FMIS bild-URL",
+                "@language": "sv"
+              },
+              "@type": "ksam:ItemNumber",
+              "@id": "_:5e460cd6358fa80a0d4151357a0c7053",
+              "ksam:number": {
+                "@value": "08/0885/860/dokument/0860-0020-02-D.jpg",
+                "@language": "sv"
+              }
+            },
+            {
+              "ksam:serviceOrganization": {
+                "@value": "RA\u00c4",
+                "@language": "sv"
+              },
+              "@type": "ksam:Entity",
+              "ksam:serviceOrganizationFull": "Riksantikvarie\u00e4mbetet",
+              "ksam:itemSuperType": {
+                "@id": "http://kulturarvsdata.se/resurser/EntitySuperType#object"
+              },
+              "ksam:itemKeyword": [
+                "Fornl\u00e4mningar",
+                "Arkeologi"
+              ],
+              "ksam:buildDate": "2026-06-10",
+              "ksam:itemName": {
+                "@id": "_:6e0b6ff5af1c3812fe951117496aa7f8"
+              },
+              "ksam:itemNumber": [
+                {
+                  "@id": "_:f82850bfa64d7ef36eba5dab6fa1f954"
+                },
+                {
+                  "@id": "_:7113e55880ccfa73a7a62405b2d77b20"
+                },
+                {
+                  "@id": "_:5e460cd6358fa80a0d4151357a0c7053"
+                }
+              ],
+              "ksam:media": {
+                "@id": "_:e343a58370d73e5f218d20c3304a9d0f"
+              },
+              "ksam:presentation": {
+                "@value": "<pres:item xmlns:pres=\"http://kulturarvsdata.se/presentation#\"><pres:version>1.11</pres:version><pres:entityUri>http://kulturarvsdata.se/raa/dokumentation/d9f5cfdb-cd0c-46b0-a7d2-af80dfab05ff</pres:entityUri><pres:type>Dokument</pres:type><pres:id>FMIS_Bild_12000000423798</pres:id><pres:idLabel>FMIS_Bild_12000000423798</pres:idLabel><pres:itemLabel>Inventeringsbokuppslag (2), Runsten 20:1, Runsten 20:2, Runsten 20:3, Runsten 20:4, Runsten 20:5, Runsten 20:6, Runsten 20:7, Runsten 20:8, Runsten 20:9, Runsten 20:10, Runsten 20:11, Runsten 20:12, Runsten 20:13, Runsten 20:14, Runsten 20:15, Runsten 20:16, Runsten 20:17, Runsten 20:18, Runsten 20:19, Runsten 20:20, Runsten 20:21, Runsten 20:22, Runsten 20:23, Runsten 20:24, Runsten 20:25, Runsten 20:26, Runsten 20:27, Runsten 20:28, Runsten 20:29, Runsten 20:30, Runsten 20:31, Runsten 20:32, Runsten 20:33</pres:itemLabel><pres:tag>Arkeologi</pres:tag><pres:tag>Fornl\u00e4mningar</pres:tag><pres:context><pres:placeLabel>Land: Sverige; L\u00e4n: Kalmar; Kommun: Borgholm; Landskap: \u00d6land; Socken: Runsten</pres:placeLabel></pres:context><pres:references><pres:reference>http://kulturarvsdata.se/raa/lamning/94c328d9-3fdf-4269-b73c-37497f49cc5b</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/c70ca82b-8ddc-45d8-a2b5-be083b6e7ea4</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/ec9299ee-9077-45ef-ac66-b9168b46cd89</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/1584415d-ea7a-4564-a04d-bf4df3070836</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/3921fad1-df6e-4b79-ad85-dcd9460e93dd</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/b1e389c4-dbc5-4334-bd81-05bc76e111a2</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/2fcc7e00-359e-4da6-b8f1-755657fd162d</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/dcfe488e-2d7a-4dfb-bf46-63e16f0f90bc</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/6aed6f4a-019d-4642-888c-ba7255d3a680</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/9e9fe3bf-5f64-44cd-bef7-55ffd198d9c1</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/401c1d9d-dd87-43f4-b8f4-e9ad248d6da6</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/8a5f98a6-31a8-42ee-a2e0-2743b9dcb176</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/3ba09003-b1f2-4d5c-85d0-c575d7090f3e</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/86f0fb6a-a517-4468-8957-8713aebfb153</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/b24cb7cd-3171-480e-b00d-663af35184c3</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/12d7c39e-c513-4cff-8200-d4f398425940</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/f41e001a-9b63-4279-be35-35790ab4c395</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/99e068c2-225e-484c-b68a-dd220b8004e3</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/ef32b1a6-d5ed-4fe1-a383-b5bca4b3d358</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/33b317aa-891e-4d1a-8be7-bbaafd669e57</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/c19bdfb7-5dd9-41d3-a6cf-5d44ca7da067</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/d3487c36-2feb-4e5f-882e-5849dd970df2</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/ba0cb79e-3a01-466b-b531-cb45eedd9f76</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/eeabb16a-91b2-4b93-b00b-789dd43d635e</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/ff8e4cd4-ab22-4d12-a8ca-32027364dc7f</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/4c949302-a3aa-43a1-ae78-d96e16cda577</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/39faaa9e-5b8d-462e-9ea4-54a2b7125769</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/073e37bd-f020-4c52-a653-898b6c9543cd</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/e25cd62a-3706-4c1f-9ed9-72fb49568e4a</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/e3f57270-1951-4e79-a530-4f5fce3c6fd3</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/481918b8-f95f-4a8f-b12d-bb445db75d79</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/919d82f7-36af-4c49-8a34-76af03640972</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/cd51f50c-1332-4771-be2c-bf6901c3817f</pres:reference></pres:references><pres:representations><pres:representation format=\"HTML\">http://kulturarvsdata.se/raa/dokumentation/html/d9f5cfdb-cd0c-46b0-a7d2-af80dfab05ff</pres:representation><pres:representation format=\"RDF\">http://kulturarvsdata.se/raa/dokumentation/rdf/d9f5cfdb-cd0c-46b0-a7d2-af80dfab05ff</pres:representation><pres:representation format=\"presentation\">http://kulturarvsdata.se/raa/dokumentation/xml/d9f5cfdb-cd0c-46b0-a7d2-af80dfab05ff</pres:representation></pres:representations><pres:organization>Riksantikvarie\u00e4mbetet</pres:organization><pres:organizationShort>RA\u00c4</pres:organizationShort><pres:service>arkiv-dokument</pres:service><pres:dataQuality>http://kulturarvsdata.se/resurser/DataQuality#raw</pres:dataQuality></pres:item>",
+                "@type": "rdf:XMLLiteral"
+              },
+              "ksam:itemLabel": {
+                "@value": "Inventeringsbokuppslag (2), Runsten 20:1, Runsten 20:2, Runsten 20:3, Runsten 20:4, Runsten 20:5, Runsten 20:6, Runsten 20:7, Runsten 20:8, Runsten 20:9, Runsten 20:10, Runsten 20:11, Runsten 20:12, Runsten 20:13, Runsten 20:14, Runsten 20:15, Runsten 20:16, Runsten 20:17, Runsten 20:18, Runsten 20:19, Runsten 20:20, Runsten 20:21, Runsten 20:22, Runsten 20:23, Runsten 20:24, Runsten 20:25, Runsten 20:26, Runsten 20:27, Runsten 20:28, Runsten 20:29, Runsten 20:30, Runsten 20:31, Runsten 20:32, Runsten 20:33",
+                "@language": "sv"
+              },
+              "@id": "http://kulturarvsdata.se/raa/dokumentation/d9f5cfdb-cd0c-46b0-a7d2-af80dfab05ff",
+              "ksam:serviceName": "arkiv-dokument",
+              "ksam:ksamsokVersion": "1.11",
+              "ksam:url": "https://pub.raa.se/visa/dokumentation/d9f5cfdb-cd0c-46b0-a7d2-af80dfab05ff",
+              "ksam:context": [
+                {
+                  "@id": "_:3b741c6073682ad8eddf613f123f66c2"
+                },
+                {
+                  "@id": "_:a16b5fd447265e3b8d1cbe491317c149"
+                }
+              ],
+              "ksam:describes": [
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/3ba09003-b1f2-4d5c-85d0-c575d7090f3e"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/481918b8-f95f-4a8f-b12d-bb445db75d79"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/6aed6f4a-019d-4642-888c-ba7255d3a680"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/39faaa9e-5b8d-462e-9ea4-54a2b7125769"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/401c1d9d-dd87-43f4-b8f4-e9ad248d6da6"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/94c328d9-3fdf-4269-b73c-37497f49cc5b"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/c19bdfb7-5dd9-41d3-a6cf-5d44ca7da067"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/b1e389c4-dbc5-4334-bd81-05bc76e111a2"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/919d82f7-36af-4c49-8a34-76af03640972"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/f41e001a-9b63-4279-be35-35790ab4c395"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/dcfe488e-2d7a-4dfb-bf46-63e16f0f90bc"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/33b317aa-891e-4d1a-8be7-bbaafd669e57"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/8a5f98a6-31a8-42ee-a2e0-2743b9dcb176"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/e3f57270-1951-4e79-a530-4f5fce3c6fd3"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/c70ca82b-8ddc-45d8-a2b5-be083b6e7ea4"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/073e37bd-f020-4c52-a653-898b6c9543cd"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/b24cb7cd-3171-480e-b00d-663af35184c3"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/12d7c39e-c513-4cff-8200-d4f398425940"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/1584415d-ea7a-4564-a04d-bf4df3070836"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/4c949302-a3aa-43a1-ae78-d96e16cda577"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/ba0cb79e-3a01-466b-b531-cb45eedd9f76"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/cd51f50c-1332-4771-be2c-bf6901c3817f"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/eeabb16a-91b2-4b93-b00b-789dd43d635e"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/9e9fe3bf-5f64-44cd-bef7-55ffd198d9c1"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/2fcc7e00-359e-4da6-b8f1-755657fd162d"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/e25cd62a-3706-4c1f-9ed9-72fb49568e4a"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/99e068c2-225e-484c-b68a-dd220b8004e3"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/3921fad1-df6e-4b79-ad85-dcd9460e93dd"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/86f0fb6a-a517-4468-8957-8713aebfb153"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/d3487c36-2feb-4e5f-882e-5849dd970df2"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/ff8e4cd4-ab22-4d12-a8ca-32027364dc7f"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/ec9299ee-9077-45ef-ac66-b9168b46cd89"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/ef32b1a6-d5ed-4fe1-a383-b5bca4b3d358"
+                }
+              ],
+              "ksam:dataQuality": {
+                "@id": "http://kulturarvsdata.se/resurser/DataQuality#raw"
+              },
+              "ksam:mediaType": "image/jpeg",
+              "ksam:itemLicense": {
+                "@id": "http://kulturarvsdata.se/resurser/license#cc0"
+              },
+              "ksam:createdDate": "2023-03-22",
+              "ksam:thumbnail": "https://pub.raa.se/dokumentation/d9f5cfdb-cd0c-46b0-a7d2-af80dfab05ff/original/1/miniatyr",
+              "ksam:itemClassName": "Dokument",
+              "ksam:itemLicenseUrl": {
+                "@id": "http://creativecommons.org/publicdomain/zero/1.0/"
+              },
+              "ksam:itemTitle": "Inventeringsbokuppslag (2), Runsten 20:1, Runsten 20:2, Runsten 20:3, Runsten 20:4, Runsten 20:5, Runsten 20:6, Runsten 20:7, Runsten 20:8, Runsten 20:9, Runsten 20:10, Runsten 20:11, Runsten 20:12, Runsten 20:13, Runsten 20:14, Runsten 20:15, Runsten 20:16, Runsten 20:17, Runsten 20:18, Runsten 20:19, Runsten 20:20, Runsten 20:21, Runsten 20:22, Runsten 20:23, Runsten 20:24, Runsten 20:25, Runsten 20:26, Runsten 20:27, Runsten 20:28, Runsten 20:29, Runsten 20:30, Runsten 20:31, Runsten 20:32, Runsten 20:33",
+              "ksam:itemType": {
+                "@id": "http://kulturarvsdata.se/resurser/EntityType#document"
+              }
+            },
+            {
+              "ksam:name": {
+                "@value": "Inventeringsbokuppslag (2), Runsten 20:1, Runsten 20:2, Runsten 20:3, Runsten 20:4, Runsten 20:5, Runsten 20:6, Runsten 20:7, Runsten 20:8, Runsten 20:9, Runsten 20:10, Runsten 20:11, Runsten 20:12, Runsten 20:13, Runsten 20:14, Runsten 20:15, Runsten 20:16, Runsten 20:17, Runsten 20:18, Runsten 20:19, Runsten 20:20, Runsten 20:21, Runsten 20:22, Runsten 20:23, Runsten 20:24, Runsten 20:25, Runsten 20:26, Runsten 20:27, Runsten 20:28, Runsten 20:29, Runsten 20:30, Runsten 20:31, Runsten 20:32, Runsten 20:33",
+                "@language": "sv"
+              },
+              "ksam:type": {
+                "@value": "Titel",
+                "@language": "sv"
+              },
+              "@type": "ksam:ItemName",
+              "@id": "_:6e0b6ff5af1c3812fe951117496aa7f8"
+            },
+            {
+              "ksam:type": {
+                "@value": "Identifierare",
+                "@language": "sv"
+              },
+              "@type": "ksam:ItemNumber",
+              "@id": "_:f82850bfa64d7ef36eba5dab6fa1f954",
+              "ksam:number": {
+                "@value": "FMIS_Bild_12000000423798",
+                "@language": "sv"
+              }
+            },
+            {
+              "ksam:contextSuperType": {
+                "@id": "http://kulturarvsdata.se/resurser/ContextSuperType#interact"
+              },
+              "ksam:fromTime": {
+                "@value": "2023-03-22",
+                "@language": "sv"
+              },
+              "@type": "ksam:Context",
+              "ksam:contextType": {
+                "@id": "http://kulturarvsdata.se/resurser/ContextType#transact"
+              },
+              "@id": "_:3b741c6073682ad8eddf613f123f66c2",
+              "ksam:toTime": {
+                "@value": "2023-03-22",
+                "@language": "sv"
+              },
+              "ksam:contextLabel": {
+                "@value": "Arkiverad",
+                "@language": "sv"
+              }
+            },
+            {
+              "ksam:type": {
+                "@value": "Arkiv referenskod",
+                "@language": "sv"
+              },
+              "@type": "ksam:ItemNumber",
+              "@id": "_:7113e55880ccfa73a7a62405b2d77b20",
+              "ksam:number": {
+                "@value": "SE/ATA/ARK4_21-7/D 1",
+                "@language": "sv"
+              }
+            },
+            {
+              "ksam:contextSuperType": {
+                "@id": "http://kulturarvsdata.se/resurser/ContextSuperType#create"
+              },
+              "@type": "ksam:Context",
+              "ksam:contextType": {
+                "@id": "http://kulturarvsdata.se/resurser/ContextType#produce"
+              },
+              "@id": "_:a16b5fd447265e3b8d1cbe491317c149",
+              "ksam:contextLabel": {
+                "@value": "Tillkomst",
+                "@language": "sv"
+              },
+              "ksam:placeName": [
+                {
+                  "@value": "Runsten 20:33",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:13",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:12",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:15",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:28",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:11",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:9",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:24",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:21",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:32",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:5",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:27",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:10",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:8",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:23",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:19",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:26",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:31",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:4",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:22",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:20",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:30",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:18",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:7",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:6",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:14",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:3",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:2",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:29",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:1",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:17",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:25",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:16",
+                  "@language": "sv"
+                }
+              ],
+              "ksam:countryName": {
+                "@value": "Sverige",
+                "@language": "sv"
+              },
+              "ksam:country": {
+                "@id": "http://kulturarvsdata.se/resurser/aukt/geo/country#SE"
+              }
+            }
+          ],
+          "@context": {
+            "pres": "http://kulturarvsdata.se/presentation#",
+            "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+            "owl": "http://www.w3.org/2002/07/owl#",
+            "ksam": "http://kulturarvsdata.se/ksamsok#",
+            "gml": "http://www.opengis.net/gml",
+            "georss": "http://www.georss.org/georss#",
+            "dcterms": "http://purl.org/dc/terms/",
+            "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+            "foaf": "http://xmlns.com/foaf/0.1/",
+            "dc": "http://purl.org/dc/elements/1.1/"
+          }
+        },
+        "rel:score": {
+          "#text": 6.696299,
+          "-xmlns:rel": "info:srw/extension/2/relevancy-1.0"
+        }
+      },
+      {
+        "record": {
+          "@graph": [
+            {
+              "ksam:contextSuperType": {
+                "@id": "http://kulturarvsdata.se/resurser/ContextSuperType#interact"
+              },
+              "ksam:fromTime": {
+                "@value": "2023-03-22",
+                "@language": "sv"
+              },
+              "@type": "ksam:Context",
+              "ksam:contextType": {
+                "@id": "http://kulturarvsdata.se/resurser/ContextType#transact"
+              },
+              "@id": "_:e92b8e5c4207a3251a007f6381824c8f",
+              "ksam:toTime": {
+                "@value": "2023-03-22",
+                "@language": "sv"
+              },
+              "ksam:contextLabel": {
+                "@value": "Arkiverad",
+                "@language": "sv"
+              }
+            },
+            {
+              "ksam:name": {
+                "@value": "Inventeringsbokuppslag (1), Runsten 20:1, Runsten 20:2, Runsten 20:3, Runsten 20:4, Runsten 20:5, Runsten 20:6, Runsten 20:7, Runsten 20:8, Runsten 20:9, Runsten 20:10, Runsten 20:11, Runsten 20:12, Runsten 20:13, Runsten 20:14, Runsten 20:15, Runsten 20:16, Runsten 20:17, Runsten 20:18, Runsten 20:19, Runsten 20:20, Runsten 20:21, Runsten 20:22, Runsten 20:23, Runsten 20:24, Runsten 20:25, Runsten 20:26, Runsten 20:27, Runsten 20:28, Runsten 20:29, Runsten 20:30, Runsten 20:31, Runsten 20:32, Runsten 20:33",
+                "@language": "sv"
+              },
+              "ksam:type": {
+                "@value": "Titel",
+                "@language": "sv"
+              },
+              "@type": "ksam:ItemName",
+              "@id": "_:ec5a8ea5fd7e3dc0ed56d673ed25d126"
+            },
+            {
+              "ksam:contextSuperType": {
+                "@id": "http://kulturarvsdata.se/resurser/ContextSuperType#create"
+              },
+              "@type": "ksam:Context",
+              "ksam:contextType": {
+                "@id": "http://kulturarvsdata.se/resurser/ContextType#produce"
+              },
+              "@id": "_:7ade772e7f203292e112a0573c661a8f",
+              "ksam:contextLabel": {
+                "@value": "Tillkomst",
+                "@language": "sv"
+              },
+              "ksam:placeName": [
+                {
+                  "@value": "Runsten 20:30",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:21",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:23",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:3",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:12",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:6",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:26",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:33",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:29",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:17",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:15",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:8",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:20",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:32",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:2",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:7",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:22",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:28",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:25",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:11",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:5",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:14",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:31",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:19",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:27",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:1",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:10",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:16",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:24",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:13",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:4",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:18",
+                  "@language": "sv"
+                },
+                {
+                  "@value": "Runsten 20:9",
+                  "@language": "sv"
+                }
+              ],
+              "ksam:countryName": {
+                "@value": "Sverige",
+                "@language": "sv"
+              },
+              "ksam:country": {
+                "@id": "http://kulturarvsdata.se/resurser/aukt/geo/country#SE"
+              }
+            },
+            {
+              "ksam:type": {
+                "@value": "Arkiv referenskod",
+                "@language": "sv"
+              },
+              "@type": "ksam:ItemNumber",
+              "@id": "_:6cf28ca635bc212dd20bb5455c552d18",
+              "ksam:number": {
+                "@value": "SE/ATA/ARK4_21-7/D 1",
+                "@language": "sv"
+              }
+            },
+            {
+              "ksam:serviceOrganization": {
+                "@value": "RA\u00c4",
+                "@language": "sv"
+              },
+              "@type": "ksam:Entity",
+              "ksam:serviceOrganizationFull": "Riksantikvarie\u00e4mbetet",
+              "ksam:itemSuperType": {
+                "@id": "http://kulturarvsdata.se/resurser/EntitySuperType#object"
+              },
+              "ksam:itemKeyword": [
+                "Fornl\u00e4mningar",
+                "Arkeologi"
+              ],
+              "ksam:buildDate": "2026-06-10",
+              "ksam:itemName": {
+                "@id": "_:ec5a8ea5fd7e3dc0ed56d673ed25d126"
+              },
+              "ksam:media": {
+                "@id": "_:fd81c06db2c50aa8b09bba0c598ed9fc"
+              },
+              "ksam:itemNumber": [
+                {
+                  "@id": "_:c129375726e0cf9c7a918f9ab1bedff0"
+                },
+                {
+                  "@id": "_:911285be4a4b3e7f10486638d1eeedb2"
+                },
+                {
+                  "@id": "_:6cf28ca635bc212dd20bb5455c552d18"
+                }
+              ],
+              "ksam:presentation": {
+                "@value": "<pres:item xmlns:pres=\"http://kulturarvsdata.se/presentation#\"><pres:version>1.11</pres:version><pres:entityUri>http://kulturarvsdata.se/raa/dokumentation/f538ddd2-6649-4f93-889f-762504b5cdc5</pres:entityUri><pres:type>Dokument</pres:type><pres:id>FMIS_Bild_12000000423797</pres:id><pres:idLabel>FMIS_Bild_12000000423797</pres:idLabel><pres:itemLabel>Inventeringsbokuppslag (1), Runsten 20:1, Runsten 20:2, Runsten 20:3, Runsten 20:4, Runsten 20:5, Runsten 20:6, Runsten 20:7, Runsten 20:8, Runsten 20:9, Runsten 20:10, Runsten 20:11, Runsten 20:12, Runsten 20:13, Runsten 20:14, Runsten 20:15, Runsten 20:16, Runsten 20:17, Runsten 20:18, Runsten 20:19, Runsten 20:20, Runsten 20:21, Runsten 20:22, Runsten 20:23, Runsten 20:24, Runsten 20:25, Runsten 20:26, Runsten 20:27, Runsten 20:28, Runsten 20:29, Runsten 20:30, Runsten 20:31, Runsten 20:32, Runsten 20:33</pres:itemLabel><pres:tag>Arkeologi</pres:tag><pres:tag>Fornl\u00e4mningar</pres:tag><pres:context><pres:placeLabel>Land: Sverige; L\u00e4n: Kalmar; Kommun: Borgholm; Landskap: \u00d6land; Socken: Runsten</pres:placeLabel></pres:context><pres:references><pres:reference>http://kulturarvsdata.se/raa/lamning/94c328d9-3fdf-4269-b73c-37497f49cc5b</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/c70ca82b-8ddc-45d8-a2b5-be083b6e7ea4</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/ec9299ee-9077-45ef-ac66-b9168b46cd89</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/1584415d-ea7a-4564-a04d-bf4df3070836</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/3921fad1-df6e-4b79-ad85-dcd9460e93dd</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/b1e389c4-dbc5-4334-bd81-05bc76e111a2</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/2fcc7e00-359e-4da6-b8f1-755657fd162d</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/dcfe488e-2d7a-4dfb-bf46-63e16f0f90bc</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/6aed6f4a-019d-4642-888c-ba7255d3a680</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/9e9fe3bf-5f64-44cd-bef7-55ffd198d9c1</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/401c1d9d-dd87-43f4-b8f4-e9ad248d6da6</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/8a5f98a6-31a8-42ee-a2e0-2743b9dcb176</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/3ba09003-b1f2-4d5c-85d0-c575d7090f3e</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/86f0fb6a-a517-4468-8957-8713aebfb153</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/b24cb7cd-3171-480e-b00d-663af35184c3</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/12d7c39e-c513-4cff-8200-d4f398425940</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/f41e001a-9b63-4279-be35-35790ab4c395</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/99e068c2-225e-484c-b68a-dd220b8004e3</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/ef32b1a6-d5ed-4fe1-a383-b5bca4b3d358</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/33b317aa-891e-4d1a-8be7-bbaafd669e57</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/c19bdfb7-5dd9-41d3-a6cf-5d44ca7da067</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/d3487c36-2feb-4e5f-882e-5849dd970df2</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/ba0cb79e-3a01-466b-b531-cb45eedd9f76</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/eeabb16a-91b2-4b93-b00b-789dd43d635e</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/ff8e4cd4-ab22-4d12-a8ca-32027364dc7f</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/4c949302-a3aa-43a1-ae78-d96e16cda577</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/39faaa9e-5b8d-462e-9ea4-54a2b7125769</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/073e37bd-f020-4c52-a653-898b6c9543cd</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/e25cd62a-3706-4c1f-9ed9-72fb49568e4a</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/e3f57270-1951-4e79-a530-4f5fce3c6fd3</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/481918b8-f95f-4a8f-b12d-bb445db75d79</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/919d82f7-36af-4c49-8a34-76af03640972</pres:reference><pres:reference>http://kulturarvsdata.se/raa/lamning/cd51f50c-1332-4771-be2c-bf6901c3817f</pres:reference></pres:references><pres:representations><pres:representation format=\"HTML\">http://kulturarvsdata.se/raa/dokumentation/html/f538ddd2-6649-4f93-889f-762504b5cdc5</pres:representation><pres:representation format=\"RDF\">http://kulturarvsdata.se/raa/dokumentation/rdf/f538ddd2-6649-4f93-889f-762504b5cdc5</pres:representation><pres:representation format=\"presentation\">http://kulturarvsdata.se/raa/dokumentation/xml/f538ddd2-6649-4f93-889f-762504b5cdc5</pres:representation></pres:representations><pres:organization>Riksantikvarie\u00e4mbetet</pres:organization><pres:organizationShort>RA\u00c4</pres:organizationShort><pres:service>arkiv-dokument</pres:service><pres:dataQuality>http://kulturarvsdata.se/resurser/DataQuality#raw</pres:dataQuality></pres:item>",
+                "@type": "rdf:XMLLiteral"
+              },
+              "ksam:itemLabel": {
+                "@value": "Inventeringsbokuppslag (1), Runsten 20:1, Runsten 20:2, Runsten 20:3, Runsten 20:4, Runsten 20:5, Runsten 20:6, Runsten 20:7, Runsten 20:8, Runsten 20:9, Runsten 20:10, Runsten 20:11, Runsten 20:12, Runsten 20:13, Runsten 20:14, Runsten 20:15, Runsten 20:16, Runsten 20:17, Runsten 20:18, Runsten 20:19, Runsten 20:20, Runsten 20:21, Runsten 20:22, Runsten 20:23, Runsten 20:24, Runsten 20:25, Runsten 20:26, Runsten 20:27, Runsten 20:28, Runsten 20:29, Runsten 20:30, Runsten 20:31, Runsten 20:32, Runsten 20:33",
+                "@language": "sv"
+              },
+              "@id": "http://kulturarvsdata.se/raa/dokumentation/f538ddd2-6649-4f93-889f-762504b5cdc5",
+              "ksam:serviceName": "arkiv-dokument",
+              "ksam:ksamsokVersion": "1.11",
+              "ksam:url": "https://pub.raa.se/visa/dokumentation/f538ddd2-6649-4f93-889f-762504b5cdc5",
+              "ksam:context": [
+                {
+                  "@id": "_:7ade772e7f203292e112a0573c661a8f"
+                },
+                {
+                  "@id": "_:e92b8e5c4207a3251a007f6381824c8f"
+                }
+              ],
+              "ksam:describes": [
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/2fcc7e00-359e-4da6-b8f1-755657fd162d"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/99e068c2-225e-484c-b68a-dd220b8004e3"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/b24cb7cd-3171-480e-b00d-663af35184c3"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/f41e001a-9b63-4279-be35-35790ab4c395"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/12d7c39e-c513-4cff-8200-d4f398425940"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/e25cd62a-3706-4c1f-9ed9-72fb49568e4a"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/c19bdfb7-5dd9-41d3-a6cf-5d44ca7da067"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/ff8e4cd4-ab22-4d12-a8ca-32027364dc7f"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/073e37bd-f020-4c52-a653-898b6c9543cd"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/919d82f7-36af-4c49-8a34-76af03640972"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/4c949302-a3aa-43a1-ae78-d96e16cda577"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/eeabb16a-91b2-4b93-b00b-789dd43d635e"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/e3f57270-1951-4e79-a530-4f5fce3c6fd3"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/ec9299ee-9077-45ef-ac66-b9168b46cd89"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/ba0cb79e-3a01-466b-b531-cb45eedd9f76"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/6aed6f4a-019d-4642-888c-ba7255d3a680"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/481918b8-f95f-4a8f-b12d-bb445db75d79"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/dcfe488e-2d7a-4dfb-bf46-63e16f0f90bc"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/3ba09003-b1f2-4d5c-85d0-c575d7090f3e"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/401c1d9d-dd87-43f4-b8f4-e9ad248d6da6"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/c70ca82b-8ddc-45d8-a2b5-be083b6e7ea4"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/b1e389c4-dbc5-4334-bd81-05bc76e111a2"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/8a5f98a6-31a8-42ee-a2e0-2743b9dcb176"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/cd51f50c-1332-4771-be2c-bf6901c3817f"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/3921fad1-df6e-4b79-ad85-dcd9460e93dd"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/ef32b1a6-d5ed-4fe1-a383-b5bca4b3d358"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/1584415d-ea7a-4564-a04d-bf4df3070836"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/33b317aa-891e-4d1a-8be7-bbaafd669e57"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/94c328d9-3fdf-4269-b73c-37497f49cc5b"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/9e9fe3bf-5f64-44cd-bef7-55ffd198d9c1"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/86f0fb6a-a517-4468-8957-8713aebfb153"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/d3487c36-2feb-4e5f-882e-5849dd970df2"
+                },
+                {
+                  "@id": "http://kulturarvsdata.se/raa/lamning/39faaa9e-5b8d-462e-9ea4-54a2b7125769"
+                }
+              ],
+              "ksam:dataQuality": {
+                "@id": "http://kulturarvsdata.se/resurser/DataQuality#raw"
+              },
+              "ksam:mediaType": "image/jpeg",
+              "ksam:createdDate": "2023-03-22",
+              "ksam:itemLicense": {
+                "@id": "http://kulturarvsdata.se/resurser/license#cc0"
+              },
+              "ksam:thumbnail": "https://pub.raa.se/dokumentation/f538ddd2-6649-4f93-889f-762504b5cdc5/original/1/miniatyr",
+              "ksam:itemClassName": "Dokument",
+              "ksam:itemLicenseUrl": {
+                "@id": "http://creativecommons.org/publicdomain/zero/1.0/"
+              },
+              "ksam:itemTitle": "Inventeringsbokuppslag (1), Runsten 20:1, Runsten 20:2, Runsten 20:3, Runsten 20:4, Runsten 20:5, Runsten 20:6, Runsten 20:7, Runsten 20:8, Runsten 20:9, Runsten 20:10, Runsten 20:11, Runsten 20:12, Runsten 20:13, Runsten 20:14, Runsten 20:15, Runsten 20:16, Runsten 20:17, Runsten 20:18, Runsten 20:19, Runsten 20:20, Runsten 20:21, Runsten 20:22, Runsten 20:23, Runsten 20:24, Runsten 20:25, Runsten 20:26, Runsten 20:27, Runsten 20:28, Runsten 20:29, Runsten 20:30, Runsten 20:31, Runsten 20:32, Runsten 20:33",
+              "ksam:itemType": {
+                "@id": "http://kulturarvsdata.se/resurser/EntityType#document"
+              }
+            },
+            {
+              "ksam:mediaLicense": {
+                "@id": "http://kulturarvsdata.se/resurser/license#cc0"
+              },
+              "ksam:link": {
+                "@value": "https://pub.raa.se/dokumentation/f538ddd2-6649-4f93-889f-762504b5cdc5/original/1",
+                "@language": "sv"
+              },
+              "@type": "ksam:Media",
+              "ksam:mediaLicenseUrl": {
+                "@id": "https://creativecommons.org/publicdomain/zero/1.0/"
+              },
+              "@id": "_:fd81c06db2c50aa8b09bba0c598ed9fc",
+              "ksam:mediaType": {
+                "@value": "image/jpeg",
+                "@language": "sv"
+              }
+            },
+            {
+              "ksam:type": {
+                "@value": "Identifierare",
+                "@language": "sv"
+              },
+              "@type": "ksam:ItemNumber",
+              "@id": "_:c129375726e0cf9c7a918f9ab1bedff0",
+              "ksam:number": {
+                "@value": "FMIS_Bild_12000000423797",
+                "@language": "sv"
+              }
+            },
+            {
+              "ksam:type": {
+                "@value": "FMIS bild-URL",
+                "@language": "sv"
+              },
+              "@type": "ksam:ItemNumber",
+              "@id": "_:911285be4a4b3e7f10486638d1eeedb2",
+              "ksam:number": {
+                "@value": "08/0885/860/dokument/0860-0020-01-D.jpg",
+                "@language": "sv"
+              }
+            }
+          ],
+          "@context": {
+            "pres": "http://kulturarvsdata.se/presentation#",
+            "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+            "owl": "http://www.w3.org/2002/07/owl#",
+            "ksam": "http://kulturarvsdata.se/ksamsok#",
+            "gml": "http://www.opengis.net/gml",
+            "georss": "http://www.georss.org/georss#",
+            "dcterms": "http://purl.org/dc/terms/",
+            "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+            "foaf": "http://xmlns.com/foaf/0.1/",
+            "dc": "http://purl.org/dc/elements/1.1/"
+          }
+        },
+        "rel:score": {
+          "#text": 6.696299,
+          "-xmlns:rel": "info:srw/extension/2/relevancy-1.0"
+        }
+      }
+    ],
+    "echo": {
+      "method": "search",
+      "hitsPerPage": 2,
+      "startRecord": 1,
+      "query": "text=\"runsten\""
+    },
+    "version": "1.0"
+  }
+}

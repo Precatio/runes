@@ -1,0 +1,33 @@
+# Hemligheter
+.env
+.env.*
+.streamlit/secrets.toml
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# macOS
+.DS_Store
+
+# Webbappen har egen .gitignore (web/.gitignore)
+
+# Stora skanningar (GitHub tillåter max 100 MB per fil)
+So 113_1_4 thin_closed holes.stl
+.venv-py39/
+
+# Firebase CLI-cache
+web/.firebase/
+
+# Opublicerat manus (hålls privat)
+manuscript/
+
+# Bilder från externa källor med okänd licens och genererade testbilder
+Gs_7,_Torsåker.jpeg
+Otto_von_Friesen_-_Runsten_Sö_113_Kolunda,_Stenkvista_socken_-_Alvin_record_110815.jpg
+Rökstenen_1.jpeg
+runsten-l1986-9602-ahus-172-i-kristianstad-skane.webp
+depth_test_fast.png
+v_groove_plot.pdf

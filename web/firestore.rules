@@ -1,0 +1,44 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Ensure all authenticated users can only read and write their own data
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      // Cascade the same rule down to nested collections (projects, settings)
+      match /{document=**} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // Shared research corpus of groove measurements (published under CC BY 4.0).
+    // Every signed-in researcher can read; entries can only be created, changed
+    // or removed by their contributor.
+    match /corpus/{entryId} {
+      function validEntry(data) {
+        return data.contributorUid == request.auth.uid
+          && data.id == entryId
+          && data.license == 'CC-BY-4.0'
+          && data.signum is string && data.signum.size() > 0 && data.signum.size() < 64
+          && data.feature_type in ['rune', 'ornament', 'unknown']
+          && data.means is map
+          && data.slices is list && data.slices.size() <= 200
+          && data.contributorName is string && data.contributorName.size() < 200;
+      }
+
+      allow read: if request.auth != null;
+      allow create: if request.auth != null && validEntry(request.resource.data);
+      allow update: if request.auth != null
+        && resource.data.contributorUid == request.auth.uid
+        && validEntry(request.resource.data);
+      allow delete: if request.auth != null && resource.data.contributorUid == request.auth.uid;
+    }
+
+    // Deny access to everything else by default
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

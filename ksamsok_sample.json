@@ -1,0 +1,13 @@
+{
+  "result": {
+    "totalHits": 0,
+    "records": [],
+    "echo": {
+      "method": "search",
+      "hitsPerPage": 5,
+      "startRecord": 1,
+      "query": "itemType=\"runristning\" AND geoDataExists=\"j\""
+    },
+    "version": "1.0"
+  }
+}
