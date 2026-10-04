@@ -145,7 +145,7 @@ function ThreeDPageContent() {
   const [autoSensitivity, setAutoSensitivity] = useState(3);
   const [autoMaxWidth, setAutoMaxWidth] = useState(16);
   const { t } = useLanguage();
-  const { geminiKey } = useSettings();
+  const { aiHeaders } = useSettings();
 
   // Load project on mount
   useEffect(() => {
@@ -463,7 +463,7 @@ function ThreeDPageContent() {
     try {
       const res = await fetch(`${API_URL}/api/raa/fetch`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", "X-Gemini-Api-Key": geminiKey },
+        headers: { "Content-Type": "application/json", ...aiHeaders },
         body: JSON.stringify({ signum }),
       });
       if (!res.ok) throw new Error("Kunde inte hämta uppgifter om signumet");
@@ -574,7 +574,7 @@ function ThreeDPageContent() {
     try {
       const res = await fetch(`${API_URL}/api/raa/extract-signum`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", "X-Gemini-Api-Key": geminiKey },
+        headers: { "Content-Type": "application/json", ...aiHeaders },
         body: JSON.stringify({ filename: selectedFile.name }),
       });
       if (res.ok) {

@@ -55,9 +55,11 @@ Kräver Python 3.11+ (utvecklas på 3.13) och Node.js 20+.
    source .venv/bin/activate  # (Eller .venv\Scripts\activate på Windows)
    pip install -r requirements.txt
    ```
-3. Skapa en `.env` i projektroten (läses av backend):
+3. Skapa en `.env` i projektroten (läses av backend, bara för lokal utveckling – i appen anger varje användare
+   sin egen nyckel under Inställningar):
    ```bash
-   GEMINI_API_KEY=din-nyckel-här
+   ANTHROPIC_API_KEY=sk-ant-...   # Claude (standard)
+   GEMINI_API_KEY=AIza...         # valfritt alternativ
    ```
 4. Bygg Rundata-filen (laddar ner Samnordisk runtextdatabas, ca 2 MB):
    ```bash
@@ -76,6 +78,8 @@ Kräver Python 3.11+ (utvecklas på 3.13) och Node.js 20+.
 | `NEXT_PUBLIC_API_URL` | web | `http://localhost:8000` | Backend-API:ts adress |
 | `PROXY_IMAGE_ALLOWED_HOSTS` | web | – | Extra värdar (kommaseparerade) som bildproxyn får hämta från |
 | `CORS_ORIGINS` | api | `http://localhost:3000` | Tillåtna ursprung (kommaseparerade) |
+| `AI_PROVIDER` | api | `claude` om en Anthropic-nyckel finns, annars `gemini` | Standardmodell när webbläsaren inte anger någon |
+| `CLAUDE_PRO_MODEL` / `CLAUDE_FAST_MODEL` | api | `claude-opus-5-5` / `claude-haiku-4-5-20251001` | Vilka Claude-modeller som används |
 | `GEMINI_PRO_MODEL` / `GEMINI_FLASH_MODEL` | api | `gemini-pro-latest` / `gemini-flash-latest` | Vilka Gemini-modeller som används |
 | `MAX_MESH_UPLOAD_MB` / `MAX_IMAGE_UPLOAD_MB` | api | `500` / `20` | Storleksgränser för uppladdningar |
 | `MAX_VIEW_FACES` | api | `1500000` | Max antal ytor i den förenklade visningsmodellen för stora skanningar |

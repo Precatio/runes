@@ -6,16 +6,13 @@ Kandidaterna för ristarattribuering räknas fram deterministiskt ur tre oberoen
   3. huggteknik jämförd med den delade mätkorpusen (skickas med från klienten).
 AI:n skriver bara löptext utifrån dessa belägg och får inte hitta på sannolikheter.
 """
-import json
-import os
 from typing import List, Optional
 
-from fastapi import APIRouter, Header, HTTPException
-from google import genai
-from google.genai import types
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel, Field
 
-from api.config import APP_VERSION, GEMINI_PRO_MODEL, METHOD_VERSION
+from api import llm
+from api.config import APP_VERSION, METHOD_VERSION
 from api.errors import ai_error, logger
 from api.rundata import context_text, store
 from api.routers.orthography import model as orthography_model
@@ -363,8 +360,18 @@ def fallback_reasoning(c: AttributionCandidate) -> str:
     return " ".join(e.description for e in c.evidence)
 
 
-def run_ai(api_key: str, evidence_block: str, candidates: List[AttributionCandidate], signum: str) -> dict:
-    client = genai.Client(api_key=api_key)
+SYNTHESIS_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "geology_analysis": {"type": "string"}, "theory_analysis": {"type": "string"},
+        "dating_analysis": {"type": "string"}, "summary": {"type": "string"},
+        "reasoning": {"type": "object", "additionalProperties": {"type": "string"}},
+    },
+    "required": ["geology_analysis", "theory_analysis", "dating_analysis", "summary", "reasoning"],
+}
+
+
+def run_ai(ai: llm.AIContext, evidence_block: str, candidates: List[AttributionCandidate], signum: str) -> dict:
     names = [c.name for c in candidates]
     prompt = f"""
 Du är en noggrann runolog. Skriv på svenska, sakligt och med tydlig osäkerhet.
@@ -386,18 +393,13 @@ Svara med JSON:
   "reasoning": {{"<kandidatnamn>": "1–2 meningar som förklarar beläggen för just denna kandidat"}}
 }}
 """
-    resp = client.models.generate_content(
-        model=GEMINI_PRO_MODEL,
-        contents=prompt,
-        config=types.GenerateContentConfig(temperature=0.2, response_mime_type="application/json"),
-    )
-    return _as_object(json.loads(resp.text))
+    return _as_object(llm.generate(ai, prompt, schema=SYNTHESIS_SCHEMA, tier="pro").data)
 
 
 @router.post("/analyze", response_model=SynthesisResponse)
 def analyze_synthesis(
     request: SynthesisRequest,
-    x_gemini_api_key: Optional[str] = Header(None, alias="X-Gemini-Api-Key"),
+    ai: llm.AIContext = Depends(llm.ai_context),
 ):
     evidence = collect_evidence(request)
     cand_dicts = build_candidate_dicts(evidence)
@@ -413,10 +415,9 @@ def analyze_synthesis(
         sources.append(STYLE_SOURCE)
 
     parsed, ai_used = {}, False
-    api_key = x_gemini_api_key or os.environ.get("GEMINI_API_KEY")
-    if api_key:
+    if llm.available(ai):
         try:
-            parsed = run_ai(api_key, block, candidates, evidence["signum"])
+            parsed = run_ai(ai, block, candidates, evidence["signum"])
             ai_used = True
         except Exception as e:
             # Syntesen fungerar utan AI; beläggen är redan framräknade
@@ -493,11 +494,9 @@ def _method_html(provenance: Optional[dict]) -> str:
 @router.post("/report", response_model=ReportResponse)
 def generate_report(
     request: ReportRequest,
-    x_gemini_api_key: Optional[str] = Header(None, alias="X-Gemini-Api-Key"),
+    ai: llm.AIContext = Depends(llm.ai_context),
 ):
-    key_to_use = x_gemini_api_key or os.environ.get("GEMINI_API_KEY")
-    if not key_to_use:
-        raise HTTPException(status_code=401, detail="No Gemini API Key provided")
+    llm.require(ai)
 
     base = SynthesisRequest(signum=request.signum, stoneType=request.stoneType, weathering=request.weathering,
                             slices=request.slices, location=request.location,
@@ -528,10 +527,7 @@ Svara med giltig HTML (endast <h2>, <p>, <strong>, <em>, <ul>, <li>) i dessa avs
 <h2>Slutsats</h2>
 """
     try:
-        client = genai.Client(api_key=key_to_use)
-        resp = client.models.generate_content(model=GEMINI_PRO_MODEL, contents=prompt,
-                                              config=types.GenerateContentConfig(temperature=0.3))
-        body = resp.text.strip().replace("```html", "").replace("```", "")
+        body = llm.generate(ai, prompt, tier="pro", temperature=0.3).text.strip().replace("```html", "").replace("```", "")
     except Exception as e:
         raise ai_error(e, "Rapportgenereringen misslyckades.")
 

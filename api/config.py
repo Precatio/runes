@@ -6,6 +6,10 @@ import os
 GEMINI_PRO_MODEL = os.environ.get("GEMINI_PRO_MODEL", "gemini-pro-latest")
 GEMINI_FLASH_MODEL = os.environ.get("GEMINI_FLASH_MODEL", "gemini-flash-latest")
 
+# Claude-modeller (standard). Den kraftfullaste för analys och text, en snabbare för enkla uppgifter.
+CLAUDE_PRO_MODEL = os.environ.get("CLAUDE_PRO_MODEL", "claude-opus-5-5")
+CLAUDE_FAST_MODEL = os.environ.get("CLAUDE_FAST_MODEL", "claude-haiku-4-5-20251001")
+
 APP_NAME = "Runforskning (Aagaard Research)"
 APP_VERSION = "2.0.0"
 # Version av mätmetoden. Höjs när beräkningen ändras så att gamla och nya mätningar kan skiljas åt.

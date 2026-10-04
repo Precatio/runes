@@ -50,7 +50,7 @@ export default function ReportsPage() {
 
 function CorpusReportPanel() {
   const { user, loginWithGoogle } = useAuth();
-  const { userName, userInstitution, geminiKey } = useSettings();
+  const { userName, userInstitution, aiHeaders } = useSettings();
   const [entries, setEntries] = useState<CorpusEntry[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [carverOf, setCarverOf] = useState<Record<string, string | null>>({});
@@ -93,7 +93,7 @@ function CorpusReportPanel() {
 
   const request = (format: "json" | "docx", aiText: Record<string, string> | null = null) => fetch(`${API_URL}/api/reports/academic`, {
     method: "POST",
-    headers: { "Content-Type": "application/json", "X-Gemini-Api-Key": geminiKey },
+    headers: { "Content-Type": "application/json", ...aiHeaders },
     body: JSON.stringify({
       scope: { type: scope, value: scopeValue || null, title: title || defaultTitle },
       entries: selection, author: userName, institution: userInstitution, use_ai: useAI, format, ai_text: aiText,

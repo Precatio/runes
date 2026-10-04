@@ -16,7 +16,7 @@ export default function AIChatWidget() {
   const dragStart = useRef({ x: 0, y: 0 });
   const initialOffset = useRef({ x: 0, y: 0 });
 
-  const { geminiKey, addUsedTokens } = useSettings();
+  const { aiHeaders, addUsedTokens } = useSettings();
   
   const { latest3DResults, latestLinguisticResults, latest2DResults } = useAnalysis();
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -76,7 +76,7 @@ export default function AIChatWidget() {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
-          "X-Gemini-Api-Key": geminiKey
+          ...aiHeaders
         },
         body: JSON.stringify(payload)
       });

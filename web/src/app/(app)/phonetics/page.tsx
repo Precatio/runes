@@ -56,7 +56,7 @@ export default function PhoneticsPage() {
   const [region, setRegion] = useState("");
   const [epoch, setEpoch] = useState("");
   
-  const { geminiKey, openaiKey, addUsedTokens } = useSettings();
+  const { aiHeaders, openaiKey, addUsedTokens } = useSettings();
   const { 
     latest2DFile, 
     latest2DImage,
@@ -376,7 +376,7 @@ export default function PhoneticsPage() {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
-          "X-Gemini-Api-Key": geminiKey
+          ...aiHeaders
         },
         body: JSON.stringify({
           image_base64: processedBase64,

@@ -1,14 +1,11 @@
-from api.config import GEMINI_PRO_MODEL
+from api import llm
 from api.errors import ai_error, server_error
 from api.uploads import read_image_upload, decode_base64_image
 from src import graphemes
 from src.styles import STYLE_GROUPS
-from fastapi import APIRouter, HTTPException, UploadFile, File, Header
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from pydantic import BaseModel
-from typing import Literal, Optional
-from google import genai
-from google.genai import types
-import os
+from typing import Literal
 from dotenv import load_dotenv
 
 load_dotenv(override=True)
@@ -77,43 +74,17 @@ Du måste svara EXAKT enligt det angivna JSON-schemat.
 """
 
 @router.post("/analyze", response_model=TwoDAnalysisResponse)
-def analyze_2d_image(
-    file: UploadFile = File(...),
-    x_gemini_api_key: Optional[str] = Header(None, alias="X-Gemini-Api-Key")
-):
-    api_key = x_gemini_api_key or os.environ.get("GEMINI_API_KEY")
-    if not api_key:
-        raise HTTPException(status_code=401, detail="Gemini API Key is missing.")
-        
-    client = genai.Client(api_key=api_key)
-    
-    # Läs fil och konvertera till base64/bytes
+def analyze_2d_image(file: UploadFile = File(...), ai: llm.AIContext = Depends(llm.ai_context)):
     contents = read_image_upload(file)
-    
     try:
-        response = client.models.generate_content(
-            model=GEMINI_PRO_MODEL,
-            contents=[
-                types.Part.from_bytes(data=contents, mime_type=file.content_type or "image/jpeg"),
-                types.Part.from_text(text="Analysera denna runsten paleografiskt och epigrafiskt.")
-            ],
-            config=types.GenerateContentConfig(
-                system_instruction=SYSTEM_INSTRUCTION,
-                temperature=0.2,
-                response_mime_type="application/json",
-                response_schema=TwoDAIResult,
-            )
-        )
-        # GenAI client automatically parses JSON to string if schema is provided, but since we specified response_schema it should be a JSON string we can just return (FastAPI will parse and validate via response_model).
-        import json
-        data = json.loads(response.text)
-        data["tokens_used"] = response.usage_metadata.total_token_count if getattr(response, "usage_metadata", None) else 0
-        data["model"] = GEMINI_PRO_MODEL
-        return TwoDAnalysisResponse(**data)
+        r = llm.generate(ai, "Analysera denna runsten paleografiskt och epigrafiskt.", system=SYSTEM_INSTRUCTION,
+                         images=[(contents, file.content_type or "image/jpeg")], schema=TwoDAIResult, tier="pro")
+        return TwoDAnalysisResponse(**r.data, tokens_used=r.tokens, model=r.model)
     except HTTPException:
         raise
     except Exception as e:
         raise ai_error(e)
+
 
 @router.post("/extract_features", response_model=ExtractFeaturesResponse)
 def extract_features(request: ExtractFeaturesRequest):

@@ -1,13 +1,10 @@
-from api.config import GEMINI_PRO_MODEL, GEMINI_FLASH_MODEL
+from api import llm
 from api.errors import ai_error
 from api.rundata import context_text, store
 from api.uploads import decode_base64_image
-from fastapi import APIRouter, HTTPException, Header
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from typing import List, Optional
-from google import genai
-from google.genai import types
-import os
+from typing import List
 from dotenv import load_dotenv
 
 load_dotenv(override=True) # Load from .env and overwrite any system env vars
@@ -45,45 +42,18 @@ Regler:
 """
 
 @router.post("", response_model=ChatResponse)
-def chat_with_ai(
-    request: ChatRequest,
-    x_gemini_api_key: Optional[str] = Header(None, alias="X-Gemini-Api-Key")
-):
-    # Resolve API Key
-    api_key = x_gemini_api_key or request.api_key or os.environ.get("GEMINI_API_KEY")
-    if not api_key:
-        raise HTTPException(status_code=401, detail="No Gemini API key found")
-        
-    client = genai.Client(api_key=api_key)
-    
-    # Format messages for Gemini and analyze complexity
-    formatted_contents = []
-    has_image = False
-    total_length = 0
-    
+def chat_with_ai(request: ChatRequest, ai: llm.AIContext = Depends(llm.ai_context)):
+    messages, has_image, total_length = [], False, 0
     for msg in request.messages:
-        role = "user" if msg.role == "user" else "model"
-        parts = [types.Part.from_text(text=msg.content)]
-        total_length += len(msg.content)
+        images = []
         if msg.image_base64:
             has_image = True
-            image_bytes = decode_base64_image(msg.image_base64)
-            parts.insert(0, types.Part.from_bytes(data=image_bytes, mime_type=msg.image_mime or "image/jpeg"))
-        
-        formatted_contents.append(
-            types.Content(role=role, parts=parts)
-        )
-        
-    # Hybrid Model Router
-    use_pro = False
-    if request.context_data:
-        use_pro = True # 3D analysis requires deep reasoning
-    if has_image:
-        use_pro = True # Visual analysis benefits from Pro
-    if total_length > 300:
-        use_pro = True # Long context/questions require Pro
-        
-    selected_model = GEMINI_PRO_MODEL if use_pro else GEMINI_FLASH_MODEL
+            images.append((decode_base64_image(msg.image_base64), msg.image_mime or "image/jpeg"))
+        total_length += len(msg.content)
+        messages.append(llm.Message("user" if msg.role == "user" else "assistant", msg.content, images))
+
+    # Analysis context, images and long questions need the stronger model
+    tier = "pro" if (request.context_data or has_image or total_length > 300) else "fast"
     dynamic_instruction = SYSTEM_INSTRUCTION
 
     # Ground the answer in Rundata for every signum mentioned recently or in the analysis context
@@ -96,19 +66,11 @@ def chat_with_ai(
 
     if request.context_data:
         dynamic_instruction += f"\n\n[SYSTEMKONTEXT: Följande är användarens aktuella analysdata som de kan ställa frågor om: {request.context_data}]"
-        
+
     try:
-        response = client.models.generate_content(
-            model=selected_model,
-            contents=formatted_contents,
-            config=types.GenerateContentConfig(
-                system_instruction=dynamic_instruction,
-                temperature=0.4,
-            )
-        )
-        return ChatResponse(
-            reply=response.text,
-            tokens_used=response.usage_metadata.total_token_count if getattr(response, "usage_metadata", None) else 0
-        )
+        r = llm.generate(ai, system=dynamic_instruction, messages=messages, tier=tier, temperature=0.4)
+        return ChatResponse(reply=r.text, tokens_used=r.tokens)
+    except HTTPException:
+        raise
     except Exception as e:
         raise ai_error(e)

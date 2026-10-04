@@ -53,7 +53,7 @@ const detail = async (res: Response, fallback: string) =>
 
 export default function StoneAnalysisPage() {
   const { user } = useAuth();
-  const { geminiKey, userName, userInstitution } = useSettings();
+  const { aiHeaders, userName, userInstitution } = useSettings();
   const [file, setFile] = useState<File | null>(null);
   const [signum, setSignum] = useState("");
   const [rec, setRec] = useState<Inscription | null>(null);
@@ -95,7 +95,7 @@ export default function StoneAnalysisPage() {
     setSteps(STEPS.map(([key, name]) => ({ key, name, state: "väntar" })));
     const notes: string[] = [];
     const wfSteps: { name: string; result: string }[] = [];
-    const headers = { "X-Gemini-Api-Key": geminiKey };
+    const headers = aiHeaders;
     try {
       // 1. Upload
       mark("upload", "pågår");
@@ -275,7 +275,7 @@ export default function StoneAnalysisPage() {
     setBusyDocx(true);
     try {
       const res = await fetch(`${API_URL}/api/reports/stone`, {
-        method: "POST", headers: { "Content-Type": "application/json", "X-Gemini-Api-Key": geminiKey },
+        method: "POST", headers: { "Content-Type": "application/json", ...aiHeaders },
         body: JSON.stringify({ ...last.current.body, format: "docx", ai_text: report.ai_text }),
       });
       if (!res.ok) throw new Error("Word-filen kunde inte skapas.");

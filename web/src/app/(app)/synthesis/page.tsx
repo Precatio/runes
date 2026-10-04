@@ -38,7 +38,7 @@ export default function SynthesisPage() {
   const [projects, setProjects] = useState<ProjectData[]>([]);
   const [selectedId, setSelectedId] = useState("");
   const [analysisId, setAnalysisId] = useState<string>("");
-  const { geminiKey } = useSettings();
+  const { aiHeaders } = useSettings();
   const { user } = useAuth();
   const { setStoneReportInput } = useAnalysis();
   const router = useRouter();
@@ -82,7 +82,7 @@ export default function SynthesisPage() {
         entries = await corpus.list().catch(() => []);
       }
       setStatus("Väger samman beläggen …");
-      setResults(await runSynthesis(project, analysisId || null, geminiKey, entries));
+      setResults(await runSynthesis(project, analysisId || null, aiHeaders, entries));
     } catch (e) {
       setError(e instanceof Error ? e.message : "Något gick fel vid syntesen.");
     } finally {

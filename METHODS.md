@@ -315,7 +315,7 @@ De tre främsta kandidaterna prövas dessutom mot:
 
 Motsägelser mellan källorna (t.ex. Rundata mot ortografi, ortografi mot huggteknik, geografi eller
 stilgrupp som inte passar) och belägg som saknas redovisas uttryckligen. Utfallet mot litteraturen räknar
-bara en oberoende källa som stöd när kandidaten kommer först där. AI-modellen (Gemini) får beläggen som
+bara en oberoende källa som stöd när kandidaten kommer först där. AI-modellen (Claude som standard, Gemini som alternativ) får beläggen som
 underlag och skriver bara löptext; utan AI ersätts texterna av framräknade formuleringar. Syntesen kan
 sparas i projektet och blir då avsnittet "Attribuering" i stenrapporten.
 
@@ -457,6 +457,14 @@ Från terminalen (analysmotorn måste köras):
 .venv/bin/python -m scripts.full_stone_analysis "skanning.stl" --signum "Sö 113" --out utdata/So113 \
     --stone Gråsten --weathering Medel --author "Namn" --sensitivity 3,5 --orientations 0,180
 ```
+
+### 14d. Språkmodeller
+
+Källkod: `api/llm.py`. Alla AI-anrop går genom ett gemensamt lager. Standard är **Claude** (Anthropic,
+`claude-opus-5-5` för analys och text, `claude-haiku-4-5` för enkla uppgifter); **Gemini** kan väljas under
+Inställningar. Strukturerade svar (t.ex. stilbedömning och läsning) begärs med ett schema – för Claude som
+verktygsanrop (tool use), så att svaret alltid är giltig JSON. Valet av modell ändrar inget i det som räknas fram:
+mätningar, statistik, jämförelser och valideringen av läsningar görs utan AI, och AI-text märks.
 
 ## 15. Jämförbarhet med tidigare forskning
 

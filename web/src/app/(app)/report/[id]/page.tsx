@@ -26,7 +26,7 @@ export default function ReportPage() {
   const [project, setProject] = useState<ReportSource | null>(null);
   const { latest3DMeta, latest3DResults } = useAnalysis();
   const { googleToken, loginWithGoogle } = useAuth();
-  const { geminiKey, userName, userInstitution } = useSettings();
+  const { aiHeaders, userName, userInstitution } = useSettings();
   const [reportHtml, setReportHtml] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -80,7 +80,7 @@ export default function ReportPage() {
           method: "POST",
           headers: { 
             "Content-Type": "application/json",
-            "X-Gemini-Api-Key": geminiKey
+            ...aiHeaders
           },
           body: JSON.stringify({
             signum: proj.metaText || "Okänt",
@@ -100,7 +100,7 @@ export default function ReportPage() {
           method: "POST",
           headers: { 
             "Content-Type": "application/json",
-            "X-Gemini-Api-Key": geminiKey
+            ...aiHeaders
           },
           body: JSON.stringify({
             signum: proj.metaText || "Okänt",
@@ -189,7 +189,7 @@ export default function ReportPage() {
     };
     
     loadReportOrProj();
-  }, [id, router, geminiKey, latest3DMeta, latest3DResults]);
+  }, [id, router, aiHeaders, latest3DMeta, latest3DResults]);
 
   // Compress base64 images inside HTML string before saving
   const compressImagesInHtml = async (html: string): Promise<string> => {

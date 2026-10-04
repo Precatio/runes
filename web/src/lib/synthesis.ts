@@ -58,11 +58,11 @@ export interface SynthesisResult {
 const metricsOnly = (slices: GrooveAnalysisRecord["slices"]) =>
   slices.map(s => ({ ...Object.fromEntries(METRICS.map(m => [m, s[m]])), position_mm: s.position_mm }));
 
-export async function runSynthesis(project: ProjectData, analysisId: string | null, geminiKey: string,
+export async function runSynthesis(project: ProjectData, analysisId: string | null, aiHeaders: Record<string, string>,
   corpusEntries: CorpusEntry[] | null): Promise<SynthesisResult> {
   const res = await fetch(`${API_URL}/api/synthesis/analyze`, {
     method: "POST",
-    headers: { "Content-Type": "application/json", "X-Gemini-Api-Key": geminiKey },
+    headers: { "Content-Type": "application/json", ...aiHeaders },
     body: JSON.stringify({
       signum: project.metaText || "Okänt",
       stoneType: project.metaStone || "Okänd",

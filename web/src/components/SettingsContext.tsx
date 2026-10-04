@@ -1,11 +1,19 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState, ReactNode } from "react";
 import { useAuth } from "./AuthContext";
 import { db as firestore } from "@/firebase/config";
 import { doc, getDoc, setDoc, updateDoc, deleteField } from "firebase/firestore";
 
+export type AIProvider = "claude" | "gemini";
+
 interface SettingsContextType {
+  aiProvider: AIProvider;
+  anthropicKey: string;
+  setAiProvider: (p: AIProvider) => void;
+  setAnthropicKey: (key: string) => void;
+  // Headers for every AI call: chosen model and the user's own keys (kept only in this browser)
+  aiHeaders: Record<string, string>;
   geminiKey: string;
   openaiKey: string;
   userName: string;
@@ -25,6 +33,8 @@ const SettingsContext = createContext<SettingsContextType | undefined>(undefined
 
 export function SettingsProvider({ children }: { children: ReactNode }) {
   const [geminiKey, setGeminiState] = useState("");
+  const [anthropicKey, setAnthropicState] = useState("");
+  const [aiProvider, setProviderState] = useState<AIProvider>("claude");
   const [openaiKey, setOpenaiState] = useState("");
   const [userName, setUserNameState] = useState("Viktor Kvant");
   const [userInstitution, setUserInstState] = useState("Aagaard Research");
@@ -77,6 +87,10 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       }
 
       if (savedGemini) setGeminiState(savedGemini);
+      const savedAnthropic = localStorage.getItem("vitki_anthropic_key");
+      if (savedAnthropic) setAnthropicState(savedAnthropic);
+      const savedProvider = localStorage.getItem("vitki_ai_provider");
+      if (savedProvider === "claude" || savedProvider === "gemini") setProviderState(savedProvider);
       if (savedOpenai) setOpenaiState(savedOpenai);
       if (savedName) setUserNameState(savedName);
       if (savedInst) setUserInstState(savedInst);
@@ -132,6 +146,23 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("vitki_gemini_key", key);
   };
 
+  const setAnthropicKey = (key: string) => {
+    setAnthropicState(key);
+    localStorage.setItem("vitki_anthropic_key", key);
+  };
+
+  const setAiProvider = (p: AIProvider) => {
+    setProviderState(p);
+    localStorage.setItem("vitki_ai_provider", p);
+  };
+
+  const aiHeaders = useMemo(() => {
+    const h: Record<string, string> = { "X-AI-Provider": aiProvider };
+    if (anthropicKey) h["X-Anthropic-Api-Key"] = anthropicKey;
+    if (geminiKey) h["X-Gemini-Api-Key"] = geminiKey;
+    return h;
+  }, [aiProvider, anthropicKey, geminiKey]);
+
   const setOpenaiKey = (key: string) => {
     setOpenaiState(key);
     localStorage.setItem("vitki_openai_key", key);
@@ -151,6 +182,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
 
   return (
     <SettingsContext.Provider value={{ 
+      aiProvider, anthropicKey, setAiProvider, setAnthropicKey, aiHeaders,
       geminiKey, openaiKey, userName, userInstitution,
       setGeminiKey, setOpenaiKey, setUserName, setUserInstitution,
       isModalOpen, setIsModalOpen,

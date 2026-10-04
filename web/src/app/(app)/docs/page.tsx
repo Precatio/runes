@@ -127,9 +127,21 @@ export default function DocsPage() {
               För att verktyget ska kunna utföra bildanalyser, texttolkningar och röstuppläsning krävs API-nycklar. Verktyget använder en så kallad &quot;Bring Your Own Key&quot;-modell (BYOK), vilket innebär att du enkelt skapar dina egna nycklar och klistrar in dem under <strong>Inställningar & API</strong> i sidomenyn.
             </p>
             
-            <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">1. Google Gemini (Bildanalys & Chatt)</h3>
+            <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">1. Claude (Anthropic) – rekommenderas</h3>
             <p>
-              Gemini används som huvudmotor för att läsa runstenar, tolka ornamentik och driva AI-assistenten Rune.
+              Claude är standardmodell för bildanalys, läsning, syntesens och rapporternas texter och AI-assistenten.
+              Välj modell under Inställningar. Ett Claude-abonnemang (Pro/Max) kan inte användas av appen – den behöver en
+              API-nyckel, som faktureras separat efter användning.
+            </p>
+            <ol className="list-decimal pl-5 mt-2 space-y-2">
+              <li>Gå till <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noreferrer" className="text-[#b7410e] hover:underline">console.anthropic.com</a> och logga in.</li>
+              <li>Lägg in betalning under <em>Billing</em> och skapa en nyckel under <em>API keys</em>.</li>
+              <li>Kopiera nyckeln (börjar med <code>sk-ant-</code>) och klistra in den under Inställningar.</li>
+            </ol>
+
+            <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">2. Google Gemini (alternativ)</h3>
+            <p>
+              Gemini kan väljas i stället för Claude under Inställningar.
             </p>
             <ol className="list-decimal pl-5 mt-2 space-y-2">
               <li>Gå till <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="text-[#b7410e] hover:underline">Google AI Studio</a> och logga in med ett Google-konto.</li>
@@ -138,7 +150,7 @@ export default function DocsPage() {
               <li>Kopiera textsträngen som skapas (börjar ofta med <code>AIzaSy...</code>) och klistra in den i Vitki AI:s inställningsmeny.</li>
             </ol>
 
-            <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">2. OpenAI (Röstuppläsning av fornnordiska)</h3>
+            <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">3. OpenAI (ungefärlig uppläsning)</h3>
             <p>
               OpenAI används bara för den ungefärliga uppläsningen i Språk &amp; Fonetik. Det är en modern talsyntes, inte en rekonstruktion av uttalet.
             </p>
@@ -155,7 +167,7 @@ export default function DocsPage() {
                 🔒 Var sparas nycklarna?
               </p>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Nycklarna lagras endast lokalt i din webbläsare (localStorage). De skickas aldrig till någon central databas, utan går direkt från din dator till Google och OpenAI vid analys. Om du rensar webbläsarens cache kommer du behöva klistra in nycklarna igen.
+                Nycklarna lagras endast lokalt i din webbläsare (localStorage). De sparas aldrig i någon central databas; de skickas med varje analys till analysmotorn, som vidarebefordrar dem till Anthropic, Google eller OpenAI. Om du rensar webbläsarens cache kommer du behöva klistra in nycklarna igen.
               </p>
             </div>
           </div>

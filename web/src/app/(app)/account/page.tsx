@@ -10,8 +10,8 @@ import Link from "next/link";
 export default function AccountOverview() {
   const { user, logout } = useAuth();
   const { 
-    userName, userInstitution, geminiKey, openaiKey,
-    setGeminiKey, setOpenaiKey, setUserName, setUserInstitution,
+    userName, userInstitution, geminiKey, openaiKey, anthropicKey, aiProvider,
+    setGeminiKey, setOpenaiKey, setUserName, setUserInstitution, setAnthropicKey, setAiProvider,
     totalTokensUsed, tokenHistory
   } = useSettings();
   const router = useRouter();
@@ -19,6 +19,8 @@ export default function AccountOverview() {
   const [reports, setReports] = useState<ReportData[]>([]);
 
   const [tempGemini, setTempGemini] = useState("");
+  const [tempAnthropic, setTempAnthropic] = useState("");
+  const [tempProvider, setTempProvider] = useState<"claude" | "gemini">("claude");
   const [tempOpenai, setTempOpenai] = useState("");
   const [tempName, setTempName] = useState("");
   const [tempInst, setTempInst] = useState("");
@@ -42,11 +44,13 @@ export default function AccountOverview() {
   }, [user]);
 
   // Copy current settings into the form whenever they change
-  const settingsKey = [geminiKey, openaiKey, userName, userInstitution].join("\u0000");
+  const settingsKey = [geminiKey, openaiKey, anthropicKey, aiProvider, userName, userInstitution].join("\u0000");
   const [prevSettingsKey, setPrevSettingsKey] = useState<string | null>(null);
   if (settingsKey !== prevSettingsKey) {
     setPrevSettingsKey(settingsKey);
     setTempGemini(geminiKey);
+    setTempAnthropic(anthropicKey);
+    setTempProvider(aiProvider);
     setTempOpenai(openaiKey);
     setTempName(userName);
     setTempInst(userInstitution);
@@ -71,6 +75,8 @@ export default function AccountOverview() {
   
   const handleSaveSettings = () => {
     setGeminiKey(tempGemini);
+    setAnthropicKey(tempAnthropic);
+    setAiProvider(tempProvider);
     setOpenaiKey(tempOpenai);
     setUserName(tempName);
     setUserInstitution(tempInst);
@@ -159,15 +165,13 @@ export default function AccountOverview() {
             </div>
             
             <div className="bg-gradient-to-br from-[#b7410e] to-orange-900 rounded-[24px] p-6 text-white shadow-lg flex flex-col justify-center items-center text-center flex-1">
-              <h3 className="text-orange-200/70 font-bold uppercase tracking-wider text-[10px] mb-1">Livstids Tokens (Gemini)</h3>
+              <h3 className="text-orange-200/70 font-bold uppercase tracking-wider text-[10px] mb-1">Livstids Tokens (AI)</h3>
               <div className="text-4xl font-black text-white mt-1">
                 {totalTokensUsed.toLocaleString('sv-SE')}
               </div>
               <div className="mt-3 text-[10px] text-orange-100 font-medium bg-black/20 px-3 py-1.5 rounded-lg w-full flex flex-col gap-1">
-                <span>Modell: Gemini 3.1 Pro Preview</span>
-                <p className="text-orange-200/50 text-[10px] mt-1">
-                  Estimerad API-kostnad: <strong>~{((totalTokensUsed / 1000000) * 2.5 * 10.5).toFixed(2)} kr</strong>
-                </p>
+                <span>Modell: {aiProvider === "claude" ? "Claude (Anthropic)" : "Gemini (Google)"}</span>
+                <p className="text-orange-200/50 text-[10px] mt-1">Kostnaden beror på modell; se leverantörens prislista.</p>
               </div>
             </div>
           </div>
@@ -286,7 +290,38 @@ export default function AccountOverview() {
             <hr className="border-slate-200" />
             
             <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2">Google Gemini API-Nyckel (Krävs)</label>
+              <label className="block text-sm font-bold text-slate-700 mb-2">AI-modell</label>
+              <div className="flex gap-2">
+                {([["claude", "Claude (Anthropic) – rekommenderas"], ["gemini", "Gemini (Google)"]] as const).map(([v, l]) => (
+                  <button key={v} type="button" onClick={() => setTempProvider(v)}
+                    className={`px-4 py-2 rounded-xl text-sm font-bold border ${tempProvider === v ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-700 border-slate-300"}`}>
+                    {l}
+                  </button>
+                ))}
+              </div>
+              <p className="text-xs text-slate-500 mt-2">
+                Används för 2D-analys, läsning, syntesens och rapporternas texter och AI-assistenten. Oavsett modell
+                prövas läsningar mot Rundata, och AI anger aldrig sannolikheter.
+              </p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-bold text-slate-700 mb-2">Anthropic API-nyckel (för Claude)</label>
+              <input
+                type="password"
+                value={tempAnthropic}
+                onChange={(e) => setTempAnthropic(e.target.value)}
+                placeholder="sk-ant-..."
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#b7410e] text-slate-900 font-mono text-sm"
+              />
+              <p className="text-xs text-slate-500 mt-2">
+                Skapa en nyckel på <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noreferrer" className="text-[#b7410e] hover:underline">console.anthropic.com</a>.
+                Ett Claude-abonnemang (Pro/Max) kan inte användas av appen; API:t faktureras separat efter användning.
+              </p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-bold text-slate-700 mb-2">Google Gemini API-nyckel (om du väljer Gemini)</label>
               <input 
                 type="password"
                 value={tempGemini}
@@ -295,7 +330,7 @@ export default function AccountOverview() {
                 className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#b7410e] text-slate-900 font-mono text-sm"
               />
               <p className="text-xs text-slate-500 mt-2">
-                Krävs för 3D/2D Analys och Chat. <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="text-[#b7410e] hover:underline">Skapa en nyckel här</a>.
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="text-[#b7410e] hover:underline">Skapa en nyckel här</a>.
               </p>
             </div>
 

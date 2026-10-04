@@ -1,20 +1,16 @@
 from functools import lru_cache
 
-from api.config import GEMINI_PRO_MODEL
+from api import llm
 from api.errors import ai_error
 from api.rundata import store
 from api.routers.orthography import model as orthography_model
 from api.uploads import decode_base64_image
 from src.reading import Lexicon, compare, runes_to_latin, validate
 from src.synthesis import smoothed_precision
-from fastapi import APIRouter, HTTPException, Header, Response
+from fastapi import APIRouter, Depends, HTTPException, Header, Response
 from pydantic import BaseModel
 from typing import Optional
-from google import genai
-from google.genai import types
 from openai import OpenAI
-import os
-import json
 
 router = APIRouter()
 
@@ -28,6 +24,20 @@ class Marker(BaseModel):
     label: str
     description: str
     polygon: list[list[int]]
+
+# The blind reading: what is seen on the image, and where
+BLIND_READING_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "raw_transliteration": {"type": "string"},
+        "markers": {"type": "array", "items": {"type": "object", "properties": {
+            "label": {"type": "string"}, "description": {"type": "string"},
+            "polygon": {"type": "array", "items": {"type": "array", "items": {"type": "integer"}}}},
+            "required": ["label", "description", "polygon"]}},
+    },
+    "required": ["raw_transliteration", "markers"],
+}
+
 
 class LinguisticAI(BaseModel):
     """Det språkmodellen får fylla i. Rundata och jämförelsen läggs till av servern."""
@@ -104,15 +114,10 @@ def compare_reading(req: CompareRequest):
 @router.post("/analyze", response_model=PhoneticsResponse)
 def analyze_phonetics(
     request: PhoneticsRequest,
-    x_gemini_api_key: Optional[str] = Header(None, alias="X-Gemini-Api-Key")
+    ai: llm.AIContext = Depends(llm.ai_context),
 ):
     try:
-        # Use provided key or fallback to env for local dev
-        key_to_use = x_gemini_api_key or os.environ.get("GEMINI_API_KEY")
-        if not key_to_use:
-            raise HTTPException(status_code=401, detail="No Gemini API Key provided")
-            
-        client = genai.Client(api_key=key_to_use)
+        llm.require(ai)
 
         # Extrahera base64 data utan prefixet (data:image/jpeg;base64,...)
         if "," in request.image_base64:
@@ -144,29 +149,9 @@ Svara EXAKT med ett JSON-objekt med två nycklar: "raw_transliteration" (sträng
 """
         step1_prompt = "Translitterera de runor som syns i bilden."
 
-        def blind_read():
-            return client.models.generate_content(
-                model=GEMINI_PRO_MODEL,
-                contents=[
-                    types.Part.from_bytes(data=image_bytes, mime_type=mime_type),
-                    step1_prompt
-                ],
-                config=types.GenerateContentConfig(
-                    system_instruction=step1_instruction,
-                    temperature=0.0,
-                    response_mime_type="application/json"
-                )
-            )
-
-        # Long answers are sometimes cut off by the server; one retry
-        try:
-            gen1_resp = blind_read()
-        except Exception as e:
-            if "disconnected" not in str(e).lower() and "timeout" not in str(e).lower():
-                raise
-            gen1_resp = blind_read()
-        
-        step1_parsed = json.loads(gen1_resp.text)
+        gen1 = llm.generate(ai, step1_prompt, system=step1_instruction, images=[(image_bytes, mime_type)],
+                            schema=BLIND_READING_SCHEMA, tier="pro", temperature=0.0)
+        step1_parsed = gen1.data or {}
         raw_transliteration = step1_parsed.get("raw_transliteration", "")
         markers_data = step1_parsed.get("markers", [])
 
@@ -212,35 +197,15 @@ Arbeta alltid med högsta filologiska exakthet, objektivitet och akademiska käl
             '"sound_laws_applied" INNAN du gör normaliseringen. Svara EXAKT med ett JSON-objekt enligt schemat.'
         )
         
-        gen2_resp = client.models.generate_content(
-            model=GEMINI_PRO_MODEL,
-            contents=[step2_prompt],
-            config=types.GenerateContentConfig(
-                system_instruction=step2_instruction,
-                temperature=0.0,
-                response_mime_type="application/json",
-                response_schema=LinguisticAI
-            )
-        )
-        
-        raw_text = gen2_resp.text.strip()
-        if raw_text.startswith("```json"):
-            raw_text = raw_text[7:]
-        if raw_text.startswith("```"):
-            raw_text = raw_text[3:]
-        if raw_text.endswith("```"):
-            raw_text = raw_text[:-3]
-            
-        parsed = LinguisticAI(**json.loads(raw_text.strip())).model_dump()
+        gen2 = llm.generate(ai, step2_prompt, system=step2_instruction, schema=LinguisticAI, tier="pro", temperature=0.0)
+        parsed = LinguisticAI(**gen2.data).model_dump()
         # The transliteration is always the blind reading from step 1 – what was actually seen on the image
         # Runic characters are converted to Rundata's Latin transliteration
         parsed["transliteration"] = runes_to_latin(raw_transliteration)
         parsed.update(reference_checks(request.signum, parsed["transliteration"], parsed["normalization"]))
         parsed["markers"] = markers_data
         
-        t1 = gen1_resp.usage_metadata.total_token_count if getattr(gen1_resp, "usage_metadata", None) else 0
-        t2 = gen2_resp.usage_metadata.total_token_count if getattr(gen2_resp, "usage_metadata", None) else 0
-        parsed["tokens_used"] = t1 + t2
+        parsed["tokens_used"] = gen1.tokens + gen2.tokens
         
         return PhoneticsResponse(**parsed)
         

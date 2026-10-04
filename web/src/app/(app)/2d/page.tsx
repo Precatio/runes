@@ -71,7 +71,7 @@ export default function TwoDPage() {
     latest3DMeta, setLatest3DMeta,
     activeProjectId, setActiveProjectId,
   } = useAnalysis();
-  const { geminiKey, addUsedTokens } = useSettings();
+  const { aiHeaders, addUsedTokens } = useSettings();
   const signum = latest3DMeta.text;
   const sourceKind: TwoDSourceKind = source?.kind ?? "upload";
   const isBinarySource = sourceKind === "groove-map" || sourceKind === "3d-snapshot" || sourceKind === "3d-relief";
@@ -170,7 +170,7 @@ export default function TwoDPage() {
       setAnalyzedCrop(completedCrop);
       const formData = new FormData();
       formData.append("file", blob, isBinarySource ? "bild.png" : "bild.jpg");
-      const res = await fetch(`${API_URL}/api/2d/analyze`, { method: "POST", headers: { "X-Gemini-Api-Key": geminiKey }, body: formData });
+      const res = await fetch(`${API_URL}/api/2d/analyze`, { method: "POST", headers: { ...aiHeaders }, body: formData });
       if (!res.ok) throw new Error((await res.json().catch(() => null))?.detail || `Fel ${res.status}`);
       const data = await res.json();
       setResult({ ...data, source: sourceKind });

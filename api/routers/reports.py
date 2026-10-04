@@ -1,17 +1,13 @@
 """Akademisk rapport ur mätkorpusen (Word, LaTeX, Markdown, HTML)."""
-import json
-import os
 
 import numpy as np
 from typing import Literal, Optional
 
-from fastapi import APIRouter, Header, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import Response
-from google import genai
-from google.genai import types
 from pydantic import BaseModel, Field
 
-from api.config import GEMINI_PRO_MODEL
+from api import llm
 from api.errors import logger
 from api import mesh_cache
 from api.rundata import store
@@ -46,8 +42,14 @@ class AcademicRequest(BaseModel):
     ai_text: Optional[dict[str, str]] = None
 
 
-def ai_sections(api_key: str, facts_text: str) -> dict:
-    client = genai.Client(api_key=api_key)
+AI_SECTIONS_SCHEMA = {
+    "type": "object",
+    "properties": {"abstract": {"type": "string"}, "introduction": {"type": "string"}, "discussion": {"type": "string"}},
+    "required": ["abstract", "introduction", "discussion"],
+}
+
+
+def ai_sections(aictx: llm.AIContext, facts_text: str) -> dict:
     prompt = f"""
 Du skriver delar av en vetenskaplig rapport på svenska om huggteknik på runstenar.
 Använd ENDAST fakta nedan. Hitta inte på stenar, ristare, siffror, litteratur eller slutsatser som inte följer
@@ -59,14 +61,11 @@ FAKTA:
 Svara med JSON:
 {{"abstract": "4–6 meningar", "introduction": "1–2 stycken om syfte och material", "discussion": "2–3 stycken: vad resultaten visar, hur säkra de är och vad som behövs härnäst"}}
 """
-    resp = client.models.generate_content(
-        model=GEMINI_PRO_MODEL, contents=prompt,
-        config=types.GenerateContentConfig(temperature=0.2, response_mime_type="application/json"))
-    return _as_object(json.loads(resp.text))
+    return _as_object(llm.generate(aictx, prompt, schema=AI_SECTIONS_SCHEMA, tier="pro").data)
 
 
 @router.post("/academic")
-def academic_report(req: AcademicRequest, x_gemini_api_key: Optional[str] = Header(None, alias="X-Gemini-Api-Key")):
+def academic_report(req: AcademicRequest, aictx: llm.AIContext = Depends(llm.ai_context)):
     if not req.entries:
         raise HTTPException(status_code=400, detail="Urvalet innehåller inga mätningar.")
     if len(req.entries) > 500:
@@ -74,12 +73,11 @@ def academic_report(req: AcademicRequest, x_gemini_api_key: Optional[str] = Head
     facts = academic.build_facts(req.entries, store().get, req.scope.model_dump())
 
     ai, ai_used = None, False
-    api_key = x_gemini_api_key or os.environ.get("GEMINI_API_KEY")
     if req.use_ai and req.ai_text:
         ai, ai_used = req.ai_text, True
-    elif req.use_ai and api_key:
+    elif req.use_ai and llm.available(aictx):
         try:
-            ai = ai_sections(api_key, academic.facts_text(facts))
+            ai = ai_sections(aictx, academic.facts_text(facts))
             ai_used = True
         except Exception as e:
             logger.warning("AI-text för rapporten misslyckades: %r", e)
@@ -136,7 +134,7 @@ def _view(req: StoneReportRequest):
 
 @router.post("/stone")
 def stone_report_endpoint(req: StoneReportRequest,
-                          x_gemini_api_key: Optional[str] = Header(None, alias="X-Gemini-Api-Key")):
+                          aictx: llm.AIContext = Depends(llm.ai_context)):
     if not any(a.get("slices") for a in req.analyses):
         raise HTTPException(status_code=400, detail="Underlaget saknar uppmätta tvärsnitt. Gör en 3D-analys först.")
     if sum(len(a.get("slices") or []) for a in req.analyses) > 3000:
@@ -161,12 +159,11 @@ def stone_report_endpoint(req: StoneReportRequest,
         surface_note = "3D-modellen finns inte i analysmotorns minne. Ladda in skanningen i 3D-vyn igen."
 
     ai, ai_used = None, False
-    api_key = x_gemini_api_key or os.environ.get("GEMINI_API_KEY")
     if req.use_ai and req.ai_text:
         ai, ai_used = req.ai_text, True
-    elif req.use_ai and api_key:
+    elif req.use_ai and llm.available(aictx):
         try:
-            ai = ai_sections(api_key, stone_report.facts_text(facts))
+            ai = ai_sections(aictx, stone_report.facts_text(facts))
             ai_used = True
         except Exception as e:
             logger.warning("AI-text för stenrapporten misslyckades: %r", e)

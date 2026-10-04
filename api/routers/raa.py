@@ -1,15 +1,11 @@
-from api.config import GEMINI_FLASH_MODEL
+from api import llm
 from api.errors import ai_error, server_error, logger
 from api.rundata import context_text, store
-from fastapi import APIRouter, HTTPException, Header
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from typing import Optional
 import requests
-import json
-import os
 import re
-from google import genai
-from google.genai import types
 
 router = APIRouter()
 
@@ -41,18 +37,13 @@ SIGNUM_PATTERN = re.compile(r"^[A-ZÅÄÖ][A-Za-zåäöÅÄÖ]{0,2}\s(\d+[A-Za-z
 @router.post("/extract-signum", response_model=ExtractSignumResponse)
 def extract_signum(
     request: ExtractSignumRequest,
-    x_gemini_api_key: Optional[str] = Header(None, alias="X-Gemini-Api-Key")
+    ai: llm.AIContext = Depends(llm.ai_context),
 ):
     # Deterministic match against Rundata first; the AI is only a fallback
     found = store().find_in_text(request.filename)
     if found:
         return ExtractSignumResponse(signum=found[0]["signum"])
 
-    api_key = x_gemini_api_key or os.environ.get("GEMINI_API_KEY")
-    if not api_key:
-        raise HTTPException(status_code=401, detail="No Gemini API key")
-        
-    client = genai.Client(api_key=api_key)
     prompt = f"""
     Extrahera signumet för runstenen från detta filnamn: "{request.filename}"
     Exempel: 
@@ -63,12 +54,7 @@ def extract_signum(
     """
     
     try:
-        gen_resp = client.models.generate_content(
-            model=GEMINI_FLASH_MODEL,
-            contents=prompt,
-            config=types.GenerateContentConfig(temperature=0.1)
-        )
-        signum = gen_resp.text.strip().strip('"').strip()
+        signum = llm.generate(ai, prompt, tier="fast", temperature=0.1).text.strip().strip('"').strip()
         # The model sometimes answers with words like "Saknas" – only accept something shaped like a signum
         return ExtractSignumResponse(signum=signum if SIGNUM_PATTERN.match(signum) else None)
     except HTTPException:
@@ -100,7 +86,7 @@ def rundata_response(rec: dict) -> RaaResponse:
 @router.post("/fetch", response_model=RaaResponse)
 def fetch_raa_data(
     request: RaaRequest,
-    x_gemini_api_key: Optional[str] = Header(None, alias="X-Gemini-Api-Key")
+    ai: llm.AIContext = Depends(llm.ai_context),
 ):
     signum = request.signum
 
@@ -110,9 +96,7 @@ def fetch_raa_data(
         return rundata_response(rec)
 
     # 2. Fallback: K-samsök free text interpreted by the AI
-    api_key = x_gemini_api_key or os.environ.get("GEMINI_API_KEY")
-    if not api_key:
-        raise HTTPException(status_code=401, detail="No Gemini API key")
+    llm.require(ai)
 
     url = "https://kulturarvsdata.se/ksamsok/api"
     params = {
@@ -152,8 +136,6 @@ def fetch_raa_data(
         
     joined_desc = "\n".join(descriptions[:20]) # Limit to avoid massive tokens
     
-    client = genai.Client(api_key=api_key)
-    
     prompt = f"""
     Här är sökresultat från Riksantikvarieämbetet (K-samsök) för runstenen med signum {signum}:
     {joined_desc}
@@ -171,24 +153,7 @@ def fetch_raa_data(
     """
     
     try:
-        gen_resp = client.models.generate_content(
-            model=GEMINI_FLASH_MODEL,
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                temperature=0.1
-            )
-        )
-        
-        # Clean markdown formatting if present
-        text = gen_resp.text.strip()
-        if text.startswith("```json"):
-            text = text[7:]
-        if text.startswith("```"):
-            text = text[3:]
-        if text.endswith("```"):
-            text = text[:-3]
-            
-        parsed_json = json.loads(text.strip())
+        parsed_json = llm.generate(ai, prompt, tier="fast", json_mode=True, temperature=0.1).data or {}
         
         return RaaResponse(
             material=parsed_json.get("material", "Okänd"),

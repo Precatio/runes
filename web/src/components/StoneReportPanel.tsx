@@ -19,7 +19,7 @@ const label = "text-[11px] font-bold uppercase tracking-wider text-slate-500";
 export default function StoneReportPanel() {
   const { stoneReportInput } = useAnalysis();
   const { user } = useAuth();
-  const { userName, userInstitution, geminiKey } = useSettings();
+  const { userName, userInstitution, aiHeaders } = useSettings();
   const [projects, setProjects] = useState<ProjectData[]>([]);
   const [sourceKey, setSourceKey] = useState<string>(stoneReportInput ? "session" : "");
   const [scan, setScan] = useState<ScanMetadata>({});
@@ -53,7 +53,7 @@ export default function StoneReportPanel() {
     const corpusEntries = withCorpus && user ? await corpus.list().catch(() => []) : [];
     return fetch(`${API_URL}/api/reports/stone`, {
       method: "POST",
-      headers: { "Content-Type": "application/json", "X-Gemini-Api-Key": geminiKey },
+      headers: { "Content-Type": "application/json", ...aiHeaders },
       body: JSON.stringify({
         signum: input!.signum, title: title || null, author: userName, institution: userInstitution,
         meta: input!.meta, scan, analyses: input!.analyses, counts: input!.counts ?? null,
