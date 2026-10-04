@@ -25,7 +25,7 @@ const FEATURE_GROUPS = [
       {
         name: "3D-huggspårsanalys",
         href: "/3d",
-        text: "V-vinkel, asymmetri, djup, bredd, bottenradie och ytråhet i STL-, OBJ- och PLY-skanningar – manuellt, med ett klick per snitt eller helt automatiskt med granskning. Runor och ornamentik mäts separat, med spridning per snitt.",
+        text: "V-vinkel, asymmetri, djup, bredd, bottenradie och ytråhet i STL-, OBJ- och PLY-skanningar – manuellt, med ett klick per snitt eller helt automatiskt med granskning. Runor och ornamentik mäts separat, med spridning per snitt. Strykljus, relief och djup räknas direkt ur skanningen. Full proveniens (filens SHA-256, parametrar, metodversion) och export till CSV eller JSON.",
       },
       {
         name: "Strykljus och RTI",
@@ -33,9 +33,14 @@ const FEATURE_GROUPS = [
         text: "Flytta ljuset fritt över 3D-modellen eller över en PTM-fil, med \"diffuse gain\"-förstärkning för att få fram svaga och vittrade ristningar.",
       },
       {
-        name: "2D-paleografi och fonetik",
+        name: "Språk och läsning",
+        href: "/phonetics",
+        text: "Blind AI-läsning av runorna från foto, RTI-vy eller relief, jämförd med Rundata utan AI: vad som stämmer, vad som skiljer och vilka ordformer som är belagda.",
+      },
+      {
+        name: "2D-paleografi",
         href: "/2d",
-        text: "AI-stöd för att markera stildrag, beskriva runformer, translitterera och resonera om ljudvärden – alltid som förslag att granska.",
+        text: "AI-stöd för stilgrupp och runformer – märkt som okalibrerad bedömning. Runutsnitt jämförs med samma runa på andra stenar och kopplas till spårmåtten.",
       },
     ],
   },
@@ -50,7 +55,17 @@ const FEATURE_GROUPS = [
       {
         name: "Ortografisk stilometri",
         href: "/inskrifter?signum=U%20729",
-        text: "Stavning, skiljetecken och bindrunor jämförs med alla vikingatida inskrifter. Ger mest lika inskrifter och ristare – med metodens träffsäkerhet redovisad.",
+        text: "Stavning, skiljetecken och bindrunor jämförs med alla vikingatida inskrifter. Ger mest lika inskrifter och ristare – med p-värde och metodens träffsäkerhet redovisade.",
+      },
+      {
+        name: "Språkdrag och inskrifternas syfte",
+        href: "/luckor",
+        text: "Fonetisk stil och språkbruk per ristare, och vad inskrifterna handlar om – minne, bro, bön, utlandsfärd, magiska formler – med test mot genomsnittet.",
+      },
+      {
+        name: "Bergart och berggrund",
+        href: "/inskrifter?signum=%C3%96l%201",
+        text: "Stenens material jämförs med SGU:s berggrundskarta där den står och med bergarterna på ristarens stenar – en ledtråd om flyttblock och transport.",
       },
       {
         name: "Jämför stenar",
@@ -73,14 +88,19 @@ const FEATURE_GROUPS = [
         text: "Forskare publicerar sina huggspårsmätningar under CC BY 4.0. Korpusen blir referens för attribuering, ristarprofiler och klustring.",
       },
       {
-        name: "Syntes och rapport",
+        name: "Syntes och attribuering",
         href: "/synthesis",
-        text: "Väger samman Rundata, ortografi och huggteknik till redovisade belägg. Rapporten innehåller mätvärden, metod, proveniens och källor.",
+        text: "Väger samman Rundata, ortografi och huggteknik efter metodernas träffsäkerhet och prövar varje kandidat mot geografi, stilgrupper, bergart, språkdrag och sten mot sten. Motsägelser redovisas.",
       },
       {
-        name: "Export och proveniens",
-        href: "/3d",
-        text: "Varje analys sparar programversion, mätmetodens version, filens SHA-256 och alla parametrar, och kan exporteras som CSV eller JSON.",
+        name: "Forskningsluckor",
+        href: "/luckor",
+        text: "Var saknas uppgifter, vad säger appens resultat jämfört med befintlig forskning – stämmer, nytt eller motsäger – och vilka stenar behöver mätas?",
+      },
+      {
+        name: "Rapporter",
+        href: "/rapporter",
+        text: "Stenrapport i artikelform enligt runologisk praxis, med figurer räknade ur skanningen, läsning och attribuering. Export till Word, LaTeX och Markdown.",
       },
     ],
   },
@@ -89,11 +109,11 @@ const FEATURE_GROUPS = [
 const USE_CASES = [
   {
     title: "Ristarattribuering",
-    text: "Pröva en attribuering mot tre oberoende källor: litteraturens uppgifter i Rundata, inskriftens ortografi och den uppmätta huggtekniken.",
+    text: "Pröva en attribuering mot litteraturens uppgifter i Rundata, inskriftens ortografi och den uppmätta huggtekniken – och kontrollera geografi, stilgrupp, bergart, språkdrag och inskriftstyp.",
   },
   {
     title: "Läsning av skadade inskrifter",
-    text: "Strykljus i valfri riktning och RTI-förstärkning gör grunda, vittrade eller överväxta ristningar läsbara utan att röra stenen.",
+    text: "Strykljus och relief ur 3D-skanningen och RTI-förstärkning gör grunda eller vittrade ristningar läsbara; en blind läsning kan jämföras med Rundata ord för ord.",
   },
   {
     title: "Datering och stil",
@@ -120,11 +140,11 @@ const PRINCIPLES = [
   },
   {
     title: "Osäkerhet redovisas",
-    text: "Mätvärden visas med spridning och antal snitt. Statistiska metoder redovisar sin korsvaliderade träffsäkerhet.",
+    text: "Mätvärden visas med spridning och antal snitt. Statistiska metoder redovisar korsvaliderad träffsäkerhet och p-värden, justerade för många test.",
   },
   {
     title: "Ingen AI-statistik",
-    text: "Kandidater räknas fram ur beläggen med öppna vikter. AI skriver bara löptext och anger aldrig sannolikheter.",
+    text: "Kandidater räknas fram ur beläggen med öppna vikter. AI skriver löptext och läser bilder, anger aldrig sannolikheter, och dess bedömningar märks som okalibrerade.",
   },
   {
     title: "Tumregler kallas tumregler",
@@ -146,8 +166,8 @@ const NEW_THINGS = [
     text: "Mätningar från olika forskare samlas med licens och bidragsgivare, och ristare kopplas automatiskt via Rundata. Det gör jämförelser möjliga mellan projekt och regioner.",
   },
   {
-    title: "Tre oberoende beläggstyper i samma analys",
-    text: "Litteraturens attribuering, ortografi och huggteknik vägs samman öppet. Varje kandidat visar exakt vilka belägg som stöder den.",
+    title: "Flera oberoende belägg i samma analys",
+    text: "Litteraturens attribuering, ortografi och huggteknik vägs samman öppet, och kandidaterna prövas mot geografi, stil, bergart och språkdrag. Varje kandidat visar exakt vilka belägg som stöder eller talar emot den.",
   },
 ];
 

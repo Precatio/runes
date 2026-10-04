@@ -9,24 +9,31 @@ Ett av appens huvudsakliga mål är **runristarattribuering** – att med hjälp
 
 ## Funktioner
 
+Allt som räknas fram beskrivs i [METHODS.md](METHODS.md) (avsnittsnummer inom parentes). Där AI används
+skriver den bara text eller gör en uttalat okalibrerad bedömning; siffror, tabeller och figurer räknas fram.
+
 **Analys**
-*   **3D-huggspårsanalys:** V-vinkel, asymmetri, djup, bredd, bottenradie och ytråhet i STL/OBJ/PLY-skanningar – manuellt, med ett klick per snitt eller helt automatiskt (alla spår på den ristade sidan hittas, mäts och granskas). Varje snitt redovisas med standardavvikelse och konfidensintervall. Runor och ornamentik mäts separat. Strykljus med valfri ljusriktning, lättare visningsmodell för stora skanningar, export till CSV/JSON och full proveniens (filens SHA-256, parametrar, metodversion).
-*   **Språk och läsning:** blind AI-läsning från foto, RTI-vy eller reliefbilder ur 3D-skanningen, jämförd med Rundata utan AI (överensstämmelse, täckning, skillnader ord för ord), kontroll av ordformer mot Rundatas korpus och ortografisk jämförelse av läsningen. Läsningen kan rättas för hand och går vidare till syntesen och stenrapporten.
-*   **2D-paleografi:** AI-stöd för stilgrupp och runformer. Bilder från uppladdning, K-samsök, 3D-vyn, RTI-visaren eller 3D-analysens ristningskarta. Runutsnitt normaliseras och jämförs med samma runa på andra stenar (formlikhet), och kopplas till spårmåtten när de kommer från en ristningskarta.
-*   **RTI-visare:** öppna PTM-filer och flytta ljuset fritt, med "diffuse gain"-förstärkning för svaga ristningar.
+*   **3D-huggspårsanalys** (1–3)**:** V-vinkel, asymmetri, djup, bredd, bottenradie och ytråhet i STL/OBJ/PLY-skanningar – manuellt, med ett klick per snitt eller helt automatiskt (alla spår på den ristade sidan hittas, mäts och granskas; runor och ornamentik märks var för sig). Varje snitt redovisas med spridning och konfidensintervall, och snittens position, riktning och råprofil sparas. Strykljus med valfri ljusriktning, lättare visningsmodell för stora skanningar, export till CSV/JSON och full proveniens (filens SHA-256, parametrar, metodversion).
+*   **Bilder ur skanningen** (1d)**:** strykljus från fyra håll, relief och djup under stenytan räknas direkt ur 3D-modellen och skickas till 2D-analysen eller Språk & Fonetik.
+*   **2D-paleografi** (11)**:** AI-bedömning av stilgrupp och runformer (okalibrerad, jämförd med Rundata). Bilder från uppladdning, K-samsök, 3D-skanningen, RTI-visaren eller 3D-analysens ristningskarta. Runutsnitt normaliseras och jämförs med samma runa på andra stenar (formlikhet) och kopplas till spårmåtten.
+*   **Språk och läsning** (7)**:** blind AI-läsning från foto, RTI-vy eller reliefbild, jämförd med Rundata utan AI (överensstämmelse, täckning, skillnader ord för ord), kontroll av ordformer mot Rundatas korpus och ortografisk jämförelse av läsningen. Läsningen kan rättas för hand och går vidare till syntesen och stenrapporten.
+*   **RTI-visare:** öppna PTM-filer och flytta ljuset fritt, med "diffuse gain"-förstärkning; vyn kan skickas till 2D-analysen eller Språk & Fonetik.
 
 **Forskning**
-*   **Inskrifter (Rundata):** hela Samnordisk runtextdatabas inbyggd – sök på signum, plats, text, ristare, stilgrupp och period.
-*   **Ortografisk stilometri:** stavning, skiljetecken och bindrunor jämförs med Rundatas korpus; ristarrangordning med redovisad, korsvaliderad träffsäkerhet.
-*   **Delad mätkorpus:** forskare publicerar huggspårsmätningar (CC BY 4.0) som blir referens för attribuering, ristarprofiler och Ward-klustring. Posterna kan bära skanningsmetadata, stenens skick, råa tvärsnittsprofiler (för omräkning med nya metodversioner) och runformer; andra forskare kan verifiera dem. Export som datapaket.
-*   **Bergart och språkdrag:** stenens bergart jämförs med berggrunden på platsen och inom 10 km (SGU:s berggrundskarta) och med bergarterna på ristarens stenar; elva definierade språkdrag (fonetisk stil och språkbruk) jämförs med ristarens inskrifter. Visas i syntesen, Forskningsluckor, stenrapporten och på varje inskrift.
-*   **Forskningsluckor:** täckning per landskap (ristare, stilgrupp, datering, tolkning, mätningar), ortografiska ristarhypoteser för oattribuerade stenar, attribueringar att ompröva och vilka ristare som mest behöver mätas. Appens resultat (ortografi, huggteknik, AI-stilgrupp) ställs mot Rundata – stämmer, nytt eller motsäger – med en redovisad uppskattning av belägg, nyhet och relevans. Alla tabeller kan sorteras.
-*   **Akademisk rapport:** stenrapport i artikelform för en sten (runologisk presentation enligt SRI/Futhark, 3D-paradata, figurer räknade ur skanningen: strykljus, djupkarta, snittpositioner, tvärsnittsprofiler, fördelningar och jämförelse med korpusen) och korpusrapport för flera stenar. Export till Word, LaTeX och Markdown; AI-skrivna avsnitt märks.
-*   **Jämför stenar:** permutationstest per mått och samlat, effektstorlek och överlagrade profiler.
-*   **Syntes och rapport:** väger samman Rundata, ortografi och huggteknik till belägg utan påhittade sannolikheter; AI skriver bara löptext.
+*   **Syntes och attribuering** (12)**:** väger samman Rundata, ortografi och huggteknik efter metodernas korsvaliderade träffsäkerhet. Varje kandidat prövas mot litteraturen (stämmer, nytt, motsäger), geografi, ristarens stilgrupper och datering, bergart, språkdrag, inskriftstyp och – om ristarens stenar är uppmätta – sten mot sten. Motsägelser och saknade belägg redovisas; inga påhittade sannolikheter. Syntesen sparas i projektet.
+*   **Inskrifter (Rundata)** (16)**:** hela Samnordisk runtextdatabas inbyggd – sök på signum, plats, text, ristare, stilgrupp, period, inskriftstyp och forskningsluckor. Varje inskrift visar ortografiskt lika ristare (med p-värde), språkdrag, inskriftstyp och berggrund.
+*   **Ortografisk stilometri** (6)**:** stavning, skiljetecken och bindrunor jämförs med ristarnas inskrifter; likheten redovisas med p-värde och metoden med korsvaliderad träffsäkerhet.
+*   **Språkdrag** (8)**:** elva definierade drag i fonetisk stil (diftonger, nasaler, h-bortfall, stungna runor) och språkbruk (stavning av vanliga ord, böner, signaturer) jämförs med ristarens inskrifter.
+*   **Inskrifternas syfte** (9)**:** minnessten, självminne, bro och väg, kristen bön, utlandsfärd, arv, ting, magisk/rituell och gräns – per ristare med test mot genomsnittet.
+*   **Bergart och berggrund** (10)**:** stenens material jämförs med SGU:s berggrundskarta på platsen och inom 10 km och med bergarterna på ristarens stenar.
+*   **Delad mätkorpus** (4)**:** forskare publicerar huggspårsmätningar (CC BY 4.0) som blir referens för attribuering, ristarprofiler och Ward-klustring. Posterna kan bära skanningsmetadata, stenens skick, råa tvärsnittsprofiler (omräkning med nya metodversioner) och runformer; andra forskare kan verifiera dem. Export som datapaket.
+*   **Forskningsluckor** (13)**:** täckning per landskap med klickbara siffror, appens resultat mot befintlig forskning (stämmer, nytt, motsäger, med uppskattning av belägg, nyhet och relevans), inskrifternas syfte per ristare, ortografiska hypoteser, attribueringar att ompröva och vilka ristare som mest behöver mätas. Alla tabeller kan sorteras.
+*   **Rapporter** (14)**:** stenrapport i artikelform (runologisk presentation enligt SRI/Futhark, 3D-paradata, figurer ur skanningen, läsning och attribuering) och korpusrapport för flera stenar. Export till Word, LaTeX och Markdown.
+*   **Jämför stenar** (3)**:** permutationstest per mått och samlat, effektstorlek och överlagrade profiler.
 *   **Karta och stilgrupper:** geografisk spridning per period, stilgrupp och ristare; Gräslunds kronologi med fördelningen i Rundata.
 
-Metoderna beskrivs i [METHODS.md](METHODS.md).
+**Resurser**
+*   **AI-assistent (Vitki AI)** med tillgång till Rundata och den senaste analysen, **Runologiskt arkiv** och **dokumentation** i appen.
 
 ## Arkitektur
 
@@ -73,6 +80,8 @@ Kräver Python 3.11+ (utvecklas på 3.13) och Node.js 20+.
 | `MAX_VIEW_FACES` | api | `1500000` | Max antal ytor i den förenklade visningsmodellen för stora skanningar |
 | `RUNDATA_PATH` | api | `data/rundata.json` | Sökväg till den byggda Rundata-filen |
 | `MESH_CACHE_SIZE` | api | `2` | Antal uppladdade 3D-modeller som hålls i analysmotorns minne |
+| `GEOLOGY_CACHE` | api | `data/cache/geology.json` | Cache för uppslag i SGU:s berggrundskarta |
+| `GEOLOGY_DISABLED` | api | – | `1` stänger av berggrundsuppslag (används i testerna) |
 
 API-nycklar som anges i webbappens inställningar sparas bara lokalt i webbläsaren.
 
@@ -92,7 +101,8 @@ Den äldre Streamlit-prototypen kan fortfarande startas med `./run_app.sh`.
 
 ### Delad mätkorpus (Firestore)
 
-Korpusen kräver de uppdaterade reglerna i `web/firestore.rules`. Publicera dem med Firebase CLI:
+Korpusen (verifiering, råprofiler och runformer) kräver reglerna i `web/firestore.rules`. Publicera dem med
+Firebase CLI när de ändras:
 ```bash
 cd web && npx firebase-tools deploy --only firestore:rules
 ```
@@ -106,7 +116,7 @@ Uppgifter ur Rundata ska citeras som Samnordisk runtextdatabas (se [data/README.
 ## Tester
 
 ```bash
-.venv/bin/python -m pytest          # backend och 3D-analys
+.venv/bin/python -m pytest          # backend, 3D-analys, rapporter, syntes och forskningsfunktioner
 cd web && npx tsc --noEmit && npm run lint
 ```
 

@@ -23,3 +23,8 @@ references:
       - name: "Institutionen för nordiska språk, Uppsala universitet"
     url: "http://www.nordiska.uu.se/forskn/samnord.htm"
     license: ODbL-1.0
+  - type: data
+    title: "Berggrund 1:50 000–1:250 000"
+    authors:
+      - name: "Sveriges geologiska undersökning (SGU)"
+    url: "https://www.sgu.se"

@@ -9,3 +9,8 @@ Uppsala universitet), skapad med `python -m scripts.build_rundata`.
 * Ändringar jämfört med originalet: tabellerna har slagits ihop per signum, alias har lösts upp, ristarfältet
   har strukturerats (S/A/P/L, osäkerhet, negerade namn borttagna) och svenska koordinater (RT90) har räknats
   om till WGS 84. Se `scripts/build_rundata.py`.
+
+## cache/
+
+`cache/geology.json` innehåller svar från Sveriges geologiska undersöknings (SGU) berggrundskarta
+1:50 000–1:250 000, hämtade vid behov (se METHODS.md, avsnitt 10). Mappen ingår inte i repot.

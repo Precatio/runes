@@ -34,7 +34,11 @@ export default function DocsPage() {
               Huvudsyftet med att utveckla <strong>Vitki AI</strong> är att flytta fältet bort från subjektiva antaganden och mot <em>direkt, verifierbar teknisk data</em>. Även om 3D-skanningar har introducerat en kvantitativ potential, har metodiken hittills krävt att forskare manuellt plottar tvärsnitt och mäter vinklar, vilket återinför den mänskliga felkällan.
             </p>
             <p>
-              Detta ramverk löser problemet genom att fullständigt automatisera den matematiska extraktionen av verktygsspår (via linjär regression) och kombinera detta med generativ AI (LLM) som väger in metadata som stensort och vittringsgrad för att bistå i en mer objektiv och probabilistisk ristningsidentifiering.
+              Vitki AI automatiserar mätningen av huggspår i 3D-skanningar och ställer den bredvid andra oberoende
+              belägg: Rundatas uppgifter, ortografi, språkdrag, inskrifternas innehåll, stilgrupper och bergart. Allt
+              som räknas fram redovisas med metod, osäkerhet och – där det går – korsvaliderad träffsäkerhet eller
+              p-värde. Språkmodeller används för att läsa bilder och skriva löptext, aldrig för att hitta på
+              sannolikheter; deras bedömningar märks som okalibrerade.
             </p>
           </div>
         </section>
@@ -51,40 +55,51 @@ export default function DocsPage() {
           </h2>
           <div className="prose prose-slate text-slate-700 max-w-none text-[15px] leading-relaxed space-y-4">
             
-            <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">1. Ladda upp 3D-Data</h3>
+            <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">1. Mät huggspår i 3D</h3>
             <p>
-              Navigera till <strong>3D-Analys</strong>. Ladda upp din 3D-modell (filformat <code>.obj</code> eller <code>.stl</code>). Om du saknar egen data kan du slå på &quot;Använd simulerad test-data&quot; för att se hur analysen fungerar.
+              Öppna <strong>3D-Huggspårsanalys</strong> och ladda upp en skanning (<code>.stl</code>, <code>.obj</code> eller{" "}
+              <code>.ply</code>). Skriver du stenens signum hämtas uppgifter ur Rundata. Välj sedan mätsätt:
             </p>
-            
-            <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">2. Sätt ut din vektor</h3>
+            <ul className="list-disc pl-5 mt-2 space-y-1">
+              <li><strong>Automatiskt:</strong> vrid den ristade sidan mot dig och starta analysen. Alla spår hittas och mäts; granska resultatet, märk områden som runor eller ornamentik och välj vilket urval som blir resultatet.</li>
+              <li><strong>Ett klick:</strong> håll Shift och klicka mitt i ett spår – varje klick mäter ett snitt.</li>
+              <li><strong>Manuellt:</strong> håll Shift och klicka två punkter tvärs över ett spår, eller flera längs spåret.</li>
+            </ul>
             <p>
-              I den interaktiva 3D-vyn, navigera runt stenen:
-            </p>
-              <ul className="list-disc pl-5 mt-2 space-y-1">
-                <li><strong>Vänsterklick + dra:</strong> Rotera kameran</li>
-                <li><strong>Högerklick + dra:</strong> Panorera</li>
-                <li><strong>Dubbelklicka:</strong> Sätt ut startpunkten för ditt snitt, dubbelklicka därefter igen för att sätta slutpunkten.</li>
-              </ul>
-              <div className="bg-[#b7410e]/5 border border-[#b7410e]/20 rounded-xl p-4 my-4">
-                <p className="text-sm text-[#b7410e] font-bold mb-1">
-                  💡 Visste du?
-                </p>
-                <p className="text-sm text-slate-700 leading-relaxed">
-                  Att klicka ut en vektor innebär enbart att du bestämmer <em>var</em> på runstenen provet (snittet) ska tas. Den kritiska och tidigare felbenägna uppgiften – att hitta spårets exakta bottenpunkt och mäta in de mikroskopiska vinklarna – görs inte längre genom att användaren manuellt försöker dra linjer längs spårets väggar, utan sköts nu helt matematiskt av 3D-motorns regressionsanalys.
-                </p>
-              </div>
-              <p>
-                Appen räknar utifrån dina klickningar automatiskt fram Origin- och Direction-vektorerna för snittet. Du kan även justera &quot;Flera snitt (Medelvärde)&quot; för högre precision vid skrovliga ytor.
-              </p>
-
-            <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">3. Analysera</h3>
-            <p>
-              Klicka på <strong>Analysera</strong>. Algoritmen skär stenen utifrån din vektor, rensar bort plan yta, och beräknar den optimala V-vinkeln och asymmetrin i spåret. Resultaten sparas i den globala kontexten.
+              Spara analysen i ett projekt. Under <strong>Bilder ur skanningen</strong> skickar du strykljus, relief och djup
+              – räknade ur själva skanningen – till 2D-analysen eller till Språk &amp; Fonetik. Mätningen kan också
+              publiceras i den delade <strong>mätkorpusen</strong>.
             </p>
 
-            <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">4. AI-Runologen</h3>
+            <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">2. Läs och tolka inskriften</h3>
             <p>
-              Nere i högra hörnet finns den inbyggda AI-assistenten. Du kan när som helst öppna chatten och ställa frågor om dina mätvärden (t.ex. <em>&quot;Jag fick en asymmetri på 3 grader, vad tyder det på?&quot;</em>). Assistenten har automatisk tillgång till din senast körda 3D-analys.
+              I <strong>Språk &amp; Fonetik</strong> läser AI:n runorna blint från en bild (foto, RTI-vy eller relief ur 3D).
+              Ange signum så jämförs läsningen med Rundata utan AI: hur stor del som stämmer, hur mycket av texten den täcker
+              och vilka ord som skiljer sig. Ordformerna kontrolleras mot Rundatas korpus. Rätta läsningen vid behov och spara
+              den i projektet. <strong>2D-Bildanalys</strong> bedömer stilgrupp och runformer; <strong>RTI-visaren</strong> låter dig
+              flytta ljuset över en PTM-fil.
+            </p>
+
+            <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">3. Väg samman beläggen</h3>
+            <p>
+              <strong>Syntes &amp; Attribuering</strong> väger samman Rundata, ortografi och huggteknik efter hur träffsäkra
+              metoderna är i just det fallet. Varje kandidat prövas mot litteraturen, geografi, ristarens stilgrupper, bergart,
+              språkdrag, inskriftstyp och – om ristarens stenar är uppmätta – sten mot sten. Motsägelser och saknade belägg
+              redovisas. Spara syntesen i projektet.
+            </p>
+
+            <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">4. Hitta luckor och skriv</h3>
+            <p>
+              <strong>Forskningsluckor</strong> visar var uppgifter saknas (klicka på en siffra för att se stenarna), vad appens
+              resultat säger jämfört med befintlig forskning, inskrifternas syfte per ristare och vilka stenar som mest behöver
+              mätas. Under <strong>Rapporter</strong> skapar du en stenrapport i artikelform – med figurer ur skanningen, läsningen och
+              attribueringen – eller en rapport över flera stenar, och laddar ner den som Word, LaTeX eller Markdown.
+            </p>
+
+            <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">5. Fråga AI-assistenten</h3>
+            <p>
+              Nere i högra hörnet finns assistenten. Den har tillgång till Rundata och din senaste analys, till exempel{" "}
+              <em>&quot;Jag fick en asymmetri på 3 grader, vad tyder det på?&quot;</em>
             </p>
           </div>
         </section>
@@ -116,7 +131,7 @@ export default function DocsPage() {
 
             <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">2. OpenAI (Röstuppläsning av fornnordiska)</h3>
             <p>
-              OpenAI används specifikt för text-till-tal (TTS) när du klickar på &quot;Spela Upp&quot; under den fonetiska rekonstruktionen.
+              OpenAI används bara för den ungefärliga uppläsningen i Språk &amp; Fonetik. Det är en modern talsyntes, inte en rekonstruktion av uttalet.
             </p>
             <ol className="list-decimal pl-5 mt-2 space-y-2">
               <li>Gå till <a href="https://platform.openai.com/api-keys" target="_blank" rel="noreferrer" className="text-[#b7410e] hover:underline">OpenAI Developer Platform</a> och logga in (eller skapa ett konto).</li>
@@ -180,6 +195,14 @@ export default function DocsPage() {
               </li>
             </ul>
 
+            <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">Geologi</h3>
+            <ul className="list-disc pl-5 mt-2 space-y-3">
+              <li>
+                <strong><a href="https://sgu.se/en/products/geological-data/berggrund--geologisk-data/bedrock" target="_blank" rel="noreferrer" className="text-[#b7410e] hover:underline">Sveriges geologiska undersökning (SGU) – Berggrund</a></strong><br/>
+                Berggrundskartan 1:50 000–1:250 000, som appen använder för att jämföra stenens bergart med berggrunden där den står.
+              </li>
+            </ul>
+
             <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">Språk & Forskning</h3>
             <ul className="list-disc pl-5 mt-2 space-y-3">
               <li>
@@ -200,18 +223,22 @@ export default function DocsPage() {
           <div className="prose prose-slate text-slate-700 max-w-none text-[15px] leading-relaxed space-y-3">
             <p>
               Alla beräkningar beskrivs i <code>METHODS.md</code>. Varje 3D-analys sparar programversion, mätmetodens version
-              (nu <code>groove-2</code>), filens SHA-256 och alla parametrar, och kan exporteras som CSV eller JSON.
+              (nu <code>groove-3</code>), filens SHA-256, alla parametrar och varje snitts position och råprofil, och kan
+              exporteras som CSV eller JSON.
             </p>
             <ul className="list-disc pl-5 space-y-1">
               <li><strong>Osäkerhet:</strong> mätvärden redovisas med standardavvikelse, antal snitt och 95 % konfidensintervall.</li>
-              <li><strong>Attribuering:</strong> kandidater räknas fram ur Rundata, ortografisk jämförelse och uppmätt huggteknik. Metodernas träffsäkerhet redovisas med korsvalidering. AI:n skriver bara text och anger inga sannolikheter.</li>
+              <li><strong>Attribuering:</strong> kandidater räknas fram ur Rundata, ortografi och huggteknik, vägda efter korsvaliderad träffsäkerhet. AI:n skriver bara text och anger inga sannolikheter.</li>
+              <li><strong>Ortografisk likhet:</strong> cosinuslikhet mellan inskriftens stavningsprofil och ristarens. p anger hur ovanligt hög likheten är jämfört med andra ristares inskrifter, justerat för att den bästa av alla ristare väljs. En enskild likhet är ett svagt belägg; metodens träffsäkerhet är det bättre måttet.</li>
+              <li><strong>Inskrifternas syfte:</strong> regelbaserade kategorier; per ristare testas avvikelser mot genomsnittet med korrektion för många test. För sällsynta typer (t.ex. magiska inskrifter) är frånvaro oftast väntad.</li>
+              <li><strong>Bergart:</strong> jämförs med SGU:s berggrundskarta. Runstenar är ofta flyttblock eller transporterade, så en avvikelse är en ledtråd, inte ett fel.</li>
               <li><strong>Verktygsklassning:</strong> pik-/bredmejsel med tröskel 85° är en tumregel, inte ett kalibrerat mått.</li>
               <li><strong>Mätkorpus:</strong> bidrag publiceras under CC BY 4.0 med bidragsgivaren angiven. Bilder och 3D-filer delas inte.</li>
               <li><strong>Stilgrupper:</strong> enligt Gräslund (1998); dateringarna är ungefärliga.</li>
             </ul>
             <p>
               Citera programvaran enligt <code>CITATION.cff</code>. Använder du uppgifter ur Rundata ska även
-              Samnordisk runtextdatabas anges som källa.
+              Samnordisk runtextdatabas anges som källa, och för berggrunden Sveriges geologiska undersökning (SGU).
             </p>
           </div>
         </section>
