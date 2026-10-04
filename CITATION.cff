@@ -8,6 +8,7 @@ authors:
 version: 2.0.0
 date-released: 2026-10-04
 license: GPL-3.0-only
+repository-code: "https://github.com/Precatio/runes"
 keywords:
   - runology
   - runic inscriptions

@@ -1,9 +1,27 @@
 {
   "title": "Runforskning (Aagaard Research): öppen plattform för analys av runinskrifter",
   "upload_type": "software",
-  "creators": [{ "name": "Kvant, Viktor" }],
+  "creators": [
+    {
+      "name": "Kvant, Viktor"
+    }
+  ],
   "license": "GPL-3.0-only",
   "version": "2.0.0",
-  "keywords": ["runology", "runic inscriptions", "3D scanning", "groove analysis", "stylometry", "digital humanities"],
-  "description": "Open research platform for runic inscriptions: 3D groove measurement with uncertainty and provenance, Rundata integration, orthographic stylometry with cross-validated accuracy, a shared measurement corpus, statistical comparison of stones, maps, style groups and an RTI (PTM) viewer. See METHODS.md."
+  "keywords": [
+    "runology",
+    "runic inscriptions",
+    "3D scanning",
+    "groove analysis",
+    "stylometry",
+    "digital humanities"
+  ],
+  "description": "Open research platform for runic inscriptions: 3D groove measurement with uncertainty and provenance, Rundata integration, orthographic stylometry with cross-validated accuracy, a shared measurement corpus, statistical comparison of stones, maps, style groups and an RTI (PTM) viewer. See METHODS.md.",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/Precatio/runes",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
 }
