@@ -27,7 +27,7 @@ export default function AccountOverview() {
   useEffect(() => {
     // If not logged in and auth resolves, redirect to home.
     if (user === null) {
-      router.push("/");
+      router.push("/start");
     }
   }, [user, router]);
 
@@ -96,7 +96,7 @@ export default function AccountOverview() {
     <div className="w-full h-full p-8 overflow-y-auto relative bg-slate-50">
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="flex items-center gap-4 mb-2">
-          <Link href="/" className="p-2 bg-white rounded-full border border-slate-200 text-slate-500 hover:text-slate-900 shadow-sm transition-all">
+          <Link href="/start" className="p-2 bg-white rounded-full border border-slate-200 text-slate-500 hover:text-slate-900 shadow-sm transition-all">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
             </svg>

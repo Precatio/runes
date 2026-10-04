@@ -18,7 +18,7 @@ export default function Sidebar() {
   const navItems = [
     {
       name: t.sidebar.ai_runologist,
-      href: "/",
+      href: "/start",
       group: "resources",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.75} stroke="currentColor" className="w-5 h-5">
@@ -154,12 +154,12 @@ export default function Sidebar() {
       
       {/* Brand Header */}
       <div className="p-6 pb-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3" title="Om Vitki AI">
           <img src="/vitki_logo.png" alt="Vitki Logotype" className="w-12 h-12 drop-shadow-sm" />
           <h1 className="text-3xl font-bold tracking-tight text-slate-900">
             Vitki <span className="text-slate-400 font-normal">AI</span>
           </h1>
-        </div>
+        </Link>
         
         {/* Language Toggle Glass Pill */}
         <button 

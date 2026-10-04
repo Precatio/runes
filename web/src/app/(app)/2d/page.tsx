@@ -411,7 +411,7 @@ export default function TwoDPage() {
       <RuneCanvasBackground />
       <div className="flex flex-col h-full w-full max-w-7xl mx-auto p-4 md:p-6 relative z-10 overflow-y-auto">
         <div className="mb-8">
-          <Link href="/" className="inline-flex items-center text-slate-500 hover:text-slate-900 font-semibold mb-4 transition-colors">
+          <Link href="/start" className="inline-flex items-center text-slate-500 hover:text-slate-900 font-semibold mb-4 transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 mr-1">
               <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
             </svg>

@@ -1,154 +1,488 @@
-"use client";
-
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import RuneCanvasBackground from "@/components/RuneCanvasBackground";
-import { db, ProjectData } from "@/lib/db";
-import { useEffect, useState } from "react";
-import { useAuth } from "@/components/AuthContext";
+import type { Metadata } from "next";
 
-export default function DashboardPage() {
-  const [projects, setProjects] = useState<ProjectData[]>([]);
-  const { user } = useAuth();
+export const metadata: Metadata = {
+  title: "Vitki AI – öppen forskningsplattform för runinskrifter",
+  description:
+    "3D-huggspårsanalys med redovisad osäkerhet, Samnordisk runtextdatabas, ortografisk stilometri, delad mätkorpus, " +
+    "jämförelse av stenar, kartor, stilgrupper och RTI – öppen källkod under GPL-3.0.",
+};
 
-  const loadProjects = async () => {
-    const data = await db.getProjects();
-    setProjects(data);
-  };
+const GITHUB = "https://github.com/Precatio/runes";
 
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    loadProjects();
-  }, [user]);
+const STATS = [
+  { value: "6 753", label: "inskrifter ur Samnordisk runtextdatabas" },
+  { value: "7", label: "huggspårsmått per tvärsnitt, med spridning" },
+  { value: "60 %", label: "rätt ristare först i ortografisk test (slump 4 %)" },
+  { value: "GPL-3.0", label: "fri och öppen källkod" },
+];
 
+const FEATURE_GROUPS = [
+  {
+    title: "Mäta",
+    items: [
+      {
+        name: "3D-huggspårsanalys",
+        href: "/3d",
+        text: "V-vinkel, asymmetri, djup, bredd, bottenradie och ytråhet i STL-, OBJ- och PLY-skanningar. Varje snitt redovisas för sig med standardavvikelse och konfidensintervall. Runor och ornamentik mäts separat.",
+      },
+      {
+        name: "Strykljus och RTI",
+        href: "/rti",
+        text: "Flytta ljuset fritt över 3D-modellen eller över en PTM-fil, med \"diffuse gain\"-förstärkning för att få fram svaga och vittrade ristningar.",
+      },
+      {
+        name: "2D-paleografi och fonetik",
+        href: "/2d",
+        text: "AI-stöd för att markera stildrag, beskriva runformer, translitterera och resonera om ljudvärden – alltid som förslag att granska.",
+      },
+    ],
+  },
+  {
+    title: "Söka och jämföra",
+    items: [
+      {
+        name: "Inskrifter (Rundata)",
+        href: "/inskrifter",
+        text: "Hela Samnordisk runtextdatabas inbyggd: translitterering, normalisering, översättning, datering, stilgrupp, ristare och plats för varje inskrift.",
+      },
+      {
+        name: "Ortografisk stilometri",
+        href: "/inskrifter?signum=U%20729",
+        text: "Stavning, skiljetecken och bindrunor jämförs med alla vikingatida inskrifter. Ger mest lika inskrifter och ristare – med metodens träffsäkerhet redovisad.",
+      },
+      {
+        name: "Jämför stenar",
+        href: "/jamfor",
+        text: "Permutationstest mått för mått och för alla mått samtidigt, effektstorlek och överlagrade tvärsnittsprofiler.",
+      },
+      {
+        name: "Karta och stilgrupper",
+        href: "/karta",
+        text: "Geografisk spridning efter period, stilgrupp och ristare. Gräslunds stilkronologi med fördelningen i Rundata.",
+      },
+    ],
+  },
+  {
+    title: "Samarbeta och publicera",
+    items: [
+      {
+        name: "Delad mätkorpus",
+        href: "/korpus",
+        text: "Forskare publicerar sina huggspårsmätningar under CC BY 4.0. Korpusen blir referens för attribuering, ristarprofiler och klustring.",
+      },
+      {
+        name: "Syntes och rapport",
+        href: "/synthesis",
+        text: "Väger samman Rundata, ortografi och huggteknik till redovisade belägg. Rapporten innehåller mätvärden, metod, proveniens och källor.",
+      },
+      {
+        name: "Export och proveniens",
+        href: "/3d",
+        text: "Varje analys sparar programversion, mätmetodens version, filens SHA-256 och alla parametrar, och kan exporteras som CSV eller JSON.",
+      },
+    ],
+  },
+];
+
+const USE_CASES = [
+  {
+    title: "Ristarattribuering",
+    text: "Pröva en attribuering mot tre oberoende källor: litteraturens uppgifter i Rundata, inskriftens ortografi och den uppmätta huggtekniken.",
+  },
+  {
+    title: "Läsning av skadade inskrifter",
+    text: "Strykljus i valfri riktning och RTI-förstärkning gör grunda, vittrade eller överväxta ristningar läsbara utan att röra stenen.",
+  },
+  {
+    title: "Datering och stil",
+    text: "Se en inskrifts stilgrupp i relation till Gräslunds kronologi och hur stilen fördelar sig geografiskt och mellan ristare.",
+  },
+  {
+    title: "Reproducerbara mätningar",
+    text: "Samma fil och samma parametrar ger samma resultat. Proveniensen gör att en annan forskare kan upprepa och granska mätningen.",
+  },
+  {
+    title: "Gemensamt referensmaterial",
+    text: "Varje mätning som delas gör attribueringen säkrare för alla. Bidragsgivare anges alltid.",
+  },
+  {
+    title: "Undervisning",
+    text: "Studenter kan utforska Rundata, kartor och stilgrupper och se hur kvantitativa metoder fungerar – och var deras gränser går.",
+  },
+];
+
+const PRINCIPLES = [
+  {
+    title: "Verifierbara källor",
+    text: "Uppgifter om inskrifter hämtas ur Samnordisk runtextdatabas och anges med källa – AI:n får inte gissa signum, texter eller ristare.",
+  },
+  {
+    title: "Osäkerhet redovisas",
+    text: "Mätvärden visas med spridning och antal snitt. Statistiska metoder redovisar sin korsvaliderade träffsäkerhet.",
+  },
+  {
+    title: "Ingen AI-statistik",
+    text: "Kandidater räknas fram ur beläggen med öppna vikter. AI skriver bara löptext och anger aldrig sannolikheter.",
+  },
+  {
+    title: "Tumregler kallas tumregler",
+    text: "Verktygsklassningen och vittringsjusteringen är inte kalibrerade och märks tydligt som heuristik.",
+  },
+];
+
+const NEW_THINGS = [
+  {
+    title: "Öppen, webbaserad huggspårsmätning",
+    text: "Tidigare 3D-analyser av huggteknik har gjorts i proprietär programvara. Här är hela mätkedjan öppen källkod, körs i webbläsaren och redovisar varje snitt med spridning och full proveniens.",
+  },
+  {
+    title: "Ortografisk stilometri med redovisad träffsäkerhet",
+    text: "Stavningsmönster jämförs över hela Rundatas vikingatida korpus. Egennamn räknas inte, så att signaturer inte avslöjar svaret, och metoden utvärderas separat på signerade inskrifter.",
+  },
+  {
+    title: "En delad, öppen mätkorpus",
+    text: "Mätningar från olika forskare samlas med licens och bidragsgivare, och ristare kopplas automatiskt via Rundata. Det gör jämförelser möjliga mellan projekt och regioner.",
+  },
+  {
+    title: "Tre oberoende beläggstyper i samma analys",
+    text: "Litteraturens attribuering, ortografi och huggteknik vägs samman öppet. Varje kandidat visar exakt vilka belägg som stöder den.",
+  },
+];
+
+const RELATED = [
+  "Laila Kitzler Åhfeldts 3D-baserade analyser av huggteknik (Stockholms universitet), som vår metod för separata spårtyper, medelvärden per sten och Ward-klustring följer.",
+  "Samnordisk runtextdatabas och Rundata-net, samt Riksantikvarieämbetets och Uppsala universitets plattform Runor.",
+  "Projektet ”AI i runologins tjänst” (Stockholms universitet, 2024–2026), som utvecklar AI-sökning i Rundata-net.",
+];
+
+const SOURCES = [
+  {
+    name: "Samnordisk runtextdatabas",
+    detail: "Institutionen för nordiska språk, Uppsala universitet. Version 2014 (RUNDATA.xls 2018). Open Database License / Database Contents License.",
+    href: "https://www.uu.se/institution/nordiska/forskning/projekt/samnordisk-runtextdatabas",
+  },
+  {
+    name: "Gräslund, A.-S. 1998",
+    detail: "Ornamentiken som dateringsgrund för Upplands runstenar. I: Innskrifter og datering / Dating inscriptions. Trondheim, s. 73–91.",
+  },
+  {
+    name: "Kitzler Åhfeldt, L. 2002",
+    detail: "Work and Worship. Laser Scanner Analysis of Viking Age Rune Stones. Stockholms universitet.",
+  },
+  {
+    name: "Kitzler Åhfeldt, L. & Imer, L. M. 2019",
+    detail: "Rune Carvers and Sponsor Families on Bornholm. Danish Journal of Archaeology 8.",
+    href: "https://doi.org/10.7146/dja.v8i0.113226",
+  },
+  {
+    name: "Axelson, J. 1993",
+    detail: "Mellansvenska runristare (Runrön 5). Källa för många ristarattribueringar i Rundata.",
+  },
+  {
+    name: "Lager, L. 2002",
+    detail: "Den synliga tron. Runstenskors som en spegling av kristnandet i Sverige. Korsformerna i Rundata.",
+  },
+  {
+    name: "Malzbender, T., Gelb, D. & Wolters, H. 2001",
+    detail: "Polynomial Texture Maps. SIGGRAPH ’01. Grunden för RTI-visaren och diffuse gain.",
+  },
+  {
+    name: "K-samsök (Riksantikvarieämbetet)",
+    detail: "Bilder och metadata från svenska kulturarvsinstitutioner.",
+    href: "https://www.raa.se/hitta-information/k-samsok/",
+  },
+  {
+    name: "OpenStreetMap",
+    detail: "Kartunderlag © OpenStreetMap-bidragsgivare.",
+    href: "https://www.openstreetmap.org/copyright",
+  },
+];
+
+const LICENSES = [
+  {
+    what: "Programkoden",
+    license: "GNU GPL v3",
+    text: "Fri att använda, studera, ändra och sprida. Ändrade versioner som sprids ska också vara öppna under GPL-3.0.",
+  },
+  {
+    what: "Rundata-uppgifter",
+    license: "ODbL / DbCL",
+    text: "Får användas fritt med angivande av Samnordisk runtextdatabas som källa. Härledda databaser delas under samma licens.",
+  },
+  {
+    what: "Mätkorpusen",
+    license: "CC BY 4.0",
+    text: "Mätningarna får användas fritt, även i publikationer, med bidragsgivaren angiven.",
+  },
+];
+
+function SectionTitle({ eyebrow, title, intro }: { eyebrow: string; title: string; intro?: string }) {
   return (
-    <>
-      <RuneCanvasBackground />
-      <div className="flex flex-col h-full w-full max-w-5xl mx-auto p-4 md:p-6 relative z-10 overflow-y-auto">
-      
-      {/* Hero Section */}
-      <div className="mb-10 text-center mt-8">
-        <div className="w-24 h-24 mx-auto mb-6 flex items-center justify-center transform -rotate-3 hover:rotate-0 transition-transform duration-300">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-20 h-20 text-[#b7410e] drop-shadow-md">
-            {/* Huvudstav */}
-            <path d="M12 2v20" />
-            {/* Ansuz (A) grenar */}
-            <path d="M12 6l6 4" />
-            <path d="M12 10l6 4" />
-            {/* Asymmetrisk gren */}
-            <path d="M12 14l-6 4" />
-            {/* Tiwaz (T) pilspets */}
-            <path d="M12 2l-5 5" />
-            <path d="M12 2l5 5" />
-          </svg>
-        </div>
-        <h1 className="text-4xl font-bold tracking-tight text-slate-900 mb-4">
-          Välkommen till Vitki AI
-        </h1>
-        <p className="text-slate-600 text-[18px] leading-relaxed max-w-2xl mx-auto font-medium">
-          Ditt centrala arbetsverktyg för epigrafik och runologi. Analysera 3D-modeller, interagera med AI-runologen och hantera dina projekt.
-        </p>
-        <p className="text-slate-500 text-[14px] leading-relaxed max-w-2xl mx-auto mt-3 italic">
-          (En &rdquo;Vitki&rdquo; var under fornnordisk tid en mästare på runor – en runristare eller magiker som besatt djup kunskap om runornas hemligheter och formler.)
-        </p>
-      </div>
+    <div className="max-w-3xl mb-12">
+      <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e] mb-3">{eyebrow}</div>
+      <h2 className="text-3xl md:text-4xl font-serif font-bold text-slate-900 tracking-tight">{title}</h2>
+      {intro && <p className="mt-4 text-lg text-slate-600 leading-relaxed">{intro}</p>}
+    </div>
+  );
+}
 
-      {/* Grid Menu */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto w-full">
-        <Link href="/3d" className="group">
-          <div className="liquid-glass-island rounded-[32px] p-8 h-full border border-white/50 hover:shadow-xl hover:border-white/80 transition-all duration-300 transform group-hover:-translate-y-1">
-            <div className="w-14 h-14 bg-[#b7410e]/10 text-[#b7410e] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-7">
-                <path strokeLinecap="round" strokeLinejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-2">3D-Analys</h3>
-            <p className="text-slate-600 text-sm font-medium leading-relaxed">
-              Utför vetenskaplig huggspårsanalys. Ladda upp modeller (.stl / .obj), markera spår med den nya interaktiva 3D-vyn, och få fram V-vinklar, spårdjup och asymmetri.
-            </p>
-          </div>
-        </Link>
-
-        <Link href="/2d" className="group">
-          <div className="liquid-glass-island rounded-[32px] p-8 h-full border border-white/50 hover:shadow-xl hover:border-white/80 transition-all duration-300 transform group-hover:-translate-y-1">
-            <div className="w-14 h-14 bg-slate-900/10 text-slate-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-7">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
-                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-2 flex items-center gap-3">
-              2D-Bildanalys
-            </h3>
-            <p className="text-slate-600 text-sm font-medium leading-relaxed">
-              Utför paleografisk analys och tyda runor på foton. AI:n extraherar Gräslunds stilgrupper, analyserar ornamentik och transkriberar inskrifter.
-            </p>
-          </div>
-        </Link>
-      </div>
-
-      {/* Info Notice */}
-      <div className="mt-10 max-w-4xl mx-auto w-full">
-        <div className="glass-btn-3d rounded-2xl p-5 flex items-start gap-4">
-          <div className="mt-0.5 text-[#b7410e]">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-            </svg>
-          </div>
-          <div>
-            <h4 className="text-sm font-bold text-slate-800 mb-1">Global AI-Assistent</h4>
-            <p className="text-sm text-slate-600 font-medium">
-              Glöm inte att AI-runologen nu finns tillgänglig när som helst nere i högra hörnet. Den läser automatiskt in resultaten från din senaste 3D-analys så du kan ställa frågor direkt i kontext.
-            </p>
+export default function LandingPage() {
+  return (
+    <div className="min-h-screen bg-[#f6f4f1] text-slate-900 overflow-x-hidden">
+      {/* Navigation */}
+      <header className="sticky top-0 z-50 bg-[#f6f4f1]/85 backdrop-blur-md border-b border-slate-900/5">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2.5">
+            <img src="/vitki_logo.png" alt="" className="w-9 h-9" />
+            <span className="text-xl font-bold tracking-tight">Vitki <span className="text-slate-400 font-normal">AI</span></span>
+          </Link>
+          <nav className="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-600">
+            <a href="#funktioner" className="hover:text-slate-900">Funktioner</a>
+            <a href="#forskning" className="hover:text-slate-900">För forskningen</a>
+            <a href="#nytt" className="hover:text-slate-900">Vad är nytt</a>
+            <a href="#kallor" className="hover:text-slate-900">Källor</a>
+            <a href="#oppen" className="hover:text-slate-900">Öppen källkod</a>
+          </nav>
+          <div className="flex items-center gap-3">
+            <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="hidden sm:inline text-sm font-semibold text-slate-600 hover:text-slate-900">GitHub</a>
+            <Link href="/start" className="px-4 py-2 rounded-full bg-slate-900 text-white text-sm font-bold hover:bg-black">Öppna appen</Link>
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Saved Projects Section */}
-      <div className="mt-12 max-w-4xl mx-auto w-full">
-        <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 text-[#b7410e]">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
-          </svg>
-          Mina Projekt
-        </h3>
-        
-        {projects.length === 0 ? (
-          <div className="liquid-glass-island rounded-[32px] p-8 text-center border border-white/50">
-            <p className="text-slate-500 font-medium">Du har inga sparade projekt ännu.</p>
+      {/* Hero */}
+      <section className="relative overflow-hidden">
+        <div aria-hidden className="absolute inset-0 pointer-events-none select-none">
+          <div className="absolute -right-24 -top-10 text-[22rem] leading-none font-serif text-[#b7410e]/[0.06]">ᚱ</div>
+          <div className="absolute -left-10 bottom-0 text-[14rem] leading-none font-serif text-slate-900/[0.04]">ᚦ</div>
+        </div>
+        <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-20">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#b7410e]/30 bg-white/60 px-3 py-1 text-xs font-bold text-[#b7410e] mb-8">
+            Version 2.0 · Öppen källkod
           </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {projects.map(p => (
-              <div key={p.id} className="liquid-glass-island rounded-[24px] p-6 border border-white/50 hover:border-[#b7410e]/50 hover:shadow-md transition-all group relative">
-                <button 
-                  onClick={async () => {
-                    await db.deleteProject(p.id);
-                    loadProjects();
-                  }}
-                  className="absolute top-4 right-4 text-slate-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
-                  title="Ta bort projekt"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-                    <path fillRule="evenodd" d="M8.75 1A2.75 2.75 0 006 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 10.23 1.482l.149-.022.841 10.518A2.75 2.75 0 007.596 19h4.807a2.75 2.75 0 002.742-2.53l.841-10.52.149.023a.75.75 0 00.23-1.482A41.03 41.03 0 0014 4.193V3.75A2.75 2.75 0 0011.25 1h-2.5zM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4zM8.58 7.72a.75.75 0 00-1.5.06l.3 7.5a.75.75 0 101.5-.06l-.3-7.5zm4.34.06a.75.75 0 10-1.5-.06l-.3 7.5a.75.75 0 101.5.06l.3-7.5z" clipRule="evenodd" />
-                  </svg>
-                </button>
-                <Link href={`/3d?projectId=${p.id}`}>
-                  <h4 className="text-lg font-bold text-slate-900 mb-1">{p.name || p.fileName}</h4>
-                  <div className="flex gap-2 mb-3">
-                    <span className="text-[10px] uppercase tracking-wider font-bold bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full">{p.metaStone}</span>
-                    <span className="text-[10px] uppercase tracking-wider font-bold bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full">{p.metaWeathering} vittring</span>
-                  </div>
-                  <div className="text-sm text-slate-500 font-medium">
-                    {p.slices.length} sparade snitt &nbsp;&bull;&nbsp; {new Date(p.updatedAt).toLocaleDateString("sv-SE")}
-                  </div>
-                </Link>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold tracking-tight leading-[1.05] max-w-4xl hyphens-auto break-words" lang="sv">
+            En öppen forskningsplattform för runinskrifter
+          </h1>
+          <p className="mt-6 text-xl text-slate-600 leading-relaxed max-w-2xl">
+            Vitki AI samlar 3D-mätning av huggspår, Samnordisk runtextdatabas, ortografisk jämförelse och en delad
+            mätkorpus i ett och samma verktyg – med redovisad osäkerhet, verifierbara källor och full spårbarhet.
+          </p>
+          <div className="mt-10 flex flex-wrap gap-4">
+            <Link href="/start" className="px-7 py-3.5 rounded-full bg-[#b7410e] text-white font-bold hover:bg-[#9a350b] shadow-lg shadow-[#b7410e]/20">
+              Öppna appen
+            </Link>
+            <a href="#funktioner" className="px-7 py-3.5 rounded-full bg-white border border-slate-300 font-bold hover:border-slate-900">
+              Se funktionerna
+            </a>
+          </div>
+
+          <dl className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-px bg-slate-900/10 rounded-2xl overflow-hidden border border-slate-900/10">
+            {STATS.map(s => (
+              <div key={s.label} className="bg-white/80 p-6">
+                <dt className="sr-only">{s.label}</dt>
+                <dd className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 whitespace-nowrap">{s.value}</dd>
+                <dd className="mt-1 text-sm text-slate-600 leading-snug">{s.label}</dd>
+              </div>
+            ))}
+          </dl>
+          <p className="mt-3 text-xs text-slate-500">
+            Ortografisk träffsäkerhet: lämna-en-ute-test på 135 signerade vikingatida inskrifter i Rundata, 27 ristare.
+          </p>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section id="funktioner" className="bg-white border-y border-slate-900/5 scroll-mt-16">
+        <div className="max-w-6xl mx-auto px-6 py-24">
+          <SectionTitle
+            eyebrow="Funktioner"
+            title="Från skanning till publicerbart resultat"
+            intro="Verktygen hänger ihop: en mätning i 3D kan jämföras med korpusen, vägas mot Rundata och ortografin och bli en rapport med källor och metod."
+          />
+          <div className="space-y-14">
+            {FEATURE_GROUPS.map(group => (
+              <div key={group.title}>
+                <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-5">{group.title}</h3>
+                <div className={`grid grid-cols-1 md:grid-cols-2 gap-5 ${group.items.length % 3 === 0 ? "lg:grid-cols-3" : ""}`}>
+                  {group.items.map(f => (
+                    <Link key={f.name} href={f.href} className="group rounded-2xl border border-slate-200 bg-[#fbfaf8] p-6 hover:border-[#b7410e]/50 hover:shadow-lg transition-all">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-lg font-bold text-slate-900">{f.name}</h4>
+                        <span className="text-[#b7410e] opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                      </div>
+                      <p className="mt-2 text-[15px] text-slate-600 leading-relaxed">{f.text}</p>
+                    </Link>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
-        )}
-      </div>
+        </div>
+      </section>
 
-      </div>
-    </>
+      {/* Research value */}
+      <section id="forskning" className="scroll-mt-16">
+        <div className="max-w-6xl mx-auto px-6 py-24">
+          <SectionTitle
+            eyebrow="För forskningen"
+            title="Vad plattformen kan hjälpa till med"
+            intro="Vitki AI ersätter inte runologens bedömning. Den ger mätbara, granskningsbara underlag att pröva hypoteser mot."
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10">
+            {USE_CASES.map(u => (
+              <div key={u.title} className="border-t-2 border-[#b7410e] pt-5">
+                <h3 className="text-lg font-bold">{u.title}</h3>
+                <p className="mt-2 text-slate-600 leading-relaxed">{u.text}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-20 rounded-3xl bg-slate-900 text-white p-10 md:p-12">
+            <h3 className="text-2xl font-serif font-bold">Så arbetar vi</h3>
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+              {PRINCIPLES.map(p => (
+                <div key={p.title}>
+                  <div className="font-bold text-[#f0a37f]">{p.title}</div>
+                  <p className="mt-1.5 text-slate-300 leading-relaxed">{p.text}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-8 text-sm text-slate-400">
+              Alla beräkningar beskrivs i{" "}
+              <a href={`${GITHUB}/blob/main/METHODS.md`} target="_blank" rel="noopener noreferrer" className="underline hover:text-white">METHODS.md</a>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* What is new */}
+      <section id="nytt" className="bg-white border-y border-slate-900/5 scroll-mt-16">
+        <div className="max-w-6xl mx-auto px-6 py-24">
+          <SectionTitle
+            eyebrow="Vad är nytt"
+            title="Det här tillför Vitki AI"
+            intro="Plattformen står på axlarna av flera decenniers runologisk forskning. Det nya är framför allt öppenheten och att metoderna kombineras i samma verktyg."
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {NEW_THINGS.map((n, i) => (
+              <div key={n.title} className="rounded-2xl bg-[#fbfaf8] border border-slate-200 p-7">
+                <div className="text-4xl font-serif font-bold text-[#b7410e]/30">{String(i + 1).padStart(2, "0")}</div>
+                <h3 className="mt-2 text-xl font-bold">{n.title}</h3>
+                <p className="mt-2 text-slate-600 leading-relaxed">{n.text}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-12 max-w-3xl">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">Vi bygger vidare på</h3>
+            <ul className="space-y-2 text-slate-600 leading-relaxed list-disc pl-5">
+              {RELATED.map(r => <li key={r}>{r}</li>)}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Sources */}
+      <section id="kallor" className="scroll-mt-16">
+        <div className="max-w-6xl mx-auto px-6 py-24">
+          <SectionTitle
+            eyebrow="Källor"
+            title="Vad vi lutar oss mot"
+            intro="Data och metoder har namngivna källor. När uppgifter ur Rundata används i plattformen anges källan, och den ska anges även i publikationer."
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {SOURCES.map(s => (
+              <div key={s.name} className="rounded-2xl bg-white border border-slate-200 p-5">
+                <div className="font-bold text-slate-900">
+                  {s.href ? (
+                    <a href={s.href} target="_blank" rel="noopener noreferrer" className="hover:text-[#b7410e]">{s.name} ↗</a>
+                  ) : s.name}
+                </div>
+                <p className="mt-1.5 text-sm text-slate-600 leading-relaxed">{s.detail}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-6 text-sm text-slate-500 max-w-3xl">
+            AI-funktionerna använder Google Gemini för löptext, bildbeskrivning och samtal. AI-text märks som sådan och ska
+            granskas; den används aldrig som källa till mätvärden eller sannolikheter.
+          </p>
+        </div>
+      </section>
+
+      {/* Open source */}
+      <section id="oppen" className="bg-slate-900 text-white scroll-mt-16">
+        <div className="max-w-6xl mx-auto px-6 py-24">
+          <div className="max-w-3xl mb-12">
+            <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#f0a37f] mb-3">Öppen källkod</div>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold tracking-tight">Fri att använda, granska och vidareutveckla</h2>
+            <p className="mt-4 text-lg text-slate-300 leading-relaxed">
+              Forskning mår bäst av öppenhet. Hela källkoden finns på GitHub, och du får bygga vidare på den för egna
+              forskningsfrågor – så länge förbättringarna förblir lika öppna för nästa forskare.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {LICENSES.map(l => (
+              <div key={l.what} className="rounded-2xl border border-white/15 bg-white/5 p-6">
+                <div className="text-sm text-slate-400 font-semibold">{l.what}</div>
+                <div className="mt-1 text-2xl font-serif font-bold">{l.license}</div>
+                <p className="mt-3 text-slate-300 leading-relaxed text-[15px]">{l.text}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-lg font-bold">Bidra</h3>
+              <ul className="mt-3 space-y-2 text-slate-300 leading-relaxed list-disc pl-5">
+                <li>Dela mätningar i den gemensamma korpusen direkt från 3D-analysen.</li>
+                <li>Rapportera fel och önskemål som issues på GitHub.</li>
+                <li>Föreslå förbättringar av kod eller metod med en pull request – metoderna dokumenteras i METHODS.md och testas automatiskt.</li>
+              </ul>
+              <a href={GITHUB} target="_blank" rel="noopener noreferrer"
+                className="mt-6 inline-block px-6 py-3 rounded-full bg-white text-slate-900 font-bold hover:bg-slate-100">
+                Källkoden på GitHub
+              </a>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold">Citera</h3>
+              <p className="mt-3 text-slate-300">Använder du plattformen i forskning, citera programvaran och de datakällor du använt:</p>
+              <pre className="mt-3 whitespace-pre-wrap rounded-xl bg-black/30 border border-white/10 p-4 text-sm text-slate-200 font-mono">
+{`Kvant, V. (2026). Runforskning (Aagaard Research):
+öppen plattform för analys av runinskrifter
+(version 2.0.0). ${GITHUB}
+
+Samnordisk runtextdatabas. Institutionen för nordiska
+språk, Uppsala universitet.`}
+              </pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="max-w-6xl mx-auto px-6 py-20 text-center">
+        <h2 className="text-3xl font-serif font-bold">Börja med en inskrift, en skanning eller en fråga</h2>
+        <p className="mt-3 text-slate-600">Rundata, kartan och stilgrupperna är öppna direkt. Logga in för att spara projekt och använda korpusen.</p>
+        <div className="mt-8 flex flex-wrap justify-center gap-4">
+          <Link href="/start" className="px-7 py-3.5 rounded-full bg-[#b7410e] text-white font-bold hover:bg-[#9a350b]">Öppna appen</Link>
+          <Link href="/inskrifter" className="px-7 py-3.5 rounded-full bg-white border border-slate-300 font-bold hover:border-slate-900">Sök i Rundata</Link>
+        </div>
+      </section>
+
+      <footer className="border-t border-slate-900/10">
+        <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row gap-4 justify-between text-sm text-slate-500">
+          <div>
+            Vitki AI · Aagaard Research · Grundat av{" "}
+            <a href="https://www.linkedin.com/in/viktor-kvant-555180108/" target="_blank" rel="noopener noreferrer" className="font-semibold text-slate-700 hover:text-[#b7410e]">Viktor Kvant</a>
+          </div>
+          <div className="flex gap-5">
+            <Link href="/docs" className="hover:text-slate-900">Dokumentation</Link>
+            <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">GitHub</a>
+            <span>GPL-3.0</span>
+          </div>
+        </div>
+      </footer>
+    </div>
   );
 }

@@ -1,17 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar";
 import { LanguageProvider } from "@/components/LanguageContext";
 import { ThemeProvider } from "@/components/ThemeContext";
 import { SettingsProvider } from "@/components/SettingsContext";
 import { AnalysisProvider } from "@/components/AnalysisContext";
-import TopBar from "@/components/TopBar";
-import AIChatWidget from "@/components/AIChatWidget";
 import { AuthProvider } from "@/components/AuthContext";
 
 export const metadata: Metadata = {
-  title: "Vitki AI",
-  description: "AI-driven verktyg för Runologer",
+  title: "Vitki AI – öppen forskningsplattform för runinskrifter",
+  description: "3D-huggspårsanalys, Rundata, ortografisk stilometri, delad mätkorpus och RTI i en öppen plattform för runologisk forskning.",
 };
 
 export default function RootLayout({
@@ -21,25 +18,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="sv">
-      <body className="flex h-screen overflow-hidden antialiased selection:bg-black/10 selection:text-black">
+      <body className="antialiased selection:bg-black/10 selection:text-black">
         <AuthProvider>
           <SettingsProvider>
             <ThemeProvider>
               <LanguageProvider>
                 <AnalysisProvider>
-                  {/* Floating Left Dock / Navigation */}
-                  <Sidebar />
-
-                  {/* Floating Main Content Pane (Liquid Glass Island) */}
-                  <main className="flex-1 flex flex-col h-[calc(100vh-2rem)] m-4 rounded-[32px] liquid-glass relative z-10 overflow-hidden shadow-2xl transition-all duration-300">
-                    <TopBar />
-                    <div className="flex-1 overflow-y-auto p-6 md:p-8">
-                      {children}
-                    </div>
-                  </main>
-
-                  {/* Global AI Chat Overlay */}
-                  <AIChatWidget />
+                  {children}
                 </AnalysisProvider>
               </LanguageProvider>
             </ThemeProvider>
