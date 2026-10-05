@@ -108,7 +108,7 @@ def features(rec: dict, names: frozenset | set = frozenset()) -> dict:
             w = _clean_word(raw)
             if w and not is_name and "[" not in n and "(?)" not in n:
                 variants[n] = w
-    return {"counts": feats, "variants": variants, "n_words": len(clean), "n_tokens": len(words)}
+    return {"counts": feats, "variants": variants, "n_words": len(clean), "n_tokens": len(words), "words": clean}
 
 
 class OrthographyModel:

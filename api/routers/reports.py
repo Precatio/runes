@@ -117,6 +117,7 @@ class StoneReportRequest(BaseModel):
     use_ai: bool = True
     format: Literal["json", "docx"] = "json"
     ai_text: Optional[dict[str, str]] = None
+    include_r: bool = True
 
 
 def _view(req: StoneReportRequest):
@@ -145,6 +146,14 @@ def stone_report_endpoint(req: StoneReportRequest,
     # What Forskningsluckor knows about the stone, and the style and inscription types of the top candidates
     names = [c["name"] for c in ((req.synthesis or {}).get("candidates") or [])[:3]]
     facts["research"] = stone_context(facts["signum"], names) if facts.get("rundata") else None
+    # The stone against the R corpus analyses (only if R and the corpus results exist; never started here)
+    facts["r"] = None
+    if facts.get("rundata") and req.include_r:
+        try:
+            from api.routers.rstats import stone_analysis
+            facts["r"] = stone_analysis(facts["rundata"]["signum"], names)
+        except Exception as e:
+            logger.warning("R-analysen för stenrapporten misslyckades: %r", e)
     rd = req.reading or {}
     if rd.get("transliteration"):
         facts["reading_validation"] = rd.get("validation") or validate_reading(

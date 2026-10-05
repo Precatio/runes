@@ -20,6 +20,7 @@ from __future__ import annotations
 import argparse
 import base64
 import datetime
+import time
 import io
 import json
 import os
@@ -181,6 +182,33 @@ def main(argv=None):
             purpose = ", ".join(c["label"].lower() for c in ctx["purpose"]) or "ingen kategori"
             styles = "; ".join(f"{c['carver']} {c['style'] or '–'} i {c['style_k']} av {c['style_n']}" for c in ctx["carvers"])
             steps.append({"name": "Forskningsläge och syfte", "result": f"Syfte: {purpose}" + (f". Stilgrupp hos kandidaterna: {styles}" if styles else "")})
+
+    # The stone against the R corpus analyses (if R is installed on the server); the report reads the cached result
+    if a.signum:
+        st = requests.get(f"{api}/api/r/status", timeout=120).json()
+        if st["r"]["available"]:
+            if not st["corpus"]["ready"]:
+                log("Statistik i R: beräknar korpusen (några minuter) …")
+                requests.post(f"{api}/api/r/corpus/run", timeout=120)
+                while True:
+                    time.sleep(5)
+                    c = requests.get(f"{api}/api/r/status", timeout=120).json()["corpus"]
+                    if c["ready"] or not c["running"]:
+                        break
+            names = ",".join(c["name"] for c in (synthesis.get("candidates") or [])[:3])
+            r = requests.get(f"{api}/api/r/stone/{a.signum}", params={"candidates": names}, timeout=1200)
+            if r.ok:
+                rs = r.json()
+                parts = []
+                if rs.get("model"):
+                    parts.append("modellen: " + ", ".join(f"{x['carver']} {x['p']:.2f}".replace(".", ",") for x in rs["model"]["top"][:2]))
+                if (rs.get("landscape") or {}).get("view"):
+                    parts.append(f"synlig från {round(rs['landscape']['view']['share_2km'] * 100)} % av ytan inom 2 km")
+                steps.append({"name": "Statistik i R", "result": "; ".join(parts) or "klart"})
+            else:
+                notes.append(f"Statistiken i R misslyckades: {r.text[:200]}")
+        else:
+            notes.append("R finns inte på servern; rapporten saknar R-avsnitten.")
 
     # 6. Stone report with the workflow appendix
     log("6/6 Stenrapport …")

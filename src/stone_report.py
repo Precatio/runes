@@ -22,6 +22,7 @@ from collections import defaultdict
 import numpy as np
 
 from src.academic import DIGITS, FEATURE_NAMES, bullets, figure, fmt, h, p, table
+from src import r_report
 from src.reading import runes_to_latin
 from src.slice_analysis import calculate_v_angle
 from src.stats import METRICS, METRIC_LABELS, attribute, compare_stones, summarize
@@ -625,6 +626,26 @@ def facts_text(f: dict) -> str:
     if st and not st.get("carver"):
         lines.append("Forskningsluckor: stenen saknar ristare i Rundata" + ("" if rs.get("hypothesis") else
                      " och finns inte bland de ortografiska hypoteserna."))
+    r = f.get("r") or {}
+    m = r.get("model")
+    if m:
+        lines.append("Attribueringsmodell i R (random forest, korsvaliderad 72 % träffsäkerhet på 18 ristare; sannolikheterna "
+                     "är försiktiga): " + ", ".join(f"{x['carver']} {x['p']:.2f}" for x in m["top"][:3]) + f" ({m['source']})")
+    c = r.get("cluster") or {}
+    if c.get("included"):
+        lines.append(f"Klustring i R: grupp {c['cluster']} av {c['k']} ({c['structure']} struktur)")
+    ch = r.get("chronology") or {}
+    if ch.get("included"):
+        lines.append(f"Upplands seriation i R: percentil {round(ch['percentile'] * 100)}, ca {ch['estimate']} "
+                     f"({ch['lo']}–{ch['hi']}); ordningen säkrare än årtalet")
+    land = r.get("landscape") or {}
+    if land.get("view"):
+        lines.append(f"Landskap (R): synlig från {round(land['view']['share_2km'] * 100)} % av ytan inom 2 km, synligare än "
+                     f"{round((land['view'].get('percentile') or 0) * 100)} % av slumpvisa platser i närheten")
+        if land.get("routes"):
+            rt = land["routes"]
+            lines.append(f"Landskap (R): {rt['stone_to_route_km']:.2f} km till simulerade vägar mellan grannplatser, "
+                         f"slumpvisa punkter median {rt['random_median_km']:.2f} km")
     td = f["two_d"].get("result") or {}
     if td.get("predicted_style"):
         lines.append(f"AI-bedömning av stilgrupp från bild (okalibrerad): {td['predicted_style']}")
@@ -914,6 +935,9 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
                     "Runforskningens mätkorpus och Mahalanobisavstånd till ristarnas medelvärden, med "
                     "lämna-en-ute-korsvalidering av träffsäkerheten; bara stenar med en säker signerad eller "
                     "attribuerad ristare i Rundata används som referens."))
+    rr_ = f.get("r") if (f.get("r") and not f["r"].get("error")) else None
+    if rr_:
+        blocks += r_report.method_blocks(rr_)
 
     # 4. Results
     blocks.append(h(1, "4. Resultat"))
@@ -1103,12 +1127,21 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
                                for c in cand_rows],
                               f"Hur ofta kandidaterna ristade i {signum}s stilgrupp och inskriftstyp (säkra inskrifter i "
                               "Rundata; stilgrupp av inskrifter med säker stilgrupp, typ av vikingatida runstenar med text)."))
+        if rr_:
+            blocks += r_report.attribution_blocks(rr_, signum, fig, tab)
         if sy.get("conflicts"):
             blocks.append(p("Motsägelser mellan källorna:"))
             blocks.append(bullets(sy["conflicts"]))
         if sy.get("missing"):
             blocks.append(p("Belägg som saknas:"))
             blocks.append(bullets(sy["missing"]))
+
+    if rr_:
+        if not (sy and sy.get("candidates") is not None):
+            blocks.append(h(2, "4.8 Attribuering"))
+            blocks += r_report.attribution_blocks(rr_, signum, fig, tab)
+        blocks += r_report.corpus_blocks(rr_, signum, fig, tab)
+        blocks += r_report.landscape_blocks(rr_.get("landscape"), signum, fig, tab)
 
     # 5. Discussion
     blocks.append(h(1, "5. Diskussion"))
@@ -1121,17 +1154,18 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
         "Ristaruppgifterna i Rundata är hypoteser i litteraturen och inte facit.",
         "Måtten är inte verifierade som likvärdiga med Groove Measure-variablerna i Kitzler Åhfeldts studier; "
         "direkta jämförelser kräver att samma referensstenar mäts med båda metoderna.",
-    ]))
+    ] + (r_report.LIMITATIONS if rr_ else [])))
 
     blocks.append(h(1, "Data och reproducerbarhet"))
     blocks.append(p(f"Mätningarna är gjorda med Runforskning {prov.get('version', '')}, mätmetod "
                     f"{', '.join(f['method_versions'])}. Modellfilen identifieras med kontrollsumman ovan, och "
                     "parametrarna i tabellen räcker för att upprepa analysen. Tvärsnittens mått finns i bilagan; "
-                    "råprofilerna kan publiceras i Runforskningens mätkorpus (CC BY 4.0)."))
+                    "råprofilerna kan publiceras i Runforskningens mätkorpus (CC BY 4.0)."
+                    + (" " + r_report.data_text(rr_) if rr_ else "")))
     blocks.append(h(1, "Tack"))
     blocks.append(p("Fyll i: den som skannat stenen, markägare, länsstyrelse, finansiärer."))
     blocks.append(h(1, "Referenser"))
-    refs = list(REFERENCES)
+    refs = list(REFERENCES) + (r_report.R_REFERENCES if rr_ else [])
     if sri:
         refs.append(sri)
     refs.append(f"Runforskning (Aagaard Research), version {prov.get('version', '2.0')}. Programvara. "

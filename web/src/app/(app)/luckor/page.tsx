@@ -63,8 +63,18 @@ interface Finding extends StoneExtras {
   signum: string; place: string; province: string; method: string; verdict: Verdict; ours: string; existing: string;
   evidence: number; novelty: number; relevance: number; score: number; assessment: string; suggested?: string;
   reasons: { belägg: string[]; nyhet: string[]; relevans: string[] };
+  crosscheck?: CrossCheck;
 }
+// The suggestion checked against newer sources (Runor 2020, Wikidata)
+interface CrossCheck {
+  status: "finns redan" | "nämns" | "annan ristare" | "samma som" | "saknas" | "ej kontrollerad";
+  runor?: { status: string; text: string; references: string[]; url?: string | null };
+  wikidata?: { text: string };
+}
+interface RPattern { topic: string; status: string; text: string; note?: string | null }
 interface Findings {
+  r_patterns?: RPattern[];
+  r_ready?: boolean;
   findings: Finding[];
   summary: { counts: Record<Verdict, number>; by_method: Record<string, Partial<Record<Verdict, number>>>; likely_new: number };
   technique_note: string | null;
@@ -159,6 +169,7 @@ export default function GapsPage() {
   const [measuredSigna, setMeasuredSigna] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("findings");
+  const [reload, setReload] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -190,7 +201,7 @@ export default function GapsPage() {
       }
     })();
     return () => { cancelled = true; };
-  }, [user]);
+  }, [user, reload]);
 
   if (error) return <div className="max-w-3xl mx-auto p-8 text-red-700 font-semibold">{error}</div>;
   if (!data || !found) return <div className="max-w-3xl mx-auto p-8 text-slate-500">Beräknar översikten …</div>;
@@ -253,7 +264,7 @@ export default function GapsPage() {
       </div>
 
       <div className="liquid-glass-island rounded-[32px] p-5">
-        {tab === "findings" && <FindingsPanel data={found} loggedIn={!!user} />}
+        {tab === "findings" && <FindingsPanel data={found} loggedIn={!!user} onRefresh={() => setReload(r => r + 1)} />}
         {tab === "categories" && <CategoryPanel />}
         {(tab === "hypotheses" || tab === "reconsider") && (
           <HypothesisTable key={tab} reconsider={tab === "reconsider"} ev={data.hypotheses.evaluation}
@@ -398,7 +409,59 @@ function ProvinceTable({ rows, measuredSigna }: { rows: ProvinceRow[]; measuredS
   );
 }
 
-function FindingsPanel({ data, loggedIn }: { data: Findings; loggedIn: boolean }) {
+const CC_STYLE: Record<string, string> = {
+  "finns redan": "bg-sky-50 text-sky-800 border-sky-200",
+  "nämns": "bg-sky-50 text-sky-800 border-sky-200",
+  "annan ristare": "bg-rose-50 text-rose-800 border-rose-200",
+  "samma som": "bg-violet-50 text-violet-800 border-violet-200",
+  "saknas": "bg-emerald-50 text-emerald-800 border-emerald-200",
+};
+
+function CrossCheckCell({ cc }: { cc?: CrossCheck }) {
+  if (!cc) return <span className="text-slate-400" title="Inte avstämd mot nyare källor">–</span>;
+  return <span className={`px-2 py-0.5 rounded-lg border text-[11px] font-bold whitespace-nowrap ${CC_STYLE[cc.status] ?? ""}`}
+    title={[cc.runor?.text, cc.wikidata?.text].filter(Boolean).join(" ")}>{cc.status}</span>;
+}
+
+function PatternsBox({ patterns }: { patterns: RPattern[] }) {
+  const style: Record<string, string> = {
+    "bekräftar": "bg-emerald-50 text-emerald-800 border-emerald-200",
+    "mönster att pröva": "bg-amber-50 text-amber-900 border-amber-200",
+    "begränsning": "bg-slate-100 text-slate-700 border-slate-300", "svagt": "bg-slate-100 text-slate-700 border-slate-300",
+  };
+  return (
+    <details open className="mb-5 rounded-2xl border border-slate-200 bg-white/70 p-4">
+      <summary className="cursor-pointer font-bold text-slate-900">Mönster i hela korpusen (statistik i R)
+        <Link href="/statistik" className="ml-3 text-xs font-semibold text-[#b7410e] hover:underline">visa figurer och metod</Link>
+      </summary>
+      <ul className="mt-3 space-y-2 text-sm">
+        {patterns.map((pt, i) => (
+          <li key={i} className="flex gap-3">
+            <span className={`shrink-0 h-fit px-2 py-0.5 rounded-lg border text-[11px] font-bold ${style[pt.status] ?? ""}`}>{pt.status}</span>
+            <div><span className="text-[11px] uppercase tracking-wider text-slate-500 mr-2">{pt.topic}</span>{pt.text}
+              {pt.note && <div className="text-xs text-slate-500 mt-0.5">{pt.note}</div>}</div>
+          </li>
+        ))}
+      </ul>
+    </details>
+  );
+}
+
+function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; loggedIn: boolean; onRefresh: () => void }) {
+  const [checking, setChecking] = useState(false);
+  const [checkError, setCheckError] = useState<string | null>(null);
+  const crosscheck = async () => {
+    setChecking(true); setCheckError(null);
+    try {
+      const res = await fetch(`${API_URL}/api/r/crosscheck`, { method: "POST" });
+      if (!res.ok) throw new Error((await res.json().catch(() => null))?.detail || `Fel ${res.status}`);
+      onRefresh();
+    } catch (e) {
+      setCheckError(e instanceof Error ? e.message : "Avstämningen misslyckades.");
+    } finally {
+      setChecking(false);
+    }
+  };
   const [verdict, setVerdict] = useState<Verdict | "">("");
   const [method, setMethod] = useState("");
   const [onlyLikely, setOnlyLikely] = useState(false);
@@ -412,17 +475,19 @@ function FindingsPanel({ data, loggedIn }: { data: Findings; loggedIn: boolean }
     signum: f => f.signum, place: f => f.place, method: f => f.method, verdict: f => f.verdict,
     suggested: f => f.suggested, existing: f => f.existing, evidence: f => f.evidence, novelty: f => f.novelty,
     relevance: f => f.relevance, score: f => f.score, assessment: f => f.assessment,
-    material: f => f.material, language: f => (f.language?.comparable ? f.language.agree / f.language.comparable : null),
+    crosscheck: f => f.crosscheck?.status, material: f => f.material, language: f => (f.language?.comparable ? f.language.agree / f.language.comparable : null),
   }, { key: "score", desc: true });
   const c = data.summary.counts;
   return (
     <>
       <p className="text-sm text-slate-600 mb-4 max-w-4xl">
-        Appens analyser ställda mot Rundata, som här står för den publicerade forskningen: ortografisk stilometri
-        (alla inskrifter, stenen själv utesluten ur ristarprofilen), huggteknik i mätkorpusen och AI-bedömd stilgrupp
-        från bilder i dina projekt. <strong>Uppskattningen</strong> väger belägg × nyhet × relevans (0–100) och är en
+        Appens analyser ställda mot Rundata (version 3.1, 2018), som här står för den publicerade forskningen: ortografisk
+        stilometri (alla inskrifter, stenen själv utesluten ur ristarprofilen), huggteknik i mätkorpusen, AI-bedömd stilgrupp
+        från bilder i dina projekt och – när statistiken i R är beräknad – attribueringsmodellen och Upplands seriation.
+        Kolumnen <strong>Nyare källor</strong> visar om förslaget redan finns i Runor 2020 (RAÄ) eller Wikidata. <strong>Uppskattningen</strong> väger belägg × nyhet × relevans (0–100) och är en
         tumregel för att prioritera – inte en granskning av litteraturen. Klicka på en rad för att se skälen.
       </p>
+      {data.r_patterns && data.r_patterns.length > 0 && <PatternsBox patterns={data.r_patterns} />}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
         {([["stämmer", "Stämmer med forskningen"], ["nytt", "Nytt – saknas i Rundata"], ["motsäger", "Motsäger forskningen"]] as [Verdict, string][]).map(([v, label]) => (
           <button key={v} onClick={() => setVerdict(verdict === v ? "" : v)}
@@ -444,6 +509,13 @@ function FindingsPanel({ data, loggedIn }: { data: Findings; loggedIn: boolean }
           {methods.map(m => <option key={m} value={m}>{m}</option>)}
         </select>
         <span className="text-slate-500">{sorted.length} fynd</span>
+        {data.r_ready && (
+          <button onClick={crosscheck} disabled={checking}
+            className="px-3 py-1.5 rounded-xl border border-slate-300 bg-white text-xs font-bold hover:bg-slate-50 disabled:opacity-50">
+            {checking ? "Stämmer av …" : "Stäm av mot Runor 2020 och Wikidata"}
+          </button>
+        )}
+        {checkError && <span className="text-xs text-red-700">{checkError}</span>}
         {data.technique_note && <span className="text-amber-800 text-xs">{data.technique_note}{!loggedIn && " Logga in för att ta med mätkorpusen."}</span>}
       </div>
       <div className="overflow-x-auto">
@@ -452,6 +524,7 @@ function FindingsPanel({ data, loggedIn }: { data: Findings; loggedIn: boolean }
             <tr className={TH_ROW}>
               {header("signum", "Sten")}{header("method", "Metod")}{header("verdict", "Mot forskningen")}
               {header("suggested", "Vårt resultat")}{header("existing", "Rundata")}
+              {header("crosscheck", "Nyare källor", "Förslaget i Runor 2020 (RAÄ) och Wikidata: finns redan, nämns, annan ristare, samma som en annan sten, saknas")}
               {header("material", "Bergart", "Stenens material i Rundata; ✓ = förekommer på den föreslagna ristarens stenar, ! = sällan")}
               {header("language", "Språkdrag", "Hur många jämförbara språkdrag (ljud och språkbruk) som stämmer med den föreslagna ristaren")}
               {header("evidence", "Belägg", "Hur pålitlig analysen är i just detta fall")}
@@ -488,6 +561,7 @@ function FindingRow({ f, open, onToggle }: { f: Finding; open: boolean; onToggle
         <td className="p-2"><span className={`px-2 py-0.5 rounded-lg border text-xs font-bold ${VERDICT_STYLE[f.verdict]}`}>{f.verdict}</span></td>
         <td className="p-2 text-xs max-w-[260px]">{f.ours}</td>
         <td className="p-2 text-xs">{f.existing}</td>
+        <td className="p-2"><CrossCheckCell cc={f.crosscheck} /></td>
         <td className="p-2 text-xs"><MaterialCell x={f} /></td>
         <td className="p-2 text-xs"><LanguageCell x={f} /></td>
         <td className="p-2"><Score value={f.evidence} /></td>
@@ -498,7 +572,7 @@ function FindingRow({ f, open, onToggle }: { f: Finding; open: boolean; onToggle
       </tr>
       {open && (
         <tr className="bg-white/50">
-          <td colSpan={12} className="p-3 text-xs text-slate-700">
+          <td colSpan={13} className="p-3 text-xs text-slate-700">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {(["belägg", "nyhet", "relevans"] as const).map(k => (
                 <div key={k}>
@@ -507,6 +581,18 @@ function FindingRow({ f, open, onToggle }: { f: Finding; open: boolean; onToggle
                 </div>
               ))}
             </div>
+            {f.crosscheck && (
+              <div className="mt-3 pt-3 border-t border-slate-900/5 space-y-1">
+                <div className="font-bold uppercase tracking-wider text-[10px] text-slate-500">Nyare källor</div>
+                {f.crosscheck.runor && (
+                  <p>{f.crosscheck.runor.text}{" "}
+                    {f.crosscheck.runor.url && <a href={f.crosscheck.runor.url} target="_blank" rel="noreferrer" className="text-[#b7410e] hover:underline">Öppna i Runor</a>}
+                  </p>
+                )}
+                {f.crosscheck.runor?.references?.length ? <p>Litteratur i Runor att kontrollera: {f.crosscheck.runor.references.join("; ")}</p> : null}
+                {f.crosscheck.wikidata && <p>{f.crosscheck.wikidata.text}</p>}
+              </div>
+            )}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3 pt-3 border-t border-slate-900/5">
               <div className="space-y-2">
                 <div className="font-bold uppercase tracking-wider text-[10px] text-slate-500">Bergart</div>

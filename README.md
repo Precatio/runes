@@ -28,7 +28,8 @@ skriver den bara text eller gör en uttalat okalibrerad bedömning; siffror, tab
 *   **Inskrifternas syfte** (9)**:** minnessten, självminne, bro och väg, kristen bön, utlandsfärd, arv, ting, magisk/rituell och gräns – per ristare med test mot genomsnittet.
 *   **Bergart och berggrund** (10)**:** stenens material jämförs med SGU:s berggrundskarta på platsen och inom 10 km och med bergarterna på ristarens stenar.
 *   **Delad mätkorpus** (4)**:** forskare publicerar huggspårsmätningar (CC BY 4.0) som blir referens för attribuering, ristarprofiler och Ward-klustring. Posterna kan bära skanningsmetadata, stenens skick, råa tvärsnittsprofiler (omräkning med nya metodversioner) och runformer; andra forskare kan verifiera dem. Export som datapaket.
-*   **Forskningsluckor** (13)**:** täckning per landskap med klickbara siffror, appens resultat mot befintlig forskning (stämmer, nytt, motsäger, med uppskattning av belägg, nyhet och relevans), inskrifternas syfte per ristare, ortografiska hypoteser, attribueringar att ompröva och vilka ristare som mest behöver mätas. Alla tabeller kan sorteras.
+*   **Statistik i R** (17)**:** hela korpusen analyserad i R – ristarnas områden och avstånd till vatten (sf), klustring och MCA (cluster, FactoMineR), formler och stavning (tidytext, stringdist), en korsvaliderad attribueringsmodell (tidymodels, random forest), seriation mot Gräslunds kronologi (ca), formelnätverk och släktrelationer (igraph) samt landskapet kring en sten (höjdmodell, sikt, strand vid vikingatiden och bästa vägar med terra och gdistance). Resultaten bakas in i stenanalysen och stenrapporten, blir fynd i Forskningsluckor och kan laddas ner som reproducerbarhetspaket med R-skript och data.
+*   **Forskningsluckor** (13)**:** täckning per landskap med klickbara siffror, appens resultat mot befintlig forskning (stämmer, nytt, motsäger, med uppskattning av belägg, nyhet och relevans, och avstämning mot Runor 2020 och Wikidata), inskrifternas syfte per ristare, ortografiska hypoteser, attribueringar att ompröva och vilka ristare som mest behöver mätas. Alla tabeller kan sorteras.
 *   **Rapporter** (14)**:** stenrapport i artikelform (runologisk presentation enligt SRI/Futhark, 3D-paradata, figurer ur skanningen, läsning och attribuering) och korpusrapport för flera stenar. Export till Word, LaTeX och Markdown.
 *   **Jämför stenar** (3)**:** permutationstest per mått och samlat, effektstorlek och överlagrade profiler.
 *   **Karta och stilgrupper:** geografisk spridning per period, stilgrupp och ristare; Gräslunds kronologi med fördelningen i Rundata.
@@ -41,7 +42,8 @@ skriver den bara text eller gör en uttalat okalibrerad bedömning; siffror, tab
 | Del | Teknik | Mapp |
 |---|---|---|
 | Webbapp (huvudgränssnitt) | Next.js + React, Firebase (inloggning/projekt) | `web/` |
-| Backend-API | Python, FastAPI, Gemini/OpenAI | `api/`, `src/` |
+| Backend-API | Python, FastAPI, Claude/Gemini | `api/`, `src/` |
+| Statistik | R (sf, tidymodels, ranger, tidytext, FactoMineR, ca, stringdist, igraph, terra, gdistance) | `r/` |
 | Äldre prototyp | Streamlit | `app.py`, `modules/` |
 
 ## Systemkrav & Installation
@@ -65,7 +67,15 @@ Kräver Python 3.11+ (utvecklas på 3.13) och Node.js 20+.
    ```bash
    .venv/bin/python -m scripts.build_rundata
    ```
-5. Webbappen – installera beroenden och lägg Firebase-konfigurationen i `web/.env.local`
+5. Statistik i R (valfritt men rekommenderat) – installera R och paketen. På macOS:
+   ```bash
+   brew install r gdal geos proj udunits pandoc cmake fribidi harfbuzz
+   Rscript r/install.R
+   ```
+   Utan R fungerar appen som förut; sidan Statistik (R) och R-avsnitten i rapporten visas då inte.
+   Obs: `brew install` kan uppgradera Homebrews Python. Om `.venv` slutar fungera, installera tillbaka
+   den Python-version miljön skapades med (t.ex. `brew install python@3.13`).
+6. Webbappen – installera beroenden och lägg Firebase-konfigurationen i `web/.env.local`
    (`NEXT_PUBLIC_FIREBASE_*`):
    ```bash
    cd web && npm install
@@ -87,6 +97,10 @@ Kräver Python 3.11+ (utvecklas på 3.13) och Node.js 20+.
 | `MESH_CACHE_SIZE` | api | `2` | Antal uppladdade 3D-modeller som hålls i analysmotorns minne |
 | `GEOLOGY_CACHE` | api | `data/cache/geology.json` | Cache för uppslag i SGU:s berggrundskarta |
 | `GEOLOGY_DISABLED` | api | – | `1` stänger av berggrundsuppslag (används i testerna) |
+| `RSCRIPT` | api | `Rscript` i PATH | Sökväg till Rscript |
+| `R_DISABLED` | api | – | `1` stänger av statistiken i R (används i testerna) |
+| `R_CACHE_DIR` | api | `data/cache/r` | Var korpus-, sten- och landskapsanalyserna i R sparas |
+| `CROSSCHECK_DISABLED` / `CROSSCHECK_CACHE` | api | – / `data/cache/crosscheck` | Avstämning mot Runor 2020 och Wikidata |
 
 API-nycklar som anges i webbappens inställningar sparas bara lokalt i webbläsaren.
 

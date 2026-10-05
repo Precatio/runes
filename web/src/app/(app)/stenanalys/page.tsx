@@ -28,7 +28,7 @@ interface Reading extends LinguisticResultData { label: string; error?: string }
 const STEPS: [string, string][] = [
   ["upload", "Ladda upp skanningen"], ["images", "Bilder ur skanningen"], ["grooves", "Spåranalys och känslighet"],
   ["twod", "2D-bildanalys"], ["reading", "Blind läsning och validering"], ["synthesis", "Syntes och attribuering"],
-  ["research", "Forskningsläge och syfte"], ["report", "Stenrapport"],
+  ["research", "Forskningsläge och syfte"], ["rstats", "Statistik i R"], ["report", "Stenrapport"],
 ];
 
 const field = "liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm font-semibold outline-none w-full mt-1";
@@ -50,6 +50,41 @@ async function rotated(dataUrl: string, deg: number): Promise<string> {
 
 const detail = async (res: Response, fallback: string) =>
   (await res.json().catch(() => null))?.detail || `${fallback} (${res.status})`;
+
+interface RStone {
+  model?: { top: { carver: string; p: number }[]; source: string } | null;
+  cluster?: { included: boolean; cluster?: number; k?: number };
+  chronology?: { included: boolean; estimate?: number; percentile?: number };
+  landscape?: { view?: { share_2km: number; percentile: number | null }; error?: string };
+}
+
+// Runs (if needed) the corpus analyses in R, then the stone's own R analysis; returns a short summary
+async function runR(signum: string, candidates: string[], progress: (msg: string) => void): Promise<string | null> {
+  const status = await fetch(`${API_URL}/api/r/status`).then(r => r.json());
+  if (!status.r?.available) return null;
+  if (!status.corpus?.ready) {
+    if (!status.corpus?.running) await fetch(`${API_URL}/api/r/corpus/run`, { method: "POST" });
+    const started = Date.now();
+    for (;;) {
+      await new Promise(r => setTimeout(r, 4000));
+      const st = await fetch(`${API_URL}/api/r/status`).then(r => r.json());
+      if (st.corpus?.ready) break;
+      if (!st.corpus?.running) throw new Error(st.corpus?.error || "Korpusanalyserna i R avbröts.");
+      if (Date.now() - started > 15 * 60 * 1000) throw new Error("Korpusanalyserna i R tog för lång tid.");
+      progress(`beräknar korpusen i R: ${st.corpus.module ?? "…"}`);
+    }
+  }
+  progress("analyserar stenen och landskapet i R …");
+  const res = await fetch(`${API_URL}/api/r/stone/${encodeURIComponent(signum)}?candidates=${encodeURIComponent(candidates.join(","))}`);
+  if (!res.ok) throw new Error((await res.json().catch(() => null))?.detail || `Fel ${res.status}`);
+  const r: RStone = await res.json();
+  const parts: string[] = [];
+  if (r.model?.top?.length) parts.push(`modellen: ${r.model.top.slice(0, 2).map(x => `${x.carver} ${x.p.toFixed(2).replace(".", ",")}`).join(", ")}`);
+  if (r.cluster?.included) parts.push(`grupp ${r.cluster.cluster} av ${r.cluster.k}`);
+  if (r.chronology?.included) parts.push(`seriation ca ${r.chronology.estimate}`);
+  if (r.landscape?.view) parts.push(`synlig från ${Math.round(r.landscape.view.share_2km * 100)} % av ytan inom 2 km`);
+  return parts.join("; ") || "klart";
+}
 
 export default function StoneAnalysisPage() {
   const { user } = useAuth();
@@ -254,7 +289,23 @@ export default function StoneAnalysisPage() {
         mark("research", "hoppades över", "inget signum i Rundata");
       }
 
-      // 8. Report
+      // 8. The stone against the R corpus analyses (model, areas, groups, seriation, landscape)
+      if (signum.trim() && rec) {
+        mark("rstats", "pågår", "kontrollerar R på servern …");
+        try {
+          const text = await runR(signum.trim(), synthesis.candidates.slice(0, 3).map(c => c.name),
+            msg => mark("rstats", "pågår", msg));
+          if (text) { wfSteps.push({ name: "Statistik i R", result: text }); mark("rstats", "klart", text); }
+          else mark("rstats", "hoppades över", "R finns inte på servern");
+        } catch (e) {
+          mark("rstats", "misslyckades", e instanceof Error ? e.message : "R-analysen misslyckades");
+          notes.push("Statistiken i R kunde inte göras för stenen; rapporten saknar de avsnitten.");
+        }
+      } else {
+        mark("rstats", "hoppades över", "inget signum i Rundata");
+      }
+
+      // 9. Report
       mark("report", "pågår");
       const body = {
         signum, author: userName, institution: userInstitution,

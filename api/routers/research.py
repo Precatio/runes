@@ -63,9 +63,12 @@ def research_findings(req: FindingsRequest):
     technique, technique_note = findings.technique_findings(req.corpus, s.get, s.inscriptions)
     extra = findings.add_extras(technique + findings.style_findings(req.styles, s.get, s.inscriptions),
                                 s.get, s.inscriptions, orthography_model().names)
-    items = list(_orthographic_findings()) + extra
+    from api.routers import rstats
+    r_items, r_patterns = rstats.findings()
+    items = rstats._with_crosscheck(list(_orthographic_findings())) + extra + r_items
     items.sort(key=lambda f: -f["score"])
     return {
+        "r_patterns": r_patterns, "r_ready": rstats.corpus_ready(),
         "findings": items,
         "summary": findings.summarize(items),
         "technique_note": technique_note,

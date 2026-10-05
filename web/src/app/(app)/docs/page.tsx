@@ -105,6 +105,16 @@ export default function DocsPage() {
               attribueringen – eller en rapport över flera stenar, och laddar ner den som Word, LaTeX eller Markdown.
             </p>
 
+            <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">Statistik i R</h3>
+            <p>
+              På sidan <strong>Statistik (R)</strong> analyseras hela korpusen i R: ristarnas områden och avstånd till vatten,
+              grupper av stil och språk, formler och stavning, dialekter, en korsvaliderad attribueringsmodell, seriation mot
+              Gräslunds kronologi och formelnätverk. Den fullständiga stenanalysen ställer stenen mot dessa resultat och mot
+              landskapet (sikt, strand vid vikingatiden, bästa vägar), och stenrapporten får egna avsnitt om det. I
+              Forskningsluckor kan förslagen stämmas av mot Runor 2020 och Wikidata. Allt kan laddas ner som
+              reproducerbarhetspaket med R-skript och data.
+            </p>
+
             <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">5. Fråga AI-assistenten</h3>
             <p>
               Nere i högra hörnet finns assistenten. Den har tillgång till Rundata och din senaste analys, till exempel{" "}
