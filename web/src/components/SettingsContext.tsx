@@ -37,7 +37,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   const [aiProvider, setProviderState] = useState<AIProvider>("claude");
   const [openaiKey, setOpenaiState] = useState("");
   const [userName, setUserNameState] = useState("Viktor Kvant");
-  const [userInstitution, setUserInstState] = useState("Bifrost");
+  const [userInstitution, setUserInstState] = useState("Vitki");
   const [totalTokensUsed, setTotalTokensUsed] = useState(0);
   const [tokenHistory, setTokenHistory] = useState<Record<string, number>>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -93,9 +93,9 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       if (savedProvider === "claude" || savedProvider === "gemini") setProviderState(savedProvider);
       if (savedOpenai) setOpenaiState(savedOpenai);
       if (savedName) setUserNameState(savedName);
-      // The app was earlier called Aagaard Research; saved settings get the new name Bifrost
-      if (savedInst === "Aagaard Research") {
-        savedInst = "Bifrost";
+      // The app was earlier called Aagaard Research and Bifrost; saved settings get the name Vitki
+      if (savedInst === "Aagaard Research" || savedInst === "Bifrost") {
+        savedInst = "Vitki";
         localStorage.setItem("vitki_user_inst", savedInst);
         if (user) {
           setDoc(doc(firestore, `users/${user.uid}/settings`, "profile"), { userInstitution: savedInst }, { merge: true })

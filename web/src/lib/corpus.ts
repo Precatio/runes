@@ -289,10 +289,10 @@ export async function datasetPackage(entries: CorpusEntry[], includeRaw: boolean
   }
   return {
     name: "runforskning-matkorpus",
-    title: "Bifrost – mätkorpus för huggspår på runstenar",
+    title: "Vitki – mätkorpus för huggspår på runstenar",
     created: new Date().toISOString(),
     license: { name: CORPUS_LICENSE, path: "https://creativecommons.org/licenses/by/4.0/" },
-    citation: "Bidragsgivarna enligt varje post; Bifrost, https://github.com/Precatio/runes",
+    citation: "Bidragsgivarna enligt varje post; Vitki, https://github.com/Precatio/runes",
     method: "Se METHODS.md i programvarans repo; metodversion anges per post.",
     contributors: [...new Set(entries.map(e => `${e.contributorName}${e.institution ? `, ${e.institution}` : ""}`))],
     count: entries.length,

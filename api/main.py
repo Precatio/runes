@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from api.routers import chat, threed, twod, raa, synthesis, phonetics, rundata, stats, orthography, research, reports, rstats
 
-app = FastAPI(title="Bifrost API")
+app = FastAPI(title="Vitki API")
 
 # Configure CORS for Next.js frontend (comma-separated list in CORS_ORIGINS)
 CORS_ORIGINS = [o.strip() for o in os.environ.get("CORS_ORIGINS", "http://localhost:3000").split(",") if o.strip()]
@@ -32,4 +32,4 @@ app.include_router(rstats.router, prefix="/api/r", tags=["r"])
 
 @app.get("/")
 def read_root():
-    return {"message": "Bifrost API is running"}
+    return {"message": "Vitki API is running"}

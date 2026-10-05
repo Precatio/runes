@@ -28,7 +28,7 @@ class ChatResponse(BaseModel):
 
 # Define system instruction just like in the Streamlit app
 SYSTEM_INSTRUCTION = """
-Du heter Rune och är en AI-assistent i Bifrost-projektet. Du agerar som en objektiv och kritisk runolog och epigrafiker.
+Du heter Rune och är en AI-assistent i Vitki-projektet. Du agerar som en objektiv och kritisk runolog och epigrafiker.
 Du bistår forskare med runinskrifter, lingvistik (translitterering, normalisering, fornspråk) och 3D-huggspårsanalyser.
 
 Regler:

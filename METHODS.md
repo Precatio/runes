@@ -1,6 +1,6 @@
 # Metodbeskrivning
 
-Den här filen beskriver exakt hur Bifrost räknar, så att resultat kan granskas, upprepas och citeras.
+Den här filen beskriver exakt hur Vitki räknar, så att resultat kan granskas, upprepas och citeras.
 Alla beräkningar finns i `src/` och testas i `tests/`. Varje analys sparar en **proveniens** (programversion,
 mätmetodens version, SHA-256 för 3D-filen, alla parametrar och tidpunkt) som följer med i export och rapporter.
 
@@ -497,7 +497,7 @@ Laila Kitzler Åhfeldts metod (Arkeologiska forskningslaboratoriet, Stockholms u
 2002) mäter spårvariabler i högupplösta 3D-modeller med funktionen *Groove Measure* (DeskArtes), analyserar
 runor och ornamentik separat, beskriver varje sten med medelvärden och använder bl.a. Wards klustring på
 standardiserade variabler (t.ex. Kitzler Åhfeldt & Imer 2019, *Danish Journal of Archaeology* 8,
-doi:10.7146/dja.v8i0.113226). Bifrost följer samma upplägg (separata spårtyper, medelvärden per sten,
+doi:10.7146/dja.v8i0.113226). Vitki följer samma upplägg (separata spårtyper, medelvärden per sten,
 standardisering, Ward), men **måtten är inte verifierade som likvärdiga** med Groove Measure-variablerna.
 Innan resultat jämförs direkt bör samma referensstenar mätas med båda metoderna.
 

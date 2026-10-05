@@ -201,7 +201,7 @@ def ensure_water() -> str | None:
         if os.path.isdir(target) and any(n.endswith(".shp") for n in os.listdir(target)):
             continue
         try:
-            resp = requests.get(url, timeout=120, headers={"User-Agent": "Bifrost/1.0"})
+            resp = requests.get(url, timeout=120, headers={"User-Agent": "Vitki/1.0"})
             resp.raise_for_status()
             with zipfile.ZipFile(io.BytesIO(resp.content)) as z:
                 z.extractall(target)
@@ -485,7 +485,7 @@ def _rerun_script(signum: str | None, candidates: list[str]) -> str:
 
 def _readme(signum: str | None) -> str:
     return (
-        "Reproducerbarhetspaket – Bifrost, statistik i R\n\n"
+        "Reproducerbarhetspaket – Vitki, statistik i R\n\n"
         "r/              R-skripten som appen kör (geografi, klustring, text, attribueringsmodell, sten)\n"
         "data/corpus.csv korpusen: svenska vikingatida runstenar ur Samnordisk runtextdatabas, med kategorier\n"
         "                och språkdrag som appen räknat fram (se METHODS.md)\n"

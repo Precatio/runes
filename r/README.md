@@ -1,6 +1,6 @@
 # Statistik i R
 
-R-skripten som Bifrost kör för korpusen och för en enskild sten. Metoderna beskrivs i
+R-skripten som Vitki kör för korpusen och för en enskild sten. Metoderna beskrivs i
 [METHODS.md](../METHODS.md), avsnitt 17.
 
 ```bash

@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "Om du använder programvaran i forskning, citera den enligt nedan."
-title: "Bifrost: öppen plattform för analys av runinskrifter"
+title: "Vitki: öppen plattform för analys av runinskrifter"
 type: software
 authors:
   - family-names: Kvant

@@ -480,7 +480,7 @@ def _method_html(provenance: Optional[dict]) -> str:
     p = provenance or {}
     mesh = p.get("mesh") or {}
     lines = [
-        f"Programvara: Bifrost {p.get('version', APP_VERSION)}, mätmetod {p.get('method_version', METHOD_VERSION)}.",
+        f"Programvara: Vitki {p.get('version', APP_VERSION)}, mätmetod {p.get('method_version', METHOD_VERSION)}.",
         "V-vinkeln är öppningsvinkeln mellan spårväggarnas regressionslinjer i varje tvärsnitt.",
         "Verktygsklassningen (pik-/bredmejsel) är en heuristisk tumregel med tröskel 85°, "
         "justerad för vittring och bergart enligt antaganden som inte är kalibrerade mot referensmaterial.",

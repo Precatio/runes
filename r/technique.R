@@ -80,8 +80,8 @@ p <- ggplot(pd, aes(pc1, pc2)) +
        subtitle = sprintf(tr("Principalkomponenter av sju standardiserade spårmått (%.0f %% och %.0f %% av variansen)",
                               "Principal components of seven standardised groove measures (%.0f %% and %.0f %% of variance)"), ve[1], ve[2]),
        x = "PC1", y = "PC2",
-       caption = tr("Skanningar: Kitzler Åhfeldt 2024 (Zenodo, CC BY 4.0). Mått: Bifrost, automatisk spåranalys.",
-                    "Scans: Kitzler Åhfeldt 2024 (Zenodo, CC BY 4.0). Measures: Bifrost automatic groove analysis.")) +
+       caption = tr("Skanningar: Kitzler Åhfeldt 2024 (Zenodo, CC BY 4.0). Mått: Vitki, automatisk spåranalys.",
+                    "Scans: Kitzler Åhfeldt 2024 (Zenodo, CC BY 4.0). Measures: Vitki automatic groove analysis.")) +
   theme_runor()
 fig_pca <- save_fig(p, out, "teknik_pca.png", 7.5, 5.5)
 

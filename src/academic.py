@@ -206,7 +206,7 @@ def build_document(facts: dict, author: str, institution: str, ai: dict | None) 
         h(1, "Sammanfattning"),
         p(ai.get("abstract") or
           f"Rapporten sammanställer huggspårsmätningar från {len(stones)} runstenar ({facts['n_slices']} tvärsnitt) "
-          f"i Bifrosts mätkorpus, med ristaruppgifter ur Samnordisk runtextdatabas.", ai=bool(ai.get("abstract"))),
+          f"i Vitkis mätkorpus, med ristaruppgifter ur Samnordisk runtextdatabas.", ai=bool(ai.get("abstract"))),
         h(1, "1. Inledning"),
         p(ai.get("introduction") or
           "Syftet är att beskriva huggtekniken i det valda urvalet och pröva i vilken mån uppmätta spårmått "
@@ -221,7 +221,7 @@ def build_document(facts: dict, author: str, institution: str, ai: dict | None) 
                 s["entry"].get("contributorName", "–")] for s in stones],
               "Tabell 1. Uppmätta stenar."),
         h(1, "3. Metod"),
-        p("Tvärsnitt genom spåren har tagits ur 3D-skanningar med Bifrost "
+        p("Tvärsnitt genom spåren har tagits ur 3D-skanningar med Vitki "
           f"(mätmetod {', '.join(facts['method_versions'])}). I varje tvärsnitt anpassas spårväggarna med linjär "
           "regression mellan 20 och 80 procent av spårdjupet; V-vinkeln är öppningsvinkeln mellan väggarnas linjer, "
           "bredden mäts där linjerna når stenytan och djupet från spårkanten till botten. Metoden har validerats "
@@ -276,7 +276,7 @@ def build_document(facts: dict, author: str, institution: str, ai: dict | None) 
     ]))
     blocks.append(h(1, "Referenser"))
     blocks.append(bullets(REFERENCES + [
-        "Bifrost, version 2.0. Programvara. https://github.com/Precatio/runes",
+        "Vitki, version 2.0. Programvara. https://github.com/Precatio/runes",
     ]))
     if facts["contributors"]:
         blocks.append(h(2, "Bidragsgivare till mätdata"))

@@ -697,7 +697,7 @@ def workflow_appendix(wf: dict, signum: str, fig, tab) -> list[dict]:
     blinda läsningar och de fel eller begränsningar som uppstod. Gör artikeln granskningsbar."""
     out = [h(1, "Bilaga B. Arbetsgång"),
            p(wf.get("intro") or (
-               f"Analysen gjordes {wf.get('date', '')} med Bifrosts fullständiga stenanalys: bilder ur skanningen, "
+               f"Analysen gjordes {wf.get('date', '')} med Vitkis fullständiga stenanalys: bilder ur skanningen, "
                "automatisk spåranalys med känslighetsanalys, 2D-bildanalys, blind läsning jämförd med Rundata, syntes och "
                "stenrapport. Varje steg använder samma beräkningar som de enskilda verktygen i appen."))]
     steps = wf.get("steps") or []
@@ -910,7 +910,7 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
     prov = f["provenance"]
     mode = (prov.get("parameters") or {}).get("mode")
     blocks.append(p(
-        f"Huggspåren mättes med Bifrost {prov.get('version', '')} (mätmetod {', '.join(f['method_versions'])}). "
+        f"Huggspåren mättes med Vitki {prov.get('version', '')} (mätmetod {', '.join(f['method_versions'])}). "
         + ("Spåren hittades automatiskt som fördjupningar under den rekonstruerade stenytan; tvärsnitt lades med jämna "
            "mellanrum längs spårens mittlinjer vinkelrätt mot spårets riktning, och varje snitt granskades mot "
            "kvalitetskriterier (väggpassning, rimlig vinkel, djup över brusnivån, spårkanter inom snittet). "
@@ -935,7 +935,7 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
     blocks.append(p("Varje mått sammanfattas med medelvärde, standardavvikelse och 95 % konfidensintervall för "
                     "medelvärdet (t-fördelning). Runor och ornamentik jämförs med permutationstest per mått "
                     "(Bonferroni-justerat) och samlat. Jämförelsen med andra stenar använder stenarnas medelvärden i "
-                    "Bifrosts mätkorpus och Mahalanobisavstånd till ristarnas medelvärden, med "
+                    "Vitkis mätkorpus och Mahalanobisavstånd till ristarnas medelvärden, med "
                     "lämna-en-ute-korsvalidering av träffsäkerheten; bara stenar med en säker signerad eller "
                     "attribuerad ristare i Rundata används som referens."))
     rr_ = f.get("r") if (f.get("r") and not f["r"].get("error")) else None
@@ -1160,10 +1160,10 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
     ] + (r_report.LIMITATIONS if rr_ else [])))
 
     blocks.append(h(1, "Data och reproducerbarhet"))
-    blocks.append(p(f"Mätningarna är gjorda med Bifrost {prov.get('version', '')}, mätmetod "
+    blocks.append(p(f"Mätningarna är gjorda med Vitki {prov.get('version', '')}, mätmetod "
                     f"{', '.join(f['method_versions'])}. Modellfilen identifieras med kontrollsumman ovan, och "
                     "parametrarna i tabellen räcker för att upprepa analysen. Tvärsnittens mått finns i bilagan; "
-                    "råprofilerna kan publiceras i Bifrosts mätkorpus (CC BY 4.0)."
+                    "råprofilerna kan publiceras i Vitkis mätkorpus (CC BY 4.0)."
                     + (" " + r_report.data_text(rr_) if rr_ else "")))
     blocks.append(h(1, "Tack"))
     ss = f.get("scan_source")
@@ -1177,7 +1177,7 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
         refs.append(scan["citation"])
     if sri:
         refs.append(sri)
-    refs.append(f"Bifrost, version {prov.get('version', '2.0')}. Programvara. "
+    refs.append(f"Vitki, version {prov.get('version', '2.0')}. Programvara. "
                 "https://github.com/Precatio/runes")
     # Harvard order: single author before co-authored works by the same first author
     blocks.append(bullets(sorted(refs, key=lambda r: r.replace(" &", "~"))))
