@@ -468,7 +468,7 @@ export default function LandingPage() {
               <h3 className="text-lg font-bold">Citera</h3>
               <p className="mt-3 text-slate-300">Använder du plattformen i forskning, citera programvaran och de datakällor du använt:</p>
               <pre className="mt-3 whitespace-pre-wrap rounded-xl bg-black/30 border border-white/10 p-4 text-sm text-slate-200 font-mono">
-{`Kvant, V. (2026). Runforskning (Aagaard Research):
+{`Kvant, V. (2026). Bifrost:
 öppen plattform för analys av runinskrifter
 (version 2.0.0). ${GITHUB}
 
@@ -493,7 +493,7 @@ språk, Uppsala universitet.`}
       <footer className="border-t border-slate-900/10">
         <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row gap-4 justify-between text-sm text-slate-500">
           <div>
-            Vitki AI · Aagaard Research · Grundat av{" "}
+            Vitki AI · Bifrost · Grundat av{" "}
             <a href="https://www.linkedin.com/in/viktor-kvant-555180108/" target="_blank" rel="noopener noreferrer" className="font-semibold text-slate-700 hover:text-[#b7410e]">Viktor Kvant</a>
           </div>
           <div className="flex gap-5">

@@ -16,6 +16,8 @@ __pycache__/
 
 # Stora skanningar (GitHub tillåter max 100 MB per fil)
 So 113_1_4 thin_closed holes.stl
+So *.stl
+skanningar/
 .venv-py39/
 
 # Firebase CLI-cache

@@ -63,8 +63,10 @@ def main(argv=None):
     api, out = a.api.rstrip("/"), a.out
     os.makedirs(f"{out}/artikel/figurer", exist_ok=True)
     notes, steps = [], []
-    key = os.environ.get("GEMINI_API_KEY", "")
-    headers = {"X-Gemini-Api-Key": key} if key else {}
+    # Same model choice as the app: Claude by default, Gemini if AI_PROVIDER=gemini
+    headers = {k: v for k, v in {"X-AI-Provider": os.environ.get("AI_PROVIDER", ""),
+                                 "X-Anthropic-Api-Key": os.environ.get("ANTHROPIC_API_KEY", ""),
+                                 "X-Gemini-Api-Key": os.environ.get("GEMINI_API_KEY", "")}.items() if v}
 
     # 1. Upload and images from the scan
     log("1/6 Laddar upp skanningen …")
@@ -166,6 +168,7 @@ def main(argv=None):
         "two_d": {"predicted_style": twod["predicted_style"], "confidence": twod["confidence"], "reasoning": twod["reasoning"]} if twod else None,
         "include_geology": True,
     }
+    syn_body["use_ai"] = not a.no_ai
     synthesis = requests.post(f"{api}/api/synthesis/analyze", json=syn_body, headers=headers, timeout=900).json()
     json.dump(synthesis, open(f"{out}/syntes.json", "w"), ensure_ascii=False, indent=1)
     if synthesis.get("outcome"):
@@ -192,7 +195,10 @@ def main(argv=None):
                 requests.post(f"{api}/api/r/corpus/run", timeout=120)
                 while True:
                     time.sleep(5)
-                    c = requests.get(f"{api}/api/r/status", timeout=120).json()["corpus"]
+                    try:
+                        c = requests.get(f"{api}/api/r/status", timeout=120).json()["corpus"]
+                    except (requests.RequestException, ValueError, KeyError):
+                        continue  # the server may be busy or restarting
                     if c["ready"] or not c["running"]:
                         break
             names = ",".join(c["name"] for c in (synthesis.get("candidates") or [])[:3])

@@ -71,6 +71,7 @@ class SynthesisRequest(BaseModel):
     reading: Optional[dict] = None
     # Berggrunden på platsen ur SGU:s karta (nätverksanrop, några sekunder första gången)
     include_geology: bool = True
+    use_ai: bool = True  # False: only the computed texts, no language model
 
 
 class Evidence(BaseModel):
@@ -415,7 +416,7 @@ def analyze_synthesis(
         sources.append(STYLE_SOURCE)
 
     parsed, ai_used = {}, False
-    if llm.available(ai):
+    if request.use_ai and llm.available(ai):
         try:
             parsed = run_ai(ai, block, candidates, evidence["signum"])
             ai_used = True
@@ -479,7 +480,7 @@ def _method_html(provenance: Optional[dict]) -> str:
     p = provenance or {}
     mesh = p.get("mesh") or {}
     lines = [
-        f"Programvara: Runforskning {p.get('version', APP_VERSION)}, mätmetod {p.get('method_version', METHOD_VERSION)}.",
+        f"Programvara: Bifrost {p.get('version', APP_VERSION)}, mätmetod {p.get('method_version', METHOD_VERSION)}.",
         "V-vinkeln är öppningsvinkeln mellan spårväggarnas regressionslinjer i varje tvärsnitt.",
         "Verktygsklassningen (pik-/bredmejsel) är en heuristisk tumregel med tröskel 85°, "
         "justerad för vittring och bergart enligt antaganden som inte är kalibrerade mot referensmaterial.",

@@ -29,7 +29,8 @@ if (has("attribution_model.rds")) {
   pcols <- paste0(".pred_", M$levels)
   if (signum %in% oof$signum) {
     probs <- unlist(oof[oof$signum == signum, pcols][1, ])
-    source_note <- "korsvaliderad: sannolikheterna kommer från modeller som inte såg stenen"
+    source_note <- tr("korsvaliderad: sannolikheterna kommer från modeller som inte såg stenen",
+                      "cross-validated: probabilities from models that did not see the stone")
   } else {
     f <- row %>% left_join(geo %>% select(signum, x, y), by = "signum") %>% left_join(txt, by = "signum") %>%
       mutate(x_km = x / 1000, y_km = y / 1000)
@@ -40,7 +41,7 @@ if (has("attribution_model.rds")) {
       f[[col]] <- factor(v, levels = M$train_levels[[col]])
     }
     probs <- unlist(predict(M$final, f, type = "prob")[1, pcols])
-    source_note <- "stenen ingick inte i träningen"
+    source_note <- tr("stenen ingick inte i träningen", "the stone was not in the training data")
   }
   names(probs) <- M$levels
   g <- geo[geo$signum == signum, ]
@@ -58,13 +59,15 @@ if (has("attribution_model.rds")) {
   model$reliability <- att$calibration$reliability
   top <- data.frame(carver = M$levels[o[1:6]], p = probs[o[1:6]])
   top$carver <- factor(top$carver, levels = rev(top$carver))
-  top$kind <- ifelse(as.character(top$carver) %in% cands, "Kandidat i syntesen", "Övriga")
+  k_c <- tr("Kandidat i syntesen", "Candidate in the synthesis"); k_o <- tr("Övriga", "Other")
+  top$kind <- ifelse(as.character(top$carver) %in% cands, k_c, k_o)
   p <- ggplot(top, aes(p, carver, fill = kind)) +
     geom_col(width = 0.65) +
     geom_text(aes(label = sprintf("%.0f %%", 100 * p)), hjust = -0.2, size = 3, colour = INK) +
-    scale_fill_manual(values = c("Kandidat i syntesen" = SERIES[1], "Övriga" = FAINT), name = NULL) +
+    scale_fill_manual(values = setNames(c(SERIES[1], FAINT), c(k_c, k_o)), name = NULL) +
     scale_x_continuous(labels = scales::percent, limits = c(0, min(1, max(top$p) * 1.25 + 0.02)), expand = c(0, 0)) +
-    labs(title = sprintf("Attribueringsmodellen: %s", signum), x = "Sannolikhet (bland modellens ristare)", y = NULL,
+    labs(title = sprintf(tr("Attribueringsmodellen: %s", "Attribution model: %s"), signum),
+         x = tr("Sannolikhet (bland modellens ristare)", "Probability (among the model's carvers)"), y = NULL,
          subtitle = paste0("Random forest; ", source_note)) +
     theme_runor() + theme(panel.grid.major.y = element_blank())
   res$figures$model <- save_fig(p, out, "sten_modell.png", 6.5, 3.6)
@@ -120,11 +123,13 @@ if (has("geography_stones.csv") && !is.na(row$lat)) {
   p <- p + geom_point(data = cs, aes(x, y, colour = carver), size = 1.4) +
     geom_point(data = s, aes(x, y), shape = 23, size = 4, fill = ACCENT, colour = "white", stroke = 0.8) +
     annotate("text", x = s$x, y = s$y, label = signum, vjust = -1.3, size = 3.2, colour = INK, fontface = "bold") +
-    scale_colour_manual(values = SERIES[seq_along(mc)], name = "Säkra stenar av") +
+    scale_colour_manual(values = SERIES[seq_along(mc)], name = tr("Säkra stenar av", "Certain stones by")) +
     coord_sf(xlim = xl, ylim = yl, crs = SWEREF, datum = NA) +
-    labs(title = sprintf("%s och kandidaternas stenar", signum),
-         subtitle = "Konvexa höljen kring varje ristares säkra stenar. Grått: övriga runstenar.",
-         caption = "Källa: Samnordisk runtextdatabas; vatten: Natural Earth 1:10 milj.") +
+    labs(title = sprintf(tr("%s och kandidaternas stenar", "%s and the candidates' stones"), signum),
+         subtitle = tr("Konvexa höljen kring varje ristares säkra stenar. Grått: övriga runstenar.",
+                       "Convex hulls around each carver's certain stones. Grey: other runestones."),
+         caption = tr("Källa: Samnordisk runtextdatabas; vatten: Natural Earth 1:10 milj.",
+                      "Source: Scandinavian Runic-text Database; water: Natural Earth 1:10m.")) +
     theme_map()
   res$figures$map <- save_fig(p, out, "sten_karta.png", 7, 7)
 }
@@ -157,8 +162,9 @@ if (has("clusters_model.rds")) {
       geom_point(data = cs[cs$cluster == me$cluster, ], colour = SERIES[1], size = 0.7) +
       geom_point(data = me, shape = 23, size = 4, fill = ACCENT, colour = "white", stroke = 0.8) +
       annotate("text", x = me$dim1, y = me$dim2, label = signum, vjust = -1.3, size = 3.2, fontface = "bold", colour = INK) +
-      labs(title = sprintf("%s i MCA-rummet", signum), x = "Dimension 1", y = "Dimension 2",
-           subtitle = sprintf("Stenens grupp (%d av %d) i blått; övriga klustrade stenar i grått", me$cluster, cj$k)) +
+      labs(title = sprintf(tr("%s i MCA-rummet", "%s in the MCA space"), signum), x = "Dimension 1", y = "Dimension 2",
+           subtitle = sprintf(tr("Stenens grupp (%d av %d) i blått; övriga klustrade stenar i grått",
+                                 "The stone's group (%d of %d) in blue; other clustered stones in grey"), me$cluster, cj$k)) +
       theme_runor()
     res$figures$mca <- save_fig(p, out, "sten_mca.png", 6.5, 5)
   }

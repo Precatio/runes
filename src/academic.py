@@ -206,7 +206,7 @@ def build_document(facts: dict, author: str, institution: str, ai: dict | None) 
         h(1, "Sammanfattning"),
         p(ai.get("abstract") or
           f"Rapporten sammanställer huggspårsmätningar från {len(stones)} runstenar ({facts['n_slices']} tvärsnitt) "
-          f"i Runforskningens mätkorpus, med ristaruppgifter ur Samnordisk runtextdatabas.", ai=bool(ai.get("abstract"))),
+          f"i Bifrosts mätkorpus, med ristaruppgifter ur Samnordisk runtextdatabas.", ai=bool(ai.get("abstract"))),
         h(1, "1. Inledning"),
         p(ai.get("introduction") or
           "Syftet är att beskriva huggtekniken i det valda urvalet och pröva i vilken mån uppmätta spårmått "
@@ -221,7 +221,7 @@ def build_document(facts: dict, author: str, institution: str, ai: dict | None) 
                 s["entry"].get("contributorName", "–")] for s in stones],
               "Tabell 1. Uppmätta stenar."),
         h(1, "3. Metod"),
-        p("Tvärsnitt genom spåren har tagits ur 3D-skanningar med Runforskning "
+        p("Tvärsnitt genom spåren har tagits ur 3D-skanningar med Bifrost "
           f"(mätmetod {', '.join(facts['method_versions'])}). I varje tvärsnitt anpassas spårväggarna med linjär "
           "regression mellan 20 och 80 procent av spårdjupet; V-vinkeln är öppningsvinkeln mellan väggarnas linjer, "
           "bredden mäts där linjerna når stenytan och djupet från spårkanten till botten. Metoden har validerats "
@@ -276,7 +276,7 @@ def build_document(facts: dict, author: str, institution: str, ai: dict | None) 
     ]))
     blocks.append(h(1, "Referenser"))
     blocks.append(bullets(REFERENCES + [
-        "Runforskning (Aagaard Research), version 2.0. Programvara. https://github.com/Precatio/runes",
+        "Bifrost, version 2.0. Programvara. https://github.com/Precatio/runes",
     ]))
     if facts["contributors"]:
         blocks.append(h(2, "Bidragsgivare till mätdata"))
@@ -315,7 +315,8 @@ def to_markdown(blocks: list[dict]) -> str:
             if b["normalization_ows"]:
                 out += [f"> *{b['normalization_ows']}*", ">"]
             if b["translation"]:
-                out += [f"> ”{b['translation']}”"]
+                q = ("“", "”") if b.get("lang") == "en" else ("”", "”")
+                out += [f"> {q[0]}{b['translation']}{q[1]}"]
             out += [""]
     return "\n".join(out)
 
@@ -345,7 +346,8 @@ def to_html(blocks: list[dict]) -> str:
             parts = [f"<p><strong>{e(b['transliteration'])}</strong></p>"]
             parts += [f"<p><em>{e(x)}</em></p>" for x in (b["normalization"], b["normalization_ows"]) if x]
             if b["translation"]:
-                parts.append(f"<p>”{e(b['translation'])}”</p>")
+                q = ("“", "”") if b.get("lang") == "en" else ("”", "”")
+                parts.append(f"<p>{q[0]}{e(b['translation'])}{q[1]}</p>")
             out.append(f"<blockquote class=\"inscription\">{''.join(parts)}</blockquote>")
     return "\n".join(out)
 
@@ -427,7 +429,8 @@ def to_docx(blocks: list[dict]) -> bytes:
                 if x:
                     doc.add_paragraph(style="Quote").add_run(x).italic = True
             if b["translation"]:
-                doc.add_paragraph(f"”{b['translation']}”", style="Quote")
+                q = ("“", "”") if b.get("lang") == "en" else ("”", "”")
+                doc.add_paragraph(f"{q[0]}{b['translation']}{q[1]}", style="Quote")
     buf = io.BytesIO()
     doc.save(buf)
     return buf.getvalue()

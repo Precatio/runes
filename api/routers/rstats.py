@@ -33,8 +33,10 @@ def corpus_ready() -> bool:
 def _state() -> dict:
     fp, _, n = _corpus()
     done = rb.JOB.result(fp) if rb.JOB.ready(fp) else None
+    if done is None and rb.JOB.ready(fp):
+        done = {}  # being written; report as not yet ready below
     st = rb.JOB.state_of(fp)
-    return {"fingerprint": fp, "n_stones": n, "ready": done is not None,
+    return {"fingerprint": fp, "n_stones": n, "ready": bool(done),
             "computed_at": done.get("computed_at") if done else None,
             "errors": done.get("errors") if done else None,
             "running": bool(st.get("running")), "module": st.get("module"),
@@ -177,7 +179,7 @@ def _urls(fp: str, res: dict) -> dict:
     return {k: f"/api/r/figure/{fp}/{rel[0]}/{rel[1]}/{v}" for k, v in (res.get("figures") or {}).items() if v}
 
 
-def stone_analysis(signum: str, candidates: list[str], with_landscape: bool = True) -> dict | None:
+def stone_analysis(signum: str, candidates: list[str], with_landscape: bool = True, lang: str = "sv") -> dict | None:
     """R-analysen av en sten för rapporter och stenanalysen; None om R eller korpusanalysen saknas."""
     if not corpus_ready():
         return None
@@ -186,13 +188,13 @@ def stone_analysis(signum: str, candidates: list[str], with_landscape: bool = Tr
         return None
     fp = fingerprint()
     try:
-        res = rb.stone(fp, rec["signum"], candidates)
+        res = rb.stone(fp, rec["signum"], candidates, lang)
     except rb.RError as e:
         return {"error": str(e)}
     res["figure_urls"] = _urls(fp, res)
     if with_landscape and rec.get("lat") is not None:
         try:
-            land = rb.landscape(fp, rec["signum"])
+            land = rb.landscape(fp, rec["signum"], lang=lang)
             land["figure_urls"] = _urls(fp, land)
             res["landscape"] = land
         except rb.RError as e:
@@ -204,7 +206,7 @@ def stone_analysis(signum: str, candidates: list[str], with_landscape: bool = Tr
 
 
 @router.get("/stone/{signum:path}")
-def r_stone(signum: str, candidates: str = "", landscape: bool = True):
+def r_stone(signum: str, candidates: str = "", landscape: bool = True, lang: str = "sv"):
     """En sten mot korpusanalyserna: kandidaternas områden, grupp, modellens sannolikheter, formler, seriation
     och landskap."""
     _require_r()
@@ -216,7 +218,9 @@ def r_stone(signum: str, candidates: str = "", landscape: bool = True):
     from src.research_gaps import is_runestone
     if not is_runestone(rec):
         raise HTTPException(status_code=422, detail="R-analysen gäller svenska vikingatida runstenar.")
-    res = stone_analysis(rec["signum"], [c.strip() for c in candidates.split(",") if c.strip()], landscape)
+    if lang not in ("sv", "en"):
+        raise HTTPException(status_code=400, detail="Språket ska vara sv eller en.")
+    res = stone_analysis(rec["signum"], [c.strip() for c in candidates.split(",") if c.strip()], landscape, lang)
     if res and res.get("error"):
         raise HTTPException(status_code=500, detail=res["error"])
     return _public(res)

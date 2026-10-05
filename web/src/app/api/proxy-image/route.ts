@@ -56,7 +56,7 @@ export async function GET(request: Request) {
     for (let hop = 0; hop <= MAX_REDIRECTS; hop++) {
       response = await fetch(target, {
         redirect: 'manual',
-        headers: { 'User-Agent': 'Runforskning/1.0 (image proxy)' },
+        headers: { 'User-Agent': 'Bifrost/1.0 (image proxy)' },
       });
       if (response.status < 300 || response.status >= 400) break;
       const location = response.headers.get('location');

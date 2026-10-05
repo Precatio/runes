@@ -2,7 +2,7 @@ import streamlit as st
 import importlib
 
 # Måste vara första anropet
-st.set_page_config(page_title="Runforskning", layout="wide", page_icon="🗿")
+st.set_page_config(page_title="Bifrost", layout="wide", page_icon="🗿")
 
 # --- Custom SaaS CSS ---
 # Detta ger en modernare känsla med rundade hörn, glas-effekter och bättre typografi.

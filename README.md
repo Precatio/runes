@@ -1,4 +1,4 @@
-# Runforskning (Aagaard Research)
+# Bifrost
 
 Ett modernt, modulärt och öppet forskningsverktyg för analys av runstenar. Appen består av en webbapp i Next.js och ett Python-API (FastAPI), och syftar till att samla spjutspetsen inom runforskning – från 3D-skannad huggspårsanalys till geografiska informationssystem (GIS) och AI-drivna expertmodeller – i en och samma plattform.
 

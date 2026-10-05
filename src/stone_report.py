@@ -22,7 +22,7 @@ from collections import defaultdict
 import numpy as np
 
 from src.academic import DIGITS, FEATURE_NAMES, bullets, figure, fmt, h, p, table
-from src import r_report
+from src import r_report, scan_sources
 from src.reading import runes_to_latin
 from src.slice_analysis import calculate_v_angle
 from src.stats import METRICS, METRIC_LABELS, attribute, compare_stones, summarize
@@ -549,11 +549,14 @@ def build_facts(req: dict, rundata_lookup) -> dict:
     attribution = attribute(reference, [this_means[m] for m in METRICS]) if this_means and reference else None
 
     prov = provenances[-1] if provenances else {}
+    # Open scan series (e.g. Kitzler Åhfeldt's on Zenodo): credit the scanner and cite the dataset
+    scan, scan_source = scan_sources.fill_scan(req.get("scan") or {}, rec["signum"] if rec else signum)
     return {
         "signum": rec["signum"] if rec else signum,
         "rundata": rec,
         "meta": req.get("meta") or {},
-        "scan": req.get("scan") or {},
+        "scan": scan,
+        "scan_source": scan_source,
         "condition": req.get("condition") or {},
         "groups": groups,
         "order": order,
@@ -694,7 +697,7 @@ def workflow_appendix(wf: dict, signum: str, fig, tab) -> list[dict]:
     blinda läsningar och de fel eller begränsningar som uppstod. Gör artikeln granskningsbar."""
     out = [h(1, "Bilaga B. Arbetsgång"),
            p(wf.get("intro") or (
-               f"Analysen gjordes {wf.get('date', '')} med Runforsknings fullständiga stenanalys: bilder ur skanningen, "
+               f"Analysen gjordes {wf.get('date', '')} med Bifrosts fullständiga stenanalys: bilder ur skanningen, "
                "automatisk spåranalys med känslighetsanalys, 2D-bildanalys, blind läsning jämförd med Rundata, syntes och "
                "stenrapport. Varje steg använder samma beräkningar som de enskilda verktygen i appen."))]
     steps = wf.get("steps") or []
@@ -896,7 +899,7 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
         ["Hörn / trianglar", f"{pm.get('vertices', '–')} / {pm.get('faces', '–')}"],
         ["Utsträckning", " × ".join(fmt(v, 0) for v in extent) + " mm" if extent else "–"],
         ["Kontrollsumma (SHA-256)", pm.get("sha256") or "–"],
-        ["Publicerad skanning", scan.get("url") or "–"],
+        ["Publicerad skanning", (f"{scan['url']} ({f['scan_source']['short']})" if f.get("scan_source") else scan.get("url")) or "–"],
         ["Licens för skanningen", scan.get("license") or "–"],
     ]
     blocks.append(tab(["", ""], scan_rows, "3D-dokumentation och paradata."))
@@ -907,7 +910,7 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
     prov = f["provenance"]
     mode = (prov.get("parameters") or {}).get("mode")
     blocks.append(p(
-        f"Huggspåren mättes med Runforskning {prov.get('version', '')} (mätmetod {', '.join(f['method_versions'])}). "
+        f"Huggspåren mättes med Bifrost {prov.get('version', '')} (mätmetod {', '.join(f['method_versions'])}). "
         + ("Spåren hittades automatiskt som fördjupningar under den rekonstruerade stenytan; tvärsnitt lades med jämna "
            "mellanrum längs spårens mittlinjer vinkelrätt mot spårets riktning, och varje snitt granskades mot "
            "kvalitetskriterier (väggpassning, rimlig vinkel, djup över brusnivån, spårkanter inom snittet). "
@@ -932,7 +935,7 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
     blocks.append(p("Varje mått sammanfattas med medelvärde, standardavvikelse och 95 % konfidensintervall för "
                     "medelvärdet (t-fördelning). Runor och ornamentik jämförs med permutationstest per mått "
                     "(Bonferroni-justerat) och samlat. Jämförelsen med andra stenar använder stenarnas medelvärden i "
-                    "Runforskningens mätkorpus och Mahalanobisavstånd till ristarnas medelvärden, med "
+                    "Bifrosts mätkorpus och Mahalanobisavstånd till ristarnas medelvärden, med "
                     "lämna-en-ute-korsvalidering av träffsäkerheten; bara stenar med en säker signerad eller "
                     "attribuerad ristare i Rundata används som referens."))
     rr_ = f.get("r") if (f.get("r") and not f["r"].get("error")) else None
@@ -1157,18 +1160,24 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
     ] + (r_report.LIMITATIONS if rr_ else [])))
 
     blocks.append(h(1, "Data och reproducerbarhet"))
-    blocks.append(p(f"Mätningarna är gjorda med Runforskning {prov.get('version', '')}, mätmetod "
+    blocks.append(p(f"Mätningarna är gjorda med Bifrost {prov.get('version', '')}, mätmetod "
                     f"{', '.join(f['method_versions'])}. Modellfilen identifieras med kontrollsumman ovan, och "
                     "parametrarna i tabellen räcker för att upprepa analysen. Tvärsnittens mått finns i bilagan; "
-                    "råprofilerna kan publiceras i Runforskningens mätkorpus (CC BY 4.0)."
+                    "råprofilerna kan publiceras i Bifrosts mätkorpus (CC BY 4.0)."
                     + (" " + r_report.data_text(rr_) if rr_ else "")))
     blocks.append(h(1, "Tack"))
-    blocks.append(p("Fyll i: den som skannat stenen, markägare, länsstyrelse, finansiärer."))
+    ss = f.get("scan_source")
+    blocks.append(p((scan_sources.credit_text(ss, signum) + " Fyll i: markägare, länsstyrelse, finansiärer.") if ss else
+                    "Fyll i: den som skannat stenen, markägare, länsstyrelse, finansiärer."))
     blocks.append(h(1, "Referenser"))
     refs = list(REFERENCES) + (r_report.R_REFERENCES if rr_ else [])
+    if ss:
+        refs.append(ss["citation"])
+    elif scan.get("citation"):
+        refs.append(scan["citation"])
     if sri:
         refs.append(sri)
-    refs.append(f"Runforskning (Aagaard Research), version {prov.get('version', '2.0')}. Programvara. "
+    refs.append(f"Bifrost, version {prov.get('version', '2.0')}. Programvara. "
                 "https://github.com/Precatio/runes")
     # Harvard order: single author before co-authored works by the same first author
     blocks.append(bullets(sorted(refs, key=lambda r: r.replace(" &", "~"))))

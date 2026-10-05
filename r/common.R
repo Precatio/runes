@@ -12,7 +12,10 @@ options(warn = 1, dplyr.summarise.inform = FALSE, stringsAsFactors = FALSE)
 
 # Svenskt decimalkomma i figurtexter. OutDec sätts bara när figuren ritas (GDAL/terra tål det inte);
 # sprintf() följer inte OutDec och får kommat här
-sprintf <- function(fmt, ...) gsub("(\\d)\\.(\\d)", "\\1,\\2", base::sprintf(fmt, ...))
+sprintf <- function(fmt, ...) {
+  out <- base::sprintf(fmt, ...)
+  if (identical(LANG, "en")) out else gsub("(\\d)\\.(\\d)", "\\1,\\2", out)
+}
 
 # Färger: samma neutrala toner och accent som stenrapporten; högst tre kategorifärger i samma bild
 INK <- "#1e293b"
@@ -25,12 +28,19 @@ SERIES <- c("#2a78d6", "#eb6834", "#1baf7a")
 SEQ <- c("#eef4fc", "#2a78d6", "#0f3d75")
 SWEREF <- 3006 # SWEREF 99 TM, meter
 
+LANG <- "sv"
+
 cli_args <- function() {
   a <- commandArgs(trailingOnly = TRUE)
   if (length(a) < 2) stop("Användning: Rscript modul.R params.json utmapp")
   dir.create(a[2], showWarnings = FALSE, recursive = TRUE)
-  list(params = fromJSON(a[1], simplifyVector = TRUE), out = a[2])
+  params <- fromJSON(a[1], simplifyVector = TRUE)
+  if (!is.null(params$lang)) LANG <<- params$lang
+  list(params = params, out = a[2])
 }
+
+# Figure text in the report's language (sv or en)
+tr <- function(sv, en) if (identical(LANG, "en")) en else sv
 
 read_corpus <- function(path) {
   d <- read.csv(path, encoding = "UTF-8", stringsAsFactors = FALSE, na.strings = "", check.names = FALSE)
@@ -80,7 +90,7 @@ theme_map <- function(base = 10) {
 }
 
 save_fig <- function(p, out, name, width = 7, height = 5) {
-  op <- options(OutDec = ",")
+  op <- options(OutDec = if (identical(LANG, "en")) "." else ",")
   on.exit(options(op))
   suppressWarnings(ggsave(file.path(out, name), p, width = width, height = height, dpi = 200, bg = "white"))
   name

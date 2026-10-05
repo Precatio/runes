@@ -30,7 +30,7 @@ RUNOR = "https://runor.raa.se/api/snrd"
 RUNOR_EDITION = "2020"
 RUNOR_WEB = "https://runor.raa.se/"
 WIKIDATA = "https://query.wikidata.org/sparql"
-UA = {"User-Agent": "Runforskning/1.0 (runestone research; https://github.com/Precatio/runes)"}
+UA = {"User-Agent": "Bifrost/1.0 (runestone research; https://github.com/Precatio/runes)"}
 SAME_AS = re.compile(r"^(?:Troligen |Kanske |Möjligen )?samma (?:som|ristare som) (?:gjort |ristat )?(.+?)\.*$", re.I)
 SOURCES = {
     "runor": "Runor, Riksantikvarieämbetet (Samnordisk runtextdatabas, utgåva 2020). https://runor.raa.se",

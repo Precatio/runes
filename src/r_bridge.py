@@ -201,7 +201,7 @@ def ensure_water() -> str | None:
         if os.path.isdir(target) and any(n.endswith(".shp") for n in os.listdir(target)):
             continue
         try:
-            resp = requests.get(url, timeout=120, headers={"User-Agent": "Runforskning/1.0"})
+            resp = requests.get(url, timeout=120, headers={"User-Agent": "Bifrost/1.0"})
             resp.raise_for_status()
             with zipfile.ZipFile(io.BytesIO(resp.content)) as z:
                 z.extractall(target)
@@ -249,10 +249,13 @@ class CorpusJob:
         d = self.directory(fp)
         if not self.ready(fp):
             return None
-        out = json.load(open(os.path.join(d, "done.json"), encoding="utf-8"))
-        for m in MODULES:
-            p = os.path.join(d, f"{m}.json")
-            out[m] = json.load(open(p, encoding="utf-8")) if os.path.exists(p) else None
+        try:
+            out = json.load(open(os.path.join(d, "done.json"), encoding="utf-8"))
+            for m in MODULES:
+                p = os.path.join(d, f"{m}.json")
+                out[m] = json.load(open(p, encoding="utf-8")) if os.path.exists(p) else None
+        except ValueError:  # a file being written right now
+            return None
         return out
 
     def state_of(self, fp: str) -> dict:
@@ -332,10 +335,12 @@ def run_corpus(fp: str):
             pass
         with open(os.path.join(d, "sessionInfo.txt"), "w", encoding="utf-8") as fh:
             fh.write(session)
-        with open(os.path.join(d, "done.json"), "w", encoding="utf-8") as fh:
+        tmp = os.path.join(d, "done.json.tmp")
+        with open(tmp, "w", encoding="utf-8") as fh:
             json.dump({"fingerprint": fp, "computed_at": datetime.now(timezone.utc).isoformat(),
                        "errors": errors, "water": bool(water), "r_version": status().get("version")},
                       fh, ensure_ascii=False)
+        os.replace(tmp, os.path.join(d, "done.json"))  # atomic: readers never see a half-written file
         _write_state(d, running=False, module=None, error="; ".join(errors.values()) or None)
     except Exception as e:
         _write_state(d, running=False, module=None, error=str(e))
@@ -355,15 +360,15 @@ def wait_for(fp: str, timeout: float) -> bool:
     return JOB.ready(fp)
 
 
-def stone(fp: str, signum: str, candidates: list[str]) -> dict:
-    """R-analysen av en sten mot den sparade korpusanalysen (cachad per sten och kandidater)."""
+def stone(fp: str, signum: str, candidates: list[str], lang: str = "sv") -> dict:
+    """R-analysen av en sten mot den sparade korpusanalysen (cachad per sten, kandidater och språk)."""
     d = JOB.directory(fp)
-    key = hashlib.sha256(json.dumps([signum, sorted(candidates), _scripts_hash(["common.R", "stone.R"])],
+    key = hashlib.sha256(json.dumps([signum, sorted(candidates), lang, _scripts_hash(["common.R", "stone.R"])],
                                     ensure_ascii=False).encode()).hexdigest()[:12]
     out_dir = os.path.join(d, "stones", key)
     path = os.path.join(out_dir, "stone.json")
     if not os.path.exists(path):
-        run_module("stone", {"corpus": os.path.join(d, "corpus.csv"), "corpus_dir": d, "signum": signum,
+        run_module("stone", {"corpus": os.path.join(d, "corpus.csv"), "corpus_dir": d, "signum": signum, "lang": lang,
                              "candidates": candidates, "water_dir": os.path.join(CACHE_DIR, "naturalearth")},
                    out_dir, timeout=600)
     res = json.load(open(path, encoding="utf-8"))
@@ -371,15 +376,15 @@ def stone(fp: str, signum: str, candidates: list[str]) -> dict:
     return res
 
 
-def landscape(fp: str, signum: str, uplift_m: float | None = None) -> dict:
-    """Landskapsanalysen av en sten (höjdmodell, strand, sikt, vägar); cachad per sten och landhöjning."""
+def landscape(fp: str, signum: str, uplift_m: float | None = None, lang: str = "sv") -> dict:
+    """Landskapsanalysen av en sten (höjdmodell, strand, sikt, vägar); cachad per sten, landhöjning och språk."""
     d = JOB.directory(fp)
-    key = hashlib.sha256(json.dumps([signum, uplift_m, _scripts_hash(["common.R", "landscape.R"])],
+    key = hashlib.sha256(json.dumps([signum, uplift_m, lang, _scripts_hash(["common.R", "landscape.R"])],
                                     ensure_ascii=False).encode()).hexdigest()[:12]
     out_dir = os.path.join(d, "landscape", key)
     path = os.path.join(out_dir, "landscape.json")
     if not os.path.exists(path):
-        params = {"corpus": os.path.join(d, "corpus.csv"), "signum": signum,
+        params = {"corpus": os.path.join(d, "corpus.csv"), "signum": signum, "lang": lang,
                   "water_dir": os.path.join(CACHE_DIR, "naturalearth"), "tile_dir": os.path.join(CACHE_DIR, "terrain")}
         if uplift_m is not None:
             params["uplift_m"] = uplift_m
@@ -480,7 +485,7 @@ def _rerun_script(signum: str | None, candidates: list[str]) -> str:
 
 def _readme(signum: str | None) -> str:
     return (
-        "Reproducerbarhetspaket – Runforskning, statistik i R\n\n"
+        "Reproducerbarhetspaket – Bifrost, statistik i R\n\n"
         "r/              R-skripten som appen kör (geografi, klustring, text, attribueringsmodell, sten)\n"
         "data/corpus.csv korpusen: svenska vikingatida runstenar ur Samnordisk runtextdatabas, med kategorier\n"
         "                och språkdrag som appen räknat fram (se METHODS.md)\n"

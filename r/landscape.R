@@ -154,8 +154,8 @@ if (nrow(neigh) >= 3) {
   wcoarse <- aggregate(water_then, fact = RES / 20, fun = "max")
   R <- raster(coarse)
   hd <- function(x) x[2] - x[1]
-  tr <- transition(R, hd, directions = 8, symm = FALSE)
-  slope_tr <- geoCorrection(tr, scl = FALSE)
+  trans <- transition(R, hd, directions = 8, symm = FALSE)
+  slope_tr <- geoCorrection(trans, scl = FALSE)
   adj <- adjacent(R, cells = 1:ncell(R), pairs = TRUE, directions = 8)
   speed <- slope_tr
   speed[adj] <- 6 * exp(-3.5 * abs(slope_tr[adj] + 0.05)) # Tobler's hiking function, km/h
@@ -207,10 +207,12 @@ p <- p +
   geom_point(aes(x = sx, y = sy), shape = 23, size = 4, fill = ACCENT, colour = "white", stroke = 0.8) +
   annotate("text", x = sx, y = sy, label = P$signum, vjust = -1.3, size = 3.2, fontface = "bold", colour = INK) +
   coord_sf(xlim = c(win$xmin[[1]], win$xmax[[1]]), ylim = c(win$ymin[[1]], win$ymax[[1]]), crs = SWEREF, datum = NA, expand = FALSE) +
-  labs(title = sprintf("%s i landskapet", P$signum),
-       subtitle = sprintf("Mörkblått: dagens vatten. Ljusblått: under %s m, ungefär stranden vid vikingatiden. Blå linjer: bästa vägar mellan andra runstensplatser i närheten.",
+  labs(title = sprintf(tr("%s i landskapet", "%s in the landscape"), P$signum),
+       subtitle = sprintf(tr("Mörkblått: dagens vatten. Ljusblått: under %s m, ungefär stranden vid vikingatiden. Blå linjer: bästa vägar mellan andra runstensplatser i närheten.",
+                             "Dark blue: present-day water. Light blue: below %s m, approximately the Viking Age shore. Blue lines: least-cost paths between other runestone sites nearby."),
                           format(uplift)),
-       caption = "Höjddata: Terrain Tiles (Tilezen/Mapzen, AWS Open Data). Strandlinjen är en grov modell utan hänsyn till sediment och dämning.") +
+       caption = tr("Höjddata: Terrain Tiles (Tilezen/Mapzen, AWS Open Data). Strandlinjen är en grov modell utan hänsyn till sediment och dämning.",
+                    "Elevation: Terrain Tiles (Tilezen/Mapzen, AWS Open Data). The shoreline is a rough model ignoring sedimentation and damming.")) +
   theme_map()
 fig_land <- save_fig(p, out, "landskap_karta.png", 7.5, 7.5)
 
@@ -224,10 +226,12 @@ p <- ggplot() +
   geom_point(aes(x = sx, y = sy), shape = 23, size = 4, fill = ACCENT, colour = "white", stroke = 0.8) +
   coord_sf(xlim = c(sx - VIEW_KM * 1000, sx + VIEW_KM * 1000), ylim = c(sy - VIEW_KM * 1000, sy + VIEW_KM * 1000),
            crs = SWEREF, datum = NA, expand = FALSE) +
-  labs(title = sprintf("Var %s syns", P$signum),
-       subtitle = sprintf("Gult: platser där en person (1,6 m) ser stenens topp (2 m) inom %d km. Synligt inom 2 km: %.0f %% av ytan.",
+  labs(title = sprintf(tr("Var %s syns", "Where %s can be seen"), P$signum),
+       subtitle = sprintf(tr("Gult: platser där en person (1,6 m) ser stenens topp (2 m) inom %d km. Synligt inom 2 km: %.0f %% av ytan.",
+                             "Yellow: places where a person (1.6 m) sees the top of the stone (2 m) within %d km. Visible within 2 km: %.0f %% of the area."),
                           VIEW_KM, 100 * view$share_2km),
-       caption = "Höjdmodellen saknar skog och byggnader i vikingatida form; sikten är en övre gräns i öppet landskap.") +
+       caption = tr("Höjdmodellen saknar skog och byggnader i vikingatida form; sikten är en övre gräns i öppet landskap.",
+                    "The elevation model has no Viking Age vegetation or buildings; visibility is an upper bound for open landscape.")) +
   theme_map()
 fig_view <- save_fig(p, out, "landskap_sikt.png", 7, 7)
 
