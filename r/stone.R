@@ -120,10 +120,15 @@ if (has("geography_stones.csv") && !is.na(row$lat)) {
     hulls$carver <- factor(hulls$carver, levels = mc)
     p <- p + geom_polygon(data = hulls, aes(x, y, colour = carver, group = carver), fill = NA, linewidth = 0.4, show.legend = FALSE)
   }
-  p <- p + geom_point(data = cs, aes(x, y, colour = carver), size = 1.4) +
+  p <- p + geom_point(data = cs, aes(x, y, colour = carver, shape = carver), size = 1.6) +
+    scale_shape_manual(values = c(16, 17, 15)[seq_along(mc)], name = tr("Säkra stenar av", "Certain stones by")) +
     geom_point(data = s, aes(x, y), shape = 23, size = 4, fill = ACCENT, colour = "white", stroke = 0.8) +
     annotate("text", x = s$x, y = s$y, label = signum, vjust = -1.3, size = 3.2, colour = INK, fontface = "bold") +
     scale_colour_manual(values = SERIES[seq_along(mc)], name = tr("Säkra stenar av", "Certain stones by")) +
+    annotate("rect", xmin = xl[1] + 0.04 * diff(xl), xmax = xl[1] + 0.04 * diff(xl) + 20000, ymin = yl[1] + 0.04 * diff(yl),
+             ymax = yl[1] + 0.04 * diff(yl) + 0.012 * diff(yl), fill = INK) +
+    annotate("text", x = xl[1] + 0.04 * diff(xl) + 10000, y = yl[1] + 0.04 * diff(yl) + 0.04 * diff(yl), label = "20 km",
+             size = 3, colour = INK) +
     coord_sf(xlim = xl, ylim = yl, crs = SWEREF, datum = NA) +
     labs(title = sprintf(tr("%s och kandidaternas stenar", "%s and the candidates' stones"), signum),
          subtitle = tr("Konvexa höljen kring varje ristares säkra stenar. Grått: övriga runstenar.",

@@ -29,6 +29,7 @@ SEQ <- c("#eef4fc", "#2a78d6", "#0f3d75")
 SWEREF <- 3006 # SWEREF 99 TM, meter
 
 LANG <- "sv"
+CLEAN <- FALSE # print version for journals: no titles or captions in the image, also a 600 dpi TIFF
 
 cli_args <- function() {
   a <- commandArgs(trailingOnly = TRUE)
@@ -36,6 +37,7 @@ cli_args <- function() {
   dir.create(a[2], showWarnings = FALSE, recursive = TRUE)
   params <- fromJSON(a[1], simplifyVector = TRUE)
   if (!is.null(params$lang)) LANG <<- params$lang
+  if (isTRUE(params$clean)) CLEAN <<- TRUE
   list(params = params, out = a[2])
 }
 
@@ -92,7 +94,10 @@ theme_map <- function(base = 10) {
 save_fig <- function(p, out, name, width = 7, height = 5) {
   op <- options(OutDec = if (identical(LANG, "en")) "." else ",")
   on.exit(options(op))
-  suppressWarnings(ggsave(file.path(out, name), p, width = width, height = height, dpi = 200, bg = "white"))
+  if (CLEAN) p <- p + labs(title = NULL, subtitle = NULL, caption = NULL)
+  suppressWarnings(ggsave(file.path(out, name), p, width = width, height = height, dpi = if (CLEAN) 300 else 200, bg = "white"))
+  if (CLEAN) suppressWarnings(ggsave(file.path(out, sub("\\.png$", ".tif", name)), p, width = width, height = height,
+                                     dpi = 600, bg = "white", device = ragg::agg_tiff, compression = "lzw"))
   name
 }
 

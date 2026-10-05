@@ -189,6 +189,14 @@ if (nrow(neigh) >= 3) {
   }
 }
 
+
+# Scale bar in SWEREF 99 TM (metres), lower left of the map
+scale_bar <- function(x0, y0, km, span) {
+  h <- span * 0.012
+  list(annotate("rect", xmin = x0, xmax = x0 + km * 1000, ymin = y0, ymax = y0 + h, fill = INK, colour = INK),
+       annotate("rect", xmin = x0 + km * 500, xmax = x0 + km * 1000, ymin = y0, ymax = y0 + h, fill = "white", colour = INK),
+       annotate("text", x = x0 + km * 500, y = y0 + 3 * h, label = paste(km, "km"), size = 3, colour = INK))
+}
 # ---- figures -------------------------------------------------------------------------------------------------------------
 hs <- shade(terrain(dem, "slope", unit = "radians"), terrain(dem, "aspect", unit = "radians"), angle = 40, direction = 315)
 hs_df <- as.data.frame(hs, xy = TRUE); names(hs_df)[3] <- "hs"
@@ -206,6 +214,7 @@ p <- p +
   geom_point(data = neigh, aes(x, y), shape = 21, fill = "white", colour = INK, size = 1.8) +
   geom_point(aes(x = sx, y = sy), shape = 23, size = 4, fill = ACCENT, colour = "white", stroke = 0.8) +
   annotate("text", x = sx, y = sy, label = P$signum, vjust = -1.3, size = 3.2, fontface = "bold", colour = INK) +
+  scale_bar(win$xmin[[1]] + 600, win$ymin[[1]] + 600, 5, 2 * RADIUS_KM * 1000) +
   coord_sf(xlim = c(win$xmin[[1]], win$xmax[[1]]), ylim = c(win$ymin[[1]], win$ymax[[1]]), crs = SWEREF, datum = NA, expand = FALSE) +
   labs(title = sprintf(tr("%s i landskapet", "%s in the landscape"), P$signum),
        subtitle = sprintf(tr("Mörkblått: dagens vatten. Ljusblått: under %s m, ungefär stranden vid vikingatiden. Blå linjer: bästa vägar mellan andra runstensplatser i närheten.",
@@ -216,19 +225,23 @@ p <- p +
   theme_map()
 fig_land <- save_fig(p, out, "landskap_karta.png", 7.5, 7.5)
 
+vs_outline <- tryCatch(st_as_sf(as.polygons(vs == 1, dissolve = TRUE)), error = function(e) NULL)
+if (!is.null(vs_outline)) vs_outline <- vs_outline[vs_outline[[1]] == 1, ] else vs_outline <- st_sf(geometry = st_sfc(crs = SWEREF))
 vs_df <- as.data.frame(vs, xy = TRUE); names(vs_df)[3] <- "v"; vs_df <- vs_df[vs_df$v == 1, ]
 hs2 <- hs_df[hs_df$x >= sx - VIEW_KM * 1000 & hs_df$x <= sx + VIEW_KM * 1000 & hs_df$y >= sy - VIEW_KM * 1000 & hs_df$y <= sy + VIEW_KM * 1000, ]
 p <- ggplot() +
   geom_raster(data = hs2, aes(x, y, fill = hs), show.legend = FALSE) +
   scale_fill_gradient(low = "#475569", high = "#f8fafc") +
   geom_raster(data = wt_df[wt_df$x %in% hs2$x & wt_df$y %in% hs2$y, ], aes(x, y), fill = "#bcd3ee", alpha = 0.7) +
-  geom_raster(data = vs_df, aes(x, y), fill = "#f59e0b", alpha = 0.55) +
+  geom_raster(data = vs_df, aes(x, y), fill = "#c2410c", alpha = 0.5) +
+  geom_sf(data = vs_outline, fill = NA, colour = INK, linewidth = 0.35, inherit.aes = FALSE) +
+  scale_bar(sx - VIEW_KM * 1000 + 300, sy - VIEW_KM * 1000 + 300, 1, 2 * VIEW_KM * 1000) +
   geom_point(aes(x = sx, y = sy), shape = 23, size = 4, fill = ACCENT, colour = "white", stroke = 0.8) +
   coord_sf(xlim = c(sx - VIEW_KM * 1000, sx + VIEW_KM * 1000), ylim = c(sy - VIEW_KM * 1000, sy + VIEW_KM * 1000),
            crs = SWEREF, datum = NA, expand = FALSE) +
   labs(title = sprintf(tr("Var %s syns", "Where %s can be seen"), P$signum),
-       subtitle = sprintf(tr("Gult: platser där en person (1,6 m) ser stenens topp (2 m) inom %d km. Synligt inom 2 km: %.0f %% av ytan.",
-                             "Yellow: places where a person (1.6 m) sees the top of the stone (2 m) within %d km. Visible within 2 km: %.0f %% of the area."),
+       subtitle = sprintf(tr("Orange: platser där en person (1,6 m) ser stenens topp (2 m) inom %d km. Synligt inom 2 km: %.0f %% av ytan.",
+                             "Orange: places where a person (1.6 m) sees the top of the stone (2 m) within %d km. Visible within 2 km: %.0f %% of the area."),
                           VIEW_KM, 100 * view$share_2km),
        caption = tr("Höjdmodellen saknar skog och byggnader i vikingatida form; sikten är en övre gräns i öppet landskap.",
                     "The elevation model has no Viking Age vegetation or buildings; visibility is an upper bound for open landscape.")) +
