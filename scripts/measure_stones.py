@@ -17,7 +17,12 @@ PROVINCES = {"So": "Sö", "Og": "Ög", "Ol": "Öl", "Na": "Nä", "An": "Ån"}
 
 
 def signum_from(path: str) -> str:
-    m = re.match(r"([A-Za-zÅÄÖåäö]{1,3})[ _]?(\d+[A-Za-z]?)", os.path.basename(path))
+    """"So 131_…" -> "Sö 131", "So 137A_…" -> "Sö 137A", "So Fv1948_282_…" -> "Sö Fv1948;282"."""
+    name = os.path.basename(path)
+    m = re.match(r"([A-Za-zÅÄÖåäö]{1,3})[ _]?Fv(\d{4})_(\d+)", name)
+    if m:
+        return f"{PROVINCES.get(m.group(1), m.group(1))} Fv{m.group(2)};{m.group(3)}"
+    m = re.match(r"([A-Za-zÅÄÖåäö]{1,3})[ _]?(\d+[A-Za-z]?)(?=[_ .]|$)", name)
     if not m:
         raise ValueError(f"Inget signum i filnamnet: {path}")
     return f"{PROVINCES.get(m.group(1), m.group(1))} {m.group(2)}"
