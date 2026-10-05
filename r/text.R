@@ -162,7 +162,7 @@ write.csv(features, file.path(out, "text_features.csv"), row.names = FALSE, file
 # ---- figures ------------------------------------------------------------------------------------------------
 fp <- bind_rows(lapply(c("formula_raising", "formula_signature"), function(col) {
   fc %>% count(carver, value = .data[[col]]) %>% group_by(carver) %>% mutate(share = n / sum(n)) %>% ungroup() %>%
-    mutate(formula = FORMULA_LABELS[[col]])
+    mutate(formula = if (identical(LANG, "en")) FORMULA_LABELS_EN[[col]] else FORMULA_LABELS[[col]], value = trv(value))
 }))
 fp$carver <- factor(fp$carver, levels = rev(carvers))
 p <- ggplot(fp, aes(value, carver, fill = share)) +
@@ -170,7 +170,7 @@ p <- ggplot(fp, aes(value, carver, fill = share)) +
   geom_text(aes(label = ifelse(share >= 0.05, round(100 * share), "")), size = 2.4,
             colour = ifelse(fp$share > 0.55, "white", INK)) +
   facet_wrap(~formula, scales = "free_x") +
-  scale_fill_gradient(low = SEQ[1], high = SEQ[3], name = "Andel av ristarens stenar (%)", labels = function(x) round(100 * x)) +
+  scale_fill_gradient(low = SEQ[1], high = SEQ[3], name = tr("Andel av ristarens stenar (%)", "Share of the carver's stones (%)"), labels = function(x) round(100 * x)) +
   labs(title = "Formler per ristare", x = NULL, y = NULL,
        subtitle = "Resarformel och ristarsignatur i ristarnas säkra inskrifter (Rundatas normalisering)") +
   theme_runor() + theme(panel.grid.major = element_blank(), axis.text.x = element_text(angle = 35, hjust = 1))
@@ -183,7 +183,7 @@ p <- ggplot(lt_df, aes(v, lemma)) +
   geom_col(fill = SERIES[1], width = 0.65) +
   geom_text(aes(label = sprintf("%.2f", v)), hjust = -0.2, size = 2.8, colour = INK) +
   scale_x_continuous(limits = c(0, max(lt_df$v) * 1.15), expand = c(0, 0)) +
-  labs(title = "Ord vars stavning bäst skiljer ristarna åt", x = "Cramérs V (stavningsform × ristare)", y = NULL,
+  labs(title = "Ord vars stavning bäst skiljer ristarna åt", x = tr("Cramérs V (stavningsform × ristare)", "Cramér's V (spelling × carver)"), y = NULL,
        subtitle = sprintf("Ord som förekommer minst 40 gånger hos ristare med minst %d säkra stenar", MIN_CARVER)) +
   theme_runor() + theme(panel.grid.major.y = element_blank())
 fig_lemmas <- save_fig(p, out, "text_stavning.png", 7, 5)

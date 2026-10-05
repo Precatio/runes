@@ -155,10 +155,13 @@ predictions <- predictions[order(-sapply(predictions, `[[`, "p"))]
 unc <- Filter(function(p) nzchar(p$rundata_uncertain), predictions)
 
 # ---- figures ------------------------------------------------------------------------------------------------
-ab <- bind_rows(lapply(evals, function(e) data.frame(set = e$name, metric = c("Rätt ristare först", "Rätt ristare bland tre främsta"),
-                                                     value = c(e$accuracy, e$top3))))
-ab$set <- factor(ab$set, levels = names(SETS))
-ab$metric <- factor(ab$metric, levels = c("Rätt ristare först", "Rätt ristare bland tre främsta"))
+# Figure labels in the figure's language (the JSON keeps the Swedish keys)
+SETN <- c("Geografi" = tr("Geografi", "Geography"), "Stil" = tr("Stil", "Style"),
+          "Språk och innehåll" = tr("Språk och innehåll", "Language and content"), "Alla" = tr("Alla", "All"))
+MET <- c(tr("Rätt ristare först", "Correct first choice"), tr("Rätt ristare bland tre främsta", "Correct among first three"))
+ab <- bind_rows(lapply(evals, function(e) data.frame(set = e$name, metric = MET, value = c(e$accuracy, e$top3))))
+ab$set <- factor(unname(SETN[ab$set]), levels = unname(SETN[names(SETS)]))
+ab$metric <- factor(ab$metric, levels = MET)
 p <- ggplot(ab, aes(set, value, fill = metric)) +
   geom_col(position = position_dodge(width = 0.75), width = 0.7, colour = "white", linewidth = 0.5) +
   geom_text(aes(label = sprintf("%.0f %%", 100 * value)), position = position_dodge(width = 0.75), vjust = -0.4,
@@ -166,7 +169,7 @@ p <- ggplot(ab, aes(set, value, fill = metric)) +
   geom_hline(yintercept = majority, linetype = "dashed", colour = MUTED, linewidth = 0.4) +
   scale_fill_manual(values = SERIES[1:2], name = NULL) +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1.05), expand = c(0, 0)) +
-  labs(title = "Vad varje slags belägg räcker till", x = NULL, y = "Andel stenar (korsvaliderat)",
+  labs(title = "Vad varje slags belägg räcker till", x = NULL, y = tr("Andel stenar (korsvaliderat)", "Share of stones (cross-validated)"),
        subtitle = sprintf("%d säkra stenar av %d ristare; %d-faldig korsvalidering upprepad %d gånger. Streckat: gissa alltid vanligaste ristaren (%.0f %%)",
                           nrow(train), length(lv), FOLDS, REPEATS, 100 * majority)) +
   theme_runor() + theme(panel.grid.major.x = element_blank())
@@ -176,19 +179,29 @@ p <- ggplot(calib, aes(mean_p, accuracy)) +
   geom_abline(slope = 1, intercept = 0, colour = MUTED, linetype = "dashed", linewidth = 0.4) +
   geom_line(colour = SERIES[1], linewidth = 0.7) +
   geom_point(aes(size = n), colour = SERIES[1]) +
-  scale_size_area(max_size = 6, name = "Antal stenar") +
+  scale_size_area(max_size = 6, name = tr("Antal stenar", "Stones")) +
   coord_equal(xlim = c(0, 1), ylim = c(0, 1)) +
-  labs(title = "Hur väl sannolikheterna stämmer", x = "Modellens sannolikhet för sitt förstaval",
-       y = "Andel där förstavalet var rätt", subtitle = sprintf("Förväntat kalibreringsfel (ECE): %.3f", ece)) +
+  labs(title = "Hur väl sannolikheterna stämmer", x = tr("Modellens sannolikhet för sitt förstaval", "The model's probability for its first choice"),
+       y = tr("Andel där förstavalet var rätt", "Share of correct first choices"), subtitle = sprintf("Förväntat kalibreringsfel (ECE): %.3f", ece)) +
   theme_runor()
 fig_calib <- save_fig(p, out, "modell_kalibrering.png", 5.5, 5.5)
 
 ti <- head(imp_df, 20)
-ti$label <- factor(ti$label, levels = rev(ti$label))
+label_en <- function(f) {
+  if (f %in% names(TRAIT_LABELS_EN)) return(TRAIT_LABELS_EN[[f]])
+  if (f %in% names(CAT_LABELS_EN)) return(CAT_LABELS_EN[[f]])
+  if (f %in% names(FORMULA_LABELS_EN)) return(FORMULA_LABELS_EN[[f]])
+  if (startsWith(f, "bg_")) return(paste0("Rune bigram ", bg_names[as.integer(sub("bg_", "", f))]))
+  c(x_km = "East–west position (km)", y_km = "North–south position (km)", province = "Province", style = "Style group",
+    cross = "Cross", short_twig = "Short-twig runes")[[f]] %||% f
+}
+if (identical(LANG, "en")) ti$label <- vapply(ti$feature, function(f) tryCatch(label_en(f), error = function(e) f), character(1))
+ti$label <- factor(ti$label, levels = rev(unique(ti$label)))
+ti$group <- unname(SETN[ti$group])
 p <- ggplot(ti, aes(importance, label, fill = group)) +
   geom_col(width = 0.7) +
-  scale_fill_manual(values = c("Geografi" = SERIES[1], "Stil" = SERIES[2], "Språk och innehåll" = SERIES[3]), name = NULL) +
-  labs(title = "Variabler som modellen lutar sig mest mot", x = "Permutationsvikt", y = NULL) +
+  scale_fill_manual(values = setNames(SERIES, unname(SETN[c("Geografi", "Stil", "Språk och innehåll")])), name = NULL) +
+  labs(title = "Variabler som modellen lutar sig mest mot", x = tr("Permutationsvikt", "Permutation importance"), y = NULL) +
   theme_runor() + theme(panel.grid.major.y = element_blank())
 fig_imp <- save_fig(p, out, "modell_variabler.png", 7.5, 5.5)
 
@@ -196,8 +209,9 @@ cm <- as.data.frame(prop.table(conf, 1))
 cm$truth <- factor(cm$truth, levels = rev(lv)); cm$pred <- factor(cm$pred, levels = lv)
 p <- ggplot(cm, aes(pred, truth, fill = Freq)) +
   geom_tile(colour = "white", linewidth = 0.4) +
-  scale_fill_gradient(low = "white", high = SEQ[3], name = "Andel", labels = scales::percent) +
-  labs(title = "Förväxlingar", x = "Modellens förstaval", y = "Ristare enligt Rundata") +
+  scale_fill_gradient(low = "white", high = SEQ[3], name = tr("Andel", "Share"), labels = scales::percent) +
+  labs(title = "Förväxlingar", x = tr("Modellens förstaval", "The model's first choice"),
+       y = tr("Ristare enligt Rundata", "Carver in the database")) +
   theme_runor() + theme(axis.text.x = element_text(angle = 45, hjust = 1), panel.grid.major = element_blank())
 fig_conf <- save_fig(p, out, "modell_forvaxling.png", 8, 7)
 

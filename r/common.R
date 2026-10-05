@@ -29,6 +29,7 @@ SEQ <- c("#eef4fc", "#2a78d6", "#0f3d75")
 SWEREF <- 3006 # SWEREF 99 TM, meter
 
 LANG <- "sv"
+FONT <- ""  # default sans; Linux Libertine O in print mode
 CLEAN <- FALSE # print version for journals: no titles or captions in the image, also a 600 dpi TIFF
 
 cli_args <- function() {
@@ -37,7 +38,18 @@ cli_args <- function() {
   dir.create(a[2], showWarnings = FALSE, recursive = TRUE)
   params <- fromJSON(a[1], simplifyVector = TRUE)
   if (!is.null(params$lang)) LANG <<- params$lang
-  if (isTRUE(params$clean)) CLEAN <<- TRUE
+  if (isTRUE(params$clean)) {
+    CLEAN <<- TRUE
+    # Print (journals): rust red like painted runes, near-black and pale rust – colours that also differ in lightness,
+    # so that they remain distinct in grey tones; the journal's typeface Linux Libertine O
+    SERIES <<- c("#b7410e", "#1f2937", "#f2c4a7")
+    SEQ <<- c("#fbefe6", "#b7410e", "#5c1f05")
+    ACCENT <<- "#111827"
+    if (nrow(systemfonts::match_fonts("Linux Libertine O")) &&
+        grepl("Libertine", systemfonts::match_fonts("Linux Libertine O")$path[1])) FONT <<- "Linux Libertine O"
+    ggplot2::update_geom_defaults("text", list(family = FONT))
+    ggplot2::update_geom_defaults("label", list(family = FONT))
+  }
   list(params = params, out = a[2])
 }
 
@@ -67,8 +79,37 @@ CAT_LABELS <- c(
   cat_ting = "Ting och offentlighet", cat_magisk = "Magisk eller rituell", cat_grans = "Gränsmärke"
 )
 
+# English labels for the trait, category and formula values (used when LANG is "en")
+TRAIT_LABELS_EN <- c(
+  trait_ai_sten = "Diphthong in 'stone'", trait_au_och = "Diphthong in 'and'", trait_nasal = "Nasal before consonant",
+  trait_h_bortfall = "Initial h", trait_stungna = "Dotted runes", trait_efter = "Spelling of 'after'",
+  trait_denna = "Spelling of 'this'", trait_bon = "Christian prayer", trait_sjal = "Prayer for the soul",
+  trait_signatur = "Carver's signature", trait_runor = "Spelling of 'runes'"
+)
+CAT_LABELS_EN <- c(
+  cat_minne = "Memorial", cat_sjalvminne = "Self-commemoration", cat_bro_vag = "Bridge or road building",
+  cat_kristen = "Christian prayer or formula", cat_fard = "Travel abroad", cat_arv = "Inheritance and property",
+  cat_ting = "Assembly", cat_magisk = "Magical or ritual", cat_grans = "Boundary"
+)
+FORMULA_LABELS_EN <- c(formula_raising = "Raising formula", formula_monument = "Monument word", formula_order = "Word order",
+                       formula_signature = "Carver's signature", formula_prayer = "Prayer")
+VALUE_EN <- c(
+  "ja" = "yes", "nej" = "no", "ai bevarad" = "diphthong", "monoftong" = "monophthong", "skriven" = "written",
+  "utelämnad" = "omitted", "h skrivet" = "h written", "h saknas" = "h omitted", "ej bestämbart" = "not determinable",
+  "ej bestämbar" = "not determinable", "ingen" = "none", "lét resa" = "had raised", "reste" = "raised", "satte" = "set",
+  "gjorde" = "made", "rätte" = "erected", "högg" = "cut", "sten" = "stone", "bro" = "bridge", "stav" = "staff",
+  "kumbl" = "kumbl", "merki" = "merki", "substantiv–pronomen" = "noun–pronoun", "pronomen–substantiv" = "pronoun–noun",
+  "Guð hjälpe själ" = "God help the soul", "Guð och Guds moder" = "God and God's mother", "Guð hjälpe" = "God help",
+  "annan bön" = "other prayer", "kors" = "cross", "inget kors" = "no cross", "kortkvist" = "short-twig runes",
+  "ej kortkvist" = "no short-twig runes", "övriga" = "other", "okänd" = "unknown"
+)
+# A value in the figure's language
+trv <- function(x) if (identical(LANG, "en")) ifelse(!is.na(x) & x %in% names(VALUE_EN), VALUE_EN[x], x) else x
+trait_label <- function(col) if (identical(LANG, "en")) TRAIT_LABELS_EN[[col]] else TRAIT_LABELS[[col]]
+cat_label <- function(col) if (identical(LANG, "en")) CAT_LABELS_EN[[col]] else CAT_LABELS[[col]]
+
 theme_runor <- function(base = 10) {
-  theme_minimal(base_size = base) +
+  theme_minimal(base_size = base, base_family = FONT) +
     theme(
       panel.grid.minor = element_blank(),
       panel.grid.major = element_line(colour = GRID, linewidth = 0.3),

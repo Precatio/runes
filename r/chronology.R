@@ -32,17 +32,21 @@ levels_of <- function(col, labels, d) {
   ok <- !is.na(v) & !(v %in% c("ingen", "ej bestämbar"))
   out <- matrix(0L, nrow(d), 0)
   for (lv in sort(unique(v[ok]))) {
-    m <- matrix(as.integer(ok & v == lv), ncol = 1, dimnames = list(NULL, paste0(labels[[col]], ": ", lv)))
+    m <- matrix(as.integer(ok & v == lv), ncol = 1, dimnames = list(NULL, paste0(labels[[col]], ": ", trv(lv))))
     out <- cbind(out, m)
   }
   out
 }
-FL <- c(formula_raising = "Resarformel", formula_monument = "Monument", formula_order = "Ordföljd",
-        formula_signature = "Ristarsignatur", formula_prayer = "Bön")
+FL <- if (identical(LANG, "en")) FORMULA_LABELS_EN else
+  c(formula_raising = "Resarformel", formula_monument = "Monument", formula_order = "Ordföljd",
+    formula_signature = "Ristarsignatur", formula_prayer = "Bön")
+TL <- if (identical(LANG, "en")) TRAIT_LABELS_EN else TRAIT_LABELS
+CL <- if (identical(LANG, "en")) CAT_LABELS_EN else CAT_LABELS
 incidence <- function(d) {
-  I <- do.call(cbind, c(lapply(tc, levels_of, labels = TRAIT_LABELS, d = d), lapply(fcols, levels_of, labels = FL, d = d)))
-  I <- cbind(I, "Kors" = d$cross, "Kortkvistrunor" = d$short_twig)
-  CI <- as.matrix(d[, cc]); colnames(CI) <- unname(CAT_LABELS[cc])
+  I <- do.call(cbind, c(lapply(tc, levels_of, labels = TL, d = d), lapply(fcols, levels_of, labels = FL, d = d)))
+  extra <- cbind(d$cross, d$short_twig); colnames(extra) <- c(tr("Kors", "Cross"), tr("Kortkvistrunor", "Short-twig runes"))
+  I <- cbind(I, extra)
+  CI <- as.matrix(d[, cc]); colnames(CI) <- unname(CL[cc])
   I <- cbind(I, CI)
   I <- I[, colSums(I) >= MIN_ATTR, drop = FALSE]
   keep <- rowSums(I) >= MIN_PER_STONE
@@ -125,7 +129,8 @@ p <- ggplot(pf %>% filter(!is.na(style)), aes(style, score)) +
   geom_boxplot(fill = SEQ[1], colour = SERIES[1], outlier.size = 0.4, outlier.colour = MUTED, width = 0.6) +
   labs(title = "Seriationen mot Gräslunds stilkronologi (Uppland)",
        subtitle = sprintf("Spearmans rho = %.2f (n = %d); stilgruppen ingick inte i korrespondensanalysen", rho, sum(dated)),
-       x = "Stilgrupp (Gräslund), äldst till vänster", y = "Position på första CA-dimensionen") +
+       x = tr("Stilgrupp (Gräslund), äldst till vänster", "Style group (Gräslund), earliest on the left"),
+       y = tr("Position på första CA-dimensionen", "Position on the first CA dimension")) +
   theme_runor()
 fig_valid <- save_fig(p, out, "seriation_validering.png", 6.5, 4.5)
 
@@ -140,8 +145,9 @@ p <- ggplot(bs, aes(xmin = bin - 0.45, xmax = bin + 0.45, ymin = as.numeric(attr
                     ymax = as.numeric(attr) + 0.45 * share / hmax)) +
   geom_rect(fill = SERIES[1]) +
   scale_y_continuous(breaks = seq_along(levels(bs$attr)), labels = levels(bs$attr), expand = c(0.01, 0.01)) +
-  scale_x_continuous(breaks = 1:10, labels = c("tidigt", rep("", 8), "sent")) +
-  labs(title = "Seriationsdiagram", x = "Stenarna ordnade efter seriationen, i tio lika stora grupper", y = NULL,
+  scale_x_continuous(breaks = 1:10, labels = c(tr("tidigt", "early"), rep("", 8), tr("sent", "late"))) +
+  labs(title = "Seriationsdiagram", x = tr("Stenarna ordnade efter seriationen, i tio lika stora grupper",
+                                           "Stones in seriation order, in ten equal groups"), y = NULL,
        subtitle = "Stapelns höjd = andel stenar i gruppen med draget; dragen sorterade efter sin position") +
   theme_runor() + theme(panel.grid.major = element_blank())
 fig_battle <- save_fig(p, out, "seriation_diagram.png", 8, 7)
@@ -150,7 +156,7 @@ und <- dd[!dated, ]
 if (usable && nrow(und)) {
   p <- ggplot(und, aes(est)) +
     geom_histogram(binwidth = 10, fill = SERIES[1], colour = "white", linewidth = 0.3) +
-    labs(title = "Skattad tid för stenar utan stilgrupp", x = "År (skattat ur seriationen)", y = "Antal stenar",
+    labs(title = "Skattad tid för stenar utan stilgrupp", x = tr("År (skattat ur seriationen)", "Year (estimated from the seriation)"), y = tr("Antal stenar", "Stones"),
          subtitle = sprintf("80 %% prediktionsintervall ± %.0f år; medelfel vid korsvalidering %.0f år", 1.28 * resid_sd, mae_loo)) +
     theme_runor()
   fig_est <- save_fig(p, out, "seriation_skattning.png", 6.5, 4)

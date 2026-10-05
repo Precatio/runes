@@ -102,15 +102,15 @@ p <- ggplot(pf, aes(k, sil)) +
   geom_hline(yintercept = 0.25, colour = MUTED, linetype = "dashed", linewidth = 0.4) +
   geom_line(colour = SERIES[1], linewidth = 0.7) + geom_point(colour = SERIES[1], size = 2.4) +
   geom_point(data = pf[pf$k == k, ], colour = INK, size = 3.4, shape = 21, stroke = 1) +
-  annotate("text", x = max(K_RANGE), y = 0.25, label = "0,25: svag struktur under", hjust = 1, vjust = -0.6,
+  annotate("text", x = max(K_RANGE), y = 0.25, label = tr("0,25: svag struktur under", "0.25: weak structure below"), hjust = 1, vjust = -0.6,
            colour = MUTED, size = 3) +
   scale_x_continuous(breaks = K_RANGE) +
   labs(title = "Antal grupper", subtitle = sprintf("Genomsnittlig silhuettbredd för PAM med k = 2–10; högst vid k = %d", k),
-       x = "Antal grupper (k)", y = "Silhuettbredd") +
+       x = tr("Antal grupper (k)", "Number of groups (k)"), y = tr("Silhuettbredd", "Silhouette width")) +
   theme_runor()
 fig_sil <- save_fig(p, out, "kluster_silhuett.png", 6.5, 4)
 
-hl <- bind_rows(lapply(seq_len(k), function(c0) data.frame(panel = sprintf("Grupp %d (n = %d)", c0, sum(dd$cluster == c0)),
+hl <- bind_rows(lapply(seq_len(k), function(c0) data.frame(panel = sprintf(tr("Grupp %d (n = %d)", "Group %d (n = %d)"), c0, sum(dd$cluster == c0)),
                                                        dim1 = dd$dim1, dim2 = dd$dim2, member = dd$cluster == c0)))
 hl$panel <- factor(hl$panel, levels = unique(hl$panel))
 p <- ggplot(hl, aes(dim1, dim2)) +
@@ -137,8 +137,8 @@ if (nrow(kc)) {
   p <- ggplot(hm, aes(factor(cluster), carver, fill = share)) +
     geom_tile(colour = "white", linewidth = 0.6) +
     geom_text(aes(label = ifelse(n > 0, n, "")), size = 2.6, colour = ifelse(hm$share > 0.55, "white", INK)) +
-    scale_fill_gradient(low = SEQ[1], high = SEQ[3], name = "Andel av ristarens stenar", labels = scales::percent) +
-    labs(title = "Ristarnas stenar fördelade på grupperna", x = "Grupp", y = NULL,
+    scale_fill_gradient(low = SEQ[1], high = SEQ[3], name = tr("Andel av ristarens stenar", "Share of the carver's stones"), labels = scales::percent) +
+    labs(title = "Ristarnas stenar fördelade på grupperna", x = tr("Grupp", "Group"), y = NULL,
          subtitle = sprintf("Justerat Rand-index mellan grupp och ristare: %.2f (0 = slump, 1 = full överensstämmelse)", ari)) +
     theme_runor() + theme(panel.grid.major = element_blank())
   fig_carv <- save_fig(p, out, "kluster_ristare.png", 7, max(4, 0.28 * length(order_c) + 1.8))

@@ -133,11 +133,11 @@ base_map <- function() {
   p
 }
 lim <- list(x = range(cent2$x) + c(-40000, 40000), y = range(cent2$y) + c(-40000, 40000))
-gp <- bind_rows(lapply(seq_len(k), function(g) cent2 %>% mutate(panel = sprintf("Grupp %d", g), member = group == g)))
+gp <- bind_rows(lapply(seq_len(k), function(g) cent2 %>% mutate(panel = sprintf(tr("Grupp %d", "Group %d"), g), member = group == g)))
 p <- base_map() +
   geom_point(data = gp %>% filter(!member), aes(x, y), colour = FAINT, size = 1.2) +
   geom_point(data = gp %>% filter(member), aes(x, y, size = n), colour = SERIES[1], alpha = 0.85) +
-  scale_size_area(max_size = 4, name = "Stenar i häradet") +
+  scale_size_area(max_size = 4, name = tr("Stenar i häradet", "Stones in the hundred")) +
   facet_wrap(~panel) +
   coord_sf(xlim = lim$x, ylim = lim$y, crs = SWEREF, datum = NA) +
   labs(title = "Härader med likartad stavning",
@@ -148,11 +148,12 @@ fig_groups <- save_fig(p, out, "dialekt_grupper.png", 9, 6)
 
 p <- ggplot(dc, aes(geo_mid, mean_ortho)) +
   geom_line(colour = SERIES[1], linewidth = 0.7) + geom_point(aes(size = n), colour = SERIES[1]) +
-  scale_size_area(max_size = 5, name = "Par av härader") +
+  scale_size_area(max_size = 5, name = tr("Par av härader", "Pairs of hundreds")) +
   labs(title = "Stavningen skiljer sig mer ju längre ifrån varandra häraderna ligger",
        subtitle = sprintf("Mantel-test (Spearman): r = %.2f, p = %s (%d permutationer, %d härader)", mt$r,
                           format.pval(mt$p, digits = 2), PERM, length(keep_d)),
-       x = "Avstånd mellan häradernas runstenar (km)", y = "Ortografiskt avstånd (normerad Levenshtein)") +
+       x = tr("Avstånd mellan häradernas runstenar (km)", "Distance between the hundreds' runestones (km)"),
+       y = tr("Ortografiskt avstånd (normerad Levenshtein)", "Orthographic distance (normalised Levenshtein)")) +
   theme_runor()
 fig_mantel <- save_fig(p, out, "dialekt_avstand.png", 6.5, 4.5)
 
@@ -162,19 +163,20 @@ spell <- d %>% select(signum, lat, lon, pairs) %>% mutate(pair = strsplit(pairs,
 mk <- function(l, f, title) {
   s <- spell %>% filter(lemma == l, !is.na(form)) %>% mutate(v = f(form))
   top <- names(sort(table(s$v), decreasing = TRUE))[1:min(3, length(unique(s$v)))]
-  s$v <- factor(ifelse(s$v %in% top, s$v, "övriga"), levels = c(top, "övriga"))
+  oth <- tr("övriga", "other")
+  s$v <- factor(ifelse(s$v %in% top, s$v, oth), levels = c(top, oth))
   sp <- st_transform(st_as_sf(s, coords = c("lon", "lat"), crs = 4326), SWEREF)
   xy <- st_coordinates(sp); s$x <- xy[, 1]; s$y <- xy[, 2]
   base_map() +
     geom_point(data = s, aes(x, y, colour = v), size = 0.9, alpha = 0.85) +
-    scale_colour_manual(values = c(setNames(SERIES[seq_along(top)], top), "övriga" = OTHER_COL), name = NULL) +
+    scale_colour_manual(values = c(setNames(SERIES[seq_along(top)], top), setNames(OTHER_COL, oth)), name = NULL) +
     coord_sf(xlim = range(s$x) + c(-20000, 20000), ylim = range(s$y) + c(-20000, 20000), crs = SWEREF, datum = NA) +
     labs(title = title) + theme_map() + guides(colour = guide_legend(override.aes = list(size = 3)))
 }
 OTHER_COL <- "#94a3b8"
 fig_efter <- tryCatch(save_fig(mk("æftir", function(w) substr(w, 1, 1), "Första runan i 'efter' (æftiR)"), out,
                                "dialekt_efter.png", 6.5, 7), error = function(e) NULL)
-fig_sten <- tryCatch(save_fig(mk("stæin", function(w) ifelse(grepl("ai|ia|æi", w), "ai (diftong)", "i/e (monoftong)"),
+fig_sten <- tryCatch(save_fig(mk("stæin", function(w) ifelse(grepl("ai|ia|æi", w), tr("ai (diftong)", "ai (diphthong)"), tr("i/e (monoftong)", "i/e (monophthong)")),
                                  "Diftongen i 'sten' (stæin)"), out, "dialekt_sten.png", 6.5, 7), error = function(e) NULL)
 
 result <- list(

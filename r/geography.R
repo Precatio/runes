@@ -110,14 +110,16 @@ if (!is.null(W)) {
                    p = signif(bt$p.value, 3))
   )
   # Figure: distance to water, runestones vs random points on land
-  long <- bind_rows(data.frame(group = "Runstenar", water_km = stones$water_km),
-                    data.frame(group = "Slumpvisa punkter på land", water_km = rnd$water_km))
-  p <- ggplot(long, aes(water_km, colour = group)) +
+  long <- bind_rows(data.frame(group = tr("Runstenar", "Runestones"), water_km = stones$water_km),
+                    data.frame(group = tr("Slumpvisa punkter på land", "Random points on land"), water_km = rnd$water_km))
+  p <- ggplot(long, aes(water_km, colour = group, linetype = group)) +
     stat_ecdf(linewidth = 0.7) +
     scale_colour_manual(values = SERIES[1:2], name = NULL) +
+    scale_linetype_manual(values = c("solid", "22"), name = NULL) +
     scale_x_sqrt(breaks = c(0, 0.5, 1, 2, 5, 10, 20)) +
-    labs(title = "Avstånd till vatten", x = "km till närmaste strand, sjö eller vattendrag (rotskala)",
-         y = "Kumulativ andel",
+    labs(title = "Avstånd till vatten", x = tr("km till närmaste strand, sjö eller vattendrag (rotskala)",
+                                               "km to the nearest shore, lake or river (square-root scale)"),
+         y = tr("Kumulativ andel", "Cumulative share"),
          subtitle = sprintf("Median: runstenar %.2f km, slumpvisa punkter %.2f km (Wilcoxon, ensidigt p = %s)",
                             median(stones$water_km), median(rnd$water_km), format.pval(overall$p.value, digits = 2)),
          caption = "Vattnet enligt Natural Earth 1:10 milj. (dagens strandlinjer). Slumpvisa punkter på land inom varje landskaps runstensområde.") +

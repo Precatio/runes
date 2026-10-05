@@ -112,7 +112,7 @@ long$role_l <- factor(role_lab[long$role], levels = role_lab)
 long$signum <- factor(long$signum, levels = S$signum[order(S$role != "query", S$role != "reference", S$signum)])
 p <- ggplot(long, aes(apex, signum, fill = role_l)) +
   geom_boxplot(outlier.size = 0.3, outlier.colour = MUTED, linewidth = 0.3, width = 0.6) +
-  scale_fill_manual(values = setNames(c("#cfe0f6", "#e2e8f0", "#f3c9b4"), role_lab), name = NULL) +
+  scale_fill_manual(values = setNames(c("#f2c4a7", "#e5e7eb", "#6b7280"), role_lab), name = NULL) +
   labs(title = tr("V-vinkel per sten", "V-angle per stone"), x = tr("V-vinkel (°)", "V-angle (°)"), y = NULL,
        subtitle = tr("Alla godkända tvärsnitt", "All accepted cross-sections")) +
   theme_runor() + theme(panel.grid.major.y = element_blank())

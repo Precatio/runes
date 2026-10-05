@@ -94,31 +94,37 @@ kin_prov <- kin %>% group_by(province) %>% filter(n() >= 40) %>%
 # ---- figures ---------------------------------------------------------------------------------------------------
 tg <- as_tbl_graph(g) %>% activate(nodes) %>% mutate(community = factor(community))
 top_comm <- names(sort(table(V(g)$community), decreasing = TRUE))[1:min(3, length(unique(V(g)$community)))]
-tg <- tg %>% mutate(colour_group = ifelse(as.character(community) %in% top_comm, paste("Grupp", community), "Övriga grupper"))
-lvl <- c(paste("Grupp", top_comm), "Övriga grupper")
+g_lab <- tr("Grupp", "Group"); o_lab <- tr("Övriga grupper", "Other groups")
+tg <- tg %>% mutate(colour_group = ifelse(as.character(community) %in% top_comm, paste(g_lab, community), o_lab))
+lvl <- c(paste(g_lab, top_comm), o_lab)
 cols <- setNames(c(SERIES[seq_along(top_comm)], "#94a3b8"), lvl)
 p <- ggraph(tg, layout = "fr", weights = weight) +
   geom_edge_link(aes(alpha = weight), colour = MUTED, show.legend = FALSE) +
   scale_edge_alpha(range = c(0.05, 0.4)) +
   geom_node_point(aes(size = n, colour = factor(colour_group, levels = lvl))) +
-  geom_node_text(aes(label = ifelse(n >= quantile(n, 0.6), name, "")), repel = TRUE, size = 2.6, colour = INK) +
+  geom_node_text(aes(label = ifelse(n >= quantile(n, 0.6), name, "")), repel = TRUE, size = 2.6, colour = INK, family = FONT) +
   scale_colour_manual(values = cols, name = NULL) +
-  scale_size_area(max_size = 6, name = "Inskrifter") +
+  scale_size_area(max_size = 6, name = tr("Inskrifter", "Inscriptions")) +
   labs(title = "Formelnätverk", subtitle = sprintf(
     "Ord i minst %d inskrifter; kant = förekommer tillsammans (PMI > 0, minst %d gånger). Modularitet %.2f.",
     MIN_WORD, MIN_EDGE, mod), caption = "Grupperna (Louvain) är ord som oftare står i samma inskrifter än slumpen ger.") +
-  theme_void(base_size = 10) + theme(plot.title = element_text(face = "bold", colour = INK),
+  theme_void(base_size = 10, base_family = FONT) + theme(plot.title = element_text(face = "bold", colour = INK),
                                      plot.subtitle = element_text(colour = MUTED, size = 9),
                                      plot.caption = element_text(colour = MUTED, size = 8, hjust = 0),
                                      legend.position = "bottom", plot.background = element_rect(fill = "white", colour = NA))
 fig_net <- save_fig(p, out, "natverk_formler.png", 9, 8)
 
 kp <- kin_prov %>% filter(relation %in% names(KIN)[sapply(kin_rows, `[[`, "n") >= 30])
-kp$relation <- factor(kp$relation, levels = rev(names(KIN)))
+KIN_EN <- c("fader" = "father", "moder" = "mother", "son" = "son", "dotter" = "daughter", "broder" = "brother",
+            "syster" = "sister", "hustru" = "wife", "make" = "husband", "fosterson/fosterfar" = "foster son/father",
+            "farbror/morbror" = "paternal/maternal uncle", "svåger/måg" = "brother-in-law/son-in-law",
+            "partner/kamrat" = "partner (félagi)")
+rel_lab <- function(x) if (identical(LANG, "en")) unname(KIN_EN[x]) else x
+kp$relation <- factor(rel_lab(kp$relation), levels = rev(rel_lab(names(KIN))))
 p <- ggplot(kp, aes(province, relation, fill = share)) +
   geom_tile(colour = "white", linewidth = 0.6) +
   geom_text(aes(label = round(100 * share)), size = 2.6, colour = ifelse(kp$share > 0.35, "white", INK)) +
-  scale_fill_gradient(low = SEQ[1], high = SEQ[3], name = "Andel inskrifter (%)", labels = function(x) round(100 * x)) +
+  scale_fill_gradient(low = SEQ[1], high = SEQ[3], name = tr("Andel inskrifter (%)", "Share of inscriptions (%)"), labels = function(x) round(100 * x)) +
   labs(title = "Släktrelationer i inskrifterna per landskap", x = NULL, y = NULL,
        subtitle = "Andel av landskapets runstenar som nämner relationen (landskap med minst 40 stenar)") +
   theme_runor() + theme(panel.grid.major = element_blank())
