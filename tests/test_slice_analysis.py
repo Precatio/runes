@@ -90,3 +90,27 @@ def test_apex_angle_on_75_degree_fixture():
     # The fixture uses Y as the up axis and runs the groove along Z
     x, z = extract_2d_profile_from_mesh(mesh, centre, np.array([0.0, 0.0, 1.0]), np.array([0.0, 1.0, 0.0]))[:2]
     assert calculate_v_angle(x, z)["apex_vinkel_deg"] == pytest.approx(75.0, abs=3.0)
+
+
+def _rounded_v(xs, angle=120.0, depth=2.5, rb=1.5):
+    """A V-groove with a rounded bottom in a flat stone surface (z = 0 outside the groove)."""
+    k = 1 / np.tan(np.radians(angle / 2))
+    zv = -depth + k * np.abs(xs)
+    zr = -depth + rb - np.sqrt(np.maximum(rb ** 2 - xs ** 2, 0))
+    x0 = rb * np.sin(np.arctan(k))
+    return np.minimum(np.where(np.abs(xs) < x0, np.maximum(zr, -depth), zv), 0)
+
+
+def test_measures_do_not_depend_on_point_spacing():
+    # The published scans range from 0.33 to 1.11 mm between points; the same groove must measure the same
+    rng = np.random.default_rng(0)
+    out = {}
+    for sp in (0.33, 1.11):
+        vals = []
+        for _ in range(60):
+            xs = np.sort(np.arange(-12.5, 12.5, sp) + rng.uniform(0, sp))
+            vals.append([calculate_v_angle(xs, _rounded_v(xs) + rng.normal(0, 0.03, len(xs)))[k]
+                         for k in ("apex_vinkel_deg", "spårbredd_mm", "bottenradie_mm")])
+        out[sp] = np.median(vals, axis=0)
+    angle, width, radius = np.abs(out[0.33] - out[1.11])
+    assert angle < 3.0 and width < 0.5 and radius < 0.5

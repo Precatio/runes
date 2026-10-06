@@ -24,7 +24,7 @@ import numpy as np
 from src.academic import DIGITS, FEATURE_NAMES, bullets, figure, fmt, h, p, table
 from src import r_report, scan_sources
 from src.reading import runes_to_latin
-from src.slice_analysis import calculate_v_angle
+from src.slice_analysis import PROFILE_STEP_MM, RIM_MM, calculate_v_angle
 from src.stats import METRICS, METRIC_LABELS, attribute, compare_stones, summarize
 
 ACCENT = "#b7410e"
@@ -269,7 +269,7 @@ def _fit(profile: dict):
         return None
     if not np.isfinite(m["apex_vinkel_deg"]):
         return None
-    return x, z, m
+    return m["x"], m["z"], m  # the indices in m refer to the resampled profile
 
 
 def profiles_figure(slices: list[dict], picks: list[int]) -> str | None:
@@ -293,7 +293,8 @@ def profiles_figure(slices: list[dict], picks: list[int]) -> str | None:
         ax.axis("on")
         a = int(m["apex_idx"])
         ls, rs = int(m["left_shoulder"]), int(m["right_shoulder"])
-        rim = 0.5 * (np.max(z[max(0, ls - 3):ls + 1]) + np.max(z[rs:rs + 4]))
+        rw = int(round(RIM_MM / PROFILE_STEP_MM))
+        rim = 0.5 * (np.max(z[max(0, ls - rw):ls + 1]) + np.max(z[rs:rs + rw + 1]))
         x0, z0 = x[a], rim
         ax.plot(x - x0, z - z0, ".", ms=1.5, color="#334155")
         (k1, m1), (k2, m2) = m["fit_left"], m["fit_right"]

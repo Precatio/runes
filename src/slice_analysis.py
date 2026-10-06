@@ -79,33 +79,81 @@ def _wall_band(xw, zw, z_bottom, z_top):
     return (xw[keep], zw[keep]) if keep.sum() >= 3 else (xw, zw)
 
 
-def calculate_v_angle(x, z):
+# Profilen räknas om till jämnt punktavstånd innan den mäts, och alla fönster anges i millimeter. Annars beror
+# måtten på skanningens punkttäthet: fem punkter är 1,6 mm på en tät skanning och 5,5 mm på en gles.
+PROFILE_STEP_MM = 0.05  # finer than any scan, so resampling loses nothing
+SMOOTH_MM = 1.0         # glidande medel för att hitta botten och axlar
+SHOULDER_MIN_MM = 1.0   # axlar närmare botten än så räknas som missade ...
+SHOULDER_FALLBACK_MM = 3.0  # ... och sätts då så här långt från botten
+RIM_MM = 0.8            # spårkanten söks så här långt utanför axeln
+BOTTOM_FIT_MM = 1.0     # bottenradien anpassas inom ± så här långt från botten
+
+
+def resample_profile(x, z, step_mm: float = PROFILE_STEP_MM, harmonize_mm: float | None = None):
+    """Profilen med jämnt punktavstånd (linjär interpolation; punkter med samma x slås ihop). Med harmonize_mm
+    jämnas profilen ut med ett gaussfilter med den standardavvikelsen, så att skanningar med olika punkttäthet får
+    samma effektiva upplösning (välj minst den glesaste skanningens punktavstånd)."""
+    x = np.asarray(x, dtype=float)
+    z = np.asarray(z, dtype=float)
+    order = np.argsort(x)
+    x, z = x[order], z[order]
+    ux, inv = np.unique(np.round(x, 6), return_inverse=True)
+    uz = np.bincount(inv, weights=z) / np.bincount(inv)
+    if len(ux) < 4:
+        raise ValueError("För få punkter i snittet.")
+    xr = np.arange(ux[0], ux[-1] + step_mm / 2, step_mm)
+    zr = np.interp(xr, ux, uz)
+    if harmonize_mm:
+        from scipy.ndimage import gaussian_filter1d
+        zr = gaussian_filter1d(zr, harmonize_mm / step_mm, mode="nearest")
+    return xr, zr
+
+
+def point_spacing(x) -> float:
+    """Medianavståndet mellan profilens punkter (mm) – ett mått på skanningens upplösning i snittet."""
+    d = np.diff(np.unique(np.round(np.asarray(x, dtype=float), 6)))
+    return float(np.median(d)) if len(d) else float("nan")
+
+
+def calculate_v_angle(x, z, harmonize_mm: float | None = None):
+    spacing = point_spacing(x)
+    x, z = resample_profile(x, z, harmonize_mm=harmonize_mm)
+    n_mm = lambda mm: max(1, int(round(mm / PROFILE_STEP_MM)))  # noqa: E731
     # Använd lätt utjämning för att hitta en mer stabil apex och axlar
-    z_smooth = np.convolve(z, np.ones(5)/5, mode='same')
-    apex_idx = np.argmin(z_smooth)
-    
+    k = n_mm(SMOOTH_MM)
+    z_smooth = np.convolve(np.pad(z, (k // 2, k - 1 - k // 2), mode="edge"), np.ones(k) / k, mode="valid")
+    apex_idx = int(np.argmin(z_smooth))
+
     # Beräkna derivatan (lutningen) för att hitta när plan stenyta börjar
     dz = np.gradient(z_smooth, x)
     slope_threshold = 0.15
-    
+
+    # Axlarna: där profilen planar ut, men först när den nått minst halvvägs upp mot stenytan på den sidan.
+    # Annars hittas den utjämnade botten (och en flat spårbotten) i stället för spårkanten.
+    z_bottom_s = z_smooth[apex_idx]
+    left_top = z_bottom_s + 0.5 * (np.max(z_smooth[:apex_idx + 1]) - z_bottom_s)
+    right_top = z_bottom_s + 0.5 * (np.max(z_smooth[apex_idx:]) - z_bottom_s)
+
     # Hitta vänster axel
     left_shoulder = 0
     for i in range(apex_idx - 1, -1, -1):
-        if abs(dz[i]) < slope_threshold:
+        if abs(dz[i]) < slope_threshold and z_smooth[i] >= left_top:
             left_shoulder = i
             break
-            
+
     # Hitta höger axel
     right_shoulder = len(x) - 1
     for i in range(apex_idx + 1, len(x)):
-        if abs(dz[i]) < slope_threshold:
+        if abs(dz[i]) < slope_threshold and z_smooth[i] >= right_top:
             right_shoulder = i
             break
-            
+
     # Fallback om axlarna hamnar för nära apex
-    if apex_idx - left_shoulder < 5: left_shoulder = max(0, apex_idx - 15)
-    if right_shoulder - apex_idx < 5: right_shoulder = min(len(x)-1, apex_idx + 15)
-    
+    if apex_idx - left_shoulder < n_mm(SHOULDER_MIN_MM):
+        left_shoulder = max(0, apex_idx - n_mm(SHOULDER_FALLBACK_MM))
+    if right_shoulder - apex_idx < n_mm(SHOULDER_MIN_MM):
+        right_shoulder = min(len(x) - 1, apex_idx + n_mm(SHOULDER_FALLBACK_MM))
+
     x_left, z_left = x[left_shoulder:apex_idx], z[left_shoulder:apex_idx]
     x_right, z_right = x[apex_idx+1:right_shoulder], z[apex_idx+1:right_shoulder]
     
@@ -134,8 +182,8 @@ def calculate_v_angle(x, z):
     
     depth = abs(np.min(z[left_shoulder:right_shoulder]) - np.max(z[left_shoulder:right_shoulder]))
     # Bredd: där väggarnas linjer når stenytans nivå precis utanför spårkanterna (medel av sidorna)
-    rim_left = np.max(z[max(0, left_shoulder - 3):left_shoulder + 1])
-    rim_right = np.max(z[right_shoulder:right_shoulder + 4])
+    rim_left = np.max(z[max(0, left_shoulder - n_mm(RIM_MM)):left_shoulder + 1])
+    rim_right = np.max(z[right_shoulder:right_shoulder + n_mm(RIM_MM) + 1])
     rim = 0.5 * (rim_left + rim_right)
     if k1 < 0 < k2:
         width = abs((rim - res_right.intercept) / k2 - (rim - res_left.intercept) / k1)
@@ -144,7 +192,7 @@ def calculate_v_angle(x, z):
     dw_ratio = depth / width if width > 0 else 0
     
     # Calculate R_b (Bottenradie) using parabolic fit near apex
-    apex_pts_idx = slice(max(0, apex_idx - 5), min(len(x), apex_idx + 6))
+    apex_pts_idx = slice(max(0, apex_idx - n_mm(BOTTOM_FIT_MM)), min(len(x), apex_idx + n_mm(BOTTOM_FIT_MM) + 1))
     x_apex, z_apex = x[apex_pts_idx], z[apex_pts_idx]
     if len(x_apex) >= 3:
         p = np.polyfit(x_apex, z_apex, 2)
@@ -169,6 +217,8 @@ def calculate_v_angle(x, z):
         "bottenradie_mm": Rb,
         "ytråhet_mm": Ra,
         "fit_r2": float(min(res_left.rvalue ** 2, res_right.rvalue ** 2)),
+        "point_spacing_mm": spacing,
+        "x": x, "z": z,  # the resampled profile that the indices below refer to
         "fit_left": (res_left.slope, res_left.intercept),
         "fit_right": (res_right.slope, res_right.intercept),
         "apex_idx": apex_idx,
@@ -177,6 +227,8 @@ def calculate_v_angle(x, z):
     }
 
 def plot_profile(x, z, analysis_results, output_path):
+    # The indices refer to the resampled profile
+    x, z = analysis_results.get("x", x), analysis_results.get("z", z)
     plt.figure(figsize=(8, 6))
     plt.plot(x, z, 'k.', label='Uppmätt data')
     

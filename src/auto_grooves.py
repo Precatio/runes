@@ -226,10 +226,13 @@ def _groove_map_png(hf: Heightfield, residual: np.ndarray, inner: np.ndarray, th
 def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 3.0,
                     min_depth_mm: float = 0.3, scale_mm: float = 20.0, edge_margin_mm: float = 5.0,
                     min_fit_r2: float = 0.8, max_cells: int = 6_000_000, face_tree: cKDTree | None = None,
-                    max_halfwidth_mm: float = 8.0, max_slope_deg: float = 45.0, up=None) -> dict:
+                    max_halfwidth_mm: float = 8.0, max_slope_deg: float = 45.0, up=None,
+                    resolution_mm: float | None = None, harmonize_mm: float | None = None) -> dict:
     """Hittar spåren i höjdfältet och mäter tvärsnitt genom själva mesh-filen, med samma
     profilutdragning och samma calculate_v_angle som den manuella analysen."""
-    hf = Heightfield.from_mesh(mesh, normal, max_cells=max_cells, up=up)
+    hf = Heightfield.from_mesh(mesh, normal, max_cells=max_cells, resolution=resolution_mm, up=up)
+    edges = mesh.edges_unique_length
+    mesh_spacing = float(np.median(edges)) if len(edges) else float("nan")
     face_tree = face_tree or cKDTree(mesh.triangles_center)
     res = hf.res
     ref = reference_surface(hf, scale_mm=scale_mm)
@@ -306,14 +309,14 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
         tangent = _unit(t_x * hf.u + t_y * hf.v)
         try:
             s, z = extract_2d_profile_from_mesh(mesh, point, tangent, hf.n, window_mm=W, face_tree=face_tree)
-            m = calculate_v_angle(s, z)
+            m = calculate_v_angle(s, z, harmonize_mm=harmonize_mm)
         except Exception:
             reject(rec, "anpassningen misslyckades")
             slices.append(rec)
             continue
         rec.update({key: float(m[key]) for key in METRICS})
         rec["fit_r2"] = float(m["fit_r2"])
-        apex_x = float(s[m["apex_idx"]])
+        apex_x = float(m["x"][m["apex_idx"]])
         rec["point"] = [float(v) for v in point]
         rec["direction"] = [float(v) for v in tangent]
         rec["up"] = [float(v) for v in hf.n]
@@ -327,7 +330,7 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
             reject(rec, "dålig väggpassning")
         elif m["spårdjup_mm"] < threshold:
             reject(rec, "för grunt")
-        elif m["left_shoulder"] == 0 or m["right_shoulder"] >= len(s) - 1:
+        elif m["left_shoulder"] == 0 or m["right_shoulder"] >= len(m["x"]) - 1:
             reject(rec, "spårkant hittades inte")
         elif abs(apex_x) > max(1.5, 1.5 * hw):
             reject(rec, "botten utanför mittlinjen")
@@ -363,6 +366,9 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
             "normal": [float(v) for v in hf.n],
             "up": [float(v) for v in hf.v],
             "resolution_mm": res,
+            "mesh_point_spacing_mm": mesh_spacing,
+            "harmonize_mm": harmonize_mm,
+            "fixed_resolution": resolution_mm is not None,
             "reference_scale_mm": scale_mm,
             "noise_mm": noise,
             "threshold_mm": threshold,

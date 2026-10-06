@@ -4,7 +4,7 @@ Den här filen beskriver exakt hur Vitki räknar, så att resultat kan granskas,
 Alla beräkningar finns i `src/` och testas i `tests/`. Varje analys sparar en **proveniens** (programversion,
 mätmetodens version, SHA-256 för 3D-filen, alla parametrar och tidpunkt) som följer med i export och rapporter.
 
-## 1. Huggspårsmått (mätmetod `groove-3`)
+## 1. Huggspårsmått (mätmetod `groove-4`)
 
 Källkod: `src/slice_analysis.py`.
 
@@ -14,12 +14,15 @@ Källkod: `src/slice_analysis.py`.
    snittet genom en sluten skanning. Profilen uttrycks i x (tvärs spåret) och z (längs ytans normal).
 2. **Uppåtriktning.** Vid manuell mätning används medelvärdet av ytnormalen i de klickade punkterna, vid
    ett klick och automatisk analys den lokala ytnormalen (se avsnitt 1b och 1c).
-3. **Apex.** Profilen jämnas ut med ett glidande medelvärde (5 punkter). Apex är den lägsta punkten.
-4. **Spårkanter (axlar).** Från apex söks utåt tills lutningen |dz/dx| understiger 0,15.
-5. **Väggar.** Varje vägg anpassas med linjär regression, men **bara mellan 20 % och 80 % av höjden** från
+3. **Jämnt punktavstånd.** Profilen interpoleras linjärt till 0,05 mm mellan punkterna (finare än någon skanning), så
+   att alla fönster nedan kan anges i millimeter. Profilens ursprungliga punktavstånd sparas (`point_spacing_mm`).
+4. **Apex.** Profilen jämnas ut med ett glidande medelvärde över 1 mm. Apex är den lägsta punkten.
+5. **Spårkanter (axlar).** Från apex söks utåt tills lutningen |dz/dx| understiger 0,15 och profilen nått minst
+   halvvägs upp mot stenytan på den sidan (annars hittas en flat spårbotten i stället för kanten).
+6. **Väggar.** Varje vägg anpassas med linjär regression, men **bara mellan 20 % och 80 % av höjden** från
    botten till spårkanten. Den rundade botten och spårkantens läpp planar annars ut väggarna och ger för
    stor vinkel (minst tre punkter, annars används hela väggen).
-6. **Mått:**
+7. **Mått:**
 
 | Mått | Definition |
 |---|---|
@@ -28,7 +31,7 @@ Källkod: `src/slice_analysis.py`.
 | Spårdjup (mm) | Höjdskillnaden mellan högsta och lägsta punkt mellan kanterna. |
 | Spårbredd (mm) | Avståndet mellan väggarnas linjer i höjd med stenytan precis utanför spårkanterna (medel av sidorna). |
 | Djup/bredd | Spårdjup / spårbredd. |
-| Bottenradie (mm) | 1/(2a) för en andragradskurva anpassad till ±5 punkter kring apex. |
+| Bottenradie (mm) | 1/(2a) för en andragradskurva anpassad inom ±1 mm från apex. |
 | Ytråhet (mm) | Medelabsolutavvikelsen från väggarnas regressionslinjer. |
 | Väggpassning (R²) | Den sämre av väggarnas förklaringsgrad; används för kvalitetsgranskning. |
 
@@ -36,12 +39,23 @@ Källkod: `src/slice_analysis.py`.
 mätbrus 0,03 mm, `src/synthetic.py`) mäts vinkeln inom ±0,6° och bredden inom ±1 % (djup 4 mm). Testerna
 körs automatiskt (`tests/`).
 
+**Punkttäthet.** Öppet publicerade skanningar är förenklade i olika grad (0,33–1,11 mm mellan punkterna i
+Kitzler Åhfeldts Södermanlandsserie). Samma syntetiska spår mätt vid 0,33 och 1,11 mm ger med `groove-4` samma
+vinkel inom 1,5°, bredd inom 0,15 mm och bottenradie inom 0,1 mm; med `groove-3` växte bottenradien från 1,3 till
+7,0 mm och vinkeln med 10° (`tests/test_slice_analysis.py`). För jämförelser mellan stenar kan den automatiska
+analysen dessutom köras med fast rutnätsupplösning (`resolution_mm`) och med utjämning till en gemensam effektiv
+upplösning (`harmonize_mm`); båda sparas bland parametrarna.
+
 **Versionshistorik.**
 * `groove-1` (före 2026-10-04) gav 180° minus den verkliga öppningsvinkeln.
 * `groove-2` (2026-10-04) rättade vinkeln, men anpassade väggarna över hela höjden, mätte bredden mellan
   spårkanterna och tog med hela snittet genom nätet. På smala spår blev vinkeln ca 10° för stor.
 * `groove-3` (2026-10-04): väggband 20–80 %, bredd vid stenytan och fönster runt mätpunkten.
   Mätningar med äldre versioner är inte direkt jämförbara och bör göras om.
+* `groove-4` (2026-10-06): fönstren räknades i punkter i stället för millimeter, så måtten berodde på
+  skanningens punkttäthet. Profilen räknas nu om till jämnt punktavstånd och alla fönster anges i mm;
+  spårkanten måste ligga minst halvvägs upp mot stenytan. Jämförelser mellan stenar med olika punkttäthet
+  gjorda med äldre versioner bör göras om.
 
 ### 1b. Ett klick per snitt
 

@@ -173,7 +173,7 @@ def measure_slices(entry: MeshEntry, origin, direction, up, slice_count: int, sp
         slices.append(_slice_record(res, offset, x_2d, z_2d, origin + groove_direction * offset,
                                     groove_direction, up))
         if i == slice_count // 2 or main is None:
-            main = {"x_2d": x_2d, "z_2d": z_2d, "res": res}
+            main = {"x_2d": res["x"], "z_2d": res["z"], "res": res}
     return slices, main
 
 
@@ -301,10 +301,15 @@ def auto_analyze(
     up_z: float = Form(None),
     meta_stone: str = Form("Granit"),
     meta_weathering: str = Form("Låg"),
+    resolution_mm: float = Form(None),
+    harmonize_mm: float = Form(None),
 ):
     """Automatisk spåranalys av den ristade ytan som vetter mot normalen (oftast kamerans riktning)."""
     if not 0.5 <= spacing_mm <= 50 or not 1 <= sensitivity <= 10:
         raise HTTPException(status_code=400, detail="Ogiltiga parametrar för automatisk analys.")
+    # Fixed grid resolution and harmonised profiles make stones from scans of different density comparable
+    if (resolution_mm is not None and not 0.1 <= resolution_mm <= 3) or (harmonize_mm is not None and not 0 <= harmonize_mm <= 5):
+        raise HTTPException(status_code=400, detail="Upplösning 0,1–3 mm och harmonisering 0–5 mm.")
     entry = resolve_mesh(file, mesh_id)
     if entry.info.get("mock"):
         raise HTTPException(status_code=400, detail=NO_MESH)
@@ -312,7 +317,8 @@ def auto_analyze(
         result = analyze_grooves(entry.mesh, [normal_x, normal_y, normal_z], spacing_mm=spacing_mm,
                                  sensitivity=sensitivity, max_halfwidth_mm=max_halfwidth_mm,
                                  face_tree=entry.face_tree,
-                                 up=None if up_x is None else [up_x, up_y, up_z])
+                                 up=None if up_x is None else [up_x, up_y, up_z],
+                                 resolution_mm=resolution_mm, harmonize_mm=harmonize_mm or None)
     except ValueError as e:
         raise HTTPException(status_code=422, detail=str(e))
     except Exception as e:
