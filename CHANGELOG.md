@@ -27,6 +27,13 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 - Attribueringsmodellen i R korsvalideras också grupperat per socken och härad (rätt ristare 72 % slumpvis,
   68 % på ny socken, 57 % i nytt härad), visat på sidan Statistik (R) och i fynden.
 
+### Stenens storlek
+- Mått (höjd, bredd, tjocklek, runhöjd) för 1 384 vikingatida runstenar ur Kulturmiljöregistret via Runor och
+  K-samsök (CC0; `data/stone_dimensions.json`, `scripts/build_stone_dimensions.py`), visade i Inskrifter och
+  stenrapporten med stenens plats bland landskapets stenar.
+- Storlek mot syfte, statusord, antal personer, textens längd och ristare, prövat inom landskap
+  (Forskningsluckor → Storlek och syfte; METHODS.md 9b).
+
 ### Protokoll och dokumentation
 - Vitki-protokollet för automatisk huggspårsmätning (`PROTOCOL.md`, `src/protocol.py`), utkast: fasta parametrar,
   krav på skanningen, arbetsgång, minsta redovisning; varje automatisk analys kontrolleras mot protokollet.

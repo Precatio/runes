@@ -124,6 +124,22 @@ def _categories() -> dict:
     return carver_categories(store().inscriptions, certain_carvers)
 
 
+@lru_cache(maxsize=2)
+def _stone_size(mtime: float) -> dict:
+    from src import stone_dimensions, stone_size
+    return {**stone_size.analyse(store().inscriptions, stone_dimensions.load().get("stones") or {}),
+            "meta": stone_dimensions.load().get("meta"), "source": stone_dimensions.SOURCE}
+
+
+@router.get("/stone_size")
+def stone_size_analysis():
+    """Runstenens storlek mot inskriftens syfte, statusord, antal personer, textens längd och ristare (METHODS.md 9b)."""
+    import os
+    from src import stone_dimensions
+    mtime = os.path.getmtime(stone_dimensions.DATA) if os.path.exists(stone_dimensions.DATA) else 0.0
+    return _stone_size(mtime)
+
+
 @router.get("/categories")
 def inscription_categories():
     """Inskrifternas syfte och innehåll per ristare, med test mot genomsnittet."""

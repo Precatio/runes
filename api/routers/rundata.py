@@ -19,7 +19,11 @@ def inscription(signum: str):
     rec = store().get(signum)
     if not rec:
         raise HTTPException(status_code=404, detail=f"Signum '{signum}' finns inte i Rundata.")
-    return rec
+    from src import stone_dimensions
+    dims = stone_dimensions.lookup(rec["signum"])
+    if dims:
+        dims = {**dims, "in_province": stone_dimensions.province_percentile(rec["signum"], lambda s: s.split(" ")[0])}
+    return {**rec, "dimensions": dims}
 
 
 @router.get("/search")

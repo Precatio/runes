@@ -896,6 +896,15 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
             f"vittring {cond.get('weathering') or meta.get('weathering')}" if (cond.get("weathering") or meta.get("weathering")) else "",
             "lav" if cond.get("lichen") else "", "ommålad" if cond.get("paint") else "", cond.get("notes") or ""] if x) or "–"],
     ]
+    dm = f.get("dimensions")
+    if dm:
+        parts = [f"{fmt(dm[k], 2)} m {w}" for k, w in (("height_m", "hög"), ("width_m", "bred"), ("thickness_m", "tjock")) if dm.get(k)]
+        if dm.get("rune_height_cm"):
+            parts.append(f"runhöjd {fmt(dm['rune_height_cm'], 1)} cm")
+        ip = dm.get("in_province")
+        facts_rows.append(["Mått (Kulturmiljöregistret)", ", ".join(parts) + (" (fragment)" if dm.get("fragment") else "")
+                           + (f"; högre än {ip['percentile']} % av {ip['n']} runstenar med kända mått i landskapet "
+                              f"(median {fmt(ip['median_m'], 2)} m)" if ip else "")])
     if rec.get("flags", {}).get("lost"):
         facts_rows.append(["Anmärkning", "Stenen är försvunnen enligt Rundata."])
     if rec.get("other"):

@@ -81,7 +81,7 @@ interface Findings {
   method_note: string;
 }
 
-type Tab = "findings" | "categories" | "hypotheses" | "reconsider" | "priorities" | "uninterpreted" | "style";
+type Tab = "findings" | "categories" | "size" | "hypotheses" | "reconsider" | "priorities" | "uninterpreted" | "style";
 
 interface CategoryStats {
   categories: { key: string; label: string; definition: string; base_rate: number; count: number }[];
@@ -210,6 +210,7 @@ export default function GapsPage() {
   const tabs: [Tab, string, number][] = [
     ["findings", "Våra resultat mot forskningen", found.findings.length],
     ["categories", "Inskrifternas syfte per ristare", 9],
+    ["size", "Storlek och syfte", 1],
     ["hypotheses", "Ortografiska hypoteser", data.hypotheses.new.length],
     ["reconsider", "Ompröva attribuering", data.hypotheses.reconsider.length],
     ["priorities", "Mätningar som gör mest nytta", data.measurement_priorities.length],
@@ -266,6 +267,7 @@ export default function GapsPage() {
       <div className="liquid-glass-island rounded-[32px] p-5">
         {tab === "findings" && <FindingsPanel data={found} loggedIn={!!user} onRefresh={() => setReload(r => r + 1)} />}
         {tab === "categories" && <CategoryPanel />}
+        {tab === "size" && <SizePanel />}
         {(tab === "hypotheses" || tab === "reconsider") && (
           <HypothesisTable key={tab} reconsider={tab === "reconsider"} ev={data.hypotheses.evaluation}
             rows={tab === "hypotheses" ? data.hypotheses.new : data.hypotheses.reconsider} />
@@ -298,6 +300,83 @@ function BarLink({ value, total, color, has, missing }: { value: number; total: 
           {total - value} saknar
         </Link>
       )}
+    </div>
+  );
+}
+
+interface SizeTest { variable: string; n: number; ratio: number | null; p: number | null; q: number | null; median_with_m: number; median_without_m: number }
+interface SizeStats {
+  n: number; median_height_m: number; quartiles_m: [number, number]; error?: string;
+  meta: { n_runestones: number; status: Record<string, number> }; source: string;
+  tests: SizeTest[];
+  correlations: { variable: string; rho: number; p: number; n: number; partial?: boolean }[];
+  carvers: { carver: string; n: number; ratio: number | null; p: number | null; q: number | null; median_m: number }[];
+  largest: { signum: string; height_m: number; categories: string[]; status: string[] }[];
+}
+
+function SizePanel() {
+  const [data, setData] = useState<SizeStats | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    fetch(`${API_URL}/api/research/stone_size`).then(r => (r.ok ? r.json() : Promise.reject(new Error(`Fel ${r.status}`))))
+      .then(setData).catch(e => setError(e instanceof Error ? e.message : "Kunde inte hämta storleksanalysen."));
+  }, []);
+  if (error) return <p className="text-red-700 font-semibold">{error}</p>;
+  if (!data) return <p className="text-slate-500">Räknar (permutationstest inom landskap) …</p>;
+  if (data.error) return <p className="text-slate-600">{data.error}</p>;
+  const ratio = (r: number | null) => (r == null ? "–" : `${r >= 1 ? "+" : "−"}${Math.abs(Math.round((r - 1) * 100))} %`);
+  const sig = (q: number | null) => (q != null && q < 0.05 ? "font-semibold text-slate-900" : "text-slate-600");
+  return (
+    <div className="space-y-5 text-sm">
+      <p className="text-slate-600 max-w-4xl">
+        Restes större stenar för större syften och av mäktigare personer? Höjden för {data.n} av {data.meta.n_runestones}{" "}
+        vikingatida runstenar kunde läsas ur Kulturmiljöregistret (median {fmt(data.median_height_m)} m, kvartiler{" "}
+        {fmt(data.quartiles_m[0])}–{fmt(data.quartiles_m[1])} m; fragment uteslutna). Alla jämförelser görs <em>inom landskap</em>{" "}
+        (bergart och lokal sed påverkar storleken): skillnaden anges som hur mycket högre eller lägre stenarna är, med
+        permutationstest inom landskap och q-värden korrigerade för antalet test.
+      </p>
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead><tr><th className="p-2 text-left text-[11px] uppercase text-slate-500">Variabel</th><th className="p-2 text-left text-[11px] uppercase text-slate-500">Stenar</th>
+            <th className="p-2 text-left text-[11px] uppercase text-slate-500">Höjd mot övriga (inom landskap)</th><th className="p-2 text-left text-[11px] uppercase text-slate-500">Median med / utan</th>
+            <th className="p-2 text-left text-[11px] uppercase text-slate-500">p</th><th className="p-2 text-left text-[11px] uppercase text-slate-500">q</th></tr></thead>
+          <tbody>{data.tests.map(t => (
+            <tr key={t.variable} className={`border-t border-slate-900/5 ${sig(t.q)}`}>
+              <td className="p-2">{t.variable}</td><td className="p-2">{t.n}</td><td className="p-2">{ratio(t.ratio)}</td>
+              <td className="p-2">{fmt(t.median_with_m)} / {fmt(t.median_without_m)} m</td><td className="p-2">{fmtP(t.p)}</td><td className="p-2">{fmtP(t.q)}</td>
+            </tr>
+          ))}</tbody>
+        </table>
+      </div>
+      <div>
+        <p className="font-bold text-slate-900 mb-1">Samband med texten (rangkorrelation inom landskap)</p>
+        <ul className="list-disc pl-5 text-slate-700">
+          {data.correlations.map(c => <li key={c.variable}>{c.variable}: rho {fmt(c.rho)} (p {fmtP(c.p)}, {c.n} stenar)</li>)}
+        </ul>
+        <p className="text-xs text-slate-500 mt-1">En större sten har plats för en längre text; därför visas också antalet personer med hänsyn till textens längd.</p>
+      </div>
+      {data.carvers.length > 0 && (
+        <div className="overflow-x-auto">
+          <p className="font-bold text-slate-900 mb-1">Ristare med minst tio stenar med kända mått</p>
+          <table className="w-full">
+            <thead><tr><th className="p-2 text-left text-[11px] uppercase text-slate-500">Ristare</th><th className="p-2 text-left text-[11px] uppercase text-slate-500">Stenar</th>
+              <th className="p-2 text-left text-[11px] uppercase text-slate-500">Median</th><th className="p-2 text-left text-[11px] uppercase text-slate-500">Höjd mot andra i landskapet</th>
+              <th className="p-2 text-left text-[11px] uppercase text-slate-500">p</th><th className="p-2 text-left text-[11px] uppercase text-slate-500">q</th></tr></thead>
+            <tbody>{data.carvers.map(c => (
+              <tr key={c.carver} className={`border-t border-slate-900/5 ${sig(c.q)}`}>
+                <td className="p-2"><Link href={`/inskrifter?carver=${encodeURIComponent(c.carver)}`} className="text-[#b7410e] hover:underline">{c.carver}</Link></td>
+                <td className="p-2">{c.n}</td><td className="p-2">{fmt(c.median_m)} m</td><td className="p-2">{ratio(c.ratio)}</td><td className="p-2">{fmtP(c.p)}</td><td className="p-2">{fmtP(c.q)}</td>
+              </tr>
+            ))}</tbody>
+          </table>
+        </div>
+      )}
+      <div className="rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 text-xs text-amber-900 space-y-1">
+        <p><strong>Läs med källkritik.</strong> Höjden är oftast höjden över mark i Kulturmiljöregistrets beskrivning, inte stenens hela längd,
+          och stenar har flyttats och rests om. Måtten finns för knappt hälften av stenarna; fornlämningar med flera stenar som inte går
+          att skilja åt är uteslutna. Stenar där minnesformeln inte går att läsa är oftare skadade och därför lägre. Statusorden är grova
+          mått på makt – betydelsen av t.ex. <em>drengr</em> och <em>þegn</em> är omdiskuterad. Källa: {data.source}</p>
+      </div>
     </div>
   );
 }

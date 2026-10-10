@@ -30,7 +30,9 @@ LIMITATIONS = [
      "text": "Huggspårsmåtten beskriver spårens form men är inte visade att skilja ristare åt. När den automatiska "
              "analysen kördes på Kitzler Åhfeldts 36 skanningar från Södermanland (2026) återskapades inte hennes "
              "indelning i grupper, och bergarten påverkade måtten mer än ristaren; ett svagare samband med Rundatas "
-             "ristare fanns kvar efter kontroll för bergart (utforskande). Skillnader mellan stenar kan därför bero på "
+             "ristare fanns kvar efter kontroll för bergart (utforskande). Samma sak gällde när bara runorna mättes "
+             "enligt Vitki-protokollet (groove-5): hennes Rak 1 och Rak 2 skildes inte åt (p 0,43), medan ristar- och "
+             "materialsignalen kvarstod. Skillnader mellan stenar kan därför bero på "
              "bergart, vittring och skanning lika väl som på ristare.",
      "short": "Måtten visar hur spåren är huggna, men det är ännu inte visat att de skiljer ristare åt – bergart och "
               "vittring påverkar mycket.",
@@ -109,6 +111,14 @@ LIMITATIONS = [
              "fynd är en hypotes att pröva med en förhandsbestämd analysplan, inte ett resultat.",
      "short": "Många samband prövas samtidigt, så en del av dem är slump; fynden är idéer att pröva vidare.",
      "needed": "Förregistrerade analysplaner för de hypoteser som ska publiceras."},
+    {"key": "size", "contexts": {"research", "rundata"},
+     "title": "Stenarnas mått är ofullständiga och ojämna",
+     "text": "Måtten läses ur Kulturmiljöregistrets fritext och finns för knappt hälften av de vikingatida runstenarna "
+             "(1 101 av 2 321 med höjd). Höjden är oftast höjden över mark, inte stenens hela längd, och stenar har "
+             "flyttats och rests om. Fornlämningar med flera stenar som inte går att skilja åt är uteslutna, liksom "
+             "fragment. Statusord och antal namn är grova mått på resarnas makt.",
+     "short": "Stenarnas storlek är bara känd för ungefär hälften av dem, och oftast bara höjden över mark.",
+     "needed": "Mått ur Sveriges runinskrifter eller nya mätningar för stenarna som saknas; hela höjden för resta stenar."},
     {"key": "ai", "contexts": {"ai"},
      "title": "AI-resultat är okalibrerade och kan vara påhittade",
      "text": "Blinda AI-läsningar och AI-bedömningar av stil är inte kalibrerade. I ett test på Sö 113 återgav blinda "

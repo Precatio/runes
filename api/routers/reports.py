@@ -159,6 +159,11 @@ def stone_report_endpoint(req: StoneReportRequest,
         raise HTTPException(status_code=400, detail="Högst 3000 tvärsnitt per rapport.")
     facts = stone_report.build_facts(req.model_dump(), store().get)
     facts["geology"] = site_geology(facts["rundata"])
+    from src import stone_dimensions
+    if facts.get("rundata"):
+        sg = facts["rundata"]["signum"]
+        dims = stone_dimensions.lookup(sg)
+        facts["dimensions"] = {**dims, "in_province": stone_dimensions.province_percentile(sg, lambda s: s.split(" ")[0])} if dims else None
     # What Forskningsluckor knows about the stone, and the style and inscription types of the top candidates
     names = [c["name"] for c in ((req.synthesis or {}).get("candidates") or [])[:3]]
     facts["research"] = stone_context(facts["signum"], names) if facts.get("rundata") else None

@@ -376,6 +376,40 @@ av en slump, (1 − basnivå)^n. För sällsynta typer (magiska inskrifter 0,5 %
 ristare med många stenar. I syntesen flaggas en stens typ bara när ristarens frånvaro är osannolik
 (sannolikhet för 0 under 5 %).
 
+### 9b. Stenens storlek och syfte
+
+Källkod: `src/stone_dimensions.py`, `scripts/build_stone_dimensions.py`, `src/stone_size.py`,
+`GET /api/research/stone_size`; fliken *Storlek och syfte* i Forskningsluckor.
+
+**Mått.** Rundata saknar mått. Runor (RAÄ, utgåva 2020) ger för varje inskrift id:t i Kulturmiljöregistret, och
+lämningens beskrivning där – hämtad via K-samsök, CC0 – anger oftast mått, t.ex. "1,5 m h, 0,5-0,6 m br och
+0,2-0,25 m tj. Runhöjd 6-8 cm". Höjd, bredd, tjocklek och runhöjd läses ut med reguljära uttryck (intervall ger
+mittvärdet; värden utanför 0,05–6 m räknas som tolkningsfel). Beskriver lämningen flera föremål ("1) … 2) …")
+används bara delen som nämner stenens signum, eller den enda delen som är en runsten; annars räknas måtten som
+oklara. Fragment markeras och utesluts ur analysen. Av 2 321 vikingatida runstenar fick 1 384 mått (1 101 med höjd,
+utan fragment); 395 saknar id i registret, 350 har en beskrivning utan mått och 192 kunde inte skiljas från andra
+stenar i samma lämning (bygge 2026-10-10, `data/stone_dimensions.json`). Höjden är oftast höjden över mark.
+
+**Analys.** Hypotesen är att stora stenar restes för större syften och av mäktigare personer. Höjden (logaritmisk
+skala) jämförs med inskriftens syfte (avsnitt 9), med statusord i normaliseringen (þegn/þiagn, dræng-, styrimann,
+skipari, kunung-, goði, landmann), med antalet namngivna personer (Rundata markerar namn med citattecken), med
+textens längd och med ristare (minst tio stenar). Bergart och lokal sed påverkar storleken, så allt jämförs
+**inom landskap**: skillnaden i medel-log-höjd viktas över landskapen och prövas med 5 000 permutationer av
+etiketterna inom landskap (Benjamini–Hochberg över testen); korrelationer räknas på rangordning inom landskap,
+med samma permutation. Antalet personer redovisas också med textens längd bortrensad (partiell rangkorrelation),
+eftersom en stor sten har plats för en längre text.
+
+**Resultat (2026-10-10, 1 101 stenar, median 1,6 m).** Minnesinskrifter är 24 % högre än övriga i samma landskap
+(q 0,004) – men inskrifter där minnesformeln inte går att läsa är oftare skadade och därför lägre, så skillnaden
+kan vara skenbar. Stenar med statusord är 19 % *lägre* (75 stenar, q 0,02), tvärt emot hypotesen; ordens
+betydelse (t.ex. *drengr* som ung krigare) är omdiskuterad. Bro- och vägbygge, kristen bön, självminne,
+utlandsfärd, arv och ting skiljer sig inte (q ≥ 0,47). Större stenar har fler namngivna personer (rho 0,26) och
+längre text (rho 0,30), men med textens längd bortrensad är sambandet med antalet personer svagt (rho 0,06,
+p 0,06). Åsmunds stenar är 30 % högre än andras i samma landskap (p 0,03) men inte efter korrektion för antalet
+ristare (q 0,31). Runhöjden följer stenens höjd (rho 0,22), vilket talar för att måtten är rimliga.
+Slutsatsen är att textens innehåll förklarar lite av stenens storlek; andra tecken på makt (läge, monument med
+flera stenar, ornamentikens kvalitet) är inte mätta.
+
 ## 10. Bergart och berggrund
 
 Källkod: `src/geology.py`, `GET /api/research/geology/{signum}`.
@@ -765,6 +799,7 @@ När en brist åtgärdas ändras förteckningen och versionen höjs. Bristerna i
 | Attribueringen riskerar att bli cirkulär | attribution, statistics | Prövning på signerade stenar som inte använts i träningen och med variabler som inte låg bakom attribueringarna. |
 | Träffsäkerheten beror på om platsen är känd | attribution, r, statistics | Grupperad korsvalidering även för mätkorpusens attribuering, när korpusen är stor nog. |
 | Många utforskande test på samma data | attribution, research, statistics | Förregistrerade analysplaner för de hypoteser som ska publiceras. |
+| Stenarnas mått är ofullständiga och ojämna | research, rundata | Mått ur Sveriges runinskrifter eller nya mätningar för stenarna som saknas; hela höjden för resta stenar. |
 | AI-resultat är okalibrerade och kan vara påhittade | ai | Kalibrering mot runologers läsningar av samma bilder. |
 | Rundata är en äldre utgåva | attribution, research, rundata | Uppdatering till senaste utgåvan av Runor. |
 | Programvaran är under utveckling | attribution, comparison, grooves, software | Låst version med DOI (Zenodo) och extern granskning av koden. |

@@ -35,6 +35,14 @@ export interface Inscription {
   normalization: string;
   normalization_ows: string;
   translation_en: string;
+  // Size from the Swedish heritage register (Kulturmiljöregistret), when it could be read safely
+  dimensions?: StoneDimensions | null;
+}
+
+export interface StoneDimensions {
+  height_m?: number; width_m?: number; thickness_m?: number; rune_height_cm?: number; fragment?: boolean;
+  kmr_url: string; description?: string; source: string;
+  in_province?: { province: string; n: number; percentile: number; median_m: number } | null;
 }
 
 export interface RundataMeta {
