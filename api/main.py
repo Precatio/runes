@@ -2,7 +2,7 @@ import os
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.routers import chat, threed, twod, raa, synthesis, phonetics, rundata, stats, orthography, research, reports, rstats
+from api.routers import chat, threed, twod, raa, synthesis, phonetics, rundata, stats, orthography, research, reports, rstats, limitations
 
 app = FastAPI(title="Vitki API")
 
@@ -28,6 +28,7 @@ app.include_router(stats.router, prefix="/api/stats", tags=["stats"])
 app.include_router(orthography.router, prefix="/api/orthography", tags=["orthography"])
 app.include_router(research.router, prefix="/api/research", tags=["research"])
 app.include_router(reports.router, prefix="/api/reports", tags=["reports"])
+app.include_router(limitations.router, prefix="/api/limitations", tags=["limitations"])
 app.include_router(rstats.router, prefix="/api/r", tags=["r"])
 
 @app.get("/")

@@ -11,7 +11,8 @@ from __future__ import annotations
 import re
 
 from src.academic import bullets, fmt, h, p, table
-from src.stone_report import FEATURE_TITLES, PERIODS, _carvers_text, sri_reference, sri_short
+from src import limitations
+from src.stone_report import FEATURE_TITLES, PERIODS, _carvers_text, report_limitations, sri_reference, sri_short
 
 FILL = "[Fyll i: {}]"
 
@@ -217,7 +218,7 @@ def guide(key: str, options: dict) -> dict:
 
 # ---- AI ------------------------------------------------------------------------------------
 
-def ai_request(key: str, options: dict, facts_text: str) -> tuple[str, dict] | None:
+def ai_request(key: str, options: dict, facts_text: str, known_limits: list[str] | None = None) -> tuple[str, dict] | None:
     """Prompt och JSON-schema för mallens AI-fält (utöver stenrapportens sammanfattning, inledning och
     diskussion, som bara efterfrågas när mallen använder dem)."""
     t = TEMPLATES[key]
@@ -248,6 +249,9 @@ attribueringar och säg vad som är osäkert.
 
 FAKTA:
 {facts_text}
+
+KÄNDA BRISTER I METODEN (ska framgå av texten; tona inte ned dem):
+""" + "\n".join(f"- {x}" for x in (known_limits or [])) + """
 
 Svara med JSON med dessa fält:
 """ + "\n".join(f'- "{k}": {v}' for k, v in fields.items())
@@ -356,6 +360,18 @@ def key_numbers(f: dict) -> dict:
             "carver_names": " och ".join(c["name"] for c in rec.get("carvers") or [] if c.get("name")),
             "style": rec.get("style") or "", "dating": PERIODS.get(rec.get("dating") or "", rec.get("dating")) or "",
             "translation": rec.get("translation_en") or "", "transliteration": rec.get("transliteration") or ""}
+
+
+def _limits(f: dict, ai: dict, popular: bool = False, top: int | None = None) -> list[str]:
+    """Kända brister och varningar för analysen, som punkter (populärt eller fullständigt)."""
+    items, warnings = report_limitations(f, bool(ai))
+    items = items[:top] if top else items
+    return warnings + [limitations.bullet(x, popular) for x in items]
+
+
+def _limits_section(f: dict, ai: dict, heading: str = "Kända brister") -> list[dict]:
+    return [h(1, heading), p(f"Metodens kända brister (förteckning version {limitations.VERSION}, METHODS.md avsnitt 18) "
+                             "som gäller den här analysen:"), bullets(_limits(f, ai))]
 
 
 def _ai(ai: dict, key: str, fallback: str) -> dict:
@@ -481,6 +497,7 @@ def _edition(title, s, note, f, ai, opt):
               if k["angle"] is not None else "Inga godkända tvärsnitt.")]
     if cond.get("weathering") or meta.get("weathering"):
         out.append(p(f"Vittring: {cond.get('weathering') or meta.get('weathering')}."))
+    out += _limits_section(f, ai, "Kända brister i huggteknikmätningen")
     out += [h(1, "Litteratur")] + s.get("refs", [])
     return out + note
 
@@ -497,7 +514,10 @@ def _conference(title, s, note, f, ai, opt):
                 f"{k['n_slices']} tvärsnitt mättes automatiskt" + (f" i {k['n_runes']} runor" if k.get("n_runes") else "") + ". "
                 + (f"V-vinkeln är i medel {fmt(k['angle'], 1)}° och djupet {fmt(k['depth'], 1)} mm. " if k["angle"] is not None else "")
                 + FILL.format("frågan, huvudresultatet och varför det spelar roll") + ".")
+    items, warnings = report_limitations(f, bool(ai))
+    lim = " ".join(warnings[:1] + [x["short"] for x in items[:2]])
     return [title, h(1, "Abstract"), _ai(ai, "conference_abstract", fallback),
+            p(("Limitations (in Swedish): " if en else "Begränsningar: ") + lim),
             p(("Keywords: " if en else "Nyckelord: ") + (ai.get("keywords") or FILL.format("4–6 nyckelord")),
               ai=bool(ai.get("keywords")))] + note
 
@@ -520,6 +540,7 @@ def _poster(title, s, note, f, ai, opt):
     out += [h(1, "Slutsats"), bullets(_lines(ai.get("poster_conclusion")) or [FILL.format("2–3 slutsatspunkter")])]
     if ai.get("poster_conclusion"):
         out[-1]["ai"] = True
+    out += [h(1, "Begränsningar"), bullets(_limits(f, ai, popular=True, top=3))]
     out += [h(1, "Data och kontakt"), p(FILL.format("DOI eller länk till data, e-post, QR-kod"))]
     return out + note
 
@@ -550,7 +571,8 @@ def _blog(title, s, note, f, ai, opt):
     out += _figures(s, ["tvarsnitt"], 1)
     out += [h(1, "Hur säkert är det?"),
             _ai(ai, "blog_certainty", "Måtten säger hur spåren är huggna, inte vem som högg dem. Vittring, bergart och "
-                "skanningens skärpa påverkar resultatet, så slutsatser om ristare kräver jämförelser med många stenar.")]
+                "skanningens skärpa påverkar resultatet, så slutsatser om ristare kräver jämförelser med många stenar."),
+            p("Det här vet vi att metoden ännu inte klarar:"), bullets(_limits(f, ai, popular=True))]
     sri = sri_reference(k["signum"])
     out += [h(1, "Läs mer"), bullets([x for x in [
         "Samnordisk runtextdatabas (Rundata): stenens text och uppgifter.",
@@ -574,6 +596,7 @@ def _press(title, s, note, f, ai, opt):
     out += [h(1, "Fakta om stenen"), bullets(facts),
             h(1, "Om studien"), p(f"Mätningarna är gjorda med det öppna forskningsverktyget Vitki. "
                                   + FILL.format("publicering, finansiering, samarbetspartner")),
+            h(1, "Studiens begränsningar"), bullets(_limits(f, ai, popular=True, top=3)),
             h(1, "Kontakt"), p(opt.get("contact") or FILL.format("namn, e-post och telefon"))]
     return out + note
 
@@ -607,6 +630,7 @@ def _antiquarian(title, s, note, f, ai, opt):
             p("Djupkartan och strykljusbilderna ovan visar ytans tillstånd vid dokumentationstillfället och kan "
               "användas som referens vid framtida tillsyn. " + FILL.format("bedömning av konservator eller antikvarie")),
             h(1, "Rekommendationer"), p(FILL.format("rekommendationer för vård, tillsyn och ny dokumentation"))]
+    out += _limits_section(f, ai, "Kända brister i metoden")
     files = [["Modellfil", pm.get("filename") or "–"], ["Kontrollsumma (SHA-256)", pm.get("sha256") or "–"],
              ["Licens", scan.get("license") or FILL.format("licens")],
              ["Förvaring", opt.get("archive") or FILL.format("arkiv eller museum där filerna förvaras")]]
@@ -642,6 +666,9 @@ def _data(title, s, note, f, ai, opt):
     out += [h(1, "4 Återanvändning"),
             _ai(ai, "reuse", "Måtten kan användas för jämförelser av huggteknik mellan stenar och ristare, för metodstudier "
                 "av automatisk spårmätning och, tillsammans med skanningen, för omräkning med nya metodversioner.")]
+    out += [h(1, "5 Kända begränsningar"), p(f"Förteckning version {limitations.VERSION} (METHODS.md avsnitt 18); "
+                                              "den följer också med i proveniensen för varje mätning."),
+            bullets(_limits(f, ai))]
     out += [h(1, "Referenser")] + s.get("refs", [])
     return out + note
 

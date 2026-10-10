@@ -25,6 +25,7 @@ from src.slice_analysis import (
     raw_profile,
     snap_path_to_bottom,
 )
+from src import limitations
 from src.stats import METRICS, summarize_by_rune, summarize_slices
 
 router = APIRouter()
@@ -122,6 +123,10 @@ def provenance(mesh_info: dict, parameters: dict, feature_type: str) -> dict:
         "mesh": mesh_info,
         "feature_type": feature_type,
         "parameters": parameters,
+        # Which known limitations (src/limitations.py) applied when the measurement was made
+        "known_limitations": {"version": limitations.VERSION,
+                              "keys": limitations.keys(["grooves", "software"]
+                                                       + (["auto"] if parameters.get("mode") == "automatic" else []))},
     }
 
 

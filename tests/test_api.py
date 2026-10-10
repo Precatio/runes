@@ -219,3 +219,28 @@ def test_report_templates(client, stone_id):
         nums = [int(x) for x in __import__("re").findall(r"\*Figur (\d+)\.", md)]
         assert nums == list(range(1, len(nums) + 1)), key
     assert client.post("/api/reports/stone", json={**body, "template": "okänd"}).status_code == 400
+
+
+def test_known_limitations_follow_every_analysis(client, stone_id):
+    import numpy as np
+
+    lim = client.get("/api/limitations?contexts=grooves,auto").json()
+    keys = [x["key"] for x in lim["items"]]
+    assert {"validity", "reliability", "rune_detection", "sample_size"} <= set(keys)
+    assert all(x["title"] and x["text"] and "contexts" in x for x in lim["items"])
+    n = [0, -np.sin(np.radians(20)), np.cos(np.radians(20))]
+    auto = client.post("/api/3d/auto_analyze", data={"mesh_id": stone_id, "normal_x": n[0], "normal_y": n[1],
+                                                      "normal_z": n[2]}).json()
+    # The measurement records which limitations applied when it was made
+    kl = auto["provenance"]["known_limitations"]
+    assert kl["version"] == lim["version"] and "rune_detection" in kl["keys"]
+    if os.path.exists(os.path.join(os.path.dirname(__file__), "..", "data", "rundata.json")):
+        acc = [s for s in auto["slices"] if s["accepted"]]
+        body = {"signum": "U 344", "counts": auto["counts"], "use_ai": False, "include_r": False,
+                "analyses": [{"feature_type": "rune", "slices": acc, "provenance": auto["provenance"]}]}
+        md = client.post("/api/reports/stone", json=body).json()["markdown"]
+        assert "Kända brister och begränsningar" in md and "Måtten är inte validerade" in md
+        # Two runes on the synthetic stone: below the guideline, so the report warns first
+        assert "färre än riktvärdet 10" in md
+        blog = client.post("/api/reports/stone", json={**body, "template": "blogg"}).json()["markdown"]
+        assert "Det här vet vi att metoden ännu inte klarar" in blog

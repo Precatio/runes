@@ -22,7 +22,7 @@ from collections import defaultdict
 import numpy as np
 
 from src.academic import DIGITS, FEATURE_NAMES, bullets, figure, fmt, h, p, table
-from src import r_report, scan_sources
+from src import limitations, r_report, scan_sources
 from src.reading import runes_to_latin
 from src.slice_analysis import PROFILE_STEP_MM, RIM_MM, calculate_v_angle
 from src.stats import METRICS, METRIC_LABELS, attribute, compare_stones, summarize
@@ -805,6 +805,31 @@ def research_blocks(rs: dict, signum: str, tab, synthesis: dict | None) -> list[
     return out
 
 
+def report_limitations(f: dict, ai_used: bool = False) -> tuple[list[dict], list[str]]:
+    """Kända brister som gäller den här analysen (src/limitations.py) och varningar för just den."""
+    params = (f.get("provenance") or {}).get("parameters") or {}
+    auto = params.get("mode") == "automatic"
+    runes_only = auto and bool(params.get("runes_only"))
+    ctx = {"grooves", "software"}
+    if runes_only:
+        ctx.add("auto")
+    if f.get("reference") or f.get("corpus") or f.get("comparison"):
+        ctx.add("comparison")
+    if f.get("synthesis") or f.get("attribution"):
+        ctx.add("attribution")
+    if ai_used or f.get("reading") or (f.get("two_d") or {}).get("result"):
+        ctx.add("ai")
+    if f.get("rundata"):
+        ctx.add("rundata")
+    if f.get("research"):
+        ctx.add("research")
+    if f.get("r") and not f["r"].get("error"):
+        ctx.update({"r", "statistics"})
+    counts = f.get("counts") or {}
+    warnings = limitations.specific(counts.get("runes_measured"), len(f.get("all_slices") or []), runes_only)
+    return limitations.select(ctx), warnings
+
+
 def build_document(f: dict, author: str, institution: str, ai: dict | None, surface: Surface | None,
                    title: str | None = None) -> list[dict]:
     ai = ai or {}
@@ -1158,14 +1183,13 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
     blocks.append(h(1, "5. Diskussion"))
     blocks.append(p(ai.get("discussion") or "Diskussionen skrivs av författaren utifrån resultaten ovan.",
                     ai=bool(ai.get("discussion"))))
-    blocks.append(h(2, "Källkritik och begränsningar"))
-    blocks.append(bullets([
-        "Spårmåtten påverkas av vittring, bergart, lav, ommålning och skanningens upplösning.",
-        "Var tvärsnitten läggs påverkar resultatet; positionerna redovisas därför i figurerna.",
-        "Ristaruppgifterna i Rundata är hypoteser i litteraturen och inte facit.",
-        "Måtten är inte verifierade som likvärdiga med Groove Measure-variablerna i Kitzler Åhfeldts studier; "
-        "direkta jämförelser kräver att samma referensstenar mäts med båda metoderna.",
-    ] + (r_report.LIMITATIONS if rr_ else [])))
+    lim, warn = report_limitations(f, bool(ai))
+    blocks.append(h(2, "Kända brister och begränsningar"))
+    blocks.append(p(f"Vitki redovisar metodens kända brister i varje analys (förteckning version {limitations.VERSION}; "
+                    "se METHODS.md, avsnitt 18). Punkterna nedan gäller den här analysen."))
+    if warn:
+        blocks.append(bullets(warn))
+    blocks.append(bullets([limitations.bullet(x) for x in lim]))
 
     blocks.append(h(1, "Data och reproducerbarhet"))
     blocks.append(p(f"Mätningarna är gjorda med Vitki {prov.get('version', '')}, mätmetod "

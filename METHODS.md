@@ -115,6 +115,15 @@ riktning blir ytans normal och kamerans upp-riktning orienterar granskningsbilde
    Varje snitt får strecktyp och runans nummer; snitt på andra streck redovisas som bortsorterade med skäl
    ("inte runa: …"). Igenkänningen är avsiktligt försiktig: det är bättre att en runa missas än att en
    spricka mäts. Missade runor kan mätas med ett klick (avsnitt 1b).
+
+**Mätning utan manuellt urval.** Tidigare 3D-studier av huggteknik (Kitzler Åhfeldt 2002 och senare) mäter
+också i 3D-modeller med programvara (Groove Measure), men forskaren väljer vilka spår som mäts och var proverna
+tas – oftast de bäst bevarade spåren. Den automatiska analysen tar i stället med alla igenkända runor, med samma
+regler och parametrar på varje sten. Urvalet beror alltså inte på vem som mäter och kan upprepas exakt av vem
+som helst med samma skanning och metodversion. Det tar bort variationen mellan bedömare men inte all systematik:
+reglerna är själva val, gjorda av utvecklarna och dokumenterade här, och de kan slå olika på olika bergarter
+och vittringsgrader, och att alla runor tas med ger mer vittringsbrus än ett urval av välbevarade spår. Fördelen
+är att felen är desamma för alla stenar och går att granska och rätta – inte att de saknas (se avsnitt 18).
 6. **Mätning:** med jämna mellanrum (standard 3 mm) längs mittlinjerna tas riktningen från mittlinjen och
    förfinas genom att botten följs (som i 1b). Tvärsnittet mäts **genom mesh-filen** med samma metod som i
    avsnitt 1 – höjdfältet används bara för att hitta spåren.
@@ -679,3 +688,35 @@ cmake).
 * Landhöjningen är en grov skattning per landskap, höjdmodellen visar dagens markyta och vägarna är simulerade
   bästa vägar, inte belagda vikingatida vägar.
 * Klustringen ger svag struktur (silhuett omkring 0,33); grupperna följer kors, stungna runor och bön, inte ristare.
+
+## 18. Kända brister
+
+Källkod: `src/limitations.py`, `GET /api/limitations`. Metodens kända brister förs i en enda förteckning
+(version 2026-10-10) som följer med varje analys:
+
+* **I appen** visas de brister som gäller sidan under varje analyssida (3D-analys, stenanalys, jämförelse,
+  mätkorpus, syntes, statistik, forskningsluckor, inskrifter, karta, stilgrupper, 2D-analys, läsning, rapporter).
+* **I rapporterna** har stenrapporten och korpusrapporten ett avsnitt "Kända brister och begränsningar", och varje
+  publiceringsform (avsnitt 14e) tar med dem – fullständigt i vetenskapliga och antikvariska former, i populär form
+  i blogginlägg, pressmeddelande och poster. Varningar för just analysen (t.ex. färre runor än riktvärdet) står först.
+  AI som formulerar text får förteckningen och instrueras att inte tona ned den.
+* **I proveniensen** som sparas med varje mätning och syntes står förteckningens version och vilka brister som
+  gällde (`known_limitations`), så att det går att se i efterhand vad som var känt när mätningen gjordes.
+
+När en brist åtgärdas ändras förteckningen och versionen höjs. Bristerna i dag:
+
+| Brist | Gäller | Vad som behövs |
+|---|---|---|
+| Måtten är inte validerade som spår av ristarens hand | attribution, comparison, grooves | Stenar med känd ristare på samma bergart, jämförelse med Groove Measure-data och gärna experimentella ristningar med kända ristare och verktyg. |
+| Bottenradie och asymmetri är osäkra mått | comparison, grooves | Bättre bottenmodell och test på skanningar av samma sten med olika punkttäthet. |
+| Mätningens tillförlitlighet är inte prövad på verkliga stenar | comparison, grooves | Test–omtest: samma stenar i olika skanningar, upplösningar och vinklar, och manuell mot automatisk mätning. |
+| Inte jämförbart med tidigare 3D-studier utan kalibrering | comparison, grooves | Samma referensstenar mätta med båda metoderna. |
+| Runigenkänningen är inte utvärderad | auto | Handmärkning av 8–10 stenar som inte använts för att justera reglerna, med låsta regler. |
+| Gränserna 10 och 20 runor är riktvärden | auto, comparison | Ny beräkning när test–omtest och stenar med känd ristare på samma bergart finns. |
+| Attribueringen riskerar att bli cirkulär | attribution, statistics | Prövning på signerade stenar som inte använts i träningen och med variabler som inte låg bakom attribueringarna. |
+| Många utforskande test på samma data | attribution, research, statistics | Förregistrerade analysplaner för de hypoteser som ska publiceras. |
+| AI-resultat är okalibrerade och kan vara påhittade | ai | Kalibrering mot runologers läsningar av samma bilder. |
+| Rundata är en äldre utgåva | attribution, research, rundata | Uppdatering till senaste utgåvan av Runor. |
+| Programvaran är under utveckling | attribution, comparison, grooves, software | Låst version med DOI (Zenodo) och extern granskning av koden. |
+
+R-analysernas egna begränsningar (avsnitt 17) ingår när de används.

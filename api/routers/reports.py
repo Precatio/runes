@@ -12,7 +12,7 @@ from api.routers.research import stone_context
 from api.errors import logger
 from api import mesh_cache
 from api.rundata import store
-from src import academic, report_templates, stone_report
+from src import academic, limitations, report_templates, stone_report
 from src.reading import validate as validate_reading
 from src.synthesis import site_geology
 
@@ -50,7 +50,8 @@ AI_SECTIONS_SCHEMA = {
 }
 
 
-def ai_sections(aictx: llm.AIContext, facts_text: str) -> dict:
+def ai_sections(aictx: llm.AIContext, facts_text: str, known_limits: list[str] | None = None) -> dict:
+    limits = "\n".join(f"- {x}" for x in known_limits or [])
     prompt = f"""
 Du skriver delar av en vetenskaplig rapport på svenska om huggteknik på runstenar.
 Använd ENDAST fakta nedan. Hitta inte på stenar, ristare, siffror, litteratur eller slutsatser som inte följer
@@ -58,6 +59,9 @@ av fakta. Var försiktig: få stenar ger osäkra slutsatser. Skriv i akademisk, 
 
 FAKTA:
 {facts_text}
+
+KÄNDA BRISTER I METODEN (diskussionen ska ta upp de viktigaste; tona inte ned dem):
+{limits}
 
 Svara med JSON:
 {{"abstract": "4–6 meningar", "introduction": "1–2 stycken om syfte och material", "discussion": "2–3 stycken: vad resultaten visar, hur säkra de är och vad som behövs härnäst"}}
@@ -78,7 +82,8 @@ def academic_report(req: AcademicRequest, aictx: llm.AIContext = Depends(llm.ai_
         ai, ai_used = req.ai_text, True
     elif req.use_ai and llm.available(aictx):
         try:
-            ai = ai_sections(aictx, academic.facts_text(facts))
+            ai = ai_sections(aictx, academic.facts_text(facts),
+                             [x["short"] for x in limitations.select(academic.CORPUS_LIMITATION_CONTEXTS)])
             ai_used = True
         except Exception as e:
             logger.warning("AI-text för rapporten misslyckades: %r", e)
@@ -187,10 +192,12 @@ def stone_report_endpoint(req: StoneReportRequest,
         ai, ai_used = req.ai_text, True
     elif req.use_ai and llm.available(aictx):
         try:
+            lims, warns = stone_report.report_limitations(facts, True)
+            known = warns + [x["short"] for x in lims]
             if req.template == "stenrapport":
-                ai = ai_sections(aictx, stone_report.facts_text(facts))
+                ai = ai_sections(aictx, stone_report.facts_text(facts), known)
             else:
-                spec = report_templates.ai_request(req.template, req.template_options, stone_report.facts_text(facts))
+                spec = report_templates.ai_request(req.template, req.template_options, stone_report.facts_text(facts), known)
                 if spec:
                     ai = _as_object(llm.generate(aictx, spec[0], schema=spec[1], tier="pro").data)
             ai_used = bool(ai)

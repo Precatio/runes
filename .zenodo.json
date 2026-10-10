@@ -16,7 +16,7 @@
     "stylometry",
     "digital humanities"
   ],
-  "description": "Open research platform for runic inscriptions: 3D groove measurement with uncertainty and provenance, Rundata integration, orthographic stylometry with cross-validated accuracy, a shared measurement corpus, statistical comparison of stones, maps, style groups and an RTI (PTM) viewer. See METHODS.md.",
+  "description": "Open research platform for runic inscriptions: automatic 3D groove measurement of recognised runes with uncertainty, provenance and a published list of known limitations; Rundata integration; orthographic stylometry with cross-validated accuracy; a shared measurement corpus; statistical comparison of stones; corpus statistics in R; reports in eleven publication formats; maps, style groups and an RTI (PTM) viewer. See METHODS.md.",
   "related_identifiers": [
     {
       "identifier": "https://github.com/Precatio/runes",

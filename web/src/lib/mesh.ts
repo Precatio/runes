@@ -140,14 +140,15 @@ export interface AutoAnalysisResult {
   provenance: import("@/lib/db").AnalysisProvenance;
 }
 
-// Number of measured runes needed (METHODS.md, 2): 10 to describe a stone, 20 to compare stones
+// Guideline numbers of measured runes (METHODS.md, 2; same as src/limitations.py): 10 to describe a stone,
+// 20 to compare stones. Guidelines, not a standard – see the known limitations.
 export const MIN_RUNES_DESCRIBE = 10;
 export const MIN_RUNES_COMPARE = 20;
 
 export function runeSampleNote(n: number): { ok: boolean; text: string } {
-  if (n >= MIN_RUNES_COMPARE) return { ok: true, text: `${n} runor mätta – tillräckligt för att jämföra stenen med andra stenar.` };
-  if (n >= MIN_RUNES_DESCRIBE) return { ok: true, text: `${n} runor mätta – räcker för att beskriva stenen, men för jämförelser med andra stenar bör minst ${MIN_RUNES_COMPARE} runor mätas.` };
-  return { ok: false, text: `Bara ${n} runor mätta – för få för ett säkert resultat (minst ${MIN_RUNES_DESCRIBE} för att beskriva stenen, ${MIN_RUNES_COMPARE} för jämförelser). Prova högre känslighet, en bättre vinkel eller mät fler runor för hand.` };
+  if (n >= MIN_RUNES_COMPARE) return { ok: true, text: `${n} runor mätta – över riktvärdet ${MIN_RUNES_COMPARE} för jämförelser med andra stenar (en tumregel, inte en garanti).` };
+  if (n >= MIN_RUNES_DESCRIBE) return { ok: true, text: `${n} runor mätta – över riktvärdet ${MIN_RUNES_DESCRIBE} för att beskriva stenen; för jämförelser med andra stenar är riktvärdet ${MIN_RUNES_COMPARE}.` };
+  return { ok: false, text: `Bara ${n} runor mätta – under riktvärdet ${MIN_RUNES_DESCRIBE} för att beskriva stenen (${MIN_RUNES_COMPARE} för jämförelser); medelvärdena är mycket osäkra. Prova högre känslighet, en bättre vinkel eller mät fler runor för hand.` };
 }
 
 // Same colour scale as the backend's review image (viridis over the angle range)

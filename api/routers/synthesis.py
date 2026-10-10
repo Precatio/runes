@@ -13,6 +13,7 @@ from pydantic import BaseModel, Field
 
 from api import llm
 from api.config import APP_VERSION, METHOD_VERSION
+from src import limitations
 from api.errors import ai_error, logger
 from api.rundata import context_text, store
 from api.routers.orthography import model as orthography_model
@@ -267,7 +268,10 @@ def enrich_candidates(evidence: dict, candidates: list[dict]) -> list[dict]:
 
 
 def public_evidence(evidence: dict) -> dict:
-    return {k: v for k, v in evidence.items() if not k.startswith("_")}
+    out = {k: v for k, v in evidence.items() if not k.startswith("_")}
+    out["known_limitations"] = {"version": limitations.VERSION,
+                                "keys": limitations.keys(["attribution", "grooves", "statistics", "rundata", "software"])}
+    return out
 
 
 def build_candidates(evidence: dict) -> List[AttributionCandidate]:

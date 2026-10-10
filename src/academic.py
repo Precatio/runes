@@ -16,6 +16,9 @@ import numpy as np
 
 from src.stats import METRICS, METRIC_LABELS, attribute, summarize, ward_clustering
 
+# Kända brister som gäller korpusrapporten (src/limitations.py)
+CORPUS_LIMITATION_CONTEXTS = ("grooves", "comparison", "attribution", "rundata", "software")
+
 DIGITS = {"apex_vinkel_deg": 1, "asymmetri_deg": 1, "spårdjup_mm": 2, "spårbredd_mm": 2,
           "djup_bredd_kvot": 2, "bottenradie_mm": 2, "ytråhet_mm": 3}
 FEATURE_NAMES = {"rune": "runor", "ornament": "ornamentik", "unknown": "ej angivet"}
@@ -267,13 +270,14 @@ def build_document(facts: dict, author: str, institution: str, ai: dict | None) 
     blocks.append(h(1, "5. Diskussion"))
     blocks.append(p(ai.get("discussion") or
                     "Diskussionen skrivs av författaren utifrån resultaten ovan.", ai=bool(ai.get("discussion"))))
-    blocks.append(h(2, "Begränsningar"))
+    from src import limitations
+    blocks.append(h(2, "Kända brister och begränsningar"))
+    blocks.append(p(f"Vitki redovisar metodens kända brister i varje analys (förteckning version {limitations.VERSION}; "
+                    "se METHODS.md, avsnitt 18)."))
     blocks.append(bullets([
-        "Spårmåtten påverkas av vittring, bergart, skanningens upplösning och var tvärsnitten läggs.",
         "Runor och ornamentik huggs ofta olika och bör jämföras var för sig.",
-        "Ristaruppgifterna i Rundata är hypoteser i litteraturen och inte facit.",
         "Få stenar per ristare ger osäkra profiler; korsvalideringens siffror bör läsas med det i åtanke.",
-    ]))
+    ] + [limitations.bullet(x) for x in limitations.select(CORPUS_LIMITATION_CONTEXTS)]))
     blocks.append(h(1, "Referenser"))
     blocks.append(bullets(REFERENCES + [
         "Vitki, version 2.0. Programvara. https://github.com/Precatio/runes",

@@ -1,6 +1,7 @@
 import Sidebar from "@/components/Sidebar";
 import TopBar from "@/components/TopBar";
 import AIChatWidget from "@/components/AIChatWidget";
+import RouteLimitations from "@/components/KnownLimitations";
 
 // Layout for the application itself (everything except the public landing page)
 export default function AppLayout({ children }: { children: React.ReactNode }) {
@@ -14,6 +15,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <TopBar />
         <div className="flex-1 overflow-y-auto p-6 md:p-8">
           {children}
+          <RouteLimitations />
         </div>
       </main>
 
