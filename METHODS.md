@@ -160,6 +160,30 @@ klassningen visuellt: slinglinjerna mellan raderna och i slingorna sorteras bort
 i Sö 128:s mittfält; de som mäts är nästan bara stavar och bistavar. Svagt böjda eller avbrutna stavar
 missas ibland. Igenkänningen är regelbaserad och inte validerad mot en handmärkt referens.
 
+### 1e. Robusthet
+
+Källkod: `scripts/groove_robustness.py`, resultat i `utdata/groove_robustness/`. Åtta skanningar ur Kitzler Åhfeldts
+Södermanlandsserie (Sö 113, 128, 134, 143, 161, 207, 319, Fv1948;282) mättes nio gånger: som standard (0,6 mm
+rutnät, känslighet 3) och med rutnät 0,4 och 0,8 mm, ytnormalen lutad 5° åt två håll, känslighet 2,5 och 3,5,
+och skanningen förenklad till hälften och en fjärdedel av trianglarna (som en glesare skanner).
+
+| Ändring | Stenens V-vinkel, median (största) | Antal runor | Återkommande mätpunkter | Samma ställe: vinkel, djup |
+|---|---|---|---|---|
+| Rutnät 0,4 / 0,8 mm | 0,7° (2,8°) / 0,8° (3,3°) | −3 % / −15 % | 60 % / 73 % | 2,1° / 2,3°; 0,07–0,08 mm |
+| Normal lutad 5° | 0,8–1,2° (4,8°) | −6 % till +10 % | 56 % | 2,3–2,6°; 0,17–0,37 mm |
+| Känslighet 2,5 / 3,5 | 2,8° (4,9°) / 0,9° (3,0°) | +1 % / −6 % | 64–65 % | 1,8–2,0°; 0,07 mm |
+| Hälften / en fjärdedel av trianglarna | 0,9° (4,2°) / 2,8° (9,1°) | −4 % / −12 % | 70 % / 43 % | 2,0° / 4,0°; 0,07–0,14 mm |
+
+Stenens medelvärden (runan som enhet) stämmer väl överens över alla nio villkor: ICC(A,1) 0,98 för V-vinkel och
+djup/bredd, 0,97 för djup, 0,95 för bredd och 0,93 för bottenradie; spridningen över villkoren är 13–19 % av
+spridningen mellan stenar. Asymmetrin stämmer dåligt (ICC 0,40; 40 %). Vilka ställen som mäts ändras däremot
+mycket (43–73 % av punkterna återkommer), och samma ställe skiljer i median ca 2° i vinkel – stenens resultat är
+stabilt för att det är ett medelvärde över många runor, inte för att varje snitt är det. Djupet beror på
+ytnormalen (0,37 mm på samma ställe vid 5° lutning) och glesa skanningar (en fjärdedel av trianglarna) ger
+tydligt sämre resultat. **För jämförelser mellan stenar ska därför samma rutnät och känslighet användas, och
+skanningar med mycket olika punkttäthet jämföras med försiktighet.** Studien är inte ett test–omtest med
+oberoende skanningar av samma sten.
+
 ### 1d. Bilder ur skanningen
 
 Källkod: `api/routers/threed.py` (`render_relief`), `src/stone_report.py` (`Surface`). Bilder för läsning,
@@ -724,7 +748,7 @@ När en brist åtgärdas ändras förteckningen och versionen höjs. Bristerna i
 |---|---|---|
 | Måtten är inte validerade som spår av ristarens hand | attribution, comparison, grooves | Stenar med känd ristare på samma bergart, jämförelse med Groove Measure-data och gärna experimentella ristningar med kända ristare och verktyg. |
 | Bottenradie och asymmetri är osäkra mått | comparison, grooves | Bättre bottenmodell och test på skanningar av samma sten med olika punkttäthet. |
-| Mätningens tillförlitlighet är inte prövad på verkliga stenar | comparison, grooves | Test–omtest: samma stenar i olika skanningar, upplösningar och vinklar, och manuell mot automatisk mätning. |
+| Ingen sten är mätt i oberoende skanningar | comparison, grooves | Test–omtest med oberoende skanningar av samma stenar, och manuell mot automatisk mätning; samma rutnät och känslighet för alla stenar som jämförs. |
 | Inte jämförbart med tidigare 3D-studier utan kalibrering | comparison, grooves | Samma referensstenar mätta med båda metoderna. |
 | Runigenkänningen är inte utvärderad | auto | Handmärkta facit för 8–10 stenar som inte använts för att justera reglerna (facit-läget i 3D-vyn, scripts/evaluate_rune_detection.py), med låsta regler. |
 | Gränserna 10 och 20 runor är riktvärden | auto, comparison | Ny beräkning när test–omtest och stenar med känd ristare på samma bergart finns. |

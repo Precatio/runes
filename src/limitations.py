@@ -40,18 +40,23 @@ LIMITATIONS = [
      "title": "Bottenradie och asymmetri är osäkra mått",
      "text": "Bottenradien beror fortfarande på skanningens punkttäthet (r = 0,44 mellan stenar) och skiljer knappt "
              "stenar åt. Asymmetrin varierar så mycket mellan snitt och runor att stenens medelvärde är osäkert "
-             "(tillförlitlighet 0,75 med 10 runor, 0,9 först med 30). V-vinkel, djup, bredd och djup/bredd är "
-             "stabilare.",
+             "(tillförlitlighet 0,75 med 10 runor, 0,9 först med 30) och ändras när analysen ändras (ICC 0,40 i "
+             "robusthetsstudien). V-vinkel, djup, bredd och djup/bredd är stabilare.",
      "short": "Två av måtten, bottenradie och asymmetri, är för osäkra för att lita på.",
      "needed": "Bättre bottenmodell och test på skanningar av samma sten med olika punkttäthet."},
     {"key": "reliability", "contexts": {"grooves", "comparison"},
-     "title": "Mätningens tillförlitlighet är inte prövad på verkliga stenar",
-     "text": "Ingen sten har mätts om i en annan skanning, med annan upplösning eller från en annan vinkel. Manuell och "
-             "automatisk mätning på samma ställen på Sö 113 skilde i median 6° i V-vinkel. Valideringen på syntetiska "
-             "stenar (idealiska V-spår) visar att beräkningen är rätt, inte att knackade, U-formade och vittrade spår "
-             "mäts tillförlitligt. Lav, ommålning och var snitten läggs påverkar också resultatet.",
-     "short": "Samma sten har inte mätts om i olika skanningar, så hur exakt mätningen är på riktiga stenar är okänt.",
-     "needed": "Test–omtest: samma stenar i olika skanningar, upplösningar och vinklar, och manuell mot automatisk mätning."},
+     "title": "Ingen sten är mätt i oberoende skanningar",
+     "text": "Robusthetsstudien (METHODS.md 1e, åtta stenar) visar att stenens medelvärden för vinkel, djup, bredd och "
+             "djup/bredd står sig när rutnät, ytnormal, känslighet och skanningens täthet ändras (ICC 0,95–0,98), men "
+             "vilka ställen som mäts ändras mycket, samma ställe skiljer ca 2° i vinkel, djupet beror på ytnormalen och "
+             "glesa skanningar ger upp till 9° annan vinkel. Ingen sten har mätts i två oberoende skanningar, och manuell "
+             "och automatisk mätning på samma ställen på Sö 113 skilde i median 6°. Valideringen på syntetiska stenar "
+             "(idealiska V-spår) visar att beräkningen är rätt, inte att knackade, U-formade och vittrade spår mäts rätt. "
+             "Lav och ommålning påverkar också resultatet.",
+     "short": "Resultatet för en hel sten står sig när analysen ändras, men samma sten har inte mätts i två olika "
+              "skanningar, och glesa skanningar ger sämre resultat.",
+     "needed": "Test–omtest med oberoende skanningar av samma stenar, och manuell mot automatisk mätning; samma rutnät "
+               "och känslighet för alla stenar som jämförs."},
     {"key": "groove_measure", "contexts": {"grooves", "comparison"},
      "title": "Inte jämförbart med tidigare 3D-studier utan kalibrering",
      "text": "Måtten är inte verifierade som likvärdiga med Groove Measure-variablerna i Kitzler Åhfeldts studier "
