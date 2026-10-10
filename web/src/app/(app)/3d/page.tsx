@@ -146,6 +146,8 @@ function ThreeDPageContent() {
   const [autoMaxWidth, setAutoMaxWidth] = useState(16);
   // Facit mode: measure every groove and let the researcher mark which are runes (to evaluate the rune detection)
   const [facitMode, setFacitMode] = useState(false);
+  // Vitki protocol (PROTOCOL.md): fixed parameters so that stones are comparable
+  const [useProtocol, setUseProtocol] = useState(true);
   const { t } = useLanguage();
   const { aiHeaders } = useSettings();
 
@@ -376,6 +378,7 @@ function ThreeDPageContent() {
         up_x: view.up[0], up_y: view.up[1], up_z: view.up[2],
         spacing_mm: autoSpacing, sensitivity: autoSensitivity, max_halfwidth_mm: autoMaxWidth / 2,
         meta_stone: metaStone, meta_weathering: metaWeathering, runes_only: !facitMode,
+        protocol: useProtocol && !facitMode,
       });
       setAutoResult(data);
       // In facit mode nothing is pre-marked, so that the program's suggestion does not steer the researcher
@@ -742,7 +745,13 @@ function ThreeDPageContent() {
 
             {measureMode === "auto" && file && (
               <div className="space-y-3 rounded-xl border border-slate-200 bg-white/70 p-3">
-                <div className="grid grid-cols-3 gap-2">
+                <label className="flex items-start gap-2 text-[11px] text-slate-600">
+                  <input type="checkbox" checked={useProtocol} onChange={e => setUseProtocol(e.target.checked)} className="mt-0.5" />
+                  <span><strong>Vitki-protokollet</strong> (rekommenderas): fasta parametrar – 0,6 mm rutnät, känslighet normal,
+                    3 mm mellan snitten – så att stenen kan jämföras med andra stenar.{" "}
+                    <a href="/docs/metod#vitki-protokollet" className="underline">Läs mer</a></span>
+                </label>
+                <div className={`grid grid-cols-3 gap-2 ${useProtocol && !facitMode ? "opacity-40 pointer-events-none" : ""}`}>
                   <label className="text-[11px] font-bold text-slate-500">Avstånd
                     <select value={autoSpacing} onChange={e => setAutoSpacing(+e.target.value)} className="mt-1 w-full liquid-glass-input-wrapper rounded-lg px-2 py-1.5 text-xs font-semibold outline-none">
                       {[2, 3, 5, 8].map(v => <option key={v} value={v}>{v} mm</option>)}

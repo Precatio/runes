@@ -160,6 +160,21 @@ klassningen visuellt: slinglinjerna mellan raderna och i slingorna sorteras bort
 i Sö 128:s mittfält; de som mäts är nästan bara stavar och bistavar. Svagt böjda eller avbrutna stavar
 missas ibland. Igenkänningen är regelbaserad och inte validerad mot en handmärkt referens.
 
+### 1d. Bilder ur skanningen
+
+Källkod: `api/routers/threed.py` (`render_relief`), `src/stone_report.py` (`Surface`). Bilder för läsning,
+2D-analys och rapporter räknas direkt ur skanningen i stället för att fotografera skärmen:
+
+* Ytan projiceras till ett höjdfält från den sida som vetter mot betraktaren i 3D-vyn (kamerans riktning och
+  upp-riktning). Utan vy används stenens tunnaste riktning (minsta variansriktningen), vänd mot den sida där
+  mest yta pekar.
+* **Strykljus** från fyra riktningar (nordväst, nordost, sydost, sydväst) 20° över ytan.
+* **Relief**: det mörkaste av de fyra strykljusen, så att varje spår blir mörkt oavsett riktning.
+* **Djup** under en rekonstruerad stenyta (morfologisk stängning, 20 mm); kantzonen (10 mm), där
+  referensytan är osäker, utelämnas.
+* Bilderna har känd upplösning (mm per pixel) och påverkas inte av zoom eller skärmens belysning. Små
+  skanningar skalas upp till minst 1 200 px för läsning.
+
 ### 1e. Robusthet
 
 Källkod: `scripts/groove_robustness.py`, resultat i `utdata/groove_robustness/`. Åtta skanningar ur Kitzler Åhfeldts
@@ -183,21 +198,6 @@ ytnormalen (0,37 mm på samma ställe vid 5° lutning) och glesa skanningar (en 
 tydligt sämre resultat. **För jämförelser mellan stenar ska därför samma rutnät och känslighet användas, och
 skanningar med mycket olika punkttäthet jämföras med försiktighet.** Studien är inte ett test–omtest med
 oberoende skanningar av samma sten.
-
-### 1d. Bilder ur skanningen
-
-Källkod: `api/routers/threed.py` (`render_relief`), `src/stone_report.py` (`Surface`). Bilder för läsning,
-2D-analys och rapporter räknas direkt ur skanningen i stället för att fotografera skärmen:
-
-* Ytan projiceras till ett höjdfält från den sida som vetter mot betraktaren i 3D-vyn (kamerans riktning och
-  upp-riktning). Utan vy används stenens tunnaste riktning (minsta variansriktningen), vänd mot den sida där
-  mest yta pekar.
-* **Strykljus** från fyra riktningar (nordväst, nordost, sydost, sydväst) 20° över ytan.
-* **Relief**: det mörkaste av de fyra strykljusen, så att varje spår blir mörkt oavsett riktning.
-* **Djup** under en rekonstruerad stenyta (morfologisk stängning, 20 mm); kantzonen (10 mm), där
-  referensytan är osäker, utelämnas.
-* Bilderna har känd upplösning (mm per pixel) och påverkas inte av zoom eller skärmens belysning. Små
-  skanningar skalas upp till minst 1 200 px för läsning.
 
 ## 2. Osäkerhet
 
@@ -695,12 +695,22 @@ av data och skript (fingeravtryck) i en egen process (`python -m src.r_bridge <f
 | `geography.R` | sf, leaflet | ristarnas tyngdpunkter, spridning och konvexa höljen (SWEREF 99 TM); permutationstest (499 urval ur samma landskap) av om ristaren arbetade inom ett mindre område än slumpen ger (Benjamini–Hochberg); avstånd till vatten mot slumpvisa punkter på land per landskap (Wilcoxon); interaktiv karta |
 | `clusters.R` | cluster, FactoMineR, factoextra | Gowers avstånd på stil, språkdrag, kors, kortkvistrunor och innehåll (kategorierna asymmetriskt binära), PAM med k = 2–10 efter silhuettbredd, stabilitet som Jaccard-likhet i 20 delurval om 80 % (Hennig 2007), MCA; ristare och landskap jämförs efteråt (justerat Rand-index) |
 | `text.R` | tidytext, stringr | formler ur normaliseringen (resarformel, monument, ordföljd, ristarsignatur, bön) per ristare; stavning per ord mot ristare (χ² med simulerat p, Cramérs V); ordformer som utmärker en ristare (Fishers exakta test, BH); tf-idf; de 100 vanligaste runbigrammen som variabler till modellen |
-| `attribution.R` | tidymodels, ranger | random forest (500 träd) på stenar med säker ristare, ristare med minst åtta stenar (i dag 18 ristare, 497 stenar); 5-faldig stratifierad korsvalidering upprepad 3 gånger; delmodeller med bara geografi, bara stil, bara språk och innehåll; kalibrering (andel rätt per sannolikhetsnivå, ECE); permutationsvikter; förslag för stenar utan ristare inom 25 km från en träningssten |
+| `attribution.R` | tidymodels, ranger | random forest (500 träd) på stenar med säker ristare, ristare med minst åtta stenar (i dag 18 ristare, 497 stenar); 5-faldig stratifierad korsvalidering upprepad 3 gånger, och grupperad per socken och härad; delmodeller med bara geografi, bara stil, bara språk och innehåll; kalibrering (andel rätt per sannolikhetsnivå, ECE); permutationsvikter; förslag för stenar utan ristare inom 25 km från en träningssten |
 | `chronology.R` | ca | seriation (korrespondensanalys av språkdrag, formler, kors, kortkvistrunor och innehåll – utan stilgrupp) för Uppland, prövad mot Gräslunds stilkronologi (Spearman mot stilgruppens mittår, och partiell med latituden konstant); tidsskattning med 80 % prediktionsintervall och korsvaliderat medelfel; för hela korpusen redovisas vad de tre första dimensionerna följer (tid, geografi, ristare eller oförklarat) |
 | `dialect.R` | stringdist | förväntat normerat Levenshtein-avstånd mellan häradernas stavning av vanliga ord; Mantel-test mot geografiskt avstånd (999 permutationer); grupper av härader (PAM); kartor över stavningen av "efter" och "sten" |
 | `network.R` | igraph, tidygraph, ggraph | ord som står i samma inskrifter (positiv PMI), grupper med Louvain; släktorden i inskrifterna (fader, moder, son, broder, félagi …) före och efter ca 1050 och i kristna mot övriga inskrifter (Fisher, BH) |
 | `stone.R` | sf, cluster, tidymodels | en sten mot korpusen: modellens sannolikheter (korsvaliderade om stenen har ristare i Rundata), avstånd till kandidaternas tyngdpunkter och höljen, grupp och närmaste grannar (Gower), formler jämförda med kandidaternas inskrifter, läge i Upplands seriation |
 | `landscape.R` | terra, gdistance | höjdmodell (ca 20 m), höjd, lutning, topografiskt positionsindex; strand vid vikingatiden som dagens höjd minus en grov landhöjning per landskap (t.ex. 5 m i Södermanland, 5,5 m i Uppland); sikt (viewshed, stenens topp 2 m, betraktare 1,6 m) mot slumpvisa platser; bästa vägar (Toblers vandringsfunktion, vatten tio gånger långsammare) mellan andra runstensplatser inom 12 km och stenens avstånd till dem mot slumpvisa punkter |
+
+**Grupperad korsvalidering** (från 2026-10-10). Vid slumpvis korsvalidering kan stenar från samma plats – ofta resta
+av samma ristare samtidigt – hamna både i tränings- och testdata. Modellen utvärderas därför också med hela socknar
+(164 grupper) respektive härader (69 grupper) utelämnade (`group_vfold_cv`, 5 delar, 3 upprepningar). En ristare vars
+alla stenar ligger i det utelämnade området saknas då i träningen och räknas som fel. Resultat (beräkning
+2026-10-10): rätt ristare först i 72 % slumpvis, 68 % med ny socken och 57 % med nytt härad (bland tre främsta
+87, 85 och 78 %); geografi ensamt 44, 40 och 30 %, språk och innehåll ensamt 60, 56 och 47 %, mot 19 % om man
+alltid gissar på den vanligaste ristaren. En del av träffsäkerheten kommer alltså från platsen, men modellen
+fungerar också för platser den inte sett. Sannolikheterna för enskilda stenar kommer fortfarande från den
+slumpvisa korsvalideringen, som motsvarar en ny sten på en känd plats.
 
 **Resultat i korpusen (beräkning 2026-10-05).** Attribueringsmodellen hittar rätt ristare i 72 % av fallen
 (87 % bland de tre främsta) mot 19 % om man alltid gissar på den vanligaste; språk och innehåll ensamt ger 60 %,
@@ -753,7 +763,7 @@ När en brist åtgärdas ändras förteckningen och versionen höjs. Bristerna i
 | Runigenkänningen är inte utvärderad | auto | Handmärkta facit för 8–10 stenar som inte använts för att justera reglerna (facit-läget i 3D-vyn, scripts/evaluate_rune_detection.py), med låsta regler. |
 | Gränserna 10 och 20 runor är riktvärden | auto, comparison | Ny beräkning när test–omtest och stenar med känd ristare på samma bergart finns. |
 | Attribueringen riskerar att bli cirkulär | attribution, statistics | Prövning på signerade stenar som inte använts i träningen och med variabler som inte låg bakom attribueringarna. |
-| Korsvalideringen delar inte upp stenarna per plats | attribution, r, statistics | Grupperad korsvalidering per socken eller härad, redovisad bredvid den nuvarande. |
+| Träffsäkerheten beror på om platsen är känd | attribution, r, statistics | Grupperad korsvalidering även för mätkorpusens attribuering, när korpusen är stor nog. |
 | Många utforskande test på samma data | attribution, research, statistics | Förregistrerade analysplaner för de hypoteser som ska publiceras. |
 | AI-resultat är okalibrerade och kan vara påhittade | ai | Kalibrering mot runologers läsningar av samma bilder. |
 | Rundata är en äldre utgåva | attribution, research, rundata | Uppdatering till senaste utgåvan av Runor. |

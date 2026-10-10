@@ -805,6 +805,15 @@ def research_blocks(rs: dict, signum: str, tab, synthesis: dict | None) -> list[
     return out
 
 
+def _protocol_text(pr: dict | None) -> str:
+    if not pr:
+        return ""
+    if pr.get("compliant"):
+        return f" Analysen följer Vitki-protokollet för automatisk huggspårsmätning ({pr['version']})."
+    return (f" Analysen avviker från Vitki-protokollet ({pr['version']}): {'; '.join(pr.get('deviations') or [])}; "
+            "den bör bara jämföras med stenar mätta på samma sätt.")
+
+
 def report_limitations(f: dict, ai_used: bool = False) -> tuple[list[dict], list[str]]:
     """Kända brister som gäller den här analysen (src/limitations.py) och varningar för just den."""
     params = (f.get("provenance") or {}).get("parameters") or {}
@@ -951,7 +960,8 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
           "V-vinkeln är öppningsvinkeln mellan väggarnas linjer, bredden mäts där linjerna når stenytans nivå och "
           "djupet från spårkanten till botten. Bottenradien är krökningsradien hos en parabel anpassad kring botten "
           "och ytråheten medelavvikelsen från väggarnas linjer. Metoden är validerad på syntetiska spår med kända "
-          "mått (vinkelfel inom ±0,6°). Runor och ornamentik redovisas var för sig."))
+          "mått (vinkelfel inom ±0,6°). Runor och ornamentik redovisas var för sig."
+        + _protocol_text(prov.get("protocol"))))
     counts = f.get("counts")
     if counts:
         rr = [[k, str(v)] for k, v in (counts.get("rejection_reasons") or {}).items()]

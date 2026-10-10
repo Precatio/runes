@@ -94,13 +94,14 @@ LIMITATIONS = [
      "needed": "Prövning på signerade stenar som inte använts i träningen och med variabler som inte låg bakom "
                "attribueringarna."},
     {"key": "cv_leakage", "contexts": {"attribution", "statistics", "r"},
-     "title": "Korsvalideringen delar inte upp stenarna per plats",
-     "text": "Attribueringsmodellerna (R och mätkorpusen) korsvalideras med slumpvis uppdelning. Stenar från samma "
-             "plats, socken eller släkt – ofta resta av samma ristare samtidigt – hamnar då både i tränings- och "
-             "testdata, så att geografi och lokala formler kan ge för hög träffsäkerhet (geografi ensamt ger 44 % i "
-             "R-modellen).",
-     "short": "Träffsäkerheten kan vara överskattad, eftersom stenar från samma plats testas mot varandra.",
-     "needed": "Grupperad korsvalidering per socken eller härad, redovisad bredvid den nuvarande."},
+     "title": "Träffsäkerheten beror på om platsen är känd",
+     "text": "Vid slumpvis korsvalidering hamnar stenar från samma plats både i tränings- och testdata. R-modellen "
+             "redovisas därför också med hela socknar och härader utelämnade: rätt ristare 72 % slumpvis, 68 % på en ny "
+             "socken och 57 % i ett nytt härad (geografi ensamt 44, 40 och 30 %). Sannolikheterna för enskilda stenar "
+             "kommer från den slumpvisa korsvalideringen och gäller en ny sten på en känd plats. Mätkorpusens "
+             "attribuering (lämna-en-ute) är inte grupperad.",
+     "short": "Modellen träffar rätt oftare på platser den redan känner till än på nya platser.",
+     "needed": "Grupperad korsvalidering även för mätkorpusens attribuering, när korpusen är stor nog."},
     {"key": "exploratory", "contexts": {"statistics", "research", "attribution"},
      "title": "Många utforskande test på samma data",
      "text": "Plattformen kör många analyser på samma korpus (ortografi, språkdrag, R-modeller, Forskningsluckor, "

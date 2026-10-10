@@ -32,6 +32,7 @@ interface Corpus {
     formulas: { tests: { label: string; cramers_v: number; q: number }[] } };
   attribution: Dict & { method: string; caveat: string; n_train: number; carvers: string[]; majority_baseline: number;
     ablation: { features: string; accuracy: number; top3: number; log_loss: number }[];
+    grouped_cv?: Record<string, { level: string; n_groups: number; ablation: { features: string; accuracy: number | null; top3: number | null }[] }>;
     calibration: { ece: number; reliability: { threshold: number; n: number; accuracy: number }[] };
     per_carver: { carver: string; n: number; recall: number; precision: number | null }[] };
   chronology: Dict & { method: string; region: string; validation: { rho: number; partial_rho: number; usable: boolean; mae_loo_years: number; mae_naive_years: number };
@@ -349,6 +350,23 @@ function Attribution({ data }: { data: Corpus }) {
         gissar på den vanligaste ristaren. Sannolikheterna är försiktiga:{" "}
         {a.calibration.reliability.map(r => `vid minst ${d2(r.threshold, 1)} är förstavalet rätt i ${pc(r.accuracy)} (${r.n} stenar)`).join("; ")}.
       </p>
+      {a.grouped_cv && (
+        <div className="overflow-x-auto">
+          <p className="text-sm text-slate-700 mb-2">
+            <strong>Fungerar modellen på en ny plats?</strong> Vid slumpvis korsvalidering kan stenar från samma plats finnas
+            både i tränings- och testdata. Här hålls hela socknar respektive härader utanför träningen; en ristare som bara
+            finns i det utelämnade området kan då inte föreslås och räknas som fel.
+          </p>
+          <table className="w-full text-sm">
+            <thead><tr><th className={TH}>Belägg</th><th className={TH}>Slumpvis</th>
+              {Object.entries(a.grouped_cv).map(([k, g]) => <th key={k} className={TH}>Ny {k.toLowerCase()} ({g.n_groups} grupper)</th>)}</tr></thead>
+            <tbody>{a.ablation.map(x => (
+              <tr key={x.features} className="border-t border-slate-900/5"><td className="p-2 font-semibold">{x.features}</td><td className="p-2">{pc(x.accuracy)}</td>
+                {Object.entries(a.grouped_cv!).map(([k, g]) => <td key={k} className="p-2">{pc(g.ablation.find(y => y.features === x.features)?.accuracy ?? undefined)}</td>)}</tr>
+            ))}</tbody>
+          </table>
+        </div>
+      )}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Fig src={f.ablation} alt="Delmodeller" /><Fig src={f.calibration} alt="Kalibrering" />
         <Fig src={f.importance} alt="Variabler" /><Fig src={f.confusion} alt="Förväxlingar" />

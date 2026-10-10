@@ -35,6 +35,9 @@ export interface AnalysisProvenance {
   method_version: string;
   timestamp: string;
   feature_type: string;
+  // Vitki protocol for automatic groove measurement (PROTOCOL.md): followed, or which deviations
+  protocol?: { version: string; compliant: boolean; deviations: string[]; notes: string[] };
+  known_limitations?: { version: string; keys: string[] };
   mesh: {
     mock: boolean;
     filename?: string;

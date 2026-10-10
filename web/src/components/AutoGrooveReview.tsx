@@ -177,6 +177,14 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
             {runesOnly && " Bara spår som känns igen som runor mäts; ornamentik, slingkanter och möjliga sprickor visas som små grå punkter."}
             {" "}Dra en ruta för att märka punkter, klicka på en punkt för att se dess profil.
           </p>
+          {result.provenance.protocol && (
+            <p className={`text-xs mt-2 ${result.provenance.protocol.compliant ? "text-emerald-800" : "text-amber-900"}`}>
+              {result.provenance.protocol.compliant
+                ? `Följer Vitki-protokollet (${result.provenance.protocol.version}).`
+                : `Avviker från Vitki-protokollet: ${result.provenance.protocol.deviations.join("; ")}. Jämför bara med stenar mätta på samma sätt.`}
+              {result.provenance.protocol.notes.map(n => ` ${n.charAt(0).toUpperCase()}${n.slice(1)}.`).join("")}
+            </p>
+          )}
           {runeNote && (
             <p className={`text-xs font-semibold mt-2 px-3 py-1.5 rounded-lg inline-block ${runeNote.ok ? "bg-emerald-50 text-emerald-800" : "bg-amber-50 text-amber-900"}`}>
               {runeNote.text}

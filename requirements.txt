@@ -19,6 +19,7 @@ uvicorn>=0.29.0
 python-multipart>=0.0.9
 python-dotenv>=1.0.0
 pydantic>=2.0.0
+markdown>=3.5  # METHODS.md som webbsida (/api/docs)
 openai>=1.0.0
 
 # Rundata-byggskript (scripts/build_rundata.py)

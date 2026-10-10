@@ -1,5 +1,7 @@
 # Attribueringsmodell: random forest (tidymodels + ranger) som väger samman geografi, stil, språkdrag, formler,
 # runbigram och innehåll. Utvärderas med upprepad korsvalidering; delmodeller visar vad varje slags belägg bidrar med.
+# Korsvalideringen görs både slumpvis (stratifierad per ristare) och grupperad per socken och härad, så att stenar
+# från samma plats aldrig finns både i tränings- och testdata.
 .here <- dirname(normalizePath(sub("^--file=", "", grep("^--file=", commandArgs(FALSE), value = TRUE)[1])))
 source(file.path(.here, "common.R"))
 suppressPackageStartupMessages({
@@ -64,17 +66,54 @@ make_wf <- function(cols, importance = "none") {
   workflow() %>% add_recipe(rec) %>% add_model(mod)
 }
 
-folds_for <- function(cols) {
+# Grouping for the grouped cross-validation: stones without a parish or district form their own group
+GROUPINGS <- c("Socken" = "parish", "Härad" = "district")
+group_key <- function(level) {
+  g <- as.character(train[[level]])
+  ifelse(is.na(g) | !nzchar(g), paste0("_", train$signum), g)
+}
+
+folds_for <- function(cols, group = NULL) {
   set.seed(seed)
-  vfold_cv(prep_frame(train, cols), v = FOLDS, repeats = REPEATS, strata = carver)
+  df <- prep_frame(train, cols)
+  if (is.null(group)) return(vfold_cv(df, v = FOLDS, repeats = REPEATS, strata = carver))
+  # The folds are drawn on a copy with the group column and applied to the clean data, so that the group never
+  # becomes a predictor. Stratification by carver is not possible when a parish has several carvers.
+  g <- group_vfold_cv(df %>% mutate(.group = group_key(group)), group = .group, v = FOLDS, repeats = REPEATS)
+  splits <- lapply(g$splits, function(s) make_splits(list(analysis = s$in_id, assessment = complement(s)), data = df))
+  manual_rset(splits, ids = paste(g$id, if ("id2" %in% names(g)) g$id2 else "", sep = "_"))
 }
 
 pcols <- paste0(".pred_", lv)
-evaluate <- function(name) {
+
+# Out-of-fold probabilities when whole groups are held out. A carver whose stones all lie in the held-out group is
+# missing from the training data; the model cannot propose that carver, so its probability is 0 (counted as wrong).
+grouped_predictions <- function(cols, group) {
+  folds <- folds_for(cols, group)
+  wf <- make_wf(cols)
+  rows <- lapply(folds$splits, function(s) {
+    test <- assessment(s)
+    P <- matrix(0, nrow(test), length(lv), dimnames = list(NULL, pcols))
+    fit_i <- tryCatch(fit(wf, analysis(s)), error = function(e) NULL)
+    if (!is.null(fit_i)) {
+      pr <- predict(fit_i, test, type = "prob")
+      for (cn in intersect(names(pr), pcols)) P[, cn] <- pr[[cn]]
+    }
+    data.frame(.row = complement(s), P, check.names = FALSE)
+  })
+  bind_rows(rows) %>% group_by(.row) %>% summarise(across(all_of(pcols), mean)) %>% arrange(.row) %>%
+    mutate(carver = train$carver[.row])
+}
+
+evaluate <- function(name, group = NULL) {
   cols <- SETS[[name]]
-  res <- fit_resamples(make_wf(cols), folds_for(cols), metrics = metric_set(accuracy, mn_log_loss),
-                       control = control_resamples(save_pred = TRUE))
-  pr <- collect_predictions(res, summarize = TRUE) %>% arrange(.row)
+  if (is.null(group)) {
+    res <- fit_resamples(make_wf(cols), folds_for(cols), metrics = metric_set(accuracy, mn_log_loss),
+                         control = control_resamples(save_pred = TRUE))
+    pr <- collect_predictions(res, summarize = TRUE) %>% arrange(.row)
+  } else {
+    pr <- grouped_predictions(cols, group)
+  }
   probs <- as.matrix(pr[, pcols])
   truth <- as.integer(pr$carver)
   rank_truth <- sapply(seq_len(nrow(probs)), function(i) sum(probs[i, ] > probs[i, truth[i]]) + 1)
@@ -91,6 +130,14 @@ E <- evals[["Alla"]]
 majority <- max(table(train$carver)) / nrow(train)
 ablation <- lapply(evals, function(e) list(features = e$name, accuracy = r3(e$accuracy), top3 = r3(e$top3),
                                            log_loss = r3(e$log_loss), brier = r3(e$brier)))
+
+# The same evaluation with whole parishes and districts held out: does the model generalise to a new place?
+grouped <- lapply(GROUPINGS, function(level) {
+  ev <- lapply(names(SETS), function(n) evaluate(n, level))
+  list(level = level, n_groups = length(unique(group_key(level))),
+       ablation = lapply(ev, function(e) list(features = e$name, accuracy = r3(e$accuracy), top3 = r3(e$top3),
+                                              log_loss = r3(e$log_loss), brier = r3(e$brier))))
+})
 
 # Calibration of the full model (out-of-fold)
 pmax_ <- apply(E$probs, 1, max)
@@ -158,8 +205,10 @@ unc <- Filter(function(p) nzchar(p$rundata_uncertain), predictions)
 # Figure labels in the figure's language (the JSON keeps the Swedish keys)
 SETN <- c("Geografi" = tr("Geografi", "Geography"), "Stil" = tr("Stil", "Style"),
           "Språk och innehåll" = tr("Språk och innehåll", "Language and content"), "Alla" = tr("Alla", "All"))
-MET <- c(tr("Rätt ristare först", "Correct first choice"), tr("Rätt ristare bland tre främsta", "Correct among first three"))
-ab <- bind_rows(lapply(evals, function(e) data.frame(set = e$name, metric = MET, value = c(e$accuracy, e$top3))))
+MET <- c(tr("Rätt ristare först", "Correct first choice"), tr("Rätt ristare bland tre främsta", "Correct among first three"),
+         tr("Rätt först, ny socken", "Correct first choice, new parish"))
+gp <- setNames(sapply(grouped[["Socken"]]$ablation, `[[`, "accuracy"), names(SETS))
+ab <- bind_rows(lapply(evals, function(e) data.frame(set = e$name, metric = MET, value = c(e$accuracy, e$top3, gp[[e$name]]))))
 ab$set <- factor(unname(SETN[ab$set]), levels = unname(SETN[names(SETS)]))
 ab$metric <- factor(ab$metric, levels = MET)
 p <- ggplot(ab, aes(set, value, fill = metric)) +
@@ -167,10 +216,10 @@ p <- ggplot(ab, aes(set, value, fill = metric)) +
   geom_text(aes(label = sprintf("%.0f %%", 100 * value)), position = position_dodge(width = 0.75), vjust = -0.4,
             size = 2.8, colour = INK) +
   geom_hline(yintercept = majority, linetype = "dashed", colour = MUTED, linewidth = 0.4) +
-  scale_fill_manual(values = SERIES[1:2], name = NULL) +
+  scale_fill_manual(values = SERIES[1:3], name = NULL) +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1.05), expand = c(0, 0)) +
   labs(title = "Vad varje slags belägg räcker till", x = NULL, y = tr("Andel stenar (korsvaliderat)", "Share of stones (cross-validated)"),
-       subtitle = sprintf("%d säkra stenar av %d ristare; %d-faldig korsvalidering upprepad %d gånger. Streckat: gissa alltid vanligaste ristaren (%.0f %%)",
+       subtitle = sprintf("%d säkra stenar av %d ristare; %d-faldig korsvalidering upprepad %d gånger, slumpvis och med hela socknar utelämnade. Streckat: gissa alltid vanligaste ristaren (%.0f %%)",
                           nrow(train), length(lv), FOLDS, REPEATS, 100 * majority)) +
   theme_runor() + theme(panel.grid.major.x = element_blank())
 fig_ablation <- save_fig(p, out, "modell_delmodeller.png", 7.5, 4.5)
@@ -222,7 +271,7 @@ saveRDS(list(final = final, levels = lv, cols = SETS$Alla, nominal = nominal, tr
 
 result <- list(
   n_train = nrow(train), carvers = lv, min_inscriptions = MIN_CARVER, folds = FOLDS, repeats = REPEATS, trees = TREES,
-  majority_baseline = r3(majority), ablation = unname(ablation),
+  majority_baseline = r3(majority), ablation = unname(ablation), grouped_cv = grouped,
   calibration = list(ece = r3(ece), bins = calib %>% mutate(across(c(mean_p, accuracy), r3)), reliability = reliab),
   per_carver = per_carver, confused = confused,
   importance = head(imp_df %>% mutate(importance = signif(importance, 3)), 30),
@@ -235,7 +284,9 @@ result <- list(
     "säker ristare i Rundata, för ristare med minst", MIN_CARVER, "stenar. Variablerna är koordinater och landskap,",
     "stilgrupp, kors och kortkvistrunor, elva språkdrag, fem formler, de 100 vanligaste runbigrammen och nio",
     "innehållskategorier. Modellen utvärderades med", FOLDS, "-faldig stratifierad korsvalidering upprepad", REPEATS,
-    "gånger; sannolikheterna för varje sten kommer från de modeller som inte såg stenen. Delmodeller med bara geografi,",
+    "gånger; sannolikheterna för varje sten kommer från de modeller som inte såg stenen. Samma utvärdering gjordes med",
+    "hela socknar respektive härader utelämnade (grupperad korsvalidering), så att stenar från samma plats aldrig",
+    "fanns både i tränings- och testdata. Delmodeller med bara geografi,",
     "bara stil respektive bara språk och innehåll visar vad varje slags belägg bidrar med. Förslag ges bara för stenar",
     "inom", NEAR_KM, "km från en träningssten, och sannolikheterna gäller under antagandet att ristaren är en av de",
     length(lv), "ristarna i modellen."

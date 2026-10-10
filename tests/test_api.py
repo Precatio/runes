@@ -244,3 +244,19 @@ def test_known_limitations_follow_every_analysis(client, stone_id):
         assert "färre än riktvärdet 10" in md
         blog = client.post("/api/reports/stone", json={**body, "template": "blogg"}).json()["markdown"]
         assert "Det här vet vi att metoden ännu inte klarar" in blog
+
+
+
+def test_auto_analyze_records_protocol(client, stone_id):
+    import numpy as np
+
+    n = [0, -np.sin(np.radians(20)), np.cos(np.radians(20))]
+    data = {"mesh_id": stone_id, "normal_x": n[0], "normal_y": n[1], "normal_z": n[2]}
+    on = client.post("/api/3d/auto_analyze", data={**data, "protocol": "true"}).json()
+    assert on["provenance"]["protocol"]["compliant"] and on["parameters"]["resolution_mm"] == 0.6
+    off = client.post("/api/3d/auto_analyze", data={**data, "sensitivity": "2"}).json()
+    assert not off["provenance"]["protocol"]["compliant"]
+    docs = client.get("/api/docs/methods").json()
+    assert any(t["id"] == "vitki-protokollet" for t in docs["toc"]) and "Kända brister" in docs["html"]
+    code = client.get("/api/docs/code").json()
+    assert any(e["path"] == "src/protocol.py" for e in code["modules"])

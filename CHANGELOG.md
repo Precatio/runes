@@ -23,6 +23,16 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   förenklad skanning (METHODS.md 1e).
 - Antalet igenkända runor jämfört med Rundatas translitterering (METHODS.md 1c).
 
+### Statistik
+- Attribueringsmodellen i R korsvalideras också grupperat per socken och härad (rätt ristare 72 % slumpvis,
+  68 % på ny socken, 57 % i nytt härad), visat på sidan Statistik (R) och i fynden.
+
+### Protokoll och dokumentation
+- Vitki-protokollet för automatisk huggspårsmätning (`PROTOCOL.md`, `src/protocol.py`), utkast: fasta parametrar,
+  krav på skanningen, arbetsgång, minsta redovisning; varje automatisk analys kontrolleras mot protokollet.
+- Webbsidan Metodik och beräkningar (Dokumentation → Metodik) visar METHODS.md, protokollet och alla moduler,
+  skript och R-moduler direkt från koden (`/api/docs`).
+
 ### Transparens
 - Förteckning över metodens kända brister som visas under varje analyssida, står i varje rapport och sparas i
   proveniensen för varje mätning (METHODS.md 18).

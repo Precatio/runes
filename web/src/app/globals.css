@@ -142,3 +142,26 @@ body {
     margin: 20mm;
   }
 }
+
+/* Method documentation rendered from METHODS.md (docs/metod) */
+.methods-doc { color: #334155; line-height: 1.7; font-size: 15px; }
+.methods-doc h1 { display: none; }
+.methods-doc h2 { font-size: 1.45em; font-weight: 700; color: #0f172a; margin: 2.2em 0 0.8em; padding-top: 0.6em;
+  border-top: 1px solid rgba(15, 23, 42, 0.08); scroll-margin-top: 1rem; }
+.methods-doc h3 { font-size: 1.15em; font-weight: 700; color: #0f172a; margin: 1.8em 0 0.6em; scroll-margin-top: 1rem; }
+.methods-doc p { margin: 0.9em 0; }
+.methods-doc strong { font-weight: 600; color: #0f172a; }
+.methods-doc a { color: #b7410e; text-decoration: underline; text-underline-offset: 2px; }
+.methods-doc ul, .methods-doc ol { margin: 0.8em 0; padding-left: 1.5em; }
+.methods-doc ul { list-style-type: disc; }
+.methods-doc ol { list-style-type: decimal; }
+.methods-doc li { margin: 0.35em 0; }
+.methods-doc code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.86em;
+  background: rgba(15, 23, 42, 0.05); padding: 0.1em 0.35em; border-radius: 4px; }
+.methods-doc pre { background: #0f172a; color: #e2e8f0; padding: 1em; border-radius: 12px; overflow-x: auto; }
+.methods-doc pre code { background: none; color: inherit; padding: 0; }
+.methods-doc table { display: block; overflow-x: auto; border-collapse: collapse; margin: 1em 0; font-size: 0.9em; }
+.methods-doc th, .methods-doc td { border: 1px solid rgba(15, 23, 42, 0.1); padding: 0.45em 0.7em; text-align: left;
+  vertical-align: top; }
+.methods-doc th { background: rgba(15, 23, 42, 0.04); font-weight: 600; color: #0f172a; }
+.methods-doc blockquote { border-left: 3px solid #b7410e; padding-left: 1em; color: #475569; margin: 1em 0; }

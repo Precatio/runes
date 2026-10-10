@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 export default function DocsPage() {
 
   return (
@@ -15,6 +17,14 @@ export default function DocsPage() {
       </div>
 
       <div className="space-y-8 pb-12">
+
+        <Link href="/docs/metod" className="block liquid-glass-island rounded-[24px] p-6 border border-[#b7410e]/30 hover:border-[#b7410e] transition-colors">
+          <p className="text-lg font-bold text-slate-900">Metodik och beräkningar →</p>
+          <p className="text-sm text-slate-600 mt-1">
+            Hur huggspåren mäts steg för steg, hur statistiken räknas, valideringar och robusthet, alla skript och
+            R-moduler – och metodens kända brister. Hämtas direkt från koden, så det är alltid aktuellt.
+          </p>
+        </Link>
         
         {/* Background / Why */}
         <section className="liquid-glass-island rounded-[32px] p-8 border border-white/50 shadow-sm">

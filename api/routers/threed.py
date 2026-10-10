@@ -26,6 +26,7 @@ from src.slice_analysis import (
     snap_path_to_bottom,
 )
 from src import limitations
+from src import protocol as protocol_spec
 from src.stats import METRICS, summarize_by_rune, summarize_slices
 
 router = APIRouter()
@@ -309,9 +310,15 @@ def auto_analyze(
     resolution_mm: float = Form(None),
     harmonize_mm: float = Form(None),
     runes_only: bool = Form(True),
+    protocol: bool = Form(False),
 ):
     """Automatisk spåranalys av den ristade ytan som vetter mot normalen (oftast kamerans riktning).
-    Med runes_only (standard) mäts bara spår som känns igen som runor."""
+    Med runes_only (standard) mäts bara spår som känns igen som runor. Med protocol används Vitki-protokollets
+    fasta parametrar (src/protocol.py); proveniensen anger alltid om analysen följer protokollet."""
+    if protocol:
+        pp = protocol_spec.PARAMETERS
+        resolution_mm, sensitivity, spacing_mm = pp["resolution_mm"], pp["sensitivity"], pp["spacing_mm"]
+        max_halfwidth_mm, harmonize_mm, runes_only = pp["max_halfwidth_mm"], pp["harmonize_mm"], pp["runes_only"]
     if not 0.5 <= spacing_mm <= 50 or not 1 <= sensitivity <= 10:
         raise HTTPException(status_code=400, detail="Ogiltiga parametrar för automatisk analys.")
     # Fixed grid resolution and harmonised profiles make stones from scans of different density comparable
@@ -341,6 +348,7 @@ def auto_analyze(
                                                   meta_stone, meta_weathering)
     params = {"mode": "automatic", **result["parameters"], "meta_stone": meta_stone, "meta_weathering": meta_weathering}
     result["provenance"] = provenance(entry.info, params, "rune" if runes_only else "unknown")
+    result["provenance"]["protocol"] = protocol_spec.compliance(result["parameters"], METHOD_VERSION)
     return result
 
 

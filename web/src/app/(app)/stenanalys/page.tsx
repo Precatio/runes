@@ -161,6 +161,8 @@ export default function StoneAnalysisPage() {
           const d = await session.postJSON<AutoAnalysisResult>("/api/3d/auto_analyze", {
             normal_x: normal[0], normal_y: normal[1], normal_z: normal[2], sensitivity: k, meta_stone: stone, meta_weathering: weathering,
             runes_only: featureType === "rune",
+            // The main analysis follows the Vitki protocol; the other sensitivities keep its fixed grid
+            ...(featureType === "rune" && k === 3 ? { protocol: true } : { resolution_mm: 0.6 }),
           });
           if (!d.summary) { notes.push(`Spåranalysen med känslighet ${k} gav inga godkända snitt.`); continue; }
           main = main ?? d;

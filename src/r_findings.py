@@ -191,12 +191,18 @@ def corpus_patterns(res: dict) -> list[dict]:
     a = res.get("attribution") or {}
     if a.get("ablation"):
         ab = {x["features"]: x for x in a["ablation"]}
+        gtext = ""
+        for name, g in (a.get("grouped_cv") or {}).items():
+            ga = {x["features"]: x for x in g.get("ablation") or []}.get("Alla")
+            if ga and ga.get("accuracy") is not None:
+                gtext += f" Med hela {'socknar' if name == 'Socken' else 'härader'} utelämnade: {_pct(ga['accuracy'])}."
         out.append({"topic": "Attribuering", "status": "bekräftar",
                     "text": f"Modellen hittar rätt ristare i {_pct(ab['Alla']['accuracy'])} av fallen (bland tre främsta "
                             f"{_pct(ab['Alla']['top3'])}); språk och innehåll ensamt {_pct(ab['Språk och innehåll']['accuracy'])}, "
                             f"geografi ensamt {_pct(ab['Geografi']['accuracy'])}, mot {_pct(a['majority_baseline'])} om man "
-                            "alltid gissar på den vanligaste ristaren.",
-                    "note": a.get("caveat")})
+                            "alltid gissar på den vanligaste ristaren." + gtext,
+                    "note": (a.get("caveat") or "") + (" Den grupperade korsvalideringen visar hur väl modellen fungerar "
+                                                       "på en plats den inte sett." if gtext else "")})
     t = res.get("text") or {}
     if t.get("lemmas"):
         top = t["lemmas"][0]

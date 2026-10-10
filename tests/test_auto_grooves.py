@@ -116,3 +116,27 @@ def test_methods_lists_every_known_limitation():
     for x in limitations.LIMITATIONS:
         assert f"| {x['title']} |" in section, x["key"]
     assert limitations.VERSION in section
+
+
+
+def test_protocol_matches_method_and_document():
+    import os
+
+    from api.config import METHOD_VERSION
+    from src import protocol
+
+    assert protocol.METHOD_VERSION == METHOD_VERSION
+    doc = open(os.path.join(os.path.dirname(__file__), "..", "PROTOCOL.md"), encoding="utf-8").read()
+    assert protocol.VERSION in doc and "0,6 mm, fast" in doc and METHOD_VERSION in doc
+
+
+def test_protocol_compliance():
+    from src import protocol
+
+    mesh = rune_stone()
+    ok = analyze_grooves(mesh, [0, 0, 1], **{k: v for k, v in protocol.PARAMETERS.items()})["parameters"]
+    assert protocol.compliance(ok, protocol.METHOD_VERSION)["compliant"]
+    other = analyze_grooves(mesh, [0, 0, 1], sensitivity=2.5)["parameters"]
+    c = protocol.compliance(other, protocol.METHOD_VERSION)
+    assert not c["compliant"] and any("känslighet" in d for d in c["deviations"])
+    assert any("rutnätet följer skanningen" in d for d in c["deviations"])
