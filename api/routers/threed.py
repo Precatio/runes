@@ -25,7 +25,7 @@ from src.slice_analysis import (
     raw_profile,
     snap_path_to_bottom,
 )
-from src.stats import METRICS, summarize_slices
+from src.stats import METRICS, summarize_by_rune, summarize_slices
 
 router = APIRouter()
 
@@ -303,8 +303,10 @@ def auto_analyze(
     meta_weathering: str = Form("Låg"),
     resolution_mm: float = Form(None),
     harmonize_mm: float = Form(None),
+    runes_only: bool = Form(True),
 ):
-    """Automatisk spåranalys av den ristade ytan som vetter mot normalen (oftast kamerans riktning)."""
+    """Automatisk spåranalys av den ristade ytan som vetter mot normalen (oftast kamerans riktning).
+    Med runes_only (standard) mäts bara spår som känns igen som runor."""
     if not 0.5 <= spacing_mm <= 50 or not 1 <= sensitivity <= 10:
         raise HTTPException(status_code=400, detail="Ogiltiga parametrar för automatisk analys.")
     # Fixed grid resolution and harmonised profiles make stones from scans of different density comparable
@@ -318,7 +320,8 @@ def auto_analyze(
                                  sensitivity=sensitivity, max_halfwidth_mm=max_halfwidth_mm,
                                  face_tree=entry.face_tree,
                                  up=None if up_x is None else [up_x, up_y, up_z],
-                                 resolution_mm=resolution_mm, harmonize_mm=harmonize_mm or None)
+                                 resolution_mm=resolution_mm, harmonize_mm=harmonize_mm or None,
+                                 runes_only=runes_only)
     except ValueError as e:
         raise HTTPException(status_code=422, detail=str(e))
     except Exception as e:
@@ -327,10 +330,12 @@ def auto_analyze(
     accepted = [s for s in result["slices"] if s["accepted"]]
     if accepted:
         result["summary"] = summarize_slices(accepted)
+        if runes_only:
+            result["rune_summary"] = summarize_by_rune(accepted)
         result["tool_heuristic"] = tool_heuristic(float(np.mean([s["apex_vinkel_deg"] for s in accepted])),
                                                   meta_stone, meta_weathering)
     params = {"mode": "automatic", **result["parameters"], "meta_stone": meta_stone, "meta_weathering": meta_weathering}
-    result["provenance"] = provenance(entry.info, params, "unknown")
+    result["provenance"] = provenance(entry.info, params, "rune" if runes_only else "unknown")
     return result
 
 

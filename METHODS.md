@@ -4,7 +4,7 @@ Den här filen beskriver exakt hur Vitki räknar, så att resultat kan granskas,
 Alla beräkningar finns i `src/` och testas i `tests/`. Varje analys sparar en **proveniens** (programversion,
 mätmetodens version, SHA-256 för 3D-filen, alla parametrar och tidpunkt) som följer med i export och rapporter.
 
-## 1. Huggspårsmått (mätmetod `groove-4`)
+## 1. Huggspårsmått (mätmetod `groove-5`)
 
 Källkod: `src/slice_analysis.py`.
 
@@ -56,6 +56,11 @@ upplösning (`harmonize_mm`); båda sparas bland parametrarna.
   skanningens punkttäthet. Profilen räknas nu om till jämnt punktavstånd och alla fönster anges i mm;
   spårkanten måste ligga minst halvvägs upp mot stenytan. Jämförelser mellan stenar med olika punkttäthet
   gjorda med äldre versioner bör göras om.
+* `groove-5` (2026-10-10): den automatiska analysen mäter bara spår som känns igen som runor (avsnitt 1c,
+  steg 5), och bara små hål (< 10 mm²) i spårmasken fylls. Förut fylldes alla hål, så att ett slingband
+  som stängs av runstavar – eller insidan av en runas båge – blev en enda yta som räknades som för bred
+  och inte mättes (på Sö 113 65 700 mm² mot nu 1 900 mm²). Själva tvärsnittsmätningen är oförändrad från
+  `groove-4`; mätningar med ett klick eller manuellt är jämförbara, automatiska analyser bör göras om.
 
 ### 1b. Ett klick per snitt
 
@@ -81,22 +86,55 @@ riktning blir ytans normal och kamerans upp-riktning orienterar granskningsbilde
    än ca 20 mm men bevarar plana, lutande och svagt välvda ytor; en lätt gaussisk utjämning (1 mm) dämpar brus.
 3. **Spår:** celler som ligger mer än `max(0,3 mm, k · brus)` under referensytan, där brus = 1,4826 · MAD av
    avvikelserna och k = 3 (känslighet "normal"). Partier inom 10 mm från skanningens kant, branta partier
-   (> 45°) och små fläckar (< 10 mm²) utesluts.
+   (> 45°) och små fläckar (< 10 mm²) utesluts. Små hål i spåren (< 10 mm², brus) fylls; större hål –
+   t.ex. ett slingband mellan två stavar eller insidan av en runas båge – lämnas.
 4. **Mittlinjer:** spåren tunnas ut till ett skelett. Punkter nära korsningar och ändar utesluts, liksom
    partier bredare än ett huggspår (standard 16 mm) – t.ex. sänkta fält eller avflagningar.
-5. **Mätning:** med jämna mellanrum (standard 3 mm) längs mittlinjerna tas riktningen från mittlinjen och
+5. **Runor eller inte** (`classify_strokes`; standard, kan stängas av med `runes_only=false`). Naturliga
+   sprickor, vittring och ornamentik har andra former än runor, och mäts de blir stenens medelvärden
+   missvisande. Mittlinjerna delas därför i streck och bara streck som känns igen som runor mäts:
+   * *Streck.* Mittlinjen bryts vid korsningar; en korsning räknas som hela området inom en halv spårbredd
+     (median). Grenar som fortsätter i samma riktning (högst 25° ändring, högst en halv spårbredd i sidled)
+     genom en korsning eller över ett avbrott på högst två spårbredder slås ihop till ett streck. En
+     slingkant som runorna stöter emot blir då ett långt streck, medan runans stav och bistavar blir egna.
+   * *Runstreck.* Rakt (avvikelse från rät linje ≤ max(2 mm, 4 % av längden), varje 10 mm-korda inom 20°
+     från streckets riktning), 12–250 mm långt och jämnbrett (variationskoefficient för bredden ≤ 0,5).
+   * *Ornamentik och slinglinjer.* Jämnt böjda streck; raka streck längre än 2,2 × 75:e percentilen av
+     runstreckens längd (runorna i en inskrift är ungefär lika höga); raka bitar som fortsätter en sådan
+     linje (spritt längs linjen); och streck som står vinkelrätt (± 20°) mot den tydligt dominerande
+     riktningen bland runstrecken inom tre stavlängder och är minst en halv stavlängd långa – stavarna i en
+     runrad är parallella och slinglinjerna går tvärs över dem, medan bistavarna sitter snett.
+   * *Oregelbundna spår* (möjliga sprickor och vittring): kortare än 12 mm, ojämnt breda eller sicksackande
+     (medianvridning mellan 5 mm-kordor > 25°, eller > 8° med växlande vridriktning i mer än 40 % av fallen –
+     en ornamentbåge svänger åt samma håll, en spricka växlar).
+   * *Runor.* Runstreck som sitter ihop är en runa. En runa godtas bara om en annan runa finns inom 2,5 × dess
+     höjd (runor står i rader; ett ensamt rakt spår kan vara en spricka eller repa), och – på stenar med
+     slinglinjer – om dess mitt ligger inom 0,75 × max(stavlängd, runans höjd) från en slinglinje (stavlängd =
+     90:e percentilen av runstreckens längd), eftersom runorna står i banden.
+
+   Varje snitt får strecktyp och runans nummer; snitt på andra streck redovisas som bortsorterade med skäl
+   ("inte runa: …"). Igenkänningen är avsiktligt försiktig: det är bättre att en runa missas än att en
+   spricka mäts. Missade runor kan mätas med ett klick (avsnitt 1b).
+6. **Mätning:** med jämna mellanrum (standard 3 mm) längs mittlinjerna tas riktningen från mittlinjen och
    förfinas genom att botten följs (som i 1b). Tvärsnittet mäts **genom mesh-filen** med samma metod som i
    avsnitt 1 – höjdfältet används bara för att hitta spåren.
-6. **Kvalitetsgranskning:** snitt sorteras bort vid orimlig vinkel (≤ 15° eller ≥ 170°), väggpassning
+7. **Kvalitetsgranskning:** snitt sorteras bort vid orimlig vinkel (≤ 15° eller ≥ 170°), väggpassning
    R² < 0,8, djup under tröskeln, ej funnen spårkant eller botten utanför mittlinjen. Skälen redovisas.
-7. **Granskning:** forskaren ser alla mätpunkter på en reliefbild, märker områden som runor eller
-   ornamentik eller utesluter dem, och väljer vilket urval som blir resultatet.
+8. **Granskning:** forskaren ser alla mätpunkter på en reliefbild – godkända runsnitt är förvalda som runor –
+   kan märka om eller utesluta områden, och väljer vilket urval som blir resultatet.
 
 **Validering.** På de syntetiska stenarna ger den automatiska analysen samma noggrannhet som avsnitt 1
 (t.ex. 70,0 ± 0,9° för spår på 70°, oberoende av hur stenen lutar). På skanningen av Sö 113 (6,1 miljoner
 trianglar) godkändes ca 250 av 1 000 kandidatsnitt; ett klick på samma ställen gav i median 6° skillnad i
 vinkel och 10° i spårriktning, vilket speglar hur oregelbundna verkliga, vittrade spår är. Resultaten bör
 därför redovisas med spridning och, för jämförelser, med samma mätsätt för alla stenar.
+
+Runigenkänningen prövas på en syntetisk runslinga (sex runor mellan två slingkanter, en ornamentbåge och
+en sicksackande spricka): alla sex runor och bara de mäts (80,8° för spår på 80°), slingkanterna och bågen
+blir ornamentik och sprickan oregelbunden (`tests/test_auto_grooves.py`). På Sö 113 och Sö 128 granskades
+klassningen visuellt: slinglinjerna mellan raderna och i slingorna sorteras bort, liksom raka vittringsspår
+i Sö 128:s mittfält; de som mäts är nästan bara stavar och bistavar. Svagt böjda eller avbrutna stavar
+missas ibland. Igenkänningen är regelbaserad och inte validerad mot en handmärkt referens.
 
 ### 1d. Bilder ur skanningen
 
@@ -118,6 +156,36 @@ Källkod: `api/routers/threed.py` (`render_relief`), `src/stone_report.py` (`Sur
 Källkod: `src/stats.py`. För varje mått och sten redovisas medelvärde, standardavvikelse (n − 1),
 antal snitt och 95 % konfidensintervall (t-fördelning). Spridningen mellan snitt säger hur stabilt måttet
 är längs spåret – den fångar inte systematiska fel som skanningsupplösning eller vittring.
+
+**Runan som enhet** (`summarize_by_rune`). Snitt i samma runa är inte oberoende – de delar slag, verktyg
+och vittring – så ett konfidensintervall över alla snitt blir för smalt. När bara runor mäts redovisas
+därför också stenens medelvärde av runornas medelvärden, med n = antal runor, konfidensintervall
+(t-fördelning) och ICC(1) (andelen av spridningen som ligger mellan runor).
+
+**Hur många runor?** (`scripts/rune_sample_size.py`). Den automatiska analysen kördes på 20 skanningar ur
+Kitzler Åhfeldts Södermanlandsserie (0,6 mm rutnät, känslighet 3); 18 stenar fick minst 8 mätta runor (8–76,
+median 6 snitt per runa). Spridningen delades i tre nivåer (envägs-ANOVA per sten):
+
+| Mått | SD inom runa | SD mellan runor | ICC | SD mellan stenar |
+|---|---|---|---|---|
+| V-vinkel | 10,0° | 8,1° | 0,37 | 12,6° |
+| Spårdjup | 0,62 mm | 0,73 mm | 0,49 | 0,99 mm |
+| Spårbredd | 2,4 mm | 1,9 mm | 0,35 | 2,5 mm |
+| Djup/bredd | 0,052 | 0,050 | 0,44 | 0,070 |
+| Asymmetri | 6,4° | 3,4° | 0,14 | 2,4° |
+
+Spridningen mellan runor är lika stor som inom en runa, så fler runor ger mer än fler snitt per runa.
+95 % konfidensintervall för stenens V-vinkel: ± 11° med 5 runor, ± 6,5° med 10, ± 4,2° med 20 och ± 3,4° med
+30 (spårdjup ± 0,96, 0,55, 0,36 och 0,29 mm). Med 20 runor per sten upptäcks en skillnad på en
+SD mellan runor (ca 8° i vinkel, 0,7 mm i djup) mellan två stenar med 80 % styrka (α = 0,05). Utifrån n
+slumpvis valda runor kändes en sten igen bland de 18 i 52 % av försöken med 5 runor, 63 % med 10 och 75 %
+med 20 (jämfört mot medelvärdet av stenens andra hälft av runor). Asymmetrin är för osäker för att skilja
+stenar åt (ICC 0,14; 30 runor ger tillförlitlighet 0,9).
+
+Appen anger därför **minst 10 runor för att beskriva en sten och minst 20 för att jämföra stenar**; 5 räcker
+inte. Gränserna gäller stenar med olika ristare *och* olika material; skillnaden mellan två ristare på samma
+bergart är mindre (avsnitt 15 och replikationsstudien av Kitzler Åhfeldts grupper), så för attribuering
+behövs fler – helst alla mätbara runor.
 
 ## 3. Jämförelse av två stenar
 

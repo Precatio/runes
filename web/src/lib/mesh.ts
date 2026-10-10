@@ -95,9 +95,14 @@ export class MeshSession {
 
 export type AutoLabel = "rune" | "ornament" | "unknown" | "excluded";
 
+export type StrokeKind = "rune" | "ornament" | "irregular" | "isolated";
+
 export interface AutoSlice extends Partial<SliceMetrics> {
   accepted: boolean;
   reason: string | null;
+  feature?: StrokeKind; // what the groove at this point was recognised as
+  rune_id?: number;
+  stroke_id?: number;
   halfwidth_mm: number;
   position_mm: number;
   fit_r2?: number;
@@ -123,10 +128,26 @@ export interface AutoAnalysisResult {
     rejection_reasons: Record<string, number>;
     groove_area_mm2: number;
     wide_area_mm2: number;
+    strokes?: Partial<Record<StrokeKind, number>>;
+    runes_identified?: number;
+    runes_measured?: number;
   };
-  parameters: Record<string, number | number[]>;
+  parameters: Record<string, number | number[] | boolean>;
   summary?: Record<Metric, import("@/lib/metrics").Summary>;
+  // Stone means with the rune as unit (n = runes), present when only runes were measured
+  rune_summary?: { n_runes: number; metrics: Record<Metric, import("@/lib/metrics").Summary & { n_slices: number; icc: number | null }> };
+  runes?: { id: number; n_strokes: number; height_mm: number; n_slices: number }[];
   provenance: import("@/lib/db").AnalysisProvenance;
+}
+
+// Number of measured runes needed (METHODS.md, 2): 10 to describe a stone, 20 to compare stones
+export const MIN_RUNES_DESCRIBE = 10;
+export const MIN_RUNES_COMPARE = 20;
+
+export function runeSampleNote(n: number): { ok: boolean; text: string } {
+  if (n >= MIN_RUNES_COMPARE) return { ok: true, text: `${n} runor mätta – tillräckligt för att jämföra stenen med andra stenar.` };
+  if (n >= MIN_RUNES_DESCRIBE) return { ok: true, text: `${n} runor mätta – räcker för att beskriva stenen, men för jämförelser med andra stenar bör minst ${MIN_RUNES_COMPARE} runor mätas.` };
+  return { ok: false, text: `Bara ${n} runor mätta – för få för ett säkert resultat (minst ${MIN_RUNES_DESCRIBE} för att beskriva stenen, ${MIN_RUNES_COMPARE} för jämförelser). Prova högre känslighet, en bättre vinkel eller mät fler runor för hand.` };
 }
 
 // Same colour scale as the backend's review image (viridis over the angle range)

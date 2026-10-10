@@ -376,7 +376,7 @@ function ThreeDPageContent() {
         meta_stone: metaStone, meta_weathering: metaWeathering,
       });
       setAutoResult(data);
-      setAutoLabels(data.slices.map(sl => (sl.accepted ? "unknown" : "excluded")));
+      setAutoLabels(data.slices.map(sl => (!sl.accepted ? "excluded" : sl.feature === "rune" ? "rune" : "unknown")));
       if (data.counts.accepted === 0) {
         setAutoError("Inga spår kunde mätas på den sida som vetter mot dig. Kontrollera att den ristade sidan är vänd mot kameran, eller prova högre känslighet.");
       }
@@ -720,7 +720,7 @@ function ThreeDPageContent() {
                 <p className="text-[11px] text-slate-500 mt-1.5">
                   {measureMode === "oneclick" && "Klicka i ett spår – appen hittar riktning och botten och mäter direkt."}
                   {measureMode === "manual" && "Du väljer själv snittets läge med två punkter, eller en bana längs spåret."}
-                  {measureMode === "auto" && "Appen hittar alla spår på den sida som vetter mot dig och mäter med jämna mellanrum."}
+                  {measureMode === "auto" && "Appen hittar spåren på den sida som vetter mot dig och mäter med jämna mellanrum – bara de spår som känns igen som runor, så att ornamentik, slingkanter och naturliga sprickor inte kommer med."}
                 </p>
               </div>
             )}

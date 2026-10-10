@@ -49,6 +49,41 @@ def summarize_slices(slices: list[dict]) -> dict:
     return {m: summarize([s.get(m) for s in slices]) for m in METRICS}
 
 
+def icc_oneway(groups: list[np.ndarray]) -> float | None:
+    """Intraklasskorrelation ICC(1) ur envägs-ANOVA, för grupper av olika storlek."""
+    groups = [g for g in groups if len(g) > 0]
+    k, N = len(groups), sum(len(g) for g in groups)
+    if k < 2 or N <= k:
+        return None
+    grand = np.concatenate(groups).mean()
+    msb = sum(len(g) * (g.mean() - grand) ** 2 for g in groups) / (k - 1)
+    msw = sum(((g - g.mean()) ** 2).sum() for g in groups) / (N - k)
+    n0 = (N - sum(len(g) ** 2 for g in groups) / N) / (k - 1)
+    denom = msb + (n0 - 1) * msw
+    return float((msb - msw) / denom) if denom > 0 else None
+
+
+def summarize_by_rune(slices: list[dict], key: str = "rune_id") -> dict:
+    """Stenens mått med runan som enhet (se METHODS.md, 2).
+
+    Snitt i samma runa är inte oberoende – de delar ristarens slag, verktyg och vittring – så
+    medelvärdet och konfidensintervallet räknas på runornas medelvärden (n = antal runor).
+    ICC anger hur stor del av spridningen som ligger mellan runor."""
+    by: dict = {}
+    for s in slices:
+        if s.get(key) is not None:
+            by.setdefault(s[key], []).append(s)
+    out = {}
+    for m in METRICS:
+        groups = [_clean([s.get(m) for s in ss]) for ss in by.values()]
+        groups = [g for g in groups if g.size]
+        res = summarize([float(g.mean()) for g in groups])
+        res["n_slices"] = int(sum(g.size for g in groups))
+        res["icc"] = icc_oneway(groups)
+        out[m] = res
+    return {"n_runes": len(by), "metrics": out}
+
+
 def permutation_test(a, b, n_perm: int = 5000, seed: int = 0) -> dict:
     """Tvåsidigt permutationstest för skillnad i medelvärde mellan två stickprov."""
     a, b = _clean(a), _clean(b)

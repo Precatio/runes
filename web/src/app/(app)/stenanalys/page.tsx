@@ -15,7 +15,7 @@ import { corpus, type ScanMetadata } from "@/lib/corpus";
 import { db, type GrooveAnalysisRecord, type LinguisticResultData, type TwoDResultData } from "@/lib/db";
 import { safeFilename } from "@/lib/export";
 import { loadImage } from "@/lib/images";
-import { MeshSession, type AutoAnalysisResult } from "@/lib/mesh";
+import { MeshSession, runeSampleNote, type AutoAnalysisResult } from "@/lib/mesh";
 import { METRICS, type FeatureType, type Metric, type SliceMetrics } from "@/lib/metrics";
 import { rundata, type Inscription } from "@/lib/rundata";
 import type { SynthesisResult } from "@/lib/synthesis";
@@ -160,6 +160,7 @@ export default function StoneAnalysisPage() {
         try {
           const d = await session.postJSON<AutoAnalysisResult>("/api/3d/auto_analyze", {
             normal_x: normal[0], normal_y: normal[1], normal_z: normal[2], sensitivity: k, meta_stone: stone, meta_weathering: weathering,
+            runes_only: featureType === "rune",
           });
           if (!d.summary) { notes.push(`Spåranalysen med känslighet ${k} gav inga godkända snitt.`); continue; }
           main = main ?? d;
@@ -185,8 +186,11 @@ export default function StoneAnalysisPage() {
       };
       const s0 = sensitivity[0];
       const fmt1 = (v: number | null) => (v == null ? "–" : v.toFixed(1).replace(".", ","));
-      wfSteps.push({ name: "Spåranalys", result: `${s0.accepted} godkända av ${s0.candidates} snitt; V-vinkel ${fmt1(s0.angle_mean)}° ± ${fmt1(s0.angle_sd)}°` });
-      mark("grooves", "klart", `${s0.accepted} snitt, V-vinkel ${fmt1(s0.angle_mean)}°` + (sensitivity.length > 1 ? `; ${sensitivity.length} känsligheter` : ""));
+      const nRunes = main.counts.runes_measured;
+      const runeText = featureType === "rune" && nRunes != null ? ` i ${nRunes} runor` : "";
+      wfSteps.push({ name: "Spåranalys", result: `${s0.accepted} godkända av ${s0.candidates} snitt${runeText}; V-vinkel ${fmt1(s0.angle_mean)}° ± ${fmt1(s0.angle_sd)}°` });
+      if (featureType === "rune" && nRunes != null && !runeSampleNote(nRunes).ok) notes.push(runeSampleNote(nRunes).text);
+      mark("grooves", "klart", `${s0.accepted} snitt${runeText}, V-vinkel ${fmt1(s0.angle_mean)}°` + (sensitivity.length > 1 ? `; ${sensitivity.length} känsligheter` : ""));
 
       const raking = relief.raking["nordväst"];
       let twod: TwoDResultData | null = null;
@@ -415,7 +419,7 @@ export default function StoneAnalysisPage() {
             </label>
             <label className={label}>Spårtyp
               <select value={featureType} onChange={e => setFeatureType(e.target.value as FeatureType)} className={field}>
-                <option value="rune">Runor</option><option value="unknown">Ej indelat</option>
+                <option value="rune">Bara runor</option><option value="unknown">Alla spår (ej indelat)</option>
               </select>
             </label>
             <label className={label}>Känsligheter

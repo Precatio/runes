@@ -16,4 +16,7 @@ APP_VERSION = "2.0.0"
 # groove-2: V-vinkeln mäts som öppningsvinkel mellan väggarna (rättad 2026-10-04; groove-1 gav 180° - V).
 # groove-3: väggarna anpassas mellan 20 och 80 % av djupet, bredden mäts mellan väggarnas linjer vid
 #           spårkanten och snittet begränsas till ett fönster runt mätpunkten (2026-10-04).
-METHOD_VERSION = "groove-4"
+# groove-4: profilen räknas om till jämnt punktavstånd och alla fönster anges i mm (2026-10-06).
+# groove-5: automatiska analysen mäter bara spår som känns igen som runor, och fyller bara små hål i
+#           spårmasken (slingband som stängs av stavar räknades förut som en enda bred yta) (2026-10-10).
+METHOD_VERSION = "groove-5"

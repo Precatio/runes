@@ -6,7 +6,7 @@ import { API_URL } from "@/lib/api";
 import type { ThreeDAnalysisResult, ToolHeuristic } from "@/lib/db";
 import { downloadFile, safeFilename, toCSV } from "@/lib/export";
 import { METRICS, METRIC_DIGITS, METRIC_LABELS, type FeatureType, type Metric, type SliceMetrics, type Summary } from "@/lib/metrics";
-import { angleColor, type AutoAnalysisResult, type AutoLabel, type AutoSlice } from "@/lib/mesh";
+import { angleColor, runeSampleNote, type AutoAnalysisResult, type AutoLabel, type AutoSlice } from "@/lib/mesh";
 
 const LABELS: Record<AutoLabel, { name: string; color: string }> = {
   rune: { name: "Runa", color: "#b7410e" },
@@ -145,6 +145,8 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
 
   const sel = selected !== null ? result.slices[selected] : null;
   const reasons = Object.entries(result.counts.rejection_reasons).sort((a, b) => b[1] - a[1]);
+  const runesOnly = result.parameters.runes_only === true;
+  const runeNote = runesOnly ? runeSampleNote(result.counts.runes_measured ?? 0) : null;
 
   return (
     <div className="liquid-glass-island rounded-[32px] p-6 shadow-sm border border-white/50 space-y-5">
@@ -152,9 +154,17 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
         <div>
           <h3 className="text-lg font-bold text-slate-900">Granska den automatiska analysen</h3>
           <p className="text-xs text-slate-500 font-medium mt-1 max-w-2xl">
-            {result.counts.accepted} godkända snitt av {result.counts.candidates}. Orange = hittade spår, grått = för brett för
-            ett huggspår (mäts inte). Dra en ruta för att märka punkter, klicka på en punkt för att se dess profil.
+            {result.counts.accepted} godkända snitt av {result.counts.candidates}
+            {runesOnly && <> i {result.counts.runes_measured} runor (av {result.counts.runes_identified} igenkända)</>}.
+            Orange = hittade spår, grått = för brett för ett huggspår (mäts inte).
+            {runesOnly && " Bara spår som känns igen som runor mäts; ornamentik, slingkanter och möjliga sprickor visas som små grå punkter."}
+            {" "}Dra en ruta för att märka punkter, klicka på en punkt för att se dess profil.
           </p>
+          {runeNote && (
+            <p className={`text-xs font-semibold mt-2 px-3 py-1.5 rounded-lg inline-block ${runeNote.ok ? "bg-emerald-50 text-emerald-800" : "bg-amber-50 text-amber-900"}`}>
+              {runeNote.text}
+            </p>
+          )}
         </div>
         <div className="flex flex-wrap gap-2">
           {onSendToTwoD && (
@@ -178,7 +188,7 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
             {LABELS[l].name}
           </button>
         ))}
-        <button type="button" onClick={() => onLabelsChange(result.slices.map(s => (s.accepted ? "unknown" : "excluded")))}
+        <button type="button" onClick={() => onLabelsChange(result.slices.map(s => (!s.accepted ? "excluded" : s.feature === "rune" ? "rune" : "unknown")))}
           className="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-500 hover:text-slate-900">Återställ</button>
       </div>
 

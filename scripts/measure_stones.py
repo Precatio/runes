@@ -43,7 +43,7 @@ def measure(path: str, api: str, sensitivity: float, resolution: float | None = 
     return {"file": os.path.basename(path), "sha256": (d["provenance"].get("mesh") or {}).get("sha256"),
             "summary": d["summary"], "counts": d["counts"], "parameters": d["parameters"],
             "means": {m: d["summary"][m]["mean"] for m in METRICS},
-            "slices": [{m: x[m] for m in METRICS} | {"position_mm": x["position_mm"]} for x in acc],
+            "slices": [{m: x[m] for m in METRICS} | {"position_mm": x["position_mm"], "rune_id": x.get("rune_id")} for x in acc],
             "relief_png": relief["relief"], "review_png": d["image_base64"]}
 
 
