@@ -7,6 +7,7 @@ import type { ThreeDAnalysisResult, ToolHeuristic } from "@/lib/db";
 import { downloadFile, safeFilename, toCSV } from "@/lib/export";
 import { METRICS, METRIC_DIGITS, METRIC_LABELS, type FeatureType, type Metric, type SliceMetrics, type Summary } from "@/lib/metrics";
 import { angleColor, runeSampleNote, type AutoAnalysisResult, type AutoLabel, type AutoSlice } from "@/lib/mesh";
+import { useSettings } from "@/components/SettingsContext";
 
 const LABELS: Record<AutoLabel, { name: string; color: string }> = {
   rune: { name: "Runa", color: "#b7410e" },
@@ -24,6 +25,7 @@ interface Props {
   onLabelsChange: (labels: AutoLabel[]) => void;
   onUse: (result: ThreeDAnalysisResult, featureType: FeatureType) => void;
   onSendToTwoD?: () => void;
+  facitMode?: boolean;
 }
 
 function quickStats(values: number[]) {
@@ -33,7 +35,8 @@ function quickStats(values: number[]) {
   return { mean, sd };
 }
 
-export default function AutoGrooveReview({ result, signum, metaStone, metaWeathering, labels, onLabelsChange, onUse, onSendToTwoD }: Props) {
+export default function AutoGrooveReview({ result, signum, metaStone, metaWeathering, labels, onLabelsChange, onUse, onSendToTwoD, facitMode }: Props) {
+  const { userName } = useSettings();
   const svgRef = useRef<SVGSVGElement>(null);
   const [tool, setTool] = useState<AutoLabel>("rune");
   const [drag, setDrag] = useState<{ x0: number; y0: number; x1: number; y1: number } | null>(null);
@@ -143,6 +146,20 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
     downloadFile(`${safeFilename(signum || "automatisk")}_automatisk_analys.csv`, toCSV(rows), "text/csv");
   };
 
+  // Facit for evaluating the rune detection (scripts/evaluate_rune_detection.py): positions and the researcher's labels
+  const saveFacit = () => {
+    const marked = result.slices.flatMap((s, i) => (s.accepted && s.point && labels[i] !== "unknown"
+      ? [{ point: s.point, direction: s.direction, label: labels[i] }] : []));
+    const facit = {
+      type: "vitki-rune-facit", version: 1, signum, labeller: userName, created: new Date().toISOString(),
+      mesh: result.provenance.mesh, method_version: result.provenance.method_version, parameters: result.parameters,
+      legend: { rune: "runa", ornament: "slinglinje eller ornamentik", excluded: "spricka, vittring eller annat som inte är huggning" },
+      labels: marked,
+    };
+    downloadFile(`${safeFilename(signum || "sten")}_facit.json`, JSON.stringify(facit, null, 1), "application/json");
+  };
+  const nUnmarked = result.slices.filter((s, i) => s.accepted && labels[i] === "unknown").length;
+
   const sel = selected !== null ? result.slices[selected] : null;
   const reasons = Object.entries(result.counts.rejection_reasons).sort((a, b) => b[1] - a[1]);
   const runesOnly = result.parameters.runes_only === true;
@@ -188,9 +205,23 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
             {LABELS[l].name}
           </button>
         ))}
-        <button type="button" onClick={() => onLabelsChange(result.slices.map(s => (!s.accepted ? "excluded" : s.feature === "rune" ? "rune" : "unknown")))}
+        <button type="button" onClick={() => onLabelsChange(result.slices.map(s => (!s.accepted ? "excluded" : !facitMode && s.feature === "rune" ? "rune" : "unknown")))}
           className="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-500 hover:text-slate-900">Återställ</button>
       </div>
+
+      {facitMode && (
+        <div className="rounded-xl border border-sky-200 bg-sky-50 px-4 py-3 text-xs text-slate-700 space-y-2">
+          <p><strong>Facit-läge.</strong> Alla spår är mätta och inget är förmärkt. Märk med rutor: <em>Runa</em> för runor,
+            <em> Ornamentik</em> för slinglinjer och ornament, <em>Utesluten</em> för sprickor, vittring och annat som inte är
+            huggning. Omärkta punkter räknas inte. Märk efter reliefen, inte efter färgerna.</p>
+          <div className="flex flex-wrap items-center gap-2">
+            <span>{nUnmarked} omärkta punkter.</span>
+            <button type="button" onClick={saveFacit} className="px-3 py-1.5 bg-sky-700 hover:bg-sky-800 text-white font-bold rounded-lg">
+              Spara facit (JSON)
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="relative w-full rounded-2xl overflow-hidden border border-slate-200 bg-white select-none">
         {/* eslint-disable-next-line @next/next/no-img-element -- generated data-URI image */}

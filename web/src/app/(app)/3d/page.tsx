@@ -144,6 +144,8 @@ function ThreeDPageContent() {
   const [autoSpacing, setAutoSpacing] = useState(3);
   const [autoSensitivity, setAutoSensitivity] = useState(3);
   const [autoMaxWidth, setAutoMaxWidth] = useState(16);
+  // Facit mode: measure every groove and let the researcher mark which are runes (to evaluate the rune detection)
+  const [facitMode, setFacitMode] = useState(false);
   const { t } = useLanguage();
   const { aiHeaders } = useSettings();
 
@@ -373,10 +375,11 @@ function ThreeDPageContent() {
         normal_x: view.toward[0], normal_y: view.toward[1], normal_z: view.toward[2],
         up_x: view.up[0], up_y: view.up[1], up_z: view.up[2],
         spacing_mm: autoSpacing, sensitivity: autoSensitivity, max_halfwidth_mm: autoMaxWidth / 2,
-        meta_stone: metaStone, meta_weathering: metaWeathering,
+        meta_stone: metaStone, meta_weathering: metaWeathering, runes_only: !facitMode,
       });
       setAutoResult(data);
-      setAutoLabels(data.slices.map(sl => (!sl.accepted ? "excluded" : sl.feature === "rune" ? "rune" : "unknown")));
+      // In facit mode nothing is pre-marked, so that the program's suggestion does not steer the researcher
+      setAutoLabels(data.slices.map(sl => (!sl.accepted ? "excluded" : facitMode ? "unknown" : sl.feature === "rune" ? "rune" : "unknown")));
       if (data.counts.accepted === 0) {
         setAutoError("Inga spår kunde mätas på den sida som vetter mot dig. Kontrollera att den ristade sidan är vänd mot kameran, eller prova högre känslighet.");
       }
@@ -756,6 +759,11 @@ function ThreeDPageContent() {
                     </select>
                   </label>
                 </div>
+                <label className="flex items-start gap-2 text-[11px] text-slate-600">
+                  <input type="checkbox" checked={facitMode} onChange={e => setFacitMode(e.target.checked)} className="mt-0.5" />
+                  <span><strong>Facit-läge:</strong> mät alla spår och märk själv vilka som är runor. Märkningen sparas som
+                    facit och används för att mäta hur träffsäker runigenkänningen är.</span>
+                </label>
                 <button type="button" onClick={runAutoAnalysis} disabled={!uploadDone || autoBusy}
                   className="w-full py-3 bg-slate-900 hover:bg-black text-white font-semibold text-sm rounded-xl disabled:opacity-40 flex justify-center items-center gap-2">
                   {autoBusy ? (<><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Analyserar stenen …</>) : "Kör automatisk analys"}
@@ -965,6 +973,7 @@ function ThreeDPageContent() {
               onLabelsChange={setAutoLabels}
               onUse={(r, ft) => { setFeatureType(ft); setResults(r); }}
               onSendToTwoD={() => sendGrooveMapToTwoD(autoLabels)}
+              facitMode={facitMode && autoResult.parameters.runes_only === false}
             />
           )}
 

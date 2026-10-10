@@ -16,6 +16,13 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 - Elva publiceringsformer för stenrapporten: tidskriftsartikel, uppsats, avhandlingskapitel, runologisk utgåva,
   konferensabstract, poster, blogginlägg, pressmeddelande, antikvarisk rapport och dataartikel (METHODS.md 14e).
 
+### Validering av huggspårsanalysen
+- Facit-läge i 3D-vyn: alla spår mäts, inget förmärks, forskaren märker runor; `scripts/evaluate_rune_detection.py`
+  mäter runigenkänningens precision och träffsäkerhet mot facit.
+- `scripts/groove_robustness.py`: samma skanning mätt med ändrat rutnät, lutad normal, annan känslighet och
+  förenklad skanning (METHODS.md 1e).
+- Antalet igenkända runor jämfört med Rundatas translitterering (METHODS.md 1c).
+
 ### Transparens
 - Förteckning över metodens kända brister som visas under varje analyssida, står i varje rapport och sparas i
   proveniensen för varje mätning (METHODS.md 18).

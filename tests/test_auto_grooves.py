@@ -73,3 +73,46 @@ def test_summary_uses_runes_as_unit():
     assert s["n_runes"] == 2 and v["n"] == 2 and v["n_slices"] == 33
     assert v["mean"] == pytest.approx(70.0)
     assert v["icc"] > 0.9
+
+
+def test_facit_evaluation_on_synthetic_stone(tmp_path):
+    """The evaluation pipeline: a facit whose labels come from the known geometry gives full precision and recall."""
+    import hashlib
+    import json
+
+    from scripts.evaluate_rune_detection import evaluate, load_like_app
+    from src.synthetic import _segment_distance
+
+    mesh = rune_stone(size=(420, 240), resolution=0.6, segments=band_segments(), depth_mm=3.0, opening_angle_deg=80)
+    path = tmp_path / "band.stl"
+    mesh.export(path)
+    # As in the app: the facit is made on the centred model loaded from the file
+    app_mesh = load_like_app(str(path))
+    shift = -(mesh.bounds[0] + mesh.bounds[1]) / 2.0
+    full = analyze_grooves(app_mesh, [0, 0, 1], runes_only=False)
+    runes = band_segments(crack=False)[2:14]  # staves and branches
+
+    def is_rune(pt):
+        x, y = pt[0] - shift[0], pt[1] - shift[1]
+        return min(float(_segment_distance(np.array(x), np.array(y), a, b)) for a, b in runes) < 3
+
+    labels = [{"point": s["point"], "label": "rune" if is_rune(s["point"]) else "ornament"}
+              for s in full["slices"] if s["accepted"]]
+    facit = {"signum": "Syntetisk", "mesh": {"filename": "band.stl", "sha256": hashlib.sha256(path.read_bytes()).hexdigest()},
+             "parameters": full["parameters"], "labels": labels}
+    res = evaluate(json.loads(json.dumps(facit)), [str(tmp_path)])
+    assert res["tp"] > 50 and res["unmatched"] == 0
+    assert res["precision"] == 1.0 and res["recall"] > 0.95
+
+
+def test_methods_lists_every_known_limitation():
+    """METHODS.md section 18 must list the same limitations as src/limitations.py."""
+    import os
+
+    from src import limitations
+
+    text = open(os.path.join(os.path.dirname(__file__), "..", "METHODS.md"), encoding="utf-8").read()
+    section = text.split("## 18. Kända brister", 1)[1]
+    for x in limitations.LIMITATIONS:
+        assert f"| {x['title']} |" in section, x["key"]
+    assert limitations.VERSION in section

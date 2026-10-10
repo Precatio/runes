@@ -62,12 +62,15 @@ LIMITATIONS = [
     {"key": "rune_detection", "contexts": {"auto"},
      "title": "Runigenkänningen är inte utvärderad",
      "text": "Vilka spår som räknas som runor avgörs av regler som justerats för hand på Sö 113 och Sö 128, inte "
-             "prövats mot handmärkta stenar. Träffsäkerheten (andel mätta streck som verkligen är runor, andel runor "
-             "som hittas) är okänd. Svagt böjda eller avbrutna stavar missas, korta raka bitar av slinglinjer kan "
-             "räknas som runor, och runor kan delas eller slås ihop, så antalet runor är ungefärligt. Granska alltid "
-             "granskningsbilden.",
+             "prövats mot handmärkta stenar, så träffsäkerheten (andel mätta streck som verkligen är runor, andel runor "
+             "som hittas) är okänd. Antalet igenkända runor på 19 skanningar var i median 0,9 gånger antalet runor i "
+             "Rundatas translitterering men varierade från 0,3 (grunda, vittrade runor som faller sönder, t.ex. Sö 160 "
+             "och Sö 206) till 1,5 (Sö 143, där korsarmar bitvis togs för runor); på Sö 371, utan läsbara runor i "
+             "Rundata, hittades sex. Slinglinjer som brutits av vittring kan räknas som runor, och runor kan delas eller "
+             "slås ihop. Granska alltid granskningsbilden.",
      "short": "Programmet som letar upp runorna kan missa runor och ibland ta fel; det är inte utvärderat.",
-     "needed": "Handmärkning av 8–10 stenar som inte använts för att justera reglerna, med låsta regler."},
+     "needed": "Handmärkta facit för 8–10 stenar som inte använts för att justera reglerna (facit-läget i 3D-vyn, "
+               "scripts/evaluate_rune_detection.py), med låsta regler."},
     {"key": "sample_size", "contexts": {"auto", "comparison"},
      "title": f"Gränserna {MIN_RUNES_DESCRIBE} och {MIN_RUNES_COMPARE} runor är riktvärden",
      "text": f"Riktvärdena ({MIN_RUNES_DESCRIBE} runor för att beskriva en sten, {MIN_RUNES_COMPARE} för att jämföra "
@@ -85,6 +88,14 @@ LIMITATIONS = [
      "short": "Datorn jämför med tidigare forskares gissningar om ristare, och de gissningarna kan vara fel.",
      "needed": "Prövning på signerade stenar som inte använts i träningen och med variabler som inte låg bakom "
                "attribueringarna."},
+    {"key": "cv_leakage", "contexts": {"attribution", "statistics", "r"},
+     "title": "Korsvalideringen delar inte upp stenarna per plats",
+     "text": "Attribueringsmodellerna (R och mätkorpusen) korsvalideras med slumpvis uppdelning. Stenar från samma "
+             "plats, socken eller släkt – ofta resta av samma ristare samtidigt – hamnar då både i tränings- och "
+             "testdata, så att geografi och lokala formler kan ge för hög träffsäkerhet (geografi ensamt ger 44 % i "
+             "R-modellen).",
+     "short": "Träffsäkerheten kan vara överskattad, eftersom stenar från samma plats testas mot varandra.",
+     "needed": "Grupperad korsvalidering per socken eller härad, redovisad bredvid den nuvarande."},
     {"key": "exploratory", "contexts": {"statistics", "research", "attribution"},
      "title": "Många utforskande test på samma data",
      "text": "Plattformen kör många analyser på samma korpus (ortografi, språkdrag, R-modeller, Forskningsluckor, "

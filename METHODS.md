@@ -116,6 +116,21 @@ riktning blir ytans normal och kamerans upp-riktning orienterar granskningsbilde
    ("inte runa: …"). Igenkänningen är avsiktligt försiktig: det är bättre att en runa missas än att en
    spricka mäts. Missade runor kan mätas med ett klick (avsnitt 1b).
 
+**Utvärdering mot facit** (`scripts/evaluate_rune_detection.py`). I 3D-vyns facit-läge mäts alla spår och inget
+är förmärkt, så att programmets förslag inte styr bedömningen; forskaren märker punkterna som runa, ornamentik
+(slinglinje eller ornament) eller utesluten (spricka, vittring) och sparar ett facit med positioner och märkning.
+Skriptet läser in skanningen som appen gör, kör analysen på nytt med facitets parametrar, parar varje facitpunkt
+med närmaste snitt (högst 2 mm) och redovisar precision (andel mätta streck som är runor), träffsäkerhet (andel
+runor som hittas) och F1, med stenarna som reglerna justerades på (Sö 113, Sö 128) redovisade för sig. Eftersom
+facitet bara innehåller positioner kan samma facit användas när reglerna ändras. Kedjan är prövad på en syntetisk
+sten med känd geometri (precision 1,0, träffsäkerhet > 0,95); några handmärkta facit finns ännu inte.
+
+**Jämförelse med Rundata.** Antalet igenkända runor på 19 skanningar ur Södermanlandsserien var i median 0,9 gånger
+antalet runor i Rundatas translitterering (Spearman 0,58), men 0,3–1,5 på enskilda stenar: grunda, vittrade runor
+faller sönder och sorteras bort (Sö 160, Sö 206), och korsarmar eller slinglinjer som brutits av vittring kan tas
+för runor (Sö 143); på Sö 371, utan läsbara runor i Rundata, hittades sex. En igenkänd "runa" är en grupp
+sammanhängande runstreck, så antalet är bara ett grovt mått.
+
 **Mätning utan manuellt urval.** Tidigare 3D-studier av huggteknik (Kitzler Åhfeldt 2002 och senare) mäter
 också i 3D-modeller med programvara (Groove Measure), men forskaren väljer vilka spår som mäts och var proverna
 tas – oftast de bäst bevarade spåren. Den automatiska analysen tar i stället med alla igenkända runor, med samma
@@ -711,9 +726,10 @@ När en brist åtgärdas ändras förteckningen och versionen höjs. Bristerna i
 | Bottenradie och asymmetri är osäkra mått | comparison, grooves | Bättre bottenmodell och test på skanningar av samma sten med olika punkttäthet. |
 | Mätningens tillförlitlighet är inte prövad på verkliga stenar | comparison, grooves | Test–omtest: samma stenar i olika skanningar, upplösningar och vinklar, och manuell mot automatisk mätning. |
 | Inte jämförbart med tidigare 3D-studier utan kalibrering | comparison, grooves | Samma referensstenar mätta med båda metoderna. |
-| Runigenkänningen är inte utvärderad | auto | Handmärkning av 8–10 stenar som inte använts för att justera reglerna, med låsta regler. |
+| Runigenkänningen är inte utvärderad | auto | Handmärkta facit för 8–10 stenar som inte använts för att justera reglerna (facit-läget i 3D-vyn, scripts/evaluate_rune_detection.py), med låsta regler. |
 | Gränserna 10 och 20 runor är riktvärden | auto, comparison | Ny beräkning när test–omtest och stenar med känd ristare på samma bergart finns. |
 | Attribueringen riskerar att bli cirkulär | attribution, statistics | Prövning på signerade stenar som inte använts i träningen och med variabler som inte låg bakom attribueringarna. |
+| Korsvalideringen delar inte upp stenarna per plats | attribution, r, statistics | Grupperad korsvalidering per socken eller härad, redovisad bredvid den nuvarande. |
 | Många utforskande test på samma data | attribution, research, statistics | Förregistrerade analysplaner för de hypoteser som ska publiceras. |
 | AI-resultat är okalibrerade och kan vara påhittade | ai | Kalibrering mot runologers läsningar av samma bilder. |
 | Rundata är en äldre utgåva | attribution, research, rundata | Uppdatering till senaste utgåvan av Runor. |
