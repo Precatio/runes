@@ -192,3 +192,30 @@ def test_stone_report_with_surface_figures(client, stone_id):
                     "normalization": "En UlfR hafiR a Ænglandi þry giald takit", "translation": "Och Ulf har tagit"})
     r4 = client.post("/api/reports/stone", json={**body, "reading": reading}).json()
     assert "Läsning av bilden" in r4["markdown"] and "**in ulfʀ hafiʀ" in r4["markdown"]
+
+
+@pytest.mark.skipif(not os.path.exists(os.path.join(os.path.dirname(__file__), "..", "data", "rundata.json")),
+                    reason="data/rundata.json saknas")
+def test_report_templates(client, stone_id):
+    import numpy as np
+
+    n = [0, -np.sin(np.radians(20)), np.cos(np.radians(20))]
+    auto = client.post("/api/3d/auto_analyze", data={"mesh_id": stone_id, "normal_x": n[0], "normal_y": n[1],
+                                                      "normal_z": n[2]}).json()
+    acc = [s for s in auto["slices"] if s["accepted"]]
+    keys = [t["key"] for t in client.get("/api/reports/templates").json()["templates"]]
+    assert {"stenrapport", "tidskrift", "uppsats", "avhandling", "blogg", "antikvarisk", "data"} <= set(keys)
+    body = {"signum": "U 344", "mesh_id": stone_id, "counts": auto["counts"], "use_ai": False, "include_r": False,
+            "analyses": [{"feature_type": "rune", "slices": acc, "provenance": auto["provenance"]}]}
+    expect = {"tidskrift": "## Highlights", "uppsats": "## 1 Inledning", "avhandling": "## 7.1 Inledning",
+              "blogg": "## Så mätte vi", "antikvarisk": "## Administrativa uppgifter", "data": "## 3 Datamängden"}
+    options = {"tidskrift": {"venue": "jas"}, "avhandling": {"chapter": "7"}}
+    for key in keys:
+        r = client.post("/api/reports/stone", json={**body, "template": key, "template_options": options.get(key, {})})
+        assert r.status_code == 200, key
+        md = r.json()["markdown"]
+        assert expect.get(key, "") in md, key
+        # Figures are numbered consecutively after the selection
+        nums = [int(x) for x in __import__("re").findall(r"\*Figur (\d+)\.", md)]
+        assert nums == list(range(1, len(nums) + 1)), key
+    assert client.post("/api/reports/stone", json={**body, "template": "okänd"}).status_code == 400

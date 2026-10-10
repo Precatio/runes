@@ -14,6 +14,13 @@ import { FEATURE_TYPES } from "@/lib/metrics";
 import { fromProject, hasPositions, hasProfiles, type StoneReportInput } from "@/lib/stoneReport";
 
 const field = "liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm font-semibold outline-none w-full mt-1";
+
+interface TemplateOption { key: string; label: string; type: "select" | "text"; choices?: Record<string, string>; default?: string }
+interface ReportTemplate {
+  key: string; name: string; group: string; description: string; audience: string; length: string;
+  structure: string[]; style: string; options: TemplateOption[]; uses_ai: boolean;
+}
+type Guide = Record<string, string>;
 const label = "text-[11px] font-bold uppercase tracking-wider text-slate-500";
 
 export default function StoneReportPanel() {
@@ -29,7 +36,21 @@ export default function StoneReportPanel() {
   const [withCorpus, setWithCorpus] = useState(true);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [report, setReport] = useState<(ReportResult & { surface: boolean; surface_note: string | null }) | null>(null);
+  const [report, setReport] = useState<(ReportResult & { surface: boolean; surface_note: string | null; guide?: Guide }) | null>(null);
+  const [templates, setTemplates] = useState<ReportTemplate[]>([]);
+  const [templateKey, setTemplateKey] = useState("stenrapport");
+  const [templateOptions, setTemplateOptions] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/reports/templates`).then(r => r.json()).then(d => setTemplates(d.templates ?? [])).catch(() => setTemplates([]));
+  }, []);
+  const template = templates.find(t => t.key === templateKey);
+  const chooseTemplate = (key: string) => {
+    setTemplateKey(key);
+    const t = templates.find(x => x.key === key);
+    setTemplateOptions(Object.fromEntries((t?.options ?? []).filter(o => o.default).map(o => [o.key, o.default!])));
+    setReport(null);
+  };
 
   useEffect(() => {
     db.getProjects().then(ps => {
@@ -46,7 +67,7 @@ export default function StoneReportPanel() {
   }, [sourceKey, stoneReportInput, projects]);
 
   const signum = input?.signum || "Okänd sten";
-  const base = safeFilename(title || `${signum} stenrapport`);
+  const base = safeFilename(title || `${signum} ${template?.name ?? "stenrapport"}`);
   const nSlices = input?.analyses.reduce((n, a) => n + a.slices.length, 0) ?? 0;
 
   const request = async (format: "json" | "docx", aiText: Record<string, string> | null = null) => {
@@ -62,6 +83,7 @@ export default function StoneReportPanel() {
         // Weathering from the 3D page's metadata unless set here
         condition: { ...condition, weathering: condition.weathering ?? input!.meta.weathering?.toLowerCase() },
         two_d: input!.twoD ?? null, synthesis: input!.synthesis ?? null, reading: input!.reading ?? null, use_ai: useAI, format, ai_text: aiText,
+        template: templateKey, template_options: templateOptions,
       }),
     });
   };
@@ -114,6 +136,45 @@ export default function StoneReportPanel() {
           </label>
         </div>
 
+        {templates.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <label className={label}>Publiceringsform
+              <select value={templateKey} onChange={e => chooseTemplate(e.target.value)} className={field}>
+                {[...new Set(templates.map(t => t.group))].map(g => (
+                  <optgroup key={g} label={g}>
+                    {templates.filter(t => t.group === g).map(t => <option key={t.key} value={t.key}>{t.name}</option>)}
+                  </optgroup>
+                ))}
+              </select>
+            </label>
+            {template && (
+              <div className="md:col-span-2 text-xs text-slate-600 space-y-1 pt-1">
+                <p>{template.description}</p>
+                <p><strong>Målgrupp:</strong> {template.audience} · <strong>Omfång:</strong> {template.length}</p>
+                <p><strong>Disposition:</strong> {template.structure.join(" · ")}</p>
+                <p className="text-slate-500">{template.style}</p>
+              </div>
+            )}
+            {template && template.options.length > 0 && (
+              <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-3">
+                {template.options.map(o => (
+                  <label key={o.key} className={label}>{o.label}
+                    {o.type === "select" ? (
+                      <select className={field} value={templateOptions[o.key] ?? o.default ?? ""}
+                        onChange={e => { setTemplateOptions(x => ({ ...x, [o.key]: e.target.value })); setReport(null); }}>
+                        {Object.entries(o.choices ?? {}).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
+                      </select>
+                    ) : (
+                      <input className={field} value={templateOptions[o.key] ?? ""}
+                        onChange={e => setTemplateOptions(x => ({ ...x, [o.key]: e.target.value }))} />
+                    )}
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
         {!input ? (
           <p className="text-sm text-slate-600">
             Gör en analys i <Link href="/3d" className="text-[#b7410e] font-semibold">3D-vyn</Link> och klicka på
@@ -161,7 +222,8 @@ export default function StoneReportPanel() {
 
             <div className="flex flex-wrap items-center gap-4">
               <label className="flex items-center gap-2 text-sm text-slate-700">
-                <input type="checkbox" checked={useAI} onChange={e => setUseAI(e.target.checked)} /> AI formulerar sammanfattning, inledning och diskussion
+                <input type="checkbox" checked={useAI} onChange={e => setUseAI(e.target.checked)} />
+                {templateKey === "stenrapport" ? "AI formulerar sammanfattning, inledning och diskussion" : "AI formulerar de fria texterna i mallen (märks som AI-text)"}
               </label>
               <label className="flex items-center gap-2 text-sm text-slate-700" title={user ? "" : "Kräver inloggning"}>
                 <input type="checkbox" checked={withCorpus && !!user} disabled={!user} onChange={e => setWithCorpus(e.target.checked)} /> Jämför med mätkorpusen
@@ -171,13 +233,22 @@ export default function StoneReportPanel() {
               </span>
               <button onClick={generate} disabled={busy || nSlices === 0}
                 className="ml-auto px-6 py-2.5 bg-[#b7410e] hover:bg-[#9a350b] text-white font-bold rounded-xl disabled:opacity-40">
-                {busy && !report ? "Skapar rapport (räknar figurer) …" : "Skapa stenrapport"}
+                {busy && !report ? "Skapar rapport (räknar figurer) …" : `Skapa ${(template?.name ?? "stenrapport").replace(/ \(.*\)$/, "").toLowerCase()}`}
               </button>
             </div>
           </>
         )}
         {error && <p className="text-sm text-red-700 font-semibold">{error}</p>}
         {report?.surface_note && <p className="text-sm text-amber-800 font-semibold">{report.surface_note}</p>}
+        {report?.guide && templateKey !== "stenrapport" && (
+          <div className="text-xs text-slate-600 rounded-xl bg-slate-50 border border-slate-200 px-4 py-3 space-y-1">
+            <p className="font-bold text-slate-800">Att tänka på – {report.guide.venue ?? report.guide.name}</p>
+            {report.guide.language && <p>Språk: {report.guide.language} · Referenser: {report.guide.citation} · Omfång: {report.guide.length}</p>}
+            <p>{report.guide.style}</p>
+            {report.guide.note && <p>{report.guide.note}</p>}
+            <p>Text inom [hakparentes] fyller du i själv.</p>
+          </div>
+        )}
       </div>
 
       {report && <ReportPreview report={report} base={base} busy={busy} onDocx={downloadDocx} />}

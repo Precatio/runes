@@ -573,6 +573,32 @@ Inställningar. Strukturerade svar (t.ex. stilbedömning och läsning) begärs m
 verktygsanrop (tool use), så att svaret alltid är giltig JSON. Valet av modell ändrar inget i det som räknas fram:
 mätningar, statistik, jämförelser och valideringen av läsningar görs utan AI, och AI-text märks.
 
+### 14e. Rapportmallar (publiceringsformer)
+
+Källkod: `src/report_templates.py`, `GET /api/reports/templates`, `POST /api/reports/stone` med `template`.
+Stenrapporten byggs först i sin fullständiga form; en mall väljer sedan ut, ordnar om och kompletterar dess avsnitt.
+Siffror, tabeller och figurer är desamma – bara urval, ordning, rubriker och ton skiljer. Figurer och tabeller
+numreras om efter urvalet, och hänvisningarna i texten rättas. Text som författaren ska skriva själv står inom
+hakparentes ("[Fyll i: …]"); mallens fria texter kan formuleras av AI utifrån samma fakta och märks då som AI-text.
+
+| Mall | Grupp | Innehåll |
+|---|---|---|
+| Stenrapport (fullständig) | Vetenskapligt | allt underlag och bilagor (avsnitt 14b) |
+| Artikel i forskningstidskrift | Vetenskapligt | IMRaD, engelsk abstract, nyckelord, highlights där tidskriften kräver det, datatillgänglighet, bilagor som tilläggsmaterial; riktvärden för Futhark, Fornvännen, Viking and Medieval Scandinavia, Journal of Archaeological Science: Reports och Danish Journal of Archaeology |
+| Uppsats (kandidat, magister, master) | Utbildning | titelsida, syfte och frågeställningar, avgränsningar, forskningsöversikt, teori och metod, material, resultat, diskussion, slutsatser, sammanfattning |
+| Avhandlingskapitel (monografi) | Vetenskapligt | kapitelnumrerade avsnitt, metoden refererad till metodkapitlet, kapitelsammanfattning, data som appendix |
+| Runologisk utgåva (SRI-stil) | Vetenskapligt | placering, material och mått, ornamentik, inskrift, kommentar, ristare och datering, huggteknik |
+| Konferensabstract | Vetenskapligt | 200–300 ord och nyckelord, svenska eller engelska |
+| Poster | Vetenskapligt | punkter om bakgrund, metod, resultat och slutsats, tre figurer |
+| Blogginlägg | Populärt | ingress, korta stycken utan facktermer, bilder, osäkerhet, läs mer |
+| Pressmeddelande | Populärt | rubrik, ingress, brödtext, citat, fakta, kontakt |
+| Antikvarisk dokumentationsrapport | Kulturmiljö | administrativa uppgifter (fornlämningsnummer, fastighet, beställare, diarienummer), metod, resultat, bevarandetillstånd, rekommendationer, arkivering |
+| Dataartikel / datapaket | Data | översikt, metod, filer och format, licens och förvaring, återanvändning (jfr Journal of Open Archaeology Data, README för Zenodo) |
+
+Tidskrifternas riktvärden (språk, omfång, referensstil) är ungefärliga och ändras; gränssnittet påminner om att
+kontrollera aktuella författaranvisningar. För Futhark finns dessutom ett färdigt manuspaket i tidskriftens mall
+(`src/journal.py`).
+
 ## 15. Jämförbarhet med tidigare forskning
 
 Laila Kitzler Åhfeldts metod (Arkeologiska forskningslaboratoriet, Stockholms universitet; Kitzler Åhfeldt

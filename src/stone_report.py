@@ -910,11 +910,16 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
     blocks.append(h(2, "3.2 Mätning av huggspår"))
     prov = f["provenance"]
     mode = (prov.get("parameters") or {}).get("mode")
+    runes_only = bool((prov.get("parameters") or {}).get("runes_only"))
     blocks.append(p(
         f"Huggspåren mättes med Vitki {prov.get('version', '')} (mätmetod {', '.join(f['method_versions'])}). "
         + ("Spåren hittades automatiskt som fördjupningar under den rekonstruerade stenytan; tvärsnitt lades med jämna "
            "mellanrum längs spårens mittlinjer vinkelrätt mot spårets riktning, och varje snitt granskades mot "
            "kvalitetskriterier (väggpassning, rimlig vinkel, djup över brusnivån, spårkanter inom snittet). "
+           + ("Bara spår som känns igen som runor mättes: mittlinjerna delades i streck, och bara raka, jämnbreda "
+              "streck av runors längd som står i rader – på stenar med slingband inne i banden – räknades som runor; "
+              "slinglinjer, ornamentik och oregelbundna spår (möjliga sprickor) sorterades bort. "
+              if runes_only else "")
            if mode == "automatic" else
            "Tvärsnitt lades vinkelrätt mot spåret i markerade spårpartier. ")
         + "I varje tvärsnitt anpassas spårväggarna med linjär regression mellan 20 och 80 procent av spårdjupet; "
@@ -927,6 +932,8 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
         rr = [[k, str(v)] for k, v in (counts.get("rejection_reasons") or {}).items()]
         blocks.append(tab(["Utfall", "Antal snitt"],
                           [["Kandidater", str(counts.get("candidates", "–"))], ["Godkända", str(counts.get("accepted", "–"))]]
+                          + ([["Igenkända runor", str(counts["runes_identified"])], ["Runor med godkända snitt", str(counts["runes_measured"])]]
+                             if counts.get("runes_identified") is not None else [])
                           + [[f"Underkända: {k}", v] for k, v in rr],
                           "Kvalitetskontroll av de automatiska tvärsnitten."))
     params = _flat_params(prov.get("parameters") or {})

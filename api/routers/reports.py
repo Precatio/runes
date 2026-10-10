@@ -12,7 +12,7 @@ from api.routers.research import stone_context
 from api.errors import logger
 from api import mesh_cache
 from api.rundata import store
-from src import academic, stone_report
+from src import academic, report_templates, stone_report
 from src.reading import validate as validate_reading
 from src.synthesis import site_geology
 
@@ -118,6 +118,9 @@ class StoneReportRequest(BaseModel):
     format: Literal["json", "docx"] = "json"
     ai_text: Optional[dict[str, str]] = None
     include_r: bool = True
+    # Publication form (src/report_templates.py) and its options, e.g. {"venue": "fornvannen"}
+    template: str = "stenrapport"
+    template_options: dict = Field(default_factory=dict)
 
 
 def _view(req: StoneReportRequest):
@@ -134,9 +137,17 @@ def _view(req: StoneReportRequest):
     return None, None
 
 
+@router.get("/templates")
+def report_template_list():
+    """Publiceringsformer för stenrapporten: blogginlägg, tidskriftsartikel, uppsats, avhandlingskapitel m.fl."""
+    return {"templates": report_templates.catalogue()}
+
+
 @router.post("/stone")
 def stone_report_endpoint(req: StoneReportRequest,
                           aictx: llm.AIContext = Depends(llm.ai_context)):
+    if req.template not in report_templates.TEMPLATES:
+        raise HTTPException(status_code=400, detail=f"Okänd rapportmall: {req.template}")
     if not any(a.get("slices") for a in req.analyses):
         raise HTTPException(status_code=400, detail="Underlaget saknar uppmätta tvärsnitt. Gör en 3D-analys först.")
     if sum(len(a.get("slices") or []) for a in req.analyses) > 3000:
@@ -176,18 +187,25 @@ def stone_report_endpoint(req: StoneReportRequest,
         ai, ai_used = req.ai_text, True
     elif req.use_ai and llm.available(aictx):
         try:
-            ai = ai_sections(aictx, stone_report.facts_text(facts))
-            ai_used = True
+            if req.template == "stenrapport":
+                ai = ai_sections(aictx, stone_report.facts_text(facts))
+            else:
+                spec = report_templates.ai_request(req.template, req.template_options, stone_report.facts_text(facts))
+                if spec:
+                    ai = _as_object(llm.generate(aictx, spec[0], schema=spec[1], tier="pro").data)
+            ai_used = bool(ai)
         except Exception as e:
             logger.warning("AI-text för stenrapporten misslyckades: %r", e)
 
     blocks = stone_report.build_document(facts, req.author, req.institution, ai, surface, req.title)
+    blocks = report_templates.apply(req.template, blocks, facts, ai, req.template_options)
     if req.format == "docx":
         return Response(content=academic.to_docx(blocks),
                         media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                        headers={"Content-Disposition": 'attachment; filename="stenrapport.docx"'})
+                        headers={"Content-Disposition": f'attachment; filename="{req.template}.docx"'})
     figures = [{"name": b["name"], "png": b["png"]} for b in blocks if b["type"] == "figure"]
     return {"html": academic.to_html(blocks), "markdown": academic.to_markdown(blocks),
             "latex": academic.to_latex(blocks), "figures": figures, "ai_used": ai_used, "ai_text": ai,
             "surface": surface is not None, "surface_note": surface_note,
-            "facts": stone_report.facts_text(facts)}
+            "facts": stone_report.facts_text(facts),
+            "template": req.template, "guide": report_templates.guide(req.template, req.template_options)}
