@@ -339,3 +339,32 @@ def test_stone_research_context_in_report(client, monkeypatch):
                                                  "analyses": [{"feature_type": "rune", "slices": slices}]}).json()["markdown"]
     assert "Inskriftens syfte" in md and "Stenen i forskningsläget" in md and "Minnesinskrift" in md
     assert "Stilgrupp RAK" in md  # how often the candidates carved in the stone's style
+
+
+def test_style_check_is_chronological():
+    from api.rundata import store
+    from src.synthesis import carver_styles
+    s = store(); rec = s.get("U 92")  # RAK
+    opir = carver_styles(rec, "Öpir 1", s.inscriptions)
+    assert opir["fits"] is False and opir["strong"] and opir["gap_years"] >= 50 and set(opir["core"]) == {"Pr4", "Pr5"}
+    # One RAK stone among 25 does not make RAK one of the carver's styles
+    visate = carver_styles(rec, "Visäte", s.inscriptions)
+    assert visate["fits"] is False and visate["gap_years"] >= 25 and "bara på 1 av" in visate["text"]
+
+
+def test_language_traits_are_weighed_against_the_province_and_tested():
+    from api.rundata import store
+    from api.routers.orthography import model
+    from src.language_profile import traits
+    from src.synthesis import language_check
+    s = store(); rec = s.get("U 92"); names = model().names
+    t = traits(rec, names)
+    assert t["skiljetecken"] == "blandat"  # ' in the first part, · from kira onwards
+    assert t["o_runa"] == "o-runa"         # moþor; brøðr has ø, not o
+    plain = language_check(rec, "Öpir 1", s.inscriptions, names)
+    chosen = language_check(rec, "Öpir 1", s.inscriptions, names, selected=True)
+    assert plain["lr_total"] > 1 and plain["p_region"] < 0.05 and plain["fits"] is True
+    # Chosen by a spelling-based method: the traits are not independent support, but could still speak against
+    assert chosen["fits"] is None and "inte som ett oberoende stöd" in chosen["text"]
+    assert any(r.get("lr") is not None and r.get("region_share") is not None for r in plain["rows"])
+    assert "lika vanliga eller vanligare på andra stenar i U" in plain["text"]

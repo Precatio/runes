@@ -290,6 +290,13 @@ def test_interpret_finding(client):
     assert "justerat" in out["paragraphs"][1]["text"]
     new = client.post("/api/research/interpret", json={**f, "verdict": "nytt", "evidence": 0.9}).json()
     assert new["level"] != "starkt"  # the adjusted p-value is not below 0.05
+    # U 92 (RAK) suggested for Öpir (Pr4–Pr5): the style group speaks strongly against, and the negative result is said
+    u92 = client.post("/api/research/interpret", json={**f, "signum": "U 92", "verdict": "nytt", "suggested": "Öpir 1",
+                                                        "existing": "ingen ristare angiven", "evidence": 0.66,
+                                                        "stats": {**f["stats"], "p": 0.024, "p_adjusted": 0.643}}).json()
+    text = u92["paragraphs"][-1]["text"]
+    assert u92["level"] == "svagt" and "kronologiskt problematiskt" in text and "stavningen ensam inte räcker" in text
+    assert "produktiva" in u92["paragraphs"][1]["text"].lower()
 
 
 

@@ -87,6 +87,8 @@ def _findings(fp: str) -> tuple[list[dict], list[dict]]:
     if res.get("chronology"):
         stone += r_findings.seriation_findings(res["chronology"], rb.stone_rows(fp, "chronology_stones.csv"),
                                                s.get, s.inscriptions)
+    if res.get("anonymous"):
+        stone += r_findings.anonymous_findings(res["anonymous"], s.get, s.inscriptions)
     return stone, r_findings.corpus_patterns(res)
 
 

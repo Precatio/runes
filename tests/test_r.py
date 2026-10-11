@@ -152,3 +152,64 @@ def test_r_modules_run_on_the_corpus(rows, tmp_path, monkeypatch):
     clusters = r_bridge.run_module("clusters", params, str(tmp_path))
     assert 2 <= clusters["k"] <= 10 and clusters["n_stones"] > 500
     assert all(0 <= c["stability"] <= 1 for c in clusters["clusters"])
+
+
+@needs_r
+def test_change_module_runs_on_the_corpus(rows, tmp_path, monkeypatch):
+    monkeypatch.setenv("R_DISABLED", "0")
+    if not r_bridge.status()["available"]:
+        pytest.skip("R-paket saknas")
+    r_bridge.write_csv(rows, str(tmp_path / "corpus.csv"))
+    params = {"corpus": str(tmp_path / "corpus.csv"), "corpus_dir": str(tmp_path), "water_dir": None, "seed": 2026,
+              "draws": 1}
+    ch = r_bridge.run_module("change", params, str(tmp_path))
+    feats = {f["key"]: f for f in ch["features"]}
+    # Dotted runes become more common over the 11th century (with place and carver held constant)
+    st = feats["stungna"]["time"]
+    assert st["tested"] and st["shape"] == "rises" and st["q"] < 0.05 and st["last"] > st["first"]
+    assert all(0 <= p["share"] <= 1 for p in st["curve"])
+    assert {a["key"] for a in ch["assoc"]} == {"bro_bon", "bro_sjal", "bro_cross"}
+    assert (tmp_path / ch["figures"]["time"]).exists()
+
+
+def test_change_patterns_only_report_adjusted_results():
+    ch = {"features": [
+        {"key": "stungna", "label": "Stungna runor", "time": {"tested": True, "q": 0.0001, "shape": "rises", "first": 0.35,
+                                                           "last": 0.85, "year_first": 998, "year_last": 1115,
+                                                           "draws": {"n": 20, "share_sig": 1.0}},
+         "provinces": {"p_differ": 0.03, "rows": [{"province": "U", "share1050": 0.5, "cross_year": 1043},
+                                                  {"province": "Ög", "share1050": 0.7, "cross_year": 1000}]}},
+        {"key": "bon", "label": "Kristen bön", "time": {"tested": True, "q": 0.2, "shape": "peak", "peak_year": 1035,
+                                                      "first": 0.12, "last": 0.02, "year_first": 998, "year_last": 1115},
+         "provinces": {"p_differ": 0.001, "rows": [{"province": "U", "share1050": 0.26, "cross_year": None},
+                                                   {"province": "Ög", "share1050": 0.08, "cross_year": None}]}}],
+        "assoc": [{"label": "Själsbön på bro- och vägstenar", "share_x": 0.23, "share_other": 0.15,
+                   "all": {"or": 1.8, "lo": 1.07, "hi": 2.98, "q": 0.08}}]}
+    pats = r_findings.change_patterns(ch)
+    texts = " ".join(p["text"] for p in pats)
+    assert pats[0]["status"] == "bekräftar" and "blir vanligare" in pats[0]["text"] and "20 av 20" in pats[0]["text"]
+    # q 0.2 for the prayer curve and q 0.08 for the bridges: not reported; the province difference (p 0.001) is
+    assert "vanligast omkring" not in texts and "bro- och vägstenar" not in texts
+    assert any("26 % i U till 8 % i Ög" in p["text"] for p in pats)
+
+
+def _anonymous(signa):
+    return {"validation": {"purity": 0.71, "purity_geography": 0.55, "share_pure": 0.73},
+            "groups": [{"id": 1, "status": "candidate", "name": "Fröderydsristaren", "type_stone": signa[0], "n": len(signa),
+                        "stones": signa, "stability": 0.95,
+                        "marks": [{"feature": "Resarformel: satte", "share_group": 0.73, "share_area": 0.13}]},
+                       {"id": 2, "status": "known", "name": None, "type_stone": "U 433", "n": 6, "stones": ["U 433"],
+                        "stability": 0.5, "marks": []}]}
+
+
+def test_anonymous_groups_become_findings_with_a_working_name():
+    s = store()
+    signa = [r["signum"] for r in s.inscriptions if r["signum"].startswith("Sm ") and not r["carvers"]][:4]
+    out = r_findings.anonymous_findings(_anonymous(signa), s.get, s.inscriptions)
+    assert {f["signum"] for f in out} == set(signa)
+    f = out[0]
+    assert f["method"] == r_findings.ANONYMOUS and f["verdict"] == "nytt" and "Fröderydsristaren" in f["ours"]
+    assert any("inte en person" in r for r in f["reasons"]["nyhet"])
+    # Groups that resemble a known carver are not reported as unknown carvers
+    pats = r_findings.corpus_patterns({"anonymous": _anonymous(signa)})
+    assert any(p["topic"] == "Okända ristare" and "1 grupp av" in p["text"] and "Fröderydsristaren" in p["text"] for p in pats)

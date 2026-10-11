@@ -428,7 +428,8 @@ def classify_strokes(skel: np.ndarray, half_width: np.ndarray, res: float, rune_
             continue
         P = np.vstack([pts[b] for s in ss for b in strokes[s]["branches"]])
         height = max(strokes[s]["length_mm"] for s in ss)
-        runes.append({"id": g, "strokes": ss, "height_mm": height, "centre": P.mean(axis=0)})
+        runes.append({"id": g, "strokes": ss, "height_mm": height, "centre": P.mean(axis=0),
+                      "extent": (float(P[:, 0].min()), float(P[:, 1].min()), float(P[:, 0].max()), float(P[:, 1].max()))})
     # A rune needs company: runes stand in rows
     for r in runes:
         r["supported"] = any(o is not r and np.hypot(*(o["centre"] - r["centre"])) * res
@@ -506,6 +507,16 @@ def _overlay_png(hf: Heightfield, mask: np.ndarray, wide: np.ndarray, slices: li
     buf = io.BytesIO()
     img.save(buf, format="PNG", optimize=True)
     return base64.b64encode(buf.getvalue()).decode("ascii"), img.width, img.height, scale
+
+
+def _rune_box(extent, shape, res: float, margin_mm: float = 4.0) -> list[float]:
+    """The rune's box as fractions of the groove map, [x0, y0, x1, y1] with y downwards (the map is flipped). The
+    extent is the groove centre lines, so a margin is added for the groove width and the ends of the strokes."""
+    ny, nx = shape
+    r0, c0, r1, c1 = extent
+    pad = margin_mm / res + 0.1 * max(r1 - r0, c1 - c0)
+    r0, c0, r1, c1 = max(0, r0 - pad), max(0, c0 - pad), min(ny - 1, r1 + pad), min(nx - 1, c1 + pad)
+    return [round(c0 / nx, 4), round((ny - 1 - r1) / ny, 4), round((c1 + 1) / nx, 4), round((ny - r0) / ny, 4)]
 
 
 def _groove_map_png(hf: Heightfield, residual: np.ndarray, inner: np.ndarray, threshold: float,
@@ -706,7 +717,8 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
             "runes_measured": len(measured_runes),
         },
         "runes": [{"id": int(r["id"]), "n_strokes": len(r["strokes"]), "height_mm": float(r["height_mm"]),
-                   "n_slices": sum(1 for s in accepted if s.get("rune_id") == r["id"])}
+                   "n_slices": sum(1 for s in accepted if s.get("rune_id") == r["id"]),
+                   "box": _rune_box(r["extent"], hf.H.shape, res)}
                   for r in strokes["runes"]],
         "parameters": {
             "normal": [float(v) for v in hf.n],

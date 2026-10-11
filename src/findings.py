@@ -156,6 +156,11 @@ def orthographic_findings(model, inscriptions: list[dict], min_words=8, min_marg
             ev_reasons.append(f"{round(sig['p_value'] * 100, 1)} % av andra ristares inskrifter är minst lika lika "
                               f"{top['carver']}s profil (p {_p(sig['p_value'])}; justerat för att den bästa av "
                               f"{sig['n_carvers']} ristare valts: p {_p(sig['p_adjusted'])})")
+            # A similarity that may be chance once the choice of the best carver is taken into account weighs less
+            pa = sig["p_adjusted"]
+            if pa >= 0.05:
+                evidence *= 0.75 if pa < 0.2 else 0.5
+                ev_reasons.append("likheten är inte säkerställd efter justeringen för urvalet, vilket sänker belägget")
         attributed = [c["name"] for c in rec["carvers"] if c["kind"] in ("S", "A") and not c["uncertain"]]
         # Structured values for the interpretation (src/interpretation.py)
         stats = {"similarity": round(top["similarity"], 3), "margin": round(margin, 3), "n_words": rk["n_words"],

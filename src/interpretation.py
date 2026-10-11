@@ -18,6 +18,8 @@ Slutsatsens nivåer:
 """
 from __future__ import annotations
 
+from src.research_gaps import certain_carvers, province
+from src.synthesis import carver_styles
 from src.stone_overview import _checks
 
 CHECK_NAMES = {"område": "området", "stil": "stilgruppen", "språkdrag": "språkdragen", "bergart": "bergarten"}
@@ -69,6 +71,13 @@ def _strength(f: dict) -> list[str]:
             out.append(f"Rundatas ristare får {_num(st['p_truth'])}.")
         out.append("Modellen är tränad på attribueringar som delvis bygger på samma drag (stil, stavning, geografi), "
                    "så den är inte helt oberoende av forskningsläget.")
+    elif method.startswith("okänd ristare") and st:
+        out.append(f"Stenen ingår i en grupp av {st.get('n')} stenar utan ristare som liknar varandra i stavning, språkdrag, "
+                   f"formler och stil (arbetsnamn {st.get('group')}, typsten {st.get('type_stone')}). När metoden prövades på "
+                   f"stenar med känd ristare bestod en grupp i genomsnitt till {round((st.get('purity') or 0) * 100)} % av "
+                   "samma ristare.")
+        out.append("Gruppen kan vara en ristare, en verkstad eller en lokal tradition. Arbetsnamnet är en etikett för "
+                   "gruppen, inte ett påstående om en person.")
     elif method == "huggteknik":
         out.append("Huggtekniken jämförs med uppmätta stenar i mätkorpusen; måtten är inte validerade som spår av "
                    "ristarens hand och påverkas av bergart och vittring.")
@@ -101,22 +110,42 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
     paragraphs.append({"title": "Vad fyndet säger", "text": say})
 
     # 2. How strong it is
-    paragraphs.append({"title": "Hur starkt belägget är", "text": " ".join(_strength(f))})
+    strength = _strength(f)
+    if sug and not style_method and (method == "ortografi" or method.startswith("statistisk modell")):
+        prov = province(rec)
+        attributed = [r for r in ctx["inscriptions"] if province(r) == prov and certain_carvers(r)]
+        share = sum(1 for r in attributed if sug in certain_carvers(r)) / len(attributed) if attributed else 0
+        if share >= 0.1:
+            strength.insert(-1, f"{sug} står för {round(share * 100)} % av de attribuerade stenarna i landskapet. Produktiva "
+                                "ristare drar till sig förslag, och träffsäkerheten för deras förslag mäter metoden i "
+                                "allmänhet snarare än den här stenen.")
+    paragraphs.append({"title": "Hur starkt belägget är", "text": " ".join(strength)})
 
     # 3. The other methods on the same carver
     support = against = 0
     lines = []
+    style_conflict = None
     if sug and not style_method:
-        chk = _checks(rec, sug, ctx["inscriptions"], ctx["names"], ctx["home"])
+        # A carver picked by a spelling-based method gets no independent support from the language traits
+        by_spelling = method in ("ortografi", "samlade belägg") or method.startswith(("statistisk modell", "okänd ristare"))
+        chk = _checks(rec, sug, ctx["inscriptions"], ctx["names"], ctx["home"], selected=by_spelling)
+        sc = carver_styles(rec, sug, ctx["inscriptions"])
+        if sc.get("strong"):
+            style_conflict = sc
         ok = [CHECK_NAMES[k] for k, (v, _) in chk.items() if v is True]
         bad = [CHECK_NAMES[k] for k, (v, _) in chk.items() if v is False]
-        unknown = [CHECK_NAMES[k] for k, (v, _) in chk.items() if v is None]
+        # None means either no data or a result that does not decide either way; the latter is shown with its text
+        cannot = ("För få", "Bergarten kan inte", "Ristarens stenar saknar")
+        unknown = [CHECK_NAMES[k] for k, (v, t) in chk.items() if v is None and (not t or t.startswith(cannot))]
+        undecided = [(CHECK_NAMES[k], t) for k, (v, t) in chk.items() if v is None and t and not t.startswith(cannot)]
         support += len(ok)
         against += len(bad)
         if ok:
             lines.append(f"{_join(ok).capitalize()} stämmer med {sug}.")
         if bad:
             lines.append(f"{_join(bad).capitalize()} talar emot ({'; '.join(chk[k][1] for k, (v, _) in chk.items() if v is False)})")
+        for name, t in undecided:
+            lines.append(f"{name.capitalize()} avgör inte frågan: {t}")
         if unknown:
             lines.append(f"{_join(unknown).capitalize()} kan inte prövas.")
         probs = ctx["oof"].get(rec["signum"]) or ctx["pred"].get(rec["signum"]) or {}
@@ -178,6 +207,12 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
         text = (f"Övriga belägg stöder Rundatas ristare {profile.get('carver')} (stöd {_num(profile['support'])}). "
                 "Avvikelsen är sannolikt en svaghet i metoden – eller ett tecken på samarbete eller en verkstad – "
                 "snarare än ett argument mot attribueringen.")
+    elif style_conflict:
+        level = "svagt"
+        text = (f"Stilgruppen talar starkt emot: stenen har {rec.get('style')}, men {sug}s stenar har främst "
+                f"{', '.join(style_conflict['core'])}, omkring {style_conflict['gap_years']} år senare enligt Gräslunds "
+                "kronologi. Om stilbestämningen stämmer är förslaget kronologiskt problematiskt, oavsett hur lik stavningen "
+                "är. Kontrollera beskrivningen av ornamentiken (Sveriges runinskrifter) innan förslaget drivs vidare.")
     elif ev >= 0.5 and support >= 3 and against == 0 and p_ok:
         level = "starkt"
         text = (f"Ett välgrundat förslag: belägget är starkt och {support} andra belägg stämmer med {sug} utan att något talar emot. "
@@ -194,6 +229,10 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
         text = (f"Ett svagt förslag: belägget är {'svagt' if ev < 0.35 else 'måttligt'} och "
                 + (f"{against} andra belägg talar emot." if against > support else "för få andra belägg stöder det.")
                 + (" Sannolikt en svaghet i metoden; övriga belägg stöder Rundata." if verdict == "motsäger" else ""))
+    if not p_ok and level != "redan känt":
+        # A negative result is also knowledge: it can test older attributions made on the same grounds
+        text += (" Det hållbara resultatet är att stavningen ensam inte räcker för att attribuera stenen – likheten "
+                 "uppstår lätt när man letar bland många ristare.")
     steps = []
     if sug and not style_method:
         steps.append(f"en 3D-mätning av huggspåren jämförd med säkra stenar av {sug} (minst 20 runor per sten enligt riktvärdet)")

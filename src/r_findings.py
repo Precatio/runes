@@ -7,6 +7,9 @@ Fynd per sten (samma bedömning som övriga fynd: stämmer / nytt / motsäger, m
                          den anger – inte sannolikheten själv, som är försiktig (underskattar).
   seriation (R)          tidig eller sen placering i Upplands seriation för stenar utan stilgrupp; svagt
                          belägg, eftersom tidsskattningen bara är något bättre än att gissa medelåret.
+  okänd ristare (R)      stenen ingår i en grupp av stenar utan ristare som liknar varandra lika mycket som en
+                         ristares stenar och inte liknar någon känd ristare i närheten (arbetsnamn efter typstenens
+                         socken). Belägget är hur rena grupperna blev när metoden prövades på stenar med känd ristare.
 
 Mönster i korpusen (geografi, dialekter, formler, klustring, seriation) redovisas separat och märks
 "bekräftar" när de stämmer med vad forskningen redan utgår från (ristare arbetade regionalt, stavningen
@@ -21,6 +24,7 @@ from src.research_gaps import AXELSON_PROVINCES, has_carver, province
 
 MODEL = "statistisk modell (R)"
 SERIATION = "seriation (R)"
+ANONYMOUS = "okänd ristare (R)"
 
 
 def _d(v: float, digits: int = 2) -> str:
@@ -168,6 +172,41 @@ def seriation_findings(chron: dict, stones: list[dict], lookup, inscriptions: li
     return out
 
 
+def anonymous_findings(anon: dict, lookup, inscriptions: list[dict]) -> list[dict]:
+    """Stenar i grupper som kan vara en okänd ristare eller verkstad (r/anonymous.R)."""
+    v = anon.get("validation") or {}
+    if not v.get("purity"):
+        return []
+    coverage, oeuvre = _province_coverage(inscriptions), _oeuvre(inscriptions)
+    out = []
+    for g in anon.get("groups") or []:
+        if g.get("status") != "candidate" or not g.get("name"):
+            continue
+        marks = "; ".join(f"{m['feature']} ({_pct(m['share_group'])} mot {_pct(m['share_area'])} i trakten)"
+                          for m in (g.get("marks") or [])[:3])
+        evidence = min(0.6, v["purity"]) * (g.get("stability") or 0)
+        for signum in g["stones"]:
+            rec = lookup(signum)
+            if not rec or has_carver(rec):
+                continue
+            rel, rel_reasons = relevance(rec, None, coverage, oeuvre)
+            ours = (f"Ingår i en grupp av {g['n']} stenar utan ristare som liknar varandra lika mycket som en ristares "
+                    f"stenar – arbetsnamn {g['name']} (typsten {g['type_stone']})")
+            out.append(_finding(rec, ANONYMOUS, "nytt", ours, _carver_text(rec), evidence, 0.6, rel,
+                                {"belägg": [f"när metoden prövades på stenar med känd ristare bestod en grupp i genomsnitt "
+                                            f"till {_pct(v['purity'])} av samma ristare, mot {_pct(v['purity_geography'])} "
+                                            "för lika många närliggande stenar",
+                                            f"gruppen återkommer till {_pct(g.get('stability') or 0)} när en femtedel av "
+                                            "länkarna tas bort"] + ([f"utmärks av {marks}"] if marks else []),
+                                 "nyhet": ["ingen ristare i Rundata, och gruppen liknar ingen känd ristare i närheten",
+                                           "arbetsnamnet är en etikett för gruppen, inte en person – kontrollera mot "
+                                           "litteraturen om gruppen redan är beskriven"],
+                                 "relevans": rel_reasons}, True,
+                                stats={"group": g["name"], "type_stone": g["type_stone"], "n": g["n"],
+                                       "purity": v["purity"], "stability": g.get("stability")}))
+    return out
+
+
 def corpus_patterns(res: dict) -> list[dict]:
     """Mönster i hela korpusen, märkta 'bekräftar' eller 'mönster att pröva'."""
     out = []
@@ -255,4 +294,70 @@ def corpus_patterns(res: dict) -> list[dict]:
                         "text": f"Relationen '{k['relation']}' är {trend} på sena stenar (efter ca 1050: {_pct(k['late'])}, "
                                 f"före: {_pct(k['early'])}; q {_d(k['q_period'], 3)}).",
                         "note": "Tidsindelningen bygger på Gräslunds stilgrupper och gäller stenar med säker stilgrupp."})
+    an = res.get("anonymous") or {}
+    if an.get("groups"):
+        v = an["validation"]; cands = [g for g in an["groups"] if g["status"] == "candidate"]
+        out.append({"topic": "Okända ristare", "status": "mönster att pröva",
+                    "text": f"{len(cands)} {'grupp' if len(cands) == 1 else 'grupper'} av stenar utan ristare "
+                            f"({sum(g['n'] for g in cands)} stenar) liknar "
+                            "varandra lika mycket som en ristares stenar och liknar ingen känd ristare i närheten, bland "
+                            "dem " + ", ".join(f"{g['name']} ({g['n']} stenar)" for g in cands[:4]) + ". "
+                            f"{len(an['groups']) - len(cands)} andra grupper liknar en känd ristare.",
+                    "note": f"Prövat på stenar med känd ristare bestod en grupp i genomsnitt till {_pct(v['purity'])} av "
+                            f"samma ristare, mot {_pct(v['purity_geography'])} för lika många närliggande stenar. En grupp "
+                            "kan vara en ristare, en verkstad eller en lokal tradition; arbetsnamnen är etiketter, inte "
+                            "personer, och grupperna kan redan vara beskrivna i litteratur som appen inte har."})
+    out += change_patterns(res.get("change") or {})
+    return out
+
+
+SHAPE_TEXT = {"rises": "blir vanligare över tid", "falls": "blir ovanligare över tid",
+              "peak": "är vanligast omkring {y}", "trough": "är ovanligast omkring {y}", "flat": "förändras knappt"}
+CHANGE_NOTE = ("Tiden bygger på Gräslunds stilgrupper (intervall, inte år) och gäller daterade stenar, främst i Uppland "
+               "och Södermanland. Stavning kan spegla skrivtradition och ristarens skola lika mycket som uttal.")
+
+
+def _q(q: float) -> str:
+    return "< 0,001" if q < 0.001 else _d(q, 3)
+
+
+def change_patterns(ch: dict) -> list[dict]:
+    """Mönster ur förändringsmodulen (r/change.R): drag som förändras över tid, skillnader mellan landskap och
+    bro- och vägstenarnas kristna drag. Bara Holm-justerade resultat under 0,05."""
+    out = []
+    for f in ch.get("features") or []:
+        t = f.get("time") or {}
+        if t.get("tested") and t.get("q") is not None and t["q"] < 0.05:
+            dr = t.get("draws") or {}
+            robust = (f" {round((dr.get('share_sig') or 0) * dr['n'])} av {dr['n']} omräkningar med årtal dragna inom "
+                      "stilgruppernas intervall gav också ett säkerställt samband." if dr.get("n") else "")
+            known = f["key"] == "stungna" and t["shape"] == "rises"
+            out.append({"topic": "Förändring", "status": "bekräftar" if known else "mönster att pröva",
+                        "text": f"{f['label']} {SHAPE_TEXT[t['shape']].format(y=t.get('peak_year'))}, med plats och ristare "
+                                f"konstanta: {_pct(t['first'])} omkring {t['year_first']} och {_pct(t['last'])} omkring "
+                                f"{t['year_last']} (q {_q(t['q'])}).{robust}",
+                        "note": ("Att stungna runor blir vanligare under 1000-talet stämmer med den gängse bilden (se t.ex. "
+                                 "Lagman 1990); här prövat med plats och ristare konstanta. " if known else "") + CHANGE_NOTE})
+        pv = f.get("provinces") or {}
+        rows = pv.get("rows") or []
+        if len(rows) >= 2 and pv.get("p_differ") is not None and pv["p_differ"] < 0.01:
+            hi = max(rows, key=lambda r: r["share1050"]); lo = min(rows, key=lambda r: r["share1050"])
+            cross = [r for r in rows if r.get("cross_year")]
+            ctext = (" Draget passerar hälften av stenarna " + ", ".join(
+                f"omkring {r['cross_year']} i {r['province']}" for r in sorted(cross, key=lambda r: r["cross_year"])) + "."
+                     if len(cross) >= 2 else "")
+            out.append({"topic": "Förändring", "status": "mönster att pröva",
+                        "text": f"{f['label']}: omkring år 1050 skiljer sig landskapen (p {_q(pv['p_differ'])}), från "
+                                f"{_pct(hi['share1050'])} i {hi['province']} till {_pct(lo['share1050'])} i {lo['province']} "
+                                f"för en typisk ristare.{ctext}",
+                        "note": "Landskap med minst 25 daterade stenar. Ett landskap där draget tidigt är vanligt kan vara "
+                                "där förändringen började, men också där en ristarskola hade sina vanor. " + CHANGE_NOTE})
+    for a in ch.get("assoc") or []:
+        al = a.get("all") or {}
+        if al.get("q") is not None and al["q"] < 0.05:
+            out.append({"topic": "Förändring", "status": "mönster att pröva",
+                        "text": f"{a['label']}: {_pct(a['share_x'])} mot {_pct(a['share_other'])} på andra stenar "
+                                f"(oddskvot {_d(al['or'])}, 95 % KI {_d(al['lo'])}–{_d(al['hi'])}, q {_q(al['q'])}), med plats "
+                                "och ristare konstanta.",
+                        "note": "Prövar tolkningen av brobyggen som kristna själagåvor. Brostenarna är få (omkring 110)."})
     return out

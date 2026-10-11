@@ -373,12 +373,40 @@ att translitterationen paras ord för ord med normaliseringen:
 | Bruk | Kristen bön, själsbön | Guð hialpi …, and/sálu |
 | Bruk | Ristarsignatur | risti, hjó, markaði … |
 | Bruk | *runor* | runaR, runa, runar |
+| Ljud | Diftongen ai i alla ord | alla ord med æi i normaliseringen (ræisa, stæinn, þæiR): diftong, monoftong eller båda |
+| Ljud | ʀ skrivet med r | ord som slutar på ʀ (æftiR, þæiR, syniR) skrivna med ʀ-runan, med r-runan eller båda |
+| Ljud | o-runan för o-ljud | o-ljudet i broður, bóndi, móður, sun, kona skrivet med o-runan (ᚬ), u-runan eller båda |
+| Ljud | Stungen i, u, k | e, y respektive g var för sig (stungen t, d, finns på för få stenar) |
+| Bruk | æftiR eller at | minnesformelns preposition (at räknas bara före ett namn) |
+| Skrift | Skiljetecken | vanligaste tecknet mellan orden (punkt, kolon, kryss, apostrof, plus), minst tre tecken |
+| Skrift | Bindrunor | om inskriften har bindrunor (^ i translittereringen) |
+
+De nio sista dragen lades till 2026-10-11. ai i alla ord bygger på 1 091 runstenar mot 663 för *sten* ensamt; ʀ
+med r finns på 147 av 938 stenar där det kan avgöras, o-runan för o-ljud på 141 av 618, at på 322 av 1 352.
+Dubbelskrivna konsonanter prövades också men förekommer nästan aldrig och togs inte med. Kristen bön känns sedan
+samma datum igen även i osäkra läsningar och som Kristr hjalpi, Guð biargi, Guð lætti och Guðs móðir.
 
 Ett drag räknas bara där inskriften har ordet. Ristarens profil är fördelningen över dennes säkra
 inskrifter (stenen själv utesluten). Stenen stämmer i ett drag när värdet är ristarens vanligaste eller
 förekommer i minst hälften av ristarens inskrifter med ordet. Dragen påverkas också av dialekt, tid och
 beställare. De redovisas som kontroll och vägs inte in i kandidaternas poäng, eftersom stavningsdragen
 delvis överlappar den ortografiska jämförelsen.
+
+**Mot landskapet och signifikans** (från 2026-10-11, efter en granskning av U 92). Att ett drag stämmer säger lite om
+det är vanligt i hela landskapet (bevarat ai i *stain*, *uk*, *iftiR* och ʀ-runa är det i Uppland). Varje drag vägs
+därför med en sannolikhetskvot: hur vanligt stenens värde är hos ristaren genom hur vanligt det är på övriga runstenar
+i landskapet (utan ristarens och stenens egna; additiv utjämning 0,5 per värde). Drag som upprepar ett annat lämnas
+utanför summan (stungna runor när stungen i, u och k finns, ai i *sten* när ai i alla ord finns, själsbön när bön
+finns). Summan av logaritmerna är stenens poäng för ristaren, och det empiriska p-värdet är andelen av landskapets
+övriga stenar (som inte är av ristaren) som får minst lika hög poäng. Språkdragen stöder ristaren när p är under 0,05
+och kvoten över 1, talar emot när kvoten är högst 1/3, och avgör annars inte frågan – vilket redovisas med texten i
+stället för som "kan inte prövas". När ristaren har valts ut av en metod som själv bygger på stavningen (ortografin,
+modellen, samlade belägg, okända ristare) räknas språkdragen inte som ett oberoende stöd: de kan tala emot men inte för.
+En justering för urvalet (t.ex. Šidák över landskapets omkring 40 ristare) prövades men kan inte gå under 0,05 med
+omkring 600 jämförelsestenar, eftersom det minsta empiriska p-värdet är 1/601. Exempel: U 92 mot Öpir – 13 av 16 drag
+stämmer men tio är lika vanliga på andra uppländska stenar; utmärkande är *iftiR*, *uk* och o-runan; sammantaget 15,6
+gånger vanligare hos Öpir, p 0,009 bland 589 stenar – men Öpir är vald av ortografin, så det räknas inte som stöd. Skiljetecken kodas som *blandat* när det vanligaste tecknet står för mindre än tre fjärdedelar
+(U 92 har ' i början och · från *kira*), och *brøðr* räknas inte till o-ljudsorden (vokalen är ø).
 
 ## 9. Inskrifternas syfte per ristare
 
@@ -582,8 +610,12 @@ Källkod: `src/stone_overview.py`, `GET /api/research/overview` och `GET /api/re
 **Stenöversikt**. För varje svensk vikingatida runsten samlas vad sex metoder säger om vem som ristade den:
 R-modellens sannolikhet (avsnitt 17; korsvaliderad för stenar med säker ristare, förslag för stenar utan ristare
 inom 25 km från en träningssten), ortografin (avsnitt 6; minst åtta ord, stenen själv utelämnad), området
-(ristarens landskap och högst 60 km till en säker sten av ristaren), stilgruppen (finns bland ristarens säkra stenar),
-språkdragen (minst hälften av de jämförbara stämmer; avsnitt 8) och bergarten (avsnitt 10).
+(ristarens landskap och högst 60 km till en säker sten av ristaren), stilgruppen, språkdragen (mot landskapet med
+p-värde; avsnitt 8) och bergarten (avsnitt 10). Stilgruppen jämförs sedan 2026-10-11 med ristarens *kärna*, de
+stilgrupper som finns på minst 10 % av ristarens säkra stenar: den stämmer om stenens stilgrupp hör till kärnan
+eller överlappar den i tid enligt Gräslund, och annars anges glappet i år (en enstaka RAK-sten bland 25 gör inte RAK
+till ristarens stil). Ett glapp på minst 25 år gör förslaget kronologiskt problematiskt, t.ex. U 92 (RAK, omkring
+980–1015) mot Öpir (Pr4–Pr5, 55 år senare) och Visäte (Pr3–Pr4, 35 år senare).
 
 * **Stöd** för Rundatas ristare (0–1): viktat medelvärde av de metoder som kan uttala sig – modellen med sin
   sannolikhet för ristaren (vikt 2), ortografin med 1 om ristaren kommer först, 0,6 bland de tre första och annars
@@ -621,7 +653,13 @@ vad som skulle kunna avgöra frågan (3D-mätning, litteratur, nyläsning, stilb
 Slutsatsen har sex nivåer: *redan känt* (förslaget finns i Runor 2020 eller Wikidata), *metodfel* (fyndet motsäger
 en signerad sten), *bekräftelse* (stämmer med Rundata), *starkt* (belägg ≥ 0,5, minst tre andra belägg för och inget
 emot, och för ortografin justerat p < 0,05), *måttligt* (belägg ≥ 0,35 och minst lika många belägg för som emot) och
-*svagt* (övrigt, och när ett fynd som motsäger Rundata står mot ett stöd ≥ 0,6 för Rundatas ristare). Att Runor 2020
+*svagt* (övrigt, och när ett fynd som motsäger Rundata står mot ett stöd ≥ 0,6 för Rundatas ristare). Sedan
+2026-10-11 blir slutsatsen också *svagt* när stilgruppen talar starkt emot (glapp på minst 25 år till ristarens
+kärna), oavsett hur lik stavningen är. Ortografins belägg sänks när likheten inte håller efter justeringen för
+urvalet (×0,75 vid justerat p 0,05–0,2, ×0,5 vid högre), och slutsatsen säger då uttryckligen att stavningen ensam inte
+räcker för att attribuera stenen – ett negativt resultat som också kan pröva äldre attribueringar gjorda på samma
+grund. När den föreslagna ristaren står för minst 10 % av landskapets attribuerade stenar påpekas att produktiva
+ristare drar till sig förslag, och att träffsäkerheten för deras förslag mäter metoden i allmänhet snarare än stenen. Att Runor 2020
 anger en annan ristare räknas som ett belägg emot. Fördelning 2026-10-11 (429 fynd): nya förslag 32 starka, 138
 måttliga, 35 svaga och 4 redan kända; motsägelser 5 måttliga, 15 svaga och 6 metodfel; 194 bekräftelser. Reglerna är
 fasta och kan granskas; tolkningen är en läshjälp, inte en runologisk bedömning.
@@ -812,11 +850,55 @@ av data och skript (fingeravtryck) i en egen process (`python -m src.r_bridge <f
 | `clusters.R` | cluster, FactoMineR, factoextra | Gowers avstånd på stil, språkdrag, kors, kortkvistrunor och innehåll (kategorierna asymmetriskt binära), PAM med k = 2–10 efter silhuettbredd, stabilitet som Jaccard-likhet i 20 delurval om 80 % (Hennig 2007), MCA; ristare och landskap jämförs efteråt (justerat Rand-index) |
 | `text.R` | tidytext, stringr | formler ur normaliseringen (resarformel, monument, ordföljd, ristarsignatur, bön) per ristare; stavning per ord mot ristare (χ² med simulerat p, Cramérs V); ordformer som utmärker en ristare (Fishers exakta test, BH); tf-idf; de 100 vanligaste runbigrammen som variabler till modellen |
 | `attribution.R` | tidymodels, ranger | random forest (500 träd) på stenar med säker ristare, ristare med minst åtta stenar (i dag 18 ristare, 497 stenar); 5-faldig stratifierad korsvalidering upprepad 3 gånger, och grupperad per socken och härad; delmodeller med bara geografi, bara stil, bara språk och innehåll; kalibrering (andel rätt per sannolikhetsnivå, ECE); permutationsvikter; förslag för stenar utan ristare inom 25 km från en träningssten |
+| `anonymous.R` | cluster, igraph | grupper av stenar utan ristare som liknar varandra lika mycket som en ristares stenar (Gowers avstånd på handens drag, länkade inom 30 km, Louvain); validering på stenar med känd ristare; jämförelse med kända ristare i närheten; arbetsnamn efter typstenens socken (se nedan) |
 | `chronology.R` | ca | seriation (korrespondensanalys av språkdrag, formler, kors, kortkvistrunor och innehåll – utan stilgrupp) för Uppland, prövad mot Gräslunds stilkronologi (Spearman mot stilgruppens mittår, och partiell med latituden konstant); tidsskattning med 80 % prediktionsintervall och korsvaliderat medelfel; för hela korpusen redovisas vad de tre första dimensionerna följer (tid, geografi, ristare eller oförklarat) |
 | `dialect.R` | stringdist | förväntat normerat Levenshtein-avstånd mellan häradernas stavning av vanliga ord; Mantel-test mot geografiskt avstånd (999 permutationer); grupper av härader (PAM); kartor över stavningen av "efter" och "sten" |
 | `network.R` | igraph, tidygraph, ggraph | ord som står i samma inskrifter (positiv PMI), grupper med Louvain; släktorden i inskrifterna (fader, moder, son, broder, félagi …) före och efter ca 1050 och i kristna mot övriga inskrifter (Fisher, BH) |
+| `change.R` | mgcv, sf | förändring i tid och rum för tio drag (monoftong i 'sten' och 'och', h-bortfall, nasal före konsonant, stungna runor, kristen bön, själsbön, kors, bro- och vägbygge, ristarsignatur): logistisk regression med utjämnad tidskurva, rumslig utjämning och ristaren som slumpeffekt; justerad andel över tid, karta, landskapen omkring 1050 och året då draget passerar hälften; bro- och vägstenar mot kristna drag (se nedan) |
 | `stone.R` | sf, cluster, tidymodels | en sten mot korpusen: modellens sannolikheter (korsvaliderade om stenen har ristare i Rundata), avstånd till kandidaternas tyngdpunkter och höljen, grupp och närmaste grannar (Gower), formler jämförda med kandidaternas inskrifter, läge i Upplands seriation |
 | `landscape.R` | terra, gdistance | höjdmodell (ca 20 m), höjd, lutning, topografiskt positionsindex; strand vid vikingatiden som dagens höjd minus en grov landhöjning per landskap (t.ex. 5 m i Södermanland, 5,5 m i Uppland); sikt (viewshed, stenens topp 2 m, betraktare 1,6 m) mot slumpvisa platser; bästa vägar (Toblers vandringsfunktion, vatten tio gånger långsammare) mellan andra runstensplatser inom 12 km och stenens avstånd till dem mot slumpvisa punkter |
+
+**Okända ristare** (`anonymous.R`, från 2026-10-11). Kan en gruppering i statistiken vara en ristare som ännu inte
+har namn? Stenar med minst fem läsbara ord jämförs i *handens drag* – stilgrupp, kors, kortkvistrunor, språkdrag
+(inklusive skiljetecken och bindrunor), formler och runbigram, men inte innehåll och plats – med Gowers avstånd. Gränsen
+för att länka två stenar kalibreras på par av stenar med känd ristare (ristare med minst tre säkra stenar) inom 30 km:
+par under gränsen ska vara minst tolv gånger vanligare bland samma ristares par än bland olika ristares. Stenar utan
+ristare i Rundata länkas när de ligger inom 30 km och under gränsen, och grupperas med Louvain. En grupp redovisas om
+den har minst fyra stenar och inte är mer utspridd än 90 % av de kända ristarna med minst fem stenar (median till
+gruppens mitt; i dag 23 km). Förfarandet prövas på stenar med känd ristare, som om ristaren vore okänd: hur stor del av
+en grupp är samma ristare, jämfört med grupper av lika många närliggande stenar? Avståndet och gränsen valdes efter
+den valideringen (15–30 km, kvot 4–12), så träffsäkerheten kan vara något överskattad. Resultat (beräkning
+2026-10-11): en grupp bestod i genomsnitt till 71 % av samma ristare, mot 55 % för bara närliggande stenar, och 73 % av
+grupperna till minst tre fjärdedelar. Stabiliteten mäts som hur stor del av gruppen som återkommer (Jaccard) när en
+femtedel av länkarna tas bort. Varje grupp jämförs med kända ristare inom 50 km: den räknas som lik en känd ristare när
+ristarens stenar i genomsnitt ligger lika nära gruppen som två stenar av samma ristare brukar göra, eller när
+attribueringsmodellen föreslår samma ristare med minst 50 % för hälften av gruppens stenar. Övriga grupper får ett
+*arbetsnamn* efter typstenens socken (typstenen är den sten som i genomsnitt ligger närmast de andra), t.ex.
+"Fröderydsristaren", efter samma bruk som för anonyma mästare i konsthistorien. Namnet görs unikt och får aldrig vara ett
+ristarnamn i Rundata. I Uppland och Södermanland, där ristarna är väl kartlagda, liknar nästan alla grupper en känd
+ristare; de möjliga okända ristarna finns främst i Östergötland, Västergötland, Småland och Medelpad, där få stenar är
+attribuerade. Stenarna i dessa grupper redovisas som fynd i Forskningsluckor (metod "okänd ristare (R)").
+
+**Förändring i tid och rum** (`change.R`, från 2026-10-11). Hur språkdrag, skrift och kristna drag förändras
+över tid och skiljer sig mellan landskap – frågor om språk- och religionshistoria som inte handlar om vem som
+ristade. För varje drag skattas en logistisk regression (mgcv::bam, fREML) bland stenar med stilgrupp: tiden
+(stilgruppens mittår enligt Gräslund) som utjämnad kurva med k = 4, så att ett drag kan öka och minska igen; en
+rumslig utjämning (tunnplattspline på SWEREF 99 TM), så att förändringen inte bara är en förskjutning mellan områden
+med olika datering; och ristaren som slumpeffekt, så att stenar av samma ristare inte räknas som oberoende. Stenar
+utan säker ristare grupperas per socken, eftersom de ofta är huggna av samma okända ristare eller verkstad (en egen
+grupp per sten gav samma skattningar men tog tio gånger längre tid). Kurvan redovisas som *justerad andel*: alla
+daterade stenar flyttas till varje år och modellens sannolikheter för en typisk ristare medelvärdesbildas, med 95 %
+intervall ur 300 dragningar av koefficienterna. Den täcker stilgrupper med minst 20 stenar; ett drag med färre
+daterade stenar (under 60, under tio med eller utan draget, eller mindre än 40 år mellan de stora stilgrupperna)
+prövas inte. Eftersom stilgruppen är ett intervall och inte ett år räknas varje resultat om tio gånger med årtal
+dragna jämnt inom intervallet; andelen omräkningar som också ger ett säkerställt samband redovisas. Rummet visas som
+karta (samma modell utan tid, på alla stenar där draget kan bestämmas, inom ca 30 km från stenarna) och landskapen som
+skattad andel omkring år 1050 (egen nivå per landskap, samma tidskurva; landskap med minst 25 daterade stenar;
+skillnaden prövad med Wald-test). När draget ökar eller minskar stadigt anges också året då det passerar hälften av
+stenarna, ur en modell med rak trend. Slutligen prövas om bro- och vägstenar oftare har kristen bön, själsbön och kors
+än andra stenar, med samma kontroller – ett test av tolkningen av brobyggen som kristna själagåvor. p-värdena
+Holm-justeras inom tidstesten respektive brotesten. Formler och kors räknas bara på inskrifter som är tolkningsbara nog
+för att språkdragen ska kunna bestämmas.
 
 **Grupperad korsvalidering** (från 2026-10-10). Vid slumpvis korsvalidering kan stenar från samma plats – ofta resta
 av samma ristare samtidigt – hamna både i tränings- och testdata. Modellen utvärderas därför också med hela socknar
@@ -873,6 +955,17 @@ Forskningsluckor visar mönstren utan anteckningar; så här ska de läsas:
   ristarens eller beställarens val; appen känner ingen förklaring i litteraturen, och det bör prövas.
 * *Släktord och formler över tid.* Tidsindelningen bygger på Gräslunds stilgrupper och gäller bara stenar med säker
   stilgrupp.
+* *Okända ristare.* En grupp är stenar som liknar varandra i handens drag och ligger nära varandra. Det kan vara en
+  ristare, en verkstad med flera ristare eller en lokal tradition som flera följde, och eftersom stil och formler också
+  följer tid kan en grupp delvis vara en tidsperiod i ett område. Arbetsnamnet är en etikett för gruppen och inget
+  påstående om en person. Gruppen kan redan vara beskriven i litteratur som appen inte har (t.ex. i *Sveriges
+  runinskrifter* för landskapet).
+* *Förändring i tid och rum.* Tiden är Gräslunds stilgrupper, som bygger på Upplands ornamentik och ger intervall
+  snarare än år; de daterade stenarna finns främst i Uppland och Södermanland. Stavning speglar skrivtradition och
+  ristarens skola lika mycket som uttal, så en ändrad stavning är inte säkert en ljudförändring. Att ett drag tidigt är
+  vanligt i ett landskap kan betyda att förändringen började där, men också att en ristarskola där hade sina vanor.
+  Den justerade kurvan kan skilja sig från de råa andelarna per stilgrupp när de sena stenarna står på andra platser
+  eller är huggna av andra ristare än de tidiga; båda visas.
 * *Huggteknik mot ristare* (`r/technique.R`). Få stenar per ristare, olika vittring och bergart och en annan
   mätmetod än Kitzler Åhfeldts Groove Measure; resultatet är en indikation, inte en attribuering.
 * *Landskapet.* Höjddata visar dagens markyta; vägar är simulerade bästa vägar, inte belagda vikingatida vägar, och

@@ -15,6 +15,28 @@ interface Status {
 }
 
 type Dict = Record<string, unknown>;
+interface ChangeFeature {
+  key: string; label: string; group: string; n: number; share: number;
+  time: {
+    tested: boolean; n: number; n_yes: number; p?: number; q?: number | null; shape?: string; peak_year?: number | null;
+    year_first?: number; year_last?: number; first?: number; last?: number; change_lo?: number; change_hi?: number;
+    draws?: { n: number; share_sig: number | null; share_same_shape: number | null };
+  };
+  provinces: { p_differ: number; rows: { province: string; n: number; share1050: number; lo1050: number; hi1050: number; cross_year: number | null; cross_lo: number | null; cross_hi: number | null }[] } | null;
+  space: { n: number; p: number; high: string[]; low: string[] } | null;
+}
+interface AnonGroup {
+  id: number; name?: string | null; status: "candidate" | "known"; type_stone: string; n: number; spread_km: number;
+  stones: string[]; parishes: string[]; styles: { style: string; n: number }[] | null; stability: number;
+  marks: { feature: string; share_group: number; share_area: number }[] | null;
+  nearest_carver: { carver: string; n: number; dist: number; km: number; as_close_as_same_carver: boolean } | null;
+  model: { n: number; carver: string; share: number; mean_p: number } | null;
+}
+interface ChangeAssoc {
+  key: string; label: string; n: number; n_x: number; share_x: number; share_other: number;
+  all: { or: number; lo: number; hi: number; p: number; q: number | null } | null;
+  dated: { n: number; or?: number; lo?: number; hi?: number; p?: number } | null;
+}
 interface Pattern { topic: string; status: string; text: string; note?: string | null }
 interface Finding {
   signum: string; place: string; method: string; verdict: string; ours: string; existing: string; score: number;
@@ -42,12 +64,17 @@ interface Corpus {
     groups: { group: number; n: number; provinces: string }[]; group_forms: { group: number; forms: { lemma: string; form: string; share_in_group: number; share_all: number }[] }[] };
   network: Dict & { method: string; modularity: number; communities: { community: number; size: number; words: { word: string }[] }[];
     kinship: { relation: string; n: number; early: number; late: number; q_period: number; share_christian: number; share_other: number; q_christian: number }[] };
+  change?: Dict & { method: string; n_dated: number; draws: number; features: ChangeFeature[]; assoc: ChangeAssoc[] };
+  anonymous?: Dict & { method: string; n_unattributed: number; n_candidates: number;
+    calibration: { link_km: number; lr_min: number; tpr: number; fpr: number; precision: number; max_spread_km: number };
+    validation: { n_groups: number; n_stones: number; purity: number; purity_geography: number; share_pure: number };
+    groups: AnonGroup[] };
 }
 
-type Tab = "overview" | "geography" | "clusters" | "text" | "attribution" | "chronology" | "network";
+type Tab = "overview" | "geography" | "clusters" | "text" | "attribution" | "anonymous" | "chronology" | "change" | "network";
 const TABS: [Tab, string][] = [
   ["overview", "Översikt"], ["geography", "Geografi"], ["clusters", "Grupper"], ["text", "Språk och dialekter"],
-  ["attribution", "Attribueringsmodell"], ["chronology", "Seriation"], ["network", "Formelnätverk"],
+  ["attribution", "Attribueringsmodell"], ["anonymous", "Okända ristare"], ["chronology", "Seriation"], ["change", "Förändring"], ["network", "Formelnätverk"],
 ];
 
 const d2 = (v: number | null | undefined, k = 2) => v == null ? "–" : v.toFixed(k).replace(".", ",");
@@ -128,7 +155,8 @@ export default function StatistikPage() {
         <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-2">Statistik (R)</h2>
         <p className="text-slate-600 text-[16px] leading-relaxed max-w-3xl font-medium">
           Hela korpusen av svenska vikingatida runstenar analyserad i R: ristarnas områden, grupper av stil och språk,
-          stavning och dialekter, en korsvaliderad attribueringsmodell, seriation mot Gräslunds kronologi och formelnätverk.
+          stavning och dialekter, en korsvaliderad attribueringsmodell, seriation mot Gräslunds kronologi, hur språk, skrift
+          och kristna drag förändras över tid och mellan landskap, och formelnätverk.
           Samma analyser används för den enskilda stenen i <Link href="/stenanalys" className="text-[#b7410e] hover:underline">Fullständig stenanalys</Link> och
           stenrapporten, och resultaten ställs mot forskningen i <Link href="/luckor" className="text-[#b7410e] hover:underline">Forskningsluckor</Link>.
         </p>
@@ -192,7 +220,9 @@ export default function StatistikPage() {
             {tab === "clusters" && <Clusters data={data} />}
             {tab === "text" && <TextTab data={data} />}
             {tab === "attribution" && <Attribution data={data} />}
+            {tab === "anonymous" && <Anonymous data={data} />}
             {tab === "chronology" && <Chronology data={data} />}
+            {tab === "change" && <Change data={data} />}
             {tab === "network" && <Network data={data} />}
           </div>
         </>
@@ -445,6 +475,165 @@ function Network({ data }: { data: Corpus }) {
         </table>
       </div>
       <Method text={n.method} />
+    </>
+  );
+}
+
+const SHAPE: Record<string, string> = {
+  rises: "ökar", falls: "minskar", peak: "vanligast omkring", trough: "ovanligast omkring", flat: "oförändrad",
+};
+const qText = (q: number | null | undefined) => q == null ? "–" : q < 0.001 ? "< 0,001" : d2(q, 3);
+
+function Change({ data }: { data: Corpus }) {
+  const c = data.change, f = data.figure_urls.change || {};
+  if (!c) return <p className="text-sm text-slate-600">Förändringsanalysen saknas i den här beräkningen; beräkna korpusanalyserna på nytt.</p>;
+  const crossing = c.features.filter(x => (x.provinces?.rows || []).filter(r => r.cross_year).length >= 2);
+  return (
+    <>
+      <p className="text-sm text-slate-700">
+        Hur språkdrag, skrift och kristna drag förändras över tid och skiljer sig mellan landskap, med plats och ristare
+        konstanta. Tiden kommer från Gräslunds stilgrupper ({c.n_dated} daterade stenar); varje resultat är omräknat {c.draws} gånger
+        med årtal dragna inom stilgruppens intervall. Gulmarkerade rader är säkerställda efter Holm-justering.
+      </p>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead><tr><th className={TH}>Drag</th><th className={TH}>Daterade stenar</th><th className={TH}>Förlopp</th>
+            <th className={TH}>Justerad andel</th><th className={TH}>q</th><th className={TH}>Omräkningar säkerställda</th>
+            <th className={TH}>Vanligast i</th><th className={TH}>Ovanligast i</th></tr></thead>
+          <tbody>{c.features.map(x => {
+            const t = x.time, sig = t.q != null && t.q < 0.05;
+            return (
+              <tr key={x.key} className={`border-t border-slate-900/5 ${sig ? "bg-amber-50" : ""}`}>
+                <td className="p-2 font-semibold">{x.label}</td>
+                <td className="p-2">{t.n}</td>
+                <td className="p-2 text-xs">{t.tested ? `${SHAPE[t.shape ?? ""] ?? ""}${t.peak_year ? ` ${t.peak_year}` : ""}` : "för få daterade stenar"}</td>
+                <td className="p-2 text-xs">{t.tested ? `${pc(t.first)} (${t.year_first}) → ${pc(t.last)} (${t.year_last})` : "–"}</td>
+                <td className="p-2">{qText(t.q)}</td>
+                <td className="p-2 text-xs">{t.draws?.n ? pc(t.draws.share_sig) : "–"}</td>
+                <td className="p-2 text-xs">{x.space && x.space.p < 0.05 ? x.space.high.join(", ") : "–"}</td>
+                <td className="p-2 text-xs">{x.space && x.space.p < 0.05 ? x.space.low.join(", ") : "–"}</td>
+              </tr>
+            );
+          })}</tbody>
+        </table>
+      </div>
+      <Fig src={f.time} alt="Dragen över tid" />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4"><Fig src={f.map} alt="Var dragen är vanligast" /><Fig src={f.provinces} alt="Landskapen omkring 1050" /></div>
+      {crossing.length > 0 && (
+        <div>
+          <h3 className="font-bold text-slate-900 mb-1">När draget passerar hälften av stenarna</h3>
+          <ul className="text-sm space-y-1">
+            {crossing.map(x => (
+              <li key={x.key}><strong>{x.label}</strong>{" "}
+                (skillnad mellan landskapen p {qText(x.provinces!.p_differ)}):{" "}
+                {x.provinces!.rows.filter(r => r.cross_year).sort((a, b) => a.cross_year! - b.cross_year!)
+                  .map(r => `${r.province} omkring ${r.cross_year} (${r.cross_lo}–${r.cross_hi})`).join(", ")}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <div className="overflow-x-auto">
+        <h3 className="font-bold text-slate-900 mb-1">Bro- och vägstenar och kristna drag</h3>
+        <table className="w-full text-sm">
+          <thead><tr><th className={TH}>Drag</th><th className={TH}>Brostenar</th><th className={TH}>Andra stenar</th>
+            <th className={TH}>Oddskvot (95 % KI)</th><th className={TH}>q</th><th className={TH}>Daterade, med tid</th></tr></thead>
+          <tbody>{c.assoc.map(a => (
+            <tr key={a.key} className={`border-t border-slate-900/5 ${a.all?.q != null && a.all.q < 0.05 ? "bg-amber-50" : ""}`}>
+              <td className="p-2 font-semibold">{a.label}</td><td className="p-2">{pc(a.share_x)} av {a.n_x}</td>
+              <td className="p-2">{pc(a.share_other)}</td>
+              <td className="p-2">{a.all ? `${d2(a.all.or)} (${d2(a.all.lo)}–${d2(a.all.hi)})` : "–"}</td>
+              <td className="p-2">{qText(a.all?.q)}</td>
+              <td className="p-2 text-xs">{a.dated?.or != null ? `${d2(a.dated.or)} (${d2(a.dated.lo)}–${d2(a.dated.hi)}), p ${qText(a.dated.p)}` : "–"}</td>
+            </tr>))}</tbody>
+        </table>
+      </div>
+      <DocsNote anchor="17-statistik-i-r">Hur förändringsanalysen ska läsas och vilka reservationer som gäller står i avsnitt 17.</DocsNote>
+      <Method text={c.method} />
+    </>
+  );
+}
+
+function Stones({ list }: { list: string[] }) {
+  return (
+    <span>
+      {list.slice(0, 8).map((sg, i) => (
+        <span key={sg}>{i > 0 && ", "}<Link href={`/inskrifter/${encodeURIComponent(sg)}`} className="hover:underline">{sg}</Link></span>
+      ))}
+      {list.length > 8 && ` och ${list.length - 8} till`}
+    </span>
+  );
+}
+
+function Anonymous({ data }: { data: Corpus }) {
+  const a = data.anonymous, f = data.figure_urls.anonymous || {};
+  if (!a) return <p className="text-sm text-slate-600">Analysen av okända ristare saknas i den här beräkningen; beräkna korpusanalyserna på nytt.</p>;
+  const v = a.validation, cal = a.calibration;
+  const cands = a.groups.filter(g => g.status === "candidate"), known = a.groups.filter(g => g.status === "known");
+  return (
+    <>
+      <p className="text-sm text-slate-700">
+        Grupper av stenar utan ristare i Rundata som ligger nära varandra och liknar varandra i stavning, språkdrag,
+        formler och stil lika mycket som en ristares stenar brukar göra. En grupp som inte liknar någon känd ristare kan
+        vara en ristare eller verkstad som ännu saknar namn, och får ett <strong>arbetsnamn</strong> efter typstenens
+        socken. Namnet är en etikett för gruppen, inte ett påstående om en person; kontrollera mot litteraturen om gruppen
+        redan är beskriven.
+      </p>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        {[["Möjliga okända ristare", `${cands.length} grupper`], ["Liknar en känd ristare", `${known.length} grupper`],
+          ["Prövat på kända ristare", `${pc(v.purity)} samma ristare`], ["Bara närliggande stenar", `${pc(v.purity_geography)} samma ristare`]].map(([l, val]) => (
+          <div key={l} className="rounded-2xl bg-white border border-slate-200 p-4">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500">{l}</div>
+            <div className="text-xl font-bold text-slate-900">{val}</div>
+          </div>
+        ))}
+      </div>
+      <p className="text-xs text-slate-500">
+        När metoden kördes på {v.n_stones} stenar med känd ristare, som om ristaren vore okänd, bestod en grupp i genomsnitt
+        till {pc(v.purity)} av samma ristare ({pc(v.share_pure)} av grupperna till minst tre fjärdedelar), mot {pc(v.purity_geography)} för
+        lika många närliggande stenar. Två stenar länkas när de ligger inom {cal.link_km} km och är så lika att paret är minst {cal.lr_min} gånger
+        vanligare bland samma ristares stenar än bland olika ristares; {pc(cal.precision)} av sådana par med känd ristare är samma ristare.
+      </p>
+      <Fig src={f.map} alt="Grupper av stenar utan ristare" />
+      <div className="overflow-x-auto">
+        <h3 className="font-bold text-slate-900 mb-1">Möjliga okända ristare</h3>
+        <table className="w-full text-sm">
+          <thead><tr><th className={TH}>Nr</th><th className={TH}>Arbetsnamn</th><th className={TH}>Stenar</th><th className={TH}>Socknar</th>
+            <th className={TH}>Stilgrupper</th><th className={TH}>Utmärks av (gruppen mot trakten)</th><th className={TH}>Stabilitet</th>
+            <th className={TH}>Närmast liknande ristare i Rundata</th></tr></thead>
+          <tbody>{cands.map(g => (
+            <tr key={g.id} className="border-t border-slate-900/5 align-top">
+              <td className="p-2">{g.id}</td>
+              <td className="p-2 font-semibold">{g.name}<div className="text-[11px] font-normal text-slate-500">typsten{" "}
+                <Link href={`/inskrifter/${encodeURIComponent(g.type_stone)}`} className="hover:underline">{g.type_stone}</Link></div></td>
+              <td className="p-2 text-xs">{g.n}: <Stones list={g.stones} /></td>
+              <td className="p-2 text-xs">{g.parishes.slice(0, 4).join(", ")}{g.parishes.length > 4 ? " …" : ""}</td>
+              <td className="p-2 text-xs">{(g.styles || []).map(x => `${x.style} ${x.n}`).join(", ") || "–"}</td>
+              <td className="p-2 text-xs">{(g.marks || []).map(m => `${m.feature} (${pc(m.share_group)} mot ${pc(m.share_area)})`).join("; ") || "–"}</td>
+              <td className="p-2">{pc(g.stability)}</td>
+              <td className="p-2 text-xs">{g.nearest_carver ? `${g.nearest_carver.carver} (${d2(g.nearest_carver.km, 0)} km bort, inte lika nära som samma ristares stenar)` : "ingen inom 50 km"}</td>
+            </tr>))}</tbody>
+        </table>
+      </div>
+      {known.length > 0 && (
+        <div className="overflow-x-auto">
+          <h3 className="font-bold text-slate-900 mb-1">Grupper som liknar en känd ristare</h3>
+          <p className="text-xs text-slate-500 mb-2">Stenar utan ristare i Rundata som kan höra till en känd ristare – underlag för attribuering snarare än en ny ristare.</p>
+          <table className="w-full text-sm">
+            <thead><tr><th className={TH}>Nr</th><th className={TH}>Liknar</th><th className={TH}>Stenar</th><th className={TH}>Attribueringsmodellen</th><th className={TH}>Stabilitet</th></tr></thead>
+            <tbody>{known.map(g => (
+              <tr key={g.id} className="border-t border-slate-900/5 align-top">
+                <td className="p-2">{g.id}</td>
+                <td className="p-2 font-semibold">{g.nearest_carver?.as_close_as_same_carver ? g.nearest_carver.carver : g.model?.carver}</td>
+                <td className="p-2 text-xs">{g.n}: <Stones list={g.stones} /></td>
+                <td className="p-2 text-xs">{g.model ? `${g.model.carver} för ${pc(g.model.share)} av ${g.model.n} stenar med förslag` : "–"}</td>
+                <td className="p-2">{pc(g.stability)}</td>
+              </tr>))}</tbody>
+          </table>
+        </div>
+      )}
+      <DocsNote anchor="17-statistik-i-r">Hur grupperna ska läsas och vilka reservationer som gäller står i avsnitt 17.</DocsNote>
+      <Method text={a.method} />
     </>
   );
 }

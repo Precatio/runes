@@ -32,14 +32,15 @@ from src.styles import BY_CODE
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 R_DIR = os.path.join(ROOT, "r")
 CACHE_DIR = os.environ.get("R_CACHE_DIR", os.path.join(ROOT, "data", "cache", "r"))
-MODULES = ("geography", "clusters", "text", "attribution", "chronology", "dialect", "network")
+MODULES = ("geography", "clusters", "text", "attribution", "anonymous", "chronology", "dialect", "network", "change")
 STONE_MODULES = ("stone", "landscape")
 MODULE_LABELS = {"geography": "Geografi", "clusters": "Klustring och MCA", "text": "Text och formler",
-                 "attribution": "Attribueringsmodell", "chronology": "Seriation och datering",
-                 "dialect": "Stavning och dialekter", "network": "Formelnätverk"}
+                 "attribution": "Attribueringsmodell", "anonymous": "Okända ristare",
+                 "chronology": "Seriation och datering",
+                 "dialect": "Stavning och dialekter", "network": "Formelnätverk", "change": "Förändring i tid och rum"}
 REQUIRED_PACKAGES = ("jsonlite", "dplyr", "tidyr", "stringr", "ggplot2", "sf", "leaflet", "htmlwidgets",
                      "tidytext", "cluster", "FactoMineR", "factoextra", "tidymodels", "ranger", "ragg",
-                     "ca", "stringdist", "igraph", "tidygraph", "ggraph", "terra", "gdistance", "raster", "png")
+                     "ca", "stringdist", "igraph", "tidygraph", "ggraph", "terra", "gdistance", "raster", "png", "mgcv")
 
 # Natural Earth 1:10 milj. (public domain): kustlinje, sjöar och vattendrag, med de europeiska tilläggen
 WATER_LAYERS = {

@@ -26,6 +26,28 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 ### Statistik
 - Attribueringsmodellen i R korsvalideras också grupperat per socken och härad (rätt ristare 72 % slumpvis,
   68 % på ny socken, 57 % i nytt härad), visat på sidan Statistik (R) och i fynden.
+- Ny R-modul `change.R` och fliken Förändring: hur tio språkdrag, skriftdrag och kristna drag förändras över tid och
+  skiljer sig mellan landskap, med plats och ristare konstanta (utjämnad tidskurva, rumslig utjämning, ristaren som
+  slumpeffekt, omräkning med årtal dragna inom stilgruppens intervall), och om bro- och vägstenar oftare har
+  kristna drag (METHODS.md 17).
+- Ny R-modul `anonymous.R` och fliken Okända ristare: grupper av stenar utan ristare som liknar varandra lika mycket
+  som en ristares stenar, validerade på stenar med känd ristare, jämförda med kända ristare i närheten och med
+  arbetsnamn efter typstenens socken för grupper som inte liknar någon känd ristare; stenarna blir fynd i
+  Forskningsluckor (METHODS.md 17).
+- Nio nya språkdrag: ai i alla ord, ʀ skrivet med r, o-runan för o-ljud, stungen i, u och k var för sig, æftiR eller
+  at, skiljetecken och bindrunor (METHODS.md 8). De ingår i attribueringsmodellen, klustringen och seriationen.
+- Kristen bön känns igen även i osäkra läsningar (hakparenteser), som Kristr hjalpi, Guð biargi, Guð lætti och
+  Guðs móðir (249 runstenar i stället för 214).
+
+### Granskning av U 92: stil, språkdrag och signifikans
+- Stilkontrollen jämför stenens stilgrupp med ristarens kärna (stilgrupper på minst 10 % av stenarna) och anger
+  glappet i år enligt Gräslund; minst 25 år gör förslaget kronologiskt problematiskt och slutsatsen högst *svagt*.
+- Språkdragen vägs mot övriga stenar i landskapet (sannolikhetskvot per drag) och prövas med ett empiriskt p-värde
+  (andel av landskapets stenar som passar ristarens profil minst lika bra); när ristaren föreslagits av en metod
+  som bygger på stavningen räknas de inte som oberoende stöd, och ett resultat som inte avgör visas med sin text.
+- Ortografins belägg sänks när likheten inte håller efter justering för urvalet, och tolkningen säger då att
+  stavningen ensam inte räcker; produktiva ristare får en notering om att de drar till sig förslag.
+- Skiljetecken kodas som blandat när inget tecken står för tre fjärdedelar; brøðr räknas inte till o-ljudsorden.
 
 ### Jämför stenar
 - Huggspåren jämförs runa mot runa (permutation av hela runor) i stället för snitt mot snitt; det samlade testet

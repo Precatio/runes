@@ -157,8 +157,10 @@ per_carver <- lapply(seq_along(lv), function(j) {
   list(carver = lv[j], n = sum(s), recall = r3(mean(pred_[s] == j)),
        precision = if (any(pred_ == j)) r3(mean(E$truth[pred_ == j] == j)) else NA)
 })
-conf <- table(truth = lv[E$truth], pred = lv[pred_])
-confused <- as.data.frame(conf) %>% filter(truth != pred, Freq > 0) %>% arrange(desc(Freq)) %>% head(12)
+# Same levels on both sides, also when a carver is never the first choice
+conf <- table(truth = factor(lv[E$truth], levels = lv), pred = factor(lv[pred_], levels = lv))
+confused <- as.data.frame(conf, stringsAsFactors = FALSE) %>% filter(truth != pred, Freq > 0) %>%
+  arrange(desc(Freq)) %>% head(12)
 
 # Final model on all training stones, with permutation importance
 set.seed(seed)

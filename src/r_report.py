@@ -202,6 +202,10 @@ LIMITATIONS = [
     "Korsvalideringen mäter därför överensstämmelse med de bedömningarna snarare än med en oberoende sanning.",
     "Seriationen gäller bara Uppland, där Gräslunds kronologi är framtagen; i hela korpusen följer den första "
     "dimensionen andra mönster än tid.",
+    "Grupperna av stenar utan ristare (okända ristare) kan vara en ristare, en verkstad eller en lokal tradition; "
+    "arbetsnamnen är etiketter, och metoden gav i valideringen grupper där omkring 70 % var samma ristare.",
+    "Förändringsanalysen daterar med Gräslunds stilgrupper (intervall, främst Uppland och Södermanland), och stavning "
+    "speglar skrivtradition och ristarskola lika mycket som uttal.",
     "Vattnet i de geografiska analyserna är Natural Earth i skala 1:10 miljoner; mindre vattendrag och våtmarker saknas.",
     "Strandlinjen vid vikingatiden är en grov modell (dagens höjd minus en landhöjning per landskap), och "
     "höjdmodellen visar dagens markyta. Vägarna är simulerade bästa vägar, inte belagda vikingatida vägar.",

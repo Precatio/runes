@@ -189,22 +189,44 @@ def geography(rec: dict, carver: str, inscriptions: list[dict], home: dict) -> d
             "provinces": dict(provinces.most_common(6)), "plausible": plausible, "text": text}
 
 
+STYLE_CORE_SHARE = 0.1   # a style group on at least this share of the carver's stones is part of the core
+STYLE_STRONG_GAP = 25    # years between the stone's style and the core that make the suggestion chronologically hard
+
+
 def carver_styles(rec: dict | None, carver: str, inscriptions: list[dict]) -> dict:
+    """Stenens stilgrupp mot stilgrupperna på ristarens säkra stenar. En stilgrupp som bara finns på enstaka stenar
+    räknas inte som ristarens; avståndet i år till kärnan (Gräslunds kronologi) avgör om stilen talar emot."""
     styles = Counter(r["style"] for r in inscriptions
                      if carver in certain_carvers(r) and r["style"] and not r["style_uncertain"] and r["style"] != "?")
+    total = sum(styles.values())
     years = [(BY_CODE[s]["from"], BY_CODE[s]["to"]) for s in styles if s in BY_CODE and BY_CODE[s]["from"]]
     span = (min(y[0] for y in years), max(y[1] for y in years)) if years else None
+    core = [s for s, n in styles.items() if n / total >= STYLE_CORE_SHARE] if total else []
+    core_years = [(BY_CODE[s]["from"], BY_CODE[s]["to"]) for s in core if s in BY_CODE and BY_CODE[s]["from"]]
     stone_style = (rec or {}).get("style")
-    fits = None
+    fits, gap = None, None
     if stone_style and not (rec or {}).get("style_uncertain") and styles:
-        fits = stone_style in styles
+        st = BY_CODE.get(stone_style)
+        if st and st["from"] and core_years:
+            lo, hi = min(y[0] for y in core_years), max(y[1] for y in core_years)
+            gap = max(0, lo - st["to"], st["from"] - hi)
+        fits = stone_style in core or (gap == 0 if gap is not None else stone_style in styles)
     text = ("Stilgrupper på ristarens säkra stenar: " + ", ".join(f"{s} ({n})" for s, n in styles.most_common()) + "."
             if styles else "Ristarens stenar saknar säker stilgrupp i Rundata.")
     if span:
         text += f" Det motsvarar ungefär {span[0]}–{span[1]} enligt Gräslunds kronologi."
     if fits is False:
-        text += f" Stenens stilgrupp {stone_style} finns inte bland dem."
-    return {"styles": dict(styles), "span": list(span) if span else None, "fits": fits, "text": text}
+        n_same = styles.get(stone_style, 0)
+        text += (f" Stenens stilgrupp {stone_style} finns {'bara på ' + str(n_same) + ' av ' + str(total) if n_same else 'inte'}"
+                 f"{' av ristarens stenar' if n_same else ' bland dem'}")
+        if gap:
+            text += (f"; ristarens huvudsakliga stilgrupper ({', '.join(sorted(core, key=lambda c: BY_CODE.get(c, {}).get('from') or 0))}) "
+                     f"ligger omkring {gap} år {'senare' if (BY_CODE[stone_style]['to'] or 0) < min(y[0] for y in core_years) else 'tidigare'}")
+            if gap >= STYLE_STRONG_GAP:
+                text += ", vilket gör förslaget kronologiskt problematiskt om stilbestämningen stämmer"
+        text += "."
+    return {"styles": dict(styles), "span": list(span) if span else None, "core": core, "gap_years": gap,
+            "strong": bool(gap is not None and gap >= STYLE_STRONG_GAP), "fits": fits, "text": text}
 
 
 def material_check(rec: dict, carver: str, inscriptions: list[dict]) -> dict | None:
@@ -223,15 +245,52 @@ def material_check(rec: dict, carver: str, inscriptions: list[dict]) -> dict | N
     return {"material": material, "fits": fits, "carver": prof, "text": text}
 
 
-def language_check(rec: dict, carver: str, inscriptions: list[dict], names) -> dict | None:
+_region_cache: dict[tuple, list[tuple[str, frozenset, dict]]] = {}
+
+
+def _region_stones(prov: str, inscriptions: list[dict], names) -> list[tuple[str, frozenset, dict]]:
+    """(signum, säkra ristare, språkdrag) för runstenarna i ett landskap; Rundata ändras inte medan servern kör."""
+    key = (prov, len(inscriptions), id(names))
+    if key not in _region_cache:
+        from src.research_gaps import is_runestone
+        _region_cache[key] = [(r["signum"], frozenset(certain_carvers(r)), language_traits(r, names))
+                              for r in inscriptions if is_runestone(r) and province(r) == prov]
+    return _region_cache[key]
+
+
+def language_check(rec: dict, carver: str, inscriptions: list[dict], names, selected: bool = False) -> dict | None:
+    """Språkdragen mot ristarens profil, vägda mot övriga stenar i landskapet och prövade mot dem: passar stenen
+    ristaren bättre än en slumpvis sten i landskapet som inte är av ristaren? selected: ristaren har valts ut av en
+    metod som själv bygger på stavningen (ortografin, modellen), så språkdragen är inget oberoende stöd – de kan då
+    tala emot men inte för."""
     stone = language_traits(rec, names)
     if not stone:
         return None
     profile = carver_profile(carver, inscriptions, certain_carvers, names, exclude=rec["signum"])
     if profile["n_inscriptions"] < 3:
         return None
-    c = compare_language(stone, profile)
-    c["fits"] = None if c["comparable"] < 2 else c["agree"] / c["comparable"] >= 0.5
+    prov = province(rec)
+    others = [t for sg, cs, t in _region_stones(prov, inscriptions, names) if sg != rec["signum"] and carver not in cs and t]
+    baseline: dict[str, Counter] = {}
+    for t in others:
+        for k, v in t.items():
+            baseline.setdefault(k, Counter())[v] += 1
+    c = compare_language(stone, profile, baseline=baseline if len(others) >= 20 else None, others=others, region=prov)
+    if c.get("lr_total") is not None:
+        p = c.get("p_region")
+        favourable = p is not None and p < 0.05 and c["lr_total"] > 1
+        if p is not None:
+            c["significant"] = favourable
+            c["text"] = c["text"][:-1] + (" Skillnaden mot landskapet är " + ("statistiskt signifikant." if favourable
+                                                                            else "inte statistiskt signifikant."))
+        if selected and favourable:
+            c["text"] += (" Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte "
+                          "som ett oberoende stöd.")
+        # Supports the carver when the stone fits better than nearly all stones in the province (and the carver was not
+        # chosen by spelling); speaks against it when the traits are clearly more common elsewhere
+        c["fits"] = (True if favourable and not selected else (False if c["lr_total"] <= 1 / 3 else None))
+    else:
+        c["fits"] = None if c["comparable"] < 2 else c["agree"] / c["comparable"] >= 0.5
     return c
 
 

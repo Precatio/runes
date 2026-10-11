@@ -62,14 +62,15 @@ def r_probabilities(directory: str | None) -> tuple[dict, dict]:
     return oof, pred
 
 
-def _checks(rec, carver, inscriptions, names, home) -> dict:
-    """Område, stil, språkdrag och bergart för en ristare: True/False/None och en förklaring."""
+def _checks(rec, carver, inscriptions, names, home, selected: bool = False) -> dict:
+    """Område, stil, språkdrag och bergart för en ristare: True/False/None och en förklaring. selected: ristaren är
+    föreslagen av en metod som bygger på stavningen (inte Rundatas), så språkdragen kan tala emot men inte för."""
     out = {}
     g = geography(rec, carver, inscriptions, home)
     out["område"] = (None if g["nearest_km"] is None and not g["in_area"] else bool(g["plausible"]), g["text"])
     st = carver_styles(rec, carver, inscriptions)
     out["stil"] = (st["fits"], st["text"])
-    lang = language_check(rec, carver, inscriptions, names)
+    lang = language_check(rec, carver, inscriptions, names, selected=selected)
     out["språkdrag"] = ((lang or {}).get("fits"), (lang or {}).get("text") or "För få jämförbara språkdrag.")
     mat = material_check(rec, carver, inscriptions)
     out["bergart"] = ((mat or {}).get("fits"), (mat or {}).get("text") or "Bergarten kan inte jämföras.")
@@ -109,7 +110,7 @@ def stone(rec, ctx: dict, detail: bool = False) -> dict:
                                 "reliability": round(smoothed_precision(per.get(r["carver"])) * (1.0 if in_area else 0.5) * length, 3)})
             ortho = {"ranking": ranking, "n_words": rk["n_words"]}
 
-    def sources_for(carver: str) -> tuple[dict, float | None]:
+    def sources_for(carver: str, selected: bool = False) -> tuple[dict, float | None]:
         src: dict[str, dict] = {}
         if probs and carver in probs:
             src["modell"] = {"value": probs[carver], "points_to": max(probs, key=probs.get),
@@ -120,7 +121,7 @@ def stone(rec, ctx: dict, detail: bool = False) -> dict:
             src["ortografi"] = {"value": v, "points_to": order[0],
                                 "text": (f"{carver} kommer {'först' if v == 1 else ('bland de tre första' if v else 'inte bland de tre första')}"
                                          f" ({ortho['n_words']} ord; först: {order[0]}).")}
-        for key, (fits, text) in _checks(rec, carver, inscriptions, names, home).items():
+        for key, (fits, text) in _checks(rec, carver, inscriptions, names, home, selected).items():
             if fits is not None:
                 src[key] = {"value": 1.0 if fits else 0.0, "points_to": None, "text": text}
         sup = sum(WEIGHTS[k] * x["value"] for k, x in src.items()) / sum(WEIGHTS[k] for k in src) if src else None
@@ -144,7 +145,7 @@ def stone(rec, ctx: dict, detail: bool = False) -> dict:
         raw = 1 - (1 - mp) * (1 - op)
         if raw < 0.15:
             continue
-        chk = _checks(rec, c, inscriptions, names, home)
+        chk = _checks(rec, c, inscriptions, names, home, selected=True)  # proposed by the model or the orthography
         alts.append({"carver": c, "strength": round(raw * (0.5 + 0.5 * _plausibility(chk)), 3), "model": round(mp, 3),
                      "orthography": round(op, 3), "checks": {k: v for k, (v, _) in chk.items()},
                      **({"check_texts": {k: t for k, (_, t) in chk.items()}} if detail else {})})

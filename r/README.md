@@ -17,9 +17,11 @@ ligger), `water_dir` (Natural Earth, valfri) och `seed`; stenmodulerna dessutom 
 | `clusters.R` | korpus | `clusters.json`, `clusters_stones.csv`, `clusters_model.rds`, `kluster_*.png` |
 | `text.R` | korpus | `text.json`, `text_features.csv`, `text_*.png` |
 | `attribution.R` | korpus (efter geography och text) | `attribution.json`, `attribution_oof.csv`, `attribution_model.rds`, `modell_*.png` |
+| `anonymous.R` | korpus (efter geography, text och attribution) | `anonymous.json`, `okanda_ristare.png` |
 | `chronology.R` | korpus (efter text) | `chronology.json`, `chronology_stones.csv`, `seriation_*.png` |
 | `dialect.R` | korpus | `dialect.json`, `dialekt_*.png` |
 | `network.R` | korpus | `network.json`, `natverk_*.png` |
+| `change.R` | korpus | `change.json`, `forandring_*.png` |
 | `stone.R` | sten | `stone.json`, `sten_*.png` |
 | `landscape.R` | sten | `landscape.json`, `landskap_*.png` |
 

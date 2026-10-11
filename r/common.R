@@ -71,7 +71,10 @@ TRAIT_LABELS <- c(
   trait_ai_sten = "Diftongen ai i 'sten'", trait_au_och = "Diftongen au i 'och'",
   trait_nasal = "Nasal före konsonant", trait_h_bortfall = "h-bortfall", trait_stungna = "Stungna runor",
   trait_efter = "Stavning av 'efter'", trait_denna = "Stavning av 'denna'", trait_bon = "Kristen bön",
-  trait_sjal = "Själsbön", trait_signatur = "Ristarsignatur", trait_runor = "Skrivningen av 'runor'"
+  trait_sjal = "Själsbön", trait_signatur = "Ristarsignatur", trait_runor = "Skrivningen av 'runor'",
+  trait_ai_alla = "Diftongen ai i alla ord", trait_r_for_R = "ʀ skrivet med r", trait_o_runa = "o-runan för o-ljud",
+  trait_stungen_e = "Stungen i (e)", trait_stungen_y = "Stungen u (y)", trait_stungen_g = "Stungen k (g)",
+  trait_preposition = "æftiR eller at", trait_skiljetecken = "Skiljetecken", trait_bindrunor = "Bindrunor"
 )
 CAT_LABELS <- c(
   cat_minne = "Minnesinskrift", cat_sjalvminne = "Självminne", cat_bro_vag = "Bro- och vägbygge",
@@ -84,7 +87,10 @@ TRAIT_LABELS_EN <- c(
   trait_ai_sten = "Diphthong in 'stone'", trait_au_och = "Diphthong in 'and'", trait_nasal = "Nasal before consonant",
   trait_h_bortfall = "Initial h", trait_stungna = "Dotted runes", trait_efter = "Spelling of 'after'",
   trait_denna = "Spelling of 'this'", trait_bon = "Christian prayer", trait_sjal = "Prayer for the soul",
-  trait_signatur = "Carver's signature", trait_runor = "Spelling of 'runes'"
+  trait_signatur = "Carver's signature", trait_runor = "Spelling of 'runes'",
+  trait_ai_alla = "Diphthong ai in all words", trait_r_for_R = "ʀ written as r", trait_o_runa = "o-rune for o",
+  trait_stungen_e = "Dotted i (e)", trait_stungen_y = "Dotted u (y)", trait_stungen_g = "Dotted k (g)",
+  trait_preposition = "æftiR or at", trait_skiljetecken = "Word separators", trait_bindrunor = "Bind-runes"
 )
 CAT_LABELS_EN <- c(
   cat_minne = "Memorial", cat_sjalvminne = "Self-commemoration", cat_bro_vag = "Bridge or road building",
@@ -96,7 +102,9 @@ FORMULA_LABELS_EN <- c(formula_raising = "Raising formula", formula_monument = "
 VALUE_EN <- c(
   "ja" = "yes", "nej" = "no", "ai bevarad" = "diphthong", "monoftong" = "monophthong", "skriven" = "written",
   "utelämnad" = "omitted", "h skrivet" = "h written", "h saknas" = "h omitted", "ej bestämbart" = "not determinable",
-  "ej bestämbar" = "not determinable", "ingen" = "none", "lét resa" = "had raised", "reste" = "raised", "satte" = "set",
+  "ej bestämbar" = "not determinable", "ingen" = "none", "diftong" = "diphthong", "båda" = "both",
+  "ʀ-runa" = "ʀ-rune", "r för ʀ" = "r for ʀ", "o-runa" = "o-rune", "u-runa" = "u-rune", "punkt" = "dot",
+  "kolon" = "colon", "kryss" = "cross", "apostrof" = "apostrophe", "plus" = "plus", "blandat" = "mixed", "lét resa" = "had raised", "reste" = "raised", "satte" = "set",
   "gjorde" = "made", "rätte" = "erected", "högg" = "cut", "sten" = "stone", "bro" = "bridge", "stav" = "staff",
   "kumbl" = "kumbl", "merki" = "merki", "substantiv–pronomen" = "noun–pronoun", "pronomen–substantiv" = "pronoun–noun",
   "Guð hjälpe själ" = "God help the soul", "Guð och Guds moder" = "God and God's mother", "Guð hjälpe" = "God help",

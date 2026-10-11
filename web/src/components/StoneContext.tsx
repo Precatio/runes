@@ -13,7 +13,9 @@ export interface Geology {
   verdict: "på platsen" | "i närheten" | "inte i närheten" | "okänt"; text: string; source: string; caveat: string;
 }
 
-export interface LanguageTrait { trait: string; group: "ljud" | "bruk"; label: string; definition: string; value: string }
+const GROUP_LABEL: Record<string, string> = { ljud: "Ljud", bruk: "Bruk", skrift: "Skrift" };
+
+export interface LanguageTrait { trait: string; group: "ljud" | "bruk" | "skrift"; label: string; definition: string; value: string }
 export interface LanguageComparison {
   rows: { trait: string; group: string; label: string; definition: string; stone: string; carver_common: string; share: number; n: number; agrees: boolean }[];
   agree: number; comparable: number; text: string;
@@ -104,7 +106,7 @@ export function LanguageTraits({ signum, carver }: { signum: string; carver?: st
       {data.traits.length === 0 && <li className="text-slate-500">Inga bestämbara språkdrag (för kort eller skadad text).</li>}
       {data.traits.map(t => (
         <li key={t.trait} title={t.definition}>
-          <span className="text-slate-500">{t.group === "ljud" ? "Ljud" : "Bruk"}:</span> <span className="font-semibold">{t.label}</span> – {t.value}
+          <span className="text-slate-500">{GROUP_LABEL[t.group] ?? t.group}:</span> <span className="font-semibold">{t.label}</span> – {t.value}
         </li>
       ))}
     </ul>
@@ -121,7 +123,7 @@ export function LanguageTable({ comparison }: { comparison: LanguageComparison }
           <tbody>
             {comparison.rows.map(r => (
               <tr key={r.trait} className="border-t border-slate-900/5" title={r.definition}>
-                <td className="py-0.5">{r.label} <span className="text-slate-400">({r.group === "ljud" ? "ljud" : "bruk"})</span></td>
+                <td className="py-0.5">{r.label} <span className="text-slate-400">({(GROUP_LABEL[r.group] ?? r.group).toLowerCase()})</span></td>
                 <td>{r.stone}</td>
                 <td>{r.carver_common} <span className="text-slate-400">({Math.round(r.share * 100)} % som stenen, n={r.n})</span></td>
                 <td className={r.agrees ? "text-emerald-700 font-bold" : "text-amber-700 font-bold"}>{r.agrees ? "✓" : "!"}</td>
