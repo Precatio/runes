@@ -149,13 +149,51 @@ class RundataStore:
         return out
 
     def geo(self):
-        """Kompakt lista för kartan: [signum, lat, lon, period, style, ristare (S/A), försvunnen]."""
+        """Kompakt lista för kartan: [signum, lat, lon, period, stil, ristare (S/A), försvunnen, landskap, föremål,
+        bergart (grupp), kors, ristarstatus, innehållskategorier, vikingatida runsten]."""
         return [
             [r["signum"], r["lat"], r["lon"], r["period"], r["style"],
              "; ".join(c["name"] for c in r["carvers"] if c["kind"] in ("S", "A")),
-             int(r["flags"]["lost"])]
+             int(r["flags"]["lost"]), r["signum"].split(" ")[0], r.get("object") or "",
+             material_group(r), int(bool((r.get("cross_form") or "").strip(" ;0"))),
+             carver_status(r), inscription_categories(r), int(gaps.is_runestone(r))]
             for r in self.inscriptions if r["lat"] is not None
         ]
+
+    def text_matches(self, q: str) -> list[str]:
+        """Signum för inskrifter med koordinater vars text, plats eller socken innehåller q (skiftlägesokänsligt)."""
+        q = q.lower().strip()
+        return [r["signum"] for r in self.inscriptions if r["lat"] is not None and q in " ".join(
+            (r["place"], r["parish"], r["transliteration"], r["normalization"], r.get("normalization_ows") or "",
+             r["translation_en"])).lower()]
+
+
+MATERIAL_GROUPS = ("granit", "gnejs", "sandsten", "kalksten", "gråsten", "skiffer", "diabas", "porfyr")
+
+
+OTHER_MATERIALS = {"trä": "trä", "metall": "metall", "ben/horn": "ben och horn", "puts": "puts"}
+
+
+def material_group(rec: dict) -> str:
+    """Materialet i grova grupper för kartan: bergarten för sten (första träffen i Rundatas fritext, så att
+    'gnejsgranit' blir granit), annars materialtypen (trä, metall, ben och horn, puts)."""
+    kind = rec.get("material_type") or ""
+    if kind in OTHER_MATERIALS:
+        return OTHER_MATERIALS[kind]
+    m = (rec.get("material") or "").lower()
+    if not m:
+        return ""
+    return next((g for g in MATERIAL_GROUPS if g in m), "annan sten")
+
+
+def carver_status(rec: dict) -> str:
+    """S = signerad, A = attribuerad (säker), ? = bara osäker attribuering, tom = ingen ristare i Rundata."""
+    kinds = {(c["kind"], c["uncertain"]) for c in rec["carvers"] if c["kind"] in ("S", "A")}
+    if any(k == "S" and not u for k, u in kinds):
+        return "S"
+    if any(k == "A" and not u for k, u in kinds):
+        return "A"
+    return "?" if kinds else ""
 
 
 @lru_cache(maxsize=1)

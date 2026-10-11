@@ -62,6 +62,47 @@ def styles():
     return {"groups": STYLE_GROUPS, "source": STYLE_SOURCE, "distribution": store().style_stats()}
 
 
+# Signum prefixes outside Sweden that occur on the map
+OTHER_REGIONS = {"N": "Norge", "DR": "Danmark", "IS": "Island", "GR": "Grönland", "Or": "Orkney", "Sh": "Shetland",
+                 "IM": "Isle of Man", "E": "England", "Sc": "Skottland", "Ir": "Irland", "FI": "Finland",
+                 "By": "Bysans", "Fær": "Färöarna"}
+
+
 @router.get("/geo")
 def geo():
-    return {"fields": ["signum", "lat", "lon", "period", "style", "carvers", "lost"], "rows": store().geo()}
+    """Inskrifter med koordinater för kartan, med etiketter för landskap, innehåll och språkdrag."""
+    from src.inscription_types import CATEGORIES
+    from src.language_profile import TRAITS
+    from src.research_gaps import PROVINCE_NAMES
+    return {"fields": ["signum", "lat", "lon", "period", "style", "carvers", "lost", "province", "object",
+                       "material", "cross", "carver_status", "categories", "runestone"],
+            "rows": store().geo(),
+            "provinces": {**OTHER_REGIONS, **PROVINCE_NAMES},
+            "categories": {k: v[0] for k, v in CATEGORIES.items()},
+            "traits": {k: {"group": v[0], "label": v[1]} for k, v in TRAITS.items()}}
+
+
+@router.get("/geo/trait/{key}")
+def geo_trait(key: str):
+    """Ett språkdrag för alla inskrifter med koordinater: värdet per signum och hur vanligt varje värde är."""
+    from collections import Counter
+    from api.routers.orthography import model as orthography_model
+    from src.language_profile import TRAITS, traits
+    if key not in TRAITS:
+        raise HTTPException(status_code=404, detail=f"Okänt språkdrag: {key}")
+    names = orthography_model().names
+    rows = {}
+    for r in store().inscriptions:
+        if r["lat"] is not None:
+            v = traits(r, names).get(key)
+            if v:
+                rows[r["signum"]] = v
+    return {"key": key, "label": TRAITS[key][1], "definition": TRAITS[key][2],
+            "values": dict(Counter(rows.values()).most_common()), "rows": rows}
+
+
+@router.get("/geo/match")
+def geo_match(q: str = Query(..., min_length=2, max_length=100)):
+    """Signum för inskrifter med koordinater där texten (translitterering, normalisering, översättning), platsen
+    eller socknen innehåller söktexten."""
+    return {"q": q, "signa": store().text_matches(q)}

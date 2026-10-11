@@ -144,10 +144,14 @@ export const rundata = {
     ),
   styles: () =>
     getJSON<{ groups: StyleGroup[]; source: string; distribution: StyleDistribution[] }>("/api/rundata/styles"),
+  // [signum, lat, lon, period, style, carvers, lost, province, object, material, cross, carver status, categories, runestone]
   geo: () =>
-    getJSON<{ fields: string[]; rows: [string, number, number, string | null, string | null, string, number][] }>(
-      "/api/rundata/geo",
-    ),
+    getJSON<{
+      fields: string[];
+      rows: [string, number, number, string | null, string | null, string, number, string, string, string, number, string, string[], number][];
+      provinces: Record<string, string>; categories: Record<string, string>;
+      traits: Record<string, { group: string; label: string }>;
+    }>("/api/rundata/geo"),
   orthographyProfile: (signum: string) => getJSON<OrthographyProfile>(`/api/orthography/profile/${enc(signum)}`),
   similar: (signum: string, limit = 10) =>
     getJSON<SimilarInscription[]>(`/api/orthography/similar/${enc(signum)}?limit=${limit}`),

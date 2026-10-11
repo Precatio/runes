@@ -5,6 +5,14 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Karta
+- Nya filter: fritext i inskriften (translitterering, normalisering, översättning, plats), landskap, innehåll (de nio
+  kategorierna), ristarstatus, material, kors, språkdrag med värde, status i Stenöversikt och bara svenska
+  vikingatida runstenar.
+- Färg efter ristarstatus, material, innehåll, språkdrag eller status i Stenöversikt, utöver stilgrupp och period.
+- Aktiva filter som etiketter, fördelning per landskap, kartan zoomar till det som syns, filtren sparas i adressen
+  (delbar länk) och det som syns kan laddas ner som CSV.
+
 ### Mätmetod `groove-5`
 - Den automatiska spåranalysen mäter bara spår som känns igen som runor; slinglinjer, ornamentik och möjliga
   sprickor sorteras bort med skäl (METHODS.md 1c, steg 5).
