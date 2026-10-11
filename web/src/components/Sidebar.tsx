@@ -148,6 +148,16 @@ export default function Sidebar() {
       )
     },
     {
+      name: t.sidebar.overview,
+      href: "/oversikt",
+      group: "research",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.75} stroke="currentColor" className="w-5 h-5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3 3v18h18M7.5 15.75h.008v.008H7.5v-.008Zm4.5-4.5h.008v.008H12v-.008Zm4.5 2.25h.008v.008H16.5v-.008Zm-2.25-6h.008v.008h-.008V7.5Z" />
+        </svg>
+      )
+    },
+    {
       name: t.sidebar.gaps,
       href: "/luckor",
       group: "research",

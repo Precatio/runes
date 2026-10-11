@@ -18,6 +18,7 @@ export interface Translations {
     corpus: string;
     compare: string;
     gaps: string;
+    overview: string;
     statistics: string;
     stone_analysis: string;
     reports: string;
@@ -79,6 +80,7 @@ export const translations: Record<Language, Translations> = {
       corpus: "Mätkorpus",
       compare: "Jämför stenar",
       gaps: "Forskningsluckor",
+      overview: "Stenöversikt",
       statistics: "Statistik (R)",
       stone_analysis: "Stenanalys (allt i ett)",
       reports: "Rapporter",
@@ -138,6 +140,7 @@ export const translations: Record<Language, Translations> = {
       corpus: "Measurement corpus",
       compare: "Compare stones",
       gaps: "Research gaps",
+      overview: "Stone overview",
       statistics: "Statistics (R)",
       stone_analysis: "Full stone analysis",
       reports: "Reports",

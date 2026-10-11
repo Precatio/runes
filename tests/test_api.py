@@ -260,3 +260,19 @@ def test_auto_analyze_records_protocol(client, stone_id):
     assert any(t["id"] == "vitki-protokollet" for t in docs["toc"]) and "Kända brister" in docs["html"]
     code = client.get("/api/docs/code").json()
     assert any(e["path"] == "src/protocol.py" for e in code["modules"])
+
+
+
+@pytest.mark.skipif(not os.path.exists(os.path.join(os.path.dirname(__file__), "..", "data", "rundata.json")),
+                    reason="data/rundata.json saknas")
+def test_stone_overview(client):
+    o = client.get("/api/research/overview").json()
+    statuses = set(o["status_order"])
+    assert len(o["stones"]) > 2000 and all(s["status"] in statuses for s in o["stones"])
+    assert sum(o["counts"].values()) == len(o["stones"])
+    signed = [s for s in o["stones"] if s["carver_kind"] == "S"]
+    assert signed and all(s["status"] == "signerad" for s in signed)
+    assert all(s["support"] is None or 0 <= s["support"] <= 1 for s in o["stones"])
+    p = client.get("/api/research/overview/U 344").json()
+    assert p["carver"] == "Åsmund" and p["sources"] and "variables" in p and p["variables"]["n_words"] > 0
+    assert client.get("/api/research/overview/Inte 999").status_code == 404

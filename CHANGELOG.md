@@ -27,6 +27,12 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 - Attribueringsmodellen i R korsvalideras också grupperat per socken och härad (rätt ristare 72 % slumpvis,
   68 % på ny socken, 57 % i nytt härad), visat på sidan Statistik (R) och i fynden.
 
+### Stenöversikt
+- Ny sida Stenöversikt: varje runsten som en punkt efter hur väl sex metoder stöder Rundatas ristare och hur
+  starkt det bästa alternativet är (kan vara felbedömd, omstridd, stöds, svagt underlag; nytt eller möjligt
+  förslag för stenar utan ristare), med kontroll mot signerade stenar och en profil per sten (METHODS.md 13c).
+- Reservationerna på korpussidorna flyttade till dokumentationen.
+
 ### Stenens storlek
 - Mått (höjd, bredd, tjocklek, runhöjd) för 1 384 vikingatida runstenar ur Kulturmiljöregistret via Runor och
   K-samsök (CC0; `data/stone_dimensions.json`, `scripts/build_stone_dimensions.py`), visade i Inskrifter och

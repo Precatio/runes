@@ -140,6 +140,59 @@ def stone_size_analysis():
     return _stone_size(mtime)
 
 
+@lru_cache(maxsize=2)
+def _overview_context(fp: str):
+    from api.routers import rstats
+    from src import r_bridge, stone_overview
+    d = r_bridge.JOB.directory(fp) if rstats.corpus_ready() else None
+    ctx = stone_overview.context(store().inscriptions, orthography_model(), d)
+    rows = {}
+    if d:
+        rows = {name: {r["signum"]: r for r in r_bridge.stone_rows(fp, f"{name}_stones.csv")} for name in ("chronology", "clusters")}
+    return ctx, rows
+
+
+@lru_cache(maxsize=2)
+def _overview(fp: str) -> dict:
+    from src import stone_overview
+    ctx, _ = _overview_context(fp)
+    stones = [stone_overview.stone(r, ctx) for r in store().inscriptions if gaps.is_runestone(r)]
+    signed = [x for x in stones if x["status"] == "signerad"]
+    flagged = [x for x in signed if (x["alternative"] or {}).get("strength", 0) >= 0.4]
+    return {"stones": stones,
+            "counts": {s: sum(1 for x in stones if x["status"] == s) for s in stone_overview.STATUS_ORDER},
+            "control": {"n_signed": len(signed), "flagged": len(flagged),
+                        "would_be_misjudged": sum(1 for x in flagged if (x["support"] or 0) < 0.4)},
+            "r_available": bool(ctx["oof"] or ctx["pred"]), "status_order": list(stone_overview.STATUS_ORDER)}
+
+
+def _fp() -> str:
+    from api.routers import rstats
+    return rstats.fingerprint() if rstats.corpus_ready() else "utan-r"
+
+
+@router.get("/overview")
+def stones_overview():
+    """Alla runstenar med stöd för Rundatas ristare, starkaste alternativ och status (METHODS.md 13c)."""
+    return _overview(_fp())
+
+
+@router.get("/overview/{signum:path}")
+def stone_profile(signum: str):
+    """En stens samlade belägg (metod för metod), alternativa ristare och övriga variabler."""
+    from fastapi import HTTPException
+    from src import crosscheck, stone_overview
+    rec = store().get(signum)
+    if not rec or not gaps.is_runestone(rec):
+        raise HTTPException(status_code=404, detail=f"'{signum}' är ingen svensk vikingatida runsten i Rundata.")
+    ctx, rows = _overview_context(_fp())
+    out = stone_overview.stone(rec, ctx, detail=True)
+    out["variables"] = stone_overview.variables(rec, store().inscriptions, rows)
+    alt = (out.get("alternative") or {}).get("carver")
+    out["crosscheck"] = crosscheck.cached(rec["signum"], alt) if alt else None
+    return out
+
+
 @router.get("/categories")
 def inscription_categories():
     """Inskrifternas syfte och innehåll per ristare, med test mot genomsnittet."""

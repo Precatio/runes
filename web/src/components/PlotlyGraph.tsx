@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
 
-export default function PlotlyGraph({ data, layout, useResizeHandler = true, style = { width: "100%", height: "100%" } }: any) {
+export default function PlotlyGraph({ data, layout, useResizeHandler = true, style = { width: "100%", height: "100%" }, onClick }: any) {
   return (
     <Plot
       data={data}
@@ -13,6 +13,7 @@ export default function PlotlyGraph({ data, layout, useResizeHandler = true, sty
       useResizeHandler={useResizeHandler}
       style={style}
       config={{ responsive: true, displayModeBar: false }}
+      onClick={onClick}
     />
   );
 }
