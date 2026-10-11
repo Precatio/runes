@@ -6,6 +6,29 @@ from api.routers import chat, threed, twod, raa, synthesis, phonetics, rundata, 
 
 app = FastAPI(title="Vitki API")
 
+
+@app.on_event("startup")
+def _warm_caches():
+    """Värmer de långsamma svaren i bakgrunden när servern startar: R-kontrollen, R-korpusens version och
+    stenöversikten. Svaren sparas också på disk, så en omstart läser dem i stället för att räkna om."""
+    import threading
+
+    def warm():
+        try:
+            from api.routers import research, rstats
+            from src import r_bridge
+            r_bridge.status()
+            rstats.fingerprint()
+            research._overview(research._fp())
+            research._hypotheses()
+            research._open_questions()
+            research._orthographic_findings()
+        except Exception as e:  # warming is an optimisation; requests compute what they need
+            from api.errors import logger
+            logger.warning("Uppvärmningen av cachen misslyckades: %r", e)
+    if os.environ.get("WARM_CACHES", "1") != "0":
+        threading.Thread(target=warm, daemon=True).start()
+
 # Configure CORS for Next.js frontend (comma-separated list in CORS_ORIGINS)
 CORS_ORIGINS = [o.strip() for o in os.environ.get("CORS_ORIGINS", "http://localhost:3000").split(",") if o.strip()]
 

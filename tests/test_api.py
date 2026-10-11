@@ -276,3 +276,17 @@ def test_stone_overview(client):
     p = client.get("/api/research/overview/U 344").json()
     assert p["carver"] == "Åsmund" and p["sources"] and "variables" in p and p["variables"]["n_words"] > 0
     assert client.get("/api/research/overview/Inte 999").status_code == 404
+
+
+
+@pytest.mark.skipif(not os.path.exists(os.path.join(os.path.dirname(__file__), "..", "data", "rundata.json")),
+                    reason="data/rundata.json saknas")
+def test_interpret_finding(client):
+    f = {"signum": "U 344", "method": "ortografi", "verdict": "stämmer", "suggested": "Åsmund", "existing": "Åsmund (A)",
+         "evidence": 0.6, "stats": {"similarity": 0.7, "margin": 0.1, "n_words": 20, "precision": 0.7, "second": "Öpir 1",
+                                    "p": 0.01, "p_adjusted": 0.2, "in_area": True}}
+    out = client.post("/api/research/interpret", json=f).json()
+    assert out["level"] == "bekräftelse" and [p["title"] for p in out["paragraphs"]][0] == "Vad fyndet säger"
+    assert "justerat" in out["paragraphs"][1]["text"]
+    new = client.post("/api/research/interpret", json={**f, "verdict": "nytt", "evidence": 0.9}).json()
+    assert new["level"] != "starkt"  # the adjusted p-value is not below 0.05

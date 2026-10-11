@@ -32,6 +32,10 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   starkt det bästa alternativet är (kan vara felbedömd, omstridd, stöds, svagt underlag; nytt eller möjligt
   förslag för stenar utan ristare), med kontroll mot signerade stenar och en profil per sten (METHODS.md 13c).
 - Reservationerna på korpussidorna flyttade till dokumentationen.
+- Tolkning av varje fynd i Forskningsluckor: belägg, p-värde, språkdrag, bergart, nyare källor och de andra
+  metodernas besked vägs samman i ett resonemang med en slutsats (METHODS.md 13d).
+- Runologiskt arkiv ombyggt: runornas namn enligt runedikterna, ristare, syften och kända stenar ur data.
+- Snabbare: R-kontrollen och Stenöversikten sparas på disk, och servern värmer de långsamma svaren vid start.
 
 ### Stenens storlek
 - Mått (höjd, bredd, tjocklek, runhöjd) för 1 384 vikingatida runstenar ur Kulturmiljöregistret via Runor och

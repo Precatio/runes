@@ -59,9 +59,13 @@ export default function OverviewPage() {
   return <Suspense fallback={null}><Overview /></Suspense>;
 }
 
+// Kept for the rest of the visit, so that returning to the page is instant (the server also caches it on disk)
+let overviewMemo: OverviewData | null = null;
+const profileMemo = new Map<string, Profile>();
+
 function Overview() {
   const params = useSearchParams();
-  const [data, setData] = useState<OverviewData | null>(null);
+  const [data, setData] = useState<OverviewData | null>(overviewMemo);
   const [error, setError] = useState<string | null>(null);
   const [province, setProvince] = useState("");
   const [carver, setCarver] = useState("");
@@ -71,8 +75,10 @@ function Overview() {
   const [showTable, setShowTable] = useState(false);
 
   useEffect(() => {
+    if (overviewMemo) return;
     fetch(`${API_URL}/api/research/overview`).then(r => (r.ok ? r.json() : Promise.reject(new Error(`Fel ${r.status}`))))
-      .then(setData).catch(e => setError(e instanceof Error ? e.message : "Kunde inte hämta översikten."));
+      .then((d: OverviewData) => { overviewMemo = d; setData(d); })
+      .catch(e => setError(e instanceof Error ? e.message : "Kunde inte hämta översikten."));
   }, []);
 
   const provinces = useMemo(() => [...new Set((data?.stones ?? []).map(s => s.province))].sort(), [data]);
@@ -261,12 +267,13 @@ function Bar({ value, color = "#2a78d6" }: { value: number | null | undefined; c
 }
 
 function StoneProfile({ signum, onClose }: { signum: string; onClose: () => void }) {
-  const [p, setP] = useState<Profile | null>(null);
+  const [p, setP] = useState<Profile | null>(profileMemo.get(signum) ?? null);
   const [error, setError] = useState<string | null>(null);
   // Keyed by signum in the parent, so a new stone starts with empty state
   useEffect(() => {
+    if (profileMemo.has(signum)) return;
     fetch(`${API_URL}/api/research/overview/${encodeURIComponent(signum)}`).then(r => (r.ok ? r.json() : r.json().then(j => Promise.reject(new Error(j.detail)))))
-      .then(setP).catch(e => setError(e instanceof Error ? e.message : "Kunde inte hämta stenen."));
+      .then((d: Profile) => { profileMemo.set(signum, d); setP(d); }).catch(e => setError(e instanceof Error ? e.message : "Kunde inte hämta stenen."));
   }, [signum]);
   if (error) return <div className="liquid-glass-island rounded-[24px] p-5 text-sm text-red-700">{error}</div>;
   if (!p) return <div className="liquid-glass-island rounded-[24px] p-5 text-sm text-slate-500">Hämtar {signum} …</div>;

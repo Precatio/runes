@@ -4,6 +4,8 @@ import os
 os.environ.setdefault("GEOLOGY_DISABLED", "1")
 # R analyses take minutes and need R installed; tests/test_r.py enables them explicitly
 os.environ.setdefault("R_DISABLED", "1")
+# The background warm-up at server start is not needed in tests
+os.environ.setdefault("WARM_CACHES", "0")
 
 import pytest  # noqa: E402
 

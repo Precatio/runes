@@ -157,6 +157,10 @@ def orthographic_findings(model, inscriptions: list[dict], min_words=8, min_marg
                               f"{top['carver']}s profil (p {_p(sig['p_value'])}; justerat för att den bästa av "
                               f"{sig['n_carvers']} ristare valts: p {_p(sig['p_adjusted'])})")
         attributed = [c["name"] for c in rec["carvers"] if c["kind"] in ("S", "A") and not c["uncertain"]]
+        # Structured values for the interpretation (src/interpretation.py)
+        stats = {"similarity": round(top["similarity"], 3), "margin": round(margin, 3), "n_words": rk["n_words"],
+                 "precision": round(precision, 3), "in_area": in_area, "second": second["carver"],
+                 "p": sig["p_value"] if sig else None, "p_adjusted": sig["p_adjusted"] if sig else None}
         if not has_carver(rec):
             if top["similarity"] < min_similarity or margin < min_margin:
                 continue
@@ -166,7 +170,7 @@ def orthographic_findings(model, inscriptions: list[dict], min_words=8, min_marg
             rel, rel_reasons = relevance(rec, top["carver"], coverage, oeuvre)
             out.append(_finding(rec, "ortografi", "nytt", ours, _carver_text(rec), evidence, novelty, rel,
                                 {"belägg": ev_reasons, "nyhet": [nov_reason], "relevans": rel_reasons}, True,
-                                suggested=top["carver"]))
+                                suggested=top["carver"], stats=stats))
         elif len(attributed) == 1 and attributed[0] in known:
             truth = attributed[0]
             signed = any(c["kind"] == "S" for c in rec["carvers"])
@@ -177,7 +181,7 @@ def orthographic_findings(model, inscriptions: list[dict], min_words=8, min_marg
                 out.append(_finding(rec, "ortografi", "stämmer", ours, _carver_text(rec), evidence,
                                     0.1 if not signed else 0.05, rel,
                                     {"belägg": ev_reasons, "nyhet": ["samma ristare som i litteraturen"],
-                                     "relevans": rel_reasons}, independent=False, suggested=top["carver"]))
+                                     "relevans": rel_reasons}, independent=False, suggested=top["carver"], stats=stats))
             elif truth not in order and margin >= min_margin:
                 if signed:
                     novelty, nov = 0.05, "stenen är signerad – avvikelsen talar mot metoden, inte mot ristaren"
@@ -185,7 +189,7 @@ def orthographic_findings(model, inscriptions: list[dict], min_words=8, min_marg
                     novelty, nov = 0.7, "ifrågasätter en attribuering (A) i litteraturen"
                 out.append(_finding(rec, "ortografi", "motsäger", ours, _carver_text(rec), evidence, novelty, rel,
                                     {"belägg": ev_reasons, "nyhet": [nov], "relevans": rel_reasons},
-                                    independent=True, suggested=top["carver"]))
+                                    independent=True, suggested=top["carver"], stats=stats))
     return out
 
 

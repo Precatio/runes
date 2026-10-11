@@ -61,6 +61,7 @@ interface Gaps {
 
 type Verdict = "stämmer" | "nytt" | "motsäger";
 interface Finding extends StoneExtras {
+  stats?: Record<string, number | string | boolean | null>;
   signum: string; place: string; province: string; method: string; verdict: Verdict; ours: string; existing: string;
   evidence: number; novelty: number; relevance: number; score: number; assessment: string; suggested?: string;
   reasons: { belägg: string[]; nyhet: string[]; relevans: string[] };
@@ -621,6 +622,49 @@ function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; loggedIn
   );
 }
 
+interface Interpretation { paragraphs: { title: string; text: string }[]; level: string; support: number; against: number }
+const interpretations = new Map<string, Interpretation>();
+const LEVEL_STYLE: Record<string, string> = {
+  starkt: "border-emerald-300 bg-emerald-50/60", "måttligt": "border-sky-300 bg-sky-50/60", svagt: "border-slate-300 bg-slate-50",
+  "redan känt": "border-slate-300 bg-slate-50", metodfel: "border-amber-300 bg-amber-50/60", "bekräftelse": "border-emerald-200 bg-white",
+};
+
+// A reasoned reading of the finding, weighing its evidence against the other methods and newer sources
+function InterpretationBox({ f }: { f: Finding }) {
+  const key = `${f.signum}|${f.method}|${f.suggested ?? ""}|${f.crosscheck?.status ?? ""}`;
+  const [it, setIt] = useState<Interpretation | null>(interpretations.get(key) ?? null);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    if (interpretations.has(key)) return;
+    fetch(`${API_URL}/api/research/interpret`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(f) })
+      .then(r => (r.ok ? r.json() : Promise.reject(new Error(`Fel ${r.status}`))))
+      .then((d: Interpretation) => { interpretations.set(key, d); setIt(d); })
+      .catch(e => setError(e instanceof Error ? e.message : "Tolkningen kunde inte hämtas."));
+  }, [key, f]);
+  if (error) return <p className="text-red-700">{error}</p>;
+  if (!it) return <p className="text-slate-500">Väger samman beläggen …</p>;
+  const last = it.paragraphs[it.paragraphs.length - 1];
+  return (
+    <div className={`rounded-xl border px-4 py-3 mb-3 ${LEVEL_STYLE[it.level] ?? "border-slate-200"}`}>
+      <div className="flex flex-wrap items-baseline gap-2 mb-1">
+        <span className="font-bold uppercase tracking-wider text-[10px] text-slate-500">Tolkning</span>
+        <span className="text-xs font-bold text-slate-900">{it.level}</span>
+        <span className="text-[11px] text-slate-500">· {it.support} andra belägg för, {it.against} emot</span>
+      </div>
+      <p className="text-sm text-slate-900 font-medium">{last.text}</p>
+      <details className="mt-2">
+        <summary className="cursor-pointer text-[11px] font-semibold text-slate-600">Resonemanget steg för steg</summary>
+        <div className="mt-2 space-y-2">
+          {it.paragraphs.slice(0, -1).map(p => (
+            <div key={p.title}><span className="font-semibold text-slate-800">{p.title}. </span><span>{p.text}</span></div>
+          ))}
+        </div>
+      </details>
+      <div className="mt-2"><DocsNote anchor="13d-tolkning-av-fynden">Reglerna bakom tolkningen står i avsnitt 13d.</DocsNote></div>
+    </div>
+  );
+}
+
 function FindingRow({ f, open, onToggle }: { f: Finding; open: boolean; onToggle: () => void }) {
   return (
     <>
@@ -642,6 +686,7 @@ function FindingRow({ f, open, onToggle }: { f: Finding; open: boolean; onToggle
       {open && (
         <tr className="bg-white/50">
           <td colSpan={13} className="p-3 text-xs text-slate-700">
+            <InterpretationBox f={f} />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {(["belägg", "nyhet", "relevans"] as const).map(k => (
                 <div key={k}>

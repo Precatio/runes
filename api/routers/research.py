@@ -152,8 +152,43 @@ def _overview_context(fp: str):
     return ctx, rows
 
 
+def _overview_key(fp: str) -> str:
+    """Översiktens nyckel: R-korpusens version, Rundata, måtten och koden som räknar fram den."""
+    import hashlib
+    import os
+    root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    parts = [fp]
+    for rel in ("data/rundata.json", "data/stone_dimensions.json"):
+        p = os.path.join(root, rel)
+        parts.append(str(os.path.getmtime(p)) if os.path.exists(p) else "-")
+    for rel in ("src/stone_overview.py", "src/synthesis.py", "src/orthography.py", "src/language_profile.py",
+                "src/geology.py", "src/research_gaps.py"):
+        parts.append(hashlib.sha256(open(os.path.join(root, rel), "rb").read()).hexdigest()[:12])
+    return hashlib.sha256("|".join(parts).encode()).hexdigest()[:16]
+
+
 @lru_cache(maxsize=2)
 def _overview(fp: str) -> dict:
+    """Beräknas en gång per version av underlaget och sparas på disk (data/cache/overview/), så att en omstart av
+    servern inte kostar en ny beräkning."""
+    import json
+    import os
+    path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+                        "data", "cache", "overview", f"{_overview_key(fp)}.json")
+    if os.path.exists(path):
+        try:
+            return json.load(open(path, encoding="utf-8"))
+        except ValueError:
+            pass
+    out = _compute_overview(fp)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    tmp = path + ".tmp"
+    json.dump(out, open(tmp, "w", encoding="utf-8"), ensure_ascii=False)
+    os.replace(tmp, path)
+    return out
+
+
+def _compute_overview(fp: str) -> dict:
     from src import stone_overview
     ctx, _ = _overview_context(fp)
     stones = [stone_overview.stone(r, ctx) for r in store().inscriptions if gaps.is_runestone(r)]
@@ -229,6 +264,20 @@ def _archive(fp: str) -> dict:
             "proposals": [{"signum": x["signum"], "place": x["place"], "carver": x["alternative"]["carver"],
                            "strength": x["alternative"]["strength"]} for x in proposals],
             "source": "Samnordisk runtextdatabas (Rundata), ristare och stilgrupper; perioder enligt Gräslund (1998)."}
+
+
+@router.post("/interpret")
+def interpret_finding(finding: dict):
+    """Ett resonemang för ett fynd i Forskningsluckor: belägg, p-värde, språkdrag, bergart, nyare källor och de andra
+    metodernas besked om samma ristare vägs samman (METHODS.md 13d)."""
+    from fastapi import HTTPException
+    from src import interpretation, stone_overview
+    rec = store().get(finding.get("signum") or "")
+    if not rec:
+        raise HTTPException(status_code=404, detail="Stenen finns inte i Rundata.")
+    ctx, _ = _overview_context(_fp())
+    profile = stone_overview.stone(rec, ctx, detail=True) if gaps.is_runestone(rec) else None
+    return interpretation.interpret(finding, rec, ctx, profile)
 
 
 @router.get("/archive")

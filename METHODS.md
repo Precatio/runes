@@ -589,6 +589,24 @@ område och stil kan ha legat till grund för attribueringarna (avsnitt 18). Pro
 besked med förklaring, de tre starkaste alternativen med sina kontroller, och stenens höjd, textlängd och antal
 namn som percentil bland landskapets runstenar, med syfte, statusord, stilgrupp, seriation och grupp.
 
+### 13d. Tolkning av fynden
+
+Källkod: `src/interpretation.py`, `POST /api/research/interpret`. När man klickar på ett fynd i "Våra resultat mot
+forskningen" visas ett resonemang i fem steg: vad fyndet säger; hur starkt belägget är (för ortografin likhet,
+marginal, antal ord, p-värde och p-värde justerat för att den bästa av alla ristare valts, och metodens precision
+för ristaren; för modellen sannolikheten och träffsäkerheten vid den nivån); vad de andra metoderna säger om samma
+ristare (område, stilgrupp, språkdrag, bergart och – om fyndet kommer från en annan metod – modellen och ortografin,
+samt stödet för Rundatas ristare i Stenöversikt); vad nyare källor säger (Runor 2020, Wikidata); och en slutsats med
+vad som skulle kunna avgöra frågan (3D-mätning, litteratur, nyläsning, stilbedömning).
+
+Slutsatsen har sex nivåer: *redan känt* (förslaget finns i Runor 2020 eller Wikidata), *metodfel* (fyndet motsäger
+en signerad sten), *bekräftelse* (stämmer med Rundata), *starkt* (belägg ≥ 0,5, minst tre andra belägg för och inget
+emot, och för ortografin justerat p < 0,05), *måttligt* (belägg ≥ 0,35 och minst lika många belägg för som emot) och
+*svagt* (övrigt, och när ett fynd som motsäger Rundata står mot ett stöd ≥ 0,6 för Rundatas ristare). Att Runor 2020
+anger en annan ristare räknas som ett belägg emot. Fördelning 2026-10-11 (429 fynd): nya förslag 32 starka, 138
+måttliga, 35 svaga och 4 redan kända; motsägelser 5 måttliga, 15 svaga och 6 metodfel; 194 bekräftelser. Reglerna är
+fasta och kan granskas; tolkningen är en läshjälp, inte en runologisk bedömning.
+
 ## 14. Rapporter
 
 Två rapporttyper, båda manusutkast där tabeller och figurer räknas fram ur data och AI-text märks.

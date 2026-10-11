@@ -75,9 +75,13 @@ function Method({ text }: { text?: string; caveat?: string }) {
   );
 }
 
+// Kept for the rest of the visit, so that returning to the page is instant; the results are refetched only when the
+// corpus version (fingerprint) changes
+const memo: { status?: Status; data?: Corpus; fingerprint?: string } = {};
+
 export default function StatistikPage() {
-  const [status, setStatus] = useState<Status | null>(null);
-  const [data, setData] = useState<Corpus | null>(null);
+  const [status, setStatus] = useState<Status | null>(memo.status ?? null);
+  const [data, setData] = useState<Corpus | null>(memo.data ?? null);
   const [error, setError] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("overview");
 
@@ -89,9 +93,15 @@ export default function StatistikPage() {
     fetch(`${API_URL}/api/r/status`).then(r => r.json()).then(async (st: Status) => {
       if (cancelled) return;
       setStatus(st);
-      if (st.corpus?.ready) {
+      memo.status = st;
+      if (st.corpus?.ready && !(memo.data && memo.fingerprint === st.corpus.fingerprint)) {
         const res = await fetch(`${API_URL}/api/r/corpus`);
-        if (res.ok && !cancelled) setData(await res.json());
+        if (res.ok && !cancelled) {
+          const d = await res.json();
+          memo.data = d;
+          memo.fingerprint = st.corpus.fingerprint;
+          setData(d);
+        }
       }
     }).catch(() => { if (!cancelled) setError("Kunde inte nå analysmotorn."); });
     return () => { cancelled = true; };

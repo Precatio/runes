@@ -76,27 +76,53 @@ def enabled() -> bool:
 _status_cache: dict = {}
 
 
+def _status_key(libpaths: list[str]) -> list:
+    """Vad R-kontrollen beror på: Rscript och paketbiblioteken (ändras när paket installeras eller tas bort)."""
+    paths = [rscript()] + list(libpaths)
+    return [[p, os.path.getmtime(p) if p and os.path.exists(p) else None] for p in paths]
+
+
 def status() -> dict:
-    """Om R finns, vilken version och vilka paket som saknas."""
+    """Om R finns, vilken version och vilka paket som saknas.
+
+    Kontrollen startar R och laddar alla paket (flera sekunder), så svaret sparas på disk och används så länge
+    Rscript och paketbiblioteken är oförändrade (högst en vecka)."""
     if not enabled():
         return {"available": False, "version": None, "missing": list(REQUIRED_PACKAGES),
                 "note": "R är inte installerat på servern (Rscript saknas)." if os.environ.get("R_DISABLED") is None
                 else "R är avstängt på servern."}
-    if _status_cache.get("t", 0) > time.time() - 300:
+    if _status_cache.get("t", 0) > time.time() - 3600:
         return _status_cache["v"]
+    path = os.path.join(CACHE_DIR, "status.json")
+    try:
+        saved = json.load(open(path, encoding="utf-8"))
+        if saved["t"] > time.time() - 7 * 86400 and saved["key"] == json.loads(json.dumps(_status_key(saved["libpaths"]))):
+            _status_cache.update(t=time.time(), v=saved["v"])
+            return saved["v"]
+    except (OSError, ValueError, KeyError):
+        pass
     code = ("pk <- c(%s); miss <- pk[!vapply(pk, requireNamespace, logical(1), quietly = TRUE)];"
-            "cat(jsonlite::toJSON(list(version = R.version.string, missing = miss), auto_unbox = TRUE))"
+            "cat(jsonlite::toJSON(list(version = R.version.string, missing = miss, libpaths = .libPaths()), auto_unbox = TRUE))"
             % ", ".join(f'"{p}"' for p in REQUIRED_PACKAGES))
+    libpaths: list[str] = []
     try:
         out = subprocess.run([rscript(), "--vanilla", "-e", code], capture_output=True, text=True, timeout=120)
         info = json.loads(out.stdout.strip().splitlines()[-1])
         missing = info["missing"] if isinstance(info["missing"], list) else [info["missing"]]
+        libpaths = info["libpaths"] if isinstance(info.get("libpaths"), list) else [info.get("libpaths")]
         v = {"available": not missing, "version": info["version"], "missing": missing,
              "note": None if not missing else "Paket saknas i R. Kör: Rscript r/install.R"}
     except Exception as e:  # jsonlite missing or R broken
         v = {"available": False, "version": None, "missing": list(REQUIRED_PACKAGES),
              "note": f"R kunde inte startas eller saknar jsonlite: {str(e)[:200]}. Kör: Rscript r/install.R"}
     _status_cache.update(t=time.time(), v=v)
+    if v["available"]:
+        try:
+            os.makedirs(CACHE_DIR, exist_ok=True)
+            json.dump({"t": time.time(), "libpaths": libpaths, "key": _status_key(libpaths), "v": v},
+                      open(path, "w", encoding="utf-8"))
+        except OSError:
+            pass
     return v
 
 

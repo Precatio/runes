@@ -93,19 +93,23 @@ def model_findings(att: dict, lookup, inscriptions: list[dict], oof: list[dict] 
             nov = ("Axelson (1993) attribuerade inte stenen" if province(rec) in AXELSON_PROVINCES
                    else "attribueringar utanför Mälardalen kan finnas i litteraturen utan att stå i Rundata")
             out.append(_finding(rec, MODEL, "nytt", ours, _carver_text(rec), evidence, novelty, rel,
-                                {"belägg": ev, "nyhet": [nov], "relevans": rel_reasons}, True, suggested=pr["top"]))
+                                {"belägg": ev, "nyhet": [nov], "relevans": rel_reasons}, True, suggested=pr["top"],
+                                stats={"probability": pr["p"], "margin": round(margin, 3), "second": pr.get("second"),
+                                       "accuracy": acc}))
         elif uncertain:
             if pr["top"] in uncertain:
                 out.append(_finding(rec, MODEL, "stämmer", ours, _carver_text(rec), evidence, 0.4, rel,
                                     {"belägg": ev, "nyhet": ["stöder en osäker attribuering i Rundata"],
-                                     "relevans": rel_reasons}, True, suggested=pr["top"]))
+                                     "relevans": rel_reasons}, True, suggested=pr["top"],
+                                    stats={"probability": pr["p"], "margin": round(margin, 3), "accuracy": acc}))
             else:
                 signed = any(c["kind"] == "S" for c in rec["carvers"])
                 if signed:
                     continue  # a signature outweighs the model
                 out.append(_finding(rec, MODEL, "motsäger", ours, _carver_text(rec), evidence, 0.6, rel,
                                     {"belägg": ev, "nyhet": ["pekar på en annan ristare än Rundatas osäkra attribuering"],
-                                     "relevans": rel_reasons}, True, suggested=pr["top"]))
+                                     "relevans": rel_reasons}, True, suggested=pr["top"],
+                                    stats={"probability": pr["p"], "margin": round(margin, 3), "accuracy": acc}))
     # Stones with a certain carver: out-of-fold predictions that disagree with Rundata
     for row in oof or []:
         if row["p"] < min_p or row["top"] == row["carver"]:
@@ -124,7 +128,8 @@ def model_findings(att: dict, lookup, inscriptions: list[dict], oof: list[dict] 
                             _carver_text(rec), acc * 0.8, novelty, rel,
                             {"belägg": [acc_text, "korsvaliderad: stenen ingick inte i den modell som bedömde den",
                                         CIRCULARITY], "nyhet": [nov], "relevans": rel_reasons},
-                            True, suggested=row["top"]))
+                            True, suggested=row["top"],
+                            stats={"probability": row["p"], "p_truth": row["p_truth"], "accuracy": acc, "cross_validated": True}))
     return out
 
 
