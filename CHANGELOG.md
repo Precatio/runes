@@ -58,6 +58,12 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 - Förklaringskomponenterna (förklaring vid hovring, hopfällbara detaljer, säkerhets- och signifikansmärken,
   förstoringsbara figurer) och ordlistan är gemensamma (`components/Explain.tsx`, `lib/glossary.ts`).
 
+### Forskningsluckor för den som inte kan terminologin
+- Samma upplägg som Statistik (R): inledning på vardagsspråk med "Så läser du sidan" och ordlista, frågekort i stället
+  för flikar (ny fråga: var saknas uppgifter?), och för varje fråga svaret i korthet, nyckeltal, förslag till tolkning
+  och vad resultatet inte säger – framräknat ur data. Alla kolumnrubriker har förklaringar (ⓘ).
+- Gemensamma komponenter för sidinledning, frågekort och svar (`components/Explain.tsx`).
+
 ### Granskning av U 1026: sluten modell, namnlösa ristare och bergart
 - Modellens förslag: plats, stil och språkdrag ingår i modellen och räknas inte som oberoende stöd; träffsäkerheten
   anges med antal stenar och 95 % konfidensintervall; *starkt* kräver en väl underbyggd träffsäkerhet och inget emot.

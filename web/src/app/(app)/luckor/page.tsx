@@ -2,7 +2,7 @@
 
 import { Fragment, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { SigBadge, Tip, type Significance } from "@/components/Explain";
+import { Answer, InfoTip, PageIntro, QuestionCards, SigBadge, Tip, type AnswerProps, type Significance } from "@/components/Explain";
 import { GLOSSARY } from "@/lib/glossary";
 import { API_URL } from "@/lib/api";
 import { corpus } from "@/lib/corpus";
@@ -86,7 +86,7 @@ interface Findings {
   method_note: string;
 }
 
-type Tab = "findings" | "categories" | "size" | "hypotheses" | "reconsider" | "priorities" | "uninterpreted" | "style";
+type Tab = "findings" | "coverage" | "categories" | "size" | "hypotheses" | "reconsider" | "priorities" | "uninterpreted" | "style";
 
 interface CategoryStats {
   categories: { key: string; label: string; definition: string; base_rate: number; count: number }[];
@@ -117,11 +117,12 @@ function useSorted<T>(rows: T[], get: Record<string, (r: T) => SortValue>, initi
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rows, sort]);
   const header = (key: string, label: string, title?: string) => (
-    <th className="p-2 whitespace-nowrap" title={title}>
+    <th className="p-2 whitespace-nowrap">
       <button onClick={() => setSort(s => ({ key, desc: s.key === key ? !s.desc : rows.length > 0 && typeof get[key](rows[0]) !== "string" }))}
         className={`uppercase tracking-wider hover:text-slate-900 ${sort.key === key ? "text-slate-900" : ""}`}>
         {label}{sort.key === key ? (sort.desc ? " ↓" : " ↑") : ""}
       </button>
+      <InfoTip text={GLOSSARY[label] ?? title} />
     </th>
   );
   return { sorted, header };
@@ -213,38 +214,123 @@ export default function GapsPage() {
   if (!data || !found) return <div className="max-w-3xl mx-auto p-8 text-slate-500">Beräknar översikten …</div>;
 
   const t = data.coverage.totals;
-  const tabs: [Tab, string, number][] = [
-    ["findings", "Våra resultat mot forskningen", found.findings.length],
-    ["categories", "Inskrifternas syfte per ristare", 9],
-    ["size", "Storlek och syfte", 1],
-    ["hypotheses", "Ortografiska hypoteser", data.hypotheses.new.length],
-    ["reconsider", "Ompröva attribuering", data.hypotheses.reconsider.length],
-    ["priorities", "Mätningar som gör mest nytta", data.measurement_priorities.length],
-    ["uninterpreted", "Osäkert tolkade", data.open_questions.uninterpreted.count],
-    ["style", "Osäker stilgrupp", data.open_questions.uncertain_style.count],
+  const nSig = (rows: Hypothesis[]) => rows.filter(h => h.p_adjusted != null && h.p_adjusted < 0.05).length;
+  const cards: { key: Tab; topic: string; question: string; note: string }[] = [
+    { key: "findings", topic: "Våra resultat", question: "Vad säger appens analyser jämfört med forskningen?", note: `${found.findings.length} fynd` },
+    { key: "coverage", topic: "Luckor", question: "Var saknas uppgifter om runstenarna?", note: `${t.total - t.carver} stenar utan ristare` },
+    { key: "hypotheses", topic: "Nya ristare", question: "Vilka stenar utan ristare liknar en känd ristare i stavningen?", note: `${data.hypotheses.new.length} stenar` },
+    { key: "reconsider", topic: "Ompröva", question: "Vilka attribueringar kan behöva omprövas?", note: `${data.hypotheses.reconsider.length} stenar` },
+    { key: "priorities", topic: "3D-mätning", question: "Vilka stenar vore mest värda att mäta i 3D?", note: `${data.measurement_priorities.length} ristare` },
+    { key: "categories", topic: "Syfte", question: "Skiljer sig ristarna i vad inskrifterna handlar om?", note: "9 kategorier" },
+    { key: "size", topic: "Storlek", question: "Restes större stenar för större syften?", note: "höjd mot syfte" },
+    { key: "uninterpreted", topic: "Tolkning", question: "Vilka inskrifter är osäkert tolkade?", note: `${data.open_questions.uninterpreted.count} inskrifter` },
+    { key: "style", topic: "Stilgrupp", question: "Vilka stenar har osäker stilgrupp?", note: `${data.open_questions.uncertain_style.count} stenar` },
   ];
+  const c = found.summary.counts;
+  const sigFound = found.findings.filter(f => f.significance?.significant).length;
+  const provinces = data.coverage.per_province.filter(r => r.total >= 30);
+  const lowest = provinces.length ? provinces.reduce((m, r) => (r.carver / r.total < m.carver / m.total ? r : m)) : null;
+  const ev = data.hypotheses.evaluation;
+  const answers: Partial<Record<Tab, AnswerProps>> = {
+    findings: {
+      topic: "Våra resultat", question: "Vad säger appens analyser jämfört med forskningen?",
+      why: "Appens metoder – stavning, den statistiska modellen, seriationen, okända ristare, huggteknik och AI-bedömd stilgrupp – ställs mot Rundata, som här står för den publicerade forskningen.",
+      headline: { value: String(found.summary.likely_new), label: "fynd som sannolikt är ny kunskap enligt uppskattningen" },
+      answer: <>{c.stämmer} av appens resultat stämmer med Rundata, {c.nytt} säger något som Rundata saknar och {c.motsäger} pekar på något annat. {sigFound} av fynden är <strong>statistiskt säkerställda</strong>.</>,
+      interpretation: [
+        "Bekräftelserna är ett test av metoderna: att de ofta kommer fram till samma ristare som forskningen talar för att de fungerar.",
+        "De nya förslagen är hypoteser. Klicka på ett fynd för en tolkning som väger samman alla belägg och visar vad som talar emot.",
+        "Fynd som redan finns i Runor 2020 eller Wikidata är inte ny kunskap, men de stärker förtroendet för metoden.",
+      ],
+      notSaying: [
+        "Rundata (2018) är inte hela forskningen – ett 'nytt' fynd kan finnas i litteratur som appen inte har.",
+        "Uppskattningen (belägg × nyhet × relevans) är en tumregel för att prioritera, inte en sannolikhet.",
+        "Statistiskt säkerställt betyder att en likhet sannolikt inte är slump, inte att attribueringen är rätt.",
+      ],
+    },
+    coverage: {
+      topic: "Luckor", question: "Var saknas uppgifter om runstenarna?",
+      why: "Där uppgifter saknas kan nya analyser och mätningar göra mest nytta.",
+      headline: { value: `${pct(t.total - t.carver, t.total)} %`, label: "av runstenarna saknar ristare i Rundata" },
+      answer: <>Av {t.total} svenska vikingatida runstenar saknar {t.total - t.carver} ristare och {t.total - t.style} säker stilgrupp; {t.dated} är daterade med årtal och {t.measured} är uppmätta i 3D.{lowest && <> Lägst andel med ristare bland landskap med minst 30 stenar har {lowest.name} ({pct(lowest.carver, lowest.total)} %).</>}</>,
+      interpretation: [
+        "Landskap med få attribueringar är där nya ristarförslag och okända ristare gör mest nytta.",
+        "Uppland och Södermanland har flest attribueringar, främst genom Axelsons arbete (1993); i andra landskap kan attribueringar finnas i litteraturen utan att stå i Rundata.",
+      ],
+      notSaying: ["Att en uppgift saknas i Rundata betyder inte att den saknas i all forskning."],
+    },
+    hypotheses: {
+      topic: "Nya ristare", question: "Vilka stenar utan ristare liknar en känd ristare i stavningen?",
+      why: "Ristare hade egna stavningsvanor. En sten utan ristare som stavar som en känd ristare kan vara hans eller hennes.",
+      headline: { value: String(data.hypotheses.new.length), label: `stenar utan ristare med tydlig stavningslikhet, varav ${nSig(data.hypotheses.new)} statistiskt säkerställda` },
+      answer: <>Ortografin pekar ut en trolig ristare för {data.hypotheses.new.length} stenar utan ristare i Rundata; {nSig(data.hypotheses.new)} av likheterna är statistiskt säkerställda (justerat p under 0,05). Prövad på stenar med känd ristare hamnar rätt ristare först i {Math.round(ev.top1_accuracy * 100)} % av fallen, mot {Math.round(ev.chance_top1 * 100)} % med slumpen.</>,
+      interpretation: [
+        "Säkerställda likheter inom ristarens område är de bästa kandidaterna att pröva vidare.",
+        "Väger tyngre när flera oberoende metoder – t.ex. den statistiska modellen eller huggtekniken – pekar mot samma ristare.",
+      ],
+      notSaying: [
+        "Stavning är bara ett av flera drag; ornamentik, runformer och huggteknik vägs inte in här.",
+        "Produktiva ristare som Öpir och Fot drar till sig förslag.",
+      ],
+    },
+    reconsider: {
+      topic: "Ompröva", question: "Vilka attribueringar kan behöva omprövas?",
+      why: "En attribuerad sten som stavar som en annan ristare kan vara felbedömd – eller visa samarbete.",
+      headline: { value: String(data.hypotheses.reconsider.length), label: `attribuerade stenar där stavningen pekar mot någon annan, varav ${nSig(data.hypotheses.reconsider)} säkerställda` },
+      answer: <>För {data.hypotheses.reconsider.length} stenar som Rundata attribuerar pekar ortografin mot en annan ristare; {nSig(data.hypotheses.reconsider)} av likheterna är statistiskt säkerställda.</>,
+      interpretation: [
+        "Det kan vara en felaktig attribuering, men också samarbete, en verkstad eller en ristare som skrev olika vid olika tillfällen.",
+        "Signerade stenar ingår inte – där är det metoden som har fel, inte ristaren.",
+      ],
+      notSaying: ["En stavningslikhet räcker inte för att underkänna en attribuering som bygger på ornamentik och runformer."],
+    },
+    priorities: {
+      topic: "3D-mätning", question: "Vilka stenar vore mest värda att mäta i 3D?",
+      why: "Huggtekniken är det enda belägget som inte bygger på tidigare forskares bedömningar, men den kräver flera uppmätta stenar per ristare.",
+      answer: <>Listan visar för varje ristare hur många stenar som är uppmätta och vilka som skulle göra mest nytta att mäta – signerade stenar först, eftersom ristaren där är känd.</>,
+      interpretation: ["Mät helst flera stenar av samma ristare på samma bergart, eftersom bergarten påverkar huggspåren."],
+      notSaying: ["Huggspårsmåtten är ännu inte validerade som spår av ristarens hand."],
+    },
+    uninterpreted: {
+      topic: "Tolkning", question: "Vilka inskrifter är osäkert tolkade?",
+      why: "Osäkra läsningar är där nya bilder, RTI och 3D kan ge mest.",
+      headline: { value: String(data.open_questions.uninterpreted.count), label: "inskrifter med osäker läsning eller tolkning i Rundata" },
+      answer: <>Rundata markerar {data.open_questions.uninterpreted.count} inskrifter som osäkert lästa eller tolkade. Listan visar dem med plats, stil och datering.</>,
+      interpretation: ["En ny läsning med strykljus (RTI) eller en 3D-relief kan avgöra oklara runor."],
+    },
+    style: {
+      topic: "Stilgrupp", question: "Vilka stenar har osäker stilgrupp?",
+      why: "Stilgruppen är grunden för dateringen; en osäker stilgrupp ger en osäker datering.",
+      headline: { value: String(data.open_questions.uncertain_style.count), label: "stenar med osäker stilgrupp i Rundata" },
+      answer: <>{data.open_questions.uncertain_style.count} stenar har en osäker stilgrupp. En AI-bedömning av en bild (2D-analysen) eller seriationen kan ge ett förslag att pröva.</>,
+      notSaying: ["AI-bedömningar av stilgrupp är okalibrerade."],
+    },
+  };
 
   return (
     <div className="flex flex-col w-full max-w-7xl mx-auto p-4 md:p-6 space-y-6">
-      <div>
-        <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-2">Forskningsluckor</h2>
-        <p className="text-slate-600 text-[16px] leading-relaxed max-w-3xl font-medium">
-          Var saknas uppgifter om de svenska vikingatida runstenarna, var kan nya mätningar och analyser göra skillnad –
-          och vad säger appens egna resultat jämfört med den befintliga forskningen? Klicka på en kolumnrubrik för att sortera.
-        </p>
-      </div>
+      <PageIntro title="Forskningsluckor"
+        lead={<>Två saker på en sida: <strong>var kunskapen om runstenarna har luckor</strong> – stenar utan ristare, stilgrupp, datering
+          eller mätningar – och <strong>vad appens egna analyser säger jämfört med forskningen</strong>. Varje fråga börjar med svaret i
+          korthet och ett förslag till tolkning. Allt är förslag för forskare att pröva, inte färdiga slutsatser.</>}
+        howTo={[
+          <>Välj en fråga i korten. Under svaret finns tabellerna; klicka på en kolumnrubrik för att sortera.</>,
+          <>Märket <strong>✓ Säkerställt</strong> betyder att resultatet sannolikt inte är slump (p eller q under 0,05). Håll muspekaren över ⓘ och prickade ord för förklaringar.</>,
+          <>Klicka på ett fynd för en tolkning som väger samman alla belägg och visar vad som talar emot.</>,
+          <>Siffrorna i rutorna överst är länkar till inskrifterna bakom dem.</>,
+        ]} />
 
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
         {[
           ["Runstenar", `${t.total}`, "", gapHref("runestone")],
           ["Med ristare", `${pct(t.carver, t.total)} %`, `${t.total - t.carver} saknar`, gapHref("no_carver")],
-          ["Med säker stilgrupp", `${pct(t.style, t.total)} %`, `${t.total - t.style} saknar`, gapHref("no_style")],
-          ["Daterade med årtal", `${t.dated}`, `${pct(t.dated, t.total)} %`, gapHref("dated")],
-          ["Uppmätta i korpusen", `${t.measured}`, user ? "" : "logga in för att se", measuredSigna.length ? signaHref(measuredSigna) : ""],
+          ["Säker stilgrupp", `${pct(t.style, t.total)} %`, `${t.total - t.style} saknar`, gapHref("no_style")],
+          ["Datering", `${t.dated}`, `${pct(t.dated, t.total)} % daterade med årtal`, gapHref("dated")],
+          ["Uppmätta", `${t.measured}`, user ? "i 3D-korpusen" : "logga in för att se", measuredSigna.length ? signaHref(measuredSigna) : ""],
         ].map(([label, value, sub, href]) => {
           const body = (
             <>
-              <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500">{label}</div>
+              <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500">{label}<InfoTip text={GLOSSARY[label]} /></div>
               <div className="text-3xl font-bold text-slate-900 mt-1">{value}</div>
               {sub && <div className="text-xs text-slate-500 mt-0.5">{sub}</div>}
             </>
@@ -255,21 +341,12 @@ export default function GapsPage() {
         })}
       </div>
 
-      <DocsNote anchor="13-forskningsluckor">Varifrån uppgifterna kommer, hur bedömningarna räknas och vilka reservationer som gäller står i avsnitt 13.</DocsNote>
+      <QuestionCards items={cards} active={tab} onSelect={k => setTab(k as Tab)} />
 
-      <ProvinceTable rows={data.coverage.per_province} measuredSigna={measuredSigna} />
-
-      <div className="flex flex-wrap gap-2">
-        {tabs.map(([key, label, n]) => (
-          <button key={key} onClick={() => setTab(key)}
-            className={`px-4 py-2 rounded-xl text-sm font-bold border ${tab === key ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-700 border-slate-300"}`}>
-            {label} <span className="opacity-60">({n})</span>
-          </button>
-        ))}
-      </div>
-
-      <div className="liquid-glass-island rounded-[32px] p-5">
+      <div className="liquid-glass-island rounded-[32px] p-5 md:p-7 space-y-6">
+        {answers[tab] && <Answer {...answers[tab]!} />}
         {tab === "findings" && <FindingsPanel data={found} loggedIn={!!user} onRefresh={() => setReload(r => r + 1)} />}
+        {tab === "coverage" && <ProvinceTable rows={data.coverage.per_province} measuredSigna={measuredSigna} />}
         {tab === "categories" && <CategoryPanel />}
         {tab === "size" && <SizePanel />}
         {(tab === "hypotheses" || tab === "reconsider") && (
@@ -282,6 +359,7 @@ export default function GapsPage() {
             rows={(tab === "uninterpreted" ? data.open_questions.uninterpreted : data.open_questions.uncertain_style).items} />
         )}
       </div>
+      <DocsNote anchor="13-forskningsluckor">Varifrån uppgifterna kommer, hur bedömningarna räknas och vilka reservationer som gäller står i avsnitt 13.</DocsNote>
       <p className="text-[11px] text-slate-500">{data.attribution}</p>
     </div>
   );
@@ -330,8 +408,18 @@ function SizePanel() {
   if (data.error) return <p className="text-slate-600">{data.error}</p>;
   const ratio = (r: number | null) => (r == null ? "–" : `${r >= 1 ? "+" : "−"}${Math.abs(Math.round((r - 1) * 100))} %`);
   const sig = (q: number | null) => (q != null && q < 0.05 ? "font-semibold text-slate-900" : "text-slate-600");
+  const sigTests = data.tests.filter(t => t.q != null && t.q < 0.05);
   return (
     <div className="space-y-5 text-sm">
+      <Answer topic="Storlek" question="Restes större stenar för större syften?"
+        why="Storleken kan säga något om beställarens resurser och om vad stenen skulle uttrycka."
+        headline={{ value: `${sigTests.length} av ${data.tests.length}`, label: "jämförelser där stenarnas höjd skiljer sig säkerställt (inom landskap)" }}
+        answer={sigTests.length
+          ? <>Med hänsyn till landskapet skiljer sig höjden säkerställt för {sigTests.map(t => `${t.variable.replace(/^Syfte: /, "").toLowerCase()} (${ratio(t.ratio)} mot övriga stenar)`).join(" och ")}. Höjden är känd för {data.n} av {data.meta.n_runestones} runstenar.</>
+          : <>Ingen av jämförelserna visar en säkerställd skillnad i höjd när landskapet hålls konstant. Höjden är känd för {data.n} av {data.meta.n_runestones} runstenar.</>}
+        interpretation={["En högre sten för vissa syften kan spegla beställarnas resurser eller budskapets vikt – men också vilken sten som fanns att tillgå."]}
+        notSaying={["Måtten är ofullständiga och ojämna: höjd över mark för resta stenar, fragment uteslutna.",
+          "En stor sten har plats för en längre text, så text och storlek hänger ihop av praktiska skäl."]} />
       <p className="text-slate-600 max-w-4xl">
         Restes större stenar för större syften och av mäktigare personer? Höjden för {data.n} av {data.meta.n_runestones}{" "}
         vikingatida runstenar kunde läsas ur Kulturmiljöregistret (median {fmt(data.median_height_m)} m, kvartiler{" "}
@@ -394,8 +482,22 @@ function CategoryPanel() {
   if (error) return <p className="text-red-700 font-semibold">{error}</p>;
   if (!data) return <p className="text-slate-500">Räknar …</p>;
   const pctTxt = (v: number) => `${(v * 100).toFixed(v < 0.01 ? 1 : 0).replace(".", ",")} %`;
+  const label = Object.fromEntries(data.categories.map(c => [c.key, c.label.toLowerCase()]));
+  const deviations = data.carvers.flatMap(r => Object.entries(r.counts).filter(([, v]) => v.direction !== "som genomsnittet")
+    .map(([k, v]) => ({ carver: r.carver, cat: label[k] ?? k, dir: v.direction, share: v.share, q: v.q })));
+  const carversWith = new Set(deviations.map(d => d.carver)).size;
+  const examples = deviations.filter(d => d.dir === "över").sort((a, b) => a.q - b.q).slice(0, 3);
   return (
     <>
+      <Answer topic="Syfte" question="Skiljer sig ristarna i vad inskrifterna handlar om?"
+        why="Om en ristare oftare än andra ristar minnesstenar, brostenar eller böner kan det säga något om ristarens repertoar eller beställarkrets."
+        headline={{ value: String(deviations.length), label: `säkerställda avvikelser från genomsnittet, hos ${carversWith} av ${data.carvers.length} ristare` }}
+        answer={<>{carversWith} av {data.carvers.length} ristare med minst fem säkra inskrifter skriver säkerställt oftare eller mer sällan än
+          genomsnittet om något (q under 0,05){examples.length > 0 && <>, t.ex. {examples.map(e => `${e.carver} om ${e.cat} (${pctTxt(e.share)})`).join(", ")}</>}.</>}
+        interpretation={["Skillnaderna kan spegla ristarens repertoar och skrivvanor, men också vilka beställare ristaren arbetade för och när.",
+          "Kristna böner och brobyggen följer också tiden, så en ristare som var verksam sent har fler av dem."]}
+        notSaying={["Kategorierna sätts med regler på Rundatas text och översättning; de kan överlappa och ibland missa.",
+          "Att en ristare saknar en sällsynt kategori (t.ex. magiska inskrifter) är oftast väntat av en slump."]} />
       <p className="text-sm text-slate-600 mb-3 max-w-4xl">
         Vad inskrifterna handlar om, katalogiserat med regler på Rundatas normalisering och översättning ({data.n_inscriptions}{" "}
         vikingatida runstenar med text). Kategorierna kan överlappa. För varje ristare med minst fem säkra inskrifter jämförs

@@ -4,6 +4,7 @@
 // how certain a result is and whether it is statistically significant, and figures that can be enlarged.
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
+import { GLOSSARY } from "@/lib/glossary";
 
 // A term with an explanation on hover, focus or tap. The box is placed on the page itself (portal), so that tables
 // with their own scrolling do not cut it off.
@@ -161,3 +162,136 @@ export function Figure({ src, alt, help, narrow }: { src?: string; alt: string; 
 }
 
 // The method in short; caveats and how to read the results are in the documentation (METHODS.md 17)
+
+// The glossary of all explained terms, searchable
+export function Glossary({ onClose }: { onClose: () => void }) {
+  const [q, setQ] = useState("");
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+  const terms = Object.entries(GLOSSARY).sort(([a], [b]) => a.localeCompare(b, "sv"))
+    .filter(([k, v]) => !q || (k + " " + v).toLowerCase().includes(q.toLowerCase()));
+  return createPortal(
+    <div role="dialog" aria-modal="true" aria-label="Ordlista" onClick={onClose}
+      className="fixed inset-0 z-[90] bg-slate-900/60 backdrop-blur-sm flex justify-center p-3 md:p-8">
+      <div onClick={e => e.stopPropagation()} className="w-full max-w-2xl bg-white rounded-3xl shadow-2xl flex flex-col max-h-full">
+        <div className="p-5 border-b border-slate-100 flex items-center gap-3">
+          <h3 className="text-lg font-bold text-slate-900">Ordlista</h3>
+          <input autoFocus value={q} onChange={e => setQ(e.target.value)} placeholder="Sök ett ord …"
+            className="flex-1 rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#b7410e]/50" />
+          <button type="button" onClick={onClose} className="px-3 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold">Stäng</button>
+        </div>
+        <dl className="overflow-y-auto p-5 space-y-3">
+          {terms.map(([k, v]) => (
+            <div key={k}><dt className="font-semibold text-slate-900">{k}</dt><dd className="text-sm text-slate-600">{v}</dd></div>
+          ))}
+          {terms.length === 0 && <p className="text-sm text-slate-500">Inga träffar.</p>}
+        </dl>
+      </div>
+    </div>, document.body);
+}
+
+
+// The top of a page with much data: what the page is for, in plain words, how to read it, and the glossary
+export function PageIntro({ title, lead, howTo }: { title: string; lead: ReactNode; howTo?: ReactNode[] }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="space-y-3">
+      <h2 className="text-3xl font-bold tracking-tight text-slate-900">{title}</h2>
+      <div className="text-slate-700 text-[16px] leading-relaxed max-w-3xl">{lead}</div>
+      <div className="flex flex-wrap items-center gap-3">
+        {howTo && howTo.length > 0 && (
+          <details className="rounded-2xl border border-slate-200 bg-white/70 text-sm max-w-3xl">
+            <summary className="cursor-pointer list-none px-4 py-2 font-semibold text-slate-800">Så läser du sidan</summary>
+            <ul className="px-6 pb-4 space-y-1.5 list-disc text-slate-700">{howTo.map((h, i) => <li key={i}>{h}</li>)}</ul>
+          </details>
+        )}
+        <button type="button" onClick={() => setOpen(true)}
+          className="px-4 py-2 rounded-2xl border border-slate-200 bg-white/70 text-sm font-semibold text-slate-800 hover:border-[#b7410e]/40">
+          Ordlista
+        </button>
+        {open && <Glossary onClose={() => setOpen(false)} />}
+      </div>
+    </div>
+  );
+}
+
+export interface QuestionCard { key: string; topic: string; question: string; note?: string }
+
+// The sections of a page as questions instead of method names
+export function QuestionCards({ items, active, onSelect, label = "Frågor" }: {
+  items: QuestionCard[]; active: string; onSelect: (key: string) => void; label?: string;
+}) {
+  return (
+    <nav aria-label={label} className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
+      {items.map(card => (
+        <button key={card.key} type="button" onClick={() => onSelect(card.key)} aria-pressed={active === card.key}
+          className={`text-left rounded-2xl border p-3 transition-colors ${active === card.key
+            ? "bg-slate-900 border-slate-900 text-white shadow-lg" : "bg-white/80 border-slate-200 text-slate-800 hover:border-[#b7410e]/40"}`}>
+          <div className={`text-[10px] font-bold uppercase tracking-wider ${active === card.key ? "text-[#f0a37f]" : "text-[#b7410e]"}`}>{card.topic}</div>
+          <div className="text-sm font-semibold leading-snug mt-0.5">{card.question}</div>
+          {card.note && <div className={`text-[10px] mt-1.5 ${active === card.key ? "text-white/70" : "text-slate-500"}`}>{card.note}</div>}
+        </button>
+      ))}
+    </nav>
+  );
+}
+
+export interface AnswerProps {
+  topic?: string; question: string; why?: ReactNode; headline?: { value: string; label: string };
+  answer: ReactNode; confidence?: { level: Level; text: string }; interpretation?: ReactNode[]; notSaying?: ReactNode[];
+  children?: ReactNode;
+}
+
+// The answer first: the question, why it matters, a key number, the answer, a suggested interpretation and its limits
+export function Answer({ topic, question, why, headline, answer, confidence, interpretation = [], notSaying = [], children }: AnswerProps) {
+  return (
+    <div className="space-y-4">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="max-w-3xl">
+          {topic && <div className="text-[11px] font-bold uppercase tracking-wider text-[#b7410e]">{topic}</div>}
+          <h3 className="text-2xl font-bold tracking-tight text-slate-900">{question}</h3>
+          {why && <p className="text-slate-600 mt-1">{why}</p>}
+        </div>
+        {confidence && <Confidence level={confidence.level} text={confidence.text} />}
+      </div>
+      <div className={`grid grid-cols-1 ${headline ? "md:grid-cols-[240px_1fr]" : ""} gap-4`}>
+        {headline && (
+          <div className="rounded-2xl bg-slate-900 text-white p-5 flex flex-col justify-center">
+            <div className="text-4xl font-bold tracking-tight">{headline.value}</div>
+            <div className="text-sm text-white/80 mt-1 leading-snug">{headline.label}</div>
+          </div>
+        )}
+        <div className="rounded-2xl bg-white border border-slate-200 p-5">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Svaret i korthet</div>
+          <div className="text-slate-800 leading-relaxed">{answer}</div>
+        </div>
+      </div>
+      {(interpretation.length > 0 || notSaying.length > 0) && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {interpretation.length > 0 && (
+            <div className="rounded-2xl bg-white border border-slate-200 p-5">
+              <h4 className="font-bold text-slate-900 mb-2">Förslag till tolkning</h4>
+              <ul className="space-y-2 text-sm text-slate-700 list-disc pl-5">{interpretation.map((t, i) => <li key={i}>{t}</li>)}</ul>
+            </div>
+          )}
+          {notSaying.length > 0 && (
+            <div className="rounded-2xl bg-slate-50 border border-slate-200 p-5">
+              <h4 className="font-bold text-slate-900 mb-2">Det här säger resultatet inte</h4>
+              <ul className="space-y-2 text-sm text-slate-600 list-disc pl-5">{notSaying.map((t, i) => <li key={i}>{t}</li>)}</ul>
+            </div>
+          )}
+        </div>
+      )}
+      {children}
+    </div>
+  );
+}
+
+// A small "?" with an explanation, for places where the label itself is a button (e.g. a sortable column)
+export function InfoTip({ text }: { text?: string }) {
+  if (!text) return null;
+  return <Tip text={text}><span className="ml-1 text-slate-400 font-normal normal-case">ⓘ</span></Tip>;
+}

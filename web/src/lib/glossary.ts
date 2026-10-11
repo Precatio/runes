@@ -86,3 +86,33 @@ GLOSSARY["Statistiskt säkerställt"] = "Resultatet är sannolikt inte slump: p-
 GLOSSARY["Inte säkerställt"] = "Ett test är gjort, men resultatet kan vara slump (p eller q 0,05 eller högre).";
 GLOSSARY["Inget signifikanstest"] = "Resultatet är inte prövat med ett signifikanstest, t.ex. för att det är en beskrivning eller en modell som prövats på annat sätt (korsvalidering).";
 GLOSSARY["justerat p"] = "p-värde som tar hänsyn till att den bästa av många ristare valts. Under 0,05 betyder att likheten är högre än den bästa felaktiga ristaren brukar få.";
+
+// Forskningsluckor
+Object.assign(GLOSSARY, {
+  "Mot forskningen": "stämmer = samma som Rundata; nytt = Rundata saknar uppgiften; motsäger = pekar på något annat än Rundata.",
+  "Vårt resultat": "Vad appens analys föreslår, t.ex. en ristare.",
+  "Nyare källor": "Avstämning mot Runor 2020 (RAÄ) och Wikidata: finns redan, nämns, annan ristare, samma som en annan sten, eller saknas.",
+  "Bergart": "Stenens material i Rundata. ✓ = vanligare hos den föreslagna ristaren än i landskapet, ! = sällan hos ristaren; utan märke avgör bergarten inte frågan.",
+  "Belägg": "Hur pålitlig analysen är i just detta fall (0–100), t.ex. metodens träffsäkerhet för ristaren och textens längd.",
+  "Nyhet": "Hur mycket fyndet tillför jämfört med Rundata (0–100).",
+  "Relevans": "Hur viktigt fyndet är: landskapets kunskapsläge, ristarens betydelse och om stenen finns kvar (0–100).",
+  "Uppskattning": "Belägg × nyhet × relevans – en tumregel för att prioritera vad som är värt att pröva, inte en sannolikhet.",
+  "Bedömning": "Fyndet sammanfattat i ord utifrån uppskattningen. Klicka på raden för en tolkning som väger in alla belägg.",
+  "Likhet": "Hur lik stenens stavning är ristarens (cosinuslikhet 0–1). Ett beskrivande mått, inte en sannolikhet.",
+  "p (just.)": "Justerat p: tar hänsyn till att den mest lika av alla ristare valts. Under 0,05 = statistiskt säkerställt.",
+  "Marginal": "Hur mycket mer lik stenen är förstavalet än tvåan. Liten marginal = metoden kan inte skilja dem åt.",
+  "Precision": "När metoden föreslår den här ristaren: hur ofta det har varit rätt på stenar med känd ristare.",
+  "Inom ristarens område": "Om stenen står i ett landskap där ristaren har säkra stenar.",
+  "Ord": "Antal läsbara ord i inskriften; korta texter ger osäkrare stavningsjämförelser.",
+  "Ortografin pekar mot": "Den ristare vars stavning stenen liknar mest.",
+  "Runstenar": "Svenska vikingatida runstenar i Rundata.",
+  "Med ristare": "Andel stenar där Rundata anger en ristare (signerad eller attribuerad).",
+  "Säker stilgrupp": "Andel stenar med en säker stilgrupp enligt Gräslund i Rundata.",
+  "Osäkert tolkade": "Inskrifter där Rundata markerar att läsningen eller tolkningen är osäker.",
+  "Försvunna": "Stenar som bara är kända från äldre avbildningar.",
+  "Uppmätta": "Stenar som är uppmätta i 3D i mätkorpusen.",
+  "Plats": "Platsen enligt Rundata.",
+  "Stil": "Stilgrupp enligt Gräslund i Rundata.",
+  "Datering": "Datering enligt Rundata.",
+  "Inskrifter": "Antal inskrifter.",
+});

@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
-import { createPortal } from "react-dom";
 import { DocsNote } from "@/components/KnownLimitations";
-import { Confidence, Details, Figure, LEVEL_STYLE, Md, SigBadge, Tip, asList, type Level, type Significance } from "@/components/Explain";
+import { Confidence, Details, Figure, Glossary, LEVEL_STYLE, Md, SigBadge, Tip, asList, type Level, type Significance } from "@/components/Explain";
 import { GLOSSARY } from "@/lib/glossary";
 import Link from "next/link";
 import { API_URL } from "@/lib/api";
@@ -383,35 +382,6 @@ export default function StatistikPage() {
       )}
     </div>
   );
-}
-
-function Glossary({ onClose }: { onClose: () => void }) {
-  const [q, setQ] = useState("");
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
-  const terms = Object.entries(GLOSSARY).sort(([a], [b]) => a.localeCompare(b, "sv"))
-    .filter(([k, v]) => !q || (k + " " + v).toLowerCase().includes(q.toLowerCase()));
-  return createPortal(
-    <div role="dialog" aria-modal="true" aria-label="Ordlista" onClick={onClose}
-      className="fixed inset-0 z-[90] bg-slate-900/60 backdrop-blur-sm flex justify-center p-3 md:p-8">
-      <div onClick={e => e.stopPropagation()} className="w-full max-w-2xl bg-white rounded-3xl shadow-2xl flex flex-col max-h-full">
-        <div className="p-5 border-b border-slate-100 flex items-center gap-3">
-          <h3 className="text-lg font-bold text-slate-900">Ordlista</h3>
-          <input autoFocus value={q} onChange={e => setQ(e.target.value)} placeholder="Sök ett ord …"
-            className="flex-1 rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#b7410e]/50" />
-          <button type="button" onClick={onClose} className="px-3 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold">Stäng</button>
-        </div>
-        <dl className="overflow-y-auto p-5 space-y-3">
-          {terms.map(([k, v]) => (
-            <div key={k}><dt className="font-semibold text-slate-900">{k}</dt><dd className="text-sm text-slate-600">{v}</dd></div>
-          ))}
-          {terms.length === 0 && <p className="text-sm text-slate-500">Inga träffar.</p>}
-        </dl>
-      </div>
-    </div>, document.body);
 }
 
 const STATUS_STYLE: Record<string, string> = {
