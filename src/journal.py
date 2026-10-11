@@ -15,7 +15,8 @@ Markering i texten: **fetstil** (bara runisk translitterering, enligt Futharks s
   {"title", "subtitle", "author", "affiliation", "abstract", "keywords",
    "body": [(kind, text)],   kind: h1 | h2 | p | quote; text kan vara {"text": …, "anonymous": …}
    "figures": [(källfil, bildtext)], "tables": [(bildtext, rubriker, rader)],
-   "bibliography": [post], "citations": {etikett: söksträng i texten}, "readme": text}
+   "bibliography": [post], "citations": {etikett: söksträng i texten}, "readme": text,
+   "lang": "en" | "sv"}       etiketter (Abstract/Sammanfattning, Table/Tabell …) och hänvisningar i texten
 """
 from __future__ import annotations
 
@@ -107,13 +108,27 @@ def add_runs(par, text: str, size: float | None = None):
             r.font.size = Pt(size)
 
 
+LABELS = {
+    "en": {"abstract": "Abstract", "keywords": "Keywords", "bibliography": "Bibliography", "captions": "Captions",
+           "fig": "Fig.", "table": "Table", "illustrated": "illustrated_reading_version"},
+    "sv": {"abstract": "Sammanfattning", "keywords": "Nyckelord", "bibliography": "Litteratur",
+           "captions": "Figur- och tabelltexter", "fig": "Fig.", "table": "Tabell", "illustrated": "med_bilder"},
+}
+FIG_REF = r"[Ff]igs?\. (\d+)(?: (?:and|och) (\d+))?"   # Fig. 1, Figs. 1 and 2, fig. 1 och 2
+TABLE_REF = r"(?:Table|[Tt]abell) (\d+)"
+
+
+def _labels(spec: dict) -> dict:
+    return LABELS[spec.get("lang", "en")]
+
+
 def _first_refs(text: str, kind: str) -> list[int]:
     if kind == "fig":
         out = []
-        for a, b in re.findall(r"Figs?\. (\d+)(?: and (\d+))?", text):
+        for a, b in re.findall(FIG_REF, text):
             out += [int(a)] + ([int(b)] if b else [])
         return out
-    return [int(x) for x in re.findall(r"Table (\d+)", text)]
+    return [int(x) for x in re.findall(TABLE_REF, text)]
 
 
 def _add_table(doc, headers, rows):
@@ -130,16 +145,17 @@ def manuscript(spec: dict, anonymous: bool = False, figure_folder: str | None = 
     """Manuscript in the journal's template styles. With figure_folder: an illustrated reading version with figures
     and tables where they are first mentioned (not for submission)."""
     illustrated = figure_folder is not None
+    lab = _labels(spec)
     placed_f, placed_t = set(), set()
     doc = futhark_document()
     title = spec["title"] + (f": {spec['subtitle']}" if spec.get("subtitle") else "")  # colon between title and subtitle
     doc.add_paragraph(title, style="F_header_1")
     if not anonymous:
         doc.add_paragraph(f"{spec['author']}, {spec['affiliation']}", style="F_paragraph")
-    doc.add_paragraph("Abstract", style="F_header_2")
+    doc.add_paragraph(lab["abstract"], style="F_header_2")
     add_runs(doc.add_paragraph(style="F_abstract"), _text(spec["abstract"], anonymous))
     if spec.get("keywords"):
-        add_runs(doc.add_paragraph(style="F_abstract"), f"*Keywords:* {spec['keywords']}")
+        add_runs(doc.add_paragraph(style="F_abstract"), f"*{lab['keywords']}:* {spec['keywords']}")
     doc.add_paragraph().add_run().add_break(WD_BREAK.PAGE)
     for kind, t in spec["body"]:
         text = _text(t, anonymous)
@@ -160,25 +176,25 @@ def manuscript(spec: dict, anonymous: bool = False, figure_folder: str | None = 
                 placed_f.add(k)
                 img = os.path.join(figure_folder, f"Fig{k:02d}.png")
                 doc.add_picture(img, width=Inches(6.0))
-                add_runs(doc.add_paragraph(style="F_abstract"), f"Fig. {k}. {spec['figures'][k - 1][1]}")
+                add_runs(doc.add_paragraph(style="F_abstract"), f"{lab['fig']} {k}. {spec['figures'][k - 1][1]}")
             for k in _first_refs(text, "table"):
                 if k in placed_t or k > len(spec["tables"]):
                     continue
                 placed_t.add(k)
                 cap, headers, rows = spec["tables"][k - 1]
-                add_runs(doc.add_paragraph(style="F_abstract"), f"Table {k}. {cap}")
+                add_runs(doc.add_paragraph(style="F_abstract"), f"{lab['table']} {k}. {cap}")
                 _add_table(doc, headers, rows)
-    doc.add_paragraph("Bibliography", style="F_header_2")
+    doc.add_paragraph(lab["bibliography"], style="F_header_2")
     for b in spec["bibliography"]:
         add_runs(doc.add_paragraph(style="F_bibliography"), b)
     if illustrated:
         return doc
     doc.add_paragraph().add_run().add_break(WD_BREAK.PAGE)
-    doc.add_paragraph("Captions", style="F_header_2")
+    doc.add_paragraph(lab["captions"], style="F_header_2")
     for i, (_, cap) in enumerate(spec["figures"], 1):
-        add_runs(doc.add_paragraph(style="F_paragraph"), f"Fig. {i}. {cap}")
+        add_runs(doc.add_paragraph(style="F_paragraph"), f"{lab['fig']} {i}. {cap}")
     for i, (cap, _, _) in enumerate(spec["tables"], 1):
-        add_runs(doc.add_paragraph(style="F_paragraph"), f"Table {i}. {cap}")
+        add_runs(doc.add_paragraph(style="F_paragraph"), f"{lab['table']} {i}. {cap}")
     return doc
 
 
@@ -186,7 +202,7 @@ def write_tables(spec: dict, folder: str):
     os.makedirs(folder, exist_ok=True)
     for i, (_, headers, rows) in enumerate(spec["tables"], 1):
         doc = futhark_document()
-        doc.add_paragraph(f"Table {i}", style="F_paragraph")
+        doc.add_paragraph(f"{_labels(spec)['table']} {i}", style="F_paragraph")
         _add_table(doc, headers, rows)
         doc.save(os.path.join(folder, f"Table{i:02d}.docx"))
 
@@ -205,28 +221,29 @@ def write_figures(spec: dict, folder: str, dpi: int = 300):
 def preview_markdown(spec: dict, path: str, figure_folder: str):
     """Läsversion: figurer och tabeller vid första hänvisningen."""
     body = []
+    lab = _labels(spec)
     placed_f, placed_t = set(), set()
     for kind, t in spec["body"]:
         text = _text(t, False)
         if text is None:
             continue
         body.append({"h1": f"## {text}", "h2": f"### {text}", "quote": f"> {text}"}.get(kind, text))
-        for n in re.findall(r"Figs?\. (\d+)(?: and (\d+))?", text):
+        for n in re.findall(FIG_REF, text):
             for k in (x for x in n if x):
                 k = int(k)
                 if k not in placed_f and k <= len(spec["figures"]):
                     placed_f.add(k)
-                    body.append(f"![Fig. {k}](figures/Fig{k:02d}.png)\n\n*Fig. {k}. {spec['figures'][k - 1][1]}*")
-        for k in (int(x) for x in re.findall(r"Table (\d+)", text)):
+                    body.append(f"![{lab['fig']} {k}](figures/Fig{k:02d}.png)\n\n*{lab['fig']} {k}. {spec['figures'][k - 1][1]}*")
+        for k in (int(x) for x in re.findall(TABLE_REF, text)):
             if k not in placed_t and k <= len(spec["tables"]):
                 placed_t.add(k)
                 cap, headers, rows = spec["tables"][k - 1]
                 md = "| " + " | ".join(headers) + " |\n|" + "---|" * len(headers) + "\n"
                 md += "\n".join("| " + " | ".join(str(c) for c in r) + " |" for r in rows)
-                body.append(f"{md}\n\n*Table {k}. {cap}*")
+                body.append(f"{md}\n\n*{lab['table']} {k}. {cap}*")
     out = [f"# {spec['title']}", f"*{spec.get('subtitle', '')}*", f"{spec['author']}, {spec['affiliation']}",
-           "## Abstract", _text(spec["abstract"], False), f"*Keywords:* {spec.get('keywords', '')}"] + body
-    out += ["## Bibliography"] + spec["bibliography"]
+           f"## {lab['abstract']}", _text(spec["abstract"], False), f"*{lab['keywords']}:* {spec.get('keywords', '')}"] + body
+    out += [f"## {lab['bibliography']}"] + spec["bibliography"]
     with open(path, "w", encoding="utf-8") as fh:
         fh.write("\n\n".join(out) + "\n")
 
@@ -236,9 +253,9 @@ def check(spec: dict) -> dict:
     text = " ".join(filter(None, [_text(spec["abstract"], False)] + [_text(t, False) for _, t in spec["body"]]))
     uncited = [k for k, needle in spec.get("citations", {}).items() if needle not in text]
     figs = set()
-    for a, b in re.findall(r"Figs?\. (\d+)(?: and (\d+))?", text):
+    for a, b in re.findall(FIG_REF, text):
         figs |= {int(a)} | ({int(b)} if b else set())
-    tabs = {int(x) for x in re.findall(r"Table (\d+)", text)}
+    tabs = {int(x) for x in re.findall(TABLE_REF, text)}
     numbered = [t for k, t in spec["body"] if k in ("h1", "h2") and re.match(r"^\d", _text(t, False) or "")]
     bold_outside = []  # bold should only mark runic transliteration: lower-case runic letters, no spaces between words
     for m in re.findall(r"\*\*([^*]+)\*\*", text):
@@ -269,7 +286,7 @@ def build(spec: dict, folder: str, basename: str) -> dict:
         im.thumbnail((2400, 2400))
         im.save(os.path.join(pv, f"Fig{k:02d}.png"))
     # Reading version with figures and tables in place (not for submission: the journal wants them as separate files)
-    manuscript(spec, False, pv).save(os.path.join(folder, f"{basename}_illustrated_reading_version.docx"))
+    manuscript(spec, False, pv).save(os.path.join(folder, f"{basename}_{_labels(spec)['illustrated']}.docx"))
     preview_markdown(spec, os.path.join(folder, "preview", f"{basename}_preview.md"), pv)
     if spec.get("readme"):
         with open(os.path.join(folder, "README.txt"), "w", encoding="utf-8") as fh:
