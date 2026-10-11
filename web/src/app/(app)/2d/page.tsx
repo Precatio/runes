@@ -295,8 +295,8 @@ export default function TwoDPage() {
   const loadKSamsokImage = async (item: KSamsokResult) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/proxy-image?url=${encodeURIComponent(item.url)}`);
-      if (!res.ok) throw new Error();
+      const res = await fetch(`/api/proxy-image?w=3000&url=${encodeURIComponent(item.url)}`);
+      if (!res.ok) throw new Error(res.status === 504 ? "Bildservern svarar inte just nu." : "Bilden kunde inte hämtas.");
       const blob = await res.blob();
       setImagePreview(URL.createObjectURL(blob));
       setFile(new File([blob], "ksamsok.jpg", { type: blob.type }));
@@ -308,8 +308,8 @@ export default function TwoDPage() {
         if (found.length) setLatest3DMeta({ ...latest3DMeta, text: found[0].signum });
       }
       setSearchResults([]);
-    } catch {
-      alert("Bilden kunde inte hämtas från K-samsök (källan tillåter kanske inte extern åtkomst).");
+    } catch (e) {
+      alert(`${e instanceof Error && e.message ? e.message : "Bilden kunde inte hämtas."} (Bilderna i K-samsök ligger hos Riksantikvarieämbetet och andra arkiv.)`);
     } finally {
       setLoading(false);
     }
@@ -391,7 +391,7 @@ export default function TwoDPage() {
                   {searchResults.map((res, i) => (
                     <button key={i} type="button" onClick={() => loadKSamsokImage(res)}
                       className="flex-shrink-0 w-24 h-24 rounded-xl overflow-hidden border-2 border-transparent hover:border-[#b7410e] relative group bg-slate-100">
-                      <img src={res.thumbnail} alt="" className="w-full h-full object-cover" />
+                      <Thumbnail url={res.thumbnail} />
                       <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center p-2">
                         <span className="text-[9px] text-white font-bold text-center leading-tight line-clamp-3">{res.description}</span>
                       </div>
@@ -638,3 +638,15 @@ export default function TwoDPage() {
   );
 }
 
+
+// A search-result thumbnail through the image proxy (archival TIFFs are converted to JPEG); if the archive's
+// image server does not answer, a short note replaces the broken image
+function Thumbnail({ url }: { url: string }) {
+  const [broken, setBroken] = useState(false);
+  if (broken) {
+    return <span className="absolute inset-0 flex items-center justify-center p-1 text-[9px] text-slate-500 text-center leading-tight">Bilden kunde inte hämtas</span>;
+  }
+  return (
+    <img src={`/api/proxy-image?w=240&url=${encodeURIComponent(url)}`} alt="" className="w-full h-full object-cover" onError={() => setBroken(true)} />
+  );
+}
