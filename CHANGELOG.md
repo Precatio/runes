@@ -134,6 +134,8 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 - Landningssidan uppdaterad: arbetsgången i Fullständig stenanalys, Statistik i R, Stenöversikt och tolkningarna i
   Forskningsluckor, principerna om validering, signifikans och regional baslinje, Claude som standard för AI-stegen
   (egen nyckel), fler källor och upphovsangivelsen i licensen.
+- Appen heter Vitki, utan "AI": AI är ett valfritt hjälpmedel för bilder och löptext, inte kärnan (mätning,
+  statistik och validering görs utan AI). Firebase-projektets tekniska id (`vitki-ai`) är oförändrat.
 
 ### Transparens
 - Förteckning över metodens kända brister som visas under varje analyssida, står i varje rapport och sparas i

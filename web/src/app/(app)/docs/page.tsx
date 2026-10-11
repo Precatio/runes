@@ -9,7 +9,7 @@ export default function DocsPage() {
       
       <div className="mb-10 mt-4">
         <h1 className="text-3xl font-bold tracking-tight text-slate-900 mb-2">
-          Om Vitki AI
+          Om Vitki
         </h1>
         <p className="text-slate-600 text-[16px] leading-relaxed max-w-3xl font-medium">
           Här hittar du bakgrundsinformation, användarmanual och licensvillkor för forskningsverktyget.
@@ -41,10 +41,10 @@ export default function DocsPage() {
               Historiskt sett har epigrafik och runologi ofta dominerats av kvalitativa tolkningar och subjektiva okulära bedömningar av ristningstekniker. När forskare försökt identifiera individuella ristare (runmästare) har man förlitat sig på visuella bedömningar av stil eller lingvistiska särdrag, vilket introducerar bias.
             </p>
             <p>
-              Huvudsyftet med att utveckla <strong>Vitki AI</strong> är att flytta fältet bort från subjektiva antaganden och mot <em>direkt, verifierbar teknisk data</em>. Även om 3D-skanningar har introducerat en kvantitativ potential, har metodiken hittills krävt att forskare manuellt plottar tvärsnitt och mäter vinklar, vilket återinför den mänskliga felkällan.
+              Huvudsyftet med att utveckla <strong>Vitki</strong> är att flytta fältet bort från subjektiva antaganden och mot <em>direkt, verifierbar teknisk data</em>. Även om 3D-skanningar har introducerat en kvantitativ potential, har metodiken hittills krävt att forskare manuellt plottar tvärsnitt och mäter vinklar, vilket återinför den mänskliga felkällan.
             </p>
             <p>
-              Vitki AI automatiserar mätningen av huggspår i 3D-skanningar och ställer den bredvid andra oberoende
+              Vitki automatiserar mätningen av huggspår i 3D-skanningar och ställer den bredvid andra oberoende
               belägg: Rundatas uppgifter, ortografi, språkdrag, inskrifternas innehåll, stilgrupper och bergart. Allt
               som räknas fram redovisas med metod, osäkerhet och – där det går – korsvaliderad träffsäkerhet eller
               p-värde. Språkmodeller används för att läsa bilder och skriva löptext, aldrig för att hitta på
@@ -167,7 +167,7 @@ export default function DocsPage() {
               <li>Gå till <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="text-[#b7410e] hover:underline">Google AI Studio</a> och logga in med ett Google-konto.</li>
               <li>Klicka på knappen <strong>Get API key</strong> (eller <em>Create API key</em>).</li>
               <li>Välj att skapa en nyckel i ett nytt eller befintligt projekt.</li>
-              <li>Kopiera textsträngen som skapas (börjar ofta med <code>AIzaSy...</code>) och klistra in den i Vitki AI:s inställningsmeny.</li>
+              <li>Kopiera textsträngen som skapas (börjar ofta med <code>AIzaSy...</code>) och klistra in den under Inställningar.</li>
             </ol>
 
             <h3 className="text-lg font-bold text-slate-900 mt-6 mb-2">3. OpenAI (ungefärlig uppläsning)</h3>
@@ -178,8 +178,8 @@ export default function DocsPage() {
               <li>Gå till <a href="https://platform.openai.com/api-keys" target="_blank" rel="noreferrer" className="text-[#b7410e] hover:underline">OpenAI Developer Platform</a> och logga in (eller skapa ett konto).</li>
               <li>Observera att du kan behöva lägga till ett betalkort och ladda kontot med en liten summa (t.ex. $5) för att röstuppläsningen ska fungera.</li>
               <li>Klicka på <strong>Create new secret key</strong>.</li>
-              <li>Ge nyckeln ett valfritt namn (t.ex. &quot;Vitki AI&quot;) och klicka på <em>Create secret key</em>.</li>
-              <li>Kopiera textsträngen (börjar oftast med <code>sk-...</code>) och klistra in den i Vitki AI:s inställningsmeny.</li>
+              <li>Ge nyckeln ett valfritt namn (t.ex. &quot;Vitki&quot;) och klicka på <em>Create secret key</em>.</li>
+              <li>Kopiera textsträngen (börjar oftast med <code>sk-...</code>) och klistra in den under Inställningar.</li>
             </ol>
 
             <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 my-4">

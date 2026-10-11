@@ -42,13 +42,13 @@ export default function DashboardPage() {
           </svg>
         </div>
         <h1 className="text-4xl font-bold tracking-tight text-slate-900 mb-4">
-          Välkommen till Vitki AI
+          Välkommen till Vitki
         </h1>
         <p className="text-slate-600 text-[18px] leading-relaxed max-w-2xl mx-auto font-medium">
-          Ditt centrala arbetsverktyg för epigrafik och runologi. Analysera 3D-modeller, interagera med AI-runologen och hantera dina projekt.
+          Ett öppet arbetsverktyg för runologi och epigrafik: mät huggspår i 3D-skanningar, pröva hypoteser mot Rundata och statistiken, och samla dina projekt.
         </p>
         <p className="text-slate-500 text-[14px] leading-relaxed max-w-2xl mx-auto mt-3 italic">
-          (En &rdquo;Vitki&rdquo; var under fornnordisk tid en mästare på runor – en runristare eller magiker som besatt djup kunskap om runornas hemligheter och formler.)
+          (Fornnordiskt <em>vitki</em> betyder ungefär &rdquo;den vise, den kunnige&rdquo; – den som behärskade runorna.)
         </p>
       </div>
 
@@ -97,7 +97,7 @@ export default function DashboardPage() {
           <div>
             <h4 className="text-sm font-bold text-slate-800 mb-1">Global AI-Assistent</h4>
             <p className="text-sm text-slate-600 font-medium">
-              Glöm inte att AI-runologen nu finns tillgänglig när som helst nere i högra hörnet. Den läser automatiskt in resultaten från din senaste 3D-analys så du kan ställa frågor direkt i kontext.
+              AI-assistenten Rune finns när som helst nere i högra hörnet. Den läser automatiskt in resultaten från din senaste 3D-analys så du kan ställa frågor direkt i kontext.
             </p>
           </div>
         </div>

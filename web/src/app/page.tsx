@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Vitki AI – öppen forskningsplattform för runinskrifter",
+  title: "Vitki – öppen forskningsplattform för runinskrifter",
   description:
     "Från 3D-skanning till artikel: huggspårsanalys, Samnordisk runtextdatabas, statistiska modeller i R, ortografisk " +
     "stilometri, tolkade fynd mot befintlig forskning och en delad mätkorpus – med redovisad osäkerhet och statistisk " +
@@ -319,7 +319,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
             <img src="/vitki_logo.png" alt="" className="w-9 h-9" />
-            <span className="text-xl font-bold tracking-tight">Vitki <span className="text-slate-400 font-normal">AI</span></span>
+            <span className="text-xl font-bold tracking-tight">Vitki</span>
           </Link>
           <nav className="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-600">
             <a href="#arbetsgang" className="hover:text-slate-900">Arbetsgång</a>
@@ -350,7 +350,7 @@ export default function LandingPage() {
             En öppen forskningsplattform för runinskrifter
           </h1>
           <p className="mt-6 text-xl text-slate-600 leading-relaxed max-w-2xl">
-            Vitki AI samlar 3D-mätning av huggspår, Samnordisk runtextdatabas, statistiska modeller i R och en delad
+            Vitki samlar 3D-mätning av huggspår, Samnordisk runtextdatabas, statistiska modeller i R och en delad
             mätkorpus i ett och samma verktyg – från skanning till artikel, med redovisad osäkerhet, statistisk
             signifikans och verifierbara källor.
           </p>
@@ -438,7 +438,7 @@ export default function LandingPage() {
           <SectionTitle
             eyebrow="För forskningen"
             title="Vad plattformen kan hjälpa till med"
-            intro="Vitki AI ersätter inte runologens bedömning. Den ger mätbara, granskningsbara underlag att pröva hypoteser mot."
+            intro="Vitki ersätter inte runologens bedömning. Den ger mätbara, granskningsbara underlag att pröva hypoteser mot."
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10">
             {USE_CASES.map(u => (
@@ -472,7 +472,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-6 py-24">
           <SectionTitle
             eyebrow="Vad är nytt"
-            title="Det här tillför Vitki AI"
+            title="Det här tillför Vitki"
             intro="Plattformen står på axlarna av flera decenniers runologisk forskning. Det nya är framför allt öppenheten och att metoderna kombineras i samma verktyg."
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -584,7 +584,7 @@ språk, Uppsala universitet.`}
       <footer className="border-t border-slate-900/10">
         <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row gap-4 justify-between text-sm text-slate-500">
           <div>
-            Vitki AI · Grundat av{" "}
+            Vitki · Grundat av{" "}
             <a href="https://www.linkedin.com/in/viktor-kvant-555180108/" target="_blank" rel="noopener noreferrer" className="font-semibold text-slate-700 hover:text-[#b7410e]">Viktor Kvant</a>
           </div>
           <div className="flex gap-5">

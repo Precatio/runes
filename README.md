@@ -35,7 +35,7 @@ skriver den bara text eller gör en uttalat okalibrerad bedömning; siffror, tab
 *   **Karta och stilgrupper:** geografisk spridning per period, stilgrupp och ristare; Gräslunds kronologi med fördelningen i Rundata.
 
 **Resurser**
-*   **AI-assistent (Vitki AI)** med tillgång till Rundata och den senaste analysen, **Runologiskt arkiv** och **dokumentation** i appen.
+*   **AI-assistent** med tillgång till Rundata och den senaste analysen, **Runologiskt arkiv** och **dokumentation** i appen.
 
 ## Arkitektur
 

@@ -7,7 +7,7 @@ import { AnalysisProvider } from "@/components/AnalysisContext";
 import { AuthProvider } from "@/components/AuthContext";
 
 export const metadata: Metadata = {
-  title: "Vitki AI – öppen forskningsplattform för runinskrifter",
+  title: "Vitki – öppen forskningsplattform för runinskrifter",
   description: "3D-huggspårsanalys, Rundata, ortografisk stilometri, delad mätkorpus och RTI i en öppen plattform för runologisk forskning.",
 };
 

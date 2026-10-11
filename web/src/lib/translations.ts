@@ -65,9 +65,9 @@ export interface Translations {
 export const translations: Record<Language, Translations> = {
   sv: {
     sidebar: {
-      title: "Vitki AI",
+      title: "Vitki",
       subtitle: "Analysplattform",
-      ai_runologist: "Vitki AI",
+      ai_runologist: "Start",
       threed_analysis: "3D-Huggspårsanalys",
       twod_analysis: "2D-Bildanalys (Paleografi)",
       synthesis: "Syntes & Attribuering",
@@ -126,9 +126,9 @@ export const translations: Record<Language, Translations> = {
   },
   en: {
     sidebar: {
-      title: "Vitki AI",
+      title: "Vitki",
       subtitle: "Analysis Platform",
-      ai_runologist: "Vitki AI",
+      ai_runologist: "Home",
       threed_analysis: "3D Groove Analysis",
       twod_analysis: "2D Image Analysis (Paleography)",
       synthesis: "Synthesis & Attribution",

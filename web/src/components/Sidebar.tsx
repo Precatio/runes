@@ -204,10 +204,10 @@ export default function Sidebar() {
       
       {/* Brand Header */}
       <div className="p-6 pb-4 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3" title="Om Vitki AI">
+        <Link href="/" className="flex items-center gap-3" title="Om Vitki">
           <img src="/vitki_logo.png" alt="Vitki Logotype" className="w-12 h-12 drop-shadow-sm" />
           <h1 className="text-3xl font-bold tracking-tight text-slate-900">
-            Vitki <span className="text-slate-400 font-normal">AI</span>
+            Vitki
           </h1>
         </Link>
         
