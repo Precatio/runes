@@ -118,9 +118,9 @@ corpus_dims <- lapply(1:3, function(k) {
   # Provinces at either end
   pm <- sort(tapply(sc, da$province, function(v) if (length(v) >= 20) mean(v) else NA))
   list(dim = k, inertia_pct = r1(100 * fa$sv[k]^2 / sum(fa$sv^2)), rho_time = r3(rt), rho_lat = r3(rlat),
-       rho_lon = r3(rlon), eta2_province = r3(e_prov), eta2_carver = r3(e_carv), negative = neg, positive = pos,
-       provinces_low = head(names(pm), 3), provinces_high = tail(names(pm), 3),
-       explained_by = if (length(explained)) explained else character(0), unexplained = !length(explained))
+       rho_lon = r3(rlon), eta2_province = r3(e_prov), eta2_carver = r3(e_carv), negative = I(neg), positive = I(pos),
+       provinces_low = I(head(names(pm), 3)), provinces_high = I(tail(names(pm), 3)),
+       explained_by = I(if (length(explained)) explained else character(0)), unexplained = !length(explained))
 })
 
 # ---- figures -------------------------------------------------------------------------------------------

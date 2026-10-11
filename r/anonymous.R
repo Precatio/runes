@@ -175,8 +175,8 @@ desc <- lapply(seq_along(groups), function(i) {
   styles <- table(full$style_short[grp])
   list(id = i, type_stone = full$signum[type_i], parish = full$parish_name[type_i], n = length(grp),
        spread_km = r1(spread(grp)),
-       stones = full$signum[grp], parishes = names(sort(table(full$parish_name[grp]), decreasing = TRUE)),
-       provinces = names(sort(table(full$province[grp]), decreasing = TRUE)),
+       stones = I(full$signum[grp]), parishes = I(names(sort(table(full$parish_name[grp]), decreasing = TRUE))),
+       provinces = I(names(sort(table(full$province[grp]), decreasing = TRUE))),
        styles = if (length(styles)) data.frame(style = names(styles), n = as.integer(styles)) else NULL,
        within = r3(within), stability = r3(stab[i]), marks = marks,
        nearest_carver = if (!is.null(nearest)) list(carver = nearest$carver, n = nearest$n, dist = r3(nearest$dist),

@@ -63,7 +63,7 @@ interface Corpus {
     calibration: { ece: number; reliability: { threshold: number; n: number; accuracy: number }[] };
     per_carver: { carver: string; n: number; recall: number; precision: number | null }[] };
   chronology: Dict & { method: string; region: string; validation: { rho: number; partial_rho: number; usable: boolean; mae_loo_years: number; mae_naive_years: number };
-    corpus_dimensions: { dim: number; inertia_pct: number; rho_time: number; rho_lat: number; eta2_province: number; eta2_carver: number; positive: string[]; negative: string[]; unexplained: boolean; explained_by: string[] }[] };
+    corpus_dimensions: { dim: number; inertia_pct: number; rho_time: number; rho_lat: number; eta2_province: number; eta2_carver: number; positive: string[] | string; negative: string[] | string; unexplained: boolean; explained_by: string[] | string }[] };
   dialect: Dict & { method: string; caveat: string; mantel: { r: number; p: number }; n_districts: number;
     groups: { group: number; n: number; provinces: string }[]; group_forms: { group: number; forms: { lemma: string; form: string; share_in_group: number; share_all: number }[] }[] };
   network: Dict & { method: string; modularity: number; communities: { community: number; size: number; words: { word: string }[] }[];
@@ -790,8 +790,8 @@ function Chronology({ data }: { data: Corpus }) {
               <tr key={x.dim} className={`border-t border-slate-900/5 align-top ${x.unexplained ? "bg-amber-50" : ""}`}>
                 <td className="p-2 font-semibold">{x.dim}</td><td className="p-2">{d2(x.inertia_pct, 1)} %</td><td className="p-2">{d2(x.rho_time)}</td>
                 <td className="p-2">{d2(x.rho_lat)}</td><td className="p-2">{d2(x.eta2_province)}</td><td className="p-2">{d2(x.eta2_carver)}</td>
-                <td className="p-2 text-xs font-semibold">{x.unexplained ? "oförklarat mönster" : x.explained_by.join(", ")}</td>
-                <td className="p-2 text-xs">{x.positive.slice(0, 3).join(", ")} ↔ {x.negative.slice(0, 3).join(", ")}</td>
+                <td className="p-2 text-xs font-semibold">{x.unexplained ? "oförklarat mönster" : asList(x.explained_by).join(", ")}</td>
+                <td className="p-2 text-xs">{asList(x.positive).slice(0, 3).join(", ")} ↔ {asList(x.negative).slice(0, 3).join(", ")}</td>
               </tr>))}</tbody>
           </table>
         </div>

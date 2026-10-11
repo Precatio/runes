@@ -250,7 +250,7 @@ space_part <- function(dd) {
   grid$carver_f <- factor(levels(nd$carver_f)[1], levels = levels(nd$carver_f))
   grid$p <- as.numeric(predict(m, newdata = grid, type = "response", exclude = "s(carver_f)"))
   list(n = n, edf = r1(st[row, "edf"]), p = signif(st[row, "p-value"], 3),
-       high = head(pv$province, 3), low = rev(tail(pv$province, 3)), provinces = pv %>% mutate(pred = r3(pred)),
+       high = I(head(pv$province, 3)), low = I(rev(tail(pv$province, 3))), provinces = pv %>% mutate(pred = r3(pred)),
        grid = grid[, c("east", "north", "p")])
 }
 
