@@ -65,21 +65,26 @@ def test_synthesis_style_check(client, monkeypatch):
 
 
 @needs_rundata
-def test_academic_report(client):
+def test_academic_report(client, monkeypatch):
+    from api import auth
+
+    # The corpus report is the founder's (tests/test_auth_admin.py)
+    monkeypatch.setattr(auth, "verify", lambda token: {"uid": "founder", "admin": True})
+    founder = {"Authorization": "Bearer founder"}
     rng = np.random.default_rng(3)
     entries = []
     for sig, mu in [("U 729", 70), ("U 707", 72), ("U 1022", 95), ("U 1034", 97)]:
         vals = rng.normal([mu, 3, 2, 6, .33, .2, .05], [2, 1, .2, .4, .02, .03, .01])
         entries.append({"signum": sig, "means": dict(zip(METRICS, vals)), "slices": [{}] * 4,
                         "feature_type": "rune", "method_version": "groove-3", "contributorName": "Test"})
-    r = client.post("/api/reports/academic", json={"entries": entries, "use_ai": False}).json()
+    r = client.post("/api/reports/academic", json={"entries": entries, "use_ai": False}, headers=founder).json()
     assert "Tabell 2" in r["markdown"] and "Balle" in r["markdown"] and r["figures"]
     assert r["latex"].startswith(r"\documentclass")
-    d = client.post("/api/reports/academic", json={"entries": entries, "use_ai": False, "format": "docx"})
+    d = client.post("/api/reports/academic", json={"entries": entries, "use_ai": False, "format": "docx"}, headers=founder)
     assert d.status_code == 200 and d.content[:2] == b"PK"
     # AI text from the preview is reused as-is, without a new AI call
     ai = {"abstract": "SAMMANFATTNINGSTEST", "introduction": "INLEDNINGSTEST", "discussion": "DISKUSSIONSTEST"}
-    r = client.post("/api/reports/academic", json={"entries": entries, "use_ai": True, "ai_text": ai}).json()
+    r = client.post("/api/reports/academic", json={"entries": entries, "use_ai": True, "ai_text": ai}, headers=founder).json()
     assert r["ai_used"] and "SAMMANFATTNINGSTEST" in r["markdown"] and "DISKUSSIONSTEST" in r["markdown"]
 
 

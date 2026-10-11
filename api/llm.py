@@ -4,8 +4,10 @@ Varje anrop anger text, eventuella bilder och – för strukturerade svar – et
 eller ett JSON-schema). Claude får schemat som strukturerat svarsformat (output_config.format), så att svaret
 alltid är giltig JSON enligt schemat; Gemini får det som response_schema.
 
-Leverantör och nyckel kommer från webbläsaren (X-AI-Provider, X-Anthropic-Api-Key, X-Gemini-Api-Key) eller,
-vid lokal utveckling, från miljövariablerna AI_PROVIDER, ANTHROPIC_API_KEY och GEMINI_API_KEY.
+Leverantör och nyckel kommer från webbläsaren (X-AI-Provider, X-Anthropic-Api-Key, X-Gemini-Api-Key): varje
+användare använder sin egen nyckel. Serverns egna nycklar (miljövariablerna ANTHROPIC_API_KEY och GEMINI_API_KEY)
+används bara om ALLOW_SERVER_AI_KEYS=1 är satt – för lokal utveckling och skript, aldrig på en publik server, där
+alla användare annars skulle köra på serverägarens nyckel.
 """
 from __future__ import annotations
 
@@ -53,8 +55,9 @@ def ai_context(
     x_gemini_api_key: Optional[str] = Header(None, alias="X-Gemini-Api-Key"),
 ) -> AIContext:
     """FastAPI-beroende: vilken modell och nyckel anropet ska använda."""
-    keys = {"claude": x_anthropic_api_key or os.environ.get("ANTHROPIC_API_KEY", ""),
-            "gemini": x_gemini_api_key or os.environ.get("GEMINI_API_KEY", "")}
+    server = os.environ.get("ALLOW_SERVER_AI_KEYS") == "1"
+    keys = {"claude": x_anthropic_api_key or (os.environ.get("ANTHROPIC_API_KEY", "") if server else ""),
+            "gemini": x_gemini_api_key or (os.environ.get("GEMINI_API_KEY", "") if server else "")}
     provider = (x_ai_provider or os.environ.get("AI_PROVIDER") or "").lower()
     if provider not in PROVIDERS:
         provider = "claude" if keys["claude"] else "gemini"

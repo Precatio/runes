@@ -25,7 +25,7 @@ const label = "text-[11px] font-bold uppercase tracking-wider text-slate-500";
 
 export default function StoneReportPanel() {
   const { stoneReportInput } = useAnalysis();
-  const { user } = useAuth();
+  const { user, authHeaders, isAdmin } = useAuth();
   const { userName, userInstitution, aiHeaders } = useSettings();
   const [projects, setProjects] = useState<ProjectData[]>([]);
   const [sourceKey, setSourceKey] = useState<string>(stoneReportInput ? "session" : "");
@@ -42,8 +42,10 @@ export default function StoneReportPanel() {
   const [templateOptions, setTemplateOptions] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    fetch(`${API_URL}/api/reports/templates`).then(r => r.json()).then(d => setTemplates(d.templates ?? [])).catch(() => setTemplates([]));
-  }, []);
+    // Everyone gets the full stone report; the founder also gets the other publication forms
+    authHeaders().then(h => fetch(`${API_URL}/api/reports/templates`, { headers: h })).then(r => r.json())
+      .then(d => setTemplates(d.templates ?? [])).catch(() => setTemplates([]));
+  }, [authHeaders, isAdmin]);
   const template = templates.find(t => t.key === templateKey);
   const chooseTemplate = (key: string) => {
     setTemplateKey(key);
@@ -74,7 +76,7 @@ export default function StoneReportPanel() {
     const corpusEntries = withCorpus && user ? await corpus.list().catch(() => []) : [];
     return fetch(`${API_URL}/api/reports/stone`, {
       method: "POST",
-      headers: { "Content-Type": "application/json", ...aiHeaders },
+      headers: { "Content-Type": "application/json", ...aiHeaders, ...(await authHeaders()) },
       body: JSON.stringify({
         signum: input!.signum, title: title || null, author: userName, institution: userInstitution,
         meta: input!.meta, scan, analyses: input!.analyses, counts: input!.counts ?? null,

@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from typing import Literal
 from dotenv import load_dotenv
 
-load_dotenv(override=True)
+load_dotenv()  # .env for local development; the server's own environment wins
 
 router = APIRouter()
 

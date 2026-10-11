@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from typing import List
 from dotenv import load_dotenv
 
-load_dotenv(override=True) # Load from .env and overwrite any system env vars
+load_dotenv()  # .env for local development; the server's own environment wins
 
 router = APIRouter()
 

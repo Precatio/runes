@@ -2,7 +2,7 @@ import os
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.routers import chat, threed, twod, raa, synthesis, phonetics, rundata, stats, orthography, research, reports, rstats, limitations, docs
+from api.routers import admin, chat, threed, twod, raa, synthesis, phonetics, rundata, stats, orthography, research, reports, rstats, limitations, docs
 
 app = FastAPI(title="Vitki API")
 
@@ -55,6 +55,7 @@ app.include_router(reports.router, prefix="/api/reports", tags=["reports"])
 app.include_router(limitations.router, prefix="/api/limitations", tags=["limitations"])
 app.include_router(docs.router, prefix="/api/docs", tags=["docs"])
 app.include_router(rstats.router, prefix="/api/r", tags=["r"])
+app.include_router(admin.router, prefix="/api", tags=["admin"])
 
 @app.get("/")
 def read_root():

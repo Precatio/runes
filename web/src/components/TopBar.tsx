@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { useAuth } from "./AuthContext";
+import Messages from "./Messages";
 
 export default function TopBar({ onMenu }: { onMenu?: () => void }) {
   const router = useRouter();
@@ -73,6 +74,7 @@ export default function TopBar({ onMenu }: { onMenu?: () => void }) {
 
       <div className="lg:flex-1 flex justify-end items-center gap-2 sm:gap-4 shrink-0">
         <div className="flex items-center gap-2 sm:gap-4">
+          <Messages />
           {/* Generate Report Quick Button */}
           <button 
             onClick={() => router.push("/report/current")}

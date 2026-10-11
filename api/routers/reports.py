@@ -15,6 +15,7 @@ from api.rundata import store
 from src import academic, limitations, report_templates, stone_report
 from src.reading import validate as validate_reading
 from src.synthesis import site_geology
+from api.auth import optional_user, require_admin
 
 router = APIRouter()
 
@@ -70,7 +71,9 @@ Svara med JSON:
 
 
 @router.post("/academic")
-def academic_report(req: AcademicRequest, aictx: llm.AIContext = Depends(llm.ai_context)):
+def academic_report(req: AcademicRequest, aictx: llm.AIContext = Depends(llm.ai_context),
+                    _: dict = Depends(require_admin)):
+    """Korpusrapporten (flera stenar) – bara för appens grundare."""
     if not req.entries:
         raise HTTPException(status_code=400, detail="Urvalet innehåller inga mätningar.")
     if len(req.entries) > 500:
@@ -180,17 +183,28 @@ def attribution_report(req: AttributionRequest):
             "crosscheck": (cc or {}).get("status")}
 
 
+# The full stone report is open to everyone; the other publication forms only to the app's founder
+OPEN_TEMPLATES = {"stenrapport"}
+
+
 @router.get("/templates")
-def report_template_list():
+def report_template_list(user: Optional[dict] = Depends(optional_user)):
     """Publiceringsformer för stenrapporten: blogginlägg, tidskriftsartikel, uppsats, avhandlingskapitel m.fl."""
-    return {"templates": report_templates.catalogue()}
+    templates = report_templates.catalogue()
+    if not (user and user.get("admin")):
+        templates = [t for t in templates if t.get("key") in OPEN_TEMPLATES]
+    return {"templates": templates}
 
 
 @router.post("/stone")
 def stone_report_endpoint(req: StoneReportRequest,
-                          aictx: llm.AIContext = Depends(llm.ai_context)):
+                          aictx: llm.AIContext = Depends(llm.ai_context),
+                          user: Optional[dict] = Depends(optional_user)):
     if req.template not in report_templates.TEMPLATES:
         raise HTTPException(status_code=400, detail=f"Okänd rapportmall: {req.template}")
+    if req.template not in OPEN_TEMPLATES and not (user and user.get("admin")):
+        raise HTTPException(status_code=403, detail="Den här publiceringsformen är bara för appens grundare. "
+                                                    "Stenrapporten (fullständig) är öppen för alla.")
     if not any(a.get("slices") for a in req.analyses):
         raise HTTPException(status_code=400, detail="Underlaget saknar uppmätta tvärsnitt. Gör en 3D-analys först.")
     if sum(len(a.get("slices") or []) for a in req.analyses) > 3000:

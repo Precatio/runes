@@ -20,6 +20,7 @@ function certainCarver(carvers: Carver[]): string | null {
 }
 
 export default function ReportsPage() {
+  const { isAdmin } = useAuth();
   const [tab, setTab] = useState<"stone" | "corpus">("stone");
   const tabBtn = (t: "stone" | "corpus", text: string) => (
     <button onClick={() => setTab(t)}
@@ -39,17 +40,25 @@ export default function ReportsPage() {
           resultaten, och markerat som AI-text.
         </p>
       </div>
-      <div className="flex gap-2">
-        {tabBtn("stone", "Stenrapport – en sten")}
-        {tabBtn("corpus", "Korpusrapport – flera stenar")}
-      </div>
-      {tab === "stone" ? <StoneReportPanel /> : <CorpusReportPanel />}
+      {/* The corpus report and the other publication forms are the founder's; everyone gets the full stone report */}
+      {isAdmin ? (
+        <div className="flex flex-wrap gap-2">
+          {tabBtn("stone", "Stenrapport – en sten")}
+          {tabBtn("corpus", "Korpusrapport – flera stenar")}
+        </div>
+      ) : (
+        <p className="text-sm text-slate-600 max-w-3xl">
+          Här skapar du <strong>Stenrapport (fullständig)</strong> för en sten du har analyserat i 3D: hela underlaget i
+          artikelform med figurer ur skanningen, läsning, attribuering och metod.
+        </p>
+      )}
+      {tab === "stone" || !isAdmin ? <StoneReportPanel /> : <CorpusReportPanel />}
     </div>
   );
 }
 
 function CorpusReportPanel() {
-  const { user, loginWithGoogle } = useAuth();
+  const { user, loginWithGoogle, authHeaders } = useAuth();
   const { userName, userInstitution, aiHeaders } = useSettings();
   const [entries, setEntries] = useState<CorpusEntry[]>([]);
   const [loaded, setLoaded] = useState(false);
@@ -91,9 +100,9 @@ function CorpusReportPanel() {
     : scope === "province" && scopeValue ? `Huggteknik på runstenar i ${scopeValue}`
     : "Huggteknik i runstenskorpusen";
 
-  const request = (format: "json" | "docx", aiText: Record<string, string> | null = null) => fetch(`${API_URL}/api/reports/academic`, {
+  const request = async (format: "json" | "docx", aiText: Record<string, string> | null = null) => fetch(`${API_URL}/api/reports/academic`, {
     method: "POST",
-    headers: { "Content-Type": "application/json", ...aiHeaders },
+    headers: { "Content-Type": "application/json", ...aiHeaders, ...(await authHeaders()) },
     body: JSON.stringify({
       scope: { type: scope, value: scopeValue || null, title: title || defaultTitle },
       entries: selection, author: userName, institution: userInstitution, use_ai: useAI, format, ai_text: aiText,

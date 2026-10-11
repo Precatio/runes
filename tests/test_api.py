@@ -196,14 +196,19 @@ def test_stone_report_with_surface_figures(client, stone_id):
 
 @pytest.mark.skipif(not os.path.exists(os.path.join(os.path.dirname(__file__), "..", "data", "rundata.json")),
                     reason="data/rundata.json saknas")
-def test_report_templates(client, stone_id):
+def test_report_templates(client, stone_id, monkeypatch):
     import numpy as np
+    from api import auth
+
+    # The publication forms other than the full stone report are the founder's (tests/test_auth_admin.py)
+    monkeypatch.setattr(auth, "verify", lambda token: {"uid": "founder", "admin": True})
+    founder = {"Authorization": "Bearer founder"}
 
     n = [0, -np.sin(np.radians(20)), np.cos(np.radians(20))]
     auto = client.post("/api/3d/auto_analyze", data={"mesh_id": stone_id, "normal_x": n[0], "normal_y": n[1],
                                                       "normal_z": n[2]}).json()
     acc = [s for s in auto["slices"] if s["accepted"]]
-    keys = [t["key"] for t in client.get("/api/reports/templates").json()["templates"]]
+    keys = [t["key"] for t in client.get("/api/reports/templates", headers=founder).json()["templates"]]
     assert {"stenrapport", "tidskrift", "uppsats", "avhandling", "blogg", "antikvarisk", "data"} <= set(keys)
     body = {"signum": "U 344", "mesh_id": stone_id, "counts": auto["counts"], "use_ai": False, "include_r": False,
             "analyses": [{"feature_type": "rune", "slices": acc, "provenance": auto["provenance"]}]}
@@ -211,7 +216,8 @@ def test_report_templates(client, stone_id):
               "blogg": "## Så mätte vi", "antikvarisk": "## Administrativa uppgifter", "data": "## 3 Datamängden"}
     options = {"tidskrift": {"venue": "jas"}, "avhandling": {"chapter": "7"}}
     for key in keys:
-        r = client.post("/api/reports/stone", json={**body, "template": key, "template_options": options.get(key, {})})
+        r = client.post("/api/reports/stone", json={**body, "template": key, "template_options": options.get(key, {})},
+                        headers=founder)
         assert r.status_code == 200, key
         md = r.json()["markdown"]
         assert expect.get(key, "") in md, key
@@ -221,8 +227,11 @@ def test_report_templates(client, stone_id):
     assert client.post("/api/reports/stone", json={**body, "template": "okänd"}).status_code == 400
 
 
-def test_known_limitations_follow_every_analysis(client, stone_id):
+def test_known_limitations_follow_every_analysis(client, stone_id, monkeypatch):
     import numpy as np
+    from api import auth
+
+    monkeypatch.setattr(auth, "verify", lambda token: {"uid": "founder", "admin": True})
 
     lim = client.get("/api/limitations?contexts=grooves,auto").json()
     keys = [x["key"] for x in lim["items"]]
@@ -242,7 +251,8 @@ def test_known_limitations_follow_every_analysis(client, stone_id):
         assert "Kända brister och begränsningar" in md and "Måtten är inte validerade" in md
         # Two runes on the synthetic stone: below the guideline, so the report warns first
         assert "färre än riktvärdet 10" in md
-        blog = client.post("/api/reports/stone", json={**body, "template": "blogg"}).json()["markdown"]
+        blog = client.post("/api/reports/stone", json={**body, "template": "blogg"},
+                           headers={"Authorization": "Bearer founder"}).json()["markdown"]
         assert "Det här vet vi att metoden ännu inte klarar" in blog
 
 

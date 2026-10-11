@@ -3,13 +3,20 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    // A signed-in account that the founder has not suspended. Suspension (api/routers/admin.py) disables the
+    // account in Firebase Auth and writes banned/{uid}, so that access stops at once and not when the token expires.
+    function active() {
+      return request.auth != null
+        && !exists(/databases/$(database)/documents/banned/$(request.auth.uid));
+    }
+
     // Ensure all authenticated users can only read and write their own data
     match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read, write: if active() && request.auth.uid == userId;
 
       // Cascade the same rule down to nested collections (projects, settings)
       match /{document=**} {
-        allow read, write: if request.auth != null && request.auth.uid == userId;
+        allow read, write: if active() && request.auth.uid == userId;
       }
     }
 
@@ -38,23 +45,35 @@ service cloud.firestore {
           && resource.data.contributorUid != request.auth.uid;
       }
 
-      allow read: if request.auth != null;
-      allow create: if request.auth != null && validEntry(request.resource.data);
-      allow update: if request.auth != null && (
+      allow read: if active();
+      allow create: if active() && validEntry(request.resource.data);
+      allow update: if active() && (
         (resource.data.contributorUid == request.auth.uid && validEntry(request.resource.data))
         || isVerification()
       );
-      allow delete: if request.auth != null && resource.data.contributorUid == request.auth.uid;
+      allow delete: if active() && resource.data.contributorUid == request.auth.uid;
 
       // Raw profiles and rune forms: readable by all signed-in users, written by the contributor.
       // getAfter() so that a batch creating the entry and its subdocuments together is allowed.
       match /{sub}/{docId} {
-        allow read: if request.auth != null;
-        allow create, update: if request.auth != null && sub in ['raw', 'runeforms']
+        allow read: if active();
+        allow create, update: if active() && sub in ['raw', 'runeforms']
           && getAfter(/databases/$(database)/documents/corpus/$(entryId)).data.contributorUid == request.auth.uid;
-        allow delete: if request.auth != null
+        allow delete: if active()
           && get(/databases/$(database)/documents/corpus/$(entryId)).data.contributorUid == request.auth.uid;
       }
+    }
+
+    // Messages from the founder (written only by the server). Messages to everyone can be read by anyone,
+    // also before signing in; a personal message only by its recipient.
+    match /messages/{messageId} {
+      allow read: if resource.data.to == 'all' || (active() && resource.data.to == request.auth.uid);
+      allow write: if false;
+    }
+
+    // Suspended accounts: written and read only by the server
+    match /banned/{uid} {
+      allow read, write: if false;
     }
 
     // Deny access to everything else by default

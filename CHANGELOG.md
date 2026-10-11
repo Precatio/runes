@@ -5,6 +5,18 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Konton, admin och säkerhet inför publicering
+- Servern kontrollerar Firebase-inloggningen (ID-token, avstängda och återkallade konton) med Firebase Admin SDK
+  (`api/auth.py`). Grundaren anges på servern med `ADMIN_UIDS` eller `ADMIN_EMAILS` – ingen inloggning står i koden.
+- Admin-sidan (bara för grundaren): antal registrerade, nya och aktiva konton, registreringar per månad, avstängning
+  och återöppning av konton, och meddelanden i appen till alla eller till ett konto (klockan i sidhuvudet).
+- Avstängda konton kan inte logga in, deras inloggningar återkallas och Firestore-reglerna nekar dem direkt
+  (`banned/{uid}`); meddelanden kan bara skrivas av servern.
+- Rapporter: Stenrapport (fullständig) är öppen för alla; korpusrapporten och de övriga publiceringsformerna är bara
+  för grundaren, också på servern.
+- Serverns egna AI-nycklar används bara med `ALLOW_SERVER_AI_KEYS=1` (lokal utveckling); på en publik server använder
+  varje användare sin egen nyckel. `.env` skriver inte längre över serverns miljövariabler.
+
 ### Mobil och surfplatta
 - Sidomenyn är en utfällbar meny under 1024 px, öppnas med menyknappen i sidhuvudet och stängs när man väljer en
   sida; sidhuvudet, chatten, marginalerna och kartans filter är anpassade för små skärmar. Alla sidor är kontrollerade
