@@ -297,6 +297,16 @@ def test_interpret_finding(client):
     text = u92["paragraphs"][-1]["text"]
     assert u92["level"] == "svagt" and "kronologiskt problematiskt" in text and "stavningen ensam inte räcker" in text
     assert "produktiva" in u92["paragraphs"][1]["text"].lower()
+    # U 1026: Rundata names an anonymous carver shared with U 1027 – the closed model cannot propose it, so the
+    # suggestion is a testable hypothesis; place, style and language are part of the model and do not count as support
+    u1026 = client.post("/api/research/interpret", json={
+        "signum": "U 1026", "method": "statistisk modell (R)", "verdict": "nytt", "suggested": "Öpir 1",
+        "existing": "namnlös ristare, samma som gjort U 1027", "evidence": 0.8,
+        "stats": {"probability": 0.84, "accuracy": 1.0, "bin_n": 20, "bin_correct": 20, "acc_lo": 0.84, "acc_hi": 1.0}}).json()
+    others = u1026["paragraphs"][2]["text"]
+    assert u1026["level"] == "måttligt" and "namnlösa ristare" in u1026["paragraphs"][-1]["text"]
+    assert "ingår redan i metoden" in others and "bergarten avgör inte frågan" in others.lower()
+    assert "20 av 20" in u1026["paragraphs"][1]["text"] and "84–100 %" in u1026["paragraphs"][1]["text"]
 
 
 

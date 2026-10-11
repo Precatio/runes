@@ -65,6 +65,7 @@ def research_findings(req: FindingsRequest):
                                 s.get, s.inscriptions, orthography_model().names)
     from api.routers import rstats
     r_items, r_patterns = rstats.findings()
+    r_items = findings.add_extras(r_items, s.get, s.inscriptions, orthography_model().names)
     items = rstats._with_crosscheck(list(_orthographic_findings())) + extra + r_items
     items.sort(key=lambda f: -f["score"])
     return {

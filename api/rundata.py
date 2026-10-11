@@ -38,6 +38,17 @@ SIGNUM_IN_TEXT_RE = re.compile(
 )
 
 
+SAME_CARVER_RE = re.compile(r"samma (?:ristare )?som (?:gjort|ristat|har gjort)\s+(.+)", re.I)
+
+
+def same_carver_as(rec: dict) -> list[str]:
+    """Stenar som Rundata anger är gjorda av samma (ofta namnlösa) ristare (U 1026: 'Samma som gjort U 1027.')."""
+    m = SAME_CARVER_RE.search(rec.get("carver_raw") or "")
+    if not m:
+        return []
+    return [f"{a} {b}" for a, b in SIGNUM_IN_TEXT_RE.findall(m.group(1))]
+
+
 class RundataStore:
     def __init__(self, data: dict):
         self.meta = data["meta"]
@@ -45,6 +56,7 @@ class RundataStore:
         self.by_key: dict[str, dict] = {}
         for rec in self.inscriptions:
             self.by_key.setdefault(fold_signum(rec["signum"]), rec)
+            rec["same_carver_as"] = same_carver_as(rec)
         for alias, target in data.get("aliases", {}).items():
             rec = self.by_key.get(fold_signum(target))
             if rec:

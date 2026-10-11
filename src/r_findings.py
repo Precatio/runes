@@ -35,16 +35,44 @@ def _pct(v: float) -> str:
     return f"{round(v * 100)} %"
 
 
+def wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
+    """95 % konfidensintervall för en andel (Wilson); rimligt även för 20 av 20."""
+    if n == 0:
+        return 0.0, 1.0
+    p = k / n
+    den = 1 + z * z / n
+    centre, half = (p + z * z / (2 * n)) / den, z * ((p * (1 - p) / n + z * z / (4 * n * n)) ** 0.5) / den
+    return max(0.0, centre - half), min(1.0, centre + half)
+
+
 def _reliability(att: dict, p: float) -> tuple[float, str]:
-    """Korsvaliderad träffsäkerhet för förstaval med minst denna sannolikhet."""
+    """Korsvaliderad träffsäkerhet för förstaval med minst denna sannolikhet, med 95 % konfidensintervall."""
+    best = _bin(att, p)
+    if not best:
+        return 0.3, "modellens förstaval är osäkra vid så låg sannolikhet"
+    k = round(best["accuracy"] * best["n"])
+    lo, hi = wilson(k, best["n"])
+    return best["accuracy"], (f"när modellen ger minst {_d(best['threshold'], 1)} till sitt förstaval har det varit rätt i "
+                              f"{k} av {best['n']} korsvaliderade stenar ({_pct(best['accuracy'])}, 95 % konfidensintervall "
+                              f"{_pct(lo)}–{_pct(hi)})")
+
+
+def _bin(att: dict, p: float) -> dict | None:
     best = None
     for r in att["calibration"]["reliability"]:
         if p >= r["threshold"] and r.get("accuracy") is not None:
             best = r
-    if not best:
-        return 0.3, "modellens förstaval är osäkra vid så låg sannolikhet"
-    return best["accuracy"], (f"när modellen ger minst {_d(best['threshold'], 1)} till sitt förstaval är det rätt i "
-                              f"{_pct(best['accuracy'])} av fallen ({best['n']} korsvaliderade stenar)")
+    return best
+
+
+def _bin_stats(att: dict, p: float) -> dict:
+    """Antal stenar och konfidensintervall för träffsäkerheten vid modellens sannolikhet (till tolkningen)."""
+    b = _bin(att, p)
+    if not b:
+        return {}
+    k = round(b["accuracy"] * b["n"])
+    lo, hi = wilson(k, b["n"])
+    return {"bin_n": b["n"], "bin_correct": k, "acc_lo": round(lo, 3), "acc_hi": round(hi, 3)}
 
 
 CIRCULARITY = ("träningsdata är Rundatas attribueringar, i Mälardalen främst Axelsons (1993), som själv vägde in "
@@ -99,13 +127,13 @@ def model_findings(att: dict, lookup, inscriptions: list[dict], oof: list[dict] 
             out.append(_finding(rec, MODEL, "nytt", ours, _carver_text(rec), evidence, novelty, rel,
                                 {"belägg": ev, "nyhet": [nov], "relevans": rel_reasons}, True, suggested=pr["top"],
                                 stats={"probability": pr["p"], "margin": round(margin, 3), "second": pr.get("second"),
-                                       "accuracy": acc}))
+                                       "accuracy": acc, **_bin_stats(att, pr["p"])}))
         elif uncertain:
             if pr["top"] in uncertain:
                 out.append(_finding(rec, MODEL, "stämmer", ours, _carver_text(rec), evidence, 0.4, rel,
                                     {"belägg": ev, "nyhet": ["stöder en osäker attribuering i Rundata"],
                                      "relevans": rel_reasons}, True, suggested=pr["top"],
-                                    stats={"probability": pr["p"], "margin": round(margin, 3), "accuracy": acc}))
+                                    stats={"probability": pr["p"], "margin": round(margin, 3), "accuracy": acc, **_bin_stats(att, pr["p"])}))
             else:
                 signed = any(c["kind"] == "S" for c in rec["carvers"])
                 if signed:
@@ -113,7 +141,7 @@ def model_findings(att: dict, lookup, inscriptions: list[dict], oof: list[dict] 
                 out.append(_finding(rec, MODEL, "motsäger", ours, _carver_text(rec), evidence, 0.6, rel,
                                     {"belägg": ev, "nyhet": ["pekar på en annan ristare än Rundatas osäkra attribuering"],
                                      "relevans": rel_reasons}, True, suggested=pr["top"],
-                                    stats={"probability": pr["p"], "margin": round(margin, 3), "accuracy": acc}))
+                                    stats={"probability": pr["p"], "margin": round(margin, 3), "accuracy": acc, **_bin_stats(att, pr["p"])}))
     # Stones with a certain carver: out-of-fold predictions that disagree with Rundata
     for row in oof or []:
         if row["p"] < min_p or row["top"] == row["carver"]:
@@ -133,7 +161,8 @@ def model_findings(att: dict, lookup, inscriptions: list[dict], oof: list[dict] 
                             {"belägg": [acc_text, "korsvaliderad: stenen ingick inte i den modell som bedömde den",
                                         CIRCULARITY], "nyhet": [nov], "relevans": rel_reasons},
                             True, suggested=row["top"],
-                            stats={"probability": row["p"], "p_truth": row["p_truth"], "accuracy": acc, "cross_validated": True}))
+                            stats={"probability": row["p"], "p_truth": row["p_truth"], "accuracy": acc, "cross_validated": True,
+                                   **_bin_stats(att, row["p"])}))
     return out
 
 

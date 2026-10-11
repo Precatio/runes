@@ -669,7 +669,24 @@ kärna), oavsett hur lik stavningen är. Ortografins belägg sänks när likhete
 urvalet (×0,75 vid justerat p 0,05–0,2, ×0,5 vid högre), och slutsatsen säger då uttryckligen att stavningen ensam inte
 räcker för att attribuera stenen – ett negativt resultat som också kan pröva äldre attribueringar gjorda på samma
 grund. När den föreslagna ristaren står för minst 10 % av landskapets attribuerade stenar påpekas att produktiva
-ristare drar till sig förslag, och att träffsäkerheten för deras förslag mäter metoden i allmänhet snarare än stenen. Att Runor 2020
+ristare drar till sig förslag, och att träffsäkerheten för deras förslag mäter metoden i allmänhet snarare än stenen.
+
+**Efter granskningen av U 1026** (2026-10-11). Attribueringsmodellen använder själv plats, stil och språkdrag, så när
+den föreslår en ristare räknas område, stilgrupp och språkdrag inte som oberoende stöd; de visas, och de kan tala
+emot. Modellens förslag bedöms *starkt* bara när träffsäkerheten vid den sannolikheten är väl underbyggd (nedre
+gränsen i ett 95 % konfidensintervall enligt Wilson minst 80 %; t.ex. 20 av 20 stenar ger 84–100 %) och inget belägg
+talar emot. Sannolikheten gäller under förutsättning att ristaren är en av modellens ristare. När Rundata anger att en
+namnlös ristare har gjort stenen och andra stenar ("Samma som gjort U 1027"; 122 inskrifter, läses ur ristarfältet)
+blir slutsatsen högst *måttligt* – en prövbar hypotes om vem den namnlösa ristaren var – och modellens förslag för de
+kopplade stenarna visas (samma förslag stöder hypotesen, ett annat talar emot). Stenens *typikalitet* visas också:
+hur stor del av ristarens egna stenar som liknar ristarens stavningsprofil mindre än stenen gör (under 10 % räknas som
+emot – förslaget kan vara det minst dåliga valet bland modellens ristare). Bergarten räknas som neutral när
+bergartsfamiljen är minst nästan lika vanlig på landskapets runstenar som hos ristaren (kvot under 1,5; granit finns
+på 74 % av Upplands runstenar). Språkdragens "X av Y" räknar bara oberoende drag, och drag som avviker från ristarens
+vanligaste form redovisas med både ristarens och landskapets andel – för U 1026 är monoftongen, avsaknaden av stungen i
+och *at* inte ovanligare hos Öpir än i Uppland, medan apostrofen som skiljetecken är nästan fem gånger vanligare hos
+honom. Länken "öppna i 3D-analysen" startar en mätning och betyder inte att stenen är mätt; tolkningen säger uttryckligen
+när ingen huggteknik är mätt. Att Runor 2020
 anger en annan ristare räknas som ett belägg emot. Fördelning 2026-10-11 före granskningen av U 92 (429 fynd): nya
 förslag 32 starka, 138 måttliga, 35 svaga och 4 redan kända; motsägelser 5 måttliga, 15 svaga och 6 metodfel; 194
 bekräftelser. Efter granskningen, med de nya språkdragen och fynden från okända ristare (516 fynd): nya förslag 21

@@ -48,6 +48,15 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 - Kristen bön känns igen även i osäkra läsningar (hakparenteser), som Kristr hjalpi, Guð biargi, Guð lætti och
   Guðs móðir (249 runstenar i stället för 214).
 
+### Granskning av U 1026: sluten modell, namnlösa ristare och bergart
+- Modellens förslag: plats, stil och språkdrag ingår i modellen och räknas inte som oberoende stöd; träffsäkerheten
+  anges med antal stenar och 95 % konfidensintervall; *starkt* kräver en väl underbyggd träffsäkerhet och inget emot.
+- Rundatas "Samma som gjort …" läses in (namnlösa ristarpar); sådana stenar får högst *måttligt*, och modellens förslag
+  för de kopplade stenarna och stenens typikalitet för ristaren vägs in.
+- Fynd från R-analyserna visar Rundatas material (tidigare "Rundata anger inget material"); en bergart som är lika
+  vanlig i landskapet som hos ristaren räknas som neutral.
+- Språkdragen räknar bara oberoende drag, listar alla avvikelser och visar både ristarens och landskapets andel.
+
 ### 2D-analys
 - Automatiska runutsnitt ("Hitta runorna"): runorna som 3D-analysen känt igen klipps ut ur ristningskartan, och i
   andra bilder markerar AI varje runa med ruta och läsning för granskning; de valda sparas som runutsnitt med

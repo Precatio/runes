@@ -276,21 +276,39 @@ def compare(stone: dict[str, str], profile: dict, min_n: int = 3, baseline: dict
             row["region_share"] = round(base.get(v, 0) / sum(base.values()), 3)
             row["lr"] = round(math.exp(table[t][v]), 2)
         rows.append(row)
-    k = sum(r["agrees"] for r in rows)
+    # A trait that repeats another (stungna runor beside stungen i/u/k, ai i 'sten' beside ai i alla ord, själsbön
+    # beside bön) is shown but not counted, so that the same evidence is not counted twice
+    present = {r["trait"] for r in rows}
+    for r in rows:
+        r["repeats"] = any(o in present for o in REDUNDANT.get(r["trait"], ()))
+    counted = [r for r in rows if not r["repeats"]]
+    k = sum(r["agrees"] for r in counted)
     who = profile["carver"]
-    text = (f"{k} av {len(rows)} jämförbara språkdrag stämmer med inskrifterna av {who}"
-            if rows else f"Inga jämförbara språkdrag (för få gemensamma ord med inskrifterna av {who})")
-    out = {"rows": rows, "agree": k, "comparable": len(rows)}
+    text = (f"{k} av {len(counted)} jämförbara språkdrag stämmer med inskrifterna av {who}"
+            if counted else f"Inga jämförbara språkdrag (för få gemensamma ord med inskrifterna av {who})")
+    out = {"rows": rows, "agree": k, "comparable": len(counted)}
     if rows and table:
-        distinct = [r for r in rows if r["agrees"] and (r.get("lr") or 0) >= 1.5]
-        common = [r for r in rows if r["agrees"] and r.get("lr") is not None and r["lr"] < 1.5]
+        distinct = [r for r in counted if r["agrees"] and (r.get("lr") or 0) >= 1.5]
+        common = [r for r in counted if r["agrees"] and r.get("lr") is not None and r["lr"] < 1.5]
+        against = [r for r in counted if (r.get("lr") or 1) <= 1 / 1.5]
         where = f"i {region}" if region else "i landskapet"
         if common:
             text += f", men {len(common)} av dem är lika vanliga eller vanligare på andra stenar {where}"
         if distinct:
             text += (". Utmärkande för ristaren: " + "; ".join(
-                f"{r['label'].lower()} ({r['stone']}: {round(r['share'] * 100)} % hos ristaren mot "
+                f"{_lc(r['label'])} ({r['stone']}: {round(r['share'] * 100)} % hos ristaren mot "
                 f"{round(r['region_share'] * 100)} % {where})" for r in sorted(distinct, key=lambda r: -r["lr"])[:3]))
+        if against:
+            text += (". Talar emot ristaren (vanligare på andra stenar " + where + "): " + "; ".join(
+                f"{_lc(r['label'])} ({r['stone']}: {round(r['share'] * 100)} % hos ristaren mot "
+                f"{round(r['region_share'] * 100)} % {where})" for r in sorted(against, key=lambda r: r["lr"])))
+        # Unlike the carver's most common form, but not rarer with the carver than elsewhere: worth showing, since a
+        # comparison with the carver alone would count them as evidence against
+        off_only = [r for r in counted if not r["agrees"] and r.get("lr") is not None and r["lr"] > 1 / 1.5]
+        if off_only:
+            text += (". Avviker från ristarens vanligaste form men är inte ovanligare hos ristaren än " + where + ": "
+                     + "; ".join(f"{_lc(r['label'])} ({r['stone']}: {round(r['share'] * 100)} % hos ristaren mot "
+                                 f"{round(r['region_share'] * 100)} % {where})" for r in off_only))
         score, n_used = _score(stone, table)
         out.update(lr_total=round(math.exp(score), 2), n_used=n_used)
         if others:
@@ -298,10 +316,11 @@ def compare(stone: dict[str, str], profile: dict, min_n: int = 3, baseline: dict
             if null:
                 p = (1 + sum(1 for sc in null if sc >= score)) / (1 + len(null))
                 out.update(p_region=round(p, 4), n_region=len(null))
-    if rows:
-        off = [r for r in rows if not r["agrees"]]
+    if counted and not table:
+        off = [r for r in counted if not r["agrees"]]
         if off:
-            text += ". Avviker: " + "; ".join(f"{r['label'].lower()} ({r['stone']}; hos ristaren oftast {r['carver_common']})" for r in off[:4])
+            text += f". Avviker ({len(off)}): " + "; ".join(
+                f"{_lc(r['label'])} ({r['stone']}; hos ristaren oftast {r['carver_common']})" for r in off)
     if out.get("lr_total") is not None:
         lr = out["lr_total"]
         text += (f". Sammantaget är stenens språkdrag {_times(lr)} så vanliga hos {who} som på andra stenar "
@@ -312,6 +331,11 @@ def compare(stone: dict[str, str], profile: dict, min_n: int = 3, baseline: dict
                      f"(p {_pfmt(p)})")
     out["text"] = text + "."
     return out
+
+
+def _lc(label: str) -> str:
+    """Liten första bokstav, men transliterationens versaler (æftiR) behålls."""
+    return label[:1].lower() + label[1:]
 
 
 def _times(lr: float) -> str:

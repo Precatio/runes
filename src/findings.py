@@ -120,6 +120,8 @@ def _finding(rec, method, verdict, ours, existing, evidence, novelty, rel, reaso
 
 def _carver_text(rec: dict) -> str:
     cs = [c for c in rec["carvers"] if c["kind"] in ("S", "A")]
+    if not cs and rec.get("same_carver_as"):
+        return f"namnlös ristare, samma som gjort {', '.join(rec['same_carver_as'])}"
     return ", ".join(f"{c['name']} ({c['kind']}{'?' if c['uncertain'] else ''})" for c in cs) or "ingen ristare angiven"
 
 

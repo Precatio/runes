@@ -65,8 +65,13 @@ def _strength(f: dict) -> list[str]:
             out.append("Stenen ligger utanför ristarens kända landskap.")
     elif method.startswith("statistisk modell") and st:
         cv = " (korsvaliderat: modellen hade inte sett stenen)" if st.get("cross_validated") else ""
-        out.append(f"Modellen ger {f.get('suggested')} sannolikheten {_num(st.get('probability'))}{cv}. "
-                   f"Vid den nivån har modellens förstaval varit rätt i omkring {round((st.get('accuracy') or 0) * 100)} % av fallen.")
+        if st.get("bin_n"):
+            acc_text = (f"Vid den nivån har modellens förstaval varit rätt i {st['bin_correct']} av {st['bin_n']} prövade "
+                        f"stenar med känd ristare (95 % konfidensintervall {round(st['acc_lo'] * 100)}–{round(st['acc_hi'] * 100)} %).")
+        else:
+            acc_text = f"Vid den nivån har modellens förstaval varit rätt i omkring {round((st.get('accuracy') or 0) * 100)} % av fallen."
+        out.append(f"Modellen ger {f.get('suggested')} sannolikheten {_num(st.get('probability'))}{cv}. {acc_text} "
+                   "Sannolikheten gäller under förutsättning att ristaren är en av modellens ristare.")
         if st.get("p_truth") is not None:
             out.append(f"Rundatas ristare får {_num(st['p_truth'])}.")
         out.append("Modellen är tränad på attribueringar som delvis bygger på samma drag (stil, stavning, geografi), "
@@ -84,9 +89,23 @@ def _strength(f: dict) -> list[str]:
     elif method.startswith("stilgrupp"):
         out.append("Stilgruppen är en AI-bedömning av en bild och är inte kalibrerad.")
     ev = f.get("evidence") or 0
-    out.append(f"Sammantaget bedöms belägget som {'starkt' if ev >= 0.6 else ('måttligt' if ev >= 0.35 else 'svagt')} "
-               f"({_num(ev)} på en skala 0–1).")
+    out.append(f"Metodens eget belägg är {'starkt' if ev >= 0.6 else ('måttligt' if ev >= 0.35 else 'svagt')} "
+               f"({_num(ev)} på en skala 0–1); slutsatsen nedan väger också in de andra beläggen.")
     return out
+
+
+def _typicality(rec: dict, carver: str, ctx: dict) -> float | None:
+    """Hur typisk stenens stavning är för ristaren: andelen av ristarens egna stenar (lämna-en-ute) som liknar
+    ristarens profil mindre än stenen gör. Ett lågt värde betyder att stenen bara är 'minst olik' ristaren."""
+    m = ctx.get("model")
+    if m is None or rec["signum"] not in m.index:
+        return None
+    rk = m.rank_carvers(rec["signum"], 60)
+    if not rk or rk["n_words"] < 5:
+        return None
+    hit = next((r for r in rk["ranking"] if r["carver"] == carver), None)
+    sig = (hit or {}).get("significance") or {}
+    return sig.get("own_percentile")
 
 
 def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
@@ -125,14 +144,20 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
     support = against = 0
     lines = []
     style_conflict = None
+    anonymous_carver = False
+    model_method = False
     if sug and not style_method:
-        # A carver picked by a spelling-based method gets no independent support from the language traits
+        # A carver picked by a spelling-based method gets no independent support from the language traits; the model
+        # also uses place and style, so they cannot support its suggestion either (they can still speak against it)
         by_spelling = method in ("ortografi", "samlade belägg") or method.startswith(("statistisk modell", "okänd ristare"))
+        model_method = method.startswith("statistisk modell")
+        dependent = {"område", "stil", "språkdrag"} if model_method else ({"språkdrag"} if by_spelling else set())
         chk = _checks(rec, sug, ctx["inscriptions"], ctx["names"], ctx["home"], selected=by_spelling)
         sc = carver_styles(rec, sug, ctx["inscriptions"])
         if sc.get("strong"):
             style_conflict = sc
-        ok = [CHECK_NAMES[k] for k, (v, _) in chk.items() if v is True]
+        ok = [CHECK_NAMES[k] for k, (v, _) in chk.items() if v is True and k not in dependent]
+        within = [CHECK_NAMES[k] for k, (v, _) in chk.items() if v is True and k in dependent]
         bad = [CHECK_NAMES[k] for k, (v, _) in chk.items() if v is False]
         # None means either no data or a result that does not decide either way; the latter is shown with its text
         cannot = ("För få", "Bergarten kan inte", "Ristarens stenar saknar")
@@ -142,10 +167,13 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
         against += len(bad)
         if ok:
             lines.append(f"{_join(ok).capitalize()} stämmer med {sug}.")
+        if within:
+            lines.append(f"{_join(within).capitalize()} stämmer också, men ingår redan i metoden och räknas inte som "
+                         "oberoende stöd.")
         if bad:
             lines.append(f"{_join(bad).capitalize()} talar emot ({'; '.join(chk[k][1] for k, (v, _) in chk.items() if v is False)})")
         for name, t in undecided:
-            lines.append(f"{name.capitalize()} avgör inte frågan: {t}")
+            lines.append(f"{name.capitalize()} avgör inte frågan: {t[:1].lower() + t[1:]}")
         if unknown:
             lines.append(f"{_join(unknown).capitalize()} kan inte prövas.")
         probs = ctx["oof"].get(rec["signum"]) or ctx["pred"].get(rec["signum"]) or {}
@@ -167,6 +195,34 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
             elif sug not in order[:3]:
                 against += 1
                 lines.append(f"Ortografin pekar i stället på {order[0]}.")
+        linked = rec.get("same_carver_as") or []
+        if linked and not [c for c in rec["carvers"] if c["kind"] in ("S", "A")]:
+            anonymous_carver = True
+            lines.append(f"Rundata anger att samma namnlösa ristare har gjort {_join(linked)}. Modellerna kan bara välja "
+                         f"bland kända ristare; om den namnlösa ristaren inte är en av dem måste de ändå välja någon, och "
+                         f"{sug} kan då vara den minst dåliga kandidaten snarare än rätt.")
+            for other in linked:
+                op = ctx["oof"].get(other) or ctx["pred"].get(other) or {}
+                if op:
+                    otop = max(op, key=op.get)
+                    if otop == sug:
+                        lines.append(f"Modellen föreslår {sug} även för {other} ({_num(op[otop])}), vilket stämmer med att "
+                                     "stenarna har samma ristare.")
+                    else:
+                        against += 1
+                        lines.append(f"För {other}, som enligt Rundata har samma ristare, föreslår modellen i stället "
+                                     f"{otop} ({_num(op[otop])}; {sug} {_num(op.get(sug, 0))}) – en varningssignal.")
+                else:
+                    lines.append(f"{other} kan inte prövas av modellen (för lite läsbar text eller för långt från "
+                                 "modellens stenar).")
+        typ = _typicality(rec, sug, ctx)
+        if typ is not None and typ < 0.1:
+            against += 1
+            lines.append(f"Stavningen liknar {sug} mindre än {round((1 - typ) * 100)} % av {sug}s egna stenar gör – stenen "
+                         "är atypisk för ristaren, och förslaget kan vara det minst dåliga valet snarare än en verklig likhet.")
+        elif typ is not None:
+            lines.append(f"Stavningen liknar {sug} lika mycket som {round(typ * 100)} % av {sug}s egna stenar gör eller mer – "
+                         "stenen är inte atypisk för ristaren.")
         if verdict == "motsäger" and profile and profile.get("support") is not None:
             lines.append(f"Stödet för Rundatas ristare {profile.get('carver')} är {_num(profile['support'])} från "
                          f"{profile.get('n_sources')} metoder (Stenöversikt).")
@@ -213,7 +269,19 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
                 f"{', '.join(style_conflict['core'])}, omkring {style_conflict['gap_years']} år senare enligt Gräslunds "
                 "kronologi. Om stilbestämningen stämmer är förslaget kronologiskt problematiskt, oavsett hur lik stavningen "
                 "är. Kontrollera beskrivningen av ornamentiken (Sveriges runinskrifter) innan förslaget drivs vidare.")
-    elif ev >= 0.5 and support >= 3 and against == 0 and p_ok:
+    elif anonymous_carver and ev >= 0.35 and against == 0:
+        level = "måttligt"
+        text = (f"En prövbar hypotes: modellen rangordnar {sug} högst, men Rundata räknar med en namnlös ristare bakom "
+                f"stenen och {_join(rec.get('same_carver_as') or [])}, och modellen kan inte föreslå en namnlös ristare. "
+                f"Frågan är alltså om den namnlösa ristaren är {sug} – det behöver prövas med ornamentik, runformer och "
+                "huggteknik på alla stenarna, inte bara med modellen.")
+    elif model_method and ev >= 0.5 and against == 0 and (st.get("acc_lo") or 0) >= 0.8:
+        level = "starkt"
+        text = (f"Ett välgrundat förslag: vid den här sannolikheten har modellen haft rätt i {st.get('bin_correct')} av "
+                f"{st.get('bin_n')} prövade fall, och inget av de andra beläggen talar emot. Plats, stil och språkdrag ingår "
+                "redan i modellen och räknas inte som oberoende stöd; ett oberoende belägg, t.ex. huggteknik, skulle stärka "
+                "förslaget. " + ("Attribueringen i Rundata kan behöva omprövas." if verdict == "motsäger" else "Värt att pröva runologiskt."))
+    elif ev >= 0.5 and support >= 3 and against == 0 and p_ok and not model_method:
         level = "starkt"
         text = (f"Ett välgrundat förslag: belägget är starkt och {support} andra belägg stämmer med {sug} utan att något talar emot. "
                 + ("Attribueringen i Rundata kan behöva omprövas." if verdict == "motsäger" else "Värt att pröva runologiskt."))
@@ -235,7 +303,10 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
                  "uppstår lätt när man letar bland många ristare.")
     steps = []
     if sug and not style_method:
-        steps.append(f"en 3D-mätning av huggspåren jämförd med säkra stenar av {sug} (minst 20 runor per sten enligt riktvärdet)")
+        stones = " och ".join([rec["signum"]] + list(rec.get("same_carver_as") or []))
+        steps.append(f"en 3D-mätning av huggspåren på {stones}, jämförd med flera säkra stenar av {sug} (minst 20 runor "
+                     "per sten enligt riktvärdet; ingen huggteknik är mätt för stenen ännu)")
+        steps.append(f"en jämförelse av runformer och ornamentik med {sug}s signerade stenar")
     refs = (cc.get("runor") or {}).get("references") or []
     if refs:
         steps.append("en genomgång av litteraturen i Runor (" + "; ".join(refs[:3]) + ")")

@@ -252,7 +252,8 @@ def test_language_traits_and_synthesis_checks(client, monkeypatch):
     assert t["ai_sten"] in ("ai bevarad", "monoftong") and set(t) <= set(TRAITS)
     r = client.post("/api/synthesis/analyze", json={"signum": "U 344", "include_geology": False}).json()
     top = r["candidates"][0]
-    assert top["name"] == "Åsmund" and top["material"]["fits"] is True
+    # U 344 is granite, the most common rock on Uppland's runestones: it fits Åsmund but does not tell carvers apart
+    assert top["name"] == "Åsmund" and top["material"]["fits"] is None and "skiljer inte ristare åt" in top["material"]["text"]
     assert top["language"]["comparable"] >= 2 and "Åsmund" in top["language"]["text"]
     lang = client.get("/api/research/language/U 344", params={"carver": "Åsmund"}).json()
     assert lang["traits"] and lang["comparison"]["rows"]

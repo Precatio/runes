@@ -229,8 +229,27 @@ def carver_styles(rec: dict | None, carver: str, inscriptions: list[dict]) -> di
             "strong": bool(gap is not None and gap >= STYLE_STRONG_GAP), "fits": fits, "text": text}
 
 
+_family_cache: dict[tuple, tuple[dict, int]] = {}
+
+
+def _province_families(prov: str, inscriptions: list[dict]) -> tuple[dict, int]:
+    """Andelen runstenar i landskapet (med uppgift om material) per bergartsfamilj."""
+    key = (prov, len(inscriptions))
+    if key not in _family_cache:
+        from src.research_gaps import is_runestone
+        fams, n = Counter(), 0
+        for r in inscriptions:
+            if is_runestone(r) and province(r) == prov and r.get("material"):
+                n += 1
+                for f in geology.families(r["material"]):
+                    fams[f] += 1
+        _family_cache[key] = ({f: c / n for f, c in fams.items()} if n else {}, n)
+    return _family_cache[key]
+
+
 def material_check(rec: dict, carver: str, inscriptions: list[dict]) -> dict | None:
-    """Stenens bergart mot bergarterna på ristarens säkra stenar (Rundata)."""
+    """Stenens bergart mot bergarterna på ristarens säkra stenar (Rundata). En bergart som är lika vanlig på andra
+    runstenar i landskapet som hos ristaren skiljer inte ristare åt och räknas varken för eller emot."""
     material = (rec or {}).get("material") or ""
     prof = geology.carver_materials(carver, inscriptions, certain_carvers)
     if not material or prof["n"] < 3:
@@ -242,6 +261,18 @@ def material_check(rec: dict, carver: str, inscriptions: list[dict]) -> dict | N
     text = f"Stenen: {material}. Säkra stenar av {carver} med uppgift ({prof['n']}): {listing}."
     if fits is False:
         text += " Bergarten förekommer sällan eller aldrig hos ristaren."
+    elif fits:
+        base, n_base = _province_families(province(rec), inscriptions)
+        fam = max(fams & used, key=lambda f: prof["families"].get(f, 0))
+        share_c, share_p = prof["families"].get(fam, 0), base.get(fam, 0)
+        label = geology.FAMILY_LABEL.get(fam, fam)
+        if n_base >= 20 and share_p and share_c / share_p < 1.5:
+            fits = None
+            text += (f" {label.capitalize()} är lika vanlig på runstenarna i landskapet i stort ({round(share_p * 100)} %) "
+                     f"som hos ristaren ({round(share_c * 100)} %), så bergarten skiljer inte ristare åt.")
+        else:
+            text += (f" {label.capitalize()} är vanligare hos ristaren ({round(share_c * 100)} %) än på runstenarna i "
+                     f"landskapet i stort ({round(share_p * 100)} %).")
     return {"material": material, "fits": fits, "carver": prof, "text": text}
 
 
@@ -281,8 +312,8 @@ def language_check(rec: dict, carver: str, inscriptions: list[dict], names, sele
         favourable = p is not None and p < 0.05 and c["lr_total"] > 1
         if p is not None:
             c["significant"] = favourable
-            c["text"] = c["text"][:-1] + (" Skillnaden mot landskapet är " + ("statistiskt signifikant." if favourable
-                                                                            else "inte statistiskt signifikant."))
+            c["text"] += " Skillnaden mot landskapet är " + ("statistiskt signifikant." if favourable
+                                                           else "inte statistiskt signifikant.")
         if selected and favourable:
             c["text"] += (" Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte "
                           "som ett oberoende stöd.")

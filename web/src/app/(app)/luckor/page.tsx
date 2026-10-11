@@ -159,7 +159,8 @@ function StoneLinks({ signum }: { signum: string }) {
   return (
     <span className="whitespace-nowrap text-xs">
       <Link href={`/inskrifter?signum=${encodeURIComponent(signum)}`} className="font-bold text-slate-900 hover:text-[#b7410e]">{signum}</Link>
-      <Link href={`/3d?signum=${encodeURIComponent(signum)}`} className="ml-2 text-[#b7410e] hover:underline">mät i 3D</Link>
+      <Link href={`/3d?signum=${encodeURIComponent(signum)}`} className="ml-2 text-[#b7410e] hover:underline"
+        title="Öppnar 3D-analysen för att mäta huggspåren. Länken betyder inte att stenen redan är mätt.">öppna i 3D-analysen</Link>
     </span>
   );
 }
