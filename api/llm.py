@@ -1,8 +1,8 @@
 """Gemensamt lager för språkmodeller: Claude (Anthropic, standard) eller Gemini (Google).
 
 Varje anrop anger text, eventuella bilder och – för strukturerade svar – ett schema (en Pydantic-modell
-eller ett JSON-schema). Claude får schemat som ett verktyg (tool use), så att svaret alltid är giltig JSON;
-Gemini får det som response_schema.
+eller ett JSON-schema). Claude får schemat som strukturerat svarsformat (output_config.format), så att svaret
+alltid är giltig JSON enligt schemat; Gemini får det som response_schema.
 
 Leverantör och nyckel kommer från webbläsaren (X-AI-Provider, X-Anthropic-Api-Key, X-Gemini-Api-Key) eller,
 vid lokal utveckling, från miljövariablerna AI_PROVIDER, ANTHROPIC_API_KEY och GEMINI_API_KEY.
@@ -10,6 +10,7 @@ vid lokal utveckling, från miljövariablerna AI_PROVIDER, ANTHROPIC_API_KEY och
 from __future__ import annotations
 
 import base64
+import io
 import json
 import os
 import re
@@ -103,6 +104,32 @@ def _parse_json(text: str):
 
 # ---- providers -----------------------------------------------------------------------------
 
+CLAUDE_MAX_IMAGE_BYTES = 5 * 1024 * 1024  # the API rejects larger images
+CLAUDE_MAX_IMAGE_EDGE = 2576               # larger images are scaled down by the API anyway
+CLAUDE_IMAGE_TYPES = {"image/jpeg", "image/png", "image/gif", "image/webp"}
+
+
+def _fit_image(data: bytes, mime: str | None) -> tuple[bytes, str]:
+    """Bilden som Claude tar emot: för stora eller okända format skalas om till JPEG. Markörernas
+    koordinater är normaliserade (0–1000), så omskalningen påverkar dem inte."""
+    mime = (mime or "image/jpeg").lower()
+    if len(data) <= CLAUDE_MAX_IMAGE_BYTES and mime in CLAUDE_IMAGE_TYPES:
+        try:
+            from PIL import Image
+            with Image.open(io.BytesIO(data)) as im:
+                if max(im.size) <= CLAUDE_MAX_IMAGE_EDGE:
+                    return data, mime
+        except Exception:
+            return data, mime
+    from PIL import Image, ImageOps
+    with Image.open(io.BytesIO(data)) as im:
+        im = ImageOps.exif_transpose(im).convert("RGB")
+        im.thumbnail((CLAUDE_MAX_IMAGE_EDGE, CLAUDE_MAX_IMAGE_EDGE))
+        out = io.BytesIO()
+        im.save(out, "JPEG", quality=88)
+    return out.getvalue(), "image/jpeg"
+
+
 def _claude(ctx, messages, system, schema, json_mode, tier, max_tokens) -> Result:
     import anthropic
 
@@ -110,26 +137,29 @@ def _claude(ctx, messages, system, schema, json_mode, tier, max_tokens) -> Resul
     model = CLAUDE_PRO_MODEL if tier == "pro" else CLAUDE_FAST_MODEL
     content = []
     for m in messages:
-        blocks = [{"type": "image", "source": {"type": "base64", "media_type": mime or "image/jpeg",
-                                               "data": base64.b64encode(data).decode()}} for data, mime in m.images]
+        images = [_fit_image(data, mime) for data, mime in m.images]
+        blocks = [{"type": "image", "source": {"type": "base64", "media_type": mime,
+                                               "data": base64.b64encode(data).decode()}} for data, mime in images]
         blocks.append({"type": "text", "text": m.text or " "})
         content.append({"role": m.role, "content": blocks})
-    kwargs: dict = {"model": model, "max_tokens": max_tokens, "messages": content}
+    # Current models think before answering and the thinking counts against max_tokens; leave room for both
+    kwargs: dict = {"model": model, "max_tokens": max(max_tokens, 16000), "messages": content}
     if system:
         kwargs["system"] = system
     if schema is not None:
-        kwargs["tools"] = [{"name": "svar", "description": "Lämna svaret i den här strukturen.",
-                            "input_schema": _json_schema(schema)}]
-        kwargs["tool_choice"] = {"type": "tool", "name": "svar"}
-    resp = client.messages.create(**kwargs)
+        # Structured outputs: the answer is guaranteed to follow the schema. (Forcing a tool call with
+        # tool_choice is rejected by Claude Opus 5.5 and later.)
+        kwargs["output_config"] = {"format": {"type": "json_schema",
+                                              "schema": anthropic.transform_schema(_json_schema(schema))}}
+    with client.messages.stream(**kwargs) as stream:
+        resp = stream.get_final_message()
     tokens = (resp.usage.input_tokens or 0) + (resp.usage.output_tokens or 0)
     text = "".join(b.text for b in resp.content if b.type == "text")
-    data = None
-    if schema is not None:
-        data = next((b.input for b in resp.content if b.type == "tool_use"), None)
-        text = json.dumps(data, ensure_ascii=False) if data is not None else text
-    elif json_mode:
-        data = _parse_json(text)
+    if resp.stop_reason == "refusal":
+        raise RuntimeError("Claude avböjde att svara på förfrågan.")
+    if resp.stop_reason == "max_tokens" and (schema is not None or json_mode):
+        raise RuntimeError("Svaret från Claude blev avklippt (för långt). Försök igen eller korta ned underlaget.")
+    data = _parse_json(text) if (schema is not None or json_mode) else None
     return Result(text, data, tokens, model, "claude")
 
 

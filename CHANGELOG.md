@@ -33,6 +33,11 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   jämförbarheten och, med signum, ristare, stil, avstånd, stavning och språkdrag (METHODS.md 3).
 - 2D-bildsökets miniatyrer fungerar med arkivens TIFF-bilder.
 
+### AI-analyser
+- 2D-analysen, den fonetiska analysen och rapporternas AI-avsnitt fungerar med Claude Opus 5.5: strukturerade
+  svar via `output_config` i stället för tvingat verktygsval (som modellen avvisar). För stora bilder skalas
+  ned före anropet, och ett avklippt eller avböjt svar ger ett tydligt felmeddelande.
+
 ### Stenöversikt
 - Ny sida Stenöversikt: varje runsten som en punkt efter hur väl sex metoder stöder Rundatas ristare och hur
   starkt det bästa alternativet är (kan vara felbedömd, omstridd, stöds, svagt underlag; nytt eller möjligt
