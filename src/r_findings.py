@@ -397,12 +397,15 @@ def corpus_patterns(res: dict) -> list[dict]:
             if dim["unexplained"]:
                 out.append({"topic": "Datering", "status": "mönster att pröva",
                             "text": f"I hela korpusen följer CA-dimension {dim['dim']} ({_d(dim['inertia_pct'], 1)} % av inertin) "
-                                    f"varken tid (rho {_d(dim['rho_time'])}; eta² mot stilgrupp {_d(dim.get('eta2_time'))}) eller "
+                                    f"varken tid (rho {_d(dim['rho_time'])}"
+                                    + (f"; eta² mot stilgrupp {_d(dim['eta2_time'])}" if dim.get("eta2_time") is not None else "")
+                                    + ") eller "
                                     f"geografi (rho latitud {_d(dim['rho_lat'])}, eta² landskap {_d(dim['eta2_province'])}). Den skiljer "
                                     f"{', '.join(dim['positive'][:3]).lower()} från {', '.join(dim['negative'][:3]).lower()}.",
-                            "note": f"Sambandet med ristare är eta² {_d(dim['eta2_carver'] or 0)} (slumpnivå "
-                                    f"{_d(dim.get('eta2_carver_null95'))}). Mönstret kan vara ristarens, verkstadens eller "
-                                    "beställarens val; formulärtraditioner knutna till ristare diskuteras i forskningen.",
+                            "note": f"Sambandet med ristare är eta² {_d(dim['eta2_carver'] or 0)}"
+                                    + (f" (slumpnivå {_d(dim['eta2_carver_null95'])})" if dim.get("eta2_carver_null95") is not None else "")
+                                    + ". Mönstret kan vara ristarens, verkstadens eller beställarens val; formulärtraditioner "
+                                    "knutna till ristare diskuteras i forskningen.",
                             "significance": significance(None, test="beskrivande (korrespondensanalys); inget signifikanstest")})
     nw = res.get("network") or {}
     for k in nw.get("kinship") or []:
