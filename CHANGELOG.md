@@ -131,6 +131,9 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   krav på skanningen, arbetsgång, minsta redovisning; varje automatisk analys kontrolleras mot protokollet.
 - Webbsidan Metodik och beräkningar (Dokumentation → Metodik) visar METHODS.md, protokollet och alla moduler,
   skript och R-moduler direkt från koden (`/api/docs`).
+- Landningssidan uppdaterad: arbetsgången i Fullständig stenanalys, Statistik i R, Stenöversikt och tolkningarna i
+  Forskningsluckor, principerna om validering, signifikans och regional baslinje, Claude som standard för AI-stegen
+  (egen nyckel), fler källor och upphovsangivelsen i licensen.
 
 ### Transparens
 - Förteckning över metodens kända brister som visas under varje analyssida, står i varje rapport och sparas i

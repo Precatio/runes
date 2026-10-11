@@ -5,17 +5,29 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Vitki AI – öppen forskningsplattform för runinskrifter",
   description:
-    "3D-huggspårsanalys med redovisad osäkerhet, Samnordisk runtextdatabas, ortografisk stilometri, delad mätkorpus, " +
-    "jämförelse av stenar, kartor, stilgrupper och RTI – öppen källkod under GPL-3.0.",
+    "Från 3D-skanning till artikel: huggspårsanalys, Samnordisk runtextdatabas, statistiska modeller i R, ortografisk " +
+    "stilometri, tolkade fynd mot befintlig forskning och en delad mätkorpus – med redovisad osäkerhet och statistisk " +
+    "signifikans. Öppen källkod under GPL-3.0.",
 };
 
 const GITHUB = "https://github.com/Precatio/runes";
 
 const STATS = [
   { value: "6 753", label: "inskrifter ur Samnordisk runtextdatabas" },
+  { value: "2 321", label: "svenska vikingatida runstenar i nio statistiska analyser i R" },
   { value: "±0,6°", label: "vinkelfel på syntetiska stenar med kända spår" },
-  { value: "60 %", label: "rätt ristare först i ortografisk test (slump 4 %)" },
-  { value: "GPL-3.0", label: "fri och öppen källkod" },
+  { value: "60 %", label: "rätt ristare först i ortografiskt test (slump 4 %)" },
+];
+
+// The full stone analysis (/stenanalys), step by step
+const WORKFLOW = [
+  { step: "Skanningen", text: "STL, OBJ eller PLY laddas upp; signum hämtas ur filnamnet och stenen ur Rundata." },
+  { step: "Bilder", text: "Relief, djupkarta och strykljus ur fyra riktningar räknas ur skanningen." },
+  { step: "Huggspåren", text: "Bara spår som känns igen som runor mäts, enligt Vitki-protokollet, med känslighetsanalys." },
+  { step: "Bild och läsning", text: "Stilgrupp ur bilden och blinda läsningar i flera orienteringar, prövade mot Rundata." },
+  { step: "Syntes", text: "Rundata, ortografi, huggteknik och modellen vägs samman; motsägelser redovisas." },
+  { step: "Statistik i R", text: "Stenen mot korpusen: modell, grupp, seriation, landskap och sikt." },
+  { step: "Rapporten", text: "En artikel med figurer ur skanningen och en bilaga om hur analysen gjordes." },
 ];
 
 const FEATURE_GROUPS = [
@@ -23,9 +35,14 @@ const FEATURE_GROUPS = [
     title: "Mäta",
     items: [
       {
+        name: "Fullständig stenanalys",
+        href: "/stenanalys",
+        text: "En skanning och ett signum in, en artikel ut. Alla steg nedan körs i följd med samma metoder som de enskilda verktygen, och varje steg redovisas – också det som misslyckades.",
+      },
+      {
         name: "3D-huggspårsanalys",
         href: "/3d",
-        text: "V-vinkel, asymmetri, djup, bredd, bottenradie och ytråhet i STL-, OBJ- och PLY-skanningar – manuellt, med ett klick per snitt eller helt automatiskt med granskning. Runor och ornamentik mäts separat, med spridning per snitt. Strykljus, relief och djup räknas direkt ur skanningen. Full proveniens (filens SHA-256, parametrar, metodversion) och export till CSV eller JSON.",
+        text: "V-vinkel, asymmetri, djup, bredd, bottenradie och ytråhet i STL-, OBJ- och PLY-skanningar – manuellt, med ett klick per snitt eller automatiskt. Den automatiska analysen mäter bara runor (mätmetod groove-5) och anger om stenen har tillräckligt många: 10 runor för att beskriva en sten, 20 för att jämföra. Full proveniens och export till CSV eller JSON.",
       },
       {
         name: "Strykljus och RTI",
@@ -35,12 +52,12 @@ const FEATURE_GROUPS = [
       {
         name: "Språk och läsning",
         href: "/phonetics",
-        text: "Blind AI-läsning av runorna från foto, RTI-vy eller relief, jämförd med Rundata utan AI: vad som stämmer, vad som skiljer och vilka ordformer som är belagda.",
+        text: "Blind AI-läsning av runorna från foto, RTI-vy eller relief, prövad mot Rundata utan AI: vad som stämmer, vad som skiljer, vilka ordformer som är belagda och om läsningen bara återger en känd text.",
       },
       {
         name: "2D-paleografi",
         href: "/2d",
-        text: "AI-stöd för stilgrupp och runformer – märkt som okalibrerad bedömning. Runutsnitt jämförs med samma runa på andra stenar och kopplas till spårmåtten.",
+        text: "AI-stöd för stilgrupp och runformer, märkt som okalibrerad bedömning. Runorna klipps ut automatiskt, jämförs med samma runa på andra stenar och kopplas till spårmåtten.",
       },
     ],
   },
@@ -55,12 +72,12 @@ const FEATURE_GROUPS = [
       {
         name: "Ortografisk stilometri",
         href: "/inskrifter?signum=U%20729",
-        text: "Stavning, skiljetecken och bindrunor jämförs med alla vikingatida inskrifter. Ger mest lika inskrifter och ristare – med p-värde och metodens träffsäkerhet redovisade.",
+        text: "Stavning, skiljetecken och bindrunor jämförs med alla vikingatida inskrifter. Ger mest lika inskrifter och ristare, med p-värde justerat för att den bästa av alla ristare valts och metodens träffsäkerhet.",
       },
       {
         name: "Språkdrag och inskrifternas syfte",
         href: "/luckor",
-        text: "Fonetisk stil och språkbruk per ristare, och vad inskrifterna handlar om – minne, bro, bön, utlandsfärd, magiska formler – med test mot genomsnittet.",
+        text: "Tjugo drag i ljud, stavning, språkbruk och skrift per ristare, jämförda med landskapets övriga stenar – och vad inskrifterna handlar om: minne, bro, bön, utlandsfärd, magiska formler.",
       },
       {
         name: "Bergart och berggrund",
@@ -70,12 +87,37 @@ const FEATURE_GROUPS = [
       {
         name: "Jämför stenar",
         href: "/jamfor",
-        text: "Permutationstest mått för mått och för alla mått samtidigt, effektstorlek och överlagrade tvärsnittsprofiler.",
+        text: "Huggspåren runa mot runa, permutationstest för varje mått och alla samtidigt, effektstorlek och om skillnaden är statistiskt säkerställd – och ristare, stil, stavning och språkdrag när stenarna har signum.",
       },
       {
         name: "Karta och stilgrupper",
         href: "/karta",
-        text: "Geografisk spridning efter period, stilgrupp och ristare. Gräslunds stilkronologi med fördelningen i Rundata.",
+        text: "Geografisk spridning efter period, stilgrupp, ristare och innehåll. Gräslunds stilkronologi med fördelningen i Rundata.",
+      },
+    ],
+  },
+  {
+    title: "Statistik och tolkning",
+    items: [
+      {
+        name: "Statistik i R",
+        href: "/statistik",
+        text: "Nio analyser av alla svenska vikingatida runstenar: en attribueringsmodell prövad på socknar den aldrig sett, ristarnas områden, stavning och avstånd, seriation mot Gräslunds kronologi, förändring i tid och rum, ordnätverk och grupper av stenar som kan vara namnlösa ristare. Varje svar med fråga, tolkning och vad det inte säger.",
+      },
+      {
+        name: "Forskningsluckor",
+        href: "/luckor",
+        text: "Appens resultat mot Rundata – stämmer, nytt eller motsäger – med en tolkning för varje fynd (starkt, måttligt, svagt) som väger alla belägg och stäms av mot Runor 2020 och Wikidata. Och var uppgifter saknas och vilka stenar som behöver mätas.",
+      },
+      {
+        name: "Stenöversikt",
+        href: "/oversikt",
+        text: "Varje runsten med stödet för Rundatas ristare, det starkaste alternativet och en status, kontrollerad mot de signerade stenarna så att man ser hur ofta markeringarna slår fel.",
+      },
+      {
+        name: "Syntes och attribuering",
+        href: "/synthesis",
+        text: "Väger samman Rundata, ortografi, huggteknik och R-modellen efter metodernas träffsäkerhet och prövar varje kandidat mot geografi, stilgrupper, bergart, språkdrag och sten mot sten. Motsägelser redovisas.",
       },
     ],
   },
@@ -85,22 +127,12 @@ const FEATURE_GROUPS = [
       {
         name: "Delad mätkorpus",
         href: "/korpus",
-        text: "Forskare publicerar sina huggspårsmätningar under CC BY 4.0. Korpusen blir referens för attribuering, ristarprofiler och klustring.",
-      },
-      {
-        name: "Syntes och attribuering",
-        href: "/synthesis",
-        text: "Väger samman Rundata, ortografi och huggteknik efter metodernas träffsäkerhet och prövar varje kandidat mot geografi, stilgrupper, bergart, språkdrag och sten mot sten. Motsägelser redovisas.",
-      },
-      {
-        name: "Forskningsluckor",
-        href: "/luckor",
-        text: "Var saknas uppgifter, vad säger appens resultat jämfört med befintlig forskning – stämmer, nytt eller motsäger – och vilka stenar behöver mätas?",
+        text: "Forskare publicerar sina huggspårsmätningar under CC BY 4.0. Korpusen blir referens för attribuering, ristarprofiler och klustring, och varje mätning anger sin kvalitet.",
       },
       {
         name: "Rapporter",
         href: "/rapporter",
-        text: "Stenrapport i artikelform enligt runologisk praxis, med figurer räknade ur skanningen, läsning och attribuering. Export till Word, LaTeX och Markdown.",
+        text: "Stenrapporten i elva publiceringsformer – tidskriftsartikel, uppsats, avhandlingskapitel, runologisk utgåva, poster, blogginlägg och fler – med figurer ur skanningen, läsning och attribuering. Export till Word, LaTeX och Markdown.",
       },
     ],
   },
@@ -109,7 +141,7 @@ const FEATURE_GROUPS = [
 const USE_CASES = [
   {
     title: "Ristarattribuering",
-    text: "Pröva en attribuering mot litteraturens uppgifter i Rundata, inskriftens ortografi och den uppmätta huggtekniken – och kontrollera geografi, stilgrupp, bergart, språkdrag och inskriftstyp.",
+    text: "Pröva en attribuering mot Rundata, inskriftens ortografi, den uppmätta huggtekniken och en statistisk modell – och kontrollera geografi, stilgrupp, bergart och språkdrag mot landskapets övriga stenar.",
   },
   {
     title: "Läsning av skadade inskrifter",
@@ -117,19 +149,19 @@ const USE_CASES = [
   },
   {
     title: "Datering och stil",
-    text: "Se en inskrifts stilgrupp i relation till Gräslunds kronologi och hur stilen fördelar sig geografiskt och mellan ristare.",
+    text: "Se en inskrifts stilgrupp i Gräslunds kronologi, och var den hamnar i en seriation byggd på språk och innehåll i stället för ornamentik.",
+  },
+  {
+    title: "Nya hypoteser ur korpusen",
+    text: "Statistiken pekar ut det som är värt en runologs tid: grupper av stenar utan ristare, förändringar i stavning och tro, och attribueringar som bör prövas igen.",
   },
   {
     title: "Reproducerbara mätningar",
-    text: "Samma fil och samma parametrar ger samma resultat. Proveniensen gör att en annan forskare kan upprepa och granska mätningen.",
-  },
-  {
-    title: "Gemensamt referensmaterial",
-    text: "Varje mätning som delas gör attribueringen säkrare för alla. Bidragsgivare anges alltid.",
+    text: "Samma fil och samma parametrar ger samma resultat, och varje mätning som delas i korpusen gör jämförelserna säkrare för alla. Bidragsgivare anges alltid.",
   },
   {
     title: "Undervisning",
-    text: "Studenter kan utforska Rundata, kartor och stilgrupper och se hur kvantitativa metoder fungerar – och var deras gränser går.",
+    text: "Studenter kan utforska Rundata, kartor, stilgrupper och statistiken, se hur kvantitativa metoder fungerar – och var deras gränser går.",
   },
 ];
 
@@ -139,16 +171,24 @@ const PRINCIPLES = [
     text: "Uppgifter om inskrifter hämtas ur Samnordisk runtextdatabas och anges med källa – AI:n får inte gissa signum, texter eller ristare.",
   },
   {
-    title: "Osäkerhet redovisas",
-    text: "Mätvärden visas med spridning och antal snitt. Statistiska metoder redovisar korsvaliderad träffsäkerhet och p-värden, justerade för många test.",
+    title: "Prövat mot det modellen inte sett",
+    text: "Varje statistisk modell valideras med korsvalidering, också på socknar och härader den aldrig sett, och dess sannolikheter kontrolleras mot hur ofta den har rätt.",
+  },
+  {
+    title: "Osäkerhet och signifikans redovisas",
+    text: "Mätvärden visas med spridning, andelar med konfidensintervall. P-värden justeras för många test och för hur hypotesen valdes, och det som är statistiskt säkerställt märks tydligt.",
+  },
+  {
+    title: "Landskapet som jämförelse",
+    text: "Ett drag talar för en ristare bara om det är ovanligare på andra stenar i samma landskap – inte bara i hela korpusen.",
   },
   {
     title: "Ingen AI-statistik",
-    text: "Kandidater räknas fram ur beläggen med öppna vikter. AI skriver löptext och läser bilder, anger aldrig sannolikheter, och dess bedömningar märks som okalibrerade.",
+    text: "Kandidater räknas fram ur beläggen med öppna vikter. AI läser bilder och skriver löptext, anger aldrig sannolikheter, och dess bedömningar märks som okalibrerade.",
   },
   {
-    title: "Tumregler kallas tumregler",
-    text: "Verktygsklassningen och vittringsjusteringen är inte kalibrerade och märks tydligt som heuristik.",
+    title: "Det som inte håller redovisas",
+    text: "Negativa resultat och kända brister redovisas öppet, och tumregler som verktygsklassningen kallas tumregler.",
   },
 ];
 
@@ -162,17 +202,25 @@ const NEW_THINGS = [
     text: "Stavningsmönster jämförs över hela Rundatas vikingatida korpus. Egennamn räknas inte, så att signaturer inte avslöjar svaret, och metoden utvärderas separat på signerade inskrifter.",
   },
   {
-    title: "En delad, öppen mätkorpus",
-    text: "Mätningar från olika forskare samlas med licens och bidragsgivare, och ristare kopplas automatiskt via Rundata. Det gör jämförelser möjliga mellan projekt och regioner.",
+    title: "Runologiska antaganden prövade med öppna modeller",
+    text: "Om ristarna arbetade lokalt, om stavningen följer avståndet och om språket följer ornamentikens kronologi prövas i R med uttalade kriterier, osäkerhet och beroendet av tidigare forskning angivet.",
   },
   {
     title: "Flera oberoende belägg i samma analys",
-    text: "Litteraturens attribuering, ortografi och huggteknik vägs samman öppet, och kandidaterna prövas mot geografi, stil, bergart och språkdrag. Varje kandidat visar exakt vilka belägg som stöder eller talar emot den.",
+    text: "Litteraturens attribuering, ortografi, huggteknik och statistik vägs samman öppet, och kandidaterna prövas mot geografi, stil, bergart och språkdrag. Varje kandidat visar vilka belägg som stöder eller talar emot den.",
+  },
+  {
+    title: "En tolkning för varje fynd",
+    text: "Appen väger metodernas besked mot varandra och mot nyare källor, säger hur starkt fyndet är och vad som skulle kunna avgöra frågan – i stället för att lämna en lista med sannolikheter.",
+  },
+  {
+    title: "En delad, öppen mätkorpus",
+    text: "Mätningar från olika forskare samlas med licens och bidragsgivare, och ristare kopplas automatiskt via Rundata. Det gör jämförelser möjliga mellan projekt och regioner.",
   },
 ];
 
 const RELATED = [
-  "Laila Kitzler Åhfeldts 3D-baserade analyser av huggteknik (Stockholms universitet), som vår metod för separata spårtyper, medelvärden per sten och Ward-klustring följer.",
+  "Laila Kitzler Åhfeldts 3D-baserade analyser av huggteknik (Stockholms universitet), som vår metod för separata spårtyper, medelvärden per sten och Ward-klustring följer, och hennes öppet publicerade skanningar, som krediteras när de används.",
   "Samnordisk runtextdatabas och Rundata-net, samt Riksantikvarieämbetets och Uppsala universitets plattform Runor.",
   "Projektet ”AI i runologins tjänst” (Stockholms universitet, 2024–2026), som utvecklar AI-sökning i Rundata-net.",
 ];
@@ -184,12 +232,22 @@ const SOURCES = [
     href: "https://www.uu.se/institution/nordiska/forskning/projekt/samnordisk-runtextdatabas",
   },
   {
+    name: "Runor och Wikidata",
+    detail: "Riksantikvarieämbetets utgåva 2020 av runtextdatabasen och Wikidata (CC0), för avstämningen av appens förslag mot nyare källor.",
+    href: "https://app.raa.se/open/runor/",
+  },
+  {
     name: "Gräslund, A.-S. 1998",
     detail: "Ornamentiken som dateringsgrund för Upplands runstenar. I: Innskrifter og datering / Dating inscriptions. Trondheim, s. 73–91.",
   },
   {
     name: "Kitzler Åhfeldt, L. 2002",
     detail: "Work and Worship. Laser Scanner Analysis of Viking Age Rune Stones. Stockholms universitet.",
+  },
+  {
+    name: "Kitzler Åhfeldt, L. 2024",
+    detail: "3D-data Runstenar i Södermanland och andra serier [Dataset]. Riksantikvarieämbetet. Zenodo, CC BY 4.0.",
+    href: "https://doi.org/10.5281/zenodo.11951255",
   },
   {
     name: "Kitzler Åhfeldt, L. & Imer, L. M. 2019",
@@ -205,17 +263,22 @@ const SOURCES = [
     detail: "Den synliga tron. Runstenskors som en spegling av kristnandet i Sverige. Korsformerna i Rundata.",
   },
   {
+    name: "R Core Team",
+    detail: "R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Wien. Paketen anges i METHODS.md.",
+    href: "https://www.r-project.org/",
+  },
+  {
     name: "Malzbender, T., Gelb, D. & Wolters, H. 2001",
     detail: "Polynomial Texture Maps. SIGGRAPH ’01. Grunden för RTI-visaren och diffuse gain.",
   },
   {
-    name: "K-samsök (Riksantikvarieämbetet)",
-    detail: "Bilder och metadata från svenska kulturarvsinstitutioner.",
-    href: "https://www.raa.se/hitta-information/k-samsok/",
+    name: "SGU och Natural Earth",
+    detail: "Berggrund 1:50 000–1:250 000 (Sveriges geologiska undersökning) och kustlinjer, sjöar och vattendrag 1:10 miljoner (public domain).",
+    href: "https://www.sgu.se/",
   },
   {
-    name: "OpenStreetMap",
-    detail: "Kartunderlag © OpenStreetMap-bidragsgivare.",
+    name: "K-samsök och OpenStreetMap",
+    detail: "Bilder och metadata från svenska kulturarvsinstitutioner (Riksantikvarieämbetet); kartunderlag © OpenStreetMap-bidragsgivare.",
     href: "https://www.openstreetmap.org/copyright",
   },
 ];
@@ -224,7 +287,7 @@ const LICENSES = [
   {
     what: "Programkoden",
     license: "GNU GPL v3",
-    text: "Fri att använda, studera, ändra och sprida. Ändrade versioner som sprids ska också vara öppna under GPL-3.0.",
+    text: "Fri att använda, studera, ändra och sprida. Ändrade versioner som sprids ska också vara öppna, märkas som ändrade och bevara upphovsangivelsen (NOTICE, enligt GPL-3.0 § 7).",
   },
   {
     what: "Rundata-uppgifter",
@@ -259,6 +322,7 @@ export default function LandingPage() {
             <span className="text-xl font-bold tracking-tight">Vitki <span className="text-slate-400 font-normal">AI</span></span>
           </Link>
           <nav className="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-600">
+            <a href="#arbetsgang" className="hover:text-slate-900">Arbetsgång</a>
             <a href="#funktioner" className="hover:text-slate-900">Funktioner</a>
             <a href="#forskning" className="hover:text-slate-900">För forskningen</a>
             <a href="#nytt" className="hover:text-slate-900">Vad är nytt</a>
@@ -286,16 +350,17 @@ export default function LandingPage() {
             En öppen forskningsplattform för runinskrifter
           </h1>
           <p className="mt-6 text-xl text-slate-600 leading-relaxed max-w-2xl">
-            Vitki AI samlar 3D-mätning av huggspår, Samnordisk runtextdatabas, ortografisk jämförelse och en delad
-            mätkorpus i ett och samma verktyg – med redovisad osäkerhet, verifierbara källor och full spårbarhet.
+            Vitki AI samlar 3D-mätning av huggspår, Samnordisk runtextdatabas, statistiska modeller i R och en delad
+            mätkorpus i ett och samma verktyg – från skanning till artikel, med redovisad osäkerhet, statistisk
+            signifikans och verifierbara källor.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
             <Link href="/start" className="px-7 py-3.5 rounded-full bg-[#b7410e] text-white font-bold hover:bg-[#9a350b] shadow-lg shadow-[#b7410e]/20">
               Öppna appen
             </Link>
-            <a href="#funktioner" className="px-7 py-3.5 rounded-full bg-white border border-slate-300 font-bold hover:border-slate-900">
-              Se funktionerna
-            </a>
+            <Link href="/stenanalys" className="px-7 py-3.5 rounded-full bg-white border border-slate-300 font-bold hover:border-slate-900">
+              Analysera en sten
+            </Link>
           </div>
 
           <dl className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-px bg-slate-900/10 rounded-2xl overflow-hidden border border-slate-900/10">
@@ -309,7 +374,32 @@ export default function LandingPage() {
           </dl>
           <p className="mt-3 text-xs text-slate-500">
             Ortografisk träffsäkerhet: lämna-en-ute-test på 135 signerade vikingatida inskrifter i Rundata, 27 ristare.
+            Vinkelfelet: syntetiska V-spår med öppningsvinkel 50–110° (METHODS.md, avsnitt 1).
           </p>
+        </div>
+      </section>
+
+      {/* Workflow: the full stone analysis */}
+      <section id="arbetsgang" className="scroll-mt-16">
+        <div className="max-w-6xl mx-auto px-6 pb-24">
+          <SectionTitle
+            eyebrow="Arbetsgång"
+            title="En skanning in, en artikel ut"
+            intro="Fullständig stenanalys kör hela kedjan i följd. Varje steg använder samma metod som det enskilda verktyget, och rapporten får en bilaga om hur analysen gjordes."
+          />
+          <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-px bg-slate-900/10 rounded-2xl overflow-hidden border border-slate-900/10">
+            {WORKFLOW.map((w, i) => (
+              <li key={w.step} className="bg-white/80 p-5">
+                <div className="text-3xl font-serif font-bold text-[#b7410e]/40">{i + 1}</div>
+                <div className="mt-1 font-bold text-slate-900">{w.step}</div>
+                <p className="mt-1.5 text-sm text-slate-600 leading-snug">{w.text}</p>
+              </li>
+            ))}
+          </ol>
+          <div className="mt-6 flex flex-wrap items-center gap-4">
+            <Link href="/stenanalys" className="px-6 py-3 rounded-full bg-slate-900 text-white font-bold hover:bg-black">Starta en stenanalys</Link>
+            <span className="text-sm text-slate-500">AI-stegen använder din egen API-nyckel; resten fungerar utan.</span>
+          </div>
         </div>
       </section>
 
@@ -424,8 +514,9 @@ export default function LandingPage() {
             ))}
           </div>
           <p className="mt-6 text-sm text-slate-500 max-w-3xl">
-            AI-funktionerna använder Google Gemini för löptext, bildbeskrivning och samtal. AI-text märks som sådan och ska
-            granskas; den används aldrig som källa till mätvärden eller sannolikheter.
+            AI-funktionerna använder som standard Claude (Anthropic); Google Gemini kan väljas under Inställningar. Du
+            använder din egen API-nyckel, som sparas i din webbläsare. AI läser bilder och skriver löptext; texten märks
+            och ska granskas, och den används aldrig som källa till mätvärden, statistik eller sannolikheter.
           </p>
         </div>
       </section>

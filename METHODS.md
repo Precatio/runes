@@ -796,7 +796,8 @@ Från terminalen (analysmotorn måste köras):
 Källkod: `api/llm.py`. Alla AI-anrop går genom ett gemensamt lager. Standard är **Claude** (Anthropic,
 `claude-opus-5-5` för analys och text, `claude-haiku-4-5` för enkla uppgifter); **Gemini** kan väljas under
 Inställningar. Strukturerade svar (t.ex. stilbedömning och läsning) begärs med ett schema – för Claude som
-verktygsanrop (tool use), så att svaret alltid är giltig JSON. Valet av modell ändrar inget i det som räknas fram:
+strukturerat svar (JSON-schema i `output_config`, sedan 2026-10-11; tidigare verktygsanrop), så att svaret alltid är
+giltig JSON. Valet av modell ändrar inget i det som räknas fram:
 mätningar, statistik, jämförelser och valideringen av läsningar görs utan AI, och AI-text märks.
 
 ### 14e. Rapportmallar (publiceringsformer)
@@ -875,7 +876,7 @@ resultaten; stenanalysen och stenrapporten använder dem för den enskilda stene
 
 **Underlag.** Alla svenska vikingatida runstenar i Rundata (2 321) exporteras till en CSV med plats, härad,
 ristare (en säker ristare, annars tomt), stilgrupp och Gräslunds datering, kors, kortkvistrunor, de nio
-innehållskategorierna (avsnitt 9), de elva språkdragen (avsnitt 8), läsbara ord och stavningsvarianter (ordform
+innehållskategorierna (avsnitt 9), de tjugo språkdragen (avsnitt 8), läsbara ord och stavningsvarianter (ordform
 parad med normaliseringen; egennamn utelämnade) och normaliseringen. Korpusanalyserna körs en gång per version
 av data och skript (fingeravtryck) i en egen process (`python -m src.r_bridge <fingeravtryck>`) och sparas i
 `data/cache/r/corpus/<fingeravtryck>/` med `sessionInfo()`. Sedan 2026-10-11 har varje modul också en egen
@@ -894,7 +895,7 @@ bara räknar om den modulen och de som bygger på den (`reused` i `done.json`). 
 | `chronology.R` | ca | seriation (korrespondensanalys av språkdrag, formler, kors, kortkvistrunor och innehåll – utan stilgrupp) för Uppland, prövad mot Gräslunds stilkronologi (Spearman mot stilgruppens mittår, och partiell med latituden konstant); tidsskattning med 80 % prediktionsintervall och korsvaliderat medelfel; för hela korpusen redovisas vad de tre första dimensionerna följer (tid, geografi, ristare eller oförklarat) |
 | `dialect.R` | stringdist | förväntat normerat Levenshtein-avstånd mellan häradernas stavning av vanliga ord; Mantel-test mot geografiskt avstånd (999 permutationer); grupper av härader (PAM); kartor över stavningen av "efter" och "sten" |
 | `network.R` | igraph, tidygraph, ggraph | ord som står i samma inskrifter (positiv PMI), grupper med Louvain; släktorden i inskrifterna (fader, moder, son, broder, félagi …) före och efter ca 1050 och i kristna mot övriga inskrifter (Fisher, BH) |
-| `change.R` | mgcv, sf | förändring i tid och rum för tio drag (monoftong i 'sten' och 'och', h-bortfall, nasal före konsonant, stungna runor, kristen bön, själsbön, kors, bro- och vägbygge, ristarsignatur): logistisk regression med utjämnad tidskurva, rumslig utjämning och ristaren som slumpeffekt; justerad andel över tid, karta, landskapen omkring 1050 och året då draget passerar hälften; bro- och vägstenar mot kristna drag (se nedan) |
+| `change.R` | mgcv, sf | förändring i tid och rum för sexton drag (monoftong i ord med *æi* och i 'och', ʀ skrivet med r-runan, åsrunan för o-ljud, h-bortfall, nasal före konsonant, prepositionen *at*, stungna runor och stungen i, u och k, kristen bön, själsbön, kors, bro- och vägbygge, ristarsignatur): logistisk regression med utjämnad tidskurva, rumslig utjämning och ristaren som slumpeffekt; justerad andel över tid, karta, landskapen omkring 1050 och året då draget passerar hälften; bro- och vägstenar mot kristna drag (se nedan) |
 | `stone.R` | sf, cluster, tidymodels | en sten mot korpusen: modellens sannolikheter (korsvaliderade om stenen har ristare i Rundata), avstånd till kandidaternas tyngdpunkter och höljen, grupp och närmaste grannar (Gower), formler jämförda med kandidaternas inskrifter, läge i Upplands seriation |
 | `landscape.R` | terra, gdistance | höjdmodell (ca 20 m), höjd, lutning, topografiskt positionsindex; strand vid vikingatiden som dagens höjd minus en grov landhöjning per landskap (t.ex. 5 m i Södermanland, 5,5 m i Uppland); sikt (viewshed, stenens topp 2 m, betraktare 1,6 m) mot slumpvisa platser; bästa vägar (Toblers vandringsfunktion, vatten tio gånger långsammare) mellan andra runstensplatser inom 12 km och stenens avstånd till dem mot slumpvisa punkter |
 
