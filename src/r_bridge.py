@@ -208,6 +208,57 @@ def _scripts_hash(names: list[str]) -> str:
     return h.hexdigest()
 
 
+# Modules that read other modules' results (in corpus_dir)
+DEPENDS = {"attribution": ("geography", "text"), "anonymous": ("geography", "text", "attribution"),
+           "chronology": ("text",)}
+# The files each module writes, so that an unchanged module's results can be reused from an earlier run
+MODULE_FILES = {"geography": ("geography*", "geografi_*", "ristare_karta*"), "clusters": ("clusters*", "kluster_*"),
+                "text": ("text*",), "attribution": ("attribution*", "modell_*"), "anonymous": ("anonymous*", "okanda_*"),
+                "chronology": ("chronology*", "seriation_*"), "dialect": ("dialect*", "dialekt_*"),
+                "network": ("network*", "natverk_*"), "change": ("change*", "forandring_*")}
+
+
+def module_hashes(csv_data: bytes) -> dict[str, str]:
+    """En version per modul: korpusen, common.R, modulens skript och versionerna av de moduler den läser. En modul
+    med samma version som i en tidigare körning behöver inte räknas om."""
+    base = hashlib.sha256(csv_data).hexdigest() + _scripts_hash(["common.R"])
+    out: dict[str, str] = {}
+    for m in MODULES:  # run order, so upstream versions exist
+        key = base + _scripts_hash([f"{m}.R"]) + "".join(out[u] for u in DEPENDS.get(m, ()))
+        out[m] = hashlib.sha256(key.encode()).hexdigest()[:16]
+    return out
+
+
+def _reusable(module: str, version: str, exclude: str) -> str | None:
+    """Katalogen för en tidigare fullständig körning där modulen hade samma version och lyckades."""
+    root = os.path.join(CACHE_DIR, "corpus")
+    best = None
+    for name in os.listdir(root) if os.path.isdir(root) else []:
+        d = os.path.join(root, name)
+        p = os.path.join(d, "done.json")
+        if name == exclude or not os.path.exists(p):
+            continue
+        try:
+            done = json.load(open(p, encoding="utf-8"))
+        except ValueError:
+            continue
+        if (done.get("module_hashes") or {}).get(module) == version and module not in (done.get("errors") or {}):
+            if best is None or os.path.getmtime(p) > os.path.getmtime(os.path.join(best, "done.json")):
+                best = d
+    return best
+
+
+def _copy_module(module: str, src: str, dst: str):
+    import glob
+    for pattern in MODULE_FILES.get(module, (f"{module}*",)):
+        for path in glob.glob(os.path.join(src, pattern)):
+            target = os.path.join(dst, os.path.basename(path))
+            if os.path.isdir(path):
+                shutil.copytree(path, target, dirs_exist_ok=True)
+            else:
+                shutil.copy2(path, target)
+
+
 def fingerprint(data: bytes) -> str:
     """Korpusens version: data och korpusmodulernas skript (inte sten- och landskapsskripten)."""
     scripts = ["common.R"] + [f"{m}.R" for m in MODULES]
@@ -346,8 +397,18 @@ def run_corpus(fp: str):
     try:
         water = ensure_water()
         params = {"corpus": os.path.join(d, "corpus.csv"), "water_dir": water, "corpus_dir": d, "seed": 2026}
+        with open(os.path.join(d, "corpus.csv"), "rb") as fh:
+            versions = module_hashes(fh.read())
+        reused = []
         for m in MODULES:
             _write_state(d, module=m)
+            src = _reusable(m, versions[m], os.path.basename(d))
+            if src:  # unchanged since an earlier run: copy its results instead of recomputing
+                _copy_module(m, src, d)
+                reused.append(m)
+                done.append(m)
+                _write_state(d, done_modules=done)
+                continue
             try:
                 run_module(m, params, d)
                 done.append(m)
@@ -365,7 +426,8 @@ def run_corpus(fp: str):
         tmp = os.path.join(d, "done.json.tmp")
         with open(tmp, "w", encoding="utf-8") as fh:
             json.dump({"fingerprint": fp, "computed_at": datetime.now(timezone.utc).isoformat(),
-                       "errors": errors, "water": bool(water), "r_version": status().get("version")},
+                       "errors": errors, "water": bool(water), "r_version": status().get("version"),
+                       "module_hashes": versions, "reused": reused},
                       fh, ensure_ascii=False)
         os.replace(tmp, os.path.join(d, "done.json"))  # atomic: readers never see a half-written file
         _write_state(d, running=False, module=None, error="; ".join(errors.values()) or None)

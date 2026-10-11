@@ -213,3 +213,34 @@ def test_anonymous_groups_become_findings_with_a_working_name():
     # Groups that resemble a known carver are not reported as unknown carvers
     pats = r_findings.corpus_patterns({"anonymous": _anonymous(signa)})
     assert any(p["topic"] == "Okända ristare" and "1 grupp av" in p["text"] and "Fröderydsristaren" in p["text"] for p in pats)
+
+
+def test_unchanged_modules_are_reused_from_an_earlier_run(tmp_path, monkeypatch):
+    monkeypatch.setattr(r_bridge, "CACHE_DIR", str(tmp_path))
+    csv_data = b"signum\nU 1\n"
+    versions = r_bridge.module_hashes(csv_data)
+    prev = tmp_path / "corpus" / "aaa"
+    prev.mkdir(parents=True)
+    (prev / "change.json").write_text('{"n_dated": 1}')
+    (prev / "forandring_tid.png").write_bytes(b"png")
+    # An earlier run where 'change' had the same version, and 'network' a different one
+    (prev / "done.json").write_text(json.dumps({"module_hashes": {"change": versions["change"], "network": "other"},
+                                                "errors": {}}))
+    new = tmp_path / "corpus" / "bbb"
+    new.mkdir(parents=True)
+    (new / "corpus.csv").write_bytes(csv_data)
+    calls = []
+
+    def fake_run(m, params, out_dir, timeout=3600):
+        calls.append(m)
+        (new / f"{m}.json").write_text("{}")
+        return {}
+    monkeypatch.setattr(r_bridge, "run_module", fake_run)
+    monkeypatch.setattr(r_bridge, "ensure_water", lambda: None)
+    monkeypatch.setattr(r_bridge, "status", lambda: {"version": "R test"})
+    r_bridge.run_corpus("bbb")
+    done = json.loads((new / "done.json").read_text())
+    assert "change" not in calls and "network" in calls and done["reused"] == ["change"]
+    assert (new / "forandring_tid.png").read_bytes() == b"png" and done["module_hashes"] == versions
+    # A module reruns when a module it reads changes: anonymous depends on attribution
+    assert r_bridge.DEPENDS["anonymous"] and "attribution" in r_bridge.DEPENDS["anonymous"]

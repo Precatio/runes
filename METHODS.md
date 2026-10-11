@@ -640,9 +640,10 @@ till ristarens stil). Ett glapp på minst 25 år gör förslaget kronologiskt pr
 Har Rundata flera ristare för stenen (två som signerat tillsammans, eller en signatur och en attribuering; 113
 runstenar) räknas stödet för var och en, den bäst stödda redovisas och de övriga räknas inte som alternativ.
 
-Resultat (2026-10-11): 7 stenar kan vara felbedömda, 72 är omstridda, 357 stöds och 89 har svagt underlag; 122 stenar
-utan ristare får ett nytt och 261 ett möjligt förslag. **Kontroll:** av 246 signerade stenar – där ristaren är känd –
-hade 59 (24 %) fått ett alternativ ≥ 0,4 och en enda hamnat som "kan vara felbedömd". Kategorin *omstridd* larmar
+Resultat (2026-10-11, med de nya språkdragen och kontrollerna): 11 stenar kan vara felbedömda, 58 är omstridda, 344
+stöds och 112 har svagt underlag; 98 stenar utan ristare får ett nytt och 263 ett möjligt förslag. **Kontroll:** av 246
+signerade stenar – där ristaren är känd – hade 59 (24 %) fått ett alternativ ≥ 0,4 och två hamnat som "kan vara
+felbedömd". Kategorin *omstridd* larmar
 alltså ofta i onödan, medan *kan vara felbedömd* sällan gör det. Måtten är index för att sortera och prioritera,
 inte sannolikheter; bara modellens sannolikhet är kalibrerad. Metoderna är inte oberoende av Rundata: ortografi,
 område och stil kan ha legat till grund för attribueringarna (avsnitt 18). Profilen för en sten visar varje metods
@@ -669,8 +670,12 @@ urvalet (×0,75 vid justerat p 0,05–0,2, ×0,5 vid högre), och slutsatsen sä
 räcker för att attribuera stenen – ett negativt resultat som också kan pröva äldre attribueringar gjorda på samma
 grund. När den föreslagna ristaren står för minst 10 % av landskapets attribuerade stenar påpekas att produktiva
 ristare drar till sig förslag, och att träffsäkerheten för deras förslag mäter metoden i allmänhet snarare än stenen. Att Runor 2020
-anger en annan ristare räknas som ett belägg emot. Fördelning 2026-10-11 (429 fynd): nya förslag 32 starka, 138
-måttliga, 35 svaga och 4 redan kända; motsägelser 5 måttliga, 15 svaga och 6 metodfel; 194 bekräftelser. Reglerna är
+anger en annan ristare räknas som ett belägg emot. Fördelning 2026-10-11 före granskningen av U 92 (429 fynd): nya
+förslag 32 starka, 138 måttliga, 35 svaga och 4 redan kända; motsägelser 5 måttliga, 15 svaga och 6 metodfel; 194
+bekräftelser. Efter granskningen, med de nya språkdragen och fynden från okända ristare (516 fynd): nya förslag 21
+starka (alla från attribueringsmodellen), 217 måttliga (varav 96 stenar i grupper av okända ristare och 81 från
+seriationen), 54 svaga (alla ortografiska förslag, vars likhet inte håller efter justering) och 2 redan kända;
+motsägelser 6 måttliga, 13 svaga och 5 metodfel; 198 bekräftelser. Reglerna är
 fasta och kan granskas; tolkningen är en läshjälp, inte en runologisk bedömning.
 
 ## 14. Rapporter
@@ -850,7 +855,10 @@ ristare (en säker ristare, annars tomt), stilgrupp och Gräslunds datering, kor
 innehållskategorierna (avsnitt 9), de elva språkdragen (avsnitt 8), läsbara ord och stavningsvarianter (ordform
 parad med normaliseringen; egennamn utelämnade) och normaliseringen. Korpusanalyserna körs en gång per version
 av data och skript (fingeravtryck) i en egen process (`python -m src.r_bridge <fingeravtryck>`) och sparas i
-`data/cache/r/corpus/<fingeravtryck>/` med `sessionInfo()`. Varje modul körs som
+`data/cache/r/corpus/<fingeravtryck>/` med `sessionInfo()`. Sedan 2026-10-11 har varje modul också en egen
+version (korpusen, `common.R`, modulens skript och versionerna av de moduler den läser); en modul med samma version
+som i en tidigare fullständig körning kopieras därifrån i stället för att räknas om, så att en ändring i ett skript
+bara räknar om den modulen och de som bygger på den (`reused` i `done.json`). Varje modul körs som
 `Rscript --vanilla r/<modul>.R params.json utmapp` och skriver JSON och figurer.
 
 | Modul | Paket | Vad den gör |
@@ -877,8 +885,12 @@ den har minst fyra stenar och inte är mer utspridd än 90 % av de kända ristar
 gruppens mitt; i dag 23 km). Förfarandet prövas på stenar med känd ristare, som om ristaren vore okänd: hur stor del av
 en grupp är samma ristare, jämfört med grupper av lika många närliggande stenar? Avståndet och gränsen valdes efter
 den valideringen (15–30 km, kvot 4–12), så träffsäkerheten kan vara något överskattad. Resultat (beräkning
-2026-10-11): en grupp bestod i genomsnitt till 71 % av samma ristare, mot 55 % för bara närliggande stenar, och 73 % av
-grupperna till minst tre fjärdedelar. Stabiliteten mäts som hur stor del av gruppen som återkommer (Jaccard) när en
+2026-10-11, med de nya språkdragen): en grupp bestod i genomsnitt till 69 % av samma ristare, mot 43 % för bara
+närliggande stenar, och 64 % av grupperna till minst tre fjärdedelar; av länkade par med känd ristare var 71 % samma
+ristare. Bland stenarna utan ristare blev det 17 grupper, varav 8 möjliga okända ristare: Konungsundsristaren (30
+stenar, Östergötland), Vibyristaren (15, Östergötland), Vetlandaristaren (14, Småland), Kölabyristaren (13,
+Västergötland), Sättnaristaren (7, Medelpad), Leksbergsristaren och Husabyristaren (6 vardera, Västergötland) och
+Dalumsristaren (5, Västergötland). Stabiliteten mäts som hur stor del av gruppen som återkommer (Jaccard) när en
 femtedel av länkarna tas bort. Varje grupp jämförs med kända ristare inom 50 km: den räknas som lik en känd ristare när
 ristarens stenar i genomsnitt ligger lika nära gruppen som två stenar av samma ristare brukar göra, eller när
 attribueringsmodellen föreslår samma ristare med minst 50 % för hälften av gruppens stenar. Övriga grupper får ett
@@ -909,6 +921,19 @@ stenarna, ur en modell med rak trend. Slutligen prövas om bro- och vägstenar o
 Holm-justeras inom tidstesten respektive brotesten. Formler och kors räknas bara på inskrifter som är tolkningsbara nog
 för att språkdragen ska kunna bestämmas.
 
+Resultat (beräkning 2026-10-11; 1 008 daterade stenar, 804 med tolkningsbar text). Säkerställt efter Holm-justering
+och i minst 70 % av omräkningarna: stungna runor ökar (justerad andel 35 % omkring 1000 till 85 % omkring 1115),
+liksom stungen i (30 till 80 %), stungen u (11 till 47 %), o-runan för o-ljud (4 till 43 % omkring 1085) och
+ristarsignaturer (6 till 28 %); stungen k förändras inte. Kristen bön och själsbön är vanligast omkring 1033 (28
+respektive 24 %) och sällsynta på de sena stenarna (2 %), och kors är vanligast omkring 1028 (70 %). Monoftong i något
+ai-ord *minskar* (69 till 22 %) med plats och ristare konstanta: den diftongiska stavningen sprids över tid, vilket
+snarare tyder på en skrivnorm än på en ljudutveckling bakåt – ett mönster att pröva. Landskapen skiljer sig omkring
+1050, mest för monoftong i ai-ord (84 % i Västergötland och 80 % i Östergötland, 55 % i Uppland, 35 % i Södermanland),
+böner och kors. Stungen i passerar hälften av stenarna omkring 1014 i Östergötland, 1019 i Västergötland, 1051 i
+Södermanland och 1069 i Uppland (stungna runor över lag 1000, 1005, 1020 och 1043) – en spridning från söder och väster
+in mot Mälardalen att pröva mot litteraturen. Bro- och vägstenar har oftare själsbön än andra stenar (25 mot 15 %,
+oddskvot 1,9, q 0,04), men inte oftare kristen bön i allmänhet eller kors.
+
 **Grupperad korsvalidering** (från 2026-10-10). Vid slumpvis korsvalidering kan stenar från samma plats – ofta resta
 av samma ristare samtidigt – hamna både i tränings- och testdata. Modellen utvärderas därför också med hela socknar
 (164 grupper) respektive härader (69 grupper) utelämnade (`group_vfold_cv`, 5 delar, 3 upprepningar). En ristare vars
@@ -917,7 +942,8 @@ alla stenar ligger i det utelämnade området saknas då i träningen och räkna
 87, 85 och 78 %); geografi ensamt 44, 40 och 30 %, språk och innehåll ensamt 60, 56 och 47 %, mot 19 % om man
 alltid gissar på den vanligaste ristaren. En del av träffsäkerheten kommer alltså från platsen, men modellen
 fungerar också för platser den inte sett. Sannolikheterna för enskilda stenar kommer fortfarande från den
-slumpvisa korsvalideringen, som motsvarar en ny sten på en känd plats.
+slumpvisa korsvalideringen, som motsvarar en ny sten på en känd plats. Med de nio nya språkdragen (2026-10-11): 72, 69 och 59 %; språk
+och innehåll ensamt 62 %.
 
 **Resultat i korpusen (beräkning 2026-10-05).** Attribueringsmodellen hittar rätt ristare i 72 % av fallen
 (87 % bland de tre främsta) mot 19 % om man alltid gissar på den vanligaste; språk och innehåll ensamt ger 60 %,
