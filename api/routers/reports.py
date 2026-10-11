@@ -142,6 +142,44 @@ def _view(req: StoneReportRequest):
     return None, None
 
 
+class AttributionRequest(BaseModel):
+    signum: str
+    carver: str
+    author: str = ""
+    institution: str = ""
+    format: Literal["json", "docx"] = "json"
+    check_sources: bool = True  # look the proposal up in Runor 2020 and Wikidata (network)
+
+
+@router.post("/attribution")
+def attribution_report(req: AttributionRequest):
+    """Attribueringsförslag för en sten: alla argument för en ristare, att skicka till runtextdatabasen
+    (src/attribution_report.py; METHODS.md 14f)."""
+    from api.config import APP_VERSION
+    from api.routers.research import _fp, _overview_context
+    from src import attribution_report as ar, crosscheck, stone_dimensions
+    rec = store().get(req.signum)
+    if not rec:
+        raise HTTPException(status_code=404, detail="Stenen finns inte i Rundata.")
+    ctx, _ = _overview_context(_fp())
+    cc = None
+    try:
+        cc = (crosscheck.check(rec["signum"], req.carver, crosscheck.wikidata_creators()) if req.check_sources
+              else crosscheck.cached(rec["signum"], req.carver))
+    except Exception as e:
+        logger.warning("Avstämningen mot Runor/Wikidata misslyckades: %r", e)
+        cc = crosscheck.cached(rec["signum"], req.carver)
+    blocks = ar.build(rec, req.carver, ctx, cc, stone_dimensions.lookup(rec["signum"]), req.author, req.institution,
+                      {"app": APP_VERSION, "fingerprint": _fp()})
+    if req.format == "docx":
+        return Response(content=academic.to_docx(blocks),
+                        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                        headers={"Content-Disposition": 'attachment; filename="attribueringsforslag.docx"'})
+    return {"html": academic.to_html(blocks), "markdown": academic.to_markdown(blocks), "latex": academic.to_latex(blocks),
+            "figures": [], "ai_used": False, "ai_text": None, "title": blocks[0]["text"],
+            "crosscheck": (cc or {}).get("status")}
+
+
 @router.get("/templates")
 def report_template_list():
     """Publiceringsformer för stenrapporten: blogginlägg, tidskriftsartikel, uppsats, avhandlingskapitel m.fl."""

@@ -160,7 +160,8 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
     ev = f.get("evidence") or 0
     signed = any(c["kind"] == "S" and not c["uncertain"] for c in rec["carvers"])
     st = f.get("stats") or {}
-    p_ok = not (method == "ortografi" and st.get("p_adjusted") is not None and st["p_adjusted"] >= 0.05)
+    # A spelling similarity that may be chance (adjusted p ≥ 0.05) keeps the conclusion from "starkt"
+    p_ok = not (method in ("ortografi", "samlade belägg") and st.get("p_adjusted") is not None and st["p_adjusted"] >= 0.05)
     rundata_supported = verdict == "motsäger" and (profile or {}).get("support") is not None and profile["support"] >= 0.6
     if verdict == "motsäger" and status == "annan ristare":
         against += 1  # Runor 2020 sides with another carver than the suggestion

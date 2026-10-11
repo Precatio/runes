@@ -36,6 +36,8 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   metodernas besked vägs samman i ett resonemang med en slutsats (METHODS.md 13d).
 - Runologiskt arkiv ombyggt: runornas namn enligt runedikterna, ristare, syften och kända stenar ur data.
 - Snabbare: R-kontrollen och Stenöversikten sparas på disk, och servern värmer de långsamma svaren vid start.
+- Attribueringsförslag från stenprofilen: ett dokument med alla argument för en ristare att skicka till
+  runtextdatabasen, avstämt mot Runor 2020 och Wikidata (METHODS.md 14f).
 
 ### Stenens storlek
 - Mått (höjd, bredd, tjocklek, runhöjd) för 1 384 vikingatida runstenar ur Kulturmiljöregistret via Runor och

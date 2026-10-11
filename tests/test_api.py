@@ -290,3 +290,19 @@ def test_interpret_finding(client):
     assert "justerat" in out["paragraphs"][1]["text"]
     new = client.post("/api/research/interpret", json={**f, "verdict": "nytt", "evidence": 0.9}).json()
     assert new["level"] != "starkt"  # the adjusted p-value is not below 0.05
+
+
+
+@pytest.mark.skipif(not os.path.exists(os.path.join(os.path.dirname(__file__), "..", "data", "rundata.json")),
+                    reason="data/rundata.json saknas")
+def test_attribution_proposal(client):
+    body = {"signum": "U 344", "carver": "Öpir 1", "author": "Test", "check_sources": False}
+    r = client.post("/api/reports/attribution", json=body)
+    assert r.status_code == 200
+    md = r.json()["markdown"]
+    assert "omprövning av attribuering: U 344 – Öpir 1" in md  # U 344 is attributed to Åsmund
+    for heading in ("## Sammanfattning", "## 3. Beläggen", "## 6. Tolkning", "## 7. Kända brister"):
+        assert heading in md
+    d = client.post("/api/reports/attribution", json={**body, "format": "docx"})
+    assert d.status_code == 200 and len(d.content) > 5000
+    assert client.post("/api/reports/attribution", json={**body, "signum": "Inte 1"}).status_code == 404

@@ -6,6 +6,8 @@ import { useSearchParams } from "next/navigation";
 import PlotlyGraph from "@/components/PlotlyGraph";
 import { API_URL } from "@/lib/api";
 import { DocsNote } from "@/components/KnownLimitations";
+import ReportPreview, { downloadBlob, type ReportResult } from "@/components/ReportPreview";
+import { useSettings } from "@/components/SettingsContext";
 
 type Status = "kan vara felbedömd" | "omstridd" | "stöds" | "svagt underlag" | "signerad" | "nytt förslag" | "möjligt förslag" | "inget förslag";
 
@@ -365,11 +367,78 @@ function StoneProfile({ signum, onClose }: { signum: string; onClose: () => void
         </div>
       </div>
 
+      {p.alternative && <AttributionProposal signum={p.signum} candidates={p.alternatives.map(a => a.carver)} reattribution={!!p.carver} />}
+
       <div className="flex flex-wrap gap-2 pt-1">
         <Link href={`/inskrifter?signum=${encodeURIComponent(p.signum)}`} className="px-3 py-1.5 rounded-xl border border-slate-300 bg-white text-xs font-bold hover:border-slate-900">Inskriften</Link>
         <Link href={`/karta?signum=${encodeURIComponent(p.signum)}`} className="px-3 py-1.5 rounded-xl border border-slate-300 bg-white text-xs font-bold hover:border-slate-900">Visa på karta</Link>
         {v.kmr_url && <a href={v.kmr_url} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 rounded-xl border border-slate-300 bg-white text-xs font-bold hover:border-slate-900">Kulturmiljöregistret</a>}
       </div>
+    </div>
+  );
+}
+
+// A document with all the arguments for a carver, to send to those who maintain the runic text database
+function AttributionProposal({ signum, candidates, reattribution }: { signum: string; candidates: string[]; reattribution: boolean }) {
+  const { userName, userInstitution } = useSettings();
+  const [carver, setCarver] = useState(candidates[0]);
+  const [report, setReport] = useState<(ReportResult & { title: string }) | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const request = (format: "json" | "docx") => fetch(`${API_URL}/api/reports/attribution`, {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ signum, carver, author: userName, institution: userInstitution, format }),
+  });
+  const create = async () => {
+    setBusy(true); setError(null);
+    try {
+      const r = await request("json");
+      if (!r.ok) throw new Error((await r.json().catch(() => null))?.detail || `Fel ${r.status}`);
+      setReport(await r.json());
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Förslaget kunde inte skapas.");
+    } finally {
+      setBusy(false);
+    }
+  };
+  const docx = async () => {
+    setBusy(true);
+    try {
+      const r = await request("docx");
+      if (!r.ok) throw new Error("Word-filen kunde inte skapas.");
+      await downloadBlob(r, `${signum.replace(/[^\wåäöÅÄÖ]+/g, "_")}_attribueringsforslag.docx`);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Word-filen kunde inte skapas.");
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <div className="rounded-xl border border-[#b7410e]/30 bg-[#b7410e]/5 px-3 py-3 space-y-2">
+      <p className="font-bold text-slate-900">{reattribution ? "Förslag till omprövning" : "Attribueringsförslag"}</p>
+      <p className="text-xs text-slate-600">
+        Ett dokument med alla argument – stenen, ristarens kända stenar, varje metods besked, andra kandidater, Runor och
+        litteratur, tolkning och kända brister – att skicka till Samnordisk runtextdatabas eller Runor. Förslaget stäms av mot
+        Runor 2020 och Wikidata när det skapas.
+      </p>
+      <div className="flex flex-wrap items-center gap-2">
+        {candidates.length > 1 && (
+          <select value={carver} onChange={e => { setCarver(e.target.value); setReport(null); }}
+            className="liquid-glass-input-wrapper rounded-lg px-2 py-1.5 text-xs font-semibold outline-none">
+            {candidates.map(c => <option key={c}>{c}</option>)}
+          </select>
+        )}
+        <button onClick={create} disabled={busy} className="px-3 py-1.5 bg-[#b7410e] hover:bg-[#9a350b] text-white text-xs font-bold rounded-lg disabled:opacity-40">
+          {busy && !report ? "Samlar argumenten …" : `Skapa förslag för ${carver}`}
+        </button>
+      </div>
+      {error && <p className="text-xs text-red-700">{error}</p>}
+      {report && (
+        <div className="space-y-2 pt-1">
+          <ReportPreview report={report} base={`${signum} attribueringsförslag`} busy={busy} onDocx={docx} />
+          <p className="text-[11px] text-slate-500">Fyll i mottagare och e-post i dokumentet innan det skickas. Ditt namn och lärosäte tas från inställningarna.</p>
+        </div>
+      )}
     </div>
   );
 }

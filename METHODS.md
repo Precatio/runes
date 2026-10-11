@@ -731,6 +731,19 @@ Tidskrifternas riktvärden (språk, omfång, referensstil) är ungefärliga och 
 kontrollera aktuella författaranvisningar. För Futhark finns dessutom ett färdigt manuspaket i tidskriftens mall
 (`src/journal.py`).
 
+### 14f. Attribueringsförslag
+
+Källkod: `src/attribution_report.py`, `POST /api/reports/attribution`; knappen *Skapa förslag* i stenprofilen i
+Stenöversikt. För en sten och en föreslagen ristare samlas alla argument i ett dokument att skicka till
+Samnordisk runtextdatabas (Uppsala universitet) eller Runor (Riksantikvarieämbetet): sammanfattning; stenen
+(Rundata, mått, inskrift); ristarens säkra stenar, landskap, stilgrupper och period; varje metods besked (modellens
+sannolikhet, ortografins plats, likhet och p-värde, område, stilgrupp, språkdrag, bergart; huggteknik om den är
+uppmätt); andra kandidater och – vid en omprövning – stödet för Rundatas ristare; avstämning mot Runor 2020 och
+Wikidata (görs när förslaget skapas) och litteratur att gå igenom; tolkningen enligt 13d; kända brister; metod,
+versioner och referenser. Om en likhet i stavningen kan vara slump (justerat p ≥ 0,05) blir slutsatsen högst
+*måttligt*. Ristarnamn som enligt forskningen är grupper får en not (t.ex. "Traen"). Dokumentet exporteras som Word
+och Markdown; mottagare och e-post fylls i av avsändaren. Ingen AI-text.
+
 ## 15. Jämförbarhet med tidigare forskning
 
 Laila Kitzler Åhfeldts metod (Arkeologiska forskningslaboratoriet, Stockholms universitet; Kitzler Åhfeldt
