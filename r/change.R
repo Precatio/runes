@@ -304,7 +304,7 @@ pct <- function(x) paste0(round(100 * x), " %")
 fmt_time <- function(t) {
   if (!isTRUE(t$tested)) return(tr("för få daterade stenar", "too few dated stones"))
   sh <- if (t$shape %in% c("peak", "trough")) sprintf(SHAPE[[t$shape]], t$peak_year) else SHAPE[[t$shape]]
-  q <- if (t$q < 0.001) "q < 0,001" else sprintf("q = %.3f", t$q)
+  q <- if (t$q < 0.001) tr("q < 0,001", "q < 0.001") else sprintf("q = %.3f", t$q)
   sprintf("%s: %s → %s (%s)", sh, pct(t$first), pct(t$last), q)
 }
 tl <- bind_rows(lapply(results, function(r) if (nrow(r$time$by_style)) r$time$by_style %>%
