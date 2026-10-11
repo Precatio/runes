@@ -256,7 +256,10 @@ export default function Sidebar() {
       <div className="p-6 pt-4 border-t border-slate-900/5">
         <div className="text-[11px] text-slate-500 leading-relaxed font-medium">
           {t.sidebar.built_by} <a href="https://www.linkedin.com/in/viktor-kvant-555180108/" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#b7410e] hover:underline decoration-[#b7410e]/40 underline-offset-2 transition-all">Viktor Kvant</a>.<br />
-          {t.sidebar.optimized_for}.
+          {t.sidebar.optimized_for}.<br />
+          {/* Attribution required by the additional terms under GPL-3.0 section 7(b) (NOTICE) */}
+          <a href="https://github.com/Precatio/runes/blob/main/NOTICE" target="_blank" rel="noopener noreferrer"
+            className="hover:underline decoration-slate-400 underline-offset-2">{t.sidebar.license_note}</a>.
         </div>
       </div>
       

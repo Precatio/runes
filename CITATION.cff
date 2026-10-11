@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "Om du använder programvaran i forskning, citera den enligt nedan."
+message: "Om du använder programvaran i forskning, citera den enligt nedan. Licens: GPL-3.0 med tilläggsvillkor om upphovsangivelse (se NOTICE)."
 title: "Vitki: öppen plattform för analys av runinskrifter"
 type: software
 authors:

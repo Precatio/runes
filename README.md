@@ -145,5 +145,17 @@ Projektet är grundat av **Viktor Kvant**. Till vardags arbetar Viktor som digit
 
 ## Licens
 
-Detta projekt är släppt under **GNU General Public License v3.0 (GPL-3.0)**. 
-Du är fri att använda, ändra och distribuera koden, förutsatt att alla ändringar också släpps under samma öppna licens. Se filen `LICENSE` för den fullständiga licenstexten.
+Copyright © 2026 Viktor Kvant.
+
+Detta projekt är släppt under **GNU General Public License v3.0 (GPL-3.0)** med tilläggsvillkor enligt licensens
+§ 7, se `NOTICE`. Du är fri att använda, ändra och distribuera koden, förutsatt att ändringar också släpps under
+samma licens och att
+
+* upphovsangivelsen *"Bygger på Vitki, ursprungligen utvecklad av Viktor Kvant (https://github.com/Precatio/runes)"*
+  bevaras i källkoden och syns i användargränssnittet (§ 7 b),
+* ingen framställer kodbasen eller grunden för den som sitt eget verk, och ändrade versioner märks som ändrade
+  (§ 7 c), och
+* en ändrad version inte ges ut under namnet Vitki, utan som "baserad på Vitki" (§ 7 e).
+
+Se `LICENSE` för licenstexten och `NOTICE` för tilläggsvillkoren. Använder du programmet i forskning, citera det
+enligt `CITATION.cff`.

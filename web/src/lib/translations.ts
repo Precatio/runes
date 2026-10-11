@@ -29,6 +29,7 @@ export interface Translations {
     settings: string;
     built_by: string;
     optimized_for: string;
+    license_note: string;
   };
   chat: {
     title: string;
@@ -91,6 +92,7 @@ export const translations: Record<Language, Translations> = {
       settings: "Inställningar & API",
       built_by: "Utvecklad av",
       optimized_for: "Optimerad för epigrafisk forskning",
+      license_note: "Fri programvara (GPL-3.0); upphovsangivelsen ska bevaras i ändrade versioner",
     },
     chat: {
       title: "Epigrafisk AI-Assistent",
@@ -151,6 +153,7 @@ export const translations: Record<Language, Translations> = {
       settings: "Settings & API",
       built_by: "Developed by",
       optimized_for: "Optimized for epigraphic research",
+      license_note: "Free software (GPL-3.0); the attribution must be kept in modified versions",
     },
     chat: {
       title: "Epigraphic AI Assistant",
