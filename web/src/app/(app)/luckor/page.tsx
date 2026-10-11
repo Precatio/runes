@@ -645,28 +645,78 @@ function CrossCheckCell({ cc }: { cc?: CrossCheck }) {
     title={[cc.runor?.text, cc.wikidata?.text].filter(Boolean).join(" ")}>{cc.status}</span>;
 }
 
+// Corpus-wide patterns from the R analyses: what confirms earlier research, what is worth testing, and the limits
+const PATTERN_GROUPS: { key: string; label: string; statuses: string[]; accent: string; pill: string; help: string }[] = [
+  { key: "test", label: "Att pröva", statuses: ["mönster att pröva"], accent: "border-l-amber-500", pill: "bg-amber-50 text-amber-900 border-amber-200",
+    help: "Nya mönster som statistiken visar men som inte är etablerad kunskap – hypoteser för runologer att pröva." },
+  { key: "confirm", label: "Bekräftar", statuses: ["bekräftar"], accent: "border-l-emerald-600", pill: "bg-emerald-50 text-emerald-800 border-emerald-200",
+    help: "Mönster som stämmer med det forskningen redan antar, nu med mätbar osäkerhet." },
+  { key: "limit", label: "Begränsningar", statuses: ["begränsning", "svagt"], accent: "border-l-slate-400", pill: "bg-slate-100 text-slate-700 border-slate-300",
+    help: "Svaga mönster och det metoden eller datan inte klarar." },
+];
+
 function PatternsBox({ patterns }: { patterns: RPattern[] }) {
-  const style: Record<string, string> = {
-    "bekräftar": "bg-emerald-50 text-emerald-800 border-emerald-200",
-    "mönster att pröva": "bg-amber-50 text-amber-900 border-amber-200",
-    "begränsning": "bg-slate-100 text-slate-700 border-slate-300", "svagt": "bg-slate-100 text-slate-700 border-slate-300",
-  };
+  const [group, setGroup] = useState("");
+  const [onlySig, setOnlySig] = useState(false);
+  const [showAll, setShowAll] = useState(false);
+  const FIRST = 6;
+  const groupOf = (pt: RPattern) => PATTERN_GROUPS.find(g => g.statuses.includes(pt.status)) ?? PATTERN_GROUPS[2];
+  const nSig = patterns.filter(p => p.significance?.significant).length;
+  const shown = patterns
+    .filter(pt => (!group || groupOf(pt).key === group) && (!onlySig || pt.significance?.significant))
+    .sort((a, b) => PATTERN_GROUPS.indexOf(groupOf(a)) - PATTERN_GROUPS.indexOf(groupOf(b)));
+  const chip = (active: boolean) => `px-3 py-1.5 rounded-xl border text-xs font-bold transition-colors ${active
+    ? "bg-slate-900 border-slate-900 text-white" : "bg-white border-slate-300 text-slate-700 hover:bg-slate-50"}`;
   return (
-    <details open className="mb-5 rounded-2xl border border-slate-200 bg-white/70 p-4">
-      <summary className="cursor-pointer font-bold text-slate-900">Mönster i hela korpusen (statistik i R)
-        <Link href="/statistik" className="ml-3 text-xs font-semibold text-[#b7410e] hover:underline">visa figurer och metod</Link>
+    <details open className="mb-6 rounded-2xl border border-slate-200 bg-white/70 p-4 sm:p-5">
+      <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+          <span className="text-lg font-bold text-slate-900">Mönster i hela korpusen</span>
+          <span className="text-sm text-slate-500">statistiken i R för alla svenska vikingatida runstenar · {patterns.length} resultat</span>
+          <Link href="/statistik" onClick={e => e.stopPropagation()} className="ml-auto text-xs font-semibold text-[#b7410e] hover:underline">
+            Visa figurer och metod →
+          </Link>
+        </div>
       </summary>
-      <ul className="mt-3 space-y-2 text-sm">
-        {patterns.map((pt, i) => (
-          <li key={i} className="flex gap-3">
-            <div className="flex flex-col gap-1 shrink-0">
-              <span className={`h-fit w-fit px-2 py-0.5 rounded-lg border text-[11px] font-bold ${style[pt.status] ?? ""}`}>{pt.status}</span>
-              <SigBadge sig={pt.significance} compact />
-            </div>
-            <div><span className="text-[11px] uppercase tracking-wider text-slate-500 mr-2">{pt.topic}</span>{pt.text}</div>
-          </li>
-        ))}
+      <div className="flex flex-wrap items-center gap-2 mt-4 mb-4">
+        <button onClick={() => setGroup("")} className={chip(!group)}>Alla {patterns.length}</button>
+        {PATTERN_GROUPS.map(g => {
+          const n = patterns.filter(p => groupOf(p).key === g.key).length;
+          return n ? (
+            <button key={g.key} onClick={() => setGroup(group === g.key ? "" : g.key)} className={chip(group === g.key)} title={g.help}>
+              {g.label} {n}
+            </button>
+          ) : null;
+        })}
+        <button onClick={() => setOnlySig(!onlySig)}
+          className={`px-3 py-1.5 rounded-xl border text-xs font-bold ${onlySig ? "bg-emerald-700 border-emerald-700 text-white" : "bg-white border-slate-300 text-emerald-800 hover:bg-emerald-50"}`}>
+          ✓ Statistiskt säkerställda {nSig}
+        </button>
+      </div>
+      <ul className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+        {shown.slice(0, showAll ? undefined : FIRST).map((pt, i) => {
+          const g = groupOf(pt);
+          return (
+            <li key={i} className={`rounded-xl border border-slate-200 border-l-4 ${g.accent} bg-white px-4 py-3`}>
+              <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">{pt.topic}</span>
+                <span className="ml-auto flex flex-wrap items-center gap-1.5">
+                  <span className={`px-2 py-0.5 rounded-lg border text-[11px] font-bold ${g.pill}`} title={g.help}>{pt.status}</span>
+                  <SigBadge sig={pt.significance} compact />
+                </span>
+              </div>
+              <p className="text-sm text-slate-800 leading-relaxed">{pt.text}</p>
+              {pt.note && <p className="mt-1 text-xs text-slate-500">{pt.note}</p>}
+            </li>
+          );
+        })}
       </ul>
+      {shown.length > FIRST && (
+        <button onClick={() => setShowAll(!showAll)} className="mt-3 text-sm font-semibold text-[#b7410e] hover:underline">
+          {showAll ? "Visa färre" : `Visa alla ${shown.length}`}
+        </button>
+      )}
+      {shown.length === 0 && <p className="text-sm text-slate-500">Inga mönster matchar filtret.</p>}
     </details>
   );
 }
@@ -751,7 +801,7 @@ function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; loggedIn
         </select>
         <button onClick={() => setOnlySignificant(!onlySignificant)}
           className={`px-3 py-1.5 rounded-xl border text-xs font-bold ${onlySignificant ? "bg-emerald-700 border-emerald-700 text-white" : "bg-white border-slate-300 text-emerald-800 hover:bg-emerald-50"}`}>
-          <Tip text={GLOSSARY["Statistiskt säkerställt"] + " Bara ortografin (justerat p) och huggtekniken har ett signifikanstest per sten; modellens sannolikheter är kalibrerade men inget test."}>
+          <Tip text={GLOSSARY["Statistiskt säkerställt"] + " Ortografin (justerat p), statistiska modellen (q, mot de sannolikheter felaktiga ristare får) och huggtekniken har ett signifikanstest per sten; seriationen och grupperna av stenar utan ristare är skattningar utan test."}>
             ✓ Bara statistiskt säkerställda ({nSignificant})
           </Tip>
         </button>

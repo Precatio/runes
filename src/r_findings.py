@@ -92,6 +92,25 @@ def _closed_set_share(inscriptions: list[dict], carvers: set[str]) -> dict[str, 
     return {p: hit[p] / tot[p] for p in tot}
 
 
+def model_significance(findings: list[dict], oof: list[dict]) -> None:
+    """Signifikanstest för modellens förslag (max-statistik, som för ortografin): på stenar med känd ristare, som
+    modellen inte såg (korsvalidering), hur ofta en felaktig ristare fick minst lika hög sannolikhet som förslaget.
+    p = (1 + antal sådana stenar) / (1 + antal stenar); en sten jämförs aldrig med sig själv. Justeras med
+    Benjamini–Hochberg över alla modellens förslag. Förutsätter, liksom sannolikheten, att ristaren är en av
+    modellens ristare."""
+    from src.stone_size import bh
+    null = [(r["signum"], r["p_wrong_max"]) for r in oof if r.get("p_wrong_max") is not None]
+    if not null or not findings:
+        return
+    pvals = []
+    for f in findings:
+        prob = f["stats"]["probability"]
+        others = [w for sg, w in null if sg != f["signum"]]
+        pvals.append((1 + sum(w >= prob for w in others)) / (1 + len(others)))
+    for f, p, q in zip(findings, pvals, bh(pvals)):
+        f["stats"].update({"p_value": round(p, 4), "q_value": round(q, 4), "null_n": len(null)})
+
+
 def model_findings(att: dict, lookup, inscriptions: list[dict], oof: list[dict] | None = None,
                    min_p: float = 0.5) -> list[dict]:
     coverage, oeuvre = _province_coverage(inscriptions), _oeuvre(inscriptions)
@@ -163,6 +182,7 @@ def model_findings(att: dict, lookup, inscriptions: list[dict], oof: list[dict] 
                             True, suggested=row["top"],
                             stats={"probability": row["p"], "p_truth": row["p_truth"], "accuracy": acc, "cross_validated": True,
                                    **_bin_stats(att, row["p"])}))
+    model_significance(out, oof or [])
     return out
 
 
@@ -247,7 +267,8 @@ def significance(value: float | None, kind: str = "q", test: str = "") -> dict:
 
 def finding_significance(f: dict) -> dict:
     """Signifikansen för ett fynd per sten, efter metod: ortografins p-värde justerat för att den bästa av alla
-    ristare valts, huggteknikens permutationstest; modellens sannolikhet är kalibrerad men inget signifikanstest."""
+    ristare valts, huggteknikens permutationstest och modellens förslag mot de sannolikheter felaktiga ristare får
+    (model_significance)."""
     st = f.get("stats") or {}
     method = f.get("method", "")
     if method in ("ortografi", "samlade belägg") and st.get("p_adjusted") is not None:
@@ -255,6 +276,9 @@ def finding_significance(f: dict) -> dict:
                                                             "justerat för att den bästa av alla ristare valts (max-statistik)")
     if method == "huggteknik" and st.get("p") is not None:
         return significance(st["p"], "p", "permutationstest på stennivå")
+    if method.startswith("statistisk modell") and st.get("q_value") is not None:
+        return significance(st["q_value"], "q", "andel stenar med känd ristare där modellen, utan att ha sett stenen, gav en "
+                                                "felaktig ristare minst lika hög sannolikhet; Benjamini–Hochberg över modellens förslag")
     if method.startswith("statistisk modell"):
         return significance(None, test="kalibrerad sannolikhet, prövad med korsvalidering – inget signifikanstest")
     return significance(None)

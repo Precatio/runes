@@ -83,3 +83,15 @@ def test_server_ai_keys_are_not_shared(monkeypatch):
     assert llm.ai_context("claude", "sk-ant-visitor", None).key == "sk-ant-visitor"
     monkeypatch.setenv("ALLOW_SERVER_AI_KEYS", "1")  # local development and scripts only
     assert llm.ai_context("claude", None, None).key == "sk-ant-owner"
+
+
+def test_crosscheck_does_not_repeat_reasons():
+    """The findings are cached; applying the check against newer sources again must not add the same text again."""
+    from src import crosscheck
+    finding = {"verdict": "nytt", "evidence": 0.5, "novelty": 0.8, "relevance": 0.8, "score": 0.32,
+               "reasons": {"belägg": [], "nyhet": ["Axelson (1993) attribuerade inte stenen"], "relevans": []}}
+    cc = {"status": "saknas", "runor": {"text": "Runor 2020 anger ingen ristare.", "references": []}}
+    for _ in range(5):
+        out = crosscheck.apply(finding, cc)
+    assert out["reasons"]["nyhet"] == ["Axelson (1993) attribuerade inte stenen", "Runor 2020 anger ingen ristare."]
+    assert finding["reasons"]["nyhet"] == ["Axelson (1993) attribuerade inte stenen"]

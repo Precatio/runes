@@ -89,7 +89,7 @@ def _levels_path() -> str:
     import hashlib
     root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     code = "".join(hashlib.sha256(open(os.path.join(root, rel), "rb").read()).hexdigest()[:12]
-                   for rel in ("src/interpretation.py", "src/findings.py"))
+                   for rel in ("src/interpretation.py", "src/findings.py", "src/r_findings.py"))
     key = hashlib.sha256(f"{_overview_key(_fp())}|{code}".encode()).hexdigest()[:16]
     return os.path.join(root, "data", "cache", "levels", f"{key}.json")
 

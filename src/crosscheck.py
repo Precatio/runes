@@ -240,6 +240,8 @@ def cached(signum: str, suggested: str | None) -> dict | None:
 def apply(finding: dict, cc: dict) -> dict:
     """Lägger avstämningen på ett fynd och justerar nyheten: ett förslag som redan finns i en nyare källa är inte nytt."""
     f = dict(finding)
+    # Own copies of the reasons: the findings are cached, and appending to shared lists repeated the text per request
+    f["reasons"] = {k: list(v) for k, v in (finding.get("reasons") or {}).items()}
     f["crosscheck"] = cc
     st = cc.get("status")
     if st == "finns redan":
@@ -261,4 +263,7 @@ def apply(finding: dict, cc: dict) -> dict:
         f.setdefault("reasons", {}).setdefault("nyhet", []).append(
             cc["runor"]["text"] + (" Litteratur att kontrollera: " + "; ".join(cc["runor"]["references"])
                                    if cc["runor"]["references"] else ""))
+    nyhet = f["reasons"].get("nyhet")
+    if nyhet:
+        f["reasons"]["nyhet"] = list(dict.fromkeys(x for x in nyhet if x))
     return f

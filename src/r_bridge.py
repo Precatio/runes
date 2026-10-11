@@ -493,8 +493,10 @@ def oof_rows(fp: str) -> list[dict]:
         for row in csv.DictReader(fh):
             probs = {k[len(".pred_"):]: float(v) for k, v in row.items() if k.startswith(".pred_")}
             top = max(probs, key=probs.get)
+            # The highest probability the model gave a wrong carver: the null distribution for its suggestions
+            wrong = max((v for k, v in probs.items() if k != row["carver"]), default=0.0)
             out.append({"signum": row["signum"], "carver": row["carver"], "top": top, "p": round(probs[top], 3),
-                        "p_truth": round(probs.get(row["carver"], 0.0), 3)})
+                        "p_truth": round(probs.get(row["carver"], 0.0), 3), "p_wrong_max": round(wrong, 4)})
     return out
 
 

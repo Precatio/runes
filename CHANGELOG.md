@@ -74,6 +74,11 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   Guðs móðir (249 runstenar i stället för 214).
 
 ### Statistisk signifikans
+- Statistiska modellens förslag har ett signifikanstest (max-statistik mot de sannolikheter felaktiga ristare får
+  i korsvalideringen, Benjamini–Hochberg); *starkt* kräver q under 0,05 (METHODS.md 13d).
+- Rättat: avstämningen mot Runor 2020 upprepade samma text i skälen varje gång Forskningsluckor laddades.
+- Mönstren i hela korpusen visas som kort i två kolumner med filter (att pröva, bekräftar, begränsningar,
+  säkerställda) och förklaring per mönster.
 - Varje mönster och fynd anger om det är statistiskt säkerställt (q eller p under 0,05, med test), inte säkerställt
   eller inte prövat med signifikanstest; märks tydligt på Statistik (R) – med en egen sektion för säkerställda
   upptäckter (25 av 30 prövade mönster) och en ruta per fråga – och i Forskningsluckor, där fynden kan filtreras.

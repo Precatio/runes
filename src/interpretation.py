@@ -72,6 +72,11 @@ def _strength(f: dict) -> list[str]:
             acc_text = f"Vid den nivån har modellens förstaval varit rätt i omkring {round((st.get('accuracy') or 0) * 100)} % av fallen."
         out.append(f"Modellen ger {f.get('suggested')} sannolikheten {_num(st.get('probability'))}{cv}. {acc_text} "
                    "Sannolikheten gäller under förutsättning att ristaren är en av modellens ristare.")
+        if st.get("q_value") is not None:
+            share = round(st["p_value"] * 100, 1)
+            out.append((f"En felaktig ristare fick minst lika hög sannolikhet på {_num(share, 1)} % av de prövade stenarna med "
+                        f"känd ristare (q {_p(st['q_value'])} justerat för alla modellens förslag) – förslaget är "
+                        + ("statistiskt säkerställt." if st["q_value"] < 0.05 else "inte statistiskt säkerställt.")))
         if st.get("p_truth") is not None:
             out.append(f"Rundatas ristare får {_num(st['p_truth'])}.")
         out.append("Modellen är tränad på attribueringar som delvis bygger på samma drag (stil, stavning, geografi), "
@@ -247,6 +252,8 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
     st = f.get("stats") or {}
     # A spelling similarity that may be chance (adjusted p ≥ 0.05) keeps the conclusion from "starkt"
     p_ok = not (method in ("ortografi", "samlade belägg") and st.get("p_adjusted") is not None and st["p_adjusted"] >= 0.05)
+    # The same for the model: a suggestion that wrong carvers often reach is not "starkt"
+    model_sig_ok = not (method.startswith("statistisk modell") and st.get("q_value") is not None and st["q_value"] >= 0.05)
     rundata_supported = verdict == "motsäger" and (profile or {}).get("support") is not None and profile["support"] >= 0.6
     if verdict == "motsäger" and status == "annan ristare":
         against += 1  # Runor 2020 sides with another carver than the suggestion
@@ -275,7 +282,7 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
                 f"stenen och {_join(rec.get('same_carver_as') or [])}, och modellen kan inte föreslå en namnlös ristare. "
                 f"Frågan är alltså om den namnlösa ristaren är {sug} – det behöver prövas med ornamentik, runformer och "
                 "huggteknik på alla stenarna, inte bara med modellen.")
-    elif model_method and ev >= 0.5 and against == 0 and (st.get("acc_lo") or 0) >= 0.8:
+    elif model_method and ev >= 0.5 and against == 0 and (st.get("acc_lo") or 0) >= 0.8 and model_sig_ok:
         level = "starkt"
         text = (f"Ett välgrundat förslag: vid den här sannolikheten har modellen haft rätt i {st.get('bin_correct')} av "
                 f"{st.get('bin_n')} prövade fall, och inget av de andra beläggen talar emot. Plats, stil och språkdrag ingår "

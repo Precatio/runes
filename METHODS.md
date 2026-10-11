@@ -681,7 +681,19 @@ ristare drar till sig förslag, och att träffsäkerheten för deras förslag m�
 den föreslår en ristare räknas område, stilgrupp och språkdrag inte som oberoende stöd; de visas, och de kan tala
 emot. Modellens förslag bedöms *starkt* bara när träffsäkerheten vid den sannolikheten är väl underbyggd (nedre
 gränsen i ett 95 % konfidensintervall enligt Wilson minst 80 %; t.ex. 20 av 20 stenar ger 84–100 %) och inget belägg
-talar emot. Sannolikheten gäller under förutsättning att ristaren är en av modellens ristare. När Rundata anger att en
+talar emot. Sannolikheten gäller under förutsättning att ristaren är en av modellens ristare.
+
+**Signifikans för modellens förslag** (från 2026-10-11). Som för ortografin prövas förslaget med en max-statistik:
+nollfördelningen är, för varje sten med känd ristare, den högsta sannolikhet som modellen – utan att ha sett stenen
+(korsvalidering) – gav en *felaktig* ristare. p är andelen sådana stenar där en felaktig ristare fick minst lika hög
+sannolikhet som förslaget, (1 + antal) / (1 + antal stenar), och stenen själv ingår aldrig i sin egen nollfördelning.
+p-värdena justeras med Benjamini–Hochberg över alla modellens förslag (q), och *starkt* kräver också q under 0,05.
+Testet gäller under samma förutsättning som sannolikheten (att ristaren är en av modellens) och säger inget om
+stenar av ristare utanför modellen; att stenarna utan ristare kan skilja sig från träningsstenarna är en kvarstående
+begränsning. I dag (497 stenar med känd ristare) är alla modellens förslag över 0,5 säkerställda: en felaktig ristare
+får sällan så hög sannolikhet.
+
+När Rundata anger att en
 namnlös ristare har gjort stenen och andra stenar ("Samma som gjort U 1027"; 122 inskrifter, läses ur ristarfältet)
 blir slutsatsen högst *måttligt* – en prövbar hypotes om vem den namnlösa ristaren var – och modellens förslag för de
 kopplade stenarna visas (samma förslag stöder hypotesen, ett annat talar emot). Stenens *typikalitet* visas också:
