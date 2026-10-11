@@ -13,6 +13,7 @@ import re
 from src.academic import bullets, fmt, h, p, table
 from src import limitations
 from src.stone_report import FEATURE_TITLES, PERIODS, _carvers_text, report_limitations, sri_reference, sri_short
+from src.about import APP_URL
 
 FILL = "[Fyll i: {}]"
 
@@ -578,7 +579,7 @@ def _blog(title, s, note, f, ai, opt):
         "Samnordisk runtextdatabas (Rundata): stenens text och uppgifter.",
         f"Sveriges runinskrifter ({sri_short(sri)})." if sri else "",
         "Laila Kitzler Åhfeldts studier av huggteknik med 3D-skanning.",
-        "Mätmetoden: Vitki, https://github.com/Precatio/runes"] if x])]
+        f"Mätmetoden: Vitki, {APP_URL}"] if x])]
     return out + note
 
 

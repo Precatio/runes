@@ -144,6 +144,8 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   (egen nyckel), fler källor och upphovsangivelsen i licensen.
 - Appen heter Vitki, utan "AI": AI är ett valfritt hjälpmedel för bilder och löptext, inte kärnan (mätning,
   statistik och validering görs utan AI). Firebase-projektets tekniska id (`vitki-ai`) är oförändrat.
+- Appens adress är https://vitkirunor.se: rapporterna, korpusexporten och CITATION.cff hänvisar dit och till
+  källkoden på GitHub (`src/about.py`).
 
 ### Transparens
 - Förteckning över metodens kända brister som visas under varje analyssida, står i varje rapport och sparas i

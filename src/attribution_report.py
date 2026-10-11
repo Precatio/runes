@@ -18,6 +18,7 @@ from src.research_gaps import certain_carvers, province
 from src.stone_overview import _checks, stone
 from src.stone_report import PERIODS, inscription, sri_reference
 from src.styles import BY_CODE
+from src.about import APP_URL, REPO_URL
 
 CHECK_LABELS = {"område": "Område", "stil": "Stilgrupp", "språkdrag": "Språkdrag", "bergart": "Bergart"}
 
@@ -185,7 +186,7 @@ def build(rec: dict, carver: str, ctx: dict, crosscheck: dict | None, dims: dict
 
     # 8. Method and reproducibility
     blocks += [h(1, "8. Metod och reproducerbarhet"),
-               p(f"Framtaget med Vitki {versions.get('app', '')} (öppen källkod, https://github.com/Precatio/runes). "
+               p(f"Framtaget med Vitki {versions.get('app', '')} ({APP_URL}; öppen källkod, {REPO_URL}). "
                  f"R-korpusens version {versions.get('fingerprint', '–')}, förteckningen över kända brister version "
                  f"{limitations.VERSION}. Metoderna beskrivs i METHODS.md: ortografi (avsnitt 6), språkdrag (8), bergart "
                  "(10), samlade belägg per sten (13c), tolkning (13d) och statistiken i R (17). Ortografin jämför stenen med "

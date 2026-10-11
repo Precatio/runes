@@ -561,7 +561,7 @@ export default function LandingPage() {
               <pre className="mt-3 whitespace-pre-wrap rounded-xl bg-black/30 border border-white/10 p-4 text-sm text-slate-200 font-mono">
 {`Kvant, V. (2026). Vitki:
 öppen plattform för analys av runinskrifter
-(version 2.0.0). ${GITHUB}
+(version 2.0.0). https://vitkirunor.se
 
 Samnordisk runtextdatabas. Institutionen för nordiska
 språk, Uppsala universitet.`}

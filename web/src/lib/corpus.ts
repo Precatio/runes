@@ -292,7 +292,7 @@ export async function datasetPackage(entries: CorpusEntry[], includeRaw: boolean
     title: "Vitki – mätkorpus för huggspår på runstenar",
     created: new Date().toISOString(),
     license: { name: CORPUS_LICENSE, path: "https://creativecommons.org/licenses/by/4.0/" },
-    citation: "Bidragsgivarna enligt varje post; Vitki, https://github.com/Precatio/runes",
+    citation: "Bidragsgivarna enligt varje post; Vitki, https://vitkirunor.se",
     method: "Se METHODS.md i programvarans repo; metodversion anges per post.",
     contributors: [...new Set(entries.map(e => `${e.contributorName}${e.institution ? `, ${e.institution}` : ""}`))],
     count: entries.length,

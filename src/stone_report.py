@@ -26,6 +26,7 @@ from src import limitations, r_report, scan_sources
 from src.reading import runes_to_latin
 from src.slice_analysis import PROFILE_STEP_MM, RIM_MM, calculate_v_angle
 from src.stats import METRICS, METRIC_LABELS, attribute, compare_stones, summarize
+from src.about import software_reference
 
 ACCENT = "#b7410e"
 GROUP_COLORS = {"rune": "#b7410e", "ornament": "#1f6f8b", "unknown": "#64748b"}
@@ -1228,8 +1229,7 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
         refs.append(scan["citation"])
     if sri:
         refs.append(sri)
-    refs.append(f"Vitki, version {prov.get('version', '2.0')}. Programvara. "
-                "https://github.com/Precatio/runes")
+    refs.append(software_reference(prov.get('version', '2.0')))
     # Harvard order: single author before co-authored works by the same first author
     blocks.append(bullets(sorted(refs, key=lambda r: r.replace(" &", "~"))))
 

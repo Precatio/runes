@@ -15,6 +15,7 @@ from collections import defaultdict
 import numpy as np
 
 from src.stats import METRICS, METRIC_LABELS, attribute, summarize, ward_clustering
+from src.about import software_reference
 
 # Kända brister som gäller korpusrapporten (src/limitations.py)
 CORPUS_LIMITATION_CONTEXTS = ("grooves", "comparison", "attribution", "rundata", "software")
@@ -280,7 +281,7 @@ def build_document(facts: dict, author: str, institution: str, ai: dict | None) 
     ] + [limitations.bullet(x) for x in limitations.select(CORPUS_LIMITATION_CONTEXTS)]))
     blocks.append(h(1, "Referenser"))
     blocks.append(bullets(REFERENCES + [
-        "Vitki, version 2.0. Programvara. https://github.com/Precatio/runes",
+        software_reference("2.0"),
     ]))
     if facts["contributors"]:
         blocks.append(h(2, "Bidragsgivare till mätdata"))
