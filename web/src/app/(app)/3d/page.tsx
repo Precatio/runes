@@ -62,6 +62,7 @@ function ThreeDPageContent() {
     setLatest2DFile(await dataURLToFile(autoResult.groove_map_base64, "ristningskarta.png"));
     setLatest2DSource({
       kind: "groove-map", description: metaText || file?.name, autoSlices,
+      runeBoxes: (autoResult.runes ?? []).flatMap(r => (r.box ? [{ id: r.id, box: r.box }] : [])),
       methodVersion: autoResult.provenance.method_version,
     });
     setLatest2DResults(null);

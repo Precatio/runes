@@ -313,3 +313,19 @@ def test_attribution_proposal(client):
     d = client.post("/api/reports/attribution", json={**body, "format": "docx"})
     assert d.status_code == 200 and len(d.content) > 5000
     assert client.post("/api/reports/attribution", json={**body, "signum": "Inte 1"}).status_code == 404
+
+
+def test_detect_runes_keeps_valid_boxes(client, monkeypatch):
+    from api import llm
+    data = {"runes": [{"translit": "r", "box_2d": [100, 250, 300, 200], "confidence": 80},
+                      {"translit": "?", "box_2d": [500, 500, 501, 501], "confidence": 20},
+                      {"translit": "a", "box_2d": [-20, 10, 200, 1200], "confidence": 60}], "note": "Övre delen skadad."}
+    monkeypatch.setattr(llm, "generate", lambda *a, **k: llm.Result("", data, 42, "claude-opus-5-5", "claude"))
+    import io
+    from PIL import Image
+    buf = io.BytesIO(); Image.new("RGB", (40, 40), "white").save(buf, "PNG")
+    r = client.post("/api/2d/detect_runes", files={"file": ("x.png", buf.getvalue(), "image/png")},
+                    headers={"X-AI-Provider": "claude", "X-Anthropic-Api-Key": "test"}).json()
+    # The tiny box is dropped, coordinates are ordered and clamped to 0–1000
+    assert [x["box_2d"] for x in r["runes"]] == [[100, 200, 300, 250], [0, 10, 200, 1000]]
+    assert r["tokens_used"] == 42 and r["note"]

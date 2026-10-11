@@ -90,6 +90,8 @@ export interface PaleographicCrop {
   formPng?: string; // normalised black-and-white rune form used for the comparison
   sourceKind?: TwoDSourceKind;
   grooveSummary?: GrooveSummaryLite; // groove measurements inside the crop (groove map only)
+  auto?: "ai" | "3d"; // found automatically: by the AI in the image, or as a rune recognised by the 3D analysis
+  confidence?: number; // the AI's own confidence (0–100), uncalibrated
   createdAt: string;
 }
 
@@ -102,6 +104,8 @@ export interface TwoDSource {
   url?: string;
   // Groove map only: accepted automatic slices with positions as fractions of the image
   autoSlices?: { x: number; y: number; metrics: Record<string, number> }[];
+  // Groove map only: the runes the analysis recognised, [x0, y0, x1, y1] as fractions of the image
+  runeBoxes?: { id: number; box: number[] }[];
   methodVersion?: string;
 }
 

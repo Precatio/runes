@@ -136,7 +136,7 @@ export interface AutoAnalysisResult {
   summary?: Record<Metric, import("@/lib/metrics").Summary>;
   // Stone means with the rune as unit (n = runes), present when only runes were measured
   rune_summary?: { n_runes: number; metrics: Record<Metric, import("@/lib/metrics").Summary & { n_slices: number; icc: number | null }> };
-  runes?: { id: number; n_strokes: number; height_mm: number; n_slices: number }[];
+  runes?: { id: number; n_strokes: number; height_mm: number; n_slices: number; box?: number[] }[];
   provenance: import("@/lib/db").AnalysisProvenance;
 }
 

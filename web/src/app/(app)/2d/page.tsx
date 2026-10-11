@@ -12,12 +12,24 @@ import { db, type GrooveSummaryLite, type PaleographicCrop, type ProjectData, ty
 import type { KSamsokResult } from "@/lib/ksamsok";
 import { API_URL } from "@/lib/api";
 import { canvasToBlob, drawScaled, persistentDataURL } from "@/lib/images";
-import { RUNE_TAGS } from "@/lib/runes";
+import { RUNE_TAGS, UNKNOWN_RUNE_TAG, tagForTranslit } from "@/lib/runes";
 import { rundata, type Inscription } from "@/lib/rundata";
 
 const ANALYSIS_MAX_SIDE = 2048; // Gemini downscales larger images anyway
 const THUMB_MAX_SIDE = 256;
 const FEATURE_MAX_SIDE = 512;
+// Automatic crops are many: smaller thumbnails and rounded vectors keep a project under the 1 MB limit
+const AUTO_THUMB_MAX_SIDE = 128;
+const MAX_AUTO_CROPS = 40;
+
+interface DetectedRune {
+  box: number[]; // [x0, y0, x1, y1] as fractions of the image
+  tag: string;
+  translit: string;
+  confidence: number;
+  selected: boolean;
+  origin: "ai" | "3d";
+}
 
 const SOURCE_LABEL: Record<TwoDSourceKind, string> = {
   upload: "Uppladdad bild",
@@ -52,6 +64,10 @@ export default function TwoDPage() {
   const [channel, setChannel] = useState<"all" | "r" | "g" | "b">("all");
   const [cropTag, setCropTag] = useState(RUNE_TAGS[4].tag);
   const [savingCrop, setSavingCrop] = useState(false);
+  const [detected, setDetected] = useState<DetectedRune[] | null>(null);
+  const [detectNote, setDetectNote] = useState<string | null>(null);
+  const [detecting, setDetecting] = useState(false);
+  const [savingAuto, setSavingAuto] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<KSamsokResult[]>([]);
@@ -140,6 +156,8 @@ export default function TwoDPage() {
 
   const resetImageState = () => {
     setResult(null);
+    setDetected(null);
+    setDetectNote(null);
     setCrop(undefined);
     setCompletedCrop(null);
     setAnalyzedCrop(null);
@@ -226,6 +244,50 @@ export default function TwoDPage() {
     return { n: inside.length, angle_mean: angleMean, angle_sd: sd, depth_mean: mean("spårdjup_mm"), width_mean: mean("spårbredd_mm") };
   };
 
+  // A rune crop with its form description; thumbSide is smaller for automatic crops
+  const buildCrop = async (pc: PercentCrop, tag: string, extra: Partial<PaleographicCrop> = {},
+                           thumbSide = THUMB_MAX_SIDE): Promise<PaleographicCrop> => {
+    const thumb = processedCanvas(thumbSide, pc);
+    const featureCanvas = processedCanvas(FEATURE_MAX_SIDE, pc);
+    if (!thumb || !featureCanvas) throw new Error("Kunde inte läsa utsnittet.");
+    const thumbnail = thumb.toDataURL(isBinarySource ? "image/png" : "image/jpeg", thumbSide < THUMB_MAX_SIDE ? 0.7 : 0.8);
+    const res = await fetch(`${API_URL}/api/2d/extract_features`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ image_base64: featureCanvas.toDataURL("image/png") }),
+    });
+    if (!res.ok) throw new Error((await res.json().catch(() => null))?.detail || "Kunde inte beskriva runformen.");
+    const features = await res.json();
+    const vector: number[] = features.feature_vector;
+    return {
+      id: crypto.randomUUID(),
+      tag,
+      imageBase64: thumbnail,
+      coordinates: [pc.x / 100, pc.y / 100, (pc.x + pc.width) / 100, (pc.y + pc.height) / 100],
+      featureVector: extra.auto ? vector.map(v => Math.round(v * 1000) / 1000) : vector,
+      featureVersion: features.feature_version,
+      formPng: features.form_png,
+      sourceKind,
+      grooveSummary: grooveSummaryFor(pc),
+      createdAt: new Date().toISOString(),
+      ...extra,
+    };
+  };
+
+  const storeCrops = async (crops: PaleographicCrop[]) => {
+    const projectId = await resolveProjectId();
+    let update: Partial<ProjectData>;
+    if (projectId) {
+      const existing = await db.getProject(projectId);
+      update = { id: projectId, paleographicCrops: [...(existing?.paleographicCrops ?? []), ...crops] };
+    } else {
+      update = { ...newProjectFields("Nytt projekt (runformer)"), paleographicCrops: crops };
+    }
+    const saved = await db.saveProject(update);
+    setActiveProjectId(saved.id);
+    await loadAllCrops();
+  };
+
   const handleSaveCrop = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!completedCrop || completedCrop.width <= 0 || completedCrop.height <= 0) {
@@ -234,45 +296,77 @@ export default function TwoDPage() {
     }
     setSavingCrop(true);
     try {
-      const thumb = processedCanvas(THUMB_MAX_SIDE, completedCrop);
-      const featureCanvas = processedCanvas(FEATURE_MAX_SIDE, completedCrop);
-      if (!thumb || !featureCanvas) throw new Error("Kunde inte läsa utsnittet.");
-      const thumbnail = thumb.toDataURL(isBinarySource ? "image/png" : "image/jpeg", 0.8);
-      const res = await fetch(`${API_URL}/api/2d/extract_features`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image_base64: featureCanvas.toDataURL("image/png") }),
-      });
-      if (!res.ok) throw new Error((await res.json().catch(() => null))?.detail || "Kunde inte beskriva runformen.");
-      const features = await res.json();
-      const newCrop: PaleographicCrop = {
-        id: crypto.randomUUID(),
-        tag: cropTag,
-        imageBase64: thumbnail,
-        coordinates: [completedCrop.x / 100, completedCrop.y / 100,
-          (completedCrop.x + completedCrop.width) / 100, (completedCrop.y + completedCrop.height) / 100],
-        featureVector: features.feature_vector,
-        featureVersion: features.feature_version,
-        formPng: features.form_png,
-        sourceKind,
-        grooveSummary: grooveSummaryFor(completedCrop),
-        createdAt: new Date().toISOString(),
-      };
-      const projectId = await resolveProjectId();
-      let update: Partial<ProjectData>;
-      if (projectId) {
-        const existing = await db.getProject(projectId);
-        update = { id: projectId, paleographicCrops: [...(existing?.paleographicCrops ?? []), newCrop] };
-      } else {
-        update = { ...newProjectFields("Nytt projekt (runformer)"), paleographicCrops: [newCrop] };
-      }
-      const saved = await db.saveProject(update);
-      setActiveProjectId(saved.id);
-      await loadAllCrops();
+      await storeCrops([await buildCrop(completedCrop, cropTag)]);
     } catch (err) {
       alert(err instanceof Error ? err.message : "Kunde inte spara utsnittet.");
     } finally {
       setSavingCrop(false);
+    }
+  };
+
+  // ---- automatic rune crops ----------------------------------------------------------------
+  // Groove map from the 3D analysis: the runes the analysis itself recognised. Other images: the AI marks the runes.
+  const handleDetectRunes = async () => {
+    if (!imagePreview) return;
+    setDetected(null);
+    setDetectNote(null);
+    if (source?.kind === "groove-map" && source.runeBoxes?.length) {
+      setDetected(source.runeBoxes.map(r => ({ box: r.box, tag: UNKNOWN_RUNE_TAG, translit: "", confidence: 100,
+        selected: true, origin: "3d" as const })));
+      setDetectNote(`${source.runeBoxes.length} runor som 3D-analysen känt igen. Analysen vet inte vilken runa det är, så ange det i listan (eller spara dem som obestämda och ange det senare).`);
+      return;
+    }
+    setDetecting(true);
+    try {
+      const canvas = processedCanvas(ANALYSIS_MAX_SIDE, null);
+      if (!canvas) throw new Error("Kunde inte läsa bilden.");
+      const blob = await canvasToBlob(canvas, isBinarySource ? "image/png" : "image/jpeg", 0.9);
+      const formData = new FormData();
+      formData.append("file", blob, isBinarySource ? "bild.png" : "bild.jpg");
+      const res = await fetch(`${API_URL}/api/2d/detect_runes`, { method: "POST", headers: { ...aiHeaders }, body: formData });
+      if (!res.ok) throw new Error((await res.json().catch(() => null))?.detail || `Fel ${res.status}`);
+      const data = await res.json();
+      if (data.tokens_used) addUsedTokens(data.tokens_used);
+      const runes: DetectedRune[] = (data.runes ?? []).map((r: { box_2d: number[]; translit: string; confidence: number }) => ({
+        box: [r.box_2d[1] / 1000, r.box_2d[0] / 1000, r.box_2d[3] / 1000, r.box_2d[2] / 1000],
+        tag: tagForTranslit(r.translit), translit: r.translit, confidence: r.confidence,
+        selected: r.confidence >= 50, origin: "ai" as const,
+      }));
+      setDetected(runes);
+      setDetectNote(runes.length
+        ? `${runes.length} runor markerade av AI (${data.model}). Rutorna och läsningen är okalibrerade – granska dem innan du sparar.${data.note ? ` ${data.note}` : ""}`
+        : `AI hittade inga runor. ${data.note ?? ""}`);
+    } catch (err) {
+      alert(`Kunde inte hitta runorna: ${err instanceof Error ? err.message : String(err)}`);
+    } finally {
+      setDetecting(false);
+    }
+  };
+
+  const handleSaveDetected = async () => {
+    const chosen = (detected ?? []).filter(d => d.selected).slice(0, MAX_AUTO_CROPS);
+    if (!chosen.length) return;
+    setSavingAuto(true);
+    try {
+      const crops: PaleographicCrop[] = [];
+      for (const d of chosen) {
+        const pc: PercentCrop = { unit: "%", x: d.box[0] * 100, y: d.box[1] * 100,
+          width: (d.box[2] - d.box[0]) * 100, height: (d.box[3] - d.box[1]) * 100 };
+        try {
+          crops.push(await buildCrop(pc, d.tag, { auto: d.origin, confidence: d.origin === "ai" ? d.confidence : undefined },
+            AUTO_THUMB_MAX_SIDE));
+        } catch {
+          // a box without a recognisable form (e.g. only weathering) is skipped
+        }
+      }
+      if (!crops.length) throw new Error("Ingen av rutorna innehöll en runform som kunde beskrivas.");
+      await storeCrops(crops);
+      setDetected(null);
+      setDetectNote(`${crops.length} runutsnitt sparade i projektet${crops.length < chosen.length ? ` (${chosen.length - crops.length} rutor saknade en tydlig runform)` : ""}.`);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Kunde inte spara runutsnitten.");
+    } finally {
+      setSavingAuto(false);
     }
   };
 
@@ -453,6 +547,16 @@ export default function TwoDPage() {
                         </div>
                       );
                     })}
+                    {detected?.map((d, i) => (
+                      <button key={`det-${i}`} type="button" title={`${i + 1}: ${d.tag}${d.origin === "ai" ? ` (${d.confidence} %)` : ""}`}
+                        onClick={e => { e.stopPropagation(); setDetected(ds => ds && ds.map((x, j) => j === i ? { ...x, selected: !x.selected } : x)); }}
+                        className={`absolute z-40 rounded-sm border ${d.selected ? "border-emerald-500 bg-emerald-400/15" : "border-slate-400 border-dashed bg-transparent"}`}
+                        style={{ left: `${d.box[0] * 100}%`, top: `${d.box[1] * 100}%`, width: `${(d.box[2] - d.box[0]) * 100}%`, height: `${(d.box[3] - d.box[1]) * 100}%` }}>
+                        <span className={`absolute -top-3.5 left-0 text-[9px] font-bold px-1 rounded ${d.selected ? "bg-emerald-600 text-white" : "bg-slate-400 text-white"}`}>
+                          {i + 1}{d.translit ? ` ${d.translit}` : ""}
+                        </span>
+                      </button>
+                    ))}
                   </ReactCrop>
                   <label className="absolute top-4 right-4 bg-slate-900/80 hover:bg-black text-white text-xs font-bold px-3 py-1.5 rounded-full cursor-pointer z-10">
                     Byt bild
@@ -508,6 +612,50 @@ export default function TwoDPage() {
                 {savingCrop ? "Sparar..." : "Spara runutsnitt"}
               </button>
             </form>
+
+            <div className="w-full mt-4 rounded-2xl border border-slate-200 bg-white/60 p-4">
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-xs text-slate-600">
+                  <span className="font-bold text-slate-800">Automatiska runutsnitt.</span>{" "}
+                  {source?.kind === "groove-map" && source.runeBoxes?.length
+                    ? "Runorna som 3D-analysen känt igen klipps ut direkt."
+                    : "AI markerar varje runa i bilden; granska rutorna innan du sparar."}
+                </div>
+                <button type="button" onClick={handleDetectRunes} disabled={!imagePreview || detecting}
+                  className="px-4 py-2 bg-slate-900 hover:bg-black text-white font-bold text-xs rounded-xl disabled:opacity-40 whitespace-nowrap">
+                  {detecting ? "Letar …" : "Hitta runorna"}
+                </button>
+              </div>
+              {detectNote && <p className="text-[11px] text-slate-600 mt-2">{detectNote}</p>}
+              {detected && detected.length > 0 && (
+                <>
+                  <div className="mt-3 max-h-56 overflow-y-auto divide-y divide-slate-100">
+                    {detected.map((d, i) => (
+                      <div key={i} className="flex items-center gap-2 py-1 text-xs">
+                        <input type="checkbox" checked={d.selected} className="accent-[#b7410e]"
+                          onChange={() => setDetected(ds => ds && ds.map((x, j) => j === i ? { ...x, selected: !x.selected } : x))} />
+                        <span className="w-6 text-slate-500">{i + 1}</span>
+                        <select value={d.tag} onChange={e => setDetected(ds => ds && ds.map((x, j) => j === i ? { ...x, tag: e.target.value } : x))}
+                          className="flex-1 bg-white border border-slate-200 rounded-lg px-2 py-1">
+                          {RUNE_TAGS.map(r => <option key={r.tag} value={r.tag}>{r.tag}</option>)}
+                        </select>
+                        {d.origin === "ai" && <span className={`w-12 text-right ${d.confidence < 50 ? "text-amber-700" : "text-slate-500"}`}>{d.confidence} %</span>}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex items-center justify-between mt-3">
+                    <span className="text-[11px] text-slate-500">
+                      {detected.filter(d => d.selected).length} av {detected.length} valda
+                      {detected.filter(d => d.selected).length > MAX_AUTO_CROPS ? ` (högst ${MAX_AUTO_CROPS} sparas åt gången)` : ""}
+                    </span>
+                    <button type="button" onClick={handleSaveDetected} disabled={savingAuto || !detected.some(d => d.selected)}
+                      className="px-4 py-2 bg-white border border-slate-200 hover:border-[#b7410e]/40 text-[#b7410e] font-bold text-xs rounded-xl disabled:opacity-40">
+                      {savingAuto ? "Sparar …" : "Spara valda som runutsnitt"}
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
 
           {/* Right */}

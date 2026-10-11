@@ -48,6 +48,17 @@ def test_only_runes_are_measured(band_result):
     assert any(r.startswith("inte runa: kort") for r in reasons)
 
 
+def test_every_recognised_rune_has_a_box(band_result):
+    # The boxes let the 2D page cut out the runes; each holds the rune's accepted slices
+    W, H = band_result["image_width"], band_result["image_height"]
+    for r in band_result["runes"]:
+        x0, y0, x1, y1 = r["box"]
+        assert 0 <= x0 < x1 <= 1 and 0 <= y0 < y1 <= 1
+        for s in band_result["slices"]:
+            if s["accepted"] and s.get("rune_id") == r["id"]:
+                assert x0 <= s["img_x"] / W <= x1 and y0 <= s["img_y"] / H <= y1
+
+
 def test_band_closed_by_staves_is_not_filled(band_result):
     # The band between two band lines, closed off by staves, must not become one wide area
     assert band_result["counts"]["wide_area_mm2"] < 500

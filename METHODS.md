@@ -491,6 +491,15 @@ Källkod: `src/geology.py`, `GET /api/research/geology/{signum}`.
   **ristningskartan** från den automatiska spåranalysen (residualdjup, djupt = mörkt). Ristningskartan har
   samma pixelkoordinater som analysens granskningsbild, så ett runutsnitt där kopplas till de uppmätta
   snitten inom utsnittet.
+* **Automatiska runutsnitt** (från 2026-10-11; knappen "Hitta runorna"). För en ristningskarta från 3D-analysen
+  används runorna som analysen själv känt igen (spåren grupperade per runa, `classify_strokes`): rutan omsluter
+  runans spårmittlinjer med 4 mm och en tiondel av runans storlek som marginal. Analysen vet inte vilken runa det är,
+  så utsnitten sparas som "obestämd runa" tills användaren anger det. För andra bilder markerar AI varje runa med en
+  ruta och en translitterering (`POST /api/2d/detect_runes`); rutorna och läsningen är okalibrerade och visas för
+  granskning innan de sparas, och rutor där AI är mindre än 50 % säker är inte förvalda. Varje sparat utsnitt får samma
+  formbeskrivning som ett manuellt, märks som automatiskt (`auto`: "3d" eller "ai") och får en mindre miniatyr (128 px)
+  och formvektorn avrundad till tre decimaler, så att ett projekt med många utsnitt ryms inom gränsen på 1 MB; högst
+  40 sparas åt gången. Rutor utan en tydlig runform hoppas över.
 
 ## 12. Syntes och attribuering
 

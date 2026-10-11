@@ -39,6 +39,11 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 - Kristen bön känns igen även i osäkra läsningar (hakparenteser), som Kristr hjalpi, Guð biargi, Guð lætti och
   Guðs móðir (249 runstenar i stället för 214).
 
+### 2D-analys
+- Automatiska runutsnitt ("Hitta runorna"): runorna som 3D-analysen känt igen klipps ut ur ristningskartan, och i
+  andra bilder markerar AI varje runa med ruta och läsning för granskning; de valda sparas som runutsnitt med
+  formbeskrivning (METHODS.md 11).
+
 ### Granskning av U 92: stil, språkdrag och signifikans
 - Stilkontrollen jämför stenens stilgrupp med ristarens kärna (stilgrupper på minst 10 % av stenarna) och anger
   glappet i år enligt Gräslund; minst 25 år gör förslaget kronologiskt problematiskt och slutsatsen högst *svagt*.

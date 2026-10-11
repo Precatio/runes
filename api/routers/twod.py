@@ -34,6 +34,41 @@ class TwoDAnalysisResponse(TwoDAIResult):
     model: str = ""
 
 
+class RuneBox(BaseModel):
+    translit: str
+    box_2d: list[int]
+    confidence: int
+
+
+class RuneDetection(BaseModel):
+    """Schema for the automatic search for the individual runes in an image."""
+    runes: list[RuneBox]
+    note: str
+
+
+class RuneDetectionResponse(RuneDetection):
+    tokens_used: int = 0
+    model: str = ""
+
+
+RUNE_DETECTION_INSTRUCTION = """
+Du är en runolog som markerar runorna i en bild av en runsten (foto, relief eller ristningskarta).
+
+Uppgift: hitta VARJE enskild runa i ristningen och ange en tät ruta runt den.
+- En ruta per runa, i den ordning runorna läses (följ runslingan).
+- Rutan ska omsluta hela runan – huvudstaven och alla bistavar – men så lite som möjligt utanför.
+- Ta INTE med ornamentik (rundjurets kropp, huvud, svans, ormöglor), kors, ramlinjer eller skiljetecken.
+- Ange rutan som box_2d = [ymin, xmin, ymax, xmax], normaliserad till 0–1000 i förhållande till hela bilden.
+- translit: runan translittererad som i Samnordisk runtextdatabas (f u þ o r k h n i a s t b m l R; stungna runor e g d y p).
+  Skriv ? om runan inte går att bestämma.
+- confidence: 0–100, hur säker du är på att rutan är en runa och på translittereringen. Var försiktig: en skadad eller
+  otydlig runa ska ha låg säkerhet.
+- note: en kort kommentar om bilden (t.ex. vilka delar som inte går att läsa).
+
+Hitta hellre färre runor med rätt rutor än många osäkra. Svara EXAKT enligt det angivna JSON-schemat.
+"""
+
+
 class ExtractFeaturesRequest(BaseModel):
     image_base64: str
 
@@ -84,6 +119,26 @@ def analyze_2d_image(file: UploadFile = File(...), ai: llm.AIContext = Depends(l
         raise
     except Exception as e:
         raise ai_error(e)
+
+
+@router.post("/detect_runes", response_model=RuneDetectionResponse)
+def detect_runes(file: UploadFile = File(...), ai: llm.AIContext = Depends(llm.ai_context)):
+    """Rutor runt de enskilda runorna i bilden (AI-bedömning), för att spara dem som runutsnitt. Rutorna är okalibrerade
+    och ska granskas; för ristningskartor från 3D-analysen används i stället de runor analysen själv känt igen."""
+    contents = read_image_upload(file)
+    try:
+        r = llm.generate(ai, "Markera de enskilda runorna i bilden.", system=RUNE_DETECTION_INSTRUCTION,
+                         images=[(contents, file.content_type or "image/jpeg")], schema=RuneDetection, tier="pro")
+        runes = [x for x in r.data.get("runes", []) if len(x.get("box_2d") or []) == 4]
+        for x in runes:  # keep the boxes inside the image and in order
+            y0, x0, y1, x1 = (max(0, min(1000, int(v))) for v in x["box_2d"])
+            x["box_2d"] = [min(y0, y1), min(x0, x1), max(y0, y1), max(x0, x1)]
+        runes = [x for x in runes if x["box_2d"][2] - x["box_2d"][0] >= 5 and x["box_2d"][3] - x["box_2d"][1] >= 3]
+        return RuneDetectionResponse(runes=runes, note=r.data.get("note", ""), tokens_used=r.tokens, model=r.model)
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise ai_error(e, "Kunde inte hitta runorna i bilden.")
 
 
 @router.post("/extract_features", response_model=ExtractFeaturesResponse)

@@ -29,7 +29,20 @@ export const RUNE_TAGS: { tag: string; name: string; group: string }[] = [
   { tag: "ᛑ d (stungen)", name: "stungen t", group: "Stungna" },
   { tag: "ᛔ p", name: "stungen b", group: "Stungna" },
   { tag: "ᚤ y", name: "stungen u", group: "Stungna" },
+  { tag: "Obestämd runa", name: "", group: "Övrigt" },
   { tag: "Skiljetecken", name: "", group: "Övrigt" },
   { tag: "Ornamentik", name: "", group: "Övrigt" },
   { tag: "Kors", name: "", group: "Övrigt" },
 ];
+
+export const UNKNOWN_RUNE_TAG = "Obestämd runa";
+
+// The tag for a transliterated rune (Rundata's conventions), e.g. "r" -> "ᚱ r", "e" -> "ᛂ e (stungen)"
+export function tagForTranslit(t: string): string {
+  const special: Record<string, string> = {
+    e: "ᛂ e (stungen)", g: "ᚵ g (stungen)", d: "ᛑ d (stungen)", y: "ᚤ y", p: "ᛔ p", o: "ᚬ ą/o", "ą": "ᚬ ą/o",
+  };
+  if (special[t]) return special[t];
+  const hit = RUNE_TAGS.find(r => r.group === "Långkvist" && r.tag.split(" ")[1] === t);
+  return hit ? hit.tag : UNKNOWN_RUNE_TAG;
+}
