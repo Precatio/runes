@@ -187,19 +187,19 @@ function Overview() {
         ))}
       </div>
       <div className="flex flex-wrap gap-3 items-end">
-        <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Landskap
-          <select value={province} onChange={e => setProvince(e.target.value)} className="block mt-1 liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm font-semibold outline-none">
+        <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 min-w-0 max-w-full">Landskap
+          <select value={province} onChange={e => setProvince(e.target.value)} className="block mt-1 w-full max-w-full liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm font-semibold outline-none">
             <option value="">Alla</option>{provinces.map(p => <option key={p}>{p}</option>)}
           </select>
         </label>
-        <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Ristare (Rundata eller alternativ)
-          <select value={carver} onChange={e => setCarver(e.target.value)} className="block mt-1 liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm font-semibold outline-none">
+        <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 min-w-0 max-w-full">Ristare (Rundata eller alternativ)
+          <select value={carver} onChange={e => setCarver(e.target.value)} className="block mt-1 w-full max-w-full liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm font-semibold outline-none">
             <option value="">Alla</option>{carvers.map(c => <option key={c}>{c}</option>)}
           </select>
         </label>
-        <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Sök sten
+        <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 min-w-0 max-w-full">Sök sten
           <input value={query} onChange={e => setQuery(e.target.value)} placeholder="t.ex. Sö 179 eller Gripsholm"
-            className="block mt-1 liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm font-semibold outline-none" />
+            className="block mt-1 w-full max-w-full liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm font-semibold outline-none" />
         </label>
         <span className="text-xs text-slate-500 pb-2">{rows.length} stenar visas</span>
       </div>

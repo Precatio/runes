@@ -229,7 +229,7 @@ function MapContent() {
     try { await navigator.clipboard.writeText(window.location.href); setCopied(true); setTimeout(() => setCopied(false), 1800); } catch { /* clipboard unavailable */ }
   };
 
-  const select = "liquid-glass-input-wrapper rounded-xl px-3 py-2 text-slate-900 text-sm font-semibold outline-none max-w-full";
+  const select = "liquid-glass-input-wrapper rounded-xl px-2 sm:px-3 py-2 text-slate-900 text-sm font-semibold outline-none w-full max-w-full";
   const label = "flex flex-col gap-1 text-[11px] font-bold uppercase tracking-wider text-slate-500 min-w-0";
 
   return (
@@ -243,8 +243,8 @@ function MapContent() {
       </div>
 
       <div className="liquid-glass-island rounded-[28px] p-4 space-y-3">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
-          <label className={`${label} lg:col-span-2`}>Sök i texten
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
+          <label className={`${label} col-span-2 sm:col-span-3 lg:col-span-2`}>Sök i texten
             <input value={qInput} onChange={e => setQInput(e.target.value)} placeholder="t.ex. grikk, bro, Ingvar"
               className={`${select} font-normal`} />
           </label>
@@ -366,10 +366,10 @@ function MapContent() {
 
       {error && <p className="text-red-700 font-semibold">{error}</p>}
 
-      <div className="liquid-glass-island rounded-[32px] p-2 flex-1 min-h-[520px] relative">
+      <div className="liquid-glass-island rounded-[24px] sm:rounded-[32px] p-1.5 sm:p-2 flex-1 min-h-[70dvh] sm:min-h-[520px] relative">
         <RuneMap points={visible} colorFor={colorFor} selected={selected}
           fitKey={nFilters ? JSON.stringify({ ...f, color: "" }) + (matches ? matches.size : "") + (trait ? trait.key : "") + (overview ? "o" : "") : undefined} />
-        <div className="absolute bottom-6 left-6 z-[500] bg-white/90 rounded-xl px-3 py-2 shadow text-xs space-y-1 max-h-[60%] overflow-y-auto">
+        <div className="absolute bottom-3 left-3 sm:bottom-6 sm:left-6 z-[500] bg-white/90 rounded-xl px-3 py-2 shadow text-[11px] sm:text-xs space-y-1 max-h-[40%] sm:max-h-[60%] max-w-[60%] overflow-y-auto">
           {legend.map(([l, color]) => (
             <div key={l} className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full inline-block shrink-0" style={{ background: color }} />{l}

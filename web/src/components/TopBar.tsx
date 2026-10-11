@@ -8,7 +8,7 @@ import Link from "next/link";
 
 import { useAuth } from "./AuthContext";
 
-export default function TopBar() {
+export default function TopBar({ onMenu }: { onMenu?: () => void }) {
   const router = useRouter();
   const { user, loginWithGoogle } = useAuth();
   const [isFocused, setIsFocused] = useState(false);
@@ -32,12 +32,24 @@ export default function TopBar() {
   }, []);
 
   return (
-    <div className="w-full flex items-center justify-between px-4 py-3 flex-shrink-0 z-30">
-      <div className="flex-1" />
+    <div className="w-full flex items-center justify-between gap-2 sm:gap-4 px-2 sm:px-4 py-2 sm:py-3 flex-shrink-0 z-30">
+      {/* Menu button and name on phones and tablets, where the sidebar is a drawer */}
+      <div className="flex items-center gap-2 lg:hidden shrink-0">
+        <button onClick={onMenu} aria-label="Öppna menyn"
+          className="p-2 rounded-full bg-white border border-slate-200 text-slate-700 hover:bg-slate-50">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+        <Link href="/start" className="hidden sm:flex items-center gap-1.5 font-bold text-slate-900 text-lg">
+          <img src="/vitki_logo.png" alt="" className="w-7 h-7" />Vitki
+        </Link>
+      </div>
+      <div className="hidden lg:block flex-1" />
       
       {/* Spotlight Search (High Contrast Liquid Glass Pill) */}
       <div 
-        className={`relative max-w-md w-full transition-all duration-300 ease-out ${
+        className={`relative max-w-md w-full min-w-0 transition-all duration-300 ease-out ${
           isFocused ? "scale-[1.02]" : "scale-100"
         }`}
       >
@@ -52,14 +64,15 @@ export default function TopBar() {
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            placeholder={isFocused ? "Sök på sten, plats, eller analys..." : "Sök (Kortkommando: Cmd+K)"} 
-            className="w-full bg-transparent text-[14px] font-semibold text-slate-900 placeholder:text-slate-500 focus:outline-none"
+            placeholder={isFocused ? "Sök på sten, plats, eller analys..." : "Sök"} 
+            className="w-full min-w-0 bg-transparent text-[14px] font-semibold text-slate-900 placeholder:text-slate-500 focus:outline-none"
           />
+          <kbd className="hidden lg:inline ml-2 shrink-0 rounded-md border border-slate-200 bg-white/70 px-1.5 py-0.5 text-[10px] font-semibold text-slate-500">⌘K</kbd>
         </div>
       </div>
 
-      <div className="flex-1 flex justify-end items-center gap-4">
-        <div className="flex items-center gap-4">
+      <div className="lg:flex-1 flex justify-end items-center gap-2 sm:gap-4 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-4">
           {/* Generate Report Quick Button */}
           <button 
             onClick={() => router.push("/report/current")}
@@ -88,7 +101,7 @@ export default function TopBar() {
                     {getInitials(user.displayName || user.email || "?")}
                   </div>
                 )}
-                <span className="text-xs font-bold text-slate-700">{user.displayName || user.email}</span>
+                <span className="hidden sm:inline text-xs font-bold text-slate-700 max-w-[10rem] truncate">{user.displayName || user.email}</span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3 h-3 text-slate-400">
                   <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                 </svg>
@@ -101,7 +114,7 @@ export default function TopBar() {
                 <div className="w-6 h-6 bg-slate-200 text-slate-500 rounded-full flex items-center justify-center font-bold text-[10px]">
                   ?
                 </div>
-                <span className="text-xs font-bold text-slate-700">Logga in</span>
+                <span className="hidden sm:inline text-xs font-bold text-slate-700">Logga in</span>
               </button>
             )}
           </div>

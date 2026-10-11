@@ -5,6 +5,11 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Mobil och surfplatta
+- Sidomenyn är en utfällbar meny under 1024 px, öppnas med menyknappen i sidhuvudet och stängs när man väljer en
+  sida; sidhuvudet, chatten, marginalerna och kartans filter är anpassade för små skärmar. Alla sidor är kontrollerade
+  i 390 och 820 px bredd utan sidledsskroll.
+
 ### Karta
 - Nya filter: fritext i inskriften (translitterering, normalisering, översättning, plats), landskap, innehåll (de nio
   kategorierna), ristarstatus, material, kors, språkdrag med värde, status i Stenöversikt och bara svenska

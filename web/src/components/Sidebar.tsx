@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useLanguage } from "./LanguageContext";
 import { useAuth } from "./AuthContext";
 
-export default function Sidebar() {
+export default function Sidebar({ open = false, onClose }: { open?: boolean; onClose?: () => void }) {
   const pathname = usePathname();
   const { user, loginWithGoogle, logout } = useAuth();
 
@@ -200,7 +200,10 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="w-[260px] m-4 mr-0 rounded-[36px] liquid-glass-island flex flex-col flex-shrink-0 relative z-20 overflow-hidden transition-all duration-300">
+    <aside className={`fixed inset-y-0 left-0 z-50 w-[min(280px,85vw)] rounded-r-[28px] lg:static lg:z-20 lg:w-[260px] lg:m-4 lg:mr-0 lg:rounded-[36px]
+      liquid-glass-island flex flex-col flex-shrink-0 overflow-hidden transition-transform duration-300 lg:transition-all
+      ${open ? "translate-x-0 shadow-2xl" : "-translate-x-full lg:translate-x-0"}`}
+      aria-label="Huvudmeny">
       
       {/* Brand Header */}
       <div className="p-6 pb-4 flex items-center justify-between">
@@ -211,13 +214,20 @@ export default function Sidebar() {
           </h1>
         </Link>
         
-        {/* Language Toggle Glass Pill */}
-        <button 
-          onClick={() => setLanguage(language === 'sv' ? 'en' : 'sv')}
-          className="glass-btn-3d px-2.5 py-1 rounded-full text-[10px] font-bold text-slate-700 tracking-wider uppercase"
-        >
-          {language}
-        </button>
+        <div className="flex items-center gap-2">
+          {/* Language Toggle Glass Pill */}
+          <button 
+            onClick={() => setLanguage(language === 'sv' ? 'en' : 'sv')}
+            className="glass-btn-3d px-2.5 py-1 rounded-full text-[10px] font-bold text-slate-700 tracking-wider uppercase"
+          >
+            {language}
+          </button>
+          <button onClick={onClose} aria-label="Stäng menyn" className="lg:hidden p-1.5 rounded-full text-slate-500 hover:bg-white/80 hover:text-slate-900">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Navigation */}
@@ -235,7 +245,8 @@ export default function Sidebar() {
             <Link
               key={item.name}
               href={item.href}
-              className={`flex items-center gap-3 px-4 py-2 rounded-[18px] text-[13px] font-semibold transition-all duration-200 ${
+              onClick={onClose}
+              className={`flex items-center gap-3 px-4 py-2.5 lg:py-2 rounded-[18px] text-[13px] font-semibold transition-all duration-200 ${
                 isActive 
                   ? "bg-slate-900 text-white shadow-lg shadow-slate-900/15 scale-[1.02]" 
                   : "text-slate-700 hover:bg-white/80 hover:text-slate-900 hover:shadow-xs"

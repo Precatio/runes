@@ -399,7 +399,7 @@ export default function StoneAnalysisPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="liquid-glass-island rounded-[32px] p-6 space-y-4 h-fit">
+        <div className="liquid-glass-island rounded-[24px] sm:rounded-[32px] p-4 sm:p-6 space-y-4 h-fit">
           <label className={label}>3D-skanning (STL, OBJ, PLY)
             <input type="file" accept=".stl,.obj,.ply" disabled={running} onChange={e => setFile(e.target.files?.[0] ?? null)}
               className="w-full mt-1 text-xs bg-white border border-slate-200 rounded-xl p-2" />
@@ -459,10 +459,10 @@ export default function StoneAnalysisPage() {
           <div className="liquid-glass-island rounded-[32px] p-6">
             <ol className="space-y-2">
               {steps.map(s => (
-                <li key={s.key} className="flex gap-3 text-sm">
-                  <span className={`w-4 ${stateStyle[s.state]}`}>{icon[s.state]}</span>
-                  <span className="font-semibold text-slate-800 w-56 shrink-0">{s.name}</span>
-                  <span className={`${stateStyle[s.state]} font-normal`}>
+                <li key={s.key} className="flex flex-wrap sm:flex-nowrap gap-x-3 gap-y-0.5 text-sm">
+                  <span className={`w-4 shrink-0 ${stateStyle[s.state]}`}>{icon[s.state]}</span>
+                  <span className="font-semibold text-slate-800 sm:w-56 shrink-0">{s.name}</span>
+                  <span className={`${stateStyle[s.state]} font-normal basis-full sm:basis-auto pl-7 sm:pl-0 min-w-0 break-words`}>
                     {s.key === "upload" && s.state === "pågår" ? `${Math.round(progress * 100)} %` : s.result ?? s.state}
                   </span>
                 </li>

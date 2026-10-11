@@ -196,11 +196,11 @@ export default function AIChatWidget() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end">
       {/* Chat Window */}
       {isOpen && (
         <div 
-          className={`mb-4 liquid-glass-island rounded-3xl flex flex-col overflow-hidden shadow-2xl animate-in slide-in-from-bottom-5 ${isMinimized ? 'w-96 h-auto' : ''}`}
+          className={`mb-4 liquid-glass-island rounded-3xl flex flex-col overflow-hidden shadow-2xl animate-in slide-in-from-bottom-5 ${isMinimized ? 'w-[min(24rem,calc(100vw-2rem))] h-auto' : ''}`}
           style={isMinimized ? { 
             transform: `translate(${offset.x}px, ${offset.y}px)` 
           } : { 
@@ -209,8 +209,8 @@ export default function AIChatWidget() {
             height: '500px',
             minWidth: '300px',
             minHeight: '300px',
-            maxWidth: '90vw',
-            maxHeight: '90vh',
+            maxWidth: 'calc(100vw - 2rem)',
+            maxHeight: 'calc(100dvh - 7rem)',
             resize: 'both',
             overflow: 'hidden'
           }}
