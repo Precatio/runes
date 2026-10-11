@@ -143,7 +143,9 @@ def corpus_results():
     stone, patterns = _findings(fp)
     stone = _with_crosscheck(stone)
     html_map = (res.get("geography") or {}).get("html_map")
-    return {**res, "figure_urls": _figure_urls(fp, res), "patterns": patterns,
+    from src import r_explain
+    return {**res, "figure_urls": _figure_urls(fp, res), "patterns": patterns, "sections": r_explain.sections(res),
+            "overview": r_explain.overview(res),
             "findings_summary": {"n": len(stone), "new": sum(f["verdict"] == "nytt" for f in stone),
                                  "contradicts": sum(f["verdict"] == "motsäger" for f in stone),
                                  "crosschecked": sum(1 for f in stone if f.get("crosscheck")),

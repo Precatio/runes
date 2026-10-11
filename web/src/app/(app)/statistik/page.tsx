@@ -22,13 +22,14 @@ interface ChangeFeature {
     tested: boolean; n: number; n_yes: number; p?: number; q?: number | null; shape?: string; peak_year?: number | null;
     year_first?: number; year_last?: number; first?: number; last?: number; change_lo?: number; change_hi?: number;
     draws?: { n: number; share_sig: number | null; share_same_shape: number | null };
+    curve?: { year: number; share: number }[];
   };
   provinces: { p_differ: number; rows: { province: string; n: number; share1050: number; lo1050: number; hi1050: number; cross_year: number | null; cross_lo: number | null; cross_hi: number | null }[] } | null;
-  space: { n: number; p: number; high: string[]; low: string[] } | null;
+  space: { n: number; p: number; high: string[] | string; low: string[] | string } | null;
 }
 interface AnonGroup {
   id: number; name?: string | null; status: "candidate" | "known"; type_stone: string; n: number; spread_km: number;
-  stones: string[]; parishes: string[]; styles: { style: string; n: number }[] | null; stability: number;
+  stones: string[]; parishes: string[] | string; styles: { style: string; n: number }[] | null; stability: number;
   marks: { feature: string; share_group: number; share_area: number }[] | null;
   nearest_carver: { carver: string; n: number; dist: number; km: number; as_close_as_same_carver: boolean } | null;
   model: { n: number; carver: string; share: number; mean_p: number } | null;
@@ -70,13 +71,11 @@ interface Corpus {
     calibration: { link_km: number; lr_min: number; tpr: number; fpr: number; precision: number; max_spread_km: number };
     validation: { n_groups: number; n_stones: number; purity: number; purity_geography: number; share_pure: number };
     groups: AnonGroup[] };
+  sections?: Section[];
+  overview?: { paragraphs: string[]; next_steps: string[] };
 }
 
 type Tab = "overview" | "geography" | "clusters" | "text" | "attribution" | "anonymous" | "chronology" | "change" | "network";
-const TABS: [Tab, string][] = [
-  ["overview", "Översikt"], ["geography", "Geografi"], ["clusters", "Grupper"], ["text", "Språk och dialekter"],
-  ["attribution", "Attribueringsmodell"], ["anonymous", "Okända ristare"], ["chronology", "Seriation"], ["change", "Förändring"], ["network", "Formelnätverk"],
-];
 
 const d2 = (v: number | null | undefined, k = 2) => v == null ? "–" : v.toFixed(k).replace(".", ",");
 const pc = (v: number | null | undefined) => v == null ? "–" : `${Math.round(v * 100)} %`;
@@ -281,13 +280,124 @@ function Fig({ src, alt, narrow }: { src?: string; alt: string; narrow?: boolean
 }
 
 // The method in short; caveats and how to read the results are in the documentation (METHODS.md 17)
-function Method({ text }: { text?: string; caveat?: string }) {
+function Method({ text, caveat }: { text?: string; caveat?: string }) {
   if (!text) return null;
   return (
     <details className="text-xs text-slate-600 rounded-xl bg-slate-50 border border-slate-200 p-3">
-      <summary className="cursor-pointer font-semibold">Metod</summary>
+      <summary className="cursor-pointer font-semibold">Metod och reservationer (för den som vill veta mer)</summary>
       <p className="mt-2">{text}</p>
+      {caveat && <p className="mt-2">{caveat}</p>}
     </details>
+  );
+}
+
+// R writes a one-element vector as a plain value
+const asList = (v: string[] | string | null | undefined): string[] => v == null ? [] : Array.isArray(v) ? v : [v];
+
+// A collapsible block for the detailed numbers, so that the page starts with the answer
+function Details({ title, children, open }: { title: string; children: ReactNode; open?: boolean }) {
+  return (
+    <details open={open} className="group/det rounded-2xl border border-slate-200 bg-white/70">
+      <summary className="cursor-pointer select-none list-none px-4 py-3 font-semibold text-slate-800 flex items-center justify-between gap-3">
+        <span>{title}</span>
+        <span className="text-xs font-bold text-[#b7410e] group-open/det:hidden">Visa</span>
+        <span className="text-xs font-bold text-[#b7410e] hidden group-open/det:inline">Dölj</span>
+      </summary>
+      <div className="px-4 pb-4 space-y-3">{children}</div>
+    </details>
+  );
+}
+
+// **bold** in the explanations from the server
+function Md({ text }: { text: string }) {
+  return <>{text.split("**").map((part, i) => i % 2 ? <strong key={i} className="text-slate-900">{part}</strong> : <span key={i}>{part}</span>)}</>;
+}
+
+type Level = "säkert" | "troligt" | "osäkert";
+const LEVEL_STYLE: Record<Level, string> = {
+  "säkert": "bg-emerald-50 text-emerald-800 border-emerald-200",
+  "troligt": "bg-amber-50 text-amber-900 border-amber-200",
+  "osäkert": "bg-slate-100 text-slate-700 border-slate-300",
+};
+const LEVEL_HELP: Record<Level, string> = {
+  "säkert": "Resultatet är prövat (t.ex. med korsvalidering eller slumptest) och stämmer med vad forskningen redan utgår från.",
+  "troligt": "Resultatet håller statistiskt, men det finns viktiga reservationer – läs vad resultatet inte säger.",
+  "osäkert": "Ett mönster att pröva: strukturen är svag, eller resultatet är hypoteser som behöver granskas av en runolog.",
+};
+
+function Confidence({ level, text }: { level: Level; text: string }) {
+  return (
+    <span className={`inline-flex shrink-0 items-center rounded-full border px-3 py-1 text-xs font-bold ${LEVEL_STYLE[level]}`}>
+      <Tip text={LEVEL_HELP[level]}>{text}</Tip>
+    </span>
+  );
+}
+
+interface Section {
+  key: Tab; question: string; why: string; headline: { value: string; label: string }; answer: string; short: string;
+  confidence: Level; confidence_text: string; interpretation: string[]; not_saying: string[];
+}
+
+const TOPIC: Record<string, string> = {
+  attribution: "Vem ristade?", anonymous: "Okända ristare", change: "Förändring", chronology: "Datering",
+  geography: "Geografi", text: "Stavning och dialekt", clusters: "Grupper av stenar", network: "Formler och släkt",
+};
+
+// The answer first: question, why it matters, the key number, the answer, a suggested interpretation and its limits
+function SectionIntro({ section }: { section?: Section }) {
+  if (!section) return null;
+  return (
+    <div className="space-y-4">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="max-w-3xl">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-[#b7410e]">{TOPIC[section.key]}</div>
+          <h3 className="text-2xl font-bold tracking-tight text-slate-900">{section.question}</h3>
+          <p className="text-slate-600 mt-1">{section.why}</p>
+        </div>
+        <Confidence level={section.confidence} text={section.confidence_text} />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-4">
+        <div className="rounded-2xl bg-slate-900 text-white p-5 flex flex-col justify-center">
+          <div className="text-4xl font-bold tracking-tight">{section.headline.value}</div>
+          <div className="text-sm text-white/80 mt-1 leading-snug">{section.headline.label}</div>
+        </div>
+        <div className="rounded-2xl bg-white border border-slate-200 p-5">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Svaret i korthet</div>
+          <p className="text-slate-800 leading-relaxed">{section.answer}</p>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="rounded-2xl bg-white border border-slate-200 p-5">
+          <h4 className="font-bold text-slate-900 mb-2">Förslag till tolkning</h4>
+          <ul className="space-y-2 text-sm text-slate-700 list-disc pl-5">{section.interpretation.map((t, i) => <li key={i}>{t}</li>)}</ul>
+        </div>
+        <div className="rounded-2xl bg-slate-50 border border-slate-200 p-5">
+          <h4 className="font-bold text-slate-900 mb-2">Det här säger resultatet inte</h4>
+          <ul className="space-y-2 text-sm text-slate-600 list-disc pl-5">{section.not_saying.map((t, i) => <li key={i}>{t}</li>)}</ul>
+        </div>
+      </div>
+      <h4 className="font-bold text-slate-900 pt-2">Figurer och siffror</h4>
+    </div>
+  );
+}
+
+// The adjusted share over time as a small line (0–100 %, the same scale in every row)
+function Spark({ curve }: { curve?: { year: number; share: number }[] }) {
+  if (!curve || curve.length < 2) return null;
+  const W = 96, H = 30, x0 = curve[0].year, x1 = curve[curve.length - 1].year;
+  const pts = curve.map(p => [((p.year - x0) / (x1 - x0 || 1)) * (W - 6) + 3, H - 3 - p.share * (H - 6)]);
+  const d = pts.map((p, i) => `${i ? "L" : "M"}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(" ");
+  const last = pts[pts.length - 1];
+  const label = `Justerad andel från ${pc(curve[0].share)} (${x0}) till ${pc(curve[curve.length - 1].share)} (${x1})`;
+  return (
+    <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} role="img" aria-label={label} className="shrink-0">
+      <title>{label}</title>
+      <line x1="3" x2={W - 3} y1={H - 3} y2={H - 3} stroke="#e2e8f0" strokeWidth="1" />
+      <line x1="3" x2={W - 3} y1="3" y2="3" stroke="#f1f5f9" strokeWidth="1" />
+      <path d={d} fill="none" stroke="#2a78d6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx={pts[0][0]} cy={pts[0][1]} r="2.5" fill="#2a78d6" />
+      <circle cx={last[0]} cy={last[1]} r="2.5" fill="#2a78d6" />
+    </svg>
   );
 }
 
@@ -300,6 +410,7 @@ export default function StatistikPage() {
   const [data, setData] = useState<Corpus | null>(memo.data ?? null);
   const [error, setError] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("overview");
+  const [glossaryOpen, setGlossaryOpen] = useState(false);
 
   const [tick, setTick] = useState(0);
 
@@ -340,71 +451,88 @@ export default function StatistikPage() {
   const c = status?.corpus;
   return (
     <div className="flex flex-col w-full max-w-7xl mx-auto p-4 md:p-6 space-y-6">
-      <div>
-        <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-2">Statistik (R)</h2>
-        <p className="text-slate-600 text-[16px] leading-relaxed max-w-3xl font-medium">
-          Hela korpusen av svenska vikingatida runstenar analyserad i R: ristarnas områden, grupper av stil och språk,
-          stavning och dialekter, en korsvaliderad attribueringsmodell, seriation mot Gräslunds kronologi, hur språk, skrift
-          och kristna drag förändras över tid och mellan landskap, och formelnätverk.
-          Samma analyser används för den enskilda stenen i <Link href="/stenanalys" className="text-[#b7410e] hover:underline">Fullständig stenanalys</Link> och
-          stenrapporten, och resultaten ställs mot forskningen i <Link href="/luckor" className="text-[#b7410e] hover:underline">Forskningsluckor</Link>.
+      <div className="space-y-3">
+        <h2 className="text-3xl font-bold tracking-tight text-slate-900">Statistik (R)</h2>
+        <p className="text-slate-700 text-[16px] leading-relaxed max-w-3xl">
+          Här har alla {c?.n_stones ? c.n_stones.toLocaleString("sv-SE") : "svenska"} vikingatida runstenar i Rundata analyserats
+          statistiskt för att hitta mönster som är svåra att se sten för sten: vem som ristade, när och var stenarna restes och
+          hur språk, skrift och tro förändrades. Varje del besvarar en fråga – först svaret i korthet, sedan ett förslag till
+          tolkning och vad resultatet <em>inte</em> säger. Resultaten är förslag för forskare att pröva, inte färdiga slutsatser.
         </p>
+        <div className="flex flex-wrap items-center gap-3">
+          <details className="group/how rounded-2xl border border-slate-200 bg-white/70 text-sm max-w-3xl">
+            <summary className="cursor-pointer list-none px-4 py-2 font-semibold text-slate-800">Så läser du sidan</summary>
+            <ul className="px-6 pb-4 space-y-1.5 list-disc text-slate-700">
+              <li>Välj en fråga i korten nedan. <strong>Översikten</strong> sammanfattar och tolkar alla frågor på en gång.</li>
+              <li>Märkningen <strong>säkert</strong>, <strong>troligt</strong> och <strong>osäkert</strong> visar hur väl resultatet håller – håll muspekaren över märket för en förklaring.</li>
+              <li>Ord med prickad understrykning förklaras när du håller muspekaren över dem (eller trycker på dem). Alla förklaringar finns också i ordlistan.</li>
+              <li>Klicka på en figur för att förstora den; under varje figur står hur den ska läsas.</li>
+              <li>&quot;Säkerställt&quot; betyder att resultatet håller även när man räknar med att många saker prövats samtidigt (justerat p-värde, q, under 0,05).</li>
+            </ul>
+          </details>
+          <button type="button" onClick={() => setGlossaryOpen(true)}
+            className="px-4 py-2 rounded-2xl border border-slate-200 bg-white/70 text-sm font-semibold text-slate-800 hover:border-[#b7410e]/40">
+            Ordlista
+          </button>
+          {glossaryOpen && <Glossary onClose={() => setGlossaryOpen(false)} />}
+        </div>
       </div>
 
       {error && <div className="rounded-2xl bg-red-50 border border-red-200 px-5 py-3 text-sm text-red-800">{error}</div>}
 
-      <div className="liquid-glass-island rounded-[24px] p-5 flex flex-wrap items-center gap-4">
-        {!status ? <span className="text-slate-500">Hämtar läget …</span> : !status.r.available ? (
-          <div className="text-sm text-amber-900">
-            <strong>R är inte tillgängligt på servern.</strong> {status.r.note}
-            {status.r.missing.length > 0 && <div className="text-xs mt-1">Saknas: {status.r.missing.join(", ")}</div>}
-          </div>
-        ) : (
-          <>
-            <div className="text-sm">
-              <div className="font-bold text-slate-900">{status.r.version}</div>
-              <div className="text-slate-500 text-xs">
-                Korpus: {c?.n_stones} runstenar · version {c?.fingerprint}
-                {c?.computed_at && ` · beräknad ${new Date(c.computed_at).toLocaleString("sv-SE")}`}
-              </div>
+      {(!data || c?.running || (c && !c.ready)) && (
+        <div className="liquid-glass-island rounded-[24px] p-5 flex flex-wrap items-center gap-4">
+          {!status ? <span className="text-slate-500">Hämtar läget …</span> : !status.r.available ? (
+            <div className="text-sm text-amber-900">
+              <strong>R är inte tillgängligt på servern.</strong> {status.r.note}
+              {status.r.missing.length > 0 && <div className="text-xs mt-1">Saknas: {status.r.missing.join(", ")}</div>}
             </div>
-            {c && !c.ready && !c.running && (
-              <button onClick={start} className="px-4 py-2 rounded-xl bg-slate-900 text-white text-sm font-bold">
-                Beräkna korpusanalyserna (några minuter)
-              </button>
-            )}
-            {c?.running && (
-              <div className="flex flex-wrap gap-2 text-xs">
-                {c.modules.map(m => (
-                  <span key={m.key} className={`px-2 py-1 rounded-lg border ${c.done_modules.includes(m.key) ? "bg-emerald-50 border-emerald-200 text-emerald-800"
-                    : c.module === m.key ? "bg-amber-50 border-amber-300 text-amber-900 animate-pulse" : "bg-white border-slate-200 text-slate-500"}`}>
-                    {c.done_modules.includes(m.key) ? "✓ " : ""}{m.label}
-                  </span>
-                ))}
+          ) : (
+            <>
+              <div className="text-sm text-slate-700">
+                {c?.running ? "Analyserna räknas just nu – det tar några minuter." : "Analyserna behöver räknas om för den här versionen av data."}
               </div>
-            )}
-            {c?.error && !c.running && <span className="text-xs text-red-700">{c.error}</span>}
-            {data && (
-              <a href={`${API_URL}/api/r/package`} className="ml-auto px-4 py-2 rounded-xl border border-slate-300 bg-white text-sm font-bold hover:bg-slate-50">
-                Ladda ner reproducerbarhetspaket (R-skript, data, resultat)
-              </a>
-            )}
-          </>
-        )}
-      </div>
+              {c && !c.ready && !c.running && (
+                <button onClick={start} className="px-4 py-2 rounded-xl bg-slate-900 text-white text-sm font-bold">
+                  Beräkna korpusanalyserna (några minuter)
+                </button>
+              )}
+              {c?.running && (
+                <div className="flex flex-wrap gap-2 text-xs">
+                  {c.modules.map(m => (
+                    <span key={m.key} className={`px-2 py-1 rounded-lg border ${c.done_modules.includes(m.key) ? "bg-emerald-50 border-emerald-200 text-emerald-800"
+                      : c.module === m.key ? "bg-amber-50 border-amber-300 text-amber-900 animate-pulse" : "bg-white border-slate-200 text-slate-500"}`}>
+                      {c.done_modules.includes(m.key) ? "✓ " : ""}{m.label}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {c?.error && !c.running && <span className="text-xs text-red-700">{c.error}</span>}
+            </>
+          )}
+        </div>
+      )}
 
       {data && (
         <>
-          <div className="flex flex-wrap gap-2">
-            {TABS.map(([key, label]) => (
-              <button key={key} onClick={() => setTab(key)}
-                className={`px-4 py-2 rounded-xl text-sm font-bold border ${tab === key ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-700 border-slate-300"}`}>
-                {label}
+          <nav aria-label="Frågor" className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
+            {[{ key: "overview" as Tab, question: "Vad säger statistiken sammantaget?", confidence: null as Level | null },
+              ...(data.sections ?? []).map(x => ({ key: x.key, question: x.question, confidence: x.confidence as Level | null }))].map(card => (
+              <button key={card.key} type="button" onClick={() => setTab(card.key)} aria-pressed={tab === card.key}
+                className={`text-left rounded-2xl border p-3 transition-colors ${tab === card.key
+                  ? "bg-slate-900 border-slate-900 text-white shadow-lg" : "bg-white/80 border-slate-200 text-slate-800 hover:border-[#b7410e]/40"}`}>
+                <div className={`text-[10px] font-bold uppercase tracking-wider ${tab === card.key ? "text-[#f0a37f]" : "text-[#b7410e]"}`}>
+                  {card.key === "overview" ? "Översikt" : TOPIC[card.key]}
+                </div>
+                <div className="text-sm font-semibold leading-snug mt-0.5">{card.question}</div>
+                {card.confidence && (
+                  <div className={`text-[10px] mt-1.5 ${tab === card.key ? "text-white/70" : "text-slate-500"}`}>{card.confidence}</div>
+                )}
               </button>
             ))}
-          </div>
-          <div className="liquid-glass-island rounded-[32px] p-5 space-y-5">
-            {tab === "overview" && <Overview data={data} />}
+          </nav>
+          <div className="liquid-glass-island rounded-[32px] p-5 md:p-7 space-y-5">
+            {tab === "overview" && <Overview data={data} onOpen={setTab} />}
             {tab === "geography" && <Geography data={data} />}
             {tab === "clusters" && <Clusters data={data} />}
             {tab === "text" && <TextTab data={data} />}
@@ -414,10 +542,52 @@ export default function StatistikPage() {
             {tab === "change" && <Change data={data} />}
             {tab === "network" && <Network data={data} />}
           </div>
+          {status?.r.available && (
+            <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 px-1">
+              <span>
+                Beräknat i {status.r.version} på {c?.n_stones} runstenar (version {c?.fingerprint}
+                {c?.computed_at ? `, ${new Date(c.computed_at).toLocaleString("sv-SE")}` : ""}). Samma analyser används i{" "}
+                <Link href="/stenanalys" className="text-[#b7410e] hover:underline">stenanalysen</Link> och ställs mot forskningen i{" "}
+                <Link href="/luckor" className="text-[#b7410e] hover:underline">Forskningsluckor</Link>.
+              </span>
+              <a href={`${API_URL}/api/r/package`} className="px-3 py-1.5 rounded-xl border border-slate-300 bg-white font-bold text-slate-700 hover:bg-slate-50">
+                Ladda ner R-skript, data och resultat
+              </a>
+            </div>
+          )}
         </>
       )}
     </div>
   );
+}
+
+function Glossary({ onClose }: { onClose: () => void }) {
+  const [q, setQ] = useState("");
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+  const terms = Object.entries(GLOSSARY).sort(([a], [b]) => a.localeCompare(b, "sv"))
+    .filter(([k, v]) => !q || (k + " " + v).toLowerCase().includes(q.toLowerCase()));
+  return createPortal(
+    <div role="dialog" aria-modal="true" aria-label="Ordlista" onClick={onClose}
+      className="fixed inset-0 z-[90] bg-slate-900/60 backdrop-blur-sm flex justify-center p-3 md:p-8">
+      <div onClick={e => e.stopPropagation()} className="w-full max-w-2xl bg-white rounded-3xl shadow-2xl flex flex-col max-h-full">
+        <div className="p-5 border-b border-slate-100 flex items-center gap-3">
+          <h3 className="text-lg font-bold text-slate-900">Ordlista</h3>
+          <input autoFocus value={q} onChange={e => setQ(e.target.value)} placeholder="Sök ett ord …"
+            className="flex-1 rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#b7410e]/50" />
+          <button type="button" onClick={onClose} className="px-3 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold">Stäng</button>
+        </div>
+        <dl className="overflow-y-auto p-5 space-y-3">
+          {terms.map(([k, v]) => (
+            <div key={k}><dt className="font-semibold text-slate-900">{k}</dt><dd className="text-sm text-slate-600">{v}</dd></div>
+          ))}
+          {terms.length === 0 && <p className="text-sm text-slate-500">Inga träffar.</p>}
+        </dl>
+      </div>
+    </div>, document.body);
 }
 
 const STATUS_STYLE: Record<string, string> = {
@@ -426,38 +596,106 @@ const STATUS_STYLE: Record<string, string> = {
   "begränsning": "bg-slate-100 text-slate-700 border-slate-300", "svagt": "bg-slate-100 text-slate-700 border-slate-300",
 };
 
-function Overview({ data }: { data: Corpus }) {
+const sectionOf = (data: Corpus, key: Tab) => (data.sections ?? []).find(x => x.key === key);
+
+function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void }) {
   const s = data.findings_summary;
   const top = data.findings.filter(f => f.verdict !== "stämmer").slice(0, 25);
+  const groups: [string, string, string[]][] = [
+    ["Stämmer med det forskningen redan utgår från", "Ett tecken på att metoderna fungerar.", ["bekräftar"]],
+    ["Nya mönster att pröva", "Mönster som appen inte kan förklara med det den känner till – kanske ny kunskap, kanske redan beskrivet i litteratur som appen inte har.", ["mönster att pröva"]],
+    ["Begränsningar och svaga mönster", "Resultat som främst visar gränserna för data och metod.", ["begränsning", "svagt"]],
+  ];
   return (
-    <>
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-        {[["Fynd per sten", s.n], ["Nya mot Rundata", s.new], ["Motsäger Rundata", s.contradicts],
-          ["Finns redan i nyare källa", s.already_known], ["Nya även mot Runor 2020", s.still_new]].map(([l, v]) => (
-          <div key={l as string} className="rounded-2xl bg-white border border-slate-200 p-4">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500"><Tip text={GLOSSARY[l as string]}>{l}</Tip></div>
-            <div className="text-2xl font-bold text-slate-900">{v}</div>
+    <div className="space-y-8">
+      {data.overview && (
+        <section className="rounded-3xl bg-white border border-slate-200 p-6 md:p-8">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-[#b7410e]">Helhetsbilden</div>
+          <h3 className="text-2xl font-bold tracking-tight text-slate-900 mb-4">Vad statistiken säger sammantaget</h3>
+          <div className="space-y-4 text-slate-700 leading-relaxed max-w-4xl">
+            {data.overview.paragraphs.map((t, i) => <p key={i}><Md text={t} /></p>)}
           </div>
-        ))}
-      </div>
-      <div>
-        <h3 className="font-bold text-slate-900 mb-2">Mönster i korpusen</h3>
-        <ul className="space-y-2 text-sm">
-          {data.patterns.map((pt, i) => (
-            <li key={i} className="flex gap-3">
-              <span className={`shrink-0 h-fit px-2 py-0.5 rounded-lg border text-[11px] font-bold ${STATUS_STYLE[pt.status] ?? ""}`}><Tip text={GLOSSARY[pt.status]}>{pt.status}</Tip></span>
-              <div><span className="text-[11px] uppercase tracking-wider text-slate-500 mr-2">{pt.topic}</span>{pt.text}</div>
-            </li>
+        </section>
+      )}
+
+      <section>
+        <h3 className="text-xl font-bold text-slate-900 mb-1">Frågorna i korthet</h3>
+        <p className="text-sm text-slate-600 mb-4">Svaret, nyckeltalet och den viktigaste tolkningen för varje fråga. Klicka för att läsa mer.</p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {(data.sections ?? []).map(x => (
+            <button key={x.key} type="button" onClick={() => onOpen(x.key)}
+              className="text-left rounded-2xl bg-white border border-slate-200 p-5 hover:border-[#b7410e]/40 hover:shadow-md transition-shadow flex flex-col gap-3">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-[#b7410e]">{TOPIC[x.key]}</div>
+                  <div className="font-bold text-slate-900 leading-snug">{x.question}</div>
+                </div>
+                <span className={`shrink-0 rounded-full border px-2.5 py-0.5 text-[11px] font-bold ${LEVEL_STYLE[x.confidence]}`}>{x.confidence}</span>
+              </div>
+              <div className="flex items-baseline gap-3">
+                <span className="text-3xl font-bold tracking-tight text-slate-900">{x.headline.value}</span>
+                <span className="text-xs text-slate-500 leading-snug">{x.headline.label}</span>
+              </div>
+              <p className="text-sm text-slate-800">{x.short}</p>
+              {x.interpretation[0] && <p className="text-sm text-slate-600"><span className="font-semibold text-slate-700">Tolkning: </span>{x.interpretation[0]}</p>}
+              <span className="text-xs font-bold text-[#b7410e] mt-auto">Läs mer →</span>
+            </button>
           ))}
-        </ul>
+        </div>
+      </section>
+
+      {data.overview && data.overview.next_steps.length > 0 && (
+        <section className="rounded-2xl bg-slate-50 border border-slate-200 p-5">
+          <h3 className="font-bold text-slate-900 mb-2">Förslag på nästa steg för forskningen</h3>
+          <ol className="list-decimal pl-5 space-y-1.5 text-sm text-slate-700">
+            {data.overview.next_steps.map((t, i) => <li key={i}>{t}</li>)}
+          </ol>
+        </section>
+      )}
+
+      <section>
+        <h3 className="text-xl font-bold text-slate-900 mb-1">Alla mönster i korpusen</h3>
+        <p className="text-sm text-slate-600 mb-4">De enskilda resultaten bakom sammanfattningen, sorterade efter vad de betyder för forskningen.</p>
+        <div className="space-y-5">
+          {groups.map(([title, help, statuses]) => {
+            const items = data.patterns.filter(pt => statuses.includes(pt.status));
+            if (!items.length) return null;
+            return (
+              <div key={title}>
+                <h4 className="font-semibold text-slate-900">{title} <span className="text-slate-400 font-normal">({items.length})</span></h4>
+                <p className="text-xs text-slate-500 mb-2">{help}</p>
+                <ul className="space-y-2 text-sm">
+                  {items.map((pt, i) => (
+                    <li key={i} className="flex gap-3 rounded-xl bg-white border border-slate-200 p-3">
+                      <span className={`shrink-0 h-fit px-2 py-0.5 rounded-lg border text-[11px] font-bold ${STATUS_STYLE[pt.status] ?? ""}`}><Tip text={GLOSSARY[pt.status]}>{pt.status}</Tip></span>
+                      <div>
+                        <span className="text-[11px] uppercase tracking-wider text-slate-500 mr-2">{pt.topic}</span>{pt.text}
+                        {pt.note && <div className="text-xs text-slate-500 mt-1">{pt.note}</div>}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
         <div className="mt-3"><DocsNote anchor="17-statistik-i-r">Hur mönstren ska tolkas och vilka reservationer som gäller står i avsnitt 17.</DocsNote></div>
-      </div>
-      <div>
-        <h3 className="font-bold text-slate-900 mb-1">Starkaste fynden per sten</h3>
-        <p className="text-xs text-slate-500 mb-2">
-          Nya och motsägande resultat från attribueringsmodellen och seriationen. &quot;Nyare källor&quot; visar avstämningen mot
-          Runor 2020 och Wikidata (görs i <Link href="/luckor" className="text-[#b7410e] hover:underline">Forskningsluckor</Link>).
-          Ett förslag är en hypotes för en runolog att pröva, inte en attribuering.
+      </section>
+
+      <Details title={`Fynd per sten (${s.n})`}>
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+          {[["Fynd per sten", s.n], ["Nya mot Rundata", s.new], ["Motsäger Rundata", s.contradicts],
+            ["Finns redan i nyare källa", s.already_known], ["Nya även mot Runor 2020", s.still_new]].map(([l, v]) => (
+            <div key={l as string} className="rounded-2xl bg-white border border-slate-200 p-4">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500"><Tip text={GLOSSARY[l as string]}>{l}</Tip></div>
+              <div className="text-2xl font-bold text-slate-900">{v}</div>
+            </div>
+          ))}
+        </div>
+        <p className="text-xs text-slate-500">
+          De starkaste nya och motsägande resultaten för enskilda stenar. &quot;Nyare källor&quot; visar avstämningen mot Runor 2020 och
+          Wikidata (görs i <Link href="/luckor" className="text-[#b7410e] hover:underline">Forskningsluckor</Link>, där varje fynd också
+          får en tolkning). Ett förslag är en hypotes för en runolog att pröva, inte en attribuering.
         </p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -479,8 +717,8 @@ function Overview({ data }: { data: Corpus }) {
             </tbody>
           </table>
         </div>
-      </div>
-    </>
+      </Details>
+    </div>
   );
 }
 
@@ -488,24 +726,27 @@ function Geography({ data }: { data: Corpus }) {
   const g = data.geography, f = data.figure_urls.geography || {};
   return (
     <>
-      <p className="text-sm text-slate-700">
-        {String(g.n_compact)} av {g.carvers.length} ristare med minst fem säkra stenar arbetade inom ett mindre område än slumpvisa
-        stenar ur samma landskap.{" "}
-        {data.html_map_url && <a href={`${API_URL}${data.html_map_url}`} target="_blank" rel="noreferrer" className="text-[#b7410e] hover:underline">Öppna den interaktiva kartan (leaflet)</a>}
-      </p>
+      <SectionIntro section={sectionOf(data, "geography")} />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4"><Fig src={f.map} alt="Ristarnas områden" /><Fig src={f.water} alt="Avstånd till vatten" /></div>
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead><tr><Th>Ristare</Th><Th>Säkra stenar</Th><Th>Median till tyngdpunkt</Th>
-            <Th>Slumpvisa urval</Th><Th>Kvot</Th><Th>q</Th><Th>Höljets yta</Th><Th>Landskap</Th></tr></thead>
-          <tbody>{g.carvers.map(r => (
-            <tr key={r.carver} className="border-t border-slate-900/5">
-              <td className="p-2 font-semibold">{r.carver}</td><td className="p-2">{r.n}</td><td className="p-2">{d2(r.median_km, 1)} km</td>
-              <td className="p-2">{d2(r.random_median_km, 1)} km</td><td className="p-2">{d2(r.compact_ratio)}</td><td className="p-2">{d2(r.compact_q, 3)}</td>
-              <td className="p-2">{r.hull_area_km2} km²</td><td className="p-2 text-xs">{r.provinces}</td>
-            </tr>))}</tbody>
-        </table>
-      </div>
+      {data.html_map_url && (
+        <a href={`${API_URL}${data.html_map_url}`} target="_blank" rel="noreferrer" className="inline-block text-sm font-semibold text-[#b7410e] hover:underline">
+          Öppna den interaktiva kartan över ristarnas stenar
+        </a>
+      )}
+      <Details title="Ristarna en och en">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead><tr><Th>Ristare</Th><Th>Säkra stenar</Th><Th>Median till tyngdpunkt</Th>
+              <Th>Slumpvisa urval</Th><Th>Kvot</Th><Th>q</Th><Th>Höljets yta</Th><Th>Landskap</Th></tr></thead>
+            <tbody>{g.carvers.map(r => (
+              <tr key={r.carver} className="border-t border-slate-900/5">
+                <td className="p-2 font-semibold">{r.carver}</td><td className="p-2">{r.n}</td><td className="p-2">{d2(r.median_km, 1)} km</td>
+                <td className="p-2">{d2(r.random_median_km, 1)} km</td><td className="p-2">{d2(r.compact_ratio)}</td><td className="p-2">{d2(r.compact_q, 3)}</td>
+                <td className="p-2">{r.hull_area_km2} km²</td><td className="p-2 text-xs">{r.provinces}</td>
+              </tr>))}</tbody>
+          </table>
+        </div>
+      </Details>
       <Method text={g.method} />
     </>
   );
@@ -515,26 +756,29 @@ function Clusters({ data }: { data: Corpus }) {
   const c = data.clusters, f = data.figure_urls.clusters || {};
   return (
     <>
-      <p className="text-sm text-slate-700">
-        {c.n_stones} stenar i {c.k} grupper; strukturen är {c.structure} (<Tip text={GLOSSARY["silhuettbredd"]}>silhuettbredd</Tip> {d2(c.best_silhouette)}). Grupperna
-        sammanfaller inte med ristarna (<Tip text={GLOSSARY["justerat Rand-index"]}>justerat Rand-index</Tip> {d2(c.carvers.ari)}).
+      <SectionIntro section={sectionOf(data, "clusters")} />
+      <p className="text-sm text-slate-600">
+        {c.n_stones} stenar med tillräckligt många drag ingår. Strukturen är {c.structure} (<Tip text={GLOSSARY["silhuettbredd"]}>silhuettbredd</Tip>{" "}
+        {d2(c.best_silhouette)}), och grupperna sammanfaller inte med ristarna (<Tip text={GLOSSARY["justerat Rand-index"]}>justerat Rand-index</Tip> {d2(c.carvers.ari)}).
       </p>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Fig src={f.mca} alt="MCA" /><Fig src={f.variables} alt="Kategorier i MCA" />
         <Fig src={f.silhouette} alt="Silhuettbredd" /><Fig src={f.carvers} alt="Ristare per grupp" />
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead><tr><Th>Grupp</Th><Th>Stenar</Th><Th>Stabilitet</Th><Th>Utmärks av</Th><Th>Stilgrupper</Th><Th>Landskap</Th></tr></thead>
-          <tbody>{c.clusters.map(k => (
-            <tr key={k.cluster} className="border-t border-slate-900/5 align-top">
-              <td className="p-2 font-semibold">{k.cluster}</td><td className="p-2">{k.n}</td><td className="p-2">{d2(k.stability)}</td>
-              <td className="p-2 text-xs">{k.features.slice(0, 4).map(x => `${x.level} (${pc(x.share_in_cluster)} mot ${pc(x.share_overall)})`).join("; ")}</td>
-              <td className="p-2 text-xs">{k.styles.map(x => `${x.style} ${x.n}`).join(", ")}</td>
-              <td className="p-2 text-xs">{k.provinces.map(x => `${x.province} ${x.n}`).join(", ")}</td>
-            </tr>))}</tbody>
-        </table>
-      </div>
+      <Details title="Grupperna och vad som utmärker dem" open>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead><tr><Th>Grupp</Th><Th>Stenar</Th><Th>Stabilitet</Th><Th>Utmärks av</Th><Th>Stilgrupper</Th><Th>Landskap</Th></tr></thead>
+            <tbody>{c.clusters.map(k => (
+              <tr key={k.cluster} className="border-t border-slate-900/5 align-top">
+                <td className="p-2 font-semibold">{k.cluster}</td><td className="p-2">{k.n}</td><td className="p-2">{d2(k.stability)}</td>
+                <td className="p-2 text-xs">{k.features.slice(0, 4).map(x => `${x.level} (${pc(x.share_in_cluster)} mot ${pc(x.share_overall)})`).join("; ")}</td>
+                <td className="p-2 text-xs">{k.styles.map(x => `${x.style} ${x.n}`).join(", ")}</td>
+                <td className="p-2 text-xs">{k.provinces.map(x => `${x.province} ${x.n}`).join(", ")}</td>
+              </tr>))}</tbody>
+          </table>
+        </div>
+      </Details>
       <Method text={c.method} />
     </>
   );
@@ -544,26 +788,31 @@ function TextTab({ data }: { data: Corpus }) {
   const t = data.text, dl = data.dialect, ft = data.figure_urls.text || {}, fd = data.figure_urls.dialect || {};
   return (
     <>
-      <h3 className="font-bold text-slate-900">Ristarnas stavning och formler</h3>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4"><Fig src={ft.formulas} alt="Formler per ristare" /><Fig src={ft.lemmas} alt="Stavning per ord" /></div>
-      <p className="text-sm text-slate-700">
-        Formler som skiljer ristarna åt (<Tip text={GLOSSARY["Cramérs V"]}>Cramérs V</Tip>): {t.formulas.tests.map(x => `${x.label} ${d2(x.cramers_v)}`).join(", ")}.
+      <SectionIntro section={sectionOf(data, "text")} />
+      <h4 className="font-semibold text-slate-900">Ristarnas stavning och formler</h4>
+      <p className="text-sm text-slate-600">
+        Hur tydligt formlerna skiljer ristarna åt (<Tip text={GLOSSARY["Cramérs V"]}>Cramérs V</Tip>, 0–1):{" "}
+        {t.formulas.tests.map(x => `${x.label.toLowerCase()} ${d2(x.cramers_v)}`).join(", ")}.
       </p>
-      <Method text={t.method} />
-      <h3 className="font-bold text-slate-900 pt-3">Stavning och dialekter</h3>
-      <p className="text-sm text-slate-700">
-        Ortografiskt avstånd mot geografiskt avstånd mellan {dl.n_districts} härader: <Tip text={GLOSSARY["Mantel r"]}>Mantel r</Tip> {d2(dl.mantel.r)}, <Tip text={GLOSSARY["p"]}>p</Tip> {d2(dl.mantel.p, 3)}.
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4"><Fig src={ft.formulas} alt="Formler per ristare" /><Fig src={ft.lemmas} alt="Stavning per ord" /></div>
+      <h4 className="font-semibold text-slate-900 pt-2">Stavning och dialekter</h4>
+      <p className="text-sm text-slate-600">
+        Stavningsavstånd mot geografiskt avstånd mellan {dl.n_districts} härader: <Tip text={GLOSSARY["Mantel r"]}>Mantel r</Tip>{" "}
+        {d2(dl.mantel.r)}, <Tip text={GLOSSARY["p"]}>p</Tip> {d2(dl.mantel.p, 3)}.
       </p>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Fig src={fd.distance} alt="Stavning mot avstånd" /><Fig src={fd.groups} alt="Härader med likartad stavning" />
         <Fig src={fd.efter} alt="Stavning av efter" /><Fig src={fd.sten} alt="Diftongen i sten" />
       </div>
-      <ul className="text-sm space-y-1">
-        {dl.group_forms.map(g => (
-          <li key={g.group}><strong>Grupp {g.group}</strong> ({dl.groups.find(x => x.group === g.group)?.provinces}):{" "}
-            {g.forms.map(x => `${x.lemma} = ${x.form} (${pc(x.share_in_group)} mot ${pc(x.share_all)})`).join("; ")}</li>
-        ))}
-      </ul>
+      <Details title="Typiska stavningar i häradsgrupperna">
+        <ul className="text-sm space-y-1">
+          {dl.group_forms.map(g => (
+            <li key={g.group}><strong>Grupp {g.group}</strong> ({dl.groups.find(x => x.group === g.group)?.provinces}):{" "}
+              {g.forms.map(x => `${x.lemma} = ${x.form} (${pc(x.share_in_group)} mot ${pc(x.share_all)})`).join("; ")}</li>
+          ))}
+        </ul>
+      </Details>
+      <Method text={t.method} />
       <Method text={dl.method} caveat={dl.caveat} />
     </>
   );
@@ -571,43 +820,66 @@ function TextTab({ data }: { data: Corpus }) {
 
 function Attribution({ data }: { data: Corpus }) {
   const a = data.attribution, f = data.figure_urls.attribution || {};
+  const all = a.ablation.find(x => x.features === "Alla");
   return (
     <>
-      <p className="text-sm text-slate-700">
-        {a.n_train} säkra stenar av {a.carvers.length} ristare. Modellen hittar rätt ristare i{" "}
-        {pc(a.ablation.find(x => x.features === "Alla")?.accuracy)} av fallen vid korsvalidering, mot {pc(a.majority_baseline)} om man alltid
-        gissar på den vanligaste ristaren. Sannolikheterna är försiktiga:{" "}
-        {a.calibration.reliability.map(r => `vid minst ${d2(r.threshold, 1)} är förstavalet rätt i ${pc(r.accuracy)} (${r.n} stenar)`).join("; ")}.
-      </p>
-      {a.grouped_cv && (
-        <div className="overflow-x-auto">
-          <p className="text-sm text-slate-700 mb-2">
-            <strong>Fungerar modellen på en ny plats?</strong> Vid slumpvis korsvalidering kan stenar från samma plats finnas
-            både i tränings- och testdata. Här hålls hela socknar respektive härader utanför träningen; en ristare som bara
-            finns i det utelämnade området kan då inte föreslås och räknas som fel.
-          </p>
-          <table className="w-full text-sm">
-            <thead><tr><Th>Belägg</Th><Th>Slumpvis</Th>
-              {Object.entries(a.grouped_cv).map(([k, g]) => <Th key={k} tip={GLOSSARY["Ny socken/härad"]}>Ny {k.toLowerCase()} ({g.n_groups} grupper)</Th>)}</tr></thead>
-            <tbody>{a.ablation.map(x => (
-              <tr key={x.features} className="border-t border-slate-900/5"><td className="p-2 font-semibold">{x.features}</td><td className="p-2">{pc(x.accuracy)}</td>
-                {Object.entries(a.grouped_cv!).map(([k, g]) => <td key={k} className="p-2">{pc(g.ablation.find(y => y.features === x.features)?.accuracy ?? undefined)}</td>)}</tr>
-            ))}</tbody>
-          </table>
+      <SectionIntro section={sectionOf(data, "attribution")} />
+      <div className="rounded-2xl bg-white border border-slate-200 p-5">
+        <h4 className="font-semibold text-slate-900 mb-3">Hur ofta modellen väljer rätt ristare</h4>
+        <div className="space-y-2">
+          {[["Modellen, alla belägg", all?.accuracy], ...a.ablation.filter(x => x.features !== "Alla").map(x => [`Bara ${x.features.toLowerCase()}`, x.accuracy] as [string, number]),
+            ["Gissa alltid den vanligaste ristaren", a.majority_baseline]].map(([label, v]) => (
+            <div key={label as string} className="grid grid-cols-[minmax(0,220px)_1fr_48px] items-center gap-3 text-sm">
+              <span className="text-slate-700 truncate">{label}</span>
+              <div className="h-3 rounded-full bg-slate-100 overflow-hidden">
+                <div className={`h-full rounded-full ${label === "Gissa alltid den vanligaste ristaren" ? "bg-slate-400" : "bg-[#2a78d6]"}`}
+                  style={{ width: `${Math.round((v as number ?? 0) * 100)}%` }} />
+              </div>
+              <span className="text-right font-semibold text-slate-900">{pc(v as number)}</span>
+            </div>
+          ))}
         </div>
-      )}
+        <p className="text-xs text-slate-500 mt-3">Andel stenar med känd ristare där modellen, utan att ha sett stenen, gav rätt ristare som förstaval.</p>
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Fig src={f.ablation} alt="Delmodeller" /><Fig src={f.calibration} alt="Kalibrering" />
         <Fig src={f.importance} alt="Variabler" /><Fig src={f.confusion} alt="Förväxlingar" />
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead><tr><Th>Ristare</Th><Th>Säkra stenar</Th><Th>Hittas (recall)</Th><Th>Rätt när föreslagen (precision)</Th></tr></thead>
-          <tbody>{a.per_carver.map(r => (
-            <tr key={r.carver} className="border-t border-slate-900/5"><td className="p-2 font-semibold">{r.carver}</td><td className="p-2">{r.n}</td>
-              <td className="p-2">{pc(r.recall)}</td><td className="p-2">{pc(r.precision)}</td></tr>))}</tbody>
-        </table>
-      </div>
+      {a.grouped_cv && (
+        <Details title="Fungerar modellen på platser den inte har sett?">
+          <p className="text-sm text-slate-600">
+            Vid vanlig korsvalidering kan stenar från samma plats finnas både i tränings- och testdata. Här hålls hela socknar
+            respektive härader utanför träningen; en ristare som bara finns i det utelämnade området kan då inte föreslås och räknas som fel.
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead><tr><Th>Belägg</Th><Th>Slumpvis</Th>
+                {Object.entries(a.grouped_cv).map(([k, g]) => <Th key={k} tip={GLOSSARY["Ny socken/härad"]}>Ny {k.toLowerCase()} ({g.n_groups} grupper)</Th>)}</tr></thead>
+              <tbody>{a.ablation.map(x => (
+                <tr key={x.features} className="border-t border-slate-900/5"><td className="p-2 font-semibold">{x.features}</td><td className="p-2">{pc(x.accuracy)}</td>
+                  {Object.entries(a.grouped_cv!).map(([k, g]) => <td key={k} className="p-2">{pc(g.ablation.find(y => y.features === x.features)?.accuracy ?? undefined)}</td>)}</tr>
+              ))}</tbody>
+            </table>
+          </div>
+        </Details>
+      )}
+      <Details title="Hur säkra sannolikheterna är">
+        <ul className="text-sm space-y-1 text-slate-700">
+          {a.calibration.reliability.map(r => (
+            <li key={r.threshold}>När modellen anger minst {Math.round(r.threshold * 100)} % sannolikhet är förstavalet rätt i <strong>{pc(r.accuracy)}</strong> av fallen ({r.n} stenar).</li>
+          ))}
+        </ul>
+      </Details>
+      <Details title="Ristarna en och en">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead><tr><Th>Ristare</Th><Th>Säkra stenar</Th><Th>Hittas (recall)</Th><Th>Rätt när föreslagen (precision)</Th></tr></thead>
+            <tbody>{a.per_carver.map(r => (
+              <tr key={r.carver} className="border-t border-slate-900/5"><td className="p-2 font-semibold">{r.carver}</td><td className="p-2">{r.n}</td>
+                <td className="p-2">{pc(r.recall)}</td><td className="p-2">{pc(r.precision)}</td></tr>))}</tbody>
+          </table>
+        </div>
+      </Details>
       <Method text={a.method} caveat={a.caveat} />
     </>
   );
@@ -617,28 +889,33 @@ function Chronology({ data }: { data: Corpus }) {
   const ch = data.chronology, f = data.figure_urls.chronology || {}, v = ch.validation;
   return (
     <>
-      <p className="text-sm text-slate-700">
-        I {ch.region === "U" ? "Uppland" : ch.region} ordnar seriationen av språk och innehåll stenarna i samma följd som Gräslunds stilkronologi
-        (<Tip text={GLOSSARY["rho"]}>rho</Tip> {d2(v.rho)}, {d2(v.partial_rho)} med latituden konstant), utan att ornamentiken ingick. Årtalen är osäkra:
-        medelfel {v.mae_loo_years} år mot {v.mae_naive_years} år utan modell.
+      <SectionIntro section={sectionOf(data, "chronology")} />
+      <p className="text-sm text-slate-600">
+        Seriationen ordnar stenarna efter vilka språkdrag, formler och innehåll de delar (<Tip text={GLOSSARY["rho"]}>rho</Tip> mot stilgrupperna{" "}
+        {d2(v.rho)}; {d2(v.partial_rho)} när hänsyn tas till hur nordligt stenarna står). Medelfel för ett årtal {v.mae_loo_years} år, mot {v.mae_naive_years} år utan modell.
       </p>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Fig src={f.validation} alt="Seriation mot Gräslund" /><Fig src={f.diagram} alt="Seriationsdiagram" /><Fig src={f.estimates} alt="Skattad tid" />
       </div>
-      <h3 className="font-bold text-slate-900">Vad korpusens dimensioner följer</h3>
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead><tr><Th>Dimension</Th><Th>Inerti</Th><Th>Tid (rho)</Th><Th>Latitud (rho)</Th>
-            <Th>Landskap (eta²)</Th><Th>Ristare (eta²)</Th><Th>Förklaras av</Th><Th>Skiljer</Th></tr></thead>
-          <tbody>{ch.corpus_dimensions.map(x => (
-            <tr key={x.dim} className={`border-t border-slate-900/5 align-top ${x.unexplained ? "bg-amber-50" : ""}`}>
-              <td className="p-2 font-semibold">{x.dim}</td><td className="p-2">{d2(x.inertia_pct, 1)} %</td><td className="p-2">{d2(x.rho_time)}</td>
-              <td className="p-2">{d2(x.rho_lat)}</td><td className="p-2">{d2(x.eta2_province)}</td><td className="p-2">{d2(x.eta2_carver)}</td>
-              <td className="p-2 text-xs font-semibold">{x.unexplained ? "oförklarat mönster" : x.explained_by.join(", ")}</td>
-              <td className="p-2 text-xs">{x.positive.slice(0, 3).join(", ")} ↔ {x.negative.slice(0, 3).join(", ")}</td>
-            </tr>))}</tbody>
-        </table>
-      </div>
+      <Details title="Vad skiljer stenarna åt i hela landet?">
+        <p className="text-sm text-slate-600">
+          Korrespondensanalysens tre huvudriktningar för hela korpusen och vad var och en följer – tid, geografi eller ristare. Gult är ett mönster
+          som inget av dem förklarar.
+        </p>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead><tr><Th>Dimension</Th><Th>Inerti</Th><Th>Tid (rho)</Th><Th>Latitud (rho)</Th>
+              <Th>Landskap (eta²)</Th><Th>Ristare (eta²)</Th><Th>Förklaras av</Th><Th>Skiljer</Th></tr></thead>
+            <tbody>{ch.corpus_dimensions.map(x => (
+              <tr key={x.dim} className={`border-t border-slate-900/5 align-top ${x.unexplained ? "bg-amber-50" : ""}`}>
+                <td className="p-2 font-semibold">{x.dim}</td><td className="p-2">{d2(x.inertia_pct, 1)} %</td><td className="p-2">{d2(x.rho_time)}</td>
+                <td className="p-2">{d2(x.rho_lat)}</td><td className="p-2">{d2(x.eta2_province)}</td><td className="p-2">{d2(x.eta2_carver)}</td>
+                <td className="p-2 text-xs font-semibold">{x.unexplained ? "oförklarat mönster" : x.explained_by.join(", ")}</td>
+                <td className="p-2 text-xs">{x.positive.slice(0, 3).join(", ")} ↔ {x.negative.slice(0, 3).join(", ")}</td>
+              </tr>))}</tbody>
+          </table>
+        </div>
+      </Details>
       <Method text={ch.method} />
     </>
   );
@@ -648,21 +925,27 @@ function Network({ data }: { data: Corpus }) {
   const n = data.network, f = data.figure_urls.network || {};
   return (
     <>
+      <SectionIntro section={sectionOf(data, "network")} />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4"><Fig src={f.network} alt="Formelnätverk" /><Fig src={f.kinship} alt="Släktrelationer" /></div>
-      <ul className="text-sm space-y-1">
-        {n.communities.map(c => <li key={c.community}><strong>Grupp {c.community}</strong> ({c.size} ord): {c.words.map(w => w.word).join(", ")}</li>)}
-      </ul>
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead><tr><Th>Relation</Th><Th>Inskrifter</Th><Th>Före ca 1050</Th><Th>Efter ca 1050</Th>
-            <Th>q (tid)</Th><Th>Kristna</Th><Th>Övriga</Th><Th>q (kristen)</Th></tr></thead>
-          <tbody>{n.kinship.map(k => (
-            <tr key={k.relation} className={`border-t border-slate-900/5 ${k.q_period < 0.05 ? "bg-amber-50" : ""}`}>
-              <td className="p-2 font-semibold">{k.relation}</td><td className="p-2">{k.n}</td><td className="p-2">{pc(k.early)}</td><td className="p-2">{pc(k.late)}</td>
-              <td className="p-2">{d2(k.q_period, 3)}</td><td className="p-2">{pc(k.share_christian)}</td><td className="p-2">{pc(k.share_other)}</td><td className="p-2">{d2(k.q_christian, 3)}</td>
-            </tr>))}</tbody>
-        </table>
-      </div>
+      <Details title="Orden i varje formelgrupp" open>
+        <ul className="text-sm space-y-1">
+          {n.communities.map(c => <li key={c.community}><strong>Grupp {c.community}</strong> ({c.size} ord): {c.words.map(w => w.word).join(", ")}</li>)}
+        </ul>
+      </Details>
+      <Details title="Släktrelationer över tid och i kristna inskrifter">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead><tr><Th>Relation</Th><Th>Inskrifter</Th><Th>Före ca 1050</Th><Th>Efter ca 1050</Th>
+              <Th>q (tid)</Th><Th>Kristna</Th><Th>Övriga</Th><Th>q (kristen)</Th></tr></thead>
+            <tbody>{n.kinship.map(k => (
+              <tr key={k.relation} className={`border-t border-slate-900/5 ${k.q_period < 0.05 || k.q_christian < 0.05 ? "bg-amber-50" : ""}`}>
+                <td className="p-2 font-semibold">{k.relation}</td><td className="p-2">{k.n}</td><td className="p-2">{pc(k.early)}</td><td className="p-2">{pc(k.late)}</td>
+                <td className="p-2">{d2(k.q_period, 3)}</td><td className="p-2">{pc(k.share_christian)}</td><td className="p-2">{pc(k.share_other)}</td><td className="p-2">{d2(k.q_christian, 3)}</td>
+              </tr>))}</tbody>
+          </table>
+        </div>
+        <p className="text-xs text-slate-500">Gult: säkerställd skillnad (q under 0,05) över tid eller mellan kristna och övriga inskrifter.</p>
+      </Details>
       <Method text={n.method} />
     </>
   );
@@ -679,65 +962,75 @@ function Change({ data }: { data: Corpus }) {
   const crossing = c.features.filter(x => (x.provinces?.rows || []).filter(r => r.cross_year).length >= 2);
   return (
     <>
-      <p className="text-sm text-slate-700">
-        Hur språkdrag, skrift och kristna drag förändras över tid och skiljer sig mellan landskap, med plats och ristare
-        konstanta. Tiden kommer från Gräslunds stilgrupper ({c.n_dated} daterade stenar); varje resultat är omräknat {c.draws} gånger
-        med årtal dragna inom stilgruppens intervall. Gulmarkerade rader är säkerställda efter Holm-justering (<Tip text={GLOSSARY["q"]}>q</Tip> under 0,05).
-      </p>
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead><tr><Th>Drag</Th><Th>Daterade stenar</Th><Th>Förlopp</Th>
-            <Th>Justerad andel</Th><Th>q</Th><Th>Omräkningar säkerställda</Th>
-            <Th>Vanligast i</Th><Th>Ovanligast i</Th></tr></thead>
-          <tbody>{c.features.map(x => {
-            const t = x.time, sig = t.q != null && t.q < 0.05;
-            return (
-              <tr key={x.key} className={`border-t border-slate-900/5 ${sig ? "bg-amber-50" : ""}`}>
-                <td className="p-2 font-semibold">{x.label}</td>
-                <td className="p-2">{t.n}</td>
-                <td className="p-2 text-xs">{t.tested ? `${SHAPE[t.shape ?? ""] ?? ""}${t.peak_year ? ` ${t.peak_year}` : ""}` : "för få daterade stenar"}</td>
-                <td className="p-2 text-xs">{t.tested ? `${pc(t.first)} (${t.year_first}) → ${pc(t.last)} (${t.year_last})` : "–"}</td>
-                <td className="p-2">{qText(t.q)}</td>
-                <td className="p-2 text-xs">{t.draws?.n ? pc(t.draws.share_sig) : "–"}</td>
-                <td className="p-2 text-xs">{x.space && x.space.p < 0.05 ? x.space.high.join(", ") : "–"}</td>
-                <td className="p-2 text-xs">{x.space && x.space.p < 0.05 ? x.space.low.join(", ") : "–"}</td>
-              </tr>
-            );
-          })}</tbody>
-        </table>
+      <SectionIntro section={sectionOf(data, "change")} />
+      <div className="rounded-2xl bg-white border border-slate-200 p-4">
+        <h4 className="font-semibold text-slate-900">Varje drag över tid</h4>
+        <p className="text-xs text-slate-500 mb-3">
+          Linjen är andelen stenar med draget från omkring år 1000 till 1115, med plats och ristare konstanta (samma skala 0–100 % på varje rad).
+          Gulmarkerade rader är säkerställda (<Tip text={GLOSSARY["q"]}>q</Tip> under 0,05). Tiden kommer från stilgrupperna ({c.n_dated} daterade stenar),
+          och varje resultat är omräknat {c.draws} gånger med årtal inom stilgruppens intervall.
+        </p>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead><tr><Th>Drag</Th><Th>Förlopp</Th><Th>Justerad andel</Th><Th>q</Th><Th>Omräkningar säkerställda</Th>
+              <Th>Vanligast i</Th><Th>Ovanligast i</Th><Th>Daterade stenar</Th></tr></thead>
+            <tbody>{c.features.map(x => {
+              const t = x.time, sig = t.q != null && t.q < 0.05;
+              return (
+                <tr key={x.key} className={`border-t border-slate-900/5 ${sig ? "bg-amber-50" : ""}`}>
+                  <td className="p-2 font-semibold">{x.label}</td>
+                  <td className="p-2 text-xs">
+                    <div className="flex items-center gap-2">
+                      <Spark curve={t.curve} />
+                      <span>{t.tested ? `${SHAPE[t.shape ?? ""] ?? ""}${t.peak_year ? ` ${t.peak_year}` : ""}` : "för få daterade stenar"}</span>
+                    </div>
+                  </td>
+                  <td className="p-2 text-xs whitespace-nowrap">{t.tested ? `${pc(t.first)} → ${pc(t.last)}` : "–"}</td>
+                  <td className="p-2">{qText(t.q)}</td>
+                  <td className="p-2 text-xs">{t.draws?.n ? pc(t.draws.share_sig) : "–"}</td>
+                  <td className="p-2 text-xs">{x.space && x.space.p < 0.05 ? asList(x.space.high).join(", ") : "–"}</td>
+                  <td className="p-2 text-xs">{x.space && x.space.p < 0.05 ? asList(x.space.low).join(", ") : "–"}</td>
+                  <td className="p-2 text-xs">{t.n}</td>
+                </tr>
+              );
+            })}</tbody>
+          </table>
+        </div>
       </div>
       <Fig src={f.time} alt="Dragen över tid" />
       <Fig src={f.map} alt="Var dragen är vanligast" />
       <Fig src={f.provinces} alt="Landskapen omkring 1050" />
       {crossing.length > 0 && (
-        <div>
-          <h3 className="font-bold text-slate-900 mb-1">När draget passerar hälften av stenarna</h3>
+        <Details title="När draget blir vanligt i olika landskap" open>
+          <p className="text-sm text-slate-600">Året då draget finns på hälften av stenarna, med 95 % intervall. Ett tidigare år kan betyda att förändringen började där.</p>
           <ul className="text-sm space-y-1">
             {crossing.map(x => (
               <li key={x.key}><strong>{x.label}</strong>{" "}
-                (skillnad mellan landskapen p {qText(x.provinces!.p_differ)}):{" "}
+                (skillnad mellan landskapen <Tip text={GLOSSARY["p"]}>p</Tip> {qText(x.provinces!.p_differ)}):{" "}
                 {x.provinces!.rows.filter(r => r.cross_year).sort((a, b) => a.cross_year! - b.cross_year!)
                   .map(r => `${r.province} omkring ${r.cross_year} (${r.cross_lo}–${r.cross_hi})`).join(", ")}
               </li>
             ))}
           </ul>
-        </div>
+        </Details>
       )}
-      <div className="overflow-x-auto">
-        <h3 className="font-bold text-slate-900 mb-1">Bro- och vägstenar och kristna drag</h3>
-        <table className="w-full text-sm">
-          <thead><tr><Th>Drag</Th><Th>Brostenar</Th><Th>Andra stenar</Th>
-            <Th>Oddskvot (95 % KI)</Th><Th>q</Th><Th>Daterade, med tid</Th></tr></thead>
-          <tbody>{c.assoc.map(a => (
-            <tr key={a.key} className={`border-t border-slate-900/5 ${a.all?.q != null && a.all.q < 0.05 ? "bg-amber-50" : ""}`}>
-              <td className="p-2 font-semibold">{a.label}</td><td className="p-2">{pc(a.share_x)} av {a.n_x}</td>
-              <td className="p-2">{pc(a.share_other)}</td>
-              <td className="p-2">{a.all ? `${d2(a.all.or)} (${d2(a.all.lo)}–${d2(a.all.hi)})` : "–"}</td>
-              <td className="p-2">{qText(a.all?.q)}</td>
-              <td className="p-2 text-xs">{a.dated?.or != null ? `${d2(a.dated.or)} (${d2(a.dated.lo)}–${d2(a.dated.hi)}), p ${qText(a.dated.p)}` : "–"}</td>
-            </tr>))}</tbody>
-        </table>
-      </div>
+      <Details title="Bro- och vägstenar och kristna drag">
+        <p className="text-sm text-slate-600">Prövar tolkningen av brobyggen som kristna själagåvor: har bro- och vägstenar oftare kristna drag än andra stenar?</p>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead><tr><Th>Drag</Th><Th>Brostenar</Th><Th>Andra stenar</Th>
+              <Th>Oddskvot (95 % KI)</Th><Th>q</Th><Th>Daterade, med tid</Th></tr></thead>
+            <tbody>{c.assoc.map(a => (
+              <tr key={a.key} className={`border-t border-slate-900/5 ${a.all?.q != null && a.all.q < 0.05 ? "bg-amber-50" : ""}`}>
+                <td className="p-2 font-semibold">{a.label}</td><td className="p-2">{pc(a.share_x)} av {a.n_x}</td>
+                <td className="p-2">{pc(a.share_other)}</td>
+                <td className="p-2">{a.all ? `${d2(a.all.or)} (${d2(a.all.lo)}–${d2(a.all.hi)})` : "–"}</td>
+                <td className="p-2">{qText(a.all?.q)}</td>
+                <td className="p-2 text-xs">{a.dated?.or != null ? `${d2(a.dated.or)} (${d2(a.dated.lo)}–${d2(a.dated.hi)}), p ${qText(a.dated.p)}` : "–"}</td>
+              </tr>))}</tbody>
+          </table>
+        </div>
+      </Details>
       <DocsNote anchor="17-statistik-i-r">Hur förändringsanalysen ska läsas och vilka reservationer som gäller står i avsnitt 17.</DocsNote>
       <Method text={c.method} />
     </>
@@ -762,13 +1055,7 @@ function Anonymous({ data }: { data: Corpus }) {
   const cands = a.groups.filter(g => g.status === "candidate"), known = a.groups.filter(g => g.status === "known");
   return (
     <>
-      <p className="text-sm text-slate-700">
-        Grupper av stenar utan ristare i Rundata som ligger nära varandra och liknar varandra i stavning, språkdrag,
-        formler och stil lika mycket som en ristares stenar brukar göra. En grupp som inte liknar någon känd ristare kan
-        vara en ristare eller verkstad som ännu saknar namn, och får ett <strong>arbetsnamn</strong> efter typstenens
-        socken. Namnet är en etikett för gruppen, inte ett påstående om en person; kontrollera mot litteraturen om gruppen
-        redan är beskriven.
-      </p>
+      <SectionIntro section={sectionOf(data, "anonymous")} />
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[["Möjliga okända ristare", `${cands.length} grupper`], ["Liknar en känd ristare", `${known.length} grupper`],
           ["Prövat på kända ristare", `${pc(v.purity)} samma ristare`], ["Bara närliggande stenar", `${pc(v.purity_geography)} samma ristare`]].map(([l, val]) => (
@@ -778,50 +1065,58 @@ function Anonymous({ data }: { data: Corpus }) {
           </div>
         ))}
       </div>
-      <p className="text-xs text-slate-500">
-        När metoden kördes på {v.n_stones} stenar med känd ristare, som om ristaren vore okänd, bestod en grupp i genomsnitt
-        till {pc(v.purity)} av samma ristare ({pc(v.share_pure)} av grupperna till minst tre fjärdedelar), mot {pc(v.purity_geography)} för
-        lika många närliggande stenar. Två stenar länkas när de ligger inom {cal.link_km} km och är så lika att paret är minst {cal.lr_min} gånger
-        vanligare bland samma ristares stenar än bland olika ristares; {pc(cal.precision)} av sådana par med känd ristare är samma ristare.
-      </p>
       <Fig src={f.map} alt="Grupper av stenar utan ristare" narrow />
-      <div className="overflow-x-auto">
-        <h3 className="font-bold text-slate-900 mb-1"><Tip text={GLOSSARY["Möjliga okända ristare"]}>Möjliga okända ristare</Tip></h3>
-        <table className="w-full text-sm">
-          <thead><tr><Th>Nr</Th><Th>Arbetsnamn</Th><Th>Stenar</Th><Th>Socknar</Th>
-            <Th>Stilgrupper</Th><Th>Utmärks av (gruppen mot trakten)</Th><Th>Stabilitet</Th>
-            <Th>Närmast liknande ristare i Rundata</Th></tr></thead>
-          <tbody>{cands.map(g => (
-            <tr key={g.id} className="border-t border-slate-900/5 align-top">
-              <td className="p-2">{g.id}</td>
-              <td className="p-2 font-semibold">{g.name}<div className="text-[11px] font-normal text-slate-500">typsten{" "}
-                <Link href={`/inskrifter/${encodeURIComponent(g.type_stone)}`} className="hover:underline">{g.type_stone}</Link></div></td>
-              <td className="p-2 text-xs">{g.n}: <Stones list={g.stones} /></td>
-              <td className="p-2 text-xs">{g.parishes.slice(0, 4).join(", ")}{g.parishes.length > 4 ? " …" : ""}</td>
-              <td className="p-2 text-xs">{(g.styles || []).map(x => `${x.style} ${x.n}`).join(", ") || "–"}</td>
-              <td className="p-2 text-xs">{(g.marks || []).map(m => `${m.feature} (${pc(m.share_group)} mot ${pc(m.share_area)})`).join("; ") || "–"}</td>
-              <td className="p-2">{pc(g.stability)}</td>
-              <td className="p-2 text-xs">{g.nearest_carver ? `${g.nearest_carver.carver} (${d2(g.nearest_carver.km, 0)} km bort, inte lika nära som samma ristares stenar)` : "ingen inom 50 km"}</td>
-            </tr>))}</tbody>
-        </table>
-      </div>
-      {known.length > 0 && (
+      <Details title={`Möjliga okända ristare (${cands.length})`} open>
         <div className="overflow-x-auto">
-          <h3 className="font-bold text-slate-900 mb-1">Grupper som liknar en känd ristare</h3>
-          <p className="text-xs text-slate-500 mb-2">Stenar utan ristare i Rundata som kan höra till en känd ristare – underlag för attribuering snarare än en ny ristare.</p>
           <table className="w-full text-sm">
-            <thead><tr><Th>Nr</Th><Th>Liknar</Th><Th>Stenar</Th><Th>Attribueringsmodellen</Th><Th>Stabilitet</Th></tr></thead>
-            <tbody>{known.map(g => (
-              <tr key={g.id} className="border-t border-slate-900/5 align-top">
-                <td className="p-2">{g.id}</td>
-                <td className="p-2 font-semibold">{g.nearest_carver?.as_close_as_same_carver ? g.nearest_carver.carver : g.model?.carver}</td>
-                <td className="p-2 text-xs">{g.n}: <Stones list={g.stones} /></td>
-                <td className="p-2 text-xs">{g.model ? `${g.model.carver} för ${pc(g.model.share)} av ${g.model.n} stenar med förslag` : "–"}</td>
-                <td className="p-2">{pc(g.stability)}</td>
-              </tr>))}</tbody>
+            <thead><tr><Th>Nr</Th><Th>Arbetsnamn</Th><Th>Stenar</Th><Th>Socknar</Th>
+              <Th>Stilgrupper</Th><Th>Utmärks av (gruppen mot trakten)</Th><Th>Stabilitet</Th>
+              <Th>Närmast liknande ristare i Rundata</Th></tr></thead>
+            <tbody>{cands.map(g => {
+              const parishes = asList(g.parishes);
+              return (
+                <tr key={g.id} className="border-t border-slate-900/5 align-top">
+                  <td className="p-2">{g.id}</td>
+                  <td className="p-2 font-semibold">{g.name}<div className="text-[11px] font-normal text-slate-500">typsten{" "}
+                    <Link href={`/inskrifter/${encodeURIComponent(g.type_stone)}`} className="hover:underline">{g.type_stone}</Link></div></td>
+                  <td className="p-2 text-xs">{g.n}: <Stones list={asList(g.stones)} /></td>
+                  <td className="p-2 text-xs">{parishes.slice(0, 4).join(", ")}{parishes.length > 4 ? " …" : ""}</td>
+                  <td className="p-2 text-xs">{(g.styles || []).map(x => `${x.style} ${x.n}`).join(", ") || "–"}</td>
+                  <td className="p-2 text-xs">{(g.marks || []).map(m => `${m.feature} (${pc(m.share_group)} mot ${pc(m.share_area)})`).join("; ") || "–"}</td>
+                  <td className="p-2">{pc(g.stability)}</td>
+                  <td className="p-2 text-xs">{g.nearest_carver ? `${g.nearest_carver.carver} (${d2(g.nearest_carver.km, 0)} km bort, inte lika nära som samma ristares stenar)` : "ingen inom 50 km"}</td>
+                </tr>
+              );
+            })}</tbody>
           </table>
         </div>
+      </Details>
+      {known.length > 0 && (
+        <Details title={`Grupper som liknar en känd ristare (${known.length})`}>
+          <p className="text-xs text-slate-500">Stenar utan ristare i Rundata som kan höra till en känd ristare – underlag för attribuering snarare än en ny ristare.</p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead><tr><Th>Nr</Th><Th>Liknar</Th><Th>Stenar</Th><Th>Attribueringsmodellen</Th><Th>Stabilitet</Th></tr></thead>
+              <tbody>{known.map(g => (
+                <tr key={g.id} className="border-t border-slate-900/5 align-top">
+                  <td className="p-2">{g.id}</td>
+                  <td className="p-2 font-semibold">{g.nearest_carver?.as_close_as_same_carver ? g.nearest_carver.carver : g.model?.carver}</td>
+                  <td className="p-2 text-xs">{g.n}: <Stones list={asList(g.stones)} /></td>
+                  <td className="p-2 text-xs">{g.model ? `${g.model.carver} för ${pc(g.model.share)} av ${g.model.n} stenar med förslag` : "–"}</td>
+                  <td className="p-2">{pc(g.stability)}</td>
+                </tr>))}</tbody>
+            </table>
+          </div>
+        </Details>
       )}
+      <Details title="Hur metoden prövades">
+        <p className="text-sm text-slate-600">
+          När metoden kördes på {v.n_stones} stenar med känd ristare, som om ristaren vore okänd, bestod en grupp i genomsnitt till {pc(v.purity)} av
+          samma ristare ({pc(v.share_pure)} av grupperna till minst tre fjärdedelar), mot {pc(v.purity_geography)} för lika många närliggande stenar.
+          Två stenar länkas när de ligger inom {cal.link_km} km och är så lika att paret är minst {cal.lr_min} gånger vanligare bland samma ristares
+          stenar än bland olika ristares; {pc(cal.precision)} av sådana par med känd ristare är samma ristare.
+        </p>
+      </Details>
       <DocsNote anchor="17-statistik-i-r">Hur grupperna ska läsas och vilka reservationer som gäller står i avsnitt 17.</DocsNote>
       <Method text={a.method} />
     </>

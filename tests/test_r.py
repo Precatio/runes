@@ -244,3 +244,30 @@ def test_unchanged_modules_are_reused_from_an_earlier_run(tmp_path, monkeypatch)
     assert (new / "forandring_tid.png").read_bytes() == b"png" and done["module_hashes"] == versions
     # A module reruns when a module it reads changes: anonymous depends on attribution
     assert r_bridge.DEPENDS["anonymous"] and "attribution" in r_bridge.DEPENDS["anonymous"]
+
+
+def test_explanations_answer_each_question_in_plain_words():
+    from src import r_explain
+    res = {"geography": {"carvers": [{}] * 29, "n_compact": 24, "min_inscriptions": 5,
+                         "water": {"available": True, "overall": {"median_stones_km": 4.2, "median_random_km": 5.8, "p": 1e-9}}},
+           "attribution": {"ablation": [{"features": "Alla", "accuracy": 0.72, "top3": 0.86},
+                                        {"features": "Geografi", "accuracy": 0.44}, {"features": "Språk och innehåll", "accuracy": 0.62}],
+                           "majority_baseline": 0.19, "carvers": ["a"] * 18,
+                           "calibration": {"reliability": [{"threshold": 0.5, "n": 140, "accuracy": 0.95}]}},
+           "anonymous": {"validation": {"purity": 0.69, "purity_geography": 0.43},
+                         "groups": [{"status": "candidate", "name": "Konungsundsristaren", "n": 30, "provinces": "Ög"},
+                                    {"status": "known", "n": 5}]},
+           "change": {"features": [{"key": "stungna", "label": "Stungna runor", "time": {
+               "tested": True, "q": 0.0, "shape": "rises", "first": 0.35, "last": 0.85,
+               "curve": [{"year": 998, "share": 0.35}, {"year": 1115, "share": 0.85}]}}]}}
+    secs = {s["key"]: s for s in r_explain.sections(res)}
+    assert set(secs) == {"geography", "attribution", "anonymous", "change"}
+    for s in secs.values():
+        assert s["question"].endswith("?") and s["answer"] and s["short"] and s["interpretation"] and s["not_saying"]
+        assert s["confidence"] in ("säkert", "troligt", "osäkert")
+    assert secs["geography"]["headline"]["value"] == "24 av 29"
+    # One province is written by R as a plain string; q exactly 0 is significant
+    assert "Östergötland" in secs["anonymous"]["interpretation"][0]
+    assert secs["change"]["headline"]["value"] == "1 av 1" and "stungna runor blir vanligare" in secs["change"]["answer"]
+    ov = r_explain.overview(res)
+    assert any(p.startswith("**Ristarna och deras hand.**") for p in ov["paragraphs"]) and ov["next_steps"]
