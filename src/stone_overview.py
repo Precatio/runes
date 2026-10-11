@@ -5,7 +5,7 @@ För varje svensk vikingatida runsten samlas vad sex metoder säger om vem som r
   modell      R-modellens sannolikhet (avsnitt 17): korsvaliderad för stenar med säker ristare, förslag för
               stenar utan ristare inom 25 km från en träningssten
   ortografi   stavningens likhet med ristarnas profiler (avsnitt 6; stenen själv utelämnad)
-  område      om stenen ligger i ristarens kända landskap och högst 60 km från en säker sten av honom
+  område      om stenen ligger i ristarens kända landskap och högst 60 km från en säker sten av ristaren
   stil        om stenens stilgrupp finns bland ristarens säkra stenar
   språkdrag   om minst hälften av de jämförbara språkdragen stämmer (avsnitt 8)
   bergart     om bergarten förekommer på ristarens stenar (avsnitt 10)
@@ -17,8 +17,8 @@ Två mått räknas fram, båda mellan 0 och 1:
                0,6 bland de tre första, annars 0, vikt 1,5; område, stil och språkdrag 1 eller 0, vikt 1;
                bergart 1 eller 0, vikt 0,5)
   alternativ   styrkan för den bästa andra ristaren: 1 − (1 − modellens sannolikhet)(1 − ortografins
-               tillförlitlighet om han kommer först), nedräknat med andelen kontroller (område, stil,
-               språkdrag, bergart) han inte klarar
+               tillförlitlighet om ristaren kommer först), nedräknat med andelen kontroller (område, stil,
+               språkdrag, bergart) som inte klaras
 
 Status för stenar med ristare i Rundata: *kan vara felbedömd* (alternativ ≥ 0,4 och stöd < 0,4), *omstridd*
 (alternativ ≥ 0,4), *stöds* (stöd ≥ 0,6), annars *svagt underlag* – liksom när färre än två metoder kan uttala

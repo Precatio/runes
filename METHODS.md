@@ -563,7 +563,7 @@ Källkod: `src/stone_overview.py`, `GET /api/research/overview` och `GET /api/re
 **Stenöversikt**. För varje svensk vikingatida runsten samlas vad sex metoder säger om vem som ristade den:
 R-modellens sannolikhet (avsnitt 17; korsvaliderad för stenar med säker ristare, förslag för stenar utan ristare
 inom 25 km från en träningssten), ortografin (avsnitt 6; minst åtta ord, stenen själv utelämnad), området
-(ristarens landskap och högst 60 km till en säker sten av honom), stilgruppen (finns bland ristarens säkra stenar),
+(ristarens landskap och högst 60 km till en säker sten av ristaren), stilgruppen (finns bland ristarens säkra stenar),
 språkdragen (minst hälften av de jämförbara stämmer; avsnitt 8) och bergarten (avsnitt 10).
 
 * **Stöd** för Rundatas ristare (0–1): viktat medelvärde av de metoder som kan uttala sig – modellen med sin
@@ -571,7 +571,7 @@ språkdragen (minst hälften av de jämförbara stämmer; avsnitt 8) och bergart
   0 (vikt 1,5), område, stilgrupp och språkdrag med 1 eller 0 (vikt 1) och bergarten med 1 eller 0 (vikt 0,5).
 * **Alternativ** (0–1): för varje annan ristare som modellen eller ortografin pekar på räknas
   1 − (1 − modellens sannolikhet)(1 − ortografins tillförlitlighet om han kommer först), multiplicerat med
-  0,5 + 0,5 × andelen kontroller (område, stilgrupp, språkdrag, bergart) han klarar; det starkaste redovisas.
+  0,5 + 0,5 × andelen kontroller (område, stilgrupp, språkdrag, bergart) ristaren klarar; det starkaste redovisas.
 * **Status** för stenar med ristare: *kan vara felbedömd* (alternativ ≥ 0,4 och stöd < 0,4), *omstridd*
   (alternativ ≥ 0,4), *stöds* (stöd ≥ 0,6), annars *svagt underlag* – också när färre än två metoder kan uttala
   sig. Signerade stenar redovisas för sig. För stenar utan ristare: *nytt förslag* (alternativ ≥ 0,5), *möjligt

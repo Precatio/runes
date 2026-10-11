@@ -193,6 +193,50 @@ def stone_profile(signum: str):
     return out
 
 
+@lru_cache(maxsize=2)
+def _archive(fp: str) -> dict:
+    """Arkivets datadelar: ristarna och de kända stenarna ur Rundata, syftena ur kategorierna."""
+    from collections import Counter
+    from src.styles import BY_CODE
+    s = store()
+    carvers = []
+    for c in s.carvers():
+        if c["signed"] + c["attributed"] < 10:
+            continue
+        stones = [r for r in s.inscriptions if any(x["name"] == c["name"] and x["kind"] in ("S", "A") for x in r["carvers"])]
+        provinces = Counter(gaps.province(r) for r in stones)
+        styles = Counter(r["style"] for r in stones if r["style"] in BY_CODE and not r["style_uncertain"])
+        # Period from the style groups that make up at least a tenth of the carver's dated stones
+        n_styled = sum(styles.values())
+        years = [(BY_CODE[st]["from"], BY_CODE[st]["to"]) for st, n in styles.items()
+                 if BY_CODE[st].get("from") and n >= 0.1 * n_styled]
+        signed = [r["signum"] for r in stones if any(x["name"] == c["name"] and x["kind"] == "S" and not x["uncertain"] for x in r["carvers"])]
+        carvers.append({"name": c["name"], "signed": c["signed"], "attributed": c["attributed"],
+                        "provinces": dict(provinces.most_common(4)), "styles": dict(styles.most_common(4)),
+                        "span": [min(y[0] for y in years), max(y[1] for y in years)] if years else None,
+                        "examples": signed[:6]})
+    ov = _overview(fp)
+    proposals = sorted((x for x in ov["stones"] if x["status"] == "nytt förslag"),
+                       key=lambda x: -(x["alternative"] or {}).get("strength", 0))[:12]
+    famous = []
+    for sg, name in (("Ög 136", "Rökstenen"), ("Öl 1", "Karlevistenen"), ("Vg 119", "Sparlösastenen"),
+                     ("Sö 179", "Gripsholmsstenen"), ("U 337", "Granbystenen")):
+        r = s.get(sg)
+        if r:
+            famous.append({"signum": sg, "name": name, "place": r["place"], "carver": r["carver_raw"] or None,
+                           "style": r["style"], "dating": r["dating"], "translation": r.get("translation_en") or ""})
+    return {"carvers": carvers, "categories": _categories()["categories"], "famous": famous,
+            "proposals": [{"signum": x["signum"], "place": x["place"], "carver": x["alternative"]["carver"],
+                           "strength": x["alternative"]["strength"]} for x in proposals],
+            "source": "Samnordisk runtextdatabas (Rundata), ristare och stilgrupper; perioder enligt Gräslund (1998)."}
+
+
+@router.get("/archive")
+def archive():
+    """Runologiskt arkiv: ristare, syften och kända stenar ur data (inte handskrivna sammanfattningar)."""
+    return _archive(_fp())
+
+
 @router.get("/categories")
 def inscription_categories():
     """Inskrifternas syfte och innehåll per ristare, med test mot genomsnittet."""
