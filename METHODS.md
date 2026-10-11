@@ -838,18 +838,31 @@ Tidskrifternas riktvärden (språk, omfång, referensstil) är ungefärliga och 
 kontrollera aktuella författaranvisningar. För Futhark finns dessutom ett färdigt manuspaket i tidskriftens mall
 (`src/journal.py`).
 
-### 14f. Attribueringsförslag
+### 14f. Beslutsunderlag om attribuering
 
-Källkod: `src/attribution_report.py`, `POST /api/reports/attribution`; knappen *Skapa förslag* i stenprofilen i
-Stenöversikt. För en sten och en föreslagen ristare samlas alla argument i ett dokument att skicka till
-Samnordisk runtextdatabas (Uppsala universitet) eller Runor (Riksantikvarieämbetet): sammanfattning; stenen
-(Rundata, mått, inskrift); ristarens säkra stenar, landskap, stilgrupper och period; varje metods besked (modellens
-sannolikhet, ortografins plats, likhet och p-värde, område, stilgrupp, språkdrag, bergart; huggteknik om den är
-uppmätt); andra kandidater och – vid en omprövning – stödet för Rundatas ristare; avstämning mot Runor 2020 och
-Wikidata (görs när förslaget skapas) och litteratur att gå igenom; tolkningen enligt 13d; kända brister; metod,
-versioner och referenser. Om en likhet i stavningen kan vara slump (justerat p ≥ 0,05) blir slutsatsen högst
-*måttligt*. Ristarnamn som enligt forskningen är grupper får en not (t.ex. "Traen"). Dokumentet exporteras som Word
-och Markdown; mottagare och e-post fylls i av avsändaren. Ingen AI-text.
+Källkod: `src/attribution_report.py`, `POST /api/reports/attribution`; knappen *Skapa beslutsunderlag* i
+stenprofilen i Stenöversikt. För en sten och en prövad ristare samlas allt i ett dokument för dem som förvaltar
+Samnordisk runtextdatabas (Uppsala universitet) eller Runor (Riksantikvarieämbetet). Dokumentet ska kunna läsas av en
+runolog som inte känner appen och ligga till grund för ett beslut (sedan 2026-10-11; tidigare en kort sammanfattning).
+
+* **Slutsats och rekommendation först**, efter tolkningens nivå (13d): *starkt* ger ett förslag, *måttligt* ett
+  underlag för granskning (ingen ändring i dag, en prövbar hypotes), *svagt* ingen ändring. **En sten som är
+  signerad av någon annan får aldrig ett förslag**: signaturen väger tyngre än alla statistiska jämförelser.
+  Beläggen sammanfattas i en tabell (talar för, emot, neutral). När modellen ensam är stark men det oberoende stödet
+  saknas sägs det uttryckligen.
+* **Varje metod förklarad**: vad den jämför, vilka data den bygger på och hur talen ska läsas. Modellens sannolikhet
+  förklaras med kalibreringen ur korsvalideringen: hur ofta en ristare med ungefär samma sannolikhet (±0,05) var den
+  rätta, och hur ofta en felaktig ristare fick minst lika hög sannolikhet. Ortografin visas för de fem närmaste
+  ristarna och den prövade och Rundatas, med likhet, p, justerat p (max-statistik) och typikalitet. Område, stilgrupp,
+  språkdrag (drag för drag med andel hos ristaren, i landskapet och kvot) och bergart visas för både den prövade
+  ristaren och Rundatas.
+* **Material** (vilka inskrifter, ristare och stenar som jämförs), **andra kandidater**, **litteratur och nyare
+  källor** (Runor 2020 och Wikidata, avstämt när dokumentet skapas), **vad som skulle avgöra frågan** (med de närmaste
+  säkra och signerade stenarna av båda ristarna), **källkritik** (cirkularitet mot Axelson, sluten mängd ristare, det
+  metoderna inte mäter), **ordlista**, metod och versioner, och en bilaga med ristarnas jämförda stenar.
+
+Ristarnamn som enligt forskningen är grupper får en not (t.ex. "Traen"). Dokumentet exporteras som Word och Markdown;
+mottagare och e-post fylls i av avsändaren. Ingen AI-text.
 
 ## 15. Jämförbarhet med tidigare forskning
 

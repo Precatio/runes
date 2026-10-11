@@ -434,7 +434,7 @@ function AttributionProposal({ signum, candidates, reattribution }: { signum: st
     try {
       const r = await request("docx");
       if (!r.ok) throw new Error("Word-filen kunde inte skapas.");
-      await downloadBlob(r, `${signum.replace(/[^\wåäöÅÄÖ]+/g, "_")}_attribueringsforslag.docx`);
+      await downloadBlob(r, `${signum.replace(/[^\wåäöÅÄÖ]+/g, "_")}_beslutsunderlag_attribuering.docx`);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Word-filen kunde inte skapas.");
     } finally {
@@ -443,11 +443,12 @@ function AttributionProposal({ signum, candidates, reattribution }: { signum: st
   };
   return (
     <div className="rounded-xl border border-[#b7410e]/30 bg-[#b7410e]/5 px-3 py-3 space-y-2">
-      <p className="font-bold text-slate-900">{reattribution ? "Förslag till omprövning" : "Attribueringsförslag"}</p>
+      <p className="font-bold text-slate-900">{reattribution ? "Beslutsunderlag om omprövning" : "Beslutsunderlag om attribuering"}</p>
       <p className="text-xs text-slate-600">
-        Ett dokument med alla argument – stenen, ristarens kända stenar, varje metods besked, andra kandidater, Runor och
-        litteratur, tolkning och kända brister – att skicka till Samnordisk runtextdatabas eller Runor. Förslaget stäms av mot
-        Runor 2020 och Wikidata när det skapas.
+        Ett dokument för dem som förvaltar Samnordisk runtextdatabas eller Runor: en slutsats och rekommendation överst, varje
+        metod förklarad (vad den jämför, vad talen betyder och hur ofta den har rätt), den prövade ristaren mot Rundatas,
+        andra kandidater, litteratur och nyare källor, vad som skulle avgöra frågan och källkritik. Rekommendationen är ärlig:
+        räcker inte underlaget står det, och en signerad sten får aldrig ett förslag om en annan ristare.
       </p>
       <div className="flex flex-wrap items-center gap-2">
         {candidates.length > 1 && (
@@ -457,7 +458,7 @@ function AttributionProposal({ signum, candidates, reattribution }: { signum: st
           </select>
         )}
         <button onClick={create} disabled={busy} className="px-3 py-1.5 bg-[#b7410e] hover:bg-[#9a350b] text-white text-xs font-bold rounded-lg disabled:opacity-40">
-          {busy && !report ? "Samlar argumenten …" : `Skapa förslag för ${carver}`}
+          {busy && !report ? "Samlar argumenten …" : `Skapa beslutsunderlag för ${carver}`}
         </button>
       </div>
       {error && <p className="text-xs text-red-700">{error}</p>}

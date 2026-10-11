@@ -327,12 +327,25 @@ def test_attribution_proposal(client):
     r = client.post("/api/reports/attribution", json=body)
     assert r.status_code == 200
     md = r.json()["markdown"]
-    assert "omprövning av attribuering: U 344 – Öpir 1" in md  # U 344 is attributed to Åsmund
-    for heading in ("## Sammanfattning", "## 3. Beläggen", "## 6. Tolkning", "## 7. Kända brister"):
+    assert "attribuering: U 344 – Öpir 1" in md  # U 344 is attributed to Åsmund
+    for heading in ("## Sammanfattning och rekommendation", "## 3. Material", "### 4.1 Statistisk modell",
+                    "### 4.2 Ortografi", "### 4.5 Språkdrag", "## 6. Samlad bedömning", "## 7. Vad som skulle kunna avgöra",
+                    "## 8. Källkritik", "## 9. Ordlista", "## Bilaga"):
         assert heading in md
+    assert "Rekommendation:" in md and "Rundatas ristare: Åsmund" in md
     d = client.post("/api/reports/attribution", json={**body, "format": "docx"})
     assert d.status_code == 200 and len(d.content) > 5000
     assert client.post("/api/reports/attribution", json={**body, "signum": "Inte 1"}).status_code == 404
+
+
+@pytest.mark.skipif(not os.path.exists(os.path.join(os.path.dirname(__file__), "..", "data", "rundata.json")),
+                    reason="data/rundata.json saknas")
+def test_signed_stone_never_gets_a_proposal(client):
+    """U 287 is signed by Öpir; a statistical alternative must not be written up as a proposal."""
+    md = client.post("/api/reports/attribution", json={"signum": "U 287", "carver": "Fot 2", "check_sources": False}).json()["markdown"]
+    assert md.startswith("# Underlag för granskning av attribuering: U 287 – Fot 2")
+    assert "Stenen är signerad" in md and "Vi rekommenderar ingen ändring" in md
+    assert "Förslag till omprövning" not in md
 
 
 def test_detect_runes_keeps_valid_boxes(client, monkeypatch):

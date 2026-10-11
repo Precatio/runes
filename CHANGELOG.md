@@ -5,6 +5,15 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Beslutsunderlag om attribuering
+- Förslaget till omprövning i Stenöversikt är nu ett fullständigt beslutsunderlag: slutsats och rekommendation först,
+  varje metod förklarad (vad den jämför, vilka data, vad talen betyder och hur ofta den har rätt – t.ex. hur ofta en
+  ristare med modellens sannolikhet var den rätta i korsvalideringen), den prövade ristaren mot Rundatas, språkdrag drag
+  för drag, andra kandidater, vad som skulle avgöra frågan, källkritik, ordlista och bilaga (METHODS.md 14f).
+- Ärlig rekommendation: *starkt* ger förslag, *måttligt* granskning, *svagt* ingen ändring; en signerad sten får
+  aldrig ett förslag om en annan ristare (tidigare kunde t.ex. U 287, signerad av Öpir, få ett förslag om Fot 2 med
+  sannolikheten 0,19).
+
 ### Granskning av R-fynden (Rune, 2026-10-11)
 - Toppår anges med 95 % intervall (koefficientdragningar och omräkningar med nya årtal), aldrig som ett exakt år.
 - Avstånd till vatten prövas mot en lokal nollmodell: slumpvisa punkter inom 5 km från runstenar (där folk bodde och
