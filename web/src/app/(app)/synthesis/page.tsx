@@ -6,8 +6,10 @@ import { useRouter } from "next/navigation";
 import { useAnalysis } from "@/components/AnalysisContext";
 import { useAuth } from "@/components/AuthContext";
 import { LanguageTable } from "@/components/StoneContext";
-import { SIMILARITY_HELP, fmtP } from "@/lib/significance";
+import { fmtP } from "@/lib/significance";
 import { useSettings } from "@/components/SettingsContext";
+import { InfoTip, PageIntro } from "@/components/Explain";
+import { GLOSSARY } from "@/lib/glossary";
 import { corpus } from "@/lib/corpus";
 import { db, type ProjectData } from "@/lib/db";
 import { FEATURE_TYPES, METRICS, METRIC_DIGITS, METRIC_LABELS, formatSummary, type FeatureType } from "@/lib/metrics";
@@ -113,12 +115,15 @@ export default function SynthesisPage() {
   return (
     <div className="flex flex-col h-full w-full max-w-7xl mx-auto p-4 md:p-6 relative z-10 overflow-y-auto">
       <div className="mb-8">
-        <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-2">Syntes & Attribuering</h2>
-        <p className="text-slate-600 text-[16px] leading-relaxed max-w-3xl font-medium">
-          Väger samman Rundata, ortografisk jämförelse och uppmätt huggteknik. Ortografi och huggteknik vägs efter
-          hur träffsäkra de är i just detta fall. Kandidaterna prövas mot geografi, ristarens stilgrupper och – om
-          ristarens stenar är uppmätta – sten mot sten. Motsägelser redovisas; inga sannolikheter anges.
-        </p>
+        <PageIntro title="Syntes & Attribuering"
+          lead={<>Vem ristade stenen? Syntesen väger samman Rundata, stavningen (ortografi) och uppmätt huggteknik. Varje källa vägs efter hur
+            träffsäker den är i just detta fall, och kandidaterna prövas mot område, ristarens stilgrupper, språkdrag och bergart.
+            Motsägelser redovisas öppet; inga sannolikheter anges.</>}
+          howTo={[
+            <>Välj ett projekt med en uppmätt sten (eller ange ett signum) och kör syntesen.</>,
+            <>Kandidaterna står först, med vad som stämmer och vad som talar emot. Därefter motsägelser, saknade belägg och tolkningen.</>,
+            <>Under &quot;Beläggen i detalj&quot; finns varje källa för sig; ⓘ förklarar måtten.</>,
+          ]} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -345,7 +350,7 @@ function EvidenceDetails({ r }: { r: SynthesisResult }) {
           {o ? (
             <>
               <table className="w-full text-xs">
-                <thead><tr className="text-left text-slate-500"><th className="py-1">Ristare</th><th title={SIMILARITY_HELP}>Likhet</th><th title={SIMILARITY_HELP}>p (just.)</th><th>Precision</th><th>Område</th><th>Vikt</th></tr></thead>
+                <thead><tr className="text-left text-slate-500"><th className="py-1">Ristare</th><th>Likhet<InfoTip text={GLOSSARY["Likhet"]} /></th><th>p (just.)<InfoTip text={GLOSSARY["p (just.)"]} /></th><th>Precision<InfoTip text={GLOSSARY["Precision"]} /></th><th>Område</th><th>Vikt</th></tr></thead>
                 <tbody>{o.ranking.map(x => (
                   <tr key={x.carver} className="border-t border-slate-900/5">
                     <td className="py-1 font-semibold">{x.carver}</td><td>{num(x.similarity)}</td>
@@ -366,7 +371,7 @@ function EvidenceDetails({ r }: { r: SynthesisResult }) {
           {g?.ranking?.length ? (
             <>
               <table className="w-full text-xs">
-                <thead><tr className="text-left text-slate-500"><th className="py-1">Ristare</th><th>Avstånd</th><th>Stenar</th></tr></thead>
+                <thead><tr className="text-left text-slate-500"><th className="py-1">Ristare</th><th>Avstånd<InfoTip text={GLOSSARY["Avstånd"]} /></th><th>Stenar</th></tr></thead>
                 <tbody>{g.ranking.map(x => (
                   <tr key={x.group} className="border-t border-slate-900/5"><td className="py-1 font-semibold">{x.group}</td><td>{num(x.distance)}</td><td>{x.n}</td></tr>
                 ))}</tbody>

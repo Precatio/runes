@@ -116,3 +116,34 @@ Object.assign(GLOSSARY, {
   "Datering": "Datering enligt Rundata.",
   "Inskrifter": "Antal inskrifter.",
 });
+
+// Stenöversikt
+Object.assign(GLOSSARY, {
+  "Stöd": "Hur väl metoderna stöder Rundatas ristare (0–1): ett viktat medelvärde av modellen, ortografin, området, stilgruppen, språkdragen och bergarten. Ett index för att sortera, inte en sannolikhet.",
+  "Starkaste alternativ": "Den andra ristare som metoderna pekar starkast mot (0–1), vägd med hur väl ristaren klarar kontrollerna (område, stil, språkdrag, bergart).",
+  "Status": "Stenen sammanfattad: stöds, omstridd, kan vara felbedömd eller svagt underlag (stenar med ristare); nytt, möjligt eller inget förslag (stenar utan ristare).",
+  "Metoder": "Hur många av de sex metoderna som kan uttala sig om stenen.",
+  "Sten": "Stenens signum i Rundata.",
+});
+
+// Huggspår, jämförelse, syntes och mätkorpus
+Object.assign(GLOSSARY, {
+  "V-vinkel (°)": "Vinkeln mellan huggspårets två väggar i tvärsnitt. Spetsigt verktyg och djupa hugg ger mindre vinkel. Ett av de stabilare måtten.",
+  "Asymmetri (°)": "Skillnaden i lutning mellan spårets två väggar. Varierar mycket mellan snitt och är ett osäkert mått.",
+  "Spårdjup (mm)": "Hur djupt spåret är under den omgivande ytan.",
+  "Spårbredd (mm)": "Spårets bredd i ytan.",
+  "Djup/bredd": "Spårdjup delat med spårbredd – spårets form oberoende av storlek.",
+  "Bottenradie (mm)": "Hur rundad spårets botten är. Beror på skanningens upplösning och är ett osäkert mått.",
+  "Ytråhet (mm)": "Hur ojämn spårets yta är.",
+  "Mått": "Huggspårsmåttet som jämförs.",
+  "A": "Sten A: medelvärde ± standardavvikelse.",
+  "B": "Sten B: medelvärde ± standardavvikelse.",
+  "d": "Cohens d: hur stor skillnaden är i standardavvikelser. Omkring 0,2 är liten, 0,5 måttlig och 0,8 eller mer stor.",
+  "Avstånd": "Hur olika huggtekniken är mellan stenen och ristarens uppmätta stenar (standardiserat avstånd). Mindre = mer lik.",
+  "Snitt": "Antal uppmätta tvärsnitt av huggspåren.",
+  "Kvalitet": "Hur pålitlig mätningen är: antal runor och snitt, skanningens upplösning och metodversion.",
+  "Bidragsgivare": "Forskaren som har publicerat mätningen i korpusen.",
+  "Spår": "Vilken sorts spår som är mätt: runor, ornamentik eller annat.",
+  "Signum": "Stenens signum i Rundata.",
+  "Ristare (Rundata)": "Ristaren enligt Rundata – bara säkra signerade eller attribuerade inskrifter.",
+});

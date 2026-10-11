@@ -5,6 +5,8 @@ import PlotlyGraph from "@/components/PlotlyGraph";
 import { useAuth } from "@/components/AuthContext";
 import { useAnalysis } from "@/components/AnalysisContext";
 import { DocsNote } from "@/components/KnownLimitations";
+import { InfoTip, PageIntro, SigBadge, Tip } from "@/components/Explain";
+import { GLOSSARY } from "@/lib/glossary";
 import { corpus } from "@/lib/corpus";
 import { db } from "@/lib/db";
 import { FEATURE_TYPES, METRIC_DIGITS, formatSummary, type FeatureType, type SliceMetrics } from "@/lib/metrics";
@@ -143,14 +145,15 @@ export default function ComparePage() {
 
   return (
     <div className="flex flex-col w-full max-w-6xl mx-auto p-4 md:p-6 space-y-6">
-      <div>
-        <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-2">Jämför två stenar</h2>
-        <p className="text-slate-600 text-[16px] leading-relaxed max-w-3xl font-medium">
-          Kan två stenar vara huggna av samma hand? Huggspåren jämförs runa mot runa, avståndet ställs mot stenpar i
-          mätkorpusen, och har stenarna signum jämförs också ristare, stil, stavning och språkdrag.
-        </p>
-        <div className="mt-2"><DocsNote anchor="3-jämförelse-av-två-stenar">Hur jämförelsen räknas står i avsnitt 3.</DocsNote></div>
-      </div>
+      <PageIntro title="Jämför två stenar"
+        lead={<>Kan två stenar vara huggna av samma hand? Huggspåren jämförs runa mot runa, avståndet ställs mot stenpar i den delade
+          mätkorpusen – par av samma och av olika ristare – och har stenarna signum jämförs också ristare, stil, stavning och språkdrag.</>}
+        howTo={[
+          <>Välj två uppmätta stenar och tryck Jämför. Slutsatsen kommer först, sedan om mätningarna alls går att jämföra.</>,
+          <>En <strong>säkerställd skillnad</strong> i huggspåren talar för olika händer (eller olika bergart, verktyg, vittring). Ingen säkerställd skillnad betyder bara att mätningarna inte skiljer stenarna åt – inte att de är huggna av samma ristare.</>,
+          <>Asymmetri och bottenradie är osäkra mått och ingår inte i den samlade jämförelsen.</>,
+        ]} />
+      <DocsNote anchor="3-jämförelse-av-två-stenar">Hur jämförelsen räknas står i avsnitt 3.</DocsNote>
 
       <div className="liquid-glass-island rounded-[32px] p-6 grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] gap-4 items-end">
         <div><label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Sten A</label>{picker(aKey, setAKey)}</div>
@@ -172,7 +175,15 @@ export default function ComparePage() {
         <>
           <div className={`liquid-glass-island rounded-[32px] p-6 border-l-8 ${
             result.overall.p_value !== null && result.overall.p_value < 0.05 ? "border-amber-600" : "border-emerald-600"}`}>
-            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Slutsats</div>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Slutsats</span>
+              {result.overall.p_value !== null && (
+                <span className="flex items-center gap-1.5 text-[11px] text-slate-600">skillnad i huggspåren:
+                  <SigBadge sig={{ significant: result.overall.p_value < 0.05, label: `p ${formatP(result.overall.p_value)}`,
+                    test: "samlat permutationstest på de stabila måtten" }} />
+                </span>
+              )}
+            </div>
             <ul className="mt-2 space-y-1.5 text-slate-800">
               {(result.conclusion ?? [result.interpretation]).map((s, i) => <li key={i} className={i === 0 ? "font-semibold text-slate-900" : ""}>{s}</li>)}
             </ul>
@@ -198,14 +209,15 @@ export default function ComparePage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="text-left text-[11px] uppercase tracking-wider text-slate-500">
-                    <th className="p-2">Mått</th><th className="p-2">A</th><th className="p-2">B</th>
-                    <th className="p-2" title="Permutationstest, Bonferroni-justerat">p (just.)</th><th className="p-2" title="Cohens d">d</th>
+                    <th className="p-2">Mått<InfoTip text={GLOSSARY["Mått"]} /></th><th className="p-2">A<InfoTip text={GLOSSARY["A"]} /></th><th className="p-2">B<InfoTip text={GLOSSARY["B"]} /></th>
+                    <th className="p-2">p (just.)<InfoTip text="Permutationstest per mått, Bonferroni-justerat för antalet mått. Under 0,05 = säkerställd skillnad." /></th>
+                    <th className="p-2">d<InfoTip text={GLOSSARY["d"]} /></th>
                   </tr>
                 </thead>
                 <tbody>
                   {[...stable, ...unstable].map(r => (
                     <tr key={r.metric} className={`border-t border-slate-900/5 ${r.stable === false ? "text-slate-400" : ""}`}>
-                      <td className="p-2 font-semibold">{r.label}{r.stable === false && <span className="font-normal text-[10px]"> (osäkert mått)</span>}</td>
+                      <td className="p-2 font-semibold"><Tip text={GLOSSARY[r.label]}>{r.label}</Tip>{r.stable === false && <span className="font-normal text-[10px]"> (osäkert mått)</span>}</td>
                       <td className="p-2 font-mono text-xs">{formatSummary(r.a, METRIC_DIGITS[r.metric])}</td>
                       <td className="p-2 font-mono text-xs">{formatSummary(r.b, METRIC_DIGITS[r.metric])}</td>
                       <td className={`p-2 font-mono text-xs ${r.p_adjusted !== null && r.p_adjusted < 0.05 && r.stable !== false ? "text-amber-700 font-bold" : ""}`}>{formatP(r.p_adjusted)}</td>

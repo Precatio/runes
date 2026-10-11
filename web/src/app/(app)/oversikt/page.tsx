@@ -8,6 +8,8 @@ import { API_URL } from "@/lib/api";
 import { DocsNote } from "@/components/KnownLimitations";
 import ReportPreview, { downloadBlob, type ReportResult } from "@/components/ReportPreview";
 import { useSettings } from "@/components/SettingsContext";
+import { Answer, InfoTip, PageIntro, Tip } from "@/components/Explain";
+import { GLOSSARY } from "@/lib/glossary";
 
 type Status = "kan vara felbedömd" | "omstridd" | "stöds" | "svagt underlag" | "signerad" | "nytt förslag" | "möjligt förslag" | "inget förslag";
 
@@ -140,16 +142,41 @@ function Overview() {
 
   return (
     <div className="flex flex-col w-full max-w-7xl mx-auto p-4 md:p-6 space-y-5">
-      <div>
-        <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-2">Stenöversikt</h2>
-        <p className="text-slate-600 text-[15px] leading-relaxed max-w-4xl">
-          Varje punkt är en runsten. Sex metoder – statistisk modell, ortografi, område, stilgrupp, språkdrag och bergart – säger
-          var för sig något om vem som ristade den. Här vägs de samman mot Rundatas ristare: hur väl beläggen <em>stöder</em> den, och hur
-          starkt det bästa <em>alternativet</em> är. Klicka på en sten för att se vad varje metod säger. Måtten är index för att sortera
-          och prioritera, inte sannolikheter.
-        </p>
-        <div className="mt-2"><DocsNote anchor="13c-översikt-per-sten">Hur måtten och statusen räknas, och hur ofta de larmar i onödan, står i avsnitt 13c.</DocsNote></div>
-      </div>
+      <PageIntro title="Stenöversikt"
+        lead={<>Varje punkt är en runsten. Sex metoder – statistisk modell, ortografi, område, stilgrupp, språkdrag och bergart – säger
+          var för sig något om vem som ristade den. Här vägs de samman mot Rundatas ristare: hur väl beläggen <Tip text={GLOSSARY["Stöd"]}>stöder</Tip> den,
+          och hur starkt det bästa <Tip text={GLOSSARY["Starkaste alternativ"]}>alternativet</Tip> är.</>}
+        howTo={[
+          <>Svaret i korthet sammanfattar alla stenar; diagrammen visar dem en och en.</>,
+          <>Klicka på en sten i ett diagram eller i tabellen för att se vad varje metod säger, vilka andra ristare som är tänkbara och för att skapa ett attribueringsförslag.</>,
+          <>Knapparna med status döljer eller visar grupper av stenar; filtren nedanför väljer landskap, ristare eller en enskild sten.</>,
+          <>Måtten är index för att sortera och prioritera, inte sannolikheter.</>,
+        ]} />
+
+      {(() => {
+        const ctl = data.control, falseShare = Math.round((100 * ctl.flagged) / Math.max(1, ctl.n_signed));
+        return (
+          <div className="liquid-glass-island rounded-[32px] p-5 md:p-7">
+            <Answer topic="Översikt" question="Hur väl stöder metoderna Rundatas ristare – och var finns nya förslag?"
+              why="Att se alla stenar samtidigt visar var forskningen och appens metoder är överens, var de inte är det och var nya ristare kan föreslås."
+              headline={{ value: String(data.counts["kan vara felbedömd"] ?? 0), label: "stenar där beläggen talar emot Rundatas ristare och pekar mot en annan" }}
+              answer={<>Av stenarna med ristare i Rundata stöds {data.counts["stöds"] ?? 0} av beläggen, {data.counts["omstridd"] ?? 0} är omstridda,{" "}
+                {data.counts["kan vara felbedömd"] ?? 0} kan vara felbedömda och {data.counts["svagt underlag"] ?? 0} har för svagt underlag. Bland stenarna
+                utan ristare får {data.counts["nytt förslag"] ?? 0} ett nytt och {data.counts["möjligt förslag"] ?? 0} ett möjligt förslag.</>}
+              interpretation={[
+                <>De stenar som <strong>kan vara felbedömda</strong> är mest värda att granska: flera metoder pekar mot en annan ristare än Rundata.</>,
+                "Omstridda stenar kan vara samarbeten, verkstäder eller osäkra attribueringar – men kategorin larmar ofta i onödan.",
+                "Förslagen för stenar utan ristare är hypoteser att pröva; öppna en sten för att samla argumenten i ett attribueringsförslag.",
+              ]}
+              notSaying={[
+                <>Kontroll: av {ctl.n_signed} signerade stenar, där ristaren är känd, fick {ctl.flagged} ({falseShare} %) ett starkt alternativ och {ctl.would_be_misjudged} hamnade
+                  som &quot;kan vara felbedömd&quot;. &quot;Omstridd&quot; larmar alltså ofta i onödan, &quot;kan vara felbedömd&quot; sällan.</>,
+                "Metoderna bygger delvis på samma drag som forskarnas attribueringar (plats, stil, stavning) och är inte helt oberoende av Rundata.",
+              ]} />
+          </div>
+        );
+      })()}
+      <DocsNote anchor="13c-översikt-per-sten">Hur måtten och statusen räknas, och hur ofta de larmar i onödan, står i avsnitt 13c.</DocsNote>
 
       <div className="flex flex-wrap gap-2">
         {data.status_order.map(st => (
@@ -242,8 +269,9 @@ function StoneTable({ rows, onPick }: { rows: StoneRow[]; onPick: (s: string) =>
     <div className="overflow-x-auto mt-2 liquid-glass-island rounded-[24px] p-3">
       <table className="w-full text-sm">
         <thead><tr className="text-left text-[11px] uppercase tracking-wider text-slate-500">
-          <th className="p-2">Sten</th><th className="p-2">Status</th><th className="p-2">Rundata</th><th className="p-2">Stöd</th>
-          <th className="p-2">Starkaste alternativ</th><th className="p-2">Metoder</th></tr></thead>
+          {["Sten", "Status", "Rundata", "Stöd", "Starkaste alternativ", "Metoder"].map(h => (
+            <th key={h} className="p-2">{h}<InfoTip text={GLOSSARY[h]} /></th>
+          ))}</tr></thead>
         <tbody>{sorted.slice(0, 400).map(s => (
           <tr key={s.signum} onClick={() => onPick(s.signum)} className="border-t border-slate-900/5 cursor-pointer hover:bg-slate-50">
             <td className="p-2 font-semibold">{s.signum} <span className="text-slate-500 font-normal">{s.place}</span></td>

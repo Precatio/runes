@@ -63,6 +63,9 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   för flikar (ny fråga: var saknas uppgifter?), och för varje fråga svaret i korthet, nyckeltal, förslag till tolkning
   och vad resultatet inte säger – framräknat ur data. Alla kolumnrubriker har förklaringar (ⓘ).
 - Gemensamma komponenter för sidinledning, frågekort och svar (`components/Explain.tsx`).
+- Stenöversikt, Jämför stenar, Syntes och Mätkorpus: inledning på vardagsspråk med läsanvisning och ordlista,
+  förklaringar på mått och kolumner; Stenöversikt får en svarsruta med tolkning och kontrollen mot signerade stenar,
+  Jämför stenar ett märke för om skillnaden i huggspår är statistiskt säkerställd.
 
 ### Granskning av U 1026: sluten modell, namnlösa ristare och bergart
 - Modellens förslag: plats, stil och språkdrag ingår i modellen och räknas inte som oberoende stöd; träffsäkerheten

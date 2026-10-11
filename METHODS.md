@@ -644,10 +644,10 @@ till ristarens stil). Ett glapp på minst 25 år gör förslaget kronologiskt pr
 Har Rundata flera ristare för stenen (två som signerat tillsammans, eller en signatur och en attribuering; 113
 runstenar) räknas stödet för var och en, den bäst stödda redovisas och de övriga räknas inte som alternativ.
 
-Resultat (2026-10-11, med de nya språkdragen och kontrollerna): 11 stenar kan vara felbedömda, 58 är omstridda, 344
-stöds och 112 har svagt underlag; 98 stenar utan ristare får ett nytt och 263 ett möjligt förslag. **Kontroll:** av 246
-signerade stenar – där ristaren är känd – hade 59 (24 %) fått ett alternativ ≥ 0,4 och två hamnat som "kan vara
-felbedömd". Kategorin *omstridd* larmar
+Resultat (2026-10-11, efter granskningarna av U 92 och U 1026 – kronologisk stilkontroll, neutral bergart och
+språkdrag mot landskapet): 15 stenar kan vara felbedömda, 49 är omstridda, 322 stöds och 139 har svagt underlag; 98
+stenar utan ristare får ett nytt och 258 ett möjligt förslag. **Kontroll:** av 246 signerade stenar – där ristaren är
+känd – hade 57 (23 %) fått ett alternativ ≥ 0,4 och fyra hamnat som "kan vara felbedömd". Kategorin *omstridd* larmar
 alltså ofta i onödan, medan *kan vara felbedömd* sällan gör det. Måtten är index för att sortera och prioritera,
 inte sannolikheter; bara modellens sannolikhet är kalibrerad. Metoderna är inte oberoende av Rundata: ortografi,
 område och stil kan ha legat till grund för attribueringarna (avsnitt 18). Profilen för en sten visar varje metods

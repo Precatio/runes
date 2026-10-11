@@ -6,6 +6,8 @@ import PlotlyGraph from "@/components/PlotlyGraph";
 import { useAuth } from "@/components/AuthContext";
 import { corpus, corpusToRows, CORPUS_LICENSE, CURRENT_METHOD, datasetPackage, quality, type CorpusEntry, type RecomputeResult } from "@/lib/corpus";
 import { useSettings } from "@/components/SettingsContext";
+import { InfoTip } from "@/components/Explain";
+import { GLOSSARY } from "@/lib/glossary";
 import { downloadFile, toCSV } from "@/lib/export";
 import { FEATURE_TYPES, METRICS, METRIC_DIGITS, METRIC_LABELS, formatSummary, type FeatureType } from "@/lib/metrics";
 import { rundata, type Carver } from "@/lib/rundata";
@@ -144,9 +146,11 @@ export default function CorpusPage() {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-2">Delad mätkorpus</h2>
-          <p className="text-slate-600 text-[16px] leading-relaxed max-w-3xl font-medium">
-            Huggspårsmätningar som forskare har publicerat under {CORPUS_LICENSE}. Ristare hämtas från Rundata
-            (endast säkra signerade eller attribuerade inskrifter). Bidra från 3D-analysen.
+          <p className="text-slate-700 text-[16px] leading-relaxed max-w-3xl">
+            Huggspårsmätningar som forskare har publicerat under {CORPUS_LICENSE} – grunden för att jämföra stenar och ristare i
+            huggteknik. Ristare hämtas från Rundata (endast säkra signerade eller attribuerade inskrifter). Bidra med egna mätningar
+            från 3D-analysen. Ristarprofilerna och klustringen längre ned visar om ristarnas stenar liknar varandra i huggtekniken;
+            måtten är ännu inte validerade som spår av ristarens hand.
           </p>
         </div>
         <div className="flex gap-2">
@@ -175,10 +179,9 @@ export default function CorpusPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="text-left text-[11px] uppercase tracking-wider text-slate-500">
-                <th className="p-2">Signum</th><th className="p-2">Spår</th><th className="p-2">Ristare (Rundata)</th>
-                <th className="p-2">Snitt</th>
-                {(["apex_vinkel_deg", "spårdjup_mm", "spårbredd_mm"] as const).map(m => <th key={m} className="p-2">{METRIC_LABELS[m]}</th>)}
-                <th className="p-2">Kvalitet</th><th className="p-2">Bidragsgivare</th><th className="p-2"></th>
+                {["Signum", "Spår", "Ristare (Rundata)", "Snitt"].map(h => <th key={h} className="p-2">{h}<InfoTip text={GLOSSARY[h]} /></th>)}
+                {(["apex_vinkel_deg", "spårdjup_mm", "spårbredd_mm"] as const).map(m => <th key={m} className="p-2">{METRIC_LABELS[m]}<InfoTip text={GLOSSARY[METRIC_LABELS[m]]} /></th>)}
+                <th className="p-2">Kvalitet<InfoTip text={GLOSSARY["Kvalitet"]} /></th><th className="p-2">Bidragsgivare<InfoTip text={GLOSSARY["Bidragsgivare"]} /></th><th className="p-2"></th>
               </tr>
             </thead>
             <tbody>
