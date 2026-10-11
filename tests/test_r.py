@@ -271,3 +271,15 @@ def test_explanations_answer_each_question_in_plain_words():
     assert secs["change"]["headline"]["value"] == "1 av 1" and "stungna runor blir vanligare" in secs["change"]["answer"]
     ov = r_explain.overview(res)
     assert any(p.startswith("**Ristarna och deras hand.**") for p in ov["paragraphs"]) and ov["next_steps"]
+
+
+def test_every_corpus_pattern_says_whether_it_is_significant():
+    res = {"geography": {"carvers": [{"compact_q": 0.01}, {"compact_q": 0.3}], "n_compact": 1, "min_inscriptions": 5,
+                         "water": {"available": True, "overall": {"median_stones_km": 4, "median_random_km": 6, "p": 1e-9}}},
+           "dialect": {"mantel": {"r": 0.29, "p": 0.004}, "n_districts": 38},
+           "chronology": {"validation": {"rho": 0.54, "partial_rho": 0.54, "usable": True, "mae_loo_years": 21,
+                                         "mae_naive_years": 25, "p": 1e-30}, "corpus_dimensions": []}}
+    pats = r_findings.corpus_patterns(res)
+    assert pats and all("significance" in p for p in pats)
+    assert all(p["significance"]["significant"] for p in pats)
+    assert any(p["significance"]["label"] == "p < 0,001" for p in pats)

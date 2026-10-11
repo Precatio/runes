@@ -2,6 +2,8 @@
 
 import { Fragment, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { SigBadge, Tip, type Significance } from "@/components/Explain";
+import { GLOSSARY } from "@/lib/glossary";
 import { API_URL } from "@/lib/api";
 import { corpus } from "@/lib/corpus";
 import { db } from "@/lib/db";
@@ -66,6 +68,7 @@ interface Finding extends StoneExtras {
   evidence: number; novelty: number; relevance: number; score: number; assessment: string; suggested?: string;
   reasons: { belägg: string[]; nyhet: string[]; relevans: string[] };
   crosscheck?: CrossCheck;
+  significance?: Significance;
 }
 // The suggestion checked against newer sources (Runor 2020, Wikidata)
 interface CrossCheck {
@@ -73,7 +76,7 @@ interface CrossCheck {
   runor?: { status: string; text: string; references: string[]; url?: string | null };
   wikidata?: { text: string };
 }
-interface RPattern { topic: string; status: string; text: string; note?: string | null }
+interface RPattern { topic: string; status: string; text: string; note?: string | null; significance?: Significance }
 interface Findings {
   r_patterns?: RPattern[];
   r_ready?: boolean;
@@ -512,7 +515,10 @@ function PatternsBox({ patterns }: { patterns: RPattern[] }) {
       <ul className="mt-3 space-y-2 text-sm">
         {patterns.map((pt, i) => (
           <li key={i} className="flex gap-3">
-            <span className={`shrink-0 h-fit px-2 py-0.5 rounded-lg border text-[11px] font-bold ${style[pt.status] ?? ""}`}>{pt.status}</span>
+            <div className="flex flex-col gap-1 shrink-0">
+              <span className={`h-fit w-fit px-2 py-0.5 rounded-lg border text-[11px] font-bold ${style[pt.status] ?? ""}`}>{pt.status}</span>
+              <SigBadge sig={pt.significance} compact />
+            </div>
             <div><span className="text-[11px] uppercase tracking-wider text-slate-500 mr-2">{pt.topic}</span>{pt.text}</div>
           </li>
         ))}
@@ -539,12 +545,15 @@ function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; loggedIn
   const [verdict, setVerdict] = useState<Verdict | "">("");
   const [method, setMethod] = useState("");
   const [onlyLikely, setOnlyLikely] = useState(false);
+  const [onlySignificant, setOnlySignificant] = useState(false);
   const [open, setOpen] = useState<string | null>(null);
   const methods = Object.keys(data.summary.by_method);
   const rows = useMemo(() => data.findings.filter(f =>
     (!verdict || f.verdict === verdict) && (!method || f.method === method)
-    && (!onlyLikely || f.assessment.startsWith("Sannolikt ny") || f.assessment === "Värd en omprövning")),
-  [data.findings, verdict, method, onlyLikely]);
+    && (!onlyLikely || f.assessment.startsWith("Sannolikt ny") || f.assessment === "Värd en omprövning")
+    && (!onlySignificant || f.significance?.significant === true)),
+  [data.findings, verdict, method, onlyLikely, onlySignificant]);
+  const nSignificant = data.findings.filter(f => f.significance?.significant).length;
   const { sorted, header } = useSorted(rows, {
     signum: f => f.signum, place: f => f.place, method: f => f.method, verdict: f => f.verdict,
     suggested: f => f.suggested, existing: f => f.existing, evidence: f => f.evidence, novelty: f => f.novelty,
@@ -582,6 +591,12 @@ function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; loggedIn
           <option value="">Alla metoder</option>
           {methods.map(m => <option key={m} value={m}>{m}</option>)}
         </select>
+        <button onClick={() => setOnlySignificant(!onlySignificant)}
+          className={`px-3 py-1.5 rounded-xl border text-xs font-bold ${onlySignificant ? "bg-emerald-700 border-emerald-700 text-white" : "bg-white border-slate-300 text-emerald-800 hover:bg-emerald-50"}`}>
+          <Tip text={GLOSSARY["Statistiskt säkerställt"] + " Bara ortografin (justerat p) och huggtekniken har ett signifikanstest per sten; modellens sannolikheter är kalibrerade men inget test."}>
+            ✓ Bara statistiskt säkerställda ({nSignificant})
+          </Tip>
+        </button>
         <span className="text-slate-500">{sorted.length} fynd</span>
         {data.r_ready && (
           <button onClick={crosscheck} disabled={checking}
@@ -682,7 +697,7 @@ function FindingRow({ f, open, onToggle }: { f: Finding; open: boolean; onToggle
         <td className="p-2"><Score value={f.novelty} /></td>
         <td className="p-2"><Score value={f.relevance} /></td>
         <td className="p-2"><Score value={f.score} /></td>
-        <td className="p-2 text-xs font-semibold">{f.assessment}</td>
+        <td className="p-2 text-xs font-semibold"><div className="flex flex-col gap-1">{f.assessment}<SigBadge sig={f.significance} compact /></div></td>
       </tr>
       {open && (
         <tr className="bg-white/50">

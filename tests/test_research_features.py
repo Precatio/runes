@@ -268,6 +268,14 @@ def test_similarity_significance(client):
     from api.routers.orthography import model
     m = model()
     assert m.significance("Balle", 0.9)["p_value"] <= m.significance("Balle", 0.5)["p_value"]
+    # The adjustment for choosing the best of all carvers is a max statistic, not Bonferroni: it can go below 0.05
+    # (with about 460 inscriptions in the null, Bonferroni over 27 carvers never could)
+    best = m.significance("Balle", 0.99)
+    assert best["adjustment"] == "max-statistik" and best["p_adjusted"] < 0.05 <= 27 / (best["n_null"] + 1)
+    from src.r_findings import finding_significance
+    assert finding_significance({"method": "ortografi", "stats": {"p_adjusted": 0.01}})["significant"] is True
+    assert finding_significance({"method": "ortografi", "stats": {"p_adjusted": 0.2}})["significant"] is False
+    assert finding_significance({"method": "statistisk modell (R)", "stats": {}})["significant"] is None
 
 
 @needs_rundata

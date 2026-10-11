@@ -67,6 +67,9 @@ def research_findings(req: FindingsRequest):
     r_items, r_patterns = rstats.findings()
     r_items = findings.add_extras(r_items, s.get, s.inscriptions, orthography_model().names)
     items = rstats._with_crosscheck(list(_orthographic_findings())) + extra + r_items
+    from src.r_findings import finding_significance
+    for f in items:
+        f["significance"] = finding_significance(f)
     items.sort(key=lambda f: -f["score"])
     return {
         "r_patterns": r_patterns, "r_ready": rstats.corpus_ready(),

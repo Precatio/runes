@@ -48,6 +48,16 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 - Kristen bön känns igen även i osäkra läsningar (hakparenteser), som Kristr hjalpi, Guð biargi, Guð lætti och
   Guðs móðir (249 runstenar i stället för 214).
 
+### Statistisk signifikans
+- Varje mönster och fynd anger om det är statistiskt säkerställt (q eller p under 0,05, med test), inte säkerställt
+  eller inte prövat med signifikanstest; märks tydligt på Statistik (R) – med en egen sektion för säkerställda
+  upptäckter (25 av 30 prövade mönster) och en ruta per fråga – och i Forskningsluckor, där fynden kan filtreras.
+- Ortografins justering för att den bästa av alla ristare valts görs med max-statistik i stället för Bonferroni,
+  som med 459 inskrifter i nollfördelningen aldrig kunde gå under 0,05; nu är 66 av 182 bekräftelser, 20 av 53 nya
+  förslag och 3 av 15 motsägelser säkerställda.
+- Förklaringskomponenterna (förklaring vid hovring, hopfällbara detaljer, säkerhets- och signifikansmärken,
+  förstoringsbara figurer) och ordlistan är gemensamma (`components/Explain.tsx`, `lib/glossary.ts`).
+
 ### Granskning av U 1026: sluten modell, namnlösa ristare och bergart
 - Modellens förslag: plats, stil och språkdrag ingår i modellen och räknas inte som oberoende stöd; träffsäkerheten
   anges med antal stenar och 95 % konfidensintervall; *starkt* kräver en väl underbyggd träffsäkerhet och inget emot.

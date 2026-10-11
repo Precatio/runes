@@ -309,10 +309,14 @@ Källkod: `src/orthography.py`. Underlag: Rundatas vikingatida inskrifter med mi
   närmaste-centroid-klassificerare.
 * **Signifikans för likheten:** p = andelen av andra ristares säkra inskrifter som är minst lika lika
   ristarens profil (empirisk nollfördelning, (k + 1)/(n + 1)). Eftersom den mest lika av alla ristare väljs
-  anges även p justerat för antalet ristare (Bonferroni). Dessutom anges hur typisk likheten är för
-  ristarens egna inskrifter (lämna-en-ute). Formelspråket gör många inskrifter lika: även signerade stenar
-  får sällan justerat p under 0,05, så en enskild likhet är ett svagt belägg. Metodens samlade
-  träffsäkerhet (nedan) är det bättre måttet.
+  anges även ett justerat p med max-statistik (Westfall–Young): andelen inskrifter med känd ristare vars högsta
+  likhet med en *annan* ristares profil är minst lika hög – samma urval som när förstavalet görs. Fram till
+  2026-10-11 justerades i stället med Bonferroni (p × 27 ristare); med 459 inskrifter i nollfördelningen är det
+  minsta möjliga p 1/460, så det justerade värdet kunde aldrig gå under 0,05 och ingen likhet kunde bli
+  säkerställd. Med max-statistiken är 66 av 182 bekräftelser av Rundatas ristare, 20 av 53 nya förslag och 3 av 15
+  motsägelser säkerställda (justerat p under 0,05). Dessutom anges hur typisk likheten är för ristarens egna
+  inskrifter (lämna-en-ute). Formelspråket gör många inskrifter lika, så metodens samlade träffsäkerhet (nedan) är
+  fortfarande ett viktigt mått vid sidan av p-värdet.
 * **Utvärdering** (lämna-en-ute, 27 ristare, 459 inskrifter, Rundata 2014): rätt ristare först i 61 %,
   bland de tre första i 71 %; för enbart signerade inskrifter (n = 135) först i 60 %. Slumpnivå 4 %.
   Attribuerade inskrifter kan ha attribuerats just på grund av ortografin, därför redovisas siffran för
@@ -661,8 +665,8 @@ samt stödet för Rundatas ristare i Stenöversikt); vad nyare källor säger (R
 vad som skulle kunna avgöra frågan (3D-mätning, litteratur, nyläsning, stilbedömning).
 
 Slutsatsen har sex nivåer: *redan känt* (förslaget finns i Runor 2020 eller Wikidata), *metodfel* (fyndet motsäger
-en signerad sten), *bekräftelse* (stämmer med Rundata), *starkt* (belägg ≥ 0,5, minst tre andra belägg för och inget
-emot, och för ortografin justerat p < 0,05), *måttligt* (belägg ≥ 0,35 och minst lika många belägg för som emot) och
+en signerad sten), *bekräftelse* (stämmer med Rundata), *starkt* (belägg ≥ 0,5, minst två oberoende belägg för och inget
+emot, och för ortografin justerat p < 0,05; före 2026-10-11 tre belägg), *måttligt* (belägg ≥ 0,35 och minst lika många belägg för som emot) och
 *svagt* (övrigt, och när ett fynd som motsäger Rundata står mot ett stöd ≥ 0,6 för Rundatas ristare). Sedan
 2026-10-11 blir slutsatsen också *svagt* när stilgruppen talar starkt emot (glapp på minst 25 år till ristarens
 kärna), oavsett hur lik stavningen är. Ortografins belägg sänks när likheten inte håller efter justeringen för

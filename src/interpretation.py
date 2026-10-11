@@ -281,7 +281,9 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
                 f"{st.get('bin_n')} prövade fall, och inget av de andra beläggen talar emot. Plats, stil och språkdrag ingår "
                 "redan i modellen och räknas inte som oberoende stöd; ett oberoende belägg, t.ex. huggteknik, skulle stärka "
                 "förslaget. " + ("Attribueringen i Rundata kan behöva omprövas." if verdict == "motsäger" else "Värt att pröva runologiskt."))
-    elif ev >= 0.5 and support >= 3 and against == 0 and p_ok and not model_method:
+    # Two independent pieces of evidence: with the language traits dependent on the spelling and a common rock neutral,
+    # area and style are often all that can support a suggestion; a spelling similarity must then also be significant
+    elif ev >= 0.5 and support >= 2 and against == 0 and p_ok and not model_method:
         level = "starkt"
         text = (f"Ett välgrundat förslag: belägget är starkt och {support} andra belägg stämmer med {sug} utan att något talar emot. "
                 + ("Attribueringen i Rundata kan behöva omprövas." if verdict == "motsäger" else "Värt att pröva runologiskt."))

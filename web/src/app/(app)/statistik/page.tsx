@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { DocsNote } from "@/components/KnownLimitations";
+import { Confidence, Details, Figure, LEVEL_STYLE, Md, SigBadge, Tip, asList, type Level, type Significance } from "@/components/Explain";
+import { GLOSSARY } from "@/lib/glossary";
 import Link from "next/link";
 import { API_URL } from "@/lib/api";
 
@@ -39,7 +41,7 @@ interface ChangeAssoc {
   all: { or: number; lo: number; hi: number; p: number; q: number | null } | null;
   dated: { n: number; or?: number; lo?: number; hi?: number; p?: number } | null;
 }
-interface Pattern { topic: string; status: string; text: string; note?: string | null }
+interface Pattern { topic: string; status: string; text: string; note?: string | null; significance?: Significance }
 interface Finding {
   signum: string; place: string; method: string; verdict: string; ours: string; existing: string; score: number;
   assessment: string; suggested?: string; crosscheck?: { status: string; runor?: { text: string; url?: string | null } };
@@ -81,88 +83,6 @@ const d2 = (v: number | null | undefined, k = 2) => v == null ? "–" : v.toFixe
 const pc = (v: number | null | undefined) => v == null ? "–" : `${Math.round(v * 100)} %`;
 const TH = "text-left text-[11px] uppercase tracking-wider text-slate-500 p-2";
 
-// What the measures and columns mean, shown on hover (or tap) – plain language, see METHODS.md 17 for the details
-const GLOSSARY: Record<string, string> = {
-  "q": "p-värde justerat för att många test görs samtidigt (Holm eller Benjamini–Hochberg). Under 0,05 räknas som säkerställt; ju lägre, desto starkare.",
-  "p": "Sannolikheten att få ett minst lika tydligt resultat om det inte fanns något samband. Under 0,05 brukar räknas som statistiskt signifikant.",
-  "Fynd per sten": "Antal resultat från R-analyserna som gäller en enskild sten: attribueringsmodellen, seriationen och okända ristare.",
-  "Nya mot Rundata": "Fynd som säger något Rundata inte anger, t.ex. en ristare för en sten som saknar ristare.",
-  "Motsäger Rundata": "Fynd som pekar på något annat än Rundata, t.ex. en annan ristare än den attribuerade.",
-  "Finns redan i nyare källa": "Fyndet står redan i Runor 2020 eller Wikidata – en bekräftelse av metoden snarare än ny kunskap.",
-  "Nya även mot Runor 2020": "Nya fynd som inte heller finns i Runor 2020 eller Wikidata (bland dem som stämts av).",
-  "bekräftar": "Resultatet stämmer med något forskningen redan utgår från – ett tecken på att metoden fungerar.",
-  "mönster att pröva": "Ett statistiskt mönster som appen inte kan förklara med det den känner till. Det kan vara nytt, eller beskrivet i litteratur som appen inte har.",
-  "begränsning": "Resultatet visar främst en begränsning i data eller metod, inte något om runstenarna.",
-  "svagt": "Mönstret är svagt eller osäkert.",
-  "Sten": "Stenens signum i Rundata.",
-  "Metod": "Vilken analys fyndet kommer från.",
-  "Mot Rundata": "nytt = Rundata saknar uppgiften; motsäger = pekar på något annat än Rundata; stämmer = samma som Rundata.",
-  "Resultat": "Vad analysen kommer fram till för stenen.",
-  "Rundata": "Vad Rundata anger i dag.",
-  "Nyare källor": "Avstämning mot Runor 2020 och Wikidata (görs i Forskningsluckor).",
-  "Bedömning": "Hur starkt fyndet är sammantaget, vägt efter belägg, nyhet och relevans.",
-  "Ristare": "Ristarnamnet i Rundata.",
-  "Säkra stenar": "Stenar där Rundata anger ristaren som säker (signerade eller säkert attribuerade).",
-  "Median till tyngdpunkt": "Medianavståndet från ristarens stenar till deras gemensamma mittpunkt – hur samlat ristaren arbetade.",
-  "Slumpvisa urval": "Samma mått för lika många slumpvis valda stenar ur samma landskap (median av 499 urval).",
-  "Kvot": "Ristarens spridning delad med slumpurvalens. Under 1 betyder att ristaren arbetade inom ett mindre område än slumpen ger.",
-  "Höljets yta": "Ytan av den minsta konvexa polygon som omsluter ristarens stenar.",
-  "Landskap": "Landskap där stenarna står, med Rundatas förkortningar (U = Uppland, Sö = Södermanland, Ög = Östergötland, Vg = Västergötland, Sm = Småland …).",
-  "Grupp": "En grupp stenar som liknar varandra (klustringen görs utan ristare och plats).",
-  "Stenar": "Antal stenar.",
-  "Stabilitet": "Hur ofta gruppen kommer tillbaka när analysen görs om med delvis andra data (0–1). Över 0,75 är stabilt, under 0,5 osäkert.",
-  "Utmärks av": "Drag som är vanligare i gruppen än i hela materialet (andel i gruppen mot andel totalt).",
-  "Stilgrupper": "Gräslunds stilgrupper på stenarna, från RAK (äldst, omkring 980–1015) till Pr5 (yngst, omkring 1100–1130).",
-  "silhuettbredd": "Hur väl stenarna passar i sin grupp jämfört med närmaste andra grupp (−1 till 1). Över 0,5 är tydliga grupper, 0,25–0,5 svag struktur, under 0,25 ingen tydlig struktur.",
-  "justerat Rand-index": "Hur väl två indelningar stämmer överens, rensat för slump: 0 = som slumpen, 1 = identiska.",
-  "Cramérs V": "Styrkan i sambandet mellan två kategorier (0–1), t.ex. hur ett ord stavas och vem som ristade. Över 0,3 är ett tydligt samband.",
-  "Mantel r": "Sambandet mellan två avståndstabeller (−1 till 1), här hur olika häraderna stavar mot hur långt ifrån varandra de ligger.",
-  "rho": "Spearmans rangkorrelation (−1 till 1): 0 = inget samband, 1 = samma ordning.",
-  "Belägg": "Vilka variabler modellen fick använda: bara geografi, bara stil, bara språk och innehåll, eller alla.",
-  "Slumpvis": "Andel rätt vid vanlig korsvalidering, där stenar från samma plats kan finnas både i tränings- och testdata.",
-  "Ny socken/härad": "Andel rätt när hela socknar respektive härader hölls utanför träningen – hur väl modellen fungerar på en plats den inte sett.",
-  "Hittas (recall)": "Andel av ristarens säkra stenar som modellen pekar ut som ristarens (korsvaliderat).",
-  "Rätt när föreslagen (precision)": "När modellen föreslår ristaren: hur ofta det är rätt (korsvaliderat).",
-  "Dimension": "En av korrespondensanalysens huvudaxlar – den riktning där stenarna skiljer sig mest åt.",
-  "Inerti": "Hur stor del av den totala variationen dimensionen fångar.",
-  "Tid (rho)": "Rangkorrelation mellan stenarnas läge på dimensionen och stilgruppens mittår. Över 0,3 (eller under −0,3) betyder att dimensionen följer tiden.",
-  "Latitud (rho)": "Rangkorrelation mellan läget på dimensionen och hur nordligt stenen står.",
-  "Landskap (eta²)": "Hur stor del av variationen längs dimensionen som förklaras av landskapet (0–1).",
-  "Ristare (eta²)": "Hur stor del av variationen längs dimensionen som förklaras av ristaren (0–1), bland ristare med minst åtta stenar.",
-  "Förklaras av": "Vad dimensionen följer: tid, geografi eller ristare. Gult = ett oförklarat mönster.",
-  "Skiljer": "Dragen i dimensionens två ändar.",
-  "Relation": "Släktord i inskrifterna, t.ex. fader, son, broder.",
-  "Inskrifter": "Antal inskrifter som nämner relationen.",
-  "Före ca 1050": "Andel av de daterade inskrifterna från före omkring 1050 (stilgrupp RAK–Pr2) som nämner relationen.",
-  "Efter ca 1050": "Andel av de daterade inskrifterna från efter omkring 1050 (Pr3–Pr5).",
-  "q (tid)": "Justerat p-värde för skillnaden före och efter 1050.",
-  "Kristna": "Andel av inskrifterna med kristen bön eller kors som nämner relationen.",
-  "Övriga": "Andel av övriga inskrifter som nämner relationen.",
-  "q (kristen)": "Justerat p-värde för skillnaden mellan kristna och övriga inskrifter.",
-  "Drag": "Språkdrag, skriftdrag eller innehåll som följs över tid.",
-  "Daterade stenar": "Stenar med stilgrupp (och därmed ungefärlig tid) där draget kan bestämmas.",
-  "Förlopp": "Formen på den justerade kurvan: ökar, minskar, vanligast eller ovanligast vid en viss tid, eller oförändrad.",
-  "Justerad andel": "Andel stenar med draget i början och i slutet av perioden när plats och ristare hålls konstanta – alla stenar flyttas till samma år, för en typisk ristare.",
-  "Omräkningar säkerställda": "Stilgruppen ger ett tidsintervall, inte ett år. Resultatet räknades om med årtal dragna inom intervallen; här andelen omräkningar som också gav ett säkerställt samband.",
-  "Vanligast i": "Landskap där draget är vanligast enligt kartmodellen.",
-  "Ovanligast i": "Landskap där draget är ovanligast enligt kartmodellen.",
-  "Brostenar": "Andel av bro- och vägstenarna som har draget (och hur många brostenar det finns).",
-  "Andra stenar": "Andel av övriga stenar med tolkningsbar text som har draget.",
-  "Oddskvot (95 % KI)": "Hur mycket större oddsen för draget är på brostenar än på andra stenar, med plats och ristare konstanta. 1 = ingen skillnad. KI = 95 % konfidensintervall; innehåller det 1 är skillnaden osäker.",
-  "Daterade, med tid": "Samma oddskvot bland daterade stenar när också tiden hålls konstant.",
-  "Nr": "Gruppens nummer på kartan.",
-  "Arbetsnamn": "En etikett efter typstenens socken – inte namnet på en person. Typstenen är den sten som i genomsnitt liknar de andra i gruppen mest.",
-  "Socknar": "Socknar där gruppens stenar står, de vanligaste först.",
-  "Utmärks av (gruppen mot trakten)": "Drag som är vanligare i gruppen än på andra stenar inom 50 km (andel i gruppen mot andel i trakten).",
-  "Närmast liknande ristare i Rundata": "Den kända ristare inom 50 km vars stenar mest liknar gruppen – men inte lika mycket som två stenar av samma ristare brukar göra.",
-  "Liknar": "Den kända ristare som gruppen liknar.",
-  "Attribueringsmodellen": "Vad attribueringsmodellen föreslår för gruppens stenar.",
-  "Möjliga okända ristare": "Grupper av stenar utan ristare som liknar varandra lika mycket som en ristares stenar och inte liknar någon känd ristare i närheten.",
-  "Liknar en känd ristare": "Grupper som liknar en känd ristare – underlag för attribuering snarare än en ny ristare.",
-  "Prövat på kända ristare": "När metoden kördes på stenar med känd ristare, som om ristaren vore okänd: hur stor del av en grupp som i genomsnitt var samma ristare.",
-  "Bara närliggande stenar": "Samma mått för grupper av lika många närliggande stenar. Skillnaden mot rutan bredvid är vad handens drag (stavning, språk, formler, stil) tillför utöver platsen.",
-};
-
 // How to read each figure (keyed by its alt text)
 const FIG_HELP: Record<string, string> = {
   "Ristarnas områden": "Varje panel är en ristare. Blå punkter är ristarens säkra stenar, linjen är det konvexa höljet runt dem och + tyngdpunkten; grått är alla runstenar. Ett litet, samlat hölje betyder att ristaren arbetade lokalt.",
@@ -192,94 +112,16 @@ const FIG_HELP: Record<string, string> = {
   "Grupper av stenar utan ristare": "Röda punkter är grupper som kan vara en okänd ristare eller verkstad, blå är grupper som liknar en känd ristare. Numren hänvisar till tabellerna nedan; grått är övriga stenar med läsbar text.",
 };
 
-// A term with an explanation on hover, focus or tap. The box is placed on the page itself (portal), so that tables
-// with their own scrolling do not cut it off.
-function Tip({ text, children }: { text?: string; children: ReactNode }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const [pos, setPos] = useState<{ x: number; y: number; above: boolean } | null>(null);
-  if (!text) return <>{children}</>;
-  const show = () => {
-    const r = ref.current?.getBoundingClientRect();
-    if (!r) return;
-    const above = r.bottom + 170 > window.innerHeight;
-    setPos({ x: Math.max(8, Math.min(r.left, window.innerWidth - 296)), y: above ? r.top - 6 : r.bottom + 6, above });
-  };
-  return (
-    <span ref={ref} tabIndex={0} role="button" aria-label={text}
-      onMouseEnter={show} onMouseLeave={() => setPos(null)} onFocus={show} onBlur={() => setPos(null)}
-      onClick={e => { e.stopPropagation(); if (pos) setPos(null); else show(); }}
-      className="cursor-help underline decoration-dotted decoration-slate-400 underline-offset-2 outline-none focus-visible:ring-2 focus-visible:ring-[#b7410e]/40 rounded">
-      {children}
-      {pos && createPortal(
-        <span role="tooltip" style={{ left: pos.x, top: pos.y, transform: pos.above ? "translateY(-100%)" : undefined }}
-          className="fixed z-[100] w-72 rounded-xl bg-slate-900 px-3 py-2 text-[12px] font-normal normal-case tracking-normal leading-snug text-white shadow-xl pointer-events-none">
-          {text}
-        </span>, document.body)}
-    </span>
-  );
-}
-
 // A column heading; the explanation is looked up from the heading text unless given
 function Th({ children, tip }: { children: ReactNode; tip?: string }) {
   return <th className={TH}><Tip text={tip ?? (typeof children === "string" ? GLOSSARY[children] : undefined)}>{children}</Tip></th>;
 }
 
-function Lightbox({ src, alt, help, onClose }: { src: string; alt: string; help?: string; onClose: () => void }) {
-  const [full, setFull] = useState(false);
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
-  return createPortal(
-    <div role="dialog" aria-modal="true" aria-label={alt} onClick={onClose}
-      className="fixed inset-0 z-[90] bg-slate-900/80 backdrop-blur-sm flex flex-col items-center p-3 md:p-8">
-      <div className="w-full max-w-6xl flex flex-wrap items-center justify-between gap-2 text-white mb-3" onClick={e => e.stopPropagation()}>
-        <div className="font-bold">{alt}</div>
-        <div className="flex gap-2 text-xs font-bold">
-          <button type="button" onClick={() => setFull(f => !f)} className="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25">
-            {full ? "Anpassa till fönstret" : "Full storlek"}
-          </button>
-          <a href={src} target="_blank" rel="noreferrer" className="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25">Öppna i ny flik</a>
-          <button type="button" onClick={onClose} className="px-3 py-1.5 rounded-lg bg-white text-slate-900">Stäng</button>
-        </div>
-      </div>
-      <div className="w-full max-w-6xl flex-1 min-h-0 overflow-auto rounded-2xl bg-white p-2" onClick={e => e.stopPropagation()}>
-        {/* eslint-disable-next-line @next/next/no-img-element -- figures are rendered by R on the backend */}
-        <img src={src} alt={alt} onClick={() => setFull(f => !f)}
-          className={full ? "max-w-none cursor-zoom-out" : "w-full h-auto cursor-zoom-in"} />
-      </div>
-      {help && <p className="w-full max-w-6xl mt-3 text-sm text-white/90 leading-relaxed" onClick={e => e.stopPropagation()}>{help}</p>}
-    </div>, document.body);
-}
-
-// An R figure: click to enlarge; "Så läser du figuren" explains it on hover
+// An R figure from the backend, with its reading guide
 function Fig({ src, alt, narrow }: { src?: string; alt: string; narrow?: boolean }) {
-  const [open, setOpen] = useState(false);
-  if (!src) return null;
-  const url = `${API_URL}${src}`;
-  const help = FIG_HELP[alt];
-  return (
-    <figure className={`group/fig rounded-2xl bg-white border border-slate-200 p-2 ${narrow ? "max-w-3xl w-full mx-auto" : ""}`}>
-      <button type="button" onClick={() => setOpen(true)} className="relative block w-full cursor-zoom-in" aria-label={`Förstora: ${alt}`}>
-        {/* eslint-disable-next-line @next/next/no-img-element -- figures are rendered by R on the backend */}
-        <img src={url} alt={alt} className="w-full h-auto rounded-xl" loading="lazy" />
-        <span className="absolute top-2 right-2 rounded-lg bg-slate-900/75 text-white text-[11px] font-bold px-2 py-1 opacity-0 group-hover/fig:opacity-100 transition-opacity">
-          Förstora
-        </span>
-      </button>
-      {help && (
-        <figcaption className="px-2 pt-2 pb-1 text-[11px] text-slate-600">
-          <Tip text={help}><span className="font-semibold">Så läser du figuren</span></Tip>
-          <span className="text-slate-400"> · klicka på figuren för att förstora</span>
-        </figcaption>
-      )}
-      {open && <Lightbox src={url} alt={alt} help={help} onClose={() => setOpen(false)} />}
-    </figure>
-  );
+  return <Figure src={src ? `${API_URL}${src}` : undefined} alt={alt} help={FIG_HELP[alt]} narrow={narrow} />;
 }
 
-// The method in short; caveats and how to read the results are in the documentation (METHODS.md 17)
 function Method({ text, caveat }: { text?: string; caveat?: string }) {
   if (!text) return null;
   return (
@@ -291,52 +133,16 @@ function Method({ text, caveat }: { text?: string; caveat?: string }) {
   );
 }
 
-// R writes a one-element vector as a plain value
-const asList = (v: string[] | string | null | undefined): string[] => v == null ? [] : Array.isArray(v) ? v : [v];
-
-// A collapsible block for the detailed numbers, so that the page starts with the answer
-function Details({ title, children, open }: { title: string; children: ReactNode; open?: boolean }) {
-  return (
-    <details open={open} className="group/det rounded-2xl border border-slate-200 bg-white/70">
-      <summary className="cursor-pointer select-none list-none px-4 py-3 font-semibold text-slate-800 flex items-center justify-between gap-3">
-        <span>{title}</span>
-        <span className="text-xs font-bold text-[#b7410e] group-open/det:hidden">Visa</span>
-        <span className="text-xs font-bold text-[#b7410e] hidden group-open/det:inline">Dölj</span>
-      </summary>
-      <div className="px-4 pb-4 space-y-3">{children}</div>
-    </details>
-  );
-}
-
-// **bold** in the explanations from the server
-function Md({ text }: { text: string }) {
-  return <>{text.split("**").map((part, i) => i % 2 ? <strong key={i} className="text-slate-900">{part}</strong> : <span key={i}>{part}</span>)}</>;
-}
-
-type Level = "säkert" | "troligt" | "osäkert";
-const LEVEL_STYLE: Record<Level, string> = {
-  "säkert": "bg-emerald-50 text-emerald-800 border-emerald-200",
-  "troligt": "bg-amber-50 text-amber-900 border-amber-200",
-  "osäkert": "bg-slate-100 text-slate-700 border-slate-300",
-};
-const LEVEL_HELP: Record<Level, string> = {
-  "säkert": "Resultatet är prövat (t.ex. med korsvalidering eller slumptest) och stämmer med vad forskningen redan utgår från.",
-  "troligt": "Resultatet håller statistiskt, men det finns viktiga reservationer – läs vad resultatet inte säger.",
-  "osäkert": "Ett mönster att pröva: strukturen är svag, eller resultatet är hypoteser som behöver granskas av en runolog.",
-};
-
-function Confidence({ level, text }: { level: Level; text: string }) {
-  return (
-    <span className={`inline-flex shrink-0 items-center rounded-full border px-3 py-1 text-xs font-bold ${LEVEL_STYLE[level]}`}>
-      <Tip text={LEVEL_HELP[level]}>{text}</Tip>
-    </span>
-  );
-}
-
 interface Section {
   key: Tab; question: string; why: string; headline: { value: string; label: string }; answer: string; short: string;
   confidence: Level; confidence_text: string; interpretation: string[]; not_saying: string[];
 }
+
+const PATTERN_TOPICS: Record<string, string[]> = {
+  geography: ["Geografi"], attribution: ["Attribuering"], text: ["Språk"], clusters: ["Stil och innehåll"],
+  chronology: ["Datering"], network: ["Släkt och formler"], anonymous: ["Okända ristare"], change: ["Förändring"],
+};
+const patternsFor = (patterns: Pattern[], key: string) => patterns.filter(p => (PATTERN_TOPICS[key] ?? []).includes(p.topic));
 
 const TOPIC: Record<string, string> = {
   attribution: "Vem ristade?", anonymous: "Okända ristare", change: "Förändring", chronology: "Datering",
@@ -344,8 +150,9 @@ const TOPIC: Record<string, string> = {
 };
 
 // The answer first: question, why it matters, the key number, the answer, a suggested interpretation and its limits
-function SectionIntro({ section }: { section?: Section }) {
+function SectionIntro({ section, patterns = [] }: { section?: Section; patterns?: Pattern[] }) {
   if (!section) return null;
+  const tests = patternsFor(patterns, section.key);
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -376,6 +183,23 @@ function SectionIntro({ section }: { section?: Section }) {
           <ul className="space-y-2 text-sm text-slate-600 list-disc pl-5">{section.not_saying.map((t, i) => <li key={i}>{t}</li>)}</ul>
         </div>
       </div>
+      {tests.length > 0 && (
+        <div className="rounded-2xl bg-white border border-slate-200 p-5">
+          <h4 className="font-bold text-slate-900 mb-1">Statistiska test i den här delen</h4>
+          <p className="text-xs text-slate-500 mb-3">
+            {tests.filter(t => t.significance?.significant).length} av {tests.length} resultat är statistiskt säkerställda
+            (<Tip text={GLOSSARY["Statistiskt säkerställt"]}>vad betyder det?</Tip>).
+          </p>
+          <ul className="space-y-2 text-sm">
+            {tests.map((t, i) => (
+              <li key={i} className="flex flex-col sm:flex-row sm:items-start gap-2">
+                <SigBadge sig={t.significance} />
+                <span className="text-slate-700">{t.text}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <h4 className="font-bold text-slate-900 pt-2">Figurer och siffror</h4>
     </div>
   );
@@ -598,6 +422,49 @@ const STATUS_STYLE: Record<string, string> = {
 
 const sectionOf = (data: Corpus, key: Tab) => (data.sections ?? []).find(x => x.key === key);
 
+// The statistically significant results, so that they stand out from the descriptive ones
+function SignificantBox({ patterns, onOpen }: { patterns: Pattern[]; onOpen: (t: Tab) => void }) {
+  const tested = patterns.filter(p => p.significance && p.significance.significant !== null);
+  const sig = tested.filter(p => p.significance?.significant);
+  const untested = patterns.filter(p => p.significance && p.significance.significant === null);
+  if (!patterns.some(p => p.significance)) return null;
+  const sectionOfTopic = (topic: string) => (Object.entries(PATTERN_TOPICS).find(([, ts]) => ts.includes(topic))?.[0] ?? "overview") as Tab;
+  const topics = Array.from(new Set(sig.map(p => p.topic)));
+  return (
+    <section className="rounded-3xl border border-emerald-200 bg-emerald-50/60 p-6 md:p-8">
+      <div className="flex flex-wrap items-baseline justify-between gap-3">
+        <div>
+          <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-800">Statistiskt säkerställt</div>
+          <h3 className="text-2xl font-bold tracking-tight text-slate-900">Upptäckter som sannolikt inte är slump</h3>
+        </div>
+        <div className="text-sm text-slate-700"><span className="text-3xl font-bold text-emerald-800">{sig.length}</span> av {tested.length} prövade resultat</div>
+      </div>
+      <p className="text-sm text-slate-700 mt-2 max-w-4xl">
+        Ett resultat är <strong>statistiskt säkerställt</strong> när p-värdet – eller q, som tar hänsyn till att många saker prövats
+        samtidigt – är under 0,05. Det betyder att mönstret sannolikt finns i materialet, inte att tolkningen av det är rätt.
+        {untested.length > 0 && ` ${untested.length} resultat är inte prövade med signifikanstest (t.ex. attribueringsmodellen, som i stället prövats med korsvalidering).`}
+      </p>
+      <div className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {topics.map(topic => (
+          <div key={topic} className="rounded-2xl bg-white border border-emerald-100 p-4">
+            <button type="button" onClick={() => onOpen(sectionOfTopic(topic))} className="text-[11px] font-bold uppercase tracking-wider text-[#b7410e] hover:underline">
+              {topic} →
+            </button>
+            <ul className="mt-2 space-y-2 text-sm">
+              {sig.filter(p => p.topic === topic).map((p, i) => (
+                <li key={i} className="flex flex-col gap-1">
+                  <SigBadge sig={p.significance} />
+                  <span className="text-slate-700">{p.text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void }) {
   const s = data.findings_summary;
   const top = data.findings.filter(f => f.verdict !== "stämmer").slice(0, 25);
@@ -617,6 +484,8 @@ function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void }) 
           </div>
         </section>
       )}
+
+      <SignificantBox patterns={data.patterns} onOpen={onOpen} />
 
       <section>
         <h3 className="text-xl font-bold text-slate-900 mb-1">Frågorna i korthet</h3>
@@ -638,6 +507,14 @@ function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void }) 
               </div>
               <p className="text-sm text-slate-800">{x.short}</p>
               {x.interpretation[0] && <p className="text-sm text-slate-600"><span className="font-semibold text-slate-700">Tolkning: </span>{x.interpretation[0]}</p>}
+              {(() => {
+                const ts = patternsFor(data.patterns, x.key), k = ts.filter(t => t.significance?.significant).length;
+                return ts.length > 0 ? (
+                  <span className={`text-xs font-semibold ${k ? "text-emerald-800" : "text-slate-500"}`}>
+                    {k ? `✓ ${k} av ${ts.length} resultat statistiskt säkerställda` : `Inget av ${ts.length} resultat statistiskt säkerställt`}
+                  </span>
+                ) : null;
+              })()}
               <span className="text-xs font-bold text-[#b7410e] mt-auto">Läs mer →</span>
             </button>
           ))}
@@ -667,7 +544,10 @@ function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void }) 
                 <ul className="space-y-2 text-sm">
                   {items.map((pt, i) => (
                     <li key={i} className="flex gap-3 rounded-xl bg-white border border-slate-200 p-3">
-                      <span className={`shrink-0 h-fit px-2 py-0.5 rounded-lg border text-[11px] font-bold ${STATUS_STYLE[pt.status] ?? ""}`}><Tip text={GLOSSARY[pt.status]}>{pt.status}</Tip></span>
+                      <div className="flex flex-col gap-1 shrink-0">
+                        <span className={`h-fit w-fit px-2 py-0.5 rounded-lg border text-[11px] font-bold ${STATUS_STYLE[pt.status] ?? ""}`}><Tip text={GLOSSARY[pt.status]}>{pt.status}</Tip></span>
+                        <SigBadge sig={pt.significance} compact />
+                      </div>
                       <div>
                         <span className="text-[11px] uppercase tracking-wider text-slate-500 mr-2">{pt.topic}</span>{pt.text}
                         {pt.note && <div className="text-xs text-slate-500 mt-1">{pt.note}</div>}
@@ -726,7 +606,7 @@ function Geography({ data }: { data: Corpus }) {
   const g = data.geography, f = data.figure_urls.geography || {};
   return (
     <>
-      <SectionIntro section={sectionOf(data, "geography")} />
+      <SectionIntro section={sectionOf(data, "geography")} patterns={data.patterns} />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4"><Fig src={f.map} alt="Ristarnas områden" /><Fig src={f.water} alt="Avstånd till vatten" /></div>
       {data.html_map_url && (
         <a href={`${API_URL}${data.html_map_url}`} target="_blank" rel="noreferrer" className="inline-block text-sm font-semibold text-[#b7410e] hover:underline">
@@ -756,7 +636,7 @@ function Clusters({ data }: { data: Corpus }) {
   const c = data.clusters, f = data.figure_urls.clusters || {};
   return (
     <>
-      <SectionIntro section={sectionOf(data, "clusters")} />
+      <SectionIntro section={sectionOf(data, "clusters")} patterns={data.patterns} />
       <p className="text-sm text-slate-600">
         {c.n_stones} stenar med tillräckligt många drag ingår. Strukturen är {c.structure} (<Tip text={GLOSSARY["silhuettbredd"]}>silhuettbredd</Tip>{" "}
         {d2(c.best_silhouette)}), och grupperna sammanfaller inte med ristarna (<Tip text={GLOSSARY["justerat Rand-index"]}>justerat Rand-index</Tip> {d2(c.carvers.ari)}).
@@ -788,7 +668,7 @@ function TextTab({ data }: { data: Corpus }) {
   const t = data.text, dl = data.dialect, ft = data.figure_urls.text || {}, fd = data.figure_urls.dialect || {};
   return (
     <>
-      <SectionIntro section={sectionOf(data, "text")} />
+      <SectionIntro section={sectionOf(data, "text")} patterns={data.patterns} />
       <h4 className="font-semibold text-slate-900">Ristarnas stavning och formler</h4>
       <p className="text-sm text-slate-600">
         Hur tydligt formlerna skiljer ristarna åt (<Tip text={GLOSSARY["Cramérs V"]}>Cramérs V</Tip>, 0–1):{" "}
@@ -823,7 +703,7 @@ function Attribution({ data }: { data: Corpus }) {
   const all = a.ablation.find(x => x.features === "Alla");
   return (
     <>
-      <SectionIntro section={sectionOf(data, "attribution")} />
+      <SectionIntro section={sectionOf(data, "attribution")} patterns={data.patterns} />
       <div className="rounded-2xl bg-white border border-slate-200 p-5">
         <h4 className="font-semibold text-slate-900 mb-3">Hur ofta modellen väljer rätt ristare</h4>
         <div className="space-y-2">
@@ -889,7 +769,7 @@ function Chronology({ data }: { data: Corpus }) {
   const ch = data.chronology, f = data.figure_urls.chronology || {}, v = ch.validation;
   return (
     <>
-      <SectionIntro section={sectionOf(data, "chronology")} />
+      <SectionIntro section={sectionOf(data, "chronology")} patterns={data.patterns} />
       <p className="text-sm text-slate-600">
         Seriationen ordnar stenarna efter vilka språkdrag, formler och innehåll de delar (<Tip text={GLOSSARY["rho"]}>rho</Tip> mot stilgrupperna{" "}
         {d2(v.rho)}; {d2(v.partial_rho)} när hänsyn tas till hur nordligt stenarna står). Medelfel för ett årtal {v.mae_loo_years} år, mot {v.mae_naive_years} år utan modell.
@@ -925,7 +805,7 @@ function Network({ data }: { data: Corpus }) {
   const n = data.network, f = data.figure_urls.network || {};
   return (
     <>
-      <SectionIntro section={sectionOf(data, "network")} />
+      <SectionIntro section={sectionOf(data, "network")} patterns={data.patterns} />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4"><Fig src={f.network} alt="Formelnätverk" /><Fig src={f.kinship} alt="Släktrelationer" /></div>
       <Details title="Orden i varje formelgrupp" open>
         <ul className="text-sm space-y-1">
@@ -962,7 +842,7 @@ function Change({ data }: { data: Corpus }) {
   const crossing = c.features.filter(x => (x.provinces?.rows || []).filter(r => r.cross_year).length >= 2);
   return (
     <>
-      <SectionIntro section={sectionOf(data, "change")} />
+      <SectionIntro section={sectionOf(data, "change")} patterns={data.patterns} />
       <div className="rounded-2xl bg-white border border-slate-200 p-4">
         <h4 className="font-semibold text-slate-900">Varje drag över tid</h4>
         <p className="text-xs text-slate-500 mb-3">
@@ -1055,7 +935,7 @@ function Anonymous({ data }: { data: Corpus }) {
   const cands = a.groups.filter(g => g.status === "candidate"), known = a.groups.filter(g => g.status === "known");
   return (
     <>
-      <SectionIntro section={sectionOf(data, "anonymous")} />
+      <SectionIntro section={sectionOf(data, "anonymous")} patterns={data.patterns} />
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[["Möjliga okända ristare", `${cands.length} grupper`], ["Liknar en känd ristare", `${known.length} grupper`],
           ["Prövat på kända ristare", `${pc(v.purity)} samma ristare`], ["Bara närliggande stenar", `${pc(v.purity_geography)} samma ristare`]].map(([l, val]) => (

@@ -241,11 +241,39 @@ class OrthographyModel:
         self._ref_sims = out
         return out
 
+    def _max_null(self) -> np.ndarray:
+        """Nollfördelningen för den bästa av alla ristare: för varje inskrift med känd ristare den högsta likheten
+        med någon *annan* ristares profil (sorterad). Den mäter hur lik en inskrift brukar vara den mest lika ristaren
+        när den mest lika ristaren är fel – samma urval som när förstavalet väljs (max-statistik, Westfall–Young)."""
+        if getattr(self, "_max_null_sims", None) is not None:
+            return self._max_null_sims
+        labels = self._labelled()
+        names = sorted(set(labels.values()))
+        if len(names) < 2:
+            self._max_null_sims = np.array([])
+            return self._max_null_sims
+        ref = self._reference_sims()
+        centres = []
+        for g in names:
+            idx = [i for i, h in labels.items() if h == g]
+            total = np.asarray(self.X[idx].sum(axis=0)).ravel()
+            centres.append(total / max(np.linalg.norm(total), 1e-12))
+        C = np.vstack(centres)
+        rows = sorted(labels)
+        S = np.asarray(self.X[rows] @ C.T)
+        own = np.array([names.index(labels[i]) for i in rows])
+        S[np.arange(len(rows)), own] = -np.inf
+        self._max_null_sims = np.sort(S.max(axis=1))
+        del ref
+        return self._max_null_sims
+
     def significance(self, carver: str, similarity: float) -> dict | None:
         """Hur ovanligt hög likheten är. p = andelen av andra ristares inskrifter som är minst lika lika
-        ristarens profil (empiriskt, med +1-korrektion). Eftersom den mest lika av alla ristare väljs
-        redovisas även p justerat för antalet ristare (Bonferroni). own = andelen av ristarens egna
-        inskrifter (lämna-en-ute) med lägre likhet – hur typisk likheten är för ristaren själv."""
+        ristarens profil (empiriskt, med +1-korrektion). Eftersom den mest lika av alla ristare väljs redovisas
+        även ett justerat p: andelen inskrifter med känd ristare vars högsta likhet med en *annan* ristare är minst
+        lika hög (max-statistik). Den ersätter Bonferroni (p × antalet ristare), som med omkring 500 inskrifter i
+        nollfördelningen aldrig kunde gå under 0,05. own = andelen av ristarens egna inskrifter (lämna-en-ute) med
+        lägre likhet – hur typisk likheten är för ristaren själv."""
         ref = self._reference_sims().get(carver)
         if ref is None or not len(ref["null"]):
             return None
@@ -253,10 +281,13 @@ class OrthographyModel:
         k = len(null) - int(np.searchsorted(null, similarity, side="left"))
         p = (k + 1) / (len(null) + 1)
         n_carvers = len(self._reference_sims())
+        mx = self._max_null()
+        k_max = len(mx) - int(np.searchsorted(mx, similarity, side="left"))
+        p_adj = (k_max + 1) / (len(mx) + 1) if len(mx) else min(1.0, p * n_carvers)
         return {
-            "p_value": round(p, 5), "p_adjusted": round(min(1.0, p * n_carvers), 5), "n_null": int(len(null)),
+            "p_value": round(p, 5), "p_adjusted": round(max(p, p_adj), 5), "n_null": int(len(null)),
             "own_percentile": round(float(np.searchsorted(own, similarity) / len(own)), 3) if len(own) else None,
-            "n_carvers": n_carvers,
+            "n_carvers": n_carvers, "adjustment": "max-statistik",
         }
 
     @staticmethod
