@@ -381,4 +381,7 @@ def test_language_traits_are_weighed_against_the_province_and_tested():
     # Chosen by a spelling-based method: the traits are not independent support, but could still speak against
     assert chosen["fits"] is None and "inte som ett oberoende stöd" in chosen["text"]
     assert any(r.get("lr") is not None and r.get("region_share") is not None for r in plain["rows"])
-    assert "lika vanliga eller vanligare på andra stenar i U" in plain["text"]
+    # The traits are counted for, against and neutral against the province, with small denominators flagged
+    assert plain["text"].startswith("Av ") and "talar" in plain["text"] and "skiljer inte" in plain["text"]
+    assert plain["n_for"] + plain["n_against"] + plain["n_neutral"] == len([r for r in plain["rows"]
+                                                                          if not r["repeats"] and r.get("lr") is not None])

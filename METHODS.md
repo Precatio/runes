@@ -625,17 +625,21 @@ R-modellens sannolikhet (avsnitt 17; korsvaliderad för stenar med säker ristar
 inom 25 km från en träningssten), ortografin (avsnitt 6; minst åtta ord, stenen själv utelämnad), området
 (ristarens landskap och högst 60 km till en säker sten av ristaren), stilgruppen, språkdragen (mot landskapet med
 p-värde; avsnitt 8) och bergarten (avsnitt 10). Stilgruppen jämförs sedan 2026-10-11 med ristarens *kärna*, de
-stilgrupper som finns på minst 10 % av ristarens säkra stenar: den stämmer om stenens stilgrupp hör till kärnan
-eller överlappar den i tid enligt Gräslund, och annars anges glappet i år (en enstaka RAK-sten bland 25 gör inte RAK
-till ristarens stil). Ett glapp på minst 25 år gör förslaget kronologiskt problematiskt, t.ex. U 92 (RAK, omkring
+stilgrupper som finns på minst 10 % av ristarens säkra stenar: den stämmer om stenens stilgrupp hör till kärnan.
+En stilgrupp utanför kärnan men inom dess tidsram enligt Gräslund avgör inte (sedan 2026-10-11, efter granskningen av
+U 735: Pr3 finns på 2 av Öpirs 101 stenar och räknades tidigare som att stilen stämde); utanför tidsramen talar den
+emot och glappet anges i år (en enstaka RAK-sten bland 25 gör inte RAK till ristarens stil). Tidsramen som anges för
+en ristare är kärnans. Ett glapp på minst 25 år gör förslaget kronologiskt problematiskt, t.ex. U 92 (RAK, omkring
 980–1015) mot Öpir (Pr4–Pr5, 55 år senare) och Visäte (Pr3–Pr4, 35 år senare).
 
 * **Stöd** för Rundatas ristare (0–1): viktat medelvärde av de metoder som kan uttala sig – modellen med sin
   sannolikhet för ristaren (vikt 2), ortografin med 1 om ristaren kommer först, 0,6 bland de tre första och annars
   0 (vikt 1,5), område, stilgrupp och språkdrag med 1 eller 0 (vikt 1) och bergarten med 1 eller 0 (vikt 0,5).
 * **Alternativ** (0–1): för varje annan ristare som modellen eller ortografin pekar på räknas
-  1 − (1 − modellens sannolikhet)(1 − ortografins tillförlitlighet om han kommer först), multiplicerat med
+  1 − (1 − modellens sannolikhet)(1 − ortografins tillförlitlighet om ristaren kommer först), multiplicerat med
   0,5 + 0,5 × andelen kontroller (område, stilgrupp, språkdrag, bergart) ristaren klarar; det starkaste redovisas.
+  Ortografins förstaval räknas fullt bara när det leder tvåan med minst 0,05 i likhet, annars i proportion till
+  marginalen (sedan 2026-10-11; U 735: Öpir 1 0,66 mot Balle 0,64 gav tidigare styrkan 0,70 och status *omstridd*).
 * **Status** för stenar med ristare: *kan vara felbedömd* (alternativ ≥ 0,4 och stöd < 0,4), *omstridd*
   (alternativ ≥ 0,4), *stöds* (stöd ≥ 0,6), annars *svagt underlag* – också när färre än två metoder kan uttala
   sig. Signerade stenar redovisas för sig. För stenar utan ristare: *nytt förslag* (alternativ ≥ 0,5), *möjligt
@@ -644,11 +648,13 @@ till ristarens stil). Ett glapp på minst 25 år gör förslaget kronologiskt pr
 Har Rundata flera ristare för stenen (två som signerat tillsammans, eller en signatur och en attribuering; 113
 runstenar) räknas stödet för var och en, den bäst stödda redovisas och de övriga räknas inte som alternativ.
 
-Resultat (2026-10-11, efter granskningarna av U 92 och U 1026 – kronologisk stilkontroll, neutral bergart och
-språkdrag mot landskapet): 15 stenar kan vara felbedömda, 49 är omstridda, 322 stöds och 139 har svagt underlag; 98
-stenar utan ristare får ett nytt och 258 ett möjligt förslag. **Kontroll:** av 246 signerade stenar – där ristaren är
-känd – hade 57 (23 %) fått ett alternativ ≥ 0,4 och fyra hamnat som "kan vara felbedömd". Kategorin *omstridd* larmar
-alltså ofta i onödan, medan *kan vara felbedömd* sällan gör det. Måtten är index för att sortera och prioritera,
+Resultat (2026-10-11, efter granskningarna av U 92, U 1026 och U 735 – kronologisk stilkontroll, neutral bergart,
+språkdrag mot landskapet, stilgruppens kärna och ortografins marginal): 9 stenar kan vara felbedömda, 26 är omstridda,
+330 stöds och 160 har svagt underlag; 80 stenar utan ristare får ett nytt och 251 ett möjligt förslag. **Kontroll:**
+av 246 signerade stenar – där ristaren är känd – får 33 (13 %) ett alternativ ≥ 0,4 och fyra hamnar som "kan vara
+felbedömd". Före U 735-granskningen var det 57 (23 %): ett förstaval i ortografin med liten marginal och en ovanlig
+stilgrupp inom kärnans tidsram gav många falsklarm. Kategorin *omstridd* larmar fortfarande ofta i onödan, medan *kan
+vara felbedömd* sällan gör det. Måtten är index för att sortera och prioritera,
 inte sannolikheter; bara modellens sannolikhet är kalibrerad. Metoderna är inte oberoende av Rundata: ortografi,
 område och stil kan ha legat till grund för attribueringarna (avsnitt 18). Profilen för en sten visar varje metods
 besked med förklaring, de tre starkaste alternativen med sina kontroller, och stenens höjd, textlängd och antal
@@ -868,8 +874,27 @@ tre kan tala emot. *Starkt* kräver att både modellen (förstaval med minst 0,5
 p under 0,05) pekar på ristaren och att inget talar emot. Före rättelsen kunde modellen och ortografin ensamma ge
 *starkt*; av 1 003 alternativ i Stenöversikt blev 51 starka, nu 4.
 
+**Jämförelsen med Rundatas ristare** (sedan 2026-10-11, efter granskningen av U 735). När dokumentet prövar en annan
+ristare än Rundatas räknas det som talar för Rundatas ristare framför den prövade: modellen har Rundatas ristare som
+förstaval och ger den mer än den prövade; språkdragen passar Rundatas ristare signifikant bättre än landskapets övriga
+stenar men inte den prövade; Rundatas ristare har en sten minst tre gånger närmare (och den prövade minst 10 km bort);
+stenens stilgrupp hör till kärnan hos Rundatas ristare men inte hos den prövade. Ett drag som redan talar emot den
+prövade räknas inte igen. Beläggen är inte oberoende av varandra (modellen använder läge, stil och språkdrag), vilket
+sägs i texten. Runor 2020 räknas inte som belägg emot förslaget när den anger samma ristare som Rundata – Runor är en
+senare utgåva av samma databas. Ortografins förstaval räknas som neutralt när det leder tvåan med mindre än 0,05 i
+likhet och inte är signifikant. Den samlade styrkan kallas inte stark eller måttlig utan förbehåll när modellen inte
+stöder förslaget eller stavningslikheten inte är signifikant.
+
+**Dokumenttyp.** *Starkt* och *måttligt* ger ett dokument till runtextdatabasen. *Svagt* ger ett internt
+arbetsunderlag som inte bör skickas som förslag; talar minst två belägg för Rundatas ristare heter det "Prövning av
+{signum}: Rundatas attribuering till {ristare} stöds". Dokumentet anger varifrån hypotesen kommer (Stenöversiktens
+alternativ från modellen och ortografin). Jämförelsestenarna är de närmaste stenarna där ristaren är ensam ristare och
+som finns kvar, med minst en signerad; närmare stenar med flera ristare eller som är försvunna nämns med skäl.
+Källkritiken tar bara med de kända bristerna som gäller dokumentet (platsläckage i korsvalideringen, många test,
+Rundatas utgåva), inte huggspårsmåtten eller stenarnas mått, som inte används.
+
 Ristarnamn som enligt forskningen är grupper får en not (t.ex. "Traen"). Dokumentet exporteras som Word och Markdown;
-mottagare och e-post fylls i av avsändaren. Ingen AI-text.
+mottagare fylls i av avsändaren och e-post hämtas ur kontoinställningarna (förvalt kontots adress). Ingen AI-text.
 
 ## 15. Jämförbarhet med tidigare forskning
 

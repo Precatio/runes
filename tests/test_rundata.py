@@ -78,3 +78,11 @@ def test_synthesis_without_ai_returns_evidence(client, monkeypatch):
     assert top["name"] == "Balle" and top["strength"] == "stark"
     assert {e["source"] for e in top["evidence"]} >= {"Rundata", "Ortografi"}
     assert "probability" not in top
+
+
+def test_percentages_are_not_signa():
+    """'Vg 84 %' in a text about province shares is a share, not the inscription Vg 84."""
+    from api.rundata import SIGNUM_IN_TEXT_RE
+    found = lambda t: [f"{a} {b}" for a, b in SIGNUM_IN_TEXT_RE.findall(t)]
+    assert found("andelen var Vg 84 % och U 26,5 % mot Sö 12 procent") == []
+    assert found("jämför U 735 och Sö 113. Se också U_1026.stl") == ["U 735", "Sö 113", "U 1026"]

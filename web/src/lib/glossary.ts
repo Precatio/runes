@@ -1,7 +1,7 @@
 // Plain-language explanations of the statistical terms, shared by the pages with much data. Shown on hover
 // (or tap) and in the glossary; see METHODS.md for the details.
 export const GLOSSARY: Record<string, string> = {
-  "q": "p-värde justerat för att många test görs samtidigt (Holm eller Benjamini–Hochberg). Under 0,05 räknas som säkerställt; ju lägre, desto starkare.",
+  "q": "p-värde justerat för att många test görs samtidigt (Holm eller Benjamini–Hochberg). Under 0,05 räknas som signifikant; ju lägre, desto starkare.",
   "p": "Sannolikheten att få ett minst lika tydligt resultat om det inte fanns något samband. Under 0,05 brukar räknas som statistiskt signifikant.",
   "Fynd per sten": "Antal resultat från R-analyserna som gäller en enskild sten: attribueringsmodellen, seriationen och okända ristare.",
   "Nya mot Rundata": "Fynd som säger något Rundata inte anger, t.ex. en ristare för en sten som saknar ristare.",
@@ -61,7 +61,7 @@ export const GLOSSARY: Record<string, string> = {
   "Daterade stenar": "Stenar med stilgrupp (och därmed ungefärlig tid) där draget kan bestämmas.",
   "Förlopp": "Formen på den justerade kurvan: ökar, minskar, vanligast eller ovanligast vid en viss tid, eller oförändrad.",
   "Justerad andel": "Andel stenar med draget i början och i slutet av perioden när plats och ristare hålls konstanta – alla stenar flyttas till samma år, för en typisk ristare.",
-  "Omräkningar säkerställda": "Stilgruppen ger ett tidsintervall, inte ett år. Resultatet räknades om med årtal dragna inom intervallen; här andelen omräkningar som också gav ett säkerställt samband.",
+  "Omräkningar signifikanta": "Stilgruppen ger ett tidsintervall, inte ett år. Resultatet räknades om med årtal dragna inom intervallen; här andelen omräkningar som också gav ett signifikant samband.",
   "Vanligast i": "Landskap där draget är vanligast enligt kartmodellen.",
   "Ovanligast i": "Landskap där draget är ovanligast enligt kartmodellen.",
   "Brostenar": "Andel av bro- och vägstenarna som har draget (och hur många brostenar det finns).",
@@ -82,8 +82,8 @@ export const GLOSSARY: Record<string, string> = {
 };
 
 
-GLOSSARY["Statistiskt säkerställt"] = "Resultatet är sannolikt inte slump: p-värdet (eller q, justerat för att många test görs samtidigt) är under 0,05.";
-GLOSSARY["Inte säkerställt"] = "Ett test är gjort, men resultatet kan vara slump (p eller q 0,05 eller högre).";
+GLOSSARY["Statistiskt signifikant"] = "p-värdet (eller q, justerat för att många test görs samtidigt) är under 0,05: ett så tydligt resultat skulle uppstå i färre än 5 av 100 fall om det inte fanns något verkligt samband. Det är inte sannolikheten att resultatet är sant, och det säger inget om hur stort eller viktigt det är.";
+GLOSSARY["Inte signifikant"] = "Ett test är gjort, men resultatet är inte tydligare än vad slumpen ofta ger (p eller q 0,05 eller högre). Det visar inte att sambandet saknas.";
 GLOSSARY["Inget signifikanstest"] = "Resultatet är inte prövat med ett signifikanstest, t.ex. för att det är en beskrivning eller en modell som prövats på annat sätt (korsvalidering).";
 GLOSSARY["justerat p"] = "p-värde som tar hänsyn till att den bästa av många ristare valts. Under 0,05 betyder att likheten är högre än den bästa felaktiga ristaren brukar få.";
 
@@ -99,7 +99,7 @@ Object.assign(GLOSSARY, {
   "Uppskattning": "Belägg × nyhet × relevans – en tumregel för att prioritera vad som är värt att pröva, inte en sannolikhet.",
   "Bedömning": "Fyndet sammanfattat i ord utifrån uppskattningen. Klicka på raden för en tolkning som väger in alla belägg.",
   "Likhet": "Hur lik stenens stavning är ristarens (cosinuslikhet 0–1). Ett beskrivande mått, inte en sannolikhet.",
-  "p (just.)": "Justerat p: tar hänsyn till att den mest lika av alla ristare valts. Under 0,05 = statistiskt säkerställt.",
+  "p (just.)": "Justerat p: tar hänsyn till att den mest lika av alla ristare valts. Under 0,05 = statistiskt signifikant.",
   "Marginal": "Hur mycket mer lik stenen är förstavalet än tvåan. Liten marginal = metoden kan inte skilja dem åt.",
   "Precision": "När metoden föreslår den här ristaren: hur ofta det har varit rätt på stenar med känd ristare.",
   "Inom ristarens område": "Om stenen står i ett landskap där ristaren har säkra stenar.",

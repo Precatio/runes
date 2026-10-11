@@ -79,6 +79,47 @@ partial <- {
 }
 usable <- !is.na(rho) && abs(rho) >= 0.3 && ct$p.value < 0.001
 
+# ---- how independent is the agreement? ----------------------------------------------------------------------------
+# The seriation is run again without features that may tie it to the ornament or to its own dating: the cross (part of
+# the picture), journeys abroad (the Ingvar and England stones anchor absolute dates), and the traits whose change over
+# time is measured elsewhere (dotted runes, the monophthong, the ós-rune), so that the two results are not counted
+# twice. The style group is used only where Rundata gives it as certain. Then the correlation within hundreds and
+# within carvers (stones in workshop clusters share both ornament and spelling).
+rho_variant <- function(drop_cols, drop_traits = character(0)) {
+  tc_keep <- setdiff(tc, drop_traits)
+  I2 <- do.call(cbind, c(lapply(tc_keep, levels_of, labels = TL, d = d), lapply(fcols, levels_of, labels = FL, d = d)))
+  extra <- cbind(d$cross, d$short_twig); colnames(extra) <- c("cross", "short_twig")
+  I2 <- cbind(I2, extra[, setdiff(colnames(extra), drop_cols), drop = FALSE])
+  CI <- as.matrix(d[, setdiff(cc, drop_cols), drop = FALSE]); I2 <- cbind(I2, CI)
+  I2 <- I2[, colSums(I2) >= MIN_ATTR, drop = FALSE]
+  keep2 <- rowSums(I2) >= MIN_PER_STONE
+  I2 <- I2[keep2, colSums(I2[keep2, , drop = FALSE]) > 0, drop = FALSE]
+  f2 <- tryCatch(ca(I2, nd = 1), error = function(e) NULL)
+  if (is.null(f2)) return(list(rho = NA, n = 0))
+  mid2 <- ifelse(!is.na(d$style_from[keep2]), (d$style_from[keep2] + d$style_to[keep2]) / 2, NA)
+  ok <- !is.na(mid2)
+  r <- suppressWarnings(cor(f2$rowcoord[ok, 1], mid2[ok], method = "spearman"))
+  list(rho = r3(abs(r)), n = sum(ok))
+}
+within_rho <- function(group) {
+  ok <- dated & !is.na(group) & group != ""
+  g <- group[ok]; keepg <- g %in% names(which(table(g) >= 5))
+  if (sum(keepg) < 30) return(list(rho = NA, n = sum(keepg), groups = 0))
+  rs <- rank(score[ok][keepg]); rt <- rank(dd$mid[ok][keepg]); gg <- g[keepg]
+  list(rho = r3(cor(rs - ave(rs, gg), rt - ave(rt, gg))), n = sum(keepg), groups = length(unique(gg)))
+}
+cat_fard <- intersect("cat_fard", cc)
+changing <- intersect(c("trait_stungna", "trait_stungen_e", "trait_stungen_y", "trait_stungen_g", "trait_ai_sten",
+                        "trait_ai_alla", "trait_o_runa"), tc)
+robust <- list(
+  no_cross = c(list(label = "utan kors"), rho_variant("cross")),
+  no_anchor = c(list(label = "utan utlandsfärder (Ingvars- och Englandsstenarna)"), rho_variant(cat_fard)),
+  no_changing = c(list(label = "utan stungna runor, monoftong och åsrunan"), rho_variant(character(0), changing)),
+  strict = c(list(label = "utan kors, utlandsfärder och de föränderliga dragen"), rho_variant(c("cross", cat_fard), changing)),
+  within_district = c(list(label = "inom härad"), within_rho(dd$district)),
+  within_carver = c(list(label = "inom ristare (ristare med minst fem daterade stenar)"), within_rho(dd$carver))
+)
+
 # Calibration: linear regression of style date on CA score (dated stones), prediction for the rest
 dd$score <- score
 cal <- lm(mid ~ score, data = dd[dated, ])
@@ -119,6 +160,33 @@ eta2_perm <- function(y, g, n_perm = 499) {
   list(eta2 = obs, null95 = unname(quantile(null, 0.95)), p = (1 + sum(null >= obs)) / (1 + n_perm))
 }
 carv_a <- ifelse(da$carver %in% names(which(table(da$carver) >= 8)), da$carver, NA)
+# Dimension 1 again: carver eta² on signed stones only (attributions may have used the formulas), and the analysis
+# without the soul prayer (it overlaps with the prayer and gives it double weight) and on stones whose inscription ends
+# intact (prayers come last, and "no prayer" may mean "lost"). Excess over the permutation null for carver and time.
+dim1_checks <- local({
+  sc1 <- fa$rowcoord[, 1]
+  signed <- !is.na(da$signed) & da$signed == 1
+  es <- eta2_perm(sc1[signed], carv_a[signed])
+  redo <- function(dsub, drop_traits) {
+    tc_k <- setdiff(tc, drop_traits)
+    I2 <- do.call(cbind, c(lapply(tc_k, levels_of, labels = TL, d = dsub), lapply(fcols, levels_of, labels = FL, d = dsub)))
+    I2 <- cbind(I2, cbind(dsub$cross, dsub$short_twig), as.matrix(dsub[, cc]))
+    I2 <- I2[, colSums(I2) >= MIN_ATTR, drop = FALSE]; keep2 <- rowSums(I2) >= MIN_PER_STONE
+    I2 <- I2[keep2, colSums(I2[keep2, , drop = FALSE]) > 0, drop = FALSE]
+    f2 <- tryCatch(ca(I2, nd = 1), error = function(e) NULL)
+    if (is.null(f2)) return(list(tested = FALSE))
+    ds <- dsub[keep2, ]
+    sty2 <- sub(" .*", "", ds$style); sty2[!sty2 %in% c("RAK", "Fp", "Pr1", "Pr2", "Pr3", "Pr4", "Pr5")] <- NA
+    cv2 <- ifelse(ds$carver %in% names(which(table(ds$carver) >= 8)), ds$carver, NA)
+    et2 <- eta2_perm(f2$rowcoord[, 1], sty2); ec2 <- eta2_perm(f2$rowcoord[, 1], cv2)
+    list(tested = TRUE, n = nrow(ds), inertia_pct = r1(100 * f2$sv[1]^2 / sum(f2$sv^2)),
+         eta2_time = r3(et2$eta2), eta2_time_null95 = r3(et2$null95), eta2_carver = r3(ec2$eta2),
+         eta2_carver_null95 = r3(ec2$null95))
+  }
+  list(signed_carver = list(n = sum(signed), eta2 = r3(es$eta2), null95 = r3(es$null95), p = signif(es$p, 3)),
+       no_soul = redo(all_d, intersect("trait_sjal", tc)),
+       intact = redo(all_d[!is.na(all_d$end_intact) & all_d$end_intact == 1, ], character(0)))
+})
 corpus_dims <- lapply(1:3, function(k) {
   sc <- fa$rowcoord[, k]
   rt <- suppressWarnings(cor(sc, mid_a, method = "spearman", use = "complete.obs"))
@@ -194,8 +262,8 @@ result <- list(
   region = REGION, n_stones = nrow(dd), n_dated = sum(dated), n_attributes = ncol(I), inertia_pct = r1(inertia[1:3]),
   validation = list(rho = r3(rho), p = signif(ct$p.value, 3), lat_rho = r3(lat_rho), partial_rho = r3(partial),
                     usable = usable, mae_years = round(mae), mae_loo_years = round(mae_loo),
-                    mae_naive_years = round(mae_naive), resid_sd_years = round(resid_sd)),
-  per_style = per_style, corpus_dimensions = corpus_dims, n_corpus = nrow(da),
+                    mae_naive_years = round(mae_naive), resid_sd_years = round(resid_sd), robustness = robust),
+  per_style = per_style, corpus_dimensions = corpus_dims, dim1_checks = dim1_checks, n_corpus = nrow(da),
   calibration = list(intercept = r1(coef(cal)[1]), slope = r1(coef(cal)[2])),
   early = head(attributes, 10), late = head(attributes[order(-attributes$score), ], 10),
   undated = if (usable) list(n = nrow(und), median = round(median(und$est))) else NULL,

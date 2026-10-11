@@ -19,17 +19,6 @@ const STATS = [
   { value: "60 %", label: "rätt ristare först i ortografiskt test (slump 4 %)" },
 ];
 
-// The full stone analysis (/stenanalys), step by step
-const WORKFLOW = [
-  { step: "Skanningen", text: "STL, OBJ eller PLY laddas upp; signum hämtas ur filnamnet och stenen ur Rundata." },
-  { step: "Bilder", text: "Relief, djupkarta och strykljus ur fyra riktningar räknas ur skanningen." },
-  { step: "Huggspåren", text: "Bara spår som känns igen som runor mäts, enligt Vitki-protokollet, med känslighetsanalys." },
-  { step: "Bild och läsning", text: "Stilgrupp ur bilden och blinda läsningar i flera orienteringar, prövade mot Rundata." },
-  { step: "Syntes", text: "Rundata, ortografi, huggteknik och modellen vägs samman; motsägelser redovisas." },
-  { step: "Statistik i R", text: "Stenen mot korpusen: modell, grupp, seriation, landskap och sikt." },
-  { step: "Rapporten", text: "En artikel med figurer ur skanningen och en bilaga om hur analysen gjordes." },
-];
-
 const FEATURE_GROUPS = [
   {
     title: "Mäta",
@@ -87,7 +76,7 @@ const FEATURE_GROUPS = [
       {
         name: "Jämför stenar",
         href: "/jamfor",
-        text: "Huggspåren runa mot runa, permutationstest för varje mått och alla samtidigt, effektstorlek och om skillnaden är statistiskt säkerställd – och ristare, stil, stavning och språkdrag när stenarna har signum.",
+        text: "Huggspåren runa mot runa, permutationstest för varje mått och alla samtidigt, effektstorlek och om skillnaden är statistiskt signifikant – och ristare, stil, stavning och språkdrag när stenarna har signum.",
       },
       {
         name: "Karta och stilgrupper",
@@ -176,7 +165,7 @@ const PRINCIPLES = [
   },
   {
     title: "Osäkerhet och signifikans redovisas",
-    text: "Mätvärden visas med spridning, andelar med konfidensintervall. P-värden justeras för många test och för hur hypotesen valdes, och det som är statistiskt säkerställt märks tydligt.",
+    text: "Mätvärden visas med spridning, andelar med konfidensintervall. P-värden justeras för många test och för hur hypotesen valdes, och det som är statistiskt signifikant märks tydligt.",
   },
   {
     title: "Landskapet som jämförelse",
@@ -322,7 +311,6 @@ export default function LandingPage() {
             <span className="text-xl font-bold tracking-tight">Vitki</span>
           </Link>
           <nav className="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-600">
-            <a href="#arbetsgang" className="hover:text-slate-900">Arbetsgång</a>
             <a href="#funktioner" className="hover:text-slate-900">Funktioner</a>
             <a href="#forskning" className="hover:text-slate-900">För forskningen</a>
             <a href="#nytt" className="hover:text-slate-900">Vad är nytt</a>
@@ -376,30 +364,6 @@ export default function LandingPage() {
             Ortografisk träffsäkerhet: lämna-en-ute-test på 135 signerade vikingatida inskrifter i Rundata, 27 ristare.
             Vinkelfelet: syntetiska V-spår med öppningsvinkel 50–110° (METHODS.md, avsnitt 1).
           </p>
-        </div>
-      </section>
-
-      {/* Workflow: the full stone analysis */}
-      <section id="arbetsgang" className="scroll-mt-16">
-        <div className="max-w-6xl mx-auto px-6 pb-24">
-          <SectionTitle
-            eyebrow="Arbetsgång"
-            title="En skanning in, en artikel ut"
-            intro="Fullständig stenanalys kör hela kedjan i följd. Varje steg använder samma metod som det enskilda verktyget, och rapporten får en bilaga om hur analysen gjordes."
-          />
-          <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-px bg-slate-900/10 rounded-2xl overflow-hidden border border-slate-900/10">
-            {WORKFLOW.map((w, i) => (
-              <li key={w.step} className="bg-white/80 p-5">
-                <div className="text-3xl font-serif font-bold text-[#b7410e]/40">{i + 1}</div>
-                <div className="mt-1 font-bold text-slate-900">{w.step}</div>
-                <p className="mt-1.5 text-sm text-slate-600 leading-snug">{w.text}</p>
-              </li>
-            ))}
-          </ol>
-          <div className="mt-6 flex flex-wrap items-center gap-4">
-            <Link href="/stenanalys" className="px-6 py-3 rounded-full bg-slate-900 text-white font-bold hover:bg-black">Starta en stenanalys</Link>
-            <span className="text-sm text-slate-500">AI-stegen använder din egen API-nyckel; resten fungerar utan.</span>
-          </div>
         </div>
       </section>
 

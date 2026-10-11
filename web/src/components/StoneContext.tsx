@@ -17,7 +17,8 @@ const GROUP_LABEL: Record<string, string> = { ljud: "Ljud", bruk: "Bruk", skrift
 
 export interface LanguageTrait { trait: string; group: "ljud" | "bruk" | "skrift"; label: string; definition: string; value: string }
 export interface LanguageComparison {
-  rows: { trait: string; group: string; label: string; definition: string; stone: string; carver_common: string; share: number; n: number; agrees: boolean }[];
+  rows: { trait: string; group: string; label: string; definition: string; stone: string; carver_common: string; share: number; n: number; agrees: boolean;
+    repeats?: boolean; region_share?: number; lr?: number }[];
   agree: number; comparable: number; text: string;
 }
 
@@ -119,20 +120,27 @@ export function LanguageTable({ comparison }: { comparison: LanguageComparison }
       <p className="mb-1.5">{comparison.text}</p>
       {comparison.rows.length > 0 && (
         <table className="w-full">
-          <thead><tr className="text-left text-slate-500"><th className="py-0.5">Drag</th><th>Stenen</th><th>Hos ristaren</th><th></th></tr></thead>
+          <thead><tr className="text-left text-slate-500"><th className="py-0.5">Drag</th><th>Stenen</th><th>Hos ristaren</th>
+            {comparison.rows.some(r => r.region_share != null) && <th>I landskapet</th>}<th></th></tr></thead>
           <tbody>
             {comparison.rows.map(r => (
-              <tr key={r.trait} className="border-t border-slate-900/5" title={r.definition}>
-                <td className="py-0.5">{r.label} <span className="text-slate-400">({(GROUP_LABEL[r.group] ?? r.group).toLowerCase()})</span></td>
+              <tr key={r.trait} className={`border-t border-slate-900/5 ${r.repeats ? "text-slate-400" : ""}`} title={r.definition}>
+                <td className="py-0.5">{r.label} <span className="text-slate-400">({(GROUP_LABEL[r.group] ?? r.group).toLowerCase()})</span>
+                  {r.repeats && <span className="ml-1 text-[10px] italic">upprepar ett annat drag, räknas inte</span>}</td>
                 <td>{r.stone}</td>
                 <td>{r.carver_common} <span className="text-slate-400">({Math.round(r.share * 100)} % som stenen, n={r.n})</span></td>
-                <td className={r.agrees ? "text-emerald-700 font-bold" : "text-amber-700 font-bold"}>{r.agrees ? "✓" : "!"}</td>
+                {comparison.rows.some(x => x.region_share != null) && <td>{r.region_share != null ? `${Math.round(r.region_share * 100)} %` : "–"}</td>}
+                <td className={r.repeats ? "text-slate-400" : r.agrees ? "text-emerald-700 font-bold" : "text-amber-700 font-bold"}>{r.agrees ? "✓" : "!"}</td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
-      <p className="text-[10px] text-slate-500 mt-1">Håll muspekaren över ett drag för definitionen. Ljud = fonetisk stil, bruk = formler och stavning.</p>
+      <p className="text-[10px] text-slate-500 mt-1">
+        Håll muspekaren över ett drag för definitionen. Ljud = fonetisk stil, bruk = formler och stavning. Drag som upprepar ett
+        annat (t.ex. stungna runor bredvid stungen i, själsbön bredvid bön) visas men räknas inte, och ett drag som stämmer med
+        ristaren men är lika vanligt i hela landskapet säger lite om just den ristaren.
+      </p>
     </div>
   );
 }

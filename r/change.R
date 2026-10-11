@@ -185,10 +185,16 @@ time_part <- function(dd) {
       if (dsc$shape == shape$shape && !is.na(dsc$peak_year)) dsc$peak_year else NA)
   }, numeric(4))
   ok <- !is.na(draws[1, ])
+  # How large is the change over time against the differences between carvers (both on the logit scale)?
+  vc <- tryCatch(gam.vcomp(m, rescale = FALSE), error = function(e) NULL)
+  sd_carver <- tryCatch(unname(sqrt(vc[grep("carver", rownames(vc))[1], 1]^2)), error = function(e) NA)
+  lr <- range(qlogis(pmin(pmax(cur$curve$share, 1e-4), 1 - 1e-4)))
   rp <- draws[4, ok & !is.na(draws[4, ])]
   if (!is.na(peak_lo) && length(rp)) { peak_lo <- min(peak_lo, rp); peak_hi <- max(peak_hi, rp) }
   c(base, list(tested = TRUE, p = signif(p, 3), shape = shape$shape, peak_year = shape$peak_year,
-               peak_lo = peak_lo, peak_hi = peak_hi,
+               peak_lo = peak_lo, peak_hi = peak_hi, peak_share = r3(max(cur$curve$share)),
+               trough_share = r3(min(cur$curve$share)), refit_peaks = I(sort(unique(rp))),
+               time_logit_range = r3(diff(lr)), carver_sd = r3(sd_carver),
                year_first = span[1], year_last = span[2],
                first = r3(cur$curve$share[1]), last = r3(tail(cur$curve$share, 1)),
                change = r3(cur$change[1]), change_lo = r3(cur$change[2]), change_hi = r3(cur$change[3]),
@@ -254,8 +260,28 @@ province_part <- function(dd, monotone) {
     b0 <- coef(m0)[pn]; V0 <- vcov(m0)[pn, pn]
     c0 <- C %*% b0; p0 <- pchisq(as.numeric(t(c0) %*% solve(C %*% V0 %*% t(C)) %*% c0), k - 1, lower.tail = FALSE)
   }
+  # Carvers with stones in both Uppland and Södermanland: the feature's share in each province among their own stones
+  both <- NULL
+  if (all(c("U", "Sö") %in% tab$province)) {
+    cb <- dd %>% filter(province %in% c("U", "Sö"), !startsWith(as.character(carver_f), "_")) %>%
+      group_by(carver_f) %>% filter(n_distinct(province) == 2) %>% ungroup()
+    if (nrow(cb) >= 6) both <- list(carvers = length(unique(cb$carver_f)), n = nrow(cb),
+                                    share_U = r3(mean(cb$y[cb$province == "U"])), n_U = sum(cb$province == "U"),
+                                    share_So = r3(mean(cb$y[cb$province == "Sö"])), n_So = sum(cb$province == "Sö"))
+  }
+  # Dating outside Uppland and Södermanland is least tested: the comparison again with those provinces' stones dated
+  # 25 years earlier and 25 years later; if the difference holds both ways it is less likely to be a hidden time effect
+  shifted <- lapply(c(earlier = -0.5, later = 0.5), function(sh) {
+    ds <- dd; out_u <- !ds$province %in% c("U", "Sö"); ds$t50[out_u] <- ds$t50[out_u] + sh
+    ms <- fit(y ~ 0 + prov + s(t50, k = 4) + s(carver_f, bs = "re"), ds)
+    if (is.null(ms)) return(NULL)
+    Xs <- predict(ms, newdata = nd, type = "lpmatrix", exclude = "s(carver_f)")
+    bs <- coef(ms); Vs <- vcov(ms)
+    cs <- C %*% bs[pn]; ps <- pchisq(as.numeric(t(cs) %*% solve(C %*% Vs[pn, pn] %*% t(C)) %*% cs), k - 1, lower.tail = FALSE)
+    list(p = signif(ps, 3), share1050 = setNames(as.list(r3(plogis(as.vector(Xs %*% bs)))), tab$province))
+  })
   list(rows = bind_rows(rows), p_differ = signif(pchisq(chi, k - 1, lower.tail = FALSE), 3), df = k - 1,
-       p_differ_nocarver = signif(p0, 3))
+       p_differ_nocarver = signif(p0, 3), shifted = shifted, carvers_both = both)
 }
 
 # ---- space --------------------------------------------------------------------------------------------------------
@@ -307,6 +333,222 @@ pp <- vapply(results, function(r) if (is.null(r$provinces)) NA_real_ else r$prov
 qp <- pp; qp[!is.na(pp)] <- p.adjust(pp[!is.na(pp)], "holm")
 for (k in names(results)) if (!is.null(results[[k]]$provinces)) results[[k]]$provinces$q_differ <- signif(qp[[k]], 3)
 
+# ---- the monophthong in æi words: robustness ----------------------------------------------------------------------
+# The trend in "stin for stain" (any æi word with a monophthong spelling) is checked in the ways a runologist would ask
+# for: per word instead of per stone (a stone with many æi words has more chances), per lexeme (stæinn against the
+# other words), for attributed and unattributed stones separately (the attributions may rest partly on spelling),
+# within the same carver over time, without the earliest and latest style groups (the ends are thin), and for Uppland
+# and Södermanland separately. Each check is a straight trend in time: the log odds per 50 years with a 95 % interval
+# (negative = the monophthong spelling becomes rarer).
+ai_trend <- function(dd, resp, re = TRUE, space = TRUE) {
+  dd <- dd[!is.na(dd$t50), ]
+  if (nrow(dd) < 30) return(list(n = nrow(dd), tested = FALSE))
+  rhs <- c("t50", if (space) sprintf("s(east, north, k = %d)", min(10, k_space(nrow(dd)))), if (re) "s(carver_f, bs = \"re\")")
+  m <- fit(as.formula(paste(resp, "~", paste(rhs, collapse = " + "))), dd)
+  ct <- coef_test(m, "t50")
+  if (is.null(ct)) return(list(n = nrow(dd), tested = FALSE))
+  list(n = nrow(dd), tested = TRUE, b = r3(ct$b), lo = r3(ct$b - 1.96 * ct$se), hi = r3(ct$b + 1.96 * ct$se),
+       p = signif(ct$p, 3))
+}
+ai_checks <- function() {
+  a <- d[!is.na(d$ai_n) & d$ai_n > 0 & !is.na(d$year), ]
+  if (nrow(a) < 50) return(NULL)
+  a$y <- as.integer(a$ai_mono > 0)
+  a$other_n <- a$ai_n - a$ai_sten_n; a$other_mono <- a$ai_mono - a$ai_sten_mono
+  word <- "cbind(ai_mono, ai_n - ai_mono)"
+  attributed <- !is.na(a$carver) & a$carver != ""
+  # Within carvers: attributed stones of carvers with at least five such stones in at least two style groups
+  wc <- a[attributed, ] %>% group_by(carver) %>% filter(n() >= 5, n_distinct(style_short) >= 2) %>% ungroup()
+  within <- NULL
+  if (nrow(wc) >= 20 && length(unique(wc$carver)) >= 2) {
+    mw <- tryCatch(suppressWarnings(glm(cbind(ai_mono, ai_n - ai_mono) ~ factor(carver) + t50, data = wc, family = binomial)),
+                   error = function(e) NULL)
+    ct <- coef_test(mw, "t50")
+    if (!is.null(ct)) within <- list(n = nrow(wc), carvers = length(unique(wc$carver)), tested = TRUE, b = r3(ct$b),
+                                     lo = r3(ct$b - 1.96 * ct$se), hi = r3(ct$b + 1.96 * ct$se), p = signif(ct$p, 3))
+  }
+  by_style <- a %>% filter(style_short %in% STYLE_ORDER) %>% group_by(style = style_short) %>%
+    summarise(n = n(), words = sum(ai_n), share_words = r3(sum(ai_mono) / sum(ai_n)),
+              mono_i = r3(sum(ai_mono_i) / sum(ai_n)), mono_e = r3(sum(ai_mono_e) / sum(ai_n))) %>%
+    arrange(match(style, STYLE_ORDER))
+  ends <- c(head(by_style$style, 1), tail(by_style$style, 1))
+  # Per province: does stæinn make up a different share of the æi words, and does it behave like the other words?
+  by_province <- a %>% group_by(province) %>% filter(n() >= 15) %>%
+    summarise(stones = n(), words = sum(ai_n), share_sten = r3(sum(ai_sten_n) / sum(ai_n)),
+              mono_sten = r3(sum(ai_sten_mono) / max(1, sum(ai_sten_n))),
+              mono_other = r3(sum(other_mono) / max(1, sum(other_n))),
+              mono_i = r3(sum(ai_mono_i) / sum(ai_n)), mono_e = r3(sum(ai_mono_e) / sum(ai_n))) %>% arrange(-stones)
+  list(
+    n_stones = nrow(a), n_words = sum(a$ai_n), share_sten = r3(sum(a$ai_sten_n) / sum(a$ai_n)),
+    by_style = by_style, by_province = by_province,
+    checks = list(
+      stone = c(list(label = "per sten (minst ett ord med monoftong)"), ai_trend(a, "y")),
+      word = c(list(label = "per ord (andelen æi-ord med monoftong)"), ai_trend(a, word)),
+      sten = c(list(label = "bara stæinn"), ai_trend(a[a$ai_sten_n > 0, ], "cbind(ai_sten_mono, ai_sten_n - ai_sten_mono)")),
+      other = c(list(label = "bara andra æi-ord än stæinn"), ai_trend(a[a$other_n > 0, ], "cbind(other_mono, other_n - other_mono)")),
+      attributed = c(list(label = "bara stenar med säker ristare"), ai_trend(a[attributed, ], word)),
+      unattributed = c(list(label = "bara stenar utan säker ristare"), ai_trend(a[!attributed, ], word)),
+      signed = c(list(label = "bara signerade stenar"), ai_trend(a[!is.na(a$signed) & a$signed == 1, ], word)),
+      no_carver = c(list(label = "utan ristaren i modellen"), ai_trend(a, word, re = FALSE)),
+      within = c(list(label = "inom samma ristare (ristare med stenar i minst två stilgrupper)"),
+                 if (is.null(within)) list(tested = FALSE) else within),
+      trimmed = c(list(label = sprintf("utan den tidigaste och senaste stilgruppen (%s)", paste(ends, collapse = ", "))),
+                  ai_trend(a[!a$style_short %in% ends, ], word)),
+      uppland = c(list(label = "bara Uppland"), ai_trend(a[a$province == "U", ], word)),
+      sodermanland = c(list(label = "bara Södermanland"), ai_trend(a[a$province == "Sö", ], word))
+    )
+  )
+}
+ai_robust <- tryCatch(ai_checks(), error = function(e) list(error = conditionMessage(e)))
+
+# ---- dotted runes: robustness, per rune and against the monophthong -----------------------------------------------
+# "At least one dotted rune" favours long inscriptions and says nothing about how consistently the runes were used.
+# The checks: the share of runes that could have been dotted (i/e, u/y, k/g, t/d) that are dotted; the stone measure
+# with text length as a covariate; without the first and last style groups; signed stones; within carvers; Uppland and
+# Södermanland. Per rune, word by word among words whose normalised form has the sound (y/ø for stungen u, e/æ for
+# stungen i, g for stungen k), so that the measure is about writing habit, not about which words a text contains; and
+# how the y sound is written (dotted u, plain u or i) over the style groups. Last, on stone level within the same
+# period: do stones with dotted runes have fewer monophthong spellings (a joint move towards fuller spelling)?
+dotted_checks <- function() {
+  a <- d[!is.na(d$year) & !is.na(d$dot_cand) & d$dot_cand > 0 & !is.na(d$trait_stungna), ]
+  if (nrow(a) < 50) return(NULL)
+  a$y <- as.integer(a$trait_stungna == "ja")
+  a$logw <- log(pmax(a$n_words, 1))
+  share <- "cbind(dot_n, dot_cand - dot_n)"
+  attributed <- !is.na(a$carver) & a$carver != ""
+  wc <- a[attributed, ] %>% group_by(carver) %>% filter(n() >= 5, n_distinct(style_short) >= 2) %>% ungroup()
+  within <- list(tested = FALSE)
+  if (nrow(wc) >= 20 && length(unique(wc$carver)) >= 2) {
+    mw <- tryCatch(suppressWarnings(glm(cbind(dot_n, dot_cand - dot_n) ~ factor(carver) + t50, data = wc, family = binomial)),
+                   error = function(e) NULL)
+    ct <- coef_test(mw, "t50")
+    if (!is.null(ct)) within <- list(n = nrow(wc), carvers = length(unique(wc$carver)), tested = TRUE, b = r3(ct$b),
+                                     lo = r3(ct$b - 1.96 * ct$se), hi = r3(ct$b + 1.96 * ct$se), p = signif(ct$p, 3))
+  }
+  sty <- a %>% filter(style_short %in% STYLE_ORDER)
+  ends <- c(STYLE_ORDER[STYLE_ORDER %in% sty$style_short][1], tail(STYLE_ORDER[STYLE_ORDER %in% sty$style_short], 1))
+  length_fit <- {
+    rhs <- sprintf("t50 + logw + s(east, north, k = %d) + s(carver_f, bs = \"re\")", min(10, k_space(nrow(a))))
+    m <- fit(as.formula(paste("y ~", rhs)), a); ct <- coef_test(m, "t50")
+    if (is.null(ct)) list(tested = FALSE) else list(n = nrow(a), tested = TRUE, b = r3(ct$b), lo = r3(ct$b - 1.96 * ct$se),
+                                                  hi = r3(ct$b + 1.96 * ct$se), p = signif(ct$p, 3))
+  }
+  checks <- list(
+    stone = c(list(label = "per sten (minst en stungen runa)"), ai_trend(a, "y")),
+    share = c(list(label = "andelen stungna av de runor som kunde vara stungna"), ai_trend(a, share)),
+    length = c(list(label = "per sten med textlängden som kovariat"), length_fit),
+    attributed = c(list(label = "bara stenar med säker ristare"), ai_trend(a[attributed, ], share)),
+    unattributed = c(list(label = "bara stenar utan säker ristare"), ai_trend(a[!attributed, ], share)),
+    signed = c(list(label = "bara signerade stenar"), ai_trend(a[!is.na(a$signed) & a$signed == 1, ], share)),
+    within = c(list(label = "inom samma ristare (ristare med stenar i minst två stilgrupper)"), within),
+    trimmed = c(list(label = sprintf("utan den tidigaste och senaste stilgruppen (%s)", paste(ends, collapse = ", "))),
+                ai_trend(a[!a$style_short %in% ends, ], share)),
+    uppland = c(list(label = "bara Uppland"), ai_trend(a[a$province == "U", ], share)),
+    sodermanland = c(list(label = "bara Södermanland"), ai_trend(a[a$province == "Sö", ], share))
+  )
+  # Per rune, word by word among the words where the dotted rune can be expected
+  per_rune <- lapply(c(y = "stungen u (y)", e = "stungen i (e)", g = "stungen k (g)"), function(lbl) lbl)
+  per_rune <- lapply(names(per_rune), function(r) {
+    ex <- paste0("dot_", r, "_exp"); ob <- paste0("dot_", r, "_obs")
+    b <- d[!is.na(d$year) & !is.na(d[[ex]]) & d[[ex]] > 0, ]
+    st <- b %>% filter(style_short %in% STYLE_ORDER) %>% group_by(style = style_short) %>%
+      summarise(stones = n(), words = sum(.data[[ex]]), share = r3(sum(.data[[ob]]) / sum(.data[[ex]]))) %>%
+      arrange(match(style, STYLE_ORDER))
+    c(list(rune = r, label = per_rune[[r]], words = sum(b[[ex]]), share = r3(sum(b[[ob]]) / max(1, sum(b[[ex]]))), by_style = st),
+      ai_trend(b, sprintf("cbind(%s, %s - %s)", ob, ex, ob)))
+  })
+  # How the y sound is written over the style groups
+  yb <- d[!is.na(d$year) & !is.na(d$dot_y_exp) & d$dot_y_exp > 0 & d$style_short %in% STYLE_ORDER, ]
+  y_writing <- yb %>% group_by(style = style_short) %>%
+    summarise(words = sum(dot_y_exp), dotted = r3(sum(dot_y_obs) / sum(dot_y_exp)), u = r3(sum(dot_y_u) / sum(dot_y_exp)),
+              i = r3(sum(dot_y_i) / sum(dot_y_exp))) %>% arrange(match(style, STYLE_ORDER))
+  # Stone level, same period: dotted runes and the monophthong together
+  j <- d[!is.na(d$year) & !is.na(d$ai_n) & d$ai_n > 0 & !is.na(d$trait_stungna), ]
+  joint <- list(tested = FALSE)
+  if (nrow(j) >= 50) {
+    j$mono <- as.integer(j$ai_mono > 0); j$dot <- as.integer(j$trait_stungna == "ja")
+    m <- fit(y ~ dot + t50 + s(carver_f, bs = "re"), transform(j, y = mono))
+    ct <- coef_test(m, "dot")
+    if (!is.null(ct)) joint <- list(n = nrow(j), tested = TRUE, b = r3(ct$b), lo = r3(ct$b - 1.96 * ct$se),
+                                    hi = r3(ct$b + 1.96 * ct$se), p = signif(ct$p, 3),
+                                    mono_with_dot = r3(mean(j$mono[j$dot == 1])), mono_without_dot = r3(mean(j$mono[j$dot == 0])))
+  }
+  list(n_stones = nrow(a), share_overall = r3(sum(a$dot_n) / sum(a$dot_cand)), checks = checks, per_rune = per_rune,
+       y_writing = y_writing, joint_monophthong = joint)
+}
+dotted_robust <- tryCatch(dotted_checks(), error = function(e) list(error = conditionMessage(e)))
+
+# ---- the soul prayer: damaged ends and wording ----------------------------------------------------------------------
+# The prayer usually comes last, in the serpent's tail, where stones are often damaged: the trend again on stones whose
+# inscription ends intact. And the wording: does sál replace and/ônd over time (a change in word choice, less a matter
+# of whether the sponsor wanted a prayer at all), and how often is Guðs móðir added?
+prayer_checks <- function() {
+  b <- d[!is.na(d$year) & !is.na(d$trait_sjal), ]
+  b$y <- as.integer(b$trait_sjal == "ja")
+  intact <- c(list(label = "bara stenar där inskriftens slut är bevarat"), ai_trend(b[!is.na(b$end_intact) & b$end_intact == 1, ], "y"))
+  p <- b[b$y == 1 & !is.na(b$prayer_sal), ]
+  p$sal <- as.integer(p$prayer_sal == 1 & p$prayer_and == 0)
+  wording <- p %>% filter(style_short %in% STYLE_ORDER) %>% group_by(style = style_short) %>%
+    summarise(prayers = n(), sal = r3(mean(sal)), gudsmodir = r3(mean(prayer_gudsmodir))) %>%
+    arrange(match(style, STYLE_ORDER))
+  sal_trend <- c(list(label = "sál i stället för and/ônd bland själsbönerna"), ai_trend(p, "sal", space = FALSE))
+  list(n_prayers = nrow(p), intact = intact, wording = wording, sal_trend = sal_trend,
+       share_sal = r3(mean(p$sal)), share_gudsmodir = r3(mean(p$prayer_gudsmodir)))
+}
+prayer_robust <- tryCatch(prayer_checks(), error = function(e) list(error = conditionMessage(e)))
+
+# ---- ʀ and r at the end of words -------------------------------------------------------------------------------------
+# r for ʀ word by word, for æftiʀ and for the other words separately (the preposition varies, so only stones where the
+# words occur count), and the reverse spelling ʀ for r (hypercorrect), which tells more about a merger in speech: if
+# both directions occur and grow, the sounds had merged and the spelling had become uncertain.
+r_checks <- function() {
+  b <- d[!is.na(d$year) & !is.na(d$R_n), ]
+  b$o_n <- b$R_n - b$R_eftir_n; b$o_r <- b$R_r - b$R_eftir_r
+  sty <- function(x, n, k) x %>% filter(style_short %in% STYLE_ORDER, .data[[n]] > 0) %>% group_by(style = style_short) %>%
+    summarise(stones = n(), words = sum(.data[[n]]), share = r3(sum(.data[[k]]) / sum(.data[[n]]))) %>%
+    arrange(match(style, STYLE_ORDER))
+  list(
+    all = c(list(label = "r för ʀ, alla ord på -ʀ", words = sum(b$R_n), share = r3(sum(b$R_r) / max(1, sum(b$R_n))),
+                 by_style = sty(b, "R_n", "R_r")), ai_trend(b[b$R_n > 0, ], "cbind(R_r, R_n - R_r)")),
+    eftir = c(list(label = "r för ʀ i æftiʀ", words = sum(b$R_eftir_n), share = r3(sum(b$R_eftir_r) / max(1, sum(b$R_eftir_n))),
+                   by_style = sty(b, "R_eftir_n", "R_eftir_r")), ai_trend(b[b$R_eftir_n > 0, ], "cbind(R_eftir_r, R_eftir_n - R_eftir_r)")),
+    other = c(list(label = "r för ʀ i andra ord än æftiʀ", words = sum(b$o_n), share = r3(sum(b$o_r) / max(1, sum(b$o_n))),
+                   by_style = sty(b, "o_n", "o_r")), ai_trend(b[b$o_n > 0, ], "cbind(o_r, o_n - o_r)")),
+    reverse = c(list(label = "ʀ för r (omvänd stavning)", words = sum(b$r_n), share = r3(sum(b$r_R) / max(1, sum(b$r_n))),
+                     by_style = sty(b, "r_n", "r_R")), ai_trend(b[b$r_n > 0, ], "cbind(r_R, r_n - r_R)"))
+  )
+}
+r_robust <- tryCatch(r_checks(), error = function(e) list(error = conditionMessage(e)))
+
+# ---- the ós-rune, 'och', and æftiʀ for dotted i ---------------------------------------------------------------------
+# The ós-rune word by word among words with etymological /o/, and for words with the old nasal ą (and/ônd): if the rune
+# is given up for ą while taken up for /o/, its value shifted. 'och' occurrence by occurrence as auk, uk, ok and ak.
+# Dotted i in æftiʀ against the other words with e/æ (some provinces use at instead of æftiʀ).
+spelling_checks <- function() {
+  b <- d[!is.na(d$year), ]
+  sty <- function(x, n, cols) x %>% filter(style_short %in% STYLE_ORDER, .data[[n]] > 0) %>% group_by(style = style_short) %>%
+    summarise(stones = n(), words = sum(.data[[n]]), across(all_of(cols), ~ r3(sum(.x) / sum(.data[[n]])))) %>%
+    arrange(match(style, STYLE_ORDER))
+  b$e_other_exp <- b$dot_e_exp - b$dot_e_eftir_exp; b$e_other_obs <- b$dot_e_obs - b$dot_e_eftir_obs
+  list(
+    o = c(list(label = "åsrunan för /o/", words = sum(b$o_n), share = r3(sum(b$o_o) / max(1, sum(b$o_n))),
+               by_style = sty(b, "o_n", "o_o")), ai_trend(b[b$o_n > 0, ], "cbind(o_o, o_n - o_o)")),
+    nasal = c(list(label = "åsrunan för ą (and/ônd)", words = sum(b$aa_n), share = r3(sum(b$aa_o) / max(1, sum(b$aa_n))),
+                   by_style = sty(b, "aa_n", "aa_o")), ai_trend(b[b$aa_n > 0, ], "cbind(aa_o, aa_n - aa_o)", space = FALSE)),
+    och = list(label = "'och' per förekomst", words = sum(b$och_n),
+               by_style = sty(b, "och_n", c("och_auk", "och_uk", "och_ok", "och_ak"))),
+    e_eftir = c(list(label = "stungen i i æftiʀ", words = sum(b$dot_e_eftir_exp),
+                     share = r3(sum(b$dot_e_eftir_obs) / max(1, sum(b$dot_e_eftir_exp))),
+                     by_style = sty(b, "dot_e_eftir_exp", "dot_e_eftir_obs")),
+                ai_trend(b[b$dot_e_eftir_exp > 0, ], "cbind(dot_e_eftir_obs, dot_e_eftir_exp - dot_e_eftir_obs)")),
+    e_other = c(list(label = "stungen i i andra ord", words = sum(b$e_other_exp),
+                     share = r3(sum(b$e_other_obs) / max(1, sum(b$e_other_exp))),
+                     by_style = sty(b, "e_other_exp", "e_other_obs")),
+                ai_trend(b[b$e_other_exp > 0, ], "cbind(e_other_obs, e_other_exp - e_other_obs)"))
+  )
+}
+spelling_robust <- tryCatch(spelling_checks(), error = function(e) list(error = conditionMessage(e)))
+
 # ---- bridges and Christianity -------------------------------------------------------------------------------------
 yv <- function(key) { f <- Filter(function(x) x$key == key, FEATURES)[[1]]; outcome(f) }
 ASSOC <- list(
@@ -317,14 +559,35 @@ ASSOC <- list(
 assoc <- lapply(ASSOC, function(s) {
   dd <- d; dd$y <- yv(s$y); dd$xx <- yv(s$x); dd <- dd[!is.na(dd$y) & !is.na(dd$xx), ]
   share_x <- mean(dd$y[dd$xx == 1]); share_o <- mean(dd$y[dd$xx == 0])
-  m <- fit(y ~ xx + s(east, north, k = k_space(nrow(dd))) + s(carver_f, bs = "re"), dd)
+  form <- y ~ xx + s(east, north, k = k_space(nrow(dd))) + s(carver_f, bs = "re")
+  m <- fit(form, dd)
   ct <- coef_test(m, "xx")
   dt <- dd[!is.na(dd$t50), ]
+  # Time as in the peak models: the prayer has its own peak, so bridge stones from the same period must not create it
   ct_t <- coef_test(fit(y ~ xx + s(t50, k = 4) + s(east, north, k = k_space(nrow(dt))) + s(carver_f, bs = "re"), dt), "xx")
   ors <- function(r) if (is.null(r)) NULL else
     list(or = r3(exp(r$b)), lo = r3(exp(r$b - 1.96 * r$se)), hi = r3(exp(r$b + 1.96 * r$se)), p = signif(r$p, 3))
+  # Text length, and stones whose inscription ends intact (prayers come last)
+  dd$logw <- log(pmax(dd$n_words, 1))
+  ct_len <- coef_test(fit(y ~ xx + logw + s(east, north, k = k_space(nrow(dd))) + s(carver_f, bs = "re"), dd), "xx")
+  di <- dd[!is.na(dd$end_intact) & dd$end_intact == 1, ]
+  ct_int <- coef_test(fit(y ~ xx + s(east, north, k = k_space(nrow(di))) + s(carver_f, bs = "re"), di), "xx")
+  # How many carvers and parishes the bridge stones with the feature spread over, and the estimate with one carver (or
+  # one parish) left out at a time: can a few workshops carry the whole effect?
+  bx <- dd[dd$xx == 1 & dd$y == 1, ]
+  carv <- unique(bx$carver[!is.na(bx$carver) & bx$carver != ""]); par <- unique(bx$parish[!is.na(bx$parish)])
+  loo <- function(groups, col) {
+    vals <- vapply(groups, function(g) { r <- coef_test(fit(form, dd[is.na(dd[[col]]) | dd[[col]] != g, ]), "xx")
+      if (is.null(r)) NA_real_ else exp(r$b) }, 0)
+    if (all(is.na(vals))) NULL else list(min_or = r3(min(vals, na.rm = TRUE)), max_or = r3(max(vals, na.rm = TRUE)),
+                                         n = sum(!is.na(vals)))
+  }
   list(key = s$key, label = s$label, n = nrow(dd), n_x = sum(dd$xx), share_x = r3(share_x), share_other = r3(share_o),
-       all = ors(ct), dated = c(list(n = nrow(dt)), ors(ct_t)))
+       k_x = nrow(bx), n_carvers_x = length(carv), n_parishes_x = length(par),
+       all = ors(ct), dated = c(list(n = nrow(dt)), ors(ct_t)), length = ors(ct_len),
+       intact = c(list(n = nrow(di)), ors(ct_int)),
+       loo_carver = if (length(carv)) loo(carv, "carver") else NULL,
+       loo_parish = if (length(par) && length(par) <= 60) loo(par, "parish") else NULL)
 })
 pa <- vapply(assoc, function(s) if (is.null(s$all$p)) NA_real_ else s$all$p, numeric(1))
 qa <- pa; qa[!is.na(pa)] <- p.adjust(pa[!is.na(pa)], "holm")
@@ -404,7 +667,8 @@ if (nrow(pr)) {
 
 result <- list(
   n_stones = nrow(d), n_dated = sum(!is.na(d$year)), draws = N_DRAWS,
-  features = unname(results), assoc = assoc,
+  features = unname(results), assoc = assoc, ai_robustness = ai_robust, dotted_robustness = dotted_robust,
+  prayer_robustness = prayer_robust, r_robustness = r_robust, spelling_robustness = spelling_robust,
   figures = list(time = fig_time, map = fig_map, provinces = fig_prov),
   method = paste(
     "Logistisk regression (mgcv::bam, fREML) för varje drag. Tid: draget mot stilgruppens mittår (Gräslund) bland",

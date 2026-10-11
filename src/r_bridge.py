@@ -25,7 +25,7 @@ from datetime import datetime, timezone
 
 from src import research_gaps as gaps
 from src.inscription_types import CATEGORIES, categories
-from src.language_profile import TRAITS, traits
+from src.language_profile import TRAITS, ai_counts, dotted_counts, o_counts, och_counts, prayer_form, r_counts, traits
 from src.orthography import features
 from src.styles import BY_CODE
 
@@ -55,7 +55,12 @@ WATER_LAYERS = {
 CSV_COLUMNS = (["signum", "province", "district", "place", "parish", "lat", "lon", "carver", "has_carver", "carvers_uncertain",
                 "style", "material", "cross", "short_twig", "lost", "n_words", "carvers_all", "style_from", "style_to"]
                + [f"cat_{k}" for k in CATEGORIES] + [f"trait_{k}" for k in TRAITS]
-               + ["words", "pairs", "normalization"])
+               + ["words", "pairs", "normalization", "signed", "ai_n", "ai_mono", "ai_sten_n", "ai_sten_mono",
+                  "dot_n", "dot_cand", "dot_y_exp", "dot_y_obs", "dot_e_exp", "dot_e_obs", "dot_g_exp", "dot_g_obs",
+                  "dot_d_exp", "dot_d_obs", "dot_y_u", "dot_y_i", "end_intact", "prayer_and", "prayer_sal",
+                  "prayer_gudsmodir", "R_n", "R_r", "R_eftir_n", "R_eftir_r", "r_n", "r_R", "ai_mono_e", "ai_mono_i",
+                  "o_n", "o_o", "aa_n", "aa_o", "dot_e_eftir_exp", "dot_e_eftir_obs", "och_n", "och_auk", "och_uk",
+                  "och_ok", "och_ak"])
 
 
 # ---- R installation ------------------------------------------------------------------------
@@ -175,6 +180,14 @@ def corpus_rows(inscriptions: list[dict], names=frozenset()) -> list[dict]:
             "words": " ".join(words),
             "pairs": pairs,
             "normalization": _clean_text(r.get("normalization")),
+            # A certain carver who signed the stone (the strongest kind of attribution)
+            "signed": int(any(c["kind"] == "S" and not c["uncertain"] for c in r["carvers"])),
+            **ai_counts(r),
+            **dotted_counts(r),
+            **prayer_form(r),
+            **r_counts(r),
+            **o_counts(r),
+            **och_counts(r),
         }
         rows.append(row)
     return rows

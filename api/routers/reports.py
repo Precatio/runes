@@ -150,6 +150,7 @@ class AttributionRequest(BaseModel):
     carver: str
     author: str = ""
     institution: str = ""
+    email: str = Field("", max_length=200)  # the author's contact address, from the user's own settings
     format: Literal["json", "docx"] = "json"
     check_sources: bool = True  # look the proposal up in Runor 2020 and Wikidata (network)
 
@@ -181,7 +182,7 @@ def attribution_report(req: AttributionRequest):
     except Exception as e:
         logger.warning("R-modellens uppgifter kunde inte läsas: %r", e)
     blocks = ar.build(rec, req.carver, ctx, cc, stone_dimensions.lookup(rec["signum"]), req.author, req.institution,
-                      {"app": APP_VERSION, "fingerprint": _fp()}, att)
+                      {"app": APP_VERSION, "fingerprint": _fp()}, att, req.email)
     if req.format == "docx":
         return Response(content=academic.to_docx(blocks),
                         media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",

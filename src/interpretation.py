@@ -76,7 +76,7 @@ def _strength(f: dict) -> list[str]:
             share = round(st["p_value"] * 100, 1)
             out.append((f"En felaktig ristare fick minst lika hög sannolikhet på {_num(share, 1)} % av de prövade stenarna med "
                         f"känd ristare (q {_p(st['q_value'])} justerat för alla modellens förslag) – förslaget är "
-                        + ("statistiskt säkerställt." if st["q_value"] < 0.05 else "inte statistiskt säkerställt.")))
+                        + ("statistiskt signifikant." if st["q_value"] < 0.05 else "inte statistiskt signifikant.")))
         if st.get("p_truth") is not None:
             out.append(f"Rundatas ristare får {_num(st['p_truth'])}.")
         out.append("Modellen är tränad på attribueringar som delvis bygger på samma drag (stil, stavning, geografi), "
@@ -96,8 +96,23 @@ def _strength(f: dict) -> list[str]:
     ev = f.get("evidence") or 0
     grade = "stark" if ev >= 0.6 else ("måttlig" if ev >= 0.35 else "svag")
     if method == "samlade belägg":  # the decision document: the strength combines the model and the orthography
-        out.append(f"Den samlade styrkan från modellen och ortografin är {grade} ({_num(ev)} på en skala 0–1); slutsatsen "
-                   "nedan väger också in de andra beläggen.")
+        # The number alone can look strong while its parts are not: say why it should not be read as strong
+        sug = f.get("suggested")
+        caveats = []
+        if st.get("model_top") is not None and (st["model_top"] != sug or (st.get("model_p") or 0) < 0.5):
+            caveats.append(f"modellen ger {sug} {_num(st.get('model_p') or 0)}"
+                           + (f" och föredrar {st['model_top']}" if st["model_top"] != sug else ""))
+        if st.get("p_adjusted") is None or st["p_adjusted"] >= 0.05:
+            caveats.append("stavningslikheten är inte statistiskt signifikant"
+                           + (f" (justerat p {_p(st['p_adjusted'])})" if st.get("p_adjusted") is not None else ""))
+        if st.get("ortho_margin") is not None and st["ortho_margin"] < 0.05:
+            caveats.append(f"ortografins förstaval leder bara med {_num(st['ortho_margin'])} i likhet")
+        if grade != "svag" and caveats:
+            out.append(f"Den samlade styrkan från modellen och ortografin är {_num(ev)} på en skala 0–1, men talet ska "
+                       f"inte läsas som {grade}t stöd: {_join(caveats)}. Slutsatsen nedan väger också in de andra beläggen.")
+        else:
+            out.append(f"Den samlade styrkan från modellen och ortografin är {grade} ({_num(ev)} på en skala 0–1); "
+                       "slutsatsen nedan väger också in de andra beläggen.")
     else:
         out.append(f"Metodens eget belägg är {grade}t ({_num(ev)} på en skala 0–1); slutsatsen nedan väger också in de "
                    "andra beläggen.")
@@ -256,6 +271,8 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
     # 4. Newer sources
     cc = f.get("crosscheck") or {}
     status = cc.get("status")
+    from src.crosscheck import agrees_with_rundata
+    same_source = verdict == "motsäger" and status == "annan ristare" and agrees_with_rundata(cc, rec)
     cc_text = {
         "finns redan": "Förslaget finns redan i Runor 2020 eller Wikidata – en bekräftelse av metoden snarare än ny kunskap.",
         "nämns": "Ristaren nämns i Runors anmärkningar om stenen; läs dem innan förslaget förs fram som nytt.",
@@ -263,6 +280,9 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
         "samma som": "Runor knyter stenen till samma namnlösa ristare som en annan sten.",
         "saknas": "Varken Runor 2020 eller Wikidata har förslaget.",
     }.get(status, "Förslaget är inte avstämt mot nyare källor (knappen ovanför tabellen).")
+    if same_source:
+        cc_text = (f"Runor 2020 anger samma ristare som Rundata ({existing}). Runor är en senare utgåva av samma databas, "
+                   "så det är inget oberoende belägg: det visar bara att attribueringen inte har ändrats sedan 2014.")
     paragraphs.append({"title": "Nyare källor", "text": cc_text})
 
     # 5. Conclusion and what could settle it
@@ -274,8 +294,8 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
     # The same for the model: a suggestion that wrong carvers often reach is not "starkt"
     model_sig_ok = not (method.startswith("statistisk modell") and st.get("q_value") is not None and st["q_value"] >= 0.05)
     rundata_supported = verdict == "motsäger" and (profile or {}).get("support") is not None and profile["support"] >= 0.6
-    if verdict == "motsäger" and status == "annan ristare":
-        against += 1  # Runor 2020 sides with another carver than the suggestion
+    if verdict == "motsäger" and status == "annan ristare" and not same_source:
+        against += 1  # Runor 2020 sides with another carver than both the suggestion and Rundata
     if status == "finns redan":
         level, text = "redan känt", f"Förslaget är redan känt i den nyare forskningen. Att metoden kommer fram till samma sak talar för metoden."
     elif verdict == "motsäger" and signed:
@@ -311,7 +331,7 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
           and _model_agrees(rec, sug, ctx)):
         level = "starkt"
         text = (f"Ett välgrundat förslag: både den statistiska modellen och ortografin pekar på {sug}, stavningslikheten är "
-                "statistiskt säkerställd och inget av de andra beläggen talar emot. Metoderna delar stavningen och modellen "
+                "statistiskt signifikant och inget av de andra beläggen talar emot. Metoderna delar stavningen och modellen "
                 "använder också plats och stil, så ett belägg som ligger utanför dem – huggteknik, runformer eller "
                 "ornamentik – skulle stärka förslaget. "
                 + ("Attribueringen i Rundata kan behöva omprövas." if verdict == "motsäger" else "Värt att pröva runologiskt."))
@@ -325,7 +345,7 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
         level = "måttligt"
         text = (f"Ett rimligt men osäkert förslag: {support} andra belägg stämmer med {sug}"
                 + (f" och {against} talar emot" if against else "") + ". "
-                + ("Stavningslikheten är inte säkerställd när man räknar med att den bästa av alla ristare valts. " if not p_ok else "")
+                + ("Stavningslikheten är inte signifikant när man räknar med att den bästa av alla ristare valts. " if not p_ok else "")
                 + ("Värt en närmare granskning, men inte ett starkt argument mot Rundata." if verdict == "motsäger"
                    else "Det behöver stöd från fler håll innan det förs fram."))
     else:

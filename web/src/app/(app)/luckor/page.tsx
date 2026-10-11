@@ -278,7 +278,7 @@ export default function GapsPage() {
       topic: "Våra resultat", question: "Vad säger appens analyser jämfört med forskningen?",
       why: "Appens metoder – stavning, den statistiska modellen, seriationen, okända ristare, huggteknik och AI-bedömd stilgrupp – ställs mot Rundata, som här står för den publicerade forskningen.",
       headline: { value: String(found.summary.likely_new), label: "fynd som sannolikt är ny kunskap enligt uppskattningen" },
-      answer: <>{c.stämmer} av appens resultat stämmer med Rundata, {c.nytt} säger något som Rundata saknar och {c.motsäger} pekar på något annat. {sigFound} av fynden är <strong>statistiskt säkerställda</strong>.</>,
+      answer: <>{c.stämmer} av appens resultat stämmer med Rundata, {c.nytt} säger något som Rundata saknar och {c.motsäger} pekar på något annat. {sigFound} av fynden är <strong>statistiskt signifikanta</strong>.</>,
       interpretation: [
         "Bekräftelserna är ett test av metoderna: att de ofta kommer fram till samma ristare som forskningen talar för att de fungerar.",
         "De nya förslagen är hypoteser. Klicka på ett fynd för en tolkning som väger samman alla belägg och visar vad som talar emot.",
@@ -287,7 +287,7 @@ export default function GapsPage() {
       notSaying: [
         "Rundata (2018) är inte hela forskningen – ett 'nytt' fynd kan finnas i litteratur som appen inte har.",
         "Uppskattningen (belägg × nyhet × relevans) är en tumregel för att prioritera, inte en sannolikhet.",
-        "Statistiskt säkerställt betyder att en likhet sannolikt inte är slump, inte att attribueringen är rätt.",
+        "Statistiskt signifikant betyder att en så stor likhet sällan uppstår utan ett verkligt samband (justerat p under 0,05) – inte att attribueringen är rätt.",
       ],
     },
     coverage: {
@@ -304,10 +304,10 @@ export default function GapsPage() {
     hypotheses: {
       topic: "Nya ristare", question: "Vilka stenar utan ristare liknar en känd ristare i stavningen?",
       why: "Ristare hade egna stavningsvanor. En sten utan ristare som stavar som en känd ristare kan vara hans eller hennes.",
-      headline: { value: String(data.hypotheses.new.length), label: `stenar utan ristare med tydlig stavningslikhet, varav ${nSig(data.hypotheses.new)} statistiskt säkerställda` },
-      answer: <>Ortografin pekar ut en trolig ristare för {data.hypotheses.new.length} stenar utan ristare i Rundata; {nSig(data.hypotheses.new)} av likheterna är statistiskt säkerställda (justerat p under 0,05). Prövad på stenar med känd ristare hamnar rätt ristare först i {Math.round(ev.top1_accuracy * 100)} % av fallen, mot {Math.round(ev.chance_top1 * 100)} % med slumpen.</>,
+      headline: { value: String(data.hypotheses.new.length), label: `stenar utan ristare med tydlig stavningslikhet, varav ${nSig(data.hypotheses.new)} statistiskt signifikanta` },
+      answer: <>Ortografin pekar ut en trolig ristare för {data.hypotheses.new.length} stenar utan ristare i Rundata; {nSig(data.hypotheses.new)} av likheterna är statistiskt signifikanta (justerat p under 0,05). Prövad på stenar med känd ristare hamnar rätt ristare först i {Math.round(ev.top1_accuracy * 100)} % av fallen, mot {Math.round(ev.chance_top1 * 100)} % med slumpen.</>,
       interpretation: [
-        "Säkerställda likheter inom ristarens område är de bästa kandidaterna att pröva vidare.",
+        "Signifikanta likheter inom ristarens område är de bästa kandidaterna att pröva vidare.",
         "Väger tyngre när flera oberoende metoder – t.ex. den statistiska modellen eller huggtekniken – pekar mot samma ristare.",
       ],
       notSaying: [
@@ -318,8 +318,8 @@ export default function GapsPage() {
     reconsider: {
       topic: "Ompröva", question: "Vilka attribueringar kan behöva omprövas?",
       why: "En attribuerad sten som stavar som en annan ristare kan vara felbedömd – eller visa samarbete.",
-      headline: { value: String(data.hypotheses.reconsider.length), label: `attribuerade stenar där stavningen pekar mot någon annan, varav ${nSig(data.hypotheses.reconsider)} säkerställda` },
-      answer: <>För {data.hypotheses.reconsider.length} stenar som Rundata attribuerar pekar ortografin mot en annan ristare; {nSig(data.hypotheses.reconsider)} av likheterna är statistiskt säkerställda.</>,
+      headline: { value: String(data.hypotheses.reconsider.length), label: `attribuerade stenar där stavningen pekar mot någon annan, varav ${nSig(data.hypotheses.reconsider)} signifikanta` },
+      answer: <>För {data.hypotheses.reconsider.length} stenar som Rundata attribuerar pekar ortografin mot en annan ristare; {nSig(data.hypotheses.reconsider)} av likheterna är statistiskt signifikanta.</>,
       interpretation: [
         "Det kan vara en felaktig attribuering, men också samarbete, en verkstad eller en ristare som skrev olika vid olika tillfällen.",
         "Signerade stenar ingår inte – där är det metoden som har fel, inte ristaren.",
@@ -357,7 +357,7 @@ export default function GapsPage() {
           korthet och ett förslag till tolkning. Allt är förslag för forskare att pröva, inte färdiga slutsatser.</>}
         howTo={[
           <>Välj en fråga i korten. Under svaret finns tabellerna; klicka på en kolumnrubrik för att sortera.</>,
-          <>Märket <strong>✓ Säkerställt</strong> betyder att resultatet sannolikt inte är slump (p eller q under 0,05). Håll muspekaren över ⓘ och prickade ord för förklaringar.</>,
+          <>Märket <strong>✓ Signifikant</strong> betyder att p eller q är under 0,05: ett så tydligt resultat vore ovanligt om det inte fanns något verkligt samband. Det säger inte hur stort eller viktigt resultatet är. Håll muspekaren över ⓘ och prickade ord för förklaringar.</>,
           <>Klicka på ett fynd för en tolkning som väger samman alla belägg och visar vad som talar emot.</>,
           <>Siffrorna i rutorna överst är länkar till inskrifterna bakom dem.</>,
         ]} />
@@ -455,10 +455,10 @@ function SizePanel() {
     <div className="space-y-5 text-sm">
       <Answer topic="Storlek" question="Restes större stenar för större syften?"
         why="Storleken kan säga något om beställarens resurser och om vad stenen skulle uttrycka."
-        headline={{ value: `${sigTests.length} av ${data.tests.length}`, label: "jämförelser där stenarnas höjd skiljer sig säkerställt (inom landskap)" }}
+        headline={{ value: `${sigTests.length} av ${data.tests.length}`, label: "jämförelser där stenarnas höjd skiljer sig signifikant (inom landskap)" }}
         answer={sigTests.length
-          ? <>Med hänsyn till landskapet skiljer sig höjden säkerställt för {sigTests.map(t => `${t.variable.replace(/^Syfte: /, "").toLowerCase()} (${ratio(t.ratio)} mot övriga stenar)`).join(" och ")}. Höjden är känd för {data.n} av {data.meta.n_runestones} runstenar.</>
-          : <>Ingen av jämförelserna visar en säkerställd skillnad i höjd när landskapet hålls konstant. Höjden är känd för {data.n} av {data.meta.n_runestones} runstenar.</>}
+          ? <>Med hänsyn till landskapet skiljer sig höjden signifikant för {sigTests.map(t => `${t.variable.replace(/^Syfte: /, "").toLowerCase()} (${ratio(t.ratio)} mot övriga stenar)`).join(" och ")}. Höjden är känd för {data.n} av {data.meta.n_runestones} runstenar.</>
+          : <>Ingen av jämförelserna visar en signifikant skillnad i höjd när landskapet hålls konstant. Höjden är känd för {data.n} av {data.meta.n_runestones} runstenar.</>}
         interpretation={["En högre sten för vissa syften kan spegla beställarnas resurser eller budskapets vikt – men också vilken sten som fanns att tillgå."]}
         notSaying={["Måtten är ofullständiga och ojämna: höjd över mark för resta stenar, fragment uteslutna.",
           "En stor sten har plats för en längre text, så text och storlek hänger ihop av praktiska skäl."]} />
@@ -533,8 +533,8 @@ function CategoryPanel() {
     <>
       <Answer topic="Syfte" question="Skiljer sig ristarna i vad inskrifterna handlar om?"
         why="Om en ristare oftare än andra ristar minnesstenar, brostenar eller böner kan det säga något om ristarens repertoar eller beställarkrets."
-        headline={{ value: String(deviations.length), label: `säkerställda avvikelser från genomsnittet, hos ${carversWith} av ${data.carvers.length} ristare` }}
-        answer={<>{carversWith} av {data.carvers.length} ristare med minst fem säkra inskrifter skriver säkerställt oftare eller mer sällan än
+        headline={{ value: String(deviations.length), label: `signifikanta avvikelser från genomsnittet, hos ${carversWith} av ${data.carvers.length} ristare` }}
+        answer={<>{carversWith} av {data.carvers.length} ristare med minst fem säkra inskrifter skriver signifikant oftare eller mer sällan än
           genomsnittet om något (q under 0,05){examples.length > 0 && <>, t.ex. {examples.map(e => `${e.carver} om ${e.cat} (${pctTxt(e.share)})`).join(", ")}</>}.</>}
         interpretation={["Skillnaderna kan spegla ristarens repertoar och skrivvanor, men också vilka beställare ristaren arbetade för och när.",
           "Kristna böner och brobyggen följer också tiden, så en ristare som var verksam sent har fler av dem."]}
@@ -652,7 +652,7 @@ const PATTERN_GROUPS: { key: string; label: string; statuses: string[]; accent: 
   { key: "confirm", label: "Bekräftar", statuses: ["bekräftar"], accent: "border-l-emerald-600", pill: "bg-emerald-50 text-emerald-800 border-emerald-200",
     help: "Mönster som stämmer med det forskningen redan antar, nu med mätbar osäkerhet." },
   { key: "limit", label: "Begränsningar", statuses: ["begränsning", "svagt", "svag effekt", "indikation"], accent: "border-l-slate-400", pill: "bg-slate-100 text-slate-700 border-slate-300",
-    help: "Svaga effekter (säkerställda men små), cirkulära jämförelser och det metoden eller datan inte klarar." },
+    help: "Svaga effekter (signifikanta men små), cirkulära jämförelser och det metoden eller datan inte klarar." },
 ];
 
 function PatternsBox({ patterns }: { patterns: RPattern[] }) {
@@ -690,13 +690,13 @@ function PatternsBox({ patterns }: { patterns: RPattern[] }) {
         })}
         <button onClick={() => setOnlySig(!onlySig)}
           className={`px-3 py-1.5 rounded-xl border text-xs font-bold ${onlySig ? "bg-emerald-700 border-emerald-700 text-white" : "bg-white border-slate-300 text-emerald-800 hover:bg-emerald-50"}`}>
-          ✓ Statistiskt säkerställda {nSig}
+          ✓ Statistiskt signifikanta {nSig}
         </button>
       </div>
       <p className="text-xs text-slate-500 mb-3 max-w-4xl">
-        Två frågor per mönster: <strong>är det statistiskt säkerställt</strong> (inte slump, grönt märke) och <strong>är det
+        Två frågor per mönster: <strong>är det statistiskt signifikant</strong> (grönt märke) och <strong>är det
         känt</strong> i forskningen (bekräftar – bidraget är då mätningen med plats och ristare konstanta) eller nytt (att pröva).
-        Ett mönster kan vara både säkerställt och känt.
+        Ett mönster kan vara både signifikant och känt.
       </p>
       <ul className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         {shown.slice(0, showAll ? undefined : FIRST).map((pt, i) => {
@@ -806,8 +806,8 @@ function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; loggedIn
         </select>
         <button onClick={() => setOnlySignificant(!onlySignificant)}
           className={`px-3 py-1.5 rounded-xl border text-xs font-bold ${onlySignificant ? "bg-emerald-700 border-emerald-700 text-white" : "bg-white border-slate-300 text-emerald-800 hover:bg-emerald-50"}`}>
-          <Tip text={GLOSSARY["Statistiskt säkerställt"] + " Ortografin (justerat p), statistiska modellen (q, mot de sannolikheter felaktiga ristare får) och huggtekniken har ett signifikanstest per sten; seriationen och grupperna av stenar utan ristare är skattningar utan test."}>
-            ✓ Bara statistiskt säkerställda ({nSignificant})
+          <Tip text={GLOSSARY["Statistiskt signifikant"] + " Ortografin (justerat p), statistiska modellen (q, mot de sannolikheter felaktiga ristare får) och huggtekniken har ett signifikanstest per sten; seriationen och grupperna av stenar utan ristare är skattningar utan test."}>
+            ✓ Bara statistiskt signifikanta ({nSignificant})
           </Tip>
         </button>
         <span className="text-slate-500">{sorted.length} fynd</span>
@@ -949,7 +949,10 @@ function FindingRow({ f, open, onToggle }: { f: Finding; open: boolean; onToggle
             <span className="sm:hidden"><Chip label="Uppskattning">{Math.round(f.score * 100)}</Chip></span>
           </div>
         </td>
-        <td className="p-2"><div className="flex flex-col gap-1.5"><LevelBadge it={f.interpretation} /><SigBadge sig={f.significance} compact /></div></td>
+        <td className="p-2"><div className="flex flex-col gap-1.5"><LevelBadge it={f.interpretation} />
+          <SigBadge compact sig={f.significance?.significant && f.interpretation && ["måttligt", "svagt"].includes(f.interpretation.level)
+            ? { ...f.significance, qualified: "metodens eget test är signifikant, men tolkningen, som väger in alla belägg, är " + f.interpretation.level }
+            : f.significance} /></div></td>
         <td className="p-2 hidden sm:table-cell">
           <Score value={f.score} />
           <div className="text-[11px] text-slate-600 mt-1 leading-snug">{f.assessment}</div>

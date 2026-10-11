@@ -150,7 +150,7 @@ export default function ComparePage() {
           mätkorpusen – par av samma och av olika ristare – och har stenarna signum jämförs också ristare, stil, stavning och språkdrag.</>}
         howTo={[
           <>Välj två uppmätta stenar och tryck Jämför. Slutsatsen kommer först, sedan om mätningarna alls går att jämföra.</>,
-          <>En <strong>säkerställd skillnad</strong> i huggspåren talar för olika händer (eller olika bergart, verktyg, vittring). Ingen säkerställd skillnad betyder bara att mätningarna inte skiljer stenarna åt – inte att de är huggna av samma ristare.</>,
+          <>En <strong>signifikant skillnad</strong> i huggspåren talar för olika händer (eller olika bergart, verktyg, vittring). Ingen signifikant skillnad betyder bara att mätningarna inte skiljer stenarna åt – inte att de är huggna av samma ristare.</>,
           <>Asymmetri och bottenradie är osäkra mått och ingår inte i den samlade jämförelsen.</>,
         ]} />
       <DocsNote anchor="3-jämförelse-av-två-stenar">Hur jämförelsen räknas står i avsnitt 3.</DocsNote>
@@ -210,7 +210,7 @@ export default function ComparePage() {
                 <thead>
                   <tr className="text-left text-[11px] uppercase tracking-wider text-slate-500">
                     <th className="p-2">Mått<InfoTip text={GLOSSARY["Mått"]} /></th><th className="p-2">A<InfoTip text={GLOSSARY["A"]} /></th><th className="p-2">B<InfoTip text={GLOSSARY["B"]} /></th>
-                    <th className="p-2">p (just.)<InfoTip text="Permutationstest per mått, Bonferroni-justerat för antalet mått. Under 0,05 = säkerställd skillnad." /></th>
+                    <th className="p-2">p (just.)<InfoTip text="Permutationstest per mått, Bonferroni-justerat för antalet mått. Under 0,05 = signifikant skillnad." /></th>
                     <th className="p-2">d<InfoTip text={GLOSSARY["d"]} /></th>
                   </tr>
                 </thead>

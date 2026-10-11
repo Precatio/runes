@@ -3,14 +3,12 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { useAuth } from "./AuthContext";
 import Messages from "./Messages";
 
 export default function TopBar({ onMenu }: { onMenu?: () => void }) {
-  const router = useRouter();
   const { user, loginWithGoogle } = useAuth();
   const [isFocused, setIsFocused] = useState(false);
   const [query, setQuery] = useState("");
@@ -75,18 +73,6 @@ export default function TopBar({ onMenu }: { onMenu?: () => void }) {
       <div className="lg:flex-1 flex justify-end items-center gap-2 sm:gap-4 shrink-0">
         <div className="flex items-center gap-2 sm:gap-4">
           <Messages />
-          {/* Generate Report Quick Button */}
-          <button 
-            onClick={() => router.push("/report/current")}
-            title="Generera Akademisk Rapport för aktuellt arbetspass"
-            className="p-2 text-slate-500 hover:text-white bg-white hover:bg-[#b7410e] rounded-full transition-colors border border-slate-200"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-            </svg>
-          </button>
-          
-
 
           {/* User Profile Pill */}
           <div className="relative">

@@ -180,8 +180,8 @@ def geography(rec: dict, carver: str, inscriptions: list[dict], home: dict) -> d
     if nearest is None:
         text = "Avståndet kan inte beräknas (koordinater saknas)."
     else:
-        text = (f"En säker sten av {carver} står på samma plats (under 1 km)." if nearest < 1 else
-                f"Närmaste säkra sten av {carver} ligger {round(nearest)} km bort.")
+        text = (f"En signerad eller attribuerad sten av {carver} står på samma plats (under 1 km)." if nearest < 1 else
+                f"Närmaste signerade eller attribuerade sten av {carver} ligger {round(nearest)} km bort.")
     if provinces:
         text += f" Ristarens kända landskap: {', '.join(f'{p} ({n})' for p, n in provinces.most_common(4))}."
     plausible = in_area and (nearest is None or nearest <= 60)
@@ -210,11 +210,23 @@ def carver_styles(rec: dict | None, carver: str, inscriptions: list[dict]) -> di
         if st and st["from"] and core_years:
             lo, hi = min(y[0] for y in core_years), max(y[1] for y in core_years)
             gap = max(0, lo - st["to"], st["from"] - hi)
-        fits = stone_style in core or (gap == 0 if gap is not None else stone_style in styles)
-    text = ("Stilgrupper på ristarens säkra stenar: " + ", ".join(f"{s} ({n})" for s, n in styles.most_common()) + "."
+        # In the core: fits. Outside the core but within its time frame: possible, but rare for the carver, so it does
+        # not decide either way. Outside the time frame: speaks against
+        fits = (True if stone_style in core else
+                (None if gap == 0 else False) if gap is not None else stone_style in styles)
+    text = ("Stilgrupper på ristarens stenar (utan frågetecken i Rundata): "
+            + ", ".join(f"{s} ({n})" for s, n in styles.most_common()) + "."
             if styles else "Ristarens stenar saknar säker stilgrupp i Rundata.")
-    if span:
-        text += f" Det motsvarar ungefär {span[0]}–{span[1]} enligt Gräslunds kronologi."
+    if core_years:
+        c_lo, c_hi = min(y[0] for y in core_years), max(y[1] for y in core_years)
+        rare = [s for s in styles if s not in core]
+        text += (f" Kärnan (stilgrupper på minst en tiondel av stenarna: "
+                 f"{', '.join(sorted(core, key=lambda c: BY_CODE.get(c, {}).get('from') or 0))}) motsvarar ungefär "
+                 f"{c_lo}–{c_hi} enligt Gräslunds kronologi" + (f"; {', '.join(rare)} finns bara på enstaka stenar." if rare else "."))
+    if fits is None and gap == 0 and stone_style not in core:
+        n_same = styles.get(stone_style, 0)
+        text += (f" Stenens stilgrupp {stone_style} ligger inom kärnans tidsram men finns bara på {n_same} av {total} av "
+                 "ristarens stenar; den är möjlig men ovanlig för ristaren och avgör inte frågan.")
     if fits is False:
         n_same = styles.get(stone_style, 0)
         text += (f" Stenens stilgrupp {stone_style} finns {'bara på ' + str(n_same) + ' av ' + str(total) if n_same else 'inte'}"

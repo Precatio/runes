@@ -6,8 +6,10 @@ För varje svensk vikingatida runsten samlas vad sex metoder säger om vem som r
               stenar utan ristare inom 25 km från en träningssten
   ortografi   stavningens likhet med ristarnas profiler (avsnitt 6; stenen själv utelämnad)
   område      om stenen ligger i ristarens kända landskap och högst 60 km från en säker sten av ristaren
-  stil        om stenens stilgrupp finns bland ristarens säkra stenar
-  språkdrag   om minst hälften av de jämförbara språkdragen stämmer (avsnitt 8)
+  stil        om stenens stilgrupp hör till kärnan av ristarens stilgrupper (minst en tiondel av stenarna);
+              en ovanlig stilgrupp inom kärnans tidsram avgör inte, en utanför den talar emot
+  språkdrag   för: stenen passar ristarens profil bättre än 95 % av landskapets stenar; emot: dragen är minst
+              tre gånger ovanligare hos ristaren än i landskapet (avsnitt 8)
   bergart     om bergarten förekommer på ristarens stenar (avsnitt 10)
 
 Två mått räknas fram, båda mellan 0 och 1:
@@ -18,7 +20,8 @@ Två mått räknas fram, båda mellan 0 och 1:
                bergart 1 eller 0, vikt 0,5)
   alternativ   styrkan för den bästa andra ristaren: 1 − (1 − modellens sannolikhet)(1 − ortografins
                tillförlitlighet om ristaren kommer först), nedräknat med andelen kontroller (område, stil,
-               språkdrag, bergart) som inte klaras
+               språkdrag, bergart) som inte klaras. Ortografins förstaval räknas fullt bara när det leder
+               tvåan med minst 0,05 i likhet, annars i proportion till marginalen
 
 Status för stenar med ristare i Rundata: *kan vara felbedömd* (alternativ ≥ 0,4 och stöd < 0,4), *omstridd*
 (alternativ ≥ 0,4), *stöds* (stöd ≥ 0,6), annars *svagt underlag* – liksom när färre än två metoder kan uttala
@@ -60,6 +63,9 @@ def r_probabilities(directory: str | None) -> tuple[dict, dict]:
             pred[x["signum"]] = {c: x[k] for c, k in ((x.get("top"), "p"), (x.get("second"), "p2"), (x.get("third"), "p3"))
                                  if c and x.get(k) is not None}
     return oof, pred
+
+
+ORTHO_MARGIN = 0.05  # the orthography's first choice counts in full only when it leads the second by at least this
 
 
 def _checks(rec, carver, inscriptions, names, home, selected: bool = False) -> dict:
@@ -108,7 +114,8 @@ def stone(rec, ctx: dict, detail: bool = False) -> dict:
                 in_area = province(rec) in home.get(r["carver"], {})
                 ranking.append({"carver": r["carver"], "similarity": round(r["similarity"], 3),
                                 "reliability": round(smoothed_precision(per.get(r["carver"])) * (1.0 if in_area else 0.5) * length, 3)})
-            ortho = {"ranking": ranking, "n_words": rk["n_words"]}
+            margin = (ranking[0]["similarity"] - ranking[1]["similarity"]) if len(ranking) > 1 else ORTHO_MARGIN
+            ortho = {"ranking": ranking, "n_words": rk["n_words"], "margin": round(max(0.0, margin), 3)}
 
     def sources_for(carver: str, selected: bool = False) -> tuple[dict, float | None]:
         src: dict[str, dict] = {}
@@ -141,7 +148,10 @@ def stone(rec, ctx: dict, detail: bool = False) -> dict:
     alts = []
     for c in candidates:
         mp = probs.get(c, 0.0)
-        op = ortho["ranking"][0]["reliability"] if ortho and ortho["ranking"][0]["carver"] == c else 0.0
+        op = 0.0
+        if ortho and ortho["ranking"][0]["carver"] == c:
+            # A first place that barely leads the second (0.66 against 0.64) does not single the carver out
+            op = ortho["ranking"][0]["reliability"] * min(1.0, ortho["margin"] / ORTHO_MARGIN)
         raw = 1 - (1 - mp) * (1 - op)
         if raw < 0.15:
             continue

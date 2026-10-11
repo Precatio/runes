@@ -34,7 +34,8 @@ DATA_PATH = os.environ.get(
 
 SIGNUM_IN_TEXT_RE = re.compile(
     r"(?<![A-Za-zÅÄÖåäö])(U|Sö|So|Ög|Og|Öl|Ol|Vg|Sm|Gs|Vs|Nä|Na|Hs|M|Ån|An|D|Hr|J|Lp|Ds|Bo|G|DR|N|IS|IM|E|GR|Or)"
-    r"[\s_]?(\d{1,4})(?![\d])"
+    # A number followed by a percent sign or a decimal is a share ("Vg 84 %", "U 26,5 %"), not a signum
+    r"[\s_]?(\d{1,4})(?![\d])(?![,.]\d)(?!\s*(?:%|procent))"
 )
 
 

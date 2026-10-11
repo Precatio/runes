@@ -163,8 +163,12 @@ def stone_language(signum: str, carver: str = ""):
            "traits": [{"trait": k, "group": TRAITS[k][0], "label": TRAITS[k][1],
                                                 "definition": TRAITS[k][2], "value": v} for k, v in t.items()]}
     if carver:
-        out["comparison"] = compare(t, carver_profile(carver, store().inscriptions, certain_carvers, names,
-                                                      exclude=rec["signum"]))
+        # Against the province's other stones as well as the carver (src/synthesis.language_check), so that a trait that
+        # is common everywhere does not count as a match; falls back to the carver alone when the province is too small
+        from src.synthesis import language_check
+        out["comparison"] = (language_check(rec, carver, store().inscriptions, names)
+                             or compare(t, carver_profile(carver, store().inscriptions, certain_carvers, names,
+                                                          exclude=rec["signum"])))
     return out
 
 

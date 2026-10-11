@@ -327,12 +327,19 @@ def test_attribution_proposal(client):
     r = client.post("/api/reports/attribution", json=body)
     assert r.status_code == 200
     md = r.json()["markdown"]
-    assert "attribuering: U 344 – Öpir 1" in md  # U 344 is attributed to Åsmund
+    # U 344 is attributed to Åsmund; the weak test of Öpir comes out in Åsmund's favour and is titled so
+    assert md.startswith("# Prövning av U 344: Rundatas attribuering till Åsmund stöds")
+    assert "Internt arbetsunderlag" in md and "Jämfört med Rundatas ristare talar" in md
     for heading in ("## Sammanfattning och rekommendation", "## 3. Material", "### 4.1 Statistisk modell",
                     "### 4.2 Ortografi", "### 4.5 Språkdrag", "## 6. Samlad bedömning", "## 7. Vad som skulle kunna avgöra",
                     "## 8. Källkritik", "## 9. Ordlista", "## Bilaga"):
         assert heading in md
     assert "Rekommendation:" in md and "Rundatas ristare: Åsmund" in md
+    assert "Hypotesen kommer från Stenöversikten" in md or "valts som hypotes av författaren" in md
+    assert "Kontakt: Test, [Fyll i e-post]" in md
+    assert "Kontakt: Test, test@example.org" in client.post("/api/reports/attribution",
+                                                             json={**body, "email": "test@example.org"}).json()["markdown"]
+    assert "Måtten är inte validerade" not in md  # only the limitations that bear on the document
     d = client.post("/api/reports/attribution", json={**body, "format": "docx"})
     assert d.status_code == 200 and len(d.content) > 5000
     assert client.post("/api/reports/attribution", json={**body, "signum": "Inte 1"}).status_code == 404

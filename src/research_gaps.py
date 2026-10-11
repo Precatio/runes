@@ -84,7 +84,7 @@ def coverage(inscriptions: list[dict], measured: set[str]) -> dict:
 def carver_home(inscriptions: list[dict]) -> dict[str, Counter]:
     home: dict[str, Counter] = defaultdict(Counter)
     for r in inscriptions:
-        for name in certain_carvers(r):
+        for name in set(certain_carvers(r)):  # a carver named twice on one inscription is one stone
             home[name][province(r)] += 1
     return home
 

@@ -38,21 +38,25 @@ for (l in lemmas) {
   form_dist[[l]] <- list(forms = f, D = m / pmax(len, 1))
 }
 nd <- length(districts)
-OD <- matrix(NA_real_, nd, nd, dimnames = list(districts, districts))
-for (i in seq_len(nd)) for (j in seq_len(nd)) {
-  if (j < i) { OD[i, j] <- OD[j, i]; next }
-  vals <- c()
-  for (l in lemmas) {
-    a1 <- dist_forms %>% filter(district == districts[i], lemma == l)
-    b1 <- dist_forms %>% filter(district == districts[j], lemma == l)
-    if (!nrow(a1) || !nrow(b1)) next
-    fd <- form_dist[[l]]
-    ia <- match(a1$form, fd$forms); ib <- match(b1$form, fd$forms)
-    vals <- c(vals, sum(outer(a1$p, b1$p) * fd$D[ia, ib, drop = FALSE]))
+od_matrix <- function(df) {
+  M <- matrix(NA_real_, nd, nd, dimnames = list(districts, districts))
+  for (i in seq_len(nd)) for (j in seq_len(nd)) {
+    if (j < i) { M[i, j] <- M[j, i]; next }
+    vals <- c()
+    for (l in lemmas) {
+      a1 <- df[df$district == districts[i] & df$lemma == l, ]
+      b1 <- df[df$district == districts[j] & df$lemma == l, ]
+      if (!nrow(a1) || !nrow(b1)) next
+      fd <- form_dist[[l]]
+      ia <- match(a1$form, fd$forms); ib <- match(b1$form, fd$forms)
+      vals <- c(vals, sum(outer(a1$p, b1$p) * fd$D[ia, ib, drop = FALSE]))
+    }
+    M[i, j] <- if (length(vals) >= 3) mean(vals) else NA
   }
-  OD[i, j] <- if (length(vals) >= 3) mean(vals) else NA
+  diag(M) <- 0
+  M
 }
-diag(OD) <- 0
+OD <- od_matrix(dist_forms)
 
 # Geographic distance between district centroids (km)
 cent <- d %>% filter(district %in% districts) %>% group_by(district) %>%
@@ -81,6 +85,39 @@ if (length(keep_d) < nrow(OD)) {
 }
 OD2 <- OD[keep_d, keep_d]; GD2 <- GD[keep_d, keep_d]
 mt <- mantel(OD2, GD2, PERM)
+
+# Checks on what the spatial pattern is: the Mantel test is known to be optimistic with spatially structured data, and
+# a pattern can come from one provincial border, from carvers' workshops or from districts with stones of different age.
+complete <- function(M, keep) { while (length(keep) > 3 && any(is.na(M[keep, keep]))) {
+  keep <- setdiff(keep, names(which.max(rowSums(is.na(M[keep, keep]))))) }; keep }
+prov_of <- setNames(cent$province, cent$district)
+within_prov <- lapply(c(U = "U", "Sö" = "Sö"), function(pv) {
+  kd <- keep_d[prov_of[keep_d] == pv]
+  if (length(kd) < 8) return(list(n_districts = length(kd), tested = FALSE))
+  m <- mantel(OD2[kd, kd], GD2[kd, kd], PERM)
+  list(n_districts = length(kd), tested = TRUE, r = r3(m$r), p = signif(m$p, 3))
+})
+# Stones without a certain carver only: the carvers' own habits cannot make the pattern
+unattr <- d$signum[is.na(d$carver) | d$carver == ""]
+df_u <- pairs %>% filter(signum %in% unattr) %>% count(district, lemma, form) %>% group_by(district, lemma) %>%
+  mutate(p = n / sum(n)) %>% ungroup()
+OD_u <- od_matrix(df_u)
+ku <- complete(OD_u, keep_d)
+unattributed <- if (length(ku) >= 8) { m <- mantel(OD_u[ku, ku], GD[ku, ku], PERM)
+  list(n_districts = length(ku), tested = TRUE, r = r3(m$r), p = signif(m$p, 3)) } else list(tested = FALSE)
+# With the difference in the districts' mean dating held constant (partial rank correlation; descriptive, since partial
+# Mantel tests are known to be unreliable with spatial data)
+mid <- d %>% filter(district %in% keep_d, !is.na(style_from)) %>% group_by(district) %>%
+  summarise(year = mean((style_from + style_to) / 2))
+partial_time <- list(tested = FALSE)
+if (nrow(mid) >= 8) {
+  kt <- intersect(keep_d, mid$district)
+  yr <- setNames(mid$year, mid$district)[kt]
+  TD <- abs(outer(yr, yr, "-")); lt2 <- lower.tri(TD)
+  ro <- rank(OD2[kt, kt][lt2]); rg <- rank(GD2[kt, kt][lt2]); rt <- rank(TD[lt2])
+  pr <- cor(resid(lm(ro ~ rt)), resid(lm(rg ~ rt)))
+  partial_time <- list(tested = TRUE, n_districts = length(kt), r = r3(pr), r_time = r3(cor(ro, rt)))
+}
 
 # Distance classes: orthographic distance by geographic distance (correlogram-like)
 lt <- lower.tri(OD2)
@@ -182,6 +219,7 @@ fig_sten <- tryCatch(save_fig(mk("stæin", function(w) ifelse(grepl("ai|ia|æi",
 result <- list(
   n_districts = length(keep_d), min_stones = MIN_STONES, lemmas = lemmas, min_lemma = MIN_LEMMA,
   mantel = list(r = r3(mt$r), p = signif(mt$p, 3), permutations = PERM),
+  checks = list(within_province = within_prov, unattributed = unattributed, partial_time = partial_time),
   distance_bands = dc %>% mutate(across(c(mean_ortho, geo_mid), r3)),
   groups = group_rows, group_forms = char_rows, k = k, silhouette = r3(max(sils)),
   lemma_geography = lemma_geo,

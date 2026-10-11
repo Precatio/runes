@@ -18,10 +18,13 @@ interface SettingsContextType {
   openaiKey: string;
   userName: string;
   userInstitution: string;
+  // Contact address in reports; defaults to the signed-in account's address
+  userEmail: string;
   setGeminiKey: (key: string) => void;
   setOpenaiKey: (key: string) => void;
   setUserName: (name: string) => void;
   setUserInstitution: (inst: string) => void;
+  setUserEmail: (email: string) => void;
   isModalOpen: boolean;
   setIsModalOpen: (open: boolean) => void;
   totalTokensUsed: number;
@@ -36,8 +39,10 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   const [anthropicKey, setAnthropicState] = useState("");
   const [aiProvider, setProviderState] = useState<AIProvider>("claude");
   const [openaiKey, setOpenaiState] = useState("");
-  const [userName, setUserNameState] = useState("Viktor Kvant");
+  // No personal defaults: the name and address come from the user's own settings or account
+  const [userName, setUserNameState] = useState("");
   const [userInstitution, setUserInstState] = useState("Vitki");
+  const [userEmail, setUserEmailState] = useState("");
   const [totalTokensUsed, setTotalTokensUsed] = useState(0);
   const [tokenHistory, setTokenHistory] = useState<Record<string, number>>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,6 +55,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       let savedOpenai = localStorage.getItem("vitki_openai_key");
       let savedName = localStorage.getItem("vitki_user_name");
       let savedInst = localStorage.getItem("vitki_user_inst");
+      let savedEmail = localStorage.getItem("vitki_user_email");
       let savedTokens = parseInt(localStorage.getItem("vitki_tokens_used") || "0", 10);
       let savedHistory = {};
       try {
@@ -78,6 +84,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
             }
             savedName = data.userName || savedName;
             savedInst = data.userInstitution || savedInst;
+            savedEmail = data.userEmail || savedEmail;
             savedTokens = data.totalTokensUsed || savedTokens;
             savedHistory = data.tokenHistory || savedHistory;
           }
@@ -92,7 +99,8 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       const savedProvider = localStorage.getItem("vitki_ai_provider");
       if (savedProvider === "claude" || savedProvider === "gemini") setProviderState(savedProvider);
       if (savedOpenai) setOpenaiState(savedOpenai);
-      if (savedName) setUserNameState(savedName);
+      setUserNameState(savedName || user?.displayName || "");
+      setUserEmailState(savedEmail || user?.email || "");
       // The app was earlier called Aagaard Research and Bifrost; saved settings get the name Vitki
       if (savedInst === "Aagaard Research" || savedInst === "Bifrost") {
         savedInst = "Vitki";
@@ -189,11 +197,17 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     saveToFirestore("userInstitution", inst);
   };
 
+  const setUserEmail = (email: string) => {
+    setUserEmailState(email);
+    localStorage.setItem("vitki_user_email", email);
+    saveToFirestore("userEmail", email);
+  };
+
   return (
     <SettingsContext.Provider value={{ 
       aiProvider, anthropicKey, setAiProvider, setAnthropicKey, aiHeaders,
-      geminiKey, openaiKey, userName, userInstitution,
-      setGeminiKey, setOpenaiKey, setUserName, setUserInstitution,
+      geminiKey, openaiKey, userName, userInstitution, userEmail,
+      setGeminiKey, setOpenaiKey, setUserName, setUserInstitution, setUserEmail,
       isModalOpen, setIsModalOpen,
       totalTokensUsed, tokenHistory, addUsedTokens
     }}>

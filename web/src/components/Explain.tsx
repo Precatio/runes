@@ -106,16 +106,26 @@ export function Confidence({ level, text }: { level: Level; text: string }) {
 
 export interface Significance {
   significant: boolean | null; label?: string; test?: string; kind?: string; value?: number;
+  qualified?: string; // significant, but the result is only an indication or a weak effect
 }
 
 // Whether a result is statistically significant – the same mark everywhere
 export function SigBadge({ sig, compact }: { sig?: Significance | null; compact?: boolean }) {
   if (!sig) return null;
+  if (sig.significant && sig.qualified) {
+    return (
+      <span className="inline-flex w-fit self-start shrink-0 items-center rounded-full border border-amber-300 bg-amber-50 px-2.5 py-0.5 text-[11px] font-bold text-amber-900">
+        <Tip text={`Signifikant men osäkert: ${sig.label ?? ""}${sig.test ? ` (${sig.test})` : ""} – ${sig.qualified}.`}>
+          Signifikant men osäkert{compact ? "" : ` · ${sig.label}`}
+        </Tip>
+      </span>
+    );
+  }
   if (sig.significant) {
     return (
       <span className="inline-flex w-fit self-start shrink-0 items-center rounded-full bg-emerald-700 px-2.5 py-0.5 text-[11px] font-bold text-white">
-        <Tip text={`Statistiskt säkerställt: ${sig.label}${sig.test ? ` (${sig.test})` : ""}. Under 0,05 betyder att resultatet sannolikt inte är slump, även när man räknar med att många saker prövats.`}>
-          ✓ Säkerställt{compact ? "" : ` · ${sig.label}`}
+        <Tip text={`Statistiskt signifikant: ${sig.label}${sig.test ? ` (${sig.test})` : ""}. Under 0,05 betyder att ett så tydligt resultat vore ovanligt (färre än 5 av 100 fall) om det inte fanns något verkligt samband, även när man räknar med att många saker prövats. Det är inte sannolikheten att resultatet är sant.`}>
+          ✓ Signifikant{compact ? "" : ` · ${sig.label}`}
         </Tip>
       </span>
     );
@@ -123,8 +133,8 @@ export function SigBadge({ sig, compact }: { sig?: Significance | null; compact?
   if (sig.significant === false) {
     return (
       <span className="inline-flex w-fit self-start shrink-0 items-center rounded-full border border-slate-300 bg-white px-2.5 py-0.5 text-[11px] font-semibold text-slate-600">
-        <Tip text={`Inte statistiskt säkerställt (${sig.label}${sig.test ? `, ${sig.test}` : ""}). Resultatet kan vara slump.`}>
-          Inte säkerställt{compact ? "" : ` · ${sig.label}`}
+        <Tip text={`Inte statistiskt signifikant (${sig.label}${sig.test ? `, ${sig.test}` : ""}). Resultatet är inte tydligare än vad slumpen ofta ger; det visar inte att sambandet saknas.`}>
+          Inte signifikant{compact ? "" : ` · ${sig.label}`}
         </Tip>
       </span>
     );

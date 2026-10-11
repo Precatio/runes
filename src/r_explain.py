@@ -33,7 +33,7 @@ def _p(v) -> str:
 
 
 def _sig(q) -> bool:
-    """Säkerställt efter justering (q kan vara exakt 0, som inte får räknas som saknat)."""
+    """Signifikant efter justering (q kan vara exakt 0, som inte får räknas som saknat)."""
     return q is not None and q < 0.05
 
 

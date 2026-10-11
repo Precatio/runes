@@ -408,14 +408,14 @@ function StoneProfile({ signum, onClose }: { signum: string; onClose: () => void
 
 // A document with all the arguments for a carver, to send to those who maintain the runic text database
 function AttributionProposal({ signum, candidates, reattribution }: { signum: string; candidates: string[]; reattribution: boolean }) {
-  const { userName, userInstitution } = useSettings();
+  const { userName, userInstitution, userEmail } = useSettings();
   const [carver, setCarver] = useState(candidates[0]);
   const [report, setReport] = useState<(ReportResult & { title: string }) | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const request = (format: "json" | "docx") => fetch(`${API_URL}/api/reports/attribution`, {
     method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ signum, carver, author: userName, institution: userInstitution, format }),
+    body: JSON.stringify({ signum, carver, author: userName, institution: userInstitution, email: userEmail, format }),
   });
   const create = async () => {
     setBusy(true); setError(null);

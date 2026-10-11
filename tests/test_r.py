@@ -190,7 +190,19 @@ def test_change_patterns_only_report_adjusted_results():
     assert pats[0]["status"] == "bekräftar" and "blir vanligare" in pats[0]["text"] and "20 av 20" in pats[0]["text"]
     # q 0.2 for the prayer curve and q 0.08 for the bridges: not reported; the province difference (p 0.001) is
     assert "vanligast omkring" not in texts and "bro- och vägstenar" not in texts
-    assert any("26 % i U till 8 % i Ög" in p["text"] for p in pats)
+    prov = [p for p in pats if p["topic"] == "Regional skillnad" and p["text"].startswith("Kristen bön")]
+    assert prov and "U 26 %" in prov[0]["text"] and "Ög 8 %" in prov[0]["text"] and "–––" not in prov[0]["text"]
+
+
+def test_province_with_few_mid_period_stones_gets_no_estimate():
+    ch = {"features": [{"key": "bon", "label": "Kristen bön", "time": {"tested": False},
+                        "provinces": {"q_differ": 0.001, "rows": [
+                            {"province": "U", "share1050": 0.26, "lo1050": 0.2, "hi1050": 0.33, "n_mid": 400},
+                            {"province": "Sö", "share1050": 0.12, "lo1050": 0.08, "hi1050": 0.18, "n_mid": 150},
+                            {"province": "Sm", "share1050": 0.9, "lo1050": 0.2, "hi1050": 1.0, "n_mid": 3}]}}]}
+    text = r_findings.change_patterns(ch)[0]["text"]
+    assert "Sm otillräckligt underlag (3 stenar" in text and "Sm 90 %" not in text
+    assert "mellan U och Sö" in text
 
 
 def _anonymous(signa):

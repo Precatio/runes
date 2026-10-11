@@ -139,7 +139,7 @@ interface Section {
 
 const PATTERN_TOPICS: Record<string, string[]> = {
   geography: ["Geografi"], attribution: ["Attribuering"], text: ["Språk"], clusters: ["Stil och innehåll"],
-  chronology: ["Datering"], network: ["Släkt och formler"], anonymous: ["Okända ristare"], change: ["Förändring"],
+  chronology: ["Datering"], network: ["Släkt och formler"], anonymous: ["Okända ristare"], change: ["Förändring", "Regional skillnad", "Samband"],
 };
 const patternsFor = (patterns: Pattern[], key: string) => patterns.filter(p => (PATTERN_TOPICS[key] ?? []).includes(p.topic));
 
@@ -186,8 +186,8 @@ function SectionIntro({ section, patterns = [] }: { section?: Section; patterns?
         <div className="rounded-2xl bg-white border border-slate-200 p-5">
           <h4 className="font-bold text-slate-900 mb-1">Statistiska test i den här delen</h4>
           <p className="text-xs text-slate-500 mb-3">
-            {tests.filter(t => t.significance?.significant).length} av {tests.length} resultat är statistiskt säkerställda
-            (<Tip text={GLOSSARY["Statistiskt säkerställt"]}>vad betyder det?</Tip>).
+            {tests.filter(t => t.significance?.significant).length} av {tests.length} resultat är statistiskt signifikanta
+            (<Tip text={GLOSSARY["Statistiskt signifikant"]}>vad betyder det?</Tip>).
           </p>
           <ul className="space-y-2 text-sm">
             {tests.map((t, i) => (
@@ -290,7 +290,7 @@ export default function StatistikPage() {
               <li>Märkningen <strong>säkert</strong>, <strong>troligt</strong> och <strong>osäkert</strong> visar hur väl resultatet håller – håll muspekaren över märket för en förklaring.</li>
               <li>Ord med prickad understrykning förklaras när du håller muspekaren över dem (eller trycker på dem). Alla förklaringar finns också i ordlistan.</li>
               <li>Klicka på en figur för att förstora den; under varje figur står hur den ska läsas.</li>
-              <li>&quot;Säkerställt&quot; betyder att resultatet håller även när man räknar med att många saker prövats samtidigt (justerat p-värde, q, under 0,05).</li>
+              <li>&quot;Signifikant&quot; betyder att resultatet håller även när man räknar med att många saker prövats samtidigt (justerat p-värde, q, under 0,05).</li>
             </ul>
           </details>
           <button type="button" onClick={() => setGlossaryOpen(true)}
@@ -405,14 +405,14 @@ function SignificantBox({ patterns, onOpen }: { patterns: Pattern[]; onOpen: (t:
     <section className="rounded-3xl border border-emerald-200 bg-emerald-50/60 p-6 md:p-8">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <div>
-          <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-800">Statistiskt säkerställt</div>
-          <h3 className="text-2xl font-bold tracking-tight text-slate-900">Upptäckter som sannolikt inte är slump</h3>
+          <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-800">Statistiskt signifikant</div>
+          <h3 className="text-2xl font-bold tracking-tight text-slate-900">Upptäckter som klarar signifikanstestet</h3>
         </div>
         <div className="text-sm text-slate-700"><span className="text-3xl font-bold text-emerald-800">{sig.length}</span> av {tested.length} prövade resultat</div>
       </div>
       <p className="text-sm text-slate-700 mt-2 max-w-4xl">
-        Ett resultat är <strong>statistiskt säkerställt</strong> när p-värdet – eller q, som tar hänsyn till att många saker prövats
-        samtidigt – är under 0,05. Det betyder att mönstret sannolikt finns i materialet, inte att tolkningen av det är rätt.
+        Ett resultat är <strong>statistiskt signifikant</strong> när p-värdet – eller q, som tar hänsyn till att många saker prövats
+        samtidigt – är under 0,05: ett så tydligt mönster vore ovanligt om det inte fanns något verkligt samband. Det är inte sannolikheten att mönstret är verkligt, och det säger inte att tolkningen av det är rätt.
         {untested.length > 0 && ` ${untested.length} resultat är inte prövade med signifikanstest (t.ex. attribueringsmodellen, som i stället prövats med korsvalidering).`}
       </p>
       <div className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -442,7 +442,7 @@ function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void }) 
   const groups: [string, string, string[]][] = [
     ["Stämmer med det forskningen redan utgår från", "Ett tecken på att metoderna fungerar.", ["bekräftar"]],
     ["Nya mönster att pröva", "Mönster som appen inte kan förklara med det den känner till – kanske ny kunskap, kanske redan beskrivet i litteratur som appen inte har.", ["mönster att pröva"]],
-    ["Begränsningar och svaga mönster", "Svaga effekter (säkerställda men små), cirkulära jämförelser och resultat som visar gränserna för data och metod.", ["begränsning", "svagt", "svag effekt", "indikation"]],
+    ["Begränsningar och svaga mönster", "Svaga effekter (signifikanta men små), cirkulära jämförelser och resultat som visar gränserna för data och metod.", ["begränsning", "svagt", "svag effekt", "indikation"]],
   ];
   return (
     <div className="space-y-8">
@@ -482,7 +482,7 @@ function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void }) 
                 const ts = patternsFor(data.patterns, x.key), k = ts.filter(t => t.significance?.significant).length;
                 return ts.length > 0 ? (
                   <span className={`text-xs font-semibold ${k ? "text-emerald-800" : "text-slate-500"}`}>
-                    {k ? `✓ ${k} av ${ts.length} resultat statistiskt säkerställda` : `Inget av ${ts.length} resultat statistiskt säkerställt`}
+                    {k ? `✓ ${k} av ${ts.length} resultat statistiskt signifikanta` : `Inget av ${ts.length} resultat statistiskt signifikant`}
                   </span>
                 ) : null;
               })()}
@@ -795,7 +795,7 @@ function Network({ data }: { data: Corpus }) {
               </tr>))}</tbody>
           </table>
         </div>
-        <p className="text-xs text-slate-500">Gult: säkerställd skillnad (q under 0,05) över tid eller mellan kristna och övriga inskrifter.</p>
+        <p className="text-xs text-slate-500">Gult: signifikant skillnad (q under 0,05) över tid eller mellan kristna och övriga inskrifter.</p>
       </Details>
       <Method text={n.method} />
     </>
@@ -818,12 +818,12 @@ function Change({ data }: { data: Corpus }) {
         <h4 className="font-semibold text-slate-900">Varje drag över tid</h4>
         <p className="text-xs text-slate-500 mb-3">
           Linjen är andelen stenar med draget från omkring år 1000 till 1115, med plats och ristare konstanta (samma skala 0–100 % på varje rad).
-          Gulmarkerade rader är säkerställda (<Tip text={GLOSSARY["q"]}>q</Tip> under 0,05). Tiden kommer från stilgrupperna ({c.n_dated} daterade stenar),
+          Gulmarkerade rader är signifikanta (<Tip text={GLOSSARY["q"]}>q</Tip> under 0,05). Tiden kommer från stilgrupperna ({c.n_dated} daterade stenar),
           och varje resultat är omräknat {c.draws} gånger med årtal inom stilgruppens intervall.
         </p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead><tr><Th>Drag</Th><Th>Förlopp</Th><Th>Justerad andel</Th><Th>q</Th><Th>Omräkningar säkerställda</Th>
+            <thead><tr><Th>Drag</Th><Th>Förlopp</Th><Th>Justerad andel</Th><Th>q</Th><Th>Omräkningar signifikanta</Th>
               <Th>Vanligast i</Th><Th>Ovanligast i</Th><Th>Daterade stenar</Th></tr></thead>
             <tbody>{c.features.map(x => {
               const t = x.time, sig = t.q != null && t.q < 0.05;

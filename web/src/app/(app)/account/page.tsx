@@ -10,8 +10,8 @@ import Link from "next/link";
 export default function AccountOverview() {
   const { user, logout } = useAuth();
   const { 
-    userName, userInstitution, geminiKey, openaiKey, anthropicKey, aiProvider,
-    setGeminiKey, setOpenaiKey, setUserName, setUserInstitution, setAnthropicKey, setAiProvider,
+    userName, userInstitution, userEmail, geminiKey, openaiKey, anthropicKey, aiProvider,
+    setGeminiKey, setOpenaiKey, setUserName, setUserInstitution, setUserEmail, setAnthropicKey, setAiProvider,
     totalTokensUsed, tokenHistory
   } = useSettings();
   const router = useRouter();
@@ -24,6 +24,7 @@ export default function AccountOverview() {
   const [tempOpenai, setTempOpenai] = useState("");
   const [tempName, setTempName] = useState("");
   const [tempInst, setTempInst] = useState("");
+  const [tempEmail, setTempEmail] = useState("");
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
@@ -44,7 +45,7 @@ export default function AccountOverview() {
   }, [user]);
 
   // Copy current settings into the form whenever they change
-  const settingsKey = [geminiKey, openaiKey, anthropicKey, aiProvider, userName, userInstitution].join("\u0000");
+  const settingsKey = [geminiKey, openaiKey, anthropicKey, aiProvider, userName, userInstitution, userEmail].join("\u0000");
   const [prevSettingsKey, setPrevSettingsKey] = useState<string | null>(null);
   if (settingsKey !== prevSettingsKey) {
     setPrevSettingsKey(settingsKey);
@@ -54,6 +55,7 @@ export default function AccountOverview() {
     setTempOpenai(openaiKey);
     setTempName(userName);
     setTempInst(userInstitution);
+    setTempEmail(userEmail);
   }
 
   if (!user) {
@@ -80,6 +82,7 @@ export default function AccountOverview() {
     setOpenaiKey(tempOpenai);
     setUserName(tempName);
     setUserInstitution(tempInst);
+    setUserEmail(tempEmail.trim());
     setIsSaved(true);
     setTimeout(() => setIsSaved(false), 3000);
   };
@@ -259,8 +262,8 @@ export default function AccountOverview() {
         <div className="bg-white border border-slate-200 rounded-[24px] p-8 shadow-sm">
           <h2 className="text-2xl font-bold text-slate-900 mb-2">Inställningar & API-Nycklar</h2>
           <p className="text-sm text-slate-600 mb-6 leading-relaxed">
-            Ställ in din användarprofil för akademiska rapporter, och hantera dina BYOK API-nycklar. 
-            All data sparas säkert lokalt i din webbläsare.
+            Ställ in din användarprofil för rapporter och hantera dina egna API-nycklar. Nycklarna sparas bara i
+            din webbläsare; namn, institution och e-post sparas i ditt konto.
           </p>
 
           <div className="space-y-6 max-w-2xl">
@@ -285,6 +288,17 @@ export default function AccountOverview() {
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#b7410e] text-slate-900 text-sm font-semibold"
                 />
               </div>
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-slate-700 mb-2">E-post för kontakt</label>
+              <input
+                type="email"
+                value={tempEmail}
+                onChange={(e) => setTempEmail(e.target.value)}
+                placeholder={user.email || "namn@exempel.se"}
+                className="w-full md:w-1/2 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#b7410e] text-slate-900 text-sm font-semibold"
+              />
+              <p className="mt-1.5 text-xs text-slate-500">Står på kontaktraden i rapporterna, till exempel i beslutsunderlag om omprövning. Förvalt är kontots adress.</p>
             </div>
             
             <hr className="border-slate-200" />

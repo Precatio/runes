@@ -166,6 +166,14 @@ def _name_match(a: str, b: str) -> bool:
 
 # ---- comparison ----------------------------------------------------------------------------
 
+def agrees_with_rundata(cc: dict | None, rec: dict) -> bool:
+    """Runor 2020 anger samma ristare som Rundata. Runor är en senare utgåva av samma databas, så det är inget
+    oberoende belägg för Rundatas ristare – och inget emot ett förslag om en annan."""
+    listed = [c["name"] for c in (rec or {}).get("carvers") or []]
+    names = [c.get("name") for c in ((cc or {}).get("runor") or {}).get("carvers") or [] if c.get("name")]
+    return bool(listed and names) and all(any(_name_match(x, n) for x in listed) for n in names)
+
+
 def check(signum: str, suggested: str | None, wikidata: dict[str, list[str]] | None = None,
           fetch: bool = True) -> dict:
     """Jämför ett förslag med Runor 2020 och Wikidata. Utan fetch används bara cachen."""

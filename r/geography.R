@@ -30,6 +30,26 @@ spread <- function(x, y) {
 cv <- d %>% filter(!is.na(carver)) %>% group_by(carver) %>% filter(n() >= MIN_N) %>% ungroup()
 by_prov <- split(seq_len(nrow(d)), d$province)
 carver_rows <- list(); hulls <- list()
+# Stricter nulls than "random stones from the same province": for each of the carver's stones a random stone from the
+# same province and style group (time-matched), and a random stone from the same hundred (härad: is the carver more
+# local than the local tradition of raising stones?). And the test on signed stones only, which do not depend on
+# attributions that may themselves have used geography.
+B2 <- 199
+d$style_short <- ifelse(is.na(d$style), NA, sub("[ ?].*", "", d$style))
+key_style <- paste(d$province, d$style_short)
+by_style <- split(seq_len(nrow(d)), key_style)
+by_district <- split(seq_len(nrow(d)), ifelse(is.na(d$district) | d$district == "", d$province, d$district))
+matched_null <- function(idx, pools) {
+  replicate(B2, { s <- vapply(pools, function(pl) if (length(pl) > 1) sample(pl, 1) else pl, 0); spread(d$x[s], d$y[s]) })
+}
+pool_for <- function(i, kind) {
+  if (kind == "style" && !is.na(d$style_short[i])) { pl <- by_style[[key_style[i]]]; if (length(pl) >= 5) return(pl) }
+  if (kind == "district") {
+    k <- if (is.na(d$district[i]) || d$district[i] == "") d$province[i] else d$district[i]
+    pl <- by_district[[k]]; if (length(pl) >= 5) return(pl)
+  }
+  by_prov[[d$province[i]]]
+}
 for (name in names(sort(table(cv$carver), decreasing = TRUE))) {
   g <- cv %>% filter(carver == name)
   cx <- mean(g$x); cy <- mean(g$y)
@@ -57,12 +77,37 @@ for (name in names(sort(table(cv$carver), decreasing = TRUE))) {
     random_median_km = r1(mean(rand)), compact_ratio = r3(obs / mean(rand)),
     compact_p = r3((1 + sum(rand <= obs)) / (1 + B))
   )
+  gi <- which(!is.na(d$carver) & d$carver == name)
+  for (kind in c("style", "district")) {
+    rn <- matched_null(gi, lapply(gi, pool_for, kind = kind))
+    carver_rows[[name]][[paste0("compact_ratio_", kind)]] <- r3(obs / mean(rn))
+    carver_rows[[name]][[paste0("compact_p_", kind)]] <- r3((1 + sum(rn <= obs)) / (1 + B2))
+  }
+  si <- gi[!is.na(d$signed[gi]) & d$signed[gi] == 1]
+  carver_rows[[name]]$n_signed <- length(si)
+  if (length(si) >= MIN_N) {
+    obs_s <- spread(d$x[si], d$y[si])
+    rs <- replicate(B2, { s <- sample(unlist(by_prov[unique(d$province[si])]), length(si)); spread(d$x[s], d$y[s]) })
+    carver_rows[[name]]$compact_ratio_signed <- r3(obs_s / mean(rs))
+    carver_rows[[name]]$compact_p_signed <- r3((1 + sum(rs <= obs_s)) / (1 + B2))
+  }
   hulls[[name]] <- hull
 }
 cp <- sapply(carver_rows, function(r) r$compact_p)
 cq <- p.adjust(cp, "BH")
 for (i in seq_along(carver_rows)) carver_rows[[i]]$compact_q <- r3(cq[i])
 n_compact <- sum(cq < 0.05)
+# The stricter tests, each with its own Benjamini–Hochberg family
+strict <- list()
+for (kind in c("style", "district", "signed")) {
+  key <- paste0("compact_p_", kind)
+  has <- which(vapply(carver_rows, function(r) !is.null(r[[key]]), TRUE))
+  if (!length(has)) next
+  q <- p.adjust(vapply(carver_rows[has], function(r) r[[key]], 0), "BH")
+  for (j in seq_along(has)) carver_rows[[has[j]]][[paste0("compact_q_", kind)]] <- r3(q[j])
+  strict[[kind]] <- list(n_tested = length(has), n_compact = sum(q < 0.05),
+                         median_ratio = r3(median(vapply(carver_rows[has], function(r) r[[paste0("compact_ratio_", kind)]], 0))))
+}
 
 # ---- water -----------------------------------------------------------------------------------
 W <- read_water(P$water_dir)
@@ -197,7 +242,7 @@ saveRDS(list(hulls = hulls), file.path(out, "geography_model.rds"))
 result <- list(
   n_stones = nrow(d), min_inscriptions = MIN_N, permutations = B,
   carvers = unname(lapply(carver_rows, function(r) r[setdiff(names(r), c("cx", "cy"))])),
-  n_compact = n_compact,
+  n_compact = n_compact, strict = strict,
   water = water,
   figures = list(map = fig_map, water = water$figure),
   html_map = html_map,

@@ -39,7 +39,8 @@ TRAITS: dict[str, tuple[str, str, str]] = {
             "Om inskriften har en bön, t.ex. Guð hjalpi and hans (Gud hjälpe hans själ), Kristr hjalpi, Guð "
             "biargi eller Guðs móðir."),
     "sjal": ("bruk", "Själsbön",
-             "Om bönen nämner själen (and, sál/sálu)."),
+             "Om bönen nämner själen (and, sál/sálu). Avsiktsfrasen på brostenar (fyrir and hans, 'för hans själ') "
+             "räknas inte som bön."),
     "signatur": ("bruk", "Ristarsignatur",
                  "Om inskriften har en ristarformel (risti, hjó, markaði, rúnaR)."),
     "runor": ("bruk", "Skrivningen av 'runor'",
@@ -145,7 +146,9 @@ def _value(trait: str, variants: dict, norm: str, translit_words: list[str]) -> 
         return "ja" if (re.search(r"\b(guð|kristr|krist)\b", n) and re.search(r"\b(hialpi|hjalpi|biargi|lætti|letti)\b", n)) \
             or "guðs moðir" in n else "nej"
     if trait == "sjal":
-        return "ja" if re.search(r"\b(and|ǫnd|salu|sál|sial)\b", n) else "nej"
+        # A prayer for the soul, not the intention phrase on bridge stones (gærði bro fyrir and hans, "for his soul")
+        rest = re.sub(r"\bfyrir\s+(and|ǫnd|salu|sál|sial)\b", "", n)
+        return "ja" if re.search(r"\b(and|ǫnd|salu|sál|sial)\b", rest) else "nej"
     if trait == "signatur":
         return "ja" if re.search(r"\b(risti|ristu|hiogg|hiuggu|markaði|faði|fáði)\b", n) else "nej"
     return None
@@ -178,6 +181,103 @@ def _case_pairs(rec: dict) -> list[tuple[str, str]]:
         if w and not n.startswith('"') and "[" not in n and "(?)" not in n:
             out.append((n, w))
     return out
+
+
+# Dotted runes and the sounds they mark: a word whose normalised form has the sound can have the dotted rune
+DOT_SOUNDS = {"y": "yøœ", "e": "eæ", "g": "g", "d": "dð"}
+
+
+def dotted_counts(rec: dict) -> dict[str, int]:
+    """Stungna runor räknade tecken för tecken (som draget: utan fragmentariska ord): hur många av de runor som kunde
+    ha varit stungna (i/e, u/y, k/g, t/d) som är stungna – ett andelsmått som inte gynnar långa inskrifter. Per runa
+    dessutom ord för ord: hur många ord som enligt normaliseringen har ljudet (y/ø, e/æ utom i diftongen æi, g, d/ð)
+    och hur många av dem som skrivs med den stungna runan; för y också hur många som skrivs med u eller i i stället
+    (r/change.R)."""
+    words = [re.sub(r"[()\[\]{}<>|?/^]", "", t) for t in (rec.get("transliteration") or "").split()]
+    letters = "".join(w for w in words if w and "-" not in w)
+    dotted = sum(letters.count(c) for c in "eygd")
+    out = {"dot_n": dotted, "dot_cand": dotted + sum(letters.count(c) for c in "iukt")}
+    pairs = [(n.lower().replace("æi", ""), w) for n, w in _case_pairs(rec)]
+    for rune, sounds in DOT_SOUNDS.items():
+        exp = [w for n, w in pairs if any(ch in n for ch in sounds)]
+        out[f"dot_{rune}_exp"] = len(exp)
+        out[f"dot_{rune}_obs"] = sum(rune in w for w in exp)
+    # æftiʀ separately: the commonest place for dotted i, and a word some provinces replace with at
+    eft = [w for n, w in pairs if n.startswith("æftir")]
+    out["dot_e_eftir_exp"] = len(eft)
+    out["dot_e_eftir_obs"] = sum("e" in w for w in eft)
+    exp_y = [w for n, w in pairs if any(ch in n for ch in DOT_SOUNDS["y"])]
+    out["dot_y_u"] = sum("y" not in w and "u" in w for w in exp_y)
+    out["dot_y_i"] = sum("y" not in w and "u" not in w and "i" in w for w in exp_y)
+    return out
+
+
+def prayer_form(rec: dict) -> dict[str, int]:
+    """Själsbönens ordval och om inskriftens slut är bevarat (bönen står oftast sist, där stenar ofta är skadade):
+    and/ônd eller sál, och om Guðs móðir nämns (r/change.R)."""
+    n = (rec.get("normalization") or "").lower()
+    t = (rec.get("transliteration") or "").strip()
+    return {"end_intact": int(bool(t) and not re.search(r"(\.\.\.|-)\W*$", t)),
+            "prayer_and": int(bool(re.search(r"\band\b|\bônd\b|\bǫnd\b", n))),
+            "prayer_sal": int(bool(re.search(r"\bsal(u|ar)?\b|\bsál", n))),
+            "prayer_gudsmodir": int(bool(re.search(r"guðs (moðir|møður|moður)", n)))}
+
+
+def r_counts(rec: dict) -> dict[str, int]:
+    """ʀ och r i ordslut, ord för ord: ord som slutar på ʀ i normaliseringen och skrivs med r-runan (r för ʀ), för
+    æftiʀ och för övriga ord var för sig, och ord som slutar på r men skrivs med ʀ-runan (omvänd, hyperkorrekt
+    stavning) – ett bättre mått på sammanfallet än r för ʀ ensamt (r/change.R)."""
+    out = dict.fromkeys(("R_n", "R_r", "R_eftir_n", "R_eftir_r", "r_n", "r_R"), 0)
+    for n, w in _case_pairs(rec):
+        if w[-1:] not in ("R", "r"):
+            continue
+        if n.endswith("R"):
+            out["R_n"] += 1; out["R_r"] += w.endswith("r")
+            if n.lower().startswith("æftir"):
+                out["R_eftir_n"] += 1; out["R_eftir_r"] += w.endswith("r")
+        elif n.endswith("r"):
+            out["r_n"] += 1; out["r_R"] += w.endswith("R")
+    return out
+
+
+def ai_counts(rec: dict) -> dict[str, int]:
+    """Ord med æi i normaliseringen, räknade ord för ord: hur många som är skrivna med monoftong (i/e i stället för
+    ai/ia/ei), för alla sådana ord och för stæinn för sig – underlaget för att pröva monoftongeringen per ord och per
+    lexem i stället för bara om stenen har minst en monoftong (r/change.R)."""
+    words = [(n.lower(), w) for n, w in _case_pairs(rec) if "æi" in n.lower()]
+    mono = [not re.search(r"ai|ia|ei|ae", w) for _, w in words]
+    sten = [m for (n, _), m in zip(words, mono) if n.startswith("stæin")]
+    # How the monophthong is written: with dotted i (e, as in sten) or plain i (stin) – so that a move from stin to sten
+    # is not mistaken for a move from stin to stain
+    mono_words = [w for (n, w), m in zip(words, mono) if m]
+    return {"ai_n": len(words), "ai_mono": sum(mono), "ai_sten_n": len(sten), "ai_sten_mono": sum(sten),
+            "ai_mono_e": sum("e" in w for w in mono_words), "ai_mono_i": sum("e" not in w for w in mono_words)}
+
+
+O_SOUND = O_WORDS  # words with etymological /o/ (brōður, bóndi, móður, sonr, kona)
+NASAL_A = {"and", "ǫnd", "ônd"}  # ą, the ós-rune's old value
+
+
+def och_counts(rec: dict) -> dict[str, int]:
+    """Konjunktionen ok, förekomst för förekomst: skriven auk, uk, ok eller ak (eller annat). Draget au_och räknar allt
+    utan au som monoftong, alltså också ok med åsrunan; här syns skrivningarna var för sig (r/change.R)."""
+    forms = [w for n, w in _case_pairs(rec) if n.lower() == "ok"]
+    out = {"och_n": len(forms), "och_auk": 0, "och_uk": 0, "och_ok": 0, "och_ak": 0}
+    for w in forms:
+        k = "och_auk" if w.startswith("au") else "och_uk" if w.startswith("u") else "och_ok" if w.startswith("o") else \
+            "och_ak" if w.startswith("a") else None
+        if k:
+            out[k] += 1
+    return out
+
+
+def o_counts(rec: dict) -> dict[str, int]:
+    """Åsrunan ord för ord: ord med etymologiskt /o/ skrivna med o, och ord med ursprungligt ą (and/ônd) skrivna med
+    o – om runan överges för ą samtidigt som den tas i bruk för /o/ har värdet förskjutits (r/change.R)."""
+    pairs = [(n.lower(), w) for n, w in _case_pairs(rec)]
+    o = [w for n, w in pairs if n in O_SOUND]
+    a = [w for n, w in pairs if n in NASAL_A]
+    return {"o_n": len(o), "o_o": sum("o" in w for w in o), "aa_n": len(a), "aa_o": sum("o" in w for w in a)}
 
 
 def _traits(rec: dict, names) -> dict[str, str]:
@@ -226,6 +326,8 @@ def carver_profile(carver: str, inscriptions: list[dict], certain_carvers, names
     return {"carver": carver, "n_inscriptions": n,
             "traits": {t: dict(c.most_common()) for t, c in dist.items() if c}}
 
+
+FEW_INSCRIPTIONS = 10  # a carver's share of a trait resting on fewer inscriptions than this is flagged as uncertain
 
 # Traits that repeat another trait: left out of the combined likelihood ratio so the same evidence is not counted twice
 REDUNDANT = {"stungna": ("stungen_e", "stungen_y", "stungen_g"), "ai_sten": ("ai_alla",), "sjal": ("bon",)}
@@ -288,27 +390,30 @@ def compare(stone: dict[str, str], profile: dict, min_n: int = 3, baseline: dict
             if counted else f"Inga jämförbara språkdrag (för få gemensamma ord med inskrifterna av {who})")
     out = {"rows": rows, "agree": k, "comparable": len(counted)}
     if rows and table:
-        distinct = [r for r in counted if r["agrees"] and (r.get("lr") or 0) >= 1.5]
-        common = [r for r in counted if r["agrees"] and r.get("lr") is not None and r["lr"] < 1.5]
-        against = [r for r in counted if (r.get("lr") or 1) <= 1 / 1.5]
+        # With the province as baseline a trait speaks for the carver when the stone's form is clearly more common with
+        # the carver than on other stones there (ratio at least 1.5), against when clearly rarer, and is neutral otherwise
         where = f"i {region}" if region else "i landskapet"
-        if common:
-            text += f", men {len(common)} av dem är lika vanliga eller vanligare på andra stenar {where}"
-        if distinct:
-            text += (". Utmärkande för ristaren: " + "; ".join(
-                f"{_lc(r['label'])} ({r['stone']}: {round(r['share'] * 100)} % hos ristaren mot "
-                f"{round(r['region_share'] * 100)} % {where})" for r in sorted(distinct, key=lambda r: -r["lr"])[:3]))
-        if against:
-            text += (". Talar emot ristaren (vanligare på andra stenar " + where + "): " + "; ".join(
-                f"{_lc(r['label'])} ({r['stone']}: {round(r['share'] * 100)} % hos ristaren mot "
-                f"{round(r['region_share'] * 100)} % {where})" for r in sorted(against, key=lambda r: r["lr"])))
-        # Unlike the carver's most common form, but not rarer with the carver than elsewhere: worth showing, since a
-        # comparison with the carver alone would count them as evidence against
-        off_only = [r for r in counted if not r["agrees"] and r.get("lr") is not None and r["lr"] > 1 / 1.5]
-        if off_only:
-            text += (". Avviker från ristarens vanligaste form men är inte ovanligare hos ristaren än " + where + ": "
-                     + "; ".join(f"{_lc(r['label'])} ({r['stone']}: {round(r['share'] * 100)} % hos ristaren mot "
-                                 f"{round(r['region_share'] * 100)} % {where})" for r in off_only))
+        rated = [r for r in counted if r.get("lr") is not None]
+        pro = sorted([r for r in rated if r["lr"] >= 1.5], key=lambda r: -r["lr"])
+        con = sorted([r for r in rated if r["lr"] <= 1 / 1.5], key=lambda r: r["lr"])
+        few = [r for r in rated if r["n"] < FEW_INSCRIPTIONS]
+
+        def listing(rs):
+            return "; ".join(f"{_lc(r['label'])} ({r['stone']}: {round(r['share'] * 100)} % hos ristaren mot "
+                             f"{round(r['region_share'] * 100)} % {where}"
+                             + (f", bara {r['n']} inskrifter" if r["n"] < FEW_INSCRIPTIONS else "") + ")" for r in rs)
+        text = (f"Av {len(rated)} jämförbara språkdrag talar {len(pro)} för {who} (stenens form är tydligt vanligare hos "
+                f"ristaren än på andra stenar {where}), {len(con)} emot (tydligt ovanligare hos ristaren) och "
+                f"{len(rated) - len(pro) - len(con)} skiljer inte")
+        if pro:
+            text += ". För: " + listing(pro)
+        if con:
+            text += ". Emot: " + listing(con)
+        if few:
+            text += (f". Drag med färre än {FEW_INSCRIPTIONS} jämförbara inskrifter hos ristaren är osäkra ("
+                     + ", ".join(f"{_lc(r['label'])}: {r['n']}" for r in few) + ")")
+        out.update(n_for=len(pro), n_against=len(con), n_neutral=len(rated) - len(pro) - len(con),
+                   few=[r["trait"] for r in few])
         score, n_used = _score(stone, table)
         out.update(lr_total=round(math.exp(score), 2), n_used=n_used)
         if others:

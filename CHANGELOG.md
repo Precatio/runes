@@ -5,6 +5,12 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Gränssnitt
+- Snabbknappen "Generera akademisk rapport för aktuellt arbetspass" i toppraden är borttagen, liksom avsnittet
+  "Arbetsgång" på landningssidan. Kontoinställningarna har ett fält för e-post (förvalt kontots adress), och
+  författarnamnet är inte längre förifyllt med grundarens namn för nya användare.
+- Rättat: Rune-uppslaget tolkade andelar som "Vg 84 %" som signum (Vg 84).
+
 ### Beslutsunderlag om attribuering
 - Förslaget till omprövning i Stenöversikt är nu ett fullständigt beslutsunderlag: slutsats och rekommendation först,
   varje metod förklarad (vad den jämför, vilka data, vad talen betyder och hur ofta den har rätt – t.ex. hur ofta en
@@ -19,8 +25,42 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 - Tydligare text: hur beläggen hänger ihop, stenar med flera ristare, träffsäkerheten också när hela socknar hålls
   utanför, att sannolikheten för stenar utan ristare inte är korsvaliderad, och bergartens jämförelse ("inte tydligt
   vanligare" i stället för "lika vanlig").
+- Granskning av U 735 (Rune): ett svagt underlag är ett internt arbetsunderlag, inte ett förslag att skicka; när
+  jämförelsen talar för Rundatas ristare heter dokumentet "Prövning av … : Rundatas attribuering till … stöds".
+  Det som talar för Rundatas ristare framför den prövade räknas och redovisas (modellen föredrar den, språkdragen
+  stöder den signifikant, den har stenar mycket närmare, stenens stilgrupp hör till dess kärna). Runor 2020 räknas
+  inte som oberoende belägg när den anger samma ristare som Rundata. Hypotesens ursprung anges. Den samlade styrkan
+  kallas inte stark när modellen inte stöder förslaget eller stavningslikheten inte är signifikant. Jämförelsestenarna
+  är stenar där ristaren är ensam ristare och som finns kvar; närmare stenar med flera ristare eller som är försvunna
+  nämns med skäl. Bara de begränsningar som gäller dokumentet. Kontaktraden får e-post ur kontoinställningarna.
+- Ortografins förstaval räknas fullt i Stenöversiktens styrka bara när det leder tvåan med minst 0,05 i likhet
+  (U 735: Öpir 1 0,66 mot Balle 0,64 räknas som oavgjort). En stilgrupp stämmer med ristaren bara om den hör till
+  kärnan (minst en tiondel av stenarna); en ovanlig stilgrupp inom kärnans tidsram avgör inte. Tidsramen för en
+  ristares stilgrupper är kärnans, i alla avsnitt. Språkdragen redovisas som för, emot och neutrala, och andelar på
+  färre än tio inskrifter markeras som osäkra. En ristare som nämns två gånger i samma inskrift räknas en gång.
+  Kontrollen på signerade stenar: falsklarmen (alternativ ≥ 0,4 för en signerad sten) minskar från 57 till 33 av 246;
+  *omstridd* 49 → 26, *kan vara felbedömd* 15 → 9.
 
 ### Granskning av R-fynden (Rune, 2026-10-11)
+- Tredje omgången: "Säkerställt" heter nu "Signifikant" i hela appen, och p-värdet förklaras som hur ovanligt ett så
+  tydligt resultat vore utan ett verkligt samband – inte som sannolikheten att resultatet är sant. Landskap med färre
+  än tio stenar från mittperioden (stenar vars stilgrupp omfattar år 1050) får ingen skattning utan redovisas som
+  otillräckligt underlag. Formelvalets CA-dimension beskrivs i klartext (stenar utan bön mot stenar med bön).
+  Sambandet själsbön–brostenar märks efter det kontrolltest som inte håller (textlängden), inte efter huvudmodellen.
+  Avståndet till vatten får förbehåll för vikingatidens högre strandlinje och för parstenar.
+- Andra granskningsomgången (stavning, runor, böner, broar, geografi, seriation, formelval): ordbaserade mått och
+  rätt nämnare i stället för "minst en på stenen" (monoftongen per æi-ord och lexem, stungna runor per runa bland ord
+  där de kan förväntas, ʀ och omvänd stavning, åsrunan för /o/ och för ą, 'och' som auk/uk/ok/ak, æftiʀ för sig);
+  kontroller med bara signerade stenar, inom ristare, utan ändgrupperna, med textlängd, bevarade inskriftsslut och för
+  Uppland och Södermanland var för sig; toppar vars intervall når periodens kant tolkas inte; flera toppar samma år
+  märks som möjlig artefakt; landskapsjämförelser bara mellan landskap med tillräckligt underlag, alla landskap med
+  intervall och märket för det visade paret; ristarnas koncentration också mot samma stilgrupp, samma härad och på
+  signerade stenar (inte mer lokala än häradet); seriationen utan kors, utlandsfärder och föränderliga drag, inom
+  härad och inom ristare; formelvalet med signerade stenar, utan själsbönen och på bevarade slut; stavningsavståndet
+  inom Uppland, på stenar utan ristare och med tiden konstant. Själsbönen räknar inte längre brostenarnas avsiktsfras
+  (fyrir and hans).
+- Märket "Säkerställt men osäkert" när ett säkerställt test hör till en indikation, en svag effekt, ett cirkulärt
+  resultat eller en måttlig/svag tolkning. Språkdragstabellen visar landskapets andel och vilka drag som inte räknas.
 - Landskapsjämförelserna: q justerat med Holm över alla drag (tidigare p), observerade andelar i stenar från
   mittperioden bredvid modellens skattning, antal attribuerade ristare per landskap och samma test utan ristareffekten.
   Spridningsförlopp anges bara för drag som stadigt ökar eller minskar; annars är jämförelsen en ögonblicksbild.
