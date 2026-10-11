@@ -1,4 +1,6 @@
 """Forskningsluckor och prioriteringar."""
+import json
+import os
 from functools import lru_cache
 
 from fastapi import APIRouter
@@ -70,6 +72,7 @@ def research_findings(req: FindingsRequest):
     from src.r_findings import finding_significance
     for f in items:
         f["significance"] = finding_significance(f)
+    _with_levels(items)
     items.sort(key=lambda f: -f["score"])
     return {
         "r_patterns": r_patterns, "r_ready": rstats.corpus_ready(),
@@ -79,6 +82,50 @@ def research_findings(req: FindingsRequest):
         "method_note": findings.__doc__.split("\n\n", 1)[1].strip(),
         "source_note": gaps.SOURCE_NOTE,
     }
+
+
+def _levels_path() -> str:
+    """Tolkningsnivåernas cachefil: översiktens nyckel plus koden för tolkningen och språkkontrollen."""
+    import hashlib
+    root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    code = "".join(hashlib.sha256(open(os.path.join(root, rel), "rb").read()).hexdigest()[:12]
+                   for rel in ("src/interpretation.py", "src/findings.py"))
+    key = hashlib.sha256(f"{_overview_key(_fp())}|{code}".encode()).hexdigest()[:16]
+    return os.path.join(root, "data", "cache", "levels", f"{key}.json")
+
+
+def _with_levels(items: list[dict]) -> list[dict]:
+    """Lägger tolkningens nivå (starkt, måttligt, svagt …) på varje fynd, så att listan kan visa den utan att raden
+    öppnas. Samma regler som /interpret (METHODS.md 13d); nivåerna sparas på disk och räknas bara om när data eller
+    koden ändras."""
+    from src import interpretation, stone_overview
+    path = _levels_path()
+    try:
+        cache = json.load(open(path, encoding="utf-8"))
+    except (OSError, ValueError):
+        cache = {}
+    s, ctx, profiles, changed = store(), None, {}, False
+    for f in items:
+        key = "|".join(str(x) for x in (f["signum"], f["method"], f.get("suggested"), f.get("score"),
+                                        (f.get("crosscheck") or {}).get("status")))
+        if key not in cache:
+            rec = s.get(f["signum"])
+            if not rec:
+                continue
+            if ctx is None:
+                ctx, _ = _overview_context(_fp())
+            if rec["signum"] not in profiles:
+                profiles[rec["signum"]] = stone_overview.stone(rec, ctx, detail=True) if gaps.is_runestone(rec) else None
+            it = interpretation.interpret(f, rec, ctx, profiles[rec["signum"]])
+            cache[key] = {"level": it["level"], "support": it["support"], "against": it["against"]}
+            changed = True
+        f["interpretation"] = cache[key]
+    if changed:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        tmp = path + ".tmp"
+        json.dump(cache, open(tmp, "w", encoding="utf-8"), ensure_ascii=False)
+        os.replace(tmp, path)
+    return items
 
 
 @router.get("/geology/{signum:path}")

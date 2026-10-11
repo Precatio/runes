@@ -9,8 +9,8 @@ app = FastAPI(title="Vitki API")
 
 @app.on_event("startup")
 def _warm_caches():
-    """Värmer de långsamma svaren i bakgrunden när servern startar: R-kontrollen, R-korpusens version och
-    stenöversikten. Svaren sparas också på disk, så en omstart läser dem i stället för att räkna om."""
+    """Värmer de långsamma svaren i bakgrunden när servern startar: R-kontrollen, R-korpusens version,
+    stenöversikten och fyndens tolkningsnivåer. Svaren sparas också på disk, så en omstart läser dem i stället för att räkna om."""
     import threading
 
     def warm():
@@ -23,6 +23,7 @@ def _warm_caches():
             research._hypotheses()
             research._open_questions()
             research._orthographic_findings()
+            research.research_findings(research.FindingsRequest())  # also the interpretation levels (disk cache)
         except Exception as e:  # warming is an optimisation; requests compute what they need
             from api.errors import logger
             logger.warning("Uppvärmningen av cachen misslyckades: %r", e)

@@ -147,3 +147,9 @@ Object.assign(GLOSSARY, {
   "Signum": "Stenens signum i Rundata.",
   "Ristare (Rundata)": "Ristaren enligt Rundata – bara säkra signerade eller attribuerade inskrifter.",
 });
+
+// Forskningsluckor: tolkningens slutsats i fyndlistan
+Object.assign(GLOSSARY, {
+  "Tolkning": "Slutsatsen när alla belägg vägs samman: starkt, måttligt eller svagt för nya förslag; bekräftelse när metoden stämmer med Rundata; redan känt när förslaget finns i nyare källor; metodfel när fyndet motsäger en signerad sten. Klicka på raden för resonemanget.",
+  "Fynd": "Metoden, vad den föreslår och vad Rundata anger, med nyare källor, bergart och språkdrag under.",
+});

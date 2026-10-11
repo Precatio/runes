@@ -664,6 +664,8 @@ ristare (område, stilgrupp, språkdrag, bergart och – om fyndet kommer från 
 samt stödet för Rundatas ristare i Stenöversikt); vad nyare källor säger (Runor 2020, Wikidata); och en slutsats med
 vad som skulle kunna avgöra frågan (3D-mätning, litteratur, nyläsning, stilbedömning).
 
+Slutsatsen visas redan i fyndlistan (kolumnen Tolkning, med filter per nivå); servern räknar den för alla fynd med samma regler och sparar den på disk tills data eller koden ändras.
+
 Slutsatsen har sex nivåer: *redan känt* (förslaget finns i Runor 2020 eller Wikidata), *metodfel* (fyndet motsäger
 en signerad sten), *bekräftelse* (stämmer med Rundata), *starkt* (belägg ≥ 0,5, minst två oberoende belägg för och inget
 emot, och för ortografin justerat p < 0,05; före 2026-10-11 tre belägg), *måttligt* (belägg ≥ 0,35 och minst lika många belägg för som emot) och

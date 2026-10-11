@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, cloneElement, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Answer, InfoTip, PageIntro, QuestionCards, SigBadge, Tip, type AnswerProps, type Significance } from "@/components/Explain";
 import { GLOSSARY } from "@/lib/glossary";
@@ -69,6 +69,8 @@ interface Finding extends StoneExtras {
   reasons: { belägg: string[]; nyhet: string[]; relevans: string[] };
   crosscheck?: CrossCheck;
   significance?: Significance;
+  // The reasoned conclusion (same rules as the interpretation shown when the row is opened; METHODS.md 13d)
+  interpretation?: { level: string; support: number; against: number };
 }
 // The suggestion checked against newer sources (Runor 2020, Wikidata)
 interface CrossCheck {
@@ -125,7 +127,7 @@ function useSorted<T>(rows: T[], get: Record<string, (r: T) => SortValue>, initi
       <InfoTip text={GLOSSARY[label] ?? title} />
     </th>
   );
-  return { sorted, header };
+  return { sorted, header, sort, setSort };
 }
 
 const VERDICT_STYLE: Record<Verdict, string> = {
@@ -133,6 +135,46 @@ const VERDICT_STYLE: Record<Verdict, string> = {
   "nytt": "bg-sky-50 text-sky-800 border-sky-200",
   "motsäger": "bg-amber-50 text-amber-900 border-amber-200",
 };
+
+// The interpretation's conclusion, strongest first; dots make the scale readable without colour
+const LEVELS: { key: string; dots: string; style: string; help: string }[] = [
+  { key: "starkt", dots: "●●●", style: "bg-emerald-50 text-emerald-900 border-emerald-400",
+    help: "Minst två oberoende belägg för och inget emot (för ortografin dessutom justerat p under 0,05)." },
+  { key: "måttligt", dots: "●●○", style: "bg-sky-50 text-sky-900 border-sky-300",
+    help: "Belägg för, minst lika många för som emot, men inte tillräckligt för starkt. En prövbar hypotes." },
+  { key: "svagt", dots: "●○○", style: "bg-slate-50 text-slate-700 border-slate-300",
+    help: "Lite stöd, belägg emot eller en stilgrupp som talar emot." },
+  { key: "bekräftelse", dots: "✓", style: "bg-white text-emerald-800 border-emerald-200",
+    help: "Metoden kommer fram till samma sak som Rundata." },
+  { key: "redan känt", dots: "○", style: "bg-white text-slate-600 border-slate-200",
+    help: "Förslaget finns redan i nyare källor (Runor 2020 eller Wikidata)." },
+  { key: "metodfel", dots: "!", style: "bg-amber-50 text-amber-900 border-amber-300",
+    help: "Fyndet motsäger en signerad sten – en svaghet i metoden, inte ett fel i Rundata." },
+];
+const LEVEL_RANK = Object.fromEntries(LEVELS.map((l, i) => [l.key, LEVELS.length - i]));
+
+function SortTh({ className, children }: { className: string; children: React.ReactElement<{ className?: string }> }) {
+  return cloneElement(children, { className: `${children.props.className ?? ""} ${className}` });
+}
+
+function LevelBadge({ it }: { it?: Finding["interpretation"] }) {
+  if (!it) return <span className="text-slate-400 text-xs">–</span>;
+  const l = LEVELS.find(x => x.key === it.level);
+  return (
+    <div className="flex flex-col gap-0.5">
+      <Tip text={`${l?.help ?? ""} Klicka på raden för hela resonemanget.`}>
+        <span className={`inline-flex w-fit items-center gap-1.5 rounded-lg border px-2 py-0.5 text-xs font-bold ${l?.style ?? "border-slate-200"}`}>
+          <span aria-hidden className="tracking-[-0.15em] text-[10px]">{l?.dots}</span>{it.level}
+        </span>
+      </Tip>
+      {!["bekräftelse", "redan känt", "metodfel"].includes(it.level) && (
+        <Tip text="Belägg utöver metodens eget: andra metoder, språkdrag, stil och bergart som talar för eller emot förslaget.">
+          <span className="text-[11px] text-slate-500">andra belägg: {it.support} för, {it.against} emot</span>
+        </Tip>
+      )}
+    </div>
+  );
+}
 
 function Score({ value }: { value: number }) {
   return (
@@ -159,12 +201,12 @@ function Bar({ value, total, color }: { value: number; total: number; color: str
   );
 }
 
-function StoneLinks({ signum }: { signum: string }) {
+function StoneLinks({ signum, stacked }: { signum: string; stacked?: boolean }) {
   return (
-    <span className="whitespace-nowrap text-xs">
-      <Link href={`/inskrifter?signum=${encodeURIComponent(signum)}`} className="font-bold text-slate-900 hover:text-[#b7410e]">{signum}</Link>
-      <Link href={`/3d?signum=${encodeURIComponent(signum)}`} className="ml-2 text-[#b7410e] hover:underline"
-        title="Öppnar 3D-analysen för att mäta huggspåren. Länken betyder inte att stenen redan är mätt.">öppna i 3D-analysen</Link>
+    <span className={stacked ? "flex flex-col text-xs" : "whitespace-nowrap text-xs"} onClick={e => e.stopPropagation()}>
+      <Link href={`/inskrifter?signum=${encodeURIComponent(signum)}`} className={`font-bold text-slate-900 hover:text-[#b7410e] ${stacked ? "break-words" : ""}`}>{signum}</Link>
+      <Link href={`/3d?signum=${encodeURIComponent(signum)}`} className={`${stacked ? "text-[11px]" : "ml-2"} text-[#b7410e] hover:underline`}
+        title="Öppnar 3D-analysen för att mäta huggspåren. Länken betyder inte att stenen redan är mätt.">{stacked ? "mät i 3D" : "öppna i 3D-analysen"}</Link>
     </span>
   );
 }
@@ -648,20 +690,34 @@ function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; loggedIn
   const [method, setMethod] = useState("");
   const [onlyLikely, setOnlyLikely] = useState(false);
   const [onlySignificant, setOnlySignificant] = useState(false);
+  const [level, setLevel] = useState("");
   const [open, setOpen] = useState<string | null>(null);
   const methods = Object.keys(data.summary.by_method);
   const rows = useMemo(() => data.findings.filter(f =>
     (!verdict || f.verdict === verdict) && (!method || f.method === method)
     && (!onlyLikely || f.assessment.startsWith("Sannolikt ny") || f.assessment === "Värd en omprövning")
-    && (!onlySignificant || f.significance?.significant === true)),
-  [data.findings, verdict, method, onlyLikely, onlySignificant]);
+    && (!onlySignificant || f.significance?.significant === true)
+    && (!level || f.interpretation?.level === level)),
+  [data.findings, verdict, method, onlyLikely, onlySignificant, level]);
+  const levelCounts = useMemo(() => {
+    const c: Record<string, number> = {};
+    for (const f of data.findings) if (f.interpretation) c[f.interpretation.level] = (c[f.interpretation.level] ?? 0) + 1;
+    return c;
+  }, [data.findings]);
   const nSignificant = data.findings.filter(f => f.significance?.significant).length;
-  const { sorted, header } = useSorted(rows, {
+  const sortState = useSorted(rows, {
     signum: f => f.signum, place: f => f.place, method: f => f.method, verdict: f => f.verdict,
     suggested: f => f.suggested, existing: f => f.existing, evidence: f => f.evidence, novelty: f => f.novelty,
     relevance: f => f.relevance, score: f => f.score, assessment: f => f.assessment,
     crosscheck: f => f.crosscheck?.status, material: f => f.material, language: f => (f.language?.comparable ? f.language.agree / f.language.comparable : null),
+    level: f => (f.interpretation ? LEVEL_RANK[f.interpretation.level] * 1000 + f.score * 100 : null),
   }, { key: "score", desc: true });
+  const { sorted, header, sort, setSort } = sortState;
+  const SORTS: [string, string, boolean][] = [
+    ["score", "Uppskattning", true], ["level", "Tolkning", true], ["evidence", "Belägg", true], ["novelty", "Nyhet", true],
+    ["relevance", "Relevans", true], ["language", "Språkdrag", true], ["crosscheck", "Nyare källor", false],
+    ["material", "Bergart", false], ["method", "Metod", false], ["verdict", "Mot forskningen", false], ["signum", "Sten", false],
+  ];
   const c = data.summary.counts;
   return (
     <>
@@ -709,19 +765,38 @@ function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; loggedIn
         {checkError && <span className="text-xs text-red-700">{checkError}</span>}
         {data.technique_note && <span className="text-amber-800 text-xs">{data.technique_note}{!loggedIn && " Logga in för att ta med mätkorpusen."}</span>}
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+      <div className="flex flex-wrap items-center gap-2 mb-3 text-xs">
+        <span className="font-bold uppercase tracking-wider text-[11px] text-slate-500">Tolkning<InfoTip text={GLOSSARY["Tolkning"]} /></span>
+        <button onClick={() => setLevel("")}
+          className={`px-2.5 py-1 rounded-lg border font-bold ${!level ? "bg-slate-900 border-slate-900 text-white" : "bg-white border-slate-300 text-slate-700 hover:bg-slate-50"}`}>
+          Alla
+        </button>
+        {LEVELS.filter(l => levelCounts[l.key]).map(l => (
+          <button key={l.key} onClick={() => setLevel(level === l.key ? "" : l.key)} title={l.help}
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border font-bold ${l.style} ${level === l.key ? "ring-2 ring-slate-900" : "hover:brightness-95"}`}>
+            <span aria-hidden className="tracking-[-0.15em] text-[10px]">{l.dots}</span>{l.key} <span className="font-normal opacity-70">{levelCounts[l.key]}</span>
+          </button>
+        ))}
+        <label className="ml-auto flex items-center gap-2 text-slate-600">Sortera efter
+          <select value={sort.key} onChange={e => setSort({ key: e.target.value, desc: SORTS.find(x => x[0] === e.target.value)?.[2] ?? true })}
+            className="liquid-glass-input-wrapper rounded-lg px-2 py-1 text-xs font-semibold outline-none">
+            {SORTS.map(([k, name]) => <option key={k} value={k}>{name}</option>)}
+          </select>
+          <button onClick={() => setSort(x => ({ ...x, desc: !x.desc }))} className="px-2 py-1 rounded-lg border border-slate-300 bg-white font-bold"
+            title={sort.desc ? "Störst först – klicka för minst först" : "Minst först – klicka för störst först"}>{sort.desc ? "↓" : "↑"}</button>
+        </label>
+      </div>
+      <div>
+        <table className="w-full text-sm table-fixed">
+          <colgroup>
+            <col className="w-[18%] sm:w-[12%]" /><col /><col className="w-[26%] sm:w-[17%]" /><col className="hidden sm:table-column w-[22%]" />
+          </colgroup>
           <thead>
             <tr className={TH_ROW}>
-              {header("signum", "Sten")}{header("method", "Metod")}{header("verdict", "Mot forskningen")}
-              {header("suggested", "Vårt resultat")}{header("existing", "Rundata")}
-              {header("crosscheck", "Nyare källor", "Förslaget i Runor 2020 (RAÄ) och Wikidata: finns redan, nämns, annan ristare, samma som en annan sten, saknas")}
-              {header("material", "Bergart", "Stenens material i Rundata; ✓ = förekommer på den föreslagna ristarens stenar, ! = sällan")}
-              {header("language", "Språkdrag", "Hur många jämförbara språkdrag (ljud och språkbruk) som stämmer med den föreslagna ristaren")}
-              {header("evidence", "Belägg", "Hur pålitlig analysen är i just detta fall")}
-              {header("novelty", "Nyhet", "Hur mycket fyndet tillför jämfört med Rundata")}
-              {header("relevance", "Relevans", "Landskapets kunskapsläge, ristarens betydelse, om stenen finns kvar")}
-              {header("score", "Uppskattning")}{header("assessment", "Bedömning")}
+              {header("signum", "Sten")}
+              {header("verdict", "Fynd", "Metoden, vad den föreslår och vad Rundata anger. Etiketterna under: nyare källor, bergart och språkdrag.")}
+              {header("level", "Tolkning")}
+              <SortTh className="hidden sm:table-cell">{header("score", "Uppskattning")}</SortTh>
             </tr>
           </thead>
           <tbody>
@@ -783,27 +858,52 @@ function InterpretationBox({ f }: { f: Finding }) {
   );
 }
 
+// The parts of the old score columns, as one small line: evidence, novelty and relevance
+function ScoreParts({ f }: { f: Finding }) {
+  const part = (label: string, v: number) => (
+    <Tip text={`${label}: ${GLOSSARY[label] ?? ""}`}><span>{label[0]} {Math.round(v * 100)}</span></Tip>
+  );
+  return <div className="flex gap-2 text-[10px] font-mono text-slate-500">{part("Belägg", f.evidence)}{part("Nyhet", f.novelty)}{part("Relevans", f.relevance)}</div>;
+}
+
+function Chip({ label, children, title }: { label: string; children: React.ReactNode; title?: string }) {
+  return (
+    <span title={title} className="inline-flex items-center gap-1 rounded-md bg-slate-900/[0.04] px-1.5 py-0.5 text-[11px] text-slate-700">
+      <span className="text-slate-500">{label}</span>{children}
+    </span>
+  );
+}
+
 function FindingRow({ f, open, onToggle }: { f: Finding; open: boolean; onToggle: () => void }) {
   return (
     <>
-      <tr className="border-t border-slate-900/5 cursor-pointer hover:bg-white/60" onClick={onToggle}>
-        <td className="p-2"><StoneLinks signum={f.signum} /><div className="text-[11px] text-slate-500">{f.place}</div></td>
-        <td className="p-2 text-xs">{f.method}</td>
-        <td className="p-2"><span className={`px-2 py-0.5 rounded-lg border text-xs font-bold ${VERDICT_STYLE[f.verdict]}`}>{f.verdict}</span></td>
-        <td className="p-2 text-xs max-w-[260px]">{f.ours}</td>
-        <td className="p-2 text-xs">{f.existing}</td>
-        <td className="p-2"><CrossCheckCell cc={f.crosscheck} /></td>
-        <td className="p-2 text-xs"><MaterialCell x={f} /></td>
-        <td className="p-2 text-xs"><LanguageCell x={f} /></td>
-        <td className="p-2"><Score value={f.evidence} /></td>
-        <td className="p-2"><Score value={f.novelty} /></td>
-        <td className="p-2"><Score value={f.relevance} /></td>
-        <td className="p-2"><Score value={f.score} /></td>
-        <td className="p-2 text-xs font-semibold"><div className="flex flex-col gap-1">{f.assessment}<SigBadge sig={f.significance} compact /></div></td>
+      <tr className={`border-t border-slate-900/5 cursor-pointer align-top hover:bg-white/60 ${open ? "bg-white/60" : ""}`} onClick={onToggle}
+        aria-expanded={open}>
+        <td className="p-2 break-words"><StoneLinks signum={f.signum} stacked /><div className="text-[11px] text-slate-500 mt-0.5">{f.place}</div></td>
+        <td className="p-2">
+          <div className="flex flex-wrap items-center gap-1.5 mb-1">
+            <span className={`px-2 py-0.5 rounded-lg border text-[11px] font-bold ${VERDICT_STYLE[f.verdict]}`}>{f.verdict}</span>
+            <span className="text-[11px] uppercase tracking-wider text-slate-500">{f.method}</span>
+          </div>
+          <div className="text-xs text-slate-900">{f.ours}</div>
+          <div className="text-[11px] text-slate-500 mt-0.5">Rundata: {f.existing}</div>
+          <div className="flex flex-wrap gap-1.5 mt-1.5">
+            {f.crosscheck && <Chip label="Nyare källor"><CrossCheckCell cc={f.crosscheck} /></Chip>}
+            {f.material && <Chip label="Bergart" title={GLOSSARY["Bergart"]}><MaterialCell x={f} /></Chip>}
+            {f.language?.comparable ? <Chip label="Språkdrag" title={GLOSSARY["Språkdrag"]}><LanguageCell x={f} /></Chip> : null}
+            <span className="sm:hidden"><Chip label="Uppskattning">{Math.round(f.score * 100)}</Chip></span>
+          </div>
+        </td>
+        <td className="p-2"><div className="flex flex-col gap-1.5"><LevelBadge it={f.interpretation} /><SigBadge sig={f.significance} compact /></div></td>
+        <td className="p-2 hidden sm:table-cell">
+          <Score value={f.score} />
+          <div className="text-[11px] text-slate-600 mt-1 leading-snug">{f.assessment}</div>
+          <div className="mt-1"><ScoreParts f={f} /></div>
+        </td>
       </tr>
       {open && (
         <tr className="bg-white/50">
-          <td colSpan={13} className="p-3 text-xs text-slate-700">
+          <td colSpan={4} className="p-3 text-xs text-slate-700">
             <InterpretationBox f={f} />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {(["belägg", "nyhet", "relevans"] as const).map(k => (

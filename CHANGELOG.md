@@ -66,6 +66,11 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 - Stenöversikt, Jämför stenar, Syntes och Mätkorpus: inledning på vardagsspråk med läsanvisning och ordlista,
   förklaringar på mått och kolumner; Stenöversikt får en svarsruta med tolkning och kontrollen mot signerade stenar,
   Jämför stenar ett märke för om skillnaden i huggspår är statistiskt säkerställd.
+- Tolkningens slutsats (starkt, måttligt, svagt, bekräftelse, redan känt, metodfel) syns direkt i fyndlistan, med
+  filter per nivå; tidigare bara när raden öppnades.
+- Fyndtabellen har fyra kolumner i stället för tretton (Sten, Fynd, Tolkning, Uppskattning) och skrollar inte i
+  sidled; nyare källor, bergart och språkdrag visas som etiketter under fyndet, belägg, nyhet och relevans under
+  uppskattningen, och en meny sorterar efter alla de tidigare kolumnerna.
 
 ### Granskning av U 1026: sluten modell, namnlösa ristare och bergart
 - Modellens förslag: plats, stil och språkdrag ingår i modellen och räknas inte som oberoende stöd; träffsäkerheten
