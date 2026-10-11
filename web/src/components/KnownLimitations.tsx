@@ -1,29 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { API_URL } from "@/lib/api";
 
 interface Limitation { key: string; title: string; text: string; short: string; needed: string; contexts: string[] }
 interface LimitationList { version: string; items: Limitation[] }
 
-// Which known limitations (src/limitations.py) apply to each analysis page
-const ROUTE_CONTEXTS: Record<string, string[]> = {
-  "/3d": ["grooves", "auto", "software"],
-  "/stenanalys": ["grooves", "auto", "attribution", "ai", "rundata", "software"],
-  "/jamfor": ["grooves", "comparison", "software"],
-  "/korpus": ["grooves", "comparison", "attribution", "software"],
-  "/synthesis": ["attribution", "grooves", "statistics", "ai", "rundata", "software"],
-  "/statistik": ["statistics", "attribution", "rundata", "r"],
-  "/luckor": ["research", "statistics", "attribution", "rundata"],
-  "/inskrifter": ["rundata", "statistics"],
-  "/karta": ["rundata"],
-  "/stilgrupper": ["rundata"],
-  "/2d": ["ai"],
-  "/phonetics": ["ai", "rundata"],
-  "/rapporter": ["grooves", "attribution", "ai", "software"],
-  "/report": ["grooves", "attribution", "ai", "software"],
-};
+// Analysis pages that get a pointer to the known limitations in the documentation
+const ANALYSIS_ROUTES = ["/3d", "/stenanalys", "/jamfor", "/korpus", "/synthesis", "/statistik", "/luckor", "/inskrifter",
+  "/karta", "/stilgrupper", "/2d", "/phonetics", "/rapporter", "/report", "/oversikt"];
 
 const cache = new Map<string, Promise<LimitationList | null>>();
 function load(contexts: string[]): Promise<LimitationList | null> {
@@ -66,9 +53,24 @@ export function KnownLimitations({ contexts }: { contexts: string[] }) {
   );
 }
 
-// Shown under every analysis page, with the limitations that apply to it
+// A short pointer to the documentation, where methods, caveats and known limitations are described
+export function DocsNote({ anchor, children }: { anchor: string; children: React.ReactNode }) {
+  return (
+    <p className="text-xs text-slate-500">
+      {children}{" "}
+      <Link href={`/docs/metod#${anchor}`} className="text-[#b7410e] font-semibold hover:underline">Läs i dokumentationen →</Link>
+    </p>
+  );
+}
+
+// Under every analysis page: one line pointing to the known limitations in the documentation (the full list
+// is in the documentation and in every report)
 export default function RouteLimitations() {
   const path = usePathname() ?? "";
-  const route = Object.keys(ROUTE_CONTEXTS).find(r => path === r || path.startsWith(`${r}/`));
-  return route ? <KnownLimitations contexts={ROUTE_CONTEXTS[route]} /> : null;
+  if (!ANALYSIS_ROUTES.some(r => path === r || path.startsWith(`${r}/`))) return null;
+  return (
+    <div className="mt-8 border-t border-slate-900/5 pt-3">
+      <DocsNote anchor="18-kända-brister">Metoderna har kända brister som gäller också här.</DocsNote>
+    </div>
+  );
 }

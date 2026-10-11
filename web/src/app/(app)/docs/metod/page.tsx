@@ -34,6 +34,13 @@ export default function MethodsPage() {
 
   const html = useMemo(() => (methods ? DOMPurify.sanitize(methods.html, { ADD_ATTR: ["target"] }) : ""), [methods]);
 
+  // The text arrives after navigation, so a link to a section (#…) is followed once it is rendered
+  useEffect(() => {
+    if (!html || !window.location.hash) return;
+    const el = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+    el?.scrollIntoView({ block: "start" });
+  }, [html]);
+
   return (
     <div className="w-full max-w-7xl mx-auto p-4 md:p-6">
       <div className="mb-6">

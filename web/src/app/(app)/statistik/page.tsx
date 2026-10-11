@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { DocsNote } from "@/components/KnownLimitations";
 import Link from "next/link";
 import { API_URL } from "@/lib/api";
 
@@ -63,13 +64,13 @@ function Fig({ src, alt }: { src?: string; alt: string }) {
   );
 }
 
-function Method({ text, caveat }: { text?: string; caveat?: string }) {
+// The method in short; caveats and how to read the results are in the documentation (METHODS.md 17)
+function Method({ text }: { text?: string; caveat?: string }) {
   if (!text) return null;
   return (
     <details className="text-xs text-slate-600 rounded-xl bg-slate-50 border border-slate-200 p-3">
-      <summary className="cursor-pointer font-semibold">Metod{caveat ? " och reservationer" : ""}</summary>
+      <summary className="cursor-pointer font-semibold">Metod</summary>
       <p className="mt-2">{text}</p>
-      {caveat && <p className="mt-2 text-amber-900">{caveat}</p>}
     </details>
   );
 }
@@ -216,11 +217,11 @@ function Overview({ data }: { data: Corpus }) {
           {data.patterns.map((pt, i) => (
             <li key={i} className="flex gap-3">
               <span className={`shrink-0 h-fit px-2 py-0.5 rounded-lg border text-[11px] font-bold ${STATUS_STYLE[pt.status] ?? ""}`}>{pt.status}</span>
-              <div><span className="text-[11px] uppercase tracking-wider text-slate-500 mr-2">{pt.topic}</span>{pt.text}
-                {pt.note && <div className="text-xs text-slate-500 mt-0.5">{pt.note}</div>}</div>
+              <div><span className="text-[11px] uppercase tracking-wider text-slate-500 mr-2">{pt.topic}</span>{pt.text}</div>
             </li>
           ))}
         </ul>
+        <div className="mt-3"><DocsNote anchor="17-statistik-i-r">Hur mönstren ska tolkas och vilka reservationer som gäller står i avsnitt 17.</DocsNote></div>
       </div>
       <div>
         <h3 className="font-bold text-slate-900 mb-1">Starkaste fynden per sten</h3>
@@ -264,7 +265,6 @@ function Geography({ data }: { data: Corpus }) {
         {data.html_map_url && <a href={`${API_URL}${data.html_map_url}`} target="_blank" rel="noreferrer" className="text-[#b7410e] hover:underline">Öppna den interaktiva kartan (leaflet)</a>}
       </p>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4"><Fig src={f.map} alt="Ristarnas områden" /><Fig src={f.water} alt="Avstånd till vatten" /></div>
-      {g.water?.note && <p className="text-xs text-amber-900">{g.water.note}</p>}
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr><th className={TH}>Ristare</th><th className={TH}>Säkra stenar</th><th className={TH}>Median till tyngdpunkt</th>

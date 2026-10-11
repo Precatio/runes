@@ -772,6 +772,30 @@ cmake).
   bästa vägar, inte belagda vikingatida vägar.
 * Klustringen ger svag struktur (silhuett omkring 0,33); grupperna följer kors, stungna runor och bön, inte ristare.
 
+**Tolkning av mönstren och reservationer.** Sidan Statistik (R) och fliken "Våra resultat mot forskningen" i
+Forskningsluckor visar mönstren utan anteckningar; så här ska de läsas:
+
+* *Ristarnas områden.* Att ristare var regionalt verksamma är en grund för Axelsons attribueringar; testet visar att
+  det också gäller statistiskt, men är inte oberoende av attribueringarna.
+* *Avstånd till vatten.* Att stenar restes vid färdleder, även vattenleder, är en etablerad tolkning. Vattenlagret är
+  grovt (1:10 miljoner); att bro- och vägstenar står "längre från vatten" visar kartlagrets gräns, inte broarnas läge.
+* *Attribueringsmodellen.* Se begränsningarna ovan och den grupperade korsvalideringen.
+* *Stavning per ristare.* Att ristare har egna stavningsvanor är en grund för ortografisk attribuering – och därför
+  inte oberoende av attribueringarna i Rundata.
+* *Dialekt.* Stavning speglar både uttal, ristarens skrivvanor och tid. Eftersom ristare ofta arbetade inom ett
+  område kan en geografisk stavningsgräns lika gärna vara en gräns mellan ristarverkstäder som mellan dialekter.
+* *Klustring.* Grupperna speglar främst kors, stungna runor och bön, alltså tid och kristnande snarare än ristare.
+* *Seriation.* Stöder Gräslunds kronologi oberoende av ornamentiken, men årtalen är osäkra (medelfel ca 21 år mot
+  25 år utan modell).
+* *Oförklarade dimensioner.* När en korrespondensdimension varken följer tid eller geografi kan mönstret vara
+  ristarens eller beställarens val; appen känner ingen förklaring i litteraturen, och det bör prövas.
+* *Släktord och formler över tid.* Tidsindelningen bygger på Gräslunds stilgrupper och gäller bara stenar med säker
+  stilgrupp.
+* *Huggteknik mot ristare* (`r/technique.R`). Få stenar per ristare, olika vittring och bergart och en annan
+  mätmetod än Kitzler Åhfeldts Groove Measure; resultatet är en indikation, inte en attribuering.
+* *Landskapet.* Höjddata visar dagens markyta; vägar är simulerade bästa vägar, inte belagda vikingatida vägar, och
+  grannstenarna kan själva stå vid vägar, så vägnätet är inte oberoende av stenarnas lägen.
+
 ## 18. Kända brister
 
 Källkod: `src/limitations.py`, `GET /api/limitations`. Metodens kända brister förs i en enda förteckning

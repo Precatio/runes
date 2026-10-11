@@ -8,6 +8,7 @@ import { db } from "@/lib/db";
 import { useAuth } from "@/components/AuthContext";
 import { GeologyBox, LanguageTraits } from "@/components/StoneContext";
 import { SIMILARITY_HELP, fmtP } from "@/lib/significance";
+import { DocsNote } from "@/components/KnownLimitations";
 
 interface ProvinceRow {
   code: string; name: string; axelson: boolean; total: number; carver: number; style: number; dated: number;
@@ -249,9 +250,7 @@ export default function GapsPage() {
         })}
       </div>
 
-      <div className="rounded-2xl bg-amber-50 border border-amber-200 px-5 py-3 text-sm text-amber-900">
-        <strong>Läs med källkritik:</strong> {data.source_note}
-      </div>
+      <DocsNote anchor="13-forskningsluckor">Varifrån uppgifterna kommer, hur bedömningarna räknas och vilka reservationer som gäller står i avsnitt 13.</DocsNote>
 
       <ProvinceTable rows={data.coverage.per_province} measuredSigna={measuredSigna} />
 
@@ -371,12 +370,7 @@ function SizePanel() {
           </table>
         </div>
       )}
-      <div className="rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 text-xs text-amber-900 space-y-1">
-        <p><strong>Läs med källkritik.</strong> Höjden är oftast höjden över mark i Kulturmiljöregistrets beskrivning, inte stenens hela längd,
-          och stenar har flyttats och rests om. Måtten finns för knappt hälften av stenarna; fornlämningar med flera stenar som inte går
-          att skilja åt är uteslutna. Stenar där minnesformeln inte går att läsa är oftare skadade och därför lägre. Statusorden är grova
-          mått på makt – betydelsen av t.ex. <em>drengr</em> och <em>þegn</em> är omdiskuterad. Källa: {data.source}</p>
-      </div>
+      <DocsNote anchor="9b-stenens-storlek-och-syfte">Hur måtten läses ut, hur de ska tolkas och vilka reservationer som gäller står i avsnitt 9b.</DocsNote>
     </div>
   );
 }
@@ -517,8 +511,7 @@ function PatternsBox({ patterns }: { patterns: RPattern[] }) {
         {patterns.map((pt, i) => (
           <li key={i} className="flex gap-3">
             <span className={`shrink-0 h-fit px-2 py-0.5 rounded-lg border text-[11px] font-bold ${style[pt.status] ?? ""}`}>{pt.status}</span>
-            <div><span className="text-[11px] uppercase tracking-wider text-slate-500 mr-2">{pt.topic}</span>{pt.text}
-              {pt.note && <div className="text-xs text-slate-500 mt-0.5">{pt.note}</div>}</div>
+            <div><span className="text-[11px] uppercase tracking-wider text-slate-500 mr-2">{pt.topic}</span>{pt.text}</div>
           </li>
         ))}
       </ul>
@@ -623,10 +616,7 @@ function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; loggedIn
         </table>
         {sorted.length > 300 && <p className="text-xs text-slate-500 mt-2">Visar de 300 första – sortera eller filtrera för att se fler.</p>}
       </div>
-      <details className="mt-4 text-xs text-slate-600">
-        <summary className="cursor-pointer font-semibold">Hur uppskattningen räknas</summary>
-        <pre className="whitespace-pre-wrap font-sans mt-2">{data.method_note}</pre>
-      </details>
+      <div className="mt-4"><DocsNote anchor="13b-våra-resultat-mot-befintlig-forskning">Hur belägg, nyhet, relevans och bedömning räknas står i avsnitt 13b.</DocsNote></div>
     </>
   );
 }
