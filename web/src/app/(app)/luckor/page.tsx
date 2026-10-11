@@ -651,8 +651,8 @@ const PATTERN_GROUPS: { key: string; label: string; statuses: string[]; accent: 
     help: "Nya mönster som statistiken visar men som inte är etablerad kunskap – hypoteser för runologer att pröva." },
   { key: "confirm", label: "Bekräftar", statuses: ["bekräftar"], accent: "border-l-emerald-600", pill: "bg-emerald-50 text-emerald-800 border-emerald-200",
     help: "Mönster som stämmer med det forskningen redan antar, nu med mätbar osäkerhet." },
-  { key: "limit", label: "Begränsningar", statuses: ["begränsning", "svagt"], accent: "border-l-slate-400", pill: "bg-slate-100 text-slate-700 border-slate-300",
-    help: "Svaga mönster och det metoden eller datan inte klarar." },
+  { key: "limit", label: "Begränsningar", statuses: ["begränsning", "svagt", "svag effekt", "indikation"], accent: "border-l-slate-400", pill: "bg-slate-100 text-slate-700 border-slate-300",
+    help: "Svaga effekter (säkerställda men små), cirkulära jämförelser och det metoden eller datan inte klarar." },
 ];
 
 function PatternsBox({ patterns }: { patterns: RPattern[] }) {
@@ -693,6 +693,11 @@ function PatternsBox({ patterns }: { patterns: RPattern[] }) {
           ✓ Statistiskt säkerställda {nSig}
         </button>
       </div>
+      <p className="text-xs text-slate-500 mb-3 max-w-4xl">
+        Två frågor per mönster: <strong>är det statistiskt säkerställt</strong> (inte slump, grönt märke) och <strong>är det
+        känt</strong> i forskningen (bekräftar – bidraget är då mätningen med plats och ristare konstanta) eller nytt (att pröva).
+        Ett mönster kan vara både säkerställt och känt.
+      </p>
       <ul className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         {shown.slice(0, showAll ? undefined : FIRST).map((pt, i) => {
           const g = groupOf(pt);

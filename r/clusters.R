@@ -34,6 +34,17 @@ fit <- pam(D, k, diss = TRUE)
 dd$cluster <- fit$clustering
 sw <- silhouette(fit)[, "sil_width"]
 
+# Null model for the silhouette: the same variables with each column shuffled independently (same marginal
+# distributions, no association between them), clustered the same way; the best width over k is compared, since k was
+# chosen by the same criterion. A real structure should beat every shuffled data set.
+N_NULL <- 19
+sil_null <- replicate(N_NULL, {
+  Xp <- X
+  for (col in names(Xp)) Xp[[col]] <- sample(Xp[[col]])
+  Dp <- daisy(Xp, metric = "gower", type = list(symm = c("cross", "short_twig"), asymm = cc))
+  max(sapply(K_RANGE, function(kk) pam(Dp, kk, diss = TRUE)$silinfo$avg.width))
+})
+
 # Stability (Hennig 2007): Jaccard similarity of each cluster with its best match in B subsamples of 80 %
 jac <- matrix(NA_real_, B, k)
 for (b in seq_len(B)) {
@@ -90,6 +101,12 @@ profiles <- lapply(seq_len(k), function(c0) {
 # Clusters against carvers (stones with one certain carver; carvers with at least 5 stones here)
 kc <- dd %>% filter(!is.na(carver)) %>% group_by(carver) %>% filter(n() >= 5) %>% ungroup()
 ari <- if (nrow(kc) > 10) adjusted_rand(kc$cluster, kc$carver) else NA
+# Nesting: the share of each carver's stones in the carver's own main group, weighted by stones. With few groups and
+# many carvers the adjusted Rand index is low even when every carver keeps to one group; nesting asks that question
+# directly, against cluster labels shuffled among the same stones.
+nest <- function(cl) { tb <- table(kc$carver, cl); sum(apply(tb, 1, max)) / sum(tb) }
+nest_obs <- if (nrow(kc) > 10) nest(kc$cluster) else NA
+nest_null <- if (nrow(kc) > 10) replicate(499, nest(sample(kc$cluster))) else NA
 carver_rows <- kc %>% count(carver, cluster) %>% group_by(carver) %>%
   summarise(n = sum(n), modal_cluster = cluster[which.max(n)], purity = r3(max(n) / sum(n))) %>% arrange(desc(n))
 ari_province <- adjusted_rand(dd$cluster, dd$province)
@@ -155,9 +172,13 @@ result <- list(
   n_stones = nrow(dd), n_excluded = sum(!keep), min_features = MIN_FEATURES, k = k,
   silhouette = lapply(seq_along(K_RANGE), function(i) list(k = K_RANGE[i], width = r3(sil[i]))),
   best_silhouette = r3(max(sil)), structure = strength,
+  silhouette_null = list(n = N_NULL, max = r3(max(sil_null)), mean = r3(mean(sil_null)),
+                         p = signif((1 + sum(sil_null >= max(sil))) / (1 + N_NULL), 3)),
   clusters = profiles,
   mca = list(dims = lapply(1:5, function(i) list(dim = i, inertia_pct = r1(eig[i])))),
-  carvers = list(ari = r3(ari), n = nrow(kc), rows = carver_rows),
+  carvers = list(ari = r3(ari), n = nrow(kc), rows = carver_rows,
+                 nesting = r3(nest_obs), nesting_null = r3(mean(nest_null)),
+                 nesting_p = if (is.na(nest_obs)) NA else signif((1 + sum(nest_null >= nest_obs)) / 500, 3)),
   ari_province = r3(ari_province), ari_style = r3(ari_style),
   figures = list(silhouette = fig_sil, mca = fig_mca, variables = fig_var, carvers = fig_carv),
   method = paste(

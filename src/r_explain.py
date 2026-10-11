@@ -167,7 +167,10 @@ def chronology(ch: dict) -> dict | None:
          "Seriationen kan ge en grov placering – tidig, mittre eller sen – av stenar som saknar ornamentik, men inte "
          "ett årtal.",
          ("I hela landet finns dessutom ett mönster som varken följer tid eller plats; det kan vara ristarens eller "
-          "beställarens val och är värt att pröva.") if unexplained else None],
+          "beställarens val och är värt att pröva.") if unexplained else
+         ("I hela landet följer formelvalet (t.ex. om stenen har en bön) mer ristaren än tiden – prövat icke-linjärt mot "
+          "stilgruppen och mot omblandade ristaretiketter.") if any(list(d.get("explained_by") or []) == ["ristare"]
+                                                                   for d in ch.get("corpus_dimensions") or []) else None],
         [f"Analysen gäller {region}, där stilkronologin är utarbetad. I hela landet styrs språket mer av region än av tid.",
          "Ordningen är säkrare än årtalen."],
         "Delvis – språket följer stilkronologins tidsordning, men årtalen för enskilda stenar är osäkra.")
@@ -196,7 +199,8 @@ def change(c: dict) -> dict | None:
     parts = []
     for f in sig[:4]:
         tm = f["time"]
-        word = SHAPE_WORD[tm["shape"]].format(y=tm.get("peak_year"))
+        from src.r_findings import _peak
+        word = SHAPE_WORD[tm["shape"]].format(y=_peak(tm))
         curve = [r["share"] for r in tm.get("curve") or []]
         if tm["shape"] == "peak" and curve:
             numbers = f"som mest {_pct(max(curve))}, på slutet {_pct(tm['last'])}"
@@ -222,7 +226,8 @@ def change(c: dict) -> dict | None:
         interp.append("o-runan tar över o-ljudet, ett tecken på att runornas ljudvärden ändrades under perioden.")
     b = t("bon")
     if b and b["shape"] == "peak":
-        interp.append(f"Kristna böner är vanligast omkring {b['peak_year']} och nästan borta på de sena stenarna – kanske "
+        from src.r_findings import _peak
+        interp.append(f"Kristna böner är vanligast omkring {_peak(b)} och nästan borta på de sena stenarna – kanske "
                       "för att kristendomen då var självklar, eller för att formlerna ändrades.")
     ai = t("ai_alla")
     if ai and ai["shape"] == "falls":
@@ -382,7 +387,8 @@ def overview(res: dict) -> dict:
     if o and o["shape"] == "rises":
         changes.append(f"o-runan tar över o-ljudet ({_pct(o['first'])} → {_pct(o['last'])})")
     if b and b["shape"] == "peak":
-        changes.append(f"kristna böner är vanligast omkring {b['peak_year']}")
+        from src.r_findings import _peak
+        changes.append(f"kristna böner är vanligast omkring {_peak(b)}")
     if changes:
         time_bits.append("Under 1000-talet förändras skrift och tro, med plats och ristare konstanta: "
                          + ", ".join(changes[:-1]) + (" och " if len(changes) > 1 else "") + changes[-1] + ".")

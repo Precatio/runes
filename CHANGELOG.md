@@ -5,6 +5,23 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Granskning av R-fynden (Rune, 2026-10-11)
+- Toppår anges med 95 % intervall (koefficientdragningar och omräkningar med nya årtal), aldrig som ett exakt år.
+- Avstånd till vatten prövas mot en lokal nollmodell: slumpvisa punkter inom 5 km från runstenar (där folk bodde och
+  rörde sig); jämförelsen mot hela landskapet finns kvar som kontroll. Resultatet håller (4,2 mot 5,3 km).
+- Mönster som är kända i forskningen (stungna runor, signaturer, åsrunan, kristna formler, monoftongeringens geografi,
+  brostenarnas själsböner, vattennärhet) märks *bekräftar*; säkerställda men små förändringar (under 10
+  procentenheter) blir *svag effekt*, och förändringar som inte håller i minst 8 av 10 omräkningar *indikation*.
+  Kors är en del av ornamentiken och därmed inte oberoende av dateringen (*begränsning*).
+- Klustringens silhuett prövas mot omblandade data och ristarnas sammanhållning mäts direkt (i stället för bara
+  justerat Rand-index).
+- Korpusdimensionerna prövas mot tiden icke-linjärt (eta² mot stilgrupp, daterade stenar) och ristarens eta² mot
+  omblandade etiketter: dimension 1 följer ristaren (27 %, slumpnivå 6 %) mer än tiden (6 %).
+- Släktrelationerna före och efter 1050 prövas inom landskapen (Cochran–Mantel–Haenszel): skillnaden för 'broder'
+  och 'partner/kamrat' försvinner – de sena stenarna är till 94 % uppländska.
+- De okända ristargrupperna prövas utan tidsberoende drag (renhet 69 % även då; grupperna återkommer till 58 %), och
+  texten anger entydigt att arbetsnamnen är appens etiketter för nya grupper.
+
 ### Konton, admin och säkerhet inför publicering
 - Servern kontrollerar Firebase-inloggningen (ID-token, avstängda och återkallade konton) med Firebase Admin SDK
   (`api/auth.py`). Grundaren anges på servern med `ADMIN_UIDS` eller `ADMIN_EMAILS` – ingen inloggning står i koden.

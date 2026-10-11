@@ -70,22 +70,32 @@ water <- list(available = FALSE, note = "Vattenlagren (Natural Earth) kunde inte
 d$water_km <- NA_real_
 if (!is.null(W)) {
   d$water_km <- as.numeric(st_distance(pts, W$lines)) / 1000
-  # Random points on land (not in lakes) within each province's runestone area
+  # Random points on land (not in lakes). The main null is local: points within LOCAL_KM of the province's runestones,
+  # i.e. the landscape where stones were raised (people lived near water, so a province-wide null is too easy). The
+  # province-wide null (the runestone area's convex hull) is kept as a coarser comparison.
+  LOCAL_KM <- 5
+  sample_land <- function(area, n) {
+    if (!is.null(W$land)) area <- suppressWarnings(suppressMessages(st_intersection(area, W$land)))
+    if (!length(area) || all(st_is_empty(area))) return(NULL)
+    s <- st_sample(area, size = n * 2, type = "random")
+    if (!is.null(W$lakes)) s <- s[!lengths(st_intersects(s, W$lakes))]
+    s <- s[seq_len(min(length(s), n))]
+    if (length(s)) as.numeric(st_distance(s, W$lines)) / 1000 else NULL
+  }
   prov_n <- table(d$province)
   provs <- names(prov_n[prov_n >= 20])
-  rnd <- list()
+  rnd <- list(); rnd_regional <- list()
   for (pv in provs) {
-    area <- st_buffer(st_convex_hull(st_union(st_geometry(pts)[d$province == pv])), 2000)
-    if (!is.null(W$land)) area <- suppressWarnings(suppressMessages(st_intersection(area, W$land)))
-    if (!length(area) || all(st_is_empty(area))) next
-    s <- st_sample(area, size = as.integer(prov_n[pv]) * 2, type = "random")
-    if (!is.null(W$lakes)) s <- s[!lengths(st_intersects(s, W$lakes))]
-    s <- s[seq_len(min(length(s), as.integer(prov_n[pv])))]
-    if (length(s)) rnd[[pv]] <- data.frame(province = pv, water_km = as.numeric(st_distance(s, W$lines)) / 1000)
+    g <- st_geometry(pts)[d$province == pv]
+    loc <- sample_land(st_union(st_buffer(g, LOCAL_KM * 1000)), as.integer(prov_n[pv]))
+    if (length(loc)) rnd[[pv]] <- data.frame(province = pv, water_km = loc)
+    reg <- sample_land(st_buffer(st_convex_hull(st_union(g)), 2000), as.integer(prov_n[pv]))
+    if (length(reg)) rnd_regional[[pv]] <- data.frame(province = pv, water_km = reg)
   }
-  rnd <- bind_rows(rnd)
+  rnd <- bind_rows(rnd); rnd_regional <- bind_rows(rnd_regional)
   stones <- d %>% filter(province %in% provs)
   overall <- wilcox.test(stones$water_km, rnd$water_km, alternative = "less")
+  regional <- wilcox.test(stones$water_km, rnd_regional$water_km, alternative = "less")
   prov_rows <- lapply(provs, function(pv) {
     s <- stones$water_km[stones$province == pv]; r <- rnd$water_km[rnd$province == pv]
     if (length(r) < 10) return(NULL)
@@ -103,7 +113,14 @@ if (!is.null(W)) {
   water <- list(
     available = TRUE, note = WATER_NOTE,
     overall = list(n_stones = nrow(stones), n_random = nrow(rnd), median_stones_km = r3(median(stones$water_km)),
-                   median_random_km = r3(median(rnd$water_km)), p = signif(overall$p.value, 3)),
+                   median_random_km = r3(median(rnd$water_km)), p = signif(overall$p.value, 3),
+                   null = sprintf(tr("slumpvisa punkter på land inom %d km från runstenar i samma landskap",
+                                     "random points on land within %d km of runestones in the same province"), LOCAL_KM),
+                   local_km = LOCAL_KM),
+    overall_regional = list(n_random = nrow(rnd_regional), median_random_km = r3(median(rnd_regional$water_km)),
+                            p = signif(regional$p.value, 3),
+                            null = tr("slumpvisa punkter på land inom landskapets runstensområde (konvext hölje)",
+                                      "random points on land within the province's runestone area (convex hull)")),
     provinces = prov_rows,
     carvers = list(kruskal_p = signif(kw$p.value, 3), df = unname(kw$parameter), rows = carver_water),
     bridges = list(n = length(bro), median_bridge_km = r3(median(bro)), median_other_km = r3(median(other)),
@@ -111,7 +128,7 @@ if (!is.null(W)) {
   )
   # Figure: distance to water, runestones vs random points on land
   long <- bind_rows(data.frame(group = tr("Runstenar", "Runestones"), water_km = stones$water_km),
-                    data.frame(group = tr("Slumpvisa punkter på land", "Random points on land"), water_km = rnd$water_km))
+                    data.frame(group = tr("Slumpvisa punkter inom 5 km från runstenar", "Random points within 5 km of runestones"), water_km = rnd$water_km))
   p <- ggplot(long, aes(water_km, colour = group, linetype = group)) +
     stat_ecdf(linewidth = 0.7) +
     scale_colour_manual(values = SERIES[1:2], name = NULL) +
@@ -122,7 +139,8 @@ if (!is.null(W)) {
          y = tr("Kumulativ andel", "Cumulative share"),
          subtitle = sprintf("Median: runstenar %.2f km, slumpvisa punkter %.2f km (Wilcoxon, ensidigt p = %s)",
                             median(stones$water_km), median(rnd$water_km), format.pval(overall$p.value, digits = 2)),
-         caption = "Vattnet enligt Natural Earth 1:10 milj. (dagens strandlinjer). Slumpvisa punkter på land inom varje landskaps runstensområde.") +
+         caption = tr("Vattnet enligt Natural Earth 1:10 milj. (dagens strandlinjer). Slumpvisa punkter på land inom 5 km från runstenar i samma landskap.",
+                      "Water from Natural Earth 1:10 million (present-day shorelines). Random points on land within 5 km of runestones in the same province.")) +
     theme_runor()
   water$figure <- save_fig(p, out, "geografi_vatten.png", 7, 4.5)
 }

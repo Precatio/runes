@@ -118,6 +118,27 @@ stab <- if (length(groups)) {
   if (is.null(dim(sims))) mean(sims) else rowMeans(sims)
 } else numeric(0)
 
+# Robustness without time-dependent features: style group, cross and the traits that change over the period (dotted
+# runes, prayers, the ós-rune, signatures) can make stones from the same time and area look like one hand. The
+# threshold is recalibrated on known carvers without them, the groups are formed again, and each group's best match is
+# reported (Jaccard); the validation is repeated too.
+TIME_DEP <- intersect(c("style_short", "cross", "trait_stungna", "trait_stungen_e", "trait_stungen_y", "trait_stungen_g",
+                        "trait_bon", "trait_sjal", "trait_o_runa", "trait_signatur", "formula_bon"), HAND)
+G_hand <- G; THRESH_hand <- THRESH
+Xn <- X[, setdiff(HAND, TIME_DEP), drop = FALSE]
+G <- as.matrix(daisy(Xn, metric = "gower"))
+gk2 <- G[known, known]; s2 <- gk2[near & same]; f2 <- gk2[near & !same]
+grid2 <- sort(unique(quantile(c(s2, f2), seq(0.005, 0.5, by = 0.005), na.rm = TRUE)))
+lr2 <- vapply(grid2, function(t) mean(s2 <= t) / pmax(mean(f2 <= t), 1e-9), 0)
+ok2 <- lr2 >= LR_MIN & vapply(grid2, function(t) mean(s2 <= t), 0) > 0
+THRESH <- if (any(ok2)) max(grid2[ok2]) else min(grid2)
+val_nt <- communities(known)
+val_nt_purity <- if (length(val_nt)) weighted.mean(vapply(val_nt, purity, 0), vapply(val_nt, length, 0)) else NA
+groups_nt <- communities(unk)
+robust_nt <- vapply(groups, function(grp) if (!length(groups_nt)) 0 else
+  max(vapply(groups_nt, function(h) length(intersect(grp, h)) / length(union(grp, h)), 0)), 0)
+G <- G_hand; THRESH <- THRESH_hand
+
 # ---- describe each group ------------------------------------------------------------------------------------------
 pred <- tryCatch(fromJSON(file.path(cdir, "attribution.json"))$predictions, error = function(e) NULL)
 known_carvers <- names(carver_n[carver_n >= MIN_CARVER])
@@ -178,7 +199,7 @@ desc <- lapply(seq_along(groups), function(i) {
        stones = I(full$signum[grp]), parishes = I(names(sort(table(full$parish_name[grp]), decreasing = TRUE))),
        provinces = I(names(sort(table(full$province[grp]), decreasing = TRUE))),
        styles = if (length(styles)) data.frame(style = names(styles), n = as.integer(styles)) else NULL,
-       within = r3(within), stability = r3(stab[i]), marks = marks,
+       within = r3(within), stability = r3(stab[i]), robust_no_time = r3(robust_nt[i]), marks = marks,
        nearest_carver = if (!is.null(nearest)) list(carver = nearest$carver, n = nearest$n, dist = r3(nearest$dist),
                                                     km = nearest$km, as_close_as_same_carver = similar) else NULL,
        model = model, status = status,
@@ -230,7 +251,10 @@ result <- list(
   validation = list(n_groups = length(val_groups), n_stones = sum(val_sizes),
                     purity = if (length(val_groups)) r3(weighted.mean(val_purity, val_sizes)) else NA,
                     purity_geography = if (length(val_groups)) r3(weighted.mean(geo_purity, val_sizes)) else NA,
-                    share_pure = if (length(val_groups)) r3(mean(val_purity >= 0.75)) else NA),
+                    share_pure = if (length(val_groups)) r3(mean(val_purity >= 0.75)) else NA,
+                    purity_no_time = r3(val_nt_purity), n_groups_no_time = length(val_nt)),
+  time_free = list(dropped = I(TIME_DEP), n_groups = length(groups_nt),
+                   mean_robust = if (length(groups)) r3(mean(robust_nt)) else NA),
   groups = desc, n_candidates = sum(vapply(desc, function(g) g$status == "candidate", TRUE)),
   figures = list(map = fig_map),
   method = paste(

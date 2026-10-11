@@ -97,28 +97,51 @@ per_style <- dd[dated, ] %>% mutate(style = sub(" .*", "", style)) %>% group_by(
   summarise(n = n(), mid = first(mid), mean_score = r3(mean(score)), mean_est = round(mean(est))) %>% arrange(mid)
 
 # ---- the whole corpus: what do the main CA dimensions follow? ----------------------------------------------
-# A dimension that follows neither time (Gräslund) nor geography is reported as an unexplained pattern.
+# A dimension that follows neither time (Gräslund) nor geography nor carver is reported as an unexplained pattern.
+# Time is tested non-linearly: a feature with a peak in mid-period (e.g. prayers around the 1030s) gives a Spearman rho
+# near zero although time explains much, so the test is eta² of the score by style group (dated stones only), against
+# a permutation null. Carver eta² is inflated when many carvers have few stones, so it is also tested against
+# permuted carver labels.
 inc_all <- incidence(all_d)
 da <- all_d[inc_all$keep, ]
 fa <- ca(inc_all$I, nd = 3)
 mid_a <- ifelse(!is.na(da$style_from), (da$style_from + da$style_to) / 2, NA)
+sty_a <- sub(" .*", "", da$style)
+sty_a[!sty_a %in% c("RAK", "Fp", "Pr1", "Pr2", "Pr3", "Pr4", "Pr5")] <- NA
 eta2 <- function(y, g) { ok <- !is.na(y) & !is.na(g); y <- y[ok]; g <- g[ok]
   sum(tapply(y, g, function(v) length(v) * (mean(v) - mean(y))^2)) / sum((y - mean(y))^2) }
+# Observed eta² and its permutation null (labels shuffled among the stones that have one)
+eta2_perm <- function(y, g, n_perm = 499) {
+  ok <- !is.na(y) & !is.na(g); y <- y[ok]; g <- g[ok]
+  if (length(unique(g)) < 2) return(list(eta2 = NA, null95 = NA, p = NA))
+  obs <- eta2(y, g)
+  null <- replicate(n_perm, eta2(y, sample(g)))
+  list(eta2 = obs, null95 = unname(quantile(null, 0.95)), p = (1 + sum(null >= obs)) / (1 + n_perm))
+}
+carv_a <- ifelse(da$carver %in% names(which(table(da$carver) >= 8)), da$carver, NA)
 corpus_dims <- lapply(1:3, function(k) {
   sc <- fa$rowcoord[, k]
   rt <- suppressWarnings(cor(sc, mid_a, method = "spearman", use = "complete.obs"))
   rlat <- suppressWarnings(cor(sc, da$lat, method = "spearman", use = "complete.obs"))
   rlon <- suppressWarnings(cor(sc, da$lon, method = "spearman", use = "complete.obs"))
   e_prov <- eta2(sc, da$province)
-  e_carv <- eta2(sc, ifelse(da$carver %in% names(which(table(da$carver) >= 8)), da$carver, NA))
+  et <- eta2_perm(sc, sty_a)
+  ec <- eta2_perm(sc, carv_a)
   cs <- fa$colcoord[, k] * sqrt(fa$colmass)
   neg <- names(sort(cs))[1:6]; pos <- names(sort(cs, decreasing = TRUE))[1:6]
-  explained <- c(if (abs(rt) >= 0.3) "tid", if (max(abs(rlat), abs(rlon)) >= 0.3 || e_prov >= 0.1) "geografi",
-                 if (!is.na(e_carv) && e_carv >= 0.3) "ristare")
+  # Explained when the association is clearly above its permutation null (at least twice the 95 % quantile) and large
+  time_ok <- abs(rt) >= 0.3 || (!is.na(et$p) && et$p < 0.05 && et$eta2 >= max(0.1, 2 * et$null95))
+  carver_ok <- !is.na(ec$p) && ec$p < 0.05 && ec$eta2 >= max(0.2, 2 * ec$null95)
+  explained <- c(if (time_ok) "tid", if (max(abs(rlat), abs(rlon)) >= 0.3 || e_prov >= 0.1) "geografi",
+                 if (carver_ok) "ristare")
   # Provinces at either end
   pm <- sort(tapply(sc, da$province, function(v) if (length(v) >= 20) mean(v) else NA))
   list(dim = k, inertia_pct = r1(100 * fa$sv[k]^2 / sum(fa$sv^2)), rho_time = r3(rt), rho_lat = r3(rlat),
-       rho_lon = r3(rlon), eta2_province = r3(e_prov), eta2_carver = r3(e_carv), negative = I(neg), positive = I(pos),
+       rho_lon = r3(rlon), eta2_province = r3(e_prov),
+       eta2_time = r3(et$eta2), eta2_time_null95 = r3(et$null95), p_time = signif(et$p, 3),
+       n_time = sum(!is.na(sty_a)),
+       eta2_carver = r3(ec$eta2), eta2_carver_null95 = r3(ec$null95), p_carver = signif(ec$p, 3),
+       negative = I(neg), positive = I(pos),
        provinces_low = I(head(names(pm), 3)), provinces_high = I(tail(names(pm), 3)),
        explained_by = I(if (length(explained)) explained else character(0)), unexplained = !length(explained))
 })

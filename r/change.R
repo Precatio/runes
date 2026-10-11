@@ -129,7 +129,8 @@ adjusted <- function(m, dd, years, nsim = 300, newdata = function(nd, y) { nd$tt
   q <- function(pr) if (nsim > 0) apply(sims, 2, quantile, pr) else NA
   dch <- if (nsim > 0) sims[, length(years)] - sims[, 1] else NA
   list(curve = data.frame(year = years, share = est, lo = q(0.025), hi = q(0.975)),
-       change = c(est[length(years)] - est[1], if (nsim > 0) quantile(dch, c(0.025, 0.975)) else c(NA, NA)))
+       change = c(est[length(years)] - est[1], if (nsim > 0) quantile(dch, c(0.025, 0.975)) else c(NA, NA)),
+       sims = if (nsim > 0) sims else NULL)
 }
 
 # The shape of the adjusted curve: rises, falls, peak or trough in between (at least 5 percentage points), or flat
@@ -166,16 +167,28 @@ time_part <- function(dd) {
   years <- unique(c(seq(span[1], span[2], by = 5), span[2]))
   cur <- adjusted(m, dd, years)
   shape <- describe(cur$curve)
+  # A peak or trough year is uncertain: the interval covers where the top lies in the coefficient draws, widened below
+  # by the refits with years redrawn within the style groups
+  peak_lo <- NA; peak_hi <- NA
+  if (shape$shape %in% c("peak", "trough") && !is.null(cur$sims)) {
+    pk <- years[apply(cur$sims, 1, if (shape$shape == "peak") which.max else which.min)]
+    peak_lo <- unname(quantile(pk, 0.025, type = 1)); peak_hi <- unname(quantile(pk, 0.975, type = 1))
+  }
   # The style group gives an interval, not a year: refit with years drawn evenly within each interval
   draws <- vapply(seq_len(N_DRAWS), function(i) {
     dd$tt <- (runif(n, dd$style_from, dd$style_to) - 1050) / 50
     md <- fit(form, dd)
-    if (is.null(md)) return(c(NA, NA, NA))
+    if (is.null(md)) return(c(NA, NA, NA, NA))
     cd <- adjusted(md, dd, years, nsim = 0)$curve
-    c(smooth_p(md, "tt"), tail(cd$share, 1) - cd$share[1], as.numeric(describe(cd)$shape == shape$shape))
-  }, numeric(3))
+    dsc <- describe(cd)
+    c(smooth_p(md, "tt"), tail(cd$share, 1) - cd$share[1], as.numeric(dsc$shape == shape$shape),
+      if (dsc$shape == shape$shape && !is.na(dsc$peak_year)) dsc$peak_year else NA)
+  }, numeric(4))
   ok <- !is.na(draws[1, ])
+  rp <- draws[4, ok & !is.na(draws[4, ])]
+  if (!is.na(peak_lo) && length(rp)) { peak_lo <- min(peak_lo, rp); peak_hi <- max(peak_hi, rp) }
   c(base, list(tested = TRUE, p = signif(p, 3), shape = shape$shape, peak_year = shape$peak_year,
+               peak_lo = peak_lo, peak_hi = peak_hi,
                year_first = span[1], year_last = span[2],
                first = r3(cur$curve$share[1]), last = r3(tail(cur$curve$share, 1)),
                change = r3(cur$change[1]), change_lo = r3(cur$change[2]), change_hi = r3(cur$change[3]),
@@ -298,12 +311,12 @@ qa <- pa; qa[!is.na(pa)] <- p.adjust(pa[!is.na(pa)], "holm")
 for (i in seq_along(assoc)) assoc[[i]]$all$q <- if (is.na(qa[i])) NA else signif(qa[i], 3)
 
 # ---- figures ------------------------------------------------------------------------------------------------------
-SHAPE <- c(rises = tr("ökar", "rises"), falls = tr("minskar", "falls"), peak = tr("vanligast omkring %d", "most common around %d"),
-           trough = tr("ovanligast omkring %d", "least common around %d"), flat = tr("oförändrad", "unchanged"))
+SHAPE <- c(rises = tr("ökar", "rises"), falls = tr("minskar", "falls"), peak = tr("vanligast omkring %d (%d–%d)", "most common around %d (%d–%d)"),
+           trough = tr("ovanligast omkring %d (%d–%d)", "least common around %d (%d–%d)"), flat = tr("oförändrad", "unchanged"))
 pct <- function(x) paste0(round(100 * x), " %")
 fmt_time <- function(t) {
   if (!isTRUE(t$tested)) return(tr("för få daterade stenar", "too few dated stones"))
-  sh <- if (t$shape %in% c("peak", "trough")) sprintf(SHAPE[[t$shape]], t$peak_year) else SHAPE[[t$shape]]
+  sh <- if (t$shape %in% c("peak", "trough")) sprintf(SHAPE[[t$shape]], t$peak_year, t$peak_lo, t$peak_hi) else SHAPE[[t$shape]]
   q <- if (t$q < 0.001) tr("q < 0,001", "q < 0.001") else sprintf("q = %.3f", t$q)
   sprintf("%s: %s → %s (%s)", sh, pct(t$first), pct(t$last), q)
 }

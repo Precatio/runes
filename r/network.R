@@ -73,6 +73,15 @@ K <- sapply(KIN, function(rx) str_detect(low, rx))
 kin <- as.data.frame(K); kin$signum <- d$signum; kin$province <- d$province
 kin$period <- case_when(is.na(d$style_from) ~ NA_character_, d$style_to <= 1050 ~ "före ca 1050", TRUE ~ "efter ca 1050")
 kin$kristen <- d$cat_kristen == 1
+# Before/after 1050 within provinces (Cochran–Mantel–Haenszel), so that a shift in which provinces have late stones
+# cannot create the difference; provinces with at least 20 dated stones in each period
+kd <- kin %>% filter(!is.na(period)) %>% group_by(province) %>%
+  filter(sum(period == "före ca 1050") >= 20, sum(period == "efter ca 1050") >= 20) %>% ungroup()
+cmh <- function(k) tryCatch({
+  if (length(unique(kd$province)) < 2 || sum(kd[[k]]) < 5) return(NA)
+  mantelhaen.test(table(factor(kd$period), factor(kd[[k]], levels = c(FALSE, TRUE)), factor(kd$province)), exact = FALSE)$p.value
+}, error = function(e) NA)
+late_share <- kd %>% group_by(period) %>% summarise(top = names(which.max(table(province))), share_top = max(table(province)) / n())
 kin_rows <- lapply(names(KIN), function(k) {
   x <- kin[[k]]
   per <- kin %>% filter(!is.na(period)) %>% group_by(period) %>% summarise(share = mean(.data[[k]]))
@@ -81,13 +90,16 @@ kin_rows <- lapply(names(KIN), function(k) {
   list(relation = k, n = sum(x), share = r3(mean(x)),
        early = r3(per$share[per$period == "före ca 1050"]), late = r3(per$share[per$period == "efter ca 1050"]),
        p_period = signif(ft, 3), share_christian = r3(mean(x[kin$kristen])), share_other = r3(mean(x[!kin$kristen])),
-       p_christian = signif(kr, 3))
+       p_christian = signif(kr, 3), p_period_strat = signif(cmh(k), 3))
 })
 pk <- p.adjust(c(sapply(kin_rows, `[[`, "p_period"), sapply(kin_rows, `[[`, "p_christian")), "BH")
 for (i in seq_along(kin_rows)) {
   kin_rows[[i]]$q_period <- signif(pk[i], 3)
   kin_rows[[i]]$q_christian <- signif(pk[length(kin_rows) + i], 3)
 }
+ps <- vapply(kin_rows, function(r) if (is.na(r$p_period_strat)) NA_real_ else r$p_period_strat, numeric(1))
+qs <- ps; qs[!is.na(ps)] <- p.adjust(ps[!is.na(ps)], "BH")
+for (i in seq_along(kin_rows)) kin_rows[[i]]$q_period_strat <- if (is.na(qs[i])) NA else signif(qs[i], 3)
 kin_prov <- kin %>% group_by(province) %>% filter(n() >= 40) %>%
   summarise(n = n(), across(all_of(names(KIN)), mean)) %>% pivot_longer(-c(province, n), names_to = "relation", values_to = "share")
 
@@ -134,6 +146,9 @@ result <- list(
   n_inscriptions = N, n_words = vcount(g), n_edges = ecount(g), modularity = r3(mod),
   min_word = MIN_WORD, min_edge = MIN_EDGE, communities = communities, community_association = community_assoc,
   kinship = kin_rows,
+  kinship_strata = list(provinces = I(sort(unique(kd$province))), n = nrow(kd),
+                        composition = lapply(seq_len(nrow(late_share)), function(i) list(
+                          period = late_share$period[i], top = late_share$top[i], share_top = r3(late_share$share_top[i])))),
   figures = list(network = fig_net, kinship = fig_kin),
   method = paste(
     "Orden i Rundatas normalisering (utan egennamn) som förekommer i minst", MIN_WORD, "inskrifter bildar noder; två ord",

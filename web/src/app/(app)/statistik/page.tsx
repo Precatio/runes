@@ -388,6 +388,7 @@ const STATUS_STYLE: Record<string, string> = {
   "bekräftar": "bg-emerald-50 text-emerald-800 border-emerald-200",
   "mönster att pröva": "bg-amber-50 text-amber-900 border-amber-200",
   "begränsning": "bg-slate-100 text-slate-700 border-slate-300", "svagt": "bg-slate-100 text-slate-700 border-slate-300",
+  "svag effekt": "bg-slate-100 text-slate-700 border-slate-300", "indikation": "bg-slate-100 text-slate-700 border-slate-300",
 };
 
 const sectionOf = (data: Corpus, key: Tab) => (data.sections ?? []).find(x => x.key === key);
@@ -441,7 +442,7 @@ function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void }) 
   const groups: [string, string, string[]][] = [
     ["Stämmer med det forskningen redan utgår från", "Ett tecken på att metoderna fungerar.", ["bekräftar"]],
     ["Nya mönster att pröva", "Mönster som appen inte kan förklara med det den känner till – kanske ny kunskap, kanske redan beskrivet i litteratur som appen inte har.", ["mönster att pröva"]],
-    ["Begränsningar och svaga mönster", "Resultat som främst visar gränserna för data och metod.", ["begränsning", "svagt"]],
+    ["Begränsningar och svaga mönster", "Svaga effekter (säkerställda men små), cirkulära jämförelser och resultat som visar gränserna för data och metod.", ["begränsning", "svagt", "svag effekt", "indikation"]],
   ];
   return (
     <div className="space-y-8">
