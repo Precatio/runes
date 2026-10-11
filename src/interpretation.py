@@ -94,8 +94,13 @@ def _strength(f: dict) -> list[str]:
     elif method.startswith("stilgrupp"):
         out.append("Stilgruppen är en AI-bedömning av en bild och är inte kalibrerad.")
     ev = f.get("evidence") or 0
-    out.append(f"Metodens eget belägg är {'starkt' if ev >= 0.6 else ('måttligt' if ev >= 0.35 else 'svagt')} "
-               f"({_num(ev)} på en skala 0–1); slutsatsen nedan väger också in de andra beläggen.")
+    grade = "stark" if ev >= 0.6 else ("måttlig" if ev >= 0.35 else "svag")
+    if method == "samlade belägg":  # the decision document: the strength combines the model and the orthography
+        out.append(f"Den samlade styrkan från modellen och ortografin är {grade} ({_num(ev)} på en skala 0–1); slutsatsen "
+                   "nedan väger också in de andra beläggen.")
+    else:
+        out.append(f"Metodens eget belägg är {grade}t ({_num(ev)} på en skala 0–1); slutsatsen nedan väger också in de "
+                   "andra beläggen.")
     return out
 
 
@@ -111,6 +116,12 @@ def _typicality(rec: dict, carver: str, ctx: dict) -> float | None:
     hit = next((r for r in rk["ranking"] if r["carver"] == carver), None)
     sig = (hit or {}).get("significance") or {}
     return sig.get("own_percentile")
+
+
+def _model_agrees(rec: dict, sug: str, ctx: dict) -> bool:
+    """Modellen har den föreslagna ristaren som förstaval med minst 0,5 (då har förstavalet varit rätt i omkring 95 %)."""
+    probs = ctx["oof"].get(rec["signum"]) or ctx["pred"].get(rec["signum"]) or {}
+    return bool(probs) and max(probs, key=probs.get) == sug and probs[sug] >= 0.5
 
 
 def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
@@ -156,7 +167,12 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
         # also uses place and style, so they cannot support its suggestion either (they can still speak against it)
         by_spelling = method in ("ortografi", "samlade belägg") or method.startswith(("statistisk modell", "okänd ristare"))
         model_method = method.startswith("statistisk modell")
-        dependent = {"område", "stil", "språkdrag"} if model_method else ({"språkdrag"} if by_spelling else set())
+        # The combined evidence (the decision document, src/attribution_report.py) is already built from the model and
+        # the orthography: they are not counted again, and when the model contributes, place and style are inside it
+        combined = method == "samlade belägg"
+        probs_c = (ctx["oof"].get(rec["signum"]) or ctx["pred"].get(rec["signum"]) or {}) if combined else {}
+        dependent = ({"område", "stil", "språkdrag"} if model_method or (combined and probs_c)
+                     else ({"språkdrag"} if by_spelling else set()))
         chk = _checks(rec, sug, ctx["inscriptions"], ctx["names"], ctx["home"], selected=by_spelling)
         sc = carver_styles(rec, sug, ctx["inscriptions"])
         if sc.get("strong"):
@@ -186,20 +202,23 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
             p = probs.get(sug, 0.0)
             top = max(probs, key=probs.get)
             if top == sug and p >= 0.3:
-                support += 1
+                support += 0 if combined else 1
                 lines.append(f"Den statistiska modellen pekar också på {sug} ({_num(p)}).")
             elif p < 0.1:
-                against += 1
+                against += 0 if combined else 1
                 lines.append(f"Den statistiska modellen pekar i stället på {top} ({_num(probs[top])}; {sug} {_num(p)}).")
         ortho = (profile or {}).get("orthography")
         if method != "ortografi" and ortho:
             order = [r["carver"] for r in ortho["ranking"]]
             if order and order[0] == sug:
-                support += 1
+                support += 0 if combined else 1
                 lines.append(f"Ortografin pekar också på {sug}.")
             elif sug not in order[:3]:
-                against += 1
+                against += 0 if combined else 1
                 lines.append(f"Ortografin pekar i stället på {order[0]}.")
+        if combined:
+            lines.append("Modellen och ortografin är grunden för den samlade styrkan och räknas inte en gång till"
+                         + ("; område och stilgrupp ingår i modellen och räknas inte som oberoende stöd." if probs else "."))
         linked = rec.get("same_carver_as") or []
         if linked and not [c for c in rec["carvers"] if c["kind"] in ("S", "A")]:
             anonymous_carver = True
@@ -288,6 +307,14 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
                 f"{st.get('bin_n')} prövade fall, och inget av de andra beläggen talar emot. Plats, stil och språkdrag ingår "
                 "redan i modellen och räknas inte som oberoende stöd; ett oberoende belägg, t.ex. huggteknik, skulle stärka "
                 "förslaget. " + ("Attribueringen i Rundata kan behöva omprövas." if verdict == "motsäger" else "Värt att pröva runologiskt."))
+    elif (method == "samlade belägg" and against == 0 and p_ok and st.get("p_adjusted") is not None
+          and _model_agrees(rec, sug, ctx)):
+        level = "starkt"
+        text = (f"Ett välgrundat förslag: både den statistiska modellen och ortografin pekar på {sug}, stavningslikheten är "
+                "statistiskt säkerställd och inget av de andra beläggen talar emot. Metoderna delar stavningen och modellen "
+                "använder också plats och stil, så ett belägg som ligger utanför dem – huggteknik, runformer eller "
+                "ornamentik – skulle stärka förslaget. "
+                + ("Attribueringen i Rundata kan behöva omprövas." if verdict == "motsäger" else "Värt att pröva runologiskt."))
     # Two independent pieces of evidence: with the language traits dependent on the spelling and a common rock neutral,
     # area and style are often all that can support a suggestion; a spelling similarity must then also be significant
     elif ev >= 0.5 and support >= 2 and against == 0 and p_ok and not model_method:

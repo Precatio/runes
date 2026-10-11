@@ -88,7 +88,7 @@ def _nearest(rec: dict, carver: str, inscriptions: list[dict], k: int = 5) -> li
     return sorted(out, key=lambda x: x[1])[:k]
 
 
-def _verdict(reading: dict, signed_by_other: bool, reattribution: bool) -> tuple[str, str, str]:
+def _verdict(reading: dict, signed_by_other: bool, reattribution: bool, carver: str = "ristaren") -> tuple[str, str, str]:
     """(dokumenttyp, slutsats, rekommendation) efter tolkningens nivå."""
     level = reading["level"]
     if signed_by_other:
@@ -99,9 +99,12 @@ def _verdict(reading: dict, signed_by_other: bool, reattribution: bool) -> tuple
                 "svaghet i metoderna eller ett möjligt samarbete, inte att signaturen är fel.")
     if level == "starkt":
         return ("Förslag till omprövning av attribuering" if reattribution else "Attribueringsförslag",
-                "Underlaget är starkt: flera oberoende belägg pekar på ristaren och inget talar emot.",
-                ("Vi föreslår att attribueringen omprövas" if reattribution else "Vi föreslår att stenen attribueras till "
-                 "ristaren") + ", efter en runologisk granskning av ornamentik och runformer (avsnitt 7).")
+                f"Underlaget är starkt: både den statistiska modellen och ortografin pekar på {carver}, stavningslikheten är "
+                "statistiskt säkerställd och inget av de andra beläggen talar emot. Något belägg utanför modellen och "
+                "ortografin (huggteknik, runformer, ornamentik) finns ännu inte.",
+                (f"Vi föreslår att attribueringen omprövas till {carver}" if reattribution else
+                 f"Vi föreslår att stenen attribueras till {carver}")
+                + ", efter en runologisk granskning av ornamentik och runformer (avsnitt 7).")
     if level == "måttligt":
         return ("Underlag för granskning av attribuering",
                 "Underlaget är måttligt: det finns belägg för ristaren, men inte tillräckligt många oberoende belägg för "
@@ -170,7 +173,7 @@ def build(rec: dict, carver: str, ctx: dict, crosscheck: dict | None, dims: dict
                "crosscheck": crosscheck or {},
                "stats": {"p_adjusted": sig.get("p_adjusted")} if pos.get(carver) == 1 else {}}
     reading = interpret(finding, rec, ctx, profile)
-    doc_type, conclusion, recommendation = _verdict(reading, signed_by_other, reattribution)
+    doc_type, conclusion, recommendation = _verdict(reading, signed_by_other, reattribution, carver)
 
     place = ", ".join(x for x in [rec.get("place"), rec.get("parish"), rec.get("district"), rec.get("municipality")] if x)
     kind_cur = ""
@@ -193,27 +196,32 @@ def build(rec: dict, carver: str, ctx: dict, crosscheck: dict | None, dims: dict
         key_rows.append(["Statistisk modell", f"{carver}: {_n(p_car)}" + (f"; {current}: {_n(p_cur)}" if current else "")
                          + f"; högst: {top_model} {_n(probs[top_model])}",
                          "talar för" if top_model == carver and (p_car or 0) >= 0.5 else
-                         ("svagt för" if top_model == carver else "talar emot")])
+                         ("svagt för" if top_model == carver else f"pekar på {top_model}")])
     if ranking:
         key_rows.append(["Ortografi", f"{carver}: plats {pos.get(carver, '–')} av {len(ranking)}"
                          + (f"; {current}: plats {pos.get(current, '–')}" if current else "")
                          + f"; närmast: {ranking[0]['carver']}",
                          "talar för" if pos.get(carver) == 1 and (sig.get("p_adjusted") or 1) < 0.05 else
-                         ("svagt för" if pos.get(carver) == 1 else "talar emot")])
+                         ("svagt för (likheten inte säkerställd)" if pos.get(carver) == 1 else f"pekar på {ranking[0]['carver']}")])
+    # Place and style are inputs to the model: when the model contributes they agree but are not independent support
+    inside_model = {"område", "stil"} if probs else set()
     for k, (v, _) in checks.items():
         key_rows.append([CHECK_LABELS[k], ("stämmer" if v is True else "talar emot" if v is False else "avgör inte")
                          + (f" (för {current}: " + ("stämmer" if checks_cur[k][0] is True else "talar emot" if checks_cur[k][0] is False
                                                    else "avgör inte") + ")" if checks_cur else ""),
-                         "talar för" if v is True else "talar emot" if v is False else "neutral"])
+                         ("stämmer, men ingår i modellen" if k in inside_model else "talar för") if v is True
+                         else "talar emot" if v is False else "neutral"])
     key_rows.append(["Huggteknik (3D)", "inte uppmätt", "–"])
     if signed_by_other:
         key_rows.insert(0, ["Signatur", f"stenen är signerad av {current}", "avgörande emot förslaget"])
+    who_cur = " och ".join(listed) if len(listed) > 1 else current
     summary = (f"{signum} ({place or 'okänd plats'}) " +
-               (f"är {kind_cur} av {current} i Samnordisk runtextdatabas (Rundata). " if current else
+               (f"är {kind_cur} av {who_cur} i Samnordisk runtextdatabas (Rundata). " if current else
                 "saknar ristare i Samnordisk runtextdatabas (Rundata). ") +
                f"Det här dokumentet prövar om stenen kan knytas till {carver} och redovisar varje belägg för och emot. "
-               f"Slutsats: {conclusion} Bedömning enligt appens regler: {reading['level']} "
-               f"({reading['support']} oberoende belägg för, {reading['against']} emot).")
+               f"Slutsats: {conclusion} Bedömning enligt appens regler: {reading['level']}"
+               + (" (metoderna avviker från en signerad sten)" if reading["level"] == "metodfel" else "")
+               + f"; {reading['support']} oberoende belägg för och {reading['against']} emot utöver modellen och ortografin.")
     # The model alone can be strong while the combined assessment, which asks for independent support, is not
     share_wrong_car = (sum(w >= p_car for w in wrong) / len(wrong)) if (wrong and p_car is not None) else None
     if (top_model == carver and (p_car or 0) >= 0.5 and share_wrong_car is not None and share_wrong_car < 0.05
@@ -224,8 +232,9 @@ def build(rec: dict, carver: str, ctx: dict, crosscheck: dict | None, dims: dict
                     "och det saknas här, så den samlade bedömningen blir lägre.")
     blocks += [h(1, "Sammanfattning och rekommendation"), p(summary), p(f"Rekommendation: {recommendation}"),
                table(["Belägg", "Resultat", "För förslaget"], key_rows,
-                     f"Beläggen i korthet; varje rad förklaras i avsnitt 4. Ett belägg som avgörs av en metod som själv bygger "
-                     f"på stavningen (modellen, ortografin) räknas inte två gånger.")]
+                     "Beläggen i korthet; varje rad förklaras i avsnitt 4. Beläggen är inte oberoende av varandra: modellen "
+                     "använder själv läge, stilgrupp och språkdrag, och ortografin och språkdragen bygger båda på stavningen. "
+                     "Bara bergart, nyare källor och huggteknik ligger helt utanför modellen och ortografin.")]
 
     # ---- 1. the stone
     dm = dims or {}
@@ -300,12 +309,17 @@ def build(rec: dict, carver: str, ctx: dict, crosscheck: dict | None, dims: dict
             hit, n_hit = _hit_rate(pairs, p_car)
             share_wrong = sum(w >= p_car for w in wrong) / len(wrong) if wrong else None
             overall = next((x for x in att.get("ablation") or [] if x.get("features") == "Alla"), {})
-            blocks.append(p(f"Hur ska sannolikheten {_n(p_car)} för {carver} läsas? I korsvalideringen på {len(wrong)} stenar med "
+            grouped = ((att.get("grouped_cv") or {}).get("Socken") or {})
+            g_all = next((x for x in grouped.get("ablation") or [] if x.get("features") == "Alla"), {})
+            blocks.append(p(("Stenen saknar ristare, så sannolikheten är inte korsvaliderad för just den; hur ofta en sådan "
+                             "sannolikhet stämmer skattas från korsvalideringen på stenar med känd ristare. " if not cross_validated else "")
+                            + f"Hur ska sannolikheten {_n(p_car)} för {carver} läsas? I korsvalideringen på {len(wrong)} stenar med "
                             f"känd ristare var en ristare som fick en sannolikhet mellan {_n(max(0, p_car - 0.05))} och "
                             f"{_n(p_car + 0.05)} den rätta i {hit} av {n_hit} fall ({_pct(hit / n_hit if n_hit else None)}). "
                             f"En felaktig ristare fick minst {_n(p_car)} på {_pct(share_wrong)} av stenarna. "
-                            + (f"Modellens förstaval är rätt på {_pct(overall.get('accuracy'))} av stenarna med känd ristare, mot "
-                               f"{_pct(att.get('majority_baseline'))} om man alltid gissar på den mest produktiva ristaren. "
+                            + (f"Modellens förstaval är rätt på {_pct(overall.get('accuracy'))} av stenarna med känd ristare"
+                               + (f" ({_pct(g_all.get('accuracy'))} när hela socknar hölls utanför)" if g_all.get("accuracy") is not None else "")
+                               + f", mot {_pct(att.get('majority_baseline'))} om man alltid gissar på den mest produktiva ristaren. "
                                if overall else "")
                             + ("Sannolikheten är alltså så hög att en felaktig ristare sällan når den."
                                if share_wrong is not None and share_wrong < 0.05 else
@@ -415,8 +429,10 @@ def build(rec: dict, carver: str, ctx: dict, crosscheck: dict | None, dims: dict
     # The other evidence is set out method by method in section 4; here only the weighing
     blocks += [h(1, "6. Samlad bedömning")] + [p(f"{x['title']}. {x['text']}") for x in reading["paragraphs"][1:-1]
                                               if not x["title"].startswith("Andra belägg")]
-    blocks.append(p(f"Vägt samman: {reading['support']} oberoende belägg talar för {carver} och {reading['against']} emot "
-                    "(område, stilgrupp, språkdrag, bergart och nyare källor; modell och ortografi räknas som ett belägg var)."))
+    blocks.append(p(f"Vägt samman: utöver modellen och ortografin, som är grunden för den samlade styrkan, talar "
+                    f"{reading['support']} oberoende belägg för {carver} och {reading['against']} emot. Område och stilgrupp "
+                    "räknas inte som oberoende stöd när modellen bidrar, eftersom den själv använder dem, och språkdragen "
+                    "inte, eftersom de bygger på samma stavning som ortografin; de kan däremot tala emot."))
     blocks.append(p(f"Slutsats. {conclusion} {recommendation}"))
 
     # ---- 7. what would decide it

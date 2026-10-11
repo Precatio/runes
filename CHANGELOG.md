@@ -13,6 +13,12 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 - Ärlig rekommendation: *starkt* ger förslag, *måttligt* granskning, *svagt* ingen ändring; en signerad sten får
   aldrig ett förslag om en annan ristare (tidigare kunde t.ex. U 287, signerad av Öpir, få ett förslag om Fot 2 med
   sannolikheten 0,19).
+- Rättat: bedömningen i beslutsunderlaget räknade modellen och ortografin två gånger (i styrkan och som andra belägg)
+  och område och stilgrupp som oberoende fast de ingår i modellen; *starkt* kräver nu att modellen och ortografin
+  (statistiskt säkerställd) båda pekar på ristaren och att inget talar emot (51 → 4 av 1 003 alternativ).
+- Tydligare text: hur beläggen hänger ihop, stenar med flera ristare, träffsäkerheten också när hela socknar hålls
+  utanför, att sannolikheten för stenar utan ristare inte är korsvaliderad, och bergartens jämförelse ("inte tydligt
+  vanligare" i stället för "lika vanlig").
 
 ### Granskning av R-fynden (Rune, 2026-10-11)
 - Toppår anges med 95 % intervall (koefficientdragningar och omräkningar med nya årtal), aldrig som ett exakt år.

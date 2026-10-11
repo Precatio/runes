@@ -861,6 +861,13 @@ runolog som inte känner appen och ligga till grund för ett beslut (sedan 2026-
   säkra och signerade stenarna av båda ristarna), **källkritik** (cirkularitet mot Axelson, sluten mängd ristare, det
   metoderna inte mäter), **ordlista**, metod och versioner, och en bilaga med ristarnas jämförda stenar.
 
+**Bedömningen räknar inget två gånger** (rättat 2026-10-11). Den samlade styrkan bygger på modellen och
+ortografin; de räknas därför inte en gång till som "andra belägg". När modellen bidrar räknas område och stilgrupp inte
+som oberoende stöd (modellen använder dem), och språkdragen aldrig (de bygger på samma stavning som ortografin); alla
+tre kan tala emot. *Starkt* kräver att både modellen (förstaval med minst 0,5) och ortografin (förstaval med justerat
+p under 0,05) pekar på ristaren och att inget talar emot. Före rättelsen kunde modellen och ortografin ensamma ge
+*starkt*; av 1 003 alternativ i Stenöversikt blev 51 starka, nu 4.
+
 Ristarnamn som enligt forskningen är grupper får en not (t.ex. "Traen"). Dokumentet exporteras som Word och Markdown;
 mottagare och e-post fylls i av avsändaren. Ingen AI-text.
 

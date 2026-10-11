@@ -268,8 +268,9 @@ def material_check(rec: dict, carver: str, inscriptions: list[dict]) -> dict | N
         label = geology.FAMILY_LABEL.get(fam, fam)
         if n_base >= 20 and share_p and share_c / share_p < 1.5:
             fits = None
-            text += (f" {label.capitalize()} är lika vanlig på runstenarna i landskapet i stort ({round(share_p * 100)} %) "
-                     f"som hos ristaren ({round(share_c * 100)} %), så bergarten skiljer inte ristare åt.")
+            text += (f" {label.capitalize()} är inte tydligt vanligare hos ristaren ({round(share_c * 100)} %) än på "
+                     f"runstenarna i landskapet i stort ({round(share_p * 100)} %; kvot under 1,5), så bergarten skiljer "
+                     "inte ristare åt.")
         else:
             text += (f" {label.capitalize()} är vanligare hos ristaren ({round(share_c * 100)} %) än på runstenarna i "
                      f"landskapet i stort ({round(share_p * 100)} %).")
