@@ -27,6 +27,12 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 - Attribueringsmodellen i R korsvalideras också grupperat per socken och härad (rätt ristare 72 % slumpvis,
   68 % på ny socken, 57 % i nytt härad), visat på sidan Statistik (R) och i fynden.
 
+### Jämför stenar
+- Huggspåren jämförs runa mot runa (permutation av hela runor) i stället för snitt mot snitt; det samlade testet
+  använder de stabila måtten. Referensskala ur mätkorpusen (par med samma och olika ristare), kontroll av
+  jämförbarheten och, med signum, ristare, stil, avstånd, stavning och språkdrag (METHODS.md 3).
+- 2D-bildsökets miniatyrer fungerar med arkivens TIFF-bilder.
+
 ### Stenöversikt
 - Ny sida Stenöversikt: varje runsten som en punkt efter hur väl sex metoder stöder Rundatas ristare och hur
   starkt det bästa alternativet är (kan vara felbedömd, omstridd, stöds, svagt underlag; nytt eller möjligt

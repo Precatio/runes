@@ -180,7 +180,7 @@ export default function StoneAnalysisPage() {
       const acc = main.slices.filter(s => s.accepted);
       const slices: SliceMetrics[] = acc.map(s => ({
         ...(Object.fromEntries(METRICS.map(m => [m, s[m] as number])) as Record<Metric, number>),
-        position_mm: s.position_mm, fit_r2: s.fit_r2, profile: s.profile, point: s.point, direction: s.direction, up: s.up,
+        position_mm: s.position_mm, fit_r2: s.fit_r2, rune_id: s.rune_id, profile: s.profile, point: s.point, direction: s.direction, up: s.up,
       }));
       const analysis: GrooveAnalysisRecord = {
         id: `auto-${Date.now()}`, feature_type: featureType, summary: main.summary!, slices,

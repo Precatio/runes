@@ -89,6 +89,7 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
         ...(Object.fromEntries(METRICS.map(m => [m, s[m] as number])) as Record<Metric, number>),
         position_mm: s.position_mm,
         fit_r2: s.fit_r2,
+        rune_id: s.rune_id,
         profile: s.profile,
         point: s.point,
         direction: s.direction,

@@ -43,6 +43,7 @@ export interface Summary {
 export type SliceMetrics = Record<Metric, number> & {
   position_mm: number;
   fit_r2?: number;
+  rune_id?: number; // which recognised rune the slice lies in (automatic analysis), so runes can be the unit
   // Raw cross-section and where it lies on the model (for recomputation and report figures)
   profile?: { x: number[]; z: number[] };
   point?: [number, number, number];

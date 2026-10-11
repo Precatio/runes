@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
 from api.rundata import store
-from src.stats import METRICS, attribute, compare_stones, summarize_slices, ward_clustering
+from src.stats import METRICS, attribute, summarize_slices, ward_clustering
 
 router = APIRouter()
 
@@ -17,11 +17,14 @@ class Stone(BaseModel):
     feature_type: Optional[str] = None
     slices: list[dict] = Field(default_factory=list)
     means: Optional[dict] = None
+    provenance: Optional[dict] = None  # method version, protocol, parameters of the measurement
 
 
 class CompareRequest(BaseModel):
     a: Stone
     b: Stone
+    # The shared measurement corpus [{signum, feature_type, means, method_version}], for the reference scale
+    corpus: list[dict] = Field(default_factory=list)
 
 
 class ClusterRequest(BaseModel):
@@ -105,14 +108,27 @@ def recompute(req: RecomputeRequest):
 
 @router.post("/compare")
 def compare(req: CompareRequest):
+    """Två stenar jämförda: huggspåren med runan som enhet, en referensskala ur mätkorpusen, kontroll av
+    jämförbarheten och – om båda har signum – ristare, stil, avstånd, stavning och språkdrag (METHODS.md 3)."""
+    from api.config import METHOD_VERSION
+    from api.routers.orthography import model as orthography_model
+    from src import stone_compare as sc, stone_dimensions
     if len(req.a.slices) < 2 or len(req.b.slices) < 2:
         raise HTTPException(status_code=400, detail="Varje sten behöver minst två snitt för att kunna jämföras.")
-    result = compare_stones(req.a.slices, req.b.slices)
-    warnings = []
-    if req.a.feature_type and req.b.feature_type and req.a.feature_type != req.b.feature_type:
-        warnings.append("Stenarna jämförs med olika typer av spår (runa/ornamentik). "
-                        "Runor och ornamentik huggs ofta olika och bör jämföras var för sig.")
-    return {**result, "a": req.a.label, "b": req.b.label, "warnings": warnings}
+    ga = sc.groove_comparison(req.a.slices, req.b.slices)
+    rec_a = store().get(req.a.signum) if req.a.signum else None
+    rec_b = store().get(req.b.signum) if req.b.signum else None
+    checks = sc.comparability(req.a.model_dump(), req.b.model_dump(), ga, rec_a, rec_b)
+    ft = req.a.feature_type if req.a.feature_type == req.b.feature_type else None
+    ref = sc.reference_scale(ga["means"][0], ga["means"][1], req.corpus, carver_label, ft, METHOD_VERSION)
+    ctx = None
+    if rec_a and rec_b and rec_a["signum"] != rec_b["signum"]:
+        m = orthography_model()
+        ctx = sc.context(rec_a, rec_b, m, m.names, stone_dimensions.lookup)
+    concl = sc.conclusion(ga, ref, checks, ctx)
+    return {**ga, "a": req.a.label, "b": req.b.label, "comparability": checks, "reference": ref, "context": ctx,
+            "conclusion": concl, "interpretation": concl[0],
+            "warnings": [c["text"] for c in checks if c["ok"] is False]}
 
 
 @router.post("/cluster")

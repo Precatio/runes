@@ -237,11 +237,30 @@ behövs fler – helst alla mätbara runor.
 
 ## 3. Jämförelse av två stenar
 
-* **Per mått:** tvåsidigt permutationstest av skillnaden i medelvärde (5 000 permutationer, fast slumpfrö),
-  Bonferroni-justerat för antalet mått, samt Cohens d.
-* **Alla mått samtidigt:** permutationstest av avståndet mellan stenarnas standardiserade medelvektorer.
-* Tolkning: p < 0,05 talar emot samma verktyg/hand; p ≥ 0,05 är *förenligt med* samma hand men bevisar den inte.
-  Runor och ornamentik bör jämföras var för sig, eftersom de ofta huggs olika.
+Källkod: `src/stone_compare.py`, `POST /api/stats/compare`; sidan **Jämför stenar**.
+
+* **Runan som enhet.** Snitt i samma runa delar slag, verktyg och vittring och är inte oberoende; behandlas de som
+  oberoende blir nästan varje skillnad mellan två stenar "signifikant". När minst 80 % av snitten bär runnummer
+  (automatisk analys) jämförs därför runornas medelvärden, och permutationstestet flyttar hela runor mellan
+  stenarna (5 000 permutationer). Utan runnummer jämförs snitten, med en varning om att p-värdena blir för små.
+* **Per mått:** tvåsidigt permutationstest av skillnaden i medelvärde, Bonferroni-justerat, och Cohens d på
+  enheterna. **Samlat:** permutationstest av avståndet mellan stenarnas standardiserade medelvektorer för de
+  stabila måtten (V-vinkel, djup, bredd, djup/bredd); asymmetri och bottenradie redovisas men ingår inte
+  (avsnitt 1e och 18).
+* **Referensskala:** avståndet mellan stenarnas medelvärden (stabila mått, standardiserade med spridningen mellan
+  korpusens stenar) jämförs med avstånden mellan alla stenpar i den delade mätkorpusen med samma spårtyp och
+  mätmetod, och särskilt med par som har samma respektive olika ristare i Rundata (minst fem stenar).
+* **Jämförbarhet:** samma spårtyp, samma mätmetod, båda enligt Vitki-protokollet, minst 20 runor per sten (avsnitt
+  2), likartad punkttäthet (högst 1,5 gånger skillnad) och samma bergartsfamilj enligt Rundata. Det som inte
+  uppfylls redovisas.
+* **Mer än huggspår:** har båda stenarna signum jämförs Rundatas ristare, stilgrupp, datering, bergart och höjd,
+  avståndet mellan platserna, stavningen (likheten mellan inskrifterna och hur stor andel av sten A:s jämförelser
+  med andra inskrifter som är mindre lika) och språkdragen (hur många jämförbara drag som stämmer).
+* **Tolkning:** p < 0,05 talar emot samma verktyg och hand, p ≥ 0,05 är *förenligt med* samma hand men bevisar den
+  inte. Skillnader kan också bero på bergart, vittring och skanning, så slutsatsen läses tillsammans med
+  jämförbarheten och de övriga beläggen. Testet med runan som enhet prövas på syntetiska stenar
+  (`tests/test_compare.py`): när runorna kommer ur samma fördelning hittar det ingen skillnad, medan samma snitt
+  behandlade som oberoende ger ett lägre p-värde.
 
 ## 4. Attribuering mot mätkorpusen
 
