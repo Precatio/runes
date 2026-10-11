@@ -458,10 +458,32 @@ def corpus_patterns(res: dict) -> list[dict]:
 
 SHAPE_TEXT = {"rises": "blir vanligare över tid", "falls": "blir ovanligare över tid",
               "peak": "är vanligast omkring {y}", "trough": "är ovanligast omkring {y}", "flat": "förändras knappt"}
-CHANGE_NOTE = ("Tiden bygger på Gräslunds stilgrupper (intervall, inte år) och gäller daterade stenar, främst i Uppland "
-               "och Södermanland. Stavning kan spegla skrivtradition och ristarens skola lika mycket som uttal. "
-               "Ristarna kommer ur Rundatas attribueringar, som delvis bygger på stavning; att hålla ristaren konstant tar då "
-               "bort variation och gör resultatet försiktigare, inte starkare.")
+TIME_NOTE = ("Tiden bygger på Gräslunds stilgrupper (intervall, inte år) och gäller daterade stenar, främst i Uppland "
+             "och Södermanland, där kronologin är utarbetad.")
+# The caveat that fits the kind of feature: spelling, script, formula or ornament
+TYPE_NOTE = {
+    "språk": "Stavning kan spegla skrivtradition och ristarens skola lika mycket som uttal.",
+    "skrift": "Runformerna kan spegla en skrivtradition eller en ristarskola lika mycket som en allmän förändring.",
+    "kristnande": "Formelvalet kan spegla beställarens önskan, ristarens repertoar eller en lokal kyrklig miljö; enligt "
+                  "korrespondensanalysen hänger formelvalet mer ihop med ristaren än med tiden.",
+    "innehåll": "Formelvalet kan spegla beställarens önskan eller ristarens repertoar.",
+    "språkbruk": "Ordvalet kan spegla ristarens eller traktens formulärbruk lika mycket som en språklig förändring.",
+}
+CARVER_NOTE = ("Ristarna kommer ur Rundatas attribueringar, som delvis bygger på stavning, formulärbruk och ornamentik. "
+               "Att hålla ristaren konstant gör jämförelsen oftast försiktigare, men kan också snedvrida den; stenar utan "
+               "ristare grupperas per socken som en grov ersättning.")
+CHANGE_NOTE = TIME_NOTE + " " + CARVER_NOTE  # kept for older texts
+KEY_GROUP = {"ai_alla": "språk", "au_och": "språk", "r_for_R": "språk", "o_runa": "språk", "h": "språk", "nasal": "språk",
+             "preposition": "språkbruk", "stungna": "skrift", "stungen_e": "skrift", "stungen_y": "skrift", "stungen_g": "skrift",
+             "bon": "kristnande", "sjal": "kristnande", "cross": "kristnande", "bro": "innehåll", "signatur": "innehåll"}
+OVERLAP = {"bon": "Själsbönen är en del av de kristna bönerna, så de två fynden mäter delvis samma sak.",
+           "sjal": "Själsbönen är en del av de kristna bönerna, så de två fynden mäter delvis samma sak."}
+
+
+def _notes(key: str) -> str:
+    """Förbehållen för ett drag: tiden, dragets typ och ristarna (inte stavningsförbehållet för formler)."""
+    parts = [TIME_NOTE, TYPE_NOTE.get(KEY_GROUP.get(key, ""), ""), OVERLAP.get(key, ""), CARVER_NOTE]
+    return " ".join(x for x in parts if x)
 # A significant change smaller than this (in share of stones) is reported as a weak effect
 WEAK_EFFECT = 0.10
 WEAK_NOTE = "Statistiskt säkerställt men litet (under 10 procentenheter) – en svag effekt, inte ett starkt mönster."
@@ -479,6 +501,10 @@ KNOWN_CHANGES = {
 # Features that are part of the ornament, whose style groups give the dates: their change is not independent of the dating
 CIRCULAR = {"cross": "Korset är en del av ornamentiken, och tiden kommer ur ornamentikens stilgrupper; förändringen är därför "
                      "inte oberoende av dateringen."}
+
+
+PROVINCE_FULL = {"U": "Uppland", "Sö": "Södermanland", "Ög": "Östergötland", "Vg": "Västergötland", "Sm": "Småland",
+                 "Öl": "Öland", "G": "Gotland", "Vs": "Västmanland", "Nä": "Närke"}
 
 
 def _peak(t: dict) -> str:
@@ -523,7 +549,7 @@ def change_patterns(ch: dict) -> list[dict]:
                  "indikation, inte ett stabilt mönster.") if unstable and not weak else "",
                 CIRCULAR.get(f["key"], ""),
                 (kn[1] + " Bidraget här är mätningen med plats och ristare konstanta.") if known else "",
-                CHANGE_NOTE] if x)
+                _notes(f["key"])] if x)
             out.append({"topic": "Förändring", "status": status,
                         "text": f"{f['label']} {SHAPE_TEXT[t['shape']].format(y=_peak(t))}, med plats och ristare "
                                 f"konstanta: {_pct(t['first'])} omkring {t['year_first']} och {_pct(t['last'])} omkring "
@@ -532,23 +558,59 @@ def change_patterns(ch: dict) -> list[dict]:
                         "significance": significance(t["q"], "q", "logistisk regression (mgcv), Holm")})
         pv = f.get("provinces") or {}
         rows = pv.get("rows") or []
-        if len(rows) >= 2 and pv.get("p_differ") is not None and pv["p_differ"] < 0.01:
+        q_prov = pv.get("q_differ", pv.get("p_differ"))
+        if len(rows) >= 2 and q_prov is not None and q_prov < 0.05:
             hi = max(rows, key=lambda r: r["share1050"]); lo = min(rows, key=lambda r: r["share1050"])
-            cross = [r for r in rows if r.get("cross_year")]
+            monotone = t.get("tested") and t.get("q") is not None and t["q"] < 0.05 and t.get("shape") in ("rises", "falls")
+            cross = [r for r in rows if r.get("cross_year")] if monotone else []
             ctext = (" Draget passerar hälften av stenarna " + ", ".join(
                 f"omkring {r['cross_year']} i {r['province']}" for r in sorted(cross, key=lambda r: r["cross_year"])) + "."
                      if len(cross) >= 2 else "")
+            observed = (f" Observerat i stenar från mittperioden: {_pct(hi['share_mid'])} av {hi['n_mid']} i {hi['province']} "
+                        f"och {_pct(lo['share_mid'])} av {lo['n_mid']} i {lo['province']}."
+                        if hi.get("share_mid") is not None and lo.get("share_mid") is not None else "")
+            nocarver = pv.get("p_differ_nocarver")
+            holds = nocarver is None or nocarver < 0.05
             known_geo = f["key"] in ("ai_alla", "ai_sten", "au_och")
-            out.append({"topic": "Förändring", "status": "bekräftar" if known_geo else "mönster att pröva",
-                        "text": f"{f['label']}: omkring år 1050 skiljer sig landskapen (p {_q(pv['p_differ'])}), från "
-                                f"{_pct(hi['share1050'])} i {hi['province']} till {_pct(lo['share1050'])} i {lo['province']} "
-                                f"för en typisk ristare.{ctext}",
-                        "note": ("Monoftongeringens geografi – vanligare skriven i Götaland än i Mälardalen – är känd; bidraget "
-                                 "är mätningen med ristare konstanta. " if known_geo else
-                                 "Spridningsförloppet mellan landskapen är ett av de mer självständiga resultaten. ")
-                                + "Landskap med minst 25 daterade stenar. Ett landskap där draget tidigt är vanligt kan vara "
-                                "där förändringen började, men också där en ristarskola hade sina vanor. " + CHANGE_NOTE,
-                        "significance": significance(pv["p_differ"], "p", "Wald-test")})
+            outside = [r["province"] for r in (hi, lo) if r["province"] not in ("U", "Sö")]
+            few = [f"{'ingen' if r['n_carvers'] == 0 else r['n_carvers']} i {PROVINCE_FULL.get(r['province'], r['province'])}"
+                   for r in (hi, lo) if r.get("n_carvers") is not None and r["n_carvers"] < 3]
+            notes = []
+            if known_geo:
+                notes.append("Monoftongeringens geografi – vanligare skriven i Götaland än i Mälardalen – är känd; bidraget är "
+                             "mätningen med ristare konstanta.")
+            elif len(cross) >= 2:
+                notes.append("Spridningsförloppet mellan landskapen är ett av de mer självständiga resultaten. Ett landskap där "
+                             "draget tidigt är vanligt kan vara där förändringen började, men också där en ristarskola hade "
+                             "sina vanor.")
+            else:
+                humped = (t.get("tested") and t.get("q") is not None and t["q"] < 0.05 and t.get("shape") in ("peak", "trough"))
+                notes.append("Jämförelsen är en ögonblicksbild i mittperioden, inte ett spridningsförlopp"
+                             + (". Draget har en topp mitt i perioden, så en hög andel kan betyda att det kom sent, kom tidigt "
+                                "men höll i sig längre, eller att traditionen var starkare." if humped else "."))
+            if outside:
+                names_out = [PROVINCE_FULL.get(x, x) for x in outside]
+                notes.append(f"Jämförelsen gäller {' och '.join(names_out)}, där Gräslunds kronologi är minst prövad (den är "
+                             "utarbetad för Uppland); dateringen är där osäkrare.")
+            if few:
+                notes.append(f"Jämförelsen vilar på få attribuerade ristare ({', '.join(few)}), så den är osäkrare än "
+                             "q-värdet antyder.")
+            thin = [f"{r['n_mid']} i {PROVINCE_FULL.get(r['province'], r['province'])}" for r in (hi, lo)
+                    if r.get("n_mid") is not None and r["n_mid"] < 10]
+            if thin:
+                notes.append(f"Mycket få stenar från mittperioden ({', '.join(thin)}); andelarna är därför osäkra.")
+            if not holds:
+                notes.append(f"Utan ristaren i modellen är skillnaden inte säkerställd (p {_q(nocarver)}); resultatet beror på "
+                             "hur attribueringarna gjorts.")
+            notes.append(_notes(f["key"]))
+            out.append({"topic": "Förändring",
+                        "status": ("bekräftar" if known_geo and holds else "mönster att pröva" if holds and not outside
+                                   and not thin and not few else "indikation"),
+                        "text": f"{f['label']}: i stenar daterade till mittperioden (omkring 1050) skiljer sig landskapen "
+                                f"(q {_q(q_prov)}, justerat för alla drag), från {_pct(hi['share1050'])} i {hi['province']} till "
+                                f"{_pct(lo['share1050'])} i {lo['province']} enligt modellen för en typisk ristare.{observed}{ctext}",
+                        "note": " ".join(notes),
+                        "significance": significance(q_prov, "q", "Wald-test av landskapens nivåer, Holm över dragen")})
     for a in ch.get("assoc") or []:
         al = a.get("all") or {}
         if al.get("q") is not None and al["q"] < 0.05:

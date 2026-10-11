@@ -226,10 +226,17 @@ province_part <- function(dd, monotone) {
       cross <- lapply(seq_along(pn), function(i) quantile(1050 - 50 * sl[, i] / sl[, ncol(sl)], c(0.5, 0.025, 0.975)))
     }
   }
+  # Observed shares in stones whose style group covers the middle of the period (1050), and how many carvers (and
+  # parish groups of unattributed stones) the province comparison rests on
+  mid <- dd[!is.na(dd$style_from) & dd$style_from <= 1050 & dd$style_to >= 1050, ]
   rows <- lapply(seq_along(pn), function(i) {
     cy <- if (is.null(cross)) c(NA, NA, NA) else cross[[i]]
     inside <- !is.na(cy[1]) && cy[1] >= 950 && cy[1] <= 1150
+    pv_mid <- mid[mid$province == tab$province[i], ]
+    cf <- unique(as.character(dd$carver_f[dd$province == tab$province[i]]))
     data.frame(province = tab$province[i], n = tab$n[i], share = r3(tab$k[i] / tab$n[i]),
+               n_mid = nrow(pv_mid), share_mid = if (nrow(pv_mid)) r3(mean(pv_mid$y)) else NA,
+               n_carvers = sum(!startsWith(cf, "_")), n_groups = length(cf),
                share1050 = r3(plogis(sum(X[i, ] * b))), lo1050 = r3(quantile(sims[i, ], 0.025)),
                hi1050 = r3(quantile(sims[i, ], 0.975)),
                cross_year = if (inside) round(cy[1]) else NA, cross_lo = if (inside) round(cy[2]) else NA,
@@ -239,7 +246,16 @@ province_part <- function(dd, monotone) {
   k <- length(pn)
   C <- cbind(-1, diag(k - 1))
   cb <- C %*% b[pn]; chi <- as.numeric(t(cb) %*% solve(C %*% V[pn, pn] %*% t(C)) %*% cb)
-  list(rows = bind_rows(rows), p_differ = signif(pchisq(chi, k - 1, lower.tail = FALSE), 3), df = k - 1)
+  # The same comparison without the carver effect: a difference that only appears (or disappears) with the carver in
+  # the model depends on how the attributions were made
+  m0 <- fit(y ~ 0 + prov + s(t50, k = 4), dd)
+  p0 <- NA
+  if (!is.null(m0)) {
+    b0 <- coef(m0)[pn]; V0 <- vcov(m0)[pn, pn]
+    c0 <- C %*% b0; p0 <- pchisq(as.numeric(t(c0) %*% solve(C %*% V0 %*% t(C)) %*% c0), k - 1, lower.tail = FALSE)
+  }
+  list(rows = bind_rows(rows), p_differ = signif(pchisq(chi, k - 1, lower.tail = FALSE), 3), df = k - 1,
+       p_differ_nocarver = signif(p0, 3))
 }
 
 # ---- space --------------------------------------------------------------------------------------------------------
@@ -286,6 +302,10 @@ qs <- ps; qs[!is.na(ps)] <- p.adjust(ps[!is.na(ps)], "holm")
 for (k in names(results)) {
   results[[k]]$time$q <- if (is.na(qs[[k]])) NA else signif(qs[[k]], 3)
 }
+# Holm over the province comparisons too (one per feature)
+pp <- vapply(results, function(r) if (is.null(r$provinces)) NA_real_ else r$provinces$p_differ, numeric(1))
+qp <- pp; qp[!is.na(pp)] <- p.adjust(pp[!is.na(pp)], "holm")
+for (k in names(results)) if (!is.null(results[[k]]$provinces)) results[[k]]$provinces$q_differ <- signif(qp[[k]], 3)
 
 # ---- bridges and Christianity -------------------------------------------------------------------------------------
 yv <- function(key) { f <- Filter(function(x) x$key == key, FEATURES)[[1]]; outcome(f) }

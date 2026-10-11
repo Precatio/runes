@@ -25,7 +25,7 @@ interface ChangeFeature {
     draws?: { n: number; share_sig: number | null; share_same_shape: number | null };
     curve?: { year: number; share: number }[];
   };
-  provinces: { p_differ: number; rows: { province: string; n: number; share1050: number; lo1050: number; hi1050: number; cross_year: number | null; cross_lo: number | null; cross_hi: number | null }[] } | null;
+  provinces: { p_differ: number; q_differ?: number; p_differ_nocarver?: number; rows: { province: string; n: number; share1050: number; lo1050: number; hi1050: number; cross_year: number | null; cross_lo: number | null; cross_hi: number | null }[] } | null;
   space: { n: number; p: number; high: string[] | string; low: string[] | string } | null;
 }
 interface AnonGroup {
@@ -857,7 +857,7 @@ function Change({ data }: { data: Corpus }) {
           <ul className="text-sm space-y-1">
             {crossing.map(x => (
               <li key={x.key}><strong>{x.label}</strong>{" "}
-                (skillnad mellan landskapen <Tip text={GLOSSARY["p"]}>p</Tip> {qText(x.provinces!.p_differ)}):{" "}
+                (skillnad mellan landskapen i mittperioden <Tip text={GLOSSARY["q"] ?? GLOSSARY["p"]}>q</Tip> {qText(x.provinces!.q_differ ?? x.provinces!.p_differ)}, justerat för alla drag):{" "}
                 {x.provinces!.rows.filter(r => r.cross_year).sort((a, b) => a.cross_year! - b.cross_year!)
                   .map(r => `${r.province} omkring ${r.cross_year} (${r.cross_lo}–${r.cross_hi})`).join(", ")}
               </li>

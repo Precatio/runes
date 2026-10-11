@@ -21,6 +21,13 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   vanligare" i stället för "lika vanlig").
 
 ### Granskning av R-fynden (Rune, 2026-10-11)
+- Landskapsjämförelserna: q justerat med Holm över alla drag (tidigare p), observerade andelar i stenar från
+  mittperioden bredvid modellens skattning, antal attribuerade ristare per landskap och samma test utan ristareffekten.
+  Spridningsförlopp anges bara för drag som stadigt ökar eller minskar; annars är jämförelsen en ögonblicksbild.
+  Jämförelser utanför Uppland och Södermanland, med få ristare eller få stenar, är *indikationer*. Kristen bön skiljer
+  sig inte säkerställt mellan landskapen efter justeringen.
+- Förbehållen följer dragets typ (stavning, ordval, runformer, formler, ornamentik) i stället för samma text för alla;
+  förbehållet om ristarna nämner formulärbruk och ornamentik och att justeringen kan snedvrida åt båda hållen.
 - Toppår anges med 95 % intervall (koefficientdragningar och omräkningar med nya årtal), aldrig som ett exakt år.
 - Avstånd till vatten prövas mot en lokal nollmodell: slumpvisa punkter inom 5 km från runstenar (där folk bodde och
   rörde sig); jämförelsen mot hela landskapet finns kvar som kontroll. Resultatet håller (4,2 mot 5,3 km).
