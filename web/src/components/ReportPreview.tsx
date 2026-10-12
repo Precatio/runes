@@ -42,7 +42,8 @@ export default function ReportPreview({ report, base, busy, onDocx }: {
           {" "}LaTeX- och Markdown-filerna hänvisar till figurfilerna med samma namn.
         </span>
       </div>
-      <article
+      {/* The server writes the report in the chosen language (src/i18n.py); it is not translated again here */}
+      <article translate="no"
         className="liquid-glass-island rounded-[32px] p-6 md:p-10 bg-white prose prose-slate max-w-none prose-table:text-sm prose-img:rounded-xl prose-img:mx-auto [&_figure]:my-8 [&_figcaption]:text-xs [&_figcaption]:text-slate-600 [&_.ai-badge]:ml-1 [&_.ai-badge]:text-[10px] [&_.ai-badge]:font-bold [&_.ai-badge]:uppercase [&_.ai-badge]:text-amber-700 [&_.caption]:text-xs [&_.caption]:italic [&_table]:w-full [&_table]:block [&_table]:overflow-x-auto [&_td]:border-t [&_td]:border-slate-200 [&_td]:px-2 [&_td]:py-1 [&_th]:px-2 [&_th]:text-left [&_.inscription]:not-italic [&_.inscription]:border-[#b7410e]"
         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(report.html) }}
       />

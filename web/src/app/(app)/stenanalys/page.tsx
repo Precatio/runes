@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/components/AuthContext";
 import { useSettings } from "@/components/SettingsContext";
+import { useLanguage } from "@/components/LanguageContext";
 import ReportPreview, { downloadBlob, type ReportResult } from "@/components/ReportPreview";
 import { API_URL } from "@/lib/api";
 import { corpus, type ScanMetadata } from "@/lib/corpus";
@@ -89,6 +90,7 @@ async function runR(signum: string, candidates: string[], progress: (msg: string
 export default function StoneAnalysisPage() {
   const { user } = useAuth();
   const { aiHeaders, userName, userInstitution } = useSettings();
+  const { lang } = useLanguage();
   const [file, setFile] = useState<File | null>(null);
   const [signum, setSignum] = useState("");
   const [rec, setRec] = useState<Inscription | null>(null);
@@ -314,7 +316,7 @@ export default function StoneAnalysisPage() {
       // 9. Report
       mark("report", "pågår");
       const body = {
-        signum, author: userName, institution: userInstitution,
+        signum, author: userName, institution: userInstitution, lang,
         meta: { stone, weathering, text: signum }, scan, condition: { weathering: weathering.toLowerCase() },
         analyses: [analysis], counts: main.counts, mesh_id: info.mesh_id, view: { normal },
         corpus: (entries ?? []).map(e => ({ signum: e.signum, feature_type: e.feature_type, means: e.means })),

@@ -88,7 +88,7 @@ function InscriptionDetail({ signum, meta }: { signum: string; meta: RundataMeta
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <h2 className="text-3xl font-bold text-slate-900">{rec.signum}</h2>
-            <p className="text-slate-600 font-medium">{[rec.place, rec.parish, rec.district].filter(Boolean).join(", ")}</p>
+            <p className="text-slate-600 font-medium" translate="no">{[rec.place, rec.parish, rec.district].filter(Boolean).join(", ")}</p>
             {flags.length > 0 && (
               <div className="flex gap-2 mt-2">
                 {flags.map(f => <span key={String(f)} className="text-[10px] font-bold uppercase bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full">{f}</span>)}
@@ -144,11 +144,11 @@ function InscriptionDetail({ signum, meta }: { signum: string; meta: RundataMeta
         </div>
 
         <div className="space-y-4">
-          <Field label="Translitterering"><span className="font-mono">{rec.transliteration}</span></Field>
-          <Field label="Normalisering (runsvenska/rundanska/fornvästnordiska)"><em>{rec.normalization}</em></Field>
-          <Field label="Fornvästnordisk normalisering"><em>{rec.normalization_ows}</em></Field>
-          <Field label="Översättning (engelska)">{rec.translation_en}</Field>
-          <Field label="Övrigt">{rec.other}</Field>
+          <Field label="Translitterering"><span className="font-mono" translate="no">{rec.transliteration}</span></Field>
+          <Field label="Normalisering (runsvenska/rundanska/fornvästnordiska)"><em translate="no">{rec.normalization}</em></Field>
+          <Field label="Fornvästnordisk normalisering"><em translate="no">{rec.normalization_ows}</em></Field>
+          <Field label="Översättning (engelska)"><span translate="no">{rec.translation_en}</span></Field>
+          <Field label="Övrigt"><span translate="no">{rec.other}</span></Field>
           <Field label="Referenser">{rec.references}</Field>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2 border-t border-slate-900/5">
@@ -185,7 +185,7 @@ function InscriptionDetail({ signum, meta }: { signum: string; meta: RundataMeta
               {Object.keys(profile.spellings).length > 0 && (
                 <div>
                   <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Stavningar (normaliserat → runtext)</div>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-1.5" translate="no">
                     {Object.entries(profile.spellings).slice(0, 40).map(([n, w]) => (
                       <span key={n} className="text-xs bg-white/70 border border-slate-200 rounded-lg px-2 py-0.5">
                         <em>{n}</em> → <span className="font-mono">{w}</span>
@@ -229,7 +229,7 @@ function InscriptionDetail({ signum, meta }: { signum: string; meta: RundataMeta
                 <Link key={s.signum} href={`/inskrifter?signum=${encodeURIComponent(s.signum)}`}
                   className="bg-white/60 hover:bg-white rounded-xl px-3 py-2 text-sm block">
                   <div className="flex justify-between">
-                    <span className="font-semibold text-slate-800">{s.signum} <span className="text-slate-500 font-normal">{s.place}</span></span>
+                    <span className="font-semibold text-slate-800">{s.signum} <span className="text-slate-500 font-normal" translate="no">{s.place}</span></span>
                     <span className="text-xs font-mono text-slate-500">{s.similarity.toFixed(2)}</span>
                   </div>
                   <div className="text-xs text-slate-500">
@@ -392,12 +392,12 @@ function InscriptionsContent() {
                   <Link key={r.signum} href={`/inskrifter?signum=${encodeURIComponent(r.signum)}`}
                     className="block px-3 py-3 hover:bg-white/60 rounded-xl">
                     <div className="flex justify-between gap-4">
-                      <span className="font-bold text-slate-900">{r.signum} <span className="font-medium text-slate-500">{r.place}{r.parish && `, ${r.parish}`}</span></span>
+                      <span className="font-bold text-slate-900">{r.signum} <span className="font-medium text-slate-500" translate="no">{r.place}{r.parish && `, ${r.parish}`}</span></span>
                       <span className="text-xs text-slate-500 whitespace-nowrap">
                         {[r.dating, r.style, r.carvers.filter(c => c.kind === "S" || c.kind === "A").map(c => c.name).join(", ")].filter(Boolean).join(" · ")}
                       </span>
                     </div>
-                    <div className="text-xs text-slate-600 font-mono truncate mt-0.5">{r.transliteration}</div>
+                    <div className="text-xs text-slate-600 font-mono truncate mt-0.5" translate="no">{r.transliteration}</div>
                   </Link>
                 ))}
               </div>

@@ -7,6 +7,10 @@
   }
 }
 
+html.i18n-pending body {
+  visibility: hidden;
+}
+
 body {
   color: var(--foreground);
   background: #e2e7ec;

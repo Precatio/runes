@@ -556,7 +556,7 @@ function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void }) 
               {top.map(f => (
                 <tr key={`${f.signum}|${f.method}`} className="border-t border-slate-900/5">
                   <td className="p-2 font-semibold"><Link href={`/inskrifter/${encodeURIComponent(f.signum)}`} className="hover:underline">{f.signum}</Link>
-                    <div className="text-[11px] text-slate-500 font-normal">{f.place}</div></td>
+                    <div className="text-[11px] text-slate-500 font-normal" translate="no">{f.place}</div></td>
                   <td className="p-2 text-xs">{f.method}</td>
                   <td className="p-2 text-xs font-bold">{f.verdict}</td>
                   <td className="p-2 text-xs max-w-[280px]">{f.ours}</td>

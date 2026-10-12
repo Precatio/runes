@@ -21,6 +21,7 @@ class ChatRequest(BaseModel):
     messages: List[Message]
     api_key: str = None # Can be provided from frontend, or fallback to backend env
     context_data: dict = None # Add context for 3D/NLP analyses
+    lang: str = "sv"  # the interface language; Rune answers in it
 
 class ChatResponse(BaseModel):
     reply: str
@@ -55,6 +56,9 @@ def chat_with_ai(request: ChatRequest, ai: llm.AIContext = Depends(llm.ai_contex
     # Analysis context, images and long questions need the stronger model
     tier = "pro" if (request.context_data or has_image or total_length > 300) else "fast"
     dynamic_instruction = SYSTEM_INSTRUCTION
+    if request.lang == "en":
+        dynamic_instruction += ("\n8. **Language:** The user has chosen English. Answer in English, keep runic text, "
+                                "transliterations and normalisations as they are, and translate Swedish terms you use.")
 
     # Ground the answer in Rundata for every signum mentioned recently or in the analysis context
     recent_user_text = " ".join(m.content for m in request.messages[-4:] if m.role == "user")

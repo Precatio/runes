@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useAnalysis } from './AnalysisContext';
 import { useSettings } from './SettingsContext';
+import { useLanguage } from './LanguageContext';
 import { API_URL } from "@/lib/api";
 
 export default function AIChatWidget() {
@@ -17,6 +18,7 @@ export default function AIChatWidget() {
   const initialOffset = useRef({ x: 0, y: 0 });
 
   const { aiHeaders, addUsedTokens } = useSettings();
+  const { lang } = useLanguage();
   
   const { latest3DResults, latestLinguisticResults, latest2DResults } = useAnalysis();
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -65,6 +67,7 @@ export default function AIChatWidget() {
     try {
       const payload = {
         messages: [...messages, { role: 'user', content: userMessage }],
+        lang,
         context_data: {
           three_d_results: latest3DResults?.results || latest3DResults,
           linguistic_results: latestLinguisticResults,
@@ -268,7 +271,7 @@ export default function AIChatWidget() {
                 )}
                 {messages.map((msg, i) => (
                   <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                    <div 
+                    <div translate="no"
                       className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm whitespace-pre-wrap ${msg.role === 'user' ? 'bg-[#0f172a] text-white rounded-br-sm' : 'bg-white/70 text-slate-900 shadow-sm border border-white/50 rounded-bl-sm backdrop-blur-md'}`}
                       dangerouslySetInnerHTML={msg.role === 'model' ? formatMessage(msg.content) : undefined}
                     >

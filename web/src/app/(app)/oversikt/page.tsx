@@ -8,6 +8,7 @@ import { API_URL } from "@/lib/api";
 import { DocsNote } from "@/components/KnownLimitations";
 import ReportPreview, { downloadBlob, type ReportResult } from "@/components/ReportPreview";
 import { useSettings } from "@/components/SettingsContext";
+import { useLanguage } from "@/components/LanguageContext";
 import { Answer, InfoTip, PageIntro, Tip } from "@/components/Explain";
 import { GLOSSARY } from "@/lib/glossary";
 
@@ -274,7 +275,7 @@ function StoneTable({ rows, onPick }: { rows: StoneRow[]; onPick: (s: string) =>
           ))}</tr></thead>
         <tbody>{sorted.slice(0, 400).map(s => (
           <tr key={s.signum} onClick={() => onPick(s.signum)} className="border-t border-slate-900/5 cursor-pointer hover:bg-slate-50">
-            <td className="p-2 font-semibold">{s.signum} <span className="text-slate-500 font-normal">{s.place}</span></td>
+            <td className="p-2 font-semibold">{s.signum} <span className="text-slate-500 font-normal" translate="no">{s.place}</span></td>
             <td className="p-2"><span style={{ color: STATUS[s.status].color }}>{STATUS[s.status].icon}</span> {s.status}</td>
             <td className="p-2">{s.carver ?? "–"}{s.carver_kind === "?" ? " (osäker)" : s.carver_kind === "S" ? " (signerad)" : ""}</td>
             <td className="p-2">{d2(s.support)}</td>
@@ -409,13 +410,14 @@ function StoneProfile({ signum, onClose }: { signum: string; onClose: () => void
 // A document with all the arguments for a carver, to send to those who maintain the runic text database
 function AttributionProposal({ signum, candidates, reattribution }: { signum: string; candidates: string[]; reattribution: boolean }) {
   const { userName, userInstitution, userEmail } = useSettings();
+  const { lang } = useLanguage();
   const [carver, setCarver] = useState(candidates[0]);
   const [report, setReport] = useState<(ReportResult & { title: string }) | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const request = (format: "json" | "docx") => fetch(`${API_URL}/api/reports/attribution`, {
     method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ signum, carver, author: userName, institution: userInstitution, email: userEmail, format }),
+    body: JSON.stringify({ signum, carver, author: userName, institution: userInstitution, email: userEmail, format, lang }),
   });
   const create = async () => {
     setBusy(true); setError(null);

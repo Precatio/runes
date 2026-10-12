@@ -814,7 +814,7 @@ export default function PhoneticsPage() {
                 
                 <div className="liquid-glass-island rounded-[32px] p-6 shadow-sm border border-slate-900/10 bg-white">
                   <div className="text-slate-500 text-[11px] uppercase tracking-wider font-bold mb-2">{results.corrected ? "Vår translitterering (rättad manuellt)" : "Vår translitterering (AI, blind läsning)"}</div>
-                  <div className="text-lg font-serif font-bold text-slate-900">{results.transliteration}</div>
+                  <div className="text-lg font-serif font-bold text-slate-900" translate="no">{results.transliteration}</div>
                 </div>
                 
                 {results.validation && !results.validation.reliable && (
@@ -828,7 +828,7 @@ export default function PhoneticsPage() {
                 {(!results.validation || results.validation.reliable || showInterpretation) && (<>
                 <div className="liquid-glass-island rounded-[32px] p-6 shadow-sm border border-slate-900/10 bg-white">
                   <div className="text-slate-500 text-[11px] uppercase tracking-wider font-bold mb-2">{results.corrected ? "Normalisering, runsvenska (rättad manuellt)" : "Normalisering, runsvenska (AI)"}</div>
-                  <div className="text-lg font-serif italic text-[#b7410e]">{results.normalization}</div>
+                  <div className="text-lg font-serif italic text-[#b7410e]" translate="no">{results.normalization}</div>
                 </div>
 
                 {results.sound_laws_applied && results.sound_laws_applied.length > 0 && (
@@ -985,11 +985,11 @@ function RundataPanel({ results }: { results: LinguisticResultData }) {
         <h3 className="text-sm font-bold uppercase tracking-wider text-emerald-800 mb-3">Rundata – publicerad läsning (fakta ur databasen)</h3>
         {rd ? (
           <div className="space-y-1.5 text-[15px]">
-            <p><span className="text-xs text-slate-500 mr-2">{rd.signum}, {rd.place}</span></p>
-            <p className="font-bold font-serif">{rd.transliteration}</p>
-            {rd.normalization && <p className="italic font-serif">{rd.normalization.replace(/"/g, "")}</p>}
-            {rd.normalization_ows && <p className="italic font-serif text-slate-600">{rd.normalization_ows.replace(/"/g, "")}</p>}
-            {rd.translation_en && <p className="text-slate-700">”{rd.translation_en}”</p>}
+            <p><span className="text-xs text-slate-500 mr-2" translate="no">{rd.signum}, {rd.place}</span></p>
+            <p className="font-bold font-serif" translate="no">{rd.transliteration}</p>
+            {rd.normalization && <p className="italic font-serif" translate="no">{rd.normalization.replace(/"/g, "")}</p>}
+            {rd.normalization_ows && <p className="italic font-serif text-slate-600" translate="no">{rd.normalization_ows.replace(/"/g, "")}</p>}
+            {rd.translation_en && <p className="text-slate-700" translate="no">”{rd.translation_en}”</p>}
             <p className="text-xs text-slate-500 pt-1">
               Ristare: {rd.carvers.filter(x => x.kind === "S" || x.kind === "A").map(x => `${x.name} (${x.kind})`).join(", ") || "–"} ·
               stil {rd.style || "–"} · datering {rd.dating || "–"}

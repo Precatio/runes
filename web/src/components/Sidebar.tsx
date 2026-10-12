@@ -228,11 +228,14 @@ export default function Sidebar({ open = false, onClose }: { open?: boolean; onC
         
         <div className="flex items-center gap-2">
           {/* Language Toggle Glass Pill */}
-          <button 
+          <button
             onClick={() => setLanguage(language === 'sv' ? 'en' : 'sv')}
+            translate="no"
+            aria-label={language === 'sv' ? "Switch to English" : "Byt till svenska"}
+            title={language === 'sv' ? "Switch to English" : "Byt till svenska"}
             className="glass-btn-3d px-2.5 py-1 rounded-full text-[10px] font-bold text-slate-700 tracking-wider uppercase"
           >
-            {language}
+            {language === 'sv' ? 'EN' : 'SV'}
           </button>
           <button onClick={onClose} aria-label="Stäng menyn" className="lg:hidden p-1.5 rounded-full text-slate-500 hover:bg-white/80 hover:text-slate-900">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">

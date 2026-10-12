@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import type { Metadata } from "next";
+import LanguageToggle from "@/components/LanguageToggle";
 
 export const metadata: Metadata = {
   title: "Vitki – öppen forskningsplattform för runinskrifter",
@@ -17,114 +18,6 @@ const STATS = [
   { value: "2 321", label: "svenska vikingatida runstenar i nio statistiska analyser i R" },
   { value: "±0,6°", label: "vinkelfel på syntetiska stenar med kända spår" },
   { value: "60 %", label: "rätt ristare först i ortografiskt test (slump 4 %)" },
-];
-
-const FEATURE_GROUPS = [
-  {
-    title: "Mäta",
-    items: [
-      {
-        name: "Fullständig stenanalys",
-        href: "/stenanalys",
-        text: "En skanning och ett signum in, en artikel ut. Alla steg nedan körs i följd med samma metoder som de enskilda verktygen, och varje steg redovisas – också det som misslyckades.",
-      },
-      {
-        name: "3D-huggspårsanalys",
-        href: "/3d",
-        text: "V-vinkel, asymmetri, djup, bredd, bottenradie och ytråhet i STL-, OBJ- och PLY-skanningar – manuellt, med ett klick per snitt eller automatiskt. Den automatiska analysen mäter bara runor (mätmetod groove-5) och anger om stenen har tillräckligt många: 10 runor för att beskriva en sten, 20 för att jämföra. Full proveniens och export till CSV eller JSON.",
-      },
-      {
-        name: "Strykljus och RTI",
-        href: "/rti",
-        text: "Flytta ljuset fritt över 3D-modellen eller över en PTM-fil, med \"diffuse gain\"-förstärkning för att få fram svaga och vittrade ristningar.",
-      },
-      {
-        name: "Språk och läsning",
-        href: "/phonetics",
-        text: "Blind AI-läsning av runorna från foto, RTI-vy eller relief, prövad mot Rundata utan AI: vad som stämmer, vad som skiljer, vilka ordformer som är belagda och om läsningen bara återger en känd text.",
-      },
-      {
-        name: "2D-paleografi",
-        href: "/2d",
-        text: "AI-stöd för stilgrupp och runformer, märkt som okalibrerad bedömning. Runorna klipps ut automatiskt, jämförs med samma runa på andra stenar och kopplas till spårmåtten.",
-      },
-    ],
-  },
-  {
-    title: "Söka och jämföra",
-    items: [
-      {
-        name: "Inskrifter (Rundata)",
-        href: "/inskrifter",
-        text: "Hela Samnordisk runtextdatabas inbyggd: translitterering, normalisering, översättning, datering, stilgrupp, ristare och plats för varje inskrift.",
-      },
-      {
-        name: "Ortografisk stilometri",
-        href: "/inskrifter?signum=U%20729",
-        text: "Stavning, skiljetecken och bindrunor jämförs med alla vikingatida inskrifter. Ger mest lika inskrifter och ristare, med p-värde justerat för att den bästa av alla ristare valts och metodens träffsäkerhet.",
-      },
-      {
-        name: "Språkdrag och inskrifternas syfte",
-        href: "/luckor",
-        text: "Tjugo drag i ljud, stavning, språkbruk och skrift per ristare, jämförda med landskapets övriga stenar – och vad inskrifterna handlar om: minne, bro, bön, utlandsfärd, magiska formler.",
-      },
-      {
-        name: "Bergart och berggrund",
-        href: "/inskrifter?signum=%C3%96l%201",
-        text: "Stenens material jämförs med SGU:s berggrundskarta där den står och med bergarterna på ristarens stenar – en ledtråd om flyttblock och transport.",
-      },
-      {
-        name: "Jämför stenar",
-        href: "/jamfor",
-        text: "Huggspåren runa mot runa, permutationstest för varje mått och alla samtidigt, effektstorlek och om skillnaden är statistiskt signifikant – och ristare, stil, stavning och språkdrag när stenarna har signum.",
-      },
-      {
-        name: "Karta och stilgrupper",
-        href: "/karta",
-        text: "Geografisk spridning efter period, stilgrupp, ristare och innehåll. Gräslunds stilkronologi med fördelningen i Rundata.",
-      },
-    ],
-  },
-  {
-    title: "Statistik och tolkning",
-    items: [
-      {
-        name: "Statistik i R",
-        href: "/statistik",
-        text: "Nio analyser av alla svenska vikingatida runstenar: en attribueringsmodell prövad på socknar den aldrig sett, ristarnas områden, stavning och avstånd, seriation mot Gräslunds kronologi, förändring i tid och rum, ordnätverk och grupper av stenar som kan vara namnlösa ristare. Varje svar med fråga, tolkning och vad det inte säger.",
-      },
-      {
-        name: "Forskningsluckor",
-        href: "/luckor",
-        text: "Appens resultat mot Rundata – stämmer, nytt eller motsäger – med en tolkning för varje fynd (starkt, måttligt, svagt) som väger alla belägg och stäms av mot Runor 2020 och Wikidata. Och var uppgifter saknas och vilka stenar som behöver mätas.",
-      },
-      {
-        name: "Stenöversikt",
-        href: "/oversikt",
-        text: "Varje runsten med stödet för Rundatas ristare, det starkaste alternativet och en status, kontrollerad mot de signerade stenarna så att man ser hur ofta markeringarna slår fel.",
-      },
-      {
-        name: "Syntes och attribuering",
-        href: "/synthesis",
-        text: "Väger samman Rundata, ortografi, huggteknik och R-modellen efter metodernas träffsäkerhet och prövar varje kandidat mot geografi, stilgrupper, bergart, språkdrag och sten mot sten. Motsägelser redovisas.",
-      },
-    ],
-  },
-  {
-    title: "Samarbeta och publicera",
-    items: [
-      {
-        name: "Delad mätkorpus",
-        href: "/korpus",
-        text: "Forskare publicerar sina huggspårsmätningar under CC BY 4.0. Korpusen blir referens för attribuering, ristarprofiler och klustring, och varje mätning anger sin kvalitet.",
-      },
-      {
-        name: "Rapporter",
-        href: "/rapporter",
-        text: "Stenrapporten i elva publiceringsformer – tidskriftsartikel, uppsats, avhandlingskapitel, runologisk utgåva, poster, blogginlägg och fler – med figurer ur skanningen, läsning och attribuering. Export till Word, LaTeX och Markdown.",
-      },
-    ],
-  },
 ];
 
 const USE_CASES = [
@@ -311,13 +204,13 @@ export default function LandingPage() {
             <span className="text-xl font-bold tracking-tight">Vitki</span>
           </Link>
           <nav className="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-600">
-            <a href="#funktioner" className="hover:text-slate-900">Funktioner</a>
             <a href="#forskning" className="hover:text-slate-900">För forskningen</a>
             <a href="#nytt" className="hover:text-slate-900">Vad är nytt</a>
             <a href="#kallor" className="hover:text-slate-900">Källor</a>
             <a href="#oppen" className="hover:text-slate-900">Öppen källkod</a>
           </nav>
           <div className="flex items-center gap-3">
+            <LanguageToggle className="px-2.5 py-1 rounded-full border border-slate-300 text-[11px] font-bold tracking-wider text-slate-600 hover:border-slate-900 hover:text-slate-900" />
             <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="hidden sm:inline text-sm font-semibold text-slate-600 hover:text-slate-900">GitHub</a>
             <Link href="/start" className="px-4 py-2 rounded-full bg-slate-900 text-white text-sm font-bold hover:bg-black">Öppna appen</Link>
           </div>
@@ -364,35 +257,6 @@ export default function LandingPage() {
             Ortografisk träffsäkerhet: lämna-en-ute-test på 135 signerade vikingatida inskrifter i Rundata, 27 ristare.
             Vinkelfelet: syntetiska V-spår med öppningsvinkel 50–110° (METHODS.md, avsnitt 1).
           </p>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section id="funktioner" className="bg-white border-y border-slate-900/5 scroll-mt-16">
-        <div className="max-w-6xl mx-auto px-6 py-24">
-          <SectionTitle
-            eyebrow="Funktioner"
-            title="Från skanning till publicerbart resultat"
-            intro="Verktygen hänger ihop: en mätning i 3D kan jämföras med korpusen, vägas mot Rundata och ortografin och bli en rapport med källor och metod."
-          />
-          <div className="space-y-14">
-            {FEATURE_GROUPS.map(group => (
-              <div key={group.title}>
-                <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-5">{group.title}</h3>
-                <div className={`grid grid-cols-1 md:grid-cols-2 gap-5 ${group.items.length % 3 === 0 ? "lg:grid-cols-3" : ""}`}>
-                  {group.items.map(f => (
-                    <Link key={f.name} href={f.href} className="group rounded-2xl border border-slate-200 bg-[#fbfaf8] p-6 hover:border-[#b7410e]/50 hover:shadow-lg transition-all">
-                      <div className="flex items-center justify-between">
-                        <h4 className="text-lg font-bold text-slate-900">{f.name}</h4>
-                        <span className="text-[#b7410e] opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                      </div>
-                      <p className="mt-2 text-[15px] text-slate-600 leading-relaxed">{f.text}</p>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 

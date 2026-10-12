@@ -353,7 +353,7 @@ def to_html(blocks: list[dict]) -> str:
             if b["translation"]:
                 q = ("“", "”") if b.get("lang") == "en" else ("”", "”")
                 parts.append(f"<p>{q[0]}{e(b['translation'])}{q[1]}</p>")
-            out.append(f"<blockquote class=\"inscription\">{''.join(parts)}</blockquote>")
+            out.append(f"<blockquote class=\"inscription\" translate=\"no\">{''.join(parts)}</blockquote>")
     return "\n".join(out)
 
 

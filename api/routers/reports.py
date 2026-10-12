@@ -12,7 +12,7 @@ from api.routers.research import stone_context
 from api.errors import logger
 from api import mesh_cache
 from api.rundata import store
-from src import academic, limitations, report_templates, stone_report
+from src import academic, i18n, limitations, report_templates, stone_report
 from src.reading import validate as validate_reading
 from src.synthesis import site_geology
 from api.auth import optional_user, require_admin
@@ -40,6 +40,7 @@ class AcademicRequest(BaseModel):
     institution: str = ""
     use_ai: bool = True
     format: Literal["json", "docx"] = "json"
+    lang: Literal["sv", "en"] = "sv"  # the document's language (src/i18n.py)
     # AI text from an earlier JSON call, so a download matches the preview without a new AI call
     ai_text: Optional[dict[str, str]] = None
 
@@ -91,7 +92,7 @@ def academic_report(req: AcademicRequest, aictx: llm.AIContext = Depends(llm.ai_
         except Exception as e:
             logger.warning("AI-text för rapporten misslyckades: %r", e)
 
-    blocks = academic.build_document(facts, req.author, req.institution, ai)
+    blocks = i18n.translate_blocks(academic.build_document(facts, req.author, req.institution, ai), req.lang)
     if req.format == "docx":
         return Response(content=academic.to_docx(blocks),
                         media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -105,6 +106,7 @@ def academic_report(req: AcademicRequest, aictx: llm.AIContext = Depends(llm.ai_
 class StoneReportRequest(BaseModel):
     signum: str = ""
     title: Optional[str] = None
+    lang: Literal["sv", "en"] = "sv"  # the document's language (src/i18n.py)
     author: str = ""
     institution: str = ""
     meta: dict = Field(default_factory=dict)
@@ -151,6 +153,7 @@ class AttributionRequest(BaseModel):
     author: str = ""
     institution: str = ""
     email: str = Field("", max_length=200)  # the author's contact address, from the user's own settings
+    lang: Literal["sv", "en"] = "sv"  # the document's language (src/i18n.py)
     format: Literal["json", "docx"] = "json"
     check_sources: bool = True  # look the proposal up in Runor 2020 and Wikidata (network)
 
@@ -183,6 +186,7 @@ def attribution_report(req: AttributionRequest):
         logger.warning("R-modellens uppgifter kunde inte läsas: %r", e)
     blocks = ar.build(rec, req.carver, ctx, cc, stone_dimensions.lookup(rec["signum"]), req.author, req.institution,
                       {"app": APP_VERSION, "fingerprint": _fp()}, att, req.email)
+    blocks = i18n.translate_blocks(blocks, req.lang)
     if req.format == "docx":
         return Response(content=academic.to_docx(blocks),
                         media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -271,7 +275,7 @@ def stone_report_endpoint(req: StoneReportRequest,
             logger.warning("AI-text för stenrapporten misslyckades: %r", e)
 
     blocks = stone_report.build_document(facts, req.author, req.institution, ai, surface, req.title)
-    blocks = report_templates.apply(req.template, blocks, facts, ai, req.template_options)
+    blocks = i18n.translate_blocks(report_templates.apply(req.template, blocks, facts, ai, req.template_options), req.lang)
     if req.format == "docx":
         return Response(content=academic.to_docx(blocks),
                         media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",

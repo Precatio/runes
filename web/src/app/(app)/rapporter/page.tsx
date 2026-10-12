@@ -6,6 +6,7 @@ import { useAuth } from "@/components/AuthContext";
 import ReportPreview, { downloadBlob, type ReportResult } from "@/components/ReportPreview";
 import StoneReportPanel from "@/components/StoneReportPanel";
 import { useSettings } from "@/components/SettingsContext";
+import { useLanguage } from "@/components/LanguageContext";
 import { API_URL } from "@/lib/api";
 import { corpus, type CorpusEntry } from "@/lib/corpus";
 import { safeFilename } from "@/lib/export";
@@ -60,6 +61,7 @@ export default function ReportsPage() {
 function CorpusReportPanel() {
   const { user, loginWithGoogle, authHeaders } = useAuth();
   const { userName, userInstitution, aiHeaders } = useSettings();
+  const { lang } = useLanguage();
   const [entries, setEntries] = useState<CorpusEntry[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [carverOf, setCarverOf] = useState<Record<string, string | null>>({});
@@ -105,7 +107,7 @@ function CorpusReportPanel() {
     headers: { "Content-Type": "application/json", ...aiHeaders, ...(await authHeaders()) },
     body: JSON.stringify({
       scope: { type: scope, value: scopeValue || null, title: title || defaultTitle },
-      entries: selection, author: userName, institution: userInstitution, use_ai: useAI, format, ai_text: aiText,
+      entries: selection, author: userName, institution: userInstitution, use_ai: useAI, format, ai_text: aiText, lang,
     }),
   });
 

@@ -934,7 +934,7 @@ function FindingRow({ f, open, onToggle }: { f: Finding; open: boolean; onToggle
     <>
       <tr className={`border-t border-slate-900/5 cursor-pointer align-top hover:bg-white/60 ${open ? "bg-white/60" : ""}`} onClick={onToggle}
         aria-expanded={open}>
-        <td className="p-2 break-words"><StoneLinks signum={f.signum} stacked /><div className="text-[11px] text-slate-500 mt-0.5">{f.place}</div></td>
+        <td className="p-2 break-words"><StoneLinks signum={f.signum} stacked /><div className="text-[11px] text-slate-500 mt-0.5" translate="no">{f.place}</div></td>
         <td className="p-2">
           <div className="flex flex-wrap items-center gap-1.5 mb-1">
             <span className={`px-2 py-0.5 rounded-lg border text-[11px] font-bold ${VERDICT_STYLE[f.verdict]}`}>{f.verdict}</span>
@@ -1033,7 +1033,7 @@ function HypothesisTable({ rows, reconsider, ev }: { rows: Hypothesis[]; reconsi
             {sorted.map(h => (
               <tr key={h.signum} className="border-t border-slate-900/5">
                 <td className="p-2"><StoneLinks signum={h.signum} /></td>
-                <td className="p-2 text-slate-600">{h.place}</td>
+                <td className="p-2 text-slate-600" translate="no">{h.place}</td>
                 {reconsider && <td className="p-2">{h.attributed_to?.join(", ")}</td>}
                 <td className="p-2 font-semibold">{h.carver} <span className="text-slate-400 font-normal">(sedan {h.runner_up})</span></td>
                 <td className="p-2 font-mono text-xs">{fmt(h.similarity)}</td>
@@ -1120,7 +1120,7 @@ function BriefTable({ rows, uninterpreted }: { rows: Brief[]; uninterpreted: boo
             {sorted.slice(0, 200).map(b => (
               <tr key={b.signum} className="border-t border-slate-900/5">
                 <td className="p-2"><StoneLinks signum={b.signum} /></td>
-                <td className="p-2 text-slate-600">{b.place}</td>
+                <td className="p-2 text-slate-600" translate="no">{b.place}</td>
                 <td className="p-2">{b.province}</td>
                 <td className="p-2">{b.style ?? "–"}</td>
                 <td className="p-2">{b.dating || "–"}</td>

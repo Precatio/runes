@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useAnalysis } from "@/components/AnalysisContext";
 import { useAuth } from "@/components/AuthContext";
 import { useSettings } from "@/components/SettingsContext";
+import { useLanguage } from "@/components/LanguageContext";
 import ReportPreview, { downloadBlob, type ReportResult } from "@/components/ReportPreview";
 import { API_URL } from "@/lib/api";
 import { corpus, type ScanMetadata, type StoneCondition } from "@/lib/corpus";
@@ -27,6 +28,7 @@ export default function StoneReportPanel() {
   const { stoneReportInput } = useAnalysis();
   const { user, authHeaders, isAdmin } = useAuth();
   const { userName, userInstitution, aiHeaders } = useSettings();
+  const { lang } = useLanguage();
   const [projects, setProjects] = useState<ProjectData[]>([]);
   const [sourceKey, setSourceKey] = useState<string>(stoneReportInput ? "session" : "");
   const [scan, setScan] = useState<ScanMetadata>({});
@@ -78,7 +80,7 @@ export default function StoneReportPanel() {
       method: "POST",
       headers: { "Content-Type": "application/json", ...aiHeaders, ...(await authHeaders()) },
       body: JSON.stringify({
-        signum: input!.signum, title: title || null, author: userName, institution: userInstitution,
+        signum: input!.signum, title: title || null, author: userName, institution: userInstitution, lang,
         meta: input!.meta, scan, analyses: input!.analyses, counts: input!.counts ?? null,
         mesh_id: input!.meshId ?? null, view: input!.view ?? null,
         corpus: corpusEntries.map(e => ({ signum: e.signum, feature_type: e.feature_type, means: e.means })),
