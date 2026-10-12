@@ -4,6 +4,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAuth } from "@/components/AuthContext";
 import { API_URL } from "@/lib/api";
+import BlogAdmin from "@/components/BlogAdmin";
 
 interface UserRow {
   uid: string; email: string | null; name: string | null; photo: string | null; disabled: boolean;
@@ -19,7 +20,8 @@ interface SentMessage { id: string; title: string; body: string; to: string; lev
 const field = "liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm outline-none w-full";
 const date = (s: string | null) => (s ? new Date(s).toLocaleDateString("sv-SE", { dateStyle: "medium" }) : "–");
 
-// The founder's admin: who has registered, suspending accounts and messages in the app (api/routers/admin.py)
+// The founder's admin: who has registered, suspending accounts, messages in the app (api/routers/admin.py) and the
+// monthly blog post (api/routers/blog.py)
 export default function AdminPage() {
   const { user, isAdmin, authHeaders, loading } = useAuth();
   const [users, setUsers] = useState<Users | null>(null);
@@ -117,7 +119,7 @@ export default function AdminPage() {
     <div className="flex flex-col w-full max-w-6xl mx-auto gap-6">
       <div>
         <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-2">Admin</h2>
-        <p className="text-slate-600 max-w-3xl">Registrerade konton, avstängning och meddelanden i appen. Bara du ser sidan.</p>
+        <p className="text-slate-600 max-w-3xl">Registrerade konton, avstängning, meddelanden i appen och månadens blogginlägg. Bara du ser sidan.</p>
       </div>
       {error && <p className="text-sm font-semibold text-red-700">{error}</p>}
 
@@ -183,6 +185,8 @@ export default function AdminPage() {
           </ul>
         )}
       </section>
+
+      <BlogAdmin call={call} />
 
       <section className="liquid-glass-island rounded-[24px] p-4 sm:p-6 space-y-3">
         <div className="flex flex-wrap items-center gap-3">

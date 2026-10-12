@@ -42,6 +42,15 @@ interface ChangeAssoc {
   dated: { n: number; or?: number; lo?: number; hi?: number; p?: number } | null;
 }
 
+interface RemainsTest {
+  label: string; n: number; or: number; lo: number; hi: number; p: number; q_bh: number;
+  halves?: { replicated: boolean }; periods?: { early: number; late: number; n_early: number; n_late: number };
+}
+interface VikingShore {
+  n_stones: number; median_stones_km: number; median_random_km: number; p: number; error?: string;
+  provinces?: { province: string; uplift_m: number; n: number; median_stones_km: number; median_random_km: number; p: number }[];
+}
+
 interface Finding {
   signum: string; place: string; method: string; verdict: string; ours: string; existing: string; score: number;
   assessment: string; suggested?: string; crosscheck?: { status: string; runor?: { text: string; url?: string | null } };
@@ -52,7 +61,8 @@ interface Corpus {
   patterns: Pattern[]; findings: Finding[];
   findings_summary: { n: number; new: number; contradicts: number; crosschecked: number; already_known: number; still_new: number };
   html_map_url: string | null;
-  geography: Dict & { carvers: { carver: string; n: number; median_km: number; random_median_km: number; compact_ratio: number; compact_q: number; provinces: string; hull_area_km2: number }[]; method: string; water: Dict & { note?: string } };
+  geography: Dict & { carvers: { carver: string; n: number; median_km: number; random_median_km: number; compact_ratio: number; compact_q: number; provinces: string; hull_area_km2: number }[]; method: string;
+    water: Dict & { note?: string; viking_shore?: VikingShore; provinces?: { province: string; median_stones_km: number; median_random_km: number }[] } };
   clusters: Dict & { k: number; best_silhouette: number; structure: string; n_stones: number; method: string; carvers: { ari: number };
     clusters: { cluster: number; n: number; stability: number; silhouette: number; features: { level: string; share_in_cluster: number; share_overall: number }[]; styles: { style: string; n: number }[]; provinces: { province: string; n: number }[] }[] };
   text: Dict & { method: string; lemmas: { lemma: string; n: number; cramers_v: number; q: number }[];
@@ -69,6 +79,10 @@ interface Corpus {
   network: Dict & { method: string; modularity: number; communities: { community: number; size: number; words: { word: string }[] }[];
     kinship: { relation: string; n: number; early: number; late: number; q_period: number; share_christian: number; share_other: number; q_christian: number }[] };
   change?: Dict & { method: string; n_dated: number; draws: number; features: ChangeFeature[]; assoc: ChangeAssoc[] };
+  remains?: Dict & { available: boolean; note?: string; method?: string; near_km?: number; n_stones?: number;
+    distances?: { key: string; label: string; n_remains: number; median_stones_km: number; median_random_km: number; near_stones: number; near_random: number; q_bh: number }[];
+    tests?: Record<string, RemainsTest>;
+    gravfalt_provinces?: { province: string; n: number; near_stones: number; near_random: number; p: number }[] };
   anonymous?: Dict & { method: string; n_unattributed: number; n_candidates: number;
     calibration: { link_km: number; lr_min: number; tpr: number; fpr: number; precision: number; max_spread_km: number };
     validation: { n_groups: number; n_stones: number; purity: number; purity_geography: number; share_pure: number };
@@ -86,6 +100,7 @@ const TH = "text-left text-[11px] uppercase tracking-wider text-slate-500 p-2";
 // How to read each figure (keyed by its alt text)
 const FIG_HELP: Record<string, string> = {
   "Ristarnas områden": "Varje panel är en ristare. Blå punkter är ristarens säkra stenar, linjen är det konvexa höljet runt dem och + tyngdpunkten; grått är alla runstenar. Ett litet, samlat hölje betyder att ristaren arbetade lokalt.",
+  "Lämningar runt stenarna": "Andelen runstenar (blått) och slumpvisa punkter på land i stenarnas närhet (grått) som ligger inom 500 m från en registrerad lämning av varje slag i Kulturmiljöregistret. En högre blå stapel betyder att stenarna står närmare den sortens lämningar än slumpen ger.",
   "Avstånd till vatten": "Fördelningen av avstånd till närmaste strand, sjö eller vattendrag för runstenarna och för slumpvisa punkter på land (rotskala). Ligger runstenarnas fördelning till vänster står de närmare vatten än slumpen ger.",
   "MCA": "Stenarna i det rum som korrespondensanalysen ger (de två första dimensionerna). Varje panel visar en grupp i blått mot alla stenar i grått; en grupp som ligger samlat skiljer sig tydligt från de andra.",
   "Kategorier i MCA": "De drag som bidrar mest till de två första dimensionerna. Drag som ligger nära varandra förekommer ofta på samma stenar; ju längre från mitten, desto mer skiljer draget stenarna åt.",
@@ -587,6 +602,8 @@ function Geography({ data }: { data: Corpus }) {
           Öppna den interaktiva kartan över ristarnas stenar
         </a>
       )}
+      <VikingShoreTable v={g.water?.viking_shore} today={g.water?.provinces} />
+      <Remains data={data} />
       <Details title="Ristarna en och en">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -603,6 +620,86 @@ function Geography({ data }: { data: Corpus }) {
       </Details>
       <Method text={g.method} />
     </>
+  );
+}
+
+const pText = (p: number | null | undefined) => p == null ? "–" : p < 0.001 ? "< 0,001" : d2(p, 3);
+
+// Distance to the modelled shoreline of c. AD 1000 per province, beside today's water (r/geography.R)
+function VikingShoreTable({ v, today }: { v?: VikingShore; today?: { province: string; median_stones_km: number; median_random_km: number }[] }) {
+  if (!v || v.error || !v.provinces?.length) return null;
+  const now = new Map((today ?? []).map(r => [r.province, r]));
+  return (
+    <Details title="Dåtidens strand: avstånd till en modellerad strandlinje omkring år 1000">
+      <p className="text-sm text-slate-600 mb-2">
+        Havet omkring år 1000 är modellerat som land under landskapets landhöjning sedan dess (dagens höjd, omkring 300 m
+        upplösning), tillsammans med dagens sjöar och vattendrag. Kvoten är stenarnas medianavstånd delat med
+        slumppunkternas: ju lägre, desto närmare vatten står stenarna. Alla landskap: {d2(v.median_stones_km, 1)} mot{" "}
+        {d2(v.median_random_km, 1)} km (p {pText(v.p)}).
+      </p>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead><tr><Th>Landskap</Th><Th>Landhöjning</Th><Th>Stenar</Th><Th>Stenar, median</Th><Th>Slumppunkter, median</Th>
+            <Th>Kvot omkring år 1000</Th><Th>Kvot med dagens vatten</Th><Th>p</Th></tr></thead>
+          <tbody>{v.provinces.map(r => {
+            const t = now.get(r.province);
+            return (
+              <tr key={r.province} className="border-t border-slate-900/5">
+                <td className="p-2 font-semibold">{r.province}</td><td className="p-2">{d2(r.uplift_m, 1)} m</td><td className="p-2">{r.n}</td>
+                <td className="p-2">{d2(r.median_stones_km, 1)} km</td><td className="p-2">{d2(r.median_random_km, 1)} km</td>
+                <td className="p-2 font-semibold">{d2(r.median_stones_km / r.median_random_km)}</td>
+                <td className="p-2">{t ? d2(t.median_stones_km / t.median_random_km) : "–"}</td><td className="p-2">{pText(r.p)}</td>
+              </tr>
+            );
+          })}</tbody>
+        </table>
+      </div>
+    </Details>
+  );
+}
+
+// The stones among the registered remains: grave fields, mounds, roads, bridges, hillforts and harbours (r/remains.R)
+function Remains({ data }: { data: Corpus }) {
+  const r = data.remains, f = data.figure_urls.remains || {};
+  if (!r?.available || !r.distances?.length) return null;
+  const m = Math.round((r.near_km ?? 0.5) * 1000);
+  return (
+    <div className="space-y-3">
+      <h3 className="text-lg font-bold text-slate-900">Lämningar runt stenarna</h3>
+      <p className="text-sm text-slate-600 max-w-4xl">
+        Hur nära står runstenarna gravfält, högar, färdvägar, broar, fornborgar och hamnar i Kulturmiljöregistret, jämfört
+        med slumpvisa punkter på land i samma trakter? {r.n_stones} stenar som inte är flyttade.
+      </p>
+      <Fig src={f.near} alt="Lämningar runt stenarna" narrow />
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead><tr><Th>Lämning</Th><Th>I registret</Th><Th>Stenar, median</Th><Th>Slumppunkter, median</Th>
+            <Th tip={`Andel inom ${m} m`}>{`Stenar inom ${m} m`}</Th><Th tip={`Andel inom ${m} m`}>{`Slumppunkter inom ${m} m`}</Th><Th>q</Th></tr></thead>
+          <tbody>{r.distances.map(x => (
+            <tr key={x.key} className="border-t border-slate-900/5">
+              <td className="p-2 font-semibold">{x.label}</td><td className="p-2">{x.n_remains.toLocaleString("sv-SE")}</td>
+              <td className="p-2">{d2(x.median_stones_km, 1)} km</td><td className="p-2">{d2(x.median_random_km, 1)} km</td>
+              <td className="p-2 font-semibold">{pc(x.near_stones)}</td><td className="p-2">{pc(x.near_random)}</td><td className="p-2">{pText(x.q_bh)}</td>
+            </tr>))}</tbody>
+        </table>
+      </div>
+      {r.tests && Object.keys(r.tests).length > 0 && (
+        <Details title="Samband: tid, kristna markörer och brostenar">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead><tr><Th>Samband</Th><Th>Stenar</Th><Th tip="Oddskvot: över 1 betyder oftare nära, under 1 mer sällan">Oddskvot</Th><Th>95 % intervall</Th><Th>q</Th><Th>Båda halvorna</Th></tr></thead>
+              <tbody>{Object.entries(r.tests).map(([k, t]) => (
+                <tr key={k} className="border-t border-slate-900/5">
+                  <td className="p-2">{t.label}{t.periods && <span className="block text-xs text-slate-500">före ca 1050 {pc(t.periods.early)}, efter {pc(t.periods.late)}</span>}</td>
+                  <td className="p-2">{t.n}</td><td className="p-2 font-semibold">{d2(t.or)}</td><td className="p-2">{d2(t.lo)}–{d2(t.hi)}</td>
+                  <td className="p-2">{pText(t.q_bh)}</td><td className="p-2">{t.halves?.replicated ? "✓ ja" : "nej"}</td>
+                </tr>))}</tbody>
+            </table>
+          </div>
+        </Details>
+      )}
+      <Method text={r.method} caveat={r.note} />
+    </div>
   );
 }
 

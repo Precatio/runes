@@ -32,12 +32,14 @@ from src.styles import BY_CODE
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 R_DIR = os.path.join(ROOT, "r")
 CACHE_DIR = os.environ.get("R_CACHE_DIR", os.path.join(ROOT, "data", "cache", "r"))
-MODULES = ("geography", "clusters", "text", "attribution", "anonymous", "chronology", "dialect", "network", "change")
+MODULES = ("geography", "clusters", "text", "attribution", "anonymous", "chronology", "dialect", "network", "change",
+           "remains")
 STONE_MODULES = ("stone", "landscape")
 MODULE_LABELS = {"geography": "Geografi", "clusters": "Klustring och MCA", "text": "Text och formler",
                  "attribution": "Attribueringsmodell", "anonymous": "Okända ristare",
                  "chronology": "Seriation och datering",
-                 "dialect": "Stavning och dialekter", "network": "Formelnätverk", "change": "Förändring i tid och rum"}
+                 "dialect": "Stavning och dialekter", "network": "Formelnätverk", "change": "Förändring i tid och rum",
+                 "remains": "Lämningar runt stenarna"}
 REQUIRED_PACKAGES = ("jsonlite", "dplyr", "tidyr", "stringr", "ggplot2", "sf", "leaflet", "htmlwidgets",
                      "tidytext", "cluster", "FactoMineR", "factoextra", "tidymodels", "ranger", "ragg",
                      "ca", "stringdist", "igraph", "tidygraph", "ggraph", "terra", "gdistance", "raster", "png", "mgcv")
@@ -53,7 +55,7 @@ WATER_LAYERS = {
 }
 
 CSV_COLUMNS = (["signum", "province", "district", "place", "parish", "lat", "lon", "carver", "has_carver", "carvers_uncertain",
-                "style", "material", "cross", "short_twig", "lost", "n_words", "n_words_core", "carvers_all", "style_from",
+                "style", "material", "cross", "short_twig", "lost", "moved", "n_words", "n_words_core", "carvers_all", "style_from",
                 "style_to"]
                + [f"cat_{k}" for k in CATEGORIES] + [f"trait_{k}" for k in TRAITS]
                + ["words", "pairs", "normalization", "signed", "ai_n", "ai_mono", "ai_sten_n", "ai_sten_mono",
@@ -157,6 +159,15 @@ _PHRASE_WORDS = {w.lower() for w in {"bro", "bru", "brú", "brúar", "bryggju", 
                  "moðir", "móðir", "hans", "hennar", "þæira", "þeira"}}
 
 
+# Rundata's placement of a stone that is no longer where it was raised: at or in a church, in a wall, a museum or a
+# collection ("I vapenhuset.", "Inmurad i södra väggen.", "Sigtuna museum", "Nu vid Åkerby."). Used where the stone's
+# surroundings matter (remains.R)
+MOVED = re.compile(r"kyrk|vapenhus|torn|museum|museet|samling|hembygds|parken|\bpark\b|SHM|magasin|förråd|slott|"
+                   r"Dagsnäs|skola|bibliotek|universitet|lapidarium|inmurad|vägg|gavel|koret|sakristi|stiglucka|bogård|"
+                   r"kloster|prästgård|Skansen|Runverket|lasarett|bruk\b|privatperson|gravkor|porten|golvet|^Nu vid|"
+                   r"Förvara|Befann sig", re.I)
+
+
 def core_words(normalization: str) -> int:
     """Antal ord i normaliseringen utan bro- och bönefrasernas ord (se _PHRASE_WORDS)."""
     words = [w.strip(".,:;!?\"'()[]").lower() for w in normalization.split()]
@@ -187,6 +198,7 @@ def corpus_rows(inscriptions: list[dict], names=frozenset()) -> list[dict]:
             "cross": int(bool((r.get("cross_form") or "").strip())),
             "short_twig": int("kortkvist" in rt),
             "lost": int(r["flags"]["lost"]),
+            "moved": int(bool(MOVED.search(r.get("placement") or ""))),
             "n_words": f["n_words"],
             "n_words_core": core_words(r.get("normalization") or ""),
             **_style_dates(r),
@@ -244,7 +256,20 @@ DEPENDS = {"attribution": ("geography", "text"), "anonymous": ("geography", "tex
 MODULE_FILES = {"geography": ("geography*", "geografi_*", "ristare_karta*"), "clusters": ("clusters*", "kluster_*"),
                 "text": ("text*",), "attribution": ("attribution*", "modell_*"), "anonymous": ("anonymous*", "okanda_*"),
                 "chronology": ("chronology*", "seriation_*"), "dialect": ("dialect*", "dialekt_*"),
-                "network": ("network*", "natverk_*"), "change": ("change*", "forandring_*")}
+                "network": ("network*", "natverk_*"), "change": ("change*", "forandring_*"),
+                "remains": ("remains*", "lamningar_*")}
+
+# Kulturmiljöregistret's remains (scripts/fetch_raa_remains.py), read by remains.R; not part of the repository
+REMAINS = os.path.join(ROOT, "data", "raa", "lamningar.csv")
+
+
+def _remains_hash() -> str:
+    if not os.path.exists(REMAINS):
+        return "none"
+    h = hashlib.sha256()
+    with open(REMAINS, "rb") as fh:
+        h.update(fh.read())
+    return h.hexdigest()[:16]
 
 
 def module_hashes(csv_data: bytes) -> dict[str, str]:
@@ -253,7 +278,8 @@ def module_hashes(csv_data: bytes) -> dict[str, str]:
     base = hashlib.sha256(csv_data).hexdigest() + _scripts_hash(["common.R"])
     out: dict[str, str] = {}
     for m in MODULES:  # run order, so upstream versions exist
-        key = base + _scripts_hash([f"{m}.R"]) + "".join(out[u] for u in DEPENDS.get(m, ()))
+        key = (base + _scripts_hash([f"{m}.R"]) + "".join(out[u] for u in DEPENDS.get(m, ()))
+               + (_remains_hash() if m == "remains" else ""))
         out[m] = hashlib.sha256(key.encode()).hexdigest()[:16]
     return out
 
@@ -291,7 +317,7 @@ def _copy_module(module: str, src: str, dst: str):
 def fingerprint(data: bytes) -> str:
     """Korpusens version: data och korpusmodulernas skript (inte sten- och landskapsskripten)."""
     scripts = ["common.R"] + [f"{m}.R" for m in MODULES]
-    return hashlib.sha256(data + _scripts_hash(scripts).encode()).hexdigest()[:16]
+    return hashlib.sha256(data + _scripts_hash(scripts).encode() + _remains_hash().encode()).hexdigest()[:16]
 
 
 # ---- water data ----------------------------------------------------------------------------
@@ -425,7 +451,8 @@ def run_corpus(fp: str):
     errors, done = {}, []
     try:
         water = ensure_water()
-        params = {"corpus": os.path.join(d, "corpus.csv"), "water_dir": water, "corpus_dir": d, "seed": 2026}
+        params = {"corpus": os.path.join(d, "corpus.csv"), "water_dir": water, "corpus_dir": d, "seed": 2026,
+                  "tile_dir": os.path.join(CACHE_DIR, "terrain"), "remains": REMAINS if os.path.exists(REMAINS) else None}
         with open(os.path.join(d, "corpus.csv"), "rb") as fh:
             versions = module_hashes(fh.read())
         reused = []

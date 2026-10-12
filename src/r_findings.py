@@ -303,6 +303,102 @@ def _poles(dim: dict) -> str:
             f"{side(dim['negative'])}.")
 
 
+def _viking_shore(v: dict, today: dict, today_provinces: list[dict] | None = None) -> list[dict]:
+    """Avståndet till en grovt modellerad strandlinje omkring år 1000 (r/geography.R), mot samma slumppunkter."""
+    if not v.get("n_stones") or v.get("p") is None:
+        return []
+    closer = v["p"] < 0.05 and v["median_stones_km"] < v["median_random_km"]
+    ratio_now = today["median_stones_km"] / today["median_random_km"] if today.get("median_random_km") else None
+    ratio = v["median_stones_km"] / v["median_random_km"] if v["median_random_km"] else None
+    held = [r["province"] for r in v.get("provinces") or [] if r["p"] < 0.05 and r["median_stones_km"] < r["median_random_km"]]
+    tested = [r["province"] for r in v.get("provinces") or []]
+    p_txt = _d(v["p"], 3) if v["p"] >= 0.001 else "< 0,001"
+    text = (f"Mot en modellerad strandlinje omkring år 1000 står runstenarna {'närmare' if closer else 'inte närmare'} "
+            f"vatten än slumpvisa punkter i samma landskap (median {_d(v['median_stones_km'])} mot "
+            f"{_d(v['median_random_km'])} km, p {p_txt}; {v['n_stones']} stenar).")
+    if ratio is not None and ratio_now is not None:
+        text += (f" Stenarnas avstånd är {_pct(ratio)} av slumppunkternas, mot {_pct(ratio_now)} med dagens vatten"
+                 + (" – närheten blir tydligare med dåtidens strand." if ratio < ratio_now - 0.02 else
+                    " – ungefär samma närhet som med dagens vatten." if abs(ratio - ratio_now) <= 0.02 else
+                    " – närheten blir svagare med den modellerade stranden."))
+    if tested:
+        text += f" Håller i {len(held)} av {len(tested)} landskap" + (f" ({', '.join(held)})." if held else ".")
+    # The province with the most stones where it holds: stones' distance as a share of the random points', today and
+    # c. AD 1000 (not the largest shift, which in flat land with little uplift can come from the terrain model's error)
+    now = {r["province"]: r for r in today_provinces or [] if r.get("median_random_km")}
+    rows = [r for r in v.get("provinces") or [] if r["province"] in held and r["province"] in now and r.get("median_random_km")]
+    if rows:
+        r = max(rows, key=lambda x: x["n"])
+        a = now[r["province"]]["median_stones_km"] / now[r["province"]]["median_random_km"]
+        b = r["median_stones_km"] / r["median_random_km"]
+        text += f" I {r['province']} ({r['n']} stenar): {_pct(a)} med dagens vatten, {_pct(b)} omkring år 1000."
+    note = ("Strandlinjen är grov: dagens höjd (terrängmodell med omkring 300 m upplösning) under landskapets "
+            "landhöjning sedan omkring år 1000 (omkring fem meter i Mälardalen, mer i norr och nära noll i Skåne) räknas "
+            "som hav, tillsammans med dagens sjöar och vattendrag. Höjdmodellens noggrannhet (några meter) är av samma "
+            "storleksordning som landhöjningen, särskilt i flack terräng och där landhöjningen är liten (Öland, Småland). "
+            "Låglänta inlandsområden kan räknas som hav, och igenslamning och dämning ingår inte. SGU:s strandförskjutningsmodell och en finare höjdmodell skulle ge en "
+            "säkrare strand. Stenar i par räknas var för sig, så p-värdet blir något för litet.")
+    return [{"key": "water_viking", "topic": "Geografi", "status": "mönster att pröva" if closer else "begränsning",
+             "text": text, "note": note,
+             "significance": significance(v["p"], "p", "Wilcoxon, ensidigt, mot samma lokala slumppunkter")}]
+
+
+def _remains(r: dict) -> list[dict]:
+    """Runstenarna bland Kulturmiljöregistrets lämningar (r/remains.R): gravfält och högar, vägar och broar."""
+    if not r.get("available") or not r.get("distances"):
+        return []
+    dist = {x["key"]: x for x in r["distances"]}
+    tests = r.get("tests") or {}
+    m = round((r.get("near_km") or 0.5) * 1000)
+    out = []
+    g, h = dist.get("gravfalt"), dist.get("hog")
+    if g and g.get("q_bh") is not None:
+        closer = g["q_bh"] < 0.05 and g["near_stones"] > g["near_random"]
+        text = (f"{_pct(g['near_stones'])} av runstenarna står inom {m} m från ett registrerat gravfält, mot "
+                f"{_pct(g['near_random'])} av slumpvisa punkter på land i samma trakter (median {_d(g['median_stones_km'])} "
+                f"mot {_d(g['median_random_km'])} km).")
+        if h:
+            text += f" Inom {m} m från en hög: {_pct(h['near_stones'])} mot {_pct(h['near_random'])}."
+        provs = [p["province"] for p in r.get("gravfalt_provinces") or [] if p["p"] < 0.05 and p["near_stones"] > p["near_random"]]
+        if provs:
+            text += f" Gäller i {', '.join(provs)}."
+        tg, cg = tests.get("time_gravfalt") or {}, tests.get("christian_gravfalt") or {}
+        same_time = tg.get("q_bh") is not None and tg["q_bh"] >= 0.05
+        same_christ = cg.get("q_bh") is not None and cg["q_bh"] >= 0.05
+        if same_time and tg.get("periods"):
+            text += (f" Närheten består över tiden (före omkring 1050 {_pct(tg['periods']['early'])}, efter "
+                     f"{_pct(tg['periods']['late'])})")
+            text += " och är lika stor för stenar med kristna markörer." if same_christ else "."
+        note = ((r.get("note") or "") + " Att runstenar ofta står vid gravfält är känt sedan länge; det nya är att "
+                "närheten kan mätas mot slumpen i hela korpusen, per landskap, över tiden och för kristna stenar. "
+                "Kulturmiljöregistret kan i enstaka fall ha registrerat ett gravfält just där en runsten står.")
+        out.append({"key": "remains_graves", "topic": "Geografi", "status": "bekräftar" if closer else "begränsning",
+                    "text": text, "note": note,
+                    "significance": significance(g["q_bh"], "q", "Wilcoxon, ensidigt, mot lokala slumppunkter, Benjamini–Hochberg")})
+    bv = tests.get("bridge_vag") or {}
+    if bv.get("or") is not None and bv.get("q_bh") is not None:
+        found = bv["q_bh"] < 0.05 and bv["or"] > 1
+        rep = (bv.get("halves") or {}).get("replicated")
+        v = dist.get("vag") or {}
+        text = (f"Stenar som nämner bro- eller vägbygge står {'oftare' if found else 'inte oftare'} inom {m} m från en "
+                f"registrerad färdväg än andra stenar (oddskvot {_d(bv['or'])}, {_d(bv['lo'])}–{_d(bv['hi'])}, med "
+                f"landskapet konstant).")
+        if v:
+            text += (f" Alla runstenar: {_pct(v['near_stones'])} inom {m} m från en färdväg, mot {_pct(v['near_random'])} "
+                     "av slumppunkterna.")
+        if rep is not None:
+            text += " Håller i båda halvorna av korpusen, uppdelad per socken." if rep else \
+                " Håller inte i båda halvorna av korpusen."
+        note = ((r.get("note") or "") + " Färdvägarna i registret är mest hålvägar, vägbankar och äldre vägsträckningar, "
+                "ofta odaterade och många yngre än stenarna; att brostenarna ändå står nära dem talar för att vägarna "
+                "följer äldre stråk. Registrerade broar är oftast medeltida eller yngre.")
+        status = ("mönster att pröva" if rep else "indikation") if found else "begränsning"
+        out.append({"key": "remains_bridges", "topic": "Geografi", "status": status, "text": text, "note": note,
+                    "replicated": rep if found else None,
+                    "significance": significance(bv["q_bh"], "q", "logistisk regression med landskapet konstant, Benjamini–Hochberg")})
+    return out
+
+
 def corpus_patterns(res: dict) -> list[dict]:
     """Mönster i hela korpusen, märkta 'bekräftar' eller 'mönster att pröva'."""
     out = []
@@ -351,10 +447,14 @@ def corpus_patterns(res: dict) -> list[dict]:
                                  "runt stenarna, där folk bodde och rörde sig, och inte mot hela landskapet, som också rymmer "
                                  "obebodd skog och inland. Vattnet är dagens (1:10 milj.): landhöjningen gör att strandlinjen "
                                  "låg högre under vikingatiden (i Mälardalen omkring fem meter), så stenar vid dåtidens stränder "
-                                 "och vikar kan i dag stå långt från vatten. En jämförelse med en rekonstruerad strandlinje för "
-                                 "omkring år 1000 återstår. Stenar som står i par eller i samma monument räknas var för sig, "
+                                 "och vikar kan i dag stå långt från vatten. "
+                                 + ("Jämförelsen med en modellerad strandlinje omkring år 1000 redovisas för sig. "
+                                    if (w.get("viking_shore") or {}).get("n_stones") else
+                                    "En jämförelse med en rekonstruerad strandlinje för omkring år 1000 återstår. ")
+                                 + "Stenar som står i par eller i samma monument räknas var för sig, "
                                  "så observationerna är inte helt oberoende och p-värdet blir något för litet."),
                         "significance": significance(o["p"], "p", "Wilcoxon, ensidigt, mot den lokala nollmodellen")})
+            out += _viking_shore(w.get("viking_shore") or {}, o, w.get("provinces"))
             b = w.get("bridges") or {}
             if b and b.get("median_bridge_km", 0) > b.get("median_other_km", 0):
                 out.append({"key": "water_bridges", "topic": "Geografi", "status": "begränsning",
@@ -363,6 +463,7 @@ def corpus_patterns(res: dict) -> list[dict]:
                             "note": "Broarna gick oftast över mindre vattendrag och våtmarker som saknas i Natural Earth; "
                                     "resultatet visar kartlagrets gräns, inte att broarna låg långt från vatten.",
                             "significance": significance(b.get("p"), "p", "Wilcoxon")})
+    out += _remains(res.get("remains") or {})
     a = res.get("attribution") or {}
     if a.get("ablation"):
         ab = {x["features"]: x for x in a["ablation"]}
@@ -621,9 +722,25 @@ HYPOTHESES: dict[tuple[str, str | None], tuple[str, str]] = {
         "Vi föreslår att ristarna arbetade för beställare inom häradet – att stenresningen organiserades lokalt kring "
         "häradets nätverk.",
         "En ristare som arbetade i flera härad bör där följa släktnätverk, med samma personnamn på stenar i olika härad."),
+    ("Geografi", "remains_graves"): (
+        "Vi föreslår att gravfälten förblev släktens minnesplatser genom kristnandet: den kristna stenen restes där "
+        "förfäderna låg, även när den döde själv kanske begravdes vid en kyrka.",
+        "Jämför med gravfält där sena, kristna gravar (östvästliga skelettgravar) är undersökta: står kristna stenar oftare "
+        "vid sådana gravfält levde gravfältet vidare; står de vid gravfält utan sena gravar var platsen ett minnesmärke."),
+    ("Geografi", "remains_bridges"): (
+        "Vi föreslår att bron var en del av en väg som redan fanns: själagåvan förbättrade en färdled som släkten och "
+        "grannarna använde.",
+        "Om det stämmer bör brostenarna ligga på linjer mellan gårdar, tingsplatser och kyrkor; en väganalys i terrängen "
+        "(least-cost path) mellan brostenarna och bygdens centra kan visa det."),
+    ("Geografi", "water_viking"): (
+        "Om stenarna restes vid färdleder på vattnet bör de ha stått vid dåtidens stränder och vikar, och närheten bör vara "
+        "störst där landhöjningen flyttat stranden mest.",
+        "Pröva med SGU:s strandförskjutningsmodell och Lantmäteriets höjdmodell: skillnaden mot slumppunkterna bör bestå, "
+        "och stenar vid forna vikar som nu är land bör ligga i rad längs den gamla stranden."),
     ("Geografi", "water"): (
         "Stenarna kan ha rests vid dåtidens vattenleder, som var viktigare färdvägar än i dag.",
-        "Jämför med en rekonstruerad strandlinje omkring år 1000 (SGU:s strandförskjutningsmodell): närheten bör bli större."),
+        "Jämför med dåtidens strand: närheten bör bli större. En grov modell av strandlinjen omkring år 1000 redovisas som "
+        "eget mönster; SGU:s strandförskjutningsmodell skulle ge en säkrare prövning."),
     ("Språk", "dialect"): (
         "Vi föreslår att stavningsgränserna följer ristarverkstäder och skrivtraditioner mer än dialekter.",
         "Gränserna bör sammanfalla med ristarnas verksamhetsområden; följer de i stället senare dialektgränser talar det för "

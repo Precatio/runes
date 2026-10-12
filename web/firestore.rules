@@ -76,6 +76,12 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    // Blog posts (Månadens fynd): written and read only by the server (api/routers/blog.py), which serves the
+    // published ones at /api/blog/posts. Closed to browsers, as by the default rule below.
+    match /posts/{postId} {
+      allow read, write: if false;
+    }
+
     // Deny access to everything else by default
     match /{document=**} {
       allow read, write: if false;

@@ -101,6 +101,30 @@ const NEW_THINGS = [
   },
 ];
 
+// The newer open sources and the questions they make possible
+const LANDSCAPE = [
+  {
+    source: "Kulturmiljöregistret (Riksantikvarieämbetet)",
+    title: "Gravfält, vägar och broar",
+    text: "Gravfält, gravhögar, forna färdvägar, broar, fornborgar och hamnar ur RAÄ:s register över lämningar. 61 % av runstenarna står inom 500 m från ett gravfält, mot 21 % av slumpvisa platser – lika ofta efter 1050 som före, och lika ofta för kristna stenar. Gravfälten tycks ha förblivit släktens minnesplatser genom kristnandet.",
+  },
+  {
+    source: "Höjdmodell och landhöjning",
+    title: "Dåtidens strand",
+    text: "I Mälardalen låg stranden omkring fem meter högre omkring år 1000. Med en terrängmodell och landhöjningen per landskap jämförs stenarnas lägen med dåtidens vatten i stället för dagens – och stenarnas närhet till vatten blir tydligare, mest i Uppland.",
+  },
+  {
+    source: "Samnordisk runtextdatabas",
+    title: "Mönsterkartan",
+    text: "Var finns de kristna bönerna, de stungna runorna och monoftongerna – och de få uttryckligt hedniska stenarna? Kartan visar andelen per område före och efter 1050, så att Upplands täthet inte döljer mönstret.",
+  },
+  {
+    source: "Runor 2020 och Wikidata",
+    title: "Avstämning mot nyare källor",
+    text: "Appens förslag om ristare stäms av mot Riksantikvarieämbetets utgåva 2020 och Wikidata. Ett förslag som redan finns där bekräftar metoden; ett som motsägs granskas.",
+  },
+];
+
 const RELATED = [
   "Laila Kitzler Åhfeldts 3D-baserade analyser av huggteknik (Stockholms universitet), som vår metod för separata spårtyper, medelvärden per sten och Ward-klustring följer, och hennes öppet publicerade skanningar, som krediteras när de används.",
   "Samnordisk runtextdatabas och Rundata-net, samt Riksantikvarieämbetets och Uppsala universitets plattform Runor.",
@@ -159,6 +183,16 @@ const SOURCES = [
     href: "https://www.sgu.se/",
   },
   {
+    name: "Kulturmiljöregistret",
+    detail: "Riksantikvarieämbetets register över lämningar (gravfält, gravhögar, färdvägar, broar, fornborgar, hamnar), hämtat via K-samsök.",
+    href: "https://www.raa.se/hitta-information/kulturmiljoregistret/",
+  },
+  {
+    name: "Terrain Tiles",
+    detail: "Höjddata från Tilezen/Mapzen (Registry of Open Data on AWS), för landskapet kring en sten och den modellerade strandlinjen omkring år 1000.",
+    href: "https://registry.opendata.aws/terrain-tiles/",
+  },
+  {
     name: "K-samsök och OpenStreetMap",
     detail: "Bilder och metadata från svenska kulturarvsinstitutioner (Riksantikvarieämbetet); kartunderlag © OpenStreetMap-bidragsgivare.",
     href: "https://www.openstreetmap.org/copyright",
@@ -206,6 +240,8 @@ export default function LandingPage() {
           <nav className="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-600">
             <a href="#forskning" className="hover:text-slate-900">För forskningen</a>
             <a href="#nytt" className="hover:text-slate-900">Vad är nytt</a>
+            <a href="#landskap" className="hover:text-slate-900">Nya källor</a>
+            <Link href="/blogg" className="hover:text-slate-900">Månadens fynd</Link>
             <a href="#kallor" className="hover:text-slate-900">Källor</a>
             <a href="#oppen" className="hover:text-slate-900">Öppen källkod</a>
           </nav>
@@ -321,8 +357,38 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* New sources: the stones in their landscape */}
+      <section id="landskap" className="scroll-mt-16">
+        <div className="max-w-6xl mx-auto px-6 py-24">
+          <SectionTitle
+            eyebrow="Nya källor"
+            title="Stenarna i sitt landskap"
+            intro="Runtexterna säger vem som reste stenen och varför. Öppna data om fornlämningar, terräng och strandlinjer visar var – och gör det möjligt att se mönster som ingen kunnat räkna på förut."
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {LANDSCAPE.map(l => (
+              <div key={l.title} className="rounded-2xl bg-white border border-slate-200 p-7">
+                <div className="text-xs font-bold uppercase tracking-wider text-[#b7410e]">{l.source}</div>
+                <h3 className="mt-2 text-xl font-bold">{l.title}</h3>
+                <p className="mt-2 text-slate-600 leading-relaxed">{l.text}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-8 rounded-2xl border border-[#b7410e]/30 bg-[#fbf3ee] p-7 flex flex-col md:flex-row md:items-center gap-4 justify-between">
+            <div>
+              <h3 className="text-lg font-bold">Månadens fynd</h3>
+              <p className="mt-1 text-slate-600 leading-relaxed max-w-2xl">
+                En gång i månaden skriver vi om de mest intressanta mönstren och fynden – vad vi ser, vad det kan betyda
+                och hur det kan prövas.
+              </p>
+            </div>
+            <Link href="/blogg" className="shrink-0 px-6 py-3 rounded-full bg-slate-900 text-white font-bold hover:bg-black">Läs bloggen</Link>
+          </div>
+        </div>
+      </section>
+
       {/* Sources */}
-      <section id="kallor" className="scroll-mt-16">
+      <section id="kallor" className="bg-white border-y border-slate-900/5 scroll-mt-16">
         <div className="max-w-6xl mx-auto px-6 py-24">
           <SectionTitle
             eyebrow="Källor"
@@ -331,7 +397,7 @@ export default function LandingPage() {
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {SOURCES.map(s => (
-              <div key={s.name} className="rounded-2xl bg-white border border-slate-200 p-5">
+              <div key={s.name} className="rounded-2xl bg-[#fbfaf8] border border-slate-200 p-5">
                 <div className="font-bold text-slate-900">
                   {s.href ? (
                     <a href={s.href} target="_blank" rel="noopener noreferrer" className="hover:text-[#b7410e]">{s.name} ↗</a>

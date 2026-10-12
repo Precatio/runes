@@ -27,6 +27,10 @@ WATER <- "#7aa6d8"
 SERIES <- c("#2a78d6", "#eb6834", "#1baf7a")
 SEQ <- c("#eef4fc", "#2a78d6", "#0f3d75")
 SWEREF <- 3006 # SWEREF 99 TM, meter
+# Approximate land uplift since c. AD 1000 (m), coarse values per province. Mälardalen about 5 m is the commonly cited
+# figure; elsewhere the values follow today's uplift pattern (high in the north, near zero in Skåne)
+UPLIFT <- c(U = 5.5, "Sö" = 5, Vs = 5, Gs = 6.5, "Nä" = 4, "Ög" = 3, "Öl" = 1.5, G = 2, Sm = 1.5, Vg = 2.5, Bo = 1.5,
+            Hs = 8, M = 8.5, D = 5, J = 7, "Ån" = 8.5, Vr = 3.5, DR = 0, "Hr" = 7)
 
 LANG <- "sv"
 FONT <- ""  # default sans; Linux Libertine O in print mode

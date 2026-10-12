@@ -962,8 +962,11 @@ Innan resultat jämförs direkt bör samma referensstenar mätas med båda metod
   WMS). Svaren cachas lokalt i `data/cache/geology.json` (ingår inte i repot).
 * **Vatten och land:** Natural Earth 1:10 miljoner (kustlinje, sjöar, vattendrag, de europeiska tilläggen och land),
   public domain. Hämtas en gång till `data/cache/r/naturalearth/`.
-* **Höjddata:** Terrain Tiles (Tilezen/Mapzen, Registry of Open Data on AWS), zoomnivå 12. Hämtas per sten till
-  `data/cache/r/terrain/`.
+* **Höjddata:** Terrain Tiles (Tilezen/Mapzen, Registry of Open Data on AWS), zoomnivå 12 per sten och zoomnivå 9
+  för korpusens strandlinje. Hämtas till `data/cache/r/terrain/`.
+* **Lämningar:** Kulturmiljöregistret (Riksantikvarieämbetet), hämtat via K-samsök (`serviceName=kmr_lamningar`):
+  gravfält, högar, färdvägar och färdvägssystem, broar, fornborgar och hamnanläggningar, en punkt per lämning
+  (`scripts/fetch_raa_remains.py`, `data/raa/lamningar.csv`, ingår inte i repot).
 * **Runor** (Riksantikvarieämbetet), utgåva 2020 av Samnordisk runtextdatabas, och **Wikidata** (CC0), för
   avstämningen i 13b. Svaren cachas i `data/cache/crosscheck/`.
 
@@ -986,7 +989,7 @@ bara räknar om den modulen och de som bygger på den (`reused` i `done.json`). 
 
 | Modul | Paket | Vad den gör |
 |---|---|---|
-| `geography.R` | sf, leaflet | ristarnas tyngdpunkter, spridning och konvexa höljen (SWEREF 99 TM); permutationstest (499 urval ur samma landskap) av om ristaren arbetade inom ett mindre område än slumpen ger (Benjamini–Hochberg); avstånd till vatten mot slumpvisa punkter på land per landskap (Wilcoxon); interaktiv karta |
+| `geography.R` | sf, leaflet | ristarnas tyngdpunkter, spridning och konvexa höljen (SWEREF 99 TM); permutationstest (499 urval ur samma landskap) av om ristaren arbetade inom ett mindre område än slumpen ger (Benjamini–Hochberg); avstånd till vatten mot slumpvisa punkter på land per landskap (Wilcoxon), också mot en modellerad strandlinje omkring år 1000 (se nedan); interaktiv karta |
 | `clusters.R` | cluster, FactoMineR, factoextra | Gowers avstånd på stil, språkdrag, kors, kortkvistrunor och innehåll (kategorierna asymmetriskt binära), PAM med k = 2–10 efter silhuettbredd, stabilitet som Jaccard-likhet i 20 delurval om 80 % (Hennig 2007), MCA; ristare och landskap jämförs efteråt (justerat Rand-index) |
 | `text.R` | tidytext, stringr | formler ur normaliseringen (resarformel, monument, ordföljd, ristarsignatur, bön) per ristare; stavning per ord mot ristare (χ² med simulerat p, Cramérs V); ordformer som utmärker en ristare (Fishers exakta test, BH); tf-idf; de 100 vanligaste runbigrammen som variabler till modellen |
 | `attribution.R` | tidymodels, ranger | random forest (500 träd) på stenar med säker ristare, ristare med minst åtta stenar (i dag 18 ristare, 497 stenar); 5-faldig stratifierad korsvalidering upprepad 3 gånger, och grupperad per socken och härad; delmodeller med bara geografi, bara stil, bara språk och innehåll; kalibrering (andel rätt per sannolikhetsnivå, ECE); permutationsvikter; förslag för stenar utan ristare inom 25 km från en träningssten |
@@ -995,8 +998,43 @@ bara räknar om den modulen och de som bygger på den (`reused` i `done.json`). 
 | `dialect.R` | stringdist | förväntat normerat Levenshtein-avstånd mellan häradernas stavning av vanliga ord; Mantel-test mot geografiskt avstånd (999 permutationer); grupper av härader (PAM); kartor över stavningen av "efter" och "sten" |
 | `network.R` | igraph, tidygraph, ggraph | ord som står i samma inskrifter (positiv PMI), grupper med Louvain; släktorden i inskrifterna (fader, moder, son, broder, félagi …) före och efter ca 1050 och i kristna mot övriga inskrifter (Fisher, BH) |
 | `change.R` | mgcv, sf | förändring i tid och rum för sexton drag (monoftong i ord med *æi* och i 'och', ʀ skrivet med r-runan, åsrunan för o-ljud, h-bortfall, nasal före konsonant, prepositionen *at*, stungna runor och stungen i, u och k, kristen bön, själsbön, kors, bro- och vägbygge, ristarsignatur): logistisk regression med utjämnad tidskurva, rumslig utjämning och ristaren som slumpeffekt; justerad andel över tid, karta, landskapen i mittperioden (omkring 1050; Holm över dragen, med observerade andelar, antal attribuerade ristare och samma test utan ristareffekten) och året då draget passerar hälften (bara för drag som stadigt ökar eller minskar); bro- och vägstenar mot kristna drag (se nedan) |
+| `remains.R` | sf | avstånd till närmaste gravfält, hög, färdväg, bro, fornborg och hamnanläggning i Kulturmiljöregistret mot slumpvisa punkter på land inom 5 km från stenarna (Wilcoxon, BH); närhet inom 500 m över tid, med kristna markörer och för brostenar (logistisk regression med landskapet konstant), prövat i korpusens två halvor; flyttade stenar räknas inte (se nedan) |
 | `stone.R` | sf, cluster, tidymodels | en sten mot korpusen: modellens sannolikheter (korsvaliderade om stenen har ristare i Rundata), avstånd till kandidaternas tyngdpunkter och höljen, grupp och närmaste grannar (Gower), formler jämförda med kandidaternas inskrifter, läge i Upplands seriation |
 | `landscape.R` | terra, gdistance | höjdmodell (ca 20 m), höjd, lutning, topografiskt positionsindex; strand vid vikingatiden som dagens höjd minus en grov landhöjning per landskap (t.ex. 5 m i Södermanland, 5,5 m i Uppland); sikt (viewshed, stenens topp 2 m, betraktare 1,6 m) mot slumpvisa platser; bästa vägar (Toblers vandringsfunktion, vatten tio gånger långsammare) mellan andra runstensplatser inom 12 km och stenens avstånd till dem mot slumpvisa punkter |
+
+**Dåtidens strand** (`geography.R`, från 2026-10-12). Landhöjningen sedan omkring år 1000 har flyttat kusten: en
+sten som stod vid en vik kan i dag stå långt in på land. Havet omkring år 1000 modelleras som land under landskapets
+landhöjning sedan dess (grova värden i `r/common.R`, t.ex. 5,5 m i Uppland, 5 m i Södermanland, 1,5 m på Öland) på en
+höjdmodell med omkring 300 m upplösning (Terrain Tiles, zoomnivå 9), tillsammans med dagens sjöar och vattendrag.
+Stenarna och samma lokala slumppunkter som i jämförelsen med dagens vatten mäts mot den strandlinjen (Wilcoxon,
+ensidigt). Beräkning 2026-10-12: stenarna står i median 3,6 km från dåtidens vatten mot 5,3 km för slumppunkterna
+(p < 0,001; med dagens vatten 4,2 mot 5,6 km). Kvoten mellan stenarnas och slumppunkternas avstånd sjunker från 0,64
+till 0,53 i Uppland, där landhöjningen är störst; skillnaden är signifikant i Uppland, Södermanland och på Öland men
+inte i Östergötland, Småland, Västergötland, Västmanland eller på Gotland. Höjdmodellens noggrannhet (några meter) är
+av samma storleksordning som landhöjningen, särskilt i flack terräng med liten landhöjning: Ölands stora förändring
+(kvoten 0,57 till 0,18) kan delvis bero på det. Låglänt inland kan räknas som hav, och igenslamning och dämning ingår
+inte. SGU:s strandförskjutningsmodell och Lantmäteriets höjdmodell skulle ge en säkrare strand.
+
+**Lämningar runt stenarna** (`remains.R`, från 2026-10-12). Hur står runstenarna i det fornlämningslandskap som
+Kulturmiljöregistret beskriver? För varje sten och för lika många slumpvisa punkter på land inom 5 km från stenarna i
+samma landskap (samma lokala nollmodell som för vattnet) mäts avståndet till närmaste gravfält, hög, färdväg
+(färdvägar och färdvägssystem), bro, fornborg och hamnanläggning; stenar och punkter jämförs med Wilcoxons test
+(ensidigt, Benjamini–Hochberg över slagen). Närhet inom 500 m modelleras med logistisk regression med landskapet
+konstant: mot stilgruppens mittår (per 50 år), mot kristna markörer (kors eller kristen formel, med tiden konstant) och
+för brostenar, och varje samband prövas i korpusens två halvor (uppdelade per socken som i `change.R`). Stenar som
+enligt Rundatas placering står vid eller i en kyrka, i en vägg, ett museum eller en samling räknas inte, eftersom de är
+flyttade (757 av 2 321; kolumnen `moved` i korpusens CSV).
+
+Beräkning 2026-10-12 (1 563 stenar, 52 674 lämningar): 61 % av stenarna står inom 500 m från ett registrerat gravfält,
+mot 21 % av slumppunkterna (median 0,36 mot 1,11 km); inom 500 m från en hög 33 % mot 9 %, från en färdväg 17 % mot 6 %.
+Närheten till gravfält gäller i Uppland, Södermanland, Östergötland, Småland och Västergötland, ändras inte över tiden
+(före omkring 1050 60 %, efter 66 %; oddskvot 0,81 per 50 år, q 0,44) och är lika stor för stenar med kristna markörer
+(oddskvot 1,08, q 0,81). Brostenar står oftare nära en registrerad färdväg (oddskvot 1,91, q 0,03), men sambandet håller
+inte i båda halvorna och redovisas därför som indikation. Att runstenar ofta står vid gravfält är känt; det nya är att
+närheten mäts mot slumpen i hela korpusen och att den varken minskar med tiden eller för kristna stenar, vilket talar för
+att gravfälten förblev släktens minnesplatser genom kristnandet. Reservationer: registret är olika väl inventerat i olika
+trakter, en lämning är en punkt (mittpunkten för en yta), de flesta lämningar är odaterade, färdvägar och broar är ofta
+medeltida eller yngre, och i enstaka fall kan ett gravfält ha registrerats just där en runsten står.
 
 **Okända ristare** (`anonymous.R`, från 2026-10-11). Kan en gruppering i statistiken vara en ristare som ännu inte
 har namn? Stenar med minst fem läsbara ord jämförs i *handens drag* – stilgrupp, kors, kortkvistrunor, språkdrag

@@ -27,3 +27,16 @@ node --experimental-strip-types scripts/i18n.mjs check # platshållarna stämmer
 
 Rapporttexter som inte syns i appen samlas genom att skapa rapporter och köra varje mening genom
 `src.i18n.translate`; det som saknas hamnar i `src.i18n.MISSING`.
+
+## Lämningar ur Kulturmiljöregistret (METHODS.md 17)
+
+Korpusanalysen `remains.R` jämför runstenarnas lägen med Riksantikvarieämbetets registrerade lämningar (gravfält,
+högar, färdvägar, broar, fornborgar, hamnanläggningar). Lämningarna hämtas en gång via K-samsök (RAÄ:s öppna API,
+omkring 53 000 poster, några minuter) till `data/raa/lamningar.csv`, som inte ingår i repot:
+
+```bash
+.venv/bin/python scripts/fetch_raa_remains.py            # alla slag som analysen använder
+.venv/bin/python scripts/fetch_raa_remains.py fornborg   # bara ett slag
+```
+
+Utan filen hoppar `remains.R` över analysen och säger att lämningarna inte är hämtade.

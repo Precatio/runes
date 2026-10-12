@@ -53,29 +53,42 @@ def _section(key, question, why, headline, answer, confidence, interpretation, n
             "interpretation": [t for t in interpretation if t], "not_saying": [t for t in not_saying if t]}
 
 
-def geography(g: dict) -> dict | None:
+def geography(g: dict, remains: dict | None = None) -> dict | None:
     carvers = g.get("carvers") or []
     if not carvers:
         return None
     n, k = len(carvers), g.get("n_compact", 0)
     w = (g.get("water") or {}).get("overall") if (g.get("water") or {}).get("available") else None
+    v = (g.get("water") or {}).get("viking_shore") or {}
     water = (f" Runstenarna står också närmare vatten än slumpvisa platser på land (median {_d(w['median_stones_km'], 1)} "
              f"mot {_d(w['median_random_km'], 1)} km)." if w and w.get("p", 1) < 0.05 else "")
+    shore = bool(water and v.get("p") is not None and v["p"] < 0.05 and v["median_stones_km"] < v["median_random_km"])
+    if shore:
+        water += (f" Mot en grovt modellerad strandlinje omkring år 1000 blir skillnaden tydligare "
+                  f"({_d(v['median_stones_km'], 1)} mot {_d(v['median_random_km'], 1)} km).")
+    grave = {x["key"]: x for x in (remains or {}).get("distances") or []}.get("gravfalt") if (remains or {}).get("available") else None
+    graves = (f" {_pct(grave['near_stones'])} av stenarna som inte är flyttade står inom "
+              f"{round(((remains or {}).get('near_km') or 0.5) * 1000)} m från ett registrerat gravfält, mot "
+              f"{_pct(grave['near_random'])} av slumpvisa platser." if grave and grave.get("q_bh", 1) < 0.05 else "")
     return _section(
         "geography", "Arbetade ristarna inom ett eget område?",
         "Om ristarna var bundna till en bygd säger stenens plats något om vem som kan ha ristat den – och om hur "
         "hantverket var organiserat.",
         {"value": f"{k} av {n}", "label": "ristare arbetade inom ett tydligt mindre område än slumpen ger"},
         f"De flesta ristare har sina stenar samlade: {k} av de {n} ristare som har minst {g.get('min_inscriptions', 5)} "
-        f"säkra stenar arbetade inom ett mindre område än lika många slumpvis valda stenar i samma landskap.{water}",
+        f"säkra stenar arbetade inom ett mindre område än lika många slumpvis valda stenar i samma landskap.{water}{graves}",
         "säkert" if k / n >= 0.6 else "troligt",
         ["Ristarna var troligen lokala hantverkare som arbetade för beställare i sin egen bygd, snarare än vandrande "
          "specialister.",
          "Platsen är därför ett rimligt – men inte avgörande – argument när en sten ska attribueras.",
-         "Närheten till vatten stämmer med att stenar restes vid färdvägar, där många passerade." if water else None],
+         "Närheten till vatten stämmer med att stenar restes vid färdvägar, där många passerade." if water else None,
+         "Närheten till gravfälten består över tiden och gäller också kristna stenar: gravfälten kan ha förblivit släktens "
+         "minnesplatser genom kristnandet." if graves else None],
         ["Testet är inte helt oberoende: forskarna har själva vägt in platsen när de attribuerat stenar, vilket gör "
          "ristarnas områden mer samlade.",
-         "Vattenkartan är grov och visar dagens stränder, inte vikingatidens." if water else None],
+         ("Vattenkartan är grov; dåtidens strand är en grov modell med höjddata vars fel är av samma storleksordning som "
+          "landhöjningen." if shore else "Vattenkartan är grov och visar dagens stränder, inte vikingatidens.") if water else None,
+         "Kulturmiljöregistret är olika väl inventerat i olika trakter, och gravfälten är sällan daterade." if graves else None],
         f"Ja – {k} av {n} ristare arbetade inom ett eget, begränsat område.")
 
 
@@ -321,7 +334,7 @@ ORDER = ["attribution", "anonymous", "change", "chronology", "geography", "text"
 def sections(res: dict) -> list[dict]:
     """En förklaring per analys, i den ordning sidan visar dem; analyser utan resultat utelämnas."""
     built = {
-        "geography": geography(res.get("geography") or {}),
+        "geography": geography(res.get("geography") or {}, res.get("remains")),
         "attribution": attribution(res.get("attribution") or {}),
         "anonymous": anonymous(res.get("anonymous") or {}),
         "chronology": chronology(res.get("chronology") or {}),
@@ -410,13 +423,29 @@ def overview(res: dict) -> dict:
         paras.append(f"**Typer av stenar.** Runstenarna faller inte i skarpa typer: de {cl['k']} grupper som finns har vaga "
                      "gränser och följer tid och kristnande (kors, stungna runor, böner) snarare än ristare.")
 
+    rm = res.get("remains") or {}
+    grave = {x["key"]: x for x in rm.get("distances") or []}.get("gravfalt") if rm.get("available") else None
+    v = (g.get("water") or {}).get("viking_shore") or {}
+    if grave and grave.get("q_bh", 1) < 0.05:
+        shore = v.get("p") is not None and v["p"] < 0.05 and v["median_stones_km"] < v["median_random_km"]
+        paras.append(
+            f"**Landskapet.** {_pct(grave['near_stones'])} av runstenarna som inte är flyttade står inom "
+            f"{round((rm.get('near_km') or 0.5) * 1000)} m från ett registrerat gravfält, mot {_pct(grave['near_random'])} "
+            "av slumpvisa platser i samma trakter"
+            + (", och närheten är densamma före och efter 1050 och för kristna stenar." if all(
+                ((rm.get("tests") or {}).get(k) or {}).get("q_bh", 0) >= 0.05 for k in ("time_gravfalt", "christian_gravfalt"))
+               else ".")
+            + (" Stenarna står också nära vatten, tydligare mot en modellerad strand omkring år 1000 än mot dagens."
+               if shore else ""))
+        steps.append("Pröva gravfältens roll mot undersökta gravfält med sena, kristna gravar.")
+
     bro = next((x for x in c.get("assoc") or [] if x.get("key") == "bro_sjal"), None)
     new_patterns = []
     if ai and ai["shape"] == "falls":
         new_patterns.append("diftongstavningens spridning")
     if len(cross) >= 2:
         new_patterns.append("de stungna runornas väg in i Mälardalen")
-    if bro and _sig((bro.get("all") or {}).get("q")):
+    if bro and _sig((bro.get("all") or {}).get("q")) and (bro.get("halves") or {}).get("replicated"):
         new_patterns.append("själsbönen på brostenar")
     if cands:
         new_patterns.append(f"{len(cands)} möjliga okända ristare")

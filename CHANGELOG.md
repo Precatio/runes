@@ -5,6 +5,29 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Stenarna i sitt landskap: nya källor
+- Lämningar ur Kulturmiljöregistret (Riksantikvarieämbetet, via K-samsök): gravfält, högar, färdvägar, broar,
+  fornborgar och hamnanläggningar, omkring 53 000 poster (`scripts/fetch_raa_remains.py`). Den nya korpusanalysen
+  `remains.R` jämför stenarnas avstånd till lämningarna med slumpvisa punkter i samma trakter och prövar om närheten
+  skiftar med tiden, med kristna markörer och för brostenar, i båda halvorna av korpusen. Flyttade stenar (vid kyrkor, i
+  museer) räknas inte. Resultaten visas under Geografi i Statistik och som mönster i Forskningsluckor: 61 % av stenarna
+  står inom 500 m från ett gravfält mot 21 % av slumppunkterna, lika ofta före som efter 1050 och för kristna stenar.
+  Att brostenar står nära färdvägar håller inte i båda halvorna och är en indikation.
+- Dåtidens strand: avståndet till vatten prövas också mot en modellerad strandlinje omkring år 1000 (dagens höjd under
+  landskapets landhöjning, terrängmodell med omkring 300 m upplösning), med samma slumppunkter som för dagens vatten.
+  Närheten blir tydligare (3,6 mot 5,3 km; i Uppland kvoten 0,64 → 0,53) och redovisas som mönster att pröva.
+- Helhetsbilden i Statistik har ett stycke om landskapet, och själsbönen på brostenar räknas inte längre som nytt
+  mönster när den inte håller i båda halvorna.
+- Landningssidan har ett nytt avsnitt om de nya källorna och vad de tillför.
+
+### Månadens fynd (blogg)
+- En blogg på /blogg med ett inlägg i månaden om de mest intressanta mönstren och fynden. Inläggen skrivs och
+  publiceras för hand i Admin; knappen "Utkast från månadens fynd" fyller i ett utkast med de mönster som är nya eller
+  har ändrat status sedan förra publicerade inlägget, månadens största förskjutning i mönsterkartan och en engelsk
+  version ur ordlistan. Inläggen kan ha en egen engelsk version.
+- Inläggen ligger i Firestore-samlingen `posts`, som bara servern läser och skriver; regeln för webbläsarna är
+  oförändrad (stängd), så ingen ändrad regel behöver driftsättas.
+
 ### Mönsterkarta
 - Kartan öppnar med en mönsterkarta: sexkanter färgade efter hur stor andel av stenarna i området som har ett mönster –
   tro (kristna, hedniska eller rituella markörer, utan religiösa markörer, bön, själsbön, kors), skrift (stungna runor,

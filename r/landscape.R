@@ -23,10 +23,7 @@ N_NEIGH <- 8
 N_RANDOM <- 300
 tile_dir <- if (is.null(P$tile_dir)) file.path(out, "tiles") else P$tile_dir
 
-# Approximate land uplift since c. AD 1000 (m), coarse values per province. Mälardalen about 5 m is the
-# commonly cited figure; elsewhere the values follow today's uplift pattern (high in the north, near zero in Skåne).
-UPLIFT <- c(U = 5.5, "Sö" = 5, Vs = 5, Gs = 6.5, "Nä" = 4, "Ög" = 3, "Öl" = 1.5, G = 2, Sm = 1.5, Vg = 2.5, Bo = 1.5,
-            Hs = 8, M = 8.5, D = 5, J = 7, "Ån" = 8.5, Vr = 3.5, DR = 0, "Hr" = 7)
+# The land uplift since c. AD 1000 per province (UPLIFT) is in common.R, shared with the corpus shoreline test
 
 d <- read_corpus(P$corpus) %>% filter(!is.na(lat))
 row <- d[d$signum == P$signum, ]

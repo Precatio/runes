@@ -119,12 +119,15 @@ if (!is.null(W)) {
   # i.e. the landscape where stones were raised (people lived near water, so a province-wide null is too easy). The
   # province-wide null (the runestone area's convex hull) is kept as a coarser comparison.
   LOCAL_KM <- 5
-  sample_land <- function(area, n) {
+  # The points are kept (rnd_pts) so that the Viking Age shoreline below is measured from the same points
+  rnd_pts <- list()
+  sample_land <- function(area, n, keep = NULL) {
     if (!is.null(W$land)) area <- suppressWarnings(suppressMessages(st_intersection(area, W$land)))
     if (!length(area) || all(st_is_empty(area))) return(NULL)
     s <- st_sample(area, size = n * 2, type = "random")
     if (!is.null(W$lakes)) s <- s[!lengths(st_intersects(s, W$lakes))]
     s <- s[seq_len(min(length(s), n))]
+    if (!is.null(keep) && length(s)) rnd_pts[[keep]] <<- s
     if (length(s)) as.numeric(st_distance(s, W$lines)) / 1000 else NULL
   }
   prov_n <- table(d$province)
@@ -132,7 +135,7 @@ if (!is.null(W)) {
   rnd <- list(); rnd_regional <- list()
   for (pv in provs) {
     g <- st_geometry(pts)[d$province == pv]
-    loc <- sample_land(st_union(st_buffer(g, LOCAL_KM * 1000)), as.integer(prov_n[pv]))
+    loc <- sample_land(st_union(st_buffer(g, LOCAL_KM * 1000)), as.integer(prov_n[pv]), keep = pv)
     if (length(loc)) rnd[[pv]] <- data.frame(province = pv, water_km = loc)
     reg <- sample_land(st_buffer(st_convex_hull(st_union(g)), 2000), as.integer(prov_n[pv]))
     if (length(reg)) rnd_regional[[pv]] <- data.frame(province = pv, water_km = reg)
@@ -171,6 +174,75 @@ if (!is.null(W)) {
     bridges = list(n = length(bro), median_bridge_km = r3(median(bro)), median_other_km = r3(median(other)),
                    p = signif(bt$p.value, 3))
   )
+  # ---- the Viking Age shoreline ------------------------------------------------------------------------------------
+  # Land uplift since c. AD 1000 has moved the coast: a stone that stood by a bay may now stand far inland. The sea of
+  # c. AD 1000 is modelled as land below the province's uplift (the coarse values in r/common.R; SGU's
+  # shoreline-displacement model would be finer) on a terrain model at about 300 m, together with today's lakes and
+  # rivers. Stones and the same local random points are compared with that shoreline. Low ground inland can be
+  # counted as sea, and sedimentation and damming are ignored, so the result is a rough first test.
+  viking <- tryCatch({
+    suppressPackageStartupMessages(library(terra))
+    tile_dir <- if (is.null(P$tile_dir)) file.path(out, "tiles") else P$tile_dir
+    Z <- 9
+    tile_xy <- function(lon, lat, z) { n <- 2^z
+      c(floor((lon + 180) / 360 * n), floor((1 - log(tan(lat * pi / 180) + 1 / cos(lat * pi / 180)) / pi) / 2 * n)) }
+    merc <- function(x, y, z) { n <- 2^z; R <- 6378137; size <- 2 * pi * R / n; o <- pi * R
+      c(x * size - o, (x + 1) * size - o, o - (y + 1) * size, o - y * size) }
+    dem_for <- function(bb) {
+      t0 <- tile_xy(bb[["xmin"]], bb[["ymax"]], Z); t1 <- tile_xy(bb[["xmax"]], bb[["ymin"]], Z)
+      tl <- list()
+      for (tx in t0[1]:t1[1]) for (ty in t0[2]:t1[2]) {
+        f <- file.path(tile_dir, Z, tx, paste0(ty, ".png"))
+        if (!file.exists(f)) {
+          dir.create(dirname(f), recursive = TRUE, showWarnings = FALSE)
+          url <- sprintf("https://s3.amazonaws.com/elevation-tiles-prod/terrarium/%d/%d/%d.png", Z, tx, ty)
+          ok <- tryCatch(download.file(url, f, mode = "wb", quiet = TRUE) == 0, error = function(e) FALSE)
+          if (!ok) { unlink(f); next }
+        }
+        img <- png::readPNG(f) * 255
+        b <- merc(tx, ty, Z)
+        tl[[length(tl) + 1]] <- rast(img[, , 1] * 256 + img[, , 2] + img[, , 3] / 256 - 32768,
+                                     extent = ext(b[1], b[2], b[3], b[4]), crs = "EPSG:3857")
+      }
+      if (!length(tl)) return(NULL)
+      if (length(tl) == 1) tl[[1]] else merge(sprc(tl))
+    }
+    rows_v <- list(); st_v <- list(); rn_v <- list()
+    for (pv in names(rnd_pts)) {
+      up <- if (pv %in% names(UPLIFT)) UPLIFT[[pv]] else 3
+      g <- st_geometry(pts)[d$province == pv]
+      area <- st_buffer(st_as_sfc(st_bbox(st_union(c(g, rnd_pts[[pv]])))), 15000)
+      bb <- st_bbox(st_transform(area, 4326))
+      dem_m <- dem_for(bb)
+      if (is.null(dem_m)) next
+      # The extent snapped to whole 300 m cells, so that the cells are square and the distances exact
+      e <- as.vector(ext(vect(st_sf(geometry = area))))
+      e <- c(floor(e[1] / 300) * 300, ceiling(e[2] / 300) * 300, floor(e[3] / 300) * 300, ceiling(e[4] / 300) * 300)
+      template <- rast(ext(e), resolution = 300, crs = "EPSG:3006")
+      dem <- project(dem_m, template, method = "bilinear")
+      sea <- dem <= up
+      if (!is.null(W$lakes)) sea <- sea | !is.na(rasterize(vect(st_sf(geometry = W$lakes)), dem, touches = TRUE))
+      if (!is.null(W$lines)) sea <- sea | !is.na(rasterize(vect(st_sf(geometry = W$lines)), dem, touches = TRUE))
+      sea[sea == 0] <- NA
+      dist <- distance(sea) / 1000
+      ds <- terra::extract(dist, vect(st_sf(geometry = g)))[, 2]
+      dr <- terra::extract(dist, vect(st_sf(geometry = rnd_pts[[pv]])))[, 2]
+      ds <- ds[!is.na(ds)]; dr <- dr[!is.na(dr)]
+      if (length(ds) < 10 || length(dr) < 10) next
+      st_v[[pv]] <- ds; rn_v[[pv]] <- dr
+      rows_v[[pv]] <- list(province = pv, uplift_m = up, n = length(ds), median_stones_km = r3(median(ds)),
+                           median_random_km = r3(median(dr)), p = signif(wilcox.test(ds, dr, alternative = "less")$p.value, 3))
+    }
+    if (!length(rows_v)) NULL else {
+      all_s <- unlist(st_v); all_r <- unlist(rn_v)
+      vw <- wilcox.test(all_s, all_r, alternative = "less")
+      list(n_stones = length(all_s), n_random = length(all_r), median_stones_km = r3(median(all_s)),
+           median_random_km = r3(median(all_r)), p = signif(vw$p.value, 3), resolution_m = 300, zoom = Z,
+           provinces = unname(rows_v))
+    }
+  }, error = function(e) list(error = conditionMessage(e)))
+  water$viking_shore <- viking
+
   # Figure: distance to water, runestones vs random points on land
   long <- bind_rows(data.frame(group = tr("Runstenar", "Runestones"), water_km = stones$water_km),
                     data.frame(group = tr("Slumpvisa punkter inom 5 km från runstenar", "Random points within 5 km of runestones"), water_km = rnd$water_km))
