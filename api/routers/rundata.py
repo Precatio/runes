@@ -1,7 +1,8 @@
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Request
 
+from api.cache import cached_json
 from api.rundata import ATTRIBUTION_NOTE, store
 from src.styles import SOURCE as STYLE_SOURCE, STYLE_GROUPS
 
@@ -69,8 +70,17 @@ OTHER_REGIONS = {"N": "Norge", "DR": "Danmark", "IS": "Island", "GR": "Grönland
 
 
 @router.get("/geo")
-def geo():
-    """Inskrifter med koordinater för kartan, med etiketter för landskap, innehåll och språkdrag."""
+def geo(request: Request):
+    """Inskrifter med koordinater för kartan, med etiketter för landskap, innehåll och språkdrag. Byggs en gång per
+    Rundata-version (api/cache.py)."""
+    return cached_json(request, geo_key(), _geo)
+
+
+def geo_key() -> str:
+    return f"geo|{id(store().inscriptions)}"
+
+
+def _geo() -> dict:
     from src.inscription_types import CATEGORIES
     from src.language_profile import TRAITS
     from src.research_gaps import PROVINCE_NAMES

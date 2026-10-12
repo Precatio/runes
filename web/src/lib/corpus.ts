@@ -6,10 +6,7 @@
 //   corpus/{id}                     main entry (metrics per slice, summary, metadata) – small
 //   corpus/{id}/raw/{n}             raw cross-section profiles in chunks, for recomputation
 //   corpus/{id}/runeforms/{cropId}  rune forms from the 2D analysis
-import {
-  arrayUnion, collection, doc, getDocs, orderBy, query, updateDoc, writeBatch,
-} from "firebase/firestore";
-import { auth, db as firestore } from "@/firebase/config";
+import { currentUser, firestoreLib } from "@/firebase/config";
 import { API_URL } from "@/lib/api";
 import { METRICS, type FeatureType, type Metric, type SliceMetrics, type Summary } from "@/lib/metrics";
 import type { AnalysisProvenance, GrooveSummaryLite, PaleographicCrop } from "@/lib/db";
@@ -129,8 +126,9 @@ export type NewCorpusEntry = Omit<CorpusEntry, "id" | "contributorUid" | "create
 
 export const corpus = {
   list: async (): Promise<CorpusEntry[]> => {
-    if (!auth.currentUser) return [];
-    const snap = await getDocs(query(collection(firestore, COLLECTION), orderBy("createdAt", "desc")));
+    if (!(await currentUser())) return [];
+    const fs = await firestoreLib();
+    const snap = await fs.getDocs(fs.query(fs.collection(fs.db, COLLECTION), fs.orderBy("createdAt", "desc")));
     return snap.docs.map(d => d.data() as CorpusEntry);
   },
 
@@ -138,8 +136,9 @@ export const corpus = {
     entry: NewCorpusEntry,
     extras: { includeRaw: boolean; runeForms?: PaleographicCrop[] },
   ): Promise<CorpusEntry> => {
-    const user = auth.currentUser;
+    const user = await currentUser();
     if (!user) throw new Error("Du måste vara inloggad för att bidra till korpusen.");
+    const fs = await firestoreLib();
     for (const m of METRICS) {
       if (!Number.isFinite(entry.means[m])) throw new Error(`Mätvärdet ${m} saknas.`);
     }
@@ -168,15 +167,15 @@ export const corpus = {
       rune_groups: groups.length ? groups : undefined,
       verifications: [],
     };
-    const batch = writeBatch(firestore);
-    batch.set(doc(firestore, COLLECTION, id), clean(full));
-    chunks.forEach((profiles, n) => batch.set(doc(firestore, COLLECTION, id, "raw", String(n)), clean({ index: n, profiles })));
+    const batch = fs.writeBatch(fs.db);
+    batch.set(fs.doc(fs.db, COLLECTION, id), clean(full));
+    chunks.forEach((profiles, n) => batch.set(fs.doc(fs.db, COLLECTION, id, "raw", String(n)), clean({ index: n, profiles })));
     for (const f of forms) {
       const form: RuneForm = {
         id: f.id, tag: f.tag, featureVector: f.featureVector!, featureVersion: f.featureVersion!,
         formPng: f.formPng, grooveSummary: f.grooveSummary,
       };
-      batch.set(doc(firestore, COLLECTION, id, "runeforms", f.id), clean(form));
+      batch.set(fs.doc(fs.db, COLLECTION, id, "runeforms", f.id), clean(form));
     }
     await batch.commit();
     return full;
@@ -184,7 +183,8 @@ export const corpus = {
 
   rawProfiles: async (entry: CorpusEntry): Promise<RawProfile[]> => {
     if (!entry.raw_profile_chunks) return [];
-    const snap = await getDocs(collection(firestore, COLLECTION, entry.id, "raw"));
+    const fs = await firestoreLib();
+    const snap = await fs.getDocs(fs.collection(fs.db, COLLECTION, entry.id, "raw"));
     return snap.docs
       .map(d => d.data() as { index: number; profiles: RawProfile[] })
       .sort((a, b) => a.index - b.index)
@@ -193,7 +193,8 @@ export const corpus = {
 
   runeForms: async (entry: CorpusEntry): Promise<RuneForm[]> => {
     if (!entry.rune_forms) return [];
-    const snap = await getDocs(collection(firestore, COLLECTION, entry.id, "runeforms"));
+    const fs = await firestoreLib();
+    const snap = await fs.getDocs(fs.collection(fs.db, COLLECTION, entry.id, "runeforms"));
     return snap.docs.map(d => d.data() as RuneForm);
   },
 
@@ -215,28 +216,31 @@ export const corpus = {
     if (!recomputed.summary) throw new Error("Inga snitt kunde räknas om.");
     const slices = entry.slices.map((s, i) => (recomputed.slices[i] ? { ...s, ...recomputed.slices[i]! } : s));
     const means = Object.fromEntries(METRICS.map(m => [m, recomputed.summary![m].mean])) as Record<Metric, number>;
-    await updateDoc(doc(firestore, COLLECTION, entry.id), clean({
+    const fs = await firestoreLib();
+    await fs.updateDoc(fs.doc(fs.db, COLLECTION, entry.id), clean({
       slices, means, summary: recomputed.summary, method_version: recomputed.method_version,
       recomputedAt: new Date().toISOString(),
     }));
   },
 
   verify: async (entry: CorpusEntry, v: Omit<Verification, "uid" | "date">) => {
-    const user = auth.currentUser;
+    const user = await currentUser();
     if (!user) throw new Error("Logga in för att verifiera.");
+    const fs = await firestoreLib();
     if (user.uid === entry.contributorUid) throw new Error("Du kan inte verifiera din egen mätning.");
     const verification: Verification = { ...v, uid: user.uid, date: new Date().toISOString() };
-    await updateDoc(doc(firestore, COLLECTION, entry.id), { verifications: arrayUnion(clean(verification)) });
+    await fs.updateDoc(fs.doc(fs.db, COLLECTION, entry.id), { verifications: fs.arrayUnion(clean(verification)) });
     return verification;
   },
 
   remove: async (entry: CorpusEntry) => {
-    const batch = writeBatch(firestore);
+    const fs = await firestoreLib();
+    const batch = fs.writeBatch(fs.db);
     for (const sub of ["raw", "runeforms"]) {
-      const snap = await getDocs(collection(firestore, COLLECTION, entry.id, sub));
+      const snap = await fs.getDocs(fs.collection(fs.db, COLLECTION, entry.id, sub));
       snap.docs.forEach(d => batch.delete(d.ref));
     }
-    batch.delete(doc(firestore, COLLECTION, entry.id));
+    batch.delete(fs.doc(fs.db, COLLECTION, entry.id));
     await batch.commit();
   },
 };

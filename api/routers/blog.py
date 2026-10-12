@@ -42,12 +42,27 @@ def _iso(d: dict) -> dict:
     return {k: (v.isoformat() if hasattr(v, "isoformat") else v) for k, v in d.items()}
 
 
+# The posts change only when the founder saves, so they are read from Firestore at most once a minute (and again at once
+# after a save or a deletion)
+_POSTS: dict = {"at": 0.0, "posts": None}
+POSTS_TTL = 60
+
+
 def _all() -> list[dict]:
+    import time
+    if _POSTS["posts"] is not None and time.time() - _POSTS["at"] < POSTS_TTL:
+        return [dict(p) for p in _POSTS["posts"]]
     try:
         docs = firestore().collection(COLLECTION).stream()
-        return [{"id": d.id, **_iso(d.to_dict())} for d in docs]
+        posts = [{"id": d.id, **_iso(d.to_dict())} for d in docs]
     except Exception as e:
         raise server_error(e, "Blogginläggen kunde inte hämtas.", status_code=503)
+    _POSTS.update(at=time.time(), posts=posts)
+    return [dict(p) for p in posts]
+
+
+def _forget() -> None:
+    _POSTS.update(at=0.0, posts=None)
 
 
 def _published() -> list[dict]:
@@ -98,6 +113,7 @@ def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
         if not old:
             data["createdAt"] = now
         ref.set(data, merge=True)
+        _forget()
     except HTTPException:
         raise
     except Exception as e:
@@ -109,6 +125,7 @@ def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
 def delete_post(post_id: str, _: dict = Depends(require_admin)):
     try:
         firestore().collection(COLLECTION).document(post_id).delete()
+        _forget()
     except Exception as e:
         raise server_error(e, "Inlägget kunde inte tas bort.", status_code=503)
     return {"id": post_id, "deleted": True}

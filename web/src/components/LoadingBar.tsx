@@ -42,8 +42,10 @@ function patchFetch() {
       finish(id);
       throw e;
     }
-    // A compressed body is counted after decompression, so its size is then unknown
-    const total = res.headers.get("content-encoding") ? 0 : Number(res.headers.get("content-length")) || 0;
+    // The body is counted after decompression: the server gives the uncompressed size in X-Content-Length (api/cache.py);
+    // without it a compressed body's size is unknown
+    const total = Number(res.headers.get("x-content-length"))
+      || (res.headers.get("content-encoding") ? 0 : Number(res.headers.get("content-length")) || 0);
     if (!res.body) { finish(id); return res; }
     const load = loads.get(id);
     if (load) load.total = total;

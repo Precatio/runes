@@ -4,7 +4,7 @@ from __future__ import annotations
 import os
 from functools import lru_cache
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import FileResponse, Response
 
 from api.rundata import store
@@ -163,13 +163,19 @@ def hotspots():
 
 
 @router.get("/corpus")
-def corpus_results():
+def corpus_results(request: Request):
     """Resultaten av korpusanalyserna med figurernas adresser och de mönster appen ser."""
     _require_r()
     fp = fingerprint()
-    res = rb.JOB.result(fp)
-    if res is None:
+    if rb.JOB.result(fp) is None:
         raise HTTPException(status_code=409, detail="Korpusanalyserna är inte beräknade än. Starta dem med POST /api/r/corpus/run.")
+    from api.cache import cached_json, dir_version
+    from src import crosscheck
+    return cached_json(request, f"corpus|{fp}|{dir_version(crosscheck.CACHE)}", lambda: _corpus_results(fp))
+
+
+def _corpus_results(fp: str) -> dict:
+    res = rb.JOB.result(fp)
     stone, patterns = _findings(fp)
     stone = _with_crosscheck(stone)
     html_map = (res.get("geography") or {}).get("html_map")

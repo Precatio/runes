@@ -2,6 +2,8 @@ import os
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.gzip import DEFAULT_EXCLUDED_CONTENT_TYPES, GZipMiddleware
+from api.cache import ContentLengthHeader
 from api.routers import admin, blog, chat, threed, twod, raa, synthesis, phonetics, rundata, stats, orthography, research, reports, rstats, limitations, docs
 
 app = FastAPI(title="Vitki API")
@@ -23,7 +25,16 @@ def _warm_caches():
             research._hypotheses()
             research._open_questions()
             research._orthographic_findings()
-            research.research_findings(research.FindingsRequest())  # also the interpretation levels (disk cache)
+            # The large answers as ready JSON (api/cache.py), so that the first visitor does not wait for them; the
+            # findings also fill the interpretation levels' disk cache
+            from api.cache import json_bytes
+            req = research.FindingsRequest()
+            json_bytes(research.findings_key(req), lambda: research.research_findings(req))
+            from api.routers import rundata
+            json_bytes(rundata.geo_key(), rundata._geo)
+            json_bytes(research.pattern_map_key(), research._pattern_map)
+            fp = research._fp()
+            json_bytes(research.overview_key(fp), lambda: research._overview(fp))
         except Exception as e:  # warming is an optimisation; requests compute what they need
             from api.errors import logger
             logger.warning("Uppvärmningen av cachen misslyckades: %r", e)
@@ -33,12 +44,18 @@ def _warm_caches():
 # Configure CORS for Next.js frontend (comma-separated list in CORS_ORIGINS)
 CORS_ORIGINS = [o.strip() for o in os.environ.get("CORS_ORIGINS", "http://localhost:3000").split(",") if o.strip()]
 
+# The last added middleware is the outermost: CORS → gzip → the uncompressed size → the app. JSON compresses to about a
+# tenth; images, zip archives and Word files are already compressed and are sent as they are.
+app.add_middleware(ContentLengthHeader)
+app.add_middleware(GZipMiddleware, minimum_size=1024, compresslevel=5, exclude_content_types=(
+    *DEFAULT_EXCLUDED_CONTENT_TYPES, "application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
 app.add_middleware(
     CORSMiddleware,
     allow_origins=CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["X-Content-Length", "Content-Encoding"],
 )
 
 app.include_router(chat.router, prefix="/api/chat", tags=["chat"])

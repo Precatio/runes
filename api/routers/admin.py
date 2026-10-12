@@ -100,6 +100,28 @@ class MessageRequest(BaseModel):
     level: Literal["info", "viktigt"] = "info"
 
 
+# The messages to everyone, for the bell in the top bar: read on the server and kept for a minute, so that visitors who
+# are not signed in do not need to load Firestore in the browser (web/src/components/Messages.tsx)
+_PUBLIC: dict = {"at": 0.0, "messages": None}
+
+
+@router.get("/messages")
+def public_messages():
+    """Meddelandena till alla, nyaste först (utan avsändarens konto)."""
+    import time
+    if _PUBLIC["messages"] is not None and time.time() - _PUBLIC["at"] < 60:
+        return {"messages": _PUBLIC["messages"]}
+    try:
+        docs = firestore().collection("messages").where("to", "==", "all").stream()
+        msgs = [{"id": d.id, **{k: (v.isoformat() if hasattr(v, "isoformat") else v) for k, v in d.to_dict().items()
+                                if k in ("title", "body", "to", "level", "createdAt")}} for d in docs]
+    except Exception as e:
+        raise server_error(e, "Meddelandena kunde inte hämtas.", status_code=503)
+    msgs.sort(key=lambda m: m.get("createdAt") or "", reverse=True)
+    _PUBLIC.update(at=time.time(), messages=msgs)
+    return {"messages": msgs}
+
+
 @router.get("/admin/messages")
 def list_messages(_: dict = Depends(require_admin)):
     try:
@@ -118,6 +140,7 @@ def send_message(req: MessageRequest, admin: dict = Depends(require_admin)):
     try:
         ref = firestore().collection("messages").document()
         ref.set(data)
+        _PUBLIC.update(at=0.0, messages=None)
     except Exception as e:
         raise server_error(e, "Meddelandet kunde inte skickas.", status_code=503)
     return {"id": ref.id, **{k: (v.isoformat() if hasattr(v, "isoformat") else v) for k, v in data.items()}}
@@ -127,6 +150,7 @@ def send_message(req: MessageRequest, admin: dict = Depends(require_admin)):
 def delete_message(message_id: str, _: dict = Depends(require_admin)):
     try:
         firestore().collection("messages").document(message_id).delete()
+        _PUBLIC.update(at=0.0, messages=None)
     except Exception as e:
         raise server_error(e, "Meddelandet kunde inte tas bort.", status_code=503)
     return {"id": message_id, "deleted": True}

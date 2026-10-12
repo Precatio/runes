@@ -3,9 +3,10 @@ import json
 import os
 from functools import lru_cache
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from pydantic import BaseModel, Field
 
+from api.cache import cached_json, dir_version
 from api.rundata import store
 from api.routers.orthography import model as orthography_model
 from src import findings, research_gaps as gaps
@@ -59,8 +60,20 @@ def _orthographic_findings() -> tuple:
 
 
 @router.post("/findings")
+def research_findings_endpoint(req: FindingsRequest):
+    """Appens resultat mot Rundata: stämmer, nytt eller motsäger – med en öppet redovisad uppskattning. Svaret sparas per
+    begäran, korpusanalysernas version och avstämningarna mot Runor (api/cache.py)."""
+    return cached_json(None, findings_key(req), lambda: research_findings(req))
+
+
+def findings_key(req: FindingsRequest) -> str:
+    import hashlib
+    from src import crosscheck
+    body = hashlib.sha256(req.model_dump_json().encode()).hexdigest()[:16]
+    return f"findings|{body}|{_fp()}|{dir_version(crosscheck.CACHE)}|{id(store().inscriptions)}"
+
+
 def research_findings(req: FindingsRequest):
-    """Appens resultat mot Rundata: stämmer, nytt eller motsäger – med en öppet redovisad uppskattning."""
     s = store()
     technique, technique_note = findings.technique_findings(req.corpus, s.get, s.inscriptions)
     extra = findings.add_extras(technique + findings.style_findings(req.styles, s.get, s.inscriptions),
@@ -191,10 +204,15 @@ def _pattern_map() -> dict:
 
 
 @router.get("/pattern-map")
-def pattern_map():
+def pattern_map(request: Request):
     """Mönsterkartan: varje runstens plats, stilgruppens mittår, om den har varje mönster och avståndet till närmaste
     plats av varje sort (src/pattern_map.py, src/places.py)."""
-    return _pattern_map()
+    return cached_json(request, pattern_map_key(), _pattern_map)
+
+
+def pattern_map_key() -> str:
+    from src import places
+    return f"pattern-map|{places._mtimes()}|{id(store().inscriptions)}"
 
 
 @router.get("/places")
@@ -323,9 +341,14 @@ def _fp() -> str:
 
 
 @router.get("/overview")
-def stones_overview():
+def stones_overview(request: Request):
     """Alla runstenar med stöd för Rundatas ristare, starkaste alternativ och status (METHODS.md 13c)."""
-    return _overview(_fp())
+    fp = _fp()
+    return cached_json(request, overview_key(fp), lambda: _overview(fp))
+
+
+def overview_key(fp: str) -> str:
+    return f"overview|{fp}|{id(store().inscriptions)}"
 
 
 @router.get("/overview/{signum:path}")

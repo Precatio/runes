@@ -9,7 +9,9 @@ import os
 import re
 from functools import lru_cache
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
+
+from api.cache import cached_json
 
 from src import limitations
 
@@ -74,14 +76,18 @@ def _methods(mtimes: tuple) -> dict:
 
 
 @router.get("/methods")
-def methods():
+def methods(request: Request):
     """METHODS.md (alla metoder, beräkningar, valideringar och kända brister) och PROTOCOL.md (Vitki-protokollet)
     som HTML med innehållsförteckning."""
-    out = dict(_methods(tuple(os.path.getmtime(os.path.join(ROOT, d)) for d in DOCS)))
-    out["source"] = REPO + "METHODS.md"
-    out["protocol_source"] = REPO + "PROTOCOL.md"
-    out["limitations_version"] = limitations.VERSION
-    return out
+    stamp = tuple(os.path.getmtime(os.path.join(ROOT, d)) for d in DOCS)
+
+    def build():
+        out = dict(_methods(stamp))
+        out["source"] = REPO + "METHODS.md"
+        out["protocol_source"] = REPO + "PROTOCOL.md"
+        out["limitations_version"] = limitations.VERSION
+        return out
+    return cached_json(request, f"methods|{stamp}|{limitations.VERSION}", build)
 
 
 def _docstring(path: str) -> str:

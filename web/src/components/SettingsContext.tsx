@@ -2,8 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useMemo, useState, ReactNode } from "react";
 import { useAuth } from "./AuthContext";
-import { db as firestore } from "@/firebase/config";
-import { doc, getDoc, setDoc, updateDoc, deleteField } from "firebase/firestore";
+import { firestoreLib } from "@/firebase/config";
 
 export type AIProvider = "claude" | "gemini";
 
@@ -64,6 +63,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       
       if (user) {
         try {
+          const { db: firestore, doc, getDoc, updateDoc, deleteField } = await firestoreLib();
           const docRef = doc(firestore, `users/${user.uid}/settings`, "profile");
           const snap = await getDoc(docRef);
           if (snap.exists()) {
@@ -106,7 +106,9 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
         savedInst = "Vitki";
         localStorage.setItem("vitki_user_inst", savedInst);
         if (user) {
-          setDoc(doc(firestore, `users/${user.uid}/settings`, "profile"), { userInstitution: savedInst }, { merge: true })
+          const inst = savedInst;
+          firestoreLib()
+            .then(({ db: firestore, doc, setDoc }) => setDoc(doc(firestore, `users/${user.uid}/settings`, "profile"), { userInstitution: inst }, { merge: true }))
             .catch(e => console.error("Failed to save setting to Firestore:", e));
         }
       }
@@ -120,6 +122,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   const saveToFirestore = async (key: string, value: string) => {
     if (user) {
        try {
+         const { db: firestore, doc, setDoc } = await firestoreLib();
          const docRef = doc(firestore, `users/${user.uid}/settings`, "profile");
          await setDoc(docRef, { [key]: value }, { merge: true });
        } catch (e) {
@@ -146,15 +149,12 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("vitki_token_history", JSON.stringify(newHistory));
     
     if (user) {
-       try {
-         const docRef = doc(firestore, `users/${user.uid}/settings`, "profile");
-         setDoc(docRef, { 
+       firestoreLib()
+         .then(({ db: firestore, doc, setDoc }) => setDoc(doc(firestore, `users/${user.uid}/settings`, "profile"), {
            totalTokensUsed: newTotal,
-           tokenHistory: newHistory 
-         }, { merge: true });
-       } catch (e) {
-         console.error("Failed to save tokens to Firestore:", e);
-       }
+           tokenHistory: newHistory
+         }, { merge: true }))
+         .catch(e => console.error("Failed to save tokens to Firestore:", e));
     }
   };
 

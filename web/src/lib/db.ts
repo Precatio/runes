@@ -1,5 +1,4 @@
-import { db as firestore, auth } from "@/firebase/config";
-import { collection, doc, getDocs, getDoc, setDoc, deleteDoc } from "firebase/firestore";
+import { currentUser, firestoreLib } from "@/firebase/config";
 import type { FeatureType, Metric, SliceMetrics, Summary } from "@/lib/metrics";
 
 export interface SliceData {
@@ -246,12 +245,13 @@ const REPORT_STORAGE_KEY = "vitki_reports";
 export const db = {
   getProjects: async (): Promise<ProjectData[]> => {
     if (typeof window === "undefined") return [];
-    const user = auth.currentUser;
+    const user = await currentUser();
     
     let firestoreProjects: ProjectData[] = [];
     if (user) {
+      const fs = await firestoreLib();
       try {
-        const querySnapshot = await getDocs(collection(firestore, `users/${user.uid}/projects`));
+        const querySnapshot = await fs.getDocs(fs.collection(fs.db, `users/${user.uid}/projects`));
         firestoreProjects = querySnapshot.docs.map(doc => doc.data() as ProjectData);
       } catch (error) {
         console.error("Failed to fetch from Firestore:", error);
@@ -274,11 +274,12 @@ export const db = {
   },
   
   getProject: async (id: string): Promise<ProjectData | null> => {
-    const user = auth.currentUser;
+    const user = await currentUser();
     if (user) {
+      const fs = await firestoreLib();
       try {
-        const docRef = doc(firestore, `users/${user.uid}/projects`, id);
-        const docSnap = await getDoc(docRef);
+        const docRef = fs.doc(fs.db, `users/${user.uid}/projects`, id);
+        const docSnap = await fs.getDoc(docRef);
         if (docSnap.exists()) {
           const local: ProjectData[] = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
           return preferRicher(docSnap.data() as ProjectData, local.find(p => p.id === id));
@@ -306,7 +307,7 @@ export const db = {
     const isNew = !project.id;
     const projectId = project.id || "proj_" + Math.random().toString(36).substring(2, 9);
     
-    const user = auth.currentUser;
+    const user = await currentUser();
     
     // Retrieve existing to merge if it exists
     let existingProject: ProjectData | null = null;
@@ -324,8 +325,9 @@ export const db = {
 
     // Save to Firestore if logged in
     if (user) {
+      const fs = await firestoreLib();
       try {
-        const docRef = doc(firestore, `users/${user.uid}/projects`, projectId);
+        const docRef = fs.doc(fs.db, `users/${user.uid}/projects`, projectId);
         // Strip heavy base64 images before saving to Firestore to avoid 1MB document limit
         let firestoreProject = { ...savedProject };
         delete firestoreProject.plotImage;
@@ -335,7 +337,7 @@ export const db = {
           firestoreProject = withoutSliceDetail(firestoreProject);
         }
         
-        await setDoc(docRef, firestoreProject);
+        await fs.setDoc(docRef, firestoreProject);
       } catch (error) {
         console.error("Failed to save project to Firestore:", error);
       }
@@ -369,11 +371,12 @@ export const db = {
   },
   
   deleteProject: async (id: string): Promise<void> => {
-    const user = auth.currentUser;
+    const user = await currentUser();
     if (user) {
+      const fs = await firestoreLib();
       try {
-        const docRef = doc(firestore, `users/${user.uid}/projects`, id);
-        await deleteDoc(docRef);
+        const docRef = fs.doc(fs.db, `users/${user.uid}/projects`, id);
+        await fs.deleteDoc(docRef);
       } catch (error) {
         console.error("Failed to delete project from Firestore:", error);
       }
@@ -389,8 +392,9 @@ export const db = {
   
   // Method to manually migrate local projects to cloud
   migrateLocalToCloud: async (): Promise<void> => {
-    const user = auth.currentUser;
+    const user = await currentUser();
     if (!user) return;
+    const fs = await firestoreLib();
     
     const data = localStorage.getItem(STORAGE_KEY);
     if (!data) return;
@@ -398,8 +402,8 @@ export const db = {
     const projects: ProjectData[] = JSON.parse(data);
     for (const project of projects) {
       try {
-        const docRef = doc(firestore, `users/${user.uid}/projects`, project.id);
-        await setDoc(docRef, project, { merge: true });
+        const docRef = fs.doc(fs.db, `users/${user.uid}/projects`, project.id);
+        await fs.setDoc(docRef, project, { merge: true });
       } catch (error) {
         console.error("Migration error for project", project.id, error);
       }
@@ -410,12 +414,13 @@ export const db = {
 
   getReports: async (): Promise<ReportData[]> => {
     if (typeof window === "undefined") return [];
-    const user = auth.currentUser;
+    const user = await currentUser();
     
     let firestoreReports: ReportData[] = [];
     if (user) {
+      const fs = await firestoreLib();
       try {
-        const querySnapshot = await getDocs(collection(firestore, `users/${user.uid}/reports`));
+        const querySnapshot = await fs.getDocs(fs.collection(fs.db, `users/${user.uid}/reports`));
         firestoreReports = querySnapshot.docs.map(doc => doc.data() as ReportData);
       } catch (error) {
         console.error("Failed to fetch reports from Firestore:", error);
@@ -440,7 +445,7 @@ export const db = {
     const isNew = !report.id;
     const reportId = report.id || "rep_" + Math.random().toString(36).substring(2, 9);
     
-    const user = auth.currentUser;
+    const user = await currentUser();
     
     const savedReport: ReportData = {
       ...report,
@@ -450,9 +455,10 @@ export const db = {
     };
 
     if (user) {
+      const fs = await firestoreLib();
       try {
-        const docRef = doc(firestore, `users/${user.uid}/reports`, reportId);
-        await setDoc(docRef, savedReport);
+        const docRef = fs.doc(fs.db, `users/${user.uid}/reports`, reportId);
+        await fs.setDoc(docRef, savedReport);
       } catch (error) {
         console.error("Failed to save report to Firestore:", error);
       }
@@ -474,11 +480,12 @@ export const db = {
   },
 
   deleteReport: async (id: string): Promise<void> => {
-    const user = auth.currentUser;
+    const user = await currentUser();
     if (user) {
+      const fs = await firestoreLib();
       try {
-        const docRef = doc(firestore, `users/${user.uid}/reports`, id);
-        await deleteDoc(docRef);
+        const docRef = fs.doc(fs.db, `users/${user.uid}/reports`, id);
+        await fs.deleteDoc(docRef);
       } catch (error) {
         console.error("Failed to delete report from Firestore:", error);
       }

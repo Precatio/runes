@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { collection, onSnapshot, query, where, type Timestamp } from "firebase/firestore";
-import { db } from "@/firebase/config";
+import type { Timestamp } from "firebase/firestore";
+import { firestoreLib } from "@/firebase/config";
+import { API_URL } from "@/lib/api";
 import { useAuth } from "./AuthContext";
 
-interface Message { id: string; title: string; body: string; to: string; level: "info" | "viktigt"; createdAt?: Timestamp }
+// createdAt is a Firestore timestamp for the account's own messages and an ISO date for the messages to everyone (GET /api/messages)
+interface Message { id: string; title: string; body: string; to: string; level: "info" | "viktigt"; createdAt?: Timestamp | string }
+const millis = (t?: Timestamp | string) => (!t ? 0 : typeof t === "string" ? Date.parse(t) : t.toMillis());
 
 const READ_KEY = "vitki_read_messages";
 
@@ -22,13 +25,23 @@ export default function Messages() {
   const [open, setOpen] = useState(false);
   const box = useRef<HTMLDivElement>(null);
 
+  // The messages to everyone come from the server; only a signed-in account listens to its own in Firestore
   useEffect(() => {
-    const toList = (snap: { docs: { id: string; data: () => object }[] }) => snap.docs.map(d => ({ id: d.id, ...d.data() }) as Message);
-    const unsubAll = onSnapshot(query(collection(db, "messages"), where("to", "==", "all")), s => setAll(toList(s)), () => setAll([]));
-    const unsubMine = user
-      ? onSnapshot(query(collection(db, "messages"), where("to", "==", user.uid)), s => setMine(toList(s)), () => setMine([]))
-      : () => {};
-    return () => { unsubAll(); unsubMine(); };
+    let cancelled = false;
+    fetch(`${API_URL}/api/messages`).then(r => (r.ok ? r.json() : { messages: [] }))
+      .then(d => { if (!cancelled) setAll(d.messages ?? []); }).catch(() => { if (!cancelled) setAll([]); });
+    return () => { cancelled = true; };
+  }, []);
+  useEffect(() => {
+    if (!user) return;
+    let unsub = () => {};
+    let cancelled = false;
+    firestoreLib().then(({ db, collection, onSnapshot, query, where }) => {
+      if (cancelled) return;
+      unsub = onSnapshot(query(collection(db, "messages"), where("to", "==", user.uid)),
+        s => setMine(s.docs.map(d => ({ id: d.id, ...d.data() }) as Message)), () => setMine([]));
+    }).catch(() => setMine([]));
+    return () => { cancelled = true; unsub(); };
   }, [user]);
 
   // Close when clicking outside the panel
@@ -40,7 +53,7 @@ export default function Messages() {
   }, [open]);
 
   const messages = useMemo(() => [...all, ...(user ? mine : [])]
-    .sort((a, b) => (b.createdAt?.toMillis?.() ?? 0) - (a.createdAt?.toMillis?.() ?? 0)), [all, mine, user]);
+    .sort((a, b) => millis(b.createdAt) - millis(a.createdAt)), [all, mine, user]);
   const unread = messages.filter(m => !read.has(m.id));
   const important = unread.some(m => m.level === "viktigt");
   const markRead = () => {
@@ -85,7 +98,7 @@ export default function Messages() {
                     <span className="font-semibold text-sm text-slate-900">{m.title}</span>
                   </div>
                   <p className="mt-1 text-sm text-slate-700 whitespace-pre-wrap">{m.body}</p>
-                  {m.createdAt && <p className="mt-1 text-[11px] text-slate-400">{m.createdAt.toDate().toLocaleString("sv-SE", { dateStyle: "medium", timeStyle: "short" })}</p>}
+                  {m.createdAt && <p className="mt-1 text-[11px] text-slate-400">{new Date(millis(m.createdAt)).toLocaleString("sv-SE", { dateStyle: "medium", timeStyle: "short" })}</p>}
                 </li>
               ))}
             </ul>

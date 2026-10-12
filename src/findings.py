@@ -92,8 +92,23 @@ def assessment(verdict: str, evidence: float, novelty: float, relevance_: float,
     return "Avvikelse – troligen osäkerhet i metoden"
 
 
+# Bergarten och språkdragen beror bara på stenen, ristaren och korpusen, så de räknas en gång per sten och ristare (nyckeln
+# innehåller korpusens och namnlistans identitet, så att en ny Rundata räknas om)
+_EXTRAS: dict[tuple, dict] = {}
+
+
 def stone_extras(rec: dict, carver: str | None, inscriptions: list[dict], names) -> dict:
     """Bergart och språkdrag för en sten, jämförda med den föreslagna ristaren."""
+    key = (rec["signum"], carver, id(inscriptions), id(names))
+    if key not in _EXTRAS:
+        if len(_EXTRAS) > 20000:
+            _EXTRAS.clear()
+        _EXTRAS[key] = _stone_extras(rec, carver, inscriptions, names)
+    out = _EXTRAS[key]
+    return {**out, "language": dict(out["language"]) if out.get("language") else out.get("language")}
+
+
+def _stone_extras(rec: dict, carver: str | None, inscriptions: list[dict], names) -> dict:
     out = {"material": rec.get("material") or None, "material_fit": None, "language": None}
     if carver:
         m = material_check(rec, carver, inscriptions)

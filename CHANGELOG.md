@@ -5,6 +5,19 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Snabbare laddning
+- Servern komprimerar svaren (gzip): de stora JSON-svaren blir omkring en tiondel så stora (stenöversikten 525 → 55 kB,
+  korpusanalyserna 730 → 104 kB). De stora svaren byggs en gång per dataversion och skickas sedan som färdiga byte
+  med ETag, så att ett nytt besök får "oförändrat" (304) utan innehåll (`api/cache.py`); anrop som kommer samtidigt
+  väntar på samma bygge. Fynden i Forskningsluckor tar 15 ms i stället för 0,7 s (bergart och språkdrag per sten och
+  ristare sparas), kartans inskrifter 3 ms i stället för 0,3 s, och bloggens inlägg läses ur Firestore högst en gång i
+  minuten.
+- Firebase laddas när det behövs i stället för med varje sida: inloggningen efter att sidan har visats, Firestore bara
+  för inloggade. Meddelandena till alla hämtas från servern (`GET /api/messages`). Diagrammen använder Plotlys mindre
+  paket (punkt- och stapeldiagram). JavaScript som varje sida laddar direkt har halverats (omkring 400 → 190–230 kB
+  komprimerat) och diagrambiblioteket krympt från 1,4 MB till 350 kB.
+- Laddningsraden visar verklig andel också för komprimerade svar (`X-Content-Length`).
+
 ### Rättelse: flyttade stenar och kristna böner
 - Stenar vars plats i Rundata är en kyrka, kyrkogård, prästgård, ett kloster, slott, en skola eller ett museum räknas nu
   som flyttade (`is_moved`, `src/r_bridge.py`). Tidigare prövades bara placeringen, som oftast är tom för stenar vid
