@@ -11,7 +11,7 @@ const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replac
 export async function GET() {
   let posts: BlogPost[] = [];
   try {
-    const r = await fetch(`${API_URL}/api/blog/posts`, { next: { revalidate: 3600 } });
+    const r = await fetch(`${API_URL}/api/blog/posts`, { next: { revalidate: 3600, tags: ["blog"] } });
     if (r.ok) posts = (await r.json()).posts;
   } catch { /* an empty feed */ }
   const items = posts.map(p => `

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import BlogBody, { monthLabel, type BlogPost } from "@/components/BlogBody";
 import { useSettings } from "@/components/SettingsContext";
+import { useAuth } from "@/components/AuthContext";
 import { metaDescription, postUrl, seoChecks } from "@/lib/blogSeo";
 import { API_URL } from "@/lib/api";
 
@@ -50,6 +51,11 @@ const empty = (author: string): Draft => ({ slug: "", title: "", summary: "", bo
 // the form with the patterns and findings that are new or changed since the last published post, to edit from.
 export default function BlogAdmin({ call }: { call: (path: string, init?: RequestInit) => Promise<any> }) { // eslint-disable-line @typescript-eslint/no-explicit-any
   const { userName } = useSettings();
+  const { authHeaders } = useAuth();
+  // The public blog is cached on the web server; after a change it is refreshed at once (app/api/revalidate-blog)
+  const refreshBlog = useCallback(async () => {
+    try { await fetch("/api/revalidate-blog", { method: "POST", headers: await authHeaders() }); } catch { /* refreshed within five minutes anyway */ }
+  }, [authHeaders]);
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [draft, setDraft] = useState<Draft>(() => empty(userName));
   const [slugTouched, setSlugTouched] = useState(false);
@@ -71,6 +77,8 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
   const set = (k: keyof Draft, v: string) => setDraft(d => {
     const next = { ...d, [k]: v };
     if (k === "title" && !slugTouched) next.slug = slugify(v);
+    // A draft's address starts with its month ("2026-09-…"); it follows a new month until the address is set by hand
+    if (k === "month" && !slugTouched && /^\d{4}-\d{2}$/.test(v) && /^\d{4}-\d{2}-/.test(d.slug)) next.slug = `${v}-${d.slug.slice(8)}`;
     return next;
   });
 
@@ -152,6 +160,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
       setDraft(x => ({ ...x, id: d.post.id }));
       setNote(published ? `Publicerat: /blogg/${d.post.slug}` : "Sparat som utkast.");
       load();
+      refreshBlog();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Inlägget kunde inte sparas.");
     } finally {
@@ -168,12 +177,12 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
 
   const remove = async (p: BlogPost) => {
     if (!window.confirm(`Ta bort "${p.title}"? Det går inte att ångra.`)) return;
-    try { await call(`/api/admin/blog/posts/${encodeURIComponent(p.id)}`, { method: "DELETE" }); load(); if (draft.id === p.id) setDraft(empty(userName)); }
+    try { await call(`/api/admin/blog/posts/${encodeURIComponent(p.id)}`, { method: "DELETE" }); load(); refreshBlog(); if (draft.id === p.id) setDraft(empty(userName)); }
     catch (e) { setError(e instanceof Error ? e.message : "Det gick inte."); }
   };
 
   const unpublish = async (p: BlogPost) => {
-    try { await call("/api/admin/blog/posts", { method: "POST", body: JSON.stringify({ ...p, published: false }) }); load(); }
+    try { await call("/api/admin/blog/posts", { method: "POST", body: JSON.stringify({ ...p, published: false }) }); load(); refreshBlog(); }
     catch (e) { setError(e instanceof Error ? e.message : "Det gick inte."); }
   };
 

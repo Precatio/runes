@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default async function BlogPage() {
   let posts: BlogPost[] = [], failed = false;
   try {
-    const r = await fetch(`${API_URL}/api/blog/posts`, { next: { revalidate: 300 } });
+    const r = await fetch(`${API_URL}/api/blog/posts`, { next: { revalidate: 300, tags: ["blog"] } });
     if (r.ok) posts = (await r.json()).posts; else failed = true;
   } catch {
     failed = true;

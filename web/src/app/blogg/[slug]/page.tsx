@@ -13,7 +13,7 @@ export const revalidate = 300;
 
 async function getPost(slug: string): Promise<BlogPost | null> {
   try {
-    const r = await fetch(`${API_URL}/api/blog/posts/${encodeURIComponent(slug)}`, { next: { revalidate: 300 } });
+    const r = await fetch(`${API_URL}/api/blog/posts/${encodeURIComponent(slug)}`, { next: { revalidate: 300, tags: ["blog"] } });
     return r.ok ? (await r.json()).post : null;
   } catch {
     return null;

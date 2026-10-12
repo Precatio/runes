@@ -17,7 +17,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const { slug } = await params;
   let post: BlogPost | null = null;
   try {
-    const r = await fetch(`${API_URL}/api/blog/posts/${encodeURIComponent(decodeURIComponent(slug))}`, { next: { revalidate: 3600 } });
+    const r = await fetch(`${API_URL}/api/blog/posts/${encodeURIComponent(decodeURIComponent(slug))}`, { next: { revalidate: 3600, tags: ["blog"] } });
     post = r.ok ? (await r.json()).post : null;
   } catch { /* the picture without the post */ }
   const logo = `data:image/png;base64,${(await readFile(join(process.cwd(), "public", "vitki_logo.png"))).toString("base64")}`;

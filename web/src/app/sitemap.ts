@@ -15,7 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
   const pages = PAGES.map(([path, changeFrequency, priority]) => ({ url: `${SITE_URL}${path}`, lastModified: now, changeFrequency, priority }));
   try {
-    const r = await fetch(`${API_URL}/api/blog/posts`, { next: { revalidate: 3600 } });
+    const r = await fetch(`${API_URL}/api/blog/posts`, { next: { revalidate: 3600, tags: ["blog"] } });
     const posts: { slug: string; publishedAt?: string | null; updatedAt?: string | null }[] = r.ok ? (await r.json()).posts : [];
     return [...pages, ...posts.map(p => {
       const changed = p.updatedAt ?? p.publishedAt;

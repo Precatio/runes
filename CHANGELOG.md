@@ -5,6 +5,12 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Bloggen uppdateras direkt vid publicering
+- Bloggens sidor, delningsbilder, sitemap och RSS cachas med taggen `blog`, och Admin tömmer cachen när ett inlägg
+  sparas, publiceras, avpubliceras eller tas bort (`/api/revalidate-blog`, bara för grundaren). Tidigare kunde ett
+  nypublicerat inlägg dröja upp till fem minuter innan det syntes i listan.
+- Ett utkasts adress följer med när månaden ändras (2026-09-…), så länge adressen inte är ändrad för hand.
+
 ### Bloggutkast i formen från ”Bönen tystnade”, med kartbilder ur R
 - Utkasten från ett valt ämne följer det publicerade inläggets form: ett citat ur en sten med mönstret som krok (vald
   automatiskt, med foto från Wikimedia Commons), ingress, "Kort sagt", mönstret med siffror och diagram, en kartbild ur
