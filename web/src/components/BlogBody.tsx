@@ -16,6 +16,8 @@ export interface BlogPost {
   published?: boolean;
   publishedAt?: string | null;
   updatedAt?: string | null;
+  // The R pattern the post is about ("Förändring|bon"), set by a draft from a chosen topic
+  topic?: string;
 }
 
 /** The post in the chosen language: the English version when there is one. */

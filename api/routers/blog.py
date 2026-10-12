@@ -36,6 +36,8 @@ class PostRequest(BaseModel):
     month: str = Field(..., min_length=7, max_length=7)
     author: str = Field("", max_length=120)
     published: bool = False
+    # The R pattern the post is about (src/blog_topics.py), so that the list of topics can show which are written
+    topic: str = Field("", max_length=160)
 
 
 def _iso(d: dict) -> dict:
@@ -333,20 +335,71 @@ def _slug(s: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", s).strip("-")[:60]
 
 
-@router.get("/admin/blog/draft")
-def draft(month: str | None = None, _: dict = Depends(require_admin)):
-    """Utkast från månadens fynd: mönstren som är nya eller har ändrat status sedan förra publicerade inlägget."""
-    month = month or dt.date.today().strftime("%Y-%m")
-    if not MONTH.match(month):
-        raise HTTPException(status_code=422, detail="Månaden ska anges som ÅÅÅÅ-MM.")
+def _res() -> dict:
+    from api.routers import rstats
+    from src import r_bridge
+    return (r_bridge.JOB.result(rstats.fingerprint()) or {}) if rstats.corpus_ready() else {}
+
+
+def _patterns_or_fail() -> list[dict]:
     try:
         patterns = _patterns()
     except Exception as e:  # noqa: BLE001
         raise server_error(e, "Mönstren kunde inte hämtas. Är korpusanalyserna i R beräknade?", status_code=503)
     if not patterns:
         raise HTTPException(status_code=409, detail="Korpusanalyserna i R är inte beräknade ännu (Statistik → Beräkna).")
-    out = build_draft(month, patterns, _last_snapshot(), _map_shift())
-    out["note"] = "Utkastet är en sammanställning av appens texter. Skriv om det med egna ord innan du publicerar."
+    return patterns
+
+
+@router.get("/admin/blog/topics")
+def topics(_: dict = Depends(require_admin)):
+    """Ämnen att välja bland: de utmärkande eller dolda mönster som R-analyserna har hittat och som håller."""
+    from src import blog_topics
+    patterns = _patterns_or_fail()
+    try:
+        used = {p.get("topic") for p in _all() if p.get("topic")}
+    except HTTPException:
+        used = set()
+    return {"topics": blog_topics.candidates(patterns, _res(), used)}
+
+
+def topic_draft(month: str, pattern: dict, res: dict) -> dict:
+    """Ett utkast kring ett mönster, på svenska och engelska (src/blog_topics.py)."""
+    from src import blog_topics, i18n, pattern_map
+    from src.research_gaps import PROVINCE_NAMES
+    feat = blog_topics._feature(res, pattern.get("key") or "")
+    hs = blog_topics._hotspot(res, pattern.get("key") or "")
+    labels = {k: l for k, l, *_ in pattern_map.PATTERNS}
+    label = labels.get(hs[0]["key"]) if hs else (feat or {}).get("label")
+    keys = frozenset(labels)
+    sv = blog_topics.draft(pattern, res, "sv", label=label, provinces=PROVINCE_NAMES, map_keys=keys)
+    en = blog_topics.draft(pattern, res, "en", tr=i18n.translate, label=i18n.translate(label) if label else None,
+                           provinces=PROVINCE_NAMES, map_keys=keys)
+    return {"draft": {"month": month, "slug": f"{month}-{_slug(sv['title'])}"[:80].rstrip("-"), **sv,
+                      "title_en": en["title"], "summary_en": en["summary"], "body_en": en["body"],
+                      "topic": blog_topics.topic_key(pattern)},
+            "sources": [f"{pattern.get('topic')}: {pattern.get('status')} – {blog_topics.first_sentence(pattern['text'])}"]}
+
+
+@router.get("/admin/blog/draft")
+def draft(month: str | None = None, topic: str | None = None, _: dict = Depends(require_admin)):
+    """Utkast från månadens fynd: kring ett valt ämne (topic, från /admin/blog/topics), eller de mönster som är nya
+    eller har ändrat status sedan förra publicerade inlägget."""
+    month = month or dt.date.today().strftime("%Y-%m")
+    if not MONTH.match(month):
+        raise HTTPException(status_code=422, detail="Månaden ska anges som ÅÅÅÅ-MM.")
+    patterns = _patterns_or_fail()
+    if topic:
+        from src import blog_topics
+        pattern = next((p for p in patterns if blog_topics.topic_key(p) == topic), None)
+        if not pattern:
+            raise HTTPException(status_code=404, detail="Ämnet finns inte bland mönstren längre; hämta ämnena igen.")
+        out = topic_draft(month, pattern, _res())
+        out["note"] = ("Utkastet följer bloggens mall med appens siffror. Skriv om det med egna ord: en krok, vad som är "
+                       "nytt för forskningen och en skarp hypotes.")
+    else:
+        out = build_draft(month, patterns, _last_snapshot(), _map_shift())
+        out["note"] = "Utkastet är en sammanställning av appens texter. Skriv om det med egna ord innan du publicerar."
     # Photos of the stones the draft names, from Wikimedia Commons; the draft is useful also without them
     try:
         from src import commons

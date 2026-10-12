@@ -139,3 +139,54 @@ def test_prayer_and_the_age_of_the_churches():
     (p,) = [x for x in rf._cult(c) if x["key"] == "prayer_early_churches"]
     assert p["status"] == "indikation" and "1,23 (1,05–1,44)" in p["text"] and "Håller inte i båda halvorna" in p["text"]
     assert "Korset följer varken de tidiga" in p["note"]
+
+
+def _res():
+    return {"change": {"features": [
+                {"key": "bon", "label": "Kristen bön", "time": {"draws": {"n": 10, "share_sig": 1}, "by_style": [
+                    {"style": "RAK", "year": 998, "n": 169, "share": 0.15}, {"style": "Pr2", "year": 1035, "n": 87, "share": 0.37},
+                    {"style": "Pr4", "year": 1085, "n": 198, "share": 0.10}]}},
+                {"key": "preposition", "label": "Prepositionen at", "provinces": {"rows": [
+                    {"province": "U", "n_mid": 192, "share1050": 0.26}, {"province": "Sö", "n_mid": 97, "share1050": 0.58},
+                    {"province": "Sm", "n_mid": 4, "share1050": 0.9}]}}]},
+            "hotspots": {"nsim": 999, "patterns": [{"key": "r_for_R", "clusters": [
+                {"center": "U 768", "radius_km": 22, "n": 52, "rate_in": 0.615, "rate_out": 0.125}]}]}}
+
+
+def _p(topic, key, status="mönster att pröva", replicated=True, **kw):
+    return {"topic": topic, "key": key, "status": status, "replicated": replicated, "text": f"{key} är ett mönster. Mer.",
+            "hypothesis": "Vi föreslår något.", "test": "Pröva så här.", "note": "Ett förbehåll.",
+            "significance": {"label": "q 0,01"}, **kw}
+
+
+def test_topics_are_patterns_that_hold():
+    from src import blog_topics as bt
+    pats = [_p("Förändring", "bon", "bekräftar"), _p("Förändring", "stungen_e", "bekräftar"), _p("Förändring", "stungna", "bekräftar"),
+            _p("Geografi", "hotspot_r_for_R_U 768"), _p("Regional skillnad", "preposition"),
+            _p("Geografi", "water", "bekräftar", None), _p("Attribuering", "model", "bekräftar"),
+            _p("Okända ristare", "anonymous", replicated=None), _p("Förändring", "x", "indikation"),
+            _p("Geografi", "y", replicated=False)]
+    keys = [c["key"] for c in bt.candidates(pats, _res(), used={"Förändring|bon"})]
+    assert keys[:3] == ["Geografi|hotspot_r_for_R_U 768", "Regional skillnad|preposition", "Okända ristare|anonymous"]
+    assert "Förändring|stungen_e" not in keys          # covered by stungna
+    assert "Geografi|water" not in keys and "Attribuering|model" not in keys and "Geografi|y" not in keys
+    assert keys[-1] == "Förändring|bon"                # already written, last
+
+
+def test_topic_charts_and_draft():
+    from src import blog_topics as bt
+    res = _res()
+    c = bt.chart(_p("Förändring", "bon", "bekräftar"), res)
+    assert c.startswith(":::chart Andel runstenar med mönstret (Kristen bön), efter stilgrupp") and "+Pr2, omkring 1035 | 37 | 87 stenar" in c
+    c = bt.chart(_p("Regional skillnad", "preposition"), res, provinces={"Sö": "Södermanland", "U": "Uppland"})
+    assert "+Södermanland | 58 | 97 stenar" in c and "Uppland | 26" in c and "Sm" not in c  # under 10 mid-period stones
+    c = bt.chart(_p("Geografi", "hotspot_r_for_R_U 768"), res, label="r för ʀ")
+    assert "+Inom klustret (U 768, 22 km) | 62 | 52 stenar" in c and "Övriga stenar | 12" in c
+    assert bt.chart(_p("Geografi", "areas"), res) == ""
+    d = bt.draft(_p("Förändring", "bon", "bekräftar"), res, "sv", map_keys=frozenset({"bon"}))
+    body = d["body"]
+    for part in (":::box Kort sagt", ":::chart", ":::box Så säkra är vi", "## Vår hypotes", "## Så kan den prövas",
+                 "## Förbehåll", "](/karta?pattern=bon&mode=tid)", "Gräslund, A.-S. 2006", "Holm, S. 1979", "10 av 10 omräkningar"):
+        assert part in body, part
+    en = bt.draft(_p("Geografi", "hotspot_r_for_R_U 768"), res, "en", map_keys=frozenset({"r_for_R"}))["body"]
+    assert ":::box In short" in en and "mode=kluster" in en and "Kulldorff, M. 1997" in en

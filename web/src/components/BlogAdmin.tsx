@@ -11,6 +11,10 @@ const slugify = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]
   .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 80);
 
 type Draft = Omit<BlogPost, "id" | "published"> & { id?: string };
+// A topic for the post: a pattern the R analyses found that holds (GET /api/admin/blog/topics, src/blog_topics.py)
+interface Topic { key: string; topic: string; status: string; replicated: boolean; title: string; text: string; hypothesis: string;
+                  significance?: string | null; chart: boolean; used: boolean }
+
 // A photo of a stone from Wikimedia Commons (POST /api/admin/blog/images, src/commons.py)
 interface StoneImage { signum: string; thumb: string; page: string; author: string; licence: string; markdown: string; markdown_en: string }
 
@@ -29,7 +33,7 @@ function insertPicture(text: string, signum: string, block: string) {
   return [...blocks.slice(0, i + 1), block, ...blocks.slice(i + 1)].join("\n\n");
 }
 const empty = (author: string): Draft => ({ slug: "", title: "", summary: "", body: "", title_en: "", summary_en: "", body_en: "",
-                                           month: thisMonth(), author });
+                                           month: thisMonth(), author, topic: "" });
 
 // The monthly blog post (api/routers/blog.py): written and published here, by hand. "Utkast från månadens fynd" fills
 // the form with the patterns and findings that are new or changed since the last published post, to edit from.
@@ -45,6 +49,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
   const [error, setError] = useState<string | null>(null);
   const [sources, setSources] = useState<string[]>([]);
   const [images, setImages] = useState<{ images: StoneImage[]; missing: string[] } | null>(null);
+  const [topics, setTopics] = useState<Topic[] | null>(null);
 
   const load = useCallback(() => {
     call("/api/admin/blog/posts").then(d => setPosts(d.posts)).catch(e => setError(e.message));
@@ -57,13 +62,27 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
     return next;
   });
 
-  const fromFindings = async () => {
-    if ((draft.title || draft.body) && !window.confirm("Ersätta texten i formuläret med ett nytt utkast från månadens fynd?")) return;
-    setBusy("draft"); setError(null); setNote(null);
+  const showTopics = async () => {
+    if (topics) { setTopics(null); return; }
+    setBusy("topics"); setError(null);
     try {
-      const d = await call(`/api/admin/blog/draft?month=${encodeURIComponent(draft.month || thisMonth())}`);
+      setTopics((await call("/api/admin/blog/topics")).topics);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Ämnena kunde inte hämtas.");
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const fromFindings = async (topic?: string) => {
+    if ((draft.title || draft.body) && !window.confirm("Ersätta texten i formuläret med ett nytt utkast?")) return;
+    setBusy(topic ? `topic:${topic}` : "draft"); setError(null); setNote(null);
+    try {
+      const d = await call(`/api/admin/blog/draft?month=${encodeURIComponent(draft.month || thisMonth())}`
+        + (topic ? `&topic=${encodeURIComponent(topic)}` : ""));
       setDraft(x => ({ ...x, ...d.draft, id: x.id, author: x.author || userName }));
       setSlugTouched(false);
+      if (topic) setTopics(null);
       setSources(d.sources ?? []);
       setNote(d.note ?? null);
     } catch (e) {
@@ -105,7 +124,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
 
   const edit = (p: BlogPost) => {
     setDraft({ id: p.id, slug: p.slug, title: p.title, summary: p.summary, body: p.body ?? "", title_en: p.title_en ?? "",
-               summary_en: p.summary_en ?? "", body_en: p.body_en ?? "", month: p.month, author: p.author ?? "" });
+               summary_en: p.summary_en ?? "", body_en: p.body_en ?? "", month: p.month, author: p.author ?? "", topic: p.topic ?? "" });
     setSlugTouched(true); setShowEn(!!(p.title_en || p.body_en)); setSources([]); setNote(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -133,7 +152,10 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
           </p>
         </div>
         <div className="flex gap-2">
-          <button onClick={fromFindings} disabled={busy === "draft"} className="px-4 py-2 rounded-xl border border-[#b7410e] text-[#b7410e] bg-white text-sm font-bold disabled:opacity-40">
+          <button onClick={showTopics} disabled={busy === "topics"} className="px-4 py-2 rounded-xl bg-[#b7410e] text-white text-sm font-bold disabled:opacity-40">
+            {busy === "topics" ? "Hämtar …" : topics ? "Dölj ämnena" : "Välj ämne ur R-analyserna"}
+          </button>
+          <button onClick={() => fromFindings()} disabled={busy === "draft"} className="px-4 py-2 rounded-xl border border-[#b7410e] text-[#b7410e] bg-white text-sm font-bold disabled:opacity-40">
             {busy === "draft" ? "Skapar …" : "Utkast från månadens fynd"}
           </button>
           <button onClick={() => { setDraft(empty(userName)); setSlugTouched(false); setSources([]); setNote(null); }}
@@ -141,6 +163,36 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
         </div>
       </div>
       {error && <p className="text-sm font-semibold text-red-700">{error}</p>}
+      {topics && (
+        <div className="rounded-xl border border-slate-200 bg-white/70 p-4 space-y-3">
+          <p className="text-sm text-slate-600 max-w-3xl">
+            Utmärkande eller dolda mönster som R-analyserna har hittat och som håller – nya mönster att pröva först. Välj ett
+            ämne så skrivs ett utkast efter bloggens mall, med appens siffror, diagram och foton; skriv sedan om det med egna
+            ord och en skarp hypotes.
+          </p>
+          {topics.length === 0 && <p className="text-sm text-slate-500">Inga mönster håller just nu.</p>}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            {topics.map(t => (
+              <div key={t.key} className={`rounded-xl border p-3 text-sm ${t.used ? "border-slate-200 bg-slate-50" : "border-[#b7410e]/25 bg-white"}`}>
+                <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-bold">
+                  <span className="rounded-md border border-slate-300 px-1.5 text-slate-600">{t.topic}</span>
+                  <span className={`rounded-md px-1.5 ${t.status === "mönster att pröva" ? "bg-[#fbf3ee] text-[#9a350b]" : "bg-emerald-50 text-emerald-800"}`}>{t.status}</span>
+                  {t.replicated && <span className="rounded-md bg-slate-100 px-1.5 text-slate-700">båda halvorna</span>}
+                  {t.chart && <span className="rounded-md bg-slate-100 px-1.5 text-slate-700">diagram</span>}
+                  {t.used && <span className="rounded-md bg-slate-200 px-1.5 text-slate-700">redan skrivet</span>}
+                </div>
+                <p className="mt-1.5 font-semibold text-slate-900">{t.title}</p>
+                <p className="mt-1 text-xs text-slate-600"><span className="font-semibold">Hypotes:</span> {t.hypothesis}</p>
+                {t.significance && <p className="mt-0.5 text-[11px] text-slate-500">{t.significance}</p>}
+                <button onClick={() => fromFindings(t.key)} disabled={!!busy}
+                  className="mt-2 text-xs font-bold text-[#b7410e] hover:underline disabled:opacity-40">
+                  {busy === `topic:${t.key}` ? "Skriver …" : "Skriv utkast om det här →"}
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       {note && <p className="text-sm font-semibold text-emerald-700">{note}</p>}
 
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">

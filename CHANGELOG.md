@@ -5,6 +5,14 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Välj ämne för Månadens fynd
+- I Admin finns en lista med ämnen: de utmärkande eller dolda mönster som R-analyserna har hittat och som håller i
+  båda halvorna (nya mönster att pröva först, högst fyra per område, redan skrivna sist). Ett klick skriver ett utkast
+  kring ämnet efter bloggens mall – "Kort sagt", vad vi ser med ett diagram (stilgrupper, landskap eller kluster),
+  "Så säkra är vi", hypotesen, hur den kan prövas, förbehåll, se själv och källor – på svenska och engelska, med foton
+  av stenarna (`src/blog_topics.py`, `GET /api/admin/blog/topics`, `GET /api/admin/blog/draft?topic=`). Inlägget
+  minns sitt ämne.
+
 ### Snabbare laddning
 - Servern komprimerar svaren (gzip): de stora JSON-svaren blir omkring en tiondel så stora (stenöversikten 525 → 55 kB,
   korpusanalyserna 730 → 104 kB). De stora svaren byggs en gång per dataversion och skickas sedan som färdiga byte
