@@ -20,11 +20,8 @@ export default function RootLayout({
   return (
     <html lang="sv" suppressHydrationWarning>
       <head>
-        {/* English chosen earlier: keep the page hidden until it is translated (at most 3 s), so that the Swedish
-            original does not flash by (src/components/LanguageContext.tsx) */}
-        <Script id="vitki-lang" strategy="beforeInteractive">
-          {`try{if(localStorage.getItem("vitki_lang")==="en"){var d=document.documentElement;d.lang="en";d.classList.add("i18n-pending");setTimeout(function(){d.classList.remove("i18n-pending")},3000)}}catch(e){}`}
-        </Script>
+        {/* English chosen earlier: keep the page hidden until it is translated (public/lang-init.js) */}
+        <Script id="vitki-lang" src="/lang-init.js" strategy="beforeInteractive" />
       </head>
       <body className="antialiased selection:bg-black/10 selection:text-black">
         <AuthProvider>

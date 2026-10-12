@@ -169,3 +169,6 @@ body {
   vertical-align: top; }
 .methods-doc th { background: rgba(15, 23, 42, 0.04); font-weight: 600; color: #0f172a; }
 .methods-doc blockquote { border-left: 3px solid #b7410e; padding-left: 1em; color: #475569; margin: 1em 0; }
+
+/* The pattern map's base map: grey and faded, so that the coloured hexagons carry the pattern */
+.pattern-basemap { filter: grayscale(1) brightness(1.15) contrast(0.8); opacity: 0.45; }

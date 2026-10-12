@@ -411,7 +411,7 @@ def compare(stone: dict[str, str], profile: dict, min_n: int = 3, baseline: dict
             text += ". Emot: " + listing(con)
         if few:
             text += (f". Drag med färre än {FEW_INSCRIPTIONS} jämförbara inskrifter hos ristaren är osäkra ("
-                     + ", ".join(f"{_lc(r['label'])}: {r['n']}" for r in few) + ")")
+                     + "; ".join(f"{_lc(r['label'])}: {r['n']}" for r in few) + ")")
         out.update(n_for=len(pro), n_against=len(con), n_neutral=len(rated) - len(pro) - len(con),
                    few=[r["trait"] for r in few])
         score, n_used = _score(stone, table)

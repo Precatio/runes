@@ -179,6 +179,18 @@ def _categories() -> dict:
     return carver_categories(store().inscriptions, certain_carvers)
 
 
+@lru_cache(maxsize=1)
+def _pattern_map() -> dict:
+    from src import pattern_map
+    return pattern_map.build(store().inscriptions, orthography_model().names)
+
+
+@router.get("/pattern-map")
+def pattern_map():
+    """Mönsterkartan: varje runstens plats, stilgruppens mittår och om den har varje mönster (src/pattern_map.py)."""
+    return _pattern_map()
+
+
 @lru_cache(maxsize=2)
 def _stone_size(mtime: float) -> dict:
     from src import stone_dimensions, stone_size

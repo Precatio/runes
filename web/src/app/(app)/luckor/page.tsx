@@ -3,6 +3,7 @@
 import { Fragment, cloneElement, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Answer, InfoTip, PageIntro, QuestionCards, SigBadge, Tip, type AnswerProps, type Significance } from "@/components/Explain";
+import { PatternBadges, PatternBody, type Pattern } from "@/components/PatternCard";
 import { GLOSSARY } from "@/lib/glossary";
 import { API_URL } from "@/lib/api";
 import { corpus } from "@/lib/corpus";
@@ -78,7 +79,7 @@ interface CrossCheck {
   runor?: { status: string; text: string; references: string[]; url?: string | null };
   wikidata?: { text: string };
 }
-interface RPattern { topic: string; status: string; text: string; note?: string | null; significance?: Significance }
+type RPattern = Pattern;
 interface Findings {
   r_patterns?: RPattern[];
   r_ready?: boolean;
@@ -648,11 +649,13 @@ function CrossCheckCell({ cc }: { cc?: CrossCheck }) {
 // Corpus-wide patterns from the R analyses: what confirms earlier research, what is worth testing, and the limits
 const PATTERN_GROUPS: { key: string; label: string; statuses: string[]; accent: string; pill: string; help: string }[] = [
   { key: "test", label: "Att pröva", statuses: ["mönster att pröva"], accent: "border-l-amber-500", pill: "bg-amber-50 text-amber-900 border-amber-200",
-    help: "Nya mönster som statistiken visar men som inte är etablerad kunskap – hypoteser för runologer att pröva." },
+    help: "Nya mönster som statistiken visar och som håller i båda halvorna av korpusen – tydliga hypoteser för runologer att pröva." },
   { key: "confirm", label: "Bekräftar", statuses: ["bekräftar"], accent: "border-l-emerald-600", pill: "bg-emerald-50 text-emerald-800 border-emerald-200",
     help: "Mönster som stämmer med det forskningen redan antar, nu med mätbar osäkerhet." },
-  { key: "limit", label: "Begränsningar", statuses: ["begränsning", "svagt", "svag effekt", "indikation"], accent: "border-l-slate-400", pill: "bg-slate-100 text-slate-700 border-slate-300",
-    help: "Svaga effekter (signifikanta men små), cirkulära jämförelser och det metoden eller datan inte klarar." },
+  { key: "hint", label: "Indikationer", statuses: ["indikation"], accent: "border-l-amber-300", pill: "bg-amber-50/50 text-amber-800 border-amber-200",
+    help: "Mönster som syns i hela korpusen men inte håller i alla kontroller eller i båda halvorna – idéer att pröva, med förbehåll." },
+  { key: "limit", label: "Begränsningar", statuses: ["begränsning", "svagt", "svag effekt"], accent: "border-l-slate-400", pill: "bg-slate-100 text-slate-700 border-slate-300",
+    help: "Cirkulära jämförelser och det metoden eller datan inte klarar." },
 ];
 
 function PatternsBox({ patterns }: { patterns: RPattern[] }) {
@@ -660,7 +663,7 @@ function PatternsBox({ patterns }: { patterns: RPattern[] }) {
   const [onlySig, setOnlySig] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const FIRST = 6;
-  const groupOf = (pt: RPattern) => PATTERN_GROUPS.find(g => g.statuses.includes(pt.status)) ?? PATTERN_GROUPS[2];
+  const groupOf = (pt: RPattern) => PATTERN_GROUPS.find(g => g.statuses.includes(pt.status)) ?? PATTERN_GROUPS[3];
   const nSig = patterns.filter(p => p.significance?.significant).length;
   const shown = patterns
     .filter(pt => (!group || groupOf(pt).key === group) && (!onlySig || pt.significance?.significant))
@@ -694,9 +697,10 @@ function PatternsBox({ patterns }: { patterns: RPattern[] }) {
         </button>
       </div>
       <p className="text-xs text-slate-500 mb-3 max-w-4xl">
-        Två frågor per mönster: <strong>är det statistiskt signifikant</strong> (grönt märke) och <strong>är det
-        känt</strong> i forskningen (bekräftar – bidraget är då mätningen med plats och ristare konstanta) eller nytt (att pröva).
-        Ett mönster kan vara både signifikant och känt.
+        Tre frågor per mönster: <strong>är det statistiskt signifikant</strong> (grönt märke), <strong>håller det i båda
+        halvorna</strong> av korpusen (uppdelad per socken – då är det ett tydligt mönster) och <strong>är det känt</strong> i
+        forskningen (bekräftar) eller nytt (att pröva). Varje mönster har en hypotes om vad det kan betyda och hur den kan
+        prövas – hypotesen är djärv med avsikt, påståendet är försiktigt.
       </p>
       <ul className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         {shown.slice(0, showAll ? undefined : FIRST).map((pt, i) => {
@@ -707,11 +711,11 @@ function PatternsBox({ patterns }: { patterns: RPattern[] }) {
                 <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">{pt.topic}</span>
                 <span className="ml-auto flex flex-wrap items-center gap-1.5">
                   <span className={`px-2 py-0.5 rounded-lg border text-[11px] font-bold ${g.pill}`} title={g.help}>{pt.status}</span>
+                  <PatternBadges pt={pt} />
                   <SigBadge sig={pt.significance} compact />
                 </span>
               </div>
-              <p className="text-sm text-slate-800 leading-relaxed">{pt.text}</p>
-              {pt.note && <p className="mt-1 text-xs text-slate-500">{pt.note}</p>}
+              <PatternBody pt={pt} />
             </li>
           );
         })}

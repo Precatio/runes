@@ -9,11 +9,21 @@ import { corpus } from "@/lib/corpus";
 import { useAuth } from "@/components/AuthContext";
 import { InfoTip } from "@/components/Explain";
 import type { MapPoint } from "@/components/RuneMap";
+import { SHARE_CLASSES, TOO_FEW, periodShares, provinceTable, type PatternStone } from "@/lib/patternMap";
 
 const RuneMap = dynamic(() => import("@/components/RuneMap"), {
   ssr: false,
   loading: () => <div className="w-full h-full flex items-center justify-center text-slate-500">Laddar karta...</div>,
 });
+const PatternMaps = dynamic(() => import("@/components/PatternMap"), {
+  ssr: false,
+  loading: () => <div className="w-full h-full flex items-center justify-center text-slate-500">Laddar karta...</div>,
+});
+
+// The patterns of the pattern map (GET /api/research/pattern-map)
+interface PatternDef { key: string; label: string; group: string; help: string }
+const HEX_SIZES = [10, 20, 40];
+const MIN_STONES = 5;
 
 const STYLE_COLORS: Record<string, string> = {
   RAK: "#64748b", Fp: "#0891b2", KB: "#a16207", Pr1: "#16a34a", Pr2: "#65a30d",
@@ -41,7 +51,7 @@ interface Trait { key: string; label: string; definition: string; values: Record
 
 // The filters, as they appear in the address bar (so a map view can be shared)
 const FILTER_KEYS = ["q", "province", "period", "style", "carver", "category", "material", "status", "cross", "trait", "value",
-  "overview", "runestones", "measured", "color"] as const;
+  "overview", "runestones", "measured", "color", "view", "pattern", "split", "hex"] as const;
 type FilterKey = typeof FILTER_KEYS[number];
 type Filters = Record<FilterKey, string>;
 const EMPTY: Filters = Object.fromEntries(FILTER_KEYS.map(k => [k, ""])) as Filters;
@@ -63,6 +73,27 @@ function MapContent() {
   const [copied, setCopied] = useState(false);
   const set = (k: FilterKey, v: string) => setF(x => ({ ...x, [k]: v, ...(k === "trait" ? { value: "" } : {}) }));
   const colorMode = (f.color || "style") as ColorMode;
+  // The pattern map is the default view; a shared link with point filters (or a selected stone) opens the points
+  const pointFilters = FILTER_KEYS.slice(0, 14).some(k => f[k]);
+  const view = f.view || (selected || pointFilters ? "punkter" : "monster");
+  const [showFilters, setShowFilters] = useState(pointFilters);
+  const [patternData, setPatternData] = useState<{ patterns: PatternDef[]; stones: PatternStone[] } | null>(null);
+  useEffect(() => {
+    if (view !== "monster" || patternData) return;
+    fetch(`${API_URL}/api/research/pattern-map`)
+      .then(r => (r.ok ? r.json() : Promise.reject(new Error(`Fel ${r.status}`))))
+      // The values come as an array in the order of the patterns (smaller to send); here they get their keys
+      .then((d: { patterns: PatternDef[]; stones: (Omit<PatternStone, "v"> & { v: (0 | 1 | null)[] })[] }) =>
+        setPatternData({ patterns: d.patterns, stones: d.stones.map(st => ({
+          ...st, v: Object.fromEntries(d.patterns.map((x, i) => [x.key, st.v[i]])) })) }))
+      .catch(e => setError(e instanceof Error ? e.message : "Mönsterkartan kunde inte hämtas."));
+  }, [view, patternData]);
+  const patternKey = f.pattern || patternData?.patterns[0]?.key || "";
+  const patternDef = patternData?.patterns.find(x => x.key === patternKey);
+  const periods = useMemo(() => (patternData && patternKey ? periodShares(patternData.stones, patternKey) : null),
+                          [patternData, patternKey]);
+  const pct = (c: { n: number; k: number }) => (c.n ? `${Math.round((100 * c.k) / c.n)} %` : "–");
+  const hexKm = Number(f.hex) || 20;
 
   useEffect(() => {
     rundata.geo()
@@ -237,12 +268,98 @@ function MapContent() {
       <div>
         <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-2">Karta</h2>
         <p className="text-slate-600 text-[16px] leading-relaxed max-w-3xl font-medium">
-          Var inskrifterna finns, med filter på text, landskap, tid, stil, ristare, innehåll, material, kors och språkdrag.
-          Filtren hamnar i adressen, så att kartan kan delas, och det som syns kan laddas ner som tabell.
+          Var mönstren finns: mönsterkartan visar hur stor andel av stenarna i varje område som har ett drag – tro, skrift
+          eller innehåll – före och efter omkring 1050. Under Punkter finns varje inskrift med filter, och vyn kan delas och
+          laddas ner som tabell.
         </p>
       </div>
 
+      <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Kartvy">
+        {([["monster", "Mönsterkarta"], ["punkter", "Punkter"]] as const).map(([k, l]) => (
+          <button key={k} role="tab" aria-selected={view === k} onClick={() => set("view", k === "monster" ? "monster" : "punkter")}
+            className={`px-4 py-2 rounded-full text-sm font-bold border ${view === k ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50"}`}>
+            {l}
+          </button>
+        ))}
+      </div>
+
+      {view === "monster" && (
+        <>
+          <div className="liquid-glass-island rounded-[28px] p-4 space-y-3">
+            <p className="text-sm text-slate-700 max-w-4xl">
+              Varje sexkant är ett område. Färgen visar hur stor <strong>andel</strong> av stenarna i området som har
+              mönstret – inte hur många stenar det finns, så att Upplands täthet inte döljer mönstret. Grå områden har
+              färre än {MIN_STONES} stenar där mönstret kan avgöras.
+            </p>
+            {patternData && [...new Set(patternData.patterns.map(x => x.group))].map(g => (
+              <div key={g} className="flex flex-wrap items-center gap-2">
+                <span className="w-24 shrink-0 text-[11px] font-bold uppercase tracking-wider text-slate-500">{g}</span>
+                {patternData.patterns.filter(x => x.group === g).map(x => (
+                  <button key={x.key} onClick={() => set("pattern", x.key)} title={x.help}
+                    className={`px-3 py-1.5 rounded-xl border text-xs font-bold ${patternKey === x.key ? "bg-[#1c5cab] text-white border-[#1c5cab]" : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50"}`}>
+                    {x.label}
+                  </button>
+                ))}
+              </div>
+            ))}
+            <div className="flex flex-wrap items-center gap-2 pt-1">
+              <span className="w-24 shrink-0 text-[11px] font-bold uppercase tracking-wider text-slate-500">Visa</span>
+              {([["", "Hela perioden"], ["1", "Före och efter ca 1050"]] as const).map(([k, l]) => (
+                <button key={l} onClick={() => set("split", k)}
+                  className={`px-3 py-1.5 rounded-xl border text-xs font-bold ${f.split === k ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50"}`}>
+                  {l}
+                </button>
+              ))}
+              <span className="ml-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">Område</span>
+              {HEX_SIZES.map(km => (
+                <button key={km} onClick={() => set("hex", km === 20 ? "" : String(km))}
+                  className={`px-3 py-1.5 rounded-xl border text-xs font-bold ${hexKm === km ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50"}`}>
+                  {km} km
+                </button>
+              ))}
+            </div>
+            {patternDef && <p className="text-xs text-slate-600"><span className="font-semibold">{patternDef.label}:</span> {patternDef.help}</p>}
+          </div>
+          <div className="liquid-glass-island rounded-[24px] sm:rounded-[32px] p-1.5 sm:p-2 flex-1 min-h-[70dvh] sm:min-h-[560px] relative">
+            {patternData && patternDef ? (
+              <PatternMaps stones={patternData.stones} patternKey={patternKey} label={patternDef.label} widthKm={hexKm}
+                minStones={MIN_STONES} split={!!f.split} />
+            ) : <div className="w-full h-full flex items-center justify-center text-slate-500">Hämtar mönstren …</div>}
+          </div>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 px-2 text-xs text-slate-700">
+            <span className="font-bold">Andel med mönstret</span>
+            {SHARE_CLASSES.map(c => (
+              <span key={c.label} className="flex items-center gap-1.5"><span className="w-4 h-3 inline-block rounded-sm" style={{ background: c.color }} />{c.label}</span>
+            ))}
+            <span className="flex items-center gap-1.5"><span className="w-4 h-3 inline-block rounded-sm border border-dashed border-slate-400" style={{ background: TOO_FEW }} />Färre än {MIN_STONES} stenar</span>
+            {periods && (
+              <span className="basis-full text-slate-600">
+                Hela korpusen: {pct(periods.all)} ({periods.all.k} av {periods.all.n} stenar). Bland stenar med säker stilgrupp: före ca 1050 {pct(periods.early)} ({periods.early.k} av {periods.early.n}), efter ca 1050 {pct(periods.late)} ({periods.late.k} av {periods.late.n}).
+              </span>
+            )}
+          </div>
+          {patternData && patternDef && (
+            <details className="liquid-glass-island rounded-[24px] p-4">
+              <summary className="cursor-pointer text-sm font-bold text-slate-800">Andel per landskap (samma siffror som tabell)</summary>
+              <div className="overflow-x-auto mt-2">
+                <table className="text-sm min-w-[360px]">
+                  <thead><tr className="text-left text-[11px] uppercase tracking-wider text-slate-500"><th className="p-2">Landskap</th><th className="p-2">Stenar</th><th className="p-2">Med mönstret</th><th className="p-2">Andel</th></tr></thead>
+                  <tbody>
+                    {provinceTable(patternData.stones, patternKey).filter(r => r.n >= MIN_STONES).map(r => (
+                      <tr key={r.p} className="border-t border-slate-900/5"><td className="p-2">{name(r.p)}</td><td className="p-2">{r.n}</td><td className="p-2">{r.k}</td><td className="p-2 font-semibold">{Math.round(r.share * 100)} %</td></tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </details>
+          )}
+        </>
+      )}
+
+      {view === "punkter" && (
+      <>
       <div className="liquid-glass-island rounded-[28px] p-4 space-y-3">
+        {showFilters && (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
           <label className={`${label} col-span-2 sm:col-span-3 lg:col-span-2`}>Sök i texten
             <input value={qInput} onChange={e => setQInput(e.target.value)} placeholder="t.ex. grikk, bro, Ingvar"
@@ -317,7 +434,12 @@ function MapContent() {
             </select>
           </label>
         </div>
+        )}
         <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-semibold text-slate-700">
+          <button onClick={() => setShowFilters(!showFilters)} aria-expanded={showFilters}
+            className="px-3 py-1.5 rounded-xl border border-slate-300 bg-white text-xs font-bold hover:bg-slate-50">
+            {showFilters ? "Dölj filter" : `Filter${nFilters ? ` (${nFilters})` : ""}`}
+          </button>
           <label className="flex items-center gap-2">
             <input type="checkbox" checked={!!f.runestones} onChange={e => set("runestones", e.target.checked ? "1" : "")} />
             Bara svenska vikingatida runstenar
@@ -379,6 +501,8 @@ function MapContent() {
           <div className="text-slate-500 pt-1">Streckad: försvunnen · svart kant: uppmätt</div>
         </div>
       </div>
+      </>
+      )}
       {meta && <p className="text-[11px] text-slate-500">Uppgifter ur {meta.source}. {meta.attribution} Kartdata © OpenStreetMap-bidragsgivare.</p>}
     </div>
   );

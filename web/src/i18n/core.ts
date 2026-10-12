@@ -52,6 +52,7 @@ const mark = (i: number) => `\u0001${String.fromCharCode(0xe000 + i)}\u0001`;
 const LEAD = /^[(«"„”'“]*/u;
 const TRAIL = /[.,;:!?)”"'’]+$/u;
 const TRAIL_KEEP_QUOTE = /[.,;:!?)”"’]+$/u;
+const TRAIL_KEEP_PAREN = /[.,;:!?]+$/u;
 
 /** Replaces names, numbers and (with withTerms) terms by {0}, {1}, … in order of appearance. */
 export function mask(text: string, withTerms = false): Masked {
@@ -68,8 +69,9 @@ export function mask(text: string, withTerms = false): Masked {
       let hit = 0;
       for (let k = Math.min(maxWords, Math.ceil((words.length - i) / 2)); k >= 1 && !hit; k--) {
         const cand = words.slice(i, i + 2 * k - 1).join("").slice(lead.length);
-        // As written ("stungen u (y)"), without trailing punctuation, or keeping a closing quote ("i 'och'")
-        const cores = [cand, cand.replace(TRAIL, ""), cand.replace(TRAIL_KEEP_QUOTE, "")];
+        // As written ("stungen u (y)"), without trailing punctuation, keeping a closing quote ("i 'och'") or a
+        // closing parenthesis ("stungen i (e):")
+        const cores = [cand, cand.replace(TRAIL, ""), cand.replace(TRAIL_KEEP_QUOTE, ""), cand.replace(TRAIL_KEEP_PAREN, "")];
         for (const core of cores) {
           const kind: Kind | null = capital && names.has(core) ? "name" : withTerms && terms.has(core) ? "term" : null;
           if (core && kind) {

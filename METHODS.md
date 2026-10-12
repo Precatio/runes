@@ -719,6 +719,28 @@ seriationen), 54 svaga (alla ortografiska förslag, vars likhet inte håller eft
 motsägelser 6 måttliga, 13 svaga och 5 metodfel; 198 bekräftelser. Reglerna är
 fasta och kan granskas; tolkningen är en läshjälp, inte en runologisk bedömning.
 
+### 13e. Mönsterkartan
+
+Kartan (`/karta`, `GET /api/research/pattern-map`, `src/pattern_map.py`) visar var ett mönster finns som **andel**
+av stenarna per område, inte som antal, så att Upplands täthet av runstenar inte döljer mönstret. Området är en
+sexkant (10, 20 eller 40 km mellan motstående sidor) i en enkel kilometerprojektion kring 62° N; sexkanter med färre
+än 5 stenar där mönstret kan avgöras visas grå. Färgerna är en sekventiell blå skala i fem steg (0–20 % … 80–100 %).
+Kartan kan delas i före och efter omkring 1050 (stilgruppens mittår; RAK–Pr2 mot Pr3–Pr5), och bara stenar med säker
+stilgrupp ingår då. Samma andelar per landskap finns som tabell under kartan.
+
+Varje mönster är 1, 0 eller okänt för varje sten. Språkdragen kommer från avsnitt 8 (okänt när ordet saknas eller
+texten är oläslig); innehållet från inskriftstyperna (avsnitt 9); korset från Rundatas ornamentik. *Kristna markörer*
+är kors eller kristen bön eller formel. *Hedniska eller rituella markörer* är Torsåkallan (Þórr med dubbelt r i
+normaliseringen, så att namn på Þór- och avbrutna Þor… inte räknas, eller Thor i Rundatas översättning), vígi-formler,
+förbannelser (ræti, argi, seiðr), alu och Tormotiv i Rundatas anmärkningar (torshammare, Tors fiskafänge).
+Futharkrader räknas inte, eftersom de också förekommer i kristna sammanhang, och inte heller Sigurdsbilder, eftersom
+hjältesagan också används i kristen konst. *Utan religiösa markörer* är läsbara stenar med varken eller; en sten utan
+kristna markörer är inte därmed hednisk. Bland 2 318 vikingatida runstenar med koordinater har 1 103 kristna markörer,
+7 hedniska eller rituella (Ög 136, Sö 102, Sö 111, Sö 140, Sö 352, Vg 150, U 1161; Sö 86 med torshammare är ett
+jordfast block och räknas inte som runsten) och 1 203 inga. De uttryckligt hedniska stenarna är alltså mycket få; den
+stora gruppen är stenarna utan religiösa markörer, som kan vara hedniska, kristna utan att säga det eller
+religiöst neutrala minnesmärken.
+
 ## 14. Rapporter
 
 Två rapporttyper, båda manusutkast där tabeller och figurer räknas fram ur data och AI-text märks.
@@ -1106,6 +1128,33 @@ Forskningsluckor visar mönstren utan anteckningar; så här ska de läsas:
   mätmetod än Kitzler Åhfeldts Groove Measure; resultatet är en indikation, inte en attribuering.
 * *Landskapet.* Höjddata visar dagens markyta; vägar är simulerade bästa vägar, inte belagda vikingatida vägar, och
   grannstenarna kan själva stå vid vägar, så vägnätet är inte oberoende av stenarnas lägen.
+
+
+### 17x. Försiktighet i påståendena, djärvhet i hypoteserna
+
+Appens uppgift är att hitta tydliga mönster som ingen sett tidigare. Det kräver två saker som lätt blandas ihop: stränghet
+när något *påstås* och djärvhet när något *föreslås*. Sedan 2026-10-12 hålls de isär:
+
+* **Varje mönster har tre delar.** *Vad vi ser* (påståendet, med signifikans och osäkerhet), *hypotes* (vad mönstret
+  kan betyda, djärv med avsikt och märkt som hypotes) och *så kan den prövas* (vad vi borde se om hypotesen stämmer och vad
+  som skulle fälla den). Förbehåll och kontroller ligger i en fällbar ruta så att de inte dränker idén. Två ordförråd:
+  påståenden säger "visar" eller "är förenligt med", hypoteser säger "vi föreslår" eller "kan tyda på".
+* **Upptäckt och bekräftelse har olika krav.** Ett mönster *upptäcks* när det klarar Benjamini–Hochberg (andelen falska
+  upptäckter bland de redovisade under 5 %). Det kallas *bekräftar* (känt i forskningen) bara när det också klarar Holm
+  (risken för ens ett falskt resultat under 5 %) och håller i båda halvorna av korpusen. Ett nytt mönster som håller i
+  båda halvorna är ett *mönster att pröva*; ett som inte gör det är en *indikation* – en idé, synlig men med förbehåll.
+* **Två halvor av korpusen** (r/change.R): socknar fördelas växelvis på två halvor inom varje landskap, i ordning efter
+  sockenstenarnas medeldatering, så att båda halvorna täcker samma trakter och samma tid. Mönstret anpassas på nytt i
+  varje halva; det håller om riktningen (eller toppen) är densamma och signifikant i båda. Signerade stenar används inte
+  som facit: signaturer blir vanliga först sent (4 % av RAK-stenarna, 33 % av Pr5), så de skulle gynna de sena mönstren.
+* **Kontroller som besvarar andra frågor fäller inte ett mönster.** En trend som syns mellan ristare men inte inom dem kan
+  ha spridits genom generationsskifte – i sig en iakttagelse. Utan den tidigaste och senaste stilgruppen försvinner en
+  stor del av tidsaxeln, så ett svagare resultat där är väntat. Landskapsjämförelser utanför Uppland och Södermanland kan
+  bli mönster att pröva när skillnaden håller med dateringarna förskjutna 25 år åt båda håll. Små men stabila effekter
+  (under 10 procentenheter) märks som små men redovisas som mönster. Sambandet mellan brostenar och själsbön kontrolleras
+  med textlängden *utan* bro- och bönefraserna (brofrasen gör själv texten längre); hela textlängden redovisas också.
+* **Regel för kritik** (också Runes instruktion): fel – siffror, nämnare, dubbelräkning, vilseledande ord – rättas alltid.
+  Försiktighet ändrar formuleringen men tar aldrig bort ett ärligt märkt mönster.
 
 ## 18. Kända brister
 

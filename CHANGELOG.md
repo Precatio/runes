@@ -5,6 +5,26 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Mönsterkarta
+- Kartan öppnar med en mönsterkarta: sexkanter färgade efter hur stor andel av stenarna i området som har ett mönster –
+  tro (kristna, hedniska eller rituella markörer, utan religiösa markörer, bön, själsbön, kors), skrift (stungna runor,
+  monoftong, o-runan, r för ʀ, signatur) eller innehåll (bro, utlandsfärd, arv). Mönstret väljs med knappar, kartan kan
+  delas i före och efter omkring 1050 och andelarna per landskap finns som tabell (METHODS.md 13e).
+- Inskrifterna med filter ligger under fliken Punkter, med filtren fällda tills de behövs.
+- Hedniska markörer är få: 7 av 2 318 runstenar (Torsåkallan, vígi-formler, förbannelser, alu, Tormotiv). Den stora
+  gruppen är stenar utan religiösa markörer (1 203).
+
+### Försiktiga påståenden, djärva hypoteser
+- Varje mönster i Forskningsluckor och Statistik har nu tre delar: vad vi ser, en hypotes om vad det kan betyda och hur
+  hypotesen kan prövas. Förbehållen ligger i en fällbar ruta.
+- Upptäckt med Benjamini–Hochberg, bekräftelse med Holm och prövning i två halvor av korpusen (uppdelad per socken, alla
+  stilgrupper i båda). Märket "Håller i båda halvorna" visar tydliga mönster. Signerade stenar används inte som facit,
+  eftersom signaturerna är sena.
+- Mindre stränga regler där de var för hårda: generationsskifte i stället för krav på trend inom ristare, utan ändgrupper
+  som information, textlängd utan bro- och bönefraser, landskap utanför U/Sö när förskjutna dateringar håller, små
+  effekter som mönster. Ny grupp "Indikationer" för idéer med förbehåll.
+- Rune granskar som en kritisk vän: fel, för säkra ord och hypoteser hålls isär.
+
 ### Engelsk version
 - Hela appen finns på engelska: språkknappen (i menyn och på landningssidan) översätter allt som visas –
   gränssnittet, forskningstexterna, fynd, mönster, tolkningar och tabeller – mot en ordlista med drygt 4 600

@@ -2,7 +2,8 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import { DocsNote } from "@/components/KnownLimitations";
-import { Confidence, Details, Figure, Glossary, LEVEL_STYLE, Md, SigBadge, Tip, asList, type Level, type Significance } from "@/components/Explain";
+import { Confidence, Details, Figure, Glossary, LEVEL_STYLE, Md, SigBadge, Tip, asList, type Level } from "@/components/Explain";
+import { PatternBadges, PatternBody, type Pattern } from "@/components/PatternCard";
 import { GLOSSARY } from "@/lib/glossary";
 import Link from "next/link";
 import { API_URL } from "@/lib/api";
@@ -40,7 +41,7 @@ interface ChangeAssoc {
   all: { or: number; lo: number; hi: number; p: number; q: number | null } | null;
   dated: { n: number; or?: number; lo?: number; hi?: number; p?: number } | null;
 }
-interface Pattern { topic: string; status: string; text: string; note?: string | null; significance?: Significance }
+
 interface Finding {
   signum: string; place: string; method: string; verdict: string; ours: string; existing: string; score: number;
   assessment: string; suggested?: string; crosscheck?: { status: string; runor?: { text: string; url?: string | null } };
@@ -192,8 +193,8 @@ function SectionIntro({ section, patterns = [] }: { section?: Section; patterns?
           <ul className="space-y-2 text-sm">
             {tests.map((t, i) => (
               <li key={i} className="flex flex-col sm:flex-row sm:items-start gap-2">
-                <SigBadge sig={t.significance} />
-                <span className="text-slate-700">{t.text}</span>
+                <div className="flex flex-wrap gap-1.5 shrink-0"><SigBadge sig={t.significance} /><PatternBadges pt={t} /></div>
+                <div className="min-w-0"><PatternBody pt={t} /></div>
               </li>
             ))}
           </ul>
@@ -424,7 +425,7 @@ function SignificantBox({ patterns, onOpen }: { patterns: Pattern[]; onOpen: (t:
             <ul className="mt-2 space-y-2 text-sm">
               {sig.filter(p => p.topic === topic).map((p, i) => (
                 <li key={i} className="flex flex-col gap-1">
-                  <SigBadge sig={p.significance} />
+                  <div className="flex flex-wrap gap-1.5"><SigBadge sig={p.significance} /><PatternBadges pt={p} /></div>
                   <span className="text-slate-700">{p.text}</span>
                 </li>
               ))}
@@ -441,8 +442,9 @@ function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void }) 
   const top = data.findings.filter(f => f.verdict !== "stämmer").slice(0, 25);
   const groups: [string, string, string[]][] = [
     ["Stämmer med det forskningen redan utgår från", "Ett tecken på att metoderna fungerar.", ["bekräftar"]],
-    ["Nya mönster att pröva", "Mönster som appen inte kan förklara med det den känner till – kanske ny kunskap, kanske redan beskrivet i litteratur som appen inte har.", ["mönster att pröva"]],
-    ["Begränsningar och svaga mönster", "Svaga effekter (signifikanta men små), cirkulära jämförelser och resultat som visar gränserna för data och metod.", ["begränsning", "svagt", "svag effekt", "indikation"]],
+    ["Nya mönster att pröva", "Mönster som appen inte kan förklara med det den känner till och som håller i båda halvorna av korpusen – kanske ny kunskap, kanske redan beskrivet i litteratur som appen inte har.", ["mönster att pröva"]],
+    ["Indikationer", "Mönster som syns i hela korpusen men inte håller i alla kontroller eller i båda halvorna – idéer att pröva, med förbehåll.", ["indikation"]],
+    ["Begränsningar", "Cirkulära jämförelser och resultat som visar gränserna för data och metod.", ["begränsning", "svagt", "svag effekt"]],
   ];
   return (
     <div className="space-y-8">
@@ -518,10 +520,11 @@ function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void }) 
                       <div className="flex flex-col gap-1 shrink-0">
                         <span className={`h-fit w-fit px-2 py-0.5 rounded-lg border text-[11px] font-bold ${STATUS_STYLE[pt.status] ?? ""}`}><Tip text={GLOSSARY[pt.status]}>{pt.status}</Tip></span>
                         <SigBadge sig={pt.significance} compact />
+                        <PatternBadges pt={pt} />
                       </div>
-                      <div>
-                        <span className="text-[11px] uppercase tracking-wider text-slate-500 mr-2">{pt.topic}</span>{pt.text}
-                        {pt.note && <div className="text-xs text-slate-500 mt-1">{pt.note}</div>}
+                      <div className="min-w-0">
+                        <div className="text-[11px] uppercase tracking-wider text-slate-500 mb-1">{pt.topic}</div>
+                        <PatternBody pt={pt} />
                       </div>
                     </li>
                   ))}

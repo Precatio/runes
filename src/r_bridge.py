@@ -53,7 +53,8 @@ WATER_LAYERS = {
 }
 
 CSV_COLUMNS = (["signum", "province", "district", "place", "parish", "lat", "lon", "carver", "has_carver", "carvers_uncertain",
-                "style", "material", "cross", "short_twig", "lost", "n_words", "carvers_all", "style_from", "style_to"]
+                "style", "material", "cross", "short_twig", "lost", "n_words", "n_words_core", "carvers_all", "style_from",
+                "style_to"]
                + [f"cat_{k}" for k in CATEGORIES] + [f"trait_{k}" for k in TRAITS]
                + ["words", "pairs", "normalization", "signed", "ai_n", "ai_mono", "ai_sten_n", "ai_sten_mono",
                   "dot_n", "dot_cand", "dot_y_exp", "dot_y_obs", "dot_e_exp", "dot_e_obs", "dot_g_exp", "dot_g_obs",
@@ -148,6 +149,20 @@ def _style_dates(r: dict) -> dict:
     return {"style_from": min(g["from"] for g in groups), "style_to": max(g["to"] for g in groups)}
 
 
+# Words of the bridge and prayer phrases ("gærði bro þessa fyrir and hans", "Guð hialpi and hans"): a bridge phrase makes
+# a text longer by itself, so the length held constant when bridge stones are compared with others leaves them out
+_PHRASE_WORDS = {w.lower() for w in {"bro", "bru", "brú", "brúar", "bryggju", "bryggja", "brygg", "bryggiu", "broð", "væg", "vægh", "veg",
+                 "vegR", "vægR", "gærði", "gerði", "gærðu", "gerðu", "gera", "gæra", "gørva", "gærva", "fyrir", "and",
+                 "ônd", "sál", "salu", "sálu", "sialu", "guð", "guðs", "hialpi", "hjalpi", "hialpin", "kristr", "krist",
+                 "moðir", "móðir", "hans", "hennar", "þæira", "þeira"}}
+
+
+def core_words(normalization: str) -> int:
+    """Antal ord i normaliseringen utan bro- och bönefrasernas ord (se _PHRASE_WORDS)."""
+    words = [w.strip(".,:;!?\"'()[]").lower() for w in normalization.split()]
+    return sum(1 for w in words if w and w not in _PHRASE_WORDS)
+
+
 def corpus_rows(inscriptions: list[dict], names=frozenset()) -> list[dict]:
     """En rad per svensk vikingatida runsten: plats, ristare, stil, kategorier, språkdrag och ordformer."""
     rows = []
@@ -173,6 +188,7 @@ def corpus_rows(inscriptions: list[dict], names=frozenset()) -> list[dict]:
             "short_twig": int("kortkvist" in rt),
             "lost": int(r["flags"]["lost"]),
             "n_words": f["n_words"],
+            "n_words_core": core_words(r.get("normalization") or ""),
             **_style_dates(r),
             "carvers_all": ";".join(c["name"] for c in r["carvers"] if c["kind"] in ("S", "A")),
             **{f"cat_{k}": int(k in cats) for k in CATEGORIES},

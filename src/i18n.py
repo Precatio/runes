@@ -38,6 +38,7 @@ LABEL = re.compile(rf"^({_L}{_LH}*(?: {_L}{_LH}*){{0,2}}(?: \([^)]{{1,12}}\))?:)
 LEAD = re.compile(r"^[(«\"„”'“]*")
 TRAIL = re.compile(r"[.,;:!?)”\"'’]+$")
 TRAIL_KEEP_QUOTE = re.compile(r"[.,;:!?)”\"’]+$")
+TRAIL_KEEP_PAREN = re.compile(r"[.,;:!?]+$")
 MARK = re.compile("\u0000(\\d+)\u0000|\u0001([-])\u0001")
 
 MISSING: dict[str, str] = {}
@@ -87,7 +88,7 @@ def mask(text: str, with_terms: bool = False) -> tuple[str, list[str], list[str]
             k = min(max_words, -(-(len(words) - i) // 2))
             while k >= 1 and not hit:
                 cand = "".join(words[i:i + 2 * k - 1])[len(lead):]
-                for core in (cand, TRAIL.sub("", cand), TRAIL_KEEP_QUOTE.sub("", cand)):
+                for core in (cand, TRAIL.sub("", cand), TRAIL_KEEP_QUOTE.sub("", cand), TRAIL_KEEP_PAREN.sub("", cand)):
                     kind = "name" if capital and core in names else ("term" if with_terms and core in terms else None)
                     if core and kind:
                         res.append(lead + "\u0001" + chr(0xE000 + len(tokens)) + "\u0001" + cand[len(core):])
