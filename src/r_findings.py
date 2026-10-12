@@ -399,6 +399,75 @@ def _remains(r: dict) -> list[dict]:
     return out
 
 
+def _cult(c: dict) -> list[dict]:
+    """Kristna budskap nära ortnamn som kan tyda på förkristen kult, och kyrkor nära samma namn (r/remains.R)."""
+    if not c.get("available") or not c.get("tests"):
+        return []
+    t = c["tests"]
+    km = c.get("near_km") or 2
+    out = []
+    pa = t.get("prayer_a") or {}
+    if pa.get("or") is not None and pa.get("q_bh") is not None:
+        found = pa["q_bh"] < 0.05 and pa["or"] > 1
+        rep = (pa.get("halves") or {}).get("replicated")
+        text = (f"Kristen bön är {'vanligare' if found else 'inte tydligt vanligare'} på runstenar inom {km} km från ett "
+                f"teoforiskt ortnamn (ett gudanamn med en sakral efterled, som Torsvi, Odensala, Ullevi och Frösö): "
+                f"{_pct(pa['share_near'])} mot {_pct(pa['share_far'])} av övriga stenar (oddskvot {_d(pa['or'])}, "
+                f"{_d(pa['lo'])}–{_d(pa['hi'])}, med landskapet konstant; {pa['n_near']} stenar vid "
+                f"{pa.get('n_places', '–')} namn).")
+        if rep is not None:
+            text += " Håller i båda halvorna av korpusen, uppdelad per socken." if rep else \
+                " Håller inte i båda halvorna av korpusen."
+        pc, pac = t.get("prayer_central") or {}, t.get("prayer_a_central") or {}
+        if pc.get("or") is not None:
+            text += (f" Vid centralortsnamn utan kult (Husby, -tuna) är bönen inte vanligare (oddskvot {_d(pc['or'])})"
+                     + (f", och med närheten till dem konstant består skillnaden vid de teofora namnen (oddskvot "
+                        f"{_d(pac['or'])})." if pac.get("or") is not None else "."))
+        ca, cr = t.get("christian_a") or {}, t.get("cross_a") or {}
+        if ca.get("or") is not None:
+            text += (f" Kristna markörer överlag ({_pct(ca['share_near'])} mot {_pct(ca['share_far'])}) och kors pekar åt "
+                     "samma håll men håller inte i alla kontroller." if not (ca.get("halves") or {}).get("replicated")
+                     else f" Kristna markörer överlag: {_pct(ca['share_near'])} mot {_pct(ca['share_far'])}.")
+        radius = {r["km"]: r for r in c.get("radius") or []}
+        loo = pa.get("loo") or {}
+        pagan = c.get("pagan") or []
+        pagan_txt = ""
+        if pagan:
+            near = [x["signum"] for x in pagan if x.get("km_a") is not None and x["km_a"] < km]
+            pagan_txt = (f" De {len(pagan)} stenarna med uttryckligt hedniska markörer (Torsåkallan, vígi-formler, Tormotiv) "
+                         + (f"står inom {km} km från ett teoforiskt namn i {len(near)} fall: {', '.join(near)}."
+                            if near else f"står inte inom {km} km från något teoforiskt namn i registret."))
+        note = (f"Radien {km} km valdes i förväg. "
+                + (f"Med 1 km ({radius[1]['n_near']} stenar) är oddskvoten {_d(radius[1]['or'])} och med 3 km "
+                   f"{_d(radius[3]['or'])}, åt samma håll men inte signifikant; resultatet hänger alltså delvis på radien. "
+                   if 1 in radius and 3 in radius else "")
+                + (f"Utan stenarna vid ett namn i taget ligger oddskvoten mellan {_d(loo['min_or'])} och "
+                   f"{_d(loo['max_or'])}. " if loo else "")
+                + "Ortnamnen kommer ur OpenStreetMap (Lantmäteriets namn) och är belagda långt efter vikingatiden; att ett "
+                "gudanamn med sakral efterled betecknar en kultplats är den gängse tolkningen (Vikstrand 2001), men ortens läge "
+                "är dagens by eller gård, inte kultplatsen själv. Flyttade stenar räknas inte. Teofora namn markerar ofta "
+                "centralorter; jämförelsen med Husby och -tuna prövar den förklaringen." + pagan_txt)
+        status = ("mönster att pröva" if rep else "indikation") if found else "begränsning"
+        out.append({"key": "cult_prayer", "topic": "Geografi", "status": status, "text": text, "note": note,
+                    "replicated": rep if found else None,
+                    "significance": significance(pa["q_bh"], "q", "logistisk regression med landskapet konstant, "
+                                                                   "Benjamini–Hochberg")})
+    ch = c.get("churches") or {}
+    a = next((r for r in ch.get("rows") or [] if r["tier"] == "A"), None)
+    if a and a.get("p") is not None:
+        found = a["p"] < 0.05 and a["or"] > 1
+        text = (f"Teofora ortnamn ligger {'oftare' if found else 'inte oftare'} inom {ch.get('near_km', 1)} km från en "
+                f"medeltida kyrka än andra ortnamn i samma trakter ({_pct(a['near_church'])} av {a['n']} namn mot "
+                f"{_d(ch['near_church_other'] * 100, 1)} %; oddskvot {_d(a['or'])}).")
+        note = (f"Kyrkorna är Wikidatas {ch['n_churches']} kyrkobyggnader i Sverige med ett uppförandeår före 1350, långt "
+                "ifrån alla medeltida kyrkor; täckningen är ojämn. Jämförelsen gäller ortnamn av samma slag (byar, gårdar) "
+                "inom 10 km från en runsten. Att kyrkor byggdes på eller vid gamla kultplatser är en gammal och omdiskuterad "
+                "tanke; resultatet är förenligt med den men visar inte att kyrkan ersatte en kultplats.")
+        out.append({"key": "cult_churches", "topic": "Geografi", "status": "indikation" if found else "begränsning",
+                    "text": text, "note": note, "significance": significance(a["p"], "p", "Fishers exakta test")})
+    return out
+
+
 def corpus_patterns(res: dict) -> list[dict]:
     """Mönster i hela korpusen, märkta 'bekräftar' eller 'mönster att pröva'."""
     out = []
@@ -464,6 +533,7 @@ def corpus_patterns(res: dict) -> list[dict]:
                                     "resultatet visar kartlagrets gräns, inte att broarna låg långt från vatten.",
                             "significance": significance(b.get("p"), "p", "Wilcoxon")})
     out += _remains(res.get("remains") or {})
+    out += _cult((res.get("remains") or {}).get("cult") or {})
     a = res.get("attribution") or {}
     if a.get("ablation"):
         ab = {x["features"]: x for x in a["ablation"]}
@@ -722,6 +792,15 @@ HYPOTHESES: dict[tuple[str, str | None], tuple[str, str]] = {
         "Vi föreslår att ristarna arbetade för beställare inom häradet – att stenresningen organiserades lokalt kring "
         "häradets nätverk.",
         "En ristare som arbetade i flera härad bör där följa släktnätverk, med samma personnamn på stenar i olika härad."),
+    ("Geografi", "cult_prayer"): (
+        "Vi föreslår att kristna böner sattes upp demonstrativt vid de gamla kultplatserna: det kristna budskapet "
+        "markerades där den gamla tron hade haft sin plats, inte bara där eliten bodde.",
+        "Om det stämmer bör bönestenarna vid kultnamnen höra till kristnandets tidiga skede och stå närmare platsen än "
+        "gården; jämför med arkeologiskt undersökta kultplatser och med de medeltida kyrkornas ålder och läge."),
+    ("Geografi", "cult_churches"): (
+        "Kyrkan kan ha byggts vid den gamla kultplatsen för att ta över dess betydelse.",
+        "Pröva med ett fullständigt register över medeltida kyrkor och deras äldsta byggnadsfas, och med undersökta "
+        "kultplatser: ligger de äldsta kyrkorna närmast?"),
     ("Geografi", "remains_graves"): (
         "Vi föreslår att gravfälten förblev släktens minnesplatser genom kristnandet: den kristna stenen restes där "
         "förfäderna låg, även när den döde själv kanske begravdes vid en kyrka.",

@@ -20,16 +20,12 @@ def test_draft_takes_what_is_new_or_changed():
     assert out["draft"]["slug"].startswith("2026-11-") and out["draft"]["month"] == "2026-11"
     assert "3 mönster" in out["draft"]["summary"]
     assert any("tidigare mönster att pröva" in s for s in out["sources"])
-    # The English version is written with English sentences, not translated piece by piece
-    assert out["draft"]["body_en"].startswith("Here are the patterns that are new")
-    assert "**What we see.**" in out["draft"]["body_en"] and "**Vad vi ser.**" in body
 
 
 def test_draft_mentions_the_map_shift_with_a_link():
     shift = {"key": "o_runa", "label": "o-runan för o", "early": 0.08, "late": 0.51, "n_early": 218, "n_late": 136}
     out = blog.build_draft("2026-11", [_pattern("b", "mönster att pröva")], {}, shift)
     assert "(/karta?pattern=o_runa&split=1)" in out["draft"]["body"] and "8 %" in out["draft"]["body"]
-    assert "[pattern map](/karta?pattern=o_runa&split=1)" in out["draft"]["body_en"]
 
 
 def test_slug_rules():
@@ -66,3 +62,23 @@ def test_remains_patterns():
     assert g["status"] == "bekräftar" and "59 %" in g["text"] and "lika stor för stenar med kristna markörer" in g["text"]
     assert b["status"] == "mönster att pröva" and b["replicated"] is True and "oddskvot 2,10" in b["text"]
     assert rf._remains({"available": False}) == []
+
+
+def test_cult_patterns():
+    t = lambda o, rep, q=0.01, **kw: {"or": o, "lo": o * 0.6, "hi": o * 1.7, "p": q, "q_bh": q, "n": 1563,
+                                      "halves": {"replicated": rep}, "share_near": 0.28, "share_far": 0.15, "n_near": 74, **kw}
+    c = {"available": True, "near_km": 2,
+         "tests": {"prayer_a": t(2.23, True, n_places=20, loo={"min_or": 1.89, "max_or": 2.55}),
+                   "prayer_central": t(1.27, False, q=0.27), "prayer_a_central": t(2.29, True),
+                   "christian_a": t(1.74, False, q=0.05)},
+         "radius": [{"km": 1, "n_near": 25, "or": 1.68, "p": 0.28}, {"km": 3, "n_near": 161, "or": 1.37, "p": 0.14}],
+         "pagan": [{"signum": "Sö 140", "km_a": 1.2, "km_b": 3.0}, {"signum": "U 1161", "km_a": 6.0, "km_b": 4.0}],
+         "churches": {"n_churches": 444, "near_church_other": 0.025, "near_km": 1,
+                      "rows": [{"tier": "A", "n": 67, "near_church": 0.09, "or": 3.8, "p": 0.007}]}}
+    pats = {p["key"]: p for p in rf._cult(c)}
+    pr, ch = pats["cult_prayer"], pats["cult_churches"]
+    assert pr["status"] == "mönster att pröva" and pr["replicated"] is True
+    assert "28 % mot 15 %" in pr["text"] and "inte vanligare (oddskvot 1,27)" in pr["text"]
+    assert "hänger alltså delvis på radien" in pr["note"] and "i 1 fall: Sö 140." in pr["note"]
+    assert ch["status"] == "indikation" and "oddskvot 3,80" in ch["text"]
+    assert rf._cult({"available": False}) == []

@@ -964,6 +964,9 @@ Innan resultat jämförs direkt bör samma referensstenar mätas med båda metod
   public domain. Hämtas en gång till `data/cache/r/naturalearth/`.
 * **Höjddata:** Terrain Tiles (Tilezen/Mapzen, Registry of Open Data on AWS), zoomnivå 12 per sten och zoomnivå 9
   för korpusens strandlinje. Hämtas till `data/cache/r/terrain/`.
+* **Ortnamn:** OpenStreetMap (© OpenStreetMap-bidragsgivare, ODbL), med Lantmäteriets ortnamn från terrängkartan;
+  Sveriges utdrag från Geofabrik, ortnamnen utplockade med GDAL (`scripts/fetch_place_names.py`, `data/ortnamn/`).
+* **Medeltida kyrkor:** Wikidata (CC0), kyrkobyggnader i Sverige med uppförandeår före 1350.
 * **Lämningar:** Kulturmiljöregistret (Riksantikvarieämbetet), hämtat via K-samsök (`serviceName=kmr_lamningar`):
   gravfält, högar, färdvägar och färdvägssystem, broar, fornborgar och hamnanläggningar, en punkt per lämning
   (`scripts/fetch_raa_remains.py`, `data/raa/lamningar.csv`, ingår inte i repot).
@@ -1035,6 +1038,34 @@ närheten mäts mot slumpen i hela korpusen och att den varken minskar med tiden
 att gravfälten förblev släktens minnesplatser genom kristnandet. Reservationer: registret är olika väl inventerat i olika
 trakter, en lämning är en punkt (mittpunkten för en yta), de flesta lämningar är odaterade, färdvägar och broar är ofta
 medeltida eller yngre, och i enstaka fall kan ett gravfält ha registrerats just där en runsten står.
+
+**Förkristna kultnamn och stenarnas budskap** (`remains.R`, från 2026-10-12). Är kristna budskap vanligare på stenar
+nära platser som kan ha varit förkristna kultplatser? Ortnamnen kommer ur OpenStreetMap (© OpenStreetMap-bidragsgivare,
+ODbL), där Lantmäteriets ortnamn från terrängkartan finns inlagda; bara by-, gårds- och ortnamn räknas, inte unga
+stadsdelsnamn (`scripts/fetch_place_names.py`, `data/ortnamn/`). Namnen delas i tre nivåer. *Teofora namn* (A) är ett
+gudanamn (Tor, Oden/Ons, Frö, Ull, Njärd/När, Härn, Dis) med en sakral eller typisk efterled (vi/ve/vid, harg, hov,
+lunda, åker/åkra, sal/sala, tuna, sunda), t.ex. Torsvi, Odensala, Ullevi och Frösö – den gängse indikationen på en
+kultplats (Vikstrand 2001); singularformen -lund räknas inte, eftersom den oftast är unga villanamn. *Sakrala namn utan
+gudanamn* (B) är Vi, Ve, Viby, Harg, Hov, Hof, Hörg och Gudhem, osäkrare eftersom harg också kan betyda stenig mark och hov
+gård eller höjd. *Centralortsnamn utan kult* (C), Husby och namn på -tuna utan gudanamn, är en jämförelse: teofora namn
+markerar ofta centralorter, där eliten kan ha blivit kristen tidigt. Ett namn sägs vara nära en sten inom 2 km (valt i
+förväg); flyttade stenar räknas inte. Kristen bön, kors och kristna markörer överlag modelleras med logistisk regression
+med landskapet konstant, också med tiden konstant och med närheten till centralortsnamn konstant, prövas i korpusens två
+halvor och med stenarna vid ett namn i taget utelämnade, och redovisas med 1 och 3 km som känslighetsprov. Medeltida
+kyrkor (Wikidatas kyrkobyggnader i Sverige med ett uppförandeår före 1350, CC0, långt ifrån alla) jämförs med namnen:
+ligger de teofora namnen oftare inom 1 km från en kyrka än andra ortnamn av samma slag inom 10 km från en runsten
+(Fishers exakta test)?
+
+Beräkning 2026-10-12 (1 563 stenar, 82 teofora namn, 66 sakrala, 128 centralortsnamn): kristen bön står på 28 % av de 74
+stenarna nära ett teoforiskt namn mot 15 % av övriga (oddskvot 2,23, 1,30–3,81, q 0,014), håller i båda halvorna och
+ligger mellan 1,89 och 2,55 när stenarna vid ett namn i taget utelämnas (20 namn). Vid centralortsnamn utan kult är bönen
+inte vanligare (oddskvot 1,27), och med närheten till dem konstant består skillnaden (2,29); det talar emot att den bara
+speglar elitens gårdar. Kristna markörer överlag (69 % mot 53 %) och kors pekar åt samma håll men håller inte i båda
+halvorna, och vid de sakrala namnen utan gudanamn syns ingen skillnad. Med 1 km (25 stenar) blir oddskvoten 1,68 och med
+3 km 1,37, åt samma håll men inte signifikant: resultatet hänger delvis på radien och redovisas som ett mönster att pröva.
+Teofora namn ligger inom 1 km från en medeltida kyrka i 9 % av fallen mot 2,5 % för andra ortnamn (oddskvot 3,8,
+p 0,007), en indikation med tanke på kyrkoregistrets luckor. Ortnamnen är belagda långt efter vikingatiden, och namnets
+läge är dagens by eller gård, inte kultplatsen själv.
 
 **Okända ristare** (`anonymous.R`, från 2026-10-11). Kan en gruppering i statistiken vara en ristare som ännu inte
 har namn? Stenar med minst fem läsbara ord jämförs i *handens drag* – stilgrupp, kors, kortkvistrunor, språkdrag

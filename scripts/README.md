@@ -40,3 +40,13 @@ omkring 53 000 poster, några minuter) till `data/raa/lamningar.csv`, som inte i
 ```
 
 Utan filen hoppar `remains.R` över analysen och säger att lämningarna inte är hämtade.
+
+## Ortnamn och medeltida kyrkor (METHODS.md 17)
+
+`remains.R` jämför också stenarnas budskap med ortnamn som kan tyda på förkristen kult. Ortnamnen plockas ur
+OpenStreetMaps utdrag för Sverige (Lantmäteriets ortnamn, omkring 900 MB, hämtas en gång till `data/cache/osm/`) med GDAL,
+och medeltida kyrkor hämtas från Wikidata. Kräver `ogr2ogr` (GDAL):
+
+```bash
+.venv/bin/python scripts/fetch_place_names.py      # data/ortnamn/kultnamn.csv, platser.csv, kyrkor.csv
+```

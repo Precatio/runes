@@ -46,6 +46,15 @@ interface RemainsTest {
   label: string; n: number; or: number; lo: number; hi: number; p: number; q_bh: number;
   halves?: { replicated: boolean }; periods?: { early: number; late: number; n_early: number; n_late: number };
 }
+interface CultTest extends RemainsTest { share_near: number; share_far: number; n_near: number; n_places?: number; loo?: { min_or: number; max_or: number } }
+interface CultResult {
+  available: boolean; near_km: number; n_a: number; n_b: number; n_c?: number; stones_near_a: number; stones_near_b: number;
+  near_a_stones: number; near_a_random: number; tests?: Record<string, CultTest>;
+  radius?: { km: number; n_near: number; or: number; p: number }[];
+  pagan?: { signum: string; km_a: number; km_b: number }[];
+  churches?: { n_churches: number; n_other: number; near_church_other: number; near_km: number;
+    rows: { tier: string; n: number; near_church: number; or: number; p: number }[] } | null;
+}
 interface VikingShore {
   n_stones: number; median_stones_km: number; median_random_km: number; p: number; error?: string;
   provinces?: { province: string; uplift_m: number; n: number; median_stones_km: number; median_random_km: number; p: number }[];
@@ -82,7 +91,8 @@ interface Corpus {
   remains?: Dict & { available: boolean; note?: string; method?: string; near_km?: number; n_stones?: number;
     distances?: { key: string; label: string; n_remains: number; median_stones_km: number; median_random_km: number; near_stones: number; near_random: number; q_bh: number }[];
     tests?: Record<string, RemainsTest>;
-    gravfalt_provinces?: { province: string; n: number; near_stones: number; near_random: number; p: number }[] };
+    gravfalt_provinces?: { province: string; n: number; near_stones: number; near_random: number; p: number }[];
+    cult?: CultResult };
   anonymous?: Dict & { method: string; n_unattributed: number; n_candidates: number;
     calibration: { link_km: number; lr_min: number; tpr: number; fpr: number; precision: number; max_spread_km: number };
     validation: { n_groups: number; n_stones: number; purity: number; purity_geography: number; share_pure: number };
@@ -699,6 +709,55 @@ function Remains({ data }: { data: Corpus }) {
         </Details>
       )}
       <Method text={r.method} caveat={r.note} />
+      <CultNames c={r.cult} />
+    </div>
+  );
+}
+
+// Christian messages near place names that suggest pre-Christian cult, and churches near the same names (r/remains.R)
+function CultNames({ c }: { c?: CultResult }) {
+  if (!c?.available || !c.tests) return null;
+  const order = ["prayer_a", "christian_a", "cross_a", "prayer_a_time", "prayer_a_central", "prayer_central", "christian_b"];
+  const rows = order.filter(k => c.tests![k]).map(k => [k, c.tests![k]] as const);
+  return (
+    <div className="space-y-3 pt-4">
+      <h3 className="text-lg font-bold text-slate-900">Förkristna kultnamn och stenarnas budskap</h3>
+      <p className="text-sm text-slate-600 max-w-4xl">
+        Är kristna budskap vanligare på stenar nära ortnamn som tyder på förkristen kult? Teofora namn är ett gudanamn med
+        en sakral efterled (Torsvi, Odensala, Ullevi, Frösö; {c.n_a} namn), sakrala namn utan gudanamn är Vi, Viby, Harg
+        och Hov ({c.n_b} namn) och centralortsnamn utan kult (Husby, -tuna; {c.n_c ?? "–"} namn) är en jämförelse. Nära
+        betyder inom {c.near_km} km; {c.stones_near_a} stenar står nära ett teoforiskt namn.
+      </p>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead><tr><Th>Samband</Th><Th>Nära</Th><Th>Andel nära</Th><Th>Andel övriga</Th><Th>Oddskvot</Th><Th>95 % intervall</Th><Th>q</Th><Th>Båda halvorna</Th></tr></thead>
+          <tbody>{rows.map(([k, t]) => (
+            <tr key={k} className="border-t border-slate-900/5">
+              <td className="p-2">{t.label}{t.loo && <span className="block text-xs text-slate-500">utan ett namn i taget: {d2(t.loo.min_or)}–{d2(t.loo.max_or)}</span>}</td>
+              <td className="p-2">{t.n_near}</td><td className="p-2 font-semibold">{pc(t.share_near)}</td><td className="p-2">{pc(t.share_far)}</td>
+              <td className="p-2 font-semibold">{d2(t.or)}</td><td className="p-2">{d2(t.lo)}–{d2(t.hi)}</td>
+              <td className="p-2">{pText(t.q_bh)}</td><td className="p-2">{t.halves?.replicated ? "✓ ja" : "nej"}</td>
+            </tr>))}</tbody>
+        </table>
+      </div>
+      {c.radius && c.radius.length > 0 && (
+        <p className="text-xs text-slate-500">
+          Kristen bön med annan radie: {c.radius.map(r => `${r.km} km: oddskvot ${d2(r.or)} (p ${pText(r.p)}, ${r.n_near} stenar nära)`).join("; ")}.
+        </p>
+      )}
+      {c.churches && c.churches.rows.length > 0 && (
+        <p className="text-sm text-slate-600 max-w-4xl">
+          Medeltida kyrkor (Wikidata, {c.churches.n_churches} kyrkor före 1350): inom {c.churches.near_km} km från en kyrka
+          ligger {c.churches.rows.map(r => `${pc(r.near_church)} av de ${r.tier === "A" ? "teofora" : "sakrala"} namnen (oddskvot ${d2(r.or)}, p ${pText(r.p)})`).join(" och ")},
+          mot {d2(c.churches.near_church_other * 100, 1)} % av {c.churches.n_other.toLocaleString("sv-SE")} andra ortnamn i samma trakter.
+        </p>
+      )}
+      {c.pagan && c.pagan.length > 0 && (
+        <p className="text-xs text-slate-500">
+          Stenar med uttryckligt hedniska markörer och avståndet till närmaste teoforiska namn:{" "}
+          <span translate="no">{c.pagan.map(x => `${x.signum} ${d2(x.km_a, 1)} km`).join(", ")}</span>.
+        </p>
+      )}
     </div>
   );
 }

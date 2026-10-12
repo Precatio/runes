@@ -5,6 +5,15 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Förkristna kultnamn och stenarnas budskap
+- Ortnamn som tyder på förkristen kult – teofora namn som Torsvi, Odensala, Ullevi och Frösö, sakrala namn som Vi, Harg
+  och Hov – ur OpenStreetMap (Lantmäteriets ortnamn), med Husby och -tuna som jämförelse, och medeltida kyrkor ur
+  Wikidata (`scripts/fetch_place_names.py`).
+- Kristen bön är vanligare på stenar inom 2 km från ett teoforiskt namn (28 % mot 15 %, oddskvot 2,2), håller i båda
+  halvorna och när stenarna vid ett namn i taget utelämnas, men inte vid centralortsnamn utan kult. Resultatet hänger
+  delvis på radien och redovisas som mönster att pröva. Teofora namn ligger oftare nära en medeltida kyrka (indikation).
+- Visas under Geografi i Statistik och som mönster i Forskningsluckor; METHODS.md 17.
+
 ### Stenarna i sitt landskap: nya källor
 - Lämningar ur Kulturmiljöregistret (Riksantikvarieämbetet, via K-samsök): gravfält, högar, färdvägar, broar,
   fornborgar och hamnanläggningar, omkring 53 000 poster (`scripts/fetch_raa_remains.py`). Den nya korpusanalysen

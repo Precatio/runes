@@ -27,6 +27,7 @@ from src import research_gaps as gaps
 from src.inscription_types import CATEGORIES, categories
 from src.language_profile import TRAITS, ai_counts, dotted_counts, o_counts, och_counts, prayer_form, r_counts, traits
 from src.orthography import features
+from src.pattern_map import pagan
 from src.styles import BY_CODE
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -55,8 +56,8 @@ WATER_LAYERS = {
 }
 
 CSV_COLUMNS = (["signum", "province", "district", "place", "parish", "lat", "lon", "carver", "has_carver", "carvers_uncertain",
-                "style", "material", "cross", "short_twig", "lost", "moved", "n_words", "n_words_core", "carvers_all", "style_from",
-                "style_to"]
+                "style", "material", "cross", "short_twig", "lost", "moved", "pagan", "n_words", "n_words_core", "carvers_all",
+                "style_from", "style_to"]
                + [f"cat_{k}" for k in CATEGORIES] + [f"trait_{k}" for k in TRAITS]
                + ["words", "pairs", "normalization", "signed", "ai_n", "ai_mono", "ai_sten_n", "ai_sten_mono",
                   "dot_n", "dot_cand", "dot_y_exp", "dot_y_obs", "dot_e_exp", "dot_e_obs", "dot_g_exp", "dot_g_obs",
@@ -199,6 +200,7 @@ def corpus_rows(inscriptions: list[dict], names=frozenset()) -> list[dict]:
             "short_twig": int("kortkvist" in rt),
             "lost": int(r["flags"]["lost"]),
             "moved": int(bool(MOVED.search(r.get("placement") or ""))),
+            "pagan": int(pagan(r)),
             "n_words": f["n_words"],
             "n_words_core": core_words(r.get("normalization") or ""),
             **_style_dates(r),
@@ -259,17 +261,27 @@ MODULE_FILES = {"geography": ("geography*", "geografi_*", "ristare_karta*"), "cl
                 "network": ("network*", "natverk_*"), "change": ("change*", "forandring_*"),
                 "remains": ("remains*", "lamningar_*")}
 
-# Kulturmiljöregistret's remains (scripts/fetch_raa_remains.py), read by remains.R; not part of the repository
+# Kulturmiljöregistret's remains (scripts/fetch_raa_remains.py) and the place names and medieval churches
+# (scripts/fetch_place_names.py), read by remains.R; not part of the repository
 REMAINS = os.path.join(ROOT, "data", "raa", "lamningar.csv")
+CULT_NAMES = os.path.join(ROOT, "data", "ortnamn", "kultnamn.csv")
+PLACES = os.path.join(ROOT, "data", "ortnamn", "platser.csv")
+CHURCHES = os.path.join(ROOT, "data", "ortnamn", "kyrkor.csv")
 
 
 def _remains_hash() -> str:
-    if not os.path.exists(REMAINS):
-        return "none"
     h = hashlib.sha256()
-    with open(REMAINS, "rb") as fh:
-        h.update(fh.read())
+    for path in (REMAINS, CULT_NAMES, PLACES, CHURCHES):
+        if os.path.exists(path):
+            with open(path, "rb") as fh:
+                h.update(fh.read())
+        else:
+            h.update(b"none")
     return h.hexdigest()[:16]
+
+
+def _if_exists(path: str) -> str | None:
+    return path if os.path.exists(path) else None
 
 
 def module_hashes(csv_data: bytes) -> dict[str, str]:
@@ -452,7 +464,8 @@ def run_corpus(fp: str):
     try:
         water = ensure_water()
         params = {"corpus": os.path.join(d, "corpus.csv"), "water_dir": water, "corpus_dir": d, "seed": 2026,
-                  "tile_dir": os.path.join(CACHE_DIR, "terrain"), "remains": REMAINS if os.path.exists(REMAINS) else None}
+                  "tile_dir": os.path.join(CACHE_DIR, "terrain"), "remains": _if_exists(REMAINS),
+                  "cult_names": _if_exists(CULT_NAMES), "places": _if_exists(PLACES), "churches": _if_exists(CHURCHES)}
         with open(os.path.join(d, "corpus.csv"), "rb") as fh:
             versions = module_hashes(fh.read())
         reused = []
