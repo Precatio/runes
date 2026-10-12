@@ -16,11 +16,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const pages = PAGES.map(([path, changeFrequency, priority]) => ({ url: `${SITE_URL}${path}`, lastModified: now, changeFrequency, priority }));
   try {
     const r = await fetch(`${API_URL}/api/blog/posts`, { next: { revalidate: 3600 } });
-    const posts: { slug: string; publishedAt?: string | null }[] = r.ok ? (await r.json()).posts : [];
-    return [...pages, ...posts.map(p => ({
-      url: `${SITE_URL}/blogg/${encodeURIComponent(p.slug)}`,
-      lastModified: p.publishedAt ? new Date(p.publishedAt) : now, changeFrequency: "yearly" as const, priority: 0.7,
-    }))];
+    const posts: { slug: string; publishedAt?: string | null; updatedAt?: string | null }[] = r.ok ? (await r.json()).posts : [];
+    return [...pages, ...posts.map(p => {
+      const changed = p.updatedAt ?? p.publishedAt;
+      return { url: `${SITE_URL}/blogg/${encodeURIComponent(p.slug)}`, lastModified: changed ? new Date(changed) : now,
+               changeFrequency: "monthly" as const, priority: 0.8,
+               images: [`${SITE_URL}/blogg/${encodeURIComponent(p.slug)}/opengraph-image`] };
+    })];
   } catch {
     return pages;
   }

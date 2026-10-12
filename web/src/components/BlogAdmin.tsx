@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import BlogBody, { monthLabel, type BlogPost } from "@/components/BlogBody";
 import { useSettings } from "@/components/SettingsContext";
+import { metaDescription, postUrl, seoChecks } from "@/lib/blogSeo";
 
 const field = "liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm outline-none w-full";
 const thisMonth = () => new Date().toISOString().slice(0, 7);
@@ -227,6 +228,36 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
           <textarea value={draft.body_en ?? ""} onChange={e => set("body_en", e.target.value)} placeholder="Text" rows={10} className={`${field} font-mono text-[13px]`} />
         </div>
       </details>
+
+      {(() => {
+        // What search engines will show and how the post measures up (lib/blogSeo.ts); the page gets its metadata,
+        // structured data and share image by itself when it is published
+        const checks = seoChecks({ ...draft, body: draft.body ?? "" });
+        const passed = checks.filter(c => c.ok).length;
+        const title = `${draft.title || "Rubrik"} | Vitki`;
+        return (
+          <details className="rounded-xl border border-slate-200 bg-white/60 p-3">
+            <summary className="cursor-pointer text-sm font-bold text-slate-700">SEO-kontroll ({passed} av {checks.length} uppfyllda)</summary>
+            <div className="mt-3 rounded-lg border border-slate-200 bg-white p-3 max-w-2xl">
+              <p className="text-[11px] text-slate-500 truncate" translate="no">{postUrl(draft.slug || "adress")}</p>
+              <p className="text-[17px] text-[#1a0dab] leading-snug truncate" translate="no">{title.length > 62 ? `${title.slice(0, 60)}…` : title}</p>
+              <p className="text-xs text-slate-600 leading-snug" translate="no">{metaDescription(draft.summary || draft.body || "") || "Ingressen blir beskrivningen."}</p>
+            </div>
+            <ul className="mt-3 space-y-1 text-xs">
+              {checks.map(c => (
+                <li key={c.text} className="flex gap-2">
+                  <span className={c.ok ? "text-emerald-700" : "text-amber-700"} aria-hidden="true">{c.ok ? "✓" : "!"}</span>
+                  <span className={c.ok ? "text-slate-600" : "text-slate-800"}>{c.text}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-2 text-[11px] text-slate-500">
+              När inlägget publiceras får sidan av sig själv titel, beskrivning, kanonisk adress, Open Graph och Twitter-kort,
+              strukturerade data (BlogPosting), en egen delningsbild med första fotot, plats i sitemap och RSS-flödet.
+            </p>
+          </details>
+        );
+      })()}
 
       <details className="text-xs text-slate-600">
         <summary className="cursor-pointer font-semibold">Formatering</summary>

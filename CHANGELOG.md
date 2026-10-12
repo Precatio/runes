@@ -5,6 +5,17 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Automatisk SEO för bloggen
+- Inläggen renderas på servern och får av sig själva, när de publiceras: titel, beskrivning (hela meningar ur
+  ingressen, högst 158 tecken), kanonisk adress, nyckelord (bland annat stenarnas signum), Open Graph som artikel med
+  publiceringsdatum, Twitter-kort, strukturerade data (schema.org BlogPosting och BreadcrumbList), en egen delningsbild
+  med rubriken och första fotot (med fotografens namn och licens), plats i sitemap med ändringsdatum och ett RSS-flöde
+  (`/blogg/rss.xml`). Bloggens förstasida får Blog-data. Allt härleds ur inlägget (`web/src/lib/blogSeo.ts`).
+- SEO-kontroll i Admin: förhandsvisning av sökträffen och tio punkter (rubrikens och beskrivningens längd, ämnesord,
+  adress, mellanrubriker, bilder med alt-text, längd, länkar till appen, källor, engelsk version).
+- Vid första publiceringen meddelas sökmotorer som använder IndexNow (Bing, Yandex m.fl.), bara när `INDEXNOW_KEY` och
+  en publik `SITE_URL` är satta i produktionen.
+
 ### Välj ämne för Månadens fynd
 - I Admin finns en lista med ämnen: de utmärkande eller dolda mönster som R-analyserna har hittat och som håller i
   båda halvorna (nya mönster att pröva först, högst fyra per område, redan skrivna sist). Ett klick skriver ett utkast

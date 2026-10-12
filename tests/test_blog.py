@@ -190,3 +190,11 @@ def test_topic_charts_and_draft():
         assert part in body, part
     en = bt.draft(_p("Geografi", "hotspot_r_for_R_U 768"), res, "en", map_keys=frozenset({"r_for_R"}))["body"]
     assert ":::box In short" in en and "mode=kluster" in en and "Kulldorff, M. 1997" in en
+
+
+def test_indexnow_only_with_a_key_and_a_public_site(monkeypatch):
+    monkeypatch.delenv("INDEXNOW_KEY", raising=False)
+    assert blog.indexnow("x") is False
+    monkeypatch.setenv("INDEXNOW_KEY", "abc123")
+    monkeypatch.setenv("SITE_URL", "http://localhost:3000")
+    assert blog.indexnow("x") is False

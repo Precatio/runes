@@ -21,7 +21,7 @@ router = APIRouter()
 COLLECTION = "posts"
 SLUG = re.compile(r"^[a-z0-9][a-z0-9-]{0,79}$")
 MONTH = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
-PUBLIC = ("id", "slug", "title", "summary", "title_en", "summary_en", "month", "author", "publishedAt")
+PUBLIC = ("id", "slug", "title", "summary", "title_en", "summary_en", "month", "author", "publishedAt", "updatedAt")
 
 
 class PostRequest(BaseModel):
@@ -109,7 +109,8 @@ def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
         col = firestore().collection(COLLECTION)
         ref = col.document(req.id) if req.id else col.document()
         old = ref.get().to_dict() if req.id else None
-        if req.published and not (old or {}).get("publishedAt"):
+        first_publish = req.published and not (old or {}).get("publishedAt")
+        if first_publish:
             data["publishedAt"] = now
             data["snapshot"] = _snapshot()
         if not old:
@@ -120,7 +121,34 @@ def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
         raise
     except Exception as e:
         raise server_error(e, "Inlägget kunde inte sparas.", status_code=503)
+    if first_publish:
+        indexnow(req.slug)
     return {"post": {"id": ref.id, **_iso({k: v for k, v in data.items() if k != "snapshot"})}}
+
+
+def indexnow(slug: str) -> bool:
+    """Tells the search engines that use IndexNow (Bing, Yandex, Seznam, Naver …) about a newly published post, the
+    blog and the sitemap, in the background. Only when INDEXNOW_KEY is set (in production; the key is served at
+    /indexnow-key.txt by the web app) and SITE_URL is a public https address – never from a local machine."""
+    import os
+    import threading
+    key, site = os.environ.get("INDEXNOW_KEY", "").strip(), os.environ.get("SITE_URL", "https://vitkirunor.se").rstrip("/")
+    if not key or not site.startswith("https://") or "localhost" in site:
+        return False
+    host = site.split("://", 1)[1].split("/", 1)[0]
+    body = {"host": host, "key": key, "keyLocation": f"{site}/indexnow-key.txt",
+            "urlList": [f"{site}/blogg/{slug}", f"{site}/blogg", f"{site}/sitemap.xml"]}
+
+    def ping():
+        import requests
+        from api.errors import logger
+        try:
+            r = requests.post("https://api.indexnow.org/indexnow", json=body, timeout=10)
+            logger.info("IndexNow %s: %s", slug, r.status_code)
+        except Exception as e:  # noqa: BLE001 - a failed ping only delays indexing
+            logger.warning("IndexNow misslyckades: %r", e)
+    threading.Thread(target=ping, daemon=True).start()
+    return True
 
 
 @router.delete("/admin/blog/posts/{post_id}")

@@ -1,25 +1,29 @@
-"use client";
-
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import type { Metadata } from "next";
 import BlogShell from "@/components/BlogShell";
-import { inLanguage, monthLabel, type BlogPost } from "@/components/BlogBody";
-import { useLanguage } from "@/components/LanguageContext";
+import BlogList from "@/components/BlogList";
+import type { BlogPost } from "@/components/BlogBody";
 import { API_URL } from "@/lib/api";
+import { BLOG_DESCRIPTION, BLOG_TITLE, blogJsonLd } from "@/lib/blogSeo";
 
-// The blog: one post a month about the most interesting patterns and findings (written in Admin)
-export default function BlogPage() {
-  const { lang } = useLanguage();
-  const [posts, setPosts] = useState<BlogPost[] | null>(null);
-  const [error, setError] = useState(false);
+// The blog: one post a month about the most interesting patterns (written in Admin), rendered on the server
+export const revalidate = 300;
 
-  useEffect(() => {
-    fetch(`${API_URL}/api/blog/posts`)
-      .then(r => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
-      .then(d => setPosts(d.posts))
-      .catch(() => { setError(true); setPosts([]); });
-  }, []);
+export const metadata: Metadata = {
+  title: BLOG_TITLE,
+  description: BLOG_DESCRIPTION,
+  alternates: { canonical: "/blogg", types: { "application/rss+xml": "/blogg/rss.xml" } },
+  openGraph: { type: "website", url: "/blogg", title: BLOG_TITLE, description: BLOG_DESCRIPTION, siteName: "Vitki", locale: "sv_SE" },
+  twitter: { card: "summary_large_image", title: BLOG_TITLE, description: BLOG_DESCRIPTION },
+};
 
+export default async function BlogPage() {
+  let posts: BlogPost[] = [], failed = false;
+  try {
+    const r = await fetch(`${API_URL}/api/blog/posts`, { next: { revalidate: 300 } });
+    if (r.ok) posts = (await r.json()).posts; else failed = true;
+  } catch {
+    failed = true;
+  }
   return (
     <BlogShell>
       <section className="max-w-3xl mx-auto px-6 pt-20 pb-24">
@@ -29,29 +33,12 @@ export default function BlogPage() {
           En gång i månaden skriver vi om de mest intressanta mönstren och fynden i Vitki – vad vi ser, vad det kan
           betyda och hur det kan prövas. Siffrorna kommer från appens analyser och kan granskas där.
         </p>
-
-        <div className="mt-14 space-y-10">
-          {posts === null && <p className="text-slate-500">Hämtar inläggen …</p>}
-          {posts && posts.length === 0 && (
-            <p className="text-slate-500">{error ? "Bloggen kunde inte hämtas just nu." : "Inga inlägg ännu. Det första kommer snart."}</p>
-          )}
-          {posts?.map(p => {
-            const v = inLanguage(p, lang);
-            return (
-              <article key={p.id} className="border-t-2 border-[#b7410e] pt-5">
-                <div className="text-sm text-slate-500">{monthLabel(p.month, lang)}{p.author ? ` · ${p.author}` : ""}</div>
-                <h2 className="mt-1 text-2xl font-serif font-bold" translate="no">
-                  <Link href={`/blogg/${encodeURIComponent(p.slug)}`} className="hover:text-[#b7410e]">{v.title}</Link>
-                </h2>
-                <p className="mt-2 text-slate-600 leading-relaxed" translate="no">{v.summary}</p>
-                <Link href={`/blogg/${encodeURIComponent(p.slug)}`} className="mt-3 inline-block text-sm font-bold text-[#b7410e] hover:underline">
-                  Läs inlägget →
-                </Link>
-              </article>
-            );
-          })}
-        </div>
+        <div className="mt-14 space-y-10"><BlogList posts={posts} failed={failed} /></div>
       </section>
+      {posts.length > 0 && (
+         
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogJsonLd(posts)).replace(/</g, "\\u003c") }} />
+      )}
     </BlogShell>
   );
 }

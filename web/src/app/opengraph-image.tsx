@@ -13,7 +13,6 @@ export default async function Image() {
     (
       <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center",
                     padding: "80px", background: "#f6f4f1", color: "#0f172a", position: "relative" }}>
-        { }
         <img src={logo} alt="" width={206} height={171} style={{ position: "absolute", right: 110, top: 220, borderRadius: 28 }} />
         <div style={{ fontSize: 30, fontWeight: 700, color: "#b7410e", letterSpacing: 4 }}>VITKI</div>
         <div style={{ fontSize: 76, fontWeight: 800, lineHeight: 1.05, marginTop: 20, maxWidth: 900 }}>
