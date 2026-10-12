@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
+import { SOURCES, download, fileName, toCSV, toXLSX } from "@/lib/exportTable";
 import { GeologyBox, LanguageTraits } from "@/components/StoneContext";
 import { SIMILARITY_HELP, fmtP } from "@/lib/significance";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -319,6 +320,37 @@ function InscriptionsContent() {
 
   const select = "liquid-glass-input-wrapper rounded-xl px-3 py-2 text-slate-900 text-sm font-semibold outline-none";
 
+  // The whole selection, not just the page shown, with the source (Rundata, ODbL)
+  const [exporting, setExporting] = useState(false);
+  const exportAll = async (kind: "csv" | "xlsx") => {
+    setExporting(true);
+    try {
+      const all: Inscription[] = [];
+      for (let off = 0; ; off += 500) {
+        const r = await rundata.search({ q, province, period, style, carver, gap: gap || undefined, signa: signa || undefined,
+                                         category: category || undefined, certain: certain || undefined, limit: 500, offset: off });
+        all.push(...r.results);
+        if (off + 500 >= r.total || !r.results.length) break;
+      }
+      const dec = (v: number | null) => (v == null ? "" : String(v).replace(".", ","));
+      const rows = [
+        ["Signum", "Plats", "Socken", "Härad", "Kommun", "Placering", "Latitud", "Longitud", "Datering", "Period", "Stilgrupp",
+         "Ristare", "Material", "Föremål", "Korsform", "Runtyper", "Translitterering", "Normalisering", "Översättning (engelska)", "Referenser"],
+        ...all.map(r => [r.signum, r.place, r.parish, r.district, r.municipality, r.placement, dec(r.lat), dec(r.lon), r.dating,
+                         r.period ?? "", r.style ?? "", r.carver_raw, r.material, r.object, r.cross_form, r.rune_types,
+                         r.transliteration, r.normalization, r.translation_en, r.references]),
+      ];
+      const date = new Date().toISOString().slice(0, 10);
+      const title = `Inskrifter (${all.length} st.)`;
+      const meta = { title, sources: [SOURCES.RUNDATA], url: window.location.href, date };
+      download(kind === "csv" ? toCSV(rows, meta) : toXLSX(rows, meta), `${fileName("inskrifter", date)}.${kind}`);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Exporten misslyckades.");
+    } finally {
+      setExporting(false);
+    }
+  };
+
   return (
     <div className="flex flex-col w-full max-w-6xl mx-auto p-4 md:p-6 space-y-6">
       <div className="flex items-end justify-between gap-4">
@@ -378,7 +410,17 @@ function InscriptionsContent() {
           {results && (
             <div className="liquid-glass-island rounded-[32px] p-4">
               <div className="flex justify-between items-center px-2 pb-3 text-sm text-slate-600 font-semibold">
-                <span>{results.total.toLocaleString("sv-SE")} träffar{loading && " · söker..."}</span>
+                <span className="flex flex-wrap items-center gap-x-3">
+                  <span>{results.total.toLocaleString("sv-SE")} träffar{loading && " · söker..."}</span>
+                  {results.total > 0 && (
+                    <span className="text-xs font-normal text-slate-500">
+                      Exportera alla träffar:{" "}
+                      <button disabled={exporting} onClick={() => exportAll("csv")} className="font-semibold hover:text-[#b7410e] disabled:opacity-40">CSV</button>{" · "}
+                      <button disabled={exporting} onClick={() => exportAll("xlsx")} className="font-semibold hover:text-[#b7410e] disabled:opacity-40">Excel</button>
+                      {exporting && " …"}
+                    </span>
+                  )}
+                </span>
                 <div className="flex gap-2">
                   <button disabled={offset === 0} onClick={() => setOffset(Math.max(0, offset - PAGE))}
                     className="px-3 py-1 rounded-lg bg-white border border-slate-300 disabled:opacity-40">←</button>

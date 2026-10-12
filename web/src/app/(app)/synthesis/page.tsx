@@ -15,6 +15,7 @@ import { db, type ProjectData } from "@/lib/db";
 import { FEATURE_TYPES, METRICS, METRIC_DIGITS, METRIC_LABELS, formatSummary, type FeatureType } from "@/lib/metrics";
 import { fromProject } from "@/lib/stoneReport";
 import { runSynthesis, type Candidate, type LiteratureVerdict, type SynthesisResult } from "@/lib/synthesis";
+import ExportTable from "@/components/ExportTable";
 
 const STRENGTH_STYLE: Record<Candidate["strength"], string> = {
   stark: "bg-emerald-100 text-emerald-800 border-emerald-300",
@@ -349,7 +350,7 @@ function EvidenceDetails({ r }: { r: SynthesisResult }) {
           {r.evidence?.reading_check && <p className="text-xs text-slate-600 mb-2">Vår läsning mot Rundata: {r.evidence.reading_check.summary}</p>}
           {o ? (
             <>
-              <table className="w-full text-xs">
+              <ExportTable><table className="w-full text-xs">
                 <thead><tr className="text-left text-slate-500"><th className="py-1">Ristare</th><th>Likhet<InfoTip text={GLOSSARY["Likhet"]} /></th><th>p (just.)<InfoTip text={GLOSSARY["p (just.)"]} /></th><th>Precision<InfoTip text={GLOSSARY["Precision"]} /></th><th>Område</th><th>Vikt</th></tr></thead>
                 <tbody>{o.ranking.map(x => (
                   <tr key={x.carver} className="border-t border-slate-900/5">
@@ -358,7 +359,7 @@ function EvidenceDetails({ r }: { r: SynthesisResult }) {
                     <td>{x.in_area ? "inom" : <span className="text-amber-700">utanför</span>}</td><td>{num(x.reliability)}</td>
                   </tr>
                 ))}</tbody>
-              </table>
+              </table></ExportTable>
               <p className="text-[11px] text-slate-500 mt-2">
                 {o.n_words} läsbara ord{!o.usable && " – för kort, vägs inte in"}. Modellen: rätt ristare först i {pct(o.evaluation.top1_accuracy)}
                 {o.evaluation.signed_top1 != null && ` (${pct(o.evaluation.signed_top1)} för signerade)`} bland {o.evaluation.n_carvers} ristare; slumpnivå {pct(o.evaluation.chance_top1)}.
@@ -370,12 +371,12 @@ function EvidenceDetails({ r }: { r: SynthesisResult }) {
           <h3 className={h3}>Huggteknik mot mätkorpusen</h3>
           {g?.ranking?.length ? (
             <>
-              <table className="w-full text-xs">
+              <ExportTable><table className="w-full text-xs">
                 <thead><tr className="text-left text-slate-500"><th className="py-1">Ristare</th><th>Avstånd<InfoTip text={GLOSSARY["Avstånd"]} /></th><th>Stenar</th></tr></thead>
                 <tbody>{g.ranking.map(x => (
                   <tr key={x.group} className="border-t border-slate-900/5"><td className="py-1 font-semibold">{x.group}</td><td>{num(x.distance)}</td><td>{x.n}</td></tr>
                 ))}</tbody>
-              </table>
+              </table></ExportTable>
               <p className="text-[11px] text-slate-500 mt-2">
                 {g.evaluation ? `Korsvaliderad träffsäkerhet ${pct(g.evaluation.top1_accuracy)} (${g.evaluation.n_stones} stenar, ${g.evaluation.n_groups} ristare; slumpnivå ${pct(g.evaluation.chance_top1)}). ` : ""}
                 Tillförlitlighet över slumpnivån: {num(g.reliability ?? 0)}. Kortare avstånd = mer lik.
@@ -387,7 +388,7 @@ function EvidenceDetails({ r }: { r: SynthesisResult }) {
       {m && Object.keys(m).length > 0 && (
         <div className="mt-6 overflow-x-auto">
           <h3 className={h3}>Uppmätta spår (senaste analysen per spårtyp)</h3>
-          <table className="w-full text-xs">
+          <ExportTable><table className="w-full text-xs">
             <thead><tr className="text-left text-slate-500"><th className="py-1">Spår</th><th>n</th>{METRICS.slice(0, 4).map(k => <th key={k}>{METRIC_LABELS[k]}</th>)}</tr></thead>
             <tbody>{Object.entries(m).map(([ft, v]) => (
               <tr key={ft} className="border-t border-slate-900/5">
@@ -395,7 +396,7 @@ function EvidenceDetails({ r }: { r: SynthesisResult }) {
                 {METRICS.slice(0, 4).map(k => <td key={k}>{formatSummary(v.summary[k], METRIC_DIGITS[k])}</td>)}
               </tr>
             ))}</tbody>
-          </table>
+          </table></ExportTable>
         </div>
       )}
     </div>

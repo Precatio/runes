@@ -5,6 +5,36 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Rättelse: flyttade stenar och kristna böner
+- Stenar vars plats i Rundata är en kyrka, kyrkogård, prästgård, ett kloster, slott, en skola eller ett museum räknas nu
+  som flyttade (`is_moved`, `src/r_bridge.py`). Tidigare prövades bara placeringen, som oftast är tom för stenar vid
+  kyrkor, så omkring 420 stenar vid kyrkor räknades som stående på sin ursprungliga plats. Med det rättade urvalet klarar
+  ingen kombination i genomsökningen av landskapet justeringen: sambanden mellan kristen bön och kyrkor och mellan kors
+  och centralorter var till stor del en följd av felet (METHODS.md 17, "Rättelse 2026-10-12").
+- Sökningen efter kristna böner hittar nu också *hiælpi*, *hialpin*, imperativet *hialp* och böner där gudsnamnet är
+  skadat; själsbönen hittar *sal*, *sialu* och *sel*.
+- Nytt prov i `remains.R`: följer bönen de tidiga kyrkorna (uppförda senast 1200) eller de senare? Visas under
+  Statistik och som fynd i Forskningsluckor; med det rättade urvalet en indikation.
+
+### Månadens fynd med bilder, diagram och faktarutor
+- Blogginläggen kan ha foton (`![alt](url)` med bildtext), faktarutor (`:::box`) och stapeldiagram (`:::chart`).
+- Foton av de stenar en text nämner hämtas automatiskt ur Wikidata och Wikimedia Commons, bara fritt licensierade, med
+  fotograf och licens i bildtexten (`src/commons.py`, `POST /api/admin/blog/images`); utkastet från månadens fynd får
+  bilder, "Kort sagt" och "Så säkra är vi" av sig självt.
+
+### Export av tabeller
+- Alla tabeller i appen kan laddas ner som CSV eller Excel, och Inskrifter kan exportera hela sökurvalet. Filerna har
+  alltid källan: data och licens (Rundata ODbL, Kulturmiljöregistret, OpenStreetMap, Wikidata, mätkorpusen CC BY 4.0),
+  adressen de exporterades från, datum och upphovsangivelsen för Vitki.
+
+### Laddning, karta och dokumentation
+- En laddningsrad överst visar förloppet när sidor och data laddas, med verklig andel när storleken är känd.
+- Mönsterkartans tidsläge kan dela stenarna omkring 1020, 1050 eller 1075 (stilgruppernas gränser) i stället för alltid
+  1050, med en förklaring om att kristnandet pågick under hela runstenstiden.
+- Stenöversikten säger till när attribueringsmodellen i R inte ingår och visar "Ingen" i stället för en ensam nolla.
+- Om Vitki är omskriven: alla funktioner, datakällor med licenser och den aktuella licensmodellen (GPL-3.0-only med
+  tilläggsvillkoren i NOTICE).
+
 ### Mönsterkartan omgjord för att hitta samband
 - Kartan är ordnad efter frågan i stället för verktygen: *Upptäck* överst med de starkaste fynden som kort (ett klick
   ställer in kartan), en sidopanel i tre steg – mönster, jämför med (tid, platser eller kluster), svaret i ord – och
@@ -23,8 +53,8 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   prövad i båda halvorna och med tiden konstant (METHODS.md 17).
 - På mönsterkartan visas resultatet som ett rutnät – varmt där mönstret är vanligare nära platserna, kallt där det är
   ovanligare, ✓ där det håller i båda halvorna. Ett klick visar kombinationen på kartan.
-- Första resultaten: kristna markörer och kors vanligare nära centralorter (Husby, -tuna) och kristen bön nära
-  medeltida kyrkor, alla tre i båda halvorna; sambandet mellan bön och teofora namn är svagare utan vald radie.
+- Första resultaten (kristna markörer och kors nära centralorter, kristen bön nära medeltida kyrkor) höll inte när
+  flyttade stenar räknades bort på rätt sätt; se rättelsen ovan.
 
 ### Platser på kartan och i stenprofilen
 - Mönsterkartan kan visa platser över sexkanterna: teofora och sakrala ortnamn, centralortsnamn, medeltida kyrkor,

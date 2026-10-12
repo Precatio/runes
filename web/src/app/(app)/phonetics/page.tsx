@@ -15,6 +15,7 @@ import { useAuth } from "@/components/AuthContext";
 import ReactCrop, { type Crop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { API_URL } from "@/lib/api";
+import ExportTable from "@/components/ExportTable";
 
 export default function PhoneticsPage() {
   const [projects, setProjects] = useState<ProjectData[]>([]);
@@ -1047,7 +1048,7 @@ function RundataPanel({ results }: { results: LinguisticResultData }) {
             <p className="text-xs text-slate-600 mb-3">
               {o.note} {o.usable ? "" : `Bara ${o.n_words} läsbara ord – för kort för en pålitlig jämförelse.`}
             </p>
-            <table className="w-full text-xs">
+            <ExportTable><table className="w-full text-xs">
               <thead><tr className="text-left text-slate-500"><th className="py-1">Ristare</th><th title={SIMILARITY_HELP}>Likhet</th><th title={SIMILARITY_HELP}>p (just.)</th><th>Precision</th></tr></thead>
               <tbody>{o.ranking.map(r => (
                 <tr key={r.carver} className="border-t border-slate-900/5">
@@ -1057,7 +1058,7 @@ function RundataPanel({ results }: { results: LinguisticResultData }) {
                   <td>{pct(r.precision)}</td>
                 </tr>
               ))}</tbody>
-            </table>
+            </table></ExportTable>
           </div>
         )}
       </div>

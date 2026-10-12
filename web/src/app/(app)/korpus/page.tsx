@@ -12,6 +12,7 @@ import { downloadFile, toCSV } from "@/lib/export";
 import { FEATURE_TYPES, METRICS, METRIC_DIGITS, METRIC_LABELS, formatSummary, type FeatureType } from "@/lib/metrics";
 import { rundata, type Carver } from "@/lib/rundata";
 import { stats, type ClusterResult } from "@/lib/stats";
+import ExportTable from "@/components/ExportTable";
 
 // Carver per signum according to Rundata: only one certain signed/attributed carver counts as a label
 function labelFrom(carvers: Carver[]): string | null {
@@ -176,7 +177,7 @@ export default function CorpusPage() {
         {!loaded ? <p className="p-4 text-slate-500">Läser korpusen...</p> : visible.length === 0 ? (
           <p className="p-4 text-slate-600">Inga mätningar ännu. Gör en analys i <Link href="/3d" className="text-[#b7410e] font-semibold">3D-vyn</Link> och välj ”Bidra till korpusen”.</p>
         ) : (
-          <table className="w-full text-sm">
+          <ExportTable><table className="w-full text-sm">
             <thead>
               <tr className="text-left text-[11px] uppercase tracking-wider text-slate-500">
                 {["Signum", "Spår", "Ristare (Rundata)", "Snitt"].map(h => <th key={h} className="p-2">{h}<InfoTip text={GLOSSARY[h]} /></th>)}
@@ -244,7 +245,7 @@ export default function CorpusPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></ExportTable>
         )}
       </div>
 

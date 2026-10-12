@@ -4,6 +4,7 @@
 // compare stones and carvers.
 import { useState } from "react";
 import { API_URL } from "@/lib/api";
+import ExportTable from "@/components/ExportTable";
 
 export interface Geology {
   signum: string; place: string; material: string; material_families: string[];
@@ -119,7 +120,7 @@ export function LanguageTable({ comparison }: { comparison: LanguageComparison }
     <div className="text-xs">
       <p className="mb-1.5">{comparison.text}</p>
       {comparison.rows.length > 0 && (
-        <table className="w-full">
+        <ExportTable><table className="w-full">
           <thead><tr className="text-left text-slate-500"><th className="py-0.5">Drag</th><th>Stenen</th><th>Hos ristaren</th>
             {comparison.rows.some(r => r.region_share != null) && <th>I landskapet</th>}<th></th></tr></thead>
           <tbody>
@@ -134,7 +135,7 @@ export function LanguageTable({ comparison }: { comparison: LanguageComparison }
               </tr>
             ))}
           </tbody>
-        </table>
+        </table></ExportTable>
       )}
       <p className="text-[10px] text-slate-500 mt-1">
         Håll muspekaren över ett drag för definitionen. Ljud = fonetisk stil, bruk = formler och stavning. Drag som upprepar ett

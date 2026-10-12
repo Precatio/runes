@@ -8,6 +8,7 @@ import { downloadFile, safeFilename, toCSV } from "@/lib/export";
 import { METRICS, METRIC_DIGITS, METRIC_LABELS, type FeatureType, type Metric, type SliceMetrics, type Summary } from "@/lib/metrics";
 import { angleColor, runeSampleNote, type AutoAnalysisResult, type AutoLabel, type AutoSlice } from "@/lib/mesh";
 import { useSettings } from "@/components/SettingsContext";
+import ExportTable from "@/components/ExportTable";
 
 const LABELS: Record<AutoLabel, { name: string; color: string }> = {
   rune: { name: "Runa", color: "#b7410e" },
@@ -263,7 +264,7 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <ExportTable><table className="w-full text-sm">
             <thead>
               <tr className="text-left text-[11px] uppercase tracking-wider text-slate-500">
                 <th className="p-2">Urval</th><th className="p-2">n</th><th className="p-2">V-vinkel</th><th className="p-2">Djup</th><th className="p-2">Bredd</th>
@@ -286,7 +287,7 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
                 );
               })}
             </tbody>
-          </table>
+          </table></ExportTable>
           <div className="flex flex-wrap gap-2 mt-3">
             <button disabled={using || groups.rune.length < 2} onClick={() => use("rune", groups.rune)}
               className="px-4 py-2 bg-[#b7410e] hover:bg-[#9a350b] text-white text-xs font-bold rounded-xl disabled:opacity-40">

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { API_URL } from "@/lib/api";
 import { runologyData, YOUNGER_FUTHARK, type RunologySection } from "@/lib/runologyData";
+import ExportTable from "@/components/ExportTable";
 
 interface ArchiveCarver { name: string; signed: number; attributed: number; provinces: Record<string, number>; styles: Record<string, number>; span: [number, number] | null; examples: string[] }
 interface Archive {
@@ -127,7 +128,7 @@ function KnowledgeBaseContent() {
           {byCat("namn").map(i => <Card key={i.id} title={i.title}><p dangerouslySetInnerHTML={formatMarkdown(i.content)} /></Card>)}
           {runeRows.length > 0 && (
             <div className="overflow-x-auto bg-white border border-slate-200 rounded-[24px] p-4">
-              <table className="w-full text-sm">
+              <ExportTable><table className="w-full text-sm">
                 <thead><tr className="text-left text-[11px] uppercase tracking-wider text-slate-500">
                   <th className="p-2">Runa</th><th className="p-2">Translitterering</th><th className="p-2">Namn</th><th className="p-2">Betydelse enligt runedikterna</th></tr></thead>
                 <tbody>{runeRows.map(r => (
@@ -136,7 +137,7 @@ function KnowledgeBaseContent() {
                     <td className="p-2 italic">{r.name}</td><td className="p-2 text-slate-600">{r.meaning}</td>
                   </tr>
                 ))}</tbody>
-              </table>
+              </table></ExportTable>
             </div>
           )}
         </Section>

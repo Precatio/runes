@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import ExportTable from "@/components/ExportTable";
 import { API_URL } from "@/lib/api";
 
 // GET /api/r/scan: every pattern of the map against the distance to every kind of place (r/remains.R)
@@ -46,6 +47,17 @@ export default function LandscapeScan({ onPick, current, scan: given }: {
   }
   const byKey = new Map(scan.cells.map(c => [`${c.feature}|${c.kind}`, c]));
   const rows = scan.features.filter(f => scan.kinds.some(k => byKey.has(`${f.key}|${k}`)));
+  // Every cell with all its numbers, for the export
+  const allRows = () => [
+    ["Mönster", "Plats", "Oddskvot när avståndet halveras", "95 % nedre", "95 % övre", "p", "q (Benjamini–Hochberg)",
+     "Båda halvorna", "Oddskvot med tiden konstant", "Radie (km)", "Stenar inom radien", "Andel inom radien", "Andel övriga", "Stenar"],
+    ...scan.cells.map(c => [
+      scan.features.find(f => f.key === c.feature)?.label ?? c.feature, scan.kind_labels[c.kind] ?? c.kind,
+      n2(c.or), n2(c.lo), n2(c.hi), String(c.p).replace(".", ","), String(c.q_bh).replace(".", ","),
+      c.halves?.replicated ? "ja" : "nej", c.time ? n2(c.time.or) : "", String(c.radius_km).replace(".", ","),
+      String(c.n_near), `${Math.round(c.share_near * 100)} %`, `${Math.round(c.share_far * 100)} %`, String(c.n),
+    ]),
+  ];
   return (
     <div>
       <p className="mt-2 text-xs text-slate-600 max-w-4xl">
@@ -59,6 +71,7 @@ export default function LandscapeScan({ onPick, current, scan: given }: {
         Visa bara de som håller i båda halvorna
       </label>
       <div className="mt-2 overflow-x-auto">
+        <ExportTable name="Dolda mönster i landskapet" rows={allRows}>
         <table className="text-xs border-separate" style={{ borderSpacing: 2 }}>
           <thead>
             <tr>
@@ -98,6 +111,7 @@ export default function LandscapeScan({ onPick, current, scan: given }: {
             ))}
           </tbody>
         </table>
+        </ExportTable>
       </div>
       <p className="mt-2 text-[11px] text-slate-500">
         Mönster som håller i båda halvorna finns också i <Link href="/luckor" className="underline">Forskningsluckor</Link> med hypotes och

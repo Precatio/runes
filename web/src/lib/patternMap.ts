@@ -54,15 +54,24 @@ export function provinceTable(stones: PatternStone[], key: string) {
   return [...by.entries()].map(([p, c]) => ({ p, ...c, share: c.k / c.n })).sort((a, b) => b.n - a.n);
 }
 
-/** The share in the whole corpus and before and after about 1050 (the stones with a dated style group). */
-export function periodShares(stones: PatternStone[], key: string) {
+// Where the time view splits the dated stones, at the borders of the style groups (the stone's year is the middle of its
+// group's interval): about 1050 gives two halves of about the same size; about 1075 is where the prayer falls silent
+export const SPLITS = [
+  { year: 1020, before: "RAK", after: "Fp–Pr5", help: "De tidigaste stenarna mot alla senare." },
+  { year: 1050, before: "RAK–Pr2", after: "Pr3–Pr5", help: "Två ungefär lika stora halvor." },
+  { year: 1075, before: "RAK–Pr3", after: "Pr4–Pr5", help: "De sista stenarna mot alla tidigare." },
+] as const;
+export const splitOf = (year: number) => SPLITS.find(x => x.year === year) ?? SPLITS[1];
+
+/** The share in the whole corpus and before and after a year (the stones with a dated style group). */
+export function periodShares(stones: PatternStone[], key: string, year = 1050) {
   const out = { all: { n: 0, k: 0 }, early: { n: 0, k: 0 }, late: { n: 0, k: 0 } };
   for (const st of stones) {
     const val = st.v[key];
     if (val === null || val === undefined) continue;
     out.all.n += 1; out.all.k += val;
     if (st.y === null) continue;
-    const c = st.y < 1050 ? out.early : out.late;
+    const c = st.y < year ? out.early : out.late;
     c.n += 1; c.k += val;
   }
   return out;

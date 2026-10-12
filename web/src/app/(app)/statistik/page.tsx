@@ -7,6 +7,7 @@ import { PatternBadges, PatternBody, type Pattern } from "@/components/PatternCa
 import { GLOSSARY } from "@/lib/glossary";
 import Link from "next/link";
 import { API_URL } from "@/lib/api";
+import ExportTable from "@/components/ExportTable";
 
 interface Status {
   r: { available: boolean; version: string | null; missing: string[]; note: string | null };
@@ -53,7 +54,13 @@ interface CultResult {
   radius?: { km: number; n_near: number; or: number; p: number }[];
   pagan?: { signum: string; km_a: number; km_b: number }[];
   churches?: { n_churches: number; n_other: number; near_church_other: number; near_km: number;
-    rows: { tier: string; n: number; near_church: number; or: number; p: number }[] } | null;
+    rows: { tier: string; n: number; near_church: number; or: number; p: number }[]; age?: ChurchAge } | null;
+}
+type AgeTerm = { or: number; lo: number; hi: number; p: number; halves?: { replicated: boolean } } | null;
+interface ChurchAge {
+  early_year: number; n_early: number; n_late: number; near_km: number;
+  tests: { feature: string; label: string; n: number; early: AgeTerm; late: AgeTerm; early_time: AgeTerm; late_time: AgeTerm;
+    ratio: number; p_diff: number; share_early: number; n_early: number; share_late: number; n_late: number; share_none: number; n_none: number }[];
 }
 interface VikingShore {
   n_stones: number; median_stones_km: number; median_random_km: number; p: number; error?: string;
@@ -577,7 +584,7 @@ function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void }) 
           får en tolkning). Ett förslag är en hypotes för en runolog att pröva, inte en attribuering.
         </p>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <ExportTable><table className="w-full text-sm">
             <thead><tr><Th>Sten</Th><Th>Metod</Th><Th>Mot Rundata</Th><Th>Resultat</Th>
               <Th>Rundata</Th><Th>Nyare källor</Th><Th>Bedömning</Th></tr></thead>
             <tbody>
@@ -594,7 +601,7 @@ function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void }) 
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></ExportTable>
         </div>
       </Details>
     </div>
@@ -616,7 +623,7 @@ function Geography({ data }: { data: Corpus }) {
       <Remains data={data} />
       <Details title="Ristarna en och en">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <ExportTable><table className="w-full text-sm">
             <thead><tr><Th>Ristare</Th><Th>Säkra stenar</Th><Th>Median till tyngdpunkt</Th>
               <Th>Slumpvisa urval</Th><Th>Kvot</Th><Th>q</Th><Th>Höljets yta</Th><Th>Landskap</Th></tr></thead>
             <tbody>{g.carvers.map(r => (
@@ -625,7 +632,7 @@ function Geography({ data }: { data: Corpus }) {
                 <td className="p-2">{d2(r.random_median_km, 1)} km</td><td className="p-2">{d2(r.compact_ratio)}</td><td className="p-2">{d2(r.compact_q, 3)}</td>
                 <td className="p-2">{r.hull_area_km2} km²</td><td className="p-2 text-xs">{r.provinces}</td>
               </tr>))}</tbody>
-          </table>
+          </table></ExportTable>
         </div>
       </Details>
       <Method text={g.method} />
@@ -648,7 +655,7 @@ function VikingShoreTable({ v, today }: { v?: VikingShore; today?: { province: s
         {d2(v.median_random_km, 1)} km (p {pText(v.p)}).
       </p>
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <ExportTable><table className="w-full text-sm">
           <thead><tr><Th>Landskap</Th><Th>Landhöjning</Th><Th>Stenar</Th><Th>Stenar, median</Th><Th>Slumppunkter, median</Th>
             <Th>Kvot omkring år 1000</Th><Th>Kvot med dagens vatten</Th><Th>p</Th></tr></thead>
           <tbody>{v.provinces.map(r => {
@@ -662,7 +669,7 @@ function VikingShoreTable({ v, today }: { v?: VikingShore; today?: { province: s
               </tr>
             );
           })}</tbody>
-        </table>
+        </table></ExportTable>
       </div>
     </Details>
   );
@@ -682,7 +689,7 @@ function Remains({ data }: { data: Corpus }) {
       </p>
       <Fig src={f.near} alt="Lämningar runt stenarna" narrow />
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <ExportTable><table className="w-full text-sm">
           <thead><tr><Th>Lämning</Th><Th>I registret</Th><Th>Stenar, median</Th><Th>Slumppunkter, median</Th>
             <Th tip={`Andel inom ${m} m`}>{`Stenar inom ${m} m`}</Th><Th tip={`Andel inom ${m} m`}>{`Slumppunkter inom ${m} m`}</Th><Th>q</Th></tr></thead>
           <tbody>{r.distances.map(x => (
@@ -691,12 +698,12 @@ function Remains({ data }: { data: Corpus }) {
               <td className="p-2">{d2(x.median_stones_km, 1)} km</td><td className="p-2">{d2(x.median_random_km, 1)} km</td>
               <td className="p-2 font-semibold">{pc(x.near_stones)}</td><td className="p-2">{pc(x.near_random)}</td><td className="p-2">{pText(x.q_bh)}</td>
             </tr>))}</tbody>
-        </table>
+        </table></ExportTable>
       </div>
       {r.tests && Object.keys(r.tests).length > 0 && (
         <Details title="Samband: tid, kristna markörer och brostenar">
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <ExportTable><table className="w-full text-sm">
               <thead><tr><Th>Samband</Th><Th>Stenar</Th><Th tip="Oddskvot: över 1 betyder oftare nära, under 1 mer sällan">Oddskvot</Th><Th>95 % intervall</Th><Th>q</Th><Th>Båda halvorna</Th></tr></thead>
               <tbody>{Object.entries(r.tests).map(([k, t]) => (
                 <tr key={k} className="border-t border-slate-900/5">
@@ -704,12 +711,47 @@ function Remains({ data }: { data: Corpus }) {
                   <td className="p-2">{t.n}</td><td className="p-2 font-semibold">{d2(t.or)}</td><td className="p-2">{d2(t.lo)}–{d2(t.hi)}</td>
                   <td className="p-2">{pText(t.q_bh)}</td><td className="p-2">{t.halves?.replicated ? "✓ ja" : "nej"}</td>
                 </tr>))}</tbody>
-            </table>
+            </table></ExportTable>
           </div>
         </Details>
       )}
       <Method text={r.method} caveat={r.note} />
       <CultNames c={r.cult} />
+    </div>
+  );
+}
+
+// The age of the churches: does a pattern follow the early churches or the later ones (r/remains.R)
+function ChurchAgeTable({ a }: { a: ChurchAge }) {
+  const or = (t: AgeTerm) => (t ? <>{d2(t.or)} <span className="text-xs text-slate-500">({d2(t.lo)}–{d2(t.hi)})</span></> : "–");
+  return (
+    <div className="space-y-2">
+      <h4 className="font-semibold text-slate-900">Tidiga och sena kyrkor</h4>
+      <p className="text-sm text-slate-600 max-w-4xl">
+        Följer mönstret de tidiga kyrkorna (uppförda {a.early_year} eller tidigare, {a.n_early} kyrkor) eller de senare
+        ({a.n_late} kyrkor)? Båda avstånden ingår i samma modell, med landskapet konstant, så att varje oddskvot gäller när
+        avståndet till den andra sortens kyrka hålls konstant. Oddskvoten gäller när avståndet halveras.
+      </p>
+      <div className="overflow-x-auto">
+        <ExportTable><table className="w-full text-sm">
+          <thead><tr><Th>Mönster</Th><Th>Tidiga kyrkor</Th><Th>Sena kyrkor</Th><Th>Skillnad, p</Th><Th>Med tiden konstant (tidiga)</Th><Th>Båda halvorna (tidiga)</Th><Th>Andel inom {a.near_km} km: tidig / bara sen / ingen</Th></tr></thead>
+          <tbody>{a.tests.map(t => (
+            <tr key={t.feature} className="border-t border-slate-900/5">
+              <td className="p-2">{t.label} <span className="text-xs text-slate-500">({t.n} stenar)</span></td>
+              <td className="p-2 font-semibold">{or(t.early)}<span className="block text-xs font-normal text-slate-500">p {t.early ? pText(t.early.p) : "–"}</span></td>
+              <td className="p-2">{or(t.late)}<span className="block text-xs text-slate-500">p {t.late ? pText(t.late.p) : "–"}</span></td>
+              <td className="p-2">{pText(t.p_diff)}</td>
+              <td className="p-2">{t.early_time ? `${d2(t.early_time.or)} (p ${pText(t.early_time.p)})` : "–"}</td>
+              <td className="p-2">{t.early?.halves?.replicated ? "✓ ja" : "nej"}</td>
+              <td className="p-2 tabular-nums">{pc(t.share_early)} / {pc(t.share_late)} / {pc(t.share_none)}
+                <span className="block text-xs text-slate-500">{t.n_early} / {t.n_late} / {t.n_none} stenar</span></td>
+            </tr>))}</tbody>
+        </table></ExportTable>
+      </div>
+      <p className="text-xs text-slate-500">
+        Uppförandeåren kommer ur Wikidata och gäller oftast den kyrka som står i dag, inte den första på platsen; många är
+        avrundade till sekelskiften.
+      </p>
     </div>
   );
 }
@@ -729,7 +771,7 @@ function CultNames({ c }: { c?: CultResult }) {
         betyder inom {c.near_km} km; {c.stones_near_a} stenar står nära ett teoforiskt namn.
       </p>
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <ExportTable><table className="w-full text-sm">
           <thead><tr><Th>Samband</Th><Th>Nära</Th><Th>Andel nära</Th><Th>Andel övriga</Th><Th>Oddskvot</Th><Th>95 % intervall</Th><Th>q</Th><Th>Båda halvorna</Th></tr></thead>
           <tbody>{rows.map(([k, t]) => (
             <tr key={k} className="border-t border-slate-900/5">
@@ -738,7 +780,7 @@ function CultNames({ c }: { c?: CultResult }) {
               <td className="p-2 font-semibold">{d2(t.or)}</td><td className="p-2">{d2(t.lo)}–{d2(t.hi)}</td>
               <td className="p-2">{pText(t.q_bh)}</td><td className="p-2">{t.halves?.replicated ? "✓ ja" : "nej"}</td>
             </tr>))}</tbody>
-        </table>
+        </table></ExportTable>
       </div>
       {c.radius && c.radius.length > 0 && (
         <p className="text-xs text-slate-500">
@@ -752,6 +794,7 @@ function CultNames({ c }: { c?: CultResult }) {
           mot {d2(c.churches.near_church_other * 100, 1)} % av {c.churches.n_other.toLocaleString("sv-SE")} andra ortnamn i samma trakter.
         </p>
       )}
+      {c.churches?.age && c.churches.age.tests.length > 0 && <ChurchAgeTable a={c.churches.age} />}
       {c.pagan && c.pagan.length > 0 && (
         <p className="text-xs text-slate-500">
           Stenar med uttryckligt hedniska markörer och avståndet till närmaste teoforiska namn:{" "}
@@ -777,7 +820,7 @@ function Clusters({ data }: { data: Corpus }) {
       </div>
       <Details title="Grupperna och vad som utmärker dem" open>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <ExportTable><table className="w-full text-sm">
             <thead><tr><Th>Grupp</Th><Th>Stenar</Th><Th>Stabilitet</Th><Th>Utmärks av</Th><Th>Stilgrupper</Th><Th>Landskap</Th></tr></thead>
             <tbody>{c.clusters.map(k => (
               <tr key={k.cluster} className="border-t border-slate-900/5 align-top">
@@ -786,7 +829,7 @@ function Clusters({ data }: { data: Corpus }) {
                 <td className="p-2 text-xs">{k.styles.map(x => `${x.style} ${x.n}`).join(", ")}</td>
                 <td className="p-2 text-xs">{k.provinces.map(x => `${x.province} ${x.n}`).join(", ")}</td>
               </tr>))}</tbody>
-          </table>
+          </table></ExportTable>
         </div>
       </Details>
       <Method text={c.method} />
@@ -862,14 +905,14 @@ function Attribution({ data }: { data: Corpus }) {
             respektive härader utanför träningen; en ristare som bara finns i det utelämnade området kan då inte föreslås och räknas som fel.
           </p>
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <ExportTable><table className="w-full text-sm">
               <thead><tr><Th>Belägg</Th><Th>Slumpvis</Th>
                 {Object.entries(a.grouped_cv).map(([k, g]) => <Th key={k} tip={GLOSSARY["Ny socken/härad"]}>Ny {k.toLowerCase()} ({g.n_groups} grupper)</Th>)}</tr></thead>
               <tbody>{a.ablation.map(x => (
                 <tr key={x.features} className="border-t border-slate-900/5"><td className="p-2 font-semibold">{x.features}</td><td className="p-2">{pc(x.accuracy)}</td>
                   {Object.entries(a.grouped_cv!).map(([k, g]) => <td key={k} className="p-2">{pc(g.ablation.find(y => y.features === x.features)?.accuracy ?? undefined)}</td>)}</tr>
               ))}</tbody>
-            </table>
+            </table></ExportTable>
           </div>
         </Details>
       )}
@@ -882,12 +925,12 @@ function Attribution({ data }: { data: Corpus }) {
       </Details>
       <Details title="Ristarna en och en">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <ExportTable><table className="w-full text-sm">
             <thead><tr><Th>Ristare</Th><Th>Säkra stenar</Th><Th>Hittas (recall)</Th><Th>Rätt när föreslagen (precision)</Th></tr></thead>
             <tbody>{a.per_carver.map(r => (
               <tr key={r.carver} className="border-t border-slate-900/5"><td className="p-2 font-semibold">{r.carver}</td><td className="p-2">{r.n}</td>
                 <td className="p-2">{pc(r.recall)}</td><td className="p-2">{pc(r.precision)}</td></tr>))}</tbody>
-          </table>
+          </table></ExportTable>
         </div>
       </Details>
       <Method text={a.method} caveat={a.caveat} />
@@ -913,7 +956,7 @@ function Chronology({ data }: { data: Corpus }) {
           som inget av dem förklarar.
         </p>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <ExportTable><table className="w-full text-sm">
             <thead><tr><Th>Dimension</Th><Th>Inerti</Th><Th>Tid (rho)</Th><Th>Latitud (rho)</Th>
               <Th>Landskap (eta²)</Th><Th>Ristare (eta²)</Th><Th>Förklaras av</Th><Th>Skiljer</Th></tr></thead>
             <tbody>{ch.corpus_dimensions.map(x => (
@@ -923,7 +966,7 @@ function Chronology({ data }: { data: Corpus }) {
                 <td className="p-2 text-xs font-semibold">{x.unexplained ? "oförklarat mönster" : asList(x.explained_by).join(", ")}</td>
                 <td className="p-2 text-xs">{asList(x.positive).slice(0, 3).join(", ")} ↔ {asList(x.negative).slice(0, 3).join(", ")}</td>
               </tr>))}</tbody>
-          </table>
+          </table></ExportTable>
         </div>
       </Details>
       <Method text={ch.method} />
@@ -944,7 +987,7 @@ function Network({ data }: { data: Corpus }) {
       </Details>
       <Details title="Släktrelationer över tid och i kristna inskrifter">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <ExportTable><table className="w-full text-sm">
             <thead><tr><Th>Relation</Th><Th>Inskrifter</Th><Th>Före ca 1050</Th><Th>Efter ca 1050</Th>
               <Th>q (tid)</Th><Th>Kristna</Th><Th>Övriga</Th><Th>q (kristen)</Th></tr></thead>
             <tbody>{n.kinship.map(k => (
@@ -952,7 +995,7 @@ function Network({ data }: { data: Corpus }) {
                 <td className="p-2 font-semibold">{k.relation}</td><td className="p-2">{k.n}</td><td className="p-2">{pc(k.early)}</td><td className="p-2">{pc(k.late)}</td>
                 <td className="p-2">{d2(k.q_period, 3)}</td><td className="p-2">{pc(k.share_christian)}</td><td className="p-2">{pc(k.share_other)}</td><td className="p-2">{d2(k.q_christian, 3)}</td>
               </tr>))}</tbody>
-          </table>
+          </table></ExportTable>
         </div>
         <p className="text-xs text-slate-500">Gult: signifikant skillnad (q under 0,05) över tid eller mellan kristna och övriga inskrifter.</p>
       </Details>
@@ -981,7 +1024,7 @@ function Change({ data }: { data: Corpus }) {
           och varje resultat är omräknat {c.draws} gånger med årtal inom stilgruppens intervall.
         </p>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <ExportTable><table className="w-full text-sm">
             <thead><tr><Th>Drag</Th><Th>Förlopp</Th><Th>Justerad andel</Th><Th>q</Th><Th>Omräkningar signifikanta</Th>
               <Th>Vanligast i</Th><Th>Ovanligast i</Th><Th>Daterade stenar</Th></tr></thead>
             <tbody>{c.features.map(x => {
@@ -1004,7 +1047,7 @@ function Change({ data }: { data: Corpus }) {
                 </tr>
               );
             })}</tbody>
-          </table>
+          </table></ExportTable>
         </div>
       </div>
       <Fig src={f.time} alt="Dragen över tid" />
@@ -1027,7 +1070,7 @@ function Change({ data }: { data: Corpus }) {
       <Details title="Bro- och vägstenar och kristna drag">
         <p className="text-sm text-slate-600">Prövar tolkningen av brobyggen som kristna själagåvor: har bro- och vägstenar oftare kristna drag än andra stenar?</p>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <ExportTable><table className="w-full text-sm">
             <thead><tr><Th>Drag</Th><Th>Brostenar</Th><Th>Andra stenar</Th>
               <Th>Oddskvot (95 % KI)</Th><Th>q</Th><Th>Daterade, med tid</Th></tr></thead>
             <tbody>{c.assoc.map(a => (
@@ -1038,7 +1081,7 @@ function Change({ data }: { data: Corpus }) {
                 <td className="p-2">{qText(a.all?.q)}</td>
                 <td className="p-2 text-xs">{a.dated?.or != null ? `${d2(a.dated.or)} (${d2(a.dated.lo)}–${d2(a.dated.hi)}), p ${qText(a.dated.p)}` : "–"}</td>
               </tr>))}</tbody>
-          </table>
+          </table></ExportTable>
         </div>
       </Details>
       <DocsNote anchor="17-statistik-i-r">Hur förändringsanalysen ska läsas och vilka reservationer som gäller står i avsnitt 17.</DocsNote>
@@ -1078,7 +1121,7 @@ function Anonymous({ data }: { data: Corpus }) {
       <Fig src={f.map} alt="Grupper av stenar utan ristare" narrow />
       <Details title={`Möjliga okända ristare (${cands.length})`} open>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <ExportTable><table className="w-full text-sm">
             <thead><tr><Th>Nr</Th><Th>Arbetsnamn</Th><Th>Stenar</Th><Th>Socknar</Th>
               <Th>Stilgrupper</Th><Th>Utmärks av (gruppen mot trakten)</Th><Th>Stabilitet</Th>
               <Th>Närmast liknande ristare i Rundata</Th></tr></thead>
@@ -1098,14 +1141,14 @@ function Anonymous({ data }: { data: Corpus }) {
                 </tr>
               );
             })}</tbody>
-          </table>
+          </table></ExportTable>
         </div>
       </Details>
       {known.length > 0 && (
         <Details title={`Grupper som liknar en känd ristare (${known.length})`}>
           <p className="text-xs text-slate-500">Stenar utan ristare i Rundata som kan höra till en känd ristare – underlag för attribuering snarare än en ny ristare.</p>
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <ExportTable><table className="w-full text-sm">
               <thead><tr><Th>Nr</Th><Th>Liknar</Th><Th>Stenar</Th><Th>Attribueringsmodellen</Th><Th>Stabilitet</Th></tr></thead>
               <tbody>{known.map(g => (
                 <tr key={g.id} className="border-t border-slate-900/5 align-top">
@@ -1115,7 +1158,7 @@ function Anonymous({ data }: { data: Corpus }) {
                   <td className="p-2 text-xs">{g.model ? `${g.model.carver} för ${pc(g.model.share)} av ${g.model.n} stenar med förslag` : "–"}</td>
                   <td className="p-2">{pc(g.stability)}</td>
                 </tr>))}</tbody>
-            </table>
+            </table></ExportTable>
           </div>
         </Details>
       )}

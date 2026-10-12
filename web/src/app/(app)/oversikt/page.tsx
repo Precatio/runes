@@ -11,6 +11,7 @@ import { useSettings } from "@/components/SettingsContext";
 import { useLanguage } from "@/components/LanguageContext";
 import { Answer, InfoTip, PageIntro, Tip } from "@/components/Explain";
 import { GLOSSARY } from "@/lib/glossary";
+import ExportTable from "@/components/ExportTable";
 
 type Status = "kan vara felbedömd" | "omstridd" | "stöds" | "svagt underlag" | "signerad" | "nytt förslag" | "möjligt förslag" | "inget förslag";
 
@@ -156,11 +157,24 @@ function Overview() {
 
       {(() => {
         const ctl = data.control, falseShare = Math.round((100 * ctl.flagged) / Math.max(1, ctl.n_signed));
+        const c = data.counts, misjudged = c["kan vara felbedömd"] ?? 0;
+        const withCarver = (c["stöds"] ?? 0) + (c["omstridd"] ?? 0) + misjudged + (c["svagt underlag"] ?? 0);
+        // No stone against Rundata is a result too, but a bare 0 reads like an error
+        const headline = misjudged > 0
+          ? { value: String(misjudged), label: "stenar där beläggen talar emot Rundatas ristare och pekar mot en annan" }
+          : { value: "Ingen", label: `sten där beläggen tydligt talar emot Rundatas ristare; ${c["stöds"] ?? 0} av ${withCarver} stenar med ristare stöds av beläggen` };
         return (
-          <div className="liquid-glass-island rounded-[32px] p-5 md:p-7">
+          <div className="liquid-glass-island rounded-[32px] p-5 md:p-7 space-y-4">
+            {!data.r_available && (
+              <p className="rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                Attribueringsmodellen i R ingår inte just nu, eftersom korpusanalysen räknas om eller inte är beräknad. Siffrorna
+                bygger på de övriga metoderna, och färre stenar kan då få ett starkt alternativ. Se förloppet under{" "}
+                <Link href="/statistik" className="font-semibold underline">Statistik (R)</Link>.
+              </p>
+            )}
             <Answer topic="Översikt" question="Hur väl stöder metoderna Rundatas ristare – och var finns nya förslag?"
               why="Att se alla stenar samtidigt visar var forskningen och appens metoder är överens, var de inte är det och var nya ristare kan föreslås."
-              headline={{ value: String(data.counts["kan vara felbedömd"] ?? 0), label: "stenar där beläggen talar emot Rundatas ristare och pekar mot en annan" }}
+              headline={headline}
               answer={<>Av stenarna med ristare i Rundata stöds {data.counts["stöds"] ?? 0} av beläggen, {data.counts["omstridd"] ?? 0} är omstridda,{" "}
                 {data.counts["kan vara felbedömd"] ?? 0} kan vara felbedömda och {data.counts["svagt underlag"] ?? 0} har för svagt underlag. Bland stenarna
                 utan ristare får {data.counts["nytt förslag"] ?? 0} ett nytt och {data.counts["möjligt förslag"] ?? 0} ett möjligt förslag.</>}
@@ -268,7 +282,7 @@ function StoneTable({ rows, onPick }: { rows: StoneRow[]; onPick: (s: string) =>
   const sorted = [...rows].sort((a, b) => (b.alternative?.strength ?? 0) - (a.alternative?.strength ?? 0));
   return (
     <div className="overflow-x-auto mt-2 liquid-glass-island rounded-[24px] p-3">
-      <table className="w-full text-sm">
+      <ExportTable><table className="w-full text-sm">
         <thead><tr className="text-left text-[11px] uppercase tracking-wider text-slate-500">
           {["Sten", "Status", "Rundata", "Stöd", "Starkaste alternativ", "Metoder"].map(h => (
             <th key={h} className="p-2">{h}<InfoTip text={GLOSSARY[h]} /></th>
@@ -283,7 +297,7 @@ function StoneTable({ rows, onPick }: { rows: StoneRow[]; onPick: (s: string) =>
             <td className="p-2">{s.n_sources}</td>
           </tr>
         ))}</tbody>
-      </table>
+      </table></ExportTable>
       {sorted.length > 400 && <p className="text-xs text-slate-500 mt-2">Visar de 400 med starkast alternativ – filtrera för att se fler.</p>}
     </div>
   );
@@ -363,7 +377,7 @@ function StoneProfile({ signum, onClose }: { signum: string; onClose: () => void
       {p.alternatives.length > 0 && (
         <div>
           <p className="font-bold text-slate-900 mb-1">{p.carver ? "Andra tänkbara ristare" : "Tänkbara ristare"}</p>
-          <table className="w-full text-xs">
+          <ExportTable><table className="w-full text-xs">
             <thead><tr className="text-left text-slate-500"><th className="py-1">Ristare</th><th>Styrka</th><th>Modell</th><th>Ortografi</th><th>Kontroller</th></tr></thead>
             <tbody>{p.alternatives.map(a => (
               <tr key={a.carver} className="border-t border-slate-900/5">
@@ -374,7 +388,7 @@ function StoneProfile({ signum, onClose }: { signum: string; onClose: () => void
                 </td>
               </tr>
             ))}</tbody>
-          </table>
+          </table></ExportTable>
           <p className="text-[11px] text-slate-500 mt-1">Kontroller: Om = område, St = stilgrupp, Sp = språkdrag, Be = bergart; ✓ klarar, ✕ klarar inte, – kan inte prövas (håll muspekaren över raden för detaljer).</p>
         </div>
       )}
@@ -432,7 +446,7 @@ function Landscape({ signum }: { signum: string }) {
           Stenen är flyttad enligt Rundata (<span translate="no">{data.placement}</span>); avstånden gäller dess nuvarande plats.
         </p>
       )}
-      <table className="w-full text-xs">
+      <ExportTable><table className="w-full text-xs">
         <tbody>{data.rows.map(r => (
           <tr key={r.key} className="border-t border-slate-900/5" title={r.help}>
             <td className="py-1 text-slate-600 w-36">{r.label}</td>
@@ -443,7 +457,7 @@ function Landscape({ signum }: { signum: string }) {
             </td>
           </tr>
         ))}</tbody>
-      </table>
+      </table></ExportTable>
       <p className="text-[11px] text-slate-500 mt-1">
         Närmaste plats av varje slag: ortnamn ur OpenStreetMap (Lantmäteriets namn), medeltida kyrkor ur Wikidata, fornlämningar
         ur Kulturmiljöregistret. Ortnamnen är belagda långt efter vikingatiden.

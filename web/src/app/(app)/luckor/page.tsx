@@ -12,6 +12,7 @@ import { useAuth } from "@/components/AuthContext";
 import { GeologyBox, LanguageTraits } from "@/components/StoneContext";
 import { SIMILARITY_HELP, fmtP } from "@/lib/significance";
 import { DocsNote } from "@/components/KnownLimitations";
+import ExportTable from "@/components/ExportTable";
 
 interface ProvinceRow {
   code: string; name: string; axelson: boolean; total: number; carver: number; style: number; dated: number;
@@ -471,7 +472,7 @@ function SizePanel() {
         permutationstest inom landskap och q-värden korrigerade för antalet test.
       </p>
       <div className="overflow-x-auto">
-        <table className="w-full">
+        <ExportTable><table className="w-full">
           <thead><tr><th className="p-2 text-left text-[11px] uppercase text-slate-500">Variabel</th><th className="p-2 text-left text-[11px] uppercase text-slate-500">Stenar</th>
             <th className="p-2 text-left text-[11px] uppercase text-slate-500">Höjd mot övriga (inom landskap)</th><th className="p-2 text-left text-[11px] uppercase text-slate-500">Median med / utan</th>
             <th className="p-2 text-left text-[11px] uppercase text-slate-500">p</th><th className="p-2 text-left text-[11px] uppercase text-slate-500">q</th></tr></thead>
@@ -481,7 +482,7 @@ function SizePanel() {
               <td className="p-2">{fmt(t.median_with_m)} / {fmt(t.median_without_m)} m</td><td className="p-2">{fmtP(t.p)}</td><td className="p-2">{fmtP(t.q)}</td>
             </tr>
           ))}</tbody>
-        </table>
+        </table></ExportTable>
       </div>
       <div>
         <p className="font-bold text-slate-900 mb-1">Samband med texten (rangkorrelation inom landskap)</p>
@@ -493,7 +494,7 @@ function SizePanel() {
       {data.carvers.length > 0 && (
         <div className="overflow-x-auto">
           <p className="font-bold text-slate-900 mb-1">Ristare med minst tio stenar med kända mått</p>
-          <table className="w-full">
+          <ExportTable><table className="w-full">
             <thead><tr><th className="p-2 text-left text-[11px] uppercase text-slate-500">Ristare</th><th className="p-2 text-left text-[11px] uppercase text-slate-500">Stenar</th>
               <th className="p-2 text-left text-[11px] uppercase text-slate-500">Median</th><th className="p-2 text-left text-[11px] uppercase text-slate-500">Höjd mot andra i landskapet</th>
               <th className="p-2 text-left text-[11px] uppercase text-slate-500">p</th><th className="p-2 text-left text-[11px] uppercase text-slate-500">q</th></tr></thead>
@@ -503,7 +504,7 @@ function SizePanel() {
                 <td className="p-2">{c.n}</td><td className="p-2">{fmt(c.median_m)} m</td><td className="p-2">{ratio(c.ratio)}</td><td className="p-2">{fmtP(c.p)}</td><td className="p-2">{fmtP(c.q)}</td>
               </tr>
             ))}</tbody>
-          </table>
+          </table></ExportTable>
         </div>
       )}
       <DocsNote anchor="9b-stenens-storlek-och-syfte">Hur måtten läses ut, hur de ska tolkas och vilka reservationer som gäller står i avsnitt 9b.</DocsNote>
@@ -557,7 +558,7 @@ function CategoryPanel() {
         ))}
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <ExportTable><table className="w-full text-sm">
           <thead>
             <tr className={TH_ROW}>
               {header("carver", "Ristare")}{header("n", "Inskrifter")}
@@ -585,7 +586,7 @@ function CategoryPanel() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </table></ExportTable>
       </div>
       <p className="text-[11px] text-slate-500 mt-3">{data.method}</p>
     </>
@@ -599,7 +600,7 @@ function ProvinceTable({ rows, measuredSigna }: { rows: ProvinceRow[]; measuredS
   }, { key: "total", desc: true });
   return (
     <div className="liquid-glass-island rounded-[32px] p-4 overflow-x-auto">
-      <table className="w-full text-sm">
+      <ExportTable><table className="w-full text-sm">
         <thead>
           <tr className={TH_ROW}>
             {header("name", "Landskap")}{header("total", "Runstenar")}{header("carver", "Med ristare")}
@@ -627,7 +628,7 @@ function ProvinceTable({ rows, measuredSigna }: { rows: ProvinceRow[]; measuredS
             </tr>
           ))}
         </tbody>
-      </table>
+      </table></ExportTable>
     </div>
   );
 }
@@ -846,7 +847,7 @@ function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; loggedIn
         </label>
       </div>
       <div>
-        <table className="w-full text-sm table-fixed">
+        <ExportTable><table className="w-full text-sm table-fixed">
           <colgroup>
             <col className="w-[18%] sm:w-[12%]" /><col /><col className="w-[26%] sm:w-[17%]" /><col className="hidden sm:table-column w-[22%]" />
           </colgroup>
@@ -866,7 +867,7 @@ function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; loggedIn
               );
             })}
           </tbody>
-        </table>
+        </table></ExportTable>
         {sorted.length > 300 && <p className="text-xs text-slate-500 mt-2">Visar de 300 första – sortera eller filtrera för att se fler.</p>}
       </div>
       <div className="mt-4"><DocsNote anchor="13b-våra-resultat-mot-befintlig-forskning">Hur belägg, nyhet, relevans och bedömning räknas står i avsnitt 13b.</DocsNote></div>
@@ -1022,7 +1023,7 @@ function HypothesisTable({ rows, reconsider, ev }: { rows: Hypothesis[]; reconsi
         <em> Precision</em> anger hur ofta modellen har rätt när den föreslår just den ristaren.
       </p>
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <ExportTable><table className="w-full text-sm">
           <thead>
             <tr className={TH_ROW}>
               {header("signum", "Sten")}{header("place", "Plats")}
@@ -1051,7 +1052,7 @@ function HypothesisTable({ rows, reconsider, ev }: { rows: Hypothesis[]; reconsi
               </tr>
             ))}
           </tbody>
-        </table>
+        </table></ExportTable>
       </div>
     </>
   );
@@ -1118,7 +1119,7 @@ function BriefTable({ rows, uninterpreted }: { rows: Brief[]; uninterpreted: boo
           : "Bevarade runstenar där stilgruppen är osäker (?) i Rundata. En 2D-stilanalys av foto eller ristningskarta kan ge underlag – AI:ns bedömning är dock okalibrerad."}
       </p>
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <ExportTable><table className="w-full text-sm">
           <thead><tr className={TH_ROW}>{header("signum", "Sten")}{header("place", "Plats")}{header("province", "Landskap")}{header("style", "Stil")}{header("dating", "Datering")}{header("carvers", "Ristare")}</tr></thead>
           <tbody>
             {sorted.slice(0, 200).map(b => (
@@ -1132,7 +1133,7 @@ function BriefTable({ rows, uninterpreted }: { rows: Brief[]; uninterpreted: boo
               </tr>
             ))}
           </tbody>
-        </table>
+        </table></ExportTable>
       </div>
     </>
   );

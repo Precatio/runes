@@ -5,10 +5,11 @@ import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
 import { API_URL } from "@/lib/api";
 import {
-  nearPlace, periodShares, PLACE_STYLE, provinceTable, SHARE_CLASSES, TOO_FEW, type MapCircle, type MapMarker, type PatternStone,
+  nearPlace, periodShares, PLACE_STYLE, SPLITS, splitOf, provinceTable, SHARE_CLASSES, TOO_FEW, type MapCircle, type MapMarker, type PatternStone,
   type PlaceKind, type PlaceLayer,
 } from "@/lib/patternMap";
 import type { Scan } from "@/components/LandscapeScan";
+import ExportTable from "@/components/ExportTable";
 
 const PatternMaps = dynamic(() => import("@/components/PatternMap"), {
   ssr: false,
@@ -36,7 +37,7 @@ interface Hotspots { available: boolean; reason?: string; computed_at?: string; 
 type Mode = "" | "tid" | "plats" | "kluster";
 const MODES: [Mode, string, string][] = [
   ["", "Andel", "Var mönstret är vanligt"],
-  ["tid", "Tid", "Före och efter omkring 1050"],
+  ["tid", "Tid", "Före och efter ett valt årtal"],
   ["plats", "Platser", "Nära ortnamn, kyrkor, fornlämningar"],
   ["kluster", "Kluster", "Hot spots och kluster ur R"],
 ];
@@ -92,6 +93,7 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
   const hexKm = Number(f.hex) || 20;
   const nearKind = mode === "plats" ? f.near : "";
   const nearKm = Number(f.km) || 2;
+  const splitYear = splitOf(Number(f.year) || 1050).year;
   const nearDef = data?.placeKinds.find(k => k.key === nearKind);
   const hp = hot?.available ? hot.patterns.find(x => x.key === patternKey) : undefined;
 
@@ -121,7 +123,7 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
 
   const mapStones = useMemo(() => (data && nearKind && f.nearonly === "1" ? nearPlace(data.stones, nearKind, nearKm) : data?.stones ?? []),
                                 [data, nearKind, nearKm, f.nearonly]);
-  const periods = useMemo(() => (data && patternKey ? periodShares(data.stones, patternKey) : null), [data, patternKey]);
+  const periods = useMemo(() => (data && patternKey ? periodShares(data.stones, patternKey, splitYear) : null), [data, patternKey, splitYear]);
   const provinces = useMemo(() => (data && patternKey ? provinceTable(data.stones, patternKey) : []), [data, patternKey]);
 
   // Clusters and hot or cold stones of the chosen pattern, when comparing with clusters
@@ -213,6 +215,21 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
                 </button>
               ))}
             </div>
+            {mode === "tid" && (
+              <div className="mt-3 space-y-1.5">
+                <div className="flex flex-wrap items-center gap-1">
+                  <span className="text-[11px] font-bold text-slate-500 mr-1">Dela vid</span>
+                  {SPLITS.map(x => (
+                    <button key={x.year} onClick={() => set("year", x.year === 1050 ? "" : String(x.year))} title={x.help}
+                      className={seg(splitYear === x.year)}>ca {x.year}</button>
+                  ))}
+                </div>
+                <p className="text-[11px] text-slate-500">
+                  {splitOf(splitYear).before} mot {splitOf(splitYear).after}. {splitOf(splitYear).help} Årtalen är stilgruppernas
+                  mitt (Gräslund) och ungefärliga. Kristnandet pågick under hela runstenstiden; ett årtal är ingen gräns för det.
+                </p>
+              </div>
+            )}
             {mode === "plats" && (
               <div className="mt-3 space-y-2">
                 <div className="flex flex-wrap gap-1">
@@ -274,7 +291,7 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
           <div className="liquid-glass-island rounded-[24px] p-1.5 h-[64dvh] min-h-[460px] relative">
             {patternDef && (
               <PatternMaps stones={mapStones} boundsFrom={data.stones} patternKey={patternKey} label={patternDef.label}
-                widthKm={hexKm} minStones={MIN_STONES} split={mode === "tid"} overlays={overlays} circles={circles} markers={markers}
+                widthKm={hexKm} minStones={MIN_STONES} split={mode === "tid"} splitYear={splitYear} overlays={overlays} circles={circles} markers={markers}
                 focus={mode === "kluster" && hp?.clusters[pickedCluster]
                   ? { lat: hp.clusters[pickedCluster].lat, lon: hp.clusters[pickedCluster].lon, radiusKm: hp.clusters[pickedCluster].radius_km }
                   : undefined} />
@@ -314,14 +331,14 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
       <details className={box}>
         <summary className="cursor-pointer text-sm font-bold text-slate-800">Andel per landskap (samma siffror som tabell)</summary>
         <div className="overflow-x-auto mt-2">
-          <table className="text-sm min-w-[360px]">
+          <ExportTable><table className="text-sm min-w-[360px]">
             <thead><tr className="text-left text-[11px] uppercase tracking-wider text-slate-500"><th className="p-2">Landskap</th><th className="p-2">Stenar</th><th className="p-2">Med mönstret</th><th className="p-2">Andel</th></tr></thead>
             <tbody>
               {provinces.filter(r => r.n >= MIN_STONES).map(r => (
                 <tr key={r.p} className="border-t border-slate-900/5"><td className="p-2">{provinceName(r.p)}</td><td className="p-2">{r.n}</td><td className="p-2">{r.k}</td><td className="p-2 font-semibold">{pct(r.share)}</td></tr>
               ))}
             </tbody>
-          </table>
+          </table></ExportTable>
         </div>
       </details>
     </div>
@@ -334,7 +351,7 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
     if (mode === "tid") {
       return (
         <div className="text-sm text-slate-700 space-y-1.5">
-          <p>{`Bland stenar med säker stilgrupp har ${pct(periods.early.k / Math.max(1, periods.early.n))} av ${periods.early.n} stenar före omkring 1050 mönstret, och ${pct(periods.late.k / Math.max(1, periods.late.n))} av ${periods.late.n} efter.`}</p>
+          <p>{`Bland stenar med säker stilgrupp har ${pct(periods.early.k / Math.max(1, periods.early.n))} av ${periods.early.n} stenar före omkring ${splitYear} mönstret, och ${pct(periods.late.k / Math.max(1, periods.late.n))} av ${periods.late.n} efter.`}</p>
           <p className="text-xs text-slate-500">
             Kartorna jämför trakterna sida vid sida. Förändringen med plats och ristare konstanta, och om den håller i båda
             halvorna av korpusen, finns under <Link href="/statistik" className="underline">Statistik → Förändring</Link>.

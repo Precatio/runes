@@ -11,6 +11,7 @@ import { corpus } from "@/lib/corpus";
 import { db } from "@/lib/db";
 import { FEATURE_TYPES, METRIC_DIGITS, formatSummary, type FeatureType, type SliceMetrics } from "@/lib/metrics";
 import { formatP, stats, type ComparisonResult } from "@/lib/stats";
+import ExportTable from "@/components/ExportTable";
 
 interface StoneOption {
   key: string;
@@ -206,7 +207,7 @@ export default function ComparePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="liquid-glass-island rounded-[32px] p-4 overflow-x-auto">
               <h3 className="font-bold text-sm text-slate-700 mb-1 px-2">Huggspåren {unitText}</h3>
-              <table className="w-full text-sm">
+              <ExportTable><table className="w-full text-sm">
                 <thead>
                   <tr className="text-left text-[11px] uppercase tracking-wider text-slate-500">
                     <th className="p-2">Mått<InfoTip text={GLOSSARY["Mått"]} /></th><th className="p-2">A<InfoTip text={GLOSSARY["A"]} /></th><th className="p-2">B<InfoTip text={GLOSSARY["B"]} /></th>
@@ -225,7 +226,7 @@ export default function ComparePage() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </table></ExportTable>
               <p className="text-[11px] text-slate-500 p-2">
                 Medel ± SD {result.unit === "runa" ? "av runornas medelvärden" : "av snitten"}. Samlat test på de stabila måtten:
                 p = {formatP(result.overall.p_value)}. Asymmetri och bottenradie är osäkra mått och ingår inte i det samlade testet.
@@ -292,12 +293,12 @@ export default function ComparePage() {
           {result.context && (
             <div className="liquid-glass-island rounded-[24px] p-5">
               <h3 className="font-bold text-slate-900 mb-2">Mer än huggspår</h3>
-              <table className="w-full text-sm">
+              <ExportTable><table className="w-full text-sm">
                 <thead><tr className="text-left text-[11px] uppercase tracking-wider text-slate-500"><th className="p-2"></th><th className="p-2">A</th><th className="p-2">B</th></tr></thead>
                 <tbody>{result.context.rows.map(r => (
                   <tr key={r.label} className="border-t border-slate-900/5"><td className="p-2 text-slate-600">{r.label}</td><td className="p-2">{r.a}</td><td className="p-2">{r.b}</td></tr>
                 ))}</tbody>
-              </table>
+              </table></ExportTable>
               <ul className="mt-3 space-y-1 text-sm text-slate-700">
                 {result.context.distance_km != null && <li>Avstånd: {result.context.distance_km < 1 ? "samma plats" : `${Math.round(result.context.distance_km)} km`}.</li>}
                 {result.context.orthography && <li>Stavning: likhet {result.context.orthography.similarity.toFixed(2).replace(".", ",")} – mer lika än {result.context.orthography.percentile} % av sten A:s jämförelser med {result.context.orthography.n} andra inskrifter.</li>}

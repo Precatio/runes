@@ -4,7 +4,7 @@ import "leaflet/dist/leaflet.css";
 import { useEffect, useMemo } from "react";
 import { Circle, CircleMarker, MapContainer, Polygon, TileLayer, Tooltip, useMap } from "react-leaflet";
 import type { LatLngBoundsExpression } from "leaflet";
-import { colorOf, PLACE_STYLE, TOO_FEW, type MapCircle, type MapMarker, type PatternStone, type PlaceLayer } from "@/lib/patternMap";
+import { colorOf, PLACE_STYLE, splitOf, TOO_FEW, type MapCircle, type MapMarker, type PatternStone, type PlaceLayer } from "@/lib/patternMap";
 
 // An equal-area-enough projection for Sweden: kilometres east and north of a reference meridian at 62° N
 const LAT0 = 62, LON0 = 16, KX = 111.32 * Math.cos((LAT0 * Math.PI) / 180), KY = 110.57;
@@ -141,13 +141,14 @@ export function HexMap({ hexes, minStones, label, title, bounds, overlays = [], 
   );
 }
 
-export default function PatternMaps({ stones, patternKey, label, widthKm, minStones, split, overlays = [], boundsFrom,
+export default function PatternMaps({ stones, patternKey, label, widthKm, minStones, split, splitYear = 1050, overlays = [], boundsFrom,
                                      circles = [], markers = [], focus }: {
-  stones: PatternStone[]; patternKey: string; label: string; widthKm: number; minStones: number; split: boolean;
+  stones: PatternStone[]; patternKey: string; label: string; widthKm: number; minStones: number; split: boolean; splitYear?: number;
   overlays?: PlaceLayer[]; boundsFrom?: PatternStone[]; circles?: MapCircle[]; markers?: MapMarker[]; focus?: MapFocus;
 }) {
-  const early = useMemo(() => stones.filter(s => s.y !== null && s.y < 1050), [stones]);
-  const late = useMemo(() => stones.filter(s => s.y !== null && s.y >= 1050), [stones]);
+  const early = useMemo(() => stones.filter(s => s.y !== null && s.y < splitYear), [stones, splitYear]);
+  const late = useMemo(() => stones.filter(s => s.y !== null && s.y >= splitYear), [stones, splitYear]);
+  const sp = splitOf(splitYear);
   // The view follows all stones, also when only those near a kind of place are shown
   const bounds = useMemo(() => boundsOf(boundsFrom ?? stones), [boundsFrom, stones]);
   const all = useMemo(() => hexbin(stones, patternKey, widthKm), [stones, patternKey, widthKm]);
@@ -156,8 +157,8 @@ export default function PatternMaps({ stones, patternKey, label, widthKm, minSto
   if (!split) return <HexMap hexes={all} minStones={minStones} label={label} bounds={bounds} overlays={overlays} circles={circles} markers={markers} focus={focus} />;
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 h-full">
-      <div className="min-h-[50dvh] md:min-h-0"><HexMap hexes={hexEarly} minStones={minStones} label={label} bounds={bounds} overlays={overlays} title="Före ca 1050 (RAK–Pr2)" /></div>
-      <div className="min-h-[50dvh] md:min-h-0"><HexMap hexes={hexLate} minStones={minStones} label={label} bounds={bounds} overlays={overlays} title="Efter ca 1050 (Pr3–Pr5)" /></div>
+      <div className="min-h-[50dvh] md:min-h-0"><HexMap hexes={hexEarly} minStones={minStones} label={label} bounds={bounds} overlays={overlays} title={`Före ca ${sp.year} (${sp.before})`} /></div>
+      <div className="min-h-[50dvh] md:min-h-0"><HexMap hexes={hexLate} minStones={minStones} label={label} bounds={bounds} overlays={overlays} title={`Efter ca ${sp.year} (${sp.after})`} /></div>
     </div>
   );
 }

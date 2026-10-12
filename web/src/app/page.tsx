@@ -2,14 +2,61 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import LanguageToggle from "@/components/LanguageToggle";
+import { SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Vitki – öppen forskningsplattform för runinskrifter",
-  description:
-    "Från 3D-skanning till artikel: huggspårsanalys, Samnordisk runtextdatabas, statistiska modeller i R, ortografisk " +
-    "stilometri, tolkade fynd mot befintlig forskning och en delad mätkorpus – med redovisad osäkerhet och statistisk " +
-    "signifikans. Öppen källkod under GPL-3.0.",
+  title: { absolute: "Vitki – runstenar, runinskrifter och runforskning med öppna data" },
+  description: SITE_DESCRIPTION,
+  alternates: { canonical: "/" },
 };
+
+// Common questions about runestones, answered from the app's data; also as structured data for search engines
+const FAQ = [
+  {
+    q: "Hur många runstenar finns det i Sverige?",
+    a: "Samnordisk runtextdatabas förtecknar 2 321 svenska runstenar från vikingatiden, av totalt 6 753 runinskrifter. Ungefär hälften, 1 178, står i Uppland; därefter kommer Södermanland, Östergötland, Öland, Västergötland och Småland.",
+  },
+  {
+    q: "Kan man se vem som ristade en runsten?",
+    a: "Ibland. 248 av de svenska vikingatida runstenarna är signerade av ristaren, och sammanlagt 771 har en signerad eller attribuerad ristare i Rundata. För de andra kan Vitkis statistiska modell föreslå en ristare utifrån språk, stil och plats – den väljer rätt i 72 % av fallen när den prövas på stenar med känd ristare.",
+  },
+  {
+    q: "Varför har många runstenar ett kors?",
+    a: "Runstenarna restes under den tid då Sverige kristnades, och 959 av de svenska vikingatida runstenarna har ett kors. Många har också en kristen bön, som Gud hjälpe hans själ. Vitkis analyser visar att bönerna var vanligast under 1030- och 1040-talen och sedan nästan försvann, medan korset fanns kvar på en stor del av stenarna.",
+  },
+  {
+    q: "Vad är Samnordisk runtextdatabas (Rundata)?",
+    a: "Samnordisk runtextdatabas vid Uppsala universitet är den samlade förteckningen över runinskrifter i Norden, med plats, ristare, stilgrupp, translitterering, normalisering och översättning. Vitki bygger på den och anger den alltid som källa.",
+  },
+  {
+    q: "Var står runstenarna i landskapet?",
+    a: "Ofta vid gravfält: 61 % av de runstenar som står kvar på sin plats finns inom 500 meter från ett registrerat gravfält, mot 21 % av slumpvisa platser i samma trakter. De står också nära vatten, tydligast mot strandlinjen omkring år 1000, och vid vägar och broar.",
+  },
+  {
+    q: "Är Vitki gratis att använda?",
+    a: "Ja. Vitki är öppen källkod under GPL-3.0. Rundata, kartan, stilgrupperna och statistiken är öppna direkt; med en inloggning kan man spara projekt och dela mätningar i den gemensamma korpusen.",
+  },
+];
+
+// Structured data (schema.org): the site, the research application and the common questions
+const JSON_LD = [
+  {
+    "@context": "https://schema.org", "@type": "WebSite", name: "Vitki", url: SITE_URL, inLanguage: ["sv", "en"],
+    description: SITE_DESCRIPTION,
+  },
+  {
+    "@context": "https://schema.org", "@type": "WebApplication", name: "Vitki", url: SITE_URL,
+    applicationCategory: "ResearchApplication", operatingSystem: "Web", isAccessibleForFree: true,
+    offers: { "@type": "Offer", price: "0", priceCurrency: "SEK" },
+    license: "https://www.gnu.org/licenses/gpl-3.0.html", author: { "@type": "Person", name: "Viktor Kvant" },
+    description: SITE_DESCRIPTION,
+    about: ["Runstenar", "Runinskrifter", "Runologi", "Vikingatiden", "Samnordisk runtextdatabas"],
+  },
+  {
+    "@context": "https://schema.org", "@type": "FAQPage",
+    mainEntity: FAQ.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+  },
+];
 
 const GITHUB = "https://github.com/Precatio/runes";
 
@@ -230,6 +277,7 @@ function SectionTitle({ eyebrow, title, intro }: { eyebrow: string; title: strin
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#f6f4f1] text-slate-900 overflow-x-hidden">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }} />
       {/* Navigation */}
       <header className="sticky top-0 z-50 bg-[#f6f4f1]/85 backdrop-blur-md border-b border-slate-900/5">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -242,6 +290,7 @@ export default function LandingPage() {
             <a href="#nytt" className="hover:text-slate-900">Vad är nytt</a>
             <a href="#landskap" className="hover:text-slate-900">Nya källor</a>
             <Link href="/blogg" className="hover:text-slate-900">Månadens fynd</Link>
+            <a href="#fragor" className="hover:text-slate-900">Frågor</a>
             <a href="#kallor" className="hover:text-slate-900">Källor</a>
             <a href="#oppen" className="hover:text-slate-900">Öppen källkod</a>
           </nav>
@@ -387,8 +436,27 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Common questions */}
+      <section id="fragor" className="bg-white border-y border-slate-900/5 scroll-mt-16">
+        <div className="max-w-6xl mx-auto px-6 py-24">
+          <SectionTitle
+            eyebrow="Vanliga frågor"
+            title="Om runstenarna och om Vitki"
+            intro="Svaren bygger på Samnordisk runtextdatabas och Vitkis egna analyser."
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8 max-w-5xl">
+            {FAQ.map(f => (
+              <div key={f.q}>
+                <h3 className="text-lg font-bold">{f.q}</h3>
+                <p className="mt-2 text-slate-600 leading-relaxed">{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Sources */}
-      <section id="kallor" className="bg-white border-y border-slate-900/5 scroll-mt-16">
+      <section id="kallor" className="scroll-mt-16">
         <div className="max-w-6xl mx-auto px-6 py-24">
           <SectionTitle
             eyebrow="Källor"
@@ -397,7 +465,7 @@ export default function LandingPage() {
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {SOURCES.map(s => (
-              <div key={s.name} className="rounded-2xl bg-[#fbfaf8] border border-slate-200 p-5">
+              <div key={s.name} className="rounded-2xl bg-white border border-slate-200 p-5">
                 <div className="font-bold text-slate-900">
                   {s.href ? (
                     <a href={s.href} target="_blank" rel="noopener noreferrer" className="hover:text-[#b7410e]">{s.name} ↗</a>
