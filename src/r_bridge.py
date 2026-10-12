@@ -272,7 +272,7 @@ MODULE_FILES = {"geography": ("geography*", "geografi_*", "ristare_karta*"), "cl
                 "text": ("text*",), "attribution": ("attribution*", "modell_*"), "anonymous": ("anonymous*", "okanda_*"),
                 "chronology": ("chronology*", "seriation_*"), "dialect": ("dialect*", "dialekt_*"),
                 "network": ("network*", "natverk_*"), "change": ("change*", "forandring_*"),
-                "remains": ("remains*", "lamningar_*"), "hotspots": ("hotspots*",)}
+                "remains": ("remains*", "lamningar_*", "landskap_genomsokning*"), "hotspots": ("hotspots*", "hotspot_*")}
 
 # Kulturmiljöregistret's remains (scripts/fetch_raa_remains.py) and the place names and medieval churches
 # (scripts/fetch_place_names.py), read by remains.R; not part of the repository
@@ -476,9 +476,13 @@ def run_corpus(fp: str):
     errors, done = {}, []
     try:
         water = ensure_water()
+        from src import pattern_map, places
         params = {"corpus": os.path.join(d, "corpus.csv"), "water_dir": water, "corpus_dir": d, "seed": 2026,
                   "tile_dir": os.path.join(CACHE_DIR, "terrain"), "remains": _if_exists(REMAINS),
-                  "cult_names": _if_exists(CULT_NAMES), "places": _if_exists(PLACES), "churches": _if_exists(CHURCHES)}
+                  "cult_names": _if_exists(CULT_NAMES), "places": _if_exists(PLACES), "churches": _if_exists(CHURCHES),
+                  # The names of the map's patterns and kinds of place, for the figures' labels (hotspots.R, remains.R)
+                  "pattern_labels": {k: label for k, label, *_ in pattern_map.PATTERNS},
+                  "kind_labels": {k: label for k, label, *_ in places.KINDS}}
         with open(os.path.join(d, "corpus.csv"), "rb") as fh:
             versions = module_hashes(fh.read())
         reused = []

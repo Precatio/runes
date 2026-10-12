@@ -352,6 +352,39 @@ scan <- tryCatch({
        cells = cells)
 }, error = function(e) list(available = FALSE, error = conditionMessage(e)))
 
+# The scan as a figure: every pattern against every kind of place, warm where the pattern is more common nearer the
+# places, cool where it is rarer; pale where the cell does not survive the adjustment (Benjamini–Hochberg); ✓ where it
+# holds in both halves of the corpus
+fig_scan <- tryCatch(if (isTRUE(scan$available) && length(scan$cells)) {
+  plab <- P$pattern_labels %||% list(); klab <- P$kind_labels %||% list()
+  sc <- bind_rows(lapply(scan$cells, function(c) data.frame(
+    feature = plab[[c$feature]] %||% c$feature, kind = klab[[c$kind]] %||% c$kind, or = c$or, q = c$q_bh,
+    rep = isTRUE(c$halves$replicated))))
+  sc$lor <- pmax(-1, pmin(1, log2(sc$or)))
+  sc$sig <- sc$q < 0.05
+  sc$text <- paste0(format(round(sc$or, 2), nsmall = 2, decimal.mark = tr(",", ".")), ifelse(sc$sig & sc$rep, " ✓", ""))
+  sc$feature <- factor(sc$feature, levels = rev(unique(sc$feature)))
+  sc$kind <- factor(sc$kind, levels = unique(sc$kind))
+  p <- ggplot(sc, aes(kind, feature)) +
+    geom_tile(aes(fill = lor, alpha = sig), colour = "white", linewidth = 0.6) +
+    geom_text(aes(label = text, colour = sig), size = 2.6) +
+    scale_fill_gradient2(low = SERIES[1], mid = "#f1f0ee", high = ACCENT, midpoint = 0, limits = c(-1, 1),
+                         breaks = c(-1, 0, 1), labels = tr(c("ovanligare nära", "ingen skillnad", "vanligare nära"),
+                                                          c("rarer nearer", "no difference", "more common nearer")),
+                         name = NULL) +
+    scale_alpha_manual(values = c(`TRUE` = 1, `FALSE` = 0.3), guide = "none") +
+    scale_colour_manual(values = c(`TRUE` = INK, `FALSE` = MUTED), guide = "none") +
+    labs(x = NULL, y = NULL,
+         title = tr("Dolda mönster i landskapet", "Hidden patterns in the landscape"),
+         subtitle = paste(strwrap(tr(sprintf("Oddskvot när avståndet till platsen halveras, med landskapet konstant; %d kombinationer, %d klarar justeringen (Benjamini–Hochberg). Blekt: klarar den inte. ✓: håller i båda halvorna.", scan$n_tests, scan$n_sig),
+                                     sprintf("Odds ratio when the distance to the place halves, province held constant; %d combinations, %d survive the adjustment (Benjamini–Hochberg). Pale: does not. ✓: holds in both halves.", scan$n_tests, scan$n_sig)), 120), collapse = "\n"),
+         caption = tr("Flyttade stenar räknas inte. Källa: Vitki, r/remains.R; Rundata (ODbL), Kulturmiljöregistret (RAÄ), OpenStreetMap (ODbL), Wikidata (CC0).",
+                      "Moved stones are left out. Source: Vitki, r/remains.R; Rundata (ODbL), Cultural Heritage Register (RAÄ), OpenStreetMap (ODbL), Wikidata (CC0).")) +
+    theme_runor(9) + theme(panel.grid.major = element_blank(), axis.text.x = element_text(angle = 30, hjust = 1),
+                           legend.key.width = unit(1.4, "cm"), plot.subtitle = element_text(size = 7.5))
+  save_fig(p, out, "landskap_genomsokning.png", 8.5, 6.5)
+} else NULL, error = function(e) { message("figur genomsökning: ", conditionMessage(e)); NULL })
+
 write.csv(d[, c("signum", grep("^km_", names(d), value = TRUE))], file.path(out, "remains_stones.csv"),
           row.names = FALSE, fileEncoding = "UTF-8")
 
@@ -359,7 +392,7 @@ write_result(list(
   available = TRUE, note = NOTE, near_km = NEAR_KM, local_km = LOCAL_KM, n_stones = nrow(d),
   n_remains = nrow(rem), distances = unname(dist_rows), tests = tests, gravfalt_provinces = prov_rows, cult = cult,
   scan = scan,
-  figures = list(near = fig),
+  figures = list(near = fig, scan = fig_scan),
   method = paste(
     "För varje runsten (utom flyttade) och för lika många slumpvisa punkter på land inom", LOCAL_KM, "km från stenarna i",
     "samma landskap beräknades avståndet till närmaste lämning av varje slag i Kulturmiljöregistret (SWEREF 99 TM).",

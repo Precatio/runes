@@ -1128,6 +1128,8 @@ mönstren. Varje kluster prövas också i korpusens två halvor, uppdelade per s
 pröva om de klarar justeringen över mönstren, annars indikationer. Ett kluster är en plats att titta närmare på (en
 ristare, en verkstad eller en bygd), inte en förklaring.
 
+*Kartbilder* (från 2026-10-12): för varje mönster som klustrar (Morans I, q < 0,05) och har heta eller kalla stenar eller ett kluster ritar `hotspots.R` en karta `hotspot_<mönster>.png`: andelen stenar med mönstret per sexkant om 25 km (minst 5 stenar), stenarna i heta och kalla områden (Gi*) och klustren (Kulldorff) som ringar, på Natural Earths land. Genomsökningen av landskapet ritas av `remains.R` som `landskap_genomsokning.png`. Figurerna kan användas i Månadens fynd; ett inlägg får en egen kopia under figurens innehållshash (`src/blog_figures.py`, `/api/blog/figures/`), så att bilden finns kvar när korpusanalysen räknas om.
+
 **Okända ristare** (`anonymous.R`, från 2026-10-11). Kan en gruppering i statistiken vara en ristare som ännu inte
 har namn? Stenar med minst fem läsbara ord jämförs i *handens drag* – stilgrupp, kors, kortkvistrunor, språkdrag
 (inklusive skiljetecken och bindrunor), formler och runbigram, men inte innehåll och plats – med Gowers avstånd. Gränsen

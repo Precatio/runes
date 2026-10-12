@@ -5,6 +5,17 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Bloggutkast i formen från ”Bönen tystnade”, med kartbilder ur R
+- Utkasten från ett valt ämne följer det publicerade inläggets form: ett citat ur en sten med mönstret som krok (vald
+  automatiskt, med foto från Wikimedia Commons), ingress, "Kort sagt", mönstret med siffror och diagram, en kartbild ur
+  R-analyserna, "Så säkra är vi", hypotesen med vad som är nytt, en första prövning som räknas fram ur datan (ristarna
+  bakom ett kluster, när en förändring slår igenom i olika landskap, skillnaden mellan landskapen med ristaren konstant,
+  gravfälten före och efter 1050) med en skärpt hypotes, hur den kan prövas vidare, förbehåll, se själv och källor.
+  Rubrikerna får en berättande form ("… breder ut sig", "… – ett kluster i Uppland").
+- R ritar kartbilder för kartverktygets analyser: var varje mönster samlas (andel per område, heta och kalla områden,
+  kluster) och genomsökningen av landskapet. Figurerna kan infogas i inlägg från Admin ("Figurer ur R-analyserna") och
+  sparas som egna kopior, så att publicerade inlägg behåller sina bilder när analysen räknas om.
+
 ### Automatisk SEO för bloggen
 - Inläggen renderas på servern och får av sig själva, när de publiceras: titel, beskrivning (hela meningar ur
   ingressen, högst 158 tecken), kanonisk adress, nyckelord (bland annat stenarnas signum), Open Graph som artikel med

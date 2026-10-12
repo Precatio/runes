@@ -593,7 +593,7 @@ def _hotspots(h: dict) -> list[dict]:
                     "flyttade stenar räknas inte. "
                     + ("Klarar justeringen över alla mönster (Benjamini–Hochberg). " if strong else
                        "Klarar inte justeringen över alla mönster (Benjamini–Hochberg); en indikation. ")
-                    + f"Mönstret som helhet: Morans I {_d(p['moran']['i'])} (q {_d(p['moran']['q_bh'], 3)}). Ett kluster "
+                    + f"Mönstret som helhet: Morans I {_d(p['moran']['i'])} (q {_q(p['moran']['q_bh'])}). Ett kluster "
                     "är en plats att titta närmare på – en ristare, en verkstad eller en bygd – inte en förklaring.")
             out.append({"key": f"hotspot_{p['key']}_{c['center']}", "topic": "Geografi",
                         "status": "mönster att pröva" if strong else "indikation", "replicated": True, "text": text,

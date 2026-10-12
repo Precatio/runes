@@ -1,4 +1,5 @@
 import { Fragment, type ReactNode } from "react";
+import { API_URL } from "@/lib/api";
 
 // A blog post (GET /api/blog/posts, api/routers/blog.py). The English fields are optional; without them the Swedish
 // text is shown also in English
@@ -65,8 +66,12 @@ function inline(text: string): ReactNode[] {
   return out;
 }
 
-// Pictures only from Wikimedia Commons (the stone photos the editor collects, with their licence) or from the site itself
-const safeSrc = (src: string) => (/^(https:\/\/(upload|thumb)\.wikimedia\.org\/|\/(?!\/))/.test(src) ? src : null);
+// Pictures only from Wikimedia Commons (the stone photos the editor collects, with their licence), the blog's own copies
+// of the R analyses' figures (served by the analysis engine, /api/blog/figures/) or the site itself
+const safeSrc = (src: string) => {
+  if (/^\/api\/blog\/figures\/[0-9a-f]{16}\.png$/.test(src)) return `${API_URL}${src}`;
+  return /^(https:\/\/(upload|thumb)\.wikimedia\.org\/|\/(?!\/|api\/))/.test(src) ? src : null;
+};
 
 /** Paragraphs, "## " and "### " headings, "- " lists, "> " quotes and pictures, separated by blank lines. */
 function Blocks({ text }: { text: string }) {

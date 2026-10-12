@@ -391,22 +391,115 @@ def topics(_: dict = Depends(require_admin)):
     return {"topics": blog_topics.candidates(patterns, _res(), used)}
 
 
+def _example_and_mix(pattern: dict, res: dict, kind: str) -> tuple[dict | None, dict | None]:
+    """A stone with the pattern and a free photo for the hook, and for a cluster the carvers behind its stones."""
+    from api.rundata import store
+    from api.routers.orthography import model
+    from src import blog_examples, blog_topics, commons
+    key = pattern.get("key") or ""
+    feat, hs = blog_topics._feature(res, key), blog_topics._hotspot(res, key)
+    s, names = store(), model().names
+    try:
+        if hs:
+            cands = blog_examples.candidates(s.inscriptions, hs[0]["key"], None, names, signa=hs[1]["stones"])
+        elif kind == "time" and feat:
+            rows = [r for r in (feat.get("time") or {}).get("by_style") or [] if r.get("n", 0) >= 20]
+            shape = (feat.get("time") or {}).get("shape")
+            pick = (max(rows, key=lambda r: r["share"]) if shape == "peak" else rows[-1] if shape == "rises" else rows[0]) if rows else None
+            cands = blog_examples.candidates(s.inscriptions, key, feat, names, styles={pick["style"]} if pick else None)
+        elif kind == "regional" and feat:
+            rows = [r for r in (feat.get("provinces") or {}).get("rows") or [] if (r.get("n_mid") or 0) >= 10]
+            top = max(rows, key=lambda r: r.get("share1050") or 0)["province"] if rows else None
+            cands = blog_examples.candidates(s.inscriptions, key, feat, names, prov=top)
+        else:
+            return None, None
+        images = commons.stone_images([r["signum"] for r in cands[:20]]) if cands else []
+        example = blog_examples.example(cands[:20], images)
+    except Exception:  # noqa: BLE001 - the draft works without a photo
+        example = None
+    mix = blog_examples.carver_mix(s.inscriptions, hs[1]["stones"], hs[0]["key"], None, names) if hs else None
+    return example, mix
+
+
+def _frozen_figure(name: str, labels: dict) -> tuple[str, str] | None:
+    """An R figure copied to the blog's own store (src/blog_figures.py), as markdown in Swedish and English."""
+    from api.routers import rstats
+    from src import blog_figures, i18n
+    from src import r_bridge as rb
+    data = rb.figure(rb.JOB.directory(rstats.fingerprint()), name)
+    d = blog_figures.describe(name, labels, i18n.translate)
+    if not data or not d:
+        return None
+    url = blog_figures.freeze(data)
+    return blog_figures.markdown(url, d, "sv"), blog_figures.markdown(url, d, "en")
+
+
 def topic_draft(month: str, pattern: dict, res: dict) -> dict:
-    """Ett utkast kring ett mönster, på svenska och engelska (src/blog_topics.py)."""
+    """Ett utkast kring ett mönster, på svenska och engelska, i formen från det publicerade inlägget (src/blog_topics.py):
+    krok med en sten och dess foto, diagram, kartbild ur R, en första prövning och källor."""
     from src import blog_topics, i18n, pattern_map
     from src.research_gaps import PROVINCE_NAMES
-    feat = blog_topics._feature(res, pattern.get("key") or "")
-    hs = blog_topics._hotspot(res, pattern.get("key") or "")
+    key = pattern.get("key") or ""
+    feat, hs = blog_topics._feature(res, key), blog_topics._hotspot(res, key)
+    kind = blog_topics.kind(pattern, res)
     labels = {k: l for k, l, *_ in pattern_map.PATTERNS}
     label = labels.get(hs[0]["key"]) if hs else (feat or {}).get("label")
     keys = frozenset(labels)
-    sv = blog_topics.draft(pattern, res, "sv", label=label, provinces=PROVINCE_NAMES, map_keys=keys)
+    example, mix = _example_and_mix(pattern, res, kind)
+    fig_name = blog_topics.figure_for(pattern, res)
+    fig = _frozen_figure(fig_name, labels) if fig_name else None
+    common = dict(provinces=PROVINCE_NAMES, map_keys=keys, example=example, mix=mix)
+    sv = blog_topics.draft(pattern, res, "sv", label=label, figure=fig[0] if fig else None, **common)
     en = blog_topics.draft(pattern, res, "en", tr=i18n.translate, label=i18n.translate(label) if label else None,
-                           provinces=PROVINCE_NAMES, map_keys=keys)
+                           figure=fig[1] if fig else None, **common)
+    sources = [f"{pattern.get('topic')}: {pattern.get('status')} – {blog_topics.first_sentence(pattern['text'])}"]
+    if example:
+        sources.append(f"Krok och foto: {example['signum']} ({example['place']})")
+    if fig_name:
+        sources.append(f"Figur ur R: {fig_name}")
     return {"draft": {"month": month, "slug": f"{month}-{_slug(sv['title'])}"[:80].rstrip("-"), **sv,
                       "title_en": en["title"], "summary_en": en["summary"], "body_en": en["body"],
                       "topic": blog_topics.topic_key(pattern)},
-            "sources": [f"{pattern.get('topic')}: {pattern.get('status')} – {blog_topics.first_sentence(pattern['text'])}"]}
+            "sources": sources}
+
+
+@router.get("/admin/blog/figures")
+def figures(_: dict = Depends(require_admin)):
+    """Korpusanalysens figurer att använda i ett inlägg, kartverktygets kartbilder först (src/blog_figures.py)."""
+    from api.routers import rstats
+    from src import blog_figures, i18n, pattern_map
+    res = _res()
+    if not res:
+        raise HTTPException(status_code=409, detail="Korpusanalyserna i R är inte beräknade ännu (Statistik → Beräkna).")
+    labels = {k: l for k, l, *_ in pattern_map.PATTERNS}
+    fp = rstats.fingerprint()
+    return {"figures": [{**d, "url": f"/api/r/figure/{fp}/{d['name']}", "group_label": blog_figures.GROUPS[d["group"]]}
+                        for d in blog_figures.available(res, labels, i18n.translate)]}
+
+
+class FigureRequest(BaseModel):
+    name: str = Field(..., min_length=5, max_length=120, pattern=r"^[A-Za-z0-9_]+\.png$")
+
+
+@router.post("/admin/blog/figures")
+def freeze_figure(req: FigureRequest, _: dict = Depends(require_admin)):
+    """Kopierar en figur till bloggens egna figurer, så att inlägget behåller den när analysen räknas om."""
+    from src import pattern_map
+    out = _frozen_figure(req.name, {k: l for k, l, *_ in pattern_map.PATTERNS})
+    if not out:
+        raise HTTPException(status_code=404, detail="Figuren finns inte i den senaste korpusanalysen.")
+    return {"markdown": out[0], "markdown_en": out[1]}
+
+
+@router.get("/blog/figures/{name}")
+def blog_figure(name: str):
+    """En figur i ett inlägg; den ändras aldrig och kan sparas länge av webbläsare och sökmotorer."""
+    from fastapi.responses import FileResponse
+    from src import blog_figures
+    path = blog_figures.path_of(name)
+    if not path:
+        raise HTTPException(status_code=404, detail="Figuren finns inte.")
+    return FileResponse(path, media_type="image/png", headers={"Cache-Control": "public, max-age=31536000, immutable"})
 
 
 @router.get("/admin/blog/draft")

@@ -111,12 +111,71 @@ cq <- p.adjust(pv[!is.na(pv)], "BH")
 j <- 0
 for (i in seq_along(res)) {
   if (length(res[[i]]$clusters)) {
-    for (c in seq_along(res[[i]]$clusters)) { j <- j + 1; res[[i]]$clusters[[c]]$q_bh <- signif(cq[j], 3) }
+    for (ci in seq_along(res[[i]]$clusters)) { j <- j + 1; res[[i]]$clusters[[ci]]$q_bh <- signif(cq[j], 3) }
   } else if (!is.na(res[[i]]$best_cluster_p)) j <- j + 1
 }
 
+# ---- figures: where each pattern gathers ----------------------------------------------------------------------------
+# For the patterns that cluster (Moran's I, q < 0.05) and have hot or cold areas or a cluster: the share of stones with
+# the pattern per hexagon of 25 km (at least 5 stones), the hot and cold stones (Gi*) and the clusters (Kulldorff), on the
+# land of Natural Earth – the same picture as the map tool's "Kluster", for reports and the blog.
+HEX_M <- 25000
+MIN_HEX <- 5
+labels <- P$pattern_labels %||% list()
+wat <- tryCatch(read_water(P$water_dir), error = function(e) { message("vatten: ", conditionMessage(e)); NULL })
+outline <- if (!is.null(wat$land)) st_boundary(wat$land) else NULL
+wrap <- function(x, w = 105) paste(strwrap(x, w), collapse = "\n")
+qtxt <- function(q) if (q < 0.001) tr("< 0,001", "< 0.001") else format(signif(q, 2), decimal.mark = tr(",", "."))
+figures <- list()
+for (i in seq_along(res)) {
+  r <- res[[i]]
+  if (is.null(r$moran$q_bh) || r$moran$q_bh >= 0.05 || (r$n_hot + r$n_cold == 0 && !length(r$clusters))) next
+  fig <- tryCatch({
+    fe <- paste0("pm_", r$key)
+    sub <- pts[!is.na(d[[fe]]), ]
+    sub$y <- as.integer(d[[fe]][!is.na(d[[fe]])])
+    grid <- st_sf(geometry = st_make_grid(st_as_sfc(st_bbox(sub)), cellsize = HEX_M, square = FALSE))
+    hits <- st_intersects(grid, sub)
+    grid$n <- lengths(hits)
+    grid$k <- vapply(hits, function(ix) sum(sub$y[ix]), numeric(1))
+    grid <- grid[grid$n > 0, ]
+    grid$share <- ifelse(grid$n >= MIN_HEX, grid$k / grid$n, NA_real_)
+    st <- if (nrow(r$stones)) merge(data.frame(signum = sub$signum, st_coordinates(sub)), r$stones, by = "signum") else NULL
+    circ <- if (length(r$clusters)) do.call(rbind, lapply(r$clusters, function(c)
+      st_sf(geometry = st_buffer(st_transform(st_sfc(st_point(c(c$lon, c$lat)), crs = 4326), SWEREF), c$radius_km * 1000))))
+      else NULL
+    # The view: where nearly all the stones are (a few far to the north would otherwise shrink the map)
+    xy_sub <- st_coordinates(sub)
+    xl <- quantile(xy_sub[, 1], c(0.01, 0.99)) + c(-30000, 30000)
+    yl <- quantile(xy_sub[, 2], c(0.01, 0.99)) + c(-30000, 30000)
+    lab <- labels[[r$key]] %||% r$key
+    p <- ggplot() + geom_sf(data = grid, aes(fill = share), colour = "white", linewidth = 0.15)
+    if (!is.null(outline)) p <- p + geom_sf(data = outline, colour = MUTED, linewidth = 0.2, inherit.aes = FALSE)
+    if (!is.null(st)) p <- p + geom_point(data = st, aes(X, Y, colour = ifelse(z > 0, "hot", "cold")), size = 1.1)
+    if (!is.null(circ)) p <- p + geom_sf(data = circ, fill = NA, colour = ACCENT, linewidth = 0.7, linetype = "22")
+    p <- p +
+      scale_fill_gradientn(colours = SEQ, limits = c(0, 1), na.value = "#eef0f2",
+                           labels = function(x) paste0(round(100 * x), " %"),
+                           name = tr("Andel med mönstret", "Share with the pattern")) +
+      scale_colour_manual(values = c(hot = ACCENT, cold = SERIES[1]),
+                          labels = c(hot = tr("hett område (Gi*)", "hot area (Gi*)"), cold = tr("kallt område (Gi*)", "cold area (Gi*)")),
+                          name = NULL, drop = TRUE) +
+      coord_sf(crs = SWEREF, xlim = xl, ylim = yl, expand = FALSE, datum = NA) +
+      labs(title = tr(sprintf("%s – var mönstret samlas", lab), sprintf("%s – where the pattern gathers", lab)),
+           subtitle = wrap(tr(sprintf("Andel per sexkant om 25 km (minst %d stenar; grått: färre). Punkter: heta och kalla områden (Getis-Ord Gi*). Ringar: kluster (Kulldorff).", MIN_HEX),
+                              sprintf("Share per 25 km hexagon (at least %d stones; grey: fewer). Points: hot and cold areas (Getis-Ord Gi*). Rings: clusters (Kulldorff).", MIN_HEX))),
+           caption = wrap(tr(sprintf("Morans I %s (q %s), %d stenar i heta och %d i kalla områden. Flyttade stenar räknas inte. Källa: Vitki, r/hotspots.R; Rundata (ODbL).",
+                                     format(r$moran$i, decimal.mark = ","), qtxt(r$moran$q_bh), r$n_hot, r$n_cold),
+                             sprintf("Moran's I %s (q %s), %d stones in hot and %d in cold areas. Moved stones are left out. Source: Vitki, r/hotspots.R; Rundata (ODbL).",
+                                     r$moran$i, qtxt(r$moran$q_bh), r$n_hot, r$n_cold)))) +
+      theme_map(9) + theme(legend.key.width = unit(1.1, "cm"), legend.box = "vertical")
+    save_fig(p, out, sprintf("hotspot_%s.png", r$key), 7, 7.5)
+  }, error = function(e) { message("figur ", r$key, ": ", conditionMessage(e)); NULL })
+  if (!is.null(fig)) { res[[i]]$figure <- fig; figures[[paste0("hotspot_", r$key)]] <- fig }
+}
+
 write_result(list(
-  n_stones = nrow(d), k = K, ubpop = UBPOP, nsim = NSIM, patterns = res,
+  n_stones = nrow(d), k = K, ubpop = UBPOP, nsim = NSIM, patterns = res, figures = figures,
   method = paste(
     "För varje mönster på mönsterkartan och de stenar där det kan avgöras (flyttade stenar räknas inte): Morans I med de",
     K, "närmaste stenarna som grannar (spdep), Benjamini–Hochberg över mönstren; Getis-Ord Gi* för varje sten, med de",

@@ -150,7 +150,7 @@ def _res():
                     {"province": "U", "n_mid": 192, "share1050": 0.26}, {"province": "Sö", "n_mid": 97, "share1050": 0.58},
                     {"province": "Sm", "n_mid": 4, "share1050": 0.9}]}}]},
             "hotspots": {"nsim": 999, "patterns": [{"key": "r_for_R", "clusters": [
-                {"center": "U 768", "radius_km": 22, "n": 52, "rate_in": 0.615, "rate_out": 0.125}]}]}}
+                {"center": "U 768", "radius_km": 22, "n": 52, "rate_in": 0.615, "rate_out": 0.125, "rr": 4.9, "provinces": {"U": 50, "Vs": 2}}]}]}}
 
 
 def _p(topic, key, status="mönster att pröva", replicated=True, **kw):
@@ -185,11 +185,72 @@ def test_topic_charts_and_draft():
     assert bt.chart(_p("Geografi", "areas"), res) == ""
     d = bt.draft(_p("Förändring", "bon", "bekräftar"), res, "sv", map_keys=frozenset({"bon"}))
     body = d["body"]
-    for part in (":::box Kort sagt", ":::chart", ":::box Så säkra är vi", "## Vår hypotes", "## Så kan den prövas",
-                 "## Förbehåll", "](/karta?pattern=bon&mode=tid)", "Gräslund, A.-S. 2006", "Holm, S. 1979", "10 av 10 omräkningar"):
+    for part in (":::box Kort sagt", ":::chart", ":::box Så säkra är vi", "## Vår hypotes", "## En första prövning",
+                 "## Så kan hypotesen prövas vidare", "1. **Det direkta provet.**", "## Förbehåll", "## Se själv",
+                 "](/karta?pattern=bon&mode=tid)", "## Källor och data", "Gräslund, A.-S. 2006", "Holm, S. 1979",
+                 "10 av 10 omräkningar"):
         assert part in body, part
     en = bt.draft(_p("Geografi", "hotspot_r_for_R_U 768"), res, "en", map_keys=frozenset({"r_for_R"}))["body"]
-    assert ":::box In short" in en and "mode=kluster" in en and "Kulldorff, M. 1997" in en
+    assert ":::box In short" in en and "mode=kluster" in en and "Kulldorff, M. 1997" in en and "## A first test" in en
+
+
+def test_topic_draft_has_the_published_form():
+    from src import blog_topics as bt
+    res = _res()
+    ex = {"signum": "U 792", "place": "Ulunda", "province": "Uppland", "style": "Pr2", "years": (1020, 1050), "carver": "Balle",
+          "normalization": "Karr let ræisa stæin þenna", "translation_en": "Karr had this stone raised",
+          "picture": "![Runstenen U 792](https://upload.wikimedia.org/a.jpg)\nU 792 vid Ulunda i Uppland. Foto: Berig, CC BY 2.5.",
+          "picture_en": "![The runestone U 792](https://upload.wikimedia.org/a.jpg)\nU 792 at Ulunda in Uppland. Photo: Berig, CC BY 2.5."}
+    fig = "![r för ʀ – var mönstret samlas](/api/blog/figures/0123456789abcdef.png)\nr för ʀ – var mönstret samlas. Källa: …"
+    mix = {"n": 32, "with_carver": 26, "carvers": 8, "top": "Erik", "top_n": 13}
+    p = _p("Geografi", "hotspot_r_for_R_U 768", text="r för ʀ klustrar: inom 22 km har 62 % mönstret, mot 12 %. Mer.")
+    d = bt.draft(p, res, "sv", label="r för ʀ", provinces={"U": "Uppland"}, map_keys=frozenset({"r_for_R"}),
+                 example=ex, figure=fig, mix=mix)
+    b = d["body"]
+    assert d["title"] == "r för ʀ – ett kluster i Uppland"
+    assert b.index("*Karr let ræisa stæin þenna*") < b.index("Så står det – i Rundatas normalisering – på runstenen U 792")
+    assert "ristad någon gång mellan 1020 och 1050 att döma av ornamentiken och tillskriven ristaren Balle" in b
+    assert b.index("![Runstenen U 792]") < b.index(":::box Kort sagt") < b.index("## Ett kluster i Uppland") < b.index(fig)
+    assert b.index(fig) < b.index(":::box Så säkra är vi") < b.index("## Vår hypotes") < b.index("## En första prövning")
+    assert "26 en säker ristare i Rundata, fördelade på 8 ristare; den vanligaste, Erik, står för 13" in b
+    assert "\n> Mönstret började hos en ristare och spreds till andra i samma bygd." in b
+    assert "- Vår hypotes: vi föreslår något. Den kan prövas." in b  # lower case after the colon
+
+
+def test_sharpened_and_main_clause():
+    from src import blog_topics as bt
+    assert bt.sharpened("Vi föreslår att signaturerna blev vanliga när runristning blev ett yrke. Mer.") == \
+        "Signaturerna blev vanliga när runristning blev ett yrke"
+    assert bt.main_clause("o-runan för o-ljud (broþur för bruþur) blir vanligare över tid, med plats: 4 % och 43 %. Mer.") == \
+        "o-runan för o-ljud blir vanligare över tid, med plats"
+    assert bt.main_clause("Prepositionen at (i stället för æftiR): landskapen skiljer sig (q < 0,001), mer.") == \
+        "Prepositionen at: landskapen skiljer sig"
+
+
+def test_examples_follow_the_pattern_values():
+    from src import blog_examples as be
+    rec = {"signum": "U 1", "carvers": [{"name": "Öpir", "kind": "S", "uncertain": False}], "cross_form": "kors"}
+    assert be.has_pattern(rec, "cross", {"yes": "1"}, frozenset())
+    from unittest import mock
+    with mock.patch("src.language_profile.traits", return_value={"o_runa": "båda"}):
+        assert be.has_pattern(rec, "o_runa", {"yes": "o-runa, båda"}, frozenset())
+        assert not be.has_pattern(rec, "o_runa", {"yes": "o-runa"}, frozenset())
+    assert be.certain_carver(rec) == "Öpir"
+
+
+def test_frozen_figures_are_kept_by_content(tmp_path, monkeypatch):
+    from src import blog_figures as bf
+    monkeypatch.setattr(bf, "DIR", str(tmp_path))
+    url = bf.freeze(b"\x89PNG fake")
+    assert url.startswith("/api/blog/figures/") and url.endswith(".png") and bf.freeze(b"\x89PNG fake") == url
+    assert bf.path_of(url.rsplit("/", 1)[1]) and bf.path_of("../etc.png") is None
+    d = bf.describe("hotspot_r_for_R.png", {"r_for_R": "r för ʀ"})
+    assert d["group"] == "map" and d["label"].startswith("r för ʀ – var mönstret samlas") and d["script"] == "hotspots.R"
+    assert bf.describe("okänd.png") is None
+    md = bf.markdown(url, d)
+    assert md.startswith(f"![r för ʀ") and "Källa: Vitkis korpusanalys i R (hotspots.R)" in md
+    res = {"hotspots": {"figures": {"hotspot_r_for_R": "hotspot_r_for_R.png"}}, "text": {"figures": {"a": "text_formler.png"}}}
+    assert [x["name"] for x in bf.available(res, {"r_for_R": "r för ʀ"})] == ["hotspot_r_for_R.png", "text_formler.png"]
 
 
 def test_indexnow_only_with_a_key_and_a_public_site(monkeypatch):

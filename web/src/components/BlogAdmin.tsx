@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import BlogBody, { monthLabel, type BlogPost } from "@/components/BlogBody";
 import { useSettings } from "@/components/SettingsContext";
 import { metaDescription, postUrl, seoChecks } from "@/lib/blogSeo";
+import { API_URL } from "@/lib/api";
 
 const field = "liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm outline-none w-full";
 const thisMonth = () => new Date().toISOString().slice(0, 7);
@@ -15,6 +16,15 @@ type Draft = Omit<BlogPost, "id" | "published"> & { id?: string };
 // A topic for the post: a pattern the R analyses found that holds (GET /api/admin/blog/topics, src/blog_topics.py)
 interface Topic { key: string; topic: string; status: string; replicated: boolean; title: string; text: string; hypothesis: string;
                   significance?: string | null; chart: boolean; used: boolean }
+
+// A figure from the R analyses (GET /api/admin/blog/figures, src/blog_figures.py): the map tool's maps first
+interface RFigure { name: string; group: string; group_label: string; label: string; script: string; url: string }
+
+/** A figure block before the hypothesis (where the published post has its map), or last. */
+function insertFigure(text: string, block: string) {
+  const at = (text || "").search(/^## (Vår hypotes|Our hypothesis)/m);
+  return at < 0 ? [(text || "").trim(), block].filter(Boolean).join("\n\n") : `${text.slice(0, at)}${block}\n\n${text.slice(at)}`;
+}
 
 // A photo of a stone from Wikimedia Commons (POST /api/admin/blog/images, src/commons.py)
 interface StoneImage { signum: string; thumb: string; page: string; author: string; licence: string; markdown: string; markdown_en: string }
@@ -51,6 +61,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
   const [sources, setSources] = useState<string[]>([]);
   const [images, setImages] = useState<{ images: StoneImage[]; missing: string[] } | null>(null);
   const [topics, setTopics] = useState<Topic[] | null>(null);
+  const [rFigures, setRFigures] = useState<RFigure[] | null>(null);
 
   const load = useCallback(() => {
     call("/api/admin/blog/posts").then(d => setPosts(d.posts)).catch(e => setError(e.message));
@@ -104,6 +115,31 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
       setBusy(null);
     }
   };
+  const findFigures = async () => {
+    if (rFigures) { setRFigures(null); return; }
+    setBusy("figures"); setError(null);
+    try {
+      setRFigures((await call("/api/admin/blog/figures")).figures);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Figurerna kunde inte hämtas.");
+    } finally {
+      setBusy(null);
+    }
+  };
+  // The figure is copied to the blog's own store, so the post keeps it when the analysis is recomputed
+  const addFigure = async (f: RFigure) => {
+    setBusy(`figure:${f.name}`); setError(null);
+    try {
+      const d = await call("/api/admin/blog/figures", { method: "POST", body: JSON.stringify({ name: f.name }) });
+      setDraft(x => ({ ...x, body: insertFigure(x.body ?? "", d.markdown),
+                       body_en: (x.body_en ?? "").trim() ? insertFigure(x.body_en ?? "", d.markdown_en) : x.body_en }));
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Figuren kunde inte infogas.");
+    } finally {
+      setBusy(null);
+    }
+  };
+
   const addImage = (img: StoneImage) => setDraft(d => ({
     ...d, body: insertPicture(d.body ?? "", img.signum, img.markdown),
     body_en: (d.body_en ?? "").trim() ? insertPicture(d.body_en ?? "", img.signum, img.markdown_en) : d.body_en,
@@ -263,7 +299,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
         <summary className="cursor-pointer font-semibold">Formatering</summary>
         <div className="mt-2 grid gap-1 font-mono text-[12px] text-slate-700">
           <span>## Rubrik · ### Underrubrik · - punkt · 1. numrerad · &gt; citat · **fet** · *kursiv* · [länk](/karta)</span>
-          <span>![Runstenen U 431](https://upload.wikimedia.org/…) – bild; bildtexten på nästa rad</span>
+          <span>![Runstenen U 431](https://upload.wikimedia.org/…) – bild; bildtexten på nästa rad (figurer ur R: knappen under Bilder)</span>
           <span>:::box Kort sagt … ::: – faktaruta (stycken och listor inuti)</span>
           <span>:::chart Rubrik / + Etikett | 36 | 87 stenar / Etikett | 8 / # Grupp / Källa: … / ::: – stapeldiagram i procent</span>
         </div>
@@ -272,10 +308,16 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
       <div className="rounded-xl border border-slate-200 bg-white/60 p-3 space-y-2">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className="text-sm font-bold text-slate-700">Bilder</p>
-          <button onClick={findImages} disabled={busy === "images" || !(draft.body ?? "").trim()}
-            className="px-3 py-1.5 rounded-lg border border-slate-300 bg-white text-xs font-bold disabled:opacity-40">
-            {busy === "images" ? "Hämtar …" : "Hämta bilder till stenarna i texten"}
-          </button>
+          <div className="flex flex-wrap gap-2">
+            <button onClick={findImages} disabled={busy === "images" || !(draft.body ?? "").trim()}
+              className="px-3 py-1.5 rounded-lg border border-slate-300 bg-white text-xs font-bold disabled:opacity-40">
+              {busy === "images" ? "Hämtar …" : "Hämta bilder till stenarna i texten"}
+            </button>
+            <button onClick={findFigures} disabled={busy === "figures"}
+              className="px-3 py-1.5 rounded-lg border border-[#b7410e]/50 bg-white text-xs font-bold text-[#9a350b] disabled:opacity-40">
+              {busy === "figures" ? "Hämtar …" : rFigures ? "Dölj figurerna" : "Figurer ur R-analyserna"}
+            </button>
+          </div>
         </div>
         <p className="text-xs text-slate-500">
           Foton av de stenar texten nämner, ur Wikidata och Wikimedia Commons. Bara fritt licensierade bilder; fotograf och
@@ -297,6 +339,31 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
               ))}
             </div>
           ) : <p className="text-xs text-slate-500">Inga fritt licensierade bilder hittades.</p>
+        )}
+        {rFigures && (
+          <div className="space-y-3 pt-1">
+            <p className="text-xs text-slate-500">
+              Kartbilderna och figurerna ur korpusanalysen i R – samma kartor som i kartverktyget. Infoga lägger figuren före
+              ”Vår hypotes” med bildtext och källa; den sparas som en egen kopia, så inlägget behåller den när analysen räknas om.
+            </p>
+            {[...new Set(rFigures.map(f => f.group_label))].map(g => (
+              <div key={g}>
+                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">{g}</p>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  {rFigures.filter(f => f.group_label === g).map(f => (
+                    <figure key={f.name} className="rounded-lg border border-slate-200 bg-white p-2 text-xs">
+                      {/* eslint-disable-next-line @next/next/no-img-element -- figure from the R analysis */}
+                      <img src={`${API_URL}${f.url}`} alt={f.label} loading="lazy" className="h-28 w-full object-contain rounded bg-white" />
+                      <figcaption className="mt-1 text-slate-700 leading-snug line-clamp-2" title={f.label}>{f.label}</figcaption>
+                      <button onClick={() => addFigure(f)} disabled={!!busy} className="mt-1 text-[#b7410e] font-semibold hover:underline disabled:opacity-40">
+                        {busy === `figure:${f.name}` ? "Infogar …" : "Infoga"}
+                      </button>
+                    </figure>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         )}
         {images && images.missing.length > 0 && (
           <p className="text-xs text-slate-500">Utan bild: <span translate="no">{images.missing.join(", ")}</span></p>
