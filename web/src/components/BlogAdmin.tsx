@@ -11,6 +11,23 @@ const slugify = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]
   .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 80);
 
 type Draft = Omit<BlogPost, "id" | "published"> & { id?: string };
+// A photo of a stone from Wikimedia Commons (POST /api/admin/blog/images, src/commons.py)
+interface StoneImage { signum: string; thumb: string; page: string; author: string; licence: string; markdown: string; markdown_en: string }
+
+/** The picture block after the first paragraph that names the stone, or last when no paragraph does. */
+function insertPicture(text: string, signum: string, block: string) {
+  const blocks = (text || "").split(/\n\s*\n/);
+  const re = new RegExp(`(^|[^\\w])${signum.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?![\\w])`);
+  // Not within a :::box or :::chart, which may hold blank lines
+  let inside = false, i = -1;
+  for (let j = 0; j < blocks.length && i < 0; j++) {
+    const b = blocks[j], opens = b.startsWith(":::") && b.trim() !== ":::", closes = /\n:::\s*$/.test(b) || b.trim() === ":::";
+    if (!inside && !opens && !b.startsWith("![") && re.test(b)) i = j;
+    inside = (inside || opens) && !closes;
+  }
+  if (i < 0) return [...blocks.filter(b => b.trim()), block].join("\n\n");
+  return [...blocks.slice(0, i + 1), block, ...blocks.slice(i + 1)].join("\n\n");
+}
 const empty = (author: string): Draft => ({ slug: "", title: "", summary: "", body: "", title_en: "", summary_en: "", body_en: "",
                                            month: thisMonth(), author });
 
@@ -27,6 +44,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
   const [note, setNote] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [sources, setSources] = useState<string[]>([]);
+  const [images, setImages] = useState<{ images: StoneImage[]; missing: string[] } | null>(null);
 
   const load = useCallback(() => {
     call("/api/admin/blog/posts").then(d => setPosts(d.posts)).catch(e => setError(e.message));
@@ -54,6 +72,22 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
       setBusy(null);
     }
   };
+
+  // Photos of the stones the text names, collected from Wikidata and Wikimedia Commons with photographer and licence
+  const findImages = async () => {
+    setBusy("images"); setError(null);
+    try {
+      setImages(await call("/api/admin/blog/images", { method: "POST", body: JSON.stringify({ text: `${draft.body ?? ""}\n${draft.body_en ?? ""}` }) }));
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Bilderna kunde inte hämtas.");
+    } finally {
+      setBusy(null);
+    }
+  };
+  const addImage = (img: StoneImage) => setDraft(d => ({
+    ...d, body: insertPicture(d.body ?? "", img.signum, img.markdown),
+    body_en: (d.body_en ?? "").trim() ? insertPicture(d.body_en ?? "", img.signum, img.markdown_en) : d.body_en,
+  }));
 
   const save = async (published: boolean) => {
     setBusy(published ? "publish" : "save"); setError(null); setNote(null);
@@ -128,7 +162,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
           <div className="sm:col-span-4 rounded-xl border border-slate-200 bg-white p-5"><BlogBody text={draft.body ?? ""} /></div>
         ) : (
           <textarea value={draft.body} onChange={e => set("body", e.target.value)} rows={18} maxLength={40000}
-            placeholder={"Text. ## Rubrik, - punktlista, **fet**, *kursiv*, [länk](/karta). Tom rad mellan stycken."}
+            placeholder={"Text. ## Rubrik, - punktlista, **fet**, *kursiv*, [länk](/karta). Tom rad mellan stycken. Se Formatering nedan."}
             className={`${field} sm:col-span-4 font-mono text-[13px]`} />
         )}
       </div>
@@ -141,6 +175,50 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
           <textarea value={draft.body_en ?? ""} onChange={e => set("body_en", e.target.value)} placeholder="Text" rows={10} className={`${field} font-mono text-[13px]`} />
         </div>
       </details>
+
+      <details className="text-xs text-slate-600">
+        <summary className="cursor-pointer font-semibold">Formatering</summary>
+        <div className="mt-2 grid gap-1 font-mono text-[12px] text-slate-700">
+          <span>## Rubrik · ### Underrubrik · - punkt · 1. numrerad · &gt; citat · **fet** · *kursiv* · [länk](/karta)</span>
+          <span>![Runstenen U 431](https://upload.wikimedia.org/…) – bild; bildtexten på nästa rad</span>
+          <span>:::box Kort sagt … ::: – faktaruta (stycken och listor inuti)</span>
+          <span>:::chart Rubrik / + Etikett | 36 | 87 stenar / Etikett | 8 / # Grupp / Källa: … / ::: – stapeldiagram i procent</span>
+        </div>
+      </details>
+
+      <div className="rounded-xl border border-slate-200 bg-white/60 p-3 space-y-2">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <p className="text-sm font-bold text-slate-700">Bilder</p>
+          <button onClick={findImages} disabled={busy === "images" || !(draft.body ?? "").trim()}
+            className="px-3 py-1.5 rounded-lg border border-slate-300 bg-white text-xs font-bold disabled:opacity-40">
+            {busy === "images" ? "Hämtar …" : "Hämta bilder till stenarna i texten"}
+          </button>
+        </div>
+        <p className="text-xs text-slate-500">
+          Foton av de stenar texten nämner, ur Wikidata och Wikimedia Commons. Bara fritt licensierade bilder; fotograf och
+          licens följer med i bildtexten. Infoga lägger bilden efter stycket som nämner stenen, på båda språken.
+        </p>
+        {images && (
+          images.images.length ? (
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {images.images.map(img => (
+                <figure key={img.signum} className="rounded-lg border border-slate-200 bg-white p-2 text-xs">
+                  {/* eslint-disable-next-line @next/next/no-img-element -- Commons thumbnail */}
+                  <img src={img.thumb} alt={img.signum} loading="lazy" className="h-28 w-full object-cover rounded" />
+                  <figcaption className="mt-1">
+                    <span className="font-semibold text-slate-900" translate="no">{img.signum}</span>
+                    <span className="block text-slate-500 truncate" title={`${img.author}, ${img.licence}`}>{img.author}, {img.licence}</span>
+                  </figcaption>
+                  <button onClick={() => addImage(img)} className="mt-1 text-[#b7410e] font-semibold hover:underline">Infoga</button>
+                </figure>
+              ))}
+            </div>
+          ) : <p className="text-xs text-slate-500">Inga fritt licensierade bilder hittades.</p>
+        )}
+        {images && images.missing.length > 0 && (
+          <p className="text-xs text-slate-500">Utan bild: <span translate="no">{images.missing.join(", ")}</span></p>
+        )}
+      </div>
 
       {sources.length > 0 && (
         <details className="text-xs text-slate-600">

@@ -82,3 +82,60 @@ def test_cult_patterns():
     assert "hänger alltså delvis på radien" in pr["note"] and "i 1 fall: Sö 140." in pr["note"]
     assert ch["status"] == "indikation" and "oddskvot 3,80" in ch["text"]
     assert rf._cult({"available": False}) == []
+
+
+def test_draft_has_the_boxes():
+    out = blog.build_draft("2026-11", [_pattern("b", "mönster att pröva", True)], {}, None)
+    body = out["draft"]["body"]
+    assert ":::box Kort sagt\n- Draget b blir vanligare över tid.\n:::" in body and ":::box Så säkra är vi" in body
+    assert ":::box In short" in out["draft"]["body_en"]
+
+
+def test_pictures_go_after_the_paragraph_that_names_the_stone():
+    text = "Intro.\n\n:::box Kort sagt\nNämner U 431.\n\n- punkt\n:::\n\nHär står U 431 och U 4310.\n\nSlut."
+    out = blog.insert_picture(text, "U 431", "![Runstenen U 431](https://upload.wikimedia.org/x.jpg)\nU 431. Foto: X.")
+    parts = out.split("\n\n")
+    assert parts[parts.index("Här står U 431 och U 4310.") + 1].startswith("![Runstenen U 431]")
+    assert blog.insert_picture("Inget här.", "U 431", "![b](u)").endswith("\n\n![b](u)")
+    img = {"signum": "U 431", "markdown": "![sv](u)", "markdown_en": "![en](u)"}
+    d = blog.with_pictures({"body": "Se U 431.", "body_en": "See U 431."}, [img])
+    assert d["body"] == "Se U 431.\n\n![sv](u)" and d["body_en"] == "See U 431.\n\n![en](u)"
+
+
+def test_commons_pictures_carry_photographer_and_licence(tmp_path, monkeypatch):
+    from src import commons
+    monkeypatch.setattr(commons, "CACHE", str(tmp_path))
+    monkeypatch.setattr(commons, "wikidata_files", lambda signa: {"U 431": "U 431, Åshusby.JPG", "U 1": "U 1.jpg"})
+    monkeypatch.setattr(commons, "commons_info", lambda files: {
+        "U 431, Åshusby.JPG": {"thumb": "https://upload.wikimedia.org/a/U_431.JPG", "page": "https://commons.wikimedia.org/wiki/File:U_431%28a%29.JPG",
+                               "author": "Berig", "licence": "CC BY 3.0", "licence_url": "https://creativecommons.org/licenses/by/3.0"},
+        "U 1.jpg": {"thumb": "https://upload.wikimedia.org/b.jpg", "page": "p", "author": "X", "licence": "All rights reserved"}})
+    imgs = commons.stone_images(["U 431", "U 1", "U 2"])
+    assert [i["signum"] for i in imgs] == ["U 431"]  # U 1 is not freely licensed, U 2 has no picture
+    assert imgs[0]["markdown"].startswith("![Runstenen U 431](https://upload.wikimedia.org/a/U_431.JPG)\nU 431. Foto: Berig, ")
+    assert "[CC BY 3.0](https://creativecommons.org/licenses/by/3.0)" in imgs[0]["markdown"] and "Photo: Berig" in imgs[0]["markdown_en"]
+    assert commons.signa_in("Se U 344 och Sö 101, men inte U344; Ög 136 och U 649B.") == ["U 344", "Sö 101", "Ög 136", "U 649B"]
+    assert commons._url("https://x.org/File:A_(b).jpg?utm_source=c&w=1") == "https://x.org/File:A_%28b%29.jpg?w=1"
+
+
+def test_prayer_is_found_in_its_spellings():
+    from src.language_profile import _value
+    for text in ("guð hiælpi sal hans", "guð hialpin sialu hans", "kristr hialp and!", "... hialpi sialu hans", "guðs moðir"):
+        assert _value("bon", {}, text, []) == "ja", text
+    assert _value("bon", {}, "guðlaug let ræisa stæin", []) == "nej"
+    assert _value("sjal", {}, "guð hiælpi sal hans", []) == "ja"
+    assert _value("sjal", {}, "hann gærði bro fyrir and hans", []) == "nej"
+
+
+def test_prayer_and_the_age_of_the_churches():
+    term = lambda o, p, rep=None: {"or": o, "lo": o * 0.85, "hi": o * 1.17, "p": p, **({"halves": {"replicated": rep}} if rep is not None else {})}
+    c = {"available": True, "near_km": 2, "tests": {"prayer_a": {"or": None}},
+         "churches": {"n_churches": 444, "near_church_other": 0.025, "near_km": 1, "rows": [],
+                      "age": {"early_year": 1200, "n_early": 267, "n_late": 177, "near_km": 2, "tests": [
+                          {"feature": "bon", "label": "Kristen bön", "n": 780, "early": term(1.23, 0.008, False),
+                           "late": term(1.0, 0.98), "early_time": term(1.31, 0.014), "ratio": 1.23, "p_diff": 0.04,
+                           "share_early": 0.25, "n_early": 130, "share_late": 0.19, "n_late": 80, "share_none": 0.15, "n_none": 570},
+                          {"feature": "kors", "label": "Kors", "n": 1144, "early": term(1.02, 0.75), "late": term(1.05, 0.38)}]}}}
+    (p,) = [x for x in rf._cult(c) if x["key"] == "prayer_early_churches"]
+    assert p["status"] == "indikation" and "1,23 (1,05–1,44)" in p["text"] and "Håller inte i båda halvorna" in p["text"]
+    assert "Korset följer varken de tidiga" in p["note"]

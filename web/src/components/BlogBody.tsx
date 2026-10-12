@@ -63,23 +63,129 @@ function inline(text: string): ReactNode[] {
   return out;
 }
 
-/** The post body: "## " headings, "- " lists and paragraphs separated by blank lines. */
-export default function BlogBody({ text }: { text: string }) {
-  const blocks = text.replace(/\r\n/g, "\n").split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
+// Pictures only from Wikimedia Commons (the stone photos the editor collects, with their licence) or from the site itself
+const safeSrc = (src: string) => (/^(https:\/\/(upload|thumb)\.wikimedia\.org\/|\/(?!\/))/.test(src) ? src : null);
+
+/** Paragraphs, "## " and "### " headings, "- " lists, "> " quotes and pictures, separated by blank lines. */
+function Blocks({ text }: { text: string }) {
+  const blocks = text.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
   return (
-    <div className="space-y-5 text-[17px] leading-relaxed text-slate-700">
+    <>
       {blocks.map((b, i) => {
         if (b.startsWith("### ")) return <h3 key={i} className="pt-2 text-lg font-bold text-slate-900">{inline(b.slice(4))}</h3>;
         if (b.startsWith("## ")) return <h2 key={i} className="pt-4 text-2xl font-serif font-bold text-slate-900">{inline(b.slice(3))}</h2>;
         const lines = b.split("\n");
+        const pic = /^!\[([^\]]*)\]\(([^)\s]+)\)$/.exec(lines[0]);
+        if (pic) return <Picture key={i} alt={pic[1]} src={pic[2]} caption={lines.slice(1).join(" ")} />;
         if (lines.every(l => /^[-*] /.test(l))) {
           return <ul key={i} className="list-disc pl-6 space-y-1.5">{lines.map((l, j) => <li key={j}>{inline(l.slice(2))}</li>)}</ul>;
+        }
+        if (lines.every(l => /^\d+\. /.test(l))) {
+          return <ol key={i} className="list-decimal pl-6 space-y-1.5">{lines.map((l, j) => <li key={j}>{inline(l.replace(/^\d+\. /, ""))}</li>)}</ol>;
         }
         if (lines.every(l => l.startsWith("> "))) {
           return <blockquote key={i} className="border-l-4 border-[#b7410e]/50 pl-4 text-slate-600 italic">{inline(lines.map(l => l.slice(2)).join(" "))}</blockquote>;
         }
         return <p key={i}>{lines.map((l, j) => <Fragment key={j}>{j > 0 && <br />}{inline(l)}</Fragment>)}</p>;
       })}
-    </div>
+    </>
   );
+}
+
+/** ![alt](url) with the caption (photographer and licence) on the following lines. */
+function Picture({ alt, src, caption }: { alt: string; src: string; caption: string }) {
+  const ok = safeSrc(src);
+  if (!ok) return null;
+  return (
+    <figure className="my-2">
+      {/* eslint-disable-next-line @next/next/no-img-element -- Commons thumbnails of varying size, credited below */}
+      <img src={ok} alt={alt} loading="lazy" className="w-full max-h-[520px] object-contain rounded-xl bg-slate-100" />
+      {caption && <figcaption className="mt-2 text-sm leading-snug text-slate-500">{inline(caption)}</figcaption>}
+    </figure>
+  );
+}
+
+/** ":::box Title" … ":::": a fact box (in short, how sure we are, the hypothesis). */
+function Box({ title, text }: { title: string; text: string }) {
+  return (
+    <aside className="rounded-xl border border-[#b7410e]/20 bg-[#fbf3ee] px-5 py-4 space-y-3 text-[16px]">
+      {title && <p className="text-xs font-bold uppercase tracking-wider text-[#9a350b]">{inline(title)}</p>}
+      <Blocks text={text} />
+    </aside>
+  );
+}
+
+/**
+ * ":::chart Title" … ":::": shares as horizontal bars, one row per line "label | percent | note"; a "+" before the label
+ * marks the rows the text is about, "# " starts a group and a line "Källa: …" (or "Source: …") is the caption.
+ */
+function Chart({ title, text }: { title: string; text: string }) {
+  type Row = { label: string; value: number; note: string; hi: boolean };
+  const groups: { name: string; rows: Row[] }[] = [];
+  let caption = "";
+  for (const raw of text.split("\n").map(l => l.trim()).filter(Boolean)) {
+    if (/^(Källa|Source|Not|Note):/i.test(raw)) { caption = raw; continue; }
+    if (raw.startsWith("# ")) { groups.push({ name: raw.slice(2), rows: [] }); continue; }
+    const [label, value, note = ""] = raw.split("|").map(x => x.trim());
+    const v = Number((value || "").replace(",", ".").replace(/[^\d.]/g, ""));
+    if (!label || !Number.isFinite(v)) continue;
+    if (!groups.length) groups.push({ name: "", rows: [] });
+    const hi = label.startsWith("+");
+    groups[groups.length - 1].rows.push({ label: hi ? label.slice(1).trim() : label, value: v, note, hi });
+  }
+  const max = Math.max(10, ...groups.flatMap(g => g.rows.map(r => r.value)));
+  const top = Math.ceil(max / 10) * 10;
+  const pct = (v: number) => `${String(Math.round(v * 10) / 10).replace(".", ",")} %`;
+  return (
+    <figure className="my-2 rounded-xl border border-slate-900/10 bg-white px-5 py-4">
+      {title && <figcaption className="text-[15px] font-semibold text-slate-900">{inline(title)}</figcaption>}
+      <div className="mt-3 space-y-4">
+        {groups.map((g, gi) => (
+          <div key={gi}>
+            {g.name && <p className="mb-1.5 text-sm font-semibold text-slate-700">{inline(g.name)}</p>}
+            <div className="space-y-2">
+              {g.rows.map((r, ri) => (
+                <div key={ri} className="grid grid-cols-1 sm:grid-cols-[minmax(0,15rem)_1fr] items-center gap-x-3 gap-y-1"
+                  title={`${r.label}: ${pct(r.value)}${r.note ? ` (${r.note})` : ""}`}>
+                  <span className="text-sm leading-tight text-slate-700">{inline(r.label)}</span>
+                  <span className="flex items-center gap-2">
+                    <span className="relative h-3 flex-1 rounded-full bg-slate-100">
+                      <span className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${(r.value / top) * 100}%`, background: r.hi ? "#b7410e" : "#94a3b8" }} />
+                    </span>
+                    <span className="w-28 shrink-0 text-sm tabular-nums text-slate-900">
+                      <span className="font-semibold">{pct(r.value)}</span>
+                      {r.note && <span className="block text-xs text-slate-500">{r.note}</span>}
+                    </span>
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      <p className="mt-3 text-xs text-slate-500">Skalan går från 0 till {top} %.{caption ? " " : ""}{caption && inline(caption)}</p>
+    </figure>
+  );
+}
+
+/** The post body: the blocks of Blocks, with ":::box" and ":::chart" sections. */
+export default function BlogBody({ text }: { text: string }) {
+  const parts: ReactNode[] = [];
+  const lines = text.replace(/\r\n/g, "\n").split("\n");
+  let buf: string[] = [];
+  const flush = () => { if (buf.join("").trim()) parts.push(<Blocks key={parts.length} text={buf.join("\n")} />); buf = []; };
+  for (let i = 0; i < lines.length; i++) {
+    const open = /^:::(box|chart)\s*(.*)$/.exec(lines[i].trim());
+    if (!open) { buf.push(lines[i]); continue; }
+    const end = lines.findIndex((l, j) => j > i && l.trim() === ":::");
+    if (end < 0) { buf.push(lines[i]); continue; }
+    flush();
+    const inner = lines.slice(i + 1, end).join("\n");
+    parts.push(open[1] === "box"
+      ? <Box key={parts.length} title={open[2]} text={inner} />
+      : <Chart key={parts.length} title={open[2]} text={inner} />);
+    i = end;
+  }
+  flush();
+  return <div className="space-y-5 text-[17px] leading-relaxed text-slate-700">{parts}</div>;
 }

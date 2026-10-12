@@ -197,6 +197,9 @@ WORDS = {
                  "1050 ({n_early} stenar) och {late} efter ({n_late} stenar), bland stenar med säker stilgrupp.",
         "outro": "Alla siffror kommer från Vitkis analyser och kan granskas i appen under [Forskningsluckor](/luckor) och "
                  "[Statistik](/statistik); metoderna beskrivs i METHODS.md.",
+        "short": "Kort sagt", "sure": "Så säkra är vi",
+        "sure_note": "Mönstren är prövade med justering för många test och, där det går, i korpusens två halvor, "
+                     "uppdelade socken för socken. Skriv om rutan med egna ord: vad har prövats, och vad kan ändå vara fel?",
     },
     "en": {
         "title": "Patterns of the month",
@@ -214,6 +217,10 @@ WORDS = {
                  "1050 ({n_early} stones) and {late} after ({n_late} stones), among stones with a certain style group.",
         "outro": "All numbers come from Vitki's analyses and can be checked in the app under [Research gaps](/luckor) "
                  "and [Statistics](/statistik); the methods are described in METHODS.md.",
+        "short": "In short", "sure": "How sure we are",
+        "sure_note": "The patterns are tested with adjustment for many tests and, where possible, in the two halves of the "
+                     "corpus, split parish by parish. Rewrite the box in your own words: what has been tested, and what "
+                     "could still be wrong?",
     },
 }
 
@@ -234,6 +241,9 @@ def _write(lang: str, month: str, changed: list[dict], picked: list[dict], first
     summary = w["first_summary"] if first else \
         w["summary"].format(n=len(changed), lead=(_first_sentence(tr(lead["text"])) if lead else "").lower())
     parts = [(w["first_intro"] if first else w["intro"]) + " " + w["three"]]
+    if picked:
+        dot = lambda t: t if t.endswith((".", "!", "?")) else t + "."
+        parts.append(f":::box {w['short']}\n" + "\n".join(f"- {dot(_first_sentence(tr(p['text'])))}" for p in picked) + "\n:::")
     for p in picked:
         text = tr(p["text"])
         parts.append(f"## {_first_sentence(text)}")
@@ -250,8 +260,39 @@ def _write(lang: str, month: str, changed: list[dict], picked: list[dict], first
         parts.append(w["shift"].format(href=f"/karta?pattern={shift['key']}&split=1", label=label[:1].lower() + label[1:],
                                        early=_pct(shift["early"]), late=_pct(shift["late"]),
                                        n_early=shift["n_early"], n_late=shift["n_late"]))
+    if picked:
+        sure = []
+        for p in picked:
+            sig = (p.get("significance") or {}).get("label")
+            sure.append(f"- **{_first_sentence(tr(p['text']))}** {tr(p['status']).capitalize()}"
+                        + (f", {sig}" if sig else "") + (f", {w['both']}" if p.get("replicated") else "") + ".")
+        parts.append(f":::box {w['sure']}\n{w['sure_note']}\n\n" + "\n".join(sure) + "\n:::")
     parts.append(w["outro"])
     return {"title": title, "summary": summary, "body": "\n\n".join(parts)}
+
+
+def insert_picture(text: str, signum: str, block: str) -> str:
+    """Bilden efter första stycket som nämner stenen (inte en bild eller en ruta), annars sist."""
+    blocks = (text or "").split("\n\n")
+    pat = re.compile(rf"(^|[^\w]){re.escape(signum)}(?!\w)")
+    inside = False  # within a :::box or :::chart, which may hold blank lines
+    for i, b in enumerate(blocks):
+        opens = b.startswith(":::") and b.strip() != ":::"
+        closes = b.rstrip().endswith("\n:::") or b.strip() == ":::"
+        if not inside and not opens and not b.startswith("![") and pat.search(b):
+            return "\n\n".join(blocks[:i + 1] + [block] + blocks[i + 1:])
+        inside = (inside or opens) and not closes
+    return "\n\n".join([b for b in blocks if b.strip()] + [block])
+
+
+def with_pictures(draft: dict, images: list[dict], most: int = 2) -> dict:
+    """Utkastet med foton av de första stenarna det nämner, på båda språken."""
+    out = dict(draft)
+    for img in images[:most]:
+        out["body"] = insert_picture(out.get("body", ""), img["signum"], img["markdown"])
+        if out.get("body_en"):
+            out["body_en"] = insert_picture(out["body_en"], img["signum"], img["markdown_en"])
+    return out
 
 
 def build_draft(month: str, patterns: list[dict], before: dict[str, str], shift: dict | None) -> dict:
@@ -289,4 +330,34 @@ def draft(month: str | None = None, _: dict = Depends(require_admin)):
         raise HTTPException(status_code=409, detail="Korpusanalyserna i R är inte beräknade ännu (Statistik → Beräkna).")
     out = build_draft(month, patterns, _last_snapshot(), _map_shift())
     out["note"] = "Utkastet är en sammanställning av appens texter. Skriv om det med egna ord innan du publicerar."
+    # Photos of the stones the draft names, from Wikimedia Commons; the draft is useful also without them
+    try:
+        from src import commons
+        signa = commons.signa_in(out["draft"]["body"])[:6]
+        images = commons.stone_images(signa) if signa else []
+        if images:
+            out["draft"] = with_pictures(out["draft"], images)
+            out["sources"].append("Foton: " + ", ".join(f"{i['signum']} ({i['author']}, {i['licence']})" for i in images[:2]))
+    except Exception:  # noqa: BLE001
+        out["note"] += " Fotona kunde inte hämtas."
     return out
+
+
+class ImagesRequest(BaseModel):
+    text: str = Field("", max_length=90000)
+
+
+@router.post("/admin/blog/images")
+def images(req: ImagesRequest, _: dict = Depends(require_admin)):
+    """Foton av de stenar en text nämner, ur Wikidata och Wikimedia Commons, med fotograf och licens (src/commons.py).
+    Bara fritt licensierade bilder; stenar utan sådan bild står under missing."""
+    from src import commons
+    signa = commons.signa_in(req.text)[:20]
+    if not signa:
+        return {"images": [], "missing": []}
+    try:
+        found = commons.stone_images(signa)
+    except Exception as e:  # noqa: BLE001
+        raise server_error(e, "Bilderna kunde inte hämtas från Wikimedia Commons.", status_code=503)
+    have = {i["signum"] for i in found}
+    return {"images": found, "missing": [s for s in signa if s not in have]}
