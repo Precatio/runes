@@ -14,8 +14,9 @@ set.seed(seed)
 NOTE <- paste(
   "Lämningarna är Kulturmiljöregistrets (RAÄ) registrerade lämningar med ett läge per lämning (mittpunkten för en yta).",
   "Registret är olika väl inventerat i olika trakter, och de flesta lämningar är odaterade: färdvägar, broar och",
-  "hamnanläggningar är ofta medeltida eller yngre, gravfält och högar oftast från järnåldern. Stenar som enligt Rundata",
-  "står vid eller i en kyrka, i ett museum eller en samling räknas inte, eftersom de är flyttade."
+  "hamnanläggningar är ofta medeltida eller yngre, gravfält och högar oftast från järnåldern. Stenar som enligt Rundatas",
+  "placering eller plats står vid eller i en kyrka, på en kyrkogård, vid en prästgård, i ett museum eller en samling",
+  "räknas inte, eftersom de är flyttade eller inte kan skiljas från flyttade."
 )
 
 if (is.null(P$remains) || !file.exists(P$remains)) {
@@ -268,6 +269,42 @@ if (!is.null(P$cult_names) && file.exists(P$cult_names)) cult <- tryCatch({
                      median_km_other = r3(median(km_other)), near_km = 1,
                      rows = Filter(Negate(is.null), list(row_for("A"), row_for("B"))))
     d$km_church <- nearest_km(st_geometry(pts), ch_sf)
+
+    # The age of the churches: does a pattern follow the early churches (built by 1200) or the later ones? Both
+    # distances enter one model, so that each is the effect with the other held constant, and the two are compared
+    # (Wald test of the difference). Tested again in the two halves and with time held constant.
+    EARLY <- 1200
+    early <- ch$year <= EARLY
+    if (sum(early) >= 20 && sum(!early) >= 20) {
+      km_e <- nearest_km(st_geometry(pts), ch_sf[early, ]); km_l <- nearest_km(st_geometry(pts), ch_sf[!early, ])
+      d$closer_early <- -log2(km_e + 0.25); d$closer_late <- -log2(km_l + 0.25)
+      age_test <- function(fe, label) {
+        if (!(fe %in% names(d))) return(NULL)
+        ok <- !is.na(d[[fe]])
+        dd <- d[ok, ]; dd$y <- as.integer(dd[[fe]])
+        f <- as.formula(paste("y ~ closer_early + closer_late", prov))
+        m <- tryCatch(suppressWarnings(glm(f, data = dd, family = binomial)), error = function(e) NULL)
+        if (is.null(m)) return(NULL)
+        b <- coef(m); V <- vcov(m)
+        z <- (b[["closer_early"]] - b[["closer_late"]]) /
+          sqrt(V["closer_early", "closer_early"] + V["closer_late", "closer_late"] - 2 * V["closer_early", "closer_late"])
+        dt <- dd[!is.na(dd$t50), ]
+        ft <- as.formula(paste("y ~ closer_early + closer_late + t50", prov))
+        ne <- km_e[ok] < CULT_KM; nl <- km_l[ok] < CULT_KM & !ne
+        list(feature = sub("^pm_", "", fe), label = label, n = nrow(dd),
+             early = with_halves(dd, f, "closer_early"), late = with_halves(dd, f, "closer_late"),
+             early_time = fit_term(dt, ft, "closer_early"), late_time = fit_term(dt, ft, "closer_late"),
+             ratio = r3(exp(b[["closer_early"]] - b[["closer_late"]])), p_diff = signif(2 * pnorm(-abs(z)), 3),
+             share_early = share(dd$y[ne]), n_early = sum(ne), share_late = share(dd$y[nl]), n_late = sum(nl),
+             share_none = share(dd$y[!ne & !nl]), n_none = sum(!ne & !nl))
+      }
+      churches$age <- list(
+        early_year = EARLY, n_early = sum(early), n_late = sum(!early), near_km = CULT_KM,
+        tests = Filter(Negate(is.null), list(
+          age_test("pm_bon", tr("Kristen bön", "Christian prayer")),
+          age_test("pm_sjal", tr("Själsbön", "Prayer for the soul")),
+          age_test("pm_kors", tr("Kors", "Cross")))))
+    }
   }
   list(available = TRUE, near_km = CULT_KM, n_a = sum(cn_sf$tier == "A"), n_b = sum(cn_sf$tier == "B"),
        stones_near_a = sum(d$near_cult_a, na.rm = TRUE), stones_near_b = sum(d$near_cult_b, na.rm = TRUE),

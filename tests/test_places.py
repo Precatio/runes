@@ -24,10 +24,20 @@ def test_near_test_ignores_missing_distances():
 @pytest.mark.skipif(not places.available(), reason="platserna är inte hämtade (scripts/fetch_place_names.py)")
 def test_landscape_lists_nearest_places():
     from api.rundata import store
-    out = places.landscape(store().get("U 1161"))
+    out = places.landscape(store().get("U 17"))
     keys = {r["key"] for r in out["rows"]}
-    assert out["signum"] == "U 1161" and out["moved"] is False and "cult_a" in keys
+    assert out["signum"] == "U 17" and out["moved"] is False and "cult_a" in keys
     assert all(r["km"] >= 0 for r in out["rows"])
+    # Altuna: Rundata's placement is empty, but the place is the church – it can not be told from a moved stone
+    assert places.landscape(store().get("U 1161"))["moved"] is True
+
+
+def test_moved_by_placement_or_place():
+    from src.r_bridge import is_moved
+    assert is_moved({"placement": "Inmurad i södra väggen.", "place": "Kumla"})
+    assert is_moved({"placement": "", "place": "Frustuna kyrka"}) and is_moved({"place": "Veta kyrkogård"})
+    assert is_moved({"place": "Sigtuna museum"}) and is_moved({"place": "Västerås domkyrka"})
+    assert not is_moved({"placement": "", "place": "Skytteholm"}) and not is_moved({"place": "Kyrkbyn"})
 
 
 def test_scan_patterns():

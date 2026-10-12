@@ -157,17 +157,27 @@ def _style_dates(r: dict) -> dict:
 # a text longer by itself, so the length held constant when bridge stones are compared with others leaves them out
 _PHRASE_WORDS = {w.lower() for w in {"bro", "bru", "brú", "brúar", "bryggju", "bryggja", "brygg", "bryggiu", "broð", "væg", "vægh", "veg",
                  "vegR", "vægR", "gærði", "gerði", "gærðu", "gerðu", "gera", "gæra", "gørva", "gærva", "fyrir", "and",
-                 "ônd", "sál", "salu", "sálu", "sialu", "guð", "guðs", "hialpi", "hjalpi", "hialpin", "kristr", "krist",
+                 "ônd", "sál", "salu", "sálu", "sialu", "guð", "guðs", "hialpi", "hjalpi", "hiælpi", "hialpin", "hialp", "kristr", "krist",
                  "moðir", "móðir", "hans", "hennar", "þæira", "þeira"}}
 
 
 # Rundata's placement of a stone that is no longer where it was raised: at or in a church, in a wall, a museum or a
 # collection ("I vapenhuset.", "Inmurad i södra väggen.", "Sigtuna museum", "Nu vid Åkerby."). Used where the stone's
-# surroundings matter (remains.R)
+# surroundings matter (remains.R, hotspots.R, the pattern map), with the place (MOVED_PLACE, is_moved)
 MOVED = re.compile(r"kyrk|vapenhus|torn|museum|museet|samling|hembygds|parken|\bpark\b|SHM|magasin|förråd|slott|"
                    r"Dagsnäs|skola|bibliotek|universitet|lapidarium|inmurad|vägg|gavel|koret|sakristi|stiglucka|bogård|"
                    r"kloster|prästgård|Skansen|Runverket|lasarett|bruk\b|privatperson|gravkor|porten|golvet|^Nu vid|"
                    r"Förvara|Befann sig", re.I)
+# Rundata's place, when it names a church, a vicarage, a monastery, a castle, a school or a museum ("Frustuna kyrka",
+# "Veta kyrkogård"): the placement is often empty for these stones, and they can not be told from stones raised there,
+# so they are counted as moved too. A village named after the church (Kyrkby) is not.
+MOVED_PLACE = re.compile(r"kyrka\b|kyrkan\b|kyrkogård|kyrkoruin|ödekyrk|kyrkohärbärge|kyrkhärbre|prästgård|\bkloster\b|"
+                         r"klosterruin|\bslott\b|skolan\b|museum|museet|samling|lapidarium", re.I)
+
+
+def is_moved(r: dict) -> bool:
+    """Om stenen inte står där den restes, enligt Rundatas placering eller plats (MOVED, MOVED_PLACE)."""
+    return bool(MOVED.search(r.get("placement") or "") or MOVED_PLACE.search(r.get("place") or ""))
 
 
 def core_words(normalization: str) -> int:
@@ -200,7 +210,7 @@ def corpus_rows(inscriptions: list[dict], names=frozenset()) -> list[dict]:
             "cross": int(bool((r.get("cross_form") or "").strip())),
             "short_twig": int("kortkvist" in rt),
             "lost": int(r["flags"]["lost"]),
-            "moved": int(bool(MOVED.search(r.get("placement") or ""))),
+            "moved": int(is_moved(r)),
             "pagan": int(pagan(r)),
             "n_words": f["n_words"],
             "n_words_core": core_words(r.get("normalization") or ""),

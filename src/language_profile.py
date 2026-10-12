@@ -94,6 +94,10 @@ def _pair_value(trait: str, pairs: list[tuple[str, str]]) -> str | None:
     return None
 
 
+# The soul in the prayers' normalisation (and/ǫnd "spirit", sál/salu/sialu/sal/sel "soul")
+_SOUL = r"\b(and|ǫnd|ônd|salu|sálu|sál|sal|sial|sialu|sel)\b"
+
+
 def _value(trait: str, variants: dict, norm: str, translit_words: list[str]) -> str | None:
     if trait == "ai_sten":
         w = variants.get("stæin") or variants.get("stæina")
@@ -142,13 +146,15 @@ def _value(trait: str, variants: dict, norm: str, translit_words: list[str]) -> 
     # Brackets and (?) mark uncertain readings in the normalisation; they should not hide a word
     n = re.sub(r"[\[\]]|\(\?\)", "", norm.lower())
     if trait == "bon":
-        # Guð/Kristr hialpi …, Guð biargi …, Guð lætti …, or Guðs moðiR
-        return "ja" if (re.search(r"\b(guð|kristr|krist)\b", n) and re.search(r"\b(hialpi|hjalpi|biargi|lætti|letti)\b", n)) \
-            or "guðs moðir" in n else "nej"
+        # Guð/Kristr/Drottinn hialpi … (also hiælpi, hialpin, the imperative hialp), Guð biargi …, Guð lætti …, Guðs moðiR,
+        # or hialpi with a soul word where the god's name is lost ("… hialpi sialu hans")
+        god = re.search(r"\b(guð|kristr|krist|drottinn?)\b", n)
+        help_ = re.search(r"\b(hialpi|hjalpi|hiælpi|hialpin|hialp|hialpa|biargi|lætti|letti)\b", n)
+        return "ja" if (god and help_) or "guðs moðir" in n or (help_ and re.search(_SOUL, n)) else "nej"
     if trait == "sjal":
         # A prayer for the soul, not the intention phrase on bridge stones (gærði bro fyrir and hans, "for his soul")
-        rest = re.sub(r"\bfyrir\s+(and|ǫnd|salu|sál|sial)\b", "", n)
-        return "ja" if re.search(r"\b(and|ǫnd|salu|sál|sial)\b", rest) else "nej"
+        rest = re.sub(r"\bfyrir\s+" + _SOUL[2:], "", n)
+        return "ja" if re.search(_SOUL, rest) else "nej"
     if trait == "signatur":
         return "ja" if re.search(r"\b(risti|ristu|hiogg|hiuggu|markaði|faði|fáði)\b", n) else "nej"
     return None

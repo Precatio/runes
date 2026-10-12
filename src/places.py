@@ -119,7 +119,7 @@ def stone_distances(stones: list[dict]) -> tuple[list[str], list[list[float | No
 
 def landscape(rec: dict) -> dict:
     """Närmaste plats av varje sort för en sten, med namn och avstånd."""
-    from src.r_bridge import MOVED
+    from src.r_bridge import is_moved
     rows = []
     for key, label, group, help_ in KINDS:
         if not places()[key] or rec.get("lat") is None:
@@ -129,7 +129,7 @@ def landscape(rec: dict) -> dict:
         rows.append({"key": key, "label": label, "group": group, "help": help_, "km": d[0], "name": p["name"],
                      "info": p["info"], "lat": p["lat"], "lon": p["lon"], "url": p.get("url")})
     placement = (rec.get("placement") or "").strip()
-    return {"signum": rec["signum"], "moved": bool(MOVED.search(placement)), "placement": placement or None, "rows": rows}
+    return {"signum": rec["signum"], "moved": is_moved(rec), "placement": placement or rec.get("place") or None, "rows": rows}
 
 
 def _fisher_p(a: int, b: int, c: int, d: int) -> float:

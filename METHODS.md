@@ -662,7 +662,7 @@ namn som percentil bland landskapets runstenar, med syfte, statusord, stilgrupp,
 
 *Landskapet runt stenen* (från 2026-10-12): stenprofilen visar närmaste teofora och sakrala ortnamn, centralortsnamn,
 medeltida kyrka och fornlämning av varje slag, med namn, avstånd och länk till Kulturmiljöregistret eller Wikidata, och
-om stenen är flyttad enligt Rundatas placering (`GET /api/research/landscape/{signum}`).
+om stenen är flyttad enligt Rundatas placering eller plats (`GET /api/research/landscape/{signum}`).
 
 ### 13d. Tolkning av fynden
 
@@ -1046,7 +1046,16 @@ samma landskap (samma lokala nollmodell som för vattnet) mäts avståndet till 
 konstant: mot stilgruppens mittår (per 50 år), mot kristna markörer (kors eller kristen formel, med tiden konstant) och
 för brostenar, och varje samband prövas i korpusens två halvor (uppdelade per socken som i `change.R`). Stenar som
 enligt Rundatas placering står vid eller i en kyrka, i en vägg, ett museum eller en samling räknas inte, eftersom de är
-flyttade (757 av 2 321; kolumnen `moved` i korpusens CSV).
+flyttade, och inte heller stenar vars plats i Rundata är en kyrka, kyrkogård, kyrkoruin, prästgård, ett kloster, slott,
+en skola eller ett museum ("Frustuna kyrka", "Veta kyrkogård"), eftersom de inte kan skiljas från flyttade stenar
+(1 176 av 2 321; kolumnen `moved` i korpusens CSV, `is_moved` i `src/r_bridge.py`).
+
+*Rättelse 2026-10-12.* Fram till den här dagen prövades bara placeringen, som oftast är tom för stenar vid kyrkor;
+omkring 420 stenar vid kyrkor räknades därför som stående på sin ursprungliga plats. Det gav ett skenbart samband
+mellan kristen bön och närhet till medeltida kyrkor (oddskvot 1,26 och replikerat med det gamla urvalet, 1,18 och inte
+signifikant med det rättade) och gjorde sambandet mellan kors och centralortsnamn starkare än det är. Resultat från
+korpusanalyser före fingeravtrycket 6e62df8f5ff9a4c0 som rör stenarnas omgivning (lämningar, ortnamn, kyrkor,
+genomsökningen och hot spots) ska läsas med det i minnet.
 
 Beräkning 2026-10-12 (1 563 stenar, 52 674 lämningar): 61 % av stenarna står inom 500 m från ett registrerat gravfält,
 mot 21 % av slumppunkterna (median 0,36 mot 1,11 km); inom 500 m från en hög 33 % mot 9 %, från en färdväg 17 % mot 6 %.

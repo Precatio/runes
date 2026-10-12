@@ -478,6 +478,35 @@ def _cult(c: dict, scan: dict | None = None) -> list[dict]:
                 "tanke; resultatet är förenligt med den men visar inte att kyrkan ersatte en kultplats.")
         out.append({"key": "cult_churches", "topic": "Geografi", "status": "indikation" if found else "begränsning",
                     "text": text, "note": note, "significance": significance(a["p"], "p", "Fishers exakta test")})
+    age = ch.get("age") or {}
+    bon = next((x for x in age.get("tests") or [] if x["feature"] == "bon"), None)
+    if bon and bon.get("early") and bon.get("late"):
+        e, l, et = bon["early"], bon["late"], bon.get("early_time") or {}
+        found = e["p"] < 0.05 and e["or"] > 1
+        rep = (e.get("halves") or {}).get("replicated")
+        y = age["early_year"]
+        text = (f"Kristen bön följer {'de tidiga kyrkorna' if found else 'inte tydligt de tidiga kyrkorna'}: oddskvoten för "
+                f"en bön är {_d(e['or'])} ({_d(e['lo'])}–{_d(e['hi'])}) när avståndet till närmaste kyrka uppförd {y} eller "
+                f"tidigare halveras, men {_d(l['or'])} ({_d(l['lo'])}–{_d(l['hi'])}) för kyrkor uppförda senare, med "
+                f"landskapet konstant (skillnaden p {_d(bon['p_diff'], 3)}). Inom {age['near_km']} km från en tidig kyrka "
+                f"bär {_pct(bon['share_early'])} av stenarna en bön, nära bara en sen kyrka {_pct(bon['share_late'])} och "
+                f"längre bort {_pct(bon['share_none'])}.")
+        if rep is not None:
+            text += " Håller i båda halvorna av korpusen" + (f" och med tiden konstant (oddskvot {_d(et['or'])})."
+                                                             if et.get("p") is not None and et["p"] < 0.05 else ".") \
+                if rep else " Håller inte i båda halvorna av korpusen."
+        kors = next((x for x in age["tests"] if x["feature"] == "kors"), None)
+        note = (f"Kyrkorna är Wikidatas kyrkobyggnader i Sverige med ett uppförandeår före 1350 ({age['n_early']} till och "
+                f"med {y}, {age['n_late']} senare). Åren gäller oftast den kyrka som står i dag och är ofta avrundade, så "
+                "uppdelningen är grov; en äldre träkyrka kan ha föregått en sen stenkyrka. Stenar som står vid en kyrka i dag "
+                "räknas som flyttade och ingår inte."
+                + (f" Korset följer varken de tidiga (oddskvot {_d(kors['early']['or'])}) eller de sena kyrkorna."
+                   if kors and kors.get("early") and kors["early"]["p"] >= 0.05 else ""))
+        out.append({"key": "prayer_early_churches", "topic": "Geografi",
+                    "status": ("mönster att pröva" if rep else "indikation") if found else "begränsning",
+                    "text": text, "note": note, "replicated": rep if found else None,
+                    "significance": significance(e["p"], "p", "logistisk regression med landskapet och de sena kyrkorna "
+                                                              "konstant")})
     return out
 
 
@@ -912,6 +941,12 @@ HYPOTHESES: dict[tuple[str, str | None], tuple[str, str]] = {
         "Kyrkan kan ha byggts vid den gamla kultplatsen för att ta över dess betydelse.",
         "Pröva med ett fullständigt register över medeltida kyrkor och deras äldsta byggnadsfas, och med undersökta "
         "kultplatser: ligger de äldsta kyrkorna närmast?"),
+    ("Geografi", "prayer_early_churches"): (
+        "Vi föreslår att de släkter som lät hugga böner på sina runstenar var de som byggde de första kyrkorna, på sin "
+        "egen mark: bönen för den dödes själ är ett tidigt spår av den privata fromhet som behövde präst, kyrka och vigd "
+        "jord. Korset var i stället ett offentligt tecken vid makten.",
+        "Om det stämmer bör undersökningar under de tidiga kyrkorna nära bönestenar oftare visa träkyrkor eller kristna "
+        "gravar från 1000-talet, och sambandet bör hålla med ett fullständigt register över kyrkornas äldsta byggnadsfas."),
     ("Geografi", "remains_graves"): (
         "Vi föreslår att gravfälten förblev släktens minnesplatser genom kristnandet: den kristna stenen restes där "
         "förfäderna låg, även när den döde själv kanske begravdes vid en kyrka.",
