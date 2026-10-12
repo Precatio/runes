@@ -1,10 +1,10 @@
 "use client";
 
 import "leaflet/dist/leaflet.css";
-import { useMemo } from "react";
-import { CircleMarker, MapContainer, Polygon, TileLayer, Tooltip } from "react-leaflet";
+import { useEffect, useMemo } from "react";
+import { Circle, CircleMarker, MapContainer, Polygon, TileLayer, Tooltip, useMap } from "react-leaflet";
 import type { LatLngBoundsExpression } from "leaflet";
-import { colorOf, PLACE_STYLE, TOO_FEW, type PatternStone, type PlaceLayer } from "@/lib/patternMap";
+import { colorOf, PLACE_STYLE, TOO_FEW, type MapCircle, type MapMarker, type PatternStone, type PlaceLayer } from "@/lib/patternMap";
 
 // An equal-area-enough projection for Sweden: kilometres east and north of a reference meridian at 62° N
 const LAT0 = 62, LON0 = 16, KX = 111.32 * Math.cos((LAT0 * Math.PI) / 180), KY = 110.57;
@@ -54,6 +54,24 @@ export function boundsOf(stones: PatternStone[]): LatLngBoundsExpression {
 }
 
 /** One map of hexagons coloured by the share of stones with the pattern; too few stones are shown grey. */
+export interface MapFocus { lat: number; lon: number; radiusKm: number }
+
+/** Zooms to a place (a cluster) when it changes, and back to the whole map when it is cleared. */
+function FocusOn({ focus, bounds }: { focus?: MapFocus; bounds: LatLngBoundsExpression }) {
+  const map = useMap();
+  const key = focus ? `${focus.lat},${focus.lon},${focus.radiusKm}` : "";
+  useEffect(() => {
+    if (focus) {
+      const dLat = (focus.radiusKm * 1.6) / 111, dLon = dLat / Math.cos((focus.lat * Math.PI) / 180);
+      map.flyToBounds([[focus.lat - dLat, focus.lon - dLon], [focus.lat + dLat, focus.lon + dLon]], { duration: 0.8 });
+    } else {
+      map.fitBounds(bounds, { padding: [12, 12] });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key, map]);
+  return null;
+}
+
 /** A point's description in the tooltip: the place name, or the kind of monument and its number, or the church's year. */
 function placeText(layer: PlaceLayer, [, , name, info]: [number, number, string, string]) {
   if (layer.kind === "church") return `${layer.label.replace(/kyrkor$/, "kyrka")}${info ? `, uppförd omkring ${info}` : ""}`;
@@ -61,8 +79,9 @@ function placeText(layer: PlaceLayer, [, , name, info]: [number, number, string,
   return `${name}${info ? ` ${info}` : ""}`;
 }
 
-export function HexMap({ hexes, minStones, label, title, bounds, overlays = [] }: {
+export function HexMap({ hexes, minStones, label, title, bounds, overlays = [], circles = [], markers = [], focus }: {
   hexes: Hex[]; minStones: number; label: string; title?: string; bounds: LatLngBoundsExpression; overlays?: PlaceLayer[];
+  circles?: MapCircle[]; markers?: MapMarker[]; focus?: MapFocus;
 }) {
   return (
     <div className="relative w-full h-full">
@@ -95,6 +114,19 @@ export function HexMap({ hexes, minStones, label, title, bounds, overlays = [] }
             </Polygon>
           );
         })}
+        <FocusOn focus={focus} bounds={bounds} />
+        {circles.map((c, i) => (
+          <Circle key={`c-${i}`} center={[c.lat, c.lon]} radius={c.radiusKm * 1000}
+            pathOptions={{ color: c.color, weight: 2.5, dashArray: c.dashed ? "6 5" : undefined, fillOpacity: 0.04 }}>
+            <Tooltip sticky><span className="text-xs">{c.label}</span></Tooltip>
+          </Circle>
+        ))}
+        {markers.map((m, i) => (
+          <CircleMarker key={`m-${i}`} center={[m.lat, m.lon]} radius={4}
+            pathOptions={{ color: "#ffffff", weight: 1, fillColor: m.color, fillOpacity: 0.95 }}>
+            <Tooltip><span className="text-xs">{m.label}</span></Tooltip>
+          </CircleMarker>
+        ))}
         {overlays.map(layer => {
           const st = PLACE_STYLE[layer.kind] ?? { color: "#111827", radius: 3 };
           return layer.points.map((pt, i) => (
@@ -109,9 +141,10 @@ export function HexMap({ hexes, minStones, label, title, bounds, overlays = [] }
   );
 }
 
-export default function PatternMaps({ stones, patternKey, label, widthKm, minStones, split, overlays = [], boundsFrom }: {
+export default function PatternMaps({ stones, patternKey, label, widthKm, minStones, split, overlays = [], boundsFrom,
+                                     circles = [], markers = [], focus }: {
   stones: PatternStone[]; patternKey: string; label: string; widthKm: number; minStones: number; split: boolean;
-  overlays?: PlaceLayer[]; boundsFrom?: PatternStone[];
+  overlays?: PlaceLayer[]; boundsFrom?: PatternStone[]; circles?: MapCircle[]; markers?: MapMarker[]; focus?: MapFocus;
 }) {
   const early = useMemo(() => stones.filter(s => s.y !== null && s.y < 1050), [stones]);
   const late = useMemo(() => stones.filter(s => s.y !== null && s.y >= 1050), [stones]);
@@ -120,7 +153,7 @@ export default function PatternMaps({ stones, patternKey, label, widthKm, minSto
   const all = useMemo(() => hexbin(stones, patternKey, widthKm), [stones, patternKey, widthKm]);
   const hexEarly = useMemo(() => hexbin(early, patternKey, widthKm), [early, patternKey, widthKm]);
   const hexLate = useMemo(() => hexbin(late, patternKey, widthKm), [late, patternKey, widthKm]);
-  if (!split) return <HexMap hexes={all} minStones={minStones} label={label} bounds={bounds} overlays={overlays} />;
+  if (!split) return <HexMap hexes={all} minStones={minStones} label={label} bounds={bounds} overlays={overlays} circles={circles} markers={markers} focus={focus} />;
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 h-full">
       <div className="min-h-[50dvh] md:min-h-0"><HexMap hexes={hexEarly} minStones={minStones} label={label} bounds={bounds} overlays={overlays} title="Före ca 1050 (RAK–Pr2)" /></div>

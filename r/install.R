@@ -2,7 +2,8 @@
 # sf kräver GDAL, GEOS, PROJ och udunits (macOS: brew install gdal geos proj udunits).
 pk <- c("jsonlite", "dplyr", "tidyr", "stringr", "ggplot2", "ragg", "sf", "leaflet", "htmlwidgets",
         "tidytext", "cluster", "FactoMineR", "factoextra", "tidymodels", "ranger",
-        "ca", "stringdist", "igraph", "tidygraph", "ggraph", "terra", "gdistance", "raster", "png", "mgcv")
+        "ca", "stringdist", "igraph", "tidygraph", "ggraph", "terra", "gdistance", "raster", "png", "mgcv",
+        "spdep", "smerc")
 miss <- pk[!vapply(pk, requireNamespace, logical(1), quietly = TRUE)]
 if (length(miss)) {
   message("Installerar: ", paste(miss, collapse = ", "))

@@ -745,6 +745,12 @@ jordfast block och räknas inte som runsten) och 1 203 inga. De uttryckligt hedn
 stora gruppen är stenarna utan religiösa markörer, som kan vara hedniska, kristna utan att säga det eller
 religiöst neutrala minnesmärken.
 
+*Arbetsgången på kartan* (från 2026-10-12). Mönsterkartan är ordnad efter frågan: *Upptäck* visar de starkaste fynden
+– kombinationer av mönster och platser och kluster som håller i båda halvorna – som kort som ställer in kartan med ett
+klick; sidopanelen har tre steg (välj mönster, jämför med tid, platser eller kluster, och svaret i ord för exakt det
+kartan visar), och platslagret för den valda jämförelsen visas av sig självt. Genomsökningens rutnät och andelarna per
+landskap ligger hopfällda under kartan.
+
 *Platser* (`src/places.py`, från 2026-10-12). Över sexkanterna kan platser visas: teofora och sakrala ortnamn,
 centralortsnamn, medeltida kyrkor och Kulturmiljöregistrets gravfält, högar, färdvägar, broar och fornborgar – samma
 data som korpusanalysens lämnings- och kultnamnsprov (avsnitt 17; `GET /api/research/places`). Varje sten har avståndet
@@ -1080,6 +1086,38 @@ halvorna, och vid de sakrala namnen utan gudanamn syns ingen skillnad. Med 1 km 
 Teofora namn ligger inom 1 km från en medeltida kyrka i 9 % av fallen mot 2,5 % för andra ortnamn (oddskvot 3,8,
 p 0,007), en indikation med tanke på kyrkoregistrets luckor. Ortnamnen är belagda långt efter vikingatiden, och namnets
 läge är dagens by eller gård, inte kultplatsen själv.
+
+**Genomsökning av landskapet** (`remains.R`, från 2026-10-12). En systematisk sökning efter dolda mönster: varje
+mönster på mönsterkartan (kolumnerna `pm_*` i korpusens CSV, samma definitioner som kartan, `src/pattern_map.py`)
+prövas mot avståndet till varje sorts plats – teofora och sakrala ortnamn, centralortsnamn, medeltida kyrkor, gravfält,
+högar, färdvägar, broar och fornborgar. Ingen radie väljs: modellen är en logistisk regression på log2 av avståndet
+(plus 250 m, så att en sten vid själva platsen inte blir oändligt nära) med landskapet konstant, och effekten anges som
+oddskvoten när avståndet halveras (över 1: vanligare närmare platserna). Kombinationer där mönstret finns på färre än
+15 stenar eller saknas på färre än 15 prövas inte. Alla kombinationer justeras tillsammans (Benjamini–Hochberg), varje
+prövas också i korpusens två halvor och med tiden konstant, och flyttade stenar räknas inte. Andelen inom 2 km (ortnamn,
+kyrkor) eller 500 m (fornlämningar) redovisas bara som läshjälp. Kombinationer som klarar justeringen och håller i båda
+halvorna blir mönster att pröva i Forskningsluckor (mönstret *utan religiösa markörer* utelämnas, eftersom det är
+spegelbilden av de kristna markörerna); de som bara klarar justeringen sammanfattas som indikationer. På kartan visas
+genomsökningen som ett rutnät med mönster mot platser.
+
+Beräkning 2026-10-12 (117 kombinationer): tio klarar justeringen och fyra håller i båda halvorna. Kristna markörer och
+kors blir vanligare närmare centralortsnamn (oddskvot 1,24 respektive 1,23 när avståndet halveras), och kristen bön
+närmare medeltida kyrkor (1,26); alla tre håller också med tiden konstant. Sambandet mellan bön och teofora namn är
+svagare utan vald radie (1,26, q 0,047, bara i den ena halvan), vilket talar för att eliten och de tidiga kyrkorna
+förklarar en del av det som syns vid kultnamnen.
+
+**Hot spots och kluster** (`hotspots.R`, från 2026-10-12; R-paketen spdep och smerc). Var klustrar mönstren på
+kartan mer än slumpen ger? För varje mönster (`pm_*`) och de stenar där det kan avgöras, utan flyttade stenar: *Morans
+I* med de åtta närmaste stenarna som grannar (SWEREF 99 TM), Benjamini–Hochberg över mönstren – klustrar mönstret alls?
+*Getis-Ord Gi\** för varje sten (grannarna och stenen själv) – ligger den i ett hett område, där mönstret är vanligare än
+i landet, eller ett kallt? De lokala p-värdena justeras med Benjamini–Hochberg över stenarna. *Kulldorffs rumsliga
+scanstatistik* (smerc) prövar alla cirklar runt varje sten som rymmer högst en tiondel av stenarna, med landets andel som
+förväntat värde per sten (Poissonformen; den binomiala fungerar inte med en sten per plats) och 999 Monte
+Carlo-simuleringar; bara kluster med p < 0,05 redovisas, och klustrens p-värden justeras med Benjamini–Hochberg över
+mönstren. Varje kluster prövas också i korpusens två halvor, uppdelade per socken: är mönstret vanligare inne i klustret
+än utanför i båda (Fishers exakta test)? Kluster som håller i båda halvorna blir mönster i Forskningsluckor – mönster att
+pröva om de klarar justeringen över mönstren, annars indikationer. Ett kluster är en plats att titta närmare på (en
+ristare, en verkstad eller en bygd), inte en förklaring.
 
 **Okända ristare** (`anonymous.R`, från 2026-10-11). Kan en gruppering i statistiken vara en ristare som ännu inte
 har namn? Stenar med minst fem läsbara ord jämförs i *handens drag* – stilgrupp, kors, kortkvistrunor, språkdrag

@@ -22,6 +22,10 @@ export const PLACE_STYLE: Record<string, { color: string; radius: number }> = {
   vag: { color: "#a16207", radius: 2 }, bro: { color: "#0f766e", radius: 3 }, fornborg: { color: "#be185d", radius: 4 },
 };
 
+// Clusters (circles) and hot or cold stones (markers) from the R analysis of hot spots (r/hotspots.R)
+export interface MapCircle { lat: number; lon: number; radiusKm: number; color: string; label: string; dashed?: boolean }
+export interface MapMarker { lat: number; lon: number; color: string; label: string }
+
 /** The stones near a kind of place (within km), leaving out moved stones. */
 export const nearPlace = (stones: PatternStone[], kind: string, km: number) =>
   stones.filter(st => !st.m && st.d?.[kind] != null && (st.d[kind] as number) < km);

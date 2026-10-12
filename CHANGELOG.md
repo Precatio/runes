@@ -5,6 +5,27 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Mönsterkartan omgjord för att hitta samband
+- Kartan är ordnad efter frågan i stället för verktygen: *Upptäck* överst med de starkaste fynden som kort (ett klick
+  ställer in kartan), en sidopanel i tre steg – mönster, jämför med (tid, platser eller kluster), svaret i ord – och
+  kartan i full storlek. Platslagret för den valda jämförelsen visas av sig självt; områdets storlek och fler lager
+  ligger under "Fler inställningar", och rutnätet med alla samband är hopfällt under kartan.
+
+### Hot spots och kluster (R: spdep, smerc)
+- Ny korpusanalys `hotspots.R`: Morans I (klustrar mönstret alls?), Getis-Ord Gi* (heta och kalla områden) och
+  Kulldorffs rumsliga scanstatistik (kluster där mönstret är ovanligt vanligt), varje kluster prövat i båda halvorna och
+  justerat över mönstren. Kluster och heta stenar visas på kartan under "Jämför med → Kluster" och kluster som håller blir
+  mönster i Forskningsluckor (METHODS.md 17). R-paketen spdep och smerc läggs till i `r/install.R`.
+
+### Dolda mönster i landskapet (R)
+- En genomsökning i R prövar varje mönster på kartan mot avståndet till varje sorts plats (ortnamn, kyrkor,
+  fornlämningar) utan vald radie, med landskapet konstant, alla kombinationer justerade tillsammans och varje träff
+  prövad i båda halvorna och med tiden konstant (METHODS.md 17).
+- På mönsterkartan visas resultatet som ett rutnät – varmt där mönstret är vanligare nära platserna, kallt där det är
+  ovanligare, ✓ där det håller i båda halvorna. Ett klick visar kombinationen på kartan.
+- Första resultaten: kristna markörer och kors vanligare nära centralorter (Husby, -tuna) och kristen bön nära
+  medeltida kyrkor, alla tre i båda halvorna; sambandet mellan bön och teofora namn är svagare utan vald radie.
+
 ### Platser på kartan och i stenprofilen
 - Mönsterkartan kan visa platser över sexkanterna: teofora och sakrala ortnamn, centralortsnamn, medeltida kyrkor,
   gravfält, högar, färdvägar, broar och fornborgar, med namn och uppgift när man håller muspekaren över dem.

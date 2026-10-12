@@ -27,20 +27,20 @@ from src import research_gaps as gaps
 from src.inscription_types import CATEGORIES, categories
 from src.language_profile import TRAITS, ai_counts, dotted_counts, o_counts, och_counts, prayer_form, r_counts, traits
 from src.orthography import features
-from src.pattern_map import pagan
+from src.pattern_map import PATTERNS as MAP_PATTERNS, pagan, stone_patterns
 from src.styles import BY_CODE
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 R_DIR = os.path.join(ROOT, "r")
 CACHE_DIR = os.environ.get("R_CACHE_DIR", os.path.join(ROOT, "data", "cache", "r"))
 MODULES = ("geography", "clusters", "text", "attribution", "anonymous", "chronology", "dialect", "network", "change",
-           "remains")
+           "remains", "hotspots")
 STONE_MODULES = ("stone", "landscape")
 MODULE_LABELS = {"geography": "Geografi", "clusters": "Klustring och MCA", "text": "Text och formler",
                  "attribution": "Attribueringsmodell", "anonymous": "Okända ristare",
                  "chronology": "Seriation och datering",
                  "dialect": "Stavning och dialekter", "network": "Formelnätverk", "change": "Förändring i tid och rum",
-                 "remains": "Lämningar runt stenarna"}
+                 "remains": "Lämningar runt stenarna", "hotspots": "Hot spots och kluster"}
 REQUIRED_PACKAGES = ("jsonlite", "dplyr", "tidyr", "stringr", "ggplot2", "sf", "leaflet", "htmlwidgets",
                      "tidytext", "cluster", "FactoMineR", "factoextra", "tidymodels", "ranger", "ragg",
                      "ca", "stringdist", "igraph", "tidygraph", "ggraph", "terra", "gdistance", "raster", "png", "mgcv")
@@ -59,6 +59,7 @@ CSV_COLUMNS = (["signum", "province", "district", "place", "parish", "lat", "lon
                 "style", "material", "cross", "short_twig", "lost", "moved", "pagan", "n_words", "n_words_core", "carvers_all",
                 "style_from", "style_to"]
                + [f"cat_{k}" for k in CATEGORIES] + [f"trait_{k}" for k in TRAITS]
+               + [f"pm_{k}" for k, *_ in MAP_PATTERNS]
                + ["words", "pairs", "normalization", "signed", "ai_n", "ai_mono", "ai_sten_n", "ai_sten_mono",
                   "dot_n", "dot_cand", "dot_y_exp", "dot_y_obs", "dot_e_exp", "dot_e_obs", "dot_g_exp", "dot_g_obs",
                   "dot_d_exp", "dot_d_obs", "dot_y_u", "dot_y_i", "end_intact", "prayer_and", "prayer_sal",
@@ -207,6 +208,8 @@ def corpus_rows(inscriptions: list[dict], names=frozenset()) -> list[dict]:
             "carvers_all": ";".join(c["name"] for c in r["carvers"] if c["kind"] in ("S", "A")),
             **{f"cat_{k}": int(k in cats) for k in CATEGORIES},
             **{f"trait_{k}": t.get(k, "") for k in TRAITS},
+            # The pattern map's patterns (src/pattern_map.py: 1, 0 or empty), so that R scans the same patterns as the map
+            **{f"pm_{k}": "" if v is None else v for k, v in stone_patterns(r, names).items()},
             "words": " ".join(words),
             "pairs": pairs,
             "normalization": _clean_text(r.get("normalization")),
@@ -259,7 +262,7 @@ MODULE_FILES = {"geography": ("geography*", "geografi_*", "ristare_karta*"), "cl
                 "text": ("text*",), "attribution": ("attribution*", "modell_*"), "anonymous": ("anonymous*", "okanda_*"),
                 "chronology": ("chronology*", "seriation_*"), "dialect": ("dialect*", "dialekt_*"),
                 "network": ("network*", "natverk_*"), "change": ("change*", "forandring_*"),
-                "remains": ("remains*", "lamningar_*")}
+                "remains": ("remains*", "lamningar_*"), "hotspots": ("hotspots*",)}
 
 # Kulturmiljöregistret's remains (scripts/fetch_raa_remains.py) and the place names and medieval churches
 # (scripts/fetch_place_names.py), read by remains.R; not part of the repository

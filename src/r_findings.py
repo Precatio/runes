@@ -399,10 +399,12 @@ def _remains(r: dict) -> list[dict]:
     return out
 
 
-def _cult(c: dict) -> list[dict]:
-    """Kristna budskap nära ortnamn som kan tyda på förkristen kult, och kyrkor nära samma namn (r/remains.R)."""
+def _cult(c: dict, scan: dict | None = None) -> list[dict]:
+    """Kristna budskap nära ortnamn som kan tyda på förkristen kult, och kyrkor nära samma namn (r/remains.R). Med
+    genomsökningen (scan) jämförs radieprovet med avståndsmodellen utan vald radie."""
     if not c.get("available") or not c.get("tests"):
         return []
+    cells = {(x["feature"], x["kind"]): x for x in (scan or {}).get("cells") or []}
     t = c["tests"]
     km = c.get("near_km") or 2
     out = []
@@ -447,6 +449,17 @@ def _cult(c: dict) -> list[dict]:
                 "gudanamn med sakral efterled betecknar en kultplats är den gängse tolkningen (Vikstrand 2001), men ortens läge "
                 "är dagens by eller gård, inte kultplatsen själv. Flyttade stenar räknas inte. Teofora namn markerar ofta "
                 "centralorter; jämförelsen med Husby och -tuna prövar den förklaringen." + pagan_txt)
+        sb = cells.get(("bon", "cult_a"))
+        if sb:
+            strong = [x for x in cells.values() if x["q_bh"] < 0.05 and (x.get("halves") or {}).get("replicated")
+                      and x["feature"] in ("kristen", "kors", "bon", "sjal")]
+            note += (f" I genomsökningen av landskapet, där avståndet används utan vald radie, är sambandet mellan bön och "
+                     f"teofora namn {'svagare' if not (sb.get('halves') or {}).get('replicated') else 'detsamma'} "
+                     f"(oddskvot {_d(sb['or'])} när avståndet halveras, q {_d(sb['q_bh'], 3)}"
+                     + (", inte i båda halvorna)" if not (sb.get("halves") or {}).get("replicated") else ")")
+                     + (". Starkare och stabilare är kristna markörer nära centralortsnamn och böner nära medeltida kyrkor"
+                        " – det talar för att eliten och de tidiga kyrkorna förklarar en del av mönstret."
+                        if any(x["kind"] in ("central", "church") for x in strong) else "."))
         status = ("mönster att pröva" if rep else "indikation") if found else "begränsning"
         out.append({"key": "cult_prayer", "topic": "Geografi", "status": status, "text": text, "note": note,
                     "replicated": rep if found else None,
@@ -465,6 +478,102 @@ def _cult(c: dict) -> list[dict]:
                 "tanke; resultatet är förenligt med den men visar inte att kyrkan ersatte en kultplats.")
         out.append({"key": "cult_churches", "topic": "Geografi", "status": "indikation" if found else "begränsning",
                     "text": text, "note": note, "significance": significance(a["p"], "p", "Fishers exakta test")})
+    return out
+
+
+# Hypotheses for the scan's combinations that hold in both halves (pattern, kind of place); others get the general one
+SCAN_HYPOTHESES = {
+    ("kristen", "central"): ("Kristna monument restes oftare vid centralorterna, där eliten tidigt tog till sig den nya tron "
+                             "och visade den.",
+                             "Pröva mot andra tecken på elit – statusord, storhögar, Husby-gårdar – och mot stenarnas datering: "
+                             "bör korsen vid centralorterna vara tidiga?"),
+    ("kors", "central"): ("Korset kan ha varit ett elitmärke: det restes oftare vid centralorterna.",
+                          "Jämför korsformerna vid centralorterna med dem på andra håll (Lager 2002)."),
+    ("bon", "church"): ("Bönestenarna står där kyrkor senare byggdes: gårdar med tidiga kristna monument kan ha fått de första "
+                        "kyrkorna.",
+                        "Jämför stenarnas datering med kyrkornas äldsta byggnadsfas; tidiga bönestenar bör stå vid de äldsta "
+                        "kyrkorna, och flyttade stenar bör hållas isär."),
+    ("sjal", "church"): ("Själsbönen kan höra till samma miljö som de tidiga kyrkorna.",
+                         "Pröva med ett fullständigt kyrkoregister och kyrkornas äldsta fas."),
+}
+SCAN_GENERAL = ("Sambandet kan spegla var bygden var tätast och rikast, eller en verklig koppling mellan budskapet och platsen.",
+                "Pröva med andra platser av samma slag i samma trakter, och se om sambandet håller inom landskap och över tid.")
+
+
+def _scan(sc: dict) -> list[dict]:
+    """Genomsökningen av landskapet (r/remains.R): ett mönster per kombination som håller i båda halvorna, och en
+    sammanfattning av resten."""
+    if not sc.get("available") or not sc.get("cells"):
+        return []
+    from src import places
+    from src.pattern_map import PATTERNS
+    flabel = {k: l for k, l, *_ in PATTERNS}
+    klabel = {k: l for k, l, *_ in places.KINDS}
+    sig = [c for c in sc["cells"] if c["q_bh"] < 0.05 and c["feature"] != "neutral"]
+    rep = sorted([c for c in sig if (c.get("halves") or {}).get("replicated")], key=lambda c: c["q_bh"])
+    other = [c for c in sig if c not in rep]
+    out = []
+    for c in rep[:6]:
+        more = c["or"] > 1
+        t = c.get("time") or {}
+        text = (f"{flabel.get(c['feature'], c['feature'])} blir {'vanligare' if more else 'ovanligare'} ju närmare "
+                f"{klabel.get(c['kind'], c['kind']).lower()} stenen står: oddskvot {_d(c['or'])} ({_d(c['lo'])}–{_d(c['hi'])}) "
+                f"när avståndet halveras, med landskapet konstant (q {_d(c['q_bh'], 3) if c['q_bh'] >= 0.001 else '< 0,001'}). "
+                f"Inom {_d(c['radius_km'], 1)} km: {_pct(c['share_near'])} av {c['n_near']} stenar, mot {_pct(c['share_far'])} "
+                "av övriga. Håller i båda halvorna av korpusen"
+                + (f" och med tiden konstant (oddskvot {_d(t['or'])})." if t.get("p") is not None and t["p"] < 0.05 else "."))
+        note = (f"Ur en genomsökning av {sc['n_tests']} kombinationer av mönster och platser, justerade tillsammans "
+                "(Benjamini–Hochberg); avståndet används direkt, utan vald radie. Flyttade stenar räknas inte. "
+                "Platsernas data har sina gränser: ortnamnen är belagda långt efter vikingatiden, kyrkoregistret är "
+                "ofullständigt och fornlämningsregistret olika väl inventerat.")
+        h, test = SCAN_HYPOTHESES.get((c["feature"], c["kind"]), SCAN_GENERAL)
+        out.append({"key": f"scan_{c['feature']}_{c['kind']}", "topic": "Geografi", "status": "mönster att pröva",
+                    "replicated": True, "text": text, "note": note, "hypothesis": h, "test": test,
+                    "significance": significance(c["q_bh"], "q", "logistisk regression på avståndet med landskapet "
+                                                                  "konstant, Benjamini–Hochberg")})
+    if other:
+        names = "; ".join(f"{flabel.get(c['feature'], c['feature']).lower()} och {klabel.get(c['kind'], c['kind']).lower()}"
+                          for c in sorted(other, key=lambda c: c["q_bh"])[:6])
+        out.append({"key": "scan_indications", "topic": "Geografi", "status": "indikation",
+                    "text": (f"Genomsökningen av landskapet ger {len(other)} samband till som klarar justeringen men inte "
+                             f"håller i båda halvorna: {names}."),
+                    "note": "Idéer att pröva vidare, inte resultat; se genomsökningen på kartan.",
+                    "significance": significance(min(c["q_bh"] for c in other), "q", "Benjamini–Hochberg")})
+    return out
+
+
+def _hotspots(h: dict) -> list[dict]:
+    """Kluster ur Kulldorffs scanstatistik (r/hotspots.R): ett mönster per kluster som håller i båda halvorna."""
+    from src.pattern_map import PATTERNS
+    flabel = {k: l for k, l, *_ in PATTERNS}
+    out = []
+    for p in h.get("patterns") or []:
+        if p["key"] == "neutral":
+            continue
+        for c in p.get("clusters") or []:
+            rep_ = (c.get("halves") or {}).get("replicated")
+            if not rep_:
+                continue
+            strong = (c.get("q_bh") or 1) < 0.05
+            provs = ", ".join(f"{k} {v}" for k, v in sorted((c.get("provinces") or {}).items(), key=lambda x: -x[1]))
+            text = (f"{flabel.get(p['key'], p['key'])} klustrar: inom {_d(c['radius_km'], 1)} km från klustrets mitt har "
+                    f"{_pct(c['rate_in'])} av {c['n']} stenar mönstret, mot {_pct(c['rate_out'])} av övriga "
+                    f"({_d(c['rr'])} gånger så vanligt; Kulldorffs scanstatistik, p {_d(c['p'], 3)}). Håller i båda "
+                    f"halvorna av korpusen. Klustrets mitt: {c['center']}. Stenar per landskap: {provs}.")
+            note = ("Klustret söktes bland alla cirklar som rymmer högst en tiondel av stenarna, med 999 simuleringar; "
+                    "flyttade stenar räknas inte. "
+                    + ("Klarar justeringen över alla mönster (Benjamini–Hochberg). " if strong else
+                       "Klarar inte justeringen över alla mönster (Benjamini–Hochberg); en indikation. ")
+                    + f"Mönstret som helhet: Morans I {_d(p['moran']['i'])} (q {_d(p['moran']['q_bh'], 3)}). Ett kluster "
+                    "är en plats att titta närmare på – en ristare, en verkstad eller en bygd – inte en förklaring.")
+            out.append({"key": f"hotspot_{p['key']}_{c['center']}", "topic": "Geografi",
+                        "status": "mönster att pröva" if strong else "indikation", "replicated": True, "text": text,
+                        "note": note,
+                        "hypothesis": "Klustret kan vara en ristares eller verkstads vana, eller en lokal sed i bygden.",
+                        "test": "Jämför klustrets stenar med ristarattribueringarna och med grannstenarna utanför: följer "
+                                "mönstret en ristare, eller alla som ristade i bygden?",
+                        "significance": significance(c.get("q_bh") or c["p"], "q" if c.get("q_bh") is not None else "p",
+                                                     "Kulldorffs scanstatistik, Benjamini–Hochberg över mönstren")})
     return out
 
 
@@ -533,7 +642,9 @@ def corpus_patterns(res: dict) -> list[dict]:
                                     "resultatet visar kartlagrets gräns, inte att broarna låg långt från vatten.",
                             "significance": significance(b.get("p"), "p", "Wilcoxon")})
     out += _remains(res.get("remains") or {})
-    out += _cult((res.get("remains") or {}).get("cult") or {})
+    out += _cult((res.get("remains") or {}).get("cult") or {}, (res.get("remains") or {}).get("scan"))
+    out += _scan((res.get("remains") or {}).get("scan") or {})
+    out += _hotspots(res.get("hotspots") or {})
     a = res.get("attribution") or {}
     if a.get("ablation"):
         ab = {x["features"]: x for x in a["ablation"]}

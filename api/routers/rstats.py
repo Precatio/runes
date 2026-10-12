@@ -132,6 +132,36 @@ def run_crosscheck(limit: int = 400):
             "results": sorted(res.values(), key=lambda r: r["signum"])}
 
 
+@router.get("/scan")
+def landscape_scan():
+    """Genomsökningen av landskapet (r/remains.R): varje mönster på kartan mot avståndet till varje sorts plats, med
+    mönstrens och platsernas namn. Tom om korpusanalysen inte är beräknad."""
+    from src import places
+    from src.pattern_map import PATTERNS
+    if not corpus_ready():
+        return {"available": False, "reason": "Korpusanalysen i R är inte beräknad (Statistik → Beräkna)."}
+    res = rb.JOB.result(fingerprint()) or {}
+    sc = (res.get("remains") or {}).get("scan") or {}
+    if not sc.get("available"):
+        return {"available": False, "reason": sc.get("error") or "Genomsökningen saknas (lämningar och ortnamn hämtas med "
+                                                               "scripts/fetch_raa_remains.py och fetch_place_names.py)."}
+    return {**sc, "computed_at": res.get("computed_at"),
+            "features": [{"key": k, "label": l, "group": g} for k, l, g, _ in PATTERNS],
+            "kind_labels": {k: l for k, l, *_ in places.KINDS}}
+
+
+@router.get("/hotspots")
+def hotspots():
+    """Hot spots och kluster per mönster på kartan (r/hotspots.R): Morans I, Getis-Ord Gi* och Kulldorffs scanstatistik."""
+    if not corpus_ready():
+        return {"available": False, "reason": "Korpusanalysen i R är inte beräknad (Statistik → Beräkna)."}
+    res = rb.JOB.result(fingerprint()) or {}
+    h = res.get("hotspots") or {}
+    if not h.get("patterns"):
+        return {"available": False, "reason": (res.get("errors") or {}).get("hotspots") or "Hot spots saknas i korpusanalysen."}
+    return {"available": True, "computed_at": res.get("computed_at"), **h}
+
+
 @router.get("/corpus")
 def corpus_results():
     """Resultaten av korpusanalyserna med figurernas adresser och de mönster appen ser."""

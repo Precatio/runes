@@ -278,12 +278,50 @@ if (!is.null(P$cult_names) && file.exists(P$cult_names)) cult <- tryCatch({
        gods = as.list(table(cn_sf$god[cn_sf$tier == "A"])))
 }, error = function(e) list(available = FALSE, error = conditionMessage(e)))
 
+# ---- scan: every pattern of the map against every kind of place ---------------------------------------------------
+# A systematic search for hidden patterns in the landscape data: each pattern (pm_* columns, src/pattern_map.py) against
+# the distance to each kind of place, with no chosen radius: logistic regression on log2 of the distance (plus 250 m,
+# so that a stone at the place itself is not infinitely close), the province held constant. The effect is given as the
+# odds ratio when the distance halves (above 1: more common nearer the places). All combinations are adjusted together
+# (Benjamini–Hochberg), each is tested again in the two halves of the corpus and with time held constant, and moved
+# stones are left out. The share within a radius (2 km for names and churches, 500 m for monuments) is only for reading.
+SCAN_KINDS <- c("cult_a", "cult_b", "central", "church", "gravfalt", "hog", "vag", "bro", "fornborg")
+SCAN_KINDS <- SCAN_KINDS[paste0("km_", SCAN_KINDS) %in% names(d)]
+SCAN_RADIUS <- c(cult_a = 2, cult_b = 2, central = 2, church = 2, gravfalt = 0.5, hog = 0.5, vag = 0.5, bro = 0.5, fornborg = 0.5)
+SCAN_MIN <- 15   # stones with and without the pattern
+scan <- tryCatch({
+  feats <- grep("^pm_", names(d), value = TRUE)
+  cells <- list()
+  for (fe in feats) for (k in SCAN_KINDS) {
+    km <- d[[paste0("km_", k)]]
+    ok <- !is.na(d[[fe]]) & !is.na(km)
+    dd <- d[ok, ]
+    dd$y <- as.integer(dd[[fe]])
+    dd$closer <- -log2(km[ok] + 0.25)          # one unit = the distance halves
+    if (sum(dd$y) < SCAN_MIN || sum(1 - dd$y) < SCAN_MIN) next
+    r <- with_halves(dd, as.formula(paste("y ~ closer", prov)), "closer")
+    if (is.null(r)) next
+    dt <- dd[!is.na(dd$t50), ]
+    rt <- if (sum(dt$y) >= SCAN_MIN && sum(1 - dt$y) >= SCAN_MIN) fit_term(dt, as.formula(paste("y ~ closer + t50", prov)), "closer") else NULL
+    near <- km[ok] < SCAN_RADIUS[[k]]
+    cells[[length(cells) + 1]] <- c(list(feature = sub("^pm_", "", fe), kind = k, radius_km = SCAN_RADIUS[[k]],
+                                         n_near = sum(near), share_near = share(dd$y[near]), share_far = share(dd$y[!near]),
+                                         time = if (is.null(rt)) NULL else rt[c("n", "or", "p")]), r)
+  }
+  q <- p.adjust(sapply(cells, `[[`, "p"), "BH")
+  for (i in seq_along(cells)) cells[[i]]$q_bh <- signif(q[i], 3)
+  list(available = TRUE, n_tests = length(cells), kinds = SCAN_KINDS, radius = as.list(SCAN_RADIUS[SCAN_KINDS]),
+       n_sig = sum(q < 0.05), n_replicated = sum(q < 0.05 & sapply(cells, function(x) isTRUE(x$halves$replicated))),
+       cells = cells)
+}, error = function(e) list(available = FALSE, error = conditionMessage(e)))
+
 write.csv(d[, c("signum", grep("^km_", names(d), value = TRUE))], file.path(out, "remains_stones.csv"),
           row.names = FALSE, fileEncoding = "UTF-8")
 
 write_result(list(
   available = TRUE, note = NOTE, near_km = NEAR_KM, local_km = LOCAL_KM, n_stones = nrow(d),
   n_remains = nrow(rem), distances = unname(dist_rows), tests = tests, gravfalt_provinces = prov_rows, cult = cult,
+  scan = scan,
   figures = list(near = fig),
   method = paste(
     "För varje runsten (utom flyttade) och för lika många slumpvisa punkter på land inom", LOCAL_KM, "km från stenarna i",

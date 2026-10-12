@@ -67,6 +67,11 @@ def build_terms() -> set[str]:
     out: set[str] = set()
     for _, label, _ in TRAITS.values():
         out |= {label, label[:1].lower() + label[1:]}
+    # The pattern map's patterns and the kinds of place, which the scan and the clusters put into sentences
+    from src.pattern_map import PATTERNS
+    from src.places import KINDS
+    for _, label, *_ in list(PATTERNS) + list(KINDS):
+        out |= {label, label[:1].lower() + label[1:]}
     names = model().names
     for r in store().inscriptions:
         out |= {v for v in traits(r, names).values() if v and len(v) > 1}
