@@ -17,6 +17,8 @@ SAMPLES = [
     "För: skiljetecken (apostrof: 13 % hos ristaren mot 5 % i U); diftongen au i 'och' (monoftong: 3 % hos ristaren mot 1 % i U).",
     "Stenen: rödgrå granit med ljusgröna inslag.",
     "Emot: stungen u (y) (ja: 42 % hos ristaren mot 19 % i U, bara 8 inskrifter).",
+    "område: Närmaste sten ligger 4 km bort.\nstil: Stilgrupper på ristarens stenar: RAK (1).",
+    "Stungen i (e): landskapen skiljer sig (q 0,047 för den samlade skillnaden, justerat för alla drag).",
 ]
 
 
@@ -33,6 +35,9 @@ def test_masking_and_lookup():
     assert t == "{0} ({1}: {2} % hos ristaren mot {3} % i U)" and kinds[:2] == ["term", "term"]
     assert i18n.translate("Swedish only", "sv") == "Swedish only"
     assert i18n.translate("U Fv1972;272") == "U Fv1972;272"
+    # Lists of stones and place strings: only fixed words, translated one by one
+    assert i18n.translate("U 618 (29 km), U 23 (30 km, signerad)") == "U 618 (29 km), U 23 (30 km, signed)"
+    assert i18n.translate("Sundby, Sånga sn, Färentuna hd, Ekerö") == "Sundby, Sånga parish, Färentuna hundred, Ekerö"
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="node saknas")
@@ -51,3 +56,5 @@ def test_same_templates_as_the_browser():
         assert i18n.mask(text)[0] == template, text
         assert i18n.segments(text) == segs, text
         assert i18n.mask(text, True)[0] == with_terms, text
+    # A label with a short parenthesis before the colon is split off like other labels
+    assert i18n.LABEL.match("Stungen i (e): landskapen skiljer sig") is not None

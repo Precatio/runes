@@ -123,7 +123,7 @@ function InscriptionDetail({ signum, meta }: { signum: string; meta: RundataMeta
           <Field label="Material">{[rec.material_type, rec.material].filter(Boolean).join(" – ")}</Field>
           <Field label="Mått (Kulturmiljöregistret)">
             {rec.dimensions && (
-              <span title={rec.dimensions.description}>
+              <span title={rec.dimensions.description} data-i18n-keep-attrs="">
                 {[rec.dimensions.height_m && `${rec.dimensions.height_m.toFixed(2).replace(".", ",")} m hög`,
                   rec.dimensions.width_m && `${rec.dimensions.width_m.toFixed(2).replace(".", ",")} m bred`,
                   rec.dimensions.rune_height_cm && `runhöjd ${rec.dimensions.rune_height_cm.toFixed(1).replace(".", ",")} cm`]

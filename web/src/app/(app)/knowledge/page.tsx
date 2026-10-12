@@ -195,7 +195,7 @@ function KnowledgeBaseContent() {
             {famous.map(f => (
               <Card key={f.signum} title={<>{f.name} <span className="text-sm font-semibold text-slate-500">({f.signum})</span></>}>
                 <p>{f.place}. Ristare i Rundata: <strong>{f.carver ?? "ingen angiven"}</strong>. Stilgrupp {f.style || "–"}, datering {f.dating || "–"}.</p>
-                {f.translation && <p className="mt-2 italic text-slate-500">&rdquo;{f.translation.replace(/§[A-F] ?/g, "").slice(0, 220)}{f.translation.length > 220 ? " …" : ""}&rdquo; (Rundatas översättning)</p>}
+                {f.translation && <p className="mt-2 italic text-slate-500"><span translate="no">&rdquo;{f.translation.replace(/§[A-F] ?/g, "").slice(0, 220)}{f.translation.length > 220 ? " …" : ""}&rdquo;</span> (Rundatas översättning)</p>}
                 <p className="mt-2 flex gap-3 text-xs">
                   <Link href={`/inskrifter?signum=${encodeURIComponent(f.signum)}`} className="text-[#b7410e] font-semibold hover:underline">Inskriften</Link>
                   <Link href={`/oversikt?signum=${encodeURIComponent(f.signum)}`} className="text-[#b7410e] font-semibold hover:underline">I stenöversikten</Link>

@@ -20,6 +20,17 @@ function reveal() {
   document.documentElement.classList.remove("i18n-pending");
 }
 
+/** After the page has loaded and React has finished hydrating the parts that stream in later (Suspense), so that
+ *  the translator never changes server-rendered markup that React is still comparing. */
+function settled(): Promise<void> {
+  return new Promise(res => {
+    const go = () => ("requestIdleCallback" in window ? window.requestIdleCallback(() => res(), { timeout: 800 })
+                                                    : setTimeout(res, 300));
+    if (document.readyState === "complete") go();
+    else window.addEventListener("load", go, { once: true });
+  });
+}
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
   // The page is rendered in Swedish (the original) and translated in place after hydration (src/i18n/dom.ts); the
   // stored choice is read after the first render so that server and client render the same thing
@@ -38,7 +49,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       const dom = await import("@/i18n/dom");
       if (lang === "en") {
         const [core, catalog, names, terms] = await Promise.all([import("@/i18n/core"), import("@/i18n/en.json"),
-                                                                 import("@/i18n/names.json"), import("@/i18n/terms.json")]);
+                                                                 import("@/i18n/names.json"), import("@/i18n/terms.json"),
+                                                                 settled()]);
         if (cancelled) return;
         core.setNames(names.default as string[]);
         core.setTerms(terms.default as string[]);

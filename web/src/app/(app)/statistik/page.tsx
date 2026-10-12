@@ -368,7 +368,7 @@ export default function StatistikPage() {
           {status?.r.available && (
             <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 px-1">
               <span>
-                Beräknat i {status.r.version} på {c?.n_stones} runstenar (version {c?.fingerprint}
+                Beräknat i {status.r.version} på {c?.n_stones} runstenar (version <span translate="no">{c?.fingerprint}</span>
                 {c?.computed_at ? `, ${new Date(c.computed_at).toLocaleString("sv-SE")}` : ""}). Samma analyser används i{" "}
                 <Link href="/stenanalys" className="text-[#b7410e] hover:underline">stenanalysen</Link> och ställs mot forskningen i{" "}
                 <Link href="/luckor" className="text-[#b7410e] hover:underline">Forskningsluckor</Link>.
@@ -780,7 +780,7 @@ function Network({ data }: { data: Corpus }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4"><Fig src={f.network} alt="Formelnätverk" /><Fig src={f.kinship} alt="Släktrelationer" /></div>
       <Details title="Orden i varje formelgrupp" open>
         <ul className="text-sm space-y-1">
-          {n.communities.map(c => <li key={c.community}><strong>Grupp {c.community}</strong> ({c.size} ord): {c.words.map(w => w.word).join(", ")}</li>)}
+          {n.communities.map(c => <li key={c.community}><strong>Grupp {c.community}</strong> ({c.size} ord): <span translate="no">{c.words.map(w => w.word).join(", ")}</span></li>)}
         </ul>
       </Details>
       <Details title="Släktrelationer över tid och i kristna inskrifter">

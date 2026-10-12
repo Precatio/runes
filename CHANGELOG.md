@@ -5,6 +5,15 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Engelsk version
+- Hela appen finns på engelska: språkknappen (i menyn och på landningssidan) översätter allt som visas –
+  gränssnittet, forskningstexterna, fynd, mönster, tolkningar och tabeller – mot en ordlista med drygt 4 600
+  meningsmallar. Siffror, ristare och orter hålls utanför mallarna och språkdrag och bergarter översätts var för
+  sig, så att samma mall räcker för alla stenar. Svenskan är originalet; runtext och källtext översätts aldrig.
+- Rapporterna (stenrapporten i alla publiceringsformer och beslutsunderlaget) skrivs på engelska när språket är
+  engelska. Rune svarar på det valda språket. Språkvalet sparas.
+- Verktyg för att hålla ordlistan aktuell när texter ändras (METHODS.md 14g, scripts/README.md).
+
 ### Gränssnitt
 - Snabbknappen "Generera akademisk rapport för aktuellt arbetspass" i toppraden är borttagen, liksom avsnittet
   "Arbetsgång" på landningssidan. Kontoinställningarna har ett fält för e-post (förvalt kontots adress), och

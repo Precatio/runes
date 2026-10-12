@@ -25,15 +25,16 @@ PASSTHROUGH = {
     "RAK", "Fp", "Pr", "KB", "MB", "GB", "STL", "OBJ", "PLY", "PNG", "JPG", "PDF", "CSV", "JSON", "ZIP", "R", "API", "AI",
     "Vitki", "GitHub", "Rundata", "Wikidata", "Zenodo", "DOI", "LinkedIn", "Claude", "Gemini", "Anthropic", "Google",
     "OpenAI", "Plotly", "Leaflet", "OpenStreetMap", "x", "y", "z", "mgcv", "Holm", "Wilcoxon", "Gräslund", "Axelson",
-    "ATA", "Fv", "SD", "SB", "NOR", "IR", "KJ", "BN", "Sc", "Br", "Vr", "NIyR", "DK", "MJy", "Ka", "Kg",
+    "ATA", "Fv", "SD", "SB", "NOR", "IR", "KJ", "BN", "Sc", "Br", "Vr", "NIyR", "DK", "MJy", "Ka", "Kg", "RR", "SHM",
+    "Sb", "SvK", "MÖLM", "RS", "Plansch",
     *"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 }
 NUMBER = re.compile(r"\d+(?:[   ]\d{3})*(?:,\d+)?")
 LETTER = re.compile(r"[A-Za-zÅÄÖåäöÆØæøÉéÜüÞþÐð]")
 UPPER = "A-ZÅÄÖÆØÉÜÞÐÁÍÓÚ"
-SPLIT = re.compile(rf"(?<=[.!?])(\s+)(?=[{UPPER}\d\"”(«])|(?<=:)(\s+)(?=[{UPPER}])|(;\s+)")
+SPLIT = re.compile(rf"(?<=[.!?])(\s+)(?=[{UPPER}\d\"”(«])|(?<=:)(\s+)(?=[{UPPER}])|(;\s+)|(\n+)")
 _L, _LH = r"[^\W\d_]", r"(?:[^\W\d_]|-)"
-LABEL = re.compile(rf"^({_L}{_LH}*(?: {_L}{_LH}*)?:)(\s+)(?=\S)")
+LABEL = re.compile(rf"^({_L}{_LH}*(?: {_L}{_LH}*){{0,2}}(?: \([^)]{{1,12}}\))?:)(\s+)(?=\S)")
 LEAD = re.compile(r"^[(«\"„”'“]*")
 TRAIL = re.compile(r"[.,;:!?)”\"'’]+$")
 TRAIL_KEEP_QUOTE = re.compile(r"[.,;:!?)”\"’]+$")
@@ -146,13 +147,26 @@ def _lookup(text: str, cat: dict[str, str]) -> str | None:
         if hit is not None:
             return _unmask(hit, tk, kd, cat)
         if _needs_nothing(t):
-            return _unmask(t, tk, kd, cat)
+            return _unmask(_plain_words(t), tk, kd, cat)
     return None
+
+
+# Words with a fixed translation, used only when a segment consists of nothing else (as WORDS in core.ts)
+WORDS = {
+    "signerad": "signed", "signerade": "signed", "attribuerad": "attributed", "försvunnen": "lost", "och": "and",
+    "med": "with", "tillsammans": "together", "sn": "parish", "hd": "hundred", "nu": "now", "numera": "now",
+    "kyrka": "church", "kyrkan": "the church", "kyrkogård": "churchyard", "Vid": "At", "vid": "at", "socken": "parish",
+    "härad": "hundred", "ungefär": "about",
+}
 
 
 def _needs_nothing(template: str) -> bool:
     words = re.findall(r"(?:[^\W\d_]|²)+", re.sub(r"\{\d+\}", " ", template))
-    return all(w in PASSTHROUGH for w in words)
+    return all(w in PASSTHROUGH or w in WORDS for w in words)
+
+
+def _plain_words(template: str) -> str:
+    return re.sub(r"[^\W\d_]+", lambda m: WORDS.get(m.group(0), m.group(0)), template)
 
 
 def _find(cat: dict[str, str], template: str) -> str | None:

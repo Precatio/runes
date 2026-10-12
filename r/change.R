@@ -332,6 +332,69 @@ for (k in names(results)) {
 pp <- vapply(results, function(r) if (is.null(r$provinces)) NA_real_ else r$provinces$p_differ, numeric(1))
 qp <- pp; qp[!is.na(pp)] <- p.adjust(pp[!is.na(pp)], "holm")
 for (k in names(results)) if (!is.null(results[[k]]$provinces)) results[[k]]$provinces$q_differ <- signif(qp[[k]], 3)
+# Benjamini–Hochberg as well: the app discovers patterns with BH (it limits the share of false discoveries among those
+# reported) and keeps Holm (the risk of even one false result) for what it calls confirmed (src/r_findings.py)
+qsb <- ps; qsb[!is.na(ps)] <- p.adjust(ps[!is.na(ps)], "BH")
+for (k in names(results)) results[[k]]$time$q_bh <- if (is.na(qsb[[k]])) NA else signif(qsb[[k]], 3)
+qpb <- pp; qpb[!is.na(pp)] <- p.adjust(pp[!is.na(pp)], "BH")
+for (k in names(results)) if (!is.null(results[[k]]$provinces)) results[[k]]$provinces$q_bh_differ <- signif(qpb[[k]], 3)
+
+# ---- split-half replication ---------------------------------------------------------------------------------------
+# A pattern found in the whole corpus is fitted again in each half of it. The halves are split by parish – a whole
+# parish in one half – alternating within each province in the order of the parishes' mean dating, so that both halves
+# cover the same regions and the same period. Holding in both halves is the app's test of a pattern that is clear, not
+# an artefact of a few parishes or carvers. Signed stones are not used as the test: signatures become common late
+# (4 % of RAK stones, 33 % of Pr5), so they would favour the late patterns.
+pkey <- ifelse(is.na(d$parish) | d$parish == "", paste0("_", d$signum), d$parish)
+pinfo <- data.frame(province = d$province, pk = pkey, t = d$t50) %>% group_by(province, pk) %>%
+  summarise(mt = if (all(is.na(t))) NA_real_ else mean(t, na.rm = TRUE), n = n(), .groups = "drop") %>%
+  arrange(province, is.na(mt), mt, desc(n)) %>% group_by(province) %>%
+  mutate(half = ifelse(row_number() %% 2 == 1, "A", "B")) %>% ungroup()
+d$half <- pinfo$half[match(paste(d$province, pkey), paste(pinfo$province, pinfo$pk))]
+
+half_time <- function(dd, tp) {
+  years <- unique(c(seq(tp$year_first, tp$year_last, by = 5), tp$year_last))
+  halves <- lapply(c(A = "A", B = "B"), function(h) {
+    x <- dd[dd$half == h & !is.na(dd$t50), ]
+    if (nrow(x) < 30 || sum(x$y) < 5 || sum(1 - x$y) < 5) return(list(n = nrow(x), tested = FALSE))
+    x$tt <- x$t50
+    m <- fit(y ~ s(tt, k = 4) + s(east, north, k = k_space(nrow(x))) + s(carver_f, bs = "re"), x)
+    if (is.null(m)) return(list(n = nrow(x), tested = FALSE))
+    cur <- adjusted(m, x, years, nsim = 0)$curve
+    list(n = nrow(x), tested = TRUE, p = signif(smooth_p(m, "tt"), 3), shape = describe(cur)$shape,
+         first = r3(cur$share[1]), last = r3(tail(cur$share, 1)))
+  })
+  # The same direction as in the whole corpus (for a steady trend) or the same shape (for a peak or a trough), and
+  # significant on its own, in both halves
+  same <- function(h) isTRUE(h$tested) && h$p < 0.05 &&
+    (if (tp$shape %in% c("rises", "falls")) sign(h$last - h$first) == sign(tp$last - tp$first) else h$shape == tp$shape)
+  c(halves, list(replicated = same(halves$A) && same(halves$B)))
+}
+half_provinces <- function(dd, provs) {
+  lapply(c(A = "A", B = "B"), function(h) {
+    x <- dd[dd$half == h & !is.na(dd$year) & dd$province %in% provs, ]
+    tb <- table(x$province); keep <- names(tb)[tb >= 10]
+    x <- x[x$province %in% keep, ]
+    if (length(keep) < 2 || sum(x$y) < 5) return(list(tested = FALSE))
+    x$prov <- factor(x$province, levels = keep)
+    m <- fit(y ~ 0 + prov + s(t50, k = 4) + s(carver_f, bs = "re"), x)
+    if (is.null(m)) return(list(tested = FALSE))
+    pn <- paste0("prov", keep); b <- coef(m); V <- vcov(m); k <- length(pn)
+    C <- cbind(-1, diag(k - 1)); cb <- C %*% b[pn]
+    chi <- as.numeric(t(cb) %*% solve(C %*% V[pn, pn] %*% t(C)) %*% cb)
+    list(tested = TRUE, n = nrow(x), p = signif(pchisq(chi, k - 1, lower.tail = FALSE), 3),
+         level = setNames(as.list(r3(plogis(b[pn]))), keep))
+  })
+}
+for (f in FEATURES) {
+  r <- results[[f$key]]
+  if (is.null(r)) next
+  dd <- d; dd$y <- outcome(f); dd <- dd[!is.na(dd$y), ]
+  if (isTRUE(r$time$tested) && !is.na(r$time$q_bh) && r$time$q_bh < 0.05)
+    results[[f$key]]$time$halves <- half_time(dd, r$time)
+  if (!is.null(r$provinces) && !is.na(r$provinces$q_bh_differ) && r$provinces$q_bh_differ < 0.05)
+    results[[f$key]]$provinces$halves <- half_provinces(dd, r$provinces$rows$province)
+}
 
 # ---- the monophthong in æi words: robustness ----------------------------------------------------------------------
 # The trend in "stin for stain" (any æi word with a monophthong spelling) is checked in the ways a runologist would ask
@@ -567,9 +630,20 @@ assoc <- lapply(ASSOC, function(s) {
   ct_t <- coef_test(fit(y ~ xx + s(t50, k = 4) + s(east, north, k = k_space(nrow(dt))) + s(carver_f, bs = "re"), dt), "xx")
   ors <- function(r) if (is.null(r)) NULL else
     list(or = r3(exp(r$b)), lo = r3(exp(r$b - 1.96 * r$se)), hi = r3(exp(r$b + 1.96 * r$se)), p = signif(r$p, 3))
-  # Text length, and stones whose inscription ends intact (prayers come last)
-  dd$logw <- log(pmax(dd$n_words, 1))
+  # Text length, and stones whose inscription ends intact (prayers come last). The bridge phrase itself makes a text
+  # longer, so the length that is held constant leaves out the bridge and prayer phrases (n_words_core, from
+  # src/r_bridge.py); the total length is reported as well
+  dd$logw <- log(pmax(if (!is.null(dd$n_words_core)) dd$n_words_core else dd$n_words, 1))
   ct_len <- coef_test(fit(y ~ xx + logw + s(east, north, k = k_space(nrow(dd))) + s(carver_f, bs = "re"), dd), "xx")
+  dd$logw_total <- log(pmax(dd$n_words, 1))
+  ct_len_total <- coef_test(fit(y ~ xx + logw_total + s(east, north, k = k_space(nrow(dd))) + s(carver_f, bs = "re"), dd), "xx")
+  halves <- lapply(c(A = "A", B = "B"), function(h) {
+    x <- dd[!is.na(dd$half) & dd$half == h, ]
+    if (sum(x$xx) < 10 || sum(x$y) < 5) return(list(tested = FALSE))
+    r <- coef_test(fit(form, x), "xx")
+    if (is.null(r)) list(tested = FALSE) else list(tested = TRUE, n = nrow(x), or = r3(exp(r$b)), p = signif(r$p, 3))
+  })
+  halves$replicated <- all(vapply(halves[c("A", "B")], function(h) isTRUE(h$tested) && h$p < 0.05 && h$or > 1, TRUE))
   di <- dd[!is.na(dd$end_intact) & dd$end_intact == 1, ]
   ct_int <- coef_test(fit(y ~ xx + s(east, north, k = k_space(nrow(di))) + s(carver_f, bs = "re"), di), "xx")
   # How many carvers and parishes the bridge stones with the feature spread over, and the estimate with one carver (or
@@ -584,7 +658,8 @@ assoc <- lapply(ASSOC, function(s) {
   }
   list(key = s$key, label = s$label, n = nrow(dd), n_x = sum(dd$xx), share_x = r3(share_x), share_other = r3(share_o),
        k_x = nrow(bx), n_carvers_x = length(carv), n_parishes_x = length(par),
-       all = ors(ct), dated = c(list(n = nrow(dt)), ors(ct_t)), length = ors(ct_len),
+       all = ors(ct), dated = c(list(n = nrow(dt)), ors(ct_t)), length = ors(ct_len), length_total = ors(ct_len_total),
+       halves = halves,
        intact = c(list(n = nrow(di)), ors(ct_int)),
        loo_carver = if (length(carv)) loo(carv, "carver") else NULL,
        loo_parish = if (length(par) && length(par) <= 60) loo(par, "parish") else NULL)
@@ -592,6 +667,8 @@ assoc <- lapply(ASSOC, function(s) {
 pa <- vapply(assoc, function(s) if (is.null(s$all$p)) NA_real_ else s$all$p, numeric(1))
 qa <- pa; qa[!is.na(pa)] <- p.adjust(pa[!is.na(pa)], "holm")
 for (i in seq_along(assoc)) assoc[[i]]$all$q <- if (is.na(qa[i])) NA else signif(qa[i], 3)
+qab <- pa; qab[!is.na(pa)] <- p.adjust(pa[!is.na(pa)], "BH")
+for (i in seq_along(assoc)) assoc[[i]]$all$q_bh <- if (is.na(qab[i])) NA else signif(qab[i], 3)
 
 # ---- figures ------------------------------------------------------------------------------------------------------
 SHAPE <- c(rises = tr("ökar", "rises"), falls = tr("minskar", "falls"), peak = tr("vanligast omkring %d (%d–%d)", "most common around %d (%d–%d)"),

@@ -79,7 +79,8 @@ function translateText(node: Text) {
 }
 
 function translateAttrs(el: Element) {
-  if (!catalog || skipped(el)) return;
+  // data-i18n-keep-attrs: the attributes hold source text (e.g. Kulturmiljöregistret's description in a tooltip)
+  if (!catalog || skipped(el) || el.hasAttribute("data-i18n-keep-attrs")) return;
   for (const a of ATTRS) {
     const v = el.getAttribute(a);
     if (!v || !v.trim()) continue;

@@ -16,7 +16,8 @@ const PASSTHROUGH = new Set([
   "Vitki", "GitHub", "Rundata", "Wikidata", "Zenodo", "DOI", "LinkedIn", "Claude", "Gemini", "Anthropic", "Google",
   "OpenAI", "Plotly", "Leaflet", "OpenStreetMap", "x", "y", "z", "mgcv", "Holm", "Wilcoxon", "Gräslund", "Axelson",
   // Signum series (U Fv1972;272, U ATA365/61A, Sö SB1965;19)
-  "ATA", "Fv", "SD", "SB", "NOR", "IR", "KJ", "BN", "Sc", "Br", "Vr", "NIyR", "DK", "MJy", "Ka", "Kg",
+  "ATA", "Fv", "SD", "SB", "NOR", "IR", "KJ", "BN", "Sc", "Br", "Vr", "NIyR", "DK", "MJy", "Ka", "Kg", "RR", "SHM",
+  "Sb", "SvK", "MÖLM", "RS", "Plansch",
   ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 ]);
 
@@ -116,14 +117,27 @@ function unmask(template: string, m: Masked, catalog: Catalog, missing: string[]
   });
 }
 
+// Words with a fixed translation, used only when a segment consists of nothing else (lists of stones, place strings):
+// "U 618 (29 km), U 23 (30 km, signerad)", "Torp, Sorunda sn, Sotholms hd"
+const WORDS: Record<string, string> = {
+  signerad: "signed", signerade: "signed", attribuerad: "attributed", försvunnen: "lost", och: "and", med: "with",
+  tillsammans: "together", sn: "parish", hd: "hundred", nu: "now", numera: "now", kyrka: "church", kyrkan: "the church",
+  kyrkogård: "churchyard", Vid: "At", vid: "at", socken: "parish", härad: "hundred", ungefär: "about",
+};
+
 /** True when nothing in the template needs translating (only numbers, names, signum prefixes, symbols). */
 function needsNothing(template: string): boolean {
   const words = template.replace(/\{\d+\}/g, " ").split(/[^\p{L}²]+/u).filter(Boolean);
-  return words.every(w => PASSTHROUGH.has(w));
+  return words.every(w => PASSTHROUGH.has(w) || w in WORDS);
+}
+
+/** The template with the fixed words translated (see WORDS). */
+function plainWords(template: string): string {
+  return template.replace(/\p{L}+/gu, w => WORDS[w] ?? w);
 }
 
 // Sentence boundaries (followed by a capital letter, a digit or an opening mark) and semicolons
-const SPLIT = /(?<=[.!?])(\s+)(?=[\p{Lu}\d"”(«])|(?<=:)(\s+)(?=\p{Lu})|(;\s+)/u;
+const SPLIT = /(?<=[.!?])(\s+)(?=[\p{Lu}\d"”(«])|(?<=:)(\s+)(?=\p{Lu})|(;\s+)|(\n+)/u;
 
 export function segments(text: string): string[] {
   // Keeps the separators, so that the text can be put back together exactly
@@ -146,7 +160,7 @@ function find(catalog: Catalog, template: string): string | undefined {
 }
 
 // "För: …", "Stenen: granit." – a short label before a colon is its own segment
-const LABEL = /^(\p{L}[\p{L}-]*(?: \p{L}[\p{L}-]*)?:)(\s+)(?=\S)/u;
+const LABEL = /^(\p{L}[\p{L}-]*(?: \p{L}[\p{L}-]*){0,2}(?: \([^)]{1,12}\))?:)(\s+)(?=\S)/u;
 
 /** One sentence as a template: first with names and numbers only (the catalog's older entries), then with terms. */
 function lookup(text: string, catalog: Catalog, missing: string[]): string | undefined {
@@ -154,7 +168,7 @@ function lookup(text: string, catalog: Catalog, missing: string[]): string | und
     const m = mask(text, withTerms);
     const hit = find(catalog, m.template);
     if (hit !== undefined) return unmask(hit, m, catalog, missing);
-    if (needsNothing(m.template)) return unmask(m.template, m, catalog, missing);
+    if (needsNothing(m.template)) return unmask(plainWords(m.template), m, catalog, missing);
   }
   return undefined;
 }

@@ -896,6 +896,26 @@ Rundatas utgåva), inte huggspårsmåtten eller stenarnas mått, som inte använ
 Ristarnamn som enligt forskningen är grupper får en not (t.ex. "Traen"). Dokumentet exporteras som Word och Markdown;
 mottagare fylls i av avsändaren och e-post hämtas ur kontoinställningarna (förvalt kontots adress). Ingen AI-text.
 
+### 14g. Engelsk version
+
+Källkod: `web/src/i18n/` (webbläsaren), `src/i18n.py` (rapporterna). Appen skrivs på svenska, och svenskan är
+originalet. Med språket engelska översätts det som visas på plats mot en ordlista (`web/src/i18n/en.json`) med
+meningsmallar, och rapporterna (Word, Markdown, LaTeX) översätts med samma ordlista när de skapas.
+
+* **Mallar.** Siffror, ristarnamn och orter (ur Rundata, `web/src/i18n/names.json`) byts mot platshållare före
+  uppslaget och sätts tillbaka efteråt, siffror i engelsk form (0,43 → 0.43; 1 101 → 1,101). Språkdrag, deras
+  värden och bergarterna (`terms.json`) översätts var för sig inne i meningarna, så att en mall räcker för alla
+  kombinationer. Längre texter delas i meningar, och korta ledord före kolon ("För:", "Stenen:") i egna delar.
+  Listor av stenar och ortsangivelser översätts ord för ord när de bara består av signum, siffror, namn och några
+  fasta ord (signerad, sn, hd, och).
+* **Det som inte översätts:** translittereringar, normaliseringar, källtext ur Kulturmiljöregistret, ortnamn och
+  Runes svar (Rune svarar direkt på engelska). En mening som saknas i ordlistan visas på svenska.
+* **Samma regler överallt:** webbläsaren och rapporterna bygger mallarna på exakt samma sätt; `tests/test_i18n.py`
+  jämför dem.
+* **Översättningarna** är gjorda för hand (av Claude, granskade stickprovsvis) och inte maskinöversatta vid
+  visningen. När svenska texter ändras samlar `web/scripts/i18n_crawl.mjs` in det som saknas, och
+  `web/scripts/i18n.mjs merge` för in nya översättningar (se `scripts/README.md`).
+
 ## 15. Jämförbarhet med tidigare forskning
 
 Laila Kitzler Åhfeldts metod (Arkeologiska forskningslaboratoriet, Stockholms universitet; Kitzler Åhfeldt
