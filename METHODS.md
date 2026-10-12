@@ -660,6 +660,10 @@ område och stil kan ha legat till grund för attribueringarna (avsnitt 18). Pro
 besked med förklaring, de tre starkaste alternativen med sina kontroller, och stenens höjd, textlängd och antal
 namn som percentil bland landskapets runstenar, med syfte, statusord, stilgrupp, seriation och grupp.
 
+*Landskapet runt stenen* (från 2026-10-12): stenprofilen visar närmaste teofora och sakrala ortnamn, centralortsnamn,
+medeltida kyrka och fornlämning av varje slag, med namn, avstånd och länk till Kulturmiljöregistret eller Wikidata, och
+om stenen är flyttad enligt Rundatas placering (`GET /api/research/landscape/{signum}`).
+
 ### 13d. Tolkning av fynden
 
 Källkod: `src/interpretation.py`, `POST /api/research/interpret`. När man klickar på ett fynd i "Våra resultat mot
@@ -740,6 +744,16 @@ kristna markörer är inte därmed hednisk. Bland 2 318 vikingatida runstenar me
 jordfast block och räknas inte som runsten) och 1 203 inga. De uttryckligt hedniska stenarna är alltså mycket få; den
 stora gruppen är stenarna utan religiösa markörer, som kan vara hedniska, kristna utan att säga det eller
 religiöst neutrala minnesmärken.
+
+*Platser* (`src/places.py`, från 2026-10-12). Över sexkanterna kan platser visas: teofora och sakrala ortnamn,
+centralortsnamn, medeltida kyrkor och Kulturmiljöregistrets gravfält, högar, färdvägar, broar och fornborgar – samma
+data som korpusanalysens lämnings- och kultnamnsprov (avsnitt 17; `GET /api/research/places`). Varje sten har avståndet
+till närmaste plats av varje slag (kd-träd i SWEREF 99 TM). *Nära en plats* jämför andelen stenar med det valda mönstret
+inom 1, 2, 3 eller 5 km från en sorts plats med övriga stenar (`GET /api/research/place-test`): andelarna, oddskvoten
+utan justering (Fishers exakta test) och med landskapet konstant (Mantel–Haenszel, CMH-test). Flyttade stenar räknas
+inte, och kartan kan begränsas till stenarna nära platserna. Provet är utforskande: tiden hålls inte konstant, mönstret
+prövas inte i två halvor och den som prövar många kombinationer av mönster, platser och radier hittar några skillnader
+av en slump. Det fullständiga provet för kultnamnen redovisas i avsnitt 17.
 
 ## 14. Rapporter
 

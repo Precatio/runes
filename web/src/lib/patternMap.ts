@@ -3,7 +3,28 @@
 
 // A stone in the pattern map (GET /api/research/pattern-map): place, mid-year of the style group and, per pattern,
 // 1 (has it), 0 (lacks it) or null (cannot be decided, e.g. illegible text)
-export interface PatternStone { s: string; lat: number; lon: number; p: string; y: number | null; v: Record<string, 0 | 1 | null> }
+export interface PatternStone {
+  s: string; lat: number; lon: number; p: string; y: number | null; v: Record<string, 0 | 1 | null>;
+  // Moved according to Rundata's placement (at a church, in a wall, a museum), and the distance (km) to the nearest
+  // place of each kind (src/places.py)
+  m?: number; d?: Record<string, number | null>;
+}
+
+// Places around the stones (GET /api/research/places): place names that suggest pre-Christian cult, medieval churches
+// and registered ancient monuments
+export interface PlaceKind { key: string; label: string; group: string; help: string }
+export interface PlaceLayer { kind: string; label: string; points: [number, number, string, string][] }
+
+// Colours that stand out against the blue hexagons; the ancient monuments are small and quiet
+export const PLACE_STYLE: Record<string, { color: string; radius: number }> = {
+  cult_a: { color: "#b7410e", radius: 6 }, cult_b: { color: "#e5883a", radius: 5 }, central: { color: "#7c3aed", radius: 5 },
+  church: { color: "#111827", radius: 3 }, gravfalt: { color: "#7c6f64", radius: 2 }, hog: { color: "#a8a29e", radius: 2 },
+  vag: { color: "#a16207", radius: 2 }, bro: { color: "#0f766e", radius: 3 }, fornborg: { color: "#be185d", radius: 4 },
+};
+
+/** The stones near a kind of place (within km), leaving out moved stones. */
+export const nearPlace = (stones: PatternStone[], kind: string, km: number) =>
+  stones.filter(st => !st.m && st.d?.[kind] != null && (st.d[kind] as number) < km);
 
 // Sequential blue, light → dark (dataviz reference ramp, steps 150–700): the share of stones with the pattern
 export const SHARE_CLASSES: { max: number; color: string; label: string }[] = [

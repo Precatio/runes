@@ -5,6 +5,16 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Platser på kartan och i stenprofilen
+- Mönsterkartan kan visa platser över sexkanterna: teofora och sakrala ortnamn, centralortsnamn, medeltida kyrkor,
+  gravfält, högar, färdvägar, broar och fornborgar, med namn och uppgift när man håller muspekaren över dem.
+- "Nära en plats" jämför det valda mönstret nära en sorts plats (1–5 km) med övriga stenar, med landskapet konstant,
+  och kan begränsa kartan till stenarna nära platserna. Provet märks som utforskande; det fullständiga ligger i
+  Statistik.
+- Stenöversikten har ett kort "Landskapet runt stenen": närmaste ortnamn, kyrka och fornlämning av varje slag med
+  avstånd och länk, och en markering om stenen är flyttad (METHODS.md 13c, 13e).
+- Rättat: områdeskontrollen sa "koordinater saknas" när ristaren inte hade några andra stenar att jämföra med.
+
 ### Förkristna kultnamn och stenarnas budskap
 - Ortnamn som tyder på förkristen kult – teofora namn som Torsvi, Odensala, Ullevi och Frösö, sakrala namn som Vi, Harg
   och Hov – ur OpenStreetMap (Lantmäteriets ortnamn), med Husby och -tuna som jämförelse, och medeltida kyrkor ur

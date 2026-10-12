@@ -97,12 +97,22 @@ def mid_year(rec: dict) -> int | None:
 
 
 def build(inscriptions: list[dict], names) -> dict:
-    """Mönstren och stenarna; stenens värden (v) står i samma ordning som mönstren, för att svaret ska bli mindre."""
+    """Mönstren och stenarna; stenens värden (v) står i samma ordning som mönstren, för att svaret ska bli mindre.
+    Varje sten har också avståndet (km) till närmaste plats av varje sort (d, i ordningen av place_kinds; src/places.py)
+    och om den är flyttad enligt Rundatas placering (m)."""
+    from src import places
+    from src.r_bridge import MOVED
     stones, keys = [], [k for k, *_ in PATTERNS]
     for r in inscriptions:
         if not is_runestone(r) or r.get("lat") is None:
             continue
         v = stone_patterns(r, names)
         stones.append({"s": r["signum"], "lat": round(r["lat"], 4), "lon": round(r["lon"], 4), "p": province(r),
-                       "y": mid_year(r), "v": [v[k] for k in keys]})
-    return {"patterns": [{"key": k, "label": l, "group": g, "help": h} for k, l, g, h in PATTERNS], "stones": stones}
+                       "y": mid_year(r), "v": [v[k] for k in keys],
+                       "m": int(bool(MOVED.search(r.get("placement") or "")))})
+    kinds, dist = places.stone_distances(stones)
+    for st, d in zip(stones, dist):
+        st["d"] = d
+    return {"patterns": [{"key": k, "label": l, "group": g, "help": h} for k, l, g, h in PATTERNS],
+            "place_kinds": [{"key": k, "label": l, "group": g, "help": h} for k, l, g, h in places.KINDS if k in kinds],
+            "stones": stones}

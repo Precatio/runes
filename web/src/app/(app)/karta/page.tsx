@@ -9,7 +9,8 @@ import { corpus } from "@/lib/corpus";
 import { useAuth } from "@/components/AuthContext";
 import { InfoTip } from "@/components/Explain";
 import type { MapPoint } from "@/components/RuneMap";
-import { SHARE_CLASSES, TOO_FEW, periodShares, provinceTable, type PatternStone } from "@/lib/patternMap";
+import { nearPlace, periodShares, PLACE_STYLE, provinceTable, SHARE_CLASSES, TOO_FEW, type PatternStone, type PlaceKind,
+         type PlaceLayer } from "@/lib/patternMap";
 
 const RuneMap = dynamic(() => import("@/components/RuneMap"), {
   ssr: false,
@@ -23,6 +24,12 @@ const PatternMaps = dynamic(() => import("@/components/PatternMap"), {
 // The patterns of the pattern map (GET /api/research/pattern-map)
 interface PatternDef { key: string; label: string; group: string; help: string }
 const HEX_SIZES = [10, 20, 40];
+const NEAR_KM = [1, 2, 3, 5];
+// GET /api/research/place-test: the share near a kind of place against the other stones (src/places.py)
+interface PlaceTest {
+  km: number; n_near: number; n_far: number; k_near: number; k_far: number; share_near: number; share_far: number;
+  or_crude: number; p_crude: number; or_mh: number | null; p_mh: number | null; strata: number;
+}
 const MIN_STONES = 5;
 
 const STYLE_COLORS: Record<string, string> = {
@@ -51,7 +58,7 @@ interface Trait { key: string; label: string; definition: string; values: Record
 
 // The filters, as they appear in the address bar (so a map view can be shared)
 const FILTER_KEYS = ["q", "province", "period", "style", "carver", "category", "material", "status", "cross", "trait", "value",
-  "overview", "runestones", "measured", "color", "view", "pattern", "split", "hex"] as const;
+  "overview", "runestones", "measured", "color", "view", "pattern", "split", "hex", "places", "near", "km", "nearonly"] as const;
 type FilterKey = typeof FILTER_KEYS[number];
 type Filters = Record<FilterKey, string>;
 const EMPTY: Filters = Object.fromEntries(FILTER_KEYS.map(k => [k, ""])) as Filters;
@@ -77,15 +84,19 @@ function MapContent() {
   const pointFilters = FILTER_KEYS.slice(0, 14).some(k => f[k]);
   const view = f.view || (selected || pointFilters ? "punkter" : "monster");
   const [showFilters, setShowFilters] = useState(pointFilters);
-  const [patternData, setPatternData] = useState<{ patterns: PatternDef[]; stones: PatternStone[] } | null>(null);
+  const [patternData, setPatternData] = useState<{ patterns: PatternDef[]; placeKinds: PlaceKind[]; stones: PatternStone[] } | null>(null);
   useEffect(() => {
     if (view !== "monster" || patternData) return;
     fetch(`${API_URL}/api/research/pattern-map`)
       .then(r => (r.ok ? r.json() : Promise.reject(new Error(`Fel ${r.status}`))))
       // The values come as an array in the order of the patterns (smaller to send); here they get their keys
-      .then((d: { patterns: PatternDef[]; stones: (Omit<PatternStone, "v"> & { v: (0 | 1 | null)[] })[] }) =>
-        setPatternData({ patterns: d.patterns, stones: d.stones.map(st => ({
-          ...st, v: Object.fromEntries(d.patterns.map((x, i) => [x.key, st.v[i]])) })) }))
+      .then((d: { patterns: PatternDef[]; place_kinds?: PlaceKind[];
+                  stones: (Omit<PatternStone, "v" | "d"> & { v: (0 | 1 | null)[]; d?: (number | null)[] })[] }) => {
+        const kinds = d.place_kinds ?? [];
+        setPatternData({ patterns: d.patterns, placeKinds: kinds, stones: d.stones.map(st => ({
+          ...st, v: Object.fromEntries(d.patterns.map((x, i) => [x.key, st.v[i]])),
+          d: Object.fromEntries(kinds.map((k, i) => [k.key, st.d?.[i] ?? null])) })) });
+      })
       .catch(e => setError(e instanceof Error ? e.message : "Mönsterkartan kunde inte hämtas."));
   }, [view, patternData]);
   const patternKey = f.pattern || patternData?.patterns[0]?.key || "";
@@ -94,6 +105,37 @@ function MapContent() {
                           [patternData, patternKey]);
   const pct = (c: { n: number; k: number }) => (c.n ? `${Math.round((100 * c.k) / c.n)} %` : "–");
   const hexKm = Number(f.hex) || 20;
+
+  // Places on the map (several kinds at once) and the stones near one kind of place
+  const overlayKinds = useMemo(() => (f.places || "").split(",").filter(Boolean), [f.places]);
+  const [layers, setLayers] = useState<Record<string, PlaceLayer>>({});
+  useEffect(() => {
+    overlayKinds.filter(k => !layers[k]).forEach(k => {
+      fetch(`${API_URL}/api/research/places?kind=${encodeURIComponent(k)}`)
+        .then(r => (r.ok ? r.json() : Promise.reject(new Error(`Fel ${r.status}`))))
+        .then((d: PlaceLayer) => setLayers(x => ({ ...x, [k]: d })))
+        .catch(e => setError(e instanceof Error ? e.message : "Platserna kunde inte hämtas."));
+    });
+  }, [overlayKinds, layers]);
+  const overlays = overlayKinds.map(k => layers[k]).filter(Boolean);
+  const togglePlace = (k: string) => set("places", (overlayKinds.includes(k) ? overlayKinds.filter(x => x !== k) : [...overlayKinds, k]).join(","));
+  const nearKind = f.near;
+  const nearKm = Number(f.km) || 2;
+  const nearDef = patternData?.placeKinds.find(k => k.key === nearKind);
+  const [placeTest, setPlaceTest] = useState<{ key: string; result: PlaceTest | null } | null>(null);
+  const testKey = nearKind && patternKey ? `${patternKey}|${nearKind}|${nearKm}` : "";
+  useEffect(() => {
+    if (!testKey) return;
+    const [pt, kind, km] = testKey.split("|");
+    fetch(`${API_URL}/api/research/place-test?pattern=${encodeURIComponent(pt)}&kind=${encodeURIComponent(kind)}&km=${km}`)
+      .then(r => (r.ok ? r.json() : Promise.reject(new Error(`Fel ${r.status}`))))
+      .then(d => setPlaceTest({ key: testKey, result: d.result }))
+      .catch(() => setPlaceTest({ key: testKey, result: null }));
+  }, [testKey]);
+  const test = placeTest?.key === testKey ? placeTest.result : undefined;
+  const mapStones = useMemo(() => (patternData && nearKind && f.nearonly === "1"
+    ? nearPlace(patternData.stones, nearKind, nearKm) : patternData?.stones ?? []), [patternData, nearKind, nearKm, f.nearonly]);
+  const chipCls = (on: boolean) => `px-3 py-1.5 rounded-xl border text-xs font-bold ${on ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50"}`;
 
   useEffect(() => {
     rundata.geo()
@@ -319,11 +361,69 @@ function MapContent() {
               ))}
             </div>
             {patternDef && <p className="text-xs text-slate-600"><span className="font-semibold">{patternDef.label}:</span> {patternDef.help}</p>}
+            {patternData && patternData.placeKinds.length > 0 && (
+              <div className="border-t border-slate-900/10 pt-3 space-y-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="w-24 shrink-0 text-[11px] font-bold uppercase tracking-wider text-slate-500">Platser</span>
+                  {patternData.placeKinds.map(k => (
+                    <button key={k.key} onClick={() => togglePlace(k.key)} title={k.help} aria-pressed={overlayKinds.includes(k.key)}
+                      className={`${chipCls(overlayKinds.includes(k.key))} flex items-center gap-1.5`}>
+                      <span className="w-2.5 h-2.5 rounded-full inline-block border border-white" style={{ background: PLACE_STYLE[k.key]?.color }} />
+                      {k.label}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="w-24 shrink-0 text-[11px] font-bold uppercase tracking-wider text-slate-500">Nära en plats</span>
+                  {patternData.placeKinds.map(k => (
+                    <button key={k.key} onClick={() => set("near", nearKind === k.key ? "" : k.key)} title={k.help} className={chipCls(nearKind === k.key)}>
+                      {k.label}
+                    </button>
+                  ))}
+                  {nearKind && (
+                    <>
+                      <span className="ml-3 text-[11px] font-bold uppercase tracking-wider text-slate-500">Inom</span>
+                      {NEAR_KM.map(km => (
+                        <button key={km} onClick={() => set("km", km === 2 ? "" : String(km))} className={chipCls(nearKm === km)}>{km} km</button>
+                      ))}
+                      <label className="ml-2 flex items-center gap-1.5 text-xs font-semibold text-slate-700">
+                        <input type="checkbox" checked={f.nearonly === "1"} onChange={e => set("nearonly", e.target.checked ? "1" : "")} />
+                        Visa bara stenarna nära på kartan
+                      </label>
+                    </>
+                  )}
+                </div>
+                {nearKind && patternDef && nearDef && (
+                  <div className="rounded-xl bg-white/70 border border-slate-200 px-3 py-2 text-sm text-slate-700">
+                    {test === undefined ? <span className="text-slate-500">Räknar …</span> : test === null ? (
+                      <span className="text-slate-500">För få stenar nära den valda sortens platser för en jämförelse.</span>
+                    ) : (
+                      <>
+                        <p className="text-xs font-bold text-slate-500">
+                          <span>{patternDef.label}</span> · <span>{nearDef.label}</span> · <span>{`inom ${test.km} km`}</span>
+                        </p>
+                        <p>
+                          {`${Math.round(test.share_near * 100)} % av de ${test.n_near} stenarna nära har mönstret, mot `
+                           + `${Math.round(test.share_far * 100)} % av ${test.n_far} övriga stenar. Oddskvot `
+                           + `${test.or_mh != null ? test.or_mh.toFixed(2).replace(".", ",") : "–"} med landskapet konstant (p `
+                           + `${test.p_mh == null ? "–" : test.p_mh < 0.001 ? "< 0,001" : test.p_mh.toFixed(3).replace(".", ",")}).`}
+                        </p>
+                        <p className="text-xs text-slate-500 mt-1">
+                          Ett utforskande prov: flyttade stenar räknas inte, men tiden hålls inte konstant och mönstret prövas inte i två
+                          halvor, och den som prövar många kombinationer hittar några skillnader av en slump. Det fullständiga provet för
+                          kultnamnen finns under <a href="/statistik" className="underline">Statistik → Geografi</a>.
+                        </p>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           <div className="liquid-glass-island rounded-[24px] sm:rounded-[32px] p-1.5 sm:p-2 flex-1 min-h-[70dvh] sm:min-h-[560px] relative">
             {patternData && patternDef ? (
-              <PatternMaps stones={patternData.stones} patternKey={patternKey} label={patternDef.label} widthKm={hexKm}
-                minStones={MIN_STONES} split={!!f.split} />
+              <PatternMaps stones={mapStones} boundsFrom={patternData.stones} patternKey={patternKey} label={patternDef.label}
+                widthKm={hexKm} minStones={MIN_STONES} split={!!f.split} overlays={overlays} />
             ) : <div className="w-full h-full flex items-center justify-center text-slate-500">Hämtar mönstren …</div>}
           </div>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 px-2 text-xs text-slate-700">
@@ -332,6 +432,17 @@ function MapContent() {
               <span key={c.label} className="flex items-center gap-1.5"><span className="w-4 h-3 inline-block rounded-sm" style={{ background: c.color }} />{c.label}</span>
             ))}
             <span className="flex items-center gap-1.5"><span className="w-4 h-3 inline-block rounded-sm border border-dashed border-slate-400" style={{ background: TOO_FEW }} />Färre än {MIN_STONES} stenar</span>
+            {overlays.map(l => (
+              <span key={l.kind} className="flex items-center gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background: PLACE_STYLE[l.kind]?.color }} />
+                {l.label} ({l.points.length.toLocaleString("sv-SE")})
+              </span>
+            ))}
+            {nearKind && f.nearonly === "1" && nearDef && (
+              <span className="basis-full font-semibold text-slate-700">
+                {`Kartan visar bara de ${mapStones.length} stenarna inom ${nearKm} km från den valda sortens platser (flyttade stenar räknas inte).`}
+              </span>
+            )}
             {periods && (
               <span className="basis-full text-slate-600">
                 Hela korpusen: {pct(periods.all)} ({periods.all.k} av {periods.all.n} stenar). Bland stenar med säker stilgrupp: före ca 1050 {pct(periods.early)} ({periods.early.k} av {periods.early.n}), efter ca 1050 {pct(periods.late)} ({periods.late.k} av {periods.late.n}).

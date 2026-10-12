@@ -179,16 +179,65 @@ def _categories() -> dict:
     return carver_categories(store().inscriptions, certain_carvers)
 
 
-@lru_cache(maxsize=1)
-def _pattern_map() -> dict:
+@lru_cache(maxsize=2)
+def _pattern_map_for(_stamp: tuple) -> dict:
     from src import pattern_map
     return pattern_map.build(store().inscriptions, orthography_model().names)
 
 
+def _pattern_map() -> dict:
+    from src import places
+    return _pattern_map_for(places._mtimes())
+
+
 @router.get("/pattern-map")
 def pattern_map():
-    """Mönsterkartan: varje runstens plats, stilgruppens mittår och om den har varje mönster (src/pattern_map.py)."""
+    """Mönsterkartan: varje runstens plats, stilgruppens mittår, om den har varje mönster och avståndet till närmaste
+    plats av varje sort (src/pattern_map.py, src/places.py)."""
     return _pattern_map()
+
+
+@router.get("/places")
+def places_layer(kind: str):
+    """En sorts platser för kartan: [lat, lon, namn, uppgift] (ortnamn, medeltida kyrkor, fornlämningar)."""
+    from fastapi import HTTPException
+    from src import places
+    if kind not in places.KEYS:
+        raise HTTPException(status_code=404, detail=f"Okänd sort: {kind}")
+    label, group, help_ = next((l, g, h) for k, l, g, h in places.KINDS if k == kind)
+    pts = places.places()[kind]
+    return {"kind": kind, "label": label, "group": group, "help": help_,
+            "points": [[round(p["lat"], 5), round(p["lon"], 5), p["name"], p["info"]] for p in pts]}
+
+
+@router.get("/landscape/{signum:path}")
+def stone_landscape(signum: str):
+    """Närmaste ortnamn, medeltida kyrka och fornlämning av varje sort för en runsten, och om den är flyttad."""
+    from fastapi import HTTPException
+    from src import places
+    rec = store().get(signum)
+    if not rec:
+        raise HTTPException(status_code=404, detail=f"'{signum}' finns inte i Rundata.")
+    return places.landscape(rec)
+
+
+@router.get("/place-test")
+def place_test(pattern: str, kind: str, km: float = 2.0, moved: bool = False):
+    """Utforskande prov: andelen stenar med mönstret nära en sorts plats mot övriga, okontrollerat och med landskapet
+    konstant (Mantel–Haenszel). Flyttade stenar räknas inte om inte moved=true."""
+    from fastapi import HTTPException
+    from src import places
+    data = _pattern_map()
+    keys = [p["key"] for p in data["patterns"]]
+    kinds = [k["key"] for k in data["place_kinds"]]
+    if pattern not in keys or kind not in kinds:
+        raise HTTPException(status_code=404, detail="Okänt mönster eller okänd sorts plats.")
+    if not 0.2 <= km <= 20:
+        raise HTTPException(status_code=422, detail="Radien ska vara mellan 0,2 och 20 km.")
+    i, j = keys.index(pattern), kinds.index(kind)
+    rows = [(st["p"], st["v"][i], st["d"][j]) for st in data["stones"]
+            if st["v"][i] is not None and (moved or not st["m"])]
+    return {"pattern": pattern, "kind": kind, "moved_included": moved, "result": places.near_test(rows, km)}
 
 
 @lru_cache(maxsize=2)

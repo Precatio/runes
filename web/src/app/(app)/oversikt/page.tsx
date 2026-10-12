@@ -396,6 +396,8 @@ function StoneProfile({ signum, onClose }: { signum: string; onClose: () => void
         </div>
       </div>
 
+      <Landscape signum={p.signum} />
+
       {p.alternative && <AttributionProposal signum={p.signum} candidates={p.alternatives.map(a => a.carver)} reattribution={!!p.carver} />}
 
       <div className="flex flex-wrap gap-2 pt-1">
@@ -403,6 +405,49 @@ function StoneProfile({ signum, onClose }: { signum: string; onClose: () => void
         <Link href={`/karta?signum=${encodeURIComponent(p.signum)}`} className="px-3 py-1.5 rounded-xl border border-slate-300 bg-white text-xs font-bold hover:border-slate-900">Visa på karta</Link>
         {v.kmr_url && <a href={v.kmr_url} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 rounded-xl border border-slate-300 bg-white text-xs font-bold hover:border-slate-900">Kulturmiljöregistret</a>}
       </div>
+    </div>
+  );
+}
+
+// GET /api/research/landscape/{signum}: the nearest place of each kind (src/places.py)
+interface LandscapeRow { key: string; label: string; group: string; help: string; km: number; name: string; info: string; url: string | null }
+interface LandscapeData { signum: string; moved: boolean; placement: string | null; rows: LandscapeRow[] }
+
+/** The stone in its landscape: the nearest grave field, mound, road, cult name, central place and medieval church. */
+function Landscape({ signum }: { signum: string }) {
+  const [data, setData] = useState<LandscapeData | null>(null);
+  useEffect(() => {
+    fetch(`${API_URL}/api/research/landscape/${encodeURIComponent(signum)}`).then(r => (r.ok ? r.json() : null))
+      .then(setData).catch(() => setData(null));
+  }, [signum]);
+  if (!data || data.rows.length === 0) return null;
+  const km = (x: number) => (x < 1 ? `${Math.round(x * 1000)} m` : `${x.toFixed(1).replace(".", ",")} km`);
+  const what = (r: LandscapeRow) => r.key === "church" ? `kyrka${r.info ? `, ca ${r.info}` : ""}`
+    : r.group === "Ortnamn" ? `${r.name}${r.info ? ` (${r.info})` : ""}` : `${r.name}${r.info ? ` ${r.info}` : ""}`;
+  return (
+    <div>
+      <p className="font-bold text-slate-900 mb-1">Landskapet runt stenen</p>
+      {data.moved && (
+        <p className="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-2 py-1 mb-1.5">
+          Stenen är flyttad enligt Rundata (<span translate="no">{data.placement}</span>); avstånden gäller dess nuvarande plats.
+        </p>
+      )}
+      <table className="w-full text-xs">
+        <tbody>{data.rows.map(r => (
+          <tr key={r.key} className="border-t border-slate-900/5" title={r.help}>
+            <td className="py-1 text-slate-600 w-36">{r.label}</td>
+            <td className="py-1 font-semibold text-slate-900 w-16">{km(r.km)}</td>
+            <td className="py-1 text-slate-600">
+              {r.url ? <a href={r.url} target="_blank" rel="noopener noreferrer" className="hover:text-[#b7410e] underline decoration-dotted" translate="no">{what(r)}</a>
+                : <span translate="no">{what(r)}</span>}
+            </td>
+          </tr>
+        ))}</tbody>
+      </table>
+      <p className="text-[11px] text-slate-500 mt-1">
+        Närmaste plats av varje slag: ortnamn ur OpenStreetMap (Lantmäteriets namn), medeltida kyrkor ur Wikidata, fornlämningar
+        ur Kulturmiljöregistret. Ortnamnen är belagda långt efter vikingatiden.
+      </p>
     </div>
   );
 }

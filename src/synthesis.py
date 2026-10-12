@@ -177,8 +177,10 @@ def geography(rec: dict, carver: str, inscriptions: list[dict], home: dict) -> d
               if carver in certain_carvers(r) and r.get("lat") is not None and r["signum"] != rec["signum"]]
     nearest = min((_km(own, o) for o in others), default=None) if own else None
     in_area = province(rec) in provinces
-    if nearest is None:
-        text = "Avståndet kan inte beräknas (koordinater saknas)."
+    if own is None:
+        text = "Avståndet kan inte beräknas (stenen saknar koordinater)."
+    elif not others:
+        text = f"{carver} har inga andra säkra stenar med koordinater att jämföra med."
     else:
         text = (f"En signerad eller attribuerad sten av {carver} står på samma plats (under 1 km)." if nearest < 1 else
                 f"Närmaste signerade eller attribuerade sten av {carver} ligger {round(nearest)} km bort.")

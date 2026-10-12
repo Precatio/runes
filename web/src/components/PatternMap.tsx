@@ -2,9 +2,9 @@
 
 import "leaflet/dist/leaflet.css";
 import { useMemo } from "react";
-import { MapContainer, Polygon, TileLayer, Tooltip } from "react-leaflet";
+import { CircleMarker, MapContainer, Polygon, TileLayer, Tooltip } from "react-leaflet";
 import type { LatLngBoundsExpression } from "leaflet";
-import { colorOf, TOO_FEW, type PatternStone } from "@/lib/patternMap";
+import { colorOf, PLACE_STYLE, TOO_FEW, type PatternStone, type PlaceLayer } from "@/lib/patternMap";
 
 // An equal-area-enough projection for Sweden: kilometres east and north of a reference meridian at 62° N
 const LAT0 = 62, LON0 = 16, KX = 111.32 * Math.cos((LAT0 * Math.PI) / 180), KY = 110.57;
@@ -54,8 +54,15 @@ export function boundsOf(stones: PatternStone[]): LatLngBoundsExpression {
 }
 
 /** One map of hexagons coloured by the share of stones with the pattern; too few stones are shown grey. */
-export function HexMap({ hexes, minStones, label, title, bounds }: {
-  hexes: Hex[]; minStones: number; label: string; title?: string; bounds: LatLngBoundsExpression;
+/** A point's description in the tooltip: the place name, or the kind of monument and its number, or the church's year. */
+function placeText(layer: PlaceLayer, [, , name, info]: [number, number, string, string]) {
+  if (layer.kind === "church") return `${layer.label.replace(/kyrkor$/, "kyrka")}${info ? `, uppförd omkring ${info}` : ""}`;
+  if (["cult_a", "cult_b", "central"].includes(layer.kind)) return `${name}${info ? ` (${info})` : ""} – ${layer.label.toLowerCase()}`;
+  return `${name}${info ? ` ${info}` : ""}`;
+}
+
+export function HexMap({ hexes, minStones, label, title, bounds, overlays = [] }: {
+  hexes: Hex[]; minStones: number; label: string; title?: string; bounds: LatLngBoundsExpression; overlays?: PlaceLayer[];
 }) {
   return (
     <div className="relative w-full h-full">
@@ -64,7 +71,7 @@ export function HexMap({ hexes, minStones, label, title, bounds }: {
           {title}
         </div>
       )}
-      <MapContainer bounds={bounds} boundsOptions={{ padding: [12, 12] }} className="w-full h-full rounded-[22px]" scrollWheelZoom>
+      <MapContainer bounds={bounds} boundsOptions={{ padding: [12, 12] }} className="w-full h-full rounded-[22px]" scrollWheelZoom preferCanvas>
         {/* A grey, faded base map, so that the hexagons carry the colour */}
         <TileLayer className="pattern-basemap"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-bidragsgivare'
@@ -88,25 +95,36 @@ export function HexMap({ hexes, minStones, label, title, bounds }: {
             </Polygon>
           );
         })}
+        {overlays.map(layer => {
+          const st = PLACE_STYLE[layer.kind] ?? { color: "#111827", radius: 3 };
+          return layer.points.map((pt, i) => (
+            <CircleMarker key={`${layer.kind}-${i}`} center={[pt[0], pt[1]]} radius={st.radius}
+              pathOptions={{ color: "#ffffff", weight: st.radius > 3 ? 1.5 : 0.5, fillColor: st.color, fillOpacity: 0.95 }}>
+              <Tooltip><span className="text-xs">{placeText(layer, pt)}</span></Tooltip>
+            </CircleMarker>
+          ));
+        })}
       </MapContainer>
     </div>
   );
 }
 
-export default function PatternMaps({ stones, patternKey, label, widthKm, minStones, split }: {
+export default function PatternMaps({ stones, patternKey, label, widthKm, minStones, split, overlays = [], boundsFrom }: {
   stones: PatternStone[]; patternKey: string; label: string; widthKm: number; minStones: number; split: boolean;
+  overlays?: PlaceLayer[]; boundsFrom?: PatternStone[];
 }) {
   const early = useMemo(() => stones.filter(s => s.y !== null && s.y < 1050), [stones]);
   const late = useMemo(() => stones.filter(s => s.y !== null && s.y >= 1050), [stones]);
-  const bounds = useMemo(() => boundsOf(stones), [stones]);
+  // The view follows all stones, also when only those near a kind of place are shown
+  const bounds = useMemo(() => boundsOf(boundsFrom ?? stones), [boundsFrom, stones]);
   const all = useMemo(() => hexbin(stones, patternKey, widthKm), [stones, patternKey, widthKm]);
   const hexEarly = useMemo(() => hexbin(early, patternKey, widthKm), [early, patternKey, widthKm]);
   const hexLate = useMemo(() => hexbin(late, patternKey, widthKm), [late, patternKey, widthKm]);
-  if (!split) return <HexMap hexes={all} minStones={minStones} label={label} bounds={bounds} />;
+  if (!split) return <HexMap hexes={all} minStones={minStones} label={label} bounds={bounds} overlays={overlays} />;
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 h-full">
-      <div className="min-h-[50dvh] md:min-h-0"><HexMap hexes={hexEarly} minStones={minStones} label={label} bounds={bounds} title="Före ca 1050 (RAK–Pr2)" /></div>
-      <div className="min-h-[50dvh] md:min-h-0"><HexMap hexes={hexLate} minStones={minStones} label={label} bounds={bounds} title="Efter ca 1050 (Pr3–Pr5)" /></div>
+      <div className="min-h-[50dvh] md:min-h-0"><HexMap hexes={hexEarly} minStones={minStones} label={label} bounds={bounds} overlays={overlays} title="Före ca 1050 (RAK–Pr2)" /></div>
+      <div className="min-h-[50dvh] md:min-h-0"><HexMap hexes={hexLate} minStones={minStones} label={label} bounds={bounds} overlays={overlays} title="Efter ca 1050 (Pr3–Pr5)" /></div>
     </div>
   );
 }
