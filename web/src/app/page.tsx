@@ -306,7 +306,6 @@ export default async function LandingPage() {
           <div className="flex items-center gap-3">
             <LanguageToggle className="px-2.5 py-1 rounded-full border border-slate-300 text-[11px] font-bold tracking-wider text-slate-600 hover:border-slate-900 hover:text-slate-900" />
             <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="hidden sm:inline text-sm font-semibold text-slate-600 hover:text-slate-900">GitHub</a>
-            <LocalAppLink />
             <a href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-full bg-slate-900 text-white text-sm font-bold hover:bg-black">Ladda ner Vitki</a>
           </div>
         </div>
@@ -570,6 +569,44 @@ språk, Uppsala universitet.`}
         </div>
       </section>
 
+      {/* The founder and the licence */}
+      <section id="om" className="bg-white border-b border-slate-900/5 scroll-mt-16">
+        <div className="max-w-6xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div>
+            <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e] mb-3">Om grundaren</div>
+            <h2 className="text-2xl md:text-3xl font-serif font-bold text-slate-900 tracking-tight">Viktor Kvant</h2>
+            <p className="mt-4 text-slate-600 leading-relaxed">
+              Projektet är grundat av{" "}
+              <a href="https://www.linkedin.com/in/viktor-kvant-555180108/" target="_blank" rel="noopener noreferrer" className="font-semibold text-slate-800 hover:text-[#b7410e]">Viktor Kvant</a>.
+              Till vardags arbetar Viktor som digital analytiker, men ser dataanalys som ett övergripande yrkesfält där samma
+              analytiska metoder, AI-modeller och tekniker kan appliceras för att driva gränserna framåt även inom humaniora
+              och arkeologi.
+            </p>
+          </div>
+          <div>
+            <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e] mb-3">Licens</div>
+            <h2 className="text-2xl md:text-3xl font-serif font-bold text-slate-900 tracking-tight">GPL-3.0 med tilläggsvillkor</h2>
+            <p className="mt-4 text-slate-600 leading-relaxed">Copyright © 2026 Viktor Kvant.</p>
+            <p className="mt-3 text-slate-600 leading-relaxed">
+              Detta projekt är släppt under GNU General Public License v3.0 (GPL-3.0) med tilläggsvillkor enligt licensens § 7,
+              se <a href={`${GITHUB}/blob/main/NOTICE`} target="_blank" rel="noopener noreferrer" className="underline hover:text-[#b7410e]">NOTICE</a>.
+              Du är fri att använda, ändra och distribuera koden, förutsatt att ändringar också släpps under samma licens och att
+            </p>
+            <ul className="mt-3 space-y-2 text-slate-600 leading-relaxed list-disc pl-5">
+              <li>upphovsangivelsen <q translate="no">Bygger på Vitki, ursprungligen utvecklad av Viktor Kvant (https://github.com/Precatio/runes)</q> bevaras i källkoden och syns i användargränssnittet (§ 7 b),</li>
+              <li>ingen framställer kodbasen eller grunden för den som sitt eget verk, och ändrade versioner märks som ändrade (§ 7 c), och</li>
+              <li>en ändrad version inte ges ut under namnet Vitki, utan som <q translate="no">baserad på Vitki</q> (§ 7 e).</li>
+            </ul>
+            <p className="mt-3 text-slate-600 leading-relaxed">
+              Se <a href={`${GITHUB}/blob/main/LICENSE`} target="_blank" rel="noopener noreferrer" className="underline hover:text-[#b7410e]">LICENSE</a> för
+              licenstexten och <a href={`${GITHUB}/blob/main/NOTICE`} target="_blank" rel="noopener noreferrer" className="underline hover:text-[#b7410e]">NOTICE</a> för
+              tilläggsvillkoren. Använder du programmet i forskning, citera det enligt{" "}
+              <a href={`${GITHUB}/blob/main/CITATION.cff`} target="_blank" rel="noopener noreferrer" className="underline hover:text-[#b7410e]">CITATION.cff</a>.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section className="max-w-6xl mx-auto px-6 py-20 text-center">
         <h2 className="text-3xl font-serif font-bold">Kör Vitki på din egen dator</h2>
@@ -593,11 +630,11 @@ språk, Uppsala universitet.`}
           <div className="flex flex-wrap items-center gap-5">
             <a href={DOCS_URL} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">Dokumentation</a>
             <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">GitHub</a>
-            <LocalAppLink className="inline" />
             <span>GPL-3.0</span>
           </div>
         </div>
       </footer>
+      <LocalAppLink className="fixed bottom-4 right-4 z-50 inline shadow-lg bg-white" />
     </div>
   );
 }

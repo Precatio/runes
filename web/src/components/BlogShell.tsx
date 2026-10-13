@@ -23,7 +23,6 @@ export default function BlogShell({ children }: { children: ReactNode }) {
           </nav>
           <div className="flex items-center gap-3">
             <LanguageToggle className="px-2.5 py-1 rounded-full border border-slate-300 text-[11px] font-bold tracking-wider text-slate-600 hover:border-slate-900 hover:text-slate-900" />
-            <LocalAppLink />
             <a href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-full bg-slate-900 text-white text-sm font-bold hover:bg-black">Ladda ner Vitki</a>
           </div>
         </div>
@@ -35,11 +34,11 @@ export default function BlogShell({ children }: { children: ReactNode }) {
           <div className="flex flex-wrap items-center gap-5">
             <a href={DOCS_URL} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">Dokumentation</a>
             <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">GitHub</a>
-            <LocalAppLink className="inline" />
             <span>GPL-3.0</span>
           </div>
         </div>
       </footer>
+      <LocalAppLink className="fixed bottom-4 right-4 z-50 inline shadow-lg bg-white" />
     </div>
   );
 }
