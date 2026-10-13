@@ -13,6 +13,7 @@ rapporter hänvisar till exakt den versionen, och Zenodo arkiverar den med en pe
    - `api/config.py` (`APP_VERSION`)
    - `.zenodo.json` (`version`)
    - `CITATION.cff` (`version`, `date-released`)
+     – startsidans versionsmärke och citeringsruta läser versionen härifrån (`web/src/lib/version.ts`)
 3. Flytta posterna under "Ej släppt" i `CHANGELOG.md` till den nya versionen med datum.
 4. Kontrollera att `src/limitations.py` (kända brister) och METHODS.md stämmer med koden.
 5. Committa, märk och pusha: `git tag -a v2.1.0 -m "Vitki 2.1.0"` och `git push --tags`.

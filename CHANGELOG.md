@@ -5,6 +5,22 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Startsidan visar appen, och artiklarna lyfter fram författaren
+- **Ny sektion "Så ser Vitki ut":** skärmbilder av Mönsterkartan, Inskrifterna, Stilgrupperna, Statistiken i R,
+  Forskningsluckorna och Stenöversikten, var och en med en förklaring.
+- **Ny del om 3D-analysen:** bilder ur vår studie av Sö 113, med djupkartan, släpljus, mätpunkterna och 254 tvärsnitt.
+  Skanningen är Laila Kitzler Åhfeldts (2024), CC BY 4.0, och anges med källa. Bilderna ligger i `web/public/bilder`.
+- **Inledningen:** den är utförligare, och statistikrutan under den är borttagen.
+- **Versionsmärket och citeringsrutan:** de läser versionen ur CITATION.cff och följer därmed varje release.
+- **"Verifierbara källor":** säger nu att mönster och ristarförslag räknas fram med statistiska modeller.
+- **Sidhuvudet:** har en länk till GitHub i stället för två.
+- **Artiklarna:**
+  - Författaren står tydligt under ingressen, med länk till LinkedIn.
+  - En ruta "Om författaren" avslutar artikeln.
+  - Sökmotorerna får samma länk.
+- **Inledningscitatet:** ett citat eller en runtext i början av en artikel sätts som citat, kursivt och indraget.
+- **Bilderna i artiklarna:** de går att klicka upp i större storlek.
+
 ### Webbplatsen länkar inte in i appen
 Den publika webbplatsen har bara startsidan och artiklarna. Appen körs på den egna datorn och laddas ner från GitHub.
 - **Artiklarna:** "Se själv" visar bilder i stället för länkar in i appen. Det gäller kartverktygets vy före och efter

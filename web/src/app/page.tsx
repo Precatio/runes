@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import LanguageToggle from "@/components/LanguageToggle";
 import LocalAppLink from "@/components/LocalAppLink";
+import { VERSION } from "@/lib/version";
 import ArticleTeasers from "@/components/ArticleTeasers";
 import type { BlogPost } from "@/components/BlogBody";
 import { API_URL } from "@/lib/api";
@@ -69,12 +70,51 @@ const R_POINTS = [
   },
 ];
 
-const STATS = [
-  { value: "6 753", label: "inskrifter ur Samnordisk runtextdatabas" },
-  { value: "2 321", label: "svenska vikingatida runstenar i elva statistiska analyser i R" },
-  { value: "±0,6°", label: "vinkelfel på syntetiska stenar med kända spår" },
-  { value: "60 %", label: "rätt ristare först i ortografiskt test (slump 4 %)" },
+// The app in pictures: what each view does, for readers who will never open it (the app runs on the researcher's own
+// computer; screenshots in public/bilder, taken from the running app)
+const APP_VIEWS = [
+  {
+    src: "/bilder/app-karta.webp", title: "Mönsterkartan",
+    text: "Välj ett drag – ett kors, en bön, en stavning – och se var det är vanligt och hur det förändras. Här kristen bön före och efter omkring 1050. Kartan visar andelen stenar med draget, så att Upplands många stenar inte döljer mönstret.",
+  },
+  {
+    src: "/bilder/app-inskrifter.webp", title: "Inskrifterna",
+    text: "Alla 6 753 inskrifter i Samnordisk runtextdatabas, sökbara på text, plats, period, stilgrupp och ristare. Varje sökning kan laddas ner som tabell, med källan angiven.",
+  },
+  {
+    src: "/bilder/app-stilgrupper.webp", title: "Stilgrupperna",
+    text: "Anne-Sofie Gräslunds stilgrupper, som daterar runstenarna efter ornamentiken, och hur Rundatas stenar fördelar sig mellan dem. Det är grunden för tidslinjerna i artiklarna.",
+  },
+  {
+    src: "/bilder/app-statistik.webp", title: "Statistiken i R",
+    text: "Elva statistiska analyser i R: kluster, dialekter, datering, förändring över tid, fornlämningar och ortnamn. Varje resultat redovisar hur säkert det är och kan laddas ner som ett paket med skript och data.",
+  },
+  {
+    src: "/bilder/app-luckor.webp", title: "Forskningsluckorna",
+    text: "De mönster som klarar de statistiska proven, vart och ett med en hypotes och ett förslag på hur den kan prövas. Härifrån kommer ämnena till artiklarna.",
+  },
+  {
+    src: "/bilder/app-stenoversikt.webp", title: "Stenöversikten",
+    text: "Varje runsten vägd mot Rundatas ristare med sex metoder – statistisk modell, ortografi, område, stilgrupp, språkdrag och bergart. Var stöder metoderna attribueringen, och var finns nya förslag?",
+  },
 ];
+
+// 3D scans from our own studies: Sö 113, scanned by Laila Kitzler Åhfeldt (CC BY 4.0), measured in Vitki
+const SCANS = [
+  {
+    src: "/bilder/skanning-so113-strykljus.webp", title: "Släpljus från fyra håll",
+    text: "Så som runologer granskar en sten i fält – men i datorn, utan att vänta på rätt ljus.",
+  },
+  {
+    src: "/bilder/skanning-so113-vinklar.webp", title: "Mätpunkterna",
+    text: "Vitki lägger tvärsnitt genom spåren och mäter vinkel, djup och bredd. Färgen visar huggspårets vinkel i varje snitt.",
+  },
+  {
+    src: "/bilder/skanning-so113-profiler.webp", title: "254 tvärsnitt",
+    text: "Tvärsnitten genom runorna lagda på varandra. Den röda linjen är den typiska profilen – ristarens handlag i millimeter, som kan jämföras mellan stenar.",
+  },
+];
+const SCAN_CREDIT = "https://doi.org/10.5281/zenodo.11951255";
 
 const USE_CASES = [
   {
@@ -106,7 +146,7 @@ const USE_CASES = [
 const PRINCIPLES = [
   {
     title: "Verifierbara källor",
-    text: "Uppgifter om inskrifter hämtas ur Samnordisk runtextdatabas och anges med källa – AI:n får inte gissa signum, texter eller ristare.",
+    text: "Uppgifter om inskrifter hämtas ur Samnordisk runtextdatabas och anges med källa. Mönster och ristarförslag räknas fram med statistiska modeller ur de belagda uppgifterna – inget signum, ingen text och ingen ristare gissas fram.",
   },
   {
     title: "Prövat mot det modellen inte sett",
@@ -298,6 +338,7 @@ export default async function LandingPage() {
           <nav className="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-600">
             <a href="#artiklar" className="hover:text-slate-900">Artiklar</a>
             <a href="#forskning" className="hover:text-slate-900">För forskningen</a>
+            <a href="#appen" className="hover:text-slate-900">Appen</a>
             <a href="#nytt" className="hover:text-slate-900">Vad är nytt</a>
             <a href="#landskap" className="hover:text-slate-900">Nya källor</a>
             <a href="#kallor" className="hover:text-slate-900">Källor</a>
@@ -305,7 +346,6 @@ export default async function LandingPage() {
           </nav>
           <div className="flex items-center gap-3">
             <LanguageToggle className="px-2.5 py-1 rounded-full border border-slate-300 text-[11px] font-bold tracking-wider text-slate-600 hover:border-slate-900 hover:text-slate-900" />
-            <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="hidden sm:inline text-sm font-semibold text-slate-600 hover:text-slate-900">GitHub</a>
             <a href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-full bg-slate-900 text-white text-sm font-bold hover:bg-black">Ladda ner Vitki</a>
           </div>
         </div>
@@ -319,15 +359,21 @@ export default async function LandingPage() {
         </div>
         <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-20">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#b7410e]/30 bg-white/60 px-3 py-1 text-xs font-bold text-[#b7410e] mb-8">
-            Version 2.0 · Öppen källkod
+            Version {VERSION} · Öppen källkod
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold tracking-tight leading-[1.05] max-w-4xl hyphens-auto break-words" lang="sv">
             En öppen forskningsplattform för runinskrifter
           </h1>
-          <p className="mt-6 text-xl text-slate-600 leading-relaxed max-w-2xl">
-            Vitki samlar 3D-mätning av huggspår, Samnordisk runtextdatabas, statistiska modeller i R och en delad
-            mätkorpus i ett och samma verktyg – från skanning till artikel, med redovisad osäkerhet, statistisk
-            signifikans och verifierbara källor.
+          <p className="mt-6 text-xl text-slate-600 leading-relaxed max-w-3xl">
+            Vitki är ett öppet forskningsverktyg för runinskrifter. Det samlar Samnordisk runtextdatabas, statistiska
+            modeller i R, 3D-mätning av huggspår och en delad mätkorpus i ett och samma arbetsflöde – från skanningen och
+            sökningen till kartan, statistiken och den färdiga artikeln.
+          </p>
+          <p className="mt-4 text-lg text-slate-600 leading-relaxed max-w-3xl">
+            Med verktyget kan du följa ett drag – en bön, ett kors, en stavning – genom alla Sveriges vikingatida runstenar,
+            se var och när det förekommer, mäta hur djupt och i vilken vinkel runorna är huggna, och pröva vem som ristade
+            en sten. Varje resultat redovisas med sin osäkerhet och sin statistiska signifikans, och varje uppgift om en
+            inskrift går att spåra till sin källa. Vitki körs på din egen dator och är fritt att ladda ner.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
             <Link href="/artiklar" className="px-7 py-3.5 rounded-full bg-[#b7410e] text-white font-bold hover:bg-[#9a350b] shadow-lg shadow-[#b7410e]/20">
@@ -341,19 +387,6 @@ export default async function LandingPage() {
             </a>
           </div>
 
-          <dl className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-px bg-slate-900/10 rounded-2xl overflow-hidden border border-slate-900/10">
-            {STATS.map(s => (
-              <div key={s.label} className="bg-white/80 p-6">
-                <dt className="sr-only">{s.label}</dt>
-                <dd className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 whitespace-nowrap">{s.value}</dd>
-                <dd className="mt-1 text-sm text-slate-600 leading-snug">{s.label}</dd>
-              </div>
-            ))}
-          </dl>
-          <p className="mt-3 text-xs text-slate-500">
-            Ortografisk träffsäkerhet: lämna-en-ute-test på 135 signerade vikingatida inskrifter i Rundata, 27 ristare.
-            Vinkelfelet: syntetiska V-spår med öppningsvinkel 50–110° (METHODS.md, avsnitt 1).
-          </p>
         </div>
       </section>
 
@@ -446,7 +479,72 @@ andel <- tapply(stenar$bon,
       </section>
 
       {/* What is new */}
-      <section id="nytt" className="bg-white border-y border-slate-900/5 scroll-mt-16">
+      {/* The app in pictures, and the 3D scans */}
+      <section id="appen" className="bg-white border-y border-slate-900/5 scroll-mt-16">
+        <div className="max-w-6xl mx-auto px-6 py-24">
+          <SectionTitle
+            eyebrow="Appen"
+            title="Så ser Vitki ut"
+            intro="Vitki körs på din egen dator. Här är några av vyerna – och vad de gör."
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-14">
+            {APP_VIEWS.map(v => (
+              <figure key={v.src}>
+                <a href={v.src} target="_blank" rel="noopener noreferrer" className="block rounded-2xl overflow-hidden border border-slate-900/10 shadow-lg shadow-slate-900/5 hover:shadow-xl transition-shadow bg-[#eef0f3]">
+                  <img src={v.src} alt={`Skärmbild från Vitki: ${v.title.toLowerCase()}`} loading="lazy" width={1600} height={1000} className="w-full h-auto" />
+                </a>
+                <figcaption className="mt-4">
+                  <h3 className="text-lg font-bold">{v.title}</h3>
+                  <p className="mt-1.5 text-slate-600 leading-relaxed">{v.text}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+
+          <div className="mt-24">
+            <div className="max-w-3xl mb-10">
+              <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e] mb-3">3D-analys</div>
+              <h3 className="text-2xl md:text-3xl font-serif font-bold text-slate-900 tracking-tight">Runorna i millimeter</h3>
+              <p className="mt-4 text-lg text-slate-600 leading-relaxed">
+                Vitki mäter huggspåren i 3D-skanningar av runstenar. Exemplen kommer från Sö 113 i Södermanland, som vi har
+                analyserat i en av våra studier.
+              </p>
+            </div>
+            <figure>
+              <a href="/bilder/skanning-so113-djupkarta.webp" target="_blank" rel="noopener noreferrer" className="block rounded-2xl overflow-hidden border border-slate-900/10 bg-white">
+                <img src="/bilder/skanning-so113-djupkarta.webp" alt="Djupkarta över runstenen Sö 113: runorna framträder i rött och violett mot den ljusa stenytan" loading="lazy" width={1393} height={769} className="w-full h-auto" />
+              </a>
+              <figcaption className="mt-4 max-w-3xl">
+                <h4 className="text-lg font-bold">Djupkartan</h4>
+                <p className="mt-1.5 text-slate-600 leading-relaxed">
+                  Varje punkt på stenen färgad efter hur djupt den ligger under stenytan, från ljust vid ytan till mörkt fem
+                  millimeter ner. Runorna träder fram som en värmekarta – också där de är svåra att se med blotta ögat.
+                </p>
+              </figcaption>
+            </figure>
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+              {SCANS.map(sc => (
+                <figure key={sc.src}>
+                  <a href={sc.src} target="_blank" rel="noopener noreferrer" className="block rounded-xl overflow-hidden border border-slate-900/10 bg-white">
+                    <img src={sc.src} alt={`Sö 113: ${sc.title.toLowerCase()}`} loading="lazy" className="w-full h-auto" />
+                  </a>
+                  <figcaption className="mt-3">
+                    <h4 className="font-bold">{sc.title}</h4>
+                    <p className="mt-1 text-sm text-slate-600 leading-relaxed">{sc.text}</p>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+            <p className="mt-10 text-xs text-slate-500 leading-relaxed">
+              3D-skanning av Sö 113: Laila Kitzler Åhfeldt (2024), <em>3D-data Runstenar i Södermanland</em>, Zenodo,{" "}
+              <a href={SCAN_CREDIT} target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-900">doi:10.5281/zenodo.11951255</a>,
+              CC BY 4.0. Bearbetning och mätning: Vitki.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="nytt" className="scroll-mt-16">
         <div className="max-w-6xl mx-auto px-6 py-24">
           <SectionTitle
             eyebrow="Vad är nytt"
@@ -472,7 +570,7 @@ andel <- tapply(stenar$bon,
       </section>
 
       {/* New sources: the stones in their landscape */}
-      <section id="landskap" className="scroll-mt-16">
+      <section id="landskap" className="bg-white border-y border-slate-900/5 scroll-mt-16">
         <div className="max-w-6xl mx-auto px-6 py-24">
           <SectionTitle
             eyebrow="Nya källor"
@@ -492,7 +590,7 @@ andel <- tapply(stenar$bon,
       </section>
 
       {/* Sources */}
-      <section id="kallor" className="bg-white border-y border-slate-900/5 scroll-mt-16">
+      <section id="kallor" className="scroll-mt-16">
         <div className="max-w-6xl mx-auto px-6 py-24">
           <SectionTitle
             eyebrow="Källor"
@@ -559,7 +657,7 @@ andel <- tapply(stenar$bon,
               <pre className="mt-3 whitespace-pre-wrap rounded-xl bg-black/30 border border-white/10 p-4 text-sm text-slate-200 font-mono">
 {`Kvant, V. (2026). Vitki:
 öppen plattform för analys av runinskrifter
-(version 2.0.0). https://vitkirunor.se
+(version ${VERSION}). https://vitkirunor.se
 
 Samnordisk runtextdatabas. Institutionen för nordiska
 språk, Uppsala universitet.`}

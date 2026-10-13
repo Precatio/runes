@@ -2,7 +2,7 @@
 // data (schema.org BlogPosting and BreadcrumbList) and a check of the post before it is published. Nothing has to be
 // filled in by hand – a new post gets it all when it is published.
 import { API_URL } from "@/lib/api";
-import { isPublicPath, SITE_NAME, SITE_URL } from "@/lib/site";
+import { authorOf, isPublicPath, SITE_NAME, SITE_URL } from "@/lib/site";
 import type { BlogPost } from "@/components/BlogBody";
 
 export const BLOG_TITLE = "Artiklar – mönster i runstenarna";
@@ -75,7 +75,8 @@ export function articleJsonLd(post: BlogPost) {
       mainEntityOfPage: { "@type": "WebPage", "@id": url },
       datePublished: published,
       dateModified: post.updatedAt ?? published,
-      author: { "@type": "Person", name: post.author || "Viktor Kvant" },
+      author: { "@type": "Person", name: post.author || "Viktor Kvant",
+                ...(authorOf(post.author) ? { url: authorOf(post.author)!.url, sameAs: [authorOf(post.author)!.url], jobTitle: authorOf(post.author)!.role } : {}) },
       publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL, logo: { "@type": "ImageObject", url: `${SITE_URL}/vitki_logo.png` } },
       image: [`${url}/opengraph-image`, ...pictures(body).map(p => p.src)].slice(0, 5),
       inLanguage: "sv-SE",

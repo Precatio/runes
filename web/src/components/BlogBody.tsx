@@ -1,5 +1,6 @@
 import { Fragment, type ReactNode } from "react";
 import { API_URL } from "@/lib/api";
+import ZoomImage from "@/components/ZoomImage";
 import { isPublicPath } from "@/lib/site";
 
 // A blog post (GET /api/blog/posts, api/routers/blog.py). The English fields are optional; without them the Swedish
@@ -92,11 +93,20 @@ const safeSrc = (src: string) => {
 };
 
 /** Paragraphs, "## " and "### " headings, "- " lists, "> " quotes and pictures, separated by blank lines. */
-function Blocks({ text }: { text: string }) {
+function Blocks({ text, opening = false }: { text: string; opening?: boolean }) {
   const blocks = text.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
   return (
     <>
       {blocks.map((b, i) => {
+        // The article's opening quotation – an inscription or a quote in italics – set off as a quotation, indented
+        const quote = /^\*([^*][^]*?)\*$/.exec(b);
+        if (opening && i === 0 && quote && !quote[1].includes("*")) {
+          return (
+            <blockquote key={i} className="ml-4 sm:ml-8 border-l-4 border-[#b7410e] pl-5 sm:pl-6 py-1 font-serif text-xl italic leading-relaxed text-slate-800">
+              {quote[1].split("\n").map((l, j) => <Fragment key={j}>{j > 0 && <br />}{inline(l)}</Fragment>)}
+            </blockquote>
+          );
+        }
         if (b.startsWith("### ")) return <h3 key={i} className="pt-2 text-lg font-bold text-slate-900">{inline(b.slice(4))}</h3>;
         if (b.startsWith("## ")) return <h2 key={i} className="pt-4 text-2xl font-serif font-bold text-slate-900">{inline(b.slice(3))}</h2>;
         const lines = b.split("\n");
@@ -123,8 +133,7 @@ function Picture({ alt, src, caption }: { alt: string; src: string; caption: str
   if (!ok) return null;
   return (
     <figure className="my-2">
-      {/* eslint-disable-next-line @next/next/no-img-element -- Commons thumbnails of varying size, credited below */}
-      <img src={ok} alt={alt} loading="lazy" className="w-full max-h-[520px] object-contain rounded-xl bg-slate-100" />
+      <ZoomImage src={ok} alt={alt} className="w-full max-h-[520px] object-contain rounded-xl bg-slate-100" />
       {caption && <figcaption className="mt-2 text-sm leading-snug text-slate-500">{inline(caption)}</figcaption>}
     </figure>
   );
@@ -198,7 +207,10 @@ export default function BlogBody({ text }: { text: string }) {
   const parts: ReactNode[] = [];
   const lines = text.replace(/\r\n/g, "\n").split("\n");
   let buf: string[] = [];
-  const flush = () => { if (buf.join("").trim()) parts.push(<Blocks key={parts.length} text={buf.join("\n")} />); buf = []; };
+  const flush = () => {
+    if (buf.join("").trim()) parts.push(<Blocks key={parts.length} text={buf.join("\n")} opening={parts.length === 0} />);
+    buf = [];
+  };
   for (let i = 0; i < lines.length; i++) {
     const open = /^:::(box|chart)\s*(.*)$/.exec(lines[i].trim());
     if (!open) { buf.push(lines[i]); continue; }
