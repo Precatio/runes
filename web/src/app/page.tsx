@@ -361,7 +361,7 @@ export default async function LandingPage() {
           <p className="mt-6 text-xl text-slate-600 leading-relaxed max-w-3xl">
             Vitki är ett öppet forskningsverktyg för runinskrifter. Det samlar Samnordisk runtextdatabas, statistiska
             modeller i R, 3D-mätning av huggspår och en delad mätkorpus i ett och samma arbetsflöde – från skanningen och
-            sökningen till kartan, statistiken och den färdiga artikeln.
+            sökningen till kartan och statistiken.
           </p>
           <p className="mt-4 text-lg text-slate-600 leading-relaxed max-w-3xl">
             Med verktyget kan du följa ett drag – en bön, ett kors, en stavning – genom alla Sveriges vikingatida runstenar,
