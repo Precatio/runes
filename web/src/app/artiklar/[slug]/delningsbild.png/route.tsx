@@ -1,25 +1,21 @@
+/* eslint-disable @next/next/no-img-element -- ImageResponse draws <img> into the picture itself */
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
-import type { BlogPost } from "@/components/BlogBody";
-import { API_URL } from "@/lib/api";
+import { getPost, postSlugs } from "@/lib/articles";
 import { postDate } from "@/components/BlogBody";
 import { pictures } from "@/lib/blogSeo";
 
-// The picture shown when a post is shared (Open Graph and Twitter/X): its title, month and first photo, made
-// automatically for every post
-export const alt = "Artiklar – Vitki";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+// The picture shown when an article is shared (Open Graph and Twitter/X): its title, date and first photo, made
+// automatically for every article, at /artiklar/…/delningsbild.png – a file with its extension, which also the static
+// public website serves as a picture
+const size = { width: 1200, height: 630 };
 export const revalidate = 3600;
+export const generateStaticParams = postSlugs;
 
-export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
+export async function GET(_req: Request, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  let post: BlogPost | null = null;
-  try {
-    const r = await fetch(`${API_URL}/api/blog/posts/${encodeURIComponent(decodeURIComponent(slug))}`, { next: { revalidate: 3600, tags: ["blog"] } });
-    post = r.ok ? (await r.json()).post : null;
-  } catch { /* the picture without the post */ }
+  const post = await getPost(decodeURIComponent(slug));
   const logo = `data:image/png;base64,${(await readFile(join(process.cwd(), "public", "vitki_logo.png"))).toString("base64")}`;
   const title = post?.title ?? "Artiklar";
   const pic = post ? pictures(post.body ?? "").find(p => /wikimedia\.org/.test(p.src)) : undefined;

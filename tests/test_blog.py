@@ -1,5 +1,7 @@
 """Artiklarna (api/routers/blog.py): utkastet ur mönstren, publiceringstiden och de nya mönstren om strand och lämningar."""
 import datetime as dt
+import json
+import os
 import re
 
 from api.routers import blog
@@ -311,3 +313,26 @@ def test_statistics_are_explained_in_plain_words():
     assert "Morans I, är 0,20, där 0 betyder ingen samling alls" in b
     cav = b[b.index("## Förbehåll"):b.index("## Se själv")]
     assert "simuleringar" not in cav and "Ett kluster är en plats att titta på." in cav
+
+
+def test_the_website_gets_only_live_articles_and_their_figures(tmp_path, monkeypatch):
+    from src import blog_figures, site_export
+    monkeypatch.setattr(site_export, "CONTENT", str(tmp_path / "content" / "articles.json"))
+    monkeypatch.setattr(site_export, "FIGURES", str(tmp_path / "figurer"))
+    monkeypatch.setattr(blog_figures, "DIR", str(tmp_path / "frozen"))
+    url = blog_figures.freeze(b"\x89PNG figure")
+    name = url.rsplit("/", 1)[1]
+    (tmp_path / "figurer").mkdir()
+    (tmp_path / "figurer" / "0123456789abcdef.png").write_bytes(b"old")  # no article uses it any more
+    posts = [
+        {"id": "a", "slug": "live", "title": "A", "published": True, "publishedAt": "2026-10-12T10:00:00+00:00",
+         "body": f"![Figur]({url})\nText.", "by": "uid", "snapshot": {"x": 1}},
+        {"id": "b", "slug": "later", "title": "B", "published": True, "publishedAt": "2099-01-01T00:00:00+00:00"},
+        {"id": "c", "slug": "draft", "title": "C", "published": False},
+    ]
+    out = site_export.export(posts, "2026-10-13T12:00:00+00:00")
+    data = json.loads((tmp_path / "content" / "articles.json").read_text())
+    assert [p["slug"] for p in data["posts"]] == ["live"]  # a scheduled article stays out of the public repository
+    assert "by" not in data["posts"][0] and "snapshot" not in data["posts"][0]
+    assert out == {"articles": 1, "figures": 1, "missing_figures": []}
+    assert sorted(os.listdir(tmp_path / "figurer")) == [name]

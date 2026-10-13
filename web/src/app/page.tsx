@@ -6,7 +6,7 @@ import LocalAppLink from "@/components/LocalAppLink";
 import { VERSION } from "@/lib/version";
 import ArticleTeasers from "@/components/ArticleTeasers";
 import type { BlogPost } from "@/components/BlogBody";
-import { API_URL } from "@/lib/api";
+import { getPost, listPosts } from "@/lib/articles";
 import { pictures } from "@/lib/blogSeo";
 import { DOCS_URL, DOWNLOAD_URL, GITHUB_URL, METHODS_URL, SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
 
@@ -14,16 +14,10 @@ import { DOCS_URL, DOWNLOAD_URL, GITHUB_URL, METHODS_URL, SITE_DESCRIPTION, SITE
 export const revalidate = 60;
 
 async function latestArticles(): Promise<{ posts: BlogPost[]; photo: { src: string; alt: string; credit: string | null } | null }> {
-  try {
-    const r = await fetch(`${API_URL}/api/blog/posts`, { next: { revalidate: 60, tags: ["blog"] } });
-    const posts: BlogPost[] = r.ok ? (await r.json()).posts : [];
-    if (!posts.length) return { posts, photo: null };
-    const one = await fetch(`${API_URL}/api/blog/posts/${encodeURIComponent(posts[0].slug)}`, { next: { revalidate: 60, tags: ["blog"] } });
-    const body: string = one.ok ? (await one.json()).post.body ?? "" : "";
-    return { posts, photo: pictures(body).find(p => /wikimedia\.org/.test(p.src)) ?? null };
-  } catch {
-    return { posts: [], photo: null };
-  }
+  const { posts } = await listPosts();
+  if (!posts.length) return { posts, photo: null };
+  const body = (await getPost(posts[0].slug))?.body ?? "";
+  return { posts, photo: pictures(body).find(p => /wikimedia\.org/.test(p.src)) ?? null };
 }
 
 export const metadata: Metadata = {

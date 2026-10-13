@@ -2,23 +2,16 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BlogShell from "@/components/BlogShell";
 import BlogArticle from "@/components/BlogArticle";
-import type { BlogPost } from "@/components/BlogBody";
-import { API_URL } from "@/lib/api";
-import { articleJsonLd, keywords, metaDescription, pictures, postPath } from "@/lib/blogSeo";
+import { getPost, postSlugs } from "@/lib/articles";
+import { articleJsonLd, keywords, metaDescription, pictures, postPath, SHARE_SIZE, sharePath } from "@/lib/blogSeo";
 
 // A published post, rendered on the server with its metadata and structured data (lib/blogSeo.ts), so that every new
 // post is described for search engines and social media as soon as it is published. Fetched again at most every five
 // minutes, so that an edit shows without a new build.
 export const revalidate = 60;
 
-async function getPost(slug: string): Promise<BlogPost | null> {
-  try {
-    const r = await fetch(`${API_URL}/api/blog/posts/${encodeURIComponent(slug)}`, { next: { revalidate: 60, tags: ["blog"] } });
-    return r.ok ? (await r.json()).post : null;
-  } catch {
-    return null;
-  }
-}
+// Every published article is built ahead; on the public website there are no others
+export const generateStaticParams = postSlugs;
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -37,8 +30,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       type: "article", url: path, title: post.title, description, siteName: "Vitki", locale: "sv_SE",
       publishedTime: post.publishedAt ?? undefined, modifiedTime: post.updatedAt ?? post.publishedAt ?? undefined,
       authors: [post.author || "Viktor Kvant"], section: "Artiklar", tags: keywords(post),
+      images: [{ url: sharePath(post.slug), ...SHARE_SIZE, alt: post.title }],
     },
-    twitter: { card: "summary_large_image", title: post.title, description },
+    twitter: { card: "summary_large_image", title: post.title, description, images: [sharePath(post.slug)] },
     robots: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
     other: photo ? { "article:image": photo.src } : undefined,
   };

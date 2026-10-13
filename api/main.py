@@ -41,6 +41,17 @@ def _warm_caches():
     if os.environ.get("WARM_CACHES", "1") != "0":
         threading.Thread(target=warm, daemon=True).start()
 
+    # The public website: publish an article whose scheduled time came while the app was off, and plan the next one
+    def site():
+        try:
+            from api.routers import blog
+            from src import site_export
+            site_export.catch_up(blog._all())
+        except Exception as e:  # Firestore unreachable: the next save plans it
+            from api.errors import logger
+            logger.warning("Webbplatsens schemaläggning: %r", e)
+    threading.Thread(target=site, daemon=True).start()
+
 # Configure CORS for Next.js frontend (comma-separated list in CORS_ORIGINS)
 CORS_ORIGINS = [o.strip() for o in os.environ.get("CORS_ORIGINS", "http://localhost:3000").split(",") if o.strip()]
 

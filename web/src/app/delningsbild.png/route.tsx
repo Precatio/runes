@@ -1,13 +1,14 @@
+/* eslint-disable @next/next/no-img-element -- ImageResponse draws <img> into the picture itself */
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
-// The picture shown when a link to Vitki is shared (Open Graph, also used for Twitter/X and LinkedIn)
-export const alt = "Vitki – öppen forskningsplattform för runstenar och runinskrifter";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+// The picture shown when a link to Vitki is shared (Open Graph, also used for Twitter/X and LinkedIn), at
+// /delningsbild.png – a file with its extension, which also the static public website serves as a picture
+export const dynamic = "force-static";
+const size = { width: 1200, height: 630 };
 
-export default async function Image() {
+export async function GET() {
   const logo = `data:image/png;base64,${(await readFile(join(process.cwd(), "public", "vitki_logo.png"))).toString("base64")}`;
   return new ImageResponse(
     (

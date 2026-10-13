@@ -199,6 +199,18 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
   };
 
   const ready = draft.title.trim() && draft.slug.trim() && (draft.body ?? "").trim();
+  // The public website: export the published articles and push them; GitHub builds the site (src/site_export.py)
+  const publishSite = async () => {
+    setBusy("site"); setError(null); setNote(null);
+    try {
+      const d = await call("/api/admin/site/publish", { method: "POST" });
+      setNote(`${d.note} ${d.articles} artiklar, ${d.figures} figurer.${d.missing_figures?.length ? ` Saknade figurer: ${d.missing_figures.join(", ")}.` : ""}`);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Webbplatsen kunde inte publiceras.");
+    } finally {
+      setBusy(null);
+    }
+  };
   return (
     <section className="liquid-glass-island rounded-[24px] p-4 sm:p-6 space-y-4">
       <div className="flex flex-wrap items-center gap-3 justify-between">
@@ -412,6 +424,18 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
           className="px-4 py-2 rounded-xl border border-[#b7410e] text-[#b7410e] bg-white text-sm font-bold disabled:opacity-40">
           {busy === "schedule" ? "Schemalägger …" : isFuture(fromLocal(publishAt))
             ? <>Schemalägg till {dateLabel(fromLocal(publishAt), "sv", true)}</> : "Schemalägg"}
+        </button>
+      </div>
+
+      <div className="rounded-xl border border-slate-900/10 bg-white/70 p-3 flex flex-wrap items-center gap-3 justify-between">
+        <p className="text-sm text-slate-600 max-w-2xl">
+          <strong className="text-slate-900">Webbplatsen vitkirunor.se</strong> byggs av GitHub från de publicerade artiklarna.
+          Den uppdateras av sig själv en halv minut efter att du har publicerat, ändrat eller tagit bort en artikel, och när
+          en schemalagd artikels tid kommer – så länge appen är igång (annars när den startar). GitHub bygger om på några
+          minuter. Knappen publicerar direkt.
+        </p>
+        <button onClick={publishSite} disabled={busy === "site"} className="px-4 py-2 rounded-xl bg-slate-900 text-white text-sm font-bold disabled:opacity-40">
+          {busy === "site" ? "Publicerar …" : "Publicera webbplatsen"}
         </button>
       </div>
 

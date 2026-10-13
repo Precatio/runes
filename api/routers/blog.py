@@ -166,6 +166,11 @@ def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
         raise server_error(e, "Artikeln kunde inte sparas.", status_code=503)
     if announce and indexnow(req.slug):
         ref.set({"announced": True}, merge=True)
+    # The public website: published or changed articles go out within half a minute, scheduled ones at their time
+    from src import site_export
+    if req.published or old.get("published"):
+        site_export.publish_soon()
+    site_export.schedule(_all())
     return {"post": {"id": ref.id, **_iso({k: v for k, v in data.items() if k != "snapshot"})}}
 
 
@@ -206,11 +211,17 @@ def indexnow(slug: str) -> bool:
 
 @router.delete("/admin/blog/posts/{post_id}")
 def delete_post(post_id: str, _: dict = Depends(require_admin)):
+    from src import site_export
     try:
-        firestore().collection(COLLECTION).document(post_id).delete()
+        ref = firestore().collection(COLLECTION).document(post_id)
+        was_published = bool((ref.get().to_dict() or {}).get("published"))
+        ref.delete()
         _forget()
     except Exception as e:
         raise server_error(e, "Inlägget kunde inte tas bort.", status_code=503)
+    if was_published:
+        site_export.publish_soon()
+    site_export.schedule(_all())
     return {"id": post_id, "deleted": True}
 
 
@@ -631,3 +642,15 @@ def images(req: ImagesRequest, _: dict = Depends(require_admin)):
         raise server_error(e, "Bilderna kunde inte hämtas från Wikimedia Commons.", status_code=503)
     have = {i["signum"] for i in found}
     return {"images": found, "missing": [s for s in signa if s not in have]}
+
+
+@router.post("/admin/site/publish")
+def publish_site(_: dict = Depends(require_admin)):
+    """Publicerar webbplatsen vitkirunor.se: exporterar de publicerade artiklarna (också schemalagda) och deras figurer
+    och pushar dem till GitHub, som bygger om webbplatsen på några minuter (src/site_export.py)."""
+    from src import site_export
+    try:
+        out = site_export.publish_now()
+    except Exception as e:  # noqa: BLE001 - git or the disk
+        raise server_error(e, "Webbplatsen kunde inte publiceras.", status_code=503)
+    return out

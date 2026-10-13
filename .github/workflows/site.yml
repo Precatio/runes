@@ -1,0 +1,60 @@
+# The public website vitkirunor.se on GitHub Pages: the start page and the articles, built as static files. The app
+# itself runs on the researcher's own computer and is not part of the website, so its pages are left out of the build.
+# The articles come from web/content/articles.json and web/public/figurer/: the articles that have gone live, exported
+# and pushed by the local app when an article is published or changed, or when a scheduled article's time comes
+# (src/site_export.py).
+name: Webbplatsen
+
+on:
+  push:
+    branches: [main]
+    paths: ["web/**", "CITATION.cff", ".github/workflows/site.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Installera
+        run: npm ci
+        working-directory: web
+      - name: Bara startsidan och artiklarna
+        run: rm -rf "web/src/app/(app)" web/src/app/api web/src/app/indexnow-key.txt
+      - name: Bygg
+        run: npx next build
+        working-directory: web
+        env:
+          NEXT_PUBLIC_SITE_MODE: public
+          NEXT_PUBLIC_SITE_URL: https://vitkirunor.se
+          NEXT_TELEMETRY_DISABLED: "1"
+      - name: Delningsbilderna som .png
+        run: node scripts/site_postbuild.mjs out
+        working-directory: web
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web/out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

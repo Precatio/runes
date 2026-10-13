@@ -5,6 +5,23 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Den publika webbplatsen på GitHub Pages
+- vitkirunor.se byggs av GitHub (`.github/workflows/site.yml`) som en statisk webbplats med startsidan och artiklarna.
+  Appens sidor ingår inte, eftersom appen körs på den egna datorn.
+- **Artiklarna:**
+  - De artiklar som har gått live exporteras med sina figurer till `web/content/articles.json` och
+    `web/public/figurer/` (`src/site_export.py`).
+  - Schemalagda artiklar läggs aldrig i det publika repot i förväg.
+- **Automatisk uppdatering från den lokala appen:**
+  - En halv minut efter att en artikel har publicerats, ändrats eller tagits bort.
+  - När en schemalagd artikels tid kommer, och om appen var avstängd då, när den startar nästa gång.
+  - Knappen "Publicera webbplatsen" i Admin publicerar direkt. `SITE_PUBLISH=0` stänger av den automatiska uppdateringen.
+- **Gemensam artikelkälla för sidorna (`web/src/lib/articles.ts`):** den lokala appen läser från analysmotorn, och
+  webbplatsen läser från den exporterade filen.
+- **Delningsbilderna:** de heter `delningsbild.png`, med filändelse, så att också den statiska webbplatsen visar dem
+  när en länk delas.
+- **Lokalt provbygge:** `scripts/build_site.sh` bygger webbplatsen i en egen kopia utan att röra den körande appen.
+
 ### Startsidan visar appen, och artiklarna lyfter fram författaren
 - **Ny sektion "Så ser Vitki ut":** skärmbilder av Mönsterkartan, Inskrifterna, Stilgrupperna, Statistiken i R,
   Forskningsluckorna och Stenöversikten, var och en med en förklaring.

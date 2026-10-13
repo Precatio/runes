@@ -19,8 +19,9 @@ export const metadata: Metadata = {
   creator: "Viktor Kvant",
   category: "research",
   openGraph: { type: "website", locale: "sv_SE", siteName: SITE_NAME, url: "/", title: "Vitki – runstenar och runinskrifter",
+               images: [{ url: "/delningsbild.png", width: 1200, height: 630, alt: "Vitki – öppen forskningsplattform för runstenar och runinskrifter" }],
                description: SITE_DESCRIPTION },
-  twitter: { card: "summary_large_image", title: "Vitki – runstenar och runinskrifter", description: SITE_DESCRIPTION },
+  twitter: { card: "summary_large_image", title: "Vitki – runstenar och runinskrifter", description: SITE_DESCRIPTION, images: ["/delningsbild.png"] },
   robots: { index: true, follow: true },
 };
 

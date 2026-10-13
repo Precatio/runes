@@ -1,7 +1,7 @@
 import { Fragment, type ReactNode } from "react";
 import { API_URL } from "@/lib/api";
 import ZoomImage from "@/components/ZoomImage";
-import { isPublicPath } from "@/lib/site";
+import { isPublicPath, PUBLIC_SITE } from "@/lib/site";
 
 // A blog post (GET /api/blog/posts, api/routers/blog.py). The English fields are optional; without them the Swedish
 // text is shown also in English
@@ -88,7 +88,7 @@ function inline(text: string): ReactNode[] {
 // Pictures only from Wikimedia Commons (the stone photos the editor collects, with their licence), the blog's own copies
 // of the R analyses' figures (served by the analysis engine, /api/blog/figures/) or the site itself
 const safeSrc = (src: string) => {
-  if (/^\/api\/blog\/figures\/[0-9a-f]{16}\.png$/.test(src)) return `${API_URL}${src}`;
+  if (/^\/api\/blog\/figures\/[0-9a-f]{16}\.png$/.test(src)) return PUBLIC_SITE ? src.replace("/api/blog/figures/", "/figurer/") : `${API_URL}${src}`;
   return /^(https:\/\/(upload|thumb)\.wikimedia\.org\/|\/(?!\/|api\/))/.test(src) ? src : null;
 };
 

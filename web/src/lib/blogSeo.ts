@@ -2,7 +2,7 @@
 // data (schema.org BlogPosting and BreadcrumbList) and a check of the post before it is published. Nothing has to be
 // filled in by hand – a new post gets it all when it is published.
 import { API_URL } from "@/lib/api";
-import { authorOf, isPublicPath, SITE_NAME, SITE_URL } from "@/lib/site";
+import { authorOf, isPublicPath, PUBLIC_SITE, SITE_NAME, SITE_URL } from "@/lib/site";
 import type { BlogPost } from "@/components/BlogBody";
 
 export const BLOG_TITLE = "Artiklar – mönster i runstenarna";
@@ -12,11 +12,18 @@ const BASE_KEYWORDS = ["runstenar", "runinskrifter", "runforskning", "runologi",
   "Samnordisk runtextdatabas", "artiklar om runstenar"];
 const SIGNUM = /\b(?:U|Sö|Ög|Vg|Sm|Öl|Gs|Hs|Hä|Vs|Nä|DR|N|G)\s\d{1,4}[A-Z]?\b/g;
 
-export const postPath = (slug: string) => `/artiklar/${encodeURIComponent(slug)}`;
+// On the public website (GitHub Pages) every address ends with a slash (next.config.ts)
+const SLASH = PUBLIC_SITE ? "/" : "";
+export const ARTICLES_PATH = `/artiklar${SLASH}`;
+export const postPath = (slug: string) => `/artiklar/${encodeURIComponent(slug)}${SLASH}`;
 export const postUrl = (slug: string) => `${SITE_URL}${postPath(slug)}`;
+/** The article's share picture (app/artiklar/[slug]/delningsbild.png). */
+export const sharePath = (slug: string) => `/artiklar/${encodeURIComponent(slug)}/delningsbild.png`;
+export const SHARE_SIZE = { width: 1200, height: 630 };
 
 /** A picture's address as a search engine or another site can fetch it. */
 export function absolute(src: string) {
+  if (src.startsWith("/api/blog/figures/") && PUBLIC_SITE) return `${SITE_URL}${src.replace("/api/blog/figures/", "/figurer/")}`;
   if (src.startsWith("/api/")) return `${API_URL}${src}`;
   if (src.startsWith("/")) return `${SITE_URL}${src}`;
   return src;
@@ -78,7 +85,7 @@ export function articleJsonLd(post: BlogPost) {
       author: { "@type": "Person", name: post.author || "Viktor Kvant",
                 ...(authorOf(post.author) ? { url: authorOf(post.author)!.url, sameAs: [authorOf(post.author)!.url], jobTitle: authorOf(post.author)!.role } : {}) },
       publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL, logo: { "@type": "ImageObject", url: `${SITE_URL}/vitki_logo.png` } },
-      image: [`${url}/opengraph-image`, ...pictures(body).map(p => p.src)].slice(0, 5),
+      image: [`${SITE_URL}${sharePath(post.slug)}`, ...pictures(body).map(p => absolute(p.src))].slice(0, 5),
       inLanguage: "sv-SE",
       articleSection: "Artiklar",
       keywords: keywords(post).join(", "),
