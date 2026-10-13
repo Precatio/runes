@@ -396,7 +396,7 @@ export default async function LandingPage() {
         <div className="max-w-6xl mx-auto px-6 py-20">
           <SectionTitle
             eyebrow="Artiklar"
-            title="Det runstenarna berättar när man räknar på dem"
+            title="Runstenarnas dolda mönster"
             intro="Mönster som syns först när man ser alla Sveriges vikingatida runstenar på en gång – vad vi ser, vad det kan betyda och hur det kan prövas."
           />
           <ArticleTeasers posts={articles.posts} photo={articles.photo} />
