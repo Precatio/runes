@@ -95,3 +95,24 @@ def test_crosscheck_does_not_repeat_reasons():
         out = crosscheck.apply(finding, cc)
     assert out["reasons"]["nyhet"] == ["Axelson (1993) attribuerade inte stenen", "Runor 2020 anger ingen ristare."]
     assert finding["reasons"]["nyhet"] == ["Axelson (1993) attribuerade inte stenen"]
+
+
+def test_github_stats_merge_days_and_token_from_env_file(tmp_path, monkeypatch):
+    from src import github_stats as gs
+    h = gs.merge({"days": {"2026-10-01": {"clones": 1, "clones_uniques": 1}}},
+                 {"clones": [{"timestamp": "2026-10-01T00:00:00Z", "count": 3, "uniques": 2},
+                             {"timestamp": "2026-10-02T00:00:00Z", "count": 5, "uniques": 4}]},
+                 {"views": [{"timestamp": "2026-10-02T00:00:00Z", "count": 9, "uniques": 6}]})
+    assert h["days"]["2026-10-01"] == {"clones": 3, "clones_uniques": 2}          # the newest numbers for the day
+    assert h["days"]["2026-10-02"] == {"clones": 5, "clones_uniques": 4, "views": 9, "views_uniques": 6}
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    monkeypatch.setattr(gs, "ROOT", str(tmp_path))
+    assert gs.token() == ""
+    (tmp_path / ".env").write_text('ADMIN_UIDS=x\nGITHUB_TOKEN="github_pat_abc123"\n')
+    assert gs.token() == "github_pat_abc123"
+
+
+def test_github_stats_need_admin():
+    from fastapi.testclient import TestClient
+    from api.main import app
+    assert TestClient(app).get("/api/admin/github").status_code in (401, 403)

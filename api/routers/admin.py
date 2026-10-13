@@ -122,6 +122,16 @@ def public_messages():
     return {"messages": msgs}
 
 
+@router.get("/admin/github")
+def github(refresh: bool = False, _: dict = Depends(require_admin)):
+    """Repots statistik på GitHub: stjärnor, forkar, releaser och, med GITHUB_TOKEN, kloner och besök (src/github_stats.py)."""
+    from src import github_stats
+    try:
+        return github_stats.stats(refresh)
+    except Exception as e:  # noqa: BLE001
+        raise server_error(e, "GitHub svarar inte just nu.", status_code=503)
+
+
 @router.get("/admin/messages")
 def list_messages(_: dict = Depends(require_admin)):
     try:

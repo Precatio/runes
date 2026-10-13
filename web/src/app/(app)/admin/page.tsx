@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAuth } from "@/components/AuthContext";
 import { API_URL } from "@/lib/api";
 import BlogAdmin from "@/components/BlogAdmin";
+import GithubStats from "@/components/GithubStats";
 
 interface UserRow {
   uid: string; email: string | null; name: string | null; photo: string | null; disabled: boolean;
@@ -185,6 +186,8 @@ export default function AdminPage() {
           </ul>
         )}
       </section>
+
+      <GithubStats call={call} />
 
       <BlogAdmin call={call} />
 
