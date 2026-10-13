@@ -17,6 +17,9 @@ def test_thor_motifs_and_rituals():
     assert pm.pagan(_rec(other="Pryds av en torshammare där korset brukar vara."))
     assert pm.pagan(_rec(other="Nedtill finns ett motiv ur Tors fiskafänge."))
     assert pm.pagan(_rec(transliteration="alu"))
+    assert pm.pagan(_rec(transliteration="(m)-- alu --(k)(i)"))
+    assert not pm.pagan(_rec(transliteration="sin · kuþ · ialbi ans · (s)alu"))  # Sö 102: salu, the soul
+    assert not pm.pagan(_rec(transliteration=": miþ alu- kr-snum :"))
     assert not pm.pagan(_rec(transliteration="fuþarkhniastbmlR"))
     assert not pm.pagan(_rec(other="Bilder ur berättelsen om Sigurd Fafnesbane."))
 

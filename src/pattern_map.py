@@ -22,7 +22,8 @@ from src.styles import BY_CODE
 # Gudens namn, inte namn på Þór- (Þorkell, Þori, avbrutna Þor...): dubbelt r och inget som fortsätter ordet
 THOR = re.compile(r"(?<![\wÞþ])Þ[oó]rr(?![\wÞþ\[]|\.\.)")
 RITUAL = re.compile(r"\bvigi\b|\bræti\b|\bargi\b|\bseiðr")
-ALU = re.compile(r"\balu\b")
+# alu as a word of its own: not "(s)alu" (salu, the soul, with an uncertain first rune) or "alu-" (a broken word)
+ALU = re.compile(r"(?<![\w()\[\]-])alu(?![\w()\[\]-])")
 RITUAL_EN = re.compile(r"\bThor\b|\bhallow|\bwretch|\bpervert|\bsorcer|\bwitch|\bcurse")
 THOR_MOTIF = re.compile(r"torshammar|tors fiskafänge|torsmask", re.I)
 

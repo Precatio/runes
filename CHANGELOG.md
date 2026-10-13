@@ -5,6 +5,11 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Rättat: alu räknades i själsbönen
+- Mönstret "Hedniska eller rituella markörer" räknade Sö 102 som hednisk, eftersom ordet *alu* hittades i `(s)alu`, alltså
+  *salu* (själen) i bönen *Guð hialpi hans salu* med en osäker första runa. Nu räknas *alu* bara som ett eget ord. Sex
+  svenska runstenar har hedniska markörer, inte sju. Siffran ändras på kartan när korpusanalysen räknas om nästa gång.
+
 ### Artiklarna datumstämplas och kan schemaläggas
 - Artiklarna publiceras inte längre per månad. De får datumet när de publiceras, och datumet visas i artikeln, listan,
   på startsidan och i delningsbilden, till exempel "12 oktober 2026" (svensk tid). Äldre artiklar utan tid visar sin månad.
