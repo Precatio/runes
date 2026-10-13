@@ -259,3 +259,22 @@ def test_indexnow_only_with_a_key_and_a_public_site(monkeypatch):
     monkeypatch.setenv("INDEXNOW_KEY", "abc123")
     monkeypatch.setenv("SITE_URL", "http://localhost:3000")
     assert blog.indexnow("x") is False
+
+
+def test_statistics_are_explained_in_plain_words():
+    from src import blog_topics as bt
+    bh = "Kulldorffs scanstatistik, Benjamini–Hochberg över mönstren"
+    assert bt.plain_significance({"value": 0.013, "test": bh}, "sv") == \
+        "Bland alla mönster som är minst så här tydliga väntas högst omkring 1,3 procent vara slumpfynd."
+    assert bt.plain_significance({"value": 0.0003, "test": "Holm"}, "sv").endswith("i mindre än ett fall av tusen.")
+    assert bt.plain_significance({"value": 0.033, "test": "p"}, "en") == "A pattern this clear would arise by pure chance in about one case in 30."
+    assert bt.plain_significance(None, "sv") == ""
+    res = _res()
+    res["hotspots"]["patterns"][0]["moran"] = {"i": 0.205}
+    p = _p("Geografi", "hotspot_r_for_R_U 768", note="Klustret söktes med 999 simuleringar. Ett kluster är en plats att titta på.",
+           significance={"label": "q 0,013", "value": 0.013, "test": bh})
+    b = bt.draft(p, res, "sv", label="r för ʀ", provinces={"U": "Uppland"})["body"]
+    assert "väntas högst omkring 1,3 procent vara slumpfynd (q 0,013)." in b
+    assert "Morans I, är 0,20, där 0 betyder ingen samling alls" in b
+    cav = b[b.index("## Förbehåll"):b.index("## Se själv")]
+    assert "simuleringar" not in cav and "Ett kluster är en plats att titta på." in cav

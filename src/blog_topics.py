@@ -22,16 +22,18 @@ WORDS = {
         "caveats": "Förbehåll", "yourself": "Se själv", "sources": "Källor och data",
         "hyp_bullet": "Vår hypotes", "test_bullet": "Den kan prövas", "both": "Mönstret håller i båda halvorna av korpusen, "
         "uppdelad socken för socken.", "not_both": "Mönstret har inte prövats i båda halvorna, eller håller bara i den ena.",
-        "many": "**Många test på en gång.** Mönstret har prövats tillsammans med appens andra mönster och klarar justeringen "
-                "för många test ({sig}).",
+        "many": "**Många test på en gång.** Den som prövar många mönster hittar till slut något av en ren slump, så vi "
+                "prövade det här tillsammans med appens andra mönster och tog hänsyn till det. {plain} ({sig}).",
         "halves": "**Båda halvorna.** Vi delade materialet i två halvor, socken för socken, och mönstret syns i båda var "
-                  "för sig.",
+                  "för sig. Ett mönster som bara fanns i den ena halvan kunde vara en tillfällighet i just de socknarna.",
         "draws": "**Osäkra årtal.** Stilgruppernas dateringar är ungefärliga; vi räknade om med årtal lottade inom varje "
                  "stilgrupps intervall, och {ok} av {n} omräkningar gav samma resultat.",
         "model": "**Samma ristare, samma trakt.** Modellen jämför stenar av samma ristare och i samma område, så att mönstret "
                  "inte bara är en enskild ristares vana eller en skillnad mellan landskap.",
-        "cluster": "**Inte slumpen.** Klustret prövades mot {nsim} slumpvisa omfördelningar av mönstret över stenarna "
-                   "(Kulldorffs scanstatistik).",
+        "cluster": "**Inte slumpen.** Vi lät datorn fördela mönstret slumpvis över stenarna {nsim} gånger och jämförde: ett "
+                   "lika tydligt kluster uppstod nästan aldrig (Kulldorffs scanstatistik).",
+        "moran": "**Mönstret samlas.** Stenar med mönstret står oftare nära varandra än slumpen ger. Måttet för det, Morans I, "
+                 "är {i}, där 0 betyder ingen samling alls.",
         "rewrite": "*Utkast: siffrorna och resonemangen kommer från Vitkis analyser. Skriv om texten med egna ord, börja "
                    "gärna med en inskrift som krok och lägg till vad som är nytt jämfört med tidigare forskning.*",
         "map": "Mönstret på [kartan]({href}).",
@@ -50,16 +52,18 @@ WORDS = {
         "test": "How it can be tested", "caveats": "Caveats", "yourself": "See for yourself", "sources": "Sources and data",
         "hyp_bullet": "Our hypothesis", "test_bullet": "It can be tested", "both": "The pattern holds in both halves of the "
         "corpus, split parish by parish.", "not_both": "The pattern has not been tested in both halves, or holds in only one.",
-        "many": "**Many tests at once.** The pattern was tested together with the app's other patterns and survives the "
-                "adjustment for many tests ({sig}).",
+        "many": "**Many tests at once.** Whoever tests many patterns will in the end find something by pure chance, so we "
+                "tested this one together with the app's other patterns and took that into account. {plain} ({sig}).",
         "halves": "**Both halves.** We split the material into two halves, parish by parish, and the pattern appears in each "
-                  "on its own.",
+                  "on its own. A pattern found in only one half could be a coincidence in just those parishes.",
         "draws": "**Uncertain years.** The style groups' dates are approximate; we recalculated with years drawn at random "
                  "within each group's interval, and {ok} of {n} recalculations gave the same result.",
         "model": "**Same carver, same area.** The model compares stones by the same carver and in the same area, so the "
                  "pattern is not just one carver's habit or a difference between provinces.",
-        "cluster": "**Not chance.** The cluster was tested against {nsim} random redistributions of the pattern over the "
-                   "stones (Kulldorff's scan statistic).",
+        "cluster": "**Not chance.** We let the computer spread the pattern at random over the stones {nsim} times and "
+                   "compared: a cluster this clear almost never arose (Kulldorff's scan statistic).",
+        "moran": "**The pattern gathers.** Stones with the pattern stand near each other more often than chance would give. "
+                 "The measure for that, Moran's I, is {i}, where 0 means no gathering at all.",
         "rewrite": "*Draft: the numbers and the reasoning come from Vitki's analyses. Rewrite the text in your own words, "
                    "perhaps opening with an inscription as a hook, and add what is new compared with earlier research.*",
         "map": "The pattern on the [map]({href}).",
@@ -239,7 +243,7 @@ T = {
                             "stort (Getis-Ord Gi*).",
                  "generic": ""},
         "model_peak": "Vår modell, som tar hänsyn till vem som ristade stenen och var den står, lägger toppen omkring {y} "
-                      "(mellan {lo} och {hi}) och visar en förändring från omkring {a} till {b} procent.",
+                      "(troligen mellan {lo} och {hi}) och visar en förändring från omkring {a} till {b} procent.",
         "model_trend": "Med vem som ristade stenen och var den står konstant går andelen från omkring {a} procent omkring {y1} "
                        "till {b} procent omkring {y2}.",
         "cluster_numbers": "Inom {r} km från {center} har {rin} procent av de {n} stenarna mönstret, mot {rout} procent i "
@@ -329,7 +333,7 @@ T["en"] = {
                         "pattern more often than the country as a whole (Getis-Ord Gi*).",
              "generic": ""},
     "model_peak": "Our model, which takes into account who carved the stone and where it stands, puts the peak around {y} "
-                  "(between {lo} and {hi}) and shows a change from about {a} to {b} per cent.",
+                  "(probably between {lo} and {hi}) and shows a change from about {a} to {b} per cent.",
     "model_trend": "With who carved the stone and where it stands held constant, the share goes from about {a} per cent around "
                    "{y1} to {b} per cent around {y2}.",
     "cluster_numbers": "Within {r} km of {center}, {rin} per cent of the {n} stones have the pattern, against {rout} per cent in "
@@ -380,6 +384,36 @@ T["en"] = {
     "rundata": WORDS["en"]["rundata"],
     "stones": "stones",
 }
+
+
+def plain_significance(sig: dict | None, lang: str) -> str:
+    """What the adjusted p- or q-value means, in plain words and correctly: for Benjamini–Hochberg the expected share of
+    chance findings among patterns this strong; otherwise how seldom a pattern this clear would arise by chance."""
+    v = (sig or {}).get("value")
+    if v is None:
+        return ""
+    sv = lang == "sv"
+    if "Benjamini" in ((sig or {}).get("test") or ""):
+        if v < 0.001:
+            return ("Bland alla mönster som är minst så här tydliga väntas färre än ett av tusen vara slumpfynd." if sv else
+                    "Among all patterns at least this strong, fewer than one in a thousand are expected to be chance findings.")
+        pct = f"{v * 100:.1f}".rstrip("0").rstrip(".")
+        pct = pct.replace(".", ",") if sv else pct
+        return (f"Bland alla mönster som är minst så här tydliga väntas högst omkring {pct} procent vara slumpfynd." if sv else
+                f"Among all patterns at least this strong, at most about {pct} per cent are expected to be chance findings.")
+    if v < 0.001:
+        return ("Ett så tydligt mönster skulle uppstå av en ren slump i mindre än ett fall av tusen." if sv else
+                "A pattern this clear would arise by pure chance in fewer than one case in a thousand.")
+    n = 1 / v
+    n = int(round(n, -1)) if n >= 20 else int(round(n))
+    return (f"Ett så tydligt mönster skulle uppstå av en ren slump i ungefär ett fall av {n}." if sv else
+            f"A pattern this clear would arise by pure chance in about one case in {n}.")
+
+
+# Statistical restatements in an analysis's note; "Så säkra är vi" explains them in plain words, so the caveats leave
+# them out and keep what limits the conclusion
+STATS_ONLY = re.compile(r"Morans I|Moran's I|Benjamini|Holm|simuleringar|simulations|Klarar justeringen|survives the adjustment|"
+                        r"\(q [<0-9]|\bq [<0-9]|\bp [<0-9]", re.I)
 
 
 def kind(p: dict, res: dict) -> str:
@@ -602,7 +636,7 @@ def draft(p: dict, res: dict, lang: str, tr=lambda t: t, label: str | None = Non
 
     # Så säkra är vi
     sig = (p.get("significance") or {}).get("label") or ""
-    sure = [w["many"].format(sig=sig) if sig else None]
+    sure = [w["many"].format(sig=sig, plain=plain_significance(p.get("significance"), lang).rstrip(".")) if sig else None]
     if f:
         sure.append(w["model"])
         draws = tm.get("draws") or {}
@@ -610,6 +644,9 @@ def draft(p: dict, res: dict, lang: str, tr=lambda t: t, label: str | None = Non
             sure.append(w["draws"].format(ok=round(draws.get("share_sig", 0) * draws["n"]), n=draws["n"]))
     if hc:
         sure.append(w["cluster"].format(nsim=(res.get("hotspots") or {}).get("nsim", 999)))
+        mi = (hc[0].get("moran") or {}).get("i")
+        if mi is not None:
+            sure.append(w["moran"].format(i=_num(mi, lang, 2)))
     if p.get("replicated"):
         sure.append(w["halves"])
     parts.append(f":::box {t['sure']}\n{t['sure_intro']}\n\n" + "\n".join(f"- {s}" for s in sure if s) + "\n:::")
@@ -633,7 +670,7 @@ def draft(p: dict, res: dict, lang: str, tr=lambda t: t, label: str | None = Non
     parts += [f"## {t['further']}", "\n".join(f"{i}. {x}" for i, x in enumerate(items, 1))]
 
     # Förbehåll
-    cav = [s.strip() for s in re.split(r"(?<=[.!?])\s+(?=[A-ZÅÄÖ])", note) if s.strip()][:4]
+    cav = [x.strip() for x in re.split(r"(?<=[.!?])\s+(?=[A-ZÅÄÖ])", note) if x.strip() and not STATS_ONLY.search(x)][:4]
     for extra in (t["general_caveats"].get(k), t["general_caveat2"]):
         if extra:
             cav.append(extra)

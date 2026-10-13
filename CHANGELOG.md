@@ -5,6 +5,13 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Statistiken förklarad i klartext i bloggutkasten
+- Utkasten förklarar vad siffrorna betyder i stället för att bara rada upp dem: det justerade p- eller q-värdet med en
+  korrekt läsning (efter Holm: hur sällan ett så tydligt mönster skulle uppstå av en slump; efter Benjamini–Hochberg:
+  hur stor andel slumpfynd som väntas bland så starka mönster), Morans I ("0 betyder ingen samling"), varför båda
+  halvorna spelar roll och intervall som "troligen mellan". Förbehållen rensas från ren statistik, som förklaras i
+  "Så säkra är vi".
+
 ### GitHub-statistik i Admin
 - Admin visar repots statistik på GitHub: stjärnor, forkar, bevakare och nedladdningar av releaser, och med en
   `GITHUB_TOKEN` (i miljön eller i `.env`, aldrig i koden) kloner och besök per dag, varifrån besökarna kommer och
