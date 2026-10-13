@@ -1,5 +1,6 @@
 import { Fragment, type ReactNode } from "react";
 import { API_URL } from "@/lib/api";
+import { isPublicPath } from "@/lib/site";
 
 // A blog post (GET /api/blog/posts, api/routers/blog.py). The English fields are optional; without them the Swedish
 // text is shown also in English
@@ -58,8 +59,9 @@ export function dateLabel(iso: string | null | undefined, lang = "sv", withTime 
 export const postDate = (p: Pick<BlogPost, "publishedAt" | "month">, lang = "sv") =>
   p.publishedAt ? dateLabel(p.publishedAt, lang) : monthLabel(p.month, lang);
 
-// Links only to the web or within the site, never javascript: or data:
-const safeHref = (href: string) => (/^(https?:\/\/|\/)/.test(href) ? href : null);
+// Links only to the web or to the public website's own pages (the start page and the articles), never javascript: or
+// data:, and never into the app, which is not on the public website – such a link is shown as plain text
+const safeHref = (href: string) => (/^https?:\/\//.test(href) || isPublicPath(href) ? href : null);
 
 /** **bold**, *italic* and [text](url) inside a line. */
 function inline(text: string): ReactNode[] {

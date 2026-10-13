@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
 import { API_URL } from "@/lib/api";
-import { SITE_URL } from "@/lib/site";
+import { PUBLIC_SITE, SITE_URL } from "@/lib/site";
 
-// The public pages, and every published blog post (GET /api/blog/posts); refreshed once an hour
+// The public pages, and every published article (GET /api/blog/posts); refreshed every five minutes. The public website
+// (NEXT_PUBLIC_SITE_MODE=public) has only the start page and the articles, so the app's pages are left out there
 export const revalidate = 300;
 
 const PAGES: [string, MetadataRoute.Sitemap[number]["changeFrequency"], number][] = [
@@ -13,7 +14,7 @@ const PAGES: [string, MetadataRoute.Sitemap[number]["changeFrequency"], number][
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const pages = PAGES.map(([path, changeFrequency, priority]) => ({ url: `${SITE_URL}${path}`, lastModified: now, changeFrequency, priority }));
+  const pages = PAGES.filter(([path]) => !PUBLIC_SITE || path === "/" || path === "/artiklar").map(([path, changeFrequency, priority]) => ({ url: `${SITE_URL}${path}`, lastModified: now, changeFrequency, priority }));
   try {
     const r = await fetch(`${API_URL}/api/blog/posts`, { next: { revalidate: 300, tags: ["blog"] } });
     const posts: { slug: string; publishedAt?: string | null; updatedAt?: string | null }[] = r.ok ? (await r.json()).posts : [];

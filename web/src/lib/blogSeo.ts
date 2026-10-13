@@ -2,7 +2,7 @@
 // data (schema.org BlogPosting and BreadcrumbList) and a check of the post before it is published. Nothing has to be
 // filled in by hand – a new post gets it all when it is published.
 import { API_URL } from "@/lib/api";
-import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { isPublicPath, SITE_NAME, SITE_URL } from "@/lib/site";
 import type { BlogPost } from "@/components/BlogBody";
 
 export const BLOG_TITLE = "Artiklar – mönster i runstenarna";
@@ -117,6 +117,10 @@ export function blogJsonLd(posts: BlogPost[]) {
 export interface SeoCheck { ok: boolean; text: string }
 
 /** What a search engine will see, checked before publishing (Admin). */
+/** Links in the article into the app, which the public website does not have (the start page and the articles only). */
+export const appLinks = (post: Pick<BlogPost, "body" | "body_en">) =>
+  [...`${post.body ?? ""}\n${post.body_en ?? ""}`.matchAll(/\]\((\/[^)\s]*)\)/g)].map(m => m[1]).filter(h => !isPublicPath(h));
+
 export function seoChecks(post: Pick<BlogPost, "title" | "summary" | "slug" | "body" | "title_en" | "body_en">): SeoCheck[] {
   const body = post.body ?? "";
   const pics = pictures(body);
@@ -132,7 +136,9 @@ export function seoChecks(post: Pick<BlogPost, "title" | "summary" | "slug" | "b
     { ok: (body.match(/^## /gm) ?? []).length >= 3, text: "Texten har minst tre mellanrubriker (##), så att den går att överblicka." },
     { ok: pics.length > 0 && pics.every(p => p.alt.trim().length >= 5), text: `${pics.length} bilder${pics.length ? ", alla med beskrivande alt-text" : " – lägg gärna till en"}.` },
     { ok: words >= 600, text: `Texten har ${words} ord (bäst minst 600 för en artikel).` },
-    { ok: /\]\(\/(karta|statistik|luckor|inskrifter|docs)/.test(body), text: "Texten länkar till appen (kartan, statistiken eller metoden)." },
+    { ok: appLinks(post).length === 0, text: appLinks(post).length
+        ? `Texten länkar in i appen, som inte finns på webbplatsen: ${appLinks(post).slice(0, 3).join(", ")}. Visa en bild ur R (Figurer) eller länka till GitHub i stället.`
+        : "Texten länkar inte in i appen (den finns inte på webbplatsen) – kartor och kurvor visas som bilder." },
     { ok: /^## (Källor|Sources)/m.test(body), text: "Texten har ett avsnitt med källor." },
     { ok: !!(post.title_en && post.body_en), text: "Det finns en engelsk version, som når fler läsare." },
   ];

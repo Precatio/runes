@@ -293,10 +293,11 @@ WORDS = {
         "see": "Vad vi ser.", "hypothesis": "Hypotes.", "test": "Så kan den prövas.", "status": "Status",
         "both": "håller i båda halvorna av korpusen",
         "map": "Månadens karta",
-        "shift": "Den största förskjutningen i [mönsterkartan]({href}) gäller {label}: {early} av stenarna före omkring "
+        "shift": "Den största förskjutningen i mönsterkartan gäller {label}: {early} av stenarna före omkring "
                  "1050 ({n_early} stenar) och {late} efter ({n_late} stenar), bland stenar med säker stilgrupp.",
-        "outro": "Alla siffror kommer från Vitkis analyser och kan granskas i appen under [Forskningsluckor](/luckor) och "
-                 "[Statistik](/statistik); metoderna beskrivs i METHODS.md.",
+        "outro": "Alla siffror kommer från Vitkis analyser. Vitki är öppen källkod och kan laddas ner från "
+                 "[GitHub](https://github.com/Precatio/runes); metoderna beskrivs i "
+                 "[METHODS.md](https://github.com/Precatio/runes/blob/main/METHODS.md).",
         "short": "Kort sagt", "sure": "Så säkra är vi",
         "sure_note": "Mönstren är prövade med justering för många test och, där det går, i korpusens två halvor, "
                      "uppdelade socken för socken. Skriv om rutan med egna ord: vad har prövats, och vad kan ändå vara fel?",
@@ -313,10 +314,11 @@ WORDS = {
         "see": "What we see.", "hypothesis": "Hypothesis.", "test": "How it can be tested.", "status": "Status",
         "both": "holds in both halves of the corpus",
         "map": "The map of the month",
-        "shift": "The largest shift in the [pattern map]({href}) concerns {label}: {early} of the stones before about "
+        "shift": "The largest shift in the pattern map concerns {label}: {early} of the stones before about "
                  "1050 ({n_early} stones) and {late} after ({n_late} stones), among stones with a certain style group.",
-        "outro": "All numbers come from Vitki's analyses and can be checked in the app under [Research gaps](/luckor) "
-                 "and [Statistics](/statistik); the methods are described in METHODS.md.",
+        "outro": "All numbers come from Vitki's analyses. Vitki is open source and can be downloaded from "
+                 "[GitHub](https://github.com/Precatio/runes); the methods are described in "
+                 "[METHODS.md](https://github.com/Precatio/runes/blob/main/METHODS.md).",
         "short": "In short", "sure": "How sure we are",
         "sure_note": "The patterns are tested with adjustment for many tests and, where possible, in the two halves of the "
                      "corpus, split parish by parish. Rewrite the box in your own words: what has been tested, and what "
@@ -357,7 +359,7 @@ def _write(lang: str, month: str, changed: list[dict], picked: list[dict], first
     if shift:
         parts.append(f"## {w['map']}")
         label = tr(shift["label"])
-        parts.append(w["shift"].format(href=f"/karta?pattern={shift['key']}&split=1", label=label[:1].lower() + label[1:],
+        parts.append(w["shift"].format(label=label[:1].lower() + label[1:],
                                        early=_pct(shift["early"]), late=_pct(shift["late"]),
                                        n_early=shift["n_early"], n_late=shift["n_late"]))
     if picked:
@@ -487,10 +489,32 @@ def _frozen_figure(name: str, labels: dict) -> tuple[str, str] | None:
     return blog_figures.markdown(url, d, "sv"), blog_figures.markdown(url, d, "en")
 
 
+def _see_figures(pattern: dict, res: dict, keys: frozenset, labels: dict, feat: dict | None) -> list[dict]:
+    """Bilderna i "Se själv" i stället för länkar in i appen (den publika webbplatsen har bara artiklarna): kartverktygets
+    tidsvy av mönstret och förändringsmodellens kurva (src/blog_maps.py). Tomt om R inte är installerat."""
+    import os
+    from api.routers import rstats
+    from src import blog_maps, blog_topics, i18n, r_bridge
+    if not rstats.corpus_ready():
+        return []
+    d = r_bridge.JOB.directory(rstats.fingerprint())
+    out = []
+    pm, mode = blog_topics.see_maps(pattern, res, keys)
+    if pm and mode == "tid":
+        m = blog_maps.time_map(os.path.join(d, "corpus.csv"), pm, labels[pm], i18n.translate(labels[pm]))
+        if m:
+            out.append(m)
+    if feat and (feat.get("time") or {}).get("curve") and os.path.exists(os.path.join(d, "change.json")):
+        c = blog_maps.curves(os.path.join(d, "change.json"), [feat["key"]], [feat["label"]], [i18n.translate(feat["label"])])
+        if c:
+            out.append(c)
+    return out
+
+
 def topic_draft(month: str, pattern: dict, res: dict) -> dict:
     """Ett utkast kring ett mönster, på svenska och engelska, i formen från det publicerade inlägget (src/blog_topics.py):
     krok med en sten och dess foto, diagram, kartbild ur R, en första prövning och källor."""
-    from src import blog_topics, i18n, pattern_map
+    from src import blog_maps, blog_topics, i18n, pattern_map
     from src.research_gaps import PROVINCE_NAMES
     key = pattern.get("key") or ""
     feat, hs = blog_topics._feature(res, key), blog_topics._hotspot(res, key)
@@ -501,10 +525,12 @@ def topic_draft(month: str, pattern: dict, res: dict) -> dict:
     example, mix = _example_and_mix(pattern, res, kind)
     fig_name = blog_topics.figure_for(pattern, res)
     fig = _frozen_figure(fig_name, labels) if fig_name else None
+    see = _see_figures(pattern, res, keys, labels, feat)
     common = dict(provinces=PROVINCE_NAMES, map_keys=keys, example=example, mix=mix)
-    sv = blog_topics.draft(pattern, res, "sv", label=label, figure=fig[0] if fig else None, **common)
+    sv = blog_topics.draft(pattern, res, "sv", label=label, figure=fig[0] if fig else None,
+                           see=[blog_maps.markdown(f, "sv") for f in see], **common)
     en = blog_topics.draft(pattern, res, "en", tr=i18n.translate, label=i18n.translate(label) if label else None,
-                           figure=fig[1] if fig else None, **common)
+                           figure=fig[1] if fig else None, see=[blog_maps.markdown(f, "en") for f in see], **common)
     sources = [f"{pattern.get('topic')}: {pattern.get('status')} – {blog_topics.first_sentence(pattern['text'])}"]
     if example:
         sources.append(f"Krok och foto: {example['signum']} ({example['place']})")

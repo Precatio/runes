@@ -5,6 +5,24 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Webbplatsen länkar inte in i appen
+Den publika webbplatsen har bara startsidan och artiklarna. Appen körs på den egna datorn och laddas ner från GitHub.
+- **Artiklarna:** "Se själv" visar bilder i stället för länkar in i appen. Det gäller kartverktygets vy före och efter
+  omkring 1050, en karta över enskilda stenar för sällsynta mönster och förändringsmodellens kurvor. Alla ritas i R
+  (`r/blogfig.R`, `src/blog_maps.py`) på svenska och engelska och fryses som artikelns egna figurer.
+- **Länkar till metoden:** de går till METHODS.md på GitHub.
+- **De publicerade artiklarna:** de är uppdaterade, och nya utkast från R-analyserna får samma bilder automatiskt.
+- **Spärr i artiklarna:** en länk in i appen i en artikeltext visas som vanlig text, och SEO-kontrollen i Admin varnar
+  för den. Tidigare bad SEO-kontrollen om sådana länkar.
+- **Startsidan och artiklarnas sidhuvud och sidfot:**
+  - "Öppna appen" heter nu "Ladda ner Vitki" och går till GitHub.
+  - "Analysera en sten" och "Sök i Rundata" har ersatts av "Läs artiklarna" och "Metoden".
+  - "Dokumentation" går till README på GitHub.
+  - Den sista uppmaningen heter nu "Kör Vitki på din egen dator".
+  - En streckad länk "Appen (lokalt)" syns bara när appen körs lokalt med `next dev`.
+- **Publik byggläge:** `NEXT_PUBLIC_SITE_MODE=public` bygger den publika webbplatsen. Appens sidor leder då till
+  startsidan och tas bort ur webbplatskartan.
+
 ### Rättat: alu räknades i själsbönen
 - Mönstret "Hedniska eller rituella markörer" räknade Sö 102 som hednisk, eftersom ordet *alu* hittades i `(s)alu`, alltså
   *salu* (själen) i bönen *Guð hialpi hans salu* med en osäker första runa. Nu räknas *alu* bara som ett eget ord. Sex

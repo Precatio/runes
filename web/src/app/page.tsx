@@ -2,11 +2,12 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import LanguageToggle from "@/components/LanguageToggle";
+import LocalAppLink from "@/components/LocalAppLink";
 import ArticleTeasers from "@/components/ArticleTeasers";
 import type { BlogPost } from "@/components/BlogBody";
 import { API_URL } from "@/lib/api";
 import { pictures } from "@/lib/blogSeo";
-import { SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
+import { DOCS_URL, DOWNLOAD_URL, METHODS_URL, SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
 
 // The newest articles are fetched again at most every five minutes, and at once when one is published (tag "blog")
 export const revalidate = 60;
@@ -338,7 +339,8 @@ export default async function LandingPage() {
           <div className="flex items-center gap-3">
             <LanguageToggle className="px-2.5 py-1 rounded-full border border-slate-300 text-[11px] font-bold tracking-wider text-slate-600 hover:border-slate-900 hover:text-slate-900" />
             <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="hidden sm:inline text-sm font-semibold text-slate-600 hover:text-slate-900">GitHub</a>
-            <Link href="/start" className="px-4 py-2 rounded-full bg-slate-900 text-white text-sm font-bold hover:bg-black">Öppna appen</Link>
+            <LocalAppLink />
+            <a href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-full bg-slate-900 text-white text-sm font-bold hover:bg-black">Ladda ner Vitki</a>
           </div>
         </div>
       </header>
@@ -362,15 +364,15 @@ export default async function LandingPage() {
             signifikans och verifierbara källor.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
-            <Link href="/start" className="px-7 py-3.5 rounded-full bg-[#b7410e] text-white font-bold hover:bg-[#9a350b] shadow-lg shadow-[#b7410e]/20">
-              Öppna appen
-            </Link>
-            <Link href="/stenanalys" className="px-7 py-3.5 rounded-full bg-white border border-slate-300 font-bold hover:border-slate-900">
-              Analysera en sten
-            </Link>
-            <Link href="/artiklar" className="px-7 py-3.5 rounded-full bg-white border border-[#b7410e]/40 text-[#9a350b] font-bold hover:border-[#b7410e]">
+            <Link href="/artiklar" className="px-7 py-3.5 rounded-full bg-[#b7410e] text-white font-bold hover:bg-[#9a350b] shadow-lg shadow-[#b7410e]/20">
               Läs artiklarna
             </Link>
+            <a href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" className="px-7 py-3.5 rounded-full bg-white border border-slate-300 font-bold hover:border-slate-900">
+              Ladda ner Vitki
+            </a>
+            <a href={METHODS_URL} target="_blank" rel="noopener noreferrer" className="px-7 py-3.5 rounded-full bg-white border border-slate-300 font-bold hover:border-slate-900">
+              Metoden
+            </a>
           </div>
 
           <dl className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-px bg-slate-900/10 rounded-2xl overflow-hidden border border-slate-900/10">
@@ -622,11 +624,14 @@ språk, Uppsala universitet.`}
 
       {/* Final CTA */}
       <section className="max-w-6xl mx-auto px-6 py-20 text-center">
-        <h2 className="text-3xl font-serif font-bold">Börja med en inskrift, en skanning eller en fråga</h2>
-        <p className="mt-3 text-slate-600">Rundata, kartan och stilgrupperna är öppna direkt. Logga in för att spara projekt och använda korpusen.</p>
+        <h2 className="text-3xl font-serif font-bold">Kör Vitki på din egen dator</h2>
+        <p className="mt-3 text-slate-600 max-w-2xl mx-auto">
+          Vitki är öppen källkod. Ladda ner den från GitHub och gör om analyserna i artiklarna – mönsterkartan, R-modellerna,
+          Rundata och 3D-mätningen – med samma data, eller pröva dina egna frågor.
+        </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <Link href="/start" className="px-7 py-3.5 rounded-full bg-[#b7410e] text-white font-bold hover:bg-[#9a350b]">Öppna appen</Link>
-          <Link href="/inskrifter" className="px-7 py-3.5 rounded-full bg-white border border-slate-300 font-bold hover:border-slate-900">Sök i Rundata</Link>
+          <a href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" className="px-7 py-3.5 rounded-full bg-[#b7410e] text-white font-bold hover:bg-[#9a350b]">Ladda ner från GitHub</a>
+          <a href={METHODS_URL} target="_blank" rel="noopener noreferrer" className="px-7 py-3.5 rounded-full bg-white border border-slate-300 font-bold hover:border-slate-900">Läs metoden</a>
           <Link href="/artiklar" className="px-7 py-3.5 rounded-full bg-white border border-[#b7410e]/40 text-[#9a350b] font-bold hover:border-[#b7410e]">Läs artiklarna</Link>
         </div>
       </section>
@@ -637,9 +642,10 @@ språk, Uppsala universitet.`}
             Vitki · Grundat av{" "}
             <a href="https://www.linkedin.com/in/viktor-kvant-555180108/" target="_blank" rel="noopener noreferrer" className="font-semibold text-slate-700 hover:text-[#b7410e]">Viktor Kvant</a>
           </div>
-          <div className="flex gap-5">
-            <Link href="/docs" className="hover:text-slate-900">Dokumentation</Link>
+          <div className="flex flex-wrap items-center gap-5">
+            <a href={DOCS_URL} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">Dokumentation</a>
             <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">GitHub</a>
+            <LocalAppLink className="inline" />
             <span>GPL-3.0</span>
           </div>
         </div>

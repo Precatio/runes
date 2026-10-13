@@ -13,6 +13,16 @@ RANK = {"mönster att pröva": 0, "bekräftar": 1}
 # Method checks rather than findings about the runestones; they do not make a post of the month
 SKIP = {("Attribuering", "model"), ("Datering", "seriation"), ("Språk", "spelling")}
 # The change analysis's features under the pattern map's names (src/pattern_map.py), for the link to the map
+def see_maps(p: dict, res: dict, map_keys: frozenset = frozenset()) -> tuple[str | None, str | None]:
+    """The map tool's view that belongs with the topic: (pattern on the map, "kluster" | "tid" | None), so that the article
+    can show the picture instead of linking to the map."""
+    k, key, hc = kind(p, res), p.get("key") or "", _hotspot(res, p.get("key") or "")
+    pm = (hc[0]["key"] if hc else MAP_ALIAS.get(key, key)) if (hc or k in ("time", "regional")) else None
+    if not pm or pm not in map_keys:
+        return None, None
+    return pm, "kluster" if hc else "tid" if k == "time" else None
+
+
 MAP_ALIAS = {"cross": "kors", "ai_alla": "monoftong", "ai_sten": "monoftong"}
 STYLE_YEARS = {"RAK": 1000, "Fp": 1030, "Pr1": 1030, "Pr2": 1035, "Pr3": 1065, "Pr4": 1085, "Pr5": 1115}
 
@@ -39,9 +49,6 @@ WORDS = {
                  "är {i}, där 0 betyder ingen samling alls.",
         "rewrite": "*Utkast: siffrorna och resonemangen kommer från Vitkis analyser. Skriv om texten med egna ord, börja "
                    "gärna med en inskrift som krok och lägg till vad som är nytt jämfört med tidigare forskning.*",
-        "map": "Mönstret på [kartan]({href}).",
-        "stats": "Modellerna och kurvorna under [Statistik](/statistik) och mönstret med hypotes i "
-                 "[Forskningsluckor](/luckor); metoden i [Metodik och beräkningar](/docs/metod).",
         "rundata": "Samnordisk runtextdatabas (Rundata), Institutionen för nordiska språk, Uppsala universitet. Open "
                    "Database License.",
         "around": "omkring", "stones": "stenar", "in": "Inom klustret", "out": "Övriga stenar",
@@ -71,9 +78,6 @@ WORDS = {
                  "The measure for that, Moran's I, is {i}, where 0 means no gathering at all.",
         "rewrite": "*Draft: the numbers and the reasoning come from Vitki's analyses. Rewrite the text in your own words, "
                    "perhaps opening with an inscription as a hook, and add what is new compared with earlier research.*",
-        "map": "The pattern on the [map]({href}).",
-        "stats": "The models and curves under [Statistics](/statistik) and the pattern with its hypothesis under "
-                 "[Research gaps](/luckor); the method in [Methods and calculations](/docs/metod).",
         "rundata": "Scandinavian Runic-text Data Base (Rundata), Department of Scandinavian Languages, Uppsala "
                    "University. Open Database License.",
         "around": "around", "stones": "stones", "in": "Within the cluster", "out": "Other stones",
@@ -289,9 +293,6 @@ T = {
                             "regional": "Landskap med färre än tio daterade stenar från mittperioden redovisas inte.",
                             "generic": ""},
         "general_caveat2": "Ett samband är inte en orsak; hypotesen förklarar mönstret, men andra förklaringar är möjliga.",
-        "map": "[{label} på kartan]({href}).",
-        "stats": "Modellerna under [Statistik](/statistik), mönstret med hypotes i [Forskningsluckor](/luckor) och metoden i "
-                 "[Metodik och beräkningar](/docs/metod).",
         "photos": "Foton: Wikimedia Commons, med fotograf och licens i bildtexterna. Figurer: Vitkis korpusanalys i R.",
         "rundata": WORDS["sv"]["rundata"],
         "stones": "stenar",
@@ -382,9 +383,6 @@ T["en"] = {
                         "regional": "Provinces with fewer than ten dated stones from the middle period are not reported.",
                         "generic": ""},
     "general_caveat2": "An association is not a cause; the hypothesis explains the pattern, but other explanations are possible.",
-    "map": "[{label} on the map]({href}).",
-    "stats": "The models under [Statistics](/statistik), the pattern with its hypothesis under [Research gaps](/luckor) and "
-             "the method under [Methods and calculations](/docs/metod).",
     "photos": "Photos: Wikimedia Commons, with photographer and licence in the captions. Figures: Vitki's corpus analysis in R.",
     "rundata": WORDS["en"]["rundata"],
     "stones": "stones",
@@ -552,7 +550,7 @@ def first_test(p: dict, res: dict, lang: str, mix: dict | None = None, provinces
 
 def draft(p: dict, res: dict, lang: str, tr=lambda t: t, label: str | None = None, provinces: dict | None = None,
           map_keys: frozenset = frozenset(), example: dict | None = None, figure: str | None = None,
-          mix: dict | None = None) -> dict:
+          mix: dict | None = None, see: list[str] | None = None) -> dict:
     """Title, summary and body around one pattern, in one language, in the form of the published post."""
     t, w = T[lang], WORDS[lang]
     sv = lang == "sv"
@@ -681,13 +679,10 @@ def draft(p: dict, res: dict, lang: str, tr=lambda t: t, label: str | None = Non
             cav.append(extra)
     parts += [f"## {t['caveats']}", "\n".join(f"- {_dot(x)}" for x in cav)]
 
-    # Se själv
-    see = [t["stats"]]
-    pm = (hc[0]["key"] if hc else MAP_ALIAS.get(key, key)) if (hc or k in ("time", "regional")) else None
-    if pm and pm in map_keys:
-        mode = "&mode=kluster" if hc else "&mode=tid" if k == "time" else ""
-        see.insert(0, t["map"].format(label=Lab, href=f"/karta?pattern={pm}{mode}"))
-    parts += [f"## {t['yourself']}", "\n".join(f"- {x}" for x in see)]
+    # Se själv: kartverktygets bild och modellens kurvor i stället för länkar in i appen, som inte finns på den publika
+    # webbplatsen (src/blog_maps.py), och var analysen kan göras om
+    from src import blog_maps
+    parts += [f"## {t['yourself']}", *(see or []), blog_maps.github_note(lang)]
 
     # Källor och data
     refs = [t["rundata"]]

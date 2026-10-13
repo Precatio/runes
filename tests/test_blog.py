@@ -1,5 +1,6 @@
 """Artiklarna (api/routers/blog.py): utkastet ur mönstren, publiceringstiden och de nya mönstren om strand och lämningar."""
 import datetime as dt
+import re
 
 from api.routers import blog
 from src import r_findings as rf
@@ -24,10 +25,15 @@ def test_draft_takes_what_is_new_or_changed():
     assert any("tidigare mönster att pröva" in s for s in out["sources"])
 
 
-def test_draft_mentions_the_map_shift_with_a_link():
+APP_LINK = re.compile(r"\]\(/(?!artiklar|api/blog/figures)")  # the public website has no app to link to
+
+
+def test_draft_mentions_the_map_shift_without_linking_into_the_app():
     shift = {"key": "o_runa", "label": "o-runan för o", "early": 0.08, "late": 0.51, "n_early": 218, "n_late": 136}
     out = blog.build_draft("2026-11", [_pattern("b", "mönster att pröva")], {}, shift)
-    assert "(/karta?pattern=o_runa&split=1)" in out["draft"]["body"] and "8 %" in out["draft"]["body"]
+    body = out["draft"]["body"]
+    assert "mönsterkartan gäller o-runan för o" in body and "8 %" in body
+    assert not APP_LINK.search(body) and "](https://github.com/Precatio/runes)" in body
 
 
 def test_slug_rules():
@@ -189,11 +195,12 @@ def test_topic_charts_and_draft():
     body = d["body"]
     for part in (":::box Kort sagt", ":::chart", ":::box Så säkra är vi", "## Vår hypotes", "## En första prövning",
                  "## Så kan hypotesen prövas vidare", "1. **Det direkta provet.**", "## Förbehåll", "## Se själv",
-                 "](/karta?pattern=bon&mode=tid)", "## Källor och data", "Gräslund, A.-S. 2006", "Holm, S. 1979",
+                 "](https://github.com/Precatio/runes)", "## Källor och data", "Gräslund, A.-S. 2006", "Holm, S. 1979",
                  "10 av 10 omräkningar"):
         assert part in body, part
     en = bt.draft(_p("Geografi", "hotspot_r_for_R_U 768"), res, "en", map_keys=frozenset({"r_for_R"}))["body"]
-    assert ":::box In short" in en and "mode=kluster" in en and "Kulldorff, M. 1997" in en and "## A first test" in en
+    assert ":::box In short" in en and "Kulldorff, M. 1997" in en and "## A first test" in en
+    assert not APP_LINK.search(body) and not APP_LINK.search(en)
 
 
 def test_topic_draft_has_the_published_form():
