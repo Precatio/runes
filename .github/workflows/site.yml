@@ -42,9 +42,8 @@ jobs:
           NEXT_PUBLIC_SITE_MODE: public
           NEXT_PUBLIC_SITE_URL: https://vitkirunor.se
           NEXT_TELEMETRY_DISABLED: "1"
-      - name: Delningsbilderna som .png
-        run: node scripts/site_postbuild.mjs out
-        working-directory: web
+      - name: Utan Jekyll
+        run: touch web/out/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:
           path: web/out
