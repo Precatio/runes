@@ -704,7 +704,7 @@ function Remains({ data }: { data: Corpus }) {
         <Details title="Samband: tid, kristna markörer och brostenar">
           <div className="overflow-x-auto">
             <ExportTable><table className="w-full text-sm">
-              <thead><tr><Th>Samband</Th><Th>Stenar</Th><Th tip="Oddskvot: över 1 betyder oftare nära, under 1 mer sällan">Oddskvot</Th><Th>95 % intervall</Th><Th>q</Th><Th>Båda halvorna</Th></tr></thead>
+              <thead><tr><Th>Samband</Th><Th>Stenar</Th><Th tip="Oddskvot: över 1 betyder oftare nära, under 1 mer sällan">Oddskvot</Th><Th>95 % intervall</Th><Th>q</Th><Th tip={GLOSSARY["Båda halvorna"]}>Båda halvorna</Th></tr></thead>
               <tbody>{Object.entries(r.tests).map(([k, t]) => (
                 <tr key={k} className="border-t border-slate-900/5">
                   <td className="p-2">{t.label}{t.periods && <span className="block text-xs text-slate-500">före ca 1050 {pc(t.periods.early)}, efter {pc(t.periods.late)}</span>}</td>
@@ -734,7 +734,7 @@ function ChurchAgeTable({ a }: { a: ChurchAge }) {
       </p>
       <div className="overflow-x-auto">
         <ExportTable><table className="w-full text-sm">
-          <thead><tr><Th>Mönster</Th><Th>Tidiga kyrkor</Th><Th>Sena kyrkor</Th><Th>Skillnad, p</Th><Th>Med tiden konstant (tidiga)</Th><Th>Båda halvorna (tidiga)</Th><Th>Andel inom {a.near_km} km: tidig / bara sen / ingen</Th></tr></thead>
+          <thead><tr><Th>Mönster</Th><Th>Tidiga kyrkor</Th><Th>Sena kyrkor</Th><Th>Skillnad, p</Th><Th>Med tiden konstant (tidiga)</Th><Th tip={GLOSSARY["Båda halvorna"]}>Båda halvorna (tidiga)</Th><Th>Andel inom {a.near_km} km: tidig / bara sen / ingen</Th></tr></thead>
           <tbody>{a.tests.map(t => (
             <tr key={t.feature} className="border-t border-slate-900/5">
               <td className="p-2">{t.label} <span className="text-xs text-slate-500">({t.n} stenar)</span></td>
@@ -772,7 +772,7 @@ function CultNames({ c }: { c?: CultResult }) {
       </p>
       <div className="overflow-x-auto">
         <ExportTable><table className="w-full text-sm">
-          <thead><tr><Th>Samband</Th><Th>Nära</Th><Th>Andel nära</Th><Th>Andel övriga</Th><Th>Oddskvot</Th><Th>95 % intervall</Th><Th>q</Th><Th>Båda halvorna</Th></tr></thead>
+          <thead><tr><Th>Samband</Th><Th>Nära</Th><Th>Andel nära</Th><Th>Andel övriga</Th><Th>Oddskvot</Th><Th>95 % intervall</Th><Th>q</Th><Th tip={GLOSSARY["Båda halvorna"]}>Båda halvorna</Th></tr></thead>
           <tbody>{rows.map(([k, t]) => (
             <tr key={k} className="border-t border-slate-900/5">
               <td className="p-2">{t.label}{t.loo && <span className="block text-xs text-slate-500">utan ett namn i taget: {d2(t.loo.min_or)}–{d2(t.loo.max_or)}</span>}</td>

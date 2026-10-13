@@ -153,3 +153,4 @@ Object.assign(GLOSSARY, {
   "Tolkning": "Slutsatsen när alla belägg vägs samman: starkt, måttligt eller svagt för nya förslag; bekräftelse när metoden stämmer med Rundata; redan känt när förslaget finns i nyare källor; metodfel när fyndet motsäger en signerad sten. Klicka på raden för resonemanget.",
   "Fynd": "Metoden, vad den föreslår och vad Rundata anger, med nyare källor, bergart och språkdrag under.",
 });
+GLOSSARY["Båda halvorna"] = "En kontroll av att ett mönster inte är en slump: stenarna delas socken för socken i två grupper med samma trakter och ungefär samma tid, och analysen görs om i varje grupp för sig. Syns mönstret i båda beror det inte på några enskilda socknar eller ristare.";

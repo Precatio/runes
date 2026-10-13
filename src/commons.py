@@ -1,4 +1,4 @@
-"""Bilder av runstenar ur Wikimedia Commons, till Månadens fynd.
+"""Bilder av runstenar ur Wikimedia Commons, till artiklarna.
 
 Wikidata anger vilken bild som visar en runsten (P18) för stenar med signum i Samnordisk runtextdatabas (P1261), och
 Commons API ger en tumnagel och bildens upphovsperson och licens, som ska stå i bildtexten. Svaren sparas i

@@ -15,7 +15,7 @@ export default function BlogShell({ children }: { children: ReactNode }) {
           </Link>
           <nav className="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-600">
             <Link href="/" className="hover:text-slate-900">Start</Link>
-            <Link href="/blogg" className="hover:text-slate-900">Månadens fynd</Link>
+            <Link href="/artiklar" className="hover:text-slate-900">Artiklar</Link>
             <Link href="/karta" className="hover:text-slate-900">Mönsterkartan</Link>
           </nav>
           <div className="flex items-center gap-3">

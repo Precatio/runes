@@ -23,7 +23,7 @@ async function getPost(slug: string): Promise<BlogPost | null> {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPost(decodeURIComponent(slug));
-  if (!post) return { title: "Inlägget finns inte", robots: { index: false, follow: true } };
+  if (!post) return { title: "Artikeln finns inte", robots: { index: false, follow: true } };
   const description = metaDescription(post.summary || post.body || "");
   const path = postPath(post.slug);
   const photo = pictures(post.body ?? "")[0];
@@ -32,11 +32,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description,
     keywords: keywords(post),
     authors: [{ name: post.author || "Viktor Kvant" }],
-    alternates: { canonical: path, types: { "application/rss+xml": "/blogg/rss.xml" } },
+    alternates: { canonical: path, types: { "application/rss+xml": "/artiklar/rss.xml" } },
     openGraph: {
       type: "article", url: path, title: post.title, description, siteName: "Vitki", locale: "sv_SE",
       publishedTime: post.publishedAt ?? undefined, modifiedTime: post.updatedAt ?? post.publishedAt ?? undefined,
-      authors: [post.author || "Viktor Kvant"], section: "Månadens fynd", tags: keywords(post),
+      authors: [post.author || "Viktor Kvant"], section: "Artiklar", tags: keywords(post),
     },
     twitter: { card: "summary_large_image", title: post.title, description },
     robots: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },

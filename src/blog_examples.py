@@ -1,4 +1,4 @@
-"""Underlag till utkasten i Månadens fynd som kräver Rundata: en exempelsten med mönstret (krok och foto) och vilka
+"""Underlag till utkasten till artiklarna som kräver Rundata: en exempelsten med mönstret (krok och foto) och vilka
 ristare som står bakom stenarna i ett kluster (utkastets första prövning)."""
 from __future__ import annotations
 

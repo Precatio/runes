@@ -58,7 +58,7 @@ const FEATURES: { group: string; items: { href: string; name: string; text: stri
     items: [
       { href: "/start", name: "Start", text: "Dina projekt och analyser, sparade i ditt konto." },
       { href: "/knowledge", name: "Runologiskt arkiv", text: "De starkaste nya förslagen från stenöversikten, som hypoteser att pröva, och källorna bakom dem." },
-      { href: "/blogg", name: "Månadens fynd", text: "Ett inlägg i månaden om det mest intressanta mönstret, skrivet för en bred publik och med metoden redovisad." },
+      { href: "/artiklar", name: "Artiklar", text: "Artiklar om de mest intressanta mönstren i runstenarna, skrivna för en bred publik och med statistiken förklarad." },
       { href: "/account", name: "Konto och inställningar", text: "Logga in för att spara projekt och bidra till mätkorpusen, och lägg in dina API-nycklar." },
     ],
   },
@@ -70,7 +70,7 @@ const SOURCES: { name: string; href: string; use: string; licence: string }[] = 
   { name: "Kulturmiljöregistret, Riksantikvarieämbetet (via K-samsök)", href: "https://kulturarvsdata.se/", use: "Fornlämningar runt stenarna: gravfält, högar, färdvägar, broar, fornborgar och hamnar.", licence: "Öppna data från Riksantikvarieämbetet; källan anges" },
   { name: "OpenStreetMap", href: "https://www.openstreetmap.org/copyright", use: "Ortnamn (med Lantmäteriets namn från terrängkartan) och bakgrundskartan.", licence: "© OpenStreetMap-bidragsgivare, ODbL" },
   { name: "Wikidata", href: "https://www.wikidata.org/", use: "Medeltida kyrkor med uppförandeår, och vilka bilder som visar en runsten.", licence: "CC0" },
-  { name: "Wikimedia Commons", href: "https://commons.wikimedia.org/", use: "Fotona i Månadens fynd.", licence: "Varje bilds egen licens, med fotograf och licens i bildtexten" },
+  { name: "Wikimedia Commons", href: "https://commons.wikimedia.org/", use: "Fotona i artiklarna.", licence: "Varje bilds egen licens, med fotograf och licens i bildtexten" },
   { name: "Natural Earth", href: "https://www.naturalearthdata.com/", use: "Kustlinje, sjöar och vattendrag.", licence: "Public domain" },
   { name: "Tilezen Terrain Tiles (AWS Open Data)", href: "https://registry.opendata.aws/terrain-tiles/", use: "Höjddata för sikt, strandlinjen under vikingatiden och bästa vägar.", licence: "Öppna data; källorna anges enligt tjänstens villkor" },
   { name: "Sveriges geologiska undersökning (SGU)", href: "https://www.sgu.se/", use: "Berggrunden där stenen står.", licence: "Öppna data från SGU; källan anges" },

@@ -4,6 +4,8 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
 import { API_URL } from "@/lib/api";
+import { GLOSSARY } from "@/lib/glossary";
+import { Tip } from "@/components/Explain";
 import {
   nearPlace, periodShares, PLACE_STYLE, SPLITS, splitOf, provinceTable, SHARE_CLASSES, TOO_FEW, type MapCircle, type MapMarker, type PatternStone,
   type PlaceKind, type PlaceLayer,
@@ -167,7 +169,7 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
     <div className="space-y-4">
       {discover.length > 0 && (
         <div>
-          <p className={step}>Upptäck – fynd som håller i båda halvorna av korpusen</p>
+          <p className={step}>Upptäck – fynd som håller i <Tip text={GLOSSARY["Båda halvorna"]}>båda halvorna</Tip> av korpusen</p>
           <div className="flex gap-3 overflow-x-auto pb-2">
             {discover.map(d => (
               <button key={d.key} type="button" onClick={() => { patch(d.go); setPickedCluster(0); }}

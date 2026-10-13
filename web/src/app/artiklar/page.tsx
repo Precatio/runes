@@ -5,14 +5,14 @@ import type { BlogPost } from "@/components/BlogBody";
 import { API_URL } from "@/lib/api";
 import { BLOG_DESCRIPTION, BLOG_TITLE, blogJsonLd } from "@/lib/blogSeo";
 
-// The blog: one post a month about the most interesting patterns (written in Admin), rendered on the server
+// The articles about the most interesting patterns (written in Admin), rendered on the server
 export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: BLOG_TITLE,
   description: BLOG_DESCRIPTION,
-  alternates: { canonical: "/blogg", types: { "application/rss+xml": "/blogg/rss.xml" } },
-  openGraph: { type: "website", url: "/blogg", title: BLOG_TITLE, description: BLOG_DESCRIPTION, siteName: "Vitki", locale: "sv_SE" },
+  alternates: { canonical: "/artiklar", types: { "application/rss+xml": "/artiklar/rss.xml" } },
+  openGraph: { type: "website", url: "/artiklar", title: BLOG_TITLE, description: BLOG_DESCRIPTION, siteName: "Vitki", locale: "sv_SE" },
   twitter: { card: "summary_large_image", title: BLOG_TITLE, description: BLOG_DESCRIPTION },
 };
 
@@ -27,11 +27,11 @@ export default async function BlogPage() {
   return (
     <BlogShell>
       <section className="max-w-3xl mx-auto px-6 pt-20 pb-24">
-        <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e] mb-3">Månadens fynd</div>
+        <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e] mb-3">Artiklar</div>
         <h1 className="text-4xl md:text-5xl font-serif font-bold tracking-tight">Mönster i runstenarna</h1>
         <p className="mt-4 text-lg text-slate-600 leading-relaxed">
-          En gång i månaden skriver vi om de mest intressanta mönstren och fynden i Vitki – vad vi ser, vad det kan
-          betyda och hur det kan prövas. Siffrorna kommer från appens analyser och kan granskas där.
+          Här skriver vi om de mest intressanta mönstren i de svenska runstenarna – vad vi ser, vad det kan betyda och
+          hur det kan prövas. Siffrorna kommer från Vitkis analyser och förklaras i texten.
         </p>
         <div className="mt-14 space-y-10"><BlogList posts={posts} failed={failed} /></div>
       </section>

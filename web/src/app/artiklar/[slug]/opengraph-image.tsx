@@ -8,7 +8,7 @@ import { pictures } from "@/lib/blogSeo";
 
 // The picture shown when a post is shared (Open Graph and Twitter/X): its title, month and first photo, made
 // automatically for every post
-export const alt = "Månadens fynd – Vitki";
+export const alt = "Artiklar – Vitki";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const revalidate = 3600;
@@ -21,7 +21,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
     post = r.ok ? (await r.json()).post : null;
   } catch { /* the picture without the post */ }
   const logo = `data:image/png;base64,${(await readFile(join(process.cwd(), "public", "vitki_logo.png"))).toString("base64")}`;
-  const title = post?.title ?? "Månadens fynd";
+  const title = post?.title ?? "Artiklar";
   const pic = post ? pictures(post.body ?? "").find(p => /wikimedia\.org/.test(p.src)) : undefined;
   const photo = pic?.src;
   const big = title.length > 48 ? 54 : 66;
@@ -31,7 +31,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "70px", width: photo ? 760 : 1200 }}>
           <div style={{ display: "flex", alignItems: "center", fontSize: 26, fontWeight: 700, color: "#b7410e", letterSpacing: 3 }}>
             <img src={logo} alt="" width={48} height={40} style={{ marginRight: 16, borderRadius: 8 }} />
-            VITKI · MÅNADENS FYND
+            VITKI · ARTIKLAR
           </div>
           <div style={{ fontSize: big, fontWeight: 800, lineHeight: 1.08, marginTop: 28 }}>{title}</div>
           <div style={{ fontSize: 26, color: "#64748b", marginTop: 32 }}>

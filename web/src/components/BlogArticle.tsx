@@ -12,14 +12,14 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
   return (
     <article className="max-w-3xl mx-auto px-6 pt-16 pb-24">
       <nav aria-label="Brödsmulor" className="text-sm">
-        <Link href="/blogg" className="font-bold text-[#b7410e] hover:underline">← Månadens fynd</Link>
+        <Link href="/artiklar" className="font-bold text-[#b7410e] hover:underline">← Artiklar</Link>
       </nav>
       <div className="mt-8 text-sm text-slate-500">
         <time dateTime={post.publishedAt ?? post.month}>{monthLabel(post.month, lang)}</time>{post.author ? ` · ${post.author}` : ""}
       </div>
       <h1 className="mt-2 text-4xl md:text-5xl font-serif font-bold tracking-tight leading-tight" translate="no">{v.title}</h1>
       {v.summary && <p className="mt-5 text-xl text-slate-600 leading-relaxed" translate="no">{v.summary}</p>}
-      {lang === "en" && !v.en && <p className="mt-4 text-sm text-slate-500">Det här inlägget finns bara på svenska.</p>}
+      {lang === "en" && !v.en && <p className="mt-4 text-sm text-slate-500">Den här artikeln finns bara på svenska.</p>}
       <div className="mt-10" translate="no"><BlogBody text={v.body} /></div>
     </article>
   );

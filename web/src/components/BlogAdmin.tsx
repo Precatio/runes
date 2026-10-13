@@ -47,7 +47,7 @@ function insertPicture(text: string, signum: string, block: string) {
 const empty = (author: string): Draft => ({ slug: "", title: "", summary: "", body: "", title_en: "", summary_en: "", body_en: "",
                                            month: thisMonth(), author, topic: "" });
 
-// The monthly blog post (api/routers/blog.py): written and published here, by hand. "Utkast från månadens fynd" fills
+// The monthly blog post (api/routers/blog.py): written and published here, by hand. "Utkast från det som är nytt" fills
 // the form with the patterns and findings that are new or changed since the last published post, to edit from.
 export default function BlogAdmin({ call }: { call: (path: string, init?: RequestInit) => Promise<any> }) { // eslint-disable-line @typescript-eslint/no-explicit-any
   const { userName } = useSettings();
@@ -158,7 +158,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
     try {
       const d = await call("/api/admin/blog/posts", { method: "POST", body: JSON.stringify({ ...draft, published }) });
       setDraft(x => ({ ...x, id: d.post.id }));
-      setNote(published ? `Publicerat: /blogg/${d.post.slug}` : "Sparat som utkast.");
+      setNote(published ? `Publicerat: /artiklar/${d.post.slug}` : "Sparat som utkast.");
       load();
       refreshBlog();
     } catch (e) {
@@ -191,10 +191,10 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
     <section className="liquid-glass-island rounded-[24px] p-4 sm:p-6 space-y-4">
       <div className="flex flex-wrap items-center gap-3 justify-between">
         <div>
-          <h3 className="text-lg font-bold text-slate-900">Månadens fynd (blogg)</h3>
+          <h3 className="text-lg font-bold text-slate-900">Artiklar</h3>
           <p className="text-sm text-slate-600 max-w-3xl">
-            Ett inlägg i månaden om de mest intressanta mönstren och fynden, på <Link href="/blogg" className="text-[#b7410e] underline">/blogg</Link>.
-            Utkastet bygger på det som är nytt eller har ändrat status sedan förra publicerade inlägget; skriv om det med egna ord innan du publicerar.
+            Artiklarna om de mest intressanta mönstren och fynden, på <Link href="/artiklar" className="text-[#b7410e] underline">/artiklar</Link>.
+            Utkastet bygger på det som är nytt eller har ändrat status sedan förra publicerade artikeln; skriv om det med egna ord innan du publicerar.
           </p>
         </div>
         <div className="flex gap-2">
@@ -202,10 +202,10 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
             {busy === "topics" ? "Hämtar …" : topics ? "Dölj ämnena" : "Välj ämne ur R-analyserna"}
           </button>
           <button onClick={() => fromFindings()} disabled={busy === "draft"} className="px-4 py-2 rounded-xl border border-[#b7410e] text-[#b7410e] bg-white text-sm font-bold disabled:opacity-40">
-            {busy === "draft" ? "Skapar …" : "Utkast från månadens fynd"}
+            {busy === "draft" ? "Skapar …" : "Utkast från det som är nytt"}
           </button>
           <button onClick={() => { setDraft(empty(userName)); setSlugTouched(false); setSources([]); setNote(null); }}
-            className="px-4 py-2 rounded-xl border border-slate-300 bg-white text-sm font-bold">Nytt inlägg</button>
+            className="px-4 py-2 rounded-xl border border-slate-300 bg-white text-sm font-bold">Ny artikel</button>
         </div>
       </div>
       {error && <p className="text-sm font-semibold text-red-700">{error}</p>}
@@ -251,7 +251,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
         <input value={draft.title} onChange={e => set("title", e.target.value)} placeholder="Rubrik" maxLength={160} className={`${field} sm:col-span-4 font-semibold`} />
         <label className="text-xs font-bold text-slate-600 sm:col-span-4">Adress
           <div className="flex items-center gap-1 mt-1">
-            <span className="text-sm text-slate-500">/blogg/</span>
+            <span className="text-sm text-slate-500">/artiklar/</span>
             <input value={draft.slug} onChange={e => { setSlugTouched(true); set("slug", slugify(e.target.value)); }} className={field} />
           </div>
         </label>
@@ -297,7 +297,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
               ))}
             </ul>
             <p className="mt-2 text-[11px] text-slate-500">
-              När inlägget publiceras får sidan av sig själv titel, beskrivning, kanonisk adress, Open Graph och Twitter-kort,
+              När artikeln publiceras får sidan av sig själv titel, beskrivning, kanonisk adress, Open Graph och Twitter-kort,
               strukturerade data (BlogPosting), en egen delningsbild med första fotot, plats i sitemap och RSS-flödet.
             </p>
           </details>
@@ -353,7 +353,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
           <div className="space-y-3 pt-1">
             <p className="text-xs text-slate-500">
               Kartbilderna och figurerna ur korpusanalysen i R – samma kartor som i kartverktyget. Infoga lägger figuren före
-              ”Vår hypotes” med bildtext och källa; den sparas som en egen kopia, så inlägget behåller den när analysen räknas om.
+              ”Vår hypotes” med bildtext och källa; den sparas som en egen kopia, så artikeln behåller den när analysen räknas om.
             </p>
             {[...new Set(rFigures.map(f => f.group_label))].map(g => (
               <div key={g}>

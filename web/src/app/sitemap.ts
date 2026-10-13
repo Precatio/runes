@@ -6,7 +6,7 @@ import { SITE_URL } from "@/lib/site";
 export const revalidate = 3600;
 
 const PAGES: [string, MetadataRoute.Sitemap[number]["changeFrequency"], number][] = [
-  ["/", "weekly", 1], ["/blogg", "weekly", 0.9], ["/karta", "monthly", 0.8], ["/inskrifter", "monthly", 0.8],
+  ["/", "weekly", 1], ["/artiklar", "weekly", 0.9], ["/karta", "monthly", 0.8], ["/inskrifter", "monthly", 0.8],
   ["/stilgrupper", "monthly", 0.6], ["/statistik", "monthly", 0.7], ["/luckor", "monthly", 0.7], ["/oversikt", "monthly", 0.6],
   ["/docs", "monthly", 0.5], ["/start", "monthly", 0.5],
 ];
@@ -19,9 +19,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const posts: { slug: string; publishedAt?: string | null; updatedAt?: string | null }[] = r.ok ? (await r.json()).posts : [];
     return [...pages, ...posts.map(p => {
       const changed = p.updatedAt ?? p.publishedAt;
-      return { url: `${SITE_URL}/blogg/${encodeURIComponent(p.slug)}`, lastModified: changed ? new Date(changed) : now,
+      return { url: `${SITE_URL}/artiklar/${encodeURIComponent(p.slug)}`, lastModified: changed ? new Date(changed) : now,
                changeFrequency: "monthly" as const, priority: 0.8,
-               images: [`${SITE_URL}/blogg/${encodeURIComponent(p.slug)}/opengraph-image`] };
+               images: [`${SITE_URL}/artiklar/${encodeURIComponent(p.slug)}/opengraph-image`] };
     })];
   } catch {
     return pages;

@@ -5,6 +5,16 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Artiklar i stället för blogg, artiklarna högt upp på startsidan och "Vad är R?"
+- Bloggen heter nu Artiklar och ligger på `/artiklar` (gamla länkar till `/blogg` leds dit), i menyer, metadata, RSS,
+  delningsbilder och Admin.
+- Startsidan behåller sin form men lyfter artiklarna: ett avsnitt direkt efter inledningen med den senaste artikeln
+  (med foto) och fler artiklar, "Läs artiklarna" i inledningen och längst ner, och "Artiklar" först i menyn. Den
+  gamla rutan om Månadens fynd är borttagen. Nytt avsnitt "Vad är R?" som förklarar R för humanister, med en rad R
+  förklarad. Siffrorna om gravfälten (66 mot 24 %) och antalet R-analyser (elva) är uppdaterade.
+- "Båda halvorna" förklaras: i artiklarna och utkasten ("två oberoende halvor"), i ordlistan med verktygstips på
+  statistiksidan och kartan, och i "Så arbetar vi".
+
 ### Statistiken förklarad i klartext i bloggutkasten
 - Utkasten förklarar vad siffrorna betyder i stället för att bara rada upp dem: det justerade p- eller q-värdet med en
   korrekt läsning (efter Holm: hur sällan ett så tydligt mönster skulle uppstå av en slump; efter Benjamini–Hochberg:

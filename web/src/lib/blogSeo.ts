@@ -5,14 +5,14 @@ import { API_URL } from "@/lib/api";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import type { BlogPost } from "@/components/BlogBody";
 
-export const BLOG_TITLE = "Månadens fynd – mönster i runstenarna";
-export const BLOG_DESCRIPTION = "Ett inlägg i månaden om de mest intressanta mönstren i de svenska vikingatida runstenarna: vad vi "
+export const BLOG_TITLE = "Artiklar – mönster i runstenarna";
+export const BLOG_DESCRIPTION = "Artiklar om de mest intressanta mönstren i de svenska vikingatida runstenarna: vad vi "
   + "ser, vad det kan betyda och hur det kan prövas – populärvetenskapligt och med statistiken redovisad.";
 const BASE_KEYWORDS = ["runstenar", "runinskrifter", "runforskning", "runologi", "vikingatiden", "statistik",
-  "Samnordisk runtextdatabas", "Månadens fynd"];
+  "Samnordisk runtextdatabas", "artiklar om runstenar"];
 const SIGNUM = /\b(?:U|Sö|Ög|Vg|Sm|Öl|Gs|Hs|Hä|Vs|Nä|DR|N|G)\s\d{1,4}[A-Z]?\b/g;
 
-export const postPath = (slug: string) => `/blogg/${encodeURIComponent(slug)}`;
+export const postPath = (slug: string) => `/artiklar/${encodeURIComponent(slug)}`;
 export const postUrl = (slug: string) => `${SITE_URL}${postPath(slug)}`;
 
 /** A picture's address as a search engine or another site can fetch it. */
@@ -79,7 +79,7 @@ export function articleJsonLd(post: BlogPost) {
       publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL, logo: { "@type": "ImageObject", url: `${SITE_URL}/vitki_logo.png` } },
       image: [`${url}/opengraph-image`, ...pictures(body).map(p => p.src)].slice(0, 5),
       inLanguage: "sv-SE",
-      articleSection: "Månadens fynd",
+      articleSection: "Artiklar",
       keywords: keywords(post).join(", "),
       wordCount: wordCount(body),
       isAccessibleForFree: true,
@@ -92,7 +92,7 @@ export function articleJsonLd(post: BlogPost) {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: SITE_NAME, item: SITE_URL },
-        { "@type": "ListItem", position: 2, name: "Månadens fynd", item: `${SITE_URL}/blogg` },
+        { "@type": "ListItem", position: 2, name: "Artiklar", item: `${SITE_URL}/artiklar` },
         { "@type": "ListItem", position: 3, name: post.title, item: url },
       ],
     },
@@ -106,7 +106,7 @@ export function blogJsonLd(posts: BlogPost[]) {
     "@type": "Blog",
     name: BLOG_TITLE,
     description: BLOG_DESCRIPTION,
-    url: `${SITE_URL}/blogg`,
+    url: `${SITE_URL}/artiklar`,
     inLanguage: "sv-SE",
     publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
     blogPost: posts.map(p => ({ "@type": "BlogPosting", headline: p.title, url: postUrl(p.slug), datePublished: p.publishedAt ?? undefined,
@@ -128,7 +128,7 @@ export function seoChecks(post: Pick<BlogPost, "title" | "summary" | "slug" | "b
     { ok: desc.length >= 70 && metaDescription(post.summary || "").length >= 70 && !metaDescription(post.summary || "").endsWith("…"),
       text: `Ingressen är ${desc.length} tecken; beskrivningen i sökträffen blir ${metaDescription(post.summary || "").length} tecken med hela meningar (bäst 70–160).` },
     { ok: topical, text: "Rubriken eller ingressen nämner runstenar, runinskrifter eller vikingatiden – orden folk söker på." },
-    { ok: /^[a-z0-9-]{1,75}$/.test(post.slug), text: `Adressen /blogg/${post.slug || "…"} är kort, med små bokstäver och bindestreck.` },
+    { ok: /^[a-z0-9-]{1,75}$/.test(post.slug), text: `Adressen /artiklar/${post.slug || "…"} är kort, med små bokstäver och bindestreck.` },
     { ok: (body.match(/^## /gm) ?? []).length >= 3, text: "Texten har minst tre mellanrubriker (##), så att den går att överblicka." },
     { ok: pics.length > 0 && pics.every(p => p.alt.trim().length >= 5), text: `${pics.length} bilder${pics.length ? ", alla med beskrivande alt-text" : " – lägg gärna till en"}.` },
     { ok: words >= 600, text: `Texten har ${words} ord (bäst minst 600 för en artikel).` },

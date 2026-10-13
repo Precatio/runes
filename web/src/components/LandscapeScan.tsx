@@ -63,7 +63,7 @@ export default function LandscapeScan({ onPick, current, scan: given }: {
       <p className="mt-2 text-xs text-slate-600 max-w-4xl">
         Varje ruta prövar om ett mönster blir vanligare (varmt) eller ovanligare (kallt) ju närmare stenen står en sorts plats –
         utan vald radie, med landskapet konstant och alla {scan.n_tests} rutor justerade tillsammans (Benjamini–Hochberg). Talet
-        är oddskvoten när avståndet halveras; ✓ betyder att sambandet håller i båda halvorna av korpusen. Grått klarar inte
+        är oddskvoten när avståndet halveras; ✓ betyder att sambandet håller i båda halvorna av korpusen (stenarna delas socken för socken i två grupper med samma trakter och tid, och analysen görs om i var och en). Grått klarar inte
         justeringen. Flyttade stenar räknas inte. Klicka på en ruta för att se den på kartan.
       </p>
       <label className="mt-2 flex items-center gap-1.5 text-xs font-semibold text-slate-700">

@@ -2,7 +2,27 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import LanguageToggle from "@/components/LanguageToggle";
+import ArticleTeasers from "@/components/ArticleTeasers";
+import type { BlogPost } from "@/components/BlogBody";
+import { API_URL } from "@/lib/api";
+import { pictures } from "@/lib/blogSeo";
 import { SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
+
+// The newest articles are fetched again at most every five minutes, and at once when one is published (tag "blog")
+export const revalidate = 300;
+
+async function latestArticles(): Promise<{ posts: BlogPost[]; photo: { src: string; alt: string; credit: string | null } | null }> {
+  try {
+    const r = await fetch(`${API_URL}/api/blog/posts`, { next: { revalidate: 300, tags: ["blog"] } });
+    const posts: BlogPost[] = r.ok ? (await r.json()).posts : [];
+    if (!posts.length) return { posts, photo: null };
+    const one = await fetch(`${API_URL}/api/blog/posts/${encodeURIComponent(posts[0].slug)}`, { next: { revalidate: 300, tags: ["blog"] } });
+    const body: string = one.ok ? (await one.json()).post.body ?? "" : "";
+    return { posts, photo: pictures(body).find(p => /wikimedia\.org/.test(p.src)) ?? null };
+  } catch {
+    return { posts: [], photo: null };
+  }
+}
 
 export const metadata: Metadata = {
   title: { absolute: "Vitki – runstenar, runinskrifter och runforskning med öppna data" },
@@ -30,7 +50,7 @@ const FAQ = [
   },
   {
     q: "Var står runstenarna i landskapet?",
-    a: "Ofta vid gravfält: 61 % av de runstenar som står kvar på sin plats finns inom 500 meter från ett registrerat gravfält, mot 21 % av slumpvisa platser i samma trakter. De står också nära vatten, tydligast mot strandlinjen omkring år 1000, och vid vägar och broar.",
+    a: "Ofta vid gravfält: 66 % av de runstenar som står kvar på sin plats finns inom 500 meter från ett registrerat gravfält, mot 24 % av slumpvisa platser i samma trakter. De står också nära vatten, tydligast mot strandlinjen omkring år 1000, och vid vägar och broar.",
   },
   {
     q: "Är Vitki gratis att använda?",
@@ -60,9 +80,29 @@ const JSON_LD = [
 
 const GITHUB = "https://github.com/Precatio/runes";
 
+// What R is, for readers from the humanities: the articles rest on analyses in R
+const R_POINTS = [
+  {
+    title: "Ett fritt verktyg för statistik",
+    text: "R är ett fritt och öppet program för statistik och diagram. Det skapades på 1990-talet av statistikerna Ross Ihaka och Robert Gentleman i Nya Zeeland och används i dag av forskare över hela världen – också inom språkvetenskap, arkeologi och historia.",
+  },
+  {
+    title: "Ett recept som vem som helst kan följa",
+    text: "En analys i R är ett skript: en text som steg för steg beskriver vad datorn ska göra med materialet. Den som har skriptet och samma data får exakt samma resultat. Därför kan andra granska varje siffra i artiklarna – och pröva om de håller.",
+  },
+  {
+    title: "Verktyg från hela forskarvärlden",
+    text: "Över 20 000 tilläggspaket, skrivna av forskare, gör R till ett gemensamt verktygsförråd. Vitki använder bland annat paket för kartor (sf), för kurvor över tid (mgcv) och för att hitta platser där ett mönster samlas (spdep och smerc).",
+  },
+  {
+    title: "Vad R gör med runstenarna",
+    text: "R räknar och jämför: hur vanligt ett drag är före och efter en viss tid, om stenarna står närmare vatten än slumpen skulle ge, om ett mönster samlas på en plats. Framför allt prövar R om ett mönster är tydligare än vad slumpen brukar ge – det är det som skiljer ett fynd från en tillfällighet.",
+  },
+];
+
 const STATS = [
   { value: "6 753", label: "inskrifter ur Samnordisk runtextdatabas" },
-  { value: "2 321", label: "svenska vikingatida runstenar i nio statistiska analyser i R" },
+  { value: "2 321", label: "svenska vikingatida runstenar i elva statistiska analyser i R" },
   { value: "±0,6°", label: "vinkelfel på syntetiska stenar med kända spår" },
   { value: "60 %", label: "rätt ristare först i ortografiskt test (slump 4 %)" },
 ];
@@ -101,7 +141,7 @@ const PRINCIPLES = [
   },
   {
     title: "Prövat mot det modellen inte sett",
-    text: "Varje statistisk modell valideras med korsvalidering, också på socknar och härader den aldrig sett, och dess sannolikheter kontrolleras mot hur ofta den har rätt.",
+    text: "Varje statistisk modell valideras med korsvalidering, också på socknar och härader den aldrig sett. Varje mönster prövas dessutom i två oberoende halvor: stenarna delas socken för socken i två grupper med samma trakter och samma tid, analysen görs om i varje grupp, och mönstret räknas bara om det syns i båda – då beror det inte på några enskilda socknar eller ristare.",
   },
   {
     title: "Osäkerhet och signifikans redovisas",
@@ -274,7 +314,8 @@ function SectionTitle({ eyebrow, title, intro }: { eyebrow: string; title: strin
   );
 }
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const articles = await latestArticles();
   return (
     <div className="min-h-screen bg-[#f6f4f1] text-slate-900 overflow-x-hidden">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }} />
@@ -286,10 +327,10 @@ export default function LandingPage() {
             <span className="text-xl font-bold tracking-tight">Vitki</span>
           </Link>
           <nav className="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-600">
+            <a href="#artiklar" className="hover:text-slate-900">Artiklar</a>
             <a href="#forskning" className="hover:text-slate-900">För forskningen</a>
             <a href="#nytt" className="hover:text-slate-900">Vad är nytt</a>
             <a href="#landskap" className="hover:text-slate-900">Nya källor</a>
-            <Link href="/blogg" className="hover:text-slate-900">Månadens fynd</Link>
             <a href="#fragor" className="hover:text-slate-900">Frågor</a>
             <a href="#kallor" className="hover:text-slate-900">Källor</a>
             <a href="#oppen" className="hover:text-slate-900">Öppen källkod</a>
@@ -327,6 +368,9 @@ export default function LandingPage() {
             <Link href="/stenanalys" className="px-7 py-3.5 rounded-full bg-white border border-slate-300 font-bold hover:border-slate-900">
               Analysera en sten
             </Link>
+            <Link href="/artiklar" className="px-7 py-3.5 rounded-full bg-white border border-[#b7410e]/40 text-[#9a350b] font-bold hover:border-[#b7410e]">
+              Läs artiklarna
+            </Link>
           </div>
 
           <dl className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-px bg-slate-900/10 rounded-2xl overflow-hidden border border-slate-900/10">
@@ -342,6 +386,59 @@ export default function LandingPage() {
             Ortografisk träffsäkerhet: lämna-en-ute-test på 135 signerade vikingatida inskrifter i Rundata, 27 ristare.
             Vinkelfelet: syntetiska V-spår med öppningsvinkel 50–110° (METHODS.md, avsnitt 1).
           </p>
+        </div>
+      </section>
+
+      {/* Articles: what the analyses find, told for everyone interested in runestones */}
+      <section id="artiklar" className="bg-white border-y border-slate-900/5 scroll-mt-16">
+        <div className="max-w-6xl mx-auto px-6 py-20">
+          <SectionTitle
+            eyebrow="Artiklar"
+            title="Det runstenarna berättar när man räknar på dem"
+            intro="Mönster som syns först när man ser alla Sveriges vikingatida runstenar på en gång – vad vi ser, vad det kan betyda och hur det kan prövas."
+          />
+          <ArticleTeasers posts={articles.posts} photo={articles.photo} />
+        </div>
+      </section>
+
+      {/* What R is, for readers from the humanities */}
+      <section id="r" className="scroll-mt-16">
+        <div className="max-w-6xl mx-auto px-6 py-20">
+          <SectionTitle
+            eyebrow="Vad är R?"
+            title="Statistikverktyget bakom artiklarna"
+            intro="Artiklarna bygger på beräkningar i R. Du behöver inte kunna R för att läsa dem – siffrorna förklaras i texten – men så här fungerar det."
+          />
+          <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-10 items-start">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8">
+              {R_POINTS.map(r => (
+                <div key={r.title} className="border-t-2 border-[#b7410e] pt-4">
+                  <h3 className="text-lg font-bold">{r.title}</h3>
+                  <p className="mt-2 text-slate-600 leading-relaxed">{r.text}</p>
+                </div>
+              ))}
+            </div>
+            <div className="rounded-2xl bg-slate-900 text-white p-6">
+              <div className="text-xs font-bold uppercase tracking-wider text-[#f0a37f]">Så ser R ut</div>
+              <pre className="mt-3 whitespace-pre overflow-x-auto text-sm leading-relaxed font-mono text-slate-100" translate="no">
+{`# Andelen stenar med en bön,
+# stilgrupp för stilgrupp
+andel <- tapply(stenar$bon,
+                stenar$stilgrupp,
+                mean)`}
+              </pre>
+              <p className="mt-4 text-sm text-slate-300 leading-relaxed">
+                Raden säger: ta uppgiften om bön för varje sten (1 för ja, 0 för nej), dela upp stenarna efter stilgrupp och
+                räkna medelvärdet i varje grupp – det blir andelen stenar med en bön. Raderna som börjar med # är
+                kommentarer för människor; datorn hoppar över dem.
+              </p>
+              <p className="mt-4 text-sm text-slate-300 leading-relaxed">
+                Alla Vitkis R-skript finns öppet på{" "}
+                <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="underline hover:text-white">GitHub</a>,
+                och i appen kan varje analys laddas ner som ett paket med skript och data.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -422,16 +519,6 @@ export default function LandingPage() {
                 <p className="mt-2 text-slate-600 leading-relaxed">{l.text}</p>
               </div>
             ))}
-          </div>
-          <div className="mt-8 rounded-2xl border border-[#b7410e]/30 bg-[#fbf3ee] p-7 flex flex-col md:flex-row md:items-center gap-4 justify-between">
-            <div>
-              <h3 className="text-lg font-bold">Månadens fynd</h3>
-              <p className="mt-1 text-slate-600 leading-relaxed max-w-2xl">
-                En gång i månaden skriver vi om de mest intressanta mönstren och fynden – vad vi ser, vad det kan betyda
-                och hur det kan prövas.
-              </p>
-            </div>
-            <Link href="/blogg" className="shrink-0 px-6 py-3 rounded-full bg-slate-900 text-white font-bold hover:bg-black">Läs bloggen</Link>
           </div>
         </div>
       </section>
@@ -540,6 +627,7 @@ språk, Uppsala universitet.`}
         <div className="mt-8 flex flex-wrap justify-center gap-4">
           <Link href="/start" className="px-7 py-3.5 rounded-full bg-[#b7410e] text-white font-bold hover:bg-[#9a350b]">Öppna appen</Link>
           <Link href="/inskrifter" className="px-7 py-3.5 rounded-full bg-white border border-slate-300 font-bold hover:border-slate-900">Sök i Rundata</Link>
+          <Link href="/artiklar" className="px-7 py-3.5 rounded-full bg-white border border-[#b7410e]/40 text-[#9a350b] font-bold hover:border-[#b7410e]">Läs artiklarna</Link>
         </div>
       </section>
 

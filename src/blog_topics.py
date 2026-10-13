@@ -1,4 +1,4 @@
-"""Ämnen för Månadens fynd: de mönster som R-analyserna har hittat och som håller, och ett utkast kring ett av dem.
+"""Ämnen för artiklarna: de mönster som R-analyserna har hittat och som håller, och ett utkast kring ett av dem.
 
 Kandidaterna är korpusmönstren (src/r_findings.py) som är *mönster att pröva* eller *bekräftar*, har en hypotes och håller i
 båda halvorna av korpusen (nya mönster får vara med också när analysen saknar ett prov i halvor). Utkastet följer bloggens mall (rubrik, ingress, "Kort sagt", vad vi
@@ -20,12 +20,15 @@ WORDS = {
     "sv": {
         "short": "Kort sagt", "see": "Vad vi ser", "sure": "Så säkra är vi", "hyp": "Vår hypotes", "test": "Så kan den prövas",
         "caveats": "Förbehåll", "yourself": "Se själv", "sources": "Källor och data",
-        "hyp_bullet": "Vår hypotes", "test_bullet": "Den kan prövas", "both": "Mönstret håller i båda halvorna av korpusen, "
-        "uppdelad socken för socken.", "not_both": "Mönstret har inte prövats i båda halvorna, eller håller bara i den ena.",
+        "hyp_bullet": "Vår hypotes", "test_bullet": "Den kan prövas", "both": "Mönstret syns i två oberoende halvor av "
+        "materialet, inte bara i några enskilda socknar.", "not_both": "Mönstret syns inte i båda halvorna av materialet, "
+        "så det kan bero på några enskilda socknar.",
         "many": "**Många test på en gång.** Den som prövar många mönster hittar till slut något av en ren slump, så vi "
                 "prövade det här tillsammans med appens andra mönster och tog hänsyn till det. {plain} ({sig}).",
-        "halves": "**Båda halvorna.** Vi delade materialet i två halvor, socken för socken, och mönstret syns i båda var "
-                  "för sig. Ett mönster som bara fanns i den ena halvan kunde vara en tillfällighet i just de socknarna.",
+        "halves": "**Två oberoende halvor.** Vi delade stenarna i två grupper, socken för socken, så att båda grupperna fick "
+                  "stenar från samma trakter och ungefär samma tid, och gjorde om hela analysen i varje grupp för sig. "
+                  "Mönstret syns i båda. Hade det bara funnits i den ena hade det kunnat bero på några enskilda socknar "
+                  "eller ristare.",
         "draws": "**Osäkra årtal.** Stilgruppernas dateringar är ungefärliga; vi räknade om med årtal lottade inom varje "
                  "stilgrupps intervall, och {ok} av {n} omräkningar gav samma resultat.",
         "model": "**Samma ristare, samma trakt.** Modellen jämför stenar av samma ristare och i samma område, så att mönstret "
@@ -54,8 +57,10 @@ WORDS = {
         "corpus, split parish by parish.", "not_both": "The pattern has not been tested in both halves, or holds in only one.",
         "many": "**Many tests at once.** Whoever tests many patterns will in the end find something by pure chance, so we "
                 "tested this one together with the app's other patterns and took that into account. {plain} ({sig}).",
-        "halves": "**Both halves.** We split the material into two halves, parish by parish, and the pattern appears in each "
-                  "on its own. A pattern found in only one half could be a coincidence in just those parishes.",
+        "halves": "**Two independent halves.** We split the stones into two groups, parish by parish, so that both groups "
+                  "got stones from the same districts and about the same time, and redid the whole analysis in each group "
+                  "on its own. The pattern appears in both. Had it been found in only one, it could have been down to a "
+                  "few particular parishes or carvers.",
         "draws": "**Uncertain years.** The style groups' dates are approximate; we recalculated with years drawn at random "
                  "within each group's interval, and {ok} of {n} recalculations gave the same result.",
         "model": "**Same carver, same area.** The model compares stones by the same carver and in the same area, so the "
@@ -223,7 +228,7 @@ T = {
                       "vi prövat det på flera sätt:",
         "kb_robust": {"time": "Förändringen syns också när vi jämför stenar av samma ristare och i samma trakt.",
                       "regional": "Skillnaden finns kvar vid samma tid och med samma ristare.",
-                      "cluster": "Klustret klarar en prövning mot slumpen och syns i båda halvorna av materialet.",
+                      "cluster": "Klustret klarar en prövning mot slumpen och syns i två oberoende halvor av materialet.",
                       "generic": "Mönstret klarar justeringen för många test."},
         "kb_hyp": "Vår hypotes: {hyp} Den kan prövas.",
         "h1": {"time": "{Label} genom tiden", "regional": "{Label} landskap för landskap", "cluster": "Ett kluster i {region}",
@@ -312,7 +317,7 @@ T["en"] = {
                   "it in several ways:",
     "kb_robust": {"time": "The change shows also when we compare stones by the same carver and in the same area.",
                   "regional": "The difference remains at the same time and with the same carver.",
-                  "cluster": "The cluster survives a test against chance and shows in both halves of the material.",
+                  "cluster": "The cluster survives a test against chance and shows in two independent halves of the material.",
                   "generic": "The pattern survives the adjustment for many tests."},
     "kb_hyp": "Our hypothesis: {hyp} It can be tested.",
     "h1": {"time": "{Label} through time", "regional": "{Label} province by province", "cluster": "A cluster in {region}",

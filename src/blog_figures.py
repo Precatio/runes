@@ -1,4 +1,4 @@
-"""Figurer ur R-analyserna för Månadens fynd: kartverktygets kartbilder (var mönstren samlas, genomsökningen av
+"""Figurer ur R-analyserna för artiklarna: kartverktygets kartbilder (var mönstren samlas, genomsökningen av
 landskapet, fornlämningarna) och korpusanalysernas övriga figurer.
 
 En figur som används i ett inlägg kopieras till data/blog/figures/ under sin innehållshash och visas från

@@ -9,7 +9,7 @@ import { postPath } from "@/lib/blogSeo";
 export default function BlogList({ posts, failed }: { posts: BlogPost[]; failed: boolean }) {
   const { lang } = useLanguage();
   if (!posts.length) {
-    return <p className="text-slate-500">{failed ? "Bloggen kunde inte hämtas just nu." : "Inga inlägg ännu. Det första kommer snart."}</p>;
+    return <p className="text-slate-500">{failed ? "Artiklarna kunde inte hämtas just nu." : "Inga artiklar ännu. Den första kommer snart."}</p>;
   }
   return (
     <>
@@ -25,7 +25,7 @@ export default function BlogList({ posts, failed }: { posts: BlogPost[]; failed:
             </h2>
             <p className="mt-2 text-slate-600 leading-relaxed" translate="no">{v.summary}</p>
             <Link href={postPath(p.slug)} className="mt-3 inline-block text-sm font-bold text-[#b7410e] hover:underline">
-              Läs inlägget →
+              Läs artikeln →
             </Link>
           </article>
         );

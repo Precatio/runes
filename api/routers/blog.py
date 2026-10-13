@@ -1,4 +1,4 @@
-"""Månadens fynd: bloggen på /blogg, ett inlägg i månaden om de mest intressanta mönstren och fynden.
+"""Artiklarna på /artiklar (tidigare Månadens fynd): de mest intressanta mönstren och fynden.
 
 Inläggen ligger i Firestore-samlingen `posts` och skrivs och läses bara av servern (Firebase Admin SDK), så att
 samlingen kan vara stängd för webbläsarna (firestore.rules). Grundaren skriver och publicerar i Admin; utkastet från
@@ -102,7 +102,7 @@ def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
         raise HTTPException(status_code=422, detail="Månaden ska anges som ÅÅÅÅ-MM.")
     others = [p for p in _all() if p["id"] != req.id]
     if any(p.get("slug") == req.slug for p in others):
-        raise HTTPException(status_code=409, detail=f"Adressen /blogg/{req.slug} används redan av ett annat inlägg.")
+        raise HTTPException(status_code=409, detail=f"Adressen /artiklar/{req.slug} används redan av en annan artikel.")
     now = dt.datetime.now(dt.timezone.utc)
     data = {**req.model_dump(exclude={"id"}), "updatedAt": now, "by": admin["uid"]}
     try:
@@ -137,7 +137,7 @@ def indexnow(slug: str) -> bool:
         return False
     host = site.split("://", 1)[1].split("/", 1)[0]
     body = {"host": host, "key": key, "keyLocation": f"{site}/indexnow-key.txt",
-            "urlList": [f"{site}/blogg/{slug}", f"{site}/blogg", f"{site}/sitemap.xml"]}
+            "urlList": [f"{site}/artiklar/{slug}", f"{site}/artiklar", f"{site}/sitemap.xml"]}
 
     def ping():
         import requests
