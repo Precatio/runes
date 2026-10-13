@@ -5,6 +5,17 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Artiklarna datumstämplas och kan schemaläggas
+- Artiklarna publiceras inte längre per månad. De får datumet när de publiceras, och datumet visas i artikeln, listan,
+  på startsidan och i delningsbilden, till exempel "12 oktober 2026" (svensk tid). Äldre artiklar utan tid visar sin månad.
+- I Admin ersätts månadsfältet av en valfri publiceringstid och knapparna Spara utkast, Publicera nu och Schemalägg. En
+  schemalagd artikel syns varken i listan eller på sin adress förrän tiden är nådd, och går sedan live av sig själv inom
+  ett par minuter. I Admin märks den "schemalagd" med tid. När den går live anmäls den till sökmotorerna (IndexNow), om
+  det är påslaget.
+- En artikel som redan var publicerad behåller sitt datum när den redigeras. Nya utkast får adresser utan månad
+  (`/artiklar/bonen-tystnade-…`), medan de publicerade artiklarna behåller sina adresser.
+- Startsidan och artikelsidorna hämtas om varje minut, RSS och webbplatskartan var femte minut.
+
 ### Artiklar i stället för blogg, artiklarna högt upp på startsidan och "Vad är R?"
 - Bloggen heter nu Artiklar och ligger på `/artiklar` (gamla länkar till `/blogg` leds dit), i menyer, metadata, RSS,
   delningsbilder och Admin.

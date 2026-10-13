@@ -42,6 +42,22 @@ export function monthLabel(month: string, lang = "sv") {
   return `${(lang === "en" ? MONTHS_EN : MONTHS_SV)[m - 1]} ${y}`;
 }
 
+/** "2026-10-13T08:30:00Z" → "13 oktober 2026" (with the time: "13 oktober 2026 10:30"), in Swedish time on server and
+ *  browser alike, so that the rendered date does not change when the page comes alive. */
+export function dateLabel(iso: string | null | undefined, lang = "sv", withTime = false) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  return d.toLocaleString(lang === "en" ? "en-GB" : "sv-SE", {
+    day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Stockholm",
+    ...(withTime ? { hour: "2-digit", minute: "2-digit" } : {}),
+  });
+}
+
+/** An article's date: when it was published, or its month for the older articles that have none. */
+export const postDate = (p: Pick<BlogPost, "publishedAt" | "month">, lang = "sv") =>
+  p.publishedAt ? dateLabel(p.publishedAt, lang) : monthLabel(p.month, lang);
+
 // Links only to the web or within the site, never javascript: or data:
 const safeHref = (href: string) => (/^(https?:\/\/|\/)/.test(href) ? href : null);
 

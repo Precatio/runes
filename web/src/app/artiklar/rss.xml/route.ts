@@ -4,14 +4,14 @@ import { BLOG_DESCRIPTION, BLOG_TITLE, metaDescription, postUrl } from "@/lib/bl
 import { SITE_URL } from "@/lib/site";
 
 // RSS for the articles: feed readers and search engines learn about a new article when it is published
-export const revalidate = 3600;
+export const revalidate = 300;
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 export async function GET() {
   let posts: BlogPost[] = [];
   try {
-    const r = await fetch(`${API_URL}/api/blog/posts`, { next: { revalidate: 3600, tags: ["blog"] } });
+    const r = await fetch(`${API_URL}/api/blog/posts`, { next: { revalidate: 300, tags: ["blog"] } });
     if (r.ok) posts = (await r.json()).posts;
   } catch { /* an empty feed */ }
   const items = posts.map(p => `

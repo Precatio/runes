@@ -22,7 +22,7 @@ const field = "liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm outline-n
 const date = (s: string | null) => (s ? new Date(s).toLocaleDateString("sv-SE", { dateStyle: "medium" }) : "–");
 
 // The founder's admin: who has registered, suspending accounts, messages in the app (api/routers/admin.py) and the
-// monthly blog post (api/routers/blog.py)
+// articles (api/routers/blog.py)
 export default function AdminPage() {
   const { user, isAdmin, authHeaders, loading } = useAuth();
   const [users, setUsers] = useState<Users | null>(null);

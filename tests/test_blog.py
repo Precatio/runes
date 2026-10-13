@@ -1,4 +1,6 @@
-"""Månadens fynd (api/routers/blog.py): utkastet ur mönstren, och de nya mönstren om strand och lämningar."""
+"""Artiklarna (api/routers/blog.py): utkastet ur mönstren, publiceringstiden och de nya mönstren om strand och lämningar."""
+import datetime as dt
+
 from api.routers import blog
 from src import r_findings as rf
 
@@ -17,7 +19,7 @@ def test_draft_takes_what_is_new_or_changed():
     body = out["draft"]["body"]
     assert "Draget a" not in body
     assert body.index("Draget b") < body.index("Draget d") < body.index("Draget c")  # new patterns to test first
-    assert out["draft"]["slug"].startswith("2026-11-") and out["draft"]["month"] == "2026-11"
+    assert not out["draft"]["slug"].startswith("2026-") and out["draft"]["slug"]  # the address no longer carries a month
     assert "3 mönster" in out["draft"]["summary"]
     assert any("tidigare mönster att pröva" in s for s in out["sources"])
 
@@ -251,6 +253,30 @@ def test_frozen_figures_are_kept_by_content(tmp_path, monkeypatch):
     assert md.startswith(f"![r för ʀ") and "Källa: Vitkis korpusanalys i R (hotspots.R)" in md
     res = {"hotspots": {"figures": {"hotspot_r_for_R": "hotspot_r_for_R.png"}}, "text": {"figures": {"a": "text_formler.png"}}}
     assert [x["name"] for x in bf.available(res, {"r_for_R": "r för ʀ"})] == ["hotspot_r_for_R.png", "text_formler.png"]
+
+
+def test_scheduled_articles_go_live_when_their_time_comes():
+    utc = dt.timezone.utc
+    now = dt.datetime(2026, 10, 13, 12, 0, tzinfo=utc)
+    assert blog._ts("2026-10-20T07:00:00Z") == dt.datetime(2026, 10, 20, 7, 0, tzinfo=utc)
+    assert blog._ts("2026-10-20T09:00:00+02:00") == dt.datetime(2026, 10, 20, 7, 0, tzinfo=utc)
+    assert blog._ts("2026-10-20T07:00:00") == dt.datetime(2026, 10, 20, 7, 0, tzinfo=utc)  # without a zone: UTC
+    assert blog._ts("i morgon") is None and blog._ts("") is None and blog._ts(None) is None
+    assert blog.is_live({"published": True, "publishedAt": "2026-10-13T11:59:00Z"}, now)
+    assert not blog.is_live({"published": True, "publishedAt": "2026-10-13T12:01:00Z"}, now)  # scheduled
+    assert blog.is_live({"published": True}, now)  # older articles without a time
+    assert not blog.is_live({"published": False, "publishedAt": "2026-10-01T00:00:00Z"}, now)
+
+
+def test_the_publication_time():
+    utc = dt.timezone.utc
+    now = dt.datetime(2026, 10, 13, 12, 0, tzinfo=utc)
+    later, earlier = now + dt.timedelta(days=7), now - dt.timedelta(days=30)
+    assert blog.publication_time(later, None, now) == later  # scheduled
+    assert blog.publication_time(later, earlier, now) == later  # rescheduled
+    assert blog.publication_time(None, None, now) == now  # published at once
+    assert blog.publication_time(None, earlier, now) == earlier  # an edit keeps its date
+    assert blog.publication_time(None, later, now) == now  # a scheduled article published at once
 
 
 def test_indexnow_only_with_a_key_and_a_public_site(monkeypatch):

@@ -9,14 +9,14 @@ import { pictures } from "@/lib/blogSeo";
 import { SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
 
 // The newest articles are fetched again at most every five minutes, and at once when one is published (tag "blog")
-export const revalidate = 300;
+export const revalidate = 60;
 
 async function latestArticles(): Promise<{ posts: BlogPost[]; photo: { src: string; alt: string; credit: string | null } | null }> {
   try {
-    const r = await fetch(`${API_URL}/api/blog/posts`, { next: { revalidate: 300, tags: ["blog"] } });
+    const r = await fetch(`${API_URL}/api/blog/posts`, { next: { revalidate: 60, tags: ["blog"] } });
     const posts: BlogPost[] = r.ok ? (await r.json()).posts : [];
     if (!posts.length) return { posts, photo: null };
-    const one = await fetch(`${API_URL}/api/blog/posts/${encodeURIComponent(posts[0].slug)}`, { next: { revalidate: 300, tags: ["blog"] } });
+    const one = await fetch(`${API_URL}/api/blog/posts/${encodeURIComponent(posts[0].slug)}`, { next: { revalidate: 60, tags: ["blog"] } });
     const body: string = one.ok ? (await one.json()).post.body ?? "" : "";
     return { posts, photo: pictures(body).find(p => /wikimedia\.org/.test(p.src)) ?? null };
   } catch {

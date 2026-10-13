@@ -6,7 +6,7 @@ import { API_URL } from "@/lib/api";
 import { BLOG_DESCRIPTION, BLOG_TITLE, blogJsonLd } from "@/lib/blogSeo";
 
 // The articles about the most interesting patterns (written in Admin), rendered on the server
-export const revalidate = 300;
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: BLOG_TITLE,
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default async function BlogPage() {
   let posts: BlogPost[] = [], failed = false;
   try {
-    const r = await fetch(`${API_URL}/api/blog/posts`, { next: { revalidate: 300, tags: ["blog"] } });
+    const r = await fetch(`${API_URL}/api/blog/posts`, { next: { revalidate: 60, tags: ["blog"] } });
     if (r.ok) posts = (await r.json()).posts; else failed = true;
   } catch {
     failed = true;

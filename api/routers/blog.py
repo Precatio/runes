@@ -33,9 +33,12 @@ class PostRequest(BaseModel):
     title_en: str = Field("", max_length=160)
     summary_en: str = Field("", max_length=600)
     body_en: str = Field("", max_length=40000)
-    month: str = Field(..., min_length=7, max_length=7)
+    # The month is kept for older articles; it is set from the publication date
+    month: str = Field("", max_length=7)
     author: str = Field("", max_length=120)
     published: bool = False
+    # A time in the future (ISO 8601) when a published article goes live; empty: now
+    publish_at: str | None = Field(None, max_length=40)
     # The R pattern the post is about (src/blog_topics.py), so that the list of topics can show which are written
     topic: str = Field("", max_length=160)
 
@@ -67,9 +70,40 @@ def _forget() -> None:
     _POSTS.update(at=0.0, posts=None)
 
 
+def _ts(v) -> dt.datetime | None:
+    """An ISO time (or a datetime) as an aware UTC datetime, or None."""
+    if v is None or v == "":
+        return None
+    if isinstance(v, dt.datetime):
+        t = v
+    else:
+        try:
+            t = dt.datetime.fromisoformat(str(v).replace("Z", "+00:00"))
+        except ValueError:
+            return None
+    return (t if t.tzinfo else t.replace(tzinfo=dt.timezone.utc)).astimezone(dt.timezone.utc)
+
+
+def is_live(p: dict, now: dt.datetime | None = None) -> bool:
+    """Published and its publication time has come: a scheduled article goes live by itself when the time is reached."""
+    if not p.get("published"):
+        return False
+    t = _ts(p.get("publishedAt"))
+    return t is None or t <= (now or dt.datetime.now(dt.timezone.utc))
+
+
 def _published() -> list[dict]:
-    posts = [p for p in _all() if p.get("published")]
-    return sorted(posts, key=lambda p: (p.get("month") or "", p.get("publishedAt") or ""), reverse=True)
+    """The live articles, newest first. One that has just gone live (scheduled) is announced to the search engines."""
+    now = dt.datetime.now(dt.timezone.utc)
+    posts = [p for p in _all() if is_live(p, now)]
+    for p in posts:
+        if not p.get("announced") and indexnow(p["slug"]):
+            try:
+                firestore().collection(COLLECTION).document(p["id"]).set({"announced": True}, merge=True)
+                _forget()
+            except Exception:  # noqa: BLE001 - announced again next time
+                pass
+    return sorted(posts, key=lambda p: (p.get("publishedAt") or p.get("month") or ""), reverse=True)
 
 
 @router.get("/blog/posts")
@@ -83,36 +117,45 @@ def get_post(slug: str):
     for p in _published():
         if p.get("slug") == slug:
             return {"post": {k: v for k, v in p.items() if k not in ("by", "snapshot", "published")}}
-    raise HTTPException(status_code=404, detail="Inlägget finns inte eller är inte publicerat.")
+    raise HTTPException(status_code=404, detail="Artikeln finns inte eller är inte publicerad.")
 
 
 @router.get("/admin/blog/posts")
 def admin_posts(_: dict = Depends(require_admin)):
-    """Alla inlägg, också utkast, nyaste månaden först."""
-    posts = sorted(_all(), key=lambda p: (p.get("month") or "", p.get("updatedAt") or ""), reverse=True)
+    """Alla artiklar, också utkast och schemalagda, nyaste först."""
+    posts = sorted(_all(), key=lambda p: (p.get("publishedAt") or p.get("updatedAt") or ""), reverse=True)
     return {"posts": [{k: v for k, v in p.items() if k != "snapshot"} for p in posts]}
 
 
 @router.post("/admin/blog/posts")
 def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
-    """Sparar ett utkast eller publicerar. Vid första publiceringen sparas mönstrens läge, som nästa utkast jämförs med."""
+    """Sparar ett utkast, publicerar nu eller schemalägger (publish_at): artikeln får publiceringstiden som datum och
+    syns först när tiden är nådd. Första gången sparas mönstrens läge, som nästa utkast jämförs med."""
     if not SLUG.match(req.slug):
         raise HTTPException(status_code=422, detail="Adressen får bara innehålla små bokstäver a–z, siffror och bindestreck.")
-    if not MONTH.match(req.month):
+    if req.month and not MONTH.match(req.month):
         raise HTTPException(status_code=422, detail="Månaden ska anges som ÅÅÅÅ-MM.")
+    publish_at = _ts(req.publish_at) if req.publish_at else None
+    if req.publish_at and publish_at is None:
+        raise HTTPException(status_code=422, detail="Publiceringstiden kunde inte läsas.")
     others = [p for p in _all() if p["id"] != req.id]
     if any(p.get("slug") == req.slug for p in others):
         raise HTTPException(status_code=409, detail=f"Adressen /artiklar/{req.slug} används redan av en annan artikel.")
     now = dt.datetime.now(dt.timezone.utc)
-    data = {**req.model_dump(exclude={"id"}), "updatedAt": now, "by": admin["uid"]}
+    data = {**req.model_dump(exclude={"id", "publish_at"}), "updatedAt": now, "by": admin["uid"]}
+    announce = False
     try:
         col = firestore().collection(COLLECTION)
         ref = col.document(req.id) if req.id else col.document()
-        old = ref.get().to_dict() if req.id else None
-        first_publish = req.published and not (old or {}).get("publishedAt")
-        if first_publish:
-            data["publishedAt"] = now
-            data["snapshot"] = _snapshot()
+        old = (ref.get().to_dict() if req.id else None) or {}
+        if req.published:
+            data["publishedAt"] = publication_time(publish_at, _ts(old.get("publishedAt")), now)
+            data["month"] = data["publishedAt"].strftime("%Y-%m")
+            if not old.get("snapshot"):
+                data["snapshot"] = _snapshot()
+            announce = data["publishedAt"] <= now and not old.get("announced")
+        else:
+            data["month"] = req.month or old.get("month") or now.strftime("%Y-%m")
         if not old:
             data["createdAt"] = now
         ref.set(data, merge=True)
@@ -120,10 +163,20 @@ def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
     except HTTPException:
         raise
     except Exception as e:
-        raise server_error(e, "Inlägget kunde inte sparas.", status_code=503)
-    if first_publish:
-        indexnow(req.slug)
+        raise server_error(e, "Artikeln kunde inte sparas.", status_code=503)
+    if announce and indexnow(req.slug):
+        ref.set({"announced": True}, merge=True)
     return {"post": {"id": ref.id, **_iso({k: v for k, v in data.items() if k != "snapshot"})}}
+
+
+def publication_time(publish_at: dt.datetime | None, before: dt.datetime | None, now: dt.datetime) -> dt.datetime:
+    """When a published article goes live: the chosen time (scheduled), the date it already had if it was live before,
+    or now (the first time, or when a scheduled article is published at once)."""
+    if publish_at is not None:
+        return publish_at
+    if before is not None and before <= now:
+        return before
+    return now
 
 
 def indexnow(slug: str) -> bool:
@@ -351,7 +404,7 @@ def build_draft(month: str, patterns: list[dict], before: dict[str, str], shift:
                + f" – {_first_sentence(p['text'])}" for p in picked]
     if shift:
         sources.append(f"Mönsterkartan: {shift['label']} {_pct(shift['early'])} → {_pct(shift['late'])}")
-    return {"draft": {"month": month, "slug": f"{month}-{_slug(sv['title'])}"[:80].rstrip("-"), **sv,
+    return {"draft": {"month": month, "slug": _slug(sv["title"])[:80].rstrip("-"), **sv,
                       "title_en": en["title"], "summary_en": en["summary"], "body_en": en["body"]},
             "sources": sources}
 
@@ -457,7 +510,7 @@ def topic_draft(month: str, pattern: dict, res: dict) -> dict:
         sources.append(f"Krok och foto: {example['signum']} ({example['place']})")
     if fig_name:
         sources.append(f"Figur ur R: {fig_name}")
-    return {"draft": {"month": month, "slug": f"{month}-{_slug(sv['title'])}"[:80].rstrip("-"), **sv,
+    return {"draft": {"month": month, "slug": _slug(sv["title"])[:80].rstrip("-"), **sv,
                       "title_en": en["title"], "summary_en": en["summary"], "body_en": en["body"],
                       "topic": blog_topics.topic_key(pattern)},
             "sources": sources}

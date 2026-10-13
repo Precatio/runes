@@ -9,11 +9,11 @@ import { articleJsonLd, keywords, metaDescription, pictures, postPath } from "@/
 // A published post, rendered on the server with its metadata and structured data (lib/blogSeo.ts), so that every new
 // post is described for search engines and social media as soon as it is published. Fetched again at most every five
 // minutes, so that an edit shows without a new build.
-export const revalidate = 300;
+export const revalidate = 60;
 
 async function getPost(slug: string): Promise<BlogPost | null> {
   try {
-    const r = await fetch(`${API_URL}/api/blog/posts/${encodeURIComponent(slug)}`, { next: { revalidate: 300, tags: ["blog"] } });
+    const r = await fetch(`${API_URL}/api/blog/posts/${encodeURIComponent(slug)}`, { next: { revalidate: 60, tags: ["blog"] } });
     return r.ok ? (await r.json()).post : null;
   } catch {
     return null;

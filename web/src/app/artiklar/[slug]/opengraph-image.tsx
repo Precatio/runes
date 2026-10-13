@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import type { BlogPost } from "@/components/BlogBody";
 import { API_URL } from "@/lib/api";
-import { monthLabel } from "@/components/BlogBody";
+import { postDate } from "@/components/BlogBody";
 import { pictures } from "@/lib/blogSeo";
 
 // The picture shown when a post is shared (Open Graph and Twitter/X): its title, month and first photo, made
@@ -35,7 +35,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
           </div>
           <div style={{ fontSize: big, fontWeight: 800, lineHeight: 1.08, marginTop: 28 }}>{title}</div>
           <div style={{ fontSize: 26, color: "#64748b", marginTop: 32 }}>
-            {post ? `${monthLabel(post.month)}${post.author ? ` · ${post.author}` : ""} · vitkirunor.se` : "vitkirunor.se"}
+            {post ? `${postDate(post)}${post.author ? ` · ${post.author}` : ""} · vitkirunor.se` : "vitkirunor.se"}
           </div>
         </div>
         {photo && (

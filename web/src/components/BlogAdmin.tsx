@@ -2,14 +2,23 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import BlogBody, { monthLabel, type BlogPost } from "@/components/BlogBody";
+import BlogBody, { dateLabel, postDate, type BlogPost } from "@/components/BlogBody";
 import { useSettings } from "@/components/SettingsContext";
 import { useAuth } from "@/components/AuthContext";
 import { metaDescription, postUrl, seoChecks } from "@/lib/blogSeo";
 import { API_URL } from "@/lib/api";
 
 const field = "liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm outline-none w-full";
-const thisMonth = () => new Date().toISOString().slice(0, 7);
+// A time in the browser's datetime-local form ("2026-10-20T09:00", local time) and back
+const localInput = (iso: string) => {
+  const d = new Date(iso), z = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${z(d.getMonth() + 1)}-${z(d.getDate())}T${z(d.getHours())}:${z(d.getMinutes())}`;
+};
+const isFuture = (iso?: string | null) => !!iso && new Date(iso).getTime() > Date.now();
+const fromLocal = (local: string) => {
+  const t = new Date(local);
+  return local && !Number.isNaN(t.getTime()) ? t.toISOString() : null;
+};
 const slugify = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
   .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 80);
 
@@ -45,9 +54,9 @@ function insertPicture(text: string, signum: string, block: string) {
   return [...blocks.slice(0, i + 1), block, ...blocks.slice(i + 1)].join("\n\n");
 }
 const empty = (author: string): Draft => ({ slug: "", title: "", summary: "", body: "", title_en: "", summary_en: "", body_en: "",
-                                           month: thisMonth(), author, topic: "" });
+                                           month: "", author, topic: "" });
 
-// The monthly blog post (api/routers/blog.py): written and published here, by hand. "Utkast från det som är nytt" fills
+// The articles (api/routers/blog.py): written here and published at once or at a chosen time. "Utkast från det som är nytt" fills
 // the form with the patterns and findings that are new or changed since the last published post, to edit from.
 export default function BlogAdmin({ call }: { call: (path: string, init?: RequestInit) => Promise<any> }) { // eslint-disable-line @typescript-eslint/no-explicit-any
   const { userName } = useSettings();
@@ -68,6 +77,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
   const [images, setImages] = useState<{ images: StoneImage[]; missing: string[] } | null>(null);
   const [topics, setTopics] = useState<Topic[] | null>(null);
   const [rFigures, setRFigures] = useState<RFigure[] | null>(null);
+  const [publishAt, setPublishAt] = useState("");
 
   const load = useCallback(() => {
     call("/api/admin/blog/posts").then(d => setPosts(d.posts)).catch(e => setError(e.message));
@@ -77,8 +87,6 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
   const set = (k: keyof Draft, v: string) => setDraft(d => {
     const next = { ...d, [k]: v };
     if (k === "title" && !slugTouched) next.slug = slugify(v);
-    // A draft's address starts with its month ("2026-09-…"); it follows a new month until the address is set by hand
-    if (k === "month" && !slugTouched && /^\d{4}-\d{2}$/.test(v) && /^\d{4}-\d{2}-/.test(d.slug)) next.slug = `${v}-${d.slug.slice(8)}`;
     return next;
   });
 
@@ -98,8 +106,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
     if ((draft.title || draft.body) && !window.confirm("Ersätta texten i formuläret med ett nytt utkast?")) return;
     setBusy(topic ? `topic:${topic}` : "draft"); setError(null); setNote(null);
     try {
-      const d = await call(`/api/admin/blog/draft?month=${encodeURIComponent(draft.month || thisMonth())}`
-        + (topic ? `&topic=${encodeURIComponent(topic)}` : ""));
+      const d = await call(`/api/admin/blog/draft${topic ? `?topic=${encodeURIComponent(topic)}` : ""}`);
       setDraft(x => ({ ...x, ...d.draft, id: x.id, author: x.author || userName }));
       setSlugTouched(false);
       if (topic) setTopics(null);
@@ -153,12 +160,16 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
     body_en: (d.body_en ?? "").trim() ? insertPicture(d.body_en ?? "", img.signum, img.markdown_en) : d.body_en,
   }));
 
-  const save = async (published: boolean) => {
-    setBusy(published ? "publish" : "save"); setError(null); setNote(null);
+  // Save as a draft, publish at once, or schedule: the article goes live by itself at the chosen time
+  const save = async (mode: "draft" | "now" | "schedule") => {
+    setBusy(mode); setError(null); setNote(null);
     try {
-      const d = await call("/api/admin/blog/posts", { method: "POST", body: JSON.stringify({ ...draft, published }) });
+      const publish_at = mode === "schedule" ? fromLocal(publishAt) : null;
+      const d = await call("/api/admin/blog/posts", { method: "POST", body: JSON.stringify({ ...draft, published: mode !== "draft", publish_at }) });
       setDraft(x => ({ ...x, id: d.post.id }));
-      setNote(published ? `Publicerat: /artiklar/${d.post.slug}` : "Sparat som utkast.");
+      if (mode !== "schedule") setPublishAt("");
+      setNote(mode === "draft" ? "Sparat som utkast." : mode === "now" ? `Publicerad: /artiklar/${d.post.slug}`
+        : `Schemalagd: går live ${dateLabel(d.post.publishedAt, "sv", true)} på /artiklar/${d.post.slug}`);
       load();
       refreshBlog();
     } catch (e) {
@@ -171,6 +182,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
   const edit = (p: BlogPost) => {
     setDraft({ id: p.id, slug: p.slug, title: p.title, summary: p.summary, body: p.body ?? "", title_en: p.title_en ?? "",
                summary_en: p.summary_en ?? "", body_en: p.body_en ?? "", month: p.month, author: p.author ?? "", topic: p.topic ?? "" });
+    setPublishAt(p.published && isFuture(p.publishedAt) ? localInput(p.publishedAt!) : "");
     setSlugTouched(true); setShowEn(!!(p.title_en || p.body_en)); setSources([]); setNote(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -204,7 +216,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
           <button onClick={() => fromFindings()} disabled={busy === "draft"} className="px-4 py-2 rounded-xl border border-[#b7410e] text-[#b7410e] bg-white text-sm font-bold disabled:opacity-40">
             {busy === "draft" ? "Skapar …" : "Utkast från det som är nytt"}
           </button>
-          <button onClick={() => { setDraft(empty(userName)); setSlugTouched(false); setSources([]); setNote(null); }}
+          <button onClick={() => { setDraft(empty(userName)); setPublishAt(""); setSlugTouched(false); setSources([]); setNote(null); }}
             className="px-4 py-2 rounded-xl border border-slate-300 bg-white text-sm font-bold">Ny artikel</button>
         </div>
       </div>
@@ -242,8 +254,9 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
       {note && <p className="text-sm font-semibold text-emerald-700">{note}</p>}
 
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
-        <label className="text-xs font-bold text-slate-600 sm:col-span-1">Månad
-          <input type="month" value={draft.month} onChange={e => set("month", e.target.value)} className={`${field} mt-1`} />
+        <label className="text-xs font-bold text-slate-600 sm:col-span-1">Publiceringstid (valfri)
+          <input type="datetime-local" value={publishAt} onChange={e => setPublishAt(e.target.value)} className={`${field} mt-1`} />
+          <span className="block mt-1 font-normal text-slate-500">Tom: publiceras direkt. En tid framåt: går live då av sig själv.</span>
         </label>
         <label className="text-xs font-bold text-slate-600 sm:col-span-3">Författare
           <input value={draft.author ?? ""} onChange={e => set("author", e.target.value)} placeholder="Namn (från Inställningar)" className={`${field} mt-1`} />
@@ -388,11 +401,17 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
 
       <div className="flex flex-wrap gap-2">
         <button onClick={() => setPreview(p => !p)} className="px-4 py-2 rounded-xl border border-slate-300 bg-white text-sm font-bold">{preview ? "Redigera" : "Förhandsgranska"}</button>
-        <button onClick={() => save(false)} disabled={!ready || !!busy} className="px-4 py-2 rounded-xl border border-slate-300 bg-white text-sm font-bold disabled:opacity-40">
-          {busy === "save" ? "Sparar …" : "Spara utkast"}
+        <button onClick={() => save("draft")} disabled={!ready || !!busy} className="px-4 py-2 rounded-xl border border-slate-300 bg-white text-sm font-bold disabled:opacity-40">
+          {busy === "draft" ? "Sparar …" : "Spara utkast"}
         </button>
-        <button onClick={() => save(true)} disabled={!ready || !!busy} className="px-4 py-2 rounded-xl bg-[#b7410e] text-white text-sm font-bold disabled:opacity-40">
-          {busy === "publish" ? "Publicerar …" : "Publicera"}
+        <button onClick={() => save("now")} disabled={!ready || !!busy} className="px-4 py-2 rounded-xl bg-[#b7410e] text-white text-sm font-bold disabled:opacity-40">
+          {busy === "now" ? "Publicerar …" : "Publicera nu"}
+        </button>
+        <button onClick={() => save("schedule")} disabled={!ready || !!busy || !isFuture(fromLocal(publishAt))}
+          title={isFuture(fromLocal(publishAt)) ? `Går live ${dateLabel(fromLocal(publishAt), "sv", true)}` : "Välj en publiceringstid framåt"}
+          className="px-4 py-2 rounded-xl border border-[#b7410e] text-[#b7410e] bg-white text-sm font-bold disabled:opacity-40">
+          {busy === "schedule" ? "Schemalägger …" : isFuture(fromLocal(publishAt))
+            ? <>Schemalägg till {dateLabel(fromLocal(publishAt), "sv", true)}</> : "Schemalägg"}
         </button>
       </div>
 
@@ -400,10 +419,14 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
         <ul className="divide-y divide-slate-900/5 pt-2">
           {posts.map(p => (
             <li key={p.id} className="py-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
-              <span className="text-[11px] text-slate-500 w-28 shrink-0">{monthLabel(p.month)}</span>
-              <span className={`text-[10px] font-bold rounded-md px-1.5 border ${p.published ? "border-emerald-300 bg-emerald-50 text-emerald-800" : "border-slate-300 bg-slate-50 text-slate-600"}`}>
-                {p.published ? "publicerad" : "utkast"}
+              <span className="text-[11px] text-slate-500 w-36 shrink-0">
+                {p.published && isFuture(p.publishedAt) ? dateLabel(p.publishedAt, "sv", true) : p.published ? postDate(p) : dateLabel(p.updatedAt)}
               </span>
+              {p.published && isFuture(p.publishedAt)
+                ? <span className="text-[10px] font-bold rounded-md px-1.5 border border-amber-300 bg-amber-50 text-amber-800">schemalagd</span>
+                : <span className={`text-[10px] font-bold rounded-md px-1.5 border ${p.published ? "border-emerald-300 bg-emerald-50 text-emerald-800" : "border-slate-300 bg-slate-50 text-slate-600"}`}>
+                    {p.published ? "publicerad" : "utkast"}
+                  </span>}
               <span className="min-w-0 flex-1 font-semibold text-slate-900 truncate" translate="no">{p.title}</span>
               <button onClick={() => edit(p)} className="text-xs font-semibold text-[#b7410e] hover:underline">Redigera</button>
               {p.published && <button onClick={() => unpublish(p)} className="text-xs font-semibold text-slate-500 hover:text-slate-900">Avpublicera</button>}

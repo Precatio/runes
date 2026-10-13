@@ -2,7 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import Link from "next/link";
-import { inLanguage, monthLabel, type BlogPost } from "@/components/BlogBody";
+import { inLanguage, postDate, type BlogPost } from "@/components/BlogBody";
 import { useLanguage } from "@/components/LanguageContext";
 import { postPath } from "@/lib/blogSeo";
 
@@ -25,7 +25,7 @@ export default function ArticleTeasers({ posts, photo }: { posts: BlogPost[]; ph
           </Link>
         )}
         <div className="p-7 flex flex-col">
-          <div className="text-xs font-bold uppercase tracking-wider text-[#b7410e]">Senaste artikeln · {monthLabel(first.month, lang)}</div>
+          <div className="text-xs font-bold uppercase tracking-wider text-[#b7410e]">Senaste artikeln · {postDate(first, lang)}</div>
           <h3 className="mt-2 text-2xl md:text-3xl font-serif font-bold leading-tight" translate="no">
             <Link href={postPath(first.slug)} className="hover:text-[#b7410e]">{v.title}</Link>
           </h3>
@@ -40,7 +40,7 @@ export default function ArticleTeasers({ posts, photo }: { posts: BlogPost[]; ph
           const w = inLanguage(p, lang);
           return (
             <article key={p.id} className="border-t-2 border-[#b7410e] pt-4">
-              <div className="text-xs text-slate-500">{monthLabel(p.month, lang)}</div>
+              <div className="text-xs text-slate-500">{postDate(p, lang)}</div>
               <h3 className="mt-1 text-lg font-serif font-bold leading-snug" translate="no">
                 <Link href={postPath(p.slug)} className="hover:text-[#b7410e]">{w.title}</Link>
               </h3>

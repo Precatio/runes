@@ -3,7 +3,7 @@ import { API_URL } from "@/lib/api";
 import { SITE_URL } from "@/lib/site";
 
 // The public pages, and every published blog post (GET /api/blog/posts); refreshed once an hour
-export const revalidate = 3600;
+export const revalidate = 300;
 
 const PAGES: [string, MetadataRoute.Sitemap[number]["changeFrequency"], number][] = [
   ["/", "weekly", 1], ["/artiklar", "weekly", 0.9], ["/karta", "monthly", 0.8], ["/inskrifter", "monthly", 0.8],
@@ -15,7 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
   const pages = PAGES.map(([path, changeFrequency, priority]) => ({ url: `${SITE_URL}${path}`, lastModified: now, changeFrequency, priority }));
   try {
-    const r = await fetch(`${API_URL}/api/blog/posts`, { next: { revalidate: 3600, tags: ["blog"] } });
+    const r = await fetch(`${API_URL}/api/blog/posts`, { next: { revalidate: 300, tags: ["blog"] } });
     const posts: { slug: string; publishedAt?: string | null; updatedAt?: string | null }[] = r.ok ? (await r.json()).posts : [];
     return [...pages, ...posts.map(p => {
       const changed = p.updatedAt ?? p.publishedAt;

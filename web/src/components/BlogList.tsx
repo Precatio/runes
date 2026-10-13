@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { inLanguage, monthLabel, type BlogPost } from "@/components/BlogBody";
+import { inLanguage, postDate, type BlogPost } from "@/components/BlogBody";
 import { useLanguage } from "@/components/LanguageContext";
 import { postPath } from "@/lib/blogSeo";
 
@@ -18,7 +18,7 @@ export default function BlogList({ posts, failed }: { posts: BlogPost[]; failed:
         return (
           <article key={p.id} className="border-t-2 border-[#b7410e] pt-5">
             <div className="text-sm text-slate-500">
-              <time dateTime={p.publishedAt ?? p.month}>{monthLabel(p.month, lang)}</time>{p.author ? ` · ${p.author}` : ""}
+              <time dateTime={p.publishedAt ?? p.month}>{postDate(p, lang)}</time>{p.author ? ` · ${p.author}` : ""}
             </div>
             <h2 className="mt-1 text-2xl font-serif font-bold" translate="no">
               <Link href={postPath(p.slug)} className="hover:text-[#b7410e]">{v.title}</Link>
