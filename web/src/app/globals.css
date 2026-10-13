@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* The runes (ᛦ, ᚦ …) in Noto Sans Runic everywhere, also in the serif headings (app/layout.tsx). Last in the lists: the
+   typeface also has Latin letters, which must not replace the text's own – it is used only for what the others lack */
+@theme {
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif, var(--font-runic);
+}
+
 @layer base {
   :root {
     --background: #e8ecef;
@@ -19,7 +25,7 @@ body {
     radial-gradient(at 90% 15%, rgba(215, 222, 232, 0.9) 0px, transparent 50%),
     radial-gradient(at 50% 95%, rgba(225, 230, 238, 0.95) 0px, transparent 50%);
   background-attachment: fixed;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif, var(--font-runic);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
