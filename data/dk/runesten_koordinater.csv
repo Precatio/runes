@@ -1,0 +1,67 @@
+signum,lat,lon,precision,parish,place
+DR 1,54.45648,9.58687,ort,Selk,"Haddeby 1, Wedelspang"
+DR 2,54.45648,9.58687,ort,Selk,"Haddeby 2 (Vedelspang 1), Wedelspang"
+DR 3,54.48935,9.55299,ort,Busdorf,"Haddeby 3 (Dannevirke/Busdorf), Busdorf"
+DR 4,54.49958,9.5379,ort,Stadt Schleswig,"Haddeby 4, Schloss Gottorf"
+DR 6,54.49958,9.5379,ort,Stadt Schleswig,Slesvig
+DR 9,54.64385,9.73454,ort,Norderbrarup,Nørre Brarup (Arrild)
+DR 37,55.61994,9.3004,ff,Egtved sn,Egtved
+DR 44,55.75558,8.93163,kyrka,Grindsted sn,Grindsted
+DR 55,56.02319,9.6422,ff,Sønder Vissing sn,Sønder Vissing 1
+DR 56,56.02315,9.64216,ff,Sønder Vissing sn,Sønder Vissing 2
+DR 58,56.08546,10.03867,kyrka,Hørning sn,Hørning
+DR 62,56.18319,9.9313,ff,Sjelle sn,Sjelle
+DR 63,56.15685,10.21065,kyrka,Århus sn,Århus 1
+DR 65,56.15685,10.21065,kyrka,Århus sn,Århus 3
+DR 66,56.15685,10.21065,kyrka,Århus sn,Århus 4
+DR 67,56.15685,10.21065,kyrka,Århus sn,Århus 5
+DR 68,56.15685,10.21065,kyrka,Århus sn,Århus 6
+DR 70,56.25541,9.863,ff,Hammel sn,Hammel 1
+DR 78,56.406,9.70346,ff,Hjermind sn,Hjermind 2
+DR 79,56.4247,9.6738,kyrka,Lee sn,Le
+DR 83,56.40879,9.78664,ff,Sønder Vinge sn,Sønder Vinge 2
+DR 84,56.39483,9.89192,kyrka,Langå sn,Langå 1
+DR 85,56.39483,9.89192,kyrka,Langå sn,Langå 2
+DR 87,56.39483,9.89192,kyrka,Langå sn,Langå 4
+DR 88,56.39483,9.89192,kyrka,Langå sn,Langå 5
+DR 89,56.39483,9.89192,kyrka,Langå sn,Langå 6
+DR 90,56.40625,9.82368,kyrka,Torup sn,Torup
+DR 93,56.42849,9.85411,kyrka,Øster Velling sn,Øster Velling
+DR 94,56.45242,9.83281,kyrka,Ålum sn,Ålum 1
+DR 95,56.45242,9.83281,kyrka,Ålum sn,Ålum 2
+DR 105,56.35579,9.91752,ff,Laurbjerg sn,Laurbjerg
+DR 106,56.40102,9.9535,kyrka,Ørum sn,Ørum
+DR 107,56.21656,10.26532,kyrka,Egå sn,Egå
+DR 109,56.41187,10.31394,ff,Øster Alling sn,Øster Alling
+DR 110,56.43456,10.24647,ff,Virring sn,Virring
+DR 112,55.50774,8.44749,kyrka,Gjesing sn (Gesing),Gesing 2
+DR 113,56.46809,10.33765,kyrka,Vejlby sn,Vejlby
+DR 114,56.47865,10.79496,ff,Rimsø sn,Rimsø
+DR 115,56.48869,10.02004,kyrka,Randers sn,Randers 1
+DR 116,56.48869,10.02004,kyrka,Randers sn,Randers 2
+DR 117,56.30147,10.21368,kyrka,Mejlby sn,Mejlby
+DR 118,56.49838,10.33858,kyrka,Ørsted sn,Stenalt
+DR 119,56.54004,10.03314,ff,Spentrup sn,Spentrup 1
+DR 120,56.5401,10.03318,kyrka,Spentrup sn,Spentrup 2
+DR 121,56.54701,9.93365,kyrka,Asferg sn,Asferg
+DR 122,56.58421,9.85167,ff,Glenstrup sn,Glenstrup 1
+DR 124,56.59839,9.90018,ff,Vester Tørslev sn,Vester Tørslev
+DR 125,56.62029,10.19514,ff,Dalbyover sn,Dalbyover
+DR 126,56.63704,9.79432,kyrka,Hobro sn,Hobro 1
+DR 127,56.63704,9.79432,kyrka,Hobro sn,Hobro 2
+DR 132,56.86628,9.34231,ff,Flejsborg sn,Flejsborg
+DR 133,56.86569,9.58933,ff,Skivum sn,Skivum
+DR 143,56.94152,10.01498,ff,Gunderup sn,Gunderup 1
+DR 144,56.94154,10.01499,ff,Gunderup sn,Gunderup 2
+DR 145,56.95126,9.89749,ff,Ferslev sn,Ferslev 1
+DR 154,56.98396,8.5111,ff,Vang sn,Torup (Tvorup)
+DR 216,54.71839,11.36801,ff,Tirsted sn,Tirsted
+DR 219,54.70514,11.68804,kyrka,Bregninge sn,Bregninge 1
+DR 220,54.77037,11.97747,kyrka,Sønder Kirkeby sn,Sønder Kirkeby
+DR 221,55.00881,11.90675,ff,Vordingborg sn,Vordingborg
+DR 227,55.37892,11.73906,kyrka,Sandby sn,Sandby 1
+DR 229,55.37892,11.73906,kyrka,Sandby sn,Sandby 3
+DR 230,55.30566,12.20931,kyrka,Karise sn,Tryggevælde
+DR 237,55.40453,11.665,ff,Alsted sn,Alsted
+DR 249,55.59361,12.17011,kyrka,Tune sn,Tune
+DR 351,,,,?,?

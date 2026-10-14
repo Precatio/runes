@@ -42,6 +42,7 @@ interface Nordic {
   patterns: NordicPattern[]; not_comparable: { label: string; why: string }[];
   groupings: Record<string, { key: string; label: string; realm: string }[]>; bins: { key: string; label: string }[];
   counts: Record<string, number>; with_place: Record<string, number>; dated: Record<string, number>;
+  placed?: Record<string, number>;
   stones: { s: string; lat: number | null; lon: number | null; l: string; r: string | null; y: number | null; v: (0 | 1 | null)[] }[];
   compare: Record<string, Record<string, Comparison>>;
   crossborder: {
@@ -98,6 +99,7 @@ export default function NordicExplorer({ f, set, onError }: {
 
   if (!data) return <div className={`${box} text-slate-500`}>Hämtar de danska, norska och svenska stenarna …</div>;
   const missing = ["danmark", "norge"].map(l => `${data.with_place[l]} av ${data.counts[l]} ${LAND_ADJ[l]}`).join(" och ");
+  const placedN = Object.values(data.placed ?? {}).reduce((a, b) => a + b, 0);
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-4 items-start">
@@ -176,8 +178,11 @@ export default function NordicExplorer({ f, set, onError }: {
             <span className="flex items-center gap-1"><span className="w-3.5 h-2.5 inline-block rounded-sm border border-dashed border-slate-400" style={{ background: TOO_FEW }} />Färre än {MIN_STONES} stenar</span>
           </div>
           <p className="px-2 text-[11px] text-slate-500">
-            Kartan visar bara stenar med koordinater i Rundata: {missing} stenar har det, och nästan alla svenska.
-            Tabellen och proven räknar alla.
+            Kartan visar stenarna med en plats: {missing} stenar har det, och nästan alla svenska.
+            {placedN > 0 && <> Av de danska har {placedN} fått sin plats ur Fund og Fortidsminder ({data.placed?.ff ?? 0} runstenar
+              i registret) eller sockenkyrkan och orten ({(data.placed?.kyrka ?? 0) + (data.placed?.ort ?? 0)}), eftersom Rundata saknar
+              koordinater för dem.</>}
+            {" "}Tabellen och proven räknar alla.
           </p>
         </div>
       </div>

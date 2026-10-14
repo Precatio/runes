@@ -102,3 +102,21 @@ def test_realm_definitions_name_only_known_blocks():
         assert len(used) == len(set(used)), f"{ep['key']}: a block in two regions"
         for r in ep["regions"]:
             assert r["realm"] in defs["realms"] and r["certainty"] in defs["certainty"] and r["name"] and r["note"]
+
+
+def test_extra_places_fill_only_known_spots(tmp_path):
+    f = tmp_path / "k.csv"
+    f.write_text("signum,lat,lon,precision,parish,place\nDR 110,56.43456,10.24647,ff,Virring sn,Virring\nDR 351,,,,?,?\n",
+                 encoding="utf-8")
+    assert nd.extra_places(str(f)) == {"DR 110": (56.43456, 10.24647, "ff")}
+    assert nd.extra_places(str(tmp_path / "saknas.csv")) == {}
+
+
+def test_danish_parish_and_place_names_for_the_search():
+    from scripts import fetch_dk_remains as fdk
+    assert fdk._parish({"parish": "Gjesing sn (Gesing)"}) == "Gjesing"
+    assert fdk._parish({"parish": "Stadt Schleswig"}) == "Schleswig"
+    assert fdk._parish({"parish": "Sønder Vissing sn"}) == "Sønder Vissing"
+    assert fdk._place({"place": "Sønder Vissing 2"}) == "Sønder Vissing"
+    assert fdk._place({"place": "Haddeby 2 (Vedelspang 1), Wedelspang"}) == "Haddeby"
+    assert fdk._km((55.0, 10.0), (55.0, 10.0)) == 0 and 110 < fdk._km((55.0, 10.0), (56.0, 10.0)) < 112

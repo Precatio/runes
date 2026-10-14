@@ -25,7 +25,9 @@ ristaren var dansk.
 """
 from __future__ import annotations
 
+import csv
 import math
+import os
 import re
 import zlib
 
@@ -140,6 +142,19 @@ MIN_FEATURES = 2
 MENTIONS = {"danmark": re.compile(r"\bDenmark|\bDanes?\b|\bDanish\b", _I),
             "sverige": re.compile(r"\bSweden|\bSwedes?\b|\bSwedish\b|\bUppsala|\bSvíþjóð", _I),
             "norge": re.compile(r"\bNorway|\bNorwegians?\b|\bNorwegian\b", _I)}
+
+
+# A place for the Danish stones without coordinates in Rundata (scripts/fetch_dk_remains.py): the runestone in Fund og
+# Fortidsminder, the parish church or the village
+EXTRA_PLACES = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "dk",
+                            "runesten_koordinater.csv")
+
+
+def extra_places(path: str = EXTRA_PLACES) -> dict[str, tuple[float, float, str]]:
+    if not os.path.exists(path):
+        return {}
+    with open(path, encoding="utf-8") as fh:
+        return {r["signum"]: (float(r["lat"]), float(r["lon"]), r["precision"]) for r in csv.DictReader(fh) if r["lat"]}
 
 
 def land_of(rec: dict) -> str | None:
@@ -482,16 +497,18 @@ def crossborder(rows: list[dict], recs: dict[str, dict], like: dict) -> dict:
 
 def build(inscriptions: list[dict]) -> dict:
     """Stenarna (med plats där den finns), mönstren, jämförelserna per gruppering och dragen över gränserna."""
-    rows, recs = [], {}
+    rows, recs, extra = [], {}, extra_places()
     for rec in inscriptions:
         if not is_runestone(rec):
             continue
         ft = features(rec)
         y = year_of(rec)
+        lat, lon, how = rec.get("lat"), rec.get("lon"), "rundata"
+        if lat is None and rec["signum"] in extra:
+            lat, lon, how = extra[rec["signum"]]
         rows.append({"s": rec["signum"], "land": land_of(rec), "rike": realm_of(rec), "y": y, "bin": bin_of(y),
-                     "ft": ft, "v": patterns(rec, ft),
-                     "lat": None if rec.get("lat") is None else round(rec["lat"], 4),
-                     "lon": None if rec.get("lon") is None else round(rec["lon"], 4)})
+                     "ft": ft, "v": patterns(rec, ft), "how": how if lat is not None else None,
+                     "lat": None if lat is None else round(lat, 4), "lon": None if lon is None else round(lon, 4)})
         recs[rec["signum"]] = rec
     like = likeness(rows)
     # Danish likeness as a pattern of its own, for the stones with enough of the features (Danish and Swedish)
@@ -509,6 +526,8 @@ def build(inscriptions: list[dict]) -> dict:
         "counts": {land: sum(1 for r in rows if r["land"] == land) for land, *_ in LANDS},
         "with_text": {land: sum(1 for r in rows if r["land"] == land and r["ft"] is not None) for land, *_ in LANDS},
         "with_place": {land: sum(1 for r in rows if r["land"] == land and r["lat"] is not None) for land, *_ in LANDS},
+        # Of those, placed by scripts/fetch_dk_remains.py: the registered runestone, the parish church or the village
+        "placed": {k: sum(1 for r in rows if r["how"] == k) for k in ("ff", "kyrka", "ort")},
         "dated": {land: sum(1 for r in rows if r["land"] == land and r["bin"]) for land, *_ in LANDS},
         # The stones as arrays in the order of the patterns, as on the pattern map
         "stones": [{"s": r["s"], "lat": r["lat"], "lon": r["lon"], "l": r["land"], "r": r["rike"], "y": r["y"],

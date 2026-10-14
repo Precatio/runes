@@ -62,3 +62,14 @@ Rscript --vanilla scripts/build_realms.R
 ```
 
 Kör det igen när ett område i `realms.json` får andra byggstenar.
+
+## Danska fornlämningar och fyndplatser (METHODS.md 14f)
+
+Fund og Fortidsminder (Slots- og Kulturstyrelsen) laddas ner som en GeoPackage, och de danska runstenar som saknar
+koordinater i Rundata får en plats via sockenkyrkan i OpenStreetMap (Nominatim) och registrets runstenar. Gratis,
+utan konto; GDAL (ogr2ogr) måste finnas.
+
+```bash
+.venv/bin/python scripts/fetch_dk_remains.py            # hämtar registret (omkring 110 MB) och platserna
+.venv/bin/python scripts/fetch_dk_remains.py platser    # bara platserna, med den fil som redan hämtats
+```

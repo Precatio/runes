@@ -25,6 +25,9 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   - De danska stenar som Rundata kallar svenskgjorda får också låg dansk prägel i modellen, fast den aldrig sett
     anmärkningarna.
   - Rundatas anmärkningar om ett annat lands ristare och texterna som nämner ett annat nordiskt land listas.
+- **Danska fyndplatser och fornlämningar:** `scripts/fetch_dk_remains.py` hämtar hela Fund og Fortidsminder (Slots- og
+  Kulturstyrelsen, gratis) och ger 65 av de 66 danska runstenar som saknar koordinater i Rundata en plats: registrets
+  runsten, sockenkyrkan eller orten. Kartan visar nu 238 av 239 danska stenar.
 - **Rättat:** METHODS.md 14e räknade Sö 102 som hednisk; den läser salu (själen), inte alu.
 - **Rättat samma dag:** jämförelsens ristarsignatur räknade beställaren som ”lät hugga runorna” som ristare. Nu
   räknas bara den som ristade, högg, målade eller märkte: 13 danska stenar i stället för 20, och 266 svenska i

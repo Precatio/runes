@@ -1126,6 +1126,16 @@ Rundata anger korsets form för 41 % av de svenska stenarna men för 12 % av de 
 korset är välkänt (Kristusbilden på Jellingstenen DR 42, Dynnastenen N 68), så en skillnad i kors vore en skillnad i
 beskrivningen.
 
+*Platser för danska stenar.* Rundata saknar koordinater för 66 av de danska stenarna, nästan alla i Nørrejylland och
+Sydslesvig och många numera på museum. `scripts/fetch_dk_remains.py` ger dem fyndplatsen på sockennivå: sockenkyrkan
+eller orten ur OpenStreetMap (Nominatim, ett anrop i sekunden), och om en runsten i Slots- og Kulturstyrelsens register
+Fund og Fortidsminder ligger inom 3 km och inte redan hör till en sten med koordinater, den runstenens punkt. Registrets
+egna poster nämner inte DR-numret, så kopplingen görs på plats. Utfallet (2026-10-14): 24 stenar fick registrets punkt,
+35 sockenkyrkan och 6 orten; DR 351 med okänd fyndort fick ingen. Platserna används för kartan, inte för proven, som inte
+bygger på läget. Samma nedladdning ger alla 326 550 registrerade anlägg med typ och datering (`data/dk/fortidsminder.csv`)
+för en dansk motsvarighet till lämningsprovet i avsnitt 1c; registreringen skiljer sig från Kulturmiljöregistrets, så
+antalen kan inte jämföras rakt av mellan länderna.
+
 *Prov.* Andelen per grupp redovisas med ett 95 % Wilsonintervall. Skillnaden mellan grupperna prövas med χ² (grupper med
 minst 10 stenar). Länderna jämförs parvis med oddskvot (Fishers exakta test) och med tiden konstant: Mantel–Haenszel
 över tre perioder (före 1000, 1000–1050, 1050 och senare). Dateringarna är Rundatas och bygger på olika system:
@@ -1387,6 +1397,12 @@ Innan resultat jämförs direkt bör samma referensstenar mätas med båda metod
   WMS). Svaren cachas lokalt i `data/cache/geology.json` (ingår inte i repot).
 * **Vatten och land:** Natural Earth 1:10 miljoner (kustlinje, sjöar, vattendrag, de europeiska tilläggen och land),
   public domain. Hämtas en gång till `data/cache/r/naturalearth/`.
+* **Danska fornlämningar:** Fund og Fortidsminder (Slots- og Kulturstyrelsen), hela databasen som GeoPackage
+  (`FF.zip`, uppdateras dagligen). Tjänsten är gratis och får användas utan styrelsens godkännande; webbplatsens sidor
+  får inte skördas, så bara nedladdningen används (`scripts/fetch_dk_remains.py`, `data/dk/fortidsminder.csv`, ingår
+  inte i repot).
+* **Danska fyndplatser:** OpenStreetMap via Nominatim (© OpenStreetMap-bidragsgivare, ODbL), svaren sparade i
+  `data/cache/dk/nominatim.json`; resultatet i `data/dk/runesten_koordinater.csv`.
 * **Rikenas gränser** (14g): landskapen ur OpenStreetMap (© OpenStreetMap-bidragsgivare, ODbL); Danmark, Norge och
   Slesvig ur Natural Earth 1:10 miljoner (länder och regioner, public domain). Den byggda filen
   `web/public/geo/riken.geojson` är en härledd databas under ODbL.
