@@ -12,6 +12,8 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   välbevarade; reglerna ändras först när handmärkta facit finns.
 - Statistik i R: när R avbryts av en signal (minnesbrist, krasch) säger felet vilken, i stället för ett tomt
   meddelande (`src/r_bridge.py`).
+- Stenanalys från terminalen (`scripts/full_stone_analysis.py`) följer nu Vitki-protokollet i huvudanalysen och
+  mäter bara runor, som sidan Stenanalys; förut fick den varken protokollets fasta rutnät eller runurvalet uttryckligen.
 
 ### Läsningar med några få runor räknas inte som bekräftade
 - En blind läsning som bara har färre än 12 läsbara runor får statusen *ej prövbar*, inte *bekräftad*

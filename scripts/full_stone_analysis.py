@@ -8,8 +8,9 @@
   5. Syntes och attribuering (med berggrund ur SGU).
   6. Stenrapport i artikelform med bilaga om arbetsgången: Word, HTML, Markdown, LaTeX och figurer.
 
-Kräver att analysmotorn körs (uvicorn api.main:app). AI-stegen kräver en Gemini-nyckel i .env; om de
-misslyckas fortsätter arbetsgången och felet redovisas i rapporten.
+Kräver att analysmotorn körs (uvicorn api.main:app). AI-stegen kräver en nyckel i miljön: ANTHROPIC_API_KEY (Claude,
+standard) eller GEMINI_API_KEY med AI_PROVIDER=gemini; om de misslyckas fortsätter arbetsgången och felet redovisas i
+rapporten.
 
 Exempel:
   .venv/bin/python -m scripts.full_stone_analysis "So 113_1_4 thin_closed holes.stl" --signum "Sö 113" \\
@@ -89,9 +90,11 @@ def main(argv=None):
     sensitivity, main_auto = [], None
     for k, sens in enumerate(sens_list):
         log(f"2/6 Spåranalys, känslighet {sens:g} …")
-        d = requests.post(f"{api}/api/3d/auto_analyze", data={"mesh_id": mid, "normal_x": normal[0], "normal_y": normal[1],
-                          "normal_z": normal[2], "sensitivity": sens, "meta_stone": a.stone, "meta_weathering": a.weathering},
-                          timeout=3600).json()
+        data = {"mesh_id": mid, "normal_x": normal[0], "normal_y": normal[1], "normal_z": normal[2], "sensitivity": sens,
+                "meta_stone": a.stone, "meta_weathering": a.weathering, "runes_only": a.feature_type == "rune"}
+        # As the page: the main analysis follows the Vitki protocol, the other sensitivities keep its fixed grid
+        data.update({"protocol": True} if a.feature_type == "rune" and sens == 3 else {"resolution_mm": 0.6})
+        d = requests.post(f"{api}/api/3d/auto_analyze", data=data, timeout=3600).json()
         if "summary" not in d:
             notes.append(f"Spåranalysen med känslighet {sens:g} gav inga godkända snitt ({d.get('detail', '')}).")
             continue
