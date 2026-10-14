@@ -1143,16 +1143,25 @@ stilgruppens mittår för svenska stenar (Gräslund), den danska indelningen fö
 925, Jelling 970, efter-Jelling 1015, kristen efter-Jelling 1025) och annars årtal eller sekel; 220 danska, 1 066
 svenska och bara 17 norska stenar är daterade. Provet är utforskande på samma sätt som platsprovet i 14e.
 
-*Dansk prägel.* En logistisk regression (ridge, λ = 1, klassvikter) skiljer danska från svenska stenar på 17 drag i
-ordval och stavning (satte, reste, lät resa, gjorde, kumbl, þegn och drængr, berömmande ord, sten med monoftong eller
-diftong, æft med eller utan -iR, bön, själen, bro, signatur, stungna runor och utlandsfärd). Den tränas bara på stenar
-från 970–1050 (147 danska och 576 svenska), så att den lär sig skillnaden mellan danskt och svenskt bruk vid samma tid
-och inte skillnaden mellan tidiga och sena stenar; stenarna i träningen får sin prognos ur femfaldig korsvalidering
-(fördelade efter signum). Den skiljer en dansk från en svensk sten rätt i 83 av 100 par (AUC 0,83). Bara stenar med
-minst två av dragen får en prägel. *Kontroll:* modellen har inte sett Rundatas anmärkningar, men de 8 danska stenar
-som anmärkningarna kallar svenskgjorda eller svenskpåverkade (DR 6, DR 344, DR 229, DR 345, DR 365, DR 212, DR 144,
-DR 2) får dansk prägel 0,34 i genomsnitt mot 0,61 för de andra danska stenarna (Mann–Whitney, ensidigt, p = 0,010);
-DR 6 och DR 344 hamnar på plats 1 och 5 av 174.
+*Dansk prägel.* En logistisk regression (ridge, λ = 1, klassvikter) skiljer danska från svenska stenar på 13 drag i
+minnesformelns ordval och i stavningen: satte, reste, lät resa, gjorde, kumbl, þegn och drængr, berömmande ord, sten med
+monoftong eller diftong, æft med eller utan -iR, ristarsignatur och stungna runor. Tro (bön, själen, bro) och resor
+ingår inte, så att måttet inte bara skiljer kristna eller sena stenar från de andra (från 2026-10-14; den första versionen
+hade alla 17 drag). Modellen tränas bara på stenar från 970–1050 (147 danska och 576 svenska), så att den lär sig
+skillnaden mellan danskt och svenskt bruk vid samma tid och inte skillnaden mellan tidiga och sena stenar; stenarna i
+träningen får sin prognos ur femfaldig korsvalidering (fördelade efter signum). Den skiljer en dansk från en svensk sten
+rätt i 82 av 100 par (AUC 0,82). Bara stenar med minst två av de 17 dragen får en prägel. *Kontroll:* modellen har inte
+sett Rundatas anmärkningar, men de 8 danska stenar som anmärkningarna kallar svenskgjorda eller svenskpåverkade (DR 6,
+DR 344, DR 229, DR 345, DR 365, DR 212, DR 144, DR 2) får dansk prägel 0,37 i genomsnitt mot 0,61 för de andra danska
+stenarna (Mann–Whitney, ensidigt, p = 0,016); DR 6 och DR 344 hamnar på plats 1 och 2 av 174.
+
+*Prövat i R.* Artikeln ”Västgötarna satte stenen som danskarna” (utkast 2026-10-14) räknade om modellen i R (mgcv,
+ridge med straffet valt med REML) med samma resultat (AUC 0,82, kontrollen p = 0,015) och prövade fynden i båda
+halvorna, där stenarna delas socken för socken och modellen tränas om i varje halva. Att den danska prägeln hos svear
+och götar bleknar med stilgruppen (landskapet konstant) och att Västergötland är danskast (stilgruppen konstant) håller i
+båda halvorna; att Skånes stenar är mindre danska än Jyllands vid samma tid, och att prägeln minskar med avståndet från
+gränsen när tiden hålls konstant, håller bara i den ena. Med tro och resor inräknade blir Västergötland tydligare danskt,
+men blekningen med tiden svag (p = 0,10): den ligger i formeln och stavningen.
 
 Resultaten redovisas per trakt, per stilgrupp och per ristare (Rundatas säkra signerade och attribuerade ristare med
 minst tre stenar), med de tidigaste stenarna med dansk prägel hos svear och götar, de danska stenar som liknar svenska

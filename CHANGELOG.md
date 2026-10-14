@@ -25,6 +25,9 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   - De danska stenar som Rundata kallar svenskgjorda får också låg dansk prägel i modellen, fast den aldrig sett
     anmärkningarna.
   - Rundatas anmärkningar om ett annat lands ristare och texterna som nämner ett annat nordiskt land listas.
+- **Dansk prägel bygger på formeln och stavningen:** modellen i *Jämför länder* läser 13 drag i minnesformelns ordval
+  och stavningen; tro och resor ingår inte längre (METHODS.md 14f). Samma modell, räknad om i R och prövad i båda
+  halvorna, ligger bakom utkastet till artikeln ”Västgötarna satte stenen som danskarna”.
 - **Danska fyndplatser och fornlämningar:** `scripts/fetch_dk_remains.py` hämtar hela Fund og Fortidsminder (Slots- og
   Kulturstyrelsen, gratis) och ger 65 av de 66 danska runstenar som saknar koordinater i Rundata en plats: registrets
   runsten, sockenkyrkan eller orten. Kartan visar nu 238 av 239 danska stenar.

@@ -17,8 +17,8 @@ på olika system: stilgrupperna (Gräslund) för svenska stenar, den danska inde
 Jelling, efter-Jelling) för danska och årtal eller sekel där sådana finns; de flesta norska stenar är bara daterade
 till vikingatid och räknas inte när tiden hålls konstant.
 
-Dansk prägel: en logistisk regression (ridge, klassvikter) lär sig skilja danska från svenska stenar på ordval och
-stavning, tränad bara på samtida stenar (970–1050), så att den lär sig skillnaden mellan danskt och svenskt bruk och
+Dansk prägel: en logistisk regression (ridge, klassvikter) lär sig skilja danska från svenska stenar på minnesformelns
+ordval och stavningen (13 drag; tro och resor ingår inte), tränad bara på samtida stenar (970–1050), så att den lär sig skillnaden mellan danskt och svenskt bruk och
 inte skillnaden mellan tidiga och sena stenar. Stenar i träningen får en prognos ur en modell som inte sett dem
 (femfaldig korsvalidering). Hög dansk prägel betyder att stenen är formulerad och stavad som en dansk sten, inte att
 ristaren var dansk.
@@ -131,6 +131,9 @@ FEATURES = [
     ("bon", "kristen bön"), ("soul", "själen nämns"), ("bro", "bro eller väg"), ("signatur", "ristarsignatur"),
     ("stungna", "stungna runor"), ("fard", "utlandsfärd"),
 ]
+# The model reads the form of the memorial formula and the spelling only: faith (prayer, soul, bridge) and events
+# (journeys) are left out, so that Danish likeness does not merely tell Christian or late stones from the others
+MODEL_KEYS = [k for k, _ in FEATURES if k not in ("bon", "soul", "bro", "fard")]
 TRAIN_YEARS = (970, 1050)
 
 # Rundata's remarks about another country's runes, language or carvers, and texts that name another Nordic land
@@ -374,7 +377,7 @@ def _auc(scores: list[float], labels: list[int]) -> float | None:
 def likeness(rows: list[dict]) -> dict:
     """Dansk prägel för varje dansk och svensk sten med text (0–1), tränad på samtida danska och svenska stenar."""
     import numpy as np
-    keys = [k for k, _ in FEATURES]
+    keys = MODEL_KEYS
     cand = [r for r in rows if r["ft"] is not None and r["land"] in ("danmark", "sverige")]
     train = [r for r in cand if r["y"] is not None and TRAIN_YEARS[0] <= r["y"] < TRAIN_YEARS[1]]
     X = lambda rs: np.array([[1.0] + [r["ft"][k] for k in keys] for r in rs])
@@ -401,7 +404,7 @@ def likeness(rows: list[dict]) -> dict:
     se = [r for r in train if r["land"] == "sverige"]
     feats = [{"key": k, "label": l, "or": round(math.exp(beta[i + 1]), 2),
               "dk": round(sum(r["ft"][k] for r in dk) / len(dk), 3), "se": round(sum(r["ft"][k] for r in se) / len(se), 3)}
-             for i, (k, l) in enumerate(FEATURES)]
+             for i, (k, l) in enumerate((k, l) for k, l in FEATURES if k in MODEL_KEYS)]
     return {"available": True, "score": score, "auc": None if auc is None else round(auc, 3),
             "n_train_dk": int(n1), "n_train_se": int(n0), "features": feats, "years": list(TRAIN_YEARS)}
 
@@ -432,7 +435,7 @@ def crossborder(rows: list[dict], recs: dict[str, dict], like: dict) -> dict:
     if not like.get("available"):
         out["likeness"] = like
         return out
-    score, keys = like["score"], [k for k, _ in FEATURES]
+    score, keys = like["score"], MODEL_KEYS
     told = [r for r in rows if r["s"] in score and sum(r["ft"].values()) >= MIN_FEATURES]
     se = [r for r in told if r["land"] == "sverige"]
     soil = [r for r in se if r["rike"] in SWEDISH_SOIL]
