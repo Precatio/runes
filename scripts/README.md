@@ -50,3 +50,15 @@ och medeltida kyrkor hämtas från Wikidata. Kräver `ogr2ogr` (GDAL):
 ```bash
 .venv/bin/python scripts/fetch_place_names.py      # data/ortnamn/kultnamn.csv, platser.csv, kyrkor.csv
 ```
+
+## Rikenas gränser på kartan (METHODS.md 14g)
+
+Kartans gränslager (`web/public/geo/riken.geojson`) byggs ur definitionerna i `web/src/lib/realms.json`. Skriptet läser
+landskapen ur Sveriges OSM-utdrag (som `fetch_place_names.py` hämtar) och Danmark, Norge och Slesvig ur Natural Earth,
+som hämtas vid behov:
+
+```bash
+Rscript --vanilla scripts/build_realms.R
+```
+
+Kör det igen när ett område i `realms.json` får andra byggstenar.

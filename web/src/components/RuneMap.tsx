@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { latLngBounds } from "leaflet";
 import Link from "next/link";
 import { CircleMarker, MapContainer, Popup, TileLayer, useMap } from "react-leaflet";
+import RealmLayer from "@/components/RealmLayer";
 
 export interface MapPoint {
   signum: string;
@@ -31,6 +32,8 @@ interface Props {
   selected?: string | null;
   // Changes when the filters change; the map then zooms to the visible points (not when empty)
   fitKey?: string;
+  // The time whose realms are drawn under the stones (src/lib/realms.ts), or none
+  realm?: string;
 }
 
 function FlyTo({ point }: { point: MapPoint | undefined }) {
@@ -52,7 +55,7 @@ function FitToPoints({ points, fitKey }: { points: MapPoint[]; fitKey?: string }
   return null;
 }
 
-export default function RuneMap({ points, colorFor, selected, fitKey }: Props) {
+export default function RuneMap({ points, colorFor, selected, fitKey, realm }: Props) {
   const selectedPoint = selected ? points.find(p => p.signum === selected) : undefined;
   return (
     <MapContainer center={[59.3, 16.5]} zoom={6} preferCanvas className="w-full h-full rounded-[28px]" scrollWheelZoom>
@@ -60,6 +63,7 @@ export default function RuneMap({ points, colorFor, selected, fitKey }: Props) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-bidragsgivare'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+      {realm && <RealmLayer epoch={realm} />}
       <FlyTo point={selectedPoint} />
       {!selectedPoint && <FitToPoints points={points} fitKey={fitKey} />}
       {points.map(p => {

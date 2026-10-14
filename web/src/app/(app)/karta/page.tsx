@@ -10,6 +10,8 @@ import { useAuth } from "@/components/AuthContext";
 import { InfoTip } from "@/components/Explain";
 import type { MapPoint } from "@/components/RuneMap";
 import PatternExplorer from "@/components/PatternExplorer";
+import RealmPanel from "@/components/RealmPanel";
+import NordicExplorer from "@/components/NordicExplorer";
 
 const RuneMap = dynamic(() => import("@/components/RuneMap"), {
   ssr: false,
@@ -43,7 +45,7 @@ interface Trait { key: string; label: string; definition: string; values: Record
 // The filters, as they appear in the address bar (so a map view can be shared)
 const FILTER_KEYS = ["q", "province", "period", "style", "carver", "category", "material", "status", "cross", "trait", "value",
   "overview", "runestones", "measured", "color", "view", "pattern", "split", "hex", "places", "near", "km", "nearonly",
-  "mode", "year"] as const;
+  "mode", "year", "borders", "npattern", "grouping"] as const;
 type FilterKey = typeof FILTER_KEYS[number];
 type Filters = Record<FilterKey, string>;
 const EMPTY: Filters = Object.fromEntries(FILTER_KEYS.map(k => [k, ""])) as Filters;
@@ -245,13 +247,17 @@ function MapContent() {
         <p className="text-slate-600 text-[16px] leading-relaxed max-w-3xl font-medium">
           Hitta mönster och samband: välj ett drag – tro, skrift eller innehåll – och jämför det med tiden, med platser som
           ortnamn, kyrkor och fornlämningar, eller med kluster som R har hittat. Börja gärna med ett fynd under Upptäck. Under
-          Punkter finns varje inskrift med filter, och vyn kan delas och laddas ner som tabell.
+          Punkter finns varje inskrift med filter, och vyn kan delas och laddas ner som tabell. Under Jämför länder ställs
+          danska, norska och svenska runstenar mot varandra, och där finns spåren av påverkan över gränserna. Rikenas
+          ungefärliga gränser omkring 890, 1025 och 1200 kan läggas på alla kartor.
         </p>
       </div>
 
       <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Kartvy">
-        {([["monster", "Mönsterkarta"], ["punkter", "Punkter"]] as const).map(([k, l]) => (
-          <button key={k} role="tab" aria-selected={view === k} onClick={() => set("view", k === "monster" ? "monster" : "punkter")}
+        {([["monster", "Mönsterkarta"], ["punkter", "Punkter"], ["norden", "Jämför länder"]] as const).map(([k, l]) => (
+          <button key={k} role="tab" aria-selected={view === k}
+            // The comparison of the countries opens with the realms about 1025 on the map
+            onClick={() => setF(x => ({ ...x, view: k, ...(k === "norden" && !x.borders ? { borders: "1025" } : {}) }))}
             className={`px-4 py-2 rounded-full text-sm font-bold border ${view === k ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50"}`}>
             {l}
           </button>
@@ -262,6 +268,8 @@ function MapContent() {
         <PatternExplorer f={f} set={(k, v) => set(k as FilterKey, v)} patch={p => setF(x => ({ ...x, ...p }))}
           onError={setError} provinceName={name} />
       )}
+
+      {view === "norden" && <NordicExplorer f={f} set={(k, v) => set(k as FilterKey, v)} onError={setError} />}
 
       {view === "punkter" && (
       <>
@@ -379,7 +387,7 @@ function MapContent() {
                 {v}<span aria-hidden>×</span>
               </button>
             ))}
-            <button onClick={() => { setF(x => ({ ...EMPTY, color: x.color })); setQInput(""); }} className="text-xs font-semibold text-[#b7410e] hover:underline">
+            <button onClick={() => { setF(x => ({ ...EMPTY, color: x.color, borders: x.borders })); setQInput(""); }} className="text-xs font-semibold text-[#b7410e] hover:underline">
               Rensa alla
             </button>
           </div>
@@ -391,13 +399,16 @@ function MapContent() {
           </p>
         )}
         {trait && <p className="text-xs text-slate-600"><span className="font-semibold">{trait.label}:</span> {trait.definition}</p>}
+        <div className="border-t border-slate-900/5 pt-3">
+          <RealmPanel value={f.borders} onChange={v => set("borders", v)} />
+        </div>
       </div>
 
       {error && <p className="text-red-700 font-semibold">{error}</p>}
 
       <div className="liquid-glass-island rounded-[24px] sm:rounded-[32px] p-1.5 sm:p-2 flex-1 min-h-[70dvh] sm:min-h-[520px] relative">
-        <RuneMap points={visible} colorFor={colorFor} selected={selected}
-          fitKey={nFilters ? JSON.stringify({ ...f, color: "" }) + (matches ? matches.size : "") + (trait ? trait.key : "") + (overview ? "o" : "") : undefined} />
+        <RuneMap points={visible} colorFor={colorFor} selected={selected} realm={f.borders || undefined}
+          fitKey={nFilters ? JSON.stringify({ ...f, color: "", borders: "" }) + (matches ? matches.size : "") + (trait ? trait.key : "") + (overview ? "o" : "") : undefined} />
         <div className="absolute bottom-3 left-3 sm:bottom-6 sm:left-6 z-[500] bg-white/90 rounded-xl px-3 py-2 shadow text-[11px] sm:text-xs space-y-1 max-h-[40%] sm:max-h-[60%] max-w-[60%] overflow-y-auto">
           {legend.map(([l, color]) => (
             <div key={l} className="flex items-center gap-2">

@@ -215,6 +215,20 @@ def pattern_map_key() -> str:
     return f"pattern-map|{places._mtimes()}|{id(store().inscriptions)}"
 
 
+@lru_cache(maxsize=2)
+def _nordic_for(_stamp: int) -> dict:
+    from src import nordic
+    return nordic.build(store().inscriptions)
+
+
+@router.get("/nordic")
+def nordic(request: Request):
+    """Danska, norska och svenska runstenar jämförda, och drag över gränserna: Rundatas anmärkningar, texter som
+    nämner ett annat land och dansk prägel på svenska stenar och ristare (src/nordic.py)."""
+    stamp = id(store().inscriptions)
+    return cached_json(request, f"nordic|{stamp}", lambda: _nordic_for(stamp))
+
+
 @router.get("/places")
 def places_layer(kind: str):
     """En sorts platser för kartan: [lat, lon, namn, uppgift] (ortnamn, medeltida kyrkor, fornlämningar)."""

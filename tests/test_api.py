@@ -288,6 +288,23 @@ def test_stone_overview(client):
     assert client.get("/api/research/overview/Inte 999").status_code == 404
 
 
+@pytest.mark.skipif(not os.path.exists(os.path.join(os.path.dirname(__file__), "..", "data", "rundata.json")),
+                    reason="data/rundata.json saknas")
+def test_nordic_comparison(client):
+    d = client.get("/api/research/nordic").json()
+    keys = [p["key"] for p in d["patterns"]]
+    assert "kors" not in keys and "dansk" in keys
+    assert d["counts"]["danmark"] > 200 and d["counts"]["sverige"] > 2000 and d["counts"]["norge"] > 30
+    assert all(len(s["v"]) == len(keys) for s in d["stones"])
+    # The East Norse monophthong in sten is more common on the Danish stones, as runology says
+    mono = {g["key"]: g["share"] for g in d["compare"]["land"]["monoftong"]["groups"]}
+    assert mono["danmark"] > mono["sverige"]
+    like = d["crossborder"]["likeness"]
+    assert like["available"] and like["auc"] > 0.7
+    # The Danish stones that Rundata calls Swedish-made look more Swedish than the rest
+    assert like["check"]["mean"] < like["check"]["mean_others"]
+
+
 
 @pytest.mark.skipif(not os.path.exists(os.path.join(os.path.dirname(__file__), "..", "data", "rundata.json")),
                     reason="data/rundata.json saknas")

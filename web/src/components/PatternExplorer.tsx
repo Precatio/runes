@@ -12,6 +12,7 @@ import {
 } from "@/lib/patternMap";
 import type { Scan } from "@/components/LandscapeScan";
 import ExportTable from "@/components/ExportTable";
+import RealmPanel from "@/components/RealmPanel";
 
 const PatternMaps = dynamic(() => import("@/components/PatternMap"), {
   ssr: false,
@@ -258,6 +259,10 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
             )}
           </div>
 
+          <div className={box}>
+            <RealmPanel value={f.borders} onChange={v => set("borders", v)} />
+          </div>
+
           <details className={box}>
             <summary className="cursor-pointer text-xs font-bold text-slate-700">Fler inställningar</summary>
             <div className="mt-3 space-y-3">
@@ -294,6 +299,7 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
             {patternDef && (
               <PatternMaps stones={mapStones} boundsFrom={data.stones} patternKey={patternKey} label={patternDef.label}
                 widthKm={hexKm} minStones={MIN_STONES} split={mode === "tid"} splitYear={splitYear} overlays={overlays} circles={circles} markers={markers}
+                realm={f.borders || undefined}
                 focus={mode === "kluster" && hp?.clusters[pickedCluster]
                   ? { lat: hp.clusters[pickedCluster].lat, lon: hp.clusters[pickedCluster].lon, radiusKm: hp.clusters[pickedCluster].radius_km }
                   : undefined} />

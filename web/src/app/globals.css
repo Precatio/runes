@@ -178,3 +178,8 @@ body {
 
 /* The pattern map's base map: grey and faded, so that the coloured hexagons carry the pattern */
 .pattern-basemap { filter: grayscale(1) brightness(1.15) contrast(0.8); opacity: 0.45; }
+
+/* The names of the realms on the maps (src/components/RealmLayer.tsx): centred on the point, with a white halo */
+.realm-label { background: none; border: none; }
+.realm-label span { display: block; transform: translate(-50%, -50%); white-space: nowrap; font-size: 12px; font-weight: 800;
+  letter-spacing: 0.08em; text-transform: uppercase; text-shadow: 0 0 3px #fff, 0 0 3px #fff, 0 0 6px #fff; }

@@ -5,6 +5,28 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Kartan: rikenas gränser och jämförelse mellan länderna
+- **Rikenas gränser:** alla kartvyer kan visa de ungefärliga gränserna för svear (Svitjod), götar, Danmark, Norge,
+  Gotland och Jämtland omkring 890, 1025 och 1200. Varje område har en förklaring med källa (Ottar och Wulfstan, Adam av
+  Bremen, runstenarna, landskapslagarna), och kärnområden, lösa och omstridda områden ritas olika
+  (`web/src/lib/realms.json`, `src/components/RealmLayer.tsx`, METHODS.md 14g).
+- **Geometrin** byggs av `scripts/build_realms.R` ur OpenStreetMaps landskap och Natural Earth
+  (`web/public/geo/riken.geojson`).
+- **Jämför länder** (ny flik): danska, norska och svenska runstenar ställs mot varandra, per land eller per rike och
+  trakt omkring 1025, med andelar, intervall och prov med och utan tiden konstant (`GET /api/research/nordic`,
+  `src/nordic.py`, METHODS.md 14f).
+  - Mönstren läser Rundatas engelska översättning och translitterationen, som är gjorda lika i alla tre serierna.
+  - Kors ingår inte, eftersom Rundata nästan bara beskriver korsen på svenska stenar.
+- **Över gränserna:**
+  - En modell ger varje dansk och svensk sten en dansk prägel ur ordval och stavning, tränad på samtida stenar
+    (970–1050).
+  - Prägeln redovisas per trakt, stilgrupp och ristare, med de tidigaste stenarna med dansk prägel hos svear och
+    götar.
+  - De danska stenar som Rundata kallar svenskgjorda får också låg dansk prägel i modellen, fast den aldrig sett
+    anmärkningarna.
+  - Rundatas anmärkningar om ett annat lands ristare och texterna som nämner ett annat nordiskt land listas.
+- **Rättat:** METHODS.md 14e räknade Sö 102 som hednisk; den läser salu (själen), inte alu.
+
 ### Röstning på webbplatsen: Vitki i webbläsaren?
 - **Röstrutan:** startsidan frågar besökarna om de hellre skulle använda Vitki direkt i webbläsaren, utan att
   installera något. De kan svara "Ja, gärna" eller "Nej, jag installerar själv" (`web/src/components/SiteVote.tsx`).

@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import { useEffect, useMemo } from "react";
 import { Circle, CircleMarker, MapContainer, Polygon, TileLayer, Tooltip, useMap } from "react-leaflet";
 import type { LatLngBoundsExpression } from "leaflet";
+import RealmLayer from "@/components/RealmLayer";
 import { colorOf, PLACE_STYLE, splitOf, TOO_FEW, type MapCircle, type MapMarker, type PatternStone, type PlaceLayer } from "@/lib/patternMap";
 
 // An equal-area-enough projection for Sweden: kilometres east and north of a reference meridian at 62° N
@@ -79,9 +80,9 @@ function placeText(layer: PlaceLayer, [, , name, info]: [number, number, string,
   return `${name}${info ? ` ${info}` : ""}`;
 }
 
-export function HexMap({ hexes, minStones, label, title, bounds, overlays = [], circles = [], markers = [], focus }: {
+export function HexMap({ hexes, minStones, label, title, bounds, overlays = [], circles = [], markers = [], focus, realm }: {
   hexes: Hex[]; minStones: number; label: string; title?: string; bounds: LatLngBoundsExpression; overlays?: PlaceLayer[];
-  circles?: MapCircle[]; markers?: MapMarker[]; focus?: MapFocus;
+  circles?: MapCircle[]; markers?: MapMarker[]; focus?: MapFocus; realm?: string;
 }) {
   return (
     <div className="relative w-full h-full">
@@ -115,6 +116,7 @@ export function HexMap({ hexes, minStones, label, title, bounds, overlays = [], 
           );
         })}
         <FocusOn focus={focus} bounds={bounds} />
+        {realm && <RealmLayer epoch={realm} outline />}
         {circles.map((c, i) => (
           <Circle key={`c-${i}`} center={[c.lat, c.lon]} radius={c.radiusKm * 1000}
             pathOptions={{ color: c.color, weight: 2.5, dashArray: c.dashed ? "6 5" : undefined, fillOpacity: 0.04 }}>
@@ -142,9 +144,9 @@ export function HexMap({ hexes, minStones, label, title, bounds, overlays = [], 
 }
 
 export default function PatternMaps({ stones, patternKey, label, widthKm, minStones, split, splitYear = 1050, overlays = [], boundsFrom,
-                                     circles = [], markers = [], focus }: {
+                                     circles = [], markers = [], focus, realm }: {
   stones: PatternStone[]; patternKey: string; label: string; widthKm: number; minStones: number; split: boolean; splitYear?: number;
-  overlays?: PlaceLayer[]; boundsFrom?: PatternStone[]; circles?: MapCircle[]; markers?: MapMarker[]; focus?: MapFocus;
+  overlays?: PlaceLayer[]; boundsFrom?: PatternStone[]; circles?: MapCircle[]; markers?: MapMarker[]; focus?: MapFocus; realm?: string;
 }) {
   const early = useMemo(() => stones.filter(s => s.y !== null && s.y < splitYear), [stones, splitYear]);
   const late = useMemo(() => stones.filter(s => s.y !== null && s.y >= splitYear), [stones, splitYear]);
@@ -154,11 +156,11 @@ export default function PatternMaps({ stones, patternKey, label, widthKm, minSto
   const all = useMemo(() => hexbin(stones, patternKey, widthKm), [stones, patternKey, widthKm]);
   const hexEarly = useMemo(() => hexbin(early, patternKey, widthKm), [early, patternKey, widthKm]);
   const hexLate = useMemo(() => hexbin(late, patternKey, widthKm), [late, patternKey, widthKm]);
-  if (!split) return <HexMap hexes={all} minStones={minStones} label={label} bounds={bounds} overlays={overlays} circles={circles} markers={markers} focus={focus} />;
+  if (!split) return <HexMap hexes={all} minStones={minStones} label={label} bounds={bounds} overlays={overlays} circles={circles} markers={markers} focus={focus} realm={realm} />;
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 h-full">
-      <div className="min-h-[50dvh] md:min-h-0"><HexMap hexes={hexEarly} minStones={minStones} label={label} bounds={bounds} overlays={overlays} title={`Före ca ${sp.year} (${sp.before})`} /></div>
-      <div className="min-h-[50dvh] md:min-h-0"><HexMap hexes={hexLate} minStones={minStones} label={label} bounds={bounds} overlays={overlays} title={`Efter ca ${sp.year} (${sp.after})`} /></div>
+      <div className="min-h-[50dvh] md:min-h-0"><HexMap hexes={hexEarly} minStones={minStones} label={label} bounds={bounds} overlays={overlays} realm={realm} title={`Före ca ${sp.year} (${sp.before})`} /></div>
+      <div className="min-h-[50dvh] md:min-h-0"><HexMap hexes={hexLate} minStones={minStones} label={label} bounds={bounds} overlays={overlays} realm={realm} title={`Efter ca ${sp.year} (${sp.after})`} /></div>
     </div>
   );
 }

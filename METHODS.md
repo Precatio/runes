@@ -1085,8 +1085,8 @@ förbannelser (ræti, argi, seiðr), alu och Tormotiv i Rundatas anmärkningar (
 Futharkrader räknas inte, eftersom de också förekommer i kristna sammanhang, och inte heller Sigurdsbilder, eftersom
 hjältesagan också används i kristen konst. *Utan religiösa markörer* är läsbara stenar med varken eller; en sten utan
 kristna markörer är inte därmed hednisk. Bland 2 318 vikingatida runstenar med koordinater har 1 103 kristna markörer,
-7 hedniska eller rituella (Ög 136, Sö 102, Sö 111, Sö 140, Sö 352, Vg 150, U 1161; Sö 86 med torshammare är ett
-jordfast block och räknas inte som runsten) och 1 203 inga. De uttryckligt hedniska stenarna är alltså mycket få; den
+6 hedniska eller rituella (Ög 136, Sö 111, Sö 140, Sö 352, Vg 150, U 1161; Sö 86 med torshammare är ett jordfast block
+och räknas inte som runsten, och Sö 102 läser salu, själen, inte alu) och 1 210 inga. De uttryckligt hedniska stenarna är alltså mycket få; den
 stora gruppen är stenarna utan religiösa markörer, som kan vara hedniska, kristna utan att säga det eller
 religiöst neutrala minnesmärken.
 
@@ -1105,6 +1105,65 @@ utan justering (Fishers exakta test) och med landskapet konstant (Mantel–Haens
 inte, och kartan kan begränsas till stenarna nära platserna. Provet är utforskande: tiden hålls inte konstant, mönstret
 prövas inte i två halvor och den som prövar många kombinationer av mönster, platser och radier hittar några skillnader
 av en slump. Det fullständiga provet för kultnamnen redovisas i avsnitt 1.
+
+### 14f. Danska, norska och svenska runstenar jämförda
+
+Fliken *Jämför länder* på kartan (`GET /api/research/nordic`, `src/nordic.py`, från 2026-10-14) ställer Rundatas
+vikingatida runstenar (period V, föremål runsten) i tre serier mot varandra: den danska (DR, 239 stenar, med Skåne,
+Blekinge, Bornholm och Slesvig, som hörde till det danska riket), den svenska (2 321) och den norska (N, 66). Stenarna
+grupperas efter serie eller efter riken och trakter omkring 1025, som i gränslagret (14g): Jylland och Slesvig, de danska
+öarna, Skåne och Blekinge, Bornholm, Svitjod (Uppland, Södermanland, Västmanland, Närke), Dalarna och Norrland,
+Götaland, Småland med Öland och Dalsland, Gotland, Jämtland, de omstridda Bohuslän och Värmland, och Norge.
+
+*Jämförbara mönster.* Rundatas normalisering är olika i serierna – runsvensk för svenska stenar, runodansk för danska
+(Guþ hialpi, kumbl þøsi) och fornvästnordisk för norska (reist rúnar) – så mönsterkartans språkdrag, som söker i
+normaliseringen, missar danska och norska former. Jämförelsens mönster läser i stället den engelska översättningen och
+translitterationen, som är gjorda på samma sätt i alla tre: kristen text (Gud, Kristus, själen, en helig), kristen bön,
+hedniska eller rituella markörer (som i 14e), titlarna þegn och drængr, ordet kumbl, bro- och vägbygge, utlandsfärd, arv,
+ristarsignatur, stungna runor och monoftong i ordet sten (stin mot stain, bara där ordet finns). Kors ingår inte:
+Rundata anger korsets form för 41 % av de svenska stenarna men för 12 % av de danska och 3 % av de norska, också där
+korset är välkänt (Kristusbilden på Jellingstenen DR 42, Dynnastenen N 68), så en skillnad i kors vore en skillnad i
+beskrivningen.
+
+*Prov.* Andelen per grupp redovisas med ett 95 % Wilsonintervall. Skillnaden mellan grupperna prövas med χ² (grupper med
+minst 10 stenar). Länderna jämförs parvis med oddskvot (Fishers exakta test) och med tiden konstant: Mantel–Haenszel
+över tre perioder (före 1000, 1000–1050, 1050 och senare). Dateringarna är Rundatas och bygger på olika system:
+stilgruppens mittår för svenska stenar (Gräslund), den danska indelningen för danska (Helnæs-Gørlev ca 825, för-Jelling
+925, Jelling 970, efter-Jelling 1015, kristen efter-Jelling 1025) och annars årtal eller sekel; 220 danska, 1 066
+svenska och bara 17 norska stenar är daterade. Provet är utforskande på samma sätt som platsprovet i 14e.
+
+*Dansk prägel.* En logistisk regression (ridge, λ = 1, klassvikter) skiljer danska från svenska stenar på 17 drag i
+ordval och stavning (satte, reste, lät resa, gjorde, kumbl, þegn och drængr, berömmande ord, sten med monoftong eller
+diftong, æft med eller utan -iR, bön, själen, bro, signatur, stungna runor och utlandsfärd). Den tränas bara på stenar
+från 970–1050 (147 danska och 576 svenska), så att den lär sig skillnaden mellan danskt och svenskt bruk vid samma tid
+och inte skillnaden mellan tidiga och sena stenar; stenarna i träningen får sin prognos ur femfaldig korsvalidering
+(fördelade efter signum). Den skiljer en dansk från en svensk sten rätt i 82 av 100 par (AUC 0,82). Bara stenar med
+minst två av dragen får en prägel. *Kontroll:* modellen har inte sett Rundatas anmärkningar, men de 8 danska stenar
+som anmärkningarna kallar svenskgjorda eller svenskpåverkade (DR 6, DR 344, DR 229, DR 345, DR 365, DR 212, DR 144,
+DR 2) får dansk prägel 0,34 i genomsnitt mot 0,60 för de andra danska stenarna (Mann–Whitney, ensidigt, p = 0,012);
+DR 6 och DR 344 hamnar på plats 1 och 5 av 176.
+
+Resultaten redovisas per trakt, per stilgrupp och per ristare (Rundatas säkra signerade och attribuerade ristare med
+minst tre stenar), med de tidigaste stenarna med dansk prägel hos svear och götar, de danska stenar som liknar svenska
+mest, Rundatas anmärkningar om ett annat lands ristare eller språk och de texter som nämner ett annat nordiskt land.
+Hög dansk prägel betyder att stenen är formulerad och stavad som en dansk sten, inte att ristaren var dansk; för stenar
+äldre än 970, utanför modellens tid, kan likheten spegla ett äldre språk som danskan och de tidiga svenska stenarna
+delar. Rundata har nästan inga ristarnamn för danska stenar (fem ristare) och inga norska, så ristare över gränserna
+kan inte sökas på namn. De norska stenarna är för få för en egen modell.
+
+### 14g. Rikenas gränser på kartan
+
+Alla tre kartvyerna kan visa rikenas och folkens ungefärliga gränser omkring 890, 1025 och 1200
+(`web/src/lib/realms.json`, från 2026-10-14). Varje område är en sammanslagning av dagens landskap och regioner och är
+märkt som kärnområde, löst knutet eller osäkert, eller omstritt; varje område har en förklaring med källa. Omkring 890
+bygger kartan på Ottars och Wulfstans berättelser i den fornengelska Orosius (Blekinge, Möre, Öland och Gotland hör
+till svearna, Skåne och de danska öarna till Danmark, Bornholm har en egen kung), omkring 1025 på Adam av Bremen,
+runstenarna själva (Jellingstenen, Frösöstenen) och senare medeltida gränser, och omkring 1200 på stiften och
+landskapslagarna. Före medeltiden var gränserna zoner snarare än linjer, och inlandet är i regel okänt; samernas land i
+norr och i fjällen ritas inte. Geometrin byggs av `scripts/build_realms.R` till `web/public/geo/riken.geojson`: de
+svenska landskapen ur OpenStreetMap (de flesta som historiska gränser, resten ur län och kommuner), Danmark, Norge och
+Slesvig ur Natural Earth, Slesvigs sydgräns ungefärligt vid Ejdern och Möre som en ruta i sydöstra Småland; allt
+klipps mot Natural Earths land och förenklas till omkring 300 m.
 
 ## 15. Rapporter
 
@@ -1327,6 +1386,9 @@ Innan resultat jämförs direkt bör samma referensstenar mätas med båda metod
   WMS). Svaren cachas lokalt i `data/cache/geology.json` (ingår inte i repot).
 * **Vatten och land:** Natural Earth 1:10 miljoner (kustlinje, sjöar, vattendrag, de europeiska tilläggen och land),
   public domain. Hämtas en gång till `data/cache/r/naturalearth/`.
+* **Rikenas gränser** (14g): landskapen ur OpenStreetMap (© OpenStreetMap-bidragsgivare, ODbL); Danmark, Norge och
+  Slesvig ur Natural Earth 1:10 miljoner (länder och regioner, public domain). Den byggda filen
+  `web/public/geo/riken.geojson` är en härledd databas under ODbL.
 * **Höjddata:** Terrain Tiles (Tilezen/Mapzen, Registry of Open Data on AWS), zoomnivå 12 per sten och zoomnivå 9
   för korpusens strandlinje. Hämtas till `data/cache/r/terrain/`.
 * **Ortnamn:** OpenStreetMap (© OpenStreetMap-bidragsgivare, ODbL), med Lantmäteriets ortnamn från terrängkartan;
