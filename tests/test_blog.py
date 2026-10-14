@@ -126,6 +126,31 @@ def test_commons_pictures_carry_photographer_and_licence(tmp_path, monkeypatch):
     assert "[CC BY 3.0](https://creativecommons.org/licenses/by/3.0)" in imgs[0]["markdown"] and "Photo: Berig" in imgs[0]["markdown_en"]
     assert commons.signa_in("Se U 344 och Sö 101, men inte U344; Ög 136 och U 649B.") == ["U 344", "Sö 101", "Ög 136", "U 649B"]
     assert commons._url("https://x.org/File:A_(b).jpg?utm_source=c&w=1") == "https://x.org/File:A_%28b%29.jpg?w=1"
+    assert commons.signa_in("Ög Fv1958;252 och DR NOR1998;21") == ["Ög Fv1958;252", "DR NOR1998;21"]
+
+
+def test_several_photos_per_stone_photos_before_drawings(tmp_path, monkeypatch):
+    from src import commons
+    monkeypatch.setattr(commons, "CACHE", str(tmp_path))
+    monkeypatch.setattr(commons, "wikidata_items", lambda signa: {
+        "U 29": {"file": "U 29, Hillersjö (drawing).jpg", "category": "U 29"}, "U 2": {"file": None, "category": None}})
+    monkeypatch.setattr(commons, "category_files", lambda cat: ["U29 Hillersjö.jpg", "U29 rights.jpg", "U 29, Hillersjö (drawing).jpg"])
+    info = lambda **k: {"thumb": f"https://upload.wikimedia.org/wikipedia/commons/a/ab/{k['f']}", "page": "p", "licence_url": None,  # noqa: E731
+                        "author": k.get("a", "Berig"), "licence": k.get("l", "CC BY 2.5"), "description": k.get("d", "")}
+    monkeypatch.setattr(commons, "commons_info", lambda files: {
+        "U 29, Hillersjö (drawing).jpg": info(f="d.jpg", a="Johan Hadorph", l="Public domain"),
+        "U29 Hillersjö.jpg": info(f="p.jpg", a="No machine-readable author provided. Cattie assumed (based on copyright claims)."),
+        "U29 rights.jpg": info(f="r.jpg", l="All rights reserved")})
+    st = commons.stone_photos(["U 29", "U 2"])
+    assert [s["signum"] for s in st] == ["U 29"]  # U 2 has no picture at all
+    ph = st[0]["photos"]
+    assert [p["file"] for p in ph] == ["U29 Hillersjö.jpg", "U 29, Hillersjö (drawing).jpg"]  # the photo first, not the unfree one
+    assert ph[0]["author"] == "Cattie" and not ph[0]["old"] and not ph[0]["main"]
+    assert ph[1]["old"] and ph[1]["main"]  # Wikidata's own picture, but an older drawing
+    assert ph[0]["preview"] == "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/p.jpg/330px-p.jpg"
+    assert commons.stone_photos(["U 29"])[0]["photos"][0]["file"] == "U29 Hillersjö.jpg"  # from the cache
+    old = {"signum": "Sö 101", "page": "p", "author": "Swedish National Heritage Board", "licence": "No restrictions"}
+    assert "inga kända upphovsrättsliga begränsningar" in commons.caption(old) and "no known copyright" in commons.caption(old, "en")
 
 
 def test_prayer_is_found_in_its_spellings():
@@ -351,3 +376,32 @@ def test_the_article_of_the_month_goes_to_the_website(tmp_path, monkeypatch):
     assert [(p["slug"], p.get("featured")) for p in data["posts"]] == [("nyare", None), ("manadens", True)]
     from api.routers.blog import PUBLIC, PostRequest
     assert "featured" in PUBLIC and PostRequest(slug="x", title="T", body="b").featured is False
+
+
+def test_the_article_of_the_month_is_set_from_the_list(monkeypatch):
+    from api.routers import blog
+    from src import site_export
+    docs = {"a": {"id": "a", "published": True, "featured": True}, "b": {"id": "b", "published": True}, "c": {"id": "c"}}
+    writes = []
+
+    class Doc:
+        def __init__(self, i): self.i = i
+        def set(self, data, merge=False): writes.append((self.i, data)); docs[self.i].update(data)
+
+    class Col:
+        def document(self, i): return Doc(i)
+
+    monkeypatch.setattr(blog, "_all", lambda: [dict(d) for d in docs.values()])
+    monkeypatch.setattr(blog, "_forget", lambda: None)
+    monkeypatch.setattr(blog, "firestore", lambda: type("F", (), {"collection": lambda self, name: Col()})())
+    monkeypatch.setattr(site_export, "publish_soon", lambda: writes.append(("site", None)))
+    assert blog.set_featured(blog.FeaturedRequest(id="b"), {}) == {"featured": "b"}
+    # Only the two that change are written, and only the flag; then the website is published
+    assert writes == [("a", {"featured": False}), ("b", {"featured": True}), ("site", None)]
+    writes.clear()
+    blog.set_featured(blog.FeaturedRequest(id=None), {})
+    assert writes == [("b", {"featured": False}), ("site", None)] and not any(d.get("featured") for d in docs.values())
+    import pytest
+    from fastapi import HTTPException
+    with pytest.raises(HTTPException):
+        blog.set_featured(blog.FeaturedRequest(id="x"), {})

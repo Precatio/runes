@@ -180,6 +180,32 @@ def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
     return {"post": {"id": ref.id, **_iso({k: v for k, v in data.items() if k != "snapshot"})}}
 
 
+class FeaturedRequest(BaseModel):
+    # The article to make the article of the month; empty: none
+    id: str | None = Field(None, max_length=64)
+
+
+@router.post("/admin/blog/featured")
+def set_featured(req: FeaturedRequest, _: dict = Depends(require_admin)):
+    """Gör en artikel till månadens artikel direkt i listan, utan att öppna den (eller ingen, med tomt id). Bara en åt
+    gången; datum och text ändras inte. Webbplatsen publiceras om en halv minut, eftersom startsidan och listan ändras."""
+    posts = _all()
+    if req.id and not any(p["id"] == req.id for p in posts):
+        raise HTTPException(status_code=404, detail="Artikeln finns inte.")
+    try:
+        col = firestore().collection(COLLECTION)
+        for p in posts:
+            want = p["id"] == req.id
+            if bool(p.get("featured")) != want:
+                col.document(p["id"]).set({"featured": want}, merge=True)
+        _forget()
+    except Exception as e:
+        raise server_error(e, "Månadens artikel kunde inte sparas.", status_code=503)
+    from src import site_export
+    site_export.publish_soon()
+    return {"featured": req.id or None}
+
+
 def publication_time(publish_at: dt.datetime | None, before: dt.datetime | None, now: dt.datetime) -> dt.datetime:
     """When a published article goes live: the chosen time (scheduled), the date it already had if it was live before,
     or now (the first time, or when a scheduled article is published at once)."""
@@ -636,18 +662,19 @@ class ImagesRequest(BaseModel):
 
 @router.post("/admin/blog/images")
 def images(req: ImagesRequest, _: dict = Depends(require_admin)):
-    """Foton av de stenar en text nämner, ur Wikidata och Wikimedia Commons, med fotograf och licens (src/commons.py).
-    Bara fritt licensierade bilder; stenar utan sådan bild står under missing."""
+    """Bilder att välja mellan för de stenar en text nämner: upp till sex fritt licensierade per sten ur Wikidata och
+    stenens kategori på Wikimedia Commons, foton före äldre teckningar, med fotograf och licens (src/commons.py).
+    Stenar utan någon sådan bild står under missing."""
     from src import commons
-    signa = commons.signa_in(req.text)[:20]
+    signa = commons.signa_in(req.text)[:30]
     if not signa:
-        return {"images": [], "missing": []}
+        return {"stones": [], "missing": []}
     try:
-        found = commons.stone_images(signa)
+        stones = commons.stone_photos(signa)
     except Exception as e:  # noqa: BLE001
         raise server_error(e, "Bilderna kunde inte hämtas från Wikimedia Commons.", status_code=503)
-    have = {i["signum"] for i in found}
-    return {"images": found, "missing": [s for s in signa if s not in have]}
+    have = {st["signum"] for st in stones}
+    return {"stones": stones, "missing": [s for s in signa if s not in have]}
 
 
 @router.post("/admin/site/publish")

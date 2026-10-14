@@ -5,6 +5,27 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Artiklar: tydligare bilder och månadens artikel direkt i listan
+- **Bilderna i artikeln:** Admin visar vilka bilder artikeln har just nu, på svenska och engelska, med tumnagel,
+  bildtext och Ta bort. En rad vid publiceringsknapparna säger hur många bilder som följer med och varnar när de
+  två språken inte har samma bilder.
+- **Flera foton per sten:** Hämta bilder ger upp till sex fritt licensierade bilder per sten, ur Wikidata och stenens
+  kategori på Wikimedia Commons (`src/commons.py`, `stone_photos`).
+  - Foton står först, äldre teckningar och bokplanscher sist, och ★ märker Wikidatas egen bild.
+  - En bild som redan finns i texten märks I artikeln. Finns en annan bild av samma sten blir knappen Byt, så att
+    ingenting infogas två gånger.
+  - Varje åtgärd säger var bilden hamnade.
+  - Urvalet visar små tumnaglar, så att panelen laddar snabbt.
+- **Vad som händer vid publiceringen:** en bild kommer in i texten bara genom Infoga eller Byt, på båda språken
+  samtidigt. Vid publiceringen behövs inget mer: fotona visas direkt från Commons, och figurerna ur R kopieras till
+  webbplatsen av sig själv. Panelen säger det nu.
+- **Bildtexter:** fotografens namn rensas från Commons anmärkning om fotografer som inte kan läsas maskinellt. Museernas
+  gamla foton med "No restrictions" (Flickr Commons) får tas med, med texten "inga kända upphovsrättsliga
+  begränsningar". Signum som `Ög Fv1958;252` och `DR NOR1998;21` hittas också i texten.
+- **Månadens artikel i listan:** varje publicerad artikel har knappen Gör till månadens artikel, och den som är det
+  har Inte månadens artikel. Bara en åt gången; datum och text ändras inte, och webbplatsen uppdateras om en halv
+  minut (`POST /api/admin/blog/featured`).
+
 ### Kartan: rikenas gränser och jämförelse mellan länderna
 - **Rikenas gränser:** alla kartvyer kan visa de ungefärliga gränserna för svear (Svitjod), götar, Danmark, Norge,
   Gotland och Jämtland omkring 890, 1025 och 1200. Varje område har en förklaring med källa (Ottar och Wulfstan, Adam av
