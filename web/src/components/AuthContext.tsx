@@ -3,6 +3,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useState, ReactNode } from "react";
 import type { User } from "firebase/auth";
 import { firebaseAuth } from "@/firebase/config";
+import { PUBLIC_SITE } from "@/lib/site";
 import { API_URL } from "@/lib/api";
 
 interface AuthContextType {
@@ -29,6 +30,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [accountNotice, setAccountNotice] = useState<string | null>(null);
 
   useEffect(() => {
+    // The public website (only the start page and the articles) has no sign-in, so Firebase is not loaded there
+    if (PUBLIC_SITE) { setLoading(false); return; }
     // Firebase Auth is loaded after the page has rendered (firebase/config.ts)
     let unsubscribe = () => {};
     let cancelled = false;

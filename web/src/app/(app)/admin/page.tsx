@@ -6,6 +6,7 @@ import { useAuth } from "@/components/AuthContext";
 import { API_URL } from "@/lib/api";
 import BlogAdmin from "@/components/BlogAdmin";
 import GithubStats from "@/components/GithubStats";
+import SiteVotes from "@/components/SiteVotes";
 
 interface UserRow {
   uid: string; email: string | null; name: string | null; photo: string | null; disabled: boolean;
@@ -188,6 +189,8 @@ export default function AdminPage() {
       </section>
 
       <GithubStats call={call} />
+
+      <SiteVotes call={call} />
 
       <BlogAdmin call={call} />
 

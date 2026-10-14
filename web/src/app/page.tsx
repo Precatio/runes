@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import LanguageToggle from "@/components/LanguageToggle";
 import LocalAppLink from "@/components/LocalAppLink";
+import SiteVote from "@/components/SiteVote";
 import { VERSION } from "@/lib/version";
 import ArticleTeasers from "@/components/ArticleTeasers";
 import type { BlogPost } from "@/components/BlogBody";
@@ -711,6 +712,7 @@ språk, Uppsala universitet.`}
           <a href={METHODS_URL} target="_blank" rel="noopener noreferrer" className="px-7 py-3.5 rounded-full bg-white border border-slate-300 font-bold hover:border-slate-900">Läs metoden</a>
           <Link href="/artiklar" className="px-7 py-3.5 rounded-full bg-white border border-[#b7410e]/40 text-[#9a350b] font-bold hover:border-[#b7410e]">Läs artiklarna</Link>
         </div>
+        <SiteVote />
       </section>
 
       <footer className="border-t border-slate-900/10">

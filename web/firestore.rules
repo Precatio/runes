@@ -82,6 +82,17 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    // Votes from the public website (web/src/components/SiteVote.tsx): anyone may cast one, with exactly these fields
+    // and values; nobody can read, change or remove votes from a browser. The founder sees the result in Admin, read
+    // with the server's own access (api/routers/admin.py).
+    match /site_votes/{voteId} {
+      allow create: if request.resource.data.keys().hasOnly(['question', 'choice', 'lang'])
+        && request.resource.data.question == 'webbapp'
+        && request.resource.data.choice in ['ja', 'nej']
+        && request.resource.data.lang in ['sv', 'en'];
+      allow read, update, delete: if false;
+    }
+
     // Deny access to everything else by default
     match /{document=**} {
       allow read, write: if false;

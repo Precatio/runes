@@ -164,3 +164,24 @@ def delete_message(message_id: str, _: dict = Depends(require_admin)):
     except Exception as e:
         raise server_error(e, "Meddelandet kunde inte tas bort.", status_code=503)
     return {"id": message_id, "deleted": True}
+
+
+@router.get("/admin/site/votes")
+def site_votes(_: dict = Depends(require_admin)):
+    """Röstningen på den publika webbplatsen (web/src/components/SiteVote.tsx): antal röster per fråga och svar, och
+    när den första och den senaste rösten kom. Rösterna läses med serverns egen behörighet; webbläsare kan inte läsa dem."""
+    try:
+        docs = list(firestore().collection("site_votes").stream())
+    except Exception as e:  # noqa: BLE001
+        raise server_error(e, "Rösterna kunde inte hämtas.", status_code=503)
+    by: dict[str, Counter] = {}
+    times: dict[str, list] = {}
+    for d in docs:
+        v = d.to_dict() or {}
+        q = v.get("question", "?")
+        by.setdefault(q, Counter())[v.get("choice", "?")] += 1
+        if d.create_time:
+            times.setdefault(q, []).append(d.create_time)
+    return {"questions": [{"question": q, "total": sum(c.values()), "choices": dict(c),
+                           "first": min(times[q]).isoformat() if times.get(q) else None,
+                           "last": max(times[q]).isoformat() if times.get(q) else None} for q, c in by.items()]}

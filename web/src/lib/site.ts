@@ -37,3 +37,7 @@ export const AUTHORS: Record<string, Author> = {
   },
 };
 export const authorOf = (name?: string | null): Author | null => (name ? AUTHORS[name] ?? null : AUTHORS["Viktor Kvant"]);
+
+// The Firebase project that the public website's vote is written to, through Firestore's REST interface (no SDK, no
+// key: the rules decide what may be written). Set when the site is built; without it the vote is not shown.
+export const VOTE_PROJECT = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "";

@@ -5,6 +5,19 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Röstning på webbplatsen: Vitki i webbläsaren?
+- **Röstrutan:** startsidan frågar besökarna om de hellre skulle använda Vitki direkt i webbläsaren, utan att
+  installera något. De kan svara "Ja, gärna" eller "Nej, jag installerar själv" (`web/src/components/SiteVote.tsx`).
+- **Hur rösten sparas:**
+  - Rösten skrivs direkt till Firestore via REST, utan Firebase-paket och utan nyckel.
+  - Säkerhetsreglerna (`web/firestore.rules`, samlingen `site_votes`) tillåter bara att en röst skapas, med exakt
+    fälten fråga, val och språk.
+  - Ingen kan läsa, ändra eller ta bort röster utifrån.
+  - En röst per webbläsare (localStorage), och den är anonym.
+- **Resultatet:** grundaren ser det i Admin under "Röstning på webbplatsen" (`GET /api/admin/site/votes`), läst med
+  serverns egen behörighet.
+- **Den publika webbplatsen** laddar inte längre Firebase Auth, eftersom den inte har någon inloggning.
+
 ### Den publika webbplatsen på GitHub Pages
 - vitkirunor.se byggs av GitHub (`.github/workflows/site.yml`) som en statisk webbplats med startsidan och artiklarna.
   Appens sidor ingår inte, eftersom appen körs på den egna datorn.

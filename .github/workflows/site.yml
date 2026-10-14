@@ -41,6 +41,8 @@ jobs:
         env:
           NEXT_PUBLIC_SITE_MODE: public
           NEXT_PUBLIC_SITE_URL: https://vitkirunor.se
+          # The vote on the start page writes to this Firebase project (public; it is also in web/.firebaserc)
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID: runes-1656b
           NEXT_TELEMETRY_DISABLED: "1"
       - name: Utan Jekyll
         run: touch web/out/.nojekyll
