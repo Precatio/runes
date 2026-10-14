@@ -104,11 +104,24 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
   const [rFigures, setRFigures] = useState<RFigure[] | null>(null);
   const [publishAt, setPublishAt] = useState("");
   const [imgNote, setImgNote] = useState<string | null>(null);
+  const [imgError, setImgError] = useState<string | null>(null);
+  // The latest attempt to publish the website (GET /api/admin/site/publish): whether the site got the change
+  const [site, setSite] = useState<{ at?: string; pushed?: boolean; note?: string; unpushed?: boolean | null } | null>(null);
+  const [sitePending, setSitePending] = useState(false);
 
   const load = useCallback(() => {
     call("/api/admin/blog/posts").then(d => setPosts(d.posts)).catch(e => setError(e.message));
   }, [call]);
   useEffect(() => { load(); }, [load]);
+  const loadSite = useCallback(() => {
+    call("/api/admin/site/publish").then(setSite).catch(() => setSite(null)).finally(() => setSitePending(false));
+  }, [call]);
+  useEffect(() => { loadSite(); }, [loadSite]);
+  // After a change the app publishes the website in half a minute; the status is read again when that should be done
+  const siteSoon = useCallback(() => {
+    setSitePending(true);
+    window.setTimeout(loadSite, 50_000);
+  }, [loadSite]);
 
   const set = (k: keyof Draft, v: string) => setDraft(d => {
     const next = { ...d, [k]: v };
@@ -147,11 +160,12 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
 
   // Photos of the stones the text names, collected from Wikidata and Wikimedia Commons with photographer and licence
   const findImages = async () => {
-    setBusy("images"); setError(null);
+    setBusy("images"); setImgError(null); setImgNote(null);
     try {
       setImages(await call("/api/admin/blog/images", { method: "POST", body: JSON.stringify({ text: `${draft.body ?? ""}\n${draft.body_en ?? ""}` }) }));
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Bilderna kunde inte hämtas.");
+      setImgError(`${e instanceof Error ? e.message : "Bilderna kunde inte hämtas."} Wikimedia svarar ibland långsamt – försök igen om en stund; `
+        + "det som redan har hämtats sparas, så nästa försök går fortare.");
     } finally {
       setBusy(null);
     }
@@ -219,6 +233,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
         : `Schemalagd: går live ${dateLabel(d.post.publishedAt, "sv", true)} på /artiklar/${d.post.slug}`);
       load();
       refreshBlog();
+      if (mode !== "draft" || draft.id) siteSoon();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Inlägget kunde inte sparas.");
     } finally {
@@ -237,7 +252,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
 
   const remove = async (p: BlogPost) => {
     if (!window.confirm(`Ta bort "${p.title}"? Det går inte att ångra.`)) return;
-    try { await call(`/api/admin/blog/posts/${encodeURIComponent(p.id)}`, { method: "DELETE" }); load(); refreshBlog(); if (draft.id === p.id) setDraft(empty(userName)); }
+    try { await call(`/api/admin/blog/posts/${encodeURIComponent(p.id)}`, { method: "DELETE" }); load(); refreshBlog(); siteSoon(); if (draft.id === p.id) setDraft(empty(userName)); }
     catch (e) { setError(e instanceof Error ? e.message : "Det gick inte."); }
   };
 
@@ -247,8 +262,8 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
     try {
       await call("/api/admin/blog/featured", { method: "POST", body: JSON.stringify({ id: p?.id ?? null }) });
       setDraft(d => (d.id ? { ...d, featured: d.id === p?.id } : d));  // the open article's checkbox follows
-      setNote(p ? `”${p.title}” är nu månadens artikel. Webbplatsen uppdateras om en halv minut.` : "Ingen artikel är månadens artikel längre.");
-      load(); refreshBlog();
+      setNote(p ? `”${p.title}” är nu månadens artikel. Webbplatsen uppdateras om en halv minut; se rutan Webbplatsen.` : "Ingen artikel är månadens artikel längre.");
+      load(); refreshBlog(); siteSoon();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Månadens artikel kunde inte sparas.");
     } finally {
@@ -257,7 +272,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
   };
 
   const unpublish = async (p: BlogPost) => {
-    try { await call("/api/admin/blog/posts", { method: "POST", body: JSON.stringify({ ...p, published: false }) }); load(); refreshBlog(); }
+    try { await call("/api/admin/blog/posts", { method: "POST", body: JSON.stringify({ ...p, published: false }) }); load(); refreshBlog(); siteSoon(); }
     catch (e) { setError(e instanceof Error ? e.message : "Det gick inte."); }
   };
 
@@ -268,6 +283,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
     try {
       const d = await call("/api/admin/site/publish", { method: "POST" });
       setNote(`${d.note} ${d.articles} artiklar, ${d.figures} figurer.${d.missing_figures?.length ? ` Saknade figurer: ${d.missing_figures.join(", ")}.` : ""}`);
+      loadSite();
     } catch (e) {
       setError(e instanceof Error ? e.message : "Webbplatsen kunde inte publiceras.");
     } finally {
@@ -414,7 +430,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
           <div className="flex flex-wrap gap-2">
             <button onClick={findImages} disabled={busy === "images" || !(draft.body ?? "").trim()}
               className="px-3 py-1.5 rounded-lg border border-slate-300 bg-white text-xs font-bold disabled:opacity-40">
-              {busy === "images" ? "Hämtar …" : "Hämta bilder till stenarna i texten"}
+              {busy === "images" ? "Hämtar … (första gången upp till en halv minut)" : "Hämta bilder till stenarna i texten"}
             </button>
             <button onClick={findFigures} disabled={busy === "figures"}
               className="px-3 py-1.5 rounded-lg border border-[#b7410e]/50 bg-white text-xs font-bold text-[#9a350b] disabled:opacity-40">
@@ -429,6 +445,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
         </p>
 
         {imgNote && <p className="text-xs font-semibold text-emerald-700">{imgNote}</p>}
+        {imgError && <p className="text-xs font-semibold text-red-700">{imgError}</p>}
         {/* What the article has now, so that nothing is inserted twice or forgotten */}
         <div className="rounded-lg border border-slate-200 bg-white p-2.5">
           <p className="text-xs font-bold text-slate-700">
@@ -575,6 +592,15 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
           Den uppdateras av sig själv en halv minut efter att du har publicerat, ändrat eller tagit bort en artikel, och när
           en schemalagd artikels tid kommer – så länge appen är igång (annars när den startar). GitHub bygger om på några
           minuter. Knappen publicerar direkt.
+          <span className={`block mt-1.5 text-xs font-semibold ${sitePending ? "text-slate-500"
+            : site?.pushed === false && !/redan/.test(site?.note ?? "") ? "text-red-700" : site?.unpushed ? "text-amber-700" : "text-emerald-700"}`}>
+            {sitePending ? "Webbplatsen uppdateras om en halv minut …"
+              : !site?.at ? (site?.unpushed ? "Det finns ändringar som inte har kommit ut på webbplatsen – klicka Publicera webbplatsen." : "")
+              : site.pushed === false && !/redan/.test(site.note ?? "")
+                ? `Senaste försöket ${dateLabel(site.at, "sv", true)} misslyckades: ${site.note} Klicka Publicera webbplatsen för att försöka igen.`
+                : site.unpushed ? "Det finns ändringar som inte har kommit ut på webbplatsen – klicka Publicera webbplatsen."
+                  : `Senast publicerad ${dateLabel(site.at, "sv", true)}: ${site.note}`}
+          </span>
         </p>
         <button onClick={publishSite} disabled={busy === "site"} className="px-4 py-2 rounded-xl bg-slate-900 text-white text-sm font-bold disabled:opacity-40">
           {busy === "site" ? "Publicerar …" : "Publicera webbplatsen"}

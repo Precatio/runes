@@ -135,6 +135,7 @@ def test_several_photos_per_stone_photos_before_drawings(tmp_path, monkeypatch):
     monkeypatch.setattr(commons, "wikidata_items", lambda signa: {
         "U 29": {"file": "U 29, Hillersjö (drawing).jpg", "category": "U 29"}, "U 2": {"file": None, "category": None}})
     monkeypatch.setattr(commons, "category_files", lambda cat: ["U29 Hillersjö.jpg", "U29 rights.jpg", "U 29, Hillersjö (drawing).jpg"])
+    monkeypatch.setattr(commons, "commons_search", lambda signum: [])  # U 2 has no category: Commons is searched instead
     info = lambda **k: {"thumb": f"https://upload.wikimedia.org/wikipedia/commons/a/ab/{k['f']}", "page": "p", "licence_url": None,  # noqa: E731
                         "author": k.get("a", "Berig"), "licence": k.get("l", "CC BY 2.5"), "description": k.get("d", "")}
     monkeypatch.setattr(commons, "commons_info", lambda files: {
@@ -421,3 +422,29 @@ def test_the_website_push_waits_for_a_busy_git_index(monkeypatch):
     monkeypatch.setattr(site_export.time, "sleep", lambda s: None)
     out = site_export.push()
     assert out["pushed"] and calls == ["add", "add", "diff", "commit", "push"]
+
+
+def test_the_latest_website_publish_is_recorded_for_admin(tmp_path, monkeypatch):
+    import subprocess
+    from src import site_export
+    monkeypatch.setattr(site_export, "STATUS", str(tmp_path / "site_publish.json"))
+    monkeypatch.setattr(site_export, "_git", lambda *a: subprocess.CompletedProcess(a, 0, " M web/content/articles.json\n", ""))
+    out = site_export.record({"pushed": False, "note": "Kunde inte committa artiklarna: index.lock"})
+    st = site_export.status()
+    assert st["note"] == out["note"] and st["at"] == out["at"] and st["unpushed"] is True
+
+
+def test_photos_are_found_on_commons_when_wikidata_does_not_answer(tmp_path, monkeypatch):
+    from src import commons
+    monkeypatch.setattr(commons, "CACHE", str(tmp_path))
+
+    def down(signa):
+        raise TimeoutError("The read operation timed out")
+    monkeypatch.setattr(commons, "wikidata_items", down)
+    monkeypatch.setattr(commons, "commons_search", lambda s: ["U861 Norsta - KMB - 1.jpg", "Kylix Louvre U861.jpg"])
+    monkeypatch.setattr(commons, "commons_info", lambda files: {f: {
+        "thumb": "https://upload.wikimedia.org/wikipedia/commons/a/ab/x.jpg", "page": "p", "author": "B", "licence": "CC BY 2.5",
+        "description": "runsten" if "KMB" in f else "a Greek cup"} for f in files})
+    st = commons.stone_photos(["U 861"])
+    assert [p["file"] for p in st[0]["photos"]] == ["U861 Norsta - KMB - 1.jpg"]  # only pictures of runestones
+    assert not list(tmp_path.iterdir())  # not cached, so the next try asks Wikidata again

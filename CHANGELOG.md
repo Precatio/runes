@@ -25,8 +25,16 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 - **Månadens artikel i listan:** varje publicerad artikel har knappen Gör till månadens artikel, och den som är det
   har Inte månadens artikel. Bara en åt gången; datum och text ändras inte, och webbplatsen uppdateras om en halv
   minut (`POST /api/admin/blog/featured`).
-- **Webbplatsen publiceras säkrare:** om ett annat git-kommando håller indexet just när appen ska publicera, försöker
-  den igen i några sekunder och säger annars till, i stället för att tyst låta bli (`src/site_export.py`).
+- **Webbplatsen publiceras säkrare, och Admin visar hur det gick:**
+  - Om git är upptaget när appen ska publicera, försöker den igen i upp till en kvarts minut.
+  - Varje fel loggas med gits eget meddelande.
+  - Det senaste försöket sparas (`data/cache/site_publish.json`, `GET /api/admin/site/publish`). Rutan
+    Webbplatsen visar om webbplatsen fick ändringen, om försöket misslyckades och om något väntar på att pushas.
+  - Vid start kontrollerar appen att den kan använda git.
+- **Bildsökningen tål ett långsamt Wikimedia:**
+  - Wikidatas frågetjänst får en ny chans när den inte svarar. Svarar den ändå inte söks bilderna direkt på
+    Commons, och bara bilder av runstenar tas med.
+  - Felet visas i bildpanelen i stället för högst upp på sidan.
 
 ### Kartan: rikenas gränser och jämförelse mellan länderna
 - **Rikenas gränser:** alla kartvyer kan visa de ungefärliga gränserna för svear (Svitjod), götar, Danmark, Norge,

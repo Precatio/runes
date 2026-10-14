@@ -28,6 +28,8 @@ FIGURES = os.path.join(ROOT, "web", "public", "figurer")
 FIELDS = ("id", "slug", "title", "summary", "body", "title_en", "summary_en", "body_en", "month", "author", "topic",
           "publishedAt", "updatedAt", "featured")
 FIGURE = re.compile(r"/api/blog/figures/([0-9a-f]{16}\.png)")
+# The latest attempt to publish the website, so that Admin can show whether the site got the change
+STATUS = os.path.join(ROOT, "data", "cache", "site_publish.json")
 
 
 def export(posts: list[dict], now_iso: str) -> dict:
@@ -60,26 +62,72 @@ def _git(*args: str) -> subprocess.CompletedProcess:
     return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True, timeout=120)
 
 
+def _step(name: str, *args: str, tries: int = 1) -> subprocess.CompletedProcess:
+    """A git command; when it fails, it is tried again a few times (another git command, such as the editor's, may
+    hold the index for a moment) and the failure is logged with git's own message."""
+    r = _git(*args)
+    for _ in range(tries - 1):
+        if not r.returncode:
+            break
+        time.sleep(2)
+        r = _git(*args)
+    if r.returncode and not (name == "diff" and r.returncode == 1):
+        from api.errors import logger
+        logger.warning("Webbplatsen: git %s misslyckades (%s): %s", name, r.returncode, (r.stderr or r.stdout).strip()[-600:])
+    return r
+
+
 def push() -> dict:
     """Committar och pushar det exporterade (bara artiklarna och figurerna), så att GitHub bygger om webbplatsen."""
     paths = [os.path.relpath(CONTENT, ROOT), os.path.relpath(FIGURES, ROOT)]
-    a = _git("add", "-A", "--", *paths)
-    for _ in range(3):  # another git command may hold the index for a moment (index.lock)
-        if not a.returncode:
-            break
-        time.sleep(2)
-        a = _git("add", "-A", "--", *paths)
+    a = _step("add", "add", "-A", "--", *paths, tries=8)
     if a.returncode:
         return {"pushed": False, "note": "Kunde inte lägga till artiklarna i git: " + (a.stderr or a.stdout).strip()[-400:]}
     if not _git("diff", "--cached", "--quiet", "--", *paths).returncode:
         return {"pushed": False, "note": "Webbplatsen har redan de senaste artiklarna."}
-    c = _git("commit", "-m", "Webbplatsen: artiklarna uppdaterade", "--", *paths)
+    c = _step("commit", "commit", "-m", "Webbplatsen: artiklarna uppdaterade", "--", *paths, tries=8)
     if c.returncode:
-        return {"pushed": False, "note": (c.stderr or c.stdout).strip()[-400:]}
-    p = _git("push")
+        return {"pushed": False, "note": "Kunde inte committa artiklarna: " + (c.stderr or c.stdout).strip()[-400:]}
+    p = _step("push", "push", tries=2)
     if p.returncode:
         return {"pushed": False, "note": "Committat men inte pushat: " + (p.stderr or p.stdout).strip()[-400:]}
     return {"pushed": True, "note": "Pushat till GitHub – webbplatsen byggs om på några minuter."}
+
+
+def check_git() -> bool:
+    """Vid start: kan appen använda git för webbplatsen? Ett fel loggas med gits eget meddelande."""
+    if not enabled():
+        return False
+    paths = [os.path.relpath(CONTENT, ROOT), os.path.relpath(FIGURES, ROOT)]
+    return not _step("add --dry-run", "add", "--dry-run", "-A", "--", *paths).returncode
+
+
+def record(out: dict) -> dict:
+    """Sparar hur det senaste försöket att publicera webbplatsen gick (data/cache/site_publish.json)."""
+    out = {**out, "at": dt.datetime.now(dt.timezone.utc).isoformat()}
+    try:
+        os.makedirs(os.path.dirname(STATUS), exist_ok=True)
+        with open(STATUS, "w", encoding="utf-8") as fh:
+            json.dump(out, fh, ensure_ascii=False)
+    except OSError:
+        pass
+    return out
+
+
+def status() -> dict:
+    """Det senaste försöket att publicera webbplatsen, och om det finns ändringar som inte har pushats."""
+    try:
+        with open(STATUS, encoding="utf-8") as fh:
+            out = json.load(fh)
+    except (OSError, ValueError):
+        out = {}
+    paths = [os.path.relpath(CONTENT, ROOT), os.path.relpath(FIGURES, ROOT)]
+    try:
+        r = _git("status", "--porcelain", "--", *paths)
+        out["unpushed"] = bool(r.stdout.strip()) if not r.returncode else None
+    except (OSError, subprocess.SubprocessError):
+        out["unpushed"] = None
+    return out
 
 
 # ---- automatic publishing ------------------------------------------------------------------------------------------
@@ -98,10 +146,14 @@ def publish_now() -> dict:
     from api.errors import logger
     from api.routers import blog
     with _lock:
-        out = export(blog._all(), dt.datetime.now(dt.timezone.utc).isoformat())
-        out.update(push())
-    logger.info("Webbplatsen: %s", out)
-    return out
+        try:
+            out = export(blog._all(), dt.datetime.now(dt.timezone.utc).isoformat())
+            out.update(push())
+        except Exception as e:  # noqa: BLE001 - recorded for Admin, then raised as before
+            record({"pushed": False, "note": f"Webbplatsen kunde inte publiceras: {e!r}"})
+            raise
+    (logger.info if out.get("pushed") or "redan" in out.get("note", "") else logger.warning)("Webbplatsen: %s", out)
+    return record(out)
 
 
 def _later(key: str, seconds: float, fn) -> None:

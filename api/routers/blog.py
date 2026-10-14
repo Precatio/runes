@@ -677,6 +677,13 @@ def images(req: ImagesRequest, _: dict = Depends(require_admin)):
     return {"stones": stones, "missing": [s for s in signa if s not in have]}
 
 
+@router.get("/admin/site/publish")
+def site_status(_: dict = Depends(require_admin)):
+    """Hur det senaste försöket att publicera webbplatsen gick, och om något väntar på att pushas."""
+    from src import site_export
+    return site_export.status()
+
+
 @router.post("/admin/site/publish")
 def publish_site(_: dict = Depends(require_admin)):
     """Publicerar webbplatsen vitkirunor.se: exporterar de publicerade artiklarna (också schemalagda) och deras figurer

@@ -25,15 +25,27 @@ FREE = re.compile(r"^(CC0|CC BY(-SA)? [0-9.]+( [a-z]{2})?|Public domain|PD.*|No 
 # Older drawings and plates from the runological books, shown after the photos when there is a choice
 OLD = re.compile(r"Bautil|Bureus|Hadorph|Dybeck|Rhezelius|Aschaneus|Peringski|drawing|teckning|ritning|tegning", re.I)
 PICTURE = re.compile(r"\.(jpe?g|png|tiff?|webp)$", re.I)
+# A picture found by searching Commons must show a runestone (its name or description says so)
+RUNIC = re.compile(r"rune|run(sten|inskrift|ristning|häll)|KMB|bildsten|picture stone", re.I)
 # Signa as Rundata writes them ("U 344", "Sö 101", "Ög 136", "U 649B", "DR 42"), for finding the stones in a text
 SIGNUM = re.compile(r"\b(?:U|Sö|Ög|Vg|Sm|Öl|Gs|Hs|Hä|Vs|Nä|Bo|Ds|Ång|M|J|G|DR|N)\s(?:(?:Fv|NOR)\d{4};\d{1,4}[A-Z]?|\d{1,4}[A-Z]?)\b")
 
 
-def _get(url: str, params: dict) -> dict:
+def _get(url: str, params: dict, tries: int = 2) -> dict:
+    """GET as JSON. Wikidata's query service is often slow or busy: a timeout or a busy answer is tried once more."""
+    import urllib.error
     req = urllib.request.Request(url + "?" + urllib.parse.urlencode(params),
                                  headers={"User-Agent": UA, "Accept": "application/json"})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return json.load(r)
+    for i in range(tries):
+        try:
+            with urllib.request.urlopen(req, timeout=30 + 15 * i) as r:
+                return json.load(r)
+        except (TimeoutError, urllib.error.URLError) as e:
+            busy = not isinstance(e, urllib.error.HTTPError) or e.code in (429, 500, 502, 503, 504)
+            if not busy or i == tries - 1:
+                raise
+            time.sleep(2)
+    raise RuntimeError("unreachable")
 
 
 def _cache_path(signum: str) -> str:
@@ -189,6 +201,17 @@ def category_files(category: str, limit: int = 40) -> list[str]:
     return [f for f in files if PICTURE.search(f)]
 
 
+def commons_search(signum: str, limit: int = 20) -> list[str]:
+    """Bildfiler på Commons vars namn bär stenens signum ("U 29, Hillersjö.jpg", "U29 Hillersjöhällen.jpg"), när
+    Wikidata inte svarar eller inte har någon kategori för stenen."""
+    d = _get(COMMONS, {"action": "query", "format": "json", "list": "search", "srnamespace": 6, "srlimit": limit,
+                       "srsearch": f'"{signum}" (runsten OR runestone OR runinskrift OR runic OR rune OR KMB)'})
+    head, _, num = signum.partition(" ")
+    own = re.compile(rf"(^|[^\w]){re.escape(head)}\s?{re.escape(num)}(?![\w;])", re.I)
+    files = [r["title"].removeprefix("File:") for r in d.get("query", {}).get("search", [])]
+    return [f for f in files if PICTURE.search(f) and own.search(f)]
+
+
 def stone_photos(signa: list[str], per_stone: int = 6) -> list[dict]:
     """Flera fritt licensierade bilder per sten att välja mellan: Wikidatas egen bild och fotona i stenens kategori på
     Commons, foton före äldre teckningar och bokplanscher. En post per sten som har någon bild: {signum, photos}."""
@@ -197,11 +220,23 @@ def stone_photos(signa: list[str], per_stone: int = 6) -> list[dict]:
     got = {s: c["photos"] for s in signa if (c := _cached(f"{s} alla")) is not None}
     todo = [s for s in signa if s not in got]
     if todo:
-        items = wikidata_items(todo)
+        try:
+            items, answered = wikidata_items(todo), True
+        except (OSError, ValueError, KeyError):  # Wikidata's query service did not answer: Commons alone, not cached
+            items, answered = {}, False
         cats = {s: d["category"] for s, d in items.items() if d.get("category")}
+        search = [s for s in todo if s not in cats]
+
+        def safely(fn, arg):
+            try:
+                return fn(arg)
+            except (OSError, ValueError, KeyError):  # one category or search that fails leaves the others
+                return []
         with ThreadPoolExecutor(max_workers=6) as pool:
-            in_cat = dict(zip(cats, pool.map(lambda c: category_files(c), cats.values())))
-        names = {s: list(dict.fromkeys(([d["file"]] if d.get("file") else []) + in_cat.get(s, []))) for s, d in items.items()}
+            in_cat = dict(zip(cats, pool.map(lambda c: safely(category_files, c), cats.values())))
+            found = dict(zip(search, pool.map(lambda s: safely(commons_search, s), search)))
+        names = {s: list(dict.fromkeys(([items[s]["file"]] if (items.get(s) or {}).get("file") else [])
+                                        + in_cat.get(s, []) + found.get(s, []))) for s in todo}
         info = commons_info(list({f for fs in names.values() for f in fs}))
         for s in todo:
             main = (items.get(s) or {}).get("file")
@@ -210,10 +245,13 @@ def stone_photos(signa: list[str], per_stone: int = 6) -> list[dict]:
                 d = info.get(f)
                 if not d or not d.get("thumb") or not FREE.match(d.get("licence") or ""):
                     continue
+                if f in found.get(s, []) and f not in in_cat.get(s, []) and not RUNIC.search(f + " " + (d.get("description") or "")):
+                    continue
                 old = bool(OLD.search(" ".join([f, d.get("description") or "", d.get("author") or ""])))
                 photos.append({"signum": s, "file": f, **d, "author": _author(d.get("author") or ""), "main": f == main, "old": old})
             photos.sort(key=lambda p: (p["old"], not p["main"]))  # photos first, Wikidata's own first among equals
-            _store(f"{s} alla", {"photos": photos})
+            if answered:
+                _store(f"{s} alla", {"photos": photos})
             got[s] = photos
     out = []
     for s in signa:

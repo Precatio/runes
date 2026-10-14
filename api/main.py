@@ -46,6 +46,7 @@ def _warm_caches():
         try:
             from api.routers import blog
             from src import site_export
+            site_export.check_git()
             site_export.catch_up(blog._all())
         except Exception as e:  # Firestore unreachable: the next save plans it
             from api.errors import logger
