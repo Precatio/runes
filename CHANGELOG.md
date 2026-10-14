@@ -5,6 +5,14 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Sannolikhetsmodell för runtext
+- Ny modul `src/runlm.py`: läser en inskrifts huggna grupper utan tolkning och anger för varje ord hur sannolikt
+  det är, ur en stavningsmodell skattad på Rundatas ordpar, ett ordbigram över Rundatas normaliserade text och
+  Eddans ordförråd. Omstridda runor kan jämföras genom textens totala sannolikhet (METHODS.md, avsnitt 8.1).
+- `scripts/runlm_calibrate.py` prövar modellen med femfaldig korsvalidering på 808 inskrifter och kalibrerar dess
+  sannolikheter (rätt ord 81 %, rätt ordgränser 92 %, kalibreringsfel 0,003). `scripts/malt_decode.py` läser
+  Maltstenen (DR NOR1988;5), som aldrig ingår i träningen.
+
 ### Runigenkänningen på en vittrad sten med bildfält: bristen dokumenterad
 - Kända brister (version 2026-10-14) och METHODS.md, avsnitt 3: på Sö 164 låg 18 av 67 igenkända runor i bildfältets
   skepp och kors, och de flesta runorna i banden var en enda stav. Stenens medelvärden påverkades inte. Tre

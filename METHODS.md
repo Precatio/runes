@@ -719,6 +719,39 @@ Källkod: `api/routers/phonetics.py`, `src/reading.py`.
 * **Uppläsning:** en modern talsyntes läser normaliseringen. Det är inte en rekonstruktion av uttalet;
   IPA-raden är modellens förslag och ljudlagarna är inte kontrollerade.
 
+### 8.1 Sannolikhetsmodell för runtext
+
+Källkod: `src/runlm.py`; prov: `scripts/runlm_calibrate.py`; tillämpning på Maltstenen: `scripts/malt_decode.py`.
+
+Modellen läser en inskrifts huggna grupper (runorna mellan stenens egna skiljetecken, utan Rundatas ordgränser)
+och anger för varje möjligt ord hur sannolikt det är, utan att använda någon tolkning av inskriften.
+
+* **Stavning:** varje normaliserad ordform har en regelbaserad mängd stavningar med 16 runor (a → a/ą, æ → a/i/e,
+  au → au/u, nasal före klusil kan falla bort, inga dubbla runor …). Regelvalens sannolikheter skattas med EM ur
+  16 479 par av huggna ord och Rundatas normaliserade form (1 479 inskrifter där orden går att para ihop).
+  Ord med egna belägg får dessutom sina faktiska stavningar (vägt mot reglerna med κ = 2). Ord som bara finns i
+  Eddan får också æ → ai (äldre diftong) och slut-r → ʀ med sannolikhet 0,3 respektive 0,5.
+* **Språk:** ett ordbigram med absolut rabatt (Kneser–Ney, D = 0,75) över Rundatas normaliserade text för
+  vikingatida inskrifter, blandat med Eddans och Snorres Eddas ordförråd (unigram, vikt 0,03) och ett okänt
+  ord (vikt 0,01) vars runor skattas med ett trigram över runor i ord.
+* **Skiljetecken:** en ordgräns med skiljetecken har sannolikheten d, en utan 1 − d, där d är andelen ordgränser
+  med skiljetecken i träningsmaterialet (0,70). Radbyten är inte skiljetecken.
+* **Avkodning:** framåt–bakåt-beräkning över alla sätt att dela grupperna i ord ger varje ords
+  a posteriori-sannolikhet och textens totala sannolikhet. Former med samma nyckel (samma ord i olika
+  normalisering: stæinn = sten = steinn, sin = sinn) slås ihop. Den redovisade läsningen är den väg som
+  maximerar det väntade antalet rätt lästa runor.
+* **Omstridda runor:** texten läses med varje kombination av de omstridda läsningarna; en lästs sannolikhet är dess
+  andel av den totala sannolikheten, med lika förhandschans. Det är språkets omdöme, inte en mätning av stenen.
+* **Prov och kalibrering:** femfaldig korsvalidering på de 808 inskrifter där Rundatas ord täcker den huggna
+  texten exakt (10 669 ord). Modellen ger rätt ord (samma nyckel) i 81 % av fallen och rätt ordgränser i 92 %.
+  Dess råa sannolikheter är för höga (säger 99 %, rätt i 93 %). De kalibreras med en logistisk regression på
+  logit(p), ordets frekvens, om ordet bara finns i Eddan, ordets längd och stavningens sannolikhet, skattad
+  på fyra delar och prövad på den femte; kalibreringsfelet (ECE) sjunker från 0,12 till 0,003. För sällsynta
+  ord (högst två belägg) är den kalibrerade sannolikheten fortfarande något hög (säger 96 %, rätt i 89 %).
+* **Begränsningar:** modellen känner bara ord som finns i Rundata eller Eddan, och namn i ovanlig stavning blir
+  okända (t.ex. *uifrþuʀ* på Maltstenen). Sannolikheten för en hel läsning räknas som produkten av ordens
+  kalibrerade sannolikheter och förutsätter oberoende; den är en storleksordning.
+
 ## 9. Språkdrag (fonetisk stil och språkbruk)
 
 Källkod: `src/language_profile.py`, `GET /api/research/language/{signum}`. Dragen läses ur Rundata genom
