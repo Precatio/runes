@@ -20,6 +20,7 @@ import shutil
 import subprocess
 import sys
 import threading
+import time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONTENT = os.path.join(ROOT, "web", "content", "articles.json")
@@ -62,7 +63,14 @@ def _git(*args: str) -> subprocess.CompletedProcess:
 def push() -> dict:
     """Committar och pushar det exporterade (bara artiklarna och figurerna), så att GitHub bygger om webbplatsen."""
     paths = [os.path.relpath(CONTENT, ROOT), os.path.relpath(FIGURES, ROOT)]
-    _git("add", "-A", "--", *paths)
+    a = _git("add", "-A", "--", *paths)
+    for _ in range(3):  # another git command may hold the index for a moment (index.lock)
+        if not a.returncode:
+            break
+        time.sleep(2)
+        a = _git("add", "-A", "--", *paths)
+    if a.returncode:
+        return {"pushed": False, "note": "Kunde inte lägga till artiklarna i git: " + (a.stderr or a.stdout).strip()[-400:]}
     if not _git("diff", "--cached", "--quiet", "--", *paths).returncode:
         return {"pushed": False, "note": "Webbplatsen har redan de senaste artiklarna."}
     c = _git("commit", "-m", "Webbplatsen: artiklarna uppdaterade", "--", *paths)

@@ -25,6 +25,8 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 - **Månadens artikel i listan:** varje publicerad artikel har knappen Gör till månadens artikel, och den som är det
   har Inte månadens artikel. Bara en åt gången; datum och text ändras inte, och webbplatsen uppdateras om en halv
   minut (`POST /api/admin/blog/featured`).
+- **Webbplatsen publiceras säkrare:** om ett annat git-kommando håller indexet just när appen ska publicera, försöker
+  den igen i några sekunder och säger annars till, i stället för att tyst låta bli (`src/site_export.py`).
 
 ### Kartan: rikenas gränser och jämförelse mellan länderna
 - **Rikenas gränser:** alla kartvyer kan visa de ungefärliga gränserna för svear (Svitjod), götar, Danmark, Norge,

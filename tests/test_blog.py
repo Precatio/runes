@@ -405,3 +405,19 @@ def test_the_article_of_the_month_is_set_from_the_list(monkeypatch):
     from fastapi import HTTPException
     with pytest.raises(HTTPException):
         blog.set_featured(blog.FeaturedRequest(id="x"), {})
+
+
+def test_the_website_push_waits_for_a_busy_git_index(monkeypatch):
+    import subprocess
+    from src import site_export
+    calls = []
+
+    def git(*args):
+        calls.append(args[0])
+        busy = args[0] == "add" and calls.count("add") == 1  # the first add meets another git command's index.lock
+        code = 1 if busy else (1 if args[0] == "diff" else 0)  # diff --quiet: 1 means there is something to commit
+        return subprocess.CompletedProcess(args, code, "", "index.lock" if busy else "")
+    monkeypatch.setattr(site_export, "_git", git)
+    monkeypatch.setattr(site_export.time, "sleep", lambda s: None)
+    out = site_export.push()
+    assert out["pushed"] and calls == ["add", "add", "diff", "commit", "push"]
