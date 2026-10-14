@@ -184,6 +184,8 @@ def consistency(readings: list[str]) -> float | None:
 
 
 CONFIRMED, PARTIAL = 0.8, 0.5
+# Fewer legible runes than this cannot be tested: a short word such as "sin" occurs in most inscriptions
+MIN_TESTABLE = 12
 
 
 def validate(transliteration: str, rundata_rec: dict | None, inscriptions: list[dict],
@@ -193,7 +195,8 @@ def validate(transliteration: str, rundata_rec: dict | None, inscriptions: list[
       delvis         – 50–80 %
       ej bekräftad   – under 50 %; läsningen får inte redovisas som stenens text
       annan inskrift – läsningen liknar en annan känd inskrift mer än stenens (troligen återgiven ur minnet)
-      ej prövbar     – Rundata saknar text; då avgör samstämmigheten mellan flera läsningar
+      ej prövbar     – Rundata saknar text; då avgör samstämmigheten mellan flera läsningar. Också en läsning med
+                       färre än MIN_TESTABLE läsbara runor, som stämmer med nästan vilken text som helst
     Bara bekräftade och delvis bekräftade läsningar får visas som läsning (med översättning m.m.)."""
     own = None
     if rundata_rec and rundata_rec.get("transliteration"):
@@ -201,11 +204,17 @@ def validate(transliteration: str, rundata_rec: dict | None, inscriptions: list[
     known = best_known_match(transliteration, inscriptions, exclude=(rundata_rec or {}).get("signum"))
     other = known[0] if known else None
     cons = consistency([transliteration] + (other_readings or []))
+    n_runes = len(_letters(transliteration))
+    short = n_runes < MIN_TESTABLE
     if other and other["char_agreement"] >= 0.6 and (own is None or other["char_agreement"] > own + 0.15):
         status = "annan inskrift"
         text = (f"Läsningen liknar {other['signum']} ({other['place']}) – {round(other['char_agreement'] * 100)} % av runorna – "
                 "mer än stenens egen text. Språkmodellen har troligen återgett en känd inskrift ur minnet i stället för att "
                 "läsa bilden.")
+    elif own is not None and short:
+        status = "ej prövbar"
+        text = (f"Läsningen har bara {n_runes} läsbara runor – för få för att pröva mot Rundata, eftersom korta ord finns "
+                "i de flesta inskrifter. Läsningen är obekräftad.")
     elif own is not None:
         status = "bekräftad" if own >= CONFIRMED else "delvis" if own >= PARTIAL else "ej bekräftad"
         text = {"bekräftad": f"Läsningen bekräftas av Rundata: {round(own * 100)} % av runorna stämmer.",
@@ -221,6 +230,7 @@ def validate(transliteration: str, rundata_rec: dict | None, inscriptions: list[
             text = (f"Rundata saknar text att pröva mot. Flera läsningar av bilden stämmer till {round(cons * 100)} % med "
                     "varandra" + (" – för lite för att lita på." if cons < CONFIRMED else ". Läsningen är ändå obekräftad tills "
                                   "en runolog granskat den."))
-    reliable = status in ("bekräftad", "delvis") or (status == "ej prövbar" and cons is not None and cons >= CONFIRMED)
+    reliable = status in ("bekräftad", "delvis") or (status == "ej prövbar" and not short and cons is not None
+                                                     and cons >= CONFIRMED)
     return {"status": status, "reliable": reliable, "own_agreement": own, "consistency": cons,
             "known_matches": known, "text": text}

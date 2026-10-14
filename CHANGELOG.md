@@ -5,6 +5,12 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Läsningar med några få runor räknas inte som bekräftade
+- En blind läsning som bara har färre än 12 läsbara runor får statusen *ej prövbar*, inte *bekräftad*
+  (`src/reading.py`, `validate`). Upptäckt i stenanalysen av Sö 164: läsningen av hela stenen gav bara ordet *sin*,
+  som räknades som 100 % rätt. Korta ord finns i de flesta inskrifter, så att de stämmer säger ingenting om att
+  bilden är läst.
+
 ### Artiklar: tydligare bilder och månadens artikel direkt i listan
 - **Bilderna i artikeln:** Admin visar vilka bilder artikeln har just nu, på svenska och engelska, med tumnagel,
   bildtext och Ta bort. En rad vid publiceringsknapparna säger hur många bilder som följer med och varnar när de

@@ -692,7 +692,9 @@ Källkod: `api/routers/phonetics.py`, `src/reading.py`.
   överensstämmelsemått) och (3) andra läsningar av samma bild. Status: *bekräftad* (≥ 80 % av runorna i stenens
   läsning), *delvis* (50–80 %), *ej bekräftad* (< 50 %), *annan inskrift* (liknar en annan känd inskrift minst
   60 % och tydligt mer än stenens egen – modellen har troligen återgett en inlärd text) eller *ej prövbar* (Rundata
-  saknar text; då krävs att flera läsningar stämmer minst 80 % med varandra). Bara bekräftade, delvis bekräftade
+  saknar text; då krävs att flera läsningar stämmer minst 80 % med varandra). En läsning med färre än 12 läsbara
+  runor är alltid *ej prövbar*: ett kort ord som *sin* finns i de flesta inskrifter, så att det stämmer säger
+  ingenting om att bilden är läst. Bara bekräftade, delvis bekräftade
   och samstämmiga läsningar visas som läsning, med normalisering och översättning, och bara de används som
   belägg i syntesen. I rapporter redovisas en obekräftad läsning aldrig som stenens text.
 * **Erfarenhet:** i testet med Sö 113 gav tre blinda läsningar tre olika, trovärdiga men påhittade texter (6–24 %

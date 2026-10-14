@@ -324,6 +324,10 @@ def test_unconfirmed_reading_is_never_presented_as_the_stones_text(client):
     assert validate(so113["transliteration"], so113, s.inscriptions)["status"] == "bekräftad"
     invented = "auk huat skata han hafþi krufit þar uar an falkin hakun baþ mik rata"
     assert validate(invented, so113, s.inscriptions)["reliable"] is False
+    # A few legible runes match almost any text: "sin" from Sö 164 is not a confirmed reading
+    so164 = s.get("Sö 164")
+    short = validate("--------'--sin-------'---------", so164, s.inscriptions)
+    assert short["status"] == "ej prövbar" and short["reliable"] is False
 
     reading = {"transliteration": invented, "normalization": "Ok hvat skatta hann hafði grofit",
                "translation": "Och vilken skatt han än hade grävt ner", "phonetic_ipa": "ɔk hwat"}
