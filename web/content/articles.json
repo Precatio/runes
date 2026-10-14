@@ -1,5 +1,5 @@
 {
- "exported_at": "2026-10-14T13:05:11.932884+00:00",
+ "exported_at": "2026-10-14T13:32:32.107734+00:00",
  "posts": [
   {
    "id": "PXwp9L2e1gJtfPg77sNw",
@@ -15,7 +15,7 @@
    "topic": "Barn|dottrar",
    "publishedAt": "2026-10-14T12:59:45.470614+00:00",
    "updatedAt": "2026-10-14T13:05:11.432660+00:00",
-   "featured": false
+   "featured": true
   },
   {
    "id": "7uV7DKOwomL5aP49OFf5",
@@ -47,7 +47,7 @@
    "topic": "Kvinnor|resare",
    "publishedAt": "2026-10-13T18:40:23.276936+00:00",
    "updatedAt": "2026-10-13T18:54:05.883671+00:00",
-   "featured": true
+   "featured": false
   },
   {
    "id": "xjCUTPRvG4oTP77TXSb1",
