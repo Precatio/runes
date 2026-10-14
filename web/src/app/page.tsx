@@ -3,7 +3,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import LanguageToggle from "@/components/LanguageToggle";
 import LocalAppLink from "@/components/LocalAppLink";
+import StatsNote from "@/components/StatsNote";
 import SiteVote from "@/components/SiteVote";
+import ZoomImage from "@/components/ZoomImage";
 import { VERSION } from "@/lib/version";
 import ArticleTeasers from "@/components/ArticleTeasers";
 import type { BlogPost } from "@/components/BlogBody";
@@ -485,9 +487,8 @@ andel <- tapply(stenar$bon,
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-14">
             {APP_VIEWS.map(v => (
               <figure key={v.src}>
-                <a href={v.src} target="_blank" rel="noopener noreferrer" className="block rounded-2xl overflow-hidden border border-slate-900/10 shadow-lg shadow-slate-900/5 hover:shadow-xl transition-shadow bg-[#eef0f3]">
-                  <img src={v.src} alt={`Skärmbild från Vitki: ${v.title.toLowerCase()}`} loading="lazy" width={1600} height={1000} className="w-full h-auto" />
-                </a>
+                <ZoomImage src={v.src} alt={`Skärmbild från Vitki: ${v.title.toLowerCase()}`} width={1600} height={1000} className="w-full h-auto"
+                  frameClassName="rounded-2xl overflow-hidden border border-slate-900/10 shadow-lg shadow-slate-900/5 hover:shadow-xl transition-shadow bg-[#eef0f3]" />
                 <figcaption className="mt-4">
                   <h3 className="text-lg font-bold">{v.title}</h3>
                   <p className="mt-1.5 text-slate-600 leading-relaxed">{v.text}</p>
@@ -506,9 +507,8 @@ andel <- tapply(stenar$bon,
               </p>
             </div>
             <figure>
-              <a href="/bilder/skanning-so113-djupkarta.webp" target="_blank" rel="noopener noreferrer" className="block rounded-2xl overflow-hidden border border-slate-900/10 bg-white">
-                <img src="/bilder/skanning-so113-djupkarta.webp" alt="Djupkarta över runstenen Sö 113: runorna framträder i rött och violett mot den ljusa stenytan" loading="lazy" width={1393} height={769} className="w-full h-auto" />
-              </a>
+              <ZoomImage src="/bilder/skanning-so113-djupkarta.webp" alt="Djupkarta över runstenen Sö 113: runorna framträder i rött och violett mot den ljusa stenytan"
+                width={1393} height={769} className="w-full h-auto" frameClassName="rounded-2xl overflow-hidden border border-slate-900/10 bg-white" />
               <figcaption className="mt-4 max-w-3xl">
                 <h4 className="text-lg font-bold">Djupkartan</h4>
                 <p className="mt-1.5 text-slate-600 leading-relaxed">
@@ -520,9 +520,8 @@ andel <- tapply(stenar$bon,
             <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
               {SCANS.map(sc => (
                 <figure key={sc.src}>
-                  <a href={sc.src} target="_blank" rel="noopener noreferrer" className="block rounded-xl overflow-hidden border border-slate-900/10 bg-white">
-                    <img src={sc.src} alt={`Sö 113: ${sc.title.toLowerCase()}`} loading="lazy" className="w-full h-auto" />
-                  </a>
+                  <ZoomImage src={sc.src} alt={`Sö 113: ${sc.title.toLowerCase()}`} className="w-full h-auto"
+                    frameClassName="rounded-xl overflow-hidden border border-slate-900/10 bg-white" />
                   <figcaption className="mt-3">
                     <h4 className="font-bold">{sc.title}</h4>
                     <p className="mt-1 text-sm text-slate-600 leading-relaxed">{sc.text}</p>
@@ -701,7 +700,7 @@ språk, Uppsala universitet.`}
       </section>
 
       {/* Final CTA */}
-      <section className="max-w-6xl mx-auto px-6 py-20 text-center">
+      <section id="kom-igang" className="max-w-6xl mx-auto px-6 py-20 text-center scroll-mt-16">
         <h2 className="text-3xl font-serif font-bold">Kör Vitki på din egen dator</h2>
         <p className="mt-3 text-slate-600 max-w-2xl mx-auto">
           Vitki är öppen källkod. Ladda ner den från GitHub och gör om analyserna i artiklarna – mönsterkartan, R-modellerna,
@@ -725,6 +724,7 @@ språk, Uppsala universitet.`}
             <a href={DOCS_URL} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">Dokumentation</a>
             <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">GitHub</a>
             <span>GPL-3.0</span>
+            <StatsNote />
           </div>
         </div>
       </footer>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import LanguageToggle from "@/components/LanguageToggle";
 import LocalAppLink from "@/components/LocalAppLink";
+import StatsNote from "@/components/StatsNote";
 import { DOCS_URL, DOWNLOAD_URL, GITHUB_URL } from "@/lib/site";
 
 // The articles' frame: the landing page's header and footer. The public website has no app, so the frame links to the
@@ -34,6 +35,7 @@ export default function BlogShell({ children }: { children: ReactNode }) {
             <a href={DOCS_URL} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">Dokumentation</a>
             <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">GitHub</a>
             <span>GPL-3.0</span>
+            <StatsNote />
           </div>
         </div>
       </footer>

@@ -185,3 +185,39 @@ def site_votes(_: dict = Depends(require_admin)):
     return {"questions": [{"question": q, "total": sum(c.values()), "choices": dict(c),
                            "first": min(times[q]).isoformat() if times.get(q) else None,
                            "last": max(times[q]).isoformat() if times.get(q) else None} for q, c in by.items()]}
+
+
+_stats_cache: dict[int, tuple[float, dict]] = {}
+STATS_TTL_S = 300
+
+
+@router.get("/admin/site/stats")
+def site_stats(days: int = 30, fresh: bool = False, _: dict = Depends(require_admin)):
+    """Besöksstatistiken för den publika webbplatsen (web/src/components/SiteTracker.tsx), sammanfattad av
+    src/site_stats.py för de senaste `days` dagarna. Raderna läses med serverns egen behörighet och sparas i fem
+    minuter, så att sidan inte läser om alla rader vid varje besök i Admin (`fresh` hämtar på nytt)."""
+    import json
+    import time
+
+    from google.cloud.firestore_v1.base_query import FieldFilter
+
+    from src import site_export, site_stats as stats
+    days = max(1, min(days, 366))
+    hit = _stats_cache.get(days)
+    if hit and not fresh and time.time() - hit[0] < STATS_TTL_S:
+        return hit[1]
+    since = dt.datetime.now(dt.timezone.utc).date() - dt.timedelta(days=days - 1)
+    try:
+        query = firestore().collection("site_views").where(filter=FieldFilter("day", ">=", since.isoformat()))
+        rows = [d.to_dict() or {} for d in query.stream()]
+    except Exception as e:  # noqa: BLE001
+        raise server_error(e, "Besöksstatistiken kunde inte hämtas.", status_code=503)
+    try:
+        with open(site_export.CONTENT, encoding="utf-8") as fh:
+            posts = json.load(fh).get("posts", [])
+    except (OSError, ValueError):
+        posts = []
+    out = stats.summarize(rows, since, days, stats.page_titles(posts))
+    out["computed_at"] = dt.datetime.now(dt.timezone.utc).isoformat()
+    _stats_cache[days] = (time.time(), out)
+    return out

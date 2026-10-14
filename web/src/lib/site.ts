@@ -38,6 +38,12 @@ export const AUTHORS: Record<string, Author> = {
 };
 export const authorOf = (name?: string | null): Author | null => (name ? AUTHORS[name] ?? null : AUTHORS["Viktor Kvant"]);
 
-// The Firebase project that the public website's vote is written to, through Firestore's REST interface (no SDK, no
-// key: the rules decide what may be written). Set when the site is built; without it the vote is not shown.
-export const VOTE_PROJECT = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "";
+// The Firebase project that the public website's vote and visitor counts are written to, through Firestore's REST
+// interface (no SDK, no key: the rules decide what may be written). Set when the site is built; without it neither is used.
+export const SITE_PROJECT = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "";
+export const siteCollection = (name: string) =>
+  `https://firestore.googleapis.com/v1/projects/${SITE_PROJECT}/databases/vitki/documents/${name}`;
+
+// Opening the website once with ?inte-rakna leaves that browser out of the visitor statistics (the founder's own visits)
+export const STATS_OFF_KEY = "vitki-stats-off";
+export const STATS_OFF_URL = `${SITE_URL}/?inte-rakna`;

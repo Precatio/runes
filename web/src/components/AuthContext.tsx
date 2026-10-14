@@ -24,14 +24,14 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  // The public website (only the start page and the articles) has no sign-in, so Firebase is not loaded there
+  const [loading, setLoading] = useState(!PUBLIC_SITE);
   const [googleToken, setGoogleToken] = useState<string | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [accountNotice, setAccountNotice] = useState<string | null>(null);
 
   useEffect(() => {
-    // The public website (only the start page and the articles) has no sign-in, so Firebase is not loaded there
-    if (PUBLIC_SITE) { setLoading(false); return; }
+    if (PUBLIC_SITE) return;
     // Firebase Auth is loaded after the page has rendered (firebase/config.ts)
     let unsubscribe = () => {};
     let cancelled = false;

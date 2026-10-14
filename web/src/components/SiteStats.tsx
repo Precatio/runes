@@ -1,0 +1,157 @@
+"use client";
+
+import { useCallback, useEffect, useState } from "react";
+import { STATS_OFF_URL } from "@/lib/site";
+
+// GET /api/admin/site/stats: the public website's visitor counts (components/SiteTracker.tsx writes them), seen only here
+interface Row { key: string; n: number }
+interface Stats {
+  since: string; days: number; views: number; visits: number; computed_at: string;
+  per_day: { day: string; views: number; visits: number }[];
+  pages: { path: string; title: string | null; n: number }[];
+  sections: { key: string; n: number; share: number | null }[];
+  referrers: Row[]; direct: number; countries: Row[]; languages: Row[]; devices: Row[];
+}
+type Call = (path: string, init?: RequestInit) => Promise<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+
+// The start page's sections (their id in app/page.tsx)
+const SECTIONS: Record<string, string> = {
+  artiklar: "Artiklar", r: "Vad är R?", forskning: "För forskningen", appen: "Så ser Vitki ut (skärmbilder)",
+  nytt: "Vad är nytt", landskap: "Stenarna i sitt landskap", kallor: "Källor", oppen: "Öppen källkod",
+  om: "Om grundaren och licens", "kom-igang": "Kör Vitki (och röstningen)",
+};
+const RANGES = [7, 30, 90, 365];
+const pct = (v: number | null) => (v == null ? "–" : `${Math.round(v * 100)} %`);
+const num = (n: number) => n.toLocaleString("sv-SE");
+
+function Bars({ rows, total, label = r => r.key }: { rows: Row[]; total: number; label?: (r: Row) => string }) {
+  if (!rows.length) return <p className="text-sm text-slate-500">Inget än.</p>;
+  return (
+    <div className="space-y-1.5">
+      {rows.map(r => (
+        <div key={r.key} className="grid grid-cols-[minmax(0,1fr)_5rem_auto] items-center gap-3 text-sm">
+          <span className="truncate text-slate-700" title={label(r)}>{label(r)}</span>
+          <span className="h-2 rounded-full bg-slate-100"><span className="block h-2 rounded-full bg-[#2a78d6]" style={{ width: `${total ? Math.max(2, Math.round(r.n / total * 100)) : 0}%` }} /></span>
+          <span className="w-10 text-right tabular-nums text-slate-700">{num(r.n)}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Box({ title, note, children }: { title: string; note?: string; children: React.ReactNode }) {
+  return (
+    <div className="rounded-xl border border-slate-900/10 bg-white/70 p-4">
+      <p className="font-semibold text-slate-900">{title}</p>
+      {note && <p className="mt-0.5 text-xs text-slate-500">{note}</p>}
+      <div className="mt-3">{children}</div>
+    </div>
+  );
+}
+
+export default function SiteStats({ call }: { call: Call }) {
+  const [days, setDays] = useState(30);
+  const [data, setData] = useState<Stats | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+  const load = useCallback((fresh = false) => call(`/api/admin/site/stats?days=${days}${fresh ? "&fresh=true" : ""}`)
+    .then(d => { setData(d); setError(null); })
+    .catch(e => setError(e instanceof Error ? e.message : "Besöksstatistiken kunde inte hämtas.")), [call, days]);
+  useEffect(() => { load(); }, [load]);
+
+  const max = Math.max(1, ...(data?.per_day ?? []).map(d => d.views));
+  const copy = () => navigator.clipboard?.writeText(STATS_OFF_URL).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
+
+  return (
+    <section className="liquid-glass-island rounded-[24px] p-4 sm:p-6 space-y-4">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <h3 className="text-lg font-bold text-slate-900">Besökare på webbplatsen</h3>
+          <p className="text-sm text-slate-600">Sidvisningar på vitkirunor.se, utan kakor och utan IP-adresser. Bara du ser statistiken.</p>
+        </div>
+        <div className="flex flex-wrap items-center gap-1.5">
+          {RANGES.map(r => (
+            <button key={r} onClick={() => setDays(r)}
+              className={`px-3 py-1.5 rounded-lg border text-xs font-bold ${r === days ? "border-slate-900 bg-slate-900 text-white" : "border-slate-300 bg-white"}`}>
+              {r === 365 ? "1 år" : `${r} dagar`}
+            </button>
+          ))}
+          <button onClick={() => load(true)} className="px-3 py-1.5 rounded-lg border border-slate-300 bg-white text-xs font-bold">Uppdatera</button>
+        </div>
+      </div>
+      {error && <p className="text-sm font-semibold text-red-700">{error}</p>}
+
+      {data && (
+        <>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {[
+              { label: "Sidvisningar", value: num(data.views) },
+              { label: "Besök", value: num(data.visits), note: "sidvisningar som började utifrån" },
+              { label: "Sidor per besök", value: data.visits ? (data.views / data.visits).toFixed(1).replace(".", ",") : "–" },
+              { label: "Via andra webbplatser", value: data.visits ? pct((data.visits - data.direct) / data.visits) : "–", note: "av besöken" },
+            ].map(t => (
+              <div key={t.label} className="rounded-xl border border-slate-900/10 bg-white/70 p-3">
+                <div className="text-xs font-semibold text-slate-500">{t.label}</div>
+                <div className="mt-1 text-2xl font-bold tabular-nums text-slate-900">{t.value}</div>
+                {t.note && <div className="text-[11px] text-slate-500">{t.note}</div>}
+              </div>
+            ))}
+          </div>
+
+          <Box title="Sidvisningar per dag" note={`Från ${data.since}. Håll muspekaren över en stapel för dagens siffror.`}>
+            <div className="flex h-32 items-end gap-[2px]" role="img" aria-label="Sidvisningar per dag">
+              {data.per_day.map(d => (
+                <div key={d.day} className="group relative flex h-full flex-1 items-end" title={`${d.day}: ${d.views} sidvisningar, ${d.visits} besök`}>
+                  <div className="w-full rounded-t-[3px] bg-[#2a78d6] group-hover:bg-[#1c5aa6]" style={{ height: `${d.views ? Math.max(3, d.views / max * 100) : 0}%` }} />
+                </div>
+              ))}
+            </div>
+            <div className="mt-1 flex justify-between text-[11px] text-slate-500"><span>{data.per_day[0]?.day}</span><span>högst {num(max)} per dag</span><span>{data.per_day.at(-1)?.day}</span></div>
+          </Box>
+
+          <div className="grid gap-3 lg:grid-cols-2">
+            <Box title="Mest besökta sidor">
+              <Bars rows={data.pages.map(p => ({ key: p.path, n: p.n }))} total={data.pages[0]?.n ?? 0}
+                label={r => data.pages.find(p => p.path === r.key)?.title ?? r.key} />
+            </Box>
+            <Box title="Avsnitt på startsidan" note="Andel av startsidans visningar där besökaren scrollade till avsnittet.">
+              {data.sections.length ? (
+                <div className="space-y-1.5">
+                  {data.sections.map(s => (
+                    <div key={s.key} className="grid grid-cols-[minmax(0,1fr)_5rem_auto] items-center gap-3 text-sm">
+                      <span className="truncate text-slate-700">{SECTIONS[s.key] ?? s.key}</span>
+                      <span className="h-2 rounded-full bg-slate-100"><span className="block h-2 rounded-full bg-[#2a78d6]" style={{ width: `${Math.round((s.share ?? 0) * 100)}%` }} /></span>
+                      <span className="w-10 text-right tabular-nums text-slate-700">{pct(s.share)}</span>
+                    </div>
+                  ))}
+                </div>
+              ) : <p className="text-sm text-slate-500">Inget än.</p>}
+            </Box>
+            <Box title="Varifrån besökarna kommer" note={`Webbplatsen besöket började från. Direkt eller okänt: ${num(data.direct)}.`}>
+              <Bars rows={data.referrers} total={data.referrers[0]?.n ?? 0} />
+            </Box>
+            <Box title="Land (ungefärligt)" note="Ur webbläsarens tidszon. Stad går inte att visa utan besökarens IP-adress, som inte sparas.">
+              <Bars rows={data.countries} total={data.countries[0]?.n ?? 0} />
+            </Box>
+            <Box title="Webbläsarens språk"><Bars rows={data.languages} total={data.languages[0]?.n ?? 0} /></Box>
+            <Box title="Enhet" note="Efter skärmens bredd."><Bars rows={data.devices} total={data.devices[0]?.n ?? 0} /></Box>
+          </div>
+        </>
+      )}
+
+      <div className="rounded-xl border border-amber-300/60 bg-amber-50 p-4 text-sm text-slate-700">
+        <p className="font-semibold text-slate-900">Räkna inte dina egna besök</p>
+        <p className="mt-1">
+          Webbplatsen ser inga IP-adresser, så dina besök stängs av per webbläsare: öppna länken nedan en gång i varje
+          webbläsare du använder (dator, mobil, surfplatta). Efter det räknas den inte. Lägg till <code>?rakna</code> i
+          stället för att räkna den igen.
+        </p>
+        <div className="mt-2 flex flex-wrap items-center gap-2">
+          <a href={STATS_OFF_URL} target="_blank" rel="noopener noreferrer" className="font-mono text-xs underline">{STATS_OFF_URL}</a>
+          <button onClick={copy} className="px-2.5 py-1 rounded-lg border border-slate-300 bg-white text-xs font-bold">{copied ? "Kopierad" : "Kopiera"}</button>
+        </div>
+      </div>
+      {data && <p className="text-xs text-slate-500">Hämtad {new Date(data.computed_at).toLocaleString("sv-SE", { dateStyle: "medium", timeStyle: "short" })}. Besök är inte unika personer: samma person räknas igen vid nästa besök utifrån.</p>}
+    </section>
+  );
+}

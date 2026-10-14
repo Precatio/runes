@@ -7,6 +7,7 @@ import { API_URL } from "@/lib/api";
 import BlogAdmin from "@/components/BlogAdmin";
 import GithubStats from "@/components/GithubStats";
 import SiteVotes from "@/components/SiteVotes";
+import SiteStats from "@/components/SiteStats";
 
 interface UserRow {
   uid: string; email: string | null; name: string | null; photo: string | null; disabled: boolean;
@@ -189,6 +190,8 @@ export default function AdminPage() {
       </section>
 
       <GithubStats call={call} />
+
+      <SiteStats call={call} />
 
       <SiteVotes call={call} />
 

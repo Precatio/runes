@@ -2,13 +2,13 @@
 
 import { useState, useSyncExternalStore } from "react";
 import { useLanguage } from "@/components/LanguageContext";
-import { VOTE_PROJECT } from "@/lib/site";
+import { DOWNLOAD_URL, SITE_PROJECT, siteCollection } from "@/lib/site";
 
 // A vote on the start page: should Vitki also be usable in the browser, without installing anything? The vote is
 // written straight to Firestore through its REST interface (the rules in firestore.rules allow exactly this and nothing
 // else), one per browser; the result is shown only to the founder, in Admin.
 const KEY = "vitki-vote-webbapp";
-const URL_ = `https://firestore.googleapis.com/v1/projects/${VOTE_PROJECT}/databases/vitki/documents/site_votes`;
+const URL_ = siteCollection("site_votes");
 
 // The vote this browser has already cast (localStorage), read without a render on the server: there it is always none
 const stored = () => { try { return localStorage.getItem(KEY); } catch { return null; } };
@@ -22,7 +22,7 @@ export default function SiteVote() {
   const voted = justVoted ?? earlier;
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(false);
-  if (!VOTE_PROJECT) return null;
+  if (!SITE_PROJECT) return null;
 
   const vote = async (choice: "ja" | "nej") => {
     setBusy(true); setError(false);
@@ -52,6 +52,13 @@ export default function SiteVote() {
           <p className="mt-2 text-slate-700 leading-relaxed">
             {en ? "Today you install Vitki on your own computer. Would you rather use it straight in the browser, with no setup?"
                 : "I dag installerar du Vitki på din egen dator. Skulle du hellre använda den direkt i webbläsaren, utan installation?"}
+          </p>
+          <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+            {en ? "Installing it yourself takes Python and Node.js, a few commands in the terminal and preferably R for the statistics – plus your own API key for the AI features. "
+                : "Egen installation kräver i dag Python och Node.js, några kommandon i terminalen och helst R för statistiken – för AI-funktionerna också en egen API-nyckel. "}
+            <a href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" className="font-semibold text-[#b7410e] hover:underline">
+              {en ? "See the instructions" : "Se anvisningen"}
+            </a>
           </p>
           <div className="mt-4 flex flex-wrap gap-3">
             <button type="button" onClick={() => vote("ja")} disabled={busy}

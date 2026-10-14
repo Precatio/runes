@@ -9,6 +9,7 @@ import { SettingsProvider } from "@/components/SettingsContext";
 import { AnalysisProvider } from "@/components/AnalysisContext";
 import { AuthProvider } from "@/components/AuthContext";
 import LoadingBar from "@/components/LoadingBar";
+import SiteTracker from "@/components/SiteTracker";
 
 // The runes themselves (ᛦ, ᚦ …) in one typeface on every device: last in the text's and the headings' font lists
 // (globals.css), so that it is used only for the runic characters; bundled with the site when it is built
@@ -43,6 +44,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased selection:bg-black/10 selection:text-black">
         <LoadingBar />
+        <SiteTracker />
         <AuthProvider>
           <SettingsProvider>
             <ThemeProvider>
