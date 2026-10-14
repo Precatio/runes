@@ -478,7 +478,7 @@ sammanhängande runstreck, så antalet är bara ett grovt mått.
 
 **Sö 164 och tre förkastade regeländringar (2026-10-14).** I stenanalysen av Sö 164 (vittrad gråsten, brus 0,65 mm)
 låg 18 av 67 igenkända runor i bildfältets skepp och kors, och 45 av de 49 i runbanden var en enda stav: bistavarna
-är grundare och bryts loss av vittringen. Stenens medelvärden påverkades inte (V-vinkel 120,4° med bara bandens
+är grundare och bryts loss av vittringen. Stenens medelvärden påverkades inte (V-vinkel 120,3° med bara bandens
 runor mot 120,2° med alla). Tre ändringar prövades på Sö 45, 113, 128, 131, 160, 164 och 205: (1) gränsen för
 ramlinjer räknad på 90:e i stället för 75:e percentilen av runstreckens längd, eftersom hela stavar på Sö 164
 sorterades bort som ramlinjer när de flesta streck var korta brottstycken; (2) krav på att en runa har parallella
