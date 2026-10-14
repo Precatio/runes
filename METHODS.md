@@ -1120,7 +1120,8 @@ Götaland, Småland med Öland och Dalsland, Gotland, Jämtland, de omstridda Bo
 normaliseringen, missar danska och norska former. Jämförelsens mönster läser i stället den engelska översättningen och
 translitterationen, som är gjorda på samma sätt i alla tre: kristen text (Gud, Kristus, själen, en helig), kristen bön,
 hedniska eller rituella markörer (som i 14e), titlarna þegn och drængr, ordet kumbl, bro- och vägbygge, utlandsfärd, arv,
-ristarsignatur, stungna runor och monoftong i ordet sten (stin mot stain, bara där ordet finns). Kors ingår inte:
+ristarsignatur (den som ristade, högg, målade eller märkte, inte beställaren som ”lät hugga” stenen), stungna runor
+och monoftong i ordet sten (stin mot stain, bara där ordet finns). Kors ingår inte:
 Rundata anger korsets form för 41 % av de svenska stenarna men för 12 % av de danska och 3 % av de norska, också där
 korset är välkänt (Kristusbilden på Jellingstenen DR 42, Dynnastenen N 68), så en skillnad i kors vore en skillnad i
 beskrivningen.
@@ -1137,11 +1138,11 @@ ordval och stavning (satte, reste, lät resa, gjorde, kumbl, þegn och drængr, 
 diftong, æft med eller utan -iR, bön, själen, bro, signatur, stungna runor och utlandsfärd). Den tränas bara på stenar
 från 970–1050 (147 danska och 576 svenska), så att den lär sig skillnaden mellan danskt och svenskt bruk vid samma tid
 och inte skillnaden mellan tidiga och sena stenar; stenarna i träningen får sin prognos ur femfaldig korsvalidering
-(fördelade efter signum). Den skiljer en dansk från en svensk sten rätt i 82 av 100 par (AUC 0,82). Bara stenar med
+(fördelade efter signum). Den skiljer en dansk från en svensk sten rätt i 83 av 100 par (AUC 0,83). Bara stenar med
 minst två av dragen får en prägel. *Kontroll:* modellen har inte sett Rundatas anmärkningar, men de 8 danska stenar
 som anmärkningarna kallar svenskgjorda eller svenskpåverkade (DR 6, DR 344, DR 229, DR 345, DR 365, DR 212, DR 144,
-DR 2) får dansk prägel 0,34 i genomsnitt mot 0,60 för de andra danska stenarna (Mann–Whitney, ensidigt, p = 0,012);
-DR 6 och DR 344 hamnar på plats 1 och 5 av 176.
+DR 2) får dansk prägel 0,34 i genomsnitt mot 0,61 för de andra danska stenarna (Mann–Whitney, ensidigt, p = 0,010);
+DR 6 och DR 344 hamnar på plats 1 och 5 av 174.
 
 Resultaten redovisas per trakt, per stilgrupp och per ristare (Rundatas säkra signerade och attribuerade ristare med
 minst tre stenar), med de tidigaste stenarna med dansk prägel hos svear och götar, de danska stenar som liknar svenska

@@ -66,7 +66,11 @@ TR_PRAYER = re.compile(r"\b(God|Christ|Michael|Mary)\b[^.;]*\b(help|helps|grant|
                        r"|\bGod's mother|\bMother of God|\bhelp\w*\b[^.;]*\b(soul|spirit)\b", _I)
 TR_SOUL_INTENT = re.compile(r"\bfor (his|her|their|the) (soul|spirit)", _I)
 TR_SOUL = re.compile(r"\b(soul|souls|spirit)\b", _I)
-TR_SIGNATURE = re.compile(r"(?<!had )(?<!be )\b(carved|cut|coloured|colored|painted|hewed|hewn|marked)\b", _I)
+TR_SIGNATURE = re.compile(r"(?<!be )(?<!was )(?<!were )\b(carved|cut|coloured|colored|painted|hewed|hewn|marked)\b", _I)
+# The commissioner, not the carver: "had these runes cut", "had the stone carved" (at most four words between); and a
+# nickname, "(the) Coloured"
+TR_COMMISSION = re.compile(r"\b(?:had|has|have)\s+(?:[\w'()\[\]/?.,-]+\s+){0,4}$", _I)
+TR_NICKNAME = re.compile(r"\(?the\)?\s*$", _I)
 TR_TITLE = re.compile(r"\bþegn|\bthegn|\bdrengr|\bdrengs\b|\bvaliant m[ae]n\b", _I)
 NORM_TITLE = re.compile(r"\bþ[æe]?i?a?gn|\bdr[æe]ng", _I)
 NORM_KUMBL = re.compile(r"\bkumb?l", _I)
@@ -208,6 +212,12 @@ def _texts(rec: dict) -> tuple[str, str, str]:
     return rec.get("translation_en") or "", rec.get("transliteration") or "", norm
 
 
+def signed(tr: str) -> bool:
+    """Ristaren nämns som den som ristade, högg, målade eller märkte – inte beställaren som lät hugga stenen."""
+    return any(not TR_COMMISSION.search(tr[max(0, m.start() - 60):m.start()])
+               and not TR_NICKNAME.search(tr[max(0, m.start() - 8):m.start()]) for m in TR_SIGNATURE.finditer(tr))
+
+
 def features(rec: dict) -> dict[str, int] | None:
     """Dragen för dansk prägel (0/1), eller None för en sten utan läsbar text."""
     tr, tl, norm = _texts(rec)
@@ -224,7 +234,7 @@ def features(rec: dict) -> dict[str, int] | None:
         "sten_mono": int(bool(TL_STONE_MONO.search(tl))), "sten_diph": int(bool(TL_STONE_DIPH.search(tl))),
         "aft_short": int(bool(TL_AFT_SHORT.search(tl))), "aft_long": int(bool(TL_AFT_LONG.search(tl))),
         "bon": int(bool(TR_PRAYER.search(tr))), "soul": int(soul), "bro": int(bool(TR_BRIDGE.search(tr))),
-        "signatur": int(bool(TR_SIGNATURE.search(tr))), "stungna": int(bool(set("".join(words)) & DOTTED)),
+        "signatur": int(signed(tr)), "stungna": int(bool(set("".join(words)) & DOTTED)),
         "fard": int(bool(TR_ABROAD.search(tr))),
     }
 

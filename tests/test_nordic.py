@@ -51,6 +51,16 @@ def test_patterns_read_the_translation_not_the_normalisation():
     assert nd.patterns(_rec(), nd.features(_rec()))["kristen"] is None
 
 
+def test_signature_is_the_carver_not_the_commissioner():
+    assert nd.signed("And Sóti carved these runes in memory of his lord.")
+    assert nd.signed("Ingileif had the stone raised in memory of Brúni, her husbandman. Balli carved.")
+    assert nd.signed("Hróðulfr placed the stone. Ávarr coloured.")
+    assert not nd.signed("Faðir had these runes cut in memory of Ôzurr, his brother.")
+    assert not nd.signed("Bófi had the stone cut in memory of Þjóðkell.")
+    assert not nd.signed("... (the) Coloured, (who) died in Svía.")
+    assert not nd.signed("He was cut down in battle.")
+
+
 def test_stone_monophthong_and_short_preposition():
     ft = nd.features(_rec(translation_en="x", transliteration="sati stin þansi aft faþur sin"))
     assert ft["sten_mono"] == 1 and ft["sten_diph"] == 0 and ft["aft_short"] == 1 and ft["aft_long"] == 0

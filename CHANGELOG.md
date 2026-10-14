@@ -26,6 +26,9 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
     anmärkningarna.
   - Rundatas anmärkningar om ett annat lands ristare och texterna som nämner ett annat nordiskt land listas.
 - **Rättat:** METHODS.md 14e räknade Sö 102 som hednisk; den läser salu (själen), inte alu.
+- **Rättat samma dag:** jämförelsens ristarsignatur räknade beställaren som ”lät hugga runorna” som ristare. Nu
+  räknas bara den som ristade, högg, målade eller märkte: 13 danska stenar i stället för 20, och 266 svenska i
+  stället för 326.
 
 ### Röstning på webbplatsen: Vitki i webbläsaren?
 - **Röstrutan:** startsidan frågar besökarna om de hellre skulle använda Vitki direkt i webbläsaren, utan att
