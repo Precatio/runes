@@ -1163,6 +1163,13 @@ båda halvorna; att Skånes stenar är mindre danska än Jyllands vid samma tid,
 gränsen när tiden hålls konstant, håller bara i den ena. Med tro och resor inräknade blir Västergötland tydligare danskt,
 men blekningen med tiden svag (p = 0,10): den ligger i formeln och stavningen.
 
+*Gränsbältet* (artikeln, 2026-10-14). Runstenarna räknas i band om avståndet från riksgränsen omkring 1025 (gränslagret,
+14g: Skåne, Halland och Blekinge mot Småland och Västergötland) och jämförs med gravfälten i Kulturmiljöregistret, som
+täcker båda sidor om den medeltida gränsen. På danska sidan finns inom 50 km 446 gravfält men 3 runstenar (0,7 per 100
+gravfält, ingen från omkring 970–1025), mot 31 per 100 längre in (Poissontest, p < 10⁻²¹; i båda halvorna p < 10⁻⁴);
+på svenska sidan 11 per 100 inom 50 km, och vid gränsen mellan götar och svear 9–13 per 100. Stavningen (sten, efter)
+och verbet (satte, reste, lät resa) ändras inte säkert vid riksgränsen; stavningen av sten ändras främst med tiden.
+
 Resultaten redovisas per trakt, per stilgrupp och per ristare (Rundatas säkra signerade och attribuerade ristare med
 minst tre stenar), med de tidigaste stenarna med dansk prägel hos svear och götar, de danska stenar som liknar svenska
 mest, Rundatas anmärkningar om ett annat lands ristare eller språk och de texter som nämner ett annat nordiskt land.
