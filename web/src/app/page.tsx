@@ -357,9 +357,13 @@ export default async function LandingPage() {
           <div className="absolute -left-10 bottom-0 text-[14rem] leading-none font-serif text-slate-900/[0.04]">ᚦ</div>
         </div>
         <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-20">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#b7410e]/30 bg-white/60 px-3 py-1 text-xs font-bold text-[#b7410e] mb-8">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#b7410e]/30 bg-white/60 px-3 py-1 text-xs font-bold text-[#b7410e] mb-5">
             Version {VERSION} · Öppen källkod
           </div>
+          <p className="mb-8 max-w-2xl font-serif italic text-lg text-slate-600 leading-relaxed">
+            Namnet Vitki är fornnordiska och betyder ungefär ”den vise, den kunnige” – i de gamla texterna också den som
+            kunde trolldom. Ordet hör ihop med vita, ”veta”.
+          </p>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold tracking-tight leading-[1.05] max-w-4xl hyphens-auto break-words" lang="sv">
             En öppen forskningsplattform för runinskrifter
           </h1>
