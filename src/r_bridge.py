@@ -388,6 +388,11 @@ def run_module(module: str, params: dict, out_dir: str, timeout: int = 3600) -> 
     result_path = os.path.join(out_dir, f"{module}.json")
     if proc.returncode != 0 or not os.path.exists(result_path):
         tail = "\n".join(line for line in log.strip().splitlines()[-8:])
+        if proc.returncode < 0:  # killed by a signal, typically the system running out of memory: R wrote nothing
+            tail = (f"R avbröts av operativsystemet (signal {-proc.returncode}), troligen av minnesbrist. Försök igen "
+                    "när datorn har mer ledigt minne." + (f"\n{tail}" if tail else ""))
+        elif not tail:
+            tail = f"R avslutades med kod {proc.returncode} utan felmeddelande."
         raise RError(f"R-modulen {module} misslyckades: {tail[-800:]}")
     with open(result_path, encoding="utf-8") as fh:
         return json.load(fh)

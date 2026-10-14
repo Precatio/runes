@@ -18,7 +18,7 @@ sammanhang den gäller:
 """
 from __future__ import annotations
 
-VERSION = "2026-10-10"
+VERSION = "2026-10-14"
 
 # Riktvärden för antal mätta runor (avsnitt 3 i METHODS.md)
 MIN_RUNES_DESCRIBE = 10
@@ -74,7 +74,12 @@ LIMITATIONS = [
              "Rundatas translitterering men varierade från 0,3 (grunda, vittrade runor som faller sönder, t.ex. Sö 160 "
              "och Sö 206) till 1,5 (Sö 143, där korsarmar bitvis togs för runor); på Sö 371, utan läsbara runor i "
              "Rundata, hittades sex. Slinglinjer som brutits av vittring kan räknas som runor, och runor kan delas eller "
-             "slås ihop. Granska alltid granskningsbilden.",
+             "slås ihop. På Sö 164 (2026-10-14) låg 18 av 67 igenkända runor i bildfältets skepp och kors, och 45 av "
+             "de 49 i runbanden var en enda stav, eftersom vittringen bryter loss bistavarna. Tre regeländringar "
+             "(längdgränsen för ramlinjer räknad på hela stavar, krav på parallella grannar i rad, båda tillsammans) "
+             "prövades på sju stenar: de minskade felen på vittrade stenar med stora figurfält (Sö 164, Sö 45) men "
+             "tappade runor på välbevarade och figurrika stenar (Sö 128, Sö 205), och infördes därför inte. Granska "
+             "alltid granskningsbilden och märk figurfältet som ornamentik där det behövs.",
      "short": "Programmet som letar upp runorna kan missa runor och ibland ta fel; det är inte utvärderat.",
      "needed": "Handmärkta facit för 8–10 stenar som inte använts för att justera reglerna (facit-läget i 3D-vyn, "
                "scripts/evaluate_rune_detection.py), med låsta regler."},

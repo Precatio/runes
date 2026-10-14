@@ -476,6 +476,18 @@ faller sönder och sorteras bort (Sö 160, Sö 206), och korsarmar eller slingli
 för runor (Sö 143); på Sö 371, utan läsbara runor i Rundata, hittades sex. En igenkänd "runa" är en grupp
 sammanhängande runstreck, så antalet är bara ett grovt mått.
 
+**Sö 164 och tre förkastade regeländringar (2026-10-14).** I stenanalysen av Sö 164 (vittrad gråsten, brus 0,65 mm)
+låg 18 av 67 igenkända runor i bildfältets skepp och kors, och 45 av de 49 i runbanden var en enda stav: bistavarna
+är grundare och bryts loss av vittringen. Stenens medelvärden påverkades inte (V-vinkel 120,4° med bara bandens
+runor mot 120,2° med alla). Tre ändringar prövades på Sö 45, 113, 128, 131, 160, 164 och 205: (1) gränsen för
+ramlinjer räknad på 90:e i stället för 75:e percentilen av runstreckens längd, eftersom hela stavar på Sö 164
+sorterades bort som ramlinjer när de flesta streck var korta brottstycken; (2) krav på att en runa har parallella
+grannar bredvid sig i en rad om minst fyra, eller två intill en bandlinje, i stället för avståndet till närmaste
+bandlinje; (3) båda. De minskade felen på vittrade stenar med stora figurfält (Sö 164: 58 runor i banden och 7 i
+figurfältet mot 49 och 18; Sö 45) men tappade runor i glesa och starkt böjda band (Sö 128) och släppte in långa
+parallella djurlinjer (Sö 205). Ingen infördes; reglerna ändras först när handmärkta facit finns. Granskningsvyn
+låter forskaren märka figurfältet som ornamentik innan analysen används.
+
 **Mätning utan manuellt urval.** Tidigare 3D-studier av huggteknik (Kitzler Åhfeldt 2002 och senare) mäter
 också i 3D-modeller med programvara (Groove Measure), men forskaren väljer vilka spår som mäts och var proverna
 tas – oftast de bäst bevarade spåren. Den automatiska analysen tar i stället med alla igenkända runor, med samma
@@ -1438,7 +1450,7 @@ Innan resultat jämförs direkt bör samma referensstenar mätas med båda metod
 ## 18. Kända brister
 
 Källkod: `src/limitations.py`, `GET /api/limitations`. Metodens kända brister förs i en enda förteckning
-(version 2026-10-10) som följer med varje analys:
+(version 2026-10-14) som följer med varje analys:
 
 * **I appen** visas de brister som gäller sidan under varje analyssida (3D-analys, stenanalys, jämförelse,
   mätkorpus, syntes, statistik, forskningsluckor, inskrifter, karta, stilgrupper, 2D-analys, läsning, rapporter).
