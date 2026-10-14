@@ -3,15 +3,17 @@
 
 import Link from "next/link";
 import { inLanguage, postDate, type BlogPost } from "@/components/BlogBody";
+import { featuredFirst } from "@/lib/featured";
 import { useLanguage } from "@/components/LanguageContext";
 import { postPath } from "@/lib/blogSeo";
 
-// The newest articles on the start page: the latest large, with its first photo, and up to three more beside it. Rendered
-// on the server in Swedish and shown in English when the reader has chosen English.
+// The articles on the start page: the article of the month large (or the latest, when none is chosen), with its first
+// photo, and up to three more beside it. Rendered on the server in Swedish and shown in English when the reader has
+// chosen English.
 export default function ArticleTeasers({ posts, photo }: { posts: BlogPost[]; photo?: { src: string; alt: string; credit: string | null } | null }) {
   const { lang } = useLanguage();
   if (!posts.length) return <p className="text-slate-500">Den första artikeln kommer snart.</p>;
-  const [first, ...rest] = posts;
+  const [first, ...rest] = featuredFirst(posts);
   const v = inLanguage(first, lang);
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-8">
@@ -25,7 +27,7 @@ export default function ArticleTeasers({ posts, photo }: { posts: BlogPost[]; ph
           </Link>
         )}
         <div className="p-7 flex flex-col">
-          <div className="text-xs font-bold uppercase tracking-wider text-[#b7410e]">Senaste artikeln · {postDate(first, lang)}</div>
+          <div className="text-xs font-bold uppercase tracking-wider text-[#b7410e]">{first.featured ? "Månadens artikel" : "Senaste artikeln"} · {postDate(first, lang)}</div>
           <h3 className="mt-2 text-2xl md:text-3xl font-serif font-bold leading-tight" translate="no">
             <Link href={postPath(first.slug)} className="hover:text-[#b7410e]">{v.title}</Link>
           </h3>

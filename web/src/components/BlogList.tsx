@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { inLanguage, postDate, type BlogPost } from "@/components/BlogBody";
+import { featuredFirst } from "@/lib/featured";
 import { useLanguage } from "@/components/LanguageContext";
 import { postPath } from "@/lib/blogSeo";
 
-// The published posts, newest first; rendered on the server in Swedish and shown in English when chosen
+// The published posts: the article of the month first, then the others newest first; rendered on the server in Swedish
+// and shown in English when chosen
 export default function BlogList({ posts, failed }: { posts: BlogPost[]; failed: boolean }) {
   const { lang } = useLanguage();
   if (!posts.length) {
@@ -13,11 +15,12 @@ export default function BlogList({ posts, failed }: { posts: BlogPost[]; failed:
   }
   return (
     <>
-      {posts.map(p => {
+      {featuredFirst(posts).map(p => {
         const v = inLanguage(p, lang);
         return (
           <article key={p.id} className="border-t-2 border-[#b7410e] pt-5">
             <div className="text-sm text-slate-500">
+              {p.featured && <span className="mr-2 text-xs font-bold uppercase tracking-wider text-[#b7410e]">Månadens artikel</span>}
               <time dateTime={p.publishedAt ?? p.month}>{postDate(p, lang)}</time>{p.author ? ` · ${p.author}` : ""}
             </div>
             <h2 className="mt-1 text-2xl font-serif font-bold" translate="no">

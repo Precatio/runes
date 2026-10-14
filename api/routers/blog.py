@@ -21,7 +21,7 @@ router = APIRouter()
 COLLECTION = "posts"
 SLUG = re.compile(r"^[a-z0-9][a-z0-9-]{0,79}$")
 MONTH = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
-PUBLIC = ("id", "slug", "title", "summary", "title_en", "summary_en", "month", "author", "publishedAt", "updatedAt")
+PUBLIC = ("id", "slug", "title", "summary", "title_en", "summary_en", "month", "author", "publishedAt", "updatedAt", "featured")
 
 
 class PostRequest(BaseModel):
@@ -41,6 +41,8 @@ class PostRequest(BaseModel):
     publish_at: str | None = Field(None, max_length=40)
     # The R pattern the post is about (src/blog_topics.py), so that the list of topics can show which are written
     topic: str = Field("", max_length=160)
+    # "Månadens artikel": shown first and large on the start page and first in the list, whatever its date; one at a time
+    featured: bool = False
 
 
 def _iso(d: dict) -> dict:
@@ -159,6 +161,10 @@ def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
         if not old:
             data["createdAt"] = now
         ref.set(data, merge=True)
+        if req.featured:  # only one article of the month
+            for p in others:
+                if p.get("featured"):
+                    col.document(p["id"]).set({"featured": False}, merge=True)
         _forget()
     except HTTPException:
         raise

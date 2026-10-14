@@ -10,6 +10,7 @@ import { VERSION } from "@/lib/version";
 import ArticleTeasers from "@/components/ArticleTeasers";
 import type { BlogPost } from "@/components/BlogBody";
 import { getPost, listPosts } from "@/lib/articles";
+import { featuredFirst } from "@/lib/featured";
 import { pictures } from "@/lib/blogSeo";
 import { DOCS_URL, DOWNLOAD_URL, GITHUB_URL, METHODS_URL, SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
 
@@ -19,7 +20,8 @@ export const revalidate = 60;
 async function latestArticles(): Promise<{ posts: BlogPost[]; photo: { src: string; alt: string; credit: string | null } | null }> {
   const { posts } = await listPosts();
   if (!posts.length) return { posts, photo: null };
-  const body = (await getPost(posts[0].slug))?.body ?? "";
+  // The photo of the article shown large: the article of the month, or the latest
+  const body = (await getPost(featuredFirst(posts)[0].slug))?.body ?? "";
   return { posts, photo: pictures(body).find(p => /wikimedia\.org/.test(p.src)) ?? null };
 }
 

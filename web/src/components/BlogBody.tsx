@@ -21,6 +21,8 @@ export interface BlogPost {
   updatedAt?: string | null;
   // The R pattern the post is about ("Förändring|bon"), set by a draft from a chosen topic
   topic?: string;
+  // "Månadens artikel": first and large on the start page and first in the list, whatever its date
+  featured?: boolean;
 }
 
 /** The post in the chosen language: the English version when there is one. */

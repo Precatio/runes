@@ -54,7 +54,7 @@ function insertPicture(text: string, signum: string, block: string) {
   return [...blocks.slice(0, i + 1), block, ...blocks.slice(i + 1)].join("\n\n");
 }
 const empty = (author: string): Draft => ({ slug: "", title: "", summary: "", body: "", title_en: "", summary_en: "", body_en: "",
-                                           month: "", author, topic: "" });
+                                           month: "", author, topic: "", featured: false });
 
 // The articles (api/routers/blog.py): written here and published at once or at a chosen time. "Utkast från det som är nytt" fills
 // the form with the patterns and findings that are new or changed since the last published post, to edit from.
@@ -181,7 +181,8 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
 
   const edit = (p: BlogPost) => {
     setDraft({ id: p.id, slug: p.slug, title: p.title, summary: p.summary, body: p.body ?? "", title_en: p.title_en ?? "",
-               summary_en: p.summary_en ?? "", body_en: p.body_en ?? "", month: p.month, author: p.author ?? "", topic: p.topic ?? "" });
+               summary_en: p.summary_en ?? "", body_en: p.body_en ?? "", month: p.month, author: p.author ?? "", topic: p.topic ?? "",
+               featured: !!p.featured });
     setPublishAt(p.published && isFuture(p.publishedAt) ? localInput(p.publishedAt!) : "");
     setSlugTouched(true); setShowEn(!!(p.title_en || p.body_en)); setSources([]); setNote(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -270,8 +271,14 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
           <input type="datetime-local" value={publishAt} onChange={e => setPublishAt(e.target.value)} className={`${field} mt-1`} />
           <span className="block mt-1 font-normal text-slate-500">Tom: publiceras direkt. En tid framåt: går live då av sig själv.</span>
         </label>
-        <label className="text-xs font-bold text-slate-600 sm:col-span-3">Författare
+        <label className="text-xs font-bold text-slate-600 sm:col-span-2">Författare
           <input value={draft.author ?? ""} onChange={e => set("author", e.target.value)} placeholder="Namn (från Inställningar)" className={`${field} mt-1`} />
+        </label>
+        <label className="text-xs font-bold text-slate-600 sm:col-span-1 flex items-start gap-2 pt-5">
+          <input type="checkbox" checked={!!draft.featured} onChange={e => setDraft(d => ({ ...d, featured: e.target.checked }))} className="mt-0.5" />
+          <span>Månadens artikel
+            <span className="block font-normal text-slate-500">Visas först och stort på startsidan och först bland artiklarna, oavsett datum. Bara en åt gången.</span>
+          </span>
         </label>
         <input value={draft.title} onChange={e => set("title", e.target.value)} placeholder="Rubrik" maxLength={160} className={`${field} sm:col-span-4 font-semibold`} />
         <label className="text-xs font-bold text-slate-600 sm:col-span-4">Adress
@@ -451,6 +458,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
                 : <span className={`text-[10px] font-bold rounded-md px-1.5 border ${p.published ? "border-emerald-300 bg-emerald-50 text-emerald-800" : "border-slate-300 bg-slate-50 text-slate-600"}`}>
                     {p.published ? "publicerad" : "utkast"}
                   </span>}
+              {p.featured && <span className="text-[10px] font-bold rounded-md px-1.5 border border-[#b7410e]/40 bg-[#fbf3ee] text-[#b7410e]">månadens artikel</span>}
               <span className="min-w-0 flex-1 font-semibold text-slate-900 truncate" translate="no">{p.title}</span>
               <button onClick={() => edit(p)} className="text-xs font-semibold text-[#b7410e] hover:underline">Redigera</button>
               {p.published && <button onClick={() => unpublish(p)} className="text-xs font-semibold text-slate-500 hover:text-slate-900">Avpublicera</button>}

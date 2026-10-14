@@ -336,3 +336,18 @@ def test_the_website_gets_only_live_articles_and_their_figures(tmp_path, monkeyp
     assert "by" not in data["posts"][0] and "snapshot" not in data["posts"][0]
     assert out == {"articles": 1, "figures": 1, "missing_figures": []}
     assert sorted(os.listdir(tmp_path / "figurer")) == [name]
+
+
+def test_the_article_of_the_month_goes_to_the_website(tmp_path, monkeypatch):
+    from src import site_export
+    monkeypatch.setattr(site_export, "CONTENT", str(tmp_path / "content" / "articles.json"))
+    monkeypatch.setattr(site_export, "FIGURES", str(tmp_path / "figurer"))
+    posts = [{"id": "a", "slug": "nyare", "title": "A", "published": True, "publishedAt": "2026-10-14T10:00:00+00:00"},
+             {"id": "b", "slug": "manadens", "title": "B", "published": True, "publishedAt": "2026-10-13T10:00:00+00:00",
+              "featured": True}]
+    site_export.export(posts, "2026-10-14T12:00:00+00:00")
+    data = json.loads((tmp_path / "content" / "articles.json").read_text())
+    # Newest first in the file; the site puts the article of the month first (web/src/lib/featured.ts)
+    assert [(p["slug"], p.get("featured")) for p in data["posts"]] == [("nyare", None), ("manadens", True)]
+    from api.routers.blog import PUBLIC, PostRequest
+    assert "featured" in PUBLIC and PostRequest(slug="x", title="T", body="b").featured is False
