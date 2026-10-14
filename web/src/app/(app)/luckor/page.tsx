@@ -71,7 +71,7 @@ interface Finding extends StoneExtras {
   reasons: { belägg: string[]; nyhet: string[]; relevans: string[] };
   crosscheck?: CrossCheck;
   significance?: Significance;
-  // The reasoned conclusion (same rules as the interpretation shown when the row is opened; METHODS.md 13d)
+  // The reasoned conclusion (same rules as the interpretation shown when the row is opened; METHODS.md 14d)
   interpretation?: { level: string; support: number; against: number };
 }
 // The suggestion checked against newer sources (Runor 2020, Wikidata)
@@ -403,7 +403,7 @@ export default function GapsPage() {
             rows={(tab === "uninterpreted" ? data.open_questions.uninterpreted : data.open_questions.uncertain_style).items} />
         )}
       </div>
-      <DocsNote anchor="13-forskningsluckor">Varifrån uppgifterna kommer, hur bedömningarna räknas och vilka reservationer som gäller står i avsnitt 13.</DocsNote>
+      <DocsNote anchor="14-forskningsluckor">Varifrån uppgifterna kommer, hur bedömningarna räknas och vilka reservationer som gäller står i avsnitt 14.</DocsNote>
       <p className="text-[11px] text-slate-500">{data.attribution}</p>
     </div>
   );
@@ -507,7 +507,7 @@ function SizePanel() {
           </table></ExportTable>
         </div>
       )}
-      <DocsNote anchor="9b-stenens-storlek-och-syfte">Hur måtten läses ut, hur de ska tolkas och vilka reservationer som gäller står i avsnitt 9b.</DocsNote>
+      <DocsNote anchor="10b-stenens-storlek-och-syfte">Hur måtten läses ut, hur de ska tolkas och vilka reservationer som gäller står i avsnitt 10b.</DocsNote>
     </div>
   );
 }
@@ -870,7 +870,7 @@ function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; loggedIn
         </table></ExportTable>
         {sorted.length > 300 && <p className="text-xs text-slate-500 mt-2">Visar de 300 första – sortera eller filtrera för att se fler.</p>}
       </div>
-      <div className="mt-4"><DocsNote anchor="13b-våra-resultat-mot-befintlig-forskning">Hur belägg, nyhet, relevans och bedömning räknas står i avsnitt 13b.</DocsNote></div>
+      <div className="mt-4"><DocsNote anchor="14b-våra-resultat-mot-befintlig-forskning">Hur belägg, nyhet, relevans och bedömning räknas står i avsnitt 14b.</DocsNote></div>
     </>
   );
 }
@@ -913,7 +913,7 @@ function InterpretationBox({ f }: { f: Finding }) {
           ))}
         </div>
       </details>
-      <div className="mt-2"><DocsNote anchor="13d-tolkning-av-fynden">Reglerna bakom tolkningen står i avsnitt 13d.</DocsNote></div>
+      <div className="mt-2"><DocsNote anchor="14d-tolkning-av-fynden">Reglerna bakom tolkningen står i avsnitt 14d.</DocsNote></div>
     </div>
   );
 }

@@ -3,7 +3,7 @@
     python scripts/fetch_raa_remains.py [TYP ...]
 
 Skriver data/raa/lamningar.csv (git-ignorerad). Utan argument hämtas de typer som prövas mot runstenarnas lägen
-(METHODS.md 17): gravfält, hög, färdväg, färdvägssystem, bro, fornborg och hamnanläggning. K-samsök är RAÄ:s öppna
+(METHODS.md 1c): gravfält, hög, färdväg, färdvägssystem, bro, fornborg och hamnanläggning. K-samsök är RAÄ:s öppna
 API (kulturarvsdata.se); hämtningen tar en sida om 500 poster i taget med en paus mellan anropen.
 """
 from __future__ import annotations

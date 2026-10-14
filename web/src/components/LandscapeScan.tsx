@@ -115,7 +115,7 @@ export default function LandscapeScan({ onPick, current, scan: given }: {
       </div>
       <p className="mt-2 text-[11px] text-slate-500">
         Mönster som håller i båda halvorna finns också i <Link href="/luckor" className="underline">Forskningsluckor</Link> med hypotes och
-        prov. Beräknat i korpusanalysen{scan.computed_at ? ` (${new Date(scan.computed_at).toLocaleDateString("sv-SE")})` : ""}; METHODS.md 17.
+        prov. Beräknat i korpusanalysen{scan.computed_at ? ` (${new Date(scan.computed_at).toLocaleDateString("sv-SE")})` : ""}; METHODS.md 1e.
       </p>
     </div>
   );

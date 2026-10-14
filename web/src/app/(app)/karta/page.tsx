@@ -321,7 +321,7 @@ function MapContent() {
             </select>
           </label>
           <label className={label}>
-            <span>Språkdrag<InfoTip text="Drag i ljud, stavning, språkbruk och skrift, lästa ur inskriften där ordet finns (METHODS.md, avsnitt 8). Välj ett drag och eventuellt ett värde." /></span>
+            <span>Språkdrag<InfoTip text="Drag i ljud, stavning, språkbruk och skrift, lästa ur inskriften där ordet finns (METHODS.md, avsnitt 9). Välj ett drag och eventuellt ett värde." /></span>
             <select value={f.trait} onChange={e => set("trait", e.target.value)} className={select}>
               <option value="">Inget</option>
               {labels && Object.entries(labels.traits).map(([k, t]) => <option key={k} value={k}>{t.label}</option>)}

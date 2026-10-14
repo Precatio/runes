@@ -1,9 +1,9 @@
-"""Jämförelse av två stenar (se METHODS.md, 3).
+"""Jämförelse av två stenar (se METHODS.md, 4).
 
 Huggspåren jämförs med runan som enhet när snitten bär runnummer (automatisk analys): snitt i samma runa delar
 slag, verktyg och vittring och är inte oberoende, så permutationstestet flyttar hela runor mellan stenarna. Utan
 runnummer jämförs snitten, med en varning om att p-värdena då blir för små. Det samlade testet använder de stabila
-måtten (V-vinkel, djup, bredd, djup/bredd); asymmetri och bottenradie redovisas men flaggas (METHODS.md 1e, 18).
+måtten (V-vinkel, djup, bredd, djup/bredd); asymmetri och bottenradie redovisas men flaggas (METHODS.md 2e, 18).
 
 Avståndet mellan stenarna ställs dessutom mot en referensskala: avstånden mellan stenpar i mätkorpusen, för par
 med samma ristare och par med olika ristare i Rundata. Jämförbarheten kontrolleras (spårtyp, metodversion,
@@ -168,7 +168,7 @@ def comparability(a: dict, b: dict, ga: dict, rec_a: dict | None, rec_b: dict | 
         ratio = max(sa, sb) / min(sa, sb)
         out.append({"key": "punkttäthet", "ok": ratio <= 1.5,
                     "text": f"Skanningarnas punktavstånd {sa:.2f} och {sb:.2f} mm".replace(".", ",") + ("." if ratio <= 1.5 else
-                    " – mycket olika täthet påverkar måtten (METHODS.md 1e).")})
+                    " – mycket olika täthet påverkar måtten (METHODS.md 2e).")})
     if rec_a and rec_b:
         fam_a = geology.families(rec_a.get("material") or "")
         fam_b = geology.families(rec_b.get("material") or "")

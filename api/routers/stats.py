@@ -109,7 +109,7 @@ def recompute(req: RecomputeRequest):
 @router.post("/compare")
 def compare(req: CompareRequest):
     """Två stenar jämförda: huggspåren med runan som enhet, en referensskala ur mätkorpusen, kontroll av
-    jämförbarheten och – om båda har signum – ristare, stil, avstånd, stavning och språkdrag (METHODS.md 3)."""
+    jämförbarheten och – om båda har signum – ristare, stil, avstånd, stavning och språkdrag (METHODS.md 4)."""
     from api.config import METHOD_VERSION
     from api.routers.orthography import model as orthography_model
     from src import stone_compare as sc, stone_dimensions

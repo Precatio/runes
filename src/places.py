@@ -1,7 +1,7 @@
 """Platser kring runstenarna: ortnamn som kan tyda på förkristen kult, medeltida kyrkor och fornlämningar
 (GET /api/research/places, /api/research/landscape/{signum}, /api/research/place-test; kartan och Stenöversikt).
 
-Samma data som korpusanalysen remains.R använder (METHODS.md 17): data/ortnamn/ (scripts/fetch_place_names.py) och
+Samma data som korpusanalysen remains.R använder (METHODS.md 1c–1e): data/ortnamn/ (scripts/fetch_place_names.py) och
 data/raa/lamningar.csv (scripts/fetch_raa_remains.py). Avstånden räknas i SWEREF 99 TM med ett kd-träd. Saknas en fil
 hoppas den sortens platser över.
 

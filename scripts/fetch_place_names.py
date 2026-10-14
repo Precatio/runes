@@ -1,4 +1,4 @@
-"""Ortnamn som kan tyda på förkristen kult, alla jämförbara ortnamn och medeltida kyrkor, för remains.R (METHODS.md 17).
+"""Ortnamn som kan tyda på förkristen kult, alla jämförbara ortnamn och medeltida kyrkor, för remains.R (METHODS.md 1d).
 
     python scripts/fetch_place_names.py
 

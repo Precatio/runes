@@ -20,7 +20,7 @@ from __future__ import annotations
 
 VERSION = "2026-10-10"
 
-# Riktvärden för antal mätta runor (avsnitt 2 i METHODS.md)
+# Riktvärden för antal mätta runor (avsnitt 3 i METHODS.md)
 MIN_RUNES_DESCRIBE = 10
 MIN_RUNES_COMPARE = 20
 
@@ -48,7 +48,7 @@ LIMITATIONS = [
      "needed": "Bättre bottenmodell och test på skanningar av samma sten med olika punkttäthet."},
     {"key": "reliability", "contexts": {"grooves", "comparison"},
      "title": "Ingen sten är mätt i oberoende skanningar",
-     "text": "Robusthetsstudien (METHODS.md 1e, åtta stenar) visar att stenens medelvärden för vinkel, djup, bredd och "
+     "text": "Robusthetsstudien (METHODS.md 2e, åtta stenar) visar att stenens medelvärden för vinkel, djup, bredd och "
              "djup/bredd står sig när rutnät, ytnormal, känslighet och skanningens täthet ändras (ICC 0,95–0,98), men "
              "vilka ställen som mäts ändras mycket, samma ställe skiljer ca 2° i vinkel, djupet beror på ytnormalen och "
              "glesa skanningar ger upp till 9° annan vinkel. Ingen sten har mätts i två oberoende skanningar, och manuell "

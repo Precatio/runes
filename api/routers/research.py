@@ -109,7 +109,7 @@ def _levels_path() -> str:
 
 def _with_levels(items: list[dict]) -> list[dict]:
     """Lägger tolkningens nivå (starkt, måttligt, svagt …) på varje fynd, så att listan kan visa den utan att raden
-    öppnas. Samma regler som /interpret (METHODS.md 13d); nivåerna sparas på disk och räknas bara om när data eller
+    öppnas. Samma regler som /interpret (METHODS.md 14d); nivåerna sparas på disk och räknas bara om när data eller
     koden ändras."""
     from src import interpretation, stone_overview
     path = _levels_path()
@@ -267,7 +267,7 @@ def _stone_size(mtime: float) -> dict:
 
 @router.get("/stone_size")
 def stone_size_analysis():
-    """Runstenens storlek mot inskriftens syfte, statusord, antal personer, textens längd och ristare (METHODS.md 9b)."""
+    """Runstenens storlek mot inskriftens syfte, statusord, antal personer, textens längd och ristare (METHODS.md 10b)."""
     import os
     from src import stone_dimensions
     mtime = os.path.getmtime(stone_dimensions.DATA) if os.path.exists(stone_dimensions.DATA) else 0.0
@@ -342,7 +342,7 @@ def _fp() -> str:
 
 @router.get("/overview")
 def stones_overview(request: Request):
-    """Alla runstenar med stöd för Rundatas ristare, starkaste alternativ och status (METHODS.md 13c)."""
+    """Alla runstenar med stöd för Rundatas ristare, starkaste alternativ och status (METHODS.md 14c)."""
     fp = _fp()
     return cached_json(request, overview_key(fp), lambda: _overview(fp))
 
@@ -408,7 +408,7 @@ def _archive(fp: str) -> dict:
 @router.post("/interpret")
 def interpret_finding(finding: dict):
     """Ett resonemang för ett fynd i Forskningsluckor: belägg, p-värde, språkdrag, bergart, nyare källor och de andra
-    metodernas besked om samma ristare vägs samman (METHODS.md 13d)."""
+    metodernas besked om samma ristare vägs samman (METHODS.md 14d)."""
     from fastapi import HTTPException
     from src import interpretation, stone_overview
     rec = store().get(finding.get("signum") or "")

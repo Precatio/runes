@@ -565,7 +565,7 @@ function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void }) 
             );
           })}
         </div>
-        <div className="mt-3"><DocsNote anchor="17-statistik-i-r">Hur mönstren ska tolkas och vilka reservationer som gäller står i avsnitt 17.</DocsNote></div>
+        <div className="mt-3"><DocsNote anchor="1l-begränsningar-och-tolkning-av-mönstren">Hur mönstren ska tolkas och vilka reservationer som gäller står i avsnitt 1l.</DocsNote></div>
       </section>
 
       <Details title={`Fynd per sten (${s.n})`}>
@@ -1084,7 +1084,7 @@ function Change({ data }: { data: Corpus }) {
           </table></ExportTable>
         </div>
       </Details>
-      <DocsNote anchor="17-statistik-i-r">Hur förändringsanalysen ska läsas och vilka reservationer som gäller står i avsnitt 17.</DocsNote>
+      <DocsNote anchor="1h-förändring-i-tid-och-rum">Hur förändringsanalysen ska läsas och vilka reservationer som gäller står i avsnitt 1h.</DocsNote>
       <Method text={c.method} />
     </>
   );
@@ -1170,7 +1170,7 @@ function Anonymous({ data }: { data: Corpus }) {
           stenar än bland olika ristares; {pc(cal.precision)} av sådana par med känd ristare är samma ristare.
         </p>
       </Details>
-      <DocsNote anchor="17-statistik-i-r">Hur grupperna ska läsas och vilka reservationer som gäller står i avsnitt 17.</DocsNote>
+      <DocsNote anchor="1g-okända-ristare">Hur grupperna ska läsas och vilka reservationer som gäller står i avsnitt 1g.</DocsNote>
       <Method text={a.method} />
     </>
   );

@@ -140,7 +140,7 @@ export interface AutoAnalysisResult {
   provenance: import("@/lib/db").AnalysisProvenance;
 }
 
-// Guideline numbers of measured runes (METHODS.md, 2; same as src/limitations.py): 10 to describe a stone,
+// Guideline numbers of measured runes (METHODS.md, 3; same as src/limitations.py): 10 to describe a stone,
 // 20 to compare stones. Guidelines, not a standard – see the known limitations.
 export const MIN_RUNES_DESCRIBE = 10;
 export const MIN_RUNES_COMPARE = 20;

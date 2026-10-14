@@ -219,7 +219,7 @@ def classify_strokes(skel: np.ndarray, half_width: np.ndarray, res: float, rune_
                      rune_max_mm: float = 250.0, max_bend_deg: float = 25.0, max_width_cv: float = 0.5,
                      neighbour_factor: float = 2.5, max_local_deg: float = 20.0, max_turn_deg: float = 25.0,
                      perpendicular_deg: float = 20.0) -> dict:
-    """Delar spårens mittlinjer i streck och avgör vilka som är runor (se METHODS.md, 2b).
+    """Delar spårens mittlinjer i streck och avgör vilka som är runor (se METHODS.md, 2c).
 
     1. Mittlinjen bryts vid korsningar i grenar.
     2. Grenar som fortsätter rakt genom en korsning eller över ett kort avbrott (högst två spårbredder)

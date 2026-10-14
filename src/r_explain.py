@@ -2,7 +2,7 @@
 nyckeltal, hur säkert det är, ett förslag till tolkning och vad resultatet inte säger.
 
 Texterna räknas fram ur korpusanalysernas resultat (src/r_bridge.py), så att de alltid stämmer med den senaste
-beräkningen. Tolkningarna är förslag som följer reservationerna i METHODS.md 17 – inte runologiska slutsatser.
+beräkningen. Tolkningarna är förslag som följer reservationerna i METHODS.md 1l – inte runologiska slutsatser.
 
 Säkerhet:
   säkert   resultatet är prövat (korsvalidering, permutationstest) och stämmer med vad forskningen utgår från

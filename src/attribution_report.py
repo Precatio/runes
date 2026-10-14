@@ -1,5 +1,5 @@
 """Beslutsunderlag om en attribuering: alla argument för och emot en ristare till en sten, som ett dokument att
-skicka till dem som förvaltar runtextdatabasen (se METHODS.md, 14f).
+skicka till dem som förvaltar runtextdatabasen (se METHODS.md, 15e).
 
 Dokumentet ska kunna läsas av en runolog som inte känner appen och ligga till grund för ett beslut. Det börjar med
 en ärlig slutsats och rekommendation (förslag, granskning eller inget skäl att ompröva; en signerad sten får aldrig
@@ -580,8 +580,8 @@ def build(rec: dict, carver: str, ctx: dict, crosscheck: dict | None, dims: dict
                h(1, "10. Metod och reproducerbarhet"),
                p(f"Framtaget med Vitki {versions.get('app', '')} ({APP_URL}; öppen källkod, {REPO_URL}). "
                  f"R-korpusens version {versions.get('fingerprint', '–')}, förteckningen över kända brister version "
-                 f"{limitations.VERSION}. Metoderna beskrivs i METHODS.md: ortografi (avsnitt 6), språkdrag (8), bergart "
-                 "(10), samlade belägg per sten (13c), tolkning (13d), attribueringsförslag (14f) och statistiken i R (17). "
+                 f"{limitations.VERSION}. Metoderna beskrivs i METHODS.md: ortografi (avsnitt 7), språkdrag (9), bergart "
+                 "(11), samlade belägg per sten (14c), tolkning (14d), attribueringsförslag (15e) och statistiken i R (1). "
                  "Samma data och samma version ger samma resultat."),
                h(1, "Referenser"),
                bullets(["Axelson, J. 1993. Mellansvenska runristare. Förteckning över signerade och attribuerade inskrifter. (Runrön 5.) Uppsala.",

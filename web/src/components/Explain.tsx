@@ -171,7 +171,7 @@ export function Figure({ src, alt, help, narrow }: { src?: string; alt: string; 
   );
 }
 
-// The method in short; caveats and how to read the results are in the documentation (METHODS.md 17)
+// The method in short; caveats and how to read the results are in the documentation (METHODS.md 1)
 
 // The glossary of all explained terms, searchable
 export function Glossary({ onClose }: { onClose: () => void }) {

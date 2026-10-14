@@ -1,4 +1,4 @@
-"""Runstenarnas mått ur Kulturmiljöregistret (Fornsök), via Runor och K-samsök (se METHODS.md, 9b).
+"""Runstenarnas mått ur Kulturmiljöregistret (Fornsök), via Runor och K-samsök (se METHODS.md, 10b).
 
 Rundata saknar mått. Runor (RAÄ, utgåva 2020 av Samnordisk runtextdatabas) ger för varje inskrift id:t i
 Kulturmiljöregistret, och lämningens beskrivning där anger oftast stenens mått, t.ex. "Runsten, ljus granit, 1,5 m h,

@@ -65,7 +65,7 @@ export default function MethodsPage() {
         </ol>
         <p className="text-xs text-slate-500 mt-4">
           Urvalet görs med samma regler på varje sten och beror inte på vem som mäter, så mätningen kan upprepas exakt.
-          Reglerna är själva val – de redovisas nedan (avsnitt 1c) tillsammans med hur robusta resultaten är (1e) och
+          Reglerna är själva val – de redovisas nedan (avsnitt 2c) tillsammans med hur robusta resultaten är (2e) och
           de kända bristerna (18).
         </p>
       </section>

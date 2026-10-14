@@ -396,7 +396,7 @@ export default function StoneAnalysisPage() {
           Ladda upp en 3D-skanning och ange signum. Appen räknar fram bilder ur skanningen, mäter huggspåren (med
           känslighetsanalys), gör en 2D-analys och blinda läsningar som prövas mot Rundata, väger samman beläggen och
           skriver en artikel med alla figurer och en bilaga om hur analysen gjordes. Varje steg använder samma metoder som
-          de enskilda verktygen; se METHODS.md, avsnitt 14c.
+          de enskilda verktygen; se METHODS.md, avsnitt 15c.
         </p>
       </div>
 

@@ -1,7 +1,7 @@
 """Bygger data/stone_dimensions.json: mått för Sveriges vikingatida runstenar ur Kulturmiljöregistret.
 
 Rundata saknar mått. För varje runsten hämtas Kulturmiljöregistrets id via Runor och lämningens beskrivning via
-K-samsök, och höjd, bredd, tjocklek och runhöjd läses ut (src/stone_dimensions.py; METHODS.md 9b). Svaren cachas,
+K-samsök, och höjd, bredd, tjocklek och runhöjd läses ut (src/stone_dimensions.py; METHODS.md 10b). Svaren cachas,
 så skriptet kan avbrytas och köras igen. Ca tre förfrågningar per sten, med paus mellan dem.
 
     .venv/bin/python -m scripts.build_stone_dimensions

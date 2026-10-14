@@ -1,7 +1,7 @@
 # Statistik i R
 
 R-skripten som Vitki kör för korpusen och för en enskild sten. Metoderna beskrivs i
-[METHODS.md](../METHODS.md), avsnitt 17.
+[METHODS.md](../METHODS.md), avsnitt 1.
 
 ```bash
 Rscript r/install.R                                  # installerar paketen

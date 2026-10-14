@@ -1,16 +1,16 @@
-"""Översikt per sten: alla oberoende belägg samlade mot Rundatas ristare (se METHODS.md, 13c).
+"""Översikt per sten: alla oberoende belägg samlade mot Rundatas ristare (se METHODS.md, 14c).
 
 För varje svensk vikingatida runsten samlas vad sex metoder säger om vem som ristade den:
 
-  modell      R-modellens sannolikhet (avsnitt 17): korsvaliderad för stenar med säker ristare, förslag för
+  modell      R-modellens sannolikhet (avsnitt 1): korsvaliderad för stenar med säker ristare, förslag för
               stenar utan ristare inom 25 km från en träningssten
-  ortografi   stavningens likhet med ristarnas profiler (avsnitt 6; stenen själv utelämnad)
+  ortografi   stavningens likhet med ristarnas profiler (avsnitt 7; stenen själv utelämnad)
   område      om stenen ligger i ristarens kända landskap och högst 60 km från en säker sten av ristaren
   stil        om stenens stilgrupp hör till kärnan av ristarens stilgrupper (minst en tiondel av stenarna);
               en ovanlig stilgrupp inom kärnans tidsram avgör inte, en utanför den talar emot
   språkdrag   för: stenen passar ristarens profil bättre än 95 % av landskapets stenar; emot: dragen är minst
-              tre gånger ovanligare hos ristaren än i landskapet (avsnitt 8)
-  bergart     om bergarten förekommer på ristarens stenar (avsnitt 10)
+              tre gånger ovanligare hos ristaren än i landskapet (avsnitt 9)
+  bergart     om bergarten förekommer på ristarens stenar (avsnitt 11)
 
 Två mått räknas fram, båda mellan 0 och 1:
 

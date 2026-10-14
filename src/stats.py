@@ -64,7 +64,7 @@ def icc_oneway(groups: list[np.ndarray]) -> float | None:
 
 
 def summarize_by_rune(slices: list[dict], key: str = "rune_id") -> dict:
-    """Stenens mått med runan som enhet (se METHODS.md, 2).
+    """Stenens mått med runan som enhet (se METHODS.md, 3).
 
     Snitt i samma runa är inte oberoende – de delar ristarens slag, verktyg och vittring – så
     medelvärdet och konfidensintervallet räknas på runornas medelvärden (n = antal runor).

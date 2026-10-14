@@ -1,4 +1,4 @@
-"""Hur träffsäker är runigenkänningen? Utvärdering mot handmärkta facit (METHODS.md, 1c steg 5).
+"""Hur träffsäker är runigenkänningen? Utvärdering mot handmärkta facit (METHODS.md, 2c steg 5).
 
 Facit skapas i 3D-vyn i facit-läge: alla spår mäts, inget är förmärkt, och forskaren märker punkterna som runa,
 ornamentik (slinglinje eller ornament) eller utesluten (spricka, vittring). Facitfilen innehåller bara positioner

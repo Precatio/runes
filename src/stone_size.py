@@ -1,7 +1,7 @@
-"""Runstenens storlek och dess syfte och resare (se METHODS.md, 9b).
+"""Runstenens storlek och dess syfte och resare (se METHODS.md, 10b).
 
 Hypotesen: stora stenar restes för större syften och av eller för mäktigare personer. Höjden (ur
-Kulturmiljöregistret, src/stone_dimensions.py) jämförs med inskriftens syfte (nio kategorier, avsnitt 9), med
+Kulturmiljöregistret, src/stone_dimensions.py) jämförs med inskriftens syfte (nio kategorier, avsnitt 10), med
 statusord i texten (þegn, drengr, styrman, skeppare, kung, gode), med antalet namngivna personer och med
 inskriftens längd.
 

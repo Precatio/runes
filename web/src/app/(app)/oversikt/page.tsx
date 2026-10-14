@@ -191,7 +191,7 @@ function Overview() {
           </div>
         );
       })()}
-      <DocsNote anchor="13c-översikt-per-sten">Hur måtten och statusen räknas, och hur ofta de larmar i onödan, står i avsnitt 13c.</DocsNote>
+      <DocsNote anchor="14c-översikt-per-sten">Hur måtten och statusen räknas, och hur ofta de larmar i onödan, står i avsnitt 14c.</DocsNote>
 
       <div className="flex flex-wrap gap-2">
         {data.status_order.map(st => (

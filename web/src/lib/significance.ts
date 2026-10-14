@@ -1,4 +1,4 @@
-// p-values for the orthographic similarity (see METHODS.md, section 6)
+// p-values for the orthographic similarity (see METHODS.md, section 7)
 export const fmtP = (v: number | null | undefined) =>
   v == null ? "–" : v < 0.001 ? "< 0,001" : v.toFixed(3).replace(".", ",");
 

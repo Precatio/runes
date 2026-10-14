@@ -1,4 +1,4 @@
-"""Tolkning av ett fynd i Forskningsluckor (se METHODS.md, 13d).
+"""Tolkning av ett fynd i Forskningsluckor (se METHODS.md, 14d).
 
 Ett fynd från en metod (ortografi, statistisk modell, huggteknik, AI-stilgrupp) vägs samman med det som de
 andra metoderna säger om samma sten och samma ristare – område, stilgrupp, språkdrag, bergart, modellens

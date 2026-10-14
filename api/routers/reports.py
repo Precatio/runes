@@ -161,7 +161,7 @@ class AttributionRequest(BaseModel):
 @router.post("/attribution")
 def attribution_report(req: AttributionRequest):
     """Attribueringsförslag för en sten: alla argument för en ristare, att skicka till runtextdatabasen
-    (src/attribution_report.py; METHODS.md 14f)."""
+    (src/attribution_report.py; METHODS.md 15e)."""
     from api.config import APP_VERSION
     from api.routers.research import _fp, _overview_context
     from src import attribution_report as ar, crosscheck, stone_dimensions

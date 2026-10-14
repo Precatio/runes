@@ -154,7 +154,7 @@ export default function ComparePage() {
           <>En <strong>signifikant skillnad</strong> i huggspåren talar för olika händer (eller olika bergart, verktyg, vittring). Ingen signifikant skillnad betyder bara att mätningarna inte skiljer stenarna åt – inte att de är huggna av samma ristare.</>,
           <>Asymmetri och bottenradie är osäkra mått och ingår inte i den samlade jämförelsen.</>,
         ]} />
-      <DocsNote anchor="3-jämförelse-av-två-stenar">Hur jämförelsen räknas står i avsnitt 3.</DocsNote>
+      <DocsNote anchor="4-jämförelse-av-två-stenar">Hur jämförelsen räknas står i avsnitt 4.</DocsNote>
 
       <div className="liquid-glass-island rounded-[32px] p-6 grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] gap-4 items-end">
         <div><label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Sten A</label>{picker(aKey, setAKey)}</div>

@@ -1,4 +1,4 @@
-"""Hur robust är den automatiska spåranalysen? Samma skanning mätt under ändrade förutsättningar (METHODS.md, 1e).
+"""Hur robust är den automatiska spåranalysen? Samma skanning mätt under ändrade förutsättningar (METHODS.md, 2e).
 
 Varje sten mäts nio gånger: som standard (0,6 mm rutnät, känslighet 3), med rutnät 0,4 och 0,8 mm, med ytnormalen
 lutad 5° åt två håll, med känslighet 2,5 och 3,5 och med skanningen förenklad till hälften och en fjärdedel av

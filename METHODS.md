@@ -1,10 +1,355 @@
 # Metodbeskrivning
 
 Den här filen beskriver exakt hur Vitki räknar, så att resultat kan granskas, upprepas och citeras.
-Alla beräkningar finns i `src/` och testas i `tests/`. Varje analys sparar en **proveniens** (programversion,
-mätmetodens version, SHA-256 för 3D-filen, alla parametrar och tidpunkt) som följer med i export och rapporter.
+Alla beräkningar finns i `src/` (Python) och `r/` (R); testerna ligger i `tests/`. Varje analys sparar en **proveniens**
+(programversion, mätmetodens version, SHA-256 för 3D-filen, alla parametrar och tidpunkt) som följer med i export och
+rapporter.
 
-## 1. Huggspårsmått (mätmetod `groove-5`)
+**Avsnitten.** Avsnitt 1 är statistiken i R över hela korpusen – de 2 321 svenska vikingatida runstenarna i Rundata –
+där appens mönster och hypoteser kommer ifrån. Avsnitt 2–13 beskriver hur en enskild sten mäts, läses och attribueras
+(huggspår, ortografi, språk, inskriftens syfte, bergart, 2D-analys och syntes), 14 forskningsluckorna och tolkningen av
+fynden, 15 rapporterna och artiklarna, 16 jämförbarheten med tidigare forskning, 17 datakällorna och 18 metodens kända
+brister.
+
+## 1. Statistik i R
+
+Källkod: `r/` (R-skripten), `src/r_bridge.py` (export, körning, cache), `src/r_findings.py` (fynd och mönster),
+`src/r_report.py` (rapportavsnitt), `api/routers/rstats.py` (`/api/r/…`). Sidan **Statistik (R)** visar
+resultaten; stenanalysen och stenrapporten använder dem för den enskilda stenen.
+
+Statistiken i R står först eftersom appens mönster kommer härifrån: vad som är vanligt var, när och hos vilka ristare i
+hela den svenska vikingatida korpusen. Forskningsluckor (avsnitt 14), stenanalysens jämförelser med korpusen och
+artiklarna (15g) bygger på dem. Avsnitt 2–13 beskriver hur en enskild sten mäts, läses och attribueras; en del av det,
+som språkdragen (avsnitt 9) och inskrifternas syfte (avsnitt 10), är också underlag för analyserna här. Hur ett mönster
+ska läsas – vad som påstås och vad som bara föreslås – står i 1x, och begränsningarna i 1l.
+
+**Underlag.** Alla svenska vikingatida runstenar i Rundata (2 321) exporteras till en CSV med plats, härad,
+ristare (en säker ristare, annars tomt), stilgrupp och Gräslunds datering, kors, kortkvistrunor, de nio
+innehållskategorierna (avsnitt 10), de tjugo språkdragen (avsnitt 9), läsbara ord och stavningsvarianter (ordform
+parad med normaliseringen; egennamn utelämnade) och normaliseringen. Korpusanalyserna körs en gång per version
+av data och skript (fingeravtryck) i en egen process (`python -m src.r_bridge <fingeravtryck>`) och sparas i
+`data/cache/r/corpus/<fingeravtryck>/` med `sessionInfo()`. Sedan 2026-10-11 har varje modul också en egen
+version (korpusen, `common.R`, modulens skript och versionerna av de moduler den läser); en modul med samma version
+som i en tidigare fullständig körning kopieras därifrån i stället för att räknas om, så att en ändring i ett skript
+bara räknar om den modulen och de som bygger på den (`reused` i `done.json`). Varje modul körs som
+`Rscript --vanilla r/<modul>.R params.json utmapp` och skriver JSON och figurer.
+
+| Modul | Paket | Vad den gör |
+|---|---|---|
+| `geography.R` | sf, leaflet | ristarnas tyngdpunkter, spridning och konvexa höljen (SWEREF 99 TM); permutationstest (499 urval ur samma landskap) av om ristaren arbetade inom ett mindre område än slumpen ger (Benjamini–Hochberg); avstånd till vatten mot slumpvisa punkter på land per landskap (Wilcoxon), också mot en modellerad strandlinje omkring år 1000 (se nedan); interaktiv karta |
+| `clusters.R` | cluster, FactoMineR, factoextra | Gowers avstånd på stil, språkdrag, kors, kortkvistrunor och innehåll (kategorierna asymmetriskt binära), PAM med k = 2–10 efter silhuettbredd, stabilitet som Jaccard-likhet i 20 delurval om 80 % (Hennig 2007), MCA; ristare och landskap jämförs efteråt (justerat Rand-index) |
+| `text.R` | tidytext, stringr | formler ur normaliseringen (resarformel, monument, ordföljd, ristarsignatur, bön) per ristare; stavning per ord mot ristare (χ² med simulerat p, Cramérs V); ordformer som utmärker en ristare (Fishers exakta test, BH); tf-idf; de 100 vanligaste runbigrammen som variabler till modellen |
+| `attribution.R` | tidymodels, ranger | random forest (500 träd) på stenar med säker ristare, ristare med minst åtta stenar (i dag 18 ristare, 497 stenar); 5-faldig stratifierad korsvalidering upprepad 3 gånger, och grupperad per socken och härad; delmodeller med bara geografi, bara stil, bara språk och innehåll; kalibrering (andel rätt per sannolikhetsnivå, ECE); permutationsvikter; förslag för stenar utan ristare inom 25 km från en träningssten |
+| `anonymous.R` | cluster, igraph | grupper av stenar utan ristare som liknar varandra lika mycket som en ristares stenar (Gowers avstånd på handens drag, länkade inom 30 km, Louvain); validering på stenar med känd ristare; jämförelse med kända ristare i närheten; arbetsnamn efter typstenens socken (se nedan) |
+| `chronology.R` | ca | seriation (korrespondensanalys av språkdrag, formler, kors, kortkvistrunor och innehåll – utan stilgrupp) för Uppland, prövad mot Gräslunds stilkronologi (Spearman mot stilgruppens mittår, och partiell med latituden konstant); tidsskattning med 80 % prediktionsintervall och korsvaliderat medelfel; för hela korpusen redovisas vad de tre första dimensionerna följer (tid, geografi, ristare eller oförklarat) |
+| `dialect.R` | stringdist | förväntat normerat Levenshtein-avstånd mellan häradernas stavning av vanliga ord; Mantel-test mot geografiskt avstånd (999 permutationer); grupper av härader (PAM); kartor över stavningen av "efter" och "sten" |
+| `network.R` | igraph, tidygraph, ggraph | ord som står i samma inskrifter (positiv PMI), grupper med Louvain; släktorden i inskrifterna (fader, moder, son, broder, félagi …) före och efter ca 1050 och i kristna mot övriga inskrifter (Fisher, BH) |
+| `change.R` | mgcv, sf | förändring i tid och rum för sexton drag (monoftong i ord med *æi* och i 'och', ʀ skrivet med r-runan, åsrunan för o-ljud, h-bortfall, nasal före konsonant, prepositionen *at*, stungna runor och stungen i, u och k, kristen bön, själsbön, kors, bro- och vägbygge, ristarsignatur): logistisk regression med utjämnad tidskurva, rumslig utjämning och ristaren som slumpeffekt; justerad andel över tid, karta, landskapen i mittperioden (omkring 1050; Holm över dragen, med observerade andelar, antal attribuerade ristare och samma test utan ristareffekten) och året då draget passerar hälften (bara för drag som stadigt ökar eller minskar); bro- och vägstenar mot kristna drag (se nedan) |
+| `remains.R` | sf | avstånd till närmaste gravfält, hög, färdväg, bro, fornborg och hamnanläggning i Kulturmiljöregistret mot slumpvisa punkter på land inom 5 km från stenarna (Wilcoxon, BH); närhet inom 500 m över tid, med kristna markörer och för brostenar (logistisk regression med landskapet konstant), prövat i korpusens två halvor; flyttade stenar räknas inte (se nedan) |
+| `stone.R` | sf, cluster, tidymodels | en sten mot korpusen: modellens sannolikheter (korsvaliderade om stenen har ristare i Rundata), avstånd till kandidaternas tyngdpunkter och höljen, grupp och närmaste grannar (Gower), formler jämförda med kandidaternas inskrifter, läge i Upplands seriation |
+| `landscape.R` | terra, gdistance | höjdmodell (ca 20 m), höjd, lutning, topografiskt positionsindex; strand vid vikingatiden som dagens höjd minus en grov landhöjning per landskap (t.ex. 5 m i Södermanland, 5,5 m i Uppland); sikt (viewshed, stenens topp 2 m, betraktare 1,6 m) mot slumpvisa platser; bästa vägar (Toblers vandringsfunktion, vatten tio gånger långsammare) mellan andra runstensplatser inom 12 km och stenens avstånd till dem mot slumpvisa punkter |
+| `hotspots.R` | sf, spdep, smerc | var mönstren på mönsterkartan klustrar: Morans I per mönster, Getis-Ord Gi\* per sten och Kulldorffs rumsliga scanstatistik (999 simuleringar), Benjamini–Hochberg; varje kluster prövat i korpusens två halvor; kartbilder (se 1f) |
+| `technique.R` | – | huggteknik sten för sten: avståndet från en sten till en ristares stenar i mätkorpusens mått, jämfört med ristarens egna stenar (lämna-en-ute) och andra ristares; permutationstest per mått på stennivå. Ingår inte i korpusanalysen utan körs med mätningar från `scripts/measure_stones.py` (se 1l) |
+| `blogfig.R` | sf | figurer till artiklarna i stället för länkar in i appen: kartverktygets tidskarta för ett mönster (andelen stenar per sexkant om 20 km, före och efter omkring 1050), en punktkarta för sällsynta mönster och förändringsmodellens kurvor (se 15g) |
+
+### 1b. Dåtidens strand
+
+Källkod: `r/geography.R` (från 2026-10-12). Landhöjningen sedan omkring år 1000 har flyttat kusten: en
+sten som stod vid en vik kan i dag stå långt in på land. Havet omkring år 1000 modelleras som land under landskapets
+landhöjning sedan dess (grova värden i `r/common.R`, t.ex. 5,5 m i Uppland, 5 m i Södermanland, 1,5 m på Öland) på en
+höjdmodell med omkring 300 m upplösning (Terrain Tiles, zoomnivå 9), tillsammans med dagens sjöar och vattendrag.
+Stenarna och samma lokala slumppunkter som i jämförelsen med dagens vatten mäts mot den strandlinjen (Wilcoxon,
+ensidigt). Beräkning 2026-10-12: stenarna står i median 3,6 km från dåtidens vatten mot 5,3 km för slumppunkterna
+(p < 0,001; med dagens vatten 4,2 mot 5,6 km). Kvoten mellan stenarnas och slumppunkternas avstånd sjunker från 0,64
+till 0,53 i Uppland, där landhöjningen är störst; skillnaden är signifikant i Uppland, Södermanland och på Öland men
+inte i Östergötland, Småland, Västergötland, Västmanland eller på Gotland. Höjdmodellens noggrannhet (några meter) är
+av samma storleksordning som landhöjningen, särskilt i flack terräng med liten landhöjning: Ölands stora förändring
+(kvoten 0,57 till 0,18) kan delvis bero på det. Låglänt inland kan räknas som hav, och igenslamning och dämning ingår
+inte. SGU:s strandförskjutningsmodell och Lantmäteriets höjdmodell skulle ge en säkrare strand.
+
+### 1c. Lämningar runt stenarna
+
+Källkod: `r/remains.R` (från 2026-10-12). Hur står runstenarna i det fornlämningslandskap som
+Kulturmiljöregistret beskriver? För varje sten och för lika många slumpvisa punkter på land inom 5 km från stenarna i
+samma landskap (samma lokala nollmodell som för vattnet) mäts avståndet till närmaste gravfält, hög, färdväg
+(färdvägar och färdvägssystem), bro, fornborg och hamnanläggning; stenar och punkter jämförs med Wilcoxons test
+(ensidigt, Benjamini–Hochberg över slagen). Närhet inom 500 m modelleras med logistisk regression med landskapet
+konstant: mot stilgruppens mittår (per 50 år), mot kristna markörer (kors eller kristen formel, med tiden konstant) och
+för brostenar, och varje samband prövas i korpusens två halvor (uppdelade per socken som i `change.R`). Stenar som
+enligt Rundatas placering står vid eller i en kyrka, i en vägg, ett museum eller en samling räknas inte, eftersom de är
+flyttade, och inte heller stenar vars plats i Rundata är en kyrka, kyrkogård, kyrkoruin, prästgård, ett kloster, slott,
+en skola eller ett museum ("Frustuna kyrka", "Veta kyrkogård"), eftersom de inte kan skiljas från flyttade stenar
+(1 176 av 2 321; kolumnen `moved` i korpusens CSV, `is_moved` i `src/r_bridge.py`).
+
+*Rättelse 2026-10-12.* Fram till den här dagen prövades bara placeringen, som oftast är tom för stenar vid kyrkor;
+omkring 420 stenar vid kyrkor räknades därför som stående på sin ursprungliga plats. Det gav ett skenbart samband
+mellan kristen bön och närhet till medeltida kyrkor (oddskvot 1,26 och replikerat med det gamla urvalet, 1,18 och inte
+signifikant med det rättade) och gjorde sambandet mellan kors och centralortsnamn starkare än det är. Resultat från
+korpusanalyser före fingeravtrycket 6e62df8f5ff9a4c0 som rör stenarnas omgivning (lämningar, ortnamn, kyrkor,
+genomsökningen och hot spots) ska läsas med det i minnet.
+
+Beräkning 2026-10-12 (1 563 stenar, 52 674 lämningar): 61 % av stenarna står inom 500 m från ett registrerat gravfält,
+mot 21 % av slumppunkterna (median 0,36 mot 1,11 km); inom 500 m från en hög 33 % mot 9 %, från en färdväg 17 % mot 6 %.
+Närheten till gravfält gäller i Uppland, Södermanland, Östergötland, Småland och Västergötland, ändras inte över tiden
+(före omkring 1050 60 %, efter 66 %; oddskvot 0,81 per 50 år, q 0,44) och är lika stor för stenar med kristna markörer
+(oddskvot 1,08, q 0,81). Brostenar står oftare nära en registrerad färdväg (oddskvot 1,91, q 0,03), men sambandet håller
+inte i båda halvorna och redovisas därför som indikation. Att runstenar ofta står vid gravfält är känt; det nya är att
+närheten mäts mot slumpen i hela korpusen och att den varken minskar med tiden eller för kristna stenar, vilket talar för
+att gravfälten förblev släktens minnesplatser genom kristnandet. Reservationer: registret är olika väl inventerat i olika
+trakter, en lämning är en punkt (mittpunkten för en yta), de flesta lämningar är odaterade, färdvägar och broar är ofta
+medeltida eller yngre, och i enstaka fall kan ett gravfält ha registrerats just där en runsten står.
+
+### 1d. Förkristna kultnamn och stenarnas budskap
+
+Källkod: `r/remains.R` (från 2026-10-12). Är kristna budskap vanligare på stenar
+nära platser som kan ha varit förkristna kultplatser? Ortnamnen kommer ur OpenStreetMap (© OpenStreetMap-bidragsgivare,
+ODbL), där Lantmäteriets ortnamn från terrängkartan finns inlagda; bara by-, gårds- och ortnamn räknas, inte unga
+stadsdelsnamn (`scripts/fetch_place_names.py`, `data/ortnamn/`). Namnen delas i tre nivåer. *Teofora namn* (A) är ett
+gudanamn (Tor, Oden/Ons, Frö, Ull, Njärd/När, Härn, Dis) med en sakral eller typisk efterled (vi/ve/vid, harg, hov,
+lunda, åker/åkra, sal/sala, tuna, sunda), t.ex. Torsvi, Odensala, Ullevi och Frösö – den gängse indikationen på en
+kultplats (Vikstrand 2001); singularformen -lund räknas inte, eftersom den oftast är unga villanamn. *Sakrala namn utan
+gudanamn* (B) är Vi, Ve, Viby, Harg, Hov, Hof, Hörg och Gudhem, osäkrare eftersom harg också kan betyda stenig mark och hov
+gård eller höjd. *Centralortsnamn utan kult* (C), Husby och namn på -tuna utan gudanamn, är en jämförelse: teofora namn
+markerar ofta centralorter, där eliten kan ha blivit kristen tidigt. Ett namn sägs vara nära en sten inom 2 km (valt i
+förväg); flyttade stenar räknas inte. Kristen bön, kors och kristna markörer överlag modelleras med logistisk regression
+med landskapet konstant, också med tiden konstant och med närheten till centralortsnamn konstant, prövas i korpusens två
+halvor och med stenarna vid ett namn i taget utelämnade, och redovisas med 1 och 3 km som känslighetsprov. Medeltida
+kyrkor (Wikidatas kyrkobyggnader i Sverige med ett uppförandeår före 1350, CC0, långt ifrån alla) jämförs med namnen:
+ligger de teofora namnen oftare inom 1 km från en kyrka än andra ortnamn av samma slag inom 10 km från en runsten
+(Fishers exakta test)?
+
+Beräkning 2026-10-12 (1 563 stenar, 82 teofora namn, 66 sakrala, 128 centralortsnamn): kristen bön står på 28 % av de 74
+stenarna nära ett teoforiskt namn mot 15 % av övriga (oddskvot 2,23, 1,30–3,81, q 0,014), håller i båda halvorna och
+ligger mellan 1,89 och 2,55 när stenarna vid ett namn i taget utelämnas (20 namn). Vid centralortsnamn utan kult är bönen
+inte vanligare (oddskvot 1,27), och med närheten till dem konstant består skillnaden (2,29); det talar emot att den bara
+speglar elitens gårdar. Kristna markörer överlag (69 % mot 53 %) och kors pekar åt samma håll men håller inte i båda
+halvorna, och vid de sakrala namnen utan gudanamn syns ingen skillnad. Med 1 km (25 stenar) blir oddskvoten 1,68 och med
+3 km 1,37, åt samma håll men inte signifikant: resultatet hänger delvis på radien och redovisas som ett mönster att pröva.
+Teofora namn ligger inom 1 km från en medeltida kyrka i 9 % av fallen mot 2,5 % för andra ortnamn (oddskvot 3,8,
+p 0,007), en indikation med tanke på kyrkoregistrets luckor. Ortnamnen är belagda långt efter vikingatiden, och namnets
+läge är dagens by eller gård, inte kultplatsen själv.
+
+### 1e. Genomsökning av landskapet
+
+Källkod: `r/remains.R` (från 2026-10-12). En systematisk sökning efter dolda mönster: varje
+mönster på mönsterkartan (kolumnerna `pm_*` i korpusens CSV, samma definitioner som kartan, `src/pattern_map.py`)
+prövas mot avståndet till varje sorts plats – teofora och sakrala ortnamn, centralortsnamn, medeltida kyrkor, gravfält,
+högar, färdvägar, broar och fornborgar. Ingen radie väljs: modellen är en logistisk regression på log2 av avståndet
+(plus 250 m, så att en sten vid själva platsen inte blir oändligt nära) med landskapet konstant, och effekten anges som
+oddskvoten när avståndet halveras (över 1: vanligare närmare platserna). Kombinationer där mönstret finns på färre än
+15 stenar eller saknas på färre än 15 prövas inte. Alla kombinationer justeras tillsammans (Benjamini–Hochberg), varje
+prövas också i korpusens två halvor och med tiden konstant, och flyttade stenar räknas inte. Andelen inom 2 km (ortnamn,
+kyrkor) eller 500 m (fornlämningar) redovisas bara som läshjälp. Kombinationer som klarar justeringen och håller i båda
+halvorna blir mönster att pröva i Forskningsluckor (mönstret *utan religiösa markörer* utelämnas, eftersom det är
+spegelbilden av de kristna markörerna); de som bara klarar justeringen sammanfattas som indikationer. På kartan visas
+genomsökningen som ett rutnät med mönster mot platser.
+
+Beräkning 2026-10-12 (117 kombinationer): tio klarar justeringen och fyra håller i båda halvorna. Kristna markörer och
+kors blir vanligare närmare centralortsnamn (oddskvot 1,24 respektive 1,23 när avståndet halveras), och kristen bön
+närmare medeltida kyrkor (1,26); alla tre håller också med tiden konstant. Sambandet mellan bön och teofora namn är
+svagare utan vald radie (1,26, q 0,047, bara i den ena halvan), vilket talar för att eliten och de tidiga kyrkorna
+förklarar en del av det som syns vid kultnamnen.
+
+### 1f. Hot spots och kluster
+
+Källkod: `r/hotspots.R` (från 2026-10-12; R-paketen spdep och smerc). Var klustrar mönstren på
+kartan mer än slumpen ger? För varje mönster (`pm_*`) och de stenar där det kan avgöras, utan flyttade stenar: *Morans
+I* med de åtta närmaste stenarna som grannar (SWEREF 99 TM), Benjamini–Hochberg över mönstren – klustrar mönstret alls?
+*Getis-Ord Gi\** för varje sten (grannarna och stenen själv) – ligger den i ett hett område, där mönstret är vanligare än
+i landet, eller ett kallt? De lokala p-värdena justeras med Benjamini–Hochberg över stenarna. *Kulldorffs rumsliga
+scanstatistik* (smerc) prövar alla cirklar runt varje sten som rymmer högst en tiondel av stenarna, med landets andel som
+förväntat värde per sten (Poissonformen; den binomiala fungerar inte med en sten per plats) och 999 Monte
+Carlo-simuleringar; bara kluster med p < 0,05 redovisas, och klustrens p-värden justeras med Benjamini–Hochberg över
+mönstren. Varje kluster prövas också i korpusens två halvor, uppdelade per socken: är mönstret vanligare inne i klustret
+än utanför i båda (Fishers exakta test)? Kluster som håller i båda halvorna blir mönster i Forskningsluckor – mönster att
+pröva om de klarar justeringen över mönstren, annars indikationer. Ett kluster är en plats att titta närmare på (en
+ristare, en verkstad eller en bygd), inte en förklaring.
+
+*Kartbilder* (från 2026-10-12): för varje mönster som klustrar (Morans I, q < 0,05) och har heta eller kalla stenar eller ett kluster ritar `hotspots.R` en karta `hotspot_<mönster>.png`: andelen stenar med mönstret per sexkant om 25 km (minst 5 stenar), stenarna i heta och kalla områden (Gi*) och klustren (Kulldorff) som ringar, på Natural Earths land. Genomsökningen av landskapet ritas av `remains.R` som `landskap_genomsokning.png`. Figurerna kan användas i artiklarna (15g); en artikel får en egen kopia under figurens innehållshash (`src/blog_figures.py`, `/api/blog/figures/`), så att bilden finns kvar när korpusanalysen räknas om.
+
+### 1g. Okända ristare
+
+Källkod: `r/anonymous.R` (från 2026-10-11). Kan en gruppering i statistiken vara en ristare som ännu inte
+har namn? Stenar med minst fem läsbara ord jämförs i *handens drag* – stilgrupp, kors, kortkvistrunor, språkdrag
+(inklusive skiljetecken och bindrunor), formler och runbigram, men inte innehåll och plats – med Gowers avstånd. Gränsen
+för att länka två stenar kalibreras på par av stenar med känd ristare (ristare med minst tre säkra stenar) inom 30 km:
+par under gränsen ska vara minst tolv gånger vanligare bland samma ristares par än bland olika ristares. Stenar utan
+ristare i Rundata länkas när de ligger inom 30 km och under gränsen, och grupperas med Louvain. En grupp redovisas om
+den har minst fyra stenar och inte är mer utspridd än 90 % av de kända ristarna med minst fem stenar (median till
+gruppens mitt; i dag 23 km). Förfarandet prövas på stenar med känd ristare, som om ristaren vore okänd: hur stor del av
+en grupp är samma ristare, jämfört med grupper av lika många närliggande stenar? Avståndet och gränsen valdes efter
+den valideringen (15–30 km, kvot 4–12), så träffsäkerheten kan vara något överskattad. Resultat (beräkning
+2026-10-11, med de nya språkdragen): en grupp bestod i genomsnitt till 69 % av samma ristare, mot 43 % för bara
+närliggande stenar, och 64 % av grupperna till minst tre fjärdedelar; av länkade par med känd ristare var 71 % samma
+ristare. Bland stenarna utan ristare blev det 17 grupper, varav 8 möjliga okända ristare: Konungsundsristaren (30
+stenar, Östergötland), Vibyristaren (15, Östergötland), Vetlandaristaren (14, Småland), Kölabyristaren (13,
+Västergötland), Sättnaristaren (7, Medelpad), Leksbergsristaren och Husabyristaren (6 vardera, Västergötland) och
+Dalumsristaren (5, Västergötland). Stabiliteten mäts som hur stor del av gruppen som återkommer (Jaccard) när en
+femtedel av länkarna tas bort. Varje grupp jämförs med kända ristare inom 50 km: den räknas som lik en känd ristare när
+ristarens stenar i genomsnitt ligger lika nära gruppen som två stenar av samma ristare brukar göra, eller när
+attribueringsmodellen föreslår samma ristare med minst 50 % för hälften av gruppens stenar. Övriga grupper får ett
+*arbetsnamn* efter typstenens socken (typstenen är den sten som i genomsnitt ligger närmast de andra), t.ex.
+"Fröderydsristaren", efter samma bruk som för anonyma mästare i konsthistorien. Namnet görs unikt och får aldrig vara ett
+ristarnamn i Rundata. I Uppland och Södermanland, där ristarna är väl kartlagda, liknar nästan alla grupper en känd
+ristare; de möjliga okända ristarna finns främst i Östergötland, Västergötland, Småland och Medelpad, där få stenar är
+attribuerade. Stenarna i dessa grupper redovisas som fynd i Forskningsluckor (metod "okänd ristare (R)").
+
+### 1h. Förändring i tid och rum
+
+Källkod: `r/change.R` (från 2026-10-11). Hur språkdrag, skrift och kristna drag förändras
+över tid och skiljer sig mellan landskap – frågor om språk- och religionshistoria som inte handlar om vem som
+ristade. För varje drag skattas en logistisk regression (mgcv::bam, fREML) bland stenar med stilgrupp: tiden
+(stilgruppens mittår enligt Gräslund) som utjämnad kurva med k = 4, så att ett drag kan öka och minska igen; en
+rumslig utjämning (tunnplattspline på SWEREF 99 TM), så att förändringen inte bara är en förskjutning mellan områden
+med olika datering; och ristaren som slumpeffekt, så att stenar av samma ristare inte räknas som oberoende. Stenar
+utan säker ristare grupperas per socken, eftersom de ofta är huggna av samma okända ristare eller verkstad (en egen
+grupp per sten gav samma skattningar men tog tio gånger längre tid). Kurvan redovisas som *justerad andel*: alla
+daterade stenar flyttas till varje år och modellens sannolikheter för en typisk ristare medelvärdesbildas, med 95 %
+intervall ur 300 dragningar av koefficienterna. Den täcker stilgrupper med minst 20 stenar; ett drag med färre
+daterade stenar (under 60, under tio med eller utan draget, eller mindre än 40 år mellan de stora stilgrupperna)
+prövas inte. Eftersom stilgruppen är ett intervall och inte ett år räknas varje resultat om tio gånger med årtal
+dragna jämnt inom intervallet; andelen omräkningar som också ger ett säkerställt samband redovisas. Rummet visas som
+karta (samma modell utan tid, på alla stenar där draget kan bestämmas, inom ca 30 km från stenarna) och landskapen som
+skattad andel omkring år 1050 (egen nivå per landskap, samma tidskurva; landskap med minst 25 daterade stenar;
+skillnaden prövad med Wald-test). När draget ökar eller minskar stadigt anges också året då det passerar hälften av
+stenarna, ur en modell med rak trend. Slutligen prövas om bro- och vägstenar oftare har kristen bön, själsbön och kors
+än andra stenar, med samma kontroller – ett test av tolkningen av brobyggen som kristna själagåvor. p-värdena
+Holm-justeras inom tidstesten respektive brotesten. Formler och kors räknas bara på inskrifter som är tolkningsbara nog
+för att språkdragen ska kunna bestämmas.
+
+Resultat (beräkning 2026-10-11; 1 008 daterade stenar, 804 med tolkningsbar text). Säkerställt efter Holm-justering
+och i minst 70 % av omräkningarna: stungna runor ökar (justerad andel 35 % omkring 1000 till 85 % omkring 1115),
+liksom stungen i (30 till 80 %), stungen u (11 till 47 %), o-runan för o-ljud (4 till 43 % omkring 1085) och
+ristarsignaturer (6 till 28 %); stungen k förändras inte. Kristen bön och själsbön är vanligast omkring 1033 (28
+respektive 24 %) och sällsynta på de sena stenarna (2 %), och kors är vanligast omkring 1028 (70 %). Monoftong i något
+ai-ord *minskar* (69 till 22 %) med plats och ristare konstanta: den diftongiska stavningen sprids över tid, vilket
+snarare tyder på en skrivnorm än på en ljudutveckling bakåt – ett mönster att pröva. Landskapen skiljer sig omkring
+1050, mest för monoftong i ai-ord (84 % i Västergötland och 80 % i Östergötland, 55 % i Uppland, 35 % i Södermanland),
+böner och kors. Stungen i passerar hälften av stenarna omkring 1014 i Östergötland, 1019 i Västergötland, 1051 i
+Södermanland och 1069 i Uppland (stungna runor över lag 1000, 1005, 1020 och 1043) – en spridning från söder och väster
+in mot Mälardalen att pröva mot litteraturen. Bro- och vägstenar har oftare själsbön än andra stenar (25 mot 15 %,
+oddskvot 1,9, q 0,04), men inte oftare kristen bön i allmänhet eller kors.
+
+### 1i. Korsvalidering och resultat i korpusen
+
+**Grupperad korsvalidering** (från 2026-10-10). Vid slumpvis korsvalidering kan stenar från samma plats – ofta resta
+av samma ristare samtidigt – hamna både i tränings- och testdata. Modellen utvärderas därför också med hela socknar
+(164 grupper) respektive härader (69 grupper) utelämnade (`group_vfold_cv`, 5 delar, 3 upprepningar). En ristare vars
+alla stenar ligger i det utelämnade området saknas då i träningen och räknas som fel. Resultat (beräkning
+2026-10-10): rätt ristare först i 72 % slumpvis, 68 % med ny socken och 57 % med nytt härad (bland tre främsta
+87, 85 och 78 %); geografi ensamt 44, 40 och 30 %, språk och innehåll ensamt 60, 56 och 47 %, mot 19 % om man
+alltid gissar på den vanligaste ristaren. En del av träffsäkerheten kommer alltså från platsen, men modellen
+fungerar också för platser den inte sett. Sannolikheterna för enskilda stenar kommer fortfarande från den
+slumpvisa korsvalideringen, som motsvarar en ny sten på en känd plats. Med de nio nya språkdragen (2026-10-11): 72, 69 och 59 %; språk
+och innehåll ensamt 62 %.
+
+**Resultat i korpusen (beräkning 2026-10-05).** Attribueringsmodellen hittar rätt ristare i 72 % av fallen
+(87 % bland de tre främsta) mot 19 % om man alltid gissar på den vanligaste; språk och innehåll ensamt ger 60 %,
+geografi ensamt 44 %. Sannolikheterna är försiktiga: vid minst 0,5 är förstavalet rätt i 93 % av fallen. 24 av 29
+ristare arbetade inom ett tydligt mindre område än slumpen ger. I Uppland följer seriationen Gräslunds kronologi
+(rho 0,55; 0,54 med latituden konstant), men tidsskattningen är bara något bättre än medelåret (medelfel 21 mot
+25 år). Stavningsavståndet mellan härader växer med det geografiska (Mantel r 0,29). I hela korpusen följer den
+första CA-dimensionen (kristen bön mot ingen bön) varken tid eller geografi – ett mönster att pröva.
+
+### 1j. Statistiken förklarad
+
+Källkod: `src/r_explain.py`. Sidan Statistik (R) börjar med en sammanfattning av vad statistiken säger sammantaget, med
+förslag på nästa steg, och ett kort per analys för den som inte kan terminologin: frågan analysen besvarar och varför den
+är intressant, svaret i korthet med ett nyckeltal, hur säkert det är, ett förslag till tolkning och vad resultatet *inte*
+säger. Texterna räknas fram ur den senaste korpusanalysen, så att siffrorna alltid stämmer med beräkningen. Säkerheten
+anges för analysen som helhet, i tre nivåer (enskilda mönster märks enligt 1x):
+
+* *Säkert*: resultatet är prövat (korsvalidering, permutationstest) och stämmer med vad forskningen utgår från.
+* *Troligt*: resultatet håller statistiskt men har viktiga reservationer, t.ex. att det inte är oberoende av
+  attribueringarna.
+* *Osäkert*: ett mönster att pröva – svag struktur, eller en hypotes som behöver granskas runologiskt.
+
+Tolkningarna är förslag som följer reservationerna i 1l och reglerna i 1x, inte runologiska slutsatser.
+
+### 1k. Reproducerbarhet
+
+`GET /api/r/package` (knappen på sidan Statistik) ger en zip med R-skripten, korpusens CSV,
+resultaten, `sessionInfo()` och `KOR_OM.R`, som kör om allt i R utan appen. Paketen installeras med
+`Rscript r/install.R` (sf kräver GDAL, GEOS, PROJ och udunits; ragg kräver fribidi och harfbuzz; nloptr kräver
+cmake).
+
+### 1l. Begränsningar och tolkning av mönstren
+
+**Begränsningar.**
+* Attribueringsmodellen väljer bara bland sina ristare; ett förslag för en sten utan ristare vägs därför med hur
+  stor andel av landskapets attribuerade stenar modellens ristare står för. Signerade stenar av ristare utanför
+  modellen räknas inte som motsägelser.
+* Träningsdata är Rundatas attribueringar, i Mälardalen främst Axelsons (1993), som själv vägde in stil, stavning
+  och geografi. Korsvalideringen mäter därför överensstämmelse med dessa bedömningar snarare än med en oberoende
+  sanning.
+* Natural Earths vattenlager saknar mindre vattendrag och våtmarker – därför står brostenarna "längre från vatten"
+  i analysen, vilket visar lagrets gräns och inte broarnas läge.
+* Landhöjningen är en grov skattning per landskap, höjdmodellen visar dagens markyta och vägarna är simulerade
+  bästa vägar, inte belagda vikingatida vägar.
+* Klustringen ger svag struktur (silhuett omkring 0,33); grupperna följer kors, stungna runor och bön, inte ristare.
+
+**Tolkning av mönstren och reservationer.** Sidan Statistik (R) och fliken "Våra resultat mot forskningen" i
+Forskningsluckor visar mönstren utan anteckningar; så här ska de läsas:
+
+* *Ristarnas områden.* Att ristare var regionalt verksamma är en grund för Axelsons attribueringar; testet visar att
+  det också gäller statistiskt, men är inte oberoende av attribueringarna.
+* *Avstånd till vatten.* Att stenar restes vid färdleder, även vattenleder, är en etablerad tolkning. Vattenlagret är
+  grovt (1:10 miljoner); att bro- och vägstenar står "längre från vatten" visar kartlagrets gräns, inte broarnas läge.
+* *Attribueringsmodellen.* Se begränsningarna ovan och den grupperade korsvalideringen.
+* *Stavning per ristare.* Att ristare har egna stavningsvanor är en grund för ortografisk attribuering – och därför
+  inte oberoende av attribueringarna i Rundata.
+* *Dialekt.* Stavning speglar både uttal, ristarens skrivvanor och tid. Eftersom ristare ofta arbetade inom ett
+  område kan en geografisk stavningsgräns lika gärna vara en gräns mellan ristarverkstäder som mellan dialekter.
+* *Klustring.* Grupperna speglar främst kors, stungna runor och bön, alltså tid och kristnande snarare än ristare.
+* *Seriation.* Stöder Gräslunds kronologi oberoende av ornamentiken, men årtalen är osäkra (medelfel ca 21 år mot
+  25 år utan modell).
+* *Oförklarade dimensioner.* När en korrespondensdimension varken följer tid eller geografi kan mönstret vara
+  ristarens eller beställarens val; appen känner ingen förklaring i litteraturen, och det bör prövas.
+* *Släktord och formler över tid.* Tidsindelningen bygger på Gräslunds stilgrupper och gäller bara stenar med säker
+  stilgrupp.
+* *Okända ristare.* En grupp är stenar som liknar varandra i handens drag och ligger nära varandra. Det kan vara en
+  ristare, en verkstad med flera ristare eller en lokal tradition som flera följde, och eftersom stil och formler också
+  följer tid kan en grupp delvis vara en tidsperiod i ett område. Arbetsnamnet är en etikett för gruppen och inget
+  påstående om en person. Gruppen kan redan vara beskriven i litteratur som appen inte har (t.ex. i *Sveriges
+  runinskrifter* för landskapet).
+* *Förändring i tid och rum.* Tiden är Gräslunds stilgrupper, som bygger på Upplands ornamentik och ger intervall
+  snarare än år; de daterade stenarna finns främst i Uppland och Södermanland. Stavning speglar skrivtradition och
+  ristarens skola lika mycket som uttal, så en ändrad stavning är inte säkert en ljudförändring. Att ett drag tidigt är
+  vanligt i ett landskap kan betyda att förändringen började där, men också att en ristarskola där hade sina vanor.
+  Den justerade kurvan kan skilja sig från de råa andelarna per stilgrupp när de sena stenarna står på andra platser
+  eller är huggna av andra ristare än de tidiga; båda visas.
+* *Huggteknik mot ristare* (`r/technique.R`). Få stenar per ristare, olika vittring och bergart och en annan
+  mätmetod än Kitzler Åhfeldts Groove Measure; resultatet är en indikation, inte en attribuering.
+* *Landskapet.* Höjddata visar dagens markyta; vägar är simulerade bästa vägar, inte belagda vikingatida vägar, och
+  grannstenarna kan själva stå vid vägar, så vägnätet är inte oberoende av stenarnas lägen.
+
+### 1x. Försiktighet i påståendena, djärvhet i hypoteserna
+
+Appens uppgift är att hitta tydliga mönster som ingen sett tidigare. Det kräver två saker som lätt blandas ihop: stränghet
+när något *påstås* och djärvhet när något *föreslås*. Sedan 2026-10-12 hålls de isär:
+
+* **Varje mönster har tre delar.** *Vad vi ser* (påståendet, med signifikans och osäkerhet), *hypotes* (vad mönstret
+  kan betyda, djärv med avsikt och märkt som hypotes) och *så kan den prövas* (vad vi borde se om hypotesen stämmer och vad
+  som skulle fälla den). Förbehåll och kontroller ligger i en fällbar ruta så att de inte dränker idén. Två ordförråd:
+  påståenden säger "visar" eller "är förenligt med", hypoteser säger "vi föreslår" eller "kan tyda på".
+* **Upptäckt och bekräftelse har olika krav.** Ett mönster *upptäcks* när det klarar Benjamini–Hochberg (andelen falska
+  upptäckter bland de redovisade under 5 %). Det kallas *bekräftar* (känt i forskningen) bara när det också klarar Holm
+  (risken för ens ett falskt resultat under 5 %) och håller i båda halvorna av korpusen. Ett nytt mönster som håller i
+  båda halvorna är ett *mönster att pröva*; ett som inte gör det är en *indikation* – en idé, synlig men med förbehåll.
+* **Två halvor av korpusen** (r/change.R): socknar fördelas växelvis på två halvor inom varje landskap, i ordning efter
+  sockenstenarnas medeldatering, så att båda halvorna täcker samma trakter och samma tid. Mönstret anpassas på nytt i
+  varje halva; det håller om riktningen (eller toppen) är densamma och signifikant i båda. Signerade stenar används inte
+  som facit: signaturer blir vanliga först sent (4 % av RAK-stenarna, 33 % av Pr5), så de skulle gynna de sena mönstren.
+* **Kontroller som besvarar andra frågor fäller inte ett mönster.** En trend som syns mellan ristare men inte inom dem kan
+  ha spridits genom generationsskifte – i sig en iakttagelse. Utan den tidigaste och senaste stilgruppen försvinner en
+  stor del av tidsaxeln, så ett svagare resultat där är väntat. Landskapsjämförelser utanför Uppland och Södermanland kan
+  bli mönster att pröva när skillnaden håller med dateringarna förskjutna 25 år åt båda håll. Små men stabila effekter
+  (under 10 procentenheter) märks som små men redovisas som mönster. Sambandet mellan brostenar och själsbön kontrolleras
+  med textlängden *utan* bro- och bönefraserna (brofrasen gör själv texten längre); hela textlängden redovisas också.
+* **Regel för kritik** (också Runes instruktion): fel – siffror, nämnare, dubbelräkning, vilseledande ord – rättas alltid.
+  Försiktighet ändrar formuleringen men tar aldrig bort ett ärligt märkt mönster.
+
+## 2. Huggspårsmått (mätmetod `groove-5`)
 
 Källkod: `src/slice_analysis.py`.
 
@@ -13,7 +358,7 @@ Källkod: `src/slice_analysis.py`.
    mätpunkten, i sidled och höjdled, tas med (fönster) – annars kommer stenens baksida och kanter med i
    snittet genom en sluten skanning. Profilen uttrycks i x (tvärs spåret) och z (längs ytans normal).
 2. **Uppåtriktning.** Vid manuell mätning används medelvärdet av ytnormalen i de klickade punkterna, vid
-   ett klick och automatisk analys den lokala ytnormalen (se avsnitt 1b och 1c).
+   ett klick och automatisk analys den lokala ytnormalen (se avsnitt 2b och 2c).
 3. **Jämnt punktavstånd.** Profilen interpoleras linjärt till 0,05 mm mellan punkterna (finare än någon skanning), så
    att alla fönster nedan kan anges i millimeter. Profilens ursprungliga punktavstånd sparas (`point_spacing_mm`).
 4. **Apex.** Profilen jämnas ut med ett glidande medelvärde över 1 mm. Apex är den lägsta punkten.
@@ -56,25 +401,25 @@ upplösning (`harmonize_mm`); båda sparas bland parametrarna.
   skanningens punkttäthet. Profilen räknas nu om till jämnt punktavstånd och alla fönster anges i mm;
   spårkanten måste ligga minst halvvägs upp mot stenytan. Jämförelser mellan stenar med olika punkttäthet
   gjorda med äldre versioner bör göras om.
-* `groove-5` (2026-10-10): den automatiska analysen mäter bara spår som känns igen som runor (avsnitt 1c,
+* `groove-5` (2026-10-10): den automatiska analysen mäter bara spår som känns igen som runor (avsnitt 2c,
   steg 5), och bara små hål (< 10 mm²) i spårmasken fylls. Förut fylldes alla hål, så att ett slingband
   som stängs av runstavar – eller insidan av en runas båge – blev en enda yta som räknades som för bred
   och inte mättes (på Sö 113 65 700 mm² mot nu 1 900 mm²). Själva tvärsnittsmätningen är oförändrad från
   `groove-4`; mätningar med ett klick eller manuellt är jämförbara, automatiska analyser bör göras om.
 
-### 1b. Ett klick per snitt
+### 2b. Ett klick per snitt
 
 Källkod: `src/auto_grooves.py` (`auto_slice`). Användaren klickar en gång i ett spår.
 
 1. Punkterna inom 15 mm runt klicket ger en lokal ytnormal (minsta variansriktningen), orienterad utåt med
-   den klickade ytans normal. Normalen förfinas med lutningen hos en spårfri referensyta (avsnitt 1c, steg 2).
+   den klickade ytans normal. Normalen förfinas med lutningen hos en spårfri referensyta (avsnitt 2c, steg 2).
 2. Ett lokalt höjdfält beräknas. Spårets riktning tas från höjdfältets Hessian (riktningen med minst
    krökning) på den skala (1–7,5 mm) där dalformen är tydligast (skalnormaliserad krökning).
 3. Riktningen förfinas genom att spårets botten följs några millimeter åt båda hållen och en linje anpassas
    genom bottenpunkterna. Mätpunkten flyttas till botten.
-4. Snitten mäts sedan exakt som i avsnitt 1. Hittas ingen dalform säger programmet till i stället för att mäta.
+4. Snitten mäts sedan exakt som i avsnitt 2. Hittas ingen dalform säger programmet till i stället för att mäta.
 
-### 1c. Automatisk spåranalys
+### 2c. Automatisk spåranalys
 
 Källkod: `src/auto_grooves.py` (`analyze_grooves`). Användaren vrider den ristade sidan mot sig; kamerans
 riktning blir ytans normal och kamerans upp-riktning orienterar granskningsbilden.
@@ -114,7 +459,7 @@ riktning blir ytans normal och kamerans upp-riktning orienterar granskningsbilde
 
    Varje snitt får strecktyp och runans nummer; snitt på andra streck redovisas som bortsorterade med skäl
    ("inte runa: …"). Igenkänningen är avsiktligt försiktig: det är bättre att en runa missas än att en
-   spricka mäts. Missade runor kan mätas med ett klick (avsnitt 1b).
+   spricka mäts. Missade runor kan mätas med ett klick (avsnitt 2b).
 
 **Utvärdering mot facit** (`scripts/evaluate_rune_detection.py`). I 3D-vyns facit-läge mäts alla spår och inget
 är förmärkt, så att programmets förslag inte styr bedömningen; forskaren märker punkterna som runa, ornamentik
@@ -140,14 +485,14 @@ reglerna är själva val, gjorda av utvecklarna och dokumenterade här, och de k
 och vittringsgrader, och att alla runor tas med ger mer vittringsbrus än ett urval av välbevarade spår. Fördelen
 är att felen är desamma för alla stenar och går att granska och rätta – inte att de saknas (se avsnitt 18).
 6. **Mätning:** med jämna mellanrum (standard 3 mm) längs mittlinjerna tas riktningen från mittlinjen och
-   förfinas genom att botten följs (som i 1b). Tvärsnittet mäts **genom mesh-filen** med samma metod som i
-   avsnitt 1 – höjdfältet används bara för att hitta spåren.
+   förfinas genom att botten följs (som i 2b). Tvärsnittet mäts **genom mesh-filen** med samma metod som i
+   avsnitt 2 – höjdfältet används bara för att hitta spåren.
 7. **Kvalitetsgranskning:** snitt sorteras bort vid orimlig vinkel (≤ 15° eller ≥ 170°), väggpassning
    R² < 0,8, djup under tröskeln, ej funnen spårkant eller botten utanför mittlinjen. Skälen redovisas.
 8. **Granskning:** forskaren ser alla mätpunkter på en reliefbild – godkända runsnitt är förvalda som runor –
    kan märka om eller utesluta områden, och väljer vilket urval som blir resultatet.
 
-**Validering.** På de syntetiska stenarna ger den automatiska analysen samma noggrannhet som avsnitt 1
+**Validering.** På de syntetiska stenarna ger den automatiska analysen samma noggrannhet som avsnitt 2
 (t.ex. 70,0 ± 0,9° för spår på 70°, oberoende av hur stenen lutar). På skanningen av Sö 113 (6,1 miljoner
 trianglar) godkändes ca 250 av 1 000 kandidatsnitt; ett klick på samma ställen gav i median 6° skillnad i
 vinkel och 10° i spårriktning, vilket speglar hur oregelbundna verkliga, vittrade spår är. Resultaten bör
@@ -160,7 +505,7 @@ klassningen visuellt: slinglinjerna mellan raderna och i slingorna sorteras bort
 i Sö 128:s mittfält; de som mäts är nästan bara stavar och bistavar. Svagt böjda eller avbrutna stavar
 missas ibland. Igenkänningen är regelbaserad och inte validerad mot en handmärkt referens.
 
-### 1d. Bilder ur skanningen
+### 2d. Bilder ur skanningen
 
 Källkod: `api/routers/threed.py` (`render_relief`), `src/stone_report.py` (`Surface`). Bilder för läsning,
 2D-analys och rapporter räknas direkt ur skanningen i stället för att fotografera skärmen:
@@ -175,7 +520,7 @@ Källkod: `api/routers/threed.py` (`render_relief`), `src/stone_report.py` (`Sur
 * Bilderna har känd upplösning (mm per pixel) och påverkas inte av zoom eller skärmens belysning. Små
   skanningar skalas upp till minst 1 200 px för läsning.
 
-### 1e. Robusthet
+### 2e. Robusthet
 
 Källkod: `scripts/groove_robustness.py`, resultat i `utdata/groove_robustness/`. Åtta skanningar ur Kitzler Åhfeldts
 Södermanlandsserie (Sö 113, 128, 134, 143, 161, 207, 319, Fv1948;282) mättes nio gånger: som standard (0,6 mm
@@ -199,7 +544,7 @@ tydligt sämre resultat. **För jämförelser mellan stenar ska därför samma r
 skanningar med mycket olika punkttäthet jämföras med försiktighet.** Studien är inte ett test–omtest med
 oberoende skanningar av samma sten.
 
-## 2. Osäkerhet
+## 3. Osäkerhet
 
 Källkod: `src/stats.py`. För varje mått och sten redovisas medelvärde, standardavvikelse (n − 1),
 antal snitt och 95 % konfidensintervall (t-fördelning). Spridningen mellan snitt säger hur stabilt måttet
@@ -232,10 +577,10 @@ stenar åt (ICC 0,14; 30 runor ger tillförlitlighet 0,9).
 
 Appen anger därför **minst 10 runor för att beskriva en sten och minst 20 för att jämföra stenar**; 5 räcker
 inte. Gränserna gäller stenar med olika ristare *och* olika material; skillnaden mellan två ristare på samma
-bergart är mindre (avsnitt 15 och replikationsstudien av Kitzler Åhfeldts grupper), så för attribuering
+bergart är mindre (avsnitt 16 och replikationsstudien av Kitzler Åhfeldts grupper), så för attribuering
 behövs fler – helst alla mätbara runor.
 
-## 3. Jämförelse av två stenar
+## 4. Jämförelse av två stenar
 
 Källkod: `src/stone_compare.py`, `POST /api/stats/compare`; sidan **Jämför stenar**.
 
@@ -246,12 +591,12 @@ Källkod: `src/stone_compare.py`, `POST /api/stats/compare`; sidan **Jämför st
 * **Per mått:** tvåsidigt permutationstest av skillnaden i medelvärde, Bonferroni-justerat, och Cohens d på
   enheterna. **Samlat:** permutationstest av avståndet mellan stenarnas standardiserade medelvektorer för de
   stabila måtten (V-vinkel, djup, bredd, djup/bredd); asymmetri och bottenradie redovisas men ingår inte
-  (avsnitt 1e och 18).
+  (avsnitt 2e och 18).
 * **Referensskala:** avståndet mellan stenarnas medelvärden (stabila mått, standardiserade med spridningen mellan
   korpusens stenar) jämförs med avstånden mellan alla stenpar i den delade mätkorpusen med samma spårtyp och
   mätmetod, och särskilt med par som har samma respektive olika ristare i Rundata (minst fem stenar).
 * **Jämförbarhet:** samma spårtyp, samma mätmetod, båda enligt Vitki-protokollet, minst 20 runor per sten (avsnitt
-  2), likartad punkttäthet (högst 1,5 gånger skillnad) och samma bergartsfamilj enligt Rundata. Det som inte
+  3), likartad punkttäthet (högst 1,5 gånger skillnad) och samma bergartsfamilj enligt Rundata. Det som inte
   uppfylls redovisas.
 * **Mer än huggspår:** har båda stenarna signum jämförs Rundatas ristare, stilgrupp, datering, bergart och höjd,
   avståndet mellan platserna, stavningen (likheten mellan inskrifterna och hur stor andel av sten A:s jämförelser
@@ -262,7 +607,7 @@ Källkod: `src/stone_compare.py`, `POST /api/stats/compare`; sidan **Jämför st
   (`tests/test_compare.py`): när runorna kommer ur samma fördelning hittar det ingen skillnad, medan samma snitt
   behandlade som oberoende ger ett lägre p-värde.
 
-## 4. Attribuering mot mätkorpusen
+## 5. Attribuering mot mätkorpusen
 
 * Referensen är den delade korpusen (Firestore, CC BY 4.0). En stens ristare hämtas från Rundata och används
   bara om exakt **en säker signerad (S) eller attribuerad (A)** ristare anges. Stenen själv utesluts alltid.
@@ -272,7 +617,7 @@ Källkod: `src/stone_compare.py`, `POST /api/stats/compare`; sidan **Jämför st
 * **Träffsäkerheten redovisas alltid** med lämna-en-ute-korsvalidering (andel stenar där rätt ristare hamnar
   först respektive bland de tre första, jämfört med slumpnivån).
 
-### 4b. Vad som lagras i korpusen
+### 5b. Vad som lagras i korpusen
 
 * Varje post har mått per snitt, sammanfattning, proveniens (filens SHA-256, parametrar, metodversion) och
   valfritt **skanningsmetadata** (utrustning, upplösning, noggrannhet, datum, skannat av, länk/DOI, licens) och
@@ -281,7 +626,7 @@ Källkod: `src/stone_compare.py`, `POST /api/stats/compare`; sidan **Jämför st
   `corpus/{id}/raw` och gör att en post kan **räknas om med en senare metodversion**
   (`POST /api/stats/recompute`). Omräkning av de lagrade profilerna återger de ursprungliga vinklarna inom
   0,01°. Bara bidragsgivaren kan ersätta sina mått med omräknade.
-* **Runformer** från 2D-analysen (normaliserad form och särdragsvektor, se avsnitt 11) kan bifogas under
+* **Runformer** från 2D-analysen (normaliserad form och särdragsvektor, se avsnitt 12) kan bifogas under
   `corpus/{id}/runeforms`, med spårmått för runan om den markerats på en ristningskarta från 3D-analysen.
 * Andra forskare kan lägga till en **verifiering** (namn, institution, kommentar); den egna posten kan inte
   verifieras av bidragsgivaren. Kvalitetsmärken visar råprofiler, skanningsuppgifter, minst fem snitt, aktuell
@@ -289,12 +634,12 @@ Källkod: `src/stone_compare.py`, `POST /api/stats/compare`; sidan **Jämför st
 * Korpusen kan exporteras som ett **datapaket** (JSON med licens, citering, bidragsgivare och alla poster,
   valfritt med råprofiler) för arkivering.
 
-## 5. Klustring
+## 6. Klustring
 
 Hierarkisk klustring med Wards metod och euklidiska avstånd på standardiserade medelvärden per sten –
-samma upplägg som i Kitzler Åhfeldts analyser av huggteknik (se avsnitt 15).
+samma upplägg som i Kitzler Åhfeldts analyser av huggteknik (se avsnitt 16).
 
-## 6. Ortografisk stilometri
+## 7. Ortografisk stilometri
 
 Källkod: `src/orthography.py`. Underlag: Rundatas vikingatida inskrifter med minst fem läsbara ord (1 719 st).
 
@@ -325,7 +670,7 @@ Källkod: `src/orthography.py`. Underlag: Rundatas vikingatida inskrifter med mi
   läsning eller ett nyfynd (`rank_text`). Egennamn tas bort via normaliseringen eller via namnformer kända
   från Rundata, och en sten som finns i modellen utesluts ur sin egen ristares profil.
 
-## 7. Språk och läsning
+## 8. Språk och läsning
 
 Källkod: `api/routers/phonetics.py`, `src/reading.py`.
 
@@ -340,7 +685,7 @@ Källkod: `api/routers/phonetics.py`, `src/reading.py`.
   Rundatas oläsliga tecken redovisas separat.
 * **Ordformer:** varje form i vår normalisering slås upp bland Rundatas normaliserade former i
   vikingatida inskrifter; obelagda former flaggas för granskning.
-* **Ortografi för vår läsning:** samma modell som i avsnitt 6, med stenen själv utesluten. Används i
+* **Ortografi för vår läsning:** samma modell som i avsnitt 7, med stenen själv utesluten. Används i
   syntesen när Rundata saknar en användbar text (t.ex. nyfynd), med 30 % lägre tillförlitlighet.
 * **Validering – får läsningen visas som stenens text?** (`src/reading.py`, `validate`): läsningen prövas utan AI
   mot (1) stenens text i Rundata, (2) alla kända inskrifter i Rundata (trigramfilter och samma
@@ -360,7 +705,7 @@ Källkod: `api/routers/phonetics.py`, `src/reading.py`.
 * **Uppläsning:** en modern talsyntes läser normaliseringen. Det är inte en rekonstruktion av uttalet;
   IPA-raden är modellens förslag och ljudlagarna är inte kontrollerade.
 
-## 8. Språkdrag (fonetisk stil och språkbruk)
+## 9. Språkdrag (fonetisk stil och språkbruk)
 
 Källkod: `src/language_profile.py`, `GET /api/research/language/{signum}`. Dragen läses ur Rundata genom
 att translitterationen paras ord för ord med normaliseringen:
@@ -412,7 +757,7 @@ stämmer men tio är lika vanliga på andra uppländska stenar; utmärkande är 
 gånger vanligare hos Öpir, p 0,009 bland 589 stenar – men Öpir är vald av ortografin, så det räknas inte som stöd. Skiljetecken kodas som *blandat* när det vanligaste tecknet står för mindre än tre fjärdedelar
 (U 92 har ' i början och · från *kira*), och *brøðr* räknas inte till o-ljudsorden (vokalen är ø).
 
-## 9. Inskrifternas syfte per ristare
+## 10. Inskrifternas syfte per ristare
 
 Källkod: `src/inscription_types.py`, `GET /api/research/categories`. Varje vikingatida runsten med text
 får en eller flera kategorier med regler på Rundatas normalisering, engelska översättning och
@@ -427,7 +772,7 @@ av en slump, (1 − basnivå)^n. För sällsynta typer (magiska inskrifter 0,5 %
 ristare med många stenar. I syntesen flaggas en stens typ bara när ristarens frånvaro är osannolik
 (sannolikhet för 0 under 5 %).
 
-### 9b. Stenens storlek och syfte
+### 10b. Stenens storlek och syfte
 
 Källkod: `src/stone_dimensions.py`, `scripts/build_stone_dimensions.py`, `src/stone_size.py`,
 `GET /api/research/stone_size`; fliken *Storlek och syfte* i Forskningsluckor.
@@ -442,7 +787,7 @@ utan fragment); 395 saknar id i registret, 350 har en beskrivning utan mått och
 stenar i samma lämning (bygge 2026-10-10, `data/stone_dimensions.json`). Höjden är oftast höjden över mark.
 
 **Analys.** Hypotesen är att stora stenar restes för större syften och av mäktigare personer. Höjden (logaritmisk
-skala) jämförs med inskriftens syfte (avsnitt 9), med statusord i normaliseringen (þegn/þiagn, dræng-, styrimann,
+skala) jämförs med inskriftens syfte (avsnitt 10), med statusord i normaliseringen (þegn/þiagn, dræng-, styrimann,
 skipari, kunung-, goði, landmann), med antalet namngivna personer (Rundata markerar namn med citattecken), med
 textens längd och med ristare (minst tio stenar). Bergart och lokal sed påverkar storleken, så allt jämförs
 **inom landskap**: skillnaden i medel-log-höjd viktas över landskapen och prövas med 5 000 permutationer av
@@ -461,7 +806,7 @@ ristare (q 0,31). Runhöjden följer stenens höjd (rho 0,22), vilket talar för
 Slutsatsen är att textens innehåll förklarar lite av stenens storlek; andra tecken på makt (läge, monument med
 flera stenar, ornamentikens kvalitet) är inte mätta.
 
-## 10. Bergart och berggrund
+## 11. Bergart och berggrund
 
 Källkod: `src/geology.py`, `GET /api/research/geology/{signum}`.
 
@@ -476,7 +821,7 @@ Källkod: `src/geology.py`, `GET /api/research/geology/{signum}`.
   Sverige.
 * I syntesen och Forskningsluckor jämförs även stenens bergart med bergarterna på ristarens säkra stenar.
 
-## 11. 2D-analys och runformer
+## 12. 2D-analys och runformer
 
 * AI-bedömningen av en bild (stilgrupp Pr1–Pr5, RAK, Fp eller **Osäker**, runformer, translitterering) är en
   hypotes. Modellens säkerhet är dess egen skattning och **inte kalibrerad**. Om stenen har en stilgrupp i
@@ -505,7 +850,7 @@ Källkod: `src/geology.py`, `GET /api/research/geology/{signum}`.
   och formvektorn avrundad till tre decimaler, så att ett projekt med många utsnitt ryms inom gränsen på 1 MB; högst
   40 sparas åt gången. Rutor utan en tydlig runform hoppas över.
 
-## 12. Syntes och attribuering
+## 13. Syntes och attribuering
 
 Källkod: `src/synthesis.py`, `api/routers/synthesis.py`. Kandidaterna räknas fram deterministiskt:
 
@@ -548,16 +893,16 @@ sandsten/kalksten) är en tumregel som inte är kalibrerad mot referensmaterial 
 
 Ytterligare kontroller för de tre främsta kandidaterna (redovisas, men vägs inte in i poängen):
 
-* **bergart** – stenens material jämfört med bergarterna på ristarens säkra stenar (avsnitt 10),
-* **språkdrag** – fonetisk stil och språkbruk jämfört med ristarens inskrifter (avsnitt 8),
+* **bergart** – stenens material jämfört med bergarterna på ristarens säkra stenar (avsnitt 11),
+* **språkdrag** – fonetisk stil och språkbruk jämfört med ristarens inskrifter (avsnitt 9),
 * **inskriftstyp** – stenens kategorier jämfört med ristarens; frånvaro flaggas bara när den är osannolik
-  (avsnitt 9),
-* **berggrund på platsen** (SGU) för stenen som helhet (avsnitt 10).
+  (avsnitt 10),
+* **berggrund på platsen** (SGU) för stenen som helhet (avsnitt 11).
 
 Har projektet en egen läsning från Språk & Fonetik används den som ortografiskt belägg när Rundata saknar
 användbar text, med 30 % lägre tillförlitlighet, och läsningens överensstämmelse med Rundata redovisas.
 
-## 13. Forskningsluckor
+## 14. Forskningsluckor
 
 Källkod: `src/research_gaps.py`. Underlag: Rundatas svenska vikingatida runstenar (2 321).
 
@@ -573,9 +918,9 @@ Källkod: `src/research_gaps.py`. Underlag: Rundatas svenska vikingatida runsten
   attribueringen mot mätkorpusen får ett underlag.
 * **Klickbara siffror:** varje tal i landskapstabellen och nyckeltalen leder till inskrifterna bakom det
   (sökfilter med samma definitioner som översikten, `GET /api/rundata/search?gap=…&province=…`).
-* Ortografiska hypoteser visas med likhet, p-värde (avsnitt 6), precision, bergart och språkdrag.
+* Ortografiska hypoteser visas med likhet, p-värde (avsnitt 7), precision, bergart och språkdrag.
 
-### 13b. Våra resultat mot befintlig forskning
+### 14b. Våra resultat mot befintlig forskning
 
 Källkod: `src/findings.py`, `POST /api/research/findings`. Appens resultat ställs mot Rundata, som får
 representera den publicerade forskningen:
@@ -585,8 +930,8 @@ representera den publicerade forskningen:
 | Ortografi (lämna-en-ute) | rätt ristare först | stark hypotes för sten utan ristare | attribuerad (A) ristare inte bland de tre första |
 | Huggteknik (mätkorpusen, runor) | närmaste ristare = Rundatas | sten utan ristare får en närmaste ristare | närmaste ristare ≠ Rundatas |
 | Stilgrupp (AI, bild) | samma som Rundata | Rundata saknar säker stilgrupp | annan stilgrupp |
-| Statistisk modell (R, avsnitt 17) | stöder en osäker attribuering | förstaval ≥ 0,5 för sten utan ristare | korsvaliderat förstaval ≠ Rundatas (A) |
-| Seriation (R, avsnitt 17) | – | sten utan stilgrupp bland de 15 % tidigaste eller senaste i Uppland | – |
+| Statistisk modell (R, avsnitt 1) | stöder en osäker attribuering | förstaval ≥ 0,5 för sten utan ristare | korsvaliderat förstaval ≠ Rundatas (A) |
+| Seriation (R, avsnitt 1) | – | sten utan stilgrupp bland de 15 % tidigaste eller senaste i Uppland | – |
 
 Varje fynd får en **uppskattning** = belägg × nyhet × relevans (var och en 0–1, skälen redovisas):
 
@@ -613,18 +958,18 @@ Runors hänvisningar av typen "Samma som gjort U 1015, 1017–1024" följs till 
 visas så att de kan kontrolleras. Svaren cachas i `data/cache/crosscheck/`. Avstämningen ersätter inte en
 genomgång av litteraturen: Runor 2020 har inte heller alla senare attribueringar.
 
-**Mönster i korpusen** (avsnitt 17) visas överst i fliken: "bekräftar" när de stämmer med vad forskningen redan
+**Mönster i korpusen** (avsnitt 1) visas överst i fliken: "bekräftar" när de stämmer med vad forskningen redan
 utgår från, "mönster att pröva" när appen inte kan knyta dem till tid, geografi eller något den känner till ur
 litteraturen (appen känner bara Rundata, Axelson 1993 och Gräslund 1998).
 
-### 13c. Översikt per sten
+### 14c. Översikt per sten
 
 Källkod: `src/stone_overview.py`, `GET /api/research/overview` och `GET /api/research/overview/{signum}`; sidan
 **Stenöversikt**. För varje svensk vikingatida runsten samlas vad sex metoder säger om vem som ristade den:
-R-modellens sannolikhet (avsnitt 17; korsvaliderad för stenar med säker ristare, förslag för stenar utan ristare
-inom 25 km från en träningssten), ortografin (avsnitt 6; minst åtta ord, stenen själv utelämnad), området
+R-modellens sannolikhet (avsnitt 1; korsvaliderad för stenar med säker ristare, förslag för stenar utan ristare
+inom 25 km från en träningssten), ortografin (avsnitt 7; minst åtta ord, stenen själv utelämnad), området
 (ristarens landskap och högst 60 km till en säker sten av ristaren), stilgruppen, språkdragen (mot landskapet med
-p-värde; avsnitt 8) och bergarten (avsnitt 10). Stilgruppen jämförs sedan 2026-10-11 med ristarens *kärna*, de
+p-värde; avsnitt 9) och bergarten (avsnitt 11). Stilgruppen jämförs sedan 2026-10-11 med ristarens *kärna*, de
 stilgrupper som finns på minst 10 % av ristarens säkra stenar: den stämmer om stenens stilgrupp hör till kärnan.
 En stilgrupp utanför kärnan men inom dess tidsram enligt Gräslund avgör inte (sedan 2026-10-11, efter granskningen av
 U 735: Pr3 finns på 2 av Öpirs 101 stenar och räknades tidigare som att stilen stämde); utanför tidsramen talar den
@@ -664,7 +1009,7 @@ namn som percentil bland landskapets runstenar, med syfte, statusord, stilgrupp,
 medeltida kyrka och fornlämning av varje slag, med namn, avstånd och länk till Kulturmiljöregistret eller Wikidata, och
 om stenen är flyttad enligt Rundatas placering eller plats (`GET /api/research/landscape/{signum}`).
 
-### 13d. Tolkning av fynden
+### 14d. Tolkning av fynden
 
 Källkod: `src/interpretation.py`, `POST /api/research/interpret`. När man klickar på ett fynd i "Våra resultat mot
 forskningen" visas ett resonemang i fem steg: vad fyndet säger; hur starkt belägget är (för ortografin likhet,
@@ -723,7 +1068,7 @@ seriationen), 54 svaga (alla ortografiska förslag, vars likhet inte håller eft
 motsägelser 6 måttliga, 13 svaga och 5 metodfel; 198 bekräftelser. Reglerna är
 fasta och kan granskas; tolkningen är en läshjälp, inte en runologisk bedömning.
 
-### 13e. Mönsterkartan
+### 14e. Mönsterkartan
 
 Kartan (`/karta`, `GET /api/research/pattern-map`, `src/pattern_map.py`) visar var ett mönster finns som **andel**
 av stenarna per område, inte som antal, så att Upplands täthet av runstenar inte döljer mönstret. Området är en
@@ -732,8 +1077,8 @@ sexkant (10, 20 eller 40 km mellan motstående sidor) i en enkel kilometerprojek
 Kartan kan delas i före och efter omkring 1050 (stilgruppens mittår; RAK–Pr2 mot Pr3–Pr5), och bara stenar med säker
 stilgrupp ingår då. Samma andelar per landskap finns som tabell under kartan.
 
-Varje mönster är 1, 0 eller okänt för varje sten. Språkdragen kommer från avsnitt 8 (okänt när ordet saknas eller
-texten är oläslig); innehållet från inskriftstyperna (avsnitt 9); korset från Rundatas ornamentik. *Kristna markörer*
+Varje mönster är 1, 0 eller okänt för varje sten. Språkdragen kommer från avsnitt 9 (okänt när ordet saknas eller
+texten är oläslig); innehållet från inskriftstyperna (avsnitt 10); korset från Rundatas ornamentik. *Kristna markörer*
 är kors eller kristen bön eller formel. *Hedniska eller rituella markörer* är Torsåkallan (Þórr med dubbelt r i
 normaliseringen, så att namn på Þór- och avbrutna Þor… inte räknas, eller Thor i Rundatas översättning), vígi-formler,
 förbannelser (ræti, argi, seiðr), alu och Tormotiv i Rundatas anmärkningar (torshammare, Tors fiskafänge).
@@ -753,19 +1098,19 @@ landskap ligger hopfällda under kartan.
 
 *Platser* (`src/places.py`, från 2026-10-12). Över sexkanterna kan platser visas: teofora och sakrala ortnamn,
 centralortsnamn, medeltida kyrkor och Kulturmiljöregistrets gravfält, högar, färdvägar, broar och fornborgar – samma
-data som korpusanalysens lämnings- och kultnamnsprov (avsnitt 17; `GET /api/research/places`). Varje sten har avståndet
+data som korpusanalysens lämnings- och kultnamnsprov (avsnitt 1; `GET /api/research/places`). Varje sten har avståndet
 till närmaste plats av varje slag (kd-träd i SWEREF 99 TM). *Nära en plats* jämför andelen stenar med det valda mönstret
 inom 1, 2, 3 eller 5 km från en sorts plats med övriga stenar (`GET /api/research/place-test`): andelarna, oddskvoten
 utan justering (Fishers exakta test) och med landskapet konstant (Mantel–Haenszel, CMH-test). Flyttade stenar räknas
 inte, och kartan kan begränsas till stenarna nära platserna. Provet är utforskande: tiden hålls inte konstant, mönstret
 prövas inte i två halvor och den som prövar många kombinationer av mönster, platser och radier hittar några skillnader
-av en slump. Det fullständiga provet för kultnamnen redovisas i avsnitt 17.
+av en slump. Det fullständiga provet för kultnamnen redovisas i avsnitt 1.
 
-## 14. Rapporter
+## 15. Rapporter
 
 Två rapporttyper, båda manusutkast där tabeller och figurer räknas fram ur data och AI-text märks.
 
-### 14a. Korpusrapport (flera stenar)
+### 15a. Korpusrapport (flera stenar)
 
 Källkod: `src/academic.py`, `POST /api/reports/academic`. Rapporten byggs för ett urval av korpusen (en
 ristare, ett landskap, valda stenar eller hela korpusen):
@@ -778,7 +1123,7 @@ ristare, ett landskap, valda stenar eller hela korpusen):
 * Export: Markdown, LaTeX (med figurfilerna) och Word (.docx). Rapporten är ett manusutkast som måste
   granskas innan den används.
 
-### 14b. Stenrapport (en sten)
+### 15b. Stenrapport (en sten)
 
 Källkod: `src/stone_report.py`, `POST /api/reports/stone`. Uppläggningen följer två traditioner:
 
@@ -814,27 +1159,27 @@ Stenrapporten får dessutom, när underlaget finns:
 * **Attribuering** – den sparade syntesen: utfallet mot litteraturen, kandidattabellen, kontrollerna
   (geografi, stilgrupper, bergart, språkdrag, sten mot sten), motsägelser och saknade belägg.
 
-### 14c. Fullständig stenanalys (arbetsgång)
+### 15c. Fullständig stenanalys (arbetsgång)
 
 Sidan **Stenanalys** och skriptet `scripts/full_stone_analysis.py` kör hela kedjan för en skanning och ett
 signum, med samma beräkningar som de enskilda verktygen:
 
-1. Uppladdning och **bilder ur skanningen** (avsnitt 1d). Den ristade sidan skattas som stenens tunnaste
+1. Uppladdning och **bilder ur skanningen** (avsnitt 2d). Den ristade sidan skattas som stenens tunnaste
    riktning; den andra sidan kan väljas.
 2. **Automatisk spåranalys** med flera känsligheter (standard 3 och 5). Den första är huvudanalysen, de övriga
    en känslighetsanalys som redovisas med granskningsbilder.
 3. **2D-bildanalys** av strykljuset från nordväst.
 4. **Blind läsning** i en eller flera orienteringar (standard 0° och 180°), validerad mot Rundata, kända
-   inskrifter och varandra (avsnitt 7).
-5. **Syntes och attribuering** med berggrund (avsnitt 10 och 12); med inloggning även mot mätkorpusen.
+   inskrifter och varandra (avsnitt 8).
+5. **Syntes och attribuering** med berggrund (avsnitt 11 och 13); med inloggning även mot mätkorpusen.
 6. **Forskningsläge och syfte** (`GET /api/research/stone/{signum}`): det Forskningsluckor vet om stenen
    (landskapets täckning, stenens luckor i Rundata, om den finns bland ortografiska hypoteser, omprövningar
-   eller mätprioriteringar och hur appens resultat bedöms mot forskningen), inskriftens syfte (avsnitt 9) och,
+   eller mätprioriteringar och hur appens resultat bedöms mot forskningen), inskriftens syfte (avsnitt 10) och,
    för de tre troligaste ristarna, hur ofta de ristade i stenens stilgrupp och inskriftstyp.
-7. **Statistik i R** (avsnitt 17): startar korpusanalyserna om de saknas och ställer stenen mot dem –
+7. **Statistik i R** (avsnitt 1): startar korpusanalyserna om de saknas och ställer stenen mot dem –
    attribueringsmodellen, kandidaternas områden, gruppen i klustringen, formlerna, Upplands seriation och
    landskapet (höjdmodell, strand, sikt, vägar).
-8. **Stenrapport** (14b), med avsnitten "Inskriftens syfte" och "Stenen i forskningsläget", R-avsnitten (metod 3.4,
+8. **Stenrapport** (15b), med avsnitten "Inskriftens syfte" och "Stenen i forskningsläget", R-avsnitten (metod 3.4,
    modellen i attribueringen, "Stenen i korpusen", "Stenen i landskapet"), en tabell över
    kandidaternas stilgrupper och inskriftstyper, bilaga A (alla tvärsnitt) och bilaga B: arbetsgångens steg och utfall,
    känslighetsanalysen, granskningsbilder, relief, 2D-motiveringen, alla läsningar med status och de fel
@@ -851,7 +1196,7 @@ Från terminalen (analysmotorn måste köras):
     --stone Gråsten --weathering Medel --author "Namn" --sensitivity 3,5 --orientations 0,180
 ```
 
-### 14d. Språkmodeller
+### 15d. Språkmodeller
 
 Källkod: `api/llm.py`. Alla AI-anrop går genom ett gemensamt lager. Standard är **Claude** (Anthropic,
 `claude-opus-5-5` för analys och text, `claude-haiku-4-5` för enkla uppgifter); **Gemini** kan väljas under
@@ -860,40 +1205,14 @@ strukturerat svar (JSON-schema i `output_config`, sedan 2026-10-11; tidigare ver
 giltig JSON. Valet av modell ändrar inget i det som räknas fram:
 mätningar, statistik, jämförelser och valideringen av läsningar görs utan AI, och AI-text märks.
 
-### 14e. Rapportmallar (publiceringsformer)
-
-Källkod: `src/report_templates.py`, `GET /api/reports/templates`, `POST /api/reports/stone` med `template`.
-Stenrapporten byggs först i sin fullständiga form; en mall väljer sedan ut, ordnar om och kompletterar dess avsnitt.
-Siffror, tabeller och figurer är desamma – bara urval, ordning, rubriker och ton skiljer. Figurer och tabeller
-numreras om efter urvalet, och hänvisningarna i texten rättas. Text som författaren ska skriva själv står inom
-hakparentes ("[Fyll i: …]"); mallens fria texter kan formuleras av AI utifrån samma fakta och märks då som AI-text.
-
-| Mall | Grupp | Innehåll |
-|---|---|---|
-| Stenrapport (fullständig) | Vetenskapligt | allt underlag och bilagor (avsnitt 14b) |
-| Artikel i forskningstidskrift | Vetenskapligt | IMRaD, engelsk abstract, nyckelord, highlights där tidskriften kräver det, datatillgänglighet, bilagor som tilläggsmaterial; riktvärden för Futhark, Fornvännen, Viking and Medieval Scandinavia, Journal of Archaeological Science: Reports och Danish Journal of Archaeology |
-| Uppsats (kandidat, magister, master) | Utbildning | titelsida, syfte och frågeställningar, avgränsningar, forskningsöversikt, teori och metod, material, resultat, diskussion, slutsatser, sammanfattning |
-| Avhandlingskapitel (monografi) | Vetenskapligt | kapitelnumrerade avsnitt, metoden refererad till metodkapitlet, kapitelsammanfattning, data som appendix |
-| Runologisk utgåva (SRI-stil) | Vetenskapligt | placering, material och mått, ornamentik, inskrift, kommentar, ristare och datering, huggteknik |
-| Konferensabstract | Vetenskapligt | 200–300 ord och nyckelord, svenska eller engelska |
-| Poster | Vetenskapligt | punkter om bakgrund, metod, resultat och slutsats, tre figurer |
-| Blogginlägg | Populärt | ingress, korta stycken utan facktermer, bilder, osäkerhet, läs mer |
-| Pressmeddelande | Populärt | rubrik, ingress, brödtext, citat, fakta, kontakt |
-| Antikvarisk dokumentationsrapport | Kulturmiljö | administrativa uppgifter (fornlämningsnummer, fastighet, beställare, diarienummer), metod, resultat, bevarandetillstånd, rekommendationer, arkivering |
-| Dataartikel / datapaket | Data | översikt, metod, filer och format, licens och förvaring, återanvändning (jfr Journal of Open Archaeology Data, README för Zenodo) |
-
-Tidskrifternas riktvärden (språk, omfång, referensstil) är ungefärliga och ändras; gränssnittet påminner om att
-kontrollera aktuella författaranvisningar. För Futhark finns dessutom ett färdigt manuspaket i tidskriftens mall
-(`src/journal.py`).
-
-### 14f. Beslutsunderlag om attribuering
+### 15e. Beslutsunderlag om attribuering
 
 Källkod: `src/attribution_report.py`, `POST /api/reports/attribution`; knappen *Skapa beslutsunderlag* i
 stenprofilen i Stenöversikt. För en sten och en prövad ristare samlas allt i ett dokument för dem som förvaltar
 Samnordisk runtextdatabas (Uppsala universitet) eller Runor (Riksantikvarieämbetet). Dokumentet ska kunna läsas av en
 runolog som inte känner appen och ligga till grund för ett beslut (sedan 2026-10-11; tidigare en kort sammanfattning).
 
-* **Slutsats och rekommendation först**, efter tolkningens nivå (13d): *starkt* ger ett förslag, *måttligt* ett
+* **Slutsats och rekommendation först**, efter tolkningens nivå (14d): *starkt* ger ett förslag, *måttligt* ett
   underlag för granskning (ingen ändring i dag, en prövbar hypotes), *svagt* ingen ändring. **En sten som är
   signerad av någon annan får aldrig ett förslag**: signaturen väger tyngre än alla statistiska jämförelser.
   Beläggen sammanfattas i en tabell (talar för, emot, neutral). När modellen ensam är stark men det oberoende stödet
@@ -938,7 +1257,7 @@ Rundatas utgåva), inte huggspårsmåtten eller stenarnas mått, som inte använ
 Ristarnamn som enligt forskningen är grupper får en not (t.ex. "Traen"). Dokumentet exporteras som Word och Markdown;
 mottagare fylls i av avsändaren och e-post hämtas ur kontoinställningarna (förvalt kontots adress). Ingen AI-text.
 
-### 14g. Engelsk version
+### 15f. Engelsk version
 
 Källkod: `web/src/i18n/` (webbläsaren), `src/i18n.py` (rapporterna). Appen skrivs på svenska, och svenskan är
 originalet. Med språket engelska översätts det som visas på plats mot en ordlista (`web/src/i18n/en.json`) med
@@ -958,7 +1277,33 @@ meningsmallar, och rapporterna (Word, Markdown, LaTeX) översätts med samma ord
   visningen. När svenska texter ändras samlar `web/scripts/i18n_crawl.mjs` in det som saknas, och
   `web/scripts/i18n.mjs merge` för in nya översättningar (se `scripts/README.md`).
 
-## 15. Jämförbarhet med tidigare forskning
+### 15g. Artiklarna på vitkirunor.se
+
+Källkod: `src/blog_topics.py` (ämnen och utkast), `src/blog_maps.py` och `r/blogfig.R` (figurer), `src/blog_figures.py`,
+`src/commons.py` (foton), `src/site_export.py` (publicering), `api/routers/blog.py`. Artiklarna på vitkirunor.se är
+populärvetenskapliga texter om mönster ur korpusanalysen (avsnitt 1), skrivna för läsare utan statistisk utbildning.
+Webbplatsen har bara startsidan och artiklarna; appen körs på den egna datorn.
+
+* **Ämnen.** Kandidaterna är korpusmönster som är *mönster att pröva* eller *bekräftar*, har en hypotes och håller i båda
+  halvorna av korpusen där det går att pröva (1x). Ett utkast följer en fast mall – rubrik, ingress, "Kort sagt", vad vi
+  ser, "Så säkra är vi", hypotesen, hur den kan prövas, förbehåll, "Se själv" och källor – och skrivs sedan om med egna
+  ord: siffrorna och resonemangen kommer från analysen, berättelsen från skribenten. Räkningar som en artikel gör utöver
+  korpusanalysen redovisas i artikeln med test, antal och nämnare.
+* **Statistiken i klartext.** Varje statistiskt tal får en mening om vad det betyder. Ett värde justerat med
+  Benjamini–Hochberg skrivs som andelen slumpfynd som väntas bland alla mönster som är minst lika tydliga ("högst omkring
+  2 procent"), andra p-värden som hur sällan ett så tydligt mönster skulle uppstå av en ren slump ("ungefär ett fall av
+  50"; `plain_significance`). En andel anges med sin nämnare – av hur många stenar där saken går att avgöra – och en
+  hypotes skrivs som en hypotes: påståenden säger "visar", hypoteser "vi föreslår" (1x).
+* **Bilder i stället för länkar.** En artikel visar kartverktygets bild i stället för att länka in i appen: tidskartan
+  (andelen stenar med mönstret per sexkant om 20 km, före och efter omkring 1050), punktkartan (de få stenarna med ett
+  sällsynt mönster) och förändringsmodellens kurvor (1h), ritade av `r/blogfig.R` på svenska och engelska. En figur som
+  används fryses under sin innehållshash, så att en publicerad artikel behåller sin bild när korpusanalysen räknas om.
+  Foton kommer ur Wikimedia Commons, bara med känd fri licens och med fotograf och licens i bildtexten.
+* **Publicering.** Bara artiklar som har gått live exporteras till webbplatsens källkod (`web/content/articles.json` och
+  figurerna i `web/public/figurer/`), eftersom repot är publikt; GitHub Pages bygger om webbplatsen när de pushas
+  (`.github/workflows/site.yml`).
+
+## 16. Jämförbarhet med tidigare forskning
 
 Laila Kitzler Åhfeldts metod (Arkeologiska forskningslaboratoriet, Stockholms universitet; Kitzler Åhfeldt
 2002) mäter spårvariabler i högupplösta 3D-modeller med funktionen *Groove Measure* (DeskArtes), analyserar
@@ -968,7 +1313,7 @@ doi:10.7146/dja.v8i0.113226). Vitki följer samma upplägg (separata spårtyper,
 standardisering, Ward), men **måtten är inte verifierade som likvärdiga** med Groove Measure-variablerna.
 Innan resultat jämförs direkt bör samma referensstenar mätas med båda metoderna.
 
-## 16. Datakällor och licenser
+## 17. Datakällor och licenser
 
 * **Samnordisk runtextdatabas** (Institutionen för nordiska språk, Uppsala universitet), version 2014 med
   RUNDATA.xls från 2018. Open Database License (databasen) / Database Contents License (innehållet).
@@ -991,302 +1336,7 @@ Innan resultat jämförs direkt bör samma referensstenar mätas med båda metod
   gravfält, högar, färdvägar och färdvägssystem, broar, fornborgar och hamnanläggningar, en punkt per lämning
   (`scripts/fetch_raa_remains.py`, `data/raa/lamningar.csv`, ingår inte i repot).
 * **Runor** (Riksantikvarieämbetet), utgåva 2020 av Samnordisk runtextdatabas, och **Wikidata** (CC0), för
-  avstämningen i 13b. Svaren cachas i `data/cache/crosscheck/`.
-
-## 17. Statistik i R
-
-Källkod: `r/` (R-skripten), `src/r_bridge.py` (export, körning, cache), `src/r_findings.py` (fynd och mönster),
-`src/r_report.py` (rapportavsnitt), `api/routers/rstats.py` (`/api/r/…`). Sidan **Statistik (R)** visar
-resultaten; stenanalysen och stenrapporten använder dem för den enskilda stenen.
-
-**Underlag.** Alla svenska vikingatida runstenar i Rundata (2 321) exporteras till en CSV med plats, härad,
-ristare (en säker ristare, annars tomt), stilgrupp och Gräslunds datering, kors, kortkvistrunor, de nio
-innehållskategorierna (avsnitt 9), de tjugo språkdragen (avsnitt 8), läsbara ord och stavningsvarianter (ordform
-parad med normaliseringen; egennamn utelämnade) och normaliseringen. Korpusanalyserna körs en gång per version
-av data och skript (fingeravtryck) i en egen process (`python -m src.r_bridge <fingeravtryck>`) och sparas i
-`data/cache/r/corpus/<fingeravtryck>/` med `sessionInfo()`. Sedan 2026-10-11 har varje modul också en egen
-version (korpusen, `common.R`, modulens skript och versionerna av de moduler den läser); en modul med samma version
-som i en tidigare fullständig körning kopieras därifrån i stället för att räknas om, så att en ändring i ett skript
-bara räknar om den modulen och de som bygger på den (`reused` i `done.json`). Varje modul körs som
-`Rscript --vanilla r/<modul>.R params.json utmapp` och skriver JSON och figurer.
-
-| Modul | Paket | Vad den gör |
-|---|---|---|
-| `geography.R` | sf, leaflet | ristarnas tyngdpunkter, spridning och konvexa höljen (SWEREF 99 TM); permutationstest (499 urval ur samma landskap) av om ristaren arbetade inom ett mindre område än slumpen ger (Benjamini–Hochberg); avstånd till vatten mot slumpvisa punkter på land per landskap (Wilcoxon), också mot en modellerad strandlinje omkring år 1000 (se nedan); interaktiv karta |
-| `clusters.R` | cluster, FactoMineR, factoextra | Gowers avstånd på stil, språkdrag, kors, kortkvistrunor och innehåll (kategorierna asymmetriskt binära), PAM med k = 2–10 efter silhuettbredd, stabilitet som Jaccard-likhet i 20 delurval om 80 % (Hennig 2007), MCA; ristare och landskap jämförs efteråt (justerat Rand-index) |
-| `text.R` | tidytext, stringr | formler ur normaliseringen (resarformel, monument, ordföljd, ristarsignatur, bön) per ristare; stavning per ord mot ristare (χ² med simulerat p, Cramérs V); ordformer som utmärker en ristare (Fishers exakta test, BH); tf-idf; de 100 vanligaste runbigrammen som variabler till modellen |
-| `attribution.R` | tidymodels, ranger | random forest (500 träd) på stenar med säker ristare, ristare med minst åtta stenar (i dag 18 ristare, 497 stenar); 5-faldig stratifierad korsvalidering upprepad 3 gånger, och grupperad per socken och härad; delmodeller med bara geografi, bara stil, bara språk och innehåll; kalibrering (andel rätt per sannolikhetsnivå, ECE); permutationsvikter; förslag för stenar utan ristare inom 25 km från en träningssten |
-| `anonymous.R` | cluster, igraph | grupper av stenar utan ristare som liknar varandra lika mycket som en ristares stenar (Gowers avstånd på handens drag, länkade inom 30 km, Louvain); validering på stenar med känd ristare; jämförelse med kända ristare i närheten; arbetsnamn efter typstenens socken (se nedan) |
-| `chronology.R` | ca | seriation (korrespondensanalys av språkdrag, formler, kors, kortkvistrunor och innehåll – utan stilgrupp) för Uppland, prövad mot Gräslunds stilkronologi (Spearman mot stilgruppens mittår, och partiell med latituden konstant); tidsskattning med 80 % prediktionsintervall och korsvaliderat medelfel; för hela korpusen redovisas vad de tre första dimensionerna följer (tid, geografi, ristare eller oförklarat) |
-| `dialect.R` | stringdist | förväntat normerat Levenshtein-avstånd mellan häradernas stavning av vanliga ord; Mantel-test mot geografiskt avstånd (999 permutationer); grupper av härader (PAM); kartor över stavningen av "efter" och "sten" |
-| `network.R` | igraph, tidygraph, ggraph | ord som står i samma inskrifter (positiv PMI), grupper med Louvain; släktorden i inskrifterna (fader, moder, son, broder, félagi …) före och efter ca 1050 och i kristna mot övriga inskrifter (Fisher, BH) |
-| `change.R` | mgcv, sf | förändring i tid och rum för sexton drag (monoftong i ord med *æi* och i 'och', ʀ skrivet med r-runan, åsrunan för o-ljud, h-bortfall, nasal före konsonant, prepositionen *at*, stungna runor och stungen i, u och k, kristen bön, själsbön, kors, bro- och vägbygge, ristarsignatur): logistisk regression med utjämnad tidskurva, rumslig utjämning och ristaren som slumpeffekt; justerad andel över tid, karta, landskapen i mittperioden (omkring 1050; Holm över dragen, med observerade andelar, antal attribuerade ristare och samma test utan ristareffekten) och året då draget passerar hälften (bara för drag som stadigt ökar eller minskar); bro- och vägstenar mot kristna drag (se nedan) |
-| `remains.R` | sf | avstånd till närmaste gravfält, hög, färdväg, bro, fornborg och hamnanläggning i Kulturmiljöregistret mot slumpvisa punkter på land inom 5 km från stenarna (Wilcoxon, BH); närhet inom 500 m över tid, med kristna markörer och för brostenar (logistisk regression med landskapet konstant), prövat i korpusens två halvor; flyttade stenar räknas inte (se nedan) |
-| `stone.R` | sf, cluster, tidymodels | en sten mot korpusen: modellens sannolikheter (korsvaliderade om stenen har ristare i Rundata), avstånd till kandidaternas tyngdpunkter och höljen, grupp och närmaste grannar (Gower), formler jämförda med kandidaternas inskrifter, läge i Upplands seriation |
-| `landscape.R` | terra, gdistance | höjdmodell (ca 20 m), höjd, lutning, topografiskt positionsindex; strand vid vikingatiden som dagens höjd minus en grov landhöjning per landskap (t.ex. 5 m i Södermanland, 5,5 m i Uppland); sikt (viewshed, stenens topp 2 m, betraktare 1,6 m) mot slumpvisa platser; bästa vägar (Toblers vandringsfunktion, vatten tio gånger långsammare) mellan andra runstensplatser inom 12 km och stenens avstånd till dem mot slumpvisa punkter |
-
-**Dåtidens strand** (`geography.R`, från 2026-10-12). Landhöjningen sedan omkring år 1000 har flyttat kusten: en
-sten som stod vid en vik kan i dag stå långt in på land. Havet omkring år 1000 modelleras som land under landskapets
-landhöjning sedan dess (grova värden i `r/common.R`, t.ex. 5,5 m i Uppland, 5 m i Södermanland, 1,5 m på Öland) på en
-höjdmodell med omkring 300 m upplösning (Terrain Tiles, zoomnivå 9), tillsammans med dagens sjöar och vattendrag.
-Stenarna och samma lokala slumppunkter som i jämförelsen med dagens vatten mäts mot den strandlinjen (Wilcoxon,
-ensidigt). Beräkning 2026-10-12: stenarna står i median 3,6 km från dåtidens vatten mot 5,3 km för slumppunkterna
-(p < 0,001; med dagens vatten 4,2 mot 5,6 km). Kvoten mellan stenarnas och slumppunkternas avstånd sjunker från 0,64
-till 0,53 i Uppland, där landhöjningen är störst; skillnaden är signifikant i Uppland, Södermanland och på Öland men
-inte i Östergötland, Småland, Västergötland, Västmanland eller på Gotland. Höjdmodellens noggrannhet (några meter) är
-av samma storleksordning som landhöjningen, särskilt i flack terräng med liten landhöjning: Ölands stora förändring
-(kvoten 0,57 till 0,18) kan delvis bero på det. Låglänt inland kan räknas som hav, och igenslamning och dämning ingår
-inte. SGU:s strandförskjutningsmodell och Lantmäteriets höjdmodell skulle ge en säkrare strand.
-
-**Lämningar runt stenarna** (`remains.R`, från 2026-10-12). Hur står runstenarna i det fornlämningslandskap som
-Kulturmiljöregistret beskriver? För varje sten och för lika många slumpvisa punkter på land inom 5 km från stenarna i
-samma landskap (samma lokala nollmodell som för vattnet) mäts avståndet till närmaste gravfält, hög, färdväg
-(färdvägar och färdvägssystem), bro, fornborg och hamnanläggning; stenar och punkter jämförs med Wilcoxons test
-(ensidigt, Benjamini–Hochberg över slagen). Närhet inom 500 m modelleras med logistisk regression med landskapet
-konstant: mot stilgruppens mittår (per 50 år), mot kristna markörer (kors eller kristen formel, med tiden konstant) och
-för brostenar, och varje samband prövas i korpusens två halvor (uppdelade per socken som i `change.R`). Stenar som
-enligt Rundatas placering står vid eller i en kyrka, i en vägg, ett museum eller en samling räknas inte, eftersom de är
-flyttade, och inte heller stenar vars plats i Rundata är en kyrka, kyrkogård, kyrkoruin, prästgård, ett kloster, slott,
-en skola eller ett museum ("Frustuna kyrka", "Veta kyrkogård"), eftersom de inte kan skiljas från flyttade stenar
-(1 176 av 2 321; kolumnen `moved` i korpusens CSV, `is_moved` i `src/r_bridge.py`).
-
-*Rättelse 2026-10-12.* Fram till den här dagen prövades bara placeringen, som oftast är tom för stenar vid kyrkor;
-omkring 420 stenar vid kyrkor räknades därför som stående på sin ursprungliga plats. Det gav ett skenbart samband
-mellan kristen bön och närhet till medeltida kyrkor (oddskvot 1,26 och replikerat med det gamla urvalet, 1,18 och inte
-signifikant med det rättade) och gjorde sambandet mellan kors och centralortsnamn starkare än det är. Resultat från
-korpusanalyser före fingeravtrycket 6e62df8f5ff9a4c0 som rör stenarnas omgivning (lämningar, ortnamn, kyrkor,
-genomsökningen och hot spots) ska läsas med det i minnet.
-
-Beräkning 2026-10-12 (1 563 stenar, 52 674 lämningar): 61 % av stenarna står inom 500 m från ett registrerat gravfält,
-mot 21 % av slumppunkterna (median 0,36 mot 1,11 km); inom 500 m från en hög 33 % mot 9 %, från en färdväg 17 % mot 6 %.
-Närheten till gravfält gäller i Uppland, Södermanland, Östergötland, Småland och Västergötland, ändras inte över tiden
-(före omkring 1050 60 %, efter 66 %; oddskvot 0,81 per 50 år, q 0,44) och är lika stor för stenar med kristna markörer
-(oddskvot 1,08, q 0,81). Brostenar står oftare nära en registrerad färdväg (oddskvot 1,91, q 0,03), men sambandet håller
-inte i båda halvorna och redovisas därför som indikation. Att runstenar ofta står vid gravfält är känt; det nya är att
-närheten mäts mot slumpen i hela korpusen och att den varken minskar med tiden eller för kristna stenar, vilket talar för
-att gravfälten förblev släktens minnesplatser genom kristnandet. Reservationer: registret är olika väl inventerat i olika
-trakter, en lämning är en punkt (mittpunkten för en yta), de flesta lämningar är odaterade, färdvägar och broar är ofta
-medeltida eller yngre, och i enstaka fall kan ett gravfält ha registrerats just där en runsten står.
-
-**Förkristna kultnamn och stenarnas budskap** (`remains.R`, från 2026-10-12). Är kristna budskap vanligare på stenar
-nära platser som kan ha varit förkristna kultplatser? Ortnamnen kommer ur OpenStreetMap (© OpenStreetMap-bidragsgivare,
-ODbL), där Lantmäteriets ortnamn från terrängkartan finns inlagda; bara by-, gårds- och ortnamn räknas, inte unga
-stadsdelsnamn (`scripts/fetch_place_names.py`, `data/ortnamn/`). Namnen delas i tre nivåer. *Teofora namn* (A) är ett
-gudanamn (Tor, Oden/Ons, Frö, Ull, Njärd/När, Härn, Dis) med en sakral eller typisk efterled (vi/ve/vid, harg, hov,
-lunda, åker/åkra, sal/sala, tuna, sunda), t.ex. Torsvi, Odensala, Ullevi och Frösö – den gängse indikationen på en
-kultplats (Vikstrand 2001); singularformen -lund räknas inte, eftersom den oftast är unga villanamn. *Sakrala namn utan
-gudanamn* (B) är Vi, Ve, Viby, Harg, Hov, Hof, Hörg och Gudhem, osäkrare eftersom harg också kan betyda stenig mark och hov
-gård eller höjd. *Centralortsnamn utan kult* (C), Husby och namn på -tuna utan gudanamn, är en jämförelse: teofora namn
-markerar ofta centralorter, där eliten kan ha blivit kristen tidigt. Ett namn sägs vara nära en sten inom 2 km (valt i
-förväg); flyttade stenar räknas inte. Kristen bön, kors och kristna markörer överlag modelleras med logistisk regression
-med landskapet konstant, också med tiden konstant och med närheten till centralortsnamn konstant, prövas i korpusens två
-halvor och med stenarna vid ett namn i taget utelämnade, och redovisas med 1 och 3 km som känslighetsprov. Medeltida
-kyrkor (Wikidatas kyrkobyggnader i Sverige med ett uppförandeår före 1350, CC0, långt ifrån alla) jämförs med namnen:
-ligger de teofora namnen oftare inom 1 km från en kyrka än andra ortnamn av samma slag inom 10 km från en runsten
-(Fishers exakta test)?
-
-Beräkning 2026-10-12 (1 563 stenar, 82 teofora namn, 66 sakrala, 128 centralortsnamn): kristen bön står på 28 % av de 74
-stenarna nära ett teoforiskt namn mot 15 % av övriga (oddskvot 2,23, 1,30–3,81, q 0,014), håller i båda halvorna och
-ligger mellan 1,89 och 2,55 när stenarna vid ett namn i taget utelämnas (20 namn). Vid centralortsnamn utan kult är bönen
-inte vanligare (oddskvot 1,27), och med närheten till dem konstant består skillnaden (2,29); det talar emot att den bara
-speglar elitens gårdar. Kristna markörer överlag (69 % mot 53 %) och kors pekar åt samma håll men håller inte i båda
-halvorna, och vid de sakrala namnen utan gudanamn syns ingen skillnad. Med 1 km (25 stenar) blir oddskvoten 1,68 och med
-3 km 1,37, åt samma håll men inte signifikant: resultatet hänger delvis på radien och redovisas som ett mönster att pröva.
-Teofora namn ligger inom 1 km från en medeltida kyrka i 9 % av fallen mot 2,5 % för andra ortnamn (oddskvot 3,8,
-p 0,007), en indikation med tanke på kyrkoregistrets luckor. Ortnamnen är belagda långt efter vikingatiden, och namnets
-läge är dagens by eller gård, inte kultplatsen själv.
-
-**Genomsökning av landskapet** (`remains.R`, från 2026-10-12). En systematisk sökning efter dolda mönster: varje
-mönster på mönsterkartan (kolumnerna `pm_*` i korpusens CSV, samma definitioner som kartan, `src/pattern_map.py`)
-prövas mot avståndet till varje sorts plats – teofora och sakrala ortnamn, centralortsnamn, medeltida kyrkor, gravfält,
-högar, färdvägar, broar och fornborgar. Ingen radie väljs: modellen är en logistisk regression på log2 av avståndet
-(plus 250 m, så att en sten vid själva platsen inte blir oändligt nära) med landskapet konstant, och effekten anges som
-oddskvoten när avståndet halveras (över 1: vanligare närmare platserna). Kombinationer där mönstret finns på färre än
-15 stenar eller saknas på färre än 15 prövas inte. Alla kombinationer justeras tillsammans (Benjamini–Hochberg), varje
-prövas också i korpusens två halvor och med tiden konstant, och flyttade stenar räknas inte. Andelen inom 2 km (ortnamn,
-kyrkor) eller 500 m (fornlämningar) redovisas bara som läshjälp. Kombinationer som klarar justeringen och håller i båda
-halvorna blir mönster att pröva i Forskningsluckor (mönstret *utan religiösa markörer* utelämnas, eftersom det är
-spegelbilden av de kristna markörerna); de som bara klarar justeringen sammanfattas som indikationer. På kartan visas
-genomsökningen som ett rutnät med mönster mot platser.
-
-Beräkning 2026-10-12 (117 kombinationer): tio klarar justeringen och fyra håller i båda halvorna. Kristna markörer och
-kors blir vanligare närmare centralortsnamn (oddskvot 1,24 respektive 1,23 när avståndet halveras), och kristen bön
-närmare medeltida kyrkor (1,26); alla tre håller också med tiden konstant. Sambandet mellan bön och teofora namn är
-svagare utan vald radie (1,26, q 0,047, bara i den ena halvan), vilket talar för att eliten och de tidiga kyrkorna
-förklarar en del av det som syns vid kultnamnen.
-
-**Hot spots och kluster** (`hotspots.R`, från 2026-10-12; R-paketen spdep och smerc). Var klustrar mönstren på
-kartan mer än slumpen ger? För varje mönster (`pm_*`) och de stenar där det kan avgöras, utan flyttade stenar: *Morans
-I* med de åtta närmaste stenarna som grannar (SWEREF 99 TM), Benjamini–Hochberg över mönstren – klustrar mönstret alls?
-*Getis-Ord Gi\** för varje sten (grannarna och stenen själv) – ligger den i ett hett område, där mönstret är vanligare än
-i landet, eller ett kallt? De lokala p-värdena justeras med Benjamini–Hochberg över stenarna. *Kulldorffs rumsliga
-scanstatistik* (smerc) prövar alla cirklar runt varje sten som rymmer högst en tiondel av stenarna, med landets andel som
-förväntat värde per sten (Poissonformen; den binomiala fungerar inte med en sten per plats) och 999 Monte
-Carlo-simuleringar; bara kluster med p < 0,05 redovisas, och klustrens p-värden justeras med Benjamini–Hochberg över
-mönstren. Varje kluster prövas också i korpusens två halvor, uppdelade per socken: är mönstret vanligare inne i klustret
-än utanför i båda (Fishers exakta test)? Kluster som håller i båda halvorna blir mönster i Forskningsluckor – mönster att
-pröva om de klarar justeringen över mönstren, annars indikationer. Ett kluster är en plats att titta närmare på (en
-ristare, en verkstad eller en bygd), inte en förklaring.
-
-*Kartbilder* (från 2026-10-12): för varje mönster som klustrar (Morans I, q < 0,05) och har heta eller kalla stenar eller ett kluster ritar `hotspots.R` en karta `hotspot_<mönster>.png`: andelen stenar med mönstret per sexkant om 25 km (minst 5 stenar), stenarna i heta och kalla områden (Gi*) och klustren (Kulldorff) som ringar, på Natural Earths land. Genomsökningen av landskapet ritas av `remains.R` som `landskap_genomsokning.png`. Figurerna kan användas i Månadens fynd; ett inlägg får en egen kopia under figurens innehållshash (`src/blog_figures.py`, `/api/blog/figures/`), så att bilden finns kvar när korpusanalysen räknas om.
-
-**Okända ristare** (`anonymous.R`, från 2026-10-11). Kan en gruppering i statistiken vara en ristare som ännu inte
-har namn? Stenar med minst fem läsbara ord jämförs i *handens drag* – stilgrupp, kors, kortkvistrunor, språkdrag
-(inklusive skiljetecken och bindrunor), formler och runbigram, men inte innehåll och plats – med Gowers avstånd. Gränsen
-för att länka två stenar kalibreras på par av stenar med känd ristare (ristare med minst tre säkra stenar) inom 30 km:
-par under gränsen ska vara minst tolv gånger vanligare bland samma ristares par än bland olika ristares. Stenar utan
-ristare i Rundata länkas när de ligger inom 30 km och under gränsen, och grupperas med Louvain. En grupp redovisas om
-den har minst fyra stenar och inte är mer utspridd än 90 % av de kända ristarna med minst fem stenar (median till
-gruppens mitt; i dag 23 km). Förfarandet prövas på stenar med känd ristare, som om ristaren vore okänd: hur stor del av
-en grupp är samma ristare, jämfört med grupper av lika många närliggande stenar? Avståndet och gränsen valdes efter
-den valideringen (15–30 km, kvot 4–12), så träffsäkerheten kan vara något överskattad. Resultat (beräkning
-2026-10-11, med de nya språkdragen): en grupp bestod i genomsnitt till 69 % av samma ristare, mot 43 % för bara
-närliggande stenar, och 64 % av grupperna till minst tre fjärdedelar; av länkade par med känd ristare var 71 % samma
-ristare. Bland stenarna utan ristare blev det 17 grupper, varav 8 möjliga okända ristare: Konungsundsristaren (30
-stenar, Östergötland), Vibyristaren (15, Östergötland), Vetlandaristaren (14, Småland), Kölabyristaren (13,
-Västergötland), Sättnaristaren (7, Medelpad), Leksbergsristaren och Husabyristaren (6 vardera, Västergötland) och
-Dalumsristaren (5, Västergötland). Stabiliteten mäts som hur stor del av gruppen som återkommer (Jaccard) när en
-femtedel av länkarna tas bort. Varje grupp jämförs med kända ristare inom 50 km: den räknas som lik en känd ristare när
-ristarens stenar i genomsnitt ligger lika nära gruppen som två stenar av samma ristare brukar göra, eller när
-attribueringsmodellen föreslår samma ristare med minst 50 % för hälften av gruppens stenar. Övriga grupper får ett
-*arbetsnamn* efter typstenens socken (typstenen är den sten som i genomsnitt ligger närmast de andra), t.ex.
-"Fröderydsristaren", efter samma bruk som för anonyma mästare i konsthistorien. Namnet görs unikt och får aldrig vara ett
-ristarnamn i Rundata. I Uppland och Södermanland, där ristarna är väl kartlagda, liknar nästan alla grupper en känd
-ristare; de möjliga okända ristarna finns främst i Östergötland, Västergötland, Småland och Medelpad, där få stenar är
-attribuerade. Stenarna i dessa grupper redovisas som fynd i Forskningsluckor (metod "okänd ristare (R)").
-
-**Förändring i tid och rum** (`change.R`, från 2026-10-11). Hur språkdrag, skrift och kristna drag förändras
-över tid och skiljer sig mellan landskap – frågor om språk- och religionshistoria som inte handlar om vem som
-ristade. För varje drag skattas en logistisk regression (mgcv::bam, fREML) bland stenar med stilgrupp: tiden
-(stilgruppens mittår enligt Gräslund) som utjämnad kurva med k = 4, så att ett drag kan öka och minska igen; en
-rumslig utjämning (tunnplattspline på SWEREF 99 TM), så att förändringen inte bara är en förskjutning mellan områden
-med olika datering; och ristaren som slumpeffekt, så att stenar av samma ristare inte räknas som oberoende. Stenar
-utan säker ristare grupperas per socken, eftersom de ofta är huggna av samma okända ristare eller verkstad (en egen
-grupp per sten gav samma skattningar men tog tio gånger längre tid). Kurvan redovisas som *justerad andel*: alla
-daterade stenar flyttas till varje år och modellens sannolikheter för en typisk ristare medelvärdesbildas, med 95 %
-intervall ur 300 dragningar av koefficienterna. Den täcker stilgrupper med minst 20 stenar; ett drag med färre
-daterade stenar (under 60, under tio med eller utan draget, eller mindre än 40 år mellan de stora stilgrupperna)
-prövas inte. Eftersom stilgruppen är ett intervall och inte ett år räknas varje resultat om tio gånger med årtal
-dragna jämnt inom intervallet; andelen omräkningar som också ger ett säkerställt samband redovisas. Rummet visas som
-karta (samma modell utan tid, på alla stenar där draget kan bestämmas, inom ca 30 km från stenarna) och landskapen som
-skattad andel omkring år 1050 (egen nivå per landskap, samma tidskurva; landskap med minst 25 daterade stenar;
-skillnaden prövad med Wald-test). När draget ökar eller minskar stadigt anges också året då det passerar hälften av
-stenarna, ur en modell med rak trend. Slutligen prövas om bro- och vägstenar oftare har kristen bön, själsbön och kors
-än andra stenar, med samma kontroller – ett test av tolkningen av brobyggen som kristna själagåvor. p-värdena
-Holm-justeras inom tidstesten respektive brotesten. Formler och kors räknas bara på inskrifter som är tolkningsbara nog
-för att språkdragen ska kunna bestämmas.
-
-Resultat (beräkning 2026-10-11; 1 008 daterade stenar, 804 med tolkningsbar text). Säkerställt efter Holm-justering
-och i minst 70 % av omräkningarna: stungna runor ökar (justerad andel 35 % omkring 1000 till 85 % omkring 1115),
-liksom stungen i (30 till 80 %), stungen u (11 till 47 %), o-runan för o-ljud (4 till 43 % omkring 1085) och
-ristarsignaturer (6 till 28 %); stungen k förändras inte. Kristen bön och själsbön är vanligast omkring 1033 (28
-respektive 24 %) och sällsynta på de sena stenarna (2 %), och kors är vanligast omkring 1028 (70 %). Monoftong i något
-ai-ord *minskar* (69 till 22 %) med plats och ristare konstanta: den diftongiska stavningen sprids över tid, vilket
-snarare tyder på en skrivnorm än på en ljudutveckling bakåt – ett mönster att pröva. Landskapen skiljer sig omkring
-1050, mest för monoftong i ai-ord (84 % i Västergötland och 80 % i Östergötland, 55 % i Uppland, 35 % i Södermanland),
-böner och kors. Stungen i passerar hälften av stenarna omkring 1014 i Östergötland, 1019 i Västergötland, 1051 i
-Södermanland och 1069 i Uppland (stungna runor över lag 1000, 1005, 1020 och 1043) – en spridning från söder och väster
-in mot Mälardalen att pröva mot litteraturen. Bro- och vägstenar har oftare själsbön än andra stenar (25 mot 15 %,
-oddskvot 1,9, q 0,04), men inte oftare kristen bön i allmänhet eller kors.
-
-**Grupperad korsvalidering** (från 2026-10-10). Vid slumpvis korsvalidering kan stenar från samma plats – ofta resta
-av samma ristare samtidigt – hamna både i tränings- och testdata. Modellen utvärderas därför också med hela socknar
-(164 grupper) respektive härader (69 grupper) utelämnade (`group_vfold_cv`, 5 delar, 3 upprepningar). En ristare vars
-alla stenar ligger i det utelämnade området saknas då i träningen och räknas som fel. Resultat (beräkning
-2026-10-10): rätt ristare först i 72 % slumpvis, 68 % med ny socken och 57 % med nytt härad (bland tre främsta
-87, 85 och 78 %); geografi ensamt 44, 40 och 30 %, språk och innehåll ensamt 60, 56 och 47 %, mot 19 % om man
-alltid gissar på den vanligaste ristaren. En del av träffsäkerheten kommer alltså från platsen, men modellen
-fungerar också för platser den inte sett. Sannolikheterna för enskilda stenar kommer fortfarande från den
-slumpvisa korsvalideringen, som motsvarar en ny sten på en känd plats. Med de nio nya språkdragen (2026-10-11): 72, 69 och 59 %; språk
-och innehåll ensamt 62 %.
-
-**Resultat i korpusen (beräkning 2026-10-05).** Attribueringsmodellen hittar rätt ristare i 72 % av fallen
-(87 % bland de tre främsta) mot 19 % om man alltid gissar på den vanligaste; språk och innehåll ensamt ger 60 %,
-geografi ensamt 44 %. Sannolikheterna är försiktiga: vid minst 0,5 är förstavalet rätt i 93 % av fallen. 24 av 29
-ristare arbetade inom ett tydligt mindre område än slumpen ger. I Uppland följer seriationen Gräslunds kronologi
-(rho 0,55; 0,54 med latituden konstant), men tidsskattningen är bara något bättre än medelåret (medelfel 21 mot
-25 år). Stavningsavståndet mellan härader växer med det geografiska (Mantel r 0,29). I hela korpusen följer den
-första CA-dimensionen (kristen bön mot ingen bön) varken tid eller geografi – ett mönster att pröva.
-
-**Reproducerbarhet.** `GET /api/r/package` (knappen på sidan Statistik) ger en zip med R-skripten, korpusens CSV,
-resultaten, `sessionInfo()` och `KOR_OM.R`, som kör om allt i R utan appen. Paketen installeras med
-`Rscript r/install.R` (sf kräver GDAL, GEOS, PROJ och udunits; ragg kräver fribidi och harfbuzz; nloptr kräver
-cmake).
-
-**Begränsningar.**
-* Attribueringsmodellen väljer bara bland sina ristare; ett förslag för en sten utan ristare vägs därför med hur
-  stor andel av landskapets attribuerade stenar modellens ristare står för. Signerade stenar av ristare utanför
-  modellen räknas inte som motsägelser.
-* Träningsdata är Rundatas attribueringar, i Mälardalen främst Axelsons (1993), som själv vägde in stil, stavning
-  och geografi. Korsvalideringen mäter därför överensstämmelse med dessa bedömningar snarare än med en oberoende
-  sanning.
-* Natural Earths vattenlager saknar mindre vattendrag och våtmarker – därför står brostenarna "längre från vatten"
-  i analysen, vilket visar lagrets gräns och inte broarnas läge.
-* Landhöjningen är en grov skattning per landskap, höjdmodellen visar dagens markyta och vägarna är simulerade
-  bästa vägar, inte belagda vikingatida vägar.
-* Klustringen ger svag struktur (silhuett omkring 0,33); grupperna följer kors, stungna runor och bön, inte ristare.
-
-**Tolkning av mönstren och reservationer.** Sidan Statistik (R) och fliken "Våra resultat mot forskningen" i
-Forskningsluckor visar mönstren utan anteckningar; så här ska de läsas:
-
-* *Ristarnas områden.* Att ristare var regionalt verksamma är en grund för Axelsons attribueringar; testet visar att
-  det också gäller statistiskt, men är inte oberoende av attribueringarna.
-* *Avstånd till vatten.* Att stenar restes vid färdleder, även vattenleder, är en etablerad tolkning. Vattenlagret är
-  grovt (1:10 miljoner); att bro- och vägstenar står "längre från vatten" visar kartlagrets gräns, inte broarnas läge.
-* *Attribueringsmodellen.* Se begränsningarna ovan och den grupperade korsvalideringen.
-* *Stavning per ristare.* Att ristare har egna stavningsvanor är en grund för ortografisk attribuering – och därför
-  inte oberoende av attribueringarna i Rundata.
-* *Dialekt.* Stavning speglar både uttal, ristarens skrivvanor och tid. Eftersom ristare ofta arbetade inom ett
-  område kan en geografisk stavningsgräns lika gärna vara en gräns mellan ristarverkstäder som mellan dialekter.
-* *Klustring.* Grupperna speglar främst kors, stungna runor och bön, alltså tid och kristnande snarare än ristare.
-* *Seriation.* Stöder Gräslunds kronologi oberoende av ornamentiken, men årtalen är osäkra (medelfel ca 21 år mot
-  25 år utan modell).
-* *Oförklarade dimensioner.* När en korrespondensdimension varken följer tid eller geografi kan mönstret vara
-  ristarens eller beställarens val; appen känner ingen förklaring i litteraturen, och det bör prövas.
-* *Släktord och formler över tid.* Tidsindelningen bygger på Gräslunds stilgrupper och gäller bara stenar med säker
-  stilgrupp.
-* *Okända ristare.* En grupp är stenar som liknar varandra i handens drag och ligger nära varandra. Det kan vara en
-  ristare, en verkstad med flera ristare eller en lokal tradition som flera följde, och eftersom stil och formler också
-  följer tid kan en grupp delvis vara en tidsperiod i ett område. Arbetsnamnet är en etikett för gruppen och inget
-  påstående om en person. Gruppen kan redan vara beskriven i litteratur som appen inte har (t.ex. i *Sveriges
-  runinskrifter* för landskapet).
-* *Förändring i tid och rum.* Tiden är Gräslunds stilgrupper, som bygger på Upplands ornamentik och ger intervall
-  snarare än år; de daterade stenarna finns främst i Uppland och Södermanland. Stavning speglar skrivtradition och
-  ristarens skola lika mycket som uttal, så en ändrad stavning är inte säkert en ljudförändring. Att ett drag tidigt är
-  vanligt i ett landskap kan betyda att förändringen började där, men också att en ristarskola där hade sina vanor.
-  Den justerade kurvan kan skilja sig från de råa andelarna per stilgrupp när de sena stenarna står på andra platser
-  eller är huggna av andra ristare än de tidiga; båda visas.
-* *Huggteknik mot ristare* (`r/technique.R`). Få stenar per ristare, olika vittring och bergart och en annan
-  mätmetod än Kitzler Åhfeldts Groove Measure; resultatet är en indikation, inte en attribuering.
-* *Landskapet.* Höjddata visar dagens markyta; vägar är simulerade bästa vägar, inte belagda vikingatida vägar, och
-  grannstenarna kan själva stå vid vägar, så vägnätet är inte oberoende av stenarnas lägen.
-
-
-### 17x. Försiktighet i påståendena, djärvhet i hypoteserna
-
-Appens uppgift är att hitta tydliga mönster som ingen sett tidigare. Det kräver två saker som lätt blandas ihop: stränghet
-när något *påstås* och djärvhet när något *föreslås*. Sedan 2026-10-12 hålls de isär:
-
-* **Varje mönster har tre delar.** *Vad vi ser* (påståendet, med signifikans och osäkerhet), *hypotes* (vad mönstret
-  kan betyda, djärv med avsikt och märkt som hypotes) och *så kan den prövas* (vad vi borde se om hypotesen stämmer och vad
-  som skulle fälla den). Förbehåll och kontroller ligger i en fällbar ruta så att de inte dränker idén. Två ordförråd:
-  påståenden säger "visar" eller "är förenligt med", hypoteser säger "vi föreslår" eller "kan tyda på".
-* **Upptäckt och bekräftelse har olika krav.** Ett mönster *upptäcks* när det klarar Benjamini–Hochberg (andelen falska
-  upptäckter bland de redovisade under 5 %). Det kallas *bekräftar* (känt i forskningen) bara när det också klarar Holm
-  (risken för ens ett falskt resultat under 5 %) och håller i båda halvorna av korpusen. Ett nytt mönster som håller i
-  båda halvorna är ett *mönster att pröva*; ett som inte gör det är en *indikation* – en idé, synlig men med förbehåll.
-* **Två halvor av korpusen** (r/change.R): socknar fördelas växelvis på två halvor inom varje landskap, i ordning efter
-  sockenstenarnas medeldatering, så att båda halvorna täcker samma trakter och samma tid. Mönstret anpassas på nytt i
-  varje halva; det håller om riktningen (eller toppen) är densamma och signifikant i båda. Signerade stenar används inte
-  som facit: signaturer blir vanliga först sent (4 % av RAK-stenarna, 33 % av Pr5), så de skulle gynna de sena mönstren.
-* **Kontroller som besvarar andra frågor fäller inte ett mönster.** En trend som syns mellan ristare men inte inom dem kan
-  ha spridits genom generationsskifte – i sig en iakttagelse. Utan den tidigaste och senaste stilgruppen försvinner en
-  stor del av tidsaxeln, så ett svagare resultat där är väntat. Landskapsjämförelser utanför Uppland och Södermanland kan
-  bli mönster att pröva när skillnaden håller med dateringarna förskjutna 25 år åt båda håll. Små men stabila effekter
-  (under 10 procentenheter) märks som små men redovisas som mönster. Sambandet mellan brostenar och själsbön kontrolleras
-  med textlängden *utan* bro- och bönefraserna (brofrasen gör själv texten längre); hela textlängden redovisas också.
-* **Regel för kritik** (också Runes instruktion): fel – siffror, nämnare, dubbelräkning, vilseledande ord – rättas alltid.
-  Försiktighet ändrar formuleringen men tar aldrig bort ett ärligt märkt mönster.
+  avstämningen i 14b. Svaren cachas i `data/cache/crosscheck/`.
 
 ## 18. Kända brister
 
@@ -1296,7 +1346,7 @@ Källkod: `src/limitations.py`, `GET /api/limitations`. Metodens kända brister 
 * **I appen** visas de brister som gäller sidan under varje analyssida (3D-analys, stenanalys, jämförelse,
   mätkorpus, syntes, statistik, forskningsluckor, inskrifter, karta, stilgrupper, 2D-analys, läsning, rapporter).
 * **I rapporterna** har stenrapporten och korpusrapporten ett avsnitt "Kända brister och begränsningar", och varje
-  publiceringsform (avsnitt 14e) tar med dem – fullständigt i vetenskapliga och antikvariska former, i populär form
+  publiceringsform tar med dem – fullständigt i vetenskapliga och antikvariska former, i populär form
   i blogginlägg, pressmeddelande och poster. Varningar för just analysen (t.ex. färre runor än riktvärdet) står först.
   AI som formulerar text får förteckningen och instrueras att inte tona ned den.
 * **I proveniensen** som sparas med varje mätning och syntes står förteckningens version och vilka brister som
@@ -1320,4 +1370,4 @@ När en brist åtgärdas ändras förteckningen och versionen höjs. Bristerna i
 | Rundata är en äldre utgåva | attribution, research, rundata | Uppdatering till senaste utgåvan av Runor. |
 | Programvaran är under utveckling | attribution, comparison, grooves, software | Låst version med DOI (Zenodo) och extern granskning av koden. |
 
-R-analysernas egna begränsningar (avsnitt 17) ingår när de används.
+R-analysernas egna begränsningar (avsnitt 1) ingår när de används.

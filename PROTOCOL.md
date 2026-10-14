@@ -17,7 +17,7 @@ dokumentation av kulturarv: metoden ska vara öppen, varje steg dokumenterat (pa
 
 * Den ristade ytan skannad i 3D (STL, OBJ eller PLY), utan utjämning eller hålfyllning som ändrar spåren.
 * Punktavstånd högst **0,5 mm** (rekommendation). Glesare skanningar ger sämre resultat: med en fjärdedel av
-  trianglarna ändras stenens V-vinkel med upp till 9° (METHODS.md 1e).
+  trianglarna ändras stenens V-vinkel med upp till 9° (METHODS.md 2e).
 * Uppgifter om skanner, upplösning, noggrannhet, datum, utförare och licens. Filens SHA-256 räknas av programmet.
 
 ### P3. Fasta parametrar
@@ -25,12 +25,12 @@ dokumentation av kulturarv: metoden ska vara öppen, varje steg dokumenterat (pa
 | Parameter | Värde | Varför |
 |---|---|---|
 | Mätmetod | `groove-5` | Resultat är bara jämförbara inom samma metodversion |
-| Rutnät (`resolution_mm`) | 0,6 mm, fast | Samma rutnät oavsett skanningens täthet (METHODS.md 1, 1e) |
+| Rutnät (`resolution_mm`) | 0,6 mm, fast | Samma rutnät oavsett skanningens täthet (METHODS.md 2, 2e) |
 | Känslighet (`sensitivity`) | 3 (tröskel = max(0,3 mm, 3 × brus)) | Känslighet 2,5 ändrar stenens vinkel med 2,8° i median |
 | Snittavstånd (`spacing_mm`) | 3 mm | |
 | Största spårbredd (`max_halfwidth_mm`) | 8 mm (16 mm bredd) | Bredare partier är sänkta fält eller avflagningar |
 | Harmonisering (`harmonize_mm`) | ingen | |
-| Bara runor (`runes_only`) | ja | Ornamentik, slinglinjer och sprickor mäts inte (METHODS.md 1c, steg 5) |
+| Bara runor (`runes_only`) | ja | Ornamentik, slinglinjer och sprickor mäts inte (METHODS.md 2c, steg 5) |
 | Ytnormal | stenens tunnaste riktning eller den ristade sidan vänd mot kameran | Djupet beror på normalen (0,37 mm vid 5° lutning) |
 
 I appen väljs protokollet med rutan *Vitki-protokollet* i 3D-vyn (standard) och används för huvudanalysen i
@@ -44,7 +44,7 @@ protokollet och vilka avvikelser som gjordes.
 3. **Granska granskningsbilden.** Kontrollera att de mätta punkterna ligger på runor. Uteslut felaktigt mätta
    områden; redovisa hur många punkter som uteslöts för hand och varför.
 4. Kontrollera antalet mätta runor mot riktvärdena: minst 10 för att beskriva stenen, minst 20 för att jämföra
-   den med andra stenar (riktvärden, METHODS.md 2).
+   den med andra stenar (riktvärden, METHODS.md 3).
 5. Spara analysen; proveniensen följer med i export, mätkorpus och rapporter.
 
 ### P5. Minsta redovisning
@@ -66,9 +66,9 @@ Stenrapporten och alla rapportmallar tar med detta.
 
 * Bara stenar mätta enligt samma protokollversion, eller med samma avvikelser.
 * Runor och ornamentik jämförs aldrig med varandra.
-* Ange bergarten. Skillnader mellan stenar av olika bergart kan bero på materialet (METHODS.md 15 och
+* Ange bergarten. Skillnader mellan stenar av olika bergart kan bero på materialet (METHODS.md 16 och
   replikationsstudien).
-* Jämförelser görs med permutationstest och effektstorlek (METHODS.md 3), inte med enstaka snitt.
+* Jämförelser görs med permutationstest och effektstorlek (METHODS.md 4), inte med enstaka snitt.
 * V-vinkel, djup, bredd och djup/bredd är stabila mått; asymmetri och bottenradie bör inte bära slutsatser.
 
 ### P7. Validering och status
@@ -76,8 +76,8 @@ Stenrapporten och alla rapportmallar tar med detta.
 | Del | Status |
 |---|---|
 | Mätningen på syntetiska spår med kända mått | gjord (vinkelfel inom ±0,6°) |
-| Robusthet mot analysens val och skanningens täthet | gjord (8 stenar; METHODS.md 1e) |
-| Riktvärden för antal runor | preliminära (18 stenar; METHODS.md 2) |
+| Robusthet mot analysens val och skanningens täthet | gjord (8 stenar; METHODS.md 2e) |
+| Riktvärden för antal runor | preliminära (18 stenar; METHODS.md 3) |
 | Runigenkänningens träffsäkerhet mot handmärkta facit | **ej gjord** – facit-läge och utvärderingsskript finns |
 | Test–omtest med oberoende skanningar av samma sten | **ej gjord** |
 | Jämförelse med Groove Measure (Kitzler Åhfeldt) | **ej gjord** |

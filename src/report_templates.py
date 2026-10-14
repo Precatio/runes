@@ -1,4 +1,4 @@
-"""Rapportmallar: samma stenanalys i olika publiceringsformer (se METHODS.md, 14e).
+"""Rapportmallar: samma stenanalys i olika publiceringsformer.
 
 Stenrapporten (src/stone_report.py) byggs först i sin fullständiga form. En mall väljer sedan ut, ordnar
 om och kompletterar dess avsnitt för en viss publiceringsform – från tidskriftsartikel och avhandlings-

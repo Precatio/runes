@@ -11,7 +11,7 @@ Kör från projektroten så att `api` och `src` kan importeras:
 
 Skript som anropar Gemini läser nyckeln från miljövariabeln `GEMINI_API_KEY`.
 
-## Engelsk översättning (METHODS.md 14g)
+## Engelsk översättning (METHODS.md 15f)
 
 När svenska texter har ändrats saknas de i den engelska ordlistan och visas på svenska i den engelska versionen.
 Så synkas ordlistan:
@@ -28,7 +28,7 @@ node --experimental-strip-types scripts/i18n.mjs check # platshållarna stämmer
 Rapporttexter som inte syns i appen samlas genom att skapa rapporter och köra varje mening genom
 `src.i18n.translate`; det som saknas hamnar i `src.i18n.MISSING`.
 
-## Lämningar ur Kulturmiljöregistret (METHODS.md 17)
+## Lämningar ur Kulturmiljöregistret (METHODS.md 1c)
 
 Korpusanalysen `remains.R` jämför runstenarnas lägen med Riksantikvarieämbetets registrerade lämningar (gravfält,
 högar, färdvägar, broar, fornborgar, hamnanläggningar). Lämningarna hämtas en gång via K-samsök (RAÄ:s öppna API,
@@ -41,7 +41,7 @@ omkring 53 000 poster, några minuter) till `data/raa/lamningar.csv`, som inte i
 
 Utan filen hoppar `remains.R` över analysen och säger att lämningarna inte är hämtade.
 
-## Ortnamn och medeltida kyrkor (METHODS.md 17)
+## Ortnamn och medeltida kyrkor (METHODS.md 1d)
 
 `remains.R` jämför också stenarnas budskap med ortnamn som kan tyda på förkristen kult. Ortnamnen plockas ur
 OpenStreetMaps utdrag för Sverige (Lantmäteriets ortnamn, omkring 900 MB, hämtas en gång till `data/cache/osm/`) med GDAL,

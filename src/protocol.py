@@ -9,7 +9,7 @@ VERSION = "vitki-groove-1-utkast"  # blir "vitki-groove-1" när protokollet lås
 METHOD_VERSION = "groove-5"  # mätmetoden protokollet gäller (api/config.py; kontrolleras i testerna)
 
 # Parametrar för analyze_grooves. Rutnätet är fast (inte skanningens egen upplösning), så att stenar skannade med
-# olika punkttäthet mäts på samma sätt (METHODS.md 1, 1e).
+# olika punkttäthet mäts på samma sätt (METHODS.md 2, 2e).
 PARAMETERS = {
     "resolution_mm": 0.6,
     "sensitivity": 3.0,
@@ -46,5 +46,5 @@ def compliance(parameters: dict, method_version: str | None = None) -> dict:
     spacing = parameters.get("mesh_point_spacing_mm")
     if spacing and spacing == spacing and spacing > MAX_MESH_SPACING_MM:  # NaN-safe
         notes.append(f"skanningens punktavstånd {spacing:.2f} mm är större än rekommenderade {MAX_MESH_SPACING_MM} mm; "
-                     "resultaten är mindre säkra (METHODS.md 1e)")
+                     "resultaten är mindre säkra (METHODS.md 2e)")
     return {"version": VERSION, "compliant": not deviations, "deviations": deviations, "notes": notes}
