@@ -10,7 +10,7 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   skepp och kors, och de flesta runorna i banden var en enda stav. Stenens medelvärden påverkades inte. Tre
   regeländringar prövades på sju stenar och förkastades, eftersom de hjälpte vittrade stenar men tappade runor på
   välbevarade; reglerna ändras först när handmärkta facit finns.
-- Statistik i R: när operativsystemet avbryter R (oftast minnesbrist) säger felet det, i stället för ett tomt
+- Statistik i R: när R avbryts av en signal (minnesbrist, krasch) säger felet vilken, i stället för ett tomt
   meddelande (`src/r_bridge.py`).
 
 ### Läsningar med några få runor räknas inte som bekräftade
