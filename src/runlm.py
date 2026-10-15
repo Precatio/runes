@@ -395,6 +395,84 @@ class CharModel:
         return sum(math.log((self.c3[s[i - 2:i + 1]] + 0.1) / (self.c2[s[i - 2:i]] + 0.1 * V)) for i in range(2, len(s)))
 
 
+# ---- names: two elements and an ending (Ás-bjǫrn-aʀ), for names the vocabulary has never seen -----------------------
+NAME_ENDINGS = ["aR", "iR", "uR", "ar", "ir", "ur", "R", "r", "s", "a", "i", "u", ""]
+
+
+class NameModel:
+    """Names as first element + second element + ending, or as a simple stem + ending, learned from the names in the
+    training texts (Rundata marks names with a quotation mark). Each part is spelled with the spelling model; a name
+    the vocabulary does not know can then still be read, e.g. osbiarnaR as as + biarn + aR."""
+    def __init__(self, names, spell, min_share=3):
+        def stem(n):
+            for e in NAME_ENDINGS:
+                if e and n.endswith(e) and len(n) - len(e) >= 3:
+                    return n[:-len(e)], e
+            return n, ""
+        stems, ends = Counter(), Counter()
+        for n, c in names.items():
+            st, e = stem(n)
+            stems[st] += c
+            ends[e] += c
+        pre, suf = Counter(), Counter()
+        for st in stems:
+            for i in range(2, len(st) - 2):
+                pre[st[:i]] += 1
+                suf[st[i:]] += 1
+        first, second, simple = Counter(), Counter(), Counter()
+        for st, c in stems.items():
+            best = None
+            for i in range(2, len(st) - 2):
+                a, b = st[:i], st[i:]
+                if pre[a] >= min_share and suf[b] >= min_share:
+                    sc = min(pre[a], suf[b])
+                    if not best or sc > best[0]:
+                        best = (sc, a, b)
+            if best:
+                first[best[1]] += c
+                second[best[2]] += c
+            else:
+                simple[st] += c
+        tot = sum(stems.values()) or 1
+        self.p_compound = sum(first.values()) / tot
+        norm = lambda cnt: {k: (v + 0.5) / (sum(cnt.values()) + 0.5 * len(cnt)) for k, v in cnt.items()}
+        self.first, self.second, self.simple, self.ends = norm(first), norm(second), norm(simple), norm(ends)
+        self.idx = {}
+        for part, table in (("F", self.first), ("S", self.second), ("X", self.simple), ("E", self.ends)):
+            ix = defaultdict(dict)
+            for w in table:
+                for sp, p in (spell.expand(w).items() if w else [("", 1.0)]):
+                    if p > 0.01:
+                        ix[sp][w] = p
+            self.idx[part] = ix
+        self._cache = {}
+
+    def candidates(self, s, top=5):
+        """{normalized name: P(name) · P(runes | name)} for names composed of known parts that spell s."""
+        if s in self._cache:
+            return self._cache[s]
+        out = defaultdict(float)
+        F, S, X, E = self.idx["F"], self.idx["S"], self.idx["X"], self.idx["E"]
+        n = len(s)
+        for j in range(2, n + 1):  # the stem ends at j, the ending is s[j:]
+            ends = E.get(s[j:])
+            if not ends:
+                continue
+            for e, pe in ends.items():
+                q = self.ends[e] * pe
+                for x, px in X.get(s[:j], {}).items():
+                    out[x + e] += (1 - self.p_compound) * self.simple[x] * px * q
+                for i in range(2, j - 1):
+                    fs, ss = F.get(s[:i]), S.get(s[i:j])
+                    if fs and ss:
+                        for f, pf in fs.items():
+                            for g, pg in ss.items():
+                                out[f + g + e] += self.p_compound * self.first[f] * pf * self.second[g] * pg * q
+        res = dict(sorted(out.items(), key=lambda kv: -kv[1])[:top])
+        self._cache[s] = res
+        return res
+
+
 class Ctx:
     """Where an inscription is read from: its path in the spelling tree (era, phase, epoch, area, region, carver),
     the choice table for that path and, after adaptation, the stone's own table."""
@@ -406,7 +484,7 @@ class Ctx:
 
 class Model:
     def __init__(self, recs, edda_tokens=(), lam_edda=0.03, lam_unk=0.01, D=0.75, d=None, kappa=2.0, exclude=(),
-                 aligned=False, contexts=False, alpha=20.0, kappa_e=5.0, lm_beta=0.0, spelling_recs=()):
+                 aligned=False, contexts=False, alpha=20.0, kappa_e=5.0, lm_beta=0.0, spelling_recs=(), lam_name=0.0):
         """recs: Viking-Age inscriptions for the language and spelling. aligned: also use sections whose word counts
         differ (step 2). contexts: spelling by era, epoch, area, region and carver, and word sequences by epoch (step 3);
         alpha is how many observations a level needs to outweigh the level above it. spelling_recs: further inscriptions
@@ -505,6 +583,27 @@ class Model:
                 if p > 1e-4:
                     self.index[s][w] = p
         self.maxlen = max(len(s) for s in self.index)
+        # names the vocabulary has never seen (lam_name > 0): composed of name elements; how likely a name is after a
+        # given word is learned from where names stand in the training texts
+        self.lam_name, self.names = lam_name, None
+        if lam_name:
+            nm, after, after_all = Counter(), Counter(), Counter()
+            for r in recs:
+                for _, p in sections(r.get("normalization")):
+                    toks = re.findall(r'("?)([^\s,.;:!?/()\[\]"]+)', re.sub(r"<([^>]*)>", r"\1", p))
+                    prev = "<s>"
+                    for q, w in toks:
+                        if not re.search(r"\w", w):
+                            continue
+                        w = normtok(w)
+                        after_all[prev] += 1
+                        if q:
+                            nm[w] += 1
+                            after[prev] += 1
+                        prev = w
+            self.names = NameModel(nm, self.spell)
+            self.name_f0 = sum(after.values()) / max(1, sum(after_all.values()))
+            self.name_after = {w: (after[w] + 5 * self.name_f0) / (after_all[w] + 5) for w in after_all}
 
     def p_word(self, w, prev, ep=None):
         """P(w | prev) for a lexicon word (the unknown word is handled separately); with an epoch, the epoch's own
@@ -576,7 +675,7 @@ class Model:
             if ck in self._cand:
                 out = dict(self._cand[ck])
                 out["<unk>"] = math.exp(self.char.logp(s))
-                return out
+                return self._with_names(s, out)
             if len(self._cand) > 400000:  # keep the cache bounded
                 self._cand.clear()
             out = {}
@@ -591,7 +690,19 @@ class Model:
                     out[w] = p
             self._cand[ck] = dict(out)
         out["<unk>"] = math.exp(self.char.logp(s))
+        return self._with_names(s, out)
+
+    def _with_names(self, s, out):
+        """Add names composed of name elements (marked §) that the vocabulary does not have."""
+        if self.names is not None and len(s) >= 3:
+            for w, p in self.names.candidates(s).items():
+                if w not in out:
+                    out["§" + w] = p
         return out
+
+    def p_name(self, prev):
+        """P(a name the vocabulary does not know | previous word)."""
+        return self.lam_name * self.name_after.get(prev, self.name_f0) / self.name_f0
 
 
 def key(w):
@@ -599,7 +710,7 @@ def key(w):
     (stæinn = sten = steinn, sin = sinn, þøsi = þausi, faður = faþur), but different words kept apart."""
     if w == "<unk>":
         return w
-    w = unicodedata.normalize("NFD", w.lower())
+    w = unicodedata.normalize("NFD", w.lstrip("§").lower())
     w = "".join(ch for ch in w if unicodedata.category(ch) != "Mn")
     for a, b in (("ð", "þ"), ("w", "v"), ("ǫ", "o"), ("ø", "o"), ("œ", "o"), ("æi", "e"), ("ei", "e"), ("ai", "e"),
                  ("au", "o"), ("ey", "o"), ("oy", "o"), ("æ", "e"), ("y", "u"), ("pt", "ft")):
@@ -639,7 +750,7 @@ def posteriors(model, groups, signs=(), lexicon=True, ctx=None):
     def lt(w, prev):
         k = (w, prev)
         if k not in ltrans:
-            p = model.lam_unk if w == "<unk>" else model.p_word(w, prev, ep)
+            p = model.lam_unk if w == "<unk>" else model.p_name(prev) if w[0] == "§" else model.p_word(w, prev, ep)
             ltrans[k] = math.log(p) if p > 0 else float("-inf")
         return ltrans[k]
 
@@ -761,3 +872,22 @@ def decode_epochs(model, groups, signs=(), path=None, adapt=0.0, prior=None):
         for k, p in post.items():
             mix[k] += ep_post[e] * p
     return m + math.log(tot), best_path(mix, len(text)), dict(mix), text, ep_post, ll
+
+
+def epoch_posterior(ll, prior=None, temperature=1.0):
+    """P(epoch | text) from log P(text | epoch), with the epochs' prior (None: equal priors), softened by a temperature
+    fitted on the dating test (scripts/runlm_dating.py), so that a stated certainty matches how often it is right."""
+    v = {e: (ll[e] + (math.log(prior[e] / sum(prior.values())) if prior else 0.0)) / temperature for e in EPOCHS}
+    mx = max(v.values())
+    z = sum(math.exp(x - mx) for x in v.values())
+    return {e: math.exp(x - mx) / z for e, x in v.items()}
+
+
+def fit_temperature(rows, use_prior=True):
+    """The temperature that minimises the log loss of the dating on held-out inscriptions (rows from
+    scripts/runlm_dating.py: {'true', 'll', 'prior'})."""
+    def loss(t):
+        return -sum(math.log(max(epoch_posterior(x["ll"], x["prior"] if use_prior else None, t)[x["true"]], 1e-12))
+                    for x in rows) / len(rows)
+    grid = [1.0 * 1.15 ** k for k in range(0, 40)]
+    return min(grid, key=loss)

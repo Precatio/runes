@@ -81,3 +81,28 @@ def test_epochs_are_weighed_by_how_probable_the_text_is():
     _, path, post, text, ep_post, ll = decode_epochs(m, ["þurir", "rist", "stin", "þansi", "eftiR", "faþur", "sin"])
     assert abs(sum(ep_post.values()) - 1) < 1e-9 and set(ll) == set(EPOCHS)
     assert ep_post["1100"] > ep_post["800"]
+
+
+def test_a_name_never_seen_is_composed_of_known_name_elements():
+    from collections import Counter
+    from src.runlm import NameModel, Spelling
+    seen = Counter({"þorbiorn": 3, "þorstæinn": 3, "þorulfR": 3, "asbiorn": 3, "asstæinn": 2, "asulfR": 2,
+                    "sigbiorn": 2, "sigulfR": 2, "gunnbiorn": 2, "gunnstæinn": 2, "gunnmundr": 1, "asmundr": 1})
+    nm = NameModel(seen, Spelling([]))
+    assert {"þor", "as"} <= set(nm.first) and {"biorn", "stæinn"} <= set(nm.second)
+    got = nm.candidates("kunulfR")  # Gunnulfr is not among the names seen
+    assert "gunnulfR" in got
+
+
+def test_an_overconfident_dating_is_softened():
+    import random
+    from src.runlm import EPOCHS, epoch_posterior, fit_temperature
+    rng = random.Random(1)
+    rows = []
+    for _ in range(300):  # the model always says 'sure', but is right only 60 % of the time
+        true = rng.choice(EPOCHS)
+        said = true if rng.random() < 0.6 else rng.choice([e for e in EPOCHS if e != true])
+        rows.append({"true": true, "ll": {e: (0.0 if e == said else -12.0) for e in EPOCHS}, "prior": {e: 1 for e in EPOCHS}})
+    T = fit_temperature(rows, use_prior=False)
+    p = epoch_posterior(rows[0]["ll"], None, T)
+    assert T > 3 and 0.45 < max(p.values()) < 0.75

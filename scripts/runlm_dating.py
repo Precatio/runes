@@ -24,6 +24,7 @@ ap.add_argument("--min_runes", type=int, default=10)
 ap.add_argument("--alpha", type=float, default=20.0)
 ap.add_argument("--kappa_e", type=float, default=5.0)
 ap.add_argument("--lm_beta", type=float, default=0.0)
+ap.add_argument("--lam_name", type=float, default=0.0)
 ap.add_argument("--folds", type=int, nargs="*", default=None)
 ap.add_argument("--out", default=None)
 args = ap.parse_args()
@@ -59,7 +60,7 @@ for k in folds:
     test = tests[k::K]
     tset = {r["signum"] for r in test}
     m = Model([r for r in V if r["signum"] not in tset], edda_tokens=ET, aligned=True, contexts=True, alpha=args.alpha,
-              kappa_e=args.kappa_e, lm_beta=args.lm_beta)
+              kappa_e=args.kappa_e, lm_beta=args.lm_beta, lam_name=args.lam_name)
     prior = {e: (m.epoch_prior[e] or 1) for e in EPOCHS}
     for r in test:
         groups, signs = readable(r)

@@ -6,7 +6,7 @@ som den står för (lika förhand). För varje ord ges modellens sannolikhet och
 (malt_avkod_kalibrering.json). Modellen byggs med samma inställningar som i provet; om epoken gissas ur texten
 (steg 3) dateras Maltstenen också: hur sannolik är texten på 800-talet, 900-talet, 1000–1070 och 1070–1150?
 Skriver malt_avkodning.json.
-    .venv/bin/python -m scripts.malt_decode"""
+    .venv/bin/python -m scripts.malt_decode [--dating-only]"""
 import itertools
 import json
 import math
@@ -15,12 +15,39 @@ import sys
 from collections import Counter
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from src.runlm import (EPOCHS, Model, context, decode, decode_epochs, edda_tokens, key, load_rundata, norm_words,  # noqa: E402
-                       normtok, pairs, runekey, sections, viking)
+from src.runlm import (EPOCHS, Model, context, decode, decode_epochs, edda_tokens, epoch_posterior, fit_temperature,  # noqa: E402
+                       key, load_rundata, norm_words, normtok, pairs, runekey, sections, viking)
 
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "utdata", "Malt")
 MALT = "DR NOR1988;5"
 CAL = json.load(open(os.path.join(OUT, "malt_avkod_kalibrering.json")))
+
+
+def calibrated_dating(ll_malt, prior):
+    """The Malt stone's dating with a temperature fitted on the dating test (utdata/Malt/runlm_datering.json)."""
+    drows = json.load(open(os.path.join(OUT, "runlm_datering.json")))["rows"]
+    out = {}
+    for mode, use_prior in (("prior", True), ("uniform", False)):
+        T = fit_temperature(drows, use_prior)
+        rel = []
+        for lo, hi in ((0, 0.4), (0.4, 0.6), (0.6, 0.8), (0.8, 1.01)):
+            sub = [(x, epoch_posterior(x["ll"], x["prior"] if use_prior else None, T)) for x in drows]
+            sub = [(x, p) for x, p in sub if lo <= max(p.values()) < hi]
+            rel.append((lo, len(sub), sum(max(p.values()) for _, p in sub) / max(1, len(sub)),
+                        sum(max(p, key=p.get) == x["true"] for x, p in sub) / max(1, len(sub))))
+        post = epoch_posterior(ll_malt, prior if use_prior else None, T)
+        out[mode] = {"temperature": T, "posterior": post, "reliability": rel}
+        print(f"kalibrerad datering ({mode}, temperatur {T:.2f}):", {e: f"{p:.0%}" for e, p in post.items()},
+              "| säkerhet → träff:", [(f"{p:.2f}", f"{a:.2f}", n) for _, n, p, a in rel])
+    return out
+
+
+if "--dating-only" in sys.argv:  # recompute the calibrated dating from a finished reading
+    path = os.path.join(OUT, "malt_avkodning.json")
+    res_ = json.load(open(path))
+    res_["epoch_cal"] = calibrated_dating(res_["epoch_ll"], res_["epoch_prior"])
+    json.dump(res_, open(path, "w"), ensure_ascii=False, indent=1, default=str)
+    sys.exit()
 RECS = load_rundata()
 V = [r for r in RECS if viking(r) and r.get("transliteration") and r.get("normalization") and r["signum"] != MALT]
 CFG = CAL.get("config", {})
@@ -33,7 +60,7 @@ MALT_PATH = context(next(r for r in RECS if r["signum"] == MALT))[:CFG.get("leve
 def build(lam_unk, lam_edda):
     return Model(V, edda_tokens=edda_tokens(), lam_unk=lam_unk, lam_edda=lam_edda, aligned=CFG.get("aligned", False),
                  contexts=CFG.get("contexts", False), alpha=CFG.get("alpha", 20.0), kappa_e=CFG.get("kappa_e", 5.0),
-                 lm_beta=CFG.get("lm_beta", 0.0), spelling_recs=MED)
+                 lm_beta=CFG.get("lm_beta", 0.0), spelling_recs=MED, lam_name=CFG.get("lam_name", 0.0))
 
 
 def read(model, groups, signs):
@@ -170,7 +197,7 @@ for lu, le in ((0.003, 0.03), (0.03, 0.03), (0.01, 0.0), (0.01, 0.1)):
 
 # Dating: P(epoch | text), summed over the combinations of the disputed runes; with the epochs' share in training as
 # prior, and with equal priors (only the text speaks)
-epoch_post = epoch_uniform = None
+epoch_post = epoch_uniform = epoch_cal = lu_ = None
 if EPOCH_MODE == "inferred":
     epoch_post = {e: sum(math.exp(lz[v] - mx) / Zs * res[v][5][e] for v in res) for e in EPOCHS}
     lu_ = {e: _lse_list([res[v][6][e] for v in res]) for e in EPOCHS}
@@ -180,6 +207,8 @@ if EPOCH_MODE == "inferred":
     print("datering av Maltstenen (med förhand):", {e: f"{p:.0%}" for e, p in epoch_post.items()})
     print("datering av Maltstenen (lika förhand):", {e: f"{p:.0%}" for e, p in epoch_uniform.items()})
     print("förhand (andel i träningen):", dict(m.epoch_prior))
+    if os.path.exists(os.path.join(OUT, "runlm_datering.json")):
+        epoch_cal = calibrated_dating(lu_, dict(m.epoch_prior))
 
 # How is 'ok' spelled? (B4:1 = k gives uk; with a, the lone u would have to be ok)
 okc = Counter(runekey(a_) for r in V for a_, b_ in pairs(r, CFG.get("aligned", False)) if normtok(b_) == "ok")
@@ -193,7 +222,8 @@ for w in ("stæin", "kumbl"):
 print("stavningsexempel:", {w: [(s_, round(p_, 2)) for s_, p_ in v] for w, v in spell_ex.items()})
 n_pair_inscr = m.n_pair_inscriptions
 
-json.dump({"config": CFG, "epoch_post": epoch_post, "epoch_uniform": epoch_uniform, "epoch_prior": dict(m.epoch_prior),
+json.dump({"config": CFG, "epoch_post": epoch_post, "epoch_uniform": epoch_uniform, "epoch_cal": epoch_cal, "epoch_ll": lu_,
+           "epoch_prior": dict(m.epoch_prior),
            "spell_examples": spell_ex, "n_train": len(V), "n_pair_inscriptions": n_pair_inscr, "ok_spellings": dict(okc),
            "exp_right": exp_right, "n_known": len(pcs), "n_unk": n_unk, "all_right": all_right, "forced_all": forced_all, "strong": strong,
            "sensitivity": sens, "points": point_post, "best": list(best_v), "best_share": math.exp(lz[best_v] - mx) / Zs, "reading": R, "forced": F,

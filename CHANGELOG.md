@@ -12,6 +12,9 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 - Epoker: stavning och ordföljd efter fas (tidig/sen vikingatid), epok (800-talet, 900-talet, 1000–1070,
   1070–1150), trakt, landskap och ristare. När epoken är okänd vägs läsningarna i de fyra epokerna, vilket också
   daterar texten: rätt epok i 58 % av 2 046 daterade inskrifter (44 % för den vanligaste epoken).
+- Namn: namn som ordförrådet saknar sätts ihop av namnled ur träningstexternas namn (`NameModel`). Namn stod för
+  59 % av felen; rätt lästa ord +1,42 procentenheter, till 83,5 % (+2,12 mot första versionen).
+- Dateringens säkerhet kalibreras med en temperatur skattad på dateringsprovet (`fit_temperature`).
 - `scripts/runlm_compare.py` jämför två prov sten för sten; `scripts/runlm_dating.py` prövar dateringen.
 - Prövat och inte infört: medeltida inskrifter som stavningsdata och anpassning till den enskilda stenen (ingen
   mätbar vinst). METHODS.md, avsnitt 8.1.

@@ -776,6 +776,19 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     vikingatid: balanserad träff 65–69 %. 800-talet har bara 16 provstenar och känns igen i 0 av 16 med
     epokernas andel som förhandschans och i 9 av 16 med lika förhandschanser. Dateringens säkerhet är för hög
     (säger 98 %, rätt i 81 %).
+* **Namn (2026-10-15):** namn som ordförrådet saknar sätts ihop av namnled (`NameModel`): förled + efterled +
+  ändelse (Ás-bjǫrn-aʀ) eller enkel stam + ändelse. Leden tas automatiskt ur namnen i träningstexterna (ord som
+  Rundata märker med citattecken): ett led räknas om det förekommer i minst tre olika namn. Varje led stavas med
+  stavningsmodellen. Ett sammansatt namn får sannolikheten λ · f(föregående ord) / f₀, där f är hur ofta ett namn
+  följer ordet i träningen och f₀ andelen namn överlag; λ = 0,05 (prövat 0,005–0,4 på första delprovet).
+  Felanalysen före namnmodellen: namn stod för 59 % av felen (25 % av namnen lästes fel, mot 8 % av vanliga ord).
+  Med namnmodellen: 83,5 % rätt ord (+1,42 procentenheter mot steg 3, 95 %: +1,09 till +1,74; 150 stenar bättre,
+  19 sämre) och 93,9 % rätta ordgränser (+1,32). Mot steg 1: +2,12 och +1,88 procentenheter.
+* **Kalibrerad datering:** dateringens sannolikheter mjukas upp med en temperatur T, skattad så att
+  logförlusten på dateringsprovet blir minst (`fit_temperature`, `epoch_posterior`), så att en angiven säkerhet
+  motsvarar hur ofta dateringen stämmer.
+* **Provets facit underskattar modellen något:** Rundata normaliserar samma ord olika i olika delar av materialet
+  (*ræisti*/*resþi*, *þænsi*/*þannsi*, *hialpi*/*hiælpi*); när modellen väljer den andra formen räknas det som fel.
 
 ## 9. Språkdrag (fonetisk stil och språkbruk)
 

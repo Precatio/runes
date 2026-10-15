@@ -37,6 +37,7 @@ ap.add_argument("--adapt", type=float, default=0.0)
 ap.add_argument("--alpha", type=float, default=20.0)
 ap.add_argument("--kappa_e", type=float, default=5.0)
 ap.add_argument("--lm_beta", type=float, default=0.0)
+ap.add_argument("--lam_name", type=float, default=0.0, help="vikt för namn som modellen sätter ihop av namnled (0 = av)")
 ap.add_argument("--lam_unk", type=float, default=0.01)
 ap.add_argument("--lam_edda", type=float, default=0.03)
 ap.add_argument("--levels", type=int, default=5, help="nivåer i stavningsträdet: 1 era, 2 +fas, 3 +epok, 4 +trakt, 5 +landskap, 6 +ristare")
@@ -91,7 +92,7 @@ for k in folds:
     tset = {r["signum"] for r, _ in test}
     m = Model([r for r in V if r["signum"] not in tset], edda_tokens=ET, lam_unk=args.lam_unk, lam_edda=args.lam_edda,
               aligned=args.aligned, contexts=args.contexts, alpha=args.alpha, kappa_e=args.kappa_e, lm_beta=args.lm_beta,
-              spelling_recs=MED)
+              spelling_recs=MED, lam_name=args.lam_name)
     m.use_epoch_lm = bool(args.epoch_lm)
     freq = Counter(normtok(b) for r in V if r["signum"] not in tset for _, p in sections(r["normalization"]) for b in norm_words(p))
     fk = Counter()
@@ -195,7 +196,8 @@ print(f"kalibreringsfel: rå {ece_raw:.3f}, kalibrerad {ece:.3f}; koefficienter 
 unk = [x for x in rows if x["unk"]]
 print(f"märkta okända: {len(unk)}; av dem rätt gräns {acc(unk, 'span'):.1%}; tid {time.time() - t0:.0f} s")
 config = {"aligned": args.aligned, "contexts": args.contexts, "epoch": args.epoch, "medieval": args.medieval, "adapt": args.adapt,
-          "alpha": args.alpha, "kappa_e": args.kappa_e, "lm_beta": args.lm_beta, "levels": args.levels, "epoch_lm": args.epoch_lm}
+          "alpha": args.alpha, "kappa_e": args.kappa_e, "lm_beta": args.lm_beta, "levels": args.levels, "epoch_lm": args.epoch_lm,
+          "lam_name": args.lam_name}
 json.dump({"config": config, "folds": folds, "lam_unk": args.lam_unk, "lam_edda": args.lam_edda, "n_inscriptions": len(cands),
            "n_gold": len(gold_rows), "exact": acc(gold_rows), "same": acc(gold_rows, "same"), "span": acc(gold_rows, "span"),
            "same_seen": acc(seen, "same"), "n_unseen": len(unseen), "unseen_span": acc(unseen, "span"),
