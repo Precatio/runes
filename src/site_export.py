@@ -22,6 +22,8 @@ import sys
 import threading
 import time
 
+from src import spawn
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONTENT = os.path.join(ROOT, "web", "content", "articles.json")
 FIGURES = os.path.join(ROOT, "web", "public", "figurer")
@@ -59,7 +61,7 @@ def export(posts: list[dict], now_iso: str) -> dict:
 
 
 def _git(*args: str) -> subprocess.CompletedProcess:
-    return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True, timeout=120)
+    return spawn.run(["git", *args], cwd=ROOT, capture_output=True, text=True, timeout=120)  # src/spawn.py: no fork
 
 
 def _step(name: str, *args: str, tries: int = 1) -> subprocess.CompletedProcess:

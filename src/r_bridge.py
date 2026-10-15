@@ -24,6 +24,7 @@ import zipfile
 from datetime import datetime, timezone
 
 from src import research_gaps as gaps
+from src import spawn
 from src.inscription_types import CATEGORIES, categories
 from src.language_profile import TRAITS, ai_counts, dotted_counts, o_counts, och_counts, prayer_form, r_counts, traits
 from src.orthography import features
@@ -117,7 +118,7 @@ def status() -> dict:
             % ", ".join(f'"{p}"' for p in REQUIRED_PACKAGES))
     libpaths: list[str] = []
     try:
-        out = subprocess.run([rscript(), "--vanilla", "-e", code], capture_output=True, text=True, timeout=120)
+        out = spawn.run([rscript(), "--vanilla", "-e", code], capture_output=True, text=True, timeout=120)
         info = json.loads(out.stdout.strip().splitlines()[-1])
         missing = info["missing"] if isinstance(info["missing"], list) else [info["missing"]]
         libpaths = info["libpaths"] if isinstance(info.get("libpaths"), list) else [info.get("libpaths")]
@@ -379,8 +380,8 @@ def run_module(module: str, params: dict, out_dir: str, timeout: int = 3600) -> 
     params_path = os.path.join(out_dir, f"{module}_params.json")
     with open(params_path, "w", encoding="utf-8") as fh:
         json.dump(params, fh, ensure_ascii=False)
-    proc = subprocess.run([rscript(), "--vanilla", os.path.join(R_DIR, f"{module}.R"), params_path, out_dir],
-                          capture_output=True, text=True, timeout=timeout, cwd=ROOT,
+    proc = spawn.run([rscript(), "--vanilla", os.path.join(R_DIR, f"{module}.R"), params_path, out_dir],
+                     capture_output=True, text=True, timeout=timeout, cwd=ROOT,  # src/spawn.py: no fork
                           env={**os.environ, "LANG": "en_US.UTF-8", "LC_ALL": "en_US.UTF-8"})
     log = (proc.stdout or "") + (proc.stderr or "")
     with open(os.path.join(out_dir, f"{module}.log"), "w", encoding="utf-8") as fh:
@@ -509,7 +510,7 @@ def run_corpus(fp: str):
                 errors[m] = str(e)
         session = ""
         try:
-            session = subprocess.run([rscript(), "--vanilla", "-e", "sessionInfo()"], capture_output=True,
+            session = spawn.run([rscript(), "--vanilla", "-e", "sessionInfo()"], capture_output=True,
                                      text=True, timeout=120).stdout
         except Exception:
             pass

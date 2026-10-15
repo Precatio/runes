@@ -5,6 +5,11 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Publicerade artiklar når webbplatsen igen
+- Analysmotorn startar git och Rscript med posix_spawn i stället för att kopiera sin egen process (`src/spawn.py`).
+  I den långkörande motorn dog git och R med signal 11, så en publicerad artikel (Maltstenen, 15 oktober) skrevs
+  till `web/content/articles.json` men pushades aldrig, och R-modulerna föll på samma sätt.
+
 ### Runtextmodellen, steg 2 och 3: fler stenar och epoker
 - Fler ordpar: avsnitt där ordantalen skiljer sig radas upp ord för ord (`align`), så att skadade och återställda
   ord inte längre kostar hela avsnittet. 27 218 ordpar från 2 877 inskrifter i stället för 17 341 från 1 479;
