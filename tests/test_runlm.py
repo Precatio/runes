@@ -51,3 +51,33 @@ def test_a_divider_is_evidence_for_a_word_boundary():
     with_div = decode(m, ["stain", "þansi"])[0]
     without = decode(m, ["stainþansi"])[0]
     assert m.d > 0.5 and with_div > without
+
+
+def test_dating_strings_and_epochs():
+    from src.runlm import epoch, years
+    assert years("V 1065-1075") == (1065, 1075) and years("V s 1000-t") == (1066, 1099)
+    assert years("V inte före 915/920") == (915, 965) and years("V Helnæs-Gørlev") == (750, 900)
+    assert epoch({"period": "V", "dating": "V 800-t"}) == "800"
+    assert epoch({"period": "V", "dating": "V", "style": "Pr4"}) == "1100"
+    assert epoch({"period": "V", "dating": "V 800-900-t"}) is None  # too wide to place
+    assert epoch({"period": "M", "dating": "M"}) == "M"
+
+
+def test_alignment_survives_damaged_and_restored_words():
+    from src.runlm import align
+    got = align(["þurir", "...", "stain", "þansi", "----", "faþur"], ["Þorir", "ræisti", "stæin", "þannsi", "æft", "faður"])
+    assert ("þurir", "Þorir") in got and ("stain", "stæin") in got and ("faþur", "faður") in got
+    assert all(a[0] != "." and a[0] != "-" for a, _ in got)
+
+
+def test_epochs_are_weighed_by_how_probable_the_text_is():
+    from src.runlm import EPOCHS, decode_epochs
+    early = [dict(r, dating="V 800-t", signum=f"E {i}") for i, r in enumerate(RECS[:4])]
+    late = [_rec(f"L {i}", "þurir : rist : stin : þansi : eftiR : faþur : sin", "Þorir ræisti stæin þannsi æftiR faður sinn.")
+            for i in range(4)]
+    for r in late:
+        r["dating"] = "V 1100-t"
+    m = Model(early + late, contexts=True, aligned=True)
+    _, path, post, text, ep_post, ll = decode_epochs(m, ["þurir", "rist", "stin", "þansi", "eftiR", "faþur", "sin"])
+    assert abs(sum(ep_post.values()) - 1) < 1e-9 and set(ll) == set(EPOCHS)
+    assert ep_post["1100"] > ep_post["800"]

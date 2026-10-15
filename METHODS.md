@@ -721,7 +721,8 @@ Källkod: `api/routers/phonetics.py`, `src/reading.py`.
 
 ### 8.1 Sannolikhetsmodell för runtext
 
-Källkod: `src/runlm.py`; prov: `scripts/runlm_calibrate.py`; tillämpning på Maltstenen: `scripts/malt_decode.py`.
+Källkod: `src/runlm.py`; prov: `scripts/runlm_calibrate.py`, `scripts/runlm_compare.py` och `scripts/runlm_dating.py`;
+tillämpning på Maltstenen: `scripts/malt_decode.py`.
 
 Modellen läser en inskrifts huggna grupper (runorna mellan stenens egna skiljetecken, utan Rundatas ordgränser)
 och anger för varje möjligt ord hur sannolikt det är, utan att använda någon tolkning av inskriften.
@@ -751,6 +752,30 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
 * **Begränsningar:** modellen känner bara ord som finns i Rundata eller Eddan, och namn i ovanlig stavning blir
   okända (t.ex. *uifrþuʀ* på Maltstenen). Sannolikheten för en hel läsning räknas som produkten av ordens
   kalibrerade sannolikheter och förutsätter oberoende; den är en storleksordning.
+* **Steg 2 – fler ordpar (2026-10-15):** avsnitt där Rundatas ordantal i translittereringen och normaliseringen
+  skiljer sig (skadade, återställda eller sammanskrivna ord) radas upp med dynamisk programmering (1:1, överhopp,
+  2:1 och 1:2) över grova ljudklasser; ett par räknas bara om orden är runor och likheten minst 0,6 (`align`).
+  Prövad på avsnitt där svaret är känt: precision 99,9 %, täckning 98,0 %. Ordparen ökar från 17 341 i 1 479
+  inskrifter till 27 218 i 2 877. Rätt ord ökar med 0,84 procentenheter (95 % intervall med stenarna omdragna
+  +0,56 till +1,12; 103 stenar bättre, 38 sämre, teckentest p = 4·10⁻⁸). Medeltida inskrifter som extra
+  stavningsdata gav +0,07 procentenheter (ej skiljbart från slumpen) och används inte.
+* **Steg 3 – epoker, trakt och ristare (2026-10-15):** varje inskrift får en plats i ett träd: era (vikingatid,
+  medeltid) → fas (tidig: 800- och 900-talet; sen: 1000–1150) → epok (800-talet, 900-talet, 1000–1070, 1070–1150)
+  → trakt (Danmark, Svealand, Götaland …) → landskap (signumets prefix) → ristare (`context`). Epoken tas ur Rundatas
+  datering (spann över 120 år räknas som okänt) eller, för svenska stenar, ur stilgruppen (RAK, Fp, Pr1–Pr5).
+  Stavningens regelval skattas för varje nod och dras mot noden ovanför (Dirichlet, α = 100); ordens faktiska
+  stavningar per epok vägs mot hela vikingatiden (κ = 50); ordföljden per epok backar till fasen och hela
+  vikingatiden med en dämpning h/(h + 200), där h är hur ofta föregående ord förekommer i epoken.
+  När epoken inte är känd läses texten i alla fyra epokerna och läsningarna vägs efter hur sannolik texten är i
+  varje epok (`decode_epochs`); det är också modellens datering. Ristaren används inte vid datering.
+  * Läsning: med gissad epok 82,1 % rätt ord (−0,14 procentenheter mot steg 2, ej skiljbart från slumpen) och
+    92,6 % rätta ordgränser (+0,27, p = 0,0002). Utan dämpningen blev orden 0,2–0,4 procentenheter sämre. En
+    anpassning till den enskilda stenens stavning (EM på en första läsning) ändrade ingenting och används inte.
+  * Datering (`scripts/runlm_dating.py`, femfaldigt prov på 2 046 daterade inskrifter med minst 10 läsbara runor):
+    rätt epok i 58 % (att alltid gissa den vanligaste epoken ger 44 %), högst en epok fel i 93 %. Tidig mot sen
+    vikingatid: balanserad träff 65–69 %. 800-talet har bara 16 provstenar och känns igen i 0 av 16 med
+    epokernas andel som förhandschans och i 9 av 16 med lika förhandschanser. Dateringens säkerhet är för hög
+    (säger 98 %, rätt i 81 %).
 
 ## 9. Språkdrag (fonetisk stil och språkbruk)
 

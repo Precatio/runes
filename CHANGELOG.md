@@ -5,6 +5,17 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Runtextmodellen, steg 2 och 3: fler stenar och epoker
+- Fler ordpar: avsnitt där ordantalen skiljer sig radas upp ord för ord (`align`), så att skadade och återställda
+  ord inte längre kostar hela avsnittet. 27 218 ordpar från 2 877 inskrifter i stället för 17 341 från 1 479;
+  rätt lästa ord +0,84 procentenheter (säkert över slumpen).
+- Epoker: stavning och ordföljd efter fas (tidig/sen vikingatid), epok (800-talet, 900-talet, 1000–1070,
+  1070–1150), trakt, landskap och ristare. När epoken är okänd vägs läsningarna i de fyra epokerna, vilket också
+  daterar texten: rätt epok i 58 % av 2 046 daterade inskrifter (44 % för den vanligaste epoken).
+- `scripts/runlm_compare.py` jämför två prov sten för sten; `scripts/runlm_dating.py` prövar dateringen.
+- Prövat och inte infört: medeltida inskrifter som stavningsdata och anpassning till den enskilda stenen (ingen
+  mätbar vinst). METHODS.md, avsnitt 8.1.
+
 ### Sannolikhetsmodell för runtext
 - Ny modul `src/runlm.py`: läser en inskrifts huggna grupper utan tolkning och anger för varje ord hur sannolikt
   det är, ur en stavningsmodell skattad på Rundatas ordpar, ett ordbigram över Rundatas normaliserade text och
