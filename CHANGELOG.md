@@ -5,6 +5,30 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Kontaktsida och nya källor på webbplatsen
+- `/kontakt` har ett formulär som skickas med e-post till grundaren via FormSubmit. Webbplatsen är statisk och har
+  ingen egen server.
+- Startsidans källista tar med:
+  - alla sex öppna 3D-datamängderna;
+  - Danske Runeindskrifter;
+  - källorna bakom kartans rikesgränser;
+  - Wikimedia Commons.
+
+### Fler öppna 3D-skanningar och rätt skannare
+- Två nya datamängder (CC BY 4.0) i `src/scan_sources.py`:
+  - Runstenar i Medelpad (Kitzler Åhfeldt & Zedig 2024, 14 stenar);
+  - Tidigkristna gravmonument i Östergötland och Småland (Kitzler Åhfeldt 2025, 11 föremål).
+- Stenarna i Hälsingland och Medelpad är skannade av Henrik Zedig (Länsstyrelsen Västra Götaland). Rapporterna angav
+  tidigare Laila Kitzler Åhfeldt som skannare; hon är medförfattare till datamängderna.
+
+### Hela Runor 2020
+- `scripts/fetch_runor.py` hämtar hela Riksantikvarieämbetets utgåva 2020 av runtextdatabasen via dess öppna API.
+- `scripts/runor_compare.py` jämför den med appens Rundata från 2018:
+  - inskrifter som saknas;
+  - försvunna stenar och stenar på sin ursprungliga plats;
+  - anteckningar om skador;
+  - ändrade läsningar.
+
 ### Statistik i R räknas om av sig själv
 - När data eller analyskoden har ändrats startar analysmotorn korpusanalyserna själv, tio minuter efter start. Tidigare
   krävdes ett knapptryck. Väntan gör att en serie kodändringar inte startar en körning per ändring. Funktionen stängs
