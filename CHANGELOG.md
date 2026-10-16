@@ -5,6 +5,11 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Läsningsraden följer spåren
+- När flera förslag vägs mot varandra i hela texten räknas nu de mjuka spåren och namnen från närliggande stenar
+  in, som i varje lucka. Tidigare kunde panelens läsningsrad visa ett ord som spåren talade emot, medan luckans
+  ordlista gav ett annat. Panelens version är `textmodel-8`.
+
 ### Sökmotoroptimering av startsidan och artiklarna
 - Startsidans och artikellistans beskrivningar ryms i en sökträff (155 och 141 tecken).
 - Startsidan beskriver Vitki som organisation, med logotyp och grundare (schema.org Organization), och förladdar inte

@@ -1197,6 +1197,23 @@ def trigram_delta(model, path):
     return out
 
 
+def _name_cache(model, site, near_km, lam_near, near_sites, carver, lam_carver):
+    """The names of the stone's neighbours and of its carver's circle as a cache for posteriors ((weight, {word:
+    share}) or None), and the spellings they were carved in."""
+    near_shares, near_spell = ({}, set())
+    if site and lam_near:
+        near_shares, near_spell = model.names_near(site[0], site[1], near_km, sites=near_sites)
+    car_shares, car_spell = model.names_by_carver(carver) if (carver and lam_carver) else ({}, set())
+    if not (near_shares or car_shares):
+        return None, near_spell | car_spell
+    lam = (lam_near if near_shares else 0.0) + (lam_carver if car_shares else 0.0)
+    mixed = defaultdict(float)
+    for shares, w_ in ((near_shares, lam_near), (car_shares, lam_carver)):
+        for k_, v_ in shares.items():
+            mixed[k_] += w_ * v_ / lam
+    return (lam, dict(mixed)), near_spell | car_spell
+
+
 def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_doc=False, char_fills=0,
             context_cands=False, name_cands=0, adapt=0.0, trigram=False, cache=0.0, area=None, by_word=False,
             words=None, site=None, near_km=20.0, lam_near=0.0, near_sites=None, allowed=None, carver=None, lam_carver=0.0,
@@ -1264,18 +1281,9 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
                 prev_w = w_
             if i_ >= before and next_w is None and p_ >= 0.3:
                 next_w = w_
-    near_shares, near_spell = ({}, set())
-    if site and lam_near:
-        near_shares, near_spell = model.names_near(site[0], site[1], near_km, sites=near_sites)
-    car_shares, car_spell = model.names_by_carver(carver) if (carver and lam_carver) else ({}, set())
-    near_spell = near_spell | car_spell
-    if (near_shares or car_shares) and not cache_arg:  # names of the stone's neighbours and of its carver's circle
-        lam = (lam_near if near_shares else 0.0) + (lam_carver if car_shares else 0.0)
-        mixed = defaultdict(float)
-        for shares, w_ in ((near_shares, lam_near), (car_shares, lam_carver)):
-            for k_, v_ in shares.items():
-                mixed[k_] += w_ * v_ / lam
-        cache_arg = (lam, dict(mixed))
+    names_arg, near_spell = _name_cache(model, site, near_km, lam_near, near_sites, carver, lam_carver)
+    if names_arg and not cache_arg:  # names of the stone's neighbours and of its carver's circle
+        cache_arg = names_arg
     pre = defaultdict(float)
     ntok = sum(model.uni.values()) or 1
     # windows inside the group that cover the gap; a candidate word is weighed by how common it is (or how well it
@@ -1435,7 +1443,8 @@ def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, a
                 positions=None, hard=None, **kw):
     """Fill several runs of lost runes in a text together. Each gap is first filled on its own, then again with the
     other gaps filled by their best candidates, for a couple of rounds; finally every combination of the best
-    candidates of each gap is weighed by how probable the whole text is. only: the gaps to fill (others stay open).
+    candidates of each gap is weighed by how probable the whole text is, with the traces and the names of nearby stones
+    weighed as in restore. only: the gaps to fill (others stay open).
     allowed: {gap: what is visible of each of its lost runes} (see restore). details: a dict that receives, for each
     gap index, its fillings [(filling, probability, word)] from the last round. positions: a dict that receives, for
     each gap index, the word at each of its positions [{word: probability}] – when two runs are filled as one
@@ -1476,6 +1485,17 @@ def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, a
                     at = lambda f, o: next((w_ for a_, b_, w_ in seg.get(f, ()) if a_ <= o < b_), None) or "<unk>"  # noqa: E731
                     positions[n] = [_by_lemma(model, [(at(f, o), p_) for f, p_ in res]) for o in range(gp[2] - gp[1])]
     combos = list(itertools.product(*[o or ["?" * (b - a)] for o, (_, a, b) in zip(options, gaps)]))
+    # the whole text is weighed as each gap was: with the names of nearby stones and, for soft traces, a factor
+    # trace_eps for each misread trace (without these a filling the traces rule against could win the reading)
+    names_arg = None if kw.get("cache") else _name_cache(
+        model, kw.get("site"), kw.get("near_km", 20.0), kw.get("lam_near", 0.0), kw.get("near_sites"),
+        kw.get("carver"), kw.get("lam_carver", 0.0))[0]
+    eps = kw.get("trace_eps", 0.0)
+
+    def misfit(gp, f):
+        sets, fixed = (allowed or {}).get(gp), set((hard or {}).get(gp) or ())
+        return sum(1 for i, ch in enumerate(f) if sets and i < len(sets) and sets[i] and ch not in sets[i]
+                   and i not in fixed) if sets else 0
     scored = []
     for choice in combos:
         gs = fill(groups, choice)
@@ -1486,10 +1506,12 @@ def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, a
                 parts.append(p_)
                 if q < len(pieces) - 1 or idx in signs:
                     sg.append(len(parts) - 1)
-        lz, post_, text_ = posteriors(model, parts, sg, ctx=ctx, area=area)
+        lz, post_, text_ = posteriors(model, parts, sg, ctx=ctx, cache=names_arg, area=area)
         path_ = best_path(post_, len(text_), model.lemma)
         if kw.get("trigram"):
             lz += trigram_delta(model, path_)
+        if eps > 0:
+            lz += sum(misfit(gp, f) for gp, f in zip(gaps, choice)) * math.log(eps)
         at = [sum(len(x.replace("?", "")) for x in gs[:gi]) + len(gs[gi][:a].replace("?", "")) for gi, a, _ in gaps]
         words = [next((w for i_, j_, w, _ in path_ if i_ <= t < j_), None) for t in at]
         scored.append((lz, choice, " ".join(w for _, _, w, _ in path_), words))

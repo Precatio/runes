@@ -151,6 +151,18 @@ def test_soft_traces_overrule_a_misread_trace_but_never_a_preserved_rune():
     assert all(f[1:3] == "fa" for f in [c[0][0] for c in soft])  # the preserved runes never change
 
 
+def test_the_reading_weighs_a_soft_trace_as_the_gap_does():
+    from src.runlm import restore_all
+    m = Model(RECS)
+    work = ["kunar", "raisþi", "stain", "aft", "s?n", "sin"]
+    assert restore_all(m, work)[0][0][0] == ("u",)  # without traces the language says sun
+    det = {}
+    combos = restore_all(m, work, allowed={(4, 1, 2): ["i"]}, trace_eps=0.01, details=det)[0]
+    # a trace of i, strong enough to win in the gap, also wins the reading of the whole text
+    assert det[0][0][0] == "i" and combos[0][0] == ("i",)
+    assert abs(combos[0][1] - det[0][0][1]) < 0.01
+
+
 def _parallel(signum, translit, norm, en):
     return {"signum": signum, "period": "V", "transliteration": translit, "normalization": norm, "translation_en": en}
 

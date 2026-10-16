@@ -874,6 +874,11 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     Panelens procent för ett ord räknas där ordet står, och luckrapporten ger varje lucka ordet på sin egen plats.
     Före rättelsen (2026-10-16) fick alla delar spannets första ord. På U 318 rapporterades då *æftiʀ* för luckan
     i *faður*, fast runan var rätt ifylld, och panelen kunde visa nästan 0 % för ett rätt ifyllt ord.
+  * **Läsningen väger spåren som luckan (2026-10-16).** Efter ifyllningen väljs den bästa kombinationen av alla
+    luckors förslag efter hur sannolik hela texten är. Det steget räknade tidigare varken med mjuka spår eller med namn
+    från närliggande stenar, så panelens läsningsrad och "bästa fyllning" kunde visa ett ord som spåren talade emot,
+    medan luckans ordlista gav ett annat. Nu vägs båda in där också (`restore_all`, `textmodel-8`). Valideringen
+    ovan bygger på luckornas ordlistor och påverkas inte.
 
 ## 9. Språkdrag (fonetisk stil och språkbruk)
 
