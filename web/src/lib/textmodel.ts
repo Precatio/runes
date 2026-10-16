@@ -24,6 +24,18 @@ export interface TextModelGap {
   traces: (string | null)[] | null;
 }
 
+// A gap whose best word changes with the editors' word boundaries (src/textmodel.py _boundaries): in a text without
+// dividers the model chooses where the words begin, and may borrow runes from a word it does not know
+export interface TextModelBoundary {
+  gap: number;
+  variant: "main" | "alt";
+  model_runes: string;
+  model_fill: string | null;
+  editor_runes: string;
+  best: string | null;
+  words: { word: string; p: number }[];
+}
+
 export interface TextModelReading {
   signum: string;
   version: string;
@@ -34,6 +46,7 @@ export interface TextModelReading {
   reading?: TextModelWord[];
   gaps?: TextModelGap[];
   open_gaps?: { group: number; start: number; end: number; n: number }[];
+  boundaries?: TextModelBoundary[];
   dating?: { epochs: { epoch: string; label: string; p: number }[]; calibrated: boolean; rundata: string };
   calibrated?: boolean;
   translation?: { sv: string; en: string };

@@ -19,7 +19,7 @@ from datetime import datetime, timezone
 from src import runlm as rl
 from src import rungloss as rg
 
-VERSION = "textmodel-8"
+VERSION = "textmodel-9"
 K = 5
 CACHE = os.path.join(rl.ROOT, "data", "cache", "textmodel", VERSION)
 MAX_GAP = 4  # longer runs of lost runes are left open: the masking test covers 1–4 runes
@@ -93,23 +93,41 @@ def recal(b: dict, p: float, w: str, runes: str, B) -> float:
     return 1 / (1 + math.exp(-sum(a * c for a, c in zip(x, B))))
 
 
-def text_groups(translit: str) -> tuple[list[str], list[int]]:
+def text_groups(translit: str, words: bool = False) -> tuple[list[str], list[int]]:
     """The carved groups with every lost rune ('-') written '?', and the groups followed by a break: text lost to an
-    unknown extent ('...') or a sign that is not read, where the reading starts afresh."""
+    unknown extent ('...') or a sign that is not read, where the reading starts afresh. words=True: the editors' word
+    boundaries too (the spaces of the transliteration), which the model otherwise chooses for itself."""
     groups, breaks = [], []
     for _, t in rl.sections(translit):
         for g in re.split(rl.DIV, rl.clean_translit(t)):
-            g = rl.runekey(re.sub(r"\s+", "", g)).replace("-", "?")
-            pieces = re.split(r"([^a-zþðæøåöäąR?]+)", g)
-            for q, p in enumerate(pieces):
-                if q % 2 == 1:  # a separator: a break after the group before it
-                    if groups and p.strip():
-                        breaks.append(len(groups) - 1)
-                elif p:
-                    groups.append(p)
+            for c in (g.split() if words else [re.sub(r"\s+", "", g)]):
+                c = rl.runekey(c).replace("-", "?")
+                pieces = re.split(r"([^a-zþðæøåöäąR?]+)", c)
+                for q, p in enumerate(pieces):
+                    if q % 2 == 1:  # a separator: a break after the group before it
+                        if groups and p.strip():
+                            breaks.append(len(groups) - 1)
+                    elif p:
+                        groups.append(p)
         if groups:
             breaks.append(len(groups) - 1)  # a new section starts afresh
     return groups, sorted(set(breaks))
+
+
+def alternative_reading(translit: str) -> str | None:
+    """The transliteration with Rundata's alternative readings (sections labelled Q) in place of the main ones, or None
+    when there are none. On U Fv1971;212B the main reading divides s--ii ok, the alternative s--i iok."""
+    secs, lab = [], ""
+    for p in re.split(r"(§[A-Z]+)", translit or ""):
+        if re.fullmatch(r"§[A-Z]+", p):
+            lab = p[1:]
+        elif p.strip():
+            secs.append((lab, p))
+    alt = {lab[:-1]: p for lab, p in secs if lab.endswith("Q")}
+    if not alt:
+        return None
+    main = [(lab[:-1] if lab.endswith("P") else lab, p) for lab, p in secs if not lab.endswith("Q")]
+    return " ".join(f"§{base or 'A'}X {alt.get(base, p)}" for base, p in main)
 
 
 def _parts(groups, breaks):
@@ -160,7 +178,24 @@ def analyze(signum: str, allowed: dict | None = None) -> dict:
     return out
 
 
-def _read(r, groups, breaks, b, allowed, base, d):
+def _offsets(groups):
+    """Where each group starts in the text with every rune and lost rune counted."""
+    out, at = [], 0
+    for g in groups:
+        out.append(at)
+        at += len(g)
+    return out
+
+
+def _covering(intervals, a, e):
+    """The (start, end) intervals that overlap [a, e)."""
+    return {(s, t) for s, t in intervals if s < e and a < t}
+
+
+def _read(r, groups, breaks, b, allowed, base, d, trace_at=None, alt=True):
+    """trace_at: the traces by a lost rune's place in the text (every rune counted), instead of allowed – to carry them
+    over to another division into words. alt: also read with the editors' word boundaries where they differ from the
+    model's around a gap."""
     m = b["model"]
     site = (float(r["lat"]), float(r["lon"])) if r.get("lat") is not None and r.get("lon") is not None else None
     every = [(gi, x.start(), x.end()) for gi, g in enumerate(groups) for x in re.finditer(r"\?+", g)]
@@ -171,8 +206,17 @@ def _read(r, groups, breaks, b, allowed, base, d):
     work = list(groups)
     for gi, a, e in fillable:
         work[gi] = work[gi][:a] + "?" * (e - a) + work[gi][e:]
-    user = {fillable[int(n)]: v for n, v in (allowed or {}).items()
-            if str(n).isdigit() and int(n) < len(fillable) and len(v) == len(lost[fillable[int(n)]])}
+    off = _offsets(groups)
+    if trace_at is not None:
+        user = {}
+        for sp in fillable:
+            vals = [trace_at.get(off[sp[0]] + i) for i in lost[sp]]
+            if any(vals):
+                user[sp] = vals
+    else:
+        user = {fillable[int(n)]: v for n, v in (allowed or {}).items()
+                if str(n).isdigit() and int(n) < len(fillable) and len(v) == len(lost[fillable[int(n)]])}
+    trace_at = {off[sp[0]] + i: v for sp, vals in user.items() for i, v in zip(lost[sp], vals) if v}
     traces, hard = {}, {}
     for sp in fillable:
         gi, a, e = sp
@@ -192,6 +236,8 @@ def _read(r, groups, breaks, b, allowed, base, d):
     parts, sg = _parts(filled, breaks)
     # read in the stone's branch of the spelling tree (era to landscape), as in the calibration
     _, read, _, text, _, ll = rl.decode_epochs(m, parts, sg, path=rl.context(r)[:5])
+    # each letter of the read text at its place among all runes, lost ones counted (open gaps are not in the text)
+    at_rune = [off[gi] + k for gi, g in enumerate(filled) for k, c in enumerate(g) if c != "?"]
     # where the filled runes stand in the read text, and where the text breaks
     spans = []
     for (gi, a, e), f in zip(gaps, best):
@@ -241,4 +287,50 @@ def _read(r, groups, breaks, b, allowed, base, d):
                    "calibrated": bool(d["T"]), "rundata": r.get("dating") or ""},
         "translation": {"sv": rg.swedish(vocab, b["en"], b["da"], b["ows"]), "en": b["en"].translate(vocab)},
     }
+    if alt and len(at_rune) == len(text):
+        out["boundaries"] = _boundaries(r, groups, gaps, best, words, read, spans, at_rune, trace_at, b, base, d)
+    return out
+
+
+def _boundaries(r, groups, gaps, best, words, read, spans, at_rune, trace_at, b, base, d):
+    """Where a gap's word depends on a word boundary. Runic texts are often written without dividers, and the model then
+    chooses where the words begin – and may borrow runes from a word it does not know (U Fv1971;212B: Víseti across
+    Ragnví). For each of the editors' divisions into words (Rundata's main reading and its alternative, when they have
+    the same runes and differ only in the boundaries) whose words around a gap differ from the model's, the text is read
+    again with those boundaries; the gaps whose best word then changes are returned."""
+    flat = "".join(groups)
+    out, seen = [], set()
+    for variant, tr in (("main", r["transliteration"]), ("alt", alternative_reading(r["transliteration"]))):
+        if not tr:
+            continue
+        eg, eb = text_groups(tr, words=True)
+        if "".join(eg) != flat or tuple(eg) in seen:
+            continue
+        seen.add(tuple(eg))
+        eoff = _offsets(eg)
+        theirs = [(s, s + len(g)) for s, g in zip(eoff, eg)]
+        off = _offsets(groups)
+        differ = []
+        for n, ((gi, a, e), (ta, te)) in enumerate(zip(gaps, spans)):
+            fa, fe = off[gi] + a, off[gi] + e
+            model_iv = {(at_rune[i], at_rune[j - 1] + 1) for i, j, _, _ in read if i < te and ta < j and j > i}
+            if model_iv and model_iv != _covering(theirs, fa, fe):
+                differ.append((n, fa, fe, model_iv))
+        if not differ:
+            continue
+        other = _read(r, eg, eb, b, None, base, d, trace_at=trace_at, alt=False)
+        for n, fa, fe, model_iv in differ:
+            og = next((g for g in other.get("gaps", []) if eoff[g["group"]] + g["start"] < fe and fa < eoff[g["group"]] + g["end"]), None)
+            if not og or not og["words"] or not words.get(n):
+                continue
+            top_mine, top_theirs = max(words[n], key=words[n].get).lstrip("§"), og["words"][0]["word"]
+            unknown = (top_mine == "<unk>", top_theirs == "<unk>")
+            if all(unknown) or (not any(unknown) and rl.same_word(top_mine, top_theirs)):
+                continue  # the same answer either way
+            s0, s1 = min(s for s, _ in model_iv), max(t for _, t in model_iv)
+            ew = sorted(_covering(theirs, fa, fe))
+            out.append({"gap": n, "variant": variant, "model_runes": flat[s0:s1],
+                        "model_fill": best[n] if n < len(best) else None,
+                        "editor_runes": " ".join(flat[s:t] for s, t in ew), "best": og["best"],
+                        "words": og["words"][:5]})
     return out

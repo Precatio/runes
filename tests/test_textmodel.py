@@ -25,3 +25,23 @@ def test_medieval_inscriptions_are_not_read(monkeypatch):
     monkeypatch.setattr(textmodel.rg, "load_danish", lambda recs: {})
     out = textmodel.analyze("X 1")
     assert out["available"] is False and "vikingatida" in out["reason"]
+
+
+def test_the_editors_word_boundaries_and_alternative_reading():
+    t = "§P ra... ... ok rahnui (s)--(i)i ok at| |t¶otur s §Q ra... ... ok rahnui (s)--(i) iok at| |t¶otur s"
+    # the model gets the runes without the editors' spaces; with words=True the spaces divide the groups too
+    groups, _ = textmodel.text_groups(t)
+    words, _ = textmodel.text_groups(t, words=True)
+    assert groups == ["ra", "okrahnuis??iiokattoturs"]
+    assert words == ["ra", "ok", "rahnui", "s??ii", "ok", "at", "totur", "s"]
+    # the alternative reading (Q) divides the same runes differently: s--i iok
+    alt, _ = textmodel.text_groups(textmodel.alternative_reading(t), words=True)
+    assert "".join(alt) == "".join(groups) and alt[3:5] == ["s??i", "iok"]
+    assert textmodel.alternative_reading("þorkil : risti") is None
+
+
+def test_the_words_around_a_gap_are_compared_as_intervals():
+    assert textmodel._offsets(["ok", "rahnui", "s??i"]) == [0, 2, 8]
+    editors = [(0, 2), (2, 8), (8, 12), (12, 15)]
+    # the model's word uis??i (6–12) against the editors' s??i (8–12) around the lost runes 9–11
+    assert textmodel._covering(editors, 9, 11) == {(8, 12)} != {(6, 12)}

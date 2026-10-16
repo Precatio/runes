@@ -5,7 +5,7 @@
 // METHODS.md 8.1 for the model and the tests behind the numbers shown.
 import { useState } from "react";
 import Link from "next/link";
-import { TRACE_RUNES, textmodel, type TextModelGap, type TextModelReading } from "@/lib/textmodel";
+import { TRACE_RUNES, textmodel, type TextModelBoundary, type TextModelGap, type TextModelReading } from "@/lib/textmodel";
 
 const pct = (p: number) => `${Math.round(p * 100)} %`;
 const tone = (p: number) =>
@@ -28,6 +28,43 @@ function Carved({ gap }: { gap: TextModelGap }) {
       <span className="bg-[#b7410e]/10 text-[#b7410e] font-bold px-0.5 rounded">{g.slice(gap.start, gap.end)}</span>
       {g.slice(gap.end)}
     </span>
+  );
+}
+
+// The gap read again with the editors' word boundaries, where the model divided the words differently and the best
+// word changes (U Fv1971;212B: Víseti across the name Ragnví, Siggi with Rundata's alternative division)
+function Boundary({ xs }: { xs: TextModelBoundary[] }) {
+  return (
+    <div className="rounded-xl border border-amber-300 bg-amber-50/80 p-3 space-y-3">
+      <div className="space-y-1">
+        <div className="text-xs font-semibold text-amber-900">Ordgränsen avgör förslaget</div>
+        <p className="text-[11px] text-slate-600">
+          Runorna står utan skiljetecken här, och modellen väljer själv var orden börjar. Med utgivarnas indelning blir
+          det ett annat ord.
+        </p>
+        <div className="grid grid-cols-[auto_1fr] gap-x-3 text-xs">
+          <span className="text-slate-500">Modellens indelning</span>
+          <span className="font-mono" translate="no">{xs[0].model_runes}</span>
+        </div>
+      </div>
+      <div className={`grid grid-cols-1 ${xs.length > 1 ? "md:grid-cols-2" : ""} gap-4`}>
+        {xs.map(x => (
+          <div key={x.variant} className="space-y-1.5">
+            <div className="grid grid-cols-[auto_1fr] gap-x-3 text-xs">
+              <span className="text-slate-500">{x.variant === "main" ? "Rundatas läsning" : "Rundatas alternativa läsning"}</span>
+              <span className="font-mono" translate="no">{x.editor_runes}</span>
+            </div>
+            {x.words.slice(0, 3).map(w => (
+              <div key={w.word} className="grid grid-cols-[1fr_auto] gap-2 items-center text-sm" translate="no">
+                <span className={w.word === "<unk>" ? "text-slate-400" : ""}>{w.word === "<unk>" ? "ett okänt ord" : w.word}</span>
+                <span className="text-xs text-slate-600 tabular-nums">{pct(w.p)}</span>
+                <div className="col-span-2"><Bar p={w.p} /></div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -182,6 +219,8 @@ export default function TextModelPanel({ signum }: { signum: string }) {
                       {g.traces && <p className="text-[11px] text-[#b7410e]">Räknat med spåren: {g.traces.map(t => t || "–").join(" · ")}</p>}
                     </div>
                   </div>
+                  {(data.boundaries || []).some(x => x.gap === g.number) &&
+                    <Boundary xs={data.boundaries!.filter(x => x.gap === g.number)} />}
                   {open === g.number && (
                     <div className="space-y-3 border-t border-slate-200 pt-3">
                       <p className="text-xs text-slate-600">

@@ -5,6 +5,11 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Ordgränsen syns i panelen
+- När en lucka står i en text utan skiljetecken och modellen delar orden annorlunda än utgivarna, läser panelen om
+  texten med utgivarnas ordgränser, både Rundatas huvudläsning och dess alternativa läsning. Ändras förslaget visas
+  båda, under rubriken "Ordgränsen avgör förslaget". Panelens version är `textmodel-9`.
+
 ### Läsningsraden följer spåren
 - När flera förslag vägs mot varandra i hela texten räknas nu de mjuka spåren och namnen från närliggande stenar
   in, som i varje lucka. Tidigare kunde panelens läsningsrad visa ett ord som spåren talade emot, medan luckans

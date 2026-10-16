@@ -879,6 +879,13 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     från närliggande stenar, så panelens läsningsrad och "bästa fyllning" kunde visa ett ord som spåren talade emot,
     medan luckans ordlista gav ett annat. Nu vägs båda in där också (`restore_all`, `textmodel-8`). Valideringen
     ovan bygger på luckornas ordlistor och påverkas inte.
+  * **Ordgränser (2026-10-16).** I en text utan skiljetecken väljer modellen själv var orden börjar, och den kan låna
+    runor från ett ord den inte känner. På U Fv1971;212B tog den *ui* från *rahnui* (Ragnví) och fyllde *uis??i* till
+    *Víseti* (97 %). Panelen läser därför om texten med utgivarnas ordgränser (mellanrummen i Rundatas translitterering)
+    när orden runt en lucka delas annorlunda än modellens. Det görs med huvudläsningen och, om den finns, med Rundatas
+    alternativa läsning (§Q), förutsatt att runorna är desamma. Ändras luckans bästa ord visas båda förslagen
+    (`_boundaries`, `textmodel-9`). På U Fv1971;212B ger alternativläsningen *s??i iok* Siggi 35 %, och 88 % med
+    Källströms iakttagelse (k eller f).
 
 ## 9. Språkdrag (fonetisk stil och språkbruk)
 
