@@ -9,6 +9,9 @@ from __future__ import annotations
 from src.signum import fold_signum
 
 KA_PROJECT = "forskningsprojektet Runristandets dynamik (2009–2014)"
+# Hälsinglands och Medelpads stenar skannades av Henrik Zedig; Laila Kitzler Åhfeldt är medförfattare till
+# datamängderna. "scanned_by" anger den som skannade, "creator" datamängdens upphovspersoner.
+ZEDIG = "Henrik Zedig (Länsstyrelsen Västra Götaland)"
 
 DATASETS = [
     {
@@ -37,10 +40,10 @@ DATASETS = [
     },
     {
         "key": "halsingland",
-        "citation": "Kitzler Åhfeldt, L. 2025. 3D-data Runstenar i Hälsingland [Dataset]. Riksantikvarieämbetet. "
-                    "https://doi.org/10.5281/zenodo.15638873",
-        "short": "Kitzler Åhfeldt 2025",
-        "creator": "Laila Kitzler Åhfeldt", "doi": "10.5281/zenodo.15638873",
+        "citation": "Kitzler Åhfeldt, L. & Zedig, H. 2025. 3D-data Runstenar i Hälsingland [Dataset]. "
+                    "Riksantikvarieämbetet. https://doi.org/10.5281/zenodo.15638873",
+        "short": "Kitzler Åhfeldt & Zedig 2025",
+        "creator": "Laila Kitzler Åhfeldt och Henrik Zedig", "scanned_by": ZEDIG, "doi": "10.5281/zenodo.15638873",
         "url": "https://doi.org/10.5281/zenodo.15638873", "license": "CC BY 4.0",
         "device": "HandySCAN BLACK Elite (Creaform), handhållen laserskanner", "project": "Runverket", "note": "",
         "signa": ["Hs 1", "Hs 2", "Hs 3", "Hs 4", "Hs 6", "Hs 9", "Hs 10", "Hs 11", "Hs 12", "Hs 14", "Hs 15",
@@ -55,6 +58,32 @@ DATASETS = [
         "url": "https://doi.org/10.5281/zenodo.14046713", "license": "CC BY 4.0",
         "device": "", "project": KA_PROJECT, "note": "",
         "signa": ["Vg 24", "Vg 27", "Vg 41", "Vg 43", "Vg 51", "Vg 53"],
+    },
+    {
+        "key": "medelpad",
+        "citation": "Kitzler Åhfeldt, L. & Zedig, H. 2024. 3D-data Runstenar i Medelpad [Dataset]. "
+                    "Riksantikvarieämbetet. https://doi.org/10.5281/zenodo.14141222",
+        "short": "Kitzler Åhfeldt & Zedig 2024",
+        "creator": "Laila Kitzler Åhfeldt och Henrik Zedig", "scanned_by": ZEDIG, "doi": "10.5281/zenodo.14141222",
+        "url": "https://doi.org/10.5281/zenodo.14141222", "license": "CC BY 4.0",
+        "device": "HandySCAN BLACK Elite (Creaform), handhållen laserskanner, upplösning 0,40 mm",
+        "project": "forskningsprojektet Evighetsrunor: en forskningsplattform för Sveriges runinskrifter",
+        "note": "Skannat inför en korpusutgåva av Medelpads runinskrifter. M 14 finns i två filer.",
+        "signa": ["M 1", "M 2", "M 3", "M 4", "M 5", "M 6", "M 7", "M 8", "M 10", "M 11", "M 13", "M 14", "M 15",
+                  "M 16"],
+    },
+    {
+        "key": "gravmonument_og_sm",
+        "citation": "Kitzler Åhfeldt, L. 2025. 3D-data Tidigkristna gravmonument Östergötland och Småland [Dataset]. "
+                    "Zenodo. https://doi.org/10.5281/zenodo.17571537",
+        "short": "Kitzler Åhfeldt 2025",
+        "creator": "Laila Kitzler Åhfeldt", "doi": "10.5281/zenodo.17571537",
+        "url": "https://doi.org/10.5281/zenodo.17571537", "license": "CC BY 4.0",
+        "device": "ATOS II (GOM), strukturerat ljus, punktavstånd 0,27 mm",
+        "project": "Cecilia Ljungs avhandlingsprojekt om tidigkristna gravmonument (skannat 2008; Ljung 2016)",
+        "note": "Bara inskriftsytorna är skannade. Ög 240 och Ög 241 är samma gravhäll.",
+        "signa": ["Ög 2", "Ög 5", "Ög 6", "Ög 240", "Ög 241", "Ög Hov12;21", "Ög Hov14;22", "Ög Hov15;22", "Sm 124",
+                  "Sm 125"],
     },
 ]
 
@@ -75,7 +104,8 @@ def fill_scan(scan: dict, signum: str | None) -> tuple[dict, dict | None]:
     if not ds:
         return scan, None
     out = dict(scan or {})
-    defaults = {"device": ds["device"], "scanned_by": ds["creator"], "license": ds["license"], "url": ds["url"],
+    defaults = {"device": ds["device"], "scanned_by": ds.get("scanned_by") or ds["creator"], "license": ds["license"],
+                "url": ds["url"],
                 "citation": ds["citation"]}
     for k, v in defaults.items():
         if v and not out.get(k):
@@ -84,6 +114,9 @@ def fill_scan(scan: dict, signum: str | None) -> tuple[dict, dict | None]:
 
 
 def credit_text(ds: dict, signum: str) -> str:
-    return (f"Skanningen av {signum} är gjord av {ds['creator']} inom {ds['project']} och publicerad med licensen "
-            f"{ds['license']} ({ds['short']}; doi:{ds['doi']}). Vi tackar för att datamängden gjorts fritt tillgänglig."
+    by = ds.get("scanned_by") or ds["creator"]
+    published = (f"och publicerad med licensen {ds['license']}" if by == ds["creator"] else
+                 f"och publicerad av {ds['creator']} med licensen {ds['license']}")
+    return (f"Skanningen av {signum} är gjord av {by} inom {ds['project']} {published} ({ds['short']}; "
+            f"doi:{ds['doi']}). Vi tackar för att datamängden gjorts fritt tillgänglig."
             + (f" {ds['note']}" if ds.get("note") else ""))

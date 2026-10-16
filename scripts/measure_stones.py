@@ -17,11 +17,15 @@ PROVINCES = {"So": "Sö", "Og": "Ög", "Ol": "Öl", "Na": "Nä", "An": "Ån"}
 
 
 def signum_from(path: str) -> str:
-    """"So 131_…" -> "Sö 131", "So 137A_…" -> "Sö 137A", "So Fv1948_282_…" -> "Sö Fv1948;282"."""
+    """"So 131_…" -> "Sö 131", "So 137A_…" -> "Sö 137A", "So Fv1948_282_…" -> "Sö Fv1948;282",
+    "Og Hov 14_22_…" -> "Ög Hov14;22" (signum efter ort och sida i en sockenutgåva)."""
     name = os.path.basename(path)
     m = re.match(r"([A-Za-zÅÄÖåäö]{1,3})[ _]?Fv(\d{4})_(\d+)", name)
     if m:
         return f"{PROVINCES.get(m.group(1), m.group(1))} Fv{m.group(2)};{m.group(3)}"
+    m = re.match(r"([A-Za-zÅÄÖåäö]{1,3}) ([A-ZÅÄÖ][a-zåäö]+) ?(\d+)_(\d+)(?=[_ .]|$)", name)
+    if m:
+        return f"{PROVINCES.get(m.group(1), m.group(1))} {m.group(2)}{m.group(3)};{m.group(4)}"
     m = re.match(r"([A-Za-zÅÄÖåäö]{1,3})[ _]?(\d+[A-Za-z]?)(?=[_ .]|$)", name)
     if not m:
         raise ValueError(f"Inget signum i filnamnet: {path}")
@@ -57,14 +61,19 @@ def main(argv=None):
     ap.add_argument("--harmonize", type=float, help="utjämna profilerna till denna effektiva upplösning i mm")
     a = ap.parse_args(argv)
     os.makedirs(a.out, exist_ok=True)
-    for path in a.files:
-        signum = signum_from(path)
-        dest = os.path.join(a.out, f"{signum.replace(' ', '_')}.json")
+    signa = [signum_from(p) for p in a.files]
+    seen: dict[str, int] = {}
+    for path, signum in zip(a.files, signa):
+        # a stone in several files (M 14_020, M 14_040) gets one result per file: M_14_1.json, M_14_2.json
+        seen[signum] = seen.get(signum, 0) + 1
+        part = f"_{seen[signum]}" if signa.count(signum) > 1 else ""
+        dest = os.path.join(a.out, f"{signum.replace(' ', '_')}{part}.json")
         if os.path.exists(dest):
             print("finns", signum)
             continue
         print("mäter", signum, flush=True)
-        res = {"signum": signum, **measure(path, a.api, a.sensitivity, a.resolution, a.harmonize)}
+        res = {"signum": signum, "part": part.lstrip("_") or None,
+               **measure(path, a.api, a.sensitivity, a.resolution, a.harmonize)}
         with open(dest, "w", encoding="utf-8") as fh:
             json.dump(res, fh, ensure_ascii=False)
         print(f"  {signum}: {res['counts']['accepted']} tvärsnitt, V {res['means']['apex_vinkel_deg']:.1f}°", flush=True)
