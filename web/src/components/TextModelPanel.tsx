@@ -252,7 +252,9 @@ export default function TextModelPanel({ signum }: { signum: string }) {
               {pct(data.validation.inside_word)} av fallen, saknas ett helt ord i {pct(data.validation.whole_word)}. När
               den säger sig vara minst 95 % säker har den rätt i {pct(data.validation.sure_right)}, och på verkliga skador
               kommer den då fram till samma ord som Rundatas utgivare i {pct(data.validation.rundata_sure)}. I ett simulerat
-              prov där halva runan syns steg rätt ord för ett helt ord till {pct(data.validation.with_traces)}.
+              prov där halva runan syns steg rätt ord för ett helt ord till {pct(data.validation.with_traces)}
+              {data.validation.with_misread_traces != null && <>, och till {pct(data.validation.with_misread_traces)} även när vart
+              femte spår var felläst – spåren räknas som troliga, inte säkra</>}.
               {data.calibrated && <> Procenten vid orden är kalibrerade: ett ord med 80 % stämmer ungefär åtta gånger av tio
               (prövat på 808 stenar med känt svar). Namn får ofta låga procent, eftersom ett namn sällan kan säkras ur språket.</>}{" "}
               <Link href="/docs/metod" className="text-[#b7410e] hover:underline">Metoden</Link>

@@ -19,16 +19,19 @@ from datetime import datetime, timezone
 from src import runlm as rl
 from src import rungloss as rg
 
-VERSION = "textmodel-4"
+VERSION = "textmodel-5"
 K = 5
 CACHE = os.path.join(rl.ROOT, "data", "cache", "textmodel", VERSION)
 MAX_GAP = 4  # longer runs of lost runes are left open: the masking test covers 1–4 runes
-FILL = dict(window=None, char_fills=15, context_cands=True, n_cands=100, by_word=True, near_km=10.0, lam_near=0.1)
+# Soft traces (trace_eps): a misread trace costs a factor 0.05 per rune instead of ruling out the right answer. With one
+# trace in five misread, whole words were 73 % right against 44 % with hard traces (scripts/runlm_restore_test.py).
+FILL = dict(window=None, char_fills=15, context_cands=True, n_cands=100, by_word=True, near_km=10.0, lam_near=0.1,
+            trace_eps=0.05)
 MODEL = dict(aligned=True, lam_name=0.05, contexts=True, alpha=100.0, kappa_e=50.0, lm_beta=200.0)
 EPOCH_LABEL = {"800": "800-talet", "900": "900-talet", "1000": "1000–1070", "1100": "1070–1150"}
 # What the tests showed (METHODS.md 8.1), shown with the results so that a reader can judge them
-VALIDATION = {"inside_word": 0.72, "whole_word": 0.56, "sure_right": 0.93, "rundata_sure": 0.96,
-              "with_traces": 0.85, "dating_epoch": 0.58, "dating_near": 0.93}
+VALIDATION = {"inside_word": 0.72, "whole_word": 0.56, "sure_right": 0.93, "rundata_sure": 0.98,
+              "with_traces": 0.81, "with_misread_traces": 0.73, "dating_epoch": 0.58, "dating_near": 0.93}
 
 _lock = threading.Lock()
 _compute = threading.Lock()  # one reading at a time: the models' caches are shared
@@ -167,16 +170,17 @@ def _read(r, groups, breaks, b, allowed, base, d):
         work[gi] = work[gi][:a] + "?" * (e - a) + work[gi][e:]
     user = {fillable[int(n)]: v for n, v in (allowed or {}).items()
             if str(n).isdigit() and int(n) < len(fillable) and len(v) == len(lost[fillable[int(n)]])}
-    traces = {}
+    traces, hard = {}, {}
     for sp in fillable:
         gi, a, e = sp
         seen = dict(zip(lost[sp], user.get(sp, [None] * len(lost[sp]))))
         cons = [seen[i] or None if i in seen else groups[gi][i] for i in range(a, e)]
         if any(c is not None for c in cons):
             traces[sp] = cons
+            hard[sp] = [i - a for i in range(a, e) if i not in seen]  # the preserved runes inside the gap
     details, positions = {}, {}
     combos, gaps, words = (rl.restore_all(m, work, signs=breaks, only=fillable, site=site, allowed=traces,
-                                          details=details, positions=positions, **FILL) if fillable else ([], [], {}))
+                                          details=details, positions=positions, hard=hard, **FILL) if fillable else ([], [], {}))
     best = combos[0][0] if combos else ()
     filled = list(groups)
     for (gi, a, e), f in sorted(zip(gaps, best), key=lambda x: (-x[0][0], -x[0][1])):

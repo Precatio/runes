@@ -39,7 +39,7 @@ export interface TextModelReading {
   translation?: { sv: string; en: string };
   validation: {
     inside_word: number; whole_word: number; sure_right: number; rundata_sure: number;
-    with_traces: number; dating_epoch: number; dating_near: number;
+    with_traces: number; with_misread_traces?: number; dating_epoch: number; dating_near: number;
   };
 }
 

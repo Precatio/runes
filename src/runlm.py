@@ -1178,7 +1178,7 @@ def trigram_delta(model, path):
 def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_doc=False, char_fills=0,
             context_cands=False, name_cands=0, adapt=0.0, trigram=False, cache=0.0, area=None, by_word=False,
             words=None, site=None, near_km=20.0, lam_near=0.0, allowed=None, carver=None, lam_carver=0.0,
-            trace_eps=0.0, segments=None):
+            trace_eps=0.0, segments=None, hard=None):
     """Fill a run of lost runes. groups are the carved groups (dividers between them) with every lost rune written '?';
     gap is (group index, first position, last position + 1) of the run to fill. Candidate fillings come from the words
     whose spelling fits the preserved runes around the gap (and, for gaps of one or two runes, every combination of
@@ -1201,7 +1201,8 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
     from a 3D scan or a photograph (data/rune_traces.json for what part of a rune leaves which runes possible); only
     fillings that agree are considered, and when few combinations agree all of them are tried. trace_eps > 0 makes the
     traces soft: a filling that disagrees with a trace is still tried, but each rune that disagrees multiplies its
-    probability by trace_eps – a misread trace then costs less. segments: a dict that receives, for each filling, the
+    probability by trace_eps – a misread trace then costs less. hard: the positions in the gap whose rune is known
+    for certain (a preserved rune inside two runs filled as one); they hold even when the traces are soft. segments: a dict that receives, for each filling, the
     words over the gap [(from, to, word)] with positions counted from the gap's start – a gap that spans two words (two
     runs filled as one, merge_runs) has a word for each part; `words` has only the word where the gap starts.
     Returns [(filling, probability)], best first, over the candidates considered."""
@@ -1211,7 +1212,9 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
     sets = [set(allowed[i]) if (allowed and allowed[i]) else None for i in range(k)]
     ok = lambda f: all(s_ is None or ch in s_ for s_, ch in zip(sets, f))
     soft = bool(allowed) and trace_eps > 0
-    misfit = lambda f: sum(1 for s_, ch in zip(sets, f) if s_ is not None and ch not in s_)
+    fixed = set(hard or ())
+    ok_hard = lambda f: all(sets[i] is None or f[i] in sets[i] for i in fixed if i < len(f))  # noqa: E731
+    misfit = lambda f: sum(1 for i, (s_, ch) in enumerate(zip(sets, f)) if s_ is not None and ch not in s_ and i not in fixed)
     # a first reading of the rest of the text (the gap left open): its words give the context
     parts0, sg0 = [], []
     for idx, grp in enumerate(groups):
@@ -1280,19 +1283,26 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
     ranked = [f for f, _ in sorted(pre.items(), key=lambda kv: -kv[1])]
     cands = [f for f in ranked if ok(f)][:n_cands]
     if soft:  # the best candidates whatever the traces say, in case a trace is misread
-        cands += [f for f in ranked[:n_cands] if f not in cands]
+        cands += [f for f in ranked[:n_cands] if f not in cands and ok_hard(f)]
     alpha = [sorted(s_) if s_ is not None else FILL_ALPHABET for s_ in sets]
     if k <= 2 or (allowed and math.prod(len(a_) for a_ in alpha) <= 400):
         # short gaps, or few combinations left by what is visible: every combination is tried as well
         cands += ["".join(f) for f in itertools.product(*alpha) if "".join(f) not in cands]
         if soft and k <= 2:
-            cands += ["".join(f) for f in itertools.product(FILL_ALPHABET, repeat=k) if "".join(f) not in cands]
+            cands += ["".join(f) for f in itertools.product(FILL_ALPHABET, repeat=k)
+                      if "".join(f) not in cands and ok_hard("".join(f))]
+        if soft and fixed:
+            # runs filled as one (preserved runes fixed): every rune the traces leave out is also tried at the lost
+            # positions, since the vocabulary does not propose fillings that span two words
+            wide = [sorted(s_) if (s_ is not None and i in fixed) else FILL_ALPHABET for i, s_ in enumerate(sets)]
+            if math.prod(len(a_) for a_ in wide) <= 400:
+                cands += ["".join(f) for f in itertools.product(*wide) if "".join(f) not in cands]
     elif char_fills:  # longer gaps: runs of runes that fit the vowel/consonant pattern and the runes around the gap
         if model.cvchar is None:
             model.cvchar = CVCharModel(model._train_words)
         left, right = g[max(0, g0 - 4):g0].split("?")[-1], g[g1:g1 + 3].split("?")[0]
         fills = model.cvchar.fills(left, k, right)[:char_fills * (5 if allowed else 1)]
-        cands += [f for f, _ in fills if f not in cands and (soft or ok(f))][:char_fills * (2 if soft else 1)]
+        cands += [f for f, _ in fills if f not in cands and (ok(f) or (soft and ok_hard(f)))][:char_fills * (2 if soft else 1)]
     if adapt and reading0:  # the stone's own spelling habits, from the rest of its text
         base = ctx or Ctx((), model.spell.p, ("glob",))
         ctx = model.adapt(base, adapt_counts(model, reading0[2], reading0[3], base), adapt)
@@ -1398,7 +1408,7 @@ def _by_lemma(model, pairs):
 
 
 def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, area=None, allowed=None, details=None,
-                positions=None, **kw):
+                positions=None, hard=None, **kw):
     """Fill several runs of lost runes in a text together. Each gap is first filled on its own, then again with the
     other gaps filled by their best candidates, for a couple of rounds; finally every combination of the best
     candidates of each gap is weighed by how probable the whole text is. only: the gaps to fill (others stay open).
@@ -1406,6 +1416,7 @@ def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, a
     gap index, its fillings [(filling, probability, word)] from the last round. positions: a dict that receives, for
     each gap index, the word at each of its positions [{word: probability}] – when two runs are filled as one
     (merge_runs) the gap can cover the end of one word and the start of the next, and each run has its own word.
+    hard: {gap: positions whose rune is certain} (see restore), for soft traces.
     Returns ([(fillings per gap, probability among the combinations, reading)], best first, gaps,
     {gap index: {word: probability over all its candidates, the other gaps filled}})."""
     gaps = [(gi, m_.start(), m_.end()) for gi, g in enumerate(groups) for m_ in re.finditer(r"\?+", g)]
@@ -1429,7 +1440,7 @@ def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, a
             choice = [best[i] if (best[i] is not None and i != n) else "?" * (gaps[i][2] - gaps[i][1]) for i in range(len(gaps))]
             wd, seg = {}, {}
             res = restore(model, fill(groups, choice), gp, signs=signs, ctx=ctx, area=area, words=wd, segments=seg,
-                          allowed=(allowed or {}).get(gp), **kw)
+                          allowed=(allowed or {}).get(gp), hard=(hard or {}).get(gp), **kw)
             if details is not None:
                 details[n] = [(f, p_, wd.get(f)) for f, p_ in res[:12]]
             if res:

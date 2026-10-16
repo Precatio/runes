@@ -138,6 +138,19 @@ def test_two_runs_filled_as_one_keep_a_word_each():
     assert [max(d, key=d.get) for d in pos[0]] == ["æft", "faður", "faður", "faður"]
 
 
+def test_soft_traces_overrule_a_misread_trace_but_never_a_preserved_rune():
+    from src.runlm import merge_runs, restore_all
+    m = Model(RECS)
+    work, spans, cons, _ = merge_runs(["þurir", "raisþi", "stain", "þansi", "af?fa?ur", "sin"], [(4, 2, 3), (4, 5, 6)])
+    # the first lost rune misread as n; the preserved f and a inside the gap are certain
+    wrong = {spans[0]: ["n", "f", "a", None]}
+    hard_only = restore_all(m, work, only=spans, allowed=wrong)[0]
+    soft = restore_all(m, work, only=spans, allowed=wrong, trace_eps=0.05, hard={spans[0]: [1, 2]})[0]
+    assert hard_only[0][0][0][0] == "n"   # a hard trace rules out the right rune
+    assert soft[0][0] == ("tfaþ",)         # a soft one lets the language overrule it
+    assert all(f[1:3] == "fa" for f in [c[0][0] for c in soft])  # the preserved runes never change
+
+
 def _parallel(signum, translit, norm, en):
     return {"signum": signum, "period": "V", "transliteration": translit, "normalization": norm, "translation_en": en}
 

@@ -42,6 +42,14 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   krävdes ett knapptryck. Väntan gör att en serie kodändringar inte startar en körning per ändring. Funktionen stängs
   av med `R_AUTORUN=0`.
 
+### Mjuka spår i panelen
+- I ett prov där vart femte spår är felläst gav hårda spår 44 % rätta helord. Det är sämre än utan spår (56 %), och av
+  modellens "minst 95 % säkra" svar stämde bara 62 %. Med mjuka spår (`trace_eps` 0,05) blev det 73 % rätta helord och
+  96 % rätt bland de säkra. Med rätt lästa spår blir mjuka spår 81 % mot hårda 85 %.
+- Panelen använder nu mjuka spår. Bevarade runor inne i en sammanslagen lucka är alltid låsta (`hard`), och när en
+  sådan lucka har ett felläst spår prövas också runorna som spåret utesluter.
+- Textmodellens cache är ny (`textmodel-5`).
+
 ### Luckor som fylls tillsammans
 - Flera förlorade runor i samma ord fylls som en lucka (`merge_runs`). Bevarade runor mellan dem låses, så att ett
   ord inte ser säkrare ut än det är.

@@ -864,6 +864,11 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     fyllda tillsammans blir det *Fastbjǫrn* 50 % och *Gæiʀbjǫrn* 50 %. Maskeringsprovet döljer bara en sammanhängande
     följd, så det har inte prövat detta. Rapporten över de verkliga luckorna (ovan) är räknad en lucka i taget och
     är därför för säker där flera luckor sitter i samma ord.
+  * **Mjuka spår (2026-10-16).** Användarens spår räknas som troliga, inte säkra: en ifyllning som strider mot ett spår
+    prövas ändå, med faktorn 0,05 per runa som inte stämmer. I ett simulerat prov med vart femte spår felläst (1 616
+    luckor, fem delar) gav hårda spår 44 % rätta helord och 62 % rätt bland svar med minst 95 % säkerhet; mjuka spår gav
+    73 % och 96 %. Med rätt lästa spår: 81 % (mjuka) mot 85 % (hårda). Bevarade runor inne i en sammanslagen lucka är
+    låsta (`hard`).
   * **En lucka över två ord.** I en odelad grupp kan två luckor som fylls som en täcka slutet av ett ord och början
     av nästa (`af?fa?ur`, *aft faþur*). Varje position i luckan får därför sitt eget ord (`restore_all(positions=...)`).
     Panelens procent för ett ord räknas där ordet står, och luckrapporten ger varje lucka ordet på sin egen plats.
