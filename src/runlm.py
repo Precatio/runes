@@ -1177,7 +1177,8 @@ def trigram_delta(model, path):
 
 def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_doc=False, char_fills=0,
             context_cands=False, name_cands=0, adapt=0.0, trigram=False, cache=0.0, area=None, by_word=False,
-            words=None, site=None, near_km=20.0, lam_near=0.0, allowed=None, carver=None, lam_carver=0.0):
+            words=None, site=None, near_km=20.0, lam_near=0.0, allowed=None, carver=None, lam_carver=0.0,
+            trace_eps=0.0, segments=None):
     """Fill a run of lost runes. groups are the carved groups (dividers between them) with every lost rune written '?';
     gap is (group index, first position, last position + 1) of the run to fill. Candidate fillings come from the words
     whose spelling fits the preserved runes around the gap (and, for gaps of one or two runes, every combination of
@@ -1198,13 +1199,19 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
     a path ending in the carver).
     allowed: for each lost rune the runes its visible remains allow (a set, or None when nothing is visible), e.g.
     from a 3D scan or a photograph (data/rune_traces.json for what part of a rune leaves which runes possible); only
-    fillings that agree are considered, and when few combinations agree all of them are tried.
+    fillings that agree are considered, and when few combinations agree all of them are tried. trace_eps > 0 makes the
+    traces soft: a filling that disagrees with a trace is still tried, but each rune that disagrees multiplies its
+    probability by trace_eps – a misread trace then costs less. segments: a dict that receives, for each filling, the
+    words over the gap [(from, to, word)] with positions counted from the gap's start – a gap that spans two words (two
+    runs filled as one, merge_runs) has a word for each part; `words` has only the word where the gap starts.
     Returns [(filling, probability)], best first, over the candidates considered."""
     gi, g0, g1 = gap
     k = g1 - g0
     g = groups[gi]
     sets = [set(allowed[i]) if (allowed and allowed[i]) else None for i in range(k)]
     ok = lambda f: all(s_ is None or ch in s_ for s_, ch in zip(sets, f))
+    soft = bool(allowed) and trace_eps > 0
+    misfit = lambda f: sum(1 for s_, ch in zip(sets, f) if s_ is not None and ch not in s_)
     # a first reading of the rest of the text (the gap left open): its words give the context
     parts0, sg0 = [], []
     for idx, grp in enumerate(groups):
@@ -1270,17 +1277,22 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
                 for sp, pn in model.names.match(pat_s.replace("\\", ""), top=name_cands).items():
                     f = sp[g0 - a:g1 - a]
                     pre[f] = max(pre[f], pn * model.lam_name)
-    cands = [f for f, _ in sorted(pre.items(), key=lambda kv: -kv[1]) if ok(f)][:n_cands]
+    ranked = [f for f, _ in sorted(pre.items(), key=lambda kv: -kv[1])]
+    cands = [f for f in ranked if ok(f)][:n_cands]
+    if soft:  # the best candidates whatever the traces say, in case a trace is misread
+        cands += [f for f in ranked[:n_cands] if f not in cands]
     alpha = [sorted(s_) if s_ is not None else FILL_ALPHABET for s_ in sets]
     if k <= 2 or (allowed and math.prod(len(a_) for a_ in alpha) <= 400):
         # short gaps, or few combinations left by what is visible: every combination is tried as well
         cands += ["".join(f) for f in itertools.product(*alpha) if "".join(f) not in cands]
+        if soft and k <= 2:
+            cands += ["".join(f) for f in itertools.product(FILL_ALPHABET, repeat=k) if "".join(f) not in cands]
     elif char_fills:  # longer gaps: runs of runes that fit the vowel/consonant pattern and the runes around the gap
         if model.cvchar is None:
             model.cvchar = CVCharModel(model._train_words)
         left, right = g[max(0, g0 - 4):g0].split("?")[-1], g[g1:g1 + 3].split("?")[0]
         fills = model.cvchar.fills(left, k, right)[:char_fills * (5 if allowed else 1)]
-        cands += [f for f, _ in fills if f not in cands and ok(f)][:char_fills]
+        cands += [f for f, _ in fills if f not in cands and (soft or ok(f))][:char_fills * (2 if soft else 1)]
     if adapt and reading0:  # the stone's own spelling habits, from the rest of its text
         base = ctx or Ctx((), model.spell.p, ("glob",))
         ctx = model.adapt(base, adapt_counts(model, reading0[2], reading0[3], base), adapt)
@@ -1288,7 +1300,7 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
     doc = None
     if use_doc and reading0:  # the words of the rest of the text
         doc = {w for _, _, w, p_ in reading0[1] if p_ >= 0.5 and w != "<unk>" and w[0] != "§"}
-    out, word_of = {}, {}
+    out, word_of, seg_of = {}, {}, {}
     gap_at = sum(len(x.replace("?", "")) for x in groups[lo:gi]) + len(g[:g0].replace("?", ""))
     for f in cands:
         filled = g[:g0] + f + g[g1:]
@@ -1304,10 +1316,13 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
         if not parts:
             continue
         lz, post_, text_ = posteriors(model, parts, sg, ctx=ctx, doc=doc, cache=cache_arg, area=area)
-        path_ = best_path(post_, len(text_), model.lemma) if (trigram or by_word or words is not None) else None
-        out[f] = lz + (trigram_delta(model, path_) if trigram else 0.0)
+        path_ = (best_path(post_, len(text_), model.lemma)
+                 if (trigram or by_word or words is not None or segments is not None) else None)
+        out[f] = lz + (trigram_delta(model, path_) if trigram else 0.0) + (misfit(f) * math.log(trace_eps) if soft else 0.0)
         if path_ is not None:
             word_of[f] = next((w for i_, j_, w, _ in path_ if i_ <= gap_at < j_), None)
+            seg_of[f] = [(max(i_, gap_at) - gap_at, min(j_, gap_at + k) - gap_at, w)
+                         for i_, j_, w, _ in path_ if i_ < gap_at + k and j_ > gap_at]
     if not out:
         return []
     mx = max(out.values())
@@ -1315,6 +1330,8 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
     probs = {f: math.exp(v - mx) / z for f, v in out.items()}
     if words is not None:
         words.update(word_of)
+    if segments is not None:
+        segments.update(seg_of)
     if by_word:
         wl = lambda f: model.lemma(word_of[f]) if word_of.get(f) and word_of[f] != "<unk>" else ("<unk>", f)
         tot = defaultdict(float)
@@ -1322,6 +1339,28 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
             tot[wl(f)] += p_
         return sorted(probs.items(), key=lambda kv: (-tot[wl(kv[0])], -kv[1]))
     return sorted(probs.items(), key=lambda kv: -kv[1])
+
+
+def merge_runs(groups, runs, max_between=3):
+    """Runs of lost runes ('?') close together in one group are filled as one: the preserved runes between them (at
+    most max_between) are kept by constraining those places to themselves, so that the word is weighed as a whole.
+    Filled one run at a time, each run takes the others' best filling as given and the word looks more certain than
+    it is. Returns (the groups with each span all '?', the spans, {span: the constraint of each place, None where a
+    rune is lost}, {run: its span})."""
+    spans, member = [], {}
+    for gp in sorted(runs):
+        if spans and spans[-1][0] == gp[0] and gp[1] - spans[-1][2] <= max_between:
+            spans[-1] = (gp[0], spans[-1][1], gp[2])
+        else:
+            spans.append(gp)
+        member[gp] = len(spans) - 1
+    work, cons = list(groups), {}
+    for gi, a, e in spans:
+        c = [None if groups[gi][i] == "?" else groups[gi][i] for i in range(a, e)]
+        work[gi] = work[gi][:a] + "?" * (e - a) + work[gi][e:]
+        if any(x is not None for x in c):
+            cons[(gi, a, e)] = c
+    return work, spans, cons, {gp: spans[i] for gp, i in member.items()}
 
 
 def _fold(w):
@@ -1344,13 +1383,29 @@ def same_word(a, b):
     return difflib.SequenceMatcher(None, a, b).ratio() >= 0.8
 
 
+def _by_lemma(model, pairs):
+    """{word: probability} from [(word, probability)], the forms of one word counted together (the most probable form
+    – the first seen – stands for them), most probable first."""
+    d, rep = defaultdict(float), {}
+    for w_, p_ in pairs:
+        lk = model.lemma(w_) if w_ != "<unk>" else ("<unk>", w_)
+        d[lk] += p_
+        rep.setdefault(lk, w_)
+    out = defaultdict(float)
+    for lk, p_ in d.items():
+        out[rep[lk]] += p_
+    return dict(sorted(out.items(), key=lambda kv: -kv[1]))
+
+
 def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, area=None, allowed=None, details=None,
-                **kw):
+                positions=None, **kw):
     """Fill several runs of lost runes in a text together. Each gap is first filled on its own, then again with the
     other gaps filled by their best candidates, for a couple of rounds; finally every combination of the best
     candidates of each gap is weighed by how probable the whole text is. only: the gaps to fill (others stay open).
     allowed: {gap: what is visible of each of its lost runes} (see restore). details: a dict that receives, for each
-    gap index, its fillings [(filling, probability, word)] from the last round.
+    gap index, its fillings [(filling, probability, word)] from the last round. positions: a dict that receives, for
+    each gap index, the word at each of its positions [{word: probability}] – when two runs are filled as one
+    (merge_runs) the gap can cover the end of one word and the start of the next, and each run has its own word.
     Returns ([(fillings per gap, probability among the combinations, reading)], best first, gaps,
     {gap index: {word: probability over all its candidates, the other gaps filled}})."""
     gaps = [(gi, m_.start(), m_.end()) for gi, g in enumerate(groups) for m_ in re.finditer(r"\?+", g)]
@@ -1372,8 +1427,8 @@ def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, a
     for r_ in range(rounds if len(gaps) > 1 else 1):
         for n, gp in enumerate(gaps):
             choice = [best[i] if (best[i] is not None and i != n) else "?" * (gaps[i][2] - gaps[i][1]) for i in range(len(gaps))]
-            wd = {}
-            res = restore(model, fill(groups, choice), gp, signs=signs, ctx=ctx, area=area, words=wd,
+            wd, seg = {}, {}
+            res = restore(model, fill(groups, choice), gp, signs=signs, ctx=ctx, area=area, words=wd, segments=seg,
                           allowed=(allowed or {}).get(gp), **kw)
             if details is not None:
                 details[n] = [(f, p_, wd.get(f)) for f, p_ in res[:12]]
@@ -1381,16 +1436,10 @@ def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, a
                 options[n] = [f for f, _ in res[:top]]
                 best[n] = res[0][0]
                 # the word in this gap, over all its candidates (the other gaps filled by their best candidates)
-                d, rep = defaultdict(float), {}
-                for f, p_ in res:
-                    w_ = wd.get(f) or "<unk>"
-                    lk = model.lemma(w_) if w_ != "<unk>" else ("<unk>", f)
-                    d[lk] += p_
-                    rep.setdefault(lk, w_)
-                wd_out = defaultdict(float)
-                for lk, p_ in d.items():
-                    wd_out[rep[lk]] += p_
-                wdist[n] = dict(sorted(wd_out.items(), key=lambda kv: -kv[1]))
+                wdist[n] = _by_lemma(model, [(wd.get(f) or "<unk>", p_) for f, p_ in res])
+                if positions is not None:
+                    at = lambda f, o: next((w_ for a_, b_, w_ in seg.get(f, ()) if a_ <= o < b_), None) or "<unk>"  # noqa: E731
+                    positions[n] = [_by_lemma(model, [(at(f, o), p_) for f, p_ in res]) for o in range(gp[2] - gp[1])]
     combos = list(itertools.product(*[o or ["?" * (b - a)] for o, (_, a, b) in zip(options, gaps)]))
     scored = []
     for choice in combos:

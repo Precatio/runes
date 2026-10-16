@@ -864,6 +864,11 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     fyllda tillsammans blir det *Fastbjǫrn* 50 % och *Gæiʀbjǫrn* 50 %. Maskeringsprovet döljer bara en sammanhängande
     följd, så det har inte prövat detta. Rapporten över de verkliga luckorna (ovan) är räknad en lucka i taget och
     är därför för säker där flera luckor sitter i samma ord.
+  * **En lucka över två ord.** I en odelad grupp kan två luckor som fylls som en täcka slutet av ett ord och början
+    av nästa (`af?fa?ur`, *aft faþur*). Varje position i luckan får därför sitt eget ord (`restore_all(positions=...)`).
+    Panelens procent för ett ord räknas där ordet står, och luckrapporten ger varje lucka ordet på sin egen plats.
+    Före rättelsen (2026-10-16) fick alla delar spannets första ord. På U 318 rapporterades då *æftiʀ* för luckan
+    i *faður*, fast runan var rätt ifylld, och panelen kunde visa nästan 0 % för ett rätt ifyllt ord.
 
 ## 9. Språkdrag (fonetisk stil och språkbruk)
 

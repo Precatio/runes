@@ -124,6 +124,20 @@ def test_lost_runes_are_filled_from_the_language():
     assert res[0][0] == "ta" and all(f[1] == "a" for f, _ in res)
 
 
+def test_two_runs_filled_as_one_keep_a_word_each():
+    from src.runlm import merge_runs, restore_all
+    m = Model(RECS)
+    # aft and faþur in one undivided group, one rune lost in each: the runs are filled as one gap
+    work, spans, cons, _ = merge_runs(["þurir", "raisþi", "stain", "þansi", "af?fa?ur", "sin"], [(4, 2, 3), (4, 5, 6)])
+    assert spans == [(4, 2, 6)]
+    pos = {}
+    combos, gaps, words = restore_all(m, work, only=spans, allowed=cons, positions=pos)
+    assert combos[0][0] == ("tfaþ",)
+    # the gap's word is the one where it starts; each position has the word that stands there
+    assert max(words[0], key=words[0].get) == "æft"
+    assert [max(d, key=d.get) for d in pos[0]] == ["æft", "faður", "faður", "faður"]
+
+
 def _parallel(signum, translit, norm, en):
     return {"signum": signum, "period": "V", "transliteration": translit, "normalization": norm, "translation_en": en}
 

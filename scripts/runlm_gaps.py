@@ -18,8 +18,8 @@ import time
 from collections import Counter
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from src.runlm import (DIV, Model, clean_translit, context, edda_tokens, is_runes, load_rundata, normtok,  # noqa: E402
-                       restore_all, runekey, sections, similarity, viking)
+from src.runlm import (DIV, Model, clean_translit, context, edda_tokens, is_runes, load_rundata, merge_runs,  # noqa: E402
+                       normtok, restore_all, runekey, sections, similarity, viking)
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--max_gaps", type=int, default=1500)
@@ -33,6 +33,8 @@ ap.add_argument("--area_lm", action="store_true")
 ap.add_argument("--by_word", action="store_true")
 ap.add_argument("--near", type=float, default=0.0)
 ap.add_argument("--near_km", type=float, default=20.0)
+ap.add_argument("--fold", type=int, default=-1, help="bara denna del (0–4), för att köra delarna parallellt")
+ap.add_argument("--separate", action="store_true", help="fyll varje följd av förlorade runor för sig (som före 2026-10-16)")
 ap.add_argument("--out", default=None)
 args = ap.parse_args()
 
@@ -151,6 +153,8 @@ for x in items:
 rows = []
 t0 = time.time()
 for k in range(5):
+    if args.fold >= 0 and k != args.fold:
+        continue
     test = {st for st in stones if fold[st] == k}
     m = Model([r for r in V if r["signum"] not in test], edda_tokens=ET, aligned=True, lam_name=args.lam_name,
               lam_doc=args.lam_doc, area_lm=args.area_lm)
@@ -162,8 +166,14 @@ for k in range(5):
         for x in xs:
             by_groups.setdefault(tuple(x[1]), []).append(x)
         for groups, ys in by_groups.items():
+            runs = [y[2] for y in ys]
+            if args.separate:
+                work, spans, cons, member = list(groups), runs, {}, {r: r for r in runs}
+            else:  # runs close together in one word are filled as one (merge_runs)
+                work, spans, cons, member = merge_runs(list(groups), runs)
+            pos = {}
             combos, gaps, marg = restore_all(
-                m, list(groups), only=[y[2] for y in ys], window=None if args.window < 0 else args.window,
+                m, work, only=spans, allowed=cons, positions=pos, window=None if args.window < 0 else args.window,
                 use_doc=args.lam_doc > 0, char_fills=args.char_fills, context_cands=args.context_cands,
                 n_cands=args.n_cands, by_word=args.by_word, area=context(r)[3] if args.area_lm else None,
                 site=(float(r["lat"]), float(r["lon"])) if (args.near and r.get("lat") is not None) else None,
@@ -172,16 +182,19 @@ for k in range(5):
                 continue
             best = dict(zip(gaps, combos[0][0]))
             for _, _, gap, w, tok, status in ys:
-                if gap not in best:
+                sp = member.get(gap)
+                if sp not in best:
                     continue
-                n = gaps.index(gap)
-                words = marg.get(n, {})
+                n = gaps.index(sp)
+                # the word where this run stands: a gap of two runs filled as one can cover two words
+                words = pos[n][gap[1] - sp[1]] if pos.get(n) else marg.get(n, {})
                 word = max(words, key=words.get) if words else None
                 restored = normtok(tok.replace("[", "").replace("]", "")) if status == "återställt" else None
                 gi, g0, g1 = gap
+                fill = best[sp][g0 - sp[1]:g1 - sp[1]]
                 filled = list(groups)
-                filled[gi] = filled[gi][:g0] + best[gap] + filled[gi][g1:]
-                rows.append({"sig": st, "carved": w, "gap": g1 - g0, "fill": best[gap], "p": words.get(word, 0.0),
+                filled[gi] = filled[gi][:sp[1]] + best[sp] + filled[gi][sp[2]:]
+                rows.append({"sig": st, "carved": w, "gap": g1 - g0, "fill": fill, "p": words.get(word, 0.0), "span": list(sp),
                              "alts": [(ww, round(pp, 3)) for ww, pp in list(words.items())[1:4]], "word": word,
                              "rundata": tok, "status": status, "reading": combos[0][2], "p_reading": combos[0][1],
                              "agrees": (m.lemma(word) == m.lemma(restored)) if (restored and word and word != "<unk>") else

@@ -36,6 +36,9 @@ ap.add_argument("--near_km", type=float, default=20.0)
 ap.add_argument("--trace", default="none", choices=["none", "halv", "tredjedel", "blandad"],
                 help="vad som syns av de dolda runorna (data/rune_traces.json): halva runan, en tredjedel, eller blandat "
                      "(för varje runa lika ofta inget, en tredjedel eller hälften)")
+ap.add_argument("--trace_noise", type=float, default=0.0,
+                help="andelen spår som är feltolkade: spåret kommer då från en annan runa än den rätta")
+ap.add_argument("--trace_eps", type=float, default=0.0, help="mjuka spår: en runa som strider mot spåret kostar så här mycket")
 ap.add_argument("--contexts", action="store_true", help="stavning per epok, trakt, landskap och ristare (steg 3)")
 ap.add_argument("--ctx", default="none", choices=["none", "region", "carver"],
                 help="stenens plats i stavningsträdet: ingen, till och med landskapet, eller ända till ristaren")
@@ -90,6 +93,8 @@ def trace(runes):
         mode = args.trace if args.trace != "blandad" else trace_rng.choice(["inget", "tredjedel", "halv"])
         region = (trace_rng.choice(HALVES) if mode == "halv" else trace_rng.choice(THIRDS) if mode == "tredjedel"
                   else None)
+        if region and ch in TRACES and args.trace_noise and trace_rng.random() < args.trace_noise:
+            ch = trace_rng.choice([c for c in "fuþorkhniastbmlR" if c != ch])  # a misread trace: another rune's remains
         out.append(TRACES[ch][region] if (region and ch in TRACES) else None)
     return out
 
@@ -148,7 +153,7 @@ for k in folds:
                           cache=args.cache, area=context(r)[3] if args.area_lm else None, by_word=args.by_word,
                           site=(float(r["lat"]), float(r["lon"])) if (args.near and r.get("lat") is not None) else None,
                           near_km=args.near_km, lam_near=args.near, allowed=allowed, ctx=ctx,
-                          carver=carver, lam_carver=args.carver_names)
+                          carver=carver, lam_carver=args.carver_names, trace_eps=args.trace_eps)
             fills = [f for f, _ in res]
             p = dict(res)
             # the word read at the gap with the best filling: is it the right word, whatever its spelling?

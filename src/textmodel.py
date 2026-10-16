@@ -17,7 +17,7 @@ from datetime import datetime, timezone
 from src import runlm as rl
 from src import rungloss as rg
 
-VERSION = "textmodel-3"
+VERSION = "textmodel-4"
 K = 5
 CACHE = os.path.join(rl.ROOT, "data", "cache", "textmodel", VERSION)
 MAX_GAP = 4  # longer runs of lost runes are left open: the masking test covers 1–4 runes
@@ -137,15 +137,8 @@ def _read(r, groups, breaks, b, allowed, base, d):
     m = b["model"]
     site = (float(r["lat"]), float(r["lon"])) if r.get("lat") is not None and r.get("lon") is not None else None
     every = [(gi, x.start(), x.end()) for gi, g in enumerate(groups) for x in re.finditer(r"\?+", g)]
-    # runs of lost runes close together in one group (?a??bi?rn) are filled as one: the preserved runes between them
-    # are kept by constraining those places to themselves, so that the word is weighed as a whole. Filled one run
-    # at a time, each run would take the others' best filling as given and the word would look more certain than it is
-    runs = []
-    for gp in every:
-        if runs and runs[-1][0] == gp[0] and gp[1] - runs[-1][2] <= 3:
-            runs[-1] = (gp[0], runs[-1][1], gp[2])
-        else:
-            runs.append(gp)
+    # runs of lost runes close together in one group (?a??bi?rn) are filled as one (rl.merge_runs)
+    _, runs, _, _ = rl.merge_runs(groups, every)
     lost = {sp: [i for i in range(sp[1], sp[2]) if groups[sp[0]][i] == "?"] for sp in runs}
     fillable = [sp for sp in runs if len(lost[sp]) <= MAX_GAP]
     work = list(groups)
@@ -160,9 +153,9 @@ def _read(r, groups, breaks, b, allowed, base, d):
         cons = [seen[i] or None if i in seen else groups[gi][i] for i in range(a, e)]
         if any(c is not None for c in cons):
             traces[sp] = cons
-    details: dict = {}
+    details, positions = {}, {}
     combos, gaps, words = (rl.restore_all(m, work, signs=breaks, only=fillable, site=site, allowed=traces,
-                                          details=details, **FILL) if fillable else ([], [], {}))
+                                          details=details, positions=positions, **FILL) if fillable else ([], [], {}))
     best = combos[0][0] if combos else ()
     filled = list(groups)
     for (gi, a, e), f in sorted(zip(gaps, best), key=lambda x: (-x[0][0], -x[0][1])):
@@ -181,10 +174,14 @@ def _read(r, groups, breaks, b, allowed, base, d):
             ends.add(pos)
     def p_filled(i, j, w):
         """A word with filled runes is as probable as that word in its gaps (the reading itself takes the filling as
-        given): the smallest probability of the word over the gaps it covers."""
-        qs = [sum(q for w_, q in words.get(n, {}).items() if w_ != "<unk>" and rl.same_word(w_, w)) if w != "<unk>"
-              else words.get(n, {}).get("<unk>", 0.0)
-              for n, (a_, e_) in enumerate(spans) if i < e_ and a_ < j]
+        given): the smallest probability of the word over the gap positions it covers. A gap of two runs filled as
+        one can cover the end of one word and the start of the next; each word is judged where it stands."""
+        def q(dist):
+            return (sum(q_ for w_, q_ in dist.items() if w_ != "<unk>" and rl.same_word(w_, w)) if w != "<unk>"
+                    else dist.get("<unk>", 0.0))
+        qs = [q(positions[n][o]) if positions.get(n) else q(words.get(n, {}))
+              for n, (a_, e_) in enumerate(spans) if i < e_ and a_ < j
+              for o in range(max(i, a_) - a_, min(j, e_) - a_)]
         return min(qs) if qs else None
 
     reading = []

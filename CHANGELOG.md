@@ -34,6 +34,16 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   krävdes ett knapptryck. Väntan gör att en serie kodändringar inte startar en körning per ändring. Funktionen stängs
   av med `R_AUTORUN=0`.
 
+### Luckor som fylls tillsammans
+- Flera förlorade runor i samma ord fylls som en lucka (`merge_runs`). Bevarade runor mellan dem låses, så att ett
+  ord inte ser säkrare ut än det är.
+- När en sådan lucka täcker två ord får varje position sitt eget ord (`restore_all(positions=...)`). Före rättelsen
+  rapporterades spannets första ord för alla dess delar, och panelen kunde visa nästan 0 % för ett rätt ifyllt ord.
+  Textmodellens cache är ny (`textmodel-4`).
+- Spår kan vara mjuka (`trace_eps`): en ifyllning som strider mot ett spår prövas ändå, med ett avdrag per runa, så
+  att en felläst rest inte stänger ute rätt svar.
+- Rapporten över de verkliga luckorna tar flera indatafiler (`--fold` körs parallellt), och okända ord räknas rätt.
+
 ### Ifyllning av förlorade runor: spår och ristare
 - `restore(allowed=...)`: synliga rester av en förlorad runa begränsar vilka runor som prövas, och när få
   kombinationer återstår prövas alla. Det gör att också namn utanför ordförrådet kan hittas.

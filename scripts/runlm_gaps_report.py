@@ -16,7 +16,9 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.runlm import load_rundata, norm_words, same_word, sections  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-rows = json.load(open(os.path.join(ROOT, "utdata", "Malt", "runlm_luckor.json")))["rows"]
+# the gap file (scripts/runlm_gaps.py), or several when the parts were run apart (--fold)
+paths = [a for a in sys.argv[1:] if a.endswith(".json")] or [os.path.join(ROOT, "utdata", "Malt", "runlm_luckor.json")]
+rows = [x for p_ in paths for x in json.load(open(p_))["rows"]]
 by = {r["signum"]: r for r in load_rundata()}
 
 
@@ -28,7 +30,7 @@ def interpreted(sig):
 
 
 rows = [x for x in rows if interpreted(x["sig"])]
-known = lambda x: x["word"] and x["word"] != "<unk>"
+known = lambda x: bool(x["word"]) and x["word"] != "<unk>"
 val = [x for x in rows if x["status"] == "återställt"]
 agree = lambda x: bool(x["agrees"]) or (known(x) and same_word(x["word"], x["rundata"]))
 out = {"n_restored": len(val), "strict": sum(bool(x["agrees"]) for x in val) / max(1, len(val)),
