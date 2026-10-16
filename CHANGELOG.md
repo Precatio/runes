@@ -5,6 +5,23 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Statistik i R räknas om av sig själv
+- När data eller analyskoden har ändrats startar analysmotorn korpusanalyserna själv, tio minuter efter start. Tidigare
+  krävdes ett knapptryck. Väntan gör att en serie kodändringar inte startar en körning per ändring. Funktionen stängs
+  av med `R_AUTORUN=0`.
+
+### Ifyllning av förlorade runor: spår och ristare
+- `restore(allowed=...)`: synliga rester av en förlorad runa begränsar vilka runor som prövas, och när få
+  kombinationer återstår prövas alla. Det gör att också namn utanför ordförrådet kan hittas.
+- `data/rune_traces.json` (`scripts/rune_traces.py`) anger vilka runor som ser likadana ut i en bevarad halva eller
+  tredjedel.
+- Simulerat prov, med samma 1 616 luckor som utan spår, där halva runan är synlig:
+  - helt ord: 56 → 85 % rätt
+  - hela namn: 12 → 66 % rätt
+
+  Med en blandning av inget, en tredjedel och hälften är siffrorna 77 % och 49 %.
+- Ristarens stavning (stavningsträdet ner till ristaren) och namnkrets (`carver`, `lam_carver`); provet pågår.
+
 ### Svenska översättningsutkast via danska
 - Översättningsutkasten (`src/rungloss.py`) kan gå via danska. Danske Runeindskrifter (runer.ku.dk) har danska
   översättningar av 596 inskrifter i Rundata. En andra ordlista lärs mellan dem och Rundatas fornvästnordiska

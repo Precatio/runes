@@ -32,7 +32,11 @@ av data och skript (fingeravtryck) i en egen process (`python -m src.r_bridge <f
 version (korpusen, `common.R`, modulens skript och versionerna av de moduler den läser); en modul med samma version
 som i en tidigare fullständig körning kopieras därifrån i stället för att räknas om, så att en ändring i ett skript
 bara räknar om den modulen och de som bygger på den (`reused` i `done.json`). Varje modul körs som
-`Rscript --vanilla r/<modul>.R params.json utmapp` och skriver JSON och figurer.
+`Rscript --vanilla r/<modul>.R params.json utmapp` och skriver JSON och figurer. Sedan 2026-10-16 startar
+analysmotorn körningen själv när den nuvarande versionen saknar resultat (`api/routers/rstats.py`, `autorun`), tio
+minuter efter start. Väntan gör att en serie kodändringar, som var och en startar om motorn, inte ger en körning per
+ändring. En misslyckad körning görs inte om av sig själv; den görs om med knappen på sidan. `R_AUTORUN=0` stänger av
+funktionen. En ny Rundata läses in när motorn startas om.
 
 | Modul | Paket | Vad den gör |
 |---|---|---|

@@ -44,6 +44,19 @@ def _state() -> dict:
             "modules": [{"key": m, "label": rb.MODULE_LABELS[m]} for m in rb.MODULES]}
 
 
+def autorun() -> bool:
+    """Starts the corpus analyses on their own when the data or the analysis code have changed: R is available, the
+    present version of the data has no results, nothing is running for it, and an earlier run of it did not fail (a
+    failed run is retried with the button on the page). Returns whether a run was started."""
+    if os.environ.get("R_AUTORUN", "1") in ("0", "false") or not rb.enabled():
+        return False
+    fp, data, _ = _corpus()
+    st = rb.JOB.state_of(fp)
+    if rb.JOB.ready(fp) or st.get("running") or st.get("error"):
+        return False
+    return rb.JOB.start(fp, data)
+
+
 @router.get("/status")
 def r_status():
     """Om R finns på servern och om korpusanalyserna är beräknade."""

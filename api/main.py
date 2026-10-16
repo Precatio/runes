@@ -41,6 +41,23 @@ def _warm_caches():
     if os.environ.get("WARM_CACHES", "1") != "0":
         threading.Thread(target=warm, daemon=True).start()
 
+    # Statistik i R: when the data or the analysis code have changed (a new Rundata, a corrected feature), the corpus
+    # analyses are computed on their own – after a quiet spell, so that a series of code edits (each restarting the
+    # server) does not start a run for every edit. R_AUTORUN=0 turns it off; R_AUTORUN_DELAY is the quiet spell in s.
+    def r_autorun():
+        import time
+        time.sleep(float(os.environ.get("R_AUTORUN_DELAY", "600")))
+        try:
+            from api.routers import rstats
+            if rstats.autorun():
+                from api.errors import logger
+                logger.info("Statistik i R: ny version av data, korpusanalyserna räknas om (%s)", rstats.fingerprint())
+        except Exception as e:
+            from api.errors import logger
+            logger.warning("Statistik i R: den automatiska körningen kunde inte starta: %r", e)
+    if os.environ.get("R_AUTORUN", "1") not in ("0", "false"):
+        threading.Thread(target=r_autorun, daemon=True).start()
+
     # The public website: publish an article whose scheduled time came while the app was off, and plan the next one
     def site():
         try:

@@ -295,3 +295,36 @@ def test_every_corpus_pattern_says_whether_it_is_significant():
     assert pats and all("significance" in p for p in pats)
     assert all(p["significance"]["significant"] for p in pats)
     assert any(p["significance"]["label"] == "p < 0,001" for p in pats)
+
+
+def test_the_corpus_analyses_start_on_their_own_only_for_new_data(monkeypatch):
+    from api.routers import rstats
+    from src import r_bridge as rb
+
+    started = []
+
+    class Job:
+        def __init__(self, ready=False, state=None):
+            self._ready, self._state = ready, state or {}
+
+        def ready(self, fp):
+            return self._ready
+
+        def state_of(self, fp):
+            return {"running": False, "error": None, **self._state}
+
+        def start(self, fp, data):
+            started.append(fp)
+            return True
+
+    monkeypatch.setattr(rstats, "_corpus", lambda: ("fp1", b"csv", 1))
+    monkeypatch.setattr(rb, "enabled", lambda: True)
+    monkeypatch.setenv("R_AUTORUN", "1")
+    for job, expect in ((Job(ready=True), False), (Job(state={"running": True}), False),
+                        (Job(state={"error": "R föll"}), False), (Job(), True)):
+        monkeypatch.setattr(rb, "JOB", job)
+        assert rstats.autorun() is expect
+    assert started == ["fp1"]
+    monkeypatch.setenv("R_AUTORUN", "0")
+    monkeypatch.setattr(rb, "JOB", Job())
+    assert rstats.autorun() is False

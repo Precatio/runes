@@ -6,6 +6,7 @@ os.environ.setdefault("GEOLOGY_DISABLED", "1")
 os.environ.setdefault("R_DISABLED", "1")
 # The background warm-up at server start is not needed in tests
 os.environ.setdefault("WARM_CACHES", "0")
+os.environ.setdefault("R_AUTORUN", "0")  # no R corpus run started by the server in a test
 os.environ.setdefault("SITE_PUBLISH", "0")  # never push the public website from a test
 
 import pytest  # noqa: E402
