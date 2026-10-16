@@ -21,22 +21,6 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.runlm import (DIV, Model, clean_translit, context, edda_tokens, is_runes, load_rundata, merge_runs,  # noqa: E402
                        normtok, restore_all, runekey, sections, similarity, viking)
 
-ap = argparse.ArgumentParser()
-ap.add_argument("--max_gaps", type=int, default=1500)
-ap.add_argument("--lam_name", type=float, default=0.05)
-ap.add_argument("--lam_doc", type=float, default=0.0)
-ap.add_argument("--window", type=int, default=-1)
-ap.add_argument("--char_fills", type=int, default=15)
-ap.add_argument("--context_cands", action="store_true")
-ap.add_argument("--n_cands", type=int, default=100)
-ap.add_argument("--area_lm", action="store_true")
-ap.add_argument("--by_word", action="store_true")
-ap.add_argument("--near", type=float, default=0.0)
-ap.add_argument("--near_km", type=float, default=20.0)
-ap.add_argument("--fold", type=int, default=-1, help="bara denna del (0–4), för att köra delarna parallellt")
-ap.add_argument("--separate", action="store_true", help="fyll varje följd av förlorade runor för sig (som före 2026-10-16)")
-ap.add_argument("--out", default=None)
-args = ap.parse_args()
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SWEDISH = set("U Sö Ög Vg Sm Öl G Nä Vs Gs Hs M J Ån Lp D Vr Bo Ds".split())
@@ -135,81 +119,102 @@ def gaps_of(r):
     return out
 
 
-items = []
-for r in SW:
-    for groups, gap, w, tok in gaps_of(r):
-        status = "återställt" if tok and "[" in tok else "ej återställt" if (tok is None or tok == "...") else "oklart"
-        if status != "oklart":
-            items.append((r, groups, gap, w, tok, status))
-random.Random(2026).shuffle(items)
-items = items[:args.max_gaps]
-print("luckor:", len(items), Counter(x[5] for x in items), flush=True)
+def main(argv=None):
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--max_gaps", type=int, default=1500)
+    ap.add_argument("--lam_name", type=float, default=0.05)
+    ap.add_argument("--lam_doc", type=float, default=0.0)
+    ap.add_argument("--window", type=int, default=-1)
+    ap.add_argument("--char_fills", type=int, default=15)
+    ap.add_argument("--context_cands", action="store_true")
+    ap.add_argument("--n_cands", type=int, default=100)
+    ap.add_argument("--area_lm", action="store_true")
+    ap.add_argument("--by_word", action="store_true")
+    ap.add_argument("--near", type=float, default=0.0)
+    ap.add_argument("--near_km", type=float, default=20.0)
+    ap.add_argument("--fold", type=int, default=-1, help="bara denna del (0–4), för att köra delarna parallellt")
+    ap.add_argument("--separate", action="store_true", help="fyll varje följd av förlorade runor för sig (som före 2026-10-16)")
+    ap.add_argument("--out", default=None)
+    args = ap.parse_args(argv)
+    items = []
+    for r in SW:
+        for groups, gap, w, tok in gaps_of(r):
+            status = "återställt" if tok and "[" in tok else "ej återställt" if (tok is None or tok == "...") else "oklart"
+            if status != "oklart":
+                items.append((r, groups, gap, w, tok, status))
+    random.Random(2026).shuffle(items)
+    items = items[:args.max_gaps]
+    print("luckor:", len(items), Counter(x[5] for x in items), flush=True)
 
-stones = sorted({x[0]["signum"] for x in items})
-fold = {st: i % 5 for i, st in enumerate(stones)}
-by_stone = {}
-for x in items:
-    by_stone.setdefault(x[0]["signum"], []).append(x)
-rows = []
-t0 = time.time()
-for k in range(5):
-    if args.fold >= 0 and k != args.fold:
-        continue
-    test = {st for st in stones if fold[st] == k}
-    m = Model([r for r in V if r["signum"] not in test], edda_tokens=ET, aligned=True, lam_name=args.lam_name,
-              lam_doc=args.lam_doc, area_lm=args.area_lm)
-    for st in sorted(test):
-        xs = by_stone[st]
-        r = xs[0][0]
-        # the stone's gaps of the same text section are filled together; each section is a text of its own
-        by_groups = {}
-        for x in xs:
-            by_groups.setdefault(tuple(x[1]), []).append(x)
-        for groups, ys in by_groups.items():
-            runs = [y[2] for y in ys]
-            if args.separate:
-                work, spans, cons, member = list(groups), runs, {}, {r: r for r in runs}
-            else:  # runs close together in one word are filled as one (merge_runs)
-                work, spans, cons, member = merge_runs(list(groups), runs)
-            pos = {}
-            combos, gaps, marg = restore_all(
-                m, work, only=spans, allowed=cons, positions=pos, window=None if args.window < 0 else args.window,
-                use_doc=args.lam_doc > 0, char_fills=args.char_fills, context_cands=args.context_cands,
-                n_cands=args.n_cands, by_word=args.by_word, area=context(r)[3] if args.area_lm else None,
-                site=(float(r["lat"]), float(r["lon"])) if (args.near and r.get("lat") is not None) else None,
-                near_km=args.near_km, lam_near=args.near)
-            if not combos:
-                continue
-            best = dict(zip(gaps, combos[0][0]))
-            for _, _, gap, w, tok, status in ys:
-                sp = member.get(gap)
-                if sp not in best:
+    stones = sorted({x[0]["signum"] for x in items})
+    fold = {st: i % 5 for i, st in enumerate(stones)}
+    by_stone = {}
+    for x in items:
+        by_stone.setdefault(x[0]["signum"], []).append(x)
+    rows = []
+    t0 = time.time()
+    for k in range(5):
+        if args.fold >= 0 and k != args.fold:
+            continue
+        test = {st for st in stones if fold[st] == k}
+        m = Model([r for r in V if r["signum"] not in test], edda_tokens=ET, aligned=True, lam_name=args.lam_name,
+                  lam_doc=args.lam_doc, area_lm=args.area_lm)
+        for st in sorted(test):
+            xs = by_stone[st]
+            r = xs[0][0]
+            # the stone's gaps of the same text section are filled together; each section is a text of its own
+            by_groups = {}
+            for x in xs:
+                by_groups.setdefault(tuple(x[1]), []).append(x)
+            for groups, ys in by_groups.items():
+                runs = [y[2] for y in ys]
+                if args.separate:
+                    work, spans, cons, member = list(groups), runs, {}, {r: r for r in runs}
+                else:  # runs close together in one word are filled as one (merge_runs)
+                    work, spans, cons, member = merge_runs(list(groups), runs)
+                pos = {}
+                combos, gaps, marg = restore_all(
+                    m, work, only=spans, allowed=cons, positions=pos, window=None if args.window < 0 else args.window,
+                    use_doc=args.lam_doc > 0, char_fills=args.char_fills, context_cands=args.context_cands,
+                    n_cands=args.n_cands, by_word=args.by_word, area=context(r)[3] if args.area_lm else None,
+                    site=(float(r["lat"]), float(r["lon"])) if (args.near and r.get("lat") is not None) else None,
+                    near_km=args.near_km, lam_near=args.near)
+                if not combos:
                     continue
-                n = gaps.index(sp)
-                # the word where this run stands: a gap of two runs filled as one can cover two words
-                words = pos[n][gap[1] - sp[1]] if pos.get(n) else marg.get(n, {})
-                word = max(words, key=words.get) if words else None
-                restored = normtok(tok.replace("[", "").replace("]", "")) if status == "återställt" else None
-                gi, g0, g1 = gap
-                fill = best[sp][g0 - sp[1]:g1 - sp[1]]
-                filled = list(groups)
-                filled[gi] = filled[gi][:sp[1]] + best[sp] + filled[gi][sp[2]:]
-                rows.append({"sig": st, "carved": w, "gap": g1 - g0, "fill": fill, "p": words.get(word, 0.0), "span": list(sp),
-                             "alts": [(ww, round(pp, 3)) for ww, pp in list(words.items())[1:4]], "word": word,
-                             "rundata": tok, "status": status, "reading": combos[0][2], "p_reading": combos[0][1],
-                             "agrees": (m.lemma(word) == m.lemma(restored)) if (restored and word and word != "<unk>") else
-                                       (False if restored else None),
-                             "context": " ".join(filled[max(0, gi - 2):gi + 3])})
-    print(f"del {k + 1} klar efter {time.time() - t0:.0f} s; {len(rows)} luckor", flush=True)
+                best = dict(zip(gaps, combos[0][0]))
+                for _, _, gap, w, tok, status in ys:
+                    sp = member.get(gap)
+                    if sp not in best:
+                        continue
+                    n = gaps.index(sp)
+                    # the word where this run stands: a gap of two runs filled as one can cover two words
+                    words = pos[n][gap[1] - sp[1]] if pos.get(n) else marg.get(n, {})
+                    word = max(words, key=words.get) if words else None
+                    restored = normtok(tok.replace("[", "").replace("]", "")) if status == "återställt" else None
+                    gi, g0, g1 = gap
+                    fill = best[sp][g0 - sp[1]:g1 - sp[1]]
+                    filled = list(groups)
+                    filled[gi] = filled[gi][:sp[1]] + best[sp] + filled[gi][sp[2]:]
+                    rows.append({"sig": st, "carved": w, "gap": g1 - g0, "fill": fill, "p": words.get(word, 0.0), "span": list(sp),
+                                 "alts": [(ww, round(pp, 3)) for ww, pp in list(words.items())[1:4]], "word": word,
+                                 "rundata": tok, "status": status, "reading": combos[0][2], "p_reading": combos[0][1],
+                                 "agrees": (m.lemma(word) == m.lemma(restored)) if (restored and word and word != "<unk>") else
+                                           (False if restored else None),
+                                 "context": " ".join(filled[max(0, gi - 2):gi + 3])})
+        print(f"del {k + 1} klar efter {time.time() - t0:.0f} s; {len(rows)} luckor", flush=True)
 
-val = [x for x in rows if x["status"] == "återställt"]
-print(f"återställda av Rundata: {len(val)}; modellen kommer fram till samma ord i {sum(bool(x['agrees']) for x in val) / max(1, len(val)):.1%}")
-for lo, hi in ((0, 0.5), (0.5, 0.8), (0.8, 0.95), (0.95, 1.01)):
-    ys = [x for x in val if lo <= x["p"] < hi]
-    print(f"   säkerhet {lo:.2f}–{min(hi, 1):.2f}: n={len(ys)}, samma ord som Rundata {sum(bool(x['agrees']) for x in ys) / max(1, len(ys)):.0%}")
-new = sorted([x for x in rows if x["status"] == "ej återställt"], key=lambda x: -x["p"])
-print(f"luckor som Rundata inte återställer: {len(new)}; med modellens säkerhet ≥ 0,9: {sum(x['p'] >= 0.9 for x in new)}")
-for x in new[:25]:
-    print(f"  {x['sig']:12} {x['carved']:16} → {x['fill']:5} ord: {x['word']} ({x['p']:.2f}) | {x['context']}")
-json.dump({"settings": vars(args), "rows": rows}, open(args.out or os.path.join(ROOT, "utdata", "Malt", "runlm_luckor.json"), "w"),
-          ensure_ascii=False, indent=1)
+    val = [x for x in rows if x["status"] == "återställt"]
+    print(f"återställda av Rundata: {len(val)}; modellen kommer fram till samma ord i {sum(bool(x['agrees']) for x in val) / max(1, len(val)):.1%}")
+    for lo, hi in ((0, 0.5), (0.5, 0.8), (0.8, 0.95), (0.95, 1.01)):
+        ys = [x for x in val if lo <= x["p"] < hi]
+        print(f"   säkerhet {lo:.2f}–{min(hi, 1):.2f}: n={len(ys)}, samma ord som Rundata {sum(bool(x['agrees']) for x in ys) / max(1, len(ys)):.0%}")
+    new = sorted([x for x in rows if x["status"] == "ej återställt"], key=lambda x: -x["p"])
+    print(f"luckor som Rundata inte återställer: {len(new)}; med modellens säkerhet ≥ 0,9: {sum(x['p'] >= 0.9 for x in new)}")
+    for x in new[:25]:
+        print(f"  {x['sig']:12} {x['carved']:16} → {x['fill']:5} ord: {x['word']} ({x['p']:.2f}) | {x['context']}")
+    json.dump({"settings": vars(args), "rows": rows}, open(args.out or os.path.join(ROOT, "utdata", "Malt", "runlm_luckor.json"), "w"),
+              ensure_ascii=False, indent=1)
+
+
+if __name__ == "__main__":
+    main()
