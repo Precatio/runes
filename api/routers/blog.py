@@ -108,10 +108,19 @@ def _published() -> list[dict]:
     return sorted(posts, key=lambda p: (p.get("publishedAt") or p.get("month") or ""), reverse=True)
 
 
+def first_photo(body: str | None) -> str | None:
+    """The article's first photo from Wikimedia Commons (a line of its own, ![…](…)), for the list's thumbnail;
+    figures and charts are not used."""
+    for m in re.finditer(r"^!\[[^\]]*\]\((\S+?)\)", body or "", re.M):
+        if "wikimedia.org" in m.group(1):
+            return m.group(1)
+    return None
+
+
 @router.get("/blog/posts")
 def list_posts():
-    """De publicerade inläggen, nyaste först (utan brödtext)."""
-    return {"posts": [{k: p.get(k) for k in PUBLIC} for p in _published()]}
+    """De publicerade inläggen, nyaste först (utan brödtext, men med första fotot som miniatyr)."""
+    return {"posts": [{**{k: p.get(k) for k in PUBLIC}, "image": first_photo(p.get("body"))} for p in _published()]}
 
 
 @router.get("/blog/posts/{slug}")

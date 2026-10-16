@@ -23,6 +23,8 @@ export interface BlogPost {
   topic?: string;
   // "Månadens artikel": first and large on the start page and first in the list, whatever its date
   featured?: boolean;
+  // The article's first photo (Wikimedia Commons), for the thumbnail in the list
+  image?: string | null;
 }
 
 /** The post in the chosen language: the English version when there is one. */

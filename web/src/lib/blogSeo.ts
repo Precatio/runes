@@ -58,6 +58,19 @@ export function keywords(post: BlogPost) {
 
 /** The pictures in the post (photos and figures), with their alt texts and, for photos, the credit from the caption
  *  ("Foto: Berig, CC BY 3.0"), which has to follow the picture also when it is shown elsewhere. */
+// The thumbnail widths Wikimedia Commons serves; other widths are refused
+const COMMONS_WIDTHS = [120, 250, 330, 500, 960, 1280];
+
+/** A smaller copy of a Wikimedia Commons picture, at the smallest standard width of at least `width`, for lists. */
+export function thumbnail(src: string, want = 500) {
+  const width = COMMONS_WIDTHS.find(w => w >= want) ?? 1280;
+  const thumb = /^(https:\/\/(?:upload|thumb)\.wikimedia\.org\/wikipedia\/commons)\/thumb\/(.+)\/\d+px-([^/]+)$/.exec(src);
+  if (thumb) return `${thumb[1]}/thumb/${thumb[2]}/${width}px-${thumb[3]}`;
+  const full = /^(https:\/\/upload\.wikimedia\.org\/wikipedia\/commons)\/([0-9a-f]\/[0-9a-f]{2})\/([^/]+)$/.exec(src);
+  if (full && !/\.svg$/i.test(full[3])) return `${full[1]}/thumb/${full[2]}/${full[3]}/${width}px-${full[3]}`;
+  return src;
+}
+
 export function pictures(md: string) {
   return [...md.matchAll(/^!\[([^\]]*)\]\(([^)\s]+)\)\n?(.*)$/gm)].map(m => {
     const credit = /(?:Foto|Photo): ([^,]+), \[?([^\](,]+)/.exec(m[3] ?? "");
