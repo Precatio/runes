@@ -296,6 +296,9 @@ export default function TextModelPanel({ signum }: { signum: string }) {
               femte spår var felläst – spåren räknas som troliga, inte säkra</>}.
               {data.calibrated && <> Procenten vid orden är kalibrerade: ett ord med 80 % stämmer ungefär åtta gånger av tio
               (prövat på 808 stenar med känt svar). Namn får ofta låga procent, eftersom ett namn sällan kan säkras ur språket.</>}{" "}
+              Procenten är prövade på luckor som utgivarna redan har fyllt. Luckor som står öppna är ofta just de där
+              ingen vanlig formel passar, och där kan modellen vara säker och ändå ha fel: den kan inte kasusböjning
+              och väljer själv var orden börjar.{" "}
               <Link href="/docs/metod" className="text-[#b7410e] hover:underline">Metoden</Link>
             </p>
           </section>

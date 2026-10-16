@@ -6038,5 +6038,6 @@
 "Runorna står utan skiljetecken här, och modellen väljer själv var orden börjar. Med utgivarnas indelning blir det ett annat ord.":"The runes stand without dividers here, and the model chooses for itself where the words begin. With the editors' division it becomes a different word.",
 "Modellens indelning":"The model's division",
 "Rundatas läsning":"Rundata's reading",
-"Rundatas alternativa läsning":"Rundata's alternative reading"
+"Rundatas alternativa läsning":"Rundata's alternative reading",
+"Procenten är prövade på luckor som utgivarna redan har fyllt. Luckor som står öppna är ofta just de där ingen vanlig formel passar, och där kan modellen vara säker och ändå ha fel: den kan inte kasusböjning och väljer själv var orden börjar.":"The percentages are tested on gaps the editors have already filled. Gaps that remain open are often exactly those where no common formula fits, and there the model can be sure and still wrong: it does not know case inflection and chooses for itself where the words begin."
 }

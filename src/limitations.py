@@ -18,7 +18,7 @@ sammanhang den gäller:
 """
 from __future__ import annotations
 
-VERSION = "2026-10-14"
+VERSION = "2026-10-16"
 
 # Riktvärden för antal mätta runor (avsnitt 3 i METHODS.md)
 MIN_RUNES_DESCRIBE = 10
@@ -138,6 +138,18 @@ LIMITATIONS = [
              "Wikidata men inte mot senare litteratur. Ristare, stilgrupper och dateringar är bedömningar, inte facit.",
      "short": "Uppgifterna om stenarna kommer från en databas från 2018 och kan vara inaktuella.",
      "needed": "Uppdatering till senaste utgåvan av Runor."},
+    {"key": "textmodel_open", "contexts": {"textmodel"},
+     "title": "Sannolikhetsmodellen är inte prövad på öppna luckor",
+     "text": "Modellens säkerhet är prövad på luckor som utgivarna redan har fyllt: när den säger minst 95 procent "
+             "har den rätt i 98 procent. Luckorna som står öppna är inget slumpmässigt urval, eftersom utgivarna redan "
+             "har fyllt dem där en vanlig formel passar. Där modellen var säkrast på öppna luckor höll förslagen inte vid "
+             "granskning: på U Fv1971;212B lånade den runor från namnet Ragnví (Víseti 97 procent), och på Sö 280 "
+             "föreslog den genitiven þæiRa (98 procent) där meningen kräver ackusativ. Modellen kan inte kasusböjning och "
+             "väljer själv ordgränser i text utan skiljetecken.",
+     "short": "Procenten gäller luckor av det slag som utgivarna redan har fyllt; på öppna luckor kan modellen vara säker "
+              "och ändå ha fel.",
+     "needed": "Grammatisk kontroll (kasus och kongruens) och prövning mot luckor som fyllts i senare utgåvor eller "
+               "med nya spår ur skanningar."},
     {"key": "software", "contexts": {"software", "grooves", "attribution", "comparison"},
      "title": "Programvaran är under utveckling",
      "text": "Mätmetoden har ändrats flera gånger (groove-1 till groove-5 under oktober 2026) efter att fel hittats. "

@@ -126,7 +126,7 @@ export default function MethodsPage() {
             </section>
           )}
 
-          <KnownLimitations contexts={["grooves", "auto", "comparison", "attribution", "statistics", "research", "ai", "rundata", "software", "r"]} />
+          <KnownLimitations contexts={["grooves", "auto", "comparison", "attribution", "statistics", "research", "ai", "rundata", "software", "textmodel", "r"]} />
         </div>
       </div>
     </div>
