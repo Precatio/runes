@@ -235,7 +235,12 @@ const SOURCES = [
   {
     name: "Runor och Wikidata",
     detail: "Riksantikvarieämbetets utgåva 2020 av runtextdatabasen och Wikidata (CC0), för avstämningen av appens förslag mot nyare källor.",
-    href: "https://app.raa.se/open/runor/",
+    href: "https://runor.raa.se/",
+  },
+  {
+    name: "Danske Runeindskrifter",
+    detail: "Nationalmuseet och Københavns Universitet. De danska översättningarna är ett stöd när appen gör svenska utkast till översättningar av danska inskrifter.",
+    href: "https://runer.ku.dk/",
   },
   {
     name: "Gräslund, A.-S. 1998",
@@ -246,8 +251,8 @@ const SOURCES = [
     detail: "Work and Worship. Laser Scanner Analysis of Viking Age Rune Stones. Stockholms universitet.",
   },
   {
-    name: "Kitzler Åhfeldt, L. 2024",
-    detail: "3D-data Runstenar i Södermanland och andra serier [Dataset]. Riksantikvarieämbetet. Zenodo, CC BY 4.0.",
+    name: "Öppna 3D-skanningar (Zenodo, CC BY 4.0)",
+    detail: "Kitzler Åhfeldt, L. 2024: Runstenar i Södermanland, Runstenar signerade av Åsmund Kåresson och Runstenar och tidigkristna gravmonument i Västergötland. Kitzler Åhfeldt, L. & Zedig, H. 2024 och 2025: Runstenar i Medelpad och i Hälsingland, skannade av Henrik Zedig. Kitzler Åhfeldt, L. 2025: Tidigkristna gravmonument i Östergötland och Småland. Riksantikvarieämbetet.",
     href: "https://doi.org/10.5281/zenodo.11951255",
   },
   {
@@ -276,6 +281,15 @@ const SOURCES = [
     name: "SGU och Natural Earth",
     detail: "Berggrund 1:50 000–1:250 000 (Sveriges geologiska undersökning) och kustlinjer, sjöar och vattendrag 1:10 miljoner (public domain).",
     href: "https://www.sgu.se/",
+  },
+  {
+    name: "Rikenas gränser",
+    detail: "Kartans gränslager omkring 890, 1025 och 1200 bygger på Ottars och Wulfstans berättelser (omkring 890), Adam av Bremen (omkring 1075), Jellingstenen och Frösöstenen, Gutasagan och Äldre Västgötalagen. Gränserna är ungefärliga.",
+  },
+  {
+    name: "Wikimedia Commons",
+    detail: "Fotografier av stenarna i artiklarna. Fotograf och licens anges vid varje bild.",
+    href: "https://commons.wikimedia.org/",
   },
   {
     name: "Kulturmiljöregistret",
