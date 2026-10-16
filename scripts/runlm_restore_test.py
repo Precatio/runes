@@ -36,6 +36,11 @@ ap.add_argument("--near_km", type=float, default=20.0)
 ap.add_argument("--trace", default="none", choices=["none", "halv", "tredjedel", "blandad"],
                 help="vad som syns av de dolda runorna (data/rune_traces.json): halva runan, en tredjedel, eller blandat "
                      "(för varje runa lika ofta inget, en tredjedel eller hälften)")
+ap.add_argument("--contexts", action="store_true", help="stavning per epok, trakt, landskap och ristare (steg 3)")
+ap.add_argument("--ctx", default="none", choices=["none", "region", "carver"],
+                help="stenens plats i stavningsträdet: ingen, till och med landskapet, eller ända till ristaren")
+ap.add_argument("--carver_names", type=float, default=0.0, help="namn från ristarens andra stenar (vikt)")
+ap.add_argument("--only_carver", action="store_true", help="bara stenar med känd ristare (samma luckor som annars)")
 ap.add_argument("--out", default=None)
 args = ap.parse_args()
 
@@ -105,7 +110,8 @@ for k in folds:
     test = cands[k::K]
     tset = {r["signum"] for r, _ in test}
     m = Model([r for r in V if r["signum"] not in tset], edda_tokens=ET, aligned=True, lam_name=args.lam_name,
-              lam_doc=args.lam_doc, area_lm=args.area_lm)
+              lam_doc=args.lam_doc, area_lm=args.area_lm,
+              **(dict(contexts=True, alpha=100.0, kappa_e=50.0, lm_beta=200.0) if args.contexts else {}))
     for r, (groups, gw) in test:
         for kind in ("inne i ord", "helt ord"):
             if kind == "inne i ord":
@@ -130,13 +136,19 @@ for k in folds:
             masked = list(groups)
             masked[gi] = groups[gi][:g0] + "?" * (g1 - g0) + groups[gi][g1:]
             allowed = trace(truth) if args.trace != "none" else None
+            cpath = context(r)
+            carver = cpath[5]
+            if args.only_carver and not carver:  # the same gaps are drawn either way; only stones with a carver are filled
+                continue
+            ctx = m.ctx(cpath if args.ctx == "carver" else cpath[:5]) if (args.contexts and args.ctx != "none") else None
             wd = {}
             res = restore(m, masked, (gi, g0, g1), words=wd, window=None if args.window < 0 else args.window,
                           use_doc=args.lam_doc > 0, char_fills=args.char_fills, context_cands=args.context_cands,
                           name_cands=args.name_cands, adapt=args.adapt, n_cands=args.n_cands, trigram=args.trigram,
                           cache=args.cache, area=context(r)[3] if args.area_lm else None, by_word=args.by_word,
                           site=(float(r["lat"]), float(r["lon"])) if (args.near and r.get("lat") is not None) else None,
-                          near_km=args.near_km, lam_near=args.near, allowed=allowed)
+                          near_km=args.near_km, lam_near=args.near, allowed=allowed, ctx=ctx,
+                          carver=carver, lam_carver=args.carver_names)
             fills = [f for f, _ in res]
             p = dict(res)
             # the word read at the gap with the best filling: is it the right word, whatever its spelling?
@@ -153,7 +165,9 @@ for k in folds:
                          "p_truth": p.get(truth, 0.0), "word_ok": word_ok, "gold_word": normtok(gword),
                          "dist": [(f, round(q, 6)) for f, q in res[:10]], "word": w_,
                          "is_name": normtok(gword) in {normtok(x) for x in re.findall(r'"(\w+)', r.get("normalization") or "")},
-                         "allowed": allowed,
+                         "allowed": allowed, "carver": carver,
+                         "carver_kind": next((c["kind"] for c in (r.get("carvers") or [])
+                                              if isinstance(c, dict) and c.get("name") == carver), None),
                          "p_word": (sum(q for f, q in res if wd.get(f) and wd.get(fills[0]) and
                                         m.lemma(wd[f]) == m.lemma(wd[fills[0]])) if fills else 0.0)})
     print(f"del {k + 1} klar efter {time.time() - t0:.0f} s; {len(rows)} luckor", flush=True)

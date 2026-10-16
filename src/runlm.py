@@ -765,8 +765,12 @@ class Model:
         self.lam_name, self.names = lam_name, None
         # where each name stands: (lat, lon, normalized name, carved spelling), for names on nearby stones
         self.name_sites = []
+        # names on each carver's stones: (carver, normalized name, carved spelling), for the carver's circle
+        self.name_carver = []
         for r in recs:
-            if r.get("lat") is None or r.get("lon") is None:
+            located = r.get("lat") is not None and r.get("lon") is not None
+            carvers = [c["name"] for c in (r.get("carvers") or []) if isinstance(c, dict) and not c.get("uncertain")]
+            if not located and not carvers:
                 continue
             T = dict(sections(r.get("transliteration")))
             for lab, n_ in sections(r.get("normalization")):
@@ -780,7 +784,10 @@ class Model:
                     ck = runekey(cw)
                     if nw.startswith('"') and is_runes(ck.lower()):
                         nm = normtok(nw.strip('"[]').replace("[", "").replace("]", "").replace("(?)", ""))
-                        self.name_sites.append((float(r["lat"]), float(r["lon"]), nm, re.sub(r"(.)\1+", r"\1", ck)))
+                        ck = re.sub(r"(.)\1+", r"\1", ck)
+                        if located:
+                            self.name_sites.append((float(r["lat"]), float(r["lon"]), nm, ck))
+                        self.name_carver.extend((cv, nm, ck) for cv in carvers)
         if lam_name:
             nm, after, after_all = Counter(), Counter(), Counter()
             for r in recs:
@@ -820,6 +827,17 @@ class Model:
                                    math.cos(math.radians(lat)) * math.cos(math.radians(la)) * math.cos(math.radians(lo - lon)))))
             if d <= km:
                 out[nm] += 1.0 / (1.0 + d / 5.0)
+                spell.add(ck)
+        tot = sum(out.values())
+        return ({k: v / tot for k, v in out.items()} if tot else {}), spell
+
+    def names_by_carver(self, carver):
+        """Names on the stones of a carver (signed or attributed in Rundata), the carver's own signature included:
+        {normalized name: share}, {carved spelling}. The same families often turned to the same carver."""
+        out, spell = Counter(), set()
+        for cv, nm, ck in self.name_carver:
+            if cv == carver:
+                out[nm] += 1
                 spell.add(ck)
         tot = sum(out.values())
         return ({k: v / tot for k, v in out.items()} if tot else {}), spell
@@ -1158,7 +1176,7 @@ def trigram_delta(model, path):
 
 def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_doc=False, char_fills=0,
             context_cands=False, name_cands=0, adapt=0.0, trigram=False, cache=0.0, area=None, by_word=False,
-            words=None, site=None, near_km=20.0, lam_near=0.0, allowed=None):
+            words=None, site=None, near_km=20.0, lam_near=0.0, allowed=None, carver=None, lam_carver=0.0):
     """Fill a run of lost runes. groups are the carved groups (dividers between them) with every lost rune written '?';
     gap is (group index, first position, last position + 1) of the run to fill. Candidate fillings come from the words
     whose spelling fits the preserved runes around the gap (and, for gaps of one or two runes, every combination of
@@ -1174,6 +1192,9 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
     its spelling cannot be known, but the word can. words: a dict that receives the word each filling gives.
     site, near_km, lam_near: (lat, lon) of the stone; names on stones within near_km become candidates (in the
     spellings their carvers used) and more probable (weight lam_near) – families raised stones near each other.
+    carver, lam_carver: the carver of the stone; names on the carver's other stones (and the carver's own name)
+    become candidates and more probable (weight lam_carver). The carver's spelling comes with ctx (Model(contexts=True),
+    a path ending in the carver).
     allowed: for each lost rune the runes its visible remains allow (a set, or None when nothing is visible), e.g.
     from a 3D scan or a photograph (data/rune_traces.json for what part of a rune leaves which runes possible); only
     fillings that agree are considered, and when few combinations agree all of them are tried.
@@ -1211,8 +1232,15 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
     near_shares, near_spell = ({}, set())
     if site and lam_near:
         near_shares, near_spell = model.names_near(site[0], site[1], near_km)
-        if near_shares:
-            cache_arg = (lam_near, near_shares) if not cache_arg else cache_arg
+    car_shares, car_spell = model.names_by_carver(carver) if (carver and lam_carver) else ({}, set())
+    near_spell = near_spell | car_spell
+    if (near_shares or car_shares) and not cache_arg:  # names of the stone's neighbours and of its carver's circle
+        lam = (lam_near if near_shares else 0.0) + (lam_carver if car_shares else 0.0)
+        mixed = defaultdict(float)
+        for shares, w_ in ((near_shares, lam_near), (car_shares, lam_carver)):
+            for k_, v_ in shares.items():
+                mixed[k_] += w_ * v_ / lam
+        cache_arg = (lam, dict(mixed))
     pre = defaultdict(float)
     ntok = sum(model.uni.values()) or 1
     # windows inside the group that cover the gap; a candidate word is weighed by how common it is (or how well it
