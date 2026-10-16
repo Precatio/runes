@@ -297,7 +297,8 @@ def _boundaries(r, groups, gaps, best, words, read, spans, at_rune, trace_at, b,
     chooses where the words begin – and may borrow runes from a word it does not know (U Fv1971;212B: Víseti across
     Ragnví). For each of the editors' divisions into words (Rundata's main reading and its alternative, when they have
     the same runes and differ only in the boundaries) whose words around a gap differ from the model's, the text is read
-    again with those boundaries; the gaps whose best word then changes are returned."""
+    again with those boundaries – only where the model's word around a gap runs across one of the editors' boundaries,
+    since reading the text again doubles the time; the gaps whose best word then changes are returned."""
     flat = "".join(groups)
     out, seen = [], set()
     for variant, tr in (("main", r["transliteration"]), ("alt", alternative_reading(r["transliteration"]))):
@@ -309,12 +310,14 @@ def _boundaries(r, groups, gaps, best, words, read, spans, at_rune, trace_at, b,
         seen.add(tuple(eg))
         eoff = _offsets(eg)
         theirs = [(s, s + len(g)) for s, g in zip(eoff, eg)]
+        cuts = set(eoff[1:])
         off = _offsets(groups)
         differ = []
         for n, ((gi, a, e), (ta, te)) in enumerate(zip(gaps, spans)):
             fa, fe = off[gi] + a, off[gi] + e
             model_iv = {(at_rune[i], at_rune[j - 1] + 1) for i, j, _, _ in read if i < te and ta < j and j > i}
-            if model_iv and model_iv != _covering(theirs, fa, fe):
+            # only where the model's word runs across a boundary the editors draw, borrowing runes from the next word
+            if any(s < c < t for s, t in model_iv for c in cuts):
                 differ.append((n, fa, fe, model_iv))
         if not differ:
             continue
