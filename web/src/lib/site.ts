@@ -21,8 +21,15 @@ export const DOCS_URL = `${GITHUB_URL}#readme`;
 // While the app runs locally (next dev), its own pages are a click away; never on the public website
 export const SHOW_LOCAL_APP = process.env.NODE_ENV === "development" && !PUBLIC_SITE;
 
-/** The paths that exist on the public website: the start page, the articles and their figures. */
-export const isPublicPath = (href: string) => /^\/(?:$|[#?]|artiklar(?:[/?#]|$)|api\/blog\/figures\/)/.test(href);
+/** The paths that exist on the public website: the start page, the articles and their figures, and the contact page. */
+export const isPublicPath = (href: string) => /^\/(?:$|[#?]|artiklar(?:[/?#]|$)|kontakt(?:[/?#]|$)|api\/blog\/figures\/)/.test(href);
+export const CONTACT_PATH = "/kontakt";
+
+// The contact form's receiver. The website is static, so FormSubmit (no account) emails the message on. The first
+// message sends an activation link to the address; after activation FormSubmit gives a random alias that can replace
+// the address here (or in NEXT_PUBLIC_CONTACT_ENDPOINT), so that the address is no longer in the page.
+export const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT || "https://formsubmit.co/ajax/viktor.kvant@gmail.com";
+export const CONTACT_SERVICE_URL = "https://formsubmit.co/";
 
 // The articles' authors: the byline links to the author's page, and search engines get the same link (schema.org)
 export interface Author { name: string; url: string; role: string; role_en: string; bio: string; bio_en: string }

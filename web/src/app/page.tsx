@@ -12,7 +12,7 @@ import type { BlogPost } from "@/components/BlogBody";
 import { getPost, listPosts } from "@/lib/articles";
 import { featuredFirst } from "@/lib/featured";
 import { pictures } from "@/lib/blogSeo";
-import { DOCS_URL, DOWNLOAD_URL, GITHUB_URL, METHODS_URL, SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
+import { CONTACT_PATH, DOCS_URL, DOWNLOAD_URL, GITHUB_URL, METHODS_URL, SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
 
 // The newest articles are fetched again at most every five minutes, and at once when one is published (tag "blog")
 export const revalidate = 60;
@@ -342,6 +342,7 @@ export default async function LandingPage() {
             <a href="#landskap" className="hover:text-slate-900">Nya källor</a>
             <a href="#kallor" className="hover:text-slate-900">Källor</a>
             <a href="#oppen" className="hover:text-slate-900">Öppen källkod</a>
+            <Link href={CONTACT_PATH} className="hover:text-slate-900">Kontakt</Link>
           </nav>
           <div className="flex items-center gap-3">
             <LanguageToggle className="px-2.5 py-1 rounded-full border border-slate-300 text-[11px] font-bold tracking-wider text-slate-600 hover:border-slate-900 hover:text-slate-900" />
@@ -680,6 +681,10 @@ språk, Uppsala universitet.`}
               analytiska metoder, AI-modeller och tekniker kan appliceras för att driva gränserna framåt även inom humaniora
               och arkeologi.
             </p>
+            <p className="mt-4 text-slate-600 leading-relaxed">
+              Frågor, rättelser eller idéer om samarbete?{" "}
+              <Link href={CONTACT_PATH} className="font-semibold text-[#b7410e] hover:underline">Skriv till Viktor</Link>.
+            </p>
           </div>
           <div>
             <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e] mb-3">Licens</div>
@@ -727,6 +732,7 @@ språk, Uppsala universitet.`}
             <a href="https://www.linkedin.com/in/viktor-kvant-555180108/" target="_blank" rel="noopener noreferrer" className="font-semibold text-slate-700 hover:text-[#b7410e]">Viktor Kvant</a>
           </div>
           <div className="flex flex-wrap items-center gap-5">
+            <Link href={CONTACT_PATH} className="hover:text-slate-900">Kontakt</Link>
             <a href={DOCS_URL} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">Dokumentation</a>
             <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">GitHub</a>
             <span>GPL-3.0</span>
