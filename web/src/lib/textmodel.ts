@@ -35,6 +35,7 @@ export interface TextModelReading {
   gaps?: TextModelGap[];
   open_gaps?: { group: number; start: number; end: number; n: number }[];
   dating?: { epochs: { epoch: string; label: string; p: number }[]; calibrated: boolean; rundata: string };
+  calibrated?: boolean;
   translation?: { sv: string; en: string };
   validation: {
     inside_word: number; whole_word: number; sure_right: number; rundata_sure: number;

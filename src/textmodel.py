@@ -8,10 +8,12 @@ inskrift i del k läses av modellen som tränats på de fyra andra – annars sk
 fyllas av en modell som redan läst återställningen. Modellerna byggs först när de behövs (omkring en halv minut
 vardera) och resultaten sparas per inskrift i data/cache/textmodel/."""
 import json
+import math
 import os
 import re
 import threading
 import zlib
+from collections import Counter
 from datetime import datetime, timezone
 
 from src import runlm as rl
@@ -45,7 +47,8 @@ def _records() -> dict:
         _data.update(recs=recs, by={r["signum"]: r for r in recs},
                      V=[r for r in recs if rl.viking(r) and r.get("transliteration") and r.get("normalization")],
                      da=rg.load_danish(recs), edda=rl.edda_tokens(),
-                     T=json.load(open(cal))["dating_temperature"] if os.path.exists(cal) else None)
+                     T=json.load(open(cal))["dating_temperature"] if os.path.exists(cal) else None,
+                     B=(json.load(open(cal)).get("word_recal") or {}).get("B") if os.path.exists(cal) else None)
     return _data
 
 
@@ -59,11 +62,29 @@ def bundle(k: int) -> dict:
         m = rl.Model([r for r in d["V"] if keep(r)], edda_tokens=d["edda"], **MODEL)
         rest = [r for r in d["recs"] if keep(r)]
         da_recs = [dict(r, translation_da=d["da"][r["signum"]]) for r in rest if r["signum"] in d["da"]]
+        # how common each word is in the texts the model learned from, over all its normalized forms (for recal)
+        freq = Counter(rl.normtok(b_) for r in d["V"] if keep(r) for _, p in rl.sections(r["normalization"])
+                       for b_ in rl.norm_words(p))
+        fk = Counter()
+        for w_, c_ in freq.items():
+            fk[rl.key(w_)] += c_
         _bundles[k] = {
-            "model": m, "en": rg.Glossary([r for r in rest if r.get("translation_en")]),
+            "model": m, "fk": fk, "en": rg.Glossary([r for r in rest if r.get("translation_en")]),
             "da": rg.Glossary(da_recs, field="translation_da", words=rg._danish, src="normalization_ows") if da_recs else None,
             "ows": rg.ows_map(rest)}
         return _bundles[k]
+
+
+def recal(b: dict, p: float, w: str, runes: str, B) -> float:
+    """The calibrated probability that a word in the reading is right (data/runlm_calibration.json, word_recal): the
+    model's own probability is too sure – said 70 %, right 40 % – and less so for common words with a usual spelling."""
+    if not B or w == "<unk>":
+        return p
+    fk, m = b["fk"], b["model"]
+    p = min(max(p, 1e-4), 1 - 1e-4)
+    lch = max(math.log(max(m.index.get(runes, {}).get(w, 0.0), 1e-12)), -12.0)
+    x = [1.0, math.log(p / (1 - p)), math.log1p(fk[rl.key(w)]), float(fk[rl.key(w)] == 0), math.log(len(runes)), lch]
+    return 1 / (1 + math.exp(-sum(a * c for a, c in zip(x, B))))
 
 
 def text_groups(translit: str) -> tuple[list[str], list[int]]:
@@ -161,7 +182,8 @@ def _read(r, groups, breaks, b, allowed, base, d):
     for (gi, a, e), f in sorted(zip(gaps, best), key=lambda x: (-x[0][0], -x[0][1])):
         filled[gi] = filled[gi][:a] + f + filled[gi][e:]
     parts, sg = _parts(filled, breaks)
-    _, read, _, text, _, ll = rl.decode_epochs(m, parts, sg)
+    # read in the stone's branch of the spelling tree (era to landscape), as in the calibration
+    _, read, _, text, _, ll = rl.decode_epochs(m, parts, sg, path=rl.context(r)[:5])
     # where the filled runes stand in the read text, and where the text breaks
     spans = []
     for (gi, a, e), f in zip(gaps, best):
@@ -189,12 +211,13 @@ def _read(r, groups, breaks, b, allowed, base, d):
         filled = any(i < e_ and a_ < j for a_, e_ in spans)
         pf = p_filled(i, j, w) if filled else None
         reading.append({"runes": text[i:j], "word": w.lstrip("§"), "name": w.startswith("§"), "unknown": w == "<unk>",
-                        "p": round(pf if pf is not None else p, 4), "filled": filled, "break_after": j in ends})
+                        "p": round(pf if pf is not None else recal(b, p, w, text[i:j], d["B"]), 4), "filled": filled,
+                        "break_after": j in ends})
     prior = {e: (m.epoch_prior[e] or 1) for e in rl.EPOCHS}
     dating = rl.epoch_posterior(ll, prior, d["T"] or 1.0)
     vocab = [w for _, _, w, _ in read]
     out = {
-        **base, "available": True, "computed_at": datetime.now(timezone.utc).isoformat(),
+        **base, "available": True, "computed_at": datetime.now(timezone.utc).isoformat(), "calibrated": bool(d["B"]),
         "groups": groups, "reading": reading,
         "gaps": [{"number": n, "group": gi, "start": a, "end": e, "carved": groups[gi], "n": len(lost[(gi, a, e)]),
                   "lost": [i - a for i in lost[(gi, a, e)]],

@@ -1,5 +1,42 @@
 {
  "dating_temperature": 1.7490062499999994,
  "n": 2046,
- "note": "Temperatur för dateringen ur språket (src/runlm.fit_temperature), skattad på dateringsprovet scripts/runlm_dating.py, 2026-10-15, med epokernas andel som förhandschans."
+ "note": "Temperatur för dateringen ur språket (src/runlm.fit_temperature), skattad på dateringsprovet scripts/runlm_dating.py, 2026-10-15, med epokernas andel som förhandschans.",
+ "word_recal": {
+  "B": [
+   -3.0630779581398238,
+   0.5097465607221964,
+   0.3531010261442239,
+   0.24273805671648738,
+   1.1472604272923834,
+   0.10157959829368955
+  ],
+  "features": [
+   "1",
+   "logit(p)",
+   "log1p(frekvens för ordet, alla normaliseringar)",
+   "okänt i runtexterna (bara Eddan)",
+   "log(antal runor)",
+   "max(log P(stavning | ord), -12)"
+  ],
+  "target": "samma ord som Rundata (key)",
+  "n_words": 10669,
+  "n_inscriptions": 808,
+  "ece_raw": 0.09337663864462674,
+  "ece": 0.006556523090344844,
+  "config": {
+   "aligned": true,
+   "contexts": true,
+   "epoch": "inferred",
+   "medieval": false,
+   "adapt": 0.0,
+   "alpha": 100.0,
+   "kappa_e": 50.0,
+   "lm_beta": 200.0,
+   "levels": 5,
+   "epoch_lm": 1,
+   "lam_name": 0.05
+  },
+  "note": "Logistisk omräkning av ordens sannolikhet i läsningen (scripts/runlm_calibrate.py, fem delar, 808 inskrifter med känt svar, 2026-10-14). Råa sannolikheter är för säkra: sagt 70 %, rätt 40 %."
+ }
 }
