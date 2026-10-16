@@ -5,6 +5,14 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Sökmotoroptimering av startsidan och artiklarna
+- Startsidans och artikellistans beskrivningar ryms i en sökträff (155 och 141 tecken).
+- Startsidan beskriver Vitki som organisation, med logotyp och grundare (schema.org Organization), och förladdar inte
+  längre artikelfotot under första skärmen.
+- Miniatyrerna i artikellistan har fotots alt-text, till exempel "Runstenen U 489".
+- Varje artikel slutar med tre andra artiklar ("Fler artiklar"), så att läsare och sökmotorer hittar vidare.
+- Kontaktsidans adress slutar med / som sajtens andra sidor.
+
 ### Kontaktsida och nya källor på webbplatsen
 - `/kontakt` har ett formulär som skickas med e-post till grundaren via FormSubmit. Webbplatsen är statisk och har
   ingen egen server.

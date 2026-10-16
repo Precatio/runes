@@ -6,8 +6,8 @@ import { authorOf, isPublicPath, PUBLIC_SITE, SITE_NAME, SITE_URL } from "@/lib/
 import type { BlogPost } from "@/components/BlogBody";
 
 export const BLOG_TITLE = "Artiklar – mönster i runstenarna";
-export const BLOG_DESCRIPTION = "Artiklar om de mest intressanta mönstren i de svenska vikingatida runstenarna: vad vi "
-  + "ser, vad det kan betyda och hur det kan prövas – populärvetenskapligt och med statistiken redovisad.";
+export const BLOG_DESCRIPTION = "Populärvetenskapliga artiklar om mönster i Sveriges runstenar: vad vi ser, vad det kan "
+  + "betyda och hur det prövas – med statistiken redovisad.";
 const BASE_KEYWORDS = ["runstenar", "runinskrifter", "runforskning", "runologi", "vikingatiden", "statistik",
   "Samnordisk runtextdatabas", "artiklar om runstenar"];
 const SIGNUM = /\b(?:U|Sö|Ög|Vg|Sm|Öl|Gs|Hs|Hä|Vs|Nä|DR|N|G)\s\d{1,4}[A-Z]?\b/g;
@@ -127,9 +127,9 @@ export function blogJsonLd(posts: BlogPost[]) {
     "@type": "Blog",
     name: BLOG_TITLE,
     description: BLOG_DESCRIPTION,
-    url: `${SITE_URL}/artiklar`,
+    url: `${SITE_URL}${ARTICLES_PATH}`,
     inLanguage: "sv-SE",
-    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL, logo: { "@type": "ImageObject", url: `${SITE_URL}/vitki_logo.png` } },
     blogPost: posts.map(p => ({ "@type": "BlogPosting", headline: p.title, url: postUrl(p.slug), datePublished: p.publishedAt ?? undefined,
                                  description: metaDescription(p.summary || "") })),
   };

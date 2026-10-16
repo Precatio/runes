@@ -25,6 +25,7 @@ export interface BlogPost {
   featured?: boolean;
   // The article's first photo (Wikimedia Commons), for the thumbnail in the list
   image?: string | null;
+  image_alt?: string | null;
 }
 
 /** The post in the chosen language: the English version when there is one. */

@@ -12,7 +12,7 @@ import type { BlogPost } from "@/components/BlogBody";
 import { getPost, listPosts } from "@/lib/articles";
 import { featuredFirst } from "@/lib/featured";
 import { pictures } from "@/lib/blogSeo";
-import { CONTACT_PATH, DOCS_URL, DOWNLOAD_URL, GITHUB_URL, METHODS_URL, SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
+import { AUTHORS, CONTACT_PATH, DOCS_URL, DOWNLOAD_URL, GITHUB_URL, METHODS_URL, SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
 
 // The newest articles are fetched again at most every five minutes, and at once when one is published (tag "blog")
 export const revalidate = 60;
@@ -32,16 +32,23 @@ export const metadata: Metadata = {
 };
 
 // Structured data (schema.org): the site and the research software, which is downloaded from GitHub
+const FOUNDER = { "@type": "Person", name: "Viktor Kvant", url: AUTHORS["Viktor Kvant"].url, sameAs: [AUTHORS["Viktor Kvant"].url],
+                  jobTitle: AUTHORS["Viktor Kvant"].role };
 const JSON_LD = [
   {
-    "@context": "https://schema.org", "@type": "WebSite", name: "Vitki", url: SITE_URL, inLanguage: ["sv", "en"],
+    "@context": "https://schema.org", "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "Vitki", url: SITE_URL,
+    logo: { "@type": "ImageObject", url: `${SITE_URL}/vitki_logo.png` }, founder: FOUNDER, sameAs: [GITHUB_URL],
     description: SITE_DESCRIPTION,
+  },
+  {
+    "@context": "https://schema.org", "@type": "WebSite", name: "Vitki", url: SITE_URL, inLanguage: ["sv", "en"],
+    description: SITE_DESCRIPTION, publisher: { "@id": `${SITE_URL}/#organization` },
   },
   {
     "@context": "https://schema.org", "@type": "SoftwareApplication", name: "Vitki", url: SITE_URL, downloadUrl: GITHUB_URL,
     applicationCategory: "ResearchApplication", operatingSystem: "macOS, Linux, Windows", isAccessibleForFree: true,
     offers: { "@type": "Offer", price: "0", priceCurrency: "SEK" },
-    license: "https://www.gnu.org/licenses/gpl-3.0.html", author: { "@type": "Person", name: "Viktor Kvant" },
+    license: "https://www.gnu.org/licenses/gpl-3.0.html", author: FOUNDER, publisher: { "@id": `${SITE_URL}/#organization` },
     description: SITE_DESCRIPTION,
     about: ["Runstenar", "Runinskrifter", "Runologi", "Vikingatiden", "Samnordisk runtextdatabas"],
   },

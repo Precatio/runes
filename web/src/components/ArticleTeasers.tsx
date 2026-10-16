@@ -23,7 +23,7 @@ export default function ArticleTeasers({ posts, photo }: { posts: BlogPost[]; ph
         <div className="flex flex-1 flex-col md:flex-row lg:flex-col xl:flex-row">
         {photo && (
           <Link href={postPath(first.slug)} className="relative md:w-2/5 lg:w-full xl:w-2/5 shrink-0 bg-slate-100">
-            <img src={photo.src} alt={photo.alt} className="h-64 md:h-full lg:h-64 xl:h-full w-full object-cover" />
+            <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" className="h-64 md:h-full lg:h-64 xl:h-full w-full object-cover" />
             {photo.credit && (
               <span className="absolute bottom-0 right-0 bg-slate-900/60 text-white text-[10px] px-2 py-0.5">Foto: {photo.credit}</span>
             )}

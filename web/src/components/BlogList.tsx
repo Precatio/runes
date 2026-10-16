@@ -18,7 +18,7 @@ function Picture({ post, width, className }: { post: BlogPost; width: number; cl
   }
   return (
     <div className={`${className} overflow-hidden bg-slate-200`}>
-      <img src={thumbnail(post.image, width)} alt="" loading="lazy" decoding="async"
+      <img src={thumbnail(post.image, width)} alt={post.image_alt || post.title} loading="lazy" decoding="async"
         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
     </div>
   );

@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BlogShell from "@/components/BlogShell";
 import BlogArticle from "@/components/BlogArticle";
-import { getPost, postSlugs } from "@/lib/articles";
+import MoreArticles from "@/components/MoreArticles";
+import { getPost, listPosts, postSlugs } from "@/lib/articles";
+import { featuredFirst } from "@/lib/featured";
 import { articleJsonLd, keywords, metaDescription, pictures, postPath, SHARE_SIZE, sharePath } from "@/lib/blogSeo";
 
 // A published post, rendered on the server with its metadata and structured data (lib/blogSeo.ts), so that every new
@@ -42,9 +44,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const { slug } = await params;
   const post = await getPost(decodeURIComponent(slug));
   if (!post) notFound();
+  // three other articles: the article of the month first, then the newest
+  const more = featuredFirst((await listPosts()).posts.filter(p => p.slug !== post.slug)).slice(0, 3);
   return (
     <BlogShell>
       <BlogArticle post={post} />
+      <MoreArticles posts={more} />
       { }
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd(post)).replace(/</g, "\\u003c") }} />
     </BlogShell>
