@@ -16,6 +16,7 @@ Data: Rundata (data/rundata.json) och, om den är nedladdad, Eddan och Snorres E
 {verk: text} (EDDA). Används av scripts/runlm_calibrate.py (provet på inskrifter med känd läsning) och
 scripts/malt_decode.py (Maltstenen). Metod: METHODS.md, avsnitt 8.
 """
+import itertools
 import json
 import math
 import os
@@ -447,6 +448,44 @@ class NameModel:
             self.idx[part] = ix
         self._cache = {}
 
+    def match(self, pattern, top=20):
+        """Names whose spelling fits a run of runes with lost runes ('.'): {spelled runes: P(name) · P(runes | name)}."""
+        n = len(pattern)
+        rx = lambda pat: re.compile(pat + "$")
+        if not hasattr(self, "_by_len"):
+            self._by_len = {part: defaultdict(list) for part in "FSXE"}
+            for part in "FSXE":
+                for sp in self.idx[part]:
+                    self._by_len[part][len(sp)].append(sp)
+        out = defaultdict(float)
+        for j in range(2, n + 1):
+            r_e = rx(pattern[j:])
+            ends = [sp for sp in self._by_len["E"].get(n - j, []) if r_e.match(sp)]
+            if not ends:
+                continue
+            qe = sum(self.ends[e] * pe for sp in ends for e, pe in self.idx["E"][sp].items())
+            r_x = rx(pattern[:j])
+            for sp in self._by_len["X"].get(j, []):
+                if r_x.match(sp):
+                    for x, px in self.idx["X"][sp].items():
+                        for es in ends:
+                            for e, pe in self.idx["E"][es].items():
+                                out[sp + es] += (1 - self.p_compound) * self.simple[x] * px * self.ends[e] * pe
+            for i in range(2, j - 1):
+                r_f, r_s = rx(pattern[:i]), rx(pattern[i:j])
+                fs = [sp for sp in self._by_len["F"].get(i, []) if r_f.match(sp)]
+                if not fs:
+                    continue
+                ss = [sp for sp in self._by_len["S"].get(j - i, []) if r_s.match(sp)]
+                for f_ in fs:
+                    pf = sum(self.first[f] * p_ for f, p_ in self.idx["F"][f_].items())
+                    for s_ in ss:
+                        ps_ = sum(self.second[g] * p_ for g, p_ in self.idx["S"][s_].items())
+                        for es in ends:
+                            pe = sum(self.ends[e] * p_ for e, p_ in self.idx["E"][es].items())
+                            out[f_ + s_ + es] += self.p_compound * pf * ps_ * pe
+        return dict(sorted(out.items(), key=lambda kv: -kv[1])[:top])
+
     def candidates(self, s, top=5):
         """{normalized name: P(name) · P(runes | name)} for names composed of known parts that spell s."""
         if s in self._cache:
@@ -482,9 +521,92 @@ class Ctx:
         self.phase = path[1] if len(path) > 1 and path[1] in ("tidig", "sen") else None
 
 
+VOWELS = set("aeiouyæøąåöä")
+
+
+def rune_type(ch):
+    """V for a vowel rune, C for a consonant, $ for the end of the word."""
+    return "$" if ch == "$" else "V" if ch in VOWELS else "C"
+
+
+class CVCharModel:
+    """Runes inside words in two steps: first whether the next rune is a vowel, a consonant or the end of the word
+    (from the pattern of vowels and consonants before it), then which rune of that kind (from the runes before it).
+    The 16-rune alphabet has five vowel runes and about a dozen consonants, so knowing that a vowel comes narrows the
+    choice to a few signs; the pattern of vowels and consonants is learned from far more words than any single run of
+    runes."""
+    def __init__(self, words, order=4):
+        self.order = order
+        self.tc, self.th = Counter(), Counter()   # type n-grams over the vowel/consonant pattern
+        self.cc, self.ch = Counter(), Counter()   # rune n-grams within each type
+        self.alpha = sorted({ch for w in words for ch in w} | {"$"})
+        self.by_type = defaultdict(set)
+        for ch in self.alpha:
+            self.by_type[rune_type(ch)].add(ch)
+        for w in words:
+            s = "^" * order + w + "$"
+            ts = "".join("^" if ch == "^" else rune_type(ch) for ch in s)
+            for i in range(order, len(s)):
+                for n in range(0, order + 1):  # type given the last n types
+                    self.tc[(ts[i - n:i], ts[i])] += 1
+                    self.th[ts[i - n:i]] += 1
+                for n in range(0, 3):  # rune given its type and the last n runes
+                    self.cc[(s[i - n:i], ts[i], s[i])] += 1
+                    self.ch[(s[i - n:i], ts[i])] += 1
+
+    def _p_type(self, ts, t):
+        p = 1.0 / 3
+        for n in range(0, self.order + 1):  # interpolated, longer patterns where they have been seen
+            h = ts[len(ts) - n:] if n else ""
+            c = self.th[h]
+            if c:
+                lam = c / (c + 3.0)
+                p = lam * self.tc[(h, t)] / c + (1 - lam) * p
+        return p
+
+    def _p_in(self, s, t, ch):
+        p = 1.0 / max(1, len(self.by_type[t]))
+        for n in range(0, 3):
+            h = s[len(s) - n:] if n else ""
+            c = self.ch[(h, t)]
+            if c:
+                lam = c / (c + 2.0)
+                p = lam * self.cc[(h, t, ch)] / c + (1 - lam) * p
+        return p
+
+    def step(self, prefix, ch):
+        """log P(next rune | the runes so far)."""
+        s = "^" * self.order + prefix
+        ts = "".join("^" if c == "^" else rune_type(c) for c in s)
+        t = rune_type(ch)
+        return math.log(max(self._p_type(ts, t) * self._p_in(s, t, ch), 1e-12))
+
+    def logp(self, w):
+        return sum(self.step(w[:i], ch) for i, ch in enumerate(w + "$"))
+
+    def fills(self, left, k, right="", beam=30):
+        """The most probable runs of k runes between `left` and `right` within a word (a beam over the runes)."""
+        states = [("", 0.0)]
+        for _ in range(k):
+            nxt = []
+            for f, lp in states:
+                for ch in self.alpha:
+                    if ch != "$":
+                        nxt.append((f + ch, lp + self.step(left + f, ch)))
+            states = sorted(nxt, key=lambda x: -x[1])[:beam]
+        out = []
+        for f, lp in states:  # the runes after the gap must also fit
+            w = left + f
+            for i, ch in enumerate(right):
+                lp += self.step(w + right[:i], ch)
+            out.append((f, lp))
+        return sorted(out, key=lambda x: -x[1])
+
+
 class Model:
     def __init__(self, recs, edda_tokens=(), lam_edda=0.03, lam_unk=0.01, D=0.75, d=None, kappa=2.0, exclude=(),
-                 aligned=False, contexts=False, alpha=20.0, kappa_e=5.0, lm_beta=0.0, spelling_recs=(), lam_name=0.0):
+                 aligned=False, contexts=False, alpha=20.0, kappa_e=5.0, lm_beta=0.0, spelling_recs=(), lam_name=0.0,
+                 cv_chars=False, lam_doc=0.0, area_lm=False, area_beta=200.0):
         """recs: Viking-Age inscriptions for the language and spelling. aligned: also use sections whose word counts
         differ (step 2). contexts: spelling by era, epoch, area, region and carver, and word sequences by epoch (step 3);
         alpha is how many observations a level needs to outweigh the level above it. spelling_recs: further inscriptions
@@ -502,6 +624,29 @@ class Model:
             if id(r) in viking_set:
                 self.emp[b][re.sub(r"(.)\1+", r"\1", a)] += 1
         self.n_pairs, self.n_pair_inscriptions = len(tp), len({id(r) for _, _, r in tpr})
+        # the same word in different normalizations, learned from the data: forms that carvers spelled alike (each
+        # at least twice) and that differ by at most two sounds are one word (ræisti = ræisþi, þennsi = þannsi)
+        by_spell = defaultdict(Counter)
+        for a, b, r in tpr:
+            if id(r) in viking_set:
+                by_spell[re.sub(r"(.)\1+", r"\1", a)][b] += 1
+        parent = {}
+
+        def root(x):
+            while parent.get(x, x) != x:
+                parent[x] = parent.get(parent[x], parent[x])
+                x = parent[x]
+            return x
+        for sp, ws in by_spell.items():
+            common = [w for w, c in ws.items() if c >= 2 and len(w) >= 3]
+            for i_, w1 in enumerate(common):
+                for w2 in common[i_ + 1:]:
+                    k1, k2 = key(w1), key(w2)
+                    if k1 != k2 and _lev(k1, k2) <= 2 and k1[:1] == k2[:1]:
+                        r1, r2 = root(w1), root(w2)
+                        if r1 != r2:
+                            parent[max(r1, r2)] = min(r1, r2)
+        self.lemma_of = {w: root(w) for w in parent}
         self.node, self.emp_ep = defaultdict(lambda: defaultdict(Counter)), defaultdict(lambda: defaultdict(Counter))
         self._tables, self._deriv, self._cand = {}, {}, {}
         if contexts:
@@ -518,6 +663,7 @@ class Model:
                 self.emp_ep[path[:3]][b][re.sub(r"(.)\1+", r"\1", a)] += 1
         # bigram counts within sections
         self.big, self.uni, self.hist = Counter(), Counter(), Counter()
+        self.big3, self.hist2, self.fol3 = Counter(), Counter(), Counter()  # three-word sequences (formulas)
         for r in recs:
             for _, p in sections(r.get("normalization")):
                 ws = ["<s>"] + [normtok(w) for w in norm_words(p)]
@@ -525,6 +671,12 @@ class Model:
                     self.big[(a, b)] += 1
                     self.hist[a] += 1
                 self.uni.update(ws[1:])
+                ws3 = ["<s>"] + ws
+                for a, b, c in zip(ws3, ws3[1:], ws3[2:]):
+                    if not self.big3[(a, b, c)]:
+                        self.fol3[(a, b)] += 1
+                    self.big3[(a, b, c)] += 1
+                    self.hist2[(a, b)] += 1
         self.follow = defaultdict(set)
         cont = Counter()
         for (a, b) in self.big:
@@ -549,6 +701,16 @@ class Model:
                         for lev in (ep, PHASE[ep]):  # the epoch and its phase
                             self.big_e[lev][(a, b)] += 1
                             self.hist_e[lev][a] += 1
+        if area_lm:  # word sequences by area (formula habits differ between landscapes), backing off to the whole
+            for r in recs:
+                ar = "A:" + context(r)[3]
+                for _, p in sections(r.get("normalization")):
+                    ws = ["<s>"] + [normtok(w) for w in norm_words(p)]
+                    for a, b in zip(ws, ws[1:]):
+                        self.big_e[ar][(a, b)] += 1
+                        self.hist_e[ar][a] += 1
+        self.area_beta = area_beta
+        if contexts or area_lm:
             for ep, big in self.big_e.items():
                 fol = Counter(a for a, _ in big)
                 self.gamma_e[ep] = {a: D * fol[a] / self.hist_e[ep][a] for a in self.hist_e[ep]}
@@ -556,7 +718,19 @@ class Model:
         ne = sum(ec.values()) or 1
         self.pe = {w: c / ne for w, c in ec.items()}
         self.lam_edda, self.lam_unk = lam_edda, lam_unk
-        self.char = CharModel([a for a, _ in tp])
+        self.char = (CVCharModel if cv_chars else CharModel)([a for a, _ in tp])
+        self.cvchar = None  # built on demand, to propose fillings rune by rune
+        self._train_words = [a for a, _ in tp]
+        # the text as a whole: which words stand in the same inscription (a word's company), lam_doc > 0
+        self.lam_doc, self.cooc, self.cooc_tot, self._doc_cache = lam_doc, defaultdict(Counter), Counter(), {}
+        if lam_doc:
+            for r in recs:
+                ws = {normtok(w) for _, p in sections(r.get("normalization")) for w in norm_words(p)}
+                for v in ws:
+                    for w in ws:
+                        if v != w:
+                            self.cooc[v][w] += 1
+                            self.cooc_tot[v] += 1
         # divider rate: share of word boundaries marked by a divider in the carved texts
         nd = nb_ = 0
         for r in recs:
@@ -583,9 +757,30 @@ class Model:
                 if p > 1e-4:
                     self.index[s][w] = p
         self.maxlen = max(len(s) for s in self.index)
+        self.keys_by_len = defaultdict(list)
+        for k_ in self.index:
+            self.keys_by_len[len(k_)].append(k_)
         # names the vocabulary has never seen (lam_name > 0): composed of name elements; how likely a name is after a
         # given word is learned from where names stand in the training texts
         self.lam_name, self.names = lam_name, None
+        # where each name stands: (lat, lon, normalized name, carved spelling), for names on nearby stones
+        self.name_sites = []
+        for r in recs:
+            if r.get("lat") is None or r.get("lon") is None:
+                continue
+            T = dict(sections(r.get("transliteration")))
+            for lab, n_ in sections(r.get("normalization")):
+                if lab not in T:
+                    continue
+                raw = [w for w in re.split(r"[\s,.;:!?]+", re.sub(r"(\S+)/\S+", r"\1", n_)) if re.search(r"\w", w)]
+                carved = translit_words(T[lab])
+                if len(raw) != len(carved):
+                    continue
+                for nw, cw in zip(raw, carved):
+                    ck = runekey(cw)
+                    if nw.startswith('"') and is_runes(ck.lower()):
+                        nm = normtok(nw.strip('"[]').replace("[", "").replace("]", "").replace("(?)", ""))
+                        self.name_sites.append((float(r["lat"]), float(r["lon"]), nm, re.sub(r"(.)\1+", r"\1", ck)))
         if lam_name:
             nm, after, after_all = Counter(), Counter(), Counter()
             for r in recs:
@@ -605,7 +800,45 @@ class Model:
             self.name_f0 = sum(after.values()) / max(1, sum(after_all.values()))
             self.name_after = {w: (after[w] + 5 * self.name_f0) / (after_all[w] + 5) for w in after_all}
 
-    def p_word(self, w, prev, ep=None):
+    def p_doc(self, doc):
+        """P(w | the other words of the inscription): how often w stands in the same inscription as those words."""
+        key_ = frozenset(doc)
+        if key_ not in self._doc_cache:
+            tot = sum(self.cooc_tot[v] for v in key_)
+            out = Counter()
+            for v in key_:
+                for w, c in self.cooc[v].items():
+                    out[w] += c
+            self._doc_cache[key_] = {w: c / tot for w, c in out.items()} if tot else {}
+        return self._doc_cache[key_]
+
+    def names_near(self, lat, lon, km=20.0):
+        """Names on stones within km of a place: {normalized name: weight}, {carved spelling}; nearer weighs more."""
+        out, spell = defaultdict(float), set()
+        for la, lo, nm, ck in self.name_sites:
+            d = 6371.0 * math.acos(max(-1.0, min(1.0, math.sin(math.radians(lat)) * math.sin(math.radians(la)) +
+                                   math.cos(math.radians(lat)) * math.cos(math.radians(la)) * math.cos(math.radians(lo - lon)))))
+            if d <= km:
+                out[nm] += 1.0 / (1.0 + d / 5.0)
+                spell.add(ck)
+        tot = sum(out.values())
+        return ({k: v / tot for k, v in out.items()} if tot else {}), spell
+
+    def lemma(self, w):
+        """The word behind a normalized form (forms the data shows to be the same word share one key)."""
+        return key(self.lemma_of.get(w.lstrip("§"), w.lstrip("§"))) if w != "<unk>" else w
+
+    def p_word3(self, w, u, v):
+        """P(w | u v) for three-word sequences, backing off to P(w | v)."""
+        p2 = self.p_word(w, v)
+        h = self.hist2.get((u, v), 0)
+        if not h:
+            return p2
+        lr = 1 - self.lam_edda - self.lam_unk
+        gam = self.D * self.fol3[(u, v)] / h
+        return lr * max(self.big3.get((u, v, w), 0) - self.D, 0) / h + gam * p2
+
+    def p_word(self, w, prev, ep=None, doc=None, cache=None, area=None):
         """P(w | prev) for a lexicon word (the unknown word is handled separately); with an epoch, the epoch's own
         word sequences back off to those of its phase, and those to the whole Viking Age."""
         lr = 1 - self.lam_edda - self.lam_unk
@@ -621,7 +854,19 @@ class Model:
                     pe = max(self.big_e[lev].get((prev, w), 0) - self.D, 0) / h + self.gamma_e[lev][prev] * pk
                     lam = h / (h + self.lm_beta) if self.lm_beta else 1.0
                     pk = lam * pe + (1 - lam) * pk
-        return lr * pk + self.lam_edda * self.pe.get(w, 0.0)
+        lev = "A:" + area if area else None
+        if lev and lev in self.hist_e and prev in self.hist_e[lev]:  # the area's own formulas
+            h = self.hist_e[lev][prev]
+            pa = max(self.big_e[lev].get((prev, w), 0) - self.D, 0) / h + self.gamma_e[lev][prev] * pk
+            lam = h / (h + self.area_beta)
+            pk = lam * pa + (1 - lam) * pk
+        p = lr * pk + self.lam_edda * self.pe.get(w, 0.0)
+        if doc and self.lam_doc:
+            p = (1 - self.lam_doc) * p + self.lam_doc * lr * self.p_doc(doc).get(w, 0.0)
+        if cache:  # (weight, {word: share}) – words read elsewhere in the same inscription
+            lam_c, shares = cache
+            p = (1 - lam_c) * p + lam_c * lr * shares.get(w, 0.0)
+        return p
 
     # ---- step 3: spelling by context ----
     def table(self, path):
@@ -723,7 +968,7 @@ def _lse(xs):
     return m + math.log(sum(math.exp(x - m) for x in xs)) if m > float("-inf") else m
 
 
-def posteriors(model, groups, signs=(), lexicon=True, ctx=None):
+def posteriors(model, groups, signs=(), lexicon=True, ctx=None, doc=None, cache=None, area=None):
     """Forward–backward over the carved text. `groups` are the carver's groups (a divider between each);
     `signs` are indices of groups followed by a non-runic sign or the futhark row (a boundary at no cost).
     Returns (log P(text), span posteriors {(i, j, w): p}, text)."""
@@ -750,7 +995,7 @@ def posteriors(model, groups, signs=(), lexicon=True, ctx=None):
     def lt(w, prev):
         k = (w, prev)
         if k not in ltrans:
-            p = model.lam_unk if w == "<unk>" else model.p_name(prev) if w[0] == "§" else model.p_word(w, prev, ep)
+            p = model.lam_unk if w == "<unk>" else model.p_name(prev) if w[0] == "§" else model.p_word(w, prev, ep, doc, cache, area)
             ltrans[k] = math.log(p) if p > 0 else float("-inf")
         return ltrans[k]
 
@@ -797,13 +1042,14 @@ def posteriors(model, groups, signs=(), lexicon=True, ctx=None):
     return logZ, post, text
 
 
-def best_path(post, L):
+def best_path(post, L, keyfn=None):
     """The path with the highest expected number of correctly read runes (posterior × length); the same word in
-    several normalizations counts as one reading of the span."""
+    several normalizations counts as one reading of the span (keyfn: e.g. Model.lemma; default key)."""
+    keyfn = keyfn or key
     grp = defaultdict(float)
     top = {}
     for (i, j, w), p in post.items():
-        k = (i, j, key(w))
+        k = (i, j, keyfn(w))
         grp[k] += p
         if k not in top or p > post[(i, j, top[k])]:
             top[k] = w
@@ -827,7 +1073,7 @@ def best_path(post, L):
 def decode(model, groups, signs=(), lexicon=True, ctx=None):
     """Returns (log P(text), best path [(start, end, word, posterior)], span posteriors {(i, j, w): p}, text)."""
     logZ, post, text = posteriors(model, groups, signs, lexicon, ctx)
-    return logZ, best_path(post, len(text)), post, text
+    return logZ, best_path(post, len(text), getattr(model, "lemma", None)), post, text
 
 
 def adapt_counts(model, post, text, ctx, floor=0.05):
@@ -891,3 +1137,216 @@ def fit_temperature(rows, use_prior=True):
                     for x in rows) / len(rows)
     grid = [1.0 * 1.15 ** k for k in range(0, 40)]
     return min(grid, key=loss)
+
+
+# ---- filling lost runes ---------------------------------------------------------------------------------------------
+FILL_ALPHABET = "fuþorkhniastbmlRe"
+
+
+def trigram_delta(model, path):
+    """How much more (log) probable the words of a reading are when each is judged by the two words before it."""
+    ws = ["<s>", "<s>"] + [w for _, _, w, _ in path]
+    out = 0.0
+    for u, v, w in zip(ws, ws[1:], ws[2:]):
+        if w == "<unk>" or w[0] == "§" or v == "<unk>" or v[0] == "§":
+            continue
+        p2, p3 = model.p_word(w, v), model.p_word3(w, u, v)
+        if p2 > 0 and p3 > 0:
+            out += math.log(p3 / p2)
+    return out
+
+
+def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_doc=False, char_fills=0,
+            context_cands=False, name_cands=0, adapt=0.0, trigram=False, cache=0.0, area=None, by_word=False,
+            words=None, site=None, near_km=20.0, lam_near=0.0):
+    """Fill a run of lost runes. groups are the carved groups (dividers between them) with every lost rune written '?';
+    gap is (group index, first position, last position + 1) of the run to fill. Candidate fillings come from the words
+    whose spelling fits the preserved runes around the gap (and, for gaps of one or two runes, every combination of
+    runes); each candidate is scored by how probable the whole text then is (within `window` groups on each side, or
+    the whole text if window is None). use_doc: the words read in the rest of the inscription also count (which words
+    stand together). char_fills: that many fillings proposed rune by rune by the vowel/consonant model, for words the
+    vocabulary does not have. context_cands: candidate words are weighed by how well they fit the words read before and
+    after the gap. name_cands: that many names composed of name elements that fit the preserved runes. adapt: the
+    stone's own spelling, learned from the rest of its text, is used (strength of the general spelling). trigram:
+    each candidate is also judged by three-word sequences (formulas) along its reading. cache: words already read
+    elsewhere in the inscription become candidates and more probable (weight). by_word: the fillings are ranked
+    by the word they give (its probability summed over its spellings), then by spelling – when a whole word is lost
+    its spelling cannot be known, but the word can. words: a dict that receives the word each filling gives.
+    site, near_km, lam_near: (lat, lon) of the stone; names on stones within near_km become candidates (in the
+    spellings their carvers used) and more probable (weight lam_near) – families raised stones near each other.
+    Returns [(filling, probability)], best first, over the candidates considered."""
+    gi, g0, g1 = gap
+    k = g1 - g0
+    g = groups[gi]
+    # a first reading of the rest of the text (the gap left open): its words give the context
+    parts0, sg0 = [], []
+    for idx, grp in enumerate(groups):
+        pieces = [p_ for p_ in grp.split("?") if p_]
+        for q, p_ in enumerate(pieces):
+            parts0.append(p_)
+            if q < len(pieces) - 1 or idx in signs or (idx == gi and q == len(pieces) - 1 and "?" in grp):
+                sg0.append(len(parts0) - 1)
+    reading0 = decode(model, parts0, sg0, ctx=ctx) if (parts0 and (use_doc or context_cands or adapt or cache)) else None
+    cache_arg, cached_runes = None, set()
+    if cache and reading0:
+        seen = Counter(w for _, _, w, p_ in reading0[1] if p_ >= 0.3 and w != "<unk>")
+        if seen:
+            tot = sum(seen.values())
+            cache_arg = (cache, {w.lstrip("§"): c / tot for w, c in seen.items()})
+            cached_runes = {reading0[3][i_:j_] for i_, j_, w, p_ in reading0[1] if p_ >= 0.3 and w != "<unk>"}
+    prev_w = next_w = None
+    if reading0 and context_cands:
+        # the gap's position in the text without lost runes: everything before it in the groups, minus earlier gaps
+        before = sum(len(x.replace("?", "")) for x in groups[:gi]) + len(g[:g0].replace("?", ""))
+        for i_, j_, w_, p_ in reading0[1]:
+            if j_ <= before and p_ >= 0.3:
+                prev_w = w_
+            if i_ >= before and next_w is None and p_ >= 0.3:
+                next_w = w_
+    near_shares, near_spell = ({}, set())
+    if site and lam_near:
+        near_shares, near_spell = model.names_near(site[0], site[1], near_km)
+        if near_shares:
+            cache_arg = (lam_near, near_shares) if not cache_arg else cache_arg
+    pre = defaultdict(float)
+    ntok = sum(model.uni.values()) or 1
+    # windows inside the group that cover the gap; a candidate word is weighed by how common it is (or how well it
+    # fits between the words before and after) and how well its spelling fits (other lost runes are wildcards)
+    for a in range(max(0, g1 - model.maxlen), g0 + 1):
+        for b in range(g1, min(len(g), a + model.maxlen) + 1):
+            pat_s = "".join("." if ch == "?" else re.escape(ch) for ch in g[a:b])
+            pat = re.compile(pat_s + "$")
+            for key_ in model.keys_by_len.get(b - a, ()):
+                if pat.match(key_):
+                    f = key_[g0 - a:g1 - a]
+                    if context_cands:
+                        sc = max(p_ * model.p_word(w, prev_w if a == 0 else "<s>") *
+                                 (model.p_word(next_w, w) if (next_w and b == len(g)) else 1.0)
+                                 for w, p_ in model.index[key_].items())
+                    else:
+                        sc = max(p_ * (model.uni.get(w, 0) + 0.5) / ntok for w, p_ in model.index[key_].items())
+                    pre[f] = max(pre[f], sc)
+            for cr in near_spell:  # a name as it was carved on a nearby stone
+                if len(cr) == b - a and pat.match(cr):
+                    pre[cr[g0 - a:g1 - a]] = max(pre[cr[g0 - a:g1 - a]], 0.5)
+            for cr in cached_runes:  # the same word written elsewhere on the stone
+                if len(cr) == b - a and pat.match(cr):
+                    pre[cr[g0 - a:g1 - a]] = max(pre[cr[g0 - a:g1 - a]], 1.0)
+            if name_cands and model.names is not None and b - a >= 4:
+                for sp, pn in model.names.match(pat_s.replace("\\", ""), top=name_cands).items():
+                    f = sp[g0 - a:g1 - a]
+                    pre[f] = max(pre[f], pn * model.lam_name)
+    cands = [f for f, _ in sorted(pre.items(), key=lambda kv: -kv[1])[:n_cands]]
+    if k <= 2:  # short gaps: every combination of runes is tried as well
+        cands += ["".join(f) for f in itertools.product(FILL_ALPHABET, repeat=k) if "".join(f) not in cands]
+    elif char_fills:  # longer gaps: runs of runes that fit the vowel/consonant pattern and the runes around the gap
+        if model.cvchar is None:
+            model.cvchar = CVCharModel(model._train_words)
+        left, right = g[max(0, g0 - 4):g0].split("?")[-1], g[g1:g1 + 3].split("?")[0]
+        cands += [f for f, _ in model.cvchar.fills(left, k, right)[:char_fills] if f not in cands]
+    if adapt and reading0:  # the stone's own spelling habits, from the rest of its text
+        base = ctx or Ctx((), model.spell.p, ("glob",))
+        ctx = model.adapt(base, adapt_counts(model, reading0[2], reading0[3], base), adapt)
+    lo, hi = (0, len(groups)) if window is None else (max(0, gi - window), min(len(groups), gi + window + 1))
+    doc = None
+    if use_doc and reading0:  # the words of the rest of the text
+        doc = {w for _, _, w, p_ in reading0[1] if p_ >= 0.5 and w != "<unk>" and w[0] != "§"}
+    out, word_of = {}, {}
+    gap_at = sum(len(x.replace("?", "")) for x in groups[lo:gi]) + len(g[:g0].replace("?", ""))
+    for f in cands:
+        filled = g[:g0] + f + g[g1:]
+        win = groups[lo:gi] + [filled] + groups[gi + 1:hi]
+        # other lost runes split their group (a boundary at no cost), so that only this gap is filled
+        parts, sg = [], []
+        for idx, grp in enumerate(win):
+            pieces = [p_ for p_ in grp.split("?") if p_]
+            for q, p_ in enumerate(pieces):
+                parts.append(p_)
+                if q < len(pieces) - 1 or (lo + idx) in signs:
+                    sg.append(len(parts) - 1)
+        if not parts:
+            continue
+        lz, post_, text_ = posteriors(model, parts, sg, ctx=ctx, doc=doc, cache=cache_arg, area=area)
+        path_ = best_path(post_, len(text_), model.lemma) if (trigram or by_word or words is not None) else None
+        out[f] = lz + (trigram_delta(model, path_) if trigram else 0.0)
+        if path_ is not None:
+            word_of[f] = next((w for i_, j_, w, _ in path_ if i_ <= gap_at < j_), None)
+    if not out:
+        return []
+    mx = max(out.values())
+    z = sum(math.exp(v - mx) for v in out.values())
+    probs = {f: math.exp(v - mx) / z for f, v in out.items()}
+    if words is not None:
+        words.update(word_of)
+    if by_word:
+        wl = lambda f: model.lemma(word_of[f]) if word_of.get(f) and word_of[f] != "<unk>" else ("<unk>", f)
+        tot = defaultdict(float)
+        for f, p_ in probs.items():
+            tot[wl(f)] += p_
+        return sorted(probs.items(), key=lambda kv: (-tot[wl(kv[0])], -kv[1]))
+    return sorted(probs.items(), key=lambda kv: -kv[1])
+
+
+def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, area=None, **kw):
+    """Fill several runs of lost runes in a text together. Each gap is first filled on its own, then again with the
+    other gaps filled by their best candidates, for a couple of rounds; finally every combination of the best
+    candidates of each gap is weighed by how probable the whole text is. only: the gaps to fill (others stay open).
+    Returns ([(fillings per gap, probability among the combinations, reading)], best first, gaps,
+    {gap index: {word: probability over all its candidates, the other gaps filled}})."""
+    gaps = [(gi, m_.start(), m_.end()) for gi, g in enumerate(groups) for m_ in re.finditer(r"\?+", g)]
+    if only is not None:
+        gaps = [gp for gp in gaps if gp in set(only)]
+    if not gaps:
+        return [], gaps, {}
+    top = top if len(gaps) <= 3 else 3 if len(gaps) <= 5 else 2
+
+    def fill(gs, choice):
+        gs = list(gs)
+        for (gi, a, b), f in sorted(zip(gaps, choice), key=lambda x: (-x[0][0], -x[0][1])):
+            gs[gi] = gs[gi][:a] + f + gs[gi][b:]
+        return gs
+
+    best = [None] * len(gaps)
+    options = [[] for _ in gaps]
+    wdist = {}
+    for r_ in range(rounds if len(gaps) > 1 else 1):
+        for n, gp in enumerate(gaps):
+            choice = [best[i] if (best[i] is not None and i != n) else "?" * (gaps[i][2] - gaps[i][1]) for i in range(len(gaps))]
+            wd = {}
+            res = restore(model, fill(groups, choice), gp, signs=signs, ctx=ctx, area=area, words=wd, **kw)
+            if res:
+                options[n] = [f for f, _ in res[:top]]
+                best[n] = res[0][0]
+                # the word in this gap, over all its candidates (the other gaps filled by their best candidates)
+                d, rep = defaultdict(float), {}
+                for f, p_ in res:
+                    w_ = wd.get(f) or "<unk>"
+                    lk = model.lemma(w_) if w_ != "<unk>" else ("<unk>", f)
+                    d[lk] += p_
+                    rep.setdefault(lk, w_)
+                wd_out = defaultdict(float)
+                for lk, p_ in d.items():
+                    wd_out[rep[lk]] += p_
+                wdist[n] = dict(sorted(wd_out.items(), key=lambda kv: -kv[1]))
+    combos = list(itertools.product(*[o or ["?" * (b - a)] for o, (_, a, b) in zip(options, gaps)]))
+    scored = []
+    for choice in combos:
+        gs = fill(groups, choice)
+        parts, sg, offs = [], [], []
+        for idx, grp in enumerate(gs):
+            pieces = [p_ for p_ in grp.split("?") if p_]
+            for q, p_ in enumerate(pieces):
+                parts.append(p_)
+                if q < len(pieces) - 1 or idx in signs:
+                    sg.append(len(parts) - 1)
+        lz, post_, text_ = posteriors(model, parts, sg, ctx=ctx, area=area)
+        path_ = best_path(post_, len(text_), model.lemma)
+        if kw.get("trigram"):
+            lz += trigram_delta(model, path_)
+        at = [sum(len(x.replace("?", "")) for x in gs[:gi]) + len(gs[gi][:a].replace("?", "")) for gi, a, _ in gaps]
+        words = [next((w for i_, j_, w, _ in path_ if i_ <= t < j_), None) for t in at]
+        scored.append((lz, choice, " ".join(w for _, _, w, _ in path_), words))
+    mx = max(x[0] for x in scored)
+    z = sum(math.exp(x[0] - mx) for x in scored)
+    out = sorted(((c, math.exp(v - mx) / z, rd) for v, c, rd, _ in scored), key=lambda x: -x[1])
+    return out, gaps, wdist

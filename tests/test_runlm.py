@@ -106,3 +106,48 @@ def test_an_overconfident_dating_is_softened():
     T = fit_temperature(rows, use_prior=False)
     p = epoch_posterior(rows[0]["ll"], None, T)
     assert T > 3 and 0.45 < max(p.values()) < 0.75
+
+
+def test_lost_runes_are_filled_from_the_language():
+    from src.runlm import restore, restore_all
+    m = Model(RECS)
+    res = restore(m, ["þurir", "raisþi", "s??in", "þansi", "aft", "faþur", "sin"], (2, 1, 3))
+    assert res[0][0] == "ta" and abs(sum(p for _, p in res) - 1) < 1e-9
+    combos, gaps, words = restore_all(m, ["þurir", "raisþi", "s??in", "þansi", "aft", "faþur", "s?n"])
+    assert len(gaps) == 2 and combos[0][0] == ("ta", "i")
+    assert max(words[0], key=words[0].get) == "stæin" and abs(sum(words[1].values()) - 1) < 1e-9
+
+
+def _parallel(signum, translit, norm, en):
+    return {"signum": signum, "period": "V", "transliteration": translit, "normalization": norm, "translation_en": en}
+
+
+PAR = [
+    _parallel("P 1", "þurir : raisþi : stain : þansi : aft : faþur : sin", '"Þorir ræisti stæin þannsi æft faður sinn.',
+              "Þórir raised this stone in memory of his father."),
+    _parallel("P 2", "kunar : raisþi : stain : aft : sun : sin", '"Gunnarr ræisti stæin æft sun sinn.',
+              "Gunnarr raised the stone in memory of his son."),
+    _parallel("P 3", "asa : raisþi : stain : þansi : aft : sun : sin", '"Asa ræisti stæin þannsi æft sun sinn.',
+              "Ása raised this stone in memory of her son."),
+    _parallel("P 4", "ulfr : raisþi : stain : aft : bruþur : sin", '"UlfR ræisti stæin æft broður sinn.',
+              "Ulfr raised the stone in memory of his brother."),
+    _parallel("P 5", "þurir : raisþi : stain : aft : bruþur : sin", '"Þorir ræisti stæin æft broður sinn.',
+              "Þórir raised the stone in memory of his brother."),
+    _parallel("P 6", "kunar : raisþi : stain : aft : faþur : sin", '"Gunnarr ræisti stæin æft faður sinn.',
+              "Gunnarr raised the stone in memory of his father."),
+]
+
+
+def test_the_glossary_learns_meanings_from_texts_and_their_translations():
+    from src.rungloss import Glossary
+    g = Glossary(PAR)
+    assert g.gloss("faður")[0][0] == "father" and g.gloss("sun")[0][0] == "son" and g.gloss("broður")[0][0] == "brother"
+    # words that always stand together (ræisti, stæin, æft, sinn here) cannot be told apart; in Rundata they vary
+    assert "asa" in g.names and g.translate(["asa", "sun"], "sv") == "Ása son"
+
+
+def test_names_from_nearby_stones():
+    m = Model([dict(r, lat=59.0, lon=18.0) for r in PAR])
+    near, spell = m.names_near(59.01, 18.01, km=5)
+    far, _ = m.names_near(62.0, 15.0, km=5)
+    assert "þorir" in near and "þurir" in spell and not far
