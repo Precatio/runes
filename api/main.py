@@ -1,10 +1,36 @@
 import os
+import shutil
+import tempfile
+import time
 
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from starlette.middleware.gzip import DEFAULT_EXCLUDED_CONTENT_TYPES, GZipMiddleware
-from api.cache import ContentLengthHeader
-from api.routers import admin, blog, chat, threed, twod, raa, synthesis, phonetics, rundata, stats, orthography, research, reports, rstats, limitations, docs, textmodel
+# Temporary files – uploaded 3D files of up to a few GB, R's working files – go to the project's own disk instead of the
+# system disk: data/cache/tmp, or VITKI_TMPDIR. Set before the routers are imported, and passed on to R and other
+# programs the engine starts (TMPDIR).
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TMP = os.environ.get("VITKI_TMPDIR") or os.path.join(ROOT, "data", "cache", "tmp")
+os.makedirs(TMP, exist_ok=True)
+os.environ["TMPDIR"] = TMP
+tempfile.tempdir = TMP
+
+
+def clean_tmp(max_age_s: float = 86400) -> None:
+    """Removes what a crashed job left in TMP more than a day ago."""
+    for name in os.listdir(TMP):
+        path = os.path.join(TMP, name)
+        try:
+            if time.time() - os.path.getmtime(path) > max_age_s:
+                shutil.rmtree(path) if os.path.isdir(path) else os.unlink(path)
+        except OSError:
+            pass
+
+
+clean_tmp()
+
+from fastapi import FastAPI  # noqa: E402 - after the temporary folder is set
+from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
+from starlette.middleware.gzip import DEFAULT_EXCLUDED_CONTENT_TYPES, GZipMiddleware  # noqa: E402
+from api.cache import ContentLengthHeader  # noqa: E402
+from api.routers import admin, blog, chat, threed, twod, raa, synthesis, phonetics, rundata, stats, orthography, research, reports, rstats, limitations, docs, textmodel  # noqa: E402
 
 app = FastAPI(title="Vitki API")
 

@@ -6,8 +6,7 @@
 // rows of tables, but never presses buttons that start analyses, write data or call AI. Also reports JavaScript
 // errors, so that a page the translator breaks is noticed.
 import { spawn } from "node:child_process";
-import { mkdtempSync, writeFileSync, existsSync, readFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { mkdtempSync, mkdirSync, rmSync, writeFileSync, existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const [out = "i18n_misses.json", base = "http://localhost:3000", ...only] = process.argv.slice(2);
@@ -21,8 +20,13 @@ const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const PORT = 9300 + Math.floor(Math.random() * 400);
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
+// Chrome's profile (about 100 MB) lives beside the project, in node_modules/.cache, and is removed when the crawl ends
+const CACHE = join(process.cwd(), "node_modules", ".cache");
+mkdirSync(CACHE, { recursive: true });
+const PROFILE = mkdtempSync(join(CACHE, "i18n-chrome-"));
+process.on("exit", () => { try { rmSync(PROFILE, { recursive: true, force: true }); } catch { /* left for the next run */ } });
 const chrome = spawn(CHROME, ["--headless=new", `--remote-debugging-port=${PORT}`,
-  `--user-data-dir=${mkdtempSync(join(tmpdir(), "i18n-"))}`, "about:blank"], { stdio: "ignore" });
+  `--user-data-dir=${PROFILE}`, "about:blank"], { stdio: "ignore" });
 let ws, id = 0;
 const pending = new Map(), errors = [];
 const send = (method, params = {}) => new Promise(res => { const i = ++id; pending.set(i, res); ws.send(JSON.stringify({ id: i, method, params })); });
