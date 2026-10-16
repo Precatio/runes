@@ -35,7 +35,10 @@ def signum_from(path: str) -> str:
 def measure(path: str, api: str, sensitivity: float, resolution: float | None = None,
             harmonize: float | None = None) -> dict:
     with open(path, "rb") as fh:
-        info = requests.post(f"{api}/api/3d/upload", files={"file": (os.path.basename(path), fh)}, timeout=3600).json()
+        r = requests.post(f"{api}/api/3d/upload", files={"file": (os.path.basename(path), fh)}, timeout=3600)
+    if not r.ok:
+        raise RuntimeError(f"uppladdningen misslyckades ({r.status_code}): {r.text[:200]}")
+    info = r.json()
     mid = info["mesh_id"]
     relief = requests.post(f"{api}/api/3d/render_relief", data={"mesh_id": mid}, timeout=1800).json()
     n = relief["normal"]
@@ -43,6 +46,8 @@ def measure(path: str, api: str, sensitivity: float, resolution: float | None = 
                       "normal_z": n[2], "sensitivity": sensitivity, "meta_stone": "", "meta_weathering": ""}
                       | ({"resolution_mm": resolution} if resolution else {}) | ({"harmonize_mm": harmonize} if harmonize else {}),
                       timeout=3600).json()
+    if "summary" not in d:  # the engine found nothing to measure (a small fragment) or failed
+        raise RuntimeError(f"ingen mätning: {str(d.get('detail') or d)[:200]}")
     acc = [x for x in d["slices"] if x["accepted"]]
     return {"file": os.path.basename(path), "sha256": (d["provenance"].get("mesh") or {}).get("sha256"),
             "summary": d["summary"], "counts": d["counts"], "parameters": d["parameters"],
@@ -72,8 +77,12 @@ def main(argv=None):
             print("finns", signum)
             continue
         print("mäter", signum, flush=True)
-        res = {"signum": signum, "part": part.lstrip("_") or None,
-               **measure(path, a.api, a.sensitivity, a.resolution, a.harmonize)}
+        try:
+            res = {"signum": signum, "part": part.lstrip("_") or None,
+                   **measure(path, a.api, a.sensitivity, a.resolution, a.harmonize)}
+        except Exception as e:  # noqa: BLE001 - one stone that cannot be measured must not stop the series
+            print(f"  {signum}: misslyckades – {e}", flush=True)
+            continue
         with open(dest, "w", encoding="utf-8") as fh:
             json.dump(res, fh, ensure_ascii=False)
         print(f"  {signum}: {res['counts']['accepted']} tvärsnitt, V {res['means']['apex_vinkel_deg']:.1f}°", flush=True)
