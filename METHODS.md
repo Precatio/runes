@@ -903,6 +903,10 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     minst 95. Maskeringsprovet oförändrat (inne i ord 72,3, helt ord 55,9 procent). Kalibreringen per ordklass görs nu
     med scikit-learn, och namnen i den känns igen också när Rundata skriver dem med hakparentes (”Alfdi[s]”)
     (`textmodel-12`).
+  * **Ordkalibreringen omskattad (2026-10-16).** Läsningsprovet (808 inskrifter, 10 669 ord, fem delar) med modellen
+    efter dagens ändringar: samma ord som Rundata 84,1 procent (81 den 14 oktober), rätt ordgräns 94,2 procent.
+    Kalibreringsfelet för ordens sannolikhet sjönk från 8,7 till 0,6 procentenheter. Omräkningen skrivs nu av
+    `scripts/runlm_calibrate.py --write_recal` (`textmodel-13`).
   * **Prövat mot färdiga bibliotek (2026-10-16).** Ordföljdens Kneser–Ney-bigram ger samma sannolikheter som NLTK:s
     (största skillnad 10⁻¹⁶ på 3 000 ordpar; testet ligger i tests/test_runlm.py). Rabatten 0,75 gav lägst perplexitet
     på inskrifter som modellen inte sett (57,5) jämfört med 0,5, 0,9 och modified Kneser–Ney (58,3). Den egna

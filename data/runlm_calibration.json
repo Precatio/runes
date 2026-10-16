@@ -4,12 +4,12 @@
  "note": "Temperatur för dateringen ur språket (src/runlm.fit_temperature), skattad på dateringsprovet scripts/runlm_dating.py, 2026-10-15, med epokernas andel som förhandschans.",
  "word_recal": {
   "B": [
-   -3.0630779581398238,
-   0.5097465607221964,
-   0.3531010261442239,
-   0.24273805671648738,
-   1.1472604272923834,
-   0.10157959829368955
+   -3.0922554688232724,
+   0.5424356032520631,
+   0.31584938343488317,
+   -0.2158010979008589,
+   1.2265464984899512,
+   0.041162760418842224
   ],
   "features": [
    "1",
@@ -20,10 +20,10 @@
    "max(log P(stavning | ord), -12)"
   ],
   "target": "samma ord som Rundata (key)",
-  "n_words": 10669,
+  "n_words": 10688,
   "n_inscriptions": 808,
-  "ece_raw": 0.09337663864462674,
-  "ece": 0.006556523090344844,
+  "ece_raw": 0.08677866937900094,
+  "ece": 0.006155947704339112,
   "config": {
    "aligned": true,
    "contexts": true,
@@ -37,7 +37,7 @@
    "epoch_lm": 1,
    "lam_name": 0.05
   },
-  "note": "Logistisk omräkning av ordens sannolikhet i läsningen (scripts/runlm_calibrate.py, fem delar, 808 inskrifter med känt svar, 2026-10-14). Råa sannolikheter är för säkra: sagt 70 %, rätt 40 %."
+  "note": "Logistisk omräkning av ordens sannolikhet i läsningen (scripts/runlm_calibrate.py --write_recal, fem delar, 808 inskrifter med känt svar, 2026-10-16)."
  },
  "gap_recal": {
   "B": [

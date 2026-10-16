@@ -19,7 +19,7 @@ from datetime import datetime, timezone
 from src import runlm as rl
 from src import rungloss as rg
 
-VERSION = "textmodel-12"
+VERSION = "textmodel-13"
 K = 5
 CACHE = os.path.join(rl.ROOT, "data", "cache", "textmodel", VERSION)
 MAX_GAP = 4  # longer runs of lost runes are left open: the masking test covers 1–4 runes
