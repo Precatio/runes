@@ -16,6 +16,7 @@ Data: Rundata (data/rundata.json) och, om den är nedladdad, Eddan och Snorres E
 {verk: text} (EDDA). Används av scripts/runlm_calibrate.py (provet på inskrifter med känd läsning) och
 scripts/malt_decode.py (Maltstenen). Metod: METHODS.md, avsnitt 8.
 """
+import difflib
 import itertools
 import json
 import math
@@ -1321,6 +1322,26 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
             tot[wl(f)] += p_
         return sorted(probs.items(), key=lambda kv: (-tot[wl(kv[0])], -kv[1]))
     return sorted(probs.items(), key=lambda kv: -kv[1])
+
+
+def _fold(w):
+    """A normalized word in plain letters, for comparing two normalizations of the same word."""
+    w = unicodedata.normalize("NFD", (w or "").lower().lstrip("§").replace("[", "").replace("]", "").replace('"', ""))
+    w = "".join(ch for ch in w if unicodedata.category(ch) != "Mn")
+    w = w.translate(str.maketrans("ðdæøy", "þþaou")).replace("e", "i").replace("ia", "io")
+    return re.sub(r"(.)\1+", r"\1", re.sub(r"[^a-zþ]", "", w))
+
+
+def same_word(a, b):
+    """Are two normalized forms the same word, allowing for another case form or another normalization of it
+    (Guðmundr ~ GuðmundaR, Vigbiorn ~ Vigbiarn, stæinn ~ stæin)? For comparing a reading with Rundata's."""
+    a, b = _fold(a), _fold(b)
+    if not a or not b:
+        return False
+    n = min(len(a), len(b))
+    if a == b or (n >= 4 and (a.startswith(b[:n - 1]) or b.startswith(a[:n - 1]))):
+        return True
+    return difflib.SequenceMatcher(None, a, b).ratio() >= 0.8
 
 
 def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, area=None, **kw):

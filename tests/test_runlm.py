@@ -180,6 +180,12 @@ def test_danish_translations_are_matched_learned_and_put_in_swedish(tmp_path):
     assert swedish(["faður", "sinn"], en) == "sin fader"
 
 
+def test_same_word_allows_another_case_form_or_normalization():
+    from src.runlm import same_word
+    assert same_word("vigbiorn", "Vig[b]iarn") and same_word("guðmundr", "Guðmu[nda]R") and same_word("stæinn", "stæi[n]")
+    assert not same_word("þæiR", "[G]æi[RR]") and not same_word("tiugu", "[k]u[n]u") and not same_word("<unk>", "ok")
+
+
 def test_names_from_nearby_stones():
     m = Model([dict(r, lat=59.0, lon=18.0) for r in PAR])
     near, spell = m.names_near(59.01, 18.01, km=5)
