@@ -25,10 +25,9 @@ export const SHOW_LOCAL_APP = process.env.NODE_ENV === "development" && !PUBLIC_
 export const isPublicPath = (href: string) => /^\/(?:$|[#?]|artiklar(?:[/?#]|$)|kontakt(?:[/?#]|$)|api\/blog\/figures\/)/.test(href);
 export const CONTACT_PATH = "/kontakt";
 
-// The contact form's receiver. The website is static, so FormSubmit (no account) emails the message on. The first
-// message sends an activation link to the address; after activation FormSubmit gives a random alias that can replace
-// the address here (or in NEXT_PUBLIC_CONTACT_ENDPOINT), so that the address is no longer in the page.
-export const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT || "https://formsubmit.co/ajax/viktor.kvant@gmail.com";
+// The contact form's receiver. The website is static, so FormSubmit (no account) emails the message on. The form is
+// activated, and FormSubmit's random alias stands in for the founder's email address, so the address is not in the page.
+export const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT || "https://formsubmit.co/ajax/dd84130aea1d4ba97d568c540422d13e";
 export const CONTACT_SERVICE_URL = "https://formsubmit.co/";
 
 // The articles' authors: the byline links to the author's page, and search engines get the same link (schema.org)
