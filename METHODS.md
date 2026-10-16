@@ -888,6 +888,15 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     med hela stenar utanför: kalibreringsfelet sjönk från 5,9 till 1,5 procentenheter och Brier-poängen från 0,105
     till 0,099 (`scripts/runlm_gap_calibrate.py`, `gap_recal` i `data/runlm_calibration.json`, `textmodel-10`).
     Kalibreringen gäller luckor av det slag utgivarna redan har fyllt, inte öppna luckor (se kapitel 18).
+  * **Namnleden stavas som på stenarna (2026-10-16).** Namn som ordförrådet saknar byggs av förled, efterled och
+    ändelse. Leden stavades tidigare bara efter stavningsreglerna, och de saknade att g efter vokal ofta skrevs h:
+    förledet Ragn- är huggen *rahn* 17 gånger i Rundata, men reglerna gav den stavningen nästan ingen chans.
+    Kvinnonamn på *-ví/-vé* kunde inte byggas alls, eftersom ändelsen *-i* togs bort och efterledet då blev *v*. Nu
+    lärs varje leds stavningar ur de huggna namnen (blandade med reglerna), efterled på två runor tillåts och *-ví/-vé*
+    behåller sitt efterled. På U Fv1971;212B föll Víseti från 97 till 44 procent när *rahnui* blev Ragnví. På 624
+    återställda luckor (samma prov som ovan) steg rätt namn från 75,7 till 78,4 procent, formelorden var oförändrade
+    och andra ord sjönk från 51,1 till 49,6 procent (två luckor). Kalibreringen per ordklass är omskattad på den nya
+    modellen (`textmodel-11`).
   * **Ordgränser (2026-10-16).** I en text utan skiljetecken väljer modellen själv var orden börjar, och den kan låna
     runor från ett ord den inte känner. På U Fv1971;212B tog den *ui* från *rahnui* (Ragnví) och fyllde *uis??i* till
     *Víseti* (97 %). Panelen läser därför om texten med utgivarnas ordgränser (mellanrummen i Rundatas translitterering)

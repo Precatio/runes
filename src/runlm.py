@@ -403,12 +403,17 @@ NAME_ENDINGS = ["aR", "iR", "uR", "ar", "ir", "ur", "R", "r", "s", "a", "i", "u"
 
 class NameModel:
     """Names as first element + second element + ending, or as a simple stem + ending, learned from the names in the
-    training texts (Rundata marks names with a quotation mark). Each part is spelled with the spelling model; a name
-    the vocabulary does not know can then still be read, e.g. osbiarnaR as as + biarn + aR."""
-    def __init__(self, names, spell, min_share=3):
+    training texts (Rundata marks names with a quotation mark). A name the vocabulary does not know can then still be
+    read, e.g. osbiarnaR as as + biarn + aR. Each part is spelled as the carvers spelled it in the names on the stones
+    (carved: (normalized name, carved runes)), mixed with the spelling model (kappa) for spellings not seen: Ragn- is
+    carved rakn, rahn and ragn, and the rules alone give rahn almost no chance. Second elements of two runes are
+    allowed, and -ví and -vé keep theirs (Ragnví, Kætilví), so that such a name is not read as Ragn + v + i."""
+    def __init__(self, names, spell, min_share=3, carved=(), kappa=5.0):
         def stem(n):
             for e in NAME_ENDINGS:
                 if e and n.endswith(e) and len(n) - len(e) >= 3:
+                    if e in ("i", "e") and n[:-len(e)].endswith("v"):
+                        continue  # -ví, -vé: the vowel belongs to the second element
                     return n[:-len(e)], e
             return n, ""
         stems, ends = Counter(), Counter()
@@ -418,13 +423,14 @@ class NameModel:
             ends[e] += c
         pre, suf = Counter(), Counter()
         for st in stems:
-            for i in range(2, len(st) - 2):
+            for i in range(2, len(st) - 1):
                 pre[st[:i]] += 1
                 suf[st[i:]] += 1
         first, second, simple = Counter(), Counter(), Counter()
+        decomp = {}
         for st, c in stems.items():
             best = None
-            for i in range(2, len(st) - 2):
+            for i in range(2, len(st) - 1):
                 a, b = st[:i], st[i:]
                 if pre[a] >= min_share and suf[b] >= min_share:
                     sc = min(pre[a], suf[b])
@@ -433,17 +439,48 @@ class NameModel:
             if best:
                 first[best[1]] += c
                 second[best[2]] += c
+                decomp[st] = (("F", best[1]), ("S", best[2]))
             else:
                 simple[st] += c
+                decomp[st] = (("X", st),)
         tot = sum(stems.values()) or 1
         self.p_compound = sum(first.values()) / tot
         norm = lambda cnt: {k: (v + 0.5) / (sum(cnt.values()) + 0.5 * len(cnt)) for k, v in cnt.items()}
         self.first, self.second, self.simple, self.ends = norm(first), norm(second), norm(simple), norm(ends)
+        rules = {}
+
+        def rule(w):
+            if w not in rules:
+                rules[w] = spell.expand(w) if w else {"": 1.0}
+            return rules[w]
+        # how the carvers spelled each part: the carved name cut where the parts fit their spellings best
+        emp = defaultdict(Counter)
+        for n, ck in carved:
+            if not ck or not re.fullmatch(r"[a-zþæøåöäąR]+", ck):
+                continue
+            st, e = stem(n)
+            parts = decomp.get(st, ()) + (("E", e),)
+            if len(parts) < 2:
+                continue
+            L, best = len(ck), None
+            cuts = ([(c1,) for c1 in range(1, L + 1)] if len(parts) == 2 else
+                    [(c1, c2) for c1 in range(1, L) for c2 in range(c1 + 1, L + 1)])
+            for cut in cuts:
+                bounds = (0,) + cut + (L,)
+                chunks = [ck[a:b] for a, b in zip(bounds, bounds[1:])]
+                sc = sum(math.log(rule(w).get(ch, 0.0) + 1e-4) for (_, w), ch in zip(parts, chunks))
+                if best is None or sc > best[0]:
+                    best = (sc, chunks)
+            for (kind, w), ch in zip(parts, best[1]):
+                emp[(kind, w)][ch] += 1
         self.idx = {}
         for part, table in (("F", self.first), ("S", self.second), ("X", self.simple), ("E", self.ends)):
             ix = defaultdict(dict)
             for w in table:
-                for sp, p in (spell.expand(w).items() if w else [("", 1.0)]):
+                r_, em = rule(w), emp.get((part, w), Counter())
+                n_e = sum(em.values())
+                for sp in set(r_) | set(em):
+                    p = (em.get(sp, 0) + kappa * r_.get(sp, 0.0)) / (n_e + kappa)
                     if p > 0.01:
                         ix[sp][w] = p
             self.idx[part] = ix
@@ -825,7 +862,7 @@ class Model:
                             nm[w] += 1
                             after[prev] += 1
                         prev = w
-            self.names = NameModel(nm, self.spell)
+            self.names = NameModel(nm, self.spell, carved=[x for r in recs for x in name_pairs(r)])
             self.name_f0 = sum(after.values()) / max(1, sum(after_all.values()))
             self.name_after = {w: (after[w] + 5 * self.name_f0) / (after_all[w] + 5) for w in after_all}
 

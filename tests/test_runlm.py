@@ -94,6 +94,21 @@ def test_a_name_never_seen_is_composed_of_known_name_elements():
     assert "gunnulfR" in got
 
 
+def test_name_parts_are_spelled_as_the_carvers_spelled_them():
+    from collections import Counter
+    from src.runlm import NameModel, Spelling
+    # women's names in -ví keep their second element (not Ragn + v + i)
+    seen = Counter({"ragnvaldr": 3, "ragnhildr": 3, "þorvaldr": 2, "þorhildr": 2, "kætilvi": 3, "þyrvi": 3, "arnvi": 3,
+                    "kætilbiorn": 2, "arnbiorn": 2, "þyrbiorn": 1})
+    plain = NameModel(seen, Spelling([]), min_share=2)
+    assert "vi" in plain.second and "ragn" in plain.first
+    # the carvers wrote Ragn- with h (rahnualtr); without their spellings the name cannot be read in that form
+    carved = [("ragnvaldr", "rahnualtr"), ("ragnhildr", "rahnhiltr"), ("ragnvaldr", "rahnualtr"), ("kætilvi", "kitilui")]
+    learned = NameModel(seen, Spelling([]), min_share=2, carved=carved)
+    assert "ragnvi" not in plain.candidates("rahnui")
+    assert "ragnvi" in learned.candidates("rahnui")
+
+
 def test_an_overconfident_dating_is_softened():
     import random
     from src.runlm import EPOCHS, epoch_posterior, fit_temperature

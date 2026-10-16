@@ -41,13 +41,13 @@
  },
  "gap_recal": {
   "B": [
-   0.5967,
-   -0.7549,
-   -0.4022,
-   0.6234,
-   0.4641,
-   0.5132,
-   -0.108
+   0.6251,
+   -0.6917,
+   -0.0807,
+   0.8026,
+   0.6447,
+   0.5544,
+   -0.2663
   ],
   "top50": [
    "a",
@@ -101,50 +101,50 @@
    "þesi",
    "þorsten"
   ],
-  "n": 631,
-  "ece_raw": 0.0589,
-  "ece_cv": 0.0152,
-  "brier_raw": 0.1048,
-  "brier_cv": 0.0988,
+  "n": 628,
+  "ece_raw": 0.0309,
+  "ece_cv": 0.0143,
+  "brier_raw": 0.0908,
+  "brier_cv": 0.0864,
   "by_class": {
    "formelord": {
-    "n": 343,
-    "right": 0.945,
+    "n": 348,
+    "right": 0.954,
     "sure_raw": [
-     270,
-     0.985
+     268,
+     0.989
     ],
     "sure_calibrated": [
-     252,
-     0.988
+     266,
+     0.985
     ]
    },
    "andra ord": {
-    "n": 98,
-    "right": 0.582,
+    "n": 90,
+    "right": 0.622,
     "sure_raw": [
-     40,
-     0.9
+     36,
+     0.972
     ],
     "sure_calibrated": [
-     15,
+     28,
      1.0
     ]
    },
    "namn": {
     "n": 190,
-    "right": 0.684,
+    "right": 0.716,
     "sure_raw": [
-     89,
-     0.933
+     83,
+     0.964
     ],
     "sure_calibrated": [
-     48,
-     0.979
+     53,
+     0.981
     ]
    }
   },
-  "source": "utdata/Malt/runlm_luckor.json",
+  "source": "utdata/runlm_forfining/namn_alla.json",
   "note": "Ordet i en lucka, kalibrerat per ordklass (scripts/runlm_gap_calibrate.py)."
  }
 }

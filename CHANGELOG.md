@@ -5,6 +5,11 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Namnen byggs med stenarnas egna stavningar
+- Namn som modellen inte känner byggs av namnled, och leden stavas nu som ristarna stavade dem i namnen på stenarna
+  (Ragn- som *rahn*, *rakn* eller *ragn*). Kvinnonamn på *-ví/-vé* (Ragnví, Kætilví) kan nu byggas. Rätt namn i
+  återställda luckor steg från 75,7 till 78,4 procent. Panelens version är `textmodel-11`.
+
 ### Ordet i en lucka kalibreras per ordklass
 - Modellen var för säker på namn och ovanliga ord i luckor men inte på formelord. Förstavalet kalibreras nu per
   ordklass (formelord, namn, andra ord), prövat med korsvalidering på 631 luckor som utgivarna har fyllt.
