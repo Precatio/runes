@@ -19,7 +19,7 @@ from datetime import datetime, timezone
 from src import runlm as rl
 from src import rungloss as rg
 
-VERSION = "textmodel-9"
+VERSION = "textmodel-10"
 K = 5
 CACHE = os.path.join(rl.ROOT, "data", "cache", "textmodel", VERSION)
 MAX_GAP = 4  # longer runs of lost runes are left open: the masking test covers 1–4 runes
@@ -51,7 +51,10 @@ def _records() -> dict:
                      V=[r for r in recs if rl.viking(r) and r.get("transliteration") and r.get("normalization")],
                      da=rg.load_danish(recs), edda=rl.edda_tokens(),
                      T=json.load(open(cal))["dating_temperature"] if os.path.exists(cal) else None,
-                     B=(json.load(open(cal)).get("word_recal") or {}).get("B") if os.path.exists(cal) else None)
+                     B=(json.load(open(cal)).get("word_recal") or {}).get("B") if os.path.exists(cal) else None,
+                     G=(json.load(open(cal)).get("gap_recal") or None) if os.path.exists(cal) else None)
+        if _data["G"]:
+            _data["G"] = (_data["G"]["B"], set(_data["G"]["top50"]), name_keys(recs))
         # names on nearby stones come from the whole corpus (the stone itself left out), not only from the stones the
         # stone's model learned from: a companion stone in the same held-out part is no leak about this one
         _data["sites"] = rl.name_sites(_data["V"])
@@ -91,6 +94,33 @@ def recal(b: dict, p: float, w: str, runes: str, B) -> float:
     lch = max(math.log(max(m.index.get(runes, {}).get(w, 0.0), 1e-12)), -12.0)
     x = [1.0, math.log(p / (1 - p)), math.log1p(fk[rl.key(w)]), float(fk[rl.key(w)] == 0), math.log(len(runes)), lch]
     return 1 / (1 + math.exp(-sum(a * c for a, c in zip(x, B))))
+
+
+def name_keys(recs) -> set[str]:
+    """The keys of every word Rundata writes as a name ("Ragnvi) somewhere in its normalizations."""
+    return {rl.key(rl.normtok(w.lstrip('"'))) for r in recs if r.get("normalization")
+            for w in re.findall(r'"[^\s,.;:!?()]+', r["normalization"])}
+
+
+def gap_class(word: str, top: set[str], names: set[str]) -> int:
+    """0 a formula word (the 50 most common), 1 another word, 2 a name (marked § by the model, or written as a name in
+    Rundata). A formula word that is also a name ("Guð") counts as a formula word."""
+    k = rl.key(rl.normtok(word.lstrip("§")))
+    return 0 if k in top else 2 if (word.startswith("§") or k in names) else 1
+
+
+def calibrate_gap(p: float, word: str, n_lost: int, G) -> float:
+    """The calibrated probability for a word in a gap (data/runlm_calibration.json, gap_recal): P(right) =
+    sigmoid(a_class + b_class·logit(p) + c·log(lost runes)), the class from gap_class. Tested on gaps the editors have
+    filled (scripts/runlm_gap_calibrate.py); not on gaps that are still open."""
+    if not G or word == "<unk>" or p <= 0:
+        return p
+    B, top, names = G
+    cls = gap_class(word, top, names)
+    q = min(max(p, 1e-4), 1 - 1e-4)
+    oh = [1.0 if cls == k else 0.0 for k in range(3)]
+    x = oh + [o * math.log(q / (1 - q)) for o in oh] + [math.log(max(1, n_lost))]
+    return 1 / (1 + math.exp(-sum(c * v for c, v in zip(B, x))))
 
 
 def text_groups(translit: str, words: bool = False) -> tuple[list[str], list[int]]:
@@ -248,6 +278,22 @@ def _read(r, groups, breaks, b, allowed, base, d, trace_at=None, alt=True):
         pos += len(p)
         if i in sg:
             ends.add(pos)
+    n_lost = [len(lost[sp]) for sp in gaps]
+
+    def cal_dist(dist, k):
+        """The words of a gap with the model's first choice calibrated by its class (scripts/runlm_gap_calibrate.py:
+        right for formula words, too high for other words and names) and the others scaled to share what is left in
+        the same proportions, never above the first choice; what is not given to them is left unassigned."""
+        if not d.get("G") or not dist:
+            return dist
+        w0, p0 = max(dist.items(), key=lambda kv: kv[1])
+        if w0 == "<unk>" or p0 >= 1:
+            return dist
+        c0 = calibrate_gap(p0, w0, k, d["G"])
+        p1 = max((p for w, p in dist.items() if w != w0), default=0.0)
+        scale = min((1 - c0) / (1 - p0), c0 / p1 if p1 > 0 else float("inf"))
+        return {w: (c0 if w == w0 else p * scale) for w, p in dist.items()}
+
     def p_filled(i, j, w):
         """A word with filled runes is as probable as that word in its gaps (the reading itself takes the filling as
         given): the smallest probability of the word over the gap positions it covers. A gap of two runs filled as
@@ -255,7 +301,7 @@ def _read(r, groups, breaks, b, allowed, base, d, trace_at=None, alt=True):
         def q(dist):
             return (sum(q_ for w_, q_ in dist.items() if w_ != "<unk>" and rl.same_word(w_, w)) if w != "<unk>"
                     else dist.get("<unk>", 0.0))
-        qs = [q(positions[n][o]) if positions.get(n) else q(words.get(n, {}))
+        qs = [q(cal_dist(positions[n][o] if positions.get(n) else words.get(n, {}), n_lost[n]))
               for n, (a_, e_) in enumerate(spans) if i < e_ and a_ < j
               for o in range(max(i, a_) - a_, min(j, e_) - a_)]
         return min(qs) if qs else None
@@ -271,14 +317,16 @@ def _read(r, groups, breaks, b, allowed, base, d, trace_at=None, alt=True):
     dating = rl.epoch_posterior(ll, prior, d["T"] or 1.0)
     vocab = [w for _, _, w, _ in read]
     out = {
-        **base, "available": True, "computed_at": datetime.now(timezone.utc).isoformat(), "calibrated": bool(d["B"]),
+        **base, "available": True, "computed_at": datetime.now(timezone.utc).isoformat(), "calibrated": bool(d["B"]), "gap_calibrated": bool(d.get("G")),
         "groups": groups, "reading": reading,
         "gaps": [{"number": n, "group": gi, "start": a, "end": e, "carved": groups[gi], "n": len(lost[(gi, a, e)]),
                   "lost": [i - a for i in lost[(gi, a, e)]],
                   "best": best[n] if n < len(best) else None,
                   "fills": [{"fill": f, "p": round(p, 4), "word": (w or "").lstrip("§") or None}
                             for f, p, w in details.get(n, [])[:8]],
-                  "words": [{"word": w.lstrip("§"), "p": round(p, 4)} for w, p in list(words.get(n, {}).items())[:6]],
+                  "words": [{"word": w.lstrip("§"), "p": round(cd[w], 4), "p_model": round(p, 4)}
+                            for cd in [cal_dist(words.get(n, {}), len(lost[(gi, a, e)]))]
+                            for w, p in list(words.get(n, {}).items())[:6]],
                   "traces": user.get((gi, a, e))}
                  for n, (gi, a, e) in enumerate(gaps)],
         "open_gaps": [{"group": gi, "start": a, "end": e, "n": len(lost[(gi, a, e)])} for gi, a, e in runs

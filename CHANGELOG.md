@@ -5,6 +5,12 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Ordet i en lucka kalibreras per ordklass
+- Modellen var för säker på namn och ovanliga ord i luckor men inte på formelord. Förstavalet kalibreras nu per
+  ordklass (formelord, namn, andra ord), prövat med korsvalidering på 631 luckor som utgivarna har fyllt.
+  Kalibreringsfelet sjönk från 5,9 till 1,5 procentenheter. Panelen visar den kalibrerade procenten, och modellens
+  egen sparas bredvid. Panelens version är `textmodel-10`.
+
 ### Ordgränsen syns i panelen
 - När en lucka står i en text utan skiljetecken och modellen delar orden annorlunda än utgivarna, läser panelen om
   texten med utgivarnas ordgränser, både Rundatas huvudläsning och dess alternativa läsning. Ändras förslaget visas

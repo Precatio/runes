@@ -45,3 +45,17 @@ def test_the_words_around_a_gap_are_compared_as_intervals():
     editors = [(0, 2), (2, 8), (8, 12), (12, 15)]
     # the model's word uis??i (6–12) against the editors' s??i (8–12) around the lost runes 9–11
     assert textmodel._covering(editors, 9, 11) == {(8, 12)} != {(6, 12)}
+
+
+def test_a_gap_word_is_calibrated_by_its_class():
+    k = lambda w: textmodel.rl.key(textmodel.rl.normtok(w))  # noqa: E731
+    top, names = {k(w) for w in ("ok", "stæin", "guð")}, {k(w) for w in ("ragnvi", "viseti", "guð")}
+    assert textmodel.gap_class("ok", top, names) == 0
+    assert textmodel.gap_class("guð", top, names) == 0      # a formula word, though also a name
+    assert textmodel.gap_class("§viseti", top, names) == 2 and textmodel.gap_class("viseti", top, names) == 2
+    assert textmodel.gap_class("satti", top, names) == 1
+    # the fitted coefficients: formula words keep their probability, a sure name is brought down
+    G = ([0.5967, -0.7549, -0.4022, 0.6234, 0.4641, 0.5132, -0.108], top, names)
+    assert textmodel.calibrate_gap(0.9747, "§viseti", 2, G) < 0.85
+    assert textmodel.calibrate_gap(0.999, "ok", 1, G) > 0.98
+    assert textmodel.calibrate_gap(0.5, "<unk>", 2, G) == 0.5 and textmodel.calibrate_gap(0.9, "ok", 1, None) == 0.9

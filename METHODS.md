@@ -879,6 +879,15 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     från närliggande stenar, så panelens läsningsrad och "bästa fyllning" kunde visa ett ord som spåren talade emot,
     medan luckans ordlista gav ett annat. Nu vägs båda in där också (`restore_all`, `textmodel-8`). Valideringen
     ovan bygger på luckornas ordlistor och påverkas inte.
+  * **Ordet i en lucka kalibreras per ordklass (2026-10-16).** Modellens sannolikhet för ordet i en lucka stämde
+    för formelord (de 50 vanligaste orden) men var för hög för namn och andra ord. På 631 luckor som utgivarna har
+    fyllt hade modellen rätt i 99 procent av formelorden när den sa minst 95 procent, men i 93 procent av namnen och
+    90 procent av de andra orden. Förstavalet kalibreras därför per klass: P(rätt) = sigmoid(a_klass + b_klass·logit(p)
+    + c·log(förlorade runor)). Klassen är formelord, namn (§ hos modellen eller skrivet som namn i Rundata) eller andra
+    ord. Alternativen delar på resten i samma proportioner och får aldrig mer än förstavalet. Femdelad korsvalidering
+    med hela stenar utanför: kalibreringsfelet sjönk från 5,9 till 1,5 procentenheter och Brier-poängen från 0,105
+    till 0,099 (`scripts/runlm_gap_calibrate.py`, `gap_recal` i `data/runlm_calibration.json`, `textmodel-10`).
+    Kalibreringen gäller luckor av det slag utgivarna redan har fyllt, inte öppna luckor (se kapitel 18).
   * **Ordgränser (2026-10-16).** I en text utan skiljetecken väljer modellen själv var orden börjar, och den kan låna
     runor från ett ord den inte känner. På U Fv1971;212B tog den *ui* från *rahnui* (Ragnví) och fyllde *uis??i* till
     *Víseti* (97 %). Panelen läser därför om texten med utgivarnas ordgränser (mellanrummen i Rundatas translitterering)

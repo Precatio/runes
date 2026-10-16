@@ -38,5 +38,113 @@
    "lam_name": 0.05
   },
   "note": "Logistisk omräkning av ordens sannolikhet i läsningen (scripts/runlm_calibrate.py, fem delar, 808 inskrifter med känt svar, 2026-10-14). Råa sannolikheter är för säkra: sagt 70 %, rätt 40 %."
+ },
+ "gap_recal": {
+  "B": [
+   0.5967,
+   -0.7549,
+   -0.4022,
+   0.6234,
+   0.4641,
+   0.5132,
+   -0.108
+  ],
+  "top50": [
+   "a",
+   "and",
+   "at",
+   "biorn",
+   "bonda",
+   "bro",
+   "broþr",
+   "broþur",
+   "eft",
+   "eftir",
+   "en",
+   "faþur",
+   "gera",
+   "gerþi",
+   "goþan",
+   "guþ",
+   "hagva",
+   "han",
+   "hans",
+   "hialpi",
+   "i",
+   "kumbl",
+   "let",
+   "letu",
+   "lundi",
+   "merki",
+   "ok",
+   "resa",
+   "resti",
+   "restu",
+   "resþi",
+   "reta",
+   "risti",
+   "runar",
+   "sati",
+   "sin",
+   "sina",
+   "sten",
+   "stena",
+   "sun",
+   "sven",
+   "var",
+   "þansi",
+   "þena",
+   "þensa",
+   "þensi",
+   "þer",
+   "þesa",
+   "þesi",
+   "þorsten"
+  ],
+  "n": 631,
+  "ece_raw": 0.0589,
+  "ece_cv": 0.0152,
+  "brier_raw": 0.1048,
+  "brier_cv": 0.0988,
+  "by_class": {
+   "formelord": {
+    "n": 343,
+    "right": 0.945,
+    "sure_raw": [
+     270,
+     0.985
+    ],
+    "sure_calibrated": [
+     252,
+     0.988
+    ]
+   },
+   "andra ord": {
+    "n": 98,
+    "right": 0.582,
+    "sure_raw": [
+     40,
+     0.9
+    ],
+    "sure_calibrated": [
+     15,
+     1.0
+    ]
+   },
+   "namn": {
+    "n": 190,
+    "right": 0.684,
+    "sure_raw": [
+     89,
+     0.933
+    ],
+    "sure_calibrated": [
+     48,
+     0.979
+    ]
+   }
+  },
+  "source": "utdata/Malt/runlm_luckor.json",
+  "note": "Ordet i en lucka, kalibrerat per ordklass (scripts/runlm_gap_calibrate.py)."
  }
 }

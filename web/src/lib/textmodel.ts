@@ -20,7 +20,7 @@ export interface TextModelGap {
   n: number;
   best: string | null;
   fills: { fill: string; p: number; word: string | null }[];
-  words: { word: string; p: number }[];
+  words: { word: string; p: number; p_model?: number }[];
   traces: (string | null)[] | null;
 }
 
@@ -49,6 +49,7 @@ export interface TextModelReading {
   boundaries?: TextModelBoundary[];
   dating?: { epochs: { epoch: string; label: string; p: number }[]; calibrated: boolean; rundata: string };
   calibrated?: boolean;
+  gap_calibrated?: boolean;
   translation?: { sv: string; en: string };
   validation: {
     inside_word: number; whole_word: number; sure_right: number; rundata_sure: number;

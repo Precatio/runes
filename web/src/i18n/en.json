@@ -6039,5 +6039,8 @@
 "Modellens indelning":"The model's division",
 "Rundatas läsning":"Rundata's reading",
 "Rundatas alternativa läsning":"Rundata's alternative reading",
-"Procenten är prövade på luckor som utgivarna redan har fyllt. Luckor som står öppna är ofta just de där ingen vanlig formel passar, och där kan modellen vara säker och ändå ha fel: den kan inte kasusböjning och väljer själv var orden börjar.":"The percentages are tested on gaps the editors have already filled. Gaps that remain open are often exactly those where no common formula fits, and there the model can be sure and still wrong: it does not know case inflection and chooses for itself where the words begin."
+"Procenten är prövade på luckor som utgivarna redan har fyllt. Luckor som står öppna är ofta just de där ingen vanlig formel passar, och där kan modellen vara säker och ändå ha fel: den kan inte kasusböjning och väljer själv var orden börjar.":"The percentages are tested on gaps the editors have already filled. Gaps that remain open are often exactly those where no common formula fits, and there the model can be sure and still wrong: it does not know case inflection and chooses for itself where the words begin.",
+"Ordet i luckan · kalibrerat per ordklass":"The word in the gap · calibrated by word class",
+" · kalibrerat per ordklass":" · calibrated by word class",
+"Ordet i en lucka är kalibrerat per ordklass, eftersom modellen var för säker på namn och ovanliga ord men inte på formelord.":"The word in a gap is calibrated by word class, since the model was too sure of names and unusual words but not of formula words."
 }

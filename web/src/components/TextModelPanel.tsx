@@ -197,7 +197,7 @@ export default function TextModelPanel({ signum }: { signum: string }) {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <div className="text-[11px] text-slate-500">Ordet i luckan</div>
+                      <div className="text-[11px] text-slate-500">Ordet i luckan{data.gap_calibrated && " · kalibrerat per ordklass"}</div>
                       {g.words.slice(0, 5).map(w => (
                         <div key={w.word} className="grid grid-cols-[1fr_auto] gap-2 items-center text-sm" translate="no">
                           <span className={w.word === "<unk>" ? "text-slate-400" : ""}>{w.word === "<unk>" ? "ett okänt ord" : w.word}</span>
@@ -296,6 +296,8 @@ export default function TextModelPanel({ signum }: { signum: string }) {
               femte spår var felläst – spåren räknas som troliga, inte säkra</>}.
               {data.calibrated && <> Procenten vid orden är kalibrerade: ett ord med 80 % stämmer ungefär åtta gånger av tio
               (prövat på 808 stenar med känt svar). Namn får ofta låga procent, eftersom ett namn sällan kan säkras ur språket.</>}{" "}
+              Ordet i en lucka är kalibrerat per ordklass, eftersom modellen var för säker på namn och ovanliga ord men
+              inte på formelord.{" "}
               Procenten är prövade på luckor som utgivarna redan har fyllt. Luckor som står öppna är ofta just de där
               ingen vanlig formel passar, och där kan modellen vara säker och ändå ha fel: den kan inte kasusböjning
               och väljer själv var orden börjar.{" "}
