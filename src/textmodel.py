@@ -19,7 +19,7 @@ from datetime import datetime, timezone
 from src import runlm as rl
 from src import rungloss as rg
 
-VERSION = "textmodel-5"
+VERSION = "textmodel-7"
 K = 5
 CACHE = os.path.join(rl.ROOT, "data", "cache", "textmodel", VERSION)
 MAX_GAP = 4  # longer runs of lost runes are left open: the masking test covers 1–4 runes
@@ -52,6 +52,9 @@ def _records() -> dict:
                      da=rg.load_danish(recs), edda=rl.edda_tokens(),
                      T=json.load(open(cal))["dating_temperature"] if os.path.exists(cal) else None,
                      B=(json.load(open(cal)).get("word_recal") or {}).get("B") if os.path.exists(cal) else None)
+        # names on nearby stones come from the whole corpus (the stone itself left out), not only from the stones the
+        # stone's model learned from: a companion stone in the same held-out part is no leak about this one
+        _data["sites"] = rl.name_sites(_data["V"])
     return _data
 
 
@@ -179,8 +182,9 @@ def _read(r, groups, breaks, b, allowed, base, d):
             traces[sp] = cons
             hard[sp] = [i - a for i in range(a, e) if i not in seen]  # the preserved runes inside the gap
     details, positions = {}, {}
+    near = [(la, lo, nm, ck) for sg, la, lo, nm, ck in d["sites"] if sg != r["signum"]]
     combos, gaps, words = (rl.restore_all(m, work, signs=breaks, only=fillable, site=site, allowed=traces,
-                                          details=details, positions=positions, hard=hard, **FILL) if fillable else ([], [], {}))
+                                          details=details, positions=positions, hard=hard, near_sites=near, **FILL) if fillable else ([], [], {}))
     best = combos[0][0] if combos else ()
     filled = list(groups)
     for (gi, a, e), f in sorted(zip(gaps, best), key=lambda x: (-x[0][0], -x[0][1])):

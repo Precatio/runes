@@ -42,6 +42,14 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   krävdes ett knapptryck. Väntan gör att en serie kodändringar inte startar en körning per ändring. Funktionen stängs
   av med `R_AUTORUN=0`.
 
+### Namn från systerstenar och skadade texter
+- Namn på närliggande stenar hämtas ur hela korpusen, utom stenen som läses (`near_sites`). Tidigare kom de bara från
+  stenarna som stenens modell lärt sig av. Då försvann en sten som av en slump låg i samma femtedel: Sö 208, där namnet
+  *Guðlaug* på dubbelmonumentet Sö 206/208 är helt bevarat.
+- Namnen i en skadad text paras med de huggna orden genom `align` och inte bara när ordantalen är lika. Sö 208 ger nu
+  Guðlaug, Hjalmlaug, Torsten, Fröslunda och Ännebrant.
+- Textmodellens cache är ny (`textmodel-7`). Blindprovet i analysplanen kördes med den tidigare versionen.
+
 ### Bild i hög upplösning från 3D-verktyget
 - En ny knapp i 3D-verktyget sparar den aktuella vyn som PNG i 2, 4 eller 8 gånger skärmens upplösning, högst 8192
   bildpunkter på längden. Vinkel, ljusriktning, ljushöjd och kontrast blir desamma som på skärmen.

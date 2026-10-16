@@ -604,6 +604,39 @@ class CVCharModel:
         return sorted(out, key=lambda x: -x[1])
 
 
+
+def name_pairs(r):
+    """The names of an inscription with their carved spellings: [(normalized name, runes without doubled letters)],
+    from sections where the carved and the normalized words can be paired one to one."""
+    out = []
+    T = dict(sections(r.get("transliteration")))
+    for lab, n_ in sections(r.get("normalization")):
+        if lab not in T:
+            continue
+        raw = [w for w in re.split(r"[\s,.;:!?]+", re.sub(r"(\S+)/\S+", r"\1", n_)) if re.search(r"\w", w)]
+        carved = translit_words(T[lab])
+        if len(raw) == len(carved):
+            pairs = list(zip(raw, carved))
+        else:  # a damaged text: the words that clearly line up (align), so that one lost word does not lose the rest
+            plain = [w.strip('"[]').replace("[", "").replace("]", "") for w in raw]
+            pairs, at = [], 0
+            for cw, nw in align(carved, plain):
+                j = next((k for k in range(at, len(plain)) if plain[k] == nw), None)
+                if j is not None:
+                    pairs.append((raw[j], cw)); at = j + 1
+        for nw, cw in pairs:
+            ck = runekey(cw)
+            if nw.startswith('"') and is_runes(ck.lower()):
+                nm = normtok(nw.strip('"[]').replace("[", "").replace("]", "").replace("(?)", ""))
+                out.append((nm, re.sub(r"(.)\1+", r"\1", ck)))
+    return out
+
+
+def name_sites(recs):
+    """Where each name stands: [(signum, lat, lon, normalized name, carved spelling)] for located inscriptions."""
+    return [(r["signum"], float(r["lat"]), float(r["lon"]), nm, ck) for r in recs
+            if r.get("lat") is not None and r.get("lon") is not None for nm, ck in name_pairs(r)]
+
 class Model:
     def __init__(self, recs, edda_tokens=(), lam_edda=0.03, lam_unk=0.01, D=0.75, d=None, kappa=2.0, exclude=(),
                  aligned=False, contexts=False, alpha=20.0, kappa_e=5.0, lm_beta=0.0, spelling_recs=(), lam_name=0.0,
@@ -773,22 +806,10 @@ class Model:
             carvers = [c["name"] for c in (r.get("carvers") or []) if isinstance(c, dict) and not c.get("uncertain")]
             if not located and not carvers:
                 continue
-            T = dict(sections(r.get("transliteration")))
-            for lab, n_ in sections(r.get("normalization")):
-                if lab not in T:
-                    continue
-                raw = [w for w in re.split(r"[\s,.;:!?]+", re.sub(r"(\S+)/\S+", r"\1", n_)) if re.search(r"\w", w)]
-                carved = translit_words(T[lab])
-                if len(raw) != len(carved):
-                    continue
-                for nw, cw in zip(raw, carved):
-                    ck = runekey(cw)
-                    if nw.startswith('"') and is_runes(ck.lower()):
-                        nm = normtok(nw.strip('"[]').replace("[", "").replace("]", "").replace("(?)", ""))
-                        ck = re.sub(r"(.)\1+", r"\1", ck)
-                        if located:
-                            self.name_sites.append((float(r["lat"]), float(r["lon"]), nm, ck))
-                        self.name_carver.extend((cv, nm, ck) for cv in carvers)
+            for nm, ck in name_pairs(r):
+                if located:
+                    self.name_sites.append((float(r["lat"]), float(r["lon"]), nm, ck))
+                self.name_carver.extend((cv, nm, ck) for cv in carvers)
         if lam_name:
             nm, after, after_all = Counter(), Counter(), Counter()
             for r in recs:
@@ -820,10 +841,11 @@ class Model:
             self._doc_cache[key_] = {w: c / tot for w, c in out.items()} if tot else {}
         return self._doc_cache[key_]
 
-    def names_near(self, lat, lon, km=20.0):
-        """Names on stones within km of a place: {normalized name: weight}, {carved spelling}; nearer weighs more."""
+    def names_near(self, lat, lon, km=20.0, sites=None):
+        """Names on stones within km of a place: {normalized name: weight}, {carved spelling}; nearer weighs more.
+        sites: other (lat, lon, name, spelling) to look among instead of the stones the model learned from."""
         out, spell = defaultdict(float), set()
-        for la, lo, nm, ck in self.name_sites:
+        for la, lo, nm, ck in (self.name_sites if sites is None else sites):
             d = 6371.0 * math.acos(max(-1.0, min(1.0, math.sin(math.radians(lat)) * math.sin(math.radians(la)) +
                                    math.cos(math.radians(lat)) * math.cos(math.radians(la)) * math.cos(math.radians(lo - lon)))))
             if d <= km:
@@ -1177,7 +1199,7 @@ def trigram_delta(model, path):
 
 def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_doc=False, char_fills=0,
             context_cands=False, name_cands=0, adapt=0.0, trigram=False, cache=0.0, area=None, by_word=False,
-            words=None, site=None, near_km=20.0, lam_near=0.0, allowed=None, carver=None, lam_carver=0.0,
+            words=None, site=None, near_km=20.0, lam_near=0.0, near_sites=None, allowed=None, carver=None, lam_carver=0.0,
             trace_eps=0.0, segments=None, hard=None):
     """Fill a run of lost runes. groups are the carved groups (dividers between them) with every lost rune written '?';
     gap is (group index, first position, last position + 1) of the run to fill. Candidate fillings come from the words
@@ -1194,6 +1216,8 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
     its spelling cannot be known, but the word can. words: a dict that receives the word each filling gives.
     site, near_km, lam_near: (lat, lon) of the stone; names on stones within near_km become candidates (in the
     spellings their carvers used) and more probable (weight lam_near) – families raised stones near each other.
+    near_sites: the stones to take those names from (name_sites), instead of the stones the model learned from – a
+    stone's companion may by chance be in the same held-out part, and its carved names are no leak about this stone.
     carver, lam_carver: the carver of the stone; names on the carver's other stones (and the carver's own name)
     become candidates and more probable (weight lam_carver). The carver's spelling comes with ctx (Model(contexts=True),
     a path ending in the carver).
@@ -1242,7 +1266,7 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
                 next_w = w_
     near_shares, near_spell = ({}, set())
     if site and lam_near:
-        near_shares, near_spell = model.names_near(site[0], site[1], near_km)
+        near_shares, near_spell = model.names_near(site[0], site[1], near_km, sites=near_sites)
     car_shares, car_spell = model.names_by_carver(carver) if (carver and lam_carver) else ({}, set())
     near_spell = near_spell | car_spell
     if (near_shares or car_shares) and not cache_arg:  # names of the stone's neighbours and of its carver's circle
