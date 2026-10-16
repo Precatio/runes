@@ -6,7 +6,8 @@ Klassen är modellens eget ord: formelord (de 50 vanligaste orden i normaliserin
 skrivet som namn i Rundata) och andra ord (src/textmodel.gap_class).
 P(rätt) = sigmoid(a_klass + b_klass·logit(p) + c·log(förlorade runor)), skattad på luckrapportens återställda luckor
 (utdata/Malt/runlm_luckor.json, scripts/runlm_gaps.py) och prövad med femdelad korsvalidering där hela stenar hålls
-utanför. Koefficienterna skrivs till data/runlm_calibration.json under gap_recal.
+utanför. Logistisk regression med scikit-learn; isoton regression per klass prövades och gav sämre
+Brier-poäng och log-förlust. Koefficienterna skrivs till data/runlm_calibration.json under gap_recal.
 
     .venv/bin/python -m scripts.runlm_gap_calibrate [luckrapportens rader.json]
 """
@@ -44,14 +45,10 @@ def features(p: float, cls: int, n_lost: int) -> list[float]:
     return oh + [o * math.log(p / (1 - p)) for o in oh] + [math.log(max(1, n_lost))]
 
 
-def fit(X, y, l2=1.0, iters=50):
-    w = np.zeros(X.shape[1])
-    for _ in range(iters):
-        q = 1 / (1 + np.exp(-(X @ w)))
-        g = X.T @ (q - y) + l2 * w
-        H = (X.T * (q * (1 - q))) @ X + l2 * np.eye(X.shape[1])
-        w -= np.linalg.solve(H, g)
-    return w
+def fit(X, y, l2=1.0):
+    """Logistic regression with an L2 penalty (scikit-learn); the class columns stand for the intercepts."""
+    from sklearn.linear_model import LogisticRegression
+    return LogisticRegression(fit_intercept=False, C=1.0 / l2, max_iter=1000).fit(X, y).coef_[0]
 
 
 def ece(q, y, bins=((0, .5), (.5, .8), (.8, .95), (.95, 1.01))):

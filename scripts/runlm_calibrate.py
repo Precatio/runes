@@ -44,6 +44,8 @@ ap.add_argument("--levels", type=int, default=5, help="nivåer i stavningsträde
 ap.add_argument("--epoch_lm", type=int, default=1, help="ordföljd efter epok (1) eller bara hela vikingatiden (0)")
 ap.add_argument("--folds", type=int, nargs="*", default=None)
 ap.add_argument("--out", default=None)
+ap.add_argument("--write_recal", action="store_true",
+                help="skriv omräkningen till data/runlm_calibration.json (word_recal), som panelen använder")
 args = ap.parse_args()
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -161,12 +163,10 @@ def feats(x):
 
 
 def fit(xs):
+    """Logistic regression (scikit-learn), practically without penalty; the first feature is the intercept."""
+    from sklearn.linear_model import LogisticRegression
     X = np.array([feats(x) for x in xs]); y = np.array([x["same"] for x in xs], float)
-    b = np.zeros(X.shape[1])
-    for _ in range(50):
-        mu = 1 / (1 + np.exp(-(X @ b))); Wt = mu * (1 - mu) + 1e-9
-        b = b + np.linalg.solve(X.T @ (X * Wt[:, None]) + 1e-6 * np.eye(len(b)), X.T @ (y - mu))
-    return b
+    return LogisticRegression(fit_intercept=False, C=1e6, max_iter=5000).fit(X, y).coef_[0]
 
 
 fl = sorted({x["fold"] for x in W})
@@ -207,3 +207,15 @@ json.dump({"config": config, "folds": folds, "lam_unk": args.lam_unk, "lam_edda"
            "n_pred": len(W), "rare_n": len(rare), "rare_acc": acc(rare, "same"),
            "rare_mean_pc": float(np.mean([x["pc"] for x in rare])) if rare else None, "seconds": time.time() - t0},
           open(args.out or os.path.join(OUT, "malt_avkod_kalibrering.json"), "w"), indent=1)
+if args.write_recal:
+    cal_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "runlm_calibration.json")
+    cal_all = json.load(open(cal_path)) if os.path.exists(cal_path) else {}
+    cal_all["word_recal"] = {
+        "B": B.tolist(), "features": ["1", "logit(p)", "log1p(frekvens för ordet, alla normaliseringar)",
+                                      "okänt i runtexterna (bara Eddan)", "log(antal runor)", "max(log P(stavning | ord), -12)"],
+        "target": "samma ord som Rundata (key)", "n_words": len(W), "n_inscriptions": len(cands), "ece_raw": ece_raw, "ece": ece,
+        "config": config, "note": "Logistisk omräkning av ordens sannolikhet i läsningen (scripts/runlm_calibrate.py --write_recal, "
+                                  f"fem delar, {len(cands)} inskrifter med känt svar, {time.strftime('%Y-%m-%d')})."}
+    with open(cal_path, "w", encoding="utf-8") as fh:
+        json.dump(cal_all, fh, ensure_ascii=False, indent=1)
+    print("word_recal skriven till", cal_path)

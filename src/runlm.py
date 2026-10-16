@@ -406,8 +406,10 @@ class NameModel:
     training texts (Rundata marks names with a quotation mark). A name the vocabulary does not know can then still be
     read, e.g. osbiarnaR as as + biarn + aR. Each part is spelled as the carvers spelled it in the names on the stones
     (carved: (normalized name, carved runes)), mixed with the spelling model (kappa) for spellings not seen: Ragn- is
-    carved rakn, rahn and ragn, and the rules alone give rahn almost no chance. Second elements of two runes are
-    allowed, and -ví and -vé keep theirs (Ragnví, Kætilví), so that such a name is not read as Ragn + v + i."""
+    carved rakn, rahn and ragn, and the rules alone give rahn almost no chance; a carved name counts only where at
+    most one of its parts is unexplained by the rules, so that a name cut wrongly does not teach a part nonsense.
+    -ví and -vé keep their vowel and are the only second elements of two runes (Ragnví, Kætilví): allowing every
+    short element let -uð take the place of -guð (Auðguðr)."""
     def __init__(self, names, spell, min_share=3, carved=(), kappa=5.0):
         def stem(n):
             for e in NAME_ENDINGS:
@@ -421,16 +423,18 @@ class NameModel:
             st, e = stem(n)
             stems[st] += c
             ends[e] += c
+        SHORT = ("vi", "ve", "ví", "vé")  # the only second elements of two runes
+        cuts = lambda st: [i for i in range(2, len(st) - 1) if len(st) - i >= 3 or st[i:] in SHORT]  # noqa: E731
         pre, suf = Counter(), Counter()
         for st in stems:
-            for i in range(2, len(st) - 1):
+            for i in cuts(st):
                 pre[st[:i]] += 1
                 suf[st[i:]] += 1
         first, second, simple = Counter(), Counter(), Counter()
         decomp = {}
         for st, c in stems.items():
             best = None
-            for i in range(2, len(st) - 1):
+            for i in cuts(st):
                 a, b = st[:i], st[i:]
                 if pre[a] >= min_share and suf[b] >= min_share:
                     sc = min(pre[a], suf[b])
@@ -471,6 +475,8 @@ class NameModel:
                 sc = sum(math.log(rule(w).get(ch, 0.0) + 1e-4) for (_, w), ch in zip(parts, chunks))
                 if best is None or sc > best[0]:
                     best = (sc, chunks)
+            if best[0] < math.log(1e-4) - 6.0:
+                continue  # more than one part unexplained: the name is probably cut wrongly
             for (kind, w), ch in zip(parts, best[1]):
                 emp[(kind, w)][ch] += 1
         self.idx = {}
@@ -677,11 +683,12 @@ def name_sites(recs):
 class Model:
     def __init__(self, recs, edda_tokens=(), lam_edda=0.03, lam_unk=0.01, D=0.75, d=None, kappa=2.0, exclude=(),
                  aligned=False, contexts=False, alpha=20.0, kappa_e=5.0, lm_beta=0.0, spelling_recs=(), lam_name=0.0,
-                 cv_chars=False, lam_doc=0.0, area_lm=False, area_beta=200.0):
+                 cv_chars=False, lam_doc=0.0, area_lm=False, area_beta=200.0, lam_class=0.0, n_classes=200):
         """recs: Viking-Age inscriptions for the language and spelling. aligned: also use sections whose word counts
         differ (step 2). contexts: spelling by era, epoch, area, region and carver, and word sequences by epoch (step 3);
         alpha is how many observations a level needs to outweigh the level above it. spelling_recs: further inscriptions
-        (e.g. medieval) used only for the spelling."""
+        (e.g. medieval) used only for the spelling. lam_class: weight of word sequences by word class (word_classes:
+        words that stand in like company, e.g. hans, hennaR, sina, þæiRa), which the word bigram is mixed with."""
         recs = [r for r in recs if r["signum"] not in set(exclude)]
         self.aligned, self.contexts, self.alpha, self.kappa, self.kappa_e = aligned, contexts, alpha, kappa, kappa_e
         self.lm_beta = lm_beta  # how many occurrences of a word an epoch needs before its own word sequences get half the weight
@@ -833,6 +840,20 @@ class Model:
             self.keys_by_len[len(k_)].append(k_)
         # names the vocabulary has never seen (lam_name > 0): composed of name elements; how likely a name is after a
         # given word is learned from where names stand in the training texts
+        # word sequences by word class (lam_class > 0): P(c(w) | c(prev)) · P(w | c(w)), Kneser–Ney over the classes
+        self.lam_class, self.cl = lam_class, {}
+        if lam_class:
+            sents = [["<s>"] + [normtok(w) for w in norm_words(p)] for r in recs for _, p in sections(r.get("normalization"))]
+            self.cl = word_classes(sents, n_classes)
+            cb = Counter((self.cl[a], self.cl[b]) for s in sents for a, b in zip(s, s[1:]))
+            self.c_hist, self.c_big = Counter(), cb
+            for (a, _), c in cb.items():
+                self.c_hist[a] += c
+            self.c_fol = Counter(a for (a, _) in cb)
+            ccont = Counter(b for (_, b) in cb)
+            self.c_pc = {c: n / len(cb) for c, n in ccont.items()}
+            self.c_words = Counter(w for s in sents for w in s[1:])
+            self.c_size = Counter(self.cl[w] for s in sents for w in s[1:])
         self.lam_name, self.names = lam_name, None
         # where each name stands: (lat, lon, normalized name, carved spelling), for names on nearby stones
         self.name_sites = []
@@ -916,6 +937,16 @@ class Model:
         gam = self.D * self.fol3[(u, v)] / h
         return lr * max(self.big3.get((u, v, w), 0) - self.D, 0) / h + gam * p2
 
+    def p_class(self, w, prev):
+        """P(w | prev) through the word classes: P(c(w) | c(prev)), Kneser–Ney, times w's share of its class."""
+        c, a = self.cl[w], self.cl.get(prev)
+        pc = self.c_pc.get(c, 0.0)
+        if a is not None and self.c_hist[a]:
+            pcc = max(self.c_big.get((a, c), 0) - self.D, 0) / self.c_hist[a] + self.D * self.c_fol[a] / self.c_hist[a] * pc
+        else:
+            pcc = pc
+        return pcc * self.c_words[w] / self.c_size[c]
+
     def p_word(self, w, prev, ep=None, doc=None, cache=None, area=None):
         """P(w | prev) for a lexicon word (the unknown word is handled separately); with an epoch, the epoch's own
         word sequences back off to those of its phase, and those to the whole Viking Age."""
@@ -938,6 +969,8 @@ class Model:
             pa = max(self.big_e[lev].get((prev, w), 0) - self.D, 0) / h + self.gamma_e[lev][prev] * pk
             lam = h / (h + self.area_beta)
             pk = lam * pa + (1 - lam) * pk
+        if self.lam_class and w in self.cl:
+            pk = (1 - self.lam_class) * pk + self.lam_class * self.p_class(w, prev)
         p = lr * pk + self.lam_edda * self.pe.get(w, 0.0)
         if doc and self.lam_doc:
             p = (1 - self.lam_doc) * p + self.lam_doc * lr * self.p_doc(doc).get(w, 0.0)
@@ -1232,6 +1265,38 @@ def trigram_delta(model, path):
         if p2 > 0 and p3 > 0:
             out += math.log(p3 / p2)
     return out
+
+
+def word_classes(sents, K=200, dims=40, n_ctx=400, seed=0):
+    """Word classes from the texts themselves: each word is described by its left and right neighbours (the n_ctx
+    commonest words, positive pointwise mutual information), reduced to dims dimensions (SVD) and grouped by k-means
+    (scikit-learn). Words that stand in like company end up together – the genitives hans, hennaR, sina, þæiRa – which
+    gives the word sequences something of the grammar the texts do not mark. {word: class}."""
+    import numpy as np
+    from sklearn.cluster import KMeans
+    from sklearn.decomposition import TruncatedSVD
+    uni = Counter(w for s in sents for w in s)
+    ctx = [w for w, _ in uni.most_common(n_ctx)]
+    ci = {w: i for i, w in enumerate(ctx)}
+    words = sorted(uni)
+    wi = {w: i for i, w in enumerate(words)}
+    M = np.zeros((len(words), 2 * len(ctx)))
+    for s in sents:
+        for a, b in zip(s, s[1:]):
+            if a in ci:
+                M[wi[b], ci[a]] += 1
+            if b in ci:
+                M[wi[a], len(ctx) + ci[b]] += 1
+    tot = M.sum()
+    pr, pc = M.sum(1, keepdims=True) / tot, M.sum(0, keepdims=True) / tot
+    with np.errstate(divide="ignore", invalid="ignore"):
+        P = np.maximum(np.log((M / tot) / (pr * pc)), 0)
+    P[~np.isfinite(P)] = 0
+    Z = TruncatedSVD(min(dims, P.shape[1] - 1, len(words) - 1), random_state=seed).fit_transform(P)
+    Z /= np.linalg.norm(Z, axis=1, keepdims=True) + 1e-9
+    k = min(K, len(words))
+    lab = KMeans(k, n_init=4, random_state=seed).fit_predict(Z)
+    return {w: int(lab[wi[w]]) for w in words}
 
 
 def _name_cache(model, site, near_km, lam_near, near_sites, carver, lam_carver):

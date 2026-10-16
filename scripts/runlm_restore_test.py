@@ -20,6 +20,7 @@ from src.runlm import (Model, carved_groups, context, decode, edda_tokens, is_ru
 ap = argparse.ArgumentParser()
 ap.add_argument("--folds", type=int, nargs="*", default=None)
 ap.add_argument("--lam_name", type=float, default=0.05)
+ap.add_argument("--lam_class", type=float, default=0.0, help="vikt för ordföljd efter ordklass (0 = av)")
 ap.add_argument("--lam_doc", type=float, default=0.0, help="vikt för vilka ord som står i samma inskrift (0 = av)")
 ap.add_argument("--window", type=int, default=2, help="grupper på var sida om luckan; -1 = hela texten")
 ap.add_argument("--char_fills", type=int, default=0, help="fyllnader föreslagna runa för runa (vokal/konsonant)")
@@ -114,7 +115,7 @@ t0 = time.time()
 for k in folds:
     test = cands[k::K]
     tset = {r["signum"] for r, _ in test}
-    m = Model([r for r in V if r["signum"] not in tset], edda_tokens=ET, aligned=True, lam_name=args.lam_name,
+    m = Model([r for r in V if r["signum"] not in tset], edda_tokens=ET, aligned=True, lam_name=args.lam_name, lam_class=args.lam_class,
               lam_doc=args.lam_doc, area_lm=args.area_lm,
               **(dict(contexts=True, alpha=100.0, kappa_e=50.0, lm_beta=200.0) if args.contexts else {}))
     for r, (groups, gw) in test:

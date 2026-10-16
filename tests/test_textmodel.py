@@ -59,3 +59,10 @@ def test_a_gap_word_is_calibrated_by_its_class():
     assert textmodel.calibrate_gap(0.9747, "§viseti", 2, G) < 0.85
     assert textmodel.calibrate_gap(0.999, "ok", 1, G) > 0.98
     assert textmodel.calibrate_gap(0.5, "<unk>", 2, G) == 0.5 and textmodel.calibrate_gap(0.9, "ok", 1, None) == 0.9
+
+
+def test_names_with_restored_runes_are_names():
+    recs = [{"normalization": '"Alfdi[s] let ræisa stæin æftiR "Kar[l](?), sun sinn.'}]
+    k = lambda w: textmodel.rl.key(textmodel.rl.normtok(w))  # noqa: E731
+    names = textmodel.name_keys(recs)
+    assert k("alfdis") in names and k("karl") in names and k("stæin") not in names

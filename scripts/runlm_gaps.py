@@ -123,6 +123,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--max_gaps", type=int, default=1500)
     ap.add_argument("--lam_name", type=float, default=0.05)
+    ap.add_argument("--lam_class", type=float, default=0.0, help="vikt för ordföljd efter ordklass (0 = av)")
     ap.add_argument("--lam_doc", type=float, default=0.0)
     ap.add_argument("--window", type=int, default=-1)
     ap.add_argument("--char_fills", type=int, default=15)
@@ -157,7 +158,7 @@ def main(argv=None):
         if args.fold >= 0 and k != args.fold:
             continue
         test = {st for st in stones if fold[st] == k}
-        m = Model([r for r in V if r["signum"] not in test], edda_tokens=ET, aligned=True, lam_name=args.lam_name,
+        m = Model([r for r in V if r["signum"] not in test], edda_tokens=ET, aligned=True, lam_name=args.lam_name, lam_class=args.lam_class,
                   lam_doc=args.lam_doc, area_lm=args.area_lm)
         for st in sorted(test):
             xs = by_stone[st]

@@ -5,6 +5,11 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Färdiga bibliotek som kontroll
+- Ordföljdens utjämning ger exakt samma sannolikheter som NLTK:s Kneser–Ney, och den valda rabatten var bäst av de
+  prövade. Kalibreringen görs med scikit-learn (samma resultat som den egna koden). Namnbyggarens korta efterled är
+  begränsade till -ví/-vé, och felaktigt delade namn lär inte längre ut stavningar. Panelens version är `textmodel-12`.
+
 ### Namnen byggs med stenarnas egna stavningar
 - Namn som modellen inte känner byggs av namnled, och leden stavas nu som ristarna stavade dem i namnen på stenarna
   (Ragn- som *rahn*, *rakn* eller *ragn*). Kvinnonamn på *-ví/-vé* (Ragnví, Kætilví) kan nu byggas. Rätt namn i

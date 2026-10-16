@@ -896,7 +896,23 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     behåller sitt efterled. På U Fv1971;212B föll Víseti från 97 till 44 procent när *rahnui* blev Ragnví. På 624
     återställda luckor (samma prov som ovan) steg rätt namn från 75,7 till 78,4 procent, formelorden var oförändrade
     och andra ord sjönk från 51,1 till 49,6 procent (två luckor). Kalibreringen per ordklass är omskattad på den nya
-    modellen (`textmodel-11`).
+    modellen (`textmodel-11`). Samma dag rättat: att tillåta alla efterled på två runor lät *-uð* ta platsen för *-guð*
+    (Auðguðr), så nu är bara *-ví/-vé* så korta; och ett huggit namn lär bara ut stavningar om högst en av dess delar
+    saknar stöd i reglerna, eftersom felaktigt delade namn annars gav skräpstavningar (*asluh* för *-laug*). På samma
+    624 luckor: rätt namn 65,4 → 67,6 procent, andra ord och formelord oförändrade, 98,1 procent rätt när modellen sa
+    minst 95. Maskeringsprovet oförändrat (inne i ord 72,3, helt ord 55,9 procent). Kalibreringen per ordklass görs nu
+    med scikit-learn, och namnen i den känns igen också när Rundata skriver dem med hakparentes (”Alfdi[s]”)
+    (`textmodel-12`).
+  * **Prövat mot färdiga bibliotek (2026-10-16).** Ordföljdens Kneser–Ney-bigram ger samma sannolikheter som NLTK:s
+    (största skillnad 10⁻¹⁶ på 3 000 ordpar; testet ligger i tests/test_runlm.py). Rabatten 0,75 gav lägst perplexitet
+    på inskrifter som modellen inte sett (57,5) jämfört med 0,5, 0,9 och modified Kneser–Ney (58,3). Den egna
+    Newton-anpassningen av kalibreringen gav samma koefficienter som scikit-learn; isoton kalibrering per klass gav
+    sämre Brier-poäng och log-förlust och används inte.
+  * **Ordklasser (prövas, avstängt).** Ordföljd efter ordklass, där klasserna lärs ur texterna (grannord, PPMI, SVD och
+    k-means med scikit-learn; `word_classes`, `lam_class`), sänkte perplexiteten från 47,3 till 45,3 med 200 klasser och
+    vikten 0,2. Klasserna blir rimliga (genitiverna *hans, hennaR, sina, þæiRa* i en klass), men *þa* är för sällsynt och
+    mångtydigt för att klassas rätt, så felet på Sö 280 kvarstår. Om klasserna används avgörs av luck- och
+    maskeringsprovet.
   * **Ordgränser (2026-10-16).** I en text utan skiljetecken väljer modellen själv var orden börjar, och den kan låna
     runor från ett ord den inte känner. På U Fv1971;212B tog den *ui* från *rahnui* (Ragnví) och fyllde *uis??i* till
     *Víseti* (97 %). Panelen läser därför om texten med utgivarnas ordgränser (mellanrummen i Rundatas translitterering)

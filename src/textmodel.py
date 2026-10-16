@@ -19,7 +19,7 @@ from datetime import datetime, timezone
 from src import runlm as rl
 from src import rungloss as rg
 
-VERSION = "textmodel-11"
+VERSION = "textmodel-12"
 K = 5
 CACHE = os.path.join(rl.ROOT, "data", "cache", "textmodel", VERSION)
 MAX_GAP = 4  # longer runs of lost runes are left open: the masking test covers 1–4 runes
@@ -98,8 +98,8 @@ def recal(b: dict, p: float, w: str, runes: str, B) -> float:
 
 def name_keys(recs) -> set[str]:
     """The keys of every word Rundata writes as a name ("Ragnvi) somewhere in its normalizations."""
-    return {rl.key(rl.normtok(w.lstrip('"'))) for r in recs if r.get("normalization")
-            for w in re.findall(r'"[^\s,.;:!?()]+', r["normalization"])}
+    return {rl.key(rl.normtok(re.sub(r"[\[\](){}<>?]", "", w.lstrip('"')))) for r in recs if r.get("normalization")
+            for w in re.findall(r'"[^\s,.;:!]+', r["normalization"])}  # "Alfdi[s]: restored runes count too
 
 
 def gap_class(word: str, top: set[str], names: set[str]) -> int:

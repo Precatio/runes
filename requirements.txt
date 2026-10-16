@@ -12,6 +12,8 @@ requests>=2.28.0
 streamlit-js-eval>=0.1.5
 opencv-python-headless>=4.8.0
 scikit-image>=0.21.0
+scikit-learn>=1.5  # kalibreringen av sannolikhetsmodellen (scripts/runlm_gap_calibrate.py, runlm_calibrate.py)
+nltk>=3.9  # referens för Kneser–Ney-utjämningen i testerna (tests/test_runlm.py)
 
 # Backend-API (FastAPI)
 fastapi>=0.110.0

@@ -245,3 +245,41 @@ def test_names_from_nearby_stones():
     near, spell = m.names_near(59.01, 18.01, km=5)
     far, _ = m.names_near(62.0, 15.0, km=5)
     assert "þorir" in near and "þurir" in spell and not far
+
+
+def _nltk_kn(recs, D):
+    """NLTK's interpolated Kneser–Ney bigram on the same word sequences as the model ('<s>' first, no end token)."""
+    from nltk.lm import KneserNeyInterpolated
+    from nltk.util import everygrams
+    from src.runlm import norm_words, normtok
+    sents = [["<s>"] + [normtok(w) for w in norm_words(p)] for r in recs for _, p in sections(r.get("normalization"))]
+    lm = KneserNeyInterpolated(order=2, discount=D)
+    lm.fit([list(everygrams(s, max_len=2)) for s in sents], [w for s in sents for w in s])
+    return lm
+
+
+def test_the_word_sequences_are_kneser_ney_as_in_nltk():
+    m = Model(RECS)
+    lm = _nltk_kn(RECS, m.D)
+    lr = 1 - m.lam_edda - m.lam_unk
+    for prev in ("<s>", "raisþi", "stæin", "æft"):
+        for w in ("stæin", "þannsi", "æft", "sun", "faður", "sinn"):
+            if prev in m.hist:
+                ours = (m.p_word(w, prev) - m.lam_edda * m.pe.get(w, 0.0)) / lr
+                assert abs(ours - lm.score(w, [prev])) < 1e-9, (prev, w)
+    # and it is a distribution: the words after a word add up to one
+    vocab = {b for (_, b) in m.big}
+    for prev in ("<s>", "raisþi"):
+        assert abs(sum((m.p_word(w, prev) - m.lam_edda * m.pe.get(w, 0.0)) / lr for w in vocab) - 1) < 1e-9
+
+
+def test_word_classes_are_a_distribution_mixed_into_the_word_sequences():
+    m = Model(PAR, lam_class=0.3, n_classes=4)
+    assert set(m.cl) >= {"stæin", "faður", "sinn"}
+    lr = 1 - m.lam_edda - m.lam_unk
+    vocab = {b for (_, b) in m.big}
+    for prev in ("<s>", "ræisti", "æft"):
+        total = sum((m.p_word(w, prev) - m.lam_edda * m.pe.get(w, 0.0)) / lr for w in vocab)
+        assert abs(total - 1) < 1e-9, (prev, total)
+    plain = Model(PAR)
+    assert plain.lam_class == 0 and not plain.cl  # off unless asked for
