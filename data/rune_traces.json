@@ -1,0 +1,230 @@
+{
+ "regions": [
+  "övre halvan",
+  "nedre halvan",
+  "vänster om staven",
+  "höger om staven",
+  "övre tredjedelen",
+  "mellersta tredjedelen",
+  "nedre tredjedelen"
+ ],
+ "allowed": {
+  "f": {
+   "övre halvan": "f",
+   "nedre halvan": "fiklmtcdeg",
+   "vänster om staven": "bfiklruþcegpy",
+   "höger om staven": "f",
+   "övre tredjedelen": "f",
+   "mellersta tredjedelen": "fkrcg",
+   "nedre tredjedelen": "afiklmtþcdegæ"
+  },
+  "u": {
+   "övre halvan": "lruy",
+   "nedre halvan": "uy",
+   "vänster om staven": "bfiklruþcegpy",
+   "höger om staven": "uy",
+   "övre tredjedelen": "blrupy",
+   "mellersta tredjedelen": "uy",
+   "nedre tredjedelen": "uy"
+  },
+  "þ": {
+   "övre halvan": "þ",
+   "nedre halvan": "þ",
+   "vänster om staven": "bfiklruþcegpy",
+   "höger om staven": "þ",
+   "övre tredjedelen": "þ",
+   "mellersta tredjedelen": "þ",
+   "nedre tredjedelen": "afikmþcegæ"
+  },
+  "o": {
+   "övre halvan": "oø",
+   "nedre halvan": "oø",
+   "vänster om staven": "oø",
+   "höger om staven": "oø",
+   "övre tredjedelen": "oø",
+   "mellersta tredjedelen": "oø",
+   "nedre tredjedelen": "oø"
+  },
+  "r": {
+   "övre halvan": "blrupy",
+   "nedre halvan": "r",
+   "vänster om staven": "bfiklruþcegpy",
+   "höger om staven": "r",
+   "övre tredjedelen": "blrupy",
+   "mellersta tredjedelen": "fr",
+   "nedre tredjedelen": "r"
+  },
+  "k": {
+   "övre halvan": "kcg",
+   "nedre halvan": "fiklmtcdeg",
+   "vänster om staven": "bfiklruþcegpy",
+   "höger om staven": "akmcgæ",
+   "övre tredjedelen": "kcg",
+   "mellersta tredjedelen": "Rfikmceg",
+   "nedre tredjedelen": "afiklmtþcdegæ"
+  },
+  "h": {
+   "övre halvan": "h",
+   "nedre halvan": "h",
+   "vänster om staven": "h",
+   "höger om staven": "h",
+   "övre tredjedelen": "h",
+   "mellersta tredjedelen": "h",
+   "nedre tredjedelen": "hn"
+  },
+  "n": {
+   "övre halvan": "n",
+   "nedre halvan": "n",
+   "vänster om staven": "n",
+   "höger om staven": "n",
+   "övre tredjedelen": "n",
+   "mellersta tredjedelen": "n",
+   "nedre tredjedelen": "hn"
+  },
+  "i": {
+   "övre halvan": "Rie",
+   "nedre halvan": "fiklmtcdeg",
+   "vänster om staven": "bfiklruþcegpy",
+   "höger om staven": "ie",
+   "övre tredjedelen": "Rie",
+   "mellersta tredjedelen": "Riklmtcdeg",
+   "nedre tredjedelen": "afiklmtþcdegæ"
+  },
+  "a": {
+   "övre halvan": "aæ",
+   "nedre halvan": "aæ",
+   "vänster om staven": "aæ",
+   "höger om staven": "akcgæ",
+   "övre tredjedelen": "aæ",
+   "mellersta tredjedelen": "aæ",
+   "nedre tredjedelen": "afiklmtþcdegæ"
+  },
+  "s": {
+   "övre halvan": "s",
+   "nedre halvan": "s",
+   "vänster om staven": "s",
+   "höger om staven": "s",
+   "övre tredjedelen": "s",
+   "mellersta tredjedelen": "s",
+   "nedre tredjedelen": "s"
+  },
+  "t": {
+   "övre halvan": "td",
+   "nedre halvan": "fiklmtcdeg",
+   "vänster om staven": "td",
+   "höger om staven": "ltd",
+   "övre tredjedelen": "td",
+   "mellersta tredjedelen": "Rilmtde",
+   "nedre tredjedelen": "afiklmtcdegæ"
+  },
+  "b": {
+   "övre halvan": "brp",
+   "nedre halvan": "bp",
+   "vänster om staven": "bfiklruþcegpy",
+   "höger om staven": "bp",
+   "övre tredjedelen": "blrupy",
+   "mellersta tredjedelen": "bp",
+   "nedre tredjedelen": "bp"
+  },
+  "m": {
+   "övre halvan": "m",
+   "nedre halvan": "fiklmtcdeg",
+   "vänster om staven": "m",
+   "höger om staven": "kmcg",
+   "övre tredjedelen": "m",
+   "mellersta tredjedelen": "Riklmtcdeg",
+   "nedre tredjedelen": "afiklmtþcdegæ"
+  },
+  "l": {
+   "övre halvan": "lruy",
+   "nedre halvan": "fiklmtcdeg",
+   "vänster om staven": "bfiklruþcegpy",
+   "höger om staven": "ltd",
+   "övre tredjedelen": "blrupy",
+   "mellersta tredjedelen": "Rilmtde",
+   "nedre tredjedelen": "afiklmtcdegæ"
+  },
+  "R": {
+   "övre halvan": "Rie",
+   "nedre halvan": "R",
+   "vänster om staven": "R",
+   "höger om staven": "R",
+   "övre tredjedelen": "Rie",
+   "mellersta tredjedelen": "Riklmtcdeg",
+   "nedre tredjedelen": "R"
+  },
+  "e": {
+   "övre halvan": "Rie",
+   "nedre halvan": "fiklmtcdeg",
+   "vänster om staven": "bfiklruþcegpy",
+   "höger om staven": "ie",
+   "övre tredjedelen": "Rie",
+   "mellersta tredjedelen": "Riklmtcdeg",
+   "nedre tredjedelen": "afiklmtþcdegæ"
+  },
+  "y": {
+   "övre halvan": "lruy",
+   "nedre halvan": "uy",
+   "vänster om staven": "bfiklruþcegpy",
+   "höger om staven": "uy",
+   "övre tredjedelen": "blrupy",
+   "mellersta tredjedelen": "uy",
+   "nedre tredjedelen": "uy"
+  },
+  "g": {
+   "övre halvan": "kcg",
+   "nedre halvan": "fiklmtcdeg",
+   "vänster om staven": "bfiklruþcegpy",
+   "höger om staven": "akmcgæ",
+   "övre tredjedelen": "kcg",
+   "mellersta tredjedelen": "Rfikmceg",
+   "nedre tredjedelen": "afiklmtþcdegæ"
+  },
+  "d": {
+   "övre halvan": "td",
+   "nedre halvan": "fiklmtcdeg",
+   "vänster om staven": "td",
+   "höger om staven": "ltd",
+   "övre tredjedelen": "td",
+   "mellersta tredjedelen": "Rilmtde",
+   "nedre tredjedelen": "afiklmtcdegæ"
+  },
+  "p": {
+   "övre halvan": "brp",
+   "nedre halvan": "bp",
+   "vänster om staven": "bfiklruþcegpy",
+   "höger om staven": "bp",
+   "övre tredjedelen": "blrupy",
+   "mellersta tredjedelen": "bp",
+   "nedre tredjedelen": "bp"
+  },
+  "c": {
+   "övre halvan": "kcg",
+   "nedre halvan": "fiklmtcdeg",
+   "vänster om staven": "bfiklruþcegpy",
+   "höger om staven": "akmcgæ",
+   "övre tredjedelen": "kcg",
+   "mellersta tredjedelen": "Rfikmceg",
+   "nedre tredjedelen": "afiklmtþcdegæ"
+  },
+  "æ": {
+   "övre halvan": "aæ",
+   "nedre halvan": "aæ",
+   "vänster om staven": "aæ",
+   "höger om staven": "akcgæ",
+   "övre tredjedelen": "aæ",
+   "mellersta tredjedelen": "aæ",
+   "nedre tredjedelen": "afiklmtþcdegæ"
+  },
+  "ø": {
+   "övre halvan": "oø",
+   "nedre halvan": "oø",
+   "vänster om staven": "oø",
+   "höger om staven": "oø",
+   "övre tredjedelen": "oø",
+   "mellersta tredjedelen": "oø",
+   "nedre tredjedelen": "oø"
+  }
+ },
+ "note": "Runor som ser likadana ut i den bevarade delen (scripts/rune_traces.py)."
+}

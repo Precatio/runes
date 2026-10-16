@@ -1158,7 +1158,7 @@ def trigram_delta(model, path):
 
 def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_doc=False, char_fills=0,
             context_cands=False, name_cands=0, adapt=0.0, trigram=False, cache=0.0, area=None, by_word=False,
-            words=None, site=None, near_km=20.0, lam_near=0.0):
+            words=None, site=None, near_km=20.0, lam_near=0.0, allowed=None):
     """Fill a run of lost runes. groups are the carved groups (dividers between them) with every lost rune written '?';
     gap is (group index, first position, last position + 1) of the run to fill. Candidate fillings come from the words
     whose spelling fits the preserved runes around the gap (and, for gaps of one or two runes, every combination of
@@ -1174,10 +1174,15 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
     its spelling cannot be known, but the word can. words: a dict that receives the word each filling gives.
     site, near_km, lam_near: (lat, lon) of the stone; names on stones within near_km become candidates (in the
     spellings their carvers used) and more probable (weight lam_near) – families raised stones near each other.
+    allowed: for each lost rune the runes its visible remains allow (a set, or None when nothing is visible), e.g.
+    from a 3D scan or a photograph (data/rune_traces.json for what part of a rune leaves which runes possible); only
+    fillings that agree are considered, and when few combinations agree all of them are tried.
     Returns [(filling, probability)], best first, over the candidates considered."""
     gi, g0, g1 = gap
     k = g1 - g0
     g = groups[gi]
+    sets = [set(allowed[i]) if (allowed and allowed[i]) else None for i in range(k)]
+    ok = lambda f: all(s_ is None or ch in s_ for s_, ch in zip(sets, f))
     # a first reading of the rest of the text (the gap left open): its words give the context
     parts0, sg0 = [], []
     for idx, grp in enumerate(groups):
@@ -1236,14 +1241,17 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
                 for sp, pn in model.names.match(pat_s.replace("\\", ""), top=name_cands).items():
                     f = sp[g0 - a:g1 - a]
                     pre[f] = max(pre[f], pn * model.lam_name)
-    cands = [f for f, _ in sorted(pre.items(), key=lambda kv: -kv[1])[:n_cands]]
-    if k <= 2:  # short gaps: every combination of runes is tried as well
-        cands += ["".join(f) for f in itertools.product(FILL_ALPHABET, repeat=k) if "".join(f) not in cands]
+    cands = [f for f, _ in sorted(pre.items(), key=lambda kv: -kv[1]) if ok(f)][:n_cands]
+    alpha = [sorted(s_) if s_ is not None else FILL_ALPHABET for s_ in sets]
+    if k <= 2 or (allowed and math.prod(len(a_) for a_ in alpha) <= 400):
+        # short gaps, or few combinations left by what is visible: every combination is tried as well
+        cands += ["".join(f) for f in itertools.product(*alpha) if "".join(f) not in cands]
     elif char_fills:  # longer gaps: runs of runes that fit the vowel/consonant pattern and the runes around the gap
         if model.cvchar is None:
             model.cvchar = CVCharModel(model._train_words)
         left, right = g[max(0, g0 - 4):g0].split("?")[-1], g[g1:g1 + 3].split("?")[0]
-        cands += [f for f, _ in model.cvchar.fills(left, k, right)[:char_fills] if f not in cands]
+        fills = model.cvchar.fills(left, k, right)[:char_fills * (5 if allowed else 1)]
+        cands += [f for f, _ in fills if f not in cands and ok(f)][:char_fills]
     if adapt and reading0:  # the stone's own spelling habits, from the rest of its text
         base = ctx or Ctx((), model.spell.p, ("glob",))
         ctx = model.adapt(base, adapt_counts(model, reading0[2], reading0[3], base), adapt)

@@ -33,6 +33,9 @@ ap.add_argument("--area_lm", action="store_true", help="ordföljd efter trakt (f
 ap.add_argument("--by_word", action="store_true", help="välj ordet (summerat över stavningar), sedan stavningen")
 ap.add_argument("--near", type=float, default=0.0, help="namn från stenar i närheten (vikt)")
 ap.add_argument("--near_km", type=float, default=20.0)
+ap.add_argument("--trace", default="none", choices=["none", "halv", "tredjedel", "blandad"],
+                help="vad som syns av de dolda runorna (data/rune_traces.json): halva runan, en tredjedel, eller blandat "
+                     "(för varje runa lika ofta inget, en tredjedel eller hälften)")
 ap.add_argument("--out", default=None)
 args = ap.parse_args()
 
@@ -69,6 +72,21 @@ random.Random(2026).shuffle(cands)
 K = 5
 folds = args.folds if args.folds is not None else list(range(K))
 rng = random.Random(15)
+trace_rng = random.Random(16)  # its own generator, so that the same runes are hidden with and without traces
+TRACES = json.load(open(os.path.join(ROOT, "data", "rune_traces.json")))["allowed"]
+HALVES = ["övre halvan", "nedre halvan", "vänster om staven", "höger om staven"]
+THIRDS = ["övre tredjedelen", "mellersta tredjedelen", "nedre tredjedelen"]
+
+
+def trace(runes):
+    """For each hidden rune the runes that its simulated visible remains allow (None: nothing visible)."""
+    out = []
+    for ch in runes:
+        mode = args.trace if args.trace != "blandad" else trace_rng.choice(["inget", "tredjedel", "halv"])
+        region = (trace_rng.choice(HALVES) if mode == "halv" else trace_rng.choice(THIRDS) if mode == "tredjedel"
+                  else None)
+        out.append(TRACES[ch][region] if (region and ch in TRACES) else None)
+    return out
 
 
 def locate(groups, start, end):
@@ -111,13 +129,14 @@ for k in folds:
             truth = groups[gi][g0:g1]
             masked = list(groups)
             masked[gi] = groups[gi][:g0] + "?" * (g1 - g0) + groups[gi][g1:]
+            allowed = trace(truth) if args.trace != "none" else None
             wd = {}
             res = restore(m, masked, (gi, g0, g1), words=wd, window=None if args.window < 0 else args.window,
                           use_doc=args.lam_doc > 0, char_fills=args.char_fills, context_cands=args.context_cands,
                           name_cands=args.name_cands, adapt=args.adapt, n_cands=args.n_cands, trigram=args.trigram,
                           cache=args.cache, area=context(r)[3] if args.area_lm else None, by_word=args.by_word,
                           site=(float(r["lat"]), float(r["lon"])) if (args.near and r.get("lat") is not None) else None,
-                          near_km=args.near_km, lam_near=args.near)
+                          near_km=args.near_km, lam_near=args.near, allowed=allowed)
             fills = [f for f, _ in res]
             p = dict(res)
             # the word read at the gap with the best filling: is it the right word, whatever its spelling?
@@ -134,6 +153,7 @@ for k in folds:
                          "p_truth": p.get(truth, 0.0), "word_ok": word_ok, "gold_word": normtok(gword),
                          "dist": [(f, round(q, 6)) for f, q in res[:10]], "word": w_,
                          "is_name": normtok(gword) in {normtok(x) for x in re.findall(r'"(\w+)', r.get("normalization") or "")},
+                         "allowed": allowed,
                          "p_word": (sum(q for f, q in res if wd.get(f) and wd.get(fills[0]) and
                                         m.lemma(wd[f]) == m.lemma(wd[fills[0]])) if fills else 0.0)})
     print(f"del {k + 1} klar efter {time.time() - t0:.0f} s; {len(rows)} luckor", flush=True)

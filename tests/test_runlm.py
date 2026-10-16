@@ -116,6 +116,12 @@ def test_lost_runes_are_filled_from_the_language():
     combos, gaps, words = restore_all(m, ["þurir", "raisþi", "s??in", "þansi", "aft", "faþur", "s?n"])
     assert len(gaps) == 2 and combos[0][0] == ("ta", "i")
     assert max(words[0], key=words[0].get) == "stæin" and abs(sum(words[1].values()) - 1) < 1e-9
+    # what is visible of the lost runes limits the fillings: here only i/e and n/h are possible
+    res = restore(m, ["þurir", "raisþi", "s??in", "þansi", "aft", "faþur", "sin"], (2, 1, 3), allowed=["ie", "hn"])
+    assert {f[0] for f, _ in res} <= set("ie") and {f[1] for f, _ in res} <= set("hn")
+    # nothing visible of the first rune: it is unconstrained
+    res = restore(m, ["þurir", "raisþi", "s??in", "þansi", "aft", "faþur", "sin"], (2, 1, 3), allowed=[None, "a"])
+    assert res[0][0] == "ta" and all(f[1] == "a" for f, _ in res)
 
 
 def _parallel(signum, translit, norm, en):
