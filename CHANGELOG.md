@@ -42,6 +42,11 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   krävdes ett knapptryck. Väntan gör att en serie kodändringar inte startar en körning per ändring. Funktionen stängs
   av med `R_AUTORUN=0`.
 
+### Bild i hög upplösning från 3D-verktyget
+- En ny knapp i 3D-verktyget sparar den aktuella vyn som PNG i 2, 4 eller 8 gånger skärmens upplösning, högst 8192
+  bildpunkter på längden. Vinkel, ljusriktning, ljushöjd och kontrast blir desamma som på skärmen.
+- Bilden används för att läsa spår eller som figur. Meddelandet påminner om att ange vem som skannat stenen.
+
 ### Mjuka spår i panelen
 - I ett prov där vart femte spår är felläst gav hårda spår 44 % rätta helord. Det är sämre än utan spår (56 %), och av
   modellens "minst 95 % säkra" svar stämde bara 62 %. Med mjuka spår (`trace_eps` 0,05) blev det 73 % rätta helord och

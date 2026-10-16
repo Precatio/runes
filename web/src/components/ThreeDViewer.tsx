@@ -669,6 +669,10 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
   const [lightElevation, setLightElevation] = useState(45);
   const [lightUpAxis, setLightUpAxis] = useState<'z' | 'y'>('z');
   const [rakingMode, setRakingMode] = useState(false);
+  // High-resolution picture of the current view (light, contrast and angle as on screen)
+  const [snapCounterImg, setSnapCounterImg] = useState(0);
+  const [exportScale, setExportScale] = useState(4);
+  const [snapMessage, setSnapMessage] = useState<string | null>(null);
   const lightPosition = useMemo<[number, number, number]>(() => {
     const az = (lightAzimuth * Math.PI) / 180;
     const el = (lightElevation * Math.PI) / 180;
@@ -768,6 +772,14 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
                 </svg>
               </button>
 
+              <button type="button" onClick={() => { setSnapMessage("Renderar bilden …"); setSnapCounterImg(c => c + 1); }}
+                className="bg-white/90 backdrop-blur-md p-2 rounded-xl shadow-md border transition-all flex items-center justify-center text-slate-700 border-white/50 hover:text-[#b7410e] hover:bg-white"
+                title="Ladda ner vyn som bild i hög upplösning">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+              </button>
+
               <button type="button" onClick={() => { setResetCounter(c => c + 1); setMeshRotation([0, 0, 0]); }}
                 className="bg-white/90 backdrop-blur-md p-2 rounded-xl shadow-md border transition-all flex items-center justify-center text-slate-700 border-white/50 hover:text-[#b7410e] hover:bg-white"
                 title="Återställ vy">
@@ -816,6 +828,18 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
                       </button>
                     ))}
                   </div>
+                </div>
+                <div className="mb-4 border-b border-slate-200 pb-4">
+                  <div className="text-[10px] font-bold text-slate-500 uppercase mb-2">Bildens upplösning</div>
+                  <div className="flex gap-1 text-[10px] font-bold">
+                    {[2, 4, 8].map(k => (
+                      <button key={k} type="button" onClick={() => setExportScale(k)}
+                        className={`px-2 py-0.5 rounded ${exportScale === k ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600'}`}>
+                        {k}×
+                      </button>
+                    ))}
+                  </div>
+                  <p className="mt-1 text-[10px] text-slate-500 leading-snug">Gånger skärmens upplösning, högst 8192 bildpunkter på längden.</p>
                 </div>
                 <div>
                   <label className="flex justify-between text-[10px] font-bold text-slate-500 uppercase mb-2">
@@ -871,6 +895,11 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
             </div>
           </div>
 
+          {snapMessage && (
+            <div className="absolute bottom-14 right-3 z-10 max-w-sm bg-white/95 backdrop-blur-md px-3 py-2 rounded-xl text-[11px] font-semibold text-slate-700 border border-white/50 shadow-md">
+              {snapMessage}
+            </div>
+          )}
           <div className="absolute bottom-3 left-3 right-3 z-10 flex justify-end pointer-events-none">
             <div className="bg-white/85 backdrop-blur-md px-3 py-2 rounded-xl text-[11px] font-semibold text-slate-600 border border-white/50 leading-relaxed text-right">
               Dra: rotera · Högerdra: panorera · Scroll: zooma ·{" "}
@@ -893,6 +922,9 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
           <Suspense fallback={null}>
           {!rakingMode && <Environment preset="city" />}
           
+          <SnapshotTaker trigger={snapCounterImg} scale={exportScale} name={file?.name ?? 'vy'}
+            onDone={msg => { setSnapMessage(msg); window.setTimeout(() => setSnapMessage(null), 8000); }} />
+
           <CameraCapturer 
             trigger={topoCaptureTrigger} 
             onCapture={(dir) => setPlaneNormal(dir)} 
@@ -935,6 +967,41 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
   );
 }
 
+
+// Renders the current view again at `scale` times the screen's resolution (at most 8192 px on the long side) and saves
+// it as a PNG: the same angle, light and contrast as on screen, for reading traces or for a figure. The canvas is
+// copied the moment toBlob is called, so the normal size can be restored straight after.
+function SnapshotTaker({ trigger, scale, name, onDone }: { trigger: number; scale: number; name: string; onDone: (msg: string) => void }) {
+  const { gl, scene, camera, size } = useThree();
+  useEffect(() => {
+    if (!trigger) return;
+    const prev = gl.getPixelRatio();
+    const maxDim = Math.min(gl.capabilities.maxTextureSize || 8192, 8192);
+    const ratio = Math.min(prev * scale, maxDim / Math.max(size.width, size.height));
+    const base = name.replace(/\.[^.]+$/, '').replace(/[^\wåäöÅÄÖ.-]+/g, '_');
+    try {
+      gl.setPixelRatio(ratio);
+      gl.setSize(size.width, size.height, false);
+      gl.render(scene, camera);
+      const w = gl.domElement.width, h = gl.domElement.height;
+      gl.domElement.toBlob(blob => {
+        if (!blob) { onDone('Bilden kunde inte sparas (för stor för grafikkortet?). Prova en lägre upplösning.'); return; }
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `${base}_vy_${w}x${h}.png`;
+        a.click();
+        window.setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+        onDone(`Bilden sparades: ${w} × ${h} bildpunkter. Ange vem som skannat stenen när du använder bilden.`);
+      }, 'image/png');
+    } catch {
+      onDone('Bilden kunde inte sparas. Prova en lägre upplösning.');
+    } finally {
+      gl.setPixelRatio(prev);
+      gl.setSize(size.width, size.height, false);
+    }
+  }, [trigger]); // eslint-disable-line react-hooks/exhaustive-deps
+  return null;
+}
 
 function CameraCapturer({ trigger, onCapture }: { trigger: number, onCapture: (dir: THREE.Vector3) => void }) {
   const { camera } = useThree();
