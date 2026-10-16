@@ -17,7 +17,7 @@ from datetime import datetime, timezone
 from src import runlm as rl
 from src import rungloss as rg
 
-VERSION = "textmodel-2"
+VERSION = "textmodel-3"
 K = 5
 CACHE = os.path.join(rl.ROOT, "data", "cache", "textmodel", VERSION)
 MAX_GAP = 4  # longer runs of lost runes are left open: the masking test covers 1–4 runes
@@ -137,11 +137,31 @@ def _read(r, groups, breaks, b, allowed, base, d):
     m = b["model"]
     site = (float(r["lat"]), float(r["lon"])) if r.get("lat") is not None and r.get("lon") is not None else None
     every = [(gi, x.start(), x.end()) for gi, g in enumerate(groups) for x in re.finditer(r"\?+", g)]
-    fillable = [gp for gp in every if gp[2] - gp[1] <= MAX_GAP]
-    traces = {fillable[int(n)]: [s or None for s in v] for n, v in (allowed or {}).items()
-              if str(n).isdigit() and int(n) < len(fillable) and len(v) == fillable[int(n)][2] - fillable[int(n)][1]}
+    # runs of lost runes close together in one group (?a??bi?rn) are filled as one: the preserved runes between them
+    # are kept by constraining those places to themselves, so that the word is weighed as a whole. Filled one run
+    # at a time, each run would take the others' best filling as given and the word would look more certain than it is
+    runs = []
+    for gp in every:
+        if runs and runs[-1][0] == gp[0] and gp[1] - runs[-1][2] <= 3:
+            runs[-1] = (gp[0], runs[-1][1], gp[2])
+        else:
+            runs.append(gp)
+    lost = {sp: [i for i in range(sp[1], sp[2]) if groups[sp[0]][i] == "?"] for sp in runs}
+    fillable = [sp for sp in runs if len(lost[sp]) <= MAX_GAP]
+    work = list(groups)
+    for gi, a, e in fillable:
+        work[gi] = work[gi][:a] + "?" * (e - a) + work[gi][e:]
+    user = {fillable[int(n)]: v for n, v in (allowed or {}).items()
+            if str(n).isdigit() and int(n) < len(fillable) and len(v) == len(lost[fillable[int(n)]])}
+    traces = {}
+    for sp in fillable:
+        gi, a, e = sp
+        seen = dict(zip(lost[sp], user.get(sp, [None] * len(lost[sp]))))
+        cons = [seen[i] or None if i in seen else groups[gi][i] for i in range(a, e)]
+        if any(c is not None for c in cons):
+            traces[sp] = cons
     details: dict = {}
-    combos, gaps, words = (rl.restore_all(m, groups, signs=breaks, only=fillable, site=site, allowed=traces,
+    combos, gaps, words = (rl.restore_all(m, work, signs=breaks, only=fillable, site=site, allowed=traces,
                                           details=details, **FILL) if fillable else ([], [], {}))
     best = combos[0][0] if combos else ()
     filled = list(groups)
@@ -179,14 +199,16 @@ def _read(r, groups, breaks, b, allowed, base, d):
     out = {
         **base, "available": True, "computed_at": datetime.now(timezone.utc).isoformat(),
         "groups": groups, "reading": reading,
-        "gaps": [{"number": n, "group": gi, "start": a, "end": e, "carved": groups[gi], "n": e - a,
+        "gaps": [{"number": n, "group": gi, "start": a, "end": e, "carved": groups[gi], "n": len(lost[(gi, a, e)]),
+                  "lost": [i - a for i in lost[(gi, a, e)]],
                   "best": best[n] if n < len(best) else None,
                   "fills": [{"fill": f, "p": round(p, 4), "word": (w or "").lstrip("§") or None}
                             for f, p, w in details.get(n, [])[:8]],
                   "words": [{"word": w.lstrip("§"), "p": round(p, 4)} for w, p in list(words.get(n, {}).items())[:6]],
-                  "traces": traces.get((gi, a, e))}
+                  "traces": user.get((gi, a, e))}
                  for n, (gi, a, e) in enumerate(gaps)],
-        "open_gaps": [{"group": gi, "start": a, "end": e, "n": e - a} for gi, a, e in every if e - a > MAX_GAP],
+        "open_gaps": [{"group": gi, "start": a, "end": e, "n": len(lost[(gi, a, e)])} for gi, a, e in runs
+                      if (gi, a, e) not in fillable],
         "dating": {"epochs": [{"epoch": e, "label": EPOCH_LABEL[e], "p": round(dating[e], 4)} for e in rl.EPOCHS],
                    "calibrated": bool(d["T"]), "rundata": r.get("dating") or ""},
         "translation": {"sv": rg.swedish(vocab, b["en"], b["da"], b["ows"]), "en": b["en"].translate(vocab)},

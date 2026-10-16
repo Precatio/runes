@@ -858,6 +858,12 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     där ifyllningen redan är given.
   * **Längre luckor och förlorad text.** Luckor med fler än fyra förlorade runor och text som förlorats i okänd
     omfattning lämnas öppna.
+  * **Flera förlorade runor i samma ord.** Om det står högst tre bevarade runor mellan dem fylls de som en enda
+    lucka (`?a??bi?rn`), och de bevarade runorna däremellan låses till sig själva. Fylls de en i taget tar varje lucka
+    de andras bästa fyllning för given, och ordet ser säkrare ut än det är. På U 508 gav det *Gæiʀbjǫrn* 100 %;
+    fyllda tillsammans blir det *Fastbjǫrn* 50 % och *Gæiʀbjǫrn* 50 %. Maskeringsprovet döljer bara en sammanhängande
+    följd, så det har inte prövat detta. Rapporten över de verkliga luckorna (ovan) är räknad en lucka i taget och
+    är därför för säker där flera luckor sitter i samma ord.
 
 ## 9. Språkdrag (fonetisk stil och språkbruk)
 
