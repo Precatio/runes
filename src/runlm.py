@@ -1344,10 +1344,13 @@ def same_word(a, b):
     return difflib.SequenceMatcher(None, a, b).ratio() >= 0.8
 
 
-def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, area=None, **kw):
+def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, area=None, allowed=None, details=None,
+                **kw):
     """Fill several runs of lost runes in a text together. Each gap is first filled on its own, then again with the
     other gaps filled by their best candidates, for a couple of rounds; finally every combination of the best
     candidates of each gap is weighed by how probable the whole text is. only: the gaps to fill (others stay open).
+    allowed: {gap: what is visible of each of its lost runes} (see restore). details: a dict that receives, for each
+    gap index, its fillings [(filling, probability, word)] from the last round.
     Returns ([(fillings per gap, probability among the combinations, reading)], best first, gaps,
     {gap index: {word: probability over all its candidates, the other gaps filled}})."""
     gaps = [(gi, m_.start(), m_.end()) for gi, g in enumerate(groups) for m_ in re.finditer(r"\?+", g)]
@@ -1370,7 +1373,10 @@ def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, a
         for n, gp in enumerate(gaps):
             choice = [best[i] if (best[i] is not None and i != n) else "?" * (gaps[i][2] - gaps[i][1]) for i in range(len(gaps))]
             wd = {}
-            res = restore(model, fill(groups, choice), gp, signs=signs, ctx=ctx, area=area, words=wd, **kw)
+            res = restore(model, fill(groups, choice), gp, signs=signs, ctx=ctx, area=area, words=wd,
+                          allowed=(allowed or {}).get(gp), **kw)
+            if details is not None:
+                details[n] = [(f, p_, wd.get(f)) for f, p_ in res[:12]]
             if res:
                 options[n] = [f for f, _ in res[:top]]
                 best[n] = res[0][0]

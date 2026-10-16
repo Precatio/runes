@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { SOURCES, download, fileName, toCSV, toXLSX } from "@/lib/exportTable";
 import { GeologyBox, LanguageTraits } from "@/components/StoneContext";
+import TextModelPanel from "@/components/TextModelPanel";
 import { SIMILARITY_HELP, fmtP } from "@/lib/significance";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
@@ -164,6 +165,8 @@ function InscriptionDetail({ signum, meta }: { signum: string; meta: RundataMeta
         </div>
         <Attribution meta={meta} />
       </div>
+
+      {rec.period === "V" && <TextModelPanel signum={rec.signum} />}
 
       <div className="liquid-glass-island rounded-[32px] p-8 space-y-6">
         <div>

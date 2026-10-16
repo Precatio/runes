@@ -20,7 +20,14 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   - hela namn: 12 → 66 % rätt
 
   Med en blandning av inget, en tredjedel och hälften är siffrorna 77 % och 49 %.
-- Ristarens stavning (stavningsträdet ner till ristaren) och namnkrets (`carver`, `lam_carver`); provet pågår.
+- Ristarens stavning (stavningsträdet ner till ristaren) och namnkrets (`carver`, `lam_carver`): ingen mätbar vinst
+  på 270 stenar med känd ristare.
+
+### Läsning och luckor på inskriftssidan
+- Ny panel med sannolikhetsmodellens läsning ord för ord, förslag för förlorade runor och omräkning med de spår
+  användaren markerar. Panelen visar också datering ur språket och översättningsutkast på svenska och engelska.
+- En sten läses av en modell som inte har sett den (fem delar).
+- `src/textmodel.py`, `api/routers/textmodel.py`, `web/src/components/TextModelPanel.tsx`.
 
 ### Svenska översättningsutkast via danska
 - Översättningsutkasten (`src/rungloss.py`) kan gå via danska. Danske Runeindskrifter (runer.ku.dk) har danska

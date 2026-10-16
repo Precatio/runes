@@ -827,6 +827,37 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     Vinsten i ordföljd gäller samma ord och är inte påverkad av det. Någon svensk översättning att pröva mot finns
     inte i Rundatas data.
   * **Räckvidd.** Den danska ordlistan känner 65 % av orden på de svenska vikingatida stenarna, främst formelorden.
+* **Ifyllning med spår och ristare (2026-10-16):**
+  * **Spår.** `restore(allowed=…)` begränsar varje förlorad runa till de runor som dess synliga rester tillåter.
+    `scripts/rune_traces.py` räknar ut vilka runor som ser likadana ut i en bevarad halva eller tredjedel av runan:
+    runorna ritas med typsnittet Apple Symbols, en tolerans på 5 % av runhöjden används, och ett bevarat streck räknas
+    liksom en bevarad tom yta. I genomsnitt återstår 4,4 av 24 runor.
+  * **Simulerat prov.** Samma 1 616 luckor som i maskeringsprovet, jämförda sten för sten:
+    * halva runan synlig: hela ord 56 → 85 %, ord inne i luckor 72 → 84 %, hela namn 12 → 66 % (237 stenar bättre, 4 sämre)
+    * blandat (inget, en tredjedel eller hälften lika ofta): hela ord 77 %, namn 49 %
+    * spåren är rena typsnittsformer, så resultatet visar vad spåren är värda i bästa fall
+  * **Ristaren.** Prövad på de 270 provstenarna med en enda säker ristare (540 luckor): stavning ner till landskapet,
+    ristarens egen stavning och namnen i ristarens krets (`carver`, `lam_carver` 0,1). Ingen mätbar vinst: ord inne i
+    luckor 81,1 → 81,1 %, hela ord 62,2 → 62,2 %. Ristarens stavning dras starkt mot landskapets (α = 100), och
+    modellen har redan lärt sig ristarens övriga stenar.
+* **Verkliga luckor, slutkörning (2026-10-16, `scripts/runlm_gaps_report.py`):**
+  * **Omfattning.** 650 luckor som Rundatas utgivare har återställt. Inskrifter som Rundata inte tolkar alls är
+    borttagna.
+  * **Samma ord som Rundata.** 72 % räknat strikt och 79 % när samma ord i annan böjning eller normalisering räknas
+    lika (`same_word`). Där modellen säger minst 95 % är det samma ord i 96 % av fallen (399 luckor).
+  * **Facit.** Rundatas återställning av en runa som är förlorad på stenen är själv en utgivargissning, så måttet
+    jämför två bedömningar. Bara maskeringsprovet har ett verkligt facit.
+* **I appen (2026-10-16, `src/textmodel.py`, `/api/textmodel/`):**
+  * **Panelen.** Inskriftssidans panel "Läsning och luckor" visar modellens läsning, de förlorade runorna (1–4 i följd)
+    med förslag, dateringen ur språket (kalibrerad med temperaturen i `data/runlm_calibration.json`) och utkast på
+    svenska och engelska.
+  * **Ingen läcka.** En inskrift läses alltid av den av fem modeller som inte är tränad på den (delning efter signum,
+    crc32 mod 5), så att Rundatas återställning inte läcker in.
+  * **Spår från användaren.** Användaren kan markera vilka runor spåren i en lucka kan vara och få allt omräknat.
+  * **Procenten för ifyllda ord.** För ett ord med ifyllda runor visas hur sannolikt ordet är i luckan, inte i läsningen
+    där ifyllningen redan är given.
+  * **Längre luckor och förlorad text.** Luckor med fler än fyra förlorade runor och text som förlorats i okänd
+    omfattning lämnas öppna.
 
 ## 9. Språkdrag (fonetisk stil och språkbruk)
 

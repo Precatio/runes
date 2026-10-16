@@ -1,0 +1,5 @@
+{
+ "dating_temperature": 1.7490062499999994,
+ "n": 2046,
+ "note": "Temperatur för dateringen ur språket (src/runlm.fit_temperature), skattad på dateringsprovet scripts/runlm_dating.py, 2026-10-15, med epokernas andel som förhandschans."
+}
