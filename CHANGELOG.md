@@ -5,6 +5,11 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Ordklasser i ordföljden
+- Modellen lär sig ordklasser ur texterna själva och väger in vilken klass som brukar följa på vilken. Rätt ord i
+  maskeringsprovet steg något (inne i ord 72 → 73 procent, hela ord 56 → 57), luckprovet är oförändrat. Panelens
+  version är `textmodel-14`.
+
 ### Färdiga bibliotek som kontroll
 - Ordföljdens utjämning ger exakt samma sannolikheter som NLTK:s Kneser–Ney, och den valda rabatten var bäst av de
   prövade. Kalibreringen görs med scikit-learn (samma resultat som den egna koden). Namnbyggarens korta efterled är

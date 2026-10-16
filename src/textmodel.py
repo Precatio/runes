@@ -19,7 +19,7 @@ from datetime import datetime, timezone
 from src import runlm as rl
 from src import rungloss as rg
 
-VERSION = "textmodel-13"
+VERSION = "textmodel-14"
 K = 5
 CACHE = os.path.join(rl.ROOT, "data", "cache", "textmodel", VERSION)
 MAX_GAP = 4  # longer runs of lost runes are left open: the masking test covers 1–4 runes
@@ -27,10 +27,10 @@ MAX_GAP = 4  # longer runs of lost runes are left open: the masking test covers 
 # trace in five misread, whole words were 73 % right against 44 % with hard traces (scripts/runlm_restore_test.py).
 FILL = dict(window=None, char_fills=15, context_cands=True, n_cands=100, by_word=True, near_km=10.0, lam_near=0.1,
             trace_eps=0.05)
-MODEL = dict(aligned=True, lam_name=0.05, contexts=True, alpha=100.0, kappa_e=50.0, lm_beta=200.0)
+MODEL = dict(aligned=True, lam_name=0.05, contexts=True, alpha=100.0, kappa_e=50.0, lm_beta=200.0, lam_class=0.2)
 EPOCH_LABEL = {"800": "800-talet", "900": "900-talet", "1000": "1000–1070", "1100": "1070–1150"}
 # What the tests showed (METHODS.md 8.1), shown with the results so that a reader can judge them
-VALIDATION = {"inside_word": 0.72, "whole_word": 0.56, "sure_right": 0.93, "rundata_sure": 0.98,
+VALIDATION = {"inside_word": 0.73, "whole_word": 0.57, "sure_right": 0.94, "rundata_sure": 0.98,
               "with_traces": 0.81, "with_misread_traces": 0.73, "dating_epoch": 0.58, "dating_near": 0.93}
 
 _lock = threading.Lock()

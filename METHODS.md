@@ -912,11 +912,13 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     på inskrifter som modellen inte sett (57,5) jämfört med 0,5, 0,9 och modified Kneser–Ney (58,3). Den egna
     Newton-anpassningen av kalibreringen gav samma koefficienter som scikit-learn; isoton kalibrering per klass gav
     sämre Brier-poäng och log-förlust och används inte.
-  * **Ordklasser (prövas, avstängt).** Ordföljd efter ordklass, där klasserna lärs ur texterna (grannord, PPMI, SVD och
-    k-means med scikit-learn; `word_classes`, `lam_class`), sänkte perplexiteten från 47,3 till 45,3 med 200 klasser och
-    vikten 0,2. Klasserna blir rimliga (genitiverna *hans, hennaR, sina, þæiRa* i en klass), men *þa* är för sällsynt och
-    mångtydigt för att klassas rätt, så felet på Sö 280 kvarstår. Om klasserna används avgörs av luck- och
-    maskeringsprovet.
+  * **Ordklasser (2026-10-16, används).** Ordföljd efter ordklass, där klasserna lärs ur texterna (grannord, PPMI,
+    SVD och k-means med scikit-learn; `word_classes`), blandas med ordens bigram med vikten 0,2 och 200 klasser.
+    Perplexiteten på inskrifter som modellen inte sett sjönk från 47,3 till 45,3. Maskeringsprovet: rätt ord inne i
+    ord 72,3 → 73,0 procent (namn 49,1 → 51,4), hela ord 55,9 → 56,6. Luckprovet oförändrat (80,9 procent; 98,2
+    procent rätt vid minst 95). Klasserna blir rimliga (genitiverna *hans, hennaR, sina, þæiRa* i en klass), men *þa*
+    är för sällsynt och mångtydigt för att klassas rätt, så felet på Sö 280 kvarstår. Ord- och luckkalibreringen är
+    omskattade med klasserna (`textmodel-14`).
   * **Ordgränser (2026-10-16).** I en text utan skiljetecken väljer modellen själv var orden börjar, och den kan låna
     runor från ett ord den inte känner. På U Fv1971;212B tog den *ui* från *rahnui* (Ragnví) och fyllde *uis??i* till
     *Víseti* (97 %). Panelen läser därför om texten med utgivarnas ordgränser (mellanrummen i Rundatas translitterering)

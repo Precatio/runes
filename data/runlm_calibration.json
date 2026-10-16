@@ -4,12 +4,12 @@
  "note": "Temperatur för dateringen ur språket (src/runlm.fit_temperature), skattad på dateringsprovet scripts/runlm_dating.py, 2026-10-15, med epokernas andel som förhandschans.",
  "word_recal": {
   "B": [
-   -3.0922554688232724,
-   0.5424356032520631,
-   0.31584938343488317,
-   -0.2158010979008589,
-   1.2265464984899512,
-   0.041162760418842224
+   -3.269655269549514,
+   0.5546465717983554,
+   0.3371906751757064,
+   -0.11461419613034103,
+   1.2329234075528936,
+   0.035890176977003016
   ],
   "features": [
    "1",
@@ -20,10 +20,10 @@
    "max(log P(stavning | ord), -12)"
   ],
   "target": "samma ord som Rundata (key)",
-  "n_words": 10688,
+  "n_words": 10702,
   "n_inscriptions": 808,
-  "ece_raw": 0.08677866937900094,
-  "ece": 0.006155947704339112,
+  "ece_raw": 0.08890598828882647,
+  "ece": 0.005034562242807173,
   "config": {
    "aligned": true,
    "contexts": true,
@@ -35,19 +35,20 @@
    "lm_beta": 200.0,
    "levels": 5,
    "epoch_lm": 1,
-   "lam_name": 0.05
+   "lam_name": 0.05,
+   "lam_class": 0.2
   },
   "note": "Logistisk omräkning av ordens sannolikhet i läsningen (scripts/runlm_calibrate.py --write_recal, fem delar, 808 inskrifter med känt svar, 2026-10-16)."
  },
  "gap_recal": {
   "B": [
-   0.5522,
-   -0.5718,
-   0.0002,
-   0.8953,
-   0.6384,
-   0.5071,
-   -0.3108
+   0.6188,
+   -0.7939,
+   0.0848,
+   0.9065,
+   0.73,
+   0.4556,
+   -0.3417
   ],
   "top50": [
    "a",
@@ -101,50 +102,50 @@
    "þesi",
    "þorsten"
   ],
-  "n": 626,
-  "ece_raw": 0.029,
-  "ece_cv": 0.0124,
-  "brier_raw": 0.0874,
-  "brier_cv": 0.0844,
+  "n": 624,
+  "ece_raw": 0.0257,
+  "ece_cv": 0.0164,
+  "brier_raw": 0.0858,
+  "brier_cv": 0.081,
   "by_class": {
    "formelord": {
-    "n": 348,
-    "right": 0.954,
+    "n": 350,
+    "right": 0.957,
     "sure_raw": [
-     269,
+     273,
      0.989
     ],
     "sure_calibrated": [
-     271,
-     0.985
+     282,
+     0.986
     ]
    },
    "andra ord": {
-    "n": 88,
-    "right": 0.636,
+    "n": 89,
+    "right": 0.596,
     "sure_raw": [
-     35,
+     34,
      0.971
     ],
     "sure_calibrated": [
-     28,
+     27,
      1.0
     ]
    },
    "namn": {
-    "n": 190,
-    "right": 0.726,
+    "n": 185,
+    "right": 0.746,
     "sure_raw": [
-     87,
-     0.954
+     92,
+     0.957
     ],
     "sure_calibrated": [
-     56,
-     0.964
+     53,
+     0.962
     ]
    }
   },
-  "source": "utdata/runlm_forfining/namn2_alla.json",
+  "source": "utdata/runlm_forfining/klass_alla.json",
   "note": "Ordet i en lucka, kalibrerat per ordklass (scripts/runlm_gap_calibrate.py)."
  }
 }
