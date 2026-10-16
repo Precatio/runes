@@ -721,7 +721,8 @@ Källkod: `api/routers/phonetics.py`, `src/reading.py`.
 
 ### 8.1 Sannolikhetsmodell för runtext
 
-Källkod: `src/runlm.py`; prov: `scripts/runlm_calibrate.py`, `scripts/runlm_compare.py` och `scripts/runlm_dating.py`;
+Källkod: `src/runlm.py` och `src/rungloss.py`; prov: `scripts/runlm_calibrate.py`, `scripts/runlm_compare.py`,
+`scripts/runlm_dating.py`, `scripts/runlm_gloss_test.py` och `scripts/runlm_gloss_da_test.py`;
 tillämpning på Maltstenen: `scripts/malt_decode.py`.
 
 Modellen läser en inskrifts huggna grupper (runorna mellan stenens egna skiljetecken, utan Rundatas ordgränser)
@@ -789,6 +790,39 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
   motsvarar hur ofta dateringen stämmer.
 * **Provets facit underskattar modellen något:** Rundata normaliserar samma ord olika i olika delar av materialet
   (*ræisti*/*resþi*, *þænsi*/*þannsi*, *hialpi*/*hiælpi*); när modellen väljer den andra formen räknas det som fel.
+* **Översättningsutkast (2026-10-15, `src/rungloss.py`, prov `scripts/runlm_gloss_test.py`):**
+  * **Ordlistan.** Den lärs ur Rundatas normaliserade texter och deras engelska översättningar med IBM-modell 1 (EM
+    över vilka ord som står tillsammans i samma avsnitt och dess översättning, med ett tomt ord för engelska ord
+    utan motsvarighet). Någon tryckt ordbok används inte. Ett ord räknas som namn om Rundata citatmärker det i
+    minst hälften av beläggen. Utkastet är ord för ord.
+  * **Resultat** (femfaldigt prov på de 808 provstenarna, mätt med de betydelsebärande engelska orden): från
+    Rundatas normalisering är 81 % av utkastets ord med i Rundatas översättning, och utkastet får med 75 % av
+    översättningens ord. Hela vägen från de huggna runorna är siffrorna 75 % respektive 69 %. Unika texter som
+    Maltstenen översätts dåligt, eftersom deras ord saknas i ordlistan.
+* **Svenska via danska (2026-10-16, prov `scripts/runlm_gloss_da_test.py`):**
+  * **Källan.** Danske Runeindskrifter (runer.ku.dk, Nationalmuseet och Københavns Universitet) översätter de danska
+    inskrifterna till danska. Tabellen kopierades för hand (utdata/Malt/kallor/runer_ku/, används internt med
+    källangivelse). 596 översättningar paras med Rundata via Rundatas hänvisning till det danska numret (`load_danish`).
+  * **Den danska ordlistan.** Den lärs mot Rundatas fornvästnordiska standardformer (`normalization_ows`), eftersom
+    Rundata normaliserar danska och svenska stenar olika (*sten* resp. *stæin*, båda *stein*). En läsning förs över
+    till standardformerna med en tabell lärd ur Rundatas två normaliseringar (`ows_map`).
+  * **Vilket ord som går via danska.** Ett ord går den danska vägen när den danska ordlistan har sett det minst tre
+    gånger och ger det danska ordet minst 40 % sannolikhet, när det danska ordet finns i den handgranskade listan
+    `DA_SV`, och när den engelska ordlistan inte ger ett annat svenskt ord med högre sannolikhet. Namn tar den danska
+    formen i svensk stavning (Thorbjørn → Torbjörn) om den liknar det fornnordiska namnet. Övriga ord går som förut
+    via engelskan.
+  * **Ordföljd.** Possessiv och demonstrativ som fornspråket sätter efter substantivet flyttas före det (*faður sinn*
+    → *sin fader*, *stæin þennsi* → *denna sten*), med komma efter ett namn. Adjektiv flyttas på samma sätt (*drængʀ
+    goðr* → *god dräng*). Numerus rättas efter substantivet (*denna/dessa*).
+  * **Prov.** 215 vikingatida danska inskrifter, femfaldigt: ordlistorna lärs utan provdelen, och provdelen
+    översätts från Rundatas normalisering. Facit är den danska översättningen överförd till svenska ord för ord.
+  * **Resultat.** Andelen av utkastets betydelsebärande ord som finns i facit stiger från 41 % (via engelska) till
+    48 % (via danska), och utkastet får med 43 % av facits ord i stället för 37 %. Andelen intilliggande ordpar som
+    står så i facit stiger från 9 % till 25 % med enbart den svenska ordföljden och till 32 % med den danska vägen.
+  * **Förbehåll.** Facit och den danska vägen använder samma ordlista, så vinsten i ordval är något överskattad.
+    Vinsten i ordföljd gäller samma ord och är inte påverkad av det. Någon svensk översättning att pröva mot finns
+    inte i Rundatas data.
+  * **Räckvidd.** Den danska ordlistan känner 65 % av orden på de svenska vikingatida stenarna, främst formelorden.
 
 ## 9. Språkdrag (fonetisk stil och språkbruk)
 

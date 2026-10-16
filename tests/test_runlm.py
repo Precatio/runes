@@ -146,6 +146,34 @@ def test_the_glossary_learns_meanings_from_texts_and_their_translations():
     assert "asa" in g.names and g.translate(["asa", "sun"], "sv") == "Ása son"
 
 
+DA_ROWS = ["Thore rejste denne sten efter sin fader.", "Gunnar rejste stenen efter sin søn.",
+           "Åse rejste denne sten efter sin søn.", "Ulv rejste stenen efter sin broder.",
+           "Thore rejste stenen efter sin bror.", "Gunnar rejste stenen efter sin far."]
+
+
+def test_danish_translations_are_matched_learned_and_put_in_swedish(tmp_path):
+    from src.rungloss import Glossary, _danish, _sv_name, load_danish, ows_map, swedish
+    recs = [dict(r, references=f"DK nr.: T {i + 1}, http://runer.ku.dk", normalization_ows=r["normalization"])
+            for i, r in enumerate(PAR)]
+    table = tmp_path / "indskrifter.txt"
+    sep = " " * 8
+    table.write_text("\ufeff" + "\n".join(f"T {i + 1}{sep}runer{sep}{da}{sep}English" for i, da in enumerate(DA_ROWS))
+                     + f"\nT 99{sep}...{sep}Utolket.{sep}...\n", encoding="utf-8")
+    da_tr = load_danish(recs, str(table))
+    assert da_tr["P 1"] == DA_ROWS[0] and len(da_tr) == 6  # matched by 'DK nr.'; T 99 is neither in Rundata nor read
+    da = Glossary([dict(r, translation_da=da_tr[r["signum"]]) for r in recs], field="translation_da", words=_danish,
+                  src="normalization_ows")
+    # bror/broder and far/fader are counted as one word
+    assert da.gloss("faður")[0][0] == "fader" and da.gloss("broður")[0][0] == "broder" and da.gloss("sun")[0][0] == "søn"
+    assert ows_map(recs)["stæin"] == "stæin"
+    assert _sv_name("Thorbjørn") == "Torbjörn" and _sv_name("Svend") == "Sven" and _sv_name("Ødbjørn") == "Ödbjörn"
+    # Old Norse puts the possessive after the noun; Swedish before it, with a comma after a name
+    en = Glossary(PAR)
+    en.t["sinn"] = {"his": 1.0}  # in these six texts sinn always stands with ræisti, so its meaning is not learned
+    assert swedish(["asa", "sun", "sinn"], en) == "Ása, sin son"
+    assert swedish(["faður", "sinn"], en) == "sin fader"
+
+
 def test_names_from_nearby_stones():
     m = Model([dict(r, lat=59.0, lon=18.0) for r in PAR])
     near, spell = m.names_near(59.01, 18.01, km=5)

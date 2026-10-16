@@ -5,6 +5,20 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Svenska översättningsutkast via danska
+- Översättningsutkasten (`src/rungloss.py`) kan gå via danska. Danske Runeindskrifter (runer.ku.dk) har danska
+  översättningar av 596 inskrifter i Rundata. En andra ordlista lärs mellan dem och Rundatas fornvästnordiska
+  standardformer, och ord som den känner väl förs över till svenska med en handgranskad lista (`DA_SV`). Danskan
+  skiljer *lät resa* från *reste*, har *sina bröder* och nordiska namnformer (Torbjörn).
+- Svensk ordföljd: *sin fader*, *denna sten*, *god dräng* i stället för fornspråkets *fader sin*, *sten denna*,
+  *dräng god*.
+- Prov på 215 danska inskrifter (`scripts/runlm_gloss_da_test.py`):
+  - utkastets ord som stämmer med facit: 41 % → 48 %
+  - ordpar i rätt följd: 9 % → 32 %
+
+  Facit är den danska översättningen i svenska ord, vilket gynnar den danska vägen något (METHODS.md, avsnitt 8.1).
+- Den danska tabellen ligger lokalt och publiceras inte.
+
 ### Publicerade artiklar når webbplatsen igen
 - Analysmotorn startar git och Rscript med posix_spawn i stället för att kopiera sin egen process (`src/spawn.py`).
   I den långkörande motorn dog git och R med signal 11, så en publicerad artikel (Maltstenen, 15 oktober) skrevs
