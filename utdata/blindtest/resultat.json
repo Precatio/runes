@@ -1,0 +1,789 @@
+{
+ "sha": "16e6f19ca6c6d56a6aaabd69edf5f47c97880a9e",
+ "stones": [
+  "U 1043",
+  "Ög 229",
+  "U 1146",
+  "U 734",
+  "U 608",
+  "Vg 51",
+  "U 46",
+  "Sö 176",
+  "U 970",
+  "U 910",
+  "U 935",
+  "DR 282",
+  "Vs 9",
+  "Sm 121"
+ ],
+ "n": 21,
+ "interval": [
+  10,
+  18
+ ],
+ "right": 16,
+ "share": 0.7619,
+ "right_strikt": 16,
+ "share_strikt": 0.7619,
+ "mean_claimed": 0.8256,
+ "claimed95": {
+  "n": 13,
+  "right": 13
+ },
+ "within_interval": true,
+ "calibration_ok": true,
+ "rows": [
+  {
+   "sig": "U 1043",
+   "carved": "fa-ur",
+   "lost": 1,
+   "truth": "þ",
+   "fill": "þ",
+   "rune_ok": true,
+   "word": "faður",
+   "gold_word": "faður",
+   "word_ok": true,
+   "word_ok_strikt": true,
+   "p": 0.9999,
+   "p_model": 1.0,
+   "alts": [
+    [
+     "faður",
+     1.0
+    ],
+    [
+     "<unk>",
+     0.0
+    ],
+    [
+     "§farur",
+     0.0
+    ],
+    [
+     "fálur",
+     0.0
+    ],
+    [
+     "§favur",
+     0.0
+    ]
+   ]
+  },
+  {
+   "sig": "Ög 229",
+   "carved": "hiul-i",
+   "lost": 1,
+   "truth": "b",
+   "fill": "b",
+   "rune_ok": true,
+   "word": "hialpi",
+   "gold_word": "hialpi",
+   "word_ok": true,
+   "word_ok_strikt": true,
+   "p": 0.9999,
+   "p_model": 1.0,
+   "alts": [
+    [
+     "hialpi",
+     1.0
+    ],
+    [
+     "<unk>",
+     0.0
+    ],
+    [
+     "hjóls",
+     0.0
+    ],
+    [
+     "liði",
+     0.0
+    ],
+    [
+     "le",
+     0.0
+    ]
+   ]
+  },
+  {
+   "sig": "U 1146",
+   "carved": "s-aka",
+   "lost": 1,
+   "truth": "b",
+   "fill": "b",
+   "rune_ok": true,
+   "word": "spaka",
+   "gold_word": "malspaka",
+   "word_ok": false,
+   "word_ok_strikt": false,
+   "p": 0.4193,
+   "p_model": 0.7236,
+   "alts": [
+    [
+     "spaka",
+     0.724
+    ],
+    [
+     "skakka",
+     0.234
+    ],
+    [
+     "slaka",
+     0.041
+    ],
+    [
+     "§staka",
+     0.001
+    ],
+    [
+     "§svakka",
+     0.0
+    ]
+   ]
+  },
+  {
+   "sig": "U 1146",
+   "carved": "suan-bu",
+   "lost": 1,
+   "truth": "o",
+   "fill": "s",
+   "rune_ok": false,
+   "word": "swens",
+   "gold_word": "svanaby",
+   "word_ok": false,
+   "word_ok_strikt": false,
+   "p": 0.1402,
+   "p_model": 0.2696,
+   "alts": [
+    [
+     "swens",
+     0.27
+    ],
+    [
+     "sweni",
+     0.256
+    ],
+    [
+     "svana",
+     0.156
+    ],
+    [
+     "§svand",
+     0.143
+    ],
+    [
+     "svæinu",
+     0.077
+    ]
+   ]
+  },
+  {
+   "sig": "U 734",
+   "carved": "lisu--",
+   "lost": 2,
+   "truth": "al",
+   "fill": "in",
+   "rune_ok": false,
+   "word": "svæinn",
+   "gold_word": "liðsvaldr",
+   "word_ok": false,
+   "word_ok_strikt": false,
+   "p": 0.141,
+   "p_model": 0.1675,
+   "alts": [
+    [
+     "sonr",
+     0.244
+    ],
+    [
+     "svæinn",
+     0.167
+    ],
+    [
+     "suni",
+     0.15
+    ],
+    [
+     "hléseyju",
+     0.125
+    ],
+    [
+     "øpiR",
+     0.049
+    ]
+   ]
+  },
+  {
+   "sig": "U 734",
+   "carved": "-isti",
+   "lost": 1,
+   "truth": "r",
+   "fill": "r",
+   "rune_ok": true,
+   "word": "reisti",
+   "gold_word": "risti",
+   "word_ok": true,
+   "word_ok_strikt": true,
+   "p": 0.9855,
+   "p_model": 0.9978,
+   "alts": [
+    [
+     "reisti",
+     0.998
+    ],
+    [
+     "viseti",
+     0.002
+    ],
+    [
+     "§æisti",
+     0.0
+    ],
+    [
+     "hesti",
+     0.0
+    ],
+    [
+     "gesti",
+     0.0
+    ]
+   ]
+  },
+  {
+   "sig": "U 608",
+   "carved": "-ruþr",
+   "lost": 1,
+   "truth": "b",
+   "fill": "b",
+   "rune_ok": true,
+   "word": "brøðr",
+   "gold_word": "brøðr",
+   "word_ok": true,
+   "word_ok_strikt": true,
+   "p": 0.9988,
+   "p_model": 0.9999,
+   "alts": [
+    [
+     "brøðr",
+     1.0
+    ],
+    [
+     "hærrøðr",
+     0.0
+    ],
+    [
+     "þæiRa",
+     0.0
+    ],
+    [
+     "fróðr",
+     0.0
+    ],
+    [
+     "§hroðr",
+     0.0
+    ]
+   ]
+  },
+  {
+   "sig": "U 608",
+   "carved": "stain-",
+   "lost": 1,
+   "truth": "o",
+   "fill": "a",
+   "rune_ok": false,
+   "word": "stæina",
+   "gold_word": "stæina",
+   "word_ok": true,
+   "word_ok_strikt": true,
+   "p": 0.8856,
+   "p_model": 0.9613,
+   "alts": [
+    [
+     "stæina",
+     0.961
+    ],
+    [
+     "í",
+     0.022
+    ],
+    [
+     "er",
+     0.007
+    ],
+    [
+     "at",
+     0.005
+    ],
+    [
+     "u",
+     0.001
+    ]
+   ]
+  },
+  {
+   "sig": "Vg 51",
+   "carved": "--afR",
+   "lost": 2,
+   "truth": "ul",
+   "fill": "ol",
+   "rune_ok": false,
+   "word": "olafR",
+   "gold_word": "olafR",
+   "word_ok": true,
+   "word_ok_strikt": true,
+   "p": 0.7691,
+   "p_model": 0.9763,
+   "alts": [
+    [
+     "olafR",
+     0.976
+    ],
+    [
+     "æilafR",
+     0.017
+    ],
+    [
+     "honæfR",
+     0.003
+    ],
+    [
+     "§swafR",
+     0.002
+    ],
+    [
+     "§siafR",
+     0.001
+    ]
+   ]
+  },
+  {
+   "sig": "U 46",
+   "carved": "hulmk-iR",
+   "lost": 1,
+   "truth": "a",
+   "fill": "a",
+   "rune_ok": true,
+   "word": "holmgæiRR",
+   "gold_word": "holmgæiRR",
+   "word_ok": true,
+   "word_ok_strikt": true,
+   "p": 0.99,
+   "p_model": 0.9998,
+   "alts": [
+    [
+     "holmgæiRR",
+     1.0
+    ],
+    [
+     "§holmgæiRiR",
+     0.0
+    ],
+    [
+     "§holmkeliR",
+     0.0
+    ],
+    [
+     "þæiR",
+     0.0
+    ],
+    [
+     "<unk>",
+     0.0
+    ]
+   ]
+  },
+  {
+   "sig": "U 46",
+   "carved": "st-in",
+   "lost": 1,
+   "truth": "a",
+   "fill": "a",
+   "rune_ok": true,
+   "word": "stæin",
+   "gold_word": "stæin",
+   "word_ok": true,
+   "word_ok_strikt": true,
+   "p": 0.9946,
+   "p_model": 0.9996,
+   "alts": [
+    [
+     "stæin",
+     1.0
+    ],
+    [
+     "steinn",
+     0.0
+    ],
+    [
+     "§styæinn",
+     0.0
+    ],
+    [
+     "§stðin",
+     0.0
+    ],
+    [
+     "§stfinn",
+     0.0
+    ]
+   ]
+  },
+  {
+   "sig": "Sö 176",
+   "carved": "bas-",
+   "lost": 1,
+   "truth": "t",
+   "fill": "i",
+   "rune_ok": false,
+   "word": "basi",
+   "gold_word": "bæzt",
+   "word_ok": false,
+   "word_ok_strikt": false,
+   "p": 0.3061,
+   "p_model": 0.5846,
+   "alts": [
+    [
+     "basi",
+     0.585
+    ],
+    [
+     "bæzt",
+     0.383
+    ],
+    [
+     "§basr",
+     0.018
+    ],
+    [
+     "§basa",
+     0.009
+    ],
+    [
+     "§bass",
+     0.004
+    ]
+   ]
+  },
+  {
+   "sig": "U 970",
+   "carved": "ef--R",
+   "lost": 2,
+   "truth": "ti",
+   "fill": "ti",
+   "rune_ok": true,
+   "word": "æftiR",
+   "gold_word": "æftiR",
+   "word_ok": true,
+   "word_ok_strikt": true,
+   "p": 0.9995,
+   "p_model": 1.0,
+   "alts": [
+    [
+     "æftiR",
+     1.0
+    ],
+    [
+     "<unk>",
+     0.0
+    ],
+    [
+     "hefðir",
+     0.0
+    ],
+    [
+     "efstr",
+     0.0
+    ],
+    [
+     "yfiR",
+     0.0
+    ]
+   ]
+  },
+  {
+   "sig": "U 910",
+   "carved": "li-u",
+   "lost": 1,
+   "truth": "t",
+   "fill": "t",
+   "rune_ok": true,
+   "word": "letu",
+   "gold_word": "letu",
+   "word_ok": true,
+   "word_ok_strikt": true,
+   "p": 0.9992,
+   "p_model": 1.0,
+   "alts": [
+    [
+     "letu",
+     1.0
+    ],
+    [
+     "liku",
+     0.0
+    ],
+    [
+     "liðu",
+     0.0
+    ],
+    [
+     "§linu",
+     0.0
+    ],
+    [
+     "§lippu",
+     0.0
+    ]
+   ]
+  },
+  {
+   "sig": "U 910",
+   "carved": "f--ur",
+   "lost": 2,
+   "truth": "aþ",
+   "fill": "aþ",
+   "rune_ok": true,
+   "word": "faður",
+   "gold_word": "faður",
+   "word_ok": true,
+   "word_ok_strikt": true,
+   "p": 0.9997,
+   "p_model": 1.0,
+   "alts": [
+    [
+     "faður",
+     1.0
+    ],
+    [
+     "freyr",
+     0.0
+    ],
+    [
+     "§fiaur",
+     0.0
+    ],
+    [
+     "§fotur",
+     0.0
+    ],
+    [
+     "§finnur",
+     0.0
+    ]
+   ]
+  },
+  {
+   "sig": "U 935",
+   "carved": "þ-agn",
+   "lost": 1,
+   "truth": "i",
+   "fill": "i",
+   "rune_ok": true,
+   "word": "þiagn",
+   "gold_word": "þiagn",
+   "word_ok": true,
+   "word_ok_strikt": true,
+   "p": 0.9988,
+   "p_model": 1.0,
+   "alts": [
+    [
+     "þiagn",
+     1.0
+    ],
+    [
+     "<unk>",
+     0.0
+    ],
+    [
+     "þú",
+     0.0
+    ],
+    [
+     "þegn",
+     0.0
+    ]
+   ]
+  },
+  {
+   "sig": "DR 282",
+   "carved": "af-iR",
+   "lost": 1,
+   "truth": "t",
+   "fill": "t",
+   "rune_ok": true,
+   "word": "æftiR",
+   "gold_word": "æftiR",
+   "word_ok": true,
+   "word_ok_strikt": true,
+   "p": 0.9998,
+   "p_model": 1.0,
+   "alts": [
+    [
+     "æftiR",
+     1.0
+    ],
+    [
+     "<unk>",
+     0.0
+    ],
+    [
+     "með",
+     0.0
+    ],
+    [
+     "seR",
+     0.0
+    ],
+    [
+     "viR",
+     0.0
+    ]
+   ]
+  },
+  {
+   "sig": "DR 282",
+   "carved": "han-aR",
+   "lost": 1,
+   "truth": "t",
+   "fill": "t",
+   "rune_ok": true,
+   "word": "handaR",
+   "gold_word": "handaR",
+   "word_ok": true,
+   "word_ok_strikt": true,
+   "p": 0.9463,
+   "p_model": 0.9971,
+   "alts": [
+    [
+     "handaR",
+     0.997
+    ],
+    [
+     "vaR",
+     0.003
+    ],
+    [
+     "eR",
+     0.0
+    ],
+    [
+     "<unk>",
+     0.0
+    ],
+    [
+     "þaR",
+     0.0
+    ]
+   ]
+  },
+  {
+   "sig": "Vs 9",
+   "carved": "ua--",
+   "lost": 2,
+   "truth": "rþ",
+   "fill": "rþ",
+   "rune_ok": true,
+   "word": "varð",
+   "gold_word": "varð",
+   "word_ok": true,
+   "word_ok_strikt": true,
+   "p": 0.993,
+   "p_model": 0.9999,
+   "alts": [
+    [
+     "varð",
+     1.0
+    ],
+    [
+     "var",
+     0.0
+    ],
+    [
+     "vaRu",
+     0.0
+    ],
+    [
+     "vas",
+     0.0
+    ],
+    [
+     "vari",
+     0.0
+    ]
+   ]
+  },
+  {
+   "sig": "Sm 121",
+   "carved": "-usi",
+   "lost": 1,
+   "truth": "þ",
+   "fill": "þ",
+   "rune_ok": true,
+   "word": "þausi",
+   "gold_word": "þausi",
+   "word_ok": true,
+   "word_ok_strikt": true,
+   "p": 0.999,
+   "p_model": 1.0,
+   "alts": [
+    [
+     "þausi",
+     1.0
+    ],
+    [
+     "susi",
+     0.0
+    ],
+    [
+     "bosi",
+     0.0
+    ],
+    [
+     "húsi",
+     0.0
+    ],
+    [
+     "§gusi",
+     0.0
+    ]
+   ]
+  },
+  {
+   "sig": "Sm 121",
+   "carved": "---ur",
+   "lost": 3,
+   "truth": "muþ",
+   "fill": "faþ",
+   "rune_ok": false,
+   "word": "faður",
+   "gold_word": "moðurbroður",
+   "word_ok": false,
+   "word_ok_strikt": false,
+   "p": 0.7726,
+   "p_model": 0.9246,
+   "alts": [
+    [
+     "faður",
+     0.925
+    ],
+    [
+     "gunnur",
+     0.024
+    ],
+    [
+     "<unk>",
+     0.021
+    ],
+    [
+     "maþur",
+     0.018
+    ],
+    [
+     "maguR",
+     0.003
+    ]
+   ]
+  }
+ ]
+}
