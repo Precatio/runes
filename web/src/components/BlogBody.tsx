@@ -137,9 +137,9 @@ function Picture({ alt, src, caption }: { alt: string; src: string; caption: str
   const ok = safeSrc(src);
   if (!ok) return null;
   return (
-    <figure className="my-2">
+    <figure className="mt-2 mb-9">
       <ZoomImage src={ok} alt={alt} className="w-full max-h-[520px] object-contain rounded-xl bg-slate-100" />
-      {caption && <figcaption className="mt-2 text-sm leading-snug text-slate-500">{inline(caption)}</figcaption>}
+      {caption && <figcaption className="mt-2.5 text-sm leading-snug text-slate-500">{inline(caption)}</figcaption>}
     </figure>
   );
 }
@@ -176,7 +176,7 @@ function Chart({ title, text }: { title: string; text: string }) {
   const top = Math.ceil(max / 10) * 10;
   const pct = (v: number) => `${String(Math.round(v * 10) / 10).replace(".", ",")} %`;
   return (
-    <figure className="my-2 rounded-xl border border-slate-900/10 bg-white px-5 py-4">
+    <figure className="mt-2 mb-7 rounded-xl border border-slate-900/10 bg-white px-5 py-4">
       {title && <figcaption className="text-[15px] font-semibold text-slate-900">{inline(title)}</figcaption>}
       <div className="mt-3 space-y-4">
         {groups.map((g, gi) => (
