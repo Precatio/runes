@@ -958,6 +958,17 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     procentenheter, och minst 95 procent stämde i 93. För hela ord i det provet är modellen fortfarande för säker (12
     procentenheter), men sådana luckor fylls nästan aldrig rätt utan spår. `VALIDATION` räknas sedan textmodel-15 på
     runstenar (`utdata/runlm_forfining/validering_tm15.py`).
+  * **Alternativens procent (2026-10-17, `textmodel-16`).** Bara luckans förstaval kalibreras. Förut delades det som
+    förstavalet förlorade ut på alternativen i proportion, aldrig över förstavalet. På de dokumenterade luckorna, med
+    alla förslag sparade, gav det alternativen sammanlagt 57 väntade rätt där 41 var rätt, och ett starkt alternativ
+    blev lika stort som förstavalet (Sö 206 med ett tänkt þ-spår: *roðnir* och *Hrungnir* 43,5 procent var). Nu får
+    ett alternativ högst sin egen sannolikhet: 44 väntade mot 41 rätt, lägst Brier-poäng och log-förlust av fyra
+    prövade regler (`utdata/runlm_forfining/alt_kalib.py`). Det som inget ord får lämnas öppet, och orden visas i
+    ordning efter sin kalibrerade procent. Ett alternativ kan då hamna över förstavalet när förstavalet är ett ord av
+    en klass där modellen ofta har fel. I de 53 sådana luckorna hade förstavalet rätt i 8 procent och alternativet i
+    30. Att också välja ordet efter den kalibrerade procenten gav korsvaliderat 69,3 → 73,6 procent rätt ord på de
+    dokumenterade luckorna, men 85,4 → 84,3 på utgivarnas. Det kräver att läsningens fyllning följer det valda ordet
+    och är inte infört ännu.
   * **Böjning är en liten del av felen (2026-10-17).** Av de ord som modellen läste med rätt ordgräns men i annan form
     än utgivarna (112 av 1 693 i en femtedel av läsprovet) var alla normaliseringsvarianter i Rundata (*sin/sinn*,
     *stæin/sten*, *ræisþi/resþi*). Verkliga kasusfel, mest namn i nominativ i stället för ackusativ, var omkring 19,
