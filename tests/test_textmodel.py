@@ -66,3 +66,15 @@ def test_names_with_restored_runes_are_names():
     k = lambda w: textmodel.rl.key(textmodel.rl.normtok(w))  # noqa: E731
     names = textmodel.name_keys(recs)
     assert k("alfdis") in names and k("karl") in names and k("stæin") not in names
+
+
+def test_the_words_of_a_gap_are_calibrated_together_and_names_keep_their_order():
+    from src.textmodel import calibrate_words
+    # theta: class constants (formula, other, name, composed), slopes, none (c, lost, whole, log(1 − max p), masked,
+    # documented), first-choice constants; the first choice is penalized, more for names than for formula words
+    theta = [0.8, 0.0, 0.1, -0.4, 0.9, 1.1, 0.8, 0.6, -0.5, 0.2, 0.0, 0.6, 0.0, 0.7, -0.5, -0.7, -0.2, -1.3]
+    from src.runlm import key
+    GL = (theta, 4, 6, {key("stæinn")}, {key("guðlaug"), key("gislaug")})
+    cd = calibrate_words({"guðlaug": 0.41, "gislaug": 0.29, "karl": 0.09}, 3, GL)
+    assert sum(cd.values()) < 1 and cd["guðlaug"] > cd["gislaug"] > 0
+    assert calibrate_words({}, 2, GL) == {} and calibrate_words({"x": 0.5}, 2, None) == {"x": 0.5}

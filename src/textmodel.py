@@ -19,7 +19,7 @@ from datetime import datetime, timezone
 from src import runlm as rl
 from src import rungloss as rg
 
-VERSION = "textmodel-16"
+VERSION = "textmodel-17"
 K = 5
 CACHE = os.path.join(rl.ROOT, "data", "cache", "textmodel", VERSION)
 CACHE_LOO = CACHE + "-loo"  # readings with the leave-one-out model
@@ -62,9 +62,13 @@ def _records() -> dict:
                      da=rg.load_danish(recs), edda=rl.edda_tokens(),
                      T=json.load(open(cal))["dating_temperature"] if os.path.exists(cal) else None,
                      B=(json.load(open(cal)).get("word_recal") or {}).get("B") if os.path.exists(cal) else None,
-                     G=(json.load(open(cal)).get("gap_recal") or None) if os.path.exists(cal) else None)
+                     G=(json.load(open(cal)).get("gap_recal") or None) if os.path.exists(cal) else None,
+                     GL=(json.load(open(cal)).get("gap_list") or None) if os.path.exists(cal) else None)
         if _data["G"]:
             _data["G"] = (_data["G"]["B"], set(_data["G"]["top50"]), name_keys(recs))
+        if _data["GL"]:
+            _data["GL"] = (_data["GL"]["theta"], _data["GL"]["classes"], _data["GL"]["kmax"], set(_data["GL"]["top50"]),
+                           name_keys(recs))
         # names on nearby stones come from the whole corpus (the stone itself left out), not only from the stones the
         # stone's model learned from: a companion stone in the same held-out part is no leak about this one
         _data["sites"] = rl.name_sites(_data["V"])
@@ -153,6 +157,32 @@ def calibrate_gap(p: float, word: str, n_lost: int, G, whole: bool = False) -> f
     oh = [1.0 if cls == k else 0.0 for k in range(K)]
     x = oh + [o * math.log(q / (1 - q)) for o in oh] + [math.log(max(1, n_lost))] + ([1.0 if whole else 0.0] if has_whole else [])
     return 1 / (1 + math.exp(-sum(c * v for c, v in zip(B, x))))
+
+
+def calibrate_words(dist: dict, n_lost: int, GL, whole: bool = False) -> dict:
+    """All the words of a gap calibrated together (data/runlm_calibration.json, gap_list; scripts/runlm_list_calibrate.py):
+    each of the gap's kmax most probable words gets u = a_class + b_class · log p (+ r_class for the first choice, whose
+    probability is too high because it was chosen for being the highest), "none of them" gets
+    u0 = c + d · log(lost runes) + e · whole word + f · log(1 − largest p) + the documented gaps' constant, and the
+    probabilities are a softmax over the words and "none". What "none" gets is left unassigned; words beyond the kmax
+    get 0."""
+    if not GL or not dist:
+        return dist
+    theta, K, kmax, top, names = GL
+    items = [(w, p) for w, p in sorted(dist.items(), key=lambda kv: -kv[1]) if w != "<unk>" and p > 0][:kmax]
+    if not items:
+        return dist
+    a, b, c, r = theta[:K], theta[K:2 * K], theta[2 * K:2 * K + 6], theta[2 * K + 6:]
+    cl = [gap_class(w, top, names, composed=True) for w, _ in items]
+    us = [a[k] + b[k] * math.log(p) + (r[k] if i == 0 else 0.0) for i, ((w, p), k) in enumerate(zip(items, cl))]
+    z = [1.0, math.log(max(1, n_lost)), 1.0 if whole else 0.0, math.log(max(1 - items[0][1], 1e-6)), 0.0, 1.0]
+    u0 = sum(ci * zi for ci, zi in zip(c, z))
+    mx = max(us + [u0])
+    ex = [math.exp(u - mx) for u in us]
+    tot = sum(ex) + math.exp(u0 - mx)
+    out = {w: 0.0 for w in dist}
+    out.update({w: e / tot for (w, _), e in zip(items, ex)})
+    return out
 
 
 def text_groups(translit: str, words: bool = False) -> tuple[list[str], list[int]]:
@@ -296,7 +326,24 @@ def _read(r, groups, breaks, b, allowed, base, d, trace_at=None, alt=True):
     dr = rl.stone_divider_rate(m, work, breaks) if OWN_D else None
     combos, gaps, words = (rl.restore_all(m, work, signs=breaks, only=fillable, site=site, allowed=traces, details=details,
                                           positions=positions, hard=hard, near_sites=near, div_rate=dr, **FILL) if fillable else ([], [], {}))
-    best = combos[0][0] if combos else ()
+    best = list(combos[0][0]) if combos else []
+    if d.get("GL"):
+        # the word with the highest calibrated probability is the gap's choice (textmodel-17): on the documented gaps the
+        # model's own first choice was often a name it had composed where a formula word was right; the filling follows
+        # the chosen word. Gaps whose filling covers two words (merge_runs) keep the model's choice.
+        for n, (gi, a, e) in enumerate(gaps):
+            wd = words.get(n) or {}
+            if not wd or (positions.get(n) and len({max(p_, key=p_.get) for p_ in positions[n] if p_}) > 1):
+                continue
+            whole_pre = a == 0 and e == len(work[gi])
+            cd = calibrate_words(wd, len(lost[(gi, a, e)]), d["GL"], whole_pre)
+            w_star = max(cd, key=cd.get)
+            if w_star == max(wd, key=wd.get) or cd[w_star] <= 0:
+                continue
+            lm = m.lemma(w_star)
+            fits = [(p_, f_) for f_, p_, w_ in details.get(n, []) if w_ and w_ != "<unk>" and m.lemma(w_) == lm]
+            if fits:
+                best[n] = max(fits)[1]
     filled = list(groups)
     for (gi, a, e), f in sorted(zip(gaps, best), key=lambda x: (-x[0][0], -x[0][1])):
         filled[gi] = filled[gi][:a] + f + filled[gi][e:]
@@ -320,6 +367,11 @@ def _read(r, groups, breaks, b, allowed, base, d, trace_at=None, alt=True):
     whole = [any(a_ <= i and j <= e_ for i, j, _, _ in read if i < e_ and a_ < j) for a_, e_ in spans]
 
     def cal_dist(dist, k, whole=False):
+        if d.get("GL"):
+            return calibrate_words(dist, k, d["GL"], whole)
+        return cal_dist16(dist, k, whole)
+
+    def cal_dist16(dist, k, whole=False):
         """The words of a gap with the model's first choice calibrated by its class (scripts/runlm_gap_calibrate.py) and
         the others at most at their own probability: scaled down when the first choice gains, never up when it loses;
         what is not given to any word is left unassigned. On the documented gaps (utdata/runlm_forfining/alt_kalib.py)

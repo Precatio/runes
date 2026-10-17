@@ -94,6 +94,20 @@ HALVES = ["övre halvan", "nedre halvan", "vänster om staven", "höger om stave
 THIRDS = ["övre tredjedelen", "mellersta tredjedelen", "nedre tredjedelen"]
 
 
+def words_of(res, wd, gword, k=6):
+    """[(word, probability, right)] for the k most probable words of a gap, summed over their fillings by lemma."""
+    tot, show = {}, {}
+    for f, q in res:
+        w = wd.get(f)
+        if not w or w == "<unk>":
+            continue
+        lm = m.lemma(w)
+        tot[lm] = tot.get(lm, 0.0) + q
+        show.setdefault(lm, w)
+    gl = m.lemma(normtok(gword))
+    return [(show[lm], round(p, 6), lm == gl) for lm, p in sorted(tot.items(), key=lambda kv: -kv[1])[:k]]
+
+
 def trace(runes):
     """For each hidden rune the runes that its simulated visible remains allow (None: nothing visible)."""
     out = []
@@ -183,7 +197,9 @@ for k in folds:
                          "carver_kind": next((c["kind"] for c in (r.get("carvers") or [])
                                               if isinstance(c, dict) and c.get("name") == carver), None),
                          "p_word": (sum(q for f, q in res if wd.get(f) and wd.get(fills[0]) and
-                                        m.lemma(wd[f]) == m.lemma(wd[fills[0]])) if fills else 0.0)})
+                                        m.lemma(wd[f]) == m.lemma(wd[fills[0]])) if fills else 0.0),
+                         # the gap's words over all its fillings (by lemma), best first, and whether each is the hidden word
+                         "words": words_of(res, wd, gword)})
     print(f"del {k + 1} klar efter {time.time() - t0:.0f} s; {len(rows)} luckor", flush=True)
 
 out = {"n": len(rows)}
