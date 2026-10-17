@@ -33,14 +33,15 @@ FILL = dict(window=None, char_fills=15, context_cands=True, n_cands=100, by_word
             trace_eps=0.05)
 MODEL = dict(aligned=True, lam_name=0.05, contexts=True, alpha=100.0, kappa_e=50.0, lm_beta=200.0, lam_class=0.2)
 EPOCH_LABEL = {"800": "800-talet", "900": "900-talet", "1000": "1000–1070", "1100": "1070–1150"}
-# What the tests showed (METHODS.md 8.1), shown with the results so that a reader can judge them. Runestones
-# (utdata/runlm_forfining/validering_tm15.py): the masking test (inside a word 698 gaps, whole words 698; at least 95 %
-# calibrated: 344 gaps), the editors' restored gaps (255 at ≥ 95 %, 254 the editors' word), the documented gaps (361;
-# 155 at ≥ 95 %, cross-validated), the dating test (1 670 runestones) and the masking test with simulated traces, half
-# of each hidden rune visible (whole words; one trace in five misread for with_misread_traces).
-VALIDATION = {"inside_word": 0.758, "whole_word": 0.597, "sure_right": 0.959, "rundata_sure": 0.996,
+# What the tests showed (METHODS.md 8.1), shown with the results so that a reader can judge them. Runestones, with the
+# calibrated choice of textmodel-17 (scripts/runlm_list_calibrate.py, cross-validated with whole stones held out):
+# the masking test (inside a word 696 gaps, whole words 698; at least 95 %: 391 gaps), the editors' restored gaps
+# (284 at ≥ 95 %), the documented gaps end to end (361; 166 at ≥ 95 %; scripts/runlm_documented_test.py, dok5),
+# the dating test (1 670 runestones) and the masking test with simulated traces, half of each hidden rune visible
+# (whole words; one trace in five misread for with_misread_traces).
+VALIDATION = {"inside_word": 0.757, "whole_word": 0.597, "sure_right": 0.959, "rundata_sure": 0.993,
               "with_traces": 0.842, "with_misread_traces": 0.769, "dating_epoch": 0.585, "dating_near": 0.948,
-              "documented_right": 0.67, "documented_sure": 0.987}
+              "documented_right": 0.687, "documented_sure": 0.98}
 
 _lock = threading.Lock()
 _compute = threading.Lock()  # one reading at a time: the models' caches are shared
