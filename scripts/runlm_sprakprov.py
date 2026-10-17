@@ -49,8 +49,11 @@ MIN_RUNES = 10
 
 
 def segments(translit: str) -> list[str]:
-    """The readable runs of runes: dividers removed, lost or unread signs as breaks."""
-    t = re.sub(r"§[A-Z]+", " ", rl.clean_translit(translit or ""))
+    """The readable runs of runes: dividers removed, lost or unread signs as breaks. Only the main reading counts:
+    alternative sections (§..Q) are dropped and of Rundata's alternatives 'a/b' the first is kept (rättat 2026-10-17;
+    before, both were counted, which doubled the runes of 16 of the 123 inscriptions and let 11 pass the ten-rune limit)."""
+    parts = [re.sub(r"(\S+)/\S+", r"\1", t) for _, t in rl.sections(translit or "")]
+    t = rl.clean_translit(" ".join(parts))
     t = re.sub(r"[:÷'·×+|¶\s]", "", t)
     return [s for s in re.split(r"[^a-zþæøR]+", t) if len(s) >= 2]
 
