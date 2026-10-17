@@ -83,7 +83,7 @@ def items_for(r):
     return out
 
 
-def run(fold: int, out_path: str, own_d: bool = False):
+def run(fold: int, out_path: str, own_d: bool = False, name_scale: float = 1.0):
     d = tm._records()
     G_cal = d["G"]
     recs = [r for r in d["V"] if tm.fold_of(r["signum"]) == fold]
@@ -93,7 +93,7 @@ def run(fold: int, out_path: str, own_d: bool = False):
         if not its:
             continue
         by_gap = {(g[gp[0]], tuple(gp)): (g, gp, w, tok, t) for g, gp, w, tok, t in its}
-        for x in read_stone(r, [(g, gp, w, tok) for g, gp, w, tok, _ in its], own_d=own_d):
+        for x in read_stone(r, [(g, gp, w, tok) for g, gp, w, tok, _ in its], own_d=own_d, name_scale=name_scale):
             g, gp, w, tok, t = by_gap[(x["group"], tuple(x["gap"]))]
             gold = rl.normtok(tok.replace("[", "").replace("]", "").lstrip("…")) if tok and tok != "..." else None
             word = x["word"]
@@ -136,8 +136,9 @@ if __name__ == "__main__":
     ap.add_argument("--out")
     ap.add_argument("--summary")
     ap.add_argument("--own_d", action="store_true", help="the carver's own divider rate (rl.stone_divider_rate)")
+    ap.add_argument("--name_scale", type=float, default=1.0, help="factor on composed names (§) while filling")
     a = ap.parse_args()
     if a.summary:
         summary(a.summary)
     else:
-        run(a.fold, a.out or os.path.join(ROOT, "utdata", "runlm_forfining", f"dokumenterade_f{a.fold}.json"), a.own_d)
+        run(a.fold, a.out or os.path.join(ROOT, "utdata", "runlm_forfining", f"dokumenterade_f{a.fold}.json"), a.own_d, a.name_scale)

@@ -14,7 +14,7 @@ import time
 from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from src.runlm import (by_object, print_by_object, Model, carved_groups, context, decode, edda_tokens, is_runes, key, load_rundata, norm_words,  # noqa: E402
+from src.runlm import (by_object, print_by_object, stone_divider_rate, Model, carved_groups, context, decode, edda_tokens, is_runes, key, load_rundata, norm_words,  # noqa: E402
                        normtok, restore, runekey, sections, translit_words, viking)
 
 ap = argparse.ArgumentParser()
@@ -45,6 +45,7 @@ ap.add_argument("--ctx", default="none", choices=["none", "region", "carver"],
                 help="stenens plats i stavningsträdet: ingen, till och med landskapet, eller ända till ristaren")
 ap.add_argument("--carver_names", type=float, default=0.0, help="namn från ristarens andra stenar (vikt)")
 ap.add_argument("--only_carver", action="store_true", help="bara stenar med känd ristare (samma luckor som annars)")
+ap.add_argument("--own_d", action="store_true", help="ristarens egen andel markerade ordgränser (stone_divider_rate)")
 ap.add_argument("--hard", action="store_true", help="bara ord som inte är bland de 50 vanligaste (formelord)")
 ap.add_argument("--out", default=None)
 args = ap.parse_args()
@@ -154,7 +155,8 @@ for k in folds:
                 continue
             ctx = m.ctx(cpath if args.ctx == "carver" else cpath[:5]) if (args.contexts and args.ctx != "none") else None
             wd = {}
-            res = restore(m, masked, (gi, g0, g1), words=wd, window=None if args.window < 0 else args.window,
+            dr = stone_divider_rate(m, masked) if args.own_d else None
+            res = restore(m, masked, (gi, g0, g1), words=wd, div_rate=dr, window=None if args.window < 0 else args.window,
                           use_doc=args.lam_doc > 0, char_fills=args.char_fills, context_cands=args.context_cands,
                           name_cands=args.name_cands, adapt=args.adapt, n_cands=args.n_cands, trigram=args.trigram,
                           cache=args.cache, area=context(r)[3] if args.area_lm else None, by_word=args.by_word,
@@ -168,7 +170,7 @@ for k in folds:
             if fills:
                 filled = list(groups)
                 filled[gi] = groups[gi][:g0] + fills[0] + groups[gi][g1:]
-                _, path, _, _ = decode(m, filled)
+                _, path, _, _ = decode(m, filled, d=dr)
                 at = sum(len(x) for x in groups[:gi]) + g0
                 w_ = next((w for a_, b_, w, _ in path if a_ <= at < b_), None)
                 word_ok = bool(w_) and w_ != "<unk>" and m.lemma(w_) == m.lemma(normtok(gword))

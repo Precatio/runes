@@ -41,9 +41,10 @@ def status_of(tok):
     return "återställt" if tok and "[" in tok else "ej återställt" if (tok is None or tok == "...") else "oklart"
 
 
-def read_stone(r, items, own_d=False):
+def read_stone(r, items, own_d=False, name_scale=1.0):
     """Fill the stone's gaps (items: [(groups, gap, carved word, Rundata token)]) with the app's model; one row per gap.
-    own_d: the carver's own divider rate (rl.stone_divider_rate over all the stone's sections) instead of the corpus rate."""
+    own_d: the carver's own divider rate (rl.stone_divider_rate over all the stone's sections) instead of the corpus rate.
+    name_scale: a factor on composed names (§) while the gaps are filled."""
     b = tm.bundle(tm.fold_of(r["signum"]))
     m = b["model"]
     site = (float(r["lat"]), float(r["lon"])) if r.get("lat") is not None and r.get("lon") is not None else None
@@ -70,7 +71,7 @@ def read_stone(r, items, own_d=False):
             continue
         pos = {}
         combos, gaps, marg = rl.restore_all(m, work, only=spans, allowed=cons, hard=hard, positions=pos, site=site,
-                                            div_rate=dr, **tm.FILL)
+                                            div_rate=dr, **{"name_scale": name_scale, **tm.FILL})
         if not combos:
             continue
         best = dict(zip(gaps, combos[0][0]))

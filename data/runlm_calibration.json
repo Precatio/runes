@@ -42,13 +42,16 @@
  },
  "gap_recal": {
   "B": [
-   0.6188,
-   -0.7939,
-   0.0848,
-   0.9065,
-   0.73,
-   0.4556,
-   -0.3417
+   -0.4438,
+   -1.7716,
+   -1.2376,
+   -1.6062,
+   0.6664,
+   0.7474,
+   0.7409,
+   0.2984,
+   -0.6488,
+   0.8884
   ],
   "top50": [
    "a",
@@ -102,50 +105,101 @@
    "þesi",
    "þorsten"
   ],
-  "n": 624,
-  "ece_raw": 0.0257,
-  "ece_cv": 0.0164,
-  "brier_raw": 0.0858,
-  "brier_cv": 0.081,
+  "n": 632,
+  "documented": {
+   "n": 349,
+   "right": 0.693,
+   "ece_cv": 0.0249,
+   "brier_cv": 0.083,
+   "sure_cv": [
+    155,
+    0.987
+   ],
+   "runestones_only": true,
+   "constant": -1.1992,
+   "masked_constant": -0.7709,
+   "whole_word": 0.8884,
+   "source": "utdata/runlm_forfining/dok_egend"
+  },
+  "masked": {
+   "inside_word": {
+    "n": 694,
+    "right": 0.762,
+    "ece_cv": 0.0267,
+    "brier_cv": 0.0973,
+    "sure_cv": [
+     348,
+     0.96
+    ]
+   },
+   "whole_word": {
+    "n": 698,
+    "right": 0.597,
+    "ece_cv": 0.043,
+    "brier_cv": 0.1374,
+    "sure_cv": [
+     58,
+     0.966
+    ]
+   },
+   "source": "utdata/runlm_forfining/mask3",
+   "note": "judged at the masked level, against the masked words' own answers"
+  },
+  "ece_raw": 0.0314,
+  "ece_cv": 0.021,
+  "brier_raw": 0.0885,
+  "brier_cv": 0.0838,
   "by_class": {
    "formelord": {
-    "n": 350,
+    "n": 351,
     "right": 0.957,
     "sure_raw": [
-     273,
-     0.989
+     275,
+     0.985
     ],
     "sure_calibrated": [
-     282,
-     0.986
+     275,
+     0.982
     ]
    },
    "andra ord": {
-    "n": 89,
-    "right": 0.596,
+    "n": 90,
+    "right": 0.589,
     "sure_raw": [
      34,
      0.971
     ],
     "sure_calibrated": [
-     27,
+     29,
      1.0
     ]
    },
    "namn": {
-    "n": 185,
-    "right": 0.746,
+    "n": 149,
+    "right": 0.792,
     "sure_raw": [
-     92,
-     0.957
+     83,
+     0.976
     ],
     "sure_calibrated": [
-     53,
-     0.962
+     55,
+     0.982
+    ]
+   },
+   "sammansatta namn": {
+    "n": 42,
+    "right": 0.524,
+    "sure_raw": [
+     10,
+     0.8
+    ],
+    "sure_calibrated": [
+     0,
+     null
     ]
    }
   },
-  "source": "utdata/runlm_forfining/klass_alla.json",
-  "note": "Ordet i en lucka, kalibrerat per ordklass (scripts/runlm_gap_calibrate.py)."
+  "source": "utdata/runlm_forfining/klass3_alla.json",
+  "note": "Ordet i en lucka, kalibrerat per ordklass (scripts/runlm_gap_calibrate.py); procenten gäller luckor av det dokumenterade slaget (documented)."
  }
 }

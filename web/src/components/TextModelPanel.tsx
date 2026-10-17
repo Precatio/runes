@@ -7,7 +7,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { TRACE_RUNES, textmodel, type TextModelBoundary, type TextModelGap, type TextModelReading } from "@/lib/textmodel";
 
-const pct = (p: number) => `${Math.round(p * 100)} %`;
+// 100 % only for certainty: 0.996 is shown as 99 %, not as if nothing could be wrong
+const pct = (p: number) => `${p < 1 ? Math.min(99, Math.round(p * 100)) : 100} %`;
 const tone = (p: number) =>
   p >= 0.9 ? "bg-emerald-50 border-emerald-300" : p >= 0.5 ? "bg-amber-50 border-amber-300" : "bg-slate-50 border-slate-300";
 
@@ -298,9 +299,21 @@ export default function TextModelPanel({ signum }: { signum: string }) {
               (prövat på 808 stenar med känt svar). Namn får ofta låga procent, eftersom ett namn sällan kan säkras ur språket.</>}{" "}
               Ordet i en lucka är kalibrerat per ordklass, eftersom modellen var för säker på namn och ovanliga ord men
               inte på formelord.{" "}
-              Procenten är prövade på luckor som utgivarna redan har fyllt. Luckor som står öppna är ofta just de där
-              ingen vanlig formel passar, och där kan modellen vara säker och ändå ha fel: den kan inte kasusböjning
-              och väljer själv var orden börjar.{" "}
+              {data.validation.documented_right != null ? (
+                <>
+                  Procenten är kalibrerade på luckor där runorna är kända från äldre avbildningar: de har fallit bort av
+                  fysiska skäl, inte för att svaret var lätt, precis som de flesta luckor i appen. Där ger modellen rätt
+                  ord i {pct(data.validation.documented_right)} av fallen, och när den säger sig vara minst 95 % säker har
+                  den rätt i {pct(data.validation.documented_sure ?? 0)}. Siffrorna gäller runstenar. Luckor som står
+                  öppna är ofta just de där ingen vanlig formel passar, och modellen kan ännu inte kasusböjning.{" "}
+                </>
+              ) : (
+                <>
+                  Procenten är prövade på luckor som utgivarna redan har fyllt. Luckor som står öppna är ofta just de där
+                  ingen vanlig formel passar, och där kan modellen vara säker och ändå ha fel: den kan inte kasusböjning
+                  och väljer själv var orden börjar.{" "}
+                </>
+              )}
               <Link href="/docs/metod" className="text-[#b7410e] hover:underline">Metoden</Link>
             </p>
           </section>

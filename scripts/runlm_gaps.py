@@ -19,7 +19,7 @@ from collections import Counter
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.runlm import (DIV, Model, by_object, print_by_object, clean_translit, context, edda_tokens, is_runes, load_rundata, merge_runs,  # noqa: E402
-                       normtok, restore_all, runekey, sections, similarity, viking)
+                       normtok, restore_all, runekey, sections, similarity, stone_divider_rate, viking)
 
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -161,6 +161,7 @@ def main(argv=None):
     ap.add_argument("--near", type=float, default=0.0)
     ap.add_argument("--near_km", type=float, default=20.0)
     ap.add_argument("--fold", type=int, default=-1, help="bara denna del (0–4), för att köra delarna parallellt")
+    ap.add_argument("--own_d", action="store_true", help="ristarens egen andel markerade ordgränser (stone_divider_rate)")
     ap.add_argument("--separate", action="store_true", help="fyll varje följd av förlorade runor för sig (som före 2026-10-16)")
     ap.add_argument("--out", default=None)
     args = ap.parse_args(argv)
@@ -194,6 +195,13 @@ def main(argv=None):
             by_groups = {}
             for x in xs:
                 by_groups.setdefault(tuple(x[1]), []).append(x)
+            dr = None
+            if args.own_d:  # over all the stone's sections, each ending in a boundary at no cost
+                allg, ends = [], []
+                for key_ in by_groups:
+                    allg.extend(key_)
+                    ends.append(len(allg) - 1)
+                dr = stone_divider_rate(m, allg, ends)
             for groups, ys in by_groups.items():
                 runs = [y[2] for y in ys]
                 if args.separate:
@@ -206,7 +214,7 @@ def main(argv=None):
                     use_doc=args.lam_doc > 0, char_fills=args.char_fills, context_cands=args.context_cands,
                     n_cands=args.n_cands, by_word=args.by_word, area=context(r)[3] if args.area_lm else None,
                     site=(float(r["lat"]), float(r["lon"])) if (args.near and r.get("lat") is not None) else None,
-                    near_km=args.near_km, lam_near=args.near)
+                    near_km=args.near_km, lam_near=args.near, div_rate=dr)
                 if not combos:
                     continue
                 best = dict(zip(gaps, combos[0][0]))

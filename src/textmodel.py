@@ -19,21 +19,28 @@ from datetime import datetime, timezone
 from src import runlm as rl
 from src import rungloss as rg
 
-VERSION = "textmodel-14"
+VERSION = "textmodel-15"
 K = 5
 CACHE = os.path.join(rl.ROOT, "data", "cache", "textmodel", VERSION)
 CACHE_LOO = CACHE + "-loo"  # readings with the leave-one-out model
 MAX_GAP = 4  # longer runs of lost runes are left open: the masking test covers 1–4 runes
 # Soft traces (trace_eps): a misread trace costs a factor 0.05 per rune instead of ruling out the right answer. With one
 # trace in five misread, whole words were 73 % right against 44 % with hard traces (scripts/runlm_restore_test.py).
-OWN_D = False  # each stone read with its carver's own divider rate (rl.stone_divider_rate) instead of the corpus rate
+# each stone read with its carver's own divider rate (rl.stone_divider_rate) instead of the corpus rate: word boundaries
+# +0.31 percentage points on the runestones of the reading test (95 %: +0.12 to +0.49), the words unchanged (textmodel-15)
+OWN_D = True
 FILL = dict(window=None, char_fills=15, context_cands=True, n_cands=100, by_word=True, near_km=10.0, lam_near=0.1,
             trace_eps=0.05)
 MODEL = dict(aligned=True, lam_name=0.05, contexts=True, alpha=100.0, kappa_e=50.0, lm_beta=200.0, lam_class=0.2)
 EPOCH_LABEL = {"800": "800-talet", "900": "900-talet", "1000": "1000–1070", "1100": "1070–1150"}
-# What the tests showed (METHODS.md 8.1), shown with the results so that a reader can judge them
-VALIDATION = {"inside_word": 0.73, "whole_word": 0.57, "sure_right": 0.94, "rundata_sure": 0.98,
-              "with_traces": 0.81, "with_misread_traces": 0.73, "dating_epoch": 0.58, "dating_near": 0.93}
+# What the tests showed (METHODS.md 8.1), shown with the results so that a reader can judge them. Runestones
+# (utdata/runlm_forfining/validering_tm15.py): the masking test (inside a word 698 gaps, whole words 698; at least 95 %
+# calibrated: 344 gaps), the editors' restored gaps (255 at ≥ 95 %, 254 the editors' word), the documented gaps (361;
+# 155 at ≥ 95 %, cross-validated) and the dating test (1 670 runestones). The trace tests are older and cover every
+# kind of inscription.
+VALIDATION = {"inside_word": 0.758, "whole_word": 0.597, "sure_right": 0.959, "rundata_sure": 0.996,
+              "with_traces": 0.81, "with_misread_traces": 0.73, "dating_epoch": 0.585, "dating_near": 0.948,
+              "documented_right": 0.67, "documented_sure": 0.987}
 
 _lock = threading.Lock()
 _compute = threading.Lock()  # one reading at a time: the models' caches are shared
@@ -118,24 +125,33 @@ def name_keys(recs) -> set[str]:
             for w in re.findall(r'"[^\s,.;:!]+', r["normalization"])}  # "Alfdi[s]: restored runes count too
 
 
-def gap_class(word: str, top: set[str], names: set[str]) -> int:
+def gap_class(word: str, top: set[str], names: set[str], composed: bool = False) -> int:
     """0 a formula word (the 50 most common), 1 another word, 2 a name (marked § by the model, or written as a name in
-    Rundata). A formula word that is also a name ("Guð") counts as a formula word."""
+    Rundata). A formula word that is also a name ("Guð") counts as a formula word. composed: a name the model has put
+    together of name elements (§) is a class of its own, 3."""
     k = rl.key(rl.normtok(word.lstrip("§")))
-    return 0 if k in top else 2 if (word.startswith("§") or k in names) else 1
+    if k in top:
+        return 0
+    if composed and word.startswith("§"):
+        return 3
+    return 2 if (word.startswith("§") or k in names) else 1
 
 
-def calibrate_gap(p: float, word: str, n_lost: int, G) -> float:
+def calibrate_gap(p: float, word: str, n_lost: int, G, whole: bool = False) -> float:
     """The calibrated probability for a word in a gap (data/runlm_calibration.json, gap_recal): P(right) =
-    sigmoid(a_class + b_class·logit(p) + c·log(lost runes)), the class from gap_class. Tested on gaps the editors have
-    filled (scripts/runlm_gap_calibrate.py); not on gaps that are still open."""
+    sigmoid(a_class + b_class·logit(p) + c·log(lost runes) [+ d·whole word lost]), the class from gap_class. Fitted on
+    gaps the editors have filled and, since textmodel-15, on documented gaps (runes known from older drawings, lost for
+    physical reasons like the gaps in the app) and masked words, at the level of the documented gaps
+    (scripts/runlm_gap_calibrate.py). whole: the gap covers a whole word (no preserved rune of it)."""
     if not G or word == "<unk>" or p <= 0:
         return p
     B, top, names = G
-    cls = gap_class(word, top, names)
+    # 2K + 1 coefficients (K classes: three, or four with the composed names on their own), + 1 with the whole-word term
+    K, has_whole = (len(B) - 1) // 2, (len(B) - 1) % 2 == 1
+    cls = gap_class(word, top, names, composed=K > 3)
     q = min(max(p, 1e-4), 1 - 1e-4)
-    oh = [1.0 if cls == k else 0.0 for k in range(3)]
-    x = oh + [o * math.log(q / (1 - q)) for o in oh] + [math.log(max(1, n_lost))]
+    oh = [1.0 if cls == k else 0.0 for k in range(K)]
+    x = oh + [o * math.log(q / (1 - q)) for o in oh] + [math.log(max(1, n_lost))] + ([1.0 if whole else 0.0] if has_whole else [])
     return 1 / (1 + math.exp(-sum(c * v for c, v in zip(B, x))))
 
 
@@ -299,8 +315,10 @@ def _read(r, groups, breaks, b, allowed, base, d, trace_at=None, alt=True):
         if i in sg:
             ends.add(pos)
     n_lost = [len(lost[sp]) for sp in gaps]
+    # a gap that covers a whole word of the reading (none of its runes preserved) is calibrated as such
+    whole = [any(a_ <= i and j <= e_ for i, j, _, _ in read if i < e_ and a_ < j) for a_, e_ in spans]
 
-    def cal_dist(dist, k):
+    def cal_dist(dist, k, whole=False):
         """The words of a gap with the model's first choice calibrated by its class (scripts/runlm_gap_calibrate.py:
         right for formula words, too high for other words and names) and the others scaled to share what is left in
         the same proportions, never above the first choice; what is not given to them is left unassigned."""
@@ -309,7 +327,7 @@ def _read(r, groups, breaks, b, allowed, base, d, trace_at=None, alt=True):
         w0, p0 = max(dist.items(), key=lambda kv: kv[1])
         if w0 == "<unk>" or p0 >= 1:
             return dist
-        c0 = calibrate_gap(p0, w0, k, d["G"])
+        c0 = calibrate_gap(p0, w0, k, d["G"], whole)
         p1 = max((p for w, p in dist.items() if w != w0), default=0.0)
         scale = min((1 - c0) / (1 - p0), c0 / p1 if p1 > 0 else float("inf"))
         return {w: (c0 if w == w0 else p * scale) for w, p in dist.items()}
@@ -321,7 +339,7 @@ def _read(r, groups, breaks, b, allowed, base, d, trace_at=None, alt=True):
         def q(dist):
             return (sum(q_ for w_, q_ in dist.items() if w_ != "<unk>" and rl.same_word(w_, w)) if w != "<unk>"
                     else dist.get("<unk>", 0.0))
-        qs = [q(cal_dist(positions[n][o] if positions.get(n) else words.get(n, {}), n_lost[n]))
+        qs = [q(cal_dist(positions[n][o] if positions.get(n) else words.get(n, {}), n_lost[n], whole[n]))
               for n, (a_, e_) in enumerate(spans) if i < e_ and a_ < j
               for o in range(max(i, a_) - a_, min(j, e_) - a_)]
         return min(qs) if qs else None
@@ -345,7 +363,7 @@ def _read(r, groups, breaks, b, allowed, base, d, trace_at=None, alt=True):
                   "fills": [{"fill": f, "p": round(p, 4), "word": (w or "").lstrip("§") or None}
                             for f, p, w in details.get(n, [])[:8]],
                   "words": [{"word": w.lstrip("§"), "p": round(cd[w], 4), "p_model": round(p, 4)}
-                            for cd in [cal_dist(words.get(n, {}), len(lost[(gi, a, e)]))]
+                            for cd in [cal_dist(words.get(n, {}), len(lost[(gi, a, e)]), whole[n])]
                             for w, p in list(words.get(n, {}).items())[:6]],
                   "traces": user.get((gi, a, e))}
                  for n, (gi, a, e) in enumerate(gaps)],

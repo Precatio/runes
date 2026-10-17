@@ -1116,11 +1116,12 @@ def _lse(xs):
     return m + math.log(sum(math.exp(x - m) for x in xs)) if m > float("-inf") else m
 
 
-def posteriors(model, groups, signs=(), lexicon=True, ctx=None, doc=None, cache=None, area=None, d=None):
+def posteriors(model, groups, signs=(), lexicon=True, ctx=None, doc=None, cache=None, area=None, d=None, name_scale=1.0):
     """Forward–backward over the carved text. `groups` are the carver's groups (a divider between each);
     `signs` are indices of groups followed by a non-runic sign or the futhark row (a boundary at no cost).
     d: the share of word boundaries the carver marks with a divider (default the corpus rate model.d; for one stone
-    see stone_divider_rate). Returns (log P(text), span posteriors {(i, j, w): p}, text)."""
+    see stone_divider_rate). name_scale: a factor on the names composed of name elements (§), for filling gaps.
+    Returns (log P(text), span posteriors {(i, j, w): p}, text)."""
     text = "".join(groups)
     L = len(text)
     div, free, pos = set(), set(), 0
@@ -1144,7 +1145,7 @@ def posteriors(model, groups, signs=(), lexicon=True, ctx=None, doc=None, cache=
     def lt(w, prev):
         k = (w, prev)
         if k not in ltrans:
-            p = model.lam_unk if w == "<unk>" else model.p_name(prev) if w[0] == "§" else model.p_word(w, prev, ep, doc, cache, area)
+            p = model.lam_unk if w == "<unk>" else name_scale * model.p_name(prev) if w[0] == "§" else model.p_word(w, prev, ep, doc, cache, area)
             ltrans[k] = math.log(p) if p > 0 else float("-inf")
         return ltrans[k]
 
@@ -1203,7 +1204,7 @@ class SplitText:
     parts, sg as posteriors takes them (groups and the indices followed by a boundary at no cost); a, b: the parts
     [a, b) that vary."""
 
-    def __init__(self, model, parts, sg, a, b, lexicon=True, ctx=None, doc=None, cache=None, area=None, d=None):
+    def __init__(self, model, parts, sg, a, b, lexicon=True, ctx=None, doc=None, cache=None, area=None, d=None, name_scale=1.0):
         self.model, self.lexicon, self.ctx = model, lexicon, ctx
         self.d = model.d if d is None else d
         self.sg = set(sg)
@@ -1214,7 +1215,7 @@ class SplitText:
         def lt(w, prev):
             k = (w, prev)
             if k not in self._lt:
-                p = model.lam_unk if w == "<unk>" else model.p_name(prev) if w[0] == "§" else model.p_word(w, prev, ep, doc, cache, area)
+                p = model.lam_unk if w == "<unk>" else name_scale * model.p_name(prev) if w[0] == "§" else model.p_word(w, prev, ep, doc, cache, area)
                 self._lt[k] = math.log(p) if p > 0 else float("-inf")
             return self._lt[k]
         self.lt = lt
@@ -1536,7 +1537,7 @@ def _name_cache(model, site, near_km, lam_near, near_sites, carver, lam_carver):
 def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_doc=False, char_fills=0,
             context_cands=False, name_cands=0, adapt=0.0, trigram=False, cache=0.0, area=None, by_word=False,
             words=None, site=None, near_km=20.0, lam_near=0.0, near_sites=None, allowed=None, carver=None, lam_carver=0.0,
-            trace_eps=0.0, segments=None, hard=None, div_rate=None):
+            trace_eps=0.0, segments=None, hard=None, div_rate=None, name_scale=1.0):
     """Fill a run of lost runes. groups are the carved groups (dividers between them) with every lost rune written '?';
     gap is (group index, first position, last position + 1) of the run to fill. Candidate fillings come from the words
     whose spelling fits the preserved runes around the gap (and, for gaps of one or two runes, every combination of
@@ -1566,6 +1567,7 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
     words over the gap [(from, to, word)] with positions counted from the gap's start – a gap that spans two words (two
     runs filled as one, merge_runs) has a word for each part; `words` has only the word where the gap starts.
     div_rate: the share of word boundaries the carver marks (stone_divider_rate); default the corpus rate.
+    name_scale: a factor on composed names (§) while the gap is filled.
     Returns [(filling, probability)], best first, over the candidates considered."""
     gi, g0, g1 = gap
     k = g1 - g0
@@ -1681,12 +1683,14 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
         if not parts:
             continue
         if trigram or not mid or not USE_SPLIT:
-            lz, post_, text_ = posteriors(model, parts, sg, ctx=ctx, doc=doc, cache=cache_arg, area=area, d=div_rate)
+            lz, post_, text_ = posteriors(model, parts, sg, ctx=ctx, doc=doc, cache=cache_arg, area=area, d=div_rate,
+                                          name_scale=name_scale)
             path_ = (best_path(post_, len(text_), model.lemma)
                      if (trigram or by_word or words is not None or segments is not None) else None)
         else:
             if split is None:
-                split = SplitText(model, parts, sg, mid[0], mid[-1] + 1, ctx=ctx, doc=doc, cache=cache_arg, area=area, d=div_rate)
+                split = SplitText(model, parts, sg, mid[0], mid[-1] + 1, ctx=ctx, doc=doc, cache=cache_arg, area=area, d=div_rate,
+                                  name_scale=name_scale)
             lz, post_, text_ = split.run(parts[mid[0]:mid[-1] + 1])
             # words never cross the group's edges, so the best path over the group is the whole path's part there
             path_ = ([(i_ + split.offset, j_ + split.offset, w_, p_) for i_, j_, w_, p_ in best_path(post_, len(text_), model.lemma)]
@@ -1843,7 +1847,8 @@ def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, a
                 parts.append(p_)
                 if q < len(pieces) - 1 or idx in signs:
                     sg.append(len(parts) - 1)
-        lz, post_, text_ = posteriors(model, parts, sg, ctx=ctx, cache=names_arg, area=area, d=kw.get("div_rate"))
+        lz, post_, text_ = posteriors(model, parts, sg, ctx=ctx, cache=names_arg, area=area, d=kw.get("div_rate"),
+                                      name_scale=kw.get("name_scale", 1.0))
         path_ = best_path(post_, len(text_), model.lemma)
         if kw.get("trigram"):
             lz += trigram_delta(model, path_)
