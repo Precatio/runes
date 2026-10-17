@@ -1,0 +1,1321 @@
+{
+ "skapad": "2026-10-17",
+ "definition": "Vikingatida runstenar i Rundata (rl.object_kind == runsten, textmodel-17:s urval tm._records()[\"V\"]) med minst en dokumenterad lucka enligt scripts/runlm_documented_test.items_for: runor som Rundata återställt i hakparentes i translittereringen, ommaskade, 1-4 förlorade runor per lucka efter sammanslagning (tm.MAX_GAP). Undantagna: alla signa i \"undantagna\" (stenar som förekommit i våra artiklar, byggskript, skanningar eller fallstudier, konservativt).",
+ "version": "textmodel-17",
+ "undantagna": [
+  "D Fv1984;250",
+  "DR 110",
+  "DR 120",
+  "DR 144",
+  "DR 190",
+  "DR 192",
+  "DR 2",
+  "DR 209",
+  "DR 212",
+  "DR 220",
+  "DR 229",
+  "DR 230",
+  "DR 239",
+  "DR 248",
+  "DR 277",
+  "DR 295",
+  "DR 338",
+  "DR 344",
+  "DR 345",
+  "DR 351",
+  "DR 357",
+  "DR 360",
+  "DR 365",
+  "DR 395",
+  "DR 40",
+  "DR 42",
+  "DR 58",
+  "DR 6",
+  "DR 81",
+  "DR 83",
+  "DR 91",
+  "DR 96",
+  "DR 97",
+  "DR EM85;151B",
+  "DR EM85;463B",
+  "DR EM85;470C",
+  "DR EM85;475A",
+  "DR EM85;493",
+  "DR NOR1988;5",
+  "DR NOR2000;7A",
+  "G 112",
+  "G 12",
+  "G 124",
+  "G 136",
+  "G 160",
+  "G 182",
+  "G 268",
+  "G 276",
+  "G 306",
+  "G 308",
+  "G 310",
+  "G 311",
+  "G 373",
+  "G 390",
+  "G 55",
+  "G 72",
+  "G 78",
+  "Gs 13",
+  "Gs 3",
+  "Hs 11",
+  "Hs 14",
+  "Hs 15",
+  "Hs 7",
+  "Hs 8",
+  "Hs 9",
+  "J Fv1988;244",
+  "M 11",
+  "M 13",
+  "M 14",
+  "M 6",
+  "M 7",
+  "N 13",
+  "N 632",
+  "N 68",
+  "N 88",
+  "N 89",
+  "Sm 111",
+  "Sm 141",
+  "Sm 143",
+  "Sm 144",
+  "Sm 16",
+  "Sm 20",
+  "Sm 47",
+  "Sm 53",
+  "Sm 80",
+  "Sm 9",
+  "Sm 94",
+  "Sm 97",
+  "Sö 101",
+  "Sö 102",
+  "Sö 111",
+  "Sö 112",
+  "Sö 113",
+  "Sö 128",
+  "Sö 128:s",
+  "Sö 129",
+  "Sö 130",
+  "Sö 131",
+  "Sö 134",
+  "Sö 137",
+  "Sö 137A",
+  "Sö 137B",
+  "Sö 140",
+  "Sö 143",
+  "Sö 149",
+  "Sö 160",
+  "Sö 161",
+  "Sö 162",
+  "Sö 163",
+  "Sö 164",
+  "Sö 165",
+  "Sö 166",
+  "Sö 184",
+  "Sö 189",
+  "Sö 196",
+  "Sö 205",
+  "Sö 206",
+  "Sö 207",
+  "Sö 208",
+  "Sö 211",
+  "Sö 213",
+  "Sö 227",
+  "Sö 23",
+  "Sö 241",
+  "Sö 245",
+  "Sö 257",
+  "Sö 277",
+  "Sö 280",
+  "Sö 285",
+  "Sö 307",
+  "Sö 319",
+  "Sö 324",
+  "Sö 331",
+  "Sö 333",
+  "Sö 347",
+  "Sö 352",
+  "Sö 360",
+  "Sö 367",
+  "Sö 370",
+  "Sö 371",
+  "Sö 373",
+  "Sö 378",
+  "Sö 45",
+  "Sö 45:s",
+  "Sö 52",
+  "Sö 56",
+  "Sö 60",
+  "Sö 71",
+  "Sö 75",
+  "Sö 79",
+  "Sö 81",
+  "Sö 86",
+  "Sö 9",
+  "Sö 91",
+  "Sö 93",
+  "Sö Fv1948;282",
+  "Sö Fv1954;19",
+  "Sö Fv1954;20",
+  "Sö Fv1973;189",
+  "Sö Fv1988;34",
+  "U 1",
+  "U 1000",
+  "U 1015",
+  "U 1026",
+  "U 1027",
+  "U 104",
+  "U 1045",
+  "U 1056",
+  "U 1061",
+  "U 107",
+  "U 108",
+  "U 1126",
+  "U 1128",
+  "U 1136",
+  "U 1144",
+  "U 1151",
+  "U 1161",
+  "U 1163",
+  "U 1165",
+  "U 1167",
+  "U 1170",
+  "U 1175",
+  "U 1178",
+  "U 1179",
+  "U 1180",
+  "U 133",
+  "U 136",
+  "U 158",
+  "U 163",
+  "U 208",
+  "U 216",
+  "U 225",
+  "U 226",
+  "U 236",
+  "U 239",
+  "U 241",
+  "U 246",
+  "U 279",
+  "U 280",
+  "U 29",
+  "U 311",
+  "U 312",
+  "U 313",
+  "U 314",
+  "U 315",
+  "U 316",
+  "U 318",
+  "U 329",
+  "U 332",
+  "U 337",
+  "U 341",
+  "U 366",
+  "U 377",
+  "U 385",
+  "U 4",
+  "U 427",
+  "U 431",
+  "U 435",
+  "U 441",
+  "U 454",
+  "U 466",
+  "U 468",
+  "U 476",
+  "U 483",
+  "U 487",
+  "U 489",
+  "U 493",
+  "U 508",
+  "U 512",
+  "U 522",
+  "U 525",
+  "U 540",
+  "U 549",
+  "U 589",
+  "U 597",
+  "U 669",
+  "U 729",
+  "U 732",
+  "U 735",
+  "U 735-",
+  "U 74",
+  "U 747",
+  "U 755",
+  "U 765",
+  "U 768",
+  "U 784",
+  "U 811",
+  "U 821",
+  "U 847",
+  "U 849",
+  "U 861",
+  "U 867",
+  "U 884",
+  "U 887",
+  "U 890",
+  "U 9",
+  "U 902",
+  "U 92",
+  "U 923",
+  "U 93",
+  "U 983",
+  "U 984",
+  "U 994",
+  "U Fv1933;134",
+  "U Fv1946;258",
+  "U Fv1971;212B",
+  "U Fv1973;199",
+  "U Fv1976;108",
+  "U Fv1992;160",
+  "U Fv1992;161B",
+  "U NOR1994;26A",
+  "U NOR1996;19",
+  "U NOR1997;29A",
+  "U NOR1998;25",
+  "U NOR2000;31B",
+  "U NOR2000;34B",
+  "U NOR2001;22A",
+  "U NOR2001;24",
+  "U NOR2002;26",
+  "Vg 119",
+  "Vg 150",
+  "Vg 17",
+  "Vg 19",
+  "Vg 199",
+  "Vg 281",
+  "Vg 59",
+  "Vg 67",
+  "Vs 1",
+  "Vs 23",
+  "Vs 29",
+  "Vs 5",
+  "Ån Fv1908;298A",
+  "Ån Fv1908;298B",
+  "Ög 113",
+  "Ög 115",
+  "Ög 117",
+  "Ög 133",
+  "Ög 136",
+  "Ög 168",
+  "Ög 181",
+  "Ög 2",
+  "Ög 239",
+  "Ög 240",
+  "Ög 59",
+  "Ög Fv1958;252",
+  "Ög NOR1994;27",
+  "Ög NOR2001;32",
+  "Öl 1",
+  "Öl 2",
+  "Öl 41",
+  "Öl 55",
+  "Öl 57",
+  "Öl ATA326-1087-2007",
+  "Öl ATA4377",
+  "Öl ATA4701",
+  "Öl Fv1976;96",
+  "Öl Fv1976;96A",
+  "Öl Fv1976;96B",
+  "Öl SHM1304:1836:64"
+ ],
+ "population": [
+  {
+   "signum": "DR 266",
+   "gaps": 1,
+   "fold": 2
+  },
+  {
+   "signum": "DR 279",
+   "gaps": 2,
+   "fold": 1
+  },
+  {
+   "signum": "DR 282",
+   "gaps": 2,
+   "fold": 2
+  },
+  {
+   "signum": "G 203",
+   "gaps": 3,
+   "fold": 2
+  },
+  {
+   "signum": "G 208",
+   "gaps": 2,
+   "fold": 3
+  },
+  {
+   "signum": "G 280",
+   "gaps": 8,
+   "fold": 3
+  },
+  {
+   "signum": "G 309",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "G 80",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "Gs 2",
+   "gaps": 2,
+   "fold": 0
+  },
+  {
+   "signum": "Gs 9",
+   "gaps": 4,
+   "fold": 0
+  },
+  {
+   "signum": "Hs 21",
+   "gaps": 3,
+   "fold": 3
+  },
+  {
+   "signum": "N 184",
+   "gaps": 3,
+   "fold": 4
+  },
+  {
+   "signum": "Sm 1",
+   "gaps": 3,
+   "fold": 3
+  },
+  {
+   "signum": "Sm 121",
+   "gaps": 2,
+   "fold": 3
+  },
+  {
+   "signum": "Sm 13",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "Sm 132",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "Sm 133",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "Sm 37",
+   "gaps": 3,
+   "fold": 1
+  },
+  {
+   "signum": "Sm 44",
+   "gaps": 5,
+   "fold": 0
+  },
+  {
+   "signum": "Sm 48",
+   "gaps": 2,
+   "fold": 0
+  },
+  {
+   "signum": "Sm 52",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "Sm 75",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "Sm 8",
+   "gaps": 3,
+   "fold": 0
+  },
+  {
+   "signum": "Sm 85",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "Sm 87",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "Sm 96",
+   "gaps": 2,
+   "fold": 4
+  },
+  {
+   "signum": "Sm 99",
+   "gaps": 2,
+   "fold": 1
+  },
+  {
+   "signum": "Sö 105",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "Sö 107",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "Sö 115",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "Sö 124",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "Sö 139",
+   "gaps": 1,
+   "fold": 2
+  },
+  {
+   "signum": "Sö 14",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "Sö 155",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "Sö 174",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "Sö 176",
+   "gaps": 1,
+   "fold": 2
+  },
+  {
+   "signum": "Sö 190",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "Sö 198",
+   "gaps": 2,
+   "fold": 3
+  },
+  {
+   "signum": "Sö 200",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "Sö 202",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "Sö 210",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "Sö 214",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "Sö 22",
+   "gaps": 3,
+   "fold": 2
+  },
+  {
+   "signum": "Sö 226",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "Sö 234",
+   "gaps": 3,
+   "fold": 0
+  },
+  {
+   "signum": "Sö 26",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "Sö 269",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "Sö 274",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "Sö 304",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "Sö 306",
+   "gaps": 1,
+   "fold": 2
+  },
+  {
+   "signum": "Sö 308",
+   "gaps": 2,
+   "fold": 2
+  },
+  {
+   "signum": "Sö 318",
+   "gaps": 4,
+   "fold": 2
+  },
+  {
+   "signum": "Sö 338",
+   "gaps": 2,
+   "fold": 2
+  },
+  {
+   "signum": "Sö 51",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "Sö 8",
+   "gaps": 1,
+   "fold": 2
+  },
+  {
+   "signum": "U 1006",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "U 1011",
+   "gaps": 1,
+   "fold": 2
+  },
+  {
+   "signum": "U 1017",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "U 1019",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "U 1020",
+   "gaps": 4,
+   "fold": 0
+  },
+  {
+   "signum": "U 1021",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "U 1022",
+   "gaps": 2,
+   "fold": 2
+  },
+  {
+   "signum": "U 1028",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "U 103",
+   "gaps": 6,
+   "fold": 1
+  },
+  {
+   "signum": "U 1031",
+   "gaps": 2,
+   "fold": 0
+  },
+  {
+   "signum": "U 1035",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "U 1039",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "U 1042",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "U 1043",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "U 1050",
+   "gaps": 1,
+   "fold": 2
+  },
+  {
+   "signum": "U 1063",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "U 1079",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "U 1081",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "U 1085",
+   "gaps": 1,
+   "fold": 2
+  },
+  {
+   "signum": "U 1097",
+   "gaps": 3,
+   "fold": 0
+  },
+  {
+   "signum": "U 1104",
+   "gaps": 3,
+   "fold": 1
+  },
+  {
+   "signum": "U 1107",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "U 1110",
+   "gaps": 1,
+   "fold": 2
+  },
+  {
+   "signum": "U 1118",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "U 1123",
+   "gaps": 3,
+   "fold": 2
+  },
+  {
+   "signum": "U 1146",
+   "gaps": 2,
+   "fold": 1
+  },
+  {
+   "signum": "U 1156",
+   "gaps": 2,
+   "fold": 4
+  },
+  {
+   "signum": "U 118",
+   "gaps": 2,
+   "fold": 3
+  },
+  {
+   "signum": "U 151",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "U 165",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "U 173",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "U 18",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "U 215",
+   "gaps": 2,
+   "fold": 0
+  },
+  {
+   "signum": "U 22",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "U 227",
+   "gaps": 2,
+   "fold": 1
+  },
+  {
+   "signum": "U 233",
+   "gaps": 1,
+   "fold": 2
+  },
+  {
+   "signum": "U 237",
+   "gaps": 2,
+   "fold": 3
+  },
+  {
+   "signum": "U 247",
+   "gaps": 4,
+   "fold": 3
+  },
+  {
+   "signum": "U 259",
+   "gaps": 1,
+   "fold": 2
+  },
+  {
+   "signum": "U 261",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "U 281",
+   "gaps": 2,
+   "fold": 0
+  },
+  {
+   "signum": "U 287",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "U 295",
+   "gaps": 2,
+   "fold": 3
+  },
+  {
+   "signum": "U 31",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "U 319",
+   "gaps": 2,
+   "fold": 0
+  },
+  {
+   "signum": "U 324",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "U 326",
+   "gaps": 2,
+   "fold": 0
+  },
+  {
+   "signum": "U 327",
+   "gaps": 1,
+   "fold": 2
+  },
+  {
+   "signum": "U 333",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "U 334",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "U 336",
+   "gaps": 2,
+   "fold": 2
+  },
+  {
+   "signum": "U 338",
+   "gaps": 3,
+   "fold": 3
+  },
+  {
+   "signum": "U 364",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "U 371",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "U 373",
+   "gaps": 2,
+   "fold": 4
+  },
+  {
+   "signum": "U 388",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "U 394",
+   "gaps": 2,
+   "fold": 0
+  },
+  {
+   "signum": "U 410",
+   "gaps": 2,
+   "fold": 0
+  },
+  {
+   "signum": "U 418",
+   "gaps": 2,
+   "fold": 0
+  },
+  {
+   "signum": "U 419",
+   "gaps": 4,
+   "fold": 4
+  },
+  {
+   "signum": "U 42",
+   "gaps": 2,
+   "fold": 2
+  },
+  {
+   "signum": "U 421",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "U 444",
+   "gaps": 2,
+   "fold": 0
+  },
+  {
+   "signum": "U 456",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "U 46",
+   "gaps": 2,
+   "fold": 1
+  },
+  {
+   "signum": "U 462",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "U 481",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "U 494",
+   "gaps": 2,
+   "fold": 4
+  },
+  {
+   "signum": "U 495",
+   "gaps": 2,
+   "fold": 4
+  },
+  {
+   "signum": "U 496",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "U 56",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "U 570",
+   "gaps": 2,
+   "fold": 2
+  },
+  {
+   "signum": "U 586",
+   "gaps": 3,
+   "fold": 1
+  },
+  {
+   "signum": "U 608",
+   "gaps": 2,
+   "fold": 0
+  },
+  {
+   "signum": "U 618",
+   "gaps": 6,
+   "fold": 0
+  },
+  {
+   "signum": "U 62",
+   "gaps": 3,
+   "fold": 0
+  },
+  {
+   "signum": "U 622",
+   "gaps": 2,
+   "fold": 1
+  },
+  {
+   "signum": "U 629",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "U 635",
+   "gaps": 2,
+   "fold": 2
+  },
+  {
+   "signum": "U 640",
+   "gaps": 2,
+   "fold": 0
+  },
+  {
+   "signum": "U 641",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "U 646",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "U 647",
+   "gaps": 3,
+   "fold": 3
+  },
+  {
+   "signum": "U 649",
+   "gaps": 2,
+   "fold": 3
+  },
+  {
+   "signum": "U 651",
+   "gaps": 3,
+   "fold": 4
+  },
+  {
+   "signum": "U 652",
+   "gaps": 5,
+   "fold": 0
+  },
+  {
+   "signum": "U 654",
+   "gaps": 3,
+   "fold": 4
+  },
+  {
+   "signum": "U 655",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "U 656",
+   "gaps": 2,
+   "fold": 4
+  },
+  {
+   "signum": "U 657",
+   "gaps": 2,
+   "fold": 2
+  },
+  {
+   "signum": "U 658",
+   "gaps": 2,
+   "fold": 1
+  },
+  {
+   "signum": "U 662",
+   "gaps": 2,
+   "fold": 2
+  },
+  {
+   "signum": "U 671",
+   "gaps": 1,
+   "fold": 2
+  },
+  {
+   "signum": "U 678",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "U 688",
+   "gaps": 4,
+   "fold": 0
+  },
+  {
+   "signum": "U 69",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "U 699",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "U 734",
+   "gaps": 2,
+   "fold": 2
+  },
+  {
+   "signum": "U 740",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "U 757",
+   "gaps": 2,
+   "fold": 0
+  },
+  {
+   "signum": "U 766",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "U 775",
+   "gaps": 3,
+   "fold": 0
+  },
+  {
+   "signum": "U 792",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "U 818",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "U 828",
+   "gaps": 2,
+   "fold": 3
+  },
+  {
+   "signum": "U 840",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "U 842",
+   "gaps": 1,
+   "fold": 2
+  },
+  {
+   "signum": "U 855",
+   "gaps": 2,
+   "fold": 4
+  },
+  {
+   "signum": "U 856",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "U 860",
+   "gaps": 4,
+   "fold": 1
+  },
+  {
+   "signum": "U 866",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "U 889",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "U 896",
+   "gaps": 1,
+   "fold": 2
+  },
+  {
+   "signum": "U 903",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "U 91",
+   "gaps": 5,
+   "fold": 0
+  },
+  {
+   "signum": "U 910",
+   "gaps": 2,
+   "fold": 3
+  },
+  {
+   "signum": "U 912",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "U 918",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "U 935",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "U 951",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "U 968",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "U 970",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "U 991",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "U 993",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "U 996",
+   "gaps": 6,
+   "fold": 3
+  },
+  {
+   "signum": "Vg 176",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "Vg 39",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "Vg 51",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "Vs 15",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "Vs 17",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "Vs 27",
+   "gaps": 1,
+   "fold": 0
+  },
+  {
+   "signum": "Vs 9",
+   "gaps": 1,
+   "fold": 1
+  },
+  {
+   "signum": "Ög 197",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "Ög 214",
+   "gaps": 2,
+   "fold": 4
+  },
+  {
+   "signum": "Ög 221",
+   "gaps": 2,
+   "fold": 1
+  },
+  {
+   "signum": "Ög 225",
+   "gaps": 1,
+   "fold": 2
+  },
+  {
+   "signum": "Ög 229",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "Ög 70",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "Ög 94",
+   "gaps": 1,
+   "fold": 3
+  },
+  {
+   "signum": "Öl 18",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "Öl 36",
+   "gaps": 1,
+   "fold": 4
+  },
+  {
+   "signum": "Öl 37",
+   "gaps": 1,
+   "fold": 0
+  }
+ ],
+ "riktmarken": {
+  "dok5_runstenar_same_word": 0.687,
+  "dok5_runstenar_strikt_lemma": 0.6565,
+  "dok5_n": 361,
+  "dok5_medel_p_cal": 0.7096,
+  "dok5_minst95_håller": 0.9759,
+  "dok5_minst95_n": 166
+ }
+}
