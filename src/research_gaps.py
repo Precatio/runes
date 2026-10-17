@@ -18,6 +18,13 @@ PROVINCE_NAMES = {
     "Bo": "Bohuslän", "Ds": "Dalsland", "Vr": "Värmland", "Hr": "Härjedalen", "Lp": "Lappland", "SE": "Okänt landskap",
 }
 AXELSON_PROVINCES = {"Sö", "U", "Vs", "Gs"}
+
+# Rundata's carver names that are groups or debated identities rather than one person; shown with every
+# finding and interpretation that suggests the name, so that the group is never presented as a carver
+CARVER_NOTES = {
+    "Traen": "”Traen” är enligt Gustavson & Snædal Brink (1981) och Bianchi (2010) en felläsning, och stenarna "
+             "bildar en grupp snarare än en ristares verk; förslaget gäller alltså att stenen hör till den gruppen.",
+}
 SOURCE_NOTE = (
     "Uppgifterna kommer ur Samnordisk runtextdatabas. Ristaruppgifterna för Södermanland, Uppland, "
     "Västmanland och Gästrikland bygger främst på Axelson (1993); i andra landskap kan attribueringar "

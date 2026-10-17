@@ -24,11 +24,7 @@ from src.about import APP_URL, REPO_URL
 
 CHECK_LABELS = {"område": "Område", "stil": "Stilgrupp", "språkdrag": "Språkdrag", "bergart": "Bergart"}
 
-# Rundata's carver names that are groups or debated identities rather than one person
-CARVER_NOTES = {
-    "Traen": "\u201dTraen\u201d är enligt Gustavson & Snædal Brink (1981) och Bianchi (2010) en felläsning, och stenarna "
-             "bildar en grupp snarare än en ristares verk; förslaget gäller alltså att stenen hör till den gruppen.",
-}
+from src.research_gaps import CARVER_NOTES  # groups or debated identities, never presented as one person
 
 
 def _n(v, d=2) -> str:

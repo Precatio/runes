@@ -27,7 +27,7 @@ from collections import Counter, defaultdict
 
 import numpy as np
 
-from src.research_gaps import (AXELSON_PROVINCES, carver_home, certain_carvers, has_carver, has_style,
+from src.research_gaps import (AXELSON_PROVINCES, CARVER_NOTES, carver_home, certain_carvers, has_carver, has_style,
                                is_runestone, model_carvers, province)
 from src.stats import METRICS, attribute
 from src.synthesis import language_check, material_check, smoothed_precision
@@ -123,6 +123,9 @@ def _stone_extras(rec: dict, carver: str | None, inscriptions: list[dict], names
 
 
 def _finding(rec, method, verdict, ours, existing, evidence, novelty, rel, reasons, independent, **extra) -> dict:
+    note = CARVER_NOTES.get(extra.get("suggested") or "")
+    if note:  # a group name (such as "Traen") must never be presented as a carver on the card
+        reasons = {**reasons, "nyhet": list(reasons.get("nyhet") or []) + [note]}
     return {
         "signum": rec["signum"], "place": rec["place"], "province": province(rec), "method": method,
         "verdict": verdict, "ours": ours, "existing": existing,

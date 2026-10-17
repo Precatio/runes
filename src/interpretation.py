@@ -18,7 +18,7 @@ Slutsatsens nivåer:
 """
 from __future__ import annotations
 
-from src.research_gaps import certain_carvers, province
+from src.research_gaps import CARVER_NOTES, certain_carvers, province
 from src.synthesis import carver_styles
 from src.stone_overview import _checks
 
@@ -157,6 +157,8 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
         say = f"Metoden ({method}) pekar på {sug}, medan Rundata anger {existing}."
     else:
         say = f"Metoden ({method}) pekar på samma ristare som Rundata: {sug}."
+    if sug in CARVER_NOTES:
+        say += " " + CARVER_NOTES[sug]
     paragraphs.append({"title": "Vad fyndet säger", "text": say})
 
     # 2. How strong it is
@@ -360,9 +362,12 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
     steps = []
     if sug and not style_method:
         stones = " och ".join([rec["signum"]] + list(rec.get("same_carver_as") or []))
-        steps.append(f"en 3D-mätning av huggspåren på {stones}, jämförd med flera säkra stenar av {sug} (minst 20 runor "
-                     "per sten enligt riktvärdet; ingen huggteknik är mätt för stenen ännu)")
-        steps.append(f"en jämförelse av runformer och ornamentik med {sug}s signerade stenar")
+        ref = "flera stenar ur gruppen" if sug in CARVER_NOTES else f"flera säkra stenar av {sug}"
+        steps.append(f"en 3D-mätning av huggspåren på {stones}, jämförd med {ref} (minst 20 runor "
+                     "per sten enligt riktvärdet; ingen huggteknik är mätt för stenen ännu, och måtten är "
+                     "ännu inte validerade som ristarskiljare – i vår prövning dominerade bergarten)")
+        steps.append("en jämförelse av runformer och ornamentik med "
+                     + ("gruppens övriga stenar" if sug in CARVER_NOTES else f"{sug}s signerade stenar"))
     refs = (cc.get("runor") or {}).get("references") or []
     if refs:
         steps.append("en genomgång av litteraturen i Runor (" + "; ".join(refs[:3]) + ")")
