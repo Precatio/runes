@@ -14,7 +14,7 @@ import time
 from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from src.runlm import (Model, carved_groups, context, decode, edda_tokens, is_runes, key, load_rundata, norm_words,  # noqa: E402
+from src.runlm import (by_object, print_by_object, Model, carved_groups, context, decode, edda_tokens, is_runes, key, load_rundata, norm_words,  # noqa: E402
                        normtok, restore, runekey, sections, translit_words, viking)
 
 ap = argparse.ArgumentParser()
@@ -45,6 +45,7 @@ ap.add_argument("--ctx", default="none", choices=["none", "region", "carver"],
                 help="stenens plats i stavningsträdet: ingen, till och med landskapet, eller ända till ristaren")
 ap.add_argument("--carver_names", type=float, default=0.0, help="namn från ristarens andra stenar (vikt)")
 ap.add_argument("--only_carver", action="store_true", help="bara stenar med känd ristare (samma luckor som annars)")
+ap.add_argument("--hard", action="store_true", help="bara ord som inte är bland de 50 vanligaste (formelord)")
 ap.add_argument("--out", default=None)
 args = ap.parse_args()
 
@@ -76,6 +77,11 @@ def gold(r):
 
 
 cands = [(r, gold(r)) for r in V]
+# --hard: only words that are not among the 50 most common (formula words), the kind of gap the editors leave open
+FORMULA = set()
+if args.hard:
+    _fq = Counter(key(normtok(b)) for r in V for _, p in sections(r["normalization"]) for b in norm_words(p))
+    FORMULA = {k for k, _ in _fq.most_common(50)}
 cands = [(r, g) for r, g in cands if g and len(g[1]) >= 4]
 random.Random(2026).shuffle(cands)
 K = 5
@@ -121,7 +127,7 @@ for k in folds:
     for r, (groups, gw) in test:
         for kind in ("inne i ord", "helt ord"):
             if kind == "inne i ord":
-                words = [w for w in gw if w[1] - w[0] >= 3]
+                words = [w for w in gw if w[1] - w[0] >= 3 and not (args.hard and key(normtok(w[3])) in FORMULA)]
                 if not words:
                     continue
                 i, j, runes, gword = rng.choice(words)
@@ -129,7 +135,7 @@ for k in folds:
                 a = i + rng.randint(0, j - i - n)
                 span = (a, a + n)
             else:
-                words = [w for w in gw if 2 <= w[1] - w[0] <= 6]
+                words = [w for w in gw if 2 <= w[1] - w[0] <= 6 and not (args.hard and key(normtok(w[3])) in FORMULA)]
                 if not words:
                     continue
                 i, j, runes, gword = rng.choice(words)
@@ -205,6 +211,9 @@ for kind in ("inne i ord", "helt ord"):
         relw.append({"lo": lo, "hi": min(hi, 1), "n": len(ys), "p": sum(x["p_word"] for x in ys) / max(1, len(ys)),
                      "acc": sum(x["word_ok"] for x in ys) / max(1, len(ys))})
     out[kind]["reliability_word"] = relw
+    out[kind]["by_object"] = by_object(xs, lambda x: x["sig"], {
+        "word": lambda ys: sum(y["word_ok"] for y in ys) / len(ys), "top1": lambda ys: sum(y["rank"] == 1 for y in ys) / len(ys)}, recs=V)
+    print_by_object(f"   [{kind}]", out[kind]["by_object"])
     print("   ordets säkerhet → rätt ord:", [(f"{c['p']:.2f}", f"{c['acc']:.2f}", c["n"]) for c in relw])
 out["rows"] = rows
 json.dump(out, open(args.out or os.path.join(ROOT, "utdata", "Malt", "runlm_ifyllning.json"), "w"), ensure_ascii=False, indent=1)

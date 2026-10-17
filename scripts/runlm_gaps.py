@@ -18,7 +18,7 @@ import time
 from collections import Counter
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from src.runlm import (DIV, Model, clean_translit, context, edda_tokens, is_runes, load_rundata, merge_runs,  # noqa: E402
+from src.runlm import (DIV, Model, by_object, print_by_object, clean_translit, context, edda_tokens, is_runes, load_rundata, merge_runs,  # noqa: E402
                        normtok, restore_all, runekey, sections, similarity, viking)
 
 
@@ -236,11 +236,15 @@ def main(argv=None):
     for lo, hi in ((0, 0.5), (0.5, 0.8), (0.8, 0.95), (0.95, 1.01)):
         ys = [x for x in val if lo <= x["p"] < hi]
         print(f"   säkerhet {lo:.2f}–{min(hi, 1):.2f}: n={len(ys)}, samma ord som Rundata {sum(bool(x['agrees']) for x in ys) / max(1, len(ys)):.0%}")
+    by_obj = by_object(val, lambda x: x["sig"], {"same": lambda ys: sum(bool(y["agrees"]) for y in ys) / len(ys),
+                                                  "sure_right": lambda ys: sum(bool(y["agrees"]) for y in ys if y["p"] >= 0.95) / max(1, sum(y["p"] >= 0.95 for y in ys))},
+                       recs=V)
+    print_by_object("återställda luckor", by_obj)
     new = sorted([x for x in rows if x["status"] == "ej återställt"], key=lambda x: -x["p"])
     print(f"luckor som Rundata inte återställer: {len(new)}; med modellens säkerhet ≥ 0,9: {sum(x['p'] >= 0.9 for x in new)}")
     for x in new[:25]:
         print(f"  {x['sig']:12} {x['carved']:16} → {x['fill']:5} ord: {x['word']} ({x['p']:.2f}) | {x['context']}")
-    json.dump({"settings": vars(args), "rows": rows}, open(args.out or os.path.join(ROOT, "utdata", "Malt", "runlm_luckor.json"), "w"),
+    json.dump({"settings": vars(args), "by_object": by_obj, "rows": rows}, open(args.out or os.path.join(ROOT, "utdata", "Malt", "runlm_luckor.json"), "w"),
               ensure_ascii=False, indent=1)
 
 

@@ -26,7 +26,8 @@ import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.runlm import (EPOCHS, Model, adapt_counts, carved_groups, context, decode, decode_epochs, edda_tokens,  # noqa: E402
-                       epoch, is_runes, key, load_rundata, norm_words, normtok, runekey, sections, translit_words, viking)
+                       epoch, is_runes, key, load_rundata, norm_words, normtok, runekey, sections, stone_divider_rate,
+                       translit_words, viking)
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--aligned", action="store_true")
@@ -44,6 +45,7 @@ ap.add_argument("--lam_edda", type=float, default=0.03)
 ap.add_argument("--levels", type=int, default=5, help="nivåer i stavningsträdet: 1 era, 2 +fas, 3 +epok, 4 +trakt, 5 +landskap, 6 +ristare")
 ap.add_argument("--epoch_lm", type=int, default=1, help="ordföljd efter epok (1) eller bara hela vikingatiden (0)")
 ap.add_argument("--folds", type=int, nargs="*", default=None)
+ap.add_argument("--own_d", action="store_true", help="ristarens egen andel markerade ordgränser (stone_divider_rate)")
 ap.add_argument("--out", default=None)
 ap.add_argument("--write_recal", action="store_true",
                 help="skriv omräkningen till data/runlm_calibration.json (word_recal), som panelen använder")
@@ -103,19 +105,20 @@ for k in folds:
     for w_, c_ in freq.items():
         fk[key(w_)] += c_  # how common the word is, over all its normalized forms
     for r, (groups, gw) in test:
+        dr = stone_divider_rate(m, groups) if args.own_d else None
         if args.contexts and args.epoch == "inferred":
-            logZ, path, post, text, ep_post, _ = decode_epochs(m, groups, path=context(r)[:args.levels], adapt=args.adapt)
+            logZ, path, post, text, ep_post, _ = decode_epochs(m, groups, path=context(r)[:args.levels], adapt=args.adapt, d=dr)
             if epoch(r) in EPOCHS:
                 dating.append({"sig": r["signum"], "true": epoch(r), "post": ep_post})
         elif args.contexts:
             # a known epoch puts the stone in its branch of the tree; otherwise only the era is used
             ctx = m.ctx(context(r)[:args.levels] if (args.epoch == "known" and epoch(r) in EPOCHS) else context(r)[:1])
-            logZ, path, post, text = decode(m, groups, ctx=ctx)
+            logZ, path, post, text = decode(m, groups, ctx=ctx, d=dr)
             if args.adapt:
                 ctx = m.adapt(ctx, adapt_counts(m, post, text, ctx), args.adapt)
-                logZ, path, post, text = decode(m, groups, ctx=ctx)
+                logZ, path, post, text = decode(m, groups, ctx=ctx, d=dr)
         else:
-            logZ, path, post, text = decode(m, groups)
+            logZ, path, post, text = decode(m, groups, d=dr)
         G = {(i, j): w for i, j, w in gw}
         P = {(i, j): (w, p) for i, j, w, p in path}
         for i, j, w, p in path:
@@ -197,6 +200,9 @@ rare = [x for x in W if x["freq"] <= 2]
 print(f"kalibreringsfel: rå {ece_raw:.3f}, kalibrerad {ece:.3f}; koefficienter {np.round(B, 3).tolist()}")
 unk = [x for x in rows if x["unk"]]
 print(f"märkta okända: {len(unk)}; av dem rätt gräns {acc(unk, 'span'):.1%}; tid {time.time() - t0:.0f} s")
+import src.runlm as _rl  # noqa: E402
+by_obj = _rl.by_object(gold_rows, lambda g: g["sig"], {"same": lambda ys: acc(ys, "same"), "span": lambda ys: acc(ys, "span")})
+_rl.print_by_object("läsprovet", by_obj)
 config = {"aligned": args.aligned, "contexts": args.contexts, "epoch": args.epoch, "medieval": args.medieval, "adapt": args.adapt,
           "alpha": args.alpha, "kappa_e": args.kappa_e, "lm_beta": args.lm_beta, "levels": args.levels, "epoch_lm": args.epoch_lm,
           "lam_name": args.lam_name, "lam_class": args.lam_class}
@@ -204,7 +210,7 @@ json.dump({"config": config, "folds": folds, "lam_unk": args.lam_unk, "lam_edda"
            "n_gold": len(gold_rows), "exact": acc(gold_rows), "same": acc(gold_rows, "same"), "span": acc(gold_rows, "span"),
            "same_seen": acc(seen, "same"), "n_unseen": len(unseen), "unseen_span": acc(unseen, "span"),
            "unseen_marked_unk": acc(unseen, "unk_pred"), "by_epoch": by_epoch, "dating": dating_out,
-           "per_word": [(g["sig"], g["same"], g["span"]) for g in gold_rows],
+           "per_word": [(g["sig"], g["same"], g["span"]) for g in gold_rows], "by_object": by_obj,
            "cal": cal, "ece_raw": ece_raw, "ece": ece, "recal": B.tolist(), "n_unk": len(unk), "unk_span": acc(unk, "span"),
            "n_pred": len(W), "rare_n": len(rare), "rare_acc": acc(rare, "same"),
            "rare_mean_pc": float(np.mean([x["pc"] for x in rare])) if rare else None, "seconds": time.time() - t0},

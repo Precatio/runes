@@ -36,6 +36,32 @@ def load_rundata(path=os.path.join(ROOT, "data/rundata.json")):
 
 
 viking = lambda r: (r.get("period") or "").startswith("V") and not (r.get("flags") or {}).get("medieval")
+OBJECT_KINDS = ("runsten", "annan sten", "lösa föremål")
+
+
+def object_kind(r: dict) -> str:
+    """What an inscription stands on: 'runsten' (Rundata's object runsten, also fragments and destroyed or lost stones),
+    'annan sten' (grave slabs, rock faces, boulders, whetstones …) or 'lösa föremål' (metal, bone, horn, wood …).
+    Calculations are made on runestones; other objects are reported separately (2026-10-17)."""
+    if "runsten" in (r.get("object") or "").lower():
+        return "runsten"
+    return "annan sten" if r.get("material_type") == "sten" else "lösa föremål"
+
+
+def by_object(rows, signum_of, metrics: dict, recs=None) -> dict:
+    """Test rows split by what their inscription stands on, runestones first: {kind: {"n": …, metric: value}}, with
+    metrics {name: function of the rows of one kind}."""
+    by = {r["signum"]: r for r in (recs if recs is not None else load_rundata())}
+    groups = {k: [] for k in OBJECT_KINDS}
+    for x in rows:
+        r = by.get(signum_of(x))
+        groups[object_kind(r) if r else "lösa föremål"].append(x)
+    return {k: {"n": len(ys), **{m: f(ys) for m, f in metrics.items()}} for k, ys in groups.items() if ys}
+
+
+def print_by_object(label: str, res: dict, fmt=lambda v: f"{v:.1%}"):
+    print(f"{label} efter föremål:", "; ".join(f"{k} (n={v['n']}): " + ", ".join(f"{m} {fmt(x)}" for m, x in v.items() if m != "n")
+                                           for k, v in res.items()))
 DIV = r"[:÷'·×+]"
 RUNES = set("fuþorkhniastbmlRyeæøcdgpvqxzåäö")
 
@@ -811,14 +837,25 @@ class Model:
                             self.cooc_tot[v] += 1
         # divider rate: share of word boundaries marked by a divider in the carved texts
         nd = nb_ = 0
+        rates = []
         for r in recs:
+            nd_r = nb_r = 0
             for _, p in sections(r.get("transliteration")):
                 ws = translit_words(p)
                 gs = carved_groups("§A " + p) if p else []
                 if len(ws) > 1 and gs:
-                    nb_ += len(ws) - 1
-                    nd += min(len(gs), len(ws)) - 1
+                    nb_r += len(ws) - 1
+                    nd_r += min(len(gs), len(ws)) - 1
+            nd, nb_ = nd + nd_r, nb_ + nb_r
+            if nb_r >= 3:
+                rates.append(nd_r / nb_r)
         self.d = min(max(d if d is not None else (nd / nb_ if nb_ else 0.5), 0.01), 0.99)
+        # carvers differ: most mark nearly every word boundary, some none. The rates of the single texts as a beta
+        # distribution (method of moments), the prior for a stone's own rate (stone_divider_rate)
+        mu = sum(rates) / len(rates) if rates else self.d
+        var = sum((x - mu) ** 2 for x in rates) / len(rates) if rates else 0.0
+        k_ = mu * (1 - mu) / var - 1 if var > 0 else 10.0
+        self.div_prior = (max(mu * k_, 0.05), max((1 - mu) * k_, 0.05))
         # index: rune string → {word: P(runes | word)}
         self.index = defaultdict(dict)
         self.rule_z = {}  # the share of a word's spellings the beam keeps; context spellings are scaled the same way
@@ -1079,17 +1116,18 @@ def _lse(xs):
     return m + math.log(sum(math.exp(x - m) for x in xs)) if m > float("-inf") else m
 
 
-def posteriors(model, groups, signs=(), lexicon=True, ctx=None, doc=None, cache=None, area=None):
+def posteriors(model, groups, signs=(), lexicon=True, ctx=None, doc=None, cache=None, area=None, d=None):
     """Forward–backward over the carved text. `groups` are the carver's groups (a divider between each);
     `signs` are indices of groups followed by a non-runic sign or the futhark row (a boundary at no cost).
-    Returns (log P(text), span posteriors {(i, j, w): p}, text)."""
+    d: the share of word boundaries the carver marks with a divider (default the corpus rate model.d; for one stone
+    see stone_divider_rate). Returns (log P(text), span posteriors {(i, j, w): p}, text)."""
     text = "".join(groups)
     L = len(text)
     div, free, pos = set(), set(), 0
     for gi, g in enumerate(groups[:-1]):
         pos += len(g)
         (free if gi in signs else div).add(pos)
-    d = model.d
+    d = model.d if d is None else d
     lbf = lambda i: 0.0 if (i == 0 or i in free) else math.log(d if i in div else 1 - d)
     ep = ctx.epoch if ctx is not None else None
 
@@ -1153,6 +1191,150 @@ def posteriors(model, groups, signs=(), lexicon=True, ctx=None, doc=None, cache=
     return logZ, post, text
 
 
+USE_SPLIT = True  # restore reads only the gap's group per candidate (SplitText); False: the whole text, as before
+
+
+class SplitText:
+    """Exact forward–backward for texts that differ only in one group: the gap's group when restore tries its
+    candidates. A word never crosses a divider or a lost rune, so the text before the group (prefix) ends in a fixed
+    forward state and the text after it (suffix) in a fixed backward function of the last word read; both are computed
+    once, and each candidate needs only its own group. Gives the same log P(text) and, for the spans inside the group,
+    the same posteriors as posteriors() on the whole text (up to rounding), at a fraction of the cost on long texts.
+    parts, sg as posteriors takes them (groups and the indices followed by a boundary at no cost); a, b: the parts
+    [a, b) that vary."""
+
+    def __init__(self, model, parts, sg, a, b, lexicon=True, ctx=None, doc=None, cache=None, area=None, d=None):
+        self.model, self.lexicon, self.ctx = model, lexicon, ctx
+        self.d = model.d if d is None else d
+        self.sg = set(sg)
+        self.a, self.b, self.n = a, b, len(parts)
+        ep = ctx.epoch if ctx is not None else None
+        self._lt = {}
+
+        def lt(w, prev):
+            k = (w, prev)
+            if k not in self._lt:
+                p = model.lam_unk if w == "<unk>" else model.p_name(prev) if w[0] == "§" else model.p_word(w, prev, ep, doc, cache, area)
+                self._lt[k] = math.log(p) if p > 0 else float("-inf")
+            return self._lt[k]
+        self.lt = lt
+        # the boundary before the varying group, and after it: free (a sign or a lost rune), a divider, or none
+        self.start_cost = 0.0 if a == 0 or (a - 1) in self.sg else math.log(self.d)
+        self.end_cost = None if b >= len(parts) else (0.0 if (b - 1) in self.sg else math.log(self.d))
+        pre = parts[:a]
+        self.offset = sum(len(p) for p in pre)
+        if pre:
+            text, div, free = self._layout(pre, 0)
+            starts = self._starts(text, div | free)
+            la = self._forward(text, starts, self._cost(div, free, 0.0), {"<s>": 0.0})
+            self.init = la[len(text)]
+        else:
+            self.init = {"<s>": 0.0}
+        suf = parts[b:]
+        self._B = {}
+        if suf:
+            text, div, free = self._layout(suf, b)
+            starts = self._starts(text, div | free)
+            # the first word of the suffix is reached from any last word of the group: its start costs end_cost
+            cost = self._cost(div, free, self.end_cost)
+            la = self._forward(text, starts, cost, {"<any>": 0.0})
+            self.suf = (text, starts, cost, self._backward(text, starts, la, cost, lambda w: 0.0, skip_start=True))
+        else:
+            self.suf = None
+
+    def _layout(self, parts, first):
+        """The text of parts[first...] and its positions of dividers and free boundaries (local)."""
+        text = "".join(parts)
+        div, free, pos = set(), set(), 0
+        for k, g in enumerate(parts[:-1]):
+            pos += len(g)
+            (free if (first + k) in self.sg else div).add(pos)
+        return text, div, free
+
+    def _cost(self, div, free, at0):
+        ld, l1 = math.log(self.d), math.log(1 - self.d)
+        return lambda i: at0 if i == 0 else (0.0 if i in free else ld if i in div else l1)
+
+    def _starts(self, text, forced):
+        L, m = len(text), self.model
+        starts = defaultdict(list)
+        for i in range(L):
+            for j in range(i + 1, min(L, i + m.maxlen) + 1):
+                if any(x in forced for x in range(i + 1, j)):
+                    break
+                for w, ps in m.candidates(text[i:j], self.ctx).items():
+                    if ps > 0 and (self.lexicon or w == "<unk>"):
+                        starts[i].append((j, w, math.log(ps)))
+        return starts
+
+    def _forward(self, text, starts, cost, init):
+        L, lt = len(text), self.lt
+        la = [dict() for _ in range(L + 1)]
+        la[0] = dict(init)
+        incoming = [defaultdict(list) for _ in range(L + 1)]
+        for i in range(L + 1):
+            if i > 0:
+                la[i] = {w: _lse(v) for w, v in incoming[i].items()}
+                incoming[i] = None
+            if not la[i] or i == L:
+                continue
+            for j, w, lps in starts[i]:
+                s_ = _lse([a_ + (0.0 if prev == "<any>" else lt(w, prev)) for prev, a_ in la[i].items()])
+                incoming[j][w].append(s_ + cost(i) + lps)
+        return la
+
+    def _backward(self, text, starts, la, cost, final, skip_start=False):
+        L, lt = len(text), self.lt
+        lb = [dict() for _ in range(L + 1)]
+        lb[L] = {w: final(w) for w in la[L]}
+        for i in range(L - 1, 0 if skip_start else -1, -1):
+            if not la[i]:
+                continue
+            acc = defaultdict(list)
+            for j, w, lps in starts[i]:
+                if w not in lb[j]:
+                    continue
+                base = cost(i) + lps + lb[j][w]
+                for prev in la[i]:
+                    acc[prev].append(lt(w, prev) + base)
+            lb[i] = {prev: _lse(v) for prev, v in acc.items()}
+        return lb
+
+    def B(self, prev):
+        """log P(the suffix | the last word before it)."""
+        if self.suf is None:
+            return 0.0
+        if prev not in self._B:
+            text, starts, cost, lb = self.suf
+            v = [self.lt(w, prev) + cost(0) + lps + lb[j][w] for j, w, lps in starts[0] if w in lb[j]]
+            self._B[prev] = _lse(v) if v else float("-inf")
+        return self._B[prev]
+
+    def run(self, mid):
+        """mid: the varying parts. Returns (log P(text), posteriors of the spans in mid {(i, j, w): p} with positions
+        counted from mid's start, the text of mid); mid starts at self.offset in the whole text."""
+        text, div, free = self._layout(mid, self.a)
+        starts = self._starts(text, div | free)
+        cost = self._cost(div, free, self.start_cost)
+        la = self._forward(text, starts, cost, self.init)
+        L = len(text)
+        if not la[L]:
+            return float("-inf"), {}, text
+        lb = self._backward(text, starts, la, cost, self.B)
+        logZ = _lse([v + self.B(w) for w, v in la[L].items()])
+        post, lt = {}, self.lt
+        for i in range(L):
+            if not la[i]:
+                continue
+            for j, w, lps in starts[i]:
+                if w not in lb[j]:
+                    continue
+                v = _lse([a_ + lt(w, prev) for prev, a_ in la[i].items()]) + cost(i) + lps + lb[j][w] - logZ
+                if v > -30:
+                    post[(i, j, w)] = post.get((i, j, w), 0.0) + math.exp(v)
+        return logZ, post, text
+
+
 def best_path(post, L, keyfn=None):
     """The path with the highest expected number of correctly read runes (posterior × length); the same word in
     several normalizations counts as one reading of the span (keyfn: e.g. Model.lemma; default key)."""
@@ -1181,10 +1363,45 @@ def best_path(post, L, keyfn=None):
     return path[::-1]
 
 
-def decode(model, groups, signs=(), lexicon=True, ctx=None):
+def decode(model, groups, signs=(), lexicon=True, ctx=None, d=None):
     """Returns (log P(text), best path [(start, end, word, posterior)], span posteriors {(i, j, w): p}, text)."""
-    logZ, post, text = posteriors(model, groups, signs, lexicon, ctx)
+    logZ, post, text = posteriors(model, groups, signs, lexicon, ctx, d=d)
     return logZ, best_path(post, len(text), getattr(model, "lemma", None)), post, text
+
+
+def split_lost(groups, signs=()):
+    """The groups with every lost rune ('?') splitting its group, and the indices of the parts followed by a boundary
+    at no cost (a lost rune or a sign), as restore reads a text with open gaps."""
+    parts, sg = [], []
+    for idx, grp in enumerate(groups):
+        pieces = [p_ for p_ in grp.split("?") if p_]
+        for q, p_ in enumerate(pieces):
+            parts.append(p_)
+            if q < len(pieces) - 1 or idx in signs:
+                sg.append(len(parts) - 1)
+    return parts, sg
+
+
+def stone_divider_rate(model, groups, signs=(), rounds=2, ctx=None):
+    """The share of word boundaries this carver marks with a divider. The stone's own dividers against the word
+    boundaries the model expects inside its groups (from a reading of the text), pulled towards the corpus by the beta
+    prior model.div_prior; read again with the new rate, `rounds` times (EM). A carver who divides every other word
+    makes a boundary inside a group unlikely, one who never divides makes it cheap: without this, a rare name with a
+    gap was split into a known word and a formula word (ulfr-- read as ulfr uk, not ulfriþ, on the documented gaps)."""
+    a, b = getattr(model, "div_prior", (1.0, 0.3))
+    parts, sg = split_lost(groups, signs)
+    if not parts:
+        return model.d
+    div, free, pos = set(), set(), 0
+    for gi, g in enumerate(parts[:-1]):
+        pos += len(g)
+        (free if gi in sg else div).add(pos)
+    d = model.d
+    for _ in range(rounds):
+        _, post, _ = posteriors(model, parts, sg, ctx=ctx, d=d)
+        inner = sum(p for (i, _, _), p in post.items() if i and i not in div and i not in free)
+        d = min(max((len(div) + a) / (len(div) + inner + a + b), 0.01), 0.99)
+    return d
 
 
 def adapt_counts(model, post, text, ctx, floor=0.05):
@@ -1204,7 +1421,7 @@ def adapt_counts(model, post, text, ctx, floor=0.05):
     return out
 
 
-def decode_epochs(model, groups, signs=(), path=None, adapt=0.0, prior=None):
+def decode_epochs(model, groups, signs=(), path=None, adapt=0.0, prior=None, d=None):
     """Read with each epoch in turn and weigh the readings by how probable the text is in each epoch: the model
     dates the text from its spelling and language. path is (era, phase, epoch, area, region, carver); its phase and
     epoch are ignored.
@@ -1215,10 +1432,10 @@ def decode_epochs(model, groups, signs=(), path=None, adapt=0.0, prior=None):
     runs, ll = {}, {}
     for e in EPOCHS:
         c = model.ctx((path[0], PHASE[e], e) + path[3:])
-        logZ, post, text = posteriors(model, groups, signs, ctx=c)
+        logZ, post, text = posteriors(model, groups, signs, ctx=c, d=d)
         if adapt:
             c = model.adapt(c, adapt_counts(model, post, text, c), adapt)
-            logZ, post, text = posteriors(model, groups, signs, ctx=c)
+            logZ, post, text = posteriors(model, groups, signs, ctx=c, d=d)
         ll[e] = logZ
         runs[e] = (logZ + math.log(prior[e] / zp), post)
     m = max(v for v, _ in runs.values())
@@ -1319,7 +1536,7 @@ def _name_cache(model, site, near_km, lam_near, near_sites, carver, lam_carver):
 def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_doc=False, char_fills=0,
             context_cands=False, name_cands=0, adapt=0.0, trigram=False, cache=0.0, area=None, by_word=False,
             words=None, site=None, near_km=20.0, lam_near=0.0, near_sites=None, allowed=None, carver=None, lam_carver=0.0,
-            trace_eps=0.0, segments=None, hard=None):
+            trace_eps=0.0, segments=None, hard=None, div_rate=None):
     """Fill a run of lost runes. groups are the carved groups (dividers between them) with every lost rune written '?';
     gap is (group index, first position, last position + 1) of the run to fill. Candidate fillings come from the words
     whose spelling fits the preserved runes around the gap (and, for gaps of one or two runes, every combination of
@@ -1348,6 +1565,7 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
     for certain (a preserved rune inside two runs filled as one); they hold even when the traces are soft. segments: a dict that receives, for each filling, the
     words over the gap [(from, to, word)] with positions counted from the gap's start – a gap that spans two words (two
     runs filled as one, merge_runs) has a word for each part; `words` has only the word where the gap starts.
+    div_rate: the share of word boundaries the carver marks (stone_divider_rate); default the corpus rate.
     Returns [(filling, probability)], best first, over the candidates considered."""
     gi, g0, g1 = gap
     k = g1 - g0
@@ -1366,7 +1584,7 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
             parts0.append(p_)
             if q < len(pieces) - 1 or idx in signs or (idx == gi and q == len(pieces) - 1 and "?" in grp):
                 sg0.append(len(parts0) - 1)
-    reading0 = decode(model, parts0, sg0, ctx=ctx) if (parts0 and (use_doc or context_cands or adapt or cache)) else None
+    reading0 = decode(model, parts0, sg0, ctx=ctx, d=div_rate) if (parts0 and (use_doc or context_cands or adapt or cache)) else None
     cache_arg, cached_runes = None, set()
     if cache and reading0:
         seen = Counter(w for _, _, w, p_ in reading0[1] if p_ >= 0.3 and w != "<unk>")
@@ -1446,22 +1664,33 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
         doc = {w for _, _, w, p_ in reading0[1] if p_ >= 0.5 and w != "<unk>" and w[0] != "§"}
     out, word_of, seg_of = {}, {}, {}
     gap_at = sum(len(x.replace("?", "")) for x in groups[lo:gi]) + len(g[:g0].replace("?", ""))
+    split = None  # the text around the gap's group, read once for all candidates (SplitText; not with trigram)
     for f in cands:
         filled = g[:g0] + f + g[g1:]
         win = groups[lo:gi] + [filled] + groups[gi + 1:hi]
         # other lost runes split their group (a boundary at no cost), so that only this gap is filled
-        parts, sg = [], []
+        parts, sg, mid = [], [], []
         for idx, grp in enumerate(win):
             pieces = [p_ for p_ in grp.split("?") if p_]
             for q, p_ in enumerate(pieces):
+                if lo + idx == gi:
+                    mid.append(len(parts))
                 parts.append(p_)
                 if q < len(pieces) - 1 or (lo + idx) in signs:
                     sg.append(len(parts) - 1)
         if not parts:
             continue
-        lz, post_, text_ = posteriors(model, parts, sg, ctx=ctx, doc=doc, cache=cache_arg, area=area)
-        path_ = (best_path(post_, len(text_), model.lemma)
-                 if (trigram or by_word or words is not None or segments is not None) else None)
+        if trigram or not mid or not USE_SPLIT:
+            lz, post_, text_ = posteriors(model, parts, sg, ctx=ctx, doc=doc, cache=cache_arg, area=area, d=div_rate)
+            path_ = (best_path(post_, len(text_), model.lemma)
+                     if (trigram or by_word or words is not None or segments is not None) else None)
+        else:
+            if split is None:
+                split = SplitText(model, parts, sg, mid[0], mid[-1] + 1, ctx=ctx, doc=doc, cache=cache_arg, area=area, d=div_rate)
+            lz, post_, text_ = split.run(parts[mid[0]:mid[-1] + 1])
+            # words never cross the group's edges, so the best path over the group is the whole path's part there
+            path_ = ([(i_ + split.offset, j_ + split.offset, w_, p_) for i_, j_, w_, p_ in best_path(post_, len(text_), model.lemma)]
+                     if (by_word or words is not None or segments is not None) else None)
         out[f] = lz + (trigram_delta(model, path_) if trigram else 0.0) + (misfit(f) * math.log(trace_eps) if soft else 0.0)
         if path_ is not None:
             word_of[f] = next((w for i_, j_, w, _ in path_ if i_ <= gap_at < j_), None)
@@ -1541,6 +1770,9 @@ def _by_lemma(model, pairs):
     return dict(sorted(out.items(), key=lambda kv: -kv[1]))
 
 
+MAX_COMBOS = 256  # above this the joint reading is searched gap by gap (restore_all)
+
+
 def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, area=None, allowed=None, details=None,
                 positions=None, hard=None, **kw):
     """Fill several runs of lost runes in a text together. Each gap is first filled on its own, then again with the
@@ -1586,7 +1818,7 @@ def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, a
                 if positions is not None:
                     at = lambda f, o: next((w_ for a_, b_, w_ in seg.get(f, ()) if a_ <= o < b_), None) or "<unk>"  # noqa: E731
                     positions[n] = [_by_lemma(model, [(at(f, o), p_) for f, p_ in res]) for o in range(gp[2] - gp[1])]
-    combos = list(itertools.product(*[o or ["?" * (b - a)] for o, (_, a, b) in zip(options, gaps)]))
+    opts = [o or ["?" * (b - a)] for o, (_, a, b) in zip(options, gaps)]
     # the whole text is weighed as each gap was: with the names of nearby stones and, for soft traces, a factor
     # trace_eps for each misread trace (without these a filling the traces rule against could win the reading)
     names_arg = None if kw.get("cache") else _name_cache(
@@ -1598,8 +1830,11 @@ def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, a
         sets, fixed = (allowed or {}).get(gp), set((hard or {}).get(gp) or ())
         return sum(1 for i, ch in enumerate(f) if sets and i < len(sets) and sets[i] and ch not in sets[i]
                    and i not in fixed) if sets else 0
-    scored = []
-    for choice in combos:
+    scored, seen = [], {}
+
+    def score(choice):
+        if choice in seen:
+            return seen[choice]
         gs = fill(groups, choice)
         parts, sg, offs = [], [], []
         for idx, grp in enumerate(gs):
@@ -1608,7 +1843,7 @@ def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, a
                 parts.append(p_)
                 if q < len(pieces) - 1 or idx in signs:
                     sg.append(len(parts) - 1)
-        lz, post_, text_ = posteriors(model, parts, sg, ctx=ctx, cache=names_arg, area=area)
+        lz, post_, text_ = posteriors(model, parts, sg, ctx=ctx, cache=names_arg, area=area, d=kw.get("div_rate"))
         path_ = best_path(post_, len(text_), model.lemma)
         if kw.get("trigram"):
             lz += trigram_delta(model, path_)
@@ -1616,7 +1851,26 @@ def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, a
             lz += sum(misfit(gp, f) for gp, f in zip(gaps, choice)) * math.log(eps)
         at = [sum(len(x.replace("?", "")) for x in gs[:gi]) + len(gs[gi][:a].replace("?", "")) for gi, a, _ in gaps]
         words = [next((w for i_, j_, w, _ in path_ if i_ <= t < j_), None) for t in at]
-        scored.append((lz, choice, " ".join(w for _, _, w, _ in path_), words))
+        seen[choice] = (lz, choice, " ".join(w for _, _, w, _ in path_), words)
+        scored.append(seen[choice])
+        return seen[choice]
+
+    if math.prod(len(o) for o in opts) <= MAX_COMBOS:
+        for choice in itertools.product(*opts):
+            score(choice)
+    else:
+        # Too many gaps for every combination (2^16 readings of the whole text took 7.7 h on By NT1984;32). Only the best
+        # combination is used, so it is searched for gap by gap: each gap takes its best option with the others held
+        # fixed, until no gap changes (iterated conditional modes, from each gap's own best option)
+        cur = tuple(o[0] for o in opts)
+        for _ in range(6):
+            changed = False
+            for n_ in range(len(opts)):
+                best_c = max((cur[:n_] + (f,) + cur[n_ + 1:] for f in opts[n_]), key=lambda c: score(c)[0])
+                if best_c != cur:
+                    cur, changed = best_c, True
+            if not changed:
+                break
     mx = max(x[0] for x in scored)
     z = sum(math.exp(x[0] - mx) for x in scored)
     out = sorted(((c, math.exp(v - mx) / z, rd) for v, c, rd, _ in scored), key=lambda x: -x[1])

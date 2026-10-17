@@ -41,8 +41,9 @@ def status_of(tok):
     return "återställt" if tok and "[" in tok else "ej återställt" if (tok is None or tok == "...") else "oklart"
 
 
-def read_stone(r, items):
-    """Fill the stone's gaps (items: [(groups, gap, carved word, Rundata token)]) with the app's model; one row per gap."""
+def read_stone(r, items, own_d=False):
+    """Fill the stone's gaps (items: [(groups, gap, carved word, Rundata token)]) with the app's model; one row per gap.
+    own_d: the carver's own divider rate (rl.stone_divider_rate over all the stone's sections) instead of the corpus rate."""
     b = tm.bundle(tm.fold_of(r["signum"]))
     m = b["model"]
     site = (float(r["lat"]), float(r["lon"])) if r.get("lat") is not None and r.get("lon") is not None else None
@@ -50,6 +51,13 @@ def read_stone(r, items):
     by_groups = defaultdict(list)
     for x in items:
         by_groups[tuple(x[0])].append(x)
+    dr = None
+    if own_d:
+        allg, ends = [], []
+        for key in by_groups:
+            allg.extend(key)
+            ends.append(len(allg) - 1)
+        dr = rl.stone_divider_rate(m, allg, ends)
     for groups, ys in by_groups.items():
         runs = [y[1] for y in ys]
         work, spans, cons, member = rl.merge_runs(list(groups), runs)
@@ -62,7 +70,7 @@ def read_stone(r, items):
             continue
         pos = {}
         combos, gaps, marg = rl.restore_all(m, work, only=spans, allowed=cons, hard=hard, positions=pos, site=site,
-                                            **tm.FILL)
+                                            div_rate=dr, **tm.FILL)
         if not combos:
             continue
         best = dict(zip(gaps, combos[0][0]))
@@ -79,10 +87,11 @@ def read_stone(r, items):
             if restored:
                 agrees = bool(word and word != "<unk>" and (m.lemma(word) == m.lemma(restored) or rl.same_word(word, restored)))
             rows.append({"sig": r["signum"], "interpreted": interpreted(r), "carved": w, "lost": gap[2] - gap[1], "fill": fill, "word": word,
+                         "gap": list(gap), "group": groups[gap[0]],
                          "p": round(words.get(word, 0.0), 4) if word else 0.0,
                          "alts": [(ww, round(pp, 3)) for ww, pp in list(words.items())[:5]],
                          "rundata": tok, "status": status_of(tok), "agrees": agrees,
-                         "reading": combos[0][2], "p_reading": round(combos[0][1], 4)})
+                         "reading": combos[0][2], "p_reading": round(combos[0][1], 4), "div_rate": dr})
     return rows
 
 

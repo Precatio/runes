@@ -298,3 +298,26 @@ def test_gap_status_follows_the_editors_restoration():
     assert [t for *_, t in gaps_of(tr)] == ["austrveg[i]"]
     tr = {"signum": "x", "transliteration": "-a--bi-rn", "normalization": "...bi[o]rn"}
     assert [status_of(t) for *_, t in gaps_of(tr)] == ["ej återställt", "ej återställt", "återställt"]
+
+
+def test_the_gap_group_alone_gives_the_same_reading_as_the_whole_text():
+    from src.runlm import SplitText, posteriors
+    m = Model(RECS)
+    parts, sg = ["þurir", "raisþi", "st", "in", "þansi", "aft", "faþursin"], [2]  # a lost rune between st and in
+    z0, post0, _ = posteriors(m, parts, sg, d=0.8)
+    for a, b in ((0, 1), (2, 4), (6, 7)):
+        S = SplitText(m, parts, sg, a, b, d=0.8)
+        z1, post1, text = S.run(parts[a:b])
+        assert abs(z1 - z0) < 1e-9
+        for (i, j, w), p in post1.items():
+            assert abs(p - post0.get((i + S.offset, j + S.offset, w), 0.0)) < 1e-9
+
+
+def test_a_carver_who_divides_every_word_makes_a_boundary_inside_a_group_costly():
+    from src.runlm import stone_divider_rate
+    # half of the carvers divide every word, the others none: the corpus rate is in between
+    m = Model(RECS + [_rec(f"T {20 + i}", "þurir raisþi stain þansi aft faþur sin", "Þorir ræisti stæin þannsi æft faður sinn.")
+                      for i in range(6)])
+    divided = stone_divider_rate(m, ["þurir", "raisþi", "stain", "þansi", "aft", "faþur", "sin"])
+    undivided = stone_divider_rate(m, ["þurirraisþistainþansiaftfaþursin"])
+    assert divided > m.d > undivided

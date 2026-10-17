@@ -17,7 +17,7 @@ import time
 from collections import Counter
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from src.runlm import EPOCHS, PHASE, RUNES, Model, carved_groups, context, edda_tokens, epoch, load_rundata, posteriors, runekey, viking  # noqa: E402
+from src.runlm import by_object, print_by_object, EPOCHS, PHASE, RUNES, Model, carved_groups, context, edda_tokens, epoch, load_rundata, posteriors, runekey, viking  # noqa: E402
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--min_runes", type=int, default=10)
@@ -25,6 +25,7 @@ ap.add_argument("--alpha", type=float, default=20.0)
 ap.add_argument("--kappa_e", type=float, default=5.0)
 ap.add_argument("--lm_beta", type=float, default=0.0)
 ap.add_argument("--lam_name", type=float, default=0.0)
+ap.add_argument("--lam_class", type=float, default=0.0)
 ap.add_argument("--folds", type=int, nargs="*", default=None)
 ap.add_argument("--out", default=None)
 args = ap.parse_args()
@@ -60,7 +61,7 @@ for k in folds:
     test = tests[k::K]
     tset = {r["signum"] for r in test}
     m = Model([r for r in V if r["signum"] not in tset], edda_tokens=ET, aligned=True, contexts=True, alpha=args.alpha,
-              kappa_e=args.kappa_e, lm_beta=args.lm_beta, lam_name=args.lam_name)
+              kappa_e=args.kappa_e, lm_beta=args.lm_beta, lam_name=args.lam_name, lam_class=args.lam_class)
     prior = {e: (m.epoch_prior[e] or 1) for e in EPOCHS}
     for r in test:
         groups, signs = readable(r)
@@ -97,6 +98,10 @@ for name, use_prior in (("prior", True), ("uniform", False)):
                     "acc": sum(pick(p) == x["true"] for x, p in sub) / max(1, len(sub))})
     out[name] = {"n": len(P), "right": right / len(P), "within_one": near / len(P), "majority_baseline": base,
                  "per_epoch": per, "confusion": conf, "by_length": by_len, "reliability": rel}
+    out[name]["by_object"] = by_object(P, lambda xp: xp[0]["sig"], {
+        "right": lambda ys: sum(pick(p) == x["true"] for x, p in ys) / len(ys),
+        "within_one": lambda ys: sum(abs(EPOCHS.index(pick(p)) - EPOCHS.index(x["true"])) <= 1 for x, p in ys) / len(ys)})
+    print_by_object(f"[{name}]", out[name]["by_object"])
     print(f"[{name}] rätt epok {right / len(P):.1%} av {len(P)} (största klassen {base:.1%}); högst en epok fel {near / len(P):.1%}")
     print("   per epok (rätt, antal):", per)
     print("   efter längd:", {k_: f"{a:.0%} (n={n})" for k_, (a, n) in by_len.items()})

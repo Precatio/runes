@@ -22,9 +22,11 @@ from src import rungloss as rg
 VERSION = "textmodel-14"
 K = 5
 CACHE = os.path.join(rl.ROOT, "data", "cache", "textmodel", VERSION)
+CACHE_LOO = CACHE + "-loo"  # readings with the leave-one-out model
 MAX_GAP = 4  # longer runs of lost runes are left open: the masking test covers 1–4 runes
 # Soft traces (trace_eps): a misread trace costs a factor 0.05 per rune instead of ruling out the right answer. With one
 # trace in five misread, whole words were 73 % right against 44 % with hard traces (scripts/runlm_restore_test.py).
+OWN_D = False  # each stone read with its carver's own divider rate (rl.stone_divider_rate) instead of the corpus rate
 FILL = dict(window=None, char_fills=15, context_cands=True, n_cands=100, by_word=True, near_km=10.0, lam_near=0.1,
             trace_eps=0.05)
 MODEL = dict(aligned=True, lam_name=0.05, contexts=True, alpha=100.0, kappa_e=50.0, lm_beta=200.0, lam_class=0.2)
@@ -36,6 +38,7 @@ VALIDATION = {"inside_word": 0.73, "whole_word": 0.57, "sure_right": 0.94, "rund
 _lock = threading.Lock()
 _compute = threading.Lock()  # one reading at a time: the models' caches are shared
 _bundles: dict = {}
+_loo: dict = {}
 _data: dict = {}
 
 
@@ -64,10 +67,24 @@ def _records() -> dict:
 def bundle(k: int) -> dict:
     """The model, glossaries and Old Norse forms learned from every inscription outside part k."""
     with _lock:
-        if k in _bundles:
-            return _bundles[k]
+        if k not in _bundles:
+            _bundles[k] = _build(lambda r: fold_of(r["signum"]) != k)
+        return _bundles[k]
+
+
+def bundle_loo(signum: str) -> dict:
+    """The same, learned from every inscription but this one (leave one out): for reading a single stone, the model also
+    sees the stones in its own part, such as a sister stone (Sö 208 for Sö 206). About 20 s to build; the latest is kept."""
+    with _lock:
+        if signum not in _loo:
+            _loo.clear()
+            _loo[signum] = _build(lambda r: r["signum"] != signum)
+        return _loo[signum]
+
+
+def _build(keep) -> dict:
+    if True:
         d = _records()
-        keep = lambda r: fold_of(r["signum"]) != k
         m = rl.Model([r for r in d["V"] if keep(r)], edda_tokens=d["edda"], **MODEL)
         rest = [r for r in d["recs"] if keep(r)]
         da_recs = [dict(r, translation_da=d["da"][r["signum"]]) for r in rest if r["signum"] in d["da"]]
@@ -77,11 +94,10 @@ def bundle(k: int) -> dict:
         fk = Counter()
         for w_, c_ in freq.items():
             fk[rl.key(w_)] += c_
-        _bundles[k] = {
+        return {
             "model": m, "fk": fk, "en": rg.Glossary([r for r in rest if r.get("translation_en")]),
             "da": rg.Glossary(da_recs, field="translation_da", words=rg._danish, src="normalization_ows") if da_recs else None,
             "ows": rg.ows_map(rest)}
-        return _bundles[k]
 
 
 def recal(b: dict, p: float, w: str, runes: str, B) -> float:
@@ -176,18 +192,20 @@ def _safe(signum: str) -> str:
     return re.sub(r"[^A-Za-z0-9ÅÄÖåäöÆØæø;_-]+", "_", signum)
 
 
-def analyze(signum: str, allowed: dict | None = None) -> dict:
+def analyze(signum: str, allowed: dict | None = None, loo: bool = False) -> dict:
     """The model's reading of an inscription. allowed: {gap number: for each lost rune of the gap the runes its
-    visible remains allow ('' or None: nothing visible)}; without it the result is cached."""
+    visible remains allow ('' or None: nothing visible)}; without it the result is cached. loo: read with the model
+    learned from every other inscription (bundle_loo) instead of the one that has not seen the stone's whole part; the
+    tests (VALIDATION) are made with the parts, so for a single stone the figures are if anything cautious."""
     d = _records()
     r = d["by"].get(signum)
     if r is None:
         raise KeyError(signum)
-    base = {"signum": signum, "version": VERSION, "validation": VALIDATION}
+    base = {"signum": signum, "version": VERSION, "validation": VALIDATION, "model": "loo" if loo else "fold"}
     if not (rl.viking(r) and r.get("transliteration")):
         return {**base, "available": False,
                 "reason": "Modellen är byggd för vikingatida inskrifter med en translitterering i Rundata."}
-    path = os.path.join(CACHE, _safe(signum) + ".json")
+    path = os.path.join(CACHE_LOO if loo else CACHE, _safe(signum) + ".json")
     if not allowed and os.path.exists(path):
         try:
             return json.load(open(path, encoding="utf-8"))
@@ -196,11 +214,11 @@ def analyze(signum: str, allowed: dict | None = None) -> dict:
     groups, breaks = text_groups(r["transliteration"])
     if sum(len(g.replace("?", "")) for g in groups) < 4:
         return {**base, "available": False, "reason": "För få läsbara runor för att läsa texten."}
-    b = bundle(fold_of(signum))
+    b = bundle_loo(signum) if loo else bundle(fold_of(signum))
     with _compute:
         out = _read(r, groups, breaks, b, allowed, base, d)
     if not allowed:
-        os.makedirs(CACHE, exist_ok=True)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
         tmp = path + ".tmp"
         with open(tmp, "w", encoding="utf-8") as fh:
             json.dump(out, fh, ensure_ascii=False)
@@ -257,15 +275,17 @@ def _read(r, groups, breaks, b, allowed, base, d, trace_at=None, alt=True):
             hard[sp] = [i - a for i in range(a, e) if i not in seen]  # the preserved runes inside the gap
     details, positions = {}, {}
     near = [(la, lo, nm, ck) for sg, la, lo, nm, ck in d["sites"] if sg != r["signum"]]
-    combos, gaps, words = (rl.restore_all(m, work, signs=breaks, only=fillable, site=site, allowed=traces,
-                                          details=details, positions=positions, hard=hard, near_sites=near, **FILL) if fillable else ([], [], {}))
+    # the carver's own share of marked word boundaries (rl.stone_divider_rate), for the filling and the reading
+    dr = rl.stone_divider_rate(m, work, breaks) if OWN_D else None
+    combos, gaps, words = (rl.restore_all(m, work, signs=breaks, only=fillable, site=site, allowed=traces, details=details,
+                                          positions=positions, hard=hard, near_sites=near, div_rate=dr, **FILL) if fillable else ([], [], {}))
     best = combos[0][0] if combos else ()
     filled = list(groups)
     for (gi, a, e), f in sorted(zip(gaps, best), key=lambda x: (-x[0][0], -x[0][1])):
         filled[gi] = filled[gi][:a] + f + filled[gi][e:]
     parts, sg = _parts(filled, breaks)
     # read in the stone's branch of the spelling tree (era to landscape), as in the calibration
-    _, read, _, text, _, ll = rl.decode_epochs(m, parts, sg, path=rl.context(r)[:5])
+    _, read, _, text, _, ll = rl.decode_epochs(m, parts, sg, path=rl.context(r)[:5], d=dr)
     # each letter of the read text at its place among all runes, lost ones counted (open gaps are not in the text)
     at_rune = [off[gi] + k for gi, g in enumerate(filled) for k, c in enumerate(g) if c != "?"]
     # where the filled runes stand in the read text, and where the text breaks
