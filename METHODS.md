@@ -926,6 +926,43 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     alternativa läsning (§Q), förutsatt att runorna är desamma. Ändras luckans bästa ord visas båda förslagen
     (`_boundaries`, `textmodel-9`). På U Fv1971;212B ger alternativläsningen *s??i iok* Siggi 35 %, och 88 % med
     Källströms iakttagelse (k eller f).
+  * **Snabbare luckfyllning (2026-10-17).** För varje kandidat i en lucka läste modellen om hela texten. Ett ord går
+    aldrig över ett skiljetecken eller en förlorad runa, så texten före luckans grupp slutar i ett fast framåtläge och
+    texten efter den i en fast bakåtfunktion av sista ordet. Båda räknas nu en gång per lucka, och varje kandidat läser
+    bara sin grupp (`SplitText`). Resultatet är detsamma (största skillnad 10⁻¹⁴ på 12 stenar, test i
+    tests/test_runlm.py) och 4,7 gånger snabbare. Stenar med mer än 256 kombinationer av luckornas förslag söks lucka
+    för lucka (iterated conditional modes); på U 512 gav det samma bästa fyllning som den fullständiga genomgången.
+  * **Ristarens egna skiljetecken (2026-10-17, `textmodel-15`).** Hur ofta en ordgräns markeras skiljer sig mycket
+    mellan ristare: de flesta markerar nästan alla, några inga. Andelen för en sten skattas ur dess egna skiljetecken
+    och de ordgränser modellen väntar sig inne i grupperna (två varv EM), dragen mot korpusens fördelning, en
+    betafördelning (1,17; 0,54) skattad med momentmetoden (`stone_divider_rate`). Läsprovet på runstenar: rätt ordgräns
+    95,1 → 95,4 procent (+0,31 procentenheter, 95 %: +0,12 till +0,49; 41 stenar bättre, 13 sämre), orden oförändrade.
+    Luckprovet 82,0 → 82,3 procent.
+  * **Dokumenterade luckor (2026-10-17).** Runor inom hakparentes i Rundata är förlorade men kända från äldre
+    avbildningar. De har fallit bort av fysiska skäl, inte för att svaret var lätt, och liknar därför appens luckor
+    bättre än de luckor som utgivarna har fyllt: utgivare fyller helst där svaret är givet. Varje sådan följd av 1–4
+    runor inne i ett ord görs till en lucka (`scripts/runlm_documented_test.py`). På 361 luckor på runstenar gav
+    modellen rätt ord i 67 procent, och när den sa minst 95 procent hade den rätt i 97. Men i mellanregistret var den
+    för säker: med kalibreringen från de återställda luckorna var kalibreringsfelet 12,6 procentenheter. Felen gäller
+    mest namn: fel namn (31 av 119 fel), namn i stället för ett vanligt ord (28), och namn som modellen satt ihop av
+    namnled blev rätt i 4 av 22 dokumenterade luckor mot 21 av 31 återställda. En lägre vikt för sådana namn (0,3 och
+    0,1) ändrade inte träffsäkerheten.
+  * **Luckkalibreringen omskattad (2026-10-17, `textmodel-15`).** Kalibreringen skattas nu på tre källor tillsammans:
+    de återställda luckorna, maskeringsprovet och de dokumenterade luckorna, var och en med en egen konstant. Appen
+    använder de dokumenterade luckornas nivå. Namn som modellen satt ihop av namnled är en egen klass, och en lucka som
+    omfattar ett helt ord har en egen term, lärd ur maskeringsprovet eftersom de dokumenterade luckorna alltid ligger
+    inne i ett ord. Korsvaliderat på runstenar: de dokumenterade luckorna 2,5 procentenheters kalibreringsfel (Brier
+    0,119 → 0,083), och påståenden om minst 95 procent stämde i 98,7 procent (155 luckor); maskeringsprovet 2,7 inne i
+    ord och 4,3 för hela ord, minst 95 procent rätt i 96 och 97 procent. Det svåra maskeringsprovet, där bara ord
+    utanför de 50 vanligaste döljs, ingick inte i skattningen: kalibreringsfelet inne i ord sjönk där från 17 till 4,5
+    procentenheter, och minst 95 procent stämde i 93. För hela ord i det provet är modellen fortfarande för säker (12
+    procentenheter), men sådana luckor fylls nästan aldrig rätt utan spår. `VALIDATION` räknas sedan textmodel-15 på
+    runstenar (`utdata/runlm_forfining/validering_tm15.py`).
+  * **Böjning är en liten del av felen (2026-10-17).** Av de ord som modellen läste med rätt ordgräns men i annan form
+    än utgivarna (112 av 1 693 i en femtedel av läsprovet) var alla normaliseringsvarianter i Rundata (*sin/sinn*,
+    *stæin/sten*, *ræisþi/resþi*). Verkliga kasusfel, mest namn i nominativ i stället för ackusativ, var omkring 19,
+    drygt 1 procent av orden. En grammatikmodell kan därför vinna högst omkring en procentenhet; spår ur skanningarna
+    väger tyngre (simulerat: hela ord 56 → 81 procent).
 
 ## 9. Språkdrag (fonetisk stil och språkbruk)
 
