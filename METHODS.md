@@ -969,6 +969,22 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     30. Att också välja ordet efter den kalibrerade procenten gav korsvaliderat 69,3 → 73,6 procent rätt ord på de
     dokumenterade luckorna, men 85,4 → 84,3 på utgivarnas. Det kräver att läsningens fyllning följer det valda ordet
     och är inte infört ännu.
+  * **Alla förslag kalibreras tillsammans, och valet följer procenten (2026-10-17, `textmodel-17`).** Att bara
+    kalibrera förstavalet gjorde ordningen i listan beroende av vilket ord som råkade stå först. Nu får varje förslag i
+    en lucka poängen u = a_klass + b_klass · log p, förstavalet dessutom en konstant per klass (dess sannolikhet är för
+    hög just för att det valdes – winner's curse), och "inget av förslagen" en egen poäng ur luckan som helhet
+    (konstant, log(förlorade runor), helt ord, log(1 − största p), källans konstant); sannolikheterna är en softmax
+    över alltihop (`scripts/runlm_list_calibrate.py`, största sannolikhet med scipy; `gap_list` i
+    `data/runlm_calibration.json`). Skattad på utgivarnas, dokumenterade och maskerade luckor; appen läser på de
+    dokumenterade luckornas nivå och väljer det ord som får högst kalibrerad procent (`calibrate_words`), med
+    fyllningen efter ordet. Inom en ordklass vänder ordningen aldrig; mellan klasser kan den. Varianter prövades
+    korsvaliderat (`utdata/runlm_forfining/lista_varianter.py`): log(1 − största p) och förstavalskonstanten behövdes,
+    en marginalterm tillförde inget. Korsvaliderat på runstenar, valt ord mot förstavalet: utgivarnas luckor 85,6 mot
+    85,4 procent (ECE 7,2), dokumenterade 69,9 mot 68,3 (ECE 2,9), maskerade inne i ord 75,7 (ECE 2,3), hela ord 59,7
+    (ECE 5,8). Det svåra maskeringsprovet (utanför skattningen) i stort oförändrat; där håller "minst 95 procent" bara
+    92 procent – känt sedan tidigare. Sö 206: *Guðlaug* står åter före *Gíslaug* också med systerstensmodellen, och i
+    *ru?niR* följer listan modellens egen ordning (*Hrungnir* 25, *roðnir* 20 – textmodel-16:s omkastning var en
+    artefakt av att bara förstavalet kalibrerades).
   * **Böjning är en liten del av felen (2026-10-17).** Av de ord som modellen läste med rätt ordgräns men i annan form
     än utgivarna (112 av 1 693 i en femtedel av läsprovet) var alla normaliseringsvarianter i Rundata (*sin/sinn*,
     *stæin/sten*, *ræisþi/resþi*). Verkliga kasusfel, mest namn i nominativ i stället för ackusativ, var omkring 19,

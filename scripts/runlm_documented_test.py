@@ -97,7 +97,8 @@ def run(fold: int, out_path: str, own_d: bool = False, name_scale: float = 1.0):
             g, gp, w, tok, t = by_gap[(x["group"], tuple(x["gap"]))]
             gold = rl.normtok(tok.replace("[", "").replace("]", "").lstrip("…")) if tok and tok != "..." else None
             word = x["word"]
-            p = tm.calibrate_gap(x["p"], word, gp[2] - gp[1], G_cal) if word else 0.0
+            # textmodel-17: read_stone chooses by the joint calibration and gives its percentage (p_cal)
+            p = x["p_cal"] if x.get("p_cal") is not None else (tm.calibrate_gap(x["p"], word, gp[2] - gp[1], G_cal) if word else 0.0)
             rows.append({"sig": r["signum"], "kind": rl.object_kind(r), "carved": w, "lost": gp[2] - gp[1], "truth": t,
                          "fill": x["fill"], "rune_ok": x["fill"] == t, "word": word, "gold_word": gold,
                          "word_ok": bool(gold and word and word != "<unk>" and rl.same_word(word.lstrip("§"), gold)),

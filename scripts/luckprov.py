@@ -69,19 +69,34 @@ def read_stone(r, items, own_d=False, name_scale=1.0):
         hard = {sp: [i for i, c in enumerate(cons[sp]) if c is not None] for sp in cons}
         if not spans:
             continue
-        pos = {}
+        pos, det = {}, {}
         combos, gaps, marg = rl.restore_all(m, work, only=spans, allowed=cons, hard=hard, positions=pos, site=site,
-                                            div_rate=dr, **{"name_scale": name_scale, **tm.FILL})
+                                            div_rate=dr, details=det, **{"name_scale": name_scale, **tm.FILL})
         if not combos:
             continue
         best = dict(zip(gaps, combos[0][0]))
+        GL = tm._records().get("GL")
+        if GL:  # as the app (textmodel-17): the word with the highest calibrated probability is the gap's choice
+            for n_i, sp in enumerate(gaps):
+                wd_full = marg.get(n_i) or {}
+                if not wd_full or (pos.get(n_i) and len({max(p_, key=p_.get) for p_ in pos[n_i] if p_}) > 1):
+                    continue
+                cd = tm.calibrate_words(wd_full, n_lost[sp], GL)
+                w_star = max(cd, key=cd.get)
+                if w_star == max(wd_full, key=wd_full.get) or cd[w_star] <= 0:
+                    continue
+                lm = m.lemma(w_star)
+                fits = [(p_, f_) for f_, p_, w_ in det.get(n_i, []) if w_ and w_ != "<unk>" and m.lemma(w_) == lm]
+                if fits:
+                    best[sp] = max(fits)[1]
         for _, gap, w, tok in ys:
             sp = member.get(gap)
             if sp not in best:
                 continue
             n = gaps.index(sp)
             words = pos[n][gap[1] - sp[1]] if pos.get(n) else marg.get(n, {})
-            word = max(words, key=words.get) if words else None
+            cd = tm.calibrate_words(words, n_lost[sp], GL) if GL and words else None
+            word = (max(cd, key=cd.get) if cd else max(words, key=words.get)) if words else None
             fill = best[sp][gap[1] - sp[1]:gap[2] - sp[1]]
             restored = rl.normtok(tok.replace("[", "").replace("]", "")) if status_of(tok) == "återställt" else None
             agrees = None
@@ -90,6 +105,7 @@ def read_stone(r, items, own_d=False, name_scale=1.0):
             rows.append({"sig": r["signum"], "interpreted": interpreted(r), "carved": w, "lost": gap[2] - gap[1], "fill": fill, "word": word,
                          "gap": list(gap), "group": groups[gap[0]],
                          "p": round(words.get(word, 0.0), 4) if word else 0.0,
+                         "p_cal": round(cd[word], 4) if cd and word else None,
                          "alts": [(ww, round(pp, 3)) for ww, pp in list(words.items())[:5]],
                          "rundata": tok, "status": status_of(tok), "agrees": agrees,
                          "reading": combos[0][2], "p_reading": round(combos[0][1], 4), "div_rate": dr})
