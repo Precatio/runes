@@ -353,9 +353,14 @@ def classify_strokes(skel: np.ndarray, half_width: np.ndarray, res: float, rune_
             kind = "irregular"  # zigzagging: possibly a natural crack
         else:
             kind = "ornament"  # smoothly curved: ornament or band edge
+        # The stroke's endpoints (pixels): the extreme points along its own principal axis, for rune-shape work
+        _c = P - P.mean(axis=0)
+        _u = np.linalg.svd(_c, full_matrices=False)[2][0]
+        _t = _c @ _u
         strokes[s] = {"kind": kind, "band": kind == "ornament" and length > rune_max_mm, "length_mm": length, "deviation_mm": dev, "local_deg": local_dev,
                       "turn_deg": turn, "zigzag": zigzag, "width_cv": cv, "branches": bs,
-                      "angle": axis_angle % math.pi, "centre": P.mean(axis=0)}
+                      "angle": axis_angle % math.pi, "centre": P.mean(axis=0),
+                      "p0": (P.mean(axis=0) + _u * _t.min()), "p1": (P.mean(axis=0) + _u * _t.max())}
 
     # The runes of one inscription are about equally tall: a straight stroke far longer than the typical
     # stave is a frame or band line
@@ -541,7 +546,8 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
                     min_fit_r2: float = 0.8, max_cells: int = 6_000_000, face_tree: cKDTree | None = None,
                     max_halfwidth_mm: float = 8.0, max_slope_deg: float = 45.0, up=None,
                     resolution_mm: float | None = None, harmonize_mm: float | None = None,
-                    runes_only: bool = True, rune_min_mm: float = 12.0, rune_max_mm: float = 250.0) -> dict:
+                    runes_only: bool = True, rune_min_mm: float = 12.0, rune_max_mm: float = 250.0,
+                    keep_arrays: bool = False) -> dict:
     """Hittar spåren i höjdfältet och mäter tvärsnitt genom själva mesh-filen, med samma
     profilutdragning och samma calculate_v_angle som den manuella analysen.
 
@@ -694,11 +700,14 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
         rec.pop("_ix", None)
 
     accepted = [s for s in slices if s["accepted"]]
+    arrays = ({"mask": mask, "wide_area": wide_area, "half_width": half_width, "branch_labels": strokes["branch_labels"],
+               "depth": -residual, "res": res} if keep_arrays else None)
     measured_runes = sorted({s["rune_id"] for s in accepted if "rune_id" in s})
     kinds = {}
     for st in strokes["strokes"].values():
         kinds[st["kind"]] = kinds.get(st["kind"], 0) + 1
     return {
+        **({"arrays": arrays} if arrays else {}),
         "slices": slices,
         "image_base64": f"data:image/png;base64,{image_b64}",
         "groove_map_base64": groove_map,
@@ -716,9 +725,20 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
             "runes_identified": len(strokes["runes"]),
             "runes_measured": len(measured_runes),
         },
+        # every stroke's line (mm), whatever its kind: for reading rune shapes, where a too-short branch may hide
+        # among the irregular strokes (the groove measurements themselves are untouched by this)
+        "stroke_lines": [{"kind": st["kind"], "length_mm": float(st["length_mm"]), "width_cv": float(st["width_cv"]),
+                          "deviation_mm": float(st["deviation_mm"]),
+                          "p0_mm": [float(v) * res for v in st["p0"]], "p1_mm": [float(v) * res for v in st["p1"]]}
+                         for st in strokes["strokes"].values()],
         "runes": [{"id": int(r["id"]), "n_strokes": len(r["strokes"]), "height_mm": float(r["height_mm"]),
                    "n_slices": sum(1 for s in accepted if s.get("rune_id") == r["id"]),
-                   "box": _rune_box(r["extent"], hf.H.shape, res)}
+                   "box": _rune_box(r["extent"], hf.H.shape, res),
+                   # each stroke's geometry in mm (heightfield plane), for reading rune shapes from the scan
+                   "strokes_detail": [{"length_mm": float(st["length_mm"]),
+                                       "p0_mm": [float(v) * res for v in st["p0"]],
+                                       "p1_mm": [float(v) * res for v in st["p1"]]}
+                                      for sid in r["strokes"] for st in [strokes["strokes"][sid]]]}
                   for r in strokes["runes"]],
         "parameters": {
             "normal": [float(v) for v in hf.n],
