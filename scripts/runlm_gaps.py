@@ -43,6 +43,10 @@ def norm_tokens_with_gaps(s):
         w2 = w.strip(",;:!?.")
         if w.startswith("..."):
             out.append("...")
+            # a word with its beginning lost ("...f[a]str): the rest is still the word the carved runes belong to
+            rest = w2.lstrip(".")
+            if rest and re.search(r"[^\W\d_]", rest):
+                out.append("…" + rest)  # marked: only the runes inside its brackets are restored (gaps_of)
         elif w2:
             out.append(w2)
     return out
@@ -62,11 +66,19 @@ def match_damaged(a_words, b_tokens):
                 continue
             if i < n and j < m:
                 a = a_words[i].replace("-", "")
-                b = b_tokens[j].replace("[", "").replace("]", "")
-                sc = (-0.1 if b == "..." and "-" in a_words[i] else
+                b = b_tokens[j].replace("[", "").replace("]", "").replace("…", "")
+                sc = (0.3 if b == "..." and a.strip(".") == "" else  # lost text on both sides
+                      -0.1 if b == "..." and "-" in a_words[i] else
                       -0.5 if b == "..." else similarity(a, b) - 0.45 if a else -0.2)
                 if v + sc > best[i + 1][j + 1]:
                     best[i + 1][j + 1] = v + sc; back[i + 1][j + 1] = (i, j, "m")
+            if i + 1 < n and j < m and b_tokens[j] != "...":
+                # two carved groups that are one normalized word (austr·uih- = austrveg[i], U 366)
+                a2 = (a_words[i] + a_words[i + 1]).replace("-", "")
+                b2 = b_tokens[j].replace("[", "").replace("]", "").replace("…", "")
+                sc2 = similarity(a2, b2) - 0.45 - 0.3
+                if v + sc2 > best[i + 2][j + 1]:
+                    best[i + 2][j + 1] = v + sc2; back[i + 2][j + 1] = (i, j, "m2")
             if i < n and v - 0.3 > best[i + 1][j]:
                 best[i + 1][j] = v - 0.3; back[i + 1][j] = (i, j, "a")
             if j < m and v - 0.3 > best[i][j + 1]:
@@ -76,6 +88,8 @@ def match_damaged(a_words, b_tokens):
         pi, pj, kind = back[i][j]
         if kind == "m":
             out[pi] = b_tokens[pj]
+        elif kind == "m2":
+            out[pi] = out[pi + 1] = b_tokens[pj]
         i, j = pi, pj
     return out
 
@@ -104,6 +118,18 @@ def gaps_of(r):
             if at < 0:
                 continue
             pos = at + len(wk)
+            tok = link.get(wi)
+            restored_runs = None
+            if tok and tok.startswith("…"):
+                # a word with its beginning lost ("...bi[o]rn): only the last runs of lost runes, as many runes as the
+                # brackets hold, are restored; the earlier ones belong to the lost beginning (U 508)
+                n_br = sum(len(x) for x in re.findall(r"\[([^\]]*)\]", tok))
+                restored_runs, cum = set(), 0
+                for mm in reversed(list(re.finditer(r"\?+", wk))):
+                    if cum + (mm.end() - mm.start()) > n_br:
+                        break
+                    restored_runs.add(mm.start())
+                    cum += mm.end() - mm.start()
             for mm in re.finditer(r"\?+", wk):
                 k = mm.end() - mm.start()
                 rest = wk.replace("?", "")
@@ -113,7 +139,8 @@ def gaps_of(r):
                 g_pos = 0
                 for gi, g in enumerate(groups):
                     if g_pos <= s0 and s0 + k <= g_pos + len(g):
-                        out.append((groups, (gi, s0 - g_pos, s0 - g_pos + k), w, link.get(wi)))
+                        t = tok if restored_runs is None else (tok[1:] if mm.start() in restored_runs else "...")
+                        out.append((groups, (gi, s0 - g_pos, s0 - g_pos + k), w, t))
                         break
                     g_pos += len(g)
     return out

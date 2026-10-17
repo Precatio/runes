@@ -283,3 +283,18 @@ def test_word_classes_are_a_distribution_mixed_into_the_word_sequences():
         assert abs(total - 1) < 1e-9, (prev, total)
     plain = Model(PAR)
     assert plain.lam_class == 0 and not plain.cl  # off unless asked for
+
+
+def test_gap_status_follows_the_editors_restoration():
+    """A damaged carved word is paired with the normalized word the editors restored, also when the beginning of the
+    word is lost (U 163 ..f[a]str) or two carved groups are one word (U 366 austr·uih- = austrveg[i]); in a word with a
+    lost beginning only the runs the brackets hold count as restored (U 508 -a--bi-rn = ...bi[o]rn)."""
+    from scripts.luckprov import status_of
+    from scripts.runlm_gaps import gaps_of
+    tr = {"signum": "x", "transliteration": "auk × kamal × iftiR × fusra sin f-str × iaRk",
+          "normalization": 'ok "Gamall æftiR fostra sinn. "...f[a]str hiogg.'}
+    assert [status_of(t) for *_, t in gaps_of(tr)] == ["återställt"]
+    tr = {"signum": "x", "transliteration": "[... uaR · tauþr × i austr·uih- ...]", "normalization": "... vaR dauðr i austrveg[i] ..."}
+    assert [t for *_, t in gaps_of(tr)] == ["austrveg[i]"]
+    tr = {"signum": "x", "transliteration": "-a--bi-rn", "normalization": "...bi[o]rn"}
+    assert [status_of(t) for *_, t in gaps_of(tr)] == ["ej återställt", "ej återställt", "återställt"]
