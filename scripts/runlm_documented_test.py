@@ -101,7 +101,9 @@ def run(fold: int, out_path: str, own_d: bool = False, name_scale: float = 1.0):
             rows.append({"sig": r["signum"], "kind": rl.object_kind(r), "carved": w, "lost": gp[2] - gp[1], "truth": t,
                          "fill": x["fill"], "rune_ok": x["fill"] == t, "word": word, "gold_word": gold,
                          "word_ok": bool(gold and word and word != "<unk>" and rl.same_word(word.lstrip("§"), gold)),
-                         "p": round(p, 4), "p_model": x["p"], "div_rate": x.get("div_rate")})
+                         "p": round(p, 4), "p_model": x["p"], "div_rate": x.get("div_rate"),
+                         "alts": x.get("alts"),
+                         "alts_ok": [bool(gold and w_ and w_ != "<unk>" and rl.same_word(w_.lstrip("§"), gold)) for w_, _ in x.get("alts") or []]})
         if i % 10 == 0:
             print(f"del {fold}: {i + 1} av {len(recs)} stenar, {len(rows)} luckor", flush=True)
     json.dump({"fold": fold, "rows": rows}, open(out_path, "w"), ensure_ascii=False, indent=1)

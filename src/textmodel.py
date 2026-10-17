@@ -19,7 +19,7 @@ from datetime import datetime, timezone
 from src import runlm as rl
 from src import rungloss as rg
 
-VERSION = "textmodel-15"
+VERSION = "textmodel-16"
 K = 5
 CACHE = os.path.join(rl.ROOT, "data", "cache", "textmodel", VERSION)
 CACHE_LOO = CACHE + "-loo"  # readings with the leave-one-out model
@@ -320,17 +320,19 @@ def _read(r, groups, breaks, b, allowed, base, d, trace_at=None, alt=True):
     whole = [any(a_ <= i and j <= e_ for i, j, _, _ in read if i < e_ and a_ < j) for a_, e_ in spans]
 
     def cal_dist(dist, k, whole=False):
-        """The words of a gap with the model's first choice calibrated by its class (scripts/runlm_gap_calibrate.py:
-        right for formula words, too high for other words and names) and the others scaled to share what is left in
-        the same proportions, never above the first choice; what is not given to them is left unassigned."""
+        """The words of a gap with the model's first choice calibrated by its class (scripts/runlm_gap_calibrate.py) and
+        the others at most at their own probability: scaled down when the first choice gains, never up when it loses;
+        what is not given to any word is left unassigned. On the documented gaps (utdata/runlm_forfining/alt_kalib.py)
+        the alternatives then got 44 right where 41 were, while sharing out what the first choice lost (textmodel-15)
+        gave them 57 and made a strong alternative equal to the first choice. An alternative can thus end above the
+        first choice, when the first is a word of a class the model is often wrong about (textmodel-16)."""
         if not d.get("G") or not dist:
             return dist
         w0, p0 = max(dist.items(), key=lambda kv: kv[1])
         if w0 == "<unk>" or p0 >= 1:
             return dist
         c0 = calibrate_gap(p0, w0, k, d["G"], whole)
-        p1 = max((p for w, p in dist.items() if w != w0), default=0.0)
-        scale = min((1 - c0) / (1 - p0), c0 / p1 if p1 > 0 else float("inf"))
+        scale = min(1.0, (1 - c0) / (1 - p0))
         return {w: (c0 if w == w0 else p * scale) for w, p in dist.items()}
 
     def p_filled(i, j, w):
@@ -363,9 +365,10 @@ def _read(r, groups, breaks, b, allowed, base, d, trace_at=None, alt=True):
                   "best": best[n] if n < len(best) else None,
                   "fills": [{"fill": f, "p": round(p, 4), "word": (w or "").lstrip("§") or None}
                             for f, p, w in details.get(n, [])[:8]],
-                  "words": [{"word": w.lstrip("§"), "p": round(cd[w], 4), "p_model": round(p, 4)}
-                            for cd in [cal_dist(words.get(n, {}), len(lost[(gi, a, e)]), whole[n])]
-                            for w, p in list(words.get(n, {}).items())[:6]],
+                  # the model's six best words, shown most probable first by their calibrated percentage
+                  "words": sorted(({"word": w.lstrip("§"), "p": round(cd[w], 4), "p_model": round(p, 4)}
+                                   for cd in [cal_dist(words.get(n, {}), len(lost[(gi, a, e)]), whole[n])]
+                                   for w, p in list(words.get(n, {}).items())[:6]), key=lambda x: -x["p"]),
                   "traces": user.get((gi, a, e))}
                  for n, (gi, a, e) in enumerate(gaps)],
         "open_gaps": [{"group": gi, "start": a, "end": e, "n": len(lost[(gi, a, e)])} for gi, a, e in runs
