@@ -186,7 +186,7 @@ Det går att göra mer än att redovisa. Tre lampor finns redan:
 
 - Samnordisk runtextdatabas (Rundata), Institutionen för nordiska språk, Uppsala universitet. Open Database License.
 - Gräslund, A.-S. 2006. Dating the Swedish Viking-Age rune stones on stylistic grounds. I: M. Stoklund m.fl. (red.), *Runes and their Secrets: Studies in Runology*. Köpenhamn: Museum Tusculanum Press, s. 117–139.
-- Källström, M. 2007. *Mästare och förlagor. Studier kring runristare och skriftmiljöer i vikingatidens Sverige* (Runrön 23). Uppsala universitet.
+- Källström, M. 2007. *Mästare och minnesmärken. Studier kring vikingatida runristare och skriftmiljöer i Norden*. Stockholm: Stockholms universitet.
 """
 
 body_en = f"""When Anne-Sofie Gräslund sorted the runestones by the shape of their rune bands and animal ornament, research gained perhaps its sharpest tool: a runestone can be dated to within a few decades without a single year in its text. The style groups today carry much of what we believe we know about the end of the Viking Age – when the carvers began to sign, when the prayers arrived, how the cross spread.
@@ -295,7 +295,7 @@ More can be done than reporting. Three lamps already exist:
 
 - Scandinavian Runic-text Database (Rundata), Department of Scandinavian Languages, Uppsala University. Open Database License.
 - Gräslund, A.-S. 2006. Dating the Swedish Viking-Age rune stones on stylistic grounds. In: M. Stoklund et al. (eds), *Runes and their Secrets: Studies in Runology*. Copenhagen: Museum Tusculanum Press, pp. 117–139.
-- Källström, M. 2007. *Mästare och förlagor. Studier kring runristare och skriftmiljöer i vikingatidens Sverige* (Runrön 23). Uppsala University.
+- Källström, M. 2007. *Mästare och minnesmärken. Studier kring vikingatida runristare och skriftmiljöer i Norden*. Stockholm: Stockholm University.
 """
 
 out = {"slug": "stilgruppernas-morkertal", "title": title, "summary": summary, "body": body,
