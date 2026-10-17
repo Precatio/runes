@@ -36,10 +36,10 @@ EPOCH_LABEL = {"800": "800-talet", "900": "900-talet", "1000": "1000–1070", "1
 # What the tests showed (METHODS.md 8.1), shown with the results so that a reader can judge them. Runestones
 # (utdata/runlm_forfining/validering_tm15.py): the masking test (inside a word 698 gaps, whole words 698; at least 95 %
 # calibrated: 344 gaps), the editors' restored gaps (255 at ≥ 95 %, 254 the editors' word), the documented gaps (361;
-# 155 at ≥ 95 %, cross-validated) and the dating test (1 670 runestones). The trace tests are older and cover every
-# kind of inscription.
+# 155 at ≥ 95 %, cross-validated), the dating test (1 670 runestones) and the masking test with simulated traces, half
+# of each hidden rune visible (whole words; one trace in five misread for with_misread_traces).
 VALIDATION = {"inside_word": 0.758, "whole_word": 0.597, "sure_right": 0.959, "rundata_sure": 0.996,
-              "with_traces": 0.81, "with_misread_traces": 0.73, "dating_epoch": 0.585, "dating_near": 0.948,
+              "with_traces": 0.842, "with_misread_traces": 0.769, "dating_epoch": 0.585, "dating_near": 0.948,
               "documented_right": 0.67, "documented_sure": 0.987}
 
 _lock = threading.Lock()
@@ -224,7 +224,8 @@ def analyze(signum: str, allowed: dict | None = None, loo: bool = False) -> dict
     path = os.path.join(CACHE_LOO if loo else CACHE, _safe(signum) + ".json")
     if not allowed and os.path.exists(path):
         try:
-            return json.load(open(path, encoding="utf-8"))
+            # the test figures describe the model, not the stone: always today's (a batch may have saved older ones)
+            return {**json.load(open(path, encoding="utf-8")), "validation": VALIDATION}
         except ValueError:
             pass
     groups, breaks = text_groups(r["transliteration"])
