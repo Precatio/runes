@@ -1,5 +1,5 @@
 """Datafil för statistiken om stavarna på runstenarna (scripts/stavar_stats.R, artikeln "Stenar och stavar"): en rad
-per vikingatida inskrift i Rundata med translitterering och normalisering. Skriver utdata/stavar/stavar_data.csv.
+per vikingatida runsten i Rundata med translitterering och normalisering (också fragment och försvunna stenar). Skriver utdata/stavar/stavar_data.csv.
     .venv/bin/python -m scripts.stavar_data"""
 import csv
 import os
@@ -19,6 +19,10 @@ YEARS = {k: (v[0] + v[1]) / 2 for k, v in rl.STYLE_YEARS.items()}
 rows = []
 for r in rl.load_rundata():
     if not (rl.viking(r) and r.get("transliteration") and r.get("normalization")):
+        continue
+    # runestones only (Rundata "runsten", also fragments and lost stones), 2026-10-17: coins, rune sticks and other
+    # objects never speak of stones and would dilute the comparison
+    if "runsten" not in (r.get("object") or "").lower():
         continue
     n = r["normalization"]
     st = (r.get("style") or "").replace("FP", "Fp").strip()
