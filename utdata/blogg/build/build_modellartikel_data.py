@@ -35,8 +35,9 @@ D["reading"] = {"inscriptions": RT["n_inscriptions"], "words": RT["n_gold"], "sa
                 "by_kind": RS["reading"]}
 assert RT["n_inscriptions"] == 808 and pr(RT["same"]) == 84 and pr(RT["span"]) == 95
 
-# --- the masking test (mask3), the hard masking test (svart: only words outside the 50 commonest) and the traces
-mask = [x for k in range(5) for x in J(F, f"mask3_f{k}.json")["rows"] if rs(x["sig"])]
+# --- the masking test (mask4, the generation textmodel-18's VALIDATION uses), the hard masking test (svart: only
+# words outside the 50 commonest) and the traces
+mask = [x for k in range(5) for x in J(F, f"mask4_f{k}.json")["rows"] if rs(x["sig"])]
 hard = [x for k in range(5) for x in J(F, f"svart_f{k}.json")["rows"] if rs(x["sig"])]
 G = tm._records()["G"]
 
@@ -66,7 +67,7 @@ D["hard"] = {kind: {"n": sum(x["kind"] == kind for x in hard), "right": float(np
                     "cal": cal_bins([x for x in hard if x["kind"] == kind])} for kind in ("inne i ord", "helt ord")}
 D["hard"]["pooled"] = cal_bins(hard)
 assert pr(D["masking"]["inne i ord"]["right"]) == pr(tm.VALIDATION["inside_word"]) == 76
-assert pr(D["masking"]["helt ord"]["right"]) == pr(tm.VALIDATION["whole_word"]) == 60
+assert pr(D["masking"]["helt ord"]["right"]) == pr(tm.VALIDATION["whole_word"]) == 59
 assert pr(D["hard"]["inne i ord"]["right"]) == 47 and D["hard"]["inne i ord"]["cal"]["ece"] < 0.06
 assert D["hard"]["pooled"]["sure_n"] == 115 and 0.95 <= D["hard"]["pooled"]["sure_right_sw"] <= 0.96
 assert 0.91 <= D["hard"]["pooled"]["sure_right"] <= 0.93 and 0.80 <= D["hard"]["pooled"]["band_right_sw"] <= 0.87
