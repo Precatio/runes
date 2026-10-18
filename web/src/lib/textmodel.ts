@@ -70,6 +70,7 @@ export const TRACE_RUNES: [string, string][] = [
 export interface ScanTraceEntry {
   pos: number;
   set: string;
+  informative?: boolean; // false: the set excludes nothing – shown, but never prefilled
   top: [string, number][];
   blobs: { cross: boolean; zone: string; long: boolean; length: number; ratio: number; w: number }[];
   bind: boolean;

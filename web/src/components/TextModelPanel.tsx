@@ -87,6 +87,8 @@ function ScanProposal({ entries, n, onUse }: { entries: ScanTraceEntry[]; n: num
           <span className="text-slate-500">Runa {e.pos + 1}:</span>{" "}
           {e.bind ? (
             <>fler djupa bistavar än någon runa har – möjlig bindruna, skannern föreslår inget här.</>
+          ) : e.informative === false ? (
+            <>{blobText(e)} – mängden utesluter inget, så skannern föreslår inget här.</>
           ) : (
             <>
               {blobText(e)} → troligast{" "}
@@ -98,11 +100,11 @@ function ScanProposal({ entries, n, onUse }: { entries: ScanTraceEntry[]; n: num
         </div>
       ))}
       <div className="flex flex-wrap items-center gap-2">
-        {entries.some(e => !e.bind) && (
+        {entries.some(e => !e.bind && e.informative !== false) && (
           <button type="button"
             onClick={() => {
               const v = Array(n).fill("");
-              for (const e of entries) if (!e.bind) v[e.pos] = e.set;
+              for (const e of entries) if (!e.bind && e.informative !== false) v[e.pos] = e.set;
               onUse(v);
             }}
             className="px-3 py-1.5 rounded-lg bg-sky-900 text-white text-xs font-semibold hover:bg-sky-950">

@@ -384,6 +384,7 @@ def proposals(signum: str) -> dict:
             top = sorted(p.items(), key=lambda kv: -kv[1])[:5]
             entries.append({"pos": i - g["start"], "bind": False,
                             "set": "".join(sorted(expand(msets[rid]))),
+                            "informative": len(msets[rid]) < len(FUT),
                             "top": [[c, round(q, 3)] for c, q in top],
                             "blobs": feats[rid]})
         if entries:
