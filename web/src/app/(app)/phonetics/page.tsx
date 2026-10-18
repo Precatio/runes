@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { db, ProjectData, type LinguisticResultData, type ReadingSegment } from "@/lib/db";
@@ -488,6 +488,10 @@ export default function PhoneticsPage() {
             föreslår normalisering, översättning och fonetisk rekonstruktion. Läsningen jämförs sedan – utan AI – med
             Rundata, ordformerna kontrolleras mot Rundatas korpus och ortografin jämförs med ristarnas.
           </p>
+          <p className="text-slate-500 text-[13px] mt-2 font-medium">
+            Längre ner på sidan: <a href="#ordmoln" className="text-[#b7410e] underline">ordmolnet</a> – vad som
+            faktiskt står på runstenarna, med samma slags filter som på kartan.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -950,6 +954,8 @@ export default function PhoneticsPage() {
             )}
           </div>
         </div>
+
+        <WordCloudSection />
       </div>
     </>
   );
@@ -1090,6 +1096,178 @@ function ValidationBanner({ v }: { v: NonNullable<LinguisticResultData["validati
           egen läsning och rätta translitterationen nedan – den prövas då på nytt.
         </p>
       )}
+    </div>
+  );
+}
+
+// ---- Ordmolnet: orden på de vikingatida runstenarna (Rundatas normalisering, räknat i API:t) -------------------
+
+interface CloudWord { w: string; name: boolean; stones: number; n: number }
+interface CloudData {
+  stones: number; words: CloudWord[]; common: string[];
+  areas: string[]; provinces: { code: string; label: string }[];
+}
+
+const EPOCH_CHOICES: [string, string][] = [
+  ["", "Alla perioder"], ["800", "800-talet"], ["900", "900-talet"],
+  ["1000", "1000–1070"], ["1100", "1070–1150"], ["odaterad", "Utan datering"],
+];
+const STYLE_CHOICES = ["RAK", "Fp", "KB", "Pr1", "Pr2", "Pr3", "Pr4", "Pr5"];
+// Validated pair (dataviz six checks, light surface #f8fafc): CVD ΔE 29.9, normal 35.5, contrast ≥ 3:1
+const CLOUD_COLOR = { word: "#1d4ed8", name: "#b7410e" };
+
+function WordCloudSection() {
+  const [data, setData] = useState<CloudData | null>(null);
+  const [cloudError, setCloudError] = useState<string | null>(null);
+  const [area, setArea] = useState("");
+  const [epoch, setEpoch] = useState("");
+  const [style, setStyle] = useState("");
+  const [kind, setKind] = useState<"alla" | "ord" | "namn">("alla");
+  const [hideCommon, setHideCommon] = useState(false);
+  const [q, setQ] = useState("");
+  const [asTable, setAsTable] = useState(false);
+  const [hover, setHover] = useState<{ word: CloudWord; x: number; y: number } | null>(null);
+  const cloudRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let dead = false;
+    setCloudError(null);
+    const p = new URLSearchParams();
+    if (area) p.set("area", area);
+    if (epoch) p.set("epoch", epoch);
+    if (style) p.set("style", style);
+    fetch(`${API_URL}/api/rundata/words?${p.toString()}`)
+      .then(r => (r.ok ? r.json() : Promise.reject(new Error(`Fel ${r.status}`))))
+      .then(d => { if (!dead) setData(d); })
+      .catch(e => { if (!dead) setCloudError(e instanceof Error ? e.message : "Orden kunde inte hämtas."); });
+    return () => { dead = true; };
+  }, [area, epoch, style]);
+
+  const common = useMemo(() => new Set(data?.common ?? []), [data]);
+  const shown = useMemo(() => {
+    const ql = q.trim().toLowerCase();
+    return (data?.words ?? [])
+      .filter(x => (kind === "alla" || (kind === "namn") === x.name)
+        && !(hideCommon && !x.name && common.has(x.w))
+        && (!ql || x.w.toLowerCase().includes(ql)))
+      .sort((a, b) => b.stones - a.stones || b.n - a.n || a.w.localeCompare(b.w, "sv"))
+      .slice(0, 150);
+  }, [data, kind, hideCommon, common, q]);
+  // Alphabetical order in the cloud mixes large and small words and keeps the layout stable between filters
+  const cloud = useMemo(() => [...shown].sort((a, b) => a.w.localeCompare(b.w, "sv")), [shown]);
+  const maxStones = shown.length ? shown[0].stones : 1;
+  const fontSize = (s: number) => Math.round(13 + 39 * Math.sqrt(s / maxStones));
+
+  const onHover = (x: CloudWord | null) => (e: React.MouseEvent) => {
+    if (!x || !cloudRef.current) { setHover(null); return; }
+    const box = cloudRef.current.getBoundingClientRect();
+    setHover({ word: x, x: e.clientX - box.left, y: e.clientY - box.top });
+  };
+  const sel = "liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm font-semibold text-slate-800 outline-none bg-white";
+
+  return (
+    <div id="ordmoln" className="mt-10 scroll-mt-16">
+      <div className="liquid-glass-island rounded-[36px] p-8 border border-white/50">
+        <h3 className="text-2xl font-bold tracking-tight text-slate-900 mb-1">Ordmolnet – vad som står på runstenarna</h3>
+        <p className="text-slate-600 text-sm font-medium leading-relaxed max-w-3xl">
+          Orden är Rundatas normaliserade former på de vikingatida runstenarna, räknade utan AI. Storleken visar på hur
+          många stenar ordet står – inte hur många gånger det upprepas på samma sten. Skadade och osäkra ord räknas
+          inte. Pröva ett landskap eller en period och se hur ordförrådet skiftar, till exempel Danmark mot Uppland.
+        </p>
+
+        <div className="flex flex-wrap items-center gap-3 mt-5">
+          <select value={area} onChange={e => setArea(e.target.value)} className={sel} aria-label="Trakt eller landskap">
+            <option value="">Alla områden</option>
+            <optgroup label="Trakter">
+              {(data?.areas ?? []).map(a => <option key={a} value={a}>{a}</option>)}
+            </optgroup>
+            <optgroup label="Landskap och länder">
+              {(data?.provinces ?? []).map(p => <option key={p.code} value={p.code}>{p.label}</option>)}
+            </optgroup>
+          </select>
+          <select value={epoch} onChange={e => setEpoch(e.target.value)} className={sel} aria-label="Period">
+            {EPOCH_CHOICES.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+          </select>
+          <select value={style} onChange={e => setStyle(e.target.value)} className={sel} aria-label="Stilgrupp">
+            <option value="">Alla stilgrupper</option>
+            {STYLE_CHOICES.map(s => <option key={s} value={s}>{s}</option>)}
+          </select>
+          <select value={kind} onChange={e => setKind(e.target.value as "alla" | "ord" | "namn")} className={sel} aria-label="Ordtyp">
+            <option value="alla">Ord och namn</option>
+            <option value="ord">Bara ord</option>
+            <option value="namn">Bara namn</option>
+          </select>
+          <input value={q} onChange={e => setQ(e.target.value)} placeholder="Filtrera ord …" className={`${sel} w-36`} aria-label="Filtrera ord" />
+          <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 cursor-pointer">
+            <input type="checkbox" checked={hideCommon} onChange={e => setHideCommon(e.target.checked)} className="accent-[#b7410e]" />
+            Dölj de vanligaste orden
+          </label>
+          <button onClick={() => setAsTable(v => !v)}
+            className="ml-auto px-4 py-2 bg-white border border-slate-300 rounded-xl text-sm font-bold hover:border-slate-900">
+            {asTable ? "Visa som moln" : "Visa som tabell"}
+          </button>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-5 mt-4 text-[13px] font-semibold text-slate-600">
+          <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full" style={{ background: CLOUD_COLOR.word }} /> Ord</span>
+          <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full" style={{ background: CLOUD_COLOR.name }} /> Namn</span>
+          {data && <span className="text-slate-500 font-medium">I urvalet: {data.stones.toLocaleString("sv-SE")} runstenar · visar de {shown.length} vanligaste</span>}
+        </div>
+
+        {cloudError && <p className="mt-6 text-red-700 font-semibold">{cloudError}</p>}
+        {!data && !cloudError && <p className="mt-6 text-slate-500 font-medium">Räknar orden …</p>}
+        {data && shown.length === 0 && <p className="mt-6 text-slate-500 font-medium">Inga ord matchar filtren.</p>}
+
+        {data && shown.length > 0 && !asTable && (
+          <div ref={cloudRef} className="relative mt-6" onMouseLeave={() => setHover(null)}>
+            <div className="flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1 leading-none py-4">
+              {cloud.map(x => (
+                <button key={`${x.w}|${x.name}`} onMouseMove={onHover(x)} onFocus={() => setHover(null)}
+                  onClick={() => setQ(q === x.w ? "" : x.w)}
+                  aria-label={`${x.w}${x.name ? " (namn)" : ""}: står på ${x.stones} av ${data.stones} stenar i urvalet, ${x.n} förekomster`}
+                  className="hover:opacity-70 transition-opacity font-serif"
+                  style={{ fontSize: fontSize(x.stones), color: x.name ? CLOUD_COLOR.name : CLOUD_COLOR.word, fontWeight: 600 }}>
+                  {x.w}
+                </button>
+              ))}
+            </div>
+            {hover && (
+              <div className="absolute z-20 pointer-events-none bg-slate-900 text-white text-xs font-semibold rounded-lg px-3 py-2 shadow-lg"
+                style={{ left: Math.min(hover.x + 12, (cloudRef.current?.clientWidth ?? 300) - 190), top: hover.y + 14, maxWidth: 190 }}>
+                <span className="font-bold">{hover.word.w}</span> {hover.word.name ? "(namn)" : ""}<br />
+                står på {hover.word.stones} av {data.stones} stenar ({(100 * hover.word.stones / Math.max(1, data.stones)).toLocaleString("sv-SE", { maximumFractionDigits: 1 })} %),
+                {" "}{hover.word.n} förekomster
+              </div>
+            )}
+          </div>
+        )}
+
+        {data && shown.length > 0 && asTable && (
+          <div className="mt-6 max-w-2xl">
+            <ExportTable name="Orden på runstenarna">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left text-[11px] uppercase tracking-wider text-slate-500 border-b border-slate-200">
+                    <th className="py-2 pr-4">Ord</th><th className="py-2 pr-4">Typ</th>
+                    <th className="py-2 pr-4">Stenar</th><th className="py-2 pr-4">Andel av urvalet</th><th className="py-2">Förekomster</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {shown.slice(0, 60).map(x => (
+                    <tr key={`${x.w}|${x.name}`} className="border-b border-slate-100">
+                      <td className="py-1.5 pr-4 font-serif font-semibold text-slate-900">{x.w}</td>
+                      <td className="py-1.5 pr-4">{x.name ? "namn" : "ord"}</td>
+                      <td className="py-1.5 pr-4">{x.stones}</td>
+                      <td className="py-1.5 pr-4">{(100 * x.stones / Math.max(1, data.stones)).toLocaleString("sv-SE", { maximumFractionDigits: 1 })} %</td>
+                      <td className="py-1.5">{x.n}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </ExportTable>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
