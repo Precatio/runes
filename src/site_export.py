@@ -45,6 +45,11 @@ def export(posts: list[dict], now_iso: str) -> dict:
     with open(CONTENT, "w", encoding="utf-8") as fh:
         json.dump({"exported_at": now_iso, "posts": published}, fh, ensure_ascii=False, indent=1)
         fh.write("\n")
+    # sökrutans index, samma format som GET /api/blog/search_index serverar lokalt
+    from src.blog_search import build_index
+    with open(os.path.join(ROOT, "web", "public", "artiklar-sok.json"), "w", encoding="utf-8") as fh:
+        json.dump({"posts": build_index(published)}, fh, ensure_ascii=False)
+        fh.write("\n")
     names = sorted({m for p in published for f in ("body", "body_en") for m in FIGURE.findall(p.get(f) or "")})
     os.makedirs(FIGURES, exist_ok=True)
     missing = []

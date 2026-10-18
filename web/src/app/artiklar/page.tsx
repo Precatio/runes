@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import BlogShell from "@/components/BlogShell";
-import BlogList from "@/components/BlogList";
+import ArticleSearch from "@/components/ArticleSearch";
 import { listPosts } from "@/lib/articles";
 import { ARTICLES_PATH, BLOG_DESCRIPTION, BLOG_TITLE, blogJsonLd } from "@/lib/blogSeo";
 
@@ -27,7 +27,7 @@ export default async function BlogPage() {
           Här skriver vi om de mest intressanta mönstren i de svenska runstenarna – vad vi ser, vad det kan betyda och
           hur det kan prövas. Siffrorna kommer från Vitkis analyser och förklaras i texten.
         </p>
-        <div className="mt-14 space-y-10"><BlogList posts={posts} failed={failed} /></div>
+        <div className="mt-10"><ArticleSearch posts={posts} failed={failed} /></div>
       </section>
       {posts.length > 0 && (
          

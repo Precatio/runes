@@ -124,6 +124,14 @@ def list_posts():
                        "image_alt": first_photo(p.get("body"), alt=True)} for p in _published()]}
 
 
+@router.get("/blog/search_index")
+def search_index():
+    """Sökindexet för artikelsidans sökruta: ren text per publicerad artikel (src/blog_search.py). Den statiska
+    webbplatsen får samma index som /artiklar-sok.json ur exporten."""
+    from src.blog_search import build_index
+    return {"posts": build_index(_published())}
+
+
 @router.get("/blog/posts/{slug}")
 def get_post(slug: str):
     for p in _published():
