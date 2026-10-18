@@ -20,7 +20,6 @@ export interface Translations {
     statistics: string;
     stone_analysis: string;
     reports: string;
-    rti: string;
     group_analysis: string;
     group_stone: string;
     group_corpus: string;
@@ -82,7 +81,6 @@ export const translations: Record<Language, Translations> = {
       statistics: "Statistik (R)",
       stone_analysis: "Stenanalys (allt i ett)",
       reports: "Rapporter",
-      rti: "RTI-visare",
       group_analysis: "Analysera",
       group_stone: "Inskriften",
       group_corpus: "Korpusen",
@@ -142,7 +140,6 @@ export const translations: Record<Language, Translations> = {
       statistics: "Statistics (R)",
       stone_analysis: "Full stone analysis",
       reports: "Reports",
-      rti: "RTI viewer",
       group_analysis: "Analyse",
       group_stone: "The inscription",
       group_corpus: "The corpus",

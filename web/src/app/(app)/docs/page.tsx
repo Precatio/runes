@@ -35,7 +35,7 @@ const FEATURES: { group: string; items: { href: string; name: string; text: stri
       { href: "/3d", name: "3D-huggspårsanalys", text: "Mäter huggspårens vinkel, djup och bredd i en 3D-skanning – automatiskt, med ett klick eller manuellt. Den automatiska analysen mäter bara runorna (mätmetod groove-5)." },
       { href: "/2d", name: "2D-bildanalys", text: "Bedömer stilgrupp och runformer ur ett foto, strykljus eller en relief räknad ur skanningen." },
       { href: "/phonetics", name: "Språk & fonetik", text: "Läser runorna blint ur en bild och prövar läsningen mot Rundata; en obekräftad läsning visas med varning. Ger också en ungefärlig uppläsning." },
-      { href: "/rti", name: "RTI-visare", text: "Flytta ljuset över en RTI- eller PTM-fil för att se grunda ristningar." },
+      { href: "/3d?verktyg=rti", name: "RTI-släpljus", text: "Flytta ljuset över en RTI- eller PTM-fil för att se grunda ristningar – ett verktyg på 3D-sidan." },
       { href: "/synthesis", name: "Syntes & attribuering", text: "Väger samman Rundata, ortografi, huggteknik, geografi, stilgrupper, bergart och språkdrag efter hur träffsäkra metoderna är, och redovisar motsägelser." },
     ],
   },

@@ -20,6 +20,7 @@ import { METRICS, type SliceMetrics } from "@/lib/metrics";
 import { FEATURE_TYPES, type FeatureType } from "@/lib/metrics";
 import dynamic from 'next/dynamic';
 import { API_URL } from "@/lib/api";
+import RTIViewer from "@/components/RTIViewer";
 
 // Disable SSR for ThreeDViewer since it uses browser APIs (window, DOM)
 const ThreeDViewer = dynamic(() => import('@/components/ThreeDViewer'), {
@@ -27,10 +28,26 @@ const ThreeDViewer = dynamic(() => import('@/components/ThreeDViewer'), {
   loading: () => <div className="w-full h-full flex items-center justify-center">Laddar 3D-miljö...</div>
 });
 
+// The page's two tools: measuring grooves in a mesh, and viewing an RTI file in raking light (no measuring)
+function ToolTabs({ tool, setTool }: { tool: "mesh" | "rti"; setTool: (t: "mesh" | "rti") => void }) {
+  return (
+    <div className="flex gap-2 mb-6" role="tablist" aria-label="Verktyg">
+      {([["mesh", "Mäta huggspår (3D-modell)"], ["rti", "RTI-släpljus (titta, mäter inte)"]] as const).map(([k, l]) => (
+        <button key={k} role="tab" aria-selected={tool === k} onClick={() => setTool(k)}
+          className={`px-4 py-2 rounded-full text-sm font-bold border transition-colors ${tool === k
+            ? "bg-slate-900 border-slate-900 text-white" : "bg-white border-slate-200 text-slate-600 hover:border-slate-400"}`}>
+          {l}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function ThreeDPageContent() {
   const searchParams = useSearchParams();
   const urlProjectId = searchParams.get("projectId");
   const urlSignum = searchParams.get("signum");
+  const [tool, setTool] = useState<"mesh" | "rti">(searchParams.get("verktyg") === "rti" ? "rti" : "mesh");
 
   const { 
     latest3DResults: results, 
@@ -676,8 +693,18 @@ function ThreeDPageContent() {
     margin: { l: 45, r: 25, t: 45, b: 45 },
   };
 
+  if (tool === "rti") {
+    return (
+      <div className="flex flex-col h-full w-full max-w-7xl mx-auto p-4 md:p-6 relative z-10 overflow-y-auto">
+        <ToolTabs tool={tool} setTool={setTool} />
+        <RTIViewer />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col h-full w-full max-w-7xl mx-auto p-4 md:p-6 relative z-10 overflow-y-auto">
+      <ToolTabs tool={tool} setTool={setTool} />
       <div className="mb-8">
         <div className="flex justify-between items-end">
           <div>
