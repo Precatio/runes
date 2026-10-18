@@ -969,6 +969,19 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     30. Att också välja ordet efter den kalibrerade procenten gav korsvaliderat 69,3 → 73,6 procent rätt ord på de
     dokumenterade luckorna, men 85,4 → 84,3 på utgivarnas. Det kräver att läsningens fyllning följer det valda ordet
     och är inte infört ännu.
+  * **Namnkandidaterna får en egen kvot (2026-10-18, `textmodel-18`).** Namn är modellens största felkälla: i de
+    dokumenterade luckorna lästes 75 procent av namnen rätt mot 96 procent av formelorden, och i 76 av 113 missar
+    saknades facitordet helt bland kandidaterna. Orsaken var att namnmatcharens kandidater (`Names.match` på de
+    bevarade runorna) rankades i samma lista som ordförrådets med sin förhandsvikt (~10⁻⁸ mot ~10⁻⁴) och alltid
+    skars bort av kandidattaket innan poängsättningen fick se dem. Nu behåller namnkandidaterna sin egen ordning
+    och läggs efter ordförrådets med en egen kvot (`name_cands` = 40 i `FILL`); poängsättningen väger dem sedan med
+    full styrka. Hela kalibreringsunderlaget regenererades och listkalibreringen skattades om
+    (`utdata/runlm_forfining/tm18_pipeline.py`). A/B på samma maskeringsprov (698 helordsluckor, runstenar): 8 luckor
+    vunna, ingen förlorad (*guðfastr* ur `kuþf`, *þormóð*, *huskarl*, *gamall* …); hela ord oförändrade. De
+    dokumenterade luckorna: 248 → 249 rätt av 361, och ≥95-nivåns felantal oförändrat (korsvaliderat 98,7 procent på
+    155 luckor). `VALIDATION` räknas nu ur mask4-generationen av maskeringsprovet
+    (`utdata/runlm_forfining/validering_tm18.py`); textmodel-17 publicerade mask3-generationens siffror, så talen är
+    inte jämförbara ett mot ett.
   * **Alla förslag kalibreras tillsammans, och valet följer procenten (2026-10-17, `textmodel-17`).** Att bara
     kalibrera förstavalet gjorde ordningen i listan beroende av vilket ord som råkade stå först. Nu får varje förslag i
     en lucka poängen u = a_klass + b_klass · log p, förstavalet dessutom en konstant per klass (dess sannolikhet är för

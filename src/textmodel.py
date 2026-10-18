@@ -19,7 +19,7 @@ from datetime import datetime, timezone
 from src import runlm as rl
 from src import rungloss as rg
 
-VERSION = "textmodel-17"
+VERSION = "textmodel-18"
 K = 5
 CACHE = os.path.join(rl.ROOT, "data", "cache", "textmodel", VERSION)
 CACHE_LOO = CACHE + "-loo"  # readings with the leave-one-out model
@@ -29,19 +29,25 @@ MAX_GAP = 4  # longer runs of lost runes are left open: the masking test covers 
 # each stone read with its carver's own divider rate (rl.stone_divider_rate) instead of the corpus rate: word boundaries
 # +0.31 percentage points on the runestones of the reading test (95 %: +0.12 to +0.49), the words unchanged (textmodel-15)
 OWN_D = True
+# name_cands=40 (textmodel-18): namnmatcharens kandidater med egen kvot, så att sällsynta namn når poängsättningen i
+# stället för att drunkna bland ordförrådets kandidater. A/B på samma maskeringsprov: 8 luckor vunna (guðfastr,
+# þormóð, huskarl …), ingen förlorad; dokumenterade luckor 248 → 249 rätt av 361, ≥95-felantalet oförändrat.
 FILL = dict(window=None, char_fills=15, context_cands=True, n_cands=100, by_word=True, near_km=10.0, lam_near=0.1,
-            trace_eps=0.05)
+            trace_eps=0.05, name_cands=40)
 MODEL = dict(aligned=True, lam_name=0.05, contexts=True, alpha=100.0, kappa_e=50.0, lm_beta=200.0, lam_class=0.2)
 EPOCH_LABEL = {"800": "800-talet", "900": "900-talet", "1000": "1000–1070", "1100": "1070–1150"}
 # What the tests showed (METHODS.md 8.1), shown with the results so that a reader can judge them. Runestones, with the
-# calibrated choice of textmodel-17 (scripts/runlm_list_calibrate.py, cross-validated with whole stones held out):
-# the masking test (inside a word 696 gaps, whole words 698; at least 95 %: 391 gaps), the editors' restored gaps
-# (284 at ≥ 95 %), the documented gaps end to end (361; 166 at ≥ 95 %; scripts/runlm_documented_test.py, dok5),
-# the dating test (1 670 runestones) and the masking test with simulated traces, half of each hidden rune visible
-# (whole words; one trace in five misread for with_misread_traces).
-VALIDATION = {"inside_word": 0.757, "whole_word": 0.597, "sure_right": 0.959, "rundata_sure": 0.993,
+# calibrated choice of textmodel-18 (scripts/runlm_list_calibrate.py, cross-validated with whole stones held out;
+# numbers from utdata/runlm_forfining/validering_tm18.py): the masking test (inside a word 698 gaps, whole words 698;
+# at least 95 %: 409 gaps), the editors' restored gaps (255 at ≥ 95 %), the documented gaps end to end (361; 155 at
+# ≥ 95 % cross-validated; scripts/runlm_documented_test.py, dok5), the dating test (1 670 runestones) and the masking
+# test with simulated traces, half of each hidden rune visible (whole words; one trace in five misread for
+# with_misread_traces). The masking figures are measured on the mask4 generation of the test; textmodel-17 published
+# the older mask3 generation's, so they are not comparable one to one — on the same test the name quota of
+# textmodel-18 wins 8 gaps and loses none.
+VALIDATION = {"inside_word": 0.755, "whole_word": 0.587, "sure_right": 0.951, "rundata_sure": 0.996,
               "with_traces": 0.842, "with_misread_traces": 0.769, "dating_epoch": 0.585, "dating_near": 0.948,
-              "documented_right": 0.687, "documented_sure": 0.98}
+              "documented_right": 0.69, "documented_sure": 0.987}
 
 _lock = threading.Lock()
 _compute = threading.Lock()  # one reading at a time: the models' caches are shared
