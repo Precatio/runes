@@ -8,6 +8,7 @@ import SiteVote from "@/components/SiteVote";
 import ZoomImage from "@/components/ZoomImage";
 import { VERSION } from "@/lib/version";
 import ArticleTeasers from "@/components/ArticleTeasers";
+import LandingArticleSearch from "@/components/LandingArticleSearch";
 import type { BlogPost } from "@/components/BlogBody";
 import { getPost, listPosts } from "@/lib/articles";
 import { featuredFirst } from "@/lib/featured";
@@ -434,6 +435,7 @@ export default async function LandingPage() {
             title="Runstenarnas dolda mönster"
             intro="Mönster som syns först när man ser alla Sveriges vikingatida runstenar på en gång – vad vi ser, vad det kan betyda och hur det kan prövas."
           />
+          <LandingArticleSearch />
           <ArticleTeasers posts={articles.posts} photo={articles.photo} />
         </div>
       </section>
