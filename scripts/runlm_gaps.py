@@ -162,6 +162,7 @@ def main(argv=None):
     ap.add_argument("--near_km", type=float, default=20.0)
     ap.add_argument("--fold", type=int, default=-1, help="bara denna del (0–4), för att köra delarna parallellt")
     ap.add_argument("--own_d", action="store_true", help="ristarens egen andel markerade ordgränser (stone_divider_rate)")
+    ap.add_argument("--name_cands", type=int, default=0, help="namn ur namnled som passar de bevarade runorna (egen kvot)")
     ap.add_argument("--separate", action="store_true", help="fyll varje följd av förlorade runor för sig (som före 2026-10-16)")
     ap.add_argument("--out", default=None)
     args = ap.parse_args(argv)
@@ -214,7 +215,7 @@ def main(argv=None):
                     use_doc=args.lam_doc > 0, char_fills=args.char_fills, context_cands=args.context_cands,
                     n_cands=args.n_cands, by_word=args.by_word, area=context(r)[3] if args.area_lm else None,
                     site=(float(r["lat"]), float(r["lon"])) if (args.near and r.get("lat") is not None) else None,
-                    near_km=args.near_km, lam_near=args.near, div_rate=dr)
+                    near_km=args.near_km, lam_near=args.near, div_rate=dr, name_cands=args.name_cands)
                 if not combos:
                     continue
                 best = dict(zip(gaps, combos[0][0]))
