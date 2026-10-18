@@ -35,13 +35,13 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 R_DIR = os.path.join(ROOT, "r")
 CACHE_DIR = os.environ.get("R_CACHE_DIR", os.path.join(ROOT, "data", "cache", "r"))
 MODULES = ("geography", "clusters", "text", "attribution", "anonymous", "chronology", "dialect", "network", "change",
-           "remains", "hotspots")
+           "remains", "hotspots", "words")
 STONE_MODULES = ("stone", "landscape")
 MODULE_LABELS = {"geography": "Geografi", "clusters": "Klustring och MCA", "text": "Text och formler",
                  "attribution": "Attribueringsmodell", "anonymous": "Okända ristare",
                  "chronology": "Seriation och datering",
                  "dialect": "Stavning och dialekter", "network": "Formelnätverk", "change": "Förändring i tid och rum",
-                 "remains": "Lämningar runt stenarna", "hotspots": "Hot spots och kluster"}
+                 "remains": "Lämningar runt stenarna", "hotspots": "Hot spots och kluster", "words": "Ordförrådet"}
 REQUIRED_PACKAGES = ("jsonlite", "dplyr", "tidyr", "stringr", "ggplot2", "sf", "leaflet", "htmlwidgets",
                      "tidytext", "cluster", "FactoMineR", "factoextra", "tidymodels", "ranger", "ragg",
                      "ca", "stringdist", "igraph", "tidygraph", "ggraph", "terra", "gdistance", "raster", "png", "mgcv")

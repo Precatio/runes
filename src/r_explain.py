@@ -328,7 +328,38 @@ def network(nw: dict) -> dict | None:
         f"Orden bildar {len(comms)} grupper som motsvarar formler, och släktorden varierar med inskriftens innehåll.")
 
 
-ORDER = ["attribution", "anonymous", "change", "chronology", "geography", "text", "clusters", "network"]
+def words(w: dict) -> dict | None:
+    region = w.get("region") or []
+    if not w.get("n_words_tested"):
+        return None
+    holds = [r for r in region if r.get("holds")]
+    time_ = w.get("time") or []
+    ex = holds[0] if holds else None
+    ex_text = ""
+    if ex:
+        ex_text = (f" Tydligast är '{ex['word']}' i {PROVINCE_NAMES.get(ex['province'], ex['province'])}: "
+                   f"{_pct(ex['rate_in'])} av stenarna där mot {_pct(ex['rate_out'])} i resten av landet.")
+    return _section(
+        "words", "Vilka ord skiljer landskapen och tiden åt?",
+        "Ordvalet på stenarna bär formlerna, tron och dialekten. Vilka ord som är vanligare i ett landskap än i "
+        "resten av landet – efter justering för tid och textlängd – visar var traditionerna skilde sig, och "
+        "tidstrenderna visar hur språket i formlerna bytte skepnad.",
+        {"value": str(len(holds)), "label": "ord–landskapssignaler som håller i båda sockenhalvorna"},
+        f"Av de {w.get('n_words_tested')} vanligaste orden har {len({r['word'] for r in holds})} en regional "
+        f"signal som överlever tidsjusteringen och halvprovet, och {len(time_)} ord ökar eller minskar tydligt "
+        f"över tid.{ex_text}",
+        "troligt",
+        ["Signalerna kan jämföras med språkdragen under Stavning och dialekt: stämmer de överens pekar båda på "
+         "verkliga skriv- och formeltraditioner.",
+         "Korrespondensanalysen visar vilka landskap som valde ord mest lika – ett spår av vilka trakter som "
+         "delade tradition."],
+        ["Ett ord som är vanligare i ett landskap behöver inte vara dialekt: formelval och beställarnas smak går "
+         "inte att skilja från språket här, bara från tid och textlängd.",
+         "Namnen ingår inte i proven – de följer familjer, inte trakter."],
+        "Ordvalet skiljer landskapen åt även när tiden räknats bort, och flera formelord byter skepnad över tid.")
+
+
+ORDER = ["attribution", "anonymous", "change", "chronology", "geography", "text", "words", "clusters", "network"]
 
 
 def sections(res: dict) -> list[dict]:
@@ -340,6 +371,7 @@ def sections(res: dict) -> list[dict]:
         "chronology": chronology(res.get("chronology") or {}),
         "change": change(res.get("change") or {}),
         "text": language(res.get("text") or {}, res.get("dialect") or {}),
+        "words": words(res.get("words") or {}),
         "clusters": clusters(res.get("clusters") or {}),
         "network": network(res.get("network") or {}),
     }

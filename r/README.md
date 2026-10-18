@@ -22,6 +22,7 @@ ligger), `water_dir` (Natural Earth, valfri) och `seed`; stenmodulerna dessutom 
 | `dialect.R` | korpus | `dialect.json`, `dialekt_*.png` |
 | `network.R` | korpus | `network.json`, `natverk_*.png` |
 | `change.R` | korpus | `change.json`, `forandring_*.png` |
+| `words.R` | korpus | `words.json` |
 | `stone.R` | sten | `stone.json`, `sten_*.png` |
 | `landscape.R` | sten | `landscape.json`, `landskap_*.png` |
 

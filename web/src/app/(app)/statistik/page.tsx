@@ -8,6 +8,7 @@ import { GLOSSARY } from "@/lib/glossary";
 import Link from "next/link";
 import { API_URL } from "@/lib/api";
 import ExportTable from "@/components/ExportTable";
+import PlotlyGraph from "@/components/PlotlyGraph";
 
 interface Status {
   r: { available: boolean; version: string | null; missing: string[]; note: string | null };
@@ -104,11 +105,19 @@ interface Corpus {
     calibration: { link_km: number; lr_min: number; tpr: number; fpr: number; precision: number; max_spread_km: number };
     validation: { n_groups: number; n_stones: number; purity: number; purity_geography: number; share_pure: number };
     groups: AnonGroup[] };
+  words?: Dict & { method: string; n_stones: number; n_dated: number; n_words_tested: number;
+    provinces_tested: string[] | string; n_region_tests: number; n_time_tests: number;
+    region: { word: string; province: string; logodds: number; q: number; k_in: number; n_in: number;
+      k_out: number; n_out: number; rate_in: number; rate_out: number; holds: boolean }[];
+    time: { word: string; slope: number; q: number; shares: { epoch: string; k: number; n: number }[] }[];
+    ca: { inertia: number[]; provinces: { code: string; x: number; y: number; n: number }[];
+      words: { w: string; x: number; y: number; n: number }[] };
+    neighbors: { a: string; b: string; dist: number }[] };
   sections?: Section[];
   overview?: { paragraphs: string[]; next_steps: string[] };
 }
 
-type Tab = "overview" | "geography" | "clusters" | "text" | "attribution" | "anonymous" | "chronology" | "change" | "network";
+type Tab = "overview" | "geography" | "clusters" | "text" | "attribution" | "anonymous" | "chronology" | "change" | "network" | "words";
 
 const d2 = (v: number | null | undefined, k = 2) => v == null ? "–" : v.toFixed(k).replace(".", ",");
 const pc = (v: number | null | undefined) => v == null ? "–" : `${Math.round(v * 100)} %`;
@@ -179,6 +188,7 @@ const patternsFor = (patterns: Pattern[], key: string) => patterns.filter(p => (
 const TOPIC: Record<string, string> = {
   attribution: "Vem ristade?", anonymous: "Okända ristare", change: "Förändring", chronology: "Datering",
   geography: "Geografi", text: "Stavning och dialekt", clusters: "Grupper av stenar", network: "Formler och släkt",
+  words: "Ordförrådet",
 };
 
 // The answer first: question, why it matters, the key number, the answer, a suggested interpretation and its limits
@@ -397,6 +407,7 @@ export default function StatistikPage() {
             {tab === "chronology" && <Chronology data={data} />}
             {tab === "change" && <Change data={data} />}
             {tab === "network" && <Network data={data} />}
+            {tab === "words" && <Words data={data} />}
           </div>
           {status?.r.available && (
             <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 px-1">
@@ -1000,6 +1011,90 @@ function Network({ data }: { data: Corpus }) {
         <p className="text-xs text-slate-500">Gult: signifikant skillnad (q under 0,05) över tid eller mellan kristna och övriga inskrifter.</p>
       </Details>
       <Method text={n.method} />
+    </>
+  );
+}
+
+function Words({ data }: { data: Corpus }) {
+  const w = data.words;
+  if (!w) return <p className="text-sm text-slate-600">Ordförrådsanalysen saknas i den här beräkningen; beräkna korpusanalyserna på nytt.</p>;
+  const epochs = w.time[0]?.shares.map(s => s.epoch) ?? [];
+  const holds = w.region.filter(r => r.holds);
+  return (
+    <>
+      <SectionIntro section={sectionOf(data, "words")} patterns={data.patterns} />
+      <p className="text-sm text-slate-600 max-w-3xl">
+        Orden är desamma som i <a href="/phonetics#ordmoln" className="underline">ordmolnet</a> på Språk &amp; Fonetik,
+        men här prövade: är ordet vanligare i ett landskap än i resten av landet när tiden och textlängden räknats
+        bort, och ändras det över tid? Ristaren räknas som slumpeffekt, så en flitig ristares vanor inte blir
+        landskapets.
+      </p>
+      <Details title={`Orden som skiljer landskapen åt (${holds.length} håller i båda sockenhalvorna)`} open>
+        <div className="overflow-x-auto">
+          <ExportTable><table className="w-full text-sm">
+            <thead><tr><Th>Ord</Th><Th>Landskap</Th><Th>Andel där</Th><Th>Andel i övriga</Th><Th>q</Th><Th>Håller i halvorna</Th></tr></thead>
+            <tbody>{w.region.map(r => (
+              <tr key={`${r.word}|${r.province}`} className={`border-t border-slate-900/5 ${r.holds ? "bg-amber-50" : ""}`}>
+                <td className="p-2 font-semibold" translate="no">{r.word}</td>
+                <td className="p-2">{r.province}</td>
+                <td className="p-2">{pc(r.rate_in)} ({r.k_in} av {r.n_in})</td>
+                <td className="p-2">{pc(r.rate_out)}</td>
+                <td className="p-2">{qText(r.q)}</td>
+                <td className="p-2">{r.holds ? "✓" : "–"}</td>
+              </tr>))}</tbody>
+          </table></ExportTable>
+        </div>
+        <p className="text-xs text-slate-500 mt-1">
+          Gult: signalen har samma riktning och p under 0,05 i båda sockenhalvorna. Riktningen (vanligare eller
+          ovanligare än riket) syns i andelarna; q är det tidsjusterade testets justerade p-värde över alla {w.n_region_tests} prov.
+        </p>
+      </Details>
+      <Details title={`Orden som ändras över tid (${w.time.length} av ${w.n_time_tests})`}>
+        <div className="overflow-x-auto">
+          <ExportTable><table className="w-full text-sm">
+            <thead><tr><Th>Ord</Th><Th>Riktning</Th><Th>q</Th>{epochs.map(e => <Th key={e}>{e}</Th>)}</tr></thead>
+            <tbody>{w.time.map(t => (
+              <tr key={t.word} className="border-t border-slate-900/5">
+                <td className="p-2 font-semibold" translate="no">{t.word}</td>
+                <td className="p-2">{t.slope > 0 ? "ökar" : "minskar"}</td>
+                <td className="p-2">{qText(t.q)}</td>
+                {t.shares.map(s => <td key={s.epoch} className="p-2">{s.n ? pc(s.k / s.n) : "–"}</td>)}
+              </tr>))}</tbody>
+          </table></ExportTable>
+        </div>
+        <p className="text-xs text-slate-500 mt-1">
+          Andelen stenar med ordet per epok (tiden ur stilgrupperna, därför ungefär 980–1130). Riktningen kommer ur
+          modellens tidslutning, justerad för landskap och textlängd.
+        </p>
+      </Details>
+      <Details title="Vilka landskap väljer ord mest lika? (korrespondensanalys)" open>
+        <div className="h-[420px]">
+          <PlotlyGraph
+            data={[
+              { type: "scatter", mode: "text", x: w.ca.words.map(x => x.x), y: w.ca.words.map(x => x.y),
+                text: w.ca.words.map(x => x.w), name: "Ord", textfont: { size: 10, color: "#94a3b8" },
+                hovertemplate: "%{text}<extra>ord</extra>" },
+              { type: "scatter", mode: "markers+text", x: w.ca.provinces.map(x => x.x), y: w.ca.provinces.map(x => x.y),
+                text: w.ca.provinces.map(x => x.code), name: "Landskap", textposition: "top center",
+                marker: { color: "#b7410e", size: 10, line: { color: "#ffffff", width: 1 } },
+                textfont: { size: 12, color: "#1f2937" },
+                hovertemplate: "%{text}: %{customdata} stenar<extra>landskap</extra>",
+                customdata: w.ca.provinces.map(x => x.n) },
+            ]}
+            layout={{
+              autosize: true, margin: { l: 40, r: 10, t: 10, b: 40 },
+              xaxis: { title: `Dimension 1 (${Math.round(100 * (w.ca.inertia[0] ?? 0))} % av variationen)`, zeroline: true, zerolinecolor: "rgba(15,23,42,0.1)" },
+              yaxis: { title: `Dimension 2 (${Math.round(100 * (w.ca.inertia[1] ?? 0))} %)`, zeroline: true, zerolinecolor: "rgba(15,23,42,0.1)" },
+              legend: { orientation: "h" }, paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)",
+            }}
+          />
+        </div>
+        <p className="text-xs text-slate-500">
+          Landskap som står nära varandra har liknande ordprofiler; orden (grå) drar mot de landskap där de är
+          vanligast. Mest lika ordval: {w.neighbors.map(n => `${n.a}–${n.b}`).join(", ")}.
+        </p>
+      </Details>
+      <Method text={w.method} />
     </>
   );
 }

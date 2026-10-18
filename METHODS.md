@@ -49,6 +49,7 @@ funktionen. En ny Rundata läses in när motorn startas om.
 | `dialect.R` | stringdist | förväntat normerat Levenshtein-avstånd mellan häradernas stavning av vanliga ord; Mantel-test mot geografiskt avstånd (999 permutationer); grupper av härader (PAM); kartor över stavningen av "efter" och "sten" |
 | `network.R` | igraph, tidygraph, ggraph | ord som står i samma inskrifter (positiv PMI), grupper med Louvain; släktorden i inskrifterna (fader, moder, son, broder, félagi …) före och efter ca 1050 och i kristna mot övriga inskrifter (Fisher, BH) |
 | `change.R` | mgcv, sf | förändring i tid och rum för sexton drag (monoftong i ord med *æi* och i 'och', ʀ skrivet med r-runan, åsrunan för o-ljud, h-bortfall, nasal före konsonant, prepositionen *at*, stungna runor och stungen i, u och k, kristen bön, själsbön, kors, bro- och vägbygge, ristarsignatur): logistisk regression med utjämnad tidskurva, rumslig utjämning och ristaren som slumpeffekt; justerad andel över tid, karta, landskapen i mittperioden (omkring 1050; Holm över dragen, med observerade andelar, antal attribuerade ristare och samma test utan ristareffekten) och året då draget passerar hälften (bara för drag som stadigt ökar eller minskar); bro- och vägstenar mot kristna drag (se nedan) |
+| `words.R` | mgcv, ca | ordförrådet per landskap och tid (1m): en logistisk modell per ord (landskap mot genomsnittet + stilgruppens mittår + textlängd, ristaren som slumpeffekt), BH-justering och sockenhalvprov; korrespondensanalys landskap × ord. Samma ordplockning som appens ordmoln; namn ingår inte |
 | `remains.R` | sf | avstånd till närmaste gravfält, hög, färdväg, bro, fornborg och hamnanläggning i Kulturmiljöregistret mot slumpvisa punkter på land inom 5 km från stenarna (Wilcoxon, BH); närhet inom 500 m över tid, med kristna markörer och för brostenar (logistisk regression med landskapet konstant), prövat i korpusens två halvor; flyttade stenar räknas inte (se nedan) |
 | `stone.R` | sf, cluster, tidymodels | en sten mot korpusen: modellens sannolikheter (korsvaliderade om stenen har ristare i Rundata), avstånd till kandidaternas tyngdpunkter och höljen, grupp och närmaste grannar (Gower), formler jämförda med kandidaternas inskrifter, läge i Upplands seriation |
 | `landscape.R` | terra, gdistance | höjdmodell (ca 20 m), höjd, lutning, topografiskt positionsindex; strand vid vikingatiden som dagens höjd minus en grov landhöjning per landskap (t.ex. 5 m i Södermanland, 5,5 m i Uppland); sikt (viewshed, stenens topp 2 m, betraktare 1,6 m) mot slumpvisa platser; bästa vägar (Toblers vandringsfunktion, vatten tio gånger långsammare) mellan andra runstensplatser inom 12 km och stenens avstånd till dem mot slumpvisa punkter |
@@ -326,6 +327,27 @@ Forskningsluckor visar mönstren utan anteckningar; så här ska de läsas:
   mätmetod än Kitzler Åhfeldts Groove Measure; resultatet är en indikation, inte en attribuering.
 * *Landskapet.* Höjddata visar dagens markyta; vägar är simulerade bästa vägar, inte belagda vikingatida vägar, och
   grannstenarna kan själva stå vid vägar, så vägnätet är inte oberoende av stenarnas lägen.
+
+### 1m. Ordförrådet per landskap och tid
+
+Källkod: `r/words.R` (från 2026-10-18). Vilka ord på runstenarna som bär regional och tidslig signal, med samma
+ordplockning som appens ordmoln (api/routers/rundata.py): orden ur Rundatas normalisering, ett ord räknas per sten,
+namn ingår inte (de följer familjer, inte trakter), skadade och osäkra ord hoppas över. För varje ord med belägg på
+minst 20 stenar (högst de 120 vanligaste) skattas en logistisk modell (mgcv::bam) på de daterade stenarna: landskap
+med sum-kontraster (varje landskap mot genomsnittet; landskap med färre än 40 daterade stenar läggs i "övriga"),
+stilgruppens mittår och logaritmen av textens längd – långa texter rymmer fler ord – med ristaren som slumpeffekt
+(stenar utan säker ristare grupperas per socken, som i `change.R`). P-värdena BH-justeras över alla ord × landskap
+respektive alla tidslutningar, och varje signifikant landskapssignal prövas dessutom i två sockenhalvor (varannan
+socken inom landskapet) med krav på samma riktning och p < 0,05 i båda. Landskapens ordprofiler jämförs med
+korrespondensanalys (paketet ca) på tabellen landskap × ord och med chi²-avstånd.
+
+Första körningen (972 daterade av 1 848 stenar med minst tre kärnord, 75 ord, landskapen Ög, Sö, U och Vg):
+fjorton ord–landskapssignaler höll i båda halvorna, och de återupptäcker kända mönster ur råorden – prepositionen
+*at* i Södermanland (55 mot 19 procent i resten av landet), tvåverbskonstruktionen *let/letu ræisa* i Uppland mot
+enkelt *ræisti* i Götaland, *goðan dræng* i Västergötland och själabönens *and* i Uppland. Trettio ord ändras
+tydligt över tid, bland dem *gærði* som försvinner och *risti* och *letu* som växer. Att ett ord är vanligare i ett
+landskap skiljer inte dialekt från formelval och beställarsmak – bara från tid och textlängd; signalerna bör läsas
+ihop med språkdragen i `change.R` och `dialect.R`.
 
 ### 1x. Försiktighet i påståendena, djärvhet i hypoteserna
 
