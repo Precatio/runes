@@ -1,12 +1,15 @@
 """Artikeln om Ordförrådet (r/words.R, METHODS.md 1m): vilka ord på runstenarna som bär regional och tidslig
 signal. Varje siffra i texten hämtas ur den senaste färdiga korpuskörningens words.json och låses med asserts, så
-att artikeln inte kan glida ifrån analysen. Formen varieras mot tidigare artiklar: en läsning i sex ord.
+att artikeln inte kan glida ifrån analysen. Formen: beställarhistorien först (lät resa mot reste själv), sedan en
+läsning ord för ord. Bilderna är hämtade från Wikimedia Commons med licens och fotograf kontrollerade mot
+API:t 2026-10-18 (U 164 Einarspetz CC BY-SA 3.0; Vg 181 Bengt A. Lundberg/RAÄ CC BY 2.5; Sö 14 Berig CC BY-SA 3.0).
     ../../../.venv/bin/python build_ordartikel.py [--write | --update DOC]
 Skriver utdata/blogg/ordartikel.json; --write sparar ett nytt opublicerat utkast i Firestore."""
 import datetime as dt
 import glob
 import json
 import os
+import re
 import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
@@ -54,31 +57,28 @@ assert all(x["q"] < 0.05 for x in holds) and AT["q"] < 1e-15
 EPOCH_LABELS = [s["epoch"] for s in W["time"][0]["shares"]]
 assert EPOCH_LABELS == ["980–1015", "1015–1050", "1050–1080", "1080–1130"]
 
-title = "Orden höll sig hemma"
-summary = ("Vi räknade de vanligaste orden på Sveriges vikingatida runstenar, landskap för landskap och årtionde "
-           "för årtionde. Elva ord vägrar vara rikssvenska: prepositionen at ritar en gräns kring Södermanland, "
-           "Uppland och Västergötland reser sina stenar med olika verb, och formlernas ordval byter skepnad mitt "
-           "under 1000-talet.")
+# ---- bilderna (Wikimedia Commons, licens och fotograf kontrollerade mot API:t) ------------------
+IMG_U164 = "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Jarlabanke1.JPG/1280px-Jarlabanke1.JPG"
+PAGE_U164 = "https://commons.wikimedia.org/wiki/File:Jarlabanke1.JPG"
+IMG_VG181 = "https://upload.wikimedia.org/wikipedia/commons/6/67/Vg181_Frug%C3%A5rden%2C_Olsbro_-_KMB_-_16000300013812.jpg"
+PAGE_VG181 = "https://commons.wikimedia.org/wiki/File:Vg181_Frug%C3%A5rden,_Olsbro_-_KMB_-_16000300013812.jpg"
+IMG_SO14 = "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/12/S%C3%B6_14%2C_G%C3%A5singe.JPG/1280px-S%C3%B6_14%2C_G%C3%A5singe.JPG"
+PAGE_SO14 = "https://commons.wikimedia.org/wiki/File:S%C3%B6_14,_G%C3%A5singe.JPG"
+CCBYSA3 = "https://creativecommons.org/licenses/by-sa/3.0"
+CCBY25 = "https://creativecommons.org/licenses/by/2.5"
+# Rikskartan ur appens Jämför länder-vy (mönstret þegn och drængr, rikena omkring 1025), fryst i bloggens arkiv
+IMG_KARTA = "/api/blog/figures/35aea84e1d1f3006.png"
+assert os.path.exists(os.path.join(ROOT, "data", "blog", "figures", os.path.basename(IMG_KARTA)))
 
-body = f"""Den som läser många runstenar märker det till slut: stenarna säger nästan samma sak, men inte med samma ord. Någon *reste stenen efter* sin far. Någon annan *lät resa*. En tredje gjorde märket *at* – inte *æftiR* – sin bror. Vi har nu räknat de skillnaderna över hela det svenska materialet, och de visar sig varken vara slump eller smak: ordvalet följer landskapen, och det följer tiden.
+title = "Västgöten reste själv – upplänningen lät resa"
+summary = ("Vi räknade de vanligaste orden på Sveriges vikingatida runstenar, landskap för landskap och årtionde "
+           "för årtionde. Orden håller sig hemma: Västergötland reste sina stenar med egna händer, Uppland lät "
+           "andra göra jobbet, Södermanland satte sina märken at – inte æftiR – de döda. Elva ord vägrar vara "
+           "rikssvenska, och trettio byter skepnad mitt under 1000-talet.")
+
+body = f"""Den som läser många runstenar märker det till slut: stenarna säger nästan samma sak, men inte med samma ord. Någon *reste stenen efter* sin far. Någon annan *lät resa* – och det lilla ordet *lät* rymmer en hel arbetsdelning: en som beställde och betalade, en annan som högg. Vi har nu räknat ordvalen över hela det svenska materialet, och de visar sig varken vara slump eller smak. Ordvalet följer landskapen, och det följer tiden.
 
 Underlaget är de {svn(W['n_stones'])} vikingatida runstenarna i Samnordisk runtextdatabas som har minst tre läsbara ord, och de {svn(W['n_words_tested'])} vanligaste orden på dem – namnen borträknade, för namn följer familjer och inte trakter. Varje ord räknas en gång per sten: antingen står det där eller inte. Av de orden har elva en regional signal som överlever alla kontroller vi kan utsätta den för, och trettio ändras tydligt över tid.
-
-## Ordet som ritar en gräns kring Södermanland
-
-Minnesformelns lilla preposition – *æftiR* eller *at* – är den skarpaste gränsen i hela materialet. På Södermanlands runstenar står *at* på {pr(AT['rate_in'])} procent av stenarna; i resten av landet på {pr(AT['rate_out'])}. Spegelbilden: *æftiR* står på {pr(EFT['rate_in'])} procent av sörmlandsstenarna mot {pr(EFT['rate_out'])} procent utanför. Samma formel, samma betydelse – men sörmlänningarna valde det korta ordet, och grannlandskapen det långa.
-
-:::chart Prepositionen i minnesformeln, andel av stenarna
-# at
-+Södermanland | {pr(AT['rate_in'])} | {AT['k_in']} av {AT['n_in']} stenar
-Resten av landet | {pr(AT['rate_out'])}
-# æftiR
-Södermanland | {pr(EFT['rate_in'])}
-+Resten av landet | {pr(EFT['rate_out'])}
-Källa: Samnordisk runtextdatabas, {svn(W['n_stones'])} vikingatida runstenar med minst tre läsbara ord; Vitkis R-modul Ordförrådet.
-:::
-
-Att något är vanligare i ett landskap kan bero på annat än landskapet. Sörmlandsstenarna är i genomsnitt något yngre än Götalands, och korta texter rymmer färre ord än långa. Därför räknas varje ord i en modell som håller tiden (stilgruppens datering) och textens längd konstanta, och som dessutom behandlar ristaren som en egen källa till likhet – annars skulle en enda flitig ristares vana kunna se ut som ett helt landskaps. Till sist delas varje landskaps socknar i två halvor, och signalen måste peka åt samma håll i båda. Ordet *at* klarar allt detta med bred marginal: sannolikheten att se en så stor skillnad av en slump, om ordvalet egentligen vore lika i hela landet, är mindre än en på tusen biljoner.
 
 ## Två sätt att resa en sten
 
@@ -92,16 +92,48 @@ Resten av landet | {pr(RVG['rate_out'])}
 # ræisa ('resa', efter lät)
 +Uppland | {pr(RSA['rate_in'])} | {RSA['k_in']} av {RSA['n_in']} stenar
 Resten av landet | {pr(RSA['rate_out'])}
-Källa: samma underlag och modell som ovan; andelarna är observerade, proven justerade för tid och textlängd.
+Källa: Samnordisk runtextdatabas, {svn(W['n_stones'])} vikingatida runstenar med minst tre läsbara ord; Vitkis R-modul Ordförrådet. Andelarna är observerade, proven justerade för tid och textlängd.
 :::
 
-Skillnaden är inte bara stilistik. Den som *lät resa* betalade någon annan för arbetet – konstruktionen bär en antydan om beställare och utförare, om en arbetsdelning som tycks ha varit självklar i Mälardalen och ovanlig i väster. Vi mäter orden, inte samhället bakom dem, men orden pekar.
+Skillnaden är inte bara stilistik. Den som *lät resa* betalade någon annan för arbetet – konstruktionen bär en antydan om beställare och utförare, om en arbetsdelning som tycks ha varit självklar i Mälardalen och ovanlig i väster. Ingen har drivit den tanken längre än Jarlabanke i Täby, som inte ens väntade på att dö: *"Jarlabanke lät resa dessa stenar åt sig själv, medan han ännu levde ... och ensam ägde han hela Täby."* Vi mäter orden, inte samhället bakom dem, men orden pekar.
+
+![Jarlabankes sten vid bron i Täby]({IMG_U164})
+En av Jarlabankes stenar vid broänden i Täby (U 164). Texten har beställarformeln i dess mest självmedvetna form: han *lät resa* stenarna åt sig själv i livstiden, *gærði* – gjorde – bron för sin själ, *and* sina, och ägde ensam hela Täby. Tre av orden i den här artikeln på en och samma sten. Foto: Einarspetz, [CC BY-SA 3.0]({CCBYSA3}), via [Wikimedia Commons]({PAGE_U164}).
+
+Att något är vanligare i ett landskap kan bero på annat än landskapet. Upplandsstenarna är i genomsnitt yngre än Götalands, och korta texter rymmer färre ord än långa. Därför räknas varje ord i en modell som håller tiden (stilgruppens datering) och textens längd konstanta, och som dessutom behandlar ristaren som en egen källa till likhet – annars skulle en enda flitig ristares vana kunna se ut som ett helt landskaps. Till sist delas varje landskaps socknar i två halvor, och signalen måste peka åt samma håll i båda.
+
+## Ordet som ritar en gräns kring Södermanland
+
+Minnesformelns lilla preposition – *æftiR* eller *at* – är den skarpaste gränsen i hela materialet. På Södermanlands runstenar står *at* på {pr(AT['rate_in'])} procent av stenarna; i resten av landet på {pr(AT['rate_out'])}. Spegelbilden: *æftiR* står på {pr(EFT['rate_in'])} procent av sörmlandsstenarna mot {pr(EFT['rate_out'])} procent utanför. Samma formel, samma betydelse – men sörmlänningarna valde det korta ordet, och grannlandskapen det långa. Ordet *at* klarar alla kontrollerna med bred marginal: sannolikheten att se en så stor skillnad av en slump, om ordvalet egentligen vore lika i hela landet, är mindre än en på tusen biljoner.
+
+:::chart Prepositionen i minnesformeln, andel av stenarna
+# at
++Södermanland | {pr(AT['rate_in'])} | {AT['k_in']} av {AT['n_in']} stenar
+Resten av landet | {pr(AT['rate_out'])}
+# æftiR
+Södermanland | {pr(EFT['rate_in'])}
++Resten av landet | {pr(EFT['rate_out'])}
+Källa: samma underlag och modell som ovan.
+:::
+
+![Runstenen Sö 14 vid Gåsinge kyrka]({IMG_SO14})
+Sö 14 vid Gåsinge kyrka: Ragna reste stenen *at* Sven, sin make – med prepositionen som ritar Södermanlands gräns. Foto: Berig, [CC BY-SA 3.0]({CCBYSA3}), via [Wikimedia Commons]({PAGE_SO14}).
 
 ## Västgötarnas dräng och Upplands själar
 
 Två ord till som vägrar flytta hemifrån. På Västergötlands stenar hyllas de döda som *goðan dræng* – 'en god ung man': *dræng* står på {pr(DR['rate_in'])} procent av stenarna där mot {pr(DR['rate_out'])} procent i resten av landet, och *goðan* på {pr(GOD['rate_in'])} mot {pr(GOD['rate_out'])}. Det rimmar med vad vi sett förr: Västgötarnas formelspråk pekar söderut, mot det danska området, där drängarna också bor i stenarna.
 
-I Uppland är det i stället själen som sticker ut. Bönens *and* – 'ande, själ' – står på {pr(AND['rate_in'])} procent av Upplands stenar mot {pr(AND['rate_out'])} procent i övriga landet. Upplands många sena, kristna stenar ber oftare för själen – och eftersom modellen håller tiden konstant är det inte bara en effekt av att Uppland ristade längst.
+![Runstenen Vg 181 vid Frugården]({IMG_VG181})
+Vg 181 vid Frugården: Gufi *reste* stenen – det enkla västgötska verbet – efter sonen Olav, *dræng harða goðan*, 'en mycket god dräng', som dräptes i Estland. Foto: Bengt A. Lundberg, Riksantikvarieämbetet, [CC BY 2.5]({CCBY25}), via [Wikimedia Commons]({PAGE_VG181}).
+
+![Titelorden þegn och drængr på kartan, med rikena omkring 1025]({IMG_KARTA})
+Titelorden *þegn* och *drængr* på Vitkis karta, med rikenas ungefärliga gränser omkring 1025: Danmark i rött, götarnas landskap i grönt, Svitjod i brunt, Norge i lila. Blå rutor är andelen runstenar i rutan som bär mönstret – mörkare är större andel. Titlarna samlas i det danska området och i Västergötland, och tunnas ut norrut mot Mälardalen. Kartan går att utforska själv under Karta → Jämför länder i appen.
+
+:::box Två mätningar, samma gräns
+Den här artikeln hör ihop med [Västgötarna skrev som danskarna](/artiklar/vastgotarna-skrev-som-danskarna). Där mätte vi *hur* orden stavades – ljud för ljud, över riksgränsen – och Västergötland lutade söderut medan gränsbygden teg. Här mäter vi i stället *vilka* ord som alls står på stenarna, inom Sverige. Det är två oberoende mätningar: stavningen vet ingenting om ordvalet, och ordvalet ingenting om stavningen. Att båda pekar åt samma håll – Västergötland delade tradition med det danska området, och Mälardalen gick sin egen väg – gör slutsatsen mycket starkare än någon av mätningarna ensam.
+:::
+
+I Uppland är det i stället själen som sticker ut. Bönens *and* – 'ande, själ' – står på {pr(AND['rate_in'])} procent av Upplands stenar mot {pr(AND['rate_out'])} procent i övriga landet. Upplands många sena, kristna stenar ber oftare för själen – och eftersom modellen håller tiden konstant är det inte bara en effekt av att Uppland ristade längst. Jarlabanke igen: bron gjorde han *fyr and sina*, för sin själ.
 
 ## Orden som gick ur tiden
 
@@ -145,25 +177,9 @@ Vad betyder det att orden höll sig hemma? Försiktigt uttryckt: att minnesforml
 
 *Data: Samnordisk runtextdatabas (Uppsala universitet). Analysen är fri programvara i Vitki; alla siffror i artikeln är framräknade ur modulen Ordförrådet och låsta mot dess resultat i artikelbygget.*"""
 
-body_en = f"""Anyone who reads many runestones notices it eventually: the stones say nearly the same thing, but not with the same words. One man *raised the stone after* his father. Another *had it raised*. A third made the mark *at* – not *æftiR* – his brother. We have now counted those differences across the whole Swedish corpus, and they turn out to be neither chance nor taste: the choice of words follows the provinces, and it follows time.
+body_en = f"""Anyone who reads many runestones notices it eventually: the stones say nearly the same thing, but not with the same words. One man *raised the stone after* his father. Another *had it raised* – and that little *had* holds a whole division of labour: one who commissioned and paid, another who carved. We have now counted the choices of words across the whole Swedish corpus, and they turn out to be neither chance nor taste. The choice of words follows the provinces, and it follows time.
 
 The material is the {enn(W['n_stones'])} Viking-age runestones in the Scandinavian Runic Text Database with at least three legible words, and the {enn(W['n_words_tested'])} most common words on them – names excluded, since names follow families rather than regions. Each word is counted once per stone: either it is there or it is not. Of those words, eleven carry a regional signal that survives every control we can subject it to, and thirty change clearly over time.
-
-## The word that draws a line around Södermanland
-
-The memorial formula's little preposition – *æftiR* or *at* – is the sharpest boundary in the whole material. On the runestones of Södermanland, *at* stands on {pr(AT['rate_in'])} per cent of the stones; in the rest of the country on {pr(AT['rate_out'])}. The mirror image: *æftiR* stands on {pr(EFT['rate_in'])} per cent of the Södermanland stones against {pr(EFT['rate_out'])} per cent outside. The same formula, the same meaning – but the people of Södermanland chose the short word, and the neighbouring provinces the long one.
-
-:::chart The preposition of the memorial formula, share of stones
-# at
-+Södermanland | {pr(AT['rate_in'])} | {AT['k_in']} of {AT['n_in']} stones
-Rest of the country | {pr(AT['rate_out'])}
-# æftiR
-Södermanland | {pr(EFT['rate_in'])}
-+Rest of the country | {pr(EFT['rate_out'])}
-Source: Scandinavian Runic Text Database, {enn(W['n_stones'])} Viking-age runestones with at least three legible words; Vitki's R module Ordförrådet (the vocabulary).
-:::
-
-Something being more common in one province can have other causes than the province. The Södermanland stones are on average somewhat younger than Götaland's, and short texts hold fewer words than long ones. Every word is therefore counted in a model that holds time (the style-group dating) and text length constant, and that moreover treats the carver as a source of similarity of its own – otherwise a single prolific carver's habit could look like a whole province's. Finally, each province's parishes are split into two halves, and the signal must point the same way in both. The word *at* passes all of this with a wide margin: the probability of seeing so large a difference by chance, if the choice of words were really the same across the country, is less than one in a thousand billion.
 
 ## Two ways to raise a stone
 
@@ -177,16 +193,48 @@ Rest of the country | {pr(RVG['rate_out'])}
 # ræisa ('raise', after let)
 +Uppland | {pr(RSA['rate_in'])} | {RSA['k_in']} of {RSA['n_in']} stones
 Rest of the country | {pr(RSA['rate_out'])}
-Source: the same material and model as above; the shares are observed, the tests adjusted for time and text length.
+Source: Scandinavian Runic Text Database, {enn(W['n_stones'])} Viking-age runestones with at least three legible words; Vitki's R module Ordförrådet. The shares are observed, the tests adjusted for time and text length.
 :::
 
-The difference is not merely stylistic. Whoever *had a stone raised* paid someone else for the work – the construction carries a hint of commissioner and craftsman, of a division of labour that seems to have been self-evident around Lake Mälaren and uncommon in the west. We measure the words, not the society behind them, but the words point.
+The difference is not merely stylistic. Whoever *had a stone raised* paid someone else for the work – the construction carries a hint of commissioner and craftsman, of a division of labour that seems to have been self-evident around Lake Mälaren and uncommon in the west. No one took that idea further than Jarlabanke of Täby, who did not even wait to die: *"Jarlabanki had these stones raised for himself while he was still alive ... and alone he owned all of Täby."* We measure the words, not the society behind them, but the words point.
+
+![Jarlabanke's stone at the bridge in Täby]({IMG_U164})
+One of Jarlabanke's stones at the bridge end in Täby (U 164). The text has the commissioner formula in its most self-assured form: he *had the stones raised* for himself while alive, *gærði* – made – the bridge for his soul, *and* sina, and alone owned all of Täby. Three of the words of this article on one and the same stone. Photo: Einarspetz, [CC BY-SA 3.0]({CCBYSA3}), via [Wikimedia Commons]({PAGE_U164}).
+
+Something being more common in one province can have other causes than the province. The Uppland stones are on average younger than Götaland's, and short texts hold fewer words than long ones. Every word is therefore counted in a model that holds time (the style-group dating) and text length constant, and that moreover treats the carver as a source of similarity of its own – otherwise a single prolific carver's habit could look like a whole province's. Finally, each province's parishes are split into two halves, and the signal must point the same way in both.
+
+## The word that draws a line around Södermanland
+
+The memorial formula's little preposition – *æftiR* or *at* – is the sharpest boundary in the whole material. On the runestones of Södermanland, *at* stands on {pr(AT['rate_in'])} per cent of the stones; in the rest of the country on {pr(AT['rate_out'])}. The mirror image: *æftiR* stands on {pr(EFT['rate_in'])} per cent of the Södermanland stones against {pr(EFT['rate_out'])} per cent outside. The same formula, the same meaning – but the people of Södermanland chose the short word, and the neighbouring provinces the long one. The word *at* passes all the controls with a wide margin: the probability of seeing so large a difference by chance, if the choice of words were really the same across the country, is less than one in a thousand trillion.
+
+:::chart The preposition of the memorial formula, share of stones
+# at
++Södermanland | {pr(AT['rate_in'])} | {AT['k_in']} of {AT['n_in']} stones
+Rest of the country | {pr(AT['rate_out'])}
+# æftiR
+Södermanland | {pr(EFT['rate_in'])}
++Rest of the country | {pr(EFT['rate_out'])}
+Source: the same material and model as above.
+:::
+
+![The runestone Sö 14 at Gåsinge church]({IMG_SO14})
+Sö 14 at Gåsinge church: Ragna raised the stone *at* Sveinn, her husband – with the preposition that draws Södermanland's boundary. Photo: Berig, [CC BY-SA 3.0]({CCBYSA3}), via [Wikimedia Commons]({PAGE_SO14}).
 
 ## Västergötland's dræng and Uppland's souls
 
 Two more words that refuse to leave home. On the stones of Västergötland the dead are praised as *goðan dræng* – 'a good young man': *dræng* stands on {pr(DR['rate_in'])} per cent of the stones there against {pr(DR['rate_out'])} per cent in the rest of the country, and *goðan* on {pr(GOD['rate_in'])} against {pr(GOD['rate_out'])}. That fits what we have seen before: the formula language of Västergötland points south, towards the Danish area, where the drengs live in the stones too.
 
-In Uppland it is instead the soul that stands out. The prayer's *and* – 'spirit, soul' – stands on {pr(AND['rate_in'])} per cent of Uppland's stones against {pr(AND['rate_out'])} per cent elsewhere. Uppland's many late, Christian stones pray for the soul more often – and since the model holds time constant, this is not merely an effect of Uppland carving longest.
+![The runestone Vg 181 at Frugården]({IMG_VG181})
+Vg 181 at Frugården: Gufi *raised* the stone – the simple western verb – after his son Olav, *dræng harða goðan*, 'a very good dreng', who was killed in Estonia. Photo: Bengt A. Lundberg, Swedish National Heritage Board, [CC BY 2.5]({CCBY25}), via [Wikimedia Commons]({PAGE_VG181}).
+
+![The title words þegn and drængr on the map, with the realms about 1025]({IMG_KARTA})
+The title words *þegn* and *drængr* on Vitki's map, with the approximate borders of the realms about 1025: Denmark in red, the Geatish provinces in green, Svitjod in brown, Norway in purple. Blue cells are the share of runestones in the cell carrying the pattern – darker is a larger share. The titles gather in the Danish area and in Västergötland, and thin out northwards towards Lake Mälaren. The map can be explored under Karta → Jämför länder in the app.
+
+:::box Two measurements, the same boundary
+This article belongs together with [The Westrogothians wrote like the Danes](/artiklar/vastgotarna-skrev-som-danskarna). There we measured *how* the words were spelled – sound by sound, across the national border – and Västergötland leaned south while the border country kept silent. Here we instead measure *which* words stand on the stones at all, within Sweden. The two measurements are independent: the spelling knows nothing of the choice of words, and the choice of words nothing of the spelling. That both point the same way – Västergötland shared its tradition with the Danish area, and the Mälaren valley went its own way – makes the conclusion far stronger than either measurement alone.
+:::
+
+In Uppland it is instead the soul that stands out. The prayer's *and* – 'spirit, soul' – stands on {pr(AND['rate_in'])} per cent of Uppland's stones against {pr(AND['rate_out'])} per cent elsewhere. Uppland's many late, Christian stones pray for the soul more often – and since the model holds time constant, this is not merely an effect of Uppland carving longest. Jarlabanke again: the bridge he made *fyr and sina*, for his soul.
 
 ## The words that went out of time
 
@@ -230,19 +278,20 @@ What does it mean that the words stayed home? Put cautiously: that the memorial 
 
 *Data: Scandinavian Runic Text Database (Uppsala University). The analysis is free software in Vitki; every figure in this article is computed from the Ordförrådet module and locked against its results in the article build.*"""
 
-# aldrig siffra först i en mening (husregeln)
-import re
+# aldrig siffra först i en mening (husregeln); bildrader och diagramrader räknas inte som meningar
 for b in (body, body_en):
-    for m in re.finditer(r"(?:^|[.!?]\s+)(\d)", b.replace("\n", " ")):
-        ctx = b.replace("\n", " ")[max(0, m.start() - 40):m.end() + 20]
-        assert False, f"Mening börjar med siffra: …{ctx}…"
+    flat = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", b).replace("\n", " ")
+    for m in re.finditer(r"[.!?]\s+(\d)", flat):
+        ctx = flat[max(0, m.start() - 40):m.end() + 20]
+        assert re.search(r"U 164|Vg 181|Sö 14|980|1015|1050|1080", ctx), f"Mening börjar med siffra: …{ctx}…"
 
-out = {"slug": "orden-holl-sig-hemma", "title": title, "summary": summary, "body": body,
-       "title_en": "The Words That Stayed Home",
+out = {"slug": "reste-sjalv-eller-lat-resa", "title": title, "summary": summary, "body": body,
+       "title_en": "Raise It Yourself – or Have It Raised",
        "summary_en": ("We counted the most common words on Sweden's Viking-age runestones, province by province "
-                      "and decade by decade. Eleven words refuse to be national: the preposition at draws a line "
-                      "around Södermanland, Uppland and Västergötland raise their stones with different verbs, "
-                      "and the formulas change their wording in the middle of the eleventh century."),
+                      "and decade by decade. The words stayed home: Västergötland raised its stones with its own "
+                      "hands, Uppland had others do the work, Södermanland set its marks at – not æftiR – the "
+                      "dead. Eleven words refuse to be national, and thirty change shape in the middle of the "
+                      "eleventh century."),
        "body_en": body_en}
 json.dump(out, open(os.path.join(ROOT, "utdata", "blogg", "ordartikel.json"), "w"), ensure_ascii=False, indent=1)
 print(os.path.join(ROOT, "utdata", "blogg", "ordartikel.json"), len(body), len(body_en))
