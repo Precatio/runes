@@ -1607,6 +1607,7 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
     if names_arg and not cache_arg:  # names of the stone's neighbours and of its carver's circle
         cache_arg = names_arg
     pre = defaultdict(float)
+    pre_names = defaultdict(float)
     ntok = sum(model.uni.values()) or 1
     # windows inside the group that cover the gap; a candidate word is weighed by how common it is (or how well it
     # fits between the words before and after) and how well its spelling fits (other lost runes are wildcards)
@@ -1631,13 +1632,18 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
                 if len(cr) == b - a and pat.match(cr):
                     pre[cr[g0 - a:g1 - a]] = max(pre[cr[g0 - a:g1 - a]], 1.0)
             if name_cands and model.names is not None and b - a >= 4:
+                # the names keep their own ranking: their priors (~1e-8) would otherwise drown under the
+                # vocabulary candidates (~1e-4) and never reach the scoring, which judges them at full strength
                 for sp, pn in model.names.match(pat_s.replace("\\", ""), top=name_cands).items():
                     f = sp[g0 - a:g1 - a]
-                    pre[f] = max(pre[f], pn * model.lam_name)
+                    pre_names[f] = max(pre_names[f], pn)
     ranked = [f for f, _ in sorted(pre.items(), key=lambda kv: -kv[1])]
     cands = [f for f in ranked if ok(f)][:n_cands]
     if soft:  # the best candidates whatever the traces say, in case a trace is misread
         cands += [f for f in ranked[:n_cands] if f not in cands and ok_hard(f)]
+    if pre_names:  # the name matcher's quota, appended after the vocabulary's candidates
+        named = [f for f, _ in sorted(pre_names.items(), key=lambda kv: -kv[1])]
+        cands += [f for f in named if f not in cands and (ok(f) or (soft and ok_hard(f)))][:name_cands]
     alpha = [sorted(s_) if s_ is not None else FILL_ALPHABET for s_ in sets]
     if k <= 2 or (allowed and math.prod(len(a_) for a_ in alpha) <= 400):
         # short gaps, or few combinations left by what is visible: every combination is tried as well
