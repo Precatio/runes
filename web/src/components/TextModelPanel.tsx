@@ -5,7 +5,7 @@
 // METHODS.md 8.1 for the model and the tests behind the numbers shown.
 import { useState } from "react";
 import Link from "next/link";
-import { TRACE_RUNES, textmodel, type TextModelBoundary, type TextModelGap, type TextModelReading } from "@/lib/textmodel";
+import { TRACE_RUNES, textmodel, type ScanTraceEntry, type ScanTraces, type TextModelBoundary, type TextModelGap, type TextModelReading } from "@/lib/textmodel";
 
 // 100 % only for certainty: 0.996 is shown as 99 %, not as if nothing could be wrong
 const pct = (p: number) => `${p < 1 ? Math.min(99, Math.round(p * 100)) : 100} %`;
@@ -69,6 +69,55 @@ function Boundary({ xs }: { xs: TextModelBoundary[] }) {
   );
 }
 
+// What the scan's trace reader sees at the gap: branch evidence and a proposed rune set per lost rune. Proposals
+// only – nothing counts until the user takes them into the trace picker and recomputes (led F: real scan traces
+// lifted whole-word filling 53.5 → 59.9 %, but weathered patches can mislead, so the user confirms).
+function ScanProposal({ entries, n, onUse }: { entries: ScanTraceEntry[]; n: number; onUse: (v: string[]) => void }) {
+  const blobText = (e: ScanTraceEntry) =>
+    e.blobs.length === 0
+      ? "bara staven"
+      : e.blobs.map(b =>
+          `${b.cross ? "korsande bistav" : b.zone === "end" ? "bistav vid änden" : "bistav på mitten"}${b.long ? ", lång" : ""} (djup ${Math.round(b.ratio * 100)} % av stavens)`
+        ).join("; ");
+  return (
+    <div className="rounded-xl border border-sky-300 bg-sky-50/70 p-3 space-y-2">
+      <div className="text-xs font-semibold text-sky-900">Vad skannern ser i luckan</div>
+      {entries.map(e => (
+        <div key={e.pos} className="text-[11px] text-slate-700">
+          <span className="text-slate-500">Runa {e.pos + 1}:</span>{" "}
+          {e.bind ? (
+            <>fler djupa bistavar än någon runa har – möjlig bindruna, skannern föreslår inget här.</>
+          ) : (
+            <>
+              {blobText(e)} → troligast{" "}
+              <span className="font-mono font-bold" translate="no">{e.top[0]?.[0]}</span>{" "}
+              ({Math.round((e.top[0]?.[1] ?? 0) * 100)} %), möjliga:{" "}
+              <span className="font-mono" translate="no">{e.set}</span>
+            </>
+          )}
+        </div>
+      ))}
+      <div className="flex flex-wrap items-center gap-2">
+        {entries.some(e => !e.bind) && (
+          <button type="button"
+            onClick={() => {
+              const v = Array(n).fill("");
+              for (const e of entries) if (!e.bind) v[e.pos] = e.set;
+              onUse(v);
+            }}
+            className="px-3 py-1.5 rounded-lg bg-sky-900 text-white text-xs font-semibold hover:bg-sky-950">
+            Ta in skannerns förslag i spåren
+          </button>
+        )}
+        <span className="text-[11px] text-slate-500">
+          Ett förslag, inte ett facit: vittring kan ge falska bistavar. Jämför med skanningen eller fotot och
+          justera innan du räknar om.
+        </span>
+      </div>
+    </div>
+  );
+}
+
 function TracePicker({ n, value, onChange }: { n: number; value: string[]; onChange: (v: string[]) => void }) {
   return (
     <div className="space-y-2">
@@ -104,12 +153,17 @@ export default function TextModelPanel({ signum }: { signum: string }) {
   const [traces, setTraces] = useState<Record<number, string[]>>({});
   const [open, setOpen] = useState<number | null>(null);
   const [withTraces, setWithTraces] = useState(false);
+  const [scan, setScan] = useState<ScanTraces | null>(null);
 
   const load = async () => {
     setBusy(true); setError(null);
     try {
-      setData(await textmodel.read(signum));
+      const d = await textmodel.read(signum);
+      setData(d);
       setWithTraces(false);
+      if (d.available && d.gaps && d.gaps.length > 0 && scan === null) {
+        textmodel.scanTraces(signum).then(setScan).catch(() => setScan({ available: false }));
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Modellen kunde inte läsa inskriften.");
     } finally {
@@ -193,7 +247,9 @@ export default function TextModelPanel({ signum }: { signum: string }) {
                     </div>
                     <button onClick={() => setOpen(open === g.number ? null : g.number)}
                       className="text-xs font-semibold text-[#b7410e] hover:underline">
-                      {open === g.number ? "Dölj spåren" : "Ange vad som syns"}
+                      {open === g.number ? "Dölj spåren"
+                        : scan?.available && scan.gaps?.[String(g.number)] ? "Ange vad som syns · skannern har ett förslag"
+                        : "Ange vad som syns"}
                     </button>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -228,6 +284,10 @@ export default function TextModelPanel({ signum }: { signum: string }) {
                         Markera för varje förlorad runa vilka runor spåret kan vara – en stav, en bistav, en halv runa i
                         skanningen eller på fotot. Lämna tomt där inget syns. Modellen väljer sedan bara bland dem.
                       </p>
+                      {scan?.available && scan.gaps?.[String(g.number)] && (
+                        <ScanProposal entries={scan.gaps[String(g.number)]} n={g.n}
+                          onUse={v => setTraces({ ...traces, [g.number]: v })} />
+                      )}
                       <TracePicker n={g.n} value={traces[g.number] || Array(g.n).fill("")}
                         onChange={v => setTraces({ ...traces, [g.number]: v })} />
                     </div>

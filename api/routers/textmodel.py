@@ -20,6 +20,17 @@ def read_with_traces(signum: str, body: Traces):
     return _read(signum, {k: v for k, v in body.allowed.items()})
 
 
+@router.get("/scantraces/{signum:path}")
+def scan_traces(signum: str):
+    """Spårläsarens förslag ur 3D-skanningen för inskriftens luckor (src/trace_reader.py). Bara förslag: panelen
+    visar vad skannern ser, och spåren räknas först när användaren bekräftar dem (POST /traces)."""
+    from src import trace_reader
+    try:
+        return trace_reader.proposals(signum)
+    except Exception as e:
+        raise server_error(e, "Spårläsaren kunde inte läsa skanningen.")
+
+
 @router.get("/{signum:path}")
 def read(signum: str):
     """Modellens läsning av inskriften; den första beräkningen tar upp till en minut, sedan sparas den."""

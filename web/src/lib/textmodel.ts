@@ -65,6 +65,23 @@ export const TRACE_RUNES: [string, string][] = [
   ["ᛂ", "e"], ["ᚤ", "y"], ["ᚵ", "g"], ["ᛑ", "d"], ["ᛔ", "p"],
 ];
 
+// What the scan's trace reader sees at a gap (api GET /textmodel/scantraces): proposals only – they count
+// first when the user confirms them, and a possible bind rune proposes nothing
+export interface ScanTraceEntry {
+  pos: number;
+  set: string;
+  top: [string, number][];
+  blobs: { cross: boolean; zone: string; long: boolean; length: number; ratio: number; w: number }[];
+  bind: boolean;
+}
+
+export interface ScanTraces {
+  available: boolean;
+  reason?: string;
+  gaps?: Record<string, ScanTraceEntry[]>;
+  quality?: { detected: number; text_runes: number; paired: number; lost_total: number; lost_with_proposal: number };
+}
+
 const enc = encodeURIComponent;
 
 async function json<T>(res: Response): Promise<T> {
@@ -77,6 +94,8 @@ async function json<T>(res: Response): Promise<T> {
 
 export const textmodel = {
   read: async (signum: string) => json<TextModelReading>(await fetch(`${API_URL}/api/textmodel/${enc(signum)}`)),
+  scanTraces: async (signum: string) =>
+    json<ScanTraces>(await fetch(`${API_URL}/api/textmodel/scantraces/${enc(signum)}`)),
   // allowed: gap number → for each lost rune the runes its remains allow ("" = nothing visible)
   withTraces: async (signum: string, allowed: Record<number, string[]>) =>
     json<TextModelReading>(await fetch(`${API_URL}/api/textmodel/traces/${enc(signum)}`, {
