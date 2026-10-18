@@ -6,6 +6,7 @@ import MoreArticles from "@/components/MoreArticles";
 import { getPost, listPosts, postSlugs } from "@/lib/articles";
 import { featuredFirst } from "@/lib/featured";
 import { articleJsonLd, keywords, metaDescription, pictures, postPath, SHARE_SIZE, sharePath } from "@/lib/blogSeo";
+import { enPostPath, languageAlternates } from "@/lib/blogSeo";
 
 // A published post, rendered on the server with its metadata and structured data (lib/blogSeo.ts), so that every new
 // post is described for search engines and social media as soon as it is published. Fetched again at most every five
@@ -27,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description,
     keywords: keywords(post),
     authors: [{ name: post.author || "Viktor Kvant" }],
-    alternates: { canonical: path, types: { "application/rss+xml": "/artiklar/rss.xml" } },
+    alternates: { canonical: path, languages: languageAlternates(post.slug), types: { "application/rss+xml": "/artiklar/rss.xml" } },
     openGraph: {
       type: "article", url: path, title: post.title, description, siteName: "Vitki", locale: "sv_SE",
       publishedTime: post.publishedAt ?? undefined, modifiedTime: post.updatedAt ?? post.publishedAt ?? undefined,
@@ -48,6 +49,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const more = featuredFirst((await listPosts()).posts.filter(p => p.slug !== post.slug)).slice(0, 3);
   return (
     <BlogShell>
+      <div className="max-w-3xl mx-auto px-6 pt-8 -mb-10 text-right">
+        <a href={enPostPath(post.slug)} hrefLang="en" className="text-sm text-[#b7410e] font-semibold hover:underline">In English →</a>
+      </div>
       <BlogArticle post={post} />
       <MoreArticles posts={more} />
       { }

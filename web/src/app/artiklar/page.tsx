@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import BlogShell from "@/components/BlogShell";
 import ArticleSearch from "@/components/ArticleSearch";
 import { listPosts } from "@/lib/articles";
-import { ARTICLES_PATH, BLOG_DESCRIPTION, BLOG_TITLE, blogJsonLd } from "@/lib/blogSeo";
+import { ARTICLES_PATH, BLOG_DESCRIPTION, BLOG_TITLE, blogJsonLd, languageAlternates } from "@/lib/blogSeo";
 
 // The articles about the most interesting patterns (written in Admin), rendered on the server
 export const revalidate = 60;
@@ -10,7 +10,7 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: BLOG_TITLE,
   description: BLOG_DESCRIPTION,
-  alternates: { canonical: ARTICLES_PATH, types: { "application/rss+xml": "/artiklar/rss.xml" } },
+  alternates: { canonical: ARTICLES_PATH, languages: languageAlternates(), types: { "application/rss+xml": "/artiklar/rss.xml" } },
   openGraph: { type: "website", url: ARTICLES_PATH, title: BLOG_TITLE, description: BLOG_DESCRIPTION, siteName: "Vitki", locale: "sv_SE",
                images: [{ url: "/delningsbild.png", width: 1200, height: 630, alt: BLOG_TITLE }] },
   twitter: { card: "summary_large_image", title: BLOG_TITLE, description: BLOG_DESCRIPTION, images: ["/delningsbild.png"] },
@@ -21,7 +21,7 @@ export default async function BlogPage() {
   return (
     <BlogShell>
       <section className="max-w-3xl mx-auto px-6 pt-20 pb-24">
-        <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e] mb-3">Artiklar</div>
+        <div className="flex items-center justify-between gap-4 mb-3"><div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e]">Artiklar</div><a href="/en/artiklar/" hrefLang="en" className="text-sm text-[#b7410e] font-semibold hover:underline">In English →</a></div>
         <h1 className="text-4xl md:text-5xl font-serif font-bold tracking-tight">Mönster i runstenarna</h1>
         <p className="mt-4 text-lg text-slate-600 leading-relaxed">
           Här skriver vi om de mest intressanta mönstren i de svenska runstenarna – vad vi ser, vad det kan betyda och

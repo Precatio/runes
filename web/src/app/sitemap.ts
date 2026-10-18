@@ -1,29 +1,39 @@
 import type { MetadataRoute } from "next";
 import { listPosts } from "@/lib/articles";
-import { ARTICLES_PATH, postUrl, sharePath } from "@/lib/blogSeo";
+import { ARTICLES_PATH, EN_ARTICLES_PATH, enPostUrl, postUrl, sharePath } from "@/lib/blogSeo";
 import { CONTACT_PATH, PUBLIC_SITE, SITE_URL } from "@/lib/site";
 
-// The public pages, and every published article (GET /api/blog/posts); refreshed every five minutes. The public website
-// (NEXT_PUBLIC_SITE_MODE=public) has only the start page, the articles and the contact page, so the app's pages are left out there
+// The public pages, and every published article in Swedish and English (with hreflang pairs); refreshed every
+// five minutes. The public website (NEXT_PUBLIC_SITE_MODE=public) has only the start page, the articles and the
+// contact page, so the app's pages are left out there. The fixed pages carry no change date – only the articles
+// know honestly when they changed.
 export const revalidate = 300;
 
 const PAGES: [string, MetadataRoute.Sitemap[number]["changeFrequency"], number][] = [
-  ["/", "weekly", 1], [ARTICLES_PATH, "weekly", 0.9], ["/karta", "monthly", 0.8], ["/inskrifter", "monthly", 0.8],
+  ["/", "weekly", 1], [ARTICLES_PATH, "weekly", 0.9], [EN_ARTICLES_PATH, "weekly", 0.7],
+  ["/karta", "monthly", 0.8], ["/inskrifter", "monthly", 0.8],
   ["/statistik", "monthly", 0.7], ["/luckor", "monthly", 0.7], ["/oversikt", "monthly", 0.6],
   ["/docs", "monthly", 0.5], ["/start", "monthly", 0.5], [CONTACT_PATH, "yearly", 0.3],
 ];
+const PUBLIC_PAGES = new Set(["/", ARTICLES_PATH, EN_ARTICLES_PATH, CONTACT_PATH]);
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date();
-  const pages = PAGES.filter(([path]) => !PUBLIC_SITE || path === "/" || path === ARTICLES_PATH || path === CONTACT_PATH).map(([path, changeFrequency, priority]) => ({ url: `${SITE_URL}${path}`, lastModified: now, changeFrequency, priority }));
+  const pages = PAGES.filter(([path]) => !PUBLIC_SITE || PUBLIC_PAGES.has(path))
+    .map(([path, changeFrequency, priority]) => ({ url: `${SITE_URL}${path}`, changeFrequency, priority }));
   try {
     const { posts } = await listPosts();
-    return [...pages, ...posts.map(p => {
+    const entries = posts.flatMap(p => {
       const changed = p.updatedAt ?? p.publishedAt;
-      return { url: postUrl(p.slug), lastModified: changed ? new Date(changed) : now,
-               changeFrequency: "monthly" as const, priority: 0.8,
-               images: [`${SITE_URL}${sharePath(p.slug)}`] };
-    })];
+      const lastModified = changed ? new Date(changed) : undefined;
+      const languages = p.title_en ? { sv: postUrl(p.slug), en: enPostUrl(p.slug) } : undefined;
+      const common = { lastModified, changeFrequency: "monthly" as const,
+                       ...(languages ? { alternates: { languages } } : {}) };
+      return [
+        { url: postUrl(p.slug), priority: 0.8, images: [`${SITE_URL}${sharePath(p.slug)}`], ...common },
+        ...(p.title_en ? [{ url: enPostUrl(p.slug), priority: 0.6, ...common }] : []),
+      ];
+    });
+    return [...pages, ...entries];
   } catch {
     return pages;
   }

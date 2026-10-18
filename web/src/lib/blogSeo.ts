@@ -16,6 +16,18 @@ const SIGNUM = /\b(?:U|Sö|Ög|Vg|Sm|Öl|Gs|Hs|Hä|Vs|Nä|DR|N|G)\s\d{1,4}[A-Z]?
 const SLASH = PUBLIC_SITE ? "/" : "";
 export const ARTICLES_PATH = `/artiklar${SLASH}`;
 export const postPath = (slug: string) => `/artiklar/${encodeURIComponent(slug)}${SLASH}`;
+export const EN_ARTICLES_PATH = `/en/artiklar${SLASH}`;
+export const enPostPath = (slug: string) => `/en/artiklar/${encodeURIComponent(slug)}${SLASH}`;
+export const enPostUrl = (slug: string) => `${SITE_URL}${enPostPath(slug)}`;
+// hreflang pairs; Swedish is the original and the default for everyone else
+export const languageAlternates = (slug?: string) => ({
+  sv: slug ? postPath(slug) : ARTICLES_PATH,
+  en: slug ? enPostPath(slug) : EN_ARTICLES_PATH,
+  "x-default": slug ? postPath(slug) : ARTICLES_PATH,
+});
+export const BLOG_TITLE_EN = "Articles – patterns in the runestones";
+export const BLOG_DESCRIPTION_EN = ("Popular-science articles on patterns in Sweden\u0027s runestones: what we see, what "
+  + "it may mean and how it can be tested. The figures come from Vitki\u0027s open analyses and are explained in the text.");
 export const postUrl = (slug: string) => `${SITE_URL}${postPath(slug)}`;
 /** The article's share picture (app/artiklar/[slug]/delningsbild.png). */
 export const sharePath = (slug: string) => `/artiklar/${encodeURIComponent(slug)}/delningsbild.png`;
@@ -81,16 +93,17 @@ export function pictures(md: string) {
 export const wordCount = (md: string) => plainText(md).split(" ").filter(Boolean).length;
 
 /** schema.org BlogPosting and BreadcrumbList for the post page (JSON-LD). */
-export function articleJsonLd(post: BlogPost) {
-  const url = postUrl(post.slug);
-  const body = post.body ?? "";
+export function articleJsonLd(post: BlogPost, lang: "sv" | "en" = "sv") {
+  const en = lang === "en";
+  const url = en ? enPostUrl(post.slug) : postUrl(post.slug);
+  const body = (en ? post.body_en : post.body) ?? "";
   const published = post.publishedAt ?? undefined;
   return [
     {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
-      headline: post.title.slice(0, 110),
-      description: metaDescription(post.summary || body),
+      headline: ((en && post.title_en) || post.title).slice(0, 110),
+      description: metaDescription((en ? post.summary_en : post.summary) || body),
       url,
       mainEntityOfPage: { "@type": "WebPage", "@id": url },
       datePublished: published,
@@ -99,8 +112,8 @@ export function articleJsonLd(post: BlogPost) {
                 ...(authorOf(post.author) ? { url: authorOf(post.author)!.url, sameAs: [authorOf(post.author)!.url], jobTitle: authorOf(post.author)!.role } : {}) },
       publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL, logo: { "@type": "ImageObject", url: `${SITE_URL}/vitki_logo.png` } },
       image: [`${SITE_URL}${sharePath(post.slug)}`, ...pictures(body).map(p => absolute(p.src))].slice(0, 5),
-      inLanguage: "sv-SE",
-      articleSection: "Artiklar",
+      inLanguage: en ? "en" : "sv-SE",
+      articleSection: en ? "Articles" : "Artiklar",
       keywords: keywords(post).join(", "),
       wordCount: wordCount(body),
       isAccessibleForFree: true,
@@ -113,8 +126,8 @@ export function articleJsonLd(post: BlogPost) {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: SITE_NAME, item: SITE_URL },
-        { "@type": "ListItem", position: 2, name: "Artiklar", item: `${SITE_URL}/artiklar` },
-        { "@type": "ListItem", position: 3, name: post.title, item: url },
+        { "@type": "ListItem", position: 2, name: en ? "Articles" : "Artiklar", item: `${SITE_URL}${en ? "/en" : ""}/artiklar` },
+        { "@type": "ListItem", position: 3, name: (en && post.title_en) || post.title, item: url },
       ],
     },
   ];
