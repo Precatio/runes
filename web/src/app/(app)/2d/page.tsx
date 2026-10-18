@@ -2,7 +2,6 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
 import ReactCrop, { type PercentCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { useSettings } from "@/components/SettingsContext";
@@ -53,6 +52,41 @@ function cosine(a: number[], b: number[]) {
 }
 
 const fmt = (v: number, d = 1) => v.toFixed(d).replace(".", ",");
+
+// Our own facts about the claimed style group (Gräslund's dating span, the distribution in Rundata) shown beside the
+// AI's judgement, so that the claim can be checked against computed numbers instead of standing alone
+interface StyleGroupFacts { code: string; name: string; features: string; from: number | null; to: number | null }
+interface StyleDistFacts { style: string; count: number; uncertain: number; provinces: Record<string, number> }
+let stylesCache: { groups: StyleGroupFacts[]; distribution: StyleDistFacts[]; source: string } | null = null;
+
+function StyleFacts({ code }: { code: string }) {
+  const [data, setData] = useState(stylesCache);
+  useEffect(() => {
+    if (stylesCache) { setData(stylesCache); return; }
+    fetch(`${API_URL}/api/rundata/styles`).then(r => (r.ok ? r.json() : null))
+      .then(d => { if (d) { stylesCache = d; setData(d); } }).catch(() => {});
+  }, []);
+  const g = data?.groups.find(x => x.code === code);
+  if (!g) return null;
+  const dist = data?.distribution.find(x => x.style === code);
+  const provs = dist ? Object.entries(dist.provinces).sort((a, b) => b[1] - a[1]).slice(0, 3) : [];
+  return (
+    <div className="liquid-glass-island rounded-[36px] p-8 border border-white/50">
+      <div className="text-slate-500 text-[12px] uppercase tracking-wider font-bold mb-2">Stilgruppen i siffror (framräknat, ingen AI)</div>
+      <p className="text-slate-700 text-sm font-medium leading-relaxed">
+        {g.code} – {g.name}: {g.features}{" "}
+        {g.from ? `Dateringen enligt Gräslunds stilkronologi är ungefär ${g.from}–${g.to}; spannen överlappar och är inte skarpa gränser.` : "Gruppen har ingen fast datering."}
+        {dist && <>{" "}Rundata har {dist.count} inskrifter med stilgruppen{dist.uncertain ? `, varav ${dist.uncertain} osäkra` : ""}{provs.length ? <>, flest i {provs.map(([p, n]) => `${p} (${n})`).join(", ")}</> : null}.</>}
+      </p>
+      <p className="text-slate-600 text-[13px] mt-3 leading-relaxed">
+        Dateringsspannet ovan är vad AI-bedömningen i praktiken påstår om stenen – stämmer den inte med Rundata eller
+        andra belägg bör bilden granskas. Saknar stenen stilgrupp i Rundata är RAK-draget vanligast: hela stenar utan
+        stilbedömning signeras lika sällan som RAK-gruppens, visar vår mätning{" "}
+        (<a className="underline" href="https://vitkirunor.se/artiklar/stilgruppernas-morkertal" target="_blank" rel="noreferrer">Stilgruppernas mörkertal</a>).
+      </p>
+    </div>
+  );
+}
 
 export default function TwoDPage() {
   const [loading, setLoading] = useState(false);
@@ -744,10 +778,10 @@ export default function TwoDPage() {
                       Rundata ({rundataForSignum.signum}): {rundataForSignum.style ? `${rundataForSignum.style}${rundataForSignum.style_uncertain ? " (osäker)" : ""}` : "ingen stilgrupp angiven"}
                       {styleAgrees === true && " – stämmer med AI:ns bedömning."}
                       {styleAgrees === false && " – skiljer sig från AI:ns bedömning. Granska ornamentiken."}
-                      {" "}<Link href={`/stilgrupper#${result.predicted_style}`} className="underline">Om stilgrupperna</Link>
                     </div>
                   )}
                 </div>
+                {result.predicted_style !== "Osäker" && <StyleFacts code={result.predicted_style} />}
                 <div className="liquid-glass-island rounded-[36px] p-8 border border-white/50">
                   <div className="text-slate-500 text-[12px] uppercase tracking-wider font-bold mb-4">Epigrafisk motivering (AI)</div>
                   <p className="text-slate-700 text-sm font-medium leading-relaxed">{result.reasoning}</p>

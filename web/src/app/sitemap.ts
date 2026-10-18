@@ -9,7 +9,7 @@ export const revalidate = 300;
 
 const PAGES: [string, MetadataRoute.Sitemap[number]["changeFrequency"], number][] = [
   ["/", "weekly", 1], [ARTICLES_PATH, "weekly", 0.9], ["/karta", "monthly", 0.8], ["/inskrifter", "monthly", 0.8],
-  ["/stilgrupper", "monthly", 0.6], ["/statistik", "monthly", 0.7], ["/luckor", "monthly", 0.7], ["/oversikt", "monthly", 0.6],
+  ["/statistik", "monthly", 0.7], ["/luckor", "monthly", 0.7], ["/oversikt", "monthly", 0.6],
   ["/docs", "monthly", 0.5], ["/start", "monthly", 0.5], [CONTACT_PATH, "yearly", 0.3],
 ];
 

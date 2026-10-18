@@ -240,6 +240,26 @@ def stone_report_endpoint(req: StoneReportRequest,
             facts["r"] = stone_analysis(facts["rundata"]["signum"], names)
         except Exception as e:
             logger.warning("R-analysen för stenrapporten misslyckades: %r", e)
+    # The probability model's reading of the inscription (src/textmodel.py, METHODS.md 8.1): cached per stone, so
+    # only the first report for a stone computes it. The scanner's trace proposals are shown as what the scan sees
+    # and are never counted into the reading without the user confirming them in the panel.
+    facts["textmodel"] = None
+    facts["scan_traces"] = None
+    if facts.get("rundata"):
+        try:
+            from src import textmodel
+            res = textmodel.analyze(facts["rundata"]["signum"])
+            facts["textmodel"] = res if res.get("available") else None
+        except Exception as e:
+            logger.warning("Sannolikhetsmodellen kunde inte läsa stenen för rapporten: %r", e)
+        if facts["textmodel"]:
+            try:
+                from src import trace_reader
+                tr = trace_reader.proposals(facts["rundata"]["signum"])
+                facts["scan_traces"] = tr if tr.get("available") else None
+            except Exception as e:
+                logger.warning("Spårläsaren misslyckades för rapporten: %r", e)
+
     rd = req.reading or {}
     if rd.get("transliteration"):
         facts["reading_validation"] = rd.get("validation") or validate_reading(

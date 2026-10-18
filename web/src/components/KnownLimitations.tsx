@@ -10,7 +10,7 @@ interface LimitationList { version: string; items: Limitation[] }
 
 // Analysis pages that get a pointer to the known limitations in the documentation
 const ANALYSIS_ROUTES = ["/3d", "/stenanalys", "/jamfor", "/korpus", "/synthesis", "/statistik", "/luckor", "/inskrifter",
-  "/karta", "/stilgrupper", "/2d", "/phonetics", "/rapporter", "/report", "/oversikt"];
+  "/karta", "/2d", "/phonetics", "/rapporter", "/report", "/oversikt"];
 
 const cache = new Map<string, Promise<LimitationList | null>>();
 function load(contexts: string[]): Promise<LimitationList | null> {

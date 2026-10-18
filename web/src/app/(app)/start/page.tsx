@@ -52,38 +52,47 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      {/* Grid Menu */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto w-full">
-        <Link href="/3d" className="group">
-          <div className="liquid-glass-island rounded-[32px] p-8 h-full border border-white/50 hover:shadow-xl hover:border-white/80 transition-all duration-300 transform group-hover:-translate-y-1">
-            <div className="w-14 h-14 bg-[#b7410e]/10 text-[#b7410e] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-7">
-                <path strokeLinecap="round" strokeLinejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
-              </svg>
+      {/* Where to start: the three ways into the app, in the order of the menu's groups */}
+      <div className="max-w-4xl mx-auto w-full">
+        <h3 className="text-2xl font-bold text-slate-900 mb-6">Var börjar jag?</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Link href="/stenanalys" className="group">
+            <div className="liquid-glass-island rounded-[32px] p-8 h-full border border-white/50 hover:shadow-xl hover:border-white/80 transition-all duration-300 transform group-hover:-translate-y-1">
+              <div className="w-10 h-10 bg-[#b7410e] text-white rounded-full flex items-center justify-center mb-5 text-lg font-black">1</div>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">Analysera en skanning</h3>
+              <p className="text-slate-600 text-sm font-medium leading-relaxed">
+                Har du en 3D-skanning? <span className="font-bold">Stenanalys (allt i ett)</span> kör hela kedjan –
+                huggspår, bilder, läsning, attribuering – och slutar i en stenrapport. Vill du styra själv gör du
+                stegen var för sig under <span className="font-bold">Analysera</span> i menyn.
+              </p>
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-2">3D-Analys</h3>
-            <p className="text-slate-600 text-sm font-medium leading-relaxed">
-              Utför vetenskaplig huggspårsanalys. Ladda upp modeller (.stl / .obj / .ply), markera spår med den nya interaktiva 3D-vyn, och få fram V-vinklar, spårdjup och asymmetri.
-            </p>
-          </div>
-        </Link>
-
-        <Link href="/2d" className="group">
-          <div className="liquid-glass-island rounded-[32px] p-8 h-full border border-white/50 hover:shadow-xl hover:border-white/80 transition-all duration-300 transform group-hover:-translate-y-1">
-            <div className="w-14 h-14 bg-slate-900/10 text-slate-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-7">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
-                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z" />
-              </svg>
+          </Link>
+          <Link href="/inskrifter" className="group">
+            <div className="liquid-glass-island rounded-[32px] p-8 h-full border border-white/50 hover:shadow-xl hover:border-white/80 transition-all duration-300 transform group-hover:-translate-y-1">
+              <div className="w-10 h-10 bg-slate-800 text-white rounded-full flex items-center justify-center mb-5 text-lg font-black">2</div>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">Granska en inskrift</h3>
+              <p className="text-slate-600 text-sm font-medium leading-relaxed">
+                Under <span className="font-bold">Inskriften</span> finns varje inskrift i Rundata med
+                sannolikhetsmodellens läsning och luckförslag, attribueringens syntes och jämförelser sten mot sten.
+              </p>
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-2 flex items-center gap-3">
-              2D-Bildanalys
-            </h3>
-            <p className="text-slate-600 text-sm font-medium leading-relaxed">
-              Utför paleografisk analys och tyda runor på foton. AI:n extraherar Gräslunds stilgrupper, analyserar ornamentik och transkriberar inskrifter.
-            </p>
-          </div>
-        </Link>
+          </Link>
+          <Link href="/luckor" className="group">
+            <div className="liquid-glass-island rounded-[32px] p-8 h-full border border-white/50 hover:shadow-xl hover:border-white/80 transition-all duration-300 transform group-hover:-translate-y-1">
+              <div className="w-10 h-10 bg-slate-500 text-white rounded-full flex items-center justify-center mb-5 text-lg font-black">3</div>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">Utforska korpusen</h3>
+              <p className="text-slate-600 text-sm font-medium leading-relaxed">
+                Under <span className="font-bold">Korpusen</span> ligger de framräknade resultaten för alla stenar:
+                kartan, stenöversikten, forskningsluckorna och statistiken i R.
+              </p>
+            </div>
+          </Link>
+        </div>
+        <p className="text-[13px] text-slate-500 mt-4 leading-relaxed">
+          Allt i appen är egna beräkningar på öppna data – det som i stället är en AI-bedömning märks alltid ut som
+          sådan, med okalibrerad säkerhet. Metoderna och proven bakom varje siffra beskrivs under{" "}
+          <Link href="/docs" className="underline">Dokumentation &amp; Om</Link>.
+        </p>
       </div>
 
       {/* Info Notice */}

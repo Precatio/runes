@@ -612,6 +612,13 @@ def facts_text(f: dict) -> str:
                 lines.append(f"Läsningen mot Rundata: {rd['comparison']}")
         else:
             lines.append(f"Appens blinda AI-läsning kunde inte bekräftas och får inte användas som läsning: {rv.get('text')}")
+    tmr = f.get("textmodel")
+    if tmr and tmr.get("available"):
+        gl = [g for g in tmr.get("gaps") or [] if g.get("words")]
+        if gl:
+            lines.append("Sannolikhetsmodellens luckförslag (kalibrerad procent, framräknad utan AI): "
+                         + "; ".join(f"lucka {g['number'] + 1} ({g['carved']}): {g['words'][0]['word']} "
+                                     f"{round(100 * g['words'][0]['p'])} %" for g in gl[:4]))
     sy = f.get("synthesis")
     if sy:
         if sy.get("outcome"):
@@ -1149,6 +1156,61 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
             blocks.append(p(f"Fonetisk rekonstruktion (AI): [{rd['phonetic_ipa'].strip().strip('[]/').strip()}]", ai=True))
         if rd.get("sound_laws_applied"):
             blocks.append(p("Ljudlagar som modellen anger: " + "; ".join(rd["sound_laws_applied"]) + ".", ai=True))
+
+    tmr = f.get("textmodel")
+    if tmr and tmr.get("available"):
+        v = tmr.get("validation") or {}
+        blocks.append(h(2, "4.8 Läsning och luckor (sannolikhetsmodellen)"))
+        doc_right = round(100 * v["documented_right"]) if v.get("documented_right") else None
+        doc_sure = round(100 * v["documented_sure"]) if v.get("documented_sure") else None
+        blocks.append(p(f"Sannolikhetsmodellen ({tmr.get('version', 'textmodel')}, METHODS.md 8.1) läser inskriftens "
+                        "huggna runföljder utan att använda Rundatas tolkning och föreslår ord för förlorade runor med "
+                        "en kalibrerad procent – ett mått som är prövat mot luckor där svaret är känt ur äldre "
+                        "dokumentation."
+                        + (f" I det provet valde modellen rätt ord i {doc_right} procent av luckorna, och när den anger "
+                           f"minst 95 procent stämmer ordet i {doc_sure} procent av fallen." if doc_right else "")
+                        + " Inskriften läses alltid av en modell som inte har tränats på den."))
+        words_read = [w for w in tmr.get("reading") or [] if not w.get("unknown")]
+        sure_words = [w for w in words_read if (w.get("p") or 0) >= 0.95]
+        if words_read:
+            blocks.append(p(f"Av läsningens {len(words_read)} ord ligger {len(sure_words)} på minst 95 procent."))
+        tgaps = [g for g in tmr.get("gaps") or [] if g.get("words")]
+        if tgaps:
+            rows = []
+            for g in tgaps:
+                ws = g["words"]
+                first = f"{ws[0]['word']} ({round(100 * ws[0]['p'])} %)"
+                second = f"{ws[1]['word']} ({round(100 * ws[1]['p'])} %)" if len(ws) > 1 else "–"
+                rows.append([str(g["number"] + 1), g["carved"], str(g["n"]), first, second])
+            blocks.append(tab(["Lucka", "Ristat (– = förlorad runa)", "Förlorade runor", "Modellens ord", "Närmaste alternativ"],
+                              rows, f"Modellens förslag för luckorna i {signum}, med kalibrerad procent. Det som inget "
+                                    "ord når upp till lämnas öppet."))
+        og = tmr.get("open_gaps") or []
+        if og:
+            blocks.append(p(f"Ytterligare {len(og)} förlorade runföljder lämnas öppna: längre än fyra runor fylls inte, "
+                            "eftersom proven bara täcker en till fyra." if len(og) > 1 else
+                            "En längre förlorad runföljd lämnas öppen: längre än fyra runor fylls inte, eftersom proven "
+                            "bara täcker en till fyra."))
+        eps = (tmr.get("dating") or {}).get("epochs") or []
+        if eps:
+            top = max(eps, key=lambda e_: e_["p"])
+            rd_dating = (tmr.get("dating") or {}).get("rundata")
+            blocks.append(p(f"Ur språket daterar modellen inskriften till {top['label']} ({round(100 * top['p'])} %). "
+                            + (f"Rundata anger {rd_dating}. " if rd_dating else "Rundata anger ingen datering. ")
+                            + "Dateringen träffar rätt epok i omkring sex fall av tio och är högst en epok fel i nio av "
+                              "tio; den är ett stöd, inte ett facit."))
+        st_ = f.get("scan_traces")
+        inf = {k: [e for e in v_ if e.get("informative")] for k, v_ in ((st_ or {}).get("gaps") or {}).items()}
+        inf = {k: v_ for k, v_ in inf.items() if v_}
+        if inf:
+            items = []
+            for k in sorted(inf, key=int):
+                parts = [f"runa {e['pos'] + 1}: {', '.join(c for c, _ in e['top'][:3])}" for e in inf[k]]
+                items.append(f"Lucka {int(k) + 1} – " + "; ".join(parts))
+            blocks.append(p("Spårläsaren jämförde skanningens huggspår med luckornas platser och anger för varje "
+                            "förlorad runa de närmaste runformerna (de troligaste först). Spåren är förslag ur "
+                            "skanningen: de räknas inte in i modellens procent förrän de har bekräftats mot stenen."))
+            blocks.append(bullets(items))
 
     sy = f.get("synthesis")
     if sy and sy.get("candidates") is not None:

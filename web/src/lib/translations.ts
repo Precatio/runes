@@ -10,11 +10,9 @@ export interface Translations {
     twod_analysis: string;
     synthesis: string;
     phonetics: string;
-    knowledge_base: string;
     documentation: string;
     inscriptions: string;
     map: string;
-    styles: string;
     corpus: string;
     compare: string;
     gaps: string;
@@ -24,7 +22,8 @@ export interface Translations {
     reports: string;
     rti: string;
     group_analysis: string;
-    group_research: string;
+    group_stone: string;
+    group_corpus: string;
     group_resources: string;
     settings: string;
     built_by: string;
@@ -73,11 +72,9 @@ export const translations: Record<Language, Translations> = {
       synthesis: "Syntes & Attribuering",
       phonetics: "Språk & Fonetik",
       nlp_analysis: "Lingvistisk Analys",
-      knowledge_base: "Runologiskt Arkiv",
       documentation: "Dokumentation & Om",
       inscriptions: "Inskrifter (Rundata)",
       map: "Karta",
-      styles: "Stilgrupper",
       corpus: "Mätkorpus",
       compare: "Jämför stenar",
       gaps: "Forskningsluckor",
@@ -86,8 +83,9 @@ export const translations: Record<Language, Translations> = {
       stone_analysis: "Stenanalys (allt i ett)",
       reports: "Rapporter",
       rti: "RTI-visare",
-      group_analysis: "Analys",
-      group_research: "Forskning",
+      group_analysis: "Analysera",
+      group_stone: "Inskriften",
+      group_corpus: "Korpusen",
       group_resources: "Resurser",
       settings: "Inställningar & API",
       built_by: "Utvecklad av",
@@ -134,11 +132,9 @@ export const translations: Record<Language, Translations> = {
       synthesis: "Synthesis & Attribution",
       phonetics: "Language & Phonetics",
       nlp_analysis: "Linguistic Analysis",
-      knowledge_base: "Runological Archive",
       documentation: "Documentation & About",
       inscriptions: "Inscriptions (Rundata)",
       map: "Map",
-      styles: "Style groups",
       corpus: "Measurement corpus",
       compare: "Compare stones",
       gaps: "Research gaps",
@@ -147,8 +143,9 @@ export const translations: Record<Language, Translations> = {
       stone_analysis: "Full stone analysis",
       reports: "Reports",
       rti: "RTI viewer",
-      group_analysis: "Analysis",
-      group_research: "Research",
+      group_analysis: "Analyse",
+      group_stone: "The inscription",
+      group_corpus: "The corpus",
       group_resources: "Resources",
       settings: "Settings & API",
       built_by: "Developed by",

@@ -28,7 +28,8 @@ interface Reading extends LinguisticResultData { label: string; error?: string }
 
 const STEPS: [string, string][] = [
   ["upload", "Ladda upp skanningen"], ["images", "Bilder ur skanningen"], ["grooves", "Spåranalys och känslighet"],
-  ["twod", "2D-bildanalys"], ["reading", "Blind läsning och validering"], ["synthesis", "Syntes och attribuering"],
+  ["twod", "2D-bildanalys"], ["reading", "Blind läsning och validering"],
+  ["textmodel", "Läsning och luckor (sannolikhetsmodellen)"], ["synthesis", "Syntes och attribuering"],
   ["research", "Forskningsläge och syfte"], ["rstats", "Statistik i R"], ["report", "Stenrapport"],
 ];
 
@@ -251,7 +252,37 @@ export default function StoneAnalysisPage() {
         notes.push("AI-stegen (2D-analys, läsning, AI-text) hoppades över.");
       }
 
-      // 6. Synthesis
+      // 6. The probability model's reading: words for the lost runes with calibrated percentages (computed, no AI).
+      // The report fetches the same reading server-side; this step shows it to the user and logs it in the workflow.
+      if (signum.trim() && rec) {
+        mark("textmodel", "pågår", "modellen läser inskriften (första gången upp till en minut) …");
+        try {
+          const tmRes = await fetch(`${API_URL}/api/textmodel/${encodeURIComponent(signum.trim())}`);
+          const tm: { available?: boolean; reason?: string; gaps?: { words?: { word: string; p: number }[] }[] } =
+            tmRes.ok ? await tmRes.json() : {};
+          if (tm.available) {
+            const gaps = (tm.gaps ?? []).filter(g => g.words?.length);
+            const best = gaps.slice(0, 3).map(g => `${g.words![0].word} (${Math.round(100 * g.words![0].p)} %)`).join(", ");
+            const scan: { available?: boolean; gaps?: Record<string, unknown> } | null =
+              await fetch(`${API_URL}/api/textmodel/scantraces/${encodeURIComponent(signum.trim())}`)
+                .then(r => (r.ok ? r.json() : null)).catch(() => null);
+            const seen = scan?.available ? Object.keys(scan.gaps ?? {}).length : 0;
+            const text = gaps.length
+              ? `förslag i ${gaps.length} ${gaps.length === 1 ? "lucka" : "luckor"}${best ? `: ${best}` : ""}${seen ? `; skannern ser spår vid ${seen}` : ""}`
+              : "inga fyllbara luckor i inskriften";
+            wfSteps.push({ name: "Läsning och luckor (sannolikhetsmodellen)", result: text });
+            mark("textmodel", "klart", text);
+          } else {
+            mark("textmodel", "hoppades över", tm.reason ?? "modellen kan inte läsa inskriften");
+          }
+        } catch {
+          mark("textmodel", "misslyckades", "sannolikhetsmodellen kunde inte nås");
+        }
+      } else {
+        mark("textmodel", "hoppades över", "inget signum i Rundata");
+      }
+
+      // 7. Synthesis
       mark("synthesis", "pågår");
       const reading = readings.find(x => x.transliteration) ?? null;
       const entries = user ? await corpus.list().catch(() => []) : null;

@@ -111,7 +111,7 @@ function InscriptionDetail({ signum, meta }: { signum: string; meta: RundataMeta
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           <Field label="Datering">{rec.dating || (rec.period ? PERIOD_LABEL[rec.period] : "")}</Field>
           <Field label="Stilgrupp">
-            {rec.style && <Link href={`/stilgrupper#${rec.style}`} className="text-[#b7410e] hover:underline">{rec.style}{rec.style_uncertain ? " (osäker)" : ""}</Link>}
+            {rec.style && <span className="text-slate-800">{rec.style}{rec.style_uncertain ? " (osäker)" : ""}</span>}
           </Field>
           <Field label="Ristare">
             {rec.carvers.length > 0 ? rec.carvers.map((c, i) => (

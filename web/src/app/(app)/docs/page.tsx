@@ -44,7 +44,6 @@ const FEATURES: { group: string; items: { href: string; name: string; text: stri
     items: [
       { href: "/inskrifter", name: "Inskrifter (Rundata)", text: "Sök och filtrera alla inskrifter i Samnordisk runtextdatabas, med text, översättning, ristare, stilgrupp och läge." },
       { href: "/karta", name: "Mönsterkartan", text: "Välj ett mönster – kors, böner, stavning, brobyggen – och jämför andelen per område, över tid, med avståndet till ortnamn, medeltida kyrkor och fornlämningar eller med statistiska kluster. Upptäck visar de starkaste mönstren." },
-      { href: "/stilgrupper", name: "Stilgrupper", text: "Stenarna efter Gräslunds stilgrupper och deras ungefärliga dateringar." },
       { href: "/korpus", name: "Mätkorpus", text: "Den delade korpusen av huggspårsmätningar från inloggade forskare, publicerad under CC BY 4.0." },
       { href: "/jamfor", name: "Jämför stenar", text: "Ställer två stenars mätningar mot varandra; först prövas om mätningarna alls går att jämföra." },
       { href: "/oversikt", name: "Stenöversikt", text: "Var beläggen stöder Rundatas ristare och var en annan ristare får stöd, och landskapet runt varje sten." },
@@ -57,7 +56,6 @@ const FEATURES: { group: string; items: { href: string; name: string; text: stri
     group: "Resurser",
     items: [
       { href: "/start", name: "Start", text: "Dina projekt och analyser, sparade i ditt konto." },
-      { href: "/knowledge", name: "Runologiskt arkiv", text: "De starkaste nya förslagen från stenöversikten, som hypoteser att pröva, och källorna bakom dem." },
       { href: "/artiklar", name: "Artiklar", text: "Artiklar om de mest intressanta mönstren i runstenarna, skrivna för en bred publik och med statistiken förklarad." },
       { href: "/account", name: "Konto och inställningar", text: "Logga in för att spara projekt och bidra till mätkorpusen, och lägg in dina API-nycklar." },
     ],

@@ -88,10 +88,6 @@ const APP_VIEWS = [
     text: "Alla 6 753 inskrifter i Samnordisk runtextdatabas, sökbara på text, plats, period, stilgrupp och ristare. Varje sökning kan laddas ner som tabell, med källan angiven.",
   },
   {
-    src: "/bilder/app-stilgrupper.webp", title: "Stilgrupperna",
-    text: "Anne-Sofie Gräslunds stilgrupper, som daterar runstenarna efter ornamentiken, och hur Rundatas stenar fördelar sig mellan dem. Det är grunden för tidslinjerna i artiklarna.",
-  },
-  {
     src: "/bilder/app-statistik.webp", title: "Statistiken i R",
     text: "Elva statistiska analyser i R: kluster, dialekter, datering, förändring över tid, fornlämningar och ortnamn. Varje resultat redovisar hur säkert det är och kan laddas ner som ett paket med skript och data.",
   },
@@ -145,7 +141,22 @@ const USE_CASES = [
   },
   {
     title: "Undervisning",
-    text: "Studenter kan utforska Rundata, kartor, stilgrupper och statistiken, se hur kvantitativa metoder fungerar – och var deras gränser går.",
+    text: "Studenter kan utforska Rundata, kartor och statistiken, se hur kvantitativa metoder fungerar – och var deras gränser går.",
+  },
+];
+
+const FOR_STUDENTS = [
+  {
+    title: "Färdiga uppsatsämnen",
+    text: "Forskningsluckorna listar mönster som klarat de statistiska proven men saknar förklaring – vart och ett med en hypotes och ett förslag på hur den kan prövas. Det är i praktiken en ämneslista för kandidat- och masteruppsatser, med data och metod på plats.",
+  },
+  {
+    title: "Data och metod till metodavsnittet",
+    text: "Varje sökning i Rundata kan laddas ner som tabell med källan angiven, och varje statistisk analys som ett paket med R-skript och data. Resultaten går att räkna om och citera – uppsatsen behöver inte bygga på skärmdumpar.",
+  },
+  {
+    title: "Lär dig se vad siffrorna säger",
+    text: "Varje statistiskt mått förklaras i klartext bredvid resultatet: vad ett p-värde, ett konfidensintervall eller en korsvalidering faktiskt betyder i just det fallet. Att pröva en egen hypotes mot korpusen är gratis – och att se den falla är också en lärdom.",
   },
 ];
 
@@ -485,7 +496,24 @@ andel <- tapply(stenar$bon,
             ))}
           </div>
 
-          <div className="mt-20 rounded-3xl bg-slate-900 text-white p-10 md:p-12">
+          <div className="mt-20 rounded-3xl border-2 border-[#b7410e]/20 bg-[#b7410e]/[0.03] p-10 md:p-12">
+            <div className="text-xs font-bold uppercase tracking-widest text-[#b7410e]">För studenter</div>
+            <h3 className="mt-2 text-2xl font-serif font-bold text-slate-900">Skriver du uppsats om runstenar?</h3>
+            <p className="mt-3 text-slate-600 leading-relaxed max-w-3xl">
+              Vitki är byggt för att vara användbart på riktigt i en uppsats – inte bara att titta i. Allt är gratis,
+              öppen källkod och körs på din egen dator.
+            </p>
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+              {FOR_STUDENTS.map(s => (
+                <div key={s.title}>
+                  <div className="font-bold text-slate-900">{s.title}</div>
+                  <p className="mt-1.5 text-slate-600 leading-relaxed">{s.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-10 rounded-3xl bg-slate-900 text-white p-10 md:p-12">
             <h3 className="text-2xl font-serif font-bold">Så arbetar vi</h3>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
               {PRINCIPLES.map(p => (
