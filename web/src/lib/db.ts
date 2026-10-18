@@ -218,6 +218,10 @@ export interface ReportData {
 const STORAGE_KEY = "vitki_projects";
 const FIRESTORE_DOC_LIMIT = 900_000; // characters; Firestore's hard limit is 1 MB per document
 
+// Firestore rejects undefined field values outright ("Unsupported field value: undefined"), and a spread like
+// { ...project, linguisticResults: maybeUndefined } keeps the key. The JSON round-trip drops every undefined.
+const stripUndefined = <T,>(x: T): T => JSON.parse(JSON.stringify(x));
+
 // Raw slice profiles and positions are the heavy part of a project; drop them when a copy must be small
 function withoutSliceDetail(project: ProjectData): ProjectData {
   return {
@@ -336,8 +340,8 @@ export const db = {
         if (JSON.stringify(firestoreProject).length > FIRESTORE_DOC_LIMIT) {
           firestoreProject = withoutSliceDetail(firestoreProject);
         }
-        
-        await fs.setDoc(docRef, firestoreProject);
+
+        await fs.setDoc(docRef, stripUndefined(firestoreProject));
       } catch (error) {
         console.error("Failed to save project to Firestore:", error);
       }
@@ -458,7 +462,7 @@ export const db = {
       const fs = await firestoreLib();
       try {
         const docRef = fs.doc(fs.db, `users/${user.uid}/reports`, reportId);
-        await fs.setDoc(docRef, savedReport);
+        await fs.setDoc(docRef, stripUndefined(savedReport));
       } catch (error) {
         console.error("Failed to save report to Firestore:", error);
       }
