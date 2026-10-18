@@ -1,0 +1,57 @@
+{
+ "_om": "Avskriftsmall för uppföljarartikeln om Maltstenens sju tolkningar: varje läsning ord för ord, i ordningen A1, B1–B6, mot de huggna runföljderna. Bara läsningar vi har i ORIGINAL skrivs av och poängsätts med modellen; andrahandsreferat (via Heltoft 2017) beskrivs enbart med samstämmighetsdata ur tolkningar.json. 'ord': null = tolkningen lämnar följden oläst/oöversatt. Rundata (R) är förifylld mekaniskt ur databasens normalisering 2026-10-18; osäkra radningar är markerade med 'obs'.",
+ "grupper": ["sua", "ai", "titultitul", "fuþorkhniastbmlR", "huaR", "is", "i", "alisti", "osa", "huaR", "is", "uifrþuR", "karþi", "afr", "aft", "asini", "fauþr", "kul", "finR", "fal(s)", "taitirunoR", "u", "(a)iuinrunoR", "sulialta", "huaR", "?", "utu", "tuuut", "bilikikR", "tuR", "ra(k)(i)", "(t)(u)(l)i"],
+ "lasningar": {
+  "R": {
+   "kalla": "Rundata (Stoklund 1994), databasens normalisering av DR NOR1988;5",
+   "status": "original",
+   "ord": [
+    {"runor": "sua", "ord": "swa"},
+    {"runor": "ai", "ord": "æ", "obs": "osäker i Rundata (?)"},
+    {"runor": "titultitul", "ord": null},
+    {"runor": "fuþorkhniastbmlR", "ord": "<runraden>"},
+    {"runor": "huaR", "ord": "hvaR"},
+    {"runor": "is", "ord": "æs", "obs": "osäker (?)"},
+    {"runor": "i", "ord": "i", "obs": "osäker (?)"},
+    {"runor": "alisti", "ord": null},
+    {"runor": "osa", "ord": "Asa/asa", "obs": "namn eller 'asarnas'"},
+    {"runor": "huaR", "ord": "hvaR"},
+    {"runor": "is", "ord": "æs"},
+    {"runor": "uifrþuR", "ord": "VifreþR/VifrøþR", "obs": "namn"},
+    {"runor": "karþi", "ord": "gærþi"},
+    {"runor": "afr", "ord": null},
+    {"runor": "aft", "ord": "æft"},
+    {"runor": "asini", "ord": null},
+    {"runor": "fauþr", "ord": "faþur"},
+    {"runor": "kul finR", "ord": "Kolfinnr/Gullfinnr", "obs": "två följder lästa som ETT namn"},
+    {"runor": "fal(s)", "ord": "fal/fals"},
+    {"runor": "taitirunoR", "ord": "tæitirunaR"},
+    {"runor": "u", "ord": "ok"},
+    {"runor": "(a)iuinrunoR", "ord": "ævinrunaR"},
+    {"runor": "sulialta", "ord": null},
+    {"runor": "huaR", "ord": "hvaR"},
+    {"runor": "?", "ord": null},
+    {"runor": "utu", "ord": null},
+    {"runor": "tuuut", "ord": null},
+    {"runor": "bilikikR", "ord": "BillingR", "obs": "osäker (?)"},
+    {"runor": "tuR", "ord": null},
+    {"runor": "ra(k)(i)", "ord": null},
+    {"runor": "(t)(u)(l)i", "ord": "Tuli/Toli", "obs": "namn"}
+   ]
+  },
+  "G": {
+   "kalla": "Grønvik 1992 (ANF 107), original: utdata/Malt/kallor/litteratur/anf.txt",
+   "status": "ATT SKRIVA AV ur originalet – ord för ord mot grupperna, med sidhänvisning per rad",
+   "ord": []
+  },
+  "H": {
+   "kalla": "Heltoft 2017 (Danske Studier), original: utdata/Malt/kallor/litteratur/heltoft2017.txt",
+   "status": "ATT SKRIVA AV ur originalet – ord för ord mot grupperna, med sidhänvisning per rad",
+   "ord": []
+  },
+  "T": {"kalla": "Thuesen 1990, via Heltoft 2017", "status": "andrahand – poängsätts inte, beskrivs via tolkningar.json"},
+  "B": {"kalla": "Braunmüller 1991/1992, via Heltoft 2017", "status": "andrahand – poängsätts inte"},
+  "S": {"kalla": "Samplonius 1992, via Heltoft 2017", "status": "andrahand – poängsätts inte"},
+  "F": {"kalla": "Fridell 2024 (VMS 20), endast sammanfattning", "status": "andrahand – poängsätts inte"}
+ }
+}

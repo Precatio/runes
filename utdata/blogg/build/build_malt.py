@@ -257,29 +257,13 @@ Mellan runorna har ristaren huggit skiljetecken. De är den viktigaste grunden v
 
 Runan ą är den som Rundata skriver o, och ʀ är det r-ljud som senare försvann. Det enda som alla sju tolkningarna läser lika är början av rad B2: en man, Vifröd, ”gjorde” något. Allt annat skiljer sig åt. Det beror inte på att runorna är oläsliga. Det beror på att runorna mellan skiljetecknen måste delas upp i ord och förstås, och där har varje tolkare gjort sina egna val. Det är de valen som sannolikhetsläran kan pröva.
 
-## Så lär sig en modell runspråket
+## Modellen som läser – utan att ha sett stenen
 
-Modellen ställer två frågor om varje bit av texten. Den första gäller stavningen: hur sannolikt är det att en runristare skrev just det här ordet med just de här runorna? Den andra gäller språket: hur sannolikt är det här ordet, efter det ord som kom före?
+Läsningen görs av Vitkis sannolikhetsmodell för runtext – samma modell som i dag läser skadade inskrifter i appen. Hur den är byggd, hur den prövas i sex olika prov och hur väl dess procent håller berättar vi utförligt i en egen artikel, [Runorna som fattas](/artiklar/runorna-som-fattas). Här räcker det korta. Modellen har lärt sig stavning och ordföljd ur tiotusentals huggna ord i Samnordisk runtextdatabas: för varje bit text ställer den två frågor – hur sannolikt är det att en ristare skrev just det här ordet med just de här runorna, och hur sannolikt är ordet efter ordet före? Ordförrådet rymmer också Eddadikternas ord, med liten vikt, eftersom de är isländska och långt yngre än stenen.
 
-Svaret på den första frågan har modellen lärt sig ur {num(dec['n_pairs'], True)} huggna ord i {num(dec['n_pair_inscriptions'], True)} inskrifter i Samnordisk runtextdatabas (Rundata), där varje ord står bredvid sin normaliserade form. Det 16-runiga alfabetet hade färre tecken än språket hade ljud, så samma ord kunde stavas på många sätt. Modellen räknar ut hur ofta varje ljud skrevs med varje runa.
+Det viktiga för Maltstenen är två saker. För det första delar modellen själv upp runföljderna i ord: en grupp mellan två skiljetecken är ofta ett ord, men ibland två eller tre, och modellen väger alla sätt att dela den – det är precis de valen som skilt de sju tolkarna åt. För det andra har Maltstenen tagits bort ur allt modellen lärt sig. Den har aldrig sett Rundatas läsning av stenen, eller någon annans.
 
-{chart_spelling('sv')}
-
-Svaret på den andra frågan kommer från Rundatas normaliserade text för {num(dec['n_train'], True)} vikingatida inskrifter, med {num(dec['n_vocab'], True)} olika ord. Här tar vi med alla slags inskrifter, inte bara runstenarna, eftersom modellen ska lära sig språket, och det är detsamma på en amulett som på en sten. Ur dem lär sig modellen vilka ord som brukar följa på varandra, som att ”efter” ofta följs av ett namn och ”fader” av ”sin”, som i *faður sinn*. Till ordförrådet lade vi de {num(dec['n_edda'], True)} ordformerna i Eddadikterna och Snorres Edda. De är isländska och omkring 400 år yngre än stenen, så de får bara 3 procent av vikten. Modellen kan också säga att en runföljd är ett ord den inte känner. Den bedömer då bara hur runor brukar följa på varandra inne i ord.
-
-Skiljetecknen är en del av modellen. I de inskrifter den har lärt sig av har ungefär sju av tio ordgränser ett skiljetecken. En grupp mellan två skiljetecken är alltså ofta ett ord, men ibland två eller tre. För varje grupp på Maltstenen väger modellen alla sätt att dela den i ord. Den räknar sedan ut hur stor del av den totala sannolikheten varje ord står för.
-
-Maltstenen själv är borttagen ur allt modellen har lärt sig. Den har aldrig sett Rundatas läsning av stenen eller någon annans.
-
-## Provet: 808 stenar med känt svar
-
-En sannolikhet är bara värd något om den stämmer. Därför prövade vi modellen innan den fick se Maltstenen. Vi delade inskrifterna i fem delar och lät modellen lära sig av fyra och läsa den femte, fem gånger om. Den fick bara de huggna grupperna, precis som för Maltstenen, och vi jämförde med Rundatas läsning. Av {num(cal['n_gold'], True)} ord i {cal['n_inscriptions']} inskrifter läste den rätt ord i {pc(cal['same'])} procent av fallen och satte ordgränserna rätt i {pc(cal['span'])} procent. Provet omfattar {TEST_K['runsten']} runstenar, {TEST_K['annan sten']} andra stenar som gravhällar och berghällar och {TEST_K['lösa föremål']} lösa föremål. Nästan nio av tio ord står alltså på runstenar. Samma ord i en annan normalisering, som sten och stæin, räknas som rätt.
-
-Lika viktigt är att modellen vet hur säker den är. Från början var den för självsäker: när den sa {pc(top['raw_p'])} procent hade den rätt i {pc(top['raw_acc'])}. Vi lade därför till en kalibrering, en enkel statistisk modell som lär sig av provet hur mycket siffrorna ska skruvas ned. Den tar hänsyn till hur sällsynt ordet är, hur ovanlig stavningen är och hur långt ordet är. Kalibreringen prövades på samma sätt, på stenar den inte hade sett. Efter den har modellen rätt ungefär så ofta som den säger. Skillnaden är i genomsnitt mindre än en halv procentenhet.
-
-{chart_calibration('sv')}
-
-För sällsynta ord, som Maltstenen är full av, är modellen fortfarande något för säker. När den säger {pc(cal['cal'][-1]['p_rare'])} procent om ett ord som förekommer högst två gånger i träningen, har den rätt i {pc(cal['cal'][-1]['acc_rare'])}. Det är värt att ha i minnet för siffrorna som följer.
+Innan modellen fick se stenen prövades den på {num(cal['n_gold'], True)} ord med känt svar: den läste rätt ord i {pc(cal['same'])} procent av fallen, och dess procentsatser är kalibrerade så att den har rätt ungefär så ofta som den säger. Ett förbehåll följer med in i det som kommer: för sällsynta ord – och Maltstenen är full av dem – är modellen fortfarande något för säker. När den säger {pc(cal['cal'][-1]['p_rare'])} procent om ett ord den knappt har sett, har den rätt i {pc(cal['cal'][-1]['acc_rare'])}.
 
 ## Maltstenen genom modellen
 
@@ -399,29 +383,13 @@ Between the runes the carver cut dividers. They are the most important ground we
 
 The rune ą is the one Rundata writes o, and ʀ is an r-sound that later disappeared. The only thing all seven interpretations read alike is the beginning of row B2: a man, Vífrøðr, 'made' something. Everything else differs. That is not because the runes are illegible. It is because the runes between the dividers have to be divided into words and understood, and there every interpreter has made his own choices. Those choices are what probability theory can test.
 
-## How a model learns the runic language
+## The model that reads – without having seen the stone
 
-The model asks two questions about every piece of the text. The first is about spelling: how probable is it that a carver wrote this word with these runes? The second is about language: how probable is this word, after the word that came before?
+The reading is made by Vitki's probability model for runic text – the same model that today reads damaged inscriptions in the app. How it is built, how it is tested in six different ways and how well its percentages hold, we tell at length in an article of its own, [Runorna som fattas](/artiklar/runorna-som-fattas). Here the short version will do. The model has learnt spelling and word order from tens of thousands of carved words in the Scandinavian Runic Text Database: for every piece of text it asks two questions – how probable is it that a carver wrote this word with these runes, and how probable is the word after the word before? The vocabulary also holds the words of the Eddic poems, at a small weight, since they are Icelandic and far younger than the stone.
 
-The model learned the answer to the first question from {num(dec['n_pairs'], False)} carved words in {num(dec['n_pair_inscriptions'], False)} inscriptions in the Scandinavian Runic-text Data Base (Rundata), where every word stands next to its normalized form. The 16-rune alphabet had fewer signs than the language had sounds, so the same word could be spelled in many ways. The model works out how often each sound was written with each rune.
+What matters for the Malt stone is two things. First, the model divides the rune sequences into words by itself: a group between two separators is often one word, but sometimes two or three, and the model weighs every way of dividing it – precisely the choices that set the seven interpreters apart. Second, the Malt stone has been removed from everything the model has learnt. It has never seen Rundata's reading of the stone, or anyone else's.
 
-{chart_spelling('en')}
-
-The answer to the second question comes from Rundata's normalized text for {num(dec['n_train'], False)} Viking-Age inscriptions, with {num(dec['n_vocab'], False)} different words. Here we include every kind of inscription, not only the runestones, since the model is to learn the language, and that is the same on an amulet as on a stone. From them the model learns which words tend to follow one another, such as 'in memory of' often being followed by a name, and 'father' by 'his', as in *faður sinn*. To the vocabulary we added the {num(dec['n_edda'], False)} word forms of the Eddic poems and Snorri's Edda. They are Icelandic and some 400 years younger than the stone, so they get only 3 per cent of the weight. The model can also say that a rune sequence is a word it does not know. It then judges only how runes usually follow one another inside words.
-
-The dividers are part of the model. In the inscriptions it learned from, about seven of ten word boundaries have a divider. A group between two dividers is thus often one word, but sometimes two or three. For every group on the Malt stone the model weighs all the ways of dividing it into words. It then works out what share of the total probability each word accounts for.
-
-The Malt stone itself is removed from everything the model learned. It has never seen Rundata's reading of the stone, or anyone else's.
-
-## The test: 808 stones with known answers
-
-A probability is only worth something if it holds. So we tested the model before it saw the Malt stone. We divided the inscriptions into five parts and let the model learn from four and read the fifth, five times over. It got only the carved groups, just as for the Malt stone, and we compared with Rundata's reading. Of {num(cal['n_gold'], False)} words in {cal['n_inscriptions']} inscriptions it read the right word in {pc(cal['same'])} per cent of cases and placed the word boundaries right in {pc(cal['span'])} per cent. The test comprises {TEST_K['runsten']} runestones, {TEST_K['annan sten']} other stones such as grave slabs and rock faces, and {TEST_K['lösa föremål']} loose objects. Almost nine words in ten thus stand on runestones. The same word in another normalization, such as sten and stæin, counts as right.
-
-Just as important is that the model knows how sure it is. At first it was overconfident: when it said {pc(top['raw_p'])} per cent it was right in {pc(top['raw_acc'])}. So we added a calibration, a simple statistical model that learns from the test how much the figures should be turned down. It takes into account how rare the word is, how unusual the spelling is and how long the word is. The calibration was tested in the same way, on stones it had not seen. After it, the model is right about as often as it says. The difference is on average less than half a percentage point.
-
-{chart_calibration('en')}
-
-For rare words, of which the Malt stone is full, the model is still somewhat overconfident. When it says {pc(cal['cal'][-1]['p_rare'])} per cent about a word that occurs at most twice in training, it is right in {pc(cal['cal'][-1]['acc_rare'])}. That is worth keeping in mind for the figures that follow.
+Before the model saw the stone it was tested on {num(cal['n_gold'], False)} words with known answers: it read the right word in {pc(cal['same'])} per cent of cases, and its percentages are calibrated so that it is right about as often as it claims. One caveat follows into what comes next: for rare words – and the Malt stone is full of them – the model is still somewhat overconfident. When it claims {pc(cal['cal'][-1]['p_rare'])} per cent about a word it has barely seen, it is right in {pc(cal['cal'][-1]['acc_rare'])}.
 
 ## The Malt stone through the model
 
