@@ -272,7 +272,10 @@ export default function ComparePage() {
               </p>
               {[["Alla par", result.reference.percentile_all, result.reference.n_pairs],
                 ["Par med samma ristare i Rundata", result.reference.percentile_same, result.reference.n_same],
-                ["Par med olika ristare i Rundata", result.reference.percentile_different, result.reference.n_different]].map(([label, pct, n]) => (
+                ["Par med olika ristare i Rundata", result.reference.percentile_different, result.reference.n_different],
+                ...(result.reference.percentile_material != null
+                  ? [[`Par av samma bergartsfamilj (${result.reference.material_family})`, result.reference.percentile_material, result.reference.n_material ?? 0]]
+                  : [])].map(([label, pct, n]) => (
                 <div key={label as string} className="text-sm">
                   <div className="flex justify-between text-xs text-slate-600"><span>{label as string} ({n as number})</span>
                     <span>{pct == null ? "för få par" : `större än ${pct} % av paren`}</span></div>
@@ -283,7 +286,8 @@ export default function ComparePage() {
               ))}
               <p className="text-[11px] text-slate-500">
                 Rundatas ristare är bedömningar, och skillnaderna mellan stenar beror också på bergart och skanning; skalan visar var paret
-                hamnar, inte vem som ristade.
+                hamnar, inte vem som ristade. Delar paret en bergartsfamilj är raden med samma bergart den ärligaste jämförelsen –
+                vår replikationsstudie visade att bergarten påverkar måtten mer än ristarens hand.
               </p>
             </div>
           ) : (

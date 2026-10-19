@@ -120,7 +120,13 @@ def compare(req: CompareRequest):
     rec_b = store().get(req.b.signum) if req.b.signum else None
     checks = sc.comparability(req.a.model_dump(), req.b.model_dump(), ga, rec_a, rec_b)
     ft = req.a.feature_type if req.a.feature_type == req.b.feature_type else None
-    ref = sc.reference_scale(ga["means"][0], ga["means"][1], req.corpus, carver_label, ft, METHOD_VERSION)
+    # parets gemensamma bergartsfamilj, och korpusstenarnas, ur Rundatas materialuppgift (src/geology.FAMILIES)
+    from src import geology
+    fam = lambda rec: geology.families((rec or {}).get("material") or "")  # noqa: E731
+    pair_families = fam(rec_a) & fam(rec_b)
+    material_of = lambda signum: fam(store().get(signum) if signum else None)  # noqa: E731
+    ref = sc.reference_scale(ga["means"][0], ga["means"][1], req.corpus, carver_label, ft, METHOD_VERSION,
+                             material_of=material_of, pair_families=pair_families or None)
     ctx = None
     if rec_a and rec_b and rec_a["signum"] != rec_b["signum"]:
         m = orthography_model()

@@ -99,9 +99,11 @@ def groove_comparison(slices_a: list[dict], slices_b: list[dict], n_perm: int = 
 
 
 def reference_scale(means_a: dict, means_b: dict, corpus: list[dict], carver_of, feature_type: str | None,
-                    method_version: str | None) -> dict | None:
+                    method_version: str | None, material_of=None, pair_families: set | None = None) -> dict | None:
     """Var parets avstånd hamnar bland avstånden mellan stenpar i mätkorpusen (stabila mått, standardiserade med
-    spridningen mellan korpusens stenar), för alla par, par med samma ristare och par med olika ristare."""
+    spridningen mellan korpusens stenar), för alla par, par med samma ristare och par med olika ristare. Delar
+    paret en bergartsfamilj (src/geology.FAMILIES) jämförs det också mot korpusens par av samma familj – Rak-
+    replikationen visade att bergarten påverkar måtten mer än handen, så den skalan är den ärligaste."""
     rows = []
     for e in corpus:
         mv = e.get("means") or {}
@@ -117,7 +119,8 @@ def reference_scale(means_a: dict, means_b: dict, corpus: list[dict], carver_of,
     sd = X.std(axis=0, ddof=1)
     sd[sd == 0] = 1
     d_ab = float(np.linalg.norm((np.array([means_a[m] for m in STABLE]) - np.array([means_b[m] for m in STABLE])) / sd))
-    same, diff, all_ = [], [], []
+    fams = [material_of(r[0]) if material_of else set() for r in rows]
+    same, diff, all_, mat = [], [], [], []
     for i in range(len(rows)):
         for j in range(i + 1, len(rows)):
             d = float(np.linalg.norm((X[i] - X[j]) / sd))
@@ -125,10 +128,14 @@ def reference_scale(means_a: dict, means_b: dict, corpus: list[dict], carver_of,
             ci, cj = carver_of(rows[i][0]), carver_of(rows[j][0])
             if ci and cj:
                 (same if ci == cj else diff).append(d)
+            if pair_families and fams[i] & fams[j] & pair_families:
+                mat.append(d)
     pct = lambda v: round(100 * sum(1 for x in v if x < d_ab) / len(v)) if v else None  # noqa: E731
     return {"distance": round(d_ab, 3), "n_stones": len(rows), "n_pairs": len(all_),
             "percentile_all": pct(all_), "percentile_same": pct(same), "percentile_different": pct(diff),
             "n_same": len(same), "n_different": len(diff),
+            "percentile_material": pct(mat) if len(mat) >= 10 else None, "n_material": len(mat),
+            "material_family": sorted(pair_families)[0] if pair_families else None,
             "median_same": round(float(np.median(same)), 3) if same else None,
             "median_different": round(float(np.median(diff)), 3) if diff else None}
 
@@ -234,6 +241,10 @@ def conclusion(ga: dict, ref: dict | None, checks: list[dict], ctx: dict | None)
                    + (f"; bland par med samma ristare är det större än {ref['percentile_same']} %" if ref.get("percentile_same") is not None else "")
                    + (f" och bland par med olika ristare större än {ref['percentile_different']} %" if ref.get("percentile_different") is not None else "")
                    + ".")
+        if ref.get("percentile_material") is not None:
+            out.append(f"Bland korpusens par av samma bergartsfamilj som stenarna ({ref['material_family']}, "
+                       f"{ref['n_material']} par) är avståndet större än {ref['percentile_material']} %. Den skalan "
+                       "väger tyngst: vår replikationsstudie visade att bergarten påverkar måtten mer än handen.")
     bad = [c for c in checks if c["ok"] is False]
     if bad:
         out.append("Jämförbarheten är begränsad: " + "; ".join(c["text"].rstrip(".") for c in bad) + ".")

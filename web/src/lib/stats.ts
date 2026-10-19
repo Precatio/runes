@@ -14,6 +14,7 @@ export interface ComparisonCheck { key: string; ok: boolean | null; text: string
 export interface ComparisonReference {
   distance: number; n_stones: number; n_pairs: number; percentile_all: number | null; percentile_same: number | null;
   percentile_different: number | null; n_same: number; n_different: number; median_same: number | null; median_different: number | null;
+  percentile_material?: number | null; n_material?: number; material_family?: string | null;
 }
 export interface ComparisonContext {
   rows: { label: string; a: string; b: string }[];
