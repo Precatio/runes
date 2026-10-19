@@ -39,8 +39,8 @@ export const AUTHORS: Record<string, Author> = {
     url: "https://www.linkedin.com/in/viktor-kvant-555180108/",
     role: "Digital analytiker och grundare av Vitki",
     role_en: "Digital analyst and founder of Vitki",
-    bio: "Viktor Kvant arbetar till vardags som digital analytiker och ser dataanalys som ett övergripande yrkesfält, där samma analytiska metoder, AI-modeller och tekniker kan driva gränserna framåt även inom humaniora och arkeologi. Han grundade Vitki.",
-    bio_en: "Viktor Kvant works as a digital analyst and sees data analysis as an overarching field, where the same analytical methods, AI models and techniques can push the boundaries forward in the humanities and archaeology as well. He founded Vitki.",
+    bio: "Viktor Kvant arbetar till vardags som digital analytiker. Han grundade Vitki för att pröva samma analytiska metoder på runstenarna.",
+    bio_en: "Viktor Kvant works as a digital analyst. He founded Vitki to try the same analytical methods on the runestones.",
   },
 };
 export const authorOf = (name?: string | null): Author | null => (name ? AUTHORS[name] ?? null : AUTHORS["Viktor Kvant"]);
