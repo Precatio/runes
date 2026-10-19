@@ -1,0 +1,335 @@
+{
+ "budget": 600,
+ "iterationer": 300,
+ "texter": [
+  {
+   "dikt": "Dráp_Niflunga",
+   "löpord": 192,
+   "kort": true,
+   "andel": 0.419,
+   "sd": null
+  },
+  {
+   "dikt": "Helreið_Brynhildar",
+   "löpord": 397,
+   "kort": true,
+   "andel": 0.415,
+   "sd": null
+  },
+  {
+   "dikt": "Sigurðarkviða_in_skamma",
+   "löpord": 1643,
+   "kort": false,
+   "andel": 0.405,
+   "sd": 0.0155
+  },
+  {
+   "dikt": "Heiðreksgátur",
+   "löpord": 2729,
+   "kort": false,
+   "andel": 0.405,
+   "sd": 0.0202
+  },
+  {
+   "dikt": "Guðrúnarkviða_in_þriðja",
+   "löpord": 305,
+   "kort": true,
+   "andel": 0.404,
+   "sd": null
+  },
+  {
+   "dikt": "Fjölsvinnsmál",
+   "löpord": 1283,
+   "kort": false,
+   "andel": 0.404,
+   "sd": 0.0171
+  },
+  {
+   "dikt": "Þrymskviða",
+   "löpord": 788,
+   "kort": false,
+   "andel": 0.403,
+   "sd": 0.0106
+  },
+  {
+   "dikt": "Grípisspá",
+   "löpord": 1771,
+   "kort": false,
+   "andel": 0.403,
+   "sd": 0.0169
+  },
+  {
+   "dikt": "Baldrs_draumar",
+   "löpord": 395,
+   "kort": true,
+   "andel": 0.4,
+   "sd": null
+  },
+  {
+   "dikt": "Hárbarðsljóð",
+   "löpord": 1251,
+   "kort": false,
+   "andel": 0.399,
+   "sd": 0.016
+  },
+  {
+   "dikt": "Helgakviða_Hjörvarðssonar",
+   "löpord": 1732,
+   "kort": false,
+   "andel": 0.399,
+   "sd": 0.0169
+  },
+  {
+   "dikt": "Grógaldr",
+   "löpord": 447,
+   "kort": true,
+   "andel": 0.398,
+   "sd": null
+  },
+  {
+   "dikt": "Vafþrúðnismál",
+   "löpord": 1372,
+   "kort": false,
+   "andel": 0.396,
+   "sd": 0.0155
+  },
+  {
+   "dikt": "Gylfaginning",
+   "löpord": 17841,
+   "kort": false,
+   "andel": 0.393,
+   "sd": 0.0201
+  },
+  {
+   "dikt": "Hlöðskviða",
+   "löpord": 1554,
+   "kort": false,
+   "andel": 0.392,
+   "sd": 0.0164
+  },
+  {
+   "dikt": "Oddrúnarkviða",
+   "löpord": 819,
+   "kort": false,
+   "andel": 0.39,
+   "sd": 0.0108
+  },
+  {
+   "dikt": "Reginsmál",
+   "löpord": 1145,
+   "kort": false,
+   "andel": 0.389,
+   "sd": 0.0139
+  },
+  {
+   "dikt": "Skírnismál",
+   "löpord": 1113,
+   "kort": false,
+   "andel": 0.384,
+   "sd": 0.0137
+  },
+  {
+   "dikt": "Hávamál",
+   "löpord": 4124,
+   "kort": false,
+   "andel": 0.383,
+   "sd": 0.0201
+  },
+  {
+   "dikt": "Fáfnismál",
+   "löpord": 1398,
+   "kort": false,
+   "andel": 0.382,
+   "sd": 0.0139
+  },
+  {
+   "dikt": "Sigurðarkviða_in_meiri",
+   "löpord": 634,
+   "kort": false,
+   "andel": 0.381,
+   "sd": 0.0045
+  },
+  {
+   "dikt": "Eddubrot",
+   "löpord": 895,
+   "kort": false,
+   "andel": 0.381,
+   "sd": 0.0116
+  },
+  {
+   "dikt": "Völundarkviða",
+   "löpord": 1234,
+   "kort": false,
+   "andel": 0.38,
+   "sd": 0.0154
+  },
+  {
+   "dikt": "Lokasenna",
+   "löpord": 1963,
+   "kort": false,
+   "andel": 0.379,
+   "sd": 0.0172
+  },
+  {
+   "dikt": "Hálfsrekkaljóð",
+   "löpord": 854,
+   "kort": false,
+   "andel": 0.376,
+   "sd": 0.0116
+  },
+  {
+   "dikt": "Hyndluljóð",
+   "löpord": 855,
+   "kort": false,
+   "andel": 0.375,
+   "sd": 0.0112
+  },
+  {
+   "dikt": "Sigrdrífumál",
+   "löpord": 1225,
+   "kort": false,
+   "andel": 0.374,
+   "sd": 0.0136
+  },
+  {
+   "dikt": "Skáldskaparmál",
+   "löpord": 21175,
+   "kort": false,
+   "andel": 0.364,
+   "sd": 0.0209
+  },
+  {
+   "dikt": "Guðrúnarkviða_in_fyrsta",
+   "löpord": 739,
+   "kort": false,
+   "andel": 0.359,
+   "sd": 0.0098
+  },
+  {
+   "dikt": "Alvíssmál",
+   "löpord": 856,
+   "kort": false,
+   "andel": 0.357,
+   "sd": 0.0131
+  },
+  {
+   "dikt": "Hjálmarskviða",
+   "löpord": 213,
+   "kort": true,
+   "andel": 0.357,
+   "sd": null
+  },
+  {
+   "dikt": "Sólarljóð",
+   "löpord": 1697,
+   "kort": false,
+   "andel": 0.355,
+   "sd": 0.017
+  },
+  {
+   "dikt": "Völsungakviða_in_forna",
+   "löpord": 1921,
+   "kort": false,
+   "andel": 0.354,
+   "sd": 0.0156
+  },
+  {
+   "dikt": "Grímnismál",
+   "löpord": 1682,
+   "kort": false,
+   "andel": 0.352,
+   "sd": 0.0165
+  },
+  {
+   "dikt": "Atlamál_in_grænlenzku",
+   "löpord": 2819,
+   "kort": false,
+   "andel": 0.351,
+   "sd": 0.0159
+  },
+  {
+   "dikt": "Völuspá_in_skamma",
+   "löpord": 310,
+   "kort": true,
+   "andel": 0.351,
+   "sd": null
+  },
+  {
+   "dikt": "Hervararkviða",
+   "löpord": 820,
+   "kort": false,
+   "andel": 0.351,
+   "sd": 0.0105
+  },
+  {
+   "dikt": "Hymiskviða",
+   "löpord": 873,
+   "kort": false,
+   "andel": 0.349,
+   "sd": 0.0114
+  },
+  {
+   "dikt": "Gróttasöngr",
+   "löpord": 847,
+   "kort": false,
+   "andel": 0.345,
+   "sd": 0.0108
+  },
+  {
+   "dikt": "Guðrúnarkviða_in_forna",
+   "löpord": 1071,
+   "kort": false,
+   "andel": 0.339,
+   "sd": 0.0121
+  },
+  {
+   "dikt": "Rígsþula",
+   "löpord": 1109,
+   "kort": false,
+   "andel": 0.333,
+   "sd": 0.0133
+  },
+  {
+   "dikt": "Guðrúnarhvöt",
+   "löpord": 605,
+   "kort": false,
+   "andel": 0.322,
+   "sd": 0.0017
+  },
+  {
+   "dikt": "Völuspá",
+   "löpord": 1573,
+   "kort": false,
+   "andel": 0.316,
+   "sd": 0.0139
+  },
+  {
+   "dikt": "Helgakviða_Hundingsbana_I",
+   "löpord": 1287,
+   "kort": false,
+   "andel": 0.31,
+   "sd": 0.0128
+  },
+  {
+   "dikt": "Atlakviða",
+   "löpord": 1201,
+   "kort": false,
+   "andel": 0.31,
+   "sd": 0.0125
+  },
+  {
+   "dikt": "Hamðismál",
+   "löpord": 746,
+   "kort": false,
+   "andel": 0.298,
+   "sd": 0.0087
+  },
+  {
+   "dikt": "Forspjallsljóð",
+   "löpord": 521,
+   "kort": true,
+   "andel": 0.237,
+   "sd": null
+  }
+ ]
+}
