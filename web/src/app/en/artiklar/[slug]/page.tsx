@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import BlogShell from "@/components/BlogShell";
 import BlogBody, { postDate, type BlogPost } from "@/components/BlogBody";
+import ShareArticle from "@/components/ShareArticle";
 import { getPost, listPosts, postSlugs } from "@/lib/articles";
 import { featuredFirst } from "@/lib/featured";
 import { articleJsonLd, enPostPath, keywords, languageAlternates, metaDescription, SHARE_SIZE, sharePath } from "@/lib/blogSeo";
@@ -76,6 +77,7 @@ export default async function EnglishPostPage({ params }: { params: Promise<{ sl
         <div className="mt-10">
           <BlogBody text={post.body_en} />
         </div>
+        <ShareArticle title={post.title_en || post.title} lang="en" />
       </article>
       <MoreInEnglish posts={more} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import BlogBody, { inLanguage, postDate, type BlogPost } from "@/components/BlogBody";
 import { useLanguage } from "@/components/LanguageContext";
+import ShareArticle from "@/components/ShareArticle";
 import { authorOf } from "@/lib/site";
 
 // One post, rendered on the server in Swedish (what search engines read) and shown in English when the reader has
@@ -43,6 +44,7 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
       )}
       {lang === "en" && !v.en && <p className="mt-4 text-sm text-slate-500">Den här artikeln finns bara på svenska.</p>}
       <div className="mt-10" translate="no"><BlogBody text={v.body} /></div>
+      <ShareArticle title={v.title} lang={lang === "en" ? "en" : "sv"} />
       {author && (
         <aside className="mt-16 rounded-2xl border border-slate-900/10 bg-white p-6" translate="no">
           <div className="text-xs font-bold uppercase tracking-wider text-[#b7410e]">{lang === "en" ? "About the author" : "Om författaren"}</div>
