@@ -1,0 +1,155 @@
+{
+ "metod": {
+  "topp": 200,
+  "min_typer": 8,
+  "strofer": 164
+ },
+ "rå": {
+  "Sverige": {
+   "stenar": 2321,
+   "löpord": 23641,
+   "ordtyper": 3054,
+   "median": 0.176,
+   "per_del": {
+    "I": 0.2,
+    "II": 0.161,
+    "III": 0.156,
+    "IV": 0.15,
+    "V": 0.195,
+    "VI": 0.2
+   }
+  },
+  "Danmark": {
+   "stenar": 239,
+   "löpord": 2757,
+   "ordtyper": 719,
+   "median": 0.217,
+   "per_del": {
+    "I": 0.235,
+    "II": 0.167,
+    "III": 0.174,
+    "IV": 0.217,
+    "V": 0.159,
+    "VI": 0.182
+   }
+  },
+  "Norge": {
+   "stenar": 66,
+   "löpord": 560,
+   "ordtyper": 263,
+   "median": 0.19,
+   "per_del": {
+    "I": 0.2,
+    "II": 0.174,
+    "III": 0.16,
+    "IV": 0.182,
+    "V": 0.201,
+    "VI": 0.174
+   }
+  }
+ },
+ "kontroll": {
+  "Sverige": {
+   "budget_löpord": 560,
+   "iterationer": 300,
+   "median_medel": 0.142,
+   "median_sd": 0.0196,
+   "andel_minst_norge": 0.003
+  },
+  "Danmark": {
+   "budget_löpord": 560,
+   "iterationer": 300,
+   "median_medel": 0.161,
+   "median_sd": 0.0186,
+   "andel_minst_norge": 0.09
+  },
+  "Norge": {
+   "budget_löpord": 560,
+   "median_medel": 0.19,
+   "median_sd": 0.0
+  }
+ },
+ "kontroll_dansk_budget": {
+  "budget_löpord": 2757,
+  "iterationer": 300,
+  "sverige_median_medel": 0.167,
+  "sverige_median_sd": 0.0129,
+  "danmark_median": 0.217,
+  "andel_sverige_minst_danmark": 0.0
+ },
+ "ord_diff": {
+  "dansk_ej_svensk": [
+   "of",
+   "sa",
+   "munu",
+   "þvi",
+   "ser",
+   "vel",
+   "mun",
+   "lifa",
+   "hanum",
+   "ver",
+   "nu",
+   "hvar",
+   "lengi",
+   "hin",
+   "ala",
+   "viþa",
+   "verþi",
+   "stendr",
+   "kona",
+   "hofi",
+   "hal",
+   "goþr",
+   "skip",
+   "oþi",
+   "hogva"
+  ],
+  "svensk_ej_dansk": [
+   "þat",
+   "til",
+   "þar",
+   "uti",
+   "suni",
+   "sal",
+   "þesa",
+   "varu",
+   "ut",
+   "ulfr",
+   "sen",
+   "rista",
+   "raþa",
+   "lata",
+   "gerva",
+   "ger",
+   "for"
+  ],
+  "norsk_ej_svensk": [
+   "sa",
+   "af",
+   "mer",
+   "konu",
+   "man",
+   "furir",
+   "ver",
+   "up",
+   "sinum",
+   "or",
+   "vit",
+   "stendr",
+   "ma",
+   "heþin",
+   "hana",
+   "finr",
+   "faþi",
+   "ar",
+   "þeru",
+   "vega",
+   "su",
+   "sonr",
+   "mali",
+   "liþi",
+   "ligja"
+  ]
+ }
+}
