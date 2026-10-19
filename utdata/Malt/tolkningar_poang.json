@@ -1,0 +1,895 @@
+{
+ "om": "Poängsättning av Maltstenens originalläsningar (R, G, H) ur tolkningar_ord.json.",
+ "korpus_ord": 31920,
+ "lasningar": {
+  "R": {
+   "kalla": "Rundata (Stoklund 1994), databasens normalisering av DR NOR1988;5",
+   "tackning": {
+    "grupper_med_ord": 20,
+    "av": 30,
+    "andel": 0.667
+   },
+   "belagg": {
+    "ord_poangsatta": 20,
+    "runbelagd": 15,
+    "edda": 2,
+    "obelagd": 3,
+    "andel_runbelagd": 0.75,
+    "medel_log10_frekvens": -3.03
+   },
+   "run_trohet": {
+    "medel": 0.923,
+    "varsta": [
+     {
+      "grupp": "u",
+      "anspråk": "ok",
+      "likhet": 0.5
+     },
+     {
+      "grupp": "uifrþuR",
+      "anspråk": "vifreþr",
+      "likhet": 0.667
+     },
+     {
+      "grupp": "fal(s)",
+      "anspråk": "fal",
+      "likhet": 0.75
+     },
+     {
+      "grupp": "bilikikR",
+      "anspråk": "billingr",
+      "likhet": 0.75
+     }
+    ]
+   },
+   "ord": [
+    {
+     "ord": "swa",
+     "nyckel": "sva",
+     "status": "runbelagd",
+     "frekvens": 8,
+     "grupp": "sua",
+     "alternativ": false
+    },
+    {
+     "ord": "æ",
+     "nyckel": "e",
+     "status": "runbelagd",
+     "frekvens": 23,
+     "grupp": "ai",
+     "alternativ": false
+    },
+    {
+     "ord": "hvaR",
+     "nyckel": "hvar",
+     "status": "runbelagd",
+     "frekvens": 3,
+     "grupp": "huaR",
+     "alternativ": false
+    },
+    {
+     "ord": "æs",
+     "nyckel": "es",
+     "status": "runbelagd",
+     "frekvens": 55,
+     "grupp": "is",
+     "alternativ": false
+    },
+    {
+     "ord": "i",
+     "nyckel": "i",
+     "status": "runbelagd",
+     "frekvens": 260,
+     "grupp": "i",
+     "alternativ": false
+    },
+    {
+     "ord": "Asa",
+     "nyckel": "asa",
+     "status": "runbelagd",
+     "frekvens": 21,
+     "grupp": "osa",
+     "alternativ": true
+    },
+    {
+     "ord": "hvaR",
+     "nyckel": "hvar",
+     "status": "runbelagd",
+     "frekvens": 3,
+     "grupp": "huaR",
+     "alternativ": false
+    },
+    {
+     "ord": "æs",
+     "nyckel": "es",
+     "status": "runbelagd",
+     "frekvens": 55,
+     "grupp": "is",
+     "alternativ": false
+    },
+    {
+     "ord": "VifreþR",
+     "nyckel": "vifreþr",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "uifrþuR",
+     "alternativ": true
+    },
+    {
+     "ord": "gærþi",
+     "nyckel": "gerþi",
+     "status": "runbelagd",
+     "frekvens": 121,
+     "grupp": "karþi",
+     "alternativ": false
+    },
+    {
+     "ord": "æft",
+     "nyckel": "eft",
+     "status": "runbelagd",
+     "frekvens": 103,
+     "grupp": "aft",
+     "alternativ": false
+    },
+    {
+     "ord": "faþur",
+     "nyckel": "faþur",
+     "status": "runbelagd",
+     "frekvens": 872,
+     "grupp": "fauþr",
+     "alternativ": false
+    },
+    {
+     "ord": "Kolfinnr",
+     "nyckel": "kolfinr",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "kul finR",
+     "alternativ": true
+    },
+    {
+     "ord": "fal",
+     "nyckel": "fal",
+     "status": "edda",
+     "frekvens": 0,
+     "grupp": "fal(s)",
+     "alternativ": true
+    },
+    {
+     "ord": "tæitirunaR",
+     "nyckel": "tetirunar",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "taitirunoR",
+     "alternativ": false
+    },
+    {
+     "ord": "ok",
+     "nyckel": "ok",
+     "status": "runbelagd",
+     "frekvens": 2102,
+     "grupp": "u",
+     "alternativ": false
+    },
+    {
+     "ord": "ævinrunaR",
+     "nyckel": "evinrunar",
+     "status": "edda",
+     "frekvens": 0,
+     "grupp": "(a)iuinrunoR",
+     "alternativ": false
+    },
+    {
+     "ord": "hvaR",
+     "nyckel": "hvar",
+     "status": "runbelagd",
+     "frekvens": 3,
+     "grupp": "huaR",
+     "alternativ": false
+    },
+    {
+     "ord": "BillingR",
+     "nyckel": "bilingr",
+     "status": "runbelagd",
+     "frekvens": 1,
+     "grupp": "bilikikR",
+     "alternativ": false
+    },
+    {
+     "ord": "Toli",
+     "nyckel": "toli",
+     "status": "runbelagd",
+     "frekvens": 8,
+     "grupp": "(t)(u)(l)i",
+     "alternativ": true
+    }
+   ]
+  },
+  "G": {
+   "kalla": "Grønvik 1992 (ANF 107), original: utdata/Malt/kallor/litteratur/anf.txt",
+   "tackning": {
+    "grupper_med_ord": 30,
+    "av": 31,
+    "andel": 0.968
+   },
+   "belagg": {
+    "ord_poangsatta": 35,
+    "runbelagd": 18,
+    "edda": 4,
+    "obelagd": 13,
+    "andel_runbelagd": 0.514,
+    "medel_log10_frekvens": -3.14
+   },
+   "run_trohet": {
+    "medel": 0.936,
+    "varsta": [
+     {
+      "grupp": "u",
+      "anspråk": "ok",
+      "likhet": 0.5
+     },
+     {
+      "grupp": "uifrþuR",
+      "anspråk": "vefrøðr",
+      "likhet": 0.667
+     },
+     {
+      "grupp": "aft",
+      "anspråk": "at",
+      "likhet": 0.667
+     },
+     {
+      "grupp": "asini",
+      "anspråk": "æsni",
+      "likhet": 0.8
+     }
+    ]
+   },
+   "ord": [
+    {
+     "ord": "svá",
+     "nyckel": "sva",
+     "status": "runbelagd",
+     "frekvens": 8,
+     "grupp": "sua",
+     "alternativ": false
+    },
+    {
+     "ord": "á",
+     "nyckel": "a",
+     "status": "runbelagd",
+     "frekvens": 430,
+     "grupp": "ai",
+     "alternativ": false
+    },
+    {
+     "ord": "í",
+     "nyckel": "i",
+     "status": "runbelagd",
+     "frekvens": 260,
+     "grupp": "ai",
+     "alternativ": false
+    },
+    {
+     "ord": "titul",
+     "nyckel": "titul",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "titultitul",
+     "alternativ": false
+    },
+    {
+     "ord": "titull",
+     "nyckel": "titul",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "titultitul",
+     "alternativ": false
+    },
+    {
+     "ord": "hverr",
+     "nyckel": "hver",
+     "status": "runbelagd",
+     "frekvens": 1,
+     "grupp": "huaR",
+     "alternativ": false
+    },
+    {
+     "ord": "es",
+     "nyckel": "es",
+     "status": "runbelagd",
+     "frekvens": 55,
+     "grupp": "is",
+     "alternativ": false
+    },
+    {
+     "ord": "í",
+     "nyckel": "i",
+     "status": "runbelagd",
+     "frekvens": 260,
+     "grupp": "i",
+     "alternativ": false
+    },
+    {
+     "ord": "elzti",
+     "nyckel": "elzti",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "alisti",
+     "alternativ": false
+    },
+    {
+     "ord": "ása",
+     "nyckel": "asa",
+     "status": "runbelagd",
+     "frekvens": 21,
+     "grupp": "osa",
+     "alternativ": false
+    },
+    {
+     "ord": "hverr",
+     "nyckel": "hver",
+     "status": "runbelagd",
+     "frekvens": 1,
+     "grupp": "huaR",
+     "alternativ": false
+    },
+    {
+     "ord": "es",
+     "nyckel": "es",
+     "status": "runbelagd",
+     "frekvens": 55,
+     "grupp": "is",
+     "alternativ": false
+    },
+    {
+     "ord": "Véfrøðr",
+     "nyckel": "vefroþr",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "uifrþuR",
+     "alternativ": false
+    },
+    {
+     "ord": "gerði",
+     "nyckel": "gerþi",
+     "status": "runbelagd",
+     "frekvens": 121,
+     "grupp": "karþi",
+     "alternativ": false
+    },
+    {
+     "ord": "afr",
+     "nyckel": "afr",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "afr",
+     "alternativ": false
+    },
+    {
+     "ord": "at",
+     "nyckel": "at",
+     "status": "runbelagd",
+     "frekvens": 668,
+     "grupp": "aft",
+     "alternativ": false
+    },
+    {
+     "ord": "*æsni",
+     "nyckel": "esni",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "asini",
+     "alternativ": false
+    },
+    {
+     "ord": "fǫðr",
+     "nyckel": "foþr",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "fauþr",
+     "alternativ": false
+    },
+    {
+     "ord": "Kol",
+     "nyckel": "kol",
+     "status": "runbelagd",
+     "frekvens": 2,
+     "grupp": "kul",
+     "alternativ": false
+    },
+    {
+     "ord": "finnr",
+     "nyckel": "finr",
+     "status": "runbelagd",
+     "frekvens": 1,
+     "grupp": "finR",
+     "alternativ": false
+    },
+    {
+     "ord": "falsk",
+     "nyckel": "falsk",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "fal(s)",
+     "alternativ": false
+    },
+    {
+     "ord": "teitirúnar",
+     "nyckel": "tetirunar",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "taitirunoR",
+     "alternativ": false
+    },
+    {
+     "ord": "ok",
+     "nyckel": "ok",
+     "status": "runbelagd",
+     "frekvens": 2102,
+     "grupp": "u",
+     "alternativ": false
+    },
+    {
+     "ord": "œvinrúnar",
+     "nyckel": "evinrunar",
+     "status": "edda",
+     "frekvens": 0,
+     "grupp": "(a)iuinrunoR",
+     "alternativ": false
+    },
+    {
+     "ord": "sýli",
+     "nyckel": "suli",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "sulialta",
+     "alternativ": false
+    },
+    {
+     "ord": "alda",
+     "nyckel": "alda",
+     "status": "runbelagd",
+     "frekvens": 1,
+     "grupp": "sulialta",
+     "alternativ": false
+    },
+    {
+     "ord": "hverr",
+     "nyckel": "hver",
+     "status": "runbelagd",
+     "frekvens": 1,
+     "grupp": "huaR",
+     "alternativ": false
+    },
+    {
+     "ord": "utu",
+     "nyckel": "utu",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "utu",
+     "alternativ": false
+    },
+    {
+     "ord": "tuuut",
+     "nyckel": "tut",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "tuuut",
+     "alternativ": false
+    },
+    {
+     "ord": "belli",
+     "nyckel": "beli",
+     "status": "edda",
+     "frekvens": 0,
+     "grupp": "bilikikR",
+     "alternativ": false
+    },
+    {
+     "ord": "gengr",
+     "nyckel": "gengr",
+     "status": "edda",
+     "frekvens": 0,
+     "grupp": "bilikikR",
+     "alternativ": false
+    },
+    {
+     "ord": "tor",
+     "nyckel": "tor",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "tuR",
+     "alternativ": false
+    },
+    {
+     "ord": "ræki",
+     "nyckel": "reki",
+     "status": "edda",
+     "frekvens": 0,
+     "grupp": "ra(k)(i)",
+     "alternativ": false
+    },
+    {
+     "ord": "at",
+     "nyckel": "at",
+     "status": "runbelagd",
+     "frekvens": 668,
+     "grupp": "(t)(u)(l)i",
+     "alternativ": false
+    },
+    {
+     "ord": "óli",
+     "nyckel": "oli",
+     "status": "runbelagd",
+     "frekvens": 1,
+     "grupp": "(t)(u)(l)i",
+     "alternativ": false
+    }
+   ]
+  },
+  "H": {
+   "kalla": "Heltoft 2017 (Danske Studier), original: utdata/Malt/kallor/litteratur/heltoft2017.txt",
+   "tackning": {
+    "grupper_med_ord": 31,
+    "av": 31,
+    "andel": 1.0
+   },
+   "belagg": {
+    "ord_poangsatta": 40,
+    "runbelagd": 22,
+    "edda": 5,
+    "obelagd": 13,
+    "andel_runbelagd": 0.55,
+    "medel_log10_frekvens": -3.58
+   },
+   "run_trohet": {
+    "medel": 0.957,
+    "varsta": [
+     {
+      "grupp": "tuR",
+      "anspråk": "dweragi",
+      "likhet": 0.5
+     },
+     {
+      "grupp": "uifrþuR",
+      "anspråk": "vifriðr",
+      "likhet": 0.667
+     },
+     {
+      "grupp": "afr",
+      "anspråk": "afra",
+      "likhet": 0.75
+     },
+     {
+      "grupp": "asini",
+      "anspråk": "æsinef",
+      "likhet": 0.833
+     }
+    ]
+   },
+   "ord": [
+    {
+     "ord": "swā",
+     "nyckel": "sva",
+     "status": "runbelagd",
+     "frekvens": 8,
+     "grupp": "sua",
+     "alternativ": false
+    },
+    {
+     "ord": "æi",
+     "nyckel": "e",
+     "status": "runbelagd",
+     "frekvens": 23,
+     "grupp": "ai",
+     "alternativ": false
+    },
+    {
+     "ord": "tī",
+     "nyckel": "ti",
+     "status": "runbelagd",
+     "frekvens": 1,
+     "grupp": "titultitul",
+     "alternativ": false
+    },
+    {
+     "ord": "duldi",
+     "nyckel": "duldi",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "titultitul",
+     "alternativ": false
+    },
+    {
+     "ord": "dul",
+     "nyckel": "dul",
+     "status": "edda",
+     "frekvens": 0,
+     "grupp": "titultitul",
+     "alternativ": false
+    },
+    {
+     "ord": "hwar",
+     "nyckel": "hvar",
+     "status": "runbelagd",
+     "frekvens": 3,
+     "grupp": "huaR",
+     "alternativ": false
+    },
+    {
+     "ord": "es",
+     "nyckel": "es",
+     "status": "runbelagd",
+     "frekvens": 55,
+     "grupp": "is",
+     "alternativ": false
+    },
+    {
+     "ord": "ī",
+     "nyckel": "i",
+     "status": "runbelagd",
+     "frekvens": 260,
+     "grupp": "i",
+     "alternativ": false
+    },
+    {
+     "ord": "ælisti",
+     "nyckel": "elisti",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "alisti",
+     "alternativ": false
+    },
+    {
+     "ord": "ą̄sa",
+     "nyckel": "asa",
+     "status": "runbelagd",
+     "frekvens": 21,
+     "grupp": "osa",
+     "alternativ": false
+    },
+    {
+     "ord": "hwar",
+     "nyckel": "hvar",
+     "status": "runbelagd",
+     "frekvens": 3,
+     "grupp": "huaR",
+     "alternativ": false
+    },
+    {
+     "ord": "es",
+     "nyckel": "es",
+     "status": "runbelagd",
+     "frekvens": 55,
+     "grupp": "is",
+     "alternativ": false
+    },
+    {
+     "ord": "Vīfriðr",
+     "nyckel": "vifriþr",
+     "status": "runbelagd",
+     "frekvens": 4,
+     "grupp": "uifrþuR",
+     "alternativ": false
+    },
+    {
+     "ord": "gærði",
+     "nyckel": "gerþi",
+     "status": "runbelagd",
+     "frekvens": 121,
+     "grupp": "karþi",
+     "alternativ": false
+    },
+    {
+     "ord": "afra",
+     "nyckel": "afra",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "afr",
+     "alternativ": false
+    },
+    {
+     "ord": "aft",
+     "nyckel": "aft",
+     "status": "runbelagd",
+     "frekvens": 16,
+     "grupp": "aft",
+     "alternativ": false
+    },
+    {
+     "ord": "Æsi",
+     "nyckel": "esi",
+     "status": "runbelagd",
+     "frekvens": 2,
+     "grupp": "asini",
+     "alternativ": false
+    },
+    {
+     "ord": "Nef",
+     "nyckel": "nef",
+     "status": "runbelagd",
+     "frekvens": 1,
+     "grupp": "asini",
+     "alternativ": false
+    },
+    {
+     "ord": "fǫðr",
+     "nyckel": "foþr",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "fauþr",
+     "alternativ": false
+    },
+    {
+     "ord": "kuml",
+     "nyckel": "kuml",
+     "status": "runbelagd",
+     "frekvens": 7,
+     "grupp": "kul",
+     "alternativ": true
+    },
+    {
+     "ord": "Finnr",
+     "nyckel": "finr",
+     "status": "runbelagd",
+     "frekvens": 1,
+     "grupp": "finR",
+     "alternativ": false
+    },
+    {
+     "ord": "falṣ",
+     "nyckel": "fals",
+     "status": "edda",
+     "frekvens": 0,
+     "grupp": "fal(s)",
+     "alternativ": false
+    },
+    {
+     "ord": "tæitirūnąr",
+     "nyckel": "tetirunar",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "taitirunoR",
+     "alternativ": false
+    },
+    {
+     "ord": "ȳ",
+     "nyckel": "u",
+     "status": "runbelagd",
+     "frekvens": 2,
+     "grupp": "u",
+     "alternativ": false
+    },
+    {
+     "ord": "æiwinrūnąr",
+     "nyckel": "evinrunar",
+     "status": "edda",
+     "frekvens": 0,
+     "grupp": "(a)iuinrunoR",
+     "alternativ": false
+    },
+    {
+     "ord": "sōl",
+     "nyckel": "sol",
+     "status": "runbelagd",
+     "frekvens": 2,
+     "grupp": "sulialta",
+     "alternativ": false
+    },
+    {
+     "ord": "ī",
+     "nyckel": "i",
+     "status": "runbelagd",
+     "frekvens": 260,
+     "grupp": "sulialta",
+     "alternativ": false
+    },
+    {
+     "ord": "ælta",
+     "nyckel": "elta",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "sulialta",
+     "alternativ": false
+    },
+    {
+     "ord": "hwar",
+     "nyckel": "hvar",
+     "status": "runbelagd",
+     "frekvens": 3,
+     "grupp": "huaR",
+     "alternativ": false
+    },
+    {
+     "ord": "tīr",
+     "nyckel": "tir",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "?",
+     "alternativ": false
+    },
+    {
+     "ord": "tīr",
+     "nyckel": "tir",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "?",
+     "alternativ": false
+    },
+    {
+     "ord": "tīr",
+     "nyckel": "tir",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "?",
+     "alternativ": false
+    },
+    {
+     "ord": "ōttu",
+     "nyckel": "otu",
+     "status": "edda",
+     "frekvens": 0,
+     "grupp": "utu",
+     "alternativ": false
+    },
+    {
+     "ord": "dȳ",
+     "nyckel": "du",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "tuuut",
+     "alternativ": false
+    },
+    {
+     "ord": "ȳ",
+     "nyckel": "u",
+     "status": "runbelagd",
+     "frekvens": 2,
+     "grupp": "tuuut",
+     "alternativ": false
+    },
+    {
+     "ord": "ȳt",
+     "nyckel": "ut",
+     "status": "runbelagd",
+     "frekvens": 14,
+     "grupp": "tuuut",
+     "alternativ": false
+    },
+    {
+     "ord": "Billingi",
+     "nyckel": "bilingi",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "bilikikR",
+     "alternativ": false
+    },
+    {
+     "ord": "ekr",
+     "nyckel": "ekr",
+     "status": "edda",
+     "frekvens": 0,
+     "grupp": "bilikikR",
+     "alternativ": false
+    },
+    {
+     "ord": "dweragi",
+     "nyckel": "dveragi",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "tuR",
+     "alternativ": false
+    },
+    {
+     "ord": "dyli",
+     "nyckel": "duli",
+     "status": "obelagd",
+     "frekvens": 0,
+     "grupp": "(t)(u)(l)i",
+     "alternativ": false
+    }
+   ]
+  }
+ }
+}
