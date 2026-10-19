@@ -91,9 +91,9 @@ Mönstret är slående. Den stora gästvisdomen i diktens början är nästan r�
 
 Är delarna verkligen olika stycken, eller är indelningen något utgivare lagt på texten? Vi lät ett fönster om tio strofer glida genom dikten och mätte hur mycket funktionsorden – småorden en författare sällan väljer medvetet – skiljer sig före och efter varje punkt. Metoden vet ingenting om forskningens indelning.
 
-De två starkaste stilbrotten i hela dikten hamnade vid strof 111–112 och 138–140: **exakt där Loddfáfnismál respektive Runatal börjar.** Två av de klassiska gränserna är alltså verkliga sömmar i språket, inte utgivarkonvention. Lika talande är var metoden *inte* slår ut: gränsen vid strof 84, där kvinnoråden tar vid, ger inget utslag alls. Den övergången är stilmässigt mjuk – gästvisdomen glider över i kärleksvarningarna snarare än byter hand.
+De två starkaste stilbrotten i hela dikten hamnade vid strof 111–112 och 138–140: **exakt där Loddfáfnismál respektive Runatal börjar** – gränser som forskningen dragit sedan Müllenhoffs dagar och som John McKinnell bygger sin moderna skiktanalys på. Att en blind metod återfinner dem betyder att de är verkliga sömmar i språket, inte utgivarkonvention. Lika talande är var metoden *inte* slår ut: vid strof 84, där McKinnell låter sin "intrigdikt" börja, ger funktionsorden inget utslag alls. Den övergången är lexikalt mjuk – gästvisdomen glider över i kärleksvarningarna snarare än byter språkdräkt. Det är ett nytt empiriskt datum i en gammal debatt.
 
-Stilmätningen som helhet pekar åt samma håll: strofblock inom samma del liknar varandra (Burrows' Delta 0,69 i snitt) medan block ur olika delar skiljer sig klart mer (1,13). Och i släktträdet över blocken händer något vackert: Gunnlöd-episoden och Runatal – de två ställen där Oden berättar om *sina egna* nederlag och offer – lägger sig närmast varandra, fast de inte står intill i dikten. Diktens "Odens bekännelser" delar stil.
+Stilmätningen som helhet pekar åt samma håll: strofblock inom samma del liknar varandra (Burrows' Delta 0,69 i snitt) medan block ur olika delar skiljer sig klart mer (1,13). Och i släktträdet över blocken händer något vackert: Gunnlöd-episoden och Runatal – de två ställen där Oden berättar om *sina egna* nederlag och offer – lägger sig närmast varandra, fast de inte står intill i dikten. Det är en parning som inte finns i McKinnells indelning, där Runatal i stället hör ihop med trollsångerna och Gunnlöd med intrigdikten; vi redovisar den som ett mätresultat att pröva, inte som ett anspråk om upphov. Men tanken ligger nära: diktens "Odens bekännelser" delar stil.
 
 ![Odens självoffer, tecknat av W.G. Collingwood]({IMG_ODIN})
 "Jag vet att jag hängde på det vindpinade trädet nio hela nätter" – Runatal är diktens tematiskt renaste del (ett enda LDA-ämne dominerar {svn(100 * amnesdom['V'], 0)} procent av stroferna) och stilsyskon med Gunnlöd-episoden. Teckning: W.G. Collingwood (1908), public domain, via [Wikimedia Commons]({PAGE_ODIN}).
@@ -101,7 +101,7 @@ Stilmätningen som helhet pekar åt samma håll: strofblock inom samma del likna
 ![Oden och Gunnlöd, tecknade av Lorenz Frølich]({IMG_GUNN})
 Oden hos Gunnlöd, Lorenz Frølichs teckning. Episoden är kort – åtta strofer – men bär samma stilsignatur som Runatal. Bild: public domain, via [Wikimedia Commons]({PAGE_GUNN}).
 
-Ett tredje spår i trädet: gästvisdomens sista strofer, 67–83 – trakten kring *deyr fé* – driver bort från sin egen dels början och lägger sig närmare kvinnoråden. Forskningen har länge anat ett eget vänskaps- och förgänglighetsskikt just där. Vår mätning, som inte läst den debatten, pekar på samma ställe.
+Ett tredje spår i trädet: gästvisdomens sista strofer, 67–83 – trakten kring *deyr fé* – driver bort från sin egen dels början och lägger sig närmare kvinnoråden. Många forskare låter den gnomiska dikten sluta redan vid strof 79, och vår mätning, som inte läst den debatten, pekar på samma trakt: slutet av del I hör stilistiskt inte riktigt ihop med sin början.
 
 ## Hypotesen som föll: Hávamál låter inte som runstenarna
 
@@ -112,6 +112,12 @@ Hypotesen föll. Likheten med runstenarnas formelspråk är jämnt låg genom he
 ## Vad dikten vill
 
 Väger man diktens massa är svaret inte mystik utan vardag: orden som bär den stora gästvisdomen är *vita*, *snotr*, *kemr*, *guma* – veta, klok, komma, människa. Hávamál är till största delen en överlevnadslära för livet bland andra: var vaksam i dörren, drick med måtta, håll dina vänner. Mot den vardagen står kronan i strof 76–77 – bara eftermälet består – och slutets dyrköpta kunskap, Odens nio nätter i trädet. Klokskapen håller dig vid liv; ryktet och kunskapen är det enda som överlever dig. Diktens sista strof säger det själv: kväden "människors söner till gagn".
+
+## Tid och plats – det andra redan visat, och bryggan till stenarna
+
+Datera dikten gör vi inte – det fältet har sina egna verktyg och sina egna mästare: Bjarne Fidjestøls språkliga kriterier, Haukur Þorgeirssons allitterationsprov och senast Mikael Males genomgång (2024), som prövar sex oberoende kriterier och landar i att dikten, även om den fogats samman av flera, sannolikt fick sin form redan omkring 900–950. Vår mätning att kristet ordförråd saknas helt i alla delar är i det ljuset ingen upptäckt utan en bekräftelse: frånvaron var ett av David Evans huvudargument redan på 1980-talet, mot tanken att dikten skulle vara medeltida boklärdom.
+
+Platsfrågan har också sitt bästa belägg i texten själv, och det är värt att le åt: strof 72 säger att *bautastenar sällan står vid vägen om inte frände reser dem efter frände* – och sådana stenar, påpekade Evans, är okända på Island men hör hemma i det förkristna Skandinavien. Den sed strofen beskriver är exakt den vår runkorpus består av: tusentals stenar, resta vid vägar och broar, av fränder efter fränder. Dikten och stenarna möts alltså till slut – inte i orden, som vår mätning visade, men i själva bruket.
 
 :::box Så räknade vi
 Texten är Codex Regius-textens normaliserade utgåva (Guðni Jónsson), 164 strofer, cirka 5 000 ord. Rösterna räknades som *ek*- respektive *þú*-former per hundra ord. Sömsökningen jämför funktionsordens fördelning i tio strofer före mot tio efter varje punkt, utan kännedom om någon indelning. Skiktjämförelsen använder Burrows' Delta på de sextio vanligaste orden i strofblock om högst 22 strofer, kontrollerad mot stylo-paketets egen beräkning, med LDA-ämnen, typ/token-kvot och versgränser (utgåvans kommatering) som stöd. Runstensjämförelsen räknar andelen av strofens ordtyper som finns bland de tvåhundra vanligaste orden i Rundatas vikingatida runstensnormaliseringar, med ordformerna hopslagna över normaliseringstraditionerna. All kod och alla resultatfiler ligger öppet i kodförrådet (utdata/Edda).
@@ -127,13 +133,13 @@ Texten är Codex Regius-textens normaliserade utgåva (Guðni Jónsson), 164 str
 
 ## Källor och data
 
-- Forskningsläget: diktens sammansatta natur har diskuterats sedan 1800-talet, och kvantitativa dateringskriterier för eddadiktning finns sedan länge (Fidjestøls of/um-partikel, Haukur Þorgeirssons allitterationskriterier). Vårt bidrag är ett annat: skiktens stilometri, den blinda sömsökningen, röstkartan och korsningen mot runkorpusen.
+- Forskningsläget: diktens sammansatta natur är dokumenterad sedan Müllenhoff på 1800-talet; den moderna skiktanalysen är John McKinnell, "The Making of Hávamál" (Viking and Medieval Scandinavia 3, 2007). Datering: Bjarne Fidjestøl, The Dating of Eddic Poetry (1999); Haukur Þorgeirsson (2012, 2016, 2017); Christopher Sapp (2022); Mikael Males, "The Dating of Hávamál" (Maal og Minne 1-2024). Utgåva och kommentar: David A. H. Evans, Hávamál (Viking Society, 1986). Gnomisk stil: Carolyne Larrington, A Store of Common Sense (1993). Vårt bidrag är ett annat än deras: skiktens stilometri, den blinda sömsökningen, röstkartan och korsningen mot runkorpusen.
 - Hávamál: Guðni Jónssons normaliserade utgåva av Codex Regius-texten (Eddukvæði, Sæmundar-Edda), via heimskringla.no.
 - Samnordisk runtextdatabas (Rundata), Institutionen för nordiska språk, Uppsala universitet, för runstensjämförelsen.
 - Analyskod och resultat: utdata/Edda i Vitkis kodförråd (R-paketen stylo, topicmodels, tidytext, quanteda, factoextra).
 - Bilder: Wikimedia Commons, public domain, med upphov i bildtexterna.
 
-*Tid och plats lämnar vi medvetet öppna: Codex Regius är isländsk och sen, dikten i delar sannolikt långt äldre – men var och när de delarna föddes kan ingen stilometri i världen läsa ut ur en enda handskrift.*"""
+*Stilometrin själv daterar och placerar ingenting – en enda handskrift från 1270-talet sätter den gränsen. Men den kan mäta sömmar, röster och ordvärldar, och lämna siffrorna öppna för runologer och filologer att pröva.*"""
 
 body_en = f"""Hávamál, "the words of the High One", is the North's most quoted poem: one hundred and sixty-four stanzas of wisdom, warnings, love adventures and magic, preserved in a single manuscript – the Codex Regius, written down in Iceland around 1270. For two hundred years scholars have debated whether the poem is one work or several joined together, where the seams run and what it really wants. We let statistics read it without preconceptions: no interpretations, only the text itself, measured with the same kinds of methods we otherwise use on the runestones. Three patterns emerged – and one of our own assumptions fell.
 
@@ -168,9 +174,9 @@ The pattern is striking. The great guest wisdom at the poem's opening is nearly 
 
 Are the parts really separate pieces, or is the division something editors laid upon the text? We let a window of ten stanzas slide through the poem and measured how much the function words – the small words an author rarely chooses deliberately – differ before and after each point. The method knows nothing of the scholarly division.
 
-The two strongest style breaks in the whole poem landed at stanzas 111–112 and 138–140: **exactly where Loddfáfnismál and Rúnatal begin.** Two of the classic boundaries are thus real seams in the language, not editorial convention. Just as telling is where the method does *not* fire: the boundary at stanza 84, where the counsel on women takes over, gives no signal at all. That transition is stylistically soft – the guest wisdom glides into the love warnings rather than changing hands.
+The two strongest style breaks in the whole poem landed at stanzas 111–112 and 138–140: **exactly where Loddfáfnismál and Rúnatal begin** – boundaries drawn by scholars since Müllenhoff's day and central to John McKinnell's modern analysis of the layers. That a blind method finds them again means they are real seams in the language, not editorial convention. Just as telling is where the method does *not* fire: at stanza 84, where McKinnell lets his "Poem of Sexual Intrigue" begin, the function words give no signal at all. That transition is lexically soft – the guest wisdom glides into the love warnings rather than changing dress. It is a new empirical datum in an old debate.
 
-The style measurement as a whole points the same way: stanza blocks within the same part resemble each other (Burrows' Delta 0.69 on average) while blocks from different parts differ clearly more (1.13). And in the cluster tree something beautiful happens: the Gunnlöð episode and Rúnatal – the two places where Odin tells of *his own* defeats and sacrifice – settle closest to each other, though they do not stand together in the poem. The poem's "confessions of Odin" share a style.
+The style measurement as a whole points the same way: stanza blocks within the same part resemble each other (Burrows' Delta 0.69 on average) while blocks from different parts differ clearly more (1.13). And in the cluster tree something beautiful happens: the Gunnlöð episode and Rúnatal – the two places where Odin tells of *his own* defeats and sacrifice – settle closest to each other, though they do not stand together in the poem. This pairing is not found in McKinnell's scheme, where Rúnatal belongs with the spell songs and Gunnlöð with the intrigue poem; we report it as a measurement to be tested, not as a claim about origins. But the thought lies near: the poem's "confessions of Odin" share a style.
 
 ![Odin's self-sacrifice, drawn by W.G. Collingwood]({IMG_ODIN})
 "I know that I hung on the wind-swept tree nine whole nights" – Rúnatal is the poem's thematically purest part (a single LDA topic dominates {svn(100 * amnesdom['V'], 0)} per cent of its stanzas) and a style sibling of the Gunnlöð episode. Drawing: W.G. Collingwood (1908), public domain, via [Wikimedia Commons]({PAGE_ODIN}).
@@ -178,7 +184,7 @@ The style measurement as a whole points the same way: stanza blocks within the s
 ![Odin and Gunnlöð, drawn by Lorenz Frølich]({IMG_GUNN})
 Odin with Gunnlöð, drawn by Lorenz Frølich. The episode is short – eight stanzas – but carries the same style signature as Rúnatal. Image: public domain, via [Wikimedia Commons]({PAGE_GUNN}).
 
-A third trace in the tree: the last stanzas of the guest wisdom, 67–83 – the region around *deyr fé* – drift away from the opening of their own part and settle nearer the counsel on women. Scholars have long suspected a separate layer of friendship and impermanence just there. Our measurement, which has not read that debate, points to the same place.
+A third trace in the tree: the last stanzas of the guest wisdom, 67–83 – the region around *deyr fé* – drift away from the opening of their own part and settle nearer the counsel on women. Many scholars end the gnomic poem already at stanza 79, and our measurement, which has not read that debate, points to the same region: the end of part one does not quite belong, stylistically, with its beginning.
 
 ## The hypothesis that fell: Hávamál does not sound like the runestones
 
@@ -189,6 +195,12 @@ The hypothesis fell. The similarity to the runestones' formula language is unifo
 ## What the poem wants
 
 Weighing the poem's mass, the answer is not mysticism but everyday life: the words that carry the great guest wisdom are *vita*, *snotr*, *kemr*, *guma* – know, wise, come, man. Hávamál is for the most part a survival manual for life among others: be watchful in the doorway, drink in moderation, keep your friends. Against that everyday stands the crown in stanzas 76–77 – only the word-fame endures – and the ending's dearly bought knowledge, Odin's nine nights in the tree. Prudence keeps you alive; reputation and knowledge are all that outlive you. The poem's last stanza says it itself: sung "for the benefit of the sons of men".
+
+## Time and place – what others have shown, and the bridge to the stones
+
+Dating the poem we do not attempt – that field has its own tools and its own masters: Bjarne Fidjestøl's linguistic criteria, Haukur Þorgeirsson's alliteration tests and most recently Mikael Males's survey (2024), which tests six independent criteria and concludes that the poem, even if joined from several, most likely took its shape already around 900–950. Our measurement that Christian vocabulary is entirely absent in every part is, in that light, no discovery but a confirmation: the absence was one of David Evans's main arguments already in the 1980s, against the idea that the poem is medieval book learning.
+
+The question of place also has its best evidence in the text itself, and it is worth a smile: stanza 72 says that *memorial stones seldom stand by the road unless kinsman raises them for kinsman* – and such stones, Evans pointed out, are unknown in Iceland and belong to pre-Christian Scandinavia. The custom the stanza describes is exactly what our runic corpus consists of: thousands of stones, raised by roads and bridges, by kinsmen for kinsmen. The poem and the stones meet in the end after all – not in their words, as our measurement showed, but in the practice itself.
 
 :::box How we counted
 The text is the Codex Regius text in its normalised edition (Guðni Jónsson), 164 stanzas, about 5,000 words. The voices were counted as *ek* and *þú* forms per hundred words. The seam search compares the distribution of function words in ten stanzas before against ten after every point, with no knowledge of any division. The layer comparison uses Burrows' Delta on the sixty most common words in blocks of at most 22 stanzas, checked against the stylo package's own computation, with LDA topics, type/token ratio and verse boundaries (the edition's punctuation) as support. The runestone comparison counts the share of a stanza's word types found among the two hundred most common words in Rundata's Viking-age runestone normalisations, with word forms merged across the normalisation traditions. All code and result files are open in the repository (utdata/Edda).
@@ -204,13 +216,13 @@ The text is the Codex Regius text in its normalised edition (Guðni Jónsson), 1
 
 ## Sources and data
 
-- The state of research: the poem's composite nature has been debated since the nineteenth century, and quantitative dating criteria for Eddic poetry have long existed (Fidjestøl's of/um particle, Haukur Þorgeirsson's alliteration criteria). Our contribution is a different one: the stylometry of the layers, the blind seam search, the voice map and the crossing against the runic corpus.
+- The state of research: the poem's composite nature has been documented since Müllenhoff in the nineteenth century; the modern analysis of the layers is John McKinnell, "The Making of Hávamál" (Viking and Medieval Scandinavia 3, 2007). Dating: Bjarne Fidjestøl, The Dating of Eddic Poetry (1999); Haukur Þorgeirsson (2012, 2016, 2017); Christopher Sapp (2022); Mikael Males, "The Dating of Hávamál" (Maal og Minne 1-2024). Edition and commentary: David A. H. Evans, Hávamál (Viking Society, 1986). Gnomic style: Carolyne Larrington, A Store of Common Sense (1993). Our contribution is a different one from theirs: the stylometry of the layers, the blind seam search, the voice map and the crossing against the runic corpus.
 - Hávamál: Guðni Jónsson's normalised edition of the Codex Regius text (Eddukvæði, Sæmundar-Edda), via heimskringla.no.
 - The Scandinavian Runic Text Database (Rundata), Uppsala University, for the runestone comparison.
 - Analysis code and results: utdata/Edda in Vitki's repository (the R packages stylo, topicmodels, tidytext, quanteda, factoextra).
 - Images: Wikimedia Commons, public domain, with credits in the captions.
 
-*Time and place we deliberately leave open: the Codex Regius is Icelandic and late, parts of the poem in all likelihood far older – but where and when those parts were born, no stylometry in the world can read out of a single manuscript.*"""
+*Stylometry itself dates and places nothing – a single manuscript from the 1270s sets that limit. But it can measure seams, voices and word worlds, and leave the figures open for runologists and philologists to test.*"""
 
 # aldrig siffra först i en mening; bild- och diagramrader räknas inte
 for b in (body, body_en):
