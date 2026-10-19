@@ -1,0 +1,259 @@
+{
+  "satser": 5463,
+  "regioner": {
+    "Danmark": 593,
+    "Götaland": 1278,
+    "Svealand": 3592
+  },
+  "ordning": {
+    "testade_par": 29,
+    "q_under_10": 3,
+    "par": {
+      "eftir|NN": {
+        "par": "eftir|NN",
+        "n": 1091,
+        "p": 0.0002,
+        "andel_ab": [0.98, 0.91, 0.98],
+        "n_region": [103, 622, 366],
+        "q": 0.0044,
+        "epok900": {
+          "p": 0.2432,
+          "andel_ab": [1, 0.95, 0.98],
+          "n": 224
+        },
+        "epok1000": {
+          "p": 0.034,
+          "andel_ab": [1, 0.93, 0.97],
+          "n": 436
+        }
+      },
+      "NN|sun": {
+        "par": "NN|sun",
+        "n": 126,
+        "p": 0.005,
+        "andel_ab": [0.7, 0.38, 0.64],
+        "n_region": [30, 68, 28],
+        "q": 0.055,
+        "epok900": {
+          "p": 0.7215,
+          "andel_ab": [0.64, 0.43, 0.62],
+          "n": 31
+        },
+        "epok1000": {
+          "p": 0.1554,
+          "andel_ab": [0.71, 0.42, 0.44],
+          "n": 57
+        }
+      },
+      "broþur|sin": {
+        "par": "broþur|sin",
+        "n": 286,
+        "p": 0.0082,
+        "andel_ab": [0.93, 1, 0.95],
+        "n_region": [42, 170, 74],
+        "q": 0.0601,
+        "epok900": {
+          "p": 0.1348,
+          "andel_ab": [0.75, 1, 0.95],
+          "n": 57
+        }
+      }
+    },
+    "riktade_fraspar": {
+      "broþur|sin": {
+        "n": 286,
+        "p": 0.0096,
+        "n_ab": [39, 170, 70],
+        "n_ba": [3, 0, 4]
+      },
+      "faþur|sin": {
+        "n": 686,
+        "p": 0.3841,
+        "n_ab": [34, 488, 143],
+        "n_ba": [1, 13, 7]
+      },
+      "sun|sin": {
+        "n": 267,
+        "p": "NaN",
+        "n_ab": [14, 183, 70],
+        "n_ba": [0, 0, 0]
+      },
+      "bonda|sin": {
+        "n": 86,
+        "p": 1,
+        "n_ab": [5, 59, 21],
+        "n_ba": [0, 1, 0]
+      },
+      "moþur|sina": {
+        "n": 36,
+        "p": "NaN",
+        "n_ab": [9, 22, 5],
+        "n_ba": [0, 0, 0]
+      },
+      "sten|þena": {
+        "n": 351,
+        "p": 0.3711,
+        "n_ab": [12, 234, 95],
+        "n_ba": [0, 9, 1]
+      },
+      "sten|þensi": {
+        "n": 119,
+        "p": "NaN",
+        "n_ab": [68, 14, 37],
+        "n_ba": [0, 0, 0]
+      },
+      "sten|þansi": {
+        "n": 118,
+        "p": 1,
+        "n_ab": [1, 38, 78],
+        "n_ba": [0, 0, 1]
+      },
+      "sten|þensa": {
+        "n": 122,
+        "p": 1,
+        "n_ab": [4, 85, 27],
+        "n_ba": [0, 5, 1]
+      },
+      "goþan|dreng": {
+        "n": 31,
+        "p": 0.1072,
+        "n_ab": [7, 1, 10],
+        "n_ba": [3, 5, 5]
+      },
+      "goþan|þegn": {
+        "n": 26,
+        "p": "NaN",
+        "n_ab": [11, 0, 13],
+        "n_ba": [1, 0, 1]
+      },
+      "bro|þesa": {
+        "n": 13,
+        "p": "NaN",
+        "n_ab": [0, 10, 3],
+        "n_ba": [0, 0, 0]
+      },
+      "kumbl|þesi": {
+        "n": 21,
+        "p": 0.235,
+        "n_ab": [3, 1, 16],
+        "n_ba": [1, 0, 0]
+      }
+    },
+    "adjektiv_goþan": {
+      "alla": {
+        "tabell": {
+          "Danmark": [18, 4],
+          "Svealand": [1, 5],
+          "Götaland": [23, 6]
+        },
+        "p": 0.0098
+      },
+      "epok900": {
+        "tabell": {
+          "Danmark": [1, 2],
+          "Svealand": [0, 0],
+          "Götaland": [20, 1]
+        },
+        "p": 0.0316
+      },
+      "epok1000": {
+        "tabell": {
+          "Danmark": [17, 1],
+          "Svealand": [0, 3],
+          "Götaland": [2, 4]
+        },
+        "p": 0.0002
+      }
+    }
+  },
+  "natverk": {
+    "Danmark": {
+      "noder": 58,
+      "kanter": 141,
+      "modularitet": 0.353,
+      "topp": {
+        "sten": 428,
+        "eftir": 355,
+        "ok": 251,
+        "þensi": 226,
+        "sin": 198,
+        "eft": 182,
+        "resþi": 182,
+        "þesi": 117,
+        "sati": 94,
+        "faþur": 71,
+        "resþu": 69,
+        "kumbl": 65
+      },
+      "kluster": {
+        "1": ["sin", "faþur", "broþur", "sun", "felaga", "ver", "bonda", "mag"],
+        "2": ["ok", "eft", "resþu", "kumbl", "þosi", "gerþi", "sina", "þer"],
+        "3": ["sten", "eftir", "þensi", "resþi", "þesi", "sati", "let", "resa"],
+        "4": ["hialpi", "hans", "santa", "siol", "siolu", "selu", "þera"],
+        "5": ["goþan", "harþa", "þegn", "dreng"],
+        "6": ["varþ", "es", "i", "doþr", "a"],
+        "7": ["vas", "han", "en", "þa"]
+      }
+    },
+    "Svealand": {
+      "noder": 130,
+      "kanter": 556,
+      "modularitet": 0.243,
+      "topp": {
+        "sten": 3565,
+        "ok": 3234,
+        "eftir": 2937,
+        "resa": 2145,
+        "sin": 1956,
+        "letu": 1695,
+        "at": 1636,
+        "let": 1378,
+        "þena": 1081,
+        "faþur": 1031,
+        "þer": 638,
+        "reta": 586
+      },
+      "kluster": {
+        "1": ["i", "doþr", "a", "varþ", "var", "ostr", "meþ", "vas"],
+        "2": ["sten", "ok", "eftir", "resa", "letu", "at", "let", "þena"],
+        "3": ["hialpi", "hans", "and", "salu", "moþir", "gerþi", "han", "betr"],
+        "4": ["sin", "faþur", "broþur", "sun", "goþan", "bonda", "boanda", "lata"],
+        "5": ["bro", "stena", "gera", "þesa", "merki", "gerva", "sik", "kvikvan"],
+        "6": ["runar", "risti", "hiog", "þesar", "þesi", "runir", "retar", "rista"],
+        "7": ["sina", "suni", "moþur", "dotur", "kunu", "sustur", "sunu"],
+        "8": ["egi", "verþa"],
+        "9": ["raþa", "þem"],
+        "10": ["standa", "skal"],
+        "11": ["þiagn", "þrotar"]
+      }
+    },
+    "Götaland": {
+      "noder": 69,
+      "kanter": 211,
+      "modularitet": 0.314,
+      "topp": {
+        "eftir": 1277,
+        "sten": 1048,
+        "sin": 553,
+        "ok": 456,
+        "resti": 394,
+        "þena": 321,
+        "faþur": 257,
+        "þansi": 244,
+        "restu": 174,
+        "resa": 169,
+        "kumbl": 140,
+        "þer": 137
+      },
+      "kluster": {
+        "1": ["ok", "restu", "þer", "broþr", "sina", "at", "gerþu", "satu"],
+        "2": ["eftir", "sten", "resti", "þena", "þansi", "sati", "resþi", "þensi"],
+        "3": ["sin", "faþur", "goþan", "sun", "broþur", "harþa", "bonda", "dreng"],
+        "4": ["i", "varþ", "a", "doþr", "er", "drepin", "endaþis", "bugi"],
+        "5": ["hialpi", "hans", "and", "salu", "moþir", "sial", "þera"],
+        "6": ["kumbl", "þesi", "gerþi", "bro", "þosi", "stena"],
+        "7": ["resa", "let", "letu", "gera", "gerva", "þo", "reta"]
+      }
+    }
+  }
+}
