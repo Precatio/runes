@@ -1,0 +1,105 @@
+{
+  "texter": 41,
+  "mfw": 100,
+  "stylo_kontroll": true,
+  "grannar": {
+    "Hugsvinnsmal": [
+      {
+        "namn": "Hávamál_gnomisk",
+        "delta": 0.691
+      },
+      {
+        "namn": "Völsungakviða_in_forna",
+        "delta": 0.963
+      },
+      {
+        "namn": "Hávamál_kvinnoråd_Gunnlöd",
+        "delta": 0.982
+      },
+      {
+        "namn": "Sigurðarkviða_in_skamma",
+        "delta": 0.985
+      },
+      {
+        "namn": "Helgakviða_Hundingsbana_I",
+        "delta": 0.99
+      },
+      {
+        "namn": "Sigrdrífumál",
+        "delta": 0.993
+      }
+    ],
+    "Solarljod": [
+      {
+        "namn": "Hlöðskviða",
+        "delta": 0.829
+      },
+      {
+        "namn": "Gylfaginning",
+        "delta": 0.848
+      },
+      {
+        "namn": "Völsungakviða_in_forna",
+        "delta": 0.89
+      },
+      {
+        "namn": "Helgakviða_Hundingsbana_I",
+        "delta": 0.898
+      },
+      {
+        "namn": "Helgakviða_Hjörvarðssonar",
+        "delta": 0.93
+      },
+      {
+        "namn": "Eddubrot",
+        "delta": 0.93
+      }
+    ],
+    "Havamal_gnomisk": [
+      {
+        "namn": "Hugsvinnsmál",
+        "delta": 0.691
+      },
+      {
+        "namn": "Sigurðarkviða_in_skamma",
+        "delta": 0.812
+      },
+      {
+        "namn": "Hávamál_kvinnoråd_Gunnlöd",
+        "delta": 0.831
+      },
+      {
+        "namn": "Reginsmál",
+        "delta": 0.888
+      },
+      {
+        "namn": "Grípisspá",
+        "delta": 0.896
+      },
+      {
+        "namn": "Fáfnismál",
+        "delta": 0.9
+      }
+    ]
+  },
+  "von_see": {
+    "delta_hugsvinn_havgnom": 0.691,
+    "delta_hugsvinn_solarljod": 1.207,
+    "delta_hugsvinn_median": 1.11,
+    "rang_havgnom_hos_hugsvinn": 1,
+    "rang_solarljod_hos_hugsvinn": 34,
+    "rang_havgnom_hos_hugsvinn_ljodahattr": 1,
+    "rang_solarljod_hos_hugsvinn_ljodahattr": 10,
+    "antal_ljodahattr": 13
+  },
+  "havamal_ihop": {
+    "inbordes": 1.105,
+    "mot_andra": 1.106
+  },
+  "kluster4": {
+    "1": ["Alvíssmál", "Fjölsvinnsmál"],
+    "2": ["Atlakviða", "Atlamál_in_grænlenzku", "Fáfnismál", "Grímnismál", "Grípisspá", "Guðrúnarkviða_in_forna", "Guðrúnarkviða_in_fyrsta", "Hamðismál", "Helgakviða_Hjörvarðssonar", "Helgakviða_Hundingsbana_I", "Hervararkviða", "Hymiskviða", "Hyndluljóð", "Hárbarðsljóð", "Hávamál_kvinnoråd_Gunnlöd", "Lokasenna", "Oddrúnarkviða", "Reginsmál", "Rígsþula", "Sigrdrífumál", "Sigurðarkviða_in_meiri", "Sigurðarkviða_in_skamma", "Skírnismál", "Vafþrúðnismál", "Völsungakviða_in_forna", "Völundarkviða", "Völuspá", "Þrymskviða"],
+    "3": ["Eddubrot", "Gylfaginning", "Heiðreksgátur", "Hlöðskviða", "Hálfsrekkaljóð", "Skáldskaparmál", "Sólarljóð"],
+    "4": ["Hugsvinnsmál", "Hávamál_Loddfáfnismál", "Hávamál_Runatal_Ljóðatal", "Hávamál_gnomisk"]
+  }
+}
