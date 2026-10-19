@@ -237,6 +237,36 @@ def margin_set(probs: dict[str, float]) -> set[str]:
     return {c for c, p in probs.items() if math.log(mx / p) * TAU <= MARGIN}
 
 
+def rune_depth_check(g: dict) -> dict[int, dict]:
+    """Djupbildens andra ögon på den automatiska analysens igenkända runor: bistavsblobbarna kring varje stav
+    prövas mot de sexton runmallarna (samma maskineri som spårläsarens luckförslag). En runa flaggas när blobbarna
+    inte liknar någon runa – antingen för många djupa bistavslägen (bindrune-vakten: kan också vara en
+    ornamentikknut) eller en platt fördelning över hela runraden trots flera blobbar (formen pekar ingenstans,
+    som korsarmar och slingor gör). INTE I DRIFT: tvåstenspiloten 2026-10-19 (Sö 143 med kända korsarmsfel mot
+    välbevarade Sö 128) gav "svag" 23 mot 12 procent – signal åt rätt håll men för mycket brus – och "tät" 11 mot
+    24, alltså åt FEL håll (den fångar bistavsrika äkta runor). Flaggan kopplas in i granskningen först när
+    handmärkta facit (scripts/evaluate_rune_detection.py) visar vilka trösklar som håller.
+    Kräver analyze_grooves(keep_arrays=True)."""
+    runes = [r for r in g.get("runes") or [] if r.get("strokes_detail")]
+    if not runes or "arrays" not in g:
+        return {}
+    feats = weighted_blobs(runes, g["stroke_lines"], g["arrays"])
+    out: dict[int, dict] = {}
+    for r in runes:
+        obs = feats.get(r["id"]) or []
+        probs = rune_probs(obs)
+        if probs is None:
+            out[r["id"]] = {"flag": "tät", "top": [],
+                            "note": "fler djupa bistavslägen än någon runa har – bindruna eller ornamentik"}
+            continue
+        top = sorted(probs.items(), key=lambda kv: -kv[1])[:3]
+        flat = len(margin_set(probs)) >= len(FUT)
+        out[r["id"]] = {"flag": "svag" if flat and len(obs) >= 2 else None,
+                        "top": [[c, round(p, 3)] for c, p in top],
+                        **({"note": "bistavarna liknar ingen runa – kan vara ornamentik"} if flat and len(obs) >= 2 else {})}
+    return out
+
+
 # --- the stone: cached features and gap proposals --------------------------------------------------------------------
 
 def _safe(signum: str) -> str:

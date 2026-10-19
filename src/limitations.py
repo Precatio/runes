@@ -85,7 +85,10 @@ LIMITATIONS = [
              "alltid granskningsbilden och märk figurfältet som ornamentik där det behövs.",
      "short": "Programmet som letar upp runorna kan missa runor och ibland ta fel; det är inte utvärderat.",
      "needed": "Handmärkta facit för 8–10 stenar som inte använts för att justera reglerna (facit-läget i 3D-vyn, "
-               "scripts/evaluate_rune_detection.py), med låsta regler."},
+               "scripts/evaluate_rune_detection.py), med låsta regler. En automatisk motkontroll ur djupbilden "
+               "(src/trace_reader.rune_depth_check) prövades 2026-10-19 men hölls utanför driften: på två stenar gav "
+               "den viss signal åt rätt håll för formlösa bistavsmönster men flaggade också var åttonde runa på en "
+               "välbevarad sten, och bindrune-vakten slog åt fel håll. Även den väntar på facit."},
     {"key": "sample_size", "contexts": {"auto", "comparison"},
      "title": f"Gränserna {MIN_RUNES_DESCRIBE} och {MIN_RUNES_COMPARE} runor är riktvärden",
      "text": f"Riktvärdena ({MIN_RUNES_DESCRIBE} runor för att beskriva en sten, {MIN_RUNES_COMPARE} för att jämföra "

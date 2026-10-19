@@ -44,7 +44,9 @@ MODULE_LABELS = {"geography": "Geografi", "clusters": "Klustring och MCA", "text
                  "remains": "Lämningar runt stenarna", "hotspots": "Hot spots och kluster", "words": "Ordförrådet"}
 REQUIRED_PACKAGES = ("jsonlite", "dplyr", "tidyr", "stringr", "ggplot2", "sf", "leaflet", "htmlwidgets",
                      "tidytext", "cluster", "FactoMineR", "factoextra", "tidymodels", "ranger", "ragg",
-                     "ca", "stringdist", "igraph", "tidygraph", "ggraph", "terra", "gdistance", "raster", "png", "mgcv")
+                     "ca", "stringdist", "igraph", "tidygraph", "ggraph", "terra", "gdistance", "raster", "png", "mgcv",
+                     # textanalysens specialister (2026-10-19, för Edda-/stilometrispåret; topicmodels kräver GSL)
+                     "stylo", "quanteda", "topicmodels")
 
 # Natural Earth 1:10 milj. (public domain): kustlinje, sjöar och vattendrag, med de europeiska tilläggen
 WATER_LAYERS = {
