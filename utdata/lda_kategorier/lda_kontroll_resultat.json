@@ -1,0 +1,84 @@
+{
+  "stenar": 1947,
+  "k": 8,
+  "teman": [
+    {
+      "tema": 1,
+      "n": 361,
+      "ord": ["ok", "faþur", "þer", "restu", "letu", "broþr", "þo", "gerþu", "resa", "þensi"]
+    },
+    {
+      "tema": 2,
+      "n": 269,
+      "ord": ["sten", "sun", "at", "i", "resa", "eftir", "a", "var", "doþr", "varþ"]
+    },
+    {
+      "tema": 3,
+      "n": 292,
+      "ord": ["let", "at", "sin", "resa", "bro", "bonda", "stena", "þesa", "gera", "hagva"]
+    },
+    {
+      "tema": 4,
+      "n": 199,
+      "ord": ["ok", "sten", "eftir", "sina", "risti", "þensa", "runar", "reta", "moþur", "letu"]
+    },
+    {
+      "tema": 5,
+      "n": 210,
+      "ord": ["ok", "sin", "faþur", "letu", "resa", "eftir", "reta", "boanda", "sun", "þon"]
+    },
+    {
+      "tema": 6,
+      "n": 205,
+      "ord": ["sin", "eftir", "sun", "sten", "broþur", "þensi", "kumbl", "gerþi", "eft", "resþi"]
+    },
+    {
+      "tema": 7,
+      "n": 207,
+      "ord": ["þena", "sten", "eftir", "hialpi", "hans", "and", "salu", "moþir", "þera", "reta"]
+    },
+    {
+      "tema": 8,
+      "n": 204,
+      "ord": ["sten", "eftir", "resti", "sin", "broþur", "goþan", "þansi", "harþa", "dreng", "hiog"]
+    }
+  ],
+  "traffar": {
+    "7 kristen": {
+      "tema": 7,
+      "kategori": "kristen",
+      "n_tema": 207,
+      "andel_i_tema": 0.715,
+      "basniva": 0.176,
+      "p": 7.5248e-77,
+      "q": 0
+    },
+    "2 fard": {
+      "tema": 2,
+      "kategori": "fard",
+      "n_tema": 269,
+      "andel_i_tema": 0.253,
+      "basniva": 0.071,
+      "p": 1.5434e-25,
+      "q": 0
+    },
+    "3 bro_vag": {
+      "tema": 3,
+      "kategori": "bro_vag",
+      "n_tema": 292,
+      "andel_i_tema": 0.182,
+      "basniva": 0.068,
+      "p": 1.9717e-13,
+      "q": 0
+    },
+    "3 sjalvminne": {
+      "tema": 3,
+      "kategori": "sjalvminne",
+      "n_tema": 292,
+      "andel_i_tema": 0.068,
+      "basniva": 0.013,
+      "p": 1.818e-12,
+      "q": 0
+    }
+  }
+}
