@@ -1,57 +1,587 @@
 {
  "_om": "Avskriftsmall för uppföljarartikeln om Maltstenens sju tolkningar: varje läsning ord för ord, i ordningen A1, B1–B6, mot de huggna runföljderna. Bara läsningar vi har i ORIGINAL skrivs av och poängsätts med modellen; andrahandsreferat (via Heltoft 2017) beskrivs enbart med samstämmighetsdata ur tolkningar.json. 'ord': null = tolkningen lämnar följden oläst/oöversatt. Rundata (R) är förifylld mekaniskt ur databasens normalisering 2026-10-18; osäkra radningar är markerade med 'obs'.",
- "grupper": ["sua", "ai", "titultitul", "fuþorkhniastbmlR", "huaR", "is", "i", "alisti", "osa", "huaR", "is", "uifrþuR", "karþi", "afr", "aft", "asini", "fauþr", "kul", "finR", "fal(s)", "taitirunoR", "u", "(a)iuinrunoR", "sulialta", "huaR", "?", "utu", "tuuut", "bilikikR", "tuR", "ra(k)(i)", "(t)(u)(l)i"],
+ "grupper": [
+  "sua",
+  "ai",
+  "titultitul",
+  "fuþorkhniastbmlR",
+  "huaR",
+  "is",
+  "i",
+  "alisti",
+  "osa",
+  "huaR",
+  "is",
+  "uifrþuR",
+  "karþi",
+  "afr",
+  "aft",
+  "asini",
+  "fauþr",
+  "kul",
+  "finR",
+  "fal(s)",
+  "taitirunoR",
+  "u",
+  "(a)iuinrunoR",
+  "sulialta",
+  "huaR",
+  "?",
+  "utu",
+  "tuuut",
+  "bilikikR",
+  "tuR",
+  "ra(k)(i)",
+  "(t)(u)(l)i"
+ ],
  "lasningar": {
   "R": {
    "kalla": "Rundata (Stoklund 1994), databasens normalisering av DR NOR1988;5",
    "status": "original",
    "ord": [
-    {"runor": "sua", "ord": "swa"},
-    {"runor": "ai", "ord": "æ", "obs": "osäker i Rundata (?)"},
-    {"runor": "titultitul", "ord": null},
-    {"runor": "fuþorkhniastbmlR", "ord": "<runraden>"},
-    {"runor": "huaR", "ord": "hvaR"},
-    {"runor": "is", "ord": "æs", "obs": "osäker (?)"},
-    {"runor": "i", "ord": "i", "obs": "osäker (?)"},
-    {"runor": "alisti", "ord": null},
-    {"runor": "osa", "ord": "Asa/asa", "obs": "namn eller 'asarnas'"},
-    {"runor": "huaR", "ord": "hvaR"},
-    {"runor": "is", "ord": "æs"},
-    {"runor": "uifrþuR", "ord": "VifreþR/VifrøþR", "obs": "namn"},
-    {"runor": "karþi", "ord": "gærþi"},
-    {"runor": "afr", "ord": null},
-    {"runor": "aft", "ord": "æft"},
-    {"runor": "asini", "ord": null},
-    {"runor": "fauþr", "ord": "faþur"},
-    {"runor": "kul finR", "ord": "Kolfinnr/Gullfinnr", "obs": "två följder lästa som ETT namn"},
-    {"runor": "fal(s)", "ord": "fal/fals"},
-    {"runor": "taitirunoR", "ord": "tæitirunaR"},
-    {"runor": "u", "ord": "ok"},
-    {"runor": "(a)iuinrunoR", "ord": "ævinrunaR"},
-    {"runor": "sulialta", "ord": null},
-    {"runor": "huaR", "ord": "hvaR"},
-    {"runor": "?", "ord": null},
-    {"runor": "utu", "ord": null},
-    {"runor": "tuuut", "ord": null},
-    {"runor": "bilikikR", "ord": "BillingR", "obs": "osäker (?)"},
-    {"runor": "tuR", "ord": null},
-    {"runor": "ra(k)(i)", "ord": null},
-    {"runor": "(t)(u)(l)i", "ord": "Tuli/Toli", "obs": "namn"}
+    {
+     "runor": "sua",
+     "ord": "swa"
+    },
+    {
+     "runor": "ai",
+     "ord": "æ",
+     "obs": "osäker i Rundata (?)"
+    },
+    {
+     "runor": "titultitul",
+     "ord": null
+    },
+    {
+     "runor": "fuþorkhniastbmlR",
+     "ord": "<runraden>"
+    },
+    {
+     "runor": "huaR",
+     "ord": "hvaR"
+    },
+    {
+     "runor": "is",
+     "ord": "æs",
+     "obs": "osäker (?)"
+    },
+    {
+     "runor": "i",
+     "ord": "i",
+     "obs": "osäker (?)"
+    },
+    {
+     "runor": "alisti",
+     "ord": null
+    },
+    {
+     "runor": "osa",
+     "ord": "Asa/asa",
+     "obs": "namn eller 'asarnas'"
+    },
+    {
+     "runor": "huaR",
+     "ord": "hvaR"
+    },
+    {
+     "runor": "is",
+     "ord": "æs"
+    },
+    {
+     "runor": "uifrþuR",
+     "ord": "VifreþR/VifrøþR",
+     "obs": "namn"
+    },
+    {
+     "runor": "karþi",
+     "ord": "gærþi"
+    },
+    {
+     "runor": "afr",
+     "ord": null
+    },
+    {
+     "runor": "aft",
+     "ord": "æft"
+    },
+    {
+     "runor": "asini",
+     "ord": null
+    },
+    {
+     "runor": "fauþr",
+     "ord": "faþur"
+    },
+    {
+     "runor": "kul finR",
+     "ord": "Kolfinnr/Gullfinnr",
+     "obs": "två följder lästa som ETT namn"
+    },
+    {
+     "runor": "fal(s)",
+     "ord": "fal/fals"
+    },
+    {
+     "runor": "taitirunoR",
+     "ord": "tæitirunaR"
+    },
+    {
+     "runor": "u",
+     "ord": "ok"
+    },
+    {
+     "runor": "(a)iuinrunoR",
+     "ord": "ævinrunaR"
+    },
+    {
+     "runor": "sulialta",
+     "ord": null
+    },
+    {
+     "runor": "huaR",
+     "ord": "hvaR"
+    },
+    {
+     "runor": "?",
+     "ord": null
+    },
+    {
+     "runor": "utu",
+     "ord": null
+    },
+    {
+     "runor": "tuuut",
+     "ord": null
+    },
+    {
+     "runor": "bilikikR",
+     "ord": "BillingR",
+     "obs": "osäker (?)"
+    },
+    {
+     "runor": "tuR",
+     "ord": null
+    },
+    {
+     "runor": "ra(k)(i)",
+     "ord": null
+    },
+    {
+     "runor": "(t)(u)(l)i",
+     "ord": "Tuli/Toli",
+     "obs": "namn"
+    }
    ]
   },
   "G": {
    "kalla": "Grønvik 1992 (ANF 107), original: utdata/Malt/kallor/litteratur/anf.txt",
-   "status": "ATT SKRIVA AV ur originalet – ord för ord mot grupperna, med sidhänvisning per rad",
-   "ord": []
+   "status": "avskriven ur originalet 2026-10-19 (ANF 107, s. 1-34); samlad läsning s. 20-21",
+   "ord": [
+    {
+     "runor": "sua",
+     "ord": "svá",
+     "sida": "s. 6 (§8.1)",
+     "obs": "'så/sålunda'; orddelningen sua a i titul titul"
+    },
+    {
+     "runor": "ai",
+     "ord": "á í",
+     "sida": "s. 6 (§8.1)",
+     "obs": "två ord: 'har ... i (sig)' - svá á í titul titull"
+    },
+    {
+     "runor": "titultitul",
+     "ord": "titul titull",
+     "sida": "s. 6 (§8.1); om lånordet s. 27-29 (§12)",
+     "obs": "'så har inskriften en inskrift i sig' - inskriften inuti är futharken; titull av lat. titulus"
+    },
+    {
+     "runor": "fuþorkhniastbmlR",
+     "ord": "<runraden>",
+     "sida": "s. 8-9 (§8.6-8.7)",
+     "obs": "futharken som 'mächtige heilige Formel'"
+    },
+    {
+     "runor": "huaR",
+     "ord": "hverr",
+     "sida": "s. 6 (§8.2)",
+     "obs": "gammalt substantiviskt frågepronomen, jfr Rök och Eggja"
+    },
+    {
+     "runor": "is",
+     "ord": "es",
+     "sida": "s. 6 (§8.2)"
+    },
+    {
+     "runor": "i",
+     "ord": "í",
+     "sida": "s. 6 (§8.2)",
+     "obs": "adverbiellt: 'däri' (i futharken)"
+    },
+    {
+     "runor": "alisti",
+     "ord": "elzti",
+     "sida": "s. 7 (§8.3)",
+     "obs": "stödvokal i; svag form utan artikel - 'den äldste'"
+    },
+    {
+     "runor": "osa",
+     "ord": "ása",
+     "sida": "s. 7 (§8.3)",
+     "obs": "'av asarna (gudarna)'"
+    },
+    {
+     "runor": "huaR",
+     "ord": "hverr",
+     "sida": "s. 7 (§8.4)",
+     "obs": "frågan upprepas didaktiskt (§8.9, not 4 s. 11)"
+    },
+    {
+     "runor": "is",
+     "ord": "es",
+     "sida": "s. 7 (§8.4)",
+     "obs": "Grønvik läser därtill ett delvis skadat i (B1:23): 'hverr es í?'; Rundata har inget ord här (not 2a, s. 7)"
+    },
+    {
+     "runor": "uifrþuR",
+     "ord": "Véfrøðr",
+     "sida": "s. 7-8 (§8.4-8.5)",
+     "obs": "läses uifr<i>þuR, ristaren antas ha glömt i-runan; gudaheite 'vé-väktaren' = Tor"
+    },
+    {
+     "runor": "karþi",
+     "ord": "gerði",
+     "sida": "s. 10 (§9.1)",
+     "obs": "'gjorde, ställde till'"
+    },
+    {
+     "runor": "afr",
+     "ord": "afr",
+     "sida": "s. 10, 12-14 (§9.1, §9.3-9.6)",
+     "obs": "'öl/gravöl': gerði afr 'ställde till gravöl'"
+    },
+    {
+     "runor": "aft",
+     "ord": "at (eptir)",
+     "sida": "s. 10 (§9.1)",
+     "obs": "'efter'"
+    },
+    {
+     "runor": "asini",
+     "ord": "*æsni-",
+     "sida": "s. 10-11 (§9.1)",
+     "obs": "'älskade' (jfr Eikeland); stödvokal; förled i *æsni-fǫðr"
+    },
+    {
+     "runor": "fauþr",
+     "ord": "-fǫðr",
+     "sida": "s. 10-11 (§9.1-9.2)",
+     "obs": "'far'; formen bara som efterled i sammansättningar"
+    },
+    {
+     "runor": "kul",
+     "ord": "Kol-",
+     "sida": "s. 10 (§9.1)",
+     "obs": "förled i namnet Kolfinnr, satsens subjekt, placerat sist"
+    },
+    {
+     "runor": "finR",
+     "ord": "-finnr",
+     "sida": "s. 10 (§9.1)",
+     "obs": "efterled i Kolfinnr"
+    },
+    {
+     "runor": "fal(s)",
+     "ord": "falsk",
+     "sida": "s. 14-15 (§9.8)",
+     "obs": "reflexivt fela: 'det framsades/överläts'; sandhi -sk > -s"
+    },
+    {
+     "runor": "taitirunoR",
+     "ord": "teiti-rúnar",
+     "sida": "s. 14 (§9.7)",
+     "obs": "'glädjerunor' - ord som väcker glädje i laget"
+    },
+    {
+     "runor": "u",
+     "ord": "ok",
+     "sida": "s. 14 (§9.7)",
+     "obs": "Grønvik delar runorna uk 'och' där Rundata har u + (a)iuinrunoR"
+    },
+    {
+     "runor": "(a)iuinrunoR",
+     "ord": "œvin-rúnar",
+     "sida": "s. 14 (§9.7)",
+     "obs": "'evig-runor', jfr œvinrúnar ok aldrrúnar i Rigsþula 43"
+    },
+    {
+     "runor": "sulialta",
+     "ord": "sýli alda",
+     "sida": "s. 16 (§10.1); s. 19-20 (§10.4)",
+     "obs": "sýli konjunktiv av sýla 'bli iskall' + alda 'av människor' - den heliga rysningen"
+    },
+    {
+     "runor": "huaR",
+     "ord": "hverr",
+     "sida": "s. 16 (§10.1)",
+     "obs": "'alda hverr' = 'var man'"
+    },
+    {
+     "runor": "?",
+     "sida": "s. 16 (§10.1); s. 20-21 (§10.5)",
+     "obs": "inget språkligt ord: gudasymbol ('potenserad t-runa'), samtidigt skiljetecken; jfr Kylver och brakteat DR br. 61"
+    },
+    {
+     "runor": "utu",
+     "ord": "utu",
+     "sida": "s. 17-18 (§10.2)",
+     "obs": "interjektion för köldrysning, jfr utututu i Rǫgnvaldr jarls lausavísa (Orkneyinga saga kap. 85)"
+    },
+    {
+     "runor": "tuuut",
+     "ord": "tu-u-ut",
+     "sida": "s. 17-18 (§10.2)",
+     "obs": "interjektionens fortsättning"
+    },
+    {
+     "runor": "bilikikR",
+     "ord": "belli gengr",
+     "sida": "s. 18 (§10.3.1, §10.3.3)",
+     "obs": "belli dativ 'med djärvhet' + gengr 'går' (nasalen utelämnad i skrift)"
+    },
+    {
+     "runor": "tuR",
+     "ord": "tor-",
+     "sida": "s. 18 (§10.3.2)",
+     "obs": "förled i tor-ræki (jfr torfenginn)"
+    },
+    {
+     "runor": "ra(k)(i)",
+     "ord": "-ræki",
+     "sida": "s. 18 (§10.3.2)",
+     "obs": "tor-ræki 'den som är svår att driva bort' = Tor"
+    },
+    {
+     "runor": "(t)(u)(l)i",
+     "ord": "at óli",
+     "sida": "s. 18-19 (§10.3.4-10.3.5)",
+     "obs": "t = at utan vokal (Rök-parallell); ól 'skadegörare (jätte)' - 'går mot jätten', Hrungnir-myten"
+    }
+   ],
+   "oversattning": "Så har inskriften en inskrift i sig: futharken. Vem är däri? Den äldste av asarna. Vem är däri? Véfrøðr (= Tor, vé-väktaren). Kolfinn ställde till gravöl efter sin älskade far; det framsades glädjerunor och evig-runor. Må var man bli iskall (i helig bävan)! utu tu-u-ut! Med djärvhet går den som är svår att driva bort (Tor) mot skadegöraren (jätten)."
   },
   "H": {
    "kalla": "Heltoft 2017 (Danske Studier), original: utdata/Malt/kallor/litteratur/heltoft2017.txt",
-   "status": "ATT SKRIVA AV ur originalet – ord för ord mot grupperna, med sidhänvisning per rad",
-   "ord": []
+   "status": "avskriven ur originalet 2026-10-19 (Danske Studier 2017, s. 27-100); sluttabell s. 93-94",
+   "ord": [
+    {
+     "runor": "sua",
+     "ord": "swā",
+     "sida": "s. 93-94 (sluttabellen); jfr s. 64",
+     "obs": "'således:' - inleder uddrivelseformeln"
+    },
+    {
+     "runor": "ai",
+     "ord": "æi",
+     "sida": "s. 63-65 (§6.4); tabell s. 94",
+     "obs": "negationen 'icke', skild från ē 'alltid'"
+    },
+    {
+     "runor": "titultitul",
+     "ord": "tī duldi dul",
+     "sida": "s. 65-67 (§6.5); tabell s. 94",
+     "obs": "reduktionsläsning: tī dat. av tīr 'guden' + duldi 'narrade' + dul 'bländverk' - 'bedrägeriet narrade inte guden'"
+    },
+    {
+     "runor": "fuþorkhniastbmlR",
+     "ord": "<runraden>",
+     "sida": "tabell s. 94",
+     "obs": "futharken som värnetext"
+    },
+    {
+     "runor": "huaR",
+     "ord": "hwar",
+     "sida": "s. 76-83 (§8.2); tabell s. 93",
+     "obs": "första raden är avsiktligt flertydiga 'drilleruner': hwar es ī / es ē / ē sē / ē sēi / ī sēi"
+    },
+    {
+     "runor": "is",
+     "ord": "es",
+     "sida": "tabell s. 93",
+     "obs": "ingår i flertydigheten (es / ē s-)"
+    },
+    {
+     "runor": "i",
+     "ord": "ī",
+     "sida": "tabell s. 93",
+     "obs": "ingår i flertydigheten (ī / ē / sē / sēi)"
+    },
+    {
+     "runor": "alisti",
+     "ord": "ælisti",
+     "sida": "tabell s. 93",
+     "obs": "'den urgamle'"
+    },
+    {
+     "runor": "osa",
+     "ord": "ą̄sa",
+     "sida": "tabell s. 93",
+     "obs": "'asen' - 'den urgamle asen'"
+    },
+    {
+     "runor": "huaR",
+     "ord": "hwar",
+     "sida": "tabell s. 93"
+    },
+    {
+     "runor": "is",
+     "ord": "es",
+     "sida": "tabell s. 93",
+     "obs": "andra frågan likaså flertydig: hwar es ī? / hwar ī sē?; Heltoft supplerar [i]: huaris[i]"
+    },
+    {
+     "runor": "uifrþuR",
+     "ord": "Vīfriðr",
+     "sida": "s. 46 (§5.1); tabell s. 93-94",
+     "obs": "personnamn: resaren (vīfriður)"
+    },
+    {
+     "runor": "karþi",
+     "ord": "gærði",
+     "sida": "s. 46-49 (§5.2); tabell s. 93-94",
+     "obs": "'uppförde' (kumlet) eller 'fastställde' (boten)"
+    },
+    {
+     "runor": "afr",
+     "ord": "afra",
+     "sida": "s. 45-56 (§5); tabell s. 93-94",
+     "obs": "adjektivet afarr 'framstående' (ack.), bevarat arkaiskt ord; hör till fǫðr"
+    },
+    {
+     "runor": "aft",
+     "ord": "aft",
+     "sida": "s. 45-56 (§5); tabell s. 93-94",
+     "obs": "'efter' resp. 'som bot för' i guld-läsningen"
+    },
+    {
+     "runor": "asini",
+     "ord": "Æsi Nef-",
+     "sida": "s. 49-56 (§5.4-5.6); tabell s. 93-94",
+     "obs": "delas asi + ni: Æsi = namnet, ni läses som början av binamnet Nef - fadern 'Æsir Nef'"
+    },
+    {
+     "runor": "fauþr",
+     "ord": "fǫðr",
+     "sida": "s. 51-55 (§5.5); tabell s. 93-94",
+     "obs": "arkaisk ackusativ 'fader'"
+    },
+    {
+     "runor": "kul",
+     "ord": "gull / kuml",
+     "sida": "tabell s. 93-94",
+     "obs": "två likvärdiga läsningar: 'guld' (bot för fadern) eller 'kuml' (monumentet); abstractet ger båda"
+    },
+    {
+     "runor": "finR",
+     "ord": "Finnr",
+     "sida": "tabell s. 94",
+     "obs": "dvärgnamn: 'dvärgen Finn gömde sig'"
+    },
+    {
+     "runor": "fal(s)",
+     "ord": "falṣ",
+     "sida": "s. 67-70 (§7.1-7.2); tabell s. 94",
+     "obs": "'gömde sig'; generaliserad medialform på -s"
+    },
+    {
+     "runor": "taitirunoR",
+     "ord": "tæitirūnąr",
+     "sida": "s. 70-72 (§7.3)",
+     "obs": "'morskabs-/drilleruner' - retas med dvärgen"
+    },
+    {
+     "runor": "u",
+     "ord": "ȳ",
+     "sida": "s. 84-87 (§9.1-9.2); tabell s. 94",
+     "obs": "'idegran (taks)' - värneträdet som drivs in"
+    },
+    {
+     "runor": "(a)iuinrunoR",
+     "ord": "æiwinrūnąr",
+     "sida": "s. 70-72 (§7.3)",
+     "obs": "'evighets-/värneruner'"
+    },
+    {
+     "runor": "sulialta",
+     "ord": "sōl ī ælta",
+     "sida": "s. 72-73 (§7.4); tabell s. 94",
+     "obs": "reduktionsläsning: 'driver solen in (häri)' - solen dödar dvärgen"
+    },
+    {
+     "runor": "huaR",
+     "ord": "hwar",
+     "sida": "tabell s. 94",
+     "obs": "'den som' - binds samman med raden 5:9-23"
+    },
+    {
+     "runor": "?",
+     "ord": "tīr tīr tīr",
+     "sida": "tabell s. 94",
+     "obs": "symbolen läst som möjlig tredubbel gudaåkallan; tīr 'gud' i singular bevarat"
+    },
+    {
+     "runor": "utu",
+     "ord": "ōttu",
+     "sida": "s. 86-87 (§9.2); tabell s. 94",
+     "obs": "'tidigt om morgonen (i ottan)'"
+    },
+    {
+     "runor": "tuuut",
+     "ord": "dȳ ȳ ȳt",
+     "sida": "s. 86-87 (§9.2); tabell s. 94",
+     "obs": "reduktionsläsning: dȳja 'slå' + ȳ 'idegran' + ȳta 'driva ut' - 'slå med idegran, driv ut (honom)'"
+    },
+    {
+     "runor": "bilikikR",
+     "ord": "Billingi ekr",
+     "sida": "s. 59-60 (§6.1); tabell s. 94",
+     "obs": "dvärgen Billing (dat.) + ekr 'driver ut' - 'driver ut dvärgen Billing'"
+    },
+    {
+     "runor": "tuR",
+     "ord": "dweragi (början)",
+     "sida": "s. 60-62 (§6.2)",
+     "obs": "turraki läses som ett ord: dweragi 'dvärgen' (dat.) enligt reduktionsprincipen; täcker tuR + ra(k)(i)"
+    },
+    {
+     "runor": "ra(k)(i)",
+     "ord": "(ingår i dweragi)",
+     "sida": "s. 60-62 (§6.2)"
+    },
+    {
+     "runor": "(t)(u)(l)i",
+     "ord": "dyli",
+     "sida": "s. 62-63 (§6.3); tabell s. 94",
+     "obs": "'skall utsäga en förnekelse'"
+    }
+   ],
+   "oversattning": "Minnesformeln (två likvärdiga läsningar): Vifred uppförde kumlet / fastställde guld som bot efter sin framstående fader Æsir Nef. Dvärgen Finn gömde sig. Drillerunor (driver) idegran (in), värnerunor driver solen in (häri). Den som ... (tīr tīr tīr - gudaåkallan?) Tidigt i ottan: slå med idegran, driv ut (honom), driver ut dvärgen Billing, skall utsäga förnekelsen: således: bländverket narrade icke guden. (Runraden som värnetext.)"
   },
-  "T": {"kalla": "Thuesen 1990, via Heltoft 2017", "status": "andrahand – poängsätts inte, beskrivs via tolkningar.json"},
-  "B": {"kalla": "Braunmüller 1991/1992, via Heltoft 2017", "status": "andrahand – poängsätts inte"},
-  "S": {"kalla": "Samplonius 1992, via Heltoft 2017", "status": "andrahand – poängsätts inte"},
-  "F": {"kalla": "Fridell 2024 (VMS 20), endast sammanfattning", "status": "andrahand – poängsätts inte"}
+  "T": {
+   "kalla": "Thuesen 1990, via Heltoft 2017",
+   "status": "andrahand – poängsätts inte, beskrivs via tolkningar.json"
+  },
+  "B": {
+   "kalla": "Braunmüller 1991/1992, via Heltoft 2017",
+   "status": "andrahand – poängsätts inte"
+  },
+  "S": {
+   "kalla": "Samplonius 1992, via Heltoft 2017",
+   "status": "andrahand – poängsätts inte"
+  },
+  "F": {
+   "kalla": "Fridell 2024 (VMS 20), endast sammanfattning",
+   "status": "andrahand – poängsätts inte"
+  }
  }
 }
