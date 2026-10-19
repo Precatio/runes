@@ -1,0 +1,780 @@
+{
+ "version": {
+  "max_gaps": 2000,
+  "lam_name": 0.05,
+  "lam_class": 0.0,
+  "lam_doc": 0.0,
+  "window": -1,
+  "char_fills": 15,
+  "context_cands": true,
+  "n_cands": 100,
+  "area_lm": false,
+  "by_word": false,
+  "near": 0.0,
+  "near_km": 20.0,
+  "fold": -1,
+  "own_d": false,
+  "name_cands": 0,
+  "separate": false,
+  "out": null
+ },
+ "antal": 33,
+ "kandidater": [
+  {
+   "sig": "Sm 20",
+   "carved": "--þ--u-u--nb",
+   "gap": 2,
+   "fill": "lr",
+   "word": "hræðslufullr",
+   "p": 1.0,
+   "reading": "svarthaufði u þæiR eRu hræðslufullr nb yfiR ai varinn eRu <unk> §þiu",
+   "p_reading": 0.08704701670490628,
+   "alts": [],
+   "context": "??r?uf??uþaiRiRureþslufulrnbefr??aiuariniRukubutrþiu"
+  },
+  {
+   "sig": "Sm 20",
+   "carved": "--þ--u-u--nb",
+   "gap": 2,
+   "fill": "re",
+   "word": "hræðslufullr",
+   "p": 1.0,
+   "reading": "svarthaufði u þæiR eRu hræðslufullr nb yfiR ai varinn eRu <unk> §þiu",
+   "p_reading": 0.08704701670490628,
+   "alts": [],
+   "context": "??r?uf??uþaiRiRureþslufulrnbefr??aiuariniRukubutrþiu"
+  },
+  {
+   "sig": "Sm 20",
+   "carved": "--þ--u-u--nb",
+   "gap": 1,
+   "fill": "f",
+   "word": "hræðslufullr",
+   "p": 1.0,
+   "reading": "svarthaufði u þæiR eRu hræðslufullr nb yfiR ai varinn eRu <unk> §þiu",
+   "p_reading": 0.08704701670490628,
+   "alts": [],
+   "context": "??r?uf??uþaiRiRureþslufulrnbefr??aiuariniRukubutrþiu"
+  },
+  {
+   "sig": "Sm 20",
+   "carved": "--þ--u-u--nb",
+   "gap": 2,
+   "fill": "sl",
+   "word": "hræðslufullr",
+   "p": 1.0,
+   "reading": "svarthaufði u þæiR eRu hræðslufullr nb yfiR ai varinn eRu <unk> §þiu",
+   "p_reading": 0.08704701670490628,
+   "alts": [],
+   "context": "??r?uf??uþaiRiRureþslufulrnbefr??aiuariniRukubutrþiu"
+  },
+  {
+   "sig": "Sö 130",
+   "carved": "u-h---u--ukþ",
+   "gap": 3,
+   "fill": "ruþ",
+   "word": "óhróðugr",
+   "p": 1.0,
+   "reading": "fjórir gærðu at faður goðan dýrð dræng hælla at §tumar a mildan orða ok mataR goðan þat u óhróðugr <unk>",
+   "p_reading": 0.24611193949429602,
+   "alts": [],
+   "context": "mataRkuþan þat uuhruþukrukþ"
+  },
+  {
+   "sig": "Sö 130",
+   "carved": "u-h---u--ukþ",
+   "gap": 2,
+   "fill": "kr",
+   "word": "óhróðugr",
+   "p": 1.0,
+   "reading": "fjórir gærðu at faður goðan dýrð dræng hælla at §tumar a mildan orða ok mataR goðan þat u óhróðugr <unk>",
+   "p_reading": 0.24611193949429602,
+   "alts": [],
+   "context": "mataRkuþan þat uuhruþukrukþ"
+  },
+  {
+   "sig": "Sö 130",
+   "carved": "u-h---u--ukþ",
+   "gap": 1,
+   "fill": "u",
+   "word": "óhróðugr",
+   "p": 1.0,
+   "reading": "fjórir gærðu at faður goðan dýrð dræng hælla at §tumar a mildan orða ok mataR goðan þat u óhróðugr <unk>",
+   "p_reading": 0.24611193949429602,
+   "alts": [],
+   "context": "mataRkuþan þat uuhruþukrukþ"
+  },
+  {
+   "sig": "Öl 57",
+   "carved": "rn--a",
+   "gap": 2,
+   "fill": "is",
+   "word": "ræisa",
+   "p": 0.9987036498496782,
+   "reading": "ræisa",
+   "p_reading": 0.9996146927000665,
+   "alts": [
+    [
+     "§ôrnr",
+     0.0
+    ],
+    [
+     "<unk>",
+     0.0
+    ],
+    [
+     "§ôrna",
+     0.0
+    ]
+   ],
+   "context": "??? rnisa"
+  },
+  {
+   "sig": "U 466",
+   "carved": "-isit--ti",
+   "gap": 1,
+   "fill": "u",
+   "word": "§viset",
+   "p": 0.9917591854886473,
+   "reading": "§stfriðr n <unk> gerði hniastbmlR a <unk> <unk> hafði takit <unk> en <unk> §mui §visetR i §viset satti",
+   "p_reading": 0.09638027378170021,
+   "alts": [
+    [
+     "þis",
+     0.002
+    ],
+    [
+     "<unk>",
+     0.002
+    ],
+    [
+     "§gishild",
+     0.001
+    ]
+   ],
+   "context": "inRslbmui uistRi uisit??ti"
+  },
+  {
+   "sig": "U 902",
+   "carved": "iþnousi--uR--okiaRisi------si",
+   "gap": 2,
+   "fill": "þb",
+   "word": "siðburinn",
+   "p": 0.991471269704011,
+   "reading": "§heðnøy siðburinn ok er isi <unk> æilifR §þiings a",
+   "p_reading": 0.2821109578065079,
+   "alts": [
+    [
+     "sízt",
+     0.003
+    ],
+    [
+     "snorriR",
+     0.002
+    ],
+    [
+     "haursi",
+     0.001
+    ]
+   ],
+   "context": "iþnousiþbuRinokiaRisi??????si ????f?þiikso"
+  },
+  {
+   "sig": "U 902",
+   "carved": "iþnousi--uR--okiaRisi------si",
+   "gap": 2,
+   "fill": "in",
+   "word": "siðburinn",
+   "p": 0.991471269704011,
+   "reading": "§heðnøy siðburinn ok er isi <unk> æilifR §þiings a",
+   "p_reading": 0.2821109578065079,
+   "alts": [
+    [
+     "kroki",
+     0.003
+    ],
+    [
+     "snorriR",
+     0.002
+    ],
+    [
+     "haursi",
+     0.001
+    ]
+   ],
+   "context": "iþnousiþbuRinokiaRisi??????si ????f?þiikso"
+  },
+  {
+   "sig": "U Fv1946;258",
+   "carved": "-i-a-----i-iti",
+   "gap": 1,
+   "fill": "f",
+   "word": "viseti",
+   "p": 0.9828940480327518,
+   "reading": "vigR ok otrygg ok balli lata ræisa mærki æftiR faður sinn rauð karr ok skip þori þessa æftiR ok skip <unk> at",
+   "p_reading": 0.10964078279353527,
+   "alts": [
+    [
+     "æftiR",
+     0.007
+    ],
+    [
+     "§ærindi",
+     0.005
+    ],
+    [
+     "kiti",
+     0.002
+    ]
+   ],
+   "context": "ukskib þu?? ?i?a?????ifiti uk??? skib"
+  },
+  {
+   "sig": "Sm 47",
+   "carved": "baiþ-",
+   "gap": 1,
+   "fill": "i",
+   "word": "þikra",
+   "p": 0.9778394634437757,
+   "reading": "pai þikra §gæiRr i",
+   "p_reading": 0.35766261038403524,
+   "alts": [
+    [
+     "ok",
+     0.013
+    ],
+    [
+     "beiða",
+     0.008
+    ],
+    [
+     "bæðr",
+     0.001
+    ]
+   ],
+   "context": "baiþikrak?Rr?"
+  },
+  {
+   "sig": "Sö 280",
+   "carved": "þ--a",
+   "gap": 2,
+   "fill": "iR",
+   "word": "þæiRa",
+   "p": 0.970253641881485,
+   "reading": "n biorn ok þau uddulf ok <unk> letu ok va stæin þenna æftiR ulfrik ok þá þæiRa fæðga ok §øya sun §undrlaugar",
+   "p_reading": 0.37124186759143835,
+   "alts": [
+    [
+     "þetta",
+     0.013
+    ],
+    [
+     "þria",
+     0.004
+    ],
+    [
+     "þora",
+     0.004
+    ]
+   ],
+   "context": "auk þa þiRa faþkaauk ?aua"
+  },
+  {
+   "sig": "Sö 245",
+   "carved": "ma-",
+   "gap": 1,
+   "fill": "k",
+   "word": "mag",
+   "p": 0.9641890218270952,
+   "reading": "ol mag sinn <unk>",
+   "p_reading": 0.7075286807631891,
+   "alts": [
+    [
+     "mænn",
+     0.031
+    ],
+    [
+     "mar",
+     0.003
+    ],
+    [
+     "mæþ",
+     0.001
+    ]
+   ],
+   "context": "ul mak san b?"
+  },
+  {
+   "sig": "U 784",
+   "carved": "-uk",
+   "gap": 1,
+   "fill": "a",
+   "word": "ok",
+   "p": 0.9632962678580225,
+   "reading": "log i ok þæiR en",
+   "p_reading": 0.9494623966307022,
+   "alts": [
+    [
+     "log",
+     0.023
+    ],
+    [
+     "hiogg",
+     0.006
+    ],
+    [
+     "tok",
+     0.004
+    ]
+   ],
+   "context": "l i auk þaiR ia?"
+  },
+  {
+   "sig": "Ög 115",
+   "carved": "fR--",
+   "gap": 2,
+   "fill": "ri",
+   "word": "fyrir",
+   "p": 0.9624245049376333,
+   "reading": "er fyrir þa",
+   "p_reading": 0.9749938941100682,
+   "alts": [
+    [
+     "frið",
+     0.009
+    ],
+    [
+     "fran",
+     0.008
+    ],
+    [
+     "fram",
+     0.005
+    ]
+   ],
+   "context": "s?? fRri þa???"
+  },
+  {
+   "sig": "Öl ATA4377/56A",
+   "carved": "u---kirkra",
+   "gap": 3,
+   "fill": "kar",
+   "word": "ok",
+   "p": 0.9612518896295407,
+   "reading": "<unk> ok arngærðr gærva <unk> i",
+   "p_reading": 0.6958293744113544,
+   "alts": [
+    [
+     "<unk>",
+     0.024
+    ],
+    [
+     "austr",
+     0.006
+    ],
+    [
+     "øyulfR",
+     0.004
+    ]
+   ],
+   "context": "???m?aukarkirkra ?na?i"
+  },
+  {
+   "sig": "U 522",
+   "carved": "fui-mrsrimuafifafiRauaiiRiafnaRfuioR---ank-n",
+   "gap": 1,
+   "fill": "a",
+   "word": "endlangan",
+   "p": 0.9581097865098595,
+   "reading": "<unk> af ef hafiR §øygæiRiR §iafnaR fuþork iaR endlangan fuþorkhnias iu a",
+   "p_reading": 0.29077599318938774,
+   "alts": [
+    [
+     "þunnvangann",
+     0.038
+    ],
+    [
+     "en",
+     0.001
+    ],
+    [
+     "§ginn",
+     0.001
+    ]
+   ],
+   "context": "fui?mrsrimuafifafiRauaiiRiafnaRfuioRitlankanfuþorkhnias????? iu?o?"
+  },
+  {
+   "sig": "U 522",
+   "carved": "fui-mrsrimuafifafiRauaiiRiafnaRfuioR---ank-n",
+   "gap": 3,
+   "fill": "itl",
+   "word": "endlangan",
+   "p": 0.9581097865098595,
+   "reading": "<unk> af ef hafiR §øygæiRiR §iafnaR fuþork iaR endlangan fuþorkhnias iu a",
+   "p_reading": 0.29077599318938774,
+   "alts": [
+    [
+     "þunnvangann",
+     0.038
+    ],
+    [
+     "uitan",
+     0.001
+    ],
+    [
+     "hunang",
+     0.001
+    ]
+   ],
+   "context": "fui?mrsrimuafifafiRauaiiRiafnaRfuioRitlankanfuþorkhnias????? iu?o?"
+  },
+  {
+   "sig": "Ån Fv1908;298A",
+   "carved": "ok-þ",
+   "gap": 1,
+   "fill": "u",
+   "word": "guð",
+   "p": 0.9334572732338754,
+   "reading": "a guð",
+   "p_reading": 0.9083921282267372,
+   "alts": [
+    [
+     "at",
+     0.032
+    ],
+    [
+     "ið",
+     0.021
+    ],
+    [
+     "et",
+     0.009
+    ]
+   ],
+   "context": "okuþ"
+  },
+  {
+   "sig": "U 1180",
+   "carved": "r-sisRainþnsnsknaþiaiaskra",
+   "gap": 1,
+   "fill": "i",
+   "word": "risti",
+   "p": 0.9290298073967109,
+   "reading": "her risti <unk> <unk> §sknar þessa æs gærva er <unk> les vissi",
+   "p_reading": 0.3260072175788444,
+   "alts": [
+    [
+     "<unk>",
+     0.045
+    ],
+    [
+     "§rysis",
+     0.023
+    ],
+    [
+     "rétt",
+     0.002
+    ]
+   ],
+   "context": "hi risisRainþnsnsknaþiaiaskra irþeoþiR?nosknlisuisi"
+  },
+  {
+   "sig": "U NOR2000;34B",
+   "carved": "-kiþ",
+   "gap": 1,
+   "fill": "s",
+   "word": "skeþ",
+   "p": 0.8969086999606992,
+   "reading": "§hæræinna e skeþ",
+   "p_reading": 0.289239150535028,
+   "alts": [
+    [
+     "egvið",
+     0.097
+    ],
+    [
+     "ok",
+     0.006
+    ],
+    [
+     "<unk>",
+     0.001
+    ]
+   ],
+   "context": "?era?nae skiþ"
+  },
+  {
+   "sig": "U 441",
+   "carved": "a-nili",
+   "gap": 1,
+   "fill": "r",
+   "word": "§arnill",
+   "p": 0.88236246481674,
+   "reading": "§arnill hælli ið gærva ok finnviðr ok er mót",
+   "p_reading": 0.9023638918630598,
+   "alts": [
+    [
+     "§anill",
+     0.059
+    ],
+    [
+     "<unk>",
+     0.055
+    ],
+    [
+     "æmni",
+     0.003
+    ]
+   ],
+   "context": "arnilili? iþ kia"
+  },
+  {
+   "sig": "Sö 285",
+   "carved": "--fun-",
+   "gap": 1,
+   "fill": "i",
+   "word": "arfuni",
+   "p": 0.8791444753366554,
+   "reading": "vigautr runaR ok arfuni resþu sten i né sina",
+   "p_reading": 0.8305893826852254,
+   "alts": [
+    [
+     "gefjuni",
+     0.081
+    ],
+    [
+     "§gefunni",
+     0.023
+    ],
+    [
+     "unni",
+     0.017
+    ]
+   ],
+   "context": "uikautrr auk arfuni risþu sten"
+  },
+  {
+   "sig": "Sö 285",
+   "carved": "--fun-",
+   "gap": 2,
+   "fill": "ar",
+   "word": "arfuni",
+   "p": 0.8791444753366554,
+   "reading": "vigautr runaR ok arfuni resþu sten i né sina",
+   "p_reading": 0.8305893826852254,
+   "alts": [
+    [
+     "gefjuni",
+     0.081
+    ],
+    [
+     "§gefunni",
+     0.023
+    ],
+    [
+     "gaf",
+     0.017
+    ]
+   ],
+   "context": "uikautrr auk arfuni risþu sten"
+  },
+  {
+   "sig": "Öl SHM1304:1836:64",
+   "carved": "ns----a",
+   "gap": 4,
+   "fill": "tain",
+   "word": "stæina",
+   "p": 0.8613091589321803,
+   "reading": "n stæina",
+   "p_reading": 0.7917970355389672,
+   "alts": [
+    [
+     "sialfa",
+     0.092
+    ],
+    [
+     "svæina",
+     0.033
+    ],
+    [
+     "<unk>",
+     0.005
+    ]
+   ],
+   "context": "nstaina"
+  },
+  {
+   "sig": "Öl ATA4701/43",
+   "carved": "-uk",
+   "gap": 1,
+   "fill": "a",
+   "word": "ok",
+   "p": 0.860881213513013,
+   "reading": "ór ok ok u ok æftiR auð",
+   "p_reading": 0.8738246655429335,
+   "alts": [
+    [
+     "lykak",
+     0.069
+    ],
+    [
+     "hygg",
+     0.02
+    ],
+    [
+     "tok",
+     0.016
+    ]
+   ],
+   "context": "ur aukak?u nukabtiR auþ"
+  },
+  {
+   "sig": "Sö 23",
+   "carved": "kuþa-t",
+   "gap": 1,
+   "fill": "n",
+   "word": "and",
+   "p": 0.835374865918033,
+   "reading": "ingi a ok <unk> gerði hann do i §olai at <unk> ai øþi guð and ok a",
+   "p_reading": 0.7915176134852087,
+   "alts": [
+    [
+     "§guðald",
+     0.083
+    ],
+    [
+     "<unk>",
+     0.04
+    ],
+    [
+     "at",
+     0.025
+    ]
+   ],
+   "context": "ai oþi kuþantauk o"
+  },
+  {
+   "sig": "Vg 119",
+   "carved": "a-a-u--ba",
+   "gap": 1,
+   "fill": "þ",
+   "word": "faður",
+   "p": 0.8222643313947857,
+   "reading": "øystæinn slaka frøy at gialdi §asar faðiR upp sal faðiR svað a faður apa a maR njóttu ok §dagaR §aslr §igullu hrygg þetta §ioisl",
+   "p_reading": 0.21365755237282813,
+   "alts": [
+    [
+     "farulf",
+     0.025
+    ],
+    [
+     "iarund",
+     0.021
+    ],
+    [
+     "kalukR",
+     0.013
+    ]
+   ],
+   "context": "???t???lakafrau?atkialti asa?faþiRubsalfaþiRsuaþafaþuraba ?omasnotuauktakaR aslrikulu??Rukþ?taiuisl"
+  },
+  {
+   "sig": "Vg 119",
+   "carved": "a-a-u--ba",
+   "gap": 2,
+   "fill": "ra",
+   "word": "faður",
+   "p": 0.8222643313947857,
+   "reading": "øystæinn slaka frøy at gialdi §asar faðiR upp sal faðiR svað a faður apa a maR njóttu ok §dagaR §aslr §igullu hrygg þetta §ioisl",
+   "p_reading": 0.21365755237282813,
+   "alts": [
+    [
+     "farulf",
+     0.025
+    ],
+    [
+     "iarund",
+     0.021
+    ],
+    [
+     "kalukR",
+     0.013
+    ]
+   ],
+   "context": "???t???lakafrau?atkialti asa?faþiRubsalfaþiRsuaþafaþuraba ?omasnotuauktakaR aslrikulu??Rukþ?taiuisl"
+  },
+  {
+   "sig": "Vg 119",
+   "carved": "a-a-u--ba",
+   "gap": 1,
+   "fill": "f",
+   "word": "faður",
+   "p": 0.8222643313947857,
+   "reading": "øystæinn slaka frøy at gialdi §asar faðiR upp sal faðiR svað a faður apa a maR njóttu ok §dagaR §aslr §igullu hrygg þetta §ioisl",
+   "p_reading": 0.21365755237282813,
+   "alts": [
+    [
+     "farulf",
+     0.025
+    ],
+    [
+     "iarund",
+     0.021
+    ],
+    [
+     "kalukR",
+     0.013
+    ]
+   ],
+   "context": "???t???lakafrau?atkialti asa?faþiRubsalfaþiRsuaþafaþuraba ?omasnotuauktakaR aslrikulu??Rukþ?taiuisl"
+  },
+  {
+   "sig": "Öl 55",
+   "carved": "aþ-aui",
+   "gap": 1,
+   "fill": "r",
+   "word": "ændaðr",
+   "p": 0.8103986283326922,
+   "reading": "ok biorn risu kik ændaðr ok §stál a",
+   "p_reading": 0.8507672398006517,
+   "alts": [
+    [
+     "andaðr",
+     0.046
+    ],
+    [
+     "aðan",
+     0.045
+    ],
+    [
+     "§aðnøyi",
+     0.027
+    ]
+   ],
+   "context": "risu kik ataþraui stal ?a?"
+  }
+ ],
+ "viseti_korsning": {
+  "U 466": {
+   "rundata_ristare": [
+    "Antagligen samma som gjort U 468. Enligt Brate Visäte"
+   ],
+   "status": "signerad",
+   "support": 1.0,
+   "alternativ": null,
+   "modell_posteriorer": {},
+   "visate_posterior": null
+  },
+  "U Fv1946;258": {
+   "rundata_ristare": [
+    "Visäte"
+   ],
+   "status": "signerad",
+   "support": 0.444,
+   "alternativ": null,
+   "modell_posteriorer": {},
+   "visate_posterior": null
+  }
+ }
+}
