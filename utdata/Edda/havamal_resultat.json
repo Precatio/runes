@@ -1,0 +1,156 @@
+{
+  "delar": ["I Gästvisdom 1–83", "II Kvinnoråd 84–102", "III Gunnlöd 103–110", "IV Loddfáfnir 111–137", "V Runatal 138–145", "VI Ljóðatal 146–164"],
+  "stilometri": {
+    "inom_medel": 0.689,
+    "mellan_medel": 1.131,
+    "n_inom": 7,
+    "n_mellan": 38,
+    "stylo_kontroll": true
+  },
+  "ttr": {
+    "I": 0.677,
+    "II": 0.836,
+    "III": 0.781,
+    "IV": 0.463,
+    "V": 0.682,
+    "VI": 0.637
+  },
+  "delta_block": [
+    [0, 0.908, 1.373, 1.259, 0.978, 1.029, 1.068, 1.052, 0.922, 0.862],
+    [0.908, 0, 1.402, 1.337, 0.773, 0.933, 0.882, 0.788, 0.935, 1.076],
+    [1.373, 1.402, 0, 0.625, 1.462, 1.573, 1.526, 1.256, 1.161, 1.436],
+    [1.259, 1.337, 0.625, 0, 1.401, 1.385, 1.307, 1.315, 1.238, 1.317],
+    [0.978, 0.773, 1.462, 1.401, 0, 0.585, 0.592, 0.769, 1.007, 1.062],
+    [1.029, 0.933, 1.573, 1.385, 0.585, 0, 0.714, 0.788, 1.033, 1.134],
+    [1.068, 0.882, 1.526, 1.307, 0.592, 0.714, 0, 0.749, 1.017, 1.029],
+    [1.052, 0.788, 1.256, 1.315, 0.769, 0.788, 0.749, 0, 0.835, 0.906],
+    [0.922, 0.935, 1.161, 1.238, 1.007, 1.033, 1.017, 0.835, 0, 1.014],
+    [0.862, 1.076, 1.436, 1.317, 1.062, 1.134, 1.029, 0.906, 1.014, 0]
+  ],
+  "amnen": [
+    {
+      "topic": 1,
+      "ord": "um aldregi engi vita sér snotr kemr guma"
+    },
+    {
+      "topic": 2,
+      "ord": "eistu hvé áva sér betra mál æva höllu"
+    },
+    {
+      "topic": 3,
+      "ord": "þann verðr t manngi mik fyrir hefr aldregi geði heldr vin var stafi finna leitaði nam reist"
+    },
+    {
+      "topic": 4,
+      "ord": "síns t öl ins konu heilir var vel sumr"
+    },
+    {
+      "topic": 5,
+      "ord": "kemr hánum mun geta skaltu geð lifa allt hafa"
+    }
+  ],
+  "amnesdominans_per_del": [
+    {
+      "del": "I",
+      "dominans": 0.36
+    },
+    {
+      "del": "II",
+      "dominans": 0.26
+    },
+    {
+      "del": "III",
+      "dominans": 0.38
+    },
+    {
+      "del": "IV",
+      "dominans": 0.26
+    },
+    {
+      "del": "V",
+      "dominans": 0.75
+    },
+    {
+      "del": "VI",
+      "dominans": 0.32
+    }
+  ],
+  "versmatt": [
+    {
+      "del": "I",
+      "strofer": 83,
+      "ord_median": 21,
+      "segment_median": 4,
+      "seglangd": 5
+    },
+    {
+      "del": "II",
+      "strofer": 19,
+      "ord_median": 22,
+      "segment_median": 4,
+      "seglangd": 5
+    },
+    {
+      "del": "III",
+      "strofer": 8,
+      "ord_median": 25.5,
+      "segment_median": 3.5,
+      "seglangd": 6.75
+    },
+    {
+      "del": "IV",
+      "strofer": 27,
+      "ord_median": 30,
+      "segment_median": 9,
+      "seglangd": 3.91
+    },
+    {
+      "del": "V",
+      "strofer": 8,
+      "ord_median": 23.5,
+      "segment_median": 5,
+      "seglangd": 5.04
+    },
+    {
+      "del": "VI",
+      "strofer": 19,
+      "ord_median": 25,
+      "segment_median": 4,
+      "seglangd": 5.25
+    }
+  ],
+  "ljodatal_kann_ek": 17,
+  "runbelagg": [
+    {
+      "del": "I",
+      "andel": 0.551,
+      "typer": 1611
+    },
+    {
+      "del": "II",
+      "andel": 0.522,
+      "typer": 391
+    },
+    {
+      "del": "III",
+      "andel": 0.527,
+      "typer": 186
+    },
+    {
+      "del": "IV",
+      "andel": 0.522,
+      "typer": 713
+    },
+    {
+      "del": "V",
+      "andel": 0.5,
+      "typer": 152
+    },
+    {
+      "del": "VI",
+      "andel": 0.605,
+      "typer": 420
+    }
+  ],
+  "forbehall": "Codex Regius är enda källan (ca 1270) och Guðni Jónssons normalisering dess utgåva; ~5 000 ord är lite för stilometri; segmenten är en proxy för versrader; skillnad mellan delar kan bero på genre lika väl som på hand eller tid."
+}
