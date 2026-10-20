@@ -118,7 +118,7 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
 
 ## Fas 4 – Användbar för andra
 
-### 4.1 Så gör du-serien  — PÅGÅR: huggspår (nUU578Mmm1BIuq3dZBUv) och inskrifter/luckor (3Uc5chZvfRUCViMpqTwt) och forskningsluckor (Y25XTQKplbCbg69mf2ze) som utkast 2026-10-20; kvar: Statistik i R (kräver färdig R-körning), Stenrapport, Syntes (kräver inloggat projekt)
+### 4.1 Så gör du-serien  — PÅGÅR: huggspår (nUU578Mmm1BIuq3dZBUv) och inskrifter/luckor (3Uc5chZvfRUCViMpqTwt) forskningsluckor (Y25XTQKplbCbg69mf2ze) och statistik i R som utkast 2026-10-20; kvar: Stenrapport, Syntes (kräver inloggat projekt)
 - Ordning: Inskrifter (sök, filter, stenöversikt) → Forskningsluckor → Statistik i R (läsa en modul) →
   Stenrapport (från mätning till Word) → Syntes.
 - Varje: `utdata/blogg/build/howto_<namn>_bilder.py` (Playwright, dev-servrar igång) +
