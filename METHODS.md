@@ -431,8 +431,12 @@ en forskare ställa en egen fråga till korpusen med samma disciplin som R-modul
 ovanligare där B gäller? Ingen fri text och ingen AI; frågan byggs av två listor.
 
 * **Underlag.** Samma rader som korpusanalyserna i R (`r_bridge.corpus_rows`): bara runstenar, 2 321 stycken. A är ett av
-  22 drag – kartans mönster (tro, skrift, innehåll), fyra språkdrag ur avsnitt 9 (*auk*, *at* i minnesformeln, h skrivet,
-  nasal skriven), bindrunor, självminne och två ristaruppgifter (ristare i Rundata, signerad). B är ett annat drag, ett
+  46 drag: kartans mönster (tro, skrift, innehåll), språkdrag ur avsnitt 9 (*auk*, *at* i minnesformeln, h skrivet,
+  nasal skriven, stungen e, y och g, det vanligaste skiljetecknet: kolon, punkt, kryss eller blandat), bindrunor,
+  kortkvistrunor, bönens ordval (*and*, *sál*, *Guðs móðir*), *Guð*, England och Grekland, ordet *kumbl*, släktord och
+  hedersord (fader, moder, broder, son, make, *drængR*, *þegn*), självminne, tre ristaruppgifter (ristare, osäker
+  ristare, signerad) och om stenen är förlorad. Ord räknas i Rundatas normalisering och avgörs bara på stenar med minst
+  tre kärnord, som i Ordförrådet (1m); namn räknas inte, utom där ordet självt är ett namn (Guð, Ænglandi, Grikkjum). B är ett annat drag, ett
   landskap (minst 15 stenar), en tidsgräns (1020, 1050 eller 1075 som på kartan, efter stilgruppens mittår) eller en
   bergartsfamilj (avsnitt 11). Stenar där A eller B inte kan avgöras räknas inte, och antalet redovisas.
 * **Justering.** Mantel–Haenszel över skikt: landskap × tidsskikt (före 1020, 1020–1050, 1050–1075, 1075 och senare,
@@ -444,6 +448,17 @@ ovanligare där B gäller? Ingen fri text och ingen AI; frågan byggs av två li
   bara om CMH-testet ger p < 0,05 i hela korpusen och samma riktning med p < 0,05 i båda halvorna; annars är det *bara i
   hela korpusen*. **Ristarprovet** räknar om frågan utan var och en av de fem ristare som har flest stenar i underlaget
   och redovisar den sämsta utgången.
+* **Två kontroller i R** (`r/question.R`, sedan 2026-10-20). *Ristaren som slumpeffekt*: en logistisk blandad
+  modell (lme4::glmer) med A som utfall, B, landskap och tidsskikt som fasta termer och handen – den säkra ristaren, för
+  stenar utan säker ristare socknen, som i `r/words.R` – som slumpvis nivå, så att en flitig ristares stenar inte räknas
+  som många oberoende belägg. *Platsen som yta*: en logistisk GAM (mgcv) med B, tidsskiktet och en tunnplåtsyta över
+  stenarnas läge (s(öst, nord), k = 60) i stället för landskapsgränserna; flyttade stenar räknas inte, och kontrollen
+  görs inte för landskapsfrågor, där platsen är själva jämförelsen. En kontroll *håller* när B:s koefficient har samma
+  riktning som Mantel–Haenszel och p < 0,05 (Wald). Ett mönster som håller i halvorna men inte i den första kontrollen
+  märks *beror på ristarna*, i den andra *kan vara platsen*. Svaret räknas en gång per korpusversion och fråga (några
+  sekunder) och sparas. Exempel: kors är ovanligare på sandsten (oddskvot 0,35, båda halvorna, också med ristaren som
+  slumpeffekt), men med platsen som yta blir oddskvoten 0,78 (p 0,58) – sandsten och färre kors hör hemma i samma trakter.
+  De kända mönstren ovan håller i båda kontrollerna (`tests/test_question.py`).
 * **Många frågor.** P-värdena för de frågor som ställts tidigare under besöket skickas med och justeras tillsammans med
   den nya (Benjamini–Hochberg). Ett mönster som håller i halvorna men inte efter justeringen märks så. Listan nollställs
   bara när användaren väljer det.

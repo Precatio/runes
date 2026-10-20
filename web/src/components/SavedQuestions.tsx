@@ -15,6 +15,8 @@ import { pct, pIs, VERDICT } from "@/components/OwnQuestion";
 const EVIDENCE: Record<string, { label: string; help: string }> = {
   "håller": { label: "måttligt", help: "Håller i båda halvorna och efter justeringen för besökets frågor. Starkare än så blir en egen fråga inte förrän den prövats enligt en analysplan." },
   "håller men inte justerat": { label: "svagt", help: "Håller i båda halvorna, men inte när besökets alla frågor räknas in." },
+  "beror på ristarna": { label: "svagt", help: "Håller i halvorna men inte med ristaren som slumpeffekt." },
+  "kan vara platsen": { label: "svagt", help: "Håller i halvorna men inte när stenarnas läge får forma en egen yta." },
   "bara i hela": { label: "svagt", help: "Syns i hela korpusen men inte i båda halvorna av socknarna." },
   "ingen skillnad": { label: "–", help: "Ingen säker skillnad: ett negativt resultat, sparat för att det också är kunskap." },
 };

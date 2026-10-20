@@ -65,12 +65,26 @@ def ask_question(req: QuestionRequest):
     from fastapi import HTTPException
     from api.routers import rstats
     from src import question
+    from src import r_bridge as rb
+    key = req.key if req.kind != "tid" else int(req.key)
     try:
-        out = question.ask(_question(), req.a, req.kind, req.key if req.kind != "tid" else int(req.key), req.earlier)
+        out = question.ask(_question(), req.a, req.kind, key, req.earlier)
     except ValueError as e:
         raise HTTPException(status_code=422, detail=str(e))
+    fp = rstats.fingerprint()
+    # The two checks in R (r/question.R) when there is an answer to check and R is installed; without them the verdict
+    # stands and the answer says that they could not be run
+    if (out.get("adjusted") or {}).get("p") is not None:
+        checks = None
+        if rb.enabled():
+            try:
+                checks = rb.question(fp, question.r_rows(_question(), req.a, req.kind, key), req.kind)
+            except Exception as e:  # noqa: BLE001 – R missing a package or a model that does not converge
+                checks = None
+                out["r_error"] = str(e)[-300:]
+        out = question.apply_r(out, checks)
     # The corpus version (the same fingerprint as the R analyses), so that a saved answer says what it was computed on
-    return {**out, "corpus": rstats.fingerprint()}
+    return {**out, "corpus": fp}
 
 
 @router.get("/gaps/textmodel")

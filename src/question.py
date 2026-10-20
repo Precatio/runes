@@ -17,10 +17,14 @@ med samma disciplin som kartans Upptäck och R-modulerna – ingen fri text och 
     utgången redovisas, så att en flitig ristares vanor inte blir hela mönstret.
   * Många frågor: p-värdena för de frågor som ställts tidigare under besöket skickas med och BH-justeras tillsammans
     med den nya, så att den som prövar tjugo frågor ser vad det kostar.
+  * Två kontroller i R (r/question.R, apply_r): ristaren som slumpeffekt (lme4) och platsen som en yta över stenarnas
+    läge i stället för landskapsgränser (mgcv). Ett mönster som håller i halvorna men inte med ristaren som slumpeffekt
+    "beror på ristarna"; ett som inte håller med platsen som yta "kan vara platsen".
 """
 from __future__ import annotations
 
 import math
+import re
 from collections import Counter, defaultdict
 
 from src import geology
@@ -50,6 +54,33 @@ def _trait(key, yes, no):
 def _cat(key):
     # a category can only be decided where the text is legible (the map's bro pattern is None otherwise)
     return lambda r: None if r.get("pm_bro") in ("", None) else int(r[f"cat_{key}"])
+
+
+MIN_CORE_WORDS = 3  # as r/words.R: a fragment with fewer core words says nothing about which words were used
+
+
+def _word(pattern: str, names: bool = False):
+    """Ett ord i Rundatas normalisering; avgörs bara på stenar med minst tre kärnord, som i Ordförrådet. Namn (med
+    citattecken i Rundata) räknas inte – utom när ordet själv är ett namn (names=True: Guð, Ænglandi, Grikkjum)."""
+    rx = re.compile(pattern)
+
+    def get(r):
+        if (r.get("n_words_core") or 0) < MIN_CORE_WORDS:
+            return None
+        text = r.get("normalization") or ""
+        text = text.replace('"', "") if names else re.sub(r'"\S+', " ", text)
+        return int(bool(rx.search(text)))
+    return get
+
+
+def _flag(key):
+    """En 0/1-uppgift ur korpusraderna som avgörs bara där texten går att läsa (bönens ordval)."""
+    return lambda r: None if (r.get("n_words_core") or 0) < MIN_CORE_WORDS else int(r[key])
+
+
+def _sep(kind):
+    """Det vanligaste skiljetecknet (språkdraget skiljetecken: minst tre tecken på stenen)."""
+    return lambda r: None if not r.get("trait_skiljetecken") else int(r["trait_skiljetecken"] == kind)
 
 
 # key, label, group, help, value(row) -> 1, 0 or None
@@ -84,6 +115,35 @@ VARIABLES = [
      lambda r: int(r["has_carver"])),
     ("signerad", "Signerad", "Ristare", "Ristaren har signerat stenen (säker signatur enligt Rundata).",
      lambda r: int(r["signed"])),
+    ("ristare_osaker", "Osäker ristare i Rundata", "Ristare",
+     "Rundata anger mer än en möjlig ristare, eller en ristare med frågetecken.", lambda r: int(r["carvers_uncertain"])),
+    # Added 2026-10-20: more traits to choose from
+    ("gud", "Guð nämns", "Tro", "Ordet Guð i texten, oftast i en bön.", _word(r"\bGuð", names=True)),
+    ("bon_and", "Anden (and) i bönen", "Tro", "Själsbönen med ordet and/ônd, som i Guð hjalpi and hans.", _flag("prayer_and")),
+    ("bon_sal", "Själen (sál) i bönen", "Tro", "Själsbönen med ordet sál/sálu.", _flag("prayer_sal")),
+    ("gudsmodir", "Guðs móðir", "Tro", "Bönen nämner Guds moder.", _flag("prayer_gudsmodir")),
+    ("kortkvist", "Kortkvistrunor", "Skrift", "Kortkvistrunor (stuttrunor) enligt Rundatas runtyp.", lambda r: int(r["short_twig"])),
+    ("stungen_e", "Stungen i (e)", "Skrift", "Stungen i-runa, som skiljer e från i.", _trait("stungen_e", {"ja"}, {"nej"})),
+    ("stungen_y", "Stungen u (y)", "Skrift", "Stungen u-runa, som skiljer y från u.", _trait("stungen_y", {"ja"}, {"nej"})),
+    ("stungen_g", "Stungen k (g)", "Skrift", "Stungen k-runa, som skiljer g från k.", _trait("stungen_g", {"ja"}, {"nej"})),
+    ("sep_kolon", "Kolon mellan orden", "Skrift", "Kolon är stenens vanligaste skiljetecken (minst tre tecken).", _sep("kolon")),
+    ("sep_punkt", "Punkt mellan orden", "Skrift", "Punkt är stenens vanligaste skiljetecken (minst tre tecken).", _sep("punkt")),
+    ("sep_kryss", "Kryss mellan orden", "Skrift", "Kryss är stenens vanligaste skiljetecken (minst tre tecken).", _sep("kryss")),
+    ("sep_blandat", "Blandade skiljetecken", "Skrift",
+     "Inget skiljetecken står för tre fjärdedelar eller mer (minst tre tecken).", _sep("blandat")),
+    ("england", "England nämns", "Innehåll", "Resa, död eller strid i England (Ænglandi).", _word(r"Ængland", names=True)),
+    ("grekland", "Grekland nämns", "Innehåll", "Resa, död eller strid i Grekland, dvs. Bysans (Grikkjum).", _word(r"Grikk", names=True)),
+    ("kumbl", "Ordet kumbl", "Innehåll", "Monumentet kallas kumbl (minnesmärke) i stället för eller utöver sten.", _word(r"\bkumbl")),
+    ("ord_fader", "Ordet fader", "Släkt och ord", "faður: stenen nämner en far – den döde, resaren eller någons far.",
+     _word(r"\bfaður\b|\bfeðr")),
+    ("ord_moder", "Ordet moder", "Släkt och ord", "moður: stenen nämner en mor.", _word(r"\bmoður\b|\bmøðr")),
+    ("ord_broder", "Ordet broder", "Släkt och ord", "broður: stenen nämner en bror.", _word(r"\bbroður\b|\bbrøðr")),
+    ("ord_son", "Ordet son", "Släkt och ord", "sun/syni: stenen nämner en son.", _word(r"\bsun\b|\bsyni\b|\bsyniR\b|\bsunu\b")),
+    ("ord_make", "Ordet make (bóndi)", "Släkt och ord", "bonda: en kvinna minns sin make, eller en man kallas bonde.",
+     _word(r"\bbonda\b|\bboanda\b|\bbondi\b")),
+    ("ord_drang", "Ordet dräng (drængR)", "Släkt och ord", "drængR: en ung man, ofta i hedrande mening.", _word(r"\bdræng")),
+    ("ord_tegn", "Ordet þegn", "Släkt och ord", "þegn: en fri man, ofta i hedrande mening.", _word(r"\bþegn")),
+    ("forlorad", "Förlorad sten", "Stenen", "Stenen är försvunnen och känd genom äldre avbildningar.", lambda r: int(r["lost"])),
 ]
 VAR = {k: (label, group, help_, fn) for k, label, group, help_, fn in VARIABLES}
 
@@ -97,6 +157,19 @@ LINKED = {
     frozenset({"bon", "sjal"}): "Själsbönen är en sorts kristen bön.",
     frozenset({"signatur", "signerad"}): "En signerad sten är en sten vars ristarformel nämner ristaren.",
     frozenset({"ristare_kand", "signerad"}): "En signerad sten har alltid en ristare i Rundata.",
+    frozenset({"ristare_kand", "ristare_osaker"}): "En osäker ristare är också en ristare i Rundata.",
+    frozenset({"gud", "kristen"}): "Kristna markörer räknar in formler med Guð.",
+    frozenset({"gud", "bon"}): "Bönen är oftast en bön till Guð.",
+    frozenset({"england", "fard"}): "Utlandsfärd räknar in England.",
+    frozenset({"grekland", "fard"}): "Utlandsfärd räknar in Grekland.",
+    **{frozenset({k, o}): "Själsbönens ordval är en del av bönen." for k in ("bon_and", "bon_sal")
+       for o in ("bon", "sjal", "kristen", "bon_and", "bon_sal") if k != o},
+    **{frozenset({"gudsmodir", o}): "Guðs móðir står i en bön." for o in ("bon", "kristen")},
+    **{frozenset({k, "stungna"}): "Stungna runor räknar in de stungna e-, y- och g-runorna." for k in
+       ("stungen_e", "stungen_y", "stungen_g")},
+    **{frozenset({a, b}): "En sten räknas till ett enda vanligaste skiljetecken, så de utesluter varandra."
+       for a in ("sep_kolon", "sep_punkt", "sep_kryss", "sep_blandat")
+       for b in ("sep_kolon", "sep_punkt", "sep_kryss", "sep_blandat") if a < b},
 }
 
 EPOCHS = ("före 1020", "1020–1050", "1050–1075", "1075 och senare")
@@ -140,13 +213,24 @@ def halves(rows: list[dict]) -> dict[str, str]:
     return {r["signum"]: half[(r["province"], r.get("parish") or f"_{r['signum']}")] for r in rows}
 
 
+def km(lat: float | None, lon: float | None) -> tuple[float | None, float | None]:
+    """Läget i kilometer (sinusprojektion kring 15° öst), tillräckligt för en yta över Sverige i r/question.R."""
+    if lat is None or lon is None:
+        return None, None
+    return round((lon - 15) * 111.32 * math.cos(math.radians(lat)), 2), round(lat * 110.57, 2)
+
+
 def prepare(rows: list[dict]) -> dict:
-    """Det frågorna behöver ur korpusraderna, räknat en gång: värdena för varje drag, skikt, halvor och ristare."""
+    """Det frågorna behöver ur korpusraderna, räknat en gång: värdena för varje drag, skikt, halvor och ristare, och för
+    kontrollerna i R handen (säker ristare, annars socknen, som i r/words.R), läget och om stenen är flyttad."""
     h = halves(rows)
     stones = []
     for r in rows:
+        xk, yk = km(r.get("lat"), r.get("lon"))
+        hand = r.get("carver") or f"_{r['province']}:{r.get('parish') or r['signum']}"
         stones.append({"signum": r["signum"], "province": r["province"], "epoch": epoch(r), "year": mid_year(r),
                        "family": family(r), "half": h[r["signum"]], "carver": r.get("carver") or "",
+                       "hand": hand, "xk": xk, "yk": yk, "moved": int(r.get("moved") or 0),
                        "v": {k: fn(r) for k, (_, _, _, fn) in VAR.items()}})
     return {"stones": stones}
 
@@ -346,4 +430,41 @@ def ask(prep: dict, a: str, kind: str, key, earlier: list[float] | None = None, 
     else:
         verdict = "håller"
     out["verdict"] = verdict
+    return out
+
+
+def r_rows(prep: dict, a: str, kind: str, key) -> list[dict]:
+    """Underlaget för r/question.R: samma stenar som ask() räknar på, med y (A), x (B), skikten, handen och läget."""
+    b = comparison(kind, key)
+    out = []
+    for s in prep["stones"]:
+        x, y = b["x"](s), s["v"][a]
+        if x is None or y is None:
+            continue
+        out.append({"signum": s["signum"], "y": y, "x": x, "province": s["province"], "epoch": s["epoch"],
+                    "hand": s["hand"], "xk": s["xk"], "yk": s["yk"], "moved": s["moved"]})
+    return out
+
+
+def apply_r(out: dict, checks: dict | None) -> dict:
+    """Lägger kontrollerna i R på svaret. Ett mönster som håller i halvorna men inte med ristaren som slumpeffekt beror
+    på ristarna; ett som inte håller med platsen som yta kan vara platsen. Utan R (checks None) står domen kvar och
+    svaret säger att kontrollerna inte kunde köras."""
+    if checks is None:
+        return {**out, "r_checks": {"available": False}}
+    out = {**out, "r_checks": {"available": True, **checks}}
+    direction = (out.get("adjusted") or {}).get("direction", 0)
+
+    def holds(c: dict) -> bool | None:
+        if not c or c.get("skipped") or c.get("error") or c.get("p") is None:
+            return None
+        return c["p"] < ALPHA and c["direction"] == direction
+
+    hc, hp = holds(checks.get("carver")), holds(checks.get("place"))
+    out["r_checks"]["carver_holds"], out["r_checks"]["place_holds"] = hc, hp
+    if out.get("verdict") in ("håller", "håller men inte justerat"):
+        if hc is False:
+            out["verdict"] = "beror på ristarna"
+        elif hp is False:
+            out["verdict"] = "kan vara platsen"
     return out

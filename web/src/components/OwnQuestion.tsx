@@ -23,13 +23,16 @@ interface Half extends MH { n: number; share_with_b: number | null; share_withou
 interface Answer {
   a: { key: string; label: string; help: string };
   b: { kind: Kind; key: string | number; label: string; help: string; yes: string; no: string; adjusted: string };
-  verdict: "håller" | "håller men inte justerat" | "bara i hela" | "ingen skillnad" | "för få" | "kopplade" | "samma";
+  verdict: "håller" | "håller men inte justerat" | "beror på ristarna" | "kan vara platsen" | "bara i hela" | "ingen skillnad" | "för få" | "kopplade" | "samma";
   reason?: string; n?: number; missing?: number; with_b?: Share; without_b?: Share;
   difference?: { value: number; ci: [number, number] }; adjusted?: MH;
   halves?: { A: Half; B: Half; replicated: boolean };
   carver_check?: { carver: string; n: number; or: number | null; p: number; holds: boolean } | null;
   q?: number; n_questions?: number; corpus?: string;
+  r_checks?: { available: boolean; carver?: RCheck; place?: RCheck; carver_holds?: boolean | null; place_holds?: boolean | null };
 }
+// A check in R (r/question.R): the odds ratio with the carver as a random effect (lme4) or the place as a surface (mgcv)
+interface RCheck { or?: number; ci?: [number, number]; p?: number; direction?: number; n?: number; groups?: number; skipped?: string; error?: string }
 type Kind = "drag" | "landskap" | "tid" | "bergart";
 interface Asked { a: string; b: string; verdict: Answer["verdict"]; p: number }
 
@@ -52,6 +55,8 @@ const oneIn = (p: number) => {
 export const VERDICT: Record<Answer["verdict"], { label: string; style: string }> = {
   "håller": { label: "Håller", style: "bg-emerald-50 text-emerald-800 border-emerald-200" },
   "håller men inte justerat": { label: "Håller, men inte efter alla frågor", style: "bg-amber-50 text-amber-900 border-amber-200" },
+  "beror på ristarna": { label: "Beror på ristarna", style: "bg-amber-50 text-amber-900 border-amber-200" },
+  "kan vara platsen": { label: "Kan vara platsen", style: "bg-amber-50 text-amber-900 border-amber-200" },
   "bara i hela": { label: "Bara i hela korpusen", style: "bg-amber-50 text-amber-900 border-amber-200" },
   "ingen skillnad": { label: "Ingen säker skillnad", style: "bg-slate-100 text-slate-700 border-slate-300" },
   "för få": { label: "För få stenar", style: "bg-slate-100 text-slate-700 border-slate-300" },
@@ -164,7 +169,7 @@ export default function OwnQuestion() {
         </label>
         <button type="button" onClick={ask} disabled={busy || !opts}
           className="px-5 py-2 rounded-xl bg-slate-900 text-white text-sm font-bold disabled:opacity-50">
-          {busy ? "Räknar …" : "Pröva"}
+          {busy ? "Räknar … (några sekunder)" : "Pröva"}
         </button>
       </div>
       {opts && <p className="text-xs text-slate-500">{opts.variables.find(v => v.key === a)?.help} Talen i listan är stenar med draget av de stenar där det går att avgöra.</p>}
@@ -227,6 +232,8 @@ function Result({ d }: { d: Answer }) {
           <p className="text-slate-800 leading-relaxed">
             {d.verdict === "håller" && <>Ja. <strong>{d.a.label}</strong> är {more ? "vanligare" : "ovanligare"} <strong>{d.b.yes}</strong> än <strong>{d.b.no}</strong>, också när {HELD[d.b.adjusted] ?? d.b.adjusted} räknats bort, och mönstret håller i båda halvorna av socknarna.</>}
             {d.verdict === "håller men inte justerat" && <>Mönstret håller i båda halvorna av socknarna, men inte när de {d.n_questions} frågor du prövat under besöket räknas in. Behandla det som en ny hypotes att pröva på ett annat underlag.</>}
+            {d.verdict === "beror på ristarna" && <>Mönstret håller i båda halvorna av socknarna, men inte när ristaren räknas som slumpeffekt. Det bärs av några ristares vanor snarare än av något som gäller stenarna i stort.</>}
+            {d.verdict === "kan vara platsen" && <>Mönstret håller i båda halvorna av socknarna, men försvinner när stenarnas läge får forma en egen yta på kartan. Draget och jämförelsen hör hemma i samma trakter, och det kan vara trakten som gör skillnaden.</>}
             {d.verdict === "bara i hela" && <>Skillnaden syns i hela korpusen men inte i båda halvorna av socknarna. Den kan bero på några få socknar eller ristare och räknas inte som ett mönster.</>}
             {d.verdict === "ingen skillnad" && <>Ingen säker skillnad: när {HELD[d.b.adjusted] ?? d.b.adjusted} räknats bort skiljer sig andelarna inte mer än slumpen väl kan ge. Det betyder inte att draget är lika vanligt – bara att stenarna inte visar en skillnad.</>}
           </p>
@@ -264,6 +271,10 @@ function Result({ d }: { d: Answer }) {
                 {cc.holds ? " håller skillnaden fortfarande" : " håller skillnaden inte"} (p {pIs(cc.p)}).
               </li>
             )}
+            <RCheckLine label="Ristaren som slumpeffekt" tip={GLOSSARY["Ristaren som slumpeffekt"]} c={d.r_checks?.carver}
+              holds={d.r_checks?.carver_holds} available={d.r_checks?.available} more={more} />
+            <RCheckLine label="Platsen som yta" tip={GLOSSARY["Platsen som yta"]} c={d.r_checks?.place}
+              holds={d.r_checks?.place_holds} available={d.r_checks?.available} more={more} />
             {d.q != null && d.n_questions != null && d.n_questions > 1 && (
               <li>
                 <Tip text={GLOSSARY["Frågor under besöket"]}>Frågor under besöket</Tip>: det här är fråga {d.n_questions}; justerat för dem är q {pIs(d.q)}.
@@ -288,6 +299,22 @@ function Result({ d }: { d: Answer }) {
         Draget och jämförelsen kan också visas på <Link href="/karta" className="text-[#b7410e] hover:underline">kartan</Link>.
       </p>
     </div>
+  );
+}
+
+// One of the two checks in R, in plain words: the odds ratio, the interval, p, and whether it holds
+function RCheckLine({ label, tip, c, holds, available, more }: { label: string; tip?: string; c?: RCheck; holds?: boolean | null; available?: boolean; more: boolean }) {
+  if (available === false) {
+    return <li><Tip text={tip}>{label}</Tip>: kunde inte räknas (R saknas på datorn eller modellen gick inte att skatta).</li>;
+  }
+  if (!c) return null;
+  if (c.skipped) return <li><Tip text={tip}>{label}</Tip>: räknas inte för landskap, där platsen är själva jämförelsen.</li>;
+  if (c.error || c.or == null) return <li><Tip text={tip}>{label}</Tip>: modellen gick inte att skatta för den här frågan.</li>;
+  return (
+    <li>
+      <Tip text={tip}>{label}</Tip>: oddskvot {num(c.or)} (95 %: {num(c.ci?.[0])}–{num(c.ci?.[1])}), p {pIs(c.p)} –{" "}
+      {holds ? <>samma riktning, {more ? "vanligare" : "ovanligare"}, och under 0,05: håller.</> : <strong>håller inte.</strong>}
+    </li>
   );
 }
 

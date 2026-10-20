@@ -560,6 +560,27 @@ def stone(fp: str, signum: str, candidates: list[str], lang: str = "sv") -> dict
     return res
 
 
+def question(fp: str, rows: list[dict], kind: str) -> dict:
+    """Kontrollerna i R för Pröva en egen fråga (r/question.R): ristaren som slumpeffekt och platsen som yta. Cachade
+    per korpusversion, underlag och skript, så att samma fråga räknas en gång."""
+    cols = ["signum", "y", "x", "province", "epoch", "hand", "xk", "yk", "moved"]
+    buf = io.StringIO()
+    w = csv.DictWriter(buf, fieldnames=cols, lineterminator="\n")
+    w.writeheader()
+    for r in rows:
+        w.writerow({k: ("" if r.get(k) is None else r[k]) for k in cols})
+    data = buf.getvalue().encode("utf-8")
+    key = hashlib.sha256(data + kind.encode() + _scripts_hash(["question.R"]).encode()).hexdigest()[:12]
+    out_dir = os.path.join(CACHE_DIR, "question", fp, key)
+    path = os.path.join(out_dir, "question.json")
+    if not os.path.exists(path):
+        os.makedirs(out_dir, exist_ok=True)
+        with open(os.path.join(out_dir, "data.csv"), "wb") as fh:
+            fh.write(data)
+        run_module("question", {"data": os.path.join(out_dir, "data.csv"), "kind": kind}, out_dir, timeout=180)
+    return json.load(open(path, encoding="utf-8"))
+
+
 def landscape(fp: str, signum: str, uplift_m: float | None = None, lang: str = "sv") -> dict:
     """Landskapsanalysen av en sten (höjdmodell, strand, sikt, vägar); cachad per sten, landhöjning och språk."""
     d = JOB.directory(fp)

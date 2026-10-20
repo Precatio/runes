@@ -5,6 +5,14 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Pröva en egen fråga: kontroller i R och fler drag
+- Två kontroller i R för varje svar (`r/question.R`): **ristaren som slumpeffekt** (lme4) och **platsen som yta** över
+  kartan i stället för landskapsgränser (mgcv). Ett mönster som håller i halvorna men inte i den första märks *Beror på
+  ristarna*, i den andra *Kan vara platsen* – kors är till exempel ovanligare på sandsten, men det försvinner när
+  platsen får forma en yta. Svaret tar några sekunder och sparas per korpusversion.
+- 46 drag att välja i stället för 22: bönens ordval, Guð, stungen e/y/g, skiljetecknen, kortkvistrunor, England och
+  Grekland, kumbl, släkt- och hedersord, osäker ristare och förlorad sten (METHODS.md 1y).
+
 ### Multipel imputation av odaterade stenar: prövad, inte införd
 - Om de 1 313 runstenarna utan säker stilgrupp kunde tas med i tidsfrågorna genom multipel imputation (R-paketet
   mice, med och utan sannolikhetsmodellens språkdatering) prövades enligt en låst analysplan. Svaret blev nej:

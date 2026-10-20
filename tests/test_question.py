@@ -98,3 +98,30 @@ def test_shuffled_traits_rarely_pass(prep):
         if q.ask(shuffled, a, kind, key, carvers=False)["verdict"] in ("håller", "håller men inte justerat"):
             passed += 1
     assert passed <= 10
+
+
+def test_r_checks_can_only_lower_the_verdict():
+    base = {"verdict": "håller", "adjusted": {"direction": 1, "p": 0.001}}
+    ok = {"or": 2.0, "p": 0.001, "direction": 1}
+    assert q.apply_r(base, {"carver": ok, "place": ok})["verdict"] == "håller"
+    assert q.apply_r(base, {"carver": {**ok, "p": 0.2}, "place": ok})["verdict"] == "beror på ristarna"
+    assert q.apply_r(base, {"carver": ok, "place": {**ok, "direction": -1}})["verdict"] == "kan vara platsen"
+    assert q.apply_r(base, {"carver": ok, "place": {"skipped": "landskap"}})["verdict"] == "håller"
+    assert q.apply_r(base, None) == {**base, "r_checks": {"available": False}}
+    # a verdict that already failed is not changed by the checks
+    weak = {"verdict": "bara i hela", "adjusted": {"direction": 1, "p": 0.01}}
+    assert q.apply_r(weak, {"carver": {**ok, "p": 0.5}, "place": ok})["verdict"] == "bara i hela"
+
+
+@pytest.mark.skipif(not __import__("shutil").which("Rscript"), reason="R är inte installerat")
+def test_r_checks_find_the_place_behind_crosses_on_sandstone(prep, tmp_path, monkeypatch):
+    """Kors är ovanligare på sandsten (Mantel–Haenszel, båda halvorna, också med ristaren som slumpeffekt), men inte när
+    stenarnas läge får forma en egen yta: sandsten och färre kors hör hemma i samma trakter (r/question.R)."""
+    from src import r_bridge as rb
+    monkeypatch.setattr(rb, "CACHE_DIR", str(tmp_path))
+    r = q.ask(prep, "kors", "bergart", "sandsten")
+    assert r["verdict"] == "håller" and r["adjusted"]["direction"] == -1
+    checks = rb.question("test", q.r_rows(prep, "kors", "bergart", "sandsten"), "bergart")
+    out = q.apply_r(r, checks)
+    assert out["r_checks"]["carver_holds"] is True and out["r_checks"]["place_holds"] is False
+    assert out["verdict"] == "kan vara platsen"
