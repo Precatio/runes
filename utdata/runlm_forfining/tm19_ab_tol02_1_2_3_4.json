@@ -1,0 +1,142 @@
+{
+ "folds": [
+  1,
+  2,
+  3,
+  4
+ ],
+ "base": "mask4",
+ "new": "tol02",
+ "words": {
+  "inne i ord": {
+   "won": 8,
+   "lost": 2,
+   "n": 559
+  },
+  "helt ord": {
+   "won": 5,
+   "lost": 3,
+   "n": 559
+  }
+ },
+ "rune_top1": {
+  "won": 9,
+  "lost": 5
+ },
+ "sure_errors": {
+  "base": 16,
+  "new": 15
+ },
+ "won": [
+  [
+   "U 1127",
+   "letu",
+   "tu",
+   "let"
+  ],
+  [
+   "Ög 64",
+   "þessaR",
+   "is",
+   "þessaR"
+  ],
+  [
+   "DR 325",
+   "sigmundr",
+   "r",
+   "sigmundr"
+  ],
+  [
+   "DR 262",
+   "felaga",
+   "aka",
+   "felaga"
+  ],
+  [
+   "U 876",
+   "ulfR",
+   "ulfr",
+   "ulfR"
+  ],
+  [
+   "Sm 76",
+   "hakonaR",
+   "aR",
+   "hakonaR"
+  ],
+  [
+   "Sm SvS1973;4",
+   "ok",
+   "auk",
+   "ok"
+  ],
+  [
+   "Ög 97",
+   "þennsa",
+   "þ",
+   "þennsa"
+  ],
+  [
+   "U 333",
+   "ok",
+   "uk",
+   "ok"
+  ],
+  [
+   "DR 69",
+   "sten",
+   "stn",
+   "sten"
+  ],
+  [
+   "U 524",
+   "ræistu",
+   "ristu",
+   "ræistu"
+  ],
+  [
+   "Sm 37",
+   "þessi",
+   "þes",
+   "þessi"
+  ],
+  [
+   "U 786",
+   "biargi",
+   "ir",
+   "biargi"
+  ]
+ ],
+ "lost": [
+  [
+   "Ög 111",
+   "broður",
+   "broður",
+   "faður"
+  ],
+  [
+   "DR 314",
+   "resþi",
+   "resþi",
+   "resþu"
+  ],
+  [
+   "U 300",
+   "halfdan",
+   "halfdan",
+   "lifstæinn"
+  ],
+  [
+   "U 188",
+   "es",
+   "es",
+   "ok"
+  ],
+  [
+   "Sö 107",
+   "ræisti",
+   "ræisti",
+   "ræisþu"
+  ]
+ ]
+}

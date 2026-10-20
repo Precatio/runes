@@ -64,3 +64,13 @@ mindre än rank-null-andelen (≈ 39 missar per veck) antydde – varianterna n�
 rankade på P(runor | ord) × ordfrekvens, där λ-straffet läggs ovanpå) och konkurrerar i poängsättningen med
 <unk>-teckenmodellen. Det är en mekanikfråga, inte en λ-fråga, och ligger utanför den låsta planen: en ny plan
 krävs för att pröva t.ex. egen kvot för varianter (som namnkvoten i tm18) eller straff först i poängsättningen.
+
+## Utfall 2026-10-20: veck 1–4 med λ = 0,02 (planens punkt 3)
+
+559 + 559 luckor, parvis mot mask4 (textmodel-18): inne i ord 8 vunna / 2 förlorade (netto +6), hela ord 5 / 3
+(netto +2), runan rätt +9 / −5, fel bland svar ≥ 95 %: 16 → 15. Vunnet är lagrets avsedda fall – *sigmundr* ur
+*…r*, *hakonaR* ur *aR*, *felaga* ur *aka*, *þessaR*, *þennsa*, *sten* ur *stn*, *ræistu* ur *ristu* – förlorat är
+fyra ordbyten till vanligare ord (*broður* → *faður*, *halfdan* → *lifstæinn*, *es* → *ok*) och en böjning.
+Punkt 3 håller (båda slagen över noll, säkra fel inte fler). Effekten är liten: +8 av 1 118 luckor. Nästa steg
+enligt punkt 7: kalibreringens underlag regenereras med lagret, listkalibreringen skattas om och dok5 körs om;
+VERSION flyttas bara om dok5 ≥ 249 av 361 och ≥ 95 %-felen inte ökar.
