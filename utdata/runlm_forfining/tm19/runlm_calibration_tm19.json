@@ -1,0 +1,657 @@
+{
+ "dating_temperature": 1.7490062499999994,
+ "n": 2046,
+ "note": "Temperatur för dateringen ur språket (src/runlm.fit_temperature), skattad på dateringsprovet scripts/runlm_dating.py, 2026-10-15, med epokernas andel som förhandschans.",
+ "word_recal": {
+  "B": [
+   -3.269655269549514,
+   0.5546465717983554,
+   0.3371906751757064,
+   -0.11461419613034103,
+   1.2329234075528936,
+   0.035890176977003016
+  ],
+  "features": [
+   "1",
+   "logit(p)",
+   "log1p(frekvens för ordet, alla normaliseringar)",
+   "okänt i runtexterna (bara Eddan)",
+   "log(antal runor)",
+   "max(log P(stavning | ord), -12)"
+  ],
+  "target": "samma ord som Rundata (key)",
+  "n_words": 10702,
+  "n_inscriptions": 808,
+  "ece_raw": 0.08890598828882647,
+  "ece": 0.005034562242807173,
+  "config": {
+   "aligned": true,
+   "contexts": true,
+   "epoch": "inferred",
+   "medieval": false,
+   "adapt": 0.0,
+   "alpha": 100.0,
+   "kappa_e": 50.0,
+   "lm_beta": 200.0,
+   "levels": 5,
+   "epoch_lm": 1,
+   "lam_name": 0.05,
+   "lam_class": 0.2
+  },
+  "note": "Logistisk omräkning av ordens sannolikhet i läsningen (scripts/runlm_calibrate.py --write_recal, fem delar, 808 inskrifter med känt svar, 2026-10-16)."
+ },
+ "gap_recal": {
+  "B": [
+   -0.4438,
+   -1.7716,
+   -1.2376,
+   -1.6062,
+   0.6664,
+   0.7474,
+   0.7409,
+   0.2984,
+   -0.6488,
+   0.8884
+  ],
+  "top50": [
+   "a",
+   "and",
+   "at",
+   "biorn",
+   "bonda",
+   "bro",
+   "broþr",
+   "broþur",
+   "eft",
+   "eftir",
+   "en",
+   "faþur",
+   "gera",
+   "gerþi",
+   "goþan",
+   "guþ",
+   "hagva",
+   "han",
+   "hans",
+   "hialpi",
+   "i",
+   "kumbl",
+   "let",
+   "letu",
+   "lundi",
+   "merki",
+   "ok",
+   "resa",
+   "resti",
+   "restu",
+   "resþi",
+   "reta",
+   "risti",
+   "runar",
+   "sati",
+   "sin",
+   "sina",
+   "sten",
+   "stena",
+   "sun",
+   "sven",
+   "var",
+   "þansi",
+   "þena",
+   "þensa",
+   "þensi",
+   "þer",
+   "þesa",
+   "þesi",
+   "þorsten"
+  ],
+  "n": 632,
+  "documented": {
+   "n": 349,
+   "right": 0.693,
+   "ece_cv": 0.0249,
+   "brier_cv": 0.083,
+   "sure_cv": [
+    155,
+    0.987
+   ],
+   "runestones_only": true,
+   "constant": -1.1992,
+   "masked_constant": -0.7709,
+   "whole_word": 0.8884,
+   "source": "utdata/runlm_forfining/dok_egend"
+  },
+  "masked": {
+   "inside_word": {
+    "n": 694,
+    "right": 0.762,
+    "ece_cv": 0.0267,
+    "brier_cv": 0.0973,
+    "sure_cv": [
+     348,
+     0.96
+    ]
+   },
+   "whole_word": {
+    "n": 698,
+    "right": 0.597,
+    "ece_cv": 0.043,
+    "brier_cv": 0.1374,
+    "sure_cv": [
+     58,
+     0.966
+    ]
+   },
+   "source": "utdata/runlm_forfining/mask3",
+   "note": "judged at the masked level, against the masked words' own answers"
+  },
+  "ece_raw": 0.0314,
+  "ece_cv": 0.021,
+  "brier_raw": 0.0885,
+  "brier_cv": 0.0838,
+  "by_class": {
+   "formelord": {
+    "n": 351,
+    "right": 0.957,
+    "sure_raw": [
+     275,
+     0.985
+    ],
+    "sure_calibrated": [
+     275,
+     0.982
+    ]
+   },
+   "andra ord": {
+    "n": 90,
+    "right": 0.589,
+    "sure_raw": [
+     34,
+     0.971
+    ],
+    "sure_calibrated": [
+     29,
+     1.0
+    ]
+   },
+   "namn": {
+    "n": 149,
+    "right": 0.792,
+    "sure_raw": [
+     83,
+     0.976
+    ],
+    "sure_calibrated": [
+     55,
+     0.982
+    ]
+   },
+   "sammansatta namn": {
+    "n": 42,
+    "right": 0.524,
+    "sure_raw": [
+     10,
+     0.8
+    ],
+    "sure_calibrated": [
+     0,
+     null
+    ]
+   }
+  },
+  "source": "utdata/runlm_forfining/klass3_alla.json",
+  "note": "Ordet i en lucka, kalibrerat per ordklass (scripts/runlm_gap_calibrate.py); procenten gäller luckor av det dokumenterade slaget (documented)."
+ },
+ "gap_list": {
+  "theta": [
+   0.95518,
+   -0.18665,
+   -0.03763,
+   -0.42316,
+   0.79592,
+   0.68434,
+   0.64684,
+   0.72676,
+   -0.30773,
+   0.81674,
+   -0.55051,
+   0.56954,
+   0.62051,
+   0.66828,
+   0.17942,
+   0.00255,
+   0.22569,
+   -0.4432
+  ],
+  "classes": 4,
+  "kmax": 6,
+  "n": 2678,
+  "report": [
+   {
+    "label": "restored | runstenar | textmodel-16",
+    "n": 553,
+    "first_choice_right": 0.864376130198915,
+    "chosen_right": 0.840867992766727,
+    "ece": 0.08867836600410646,
+    "sure_n": 254,
+    "sure_right": 0.9960629921259843,
+    "bins": [
+     [
+      0.3,
+      0.458,
+      142
+     ],
+     [
+      0.663,
+      0.924,
+      79
+     ],
+     [
+      0.893,
+      0.949,
+      78
+     ],
+     [
+      0.989,
+      0.996,
+      254
+     ]
+    ]
+   },
+   {
+    "label": "restored | runstenar | ny (KV)",
+    "n": 553,
+    "first_choice_right": 0.864376130198915,
+    "chosen_right": 0.8607594936708861,
+    "ece": 0.07936822374100232,
+    "sure_n": 269,
+    "sure_right": 0.9962825278810409,
+    "bins": [
+     [
+      0.304,
+      0.512,
+      123
+     ],
+     [
+      0.685,
+      0.845,
+      71
+     ],
+     [
+      0.886,
+      0.944,
+      90
+     ],
+     [
+      0.99,
+      0.996,
+      269
+     ]
+    ]
+   },
+   {
+    "label": "documented | runstenar | textmodel-16",
+    "n": 358,
+    "first_choice_right": 0.6983240223463687,
+    "chosen_right": 0.723463687150838,
+    "ece": 0.023173416955858978,
+    "sure_n": 156,
+    "sure_right": 0.9871794871794872,
+    "bins": [
+     [
+      0.269,
+      0.298,
+      114
+     ],
+     [
+      0.648,
+      0.636,
+      44
+     ],
+     [
+      0.899,
+      0.977,
+      44
+     ],
+     [
+      0.993,
+      0.987,
+      156
+     ]
+    ]
+   },
+   {
+    "label": "documented | runstenar | ny (KV)",
+    "n": 358,
+    "first_choice_right": 0.6983240223463687,
+    "chosen_right": 0.7039106145251397,
+    "ece": 0.03681629297986852,
+    "sure_n": 162,
+    "sure_right": 0.9876543209876543,
+    "bins": [
+     [
+      0.284,
+      0.221,
+      95
+     ],
+     [
+      0.646,
+      0.538,
+      52
+     ],
+     [
+      0.893,
+      0.878,
+      49
+     ],
+     [
+      0.993,
+      0.988,
+      162
+     ]
+    ]
+   },
+   {
+    "label": "masked | runstenar | textmodel-16",
+    "n": 698,
+    "first_choice_right": 0.7650429799426934,
+    "chosen_right": 0.7535816618911175,
+    "ece": 0.03631351065803182,
+    "sure_n": 324,
+    "sure_right": 0.9598765432098766,
+    "bins": [
+     [
+      0.275,
+      0.303,
+      185
+     ],
+     [
+      0.646,
+      0.738,
+      84
+     ],
+     [
+      0.892,
+      0.924,
+      105
+     ],
+     [
+      0.988,
+      0.96,
+      324
+     ]
+    ]
+   },
+   {
+    "label": "masked | runstenar | ny (KV)",
+    "n": 698,
+    "first_choice_right": 0.7650429799426934,
+    "chosen_right": 0.7650429799426934,
+    "ece": 0.038032362942406014,
+    "sure_n": 335,
+    "sure_right": 0.9522388059701492,
+    "bins": [
+     [
+      0.259,
+      0.316,
+      158
+     ],
+     [
+      0.659,
+      0.653,
+      95
+     ],
+     [
+      0.898,
+      0.936,
+      110
+     ],
+     [
+      0.99,
+      0.952,
+      335
+     ]
+    ]
+   },
+   {
+    "label": "masked helt ord | runstenar | textmodel-16",
+    "n": 698,
+    "first_choice_right": 0.5959885386819485,
+    "chosen_right": 0.5974212034383954,
+    "ece": 0.05826351241843561,
+    "sure_n": 85,
+    "sure_right": 0.9294117647058824,
+    "bins": [
+     [
+      0.3,
+      0.261,
+      306
+     ],
+     [
+      0.674,
+      0.785,
+      177
+     ],
+     [
+      0.878,
+      0.915,
+      130
+     ],
+     [
+      0.979,
+      0.929,
+      85
+     ]
+    ]
+   },
+   {
+    "label": "masked helt ord | runstenar | ny (KV)",
+    "n": 698,
+    "first_choice_right": 0.5959885386819485,
+    "chosen_right": 0.6017191977077364,
+    "ece": 0.0433321058679514,
+    "sure_n": 77,
+    "sure_right": 0.935064935064935,
+    "bins": [
+     [
+      0.275,
+      0.274,
+      307
+     ],
+     [
+      0.67,
+      0.784,
+      185
+     ],
+     [
+      0.88,
+      0.922,
+      129
+     ],
+     [
+      0.978,
+      0.935,
+      77
+     ]
+    ]
+   },
+   {
+    "label": "svår maskering | runstenar (ingick inte) | textmodel-16",
+    "n": 697,
+    "first_choice_right": 0.4734576757532281,
+    "chosen_right": 0.43615494978479197,
+    "ece": 0.0315560893711612,
+    "sure_n": 105,
+    "sure_right": 0.9428571428571428,
+    "bins": [
+     [
+      0.26,
+      0.234,
+      453
+     ],
+     [
+      0.644,
+      0.608,
+      74
+     ],
+     [
+      0.877,
+      0.831,
+      65
+     ],
+     [
+      0.986,
+      0.943,
+      105
+     ]
+    ]
+   },
+   {
+    "label": "svår maskering | runstenar (ingick inte) | ny",
+    "n": 697,
+    "first_choice_right": 0.4734576757532281,
+    "chosen_right": 0.45911047345767575,
+    "ece": 0.033492597345434076,
+    "sure_n": 92,
+    "sure_right": 0.9347826086956522,
+    "bins": [
+     [
+      0.242,
+      0.255,
+      415
+     ],
+     [
+      0.64,
+      0.577,
+      111
+     ],
+     [
+      0.886,
+      0.81,
+      79
+     ],
+     [
+      0.987,
+      0.935,
+      92
+     ]
+    ]
+   },
+   {
+    "label": "svår maskering helt ord | runstenar (ingick inte) | textmodel-16",
+    "n": 675,
+    "first_choice_right": 0.09777777777777778,
+    "chosen_right": 0.08,
+    "ece": 0.2283515118656805,
+    "sure_n": 7,
+    "sure_right": 0.2857142857142857,
+    "bins": [
+     [
+      0.253,
+      0.044,
+      595
+     ],
+     [
+      0.635,
+      0.315,
+      54
+     ],
+     [
+      0.864,
+      0.474,
+      19
+     ],
+     [
+      0.974,
+      0.286,
+      7
+     ]
+    ]
+   },
+   {
+    "label": "svår maskering helt ord | runstenar (ingick inte) | ny",
+    "n": 675,
+    "first_choice_right": 0.09777777777777778,
+    "chosen_right": 0.07703703703703704,
+    "ece": 0.20640085918887663,
+    "sure_n": 5,
+    "sure_right": 0.2,
+    "bins": [
+     [
+      0.229,
+      0.045,
+      599
+     ],
+     [
+      0.64,
+      0.327,
+      55
+     ],
+     [
+      0.862,
+      0.375,
+      16
+     ],
+     [
+      0.976,
+      0.2,
+      5
+     ]
+    ]
+   }
+  ],
+  "top50": [
+   "a",
+   "and",
+   "at",
+   "biorn",
+   "bonda",
+   "bro",
+   "broþr",
+   "broþur",
+   "eft",
+   "eftir",
+   "en",
+   "faþur",
+   "gera",
+   "gerþi",
+   "goþan",
+   "guþ",
+   "hagva",
+   "han",
+   "hans",
+   "hialpi",
+   "i",
+   "kumbl",
+   "let",
+   "letu",
+   "lundi",
+   "merki",
+   "ok",
+   "resa",
+   "resti",
+   "restu",
+   "resþi",
+   "reta",
+   "risti",
+   "runar",
+   "sati",
+   "sin",
+   "sina",
+   "sten",
+   "stena",
+   "sun",
+   "sven",
+   "var",
+   "þansi",
+   "þena",
+   "þensa",
+   "þensi",
+   "þer",
+   "þesa",
+   "þesi",
+   "þorsten"
+  ],
+  "note": "Alla förslag i en lucka kalibrerade tillsammans (scripts/runlm_list_calibrate.py), på de dokumenterade luckornas nivå."
+ }
+}

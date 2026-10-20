@@ -74,3 +74,16 @@ fyra ordbyten till vanligare ord (*broður* → *faður*, *halfdan* → *lifstæ
 Punkt 3 håller (båda slagen över noll, säkra fel inte fler). Effekten är liten: +8 av 1 118 luckor. Nästa steg
 enligt punkt 7: kalibreringens underlag regenereras med lagret, listkalibreringen skattas om och dok5 körs om;
 VERSION flyttas bara om dok5 ≥ 249 av 361 och ≥ 95 %-felen inte ökar.
+
+## Utfall 2026-10-20 kväll: valideringståget (planens punkt 7) – textmodel-19 infört
+
+`tm19_pipeline.py` regenererade klass3 (848 rader), dok_alts, svart4 och mask4 (= tol02_f*) med λ = 0,02, skattade om
+listkalibreringen till `tm19/runlm_calibration_tm19.json` och körde dok5 om – allt i `tm19/`, den levande appen orörd
+under tiden. Dok5 på runstenar: **252 rätt av 361** (textmodel-18: 249), **2 fel bland 158 svar ≥ 95 %** (4), medel-p
+0,718 (0,713). Svåra maskeringen: 403 mot 407 rätt först, 30 mot 31 säkra fel av 163 mot 176 – oförändrad inom bruset.
+Kalibreringsfilen (ny KV): dokumenterade 162 svar ≥ 95 % rätt i 98,8 %, maskerade 335 i 95,2 %. Båda villkoren i
+punkt 7 håller → `textmodel.VERSION` = textmodel-19, `MODEL` får `tolerance=0.02, tol_max_rules=2`,
+`data/runlm_calibration.json` = tm19-filen (textmodel-18:s sparad som `.fore-tm19-2026-10-20`), `VALIDATION` ur
+`validering_tm19.py`: inne i ord 0,764 (0,755), hela ord 0,592 (0,587), säkra rätt 0,954 (0,951), dokumenterade
+0,698 (0,690). METHODS 8.1 har versionsnoten; bristposten `textmodel_tolerance` är ny. Blindtestet (textmodel-17)
+upprepas inte – engångsprov enligt protokollet. Nästa kandidat (ny plan krävs): egen kvot för varianter.

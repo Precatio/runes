@@ -167,6 +167,16 @@ LIMITATIONS = [
               "och ändå ha fel.",
      "needed": "Grammatisk kontroll (kasus och kongruens) och prövning mot luckor som fyllts i senare utgåvor eller "
                "med nya spår ur skanningar."},
+    {"key": "textmodel_tolerance", "contexts": {"textmodel"},
+     "title": "Modellen kan föreslå stavningar som inte är belagda",
+     "text": "Sedan textmodel-19 utökar modellen varje belagd stavning med regelgenererade varianter (slut-R, h-, "
+             "obetonad vokal, i/e/a, nasal före k/t/b, svarabhakti) till ett straff per regel. Det gör att ett ord kan "
+             "nås fast just den huggna stavningen saknas i korpusen, men ett förslag kan då vila på en stavning som ingen "
+             "sten har. Vinsten är liten – omkring en lucka på hundra i maskeringsprovet – och prövad på samma slags "
+             "luckor som resten av modellen.",
+     "short": "Ett förslag kan bygga på en regelgjord stavning som inte är belagd på någon sten.",
+     "needed": "Att varianten som ledde till förslaget visas, och att lagret prövas på öppna luckor som fylls i senare "
+               "utgåvor."},
     {"key": "software", "contexts": {"software", "grooves", "attribution", "comparison"},
      "title": "Programvaran är under utveckling",
      "text": "Mätmetoden har ändrats flera gånger (groove-1 till groove-5 under oktober 2026) efter att fel hittats. "

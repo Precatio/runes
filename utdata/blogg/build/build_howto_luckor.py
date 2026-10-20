@@ -30,7 +30,7 @@ assert PRIO[0]["carver"] == "Öpir 1" and PRIO[0]["inscriptions"] == 95
 UNINT, USTYLE = g["open_questions"]["uninterpreted"]["count"], g["open_questions"]["uncertain_style"]["count"]
 assert UNINT == 465 and USTYLE == 719
 tg = requests.get(f"{API}/api/research/gaps/textmodel", timeout=120).json()
-assert tg["available"] and tg["counts"]["candidates"] == 33 and tg["counts"]["stones"] == 23 and tg["counts"]["open"] == 175
+assert tg["available"] and tg["counts"]["candidates"] == 27 and tg["counts"]["stones"] == 21 and tg["counts"]["open"] == 175  # textmodel-19
 f = requests.post(f"{API}/api/research/findings", json={}, timeout=600).json()
 ORT = f["summary"]["by_method"]["ortografi"]
 assert ORT["stämmer"] == 182 and ORT["nytt"] == 53 and ORT["motsäger"] == 15

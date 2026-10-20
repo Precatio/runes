@@ -1,9 +1,10 @@
 """Sannolikhetsmodellens öppna luckor för Forskningsluckor (METHODS.md 14): de luckor Rundata lämnat oåterställda där
-modellens ifyllnad når minst 80 % och ordet är känt, ur den senaste luckinventeringen (scripts/runlm_gaps.py →
-utdata/Malt/runlm_luckor.json). Skriver data/textmodel_candidates.json, som appen serverar
-(GET /api/research/gaps/textmodel) och som ligger i git, eftersom utdata inte gör det.
-    .venv/bin/python scripts/runlm_gaps.py ...                 # inventeringen (tar tid)
-    .venv/bin/python scripts/textmodel_candidates.py           # kandidatlistan
+modellens ifyllnad når minst 80 % och ordet är känt, ur den senaste luckinventeringen (scripts/runlm_gaps.py).
+Sedan textmodel-19 är källan den gällande generationens klass3_alla.json (utdata/runlm_forfining/tm19/), som är
+samma inventering körd med appens inställningar (egna skiljetecken, namnkvot, toleranslager); utdata/Malt/
+runlm_luckor.json (2026-10-19) kördes med skriptets grundinställningar. Skriver data/textmodel_candidates.json, som
+appen serverar (GET /api/research/gaps/textmodel) och som ligger i git, eftersom utdata inte gör det.
+    .venv/bin/python scripts/textmodel_candidates.py [INVENTERING.json]
 """
 import datetime as dt
 import json
@@ -14,7 +15,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, ROOT)
 from src.textmodel import VERSION  # noqa: E402
 
-SRC = os.path.join(ROOT, "utdata", "Malt", "runlm_luckor.json")
+SRC = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "utdata", "runlm_forfining", "tm19", "klass3_alla.json")
 OUT = os.path.join(ROOT, "data", "textmodel_candidates.json")
 RUNDATA_VERSION = "Samnordisk runtextdatabas 3.1 (2018)"
 MIN_P = 0.8

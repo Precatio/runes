@@ -1,6 +1,7 @@
 """Valideringståget för textmodel-19-kandidaten (toleranslagret, λ = 0,02; analysplan_tm19.md punkt 7). Samma etapper
 som tm18_pipeline.py, men allt skrivs till utdata/runlm_forfining/tm19/ och kalibreringen till en egen fil, så att den
 levande appen (textmodel-18) inte rörs förrän beslutet är taget. src/textmodel.py patchas bara i arbetarprocesserna.
+Utfall 2026-10-20: dok5 252/361, 2 säkra fel → textmodel-19 infört; tm19/ är nu den gällande generationen (validering_tm19.py).
   1 klass3   utgivarnas luckor (scripts/runlm_gaps --tolerance), 5 parallellt, + klass3_alla
   2 dokalts  dokumenterade luckor för skattningen (runlm_documented_test med MODEL+tolerance, FILL+name_cands), 5 parallellt
   3 svart4   svåra maskeringsprovet (--hard --tolerance), 5 parallellt; mask4_f* är tol02_f* (redan körda)

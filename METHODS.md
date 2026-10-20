@@ -1035,6 +1035,25 @@ och anger för varje möjligt ord hur sannolikt det är, utan att använda någo
     155 luckor). `VALIDATION` räknas nu ur mask4-generationen av maskeringsprovet
     (`utdata/runlm_forfining/validering_tm18.py`); textmodel-17 publicerade mask3-generationens siffror, så talen är
     inte jämförbara ett mot ett.
+  * **Toleranslagret (2026-10-20, `textmodel-19`).** 194 av maskeringsprovets 354 missar var ord vars huggna
+    stavning inte fanns i träningsmaterialet (`utdata/runlm_forfining/tolerans_diagnos.md`). Nu utökas varje belagd
+    stavning med regelgenererade varianter – slut-R/r faller, h- läggs till eller faller, en obetonad vokal faller,
+    i/e/a skiftar, nasal faller före k/t/b, svarabhakti-i/u skjuts in; högst två regler per form – och en variant
+    poängsätts från sin källstavning i sitt sammanhang med straffet λ per regel (`Model(tolerance=λ)`,
+    `spelling_variants`). Analysplanen låstes innan några resultat fanns (`analysplan_tm19.md`, hash
+    `analysis_plan_tm19.sha256`, avsnitt 1x): λ valdes bland 0,02, 0,05 och 0,1 på veck 0 enbart (0,02 var det enda
+    över noll; 0,05 och 0,1 förlorade luckor), och veck 1–4 var provet: parvis mot textmodel-18 på samma 1 118 luckor
+    vann lagret 8 och förlorade 2 inne i ord, vann 5 och förlorade 3 hela ord, och felen bland svar ≥ 95 procent gick
+    från 16 till 15 – vunnet är lagrets avsedda fall (*sigmundr* ur *…r*, *hakonaR* ur *aR*, *ræistu* ur *ristu*),
+    förlorat är byten till vanligare ord (*broður* → *faður*). Hela kalibreringsunderlaget regenererades med lagret,
+    listkalibreringen skattades om och de dokumenterade luckorna kördes om (`tm19_pipeline.py`, allt i
+    `utdata/runlm_forfining/tm19/`): 252 rätt av 361 (textmodel-18: 249) och 2 fel bland 158 svar ≥ 95 procent (4).
+    Det svåra maskeringsprovet var oförändrat (403 mot 407 rätt först, 30 mot 31 säkra fel av 163 mot 176). Effekten
+    är alltså liten – omkring en lucka på hundra – men åt rätt håll och utan nya säkra fel, vilket var planens
+    villkor. `VALIDATION` räknas ur tm19-generationen (`validering_tm19.py`); textmodel-18:s underlag ligger kvar på
+    toppnivån i `utdata/runlm_forfining/`. Diagnosen kvarstår: varianterna når sällan kandidattaket och förlorar mot
+    teckenmodellen, så en egen kvot för varianter (som namnkvoten) är nästa kandidat och kräver en ny plan. Det
+    förregistrerade blindtestet (textmodel-17) upprepas inte: det var ett engångsprov enligt sitt protokoll.
   * **Alla förslag kalibreras tillsammans, och valet följer procenten (2026-10-17, `textmodel-17`).** Att bara
     kalibrera förstavalet gjorde ordningen i listan beroende av vilket ord som råkade stå först. Nu får varje förslag i
     en lucka poängen u = a_klass + b_klass · log p, förstavalet dessutom en konstant per klass (dess sannolikhet är för
