@@ -45,3 +45,22 @@ Som för tm18: fem vecks mask-utvärdering (A/B mot mask4), dok5 får inte backa
 räknas om, säkra fel får inte öka. Ingen del av lagret får aktiveras i skarp drift före det.
 Potential: rank-null är 194/808 ≈ 24 procentenheter av alla maskerade ord; även en partiell
 täckning är den största enskilda förbättringsytan som återstår.
+
+## Utfall 2026-10-20: λ-valet på veck 0 (analysplan_tm19.md, punkt 5)
+
+Lagret byggt i `runlm.Model(tolerance=λ)` (regler a–f, högst två per variant, varianter från stavningar med
+P(runor | ord) ≥ 0,05). Samma luckor som mask4 (textmodel-18), parvis per lucka, veck 0 (139 + 139 luckor):
+
+| λ | inne i ord vunna/förlorade | helt ord vunna/förlorade | runan rätt | fel bland ≥ 95 % |
+|---|---|---|---|---|
+| 0,02 | 0 / 0 | 1 / 0 | +1 / −0 | 4 → 4 |
+| 0,05 | 0 / 2 | 2 / 2 | +3 / −2 | 4 → 4 |
+| 0,1 | 0 / 4 | 2 / 3 | +3 / −4 | 4 → 4 |
+
+Vunnet: U 1018 *sinn* (hugget *sn*, vokalbortfall), U 1087 *syni* (*suni*, y/u). Förlorat vid högre λ: varianter av
+vanligare ord tränger undan rätt ord (*bofi* → *tofi*, *bonda* → *faður*, *satti* → *retti*, *let* → *retta*).
+Enligt planen väljs 0,02 (enda λ över noll) och prövas på veck 1–4. Förväntan: nära noll. Räckvidden är mycket
+mindre än rank-null-andelen (≈ 39 missar per veck) antydde – varianterna når sällan kandidatgränsen (n_cands = 100,
+rankade på P(runor | ord) × ordfrekvens, där λ-straffet läggs ovanpå) och konkurrerar i poängsättningen med
+<unk>-teckenmodellen. Det är en mekanikfråga, inte en λ-fråga, och ligger utanför den låsta planen: en ny plan
+krävs för att pröva t.ex. egen kvot för varianter (som namnkvoten i tm18) eller straff först i poängsättningen.

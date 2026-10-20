@@ -1,0 +1,85 @@
+{
+ "folds": [
+  0
+ ],
+ "base": "mask4",
+ "new": "tol1",
+ "words": {
+  "inne i ord": {
+   "won": 0,
+   "lost": 4,
+   "n": 139
+  },
+  "helt ord": {
+   "won": 2,
+   "lost": 3,
+   "n": 139
+  }
+ },
+ "rune_top1": {
+  "won": 3,
+  "lost": 4
+ },
+ "sure_errors": {
+  "base": 4,
+  "new": 4
+ },
+ "won": [
+  [
+   "U 1018",
+   "sinn",
+   "sn",
+   "sinn"
+  ],
+  [
+   "U 1087",
+   "syni",
+   "suni",
+   "syni"
+  ]
+ ],
+ "lost": [
+  [
+   "Sm 69",
+   "satti",
+   "satti",
+   "retti"
+  ],
+  [
+   "DR 390",
+   "bofi",
+   "bofi",
+   "tofi"
+  ],
+  [
+   "Sö 276",
+   "þaun",
+   "þau",
+   "þæiR"
+  ],
+  [
+   "Ög 166",
+   "farulf",
+   "farulf",
+   "farulfR"
+  ],
+  [
+   "U 478",
+   "bonda",
+   "bonda",
+   "faður"
+  ],
+  [
+   "U 1023",
+   "fasta",
+   "fasta",
+   "fasti"
+  ],
+  [
+   "U 352",
+   "let",
+   "let",
+   "retta"
+  ]
+ ]
+}
