@@ -1,0 +1,19 @@
+{
+ "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
+ "items": [
+  {
+   "id": "prova-en-egen-fraga",
+   "date": "2026-10-20",
+   "status": "nytt",
+   "title": "Pröva en egen fråga",
+   "text": "Under Statistik kan du nu ställa en egen fråga till Sveriges 2 321 vikingatida runstenar: är ett drag – en bön, en stavning, ett kors – vanligare i ett visst landskap, efter en viss tid, på en viss bergart eller tillsammans med ett annat drag? Svaret räknas med samma krav som appens övriga statistik. Landskap och tid hålls konstanta, ett mönster räknas bara om det syns i båda halvorna av socknarna, och den som ställer många frågor får se vad det kostar. Ingen fri text och ingen AI."
+  },
+  {
+   "id": "spara-som-fynd",
+   "date": "2026-10-20",
+   "status": "nytt",
+   "title": "Spara som fynd",
+   "text": "Ett svar som du vill komma ihåg kan sparas med en anteckning om vilken hypotes du prövade. De sparade frågorna samlas under Forskningsluckor, med siffrorna som de var när du sparade dem och en knapp som räknar om dem på databasen som den är nu. Ett svar på en egen fråga är en hypotes, och appen säger det: beläggen räknas som högst måttliga tills frågan har prövats enligt en analysplan."
+  }
+ ]
+}

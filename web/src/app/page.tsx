@@ -13,7 +13,9 @@ import type { BlogPost } from "@/components/BlogBody";
 import { getPost, listPosts } from "@/lib/articles";
 import { featuredFirst } from "@/lib/featured";
 import { pictures } from "@/lib/blogSeo";
-import { AUTHORS, CONTACT_PATH, DOCS_URL, DOWNLOAD_URL, GITHUB_URL, METHODS_URL, SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
+import { AUTHORS, CONTACT_PATH, DOCS_URL, DOWNLOAD_URL, GITHUB_URL, METHODS_URL, NEWS_PATH, SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
+import NewsList from "@/components/NewsList";
+import { NEWS } from "@/lib/news";
 
 // The newest articles are fetched again at most every five minutes, and at once when one is published (tag "blog")
 export const revalidate = 60;
@@ -455,6 +457,22 @@ export default async function LandingPage() {
           <ArticleTeasers posts={articles.posts} photo={articles.photo} />
         </div>
       </section>
+
+      {/* News: new features in the app and what is under way, the latest two (all at /nyheter) */}
+      {NEWS.length > 0 && (
+        <section id="nyheter" className="scroll-mt-16">
+          <div className="max-w-6xl mx-auto px-6 pt-16 pb-4">
+            <div className="flex flex-wrap items-baseline justify-between gap-3 mb-6">
+              <div>
+                <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e] mb-2">Nyheter</div>
+                <h2 className="text-2xl md:text-3xl font-serif font-bold tracking-tight">Nytt i Vitki</h2>
+              </div>
+              <Link href={NEWS_PATH} className="text-sm font-bold text-[#9a350b] hover:underline">Alla nyheter →</Link>
+            </div>
+            <NewsList items={NEWS.slice(0, 2)} compact />
+          </div>
+        </section>
+      )}
 
       {/* What R is, for readers from the humanities */}
       <section id="r" className="scroll-mt-16">

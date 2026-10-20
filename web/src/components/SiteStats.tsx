@@ -19,7 +19,7 @@ type Call = (path: string, init?: RequestInit) => Promise<any>; // eslint-disabl
 
 // The start page's sections (their id in app/page.tsx)
 const SECTIONS: Record<string, string> = {
-  artiklar: "Artiklar", r: "Vad är R?", forskning: "För forskningen", appen: "Så ser Vitki ut (skärmbilder)",
+  artiklar: "Artiklar", nyheter: "Nyheter", r: "Vad är R?", forskning: "För forskningen", appen: "Så ser Vitki ut (skärmbilder)",
   nytt: "Vad är nytt", landskap: "Stenarna i sitt landskap", kallor: "Källor", oppen: "Öppen källkod",
   om: "Om grundaren och licens", "kom-igang": "Kör Vitki (och röstningen)",
 };

@@ -5,6 +5,11 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Nyheter på webbplatsen
+- vitkirunor.se har en nyhetsmodul: rutan **Nytt i Vitki** på startsidan med de senaste notiserna och sidan
+  **/nyheter** med alla, länkad från sidhuvudet och sidfoten och med i sajtkartan. Notiserna skrivs i
+  `web/content/news.json` (status *nytt* eller *på gång*). De första handlar om Pröva en egen fråga och Spara som fynd.
+
 ### Fynd vi redan skrivit om
 - R-mönster som det finns en artikel eller ett utkast om märks **Artikel ✓** (länk till artikeln) eller **Utkast
   skrivet** på Statistik och i Forskningsluckor, och knappen *Dölj de vi skrivit om* tar bort dem ur listorna med ett

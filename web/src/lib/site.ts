@@ -22,9 +22,10 @@ export const DOCS_URL = `${GITHUB_URL}#readme`;
 // While the app runs locally (next dev), its own pages are a click away; never on the public website
 export const SHOW_LOCAL_APP = process.env.NODE_ENV === "development" && !PUBLIC_SITE;
 
-/** The paths that exist on the public website: the start page, the articles and their figures, and the contact page. */
-export const isPublicPath = (href: string) => /^\/(?:$|[#?]|artiklar(?:[/?#]|$)|kontakt(?:[/?#]|$)|api\/blog\/figures\/)/.test(href);
+/** The paths that exist on the public website: the start page, the articles and their figures, the news and the contact page. */
+export const isPublicPath = (href: string) => /^\/(?:$|[#?]|artiklar(?:[/?#]|$)|nyheter(?:[/?#]|$)|kontakt(?:[/?#]|$)|api\/blog\/figures\/)/.test(href);
 export const CONTACT_PATH = PUBLIC_SITE ? "/kontakt/" : "/kontakt";
+export const NEWS_PATH = PUBLIC_SITE ? "/nyheter/" : "/nyheter";
 
 // The contact form's receiver. The website is static, so FormSubmit (no account) emails the message on. The form is
 // activated, and FormSubmit's random alias stands in for the founder's email address, so the address is not in the page.

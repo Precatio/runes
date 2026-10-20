@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { listPosts } from "@/lib/articles";
 import { ARTICLES_PATH, EN_ARTICLES_PATH, enPostUrl, postUrl, sharePath } from "@/lib/blogSeo";
-import { CONTACT_PATH, PUBLIC_SITE, SITE_URL } from "@/lib/site";
+import { CONTACT_PATH, NEWS_PATH, PUBLIC_SITE, SITE_URL } from "@/lib/site";
 
 // The public pages, and every published article in Swedish and English (with hreflang pairs); refreshed every
 // five minutes. The public website (NEXT_PUBLIC_SITE_MODE=public) has only the start page, the articles and the
@@ -13,9 +13,9 @@ const PAGES: [string, MetadataRoute.Sitemap[number]["changeFrequency"], number][
   ["/", "weekly", 1], [ARTICLES_PATH, "weekly", 0.9], [EN_ARTICLES_PATH, "weekly", 0.7],
   ["/karta", "monthly", 0.8], ["/inskrifter", "monthly", 0.8],
   ["/statistik", "monthly", 0.7], ["/luckor", "monthly", 0.7], ["/oversikt", "monthly", 0.6],
-  ["/docs", "monthly", 0.5], ["/start", "monthly", 0.5], [CONTACT_PATH, "yearly", 0.3],
+  ["/docs", "monthly", 0.5], ["/start", "monthly", 0.5], [NEWS_PATH, "weekly", 0.5], [CONTACT_PATH, "yearly", 0.3],
 ];
-const PUBLIC_PAGES = new Set(["/", ARTICLES_PATH, EN_ARTICLES_PATH, CONTACT_PATH]);
+const PUBLIC_PAGES = new Set(["/", ARTICLES_PATH, EN_ARTICLES_PATH, NEWS_PATH, CONTACT_PATH]);
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const pages = PAGES.filter(([path]) => !PUBLIC_SITE || PUBLIC_PAGES.has(path))
