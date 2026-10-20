@@ -89,6 +89,10 @@ const APP_VIEWS = [
     text: "Alla 6 753 inskrifter i Samnordisk runtextdatabas, sökbara på text, plats, period, stilgrupp och ristare. Varje sökning kan laddas ner som tabell, med källan angiven, och på stenens sida står Runor 2020 bredvid Rundata 2018 där utgåvorna skiljer sig.",
   },
   {
+    src: "/bilder/app-modell.webp", title: "Sannolikhetsmodellen",
+    text: "Läser de huggna runorna utan att se Rundatas tolkning av just den stenen, fyller i förlorade runor med kalibrerade procent och daterar texten ur språket. Här Sö 206: i namnet med en förlorad runa väger modellen Hrungnir mot Roðnir, och den som ser ett spår i skanningen kan ange det runa för runa.",
+  },
+  {
     src: "/bilder/app-statistik.webp", title: "Statistiken i R",
     text: "Tolv statistiska analyser i R: ristare med och utan namn, kluster, dialekter, ordförråd, datering, förändring över tid, fornlämningar och ortnamn. Varje resultat redovisar hur säkert det är – prövat på stenar modellen inte sett och mot vad enbart bergarten skulle gissa – och kan laddas ner som ett paket med skript och data.",
   },

@@ -15,6 +15,8 @@ VIEWS = [
     ("statistik", "/statistik", "Vad statistiken säger sammantaget"),
     ("luckor", "/luckor", "Luckor i texten"),
     ("stenoversikt", "/oversikt", "Hur väl stöder metoderna Rundatas ristare"),
+    # Sannolikhetsmodellens läsning av Sö 206 (samma sten som Så gör du-artikeln om inskrifterna), med en lucka öppnad
+    ("modell", "/inskrifter?signum=S%C3%B6%20206", "Läsning och luckor"),
 ]
 
 with sync_playwright() as p:
@@ -28,6 +30,16 @@ with sync_playwright() as p:
         pg.get_by_text(wait_text).first.wait_for(timeout=300000)
         if name == "karta":
             pg.get_by_text("Kristna markörer", exact=True).first.click()
+        if name == "modell":
+            pg.get_by_role("button", name="Läs med sannolikhetsmodellen").click()
+            pg.get_by_text("Hur säker är modellen?").first.wait_for(timeout=300000)  # läsningen klar
+            pg.wait_for_timeout(1500)
+            btn = pg.get_by_role("button", name="Ange vad som syns")
+            if btn.count():
+                btn.first.click()
+                pg.wait_for_timeout(1500)
+            pg.get_by_role("heading", name="Läsning och luckor").first.evaluate("el => el.scrollIntoView({block: 'start'})")
+            pg.evaluate("window.scrollBy(0, -24)")
         pg.wait_for_timeout(4000)
         png = pg.screenshot()
         im = Image.open(io.BytesIO(png)).convert("RGB")
