@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import type { Significance } from "./Explain";
+import { patternKey, usePatternArticles, useHideWritten } from "@/lib/patternArticles";
 
 // A corpus pattern from the R analyses (src/r_findings.py)
 export interface Pattern {
@@ -62,6 +64,37 @@ export function PatternBadges({ pt }: { pt: Pattern }) {
           liten effekt
         </span>
       )}
+      <ArticleBadge pt={pt} />
     </>
+  );
+}
+
+/** The article (or draft) written about the pattern, linked; nothing when there is none. */
+export function ArticleBadge({ pt }: { pt: Pattern }) {
+  const articles = usePatternArticles()[patternKey(pt)] ?? [];
+  const pill = "px-2 py-0.5 rounded-lg border text-[11px] font-bold whitespace-nowrap border-[#b7410e]/30 bg-[#b7410e]/5 text-[#9a350b]";
+  return (
+    <>
+      {articles.map(a => a.published ? (
+        <Link key={a.slug} href={`/artiklar/${a.slug}`} className={`${pill} hover:underline`} title={`Artikel: ${a.title}`}>
+          Artikel ✓
+        </Link>
+      ) : (
+        <span key={a.slug} className={pill} title={`Utkast (opublicerat): ${a.title}`}>Utkast skrivet</span>
+      ))}
+    </>
+  );
+}
+
+/** One click to hide the patterns we have already written about; the choice applies on every page that lists them. */
+export function HideWrittenToggle({ written }: { written: number }) {
+  const [hide, setHide] = useHideWritten();
+  if (!written) return null;
+  return (
+    <button type="button" onClick={() => setHide(!hide)} aria-pressed={hide}
+      className={`px-3 py-1.5 rounded-xl border text-xs font-bold ${hide ? "bg-[#b7410e] border-[#b7410e] text-white" : "bg-white border-slate-300 text-[#9a350b] hover:bg-[#b7410e]/5"}`}
+      title="Mönster som vi redan skrivit en artikel eller ett utkast om. Valet gäller både Statistik och Forskningsluckor.">
+      {hide ? `Visa de vi skrivit om (${written})` : `Dölj de vi skrivit om (${written})`}
+    </button>
   );
 }

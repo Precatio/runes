@@ -5,6 +5,12 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Fynd vi redan skrivit om
+- R-mönster som det finns en artikel eller ett utkast om märks **Artikel ✓** (länk till artikeln) eller **Utkast
+  skrivet** på Statistik och i Forskningsluckor, och knappen *Dölj de vi skrivit om* tar bort dem ur listorna med ett
+  klick; valet gäller båda sidorna. Kopplingen är artikelns ämne (som Månadens fynd sparar det) eller
+  `data/article_patterns.json` (`GET /api/r/pattern-articles`).
+
 ### Pröva en egen fråga
 - Statistik (R) har kortet **Pröva en egen fråga**: välj ett drag (tro, skrift, innehåll, ristare) och jämför med ett
   annat drag, ett landskap, en tidsgräns eller en bergart. Svaret är justerat för landskap och tid (Mantel–Haenszel),

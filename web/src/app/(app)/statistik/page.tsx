@@ -3,12 +3,13 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { DocsNote } from "@/components/KnownLimitations";
 import { Confidence, Details, Figure, Glossary, LEVEL_STYLE, Md, SigBadge, Tip, asList, type Level } from "@/components/Explain";
-import { PatternBadges, PatternBody, type Pattern } from "@/components/PatternCard";
+import { PatternBadges, PatternBody, type Pattern, HideWrittenToggle } from "@/components/PatternCard";
 import { GLOSSARY } from "@/lib/glossary";
 import Link from "next/link";
 import { API_URL } from "@/lib/api";
 import ExportTable from "@/components/ExportTable";
 import OwnQuestion from "@/components/OwnQuestion";
+import { useWrittenFilter } from "@/lib/patternArticles";
 import PlotlyGraph from "@/components/PlotlyGraph";
 
 interface Status {
@@ -200,8 +201,10 @@ const TOPIC: Record<string, string> = {
 
 // The answer first: question, why it matters, the key number, the answer, a suggested interpretation and its limits
 function SectionIntro({ section, patterns = [] }: { section?: Section; patterns?: Pattern[] }) {
+  const { shown, written } = useWrittenFilter(patterns);
   if (!section) return null;
-  const tests = patternsFor(patterns, section.key);
+  const tests = patternsFor(shown, section.key);
+  const writtenHere = patternsFor(patterns, section.key).length - tests.length;
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -234,7 +237,11 @@ function SectionIntro({ section, patterns = [] }: { section?: Section; patterns?
       </div>
       {tests.length > 0 && (
         <div className="rounded-2xl bg-white border border-slate-200 p-5">
-          <h4 className="font-bold text-slate-900 mb-1">Statistiska test i den här delen</h4>
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+            <h4 className="font-bold text-slate-900">Statistiska test i den här delen</h4>
+            {written > 0 && <HideWrittenToggle written={written} />}
+          </div>
+          {writtenHere > 0 && <p className="text-xs text-slate-500 mb-1">{writtenHere} resultat som vi redan skrivit om är dolda.</p>}
           <p className="text-xs text-slate-500 mb-3">
             {tests.filter(t => t.significance?.significant).length} av {tests.length} resultat är statistiskt signifikanta
             (<Tip text={GLOSSARY["Statistiskt signifikant"]}>vad betyder det?</Tip>).
@@ -496,6 +503,8 @@ function SignificantBox({ patterns, onOpen }: { patterns: Pattern[]; onOpen: (t:
 
 function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void }) {
   const s = data.findings_summary;
+  // The patterns we have already written an article or draft about can be hidden with one click (PatternCard.tsx)
+  const { shown: patterns, written, hide } = useWrittenFilter(data.patterns);
   const top = data.findings.filter(f => f.verdict !== "stämmer").slice(0, 25);
   const groups: [string, string, string[]][] = [
     ["Stämmer med det forskningen redan utgår från", "Ett tecken på att metoderna fungerar.", ["bekräftar"]],
@@ -515,7 +524,14 @@ function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void }) 
         </section>
       )}
 
-      <SignificantBox patterns={data.patterns} onOpen={onOpen} />
+      {written > 0 && (
+        <div className="flex flex-wrap items-center gap-3 text-sm text-slate-600">
+          <HideWrittenToggle written={written} />
+          <span>{hide ? `${written} mönster som vi redan skrivit artiklar eller utkast om är dolda.` : "Mönster som vi redan skrivit om är märkta Artikel ✓ eller Utkast skrivet."}</span>
+        </div>
+      )}
+
+      <SignificantBox patterns={patterns} onOpen={onOpen} />
 
       <section>
         <h3 className="text-xl font-bold text-slate-900 mb-1">Frågorna i korthet</h3>
@@ -565,7 +581,7 @@ function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void }) 
         <p className="text-sm text-slate-600 mb-4">De enskilda resultaten bakom sammanfattningen, sorterade efter vad de betyder för forskningen.</p>
         <div className="space-y-5">
           {groups.map(([title, help, statuses]) => {
-            const items = data.patterns.filter(pt => statuses.includes(pt.status));
+            const items = patterns.filter(pt => statuses.includes(pt.status));
             if (!items.length) return null;
             return (
               <div key={title}>

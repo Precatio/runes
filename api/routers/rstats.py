@@ -123,6 +123,34 @@ def findings() -> tuple[list[dict], list[dict]]:
     return _with_crosscheck(stone), patterns
 
 
+@router.get("/pattern-articles")
+def pattern_articles():
+    """Artiklarna (och utkasten) som skrivits om R-mönstren, per mönster ("ämne|nyckel", src/blog_topics.topic_key): en
+    artikel hör till ett mönster när dess ämne är mönstrets nyckel, som Månadens fynd sparar det, eller när
+    data/article_patterns.json kopplar dem. Statistik och Forskningsluckor märker mönstren och kan dölja dem."""
+    import json
+    from api.routers import blog
+    path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "data",
+                        "article_patterns.json")
+    try:
+        extra = {k: v for k, v in json.load(open(path, encoding="utf-8")).items() if not k.startswith("_")}
+    except (OSError, ValueError):
+        extra = {}
+    out: dict[str, list[dict]] = {}
+    try:
+        posts = blog._all()
+    except Exception:  # noqa: BLE001 – without Firestore the patterns are simply not marked
+        posts = []
+    for p in posts:
+        keys = set(extra.get(p.get("slug") or "", []))
+        if "|" in (p.get("topic") or ""):
+            keys.add(p["topic"])
+        for k in keys:
+            out.setdefault(k, []).append({"title": p.get("title") or "", "slug": p.get("slug") or "",
+                                          "published": bool(p.get("published"))})
+    return {"articles": out}
+
+
 @router.post("/crosscheck")
 def run_crosscheck(limit: int = 400):
     """Stämmer av appens förslag (nya och motsägande) mot Runor 2020 (RAÄ) och Wikidata. Hämtar det som inte är

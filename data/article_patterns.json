@@ -1,0 +1,4 @@
+{
+ "_om": "Artiklar som handlar om ett R-mönster utan att artikelns ämne (topic) är mönstrets nyckel. Nyckel = artikelns slug, värde = mönstrens 'ämne|nyckel' (src/blog_topics.topic_key). Artiklar vars ämne redan är mönstrets nyckel (Månadens fynd sparar det så) behöver inte stå här. Används av GET /api/r/pattern-articles.",
+ "mojliga-ristare-utan-namn": ["Okända ristare|anonymous"]
+}

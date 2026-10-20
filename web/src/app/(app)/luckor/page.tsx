@@ -3,7 +3,7 @@
 import { Fragment, cloneElement, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Answer, InfoTip, PageIntro, QuestionCards, SigBadge, Tip, type AnswerProps, type Significance } from "@/components/Explain";
-import { PatternBadges, PatternBody, type Pattern } from "@/components/PatternCard";
+import { PatternBadges, PatternBody, type Pattern, HideWrittenToggle } from "@/components/PatternCard";
 import { GLOSSARY } from "@/lib/glossary";
 import { API_URL } from "@/lib/api";
 import { corpus } from "@/lib/corpus";
@@ -13,6 +13,7 @@ import { SIMILARITY_HELP, fmtP } from "@/lib/significance";
 import { DocsNote } from "@/components/KnownLimitations";
 import ExportTable from "@/components/ExportTable";
 import SavedQuestions from "@/components/SavedQuestions";
+import { useWrittenFilter } from "@/lib/patternArticles";
 
 interface ProvinceRow {
   code: string; name: string; axelson: boolean; total: number; carver: number; style: number; dated: number;
@@ -673,7 +674,8 @@ const PATTERN_GROUPS: { key: string; label: string; statuses: string[]; accent: 
     help: "Cirkulära jämförelser och det metoden eller datan inte klarar." },
 ];
 
-function PatternsBox({ patterns }: { patterns: RPattern[] }) {
+function PatternsBox({ patterns: all }: { patterns: RPattern[] }) {
+  const { shown: patterns, written } = useWrittenFilter(all);
   const [group, setGroup] = useState("");
   const [onlySig, setOnlySig] = useState(false);
   const [showAll, setShowAll] = useState(false);
@@ -710,6 +712,7 @@ function PatternsBox({ patterns }: { patterns: RPattern[] }) {
           className={`px-3 py-1.5 rounded-xl border text-xs font-bold ${onlySig ? "bg-emerald-700 border-emerald-700 text-white" : "bg-white border-slate-300 text-emerald-800 hover:bg-emerald-50"}`}>
           ✓ Statistiskt signifikanta {nSig}
         </button>
+        <HideWrittenToggle written={written} />
       </div>
       <p className="text-xs text-slate-500 mb-3 max-w-4xl">
         Tre frågor per mönster: <strong>är det statistiskt signifikant</strong> (grönt märke), <strong>håller det i båda
