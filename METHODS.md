@@ -271,6 +271,19 @@ samma ordlistor som `src/geology.FAMILIES`) träffar 19 % – samma som att allt
 Modellens träff kommer alltså inte från bergarten, till skillnad från huggspårsmåtten (avsnitt 13), där bergarten
 ensam träffar lika bra som måtten. Resultatet står i `attribution.json` (`material`) och i Statistik.
 
+**"Kanske någon annan" (från 2026-10-20).** Modellen känner bara de 18 ristarna med minst 8 säkra stenar, så en sten av
+någon annan får ändå ett av deras namn. Den säger därför *kanske någon annan* när förstavalets sannolikhet är under en
+gräns. Okända ristare efterliknas genom att varje ristare i tur och ordning lämnas utanför: en modell tränad på de
+andras alla stenar gissar på den utelämnades. Gränsen väljs så att (andelen sådana stenar som flaggas) + (andelen
+kända stenar som inte flaggas) − 1 blir störst, där de kända stenarnas sannolikheter är de korsvaliderade. Resultat
+(korpusversion 5ebd6df1627127fd): gränsen blev 0,35; 80 % av de utelämnade ristarnas stenar flaggas, men också 41 % av
+de kända ristarnas, och där modellen ger ett namn är det rätt i 87 % (mot 73 % för alla). Prövat på stenar som inte
+användes när gränsen valdes – 139 stenar av 62 ristare med färre än 8 säkra stenar, inom 25 km från en träningssten –
+flaggas 71 %. Medianen för förstavalet är 0,26 för dem och 0,39 för de kända. Under gränsen kan modellen alltså inte
+skilja en okänd ristare från en sten den bara är osäker på, och flaggan betyder *kanske* någon annan. 608 av 923
+förslag för stenar utan säker ristare får flaggan; i Forskningsluckor visas bara förslag utan flagga, och stenrapporten
+säger till när förstavalet ligger under gränsen. Resultatet står i `attribution.json` (`open_set`).
+
 **Resultat i korpusen (beräkning 2026-10-05).** Attribueringsmodellen hittar rätt ristare i 72 % av fallen
 (87 % bland de tre främsta) mot 19 % om man alltid gissar på den vanligaste; språk och innehåll ensamt ger 60 %,
 geografi ensamt 44 %. Sannolikheterna är försiktiga: vid minst 0,5 är förstavalet rätt i 93 % av fallen. 24 av 29

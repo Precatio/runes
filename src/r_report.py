@@ -82,6 +82,9 @@ def attribution_blocks(r: dict, signum: str, fig, tab) -> list:
                 "Sannolikheten är låg; vid så låga värden är modellens förstaval osäkra.")
         if not m.get("in_range"):
             txt += f" Stenen ligger mer än {m['near_limit_km']} km från närmaste träningssten, så förslaget är svagt."
+        if m.get("someone_else"):
+            txt += (f" Förstavalet ligger under gränsen {_d(m['threshold'])}, där modellen hellre säger *kanske någon annan*: "
+                    "stenen liknar ingen av modellens ristare tillräckligt, och ristaren kan vara en annan.")
         out.append(p(txt + " Sannolikheterna gäller under antagandet att ristaren är en av modellens ristare."))
         png = _png(r.get("figure_dir"), (r.get("figures") or {}).get("model"))
         if png:

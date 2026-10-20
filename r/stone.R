@@ -53,7 +53,9 @@ if (has("attribution_model.rds")) {
     candidates = lapply(cands, function(cn) list(carver = cn, p = if (cn %in% M$levels) r3(probs[[cn]]) else NA,
                                                  in_model = cn %in% M$levels,
                                                  rank = if (cn %in% M$levels) which(M$levels[o] == cn) else NA)),
-    rundata_carver = if (!is.na(row$carver)) row$carver else NULL
+    rundata_carver = if (!is.na(row$carver)) row$carver else NULL,
+    # "Någon annan": the first choice is below the threshold where the model is more often facing a carver it does not know
+    threshold = M$threshold, someone_else = if (is.null(M$threshold)) NULL else max(probs) < M$threshold
   )
   att <- fromJSON(file.path(cdir, "attribution.json"))
   model$reliability <- att$calibration$reliability

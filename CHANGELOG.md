@@ -5,6 +5,13 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Vem ristade? kan säga "kanske någon annan"
+- Attribueringsmodellen känner bara 18 ristare men gav förut alltid ett av deras namn. Nu säger den *kanske någon
+  annan* när förstavalet får mindre än 35 %. Gränsen valdes genom att gömma en ristare i taget och prövades på 139
+  stenar av ristare med färre än 8 stenar, som flaggades i 71 % av fallen; där modellen ger ett namn har den rätt i
+  87 %. Avsnittet *Kan modellen säga "kanske någon annan"?* i Statistik, stenrapporten och Forskningsluckor följer
+  flaggan (METHODS.md 1i). Övriga resultat är oförändrade.
+
 ### Pröva en egen fråga: kontroller i R och fler drag
 - Två kontroller i R för varje svar (`r/question.R`): **ristaren som slumpeffekt** (lme4) och **platsen som yta** över
   kartan i stället för landskapsgränser (mgcv). Ett mönster som håller i halvorna men inte i den första märks *Beror på

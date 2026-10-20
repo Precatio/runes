@@ -87,12 +87,18 @@ interface Corpus {
     clusters: { cluster: number; n: number; stability: number; silhouette: number; features: { level: string; share_in_cluster: number; share_overall: number }[]; styles: { style: string; n: number }[]; provinces: { province: string; n: number }[] }[] };
   text: Dict & { method: string; lemmas: { lemma: string; n: number; cramers_v: number; q: number }[];
     formulas: { tests: { label: string; cramers_v: number; q: number }[] } };
-  attribution: Dict & { method: string; caveat: string; n_train: number; carvers: string[]; majority_baseline: number;
+  attribution: Dict & { method: string; caveat: string; n_train: number; carvers: string[]; majority_baseline: number; min_inscriptions?: number;
     ablation: { features: string; accuracy: number; top3: number; log_loss: number }[];
     grouped_cv?: Record<string, { level: string; n_groups: number; ablation: { features: string; accuracy: number | null; top3: number | null }[] }>;
     material?: { per_family: { family: string; n: number; accuracy: number; carvers: number }[]; n_without_family: number };
     calibration: { ece: number; reliability: { threshold: number; n: number; accuracy: number }[] };
-    per_carver: { carver: string; n: number; recall: number; precision: number | null }[] };
+    per_carver: { carver: string; n: number; recall: number; precision: number | null }[];
+    n_predictions?: number; n_someone_else?: number;
+    open_set?: { threshold: number; method: string;
+      known: { n: number; flagged: number; accuracy_kept: number; accuracy_all: number };
+      left_out: { n: number; flagged: number; per_carver: { carver: string; n: number; flagged: number }[] };
+      small_carvers: { n: number; carvers: number; flagged: number; median_p: number; median_p_known: number;
+        stones: { signum: string; carver: string; top: string; p: number; someone_else: boolean }[] } } };
   chronology: Dict & { method: string; region: string; validation: { rho: number; partial_rho: number; usable: boolean; mae_loo_years: number; mae_naive_years: number };
     corpus_dimensions: { dim: number; inertia_pct: number; rho_time: number; rho_lat: number; eta2_province: number; eta2_carver: number; positive: string[] | string; negative: string[] | string; unexplained: boolean; explained_by: string[] | string }[] };
   dialect: Dict & { method: string; caveat: string; mantel: { r: number; p: number }; n_districts: number;
@@ -974,6 +980,7 @@ function Attribution({ data }: { data: Corpus }) {
           </div>
         </Details>
       )}
+      {a.open_set && <SomeoneElse a={a} />}
       <Details title="Hur säkra sannolikheterna är">
         <ul className="text-sm space-y-1 text-slate-700">
           {a.calibration.reliability.map(r => (
@@ -993,6 +1000,55 @@ function Attribution({ data }: { data: Corpus }) {
       </Details>
       <Method text={a.method} caveat={a.caveat} />
     </>
+  );
+}
+
+// "Någon annan": the model only knows its carvers, and says so when its first choice is too weak (r/attribution.R)
+function SomeoneElse({ a }: { a: Corpus["attribution"] }) {
+  const o = a.open_set!;
+  return (
+    <div className="rounded-2xl bg-white border border-slate-200 p-5 space-y-3">
+      <h4 className="font-semibold text-slate-900">Kan modellen säga &quot;kanske någon annan&quot;?</h4>
+      <p className="text-sm text-slate-700 leading-relaxed">
+        Modellen känner bara {a.carvers.length} ristare, och en sten av någon annan får ändå ett av deras namn. Därför säger den
+        nu <strong>kanske någon annan</strong> när förstavalet får mindre än <strong>{pc(o.threshold)}</strong>. Gränsen valdes genom att
+        gömma en ristare i taget: modellen tränades på de andra och fick gissa på den gömdas stenar. Då sade den &quot;kanske
+        någon annan&quot; om <strong>{pc(o.left_out.flagged)}</strong> av de {o.left_out.n} stenarna – men också om {pc(o.known.flagged)} av
+        de kända ristarnas stenar, där den egentligen hade svaret. Under gränsen kan modellen alltså inte skilja en ristare
+        den aldrig sett från en sten den bara är osäker på.
+      </p>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="rounded-xl bg-slate-50 border border-slate-200 p-3">
+          <div className="text-2xl font-bold text-slate-900">{pc(o.small_carvers.flagged)}</div>
+          <div className="text-xs text-slate-600">av {o.small_carvers.n} stenar av {o.small_carvers.carvers} ristare med färre än {a.min_inscriptions ?? 8} stenar
+            får &quot;kanske någon annan&quot; – prövat på stenar som inte användes när gränsen valdes</div>
+        </div>
+        <div className="rounded-xl bg-slate-50 border border-slate-200 p-3">
+          <div className="text-2xl font-bold text-slate-900">{pc(o.known.accuracy_kept)}</div>
+          <div className="text-xs text-slate-600">rätt förstaval där modellen ger ett namn (mot {pc(o.known.accuracy_all)} för alla kända stenar)</div>
+        </div>
+        {a.n_predictions != null && a.n_someone_else != null && (
+          <div className="rounded-xl bg-slate-50 border border-slate-200 p-3">
+            <div className="text-2xl font-bold text-slate-900">{a.n_someone_else}</div>
+            <div className="text-xs text-slate-600">av {a.n_predictions} stenar utan säker ristare får &quot;kanske någon annan&quot; i stället för ett namn</div>
+          </div>
+        )}
+      </div>
+      <p className="text-xs text-slate-500">
+        &quot;Kanske någon annan&quot; betyder att stenen inte liknar någon av modellens ristare tillräckligt – inte att ristaren
+        är okänd för forskningen, och inte säkert att det är någon annan. Ett namn betyder inte heller att det inte kan vara
+        någon annan, bara att det är mindre troligt. Typiskt förstaval för ristare den inte känner: {pc(o.small_carvers.median_p)} (median), mot {pc(o.small_carvers.median_p_known)} för kända.
+      </p>
+      <Details title="Den gömda ristaren, en i taget">
+        <div className="overflow-x-auto">
+          <ExportTable><table className="w-full text-sm">
+            <thead><tr><Th>Gömd ristare</Th><Th>Stenar</Th><Th>Får &quot;kanske någon annan&quot;</Th></tr></thead>
+            <tbody>{o.left_out.per_carver.map(r => (
+              <tr key={r.carver} className="border-t border-slate-900/5"><td className="p-2 font-semibold">{r.carver}</td><td className="p-2">{r.n}</td><td className="p-2">{pc(r.flagged)}</td></tr>))}</tbody>
+          </table></ExportTable>
+        </div>
+      </Details>
+    </div>
   );
 }
 

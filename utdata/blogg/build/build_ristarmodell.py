@@ -12,7 +12,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..")
 sys.path.insert(0, ROOT)
 from src import blog_figures, commons  # noqa: E402
 
-FP = "5b1153fb66211f0a"
+FP = "5ebd6df1627127fd"
 RUN = os.path.join(ROOT, "data", "cache", "r", "corpus", FP)
 A = json.load(open(os.path.join(RUN, "attribution.json"), encoding="utf-8"))
 pr = lambda x: round(100 * x)  # noqa: E731
@@ -57,6 +57,13 @@ assert len(open_hi) == 61
 TOP5 = ["U 1026", "U 894", "U 843", "Sö 53", "Sö 232"]
 assert [p["signum"] for p in open_hi if p["signum"] in TOP5] == TOP5
 assert [(PRED[s]["top"], pr(PRED[s]["p"])) for s in TOP5] == [("Öpir 1", 85), ("Öpir 1", 75), ("Fot 2", 72), ("Traen", 70), ("Amunde", 70)]
+
+# "Kanske någon annan" (open set, r/attribution.R)
+O = A["open_set"]
+assert O["threshold"] == 0.35 and (pr(O["left_out"]["flagged"]), pr(O["known"]["flagged"]), pr(O["known"]["accuracy_kept"])) == (80, 41, 87)
+assert (O["small_carvers"]["n"], O["small_carvers"]["carvers"], pr(O["small_carvers"]["flagged"])) == (139, 62, 71)
+assert (A["n_someone_else"], A["n_predictions"]) == (608, 923) and U485["someone_else"] is False
+assert not [p for p in open_hi if p["someone_else"]]
 
 # The training stones' provinces (the closed world of the model)
 import csv  # noqa: E402
@@ -147,9 +154,11 @@ Här kommer haken. Facit – vem som ristade vilken sten – är inte skrivet av
 
 Tillbaka till spelets första regel. Datorn känner {len(A['carvers'])} ristare, och alla deras träningsstenar står i Mälardalen: {PROV['U']} i Uppland, {PROV['Sö']} i Södermanland, {PROV['Gs']} i Gästrikland och {PROV['Vs']} i Västmanland. En sten som ristades av någon annan – en ristare med färre än {A['min_inscriptions']} kända stenar, en som är helt okänd eller en från ett annat landskap – får ändå ett av de {len(A['carvers'])} namnen. Därför ger datorn bara förslag för stenar inom {A['near_km']} kilometer från en sten den tränats på. Och därför ska förslagen läsas som *om det var någon av de {len(A['carvers'])}, så troligen den här*.
 
+Nu har datorn fått ett nytt svar att ge: *kanske någon annan*. Vi lärde den det genom att gömma en ristare i taget och se hur osäker den blev på stenar av någon den aldrig träffat. När förstavalet får mindre än {pr(O['threshold'])} procent säger den nu kanske någon annan. Det fångar {pr(O['left_out']['flagged'])} procent av de gömda ristarnas stenar, och när vi prövade på {O['small_carvers']['n']} stenar av {O['small_carvers']['carvers']} ristare med för få stenar för att vara med – ristare i samma läge som Ofeg – fångade det {pr(O['small_carvers']['flagged'])} procent. Priset är att datorn också säger kanske någon annan om {pr(O['known']['flagged'])} procent av de kända ristarnas stenar. Den blygsamma maskinen kan inte alltid skilja en främling från en sten den bara är osäker på. Men där den vågar ge ett namn har den rätt i {pr(O['known']['accuracy_kept'])} procent av fallen. Om U 485 är den inte i tvivel: Öpir, {pr(U485['p'])} procent.
+
 ## Förslag att pröva
 
-Med de reservationerna har datorn ett förslag för {sv(A['n_predictions'])} stenar som saknar en säker ristare men står nära en träningssten. För {len(open_hi)} stenar som inte har någon ristare alls i Rundata säger den minst 50 procent. Här är de fem säkraste:
+Med de reservationerna har datorn tittat på {sv(A['n_predictions'])} stenar som saknar en säker ristare men står nära en träningssten. För {A['n_someone_else']} av dem säger den kanske någon annan. För {len(open_hi)} stenar som inte har någon ristare alls i Rundata ger den ett namn med minst 50 procent. Här är de fem säkraste:
 
 | Sten | Plats | Datorns förslag | Sannolikhet |
 |---|---|---|---|
@@ -160,7 +169,7 @@ På de {A['uncertain']['n']} stenar där Rundata tvekar mellan flera ristare vä
 Vill du se själv finns alltihop i Vitki under Statistik → *Vem ristade?*, och förslagen sten för sten under Forskningsluckor → *Våra resultat*.
 
 :::box Det viktigaste i korthet
-- Statistiken kan föreslå en ristare, och den har oftast rätt. Men den väljer bara bland de {len(A['carvers'])} den känner, och facit den rättas mot är skrivet av forskare som letade efter samma slags ledtrådar.
+- Statistiken kan föreslå en ristare, och den har oftast rätt. Men den väljer bara bland de {len(A['carvers'])} den känner – numera med möjligheten att säga kanske någon annan – och facit den rättas mot är skrivet av forskare som letade efter samma slags ledtrådar.
 - Handen syns mest i skrivandet. Skiljetecken, stavning och formler säger mer om ristaren än ornamentiken, och bergarten säger ingenting alls.
 - Förslagen för stenar utan ristare är en lista att pröva mot stenarna själva, inte nya attribueringar.
 :::
@@ -170,6 +179,7 @@ Vill du se själv finns alltihop i Vitki under Statistik → *Vem ristade?*, och
 - En slumpskog (random forest, R-paketet ranger) med {A['trees']} träd. Femfaldig korsvalidering upprepad tre gånger, och samma prov med hela socknar ({G['Socken']['n_groups']}) och härader ({G['Härad']['n_groups']}) utelämnade.
 - Ledtrådar: koordinater och landskap, stilgrupp, kors och kortkvistrunor, elva språkdrag, fem formler, de hundra vanligaste runparen och nio innehållskategorier. Namn är borttagna ur texterna.
 - Delmodellerna använder en sorts ledtråd i taget; latmasken gissar alltid på den ristare som har flest stenar.
+- Kanske någon annan: förstavalet under {pr(O['threshold'])} procent. Gränsen valdes med en ristare i taget utelämnad och prövades på stenar av ristare med färre än {A['min_inscriptions']} stenar.
 - Modulen r/attribution.R i Vitki (Statistik → Vem ristade?), metoddokumentationen avsnitt 1i, korpusversion {FP}.
 :::
 

@@ -232,6 +232,59 @@ predictions <- lapply(seq_len(nrow(cand)), function(i) {
 predictions <- predictions[order(-sapply(predictions, `[[`, "p"))]
 unc <- Filter(function(p) nzchar(p$rundata_uncertain), predictions)
 
+# ---- "someone else" (open set) ---------------------------------------------------------------------------------
+# The model only knows the carvers in lv, so a stone by anyone else still gets one of their names. It says "någon
+# annan" when its first choice has a probability below a threshold. Unknown carvers are imitated by leaving each
+# carver out in turn: a model trained on all stones of the others predicts the left-out carver's stones. The threshold
+# maximises (share of those stones flagged) + (share of known stones not flagged) − 1, the known stones' probabilities
+# being the cross-validated ones above. It is then tried on stones it was not chosen on: those by carvers with a
+# certain attribution but fewer than MIN_CARVER stones, within NEAR_KM of a training stone, predicted by the final model.
+fit_on <- function(df, cols) {
+  df <- prep_frame(df, cols)
+  df$carver <- droplevels(df$carver)
+  rec <- recipe(carver ~ ., data = df) %>% step_novel(all_nominal_predictors()) %>%
+    step_impute_median(all_numeric_predictors()) %>% step_zv(all_predictors())
+  mod <- rand_forest(trees = TREES, min_n = 2) %>%
+    set_engine("ranger", seed = seed, num.threads = max(1, parallel::detectCores() - 1)) %>% set_mode("classification")
+  fit(workflow() %>% add_recipe(rec) %>% add_model(mod), df)
+}
+top_p <- function(m, df) apply(as.matrix(predict(m, prep_frame(df, SETS$Alla)[, SETS$Alla, drop = FALSE], type = "prob")), 1, max)
+set.seed(seed)
+loco <- bind_rows(lapply(lv, function(cn) {
+  m <- fit_on(train[train$carver != cn, ], SETS$Alla)
+  data.frame(carver = cn, p = top_p(m, train[train$carver == cn, ]))
+}))
+known_p <- pmax_
+grid <- seq(0.05, 0.6, by = 0.005)
+J <- sapply(grid, function(t) mean(loco$p < t) + mean(known_p >= t) - 1)
+threshold <- grid[which.max(J)]
+for (i in seq_along(predictions)) predictions[[i]]$someone_else <- predictions[[i]]$p < threshold
+
+small <- full %>% filter(!is.na(carver), !(carver %in% lv), !is.na(x))
+small$near_km <- sapply(seq_len(nrow(small)), function(i) min(sqrt((train_xy[, 1] - small$x[i])^2 + (train_xy[, 2] - small$y[i])^2)) / 1000)
+small <- small %>% filter(near_km <= NEAR_KM)
+for (col in nominal) small[[col]] <- as.character(small[[col]])
+sp <- as.matrix(predict(final, prep_frame(small, SETS$Alla)[, SETS$Alla, drop = FALSE], type = "prob")[, pcols])
+small_top <- apply(sp, 1, max)
+small_pred <- lv[apply(sp, 1, which.max)]
+open_set <- list(
+  threshold = threshold, J = r3(max(J)),
+  known = list(n = length(known_p), flagged = r3(mean(known_p < threshold)),
+               accuracy_kept = r3(mean(correct[known_p >= threshold])), accuracy_all = r3(mean(correct))),
+  left_out = list(n = nrow(loco), flagged = r3(mean(loco$p < threshold)),
+                  per_carver = lapply(lv, function(cn) list(carver = cn, n = sum(loco$carver == cn),
+                                                              flagged = r3(mean(loco$p[loco$carver == cn] < threshold))))),
+  small_carvers = list(n = nrow(small), carvers = length(unique(small$carver)), flagged = r3(mean(small_top < threshold)),
+                       median_p = r3(median(small_top)), median_p_known = r3(median(known_p)),
+                       stones = lapply(order(small_top), function(i) list(signum = small$signum[i], carver = small$carver[i],
+                                                                         top = small_pred[i], p = r3(small_top[i]),
+                                                                         someone_else = small_top[i] < threshold))),
+  method = paste(
+    "Modellen säger 'någon annan' när förstavalets sannolikhet är under", threshold, ". Gränsen valdes så att den bäst",
+    "skiljer stenar av en ristare som modellen inte tränats på (varje ristare utelämnad i tur och ordning) från de kända",
+    "ristarnas korsvaliderade stenar, och prövades sedan på stenar av ristare med färre än", MIN_CARVER, "stenar inom",
+    NEAR_KM, "km, som inte användes när gränsen valdes."))
+
 # ---- figures ------------------------------------------------------------------------------------------------
 # Figure labels in the figure's language (the JSON keeps the Swedish keys)
 SETN <- c("Geografi" = tr("Geografi", "Geography"), "Stil" = tr("Stil", "Style"),
@@ -301,7 +354,7 @@ fig_conf <- save_fig(p, out, "modell_forvaxling.png", 8, 7)
 oof <- data.frame(signum = train$signum[E$preds$.row], carver = lv[E$truth], E$probs, check.names = FALSE)
 write.csv(oof, file.path(out, "attribution_oof.csv"), row.names = FALSE, fileEncoding = "UTF-8")
 saveRDS(list(final = final, levels = lv, cols = SETS$Alla, nominal = nominal, train_levels = train_levels, train_xy = train_xy,
-             near_km = NEAR_KM), file.path(out, "attribution_model.rds"))
+             near_km = NEAR_KM, threshold = threshold), file.path(out, "attribution_model.rds"))
 
 result <- list(
   n_train = nrow(train), carvers = lv, min_inscriptions = MIN_CARVER, folds = FOLDS, repeats = REPEATS, trees = TREES,
@@ -313,6 +366,7 @@ result <- list(
   group_importance = group_imp %>% mutate(across(c(importance, share), r3)),
   predictions = head(predictions, 400), n_predictions = length(predictions), near_km = NEAR_KM,
   uncertain = list(n = length(unc), agree = sum(sapply(unc, function(p) isTRUE(p$agrees_rundata)))),
+  open_set = open_set, n_someone_else = sum(sapply(predictions, `[[`, "someone_else")),
   figures = list(ablation = fig_ablation, calibration = fig_calib, importance = fig_imp, confusion = fig_conf),
   method = paste(
     "Random forest (Breiman 2001; ranger, tidymodels) med", TREES, "träd tränades på svenska vikingatida runstenar med en",

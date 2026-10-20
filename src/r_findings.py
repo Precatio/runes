@@ -120,7 +120,7 @@ def model_findings(att: dict, lookup, inscriptions: list[dict], oof: list[dict] 
     closed = _closed_set_share(inscriptions, in_model)
     out = []
     for pr in att.get("predictions") or []:
-        if pr["p"] < min_p:
+        if pr["p"] < min_p or pr.get("someone_else"):  # "någon annan": no name to suggest
             continue
         rec = lookup(pr["signum"])
         if not rec:

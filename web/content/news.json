@@ -2,6 +2,20 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "kanske-nagon-annan",
+   "date": "2026-10-20",
+   "status": "nytt",
+   "title": "Kanske någon annan",
+   "text": "Statistikens modell för vem som ristade en sten känner bara 18 ristare, men gav förut alltid ett av deras namn. Nu kan den svara kanske någon annan när den är för osäker. Prövad på 139 stenar av ristare den aldrig hade sett sade den det i 71 procent av fallen, och där den vågar ge ett namn har den rätt i 87 procent."
+  },
+  {
+   "id": "kontroller-i-r",
+   "date": "2026-10-20",
+   "status": "nytt",
+   "title": "Två kontroller i R för egna frågor",
+   "text": "Varje svar i Pröva en egen fråga prövas nu också i R. Med ristaren som slumpeffekt syns det om ett mönster bara bärs av några flitiga ristares vanor, och med platsen som en yta över kartan om det är trakten som gör skillnaden. Kors är till exempel ovanligare på sandsten – men det försvinner när platsen får forma sin egen yta. Dessutom finns nu 46 drag att välja mellan i stället för 22."
+  },
+  {
    "id": "prova-en-egen-fraga",
    "date": "2026-10-20",
    "status": "nytt",
