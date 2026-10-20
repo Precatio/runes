@@ -5,6 +5,65 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+## [3.0.0] – 2026-10-20
+
+Ett nytt huvudnummer därför att gränssnittet och API:t inte längre är bakåtkompatibla med 2.x: Vitki läser inte runor
+och bedömer inte stilgrupp med AI, sidorna Språk & Fonetik, 2D-bildanalys, Stilgrupper och Kunskap är borta (gamla
+adresser leder vidare), `styles` i `/api/research/findings` och `style_check` i syntesen finns inte längre, och AI-text
+är ett tillval i stället för standard. Allt som räknas fram har fått redovisad träffsäkerhet mot en nollnivå, och
+sannolikhetsmodellen har gått från textmodel-14 till textmodel-19 med låsta analysplaner.
+
+### Sannolikhetsmodellen textmodel-15 → textmodel-19
+- `textmodel-15`: varje sten läses med ristarens egen skiljeteckentäthet (ordgränser 95,1 → 95,4 procent), och
+  kalibreringen skattas på utgivarnas, maskerade och dokumenterade luckor tillsammans (kalibreringsfel 2,5
+  procentenheter på de dokumenterade). `VALIDATION` räknas på runstenar.
+- `textmodel-16`: alternativen i en lucka får högst sin egen sannolikhet, aldrig mer än förstavalet förlorade.
+- `textmodel-17`: alla förslag i en lucka kalibreras tillsammans (softmax över förslagen och "inget av dem"), och
+  valet följer den kalibrerade procenten. Förregistrerat blindtest på 21 aldrig granskade stenar: 16 rätt inom det
+  låsta intervallet, 13 av 13 svar ≥ 95 procent rätt.
+- `textmodel-18`: namnkandidaterna får en egen kvot (`name_cands` 40), så att sällsynta namn når poängsättningen:
+  8 luckor vunna, ingen förlorad; dokumenterade luckor 248 → 249 av 361.
+- `textmodel-19`: toleranslagret – belagda stavningar utökas med regelgenererade varianter (slut-R, h-, obetonad
+  vokal, i/e/a, nasal, svarabhakti) till ett straff per regel, efter en analysplan som låstes innan resultaten fanns.
+  Dokumenterade luckor 252 av 361 med 2 fel bland 158 svar ≥ 95 procent (förut 249 och 4). Spår ur skanningen
+  ("Vad skannern ser") kan tas in mjukt i luckorna; maskering med spår ger 84 procent hela ord.
+- Forskningsluckor har fliken **Luckor i texten**: de öppna luckor där modellen fyller i ett känt ord med minst 80
+  procent (27 på 21 stenar), med en rad som anger vilket underlag och vilken modellversion sidan bygger på.
+
+### Statistik i R prövad mot nollnivåer
+- **Vem ristade?** redovisar bergartens eget bidrag: en delmodell med bara bergart träffar 19 procent (= att gissa
+  den vanligaste ristaren), och tabellen *Kommer träffen från bergarten?* visar hela modellens träff per
+  bergartsfamilj. Huggspårens tillförlitlighet räknas mot bergartsgissningen i stället för mot slumpen.
+- **Okända ristare**: grupperna prövas där ristare är kända – strängare prov med tre slumpdelar och 30 upprepningar
+  ger 85 mot 69 procent för närliggande stenar (+16 procentenheter) – och en kolumn *utan tidsdragen* visar vilka
+  grupper som består när stilgrupp, kors, stungna runor, böner och signaturer tas bort. Sidan varnar för att 25 av 35
+  kända ristare finns i Uppland medan kandidaterna ligger i landskap där nästan inga ristare är kända.
+- **Ordförrådet**: vilka ord som skiljer landskapen åt när tid och textlängd räknats bort (logistisk modell med
+  ristaren som slumpeffekt, prövad i sockenhalvor) och vilka som ändras över tid; korrespondensanalys av landskapens
+  ordval.
+- Mätkorpusen är fylld med Kitzler Åhfeldts 37 öppna skanningar, så att huggspår kan jämföras mot något.
+
+### Artiklarna organiserade: etiketter och Så gör du-serien
+- Varje artikel har etiketter (typ och ämnen ur en fast lista), som filter på artikellistan (`?etikett=`) och i
+  Admin. Serien **Så gör du** går igenom appen vy för vy med skärmbilder ur den körande appen: huggspårsanalys,
+  inskrifter och luckor, forskningsluckorna och statistiken i R (utkast).
+- Startsidan visar sex vyer ur appen – mönsterkartan, inskrifterna, sannolikhetsmodellen, statistiken, forsknings-
+  luckorna och stenöversikten – tagna med ett skript så att de kan tas om när appen ändras.
+
+### Runor 2020 bredvid Rundata
+- Inskriftssidan visar Riksantikvarieämbetets Runor (2020) bredvid Rundata 3.1 (2018) där utgåvorna skiljer sig
+  (plats, status, läsning). Beräkningarna bygger ännu på Rundata; bytet kräver en egen analysplan.
+
+### Metod och reproducerbarhet
+- Analysplaner låses med hash innan resultat tas fram (`ANALYSPLAN.md`, METHODS.md 1x); toleranslagret var det
+  första. `tests/test_methods_numbers.py` kontrollerar att talen i METHODS stämmer med koden.
+- Exempelpaketet `examples/so128/` visar vägen från öppen skanning till färdig stenrapport.
+- `IMPLEMENTATIONSPLAN.md` samlar det som återstår, med status.
+
+### Admin
+- Besöksstatistiken: ett klick på en dag i stapeldiagrammet visar sidor, länder, sökord och klick för den dagen
+  ensam.
+
 ### AI-läsningen och Språk & Fonetik borttagna; 2D blev en flik på 3D-sidan
 - Vitki läser inte längre runor med AI. Sidan Språk & Fonetik (blind läsning, normalisering, IPA, uppläsning) är
   borttagen efter två prov: läsningar ur minnet (Sö 113 gav Jellingstenens text) och, med strikt instruktion, nästan

@@ -9,14 +9,14 @@ rapporter hänvisar till exakt den versionen, och Zenodo arkiverar den med en pe
 
 ## Varje version
 1. Kör alla tester: `.venv/bin/python -m pytest` och `cd web && npx tsc --noEmit && npx eslint`.
-2. Bestäm versionsnummer (t.ex. 2.1.0) och skriv in det i:
+2. Bestäm versionsnummer (t.ex. 3.1.0) och skriv in det i:
    - `api/config.py` (`APP_VERSION`)
    - `.zenodo.json` (`version`)
    - `CITATION.cff` (`version`, `date-released`)
      – startsidans versionsmärke och citeringsruta läser versionen härifrån (`web/src/lib/version.ts`)
 3. Flytta posterna under "Ej släppt" i `CHANGELOG.md` till den nya versionen med datum.
 4. Kontrollera att `src/limitations.py` (kända brister) och METHODS.md stämmer med koden.
-5. Committa, märk och pusha: `git tag -a v2.1.0 -m "Vitki 2.1.0"` och `git push --tags`.
+5. Committa, märk och pusha: `git tag -a v3.1.0 -m "Vitki 3.1.0"` och `git push --tags`.
 6. Skapa en release från märkningen på GitHub (Releases → Draft a new release). Zenodo arkiverar den och skapar
    en DOI inom några minuter.
 7. Lägg in DOI:n i `README.md`, `CITATION.cff` (`doi`) och stenrapportens referens till Vitki

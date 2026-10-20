@@ -6,9 +6,9 @@ import { join } from "node:path";
 function read(): string {
   try {
     const cff = readFileSync(join(process.cwd(), "..", "CITATION.cff"), "utf8");
-    return /^version:\s*"?([0-9][^"\s]*)"?\s*$/m.exec(cff)?.[1] ?? "2.0.0";
+    return /^version:\s*"?([0-9][^"\s]*)"?\s*$/m.exec(cff)?.[1] ?? "3.0.0";
   } catch {
-    return "2.0.0";
+    return "3.0.0";
   }
 }
 
