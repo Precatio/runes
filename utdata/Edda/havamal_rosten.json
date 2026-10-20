@@ -1,0 +1,235 @@
+{
+ "ord": {
+  "Hávamál": 4092,
+  "Hávamál_del_I": 1837,
+  "Hugsvinnsmál": 3062,
+  "Sólarljóð": 1673,
+  "hedniska_dialoger": 8941
+ },
+ "kristet": {
+  "Hávamál": {
+   "traffar": 0,
+   "per100": 0.0
+  },
+  "Hugsvinnsmál": {
+   "traffar": 13,
+   "per100": 0.42
+  },
+  "Sólarljóð": {
+   "traffar": 26,
+   "per100": 1.55
+  },
+  "hedniska_dialoger": {
+   "traffar": 0,
+   "per100": 0.0
+  }
+ },
+ "gava": {
+  "mot_hugsvinnsmal": {
+   "a": 17,
+   "n_a": 4092,
+   "per100_a": 0.42,
+   "b": 13,
+   "n_b": 3062,
+   "per100_b": 0.42,
+   "p": 1.0
+  },
+  "mot_hedniska": {
+   "a": 17,
+   "n_a": 4092,
+   "per100_a": 0.42,
+   "b": 8,
+   "n_b": 8941,
+   "per100_b": 0.09,
+   "p": 0.000262
+  }
+ },
+ "van": {
+  "mot_hugsvinnsmal": {
+   "a": 21,
+   "n_a": 4092,
+   "per100_a": 0.51,
+   "b": 17,
+   "n_b": 3062,
+   "per100_b": 0.56,
+   "p": 0.87
+  },
+  "mot_hedniska": {
+   "a": 21,
+   "n_a": 4092,
+   "per100_a": 0.51,
+   "b": 4,
+   "n_b": 8941,
+   "per100_b": 0.04,
+   "p": 8.06e-08
+  }
+ },
+ "betra": {
+  "hela": {
+   "mot_hugsvinnsmal": {
+    "a": 18,
+    "n_a": 4092,
+    "per100_a": 0.44,
+    "b": 4,
+    "n_b": 3062,
+    "per100_b": 0.13,
+    "p": 0.0285
+   },
+   "mot_hedniska": {
+    "a": 18,
+    "n_a": 4092,
+    "per100_a": 0.44,
+    "b": 6,
+    "n_b": 8941,
+    "per100_b": 0.07,
+    "p": 1.41e-05
+   }
+  },
+  "del_I": {
+   "mot_hugsvinnsmal": {
+    "a": 13,
+    "n_a": 1837,
+    "per100_a": 0.71,
+    "b": 4,
+    "n_b": 3062,
+    "per100_b": 0.13,
+    "p": 0.00157
+   },
+   "mot_hedniska": {
+    "a": 13,
+    "n_a": 1837,
+    "per100_a": 0.71,
+    "b": 6,
+    "n_b": 8941,
+    "per100_b": 0.07,
+    "p": 9.63e-07
+   }
+  }
+ },
+ "ef": {
+  "hela": {
+   "mot_hugsvinnsmal": {
+    "a": 85,
+    "n_a": 4092,
+    "per100_a": 2.08,
+    "b": 34,
+    "n_b": 3062,
+    "per100_b": 1.11,
+    "p": 0.00143
+   },
+   "mot_hedniska": {
+    "a": 85,
+    "n_a": 4092,
+    "per100_a": 2.08,
+    "b": 44,
+    "n_b": 8941,
+    "per100_b": 0.49,
+    "p": 9.74e-16
+   }
+  },
+  "utan_refrang": {
+   "mot_hugsvinnsmal": {
+    "a": 45,
+    "n_a": 3732,
+    "per100_a": 1.21,
+    "b": 34,
+    "n_b": 3062,
+    "per100_b": 1.11,
+    "p": 0.734
+   },
+   "mot_hedniska": {
+    "a": 45,
+    "n_a": 3732,
+    "per100_a": 1.21,
+    "b": 44,
+    "n_b": 8941,
+    "per100_b": 0.49,
+    "p": 3.22e-05
+   }
+  },
+  "refranger": [
+   20,
+   20
+  ],
+  "kasserat": "skillnaden mot Hugsvinnsmål försvinner när Loddfáfnismáls refräng tas bort"
+ },
+ "ek": {
+  "hela": {
+   "mot_hugsvinnsmal": {
+    "a": 97,
+    "n_a": 4092,
+    "per100_a": 2.37,
+    "b": 8,
+    "n_b": 3062,
+    "per100_b": 0.26,
+    "p": 8.3e-16
+   },
+   "mot_hedniska": {
+    "a": 97,
+    "n_a": 4092,
+    "per100_a": 2.37,
+    "b": 230,
+    "n_b": 8941,
+    "per100_b": 2.57,
+    "p": 0.508
+   }
+  },
+  "del_I": {
+   "mot_hugsvinnsmal": {
+    "a": 14,
+    "n_a": 1837,
+    "per100_a": 0.76,
+    "b": 8,
+    "n_b": 3062,
+    "per100_b": 0.26,
+    "p": 0.0145
+   },
+   "mot_hedniska": {
+    "a": 14,
+    "n_a": 1837,
+    "per100_a": 0.76,
+    "b": 230,
+    "n_b": 8941,
+    "per100_b": 2.57,
+    "p": 1.6e-07
+   }
+  },
+  "kann_ek": 18,
+  "hugsvinnsmal_bedomer": 5,
+  "hugsvinnsmal_undervisar": 3,
+  "del_I_vittnar_strofer": [
+   13,
+   14,
+   39,
+   47,
+   49,
+   52,
+   66,
+   67,
+   70,
+   78
+  ]
+ },
+ "skall": {
+  "hela": {
+   "mot_hugsvinnsmal": {
+    "a": 69,
+    "n_a": 4092,
+    "per100_a": 1.69,
+    "b": 67,
+    "n_b": 3062,
+    "per100_b": 2.19,
+    "p": 0.137
+   },
+   "mot_hedniska": {
+    "a": 69,
+    "n_a": 4092,
+    "per100_a": 1.69,
+    "b": 75,
+    "n_b": 8941,
+    "per100_b": 0.84,
+    "p": 4.03e-05
+   }
+  }
+ }
+}

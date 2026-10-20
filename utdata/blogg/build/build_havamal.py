@@ -54,6 +54,44 @@ assert all(w in L["ord_diff"]["norsk_ej_svensk"] for w in ("sa", "mer", "konu", 
 assert all(w in L["ord_diff"]["dansk_ej_svensk"] for w in ("munu", "vel", "lifa", "nu", "lengi"))
 pN, pD, pS = (svn(100 * LK[k]["median_medel"], 0) for k in ("Norge", "Danmark", "Sverige"))
 
+# ---- rösten mot kristen och hednisk dikt (havamal_rosten.py) --------------------------------------
+RO = json.load(open(os.path.join(E, "havamal_rosten.json")))
+rk, G, VN, BT, EKr, EFr, SK = RO["kristet"], RO["gava"], RO["van"], RO["betra"]["del_I"], RO["ek"], RO["ef"], RO["skall"]["hela"]
+assert rk["Hávamál"]["traffar"] == 0 and rk["hedniska_dialoger"]["traffar"] == 0
+assert rk["Hugsvinnsmál"]["per100"] == 0.42 and rk["Sólarljóð"]["per100"] == 1.55
+# gåvans och vänskapens etik delas av Hávamál och Hugsvinnsmål, men inte av de hedniska dialogerna
+assert G["mot_hugsvinnsmal"]["p"] > 0.5 and VN["mot_hugsvinnsmal"]["p"] > 0.5
+assert G["mot_hedniska"]["p"] < 0.001 and VN["mot_hedniska"]["p"] < 0.001
+assert 4 <= G["mot_hedniska"]["per100_a"] / G["mot_hedniska"]["per100_b"] <= 6
+assert 10 <= VN["mot_hedniska"]["per100_a"] / VN["mot_hedniska"]["per100_b"] <= 14
+# 'bättre': gästvisdomen mot Hugsvinnsmål och dialogerna
+assert BT["mot_hugsvinnsmal"]["p"] < 0.01 and BT["mot_hedniska"]["p"] < 0.001
+assert BT["mot_hugsvinnsmal"]["a"] == 13 and BT["mot_hugsvinnsmal"]["b"] == 4
+# jaget: Hugsvinnsmål bedömer (5) eller undervisar (3); Hávamáls kann ek
+assert EKr["hugsvinnsmal_bedomer"] == 5 and EKr["hugsvinnsmal_undervisar"] == 3 and EKr["kann_ek"] == 18
+assert EKr["hela"]["mot_hedniska"]["p"] > 0.1, "jag-formen är inte unik mot dialogerna"
+# kasserade mått: 'ef' faller utan refrängen, 'skal' skiljer inte
+assert EFr["utan_refrang"]["mot_hugsvinnsmal"]["p"] > 0.5 and EFr["refranger"][0] == 20
+assert EFr["hela"]["mot_hugsvinnsmal"]["a"] - EFr["utan_refrang"]["mot_hugsvinnsmal"]["a"] == 2 * EFr["refranger"][0]
+assert SK["mot_hugsvinnsmal"]["p"] > 0.1
+# de citerade stroferna står ordagrant i texten
+for nr, ord_ in ((36, "þat er þó betra en bæn"), (38, "Vápnum sínum"), (41, "endrgefendr"), (42, "gjalda gjöf við gjöf"),
+                 (46, "glík skulu gjöld gjöfum"), (47, "Ungr var ek forðum"), (48, "Mildir, fræknir menn bazt lifa"),
+                 (50, "Hrörnar þöll"), (54, "Meðalsnotr"), (56, "örlög sín viti engi fyrir"), (66, "Mikilsti snemma kom ek í marga staði"),
+                 (70, "Betra er lifðum en sé ólifðum"), (77, "dómr um dauðan hvern"), (78, "Fullar grindr sá ek"), (78, "nú bera þeir vánar völ"),
+                 (84, "Meyjar orðum"), (91, "brigðr er karla hugr konum"), (105, "ill iðgjöld lét ek hana"),
+                 (111, "sá ek ok þagðak"), (119, "far þú at finna oft"), (131, "varan bið ek þik vera ok eigi ofvaran"),
+                 (138, "gefinn Óðni, sjalfr sjalfum mér"), (139, "Við hleifi mik"), (144, "Veistu, hvé blóta skal"),
+                 (145, "ey sér til gildis gjöf"), (164, "njóti sá, er nam")):
+    assert ord_ in d76[nr]["text"], (nr, ord_)
+_hug = open(os.path.join(E, "kallor", "hugsvinnsmal_norront.txt"), encoding="utf-8").read()
+for ord_ in ("gjǫld af guði hygg ek gumnar taki", "ef veizt þik syndgan sjálfr"):
+    assert ord_ in _hug, ord_
+ett_pa = lambda p: f"{round((1 / p) / 10 ** (len(str(int(1 / p))) - 2)) * 10 ** (len(str(int(1 / p))) - 2):,}".replace(",", " ")  # noqa: E731
+f2 = lambda x: svn(x, 2)  # noqa: E731
+ORD = {k: f"{v:,}".replace(",", " ") for k, v in RO["ord"].items()}
+e2 = lambda x, dd=2: f"{x:.{dd}f}"  # noqa: E731  (engelska: decimalpunkt)
+
 IMG_CR = "https://upload.wikimedia.org/wikipedia/commons/5/50/Codex_Regius_of_Eddaic_Poems.jpg"
 PAGE_CR = "https://commons.wikimedia.org/wiki/File:Codex_Regius_of_Eddaic_Poems.jpg"
 IMG_ODIN = "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Odin%27s_Self-sacrifice_by_Collingwood.jpg/1280px-Odin%27s_Self-sacrifice_by_Collingwood.jpg"
@@ -64,17 +102,16 @@ PAGE_GUNN = "https://commons.wikimedia.org/wiki/File:Odin_and_Gunnl%C3%B6%C3%B0_
 title = "Vem talar i Hávamál?"
 summary = ("Eddans visdomsdikt är genomtröskad av tvåhundra års forskning – så den här artikeln håller sig "
            "till det ingen visat förut. En blind sömsökning hittar själv två av diktens skarvar men förklarar "
-           "en tredje mjuk, två av Odens bekännelser visar sig dela stil fast de inte står ihop, och för "
-           "första gången mäts dikten mot Nordens samlade runstenar. Där föll vår egen hypotes – och "
-           "ersattes av ett spår som pekar västerut, mot diktens hemtrakt.")
+           "en tredje mjuk, dikten mäts mot Nordens runstenar och mot kristna dikter i samma versmått, och "
+           "sist kommer en läsning av vad den Höge säger om ensamhet, gåva och blot – och vad vi offrar i dag.")
 
-body = f"""Hávamál, "den höges tal", är nordens mest citerade dikt: etthundrasextiofyra strofer visdom, varningar, kärleksäventyr och trolldom, bevarade i en enda handskrift – Codex Regius, nedskriven på Island omkring 1270. Forskare har i tvåhundra år diskuterat om dikten är ett verk eller flera hopfogade, var skarvarna går och vad den egentligen vill. Det mesta om dikten är redan utrett, och det tänker vi inte upprepa. Den här artikeln håller sig till det forskningen inte redan visste: fyra mätningar som är nya – varav en gick emot oss själva.
+body = f"""Hávamál, "den höges tal", är nordens mest citerade dikt: etthundrasextiofyra strofer visdom, varningar, kärleksäventyr och trolldom, bevarade i en enda handskrift – Codex Regius, nedskriven på Island omkring 1270. Forskare har i tvåhundra år diskuterat om dikten är ett verk eller flera hopfogade, var skarvarna går och vad den egentligen vill. Det mesta om dikten är redan utrett, och det tänker vi inte upprepa. Den här artikeln håller sig till det forskningen inte redan visste: fyra mätningar som är nya – varav en gick emot oss själva – och sist en läsning av vad den Höge säger till en människa.
 
 ![Uppslag ur Codex Regius]({IMG_CR})
 Codex Regius (GKS 2365 4to), nedskriven omkring 1270 – Hávamáls enda medeltida källa. Allt i den här artikeln är mätt på den textens normaliserade utgåva (Guðni Jónsson). Bild: public domain, via [Wikimedia Commons]({PAGE_CR}).
 
 :::box Det som redan var känt
-Att Hávamál är sammansatt av flera stycken har forskningen vetat sedan 1800-talet (Müllenhoff; den moderna skiktanalysen är John McKinnells). Dateringen är också andras fält: senast Mikael Males (2024), som prövar sex oberoende kriterier och landar i att dikten sannolikt fick sin form omkring 900–950. Att kristet ordförråd saknas helt – vilket vår mätning bekräftar rakt igenom – var ett av David Evans huvudargument redan på 1980-talet, liksom platsbelägget i strof 72: *bautastenar* är okända på Island men hör hemma i det förkristna Skandinavien. Allt detta är utgångspunkt här, inte resultat.
+Att Hávamál är sammansatt av flera stycken har forskningen vetat sedan 1800-talet (Müllenhoff; den moderna skiktanalysen är John McKinnells). Dateringen är också andras fält: senast Mikael Males (2024), som prövar sex oberoende kriterier och landar i att dikten sannolikt fick sin form omkring 900–950. Att kristet ordförråd saknas helt – vilket vår mätning bekräftar rakt igenom – var ett av David Evans huvudargument redan på 1980-talet, liksom platsbelägget i strof 72: *bautastenar* är okända på Island men hör hemma i det förkristna Skandinavien. Att gåvor ska gäldas med gåvor är lika välkänt (Marcel Mauss använde stroferna i sin klassiska studie av gåvan), och förhållandet till den kristna Hugsvinnsmál och dess latinska förebild Disticha Catonis är en gammal tvistefråga (Klaus von See mot Evans). Allt detta är utgångspunkt här, inte resultat.
 :::
 
 ## Rösterna ritar arkitekturen
@@ -117,6 +154,22 @@ Oden hos Gunnlöd, Lorenz Frølichs teckning. Episoden är kort – åtta strofe
 
 Ett tredje spår i trädet: gästvisdomens sista strofer, 67–83 – trakten kring *deyr fé* – driver bort från sin egen dels början och lägger sig närmare kvinnoråden. Många forskare låter den gnomiska dikten sluta redan vid strof 79, och vår mätning, som inte läst den debatten, pekar på samma trakt: slutet av del I hör stilistiskt inte riktigt ihop med sin början.
 
+## Hur den Höge talar – och vad han aldrig lovar
+
+Vilken sorts röst är det som ger råden? Vi ställde Hávamál mot tre grupper av dikter i samma versmått, ljóðaháttr. Den första är de hedniska dialogdikterna (Vafþrúðnismál, Grímnismál, Skírnismál, Lokasenna, Alvíssmál, Sigrdrífumál och Fjölsvinnsmál). De två andra är kristna: *Sólarljóð*, en visionsdikt om en död man som ser straff och nåd, och *Hugsvinnsmál*, en kristen bearbetning av den latinska visdomsboken Disticha Catonis. Hugsvinnsmál är den intressantaste jämförelsen, eftersom den liksom stora delar av Hávamál är ett råd från en far till hans son.
+
+Det första resultatet är det väntade. Hávamál har inte ett enda ord ur det kristna ordförrådet – *guð*, *synd*, *sál*, *drottinn*, *náð* och deras släkt – medan Hugsvinnsmál har dem {svn(rk['Hugsvinnsmál']['per100'], 1)} gånger per hundra ord och Sólarljóð {svn(rk['Sólarljóð']['per100'], 1)}. De hedniska dialogerna har dem inte heller. Det är Evans gamla belägg uttryckt i siffror, inte något nytt. (Ordet *bæn* står en gång i Hávamál, men i strof 36 betyder det ’tiggeri’ och inte ’bön’: *þat er þó betra en bæn*, ’det är ändå bättre än att tigga’.)
+
+Det andra är mer överraskande: vänskapens och gåvans etik skiljer inte hednisk från kristen. Ord för gåva och gäld står {f2(G['mot_hugsvinnsmal']['per100_a'])} gånger per hundra ord i Hávamál och {f2(G['mot_hugsvinnsmal']['per100_b'])} i Hugsvinnsmál, och ord för vän {f2(VN['mot_hugsvinnsmal']['per100_a'])} mot {f2(VN['mot_hugsvinnsmal']['per100_b'])} – men bara {f2(G['mot_hedniska']['per100_b'])} respektive {f2(VN['mot_hedniska']['per100_b'])} i de hedniska dialogerna, alltså ungefär fem till tretton gånger mer i de två visdomsdikterna. Att gälda gåva med gåva och vårda sina vänner hör till visdomslitteraturen, inte till tron. Det är känt sedan Marcel Mauss använde Hávamáls gåvostrofer i sin klassiska studie av gåvan; det som tillkommer här är att det går att mäta.
+
+Skillnaden ligger i två andra saker. Den första är att Hávamál jämför. Ordet *betra*, ’bättre’, står {f2(BT['mot_hugsvinnsmal']['per100_a'])} gånger per hundra ord i gästvisdomen mot {f2(BT['mot_hugsvinnsmal']['per100_b'])} i Hugsvinnsmál och {f2(BT['mot_hedniska']['per100_b'])} i dialogerna. En slump skulle ge en så stor skillnad mot Hugsvinnsmál ungefär en gång på {ett_pa(BT['mot_hugsvinnsmal']['p'])}. Talen är små ({BT['mot_hugsvinnsmal']['a']} träffar mot {BT['mot_hugsvinnsmal']['b']}), så det är en antydan och inte ett bevis, men den pekar åt samma håll som texten: *Bú er betra, þótt lítit sé* – ett hem är bättre, om än litet. *Betra er lifðum en sé ólifðum* – bättre att leva än att vara död. Råden är sällan bud utan avvägningar mellan det sämre och det bättre, en fattigmansfilosofi där inget val är gratis.
+
+Den andra är vad jaget gör. I Hugsvinnsmál *bedömer* det: *hygg ek*, ’jag tror’, och *tel ek*, ’jag räknar’, utgör fem av dess åtta *ek*, och de övriga tre rammar in undervisningen. I Hávamáls gästvisdom *minns* jaget: *Ungr var ek forðum, fór ek einn saman* (47), ’ung var jag förr, jag for ensam’; *Mikilsti snemma kom ek í marga staði* (66), ’alltför tidigt kom jag till många platser’; *Fullar grindr sá ek fyr Fitjungs sonum* (78), ’fulla fållor såg jag hos Fitjungs söner – nu bär de tiggarstav’. Rådet vilar på en människas erfarenhet. I trollsångerna blir jaget kunnigt: *þat kann ek*, ’det kan jag’, {EKr['kann_ek']} gånger. Jag-formen i sig är inte unik för Hávamál, för dialogdikterna har lika mycket, men det är den som skiljer dikten från den kristna visdomsdikten.
+
+Två saker vi trodde oss se höll inte. Vi trodde först att Hávamál argumenterar med villkor, eftersom ordet *ef*, ’om’, är dubbelt så vanligt som i Hugsvinnsmál. Men {2 * EFr['refranger'][0]} av de {EFr['hela']['mot_hugsvinnsmal']['a']} *ef* står i Loddfáfnismáls refräng (*njóta mundu, ef þú nemr … ef þú getr*), och utan den är skillnaden borta ({svn(EFr['utan_refrang']['mot_hugsvinnsmal']['per100_a'], 1)} mot {svn(EFr['utan_refrang']['mot_hugsvinnsmal']['per100_b'], 1)} per hundra ord). Och Hávamál är inte mer befallande: *skal*-formerna står {svn(SK['mot_hugsvinnsmal']['per100_a'], 1)} gånger per hundra ord mot {svn(SK['mot_hugsvinnsmal']['per100_b'], 1)} i Hugsvinnsmál, en skillnad som lätt kan vara slump. Den Höge befaller lika mycket som den kristne läraren. Han motiverar annorlunda, och han har ingen domare.
+
+Den sista skillnaden fångar ingen räkning. I Hugsvinnsmál går gälden via Gud: *gjǫld af guði hygg ek gumnar taki*, ’gäld från Gud, tror jag, får människorna’ (135), och självprövningen gäller synd: *ef veizt þik syndgan sjálfr* (45), ’om du vet att du själv syndat’. I Hávamál står gälden mellan människor: *glík skulu gjöld gjöfum* (46), ’lika ska gälden vara gåvorna’.
+
 ## Hypotesen som föll: Hávamál låter inte som runstenarna
 
 Här kommer artikelns ärligaste fynd. Hávamáls mest berömda strofer säger samma sak som varje runsten: *Deyr fé, deyja frændr … en orðstírr deyr aldregi* – boskap dör, fränder dör, men eftermälet dör aldrig. Runstenarna är ju exakt det: eftermälen i sten. Så vi antog att förgänglighetsstroferna också skulle *låta* som runstenarna, och mätte varje strofs ordförråd mot de tvåhundra vanligaste orden på Nordens vikingatida runstenar – samma korpus som driver resten av Vitki.
@@ -129,15 +182,79 @@ Så delade vi korpusen per land – dikten är ju västnordisk, stenarna till st
 
 Ett möte finns till slut ändå, och det står i dikten själv: strof 72 säger att *bautastenar sällan står vid vägen om inte frände reser dem efter frände*. Seden strofen beskriver är exakt den vår runkorpus består av – tusentals stenar, resta vid vägar och broar, av fränder efter fränder. Det belägget är Evans, inte vårt. Men vår mätning lägger en egen liten vikt i samma vågskål: stenarnas språk ligger närmast diktens just i väster, där strofens bautastenar hör hemma.
 
+## Vad den Höge säger till en människa
+
+Det som följer är en läsning och inte ett mätresultat. Siffrorna ovan visar hur dikten talar; här frågar vi vad den säger. Vi håller oss till stroferna själva, översatta så ordagrant vi kan, och till det mätningarna pekade mot: ett jag som minns och en moral som ligger mellan människor.
+
+### Människan är människans glädje
+
+> *Ungr var ek forðum, fór ek einn saman, þá varð ek villr vega; auðigr þóttumk, er ek annan fann, maðr er manns gaman.*
+
+Ung var jag förr, jag for ensam; då gick jag vilse på vägen. Rik tyckte jag mig, när jag fann en annan: människan är människans glädje.
+
+Strof 47 hör till diktens mest mänskliga. En av de största farorna i Hávamál är inte döden utan ensamheten, och det säger strof 50 med en bild ur skogen:
+
+> *Hrörnar þöll, sú er stendr þorpi á, hlýr-at henni börkr né barr; svá er maðr, sá er manngi ann. Hvat skal hann lengi lifa?*
+
+Förtorkas gör tallen som står vid byn; varken bark eller barr skyddar henne. Så är den människa som ingen älskar. Varför ska en sådan leva länge?
+
+Rådet som följer är nästan tekniskt. Strof 119: *far þú at finna oft, því at hrísi vex ok hávu grasi vegr, er vættki treðr* – gå ofta och hälsa på din vän, för på en väg som ingen trampar växer buskar och högt gräs. Vänskap är ingen känsla utan ett underhåll.
+
+### Gåva mot gåva – och blotet
+
+> *Vin sínum skal maðr vinr vera ok gjalda gjöf við gjöf.*
+
+Mot sin vän ska man vara en vän och gälda gåva med gåva (42). De som ger och de som ger igen, säger strof 41, förblir längst vänner. Det är diktens ekonomi: ingen är skyldig någon något för alltid, och därför kan vänskapen leva.
+
+Samma tanke återkommer i ett av diktens mest främmande ord, blot. I strof 144 ställer den Höge åtta frågor – *veistu, hvé rísta skal*, ’vet du hur man ska rista’ – och en av dem är *veistu, hvé blóta skal*, ’vet du hur man ska blota’. Ett svar står i strof 145, och det är samma ömsesidighet:
+
+> *Betra er óbeðit en sé ofblótit, ey sér til gildis gjöf.*
+
+Bättre ej bedd än för mycket offrat; en gåva ser alltid efter sin gengåva (*gildi*). Blotet är alltså inte något främmande och högtidligt utan vänskapens bokföring riktad uppåt: man ger för att få, och man ska ge lagom. Dikten varnar för överdriften, men lika tydligt för snålheten: *mildir, fræknir menn bazt lifa*, ’frikostiga, tappra män lever bäst’ (48).
+
+Den dyraste gåvan i dikten är den Höges egen. I strof 138 hänger han nio nätter i trädet, *gefinn Óðni, sjalfr sjalfum mér*, ’given åt Oden, själv åt mig själv’, och i strof 139 får han varken bröd eller dryckeshorn. Det han köper är runorna, och han tar dem *æpandi*, ’skrikande’. Det som gör offret stort är inte att det är högt utan att det kostar.
+
+Vad blotar vi i dag? Det är en fråga som dikten inte ställer, men som dess ord gör rimlig, och här tillåter vi oss en tolkning som inte är diktens egen. Vi offrar något varje dag. Det som kostar har bara blivit något annat än boskap och mjöd: för oss har det dyrbara blivit vår tid och vår uppmärksamhet, och vi ger bort dem hela dagarna, ofta utan att fråga vad vi får tillbaka. Då är den Höges fråga inte ett arkaiskt krav utan en vass fråga om det egna livet: vet du hur du ska ge bort dina dagar, och vad väntar gåvan sig av dig? *Ey sér til gildis gjöf.* Och varningen gäller också här: *betra er óbeðit en sé ofblótit*. Man kan offra för mycket av sin uppmärksamhet åt sådant som aldrig ger något tillbaka.
+
+### Måttlig vishet
+
+> *Meðalsnotr skyli manna hverr, æva til snotr sé … örlög sín viti engi fyrir, þeim er sorgalausastr sefi.*
+
+Måttligt vis ska var människa vara, aldrig alltför vis … ingen ska i förväg veta sitt öde; då är sinnet friast från sorg (54, 56). Strof 55 går längre och säger att den alltför visas hjärta sällan blir glatt. Samma balans finns i strof 131: *varan bið ek þik vera ok eigi ofvaran*, ’vaksam ber du vara, men inte alltför vaksam’. Dikten som prisar kunskapen varnar alltså för för mycket av den, och det är ett märkligt råd i en tid då vi kan veta nästan allt om nästan alla, hela tiden.
+
+Uppmärksamheten är diktens första lärdom: *sá ek ok þagðak, sá ek ok hugðak, hlýdda ek á manna mál* (111), ’jag såg och teg, jag såg och tänkte, jag lyssnade till människornas tal’. Ordningen är att se, tiga, tänka och lyssna innan man talar. Samma strof är utgångspunkten för essän [Korpen som heter Minne](/artiklar/korpen-som-heter-minne).
+
+### Domen över de döda – och den Höges erkännande
+
+Strof 77 säger vad som består: *ek veit einn, at aldrei deyr: dómr um dauðan hvern* – jag vet ett som aldrig dör: domen över varje död. Domen som avses är eftermälets: det de levande säger om den döde, och därför är det enda som består ett gott namn (76). Det är samma tanke som reste varje runsten.
+
+Men det är en röst som inte gör sig själv felfri. I strof 105 säger den Höge om Gunnlöd, som gav honom mjödet:
+
+> *Gunnlöð mér of gaf gullnum stóli á drykk ins dýra mjaðar; ill iðgjöld lét ek hana eftir hafa síns ins heila hugar, síns ins svára sefa.*
+
+Gunnlöd gav mig, på gyllene stol, en dryck av den dyra mjöden; ond lön lät jag henne få för sitt hela hjärta, sitt tunga sinne.
+
+Den som har lärt ut att gälda gåva med gåva erkänner här att han själv gäldade en gåva illa. Det är samma jag som hänger i trädet i Runatal, och den röst som våra mätningar fann att de två delarna delar: Odens bekännelser. En visdom som kan säga *ill iðgjöld lét ek* är svårare att avfärda än en som aldrig misstar sig.
+
+### Att ta den till sig – eller låta den stå stilla
+
+Ska vi ta Hávamál till oss i dag, eller låta den vara en bild av våra förfäder, fryst i tiden? Dikten är ärlig om att mycket i den hör till sin tid. Rådet att inte gå ett steg från sina vapen på fältet (38) hör hemma i en värld utan polis, och rådet att aldrig lita på en kvinnas ord (84) är en misstro vi inte vill ta med oss – även om samma röst i strof 91 öppet säger att det är männens hjärta som är opålitligt mot kvinnorna. Den som tar hela dikten bokstavligt får både vishet och förhinder.
+
+Men det som hör till sin tid är svaren, inte frågorna: hur undviker jag ensamheten, hur håller jag vänner, vad ger jag för det jag får, hur mycket ska jag veta, och hur blir jag ihågkommen? Och dikten ber själv om att användas, inte bevaras. Loddfáfnismáls refräng lovar nytta åt den som tar emot: *njóta mundu, ef þú nemr*, ’du får nytta, om du tar det till dig’. Den sista strofen kallar orden *allþörf ýta sonum*, ’till stor nytta för människors söner’, och avslutas med välsignelser åt den som kvad, den som kan, den som lärt och dem som lyssnat: *njóti sá, er nam* (164), ’må den njuta som har lärt’. En bild fryst i tiden ger ingen någon nytta.
+
+Visdom är alltså tidsbunden i sina svar men inte i sina frågor, och den överlever bara så länge någon prövar den mot sitt eget liv. Strof 119 kan vem som helst pröva i kväll, genom att höra av sig till en vän man inte hört av på ett år. Det är vår läsning av vad det betyder att ta Hávamál till sig.
+
 :::box Så räknade vi
-Texten är Codex Regius-textens normaliserade utgåva (Guðni Jónsson), 164 strofer, cirka 5 000 ord. Rösterna räknades som *ek*- respektive *þú*-former per hundra ord. Sömsökningen jämför funktionsordens fördelning i tio strofer före mot tio efter varje punkt, utan kännedom om någon indelning. Skiktjämförelsen använder Burrows' Delta på de sextio vanligaste orden i strofblock om högst 22 strofer, kontrollerad mot stylo-paketets egen beräkning, med LDA-ämnen, typ/token-kvot och versgränser (utgåvans kommatering) som stöd. Runstensjämförelsen räknar andelen av strofens ordtyper som finns bland de tvåhundra vanligaste orden i Rundatas vikingatida runstensnormaliseringar, med ordformerna hopslagna över normaliseringstraditionerna. Landjämförelsen delar korpusen i svenska, danska (DR) och norska (N) stenar; eftersom en topplista ur en liten korpus når djupare ner i vardagsorden jämförs länderna efter slumpprov med lika många löpord, trehundra dragningar per land. All kod och alla resultatfiler ligger öppet i kodförrådet (utdata/Edda).
+Texten är Codex Regius-textens normaliserade utgåva (Guðni Jónsson), 164 strofer, cirka 5 000 ord. Rösterna räknades som *ek*- respektive *þú*-former per hundra ord. Sömsökningen jämför funktionsordens fördelning i tio strofer före mot tio efter varje punkt, utan kännedom om någon indelning. Skiktjämförelsen använder Burrows' Delta på de sextio vanligaste orden i strofblock om högst 22 strofer, kontrollerad mot stylo-paketets egen beräkning, med LDA-ämnen, typ/token-kvot och versgränser (utgåvans kommatering) som stöd. Runstensjämförelsen räknar andelen av strofens ordtyper som finns bland de tvåhundra vanligaste orden i Rundatas vikingatida runstensnormaliseringar, med ordformerna hopslagna över normaliseringstraditionerna. Landjämförelsen delar korpusen i svenska, danska (DR) och norska (N) stenar; eftersom en topplista ur en liten korpus når djupare ner i vardagsorden jämförs länderna efter slumpprov med lika många löpord, trehundra dragningar per land. Jämförelsen mot kristen och hednisk dikt gjordes med fasta ordlistor och Fishers exakta test, som frågar hur ofta en slump skulle ge en lika stor skillnad; vi anger det som ”en gång på …”. Jämförelsetexterna är Hugsvinnsmál (Finnur Jónssons utgåva), Sólarljóð och de sju hedniska dialogdikterna (Guðni Jónssons utgåvor) med {ORD['Hugsvinnsmál']}, {ORD['Sólarljóð']} och {ORD['hedniska_dialoger']} ord, mot Hávamáls {ORD['Hávamál']}. Eftersom utgåvorna stavar olika använde vi bara ord vars stavning är lika; ett första försök med nyckelord lades ned, eftersom det mest fångade stavningsskillnader. Hugsvinnsmál är dessutom en bearbetning av en latinsk förebild, så resultaten gäller just de här jämförelserna. Två mått kasserades när vi prövade dem mot sina egna artefakter: ordet *ef* (som mest speglar en refräng) och *skal* (som inte skiljer). All kod och alla resultatfiler ligger öppet i kodförrådet (utdata/Edda).
 :::
 
 :::box Det viktigaste i korthet
 - En blind sökning som inte vet var forskningen drar sina gränser hittar själv språksömmarna där Loddfáfnismál och Runatal börjar – men ingen alls vid strof 84, där en omdebatterad del sägs börja. Den övergången är språkligt mjuk, och det är ett nytt datum i en gammal debatt.
 - Gunnlöd-episoden och Runatal delar stil fast de inte står ihop i dikten – Odens bekännelser kan vara ett eget skikt, en parning som inte finns i forskningens scheman.
-- Diktens mest berömda tanke, att bara eftermälet består, delas med varje runsten – men språket delas inte: den första mätningen någonsin mot en hel runkorpus slutade i ett nej, och nejet betyder att dikt och minnesformel är två oberoende traditioner kring samma idé.
-- Delas runkorpusen per land ligger stenarnas vardagsspråk närmast dikten i väster och längst bort i öster – ett svagt men riktningsrätt eko av diktens västnordiska hemtrakt.
+- Dikten och runstenarna delar tanken att bara eftermälet består, men inte orden: den första mätningen någonsin mot en hel runkorpus slutade i ett nej, och det pekar på två oberoende traditioner. Delas korpusen per land ligger stenarnas vardagsspråk närmast dikten i väster – ett svagt men riktningsrätt eko av diktens västnordiska hemtrakt.
+- Mätt mot kristna dikter i samma versmått saknar Hávamál Gud, synd och själ helt, men delar vänskapens och gåvans etik med den kristna Hugsvinnsmál: den etiken är visdomens, inte hedendomens. Skillnaden är att råden vilar på avvägningar (”bättre … än”) och på ett jag som minns, och att gälden står mellan människor och inte inför en domare.
+- Blotet är i dikten samma ömsesidighet som vänskapen, riktad uppåt: man ger för att få, och man ska ge lagom. Det dyra är det som kostar – för oss har det blivit tid och uppmärksamhet.
+- Dikten är bunden till sin tid i sina svar men inte i sina frågor, och den ber själv om att användas, inte bevaras.
 - Inget av detta daterar eller placerar dikten: en enda handskrift från 1270-talet sätter gränsen för vad någon metod kan veta, och stilskillnad kan bero på genre lika väl som på hand eller tid.
 :::
 
@@ -147,17 +264,19 @@ Texten är Codex Regius-textens normaliserade utgåva (Guðni Jónsson), 164 str
 - Hávamál: Guðni Jónssons normaliserade utgåva av Codex Regius-texten (Eddukvæði, Sæmundar-Edda), via heimskringla.no.
 - Samnordisk runtextdatabas (Rundata), Institutionen för nordiska språk, Uppsala universitet, för runstensjämförelsen.
 - Analyskod och resultat: utdata/Edda i Vitkis kodförråd (R-paketen stylo, topicmodels, tidytext, quanteda, factoextra).
+- Hugsvinnsmál: Finnur Jónsson (utg.), Den norsk-islandske skjaldedigtning, 1912–15, via heimskringla.no. Sólarljóð och de hedniska dialogdikterna: Guðni Jónssons utgåvor, via heimskringla.no.
+- Gåvans etik: Marcel Mauss, ”Essai sur le don”, L’Année sociologique 1923–24. Debatten om Hugsvinnsmál och Hávamál: Klaus von See (1972) och David A. H. Evans (1986).
 - Bilder: Wikimedia Commons, public domain, med upphov i bildtexterna.
 
 *Stilometrin själv daterar och placerar ingenting – en enda handskrift från 1270-talet sätter den gränsen. Men den kan mäta sömmar, röster och ordvärldar, och lämna siffrorna öppna för runologer och filologer att pröva.*"""
 
-body_en = f"""Hávamál, "the words of the High One", is the North's most quoted poem: one hundred and sixty-four stanzas of wisdom, warnings, love adventures and magic, preserved in a single manuscript – the Codex Regius, written down in Iceland around 1270. For two hundred years scholars have debated whether the poem is one work or several joined together, where the seams run and what it really wants. Most of that debate is already settled ground, and we are not going to repeat it. This article keeps to what scholarship did not already know: four measurements that are new – one of which went against ourselves.
+body_en = f"""Hávamál, "the words of the High One", is the North's most quoted poem: one hundred and sixty-four stanzas of wisdom, warnings, love adventures and magic, preserved in a single manuscript – the Codex Regius, written down in Iceland around 1270. For two hundred years scholars have debated whether the poem is one work or several joined together, where the seams run and what it really wants. Most of that debate is already settled ground, and we are not going to repeat it. This article keeps to what scholarship did not already know: four measurements that are new – one of which went against ourselves – and, last, a reading of what the High One says to a person.
 
 ![Opening of the Codex Regius]({IMG_CR})
 The Codex Regius (GKS 2365 4to), written down around 1270 – Hávamál's only medieval source. Everything in this article is measured on that text's normalised edition (Guðni Jónsson). Image: public domain, via [Wikimedia Commons]({PAGE_CR}).
 
 :::box What was already known
-That Hávamál is composed of several pieces has been known since the nineteenth century (Müllenhoff; the modern analysis of the layers is John McKinnell's). Dating is also the field of others: most recently Mikael Males (2024), who tests six independent criteria and concludes that the poem most likely took its shape around 900–950. That Christian vocabulary is entirely absent – which our measurement confirms throughout – was one of David Evans's main arguments already in the 1980s, as was the evidence of place in stanza 72: *memorial stones* are unknown in Iceland but belong to pre-Christian Scandinavia. All of this is the starting point here, not a result.
+That Hávamál is composed of several pieces has been known since the nineteenth century (Müllenhoff; the modern analysis of the layers is John McKinnell's). Dating is also the field of others: most recently Mikael Males (2024), who tests six independent criteria and concludes that the poem most likely took its shape around 900–950. That Christian vocabulary is entirely absent – which our measurement confirms throughout – was one of David Evans's main arguments already in the 1980s, as was the evidence of place in stanza 72: *memorial stones* are unknown in Iceland but belong to pre-Christian Scandinavia. That gifts are to be repaid with gifts is just as familiar (Marcel Mauss used the stanzas in his classic study of the gift), and the relation to the Christian Hugsvinnsmál and its Latin model, the Disticha Catonis, is an old dispute (Klaus von See against Evans). All of this is the starting point here, not a result.
 :::
 
 ## The voices draw the architecture
@@ -200,6 +319,22 @@ Odin with Gunnlöð, drawn by Lorenz Frølich. The episode is short – eight st
 
 A third trace in the tree: the last stanzas of the guest wisdom, 67–83 – the region around *deyr fé* – drift away from the opening of their own part and settle nearer the counsel on women. Many scholars end the gnomic poem already at stanza 79, and our measurement, which has not read that debate, points to the same region: the end of part one does not quite belong, stylistically, with its beginning.
 
+## How the High One speaks – and what he never promises
+
+What kind of voice gives the advice? We set Hávamál against three groups of poems in the same metre, ljóðaháttr. The first is the pagan dialogue poems (Vafþrúðnismál, Grímnismál, Skírnismál, Lokasenna, Alvíssmál, Sigrdrífumál and Fjölsvinnsmál). The other two are Christian: *Sólarljóð*, a vision poem about a dead man who sees punishment and grace, and *Hugsvinnsmál*, a Christian adaptation of the Latin wisdom book Disticha Catonis. Hugsvinnsmál is the most interesting comparison, because like large parts of Hávamál it is advice from a father to his son.
+
+The first result is the expected one. Hávamál has not a single word from the Christian vocabulary – *guð*, *synd*, *sál*, *drottinn*, *náð* and their kin – while Hugsvinnsmál has them {e2(rk['Hugsvinnsmál']['per100'], 1)} times per hundred words and Sólarljóð {e2(rk['Sólarljóð']['per100'], 1)}. The pagan dialogues have none either. That is Evans's old evidence in numbers, not something new. (The word *bæn* occurs once in Hávamál, but in stanza 36 it means 'begging', not 'prayer': *þat er þó betra en bæn*, 'that is still better than begging'.)
+
+The second is more surprising: the ethics of friendship and gifts does not separate pagan from Christian. Words for gift and repayment stand {e2(G['mot_hugsvinnsmal']['per100_a'])} times per hundred words in Hávamál and {e2(G['mot_hugsvinnsmal']['per100_b'])} in Hugsvinnsmál, and words for friend {e2(VN['mot_hugsvinnsmal']['per100_a'])} against {e2(VN['mot_hugsvinnsmal']['per100_b'])} – but only {e2(G['mot_hedniska']['per100_b'])} and {e2(VN['mot_hedniska']['per100_b'])} in the pagan dialogues, roughly five to thirteen times more in the two wisdom poems. Repaying gift with gift and tending one's friends belong to wisdom literature, not to belief. That has been known since Marcel Mauss used Hávamál's gift stanzas in his classic study of the gift; what is added here is that it can be measured.
+
+The difference lies in two other things. The first is that Hávamál compares. The word *betra*, 'better', stands {e2(BT['mot_hugsvinnsmal']['per100_a'])} times per hundred words in the guest wisdom against {e2(BT['mot_hugsvinnsmal']['per100_b'])} in Hugsvinnsmál and {e2(BT['mot_hedniska']['per100_b'])} in the dialogues. Chance would produce a difference that large against Hugsvinnsmál about once in {ett_pa(BT['mot_hugsvinnsmal']['p'])}. The numbers are small ({BT['mot_hugsvinnsmal']['a']} hits against {BT['mot_hugsvinnsmal']['b']}), so it is a hint and not proof, but it points the same way as the text: *Bú er betra, þótt lítit sé* – a home is better, though small. *Betra er lifðum en sé ólifðum* – better to live than to be dead. The advice is seldom commands and mostly trade-offs between the worse and the better, a poor man's philosophy where no choice is free.
+
+The second is what the I does. In Hugsvinnsmál it *judges*: *hygg ek*, 'I think', and *tel ek*, 'I count', make up five of its eight *ek*, and the other three frame the teaching. In Hávamál's guest wisdom the I *remembers*: *Ungr var ek forðum, fór ek einn saman* (47), 'young I was once, I travelled alone'; *Mikilsti snemma kom ek í marga staði* (66), 'far too early I came to many places'; *Fullar grindr sá ek fyr Fitjungs sonum* (78), 'full folds I saw among Fitjung's sons – now they carry the beggar's staff'. The advice rests on a person's experience. In the charms the I becomes knowing: *þat kann ek*, 'that I know', {EKr['kann_ek']} times. The first person in itself is not unique to Hávamál, since the dialogue poems have as much, but it is what separates the poem from the Christian wisdom poem.
+
+Two things we thought we saw did not hold. We first thought Hávamál argues with conditions, because the word *ef*, 'if', is twice as common as in Hugsvinnsmál. But {2 * EFr['refranger'][0]} of the {EFr['hela']['mot_hugsvinnsmal']['a']} *ef* stand in the refrain of Loddfáfnismál (*njóta mundu, ef þú nemr … ef þú getr*), and without it the difference is gone ({e2(EFr['utan_refrang']['mot_hugsvinnsmal']['per100_a'], 1)} against {e2(EFr['utan_refrang']['mot_hugsvinnsmal']['per100_b'], 1)} per hundred words). Nor is Hávamál more commanding: the *skal* forms stand {e2(SK['mot_hugsvinnsmal']['per100_a'], 1)} times per hundred words against {e2(SK['mot_hugsvinnsmal']['per100_b'], 1)} in Hugsvinnsmál, a difference that could easily be chance. The High One commands as much as the Christian teacher. He gives reasons differently, and he has no judge.
+
+The last difference no count captures. In Hugsvinnsmál repayment runs through God: *gjǫld af guði hygg ek gumnar taki*, 'requital from God, I think, men receive' (135), and self-examination concerns sin: *ef veizt þik syndgan sjálfr* (45), 'if you know yourself sinful'. In Hávamál repayment stands between people: *glík skulu gjöld gjöfum* (46), 'let the repayment match the gifts'.
+
 ## The hypothesis that fell: Hávamál does not sound like the runestones
 
 Here is the article's most honest find. Hávamál's most famous stanzas say the same thing as every runestone: *Deyr fé, deyja frændr … en orðstírr deyr aldregi* – cattle die, kinsmen die, but the word-fame never dies. The runestones are precisely that: memorials in stone. So we assumed the impermanence stanzas would also *sound* like the runestones, and measured each stanza's vocabulary against the two hundred most common words on the North's Viking-age runestones – the same corpus that drives the rest of Vitki.
@@ -212,15 +347,79 @@ Then we split the corpus by country – the poem is after all West Norse, the st
 
 One meeting remains in the end, and it stands in the poem itself: stanza 72 says that *memorial stones seldom stand by the road unless kinsman raises them for kinsman*. The custom the stanza describes is exactly what our runic corpus consists of – thousands of stones, raised by roads and bridges, by kinsmen for kinsmen. That piece of evidence is Evans's, not ours. But our measurement adds a small weight of its own to the same scale: the language of the stones lies closest to the poem's precisely in the west, where the stanza's memorial stones belong.
 
+## What the High One says to a person
+
+What follows is a reading and not a measured result. The figures above show how the poem speaks; here we ask what it says. We keep to the stanzas themselves, translated as literally as we can, and to what the measurements pointed towards: an I that remembers and a morality that lies between people.
+
+### Man is man's joy
+
+> *Ungr var ek forðum, fór ek einn saman, þá varð ek villr vega; auðigr þóttumk, er ek annan fann, maðr er manns gaman.*
+
+Young I was once, I travelled alone; then I lost my way. Rich I felt when I found another: man is man's joy.
+
+Stanza 47 is among the poem's most human. One of the greatest dangers in Hávamál is not death but loneliness, and stanza 50 says so with an image from the forest:
+
+> *Hrörnar þöll, sú er stendr þorpi á, hlýr-at henni börkr né barr; svá er maðr, sá er manngi ann. Hvat skal hann lengi lifa?*
+
+The pine that stands by the village withers; neither bark nor needles shelter it. So is the person whom no one loves. Why should such a one live long?
+
+The advice that follows is almost technical. Stanza 119: *far þú at finna oft, því at hrísi vex ok hávu grasi vegr, er vættki treðr* – go often to see your friend, for on a road no one treads, brush and tall grass grow. Friendship is no feeling but maintenance.
+
+### Gift for gift – and the blót
+
+> *Vin sínum skal maðr vinr vera ok gjalda gjöf við gjöf.*
+
+To his friend a man should be a friend and repay gift with gift (42). Those who give and give back, says stanza 41, remain friends longest. That is the poem's economy: no one owes anyone anything forever, and so friendship can live.
+
+The same thought returns in one of the poem's strangest words, blót. In stanza 144 the High One asks eight questions – *veistu, hvé rísta skal*, 'do you know how to carve' – and one of them is *veistu, hvé blóta skal*, 'do you know how to sacrifice'. One answer stands in stanza 145, and it is the same reciprocity:
+
+> *Betra er óbeðit en sé ofblótit, ey sér til gildis gjöf.*
+
+Better not asked than over-sacrificed; a gift always looks for its return (*gildi*). The blót is thus nothing foreign and solemn but friendship's bookkeeping turned upwards: one gives in order to get, and one should give in measure. The poem warns against excess, but just as plainly against stinginess: *mildir, fræknir menn bazt lifa*, 'generous, brave men live best' (48).
+
+The costliest gift in the poem is the High One's own. In stanza 138 he hangs nine nights in the tree, *gefinn Óðni, sjalfr sjalfum mér*, 'given to Odin, myself to myself', and in stanza 139 he gets neither bread nor drinking horn. What he buys is the runes, and he takes them *æpandi*, 'screaming'. What makes the sacrifice great is not that it is lofty but that it costs.
+
+What do we sacrifice today? That is a question the poem does not ask, but its words make it reasonable, and here we allow ourselves an interpretation that is not the poem's own. We sacrifice something every day. What costs has simply become something other than cattle and mead: for us the precious has become our time and our attention, and we give them away all day long, often without asking what we get back. Then the High One's question is not an archaic demand but a sharp question about one's own life: do you know how to give away your days, and what does the gift expect of you? *Ey sér til gildis gjöf.* And the warning applies here too: *betra er óbeðit en sé ofblótit*. One can sacrifice too much of one's attention to things that never give anything back.
+
+### Moderate wisdom
+
+> *Meðalsnotr skyli manna hverr, æva til snotr sé … örlög sín viti engi fyrir, þeim er sorgalausastr sefi.*
+
+Moderately wise should everyone be, never too wise … let no one know their fate in advance; then the mind is freest from sorrow (54, 56). Stanza 55 goes further and says that the heart of the all-too-wise is seldom glad. The same balance is in stanza 131: *varan bið ek þik vera ok eigi ofvaran*, 'wary I bid you be, but not over-wary'. The poem that praises knowledge thus warns against too much of it, and that is a strange piece of advice in an age when we can know nearly everything about nearly everyone, all the time.
+
+Attention is the poem's first lesson: *sá ek ok þagðak, sá ek ok hugðak, hlýdda ek á manna mál* (111), 'I saw and kept silent, I saw and thought, I listened to the speech of men'. The order is to see, be silent, think and listen before speaking. The same stanza is the starting point of the essay [Korpen som heter Minne](/artiklar/korpen-som-heter-minne) (in Swedish).
+
+### The verdict on the dead – and the High One's confession
+
+Stanza 77 says what endures: *ek veit einn, at aldrei deyr: dómr um dauðan hvern* – I know one thing that never dies: the verdict on each dead person. The verdict meant is the posthumous one: what the living say about the dead, and so the only thing that endures is a good name (76). It is the same thought that raised every runestone.
+
+But this is a voice that does not make itself faultless. In stanza 105 the High One says of Gunnlöð, who gave him the mead:
+
+> *Gunnlöð mér of gaf gullnum stóli á drykk ins dýra mjaðar; ill iðgjöld lét ek hana eftir hafa síns ins heila hugar, síns ins svára sefa.*
+
+Gunnlöð gave me, on a golden stool, a drink of the precious mead; bad repayment I let her have for her whole heart, her heavy mind.
+
+He who has taught repaying gift with gift admits here that he himself repaid a gift badly. It is the same I that hangs in the tree in Rúnatal, and the voice our measurements found the two parts to share: Odin's confessions. A wisdom that can say *ill iðgjöld lét ek* is harder to dismiss than one that never errs.
+
+### Taking it to heart – or letting it stand still
+
+Should we take Hávamál to heart today, or let it be a picture of our ancestors, frozen in time? The poem is honest that much in it belongs to its time. The advice never to go a step from one's weapons in the field (38) belongs in a world without police, and the advice never to trust a woman's word (84) is a distrust we do not want to carry with us – even though the same voice in stanza 91 says openly that it is men's hearts that are unreliable towards women. Whoever takes the whole poem literally gets both wisdom and hindrance.
+
+But what belongs to its time is the answers, not the questions: how do I avoid loneliness, how do I keep friends, what do I give for what I get, how much should I know, and how will I be remembered? And the poem itself asks to be used, not preserved. The refrain of Loddfáfnismál promises benefit to the one who receives: *njóta mundu, ef þú nemr*, 'you will benefit, if you take it in'. The last stanza calls the words *allþörf ýta sonum*, 'of great use to the sons of men', and closes with blessings on the one who spoke, the one who knows, the one who has learned and those who listened: *njóti sá, er nam* (164), 'may he enjoy who has learned'. A picture frozen in time is of use to no one.
+
+Wisdom, then, is bound to its time in its answers but not in its questions, and it survives only as long as someone tests it against their own life. Stanza 119 anyone can test tonight, by getting in touch with a friend one has not heard from in a year. That is our reading of what it means to take Hávamál to heart.
+
 :::box How we counted
-The text is the Codex Regius text in its normalised edition (Guðni Jónsson), 164 stanzas, about 5,000 words. The voices were counted as *ek* and *þú* forms per hundred words. The seam search compares the distribution of function words in ten stanzas before against ten after every point, with no knowledge of any division. The layer comparison uses Burrows' Delta on the sixty most common words in blocks of at most 22 stanzas, checked against the stylo package's own computation, with LDA topics, type/token ratio and verse boundaries (the edition's punctuation) as support. The runestone comparison counts the share of a stanza's word types found among the two hundred most common words in Rundata's Viking-age runestone normalisations, with word forms merged across the normalisation traditions. The country comparison splits the corpus into Swedish, Danish (DR) and Norwegian (N) stones; since a top list from a small corpus reaches deeper into everyday words, the countries are compared on random samples with equal numbers of running words, three hundred draws per country. All code and result files are open in the repository (utdata/Edda).
+The text is the Codex Regius text in its normalised edition (Guðni Jónsson), 164 stanzas, about 5,000 words. The voices were counted as *ek* and *þú* forms per hundred words. The seam search compares the distribution of function words in ten stanzas before against ten after every point, with no knowledge of any division. The layer comparison uses Burrows' Delta on the sixty most common words in blocks of at most 22 stanzas, checked against the stylo package's own computation, with LDA topics, type/token ratio and verse boundaries (the edition's punctuation) as support. The runestone comparison counts the share of a stanza's word types found among the two hundred most common words in Rundata's Viking-age runestone normalisations, with word forms merged across the normalisation traditions. The country comparison splits the corpus into Swedish, Danish (DR) and Norwegian (N) stones; since a top list from a small corpus reaches deeper into everyday words, the countries are compared on random samples with equal numbers of running words, three hundred draws per country. The comparison against Christian and pagan poetry used fixed word lists and Fisher's exact test, which asks how often chance would produce a difference that large; we give it as 'once in …'. The comparison texts are Hugsvinnsmál (Finnur Jónsson's edition), Sólarljóð and the seven pagan dialogue poems (Guðni Jónsson's editions) with {ORD['Hugsvinnsmál']}, {ORD['Sólarljóð']} and {ORD['hedniska_dialoger']} words, against Hávamál's {ORD['Hávamál']}. Because the editions spell differently we used only words with equal spelling; a first attempt with keywords was dropped because it mostly caught spelling differences. Hugsvinnsmál is, moreover, an adaptation of a Latin model, so the results hold for these comparisons only. Two measures were discarded when we tested them against their own artefacts: the word *ef* (which mostly reflects a refrain) and *skal* (which does not separate). All code and result files are open in the repository (utdata/Edda).
 :::
 
 :::box The essentials in brief
 - A blind search that does not know where scholarship draws its boundaries finds by itself the language seams where Loddfáfnismál and Rúnatal begin – but none at all at stanza 84, where a much-debated part is said to start. That transition is linguistically soft, and that is a new datum in an old debate.
 - The Gunnlöð episode and Rúnatal share a style though they do not stand together in the poem – Odin's confessions may be a layer of their own, a pairing that exists in none of scholarship's schemes.
-- The poem's most famous thought, that only the word-fame endures, is shared with every runestone – but the language is not: the first measurement ever against a whole runic corpus ended in a no, and the no means that poem and memorial formula are two independent traditions around the same idea.
-- Split the runic corpus by country and the stones' everyday language lies closest to the poem in the west and furthest away in the east – a faint but well-aimed echo of the poem's West Norse homeland.
+- The poem and the runestones share the thought that only the word-fame endures, but not the words: the first measurement ever against a whole runic corpus ended in a no, which points to two independent traditions. Split by country, the stones' everyday language lies closest to the poem in the west – a faint but well-aimed echo of the poem's West Norse homeland.
+- Measured against Christian poems in the same metre, Hávamál lacks God, sin and soul entirely, but shares the ethics of friendship and gifts with the Christian Hugsvinnsmál: that ethics belongs to wisdom, not to paganism. The difference is that the advice rests on trade-offs ('better … than') and on an I that remembers, and that repayment stands between people and not before a judge.
+- The blót is in the poem the same reciprocity as friendship, turned upwards: one gives in order to get, and should give in measure. What is precious is what costs – for us it has become time and attention.
+- The poem is bound to its time in its answers but not in its questions, and it asks itself to be used, not preserved.
 - None of this dates or places the poem: a single manuscript from the 1270s sets the limit of what any method can know, and style difference can stem from genre as well as from hand or time.
 :::
 
@@ -230,6 +429,8 @@ The text is the Codex Regius text in its normalised edition (Guðni Jónsson), 1
 - Hávamál: Guðni Jónsson's normalised edition of the Codex Regius text (Eddukvæði, Sæmundar-Edda), via heimskringla.no.
 - The Scandinavian Runic Text Database (Rundata), Uppsala University, for the runestone comparison.
 - Analysis code and results: utdata/Edda in Vitki's repository (the R packages stylo, topicmodels, tidytext, quanteda, factoextra).
+- Hugsvinnsmál: Finnur Jónsson (ed.), Den norsk-islandske skjaldedigtning, 1912–15, via heimskringla.no. Sólarljóð and the pagan dialogue poems: Guðni Jónsson's editions, via heimskringla.no.
+- The ethics of the gift: Marcel Mauss, 'Essai sur le don', L'Année sociologique 1923–24. The debate on Hugsvinnsmál and Hávamál: Klaus von See (1972) and David A. H. Evans (1986).
 - Images: Wikimedia Commons, public domain, with credits in the captions.
 
 *Stylometry itself dates and places nothing – a single manuscript from the 1270s sets that limit. But it can measure seams, voices and word worlds, and leave the figures open for runologists and philologists to test.*"""
@@ -246,10 +447,9 @@ out = {"slug": "vem-talar-i-havamal", "title": title, "summary": summary, "body"
        "title_en": "Who Is Speaking in Hávamál?",
        "summary_en": ("The Edda's wisdom poem has been worked over by two hundred years of scholarship – so this "
                       "article keeps to what no one has shown before. A blind seam search finds two of the poem's "
-                      "boundaries on its own but declares a third one soft, two of Odin's confessions turn out to "
-                      "share a style though they do not stand together, and for the first time the poem is "
-                      "measured against the North's collected runestones. There our own hypothesis fell – and "
-                      "was replaced by a trail pointing west, towards the poem's homeland."),
+                      "boundaries on its own but declares a third one soft, the poem is measured against the North's "
+                      "runestones and against Christian poems in the same metre, and last comes a reading of what the "
+                      "High One says about loneliness, gift and blót – and what we sacrifice today."),
        "body_en": body_en}
 json.dump(out, open(os.path.join(ROOT, "utdata", "blogg", "havamalartikel.json"), "w"), ensure_ascii=False, indent=1)
 print(os.path.join(ROOT, "utdata", "blogg", "havamalartikel.json"), len(body), len(body_en))
