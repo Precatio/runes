@@ -123,8 +123,10 @@ LIMITATIONS = [
     {"key": "exploratory", "contexts": {"statistics", "research", "attribution"},
      "title": "Många utforskande test på samma data",
      "text": "Plattformen kör många analyser på samma korpus (ortografi, språkdrag, R-modeller, Forskningsluckor, "
-             "syntes). P-värdena är justerade inom varje analys men inte över plattformen som helhet. Ett automatiskt "
-             "fynd är en hypotes att pröva med en förhandsbestämd analysplan, inte ett resultat.",
+             "syntes), och i Pröva en egen fråga kan användaren själv pröva hur många samband som helst. P-värdena är "
+             "justerade inom varje analys och över en användares frågor under ett besök, men inte över plattformen som "
+             "helhet. Ett automatiskt fynd eller ett svar på en egen fråga är en hypotes att pröva med en "
+             "förhandsbestämd analysplan, inte ett resultat.",
      "short": "Många samband prövas samtidigt, så en del av dem är slump; fynden är idéer att pröva vidare.",
      "needed": "Förregistrerade analysplaner för de hypoteser som ska publiceras."},
     {"key": "size", "contexts": {"research", "rundata"},

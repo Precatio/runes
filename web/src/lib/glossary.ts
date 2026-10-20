@@ -156,3 +156,10 @@ Object.assign(GLOSSARY, {
   "Fynd": "Metoden, vad den föreslår och vad Rundata anger, med nyare källor, bergart och språkdrag under.",
 });
 GLOSSARY["Båda halvorna"] = "En kontroll av att ett mönster inte är en slump: stenarna delas socken för socken i två grupper med samma trakter och ungefär samma tid, och analysen görs om i varje grupp för sig. Syns mönstret i båda beror det inte på några enskilda socknar eller ristare.";
+// Pröva en egen fråga (components/OwnQuestion.tsx, src/question.py)
+Object.assign(GLOSSARY, {
+  "Oddskvot": "Hur mycket större oddsen för draget är i den ena gruppen än i den andra. 1 betyder ingen skillnad, 2 dubbelt så stora odds, 0,5 hälften. Intervallet (95 %) visar hur säkert talet är: innehåller det 1 kan skillnaden vara slump.",
+  "Justerat för landskap och tid": "Stenarna jämförs bara med stenar från samma landskap och samma tidsskikt (stilgruppens datering; odaterade stenar för sig), och resultaten vägs sedan samman (Mantel–Haenszel). Då kan ett drag inte se vanligt ut bara för att det hör till en viss trakt eller tid.",
+  "Ristarprovet": "Frågan räknas om utan var och en av de fem ristare som har flest stenar i underlaget. Håller mönstret även utan den ristare som påverkar det mest, beror det inte på en enda ristares vanor.",
+  "Frågor under besöket": "Ju fler frågor man prövar, desto fler slår igenom av en slump. De p-värden du fått under besöket justeras därför tillsammans (Benjamini–Hochberg) till q. Ett mönster som bara klarar p men inte q bör prövas igen på ett annat underlag.",
+});

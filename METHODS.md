@@ -404,6 +404,43 @@ när något *påstås* och djärvhet när något *föreslås*. Sedan 2026-10-12 
 * **Regel för kritik** (också Runes instruktion): fel – siffror, nämnare, dubbelräkning, vilseledande ord – rättas alltid.
   Försiktighet ändrar formuleringen men tar aldrig bort ett ärligt märkt mönster.
 
+### 1y. Pröva en egen fråga
+
+Kortet *Pröva en egen fråga* på Statistik (R) (`src/question.py`, `POST /api/research/question`, sedan 2026-10-20) låter
+en forskare ställa en egen fråga till korpusen med samma disciplin som R-modulerna: är draget A vanligare eller
+ovanligare där B gäller? Ingen fri text och ingen AI; frågan byggs av två listor.
+
+* **Underlag.** Samma rader som korpusanalyserna i R (`r_bridge.corpus_rows`): bara runstenar, 2 321 stycken. A är ett av
+  22 drag – kartans mönster (tro, skrift, innehåll), fyra språkdrag ur avsnitt 9 (*auk*, *at* i minnesformeln, h skrivet,
+  nasal skriven), bindrunor, självminne och två ristaruppgifter (ristare i Rundata, signerad). B är ett annat drag, ett
+  landskap (minst 15 stenar), en tidsgräns (1020, 1050 eller 1075 som på kartan, efter stilgruppens mittår) eller en
+  bergartsfamilj (avsnitt 11). Stenar där A eller B inte kan avgöras räknas inte, och antalet redovisas.
+* **Justering.** Mantel–Haenszel över skikt: landskap × tidsskikt (före 1020, 1020–1050, 1050–1075, 1075 och senare,
+  odaterade stenar som ett eget skikt) för drag och bergart, bara tidsskikt för ett landskap och bara landskap för en
+  tidsgräns. Oddskvoten har ett 95 %-intervall enligt Robins–Breslow–Greenland och testet är CMH med
+  kontinuitetskorrektion. Andelarna visas råa med Wilsons intervall och skillnaden med Newcombes.
+* **Halvprovet.** Halvorna är desamma för alla frågor och bestäms en gång: hela socknar växelvis inom varje landskap i
+  ordning efter socknens medeldatering (odaterade sist), som i `r/change.R` och `r/hotspots.R`. Ett mönster *håller*
+  bara om CMH-testet ger p < 0,05 i hela korpusen och samma riktning med p < 0,05 i båda halvorna; annars är det *bara i
+  hela korpusen*. **Ristarprovet** räknar om frågan utan var och en av de fem ristare som har flest stenar i underlaget
+  och redovisar den sämsta utgången.
+* **Många frågor.** P-värdena för de frågor som ställts tidigare under besöket skickas med och justeras tillsammans med
+  den nya (Benjamini–Hochberg). Ett mönster som håller i halvorna men inte efter justeringen märks så. Listan nollställs
+  bara när användaren väljer det.
+* **Spärrar.** Par där det ena draget ingår i det andras definition (kristna markörer och kristen bön, signatur och
+  signerad m.fl.) prövas inte. Minst 10 stenar på var sida och minst 5 med och utan A krävs, och minst 5 stenar med och
+  utan A ska vara väntade på den mindre sidan – annars kan provet inte se en skillnad ens om den finns, och "ingen
+  skillnad" vore missvisande.
+* **Prövat (`tests/test_question.py`).** En tabell ger samma oddskvot, intervall och p som läroboken (Woolf, Yates ×
+  (n − 1)/n). Kända mönster håller: *at* i Södermanland (61 mot 17 procent), monoftong i Västergötland, stungna runor
+  från 1075 och bönen som blir ovanligare från 1050 (*Bönen tystnade*). *r för ʀ* i Uppland syns i hela korpusen (p
+  0,0009) men inte i ena halvan (p 0,40) och märks som bara i hela. Nollfallet: med draget omblandat mellan stenarna gav
+  1 000 frågor p < 0,05 i hela korpusen i 3,3 procent och höll i båda halvorna i ingen.
+* **Vad svaret inte är.** Ett samband, inte en orsak; stenar av samma ristare räknas var för sig (ristarprovet och
+  halvorna skyddar men tar inte bort det); tidsskikten bygger på stilgruppen, som hälften av stenarna saknar. Ett svar
+  som ska användas i en artikel kräver en analysplan (1x) som skrevs innan frågan ställdes – listan över besökets frågor
+  visar hur många som prövats.
+
 ## 2. Huggspårsmått (mätmetod `groove-5`)
 
 Källkod: `src/slice_analysis.py`.

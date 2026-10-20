@@ -8,6 +8,7 @@ import { GLOSSARY } from "@/lib/glossary";
 import Link from "next/link";
 import { API_URL } from "@/lib/api";
 import ExportTable from "@/components/ExportTable";
+import OwnQuestion from "@/components/OwnQuestion";
 import PlotlyGraph from "@/components/PlotlyGraph";
 
 interface Status {
@@ -123,7 +124,7 @@ interface Corpus {
   overview?: { paragraphs: string[]; next_steps: string[] };
 }
 
-type Tab = "overview" | "geography" | "clusters" | "text" | "attribution" | "anonymous" | "chronology" | "change" | "network" | "words";
+type Tab = "overview" | "question" | "geography" | "clusters" | "text" | "attribution" | "anonymous" | "chronology" | "change" | "network" | "words";
 
 const d2 = (v: number | null | undefined, k = 2) => v == null ? "–" : v.toFixed(k).replace(".", ",");
 const pc = (v: number | null | undefined) => v == null ? "–" : `${Math.round(v * 100)} %`;
@@ -194,7 +195,7 @@ const patternsFor = (patterns: Pattern[], key: string) => patterns.filter(p => (
 const TOPIC: Record<string, string> = {
   attribution: "Vem ristade?", anonymous: "Okända ristare", change: "Förändring", chronology: "Datering",
   geography: "Geografi", text: "Stavning och dialekt", clusters: "Grupper av stenar", network: "Formler och släkt",
-  words: "Ordförrådet",
+  words: "Ordförrådet", question: "Egen fråga",
 };
 
 // The answer first: question, why it matters, the key number, the answer, a suggested interpretation and its limits
@@ -293,6 +294,7 @@ export default function StatistikPage() {
       if (cancelled) return;
       setStatus(st);
       memo.status = st;
+      if (window.location.hash === "#egen-fraga") setTab("question");
       if (st.corpus?.ready && !(memo.data && memo.fingerprint === st.corpus.fingerprint)) {
         const res = await fetch(`${API_URL}/api/r/corpus`);
         if (res.ok && !cancelled) {
@@ -385,10 +387,15 @@ export default function StatistikPage() {
         </div>
       )}
 
+      {!data && status && (
+        <div className="liquid-glass-island rounded-[32px] p-5 md:p-7"><OwnQuestion /></div>
+      )}
+
       {data && (
         <>
           <nav aria-label="Frågor" className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
             {[{ key: "overview" as Tab, question: "Vad säger statistiken sammantaget?", confidence: null as Level | null },
+              { key: "question" as Tab, question: "Pröva en egen fråga", confidence: null as Level | null },
               ...(data.sections ?? []).map(x => ({ key: x.key, question: x.question, confidence: x.confidence as Level | null }))].map(card => (
               <button key={card.key} type="button" onClick={() => setTab(card.key)} aria-pressed={tab === card.key}
                 className={`text-left rounded-2xl border p-3 transition-colors ${tab === card.key
@@ -405,6 +412,7 @@ export default function StatistikPage() {
           </nav>
           <div className="liquid-glass-island rounded-[32px] p-5 md:p-7 space-y-5">
             {tab === "overview" && <Overview data={data} onOpen={setTab} />}
+            {tab === "question" && <OwnQuestion />}
             {tab === "geography" && <Geography data={data} />}
             {tab === "clusters" && <Clusters data={data} />}
             {tab === "text" && <TextTab data={data} />}

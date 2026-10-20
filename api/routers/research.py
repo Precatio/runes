@@ -32,6 +32,44 @@ def _open_questions() -> dict:
     return gaps.open_questions(store().inscriptions)
 
 
+class QuestionRequest(BaseModel):
+    a: str
+    kind: str  # drag, landskap, tid or bergart
+    key: str
+    # p-values of the questions asked earlier in the visit, adjusted together with this one (Benjamini–Hochberg)
+    earlier: list[float] = Field(default_factory=list, max_length=500)
+
+
+@lru_cache(maxsize=2)
+def _question_prep(_stamp: int) -> dict:
+    from src import question, r_bridge as rb
+    return question.prepare(rb.corpus_rows(store().inscriptions, orthography_model().names))
+
+
+def _question() -> dict:
+    return _question_prep(id(store().inscriptions))
+
+
+@router.get("/question/options")
+def question_options():
+    """Det som går att välja i Pröva en egen fråga (src/question.py): dragen, landskapen, tidsgränserna och
+    bergartsfamiljerna, med antal runstenar."""
+    from src import question
+    return question.options(_question())
+
+
+@router.post("/question")
+def ask_question(req: QuestionRequest):
+    """Pröva en egen fråga: är draget A vanligare där B gäller? Justerat för landskap och tid, prövat i två halvor av
+    socknarna och utan de flitigaste ristarna, med tidigare frågor BH-justerade tillsammans (METHODS.md 1y)."""
+    from fastapi import HTTPException
+    from src import question
+    try:
+        return question.ask(_question(), req.a, req.kind, req.key if req.kind != "tid" else int(req.key), req.earlier)
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+
+
 @router.get("/gaps/textmodel")
 def textmodel_gaps():
     """Sannolikhetsmodellens öppna luckor (data/textmodel_candidates.json, scripts/textmodel_candidates.py): luckor som

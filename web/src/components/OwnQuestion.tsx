@@ -1,0 +1,285 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+import { API_URL } from "@/lib/api";
+import { GLOSSARY } from "@/lib/glossary";
+import { Tip } from "@/components/Explain";
+
+// Pröva en egen fråga (POST /api/research/question, src/question.py; METHODS.md 1y): a trait A against another trait,
+// a province, a time limit or a rock family, adjusted for province and time, tested in both halves of the parishes and
+// without the most prolific carvers. No free text and no AI. The questions of the visit are kept in sessionStorage so
+// that their p-values can be adjusted together.
+interface Variable { key: string; label: string; group: string; help: string; n: number; k: number }
+interface Choice { key: string; label: string; n: number }
+interface Options {
+  variables: Variable[]; provinces: Choice[]; families: Choice[];
+  splits: { year: number; n_before: number; n_after: number }[]; n_stones: number;
+}
+interface Share { n: number; k: number; share: number | null; ci: [number, number] }
+interface MH { or: number | null; ci: [number, number] | null; p: number | null; direction: number; strata: number }
+interface Half extends MH { n: number; share_with_b: number | null; share_without_b: number | null }
+interface Answer {
+  a: { key: string; label: string; help: string };
+  b: { kind: Kind; key: string | number; label: string; help: string; yes: string; no: string; adjusted: string };
+  verdict: "håller" | "håller men inte justerat" | "bara i hela" | "ingen skillnad" | "för få" | "kopplade" | "samma";
+  reason?: string; n?: number; missing?: number; with_b?: Share; without_b?: Share;
+  difference?: { value: number; ci: [number, number] }; adjusted?: MH;
+  halves?: { A: Half; B: Half; replicated: boolean };
+  carver_check?: { carver: string; n: number; or: number | null; p: number; holds: boolean } | null;
+  q?: number; n_questions?: number;
+}
+type Kind = "drag" | "landskap" | "tid" | "bergart";
+interface Asked { a: string; b: string; verdict: Answer["verdict"]; p: number }
+
+const KINDS: [Kind, string][] = [["landskap", "ett landskap"], ["tid", "en tidsgräns"], ["drag", "ett annat drag"], ["bergart", "en bergart"]];
+const STORE = "vitki-egna-fragor";
+const pct = (x: number | null | undefined) => (x == null ? "–" : `${Math.round(x * 100)} %`);
+const num = (x: number | null | undefined, d = 2) => (x == null ? "–" : x.toFixed(d).replace(".", ","));
+const pText = (p: number | null | undefined) =>
+  p == null ? "–" : p < 0.0001 ? "under 0,0001" : p < 0.001 ? "under 0,001" : num(p, p < 0.01 ? 3 : 2);
+// "p under 0,001" or "p = 0,03"
+const pIs = (p: number | null | undefined) => (p != null && p < 0.001 ? pText(p) : `= ${pText(p)}`);
+// What was held constant, in the definite form the sentences need
+const HELD: Record<string, string> = { tid: "tiden", landskap: "landskapet", "landskap och tid": "landskap och tid" };
+// "fewer than 1 in N": a p-value in plain words, rounded down to a readable 1-in-N
+const oneIn = (p: number) => {
+  for (const n of [1_000_000, 100_000, 10_000, 1000, 100, 20]) if (p < 1 / n) return n.toLocaleString("sv-SE");
+  return null;
+};
+
+const VERDICT: Record<Answer["verdict"], { label: string; style: string }> = {
+  "håller": { label: "Håller", style: "bg-emerald-50 text-emerald-800 border-emerald-200" },
+  "håller men inte justerat": { label: "Håller, men inte efter alla frågor", style: "bg-amber-50 text-amber-900 border-amber-200" },
+  "bara i hela": { label: "Bara i hela korpusen", style: "bg-amber-50 text-amber-900 border-amber-200" },
+  "ingen skillnad": { label: "Ingen säker skillnad", style: "bg-slate-100 text-slate-700 border-slate-300" },
+  "för få": { label: "För få stenar", style: "bg-slate-100 text-slate-700 border-slate-300" },
+  "kopplade": { label: "Samma sak per definition", style: "bg-slate-100 text-slate-700 border-slate-300" },
+  "samma": { label: "Samma drag", style: "bg-slate-100 text-slate-700 border-slate-300" },
+};
+
+function loadAsked(): Asked[] {
+  try { return JSON.parse(sessionStorage.getItem(STORE) || "[]"); } catch { return []; }
+}
+function saveAsked(list: Asked[]) {
+  try { sessionStorage.setItem(STORE, JSON.stringify(list)); } catch { /* private window: the list lives in memory */ }
+}
+
+export default function OwnQuestion() {
+  const [opts, setOpts] = useState<Options | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [a, setA] = useState("stungna");
+  const [kind, setKind] = useState<Kind>("tid");
+  const [key, setKey] = useState("1075");
+  const [answer, setAnswer] = useState<Answer | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [asked, setAsked] = useState<Asked[]>(loadAsked);
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/research/question/options`).then(r => r.json()).then(setOpts)
+      .catch(() => setError("Kunde inte nå analysmotorn."));
+  }, []);
+
+  const groups = useMemo(() => {
+    const out: Record<string, Variable[]> = {};
+    for (const v of opts?.variables ?? []) (out[v.group] ??= []).push(v);
+    return out;
+  }, [opts]);
+
+  const keyChoices: { key: string; label: string }[] = !opts ? [] : kind === "landskap"
+    ? opts.provinces.map(p => ({ key: p.key, label: `${p.label} (${p.n})` }))
+    : kind === "tid" ? opts.splits.map(s => ({ key: String(s.year), label: `före och från ${s.year} (${s.n_before} mot ${s.n_after})` }))
+    : kind === "bergart" ? opts.families.map(f => ({ key: f.key, label: `${f.label} (${f.n})` }))
+    : opts.variables.filter(v => v.key !== a).map(v => ({ key: v.key, label: `${v.label} (${v.k} av ${v.n})` }));
+
+  const chooseKind = (k: Kind) => {
+    setKind(k);
+    setKey(k === "landskap" ? "U" : k === "tid" ? "1050" : k === "bergart" ? "granitoid" : a === "bon" ? "bro" : "bon");
+  };
+
+  const ask = async () => {
+    setBusy(true); setError(null);
+    try {
+      const res = await fetch(`${API_URL}/api/research/question`, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ a, kind, key, earlier: asked.map(x => x.p) }),
+      });
+      if (!res.ok) throw new Error((await res.json().catch(() => null))?.detail || `Fel ${res.status}`);
+      const d: Answer = await res.json();
+      setAnswer(d);
+      if (d.adjusted?.p != null) {
+        const list = [...asked, { a: d.a.label, b: d.b.yes, verdict: d.verdict, p: d.adjusted.p }];
+        setAsked(list); saveAsked(list);
+      }
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Frågan kunde inte prövas.");
+    } finally {
+      setBusy(false);
+    }
+  };
+  const clear = () => { setAsked([]); saveAsked([]); };
+
+  const field = "w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900";
+  return (
+    <div className="space-y-5" id="egen-fraga">
+      <div className="max-w-3xl">
+        <div className="text-[11px] font-bold uppercase tracking-wider text-[#b7410e]">Egen fråga</div>
+        <h3 className="text-2xl font-bold tracking-tight text-slate-900">Pröva en egen fråga</h3>
+        <p className="text-slate-600 mt-1">
+          Välj ett drag och vad det ska jämföras med. Svaret räknas på samma {opts?.n_stones.toLocaleString("sv-SE") ?? ""} runstenar
+          som analyserna ovan, <Tip text={GLOSSARY["Justerat för landskap och tid"]}>justerat för landskap och tid</Tip>,
+          och räknas som ett mönster bara om det håller i <Tip text={GLOSSARY["Båda halvorna"]}>båda halvorna</Tip> av
+          socknarna. Ingen fri text och ingen AI – bara frågor som går att räkna ärligt.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr_auto] gap-3 items-end">
+        <label className="text-xs font-semibold text-slate-600 space-y-1">
+          <span>Är draget</span>
+          <select value={a} onChange={e => { setA(e.target.value); if (kind === "drag" && key === e.target.value) setKey(e.target.value === "bon" ? "bro" : "bon"); }} className={field}>
+            {Object.entries(groups).map(([g, vs]) => (
+              <optgroup key={g} label={g}>
+                {vs.map(v => <option key={v.key} value={v.key}>{v.label} ({v.k} av {v.n})</option>)}
+              </optgroup>
+            ))}
+          </select>
+        </label>
+        <label className="text-xs font-semibold text-slate-600 space-y-1">
+          <span>vanligare eller ovanligare i</span>
+          <select value={kind} onChange={e => chooseKind(e.target.value as Kind)} className={field}>
+            {KINDS.map(([k, l]) => <option key={k} value={k}>{l}</option>)}
+          </select>
+        </label>
+        <label className="text-xs font-semibold text-slate-600 space-y-1">
+          <span>{kind === "drag" ? "nämligen stenar med" : "nämligen"}</span>
+          <select value={key} onChange={e => setKey(e.target.value)} className={field}>
+            {keyChoices.map(c => <option key={c.key} value={c.key}>{c.label}</option>)}
+          </select>
+        </label>
+        <button type="button" onClick={ask} disabled={busy || !opts}
+          className="px-5 py-2 rounded-xl bg-slate-900 text-white text-sm font-bold disabled:opacity-50">
+          {busy ? "Räknar …" : "Pröva"}
+        </button>
+      </div>
+      {opts && <p className="text-xs text-slate-500">{opts.variables.find(v => v.key === a)?.help} Talen i listan är stenar med draget av de stenar där det går att avgöra.</p>}
+      {error && <p className="text-sm font-semibold text-red-700">{error}</p>}
+
+      {answer && <Result d={answer} />}
+
+      {asked.length > 0 && (
+        <div className="rounded-2xl bg-white border border-slate-200 p-4">
+          <div className="flex items-center justify-between gap-2">
+            <h4 className="font-bold text-slate-900 text-sm">
+              <Tip text={GLOSSARY["Frågor under besöket"]}>Frågor under besöket</Tip> ({asked.length})
+            </h4>
+            <button type="button" onClick={clear} className="px-2.5 py-1 rounded-lg border border-slate-300 bg-white text-xs font-bold">Börja om</button>
+          </div>
+          <ol className="mt-2 space-y-1 text-sm text-slate-700 list-decimal pl-5">
+            {asked.map((x, i) => (
+              <li key={i}><strong>{x.a}</strong> <span className="text-slate-500">{x.b}</span> – {VERDICT[x.verdict]?.label ?? x.verdict} <span className="text-xs text-slate-500">(p {pIs(x.p)})</span></li>
+            ))}
+          </ol>
+          <p className="mt-2 text-xs text-slate-500">
+            Listan finns bara i den här fliken. &quot;Börja om&quot; nollställer justeringen – gör det när du byter till en ny, i förväg bestämd fråga,
+            inte för att få ett bättre q.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Result({ d }: { d: Answer }) {
+  const v = VERDICT[d.verdict];
+  const w = d.with_b, wo = d.without_b, ad = d.adjusted, h = d.halves, cc = d.carver_check;
+  if (!w || !wo || !ad || ad.p == null) {
+    return (
+      <div className="rounded-2xl bg-slate-50 border border-slate-200 p-5 space-y-2">
+        <span className={`inline-block text-xs font-bold px-2 py-1 rounded-lg border ${v.style}`}>{v.label}</span>
+        <p className="text-slate-800">{d.reason}</p>
+        {w && wo && <p className="text-sm text-slate-600"><strong>{d.a.label}</strong>: {pct(w.share)} av {w.n} stenar <strong>{d.b.yes}</strong>, {pct(wo.share)} av {wo.n} <strong>{d.b.no}</strong>.</p>}
+      </div>
+    );
+  }
+  const more = ad.direction > 0;
+  const odds = ad.or == null ? null : more ? ad.or : 1 / ad.or;
+  const once = oneIn(ad.p);
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-4">
+        <div className="rounded-2xl bg-slate-900 text-white p-5 flex flex-col justify-center">
+          <div className="text-4xl font-bold tracking-tight"><span className="whitespace-nowrap">{pct(w.share)}</span> <span className="text-white/60 text-2xl">mot</span> <span className="whitespace-nowrap">{pct(wo.share)}</span></div>
+          <div className="text-sm text-white/80 mt-1 leading-snug">
+            av stenarna <strong>{d.b.yes}</strong> mot <strong>{d.b.no}</strong> har <strong>{d.a.label.toLowerCase()}</strong>
+          </div>
+        </div>
+        <div className="rounded-2xl bg-white border border-slate-200 p-5 space-y-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Svaret i korthet</div>
+            <span className={`text-xs font-bold px-2 py-0.5 rounded-lg border ${v.style}`}>{v.label}</span>
+          </div>
+          <p className="text-slate-800 leading-relaxed">
+            {d.verdict === "håller" && <>Ja. <strong>{d.a.label}</strong> är {more ? "vanligare" : "ovanligare"} <strong>{d.b.yes}</strong> än <strong>{d.b.no}</strong>, också när {HELD[d.b.adjusted] ?? d.b.adjusted} räknats bort, och mönstret håller i båda halvorna av socknarna.</>}
+            {d.verdict === "håller men inte justerat" && <>Mönstret håller i båda halvorna av socknarna, men inte när de {d.n_questions} frågor du prövat under besöket räknas in. Behandla det som en ny hypotes att pröva på ett annat underlag.</>}
+            {d.verdict === "bara i hela" && <>Skillnaden syns i hela korpusen men inte i båda halvorna av socknarna. Den kan bero på några få socknar eller ristare och räknas inte som ett mönster.</>}
+            {d.verdict === "ingen skillnad" && <>Ingen säker skillnad: när {HELD[d.b.adjusted] ?? d.b.adjusted} räknats bort skiljer sig andelarna inte mer än slumpen väl kan ge. Det betyder inte att draget är lika vanligt – bara att stenarna inte visar en skillnad.</>}
+          </p>
+          <p className="text-sm text-slate-600">
+            Skillnaden är {num(Math.abs(d.difference!.value) * 100, 0)} procentenheter (95 %: {num(d.difference!.ci[0] * 100, 0)} till {num(d.difference!.ci[1] * 100, 0)}),
+            räknat på {d.n} stenar{d.missing ? `; ${d.missing} stenar där draget eller jämförelsen inte går att avgöra är inte med` : ""}.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="rounded-2xl bg-white border border-slate-200 p-5">
+          <h4 className="font-bold text-slate-900 mb-2">Hur säkert är det?</h4>
+          <ul className="space-y-2 text-sm text-slate-700 list-disc pl-5">
+            <li>
+              <Tip text={GLOSSARY["Justerat för landskap och tid"]}>Justerat för {d.b.adjusted}</Tip>:{" "}
+              {odds == null ? "oddskvoten går inte att räkna (draget saknas helt på ena sidan i varje skikt)" : (
+                <>oddsen för draget är {num(odds, odds >= 10 ? 0 : 1)} gånger så {more ? "höga" : "låga"} <strong>{d.b.yes}</strong> (<Tip text={GLOSSARY["Oddskvot"]}>oddskvot</Tip> {num(ad.or)}, 95 %: {num(ad.ci?.[0])}–{num(ad.ci?.[1])}; {ad.strata} skikt).</>
+              )}
+            </li>
+            <li>
+              <Tip text={GLOSSARY["p"]}>p</Tip> {pIs(ad.p)}:{" "}
+              {once ? <>om draget inte hängde ihop med jämförelsen skulle en så tydlig skillnad uppstå av en slump i färre än 1 fall på {once}.</>
+                : <>en så stor skillnad uppstår lätt av en slump.</>}
+            </li>
+            {h && (
+              <li>
+                <Tip text={GLOSSARY["Båda halvorna"]}>Halvorna</Tip>: i den ena halvan av socknarna {pct(h.A.share_with_b)} mot {pct(h.A.share_without_b)} (p {pIs(h.A.p)}),
+                i den andra {pct(h.B.share_with_b)} mot {pct(h.B.share_without_b)} (p {pIs(h.B.p)}) – {h.replicated ? "samma riktning och under 0,05 i båda." : "inte under 0,05 med samma riktning i båda."}
+              </li>
+            )}
+            {cc && (
+              <li>
+                <Tip text={GLOSSARY["Ristarprovet"]}>Ristarprovet</Tip>: utan <strong>{cc.carver}</strong> ({cc.n} stenar i underlaget), den ristare som påverkar mest,
+                {cc.holds ? " håller skillnaden fortfarande" : " håller skillnaden inte"} (p {pIs(cc.p)}).
+              </li>
+            )}
+            {d.q != null && d.n_questions != null && d.n_questions > 1 && (
+              <li>
+                <Tip text={GLOSSARY["Frågor under besöket"]}>Frågor under besöket</Tip>: det här är fråga {d.n_questions}; justerat för dem är q {pIs(d.q)}.
+              </li>
+            )}
+          </ul>
+        </div>
+        <div className="rounded-2xl bg-slate-50 border border-slate-200 p-5">
+          <h4 className="font-bold text-slate-900 mb-2">Det här säger resultatet inte</h4>
+          <ul className="space-y-2 text-sm text-slate-600 list-disc pl-5">
+            <li>Varför. Ett samband mellan två drag säger inte vilket som orsakade vilket, eller om något tredje – en verkstad, en beställarkrets – ligger bakom båda.</li>
+            {d.b.kind !== "tid" && <li>Något om tiden utöver det som stilgruppen säger. Hälften av stenarna saknar säker stilgrupp och jämförs bara inom sitt landskap.</li>}
+            <li>Något om andra föremål än runstenar, eller om stenar Rundata inte har.</li>
+            <li>Något om det draget missar: dragen läses ur Rundatas translitterering och normalisering, och en skadad text kan sakna ett drag som fanns.</li>
+            <li>Att frågan är ny. Pröva den mot litteraturen; ett resultat som ska användas i en text behöver en <Link href="/docs" className="text-[#b7410e] hover:underline">analysplan</Link> som skrivs innan frågan ställs.</li>
+          </ul>
+        </div>
+      </div>
+      <p className="text-xs text-slate-500">
+        Mantel–Haenszel över landskap och tidsskikt, halvprovet och ristarprovet beskrivs i metoddokumentationen, avsnitt 1y.
+        Draget och jämförelsen kan också visas på <Link href="/karta" className="text-[#b7410e] hover:underline">kartan</Link>.
+      </p>
+    </div>
+  );
+}

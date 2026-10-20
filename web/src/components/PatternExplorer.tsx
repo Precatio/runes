@@ -170,7 +170,10 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
     <div className="space-y-4">
       {discover.length > 0 && (
         <div>
-          <p className={step}>Upptäck – fynd som håller i <Tip text={GLOSSARY["Båda halvorna"]}>båda halvorna</Tip> av korpusen</p>
+          <p className={step}>
+            Upptäck – fynd som håller i <Tip text={GLOSSARY["Båda halvorna"]}>båda halvorna</Tip> av korpusen
+            <Link href="/statistik#egen-fraga" className="ml-2 normal-case tracking-normal font-semibold text-[#b7410e] hover:underline">Pröva en egen fråga →</Link>
+          </p>
           <div className="flex gap-3 overflow-x-auto pb-2">
             {discover.map(d => (
               <button key={d.key} type="button" onClick={() => { patch(d.go); setPickedCluster(0); }}

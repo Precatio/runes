@@ -5,6 +5,13 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Pröva en egen fråga
+- Statistik (R) har kortet **Pröva en egen fråga**: välj ett drag (tro, skrift, innehåll, ristare) och jämför med ett
+  annat drag, ett landskap, en tidsgräns eller en bergart. Svaret är justerat för landskap och tid (Mantel–Haenszel),
+  räknas som ett mönster bara om det håller i båda halvorna av socknarna, prövas utan de flitigaste ristarna, och
+  besökets frågor justeras tillsammans (Benjamini–Hochberg). Ingen fri text och ingen AI. Kartans Upptäck länkar hit.
+  Nollfallet: omblandade drag höll i båda halvorna i 0 av 1 000 frågor (METHODS.md 1y).
+
 ## [3.0.0] – 2026-10-20
 
 Ett nytt huvudnummer därför att gränssnittet och API:t inte längre är bakåtkompatibla med 2.x: Vitki läser inte runor
