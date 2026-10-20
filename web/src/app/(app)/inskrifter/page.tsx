@@ -152,6 +152,24 @@ function InscriptionDetail({ signum, meta }: { signum: string; meta: RundataMeta
           <Field label="Översättning (engelska)"><span translate="no">{rec.translation_en}</span></Field>
           <Field label="Övrigt"><span translate="no">{rec.other}</span></Field>
           <Field label="Referenser">{rec.references}</Field>
+          {rec.runor && (
+            <Field label="Runor 2020 (Riksantikvarieämbetet)">
+              <div className="space-y-1 text-sm">
+                <div>
+                  {rec.runor.original_location === true ? "På sin ursprungliga plats" : rec.runor.original_location === false ? "Flyttad från den ursprungliga platsen" : "Ursprunglig plats okänd"}
+                  {rec.runor.extant === false && " · stenen är försvunnen"}
+                  {rec.runor.dating && <> · datering {rec.runor.dating}</>}
+                  {rec.runor.placement && rec.runor.placement !== rec.placement && <> · placering: {rec.runor.placement}</>}
+                </div>
+                {rec.runor.reading_changed && rec.runor.reading && (
+                  <div>Läsningen ändrad sedan 2018: <span className="font-mono" translate="no">{rec.runor.reading}</span></div>
+                )}
+                {rec.runor.notes.map((n, i) => <div key={i} className="text-slate-600" translate="no">{n}</div>)}
+                {rec.runor.url && <a href={rec.runor.url} target="_blank" rel="noreferrer" className="text-[#b7410e] underline text-xs">Posten i Runor</a>}
+                <div className="text-[11px] text-slate-500">Visas bredvid Rundata 2018; appens beräkningar bygger ännu på Rundata (METHODS.md 17).</div>
+              </div>
+            </Field>
+          )}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2 border-t border-slate-900/5">
           <div className="space-y-2">

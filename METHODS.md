@@ -1786,6 +1786,13 @@ Innan resultat jämförs direkt bör samma referensstenar mätas med båda metod
 
 ## 17. Datakällor och licenser
 
+**Runor 2020 bredvid Rundata 2018 (från 2026-10-20, `src/runor.py`).** Appens beräkningar bygger på Rundata 3.1 (2018).
+Runor (RAÄ, utgåva 2020) är skördad i sin helhet (`scripts/fetch_runor.py` → `data/raa/runor_2020.json`, inte i git);
+när filen finns visar inskriftssidan Runors uppgifter bredvid Rundatas: ursprunglig plats eller flyttad, bevarad,
+datering, anteckningar och läsningen om den ändrats sedan 2018 (299 inskrifter; jämförelsen normaliserar ʀ/R, …/... och
+§P/§Q). Inget räknas om på Runors uppgifter; bytet av källa är planerat (IMPLEMENTATIONSPLAN.md 3.2) och kräver en
+analysplan, eftersom 184 "in situ"-stenar är flyttade enligt Runor och landskapsresultaten då ändras.
+
 * **Samnordisk runtextdatabas** (Institutionen för nordiska språk, Uppsala universitet), version 2014 med
   RUNDATA.xls från 2018. Open Database License (databasen) / Database Contents License (innehållet).
   Källan ska anges: www.nordiska.uu.se/forskn/samnord.htm. `data/rundata.json` är en härledd databas och

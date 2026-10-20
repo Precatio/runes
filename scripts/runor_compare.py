@@ -26,18 +26,7 @@ DAMAGE = re.compile(r"skad|omhugg|sprä?ng|avslag|avslog|slagits|lagad|lagats|s�
 SEP = re.compile(r"[\s·:'×÷+|¶⁓;,.!?\"]|§[A-Z]|\{|\}|\$|=")
 
 
-def _first_reading(reading: str) -> str:
-    """Rundata ger ibland två läsningar (§P och §Q); den första jämförs."""
-    return re.split(r"§Q", reading or "")[0]
-
-
-def runes(reading: str) -> str:
-    """Läsningen utan skiljetecken, avsnittsetiketter, klamrar och mellanrum, för att jämföra två läsningar.
-    Rundata 2018 skriver ʀ som R, ɴ som N och … som ..., Runor 2020 med de egentliga tecknen."""
-    t = _first_reading(reading).replace("...", "…").replace("R", "ʀ").replace("N", "ɴ")
-    t = re.sub(r"§[A-Z]+", "", t)
-    t = re.sub(r"[()\[\]{}<>^]", "", t)
-    return SEP.sub("", t).lower()
+from src.runor import first_reading as _first_reading, runes  # noqa: E402  (samma jämförelse som appen visar)
 
 
 def lost_count(reading: str) -> int:

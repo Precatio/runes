@@ -93,7 +93,7 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
 - Ett test som låser METHODS-siffrorna mot resultatfilerna (som artikelbyggarna gör), så att 1g-fallet
   ("30 stenar" när det var 28) inte återkommer: `tests/test_methods_numbers.py`.
 
-### 3.2 Rundata → Runor 2020  (en session, stor effekt)
+### 3.2 Rundata → Runor 2020  (en session, stor effekt) — DELVIS 2026-10-20: Runor visas bredvid Rundata (src/runor.py, inskriftssidan); själva bytet återstår och kräver analysplan
 - Underlag finns: `scripts/fetch_runor.py`, `scripts/runor_compare.py`, 184 flyttade stenar, 43 nya texter.
 - **Kod:** `scripts/build_rundata.py` får Runor som primär källa med Rundata 3.1 som fallback per fält; fältet
   `source_version` per inskrift. Alla R-moduler körs om (nytt fingeravtryck). Bristposten `rundata` ändras.

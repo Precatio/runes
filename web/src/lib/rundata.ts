@@ -37,6 +37,11 @@ export interface Inscription {
   translation_en: string;
   // Size from the Swedish heritage register (Kulturmiljöregistret), when it could be read safely
   dimensions?: StoneDimensions | null;
+  // Runor 2020 (RAÄ) beside Rundata 2018, when the harvest is on the machine (src/runor.py); shown, not computed on
+  runor?: {
+    edition: string; url: string | null; signum: string; extant: boolean | null; original_location: boolean | null;
+    placement: string | null; dating: string | null; notes: string[]; reading: string | null; reading_changed: boolean;
+  } | null;
 }
 
 export interface StoneDimensions {
