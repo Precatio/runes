@@ -138,9 +138,13 @@ LIMITATIONS = [
     {"key": "ai", "contexts": {"ai"},
      "title": "AI-resultat är okalibrerade och kan vara påhittade",
      "text": "Blinda AI-läsningar och AI-bedömningar av stil är inte kalibrerade. I ett test på Sö 113 återgav blinda "
-             "läsningar text ur minnet i stället för ur bilden, bland annat Jellingstenens text. Läsningarna valideras "
-             "mot Rundata och kända inskrifter, och AI-text i rapporter märks, men inget AI-resultat bör bära ett "
-             "argument.",
+             "läsningar text ur minnet i stället för ur bilden, bland annat Jellingstenens text. Stilbedömningen prövades "
+             "2026-10-20 på 57 runstenar med säker stilgrupp i Rundata och fri bild (Claude Opus, appens egen instruktion): "
+             "exakt stilgrupp i 35 % av fallen (slump 14 %), rätt grov klass – RAK, Fp, Ringerike (Pr1–Pr2) eller Urnes "
+             "(Pr3–Pr5) – i 71 % och inom en grannstilgrupp i 83 %; Pr5 bedömdes som Pr4 i sju fall av åtta. "
+             "Självskattningen ordnar svaren rätt (över 60 % träffade i 71 %, under 60 % i 26 %) men är ingen "
+             "sannolikhet. Läsningarna valideras mot Rundata och kända inskrifter, och AI-text i rapporter märks, men "
+             "inget AI-resultat bör bära ett argument.",
      "short": "AI kan hitta på; allt som AI skrivit eller läst är märkt och måste granskas.",
      "needed": "Kalibrering mot runologers läsningar av samma bilder."},
     {"key": "rundata", "contexts": {"rundata", "attribution", "research"},

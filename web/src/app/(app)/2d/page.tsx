@@ -88,6 +88,11 @@ function StyleFacts({ code }: { code: string }) {
   );
 }
 
+// The coarse class is what the AI gets right most of the time (71 % on 57 stones); the exact group (35 %) is shown as a guess
+const COARSE: Record<string, string> = { RAK: "RAK", Fp: "Fp", Pr1: "Ringerike (Pr1–Pr2)", Pr2: "Ringerike (Pr1–Pr2)",
+  Pr3: "Urnes (Pr3–Pr5)", Pr4: "Urnes (Pr3–Pr5)", Pr5: "Urnes (Pr3–Pr5)" };
+const coarseStyle = (code: string) => COARSE[code] ?? code;
+
 export default function TwoDPage() {
   const [loading, setLoading] = useState(false);
   const [crop, setCrop] = useState<PercentCrop>();
@@ -766,13 +771,20 @@ export default function TwoDPage() {
             ) : result ? (
               <div className="space-y-6">
                 <div className="liquid-glass-island rounded-[36px] p-8 border border-[#b7410e]/20 bg-gradient-to-br from-white/50 to-[#b7410e]/5">
-                  <div className="text-slate-500 text-[12px] uppercase tracking-wider font-bold mb-2">Stilgrupp enligt AI (Gräslund)</div>
+                  <div className="text-slate-500 text-[12px] uppercase tracking-wider font-bold mb-2">Stilklass enligt AI (Gräslund)</div>
                   <div className="flex flex-wrap items-end gap-4">
-                    <h3 className="text-5xl font-black text-[#b7410e]">{result.predicted_style}</h3>
+                    <h3 className="text-5xl font-black text-[#b7410e]">{coarseStyle(result.predicted_style)}</h3>
                     <div className="mb-2 bg-slate-900 text-white text-xs font-bold px-3 py-1 rounded-full" title="AI:ns egen uppskattning, inte en kalibrerad sannolikhet">
                       AI:ns självskattning {result.confidence} % (okalibrerad)
                     </div>
                   </div>
+                  {result.predicted_style !== "Osäker" && (
+                    <p className="mt-3 text-sm text-slate-700">
+                      Gissning inom klassen: <strong>{result.predicted_style}</strong>.{" "}
+                      <span className="text-slate-500">Prövat på 57 stenar med känd stilgrupp träffade AI:n den grova klassen i 71 % av fallen men den exakta
+                      stilgruppen bara i 35 %; sen Urnesstil (Pr5) bedöms nästan alltid som Pr4 (METHODS.md 12).</span>
+                    </p>
+                  )}
                   {rundataForSignum && (
                     <div className={`mt-4 rounded-xl px-4 py-3 text-sm font-semibold ${styleAgrees === null ? "bg-slate-100 text-slate-700" : styleAgrees ? "bg-emerald-50 text-emerald-800" : "bg-amber-50 text-amber-800"}`}>
                       Rundata ({rundataForSignum.signum}): {rundataForSignum.style ? `${rundataForSignum.style}${rundataForSignum.style_uncertain ? " (osäker)" : ""}` : "ingen stilgrupp angiven"}

@@ -1166,7 +1166,15 @@ Källkod: `src/geology.py`, `GET /api/research/geology/{signum}`.
   binäriseras (Otsu; minoritetsklassen räknas som ristning), beskärs till ristningen och läggs i en kvadrat
   med bibehållna proportioner, 64 × 64 px. Särdrag: HOG, täthet i 4 × 4 zoner och logaritmerat
   höjd/bredd-förhållande. Likhet: cosinus.
-* **Validering:** på syntetiskt ritade runor (ᛁ ᛏ ᚴ ᚱ ᛋ med slumpad stavtjocklek, lutning och brus,
+* **Stilbedömningen prövad (2026-10-20, `utdata/stilgrupp_ai/stilgrupp_test.py`):** 57 svenska runstenar med
+  säker stilgrupp i Rundata och fri bild i Wikidata, stratifierat urval, Claude Opus med appens instruktion.
+  Exakt stilgrupp 35 % (slump 14 %, majoritetsgissning 21 %), 39 % bland de 91 % där modellen inte svarade
+  "Osäker"; rätt grov klass (RAK / Fp / Ringerike Pr1–2 / Urnes Pr3–5) 71 %; inom en grannstilgrupp 83 %. RAK 8 av
+  11 och Fp 5 av 8 rätt, men Pr1 spreds över fem svar, Pr3 blev oftast Pr4 och Pr5 blev Pr4 i 7 av 8. Självskattningen
+  ordnar svaren rätt (60–79 %: 71 % rätt; under 60 %: 26 %) men är inte kalibrerad. Sidan visar därför den grova
+  klassen som huvudresultat och stilgruppen som modellens gissning inom klassen. 827 stenar med bild finns för en
+  större prövning.
+* **Validering av runformerna:** på syntetiskt ritade runor (ᛁ ᛏ ᚴ ᚱ ᛋ med slumpad stavtjocklek, lutning och brus,
   `src/synthetic_runes.py`) hamnar närmaste granne på rätt runa i 85 % av fallen. Den tidigare metoden låg
   på slumpnivå. Resultatet är ett mått på **formlikhet**, inte på samma ristare; på riktiga stenar påverkas
   det av vittring, belysning och utsnittets noggrannhet.
