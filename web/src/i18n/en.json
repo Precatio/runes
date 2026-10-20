@@ -4796,6 +4796,7 @@
 "Sannolikheterna summerar till {0}.":"The probabilities sum to {0}.",
 "Sannolikheterna är försiktiga: när modellen säger {0} % har den oftast rätt oftare än så.":"The probabilities are cautious: when the model says {0} %, it is usually right more often than that.",
 "Sannolikhetskvot (språkdrag): hur mycket vanligare stenens form är hos ristaren än på andra stenar i landskapet.":"Likelihood ratio (language traits): how much more common the stone's form is with the carver than on other stones in the province.",
+"sannolikhetsmodellen":"the probability model",
 "Sannolikhetsmodellen":"The probability model",
 "Sannolikhetsmodellen läser de huggna runorna utan att se Rundatas tolkning av just den här stenen, fyller i förlorade runor och daterar texten ur språket.":"The probability model reads the carved runes without seeing Rundata's interpretation of this particular stone, fills in lost runes and dates the text from its language.",
 "Sannolikt ny kunskap":"Probably new knowledge",
