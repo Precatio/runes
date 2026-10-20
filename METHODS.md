@@ -372,6 +372,26 @@ tydligt över tid, bland dem *gærði* som försvinner och *risti* och *letu* so
 landskap skiljer inte dialekt från formelval och beställarsmak – bara från tid och textlängd; signalerna bör läsas
 ihop med språkdragen i `change.R` och `dialect.R`.
 
+### 1n. Odaterade stenar: multipel imputation prövad och inte införd (2026-10-20)
+
+1 313 av 2 321 runstenar saknar säker stilgrupp och räknas därför inte i tidsfrågorna (Förändring, Ordförrådet,
+tidsgränsen i Pröva en egen fråga). Om de kunde tas med genom multipel imputation av tidsskiktet prövades enligt en
+analysplan som låstes innan några resultat fanns (`utdata/mi/analysplan_mi.md`, SHA-256 d97e20ba…): mice med ordnad
+logistisk regression (polr, m = 20) på landskap, de 22 dragen, bergart, textlängd och socknens övriga daterade stenar,
+med och utan sannolikhetsmodellens språkdatering som hjälpvariabel; 30 procent av de daterade stenarna maskerades i 20
+upprepningar, med ett bortfall som efterliknade det verkliga (MAR) och slumpvis (MCAR). Mått: täckningen för 95
+%-intervallet kring oddskvoten för varje drag från 1050 mot före 1050, justerad för landskap, och avvikelsen från värdet
+med alla daterade stenar kända.
+
+Utfallet blev nej. Under MAR täckte intervallen det rätta värdet i 88,8 procent (utan språkdatering) och 86,7 procent
+(med), under planens gräns 90, och skattningarna låg längre från det rätta värdet än analysen med bara de daterade
+stenarna (medelavvikelse 0,24 mot 0,16 för log-oddskvoten). Språkdateringen förbättrade gissningen av skiktet med 0,8
+procentenheter. Täckningen föll för dragen vars tidsförändring skiljer sig mellan landskapen (kristna markörer 0,45,
+ristare i Rundata 0,25), eftersom imputationsmodellen inte har samspel mellan landskap och drag. Analysen med bara de
+daterade stenarna höll däremot sina intervall också med det realistiska bortfallet (täckning 0,99): bortfallet gör
+tidsfrågorna mindre precisa men tycks inte snedvrida dem. Appen räknar därför som förut bara på daterade stenar.
+Redovisning: `utdata/mi/resultat.md`, `utdata/mi/validering.json`. En imputation med samspel kräver en ny plan.
+
 ### 1x. Försiktighet i påståendena, djärvhet i hypoteserna
 
 **Förregistrerade analysplaner (från 2026-10-20).** En artikel som gör ett nytt anspråk hänvisar till en analysplan som

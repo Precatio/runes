@@ -5,6 +5,12 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Multipel imputation av odaterade stenar: prövad, inte införd
+- Om de 1 313 runstenarna utan säker stilgrupp kunde tas med i tidsfrågorna genom multipel imputation (R-paketet
+  mice, med och utan sannolikhetsmodellens språkdatering) prövades enligt en låst analysplan. Svaret blev nej:
+  intervallen höll inte (täckning 0,87–0,89 mot kravet 0,90) och skattningarna blev sämre än med bara de daterade
+  stenarna. Appen räknar som förut på daterade stenar. Ny bristpost `undated`, METHODS.md 1n, `utdata/mi/`.
+
 ### Nyheter på webbplatsen
 - vitkirunor.se har en nyhetsmodul: rutan **Nytt i Vitki** på startsidan med de senaste notiserna och sidan
   **/nyheter** med alla, länkad från sidhuvudet och sidfoten och med i sajtkartan. Notiserna skrivs i

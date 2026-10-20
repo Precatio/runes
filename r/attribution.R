@@ -235,7 +235,8 @@ unc <- Filter(function(p) nzchar(p$rundata_uncertain), predictions)
 # ---- figures ------------------------------------------------------------------------------------------------
 # Figure labels in the figure's language (the JSON keeps the Swedish keys)
 SETN <- c("Geografi" = tr("Geografi", "Geography"), "Stil" = tr("Stil", "Style"),
-          "Språk och innehåll" = tr("Språk och innehåll", "Language and content"), "Alla" = tr("Alla", "All"))
+          "Språk och innehåll" = tr("Språk och innehåll", "Language and content"), "Bergart" = tr("Bergart", "Rock type"),
+          "Alla" = tr("Alla", "All"))
 MET <- c(tr("Rätt ristare först", "Correct first choice"), tr("Rätt ristare bland tre främsta", "Correct among first three"),
          tr("Rätt först, ny socken", "Correct first choice, new parish"))
 gp <- setNames(sapply(grouped[["Socken"]]$ablation, `[[`, "accuracy"), names(SETS))
@@ -249,8 +250,10 @@ p <- ggplot(ab, aes(set, value, fill = metric)) +
   geom_hline(yintercept = majority, linetype = "dashed", colour = MUTED, linewidth = 0.4) +
   scale_fill_manual(values = SERIES[1:3], name = NULL) +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1.05), expand = c(0, 0)) +
-  labs(title = "Vad varje slags belägg räcker till", x = NULL, y = tr("Andel stenar (korsvaliderat)", "Share of stones (cross-validated)"),
-       subtitle = sprintf("%d säkra stenar av %d ristare; %d-faldig korsvalidering upprepad %d gånger, slumpvis och med hela socknar utelämnade. Streckat: gissa alltid vanligaste ristaren (%.0f %%)",
+  labs(title = tr("Vad varje slags belägg räcker till", "What each kind of evidence achieves"), x = NULL,
+       y = tr("Andel stenar (korsvaliderat)", "Share of stones (cross-validated)"),
+       subtitle = sprintf(tr("%d säkra stenar av %d ristare; %d-faldig korsvalidering upprepad %d gånger.\nStreckat: gissa alltid den vanligaste ristaren (%.0f %%).",
+                             "%d stones with a certain carver, %d carvers; %d-fold cross-validation repeated %d times.\nDashed: always guess the most common carver (%.0f %%)."),
                           nrow(train), length(lv), FOLDS, REPEATS, 100 * majority)) +
   theme_runor() + theme(panel.grid.major.x = element_blank())
 fig_ablation <- save_fig(p, out, "modell_delmodeller.png", 7.5, 4.5)

@@ -129,6 +129,15 @@ LIMITATIONS = [
              "förhandsbestämd analysplan, inte ett resultat.",
      "short": "Många samband prövas samtidigt, så en del av dem är slump; fynden är idéer att pröva vidare.",
      "needed": "Förregistrerade analysplaner för de hypoteser som ska publiceras."},
+    {"key": "undated", "contexts": {"statistics", "r"},
+     "title": "Hälften av runstenarna saknar datering",
+     "text": "Tidsfrågorna räknas bara på de 1 008 runstenar som har en säker stilgrupp; 1 313 saknar en. Att ta med dem "
+             "genom multipel imputation prövades 2026-10-20 enligt en låst analysplan och gav sämre skattningar än att "
+             "låta dem vara (METHODS.md 1n). I samma prov höll analysen med bara de daterade stenarna sina intervall "
+             "också när bortfallet efterliknade det verkliga, så tidsresultaten är mindre precisa men inte påvisbart "
+             "snedvridna.",
+     "short": "Tidsfrågorna bygger på den knappa hälften av stenarna som har en säker stilgrupp.",
+     "needed": "Fler säkra dateringar, eller en imputation med samspel mellan landskap och drag prövad enligt en ny plan."},
     {"key": "size", "contexts": {"research", "rundata"},
      "title": "Stenarnas mått är ofullständiga och ojämna",
      "text": "Måtten läses ur Kulturmiljöregistrets fritext och finns för knappt hälften av de vikingatida runstenarna "
