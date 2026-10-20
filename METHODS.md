@@ -440,6 +440,12 @@ ovanligare där B gäller? Ingen fri text och ingen AI; frågan byggs av två li
   halvorna skyddar men tar inte bort det); tidsskikten bygger på stilgruppen, som hälften av stenarna saknar. Ett svar
   som ska användas i en artikel kräver en analysplan (1x) som skrevs innan frågan ställdes – listan över besökets frågor
   visar hur många som prövats.
+* **Spara som fynd.** Ett svar kan sparas med en anteckning (Firestore under användarens konto, med en lokal kopia):
+  frågan, siffrorna och domen som de var, hur många frågor som föregick den under besöket och korpusens version. De
+  sparade visas i Forskningsluckor → Våra resultat under *Egna frågor*. Beläggen räknas som högst *måttliga* – och
+  bara om mönstret höll i båda halvorna och efter justeringen för besökets frågor – eftersom en fråga som valts under
+  utforskandet inte kan bli starkare än så utan en analysplan. *Räkna om* ställer samma fråga på korpusen som den är
+  nu, som enda fråga, och säger om korpusen har ändrats sedan.
 
 ## 2. Huggspårsmått (mätmetod `groove-5`)
 

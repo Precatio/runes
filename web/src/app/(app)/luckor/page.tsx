@@ -12,6 +12,7 @@ import { GeologyBox, LanguageTraits } from "@/components/StoneContext";
 import { SIMILARITY_HELP, fmtP } from "@/lib/significance";
 import { DocsNote } from "@/components/KnownLimitations";
 import ExportTable from "@/components/ExportTable";
+import SavedQuestions from "@/components/SavedQuestions";
 
 interface ProvinceRow {
   code: string; name: string; axelson: boolean; total: number; carver: number; style: number; dated: number;
@@ -802,6 +803,7 @@ function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; loggedIn
         tumregel för att prioritera – inte en granskning av litteraturen. Klicka på en rad för att se skälen.
       </p>
       {data.r_patterns && data.r_patterns.length > 0 && <PatternsBox patterns={data.r_patterns} />}
+      <SavedQuestions />
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
         {([["stämmer", "Stämmer med forskningen"], ["nytt", "Nytt – saknas i Rundata"], ["motsäger", "Motsäger forskningen"]] as [Verdict, string][]).map(([v, label]) => (
           <button key={v} onClick={() => setVerdict(verdict === v ? "" : v)}

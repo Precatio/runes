@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { API_URL } from "@/lib/api";
 import { GLOSSARY } from "@/lib/glossary";
 import { Tip } from "@/components/Explain";
+import { db } from "@/lib/db";
 
 // Pröva en egen fråga (POST /api/research/question, src/question.py; METHODS.md 1y): a trait A against another trait,
 // a province, a time limit or a rock family, adjusted for province and time, tested in both halves of the parishes and
@@ -27,19 +28,19 @@ interface Answer {
   difference?: { value: number; ci: [number, number] }; adjusted?: MH;
   halves?: { A: Half; B: Half; replicated: boolean };
   carver_check?: { carver: string; n: number; or: number | null; p: number; holds: boolean } | null;
-  q?: number; n_questions?: number;
+  q?: number; n_questions?: number; corpus?: string;
 }
 type Kind = "drag" | "landskap" | "tid" | "bergart";
 interface Asked { a: string; b: string; verdict: Answer["verdict"]; p: number }
 
 const KINDS: [Kind, string][] = [["landskap", "ett landskap"], ["tid", "en tidsgräns"], ["drag", "ett annat drag"], ["bergart", "en bergart"]];
 const STORE = "vitki-egna-fragor";
-const pct = (x: number | null | undefined) => (x == null ? "–" : `${Math.round(x * 100)} %`);
+export const pct = (x: number | null | undefined) => (x == null ? "–" : `${Math.round(x * 100)} %`);
 const num = (x: number | null | undefined, d = 2) => (x == null ? "–" : x.toFixed(d).replace(".", ","));
-const pText = (p: number | null | undefined) =>
+export const pText = (p: number | null | undefined) =>
   p == null ? "–" : p < 0.0001 ? "under 0,0001" : p < 0.001 ? "under 0,001" : num(p, p < 0.01 ? 3 : 2);
 // "p under 0,001" or "p = 0,03"
-const pIs = (p: number | null | undefined) => (p != null && p < 0.001 ? pText(p) : `= ${pText(p)}`);
+export const pIs = (p: number | null | undefined) => (p != null && p < 0.001 ? pText(p) : `= ${pText(p)}`);
 // What was held constant, in the definite form the sentences need
 const HELD: Record<string, string> = { tid: "tiden", landskap: "landskapet", "landskap och tid": "landskap och tid" };
 // "fewer than 1 in N": a p-value in plain words, rounded down to a readable 1-in-N
@@ -48,7 +49,7 @@ const oneIn = (p: number) => {
   return null;
 };
 
-const VERDICT: Record<Answer["verdict"], { label: string; style: string }> = {
+export const VERDICT: Record<Answer["verdict"], { label: string; style: string }> = {
   "håller": { label: "Håller", style: "bg-emerald-50 text-emerald-800 border-emerald-200" },
   "håller men inte justerat": { label: "Håller, men inte efter alla frågor", style: "bg-amber-50 text-amber-900 border-amber-200" },
   "bara i hela": { label: "Bara i hela korpusen", style: "bg-amber-50 text-amber-900 border-amber-200" },
@@ -65,12 +66,17 @@ function saveAsked(list: Asked[]) {
   try { sessionStorage.setItem(STORE, JSON.stringify(list)); } catch { /* private window: the list lives in memory */ }
 }
 
+// A question opened from a saved finding (Forskningsluckor): /statistik?a=…&jamfor=…&varde=…#egen-fraga
+function fromUrl(name: string): string | null {
+  try { return new URLSearchParams(window.location.search).get(name); } catch { return null; }
+}
+
 export default function OwnQuestion() {
   const [opts, setOpts] = useState<Options | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [a, setA] = useState("stungna");
-  const [kind, setKind] = useState<Kind>("tid");
-  const [key, setKey] = useState("1075");
+  const [a, setA] = useState(() => fromUrl("a") ?? "stungna");
+  const [kind, setKind] = useState<Kind>(() => (fromUrl("jamfor") as Kind | null) ?? "tid");
+  const [key, setKey] = useState(() => fromUrl("varde") ?? "1075");
   const [answer, setAnswer] = useState<Answer | null>(null);
   const [busy, setBusy] = useState(false);
   const [asked, setAsked] = useState<Asked[]>(loadAsked);
@@ -164,7 +170,7 @@ export default function OwnQuestion() {
       {opts && <p className="text-xs text-slate-500">{opts.variables.find(v => v.key === a)?.help} Talen i listan är stenar med draget av de stenar där det går att avgöra.</p>}
       {error && <p className="text-sm font-semibold text-red-700">{error}</p>}
 
-      {answer && <Result d={answer} />}
+      {answer && <Result key={`${answer.a.key}|${answer.b.kind}|${answer.b.key}|${answer.n_questions}`} d={answer} />}
 
       {asked.length > 0 && (
         <div className="rounded-2xl bg-white border border-slate-200 p-4">
@@ -276,10 +282,53 @@ function Result({ d }: { d: Answer }) {
           </ul>
         </div>
       </div>
+      <SaveFinding d={d} />
       <p className="text-xs text-slate-500">
         Mantel–Haenszel över landskap och tidsskikt, halvprovet och ristarprovet beskrivs i metoddokumentationen, avsnitt 1y.
         Draget och jämförelsen kan också visas på <Link href="/karta" className="text-[#b7410e] hover:underline">kartan</Link>.
       </p>
+    </div>
+  );
+}
+
+// Spara som fynd: the answer as it is now, with how many questions came before it, into Forskningsluckor → Våra resultat
+function SaveFinding({ d }: { d: Answer }) {
+  const [note, setNote] = useState("");
+  const [saved, setSaved] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const ad = d.adjusted!, w = d.with_b!, wo = d.without_b!;
+  const save = async () => {
+    setBusy(true);
+    await db.saveQuestion({
+      a: { key: d.a.key, label: d.a.label },
+      b: { kind: d.b.kind, key: String(d.b.key), label: d.b.label, yes: d.b.yes, no: d.b.no, adjusted: d.b.adjusted },
+      verdict: d.verdict, n: d.n ?? 0,
+      withB: { n: w.n, k: w.k, share: w.share ?? 0 }, withoutB: { n: wo.n, k: wo.k, share: wo.share ?? 0 },
+      or: ad.or, orCi: ad.ci, p: ad.p ?? 1,
+      halves: { pA: d.halves?.A.p ?? null, pB: d.halves?.B.p ?? null, replicated: !!d.halves?.replicated },
+      carver: d.carver_check ? { name: d.carver_check.carver, n: d.carver_check.n, p: d.carver_check.p, holds: d.carver_check.holds } : null,
+      q: d.q ?? ad.p ?? 1, nQuestions: d.n_questions ?? 1, corpus: d.corpus ?? "", note: note.trim(),
+    });
+    setSaved(true); setBusy(false);
+  };
+  if (saved) {
+    return (
+      <p className="rounded-2xl bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-emerald-900">
+        Sparad. Den finns under <Link href="/luckor" className="font-semibold underline">Forskningsluckor → Våra resultat</Link>, med siffrorna som de är nu.
+      </p>
+    );
+  }
+  return (
+    <div className="rounded-2xl bg-white border border-slate-200 p-4 flex flex-col sm:flex-row gap-3 sm:items-end">
+      <label className="flex-1 text-xs font-semibold text-slate-600 space-y-1">
+        <span>Anteckning (valfri): vilken hypotes prövade du, och varför?</span>
+        <input value={note} onChange={e => setNote(e.target.value)} maxLength={500}
+          className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900" />
+      </label>
+      <button type="button" onClick={save} disabled={busy}
+        className="px-4 py-2 rounded-xl border border-slate-900 bg-white text-sm font-bold text-slate-900 hover:bg-slate-50 disabled:opacity-50">
+        {busy ? "Sparar …" : "Spara som fynd"}
+      </button>
     </div>
   );
 }

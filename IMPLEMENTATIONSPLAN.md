@@ -114,7 +114,7 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
 - De fem robusta grupperna (Konungsund, Vetlanda, Leksberg, Husaby, Kölaby) mot Sveriges runinskrifter och
   Östergötlands/Västergötlands runinskrifter. Resultatet in i artikelutkastet `zHgKo0HEjEJPmpooUXpq` innan publicering.
 
-### 3.6 Pröva en egen fråga  (tillagd 2026-10-20) — KLAR 2026-10-20 (src/question.py, kortet på Statistik (R), METHODS 1y; "Spara som fynd" inte byggt)
+### 3.6 Pröva en egen fråga  (tillagd 2026-10-20) — KLAR 2026-10-20 (src/question.py, kortet på Statistik (R), METHODS 1y; "Spara som fynd" klart samma dag)
 Statistik (R) svarar bara på tolv förregistrerade frågor, och Upptäck på kartan letar bara bland färdiga drag × platser.
 En **strukturerad frågebyggare** – ingen fri text, ingen AI – låter en forskare pröva en egen hypotes i gränssnittet
 med samma disciplin som Upptäck: välj *drag A* (tro, skrift, innehåll, stilgrupp, språkdrag, bergart, ristare

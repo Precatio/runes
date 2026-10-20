@@ -216,7 +216,31 @@ export interface ReportData {
   updatedAt: string;
 }
 
+// A question from Pröva en egen fråga (components/OwnQuestion.tsx) saved as a finding: what was asked and the answer as
+// it was when saved, including how many questions came before it in the visit (its q is adjusted for them)
+export interface SavedQuestion {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  a: { key: string; label: string };
+  b: { kind: string; key: string; label: string; yes: string; no: string; adjusted: string };
+  verdict: string;
+  n: number;
+  withB: { n: number; k: number; share: number };
+  withoutB: { n: number; k: number; share: number };
+  or: number | null;
+  orCi: [number, number] | null;
+  p: number;
+  halves: { pA: number | null; pB: number | null; replicated: boolean };
+  carver: { name: string; n: number; p: number; holds: boolean } | null;
+  q: number;
+  nQuestions: number;
+  corpus: string;
+  note: string;
+}
+
 const STORAGE_KEY = "vitki_projects";
+const QUESTION_STORAGE_KEY = "vitki_questions";
 const FIRESTORE_DOC_LIMIT = 900_000; // characters; Firestore's hard limit is 1 MB per document
 
 // Firestore rejects undefined field values outright ("Unsupported field value: undefined"), and a spread like
@@ -502,5 +526,61 @@ export const db = {
       const filtered = reports.filter((r) => r.id !== id);
       localStorage.setItem(REPORT_STORAGE_KEY, JSON.stringify(filtered));
     }
-  }
+  },
+
+  // --- SAVED QUESTIONS (Pröva en egen fråga → Forskningsluckor) ---
+
+  getQuestions: async (): Promise<SavedQuestion[]> => {
+    if (typeof window === "undefined") return [];
+    const user = await currentUser();
+    let remote: SavedQuestion[] = [];
+    if (user) {
+      const fs = await firestoreLib();
+      try {
+        const snap = await fs.getDocs(fs.collection(fs.db, `users/${user.uid}/questions`));
+        remote = snap.docs.map(doc => doc.data() as SavedQuestion);
+      } catch (error) {
+        console.error("Failed to fetch saved questions from Firestore:", error);
+      }
+    }
+    let local: SavedQuestion[] = [];
+    try { local = JSON.parse(localStorage.getItem(QUESTION_STORAGE_KEY) || "[]"); } catch { /* unreadable: start empty */ }
+    const merged = [...remote, ...local.filter(l => !remote.find(r => r.id === l.id))];
+    return merged.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  },
+
+  saveQuestion: async (q: Omit<SavedQuestion, "id" | "createdAt" | "updatedAt"> & { id?: string; createdAt?: string }): Promise<SavedQuestion> => {
+    const now = new Date().toISOString();
+    const saved: SavedQuestion = { ...q, id: q.id || "q_" + Math.random().toString(36).substring(2, 10), createdAt: q.createdAt || now, updatedAt: now };
+    const user = await currentUser();
+    if (user) {
+      const fs = await firestoreLib();
+      try {
+        await fs.setDoc(fs.doc(fs.db, `users/${user.uid}/questions`, saved.id), stripUndefined(saved));
+      } catch (error) {
+        console.error("Failed to save the question to Firestore:", error);
+      }
+    }
+    try {
+      const list: SavedQuestion[] = JSON.parse(localStorage.getItem(QUESTION_STORAGE_KEY) || "[]");
+      localStorage.setItem(QUESTION_STORAGE_KEY, JSON.stringify([saved, ...list.filter(x => x.id !== saved.id)]));
+    } catch { /* storage blocked: the Firestore copy is the one kept */ }
+    return saved;
+  },
+
+  deleteQuestion: async (id: string): Promise<void> => {
+    const user = await currentUser();
+    if (user) {
+      const fs = await firestoreLib();
+      try {
+        await fs.deleteDoc(fs.doc(fs.db, `users/${user.uid}/questions`, id));
+      } catch (error) {
+        console.error("Failed to delete the question from Firestore:", error);
+      }
+    }
+    try {
+      const list: SavedQuestion[] = JSON.parse(localStorage.getItem(QUESTION_STORAGE_KEY) || "[]");
+      localStorage.setItem(QUESTION_STORAGE_KEY, JSON.stringify(list.filter(x => x.id !== id)));
+    } catch { /* nothing stored locally */ }
+  },
 };

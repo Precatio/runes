@@ -11,6 +11,8 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   räknas som ett mönster bara om det håller i båda halvorna av socknarna, prövas utan de flitigaste ristarna, och
   besökets frågor justeras tillsammans (Benjamini–Hochberg). Ingen fri text och ingen AI. Kartans Upptäck länkar hit.
   Nollfallet: omblandade drag höll i båda halvorna i 0 av 1 000 frågor (METHODS.md 1y).
+- **Spara som fynd**: ett svar sparas med en anteckning och visas i Forskningsluckor → Våra resultat under *Egna
+  frågor*, med belägg som högst måttliga och bara om halvprovet höll. *Räkna om* prövar frågan på korpusen som den är nu.
 
 ## [3.0.0] – 2026-10-20
 

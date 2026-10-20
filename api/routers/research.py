@@ -63,11 +63,14 @@ def ask_question(req: QuestionRequest):
     """Pröva en egen fråga: är draget A vanligare där B gäller? Justerat för landskap och tid, prövat i två halvor av
     socknarna och utan de flitigaste ristarna, med tidigare frågor BH-justerade tillsammans (METHODS.md 1y)."""
     from fastapi import HTTPException
+    from api.routers import rstats
     from src import question
     try:
-        return question.ask(_question(), req.a, req.kind, req.key if req.kind != "tid" else int(req.key), req.earlier)
+        out = question.ask(_question(), req.a, req.kind, req.key if req.kind != "tid" else int(req.key), req.earlier)
     except ValueError as e:
         raise HTTPException(status_code=422, detail=str(e))
+    # The corpus version (the same fingerprint as the R analyses), so that a saved answer says what it was computed on
+    return {**out, "corpus": rstats.fingerprint()}
 
 
 @router.get("/gaps/textmodel")
