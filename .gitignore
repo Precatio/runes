@@ -44,3 +44,4 @@ data/github/
 
 # The public website's trial build (scripts: see .github/workflows/site.yml)
 .site-build/
+examples/*/ut/

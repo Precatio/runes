@@ -124,7 +124,7 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
 - Varje: `utdata/blogg/build/howto_<namn>_bilder.py` (Playwright, dev-servrar igång) +
   `build_howto_<namn>.py` med etiketterna `Så gör du` + ämne. Engelsk version när svenskan är godkänd.
 
-### 4.2 Exempelpaket  (kort)
+### 4.2 Exempelpaket  — KLAR 2026-10-20 (examples/so128/)
 - `examples/so128/`: skanningen (länk till Zenodo, inte filen), signum, kommandot till
   `scripts/full_stone_analysis.py`, den färdiga rapporten som Markdown. README-avsnitt "Kör på tio minuter".
 

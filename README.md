@@ -7,6 +7,12 @@ Det här projektet drivs av övertygelsen att **forskning och kunskap mår bäst
 
 Ett av appens huvudsakliga mål är **runristarattribuering** – att med hjälp av kvantitativ data (som spårdjup, huggvinklar i 3D-modeller och lingvistiska mönster) samt artificiell intelligens hitta tidigare okända samband mellan olika runstenar. Tänk om vi, tack vare öppen källkod och datadriven analys, kan bevisa att två stenar miltals från varandra faktiskt är huggna av samma obekanta mästare!
 
+## Kör på tio minuter
+
+[examples/so128/](examples/so128/) är ett helt genomfört exempel: en öppen skanning av Sö 128 (Kitzler Åhfeldt, RAÄ,
+Zenodo), kommandot som kör hela kedjan och rapporten som kom ut, med figurer. Börja där om du vill se vad appen gör
+innan du läser metodbeskrivningen.
+
 ## Funktioner
 
 Allt som räknas fram beskrivs i [METHODS.md](METHODS.md) (avsnittsnummer inom parentes). Där AI används
