@@ -70,7 +70,7 @@ function CorpusReportPanel() {
   const [picked, setPicked] = useState<Set<string>>(new Set());
   const [featureFilter, setFeatureFilter] = useState<FeatureType | "">("rune");
   const [title, setTitle] = useState("");
-  const [useAI, setUseAI] = useState(true);
+  const [useAI, setUseAI] = useState(false);  // AI prose is opt-in
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [report, setReport] = useState<ReportResult | null>(null);

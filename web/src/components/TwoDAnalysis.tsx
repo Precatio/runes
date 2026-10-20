@@ -4,7 +4,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import ReactCrop, { type PercentCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import { useSettings } from "@/components/SettingsContext";
 import { useAnalysis } from "@/components/AnalysisContext";
 import { db, type GrooveSummaryLite, type PaleographicCrop, type ProjectData, type TwoDSourceKind } from "@/lib/db";
 import type { KSamsokResult } from "@/lib/ksamsok";
@@ -52,59 +51,18 @@ function cosine(a: number[], b: number[]) {
 
 const fmt = (v: number, d = 1) => v.toFixed(d).replace(".", ",");
 
-// Our own facts about the claimed style group (Gräslund's dating span, the distribution in Rundata) shown beside the
-// AI's judgement, so that the claim can be checked against computed numbers instead of standing alone
-interface StyleGroupFacts { code: string; name: string; features: string; from: number | null; to: number | null }
-interface StyleDistFacts { style: string; count: number; uncertain: number; provinces: Record<string, number> }
-let stylesCache: { groups: StyleGroupFacts[]; distribution: StyleDistFacts[]; source: string } | null = null;
-
-function StyleFacts({ code }: { code: string }) {
-  const [data, setData] = useState(stylesCache);
-  useEffect(() => {
-    if (stylesCache) { setData(stylesCache); return; }
-    fetch(`${API_URL}/api/rundata/styles`).then(r => (r.ok ? r.json() : null))
-      .then(d => { if (d) { stylesCache = d; setData(d); } }).catch(() => {});
-  }, []);
-  const g = data?.groups.find(x => x.code === code);
-  if (!g) return null;
-  const dist = data?.distribution.find(x => x.style === code);
-  const provs = dist ? Object.entries(dist.provinces).sort((a, b) => b[1] - a[1]).slice(0, 3) : [];
-  return (
-    <div className="liquid-glass-island rounded-[36px] p-8 border border-white/50">
-      <div className="text-slate-500 text-[12px] uppercase tracking-wider font-bold mb-2">Stilgruppen i siffror (framräknat, ingen AI)</div>
-      <p className="text-slate-700 text-sm font-medium leading-relaxed">
-        {g.code} – {g.name}: {g.features}{" "}
-        {g.from ? `Dateringen enligt Gräslunds stilkronologi är ungefär ${g.from}–${g.to}; spannen överlappar och är inte skarpa gränser.` : "Gruppen har ingen fast datering."}
-        {dist && <>{" "}Rundata har {dist.count} inskrifter med stilgruppen{dist.uncertain ? `, varav ${dist.uncertain} osäkra` : ""}{provs.length ? <>, flest i {provs.map(([p, n]) => `${p} (${n})`).join(", ")}</> : null}.</>}
-      </p>
-      <p className="text-slate-600 text-[13px] mt-3 leading-relaxed">
-        Dateringsspannet ovan är vad AI-bedömningen i praktiken påstår om stenen – stämmer den inte med Rundata eller
-        andra belägg bör bilden granskas. Saknar stenen stilgrupp i Rundata är RAK-draget vanligast: hela stenar utan
-        stilbedömning signeras lika sällan som RAK-gruppens, visar vår mätning{" "}
-        (<a className="underline" href="https://vitkirunor.se/artiklar/stilgruppernas-morkertal" target="_blank" rel="noreferrer">Stilgruppernas mörkertal</a>).
-      </p>
-    </div>
-  );
-}
-
-// The coarse class is what the AI gets right most of the time (71 % on 57 stones); the exact group (35 %) is shown as a guess
-const COARSE: Record<string, string> = { RAK: "RAK", Fp: "Fp", Pr1: "Ringerike (Pr1–Pr2)", Pr2: "Ringerike (Pr1–Pr2)",
-  Pr3: "Urnes (Pr3–Pr5)", Pr4: "Urnes (Pr3–Pr5)", Pr5: "Urnes (Pr3–Pr5)" };
-const coarseStyle = (code: string) => COARSE[code] ?? code;
-
 // Images and rune forms: a tab on the 3D page. A photo, an RTI view, a relief or the groove map from the 3D analysis;
-// the AI's style assessment is shown as a guess within its coarse class (METHODS.md 12), and rune crops are compared
-// by shape (src/graphemes.py). The AI reading of runes was removed 2026-10-20: it returned mostly blanks and could
-// not be told apart from recalled formulas (METHODS.md 8).
+// rune crops are compared by shape (src/graphemes.py), and Rundata's style group is shown beside the image. The AI style
+// assessment and the AI reading were removed 2026-10-20 (METHODS.md 8 and 12): the reading returned mostly blanks, and
+// the style assessment got the exact group right in 35 % of 57 tested stones.
 export default function TwoDAnalysis() {
-  const [loading, setLoading] = useState(false);
   const [crop, setCrop] = useState<PercentCrop>();
   const [completedCrop, setCompletedCrop] = useState<PercentCrop | null>(null);
-  const [analyzedCrop, setAnalyzedCrop] = useState<PercentCrop | null>(null);
   const [brightness, setBrightness] = useState(100);
   const [contrast, setContrast] = useState(100);
   const [channel, setChannel] = useState<"all" | "r" | "g" | "b">("all");
   const [cropTag, setCropTag] = useState(RUNE_TAGS[4].tag);
+  const [loading, setLoading] = useState(false);  // a K-samsök image is being fetched
   const [savingCrop, setSavingCrop] = useState(false);
   const [detected, setDetected] = useState<DetectedRune[] | null>(null);
   const [detectNote, setDetectNote] = useState<string | null>(null);
@@ -121,14 +79,12 @@ export default function TwoDAnalysis() {
 
   const imgRef = useRef<HTMLImageElement>(null);
   const {
-    latest2DResults: result, setLatest2DResults: setResult,
     latest2DImage: imagePreview, setLatest2DImage: setImagePreview,
     latest2DFile: file, setLatest2DFile: setFile,
     latest2DSource: source, setLatest2DSource: setSource,
     latest3DMeta, setLatest3DMeta,
     activeProjectId, setActiveProjectId,
   } = useAnalysis();
-  const { aiHeaders, addUsedTokens } = useSettings();
   const signum = latest3DMeta.text;
   const sourceKind: TwoDSourceKind = source?.kind ?? "upload";
   const isBinarySource = sourceKind === "groove-map" || sourceKind === "3d-snapshot" || sourceKind === "3d-relief";
@@ -196,12 +152,10 @@ export default function TwoDAnalysis() {
   };
 
   const resetImageState = () => {
-    setResult(null);
     setDetected(null);
     setDetectNote(null);
     setCrop(undefined);
     setCompletedCrop(null);
-    setAnalyzedCrop(null);
     setBrightness(100);
     setContrast(100);
     setChannel("all");
@@ -214,31 +168,6 @@ export default function TwoDAnalysis() {
     setImagePreview(URL.createObjectURL(selectedFile));
     setSource({ kind: "upload", description: selectedFile.name });
     resetImageState();
-  };
-
-  // ---- AI analysis -------------------------------------------------------------------------
-  const handleAnalyze = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!imagePreview) return;
-    setLoading(true);
-    setResult(null);
-    try {
-      const canvas = processedCanvas(ANALYSIS_MAX_SIDE, completedCrop);
-      if (!canvas) throw new Error("Kunde inte läsa bilden.");
-      const blob = await canvasToBlob(canvas, isBinarySource ? "image/png" : "image/jpeg", 0.9);
-      setAnalyzedCrop(completedCrop);
-      const formData = new FormData();
-      formData.append("file", blob, isBinarySource ? "bild.png" : "bild.jpg");
-      const res = await fetch(`${API_URL}/api/2d/analyze`, { method: "POST", headers: { ...aiHeaders }, body: formData });
-      if (!res.ok) throw new Error((await res.json().catch(() => null))?.detail || `Fel ${res.status}`);
-      const data = await res.json();
-      setResult({ ...data, source: sourceKind });
-      if (data.tokens_used) addUsedTokens(data.tokens_used);
-    } catch (err) {
-      alert(`Något gick fel vid 2D-analysen: ${err instanceof Error ? err.message : String(err)}`);
-    } finally {
-      setLoading(false);
-    }
   };
 
   // ---- projects ----------------------------------------------------------------------------
@@ -260,16 +189,17 @@ export default function TwoDAnalysis() {
     slices: [],
   });
 
+  // The image goes into the project (and so into the stone report's picture section)
   const handleSaveProject = async () => {
-    if (!result || !imagePreview) return;
+    if (!imagePreview) return;
     const projectId = await resolveProjectId();
     const twoDImage = await persistentDataURL(imagePreview);
     const update: Partial<ProjectData> = projectId
-      ? { id: projectId, twoDResults: result, twoDImage, ...(signum ? { metaText: signum, name: signum } : {}) }
-      : { ...newProjectFields("Nytt projekt (2D)"), twoDResults: result, twoDImage };
+      ? { id: projectId, twoDImage, ...(signum ? { metaText: signum, name: signum } : {}) }
+      : { ...newProjectFields("Nytt projekt (bild)"), twoDImage };
     const saved = await db.saveProject(update);
     setActiveProjectId(saved.id);
-    alert(`2D-data sparat till projekt: ${saved.name}`);
+    alert(`Bilden sparad i projektet: ${saved.name}`);
   };
 
   // Groove measurements inside the crop, when the image is a groove map from the 3D analysis
@@ -441,29 +371,6 @@ export default function TwoDAnalysis() {
 
   const projectCrops = allCrops.filter(c => c.projectId === activeProjectId);
 
-  // ---- marker overlay (positions in % of the displayed image) -----------------------------
-  const markerBox = (m: { polygon?: number[][]; box_2d?: number[] }) => {
-    let ymin, xmin, ymax, xmax;
-    if (m.polygon && m.polygon.length > 0) {
-      ymin = Math.min(...m.polygon.map(p => p[0])) / 1000;
-      xmin = Math.min(...m.polygon.map(p => p[1])) / 1000;
-      ymax = Math.max(...m.polygon.map(p => p[0])) / 1000;
-      xmax = Math.max(...m.polygon.map(p => p[1])) / 1000;
-    } else if (m.box_2d && m.box_2d.length === 4) {
-      [ymin, xmin, ymax, xmax] = m.box_2d.map(v => v / 1000);
-    } else {
-      return null;
-    }
-    const ac = analyzedCrop && analyzedCrop.width > 0 ? analyzedCrop : { x: 0, y: 0, width: 100, height: 100 };
-    return {
-      xmin, ymin, xmax, ymax,
-      left: ac.x + xmin * ac.width, top: ac.y + ymin * ac.height,
-      width: (xmax - xmin) * ac.width, height: (ymax - ymin) * ac.height,
-    };
-  };
-
-  const styleAgrees = result && rundataForSignum?.style ? result.predicted_style === rundataForSignum.style : null;
-
   return (
     <>
       <svg width="0" height="0" className="absolute pointer-events-none">
@@ -476,8 +383,7 @@ export default function TwoDAnalysis() {
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-2">Bilder och runformer</h2>
           <p className="text-slate-600 text-[16px] leading-relaxed max-w-3xl font-medium mb-6">
             Ett foto, en vy från RTI-visaren, en relief eller ristningskartan från 3D-analysen. Rita runutsnitt och jämför
-            deras form med samma runa på andra stenar. AI:ns stilbedömning visas som en gissning inom sin grova klass – prövad
-            på 57 stenar träffade den klassen i 71 % av fallen och den exakta stilgruppen i 35 %.
+            deras form med samma runa på andra stenar. Ingen AI: stilgruppen hämtas ur Rundata.
           </p>
 
           <div className="w-full max-w-3xl bg-white p-4 rounded-[24px] shadow-sm border border-slate-200 space-y-3">
@@ -496,6 +402,7 @@ export default function TwoDAnalysis() {
                 </button>
               )}
             </form>
+            {loading && <p className="text-xs text-slate-500">Hämtar bilden …</p>}
             {searchResults.length > 0 && (
               <div className="border-t border-slate-100 pt-3">
                 <p className="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Sökresultat ({searchResults.length})</p>
@@ -539,32 +446,6 @@ export default function TwoDAnalysis() {
                     <img ref={imgRef} src={imagePreview} alt="Runsten"
                       style={{ filter: `brightness(${brightness}%) contrast(${contrast}%) ${channel !== "all" ? `url(#channel-${channel})` : ""}` }}
                       className="w-auto h-auto max-h-[460px] object-contain shadow-sm" />
-                    {result?.markers?.map((m, i) => {
-                      const box = markerBox(m);
-                      if (!box) return null;
-                      return (
-                        <div key={i}
-                          onClick={e => {
-                            e.stopPropagation();
-                            const pc: PercentCrop = { unit: "%", x: box.left, y: box.top, width: box.width, height: box.height };
-                            setCrop(pc);
-                            setCompletedCrop(pc);
-                          }}
-                          className={`absolute group cursor-pointer z-40 rounded ${!m.polygon ? "border-2 border-[#b7410e] bg-[#b7410e]/10 hover:bg-[#b7410e]/40" : ""}`}
-                          style={{ left: `${box.left}%`, top: `${box.top}%`, width: `${box.width}%`, height: `${box.height}%` }}>
-                          {m.polygon && (
-                            <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full overflow-visible pointer-events-none">
-                              <polygon
-                                points={m.polygon.map(p => `${((p[1] / 1000 - box.xmin) / (box.xmax - box.xmin || 1)) * 100},${((p[0] / 1000 - box.ymin) / (box.ymax - box.ymin || 1)) * 100}`).join(" ")}
-                                className="fill-[#b7410e]/10 stroke-[#b7410e] group-hover:fill-[#b7410e]/40 pointer-events-auto" vectorEffect="non-scaling-stroke" />
-                            </svg>
-                          )}
-                          <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-slate-900 text-white text-xs p-3 rounded-xl opacity-0 group-hover:opacity-100 pointer-events-none z-50 shadow-xl">
-                            <span className="font-bold block mb-1 text-[#f0a37f]">{m.label}</span>{m.description}
-                          </div>
-                        </div>
-                      );
-                    })}
                     {detected?.map((d, i) => (
                       <button key={`det-${i}`} type="button" title={`${i + 1}: ${d.tag}${d.origin === "ai" ? ` (${d.confidence} %)` : ""}`}
                         onClick={e => { e.stopPropagation(); setDetected(ds => ds && ds.map((x, j) => j === i ? { ...x, selected: !x.selected } : x)); }}
@@ -601,20 +482,11 @@ export default function TwoDAnalysis() {
                     ))}
                   </div>
                   <p className="text-[11px] text-slate-500">
-                    Dra en ruta i bilden för att analysera eller spara ett utsnitt. Utan ruta analyseras hela bilden.
+                    Dra en ruta i bilden för att spara ett runutsnitt.
                   </p>
                 </div>
               </div>
             )}
-
-            <form onSubmit={handleAnalyze} className="w-full mt-6">
-              <button type="submit" disabled={loading || !imagePreview}
-                className="w-full py-3.5 bg-slate-900 hover:bg-black disabled:opacity-40 text-white font-semibold text-sm rounded-2xl shadow-lg flex justify-center items-center gap-2">
-                {loading ? (<><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Analyserar...</>)
-                  : completedCrop && completedCrop.width > 0 ? "Kör AI-analys av utsnittet" : "Kör AI-analys av hela bilden"}
-              </button>
-              {!imagePreview && <p className="text-xs text-slate-500 mt-2 text-center">Välj eller hämta en bild först.</p>}
-            </form>
 
             <form onSubmit={handleSaveCrop} className="w-full mt-4 flex gap-2">
               <select value={cropTag} onChange={e => setCropTag(e.target.value)}
@@ -741,69 +613,28 @@ export default function TwoDAnalysis() {
               </div>
             )}
 
-            {loading ? (
-              <div className="liquid-glass-island rounded-[36px] flex flex-col items-center justify-center border border-white/50 p-8 text-center min-h-[300px]">
-                <div className="w-16 h-16 border-4 border-slate-200 border-t-[#b7410e] rounded-full animate-spin mb-6" />
-                <h3 className="text-xl font-bold text-slate-800 mb-2">Analyserar bilden...</h3>
-                <p className="text-sm text-slate-500 max-w-sm">Det kan ta upp till 30 sekunder.</p>
+            <div className="liquid-glass-island rounded-[36px] p-6 border border-white/50 space-y-4">
+              <div>
+                <label className="block text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Signum (t.ex. Sö 112)</label>
+                <input value={signum} onChange={e => setLatest3DMeta({ ...latest3DMeta, text: e.target.value })}
+                  placeholder="Ange signum..." className="w-full liquid-glass-input-wrapper rounded-xl px-4 py-2.5 text-slate-900 text-sm font-semibold outline-none" />
               </div>
-            ) : result ? (
-              <div className="space-y-6">
-                <div className="liquid-glass-island rounded-[36px] p-8 border border-[#b7410e]/20 bg-gradient-to-br from-white/50 to-[#b7410e]/5">
-                  <div className="text-slate-500 text-[12px] uppercase tracking-wider font-bold mb-2">Stilklass enligt AI (Gräslund)</div>
-                  <div className="flex flex-wrap items-end gap-4">
-                    <h3 className="text-5xl font-black text-[#b7410e]">{coarseStyle(result.predicted_style)}</h3>
-                    <div className="mb-2 bg-slate-900 text-white text-xs font-bold px-3 py-1 rounded-full" title="AI:ns egen uppskattning, inte en kalibrerad sannolikhet">
-                      AI:ns självskattning {result.confidence} % (okalibrerad)
-                    </div>
-                  </div>
-                  {result.predicted_style !== "Osäker" && (
-                    <p className="mt-3 text-sm text-slate-700">
-                      Gissning inom klassen: <strong>{result.predicted_style}</strong>.{" "}
-                      <span className="text-slate-500">Prövat på 57 stenar med känd stilgrupp träffade AI:n den grova klassen i 71 % av fallen men den exakta
-                      stilgruppen bara i 35 %; sen Urnesstil (Pr5) bedöms nästan alltid som Pr4 (METHODS.md 12).</span>
-                    </p>
-                  )}
-                  {rundataForSignum && (
-                    <div className={`mt-4 rounded-xl px-4 py-3 text-sm font-semibold ${styleAgrees === null ? "bg-slate-100 text-slate-700" : styleAgrees ? "bg-emerald-50 text-emerald-800" : "bg-amber-50 text-amber-800"}`}>
-                      Rundata ({rundataForSignum.signum}): {rundataForSignum.style ? `${rundataForSignum.style}${rundataForSignum.style_uncertain ? " (osäker)" : ""}` : "ingen stilgrupp angiven"}
-                      {styleAgrees === true && " – stämmer med AI:ns bedömning."}
-                      {styleAgrees === false && " – skiljer sig från AI:ns bedömning. Granska ornamentiken."}
-                    </div>
-                  )}
+              {rundataForSignum && (
+                <div className="rounded-xl bg-slate-50 border border-slate-200 px-4 py-3 text-sm text-slate-700">
+                  <span className="font-bold text-slate-900">Rundata ({rundataForSignum.signum}):</span>{" "}
+                  stilgrupp {rundataForSignum.style ? `${rundataForSignum.style}${rundataForSignum.style_uncertain ? " (osäker)" : ""}` : "ej angiven"}
+                  {rundataForSignum.dating ? `, datering ${rundataForSignum.dating}` : ""}. Fakta ur databasen, ingen bildbedömning.
                 </div>
-                {result.predicted_style !== "Osäker" && <StyleFacts code={result.predicted_style} />}
-                <div className="liquid-glass-island rounded-[36px] p-8 border border-white/50">
-                  <div className="text-slate-500 text-[12px] uppercase tracking-wider font-bold mb-4">Epigrafisk motivering (AI)</div>
-                  <p className="text-slate-700 text-sm font-medium leading-relaxed">{result.reasoning}</p>
-                </div>
-                {result.rune_types && (
-                  <div className="liquid-glass-island rounded-[36px] p-8 border border-white/50">
-                    <div className="text-slate-500 text-[12px] uppercase tracking-wider font-bold mb-2">Runtyper och paleografi (AI)</div>
-                    <p className="text-slate-700 text-sm font-medium leading-relaxed">{result.rune_types}</p>
-                  </div>
-                )}
-                <div className="liquid-glass-island rounded-[36px] p-6 border border-white/50 flex items-end justify-between gap-4">
-                  <div className="flex-1">
-                    <label className="block text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Signum (t.ex. Sö 112)</label>
-                    <input value={signum} onChange={e => setLatest3DMeta({ ...latest3DMeta, text: e.target.value })}
-                      placeholder="Ange signum..." className="w-full liquid-glass-input-wrapper rounded-xl px-4 py-2.5 text-slate-900 text-sm font-semibold outline-none" />
-                  </div>
-                  <button onClick={handleSaveProject}
-                    className="px-6 py-3 bg-[#b7410e] hover:bg-[#9a350b] text-white font-bold rounded-2xl shadow-lg flex-shrink-0">
-                    Spara i projekt
-                  </button>
-                </div>
-                <p className="text-[11px] text-slate-500">
-                  Bedömningen är gjord av {result.model || "en AI-modell"} och ska granskas. I syntesen vägs den mot Rundata.
-                </p>
-              </div>
-            ) : (
-              <div className="liquid-glass-island rounded-[36px] flex flex-col items-center justify-center border border-white/50 p-8 text-center text-slate-400 min-h-[300px]">
-                <p className="font-semibold text-lg text-slate-500 mb-2">Ingen analys ännu</p>
-                <p className="text-sm max-w-sm">Välj en bild och klicka på Kör AI-analys.</p>
-              </div>
-            )}
+              )}
+              <p className="text-[11px] text-slate-500">
+                Vitki bedömer inte stilgrupp ur bilder: i ett prov på 57 stenar träffade AI:n den exakta stilgruppen i 35 % av
+                fallen (METHODS.md 12). Stilgruppen hämtas ur Rundata; saknas den, avgör ornamentiken för ögat.
+              </p>
+              <button onClick={handleSaveProject} disabled={!imagePreview}
+                className="w-full px-6 py-3 bg-[#b7410e] hover:bg-[#9a350b] disabled:opacity-40 text-white font-bold rounded-2xl shadow-lg">
+                Spara bilden i projekt
+              </button>
+            </div>
           </div>
         </div>
       </div>

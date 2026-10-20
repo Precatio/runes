@@ -34,7 +34,7 @@ export default function StoneReportPanel() {
   const [scan, setScan] = useState<ScanMetadata>({});
   const [condition, setCondition] = useState<StoneCondition>({});
   const [title, setTitle] = useState("");
-  const [useAI, setUseAI] = useState(true);
+  const [useAI, setUseAI] = useState(false);  // AI prose is opt-in
   const [withCorpus, setWithCorpus] = useState(true);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);

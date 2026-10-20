@@ -60,8 +60,6 @@ class SynthesisRequest(BaseModel):
     feature_type: Optional[str] = None
     # Resultat från /api/stats/attribute mot den delade korpusen (valfritt)
     groove_attribution: Optional[dict] = None
-    # AI:ns stilbedömning från 2D-analysen (valfritt): predicted_style, confidence, reasoning
-    two_d: Optional[dict] = None
     # Projektets sparade 3D-analyser [{id, feature_type, slices, savedAt}] och vilken som ska jämföras
     analyses: List[dict] = Field(default_factory=list)
     analysis_id: Optional[str] = None
@@ -72,7 +70,7 @@ class SynthesisRequest(BaseModel):
     reading: Optional[dict] = None
     # Berggrunden på platsen ur SGU:s karta (nätverksanrop, några sekunder första gången)
     include_geology: bool = True
-    use_ai: bool = True  # False: only the computed texts, no language model
+    use_ai: bool = False  # True: a language model writes the prose (marked); otherwise the computed texts
 
 
 class Evidence(BaseModel):
@@ -220,16 +218,6 @@ def collect_evidence(req: SynthesisRequest) -> dict:
 
     if req.include_geology:
         evidence["geology"] = syn.site_geology(rec)
-    if req.two_d and req.two_d.get("predicted_style"):
-        ai_style = str(req.two_d["predicted_style"])
-        rd_style = (evidence.get("rundata") or {}).get("style")
-        evidence["style_check"] = {
-            "ai_style": ai_style,
-            "ai_confidence": req.two_d.get("confidence"),
-            "rundata_style": rd_style,
-            "agrees": bool(rd_style) and ai_style == rd_style,
-            "note": "AI-bedömning från foto/ristningskarta, okalibrerad.",
-        }
     if req.corpus and query_slices:
         g = syn.groove(query_slices, feature_type, req.corpus, s.get, req.signum)
         evidence["_candidate_stones"] = g.pop("_stones", {})
@@ -335,13 +323,6 @@ def evidence_text(evidence: dict, req: SynthesisRequest, candidates: Optional[li
             lines.append(f"- {r['group']}: avstånd {r['distance']:.2f} (n={r['n']})")
     else:
         lines.append("Ingen jämförelse mot mätkorpusen (för lite referensdata eller ej begärd).")
-
-    sc = evidence.get("style_check")
-    if sc:
-        lines.append("\n--- STILGRUPP: AI-BEDÖMNING (2D) MOT RUNDATA ---")
-        verdict = ("stämmer med Rundata" if sc["agrees"] else
-                   "skiljer sig från Rundata" if sc["rundata_style"] else "Rundata saknar stilgrupp")
-        lines.append(f"AI (okalibrerad, från bild): {sc['ai_style']}; Rundata: {sc['rundata_style'] or 'uppgift saknas'} – {verdict}.")
 
     geo = evidence.get("geology")
     if geo:

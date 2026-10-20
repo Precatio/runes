@@ -57,14 +57,6 @@ def test_research_gaps(client):
 
 
 @needs_rundata
-def test_synthesis_style_check(client, monkeypatch):
-    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
-    r = client.post("/api/synthesis/analyze", json={"signum": "U 11", "two_d": {"predicted_style": "Pr3"}}).json()
-    sc = r["evidence"]["style_check"]
-    assert sc["rundata_style"] == "Pr4" and sc["agrees"] is False
-
-
-@needs_rundata
 def test_academic_report(client, monkeypatch):
     from api import auth
 

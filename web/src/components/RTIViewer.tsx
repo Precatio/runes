@@ -19,7 +19,7 @@ export default function RTIViewer() {
   const [grayscale, setGrayscale] = useState(false);
   const [dragging, setDragging] = useState(false);
   const router = useRouter();
-  const { setLatest2DImage, setLatest2DFile, setLatest2DSource, setLatest2DResults } = useAnalysis();
+  const { setLatest2DImage, setLatest2DFile, setLatest2DSource } = useAnalysis();
 
   const load = async (file: File | undefined) => {
     if (!file) return;
@@ -80,7 +80,6 @@ export default function RTIViewer() {
     setLatest2DImage(url);
     setLatest2DFile(await dataURLToFile(url, "rti_vy.png"));
     setLatest2DSource({ kind: "rti", description: `${fileName}, ljus ${azimuth.toFixed(0)}°/${elevation.toFixed(0)}°` });
-    setLatest2DResults(null);
     router.push("/3d?verktyg=2d");
   };
 

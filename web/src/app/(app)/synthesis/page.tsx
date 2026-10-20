@@ -47,6 +47,10 @@ export default function SynthesisPage() {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
+  const [useAI, setUseAI] = useState(false);  // AI prose is opt-in
+  // An own reading (a researcher's reading of the stone, or a new find without text in Rundata); prefilled from the project
+  const [ownReading, setOwnReading] = useState("");
+  const [ownNorm, setOwnNorm] = useState("");
   const [results, setResults] = useState<SynthesisResult | null>(null);
   const [savedAt, setSavedAt] = useState<string | null>(null);
   const [status, setStatus] = useState("");
@@ -57,6 +61,12 @@ export default function SynthesisPage() {
   }, [user]);
 
   const project = projects.find(p => p.id === selectedId) ?? null;
+  const [prevProjectId, setPrevProjectId] = useState<string | null>(null);
+  if ((project?.id ?? null) !== prevProjectId) {
+    setPrevProjectId(project?.id ?? null);
+    setOwnReading(project?.linguisticResults?.transliteration ?? "");
+    setOwnNorm(project?.linguisticResults?.normalization ?? "");
+  }
   const analyses = useMemo(() => project?.grooveAnalyses ?? [], [project]);
 
   const selectProject = (id: string) => {
@@ -85,7 +95,14 @@ export default function SynthesisPage() {
         entries = await corpus.list().catch(() => []);
       }
       setStatus("Väger samman beläggen …");
-      setResults(await runSynthesis(project, analysisId || null, aiHeaders, entries));
+      const reading = ownReading.trim() ? { transliteration: ownReading, normalization: ownNorm } : null;
+      setResults(await runSynthesis(project, analysisId || null, aiHeaders, entries, { useAI, reading }));
+      // The reading follows the project, so that the stone report picks it up (validated against Rundata without AI there)
+      if (reading && reading.transliteration !== project.linguisticResults?.transliteration) {
+        await db.saveProject({ id: project.id, linguisticResults: {
+          transliteration: reading.transliteration.trim(), normalization: reading.normalization.trim(),
+          phonetic_ipa: "", translation: "", linguistic_analysis: "", corrected: true } }).catch(() => {});
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Något gick fel vid syntesen.");
     } finally {
@@ -155,11 +172,24 @@ export default function SynthesisPage() {
                   <li className="flex justify-between"><span>Signum</span><span>{project.metaText || "–"}</span></li>
                   <li className="flex justify-between"><span>Stenart / vittring</span><span>{project.metaStone || "–"} / {project.metaWeathering || "–"}</span></li>
                   <li className="flex justify-between"><span>Sparade analyser</span><span>{analyses.length}</span></li>
-                  <li className="flex justify-between"><span>2D-stilanalys</span><span>{project.twoDResults?.predicted_style ?? "–"}</span></li>
-                  <li className="flex justify-between"><span>Egen läsning</span><span>{project.linguisticResults?.transliteration ? "ja (äldre projekt)" : "–"}</span></li>
                   <li className="flex justify-between"><span>Mätkorpus</span><span>{user ? "jämförs" : "logga in"}</span></li>
                 </ul>
               </div>
+              <label className="block text-slate-500 text-[12px] font-bold uppercase tracking-wider">Egen läsning (valfri)
+                <textarea value={ownReading} onChange={e => setOwnReading(e.target.value)} rows={2}
+                  placeholder="Translitterering, t.ex. in ulfʀ hafiʀ o onklati þru kialt takat"
+                  className="w-full mt-2 liquid-glass-input-wrapper rounded-xl px-4 py-2.5 text-slate-900 text-sm font-mono outline-none normal-case tracking-normal" />
+                <input value={ownNorm} onChange={e => setOwnNorm(e.target.value)} placeholder="Normalisering (valfri), t.ex. En UlfR hafiR a Ænglandi …"
+                  className="w-full mt-2 liquid-glass-input-wrapper rounded-xl px-4 py-2.5 text-slate-900 text-sm outline-none normal-case tracking-normal" />
+                <span className="block mt-1 text-[11px] font-normal normal-case tracking-normal text-slate-500">
+                  Din läsning av stenen. Prövas mot Rundata och kända inskrifter utan AI, och används som ortografiskt belägg
+                  när Rundata saknar text (nyfynd). Sparas i projektet och följer med i stenrapporten.
+                </span>
+              </label>
+              <label className="flex items-center gap-2 text-sm text-slate-700">
+                <input type="checkbox" checked={useAI} onChange={e => setUseAI(e.target.checked)} />
+                Låt AI formulera tolkningen (märks som AI-text; annars framräknad text)
+              </label>
               {!project.metaText && <p className="text-xs text-amber-800">Projektet saknar signum – Rundata och ortografi kan inte användas.</p>}
               {!analyses.length && (
                 <p className="text-xs text-amber-800">

@@ -1161,21 +1161,20 @@ Källkod: `src/geology.py`, `GET /api/research/geology/{signum}`.
 
 ## 12. Bilder och runformer (fliken på 3D-sidan)
 
-Källkod: `web/src/components/TwoDAnalysis.tsx`, `api/routers/twod.py`, `src/graphemes.py`. Till 2026-10-20 en egen
-sida (*2D-bildanalys*); nu fliken **Bilder och runformer** på 3D-sidan, eftersom bilderna nästan alltid kommer ur
-skanningen (2d) och runutsnitten hör ihop med spåranalysen.
+Källkod: `web/src/components/TwoDAnalysis.tsx`, `api/routers/twod.py` (`/extract_features`), `src/graphemes.py`.
+Till 2026-10-20 en egen sida (*2D-bildanalys*) med AI-bedömning av stilgrupp; nu fliken **Bilder och runformer** på
+3D-sidan utan AI, eftersom bilderna nästan alltid kommer ur skanningen (2d) och runutsnitten hör ihop med spåranalysen.
 
-* **Stilbedömning (AI).** AI-bedömningen av en bild (stilgrupp Pr1–Pr5, RAK, Fp eller **Osäker**, runtyper) är en
-  hypotes, och modellens säkerhet är dess egen skattning, **inte kalibrerad**. Om stenen har en stilgrupp i Rundata
-  visas den bredvid, och syntesen redovisar om AI:n och Rundata är överens.
-* **Stilbedömningen prövad (2026-10-20, `utdata/stilgrupp_ai/stilgrupp_test.py`):** 57 svenska runstenar med
-  säker stilgrupp i Rundata och fri bild i Wikidata, stratifierat urval, Claude Opus med appens instruktion.
-  Exakt stilgrupp 35 % (slump 14 %, majoritetsgissning 21 %), 39 % bland de 91 % där modellen inte svarade
-  "Osäker"; rätt grov klass (RAK / Fp / Ringerike Pr1–2 / Urnes Pr3–5) 71 %; inom en grannstilgrupp 83 %. RAK 8 av
-  11 och Fp 5 av 8 rätt, men Pr1 spreds över fem svar, Pr3 blev oftast Pr4 och Pr5 blev Pr4 i 7 av 8. Självskattningen
-  ordnar svaren rätt (60–79 %: 71 % rätt; under 60 %: 26 %) men är inte kalibrerad. Fliken visar därför den grova
-  klassen som huvudresultat och stilgruppen som modellens gissning inom klassen. 827 stenar med bild finns för en
-  större prövning.
+* **Stilgrupp ur bild: borttagen 2026-10-20.** AI-bedömningen av stilgrupp (Pr1–Pr5, RAK, Fp, "Osäker" med egen
+  säkerhetsangivelse) prövades samma dag (`utdata/stilgrupp_ai/stilgrupp_test.py`, 57 svenska runstenar med säker
+  stilgrupp i Rundata och fri bild i Wikidata, stratifierat urval, Claude Opus med appens instruktion): exakt
+  stilgrupp 35 % (slump 14 %, majoritetsgissning 21 %), 39 % bland de 91 % där modellen inte svarade "Osäker"; rätt
+  grov klass (RAK / Fp / Ringerike Pr1–2 / Urnes Pr3–5) 71 %; inom en grannstilgrupp 83 %. RAK 8 av 11 och Fp 5 av 8
+  rätt, men Pr1 spreds över fem svar, Pr3 blev oftast Pr4 och Pr5 blev Pr4 i 7 av 8. Modellens säkerhetsangivelse
+  ordnade svaren rätt (60–79 %: 71 % rätt; under 60 %: 26 %) men var inte kalibrerad. Eftersom Rundata har säker
+  stilgrupp för 1 038 stenar och en gissning med 35 % träff inte tillför något för de övriga, togs funktionen bort
+  (API `/api/2d/analyze`, syntesens stilkontroll, stenanalysens steg och rapportens avsnitt). Fliken visar i stället
+  Rundatas stilgrupp bredvid bilden. Provet står kvar som mätning i `utdata/stilgrupp_ai/`.
 * **Runformer** (`src/graphemes.py`, särdragsversion `grapheme-2`): utsnittet kontrastförstärks (CLAHE),
   binäriseras (Otsu; minoritetsklassen räknas som ristning), beskärs till ristningen och läggs i en kvadrat
   med bibehållna proportioner, 64 × 64 px. Särdrag: HOG, täthet i 4 × 4 zoner och logaritmerat
@@ -1613,24 +1612,23 @@ signum, med samma beräkningar som de enskilda verktygen:
    riktning; den andra sidan kan väljas.
 2. **Automatisk spåranalys** med flera känsligheter (standard 3 och 5). Den första är huvudanalysen, de övriga
    en känslighetsanalys som redovisas med granskningsbilder.
-3. **Stilbedömning (AI)** av strykljuset från nordväst, som gissning inom grov klass (avsnitt 12). (Den blinda
-   läsningen i flera orienteringar togs bort 2026-10-20, avsnitt 8.)
-4. **Syntes och attribuering** med berggrund (avsnitt 11 och 13); med inloggning även mot mätkorpusen.
-5. **Forskningsläge och syfte** (`GET /api/research/stone/{signum}`): det Forskningsluckor vet om stenen
+3. **Syntes och attribuering** med berggrund (avsnitt 11 och 13); med inloggning även mot mätkorpusen.
+4. **Forskningsläge och syfte** (`GET /api/research/stone/{signum}`): det Forskningsluckor vet om stenen
    (landskapets täckning, stenens luckor i Rundata, om den finns bland ortografiska hypoteser, omprövningar
    eller mätprioriteringar och hur appens resultat bedöms mot forskningen), inskriftens syfte (avsnitt 10) och,
    för de tre troligaste ristarna, hur ofta de ristade i stenens stilgrupp och inskriftstyp.
-6. **Statistik i R** (avsnitt 1): startar korpusanalyserna om de saknas och ställer stenen mot dem –
+5. **Statistik i R** (avsnitt 1): startar korpusanalyserna om de saknas och ställer stenen mot dem –
    attribueringsmodellen, kandidaternas områden, gruppen i klustringen, formlerna, Upplands seriation och
    landskapet (höjdmodell, strand, sikt, vägar).
-7. **Stenrapport** (15b), med avsnitten "Inskriftens syfte" och "Stenen i forskningsläget", R-avsnitten (metod 3.4,
+6. **Stenrapport** (15b), med avsnitten "Inskriftens syfte" och "Stenen i forskningsläget", R-avsnitten (metod 3.4,
    modellen i attribueringen, "Stenen i korpusen", "Stenen i landskapet"), en tabell över
    kandidaternas stilgrupper och inskriftstyper, bilaga A (alla tvärsnitt) och bilaga B: arbetsgångens steg och utfall,
-   känslighetsanalysen, granskningsbilder, relief, stilbedömningens motivering och de fel eller begränsningar som
-   uppstod.
+   känslighetsanalysen, granskningsbilder, relief och de fel eller begränsningar som uppstod. (Stilbedömningen och
+   den blinda läsningen togs bort 2026-10-20, avsnitt 8 och 12.)
 
-Misslyckas ett AI-steg (ingen nyckel, slut på krediter, tidsgräns) fortsätter arbetsgången, och felet
-redovisas i bilaga B. Resultatet kan sparas i ett projekt.
+AI används bara för löptext i syntes och rapport, som tillval; utan nyckel eller med valet avstängt räknas texterna
+fram. Misslyckas AI-texten (ingen nyckel, slut på krediter, tidsgräns) fortsätter arbetsgången med framräknad text,
+och felet redovisas i bilaga B. Resultatet kan sparas i ett projekt.
 
 Från terminalen (analysmotorn måste köras):
 
@@ -1829,7 +1827,7 @@ När en brist åtgärdas ändras förteckningen och versionen höjs. Bristerna i
 | Träffsäkerheten beror på om platsen är känd | attribution, r, statistics | Grupperad korsvalidering även för mätkorpusens attribuering, när korpusen är stor nog. |
 | Många utforskande test på samma data | attribution, research, statistics | Förregistrerade analysplaner för de hypoteser som ska publiceras. |
 | Stenarnas mått är ofullständiga och ojämna | research, rundata | Mått ur Sveriges runinskrifter eller nya mätningar för stenarna som saknas; hela höjden för resta stenar. |
-| AI-resultat är okalibrerade och kan vara påhittade | ai | Kalibrering mot runologers läsningar av samma bilder. |
+| AI-text är okalibrerad och kan vara påhittad | ai | Granskning av AI-texten mot beläggen i varje rapport; AI-text förblir ett tillval och ersätter aldrig framräknad text. |
 | Rundata är en äldre utgåva | attribution, research, rundata | Uppdatering till senaste utgåvan av Runor. |
 | Programvaran är under utveckling | attribution, comparison, grooves, software | Låst version med DOI (Zenodo) och extern granskning av koden. |
 

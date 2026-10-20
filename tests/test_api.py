@@ -131,15 +131,6 @@ def test_summarize_selection(client):
     assert r.status_code == 200 and r.json()["n"] == 4
 
 
-def test_2d_rejects_non_image(client):
-    r = client.post(
-        "/api/2d/analyze",
-        files={"file": ("a.txt", b"x", "text/plain")},
-        headers={"X-Gemini-Api-Key": "dummy"},
-    )
-    assert r.status_code == 400
-
-
 def test_extract_features_rejects_bad_base64(client):
     r = client.post("/api/2d/extract_features", json={"image_base64": "data:image/png;base64,@@@"})
     assert r.status_code == 400

@@ -54,13 +54,13 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
 
 ## Fas 2 – Ta bort det som inte bär
 
-### 2.1 Stilbedömningen (AI)  (kort)
+### 2.1 Stilbedömningen (AI)  — KLAR 2026-10-20 (borttagen)
 - Beslut Viktor: behålla som "gissning inom grov klass" eller ta bort. Rekommendation: ta bort.
 - Om borttagning: `api/routers/twod.py` `/analyze` och `TwoDAIResult`, stenanalysens steg `twod`,
   `TwoDAnalysis.tsx` resultatkortet och `StyleFacts`, `scripts/full_stone_analysis.py`, METHODS 12, README,
   CHANGELOG, bristposten `ai`. Rundatas stilgrupp visas i stället direkt i fliken.
 
-### 2.2 Egen läsning: fält eller bort  (kort)
+### 2.2 Egen läsning: fält eller bort  — KLAR 2026-10-20 (alternativ A: fält i Syntes)
 - Alternativ A (rekommenderas): ett textfält "Egen läsning (translitterering)" i Syntes, skickas som `reading`
   till `/api/synthesis/analyze` och `/api/reports/stone`; valideras av `src/reading.validate` som i dag.
 - Alternativ B: ta bort `reading`-spåret ur `api/routers/synthesis.py`, `reports.py`, `src/stone_report.py`,
@@ -71,7 +71,7 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
 - När facit finns: klipp utsnitt ur facit-stenarnas ristningskartor, jämför närmaste granne mot facitets runa.
   Ger en träff på riktiga stenar att sätta bredvid 85 % på syntetiska. Under 50 % → ta bort funktionen.
 
-### 2.4 AI-text och AI-chatt  (beslut)
+### 2.4 AI-text och AI-chatt  — KLAR 2026-10-20 (AI-text tillval, framräknad text standard; chatten kvar)
 - Inventera var AI skriver löptext (syntes, rapporter, assistenten). Behåll bara där texten är märkt och
   ersättningsbar av framräknad formulering (finns redan som fallback). Rekommendation: behåll fallback som standard,
   AI-text som tillval.
@@ -139,9 +139,9 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
 ---
 
 ## Väntande beslut som planen behöver från Viktor
-1. Stilbedömningen: kvar eller bort (2.1).
-2. Egen läsning: fält (A) eller bort (B) (2.2).
-3. AI-text: tillval eller standard (2.4).
+1. ~~Stilbedömningen~~ – beslutat 2026-10-20: bort.
+2. ~~Egen läsning~~ – beslutat: fält i Syntes (A).
+3. ~~AI-text~~ – beslutat: tillval.
 4. Vilka utkast som publiceras först: Hávamál, Möjliga ristare utan namn (efter 3.5), Så gör du: huggspår,
    Runorna som fattas → därefter Malt.
 

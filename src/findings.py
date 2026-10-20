@@ -11,7 +11,7 @@ Fyndet klassas som
 och får en uppskattning i tre delar, alla mellan 0 och 1 och redovisade öppet:
 
   belägg     hur pålitlig analysen är i just detta fall (korsvaliderad träffsäkerhet, textlängd,
-             avstånd till nästa kandidat; AI-stilbedömningar får lågt värde eftersom de är okalibrerade)
+             avstånd till nästa kandidat)
   nyhet      hur mycket fyndet tillför jämfört med Rundata (en bekräftelse tillför lite, en ny
              attribuering mycket – men mindre utanför Axelsons område, där attribueringar kan finnas i
              litteraturen utan att stå i Rundata)

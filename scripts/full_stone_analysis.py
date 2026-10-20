@@ -3,9 +3,8 @@
   1. Skanningen laddas upp; reliefbilder räknas ur den (den ristade sidan skattas som stenens tunnaste
      riktning om ingen normal anges).
   2. Automatisk spåranalys med flera känsligheter (den första är huvudanalysen, de övriga känslighetsanalys).
-  3. Stilbedömning (AI) av strykljusbilden, som gissning inom grov klass.
-  4. Syntes och attribuering (med berggrund ur SGU).
-  5. Stenrapport i artikelform med bilaga om arbetsgången: Word, HTML, Markdown, LaTeX och figurer.
+  3. Syntes och attribuering (med berggrund ur SGU).
+  4. Stenrapport i artikelform med bilaga om arbetsgången: Word, HTML, Markdown, LaTeX och figurer.
 
 Kräver att analysmotorn körs (uvicorn api.main:app). AI-stegen kräver en nyckel i miljön: ANTHROPIC_API_KEY (Claude,
 standard) eller GEMINI_API_KEY med AI_PROVIDER=gemini; om de misslyckas fortsätter arbetsgången och felet redovisas i
@@ -56,7 +55,7 @@ def main(argv=None):
     ap.add_argument("--stone", default="Okänd"); ap.add_argument("--weathering", default="Medel")
     ap.add_argument("--author", default=""); ap.add_argument("--institution", default="")
     ap.add_argument("--device", default=""); ap.add_argument("--scan-license", default="")
-    ap.add_argument("--no-ai", action="store_true", help="hoppa över stilbedömning och AI-text")
+    ap.add_argument("--no-ai", action="store_true", help="ingen AI-text i syntes och rapport (texterna räknas fram)")
     a = ap.parse_args(argv)
 
     api, out = a.api.rstrip("/"), a.out
@@ -118,18 +117,8 @@ def main(argv=None):
                   f"{m0['angle_mean']:.1f}° ± {m0['angle_sd']:.1f}°".replace(".", ",")})
 
     raking = open(f"{out}/strykljus_nordväst.png", "rb").read()
-    twod = None
-    if not a.no_ai:
-        # 3. 2D image analysis
-        log("3/5 Stilbedömning (AI) …")
-        r = requests.post(f"{api}/api/2d/analyze", files={"file": ("strykljus.png", raking, "image/png")}, headers=headers, timeout=900)
-        if r.ok:
-            twod = r.json()
-            steps.append({"name": "Stilbedömning (AI)", "result": f"stilgrupp {twod['predicted_style']} (AI:ns gissning, självskattning {twod['confidence']} %)"})
-        else:
-            notes.append(f"Stilbedömningen misslyckades: {r.json().get('detail', r.status_code)}")
-    else:
-        notes.append("AI-stegen (stilbedömning, AI-text) hoppades över.")
+    if a.no_ai:
+        notes.append("AI-text i syntes och rapport är avstängd; texterna är framräknade.")
 
     # 5. Synthesis
     log("5/6 Syntes och attribuering …")
@@ -138,7 +127,6 @@ def main(argv=None):
         "analyses": [{"id": "auto-1", "feature_type": a.feature_type, "savedAt": analysis["savedAt"],
                       "slices": [{m: x[m] for m in METRICS} | {"position_mm": x["position_mm"]} for x in slices]}],
         "analysis_id": "auto-1", "corpus": [], "corpus_note": "mätkorpusen ingår inte i körningar från terminalen (kräver inloggning).",
-        "two_d": {"predicted_style": twod["predicted_style"], "confidence": twod["confidence"], "reasoning": twod["reasoning"]} if twod else None,
         "include_geology": True,
     }
     syn_body["use_ai"] = not a.no_ai
@@ -192,14 +180,14 @@ def main(argv=None):
     # 6. Stone report with the workflow appendix
     log("6/6 Stenrapport …")
     workflow = {"date": datetime.date.today().isoformat(), "steps": steps, "sensitivity": sensitivity,
-                "relief_png": relief["relief"], "two_d_reasoning": (twod or {}).get("reasoning"),
+                "relief_png": relief["relief"], 
                 "notes": notes + ["Skanningens upplösning, utrustning och licens bör fyllas i om de saknas."]}
     body = {"signum": a.signum, "author": a.author, "institution": a.institution,
             "meta": {"stone": a.stone, "weathering": a.weathering, "text": a.signum},
             "scan": {"device": a.device, "license": a.scan_license}, "condition": {"weathering": a.weathering.lower()},
             "analyses": [analysis], "counts": main_auto["counts"], "mesh_id": mid, "view": {"normal": normal},
             "corpus": [], "synthesis": synthesis,
-            "two_d": {"image": data_url(raking), "result": twod, "crops": [],
+            "two_d": {"image": data_url(raking), "crops": [],
                       "caption": "Digitalt strykljus från nordväst, räknat ur 3D-skanningen – bilden som 2D-analysen och läsningen fick."},
             "workflow": workflow, "use_ai": not a.no_ai}
     rep = requests.post(f"{api}/api/reports/stone", json=body, headers=headers, timeout=1800).json()

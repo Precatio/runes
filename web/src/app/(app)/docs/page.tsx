@@ -33,7 +33,7 @@ const FEATURES: { group: string; items: { href: string; name: string; text: stri
     items: [
       { href: "/stenanalys", name: "Stenanalys (allt i ett)", text: "Kör hela kedjan för en skanning och ett signum och ger en färdig artikel med figurer och en bilaga om hur analysen gjordes." },
       { href: "/3d", name: "3D-huggspårsanalys", text: "Mäter huggspårens vinkel, djup och bredd i en 3D-skanning – automatiskt, med ett klick eller manuellt. Den automatiska analysen mäter bara runorna (mätmetod groove-5)." },
-      { href: "/3d?verktyg=2d", name: "Bilder och runformer", text: "Strykljus, relief, djupkarta och ristningskarta ur skanningen, foton och RTI-vyer; runutsnitt jämförs efter form, och AI:ns stilbedömning visas som en gissning inom sin grova klass – en flik på 3D-sidan." },
+      { href: "/3d?verktyg=2d", name: "Bilder och runformer", text: "Strykljus, relief, djupkarta och ristningskarta ur skanningen, foton och RTI-vyer; runutsnitt jämförs efter form, och Rundatas stilgrupp visas bredvid bilden – en flik på 3D-sidan." },
       { href: "/3d?verktyg=rti", name: "RTI-släpljus", text: "Flytta ljuset över en RTI- eller PTM-fil för att se grunda ristningar – ett verktyg på 3D-sidan." },
       { href: "/synthesis", name: "Syntes & attribuering", text: "Väger samman Rundata, ortografi, huggteknik, geografi, stilgrupper, bergart och språkdrag efter hur träffsäkra metoderna är, och redovisar motsägelser." },
     ],
@@ -174,7 +174,7 @@ export default function DocsPage() {
             ristningar synliga, och <strong>sannolikhetsmodellen</strong> föreslår ord i luckorna med kalibrerade procent
             (Inskrifter och Stenanalys). Vitki läser inte runorna med AI: i våra prov gav blinda AI-läsningar mest streck eller
             formler ur minnet, och funktionen togs bort 2026-10-20. Under <strong>Bilder och runformer</strong> jämförs
-            runutsnitt efter form, och AI:ns stilbedömning visas som en gissning inom sin grova klass.
+            runutsnitt efter form. Vitki bedömer inte heller stilgrupp ur bilder (35 % rätt i prov); den hämtas ur Rundata.
           </p>
 
           <H3>3. Väg samman beläggen</H3>
@@ -202,7 +202,7 @@ export default function DocsPage() {
 
         <Section id="nycklar" title="API-nycklar" icon="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z">
           <p>
-            Stilbedömningen, texterna i syntesen och rapporterna och assistenten kräver API-nycklar. Vitki
+            AI-texterna i syntesen och rapporterna (tillval; utan nyckel räknas texterna fram) och assistenten kräver API-nycklar. Vitki
             använder en <em>bring your own key</em>-modell: du skapar egna nycklar och klistrar in dem under{" "}
             <Link href="/account" className={A}>Inställningar</Link>. Mätningarna, statistiken och kartan fungerar utan nycklar.
           </p>

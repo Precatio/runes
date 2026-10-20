@@ -467,9 +467,6 @@ def conflicts(ev: dict, candidates: list[dict]) -> list[str]:
         tests = cand.get("stone_tests") or {}
         if tests.get("n") and tests["compatible"] == 0:
             out.append(f"{cand['name']}: huggtekniken skiljer sig signifikant från alla {tests['n']} uppmätta stenar av ristaren.")
-    sc = ev.get("style_check")
-    if sc and sc.get("rundata_style") and not sc["agrees"]:
-        out.append(f"AI-bedömd stilgrupp {sc['ai_style']} (bild, okalibrerad) skiljer sig från Rundatas {sc['rundata_style']}.")
     return out
 
 

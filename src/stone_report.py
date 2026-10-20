@@ -659,9 +659,6 @@ def facts_text(f: dict) -> str:
             rt = land["routes"]
             lines.append(f"Landskap (R): {rt['stone_to_route_km']:.2f} km till simulerade vägar mellan grannplatser, "
                          f"slumpvisa punkter median {rt['random_median_km']:.2f} km")
-    td = f["two_d"].get("result") or {}
-    if td.get("predicted_style"):
-        lines.append(f"AI-bedömning av stilgrupp från bild (okalibrerad): {td['predicted_style']}")
     return "\n".join(lines)
 
 
@@ -708,7 +705,7 @@ def workflow_appendix(wf: dict, signum: str, fig, tab) -> list[dict]:
     out = [h(1, "Bilaga B. Arbetsgång"),
            p(wf.get("intro") or (
                f"Analysen gjordes {wf.get('date', '')} med Vitkis fullständiga stenanalys: bilder ur skanningen, "
-               "automatisk spåranalys med känslighetsanalys, stilbedömning (AI), sannolikhetsmodellens läsning, syntes och "
+               "automatisk spåranalys med känslighetsanalys, sannolikhetsmodellens läsning, syntes och "
                "stenrapport. Varje steg använder samma beräkningar som de enskilda verktygen i appen."))]
     steps = wf.get("steps") or []
     if steps:
@@ -738,9 +735,6 @@ def workflow_appendix(wf: dict, signum: str, fig, tab) -> list[dict]:
         if img:
             out.append(fig(img, f"{signum}. Relief ur skanningen: det mörkaste av fyra strykljus, så att varje spår blir "
                                 "mörkt oavsett riktning.", "relief"))
-    if wf.get("two_d_reasoning"):
-        out.append(h(2, "B.2 Stilbedömning (AI)"))
-        out.append(p(f"Bildanalysens motivering (förkortad): {wf['two_d_reasoning'][:600].rstrip()} …", ai=True))
     readings = wf.get("readings") or []
     if readings:
         out.append(h(2, "B.3 Blinda läsningar"))
@@ -835,7 +829,7 @@ def report_limitations(f: dict, ai_used: bool = False) -> tuple[list[dict], list
         ctx.add("comparison")
     if f.get("synthesis") or f.get("attribution"):
         ctx.add("attribution")
-    if ai_used or f.get("reading") or (f.get("two_d") or {}).get("result"):
+    if ai_used or f.get("reading"):
         ctx.add("ai")
     if f.get("rundata"):
         ctx.add("rundata")
@@ -1102,20 +1096,12 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
                         "Mätkorpusen innehåller ännu för få stenar med säker ristare för en jämförelse."))
 
     td = f["two_d"]
-    td_res = td.get("result") or {}
     img = to_png_b64(td["image"]) if td.get("image") else None
     forms = rune_forms_figure(td.get("crops") or [])
-    if img or td_res or forms:
-        blocks.append(h(2, "4.6 Bildanalys"))
+    if img or forms:
+        blocks.append(h(2, "4.6 Bild och runformer"))
         if img:
-            blocks.append(fig(img, f"{signum}. {td.get('caption') or 'Bild använd i 2D-analysen.'}", "bild"))
-        if td_res.get("predicted_style"):
-            agree = rec.get("style") and td_res["predicted_style"] == rec.get("style")
-            blocks.append(p(f"En språkmodell bedömde stilgruppen från bilden som {td_res['predicted_style']} "
-                            f"(egen, okalibrerad säkerhet {td_res.get('confidence', '–')} %). "
-                            + (f"Rundata anger {rec['style']}, " + ("vilket stämmer överens." if agree else "vilket avviker.")
-                               if rec.get("style") else "Rundata anger ingen stilgrupp.")
-                            + " Bedömningen är en hypotes och inte ett mätresultat."))
+            blocks.append(fig(img, f"{signum}. {td.get('caption') or 'Bild ur skanningen.'}", "bild"))
         if forms:
             blocks.append(fig(forms, f"{signum}. Normaliserade runformer ur bilden (svartvita, lika stora), "
                                      "underlag för formjämförelser.", "runformer"))

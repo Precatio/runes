@@ -11,10 +11,13 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   bara streck (träff 0 mot Rundata). Jämförelsen mot Rundata, ordformerna, ortografin och valideringen står kvar som
   beräkning (`POST /api/phonetics/compare`) och i rapporterna (METHODS.md 8). OpenAI-nyckeln (bara uppläsningen) är borta.
 - 2D-bildanalysen är fliken **Bilder och runformer** på 3D-sidan: foton, RTI-vyer, reliefer och ristningskartan,
-  runutsnitt jämförda efter form, och AI:ns stilbedömning som gissning inom grov klass. AI-markeringen av runor i foton
+  runutsnitt jämförda efter form, och Rundatas stilgrupp bredvid bilden. AI-markeringen av runor i foton
   (`/api/2d/detect_runes`) är borttagen; automatiska utsnitt finns bara för ristningskartan. Gamla adresser (/2d,
   /phonetics) leder till 3D-sidan.
-- Stenanalysen kör inte längre blinda läsningar; steget heter Stilbedömning (AI).
+- AI-bedömningen av stilgrupp ur bild är borttagen: prövad på 57 stenar med säker stilgrupp träffade den exakta
+  gruppen i 35 % av fallen (grov klass 71 %, Pr5 blev Pr4 i 7 av 8). Rundata har stilgruppen för 1 038 stenar.
+  Syntesens stilkontroll mot AI, stenanalysens steg och rapportens avsnitt följer med. AI används nu bara för löptext,
+  som tillval; utan nyckel räknas texterna fram.
 
 ### Ordklasser i ordföljden
 - Modellen lär sig ordklasser ur texterna själva och väger in vilken klass som brukar följa på vilken. Rätt ord i

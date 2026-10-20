@@ -58,8 +58,19 @@ export interface SynthesisResult {
 const metricsOnly = (slices: GrooveAnalysisRecord["slices"]) =>
   slices.map(s => ({ ...Object.fromEntries(METRICS.map(m => [m, s[m]])), position_mm: s.position_mm }));
 
+export interface SynthesisOptions {
+  useAI?: boolean;  // let a language model write the prose (marked); default: computed texts
+  // An own reading of the inscription, compared with Rundata without AI; used as orthographic evidence when Rundata has no text
+  reading?: { transliteration: string; normalization: string } | null;
+}
+
 export async function runSynthesis(project: ProjectData, analysisId: string | null, aiHeaders: Record<string, string>,
-  corpusEntries: CorpusEntry[] | null): Promise<SynthesisResult> {
+  corpusEntries: CorpusEntry[] | null, opts: SynthesisOptions = {}): Promise<SynthesisResult> {
+  const reading = opts.reading?.transliteration?.trim()
+    ? { transliteration: opts.reading.transliteration.trim(), normalization: opts.reading.normalization?.trim() ?? "" }
+    : project.linguisticResults?.transliteration
+      ? { transliteration: project.linguisticResults.transliteration, normalization: project.linguisticResults.normalization }
+      : null;
   const res = await fetch(`${API_URL}/api/synthesis/analyze`, {
     method: "POST",
     headers: { "Content-Type": "application/json", ...aiHeaders },
@@ -77,16 +88,8 @@ export async function runSynthesis(project: ProjectData, analysisId: string | nu
       slices: project.grooveAnalyses?.length ? [] : project.slices,
       corpus: (corpusEntries ?? []).map(e => ({ signum: e.signum, feature_type: e.feature_type, means: e.means, slices: metricsOnly(e.slices) })),
       corpus_note: corpusEntries === null ? "logga in för att jämföra med den delade mätkorpusen." : null,
-      // An own reading of the inscription (older projects) – used when Rundata has no usable text
-      reading: project.linguisticResults?.transliteration ? {
-        transliteration: project.linguisticResults.transliteration,
-        normalization: project.linguisticResults.normalization,
-      } : null,
-      two_d: project.twoDResults ? {
-        predicted_style: project.twoDResults.predicted_style,
-        confidence: project.twoDResults.confidence,
-        reasoning: project.twoDResults.reasoning,
-      } : undefined,
+      reading,
+      use_ai: !!opts.useAI,
     }),
   });
   if (!res.ok) throw new Error((await res.json().catch(() => null))?.detail || "Syntesen misslyckades.");

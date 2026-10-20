@@ -23,6 +23,56 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 BILDER = os.path.join(HERE, "bilder")
 RES = os.path.join(HERE, "resultat.jsonl")
 CODES = ["RAK", "Fp", "Pr1", "Pr2", "Pr3", "Pr4", "Pr5"]  # KB bedömer inte appen; Rundatas KB-stenar utelämnas
+# Appens instruktion och schema som de var när provet gjordes (stilbedömningen togs bort ur appen 2026-10-20)
+from pydantic import BaseModel  # noqa: E402
+from typing import Literal  # noqa: E402
+from src.styles import STYLE_GROUPS  # noqa: E402
+
+
+class Marker(BaseModel):
+    label: str
+    description: str
+    polygon: list[list[int]]
+
+
+class TwoDAIResult(BaseModel):
+    predicted_style: Literal["RAK", "Fp", "Pr1", "Pr2", "Pr3", "Pr4", "Pr5", "Osäker"]
+    confidence: int
+    reasoning: str
+    rune_types: str
+    markers: list[Marker]
+
+
+STYLE_REFERENCE = "\n".join(
+    f"- {g['code']}: {g['features']}" + (f" (ca {g['from']}–{g['to']})" if g["from"] else "")
+    for g in STYLE_GROUPS if g["code"] != "KB"
+)
+
+SYSTEM_INSTRUCTION = """
+Du är en expert-runolog och epigrafiker som specialiserar sig på paleografi och ornamentik på svenska runstenar.
+I din stilanalys (ornamentik) utgår du ifrån Anne-Sofie Gräslunds kronologiska metoder.
+Din uppgift är att analysera en uppladdad 2D-bild (ett foto eller en uppmålning) av en runsten.
+
+Du måste identifiera vilken av Anne-Sofie Gräslunds stilgrupper (RAK, Fp, Pr1, Pr2, Pr3, Pr4, Pr5) som stenen med störst sannolikhet tillhör.
+Använd koderna exakt så (RAK, Fp, Pr1–Pr5). Om bilden inte visar ornamentik som går att bedöma, svara "Osäker". Referens (ungefärliga dateringar som överlappar):
+""" + STYLE_REFERENCE + """
+Om bilden innehåller ett rundjur med huvud är det ALDRIG Rak. Var noggrann och variera din bedömning baserat på faktiska visuella bevis i bilden. Undvik att defaulta till Rak.
+
+Din uppskattning genererar även en procentsats (confidence). Den visas som en okalibrerad självskattning. Ange ett realistiskt värde (t.ex. 40-90%) baserat på bildens tydlighet, var inte överdrivet säker (95%) om bilden är suddig eller svårtolkad.
+
+I fältet "reasoning" (Epigrafisk motivering) MÅSTE du vara mycket utförlig. Analysera eventuella drakhuvuden, ögonform, fotflikar och bandens dragning grundligt, eller avsaknaden av dessa.
+
+Du måste även identifiera runtyperna som används på stenen. I fältet "rune_types" beskriv de distinkta paleografiska dragen.
+
+När du identifierar nyckeldetaljer (t.ex. drakhuvud, svans, rakt bandavslut, specifik runa), inkludera dessa i "markers"-listan. 
+Du SKA sträva efter att inkludera så många relevanta markörer som möjligt (gärna 5-10 stycken om bilden tillåter) för att bygga ett massivt och detaljerat visuellt bevis för din bedömning. Markera ögon, öron, nosflikar, fötter, svansar, ormöglor, kors och särpräglade runor separat.
+För varje markör (marker), ange en 'label' (t.ex. "Drakhuvud - Mandelformat öga"), en mycket djupgående och detaljerad 'description' (t.ex. "Ett tydligt mandelformat öga med utdragen snibb som är starkt indikativt för stil Pr3, placerat strax bakom nospartiet."), och dess utbredning i 'polygon' med en lista av koordinater i formatet [[y1, x1], [y2, x2], ...] normaliserat till 0-1000. Sätt ut tillräckligt med punkter (minst 4, men gärna fler) så att polygonen noggrant följer den visuella formen du markerar istället för att bara vara en inexakt rektangel.
+Exempel på polygon: [[150, 200], [150, 400], [250, 420], [300, 400], [300, 200]] för en mer oregelbunden form.
+
+Du måste svara EXAKT enligt det angivna JSON-schemat.
+"""
+
+
 UA = {"User-Agent": "Vitki/1.0 (vitkirunor.se; forskning) python-requests"}
 
 
@@ -75,7 +125,6 @@ def hamta_bild(signum: str, fil: str) -> str | None:
 
 def bedom(path: str, ctx) -> dict:
     from api import llm
-    from api.routers.twod import SYSTEM_INSTRUCTION, TwoDAIResult
     r = llm.generate(ctx, "Analysera denna runsten paleografiskt och epigrafiskt.", system=SYSTEM_INSTRUCTION,
                      images=[(open(path, "rb").read(), "image/jpeg")], schema=TwoDAIResult, tier="pro")
     return {"predicted": r.data.get("predicted_style"), "confidence": r.data.get("confidence"),

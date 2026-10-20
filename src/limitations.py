@@ -136,19 +136,19 @@ LIMITATIONS = [
      "short": "Stenarnas storlek är bara känd för ungefär hälften av dem, och oftast bara höjden över mark.",
      "needed": "Mått ur Sveriges runinskrifter eller nya mätningar för stenarna som saknas; hela höjden för resta stenar."},
     {"key": "ai", "contexts": {"ai"},
-     "title": "AI-resultat är okalibrerade och kan vara påhittade",
-     "text": "AI-bedömningar av stil är inte kalibrerade, och AI läser inte runor i Vitki: i ett test på Sö 113 återgav "
+     "title": "AI-text är okalibrerad och kan vara påhittad",
+     "text": "AI används i Vitki bara för löptext i syntes, rapporter och assistenten, som tillval och märkt. AI läser inte runor "
+             "och bedömer inte stilgrupp: i ett test på Sö 113 återgav "
              "blinda läsningar text ur minnet i stället för ur bilden, bland annat Jellingstenens text, och i ett prov "
              "2026-10-20 med appens strikta läsinstruktion gav Claude Opus nästan bara streck (träff 0 mot Rundata på tre "
-             "stenar), varför den blinda läsningen togs bort samma dag. Stilbedömningen prövades "
+             "stenar), varför den blinda läsningen togs bort samma dag. Stilbedömningen ur bild prövades "
              "2026-10-20 på 57 runstenar med säker stilgrupp i Rundata och fri bild (Claude Opus, appens egen instruktion): "
              "exakt stilgrupp i 35 % av fallen (slump 14 %), rätt grov klass – RAK, Fp, Ringerike (Pr1–Pr2) eller Urnes "
-             "(Pr3–Pr5) – i 71 % och inom en grannstilgrupp i 83 %; Pr5 bedömdes som Pr4 i sju fall av åtta. "
-             "Modellens egen säkerhetsangivelse ordnar svaren rätt (över 60 % träffade i 71 %, under 60 % i 26 %) men är "
-             "ingen sannolikhet. En egen läsning som matas in valideras mot Rundata och kända inskrifter utan AI, AI-text i "
+             "(Pr3–Pr5) – i 71 % och inom en grannstilgrupp i 83 %; Pr5 bedömdes som Pr4 i sju fall av åtta, och funktionen "
+             "togs bort. En egen läsning som matas in valideras mot Rundata och kända inskrifter utan AI, AI-text i "
              "rapporter märks, men inget AI-resultat bör bära ett argument.",
      "short": "AI kan hitta på; AI läser inte runor i Vitki, och allt som AI skrivit eller bedömt är märkt och måste granskas.",
-     "needed": "Kalibrering mot runologers läsningar av samma bilder."},
+     "needed": "Granskning av AI-texten mot beläggen i varje rapport; AI-text förblir ett tillval och ersätter aldrig framräknad text."},
     {"key": "rundata", "contexts": {"rundata", "attribution", "research"},
      "title": "Rundata är en äldre utgåva",
      "text": "Appen bygger på Samnordisk runtextdatabas version 3.1 (2018); nyare förslag stäms av mot Runor (2020) och "

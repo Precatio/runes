@@ -115,6 +115,7 @@ export interface MarkerData {
   polygon?: number[][];
 }
 
+// The AI style assessment, kept only for projects saved before 2026-10-20 (the function was removed)
 export interface TwoDResultData {
   predicted_style: string;
   confidence: number;

@@ -70,7 +70,6 @@ function ThreeDPageContent() {
     setLatest2DImage,
     setLatest2DFile,
     setLatest2DSource,
-    setLatest2DResults,
     setStoneReportInput,
   } = useAnalysis();
   const router = useRouter();
@@ -90,7 +89,6 @@ function ThreeDPageContent() {
       runeBoxes: (autoResult.runes ?? []).flatMap(r => (r.box ? [{ id: r.id, box: r.box }] : [])),
       methodVersion: autoResult.provenance.method_version,
     });
-    setLatest2DResults(null);
     setTool("2d");
     window.scrollTo({ top: 0 });
   };
@@ -456,8 +454,7 @@ function ThreeDPageContent() {
         kind: "3d-relief",
         description: `${metaText || file?.name || "3D-modell"}, relief ur skanningen (${resolution.toFixed(2).replace(".", ",")} mm/px före skalning)`,
       });
-      setLatest2DResults(null);
-      setTool("2d");
+        setTool("2d");
       window.scrollTo({ top: 0 });
     } catch (e) {
       alert(errorText(e, "Reliefbilden kunde inte räknas fram."));

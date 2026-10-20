@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useContext, useState } from "react";
-import { TwoDResultData, ThreeDAnalysisResult, TwoDSource } from "@/lib/db";
+import { ThreeDAnalysisResult, TwoDSource } from "@/lib/db";
 import type { StoneReportInput } from "@/lib/stoneReport";
 
 export interface MetaData {
@@ -20,8 +20,6 @@ interface AnalysisContextType {
   setLatest3DFile: (data: File | null) => void;
   latest3DMeta: MetaData;
   setLatest3DMeta: (data: MetaData) => void;
-  latest2DResults: TwoDResultData | null;
-  setLatest2DResults: (data: TwoDResultData | null) => void;
   latest2DImage: string | null;
   setLatest2DImage: (data: string | null) => void;
   latest2DFile: File | null;
@@ -42,7 +40,6 @@ export function AnalysisProvider({ children }: { children: React.ReactNode }) {
   const [latest3DMeta, setLatest3DMeta] = useState<MetaData>({
     stone: "Granit", weathering: "Låg", text: "", ornamentation: "", period: "", carver: "", location: ""
   });
-  const [latest2DResults, setLatest2DResults] = useState<TwoDResultData | null>(null);
   const [latest2DImage, setLatest2DImage] = useState<string | null>(null);
   const [latest2DFile, setLatest2DFile] = useState<File | null>(null);
   const [latest2DSource, setLatest2DSource] = useState<TwoDSource | null>(null);
@@ -54,7 +51,6 @@ export function AnalysisProvider({ children }: { children: React.ReactNode }) {
       latest3DResults, setLatest3DResults,
       latest3DFile, setLatest3DFile,
       latest3DMeta, setLatest3DMeta,
-      latest2DResults, setLatest2DResults,
       latest2DImage, setLatest2DImage,
       latest2DFile, setLatest2DFile,
       latest2DSource, setLatest2DSource,

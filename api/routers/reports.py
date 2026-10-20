@@ -38,7 +38,7 @@ class AcademicRequest(BaseModel):
     entries: list[dict]
     author: str = ""
     institution: str = ""
-    use_ai: bool = True
+    use_ai: bool = False  # AI prose is opt-in; the computed texts are the default
     format: Literal["json", "docx"] = "json"
     lang: Literal["sv", "en"] = "sv"  # the document's language (src/i18n.py)
     # AI text from an earlier JSON call, so a download matches the preview without a new AI call
@@ -119,12 +119,12 @@ class StoneReportRequest(BaseModel):
     mesh_id: Optional[str] = None
     view: Optional[dict] = None  # {normal, up} for the carved face
     corpus: list[dict] = Field(default_factory=list)
-    two_d: Optional[dict] = None
+    two_d: Optional[dict] = None  # {image, crops, caption}: the picture and the rune forms for section 4.6
     synthesis: Optional[dict] = None  # result of /api/synthesis/analyze
     reading: Optional[dict] = None  # the app's own reading, compared with Rundata by /api/phonetics/compare (older projects)
     # The full stone analysis: steps, sensitivity analysis with review images, all readings, notes (appendix B)
     workflow: Optional[dict] = None
-    use_ai: bool = True
+    use_ai: bool = False  # AI prose is opt-in; the computed texts are the default
     format: Literal["json", "docx"] = "json"
     ai_text: Optional[dict[str, str]] = None
     include_r: bool = True
