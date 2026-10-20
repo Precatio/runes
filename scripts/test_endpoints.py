@@ -90,25 +90,6 @@ def run_tests():
     except Exception as e:
         print("Error during Synthesis report:", e)
 
-    # 4. Test Phonetics Analyze
-    print("\n4. Testing /api/phonetics/analyze endpoint...")
-    try:
-        # Create a tiny dummy base64 jpeg
-        dummy_base64 = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA="
-        response = client.post("/api/phonetics/analyze", json={
-            "image_base64": dummy_base64,
-            "signum": "U 11"
-        })
-        print(f"Status Code: {response.status_code}")
-        if response.status_code == 200:
-            data = response.json()
-            print("Phonetics analysis generated successfully:")
-            print(f" - Transliteration: {data.get('transliteration')}")
-            print(f" - IPA: {data.get('phonetic_ipa')}")
-        else:
-            print("Response:", response.text)
-    except Exception as e:
-        print("Error during Phonetics analyze:", e)
 
 if __name__ == "__main__":
     run_tests()

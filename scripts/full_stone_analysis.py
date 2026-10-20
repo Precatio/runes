@@ -3,10 +3,9 @@
   1. Skanningen laddas upp; reliefbilder räknas ur den (den ristade sidan skattas som stenens tunnaste
      riktning om ingen normal anges).
   2. Automatisk spåranalys med flera känsligheter (den första är huvudanalysen, de övriga känslighetsanalys).
-  3. 2D-bildanalys av strykljusbilden.
-  4. Blind läsning av strykljusbilden i en eller flera orienteringar, jämförd med Rundata utan AI.
-  5. Syntes och attribuering (med berggrund ur SGU).
-  6. Stenrapport i artikelform med bilaga om arbetsgången: Word, HTML, Markdown, LaTeX och figurer.
+  3. Stilbedömning (AI) av strykljusbilden, som gissning inom grov klass.
+  4. Syntes och attribuering (med berggrund ur SGU).
+  5. Stenrapport i artikelform med bilaga om arbetsgången: Word, HTML, Markdown, LaTeX och figurer.
 
 Kräver att analysmotorn körs (uvicorn api.main:app). AI-stegen kräver en nyckel i miljön: ANTHROPIC_API_KEY (Claude,
 standard) eller GEMINI_API_KEY med AI_PROVIDER=gemini; om de misslyckas fortsätter arbetsgången och felet redovisas i
@@ -53,12 +52,11 @@ def main(argv=None):
     ap.add_argument("--out", default="utdata/stenanalys", help="mapp för resultaten")
     ap.add_argument("--api", default=os.environ.get("RUNFORSKNING_API", "http://localhost:8000"))
     ap.add_argument("--sensitivity", default="3,5", help="känsligheter; den första är huvudanalysen")
-    ap.add_argument("--orientations", default="0,180", help="vridningar (grader) av bilden för blind läsning")
     ap.add_argument("--feature-type", default="rune", choices=["rune", "ornament", "unknown"])
     ap.add_argument("--stone", default="Okänd"); ap.add_argument("--weathering", default="Medel")
     ap.add_argument("--author", default=""); ap.add_argument("--institution", default="")
     ap.add_argument("--device", default=""); ap.add_argument("--scan-license", default="")
-    ap.add_argument("--no-ai", action="store_true", help="hoppa över 2D-analys, läsning och AI-text")
+    ap.add_argument("--no-ai", action="store_true", help="hoppa över stilbedömning och AI-text")
     a = ap.parse_args(argv)
 
     api, out = a.api.rstrip("/"), a.out
@@ -120,54 +118,26 @@ def main(argv=None):
                   f"{m0['angle_mean']:.1f}° ± {m0['angle_sd']:.1f}°".replace(".", ",")})
 
     raking = open(f"{out}/strykljus_nordväst.png", "rb").read()
-    twod, readings = None, []
+    twod = None
     if not a.no_ai:
         # 3. 2D image analysis
-        log("3/6 2D-bildanalys …")
+        log("3/5 Stilbedömning (AI) …")
         r = requests.post(f"{api}/api/2d/analyze", files={"file": ("strykljus.png", raking, "image/png")}, headers=headers, timeout=900)
         if r.ok:
             twod = r.json()
-            steps.append({"name": "2D-bildanalys", "result": f"stilgrupp {twod['predicted_style']} (AI, okalibrerad {twod['confidence']} %)"})
+            steps.append({"name": "Stilbedömning (AI)", "result": f"stilgrupp {twod['predicted_style']} (AI:ns gissning, självskattning {twod['confidence']} %)"})
         else:
-            notes.append(f"2D-bildanalysen misslyckades: {r.json().get('detail', r.status_code)}")
-        # 4. Blind reading in each orientation
-        for deg in [int(x) for x in a.orientations.split(",") if x.strip()]:
-            log(f"4/6 Blind läsning, {deg}° …")
-            img = Image.open(io.BytesIO(raking)).rotate(deg, expand=True)
-            buf = io.BytesIO(); img.save(buf, format="PNG")
-            r = requests.post(f"{api}/api/phonetics/analyze", headers=headers, timeout=900,
-                              json={"image_base64": data_url(buf.getvalue()), "signum": a.signum or "Okänd"})
-            if r.ok:
-                readings.append({"label": f"Strykljus, {deg}°", **r.json()})
-            else:
-                readings.append({"label": f"Strykljus, {deg}°", "error": "misslyckades"})
-                notes.append(f"Blind läsning ({deg}°) misslyckades: {r.json().get('detail', r.status_code)}")
-        ok = [x for x in readings if x.get("transliteration")]
-        # Validation with the other readings of the same image (consistency), Rundata and known inscriptions
-        for x in ok:
-            others = [y["transliteration"] for y in ok if y is not x]
-            x.update(requests.post(f"{api}/api/phonetics/compare", timeout=300, json={
-                "signum": a.signum, "transliteration": x["transliteration"], "normalization": x.get("normalization", ""),
-                "other_readings": others}).json())
-        if ok:
-            c = ok[0].get("reading_comparison") or {}
-            v = ok[0].get("validation") or {}
-            steps.append({"name": "Blind läsning", "result": f"{len(ok)} av {len(readings)} lyckades; den första: "
-                          + (v.get("status") or "ej validerad")
-                          + (f" ({round(c.get('char_agreement', 0) * 100)} % av runorna stämmer med Rundata)" if c else "")})
+            notes.append(f"Stilbedömningen misslyckades: {r.json().get('detail', r.status_code)}")
     else:
-        notes.append("AI-stegen (2D-analys, läsning, AI-text) hoppades över.")
+        notes.append("AI-stegen (stilbedömning, AI-text) hoppades över.")
 
     # 5. Synthesis
     log("5/6 Syntes och attribuering …")
-    reading = next((x for x in readings if x.get("transliteration")), None)
     syn_body = {
         "signum": a.signum or "Okänd", "stoneType": a.stone, "weathering": a.weathering,
         "analyses": [{"id": "auto-1", "feature_type": a.feature_type, "savedAt": analysis["savedAt"],
                       "slices": [{m: x[m] for m in METRICS} | {"position_mm": x["position_mm"]} for x in slices]}],
         "analysis_id": "auto-1", "corpus": [], "corpus_note": "mätkorpusen ingår inte i körningar från terminalen (kräver inloggning).",
-        "reading": {"transliteration": reading["transliteration"], "normalization": reading.get("normalization", ""),
-                    "others": [x["transliteration"] for x in readings if x.get("transliteration") and x is not reading]} if reading else None,
         "two_d": {"predicted_style": twod["predicted_style"], "confidence": twod["confidence"], "reasoning": twod["reasoning"]} if twod else None,
         "include_geology": True,
     }
@@ -223,12 +193,12 @@ def main(argv=None):
     log("6/6 Stenrapport …")
     workflow = {"date": datetime.date.today().isoformat(), "steps": steps, "sensitivity": sensitivity,
                 "relief_png": relief["relief"], "two_d_reasoning": (twod or {}).get("reasoning"),
-                "readings": readings, "notes": notes + ["Skanningens upplösning, utrustning och licens bör fyllas i om de saknas."]}
+                "notes": notes + ["Skanningens upplösning, utrustning och licens bör fyllas i om de saknas."]}
     body = {"signum": a.signum, "author": a.author, "institution": a.institution,
             "meta": {"stone": a.stone, "weathering": a.weathering, "text": a.signum},
             "scan": {"device": a.device, "license": a.scan_license}, "condition": {"weathering": a.weathering.lower()},
             "analyses": [analysis], "counts": main_auto["counts"], "mesh_id": mid, "view": {"normal": normal},
-            "corpus": [], "synthesis": synthesis, "reading": {k: v for k, v in reading.items() if k != "markers"} if reading else None,
+            "corpus": [], "synthesis": synthesis,
             "two_d": {"image": data_url(raking), "result": twod, "crops": [],
                       "caption": "Digitalt strykljus från nordväst, räknat ur 3D-skanningen – bilden som 2D-analysen och läsningen fick."},
             "workflow": workflow, "use_ai": not a.no_ai}

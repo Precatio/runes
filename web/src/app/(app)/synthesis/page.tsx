@@ -156,7 +156,7 @@ export default function SynthesisPage() {
                   <li className="flex justify-between"><span>Stenart / vittring</span><span>{project.metaStone || "–"} / {project.metaWeathering || "–"}</span></li>
                   <li className="flex justify-between"><span>Sparade analyser</span><span>{analyses.length}</span></li>
                   <li className="flex justify-between"><span>2D-stilanalys</span><span>{project.twoDResults?.predicted_style ?? "–"}</span></li>
-                  <li className="flex justify-between"><span>Egen läsning</span><span>{project.linguisticResults?.transliteration ? "ja" : <Link href="/phonetics" className="underline">nej</Link>}</span></li>
+                  <li className="flex justify-between"><span>Egen läsning</span><span>{project.linguisticResults?.transliteration ? "ja (äldre projekt)" : "–"}</span></li>
                   <li className="flex justify-between"><span>Mätkorpus</span><span>{user ? "jämförs" : "logga in"}</span></li>
                 </ul>
               </div>

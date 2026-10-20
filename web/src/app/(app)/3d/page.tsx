@@ -21,6 +21,7 @@ import { FEATURE_TYPES, type FeatureType } from "@/lib/metrics";
 import dynamic from 'next/dynamic';
 import { API_URL } from "@/lib/api";
 import RTIViewer from "@/components/RTIViewer";
+import TwoDAnalysis from "@/components/TwoDAnalysis";
 
 // Disable SSR for ThreeDViewer since it uses browser APIs (window, DOM)
 const ThreeDViewer = dynamic(() => import('@/components/ThreeDViewer'), {
@@ -28,11 +29,15 @@ const ThreeDViewer = dynamic(() => import('@/components/ThreeDViewer'), {
   loading: () => <div className="w-full h-full flex items-center justify-center">Laddar 3D-miljö...</div>
 });
 
-// The page's two tools: measuring grooves in a mesh, and viewing an RTI file in raking light (no measuring)
-function ToolTabs({ tool, setTool }: { tool: "mesh" | "rti"; setTool: (t: "mesh" | "rti") => void }) {
+type Tool = "mesh" | "rti" | "2d";
+const toolOf = (v: string | null): Tool => (v === "rti" || v === "2d" ? v : "mesh");
+
+// The page's three tools: measuring grooves in a mesh, viewing an RTI file in raking light (no measuring), and the
+// images and rune forms (photos, reliefs and the groove map; was the 2D page until 2026-10-20)
+function ToolTabs({ tool, setTool }: { tool: Tool; setTool: (t: Tool) => void }) {
   return (
-    <div className="flex gap-2 mb-6" role="tablist" aria-label="Verktyg">
-      {([["mesh", "Mäta huggspår (3D-modell)"], ["rti", "RTI-släpljus (titta, mäter inte)"]] as const).map(([k, l]) => (
+    <div className="flex flex-wrap gap-2 mb-6" role="tablist" aria-label="Verktyg">
+      {([["mesh", "Mäta huggspår (3D-modell)"], ["rti", "RTI-släpljus (titta, mäter inte)"], ["2d", "Bilder och runformer"]] as const).map(([k, l]) => (
         <button key={k} role="tab" aria-selected={tool === k} onClick={() => setTool(k)}
           className={`px-4 py-2 rounded-full text-sm font-bold border transition-colors ${tool === k
             ? "bg-slate-900 border-slate-900 text-white" : "bg-white border-slate-200 text-slate-600 hover:border-slate-400"}`}>
@@ -47,7 +52,11 @@ function ThreeDPageContent() {
   const searchParams = useSearchParams();
   const urlProjectId = searchParams.get("projectId");
   const urlSignum = searchParams.get("signum");
-  const [tool, setTool] = useState<"mesh" | "rti">(searchParams.get("verktyg") === "rti" ? "rti" : "mesh");
+  const [tool, setTool] = useState<Tool>(toolOf(searchParams.get("verktyg")));
+  // A link to /3d?verktyg=… from inside the page (the RTI viewer sends its view to the images tab) changes the tab
+  const wanted = toolOf(searchParams.get("verktyg"));
+  const [prevWanted, setPrevWanted] = useState(wanted);
+  if (wanted !== prevWanted) { setPrevWanted(wanted); setTool(wanted); }
 
   const { 
     latest3DResults: results, 
@@ -63,7 +72,6 @@ function ThreeDPageContent() {
     setLatest2DSource,
     setLatest2DResults,
     setStoneReportInput,
-    setPhoneticsImage,
   } = useAnalysis();
   const router = useRouter();
 
@@ -83,7 +91,8 @@ function ThreeDPageContent() {
       methodVersion: autoResult.provenance.method_version,
     });
     setLatest2DResults(null);
-    router.push("/2d");
+    setTool("2d");
+    window.scrollTo({ top: 0 });
   };
 
   const [activeProject, setActiveProject] = useState<ProjectData | null>(null);
@@ -436,19 +445,6 @@ function ThreeDPageContent() {
     return { images, resolution: data.resolution_mm };
   };
 
-  const sendReliefToPhonetics = async () => {
-    setReliefBusy("phonetics");
-    try {
-      const { images } = await fetchRelief();
-      setPhoneticsImage({ source: `${metaText || file?.name || "3D-modell"} – sedd från den aktuella vyn`, images });
-      router.push("/phonetics");
-    } catch (e) {
-      alert(errorText(e, "Reliefbilden kunde inte räknas fram."));
-    } finally {
-      setReliefBusy("");
-    }
-  };
-
   const sendReliefToTwoD = async () => {
     setReliefBusy("2d");
     try {
@@ -461,7 +457,8 @@ function ThreeDPageContent() {
         description: `${metaText || file?.name || "3D-modell"}, relief ur skanningen (${resolution.toFixed(2).replace(".", ",")} mm/px före skalning)`,
       });
       setLatest2DResults(null);
-      router.push("/2d");
+      setTool("2d");
+      window.scrollTo({ top: 0 });
     } catch (e) {
       alert(errorText(e, "Reliefbilden kunde inte räknas fram."));
     } finally {
@@ -693,11 +690,11 @@ function ThreeDPageContent() {
     margin: { l: 45, r: 25, t: 45, b: 45 },
   };
 
-  if (tool === "rti") {
+  if (tool === "rti" || tool === "2d") {
     return (
       <div className="flex flex-col h-full w-full max-w-7xl mx-auto p-4 md:p-6 relative z-10 overflow-y-auto">
         <ToolTabs tool={tool} setTool={setTool} />
-        <RTIViewer />
+        {tool === "rti" ? <RTIViewer /> : <TwoDAnalysis />}
       </div>
     );
   }
@@ -939,15 +936,7 @@ function ThreeDPageContent() {
                 disabled={!meshInfo || !!reliefBusy}
                 className="w-full py-2.5 bg-white border border-[#b7410e] text-[#b7410e] hover:bg-[#b7410e] hover:text-white disabled:opacity-40 font-semibold text-sm rounded-xl transition-all"
               >
-                {reliefBusy === "2d" ? "Räknar fram reliefbild …" : "Skicka reliefbild till 2D-analysen"}
-              </button>
-              <button
-                type="button"
-                onClick={sendReliefToPhonetics}
-                disabled={!meshInfo || !!reliefBusy}
-                className="w-full py-2.5 bg-white border border-slate-300 text-slate-800 hover:border-slate-900 disabled:opacity-40 font-semibold text-sm rounded-xl transition-all"
-              >
-                {reliefBusy === "phonetics" ? "Räknar fram reliefbilder …" : "Läs runorna i Språk & Fonetik"}
+                {reliefBusy === "2d" ? "Räknar fram reliefbild …" : "Öppna reliefbilden under Bilder och runformer"}
               </button>
             </div>
 

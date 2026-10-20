@@ -126,7 +126,7 @@ const USE_CASES = [
   },
   {
     title: "Läsning av skadade inskrifter",
-    text: "Strykljus och relief ur 3D-skanningen och RTI-förstärkning gör grunda eller vittrade ristningar läsbara; en blind läsning kan jämföras med Rundata ord för ord.",
+    text: "Strykljus, relief och djupkarta ur 3D-skanningen och RTI-förstärkning gör grunda eller vittrade ristningar läsbara, och sannolikhetsmodellen föreslår ord i luckorna med kalibrerade procent – utan AI.",
   },
   {
     title: "Datering och stil",

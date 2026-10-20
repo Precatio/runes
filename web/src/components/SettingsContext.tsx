@@ -14,13 +14,11 @@ interface SettingsContextType {
   // Headers for every AI call: chosen model and the user's own keys (kept only in this browser)
   aiHeaders: Record<string, string>;
   geminiKey: string;
-  openaiKey: string;
   userName: string;
   userInstitution: string;
   // Contact address in reports; defaults to the signed-in account's address
   userEmail: string;
   setGeminiKey: (key: string) => void;
-  setOpenaiKey: (key: string) => void;
   setUserName: (name: string) => void;
   setUserInstitution: (inst: string) => void;
   setUserEmail: (email: string) => void;
@@ -37,7 +35,6 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   const [geminiKey, setGeminiState] = useState("");
   const [anthropicKey, setAnthropicState] = useState("");
   const [aiProvider, setProviderState] = useState<AIProvider>("claude");
-  const [openaiKey, setOpenaiState] = useState("");
   // No personal defaults: the name and address come from the user's own settings or account
   const [userName, setUserNameState] = useState("");
   const [userInstitution, setUserInstState] = useState("Vitki");
@@ -51,7 +48,6 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const loadSettings = async () => {
       let savedGemini = localStorage.getItem("vitki_gemini_key");
-      let savedOpenai = localStorage.getItem("vitki_openai_key");
       let savedName = localStorage.getItem("vitki_user_name");
       let savedInst = localStorage.getItem("vitki_user_inst");
       let savedEmail = localStorage.getItem("vitki_user_email");
@@ -70,14 +66,10 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
             const data = snap.data();
             // API keys are local-only. Migrate keys that older versions synced to
             // Firestore into localStorage, then remove them from the cloud.
-            if (data.geminiKey || data.openaiKey) {
+            if (data.geminiKey || data.openaiKey) {  // keys that older versions synced to Firestore
               if (data.geminiKey && !savedGemini) {
                 savedGemini = data.geminiKey;
                 localStorage.setItem("vitki_gemini_key", data.geminiKey);
-              }
-              if (data.openaiKey && !savedOpenai) {
-                savedOpenai = data.openaiKey;
-                localStorage.setItem("vitki_openai_key", data.openaiKey);
               }
               updateDoc(docRef, { geminiKey: deleteField(), openaiKey: deleteField() })
                 .catch(e => console.error("Failed to remove API keys from Firestore:", e));
@@ -98,7 +90,6 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       if (savedAnthropic) setAnthropicState(savedAnthropic);
       const savedProvider = localStorage.getItem("vitki_ai_provider");
       if (savedProvider === "claude" || savedProvider === "gemini") setProviderState(savedProvider);
-      if (savedOpenai) setOpenaiState(savedOpenai);
       setUserNameState(savedName || user?.displayName || "");
       setUserEmailState(savedEmail || user?.email || "");
       // The app was earlier called Aagaard Research and Bifrost; saved settings get the name Vitki
@@ -180,11 +171,6 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     return h;
   }, [aiProvider, anthropicKey, geminiKey]);
 
-  const setOpenaiKey = (key: string) => {
-    setOpenaiState(key);
-    localStorage.setItem("vitki_openai_key", key);
-  };
-
   const setUserName = (name: string) => {
     setUserNameState(name);
     localStorage.setItem("vitki_user_name", name);
@@ -206,8 +192,8 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   return (
     <SettingsContext.Provider value={{ 
       aiProvider, anthropicKey, setAiProvider, setAnthropicKey, aiHeaders,
-      geminiKey, openaiKey, userName, userInstitution, userEmail,
-      setGeminiKey, setOpenaiKey, setUserName, setUserInstitution, setUserEmail,
+      geminiKey, userName, userInstitution, userEmail,
+      setGeminiKey, setUserName, setUserInstitution, setUserEmail,
       isModalOpen, setIsModalOpen,
       totalTokensUsed, tokenHistory, addUsedTokens
     }}>

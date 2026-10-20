@@ -7,9 +7,7 @@ export interface Translations {
     ai_runologist: string;
     threed_analysis: string;
     nlp_analysis: string;
-    twod_analysis: string;
     synthesis: string;
-    phonetics: string;
     documentation: string;
     inscriptions: string;
     map: string;
@@ -67,9 +65,7 @@ export const translations: Record<Language, Translations> = {
       subtitle: "Analysplattform",
       ai_runologist: "Start",
       threed_analysis: "3D-Huggspårsanalys",
-      twod_analysis: "2D-Bildanalys (Paleografi)",
       synthesis: "Syntes & Attribuering",
-      phonetics: "Språk & Fonetik",
       nlp_analysis: "Lingvistisk Analys",
       documentation: "Dokumentation & Om",
       inscriptions: "Inskrifter (Rundata)",
@@ -126,9 +122,7 @@ export const translations: Record<Language, Translations> = {
       subtitle: "Analysis Platform",
       ai_runologist: "Home",
       threed_analysis: "3D Groove Analysis",
-      twod_analysis: "2D Image Analysis (Paleography)",
       synthesis: "Synthesis & Attribution",
-      phonetics: "Language & Phonetics",
       nlp_analysis: "Linguistic Analysis",
       documentation: "Documentation & About",
       inscriptions: "Inscriptions (Rundata)",

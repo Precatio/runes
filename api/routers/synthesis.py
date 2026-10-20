@@ -68,7 +68,7 @@ class SynthesisRequest(BaseModel):
     # Mätkorpusen [{signum, feature_type, means, slices}] – jämförelsen görs här, inklusive sten mot sten
     corpus: List[dict] = Field(default_factory=list)
     corpus_note: Optional[str] = None  # t.ex. "logga in för att jämföra med korpusen"
-    # Appens egen läsning från Språk & Fonetik: {transliteration, normalization}
+    # En egen läsning av inskriften (prövad mot Rundata utan AI, METHODS.md 8): {transliteration, normalization}
     reading: Optional[dict] = None
     # Berggrunden på platsen ur SGU:s karta (nätverksanrop, några sekunder första gången)
     include_geology: bool = True

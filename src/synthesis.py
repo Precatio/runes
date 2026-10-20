@@ -478,7 +478,7 @@ def missing_notes(ev: dict, corpus_note: str | None) -> list[str]:
     if not ev.get("rundata"):
         notes.append("Signumet finns inte i Rundata: ingen litteraturuppgift eller geografi"
                      + ("." if ev.get("orthography") else
-                        "; ortografin kräver en egen läsning från Språk & Fonetik."))
+                        "; ortografin kräver en egen läsning av inskriften."))
     o = ev.get("orthography")
     if ev.get("rundata") and not o:
         notes.append("Ortografi: inskriften ingår inte i den ortografiska modellen (för få läsbara ord eller fel period).")

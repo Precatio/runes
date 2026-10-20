@@ -121,7 +121,7 @@ class StoneReportRequest(BaseModel):
     corpus: list[dict] = Field(default_factory=list)
     two_d: Optional[dict] = None
     synthesis: Optional[dict] = None  # result of /api/synthesis/analyze
-    reading: Optional[dict] = None  # result of /api/phonetics/analyze (the app's own reading)
+    reading: Optional[dict] = None  # the app's own reading, compared with Rundata by /api/phonetics/compare (older projects)
     # The full stone analysis: steps, sensitivity analysis with review images, all readings, notes (appendix B)
     workflow: Optional[dict] = None
     use_ai: bool = True

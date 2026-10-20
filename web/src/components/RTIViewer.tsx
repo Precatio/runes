@@ -19,7 +19,7 @@ export default function RTIViewer() {
   const [grayscale, setGrayscale] = useState(false);
   const [dragging, setDragging] = useState(false);
   const router = useRouter();
-  const { setLatest2DImage, setLatest2DFile, setLatest2DSource, setLatest2DResults, setPhoneticsImage } = useAnalysis();
+  const { setLatest2DImage, setLatest2DFile, setLatest2DSource, setLatest2DResults } = useAnalysis();
 
   const load = async (file: File | undefined) => {
     if (!file) return;
@@ -73,14 +73,7 @@ export default function RTIViewer() {
     a.click();
   };
 
-  // Send the current relit view to the 2D analysis
-  const sendToPhonetics = () => {
-    const url = canvasRef.current?.toDataURL("image/png");
-    if (!url) return;
-    setPhoneticsImage({ source: `RTI: ${fileName}, ljus ${azimuth.toFixed(0)}°/${elevation.toFixed(0)}°`, images: { "RTI-vy": url } });
-    router.push("/phonetics");
-  };
-
+  // Send the current relit view to the images tab on this page
   const sendToTwoD = async () => {
     const url = canvasRef.current?.toDataURL("image/png");
     if (!url) return;
@@ -88,7 +81,7 @@ export default function RTIViewer() {
     setLatest2DFile(await dataURLToFile(url, "rti_vy.png"));
     setLatest2DSource({ kind: "rti", description: `${fileName}, ljus ${azimuth.toFixed(0)}°/${elevation.toFixed(0)}°` });
     setLatest2DResults(null);
-    router.push("/2d");
+    router.push("/3d?verktyg=2d");
   };
 
   return (
@@ -147,11 +140,7 @@ export default function RTIViewer() {
           </button>
           <button onClick={sendToTwoD} disabled={!ptm}
             className="w-full py-2.5 bg-white border border-slate-300 hover:border-slate-900 text-sm font-bold rounded-xl disabled:opacity-40">
-            Analysera vyn i 2D
-          </button>
-          <button onClick={sendToPhonetics} disabled={!ptm}
-            className="w-full py-2.5 bg-white border border-slate-300 hover:border-slate-900 text-sm font-bold rounded-xl disabled:opacity-40">
-            Läs runorna i Språk & Fonetik
+            Öppna vyn under Bilder och runformer
           </button>
         </div>
 

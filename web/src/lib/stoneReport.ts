@@ -22,7 +22,7 @@ export interface StoneReportInput {
   counts?: AutoAnalysisResult["counts"];
   twoD?: { image?: string; result?: TwoDResultData | null; crops?: { tag: string; formPng?: string }[]; caption?: string };
   synthesis?: SynthesisResult; // attribution section of the report
-  reading?: LinguisticResultData; // the app's own reading (Språk & Fonetik)
+  reading?: LinguisticResultData; // an own reading saved in an older project (the AI reading was removed 2026-10-20)
 }
 
 // Markers (image polygons) are not needed in the report

@@ -708,7 +708,7 @@ def workflow_appendix(wf: dict, signum: str, fig, tab) -> list[dict]:
     out = [h(1, "Bilaga B. Arbetsgång"),
            p(wf.get("intro") or (
                f"Analysen gjordes {wf.get('date', '')} med Vitkis fullständiga stenanalys: bilder ur skanningen, "
-               "automatisk spåranalys med känslighetsanalys, 2D-bildanalys, blind läsning jämförd med Rundata, syntes och "
+               "automatisk spåranalys med känslighetsanalys, stilbedömning (AI), sannolikhetsmodellens läsning, syntes och "
                "stenrapport. Varje steg använder samma beräkningar som de enskilda verktygen i appen."))]
     steps = wf.get("steps") or []
     if steps:
@@ -739,7 +739,7 @@ def workflow_appendix(wf: dict, signum: str, fig, tab) -> list[dict]:
             out.append(fig(img, f"{signum}. Relief ur skanningen: det mörkaste av fyra strykljus, så att varje spår blir "
                                 "mörkt oavsett riktning.", "relief"))
     if wf.get("two_d_reasoning"):
-        out.append(h(2, "B.2 2D-bildanalys"))
+        out.append(h(2, "B.2 Stilbedömning (AI)"))
         out.append(p(f"Bildanalysens motivering (förkortad): {wf['two_d_reasoning'][:600].rstrip()} …", ai=True))
     readings = wf.get("readings") or []
     if readings:

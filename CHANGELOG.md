@@ -5,6 +5,17 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### AI-läsningen och Språk & Fonetik borttagna; 2D blev en flik på 3D-sidan
+- Vitki läser inte längre runor med AI. Sidan Språk & Fonetik (blind läsning, normalisering, IPA, uppläsning) är
+  borttagen efter två prov: läsningar ur minnet (Sö 113 gav Jellingstenens text) och, med strikt instruktion, nästan
+  bara streck (träff 0 mot Rundata). Jämförelsen mot Rundata, ordformerna, ortografin och valideringen står kvar som
+  beräkning (`POST /api/phonetics/compare`) och i rapporterna (METHODS.md 8). OpenAI-nyckeln (bara uppläsningen) är borta.
+- 2D-bildanalysen är fliken **Bilder och runformer** på 3D-sidan: foton, RTI-vyer, reliefer och ristningskartan,
+  runutsnitt jämförda efter form, och AI:ns stilbedömning som gissning inom grov klass. AI-markeringen av runor i foton
+  (`/api/2d/detect_runes`) är borttagen; automatiska utsnitt finns bara för ristningskartan. Gamla adresser (/2d,
+  /phonetics) leder till 3D-sidan.
+- Stenanalysen kör inte längre blinda läsningar; steget heter Stilbedömning (AI).
+
 ### Ordklasser i ordföljden
 - Modellen lär sig ordklasser ur texterna själva och väger in vilken klass som brukar följa på vilken. Rätt ord i
   maskeringsprovet steg något (inne i ord 72 → 73 procent, hela ord 56 → 57), luckprovet är oförändrat. Panelens

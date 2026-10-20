@@ -20,7 +20,7 @@ export default function AIChatWidget() {
   const { aiHeaders, addUsedTokens } = useSettings();
   const { lang } = useLanguage();
   
-  const { latest3DResults, latestLinguisticResults, latest2DResults } = useAnalysis();
+  const { latest3DResults, latest2DResults } = useAnalysis();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -70,7 +70,6 @@ export default function AIChatWidget() {
         lang,
         context_data: {
           three_d_results: latest3DResults?.results || latest3DResults,
-          linguistic_results: latestLinguisticResults,
           two_d_results: latest2DResults
         }
       };

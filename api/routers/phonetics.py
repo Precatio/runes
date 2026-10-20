@@ -1,65 +1,22 @@
+"""Läsning mot Rundata, utan AI (METHODS.md 8): en translitterering (t.ex. en forskares egen läsning av en bild eller ett
+nyfynd) jämförs med Rundatas läsning ord för ord och runa för runa, ordformerna slås upp i korpusen, läsningens ortografi
+rankas mot ristarna och läsningen valideras (bekräftad, delvis, ej bekräftad, annan inskrift, ej prövbar).
+
+Den blinda AI-läsningen (/analyze) och uppläsningen (/speak) togs bort 2026-10-20: i prov gav AI-läsningen mest streck
+eller formler som inte gick att skilja från text ur minnet (Sö 113 gav Jellingstenens text). Adressen /api/phonetics
+behålls för /compare, som rapporterna och syntesen fortfarande kan ta emot en läsning från.
+"""
 from functools import lru_cache
 
-from api import llm
-from api.errors import ai_error
 from api.rundata import store
 from api.routers.orthography import model as orthography_model
-from api.uploads import decode_base64_image
-from src.reading import Lexicon, compare, runes_to_latin, validate
+from src.reading import Lexicon, compare, validate
 from src.synthesis import smoothed_precision
-from fastapi import APIRouter, Depends, HTTPException, Header, Response
+from fastapi import APIRouter
 from pydantic import BaseModel
 from typing import Optional
-from openai import OpenAI
 
 router = APIRouter()
-
-class PhoneticsRequest(BaseModel):
-    image_base64: str
-    signum: str = "Okänd"
-    region: Optional[str] = None
-    epoch: Optional[str] = None
-    
-class Marker(BaseModel):
-    label: str
-    description: str
-    polygon: list[list[int]]
-
-# The blind reading: what is seen on the image, and where
-BLIND_READING_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "raw_transliteration": {"type": "string"},
-        "markers": {"type": "array", "items": {"type": "object", "properties": {
-            "label": {"type": "string"}, "description": {"type": "string"},
-            "polygon": {"type": "array", "items": {"type": "array", "items": {"type": "integer"}}}},
-            "required": ["label", "description", "polygon"]}},
-    },
-    "required": ["raw_transliteration", "markers"],
-}
-
-
-class LinguisticAI(BaseModel):
-    """Det språkmodellen får fylla i. Rundata och jämförelsen läggs till av servern."""
-    transliteration: str
-    normalization: str
-    phonetic_ipa: str
-    translation: str
-    linguistic_analysis: str
-    sound_laws_applied: Optional[list[str]] = None
-
-
-class PhoneticsResponse(LinguisticAI):
-    # Rundatas läsning (fakta ur databasen, inte AI) och den framräknade jämförelsen
-    academic_reading: Optional[str] = None
-    comparison: Optional[str] = None
-    rundata: Optional[dict] = None
-    validation: Optional[dict] = None
-    reading_comparison: Optional[dict] = None
-    form_check: Optional[dict] = None
-    orthography: Optional[dict] = None
-    markers: Optional[list[Marker]] = None
-    tokens_used: int = 0
 
 
 @lru_cache(maxsize=1)
@@ -111,135 +68,3 @@ def compare_reading(req: CompareRequest):
     """Jämför en (t.ex. manuellt rättad) läsning med Rundata – utan AI."""
     return reference_checks(req.signum, req.transliteration, req.normalization, req.other_readings)
 
-@router.post("/analyze", response_model=PhoneticsResponse)
-def analyze_phonetics(
-    request: PhoneticsRequest,
-    ai: llm.AIContext = Depends(llm.ai_context),
-):
-    try:
-        llm.require(ai)
-
-        # Extrahera base64 data utan prefixet (data:image/jpeg;base64,...)
-        if "," in request.image_base64:
-            base64_data = request.image_base64.split(",")[1]
-            mime_type = request.image_base64.split(",")[0].split(":")[1].split(";")[0]
-        else:
-            base64_data = request.image_base64
-            mime_type = "image/jpeg"
-            
-        image_bytes = decode_base64_image(base64_data)
-        
-        # STEG 1: Blind Läsning
-        step1_instruction = """
-Du är en extremt strikt epigrafiker och agerar som en "dum OCR-skanner".
-Läs ENDAST de runor som är 100% synliga i den bifogade bilden.
-Gissa ALDRIG vad som står utanför bildens ramar eller i skadade partier.
-Om bilden visar 3 runor, svara med exakt 3 runor.
-
-VIKTIGT: Om det finns en inritad färgstark linje (oftast röd, halvgenomskinlig) i bilden är detta en "läs-väg" från användaren. Du SKA då endast läsa de runor som ligger längs med och i direkt anslutning till denna linje. Följ linjens riktning. Om ingen linje finns, läs runorna i den ordning som är mest logisk för ristningen.
-
-Du måste också identifiera visuellt var du hittar dessa runor/ord. Skapa en "markers"-lista. 
-Sätt en separat form (polygon) kring varje runord eller tydlig sekvens du läser, och kring viktiga detaljer (skador, skiljetecken, särpräglade runor). Högst 40 markörer, så att svaret inte blir för långt.
-För varje markör, ange en 'label' (t.ex. "Runord: kuþ", eller "Skiljetecken: Kors"), en mycket djupgående och detaljerad 'description' (t.ex. "Tydligt inristat i bandet, stungen k-runa (g), u-runa och stungenn th-runa (ð) indikerar ordet Guð. Runorna är djupt huggna."), och dess utbredning i 'polygon' med en lista av koordinater i formatet [[y1, x1], [y2, x2], ...] normaliserat till 0-1000. Använd 4–8 punkter per polygon.
-
-Skriv translitterationen med LATINSKA bokstäver enligt Samnordisk runtextdatabas (gemener, þ för thurs-runan,
-R för yr-runan, ' eller : för skiljetecken, - för oläslig runa), inte med runtecken.
-
-Svara EXAKT med ett JSON-objekt med två nycklar: "raw_transliteration" (sträng) och "markers" (lista av markörer).
-"""
-        step1_prompt = "Translitterera de runor som syns i bilden."
-
-        gen1 = llm.generate(ai, step1_prompt, system=step1_instruction, images=[(image_bytes, mime_type)],
-                            schema=BLIND_READING_SCHEMA, tier="pro", temperature=0.0)
-        step1_parsed = gen1.data or {}
-        raw_transliteration = step1_parsed.get("raw_transliteration", "")
-        markers_data = step1_parsed.get("markers", [])
-
-        # STEG 2: Lingvistisk Analys & Akademisk Jämförelse
-        step2_instruction = """
-Du är en specialiserad AI-agent inom svensk runologi, nordisk epigrafik och historisk filologi.
-Din uppgift är att ta emot råa eller translittererade runsekvenser från alla svenska runfyndigheter (runstenar, gravhällar, träpinnar, kyrkklockor, metallföremål) och generera en vetenskapligt underbyggd, epokanpassad fonetisk avkodning och flerskiktad tolkning.
-
----
-## 1. EPOKER OCH RUNSYSTEM I SVERIGE (IDENTIFIERINGSRUM)
-När du tar emot en inskrift ska du beakta användarens angivna region och epok. Om inget är angivet, försök klassificera vilken av följande fyra huvudepoker inskriften tillhör:
-A. Urnordisk tid & Äldre futharken (ca 150 - 800 e.Kr.)
-B. Vikingatid & Yngre futharken (ca 800 - 1050 e.Kr.)
-C. Medeltid & Stingda runor (ca 1050 - 1500 e.Kr.)
-D. Eftermedeltida traditioner & Dalarunor (ca 1500 - 1900-tal)
-
-## 2. ANALYSPIPELINE (STEG-FÖR-STEG)
-Steg 1: Epok- & Typologibestämning (inklusive regional särart, e.g. Gutniska ljudlagar)
-Steg 2: Ljudlagshärledning (VILKA historiska ljudlagar appliceras? ex. i-omljud, monoftongering). Fyll i listan 'sound_laws_applied'.
-Steg 3: Fonetisk & Fonematisk Rekonstruktion (IPA & normalisering) baserat MÅLMEDVETET på lagarna från Steg 2.
-        Normalisera vikingatida svenska inskrifter till runsvenska på samma sätt som Samnordisk runtextdatabas
-        (t.ex. "En Ulfr hafiR a Ænglandi þry giald takit"), med egennamn med versal. Översätt till modern svenska.
-        Hitta inte på uppgifter om tidigare forskning – den jämförelsen görs separat mot Rundata.
-Steg 4: Semantisk & Grammatisk Analys
-Steg 5: Kontextuell & Flerskiktad Tolkning (Juridiskt, Sakralt, Socio-Geopolitiskt, Konstnärligt)
-
-Arbeta alltid med högsta filologiska exakthet, objektivitet och akademiska källkritik.
-"""
-        
-        # Inkludera kontext
-        region_ctx = request.region if request.region else "Okänd region"
-        epoch_ctx = request.epoch if request.epoch else "Okänd epok"
-        
-        # The signum is NOT given to the model: it would recall the published reading from memory instead of
-        # interpreting what was read on the image. The comparison with Rundata is made afterwards, without AI.
-        step2_prompt = (
-            f'Här är den blinda läsningen (direkt från bilden): "{raw_transliteration}"\n'
-            f'Geografisk region: {region_ctx}\n'
-            f'Tidsperiod/Epok: {epoch_ctx}\n\n'
-            'Tolka ENDAST denna läsning. Lägg inte till ord som inte finns i läsningen och fyll inte i luckor ur '
-            'kända inskrifter; markera osäkra eller ofullständiga ord. Fältet "transliteration" ska vara läsningen '
-            'ovan oförändrad. Använd din analyspipeline. Börja med att identifiera ljudlagarna i '
-            '"sound_laws_applied" INNAN du gör normaliseringen. Svara EXAKT med ett JSON-objekt enligt schemat.'
-        )
-        
-        gen2 = llm.generate(ai, step2_prompt, system=step2_instruction, schema=LinguisticAI, tier="pro", temperature=0.0)
-        parsed = LinguisticAI(**gen2.data).model_dump()
-        # The transliteration is always the blind reading from step 1 – what was actually seen on the image
-        # Runic characters are converted to Rundata's Latin transliteration
-        parsed["transliteration"] = runes_to_latin(raw_transliteration)
-        parsed.update(reference_checks(request.signum, parsed["transliteration"], parsed["normalization"]))
-        parsed["markers"] = markers_data
-        
-        parsed["tokens_used"] = gen1.tokens + gen2.tokens
-        
-        return PhoneticsResponse(**parsed)
-        
-    except HTTPException:
-        raise
-    except Exception as e:
-        if "disconnected" in str(e).lower():
-            raise HTTPException(status_code=504, detail=(
-                "Språkmodellen svarade inte inom tidsgränsen (ca 60 s hos Google). Försök igen, eller beskär bilden "
-                "till en del av inskriften så att svaret blir kortare."))
-        raise ai_error(e, "Fonetisk analys misslyckades.")
-
-class SpeakRequest(BaseModel):
-    text: str
-
-@router.post("/speak")
-def generate_speech(
-    request: SpeakRequest,
-    x_openai_api_key: Optional[str] = Header(None, alias="X-OpenAI-Api-Key")
-):
-    try:
-        if not x_openai_api_key:
-            raise HTTPException(status_code=401, detail="No OpenAI API Key provided")
-            
-        openai_client = OpenAI(api_key=x_openai_api_key)
-        
-        response = openai_client.audio.speech.create(
-            model="tts-1",
-            voice="onyx",
-            input=request.text
-        )
-        
-        return Response(content=response.content, media_type="audio/mpeg")
-    except HTTPException:
-        raise
-    except Exception as e:
-        raise ai_error(e, "Talsyntesen misslyckades.")

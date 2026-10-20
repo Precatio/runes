@@ -3,8 +3,8 @@
 
 // Full stone analysis: one scan and a signum in, an article out. Runs the same steps as the individual
 // tools (and scripts/full_stone_analysis.py): images from the scan, automatic groove analysis with a
-// sensitivity analysis, 2D analysis, blind readings validated against Rundata, synthesis and the stone
-// report with an appendix on how the analysis was made.
+// sensitivity analysis, the AI's style assessment, the probability model's reading, synthesis and the stone
+// report with an appendix on how the analysis was made. (The blind AI readings were removed 2026-10-20.)
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/components/AuthContext";
@@ -13,7 +13,7 @@ import { useLanguage } from "@/components/LanguageContext";
 import ReportPreview, { downloadBlob, type ReportResult } from "@/components/ReportPreview";
 import { API_URL } from "@/lib/api";
 import { corpus, type ScanMetadata } from "@/lib/corpus";
-import { db, type GrooveAnalysisRecord, type LinguisticResultData, type TwoDResultData } from "@/lib/db";
+import { db, type GrooveAnalysisRecord, type TwoDResultData } from "@/lib/db";
 import { safeFilename } from "@/lib/export";
 import { loadImage } from "@/lib/images";
 import { MeshSession, runeSampleNote, type AutoAnalysisResult } from "@/lib/mesh";
@@ -24,11 +24,10 @@ import type { SynthesisResult } from "@/lib/synthesis";
 type StepState = "väntar" | "pågår" | "klart" | "misslyckades" | "hoppades över";
 interface Step { key: string; name: string; state: StepState; result?: string }
 interface Relief { relief: string; depth: string; raking: Record<string, string>; resolution_mm: number; normal: number[] }
-interface Reading extends LinguisticResultData { label: string; error?: string }
 
 const STEPS: [string, string][] = [
   ["upload", "Ladda upp skanningen"], ["images", "Bilder ur skanningen"], ["grooves", "Spåranalys och känslighet"],
-  ["twod", "2D-bildanalys"], ["reading", "Blind läsning och validering"],
+  ["twod", "Stilbedömning (AI)"],
   ["textmodel", "Läsning och luckor (sannolikhetsmodellen)"], ["synthesis", "Syntes och attribuering"],
   ["research", "Forskningsläge och syfte"], ["rstats", "Statistik i R"], ["report", "Stenrapport"],
 ];
@@ -100,7 +99,6 @@ export default function StoneAnalysisPage() {
   const [featureType, setFeatureType] = useState<FeatureType>("rune");
   const [scan, setScan] = useState<ScanMetadata>({});
   const [sensitivities, setSensitivities] = useState("3,5");
-  const [orientations, setOrientations] = useState<number[]>([0, 180]);
   const [useAI, setUseAI] = useState(true);
   const [flip, setFlip] = useState(false);
 
@@ -112,7 +110,7 @@ export default function StoneAnalysisPage() {
   const [error, setError] = useState<string | null>(null);
   const [saved, setSaved] = useState<string | null>(null);
   const [busyDocx, setBusyDocx] = useState(false);
-  const last = useRef<{ body: Record<string, unknown>; analysis: GrooveAnalysisRecord; reading: Reading | null;
+  const last = useRef<{ body: Record<string, unknown>; analysis: GrooveAnalysisRecord;
     twod: TwoDResultData | null; synthesis: SynthesisResult | null; raking: string } | null>(null);
 
   useEffect(() => {
@@ -199,7 +197,6 @@ export default function StoneAnalysisPage() {
 
       const raking = relief.raking["nordväst"];
       let twod: TwoDResultData | null = null;
-      const readings: Reading[] = [];
       if (useAI) {
         // 4. 2D analysis
         mark("twod", "pågår");
@@ -208,48 +205,17 @@ export default function StoneAnalysisPage() {
         const r2 = await fetch(`${API_URL}/api/2d/analyze`, { method: "POST", headers, body: fd });
         if (r2.ok) {
           twod = await r2.json();
-          wfSteps.push({ name: "2D-bildanalys", result: `stilgrupp ${twod!.predicted_style} (AI, okalibrerad ${twod!.confidence} %)` });
+          wfSteps.push({ name: "Stilbedömning (AI)", result: `stilgrupp ${twod!.predicted_style} (AI:ns gissning, självskattning ${twod!.confidence} %)` });
           mark("twod", "klart", `stilgrupp ${twod!.predicted_style}` + (rec?.style ? ` (Rundata ${rec.style})` : ""));
         } else {
           const msg = await detail(r2, "2D-analysen misslyckades");
-          notes.push(`2D-bildanalysen misslyckades: ${msg}`);
+          notes.push(`Stilbedömningen misslyckades: ${msg}`);
           mark("twod", "misslyckades", msg);
         }
 
-        // 5. Blind readings in each orientation, then validated against each other, Rundata and known texts
-        mark("reading", "pågår");
-        for (const deg of orientations) {
-          const r = await fetch(`${API_URL}/api/phonetics/analyze`, {
-            method: "POST", headers: { ...headers, "Content-Type": "application/json" },
-            body: JSON.stringify({ image_base64: await rotated(raking, deg), signum: signum || "Okänd" }),
-          });
-          if (r.ok) readings.push({ label: `Strykljus, ${deg}°`, ...(await r.json()) });
-          else {
-            const msg = await detail(r, "Läsningen misslyckades");
-            readings.push({ label: `Strykljus, ${deg}°`, error: "misslyckades" } as Reading);
-            notes.push(`Blind läsning (${deg}°) misslyckades: ${msg}`);
-          }
-        }
-        const ok = readings.filter(x => x.transliteration);
-        for (const x of ok) {
-          const r = await fetch(`${API_URL}/api/phonetics/compare`, {
-            method: "POST", headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ signum, transliteration: x.transliteration, normalization: x.normalization ?? "",
-              other_readings: ok.filter(y => y !== x).map(y => y.transliteration) }),
-          });
-          if (r.ok) Object.assign(x, await r.json());
-        }
-        if (ok.length) {
-          const v = ok[0].validation;
-          wfSteps.push({ name: "Blind läsning", result: `${ok.length} av ${readings.length} lyckades; den första: ${v?.status ?? "ej validerad"}` });
-          mark("reading", ok.some(x => x.validation?.reliable) ? "klart" : "misslyckades",
-            ok.map(x => `${x.label}: ${x.validation?.status ?? "–"}`).join("; "));
-        } else {
-          mark("reading", "misslyckades", "ingen läsning lyckades");
-        }
       } else {
-        mark("twod", "hoppades över"); mark("reading", "hoppades över");
-        notes.push("AI-stegen (2D-analys, läsning, AI-text) hoppades över.");
+        mark("twod", "hoppades över");
+        notes.push("AI-stegen (stilbedömning, AI-text) hoppades över.");
       }
 
       // 6. The probability model's reading: words for the lost runes with calibrated percentages (computed, no AI).
@@ -284,7 +250,6 @@ export default function StoneAnalysisPage() {
 
       // 7. Synthesis
       mark("synthesis", "pågår");
-      const reading = readings.find(x => x.transliteration) ?? null;
       const entries = user ? await corpus.list().catch(() => []) : null;
       const rs = await fetch(`${API_URL}/api/synthesis/analyze`, {
         method: "POST", headers: { ...headers, "Content-Type": "application/json" },
@@ -296,8 +261,6 @@ export default function StoneAnalysisPage() {
           corpus: (entries ?? []).map(e => ({ signum: e.signum, feature_type: e.feature_type, means: e.means,
             slices: e.slices.map(s => ({ ...Object.fromEntries(METRICS.map(m => [m, s[m]])), position_mm: s.position_mm })) })),
           corpus_note: entries === null ? "logga in för att jämföra med den delade mätkorpusen." : null,
-          reading: reading ? { transliteration: reading.transliteration, normalization: reading.normalization,
-            others: readings.filter(x => x.transliteration && x !== reading).map(x => x.transliteration) } : null,
           two_d: twod ? { predicted_style: twod.predicted_style, confidence: twod.confidence, reasoning: twod.reasoning } : undefined,
           include_geology: true,
         }),
@@ -351,14 +314,12 @@ export default function StoneAnalysisPage() {
         meta: { stone, weathering, text: signum }, scan, condition: { weathering: weathering.toLowerCase() },
         analyses: [analysis], counts: main.counts, mesh_id: info.mesh_id, view: { normal },
         corpus: (entries ?? []).map(e => ({ signum: e.signum, feature_type: e.feature_type, means: e.means })),
-        synthesis, reading: reading ? { ...reading, markers: undefined, others: readings.filter(x => x.transliteration && x !== reading).map(x => x.transliteration) } : null,
+        synthesis,
         two_d: { image: raking, result: twod, crops: [],
-          caption: "Digitalt strykljus från nordväst, räknat ur 3D-skanningen – bilden som 2D-analysen och läsningen fick." },
+          caption: "Digitalt strykljus från nordväst, räknat ur 3D-skanningen – bilden som stilbedömningen fick." },
         workflow: {
           date: new Date().toISOString().slice(0, 10), steps: wfSteps, sensitivity, relief_png: relief.relief,
           two_d_reasoning: twod?.reasoning ?? null,
-          readings: readings.map(x => ({ label: x.label, transliteration: x.transliteration, reading_comparison: x.reading_comparison,
-            validation: x.validation, error: x.error })),
           notes: [...notes, ...(scan.device ? [] : ["Skanningens upplösning, utrustning och licens bör fyllas i."])],
         },
         use_ai: useAI,
@@ -369,7 +330,7 @@ export default function StoneAnalysisPage() {
       if (!rr.ok) throw new Error(await detail(rr, "Rapporten kunde inte skapas"));
       const rep = await rr.json();
       setReport(rep);
-      last.current = { body, analysis, reading, twod, synthesis, raking };
+      last.current = { body, analysis, twod, synthesis, raking };
       mark("report", "klart", `${rep.figures.length} figurer`);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Analysen avbröts.");
@@ -399,14 +360,12 @@ export default function StoneAnalysisPage() {
 
   const saveProject = async () => {
     if (!last.current) return;
-    const { analysis, reading, twod, synthesis, raking } = last.current;
+    const { analysis, twod, synthesis, raking } = last.current;
     const existing = signum ? await db.getProjectBySignum(signum) : null;
     const p = await db.saveProject({
       id: existing?.id, name: existing?.name ?? (signum || file?.name || "Stenanalys"), fileName: file?.name ?? "",
       metaText: signum, metaStone: stone, metaWeathering: weathering, slices: existing?.slices ?? [],
       grooveAnalyses: [...(existing?.grooveAnalyses ?? []), analysis],
-      // Only a validated reading is stored as the project's reading
-      linguisticResults: reading && reading.validation?.reliable ? { ...reading, markers: undefined } : existing?.linguisticResults,
       twoDResults: twod ?? existing?.twoDResults, twoDImage: raking,
       synthesis: synthesis ? { result: synthesis, analysisId: analysis.id, featureType, savedAt: new Date().toISOString() } : existing?.synthesis,
     });
@@ -425,7 +384,7 @@ export default function StoneAnalysisPage() {
         <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-2">Fullständig stenanalys</h2>
         <p className="text-slate-600 text-[16px] leading-relaxed max-w-3xl font-medium">
           Ladda upp en 3D-skanning och ange signum. Appen räknar fram bilder ur skanningen, mäter huggspåren (med
-          känslighetsanalys), gör en 2D-analys och blinda läsningar som prövas mot Rundata, väger samman beläggen och
+          känslighetsanalys), låter AI gissa stilgruppen, läser luckorna med sannolikhetsmodellen, väger samman beläggen och
           skriver en artikel med alla figurer och en bilaga om hur analysen gjordes. Varje steg använder samma metoder som
           de enskilda verktygen; se METHODS.md, avsnitt 15c.
         </p>
@@ -466,16 +425,7 @@ export default function StoneAnalysisPage() {
             <label className={label}>Licens<input value={scan.license ?? ""} onChange={e => setScan(s => ({ ...s, license: e.target.value }))} className={field} /></label>
           </div>
           <div className="space-y-1.5 text-sm text-slate-700">
-            <label className="flex items-center gap-2"><input type="checkbox" checked={useAI} onChange={e => setUseAI(e.target.checked)} /> AI-steg (2D-analys, blind läsning, AI-text)</label>
-            <div className="flex items-center gap-3 pl-6 text-xs">
-              Läs i orienteringarna:
-              {[0, 90, 180, 270].map(d => (
-                <label key={d} className="flex items-center gap-1">
-                  <input type="checkbox" disabled={!useAI} checked={orientations.includes(d)}
-                    onChange={e => setOrientations(o => (e.target.checked ? [...o, d].sort((a, b) => a - b) : o.filter(x => x !== d)))} />{d}°
-                </label>
-              ))}
-            </div>
+            <label className="flex items-center gap-2"><input type="checkbox" checked={useAI} onChange={e => setUseAI(e.target.checked)} /> AI-steg (stilbedömning, AI-text)</label>
             <label className="flex items-center gap-2"><input type="checkbox" checked={flip} onChange={e => setFlip(e.target.checked)} /> Analysera den andra sidan av stenen</label>
           </div>
           <button onClick={run} disabled={!file || running}

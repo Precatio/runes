@@ -10,8 +10,8 @@ import Link from "next/link";
 export default function AccountOverview() {
   const { user, logout } = useAuth();
   const { 
-    userName, userInstitution, userEmail, geminiKey, openaiKey, anthropicKey, aiProvider,
-    setGeminiKey, setOpenaiKey, setUserName, setUserInstitution, setUserEmail, setAnthropicKey, setAiProvider,
+    userName, userInstitution, userEmail, geminiKey, anthropicKey, aiProvider,
+    setGeminiKey, setUserName, setUserInstitution, setUserEmail, setAnthropicKey, setAiProvider,
     totalTokensUsed, tokenHistory
   } = useSettings();
   const router = useRouter();
@@ -21,7 +21,6 @@ export default function AccountOverview() {
   const [tempGemini, setTempGemini] = useState("");
   const [tempAnthropic, setTempAnthropic] = useState("");
   const [tempProvider, setTempProvider] = useState<"claude" | "gemini">("claude");
-  const [tempOpenai, setTempOpenai] = useState("");
   const [tempName, setTempName] = useState("");
   const [tempInst, setTempInst] = useState("");
   const [tempEmail, setTempEmail] = useState("");
@@ -45,14 +44,13 @@ export default function AccountOverview() {
   }, [user]);
 
   // Copy current settings into the form whenever they change
-  const settingsKey = [geminiKey, openaiKey, anthropicKey, aiProvider, userName, userInstitution, userEmail].join("\u0000");
+  const settingsKey = [geminiKey, anthropicKey, aiProvider, userName, userInstitution, userEmail].join("\u0000");
   const [prevSettingsKey, setPrevSettingsKey] = useState<string | null>(null);
   if (settingsKey !== prevSettingsKey) {
     setPrevSettingsKey(settingsKey);
     setTempGemini(geminiKey);
     setTempAnthropic(anthropicKey);
     setTempProvider(aiProvider);
-    setTempOpenai(openaiKey);
     setTempName(userName);
     setTempInst(userInstitution);
     setTempEmail(userEmail);
@@ -79,7 +77,6 @@ export default function AccountOverview() {
     setGeminiKey(tempGemini);
     setAnthropicKey(tempAnthropic);
     setAiProvider(tempProvider);
-    setOpenaiKey(tempOpenai);
     setUserName(tempName);
     setUserInstitution(tempInst);
     setUserEmail(tempEmail.trim());
@@ -348,19 +345,6 @@ export default function AccountOverview() {
               </p>
             </div>
 
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2">OpenAI API-Nyckel (Talsyntes)</label>
-              <input 
-                type="password"
-                value={tempOpenai}
-                onChange={(e) => setTempOpenai(e.target.value)}
-                placeholder="sk-..."
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#b7410e] text-slate-900 font-mono text-sm"
-              />
-              <p className="text-xs text-slate-500 mt-2">
-                Krävs för att låta Vitki läsa upp fornnordiska. <a href="https://platform.openai.com/api-keys" target="_blank" rel="noreferrer" className="text-[#b7410e] hover:underline">Skapa en nyckel här</a>.
-              </p>
-            </div>
           </div>
 
           <div className="mt-8 flex items-center gap-4">

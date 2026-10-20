@@ -7,7 +7,7 @@ rapporter.
 
 **Avsnitten.** Avsnitt 1 är statistiken i R över hela korpusen – de 2 321 svenska vikingatida runstenarna i Rundata –
 där appens mönster och hypoteser kommer ifrån. Avsnitt 2–13 beskriver hur en enskild sten mäts, läses och attribueras
-(huggspår, ortografi, språk, inskriftens syfte, bergart, 2D-analys och syntes), 14 forskningsluckorna och tolkningen av
+(huggspår, ortografi, läsning mot Rundata, inskriftens syfte, bergart, bilder och runformer, och syntes), 14 forskningsluckorna och tolkningen av
 fynden, 15 rapporterna och artiklarna, 16 jämförbarheten med tidigare forskning, 17 datakällorna och 18 metodens kända
 brister.
 
@@ -560,8 +560,8 @@ missas ibland. Igenkänningen är regelbaserad och inte validerad mot en handmä
 
 ### 2d. Bilder ur skanningen
 
-Källkod: `api/routers/threed.py` (`render_relief`), `src/stone_report.py` (`Surface`). Bilder för läsning,
-2D-analys och rapporter räknas direkt ur skanningen i stället för att fotografera skärmen:
+Källkod: `api/routers/threed.py` (`render_relief`), `src/stone_report.py` (`Surface`). Bilder för egen läsning,
+fliken Bilder och runformer och rapporterna räknas direkt ur skanningen i stället för att fotografera skärmen:
 
 * Ytan projiceras till ett höjdfält från den sida som vetter mot betraktaren i 3D-vyn (kamerans riktning och
   upp-riktning). Utan vy används stenens tunnaste riktning (minsta variansriktningen), vänd mot den sida där
@@ -679,7 +679,7 @@ Källkod: `src/stone_compare.py`, `POST /api/stats/compare`; sidan **Jämför st
   `corpus/{id}/raw` och gör att en post kan **räknas om med en senare metodversion**
   (`POST /api/stats/recompute`). Omräkning av de lagrade profilerna återger de ursprungliga vinklarna inom
   0,01°. Bara bidragsgivaren kan ersätta sina mått med omräknade.
-* **Runformer** från 2D-analysen (normaliserad form och särdragsvektor, se avsnitt 12) kan bifogas under
+* **Runformer** från fliken Bilder och runformer (normaliserad form och särdragsvektor, se avsnitt 12) kan bifogas under
   `corpus/{id}/runeforms`, med spårmått för runan om den markerats på en ristningskarta från 3D-analysen.
 * Andra forskare kan lägga till en **verifiering** (namn, institution, kommentar); den egna posten kan inte
   verifieras av bidragsgivaren. Kvalitetsmärken visar råprofiler, skanningsuppgifter, minst fem snitt, aktuell
@@ -723,42 +723,44 @@ Källkod: `src/orthography.py`. Underlag: Rundatas vikingatida inskrifter med mi
   läsning eller ett nyfynd (`rank_text`). Egennamn tas bort via normaliseringen eller via namnformer kända
   från Rundata, och en sten som finns i modellen utesluts ur sin egen ristares profil.
 
-## 8. Språk och läsning
+## 8. Läsning mot Rundata (utan AI)
 
-Källkod: `api/routers/phonetics.py`, `src/reading.py`.
+Källkod: `src/reading.py`, `api/routers/phonetics.py` (`POST /api/phonetics/compare`).
 
-* **Blind läsning:** en språkmodell läser runorna från bilden utan att få signumet (steg 1). Även tolkningen
-  (steg 2: normalisering till runsvenska, översättning, IPA, ljudlagar) görs utan signum, eftersom modellen
-  annars återger den publicerade läsningen ur minnet i stället för det som syns på bilden. Translitterationen
-  i resultatet är alltid den blinda läsningen.
-* **Jämförelse med Rundata (utan AI):** translitterationerna jämförs ord för ord och runa för runa
-  (difflib). *Överensstämmelse* = andelen av våra runor och ord som finns i Rundatas läsning, *täckning* =
-  andelen av Rundatas text som vår läsning omfattar (en beskuren bild kan stämma helt men täcka lite). Bara
-  sammanhängande träffar på minst tre runor räknas, skiljetecken och textkritiska tecken ignoreras och
-  Rundatas oläsliga tecken redovisas separat.
-* **Ordformer:** varje form i vår normalisering slås upp bland Rundatas normaliserade former i
-  vikingatida inskrifter; obelagda former flaggas för granskning.
-* **Ortografi för vår läsning:** samma modell som i avsnitt 7, med stenen själv utesluten. Används i
-  syntesen när Rundata saknar en användbar text (t.ex. nyfynd), med 30 % lägre tillförlitlighet.
+**Vitki läser inte runor med AI.** Fram till 2026-10-20 fanns sidan *Språk & Fonetik* med en blind AI-läsning
+(språkmodellen fick bilden men inte signumet), normalisering, IPA, ljudlagar och uppläsning. Den togs bort, av två skäl
+som båda är mätta. (1) I testet med Sö 113 gav tre blinda läsningar tre olika, trovärdiga men påhittade texter (6–24 %
+av runorna stämde), en av dem Jellingestenens text (DR 42, 95 % lika): modellen återgav inlärda inskrifter. (2) Med
+appens strikta instruktion ("läs bara det som syns, gissa aldrig") gav Claude Opus 2026-10-20 nästan bara streck för
+oläsliga runor (U 935: enbart streck; U 124, Sö 52: enstaka tecken), träff 0 mot Rundata på de tre stenar som hann
+provas innan provet stoppades (`utdata/stilgrupp_ai/lastest.py`). En genomgång av 42 anonymiserade foton i samma
+session visade detsamma för läsning i allmänhet: det som går att "läsa" på ett foto är minnesformlerna (*stæin þansi*,
+*æftiR*), och en träff mot Rundata på dem säger inte att bilden lästs. Normalisering och översättning finns i Rundata
+för alla publicerade inskrifter, och sannolikhetsmodellens läsning (8.1) räknas utan AI. Det som var tillförlitligt på
+sidan – jämförelsen mot Rundata, ordformerna, ortografin och valideringen – är beräkningar och står kvar som API och i
+rapporterna, så att en egen läsning (en forskares läsning av en bild, ett nyfynd) kan prövas.
+
+* **Jämförelse med Rundata:** translitterationerna jämförs ord för ord och runa för runa (difflib).
+  *Överensstämmelse* = andelen av våra runor och ord som finns i Rundatas läsning, *täckning* = andelen av Rundatas
+  text som vår läsning omfattar (en beskuren bild kan stämma helt men täcka lite). Bara sammanhängande träffar på
+  minst tre runor räknas, skiljetecken och textkritiska tecken ignoreras och Rundatas oläsliga tecken redovisas
+  separat.
+* **Ordformer:** varje form i normaliseringen slås upp bland Rundatas normaliserade former i vikingatida inskrifter;
+  obelagda former flaggas för granskning.
+* **Ortografi för läsningen:** samma modell som i avsnitt 7, med stenen själv utesluten. Används i syntesen när Rundata
+  saknar en användbar text (t.ex. nyfynd), med 30 % lägre tillförlitlighet.
 * **Validering – får läsningen visas som stenens text?** (`src/reading.py`, `validate`): läsningen prövas utan AI
   mot (1) stenens text i Rundata, (2) alla kända inskrifter i Rundata (trigramfilter och samma
   överensstämmelsemått) och (3) andra läsningar av samma bild. Status: *bekräftad* (≥ 80 % av runorna i stenens
   läsning), *delvis* (50–80 %), *ej bekräftad* (< 50 %), *annan inskrift* (liknar en annan känd inskrift minst
-  60 % och tydligt mer än stenens egen – modellen har troligen återgett en inlärd text) eller *ej prövbar* (Rundata
+  60 % och tydligt mer än stenens egen – texten är troligen en inlärd inskrift) eller *ej prövbar* (Rundata
   saknar text; då krävs att flera läsningar stämmer minst 80 % med varandra). En läsning med färre än 12 läsbara
   runor är alltid *ej prövbar*: ett kort ord som *sin* finns i de flesta inskrifter, så att det stämmer säger
-  ingenting om att bilden är läst. Bara bekräftade, delvis bekräftade
-  och samstämmiga läsningar visas som läsning, med normalisering och översättning, och bara de används som
-  belägg i syntesen. I rapporter redovisas en obekräftad läsning aldrig som stenens text.
-* **Erfarenhet:** i testet med Sö 113 gav tre blinda läsningar tre olika, trovärdiga men påhittade texter (6–24 %
-  av runorna stämde), en av dem Jellingestenens text (DR 42, 95 % lika). Språkmodeller kan alltså inte läsa runor
-  tillförlitligt; reliefbilderna är ett bättre underlag för en mänsklig läsning.
-* Läsningen kan rättas för hand och jämföras igen; den märks då som rättad.
-* **Bilder att läsa:** foto, 2D-analysens bild, RTI-vy eller reliefbilder ur 3D-skanningen (strykljus från
-  fyra riktningar, ett kombinerat relief där varje spår blir mörkt oavsett riktning, och djup under
-  stenytan), räknade från den sida som vetter mot betraktaren i 3D-vyn.
-* **Uppläsning:** en modern talsyntes läser normaliseringen. Det är inte en rekonstruktion av uttalet;
-  IPA-raden är modellens förslag och ljudlagarna är inte kontrollerade.
+  ingenting om att bilden är läst. Bara bekräftade, delvis bekräftade och samstämmiga läsningar visas som läsning,
+  och bara de används som belägg i syntesen. I rapporter redovisas en obekräftad läsning aldrig som stenens text.
+* **Bilder att läsa själv:** 2D-fliken på 3D-sidan visar foto, RTI-vy och reliefbilderna ur 3D-skanningen (strykljus
+  från fyra riktningar, ett kombinerat relief där varje spår blir mörkt oavsett riktning, och djup under stenytan),
+  räknade från den sida som vetter mot betraktaren i 3D-vyn (2d).
 
 ### 8.1 Sannolikhetsmodell för runtext
 
@@ -1157,42 +1159,45 @@ Källkod: `src/geology.py`, `GET /api/research/geology/{signum}`.
   Sverige.
 * I syntesen och Forskningsluckor jämförs även stenens bergart med bergarterna på ristarens säkra stenar.
 
-## 12. 2D-analys och runformer
+## 12. Bilder och runformer (fliken på 3D-sidan)
 
-* AI-bedömningen av en bild (stilgrupp Pr1–Pr5, RAK, Fp eller **Osäker**, runformer, translitterering) är en
-  hypotes. Modellens säkerhet är dess egen skattning och **inte kalibrerad**. Om stenen har en stilgrupp i
-  Rundata visas den bredvid, och syntesen redovisar om AI:n och Rundata är överens.
-* **Runformer** (`src/graphemes.py`, särdragsversion `grapheme-2`): utsnittet kontrastförstärks (CLAHE),
-  binäriseras (Otsu; minoritetsklassen räknas som ristning), beskärs till ristningen och läggs i en kvadrat
-  med bibehållna proportioner, 64 × 64 px. Särdrag: HOG, täthet i 4 × 4 zoner och logaritmerat
-  höjd/bredd-förhållande. Likhet: cosinus.
+Källkod: `web/src/components/TwoDAnalysis.tsx`, `api/routers/twod.py`, `src/graphemes.py`. Till 2026-10-20 en egen
+sida (*2D-bildanalys*); nu fliken **Bilder och runformer** på 3D-sidan, eftersom bilderna nästan alltid kommer ur
+skanningen (2d) och runutsnitten hör ihop med spåranalysen.
+
+* **Stilbedömning (AI).** AI-bedömningen av en bild (stilgrupp Pr1–Pr5, RAK, Fp eller **Osäker**, runtyper) är en
+  hypotes, och modellens säkerhet är dess egen skattning, **inte kalibrerad**. Om stenen har en stilgrupp i Rundata
+  visas den bredvid, och syntesen redovisar om AI:n och Rundata är överens.
 * **Stilbedömningen prövad (2026-10-20, `utdata/stilgrupp_ai/stilgrupp_test.py`):** 57 svenska runstenar med
   säker stilgrupp i Rundata och fri bild i Wikidata, stratifierat urval, Claude Opus med appens instruktion.
   Exakt stilgrupp 35 % (slump 14 %, majoritetsgissning 21 %), 39 % bland de 91 % där modellen inte svarade
   "Osäker"; rätt grov klass (RAK / Fp / Ringerike Pr1–2 / Urnes Pr3–5) 71 %; inom en grannstilgrupp 83 %. RAK 8 av
   11 och Fp 5 av 8 rätt, men Pr1 spreds över fem svar, Pr3 blev oftast Pr4 och Pr5 blev Pr4 i 7 av 8. Självskattningen
-  ordnar svaren rätt (60–79 %: 71 % rätt; under 60 %: 26 %) men är inte kalibrerad. Sidan visar därför den grova
+  ordnar svaren rätt (60–79 %: 71 % rätt; under 60 %: 26 %) men är inte kalibrerad. Fliken visar därför den grova
   klassen som huvudresultat och stilgruppen som modellens gissning inom klassen. 827 stenar med bild finns för en
   större prövning.
+* **Runformer** (`src/graphemes.py`, särdragsversion `grapheme-2`): utsnittet kontrastförstärks (CLAHE),
+  binäriseras (Otsu; minoritetsklassen räknas som ristning), beskärs till ristningen och läggs i en kvadrat
+  med bibehållna proportioner, 64 × 64 px. Särdrag: HOG, täthet i 4 × 4 zoner och logaritmerat
+  höjd/bredd-förhållande. Likhet: cosinus.
 * **Validering av runformerna:** på syntetiskt ritade runor (ᛁ ᛏ ᚴ ᚱ ᛋ med slumpad stavtjocklek, lutning och brus,
   `src/synthetic_runes.py`) hamnar närmaste granne på rätt runa i 85 % av fallen. Den tidigare metoden låg
   på slumpnivå. Resultatet är ett mått på **formlikhet**, inte på samma ristare; på riktiga stenar påverkas
-  det av vittring, belysning och utsnittets noggrannhet.
+  det av vittring, belysning och utsnittets noggrannhet, och det är inte prövat på riktiga stenar.
 * Jämförelser görs bara mellan utsnitt med samma särdragsversion och, om angivet, samma runtyp
   (långkvist, kortkvist, stungen m.fl.).
 * Bilder kan komma från uppladdning, K-samsök, en reliefbild räknad ur 3D-skanningen, RTI-visaren eller
   **ristningskartan** från den automatiska spåranalysen (residualdjup, djupt = mörkt). Ristningskartan har
   samma pixelkoordinater som analysens granskningsbild, så ett runutsnitt där kopplas till de uppmätta
   snitten inom utsnittet.
-* **Automatiska runutsnitt** (från 2026-10-11; knappen "Hitta runorna"). För en ristningskarta från 3D-analysen
-  används runorna som analysen själv känt igen (spåren grupperade per runa, `classify_strokes`): rutan omsluter
-  runans spårmittlinjer med 4 mm och en tiondel av runans storlek som marginal. Analysen vet inte vilken runa det är,
-  så utsnitten sparas som "obestämd runa" tills användaren anger det. För andra bilder markerar AI varje runa med en
-  ruta och en translitterering (`POST /api/2d/detect_runes`); rutorna och läsningen är okalibrerade och visas för
-  granskning innan de sparas, och rutor där AI är mindre än 50 % säker är inte förvalda. Varje sparat utsnitt får samma
-  formbeskrivning som ett manuellt, märks som automatiskt (`auto`: "3d" eller "ai") och får en mindre miniatyr (128 px)
-  och formvektorn avrundad till tre decimaler, så att ett projekt med många utsnitt ryms inom gränsen på 1 MB; högst
-  40 sparas åt gången. Rutor utan en tydlig runform hoppas över.
+* **Automatiska runutsnitt** (knappen "Hitta runorna") finns bara för ristningskartan från 3D-analysen: runorna
+  som analysen själv känt igen (spåren grupperade per runa, `classify_strokes`) får en ruta som omsluter runans
+  spårmittlinjer med 4 mm och en tiondel av runans storlek som marginal. Analysen vet inte vilken runa det är, så
+  utsnitten sparas som "obestämd runa" tills användaren anger det. Varje sparat utsnitt får samma formbeskrivning som
+  ett manuellt, märks som automatiskt (`auto`: "3d") och får en mindre miniatyr (128 px) och formvektorn avrundad
+  till tre decimaler, så att ett projekt med många utsnitt ryms inom gränsen på 1 MB; högst 40 sparas åt gången.
+  AI-markeringen av runor i andra bilder (`/api/2d/detect_runes`, med en AI-translitterering per ruta) togs bort
+  2026-10-20 tillsammans med AI-läsningen (avsnitt 8).
 
 ## 13. Syntes och attribuering
 
@@ -1252,8 +1257,9 @@ Ytterligare kontroller för de tre främsta kandidaterna (redovisas, men vägs i
   (avsnitt 10),
 * **berggrund på platsen** (SGU) för stenen som helhet (avsnitt 11).
 
-Har projektet en egen läsning från Språk & Fonetik används den som ortografiskt belägg när Rundata saknar
-användbar text, med 30 % lägre tillförlitlighet, och läsningens överensstämmelse med Rundata redovisas.
+Har projektet en egen läsning (sparad i ett äldre projekt, eller en läsning som skickas till syntesen och prövas mot
+Rundata utan AI, avsnitt 8) används den som ortografiskt belägg när Rundata saknar användbar text, med 30 % lägre
+tillförlitlighet, och läsningens överensstämmelse med Rundata redovisas.
 
 ## 14. Forskningsluckor
 
@@ -1586,15 +1592,15 @@ Figurerna räknas direkt ur 3D-modellen och snittens råprofiler (inget är retu
 7. måttens fördelningar, 8. samband mellan bredd, djup och vinkel,
 9. runor mot ornamentik (permutationstest), 10. jämförelse med stenar med säker ristare i mätkorpusen,
 
-och, om det finns, bilden och runformerna från 2D-analysen. Figurerna 1–4 kräver att skanningen finns i
+och, om det finns, bilden och runformerna från fliken Bilder och runformer. Figurerna 1–4 kräver att skanningen finns i
 analysmotorns minne (samma fil inläst i 3D-vyn); annars utelämnas de och rapporten säger det. Snittens
 positioner och råprofiler sparas med varje analys (automatisk, ett klick per snitt och spårbana).
 
 Stenrapporten får dessutom, när underlaget finns:
 
 * **berggrunden på platsen** (SGU) i avsnittet om stenen,
-* **Läsning av bilden** – appens blinda läsning som inskrift (fetstil/kursiv), jämförelsen med Rundata,
-  skillnaderna ord för ord, kontrollen av ordformer och, märkta som AI, IPA och ljudlagar,
+* **Läsning av bilden** – en egen läsning (äldre projekt, eller skickad med rapporten) som inskrift
+  (fetstil/kursiv), jämförelsen med Rundata, skillnaderna ord för ord och kontrollen av ordformer,
 * **Attribuering** – den sparade syntesen: utfallet mot litteraturen, kandidattabellen, kontrollerna
   (geografi, stilgrupper, bergart, språkdrag, sten mot sten), motsägelser och saknade belägg.
 
@@ -1607,26 +1613,24 @@ signum, med samma beräkningar som de enskilda verktygen:
    riktning; den andra sidan kan väljas.
 2. **Automatisk spåranalys** med flera känsligheter (standard 3 och 5). Den första är huvudanalysen, de övriga
    en känslighetsanalys som redovisas med granskningsbilder.
-3. **2D-bildanalys** av strykljuset från nordväst.
-4. **Blind läsning** i en eller flera orienteringar (standard 0° och 180°), validerad mot Rundata, kända
-   inskrifter och varandra (avsnitt 8).
-5. **Syntes och attribuering** med berggrund (avsnitt 11 och 13); med inloggning även mot mätkorpusen.
-6. **Forskningsläge och syfte** (`GET /api/research/stone/{signum}`): det Forskningsluckor vet om stenen
+3. **Stilbedömning (AI)** av strykljuset från nordväst, som gissning inom grov klass (avsnitt 12). (Den blinda
+   läsningen i flera orienteringar togs bort 2026-10-20, avsnitt 8.)
+4. **Syntes och attribuering** med berggrund (avsnitt 11 och 13); med inloggning även mot mätkorpusen.
+5. **Forskningsläge och syfte** (`GET /api/research/stone/{signum}`): det Forskningsluckor vet om stenen
    (landskapets täckning, stenens luckor i Rundata, om den finns bland ortografiska hypoteser, omprövningar
    eller mätprioriteringar och hur appens resultat bedöms mot forskningen), inskriftens syfte (avsnitt 10) och,
    för de tre troligaste ristarna, hur ofta de ristade i stenens stilgrupp och inskriftstyp.
-7. **Statistik i R** (avsnitt 1): startar korpusanalyserna om de saknas och ställer stenen mot dem –
+6. **Statistik i R** (avsnitt 1): startar korpusanalyserna om de saknas och ställer stenen mot dem –
    attribueringsmodellen, kandidaternas områden, gruppen i klustringen, formlerna, Upplands seriation och
    landskapet (höjdmodell, strand, sikt, vägar).
-8. **Stenrapport** (15b), med avsnitten "Inskriftens syfte" och "Stenen i forskningsläget", R-avsnitten (metod 3.4,
+7. **Stenrapport** (15b), med avsnitten "Inskriftens syfte" och "Stenen i forskningsläget", R-avsnitten (metod 3.4,
    modellen i attribueringen, "Stenen i korpusen", "Stenen i landskapet"), en tabell över
    kandidaternas stilgrupper och inskriftstyper, bilaga A (alla tvärsnitt) och bilaga B: arbetsgångens steg och utfall,
-   känslighetsanalysen, granskningsbilder, relief, 2D-motiveringen, alla läsningar med status och de fel
-   eller begränsningar som uppstod.
+   känslighetsanalysen, granskningsbilder, relief, stilbedömningens motivering och de fel eller begränsningar som
+   uppstod.
 
 Misslyckas ett AI-steg (ingen nyckel, slut på krediter, tidsgräns) fortsätter arbetsgången, och felet
-redovisas i bilaga B. Resultatet kan sparas i ett projekt; bara en validerad läsning sparas som projektets
-läsning.
+redovisas i bilaga B. Resultatet kan sparas i ett projekt.
 
 Från terminalen (analysmotorn måste köras):
 
@@ -1802,7 +1806,7 @@ Källkod: `src/limitations.py`, `GET /api/limitations`. Metodens kända brister 
 (version 2026-10-20) som följer med varje analys:
 
 * **I appen** visas de brister som gäller sidan under varje analyssida (3D-analys, stenanalys, jämförelse,
-  mätkorpus, syntes, statistik, forskningsluckor, inskrifter, karta, stilgrupper, 2D-analys, läsning, rapporter).
+  mätkorpus, syntes, statistik, forskningsluckor, inskrifter, karta, rapporter).
 * **I rapporterna** har stenrapporten och korpusrapporten ett avsnitt "Kända brister och begränsningar", och varje
   publiceringsform tar med dem – fullständigt i vetenskapliga och antikvariska former, i populär form
   i blogginlägg, pressmeddelande och poster. Varningar för just analysen (t.ex. färre runor än riktvärdet) står först.

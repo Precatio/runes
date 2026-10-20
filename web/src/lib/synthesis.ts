@@ -77,7 +77,7 @@ export async function runSynthesis(project: ProjectData, analysisId: string | nu
       slices: project.grooveAnalyses?.length ? [] : project.slices,
       corpus: (corpusEntries ?? []).map(e => ({ signum: e.signum, feature_type: e.feature_type, means: e.means, slices: metricsOnly(e.slices) })),
       corpus_note: corpusEntries === null ? "logga in för att jämföra med den delade mätkorpusen." : null,
-      // The app's own reading (Språk & Fonetik) – used when Rundata has no usable text
+      // An own reading of the inscription (older projects) – used when Rundata has no usable text
       reading: project.linguisticResults?.transliteration ? {
         transliteration: project.linguisticResults.transliteration,
         normalization: project.linguisticResults.normalization,

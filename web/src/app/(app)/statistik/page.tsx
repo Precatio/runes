@@ -1029,8 +1029,7 @@ function Words({ data }: { data: Corpus }) {
     <>
       <SectionIntro section={sectionOf(data, "words")} patterns={data.patterns} />
       <p className="text-sm text-slate-600 max-w-3xl">
-        Orden är desamma som i <a href="/phonetics#ordmoln" className="underline">ordmolnet</a> på Språk &amp; Fonetik,
-        men här prövade: är ordet vanligare i ett landskap än i resten av landet när tiden och textlängden räknats
+        De vanligaste orden på de vikingatida runstenarna (Rundatas normalisering, namnen borträknade), här prövade: är ordet vanligare i ett landskap än i resten av landet när tiden och textlängden räknats
         bort, och ändras det över tid? Ristaren räknas som slumpeffekt, så en flitig ristares vanor inte blir
         landskapets.
       </p>
