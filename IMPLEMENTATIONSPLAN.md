@@ -114,6 +114,27 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
 - De fem robusta grupperna (Konungsund, Vetlanda, Leksberg, Husaby, Kölaby) mot Sveriges runinskrifter och
   Östergötlands/Västergötlands runinskrifter. Resultatet in i artikelutkastet `zHgKo0HEjEJPmpooUXpq` innan publicering.
 
+### 3.6 Pröva en egen fråga  (tillagd 2026-10-20; en session) — INTE PÅBÖRJAD
+Statistik (R) svarar bara på tolv förregistrerade frågor, och Upptäck på kartan letar bara bland färdiga drag × platser.
+En **strukturerad frågebyggare** – ingen fri text, ingen AI – låter en forskare pröva en egen hypotes i gränssnittet
+med samma disciplin som Upptäck: välj *drag A* (tro, skrift, innehåll, stilgrupp, språkdrag, bergart, ristare
+känd/okänd …) och *drag B* eller *plats/tid* (landskap, härad, epok), och få ett ärligt svar.
+- **Beräkning (Python, ingen ny R-körning):** `src/question.py` + `POST /api/research/question`. Bara runstenar
+  (regeln i METHODS: andra föremål särredovisas). Andel med A bland B mot övriga, justerat för landskap och stilgrupp
+  (Mantel–Haenszel eller logistisk modell som i words.R), p-värde, konfidensintervall för skillnaden, och **halvprovet**:
+  socknarna delas i två halvor per landskap som i `r/hotspots.R` (rad 38) och mönstret räknas bara som fynd om det har
+  samma riktning och p < 0,05 i båda. Antalet frågor som ställts i sessionen räknas och p-värdena BH-justeras över dem,
+  så att den som provar tjugo frågor får veta det. Svaret ska ha samma tre delar som R-modulerna: svaret i korthet,
+  förslag till tolkning, vad resultatet *inte* säger – med varje tal förklarat i klartext.
+- **Gränssnitt:** ett kort "Pröva en egen fråga" överst på Statistik (R) (och en länk från kartans Upptäck). Två
+  rullistor + knapp; resultatet som ett `Answer`-kort; "Spara som fynd" lägger raden i Forskningsluckor → Våra resultat
+  med metoden `egen fråga` och lågt belägg tills halvprovet håller.
+- **Kontroll:** `tests/test_question.py` med kända mönster (kristen bön × epok ska ge det kartan ger; r för R ×
+  kluster U 768 ska återfinnas) och ett nollfall (slumpdrag ska falla i halvprovet i ≥ 95 % av 200 omblandningar).
+  Analysplan enligt 3.4 innan något av svaren används i en artikel. METHODS: nytt avsnitt 1y; bristposten `statistics`.
+- **Inte:** fri text, AI-tolkning, eller att frågebyggaren får skriva nya R-moduler. En avvikelsemodul ("udda stenar")
+  är ett eget senare spår och kräver egen plan.
+
 ---
 
 ## Fas 4 – Användbar för andra
