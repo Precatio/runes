@@ -2,7 +2,7 @@
 
 // The articles page's search: finds articles by any word in title, summary or body (shared logic in
 // lib/articleSearch.ts). A query can arrive from the landing page as ?q=.
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import type { BlogPost } from "@/components/BlogBody";
 import BlogList from "@/components/BlogList";
 import LabelFilter, { useLabelFromAddress, withLabel } from "@/components/LabelFilter";
@@ -12,19 +12,17 @@ import { loadIndex, matches, searchTerms, snippet, type IndexPost } from "@/lib/
 import { trackSearch } from "@/lib/track";
 
 export default function ArticleSearch({ posts, failed }: { posts: BlogPost[]; failed: boolean }) {
-  const [q, setQ] = useState("");
+  // The landing page's search box links here with the query in the address; what the reader types then takes over
+  const initialQ = useSyncExternalStore(() => () => {}, () => new URLSearchParams(window.location.search).get("q") ?? "", () => "");
+  const [typed, setTyped] = useState<string | null>(null);
+  const q = typed ?? initialQ;
+  const setQ = setTyped;
   const [index, setIndex] = useState<IndexPost[] | null>(null);
   const [label, setLabel] = useLabelFromAddress();
   const { lang } = useLanguage();
-
-  // The landing page's search box links here with the query in the address
   useEffect(() => {
-    const initial = new URLSearchParams(window.location.search).get("q");
-    if (initial) {
-      setQ(initial);
-      loadIndex().then(setIndex);
-    }
-  }, []);
+    if (initialQ) loadIndex().then(setIndex);
+  }, [initialQ]);
 
   const terms = useMemo(() => searchTerms(q), [q]);
   const by = useMemo(() => new Map((index ?? []).map(p => [p.slug, p])), [index]);

@@ -26,17 +26,39 @@ full <- d %>% left_join(geo %>% select(signum, x, y, water_km), by = "signum") %
   mutate(x_km = x / 1000, y_km = y / 1000)
 
 tc <- trait_cols(d); cc <- cat_cols(d)
+# Rock family from Rundata's material text (the same keyword lists as src/geology.FAMILIES): carver and rock type go
+# together, so "Bergart" alone is the level the model must beat to say anything about the hand (METHODS.md 1i, 13)
+FAMILY_WORDS <- list(
+  granitoid = c("granit", "granodiorit", "tonalit", "pegmatit", "aplit", "monzonit", "syenit", "kvartsdiorit", "charnockit", "gråsten", "gnejsgranit", "granitgnejs"),
+  gnejs = c("gnejs", "migmatit", "gråsten", "gnejsgranit", "granitgnejs"),
+  sandsten = c("sandsten", "arenit", "arkos", "konglomerat", "siltsten", "gävlesandsten"),
+  kalksten = c("kalksten", "märgel", "dolomit", "marmor"),
+  basisk = c("diabas", "gabbro", "basalt", "amfibolit", "dolerit", "diorit"),
+  vulkanisk = c("ryolit", "dacit", "porfyr", "andesit", "vulkanit", "leptit"),
+  kvartsit = "kvartsit",
+  metasediment = c("vacka", "skiffer", "fyllit", "lersten", "metasediment", "glimmerskiffer"))
+material_family <- function(txt) {
+  t <- tolower(ifelse(is.na(txt), "", txt))
+  fam <- rep(NA_character_, length(t))
+  for (f in names(FAMILY_WORDS)) {
+    hit <- is.na(fam) & grepl(paste(FAMILY_WORDS[[f]], collapse = "|"), t)
+    fam[hit] <- f
+  }
+  fam
+}
+full$material_family <- material_family(full$material)
 fcols <- grep("^formula_", names(txt), value = TRUE)
 bcols <- grep("^bg_", names(txt), value = TRUE)
 SETS <- list(
   "Geografi" = c("x_km", "y_km", "province"),
   "Stil" = c("style", "cross", "short_twig"),
   "Språk och innehåll" = c(tc, fcols, bcols, cc),
+  "Bergart" = c("material_family"),
   "Alla" = c("x_km", "y_km", "province", "style", "cross", "short_twig", tc, fcols, bcols, cc)
 )
 GROUP <- c(setNames(rep("Geografi", 3), SETS$Geografi), setNames(rep("Stil", 3), SETS$Stil),
            setNames(rep("Språk och innehåll", length(SETS[[3]])), SETS[[3]]))
-nominal <- c("province", "style", tc, fcols)
+nominal <- c("province", "style", "material_family", tc, fcols)
 
 train <- full %>% filter(!is.na(carver)) %>% group_by(carver) %>% filter(n() >= MIN_CARVER) %>% ungroup()
 train$carver <- factor(train$carver)
@@ -128,6 +150,13 @@ names(evals) <- names(SETS)
 E <- evals[["Alla"]]
 
 majority <- max(table(train$carver)) / nrow(train)
+# Accuracy of the full model per rock family (out-of-fold), and the share of training stones per family
+fam_of <- train$material_family[E$preds$.row]
+per_family <- bind_rows(lapply(sort(unique(na.omit(fam_of))), function(f) {
+  i <- which(fam_of == f)
+  data.frame(family = f, n = length(i), accuracy = r3(mean((apply(E$probs[i, , drop = FALSE], 1, which.max)) == E$truth[i])),
+             carvers = length(unique(E$truth[i])))
+}))
 ablation <- lapply(evals, function(e) list(features = e$name, accuracy = r3(e$accuracy), top3 = r3(e$top3),
                                            log_loss = r3(e$log_loss), brier = r3(e$brier)))
 
@@ -274,6 +303,7 @@ saveRDS(list(final = final, levels = lv, cols = SETS$Alla, nominal = nominal, tr
 result <- list(
   n_train = nrow(train), carvers = lv, min_inscriptions = MIN_CARVER, folds = FOLDS, repeats = REPEATS, trees = TREES,
   majority_baseline = r3(majority), ablation = unname(ablation), grouped_cv = grouped,
+  material = list(per_family = per_family, n_without_family = sum(is.na(train$material_family))),
   calibration = list(ece = r3(ece), bins = calib %>% mutate(across(c(mean_p, accuracy), r3)), reliability = reliab),
   per_carver = per_carver, confused = confused,
   importance = head(imp_df %>% mutate(importance = signif(importance, 3)), 30),

@@ -15,7 +15,7 @@ import { API_URL } from "@/lib/api";
 import { corpus, type ScanMetadata } from "@/lib/corpus";
 import { db, type GrooveAnalysisRecord } from "@/lib/db";
 import { safeFilename } from "@/lib/export";
-import { loadImage } from "@/lib/images";
+
 import { MeshSession, runeSampleNote, type AutoAnalysisResult } from "@/lib/mesh";
 import { METRICS, type FeatureType, type Metric, type SliceMetrics } from "@/lib/metrics";
 import { rundata, type Inscription } from "@/lib/rundata";
@@ -33,20 +33,6 @@ const STEPS: [string, string][] = [
 
 const field = "liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm font-semibold outline-none w-full mt-1";
 const label = "text-[11px] font-bold uppercase tracking-wider text-slate-500";
-
-async function rotated(dataUrl: string, deg: number): Promise<string> {
-  if (!deg) return dataUrl;
-  const img = await loadImage(dataUrl);
-  const c = document.createElement("canvas");
-  const swap = deg % 180 !== 0;
-  c.width = swap ? img.height : img.width;
-  c.height = swap ? img.width : img.height;
-  const ctx = c.getContext("2d")!;
-  ctx.translate(c.width / 2, c.height / 2);
-  ctx.rotate((deg * Math.PI) / 180);
-  ctx.drawImage(img, -img.width / 2, -img.height / 2);
-  return c.toDataURL("image/png");
-}
 
 const detail = async (res: Response, fallback: string) =>
   (await res.json().catch(() => null))?.detail || `${fallback} (${res.status})`;

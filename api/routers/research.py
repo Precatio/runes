@@ -32,6 +32,19 @@ def _open_questions() -> dict:
     return gaps.open_questions(store().inscriptions)
 
 
+@router.get("/gaps/textmodel")
+def textmodel_gaps():
+    """Sannolikhetsmodellens öppna luckor (data/textmodel_candidates.json, scripts/textmodel_candidates.py): luckor som
+    Rundata lämnat oåterställda där modellen fyller i ett känt ord med minst 80 %. Underlag att granska mot foto och
+    skanning, inte ett resultat (METHODS.md 14)."""
+    import json
+    import os
+    p = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "data", "textmodel_candidates.json")
+    if not os.path.exists(p):
+        return {"available": False, "note": "Kandidatlistan är inte byggd (scripts/textmodel_candidates.py)."}
+    return {"available": True, **json.load(open(p, encoding="utf-8"))}
+
+
 @router.post("/gaps")
 def research_gaps(req: GapsRequest):
     s = store()

@@ -88,6 +88,7 @@ interface Corpus {
   attribution: Dict & { method: string; caveat: string; n_train: number; carvers: string[]; majority_baseline: number;
     ablation: { features: string; accuracy: number; top3: number; log_loss: number }[];
     grouped_cv?: Record<string, { level: string; n_groups: number; ablation: { features: string; accuracy: number | null; top3: number | null }[] }>;
+    material?: { per_family: { family: string; n: number; accuracy: number; carvers: number }[]; n_without_family: number };
     calibration: { ece: number; reliability: { threshold: number; n: number; accuracy: number }[] };
     per_carver: { carver: string; n: number; recall: number; precision: number | null }[] };
   chronology: Dict & { method: string; region: string; validation: { rho: number; partial_rho: number; usable: boolean; mae_loo_years: number; mae_naive_years: number };
@@ -927,6 +928,23 @@ function Attribution({ data }: { data: Corpus }) {
               <tbody>{a.ablation.map(x => (
                 <tr key={x.features} className="border-t border-slate-900/5"><td className="p-2 font-semibold">{x.features}</td><td className="p-2">{pc(x.accuracy)}</td>
                   {Object.entries(a.grouped_cv!).map(([k, g]) => <td key={k} className="p-2">{pc(g.ablation.find(y => y.features === x.features)?.accuracy ?? undefined)}</td>)}</tr>
+              ))}</tbody>
+            </table></ExportTable>
+          </div>
+        </Details>
+      )}
+      {a.material && a.material.per_family.length > 0 && (
+        <Details title="Kommer träffen från bergarten?">
+          <p className="text-sm text-slate-600">
+            Ristare och bergart hänger ihop. Delmodellen <em>Bergart</em> ovan visar vad bergartsfamiljen ensam ger
+            ({pc(a.ablation.find(x => x.features === "Bergart")?.accuracy)} – samma som att gissa den vanligaste ristaren, eftersom nästan alla
+            stenar är granit). Här är hela modellens träff per bergartsfamilj; {a.material.n_without_family} träningsstenar saknar bergart i Rundata.
+          </p>
+          <div className="overflow-x-auto">
+            <ExportTable><table className="w-full text-sm">
+              <thead><tr><Th>Bergartsfamilj</Th><Th>Stenar</Th><Th>Ristare</Th><Th>Rätt först</Th></tr></thead>
+              <tbody>{a.material.per_family.filter(x => x.n >= 5).map(x => (
+                <tr key={x.family} className="border-t border-slate-900/5"><td className="p-2 font-semibold">{x.family}</td><td className="p-2">{x.n}</td><td className="p-2">{x.carvers}</td><td className="p-2">{pc(x.accuracy)}</td></tr>
               ))}</tbody>
             </table></ExportTable>
           </div>

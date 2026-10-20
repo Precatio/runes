@@ -4,16 +4,15 @@
 // Adressen tas vid klicket ur fönstret, så samma komponent fungerar på svenska och engelska sidor. Den delade adressen
 // märks med kanalen (?via=x), så att besöksstatistiken kan visa vilken delning som gav besök; märket läses vid
 // ankomsten och tas bort ur adressfältet (components/SiteTracker.tsx). Själva klicket räknas också (lib/track.ts).
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { trackClick, type ShareChannel } from "@/lib/track";
 
 const BTN = "inline-flex items-center gap-1.5 rounded-full border border-slate-300 bg-white px-3.5 py-1.5 text-xs font-bold text-slate-600 hover:border-[#b7410e] hover:text-[#b7410e] transition-colors";
 
 export default function ShareArticle({ title, lang = "sv" }: { title: string; lang?: "sv" | "en" }) {
   const [copied, setCopied] = useState(false);
-  // navigator finns bara i webbläsaren: knappen tänds efter monteringen, så server och klient renderar lika
-  const [canShare, setCanShare] = useState(false);
-  useEffect(() => { setCanShare(typeof navigator !== "undefined" && "share" in navigator); }, []);
+  // navigator finns bara i webbläsaren: servern renderar utan knappen, klienten läser av den efter monteringen
+  const canShare = useSyncExternalStore(() => () => {}, () => typeof navigator !== "undefined" && "share" in navigator, () => false);
   const en = lang === "en";
   // Adressen utan fragment, märkt med kanalen
   const url = (via: ShareChannel) => {

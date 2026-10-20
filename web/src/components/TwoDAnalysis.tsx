@@ -8,11 +8,10 @@ import { useAnalysis } from "@/components/AnalysisContext";
 import { db, type GrooveSummaryLite, type PaleographicCrop, type ProjectData, type TwoDSourceKind } from "@/lib/db";
 import type { KSamsokResult } from "@/lib/ksamsok";
 import { API_URL } from "@/lib/api";
-import { canvasToBlob, drawScaled, persistentDataURL } from "@/lib/images";
+import { drawScaled, persistentDataURL } from "@/lib/images";
 import { RUNE_TAGS, UNKNOWN_RUNE_TAG } from "@/lib/runes";
 import { rundata, type Inscription } from "@/lib/rundata";
 
-const ANALYSIS_MAX_SIDE = 2048; // Gemini downscales larger images anyway
 const THUMB_MAX_SIDE = 256;
 const FEATURE_MAX_SIDE = 512;
 // Automatic crops are many: smaller thumbnails and rounded vectors keep a project under the 1 MB limit

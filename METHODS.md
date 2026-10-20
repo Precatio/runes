@@ -263,6 +263,14 @@ fungerar också för platser den inte sett. Sannolikheterna för enskilda stenar
 slumpvisa korsvalideringen, som motsvarar en ny sten på en känd plats. Med de nio nya språkdragen (2026-10-11): 72, 69 och 59 %; språk
 och innehåll ensamt 62 %.
 
+**Bergarten som nollnivå (från 2026-10-20).** Ristare och bergart hänger ihop (en ristare högg i traktens sten), så
+modellen utvärderas också mot bergarten ensam: delmodellen "Bergart" (bergartsfamiljen ur Rundatas materialuppgift,
+samma ordlistor som `src/geology.FAMILIES`) träffar 19 % – samma som att alltid gissa den vanligaste ristaren
+(19 %) – eftersom 347 av 421 träningsstenar med känd bergart är granit. Den fulla modellens träff per bergartsfamilj
+(utanför träningsdelarna): granit 74 % (347 stenar), sandsten 67 % (52), gnejs 67 % (21); 75 stenar saknar bergart.
+Modellens träff kommer alltså inte från bergarten, till skillnad från huggspårsmåtten (avsnitt 13), där bergarten
+ensam träffar lika bra som måtten. Resultatet står i `attribution.json` (`material`) och i Statistik.
+
 **Resultat i korpusen (beräkning 2026-10-05).** Attribueringsmodellen hittar rätt ristare i 72 % av fallen
 (87 % bland de tre främsta) mot 19 % om man alltid gissar på den vanligaste; språk och innehåll ensamt ger 60 %,
 geografi ensamt 44 %. Sannolikheterna är försiktiga: vid minst 0,5 är förstavalet rätt i 93 % av fallen. 24 av 29
@@ -365,6 +373,12 @@ landskap skiljer inte dialekt från formelval och beställarsmak – bara från 
 ihop med språkdragen i `change.R` och `dialect.R`.
 
 ### 1x. Försiktighet i påståendena, djärvhet i hypoteserna
+
+**Förregistrerade analysplaner (från 2026-10-20).** En artikel som gör ett nytt anspråk hänvisar till en analysplan som
+skrevs och låstes (SHA-256) innan resultaten togs fram: fråga, underlag, primärt mått och gräns, nollmodeller,
+känslighet och vad som inte får göras. Mallen är `ANALYSPLAN.md`; planen ligger i `utdata/<spår>/analysplan.md` med
+hashen i `analysis_plan.sha256`, och hashen står i artikelns ruta "Så räknade vi". Rak-studien (2026-10-05) var den
+första; toleranslagret (textmodel-19) och bytet till Runor 2020 är de nästa.
 
 Appens uppgift är att hitta tydliga mönster som ingen sett tidigare. Det kräver två saker som lätt blandas ihop: stränghet
 när något *påstås* och djärvhet när något *föreslås*. Sedan 2026-10-12 hålls de isär:
@@ -1277,6 +1291,12 @@ Källkod: `src/research_gaps.py`. Underlag: Rundatas svenska vikingatida runsten
 * **Klickbara siffror:** varje tal i landskapstabellen och nyckeltalen leder till inskrifterna bakom det
   (sökfilter med samma definitioner som översikten, `GET /api/rundata/search?gap=…&province=…`).
 * Ortografiska hypoteser visas med likhet, p-värde (avsnitt 7), precision, bergart och språkdrag.
+* **Luckor i texten** (från 2026-10-20, `GET /api/research/gaps/textmodel`, `scripts/textmodel_candidates.py` →
+  `data/textmodel_candidates.json`): sannolikhetsmodellens (8.1) inventering av luckorna – de som Rundata lämnat
+  oåterställda och där modellen fyller i ett känt ord med minst 80 % kalibrerad sannolikhet – med stenens signum,
+  det huggna, ifyllnaden, ordet, p och näst bästa ord. Fliken visar modellversion, beräkningsdatum och
+  Rundata-utgåva. Raderna är underlag att granska mot foto och skanning (panelen "Vad skannern ser"), inte fynd;
+  flaggskeppsartikeln om luckorna bygger på samma lista efter granskning.
 
 ### 14b. Våra resultat mot befintlig forskning
 

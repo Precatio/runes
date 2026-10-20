@@ -381,3 +381,11 @@ def test_language_traits_are_weighed_against_the_province_and_tested():
     assert plain["text"].startswith("Av ") and "talar" in plain["text"] and "skiljer inte" in plain["text"]
     assert plain["n_for"] + plain["n_against"] + plain["n_neutral"] == len([r for r in plain["rows"]
                                                                           if not r["repeats"] and r.get("lr") is not None])
+
+
+def test_textmodel_gaps_endpoint(client):
+    r = client.get("/api/research/gaps/textmodel").json()
+    if not r["available"]:
+        return  # the candidate list is built from a local inventory; absent on a fresh checkout
+    assert r["counts"]["candidates"] == len(r["candidates"]) and r["model_version"].startswith("textmodel-")
+    assert all(c["p"] >= r["min_p"] for c in r["candidates"])

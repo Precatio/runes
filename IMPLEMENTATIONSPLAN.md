@@ -31,7 +31,7 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
 - **Leverans:** bristposten `reliability` får ett mätt tal; riktvärdena 10/20 runor räknas om om spridningen
   motiverar det (`web/src/lib/mesh.ts`, `src/limitations.py`).
 
-### 1.3 Fyll mätkorpusen  (en session)
+### 1.3 Fyll mätkorpusen  — KLAR 2026-10-20 (37 poster, scripts/corpus_seed_ka.py)
 - Mät de 36 KÅ-stenarna med protokollet (groove-5, `utdata/Rak/referenser_g5` finns) och lägg in dem i Firestore
   `corpus` som Riksantikvarieämbetets/KÅ:s data under CC BY, med scan-credit (DOI 10.5281/zenodo.11951255).
 - **Kod:** ett skript `scripts/corpus_seed_ka.py` som skriver posterna via adminklienten med `contributorUid` = ditt,
@@ -76,7 +76,7 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
   ersättningsbar av framräknad formulering (finns redan som fallback). Rekommendation: behåll fallback som standard,
   AI-text som tillval.
 
-### 2.5 Lintfel  (kort)
+### 2.5 Lintfel  — KLAR 2026-10-20 (0 fel, 0 varningar)
 - De fem setState-i-effekt-felen (ShareArticle, ArticleSearch, 2D-sidan/TwoDAnalysis, m.fl.): skriv om till
   `useSyncExternalStore` eller härledd state, som LabelFilter gjordes 2026-10-20.
 
@@ -84,7 +84,7 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
 
 ## Fas 3 – Nya resultat
 
-### 3.1 Forskningsluckor: textmodellens luckor som flik  (en session)
+### 3.1 Forskningsluckor: textmodellens luckor som flik  — KLAR 2026-10-20 (flik, datumrad, tests/test_methods_numbers.py)
 - **Kod:** `api/routers/research.py` ny endpoint `/gaps/textmodel` som läser `utdata/luckartikel/bygg_kandidatlista.py`:s
   utdata (flytta byggskriptet till `src/` eller `scripts/` så att det inte ligger i gitignorerad utdata).
   Flik i `web/src/app/(app)/luckor/page.tsx`: 175 öppna luckor, de 33 kandidaterna ≥ 80 % med känt ord, filter per
@@ -100,13 +100,13 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
 - **Kontroll:** jämför artiklarnas låsta siffror före/efter (byggskripten faller om något ändras – gå igenom
   varje assert och avgör om artikeln ska patchas). Räkna hur många "nya" fynd som redan finns i Runor.
 
-### 3.3 Materialstratifiering överallt  (halv session)
+### 3.3 Materialstratifiering överallt  — KLAR 2026-10-20 (R-modellen: Bergart-delmodell 19 % = majoritet; träff per familj i Statistik)
 - `r/attribution.R`: korsvalidering grupperad så att material inte läcker; redovisa träff per bergartsfamilj.
 - `src/stats.compare_stones` / jämförelsesidan: materialfamiljens referensskala som standard (finns i jämförelsevyn,
   gör den till huvudtal).
 - METHODS 1i/4/13 och bristposten `validity`.
 
-### 3.4 Preregistrerade analysplaner  (rutin)
+### 3.4 Preregistrerade analysplaner  — KLAR 2026-10-20 (ANALYSPLAN.md, METHODS 1x)
 - Mall `utdata/<spår>/analysplan.md` + `analysis_plan.sha256` (som Rak-studien). Krav i METHODS 1x: varje artikel
   som gör ett nytt anspråk hänvisar till sin plan och dess hash. Börja med toleranslagret (1.4) och Runor-bytet (3.2).
 
