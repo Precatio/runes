@@ -91,8 +91,6 @@ def _strength(f: dict) -> list[str]:
     elif method == "huggteknik":
         out.append("Huggtekniken jämförs med uppmätta stenar i mätkorpusen; måtten är inte validerade som spår av "
                    "ristarens hand och påverkas av bergart och vittring.")
-    elif method.startswith("stilgrupp"):
-        out.append("Stilgruppen är en AI-bedömning av en bild och är inte kalibrerad.")
     ev = f.get("evidence") or 0
     grade = "stark" if ev >= 0.6 else ("måttlig" if ev >= 0.35 else "svag")
     if method == "samlade belägg":  # the decision document: the strength combines the model and the orthography
@@ -144,14 +142,11 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
     sug = f.get("suggested")
     verdict = f.get("verdict")
     method = f.get("method", "")
-    style_method = method.startswith("stilgrupp")
     existing = f.get("existing") or "ingen ristare"
     paragraphs = []
 
     # 1. What the finding says
-    if style_method:
-        say = f"AI-bedömningen av bilden ger stilgruppen {sug}; Rundata anger {existing}."
-    elif verdict == "nytt":
+    if verdict == "nytt":
         say = f"Metoden ({method}) föreslår {sug} för en sten som saknar ristare i Rundata."
     elif verdict == "motsäger":
         say = f"Metoden ({method}) pekar på {sug}, medan Rundata anger {existing}."
@@ -163,7 +158,7 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
 
     # 2. How strong it is
     strength = _strength(f)
-    if sug and not style_method and (method == "ortografi" or method.startswith("statistisk modell")):
+    if sug and (method == "ortografi" or method.startswith("statistisk modell")):
         prov = province(rec)
         attributed = [r for r in ctx["inscriptions"] if province(r) == prov and certain_carvers(r)]
         share = sum(1 for r in attributed if sug in certain_carvers(r)) / len(attributed) if attributed else 0
@@ -179,7 +174,7 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
     style_conflict = None
     anonymous_carver = False
     model_method = False
-    if sug and not style_method:
+    if sug:
         # A carver picked by a spelling-based method gets no independent support from the language traits; the model
         # also uses place and style, so they cannot support its suggestion either (they can still speak against it)
         by_spelling = method in ("ortografi", "samlade belägg") or method.startswith(("statistisk modell", "okänd ristare"))
@@ -267,7 +262,7 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
         if verdict == "motsäger" and profile and profile.get("support") is not None:
             lines.append(f"Stödet för Rundatas ristare {profile.get('carver')} är {_num(profile['support'])} från "
                          f"{profile.get('n_sources')} metoder (Stenöversikt).")
-    paragraphs.append({"title": f"Andra belägg för {sug}" if sug and not style_method else "Andra belägg",
+    paragraphs.append({"title": f"Andra belägg för {sug}" if sug else "Andra belägg",
                        "text": " ".join(lines) if lines else "Inga andra metoder kan uttala sig om förslaget."})
 
     # 4. Newer sources
@@ -360,7 +355,7 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
         text += (" Det hållbara resultatet är att stavningen ensam inte räcker för att attribuera stenen – likheten "
                  "uppstår lätt när man letar bland många ristare.")
     steps = []
-    if sug and not style_method:
+    if sug:
         stones = " och ".join([rec["signum"]] + list(rec.get("same_carver_as") or []))
         ref = "flera stenar ur gruppen" if sug in CARVER_NOTES else f"flera säkra stenar av {sug}"
         steps.append(f"en 3D-mätning av huggspåren på {stones}, jämförd med {ref} (minst 20 runor "

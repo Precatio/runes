@@ -6,7 +6,7 @@ import { STATS_OFF_URL } from "@/lib/site";
 // GET /api/admin/site/stats: the public website's visitor counts (components/SiteTracker.tsx writes them), seen only here
 interface Row { key: string; n: number }
 interface Stats {
-  since: string; days: number; views: number; visits: number; computed_at: string;
+  since: string; days: number; day: string | null; views: number; visits: number; computed_at: string;
   per_day: { day: string; views: number; visits: number }[];
   pages: { path: string; title: string | null; n: number }[];
   sections: { key: string; n: number; share: number | null }[];
@@ -55,16 +55,19 @@ function Box({ title, note, children }: { title: string; note?: string; children
 
 export default function SiteStats({ call }: { call: Call }) {
   const [days, setDays] = useState(30);
+  // En klickad stapel: allt utom staplarna räknas då på den dagen ensam (servern filtrerar raderna)
+  const [day, setDay] = useState<string | null>(null);
   const [data, setData] = useState<Stats | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-  const load = useCallback((fresh = false) => call(`/api/admin/site/stats?days=${days}${fresh ? "&fresh=true" : ""}`)
+  const load = useCallback((fresh = false) => call(`/api/admin/site/stats?days=${days}${day ? `&day=${day}` : ""}${fresh ? "&fresh=true" : ""}`)
     .then(d => { setData(d); setError(null); })
-    .catch(e => setError(e instanceof Error ? e.message : "Besöksstatistiken kunde inte hämtas.")), [call, days]);
+    .catch(e => setError(e instanceof Error ? e.message : "Besöksstatistiken kunde inte hämtas.")), [call, days, day]);
   useEffect(() => { load(); }, [load]);
   // Längre perioder än bredden rymmer scrollar i sidled; senaste dagen ska synas först
   const dayScroll = useRef<HTMLDivElement>(null);
-  useEffect(() => { const el = dayScroll.current; if (el) el.scrollLeft = el.scrollWidth; }, [data]);
+  useEffect(() => { const el = dayScroll.current; if (el) el.scrollLeft = el.scrollWidth; }, [data?.since, data?.days]);
+  const dayLabel = day ? new Date(day).toLocaleDateString("sv-SE", { weekday: "long", day: "numeric", month: "long" }) : null;
 
   const max = Math.max(1, ...(data?.per_day ?? []).map(d => d.views));
   const copy = () => navigator.clipboard?.writeText(STATS_OFF_URL).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
@@ -78,7 +81,7 @@ export default function SiteStats({ call }: { call: Call }) {
         </div>
         <div className="flex flex-wrap items-center gap-1.5">
           {RANGES.map(r => (
-            <button key={r} onClick={() => setDays(r)}
+            <button key={r} onClick={() => { setDays(r); setDay(null); }}
               className={`px-3 py-1.5 rounded-lg border text-xs font-bold ${r === days ? "border-slate-900 bg-slate-900 text-white" : "border-slate-300 bg-white"}`}>
               {r === 365 ? "1 år" : `${r} dagar`}
             </button>
@@ -90,6 +93,12 @@ export default function SiteStats({ call }: { call: Call }) {
 
       {data && (
         <>
+          {dayLabel && (
+            <div className="flex flex-wrap items-center gap-2 rounded-xl border border-[#2a78d6]/30 bg-[#2a78d6]/5 px-3 py-2 text-sm text-slate-800">
+              <span>Visar <strong>{dayLabel}</strong> ({day}): talen, sidorna, länderna och sökorden nedan gäller bara den dagen. Staplarna visar hela perioden.</span>
+              <button onClick={() => setDay(null)} className="ml-auto px-2.5 py-1 rounded-lg border border-slate-300 bg-white text-xs font-bold">Visa hela perioden</button>
+            </div>
+          )}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[
               { label: "Sidvisningar", value: num(data.views) },
@@ -105,15 +114,17 @@ export default function SiteStats({ call }: { call: Call }) {
             ))}
           </div>
 
-          <Box title="Sidvisningar per dag" note={`Från ${data.since}. Det fetstilta talet över varje stapel är dagens sidvisningar, det grå under det är dagens besök (sidvisningar som började utifrån). Håll muspekaren över en stapel för datum.`}>
+          <Box title="Sidvisningar per dag" note={`Från ${data.since}. Det fetstilta talet över varje stapel är dagens sidvisningar, det grå under det är dagens besök (sidvisningar som började utifrån). Klicka på en stapel så visar allt nedanför bara den dagen; klicka igen för hela perioden.`}>
             <div ref={dayScroll} className="overflow-x-auto pb-1">
               <div className="flex items-end gap-[2px]" style={{ height: BAR_AREA + 26 }} role="img" aria-label="Sidvisningar och besök per dag">
                 {data.per_day.map(d => (
-                  <div key={d.day} className="group flex h-full min-w-6 flex-1 flex-col items-center justify-end" title={`${d.day}: ${d.views} sidvisningar, ${d.visits} besök`}>
+                  <button key={d.day} type="button" onClick={() => setDay(day === d.day ? null : d.day)} aria-pressed={day === d.day}
+                    className={`group flex h-full min-w-6 flex-1 cursor-pointer flex-col items-center justify-end rounded-t-[3px] ${day === d.day ? "bg-[#2a78d6]/10" : ""}`}
+                    title={`${d.day}: ${d.views} sidvisningar, ${d.visits} besök – klicka för att visa dagen`}>
                     <span className={`whitespace-nowrap text-[10px] font-bold leading-3 tabular-nums ${d.views ? "text-slate-800" : "text-slate-400"}`}>{d.views}</span>
                     <span className="whitespace-nowrap text-[9px] leading-3 tabular-nums text-slate-400">{d.visits}</span>
-                    <div className="w-full rounded-t-[3px] bg-[#2a78d6] group-hover:bg-[#1c5aa6]" style={{ height: d.views ? Math.max(3, Math.round(d.views / max * BAR_AREA)) : 0 }} />
-                  </div>
+                    <div className={`w-full rounded-t-[3px] ${day === d.day ? "bg-[#b7410e]" : day ? "bg-[#2a78d6]/40 group-hover:bg-[#1c5aa6]" : "bg-[#2a78d6] group-hover:bg-[#1c5aa6]"}`} style={{ height: d.views ? Math.max(3, Math.round(d.views / max * BAR_AREA)) : 0 }} />
+                  </button>
                 ))}
               </div>
             </div>

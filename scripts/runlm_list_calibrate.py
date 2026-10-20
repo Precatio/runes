@@ -36,7 +36,7 @@ from src import runlm as rl  # noqa: E402
 from src import textmodel as tm  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-F = os.path.join(ROOT, "utdata", "runlm_forfining")
+F = os.environ.get("RUNLM_FORFINING_DIR") or os.path.join(ROOT, "utdata", "runlm_forfining")  # valideringståg kan peka på egen katalog
 KC = 4      # word classes
 KMAX = 6    # candidates per gap
 SOURCES = ("restored", "documented", "masked")

@@ -7,7 +7,6 @@ import { PatternBadges, PatternBody, type Pattern } from "@/components/PatternCa
 import { GLOSSARY } from "@/lib/glossary";
 import { API_URL } from "@/lib/api";
 import { corpus } from "@/lib/corpus";
-import { db } from "@/lib/db";
 import { useAuth } from "@/components/AuthContext";
 import { GeologyBox, LanguageTraits } from "@/components/StoneContext";
 import { SIMILARITY_HELP, fmtP } from "@/lib/significance";
@@ -244,10 +243,6 @@ export default function GapsPage() {
       if (user) {
         try { entries = await corpus.list(); } catch { /* corpus optional */ }
       }
-      // AI style assessments saved in the user's own projects
-      const styles = (await db.getProjects().catch(() => []))
-        .filter(p => p.metaText && p.twoDResults?.predicted_style)
-        .map(p => ({ signum: p.metaText, style: p.twoDResults!.predicted_style, confidence: p.twoDResults!.confidence }));
       const post = (path: string, body: unknown) => fetch(`${API_URL}${path}`, {
         method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body),
       }).then(async res => {
@@ -258,7 +253,7 @@ export default function GapsPage() {
         const [gaps, findings] = await Promise.all([
           post("/api/research/gaps", { measured_signa: [...new Set(entries.map(e => e.signum))] }),
           post("/api/research/findings", {
-            corpus: entries.map(e => ({ signum: e.signum, feature_type: e.feature_type, means: e.means })), styles,
+            corpus: entries.map(e => ({ signum: e.signum, feature_type: e.feature_type, means: e.means })),
           }),
         ]);
         if (!cancelled) { setData(gaps); setFound(findings); setMeasuredSigna([...new Set(entries.map(e => e.signum))]); }
@@ -294,7 +289,7 @@ export default function GapsPage() {
   const answers: Partial<Record<Tab, AnswerProps>> = {
     findings: {
       topic: "Våra resultat", question: "Vad säger appens analyser jämfört med forskningen?",
-      why: "Appens metoder – stavning, den statistiska modellen, seriationen, okända ristare, huggteknik och AI-bedömd stilgrupp – ställs mot Rundata, som här står för den publicerade forskningen.",
+      why: "Appens metoder – stavning, den statistiska modellen, seriationen, okända ristare och huggteknik – ställs mot Rundata, som här står för den publicerade forskningen.",
       headline: { value: String(found.summary.likely_new), label: "fynd som sannolikt är ny kunskap enligt uppskattningen" },
       answer: <>{c.stämmer} av appens resultat stämmer med Rundata, {c.nytt} säger något som Rundata saknar och {c.motsäger} pekar på något annat. {sigFound} av fynden är <strong>statistiskt signifikanta</strong>.</>,
       interpretation: [
@@ -362,8 +357,8 @@ export default function GapsPage() {
       topic: "Stilgrupp", question: "Vilka stenar har osäker stilgrupp?",
       why: "Stilgruppen är grunden för dateringen; en osäker stilgrupp ger en osäker datering.",
       headline: { value: String(data.open_questions.uncertain_style.count), label: "stenar med osäker stilgrupp i Rundata" },
-      answer: <>{data.open_questions.uncertain_style.count} stenar har en osäker stilgrupp. En AI-bedömning av en bild (2D-analysen) eller seriationen kan ge ett förslag att pröva.</>,
-      notSaying: ["AI-bedömningar av stilgrupp är okalibrerade."],
+      answer: <>{data.open_questions.uncertain_style.count} stenar har en osäker stilgrupp. Seriationen i R kan ge ett förslag att pröva mot ornamentiken; appen bedömer inte stilgrupp ur foto.</>,
+      notSaying: ["Seriationen bygger på språk och innehåll, inte på ornamentik, och daterar bara relativt."],
     },
   };
 
@@ -801,8 +796,8 @@ function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; loggedIn
     <>
       <p className="text-sm text-slate-600 mb-4 max-w-4xl">
         Appens analyser ställda mot Rundata (version 3.1, 2018), som här står för den publicerade forskningen: ortografisk
-        stilometri (alla inskrifter, stenen själv utesluten ur ristarprofilen), huggteknik i mätkorpusen, AI-bedömd stilgrupp
-        från bilder i dina projekt och – när statistiken i R är beräknad – attribueringsmodellen och Upplands seriation.
+        stilometri (alla inskrifter, stenen själv utesluten ur ristarprofilen), huggteknik i mätkorpusen och – när
+        statistiken i R är beräknad – attribueringsmodellen, de okända ristarna och Upplands seriation.
         Kolumnen <strong>Nyare källor</strong> visar om förslaget redan finns i Runor 2020 (RAÄ) eller Wikidata. <strong>Uppskattningen</strong> väger belägg × nyhet × relevans (0–100) och är en
         tumregel för att prioritera – inte en granskning av litteraturen. Klicka på en rad för att se skälen.
       </p>
@@ -1014,7 +1009,7 @@ function FindingRow({ f, open, onToggle }: { f: Finding; open: boolean; onToggle
               </div>
               <div className="space-y-2">
                 <div className="font-bold uppercase tracking-wider text-[10px] text-slate-500">Språkdrag (fonetisk stil och språkbruk)</div>
-                {f.suggested && f.method !== "stilgrupp (AI, bild)" ? <LanguageTraits signum={f.signum} carver={f.suggested} /> : <LanguageTraits signum={f.signum} />}
+                {f.suggested ? <LanguageTraits signum={f.signum} carver={f.suggested} /> : <LanguageTraits signum={f.signum} />}
               </div>
             </div>
           </td>

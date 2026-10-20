@@ -34,7 +34,8 @@ from src import runlm as rl  # noqa: E402
 from src.textmodel import gap_class, name_keys  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CAL = os.path.join(ROOT, "data", "runlm_calibration.json")
+# RUNLM_CALIBRATION: en annan kalibreringsfil (valideringståg som inte ska röra den levande appens)
+CAL = os.environ.get("RUNLM_CALIBRATION") or os.path.join(ROOT, "data", "runlm_calibration.json")
 CLASSES = ["formelord", "andra ord", "namn"]
 
 

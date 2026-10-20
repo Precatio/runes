@@ -187,15 +187,17 @@ def site_votes(_: dict = Depends(require_admin)):
                            "last": max(times[q]).isoformat() if times.get(q) else None} for q, c in by.items()]}
 
 
-_stats_cache: dict[int, tuple[float, dict]] = {}
+_stats_cache: dict[tuple[int, str | None], tuple[float, dict]] = {}
+_rows_cache: dict[int, tuple[float, list[dict]]] = {}
 STATS_TTL_S = 300
 
 
 @router.get("/admin/site/stats")
-def site_stats(days: int = 30, fresh: bool = False, _: dict = Depends(require_admin)):
+def site_stats(days: int = 30, fresh: bool = False, day: str | None = None, _: dict = Depends(require_admin)):
     """Besöksstatistiken för den publika webbplatsen (web/src/components/SiteTracker.tsx), sammanfattad av
     src/site_stats.py för de senaste `days` dagarna. Raderna läses med serverns egen behörighet och sparas i fem
-    minuter, så att sidan inte läser om alla rader vid varje besök i Admin (`fresh` hämtar på nytt)."""
+    minuter, så att sidan inte läser om alla rader vid varje besök i Admin (`fresh` hämtar på nytt). `day` (ÅÅÅÅ-MM-DD)
+    räknar allt utom staplarna per dag på den dagen ensam – ett klick på en stapel i Admin."""
     import json
     import time
 
@@ -203,21 +205,33 @@ def site_stats(days: int = 30, fresh: bool = False, _: dict = Depends(require_ad
 
     from src import site_export, site_stats as stats
     days = max(1, min(days, 366))
-    hit = _stats_cache.get(days)
+    if day is not None:
+        try:
+            day = dt.date.fromisoformat(day).isoformat()
+        except ValueError:
+            raise HTTPException(status_code=422, detail="day ska vara ett datum, ÅÅÅÅ-MM-DD.")
+    key = (days, day)
+    hit = _stats_cache.get(key)
     if hit and not fresh and time.time() - hit[0] < STATS_TTL_S:
         return hit[1]
     since = dt.datetime.now(dt.timezone.utc).date() - dt.timedelta(days=days - 1)
-    try:
-        query = firestore().collection("site_views").where(filter=FieldFilter("day", ">=", since.isoformat()))
-        rows = [d.to_dict() or {} for d in query.stream()]
-    except Exception as e:  # noqa: BLE001
-        raise server_error(e, "Besöksstatistiken kunde inte hämtas.", status_code=503)
+    # The rows are read once per period and kept; a day filter only re-summarizes them
+    raw = _rows_cache.get(days)
+    if raw is None or fresh or time.time() - raw[0] >= STATS_TTL_S:
+        try:
+            query = firestore().collection("site_views").where(filter=FieldFilter("day", ">=", since.isoformat()))
+            rows = [d.to_dict() or {} for d in query.stream()]
+        except Exception as e:  # noqa: BLE001
+            raise server_error(e, "Besöksstatistiken kunde inte hämtas.", status_code=503)
+        _rows_cache[days] = (time.time(), rows)
+    else:
+        rows = raw[1]
     try:
         with open(site_export.CONTENT, encoding="utf-8") as fh:
             posts = json.load(fh).get("posts", [])
     except (OSError, ValueError):
         posts = []
-    out = stats.summarize(rows, since, days, stats.page_titles(posts))
+    out = stats.summarize(rows, since, days, stats.page_titles(posts), day=day)
     out["computed_at"] = dt.datetime.now(dt.timezone.utc).isoformat()
-    _stats_cache[days] = (time.time(), out)
+    _stats_cache[key] = (time.time(), out)
     return out

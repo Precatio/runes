@@ -63,7 +63,7 @@ def fold_of(signum: str) -> int:
 def _records() -> dict:
     if "by" not in _data:
         recs = rl.load_rundata()
-        cal = os.path.join(rl.ROOT, "data", "runlm_calibration.json")
+        cal = os.environ.get("RUNLM_CALIBRATION") or os.path.join(rl.ROOT, "data", "runlm_calibration.json")
         _data.update(recs=recs, by={r["signum"]: r for r in recs},
                      V=[r for r in recs if rl.viking(r) and r.get("transliteration") and r.get("normalization")],
                      da=rg.load_danish(recs), edda=rl.edda_tokens(),

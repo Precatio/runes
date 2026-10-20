@@ -1,7 +1,8 @@
 """Våra resultat mot befintlig forskning.
 
-Varje fynd från appens analyser – ortografisk stilometri, huggteknik i mätkorpusen och AI-bedömd
-stilgrupp från bilder – ställs mot Rundata, som här får representera den publicerade forskningen.
+Varje fynd från appens analyser – ortografisk stilometri, huggteknik i mätkorpusen och, när statistiken i R
+är beräknad, attribueringsmodellen, de okända ristarna och seriationen – ställs mot Rundata, som här får
+representera den publicerade forskningen.
 Fyndet klassas som
 
   stämmer   – samma slutsats som i Rundata
@@ -289,41 +290,11 @@ def technique_findings(corpus: list[dict], lookup, inscriptions: list[dict]) -> 
     return out, None
 
 
-def style_findings(styles: list[dict], lookup, inscriptions: list[dict]) -> list[dict]:
-    """AI-bedömd stilgrupp (2D) mot Rundata. Okalibrerat – därför lågt belägg."""
-    coverage, oeuvre = _province_coverage(inscriptions), _oeuvre(inscriptions)
-    out = []
-    for st in styles:
-        rec = lookup(st.get("signum") or "")
-        ai = (st.get("style") or "").strip()
-        if not rec or not ai or ai == "Osäker":
-            continue
-        conf = float(st.get("confidence") or 0) / 100
-        evidence = 0.35 * max(0.0, min(1.0, conf))
-        ev_reasons = ["AI-bedömning av en bild, inte kalibrerad mot kända stenar",
-                      f"modellens egen säkerhet {round(conf * 100)} %"]
-        ours = f"AI bedömer stilgruppen som {ai}"
-        rel, rel_reasons = relevance(rec, None, coverage, oeuvre)
-        existing = f"stilgrupp {rec['style']}" + (" (osäker)" if rec["style_uncertain"] else "") if rec["style"] else "ingen stilgrupp angiven"
-        if has_style(rec):
-            verdict = "stämmer" if ai == rec["style"] else "motsäger"
-            novelty = 0.1 if verdict == "stämmer" else 0.5
-            nov = "samma stilgrupp som i Rundata" if verdict == "stämmer" else "avviker från Gräslunds stilgrupp i Rundata"
-        else:
-            verdict, novelty = "nytt", 0.7
-            nov = "Rundata saknar säker stilgrupp"
-        out.append(_finding(rec, "stilgrupp (AI, bild)", verdict, ours, existing, evidence, novelty, rel,
-                            {"belägg": ev_reasons, "nyhet": [nov], "relevans": rel_reasons},
-                            independent=True, suggested=ai))
-    return out
-
-
 def add_extras(findings: list[dict], lookup, inscriptions: list[dict], names) -> list[dict]:
     for f in findings:
         rec = lookup(f["signum"])
         if rec:
-            f.update(stone_extras(rec, f.get("suggested") if f["method"] != "stilgrupp (AI, bild)" else None,
-                                  inscriptions, names))
+            f.update(stone_extras(rec, f.get("suggested"), inscriptions, names))
     return findings
 
 

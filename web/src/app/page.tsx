@@ -86,15 +86,15 @@ const APP_VIEWS = [
   },
   {
     src: "/bilder/app-inskrifter.webp", title: "Inskrifterna",
-    text: "Alla 6 753 inskrifter i Samnordisk runtextdatabas, sökbara på text, plats, period, stilgrupp och ristare. Varje sökning kan laddas ner som tabell, med källan angiven.",
+    text: "Alla 6 753 inskrifter i Samnordisk runtextdatabas, sökbara på text, plats, period, stilgrupp och ristare. Varje sökning kan laddas ner som tabell, med källan angiven, och på stenens sida står Runor 2020 bredvid Rundata 2018 där utgåvorna skiljer sig.",
   },
   {
     src: "/bilder/app-statistik.webp", title: "Statistiken i R",
-    text: "Elva statistiska analyser i R: kluster, dialekter, datering, förändring över tid, fornlämningar och ortnamn. Varje resultat redovisar hur säkert det är och kan laddas ner som ett paket med skript och data.",
+    text: "Tolv statistiska analyser i R: ristare med och utan namn, kluster, dialekter, ordförråd, datering, förändring över tid, fornlämningar och ortnamn. Varje resultat redovisar hur säkert det är – prövat på stenar modellen inte sett och mot vad enbart bergarten skulle gissa – och kan laddas ner som ett paket med skript och data.",
   },
   {
     src: "/bilder/app-luckor.webp", title: "Forskningsluckorna",
-    text: "De mönster som klarar de statistiska proven, vart och ett med en hypotes och ett förslag på hur den kan prövas. Härifrån kommer ämnena till artiklarna.",
+    text: "Tio frågekort om var kunskapen saknas: stenar utan ristare, stilgrupp eller datering, attribueringar som bör omprövas, stenar värda att skanna – och de luckor i texterna där sannolikhetsmodellen fyller i ett ord med minst 80 procent. Härifrån kommer ämnena till artiklarna.",
   },
   {
     src: "/bilder/app-stenoversikt.webp", title: "Stenöversikten",
@@ -130,7 +130,7 @@ const USE_CASES = [
   },
   {
     title: "Datering och stil",
-    text: "Se en inskrifts stilgrupp i Gräslunds kronologi, och var den hamnar i en seriation byggd på språk och innehåll i stället för ornamentik.",
+    text: "Se Rundatas stilgrupp i Gräslunds kronologi, och var inskriften hamnar i en seriation byggd på språk och innehåll i stället för ornamentik. Stilgruppen bedöms aldrig ur foto: det prövades med AI och togs bort när bara en av tre blev rätt.",
   },
   {
     title: "Nya hypoteser ur korpusen",
@@ -179,8 +179,8 @@ const PRINCIPLES = [
     text: "Ett drag talar för en ristare bara om det är ovanligare på andra stenar i samma landskap – inte bara i hela korpusen.",
   },
   {
-    title: "Ingen AI-statistik",
-    text: "Kandidater räknas fram ur beläggen med öppna vikter. AI läser bilder och skriver löptext, anger aldrig sannolikheter, och dess bedömningar märks som okalibrerade.",
+    title: "Ingen AI i resultaten",
+    text: "Kandidater räknas fram ur beläggen med öppna vikter. Vitki läser inte runor och bedömer inte stil med AI – båda prövades och togs bort. AI är ett tillval som bara skriver löptext ur färdiga resultat, märkt som sådan.",
   },
   {
     title: "Det som inte håller redovisas",
@@ -662,9 +662,10 @@ andel <- tapply(stenar$bon,
             ))}
           </div>
           <p className="mt-6 text-sm text-slate-500 max-w-3xl">
-            AI-funktionerna använder som standard Claude (Anthropic); Google Gemini kan väljas under Inställningar. Du
-            använder din egen API-nyckel, som sparas i din webbläsare. AI läser bilder och skriver löptext; texten märks
-            och ska granskas, och den används aldrig som källa till mätvärden, statistik eller sannolikheter.
+            AI är ett tillval: Claude (Anthropic) som standard, Google Gemini kan väljas under Inställningar, med din
+            egen API-nyckel sparad i din webbläsare. Den skriver löptext i syntes, rapporter och assistenten ur resultat
+            som redan är räknade; texten märks och ska granskas, och den används aldrig som källa till mätvärden,
+            läsningar, stilgrupper, statistik eller sannolikheter.
           </p>
         </div>
       </section>

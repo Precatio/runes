@@ -30,6 +30,13 @@ def test_summarize_counts_views_visits_sections_and_countries():
     countries = {c["key"]: c["n"] for c in out["countries"]}
     assert countries == {"Sverige": 2, "Norge": 1, "övriga Amerika": 1, "okänt": 1}
     assert {c["key"] for c in out["languages"]} == {"svenska", "norska", "spanska", "okänt"}
+    # A clicked day: everything but the bars per day counts that day alone
+    one = site_stats.summarize(rows, since, 3, {}, day="2026-10-14")
+    assert one["day"] == "2026-10-14" and one["views"] == 2 and one["visits"] == 2
+    assert [d["views"] for d in one["per_day"]] == [2, 0, 2]
+    assert one["pages"] == [{"path": "/", "title": None, "n": 2}]
+    assert {c["key"]: c["n"] for c in one["countries"]} == {"Norge": 1, "övriga Amerika": 1}
+    assert {s["key"] for s in one["sections"]} == {"artiklar", "om"}
 
 
 def test_country_and_language_fallbacks():

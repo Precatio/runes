@@ -47,7 +47,6 @@ export interface SynthesisResult {
     groove?: { ranking: { group: string; n: number; distance: number }[]; evaluation?: { top1_accuracy: number; chance_top1: number; material_top1?: number | null; n_stones: number; n_groups: number } | null;
       reference_size?: number; reliability?: number } | null;
     measurements_by_feature?: Record<string, { n: number; summary: Record<Metric, Summary> }> | null;
-    style_check?: { ai_style: string; ai_confidence?: number; rundata_style: string | null; agrees: boolean; note: string };
     reading_check?: { char_agreement: number; word_agreement: number; coverage: number; summary: string };
     geology?: Omit<Geology, "signum" | "place"> | null;
     rundata?: { carver_raw: string; style: string | null; dating: string; material: string; place: string } | null;

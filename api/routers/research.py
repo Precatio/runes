@@ -61,9 +61,8 @@ def research_gaps(req: GapsRequest):
 
 
 class FindingsRequest(BaseModel):
-    # Corpus entries ({signum, feature_type, means}) and AI style assessments from the user's projects
+    # Corpus entries ({signum, feature_type, means}) from the user's projects
     corpus: list[dict] = Field(default_factory=list)
-    styles: list[dict] = Field(default_factory=list)
 
 
 @lru_cache(maxsize=1)
@@ -89,8 +88,7 @@ def findings_key(req: FindingsRequest) -> str:
 def research_findings(req: FindingsRequest):
     s = store()
     technique, technique_note = findings.technique_findings(req.corpus, s.get, s.inscriptions)
-    extra = findings.add_extras(technique + findings.style_findings(req.styles, s.get, s.inscriptions),
-                                s.get, s.inscriptions, orthography_model().names)
+    extra = findings.add_extras(technique, s.get, s.inscriptions, orthography_model().names)
     from api.routers import rstats
     r_items, r_patterns = rstats.findings()
     r_items = findings.add_extras(r_items, s.get, s.inscriptions, orthography_model().names)

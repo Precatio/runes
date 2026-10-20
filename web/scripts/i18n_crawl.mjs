@@ -11,10 +11,10 @@ import { join } from "node:path";
 
 const [out = "i18n_misses.json", base = "http://localhost:3000", ...only] = process.argv.slice(2);
 const ROUTES = only.length ? only : [
-  "/", "/start", "/stenanalys", "/3d", "/2d", "/rti", "/synthesis", "/phonetics", "/inskrifter",
-  "/inskrifter?signum=U%20735", "/karta", "/karta?signum=U%20735", "/stilgrupper", "/korpus", "/jamfor", "/luckor",
+  "/", "/start", "/stenanalys", "/3d", "/3d?verktyg=2d", "/rti", "/synthesis", "/inskrifter",
+  "/inskrifter?signum=U%20735", "/karta", "/karta?signum=U%20735", "/korpus", "/jamfor", "/luckor",
   "/oversikt", "/oversikt?signum=U%20735", "/oversikt?signum=U%20344", "/oversikt?signum=Sö%20131", "/statistik",
-  "/rapporter", "/knowledge", "/docs", "/account", "/admin",
+  "/rapporter", "/docs", "/account", "/admin",
 ];
 const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const PORT = 9300 + Math.floor(Math.random() * 400);

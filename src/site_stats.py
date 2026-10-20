@@ -53,21 +53,26 @@ def _top(counter: Counter, n: int = TOP) -> list[dict]:
     return [{"key": k, "n": v} for k, v in counter.most_common(n)]
 
 
-def summarize(rows: list[dict], since: dt.date, days: int, titles: dict[str, str] | None = None) -> dict:
+def summarize(rows: list[dict], since: dt.date, days: int, titles: dict[str, str] | None = None,
+              day: str | None = None) -> dict:
     """Sammanfattar raderna från och med `since` (`days` dagar): totaler, per dag, sidor, avsnitt på startsidan,
-    hänvisande webbplatser, land, språk och enhet. `titles` ger sidornas namn (sökväg -> titel)."""
+    hänvisande webbplatser, land, språk och enhet. `titles` ger sidornas namn (sökväg -> titel). Med `day` (ÅÅÅÅ-MM-DD)
+    räknas allt utom stapeldiagrammet per dag bara på den dagens rader – så att ett klick på en stapel i Admin visar
+    vilka sidor, länder och sökord dagen bestod av."""
     titles = titles or {}
+    per_day = {(since + dt.timedelta(days=i)).isoformat(): {"views": 0, "visits": 0} for i in range(days)}
+    for r in rows:
+        d = per_day.get(r.get("day") or "") if r.get("kind") == "view" else None
+        if d is not None:
+            d["views"] += 1
+            d["visits"] += bool(r.get("entry"))
+    if day:
+        rows = [r for r in rows if r.get("day") == day]
     views = [r for r in rows if r.get("kind") == "view"]
     sections = [r for r in rows if r.get("kind") == "section"]
     searches = [r for r in rows if r.get("kind") == "search" and r.get("label")]
     clicks = [r for r in rows if r.get("kind") == "click" and r.get("label")]
     title = lambda p: titles.get(p) or p  # noqa: E731
-    per_day = {(since + dt.timedelta(days=i)).isoformat(): {"views": 0, "visits": 0} for i in range(days)}
-    for r in views:
-        d = per_day.get(r.get("day") or "")
-        if d is not None:
-            d["views"] += 1
-            d["visits"] += bool(r.get("entry"))
     visits = sum(bool(r.get("entry")) for r in views)
     pages = Counter(r.get("path") or "/" for r in views)
     start_views = pages.get("/", 0)
@@ -83,7 +88,7 @@ def summarize(rows: list[dict], since: dt.date, days: int, titles: dict[str, str
     flow = Counter((r["prev"], r.get("path") or "/") for r in views if r.get("prev"))
     entries = Counter(r.get("path") or "/" for r in views if r.get("entry"))
     return {
-        "since": since.isoformat(), "days": days,
+        "since": since.isoformat(), "days": days, "day": day,
         "views": len(views), "visits": visits,
         "per_day": [{"day": k, **v} for k, v in per_day.items()],
         "pages": [{"path": p, "title": titles.get(p), "n": n} for p, n in pages.most_common(TOP)],

@@ -251,13 +251,6 @@ export default function SynthesisPage() {
                     <ul className="list-disc pl-5 space-y-1 text-sm text-slate-700">{results.missing.map((m, i) => <li key={i}>{m}</li>)}</ul>
                   </>
                 )}
-                {ev?.style_check && (
-                  <p className={`mt-4 rounded-2xl px-4 py-3 text-sm ${ev.style_check.rundata_style ? (ev.style_check.agrees ? "bg-emerald-50 text-emerald-800" : "bg-amber-50 text-amber-800") : "bg-slate-100 text-slate-700"}`}>
-                    <strong>Stilgrupp:</strong> AI-bedömning från 2D-analysen {ev.style_check.ai_style}
-                    {ev.style_check.ai_confidence != null && ` (självskattning ${ev.style_check.ai_confidence} %, okalibrerad)`};
-                    Rundata {ev.style_check.rundata_style ?? "saknar uppgift"}{ev.style_check.rundata_style && (ev.style_check.agrees ? " – stämmer." : " – skiljer sig.")}
-                  </p>
-                )}
               </div>
 
               <EvidenceDetails r={results} />

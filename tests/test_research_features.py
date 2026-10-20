@@ -102,14 +102,13 @@ def test_findings_compare_with_rundata(client):
     vals = rng.normal([95, 3, 2, 6, .33, .2, .05], [1, .3, .05, .1, .01, .01, .002])
     corpus.append({"signum": unattributed, "feature_type": "rune", "means": dict(zip(METRICS, vals))})
 
-    r = client.post("/api/research/findings", json={
-        "corpus": corpus, "styles": [{"signum": "U 11", "style": "Pr3", "confidence": 80}]}).json()
+    r = client.post("/api/research/findings", json={"corpus": corpus}).json()
     tech = [f for f in r["findings"] if f["method"] == "huggteknik"]
     new = [f for f in tech if f["signum"] == unattributed]
     assert new and new[0]["verdict"] == "nytt" and new[0]["suggested"] == "Öpir 1"
     assert any(f["verdict"] == "stämmer" for f in tech)
-    style = [f for f in r["findings"] if f["method"].startswith("stilgrupp")]
-    assert style[0]["verdict"] == "motsäger"  # Rundata: Pr4
+    # no style-from-image findings any more: the AI style assessment was removed 2026-10-20
+    assert not [f for f in r["findings"] if f["method"].startswith("stilgrupp")]
     for f in r["findings"]:
         assert 0 <= f["evidence"] <= 1 and 0 <= f["novelty"] <= 1 and 0 <= f["relevance"] <= 1
         assert f["verdict"] in ("stämmer", "nytt", "motsäger") and f["reasons"]["belägg"]
