@@ -77,6 +77,7 @@ def kor(per_grupp: int):
     done = {json.loads(l)["signum"] for l in open(RES) if json.loads(l).get("predicted")} if os.path.exists(RES) else set()
     rows = urval(per_grupp)
     print(f"{len(rows)} stenar i urvalet, {len(done)} redan bedömda")
+    fel_i_rad = 0
     with open(RES, "a") as out:
         for i, (sg, st, fil) in enumerate(rows):
             if sg in done:
@@ -87,8 +88,15 @@ def kor(per_grupp: int):
                 continue
             try:
                 res = bedom(path, ctx)
+                fel_i_rad = 0
             except Exception as e:
                 res = {"error": str(e)[:300]}
+                fel_i_rad += 1
+                text = str(e).lower()
+                if fel_i_rad >= 3 or any(k in text for k in ("credit", "billing", "insufficient", "401", "402", "authentication")):
+                    out.write(json.dumps({"signum": sg, "rundata": st, "file": fil, **res}, ensure_ascii=False) + "\n")
+                    print("stoppar: nyckeln eller krediten verkar vara slut:", str(e)[:200])
+                    break
                 time.sleep(5)
             out.write(json.dumps({"signum": sg, "rundata": st, "file": fil, **res}, ensure_ascii=False) + "\n")
             out.flush()

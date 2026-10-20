@@ -53,13 +53,13 @@ Vad som mäts är spårens form: V-vinkeln i botten, djupet, bredden och några 
 
 ## Steg 1. Öppna 3D-huggspårsanalysen
 
-I menyn till vänster, under *Analys av en sten*, väljer du **3D-huggspårsanalys**. Sidan har tre delar: inställningarna till vänster, 3D-vyn i mitten och resultaten nedanför.
+I menyn till vänster, under *Analysera*, väljer du **3D-Huggspårsanalys**. Sidan har tre delar: inställningarna till vänster, 3D-vyn i mitten och resultaten nedanför.
 
 {bild("01_sidan.png", "3D-huggspårsanalysens sida i Vitki innan någon fil är uppladdad", "Sidan innan en fil är uppladdad: inställningarna till vänster, den tomma 3D-vyn till höger.")}
 
 ## Steg 2. Ladda upp skanningen
 
-Klicka på **Välj fil** under *Ladda upp 3D-modell* och välj din skanning. Statusrutan visar vad som händer: filen laddas upp till analysmotorn, modellen läses in, och när den är klar står hur många ytor (trianglar) den har. Stenen dyker upp i 3D-vyn, där du kan vrida den med musen.
+Klicka på **Välj fil** under *Ladda upp 3D-mesh* och välj din skanning. Statusrutan visar vad som händer: filen laddas upp till analysmotorn, modellen läses in, och när den är klar står hur många ytor (trianglar) den har. Stenen dyker upp i 3D-vyn, där du kan vrida den med musen.
 
 {bild("03_status_inlast.png", "Statusrutan när modellen är inläst", "Statusrutan när modellen är inläst. Nästa punkt säger vad som behövs för att mäta med det valda mätsättet.")}
 
@@ -95,15 +95,19 @@ Titta igenom punkterna. Dra en ruta i 3D-vyn för att märka punkter som *Runa*,
 
 {bild("10_3d_vy.png", "3D-vyn med de mätta snitten som punkter", "Stenen i 3D-vyn med de mätta snitten. Orange är mätta spår, grått sådant som inte mäts.")}
 
+När du är nöjd med granskningen klickar du på **Använd runorna som resultat**. Då räknas stenens mått fram ur de godkända snitten och visas under granskningen. (Knapparna bredvid använder ornamentiken, eller allt som inte uteslutits, för den som vill jämföra spårtyperna.)
+
 Två riktvärden är bra att känna till. Appen vill ha minst {MIN_DESCRIBE} runor för att beskriva en sten och minst {MIN_COMPARE} för att jämföra den med andra: med tio runor är osäkerheten i stenens vinkel ungefär ±6°, med tjugo ±4°. Har analysen hittat färre säger granskningsrutan det.
 
 ## Steg 6. Läs måtten
 
 Under granskningen står stenens mått: medelvärden med osäkerhetsintervall för V-vinkel, djup, bredd, djup/bredd och de övriga måtten, uppdelat på spårtyp. Vinkel, djup och bredd är de stabila måtten; bottenradie och asymmetri är osäkrare och ska läsas med försiktighet. Verktygsklassningen (pik- eller bredmejsel) är en tumregel och inte kalibrerad mot kända verktyg.
 
-{bild("11_resultat.png", "Resultatpanelen med stenens mått", "Stenens mått som medelvärden, och knappen för att jämföra huggtekniken med mätkorpusen.")}
+{bild("11b_resultat_allt.png", "Resultatpanelen med stenens mått, jämförelsen med mätkorpusen och exportknapparna", "Stenens mått som medelvärden med spridning (SD) och antal snitt, verktygsbedömningen överst (en tumregel), jämförelsen med mätkorpusen och knapparna för export och bidrag. Sö 128 är en sandstenshäll med grunda, breda spår: V-vinkeln 140° är trubbigare än hos de flesta stenar i Södermanlandsserien, och djupet under två millimeter hör till de minsta.")}
 
 ## Steg 7. Spara, rapportera, dela
+
+{bild("12_stenrapport.png", "Kortet Stenrapport med knappen Skapa stenrapport", "Stenrapporten skapas med ett klick och öppnas under Rapporter.")}
 
 - **Spara snitt i Projekt** (kräver inloggning) sparar mätningen med skanningens fingeravtryck, inställningarna och metodversionen, så att du kan återuppta arbetet och så att det går att se i efterhand hur mätningen gjordes.
 - **Skapa stenrapport** ger ett artikelutkast om stenen med strykljus, djupkarta, snittpositioner, profiler och mått, räknat direkt ur skanningen.
@@ -128,7 +132,7 @@ Därför: använd måtten för att beskriva en sten, jämföra två stenar som m
 
 Metoden är beskriven i detalj i Vitkis metoddokumentation (avsnitt 2, *Huggspårsmått*) och protokollet i PROTOCOL.md, båda öppna i kodförrådet. Bristerna i metoden förs i en enda lista som följer med varje analys (version {limitations.VERSION}).
 
-*Skanningen i bilderna är Sö 128 (Lids kyrka), skannad av Laila Kitzler Åhfeldt, Riksantikvarieämbetet, och fritt tillgänglig på Zenodo under CC BY 4.0.*"""
+*Skanningen i bilderna är Sö 128 vid Lids kyrka i Södermanland, en sandstenshäll i stilgrupp Pr2, skannad av Laila Kitzler Åhfeldt (Riksantikvarieämbetet) och fritt tillgänglig på Zenodo under CC BY 4.0. Skanningens punktavstånd, 1,1 mm, är glesare än protokollets rekommenderade 0,5 mm, och appen säger det själv i granskningsrutan – ett bra exempel på en varning att ta på allvar.*"""
 
 out = {"slug": "sa-gor-du-en-huggsparsanalys", "title": title, "summary": summary, "body": body,
        "title_en": "", "summary_en": "", "body_en": "", "labels": ["Så gör du", "Huggspår och 3D"]}

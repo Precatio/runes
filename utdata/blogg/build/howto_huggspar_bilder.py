@@ -50,7 +50,12 @@ with sync_playwright() as p:
     pg.screenshot(path=os.path.join(OUT, "06_sidan_fore_analys.png"))
 
     t0 = time.time()
-    pg.get_by_role("button", name="Kör automatisk analys").click()
+    knapp = pg.get_by_role("button", name="Kör automatisk analys")
+    for _ in range(60):  # knappen är avstängd tills modellen är helt inläst i motorn
+        if knapp.is_enabled():
+            break
+        pg.wait_for_timeout(5000)
+    knapp.click(timeout=120000)
     pg.get_by_text("Granska den automatiska analysen").wait_for(timeout=20 * 60 * 1000)
     print("analys klar efter", round(time.time() - t0), "s")
     pg.wait_for_timeout(4000)
@@ -58,9 +63,8 @@ with sync_playwright() as p:
     shot(pg.locator("text=Status").first.locator(".."), "08_status_klar.png")
     review = pg.get_by_text("Granska den automatiska analysen").locator("..").locator("..").locator("..")
     shot(review, "09_granska.png")
-    canvas = pg.locator("canvas").first
-    if canvas.count():
-        shot(canvas, "10_3d_vy.png", pad=0)
+    viewer = pg.get_by_text("Dra: rotera").locator("..").locator("..")
+    shot(viewer, "10_3d_vy.png")
     pg.get_by_role("button", name="Använd runorna som resultat").click()
     pg.get_by_text("Huggteknik jämfört med mätkorpusen").wait_for(timeout=120000)
     pg.wait_for_timeout(2500)
