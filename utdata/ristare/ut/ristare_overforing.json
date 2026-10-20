@@ -1,0 +1,48 @@
+{
+  "per_landskap": {
+    "Ög": 1,
+    "Sö": 8,
+    "U": 25,
+    "Vs": 1
+  },
+  "U_till_Sö": {
+    "train": "U",
+    "test": "Sö",
+    "n_test_stenar": 59,
+    "n_test_ristare": 8,
+    "n_train_stenar": 373,
+    "tröskel": 0.083,
+    "grupper_per_körning": 1,
+    "renhet": 0.75,
+    "geografi": 1,
+    "skillnad": -0.25,
+    "andel_rena_75": 1,
+    "andel_rena_75_geo": 1,
+    "median_p_per_körning": "NA",
+    "körningar_p05": 0,
+    "körningar": 0
+  },
+  "Sö_till_U": {
+    "train": "Sö",
+    "test": "U",
+    "n_test_stenar": 373,
+    "n_test_ristare": 25,
+    "n_train_stenar": 59,
+    "tröskel": 0.056,
+    "grupper_per_körning": 5,
+    "renhet": 0.742,
+    "geografi": 0.613,
+    "skillnad": 0.129,
+    "andel_rena_75": 0.6,
+    "andel_rena_75_geo": 0.6,
+    "median_p_per_körning": 0.0938,
+    "körningar_p05": 0,
+    "körningar": 30
+  },
+  "USö_till_övriga": {
+    "train": "U+Sö",
+    "test": "Ög+Vs",
+    "n_test_stenar": 9,
+    "n_grupper": 0
+  }
+}
