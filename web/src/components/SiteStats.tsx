@@ -11,6 +11,9 @@ interface Stats {
   pages: { path: string; title: string | null; n: number }[];
   sections: { key: string; n: number; share: number | null }[];
   referrers: Row[]; direct: number; countries: Row[]; languages: Row[]; devices: Row[];
+  searches: { total: number; top: Row[]; no_hits: Row[] };
+  clicks: { share: Row[]; outbound: Row[]; language: Row[]; shared_pages: Row[] };
+  via: Row[]; flow: Row[]; entries: { path: string; title: string | null; n: number }[];
 }
 type Call = (path: string, init?: RequestInit) => Promise<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 
@@ -71,7 +74,7 @@ export default function SiteStats({ call }: { call: Call }) {
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
           <h3 className="text-lg font-bold text-slate-900">Besökare på webbplatsen</h3>
-          <p className="text-sm text-slate-600">Sidvisningar på vitkirunor.se, utan kakor och utan IP-adresser. Bara du ser statistiken.</p>
+          <p className="text-sm text-slate-600">Sidvisningar, sökord, delningar och klick på vitkirunor.se, utan kakor och utan IP-adresser. Bara du ser statistiken.</p>
         </div>
         <div className="flex flex-wrap items-center gap-1.5">
           {RANGES.map(r => (
@@ -143,6 +146,37 @@ export default function SiteStats({ call }: { call: Call }) {
             </Box>
             <Box title="Webbläsarens språk"><Bars rows={data.languages} total={data.languages[0]?.n ?? 0} /></Box>
             <Box title="Enhet" note="Efter skärmens bredd."><Bars rows={data.devices} total={data.devices[0]?.n ?? 0} /></Box>
+          </div>
+
+          <div className="grid gap-3 lg:grid-cols-2">
+            <Box title="Sökningar på webbplatsen" note={`${num(data.searches.total)} sökningar i artikelsökningen. Orden besökarna skriver, utan koppling till någon person.`}>
+              <Bars rows={data.searches.top} total={data.searches.top[0]?.n ?? 0} />
+            </Box>
+            <Box title="Sökningar utan träff" note="Det besökarna söker efter som ingen artikel tar upp än – idéer till nya texter.">
+              <Bars rows={data.searches.no_hits} total={data.searches.no_hits[0]?.n ?? 0} />
+            </Box>
+            <Box title="Delningar per kanal" note="Klick på delningsknapparna under artiklarna.">
+              <Bars rows={data.clicks.share} total={data.clicks.share[0]?.n ?? 0} />
+            </Box>
+            <Box title="Besök från delade länkar" note="Besök som började i en länk som delats från sajten, per kanal. Märket tas bort ur adressfältet efter ankomsten.">
+              <Bars rows={data.via} total={data.via[0]?.n ?? 0} />
+            </Box>
+            <Box title="Mest delade artiklar">
+              <Bars rows={data.clicks.shared_pages} total={data.clicks.shared_pages[0]?.n ?? 0} />
+            </Box>
+            <Box title="Utgående länkar" note="Vilka webbplatser besökarna lämnar till (bara webbplatsen, inte hela adressen).">
+              <Bars rows={data.clicks.outbound} total={data.clicks.outbound[0]?.n ?? 0} />
+            </Box>
+            <Box title="Vad läser man härnäst" note="Vägen från en sida till nästa inom samma besök. Minns bara i webbläsarens minne och försvinner vid omladdning.">
+              <Bars rows={data.flow} total={data.flow[0]?.n ?? 0} />
+            </Box>
+            <Box title="Sidorna besöken börjar på" note="Där besökare som kommer utifrån först landar.">
+              <Bars rows={data.entries.map(p => ({ key: p.path, n: p.n }))} total={data.entries[0]?.n ?? 0}
+                label={r => data.entries.find(p => p.path === r.key)?.title ?? r.key} />
+            </Box>
+            <Box title="Språkbyten" note="Klick mellan den svenska och den engelska versionen av en artikel.">
+              <Bars rows={data.clicks.language} total={data.clicks.language[0]?.n ?? 0} />
+            </Box>
           </div>
         </>
       )}

@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { BlogPost } from "@/components/BlogBody";
 import BlogList from "@/components/BlogList";
 import { loadIndex, matches, searchTerms, snippet, type IndexPost } from "@/lib/articleSearch";
+import { trackSearch } from "@/lib/track";
 
 export default function ArticleSearch({ posts, failed }: { posts: BlogPost[]; failed: boolean }) {
   const [q, setQ] = useState("");
@@ -31,6 +32,13 @@ export default function ArticleSearch({ posts, failed }: { posts: BlogPost[]; fa
       return terms.every(t => hay.includes(t));
     });
   }, [terms, posts, by]);
+
+  // The words and the number of hits are counted once the typing has settled (lib/track.ts: anonymous, nothing else)
+  useEffect(() => {
+    if (!hits || !index) return; // before the full texts are fetched the hit count only covers titles and summaries
+    const t = setTimeout(() => trackSearch(q, hits.length), 1500);
+    return () => clearTimeout(t);
+  }, [q, hits, index]);
 
   return (
     <>

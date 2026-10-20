@@ -2,9 +2,10 @@
 
 // The landing page's compact article search: inline hits with a snippet, each leading to its article;
 // the full archive search lives on /artiklar and gets the query passed along.
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { loadIndex, matches, searchTerms, snippet, type IndexPost } from "@/lib/articleSearch";
+import { trackSearch } from "@/lib/track";
 
 export default function LandingArticleSearch() {
   const [q, setQ] = useState("");
@@ -15,6 +16,13 @@ export default function LandingArticleSearch() {
   const terms = useMemo(() => searchTerms(q), [q]);
   const hits = useMemo(() => (terms.length && index ? index.filter(p => matches(p, terms)) : null),
     [terms, index]);
+
+  // The words and the number of hits are counted once the typing has settled (lib/track.ts: anonymous, nothing else)
+  useEffect(() => {
+    if (!hits) return;
+    const t = setTimeout(() => trackSearch(q, hits.length), 1500);
+    return () => clearTimeout(t);
+  }, [q, hits]);
 
   return (
     <div className="mt-8 mb-10 max-w-2xl">

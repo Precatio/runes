@@ -1,9 +1,12 @@
 """Besöksstatistik för den publika webbplatsen (vitkirunor.se), sammanfattad för Admin.
 
 Webbplatsen skriver en rad per visad sida och en per avsnitt på startsidan som besökaren har scrollat till
-(web/src/components/SiteTracker.tsx, samlingen site_views i Firestore). Raderna har ingen identifierare, ingen kaka och
-ingen IP-adress, så *besök* räknas som sidvisningar där besökaren kom utifrån (eller utan hänvisning) – inte som unika
-personer. Landet är ungefärligt: det läses ur webbläsarens tidszon, och en stad går inte att få fram utan IP-adress.
+(web/src/components/SiteTracker.tsx, samlingen site_views i Firestore), och dessutom en rad per sökning i artikelsökningen
+(sökorden och antalet träffar), per klick på en delningsknapp, en utgående länk eller en språklänk (web/src/lib/track.ts).
+En sidvisning bär också sidan besökaren kom från inne på webbplatsen (`prev`, bara ur minnet, aldrig sparad på enheten) och,
+för ett besök som började i en delad länk, delningskanalen (`via`). Raderna har ingen identifierare, ingen kaka och ingen
+IP-adress, så *besök* räknas som sidvisningar där besökaren kom utifrån (eller utan hänvisning) – inte som unika personer.
+Landet är ungefärligt: det läses ur webbläsarens tidszon, och en stad går inte att få fram utan IP-adress.
 """
 from __future__ import annotations
 
@@ -30,6 +33,9 @@ LANGUAGES = {"sv": "svenska", "en": "engelska", "nb": "norska", "nn": "norska", 
              "fi": "finska", "is": "isländska", "de": "tyska", "fr": "franska", "nl": "nederländska", "es": "spanska",
              "it": "italienska", "pl": "polska"}
 TOP = 15
+SHARE_CHANNELS = {"lank": "Kopiera länk", "enhet": "Enhetens delning", "x": "X", "facebook": "Facebook",
+                  "linkedin": "LinkedIn", "epost": "E-post"}
+LANGUAGE_CLICKS = {"en": "Till engelska versionen", "sv": "Till svenska versionen"}
 
 
 def country(tz: str | None) -> str:
@@ -53,6 +59,9 @@ def summarize(rows: list[dict], since: dt.date, days: int, titles: dict[str, str
     titles = titles or {}
     views = [r for r in rows if r.get("kind") == "view"]
     sections = [r for r in rows if r.get("kind") == "section"]
+    searches = [r for r in rows if r.get("kind") == "search" and r.get("label")]
+    clicks = [r for r in rows if r.get("kind") == "click" and r.get("label")]
+    title = lambda p: titles.get(p) or p  # noqa: E731
     per_day = {(since + dt.timedelta(days=i)).isoformat(): {"views": 0, "visits": 0} for i in range(days)}
     for r in views:
         d = per_day.get(r.get("day") or "")
@@ -65,6 +74,14 @@ def summarize(rows: list[dict], since: dt.date, days: int, titles: dict[str, str
     reached = Counter(r.get("section") for r in sections if (r.get("path") or "/") == "/" and r.get("section"))
     refs = Counter(r.get("ref") for r in views if r.get("entry") and r.get("ref"))
     direct = sum(1 for r in views if r.get("entry") and not r.get("ref"))
+    shares = [r for r in clicks if r["label"].startswith("dela:")]
+
+    def clicked(prefix: str, names: dict[str, str] | None = None) -> list[dict]:
+        c = Counter(r["label"][len(prefix):] for r in clicks if r["label"].startswith(prefix))
+        return [{"key": (names or {}).get(k, k), "n": n} for k, n in c.most_common(TOP)]
+
+    flow = Counter((r["prev"], r.get("path") or "/") for r in views if r.get("prev"))
+    entries = Counter(r.get("path") or "/" for r in views if r.get("entry"))
     return {
         "since": since.isoformat(), "days": days,
         "views": len(views), "visits": visits,
@@ -76,11 +93,28 @@ def summarize(rows: list[dict], since: dt.date, days: int, titles: dict[str, str
         "countries": _top(Counter(country(r.get("tz")) for r in views)),
         "languages": _top(Counter(language(r.get("lang")) for r in views)),
         "devices": _top(Counter(r.get("device") or "okänt" for r in views)),
+        # Sökningarna i artikelsökningen: orden, och de som inte gav någon träff (luckor i innehållet)
+        "searches": {"total": len(searches),
+                     "top": _top(Counter(r["label"] for r in searches)),
+                     "no_hits": _top(Counter(r["label"] for r in searches if r.get("hits") == 0))},
+        # Klick: delningsknappar per kanal, de mest delade sidorna, utgående länkar och språklänkar
+        "clicks": {"share": clicked("dela:", SHARE_CHANNELS), "outbound": clicked("ut:"),
+                   "language": clicked("sprak:", LANGUAGE_CLICKS),
+                   "shared_pages": [{"key": title(p), "n": n} for p, n in
+                                    Counter(r.get("path") or "/" for r in shares).most_common(TOP)]},
+        # Besök som började i en delad länk, per delningskanal
+        "via": [{"key": SHARE_CHANNELS.get(k, k), "n": n} for k, n in
+                Counter(r.get("via") for r in views if r.get("entry") and r.get("via")).most_common()],
+        # Vägen mellan sidorna inom ett besök, och sidorna besöken börjar på
+        "flow": [{"key": f"{title(a)} → {title(b)}", "n": n} for (a, b), n in flow.most_common(TOP)],
+        "entries": [{"path": p, "title": titles.get(p), "n": n} for p, n in entries.most_common(TOP)],
     }
 
 
 def page_titles(posts: list[dict]) -> dict[str, str]:
     """Sidornas namn: startsidan, artikellistan och varje publicerad artikel."""
-    out = {"/": "Startsidan", "/artiklar": "Artiklar (listan)"}
+    out = {"/": "Startsidan", "/artiklar": "Artiklar (listan)", "/en/artiklar": "Articles (list, English)"}
     out.update({f"/artiklar/{p['slug']}": p.get("title") or p["slug"] for p in posts if p.get("slug")})
+    out.update({f"/en/artiklar/{p['slug']}": f"{p.get('title_en') or p.get('title') or p['slug']} (engelska)"
+                for p in posts if p.get("slug") and p.get("title_en")})
     return out
