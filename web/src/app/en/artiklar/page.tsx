@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import BlogShell from "@/components/BlogShell";
 import EnglishArticleList from "@/components/EnglishArticleList";
+import ContentVote from "@/components/ContentVote";
 import { listPosts } from "@/lib/articles";
 import { featuredFirst } from "@/lib/featured";
 import { BLOG_DESCRIPTION_EN, BLOG_TITLE_EN, EN_ARTICLES_PATH, languageAlternates } from "@/lib/blogSeo";
@@ -35,6 +36,7 @@ export default async function EnglishBlogPage() {
           can be tested. The figures come from Vitki&apos;s open analyses and are explained in the text.
         </p>
         <EnglishArticleList posts={withEn} />
+        <ContentVote />
       </section>
     </BlogShell>
   );

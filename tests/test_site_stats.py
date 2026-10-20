@@ -45,3 +45,14 @@ def test_country_and_language_fallbacks():
     assert site_stats.country("") == "okänt"
     assert site_stats.language("en-GB") == "engelska"
     assert site_stats.language("xx") == "xx"
+
+
+def test_votes_on_the_articles_page_are_summarised():
+    since = dt.date(2026, 10, 20)
+    rows = [{"kind": "click", "path": "/artiklar", "day": "2026-10-20", "label": "rost:magi"},
+            {"kind": "click", "path": "/artiklar", "day": "2026-10-20", "label": "rost:magi"},
+            {"kind": "click", "path": "/artiklar", "day": "2026-10-20", "label": "rost:eddan"},
+            {"kind": "click", "path": "/artiklar", "day": "2026-10-20", "label": "rost-eget:Stenarna på Öland"}]
+    out = site_stats.summarize(rows, since, 1)
+    assert out["clicks"]["votes"] == [{"key": "Magi, förbannelser och skydd", "n": 2}, {"key": "Eddan och fornnordisk dikt", "n": 1}]
+    assert out["clicks"]["vote_texts"] == [{"key": "Stenarna på Öland", "n": 1}]

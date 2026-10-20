@@ -12,7 +12,7 @@ interface Stats {
   sections: { key: string; n: number; share: number | null }[];
   referrers: Row[]; direct: number; countries: Row[]; languages: Row[]; devices: Row[];
   searches: { total: number; top: Row[]; no_hits: Row[] };
-  clicks: { share: Row[]; outbound: Row[]; language: Row[]; shared_pages: Row[] };
+  clicks: { share: Row[]; outbound: Row[]; language: Row[]; shared_pages: Row[]; votes?: Row[]; vote_texts?: Row[] };
   via: Row[]; flow: Row[]; entries: { path: string; title: string | null; n: number }[];
 }
 type Call = (path: string, init?: RequestInit) => Promise<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -165,6 +165,12 @@ export default function SiteStats({ call }: { call: Call }) {
             </Box>
             <Box title="Sökningar utan träff" note="Det besökarna söker efter som ingen artikel tar upp än – idéer till nya texter.">
               <Bars rows={data.searches.no_hits} total={data.searches.no_hits[0]?.n ?? 0} />
+            </Box>
+            <Box title="Vad läsarna vill läsa mer om" note="Rösterna på artikelsidan: valda ämnen (upp till tre per röst).">
+              <Bars rows={data.clicks.votes ?? []} total={data.clicks.votes?.[0]?.n ?? 0} />
+            </Box>
+            <Box title="Läsarnas egna förslag" note="Fritext i röstningen på artikelsidan, högst 70 tecken.">
+              <Bars rows={data.clicks.vote_texts ?? []} total={data.clicks.vote_texts?.[0]?.n ?? 0} />
             </Box>
             <Box title="Delningar per kanal" note="Klick på delningsknapparna under artiklarna.">
               <Bars rows={data.clicks.share} total={data.clicks.share[0]?.n ?? 0} />

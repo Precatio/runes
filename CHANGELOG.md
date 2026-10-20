@@ -5,6 +5,11 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Läsarnas röst på artikelsidan
+- Artikelsidan (svenska och engelska) har rutan **Vad vill du läsa mer om?**: tolv ämnen att välja upp till tre av och
+  ett eget förslag på högst 70 tecken. Rösten skickas som anonyma rader i besöksstatistiken (ingen ny databasregel),
+  en gång per webbläsare, och syns i Admin under *Vad läsarna vill läsa mer om* och *Läsarnas egna förslag*.
+
 ### Vem ristade? kan säga "kanske någon annan"
 - Attribueringsmodellen känner bara 18 ristare men gav förut alltid ett av deras namn. Nu säger den *kanske någon
   annan* när förstavalet får mindre än 35 %. Gränsen valdes genom att gömma en ristare i taget och prövades på 139

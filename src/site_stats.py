@@ -36,6 +36,13 @@ TOP = 15
 SHARE_CHANNELS = {"lank": "Kopiera länk", "enhet": "Enhetens delning", "x": "X", "facebook": "Facebook",
                   "linkedin": "LinkedIn", "epost": "E-post"}
 LANGUAGE_CLICKS = {"en": "Till engelska versionen", "sv": "Till svenska versionen"}
+# The topics in the vote on the articles page (web/src/components/ContentVote.tsx, label "rost:<key>"; same keys there)
+VOTE_TOPICS = {"ristare": "Ristarna och deras händer", "tro": "Tro – från Tor till Kristus",
+               "kvinnor": "Kvinnor och barn på stenarna", "fard": "Vikingafärder: England, Grekland, Ingvar",
+               "sprak": "Språket och stavningen", "lasning": "Skadade och olästa inskrifter",
+               "landskap": "Stenarna i landskapet", "magi": "Magi, förbannelser och skydd",
+               "eddan": "Eddan och fornnordisk dikt", "norden": "Danmark, Norge och gränserna",
+               "metod": "Hur metoderna fungerar – statistik och 3D", "guider": "Guider till Vitki, steg för steg"}
 
 
 def country(tz: str | None) -> str:
@@ -105,6 +112,8 @@ def summarize(rows: list[dict], since: dt.date, days: int, titles: dict[str, str
         # Klick: delningsknappar per kanal, de mest delade sidorna, utgående länkar och språklänkar
         "clicks": {"share": clicked("dela:", SHARE_CHANNELS), "outbound": clicked("ut:"),
                    "language": clicked("sprak:", LANGUAGE_CLICKS),
+                   # The vote on the articles page: chosen topics and own suggestions (free text, up to 70 characters)
+                   "votes": clicked("rost:", VOTE_TOPICS), "vote_texts": clicked("rost-eget:"),
                    "shared_pages": [{"key": title(p), "n": n} for p, n in
                                     Counter(r.get("path") or "/" for r in shares).most_common(TOP)]},
         # Besök som började i en delad länk, per delningskanal

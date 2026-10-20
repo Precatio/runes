@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import BlogShell from "@/components/BlogShell";
 import ArticleSearch from "@/components/ArticleSearch";
+import ContentVote from "@/components/ContentVote";
 import { listPosts } from "@/lib/articles";
 import { ARTICLES_PATH, BLOG_DESCRIPTION, BLOG_TITLE, blogJsonLd, languageAlternates } from "@/lib/blogSeo";
 
@@ -29,6 +30,7 @@ export default async function BlogPage() {
           hur det kan prövas. Siffrorna kommer från Vitkis analyser och förklaras i texten.
         </p>
         <div className="mt-10"><ArticleSearch posts={posts} failed={failed} /></div>
+        <ContentVote />
       </section>
       {posts.length > 0 && (
          
