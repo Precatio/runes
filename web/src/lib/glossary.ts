@@ -75,6 +75,8 @@ export const GLOSSARY: Record<string, string> = {
   "Närmast liknande ristare i Rundata": "Den kända ristare inom 50 km vars stenar mest liknar gruppen – men inte lika mycket som två stenar av samma ristare brukar göra.",
   "Liknar": "Den kända ristare som gruppen liknar.",
   "Attribueringsmodellen": "Vad attribueringsmodellen föreslår för gruppens stenar.",
+  "Håller utan tidsdragen": "Grupper som återfinns till minst 65 % när stilgrupp, kors, stungna runor, böner och signaturer – drag som följer tiden – tas bort och gränsen räknas om. De samlar då inte bara stenar från samma tid.",
+  "Prövat på ristare metoden inte sett": "Ristarna delas slumpvis i tre delar; gränsen tas fram på två och prövas på den tredje. Andelen av en grupp som är samma ristare, mot lika många närliggande stenar.",
   "Möjliga okända ristare": "Grupper av stenar utan ristare som liknar varandra lika mycket som en ristares stenar och inte liknar någon känd ristare i närheten.",
   "Liknar en känd ristare": "Grupper som liknar en känd ristare – underlag för attribuering snarare än en ny ristare.",
   "Prövat på kända ristare": "När metoden kördes på stenar med känd ristare, som om ristaren vore okänd: hur stor del av en grupp som i genomsnitt var samma ristare.",

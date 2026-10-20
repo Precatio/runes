@@ -184,10 +184,10 @@ den har minst fyra stenar och inte är mer utspridd än 90 % av de kända ristar
 gruppens mitt; i dag 23 km). Förfarandet prövas på stenar med känd ristare, som om ristaren vore okänd: hur stor del av
 en grupp är samma ristare, jämfört med grupper av lika många närliggande stenar? Avståndet och gränsen valdes efter
 den valideringen (15–30 km, kvot 4–12), så träffsäkerheten kan vara något överskattad. Resultat (beräkning
-2026-10-11, med de nya språkdragen): en grupp bestod i genomsnitt till 69 % av samma ristare, mot 43 % för bara
-närliggande stenar, och 64 % av grupperna till minst tre fjärdedelar; av länkade par med känd ristare var 71 % samma
-ristare. Bland stenarna utan ristare blev det 17 grupper, varav 8 möjliga okända ristare: Konungsundsristaren (30
-stenar, Östergötland), Vibyristaren (15, Östergötland), Vetlandaristaren (14, Småland), Kölabyristaren (13,
+2026-10-20): en grupp bestod i genomsnitt till 69 % av samma ristare, mot 43 % för bara
+närliggande stenar, och 60 % av grupperna till minst tre fjärdedelar; av länkade par med känd ristare var 71 % samma
+ristare. Bland stenarna utan ristare blev det 16 grupper, varav 8 möjliga okända ristare: Konungsundsristaren (28
+stenar, Östergötland), Vibyristaren (14, Östergötland), Vetlandaristaren (14, Småland), Kölabyristaren (13,
 Västergötland), Sättnaristaren (7, Medelpad), Leksbergsristaren och Husabyristaren (6 vardera, Västergötland) och
 Dalumsristaren (5, Västergötland). Stabiliteten mäts som hur stor del av gruppen som återkommer (Jaccard) när en
 femtedel av länkarna tas bort. Varje grupp jämförs med kända ristare inom 50 km: den räknas som lik en känd ristare när
@@ -198,6 +198,21 @@ attribueringsmodellen föreslår samma ristare med minst 50 % för hälften av g
 ristarnamn i Rundata. I Uppland och Södermanland, där ristarna är väl kartlagda, liknar nästan alla grupper en känd
 ristare; de möjliga okända ristarna finns främst i Östergötland, Västergötland, Småland och Medelpad, där få stenar är
 attribuerade. Stenarna i dessa grupper redovisas som fynd i Forskningsluckor (metod "okänd ristare (R)").
+
+**Prövning utanför det stöd gränsen justerats på (2026-10-20).** (1) *Hållet-utanför:* ristarna (inte stenarna) delas slumpvis
+i tre delar, gränsen och största spridning tas fram på två och grupper bildas på den tredje; trettio upprepningar, samma
+slumpfrö som skriptet `utdata/ristare/ristare_heldout.R`. Grupperna blev i genomsnitt 85 % samma ristare mot 69 % för lika
+många närliggande stenar ur samma tredjedel (skillnad 16 procentenheter, osäkerhet 14–17, till gruppernas fördel i 30
+av 30 upprepningar); utan de tidsberoende dragen 85 mot 68 %. Skillnaden är mindre än i den första valideringen (26), vars
+gränsvärden justerats efter samma kontroll. p-värden över upprepningarna redovisas inte, eftersom samma stenar ingår i dem.
+(2) *Robusthet:* varje grupp får en andel utan de tidsberoende dragen (stilgrupp, kors, stungna runor, böner, åsrunan,
+signatur); grupper med minst 65 % räknas "hålla" (fem av åtta: Konungsund 83 %, Vetlanda 79 %, Leksberg 83 %, Husaby 83 %,
+Kölaby 68 %; Viby 62 %, Sättna 57 % och Dalum 14 % håller delvis eller inte). (3) *Täckning:* de kända ristarna med minst tre
+stenar är 35, varav 25 i Uppland och 8 i Södermanland och en i kandidatlandskapen (Östergötland, Småland, Västergötland,
+Medelpad); där har 5, 2, 1 respektive 8 % av stenarna någon ristare i Rundata mot 70 % i Uppland (och 46 % i Södermanland). Att gränsen gäller i
+kandidatlandskapen är därför inte prövat – flytt av gränsen mellan Södermanland och Uppland gav inget säkert resultat
+(74 mot 61 %, `utdata/ristare/ristare_overforing.R`). Appen visar detta i en ruta ovanför tabellen. Att listade drag
+skiljer gruppen från trakten är ingen validering, eftersom grupperna bildas på just de dragen.
 
 ### 1h. Förändring i tid och rum
 

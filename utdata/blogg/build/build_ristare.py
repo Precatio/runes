@@ -18,6 +18,8 @@ A = json.load(open(os.path.join(RUN, "anonymous.json"), encoding="utf-8"))
 H3 = json.load(open(os.path.join(UT, "ut", "ristare_heldout_3delar.json"), encoding="utf-8"))
 H2 = json.load(open(os.path.join(UT, "ut", "ristare_heldout_2delar.json"), encoding="utf-8"))
 OV = json.load(open(os.path.join(UT, "ut", "ristare_overforing.json"), encoding="utf-8"))
+# Hållet-utanför-testets huvudtal kommer från appens egen modul (r/anonymous.R), så att appen och artikeln säger samma sak
+M = json.load(open(os.path.join(UT, "ut", "anonymous_modul.json"), encoding="utf-8"))["validation"]
 
 svn = lambda x, d=0: f"{x:,.{d}f}".replace(",", " ").replace(".", ",")  # noqa: E731
 enn = lambda x, d=0: f"{x:.{d}f}"  # noqa: E731
@@ -30,11 +32,13 @@ assert C["link_km"] == 30 and C["lr_min"] == 12 and C["lr"] == 13.6 and pr(C["pr
 assert (V["n_groups"], V["n_stones"], pr(V["purity"]), pr(V["purity_geography"])) == (15, 182, 69, 43)
 assert pr(V["purity_no_time"]) == 68 and A["n_candidates"] == 8
 assert H3["n_kanda_ristare"] == 35 and H3["n_kanda_stenar"] == 441 and H3["omgangar"] == 30 and H3["delar"] == 3
-h, hn = H3["huvud"], H3["utan_tid"]
-assert (pr(h["renhet"]), pr(h["geografi"]), pr(h["skillnad"])) == (86, 69, 17)
+Hm, Hmn = M["heldout"], M["heldout_no_time"]
+assert Hm["folds"] == 3 and Hm["runs"] == 30 and Hm["runs_above"] == 30 and Hmn["runs_above"] == 30
+h = {"renhet": Hm["purity"], "geografi": Hm["purity_geography"], "skillnad": Hm["difference"], "skillnad_ci": Hm["difference_ci"]}
+hn = {"renhet": Hmn["purity"], "geografi": Hmn["purity_geography"]}
+assert (pr(h["renhet"]), pr(h["geografi"]), pr(h["skillnad"])) == (85, 69, 16), (h,)
 assert (pr(hn["renhet"]), pr(hn["geografi"])) == (85, 68)
-assert h["omgangar_over_geografi"] == 30 and h["omgangar_p05"] == 30 and h["p_per_omgang_median"] < 0.01
-assert pr(h["skillnad_ci"][0]) == 16 and pr(h["skillnad_ci"][1]) == 18
+assert (round(100 * h["skillnad_ci"][0]), round(100 * h["skillnad_ci"][1])) == (14, 17)
 sens = [pr(k["skillnad"]) for k in H3["kanslighet"]] + [pr(H2["huvud"]["skillnad"])]
 assert min(sens) == 12 and max(sens) == 19, sens
 assert pr(H2["huvud"]["renhet"]) == 80 and pr(H2["huvud"]["geografi"]) == 61
@@ -71,20 +75,13 @@ assert not any(cand[i].get("nearest_carver") for i in (5, 6, 11, 12, 13, 14))
 known_groups = [g for g in A["groups"] if g["status"] == "known"]
 assert len(known_groups) == 8 and len(A["groups"]) == 16
 
-# Andel av stenarna (minst fem läsbara ord) som har en ristare i Rundata, per landskap
-import pandas as pd  # noqa: E402
-
-d = pd.read_csv(os.path.join(RUN, "corpus.csv"), na_values="", keep_default_na=False, low_memory=False)
-g = pd.read_csv(os.path.join(RUN, "geography_stones.csv"))
-f = d.merge(g[["signum"]], on="signum")
-f = f[f.n_words >= 5]
-f["har"] = f.carver.astype(str).str.len().gt(0) & f.carver.notna()
-RATE = f.groupby("province").har.mean()
-NSTONE = f.groupby("province").size()
-assert len(f) == 1292
-rate = {p: pr(RATE[p]) for p in ("U", "Sö", "Ög", "Sm", "Vg", "M")}
-assert rate == {"U": 57, "Sö": 40, "Ög": 5, "Sm": 1, "Vg": 0, "M": 8}, rate
+# Andel av stenarna (minst fem läsbara ord) som har någon ristare i Rundata, per landskap – modulens egen täckning
+COV = json.load(open(os.path.join(UT, "ut", "anonymous_modul.json"), encoding="utf-8"))["coverage"]
+rate = {p: pr(COV["share_attributed"][p]) for p in ("U", "Sö", "Ög", "Sm", "Vg", "M")}
+NSTONE = COV["n_stones_province"]
+assert rate == {"U": 70, "Sö": 46, "Ög": 5, "Sm": 2, "Vg": 1, "M": 8}, rate
 assert NSTONE["Vg"] == 95 and NSTONE["Ög"] == 134 and NSTONE["M"] == 12 and NSTONE["U"] == 671
+assert COV["carvers_by_province"]["U"] == 25 and COV["carvers_by_province"]["Sö"] == 8 and COV["n_carvers"] == 35
 
 # ---- figuren (kartan ur körningen, fryst i bloggens arkiv) ---------------------------------------
 from src import blog_figures  # noqa: E402
@@ -118,12 +115,12 @@ Därefter bildar stenarna grupper (de som är lika varandra och ligger nära var
 
 Gör man som om en känd ristare vore okänd och söker grupper bland hans stenar, blir {pr(V['purity'])} procent av stenarna i en grupp i genomsnitt av samma ristare. Grupper av lika många närliggande stenar, utan hänsyn till handens drag, ger {pr(V['purity_geography'])} procent. Det är ett bra resultat, men det räknades med gränsvärden som vi själva justerade efter just den kontrollen, och det överskattar därför.
 
-Det strängare testet delar ristarna slumpvis i tre delar. Gränsen tas fram på två delar och prövas på den tredje, som metoden aldrig sett, och allt upprepas trettio gånger med nya indelningar. Då är grupperna i snitt {pr(h['renhet'])} procent samma ristare, mot {pr(h['geografi'])} procent för närliggande stenar. (Procenttalen är högre än i det första testet eftersom varje prov bara har en tredjedel av ristarna, så grupperna blir lättare att få rena. Det som räknas är avståndet till närhetsgrupperna.) Skillnaden är {pr(h['skillnad'])} procentenheter, med osäkerhet mellan {pr(h['skillnad_ci'][0])} och {pr(h['skillnad_ci'][1])}, och den var till gruppernas fördel i alla trettio upprepningar. Skillnaden krymper alltså från 26 procentenheter i det första testet till {pr(h['skillnad'])} i det strängare, och i andra inställningar av avstånd och sållning landar den mellan {min(sens)} och {max(sens)}.
+Det strängare testet delar ristarna slumpvis i tre delar. Gränsen tas fram på två delar och prövas på den tredje, som metoden aldrig sett, och allt upprepas trettio gånger med nya indelningar. Då är grupperna i snitt {pr(h['renhet'])} procent samma ristare, mot {pr(h['geografi'])} procent för närliggande stenar. (Procenttalen är högre än i det första testet eftersom varje prov bara har en tredjedel av ristarna, så grupperna blir lättare att få rena. Det som räknas är avståndet till närhetsgrupperna.) Skillnaden är {pr(h['skillnad'])} procentenheter, med osäkerhet mellan {round(100 * h['skillnad_ci'][0])} och {round(100 * h['skillnad_ci'][1])}, och den var till gruppernas fördel i alla trettio upprepningar. Skillnaden krymper alltså från 26 procentenheter i det första testet till {pr(h['skillnad'])} i det strängare, och i andra inställningar av avstånd och sållning landar den mellan {min(sens)} och {max(sens)}.
 
 Metoden vilar inte heller på sådant som bara följer tiden. Tar man bort stilgrupp, kors, stungna runor, böner och signaturer, och räknar om gränsen, blir resultatet {pr(hn['renhet'])} mot {pr(hn['geografi'])} procent. Samtida stenar ser alltså inte ut som en hand bara för att dragen följer tiden.
 
 :::box Den svaga punkten
-Nästan alla ristare vi kan pröva på finns i Mälardalen. Av de {sum(land.values())} kända ristare som har minst tre stenar är {land['U']} i Uppland och {land['Sö']} i Södermanland. Av Upplands stenar har {rate['U']} procent en ristare i databasen och av Södermanlands {rate['Sö']} procent, men av Östergötlands bara {rate['Ög']} procent, Smålands {rate['Sm']} procent, Västergötlands {rate['Vg']} procent (inte en enda av {NSTONE['Vg']} stenar) och Medelpads {rate['M']} procent. Gränsen har alltså aldrig kunnat prövas där kandidaterna finns. Vi försökte flytta den: tränar man på Södermanlands ristare och prövar på Upplands, blir grupperna {pr(so_u['renhet'])} procent rena mot {pr(so_u['geografi'])} för närhet, men det är inte säkert nog att skilja från slump. Åt andra hållet blir det för få grupper för att räkna alls. Vi vet därför att metoden fungerar där ristare är kända, inte att den gör det i Västergötland.
+Nästan alla ristare vi kan pröva på finns i Mälardalen. Av de {sum(land.values())} kända ristare som har minst tre stenar är {land['U']} i Uppland och {land['Sö']} i Södermanland. Av Upplands stenar har {rate['U']} procent någon ristare i databasen och av Södermanlands {rate['Sö']} procent, men av Östergötlands bara {rate['Ög']} procent, Smålands {rate['Sm']} procent, Västergötlands {rate['Vg']} procent (en enda av {NSTONE['Vg']} stenar) och Medelpads {rate['M']} procent. Gränsen har alltså aldrig kunnat prövas där kandidaterna finns. Vi försökte flytta den: tränar man på Södermanlands ristare och prövar på Upplands, blir grupperna {pr(so_u['renhet'])} procent rena mot {pr(so_u['geografi'])} för närhet, men det är inte säkert nog att skilja från slump. Åt andra hållet blir det för få grupper för att räkna alls. Vi vet därför att metoden fungerar där ristare är kända, inte att den gör det i Västergötland.
 :::
 
 ## Sju grupper utan namn
@@ -157,7 +154,7 @@ Underlag: {svn(A['n_stones'])} vikingatida runstenar i Samnordisk runtextdatabas
 :::
 
 :::box Det viktigaste i korthet
-- En metod som söker grupper av stenar med samma handstil hittar rätt ristare tydligt oftare än slumpen och närheten ensamma, även för ristare den inte sett – men effekten är mindre än vi först mätte (17 procentenheter mot 26).
+- En metod som söker grupper av stenar med samma handstil hittar rätt ristare tydligt oftare än slumpen och närheten ensamma, även för ristare den inte sett – men effekten är mindre än vi först mätte ({pr(h['skillnad'])} procentenheter mot 26).
 - Metoden är bara prövad i Mälardalen. Där kandidatgrupperna ligger, i Östergötland, Småland, Västergötland och Medelpad, har knappt några stenar en känd ristare, så den kan inte prövas.
 - Fem grupper håller sig även när tidsberoende drag tas bort. De är hypoteser om en ristare, en verkstad eller en lokal skrivvana, och steget som avgör är en granskning av själva stenarna.
 :::
@@ -185,12 +182,12 @@ The stones are then formed into groups (those that are alike and lie close toget
 
 If one acts as though a known carver were unknown and searches for groups among his stones, {pr(V['purity'])} per cent of the stones in a group are on average by the same carver. Groups of the same number of nearby stones, with no regard to the hand, give {pr(V['purity_geography'])} per cent. That is a good result, but it was computed with thresholds that we ourselves tuned on that very check, so it overestimates.
 
-The stricter test divides the carvers at random into three parts. The threshold is derived on two parts and tested on the third, which the method has never seen, and everything is repeated thirty times with new divisions. The groups are then on average {pr(h['renhet'])} per cent by the same carver, against {pr(h['geografi'])} per cent for nearby stones. (The percentages are higher than in the first test because each sample has only a third of the carvers, which makes the groups easier to get pure. What counts is the distance to the proximity groups.) The difference is {pr(h['skillnad'])} percentage points, with uncertainty between {pr(h['skillnad_ci'][0])} and {pr(h['skillnad_ci'][1])}, and it favoured the groups in all thirty repetitions. The difference thus shrinks from 26 percentage points in the first test to {pr(h['skillnad'])} in the stricter one, and in other settings of distance and sieve it lands between {min(sens)} and {max(sens)}.
+The stricter test divides the carvers at random into three parts. The threshold is derived on two parts and tested on the third, which the method has never seen, and everything is repeated thirty times with new divisions. The groups are then on average {pr(h['renhet'])} per cent by the same carver, against {pr(h['geografi'])} per cent for nearby stones. (The percentages are higher than in the first test because each sample has only a third of the carvers, which makes the groups easier to get pure. What counts is the distance to the proximity groups.) The difference is {pr(h['skillnad'])} percentage points, with uncertainty between {round(100 * h['skillnad_ci'][0])} and {round(100 * h['skillnad_ci'][1])}, and it favoured the groups in all thirty repetitions. The difference thus shrinks from 26 percentage points in the first test to {pr(h['skillnad'])} in the stricter one, and in other settings of distance and sieve it lands between {min(sens)} and {max(sens)}.
 
 Nor does the method rest on anything that merely follows time. Remove style group, cross, dotted runes, prayers and signatures, and recompute the threshold, and the result is {pr(hn['renhet'])} against {pr(hn['geografi'])} per cent. Contemporary stones thus do not look like one hand just because the features follow time.
 
 :::box The weak point
-Almost all the carvers we can test on are in the Mälaren valley. Of the {sum(land.values())} known carvers with at least three stones, {land['U']} are in Uppland and {land['Sö']} in Södermanland. Of Uppland's stones, {rate['U']} per cent have a carver in the database and {rate['Sö']} per cent of Södermanland's, but only {rate['Ög']} per cent of Östergötland's, {rate['Sm']} per cent of Småland's, {rate['Vg']} per cent of Västergötland's (not one of {NSTONE['Vg']} stones) and {rate['M']} per cent of Medelpad's. The threshold has therefore never been testable where the candidates are. We tried moving it: trained on Södermanland's carvers and tested on Uppland's, the groups are {pr(so_u['renhet'])} per cent pure against {pr(so_u['geografi'])} for proximity, but that is not certain enough to tell from chance. In the other direction there are too few groups to count at all. So we know that the method works where carvers are known, not that it does in Västergötland.
+Almost all the carvers we can test on are in the Mälaren valley. Of the {sum(land.values())} known carvers with at least three stones, {land['U']} are in Uppland and {land['Sö']} in Södermanland. Of Uppland's stones, {rate['U']} per cent have some carver in the database and {rate['Sö']} per cent of Södermanland's, but only {rate['Ög']} per cent of Östergötland's, {rate['Sm']} per cent of Småland's, {rate['Vg']} per cent of Västergötland's (a single one of {NSTONE['Vg']} stones) and {rate['M']} per cent of Medelpad's. The threshold has therefore never been testable where the candidates are. We tried moving it: trained on Södermanland's carvers and tested on Uppland's, the groups are {pr(so_u['renhet'])} per cent pure against {pr(so_u['geografi'])} for proximity, but that is not certain enough to tell from chance. In the other direction there are too few groups to count at all. So we know that the method works where carvers are known, not that it does in Västergötland.
 :::
 
 ## Seven groups without a name
@@ -224,7 +221,7 @@ Basis: {enn(A['n_stones'])} Viking-age runestones in the Scandinavian Runic-text
 :::
 
 :::box The essentials in brief
-- A method that searches for groups of stones with the same handwriting finds the right carver clearly more often than chance and proximity alone, even for carvers it has not seen – but the effect is smaller than we first measured (17 percentage points against 26).
+- A method that searches for groups of stones with the same handwriting finds the right carver clearly more often than chance and proximity alone, even for carvers it has not seen – but the effect is smaller than we first measured ({pr(h['skillnad'])} percentage points against 26).
 - The method has been tested only in the Mälaren valley. Where the candidate groups are, in Östergötland, Småland, Västergötland and Medelpad, hardly any stones have a known carver, so it cannot be tested.
 - Five groups hold up even when time-dependent features are removed. They are hypotheses about a carver, a workshop or a local writing habit, and the deciding step is an examination of the stones themselves.
 :::

@@ -132,33 +132,46 @@ def anonymous(an: dict) -> dict | None:
     if not groups or not v.get("purity"):
         return None
     cands = [g for g in groups if g.get("status") == "candidate"]
+    robust = [g for g in cands if g.get("robust")]
     known = len(groups) - len(cands)
+    ho = v.get("heldout") or {}
+    cov = an.get("coverage") or {}
     provs = []
     for g in cands:
         for p in _list(g.get("provinces")):
             if p not in provs:
                 provs.append(p)
-    examples = ", ".join(f"{g['name']} ({g['n']} stenar)" for g in cands[:3])
+    examples = ", ".join(f"{g['name']} ({g['n']} stenar)" for g in robust[:3] or cands[:3])
+    held = (f" När gränsen i stället togs fram på andra ristare än de som prövades var grupperna {_pct(ho['purity'])} samma "
+            f"ristare, mot {_pct(ho['purity_geography'])} för närliggande stenar." if ho.get("purity") else "")
+    in_cand = cov.get("carvers_in_candidate_provinces")
     return _section(
         "anonymous", "Finns det ristare som ännu inte har namn?",
         "Om en grupp stenar utan ristare liknar varandra lika mycket som en ristares stenar, kan det vara en okänd "
         "ristare eller verkstad.",
-        {"value": str(len(cands)), "label": "möjliga okända ristare, med arbetsnamn efter socken"},
+        {"value": str(len(robust)), "label": f"av {len(cands)} möjliga okända ristare håller även utan de tidsberoende dragen"},
         f"{len(cands)} grupper av stenar utan ristare liknar varandra i stavning, språk, formler och stil lika mycket som "
-        f"en ristares stenar, utan att likna någon känd ristare i närheten" + (f" – t.ex. {examples}" if examples else "")
+        f"en ristares stenar, utan att likna någon känd ristare i närheten; {len(robust)} av dem återfinns också när "
+        "stilgrupp, kors och andra drag som följer tiden tas bort" + (f" – t.ex. {examples}" if examples else "")
         + f". Prövad på kända ristare bestod en sådan grupp i genomsnitt till {_pct(v['purity'])} av samma ristare, mot "
-        f"{_pct(v.get('purity_geography'))} om man bara tar närliggande stenar.",
+        f"{_pct(v.get('purity_geography'))} om man bara tar närliggande stenar.{held}",
         "osäkert",
-        [f"Kandidaterna finns i {_names(provs[:4])}, där få stenar är attribuerade – där är chansen störst att hitta "
-         "ristare som forskningen inte har namngett." if provs else None,
+        [f"Kandidaterna finns i {_names(provs[:4])}, där få stenar har en ristare i Rundata." if provs else None,
          f"{known} andra grupper liknar en känd ristare. Att metoden där hittar kända ristare talar för att den fångar "
          "verkliga ristargrupper." if known else None,
          "Nästa steg är att jämföra ornamentik, runformer och huggteknik på stenarna i en grupp."],
         ["Arbetsnamnen är etiketter för grupperna, inte namn på personer.",
          "En grupp kan vara en ristare, en verkstad eller en lokal tradition som flera följde.",
+         (f"Metoden är bara prövad där ristare är kända: {cov.get('carvers_by_province', {}).get('U', 0)} av de "
+          f"{cov.get('n_carvers')} kända ristarna finns i Uppland och {cov.get('carvers_by_province', {}).get('Sö', 0)} i "
+          f"Södermanland, och bara {in_cand} i landskapen med kandidater. Om gränsen gäller där är inte prövat.")
+         if cov.get("n_carvers") else None,
          f"I genomsnitt kan omkring {_pct(1 - v['purity'])} av stenarna i en grupp vara av någon annan.",
+         "Drag som listas för en grupp är de där den skiljer sig mest från trakten; eftersom grupperna bildas på just de "
+         "dragen visar listan hur gruppen ser ut, inte att den är en hand.",
          "Grupperna kan redan vara beskrivna i Sveriges runinskrifter eller annan litteratur som appen inte har."],
-        f"Kanske – {len(cands)} grupper av stenar utan ristare kan vara okända ristare eller verkstäder.")
+        f"Kanske – {len(robust)} grupper av stenar utan ristare kan vara okända ristare eller verkstäder, "
+        f"men det är inte prövat utanför Mälardalen.")
 
 
 def chronology(ch: dict) -> dict | None:

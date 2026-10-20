@@ -237,7 +237,7 @@ def anonymous_findings(anon: dict, lookup, inscriptions: list[dict]) -> list[dic
             continue
         marks = "; ".join(f"{m['feature']} ({_pct(m['share_group'])} mot {_pct(m['share_area'])} i trakten)"
                           for m in (g.get("marks") or [])[:3])
-        evidence = min(0.6, v["purity"]) * (g.get("stability") or 0)
+        evidence = min(0.6, v["purity"]) * min(g.get("stability") or 0, g.get("robust_no_time") if g.get("robust_no_time") is not None else 1)
         for signum in g["stones"]:
             rec = lookup(signum)
             if not rec or has_carver(rec):
@@ -250,8 +250,12 @@ def anonymous_findings(anon: dict, lookup, inscriptions: list[dict]) -> list[dic
                                             f"till {_pct(v['purity'])} av samma ristare, mot {_pct(v['purity_geography'])} "
                                             "för lika många närliggande stenar",
                                             f"gruppen återkommer till {_pct(g.get('stability') or 0)} när en femtedel av "
-                                            "länkarna tas bort"] + ([f"utmärks av {marks}"] if marks else []),
+                                            "länkarna tas bort och till "
+                                            f"{_pct(g.get('robust_no_time') or 0)} när dragen som följer tiden tas bort"]
+                                           + ([f"utmärks av {marks}"] if marks else []),
                                  "nyhet": ["ingen ristare i Rundata, och gruppen liknar ingen känd ristare i närheten",
+                                           "metoden är prövad där ristare är kända (nästan bara Uppland och Södermanland), "
+                                           "inte i det här landskapet",
                                            "arbetsnamnet är en etikett för gruppen, inte en person – kontrollera mot "
                                            "litteraturen om gruppen redan är beskriven"],
                                  "relevans": rel_reasons}, True,
@@ -836,6 +840,11 @@ def corpus_patterns(res: dict) -> list[dict]:
                                f"{_pct(v['purity_no_time'])} och grupperna återkommer i genomsnitt till "
                                f"{_pct((an.get('time_free') or {}).get('mean_robust'))}, så de samlar inte bara stenar från samma tid. "
                                if v.get("purity_no_time") is not None else "")
+                            + ((f"När gränsen togs fram på andra ristare än de som prövades var renheten {_pct(v['heldout']['purity'])} mot "
+                                f"{_pct(v['heldout']['purity_geography'])} för närliggande stenar. ") if (v.get("heldout") or {}).get("purity") else "")
+                            + ((f"Nästan alla kända ristare finns i Uppland och Södermanland ({an['coverage']['carvers_by_province'].get('U', 0)} "
+                                f"och {an['coverage']['carvers_by_province'].get('Sö', 0)} av {an['coverage']['n_carvers']}), så om "
+                                "gränsen gäller i landskapen med kandidaterna är inte prövat. ") if (an.get("coverage") or {}).get("n_carvers") else "")
                             + "Stenar med känd ristare är ofta signerade och mer standardiserade, så träffsäkerheten kan vara "
                             "lägre för de okända. Grupperna är hypoteser om verkstäder eller lokala traditioner, inte individer, "
                             "tills oberoende drag (runformer, ornamentik, huggteknik) bekräftar dem. Arbetsnamnen är appens "

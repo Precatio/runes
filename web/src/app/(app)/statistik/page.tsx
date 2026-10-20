@@ -34,6 +34,7 @@ interface ChangeFeature {
 interface AnonGroup {
   id: number; name?: string | null; status: "candidate" | "known"; type_stone: string; n: number; spread_km: number;
   stones: string[]; parishes: string[] | string; styles: { style: string; n: number }[] | null; stability: number;
+  robust_no_time?: number; robust?: boolean; known_carvers_near?: number; attributed_share_area?: number;
   marks: { feature: string; share_group: number; share_area: number }[] | null;
   nearest_carver: { carver: string; n: number; dist: number; km: number; as_close_as_same_carver: boolean } | null;
   model: { n: number; carver: string; share: number; mean_p: number } | null;
@@ -103,7 +104,11 @@ interface Corpus {
     cult?: CultResult };
   anonymous?: Dict & { method: string; n_unattributed: number; n_candidates: number;
     calibration: { link_km: number; lr_min: number; tpr: number; fpr: number; precision: number; max_spread_km: number };
-    validation: { n_groups: number; n_stones: number; purity: number; purity_geography: number; share_pure: number };
+    validation: { n_groups: number; n_stones: number; purity: number; purity_geography: number; share_pure: number;
+      heldout?: { purity: number; purity_geography: number; difference: number; difference_ci: number[] | number; runs_above: number; runs: number; folds: number } | null };
+    coverage?: { carvers_by_province: Record<string, number>; n_carvers: number; share_attributed: Record<string, number>;
+      n_stones_province: Record<string, number>; candidate_provinces: string[] | string; carvers_in_candidate_provinces: number };
+    n_robust?: number; robust_min?: number;
     groups: AnonGroup[] };
   words?: Dict & { method: string; n_stones: number; n_dated: number; n_words_tested: number;
     provinces_tested: string[] | string; n_region_tests: number; n_time_tests: number;
@@ -1196,29 +1201,50 @@ function Stones({ list }: { list: string[] }) {
   );
 }
 
+const PROVINCE_NAMES: Record<string, string> = { U: "Uppland", "Sö": "Södermanland", "Ög": "Östergötland", Sm: "Småland", Vg: "Västergötland",
+  M: "Medelpad", Vs: "Västmanland", G: "Gotland", "Öl": "Öland", Gs: "Gästrikland", Hs: "Hälsingland", Nä: "Närke", Dr: "Dalarna" };
+
 function Anonymous({ data }: { data: Corpus }) {
   const a = data.anonymous, f = data.figure_urls.anonymous || {};
   if (!a) return <p className="text-sm text-slate-600">Analysen av okända ristare saknas i den här beräkningen; beräkna korpusanalyserna på nytt.</p>;
-  const v = a.validation, cal = a.calibration;
-  const cands = a.groups.filter(g => g.status === "candidate"), known = a.groups.filter(g => g.status === "known");
+  const v = a.validation, cal = a.calibration, ho = v.heldout, cov = a.coverage;
+  const cands = [...a.groups.filter(g => g.status === "candidate")].sort((x, y) => Number(!!y.robust) - Number(!!x.robust) || y.n - x.n);
+  const known = a.groups.filter(g => g.status === "known");
+  const nRobust = cands.filter(g => g.robust).length;
+  const candProv = cov ? asList(cov.candidate_provinces) : [];
+  const prov = (c: string) => PROVINCE_NAMES[c] || c;
+  const boxes: [string, string][] = [
+    ["Möjliga okända ristare", `${cands.length} grupper`],
+    ["Håller utan tidsdragen", `${nRobust} av ${cands.length}`],
+    ["Liknar en känd ristare", `${known.length} grupper`],
+    ["Prövat på kända ristare", `${pc(v.purity)} mot ${pc(v.purity_geography)} för närhet`],
+    ...(ho ? [["Prövat på ristare metoden inte sett", `${pc(ho.purity)} mot ${pc(ho.purity_geography)} för närhet`] as [string, string]] : []),
+  ];
   return (
     <>
       <SectionIntro section={sectionOf(data, "anonymous")} patterns={data.patterns} />
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {[["Möjliga okända ristare", `${cands.length} grupper`], ["Liknar en känd ristare", `${known.length} grupper`],
-          ["Prövat på kända ristare", `${pc(v.purity)} samma ristare`], ["Bara närliggande stenar", `${pc(v.purity_geography)} samma ristare`]].map(([l, val]) => (
+      <div className={`grid grid-cols-2 ${boxes.length > 4 ? "md:grid-cols-5" : "md:grid-cols-4"} gap-3`}>
+        {boxes.map(([l, val]) => (
           <div key={l} className="rounded-2xl bg-white border border-slate-200 p-4">
             <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500"><Tip text={GLOSSARY[l]}>{l}</Tip></div>
             <div className="text-xl font-bold text-slate-900">{val}</div>
           </div>
         ))}
       </div>
+      {cov && (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950">
+          <strong>Prövat bara där ristare är kända.</strong> {cov.carvers_by_province.U ?? 0} av de {cov.n_carvers} kända ristarna (med minst tre stenar)
+          finns i Uppland och {cov.carvers_by_province["Sö"] ?? 0} i Södermanland, men bara {cov.carvers_in_candidate_provinces} i
+          kandidaternas landskap. Där har {candProv.map(c => `${pc(cov.share_attributed[c])} av stenarna i ${prov(c)}`).join(", ")} en ristare i Rundata,
+          mot {pc(cov.share_attributed.U)} i Uppland. Om gränsen för vad som räknas som lika gäller i de landskapen är inte prövat, så grupperna där är hypoteser.
+        </div>
+      )}
       <Fig src={f.map} alt="Grupper av stenar utan ristare" narrow />
       <Details title={`Möjliga okända ristare (${cands.length})`} open>
         <div className="overflow-x-auto">
           <ExportTable><table className="w-full text-sm">
             <thead><tr><Th>Nr</Th><Th>Arbetsnamn</Th><Th>Stenar</Th><Th>Socknar</Th>
-              <Th>Stilgrupper</Th><Th>Utmärks av (gruppen mot trakten)</Th><Th>Stabilitet</Th>
+              <Th>Stilgrupper</Th><Th>Utmärks av (gruppen mot trakten)</Th><Th>Stabilitet</Th><Th tip="Hur stor del av gruppen som återkommer när stilgrupp, kors, stungna runor, böner och signaturer – drag som följer tiden – tas bort, och gränsen räknas om.">Utan tidsdragen</Th>
               <Th>Närmast liknande ristare i Rundata</Th></tr></thead>
             <tbody>{cands.map(g => {
               const parishes = asList(g.parishes);
@@ -1232,6 +1258,9 @@ function Anonymous({ data }: { data: Corpus }) {
                   <td className="p-2 text-xs">{(g.styles || []).map(x => `${x.style} ${x.n}`).join(", ") || "–"}</td>
                   <td className="p-2 text-xs">{(g.marks || []).map(m => `${m.feature} (${pc(m.share_group)} mot ${pc(m.share_area)})`).join("; ") || "–"}</td>
                   <td className="p-2">{pc(g.stability)}</td>
+                  <td className="p-2">{g.robust_no_time == null ? "–" : (
+                    <span className={`inline-block rounded-full border px-2 py-0.5 text-xs font-semibold ${g.robust ? "bg-emerald-50 text-emerald-900 border-emerald-200" : "bg-slate-100 text-slate-600 border-slate-200"}`}>
+                      {pc(g.robust_no_time)}{g.robust ? " håller" : " delvis"}</span>)}</td>
                   <td className="p-2 text-xs">{g.nearest_carver ? `${g.nearest_carver.carver} (${d2(g.nearest_carver.km, 0)} km bort, inte lika nära som samma ristares stenar)` : "ingen inom 50 km"}</td>
                 </tr>
               );
@@ -1262,8 +1291,17 @@ function Anonymous({ data }: { data: Corpus }) {
           När metoden kördes på {v.n_stones} stenar med känd ristare, som om ristaren vore okänd, bestod en grupp i genomsnitt till {pc(v.purity)} av
           samma ristare ({pc(v.share_pure)} av grupperna till minst tre fjärdedelar), mot {pc(v.purity_geography)} för lika många närliggande stenar.
           Två stenar länkas när de ligger inom {cal.link_km} km och är så lika att paret är minst {cal.lr_min} gånger vanligare bland samma ristares
-          stenar än bland olika ristares; {pc(cal.precision)} av sådana par med känd ristare är samma ristare.
+          stenar än bland olika ristares; {pc(cal.precision)} av sådana par med känd ristare är samma ristare. Gränsen justerades efter just den kontrollen, så
+          resultatet överskattar något.
         </p>
+        {ho && (
+          <p className="mt-2 text-sm text-slate-600">
+            Strängare prov: ristarna delades slumpvis i {ho.folds} delar, gränsen togs fram på två och prövades på den tredje, som metoden aldrig sett,
+            och allt upprepades {ho.runs} gånger. Grupperna bestod då i genomsnitt till {pc(ho.purity)} av samma ristare, mot {pc(ho.purity_geography)} för
+            närliggande stenar – en skillnad på {Math.round(ho.difference * 100)} procentenheter ({([] as number[]).concat(ho.difference_ci).map(x => Math.round(x * 100)).join("–")}), till gruppernas fördel i {ho.runs_above} av {ho.runs} upprepningar.
+            Procenttalen är högre än i det första provet eftersom varje prov bara har en del av ristarna; det som räknas är avståndet till närhetsgrupperna.
+          </p>
+        )}
       </Details>
       <DocsNote anchor="1g-okända-ristare">Hur grupperna ska läsas och vilka reservationer som gäller står i avsnitt 1g.</DocsNote>
       <Method text={a.method} />

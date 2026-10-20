@@ -9,7 +9,11 @@
 #    redovisas bara om den inte är mer utspridd än 90 % av de kända ristarnas stenar (median till mitten).
 # 4. Validering: samma förfarande på stenar med känd ristare, som om ristaren vore okänd. Hur stor del av en grupp
 #    är samma ristare, jämfört med grupper av lika många närliggande stenar (bara geografi)?
-# 5. Varje grupp jämförs med kända ristare i närheten (avstånd i handens drag och attribueringsmodellens förslag).
+# 5. Hållet-utanför-test (utdata/ristare/ristare_heldout.R): ristarna delas i tre delar, gränsen tas fram på två och prövas på
+#    den tredje, som metoden aldrig sett. Redovisas bredvid valideringen i 4, som gränsen justerats efter.
+# 6. Täckning: de kända ristarna finns nästan bara i Uppland och Södermanland; kandidaterna ligger där få stenar har ristare,
+#    och där kan gränsen inte prövas. Varje grupp får därför antalet kända ristare och andelen attribuerade stenar i trakten.
+# 7. Varje grupp jämförs med kända ristare i närheten (avstånd i handens drag och attribueringsmodellens förslag).
 #    Grupper som inte liknar någon känd ristare får ett arbetsnamn efter typstenens socken, där typstenen är den
 #    sten som i genomsnitt ligger närmast de andra i gruppen.
 .here <- dirname(normalizePath(sub("^--file=", "", grep("^--file=", commandArgs(FALSE), value = TRUE)[1])))
@@ -28,6 +32,9 @@ MIN_CARVER <- 3    # ristare med minst så många säkra stenar används i kalib
 MIN_WORDS <- 5     # stenar med kortare läsbar text har för lite av handens drag
 NEAR_CARVER_KM <- 50
 N_BOOT <- if (is.null(P$boot)) 50 else P$boot
+ROBUST_MIN <- 0.65 # en grupp "håller" när minst så stor del av den återfinns utan de tidsberoende dragen
+HELD_REP <- 30     # upprepningar av hållet-utanför-testet (nya indelningar av ristarna)
+HELD_FOLDS <- 3
 
 d <- read_corpus(P$corpus)
 geo <- read.csv(file.path(cdir, "geography_stones.csv"), encoding = "UTF-8", stringsAsFactors = FALSE)
@@ -137,6 +144,7 @@ val_nt_purity <- if (length(val_nt)) weighted.mean(vapply(val_nt, purity, 0), va
 groups_nt <- communities(unk)
 robust_nt <- vapply(groups, function(grp) if (!length(groups_nt)) 0 else
   max(vapply(groups_nt, function(h) length(intersect(grp, h)) / length(union(grp, h)), 0)), 0)
+G_nt <- G
 G <- G_hand; THRESH <- THRESH_hand
 
 # ---- describe each group ------------------------------------------------------------------------------------------
@@ -192,6 +200,9 @@ desc <- lapply(seq_along(groups), function(i) {
     }
   }
   model_says <- !is.null(model) && model$n >= 2 && model$share >= 0.5
+  n_near_carvers <- if (nrow(near_c)) nrow(near_c) else 0
+  area_all <- which(K[type_i, ] <= NEAR_CARVER_KM)
+  attributed_area <- mean(!is.na(full$carver[area_all]) | full$has_carver[area_all] > 0)
   status <- if (similar || model_says) "known" else "candidate"
   styles <- table(full$style_short[grp])
   list(id = i, type_stone = full$signum[type_i], parish = full$parish_name[type_i], n = length(grp),
@@ -199,7 +210,9 @@ desc <- lapply(seq_along(groups), function(i) {
        stones = I(full$signum[grp]), parishes = I(names(sort(table(full$parish_name[grp]), decreasing = TRUE))),
        provinces = I(names(sort(table(full$province[grp]), decreasing = TRUE))),
        styles = if (length(styles)) data.frame(style = names(styles), n = as.integer(styles)) else NULL,
-       within = r3(within), stability = r3(stab[i]), robust_no_time = r3(robust_nt[i]), marks = marks,
+       within = r3(within), stability = r3(stab[i]), robust_no_time = r3(robust_nt[i]),
+       robust = isTRUE(robust_nt[i] >= ROBUST_MIN), known_carvers_near = n_near_carvers,
+       attributed_share_area = r3(attributed_area), marks = marks,
        nearest_carver = if (!is.null(nearest)) list(carver = nearest$carver, n = nearest$n, dist = r3(nearest$dist),
                                                     km = nearest$km, as_close_as_same_carver = similar) else NULL,
        model = model, status = status,
@@ -242,6 +255,65 @@ if (length(desc)) {
   fig_map <- save_fig(p, out, "okanda_ristare.png", 7, 8)
 }
 
+
+# ---- hållet-utanför-test ------------------------------------------------------------------------------------------
+heldout <- function(Gm, link_km = LINK_KM, lr_min = LR_MIN) {
+  carvers <- unique(full$carver[known])
+  one <- function() {
+    fold <- sample(rep(seq_len(HELD_FOLDS), length.out = length(carvers))); names(fold) <- carvers
+    out <- NULL
+    for (f in seq_len(HELD_FOLDS)) {
+      te <- known[fold[full$carver[known]] == f]; tr <- known[fold[full$carver[known]] != f]
+      ut_ <- upper.tri(diag(length(tr))); nr <- K[tr, tr] <= link_km & ut_
+      sm <- outer(full$carver[tr], full$carver[tr], "=="); gk_ <- Gm[tr, tr]; ds <- gk_[nr & sm]; dd <- gk_[nr & !sm]
+      if (length(ds) < 20) next
+      gr <- sort(unique(quantile(c(ds, dd), seq(0.005, 0.5, by = 0.005), na.rm = TRUE)))
+      lr <- vapply(gr, function(t) mean(ds <= t) / pmax(mean(dd <= t), 1e-9), 0)
+      ok_ <- lr >= lr_min & vapply(gr, function(t) mean(ds <= t), 0) > 0
+      thr <- if (any(ok_)) max(gr[ok_]) else min(gr)
+      ct <- table(full$carver[tr]); big <- names(ct[ct >= 5])
+      ms <- if (length(big) >= 3) unname(quantile(vapply(big, function(cv) spread(which(full$carver == cv)), 0), 0.9)) else Inf
+      Am <- (Gm[te, te] <= thr) & (K[te, te] <= link_km); diag(Am) <- FALSE
+      W <- ifelse(Am, 1 - Gm[te, te] / (thr + 1e-9) + 0.05, 0)
+      m <- as.integer(membership(cluster_louvain(graph_from_adjacency_matrix(W, mode = "undirected", weighted = TRUE, diag = FALSE))))
+      sz <- table(m)
+      for (k in as.integer(names(sz[sz >= MIN_GROUP]))) {
+        grp <- te[m == k]
+        if (spread(grp) > ms) next
+        centre <- grp[which.min(rowSums(Gm[grp, grp]))]
+        nn <- te[order(K[centre, te])][seq_along(grp)]
+        out <- rbind(out, data.frame(n = length(grp), pure = purity(grp), geo = purity(nn)))
+      }
+    }
+    out
+  }
+  runs <- lapply(seq_len(HELD_REP), function(i) one())
+  per <- vapply(runs, function(r) if (is.null(r)) NA_real_ else weighted.mean(r$pure, r$n) - weighted.mean(r$geo, r$n), 0)
+  all <- do.call(rbind, runs)
+  per <- per[!is.na(per)]
+  boot <- replicate(2000, mean(sample(per, replace = TRUE)))
+  list(purity = r3(weighted.mean(all$pure, all$n)), purity_geography = r3(weighted.mean(all$geo, all$n)),
+       difference = r3(mean(per)), difference_ci = I(r3(unname(quantile(boot, c(0.025, 0.975))))),
+       runs_above = sum(per > 0), runs = length(per), folds = HELD_FOLDS)
+}
+set.seed(seed)  # samma slumpfrö som utdata/ristare/ristare_heldout.R, så att talen är desamma
+held <- tryCatch(heldout(G_hand), error = function(e) NULL)
+held_nt <- tryCatch(heldout(G_nt), error = function(e) NULL)
+
+# ---- täckning: var finns de kända ristarna? -----------------------------------------------------------------------
+carver_home <- vapply(unique(full$carver[known]), function(cv) names(sort(table(full$province[full$carver == cv]), decreasing = TRUE))[1], "")
+prov_n <- table(full$province)
+prov_attr <- tapply(!is.na(full$carver) | full$has_carver > 0, full$province, mean)
+cand_prov <- unique(unlist(lapply(desc, function(g) if (g$status == "candidate") g$provinces else NULL)))
+coverage <- list(
+  carvers_by_province = as.list(table(carver_home)),
+  n_carvers = length(carver_home),
+  share_attributed = lapply(setNames(nm = names(prov_n)[prov_n >= 10]), function(p) r3(prov_attr[[p]])),
+  n_stones_province = as.list(prov_n[prov_n >= 10]),
+  candidate_provinces = I(cand_prov),
+  carvers_in_candidate_provinces = sum(carver_home %in% cand_prov)
+)
+
 result <- list(
   n_stones = nrow(full), n_unattributed = length(unk), n_known = length(known),
   calibration = list(threshold = r3(THRESH), link_km = LINK_KM, lr_min = LR_MIN, lr = r1(crow$lr), tpr = r3(crow$tpr),
@@ -252,10 +324,13 @@ result <- list(
                     purity = if (length(val_groups)) r3(weighted.mean(val_purity, val_sizes)) else NA,
                     purity_geography = if (length(val_groups)) r3(weighted.mean(geo_purity, val_sizes)) else NA,
                     share_pure = if (length(val_groups)) r3(mean(val_purity >= 0.75)) else NA,
-                    purity_no_time = r3(val_nt_purity), n_groups_no_time = length(val_nt)),
+                    purity_no_time = r3(val_nt_purity), n_groups_no_time = length(val_nt),
+                    heldout = held, heldout_no_time = held_nt),
+  coverage = coverage, robust_min = ROBUST_MIN,
   time_free = list(dropped = I(TIME_DEP), n_groups = length(groups_nt),
                    mean_robust = if (length(groups)) r3(mean(robust_nt)) else NA),
   groups = desc, n_candidates = sum(vapply(desc, function(g) g$status == "candidate", TRUE)),
+  n_robust = sum(vapply(desc, function(g) g$status == "candidate" && g$robust, TRUE)),
   figures = list(map = fig_map),
   method = paste(
     "Stenar med minst fem läsbara ord. Likhet i handens drag: Gowers avstånd på stilgrupp, kors, kortkvistrunor,",
