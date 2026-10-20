@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { STATS_OFF_URL } from "@/lib/site";
 
 // GET /api/admin/site/stats: the public website's visitor counts (components/SiteTracker.tsx writes them), seen only here
@@ -21,6 +21,7 @@ const SECTIONS: Record<string, string> = {
   om: "Om grundaren och licens", "kom-igang": "Kör Vitki (och röstningen)",
 };
 const RANGES = [7, 30, 90, 365];
+const BAR_AREA = 104; // px för den högsta stapeln; talen får 26 px ovanför
 const pct = (v: number | null) => (v == null ? "–" : `${Math.round(v * 100)} %`);
 const num = (n: number) => n.toLocaleString("sv-SE");
 
@@ -58,6 +59,9 @@ export default function SiteStats({ call }: { call: Call }) {
     .then(d => { setData(d); setError(null); })
     .catch(e => setError(e instanceof Error ? e.message : "Besöksstatistiken kunde inte hämtas.")), [call, days]);
   useEffect(() => { load(); }, [load]);
+  // Längre perioder än bredden rymmer scrollar i sidled; senaste dagen ska synas först
+  const dayScroll = useRef<HTMLDivElement>(null);
+  useEffect(() => { const el = dayScroll.current; if (el) el.scrollLeft = el.scrollWidth; }, [data]);
 
   const max = Math.max(1, ...(data?.per_day ?? []).map(d => d.views));
   const copy = () => navigator.clipboard?.writeText(STATS_OFF_URL).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
@@ -98,13 +102,17 @@ export default function SiteStats({ call }: { call: Call }) {
             ))}
           </div>
 
-          <Box title="Sidvisningar per dag" note={`Från ${data.since}. Håll muspekaren över en stapel för dagens siffror.`}>
-            <div className="flex h-32 items-end gap-[2px]" role="img" aria-label="Sidvisningar per dag">
-              {data.per_day.map(d => (
-                <div key={d.day} className="group relative flex h-full flex-1 items-end" title={`${d.day}: ${d.views} sidvisningar, ${d.visits} besök`}>
-                  <div className="w-full rounded-t-[3px] bg-[#2a78d6] group-hover:bg-[#1c5aa6]" style={{ height: `${d.views ? Math.max(3, d.views / max * 100) : 0}%` }} />
-                </div>
-              ))}
+          <Box title="Sidvisningar per dag" note={`Från ${data.since}. Det fetstilta talet över varje stapel är dagens sidvisningar, det grå under det är dagens besök (sidvisningar som började utifrån). Håll muspekaren över en stapel för datum.`}>
+            <div ref={dayScroll} className="overflow-x-auto pb-1">
+              <div className="flex items-end gap-[2px]" style={{ height: BAR_AREA + 26 }} role="img" aria-label="Sidvisningar och besök per dag">
+                {data.per_day.map(d => (
+                  <div key={d.day} className="group flex h-full min-w-6 flex-1 flex-col items-center justify-end" title={`${d.day}: ${d.views} sidvisningar, ${d.visits} besök`}>
+                    <span className={`whitespace-nowrap text-[10px] font-bold leading-3 tabular-nums ${d.views ? "text-slate-800" : "text-slate-400"}`}>{d.views}</span>
+                    <span className="whitespace-nowrap text-[9px] leading-3 tabular-nums text-slate-400">{d.visits}</span>
+                    <div className="w-full rounded-t-[3px] bg-[#2a78d6] group-hover:bg-[#1c5aa6]" style={{ height: d.views ? Math.max(3, Math.round(d.views / max * BAR_AREA)) : 0 }} />
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="mt-1 flex justify-between text-[11px] text-slate-500"><span>{data.per_day[0]?.day}</span><span>högst {num(max)} per dag</span><span>{data.per_day.at(-1)?.day}</span></div>
           </Box>
