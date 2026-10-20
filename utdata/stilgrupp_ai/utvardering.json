@@ -1,0 +1,64 @@
+{
+ "n": 57,
+ "fel": 51,
+ "exakt": 0.3508771929824561,
+ "osaker": 0.08771929824561403,
+ "exakt_bland_avgjorda": 0.38461538461538464,
+ "grov_bland_avgjorda": 0.7115384615384616,
+ "inom_en_grupp_bland_avgjorda": 0.8269230769230769,
+ "majoritetsgissning": 0.21052631578947367,
+ "slump_exakt": 0.14285714285714285,
+ "forvaxling": {
+  "RAK": {
+   "RAK": 8,
+   "Fp": 1,
+   "Osäker": 3
+  },
+  "Fp": {
+   "Fp": 5,
+   "Pr1": 1,
+   "Pr2": 2
+  },
+  "Pr1": {
+   "Pr3": 2,
+   "RAK": 2,
+   "Pr2": 4,
+   "Osäker": 1,
+   "Fp": 1,
+   "Pr4": 1
+  },
+  "Pr2": {
+   "Pr2": 4,
+   "RAK": 1,
+   "Pr1": 1
+  },
+  "Pr3": {
+   "Pr4": 4,
+   "Pr2": 3,
+   "Pr3": 1
+  },
+  "Pr4": {
+   "Pr3": 1,
+   "Pr4": 2,
+   "Pr2": 1
+  },
+  "Pr5": {
+   "Pr4": 7,
+   "Osäker": 1
+  }
+ },
+ "kalibrering": {
+  "60–79": {
+   "ratt": 10,
+   "n": 14,
+   "andel": 0.7142857142857143
+  },
+  "<60": {
+   "ratt": 10,
+   "n": 38,
+   "andel": 0.2631578947368421
+  }
+ },
+ "tokens_medel": 7387.3859649122805,
+ "modell": "claude-opus-5-5"
+}

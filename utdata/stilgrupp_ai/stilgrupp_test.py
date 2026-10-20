@@ -43,6 +43,9 @@ def urval(per_grupp: int, fro: int = 20261020) -> list[tuple[str, str, str]]:
 
 
 def hamta_bild(signum: str, fil: str) -> str | None:
+    """Bilden från Commons, högst 1600 px, sparad lokalt; väntar och försöker igen vid 429 (Wikimedias takbegränsning)."""
+    from io import BytesIO
+    from PIL import Image
     from src import commons
     os.makedirs(BILDER, exist_ok=True)
     path = os.path.join(BILDER, commons.re.sub(r"[^\w]+", "_", signum) + ".jpg")
@@ -51,20 +54,30 @@ def hamta_bild(signum: str, fil: str) -> str | None:
     info = commons.commons_info([fil]).get(fil)
     if not info or not info.get("thumb"):
         return None
-    r = requests.get(info["thumb"], headers=UA, timeout=60)
-    if r.status_code != 200 or len(r.content) < 2000:
-        return None
-    open(path, "wb").write(r.content)
-    return path
+    for forsok in range(4):
+        r = requests.get(info["thumb"], headers=UA, timeout=90)
+        if r.status_code == 429:
+            time.sleep(float(r.headers.get("Retry-After") or 15) * (forsok + 1))
+            continue
+        if r.status_code != 200 or len(r.content) < 2000:
+            return None
+        try:
+            im = Image.open(BytesIO(r.content)).convert("RGB")
+        except Exception:
+            return None
+        if max(im.size) > 1600:
+            im.thumbnail((1600, 1600))
+        im.save(path, "JPEG", quality=90)
+        time.sleep(2)  # artigt mot Commons
+        return path
+    return None
 
 
 def bedom(path: str, ctx) -> dict:
     from api import llm
     from api.routers.twod import SYSTEM_INSTRUCTION, TwoDAIResult
-    data = open(path, "rb").read()
-    mime = "image/png" if data[:8] == b"\x89PNG\r\n\x1a\n" else "image/webp" if data[8:12] == b"WEBP" else "image/jpeg"
     r = llm.generate(ctx, "Analysera denna runsten paleografiskt och epigrafiskt.", system=SYSTEM_INSTRUCTION,
-                     images=[(data, mime)], schema=TwoDAIResult, tier="pro")
+                     images=[(open(path, "rb").read(), "image/jpeg")], schema=TwoDAIResult, tier="pro")
     return {"predicted": r.data.get("predicted_style"), "confidence": r.data.get("confidence"),
             "reasoning": (r.data.get("reasoning") or "")[:600], "tokens": r.tokens, "model": r.model}
 
