@@ -40,7 +40,7 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
   (som i dag) – det är rätt resultat och ska stå så.
 - **Klart när:** Statistik/mätkorpus visar 36 poster och syntesen för en KÅ-sten väger in huggteknik med redovisad nivå.
 
-### 1.4 Textmodell 19 – toleranslagret  (en hel session, inget annat samtidigt)
+### 1.4 Textmodell 19 – toleranslagret  — PÅGÅR 2026-10-20: lagret byggt (avstängt), analysplan låst, λ-val på veck 0 kör
 - Underlag: `utdata/runlm_forfining/tolerans_diagnos.md` (rank-null-missar = obelagda stavningsvarianter).
 - **Kod:** `src/runlm.py`: ett toleranslager som vid rankning accepterar belagda stavningsalternativ per lemma
   (ur ordförrådet, inte påhittade), med vikt som kalibreras.
@@ -118,7 +118,7 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
 
 ## Fas 4 – Användbar för andra
 
-### 4.1 Så gör du-serien  (en artikel per halv session; mallen finns)
+### 4.1 Så gör du-serien  — PÅGÅR: huggspår (nUU578Mmm1BIuq3dZBUv) och inskrifter/luckor (3Uc5chZvfRUCViMpqTwt) som utkast 2026-10-20; kvar: Forskningsluckor, Statistik i R, Stenrapport, Syntes
 - Ordning: Inskrifter (sök, filter, stenöversikt) → Forskningsluckor → Statistik i R (läsa en modul) →
   Stenrapport (från mätning till Word) → Syntes.
 - Varje: `utdata/blogg/build/howto_<namn>_bilder.py` (Playwright, dev-servrar igång) +
