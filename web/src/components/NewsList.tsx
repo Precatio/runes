@@ -10,7 +10,8 @@ export default function NewsList({ items, compact = false }: { items: NewsItem[]
           <li key={n.id} id={n.id} className="rounded-2xl border border-slate-900/10 bg-white p-5 scroll-mt-20">
             <div className="flex flex-wrap items-center gap-2 text-xs">
               <time dateTime={n.date} className="font-semibold text-slate-500">{newsDate(n.date)}</time>
-              <span className={`px-2 py-0.5 rounded-full border font-bold ${st.style}`}>{st.label}</span>
+              {/* On the start page only work in progress is marked; everything else there is already in the app */}
+              {!(compact && n.status === "nytt") && <span className={`px-2 py-0.5 rounded-full border font-bold ${st.style}`}>{st.label}</span>}
             </div>
             <h3 className="mt-2 text-lg font-bold text-slate-900">{n.title}</h3>
             <p className={`mt-1.5 text-slate-600 leading-relaxed ${compact ? "text-sm" : ""}`}>{n.text}</p>
