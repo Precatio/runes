@@ -203,10 +203,12 @@ def attribute(reference: list[dict], query: list[float], min_per_group: int = 2)
     reference: [{"group": "Balle", "label": "U 729", "values": [..METRICS..]}, ...]
     Använder poolad, krympt kovarians på standardiserade data. Grupper med färre än
     min_per_group stenar tas inte med. Returnerar även korsvaliderad träffsäkerhet."""
-    groups = {}
+    groups, families = {}, {}
     for r in reference:
         groups.setdefault(r["group"], []).append(r["values"])
+        families.setdefault(r["group"], []).append(r.get("family"))
     groups = {g: v for g, v in groups.items() if len(v) >= min_per_group}
+    families = {g: families[g] for g in groups}
     if len(groups) < 2:
         return {"ranking": [], "evaluation": None,
                 "note": f"Referenskorpusen har för få ristare med minst {min_per_group} uppmätta stenar."}
@@ -223,11 +225,40 @@ def attribute(reference: list[dict], query: list[float], min_per_group: int = 2)
         d = zq - centre
         ranking.append({"group": g, "n": len(vals), "distance": float(math.sqrt(max(0.0, d @ inv @ d)))})
     ranking.sort(key=lambda r: r["distance"])
-    return {"ranking": ranking, "evaluation": evaluate_loo(groups)}
+    return {"ranking": ranking, "evaluation": evaluate_loo(groups, families)}
 
 
-def evaluate_loo(groups: dict[str, list]) -> dict:
-    """Lämna-en-ute-korsvalidering av närmaste-centroid-klassificering (Mahalanobis)."""
+def material_baseline(labels: list[str], families: list) -> float | None:
+    """Träffsäkerheten för en gissare som bara känner bergarten: lämna-en-ute, den vanligaste ristaren bland de övriga
+    stenarna i samma bergartsfamilj. Ristare och bergart hänger ihop (en ristare högg ofta i traktens sten), så den
+    här nivån är den träffsäkerhet huggtekniken måste överträffa för att säga något om handen. None när bergart saknas
+    för alla stenar."""
+    known = [(g, f) for g, f in zip(labels, families) if f]
+    if len(known) < 2:
+        return None
+    hits = 0
+    for i, (g, f) in enumerate(zip(labels, families)):
+        pool = [h for j, (h, f2) in enumerate(zip(labels, families)) if j != i and f and f2 == f]
+        if not pool:
+            pool = [h for j, h in enumerate(labels) if j != i]
+        hits += max(sorted(set(pool)), key=pool.count) == g  # sorterat: lika antal avgörs lika varje gång
+    return hits / len(labels)
+
+
+def reliability(ev: dict | None) -> float:
+    """Träffsäkerhet över den strängare av två nollnivåer: slumpen (1/antal ristare) och materialgissaren.
+    (träff − nivå)/(1 − nivå); 0 när metoden inte är bättre än nivån."""
+    if not ev:
+        return 0.0
+    base = max(ev.get("chance_top1") or 0.0, ev.get("material_top1") or 0.0)
+    if base >= 1:
+        return 0.0
+    return max(0.0, (ev["top1_accuracy"] - base) / (1 - base))
+
+
+def evaluate_loo(groups: dict[str, list], families: dict[str, list] | None = None) -> dict:
+    """Lämna-en-ute-korsvalidering av närmaste-centroid-klassificering (Mahalanobis). families: bergartsfamilj per
+    sten i samma ordning som groups, för materialgissarens nivå (material_top1)."""
     items = [(g, np.array(v, float)) for g, vals in groups.items() for v in vals]
     if len(items) < 4:
         return None
@@ -252,11 +283,13 @@ def evaluate_loo(groups: dict[str, list]) -> dict:
         correct3 += true_g in order[:3]
     n = len(items)
     n_groups = len(groups)
+    fam = [f for g in groups for f in (families or {}).get(g, [None] * len(groups[g]))]
     return {
         "n_stones": n,
         "n_groups": n_groups,
         "top1_accuracy": correct1 / n,
         "top3_accuracy": correct3 / n,
         "chance_top1": 1 / n_groups,
+        "material_top1": material_baseline([g for g, _ in items], fam) if families else None,
         "method": "Lämna-en-ute, närmaste centroid (Mahalanobis, poolad krympt kovarians)",
     }

@@ -18,7 +18,7 @@ from src import geology
 from src.language_profile import carver_profile, compare as compare_language, traits as language_traits
 from src.orthography import OrthographyModel
 from src.research_gaps import certain_carvers, province
-from src.stats import METRICS, attribute, multivariate_permutation_test, summarize
+from src.stats import METRICS, attribute, multivariate_permutation_test, reliability as technique_reliability, summarize
 from src.styles import BY_CODE
 
 MIN_WORDS = 8
@@ -112,6 +112,12 @@ def orthography_from_reading(model, reading: dict, signum: str, home: dict, rec:
 
 # ---- groove technique ----------------------------------------------------------------------
 
+def material_family(rec: dict) -> str | None:
+    """Stenens bergartsfamilj enligt Rundata (src/geology.FAMILIES), för materialgissarens nivå; None när okänd."""
+    fams = sorted(geology.families(rec.get("material") or ""))
+    return fams[0] if fams else None
+
+
 def _reference(corpus: list[dict], lookup, signum: str, feature_type: str):
     own = lookup(signum)
     ref, stones = [], {}
@@ -125,7 +131,8 @@ def _reference(corpus: list[dict], lookup, signum: str, feature_type: str):
         m = e.get("means") or {}
         if len(cs) != 1 or any(m.get(k) is None for k in METRICS):
             continue
-        ref.append({"group": cs[0], "label": rec["signum"], "values": [float(m[k]) for k in METRICS]})
+        ref.append({"group": cs[0], "label": rec["signum"], "values": [float(m[k]) for k in METRICS],
+                    "family": material_family(rec)})
         stones.setdefault(cs[0], []).append({"signum": rec["signum"], "slices": complete(e.get("slices") or [])})
     return ref, stones
 
@@ -137,9 +144,9 @@ def groove(query_slices: list[dict], feature_type: str, corpus: list[dict], look
     ref, stones = _reference(corpus, lookup, signum, feature_type)
     res = attribute(ref, q)
     ev = res.get("evaluation")
-    reliability = 0.0
-    if ev:
-        reliability = max(0.0, (ev["top1_accuracy"] - ev["chance_top1"]) / (1 - ev["chance_top1"]))
+    # Över den strängare av slumpen och materialgissaren: ristare och bergart hänger ihop, och i det enda
+    # referensmaterialet med kända ristare (METHODS.md 13) nådde huggtekniken inte över materialets nivå
+    reliability = technique_reliability(ev)
     return {"ranking": res.get("ranking", [])[:5], "evaluation": ev, "reference_size": len(ref),
             "reliability": round(reliability, 3), "note": res.get("note"), "_stones": stones}
 

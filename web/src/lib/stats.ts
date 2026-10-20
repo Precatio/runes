@@ -57,6 +57,7 @@ export interface GrooveAttribution {
     top1_accuracy: number;
     top3_accuracy: number;
     chance_top1: number;
+    material_top1?: number | null;  // a guess from the rock type alone (leave-one-out); the stricter baseline
     method: string;
   } | null;
   note?: string;

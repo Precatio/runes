@@ -600,7 +600,8 @@ def facts_text(f: dict) -> str:
         ev = at.get("evaluation")
         if ev:
             lines.append(f"Korsvaliderad träffsäkerhet för attribueringen: {ev['top1_accuracy']:.0%} "
-                         f"({ev['n_stones']} stenar, {ev['n_groups']} ristare, slumpnivå {ev['chance_top1']:.0%})")
+                         f"({ev['n_stones']} stenar, {ev['n_groups']} ristare, slumpnivå {ev['chance_top1']:.0%}"
+                         + (f", en gissning efter bergart ensam {ev['material_top1']:.0%}" if ev.get("material_top1") is not None else "") + ")")
     else:
         lines.append("Mätkorpusen räcker inte för en jämförelse med ristare (minst två ristare med två uppmätta stenar krävs).")
     rd = f.get("reading")
@@ -1092,7 +1093,10 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
         if ev:
             blocks.append(p(f"Med lämna-en-ute-korsvalidering hamnar rätt ristare först för {ev['top1_accuracy'] * 100:.0f} "
                             f"procent av {ev['n_stones']} referensstenar ({ev['n_groups']} ristare, slumpnivå "
-                            f"{ev['chance_top1'] * 100:.0f} procent). Rangordningen ovan bör läsas mot den siffran."))
+                            f"{ev['chance_top1'] * 100:.0f} procent"
+                            + (f"; en gissning efter bergart ensam träffar {ev['material_top1'] * 100:.0f} procent"
+                               if ev.get("material_top1") is not None else "")
+                            + "). Rangordningen ovan bör läsas mot den högre av de två nivåerna."))
     else:
         blocks.append(p((at or {}).get("note") or
                         "Mätkorpusen innehåller ännu för få stenar med säker ristare för en jämförelse."))

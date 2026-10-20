@@ -1,0 +1,98 @@
+{
+ "metrics": [
+  "apex_vinkel_deg",
+  "asymmetri_deg",
+  "spårdjup_mm",
+  "spårbredd_mm",
+  "djup_bredd_kvot",
+  "bottenradie_mm",
+  "ytråhet_mm"
+ ],
+ "app_regel": {
+  "urval": "appens regel (exakt en säker ristare)",
+  "n_stenar": 8,
+  "n_ristare": 3,
+  "ristare": {
+   "Äsbjörn": {
+    "granit/gnejs": 2
+   },
+   "Tore 1": {
+    "granit/gnejs": 2
+   },
+   "Traen": {
+    "granit/gnejs": 4
+   }
+  },
+  "traff_loo": 0.375,
+  "slump_app": 0.333,
+  "tillforlitlighet_app": 0.063,
+  "materialgissare": 0.5,
+  "tillforlitlighet_mot_material": 0.0,
+  "null_fri_medel": 0.292,
+  "p_fri": 0.3983,
+  "null_inom_material_medel": 0.291,
+  "p_inom_material": 0.4008,
+  "n_null_inom": 2000
+ },
+ "rak_lista": {
+  "urval": "Rak-planens lista (delade signaturer som grupp)",
+  "n_stenar": 12,
+  "n_ristare": 5,
+  "ristare": {
+   "Äskil 1": {
+    "granit/gnejs": 2
+   },
+   "Tore 1": {
+    "granit/gnejs": 2
+   },
+   "Traen": {
+    "granit/gnejs": 4
+   },
+   "Äsbjörn": {
+    "granit/gnejs": 2
+   },
+   "Gunnlev 2 & Sigmund": {
+    "sandsten": 2
+   }
+  },
+  "traff_loo": 0.583,
+  "slump_app": 0.2,
+  "tillforlitlighet_app": 0.479,
+  "materialgissare": 0.5,
+  "tillforlitlighet_mot_material": 0.167,
+  "null_fri_medel": 0.168,
+  "p_fri": 0.009,
+  "null_inom_material_medel": 0.341,
+  "p_inom_material": 0.0955,
+  "n_null_inom": 2000
+ },
+ "rak_lista_bara_granit": {
+  "urval": "Rak-planens lista, bara granit/gnejs",
+  "n_stenar": 10,
+  "n_ristare": 4,
+  "ristare": {
+   "Äsbjörn": {
+    "granit/gnejs": 2
+   },
+   "Äskil 1": {
+    "granit/gnejs": 2
+   },
+   "Tore 1": {
+    "granit/gnejs": 2
+   },
+   "Traen": {
+    "granit/gnejs": 4
+   }
+  },
+  "traff_loo": 0.5,
+  "slump_app": 0.25,
+  "tillforlitlighet_app": 0.333,
+  "materialgissare": 0.4,
+  "tillforlitlighet_mot_material": 0.167,
+  "null_fri_medel": 0.209,
+  "p_fri": 0.0675,
+  "null_inom_material_medel": 0.216,
+  "p_inom_material": 0.086,
+  "n_null_inom": 2000
+ }
+}

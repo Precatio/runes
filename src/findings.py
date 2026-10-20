@@ -29,7 +29,7 @@ import numpy as np
 
 from src.research_gaps import (AXELSON_PROVINCES, CARVER_NOTES, carver_home, certain_carvers, has_carver, has_style,
                                is_runestone, model_carvers, province)
-from src.stats import METRICS, attribute
+from src.stats import METRICS, attribute, reliability as technique_reliability
 from src.synthesis import language_check, material_check, smoothed_precision
 
 VERDICTS = ("stämmer", "nytt", "motsäger")
@@ -233,7 +233,9 @@ def technique_findings(corpus: list[dict], lookup, inscriptions: list[dict]) -> 
     for s in stones:
         cs = certain_carvers(lookup(s))
         carver_of[s] = cs[0] if len(cs) == 1 else None
-    reference_all = [{"group": carver_of[s], "label": s, "values": v} for s, v in stones.items() if carver_of[s]]
+    from src.synthesis import material_family
+    reference_all = [{"group": carver_of[s], "label": s, "values": v, "family": material_family(lookup(s))}
+                     for s, v in stones.items() if carver_of[s]]
     groups = Counter(r["group"] for r in reference_all)
     if sum(1 for n in groups.values() if n >= 2) < 2:
         return [], ("Mätkorpusen har ännu för få ristare med minst två uppmätta stenar (runor) för att pröva "
@@ -250,9 +252,12 @@ def technique_findings(corpus: list[dict], lookup, inscriptions: list[dict]) -> 
         ev = res.get("evaluation") or {}
         acc = ev.get("top1_accuracy") or 0.0
         gap = rk[1]["distance"] - rk[0]["distance"]
-        evidence = acc * min(1.0, 0.4 + gap / 2)
+        # Över den strängare av slumpen och en gissning efter bergart (src/stats.reliability), inte rå träffsäkerhet
+        evidence = technique_reliability(ev) * min(1.0, 0.4 + gap / 2)
+        mat = ev.get("material_top1")
         ev_reasons = [f"korsvaliderad träffsäkerhet {round(acc * 100)} % ({ev.get('n_stones', '?')} stenar, "
-                      f"{ev.get('n_groups', '?')} ristare)",
+                      f"{ev.get('n_groups', '?')} ristare; slump {round((ev.get('chance_top1') or 0) * 100)} %"
+                      + (f", en gissning efter bergart {round(mat * 100)} %" if mat is not None else "") + ")",
                       f"avstånd {_d(rk[0]['distance'])} mot {_d(rk[1]['distance'])} för {rk[1]['group']}"]
         ours = f"Huggtekniken liknar mest {rk[0]['group']} (därefter {rk[1]['group']})"
         truth = carver_of[s]

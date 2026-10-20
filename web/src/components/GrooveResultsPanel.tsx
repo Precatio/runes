@@ -200,8 +200,9 @@ export default function GrooveResultsPanel({ results, signum, featureType }: Pro
               {attribution.evaluation && (
                 <p className="text-xs text-slate-500 pt-2">
                   Träffsäkerhet (lämna-en-ute): rätt ristare först i {(attribution.evaluation.top1_accuracy * 100).toFixed(0)} %
-                  av {attribution.evaluation.n_stones} stenar, slumpnivå {(attribution.evaluation.chance_top1 * 100).toFixed(0)} %.
-                  Kortare avstånd betyder mer lik huggteknik.
+                  av {attribution.evaluation.n_stones} stenar, slumpnivå {(attribution.evaluation.chance_top1 * 100).toFixed(0)} %
+                  {attribution.evaluation.material_top1 != null && <>; en gissning efter bergart ensam träffar {(attribution.evaluation.material_top1 * 100).toFixed(0)} %</>}.
+                  Ristare och bergart hänger ihop, så läs träffsäkerheten mot den högre nivån. Kortare avstånd betyder mer lik huggteknik.
                 </p>
               )}
             </div>

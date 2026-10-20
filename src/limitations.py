@@ -18,7 +18,7 @@ sammanhang den gäller:
 """
 from __future__ import annotations
 
-VERSION = "2026-10-16"
+VERSION = "2026-10-20"
 
 # Riktvärden för antal mätta runor (avsnitt 3 i METHODS.md)
 MIN_RUNES_DESCRIBE = 10
@@ -32,7 +32,12 @@ LIMITATIONS = [
              "indelning i grupper, och bergarten påverkade måtten mer än ristaren; ett svagare samband med Rundatas "
              "ristare fanns kvar efter kontroll för bergart (utforskande). Samma sak gällde när bara runorna mättes "
              "enligt Vitki-protokollet (groove-5): hennes Rak 1 och Rak 2 skildes inte åt (p 0,43), medan ristar- och "
-             "materialsignalen kvarstod. Skillnader mellan stenar kan därför bero på "
+             "materialsignalen kvarstod. Med appens egen attribuering (lämna-en-ute, Mahalanobis) på samma 36 stenar "
+             "(2026-10-20) hamnade rätt ristare först i 58 % av fallen för tolv stenar av fem ristare, men en gissning "
+             "efter bergarten ensam träffar 50 %, och slumpade ristarnamn inom samma bergart når 34 % (p 0,10); med "
+             "appens strängare urval (åtta stenar, tre ristare) 38 % mot 50 % för bergartsgissningen. Huggtekniken "
+             "vägs därför in mot den högre av slumpnivån och bergartsgissningen, och i det enda referensmaterialet "
+             "med kända ristare väger den inget. Skillnader mellan stenar kan därför bero på "
              "bergart, vittring och skanning lika väl som på ristare.",
      "short": "Måtten visar hur spåren är huggna, men det är ännu inte visat att de skiljer ristare åt – bergart och "
               "vittring påverkar mycket.",

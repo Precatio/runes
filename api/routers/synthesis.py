@@ -238,7 +238,8 @@ def collect_evidence(req: SynthesisRequest) -> dict:
         # Older clients send a ready attribution; its weight follows its cross-validation
         ga = req.groove_attribution
         ev = ga.get("evaluation") or {}
-        rel = max(0.0, (ev["top1_accuracy"] - ev["chance_top1"]) / (1 - ev["chance_top1"])) if ev else 0.0
+        from src.stats import reliability as technique_reliability
+        rel = technique_reliability(ev)
         evidence["groove"] = {"ranking": ga["ranking"][:5], "evaluation": ev or None,
                               "reference_size": ga.get("reference_size"), "reliability": round(rel, 3)}
     return evidence
@@ -326,8 +327,10 @@ def evidence_text(evidence: dict, req: SynthesisRequest, candidates: Optional[li
     if g:
         ev = g.get("evaluation") or {}
         if ev:
+            mat = ev.get("material_top1")
             lines.append(f"Korsvaliderad träffsäkerhet: {ev.get('top1_accuracy', 0):.0%} "
-                         f"(slump {ev.get('chance_top1', 0):.0%}).")
+                         f"(slump {ev.get('chance_top1', 0):.0%}"
+                         + (f"; en gissning efter bergart ensam {mat:.0%}" if mat is not None else "") + ").")
         for r in g["ranking"]:
             lines.append(f"- {r['group']}: avstånd {r['distance']:.2f} (n={r['n']})")
     else:

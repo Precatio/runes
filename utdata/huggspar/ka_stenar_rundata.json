@@ -1,0 +1,551 @@
+[
+ {
+  "signum": "Sö 112",
+  "n": 243,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "gråsten",
+  "families": [
+   "gnejs",
+   "granitoid"
+  ],
+  "certain": [
+   "Traen"
+  ],
+  "carvers": [
+   [
+    "Traen",
+    "A",
+    false
+   ]
+  ]
+ },
+ {
+  "signum": "Sö 113",
+  "n": 456,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "gråsten",
+  "families": [
+   "gnejs",
+   "granitoid"
+  ],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö 128",
+  "n": 295,
+  "material_ka": "sandstone",
+  "material_rundata": "sandsten",
+  "families": [
+   "sandsten"
+  ],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö 129",
+  "n": 201,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "gråsten",
+  "families": [
+   "gnejs",
+   "granitoid"
+  ],
+  "certain": [
+   "Traen"
+  ],
+  "carvers": [
+   [
+    "Traen",
+    "A",
+    false
+   ]
+  ]
+ },
+ {
+  "signum": "Sö 131",
+  "n": 78,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "granit",
+  "families": [
+   "granitoid"
+  ],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö 134",
+  "n": 581,
+  "material_ka": "sandstone",
+  "material_rundata": "sandsten",
+  "families": [
+   "sandsten"
+  ],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö 137",
+  "n": 557,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "gråsten",
+  "families": [
+   "gnejs",
+   "granitoid"
+  ],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö 143",
+  "n": 941,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "gråsten",
+  "families": [
+   "gnejs",
+   "granitoid"
+  ],
+  "certain": [
+   "Tore 1"
+  ],
+  "carvers": [
+   [
+    "Tore 1",
+    "A",
+    false
+   ]
+  ]
+ },
+ {
+  "signum": "Sö 149",
+  "n": 12,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "gråsten",
+  "families": [
+   "gnejs",
+   "granitoid"
+  ],
+  "certain": [
+   "Tore 1"
+  ],
+  "carvers": [
+   [
+    "Tore 1",
+    "A",
+    false
+   ]
+  ]
+ },
+ {
+  "signum": "Sö 160",
+  "n": 103,
+  "material_ka": "sandstone",
+  "material_rundata": "sandsten",
+  "families": [
+   "sandsten"
+  ],
+  "certain": [
+   "Gunnlev 2",
+   "Sigmund"
+  ],
+  "carvers": [
+   [
+    "Gunnlev 2",
+    "S",
+    false
+   ],
+   [
+    "Sigmund",
+    "S",
+    false
+   ]
+  ]
+ },
+ {
+  "signum": "Sö 161",
+  "n": 498,
+  "material_ka": "sandstone",
+  "material_rundata": "sandsten",
+  "families": [
+   "sandsten"
+  ],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö 162",
+  "n": 31,
+  "material_ka": "sandstone",
+  "material_rundata": "sandsten",
+  "families": [
+   "sandsten"
+  ],
+  "certain": [
+   "Gunnlev 2",
+   "Sigmund"
+  ],
+  "carvers": [
+   [
+    "Gunnlev 2",
+    "S",
+    false
+   ],
+   [
+    "Sigmund",
+    "S",
+    false
+   ]
+  ]
+ },
+ {
+  "signum": "Sö 163",
+  "n": 88,
+  "material_ka": "sandstone",
+  "material_rundata": "sandsten",
+  "families": [
+   "sandsten"
+  ],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö 164",
+  "n": 198,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "gråsten",
+  "families": [
+   "gnejs",
+   "granitoid"
+  ],
+  "certain": [
+   "Traen"
+  ],
+  "carvers": [
+   [
+    "Traen",
+    "A",
+    false
+   ]
+  ]
+ },
+ {
+  "signum": "Sö 165",
+  "n": 91,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "gråsten",
+  "families": [
+   "gnejs",
+   "granitoid"
+  ],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö 166",
+  "n": 181,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "gnejs",
+  "families": [
+   "gnejs"
+  ],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö 184",
+  "n": 127,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "granit",
+  "families": [
+   "granitoid"
+  ],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö 205",
+  "n": 76,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "granit",
+  "families": [
+   "granitoid"
+  ],
+  "certain": [
+   "Tidkume",
+   "Äsbjörn 1",
+   "Orökja 1"
+  ],
+  "carvers": [
+   [
+    "Tidkume",
+    "S",
+    false
+   ],
+   [
+    "Äsbjörn 1",
+    "S",
+    false
+   ],
+   [
+    "Orökja 1",
+    "S",
+    false
+   ]
+  ]
+ },
+ {
+  "signum": "Sö 206",
+  "n": 92,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "",
+  "families": [],
+  "certain": [
+   "Äsbjörn"
+  ],
+  "carvers": [
+   [
+    "Äsbjörn",
+    "A",
+    false
+   ]
+  ]
+ },
+ {
+  "signum": "Sö 207",
+  "n": 542,
+  "material_ka": "sandstone",
+  "material_rundata": "sandsten",
+  "families": [
+   "sandsten"
+  ],
+  "certain": [
+   "Balle"
+  ],
+  "carvers": [
+   [
+    "Balle",
+    "A",
+    false
+   ]
+  ]
+ },
+ {
+  "signum": "Sö 208",
+  "n": 87,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "",
+  "families": [],
+  "certain": [
+   "Äsbjörn"
+  ],
+  "carvers": [
+   [
+    "Äsbjörn",
+    "A",
+    false
+   ]
+  ]
+ },
+ {
+  "signum": "Sö 211",
+  "n": 571,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "granit",
+  "families": [
+   "granitoid"
+  ],
+  "certain": [
+   "Äskil 1"
+  ],
+  "carvers": [
+   [
+    "Äskil 1",
+    "A",
+    false
+   ]
+  ]
+ },
+ {
+  "signum": "Sö 307",
+  "n": 65,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "gråsten",
+  "families": [
+   "gnejs",
+   "granitoid"
+  ],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö 319",
+  "n": 428,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "granit",
+  "families": [
+   "granitoid"
+  ],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö 333",
+  "n": 277,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "granit",
+  "families": [
+   "granitoid"
+  ],
+  "certain": [
+   "Äskil 1",
+   "Äsger"
+  ],
+  "carvers": [
+   [
+    "Äskil 1",
+    "S",
+    false
+   ],
+   [
+    "Äsger",
+    "S",
+    false
+   ]
+  ]
+ },
+ {
+  "signum": "Sö 360",
+  "n": 23,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "gråsten",
+  "families": [
+   "gnejs",
+   "granitoid"
+  ],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö 367",
+  "n": 1408,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "granit",
+  "families": [
+   "granitoid"
+  ],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö 370",
+  "n": 284,
+  "material_ka": "sandstone",
+  "material_rundata": "sandsten",
+  "families": [
+   "sandsten"
+  ],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö 371",
+  "n": 14,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "kalksten",
+  "families": [
+   "kalksten"
+  ],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö 45",
+  "n": 210,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "gnejs",
+  "families": [
+   "gnejs"
+  ],
+  "certain": [
+   "Traen"
+  ],
+  "carvers": [
+   [
+    "Traen",
+    "A",
+    false
+   ]
+  ]
+ },
+ {
+  "signum": "Sö 52",
+  "n": 215,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "",
+  "families": [],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö 75",
+  "n": 592,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "gråsten",
+  "families": [
+   "gnejs",
+   "granitoid"
+  ],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö Fv1948;282",
+  "n": 586,
+  "material_ka": "sandstone",
+  "material_rundata": "sandsten",
+  "families": [
+   "sandsten"
+  ],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö Fv1954;19",
+  "n": 125,
+  "material_ka": "sandstone",
+  "material_rundata": "rödbrun kalksten",
+  "families": [
+   "kalksten"
+  ],
+  "certain": [],
+  "carvers": []
+ },
+ {
+  "signum": "Sö Fv1954;20",
+  "n": 11,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "",
+  "families": [],
+  "certain": [
+   "Björn 3"
+  ],
+  "carvers": [
+   [
+    "Björn 3",
+    "S",
+    false
+   ]
+  ]
+ },
+ {
+  "signum": "Sö Fv1973;189",
+  "n": 403,
+  "material_ka": "granite/gneiss",
+  "material_rundata": "granit",
+  "families": [
+   "granitoid"
+  ],
+  "certain": [],
+  "carvers": []
+ }
+]

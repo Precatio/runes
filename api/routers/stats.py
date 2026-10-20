@@ -168,7 +168,9 @@ def attribute_endpoint(req: AttributeRequest):
         if not label or not m:
             skipped += 1
             continue
-        reference.append({"group": label, "label": s.label, "values": m})
+        from src.synthesis import material_family
+        reference.append({"group": label, "label": s.label, "values": m,
+                          "family": material_family(store().get(s.signum)) if s.signum else None})
     result = attribute(reference, q, min_per_group=req.min_per_carver)
     return {
         **result,

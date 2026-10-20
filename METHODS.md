@@ -1201,10 +1201,19 @@ Källkod: `src/synthesis.py`, `api/routers/synthesis.py`. Kandidaterna räknas f
 * **Ortografins tillförlitlighet** = modellens precision för den föreslagna ristaren (korsvaliderad,
   Laplace-utjämnad: (rätt + 1)/(förslag + 2)) × 0,5 om stenen ligger utanför ristarens kända landskap ×
   textlängd (1 vid ≥ 12 läsbara ord, 0,7 vid 8–11). Texter under 8 ord vägs inte in.
-* **Huggteknikens tillförlitlighet** = korsvaliderad träffsäkerhet över slumpnivån,
-  (träff − slump)/(1 − slump). Är metoden inte bättre än slumpen vägs den inte in. Jämförelsen görs med
-  den valda analysen (runor som standard), mot stenar med samma spårtyp och säker ristare; stenen själv
-  ingår aldrig i referensen.
+* **Huggteknikens tillförlitlighet** = korsvaliderad träffsäkerhet över den strängare av två nollnivåer,
+  (träff − nivå)/(1 − nivå): slumpen (1/antal ristare) och *materialgissaren* – lämna-en-ute, den vanligaste
+  ristaren bland de övriga referensstenarna i samma bergartsfamilj (`src/geology.FAMILIES` på Rundatas
+  materialuppgift; `src/stats.material_baseline`). Ristare och bergart hänger ihop, så träffsäkerhet som en
+  bergartsgissning också når säger inget om handen. Är metoden inte bättre än nivån vägs den inte in.
+  Jämförelsen görs med den valda analysen (runor som standard), mot stenar med samma spårtyp och säker
+  ristare; stenen själv ingår aldrig i referensen. Prövat 2026-10-20 på Kitzler Åhfeldts 36 skanningar
+  (groove-5, `utdata/huggspar/material_kontroll.py`): med Rak-planens ristarlista (12 stenar, 5 ristare)
+  58 % rätt mot 20 % slump men 50 % för materialgissaren; slumpade ristarnamn inom bergart når 34 %
+  (p 0,10, 2 000 dragningar); bara granit/gnejs (10 stenar, 4 ristare) 50 % mot 40 %; med appens regel
+  (exakt en säker ristare: 8 stenar, 3 ristare) 38 % mot 50 %. Tillförlitligheten blir 0,17 i stället för
+  0,48 med slumpen som enda nivå, och 0 med appens eget urval. Den delade mätkorpusen var vid provet tom,
+  så ingen syntes hade vägt in huggteknik.
 
 Styrka: **stark** = summa ≥ 4 eller ≥ 3 från tre källor; **måttlig** = ≥ 2,5 eller ≥ 1,5 från två källor;
 annars **svag**. Inga procentsatser anges.
@@ -1772,7 +1781,7 @@ Innan resultat jämförs direkt bör samma referensstenar mätas med båda metod
 ## 18. Kända brister
 
 Källkod: `src/limitations.py`, `GET /api/limitations`. Metodens kända brister förs i en enda förteckning
-(version 2026-10-16) som följer med varje analys:
+(version 2026-10-20) som följer med varje analys:
 
 * **I appen** visas de brister som gäller sidan under varje analyssida (3D-analys, stenanalys, jämförelse,
   mätkorpus, syntes, statistik, forskningsluckor, inskrifter, karta, stilgrupper, 2D-analys, läsning, rapporter).
@@ -1787,7 +1796,7 @@ När en brist åtgärdas ändras förteckningen och versionen höjs. Bristerna i
 
 | Brist | Gäller | Vad som behövs |
 |---|---|---|
-| Måtten är inte validerade som spår av ristarens hand | attribution, comparison, grooves | Stenar med känd ristare på samma bergart, jämförelse med Groove Measure-data och gärna experimentella ristningar med kända ristare och verktyg. |
+| Måtten är inte validerade som spår av ristarens hand | attribution, comparison, grooves | Stenar med känd ristare på samma bergart (i det enda referensmaterialet med kända ristare når huggtekniken inte över en gissning efter bergart, avsnitt 13), jämförelse med Groove Measure-data och gärna experimentella ristningar med kända ristare och verktyg. |
 | Bottenradie och asymmetri är osäkra mått | comparison, grooves | Bättre bottenmodell och test på skanningar av samma sten med olika punkttäthet. |
 | Ingen sten är mätt i oberoende skanningar | comparison, grooves | Test–omtest med oberoende skanningar av samma stenar, och manuell mot automatisk mätning; samma rutnät och känslighet för alla stenar som jämförs. |
 | Inte jämförbart med tidigare 3D-studier utan kalibrering | comparison, grooves | Samma referensstenar mätta med båda metoderna. |
