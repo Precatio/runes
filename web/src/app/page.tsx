@@ -122,6 +122,18 @@ const SCANS = [
   },
 ];
 const SCAN_CREDIT = "https://doi.org/10.5281/zenodo.11951255";
+const SCAN_LICENSE = "https://creativecommons.org/licenses/by/4.0/deed.sv";
+// The credit line under every image computed from the scan (the rule for open scans: scanner, institution, licence, DOI)
+function ScanCredit() {
+  return (
+    <p className="mt-2 text-xs text-slate-500 leading-relaxed">
+      Skanning: Laila Kitzler Åhfeldt, Riksantikvarieämbetet ·{" "}
+      <a href={SCAN_LICENSE} target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-900">CC BY 4.0</a> ·{" "}
+      <a href={SCAN_CREDIT} target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-900">doi:10.5281/zenodo.11951255</a>.
+      Bilden är beräknad i Vitki.
+    </p>
+  );
+}
 
 const USE_CASES = [
   {
@@ -564,8 +576,9 @@ andel <- tapply(stenar$bon,
               <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e] mb-3">3D-analys</div>
               <h3 className="text-2xl md:text-3xl font-serif font-bold text-slate-900 tracking-tight">Runorna i millimeter</h3>
               <p className="mt-4 text-lg text-slate-600 leading-relaxed">
-                Vitki mäter huggspåren i 3D-skanningar av runstenar. Exemplen kommer från Sö 113 i Södermanland, som vi har
-                analyserat i en av våra studier.
+                Vitki mäter huggspåren i 3D-skanningar av runstenar. Exemplen kommer från Sö 113 i Södermanland, skannad av
+                runologen Laila Kitzler Åhfeldt vid Riksantikvarieämbetet och publicerad öppet av henne. Skanningen är hennes;
+                bilderna och mätningarna nedan har Vitki räknat fram ur den.
               </p>
             </div>
             <figure>
@@ -577,6 +590,7 @@ andel <- tapply(stenar$bon,
                   Varje punkt på stenen färgad efter hur djupt den ligger under stenytan, från ljust vid ytan till mörkt fem
                   millimeter ner. Runorna träder fram som en värmekarta – också där de är svåra att se med blotta ögat.
                 </p>
+                <ScanCredit />
               </figcaption>
             </figure>
             <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -587,15 +601,29 @@ andel <- tapply(stenar$bon,
                   <figcaption className="mt-3">
                     <h4 className="font-bold">{sc.title}</h4>
                     <p className="mt-1 text-sm text-slate-600 leading-relaxed">{sc.text}</p>
+                    <ScanCredit />
                   </figcaption>
                 </figure>
               ))}
             </div>
-            <p className="mt-10 text-xs text-slate-500 leading-relaxed">
-              3D-skanning av Sö 113: Laila Kitzler Åhfeldt (2024), <em>3D-data Runstenar i Södermanland</em>, Zenodo,{" "}
-              <a href={SCAN_CREDIT} target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-900">doi:10.5281/zenodo.11951255</a>,
-              CC BY 4.0. Bearbetning och mätning: Vitki.
-            </p>
+            <div className="mt-10 rounded-2xl border border-slate-900/10 bg-white/70 p-5 max-w-3xl">
+              <h4 className="font-bold text-slate-900">Om skanningen</h4>
+              <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+                Sö 113 skannades av Laila Kitzler Åhfeldt, Riksantikvarieämbetet, inom forskningsprojektet{" "}
+                <em>Runristandets dynamik</em> (2009–2014), med en ATOS I-skanner (GOM, strukturerat ljus). Bara
+                inskriftsytan är skannad. Skanningen ingår i datamängden{" "}
+                <em>3D-data Runstenar i Södermanland / Runestones in Södermanland</em>, som hon publicerade på Zenodo den
+                17 juni 2024 under licensen{" "}
+                <a href={SCAN_LICENSE} target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-900">CC BY 4.0</a>:{" "}
+                <a href={SCAN_CREDIT} target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-900">doi:10.5281/zenodo.11951255</a>.
+                Vitki har använt filen som den är publicerad; djupkartan, släpljuset, mätpunkterna och tvärsnitten är
+                beräknade i Vitki. Tack till Laila Kitzler Åhfeldt för att hon gjort skanningarna fritt tillgängliga.
+              </p>
+              <p className="mt-2 text-xs text-slate-500 leading-relaxed">
+                Citera: Kitzler Åhfeldt, L. 2024. <em>3D-data Runstenar i Södermanland / Runestones in Södermanland</em>{" "}
+                [Dataset]. Riksantikvarieämbetet. https://doi.org/10.5281/zenodo.11951255
+              </p>
+            </div>
           </div>
         </div>
       </section>

@@ -24,8 +24,13 @@ PROTOKOLL = open(os.path.join(ROOT, "PROTOCOL.md"), encoding="utf-8").read()
 assert "0,6 mm" in PROTOKOLL and "3 mm" in PROTOKOLL
 
 
-def bild(fil: str, alt: str, text: str, max_w: int = 1600) -> str:
-    """Skärmbilden fryst i bloggens arkiv, som markdown med bildtext."""
+SKANNING = ("Skanning: Laila Kitzler Åhfeldt, Riksantikvarieämbetet · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.sv) · "
+            "[doi:10.5281/zenodo.11951255](https://doi.org/10.5281/zenodo.11951255). Bilden är beräknad i Vitki.")
+
+
+def bild(fil: str, alt: str, text: str, max_w: int = 1600, skanning: bool = False) -> str:
+    """Skärmbilden fryst i bloggens arkiv, som markdown med bildtext; skanning=True lägger till krediteringen av
+    skanningen under bilder som visar den eller mått ur den."""
     path = os.path.join(BILDER, fil)
     assert os.path.exists(path), f"skärmbild saknas: {fil} (kör howto_huggspar_bilder.py)"
     im = Image.open(path).convert("RGB")
@@ -34,7 +39,7 @@ def bild(fil: str, alt: str, text: str, max_w: int = 1600) -> str:
     out = io.BytesIO()
     im.save(out, "PNG", optimize=True)
     url = blog_figures.freeze(out.getvalue())
-    return f"![{alt}]({url})\n{text}"
+    return f"![{alt}]({url})\n{text}" + (f" {SKANNING}" if skanning else "")
 
 
 title = "Så gör du en huggspårsanalys i Vitki"
@@ -61,7 +66,7 @@ I menyn till vänster, under *Analysera*, väljer du **3D-Huggspårsanalys**. Si
 
 Klicka på **Välj fil** under *Ladda upp 3D-mesh* och välj din skanning. Statusrutan visar vad som händer: filen laddas upp till analysmotorn, modellen läses in, och när den är klar står hur många ytor (trianglar) den har. Stenen dyker upp i 3D-vyn, där du kan vrida den med musen.
 
-{bild("03_status_inlast.png", "Statusrutan när modellen är inläst", "Statusrutan när modellen är inläst. Nästa punkt säger vad som behövs för att mäta med det valda mätsättet.")}
+{bild("03_status_inlast.png", "Statusrutan när modellen är inläst", "Statusrutan när modellen är inläst. Nästa punkt säger vad som behövs för att mäta med det valda mätsättet.", skanning=True)}
 
 ## Steg 3. Välj mätsätt
 
@@ -81,7 +86,7 @@ Välj **Automatiskt**. Panelen som öppnas har en kryssruta för **Vitki-protoko
 
 Klicka på **Kör automatisk analys**. Analysen tar från en halv minut till några minuter beroende på skanningens storlek.
 
-{bild("05_automatisk_panel.png", "Panelen för automatisk analys med Vitki-protokollet ikryssat", "Panelen för den automatiska analysen. Protokollet är förvalt; inställningarna under är låsta tills du kryssar ur det.")}
+{bild("05_automatisk_panel.png", "Panelen för automatisk analys med Vitki-protokollet ikryssat", "Panelen för den automatiska analysen. Protokollet är förvalt; inställningarna under är låsta tills du kryssar ur det.", skanning=True)}
 
 *Facit-läget* i samma panel är för den som vill pröva runigenkänningen: då mäts alla spår, och du märker själv vilka som är runor. Det behövs inte för en vanlig mätning.
 
@@ -89,11 +94,11 @@ Klicka på **Kör automatisk analys**. Analysen tar från en halv minut till nå
 
 När analysen är klar visas rutan **Granska den automatiska analysen**. Den säger hur många snitt som godkänts, hur många runor som känts igen och om protokollet följts. I 3D-vyn är varje mätt snitt en orange punkt; grå punkter är spår som var för breda för att vara huggspår, eller som inte känts igen som runor.
 
-{bild("09_granska.png", "Granskningsrutan efter den automatiska analysen", "Granskningsrutan: antal godkända snitt, antal runor och om protokollet följdes. Här kan du också exportera alla snitt som CSV.")}
+{bild("09_granska.png", "Granskningsrutan efter den automatiska analysen", "Granskningsrutan: antal godkända snitt, antal runor och om protokollet följdes. Här kan du också exportera alla snitt som CSV.", skanning=True)}
 
 Titta igenom punkterna. Dra en ruta i 3D-vyn för att märka punkter som *Runa*, *Ornamentik* eller *Utesluten*, och klicka på en punkt för att se dess tvärsnittsprofil. Det är här du rättar det appen gjort fel: en korsarm som tagits för en runa, en spricka som mätts.
 
-{bild("10_3d_vy.png", "3D-vyn med de mätta snitten som punkter", "Stenen i 3D-vyn med de mätta snitten. Orange är mätta spår, grått sådant som inte mäts.")}
+{bild("10_3d_vy.png", "3D-vyn med de mätta snitten som punkter", "Stenen i 3D-vyn med de mätta snitten. Orange är mätta spår, grått sådant som inte mäts.", skanning=True)}
 
 När du är nöjd med granskningen klickar du på **Använd runorna som resultat**. Då räknas stenens mått fram ur de godkända snitten och visas under granskningen. (Knapparna bredvid använder ornamentiken, eller allt som inte uteslutits, för den som vill jämföra spårtyperna.)
 
@@ -103,7 +108,7 @@ Två riktvärden är bra att känna till. Appen vill ha minst {MIN_DESCRIBE} run
 
 Under granskningen står stenens mått: medelvärden med osäkerhetsintervall för V-vinkel, djup, bredd, djup/bredd och de övriga måtten, uppdelat på spårtyp. Vinkel, djup och bredd är de stabila måtten; bottenradie och asymmetri är osäkrare och ska läsas med försiktighet. Verktygsklassningen (pik- eller bredmejsel) är en tumregel och inte kalibrerad mot kända verktyg.
 
-{bild("11b_resultat_allt.png", "Resultatpanelen med stenens mått, jämförelsen med mätkorpusen och exportknapparna", "Stenens mått som medelvärden med spridning (SD) och antal snitt, verktygsbedömningen överst (en tumregel), jämförelsen med mätkorpusen och knapparna för export och bidrag. Sö 128 är en sandstenshäll med grunda, breda spår: V-vinkeln 140° är trubbigare än hos de flesta stenar i Södermanlandsserien, och djupet under två millimeter hör till de minsta.")}
+{bild("11b_resultat_allt.png", "Resultatpanelen med stenens mått, jämförelsen med mätkorpusen och exportknapparna", "Stenens mått som medelvärden med spridning (SD) och antal snitt, verktygsbedömningen överst (en tumregel), jämförelsen med mätkorpusen och knapparna för export och bidrag. Sö 128 är en sandstenshäll med grunda, breda spår: V-vinkeln 140° är trubbigare än hos de flesta stenar i Södermanlandsserien, och djupet under två millimeter hör till de minsta.", skanning=True)}
 
 ## Steg 7. Spara, rapportera, dela
 
@@ -132,7 +137,13 @@ Därför: använd måtten för att beskriva en sten, jämföra två stenar som m
 
 Metoden är beskriven i detalj i Vitkis metoddokumentation (avsnitt 2, *Huggspårsmått*) och protokollet i PROTOCOL.md, båda öppna i kodförrådet. Bristerna i metoden förs i en enda lista som följer med varje analys (version {limitations.VERSION}).
 
-*Skanningen i bilderna är Sö 128 vid Lids kyrka i Södermanland, en sandstenshäll i stilgrupp Pr2, skannad av Laila Kitzler Åhfeldt (Riksantikvarieämbetet) och fritt tillgänglig på Zenodo under CC BY 4.0. Skanningens punktavstånd, 1,1 mm, är glesare än protokollets rekommenderade 0,5 mm, och appen säger det själv i granskningsrutan – ett bra exempel på en varning att ta på allvar.*"""
+## Om skanningen
+
+Skanningen i bilderna är Sö 128 vid Lids kyrka i Södermanland, en sandstenshäll i stilgrupp Pr2. Den är gjord av runologen Laila Kitzler Åhfeldt vid Riksantikvarieämbetet inom forskningsprojektet *Runristandets dynamik* (2009–2014), med en ATOS I-skanner (GOM, strukturerat ljus); bara inskriftsytan är skannad. Hon publicerade den öppet på Zenodo den 17 juni 2024 i datamängden *3D-data Runstenar i Södermanland / Runestones in Södermanland*, under licensen [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.sv). Vi har använt filen som den är publicerad; alla bilder och mått i artikeln är beräknade i Vitki ur den. Tack till Laila Kitzler Åhfeldt för att hon gjort skanningarna fritt tillgängliga.
+
+Skanningens punktavstånd, 1,1 mm, är glesare än protokollets rekommenderade 0,5 mm, och appen säger det själv i granskningsrutan – ett bra exempel på en varning att ta på allvar.
+
+*Kitzler Åhfeldt, L. 2024. 3D-data Runstenar i Södermanland / Runestones in Södermanland [Dataset]. Riksantikvarieämbetet. [https://doi.org/10.5281/zenodo.11951255](https://doi.org/10.5281/zenodo.11951255)*"""
 
 out = {"slug": "sa-gor-du-en-huggsparsanalys", "title": title, "summary": summary, "body": body,
        "title_en": "", "summary_en": "", "body_en": "", "labels": ["Så gör du", "Huggspår och 3D"]}
