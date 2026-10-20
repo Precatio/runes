@@ -709,12 +709,18 @@ def name_sites(recs):
 class Model:
     def __init__(self, recs, edda_tokens=(), lam_edda=0.03, lam_unk=0.01, D=0.75, d=None, kappa=2.0, exclude=(),
                  aligned=False, contexts=False, alpha=20.0, kappa_e=5.0, lm_beta=0.0, spelling_recs=(), lam_name=0.0,
-                 cv_chars=False, lam_doc=0.0, area_lm=False, area_beta=200.0, lam_class=0.0, n_classes=200):
+                 cv_chars=False, lam_doc=0.0, area_lm=False, area_beta=200.0, lam_class=0.0, n_classes=200,
+                 tolerance=0.0, tol_max_rules=2):
         """recs: Viking-Age inscriptions for the language and spelling. aligned: also use sections whose word counts
         differ (step 2). contexts: spelling by era, epoch, area, region and carver, and word sequences by epoch (step 3);
         alpha is how many observations a level needs to outweigh the level above it. spelling_recs: further inscriptions
         (e.g. medieval) used only for the spelling. lam_class: weight of word sequences by word class (word_classes:
-        words that stand in like company, e.g. hans, hennaR, sina, þæiRa), which the word bigram is mixed with."""
+        words that stand in like company, e.g. hans, hennaR, sina, þæiRa), which the word bigram is mixed with.
+        tolerance (> 0, textmodel-19 candidate): the tolerance layer – every well-attested spelling of a word is widened
+        with rule-made variants (final -R dropped, h- added or dropped, an unstressed vowel dropped or shifted among
+        i/e/a, a nasal dropped before a stop, a svarabhakti vowel inserted), each rule costing the factor `tolerance`,
+        at most tol_max_rules rules per variant. A carver's unattested spelling of a known word can then be reached
+        (utdata/runlm_forfining/tolerans_diagnos.md); off by default."""
         recs = [r for r in recs if r["signum"] not in set(exclude)]
         self.aligned, self.contexts, self.alpha, self.kappa, self.kappa_e = aligned, contexts, alpha, kappa, kappa_e
         self.lm_beta = lm_beta  # how many occurrences of a word an epoch needs before its own word sequences get half the weight
@@ -871,6 +877,9 @@ class Model:
             for s, p in ps.items():
                 if p > 1e-4:
                     self.index[s][w] = p
+        self.tolerance, self.tol_variants = tolerance, {}
+        if tolerance > 0:
+            self._widen_index(tolerance, tol_max_rules)
         self.maxlen = max(len(s) for s in self.index)
         self.keys_by_len = defaultdict(list)
         for k_ in self.index:
@@ -1043,6 +1052,71 @@ class Model:
                  for c, q in cs.items()} for u, cs in ctx.table.items()}
         return Ctx(ctx.path, t, ctx.key + (("stone", id(t)),))
 
+    # ---- the tolerance layer (textmodel-19 candidate) --------------------------------------------------------------
+    @staticmethod
+    def spelling_variants(s, max_rules=2):
+        """Rule-made variants of a carved spelling, {variant: number of rules applied}. The rules are the carvers'
+        known liberties (analysplan_tm19.md, 5): (a) final -R/-r dropped, (b) h- added or dropped at the start,
+        (c) an unstressed vowel (not the first rune) dropped, (d) one of i/e/a shifted to another of the three,
+        (e) n/m dropped before k/t/b, (f) i or u inserted between two consonants (svarabhakti). Two rules may be
+        combined only when one of them is (a), (b) or (e), so that the positional rules do not multiply."""
+        V = "aiueoy"
+        def one(x):
+            out = {}
+            if len(x) >= 3 and x[-1] in "Rr":
+                out[x[:-1]] = "a"
+            if x.startswith("h") and len(x) >= 3:
+                out[x[1:]] = "b"
+            elif x[:1] in V or x[:1] in "lrnmfs":
+                out["h" + x] = "b"
+            for i in range(1, len(x)):
+                if x[i] in V and len(x) >= 3:
+                    out[x[:i] + x[i + 1:]] = "c"
+            for i in range(len(x)):
+                if x[i] in "iea":
+                    for ch in "iea":
+                        if ch != x[i]:
+                            out[x[:i] + ch + x[i + 1:]] = "d"
+            for i in range(len(x) - 1):
+                if x[i] in "nm" and x[i + 1] in "ktb":
+                    out[x[:i] + x[i + 1:]] = "e"
+            for i in range(1, len(x)):
+                if x[i - 1] not in V and x[i] not in V and x[i - 1] != x[i]:
+                    for ch in "iu":
+                        out[x[:i] + ch + x[i:]] = "f"
+            return out
+        found = {}
+        first = one(s)
+        for v, r in first.items():
+            if v != s and len(v) >= 2:
+                found[v] = min(found.get(v, 9), 1)
+        if max_rules >= 2:
+            for v, r in list(first.items()):
+                if r not in "abe" or len(v) < 2:
+                    continue
+                for v2, r2 in one(v).items():
+                    if v2 != s and len(v2) >= 2 and v2 not in found and r2 != r:
+                        found[v2] = 2
+        found.pop(s, None)
+        return found
+
+    def _widen_index(self, lam, max_rules, min_p=0.05):
+        """Add the variants of every spelling with P(runes | word) ≥ min_p, at the penalty lam per rule. Variants keep a
+        pointer to their source spelling, so that candidates() can score them with the context's spelling too."""
+        added = 0
+        for s in list(self.index):
+            for w, p in list(self.index[s].items()):
+                if p < min_p or len(s) < 3:
+                    continue
+                for v, k in self.spelling_variants(s, max_rules).items():
+                    q = p * (lam ** k)
+                    if q <= 1e-4 or self.index.get(v, {}).get(w, 0.0) >= q:
+                        continue
+                    self.index[v][w] = q
+                    self.tol_variants.setdefault(v, {})[w] = (s, k)
+                    added += 1
+        self.tol_added = added
+
     def derivations(self, w, s):
         k = (w, s)
         if k not in self._deriv:
@@ -1073,12 +1147,16 @@ class Model:
                 self._cand.clear()
             out = {}
             emp_ep = self.emp_ep.get(ctx.path[:3], {})
+            variants = self.tol_variants.get(s, {})
             for w in self.index.get(s, {}):
+                src, k = variants.get(w, (s, 0))  # a tolerance variant is scored from the spelling it was made of
                 n = sum(self.emp[w].values())
-                rule = self.rule_prob(w, s, ctx.table) / self.rule_z.get(w, 1.0)
-                pg = (self.emp[w].get(s, 0) + self.kappa * rule) / (n + self.kappa)
+                rule = self.rule_prob(w, src, ctx.table) / self.rule_z.get(w, 1.0)
+                pg = (self.emp[w].get(src, 0) + self.kappa * rule) / (n + self.kappa)
                 m = emp_ep.get(w)
-                p = (m.get(s, 0) + self.kappa_e * pg) / (sum(m.values()) + self.kappa_e) if m else pg
+                p = (m.get(src, 0) + self.kappa_e * pg) / (sum(m.values()) + self.kappa_e) if m else pg
+                if k:
+                    p *= self.tolerance ** k
                 if p > 1e-6:
                     out[w] = p
             self._cand[ck] = dict(out)

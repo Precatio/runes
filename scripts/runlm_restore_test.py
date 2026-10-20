@@ -28,6 +28,7 @@ ap.add_argument("--context_cands", action="store_true", help="kandidatord vägs 
 ap.add_argument("--name_cands", type=int, default=0, help="namn ur namnled som passar de bevarade runorna")
 ap.add_argument("--adapt", type=float, default=0.0, help="stenens egen stavning ur resten av texten (styrka)")
 ap.add_argument("--n_cands", type=int, default=60)
+ap.add_argument("--tolerance", type=float, default=0.0, help="toleranslagret: straff per stavningsregel (0 = av; textmodel-19-kandidat)")
 ap.add_argument("--trigram", action="store_true", help="kandidaterna bedöms också efter följder om tre ord")
 ap.add_argument("--cache", type=float, default=0.0, help="ord som redan står på stenen (vikt)")
 ap.add_argument("--area_lm", action="store_true", help="ordföljd efter trakt (formler per landskap)")
@@ -136,7 +137,7 @@ t0 = time.time()
 for k in folds:
     test = cands[k::K]
     tset = {r["signum"] for r, _ in test}
-    m = Model([r for r in V if r["signum"] not in tset], edda_tokens=ET, aligned=True, lam_name=args.lam_name, lam_class=args.lam_class,
+    m = Model([r for r in V if r["signum"] not in tset], edda_tokens=ET, aligned=True, lam_name=args.lam_name, lam_class=args.lam_class, tolerance=args.tolerance,
               lam_doc=args.lam_doc, area_lm=args.area_lm,
               **(dict(contexts=True, alpha=100.0, kappa_e=50.0, lm_beta=200.0) if args.contexts else {}))
     for r, (groups, gw) in test:

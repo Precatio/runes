@@ -156,6 +156,7 @@ def main(argv=None):
     ap.add_argument("--char_fills", type=int, default=15)
     ap.add_argument("--context_cands", action="store_true")
     ap.add_argument("--n_cands", type=int, default=100)
+    ap.add_argument("--tolerance", type=float, default=0.0, help="toleranslagret: straff per stavningsregel (0 = av; textmodel-19-kandidat)")
     ap.add_argument("--area_lm", action="store_true")
     ap.add_argument("--by_word", action="store_true")
     ap.add_argument("--near", type=float, default=0.0)
@@ -187,7 +188,7 @@ def main(argv=None):
         if args.fold >= 0 and k != args.fold:
             continue
         test = {st for st in stones if fold[st] == k}
-        m = Model([r for r in V if r["signum"] not in test], edda_tokens=ET, aligned=True, lam_name=args.lam_name, lam_class=args.lam_class,
+        m = Model([r for r in V if r["signum"] not in test], edda_tokens=ET, aligned=True, lam_name=args.lam_name, lam_class=args.lam_class, tolerance=args.tolerance,
                   lam_doc=args.lam_doc, area_lm=args.area_lm)
         for st in sorted(test):
             xs = by_stone[st]
