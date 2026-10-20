@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import BlogBody, { inLanguage, postDate, type BlogPost } from "@/components/BlogBody";
+import LabelChips from "@/components/LabelChips";
 import { useLanguage } from "@/components/LanguageContext";
 import ShareArticle from "@/components/ShareArticle";
 import { authorOf } from "@/lib/site";
@@ -21,6 +22,7 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
       <div className="mt-8 text-sm text-slate-500">
         <time dateTime={post.publishedAt ?? post.month}>{postDate(post, lang)}</time>
       </div>
+      <LabelChips labels={post.labels} lang={lang} linked className="mt-3" />
       <h1 className="mt-2 text-4xl md:text-5xl font-serif font-bold tracking-tight leading-tight" translate="no">{v.title}</h1>
       {v.summary && <p className="mt-5 text-xl text-slate-600 leading-relaxed" translate="no">{v.summary}</p>}
       {name && (

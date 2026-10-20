@@ -1734,6 +1734,16 @@ Webbplatsen har bara startsidan och artiklarna; appen körs på den egna datorn.
   figurerna i `web/public/figurer/`), eftersom repot är publikt; GitHub Pages bygger om webbplatsen när de pushas
   (`.github/workflows/site.yml`).
 
+
+**Etiketter (2026-10-20).** Varje artikel bär en *typ* och ett eller flera *ämnen* ur en fast lista
+(`src/blog_labels.py`, samma lista i `web/src/lib/labels.ts`; `tests/test_blog_labels.py` håller dem lika). Typerna
+är Forskning, Metod, Så gör du, Pågående arbete och Personligt; ämnena Ristare, Språk och stavning, Formler och
+syfte, Tro och magi, Kvinnor och barn, Norden, Datering och stil, Geografi, Kryptologi, Tolkning,
+Sannolikhetsmodellen, Huggspår och 3D och Eddan. Admin sätter dem med knappar (en typ, högst fem etiketter
+tillsammans), API:t avvisar etiketter utanför listan, och artikellistan på svenska och engelska filtrerar på dem
+(`?etikett=…`; `components/LabelFilter.tsx`, `LabelChips.tsx`). Etiketterna följer med i exporten och i sökindexet.
+*Så gör du*-artiklarna är handledningar steg för steg med skärmbilder ur appen, tagna med Playwright mot de lokala
+dev-servrarna (`utdata/blogg/build/howto_huggspar_bilder.py`) och frysta i bloggens bildarkiv som andra figurer.
 ## 16. Jämförbarhet med tidigare forskning
 
 Laila Kitzler Åhfeldts metod (Arkeologiska forskningslaboratoriet, Stockholms universitet; Kitzler Åhfeldt

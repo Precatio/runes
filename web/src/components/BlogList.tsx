@@ -6,6 +6,7 @@ import { inLanguage, postDate, type BlogPost } from "@/components/BlogBody";
 import { featuredFirst } from "@/lib/featured";
 import { useLanguage } from "@/components/LanguageContext";
 import { postPath, thumbnail } from "@/lib/blogSeo";
+import LabelChips from "@/components/LabelChips";
 
 // The article's first photo, or a rune on the page colour when it has none
 function Picture({ post, width, className }: { post: BlogPost; width: number; className: string }) {
@@ -47,6 +48,11 @@ export default function BlogList({ posts, failed }: { posts: BlogPost[]; failed:
             <time dateTime={p.publishedAt ?? p.month}>{postDate(p, lang)}</time>{p.author ? ` · ${p.author}` : ""}
           </div>
         );
+        const chips = (
+          <div className="mt-3">
+            <LabelChips labels={p.labels} lang={lang} />
+          </div>
+        );
         return (
           <article key={p.id}>
             <Link href={postPath(p.slug)}
@@ -59,6 +65,7 @@ export default function BlogList({ posts, failed }: { posts: BlogPost[]; failed:
                   {v.title}
                 </h2>
                 <p className="mt-2 text-slate-600 leading-relaxed line-clamp-4" translate="no">{v.summary}</p>
+                {chips}
                 <span className="mt-3 text-sm font-bold text-[#b7410e] group-hover:underline">{read}</span>
               </div>
             </Link>

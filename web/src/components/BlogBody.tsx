@@ -23,6 +23,8 @@ export interface BlogPost {
   topic?: string;
   // "Månadens artikel": first and large on the start page and first in the list, whatever its date
   featured?: boolean;
+  // One type and some subjects from the fixed list in lib/labels.ts ("Forskning", "Ristare", …)
+  labels?: string[];
   // The article's first photo (Wikimedia Commons), for the thumbnail in the list
   image?: string | null;
   image_alt?: string | null;

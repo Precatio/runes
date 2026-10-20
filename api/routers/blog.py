@@ -21,7 +21,8 @@ router = APIRouter()
 COLLECTION = "posts"
 SLUG = re.compile(r"^[a-z0-9][a-z0-9-]{0,79}$")
 MONTH = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
-PUBLIC = ("id", "slug", "title", "summary", "title_en", "summary_en", "month", "author", "publishedAt", "updatedAt", "featured")
+PUBLIC = ("id", "slug", "title", "summary", "title_en", "summary_en", "month", "author", "publishedAt", "updatedAt", "featured",
+          "labels")
 
 
 class PostRequest(BaseModel):
@@ -43,6 +44,8 @@ class PostRequest(BaseModel):
     topic: str = Field("", max_length=160)
     # "Månadens artikel": shown first and large on the start page and first in the list, whatever its date; one at a time
     featured: bool = False
+    # Etiketter ur den fasta listan (src/blog_labels.py): en typ och ett eller flera ämnen
+    labels: list[str] = Field(default_factory=list, max_length=8)
 
 
 def _iso(d: dict) -> dict:
@@ -155,6 +158,10 @@ def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
         raise HTTPException(status_code=422, detail="Adressen får bara innehålla små bokstäver a–z, siffror och bindestreck.")
     if req.month and not MONTH.match(req.month):
         raise HTTPException(status_code=422, detail="Månaden ska anges som ÅÅÅÅ-MM.")
+    from src import blog_labels
+    if (bad := blog_labels.check(req.labels)):
+        raise HTTPException(status_code=422, detail=bad)
+    req.labels = blog_labels.ordered(req.labels)
     publish_at = _ts(req.publish_at) if req.publish_at else None
     if req.publish_at and publish_at is None:
         raise HTTPException(status_code=422, detail="Publiceringstiden kunde inte läsas.")

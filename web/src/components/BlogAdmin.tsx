@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { MAX_LABELS, SUBJECTS, TYPES, isType } from "@/lib/labels";
 import { useCallback, useEffect, useState } from "react";
 import BlogBody, { dateLabel, postDate, type BlogPost } from "@/components/BlogBody";
 import { useSettings } from "@/components/SettingsContext";
@@ -79,7 +80,7 @@ function insertPicture(text: string, signum: string, block: string) {
   return [...blocks.slice(0, i + 1), block, ...blocks.slice(i + 1)].join("\n\n");
 }
 const empty = (author: string): Draft => ({ slug: "", title: "", summary: "", body: "", title_en: "", summary_en: "", body_en: "",
-                                           month: "", author, topic: "", featured: false });
+                                           month: "", author, topic: "", featured: false, labels: [] });
 
 // The articles (api/routers/blog.py): written here and published at once or at a chosen time. "Utkast från det som är nytt" fills
 // the form with the patterns and findings that are new or changed since the last published post, to edit from.
@@ -244,7 +245,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
   const edit = (p: BlogPost) => {
     setDraft({ id: p.id, slug: p.slug, title: p.title, summary: p.summary, body: p.body ?? "", title_en: p.title_en ?? "",
                summary_en: p.summary_en ?? "", body_en: p.body_en ?? "", month: p.month, author: p.author ?? "", topic: p.topic ?? "",
-               featured: !!p.featured });
+               featured: !!p.featured, labels: p.labels ?? [] });
     setPublishAt(p.published && isFuture(p.publishedAt) ? localInput(p.publishedAt!) : "");
     setSlugTouched(true); setShowEn(!!(p.title_en || p.body_en)); setSources([]); setNote(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -358,6 +359,31 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
             <span className="block font-normal text-slate-500">Visas först och stort på startsidan och först bland artiklarna, oavsett datum. Bara en åt gången; kan också sättas direkt i listan nedan.</span>
           </span>
         </label>
+        <div className="sm:col-span-4 text-xs font-bold text-slate-600">Etiketter
+          <span className="block font-normal text-slate-500">En typ (vad slags text) och ett eller flera ämnen, högst {MAX_LABELS} tillsammans. Läsaren filtrerar artikellistan på dem.</span>
+          {[["Typ", TYPES], ["Ämne", SUBJECTS]].map(([name, pairs]) => (
+            <div key={name as string} className="mt-2 flex flex-wrap items-center gap-1.5">
+              <span className="w-12 text-[11px] uppercase tracking-wider text-slate-500">{name as string}</span>
+              {(pairs as [string, string][]).map(([sv]) => {
+                const on = (draft.labels ?? []).includes(sv);
+                return (
+                  <button key={sv} type="button" aria-pressed={on} onClick={() => setDraft(d => {
+                    let next = (d.labels ?? []).filter(x => x !== sv);
+                    if (!on) {
+                      if (isType(sv)) next = next.filter(x => !isType(x));  // one type at a time
+                      if (next.length >= MAX_LABELS) return d;
+                      next = [...next, sv];
+                    }
+                    return { ...d, labels: next };
+                  })}
+                    className={`rounded-full border px-2.5 py-0.5 text-[12px] font-semibold ${on ? "border-[#b7410e] bg-[#b7410e] text-white" : "border-slate-300 bg-white text-slate-700 hover:border-[#b7410e]"}`}>
+                    {sv}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+        </div>
         <input value={draft.title} onChange={e => set("title", e.target.value)} placeholder="Rubrik" maxLength={160} className={`${field} sm:col-span-4 font-semibold`} />
         <label className="text-xs font-bold text-slate-600 sm:col-span-4">Adress
           <div className="flex items-center gap-1 mt-1">

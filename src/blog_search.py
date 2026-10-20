@@ -34,7 +34,10 @@ def plain_text(body: str) -> str:
 
 def build_index(posts: list[dict]) -> list[dict]:
     """Indexposterna för en lista publicerade artiklar (fälten som sökrutan behöver, gement för sökningen)."""
+    from src.blog_labels import ENGLISH
     return [{"slug": p.get("slug"), "title": p.get("title") or "", "title_en": p.get("title_en") or "",
+             "labels": list(p.get("labels") or []),
+             "labels_en": [ENGLISH.get(x, x) for x in (p.get("labels") or [])],
              "text": plain_text(p.get("body") or "").lower(),
              "text_en": plain_text(p.get("body_en") or "").lower(),
              "summary": (p.get("summary") or "").lower(), "summary_en": (p.get("summary_en") or "").lower()}

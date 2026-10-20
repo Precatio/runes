@@ -1,0 +1,142 @@
+"""AI-bedömningen av stilgrupp (api/routers/twod.py, samma systemprompt och schema som appen) prövad mot Rundata.
+
+Underlag: svenska vikingatida runstenar med säker stilgrupp i Rundata och en fritt licensierad bild i Wikidata
+(wikidata_bilder.json, 827 stenar). Bilden hämtas i 1200 px bredd från Commons (samma tumnagel som artiklarna använder).
+Urvalet är stratifierat: lika många per stilgrupp (--per-grupp), slumpat med fast frö, så att RAK och Pr4 inte dominerar.
+Varje svar sparas rad för rad (resultat.jsonl) och skriptet kan köras om utan att betala för redan bedömda stenar.
+    ANTHROPIC_API_KEY=… .venv/bin/python utdata/stilgrupp_ai/stilgrupp_test.py --per-grupp 15
+    .venv/bin/python utdata/stilgrupp_ai/stilgrupp_test.py --utvardera        # bara sammanställningen
+"""
+import argparse
+import json
+import os
+import random
+import sys
+import time
+from collections import Counter, defaultdict
+
+import requests
+
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+sys.path.insert(0, ROOT)
+HERE = os.path.dirname(os.path.abspath(__file__))
+BILDER = os.path.join(HERE, "bilder")
+RES = os.path.join(HERE, "resultat.jsonl")
+CODES = ["RAK", "Fp", "Pr1", "Pr2", "Pr3", "Pr4", "Pr5"]  # KB bedömer inte appen; Rundatas KB-stenar utelämnas
+UA = {"User-Agent": "Vitki/1.0 (vitkirunor.se; forskning) python-requests"}
+
+
+def urval(per_grupp: int, fro: int = 20261020) -> list[tuple[str, str, str]]:
+    d = json.load(open(os.path.join(HERE, "wikidata_bilder.json")))
+    rng = random.Random(fro)
+    by = defaultdict(list)
+    for sg, f in d["files"].items():
+        st = d["style"][sg]
+        if st in CODES:
+            by[st].append((sg, st, f))
+    out = []
+    for st in CODES:
+        rows = sorted(by[st])
+        rng.shuffle(rows)
+        out += rows[:per_grupp]
+    return out
+
+
+def hamta_bild(signum: str, fil: str) -> str | None:
+    from src import commons
+    os.makedirs(BILDER, exist_ok=True)
+    path = os.path.join(BILDER, commons.re.sub(r"[^\w]+", "_", signum) + ".jpg")
+    if os.path.exists(path):
+        return path
+    info = commons.commons_info([fil]).get(fil)
+    if not info or not info.get("thumb"):
+        return None
+    r = requests.get(info["thumb"], headers=UA, timeout=60)
+    if r.status_code != 200 or len(r.content) < 2000:
+        return None
+    open(path, "wb").write(r.content)
+    return path
+
+
+def bedom(path: str, ctx) -> dict:
+    from api import llm
+    from api.routers.twod import SYSTEM_INSTRUCTION, TwoDAIResult
+    data = open(path, "rb").read()
+    mime = "image/png" if data[:8] == b"\x89PNG\r\n\x1a\n" else "image/webp" if data[8:12] == b"WEBP" else "image/jpeg"
+    r = llm.generate(ctx, "Analysera denna runsten paleografiskt och epigrafiskt.", system=SYSTEM_INSTRUCTION,
+                     images=[(data, mime)], schema=TwoDAIResult, tier="pro")
+    return {"predicted": r.data.get("predicted_style"), "confidence": r.data.get("confidence"),
+            "reasoning": (r.data.get("reasoning") or "")[:600], "tokens": r.tokens, "model": r.model}
+
+
+def kor(per_grupp: int):
+    from api import llm
+    key = os.environ.get("ANTHROPIC_API_KEY", "")
+    assert key, "Sätt ANTHROPIC_API_KEY (din egen nyckel ur appens inställningar) i miljön eller .env"
+    ctx = llm.AIContext("claude", key)
+    done = {json.loads(l)["signum"] for l in open(RES) if json.loads(l).get("predicted")} if os.path.exists(RES) else set()
+    rows = urval(per_grupp)
+    print(f"{len(rows)} stenar i urvalet, {len(done)} redan bedömda")
+    with open(RES, "a") as out:
+        for i, (sg, st, fil) in enumerate(rows):
+            if sg in done:
+                continue
+            path = hamta_bild(sg, fil)
+            if not path:
+                out.write(json.dumps({"signum": sg, "rundata": st, "file": fil, "error": "ingen bild"}, ensure_ascii=False) + "\n")
+                continue
+            try:
+                res = bedom(path, ctx)
+            except Exception as e:
+                res = {"error": str(e)[:300]}
+                time.sleep(5)
+            out.write(json.dumps({"signum": sg, "rundata": st, "file": fil, **res}, ensure_ascii=False) + "\n")
+            out.flush()
+            print(f"{i + 1}/{len(rows)} {sg}: Rundata {st} → AI {res.get('predicted')} ({res.get('confidence')} %, {res.get('tokens')} tokens)")
+
+
+def utvardera():
+    rows = [json.loads(l) for l in open(RES)]
+    ok = [r for r in rows if r.get("predicted")]
+    errs = [r for r in rows if not r.get("predicted")]
+    n = len(ok)
+    exact = sum(r["predicted"] == r["rundata"] for r in ok)
+    unsure = sum(r["predicted"] == "Osäker" for r in ok)
+    decided = [r for r in ok if r["predicted"] != "Osäker"]
+    exact_d = sum(r["predicted"] == r["rundata"] for r in decided)
+    # Grova klasser: RAK | Fp | Pr1–2 (Ringerike) | Pr3–5 (Urnes)
+    grov = {"RAK": "RAK", "Fp": "Fp", "Pr1": "Ringerike", "Pr2": "Ringerike", "Pr3": "Urnes", "Pr4": "Urnes", "Pr5": "Urnes"}
+    grov_ok = sum(grov.get(r["predicted"]) == grov[r["rundata"]] for r in decided)
+    # Grannfel: en stilgrupp intill i Gräslunds serie räknas som "nära"
+    order = {c: i for i, c in enumerate(CODES)}
+    near = sum(abs(order[r["predicted"]] - order[r["rundata"]]) <= 1 for r in decided if r["predicted"] in order)
+    conf = defaultdict(Counter)
+    for r in ok:
+        conf[r["rundata"]][r["predicted"]] += 1
+    # Slumpnivå för exakt grupp med urvalets fördelning, och majoritetsgissning
+    maj = Counter(r["rundata"] for r in ok).most_common(1)[0][1] / n if n else 0
+    # Kalibrering: träff per självskattad säkerhet
+    kal = defaultdict(lambda: [0, 0])
+    for r in decided:
+        b = "<60" if (r.get("confidence") or 0) < 60 else "60–79" if r["confidence"] < 80 else "≥80"
+        kal[b][0] += r["predicted"] == r["rundata"]
+        kal[b][1] += 1
+    tokens = [r["tokens"] for r in ok if r.get("tokens")]
+    out = {"n": n, "fel": len(errs), "exakt": exact / n if n else None, "osaker": unsure / n if n else None,
+           "exakt_bland_avgjorda": exact_d / len(decided) if decided else None, "grov_bland_avgjorda": grov_ok / len(decided) if decided else None,
+           "inom_en_grupp_bland_avgjorda": near / len(decided) if decided else None, "majoritetsgissning": maj,
+           "slump_exakt": 1 / len(CODES), "forvaxling": {k: dict(v) for k, v in conf.items()},
+           "kalibrering": {k: {"ratt": v[0], "n": v[1], "andel": v[0] / v[1]} for k, v in kal.items()},
+           "tokens_medel": sum(tokens) / len(tokens) if tokens else None, "modell": ok[0]["model"] if ok else None}
+    json.dump(out, open(os.path.join(HERE, "utvardering.json"), "w"), ensure_ascii=False, indent=1)
+    print(json.dumps(out, ensure_ascii=False, indent=1))
+
+
+if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--per-grupp", type=int, default=15)
+    ap.add_argument("--utvardera", action="store_true")
+    a = ap.parse_args()
+    if not a.utvardera:
+        kor(a.per_grupp)
+    utvardera()

@@ -5,12 +5,17 @@
 import { useEffect, useMemo, useState } from "react";
 import type { BlogPost } from "@/components/BlogBody";
 import BlogList from "@/components/BlogList";
+import LabelFilter, { useLabelFromAddress, withLabel } from "@/components/LabelFilter";
+import { useLanguage } from "@/components/LanguageContext";
+import { labelName } from "@/lib/labels";
 import { loadIndex, matches, searchTerms, snippet, type IndexPost } from "@/lib/articleSearch";
 import { trackSearch } from "@/lib/track";
 
 export default function ArticleSearch({ posts, failed }: { posts: BlogPost[]; failed: boolean }) {
   const [q, setQ] = useState("");
   const [index, setIndex] = useState<IndexPost[] | null>(null);
+  const [label, setLabel] = useLabelFromAddress();
+  const { lang } = useLanguage();
 
   // The landing page's search box links here with the query in the address
   useEffect(() => {
@@ -68,8 +73,14 @@ export default function ArticleSearch({ posts, failed }: { posts: BlogPost[]; fa
           })}
         </ul>
       )}
+      <div className="mt-8"><LabelFilter posts={posts} lang={lang} value={label} onChange={setLabel} /></div>
+      {label && withLabel(hits ?? posts, label).length === 0 && (
+        <p className="mt-6 text-sm text-slate-500">
+          {lang === "en" ? `No article carries the label “${labelName(label, lang)}”.` : `Ingen artikel har etiketten ”${label}”.`}
+        </p>
+      )}
       <div className="mt-10 space-y-10">
-        <BlogList posts={hits ?? posts} failed={failed} />
+        <BlogList posts={withLabel(hits ?? posts, label)} failed={failed} />
       </div>
     </>
   );

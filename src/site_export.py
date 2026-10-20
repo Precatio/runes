@@ -28,7 +28,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONTENT = os.path.join(ROOT, "web", "content", "articles.json")
 FIGURES = os.path.join(ROOT, "web", "public", "figurer")
 FIELDS = ("id", "slug", "title", "summary", "body", "title_en", "summary_en", "body_en", "month", "author", "topic",
-          "publishedAt", "updatedAt", "featured")
+          "publishedAt", "updatedAt", "featured", "labels")
 FIGURE = re.compile(r"/api/blog/figures/([0-9a-f]{16}\.png)")
 # The latest attempt to publish the website, so that Admin can show whether the site got the change
 STATUS = os.path.join(ROOT, "data", "cache", "site_publish.json")
