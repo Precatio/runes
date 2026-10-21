@@ -299,8 +299,10 @@ def runor(r):
     return XC[st]
 
 
-NEXT = "\n".join(f"| {r['signum']} | {r['place']} | {r['carver']} | {d2(r['strength'])} | {d2(r['model'])} | "
-                 f"{d2(r['ortho'])} | {runor(r)} |" for r in TOP10[5:])
+SHOWN = {"Fot 2": "Fot", "Öpir 1": "Öpir", "Traen": "Traen-gruppen"}
+# A list, not a table: the article page (components/BlogBody.tsx) has no tables
+NEXT = "\n".join(f"- **{r['signum']} vid {r['place']}** – {SHOWN.get(r['carver'], r['carver'])}, styrka {d2(r['strength'])} "
+                 f"(modellen {d2(r['model'])}, stavningen {d2(r['ortho'])}). Runor 2020: {runor(r)}." for r in TOP10[5:])
 assert "samma ristare som U 135" in NEXT
 
 title = "Fem runstenar söker sin ristare"
@@ -400,8 +402,6 @@ Här talar bara stavningen. Modellen svarar inte alls, eftersom stenen står mer
 
 ## Nästa fem
 
-| Sten | Plats | Förslag | Styrka | Modellen | Stavningen | Runor 2020 |
-|---|---|---|---|---|---|---|
 {NEXT}
 
 Två stenar som är starkare än Sö 335, U 854 och U 957, är inte med, eftersom modellen säger *kanske någon annan* om dem: ingen av dess ristare når {pr(A['open_set']['threshold'])} procent. Det gäller {sum(r['someone_else'] is True for r in N['rows'])} av de {C['nytt förslag']} nya förslagen.
@@ -459,6 +459,7 @@ En modell som den här kan inte ge oss nya attribueringar. Det kan bara den som 
 
 for word in (" han ", " hans ", " hon ", " henne ", " hennes "):  # no pronouns for carvers or the people on the stones
     assert word not in body, word
+assert not re.search(r"^\|", body, re.M)  # no tables (the article page cannot show them)
 
 out = {"slug": "fem-runstenar-soker-sin-ristare", "title": title, "summary": summary, "body": body,
        "title_en": "", "summary_en": "", "body_en": "", "labels": ["Forskning", "Ristare"]}
