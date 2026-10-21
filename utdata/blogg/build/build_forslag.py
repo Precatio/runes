@@ -262,9 +262,6 @@ IMG01 = bild("01_stenar_utan_ristare.png", "Stenöversiktens diagram över stena
 IMG02 = bild("02_u843_panel.png", "U 843 i Stenöversikten",
              "U 843 i Stenöversikten. Styrkan 0,84 kommer ur modellen (0,72) och stavningen (0,45); av kontrollerna går bara "
              "området att pröva (Om ✓). Skärmbild ur Vitki.")
-IMG03 = bild("03_u843_beslutsunderlag.png", "Beslutsunderlaget för U 843",
-             "Första sidan av beslutsunderlaget för U 843, som Vitki skapar med ett klick i panelen. Skärmbild ur Vitki "
-             "(dokumentet i Word-format).")
 IMG04 = bild("04_kanske_nagon_annan.png", "Modellens kanske någon annan",
              "Statistik → Vem ristade? i Vitki: när ingen av modellens ristare får minst 35 procent säger den kanske någon "
              "annan. Skärmbild ur Vitki.")
@@ -310,7 +307,7 @@ summary = (f"Två av tre svenska runstenar saknar ristare i Rundata. Vitki går 
            f"ett blindprov på {B['n_attributed']} stenar, där svaret var dolt, hade de nya förslagen rätt fyra gånger av fem. "
            "Här är de fem starkaste, och hur Vitki kommer fram till dem.")
 
-body = f"""Jag vill nu visa en av de verkliga styrkorna i Vitki.
+body = f"""Vi vill nu visa en av de verkliga styrkorna i Vitki.
 
 Av de {sv(len(stones))} svenska vikingatida runstenarna i Samnordisk runtextdatabas (Rundata) saknar {sv(N['n_unattributed'])} en ristare – två av tre. Ingen har antecknat vem som högg dem, och för de flesta kommer vi aldrig att få veta det. Men stenarna bär spår av sina ristare: hur orden stavas, vilka tecken som skiljer dem åt, ornamentiken, platsen. Det är sådana spår runologerna följer när de attribuerar en sten för hand, en i taget. Vitki följer dem för alla stenar på en gång och säger för varje sten om beläggen pekar mot någon av de ristare Vitki känner – och hur starkt.
 
@@ -318,13 +315,13 @@ Det syns i **Stenöversikt**. Där får {C['nytt förslag']} stenar utan ristare
 
 {IMG01}
 
-Ett förslag är bara värt något om vi vet hur ofta det stämmer. Därför börjar jag inte med förslagen utan med ett prov.
+Ett förslag är bara värt något om vi vet hur ofta det stämmer. Därför börjar vi inte med förslagen utan med ett prov.
 
 ## Först ett blindprov
 
-Rundata anger en säker ristare för {B['n_attributed']} runstenar. Jag lät Vitki gå igenom dem en i taget med svaret dolt. Ristaren togs bort ur stenens uppgifter, och allt Vitki vet om ristarna – var de verkade, vilka stilgrupper och bergarter de använde, hur de stavade – räknades om utan den stenen. Sedan fick Vitki säga sitt, precis som om stenen aldrig hade haft någon ristare. Hur provet skulle gå till och vad som skulle räknas som framgång skrev jag ner och låste innan jag såg ett enda resultat.
+Rundata anger en säker ristare för {B['n_attributed']} runstenar. Vi lät Vitki gå igenom dem en i taget med svaret dolt. Ristaren togs bort ur stenens uppgifter, och allt Vitki vet om ristarna – var de verkade, vilka stilgrupper och bergarter de använde, hur de stavade – räknades om utan den stenen. Sedan fick Vitki säga sitt, precis som om stenen aldrig hade haft någon ristare. Hur provet skulle gå till och vad som skulle räknas som framgång skrev vi ner och låste innan vi såg ett enda resultat.
 
-Som motståndare valde jag den enklaste regel jag kunde komma på: gissa på ristaren bakom den närmaste stenen med känd ristare. Regeln är inte dum. Ristarna arbetade i sina hemtrakter, och grannstenen har ofta samma ristare.
+Som motståndare valde vi den enklaste regel vi kunde komma på: gissa på ristaren bakom den närmaste stenen med känd ristare. Regeln är inte dum. Ristarna arbetade i sina hemtrakter, och grannstenen har ofta samma ristare.
 
 {CHART}
 
@@ -352,13 +349,9 @@ Sist kommer kontrollerna: stämmer **området**, **stilgruppen**, **språkdragen
 
 Formeln förutsätter att vittnena är oberoende, och det är de inte helt, för båda tittar delvis på stavningen. Därför är styrkan ett index att sortera stenarna efter, inte en sannolikhet. Det är också därför blindprovet behövdes: det visar vad indexet är värt.
 
-Ett klick till i panelen ger ett **beslutsunderlag**, ett dokument för den som förvaltar Rundata eller Runor. Där redovisas varje belägg för och emot, vad som skulle kunna avgöra frågan och en rekommendation. För U 843 lyder den: attribuera stenen till Fot, efter en runologisk granskning av ornamentik och runformer.
-
-{IMG03}
-
 ## Fem stenar
 
-Här är de fem starkaste nya förslagen. Jag har inte valt dem för hand: de är Stenöversiktens fem högsta, enligt regeln i den låsta planen.
+Här är de fem starkaste nya förslagen. Vi har inte valt dem för hand: de är Stenöversiktens fem högsta, enligt regeln i den låsta planen.
 
 {IMG05}
 
@@ -426,16 +419,16 @@ Ett prov mot Runor 2020 blev för litet för att säga något. Runor anger rista
 
 ## Vad det ger oss
 
-En modell som den här kan inte ge oss nya attribueringar. Det kan bara den som granskar stenarna. Men den ger runologin något som är svårt att få fram för hand: en arbetslista över alla Sveriges runstenar utan ristare, ordnad efter hur starkt beläggen pekar, med varje belägg synligt och ett beslutsunderlag ett klick bort. Den visar var forskningens egna grupper håller ihop i datan, som när Sö 158, som en gång lästes som signerad av Traen, hamnar bland Traen-stenarna utan att Vitki vet om den läsningen. Den hittar platserna där frågan är öppen, som Österberga. Och den kan säga hur ofta den har rätt: fyra gånger av fem, i ett prov där svaret var dolt.
+En modell som den här kan inte ge oss nya attribueringar. Det kan bara den som granskar stenarna. Men den ger runologin något som är svårt att få fram för hand: en arbetslista över alla Sveriges runstenar utan ristare, ordnad efter hur starkt beläggen pekar, med varje belägg synligt. Den visar var forskningens egna grupper håller ihop i datan, som när Sö 158, som en gång lästes som signerad av Traen, hamnar bland Traen-stenarna utan att Vitki vet om den läsningen. Den hittar platserna där frågan är öppen, som Österberga. Och den kan säga hur ofta den har rätt: fyra gånger av fem, i ett prov där svaret var dolt.
 
 :::box Det viktigaste i korthet
 - Vitki gör för alla runstenar på en gång det som runologer har gjort för hand, en sten i taget, och kan dessutom säga hur ofta det stämmer: i ett blindprov där svaret var dolt hade de nya förslagen rätt fyra gånger av fem, ungefär dubbelt så ofta som en gissning på närmaste kända ristare.
 - De fem starkaste förslagen är hypoteser att pröva mot stenarna – ornamentik, runformer och huggteknik – inte nya attribueringar. Det svagaste, Sö 72, vilar på stavningen ensam.
 - Traen är ingen person utan en grupp stenar med ett felläst namn. Ett Traen-förslag placerar en sten i en lokal tradition i Södermanland, där Vitki också är som osäkrast.
-- Styrkan ligger i öppenheten: två vittnen, fyra kontroller och ett beslutsunderlag för varje sten, så att den som vet mer kan se exakt var resonemanget brister.
+- Styrkan ligger i öppenheten: två vittnen och fyra kontroller, redovisade för varje sten, så att den som vet mer kan se exakt var resonemanget brister.
 :::
 
-:::box Så räknade jag
+:::box Så räknade vi
 - Planen för provet skrevs och låstes 2026-10-21, innan blindprovet räknades (SHA-256 {SHA[:12]}…; metoddokumentationen avsnitt 1x och 14c).
 - Underlag: vikingatida runstenar i Samnordisk runtextdatabas 3.1, korpusversion {FP}. Stenöversiktens regel är oförändrad: nytt förslag vid en styrka på minst 0,5, möjligt vid minst 0,3, och modellens kanske någon annan när förstavalet får under {pr(A['open_set']['threshold'])} procent.
 - Blindprovet: {B['n_attributed']} stenar med säker ristare. Attribueringen doldes och ristarnas landskap räknades om utan stenen; modellens sannolikheter är korsvaliderade, alltså hämtade från modeller som inte såg stenen. En oberoende omräkning av 60 slumpvis valda stenar gav exakt samma resultat.
@@ -445,7 +438,7 @@ En modell som den här kan inte ge oss nya attribueringar. Det kan bara den som 
 
 ## Se själv
 
-Öppna **Stenöversikt** i Vitki, stäng av alla statusar utom *nytt förslag* och välj *Visa som tabell*. Klicka på en sten för att se vad varje metod säger om den, och på *Skapa beslutsunderlag* för dokumentet. Modellen och dess *kanske någon annan* finns under Statistik → *Vem ristade?*. Blindprovets alla rader finns i Vitkis öppna källkod.
+Öppna **Stenöversikt** i Vitki, stäng av alla statusar utom *nytt förslag* och välj *Visa som tabell*. Klicka på en sten för att se vad varje metod säger om den. Modellen och dess *kanske någon annan* finns under Statistik → *Vem ristade?*. Blindprovets alla rader finns i Vitkis öppna källkod.
 
 ## Källor
 
@@ -459,6 +452,7 @@ En modell som den här kan inte ge oss nya attribueringar. Det kan bara den som 
 
 for word in (" han ", " hans ", " hon ", " henne ", " hennes "):  # no pronouns for carvers or the people on the stones
     assert word not in body, word
+assert not re.search(r"\b(jag|mig|min)\b", body, re.I) and "beslutsunderlag" not in body.lower()  # we-voice, as the other articles
 assert not re.search(r"^\|", body, re.M)  # no tables (the article page cannot show them)
 
 out = {"slug": "fem-runstenar-soker-sin-ristare", "title": title, "summary": summary, "body": body,

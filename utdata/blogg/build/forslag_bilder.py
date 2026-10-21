@@ -1,21 +1,15 @@
 """Skärmbilder till artikeln om Vitkis ristarförslag för stenar utan ristare (build_forslag.py): Stenöversiktens diagram
-över stenarna utan ristare, U 843:s panel med metodernas besked, första sidan av beslutsunderlaget för U 843 och
-Statistiks ruta om "kanske någon annan". Tas ur den körande appen (localhost:3000 och :8000).
+över stenarna utan ristare, U 843:s panel med metodernas besked, topplistan och Statistiks ruta om "kanske någon annan". Tas ur den körande appen (localhost:3000 och :8000).
     PLAYWRIGHT_BROWSERS_PATH=/Volumes/2TB/cache/ms-playwright .venv/bin/python utdata/blogg/build/forslag_bilder.py
 """
-import json
 import os
-import subprocess
-import urllib.request
 
 from PIL import Image
 from playwright.sync_api import sync_playwright
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 OUT = os.path.join(ROOT, "utdata", "blogg", "forslag")
-DOCX = "/Volumes/2TB/Antigrvity/Runes/logs/forslag_utkast/docx"  # the Word file is a by-product, kept off the repo
 os.makedirs(OUT, exist_ok=True)
-os.makedirs(DOCX, exist_ok=True)
 
 
 def shot(loc, name):
@@ -74,17 +68,3 @@ with sync_playwright() as p:
 
     print("fel:", errs)
     b.close()
-
-# The decision document as the reader gets it: the Word file from the same endpoint as the panel's button, page 1
-# rendered by Quick Look and cut below the table of evidence
-req = urllib.request.Request("http://localhost:8000/api/reports/attribution", method="POST",
-                             headers={"Content-Type": "application/json"},
-                             data=json.dumps({"signum": "U 843", "carver": "Fot 2", "format": "docx", "lang": "sv",
-                                              "author": "Viktor Kvant"}).encode())
-docx = os.path.join(DOCX, "U843_beslutsunderlag.docx")
-with urllib.request.urlopen(req, timeout=600) as r, open(docx, "wb") as fh:
-    fh.write(r.read())
-subprocess.run(["qlmanage", "-t", "-s", "1800", "-o", DOCX, docx], check=True, capture_output=True)
-im = Image.open(docx + ".png").convert("RGB")
-im.crop((0, 0, im.width, 1640)).save(os.path.join(OUT, "03_u843_beslutsunderlag.png"))
-print("sparade 03_u843_beslutsunderlag.png", im.size)
