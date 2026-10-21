@@ -257,16 +257,16 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
     catch (e) { setError(e instanceof Error ? e.message : "Det gick inte."); }
   };
 
-  // The article of the month straight from the list, without opening it (POST /api/admin/blog/featured); null: none
+  // The article of the week straight from the list, without opening it (POST /api/admin/blog/featured); null: none
   const feature = async (p: BlogPost | null) => {
     setBusy(`featured:${p?.id ?? ""}`); setError(null);
     try {
       await call("/api/admin/blog/featured", { method: "POST", body: JSON.stringify({ id: p?.id ?? null }) });
       setDraft(d => (d.id ? { ...d, featured: d.id === p?.id } : d));  // the open article's checkbox follows
-      setNote(p ? `”${p.title}” är nu månadens artikel. Webbplatsen uppdateras om en halv minut; se rutan Webbplatsen.` : "Ingen artikel är månadens artikel längre.");
+      setNote(p ? `”${p.title}” är nu veckans artikel. Webbplatsen uppdateras om en halv minut; se rutan Webbplatsen.` : "Ingen artikel är veckans artikel längre.");
       load(); refreshBlog(); siteSoon();
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Månadens artikel kunde inte sparas.");
+      setError(e instanceof Error ? e.message : "Veckans artikel kunde inte sparas.");
     } finally {
       setBusy(null);
     }
@@ -355,7 +355,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
         </label>
         <label className="text-xs font-bold text-slate-600 sm:col-span-1 flex items-start gap-2 pt-5">
           <input type="checkbox" checked={!!draft.featured} onChange={e => setDraft(d => ({ ...d, featured: e.target.checked }))} className="mt-0.5" />
-          <span>Månadens artikel
+          <span>Veckans artikel
             <span className="block font-normal text-slate-500">Visas först och stort på startsidan och först bland artiklarna, oavsett datum. Bara en åt gången; kan också sättas direkt i listan nedan.</span>
           </span>
         </label>
@@ -645,14 +645,14 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
                 : <span className={`text-[10px] font-bold rounded-md px-1.5 border ${p.published ? "border-emerald-300 bg-emerald-50 text-emerald-800" : "border-slate-300 bg-slate-50 text-slate-600"}`}>
                     {p.published ? "publicerad" : "utkast"}
                   </span>}
-              {p.featured && <span className="text-[10px] font-bold rounded-md px-1.5 border border-[#b7410e]/40 bg-[#fbf3ee] text-[#b7410e]">månadens artikel</span>}
+              {p.featured && <span className="text-[10px] font-bold rounded-md px-1.5 border border-[#b7410e]/40 bg-[#fbf3ee] text-[#b7410e]">veckans artikel</span>}
               <span className="min-w-0 flex-1 font-semibold text-slate-900 truncate" translate="no">{p.title}</span>
               {p.published && (p.featured
                 ? <button onClick={() => feature(null)} disabled={!!busy} className="text-xs font-semibold text-slate-500 hover:text-slate-900 disabled:opacity-40">
-                    {busy === `featured:` ? "Sparar …" : "Inte månadens artikel"}
+                    {busy === `featured:` ? "Sparar …" : "Inte veckans artikel"}
                   </button>
                 : <button onClick={() => feature(p)} disabled={!!busy} className="text-xs font-semibold text-[#b7410e] hover:underline disabled:opacity-40">
-                    {busy === `featured:${p.id}` ? "Sparar …" : "Gör till månadens artikel"}
+                    {busy === `featured:${p.id}` ? "Sparar …" : "Gör till veckans artikel"}
                   </button>)}
               <button onClick={() => edit(p)} className="text-xs font-semibold text-[#b7410e] hover:underline">Redigera</button>
               {p.published && <button onClick={() => unpublish(p)} className="text-xs font-semibold text-slate-500 hover:text-slate-900">Avpublicera</button>}

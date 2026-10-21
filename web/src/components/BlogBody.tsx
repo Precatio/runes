@@ -23,7 +23,7 @@ export interface BlogPost {
   views?: number;
   // The R pattern the post is about ("Förändring|bon"), set by a draft from a chosen topic
   topic?: string;
-  // "Månadens artikel": first and large on the start page and first in the list, whatever its date
+  // "Veckans artikel": first and large on the start page and first in the list, whatever its date
   featured?: boolean;
   // One type and some subjects from the fixed list in lib/labels.ts ("Forskning", "Ristare", …)
   labels?: string[];

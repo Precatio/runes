@@ -45,7 +45,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const { slug } = await params;
   const post = await getPost(decodeURIComponent(slug));
   if (!post) notFound();
-  // three other articles: the article of the month first, then the newest
+  // three other articles: the article of the week first, then the newest
   const more = featuredFirst((await listPosts()).posts.filter(p => p.slug !== post.slug)).slice(0, 3);
   return (
     <BlogShell>

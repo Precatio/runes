@@ -5,6 +5,9 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Veckans artikel
+- Den utvalda artikeln heter nu *Veckans artikel* i stället för *Månadens artikel* – på startsidan, i listan och i Admin.
+
 ### Mest lästa på webbplatsen
 - Artikellistan på vitkirunor.se (svenska och engelska) kan sorteras **Senaste** eller **Mest lästa** (`?sortera=mest-lasta`).
   Sidvisningarna per artikel (svenska och engelska sidan ihop) följer med exporten av artiklarna och uppdateras när

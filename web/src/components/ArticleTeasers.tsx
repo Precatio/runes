@@ -7,7 +7,7 @@ import { featuredFirst } from "@/lib/featured";
 import { useLanguage } from "@/components/LanguageContext";
 import { postPath } from "@/lib/blogSeo";
 
-// The articles on the start page: the article of the month large (or the latest, when none is chosen), with its first
+// The articles on the start page: the article of the week large (or the latest, when none is chosen), with its first
 // photo, and up to three more beside it. Rendered on the server in Swedish and shown in English when the reader has
 // chosen English.
 export default function ArticleTeasers({ posts, photo }: { posts: BlogPost[]; photo?: { src: string; alt: string; credit: string | null } | null }) {
@@ -18,7 +18,7 @@ export default function ArticleTeasers({ posts, photo }: { posts: BlogPost[]; ph
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-8">
       <article className="rounded-3xl bg-white border border-slate-200 overflow-hidden flex flex-col">
-        {/* The article of the month is marked with a band of Vitki's rust red along the top of the box */}
+        {/* The article of the week is marked with a band of Vitki's rust red along the top of the box */}
         {first.featured && <div className="h-1.5 shrink-0 bg-[#b7410e]" aria-hidden />}
         <div className="flex flex-1 flex-col md:flex-row lg:flex-col xl:flex-row">
         {photo && (
@@ -30,7 +30,7 @@ export default function ArticleTeasers({ posts, photo }: { posts: BlogPost[]; ph
           </Link>
         )}
         <div className="p-7 flex flex-col">
-          <div className="text-xs font-bold uppercase tracking-wider text-[#b7410e]">{first.featured ? "Månadens artikel" : "Senaste artikeln"} · {postDate(first, lang)}</div>
+          <div className="text-xs font-bold uppercase tracking-wider text-[#b7410e]">{first.featured ? "Veckans artikel" : "Senaste artikeln"} · {postDate(first, lang)}</div>
           <h3 className="mt-2 text-2xl md:text-3xl font-serif font-bold leading-tight" translate="no">
             <Link href={postPath(first.slug)} className="hover:text-[#b7410e]">{v.title}</Link>
           </h3>

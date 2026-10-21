@@ -1927,7 +1927,7 @@ dev-servrarna (`utdata/blogg/build/howto_huggspar_bilder.py`) och frysta i blogg
 **Mest lästa (från 2026-10-21).** Exporten (`src/site_export.export`) lägger till `views` per artikel: antalet sidvisningar av
 artikelns svenska och engelska sida i webbplatsens egen räkning (`site_views`, slaget view; `src/site_stats.views_by_slug`).
 Listan kan sorteras efter dem (`?sortera=mest-lasta`, `web/src/components/SortToggle.tsx`); nyast först är standard och
-månadens artikel ligger då först. Kan räkningen inte läsas behålls föregående antal. `src/site_export.refresh_views` kontrollerar
+veckans artikel ligger då först. Kan räkningen inte läsas behålls föregående antal. `src/site_export.refresh_views` kontrollerar
 en gång om dygnet om ordningen "mest lästa" har ändrats och publicerar då webbplatsen om; annars inte. Antalen visas inte
 för läsarna, bara ordningen.
 

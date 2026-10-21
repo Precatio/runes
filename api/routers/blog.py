@@ -42,7 +42,7 @@ class PostRequest(BaseModel):
     publish_at: str | None = Field(None, max_length=40)
     # The R pattern the post is about (src/blog_topics.py), so that the list of topics can show which are written
     topic: str = Field("", max_length=160)
-    # "Månadens artikel": shown first and large on the start page and first in the list, whatever its date; one at a time
+    # "Veckans artikel": shown first and large on the start page and first in the list, whatever its date; one at a time
     featured: bool = False
     # Etiketter ur den fasta listan (src/blog_labels.py): en typ och ett eller flera ämnen
     labels: list[str] = Field(default_factory=list, max_length=8)
@@ -186,7 +186,7 @@ def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
         if not old:
             data["createdAt"] = now
         ref.set(data, merge=True)
-        if req.featured:  # only one article of the month
+        if req.featured:  # only one article of the week
             for p in others:
                 if p.get("featured"):
                     col.document(p["id"]).set({"featured": False}, merge=True)
@@ -206,13 +206,13 @@ def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
 
 
 class FeaturedRequest(BaseModel):
-    # The article to make the article of the month; empty: none
+    # The article to make the article of the week; empty: none
     id: str | None = Field(None, max_length=64)
 
 
 @router.post("/admin/blog/featured")
 def set_featured(req: FeaturedRequest, _: dict = Depends(require_admin)):
-    """Gör en artikel till månadens artikel direkt i listan, utan att öppna den (eller ingen, med tomt id). Bara en åt
+    """Gör en artikel till veckans artikel direkt i listan, utan att öppna den (eller ingen, med tomt id). Bara en åt
     gången; datum och text ändras inte. Webbplatsen publiceras om en halv minut, eftersom startsidan och listan ändras."""
     posts = _all()
     if req.id and not any(p["id"] == req.id for p in posts):
@@ -225,7 +225,7 @@ def set_featured(req: FeaturedRequest, _: dict = Depends(require_admin)):
                 col.document(p["id"]).set({"featured": want}, merge=True)
         _forget()
     except Exception as e:
-        raise server_error(e, "Månadens artikel kunde inte sparas.", status_code=503)
+        raise server_error(e, "Veckans artikel kunde inte sparas.", status_code=503)
     from src import site_export
     site_export.publish_soon()
     return {"featured": req.id or None}

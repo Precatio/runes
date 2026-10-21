@@ -25,7 +25,7 @@ function Picture({ post, width, className }: { post: BlogPost; width: number; cl
   );
 }
 
-// The published posts: the article of the month first and large, then the others newest first, each a card that is
+// The published posts: the article of the week first and large, then the others newest first, each a card that is
 // a link as a whole; rendered on the server in Swedish and shown in English when chosen
 export default function BlogList({ posts, failed, order = "senaste" }: { posts: BlogPost[]; failed: boolean; order?: Order }) {
   const { lang } = useLanguage();
@@ -42,7 +42,7 @@ export default function BlogList({ posts, failed, order = "senaste" }: { posts: 
           <div className="text-sm text-slate-500">
             {p.featured && (
               <span className="mr-2 text-xs font-bold uppercase tracking-wider text-[#b7410e]">
-                {lang === "en" ? "Article of the month" : "Månadens artikel"}
+                {lang === "en" ? "Article of the week" : "Veckans artikel"}
               </span>
             )}
             <time dateTime={p.publishedAt ?? p.month}>{postDate(p, lang)}</time>{p.author ? ` · ${p.author}` : ""}
