@@ -762,7 +762,7 @@ språk, Uppsala universitet.`}
               Projektet är grundat av{" "}
               <a href="https://www.linkedin.com/in/viktor-kvant-555180108/" target="_blank" rel="noopener noreferrer" className="font-semibold text-slate-800 hover:text-[#b7410e]">Viktor Kvant</a>.
               Till vardags arbetar Viktor som digital analytiker, men ser dataanalys som ett övergripande yrkesfält där samma
-              analytiska metoder, AI-modeller och tekniker kan appliceras för att driva gränserna framåt även inom humaniora
+              analytiska metoder kan appliceras för att driva gränserna framåt även inom humaniora
               och arkeologi.
             </p>
             <p className="mt-4 text-slate-600 leading-relaxed">
