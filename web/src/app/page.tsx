@@ -164,7 +164,7 @@ const USE_CASES = [
 
 const FOR_STUDENTS = [
   {
-    title: "Färdiga uppsatsämnen",
+    title: "Förslag på uppsatsämnen",
     text: "Forskningsluckorna listar mönster som klarat de statistiska proven men saknar förklaring – vart och ett med en hypotes och ett förslag på hur den kan prövas. Det är i praktiken en ämneslista för kandidat- och masteruppsatser, med data och metod på plats.",
   },
   {
