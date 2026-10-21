@@ -1481,17 +1481,32 @@ en ristare är kärnans. Ett glapp på minst 25 år gör förslaget kronologiskt
 Har Rundata flera ristare för stenen (två som signerat tillsammans, eller en signatur och en attribuering; 113
 runstenar) räknas stödet för var och en, den bäst stödda redovisas och de övriga räknas inte som alternativ.
 
-Resultat (2026-10-11, efter granskningarna av U 92, U 1026 och U 735 – kronologisk stilkontroll, neutral bergart,
-språkdrag mot landskapet, stilgruppens kärna och ortografins marginal): 9 stenar kan vara felbedömda, 26 är omstridda,
-330 stöds och 160 har svagt underlag; 80 stenar utan ristare får ett nytt och 251 ett möjligt förslag. **Kontroll:**
-av 246 signerade stenar – där ristaren är känd – får 33 (13 %) ett alternativ ≥ 0,4 och fyra hamnar som "kan vara
-felbedömd". Före U 735-granskningen var det 57 (23 %): ett förstaval i ortografin med liten marginal och en ovanlig
-stilgrupp inom kärnans tidsram gav många falsklarm. Kategorin *omstridd* larmar fortfarande ofta i onödan, medan *kan
-vara felbedömd* sällan gör det. Måtten är index för att sortera och prioritera,
+Resultat (2026-10-21, korpusversion 5fdfd1e095bfb6fb, sedan R-modulen inte längre kortar listan över modellens förslag
+till 400 stenar): 9 stenar kan vara felbedömda, 26 är omstridda, 331 stöds och 159 har svagt underlag; 86 av 1 550
+stenar utan ristare får ett nytt och 292 ett möjligt förslag (2026-10-11, efter granskningarna av U 92, U 1026 och
+U 735 men före rättelsen: 330, 160, 80 och 251). **Kontroll:** av 246 signerade stenar – där ristaren är känd – får 35
+(14 %) ett alternativ ≥ 0,4 och tre hamnar som "kan vara felbedömd". Före U 735-granskningen var det 57 (23 %): ett
+förstaval i ortografin med liten marginal och en ovanlig stilgrupp inom kärnans tidsram gav många falsklarm. Kategorin
+*omstridd* larmar fortfarande ofta i onödan, medan *kan vara felbedömd* sällan gör det. Måtten är index för att
+sortera och prioritera,
 inte sannolikheter; bara modellens sannolikhet är kalibrerad. Metoderna är inte oberoende av Rundata: ortografi,
 område och stil kan ha legat till grund för attribueringarna (avsnitt 18). Profilen för en sten visar varje metods
 besked med förklaring, de tre starkaste alternativen med sina kontroller, och stenens höjd, textlängd och antal
 namn som percentil bland landskapets runstenar, med syfte, statusord, stilgrupp, seriation och grupp.
+
+**Blindprov av förslagen** (2026-10-21; analysplanen `utdata/forslag/analysplan_forslag.md`, låst innan provet räknades,
+SHA-256 i `analysis_plan_forslag.sha256`; `utdata/forslag/blindprov.py`, oberoende kontroll `kontroll.py`). För var och
+en av de 769 runstenarna med säker ristare doldes attribueringen – ristarnas landskap, stil-, bergarts- och
+språkprofiler räknades utan stenen, och modellens sannolikheter är de korsvaliderade – och statusen räknades som för en
+sten utan ristare. *Nytt förslag* gavs för 302 stenar och var Rundatas ristare i 248 (82 %, Wilson 77–86 %). Regeln
+*närmaste ristare* (ristarna bakom den närmaste andra stenen med säker ristare, alla vid lika avstånd) hade rätt på samma
+stenar i 133 (44 %); på 132 hade bara förslaget rätt och på 17 bara regeln (McNemar exakt p = 3 · 10⁻²³). Signerade
+stenar: 72 av 100 mot 42. *Möjligt förslag*: 108 av 195 (55 %) mot 66 (34 %). Styrka ≥ 0,7: 142 av 165 (86 %). Per
+landskap: Uppland 227 av 270 (84 %) mot 43 %, Södermanland 17 av 28 (61 %) mot 46 % (p = 0,39, alltså ingen säker
+skillnad). 133 stenar har en ristare utanför de 28 som kan föreslås; 23 av dem fick ändå ett nytt förslag och räknas
+som fel. Inget nytt förslag i provet vilade på ortografin ensam, så sådana förslag är inte prövade. Externt prov mot
+Runor 2020: 19 runstenar har en ristare där men inte i Rundata 3.1, åtta av dem en ristare som kan föreslås; inget fick
+nytt förslag, och ett av tre möjliga förslag stämde. Resultat och avvikelser från planen: `utdata/forslag/resultat.md`.
 
 *Landskapet runt stenen* (från 2026-10-12): stenprofilen visar närmaste teofora och sakrala ortnamn, centralortsnamn,
 medeltida kyrka och fornlämning av varje slag, med namn, avstånd och länk till Kulturmiljöregistret eller Wikidata, och

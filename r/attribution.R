@@ -364,7 +364,8 @@ result <- list(
   per_carver = per_carver, confused = confused,
   importance = head(imp_df %>% mutate(importance = signif(importance, 3)), 30),
   group_importance = group_imp %>% mutate(across(c(importance, share), r3)),
-  predictions = head(predictions, 400), n_predictions = length(predictions), near_km = NEAR_KM,
+  # All suggestions, not only the strongest: Stenöversikten (src/stone_overview.py) needs the model's answer for every stone
+  predictions = predictions, n_predictions = length(predictions), near_km = NEAR_KM,
   uncertain = list(n = length(unc), agree = sum(sapply(unc, function(p) isTRUE(p$agrees_rundata)))),
   open_set = open_set, n_someone_else = sum(sapply(predictions, `[[`, "someone_else")),
   figures = list(ablation = fig_ablation, calibration = fig_calib, importance = fig_imp, confusion = fig_conf),

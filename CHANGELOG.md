@@ -5,6 +5,14 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Stenöversiktens förslag: blindprov och rättelse
+- R-modulen `r/attribution.R` sparade bara modellens 400 första förslag, så stenar längre ned i listan fick inget
+  modellvärde i Stenöversikten. Nu sparas alla 923. Stenar utan ristare med *nytt förslag* blir 86 i stället för 79,
+  med *möjligt förslag* 292 i stället för 254.
+- Förslagen är prövade i ett blindprov enligt en låst analysplan (`utdata/forslag/`): på 769 stenar med säker ristare,
+  med attribueringen dold, hade *nytt förslag* rätt i 82 % mot 44 % för regeln "närmaste ristare"; på signerade
+  stenar 72 mot 42 %. I Södermanland är skillnaden inte säker (61 mot 46 %, 28 stenar). METHODS.md 14c.
+
 ### Läsarnas röst på artikelsidan
 - Artikelsidan (svenska och engelska) har rutan **Vad vill du läsa mer om?**: tolv ämnen att välja upp till tre av och
   ett eget förslag på högst 70 tecken. Rösten skickas som anonyma rader i besöksstatistiken (ingen ny databasregel),

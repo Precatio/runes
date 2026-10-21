@@ -1,0 +1,4720 @@
+{
+ "corpus": "5fdfd1e095bfb6fb",
+ "threshold": 0.35,
+ "counts": {
+  "inget förslag": 1172,
+  "möjligt förslag": 292,
+  "nytt förslag": 86
+ },
+ "n_unattributed": 1550,
+ "rows": [
+  {
+   "signum": "Sö 62",
+   "place": "Hässlö",
+   "province": "Sö",
+   "lost": false,
+   "carver": "Traen",
+   "strength": 0.881,
+   "model": 0.523,
+   "ortho": 0.75,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Traen ligger 24 km bort. Ristarens kända landskap: Sö (22).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Fp (9), Pr1 (3), RAK (2), Pr2 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: RAK, Fp, Pr1) motsvarar ungefär 980–1050 enligt Gräslunds kronologi; Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 10 jämförbara språkdrag talar 0 för Traen (stenens form är tydligt vanligare hos ristaren än på andra stenar i Sö), 1 emot (tydligt ovanligare hos ristaren) och 9 skiljer inte. Emot: diftongen ai i alla ord (monoftong: 6 % hos ristaren mot 20 % i Sö). Drag med färre än 10 jämförbara inskrifter hos ristaren är osäkra (o-runan för o-ljud: 8). Sammantaget är stenens språkdrag 1,1 gånger så vanliga hos Traen som på andra stenar i Sö; 39 % av 201 andra stenar där passar ristarens profil minst lika bra (p 0,391). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Stenen: gråsten. Säkra stenar av Traen med uppgift (18): gråsten (9), granit (4), gnejs (3), jotnisk sandsten (1). Granit och närstående är inte tydligt vanligare hos ristaren (72 %) än på runstenarna i landskapet i stort (69 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Traen",
+   "model_top_p": 0.523,
+   "model_probs": {
+    "Traen": 0.523,
+    "Balle": 0.098,
+    "Halvdan": 0.063
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Traen",
+     "similarity": 0.575,
+     "reliability": 0.833
+    },
+    {
+     "carver": "Tidkume",
+     "similarity": 0.53,
+     "reliability": 0.462
+    },
+    {
+     "carver": "Björn 2 eller -björn",
+     "similarity": 0.497,
+     "reliability": 0.5
+    },
+    {
+     "carver": "Torbjörn 2",
+     "similarity": 0.48,
+     "reliability": 0.212
+    },
+    {
+     "carver": "Ärnfast",
+     "similarity": 0.46,
+     "reliability": 0.208
+    }
+   ],
+   "n_words": 12,
+   "ortho_margin": 0.045,
+   "style": "Pr1",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "Sö 158",
+   "place": "Österberga",
+   "province": "Sö",
+   "lost": false,
+   "carver": "Traen",
+   "strength": 0.866,
+   "model": 0.678,
+   "ortho": 0.583,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Traen ligger 2 km bort. Ristarens kända landskap: Sö (22).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Fp (9), Pr1 (3), RAK (2), Pr2 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: RAK, Fp, Pr1) motsvarar ungefär 980–1050 enligt Gräslunds kronologi; Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 9 jämförbara språkdrag talar 2 för Traen (stenens form är tydligt vanligare hos ristaren än på andra stenar i Sö), 0 emot (tydligt ovanligare hos ristaren) och 7 skiljer inte. För: bindrunor (ja: 11 % hos ristaren mot 5 % i Sö); diftongen ai i alla ord (båda: 25 % hos ristaren mot 13 % i Sö). Sammantaget är stenens språkdrag 7,0 gånger så vanliga hos Traen som på andra stenar i Sö; 1 % av 206 andra stenar där passar ristarens profil minst lika bra (p 0,010). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Traen",
+   "model_top_p": 0.678,
+   "model_probs": {
+    "Traen": 0.678,
+    "Balle": 0.084,
+    "Halvdan": 0.05
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Traen",
+     "similarity": 0.642,
+     "reliability": 0.583
+    },
+    {
+     "carver": "Tidkume",
+     "similarity": 0.548,
+     "reliability": 0.323
+    },
+    {
+     "carver": "Ärnfast",
+     "similarity": 0.54,
+     "reliability": 0.146
+    },
+    {
+     "carver": "Torbjörn 2",
+     "similarity": 0.501,
+     "reliability": 0.148
+    },
+    {
+     "carver": "Björn 2 eller -björn",
+     "similarity": 0.489,
+     "reliability": 0.35
+    }
+   ],
+   "n_words": 10,
+   "ortho_margin": 0.094,
+   "style": "Fp",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "nämns",
+    "text": "Runor 2020 nämner Traen i en anmärkning: Tidigare tolkad som signerad av Traen.",
+    "references": [
+     "Fv 1981:196, <http://fornvannen.se/pdf/1980talet/1981_186.pdf>"
+    ]
+   }
+  },
+  {
+   "signum": "U 1026",
+   "place": "Lena kyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.847,
+   "model": 0.847,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Öpir 1 ligger 4 km bort. Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "Av 11 jämförbara språkdrag talar 4 för Öpir 1 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 7 skiljer inte. För: skiljetecken (apostrof: 55 % hos ristaren mot 11 % i U); diftongen au i 'och' (monoftong: 72 % hos ristaren mot 38 % i U); o-runan för o-ljud (o-runa: 55 % hos ristaren mot 29 % i U); æftiR eller at (at: 33 % hos ristaren mot 22 % i U). Sammantaget är stenens språkdrag 11,5 gånger så vanliga hos Öpir 1 som på andra stenar i U; 2 % av 594 andra stenar där passar ristarens profil minst lika bra (p 0,018). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: granit. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Granit och närstående är inte tydligt vanligare hos ristaren (77 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.847,
+   "model_probs": {
+    "Öpir 1": 0.847,
+    "Likbjörn": 0.04,
+    "Åsmund": 0.039
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr4",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "samma som",
+    "text": "Runor 2020: samma ristare som U 1027 (namnlös).",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 843",
+   "place": "Hässle",
+   "province": "U",
+   "lost": true,
+   "carver": "Fot 2",
+   "strength": 0.844,
+   "model": 0.718,
+   "ortho": 0.447,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Fot 2 står på samma plats (under 1 km). Ristarens kända landskap: U (78).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (28), Pr3 (18), Pr2 (5), RAK (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr3, Pr4) motsvarar ungefär 1050–1100 enligt Gräslunds kronologi; Pr2, RAK finns bara på enstaka stenar.",
+    "språkdrag": "Av 11 jämförbara språkdrag talar 2 för Fot 2 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 9 skiljer inte. För: skiljetecken (kryss: 73 % hos ristaren mot 15 % i U); diftongen au i 'och' (auk: 95 % hos ristaren mot 52 % i U). Sammantaget är stenens språkdrag 18,1 gånger så vanliga hos Fot 2 som på andra stenar i U; 1 % av 624 andra stenar där passar ristarens profil minst lika bra (p 0,011). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Fot 2",
+   "model_top_p": 0.718,
+   "model_probs": {
+    "Fot 2": 0.718,
+    "Öpir 1": 0.124,
+    "Arbjörn": 0.056
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Fot 2",
+     "similarity": 0.883,
+     "reliability": 0.447
+    },
+    {
+     "carver": "Gunnar",
+     "similarity": 0.751,
+     "reliability": 0.519
+    },
+    {
+     "carver": "Hägvid",
+     "similarity": 0.709,
+     "reliability": 0.3
+    },
+    {
+     "carver": "Torsten",
+     "similarity": 0.694,
+     "reliability": 0.42
+    },
+    {
+     "carver": "Äskil 2",
+     "similarity": 0.639,
+     "reliability": 0.35
+    }
+   ],
+   "n_words": 8,
+   "ortho_margin": 0.132,
+   "style": "?",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "Sö 72",
+   "place": "Kesäter",
+   "province": "Sö",
+   "lost": true,
+   "carver": "Traen",
+   "strength": 0.833,
+   "model": 0.0,
+   "ortho": 0.833,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Traen ligger 46 km bort. Ristarens kända landskap: Sö (22).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Fp (9), Pr1 (3), RAK (2), Pr2 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: RAK, Fp, Pr1) motsvarar ungefär 980–1050 enligt Gräslunds kronologi; Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 13 jämförbara språkdrag talar 2 för Traen (stenens form är tydligt vanligare hos ristaren än på andra stenar i Sö), 1 emot (tydligt ovanligare hos ristaren) och 10 skiljer inte. För: diftongen au i 'och' (monoftong: 25 % hos ristaren mot 11 % i Sö, bara 4 inskrifter); bindrunor (ja: 11 % hos ristaren mot 5 % i Sö). Emot: æftiR eller at (æftiR: 15 % hos ristaren mot 42 % i Sö). Drag med färre än 10 jämförbara inskrifter hos ristaren är osäkra (diftongen au i 'och': 4; stavning av 'efter': 3; o-runan för o-ljud: 8). Sammantaget är stenens språkdrag 3,9 gånger så vanliga hos Traen som på andra stenar i Sö; 4 % av 199 andra stenar där passar ristarens profil minst lika bra (p 0,035). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": null,
+   "model_top_p": null,
+   "model_probs": {},
+   "someone_else": null,
+   "ortho_ranking": [
+    {
+     "carver": "Traen",
+     "similarity": 0.555,
+     "reliability": 0.833
+    },
+    {
+     "carver": "Ärnfast",
+     "similarity": 0.498,
+     "reliability": 0.208
+    },
+    {
+     "carver": "Tidkume",
+     "similarity": 0.476,
+     "reliability": 0.462
+    },
+    {
+     "carver": "Björn 2 eller -björn",
+     "similarity": 0.469,
+     "reliability": 0.5
+    },
+    {
+     "carver": "Torbjörn 2",
+     "similarity": 0.468,
+     "reliability": 0.212
+    }
+   ],
+   "n_words": 13,
+   "ortho_margin": 0.057,
+   "style": "Fp",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 482",
+   "place": "Kasby",
+   "province": "U",
+   "lost": false,
+   "carver": "Fot 2",
+   "strength": 0.819,
+   "model": 0.673,
+   "ortho": 0.447,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Fot 2 står på samma plats (under 1 km). Ristarens kända landskap: U (78).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (28), Pr3 (18), Pr2 (5), RAK (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr3, Pr4) motsvarar ungefär 1050–1100 enligt Gräslunds kronologi; Pr2, RAK finns bara på enstaka stenar.",
+    "språkdrag": "Av 11 jämförbara språkdrag talar 4 för Fot 2 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 7 skiljer inte. För: skiljetecken (kryss: 73 % hos ristaren mot 15 % i U); o-runan för o-ljud (o-runa: 56 % hos ristaren mot 30 % i U); diftongen au i 'och' (auk: 95 % hos ristaren mot 52 % i U); diftongen ai i alla ord (båda: 23 % hos ristaren mot 15 % i U). Sammantaget är stenens språkdrag 34,5 gånger så vanliga hos Fot 2 som på andra stenar i U; 1 % av 624 andra stenar där passar ristarens profil minst lika bra (p 0,006). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: granit. Säkra stenar av Fot 2 med uppgift (64): granit (41), rödgrå granit (5), gnejs (3), röd granit (3). Granit och närstående är inte tydligt vanligare hos ristaren (91 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Fot 2",
+   "model_top_p": 0.673,
+   "model_probs": {
+    "Fot 2": 0.673,
+    "Öpir 1": 0.149,
+    "Balle": 0.032
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Fot 2",
+     "similarity": 0.874,
+     "reliability": 0.447
+    },
+    {
+     "carver": "Gunnar",
+     "similarity": 0.76,
+     "reliability": 0.519
+    },
+    {
+     "carver": "Hägvid",
+     "similarity": 0.748,
+     "reliability": 0.3
+    },
+    {
+     "carver": "Äskil 2",
+     "similarity": 0.626,
+     "reliability": 0.35
+    },
+    {
+     "carver": "Torsten",
+     "similarity": 0.611,
+     "reliability": 0.42
+    }
+   ],
+   "n_words": 8,
+   "ortho_margin": 0.114,
+   "style": "Pr1",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "Sö 70",
+   "place": "Hedenlunda",
+   "province": "Sö",
+   "lost": false,
+   "carver": "Traen",
+   "strength": 0.788,
+   "model": 0.491,
+   "ortho": 0.583,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Traen ligger 22 km bort. Ristarens kända landskap: Sö (22).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Fp (9), Pr1 (3), RAK (2), Pr2 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: RAK, Fp, Pr1) motsvarar ungefär 980–1050 enligt Gräslunds kronologi; Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 8 jämförbara språkdrag talar 0 för Traen (stenens form är tydligt vanligare hos ristaren än på andra stenar i Sö), 0 emot (tydligt ovanligare hos ristaren) och 8 skiljer inte. Sammantaget är stenens språkdrag 1,7 gånger så vanliga hos Traen som på andra stenar i Sö; 15 % av 206 andra stenar där passar ristarens profil minst lika bra (p 0,150). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Stenen: granit. Säkra stenar av Traen med uppgift (18): gråsten (9), granit (4), gnejs (3), jotnisk sandsten (1). Granit och närstående är inte tydligt vanligare hos ristaren (72 %) än på runstenarna i landskapet i stort (69 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Traen",
+   "model_top_p": 0.491,
+   "model_probs": {
+    "Traen": 0.491,
+    "Balle": 0.13,
+    "Tore 1": 0.061
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Traen",
+     "similarity": 0.483,
+     "reliability": 0.583
+    },
+    {
+     "carver": "Tidkume",
+     "similarity": 0.432,
+     "reliability": 0.323
+    },
+    {
+     "carver": "Torbjörn 2",
+     "similarity": 0.421,
+     "reliability": 0.148
+    },
+    {
+     "carver": "Ärnfast",
+     "similarity": 0.415,
+     "reliability": 0.146
+    },
+    {
+     "carver": "Björn 2 eller -björn",
+     "similarity": 0.391,
+     "reliability": 0.35
+    }
+   ],
+   "n_words": 10,
+   "ortho_margin": 0.051,
+   "style": "?",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "Sö 137",
+   "place": "Aspa",
+   "province": "Sö",
+   "lost": false,
+   "carver": "Traen",
+   "strength": 0.785,
+   "model": 0.414,
+   "ortho": 0.633,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Traen ligger 2 km bort. Ristarens kända landskap: Sö (22).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Fp (9), Pr1 (3), RAK (2), Pr2 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: RAK, Fp, Pr1) motsvarar ungefär 980–1050 enligt Gräslunds kronologi; Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 11 jämförbara språkdrag talar 1 för Traen (stenens form är tydligt vanligare hos ristaren än på andra stenar i Sö), 1 emot (tydligt ovanligare hos ristaren) och 9 skiljer inte. För: diftongen ai i alla ord (båda: 25 % hos ristaren mot 13 % i Sö). Emot: ʀ skrivet med r (r för ʀ: 0 % hos ristaren mot 7 % i Sö). Drag med färre än 10 jämförbara inskrifter hos ristaren är osäkra (o-runan för o-ljud: 8). Sammantaget är stenens språkdrag 2,8 gånger så vanliga hos Traen som på andra stenar i Sö; 5 % av 201 andra stenar där passar ristarens profil minst lika bra (p 0,050). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: gråsten. Säkra stenar av Traen med uppgift (18): gråsten (9), granit (4), gnejs (3), jotnisk sandsten (1). Granit och närstående är inte tydligt vanligare hos ristaren (72 %) än på runstenarna i landskapet i stort (69 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Traen",
+   "model_top_p": 0.414,
+   "model_probs": {
+    "Traen": 0.414,
+    "Balle": 0.178,
+    "Halvdan": 0.059
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Traen",
+     "similarity": 0.634,
+     "reliability": 0.833
+    },
+    {
+     "carver": "Ärnfast",
+     "similarity": 0.596,
+     "reliability": 0.208
+    },
+    {
+     "carver": "Torbjörn 2",
+     "similarity": 0.592,
+     "reliability": 0.212
+    },
+    {
+     "carver": "Tidkume",
+     "similarity": 0.58,
+     "reliability": 0.462
+    },
+    {
+     "carver": "Björn 2 eller -björn",
+     "similarity": 0.553,
+     "reliability": 0.5
+    }
+   ],
+   "n_words": 34,
+   "ortho_margin": 0.038,
+   "style": "RAK",
+   "style_uncertain": false,
+   "second": "Balle",
+   "second_strength": 0.178,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "§Q: $=Bianchi 2010:122f"
+    ]
+   }
+  },
+  {
+   "signum": "U 136",
+   "place": "Broby",
+   "province": "U",
+   "lost": false,
+   "carver": "Fot 2",
+   "strength": 0.78,
+   "model": 0.391,
+   "ortho": 0.638,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Fot 2 ligger 1 km bort. Ristarens kända landskap: U (78).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (28), Pr3 (18), Pr2 (5), RAK (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr3, Pr4) motsvarar ungefär 1050–1100 enligt Gräslunds kronologi; Pr2, RAK finns bara på enstaka stenar. Stenens stilgrupp Pr2 ligger inom kärnans tidsram men finns bara på 5 av 52 av ristarens stenar; den är möjlig men ovanlig för ristaren och avgör inte frågan.",
+    "språkdrag": "Av 12 jämförbara språkdrag talar 2 för Fot 2 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 2 emot (tydligt ovanligare hos ristaren) och 8 skiljer inte. För: skiljetecken (kryss: 73 % hos ristaren mot 15 % i U); diftongen au i 'och' (auk: 95 % hos ristaren mot 52 % i U). Emot: nasal före konsonant (utelämnad: 0 % hos ristaren mot 24 % i U, bara 7 inskrifter); o-runan för o-ljud (u-runa: 40 % hos ristaren mot 63 % i U). Drag med färre än 10 jämförbara inskrifter hos ristaren är osäkra (nasal före konsonant: 7). Sammantaget är stenens språkdrag 2,8 gånger så vanliga hos Fot 2 som på andra stenar i U; 8 % av 619 andra stenar där passar ristarens profil minst lika bra (p 0,084). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Fot 2",
+   "model_top_p": 0.391,
+   "model_probs": {
+    "Fot 2": 0.391,
+    "Balle": 0.143,
+    "Gunnar": 0.075
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Fot 2",
+     "similarity": 0.698,
+     "reliability": 0.638
+    },
+    {
+     "carver": "Gunnar",
+     "similarity": 0.635,
+     "reliability": 0.741
+    },
+    {
+     "carver": "Äskil 2",
+     "similarity": 0.569,
+     "reliability": 0.5
+    },
+    {
+     "carver": "Torsten",
+     "similarity": 0.56,
+     "reliability": 0.6
+    },
+    {
+     "carver": "Hägvid",
+     "similarity": 0.533,
+     "reliability": 0.429
+    }
+   ],
+   "n_words": 13,
+   "ortho_margin": 0.063,
+   "style": "Pr2",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "samma som",
+    "text": "Runor 2020: samma ristare som U 135 (namnlös).",
+    "references": [
+     "Salberger 1997"
+    ]
+   }
+  },
+  {
+   "signum": "U 854",
+   "place": "Prästgården",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.76,
+   "model": 0.303,
+   "ortho": 0.656,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Öpir 1 ligger 2 km bort. Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "Av 11 jämförbara språkdrag talar 1 för Öpir 1 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 10 skiljer inte. För: o-runan för o-ljud (o-runa: 55 % hos ristaren mot 29 % i U). Sammantaget är stenens språkdrag 2,0 gånger så vanliga hos Öpir 1 som på andra stenar i U; 14 % av 594 andra stenar där passar ristarens profil minst lika bra (p 0,141). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Stenen: blågrå granit. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Granit och närstående är inte tydligt vanligare hos ristaren (77 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.303,
+   "model_probs": {
+    "Öpir 1": 0.303,
+    "Likbjörn": 0.107,
+    "Åsmund": 0.107
+   },
+   "someone_else": true,
+   "ortho_ranking": [
+    {
+     "carver": "Öpir 1",
+     "similarity": 0.718,
+     "reliability": 0.656
+    },
+    {
+     "carver": "Visäte",
+     "similarity": 0.564,
+     "reliability": 0.778
+    },
+    {
+     "carver": "Åsmund",
+     "similarity": 0.537,
+     "reliability": 0.969
+    },
+    {
+     "carver": "Balle",
+     "similarity": 0.514,
+     "reliability": 0.478
+    },
+    {
+     "carver": "Torgöt Fotsarve",
+     "similarity": 0.491,
+     "reliability": 0.333
+    }
+   ],
+   "n_words": 37,
+   "ortho_margin": 0.154,
+   "style": "Pr4",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "§P: $=Fältex. A; §Q: $=Stille 1999b:139f"
+    ]
+   }
+  },
+  {
+   "signum": "U 957",
+   "place": "Vedyxa (Viggby)",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.759,
+   "model": 0.299,
+   "ortho": 0.656,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Öpir 1 står på samma plats (under 1 km). Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "Av 13 jämförbara språkdrag talar 4 för Öpir 1 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 1 emot (tydligt ovanligare hos ristaren) och 8 skiljer inte. För: skiljetecken (apostrof: 55 % hos ristaren mot 11 % i U); diftongen au i 'och' (monoftong: 72 % hos ristaren mot 38 % i U); o-runan för o-ljud (o-runa: 55 % hos ristaren mot 29 % i U); æftiR eller at (at: 33 % hos ristaren mot 22 % i U). Emot: ʀ skrivet med r (r för ʀ: 8 % hos ristaren mot 16 % i U). Drag med färre än 10 jämförbara inskrifter hos ristaren är osäkra (nasal före konsonant: 8). Sammantaget är stenens språkdrag 14,9 gånger så vanliga hos Öpir 1 som på andra stenar i U; 1 % av 589 andra stenar där passar ristarens profil minst lika bra (p 0,014). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: grovkornig granit. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Granit och närstående är inte tydligt vanligare hos ristaren (77 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.299,
+   "model_probs": {
+    "Öpir 1": 0.299,
+    "Likbjörn": 0.199,
+    "Åsmund": 0.086
+   },
+   "someone_else": true,
+   "ortho_ranking": [
+    {
+     "carver": "Öpir 1",
+     "similarity": 0.713,
+     "reliability": 0.656
+    },
+    {
+     "carver": "Åsmund",
+     "similarity": 0.552,
+     "reliability": 0.969
+    },
+    {
+     "carver": "Visäte",
+     "similarity": 0.541,
+     "reliability": 0.778
+    },
+    {
+     "carver": "Likbjörn",
+     "similarity": 0.444,
+     "reliability": 0.5
+    },
+    {
+     "carver": "Gudfast",
+     "similarity": 0.389,
+     "reliability": 0.333
+    }
+   ],
+   "n_words": 14,
+   "ortho_margin": 0.161,
+   "style": "Pr4",
+   "style_uncertain": true,
+   "second": "Likbjörn",
+   "second_strength": 0.199,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "Sö 335",
+   "place": "Ärja ödekyrka",
+   "province": "Sö",
+   "lost": false,
+   "carver": "Traen",
+   "strength": 0.748,
+   "model": 0.396,
+   "ortho": 0.583,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Traen ligger 17 km bort. Ristarens kända landskap: Sö (22).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Fp (9), Pr1 (3), RAK (2), Pr2 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: RAK, Fp, Pr1) motsvarar ungefär 980–1050 enligt Gräslunds kronologi; Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 10 jämförbara språkdrag talar 1 för Traen (stenens form är tydligt vanligare hos ristaren än på andra stenar i Sö), 0 emot (tydligt ovanligare hos ristaren) och 9 skiljer inte. För: bindrunor (ja: 11 % hos ristaren mot 5 % i Sö). Drag med färre än 10 jämförbara inskrifter hos ristaren är osäkra (o-runan för o-ljud: 8). Sammantaget är stenens språkdrag 3,9 gånger så vanliga hos Traen som på andra stenar i Sö; 3 % av 201 andra stenar där passar ristarens profil minst lika bra (p 0,035). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: sandsten. Säkra stenar av Traen med uppgift (18): gråsten (9), granit (4), gnejs (3), jotnisk sandsten (1). Sandsten är inte tydligt vanligare hos ristaren (11 %) än på runstenarna i landskapet i stort (21 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Traen",
+   "model_top_p": 0.396,
+   "model_probs": {
+    "Traen": 0.396,
+    "Balle": 0.168,
+    "Tore 1": 0.107
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Traen",
+     "similarity": 0.47,
+     "reliability": 0.583
+    },
+    {
+     "carver": "Ärnfast",
+     "similarity": 0.414,
+     "reliability": 0.146
+    },
+    {
+     "carver": "Äskil 2",
+     "similarity": 0.41,
+     "reliability": 0.35
+    },
+    {
+     "carver": "Torbjörn 2",
+     "similarity": 0.396,
+     "reliability": 0.148
+    },
+    {
+     "carver": "Tidkume",
+     "similarity": 0.388,
+     "reliability": 0.323
+    }
+   ],
+   "n_words": 11,
+   "ortho_margin": 0.056,
+   "style": "Fp",
+   "style_uncertain": false,
+   "second": "Balle",
+   "second_strength": 0.14,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "Fältex. A; SRI 3 s. 424"
+    ]
+   }
+  },
+  {
+   "signum": "U 894",
+   "place": "Söderby",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.747,
+   "model": 0.747,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Öpir 1 ligger 4 km bort. Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "Av 11 jämförbara språkdrag talar 3 för Öpir 1 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 8 skiljer inte. För: skiljetecken (apostrof: 55 % hos ristaren mot 11 % i U); stavning av 'efter' (i-…-iR: 46 % hos ristaren mot 18 % i U); diftongen au i 'och' (monoftong: 72 % hos ristaren mot 38 % i U). Sammantaget är stenens språkdrag 11,5 gånger så vanliga hos Öpir 1 som på andra stenar i U; 2 % av 594 andra stenar där passar ristarens profil minst lika bra (p 0,018). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: rödgrå grovkornig granit. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Granit och närstående är inte tydligt vanligare hos ristaren (77 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.747,
+   "model_probs": {
+    "Öpir 1": 0.747,
+    "Fot 2": 0.062,
+    "Åsmund": 0.041
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr4",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 1027",
+   "place": "Lena kyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.74,
+   "model": 0.74,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Öpir 1 ligger 4 km bort. Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "Av 1 jämförbara språkdrag talar 1 för Öpir 1 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 0 skiljer inte. För: skiljetecken (apostrof: 55 % hos ristaren mot 11 % i U). Sammantaget är stenens språkdrag 4,8 gånger så vanliga hos Öpir 1 som på andra stenar i U; 5 % av 724 andra stenar där passar ristarens profil minst lika bra (p 0,050). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: blågrå granit. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Granit och närstående är inte tydligt vanligare hos ristaren (77 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.74,
+   "model_probs": {
+    "Öpir 1": 0.74,
+    "Åsmund": 0.088,
+    "Gunnar": 0.043
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr4",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "samma som",
+    "text": "Runor 2020: samma ristare som U 1026 (namnlös).",
+    "references": [
+     "Källström 2018za"
+    ]
+   }
+  },
+  {
+   "signum": "U 227",
+   "place": "Grana",
+   "province": "U",
+   "lost": false,
+   "carver": "Fot 2",
+   "strength": 0.738,
+   "model": 0.526,
+   "ortho": 0.447,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Fot 2 ligger 2 km bort. Ristarens kända landskap: U (78).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (28), Pr3 (18), Pr2 (5), RAK (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr3, Pr4) motsvarar ungefär 1050–1100 enligt Gräslunds kronologi; Pr2, RAK finns bara på enstaka stenar.",
+    "språkdrag": "Av 13 jämförbara språkdrag talar 2 för Fot 2 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 1 emot (tydligt ovanligare hos ristaren) och 10 skiljer inte. För: skiljetecken (kryss: 73 % hos ristaren mot 15 % i U); diftongen au i 'och' (auk: 95 % hos ristaren mot 52 % i U). Emot: o-runan för o-ljud (u-runa: 40 % hos ristaren mot 63 % i U). Sammantaget är stenens språkdrag 8,7 gånger så vanliga hos Fot 2 som på andra stenar i U; 3 % av 619 andra stenar där passar ristarens profil minst lika bra (p 0,026). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: granit. Säkra stenar av Fot 2 med uppgift (64): granit (41), rödgrå granit (5), gnejs (3), röd granit (3). Granit och närstående är inte tydligt vanligare hos ristaren (91 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Fot 2",
+   "model_top_p": 0.526,
+   "model_probs": {
+    "Fot 2": 0.526,
+    "Öpir 1": 0.277,
+    "Gunnar": 0.035
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Fot 2",
+     "similarity": 0.861,
+     "reliability": 0.447
+    },
+    {
+     "carver": "Gunnar",
+     "similarity": 0.787,
+     "reliability": 0.519
+    },
+    {
+     "carver": "Torsten",
+     "similarity": 0.764,
+     "reliability": 0.42
+    },
+    {
+     "carver": "Hägvid",
+     "similarity": 0.714,
+     "reliability": 0.3
+    },
+    {
+     "carver": "Äskil 2",
+     "similarity": 0.648,
+     "reliability": 0.35
+    }
+   ],
+   "n_words": 10,
+   "ortho_margin": 0.074,
+   "style": "Pr4",
+   "style_uncertain": false,
+   "second": "Öpir 1",
+   "second_strength": 0.231,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 324",
+   "place": "Tjusta",
+   "province": "U",
+   "lost": false,
+   "carver": "Gunnar",
+   "strength": 0.73,
+   "model": 0.438,
+   "ortho": 0.519,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Gunnar står på samma plats (under 1 km). Ristarens kända landskap: U (43).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): RAK (25), Pr1 (10), Pr2 (2). Kärnan (stilgrupper på minst en tiondel av stenarna: RAK, Pr1) motsvarar ungefär 980–1050 enligt Gräslunds kronologi; Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 10 jämförbara språkdrag talar 4 för Gunnar (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 1 emot (tydligt ovanligare hos ristaren) och 5 skiljer inte. För: skiljetecken (kryss: 64 % hos ristaren mot 18 % i U); stungen k (g) (ja: 14 % hos ristaren mot 8 % i U); o-runan för o-ljud (u-runa: 100 % hos ristaren mot 58 % i U); stungen i (e) (nej: 78 % hos ristaren mot 51 % i U). Emot: kristen bön (nej: 46 % hos ristaren mot 79 % i U). Sammantaget är stenens språkdrag 11,0 gånger så vanliga hos Gunnar som på andra stenar i U; 1 % av 641 andra stenar där passar ristarens profil minst lika bra (p 0,011). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: kvartsrik granit. Säkra stenar av Gunnar med uppgift (37): granit (27), gnejs (3), gnejsgranit (3), gråsten (2). Granit och närstående är inte tydligt vanligare hos ristaren (92 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Gunnar",
+   "model_top_p": 0.438,
+   "model_probs": {
+    "Gunnar": 0.438,
+    "Åsmund": 0.08,
+    "Öpir 1": 0.079
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Gunnar",
+     "similarity": 0.747,
+     "reliability": 0.519
+    },
+    {
+     "carver": "Fot 2",
+     "similarity": 0.695,
+     "reliability": 0.447
+    },
+    {
+     "carver": "Hägvid",
+     "similarity": 0.597,
+     "reliability": 0.3
+    },
+    {
+     "carver": "Torsten",
+     "similarity": 0.566,
+     "reliability": 0.42
+    },
+    {
+     "carver": "Östen 1",
+     "similarity": 0.53,
+     "reliability": 0.233
+    }
+   ],
+   "n_words": 9,
+   "ortho_margin": 0.052,
+   "style": "Pr1",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 135",
+   "place": "Broby",
+   "province": "U",
+   "lost": false,
+   "carver": "Fot 2",
+   "strength": 0.723,
+   "model": 0.234,
+   "ortho": 0.638,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Fot 2 ligger 1 km bort. Ristarens kända landskap: U (78).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (28), Pr3 (18), Pr2 (5), RAK (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr3, Pr4) motsvarar ungefär 1050–1100 enligt Gräslunds kronologi; Pr2, RAK finns bara på enstaka stenar. Stenens stilgrupp Pr2 ligger inom kärnans tidsram men finns bara på 5 av 52 av ristarens stenar; den är möjlig men ovanlig för ristaren och avgör inte frågan.",
+    "språkdrag": "Av 11 jämförbara språkdrag talar 2 för Fot 2 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 9 skiljer inte. För: skiljetecken (kryss: 73 % hos ristaren mot 15 % i U); diftongen au i 'och' (auk: 95 % hos ristaren mot 52 % i U). Drag med färre än 10 jämförbara inskrifter hos ristaren är osäkra (stavning av 'denna': 5). Sammantaget är stenens språkdrag 18,8 gånger så vanliga hos Fot 2 som på andra stenar i U; 1 % av 624 andra stenar där passar ristarens profil minst lika bra (p 0,013). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: granit. Säkra stenar av Fot 2 med uppgift (64): granit (41), rödgrå granit (5), gnejs (3), röd granit (3). Granit och närstående är inte tydligt vanligare hos ristaren (91 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Fot 2",
+   "model_top_p": 0.234,
+   "model_probs": {
+    "Fot 2": 0.234,
+    "Gunnar": 0.143,
+    "Balle": 0.137
+   },
+   "someone_else": true,
+   "ortho_ranking": [
+    {
+     "carver": "Fot 2",
+     "similarity": 0.836,
+     "reliability": 0.638
+    },
+    {
+     "carver": "Gunnar",
+     "similarity": 0.752,
+     "reliability": 0.741
+    },
+    {
+     "carver": "Hägvid",
+     "similarity": 0.671,
+     "reliability": 0.429
+    },
+    {
+     "carver": "Äskil 2",
+     "similarity": 0.619,
+     "reliability": 0.5
+    },
+    {
+     "carver": "Torsten",
+     "similarity": 0.601,
+     "reliability": 0.6
+    }
+   ],
+   "n_words": 16,
+   "ortho_margin": 0.084,
+   "style": "Pr2",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "samma som",
+    "text": "Runor 2020: samma ristare som U 136 (namnlös).",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 1032",
+   "place": "Ånge",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.717,
+   "model": 0.559,
+   "ortho": 0.358,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Öpir 1 ligger 3 km bort. Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "Av 12 jämförbara språkdrag talar 2 för Öpir 1 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 10 skiljer inte. För: stavning av 'efter' (f-…-iR: 3 % hos ristaren mot 0 % i U); diftongen au i 'och' (monoftong: 72 % hos ristaren mot 38 % i U). Sammantaget är stenens språkdrag 11,7 gånger så vanliga hos Öpir 1 som på andra stenar i U; 2 % av 589 andra stenar där passar ristarens profil minst lika bra (p 0,020). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: granit. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Granit och närstående är inte tydligt vanligare hos ristaren (77 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.559,
+   "model_probs": {
+    "Öpir 1": 0.559,
+    "Fot 2": 0.075,
+    "Åsmund": 0.075
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Öpir 1",
+     "similarity": 0.582,
+     "reliability": 0.459
+    },
+    {
+     "carver": "Torgöt Fotsarve",
+     "similarity": 0.543,
+     "reliability": 0.233
+    },
+    {
+     "carver": "Balle",
+     "similarity": 0.52,
+     "reliability": 0.335
+    },
+    {
+     "carver": "Åsmund",
+     "similarity": 0.514,
+     "reliability": 0.678
+    },
+    {
+     "carver": "Visäte",
+     "similarity": 0.484,
+     "reliability": 0.544
+    }
+   ],
+   "n_words": 11,
+   "ortho_margin": 0.039,
+   "style": "Pr4",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "Sö 131",
+   "place": "Lundby",
+   "province": "Sö",
+   "lost": false,
+   "carver": "Traen",
+   "strength": 0.716,
+   "model": 0.502,
+   "ortho": 0.716,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": false,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Traen ligger 1 km bort. Ristarens kända landskap: Sö (22).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Fp (9), Pr1 (3), RAK (2), Pr2 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: RAK, Fp, Pr1) motsvarar ungefär 980–1050 enligt Gräslunds kronologi; Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 12 jämförbara språkdrag talar 0 för Traen (stenens form är tydligt vanligare hos ristaren än på andra stenar i Sö), 2 emot (tydligt ovanligare hos ristaren) och 10 skiljer inte. Emot: stavning av 'efter' (e-…-iR: 0 % hos ristaren mot 35 % i Sö, bara 3 inskrifter); æftiR eller at (æftiR: 15 % hos ristaren mot 42 % i Sö). Drag med färre än 10 jämförbara inskrifter hos ristaren är osäkra (stavning av 'efter': 3; o-runan för o-ljud: 8). Sammantaget är stenens språkdrag bara 0,10 gånger så vanliga hos Traen som på andra stenar i Sö; 82 % av 199 andra stenar där passar ristarens profil minst lika bra (p 0,820). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Stenen: granit. Säkra stenar av Traen med uppgift (18): gråsten (9), granit (4), gnejs (3), jotnisk sandsten (1). Granit och närstående är inte tydligt vanligare hos ristaren (72 %) än på runstenarna i landskapet i stort (69 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Traen",
+   "model_top_p": 0.502,
+   "model_probs": {
+    "Traen": 0.502,
+    "Tore 1": 0.077,
+    "Balle": 0.068
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Traen",
+     "similarity": 0.745,
+     "reliability": 0.833
+    },
+    {
+     "carver": "Torbjörn 2",
+     "similarity": 0.702,
+     "reliability": 0.212
+    },
+    {
+     "carver": "Ärnfast",
+     "similarity": 0.681,
+     "reliability": 0.208
+    },
+    {
+     "carver": "Tidkume",
+     "similarity": 0.656,
+     "reliability": 0.462
+    },
+    {
+     "carver": "Björn 2 eller -björn",
+     "similarity": 0.606,
+     "reliability": 0.5
+    }
+   ],
+   "n_words": 14,
+   "ortho_margin": 0.043,
+   "style": "RAK",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "Sö 367",
+   "place": "Släbro",
+   "province": "Sö",
+   "lost": false,
+   "carver": "Traen",
+   "strength": 0.702,
+   "model": 0.489,
+   "ortho": 0.416,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Traen står på samma plats (under 1 km). Ristarens kända landskap: Sö (22).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Fp (9), Pr1 (3), RAK (2), Pr2 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: RAK, Fp, Pr1) motsvarar ungefär 980–1050 enligt Gräslunds kronologi; Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 11 jämförbara språkdrag talar 2 för Traen (stenens form är tydligt vanligare hos ristaren än på andra stenar i Sö), 1 emot (tydligt ovanligare hos ristaren) och 8 skiljer inte. För: bindrunor (ja: 11 % hos ristaren mot 5 % i Sö); stavning av 'efter' (e-…annat: 0 % hos ristaren mot 2 % i Sö, bara 3 inskrifter). Emot: æftiR eller at (æftiR: 15 % hos ristaren mot 42 % i Sö). Drag med färre än 10 jämförbara inskrifter hos ristaren är osäkra (stavning av 'efter': 3). Sammantaget är stenens språkdrag 4,1 gånger så vanliga hos Traen som på andra stenar i Sö; 2 % av 201 andra stenar där passar ristarens profil minst lika bra (p 0,025). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: granit. Säkra stenar av Traen med uppgift (18): gråsten (9), granit (4), gnejs (3), jotnisk sandsten (1). Granit och närstående är inte tydligt vanligare hos ristaren (72 %) än på runstenarna i landskapet i stort (69 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Traen",
+   "model_top_p": 0.489,
+   "model_probs": {
+    "Traen": 0.489,
+    "Balle": 0.079,
+    "Gunnar": 0.072
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Traen",
+     "similarity": 0.655,
+     "reliability": 0.833
+    },
+    {
+     "carver": "Ärnfast",
+     "similarity": 0.63,
+     "reliability": 0.208
+    },
+    {
+     "carver": "Torbjörn 2",
+     "similarity": 0.6,
+     "reliability": 0.212
+    },
+    {
+     "carver": "Tidkume",
+     "similarity": 0.582,
+     "reliability": 0.462
+    },
+    {
+     "carver": "Björn 2 eller -björn",
+     "similarity": 0.562,
+     "reliability": 0.5
+    }
+   ],
+   "n_words": 14,
+   "ortho_margin": 0.025,
+   "style": "RAK",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "Fv 1980:187-200, <http://fornvannen.se/pdf/1980talet/1980_187.pdf>"
+    ]
+   }
+  },
+  {
+   "signum": "Sö 53",
+   "place": "Valstad",
+   "province": "Sö",
+   "lost": true,
+   "carver": "Traen",
+   "strength": 0.699,
+   "model": 0.699,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Traen ligger 11 km bort. Ristarens kända landskap: Sö (22).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Fp (9), Pr1 (3), RAK (2), Pr2 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: RAK, Fp, Pr1) motsvarar ungefär 980–1050 enligt Gräslunds kronologi; Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 12 jämförbara språkdrag talar 0 för Traen (stenens form är tydligt vanligare hos ristaren än på andra stenar i Sö), 1 emot (tydligt ovanligare hos ristaren) och 11 skiljer inte. Emot: æftiR eller at (æftiR: 15 % hos ristaren mot 42 % i Sö). Drag med färre än 10 jämförbara inskrifter hos ristaren är osäkra (stavning av 'efter': 3; o-runan för o-ljud: 8). Sammantaget är stenens språkdrag bara 0,61 gånger så vanliga hos Traen som på andra stenar i Sö; 47 % av 199 andra stenar där passar ristarens profil minst lika bra (p 0,470). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Traen",
+   "model_top_p": 0.699,
+   "model_probs": {
+    "Traen": 0.699,
+    "Erik": 0.046,
+    "Balle": 0.041
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Torkel",
+     "similarity": 0.626,
+     "reliability": 0.233
+    },
+    {
+     "carver": "Traen",
+     "similarity": 0.591,
+     "reliability": 0.583
+    },
+    {
+     "carver": "Tore 1",
+     "similarity": 0.57,
+     "reliability": 0.247
+    },
+    {
+     "carver": "Balle",
+     "similarity": 0.51,
+     "reliability": 0.335
+    },
+    {
+     "carver": "Arbjörn",
+     "similarity": 0.488,
+     "reliability": 0.217
+    }
+   ],
+   "n_words": 10,
+   "ortho_margin": 0.035,
+   "style": "RAK",
+   "style_uncertain": true,
+   "second": "Torkel",
+   "second_strength": 0.082,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 633",
+   "place": "Broby",
+   "province": "U",
+   "lost": false,
+   "carver": "Fot 2",
+   "strength": 0.699,
+   "model": 0.455,
+   "ortho": 0.447,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Fot 2 ligger 1 km bort. Ristarens kända landskap: U (78).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (28), Pr3 (18), Pr2 (5), RAK (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr3, Pr4) motsvarar ungefär 1050–1100 enligt Gräslunds kronologi; Pr2, RAK finns bara på enstaka stenar.",
+    "språkdrag": "Av 13 jämförbara språkdrag talar 3 för Fot 2 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 10 skiljer inte. För: skiljetecken (kryss: 73 % hos ristaren mot 15 % i U); stavning av 'efter' (e-…-iR: 47 % hos ristaren mot 18 % i U); o-runan för o-ljud (o-runa: 56 % hos ristaren mot 30 % i U). Drag med färre än 10 jämförbara inskrifter hos ristaren är osäkra (nasal före konsonant: 7). Sammantaget är stenens språkdrag 47,7 gånger så vanliga hos Fot 2 som på andra stenar i U; 0 % av 619 andra stenar där passar ristarens profil minst lika bra (p 0,002). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: granitgnejs. Säkra stenar av Fot 2 med uppgift (64): granit (41), rödgrå granit (5), gnejs (3), röd granit (3). Granit och närstående är inte tydligt vanligare hos ristaren (91 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Fot 2",
+   "model_top_p": 0.455,
+   "model_probs": {
+    "Fot 2": 0.455,
+    "Öpir 1": 0.169,
+    "Arbjörn": 0.073
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Fot 2",
+     "similarity": 0.83,
+     "reliability": 0.447
+    },
+    {
+     "carver": "Gunnar",
+     "similarity": 0.695,
+     "reliability": 0.519
+    },
+    {
+     "carver": "Torsten",
+     "similarity": 0.658,
+     "reliability": 0.42
+    },
+    {
+     "carver": "Hägvid",
+     "similarity": 0.636,
+     "reliability": 0.3
+    },
+    {
+     "carver": "Äskil 2",
+     "similarity": 0.55,
+     "reliability": 0.35
+    }
+   ],
+   "n_words": 9,
+   "ortho_margin": 0.135,
+   "style": "?",
+   "style_uncertain": true,
+   "second": "Öpir 1",
+   "second_strength": 0.127,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 806",
+   "place": "Fröslunda kyrka",
+   "province": "U",
+   "lost": true,
+   "carver": "Balle",
+   "strength": 0.695,
+   "model": 0.695,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Balle står på samma plats (under 1 km). Ristarens kända landskap: U (72), Sö (16), Vs (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr3 (33), Fp (14), Pr4 (3), Pr2 (2), Pr1 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Fp, Pr3) motsvarar ungefär 1010–1080 enligt Gräslunds kronologi; Pr1, Pr4, Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Balle",
+   "model_top_p": 0.695,
+   "model_probs": {
+    "Balle": 0.695,
+    "Tidkume": 0.083,
+    "Åsmund": 0.073
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "?",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "Sö Fv1948;295",
+   "place": "Prästgården",
+   "province": "Sö",
+   "lost": false,
+   "carver": "Traen",
+   "strength": 0.688,
+   "model": 0.402,
+   "ortho": 0.478,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Traen ligger 7 km bort. Ristarens kända landskap: Sö (22).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Fp (9), Pr1 (3), RAK (2), Pr2 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: RAK, Fp, Pr1) motsvarar ungefär 980–1050 enligt Gräslunds kronologi; Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 12 jämförbara språkdrag talar 1 för Traen (stenens form är tydligt vanligare hos ristaren än på andra stenar i Sö), 1 emot (tydligt ovanligare hos ristaren) och 10 skiljer inte. För: diftongen au i 'och' (monoftong: 25 % hos ristaren mot 11 % i Sö, bara 4 inskrifter). Emot: diftongen ai i alla ord (monoftong: 6 % hos ristaren mot 20 % i Sö). Drag med färre än 10 jämförbara inskrifter hos ristaren är osäkra (diftongen au i 'och': 4; o-runan för o-ljud: 8). Sammantaget är stenens språkdrag 1,9 gånger så vanliga hos Traen som på andra stenar i Sö; 8 % av 199 andra stenar där passar ristarens profil minst lika bra (p 0,085). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Stenen: granit. Säkra stenar av Traen med uppgift (18): gråsten (9), granit (4), gnejs (3), jotnisk sandsten (1). Granit och närstående är inte tydligt vanligare hos ristaren (72 %) än på runstenarna i landskapet i stort (69 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Traen",
+   "model_top_p": 0.402,
+   "model_probs": {
+    "Traen": 0.402,
+    "Tore 1": 0.135,
+    "Halvdan": 0.117
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Traen",
+     "similarity": 0.573,
+     "reliability": 0.583
+    },
+    {
+     "carver": "Ärnfast",
+     "similarity": 0.532,
+     "reliability": 0.146
+    },
+    {
+     "carver": "Torbjörn 2",
+     "similarity": 0.506,
+     "reliability": 0.148
+    },
+    {
+     "carver": "Tidkume",
+     "similarity": 0.494,
+     "reliability": 0.323
+    },
+    {
+     "carver": "Björn 2 eller -björn",
+     "similarity": 0.471,
+     "reliability": 0.35
+    }
+   ],
+   "n_words": 9,
+   "ortho_margin": 0.041,
+   "style": "Fp",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "<http://fornvannen.se/pdf/1940talet/1948_282.pdf>"
+    ]
+   }
+  },
+  {
+   "signum": "U 830",
+   "place": "Furby",
+   "province": "U",
+   "lost": true,
+   "carver": "Balle",
+   "strength": 0.687,
+   "model": 0.687,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Balle står på samma plats (under 1 km). Ristarens kända landskap: U (72), Sö (16), Vs (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr3 (33), Fp (14), Pr4 (3), Pr2 (2), Pr1 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Fp, Pr3) motsvarar ungefär 1010–1080 enligt Gräslunds kronologi; Pr1, Pr4, Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Balle",
+   "model_top_p": 0.687,
+   "model_probs": {
+    "Balle": 0.687,
+    "Tidkume": 0.101,
+    "Åsmund": 0.059
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "?",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "SRI 10 Dig. suppl. (U 830) (version 0.2)"
+    ]
+   }
+  },
+  {
+   "signum": "Sö 173",
+   "place": "Tystberga",
+   "province": "Sö",
+   "lost": false,
+   "carver": "Traen",
+   "strength": 0.677,
+   "model": 0.308,
+   "ortho": 0.533,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Traen ligger 9 km bort. Ristarens kända landskap: Sö (22).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Fp (9), Pr1 (3), RAK (2), Pr2 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: RAK, Fp, Pr1) motsvarar ungefär 980–1050 enligt Gräslunds kronologi; Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 7 jämförbara språkdrag talar 0 för Traen (stenens form är tydligt vanligare hos ristaren än på andra stenar i Sö), 0 emot (tydligt ovanligare hos ristaren) och 7 skiljer inte. Sammantaget är stenens språkdrag 1,3 gånger så vanliga hos Traen som på andra stenar i Sö; 27 % av 220 andra stenar där passar ristarens profil minst lika bra (p 0,267). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Stenen: gråsten. Säkra stenar av Traen med uppgift (18): gråsten (9), granit (4), gnejs (3), jotnisk sandsten (1). Granit och närstående är inte tydligt vanligare hos ristaren (72 %) än på runstenarna i landskapet i stort (69 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Traen",
+   "model_top_p": 0.308,
+   "model_probs": {
+    "Traen": 0.308,
+    "Balle": 0.275,
+    "Tore 1": 0.073
+   },
+   "someone_else": true,
+   "ortho_ranking": [
+    {
+     "carver": "Traen",
+     "similarity": 0.47,
+     "reliability": 0.833
+    },
+    {
+     "carver": "Björn 2 eller -björn",
+     "similarity": 0.438,
+     "reliability": 0.5
+    },
+    {
+     "carver": "Torbjörn 2",
+     "similarity": 0.433,
+     "reliability": 0.212
+    },
+    {
+     "carver": "Tidkume",
+     "similarity": 0.429,
+     "reliability": 0.462
+    },
+    {
+     "carver": "Ärnfast",
+     "similarity": 0.424,
+     "reliability": 0.208
+    }
+   ],
+   "n_words": 17,
+   "ortho_margin": 0.032,
+   "style": "Fp, Pr2",
+   "style_uncertain": true,
+   "second": "Balle",
+   "second_strength": 0.275,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "Stille 1996; $=SRI 3 s. 410"
+    ]
+   }
+  },
+  {
+   "signum": "U ATA365/61A",
+   "place": "Svinnegarns kyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Balle",
+   "strength": 0.669,
+   "model": 0.669,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Balle står på samma plats (under 1 km). Ristarens kända landskap: U (72), Sö (16), Vs (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr3 (33), Fp (14), Pr4 (3), Pr2 (2), Pr1 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Fp, Pr3) motsvarar ungefär 1010–1080 enligt Gräslunds kronologi; Pr1, Pr4, Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Stenen: sandsten. Säkra stenar av Balle med uppgift (75): granit (37), sandsten (3), rödgrå granit (3), gnejsgranit (2). Sandsten är inte tydligt vanligare hos ristaren (16 %) än på runstenarna i landskapet i stort (20 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Balle",
+   "model_top_p": 0.669,
+   "model_probs": {
+    "Balle": 0.669,
+    "Tidkume": 0.142,
+    "Torbjörn 2": 0.043
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": null,
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U ATA365/61B",
+   "place": "Svinnegarns kyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Balle",
+   "strength": 0.669,
+   "model": 0.669,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Balle står på samma plats (under 1 km). Ristarens kända landskap: U (72), Sö (16), Vs (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr3 (33), Fp (14), Pr4 (3), Pr2 (2), Pr1 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Fp, Pr3) motsvarar ungefär 1010–1080 enligt Gräslunds kronologi; Pr1, Pr4, Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Stenen: sandsten. Säkra stenar av Balle med uppgift (75): granit (37), sandsten (3), rödgrå granit (3), gnejsgranit (2). Sandsten är inte tydligt vanligare hos ristaren (16 %) än på runstenarna i landskapet i stort (20 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Balle",
+   "model_top_p": 0.669,
+   "model_probs": {
+    "Balle": 0.669,
+    "Tidkume": 0.142,
+    "Torbjörn 2": 0.043
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": null,
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U ATA365/61C",
+   "place": "Svinnegarns kyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Balle",
+   "strength": 0.669,
+   "model": 0.669,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Balle står på samma plats (under 1 km). Ristarens kända landskap: U (72), Sö (16), Vs (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr3 (33), Fp (14), Pr4 (3), Pr2 (2), Pr1 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Fp, Pr3) motsvarar ungefär 1010–1080 enligt Gräslunds kronologi; Pr1, Pr4, Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Stenen: sandsten. Säkra stenar av Balle med uppgift (75): granit (37), sandsten (3), rödgrå granit (3), gnejsgranit (2). Sandsten är inte tydligt vanligare hos ristaren (16 %) än på runstenarna i landskapet i stort (20 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Balle",
+   "model_top_p": 0.669,
+   "model_probs": {
+    "Balle": 0.669,
+    "Tidkume": 0.142,
+    "Torbjörn 2": 0.043
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": null,
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "Vs 18",
+   "place": "Berga",
+   "province": "Vs",
+   "lost": false,
+   "carver": "Balle",
+   "strength": 0.657,
+   "model": 0.342,
+   "ortho": 0.478,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": true,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Balle ligger 18 km bort. Ristarens kända landskap: U (72), Sö (16), Vs (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr3 (33), Fp (14), Pr4 (3), Pr2 (2), Pr1 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Fp, Pr3) motsvarar ungefär 1010–1080 enligt Gräslunds kronologi; Pr1, Pr4, Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "8 av 14 jämförbara språkdrag stämmer med inskrifterna av Balle. Avviker (6): stavning av 'efter' (i-…-ir; hos ristaren oftast y-…-iR); kristen bön (ja; hos ristaren oftast nej); diftongen ai i alla ord (monoftong; hos ristaren oftast båda); ʀ skrivet med r (r för ʀ; hos ristaren oftast ʀ-runa); o-runan för o-ljud (u-runa; hos ristaren oftast o-runa); æftiR eller at (æftiR; hos ristaren oftast at).",
+    "bergart": "Stenen: granit. Säkra stenar av Balle med uppgift (75): granit (37), sandsten (3), rödgrå granit (3), gnejsgranit (2). Granit och närstående är inte tydligt vanligare hos ristaren (80 %) än på runstenarna i landskapet i stort (85 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Balle",
+   "model_top_p": 0.342,
+   "model_probs": {
+    "Balle": 0.342,
+    "Torbjörn 2": 0.139,
+    "Erik": 0.092
+   },
+   "someone_else": true,
+   "ortho_ranking": [
+    {
+     "carver": "Balle",
+     "similarity": 0.635,
+     "reliability": 0.478
+    },
+    {
+     "carver": "Tore 1",
+     "similarity": 0.581,
+     "reliability": 0.176
+    },
+    {
+     "carver": "Arbjörn",
+     "similarity": 0.543,
+     "reliability": 0.31
+    },
+    {
+     "carver": "Torkel",
+     "similarity": 0.518,
+     "reliability": 0.333
+    },
+    {
+     "carver": "Önjut",
+     "similarity": 0.447,
+     "reliability": 0.3
+    }
+   ],
+   "n_words": 17,
+   "ortho_margin": 0.054,
+   "style": "Fp",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "samma som",
+    "text": "Runor 2020: samma ristare som Vs 19 (namnlös).",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 275",
+   "place": "Brunnby",
+   "province": "U",
+   "lost": false,
+   "carver": "Fot 2",
+   "strength": 0.656,
+   "model": 0.656,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Fot 2 ligger 1 km bort. Ristarens kända landskap: U (78).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (28), Pr3 (18), Pr2 (5), RAK (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr3, Pr4) motsvarar ungefär 1050–1100 enligt Gräslunds kronologi; Pr2, RAK finns bara på enstaka stenar.",
+    "språkdrag": "Av 12 jämförbara språkdrag talar 2 för Fot 2 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 10 skiljer inte. För: o-runan för o-ljud (o-runa: 56 % hos ristaren mot 30 % i U); diftongen au i 'och' (auk: 95 % hos ristaren mot 52 % i U). Sammantaget är stenens språkdrag 2,8 gånger så vanliga hos Fot 2 som på andra stenar i U; 9 % av 619 andra stenar där passar ristarens profil minst lika bra (p 0,086). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Stenen: granit. Säkra stenar av Fot 2 med uppgift (64): granit (41), rödgrå granit (5), gnejs (3), röd granit (3). Granit och närstående är inte tydligt vanligare hos ristaren (91 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Fot 2",
+   "model_top_p": 0.656,
+   "model_probs": {
+    "Fot 2": 0.656,
+    "Öpir 1": 0.137,
+    "Arbjörn": 0.075
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr4",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 996",
+   "place": "Karberga (Sundby)",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.654,
+   "model": 0.374,
+   "ortho": 0.656,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": false,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Öpir 1 ligger 2 km bort. Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "Av 13 jämförbara språkdrag talar 0 för Öpir 1 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 2 emot (tydligt ovanligare hos ristaren) och 11 skiljer inte. Emot: diftongen au i 'och' (auk: 28 % hos ristaren mot 62 % i U); o-runan för o-ljud (u-runa: 30 % hos ristaren mot 65 % i U). Sammantaget är stenens språkdrag bara 0,19 gånger så vanliga hos Öpir 1 som på andra stenar i U; 48 % av 589 andra stenar där passar ristarens profil minst lika bra (p 0,485). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Stenen: rödgrå granit. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Granit och närstående är inte tydligt vanligare hos ristaren (77 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.374,
+   "model_probs": {
+    "Öpir 1": 0.374,
+    "Fot 2": 0.172,
+    "Visäte": 0.131
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Öpir 1",
+     "similarity": 0.759,
+     "reliability": 0.656
+    },
+    {
+     "carver": "Visäte",
+     "similarity": 0.634,
+     "reliability": 0.778
+    },
+    {
+     "carver": "Åsmund",
+     "similarity": 0.58,
+     "reliability": 0.969
+    },
+    {
+     "carver": "Torgöt Fotsarve",
+     "similarity": 0.543,
+     "reliability": 0.333
+    },
+    {
+     "carver": "Balle",
+     "similarity": 0.415,
+     "reliability": 0.478
+    }
+   ],
+   "n_words": 21,
+   "ortho_margin": 0.125,
+   "style": "Pr4",
+   "style_uncertain": false,
+   "second": "Fot 2",
+   "second_strength": 0.172,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "Larsson 2002:63f; SRI 9 s. 677"
+    ]
+   }
+  },
+  {
+   "signum": "U 452",
+   "place": "Hova",
+   "province": "U",
+   "lost": true,
+   "carver": "Fot 2",
+   "strength": 0.65,
+   "model": 0.65,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Fot 2 ligger 2 km bort. Ristarens kända landskap: U (78).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (28), Pr3 (18), Pr2 (5), RAK (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr3, Pr4) motsvarar ungefär 1050–1100 enligt Gräslunds kronologi; Pr2, RAK finns bara på enstaka stenar.",
+    "språkdrag": "Av 3 jämförbara språkdrag talar 1 för Fot 2 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 2 skiljer inte. För: skiljetecken (kryss: 73 % hos ristaren mot 15 % i U). Sammantaget är stenens språkdrag 6,6 gånger så vanliga hos Fot 2 som på andra stenar i U; 4 % av 750 andra stenar där passar ristarens profil minst lika bra (p 0,043). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Fot 2",
+   "model_top_p": 0.65,
+   "model_probs": {
+    "Fot 2": 0.65,
+    "Öpir 1": 0.09,
+    "Åsmund": 0.068
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "?",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 92",
+   "place": "Vible",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.646,
+   "model": 0.596,
+   "ortho": 0.656,
+   "checks": {
+    "område": true,
+    "stil": false,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Öpir 1 ligger 6 km bort. Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar. Stenens stilgrupp RAK finns inte bland dem; ristarens huvudsakliga stilgrupper (Pr4, Pr5) ligger omkring 55 år senare, vilket gör förslaget kronologiskt problematiskt om stilbestämningen stämmer.",
+    "språkdrag": "Av 13 jämförbara språkdrag talar 4 för Öpir 1 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 9 skiljer inte. För: stungen u (y) (ja: 42 % hos ristaren mot 19 % i U); stavning av 'efter' (i-…-iR: 46 % hos ristaren mot 18 % i U); diftongen au i 'och' (monoftong: 72 % hos ristaren mot 38 % i U); o-runan för o-ljud (o-runa: 55 % hos ristaren mot 29 % i U). Sammantaget är stenens språkdrag 15,8 gånger så vanliga hos Öpir 1 som på andra stenar i U; 1 % av 589 andra stenar där passar ristarens profil minst lika bra (p 0,009). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: granit. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Granit och närstående är inte tydligt vanligare hos ristaren (77 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.596,
+   "model_probs": {
+    "Öpir 1": 0.596,
+    "Gunnar": 0.09,
+    "Visäte": 0.066
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Öpir 1",
+     "similarity": 0.745,
+     "reliability": 0.656
+    },
+    {
+     "carver": "Visäte",
+     "similarity": 0.58,
+     "reliability": 0.778
+    },
+    {
+     "carver": "Åsmund",
+     "similarity": 0.559,
+     "reliability": 0.969
+    },
+    {
+     "carver": "Balle",
+     "similarity": 0.517,
+     "reliability": 0.478
+    },
+    {
+     "carver": "Torgöt Fotsarve",
+     "similarity": 0.488,
+     "reliability": 0.333
+    }
+   ],
+   "n_words": 16,
+   "ortho_margin": 0.165,
+   "style": "RAK",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 783",
+   "place": "Svinnegarns kyrkogård",
+   "province": "U",
+   "lost": false,
+   "carver": "Balle",
+   "strength": 0.637,
+   "model": 0.637,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Balle står på samma plats (under 1 km). Ristarens kända landskap: U (72), Sö (16), Vs (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr3 (33), Fp (14), Pr4 (3), Pr2 (2), Pr1 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Fp, Pr3) motsvarar ungefär 1010–1080 enligt Gräslunds kronologi; Pr1, Pr4, Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Stenen: ljusröd sandsten. Säkra stenar av Balle med uppgift (75): granit (37), sandsten (3), rödgrå granit (3), gnejsgranit (2). Sandsten är inte tydligt vanligare hos ristaren (16 %) än på runstenarna i landskapet i stort (20 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Balle",
+   "model_top_p": 0.637,
+   "model_probs": {
+    "Balle": 0.637,
+    "Tidkume": 0.158,
+    "Åsmund": 0.045
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "?",
+   "style_uncertain": true,
+   "second": "Tidkume",
+   "second_strength": 0.119,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "ATA Dnr 365/61"
+    ]
+   }
+  },
+  {
+   "signum": "U Fv1977;162B",
+   "place": "S:t Ilians kyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Balle",
+   "strength": 0.633,
+   "model": 0.633,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Balle ligger 4 km bort. Ristarens kända landskap: U (72), Sö (16), Vs (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr3 (33), Fp (14), Pr4 (3), Pr2 (2), Pr1 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Fp, Pr3) motsvarar ungefär 1010–1080 enligt Gräslunds kronologi; Pr1, Pr4, Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Stenen: ljusröd sandsten. Säkra stenar av Balle med uppgift (75): granit (37), sandsten (3), rödgrå granit (3), gnejsgranit (2). Sandsten är inte tydligt vanligare hos ristaren (16 %) än på runstenarna i landskapet i stort (20 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Balle",
+   "model_top_p": 0.633,
+   "model_probs": {
+    "Balle": 0.633,
+    "Tidkume": 0.155,
+    "Torbjörn 2": 0.067
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "?",
+   "style_uncertain": true,
+   "second": "Tidkume",
+   "second_strength": 0.116,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "<http://fornvannen.se/pdf/1970talet/1977_157.pdf>"
+    ]
+   }
+  },
+  {
+   "signum": "U 649",
+   "place": "Övergrans kyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Arbjörn",
+   "strength": 0.628,
+   "model": 0.344,
+   "ortho": 0.433,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Arbjörn står på samma plats (under 1 km). Ristarens kända landskap: U (18).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr2 (11). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr2) motsvarar ungefär 1020–1050 enligt Gräslunds kronologi.",
+    "språkdrag": "Av 13 jämförbara språkdrag talar 5 för Arbjörn (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 1 emot (tydligt ovanligare hos ristaren) och 7 skiljer inte. För: stavning av 'denna' (þeno: 50 % hos ristaren mot 1 % i U, bara 4 inskrifter); skiljetecken (punkt: 83 % hos ristaren mot 27 % i U); stungen k (g) (ja: 20 % hos ristaren mot 8 % i U); stungen i (e) (ja: 100 % hos ristaren mot 46 % i U); diftongen ai i alla ord (diftong: 100 % hos ristaren mot 50 % i U, bara 8 inskrifter). Emot: stavning av 'efter' (i-…-iR: 0 % hos ristaren mot 21 % i U, bara 5 inskrifter). Drag med färre än 10 jämförbara inskrifter hos ristaren är osäkra (diftongen au i 'och': 4; stavning av 'efter': 5; stavning av 'denna': 4; diftongen ai i alla ord: 8; ʀ skrivet med r: 8). Sammantaget är stenens språkdrag 97,6 gånger så vanliga hos Arbjörn som på andra stenar i U; 0 % av 658 andra stenar där passar ristarens profil minst lika bra (p 0,003). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: mörk gnejsgranit. Säkra stenar av Arbjörn med uppgift (15): granit (3), brungrå gnejs (2), rödgrå granit (2), blågrå granit (2). Granit och närstående är inte tydligt vanligare hos ristaren (87 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Arbjörn",
+   "model_top_p": 0.344,
+   "model_probs": {
+    "Arbjörn": 0.344,
+    "Fot 2": 0.188,
+    "Gunnar": 0.079
+   },
+   "someone_else": true,
+   "ortho_ranking": [
+    {
+     "carver": "Arbjörn",
+     "similarity": 0.821,
+     "reliability": 0.433
+    },
+    {
+     "carver": "Balle",
+     "similarity": 0.728,
+     "reliability": 0.335
+    },
+    {
+     "carver": "Tore 1",
+     "similarity": 0.715,
+     "reliability": 0.124
+    },
+    {
+     "carver": "Torkel",
+     "similarity": 0.606,
+     "reliability": 0.233
+    },
+    {
+     "carver": "Torgöt Fotsarve",
+     "similarity": 0.577,
+     "reliability": 0.233
+    }
+   ],
+   "n_words": 8,
+   "ortho_margin": 0.093,
+   "style": "Pr2",
+   "style_uncertain": false,
+   "second": "Fot 2",
+   "second_strength": 0.188,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 1005",
+   "place": "Hov",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.628,
+   "model": 0.628,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Öpir 1 ligger 5 km bort. Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "Av 8 jämförbara språkdrag talar 1 för Öpir 1 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 7 skiljer inte. För: æftiR eller at (at: 33 % hos ristaren mot 22 % i U). Sammantaget är stenens språkdrag 1,5 gånger så vanliga hos Öpir 1 som på andra stenar i U; 18 % av 618 andra stenar där passar ristarens profil minst lika bra (p 0,183). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Stenen: röd granit. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Granit och närstående är inte tydligt vanligare hos ristaren (77 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.628,
+   "model_probs": {
+    "Öpir 1": 0.628,
+    "Likbjörn": 0.073,
+    "Fot 2": 0.067
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Balle",
+     "similarity": 0.7,
+     "reliability": 0.335
+    },
+    {
+     "carver": "Öpir 1",
+     "similarity": 0.653,
+     "reliability": 0.459
+    },
+    {
+     "carver": "Arbjörn",
+     "similarity": 0.592,
+     "reliability": 0.433
+    },
+    {
+     "carver": "Tore 1",
+     "similarity": 0.567,
+     "reliability": 0.124
+    },
+    {
+     "carver": "Visäte",
+     "similarity": 0.541,
+     "reliability": 0.544
+    }
+   ],
+   "n_words": 8,
+   "ortho_margin": 0.047,
+   "style": "Pr4",
+   "style_uncertain": true,
+   "second": "Balle",
+   "second_strength": 0.315,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 801",
+   "place": "Långtora prästgård",
+   "province": "U",
+   "lost": false,
+   "carver": "Balle",
+   "strength": 0.625,
+   "model": 0.625,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Balle står på samma plats (under 1 km). Ristarens kända landskap: U (72), Sö (16), Vs (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr3 (33), Fp (14), Pr4 (3), Pr2 (2), Pr1 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Fp, Pr3) motsvarar ungefär 1010–1080 enligt Gräslunds kronologi; Pr1, Pr4, Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Stenen: mörkgrå granit. Säkra stenar av Balle med uppgift (75): granit (37), sandsten (3), rödgrå granit (3), gnejsgranit (2). Granit och närstående är inte tydligt vanligare hos ristaren (80 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Balle",
+   "model_top_p": 0.625,
+   "model_probs": {
+    "Balle": 0.625,
+    "Tidkume": 0.139,
+    "Åsmund": 0.082
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Fp??",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 411",
+   "place": "Norra Til",
+   "province": "U",
+   "lost": false,
+   "carver": "Fot 2",
+   "strength": 0.624,
+   "model": 0.32,
+   "ortho": 0.447,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Fot 2 står på samma plats (under 1 km). Ristarens kända landskap: U (78).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (28), Pr3 (18), Pr2 (5), RAK (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr3, Pr4) motsvarar ungefär 1050–1100 enligt Gräslunds kronologi; Pr2, RAK finns bara på enstaka stenar.",
+    "språkdrag": "Av 12 jämförbara språkdrag talar 3 för Fot 2 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 1 emot (tydligt ovanligare hos ristaren) och 8 skiljer inte. För: skiljetecken (kryss: 73 % hos ristaren mot 15 % i U); stavning av 'efter' (e-…-iR: 47 % hos ristaren mot 18 % i U); diftongen ai i alla ord (båda: 23 % hos ristaren mot 15 % i U). Emot: kristen bön (ja: 13 % hos ristaren mot 24 % i U). Drag med färre än 10 jämförbara inskrifter hos ristaren är osäkra (h-bortfall: 6). Sammantaget är stenens språkdrag 10,8 gånger så vanliga hos Fot 2 som på andra stenar i U; 2 % av 619 andra stenar där passar ristarens profil minst lika bra (p 0,023). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: ljusröd granit. Säkra stenar av Fot 2 med uppgift (64): granit (41), rödgrå granit (5), gnejs (3), röd granit (3). Granit och närstående är inte tydligt vanligare hos ristaren (91 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Fot 2",
+   "model_top_p": 0.32,
+   "model_probs": {
+    "Fot 2": 0.32,
+    "Balle": 0.111,
+    "Öpir 1": 0.104
+   },
+   "someone_else": true,
+   "ortho_ranking": [
+    {
+     "carver": "Fot 2",
+     "similarity": 0.802,
+     "reliability": 0.447
+    },
+    {
+     "carver": "Gunnar",
+     "similarity": 0.751,
+     "reliability": 0.519
+    },
+    {
+     "carver": "Hägvid",
+     "similarity": 0.68,
+     "reliability": 0.3
+    },
+    {
+     "carver": "Torsten",
+     "similarity": 0.652,
+     "reliability": 0.42
+    },
+    {
+     "carver": "Östen 1",
+     "similarity": 0.592,
+     "reliability": 0.233
+    }
+   ],
+   "n_words": 10,
+   "ortho_margin": 0.051,
+   "style": "Pr4",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "Lagman 1990:80f"
+    ]
+   }
+  },
+  {
+   "signum": "U 204",
+   "place": "Angarns kyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Fot 2",
+   "strength": 0.621,
+   "model": 0.621,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Fot 2 står på samma plats (under 1 km). Ristarens kända landskap: U (78).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (28), Pr3 (18), Pr2 (5), RAK (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr3, Pr4) motsvarar ungefär 1050–1100 enligt Gräslunds kronologi; Pr2, RAK finns bara på enstaka stenar. Stenens stilgrupp Fp ligger inom kärnans tidsram men finns bara på 0 av 52 av ristarens stenar; den är möjlig men ovanlig för ristaren och avgör inte frågan.",
+    "språkdrag": "Av 12 jämförbara språkdrag talar 4 för Fot 2 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 8 skiljer inte. För: skiljetecken (kryss: 73 % hos ristaren mot 15 % i U); stavning av 'efter' (e-…-iR: 47 % hos ristaren mot 18 % i U); diftongen au i 'och' (auk: 95 % hos ristaren mot 52 % i U); diftongen ai i alla ord (båda: 23 % hos ristaren mot 15 % i U). Sammantaget är stenens språkdrag 40,5 gånger så vanliga hos Fot 2 som på andra stenar i U; 0 % av 619 andra stenar där passar ristarens profil minst lika bra (p 0,003). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: granit. Säkra stenar av Fot 2 med uppgift (64): granit (41), rödgrå granit (5), gnejs (3), röd granit (3). Granit och närstående är inte tydligt vanligare hos ristaren (91 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Fot 2",
+   "model_top_p": 0.621,
+   "model_probs": {
+    "Fot 2": 0.621,
+    "Arbjörn": 0.056,
+    "Öpir 1": 0.056
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Fp",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "Sö 320",
+   "place": "Stäringe",
+   "province": "Sö",
+   "lost": false,
+   "carver": "Traen",
+   "strength": 0.618,
+   "model": 0.209,
+   "ortho": 0.516,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Traen ligger 14 km bort. Ristarens kända landskap: Sö (22).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Fp (9), Pr1 (3), RAK (2), Pr2 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: RAK, Fp, Pr1) motsvarar ungefär 980–1050 enligt Gräslunds kronologi; Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 8 jämförbara språkdrag talar 0 för Traen (stenens form är tydligt vanligare hos ristaren än på andra stenar i Sö), 0 emot (tydligt ovanligare hos ristaren) och 8 skiljer inte. Sammantaget är stenens språkdrag 1,9 gånger så vanliga hos Traen som på andra stenar i Sö; 9 % av 206 andra stenar där passar ristarens profil minst lika bra (p 0,087). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Stenen: granit. Säkra stenar av Traen med uppgift (18): gråsten (9), granit (4), gnejs (3), jotnisk sandsten (1). Granit och närstående är inte tydligt vanligare hos ristaren (72 %) än på runstenarna i landskapet i stort (69 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Balle",
+   "model_top_p": 0.213,
+   "model_probs": {
+    "Balle": 0.213,
+    "Traen": 0.209,
+    "Öpir 1": 0.126
+   },
+   "someone_else": true,
+   "ortho_ranking": [
+    {
+     "carver": "Traen",
+     "similarity": 0.626,
+     "reliability": 0.833
+    },
+    {
+     "carver": "Ärnfast",
+     "similarity": 0.595,
+     "reliability": 0.208
+    },
+    {
+     "carver": "Torbjörn 2",
+     "similarity": 0.59,
+     "reliability": 0.212
+    },
+    {
+     "carver": "Tidkume",
+     "similarity": 0.585,
+     "reliability": 0.462
+    },
+    {
+     "carver": "Björn 2 eller -björn",
+     "similarity": 0.548,
+     "reliability": 0.5
+    }
+   ],
+   "n_words": 13,
+   "ortho_margin": 0.031,
+   "style": "Fp",
+   "style_uncertain": false,
+   "second": "Balle",
+   "second_strength": 0.177,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 1128",
+   "place": "Alunda kyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.618,
+   "model": 0.618,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Öpir 1 ligger 8 km bort. Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "Av 1 jämförbara språkdrag talar 1 för Öpir 1 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 0 skiljer inte. För: skiljetecken (apostrof: 55 % hos ristaren mot 11 % i U). Sammantaget är stenens språkdrag 4,8 gånger så vanliga hos Öpir 1 som på andra stenar i U; 5 % av 724 andra stenar där passar ristarens profil minst lika bra (p 0,050). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: rödgrå granit med ljusgröna inslag. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Granit och närstående är inte tydligt vanligare hos ristaren (77 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.618,
+   "model_probs": {
+    "Öpir 1": 0.618,
+    "Åsmund": 0.106,
+    "Gunnar": 0.073
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr4",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 361",
+   "place": "Gådersta",
+   "province": "U",
+   "lost": true,
+   "carver": "Öpir 1",
+   "strength": 0.616,
+   "model": 0.291,
+   "ortho": 0.459,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Öpir 1 ligger 3 km bort. Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "Av 11 jämförbara språkdrag talar 2 för Öpir 1 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 9 skiljer inte. För: diftongen au i 'och' (monoftong: 72 % hos ristaren mot 38 % i U); æftiR eller at (at: 33 % hos ristaren mot 22 % i U). Sammantaget är stenens språkdrag 4,1 gånger så vanliga hos Öpir 1 som på andra stenar i U; 7 % av 594 andra stenar där passar ristarens profil minst lika bra (p 0,069). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.291,
+   "model_probs": {
+    "Öpir 1": 0.291,
+    "Åsmund": 0.162,
+    "Balle": 0.121
+   },
+   "someone_else": true,
+   "ortho_ranking": [
+    {
+     "carver": "Öpir 1",
+     "similarity": 0.668,
+     "reliability": 0.459
+    },
+    {
+     "carver": "Balle",
+     "similarity": 0.58,
+     "reliability": 0.335
+    },
+    {
+     "carver": "Åsmund",
+     "similarity": 0.569,
+     "reliability": 0.678
+    },
+    {
+     "carver": "Visäte",
+     "similarity": 0.566,
+     "reliability": 0.544
+    },
+    {
+     "carver": "Torgöt Fotsarve",
+     "similarity": 0.529,
+     "reliability": 0.233
+    }
+   ],
+   "n_words": 8,
+   "ortho_margin": 0.088,
+   "style": "Pr4",
+   "style_uncertain": true,
+   "second": "Åsmund",
+   "second_strength": 0.122,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "Jacobsson 2004:80f"
+    ]
+   }
+  },
+  {
+   "signum": "U 297",
+   "place": "Skånela kyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Fot 2",
+   "strength": 0.614,
+   "model": 0.614,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Fot 2 står på samma plats (under 1 km). Ristarens kända landskap: U (78).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (28), Pr3 (18), Pr2 (5), RAK (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr3, Pr4) motsvarar ungefär 1050–1100 enligt Gräslunds kronologi; Pr2, RAK finns bara på enstaka stenar.",
+    "språkdrag": "Av 11 jämförbara språkdrag talar 2 för Fot 2 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 9 skiljer inte. För: skiljetecken (kryss: 73 % hos ristaren mot 15 % i U); stavning av 'efter' (e-…-iR: 47 % hos ristaren mot 18 % i U). Sammantaget är stenens språkdrag 12,7 gånger så vanliga hos Fot 2 som på andra stenar i U; 2 % av 624 andra stenar där passar ristarens profil minst lika bra (p 0,019). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: granit. Säkra stenar av Fot 2 med uppgift (64): granit (41), rödgrå granit (5), gnejs (3), röd granit (3). Granit och närstående är inte tydligt vanligare hos ristaren (91 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Fot 2",
+   "model_top_p": 0.614,
+   "model_probs": {
+    "Fot 2": 0.614,
+    "Öpir 1": 0.119,
+    "Torbjörn 2": 0.031
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr4",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "samma som",
+    "text": "Runor 2020: samma ristare som U Fv1953;270 och U Fv1979;245 (namnlös).",
+    "references": [
+     "Lagman 1990:80f; Fv 1953:270f, <http://fornvannen.se/pdf/1950talet/1953_262.pdf>"
+    ]
+   }
+  },
+  {
+   "signum": "U 872",
+   "place": "Ölsta",
+   "province": "U",
+   "lost": false,
+   "carver": "Balle",
+   "strength": 0.612,
+   "model": 0.612,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Balle ligger 4 km bort. Ristarens kända landskap: U (72), Sö (16), Vs (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr3 (33), Fp (14), Pr4 (3), Pr2 (2), Pr1 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Fp, Pr3) motsvarar ungefär 1010–1080 enligt Gräslunds kronologi; Pr1, Pr4, Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Stenen: granit. Säkra stenar av Balle med uppgift (75): granit (37), sandsten (3), rödgrå granit (3), gnejsgranit (2). Granit och närstående är inte tydligt vanligare hos ristaren (80 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Balle",
+   "model_top_p": 0.612,
+   "model_probs": {
+    "Balle": 0.612,
+    "Tidkume": 0.107,
+    "Åsmund": 0.083
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "?",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 1114",
+   "place": "Myrby",
+   "province": "U",
+   "lost": true,
+   "carver": "Visäte",
+   "strength": 0.599,
+   "model": 0.12,
+   "ortho": 0.544,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Visäte ligger 28 km bort. Ristarens kända landskap: U (39).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr3 (15), Pr4 (8), RAK (1), Pr2 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr3, Pr4) motsvarar ungefär 1050–1100 enligt Gräslunds kronologi; RAK, Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 9 jämförbara språkdrag talar 2 för Visäte (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 7 skiljer inte. För: skiljetecken (blandat: 46 % hos ristaren mot 17 % i U); stungen i (e) (ja: 88 % hos ristaren mot 45 % i U). Sammantaget är stenens språkdrag 5,4 gånger så vanliga hos Visäte som på andra stenar i U; 4 % av 675 andra stenar där passar ristarens profil minst lika bra (p 0,044). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.187,
+   "model_probs": {
+    "Öpir 1": 0.187,
+    "Visäte": 0.12,
+    "Balle": 0.097
+   },
+   "someone_else": true,
+   "ortho_ranking": [
+    {
+     "carver": "Visäte",
+     "similarity": 0.375,
+     "reliability": 0.544
+    },
+    {
+     "carver": "Torgöt Fotsarve",
+     "similarity": 0.315,
+     "reliability": 0.233
+    },
+    {
+     "carver": "Öpir 1",
+     "similarity": 0.305,
+     "reliability": 0.459
+    },
+    {
+     "carver": "Gudfast",
+     "similarity": 0.297,
+     "reliability": 0.233
+    },
+    {
+     "carver": "Åsmund",
+     "similarity": 0.28,
+     "reliability": 0.678
+    }
+   ],
+   "n_words": 8,
+   "ortho_margin": 0.06,
+   "style": "?",
+   "style_uncertain": true,
+   "second": "Öpir 1",
+   "second_strength": 0.187,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "Sö 91",
+   "place": "Tidö",
+   "province": "Sö",
+   "lost": true,
+   "carver": "Traen",
+   "strength": 0.592,
+   "model": 0.296,
+   "ortho": 0.42,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Traen ligger 2 km bort. Ristarens kända landskap: Sö (22).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Fp (9), Pr1 (3), RAK (2), Pr2 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: RAK, Fp, Pr1) motsvarar ungefär 980–1050 enligt Gräslunds kronologi; Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 8 jämförbara språkdrag talar 0 för Traen (stenens form är tydligt vanligare hos ristaren än på andra stenar i Sö), 1 emot (tydligt ovanligare hos ristaren) och 7 skiljer inte. Emot: æftiR eller at (æftiR: 15 % hos ristaren mot 42 % i Sö). Sammantaget är stenens språkdrag bara 0,48 gånger så vanliga hos Traen som på andra stenar i Sö; 54 % av 206 andra stenar där passar ristarens profil minst lika bra (p 0,541). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Traen",
+   "model_top_p": 0.296,
+   "model_probs": {
+    "Traen": 0.296,
+    "Balle": 0.162,
+    "Erik": 0.104
+   },
+   "someone_else": true,
+   "ortho_ranking": [
+    {
+     "carver": "Traen",
+     "similarity": 0.61,
+     "reliability": 0.583
+    },
+    {
+     "carver": "Ärnfast",
+     "similarity": 0.574,
+     "reliability": 0.146
+    },
+    {
+     "carver": "Torbjörn 2",
+     "similarity": 0.544,
+     "reliability": 0.148
+    },
+    {
+     "carver": "Tidkume",
+     "similarity": 0.541,
+     "reliability": 0.323
+    },
+    {
+     "carver": "Björn 2 eller -björn",
+     "similarity": 0.517,
+     "reliability": 0.35
+    }
+   ],
+   "n_words": 9,
+   "ortho_margin": 0.036,
+   "style": "Fp",
+   "style_uncertain": false,
+   "second": "Balle",
+   "second_strength": 0.135,
+   "crosscheck": {
+    "status": "samma som",
+    "text": "Runor 2020: samma ristare som Sö Fv1986;218 (namnlös).",
+    "references": [
+     "Källström och Kitzler Åhfeldt 2019:237"
+    ]
+   }
+  },
+  {
+   "signum": "U 153",
+   "place": "Lissby",
+   "province": "U",
+   "lost": false,
+   "carver": "Fot 2",
+   "strength": 0.575,
+   "model": 0.575,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Fot 2 står på samma plats (under 1 km). Ristarens kända landskap: U (78).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (28), Pr3 (18), Pr2 (5), RAK (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr3, Pr4) motsvarar ungefär 1050–1100 enligt Gräslunds kronologi; Pr2, RAK finns bara på enstaka stenar.",
+    "språkdrag": "Av 10 jämförbara språkdrag talar 1 för Fot 2 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 9 skiljer inte. För: skiljetecken (kryss: 73 % hos ristaren mot 15 % i U). Sammantaget är stenens språkdrag 6,3 gånger så vanliga hos Fot 2 som på andra stenar i U; 4 % av 624 andra stenar där passar ristarens profil minst lika bra (p 0,043). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: granit. Säkra stenar av Fot 2 med uppgift (64): granit (41), rödgrå granit (5), gnejs (3), röd granit (3). Granit och närstående är inte tydligt vanligare hos ristaren (91 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Fot 2",
+   "model_top_p": 0.575,
+   "model_probs": {
+    "Fot 2": 0.575,
+    "Öpir 1": 0.108,
+    "Visäte": 0.054
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr3",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 1073",
+   "place": "Bälinge kyrka",
+   "province": "U",
+   "lost": true,
+   "carver": "Öpir 1",
+   "strength": 0.575,
+   "model": 0.575,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Öpir 1 står på samma plats (under 1 km). Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "Av 1 jämförbara språkdrag talar 0 för Öpir 1 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 1 skiljer inte. Sammantaget är stenens språkdrag bara 0,73 gånger så vanliga hos Öpir 1 som på andra stenar i U; 30 % av 724 andra stenar där passar ristarens profil minst lika bra (p 0,295). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.575,
+   "model_probs": {
+    "Öpir 1": 0.575,
+    "Gunnar": 0.08,
+    "Åsmund": 0.06
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr5",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 444",
+   "place": "Bromsta",
+   "province": "U",
+   "lost": false,
+   "carver": "Fot 2",
+   "strength": 0.572,
+   "model": 0.226,
+   "ortho": 0.447,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Fot 2 står på samma plats (under 1 km). Ristarens kända landskap: U (78).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (28), Pr3 (18), Pr2 (5), RAK (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr3, Pr4) motsvarar ungefär 1050–1100 enligt Gräslunds kronologi; Pr2, RAK finns bara på enstaka stenar. Stenens stilgrupp Fp ligger inom kärnans tidsram men finns bara på 0 av 52 av ristarens stenar; den är möjlig men ovanlig för ristaren och avgör inte frågan.",
+    "språkdrag": "Av 10 jämförbara språkdrag talar 3 för Fot 2 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 7 skiljer inte. För: skiljetecken (kryss: 73 % hos ristaren mot 15 % i U); diftongen au i 'och' (auk: 95 % hos ristaren mot 52 % i U); diftongen ai i alla ord (båda: 23 % hos ristaren mot 15 % i U). Sammantaget är stenens språkdrag 21,2 gånger så vanliga hos Fot 2 som på andra stenar i U; 1 % av 624 andra stenar där passar ristarens profil minst lika bra (p 0,011). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: granit. Säkra stenar av Fot 2 med uppgift (64): granit (41), rödgrå granit (5), gnejs (3), röd granit (3). Granit och närstående är inte tydligt vanligare hos ristaren (91 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Fot 2",
+   "model_top_p": 0.226,
+   "model_probs": {
+    "Fot 2": 0.226,
+    "Visäte": 0.142,
+    "Öpir 1": 0.128
+   },
+   "someone_else": true,
+   "ortho_ranking": [
+    {
+     "carver": "Fot 2",
+     "similarity": 0.875,
+     "reliability": 0.447
+    },
+    {
+     "carver": "Gunnar",
+     "similarity": 0.782,
+     "reliability": 0.519
+    },
+    {
+     "carver": "Hägvid",
+     "similarity": 0.716,
+     "reliability": 0.3
+    },
+    {
+     "carver": "Torsten",
+     "similarity": 0.661,
+     "reliability": 0.42
+    },
+    {
+     "carver": "Äskil 2",
+     "similarity": 0.625,
+     "reliability": 0.35
+    }
+   ],
+   "n_words": 9,
+   "ortho_margin": 0.093,
+   "style": "Fp",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U Fv1972;272",
+   "place": "Össeby ödekyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.568,
+   "model": 0.568,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Öpir 1 står på samma plats (under 1 km). Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "Av 2 jämförbara språkdrag talar 1 för Öpir 1 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 1 skiljer inte. För: o-runan för o-ljud (o-runa: 55 % hos ristaren mot 29 % i U). Sammantaget är stenens språkdrag 2,4 gånger så vanliga hos Öpir 1 som på andra stenar i U; 11 % av 723 andra stenar där passar ristarens profil minst lika bra (p 0,106). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Stenen: sandsten. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Sandsten är inte tydligt vanligare hos ristaren (22 %) än på runstenarna i landskapet i stort (20 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.568,
+   "model_probs": {
+    "Öpir 1": 0.568,
+    "Gunnar": 0.092,
+    "Åsmund": 0.072
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr5",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "<http://fornvannen.se/pdf/1970talet/1972_254.pdf>"
+    ]
+   }
+  },
+  {
+   "signum": "Sö 243",
+   "place": "Stav",
+   "province": "Sö",
+   "lost": false,
+   "carver": "Halvdan",
+   "strength": 0.567,
+   "model": 0.567,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": true
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Halvdan ligger 2 km bort. Ristarens kända landskap: Sö (18).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr3 (5), Pr2 (4), Pr1 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr1, Pr2, Pr3) motsvarar ungefär 1010–1080 enligt Gräslunds kronologi.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Stenen: gråsten. Säkra stenar av Halvdan med uppgift (9): gråsten (5), granit (2), gnejs (2). Gnejs och migmatit är vanligare hos ristaren (78 %) än på runstenarna i landskapet i stort (40 %)."
+   },
+   "model_top": "Halvdan",
+   "model_top_p": 0.567,
+   "model_probs": {
+    "Halvdan": 0.567,
+    "Amunde": 0.224,
+    "Åsmund": 0.045
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr3",
+   "style_uncertain": false,
+   "second": "Amunde",
+   "second_strength": 0.224,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 761",
+   "place": "Enköping",
+   "province": "U",
+   "lost": true,
+   "carver": "Balle",
+   "strength": 0.566,
+   "model": 0.566,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Balle ligger 4 km bort. Ristarens kända landskap: U (72), Sö (16), Vs (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr3 (33), Fp (14), Pr4 (3), Pr2 (2), Pr1 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Fp, Pr3) motsvarar ungefär 1010–1080 enligt Gräslunds kronologi; Pr1, Pr4, Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 1 jämförbara språkdrag talar 1 för Balle (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 0 skiljer inte. För: skiljetecken (punkt: 62 % hos ristaren mot 26 % i U). Sammantaget är stenens språkdrag 2,3 gånger så vanliga hos Balle som på andra stenar i U; 8 % av 770 andra stenar där passar ristarens profil minst lika bra (p 0,076). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Balle",
+   "model_top_p": 0.566,
+   "model_probs": {
+    "Balle": 0.566,
+    "Tidkume": 0.109,
+    "Åsmund": 0.066
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "?",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 1099",
+   "place": "Sundbro",
+   "province": "U",
+   "lost": true,
+   "carver": "Öpir 1",
+   "strength": 0.561,
+   "model": 0.561,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Öpir 1 står på samma plats (under 1 km). Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.561,
+   "model_probs": {
+    "Öpir 1": 0.561,
+    "Gunnar": 0.085,
+    "Åsmund": 0.078
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr4",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 876",
+   "place": "Focksta",
+   "province": "U",
+   "lost": false,
+   "carver": "Fot 2",
+   "strength": 0.559,
+   "model": 0.203,
+   "ortho": 0.447,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Fot 2 ligger 1 km bort. Ristarens kända landskap: U (78).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (28), Pr3 (18), Pr2 (5), RAK (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr3, Pr4) motsvarar ungefär 1050–1100 enligt Gräslunds kronologi; Pr2, RAK finns bara på enstaka stenar. Stenens stilgrupp Fp ligger inom kärnans tidsram men finns bara på 0 av 52 av ristarens stenar; den är möjlig men ovanlig för ristaren och avgör inte frågan.",
+    "språkdrag": "Av 10 jämförbara språkdrag talar 2 för Fot 2 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 8 skiljer inte. För: skiljetecken (kryss: 73 % hos ristaren mot 15 % i U); diftongen au i 'och' (auk: 95 % hos ristaren mot 52 % i U). Sammantaget är stenens språkdrag 17,1 gånger så vanliga hos Fot 2 som på andra stenar i U; 1 % av 624 andra stenar där passar ristarens profil minst lika bra (p 0,013). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: finkornig granit. Säkra stenar av Fot 2 med uppgift (64): granit (41), rödgrå granit (5), gnejs (3), röd granit (3). Granit och närstående är inte tydligt vanligare hos ristaren (91 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Balle",
+   "model_top_p": 0.221,
+   "model_probs": {
+    "Balle": 0.221,
+    "Erik": 0.211,
+    "Fot 2": 0.203
+   },
+   "someone_else": true,
+   "ortho_ranking": [
+    {
+     "carver": "Fot 2",
+     "similarity": 0.861,
+     "reliability": 0.447
+    },
+    {
+     "carver": "Gunnar",
+     "similarity": 0.739,
+     "reliability": 0.519
+    },
+    {
+     "carver": "Hägvid",
+     "similarity": 0.664,
+     "reliability": 0.3
+    },
+    {
+     "carver": "Äskil 2",
+     "similarity": 0.642,
+     "reliability": 0.35
+    },
+    {
+     "carver": "Torsten",
+     "similarity": 0.622,
+     "reliability": 0.42
+    }
+   ],
+   "n_words": 9,
+   "ortho_margin": 0.122,
+   "style": "Fp",
+   "style_uncertain": false,
+   "second": "Balle",
+   "second_strength": 0.184,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 185",
+   "place": "Össeby ödekyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.558,
+   "model": 0.558,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Öpir 1 står på samma plats (under 1 km). Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "Av 1 jämförbara språkdrag talar 1 för Öpir 1 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 0 skiljer inte. För: skiljetecken (apostrof: 55 % hos ristaren mot 11 % i U). Sammantaget är stenens språkdrag 4,8 gånger så vanliga hos Öpir 1 som på andra stenar i U; 5 % av 724 andra stenar där passar ristarens profil minst lika bra (p 0,050). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: sandsten. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Sandsten är inte tydligt vanligare hos ristaren (22 %) än på runstenarna i landskapet i stort (20 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.558,
+   "model_probs": {
+    "Öpir 1": 0.558,
+    "Åsmund": 0.22,
+    "Gunnar": 0.075
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr4 - Pr5?",
+   "style_uncertain": true,
+   "second": "Åsmund",
+   "second_strength": 0.22,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "Fv 1972:274, <http://fornvannen.se/pdf/1970talet/1972_254.pdf>; $=Källström 2013a:79, 82"
+    ]
+   }
+  },
+  {
+   "signum": "U 665",
+   "place": "Finstaholm",
+   "province": "U",
+   "lost": false,
+   "carver": "Arbjörn",
+   "strength": 0.556,
+   "model": 0.293,
+   "ortho": 0.372,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Arbjörn ligger 2 km bort. Ristarens kända landskap: U (18).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr2 (11). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr2) motsvarar ungefär 1020–1050 enligt Gräslunds kronologi.",
+    "språkdrag": "Av 11 jämförbara språkdrag talar 4 för Arbjörn (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 1 emot (tydligt ovanligare hos ristaren) och 6 skiljer inte. För: skiljetecken (punkt: 83 % hos ristaren mot 27 % i U); stungen k (g) (ja: 20 % hos ristaren mot 8 % i U); stungen i (e) (ja: 100 % hos ristaren mot 46 % i U); diftongen ai i alla ord (diftong: 100 % hos ristaren mot 50 % i U, bara 8 inskrifter). Emot: ʀ skrivet med r (r för ʀ: 0 % hos ristaren mot 16 % i U, bara 8 inskrifter). Drag med färre än 10 jämförbara inskrifter hos ristaren är osäkra (diftongen au i 'och': 4; diftongen ai i alla ord: 8; ʀ skrivet med r: 8). Sammantaget är stenens språkdrag 18,3 gånger så vanliga hos Arbjörn som på andra stenar i U; 1 % av 663 andra stenar där passar ristarens profil minst lika bra (p 0,006). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: granit. Säkra stenar av Arbjörn med uppgift (15): granit (3), brungrå gnejs (2), rödgrå granit (2), blågrå granit (2). Granit och närstående är inte tydligt vanligare hos ristaren (87 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Arbjörn",
+   "model_top_p": 0.293,
+   "model_probs": {
+    "Arbjörn": 0.293,
+    "Balle": 0.22,
+    "Fot 2": 0.134
+   },
+   "someone_else": true,
+   "ortho_ranking": [
+    {
+     "carver": "Arbjörn",
+     "similarity": 0.765,
+     "reliability": 0.433
+    },
+    {
+     "carver": "Önjut",
+     "similarity": 0.722,
+     "reliability": 0.42
+    },
+    {
+     "carver": "Balle",
+     "similarity": 0.711,
+     "reliability": 0.335
+    },
+    {
+     "carver": "Tore 1",
+     "similarity": 0.664,
+     "reliability": 0.124
+    },
+    {
+     "carver": "Torkel",
+     "similarity": 0.526,
+     "reliability": 0.233
+    }
+   ],
+   "n_words": 10,
+   "ortho_margin": 0.043,
+   "style": "Pr2",
+   "style_uncertain": false,
+   "second": "Balle",
+   "second_strength": 0.22,
+   "crosscheck": {
+    "status": "samma som",
+    "text": "Runor 2020: samma ristare som U 672 (namnlös).",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 1015",
+   "place": "Ärentuna kyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.556,
+   "model": 0.556,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Öpir 1 står på samma plats (under 1 km). Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "Av 8 jämförbara språkdrag talar 1 för Öpir 1 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 7 skiljer inte. För: stungen u (y) (ja: 42 % hos ristaren mot 19 % i U). Sammantaget är stenens språkdrag 2,3 gånger så vanliga hos Öpir 1 som på andra stenar i U; 13 % av 618 andra stenar där passar ristarens profil minst lika bra (p 0,126). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Stenen: rödaktig granit. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Granit och närstående är inte tydligt vanligare hos ristaren (77 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.556,
+   "model_probs": {
+    "Öpir 1": 0.556,
+    "Likbjörn": 0.147,
+    "Visäte": 0.054
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Gudfast",
+     "similarity": 0.458,
+     "reliability": 0.333
+    },
+    {
+     "carver": "Öpir 1",
+     "similarity": 0.452,
+     "reliability": 0.656
+    },
+    {
+     "carver": "Åsmund",
+     "similarity": 0.37,
+     "reliability": 0.969
+    },
+    {
+     "carver": "Visäte",
+     "similarity": 0.351,
+     "reliability": 0.778
+    },
+    {
+     "carver": "Balle",
+     "similarity": 0.334,
+     "reliability": 0.478
+    }
+   ],
+   "n_words": 12,
+   "ortho_margin": 0.006,
+   "style": "Pr5",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "finns redan",
+    "text": "Runor 2020 anger redan Öpir 1 (via 'samma som U 1017-1024').",
+    "references": [
+     "Fältex. C"
+    ]
+   }
+  },
+  {
+   "signum": "U 425",
+   "place": "Rosersberg",
+   "province": "U",
+   "lost": false,
+   "carver": "Fot 2",
+   "strength": 0.554,
+   "model": 0.554,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Fot 2 står på samma plats (under 1 km). Ristarens kända landskap: U (78).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (28), Pr3 (18), Pr2 (5), RAK (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr3, Pr4) motsvarar ungefär 1050–1100 enligt Gräslunds kronologi; Pr2, RAK finns bara på enstaka stenar.",
+    "språkdrag": "Av 2 jämförbara språkdrag talar 1 för Fot 2 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 1 skiljer inte. För: skiljetecken (kryss: 73 % hos ristaren mot 15 % i U). Sammantaget är stenens språkdrag 4,7 gånger så vanliga hos Fot 2 som på andra stenar i U; 7 % av 750 andra stenar där passar ristarens profil minst lika bra (p 0,075). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Fot 2",
+   "model_top_p": 0.554,
+   "model_probs": {
+    "Fot 2": 0.554,
+    "Öpir 1": 0.083,
+    "Balle": 0.071
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr3",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "NOR 1996:16, <http://urn.nb.no/URN:NBN:no-44953>"
+    ]
+   }
+  },
+  {
+   "signum": "U 1025",
+   "place": "Vaxmyra",
+   "province": "U",
+   "lost": true,
+   "carver": "Öpir 1",
+   "strength": 0.554,
+   "model": 0.554,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Öpir 1 ligger 2 km bort. Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "Av 13 jämförbara språkdrag talar 2 för Öpir 1 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 1 emot (tydligt ovanligare hos ristaren) och 10 skiljer inte. För: stungen u (y) (ja: 42 % hos ristaren mot 19 % i U); diftongen au i 'och' (monoftong: 72 % hos ristaren mot 38 % i U). Emot: o-runan för o-ljud (u-runa: 30 % hos ristaren mot 65 % i U). Sammantaget är stenens språkdrag 2,2 gånger så vanliga hos Öpir 1 som på andra stenar i U; 14 % av 589 andra stenar där passar ristarens profil minst lika bra (p 0,137). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.554,
+   "model_probs": {
+    "Öpir 1": 0.554,
+    "Åsmund": 0.104,
+    "Likbjörn": 0.073
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "?",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 42",
+   "place": "Troxhammar",
+   "province": "U",
+   "lost": false,
+   "carver": "Fot 2",
+   "strength": 0.553,
+   "model": 0.553,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Fot 2 ligger 10 km bort. Ristarens kända landskap: U (78).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (28), Pr3 (18), Pr2 (5), RAK (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr3, Pr4) motsvarar ungefär 1050–1100 enligt Gräslunds kronologi; Pr2, RAK finns bara på enstaka stenar.",
+    "språkdrag": "Av 11 jämförbara språkdrag talar 1 för Fot 2 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 1 emot (tydligt ovanligare hos ristaren) och 9 skiljer inte. För: skiljetecken (kryss: 73 % hos ristaren mot 15 % i U). Emot: ʀ skrivet med r (r för ʀ: 8 % hos ristaren mot 16 % i U). Sammantaget är stenens språkdrag 5,8 gånger så vanliga hos Fot 2 som på andra stenar i U; 4 % av 624 andra stenar där passar ristarens profil minst lika bra (p 0,045). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Fot 2",
+   "model_top_p": 0.553,
+   "model_probs": {
+    "Fot 2": 0.553,
+    "Öpir 1": 0.171,
+    "Amunde": 0.047
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr4",
+   "style_uncertain": false,
+   "second": "Öpir 1",
+   "second_strength": 0.143,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 562",
+   "place": "Malsta kyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.546,
+   "model": 0.546,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Öpir 1 står på samma plats (under 1 km). Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Stenen: grå sandsten. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Sandsten är inte tydligt vanligare hos ristaren (22 %) än på runstenarna i landskapet i stort (20 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.546,
+   "model_probs": {
+    "Öpir 1": 0.546,
+    "Gunnar": 0.114,
+    "Åsmund": 0.1
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr5",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 563",
+   "place": "Malsta kyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.546,
+   "model": 0.546,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Öpir 1 står på samma plats (under 1 km). Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Stenen: röd sandsten. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Sandsten är inte tydligt vanligare hos ristaren (22 %) än på runstenarna i landskapet i stort (20 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.546,
+   "model_probs": {
+    "Öpir 1": 0.546,
+    "Gunnar": 0.114,
+    "Åsmund": 0.1
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr5",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 1090",
+   "place": "Marsta",
+   "province": "U",
+   "lost": true,
+   "carver": "Öpir 1",
+   "strength": 0.546,
+   "model": 0.546,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Öpir 1 står på samma plats (under 1 km). Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "Av 1 jämförbara språkdrag talar 0 för Öpir 1 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 1 skiljer inte. Sammantaget är stenens språkdrag bara 0,73 gånger så vanliga hos Öpir 1 som på andra stenar i U; 30 % av 724 andra stenar där passar ristarens profil minst lika bra (p 0,295). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.546,
+   "model_probs": {
+    "Öpir 1": 0.546,
+    "Gunnar": 0.131,
+    "Åsmund": 0.09
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr4 - Pr5?",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "Sö 33",
+   "place": "Skåäng",
+   "province": "Sö",
+   "lost": false,
+   "carver": "Traen",
+   "strength": 0.543,
+   "model": 0.216,
+   "ortho": 0.416,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Traen ligger 15 km bort. Ristarens kända landskap: Sö (22).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Fp (9), Pr1 (3), RAK (2), Pr2 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: RAK, Fp, Pr1) motsvarar ungefär 980–1050 enligt Gräslunds kronologi; Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 11 jämförbara språkdrag talar 0 för Traen (stenens form är tydligt vanligare hos ristaren än på andra stenar i Sö), 1 emot (tydligt ovanligare hos ristaren) och 10 skiljer inte. Emot: æftiR eller at (æftiR: 15 % hos ristaren mot 42 % i Sö). Drag med färre än 10 jämförbara inskrifter hos ristaren är osäkra (o-runan för o-ljud: 8). Sammantaget är stenens språkdrag bara 0,73 gånger så vanliga hos Traen som på andra stenar i Sö; 44 % av 201 andra stenar där passar ristarens profil minst lika bra (p 0,436). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Stenen: granit. Säkra stenar av Traen med uppgift (18): gråsten (9), granit (4), gnejs (3), jotnisk sandsten (1). Granit och närstående är inte tydligt vanligare hos ristaren (72 %) än på runstenarna i landskapet i stort (69 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Traen",
+   "model_top_p": 0.216,
+   "model_probs": {
+    "Traen": 0.216,
+    "Balle": 0.156,
+    "Halvdan": 0.104
+   },
+   "someone_else": true,
+   "ortho_ranking": [
+    {
+     "carver": "Traen",
+     "similarity": 0.607,
+     "reliability": 0.833
+    },
+    {
+     "carver": "Torbjörn 2",
+     "similarity": 0.582,
+     "reliability": 0.212
+    },
+    {
+     "carver": "Tidkume",
+     "similarity": 0.557,
+     "reliability": 0.462
+    },
+    {
+     "carver": "Ärnfast",
+     "similarity": 0.537,
+     "reliability": 0.208
+    },
+    {
+     "carver": "Björn 2 eller -björn",
+     "similarity": 0.535,
+     "reliability": 0.5
+    }
+   ],
+   "n_words": 12,
+   "ortho_margin": 0.025,
+   "style": "Fp",
+   "style_uncertain": false,
+   "second": "Balle",
+   "second_strength": 0.13,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 663",
+   "place": "Signildsberg",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.541,
+   "model": 0.541,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Öpir 1 ligger 4 km bort. Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "Av 12 jämförbara språkdrag talar 1 för Öpir 1 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 1 emot (tydligt ovanligare hos ristaren) och 10 skiljer inte. För: skiljetecken (apostrof: 55 % hos ristaren mot 11 % i U). Emot: o-runan för o-ljud (u-runa: 30 % hos ristaren mot 65 % i U). Sammantaget är stenens språkdrag 2,8 gånger så vanliga hos Öpir 1 som på andra stenar i U; 10 % av 589 andra stenar där passar ristarens profil minst lika bra (p 0,103). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Stenen: röd granit. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Granit och närstående är inte tydligt vanligare hos ristaren (77 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.541,
+   "model_probs": {
+    "Öpir 1": 0.541,
+    "Åsmund": 0.103,
+    "Likbjörn": 0.089
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "RAK",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 1136",
+   "place": "Gubbo, Kallviksmossen",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.54,
+   "model": 0.54,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Öpir 1 ligger 22 km bort. Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Stenen: granit. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Granit och närstående är inte tydligt vanligare hos ristaren (77 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.54,
+   "model_probs": {
+    "Öpir 1": 0.54,
+    "Gunnar": 0.101,
+    "Åsmund": 0.09
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr4",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "Sö 189",
+   "place": "Åkerby",
+   "province": "Sö",
+   "lost": false,
+   "carver": "Balle",
+   "strength": 0.536,
+   "model": 0.26,
+   "ortho": 0.373,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Balle ligger 2 km bort. Ristarens kända landskap: U (72), Sö (16), Vs (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr3 (33), Fp (14), Pr4 (3), Pr2 (2), Pr1 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Fp, Pr3) motsvarar ungefär 1010–1080 enligt Gräslunds kronologi; Pr1, Pr4, Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 10 jämförbara språkdrag talar 3 för Balle (stenens form är tydligt vanligare hos ristaren än på andra stenar i Sö), 2 emot (tydligt ovanligare hos ristaren) och 5 skiljer inte. För: skiljetecken (punkt: 62 % hos ristaren mot 19 % i Sö); stungen u (y) (ja: 39 % hos ristaren mot 21 % i Sö); stungen i (e) (ja: 77 % hos ristaren mot 42 % i Sö). Emot: bindrunor (ja: 2 % hos ristaren mot 6 % i Sö); ʀ skrivet med r (ʀ-runa: 50 % hos ristaren mot 92 % i Sö). Sammantaget är stenens språkdrag 2,5 gånger så vanliga hos Balle som på andra stenar i Sö; 10 % av 209 andra stenar där passar ristarens profil minst lika bra (p 0,095). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Stenen: granit. Säkra stenar av Balle med uppgift (75): granit (37), sandsten (3), rödgrå granit (3), gnejsgranit (2). Granit och närstående är inte tydligt vanligare hos ristaren (80 %) än på runstenarna i landskapet i stort (69 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Balle",
+   "model_top_p": 0.26,
+   "model_probs": {
+    "Balle": 0.26,
+    "Traen": 0.22,
+    "Öpir 1": 0.079
+   },
+   "someone_else": true,
+   "ortho_ranking": [
+    {
+     "carver": "Balle",
+     "similarity": 0.581,
+     "reliability": 0.478
+    },
+    {
+     "carver": "Torkel",
+     "similarity": 0.542,
+     "reliability": 0.333
+    },
+    {
+     "carver": "Tore 1",
+     "similarity": 0.54,
+     "reliability": 0.353
+    },
+    {
+     "carver": "Arbjörn",
+     "similarity": 0.532,
+     "reliability": 0.31
+    },
+    {
+     "carver": "Önjut",
+     "similarity": 0.448,
+     "reliability": 0.3
+    }
+   ],
+   "n_words": 16,
+   "ortho_margin": 0.039,
+   "style": "?",
+   "style_uncertain": true,
+   "second": "Traen",
+   "second_strength": 0.22,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 754",
+   "place": "Hällby",
+   "province": "U",
+   "lost": false,
+   "carver": "Balle",
+   "strength": 0.533,
+   "model": 0.533,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Balle står på samma plats (under 1 km). Ristarens kända landskap: U (72), Sö (16), Vs (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr3 (33), Fp (14), Pr4 (3), Pr2 (2), Pr1 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Fp, Pr3) motsvarar ungefär 1010–1080 enligt Gräslunds kronologi; Pr1, Pr4, Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Stenen: granit. Säkra stenar av Balle med uppgift (75): granit (37), sandsten (3), rödgrå granit (3), gnejsgranit (2). Granit och närstående är inte tydligt vanligare hos ristaren (80 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Balle",
+   "model_top_p": 0.533,
+   "model_probs": {
+    "Balle": 0.533,
+    "Öpir 1": 0.096,
+    "Tidkume": 0.08
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "?",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "Plansch 83"
+    ]
+   }
+  },
+  {
+   "signum": "Sö 267",
+   "place": "Småhamra",
+   "province": "Sö",
+   "lost": true,
+   "carver": "Halvdan",
+   "strength": 0.532,
+   "model": 0.532,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Halvdan ligger 2 km bort. Ristarens kända landskap: Sö (18).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr3 (5), Pr2 (4), Pr1 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr1, Pr2, Pr3) motsvarar ungefär 1010–1080 enligt Gräslunds kronologi.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Halvdan",
+   "model_top_p": 0.532,
+   "model_probs": {
+    "Halvdan": 0.532,
+    "Amunde": 0.14,
+    "Åsmund": 0.074
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "?",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "Sö 65",
+   "place": "Djulefors",
+   "province": "Sö",
+   "lost": false,
+   "carver": "Traen",
+   "strength": 0.531,
+   "model": 0.483,
+   "ortho": 0.093,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Traen ligger 24 km bort. Ristarens kända landskap: Sö (22).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Fp (9), Pr1 (3), RAK (2), Pr2 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: RAK, Fp, Pr1) motsvarar ungefär 980–1050 enligt Gräslunds kronologi; Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 8 jämförbara språkdrag talar 0 för Traen (stenens form är tydligt vanligare hos ristaren än på andra stenar i Sö), 0 emot (tydligt ovanligare hos ristaren) och 8 skiljer inte. Sammantaget är stenens språkdrag 1,7 gånger så vanliga hos Traen som på andra stenar i Sö; 15 % av 206 andra stenar där passar ristarens profil minst lika bra (p 0,150). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Stenen: gråsten. Säkra stenar av Traen med uppgift (18): gråsten (9), granit (4), gnejs (3), jotnisk sandsten (1). Granit och närstående är inte tydligt vanligare hos ristaren (72 %) än på runstenarna i landskapet i stort (69 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Traen",
+   "model_top_p": 0.483,
+   "model_probs": {
+    "Traen": 0.483,
+    "Balle": 0.116,
+    "Tore 1": 0.064
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Traen",
+     "similarity": 0.594,
+     "reliability": 0.583
+    },
+    {
+     "carver": "Ärnfast",
+     "similarity": 0.586,
+     "reliability": 0.146
+    },
+    {
+     "carver": "Torbjörn 2",
+     "similarity": 0.575,
+     "reliability": 0.148
+    },
+    {
+     "carver": "Tidkume",
+     "similarity": 0.56,
+     "reliability": 0.323
+    },
+    {
+     "carver": "Björn 2 eller -björn",
+     "similarity": 0.487,
+     "reliability": 0.35
+    }
+   ],
+   "n_words": 11,
+   "ortho_margin": 0.008,
+   "style": "Pr1",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "Sö 249",
+   "place": "Fors",
+   "province": "Sö",
+   "lost": true,
+   "carver": "Halvdan",
+   "strength": 0.53,
+   "model": 0.53,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Halvdan ligger 5 km bort. Ristarens kända landskap: Sö (18).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr3 (5), Pr2 (4), Pr1 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr1, Pr2, Pr3) motsvarar ungefär 1010–1080 enligt Gräslunds kronologi.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Halvdan",
+   "model_top_p": 0.53,
+   "model_probs": {
+    "Halvdan": 0.53,
+    "Amunde": 0.198,
+    "Öpir 1": 0.063
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "?",
+   "style_uncertain": true,
+   "second": "Amunde",
+   "second_strength": 0.198,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "Fornminnesregistret RAÄ 458"
+    ]
+   }
+  },
+  {
+   "signum": "U Fv2012;59",
+   "place": "Gamla Uppsala kyrka",
+   "province": "U",
+   "lost": true,
+   "carver": "Öpir 1",
+   "strength": 0.529,
+   "model": 0.529,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Öpir 1 ligger 3 km bort. Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Stenen: granit(?). Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Granit och närstående är inte tydligt vanligare hos ristaren (77 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.529,
+   "model_probs": {
+    "Öpir 1": 0.529,
+    "Åsmund": 0.095,
+    "Gunnar": 0.089
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr5(?) [Fv 2012]",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "SRI 10 Dig. suppl. (U Fv2012;59) (version 0.2); <http://fornvannen.se/pdf/2010talet/2012_059.pdf>"
+    ]
+   }
+  },
+  {
+   "signum": "Sö 232",
+   "place": "Trollsta",
+   "province": "Sö",
+   "lost": false,
+   "carver": "Amunde",
+   "strength": 0.523,
+   "model": 0.697,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": false,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Amunde står på samma plats (under 1 km). Ristarens kända landskap: Sö (13).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Fp (10), Pr1 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Fp) motsvarar ungefär 1010–1050 enligt Gräslunds kronologi; Pr1 finns bara på enstaka stenar. Stenens stilgrupp KB finns inte bland dem.",
+    "språkdrag": "Av 8 jämförbara språkdrag talar 1 för Amunde (stenens form är tydligt vanligare hos ristaren än på andra stenar i Sö), 1 emot (tydligt ovanligare hos ristaren) och 6 skiljer inte. För: skiljetecken (blandat: 33 % hos ristaren mot 15 % i Sö). Emot: ristarsignatur (nej: 60 % hos ristaren mot 91 % i Sö). Sammantaget är stenens språkdrag 3,9 gånger så vanliga hos Amunde som på andra stenar i Sö; 5 % av 213 andra stenar där passar ristarens profil minst lika bra (p 0,051). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Amunde",
+   "model_top_p": 0.697,
+   "model_probs": {
+    "Amunde": 0.697,
+    "Halvdan": 0.072,
+    "Traen": 0.067
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "KB",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 931",
+   "place": "Uppsala domkyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.521,
+   "model": 0.33,
+   "ortho": 0.285,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Öpir 1 står på samma plats (under 1 km). Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "Av 9 jämförbara språkdrag talar 0 för Öpir 1 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 9 skiljer inte. Sammantaget är stenens språkdrag bara 0,64 gånger så vanliga hos Öpir 1 som på andra stenar i U; 31 % av 618 andra stenar där passar ristarens profil minst lika bra (p 0,307). Skillnaden mot landskapet är inte statistiskt signifikant.",
+    "bergart": "Stenen: ljus granit. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Granit och närstående är inte tydligt vanligare hos ristaren (77 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.33,
+   "model_probs": {
+    "Öpir 1": 0.33,
+    "Fot 2": 0.199,
+    "Likbjörn": 0.128
+   },
+   "someone_else": true,
+   "ortho_ranking": [
+    {
+     "carver": "Öpir 1",
+     "similarity": 0.373,
+     "reliability": 0.459
+    },
+    {
+     "carver": "Balle",
+     "similarity": 0.342,
+     "reliability": 0.335
+    },
+    {
+     "carver": "Visäte",
+     "similarity": 0.33,
+     "reliability": 0.544
+    },
+    {
+     "carver": "Torgöt Fotsarve",
+     "similarity": 0.292,
+     "reliability": 0.233
+    },
+    {
+     "carver": "Åsmund",
+     "similarity": 0.28,
+     "reliability": 0.678
+    }
+   ],
+   "n_words": 8,
+   "ortho_margin": 0.031,
+   "style": "Pr4",
+   "style_uncertain": true,
+   "second": "Fot 2",
+   "second_strength": 0.149,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U ATA322-4035-2010",
+   "place": "Uppsala, Fyristorg",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.517,
+   "model": 0.517,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Öpir 1 står på samma plats (under 1 km). Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Stenen: röd sandsten. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Sandsten är inte tydligt vanligare hos ristaren (22 %) än på runstenarna i landskapet i stort (20 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.517,
+   "model_probs": {
+    "Öpir 1": 0.517,
+    "Åsmund": 0.126,
+    "Torbjörn 2": 0.114
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": null,
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "<http://kulturarvsdata.se/raa/samla/html/6410>"
+    ]
+   }
+  },
+  {
+   "signum": "U 965",
+   "place": "Vaksala kyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.516,
+   "model": 0.516,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Öpir 1 står på samma plats (under 1 km). Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Stenen: ljus granit. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Granit och närstående är inte tydligt vanligare hos ristaren (77 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.516,
+   "model_probs": {
+    "Öpir 1": 0.516,
+    "Torbjörn 2": 0.138,
+    "Åsmund": 0.097
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "?",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U 1166",
+   "place": "Prästgården",
+   "province": "U",
+   "lost": true,
+   "carver": "Balle",
+   "strength": 0.516,
+   "model": 0.516,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Balle ligger 3 km bort. Ristarens kända landskap: U (72), Sö (16), Vs (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr3 (33), Fp (14), Pr4 (3), Pr2 (2), Pr1 (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Fp, Pr3) motsvarar ungefär 1010–1080 enligt Gräslunds kronologi; Pr1, Pr4, Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Bergarten kan inte jämföras."
+   },
+   "model_top": "Balle",
+   "model_top_p": 0.516,
+   "model_probs": {
+    "Balle": 0.516,
+    "Tidkume": 0.125,
+    "Åsmund": 0.105
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "?",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U Fv1979;245",
+   "place": "Skånela kyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Fot 2",
+   "strength": 0.512,
+   "model": 0.512,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Fot 2 står på samma plats (under 1 km). Ristarens kända landskap: U (78).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (28), Pr3 (18), Pr2 (5), RAK (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr3, Pr4) motsvarar ungefär 1050–1100 enligt Gräslunds kronologi; Pr2, RAK finns bara på enstaka stenar.",
+    "språkdrag": "Av 2 jämförbara språkdrag talar 1 för Fot 2 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 0 emot (tydligt ovanligare hos ristaren) och 1 skiljer inte. För: skiljetecken (kryss: 73 % hos ristaren mot 15 % i U). Sammantaget är stenens språkdrag 6,7 gånger så vanliga hos Fot 2 som på andra stenar i U; 4 % av 750 andra stenar där passar ristarens profil minst lika bra (p 0,040). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: granit. Säkra stenar av Fot 2 med uppgift (64): granit (41), rödgrå granit (5), gnejs (3), röd granit (3). Granit och närstående är inte tydligt vanligare hos ristaren (91 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Fot 2",
+   "model_top_p": 0.512,
+   "model_probs": {
+    "Fot 2": 0.512,
+    "Åsmund": 0.198,
+    "Öpir 1": 0.127
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr4 [Källström 2007a:407]",
+   "style_uncertain": true,
+   "second": "Åsmund",
+   "second_strength": 0.148,
+   "crosscheck": {
+    "status": "samma som",
+    "text": "Runor 2020: samma ristare som U 297 och Fv1953;270 (namnlös).",
+    "references": [
+     "<http://fornvannen.se/pdf/1950talet/1953_262.pdf>; <http://fornvannen.se/pdf/1970talet/1979_228.pdf>; $=Fv 1996:214-215, <http://fornvannen.se/pdf/1990talet/1996_211.pdf>; $=Källström 2007a:407; $=ATA Dnr 322-4013-2011"
+    ]
+   }
+  },
+  {
+   "signum": "U 997",
+   "place": "Lövsta",
+   "province": "U",
+   "lost": false,
+   "carver": "Fot 2",
+   "strength": 0.511,
+   "model": 0.511,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "Närmaste signerade eller attribuerade sten av Fot 2 ligger 2 km bort. Ristarens kända landskap: U (78).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (28), Pr3 (18), Pr2 (5), RAK (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr3, Pr4) motsvarar ungefär 1050–1100 enligt Gräslunds kronologi; Pr2, RAK finns bara på enstaka stenar.",
+    "språkdrag": "Av 11 jämförbara språkdrag talar 2 för Fot 2 (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 1 emot (tydligt ovanligare hos ristaren) och 8 skiljer inte. För: skiljetecken (kryss: 73 % hos ristaren mot 15 % i U); diftongen ai i alla ord (båda: 23 % hos ristaren mot 15 % i U). Emot: stavning av 'efter' (e-…-R: 3 % hos ristaren mot 7 % i U). Sammantaget är stenens språkdrag 5,7 gånger så vanliga hos Fot 2 som på andra stenar i U; 4 % av 624 andra stenar där passar ristarens profil minst lika bra (p 0,045). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: röd fältspatsrik granit. Säkra stenar av Fot 2 med uppgift (64): granit (41), rödgrå granit (5), gnejs (3), röd granit (3). Granit och närstående är inte tydligt vanligare hos ristaren (91 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Fot 2",
+   "model_top_p": 0.511,
+   "model_probs": {
+    "Fot 2": 0.511,
+    "Öpir 1": 0.269,
+    "Visäte": 0.094
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr4",
+   "style_uncertain": false,
+   "second": "Öpir 1",
+   "second_strength": 0.224,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  },
+  {
+   "signum": "U Fv1973;198D",
+   "place": "Uppsala, kv. Torget",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.509,
+   "model": 0.509,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Öpir 1 står på samma plats (under 1 km). Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Stenen: granit. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Granit och närstående är inte tydligt vanligare hos ristaren (77 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.509,
+   "model_probs": {
+    "Öpir 1": 0.509,
+    "Torbjörn 2": 0.123,
+    "Åsmund": 0.118
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "?",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "<http://fornvannen.se/pdf/1970talet/1973_185.pdf>"
+    ]
+   }
+  },
+  {
+   "signum": "U ATA7269/60D",
+   "place": "Eds kyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.506,
+   "model": 0.506,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Öpir 1 står på samma plats (under 1 km). Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Stenen: röd gävlesandsten. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Sandsten är inte tydligt vanligare hos ristaren (22 %) än på runstenarna i landskapet i stort (20 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.506,
+   "model_probs": {
+    "Öpir 1": 0.506,
+    "Torbjörn 2": 0.145,
+    "Visäte": 0.092
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "Pr5",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "SRI 10 Dig. suppl. (U ATA7269/60D) (version 0.2)"
+    ]
+   }
+  },
+  {
+   "signum": "U Fv1969;304A",
+   "place": "Uppsala, kv. S:t Per",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.501,
+   "model": 0.501,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Öpir 1 står på samma plats (under 1 km). Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Stenen: röd sandsten. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Sandsten är inte tydligt vanligare hos ristaren (22 %) än på runstenarna i landskapet i stort (20 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.501,
+   "model_probs": {
+    "Öpir 1": 0.501,
+    "Torbjörn 2": 0.142,
+    "Åsmund": 0.103
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": "?",
+   "style_uncertain": true,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "<http://fornvannen.se/pdf/1960talet/1969_297.pdf>"
+    ]
+   }
+  },
+  {
+   "signum": "U Fv1969;304B",
+   "place": "Uppsala, kv. S:t Per",
+   "province": "U",
+   "lost": false,
+   "carver": "Öpir 1",
+   "strength": 0.501,
+   "model": 0.501,
+   "ortho": 0.0,
+   "checks": {
+    "område": true,
+    "stil": null,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Öpir 1 står på samma plats (under 1 km). Ristarens kända landskap: U (119), Sö (2), Gs (1).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): Pr4 (58), Pr5 (40), Pr3 (2), Fp (1). Kärnan (stilgrupper på minst en tiondel av stenarna: Pr4, Pr5) motsvarar ungefär 1070–1130 enligt Gräslunds kronologi; Pr3, Fp finns bara på enstaka stenar.",
+    "språkdrag": "För få jämförbara språkdrag.",
+    "bergart": "Stenen: röd sandsten. Säkra stenar av Öpir 1 med uppgift (105): granit (28), sandsten (13), ljus granit (9), röd granit (6). Sandsten är inte tydligt vanligare hos ristaren (22 %) än på runstenarna i landskapet i stort (20 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Öpir 1",
+   "model_top_p": 0.501,
+   "model_probs": {
+    "Öpir 1": 0.501,
+    "Torbjörn 2": 0.142,
+    "Åsmund": 0.103
+   },
+   "someone_else": false,
+   "ortho_ranking": null,
+   "n_words": null,
+   "ortho_margin": null,
+   "style": null,
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": [
+     "<http://fornvannen.se/pdf/1960talet/1969_297.pdf>"
+    ]
+   }
+  },
+  {
+   "signum": "U 335",
+   "place": "Orkesta kyrka",
+   "province": "U",
+   "lost": false,
+   "carver": "Gunnar",
+   "strength": 0.5,
+   "model": 0.422,
+   "ortho": 0.135,
+   "checks": {
+    "område": true,
+    "stil": true,
+    "språkdrag": null,
+    "bergart": null
+   },
+   "check_texts": {
+    "område": "En signerad eller attribuerad sten av Gunnar står på samma plats (under 1 km). Ristarens kända landskap: U (43).",
+    "stil": "Stilgrupper på ristarens stenar (utan frågetecken i Rundata): RAK (25), Pr1 (10), Pr2 (2). Kärnan (stilgrupper på minst en tiondel av stenarna: RAK, Pr1) motsvarar ungefär 980–1050 enligt Gräslunds kronologi; Pr2 finns bara på enstaka stenar.",
+    "språkdrag": "Av 13 jämförbara språkdrag talar 5 för Gunnar (stenens form är tydligt vanligare hos ristaren än på andra stenar i U), 1 emot (tydligt ovanligare hos ristaren) och 7 skiljer inte. För: stavning av 'efter' (i-…-iR: 82 % hos ristaren mot 16 % i U); skiljetecken (kryss: 64 % hos ristaren mot 18 % i U); diftongen ai i alla ord (monoftong: 79 % hos ristaren mot 30 % i U); diftongen au i 'och' (monoftong: 82 % hos ristaren mot 40 % i U); stungen i (e) (nej: 78 % hos ristaren mot 51 % i U). Emot: kristen bön (nej: 46 % hos ristaren mot 79 % i U). Sammantaget är stenens språkdrag 121,8 gånger så vanliga hos Gunnar som på andra stenar i U; 0 % av 636 andra stenar där passar ristarens profil minst lika bra (p 0,002). Skillnaden mot landskapet är statistiskt signifikant. Ristaren är utvald av en metod som själv bygger på stavningen, så språkdragen räknas inte som ett oberoende stöd.",
+    "bergart": "Stenen: granit. Säkra stenar av Gunnar med uppgift (37): granit (27), gnejs (3), gnejsgranit (3), gråsten (2). Granit och närstående är inte tydligt vanligare hos ristaren (92 %) än på runstenarna i landskapet i stort (74 %; kvot under 1,5), så bergarten skiljer inte ristare åt."
+   },
+   "model_top": "Gunnar",
+   "model_top_p": 0.422,
+   "model_probs": {
+    "Gunnar": 0.422,
+    "Balle": 0.102,
+    "Öpir 1": 0.097
+   },
+   "someone_else": false,
+   "ortho_ranking": [
+    {
+     "carver": "Gunnar",
+     "similarity": 0.777,
+     "reliability": 0.519
+    },
+    {
+     "carver": "Fot 2",
+     "similarity": 0.764,
+     "reliability": 0.447
+    },
+    {
+     "carver": "Hägvid",
+     "similarity": 0.649,
+     "reliability": 0.3
+    },
+    {
+     "carver": "Torsten",
+     "similarity": 0.632,
+     "reliability": 0.42
+    },
+    {
+     "carver": "Äskil 2",
+     "similarity": 0.58,
+     "reliability": 0.35
+    }
+   ],
+   "n_words": 11,
+   "ortho_margin": 0.013,
+   "style": "Pr1",
+   "style_uncertain": false,
+   "second": null,
+   "second_strength": null,
+   "crosscheck": {
+    "status": "saknas",
+    "text": "Runor 2020 anger ingen ristare.",
+    "references": []
+   }
+  }
+ ]
+}
