@@ -6,6 +6,7 @@ Skriver utdata/blogg/ristarmodell.json; --write sparar ett nytt opublicerat utka
 import datetime as dt
 import json
 import os
+import re
 import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
@@ -87,7 +88,8 @@ def fig(name: str) -> str:
 FIG_AB = fig("modell_delmodeller.png")
 FIG_CF = fig("modell_forvaxling.png")
 
-rows = "\n".join(f"| {s} | {PRED[s]['place']} | {PRED[s]['top']} | {pr(PRED[s]['p'])} % |" for s in TOP5)
+# A list, not a table: the article page (components/BlogBody.tsx) has no tables
+rows = "\n".join(f"- **{s}** vid {PRED[s]['place']}: {PRED[s]['top']}, {pr(PRED[s]['p'])} procent." for s in TOP5)
 
 title = "Kan statistiken föreslå vem som ristade en sten?"
 summary = ("Vi lät 500 små beslutsträd gissa ristaren på 497 runstenar där svaret redan var känt. De hade rätt på nästan "
@@ -135,12 +137,12 @@ Räknat i grupp står språk och innehåll för {pr(GI['Språk och innehåll']['
 
 ## Öpir-magneten
 
-När datorn har fel gissar den ofta på Öpir. Tio av Åsmunds {PC['Åsmund']['n']} stenar, åtta av Gunnars {PC['Gunnar']['n']} och åtta av Visätes {PC['Visäte']['n']} hamnar hos honom. Öpir har flest stenar i spelet, så när ledtrådarna pekar åt flera håll är han det säkraste kortet. Det syns åt andra hållet också: när datorn säger Öpir har den rätt i {pr(PC['Öpir 1']['precision'])} procent av fallen. Öpir får beröm för fler stenar än han ristade.
+När datorn har fel gissar den ofta på Öpir. Tio av Åsmunds {PC['Åsmund']['n']} stenar, åtta av Gunnars {PC['Gunnar']['n']} och åtta av Visätes {PC['Visäte']['n']} hamnar hos Öpir. Öpir har flest stenar i spelet, så när ledtrådarna pekar åt flera håll är Öpir det säkraste kortet. Det syns åt andra hållet också: när datorn säger Öpir har den rätt i {pr(PC['Öpir 1']['precision'])} procent av fallen. Öpir får beröm för fler stenar än det finns belägg för.
 
 {FIG_CF}
 Raderna är ristaren enligt Rundata, kolumnerna datorns förstaval. Ju mörkare ruta, desto större andel av ristarens stenar. Den mörka diagonalen är rätt svar; Öpirs kolumn samlar många av felen.
 
-Lättast att känna igen är Balle ({right('Balle')} av {PC['Balle']['n']} stenar rätt) och Öpir ({right('Öpir 1')} av {PC['Öpir 1']['n']}). Svårast är Tore 1 och Vidbjörn, som datorn inte kände igen på en enda sten ({right('Tore 1')} av {PC['Tore 1']['n']} och {right('Vidbjörn')} av {PC['Vidbjörn']['n']}), och Tidkume: tio av hans tolv stenar tog datorn för Balles. Om det betyder att de två skrev likadant, att de arbetade nära varandra eller bara att tolv stenar är för lite att lära sig av, kan datorn inte avgöra. Det är en fråga för någon som kan titta på stenarna.
+Lättast att känna igen är Balle ({right('Balle')} av {PC['Balle']['n']} stenar rätt) och Öpir ({right('Öpir 1')} av {PC['Öpir 1']['n']}). Svårast är Tore 1 och Vidbjörn, som datorn inte kände igen på en enda sten ({right('Tore 1')} av {PC['Tore 1']['n']} och {right('Vidbjörn')} av {PC['Vidbjörn']['n']}), och Tidkume: tio av Tidkumes tolv stenar tog datorn för Balles. Om det betyder att de två skrev likadant, att de arbetade nära varandra eller bara att tolv stenar är för lite att lära sig av, kan datorn inte avgöra. Det är en fråga för någon som kan titta på stenarna.
 
 ## En blygsam maskin
 
@@ -148,7 +150,7 @@ Datorn säger också hur säker den är. När den säger minst 50 procent har de
 
 ## Vem rättade provet?
 
-Här kommer haken. Facit – vem som ristade vilken sten – är inte skrivet av stenarna själva. I Uppland och Södermanland bygger Rundatas attribueringar till stor del på Jan Axelsons förteckning över mellansvenska runristare från 1993, och Axelson vägde själv in stil, stavning och geografi. Det är samma slags ledtrådar som datorn använder. Datorn har alltså delvis gått i Axelsons skola, och de {pr(AB['Alla']['accuracy'])} procenten mäter till en del hur väl den tänker som han – inte bara hur ofta den har rätt.
+Här kommer haken. Facit – vem som ristade vilken sten – är inte skrivet av stenarna själva. I Uppland och Södermanland bygger Rundatas attribueringar till stor del på Jan Axelsons förteckning över mellansvenska runristare från 1993, och Axelson vägde själv in stil, stavning och geografi. Det är samma slags ledtrådar som datorn använder. Datorn har alltså delvis gått i Axelsons skola, och de {pr(AB['Alla']['accuracy'])} procenten mäter till en del hur väl den tänker som Axelson – inte bara hur ofta den har rätt.
 
 ## Arton namn – och alla andra
 
@@ -160,8 +162,6 @@ Nu har datorn fått ett nytt svar att ge: *kanske någon annan*. Vi lärde den d
 
 Med de reservationerna har datorn tittat på {sv(A['n_predictions'])} stenar som saknar en säker ristare men står nära en träningssten. För {A['n_someone_else']} av dem säger den kanske någon annan. För {len(open_hi)} stenar som inte har någon ristare alls i Rundata ger den ett namn med minst 50 procent. Här är de fem säkraste:
 
-| Sten | Plats | Datorns förslag | Sannolikhet |
-|---|---|---|---|
 {rows}
 
 På de {A['uncertain']['n']} stenar där Rundata tvekar mellan flera ristare väljer datorn en av Rundatas kandidater i {A['uncertain']['agree']} fall. Varje förslag är en hypotes att pröva mot stenen själv – mot ornamentiken, huggningen och det som står – inte en ny attribuering.
@@ -189,6 +189,10 @@ Vill du se själv finns alltihop i Vitki under Statistik → *Vem ristade?*, och
 - Breiman, L. 2001. Random forests. *Machine Learning* 45: 5–32.
 - Samnordisk runtextdatabas, version 3.1 (ODbL).
 - Foto av U 485: se bildtexten."""
+
+for word in (" han ", " hans ", " honom ", " hon ", " henne "):  # no pronouns for carvers or scholars
+    assert word not in body, word
+assert not re.search(r"^\|", body, re.M)  # no tables (the article page cannot show them)
 
 out = {"slug": "kan-statistiken-foresla-vem-som-ristade", "title": title, "summary": summary, "body": body,
        "title_en": "", "summary_en": "", "body_en": "", "labels": ["Metod", "Ristare"]}
