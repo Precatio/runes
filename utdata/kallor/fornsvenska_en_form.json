@@ -1,0 +1,734 @@
+{
+ "plan_sha256": "c11d3142f984aec0263a90040f54ac2631302f4de76c24751db1d1b3b89b12b3",
+ "dictionaries": {
+  "soederwall": 21225,
+  "soederwall-supp": 18102,
+  "schlyter": 9646,
+  "fsvm": 37201
+ },
+ "n_dictionary_forms": 39351,
+ "n_stones": 2321,
+ "n_lemmas": 1106,
+ "n_tokens": 11157,
+ "attested_types": 397,
+ "attested_tokens": 8535,
+ "by_class": {
+  "hapax": {
+   "attested": 217,
+   "n": 747,
+   "share": 0.29049531459170014
+  },
+  "2–4": {
+   "attested": 96,
+   "n": 215,
+   "share": 0.44651162790697674
+  },
+  "≥5": {
+   "attested": 84,
+   "n": 144,
+   "share": 0.5833333333333334
+  }
+ },
+ "z": 6.802970774425637,
+ "p_one_sided": 5.1241233478549475e-12,
+ "answer": true,
+ "unattested_frequent": [
+  {
+   "lemma": "let",
+   "n": 448,
+   "forms": {
+    "let": 448
+   }
+  },
+  {
+   "lemma": "resþu",
+   "n": 230,
+   "forms": {
+    "ræistu": 200,
+    "ræisþu": 22,
+    "ristu": 8
+   }
+  },
+  {
+   "lemma": "þensa",
+   "n": 218,
+   "forms": {
+    "þennsa": 129,
+    "þessa": 67,
+    "þessaR": 22
+   }
+  },
+  {
+   "lemma": "goþ",
+   "n": 161,
+   "forms": {
+    "goðan": 158,
+    "goð": 3
+   }
+  },
+  {
+   "lemma": "kumbl",
+   "n": 81,
+   "forms": {
+    "kumbl": 75,
+    "kuml": 6
+   }
+  },
+  {
+   "lemma": "hagva",
+   "n": 64,
+   "forms": {
+    "haggva": 64
+   }
+  },
+  {
+   "lemma": "giera",
+   "n": 50,
+   "forms": {
+    "gærva": 45,
+    "giæra": 5
+   }
+  },
+  {
+   "lemma": "varþ",
+   "n": 44,
+   "forms": {
+    "varð": 44
+   }
+  },
+  {
+   "lemma": "moþur",
+   "n": 36,
+   "forms": {
+    "moður": 36
+   }
+  },
+  {
+   "lemma": "mag",
+   "n": 27,
+   "forms": {
+    "mag": 25,
+    "mik": 2
+   }
+  },
+  {
+   "lemma": "bugi",
+   "n": 21,
+   "forms": {
+    "byggi": 21
+   }
+  },
+  {
+   "lemma": "þosi",
+   "n": 18,
+   "forms": {
+    "þausi": 18
+   }
+  },
+  {
+   "lemma": "vestr",
+   "n": 17,
+   "forms": {
+    "vestr": 17
+   }
+  },
+  {
+   "lemma": "do",
+   "n": 16,
+   "forms": {
+    "do": 16
+   }
+  },
+  {
+   "lemma": "endaþis",
+   "n": 15,
+   "forms": {
+    "ændaðis": 15
+   }
+  },
+  {
+   "lemma": "drepin",
+   "n": 15,
+   "forms": {
+    "drepinn": 14,
+    "dræpinn": 1
+   }
+  },
+  {
+   "lemma": "sustur",
+   "n": 13,
+   "forms": {
+    "systur": 13
+   }
+  },
+  {
+   "lemma": "hiar",
+   "n": 13,
+   "forms": {
+    "hiar": 9,
+    "hier": 2,
+    "hiær": 2
+   }
+  },
+  {
+   "lemma": "sialfan",
+   "n": 13,
+   "forms": {
+    "sialfan": 13
+   }
+  },
+  {
+   "lemma": "aft",
+   "n": 12,
+   "forms": {
+    "aft": 12
+   }
+  },
+  {
+   "lemma": "nutan",
+   "n": 12,
+   "forms": {
+    "nytan": 12
+   }
+  },
+  {
+   "lemma": "sialu",
+   "n": 11,
+   "forms": {
+    "sialu": 11
+   }
+  },
+  {
+   "lemma": "kvikvan",
+   "n": 11,
+   "forms": {
+    "kvikvan": 11
+   }
+  },
+  {
+   "lemma": "markaþi",
+   "n": 11,
+   "forms": {
+    "markaði": 11
+   }
+  },
+  {
+   "lemma": "þeta",
+   "n": 10,
+   "forms": {
+    "þetta": 10
+   }
+  },
+  {
+   "lemma": "hio",
+   "n": 9,
+   "forms": {
+    "hio": 9
+   }
+  },
+  {
+   "lemma": "beztr",
+   "n": 9,
+   "forms": {
+    "bæztr": 9
+   }
+  },
+  {
+   "lemma": "hiogu",
+   "n": 9,
+   "forms": {
+    "hioggu": 9
+   }
+  },
+  {
+   "lemma": "het",
+   "n": 8,
+   "forms": {
+    "het": 7,
+    "hæit": 1
+   }
+  },
+  {
+   "lemma": "þem",
+   "n": 8,
+   "forms": {
+    "þæim": 8
+   }
+  },
+  {
+   "lemma": "snialan",
+   "n": 8,
+   "forms": {
+    "sniallan": 8
+   }
+  },
+  {
+   "lemma": "arfi",
+   "n": 8,
+   "forms": {
+    "arfi": 8
+   }
+  },
+  {
+   "lemma": "eft",
+   "n": 7,
+   "forms": {
+    "æft": 7
+   }
+  },
+  {
+   "lemma": "sagum",
+   "n": 7,
+   "forms": {
+    "sagum": 7
+   }
+  },
+  {
+   "lemma": "þrotar",
+   "n": 7,
+   "forms": {
+    "þrottaR": 7
+   }
+  },
+  {
+   "lemma": "hafþi",
+   "n": 7,
+   "forms": {
+    "hafði": 7
+   }
+  },
+  {
+   "lemma": "arfa",
+   "n": 7,
+   "forms": {
+    "arfa": 7
+   }
+  },
+  {
+   "lemma": "drengia",
+   "n": 7,
+   "forms": {
+    "drængia": 7
+   }
+  },
+  {
+   "lemma": "hvitavaþum",
+   "n": 7,
+   "forms": {
+    "hvitavaðum": 7
+   }
+  },
+  {
+   "lemma": "sven/sten",
+   "n": 6,
+   "forms": {
+    "svæinn/stæinn": 5,
+    "svæin/stæin": 1
+   }
+  }
+ ],
+ "attested_frequent": [
+  {
+   "lemma": "ok",
+   "n": 1663
+  },
+  {
+   "lemma": "eftir",
+   "n": 1300
+  },
+  {
+   "lemma": "þan",
+   "n": 632
+  },
+  {
+   "lemma": "resa",
+   "n": 576
+  },
+  {
+   "lemma": "at",
+   "n": 555
+  },
+  {
+   "lemma": "rest",
+   "n": 443
+  },
+  {
+   "lemma": "hialpi",
+   "n": 283
+  },
+  {
+   "lemma": "þar",
+   "n": 236
+  },
+  {
+   "lemma": "and",
+   "n": 178
+  },
+  {
+   "lemma": "han",
+   "n": 162
+  },
+  {
+   "lemma": "i",
+   "n": 149
+  },
+  {
+   "lemma": "reta",
+   "n": 140
+  },
+  {
+   "lemma": "bro",
+   "n": 114
+  },
+  {
+   "lemma": "bonda",
+   "n": 111
+  },
+  {
+   "lemma": "sal",
+   "n": 98
+  },
+  {
+   "lemma": "gierþi",
+   "n": 81
+  },
+  {
+   "lemma": "en",
+   "n": 77
+  },
+  {
+   "lemma": "boanda",
+   "n": 69
+  },
+  {
+   "lemma": "merki",
+   "n": 68
+  },
+  {
+   "lemma": "hiog",
+   "n": 67
+  },
+  {
+   "lemma": "þo",
+   "n": 59
+  },
+  {
+   "lemma": "sati",
+   "n": 54
+  },
+  {
+   "lemma": "moþir",
+   "n": 54
+  },
+  {
+   "lemma": "doþr",
+   "n": 49
+  },
+  {
+   "lemma": "reti",
+   "n": 47
+  },
+  {
+   "lemma": "þera",
+   "n": 45
+  },
+  {
+   "lemma": "er",
+   "n": 40
+  },
+  {
+   "lemma": "meþ",
+   "n": 36
+  },
+  {
+   "lemma": "gierþu",
+   "n": 35
+  },
+  {
+   "lemma": "vas",
+   "n": 35
+  },
+  {
+   "lemma": "sunr",
+   "n": 35
+  },
+  {
+   "lemma": "ostr",
+   "n": 34
+  },
+  {
+   "lemma": "harþa",
+   "n": 33
+  },
+  {
+   "lemma": "es",
+   "n": 27
+  },
+  {
+   "lemma": "sar",
+   "n": 25
+  },
+  {
+   "lemma": "til",
+   "n": 23
+  },
+  {
+   "lemma": "konu",
+   "n": 21
+  },
+  {
+   "lemma": "sial",
+   "n": 21
+  },
+  {
+   "lemma": "for",
+   "n": 20
+  },
+  {
+   "lemma": "þa",
+   "n": 19
+  }
+ ],
+ "unattested_hapax_sample": [
+  {
+   "lemma": "fulgin",
+   "forms": {
+    "fulginn": 1
+   }
+  },
+  {
+   "lemma": "fulgþu",
+   "forms": {
+    "fylgðu": 1
+   }
+  },
+  {
+   "lemma": "mestar",
+   "forms": {
+    "mæstaR": 1
+   }
+  },
+  {
+   "lemma": "deþir",
+   "forms": {
+    "dæðiR": 1
+   }
+  },
+  {
+   "lemma": "drogr",
+   "forms": {
+    "draugR": 1
+   }
+  },
+  {
+   "lemma": "þemsi",
+   "forms": {
+    "þæimsi": 1
+   }
+  },
+  {
+   "lemma": "hogi",
+   "forms": {
+    "haugi": 1
+   }
+  },
+  {
+   "lemma": "munat",
+   "forms": {
+    "munat": 1
+   }
+  },
+  {
+   "lemma": "rogstarkr",
+   "forms": {
+    "rogstarkR": 1
+   }
+  },
+  {
+   "lemma": "iarmungrundar",
+   "forms": {
+    "iarmungrundaR": 1
+   }
+  },
+  {
+   "lemma": "urgrandari",
+   "forms": {
+    "uRgrandaRi": 1
+   }
+  },
+  {
+   "lemma": "{in",
+   "forms": {
+    "{in": 1
+   }
+  },
+  {
+   "lemma": "nomine",
+   "forms": {
+    "nomine": 1
+   }
+  },
+  {
+   "lemma": "-abi",
+   "forms": {
+    "-abi": 1
+   }
+  },
+  {
+   "lemma": "vitran",
+   "forms": {
+    "vitran": 1
+   }
+  },
+  {
+   "lemma": "sitr",
+   "forms": {
+    "sitr": 1
+   }
+  },
+  {
+   "lemma": "herfriþr",
+   "forms": {
+    "hærfriðr": 1
+   }
+  },
+  {
+   "lemma": "hiarsug",
+   "forms": {
+    "hiarsug": 1
+   }
+  },
+  {
+   "lemma": "hefndi",
+   "forms": {
+    "hæfndi": 1
+   }
+  },
+  {
+   "lemma": "enigi",
+   "forms": {
+    "æinigi": 1
+   }
+  },
+  {
+   "lemma": "les",
+   "forms": {
+    "les": 1
+   }
+  },
+  {
+   "lemma": "resti/rest",
+   "forms": {
+    "ræisti/ræist": 1
+   }
+  },
+  {
+   "lemma": "ald",
+   "forms": {
+    "ald": 1
+   }
+  },
+  {
+   "lemma": "mest",
+   "forms": {
+    "mæst": 1
+   }
+  },
+  {
+   "lemma": "uar",
+   "forms": {
+    "uar": 1
+   }
+  },
+  {
+   "lemma": "stigur",
+   "forms": {
+    "stiguR": 1
+   }
+  },
+  {
+   "lemma": "strendi",
+   "forms": {
+    "strændi": 1
+   }
+  },
+  {
+   "lemma": "gierva",
+   "forms": {
+    "giærva": 1
+   }
+  },
+  {
+   "lemma": "oketri",
+   "forms": {
+    "okætRi": 1
+   }
+  },
+  {
+   "lemma": "faþurbroþur",
+   "forms": {
+    "faðurbroður": 1
+   }
+  },
+  {
+   "lemma": "iatin",
+   "forms": {
+    "iattin": 1
+   }
+  },
+  {
+   "lemma": "þikra",
+   "forms": {
+    "þikra": 1
+   }
+  },
+  {
+   "lemma": "ini'k",
+   "forms": {
+    "inni'k": 1
+   }
+  },
+  {
+   "lemma": "serkir/sverkir",
+   "forms": {
+    "særkiR/sværkiR": 1
+   }
+  },
+  {
+   "lemma": "gerna/karna",
+   "forms": {
+    "gæiRna/karna": 1
+   }
+  },
+  {
+   "lemma": "ke-i",
+   "forms": {
+    "kai-i": 1
+   }
+  },
+  {
+   "lemma": "asgota",
+   "forms": {
+    "asgauta": 1
+   }
+  },
+  {
+   "lemma": "hofi/hofi",
+   "forms": {
+    "hofi/høfi": 1
+   }
+  },
+  {
+   "lemma": "toia",
+   "forms": {
+    "tøyia": 1
+   }
+  },
+  {
+   "lemma": "harþina",
+   "forms": {
+    "harðina": 1
+   }
+  }
+ ]
+}

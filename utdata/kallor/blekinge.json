@@ -1,0 +1,700 @@
+{
+ "plan_sha256": "c11d3142f984aec0263a90040f54ac2631302f4de76c24751db1d1b3b89b12b3",
+ "stones": {
+  "91": {
+   "name": "Bl 2 Gummarp",
+   "n_interpretations": 7,
+   "years": [
+    1944,
+    1961,
+    1965,
+    1966,
+    1971,
+    1975,
+    1983,
+    1995,
+    1996,
+    2000,
+    2002,
+    2004
+   ],
+   "n_english": 7,
+   "lines": [
+    "[0-?](h)ᴀþuwolᴀfᴀ",
+    "[0-?]sᴀte",
+    "[0-?](s)tᴀ(b)ᴀþr(i)a",
+    "fff"
+   ],
+   "coverage": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "agreement": [
+    1.0,
+    1.0,
+    0.7142857142857143,
+    1.0
+   ],
+   "translation_similarity": 0.7206105045234006,
+   "stable_words": [
+    "set",
+    "stav",
+    "three"
+   ],
+   "unstable_words": [
+    "cattle",
+    "fff",
+    "much",
+    "property",
+    "prosperity",
+    "uwolf",
+    "uwul",
+    "wealth"
+   ],
+   "groups": {
+    "död": {
+     "n": 0,
+     "share": 0.0
+    },
+    "förstörelse": {
+     "n": 0,
+     "share": 0.0
+    },
+    "förutsägelse/skada": {
+     "n": 0,
+     "share": 0.0
+    }
+   },
+   "literature": [
+    "Antonsen 1975",
+    "Antonsen 2002",
+    "Arntz 1944",
+    "Birkmann 1995",
+    "Krause & Jankuhn 1966",
+    "Krause 1961",
+    "Krause 1971",
+    "Makaev 1965",
+    "Makaev 1996",
+    "McKinnell et al. 2004",
+    "Nielsen 1983",
+    "Smith 1971",
+    "Sundqvist 2000"
+   ],
+   "english": [
+    "Haþuwolªfaʀ set three staves. f f f",
+    "Hǫþuwulªfz set three staves, fff (=much wealth?).",
+    "Haþuwulªfʀ set three staves: f f f.",
+    "Haþuwolªfªʀ set three staves: f f f  (=cattle, property, prosperity).",
+    "Haþuwolªfaʀ set (the) three staves f f f.",
+    "Haþuwolªfaʀ set three staves: f f f.",
+    "Haþuwolf set three staves, property, property, property."
+   ]
+  },
+  "92": {
+   "name": "Bl 3 Stentoften",
+   "n_interpretations": 19,
+   "years": [
+    1961,
+    1962,
+    1966,
+    1968,
+    1971,
+    1973,
+    1975,
+    1976,
+    1978,
+    1979,
+    1980,
+    1983,
+    1985,
+    1987,
+    1989,
+    1990,
+    1993,
+    1995,
+    1996,
+    2000,
+    2004
+   ],
+   "n_english": 19,
+   "lines": [
+    "niuhᴀborumz",
+    "niuhagestumz",
+    "hᴀþuwolᴀfzgᴀfj",
+    "hᴀriwolᴀfz(m)ᴀ(2?)usnuh(1?)e",
+    "hidezrunonofel(ᴀ)hekᴀhederᴀginoronoz",
+    "herᴀmᴀlᴀsᴀzᴀrᴀgeuwe(lᴀ)dudsᴀþᴀtbᴀriutiþ"
+   ],
+   "coverage": [
+    0.7894736842105263,
+    0.7894736842105263,
+    0.8421052631578947,
+    0.7368421052631579,
+    0.5789473684210527,
+    0.5263157894736842
+   ],
+   "agreement": [
+    1.0,
+    1.0,
+    0.75,
+    0.21428571428571427,
+    0.8181818181818182,
+    0.7
+   ],
+   "translation_similarity": 0.20935251457099457,
+   "stable_words": [],
+   "unstable_words": [
+    "about",
+    "alway",
+    "basenes",
+    "because",
+    "before",
+    "better",
+    "birth",
+    "born",
+    "boy",
+    "break",
+    "bright",
+    "brightnes",
+    "brightrun",
+    "buck",
+    "bury",
+    "care",
+    "cessation",
+    "clear",
+    "close",
+    "commit",
+    "compos",
+    "condemn",
+    "consecrat",
+    "dead",
+    "death",
+    "deceit",
+    "dedicat",
+    "dedicate",
+    "destroy",
+    "disturb",
+    "dullnes",
+    "establish",
+    "farmer",
+    "fire",
+    "foreigner",
+    "friend",
+    "give",
+    "gloryrun",
+    "gods",
+    "grave",
+    "great",
+    "grief",
+    "growth",
+    "guest",
+    "guil",
+    "hariwol",
+    "hariwolaf",
+    "harvest",
+    "hav",
+    "have",
+    "hid",
+    "hidden",
+    "hide",
+    "high",
+    "highson",
+    "hither",
+    "honour",
+    "horseguest",
+    "insidiou",
+    "insiduou"
+   ],
+   "groups": {
+    "död": {
+     "n": 9,
+     "share": 0.47368421052631576
+    },
+    "förstörelse": {
+     "n": 9,
+     "share": 0.47368421052631576
+    },
+    "förutsägelse/skada": {
+     "n": 0,
+     "share": 0.0
+    }
+   },
+   "literature": [
+    "Antonsen 1975",
+    "Antonsen 1978",
+    "Antonsen 1980",
+    "Birkmann 1995",
+    "Braunmüller 2004",
+    "Düwel 1975",
+    "Grønvik 1987",
+    "Grønvik 1990",
+    "Grønvik 1996",
+    "Jänichen 1962",
+    "Klingenberg 1973",
+    "Krause & Jankuhn 1966",
+    "Krause 1961",
+    "Krause 1971",
+    "Lacy 1979",
+    "Moltke 1976",
+    "Moltke 1985",
+    "Nielsen 1968",
+    "Nielsen 1983",
+    "Ohlmarks 1978",
+    "Santesson 1989",
+    "Santesson 1993",
+    "Smith 1971",
+    "Sundqvist 2000"
+   ],
+   "english": [
+    "With nine bucks, with nine stallions Haþuwolªfʀ gave good growth. …",
+    "... Haþuwolªfʀ gave good year. Hariwolªfʀ, for his son, is now protection. ..., [who] that disturbs.",
+    "... Hariwolafʀ is now protection for many things. …",
+    "… To the [sequence] of bright runes I commit hither mighty runes. Protectionless through baseness, [condemned] to insidious death, is he [who] breaks this.",
+    "... is hidden ...",
+    "... To the sequence of clear runes I commit here mighty runes. Protectionless Through baseness, (in possession) of an insidious death is he who breaks this.",
+    "With [the sacrifice of] nine bucks, nine stallions Haþuwolªfʀ gave a good year. Hariwolªfʀ is now protection for the boy. The sequence of bright-runes I hide here, magic-runes. Restless trough baseness, having an insidious death [is], who destroys this.",
+    "Not Ūha to the sons, not Ūha to the guests, Hǫþuwulªfz gave good harvest. Hæriwulªfz to his son ... - The sequence of bright runes I commit here, mighty runes. Protectionless because of baseness, [in possession] of an insidious death is, who breaks this.",
+    "To the Niuha-dwellers, to the Niuha-guests Haþuwolªfʀ gave a good year. Hariwolªfʀ ... - I, master of the runes, bury here potent runes. With no cessation of sorcery, a malevolent guile's death for [the man] who breaks it (=the memorial).",
+    "To nine hā-sons (those who have been dedicated to Odin before their births), to nine hā-guests (=dead ones who are now guests of Odin in Valhall) Hǫþuwolªfʀ sacrified. Hæriwolªfʀ gave his son a grave (mound) made of fire.",
+    "With the ... farmers, ... guests Haþuwolªfʀ  gave a good year. Hariwolªfʀ may turn the year for the better for the year-king. The brightness of runes I hide here, mighty runes. …",
+    "To the Niuha-dwellers, to the Niuha-guests Haþuwolªfʀ gave a good year. Hariwolªfʀ, the son, composed [this]. This is the runes' mystery. I hid here mighty runes. Restless because of perversity, dead because of deceit [be] he [who] breaks this",
+    "with nine high-sons (=young men of high birth), with nine horse-guests, Haþuwolªfʀ gave a good year. Hariwolªfʀ may now give us protection. The intimate friends' monument of honour I dedicate, with the monument of honour [I dedicate] the gods' runes. With great grief he may always stagger about, in unhappy dullness, who breaks this.",
+    "To the nine Hār-sons (=sons of Odin), to the nine Hār-guests (=guests of Odin) Haþuwolªfʀ gave, and Hæriwolªfʀ consecrated in the established way the protected place (=the grave), the resting place of the close friends.",
+    "To those whose sons are new [born], to those whose guests are new, May Hariwolᴀfʀ take care of manly strength for my son. ...",
+    "To the nine high sons, to the nine high guests Haþuwolªfʀ gave a good year. …",
+    "To the new farmers, to the new foreigners Haþuwolªfʀ gave a good year. Hariwolªfʀ ... is now protection. The sequence of bright runes I hide here, magic runes. Restless because of baseness, having an insiduous death, who breaks this.",
+    "To the nine high sons, to the nine high guests Haþuwolªfʀ gave a good year. Hariwolªfʀ, the son, [is] now protection for us. Glory-runes I hide now here, might-runes. Protectionless because of baseness, meeting death by magic [be], he who destroys this.",
+    "To the new peasants, to the new strangers Haþuwolªfʀ gave a good year. …"
+   ]
+  },
+  "94": {
+   "name": "Bl 4 Istaby",
+   "n_interpretations": 7,
+   "years": [
+    1960,
+    1963,
+    1965,
+    1966,
+    1971,
+    1975,
+    1976,
+    1978,
+    1983,
+    1985,
+    1987,
+    1995,
+    1996,
+    2001
+   ],
+   "n_english": 7,
+   "lines": [
+    "ᴀfatzhᴀriwulafa",
+    "hᴀþuwulafzhᴀeruwulafiz",
+    "(wa)rᴀitrunᴀzþᴀiᴀz"
+   ],
+   "coverage": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "agreement": [
+    1.0,
+    0.8571428571428571,
+    1.0
+   ],
+   "translation_similarity": 0.5722831473220282,
+   "stable_words": [
+    "run",
+    "uwul",
+    "wrote"
+   ],
+   "unstable_words": [
+    "after",
+    "carv",
+    "descendant",
+    "grandson",
+    "haeruwulafi",
+    "hariwulaf",
+    "heruwul",
+    "riwul",
+    "ruwul",
+    "ruwyl",
+    "stand",
+    "stone",
+    "uwulaf"
+   ],
+   "groups": {
+    "död": {
+     "n": 0,
+     "share": 0.0
+    },
+    "förstörelse": {
+     "n": 0,
+     "share": 0.0
+    },
+    "förutsägelse/skada": {
+     "n": 0,
+     "share": 0.0
+    }
+   },
+   "literature": [
+    "Antonsen 1975",
+    "Birkmann 1995",
+    "Eythórsson 2001",
+    "Jansson 1963",
+    "Jansson 1976",
+    "Jansson 1987",
+    "Krause & Jankuhn 1966",
+    "Krause 1971",
+    "Makaev 1965",
+    "Makaev 1996",
+    "Moltke 1976",
+    "Moltke 1985",
+    "Musset 1965",
+    "Nielsen 1983",
+    "Ohlmarks 1978",
+    "Salberger 1960",
+    "Smith 1971"
+   ],
+   "english": [
+    "Haþuwulafʀ Haeruwulafiʀ wrote these runes after Hariwulafʀ.",
+    "in memory of Hariwulªfʀ [stands this stone] - Haþuwulªfʀ, Heruwulªfiʀ (=Heruwulªfʀ's son), wrote these runes.",
+    "in memory of Hariwulªfʀ - Haþuwulªfʀ, Haeruwulªfiʀ (=Haeruwulªfʀ's son), wrote these runes.",
+    "Hǫþuwulªfz, Hjǫruwylªfīz (=son of Hjǫruwulªfz), wrote these runes in memory of Hæriwulªfz.",
+    "Haþuwulªfʀ, Haeruwulªfiʀ (=descendant of Haeruwulªfʀ), carved these runes [in memory] of Hariwulªfʀ.",
+    "after Hariwulªfʀ [stands this stone] - Haþuwulªfʀ, son (or grandson) of Haeruwulªfʀ, wrote these runes.",
+    "After Hariwulªfʀ,  Haþuwulªfʀ, Haeruwulªfiʀ (=son/descendant of Haeruwulªfʀ), wrote these runes."
+   ]
+  },
+  "93": {
+   "name": "Bl 6 Björketorp",
+   "n_interpretations": 12,
+   "years": [
+    1966,
+    1968,
+    1971,
+    1973,
+    1975,
+    1976,
+    1978,
+    1980,
+    1983,
+    1985,
+    1995,
+    1996,
+    1998,
+    2004
+   ],
+   "n_english": 12,
+   "lines": [
+    "uþᴀrᴀbᴀsbᴀ",
+    "hᴀidzrunoronu",
+    "fᴀlᴀhᴀkhᴀiderᴀg",
+    "inᴀrunazᴀrᴀgeu",
+    "hᴀerᴀmᴀlᴀusz",
+    "utiᴀzwelᴀdᴀude",
+    "sᴀzþᴀtbᴀrutz"
+   ],
+   "coverage": [
+    0.6666666666666666,
+    0.75,
+    0.9166666666666666,
+    0.75,
+    0.75,
+    0.8333333333333334,
+    0.75
+   ],
+   "agreement": [
+    1.0,
+    1.0,
+    0.8181818181818182,
+    0.7777777777777778,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "translation_similarity": 0.28472823268541414,
+   "stable_words": [],
+   "unstable_words": [
+    "about",
+    "abroad",
+    "account",
+    "alway",
+    "bad",
+    "basemes",
+    "basenes",
+    "behaviour",
+    "break",
+    "bright",
+    "brightrun",
+    "buri",
+    "cannot",
+    "clear",
+    "commit",
+    "condemn",
+    "curse",
+    "damage",
+    "dead",
+    "deceit",
+    "dedicate",
+    "defenceless",
+    "destroy",
+    "disaster",
+    "dullnes",
+    "encumber",
+    "expos",
+    "far",
+    "forebode",
+    "foresee",
+    "friend",
+    "give",
+    "gloriou",
+    "gods",
+    "great",
+    "grief",
+    "guile",
+    "harm",
+    "harmful",
+    "harmprophesie",
+    "harmprophesy",
+    "hav",
+    "hid",
+    "hidden",
+    "hide",
+    "home",
+    "honour",
+    "insidiou",
+    "insiduou",
+    "intimate",
+    "magic",
+    "magical",
+    "malicio",
+    "maliciou",
+    "master",
+    "may",
+    "memorial",
+    "mighty",
+    "mightyrun",
+    "monument"
+   ],
+   "groups": {
+    "död": {
+     "n": 9,
+     "share": 0.75
+    },
+    "förstörelse": {
+     "n": 9,
+     "share": 0.75
+    },
+    "förutsägelse/skada": {
+     "n": 5,
+     "share": 0.4166666666666667
+    }
+   },
+   "literature": [
+    "Antonsen 1975",
+    "Antonsen 1978",
+    "Antonsen 1980",
+    "Barðdal 1998",
+    "Birkmann 1995",
+    "Braunmüller 2004",
+    "Grønvik 1996",
+    "Haugen 1976",
+    "Klingenberg 1973",
+    "Krause & Jankuhn 1966",
+    "Krause 1971",
+    "Moltke 1976",
+    "Moltke 1985",
+    "Nielsen 1968",
+    "Nielsen 1983",
+    "Ohlmarks 1978"
+   ],
+   "english": [
+    "To the row of clear runes I give here mighty runes. On account of wickedness defencelessly exposed to a malicios death is the one who destroys this. ...",
+    "harm-prophesy - The sequence of bright runes I hid here, magic runes. Restless because of baseness, having an insiduous death outside is, who destroys this.",
+    "The sequence of bright-runes I commit here, mighty-runes. Because of baseness, protectionless abroad is, (condemned) to an insidious death, he who breaks this. harmful prophecy",
+    "harm-prophesie - The sequence of bright runes I hide here, magical runes. Restless because of basemess, having an insiduous death outside (=abroad) is he, who destroys this [memorial].",
+    "Glorious runes I hide now here, mighty runes. Because of baseness protectionless, outcast because of a  death trough magic [may be] he, who destroys this. Ruin [I] foresee.",
+    "... The sequence of bright runes I hid here, mighty runes. ...",
+    "harm-prophesie - The sequence of bright runes I hide here, magical working runes. Restless because of baseness (=perverted behaviour), having an insiduous death outside (=abroad) is he, who destroys this [memorial].",
+    "... a death trough guile visits ...",
+    "I, master of the rune row, buried here potent runes. Unceasingly [encumbered] by sorcery, \"utiaʀ\" to death through malicious guile [is] he who breaks it (=the memorial). forebodeing of bad things",
+    "Prophesie of disaster (=curse) - This is the runes' mystery. I hid here mighty runes, [which] cannot be harmed by perversity. Outside (=far from home) is dead because of deceit [he] who breaks this.",
+    "... is hidden ...",
+    "The intimate friend's monument of honour I dedicate with the sequence [of words], with the monument of honour [I dedicate] the gods' runes. He may alway stagger about, with great grief, in unhappy dullness, who breaks this. I foresee damage."
+   ]
+  },
+  "137": {
+   "name": "IK 184 Tjurkö I",
+   "n_interpretations": 7,
+   "years": [
+    1914,
+    1963,
+    1965,
+    1966,
+    1971,
+    1975,
+    1976,
+    1983,
+    1985,
+    1987,
+    1994,
+    1995,
+    1996,
+    2001,
+    2002,
+    2003,
+    2006
+   ],
+   "n_english": 7,
+   "lines": [
+    "wurterunozanwalhakurne ˈ heldazkunimudiu ˈ"
+   ],
+   "coverage": [
+    0.5714285714285714
+   ],
+   "agreement": [
+    0.75
+   ],
+   "translation_similarity": 0.4695471602571719,
+   "stable_words": [
+    "run"
+   ],
+   "unstable_words": [
+    "bracteate",
+    "european",
+    "foreigngrain",
+    "gold",
+    "golden",
+    "grain",
+    "heldaz",
+    "kunimunduz",
+    "ly",
+    "made",
+    "ornament",
+    "place",
+    "southern",
+    "walhakra",
+    "walhakurne",
+    "welshcorn",
+    "welshgrain",
+    "work",
+    "wrought"
+   ],
+   "groups": {
+    "död": {
+     "n": 0,
+     "share": 0.0
+    },
+    "förstörelse": {
+     "n": 0,
+     "share": 0.0
+    },
+    "förutsägelse/skada": {
+     "n": 0,
+     "share": 0.0
+    }
+   },
+   "literature": [
+    "Antonsen 1975",
+    "Antonsen 2002",
+    "Axboe et al. (Hrsg.) 1985",
+    "Birkmann 1995",
+    "Düwel 2006",
+    "Eythórsson 2001",
+    "Grønvik 1987",
+    "Grønvik 1994",
+    "Jansson 1963",
+    "Jansson 1976",
+    "Jansson 1987",
+    "Krause & Jankuhn 1966",
+    "Krause 1971",
+    "Looijenga 2003",
+    "Makaev 1965",
+    "Makaev 1996",
+    "Moltke 1976",
+    "Moltke 1985",
+    "Musset 1965",
+    "Nielsen 1983",
+    "Nowak 2003",
+    "Smith 1971",
+    "von Grienberger 1914"
+   ],
+   "english": [
+    "Heldaʀ worked the runes on the welsh-grain (=gold, bracteate?) for Kunimunduʀ.",
+    "The runes on the foreign-grain (=bracteate) wrought Heldaz for Kunimunduz.",
+    "... at the place lying in or at *Walhakraʀ ...",
+    "Heldaʀ, for Kunimunduʀ, wrought the runes on the Welsh-corn.",
+    "Heldaʀ to Kunimunduʀ: [He] wrought the runes for Walhakurne.",
+    "Heldaʀ made the runes on the southern European grain (=the golden ornament?)  for Kunimunduʀ.",
+    "Heldaʀ made the runes on the southern grain for Kunimunduʀ."
+   ]
+  },
+  "125": {
+   "name": "IK 185 Tjurkö II",
+   "n_interpretations": 4,
+   "years": [
+    1941,
+    1942,
+    1965,
+    1966,
+    1970,
+    1987,
+    1996
+   ],
+   "n_english": 4,
+   "lines": [
+    "ota"
+   ],
+   "coverage": [
+    1.0
+   ],
+   "agreement": [
+    1.0
+   ],
+   "translation_similarity": 0.15737005114412048,
+   "stable_words": [],
+   "unstable_words": [
+    "awe",
+    "formula",
+    "god",
+    "magical",
+    "odin",
+    "ota",
+    "property",
+    "respect",
+    "tta"
+   ],
+   "groups": {
+    "död": {
+     "n": 0,
+     "share": 0.0
+    },
+    "förstörelse": {
+     "n": 0,
+     "share": 0.0
+    },
+    "förutsägelse/skada": {
+     "n": 0,
+     "share": 0.0
+    }
+   },
+   "literature": [
+    "Ellmers 1970",
+    "Grønvik 1987",
+    "Krause & Jankuhn 1966",
+    "Makaev 1965",
+    "Makaev 1996"
+   ],
+   "english": [
+    "ota (magical formula)",
+    "Ōtta (=awe, respect)",
+    "?",
+    "to the god Týr (or Odin) as property"
+   ]
+  }
+ },
+ "answer": false
+}

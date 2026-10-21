@@ -1695,6 +1695,30 @@ svenska landskapen ur OpenStreetMap (de flesta som historiska gränser, resten u
 Slesvig ur Natural Earth, Slesvigs sydgräns ungefärligt vid Ejdern och Möre som en ruta i sydöstra Småland; allt
 klipps mot Natural Earths land och förenklas till omkring 300 m.
 
+### 14h. Tre nya källor prövade: runformer, fornsvenskan och Blekingestenarna (2026-10-21)
+
+Analysplan `utdata/kallor/analysplan_kallor.md`, låst innan måtten räknades (SHA-256 i `analysis_plan_kallor.sha256`);
+resultat och avvikelser i `utdata/kallor/resultat.md`.
+
+* **Skåne: runformer mot stavning** (`skane_runformer.py`). RuneS-DB:s graftyper (runformen vid varje position) för
+  de 43 runstenar i Skåne som har graftyper, DR-signum i Rundata och plats i stavningsmodellens index (2 837
+  positioner, 21 tecken, 63 graftyper). Runformsavstånd = medelvärdet över gemensamma varierande tecken (minst två
+  graftyper med minst fem positioner var) av totalvariationsavståndet mellan stenarnas graftypsandelar; stavningsavstånd
+  = 1 − cosinus mellan modellens vektorer; Mantel (Spearman, 10 000 permutationer). Resultat: r = 0,42, p = 0,0001,
+  oberoende av det geografiska avståndet (partiell Mantel r = 0,42). Utan skiljetecknet som varierande tecken r = 0,15,
+  p = 0,017: skiljetecknets form bär större delen av sambandet, och det registreras av båda källorna.
+* **Fornsvenskan** (`fornsvenska.py`). Runstenarnas 1 106 lemman (textmodellens lemma, namn uteslutna) mot de fyra
+  ordböckernas 39 351 uppslagsord med en fast regellista (ʀ→r, ð→þ, þ→th/dh, æi→e, au→ö, ø→ö, æ→ä/e, slut-r→-er …).
+  Belagda: 36 % av lemmana och 79 % av förekomsterna (45 % och 90 % när ordböckernas böjda former räknas). Hapax 29 %
+  mot 60 % för lemman med minst fem förekomster (z = 7,3, p = 2 · 10⁻¹³; 37 mot 76 % med böjda former). Andelarna är
+  nedre gränser (reglerna missar böjningar som *haggva*–hugga); skillnaden mellan klasserna är det bärande resultatet.
+* **Blekinge** (`blekinge_tolkningar.py`). RuneS-DB:s tolkningar av Gummarp (7), Stentoften (19), Istaby (7) och
+  Björketorp (12), publicerade 1944–2004: täckning och läsningsenighet per rad, parvis likhet mellan de engelska
+  översättningarna (0,21–0,72) och andelen tolkningar som nämner död, förstörelse respektive förutsägelse/skada.
+  Planens hypotes (död och förstörelse i minst 80 % på Björketorp och Stentoften) föll: 9 av 12 (75 %) och 9 av 19
+  (47 %); förutsägelsen 5 av 12. Inga egna läsningar; tolkningarna är data om oenighet.
+* **K-samsök**: prövat, ingen fyndplats i indexet för SHM:s vikingatida föremål (avsnitt 17).
+
 ## 15. Rapporter
 
 Två rapporttyper, båda manusutkast där tabeller och figurer räknas fram ur data och AI-text märks.
@@ -1949,6 +1973,17 @@ analysplan, eftersom 184 "in situ"-stenar är flyttade enligt Runor och landskap
   (`scripts/fetch_raa_remains.py`, `data/raa/lamningar.csv`, ingår inte i repot).
 * **Runor** (Riksantikvarieämbetet), utgåva 2020 av Samnordisk runtextdatabas, och **Wikidata** (CC0), för
   avstämningen i 14b. Svaren cachas i `data/cache/crosscheck/`.
+* **RuneS-DB** (Niedersächsische Akademie der Wissenschaften zu Göttingen, runesdb.de, beta): runfynd med graftyper –
+  runformen position för position – samt tolkningar med litteratur; data CC BY-SA 4.0 (impressumet har också en klausul
+  om vidareanvändning av bilder och texter, så inga skärmbilder eller bilder därifrån). Posterna för Skåne och Blekinge
+  (259 inskrifter) hämtade 2026-10-21 till `data/raa/kallor/` (inte i git). Innehåller Kielprojektets material om den
+  äldre futharken. Se 14h.
+* **Språkbanken Text** (Göteborgs universitet), Karp v7: Söderwalls Ordbok öfver svenska medeltids-språket med
+  supplement, Schlyters Ordbok till Samlingen af Sweriges Gamla Lagar och Fornsvensk lexikalisk databas; uppslagsord
+  och artikel-XML hämtade 2026-10-21 (`data/raa/kallor/karp/`, inte i git). Se 14h.
+* **K-samsök** (Riksantikvarieämbetet, kulturarvsdata.se): används för Kulturmiljöregistrets lämningar (ovan) och för
+  fritext i 3D-vyn. Statens historiska museers 246 543 vikingatida föremål saknar fyndplats i indexet (prövat
+  2026-10-21), så någon fyndkarta kring stenarna går inte att bygga därifrån.
 
 ## 18. Kända brister
 
