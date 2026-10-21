@@ -41,6 +41,13 @@ def export(posts: list[dict], now_iso: str) -> dict:
     now = dt.datetime.fromisoformat(now_iso)
     published = [{k: p.get(k) for k in FIELDS} for p in posts if is_live(p, now)]
     published.sort(key=lambda p: p.get("publishedAt") or p.get("month") or "", reverse=True)
+    # "Mest lästa": the page views per article, from the site's own counting (src/site_stats.py); when Firestore cannot
+    # be read the counts of the previous export stay, so that a failed read never zeroes the order
+    views = article_views()
+    if views is None:
+        views = previous_views()
+    for p in published:
+        p["views"] = int(views.get(p["slug"], 0))
     os.makedirs(os.path.dirname(CONTENT), exist_ok=True)
     with open(CONTENT, "w", encoding="utf-8") as fh:
         json.dump({"exported_at": now_iso, "posts": published}, fh, ensure_ascii=False, indent=1)
@@ -82,6 +89,34 @@ def _step(name: str, *args: str, tries: int = 1) -> subprocess.CompletedProcess:
         from api.errors import logger
         logger.warning("Webbplatsen: git %s misslyckades (%s): %s", name, r.returncode, (r.stderr or r.stdout).strip()[-600:])
     return r
+
+
+def article_views() -> dict[str, int] | None:
+    """Sidvisningar per artikel ur samlingen site_views (bara sökvägen läses); None när Firestore inte kan nås."""
+    try:
+        from google.cloud.firestore_v1.base_query import FieldFilter
+
+        from api.auth import firestore
+        from src.site_stats import views_by_slug
+        query = firestore().collection("site_views").where(filter=FieldFilter("kind", "==", "view")).select(["path", "kind"])
+        return views_by_slug([d.to_dict() or {} for d in query.stream()])
+    except Exception as e:  # noqa: BLE001 - the export must not fail on the statistics
+        from api.errors import logger
+        logger.warning("Webbplatsen: sidvisningarna kunde inte hämtas (%r); föregående antal behålls", e)
+        return None
+
+
+def previous_views() -> dict[str, int]:
+    try:
+        with open(CONTENT, encoding="utf-8") as fh:
+            return {p["slug"]: int(p.get("views") or 0) for p in json.load(fh).get("posts", [])}
+    except (OSError, ValueError, KeyError):
+        return {}
+
+
+def views_order(posts: list[dict]) -> list[str]:
+    """Artiklarna i den ordning "mest lästa" visar dem: flest visningar först, lika många efter datum."""
+    return [p["slug"] for p in sorted(posts, key=lambda p: (int(p.get("views") or 0), p.get("publishedAt") or ""), reverse=True)]
 
 
 def push() -> dict:
@@ -205,6 +240,31 @@ def schedule(posts: list[dict]) -> None:
         publish_now()
         schedule(blog._all())
     _later("scheduled", (min(times) - now).total_seconds() + 5, _quietly(fire))
+
+
+VIEWS_REFRESH_S = 24 * 3600
+
+
+def refresh_views() -> None:
+    """En gång om dygnet: har ordningen "mest lästa" ändrats sedan webbplatsen senast publicerades, publiceras den om –
+    annars inte, så att räkningen inte ger en commit om dagen."""
+    try:
+        with open(CONTENT, encoding="utf-8") as fh:
+            posts = json.load(fh).get("posts", [])
+    except (OSError, ValueError):
+        posts = []
+    views = article_views()
+    if posts and views is not None:
+        fresh = [{**p, "views": int(views.get(p["slug"], 0))} for p in posts]
+        if views_order(fresh) != views_order(posts):
+            publish_now()
+    _later("views", VIEWS_REFRESH_S, _quietly(refresh_views))
+
+
+def start_view_refresh() -> None:
+    """Vid start: första kontrollen av ordningen efter en kvart, sedan en gång om dygnet."""
+    if enabled():
+        _later("views", 15 * 60, _quietly(refresh_views))
 
 
 def catch_up(posts: list[dict]) -> None:

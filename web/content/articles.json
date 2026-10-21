@@ -1,5 +1,5 @@
 {
- "exported_at": "2026-10-21T15:09:02.134053+00:00",
+ "exported_at": "2026-10-21T17:24:06.507111+00:00",
  "posts": [
   {
    "id": "PoSiCSxYlkiwpQMOp35u",
@@ -19,7 +19,8 @@
    "labels": [
     "Forskning",
     "Ristare"
-   ]
+   ],
+   "views": 3
   },
   {
    "id": "777KetVJlf3MK8YfIIFq",
@@ -40,7 +41,8 @@
     "Forskning",
     "Språk och stavning",
     "Huggspår och 3D"
-   ]
+   ],
+   "views": 3
   },
   {
    "id": "SqFpd1qqOHoV1tRwHk0Z",
@@ -62,7 +64,8 @@
     "Språk och stavning",
     "Formler och syfte",
     "Geografi"
-   ]
+   ],
+   "views": 4
   },
   {
    "id": "fmXMAkP3zPiTcmCo2VAF",
@@ -82,7 +85,8 @@
    "labels": [
     "Pågående arbete",
     "Sannolikhetsmodellen"
-   ]
+   ],
+   "views": 7
   },
   {
    "id": "eI4ur9rea4q4zVlO5REO",
@@ -103,7 +107,8 @@
     "Forskning",
     "Ristare",
     "Datering och stil"
-   ]
+   ],
+   "views": 5
   },
   {
    "id": "1xZtwn3UsuorRJrYqWsG",
@@ -124,7 +129,8 @@
     "Metod",
     "Språk och stavning",
     "Kryptologi"
-   ]
+   ],
+   "views": 3
   },
   {
    "id": "qInb92iRG6e4uZQehyIu",
@@ -145,7 +151,8 @@
     "Forskning",
     "Tro och magi",
     "Norden"
-   ]
+   ],
+   "views": 1
   },
   {
    "id": "3Bm90ndpJe9RR16WQnz8",
@@ -165,7 +172,8 @@
    "labels": [
     "Forskning",
     "Tro och magi"
-   ]
+   ],
+   "views": 1
   },
   {
    "id": "MkvdDryIiSFhTR0jm2fU",
@@ -185,7 +193,8 @@
    "labels": [
     "Personligt",
     "Eddan"
-   ]
+   ],
+   "views": 21
   },
   {
    "id": "xDNLB2TYhuF3k2PGYv8Z",
@@ -206,7 +215,8 @@
     "Forskning",
     "Tolkning",
     "Sannolikhetsmodellen"
-   ]
+   ],
+   "views": 8
   },
   {
    "id": "PXwp9L2e1gJtfPg77sNw",
@@ -226,7 +236,8 @@
    "labels": [
     "Forskning",
     "Kvinnor och barn"
-   ]
+   ],
+   "views": 7
   },
   {
    "id": "O8UYeLFeFhyQ1ectDMsY",
@@ -247,7 +258,8 @@
     "Forskning",
     "Formler och syfte",
     "Kvinnor och barn"
-   ]
+   ],
+   "views": 6
   },
   {
    "id": "xjCUTPRvG4oTP77TXSb1",
@@ -269,7 +281,8 @@
     "Ristare",
     "Språk och stavning",
     "Geografi"
-   ]
+   ],
+   "views": 8
   },
   {
    "id": "kRHqBbMX9f2Z7p0CqLNJ",
@@ -289,7 +302,8 @@
    "labels": [
     "Forskning",
     "Tro och magi"
-   ]
+   ],
+   "views": 3
   },
   {
    "id": "pdXlXged0GkNFCcl4sxi",
@@ -310,7 +324,8 @@
     "Forskning",
     "Ristare",
     "Datering och stil"
-   ]
+   ],
+   "views": 2
   },
   {
    "id": "ffKBUCyMT3eDD1JdFR22",
@@ -331,7 +346,8 @@
     "Forskning",
     "Tro och magi",
     "Datering och stil"
-   ]
+   ],
+   "views": 4
   },
   {
    "id": "rSZq7Yyj6QHNWAoUeKP0",
@@ -352,7 +368,8 @@
     "Forskning",
     "Språk och stavning",
     "Norden"
-   ]
+   ],
+   "views": 3
   }
  ]
 }

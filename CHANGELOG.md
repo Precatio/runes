@@ -5,6 +5,12 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Mest lästa på webbplatsen
+- Artikellistan på vitkirunor.se (svenska och engelska) kan sorteras **Senaste** eller **Mest lästa** (`?sortera=mest-lasta`).
+  Sidvisningarna per artikel (svenska och engelska sidan ihop) följer med exporten av artiklarna och uppdateras när
+  webbplatsen publiceras; appen kontrollerar dessutom en gång om dygnet om ordningen ändrats och publicerar då om.
+  Räkningen är webbplatsens egen, anonyma (inga kakor, inga identifierare); inga antal visas för läsarna.
+
 ### Stenöversiktens förslag: blindprov och rättelse
 - R-modulen `r/attribution.R` sparade bara modellens 400 första förslag, så stenar längre ned i listan fick inget
   modellvärde i Stenöversikten. Nu sparas alla 923. Stenar utan ristare med *nytt förslag* blir 86 i stället för 79,

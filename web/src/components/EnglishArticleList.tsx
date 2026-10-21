@@ -4,15 +4,19 @@ import Link from "next/link";
 import { postDate, type BlogPost } from "@/components/BlogBody";
 import LabelChips from "@/components/LabelChips";
 import LabelFilter, { useLabelFromAddress, withLabel } from "@/components/LabelFilter";
+import SortToggle, { useOrderFromAddress } from "@/components/SortToggle";
+import { inOrder } from "@/lib/featured";
 import { enPostPath, metaDescription } from "@/lib/blogSeo";
 
 // The English list of articles with the label filter (the Swedish list is BlogList inside ArticleSearch)
 export default function EnglishArticleList({ posts }: { posts: BlogPost[] }) {
   const [label, setLabel] = useLabelFromAddress();
-  const shown = withLabel(posts, label);
+  const [order, setOrder] = useOrderFromAddress();
+  const shown = inOrder(withLabel(posts, label), order);
   return (
     <>
       <div className="mt-10"><LabelFilter posts={posts} lang="en" value={label} onChange={setLabel} /></div>
+      <SortToggle posts={posts} lang="en" value={order} onChange={setOrder} className="mt-5" />
       {label && shown.length === 0 && <p className="mt-8 text-slate-500">No article in English carries that label yet.</p>}
       <ul className="mt-10 space-y-10">
         {shown.map(p => (

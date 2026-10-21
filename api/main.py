@@ -91,6 +91,7 @@ def _warm_caches():
             from src import site_export
             site_export.check_git()
             site_export.catch_up(blog._all())
+            site_export.start_view_refresh()
         except Exception as e:  # Firestore unreachable: the next save plans it
             from api.errors import logger
             logger.warning("Webbplatsens schemaläggning: %r", e)

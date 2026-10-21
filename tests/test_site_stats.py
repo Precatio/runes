@@ -56,3 +56,20 @@ def test_votes_on_the_articles_page_are_summarised():
     out = site_stats.summarize(rows, since, 1)
     assert out["clicks"]["votes"] == [{"key": "Magi, förbannelser och skydd", "n": 2}, {"key": "Eddan och fornnordisk dikt", "n": 1}]
     assert out["clicks"]["vote_texts"] == [{"key": "Stenarna på Öland", "n": 1}]
+
+
+def test_views_per_article_count_both_languages_and_only_views():
+    from src.site_stats import views_by_slug
+    rows = [{"kind": "view", "path": "/artiklar/bonen-tystnade"}, {"kind": "view", "path": "/artiklar/bonen-tystnade/"},
+            {"kind": "view", "path": "/en/artiklar/bonen-tystnade"}, {"kind": "section", "path": "/artiklar/bonen-tystnade"},
+            {"kind": "view", "path": "/artiklar"}, {"kind": "view", "path": "/"}, {"kind": "view", "path": "/artiklar/annan"},
+            {"kind": "click", "path": "/artiklar/annan"}]
+    assert views_by_slug(rows) == {"bonen-tystnade": 3, "annan": 1}
+
+
+def test_most_read_order_is_by_views_then_date():
+    from src.site_export import views_order
+    posts = [{"slug": "a", "views": 2, "publishedAt": "2026-10-01"}, {"slug": "b", "views": 5, "publishedAt": "2026-09-01"},
+             {"slug": "c", "views": 2, "publishedAt": "2026-10-10"}, {"slug": "d", "views": 0, "publishedAt": "2026-10-20"}]
+    assert views_order(posts) == ["b", "c", "a", "d"]
+

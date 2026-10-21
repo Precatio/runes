@@ -19,6 +19,8 @@ export interface BlogPost {
   published?: boolean;
   publishedAt?: string | null;
   updatedAt?: string | null;
+  // Page views on the public website (Swedish and English page together), exported with the article for "Mest lästa"
+  views?: number;
   // The R pattern the post is about ("Förändring|bon"), set by a draft from a chosen topic
   topic?: string;
   // "Månadens artikel": first and large on the start page and first in the list, whatever its date

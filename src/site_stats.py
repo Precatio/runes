@@ -11,6 +11,7 @@ Landet är ungefärligt: det läses ur webbläsarens tidszon, och en stad går i
 from __future__ import annotations
 
 import datetime as dt
+import re
 from collections import Counter
 
 # Time zone -> country; the zones the Nordic countries and their neighbours use, other zones by continent
@@ -123,6 +124,22 @@ def summarize(rows: list[dict], since: dt.date, days: int, titles: dict[str, str
         "flow": [{"key": f"{title(a)} → {title(b)}", "n": n} for (a, b), n in flow.most_common(TOP)],
         "entries": [{"path": p, "title": titles.get(p), "n": n} for p, n in entries.most_common(TOP)],
     }
+
+
+ARTICLE_PATH = re.compile(r"^/(en/)?artiklar/([^/?#]+)/?$")
+
+
+def views_by_slug(rows: list[dict]) -> dict[str, int]:
+    """Sidvisningar per artikel (svenska och engelska sidan räknade ihop), för sorteringen "mest lästa" på
+    webbplatsen. Bara rader av slaget view; andra sidor räknas inte."""
+    out: Counter = Counter()
+    for r in rows:
+        if r.get("kind") != "view":
+            continue
+        m = ARTICLE_PATH.match(r.get("path") or "")
+        if m:
+            out[m.group(2)] += 1
+    return dict(out)
 
 
 def page_titles(posts: list[dict]) -> dict[str, str]:

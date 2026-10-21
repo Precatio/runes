@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import type { BlogPost } from "@/components/BlogBody";
 import BlogList from "@/components/BlogList";
 import LabelFilter, { useLabelFromAddress, withLabel } from "@/components/LabelFilter";
+import SortToggle, { useOrderFromAddress } from "@/components/SortToggle";
 import { useLanguage } from "@/components/LanguageContext";
 import { labelName } from "@/lib/labels";
 import { loadIndex, matches, searchTerms, snippet, type IndexPost } from "@/lib/articleSearch";
@@ -19,6 +20,7 @@ export default function ArticleSearch({ posts, failed }: { posts: BlogPost[]; fa
   const setQ = setTyped;
   const [index, setIndex] = useState<IndexPost[] | null>(null);
   const [label, setLabel] = useLabelFromAddress();
+  const [order, setOrder] = useOrderFromAddress();
   const { lang } = useLanguage();
   useEffect(() => {
     if (initialQ) loadIndex().then(setIndex);
@@ -72,13 +74,14 @@ export default function ArticleSearch({ posts, failed }: { posts: BlogPost[]; fa
         </ul>
       )}
       <div className="mt-8"><LabelFilter posts={posts} lang={lang} value={label} onChange={setLabel} /></div>
+      <SortToggle posts={posts} lang={lang} value={order} onChange={setOrder} className="mt-5" />
       {label && withLabel(hits ?? posts, label).length === 0 && (
         <p className="mt-6 text-sm text-slate-500">
           {lang === "en" ? `No article carries the label “${labelName(label, lang)}”.` : `Ingen artikel har etiketten ”${label}”.`}
         </p>
       )}
       <div className="mt-10 space-y-10">
-        <BlogList posts={withLabel(hits ?? posts, label)} failed={failed} />
+        <BlogList posts={withLabel(hits ?? posts, label)} failed={failed} order={order} />
       </div>
     </>
   );

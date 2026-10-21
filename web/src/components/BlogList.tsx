@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { inLanguage, postDate, type BlogPost } from "@/components/BlogBody";
-import { featuredFirst } from "@/lib/featured";
+import { inOrder, type Order } from "@/lib/featured";
 import { useLanguage } from "@/components/LanguageContext";
 import { postPath, thumbnail } from "@/lib/blogSeo";
 import LabelChips from "@/components/LabelChips";
@@ -27,7 +27,7 @@ function Picture({ post, width, className }: { post: BlogPost; width: number; cl
 
 // The published posts: the article of the month first and large, then the others newest first, each a card that is
 // a link as a whole; rendered on the server in Swedish and shown in English when chosen
-export default function BlogList({ posts, failed }: { posts: BlogPost[]; failed: boolean }) {
+export default function BlogList({ posts, failed, order = "senaste" }: { posts: BlogPost[]; failed: boolean; order?: Order }) {
   const { lang } = useLanguage();
   if (!posts.length) {
     return <p className="text-slate-500">{failed ? "Artiklarna kunde inte hämtas just nu." : "Inga artiklar ännu. Den första kommer snart."}</p>;
@@ -35,9 +35,9 @@ export default function BlogList({ posts, failed }: { posts: BlogPost[]; failed:
   const read = lang === "en" ? "Read the article →" : "Läs artikeln →";
   return (
     <>
-      {featuredFirst(posts).map((p, i) => {
+      {inOrder(posts, order).map((p, i) => {
         const v = inLanguage(p, lang);
-        const big = i === 0 && p.featured;
+        const big = i === 0 && p.featured && order === "senaste";
         const meta = (
           <div className="text-sm text-slate-500">
             {p.featured && (
