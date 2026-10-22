@@ -11,8 +11,8 @@ import { AUTHORS, CONTACT_PATH, GITHUB_URL, SITE_NAME, SITE_URL } from "@/lib/si
 // The author's page and the contact page in one: who writes the articles, what he has written, and a form that is
 // emailed to him (ContactForm). Search engines get the same person as a schema.org entity (#founder, also on the start page).
 const AUTHOR = AUTHORS["Viktor Kvant"];
-const TITLE = "Viktor Kvant – om författaren och kontakt – Vitki";
-const DESCRIPTION = "Viktor Kvant grundade Vitki och skriver artiklarna om runstenarna. Om författaren, hans artiklar och ett formulär för frågor, rättelser och samarbete.";
+const TITLE = "Viktor Kvant – personen bakom Vitki – kontakt";
+const DESCRIPTION = "Viktor Kvant grundade Vitki och skriver artiklarna om runstenarna. Personen bakom Vitki, artiklarna och ett formulär för frågor, rättelser och samarbete.";
 export const revalidate = 60;
 
 export const metadata: Metadata = {
@@ -40,7 +40,7 @@ export default async function ContactPage() {
   return (
     <BlogShell>
       <section className="max-w-2xl mx-auto px-6 pt-20 pb-24">
-        <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e] mb-3">Om författaren</div>
+        <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e] mb-3">Personen bakom Vitki</div>
         <h1 className="text-4xl md:text-5xl font-serif font-bold tracking-tight">{AUTHOR.name}</h1>
         <p className="mt-2 text-lg text-slate-500">{AUTHOR.role}</p>
         <p className="mt-5 text-lg text-slate-600 leading-relaxed">{AUTHOR.bio}</p>
