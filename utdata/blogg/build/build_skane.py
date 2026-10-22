@@ -68,6 +68,19 @@ styled = [r for r in U if r.get("style") and r["style"] != "?"]
 late = sum((r.get("style") or "").startswith(("Pr3", "Pr4", "Pr5")) for r in U)
 assert len(U) == N["Uppland"] and (len(styled), late) == (804, 556)
 U_LATE = pr(late / len(styled))
+# The whole North: who names a king or a realm at all
+ALL = [r for r in ins if r.get("period") == "V" and "runsten" in (r.get("object") or "").lower()]
+nrm = lambda r: (r.get("normalization") or "").replace("ð", "þ")  # noqa: E731
+KING = sorted(r["signum"] for r in ALL if re.search(r"kunung|konung", nrm(r), re.I) and r["signum"] != "U 963")  # U 963: the name Næskonungr
+DANM = sorted(r["signum"] for r in ALL if re.search(r"Danm[oa]rk", nrm(r)))
+SWED = sorted(r["signum"] for r in ALL if re.search(r"Sw[eiæ]þiuþ", nrm(r)))
+assert len(ALL) == 2633 and KING == ["DR 3", "DR 4", "DR 41", "DR 42", "DR 66", "Sm 42", "Vg 40", "Ög 136"]
+assert DANM == ["DR 133", "DR 41", "DR 42", "U 699", "Öl 1"] and SWED == ["DR 216", "DR 344"]
+by_all = {r["signum"]: r for r in ALL}
+assert "Swen kunungR satti sten æftiR \"Skarþa, sin hemþæga" in nrm(by_all["DR 3"]) and "æft \"Sigtryg kunung" in nrm(by_all["DR 4"])
+assert "skipari \"Haralds kunungs" in nrm(by_all["Sm 42"]) and "eR barþus kunungaR" in nrm(by_all["Vg 40"]) and "þa kunungaR barþusk" in nrm(by_all["DR 66"])
+assert "landmanna bæztr i \"Danmarku ok fyrstr" in nrm(by_all["DR 133"]) and "a \"Danmarku i hwitawaþum" in nrm(by_all["U 699"]).replace("hvitavaðum", "hwitawaþum") or "Danmarku i hvitava" in (by_all["U 699"].get("normalization") or "")
+assert "han warþ døþr a \"Sweþiuþu" in nrm(by_all["DR 216"])
 # Jelling: Harald's stone DR 42 claims all Denmark
 J = next(r for r in ins if r["signum"] == "DR 42")
 assert "wan \"Danmork" in J["normalization"] and "dani gærþi kristna" in J["normalization"]
@@ -161,7 +174,7 @@ Räknar man allt som pekar bortom bygden – Uppsala, Gotland, London, viking, v
 
 ## En herre, men ingen kung
 
-Så var hörde man hemma? Ingen av de {N['Skåne']} stenarna nämner en kung. Ingen nämner Danmark. Det ordet står på Jellingstenen, där Harald säger att han vann sig hela Danmark och gjorde danerna kristna – men det är kungens ord, i Jylland. På Skånes stenar hör människorna hemma hos någon annan: hos en herre.
+Så var hörde man hemma? Ingen av de {N['Skåne']} stenarna nämner en kung. Ingen nämner Danmark. Det ordet står på Jellingstenen, där Harald säger att han vann sig hela Danmark och gjorde danerna kristna – men det är kungens ord, i Jylland. Och det är inte en skånsk egenhet. Av Nordens {sv(len(ALL))} vikingatida runstenar nämner {len(KING)} en kung, och fyra av dem är kungarnas egna: de två Jellingstenarna, kung Svens sten vid Hedeby efter hans hustegn Skarde (DR 3) och Asfrids efter kung Sigtrygg (DR 4). Av de övriga fyra är en Rökstenen, en Tuna i Småland där Assur var *skipari Haralds kunungs*, kung Haralds skeppsman (Sm 42), och två säger bara att mannen dog *när kungar stred* (Vg 40, DR 66). Ordet Danmark står på {len(DANM)} stenar: Jellingstenarna, Skivum på Jylland där den döde var *landmanna bæztr i Danmarku*, den bäste av landmän i Danmark (DR 133), versen på Karlevistenen på Öland och Amnö i Uppland, där Brune dog i Danmark i dopkläder (U 699). Sverige, *Sweþiuþ*, står på {len(SWED)} – båda danska, Tirsted på Lolland och Simris, och båda om någon som var borta där. Riket var ett ord för kungar och för dem som dog utomlands. På Skånes stenar hör människorna hemma hos någon annan: hos en herre.
 
 {PH_HAL}
 
@@ -190,7 +203,7 @@ Vill du pröva det själv, gå till Hällestads kyrka. Stenarna sitter i väggen
 :::box Det viktigaste i korthet
 - Skånes {N['Skåne']} runstenar restes i en enda generation, årtiondena omkring år 1000, och de talar som Danmarks och Västergötlands stenar: den som reste gjorde det själv, utan ornamentik, nästan utan kors, och efter ”en mycket god dräng”.
 - Det som utmärker dem är fälagen och havet: inga stenar i Norden nämner så ofta en fälage, och ingen landsdel pekar så ofta bortom bygden – Uppsala, Gotland, London, viking.
-- Ingen sten nämner kung eller rike. Tillhörigheten på stenarna är en herre, fälagar, bröder och gården; vid Hällestad och Sjörup är den också att inte ha flytt vid Uppsala, på danskt uppdrag mot svearna.
+- Ingen sten nämner kung eller rike – och det gör nästan ingen runsten i Norden: åtta av 2 633 nämner en kung, fyra av dem kungarnas egna. Tillhörigheten på stenarna är en herre, fälagar, bröder och gården; vid Hällestad och Sjörup är den också att inte ha flytt vid Uppsala, på danskt uppdrag mot svearna.
 - Stenarna tystnar omkring 1050, när Mälardalens är som flest. Det Skåne sade med egen röst sade det före kyrkan och riket tog över minnet.
 :::
 
