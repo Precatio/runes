@@ -92,7 +92,7 @@ def ask_question(req: QuestionRequest):
 @router.get("/gaps/textmodel")
 def textmodel_gaps():
     """Sannolikhetsmodellens öppna luckor (data/textmodel_candidates.json, scripts/textmodel_candidates.py): luckor som
-    Rundata lämnat oåterställda där modellen fyller i ett känt ord med minst 80 %. Underlag att granska mot foto och
+    Rundata lämnat oåterställda där modellen fyller i ett känt ord med minst 50 % kalibrerad sannolikhet. Underlag att granska mot foto och
     skanning, inte ett resultat (METHODS.md 14)."""
     import json
     import os

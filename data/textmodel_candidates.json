@@ -1,13 +1,31 @@
 {
  "model_version": "textmodel-19",
  "computed_at": "2026-10-20T12:35:18.268886+00:00",
+ "built_at": "2026-10-22T23:00:04.395071+00:00",
  "rundata_version": "Samnordisk runtextdatabas 3.1 (2018)",
- "min_p": 0.8,
+ "min_p": 0.5,
+ "sure_p": 0.8,
+ "p_is": "calibrated",
  "counts": {
   "gaps_inventoried": 848,
   "open": 175,
-  "candidates": 27,
-  "stones": 21
+  "candidates": 29,
+  "stones": 23,
+  "sure": 8,
+  "runsten": {
+   "gaps_inventoried": 685,
+   "open": 112,
+   "candidates": 17,
+   "stones": 15,
+   "sure": 7
+  },
+  "annat": {
+   "gaps_inventoried": 163,
+   "open": 63,
+   "candidates": 12,
+   "stones": 8,
+   "sure": 1
+  }
  },
  "settings": {
   "max_gaps": 2000,
@@ -31,571 +49,787 @@
  },
  "candidates": [
   {
-   "signum": "Sm 47",
-   "province": "Sm",
-   "carved": "baiþ-",
-   "gap": 1,
-   "fill": "i",
-   "word": "þikra",
-   "p": 0.998,
-   "alts": [
-    [
-     "ok",
-     0.001
-    ],
-    [
-     "skæra",
-     0.001
-    ]
-   ],
-   "reading": "pai þikra gæiRrøð",
-   "p_reading": 0.527
-  },
-  {
    "signum": "U 765",
    "province": "U",
+   "object": "fragment av runsten",
+   "runestone": true,
    "carved": "a-s",
    "gap": 1,
    "fill": "n",
    "word": "hans",
-   "p": 0.995,
+   "p": 0.969,
+   "p_model": 0.995,
    "alts": [
     [
      "ars",
+     0.004,
      0.002
     ],
     [
      "alls",
+     0.002,
      0.001
     ]
    ],
    "reading": "gerði n <unk> sal hans",
-   "p_reading": 0.996
+   "p_reading": 0.996,
+   "translation_sv": "gjorde och … hans själ"
   },
   {
-   "signum": "U NOR1994;26A",
-   "province": "U",
-   "carved": "?k?o?þtouf???",
-   "gap": 3,
-   "fill": "iki",
-   "word": "fængit",
-   "p": 0.976,
-   "alts": [
-    [
-     "farinn",
-     0.007
-    ],
-    [
-     "deyfa",
-     0.006
-    ]
-   ],
-   "reading": "ok þorþ dou fængit fly",
-   "p_reading": 0.356
-  },
-  {
-   "signum": "U 525",
-   "province": "U",
-   "carved": "au--s--þ--",
-   "gap": 2,
-   "fill": "ta",
-   "word": "hiortstaðum",
-   "p": 0.97,
-   "alts": [
-    [
-     "<unk>",
-     0.017
-    ],
-    [
-     "§øyfasti",
-     0.005
-    ]
-   ],
-   "reading": "æftiR svæin faður sinn en §osunns hiortstaðum",
-   "p_reading": 0.424
-  },
-  {
-   "signum": "U 525",
-   "province": "U",
-   "carved": "au--s--þ--",
-   "gap": 2,
-   "fill": "um",
-   "word": "hiortstaðum",
-   "p": 0.97,
-   "alts": [
-    [
-     "<unk>",
-     0.017
-    ],
-    [
-     "þæiR",
-     0.007
-    ]
-   ],
-   "reading": "æftiR svæin faður sinn en §osunns hiortstaðum",
-   "p_reading": 0.424
-  },
-  {
-   "signum": "U 525",
-   "province": "U",
-   "carved": "au--s--þ--",
-   "gap": 2,
-   "fill": "rt",
-   "word": "hiortstaðum",
-   "p": 0.97,
+   "signum": "Sm 47",
+   "province": "Sm",
+   "object": "runsten",
+   "runestone": true,
+   "carved": "baiþ-",
+   "gap": 1,
+   "fill": "i",
+   "word": "þikra",
+   "p": 0.929,
+   "p_model": 0.998,
    "alts": [
     [
      "ok",
-     0.014
+     0.012,
+     0.001
     ],
     [
-     "<unk>",
-     0.007
+     "skæra",
+     0.008,
+     0.001
     ]
    ],
-   "reading": "æftiR svæin faður sinn en §osunns hiortstaðum",
-   "p_reading": 0.424
-  },
-  {
-   "signum": "Öl 57",
-   "province": "Öl",
-   "carved": "rn--a",
-   "gap": 2,
-   "fill": "is",
-   "word": "ræisa",
-   "p": 0.969,
-   "alts": [
-    [
-     "runaR",
-     0.015
-    ],
-    [
-     "ringia",
-     0.013
-    ]
-   ],
-   "reading": "ræisa",
-   "p_reading": 0.986
-  },
-  {
-   "signum": "Sö 280",
-   "province": "Sö",
-   "carved": "þ--a",
-   "gap": 2,
-   "fill": "iR",
-   "word": "þæiRa",
-   "p": 0.968,
-   "alts": [
-    [
-     "þetta",
-     0.012
-    ],
-    [
-     "þria",
-     0.006
-    ]
-   ],
-   "reading": "n biorn ok þau oddlaug møðgini letu hoggva stæin þenna æftiR ulfrik ok þá þæiRa fæðga ok §øya sun §undrlaugar",
-   "p_reading": 0.459
-  },
-  {
-   "signum": "Sö 245",
-   "province": "Sö",
-   "carved": "ma-",
-   "gap": 1,
-   "fill": "k",
-   "word": "mag",
-   "p": 0.967,
-   "alts": [
-    [
-     "mann",
-     0.02
-    ],
-    [
-     "maR",
-     0.009
-    ]
-   ],
-   "reading": "ol mag sinn <unk>",
-   "p_reading": 0.714
-  },
-  {
-   "signum": "Ög 115",
-   "province": "Ög",
-   "carved": "fR--",
-   "gap": 2,
-   "fill": "ri",
-   "word": "fyrir",
-   "p": 0.963,
-   "alts": [
-    [
-     "frið",
-     0.007
-    ],
-    [
-     "fran",
-     0.007
-    ]
-   ],
-   "reading": "er fyrir þa",
-   "p_reading": 0.962
+   "reading": "pai þikra gæiRrøð",
+   "p_reading": 0.527,
+   "translation_sv": "Pai þikra GæiRrøð"
   },
   {
    "signum": "U 784",
    "province": "U",
+   "object": "fragment av runsten",
+   "runestone": true,
    "carved": "-uk",
    "gap": 1,
    "fill": "a",
    "word": "ok",
-   "p": 0.961,
+   "p": 0.903,
+   "p_model": 0.961,
    "alts": [
     [
      "log",
+     0.023,
      0.03
     ],
     [
      "tok",
+     0.006,
      0.004
     ]
    ],
    "reading": "log i ok þæiR en",
-   "p_reading": 0.939
+   "p_reading": 0.939,
+   "translation_sv": "log i och de och"
   },
   {
-   "signum": "Öl ATA4377/56A",
+   "signum": "Öl 57",
    "province": "Öl",
-   "carved": "u---kirkra",
-   "gap": 3,
-   "fill": "kar",
-   "word": "ok",
-   "p": 0.958,
+   "object": "fragment av runsten",
+   "runestone": true,
+   "carved": "rn--a",
+   "gap": 2,
+   "fill": "is",
+   "word": "ræisa",
+   "p": 0.859,
+   "p_model": 0.969,
    "alts": [
     [
-     "<unk>",
-     0.017
+     "runaR",
+     0.026,
+     0.015
     ],
     [
-     "austr",
-     0.007
+     "ringia",
+     0.016,
+     0.013
     ]
    ],
-   "reading": "<unk> ok arngærðr gærva <unk> i",
-   "p_reading": 0.652
+   "reading": "ræisa",
+   "p_reading": 0.986,
+   "translation_sv": "resa"
   },
   {
    "signum": "U 1180",
    "province": "U",
+   "object": "runsten",
+   "runestone": true,
    "carved": "r-sisRainþnsnsknaþiaiaskra",
    "gap": 1,
    "fill": "i",
    "word": "risti",
-   "p": 0.933,
+   "p": 0.852,
+   "p_model": 0.933,
    "alts": [
     [
      "§rysi",
+     0.017,
      0.037
     ],
     [
      "ræisa",
+     0.039,
      0.024
     ]
    ],
    "reading": "her risti saR æin þann sun saknaði a æs gærva er þjóðir en <unk> liðs visi",
-   "p_reading": 0.412
+   "p_reading": 0.412,
+   "translation_sv": "här ristade han æin han son saknaði på som göra som þjóðir och … liðs visi"
   },
   {
    "signum": "Ån Fv1908;298A",
    "province": "Ån",
+   "object": "skifferbit",
+   "runestone": false,
    "carved": "ok-þ",
    "gap": 1,
    "fill": "u",
    "word": "guð",
-   "p": 0.928,
+   "p": 0.839,
+   "p_model": 0.928,
    "alts": [
     [
      "at",
+     0.046,
      0.03
     ],
     [
      "ið",
+     0.016,
      0.019
     ]
    ],
    "reading": "a guð",
-   "p_reading": 0.913
+   "p_reading": 0.913,
+   "translation_sv": "på Gud"
   },
   {
-   "signum": "U NOR2000;34B",
-   "province": "U",
-   "carved": "-kiþ",
-   "gap": 1,
-   "fill": "s",
-   "word": "skeþ",
-   "p": 0.887,
+   "signum": "Öl ATA4377/56A",
+   "province": "Öl",
+   "object": "fragment av runsten",
+   "runestone": true,
+   "carved": "u---kirkra",
+   "gap": 3,
+   "fill": "kar",
+   "word": "ok",
+   "p": 0.826,
+   "p_model": 0.958,
    "alts": [
     [
-     "egvið",
-     0.106
+     "austr",
+     0.008,
+     0.007
     ],
     [
-     "ok",
-     0.005
+     "øyulfR",
+     0.007,
+     0.004
     ]
    ],
-   "reading": "§hæræinna e skeþ",
-   "p_reading": 0.349
-  },
-  {
-   "signum": "U 441",
-   "province": "U",
-   "carved": "a-nili",
-   "gap": 1,
-   "fill": "r",
-   "word": "§arnill",
-   "p": 0.884,
-   "alts": [
-    [
-     "§anill",
-     0.058
-    ],
-    [
-     "<unk>",
-     0.056
-    ]
-   ],
-   "reading": "§arnill hælli ið gærva ok finnviðr ok er mót",
-   "p_reading": 0.911
-  },
-  {
-   "signum": "U Fv1946;258",
-   "province": "U",
-   "carved": "-i-a-----i-iti",
-   "gap": 1,
-   "fill": "s",
-   "word": "viseti",
-   "p": 0.882,
-   "alts": [
-    [
-     "æftiR",
-     0.032
-    ],
-    [
-     "§ærindi",
-     0.029
-    ]
-   ],
-   "reading": "vigR ok otrygg ok balli lata ræisa mærki æftiR faður sinn rauðr karr ok skip þóri sina viseti ok skip <unk> at",
-   "p_reading": 0.473
+   "reading": "<unk> ok arngærðr gærva <unk> i",
+   "p_reading": 0.652,
+   "translation_sv": "… och Arngærðr göra … i"
   },
   {
    "signum": "Öl ATA4701/43",
    "province": "Öl",
+   "object": "runsten",
+   "runestone": true,
    "carved": "-uk",
    "gap": 1,
    "fill": "a",
    "word": "ok",
-   "p": 0.869,
+   "p": 0.801,
+   "p_model": 0.869,
    "alts": [
     [
      "lykak",
+     0.041,
      0.076
     ],
     [
      "hygg",
+     0.015,
      0.017
     ]
    ],
    "reading": "ór ok ok u ok æftiR auð",
-   "p_reading": 0.922
-  },
-  {
-   "signum": "U NOR1994;26A",
-   "province": "U",
-   "carved": "t?????f?",
-   "gap": 1,
-   "fill": "l",
-   "word": "fly",
-   "p": 0.846,
-   "alts": [
-    [
-     "fyr",
-     0.057
-    ],
-    [
-     "fi",
-     0.044
-    ]
-   ],
-   "reading": "ok þorþ dou fængit fly",
-   "p_reading": 0.356
-  },
-  {
-   "signum": "U 466",
-   "province": "U",
-   "carved": "--kitiht",
-   "gap": 2,
-   "fill": "uk",
-   "word": "ok",
-   "p": 0.846,
-   "alts": [
-    [
-     "væknti",
-     0.036
-    ],
-    [
-     "<unk>",
-     0.011
-    ]
-   ],
-   "reading": "§stfriðr næst blæik hniastbmlR a <unk> <unk> hakon ok kiti het iunR slapp §mui vestri ræisti stæin",
-   "p_reading": 0.196
-  },
-  {
-   "signum": "U 522",
-   "province": "U",
-   "carved": "fui-mrsrimuafifafiRauaiiRiafnaRfuioR---ank-n",
-   "gap": 1,
-   "fill": "u",
-   "word": "heðingunnr",
-   "p": 0.82,
-   "alts": [
-    [
-     "endlangan",
-     0.164
-    ],
-    [
-     "þunnvangann",
-     0.006
-    ]
-   ],
-   "reading": "<unk> af ef hafiR §øygæiRiR §iafnaR fuþork iaR heðingunnr fuþorkhnias iu a",
-   "p_reading": 0.282
-  },
-  {
-   "signum": "U 522",
-   "province": "U",
-   "carved": "fui-mrsrimuafifafiRauaiiRiafnaRfuioR---ank-n",
-   "gap": 3,
-   "fill": "hiþ",
-   "word": "heðingunnr",
-   "p": 0.82,
-   "alts": [
-    [
-     "endlangan",
-     0.164
-    ],
-    [
-     "þunnvangann",
-     0.006
-    ]
-   ],
-   "reading": "<unk> af ef hafiR §øygæiRiR §iafnaR fuþork iaR heðingunnr fuþorkhnias iu a",
-   "p_reading": 0.282
-  },
-  {
-   "signum": "U Fv1992;161B",
-   "province": "U",
-   "carved": "-aa--",
-   "gap": 2,
-   "fill": "rn",
-   "word": "biorn",
-   "p": 0.818,
-   "alts": [
-    [
-     "gæra",
-     0.075
-    ],
-    [
-     "hioggu",
-     0.019
-    ]
-   ],
-   "reading": "biorn <unk> §hulr-r",
-   "p_reading": 0.268
-  },
-  {
-   "signum": "U Fv1992;161B",
-   "province": "U",
-   "carved": "-aa--",
-   "gap": 1,
-   "fill": "b",
-   "word": "biorn",
-   "p": 0.818,
-   "alts": [
-    [
-     "gæra",
-     0.075
-    ],
-    [
-     "hioggu",
-     0.019
-    ]
-   ],
-   "reading": "biorn <unk> §hulr-r",
-   "p_reading": 0.268
-  },
-  {
-   "signum": "U 493",
-   "province": "U",
-   "carved": "srua-telsa",
-   "gap": 1,
-   "fill": "R",
-   "word": "vaR",
-   "p": 0.815,
-   "alts": [
-    [
-     "vas",
-     0.146
-    ],
-    [
-     "wan",
-     0.021
-    ]
-   ],
-   "reading": "gerði til saR vaR til sa retta æ ani §sibb oþin",
-   "p_reading": 0.741
-  },
-  {
-   "signum": "U 466",
-   "province": "U",
-   "carved": "-isit--ti",
-   "gap": 1,
-   "fill": "r",
-   "word": "viseti",
-   "p": 0.807,
-   "alts": [
-    [
-     "risti",
-     0.182
-    ],
-    [
-     "bæzti",
-     0.003
-    ]
-   ],
-   "reading": "§stfriðr næst blæik hniastbmlR a <unk> <unk> hakon ok kiti het iunR slapp §mui vestri ræisti stæin",
-   "p_reading": 0.196
+   "p_reading": 0.922,
+   "translation_sv": "från och och u och efter auð"
   },
   {
    "signum": "Sö 23",
    "province": "Sö",
+   "object": "berghäll",
+   "runestone": false,
    "carved": "kuþa-t",
    "gap": 1,
    "fill": "n",
    "word": "and",
-   "p": 0.806,
+   "p": 0.781,
+   "p_model": 0.806,
    "alts": [
     [
-     "<unk>",
-     0.1
+     "§guðald",
+     0.029,
+     0.074
     ],
     [
-     "§guðald",
-     0.074
+     "at",
+     0.021,
+     0.011
     ]
    ],
    "reading": "ingi a ok <unk> k hann do i §olai at <unk> ai øþi guð and ok a",
-   "p_reading": 0.766
+   "p_reading": 0.766,
+   "translation_sv": "Ingi på och … K han dog i Olai efter … ai Øþi Gud ande och på"
+  },
+  {
+   "signum": "U 525",
+   "province": "U",
+   "object": "3 fragment av runsten",
+   "runestone": true,
+   "carved": "au--s--þ--",
+   "gap": 2,
+   "fill": "ta",
+   "word": "hiortstaðum",
+   "p": 0.759,
+   "p_model": 0.97,
+   "alts": [
+    [
+     "§øyfasti",
+     0.009,
+     0.005
+    ],
+    [
+     "asta",
+     0.014,
+     0.003
+    ]
+   ],
+   "reading": "æftiR svæin faður sinn en §osunns hiortstaðum",
+   "p_reading": 0.424,
+   "translation_sv": "efter Sven, sin fader och Osunns Hiortstaðum"
+  },
+  {
+   "signum": "U 493",
+   "province": "U",
+   "object": "fragment av runsten",
+   "runestone": true,
+   "carved": "srua-telsa",
+   "gap": 1,
+   "fill": "R",
+   "word": "vaR",
+   "p": 0.754,
+   "p_model": 0.815,
+   "alts": [
+    [
+     "vas",
+     0.063,
+     0.146
+    ],
+    [
+     "wan",
+     0.017,
+     0.021
+    ]
+   ],
+   "reading": "gerði til saR vaR til sa retta æ ani §sibb oþin",
+   "p_reading": 0.741,
+   "translation_sv": "gjorde til han var til han resa alltid Ani Sibb Oþin"
+  },
+  {
+   "signum": "U 525",
+   "province": "U",
+   "object": "3 fragment av runsten",
+   "runestone": true,
+   "carved": "au--s--þ--",
+   "gap": 2,
+   "fill": "um",
+   "word": "hiortstaðum",
+   "p": 0.741,
+   "p_model": 0.97,
+   "alts": [
+    [
+     "þæiR",
+     0.031,
+     0.007
+    ],
+    [
+     "þor",
+     0.014,
+     0.003
+    ]
+   ],
+   "reading": "æftiR svæin faður sinn en §osunns hiortstaðum",
+   "p_reading": 0.424,
+   "translation_sv": "efter Sven, sin fader och Osunns Hiortstaðum"
+  },
+  {
+   "signum": "U 525",
+   "province": "U",
+   "object": "3 fragment av runsten",
+   "runestone": true,
+   "carved": "au--s--þ--",
+   "gap": 2,
+   "fill": "rt",
+   "word": "hiortstaðum",
+   "p": 0.729,
+   "p_model": 0.97,
+   "alts": [
+    [
+     "ok",
+     0.054,
+     0.014
+    ],
+    [
+     "§øyfasti",
+     0.009,
+     0.005
+    ]
+   ],
+   "reading": "æftiR svæin faður sinn en §osunns hiortstaðum",
+   "p_reading": 0.424,
+   "translation_sv": "efter Sven, sin fader och Osunns Hiortstaðum"
+  },
+  {
+   "signum": "U 466",
+   "province": "U",
+   "object": "runsten",
+   "runestone": true,
+   "carved": "--kitiht",
+   "gap": 2,
+   "fill": "uk",
+   "word": "ok",
+   "p": 0.728,
+   "p_model": 0.846,
+   "alts": [
+    [
+     "væknti",
+     0.023,
+     0.036
+    ],
+    [
+     "at",
+     0.016,
+     0.009
+    ]
+   ],
+   "reading": "§stfriðr næst blæik hniastbmlR a <unk> <unk> hakon ok kiti het iunR slapp §mui vestri ræisti stæin",
+   "p_reading": 0.196,
+   "translation_sv": "Stfriðr næst Blæik hniastbmlR på … … Hakon och kiti var iunR slapp Mui vestri reste sten"
+  },
+  {
+   "signum": "U Fv1992;161B",
+   "province": "U",
+   "object": "runben, revben, fragment",
+   "runestone": false,
+   "carved": "-aa--",
+   "gap": 1,
+   "fill": "b",
+   "word": "biorn",
+   "p": 0.727,
+   "p_model": 0.818,
+   "alts": [
+    [
+     "gæra",
+     0.091,
+     0.075
+    ],
+    [
+     "hioggu",
+     0.015,
+     0.019
+    ]
+   ],
+   "reading": "biorn <unk> §hulr-r",
+   "p_reading": 0.268,
+   "translation_sv": "Biorn … Hulr-r"
+  },
+  {
+   "signum": "Sö 245",
+   "province": "Sö",
+   "object": "fragment av runsten",
+   "runestone": true,
+   "carved": "ma-",
+   "gap": 1,
+   "fill": "k",
+   "word": "mag",
+   "p": 0.726,
+   "p_model": 0.967,
+   "alts": [
+    [
+     "mann",
+     0.051,
+     0.02
+    ],
+    [
+     "maR",
+     0.03,
+     0.009
+    ]
+   ],
+   "reading": "ol mag sinn <unk>",
+   "p_reading": 0.714,
+   "translation_sv": "Ol, sin måg …"
+  },
+  {
+   "signum": "U Fv1992;161B",
+   "province": "U",
+   "object": "runben, revben, fragment",
+   "runestone": false,
+   "carved": "-aa--",
+   "gap": 2,
+   "fill": "rn",
+   "word": "biorn",
+   "p": 0.653,
+   "p_model": 0.818,
+   "alts": [
+    [
+     "gæra",
+     0.082,
+     0.075
+    ],
+    [
+     "hioggu",
+     0.014,
+     0.019
+    ]
+   ],
+   "reading": "biorn <unk> §hulr-r",
+   "p_reading": 0.268,
+   "translation_sv": "Biorn … Hulr-r"
+  },
+  {
+   "signum": "Sö 280",
+   "province": "Sö",
+   "object": "gravhäll",
+   "runestone": false,
+   "carved": "þ--a",
+   "gap": 2,
+   "fill": "iR",
+   "word": "þæiRa",
+   "p": 0.64,
+   "p_model": 0.968,
+   "alts": [
+    [
+     "þetta",
+     0.032,
+     0.012
+    ],
+    [
+     "þria",
+     0.02,
+     0.006
+    ]
+   ],
+   "reading": "n biorn ok þau oddlaug møðgini letu hoggva stæin þenna æftiR ulfrik ok þá þæiRa fæðga ok §øya sun §undrlaugar",
+   "p_reading": 0.459,
+   "translation_sv": "och Biorn och de oddlaug møðgini lät hoggva denna sten efter Ulfrik och då deras fæðga och Øya son Undrlaugar"
+  },
+  {
+   "signum": "Ög 115",
+   "province": "Ög",
+   "object": "runsten",
+   "runestone": true,
+   "carved": "fR--",
+   "gap": 2,
+   "fill": "ri",
+   "word": "fyrir",
+   "p": 0.63,
+   "p_model": 0.963,
+   "alts": [
+    [
+     "frið",
+     0.03,
+     0.007
+    ],
+    [
+     "fran",
+     0.022,
+     0.007
+    ]
+   ],
+   "reading": "er fyrir þa",
+   "p_reading": 0.962,
+   "translation_sv": "som för då"
+  },
+  {
+   "signum": "U NOR1994;26A",
+   "province": "U",
+   "object": "bleck (amulett)",
+   "runestone": false,
+   "carved": "?k?o?þtouf???",
+   "gap": 3,
+   "fill": "iki",
+   "word": "fængit",
+   "p": 0.624,
+   "p_model": 0.976,
+   "alts": [
+    [
+     "farinn",
+     0.021,
+     0.007
+    ],
+    [
+     "deyfa",
+     0.019,
+     0.006
+    ]
+   ],
+   "reading": "ok þorþ dou fængit fly",
+   "p_reading": 0.356,
+   "translation_sv": "och Þorþ dog fængit fly"
+  },
+  {
+   "signum": "U NOR1994;26A",
+   "province": "U",
+   "object": "bleck (amulett)",
+   "runestone": false,
+   "carved": "?k?o?þtouf???",
+   "gap": 1,
+   "fill": "u",
+   "word": "ok",
+   "p": 0.621,
+   "p_model": 0.604,
+   "alts": [
+    [
+     "§ingvarð",
+     0.058,
+     0.186
+    ],
+    [
+     "§ingiarð",
+     0.04,
+     0.111
+    ]
+   ],
+   "reading": "ok þorþ dou fængit fly",
+   "p_reading": 0.356,
+   "translation_sv": "och Þorþ dog fængit fly"
+  },
+  {
+   "signum": "U Fv1946;258",
+   "province": "U",
+   "object": "berghäll",
+   "runestone": false,
+   "carved": "-i-a-----i-iti",
+   "gap": 1,
+   "fill": "s",
+   "word": "viseti",
+   "p": 0.611,
+   "p_model": 0.882,
+   "alts": [
+    [
+     "æftiR",
+     0.092,
+     0.032
+    ],
+    [
+     "§ærindi",
+     0.027,
+     0.029
+    ]
+   ],
+   "reading": "vigR ok otrygg ok balli lata ræisa mærki æftiR faður sinn rauðr karr ok skip þóri sina viseti ok skip <unk> at",
+   "p_reading": 0.473,
+   "translation_sv": "VigR och Otrygg och Balli lata resa minnesmärke efter sin fader Röd Karr och skepp Þóri sin Viseti och skepp … eller"
+  },
+  {
+   "signum": "U 522",
+   "province": "U",
+   "object": "runsten",
+   "runestone": true,
+   "carved": "fui-mrsrimuafifafiRauaiiRiafnaRfuioR---ank-n",
+   "gap": 1,
+   "fill": "u",
+   "word": "heðingunnr",
+   "p": 0.562,
+   "p_model": 0.82,
+   "alts": [
+    [
+     "endlangan",
+     0.128,
+     0.164
+    ],
+    [
+     "þunnvangann",
+     0.013,
+     0.006
+    ]
+   ],
+   "reading": "<unk> af ef hafiR §øygæiRiR §iafnaR fuþork iaR heðingunnr fuþorkhnias iu a",
+   "p_reading": 0.282,
+   "translation_sv": "… av ef hafiR ØygæiRiR IafnaR fuþork iaR Heðingunnr fuþorkhnias minne på"
+  },
+  {
+   "signum": "U 246",
+   "province": "U",
+   "object": "fragment av runsten",
+   "runestone": true,
+   "carved": "-ia",
+   "gap": 1,
+   "fill": "s",
+   "word": "sinn",
+   "p": 0.557,
+   "p_model": 0.5,
+   "alts": [
+    [
+     "hia",
+     0.066,
+     0.135
+    ],
+    [
+     "§dia",
+     0.033,
+     0.081
+    ]
+   ],
+   "reading": "sinn en æftiR hal",
+   "p_reading": 0.58,
+   "translation_sv": "sin och efter hal"
+  },
+  {
+   "signum": "U NOR2000;34B",
+   "province": "U",
+   "object": "runben, revben",
+   "runestone": false,
+   "carved": "-kiþ",
+   "gap": 1,
+   "fill": "s",
+   "word": "skeþ",
+   "p": 0.545,
+   "p_model": 0.887,
+   "alts": [
+    [
+     "egvið",
+     0.127,
+     0.106
+    ],
+    [
+     "ok",
+     0.027,
+     0.005
+    ]
+   ],
+   "reading": "§hæræinna e skeþ",
+   "p_reading": 0.349,
+   "translation_sv": "Hæræinna e skeþ"
+  },
+  {
+   "signum": "Öl Fv1976;96A",
+   "province": "Öl",
+   "object": "bleck",
+   "runestone": false,
+   "carved": "?i?na??iii",
+   "gap": 1,
+   "fill": "i",
+   "word": "svæinaldi",
+   "p": 0.544,
+   "p_model": 0.794,
+   "alts": [
+    [
+     "askel",
+     0.073,
+     0.05
+    ],
+    [
+     "uikir",
+     0.053,
+     0.046
+    ]
+   ],
+   "reading": "i hialli hioggu æs nu hví en nasi i §æikøys á svæinaldi i hiogg e kristr ok sankta maria biargi",
+   "p_reading": 0.134,
+   "translation_sv": "i Hialli högg som nu hví och Nasi i Æikøys äger Svæinaldi i högg E Krist och Mikael Maria biargi"
+  },
+  {
+   "signum": "Öl Fv1976;96A",
+   "province": "Öl",
+   "object": "bleck",
+   "runestone": false,
+   "carved": "?i?na??iii",
+   "gap": 1,
+   "fill": "u",
+   "word": "svæinaldi",
+   "p": 0.544,
+   "p_model": 0.794,
+   "alts": [
+    [
+     "askel",
+     0.073,
+     0.05
+    ],
+    [
+     "uikir",
+     0.053,
+     0.046
+    ]
+   ],
+   "reading": "i hialli hioggu æs nu hví en nasi i §æikøys á svæinaldi i hiogg e kristr ok sankta maria biargi",
+   "p_reading": 0.134,
+   "translation_sv": "i Hialli högg som nu hví och Nasi i Æikøys äger Svæinaldi i högg E Krist och Mikael Maria biargi"
+  },
+  {
+   "signum": "Öl Fv1976;96A",
+   "province": "Öl",
+   "object": "bleck",
+   "runestone": false,
+   "carved": "iii?ihii???asnuh?iinnsiiikous??????o?",
+   "gap": 1,
+   "fill": "s",
+   "word": "svæinaldi",
+   "p": 0.544,
+   "p_model": 0.794,
+   "alts": [
+    [
+     "askel",
+     0.073,
+     0.05
+    ],
+    [
+     "uikir",
+     0.053,
+     0.046
+    ]
+   ],
+   "reading": "i hialli hioggu æs nu hví en nasi i §æikøys á svæinaldi i hiogg e kristr ok sankta maria biargi",
+   "p_reading": 0.134,
+   "translation_sv": "i Hialli högg som nu hví och Nasi i Æikøys äger Svæinaldi i högg E Krist och Mikael Maria biargi"
+  },
+  {
+   "signum": "U Fv1976;108",
+   "province": "U",
+   "object": "runsten",
+   "runestone": true,
+   "carved": "-in",
+   "gap": 1,
+   "fill": "s",
+   "word": "sinn",
+   "p": 0.522,
+   "p_model": 0.559,
+   "alts": [
+    [
+     "hann",
+     0.201,
+     0.211
+    ],
+    [
+     "mænn",
+     0.037,
+     0.074
+    ]
+   ],
+   "reading": "<unk> u sinn u",
+   "p_reading": 0.623,
+   "translation_sv": "… sin u u"
   }
  ]
 }

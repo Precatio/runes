@@ -94,13 +94,16 @@ interface Findings {
 type Tab = "findings" | "coverage" | "categories" | "size" | "hypotheses" | "reconsider" | "priorities" | "uninterpreted" | "style" | "textgaps";
 
 // The probability model's open gaps (GET /api/research/gaps/textmodel, scripts/textmodel_candidates.py)
+// p is the calibrated probability (since 2026-10-23); p_model the model's raw figure; alts [word, calibrated, raw]
 interface TextGapCandidate {
-  signum: string; province: string; carved: string; gap: number; fill: string | null; word: string | null; p: number;
-  alts: [string, number][]; reading: string | null; p_reading: number | null;
+  signum: string; province: string; object?: string | null; runestone?: boolean; carved: string; gap: number;
+  fill: string | null; word: string | null; p: number; p_model?: number;
+  alts: [string, number, number?][]; reading: string | null; p_reading: number | null; translation_sv?: string | null;
 }
+interface TextGapCounts { gaps_inventoried: number; open: number; candidates: number; stones: number; sure?: number }
 interface TextGaps {
   available: boolean; note?: string; model_version?: string; computed_at?: string; rundata_version?: string; min_p?: number;
-  counts?: { gaps_inventoried: number; open: number; candidates: number; stones: number };
+  sure_p?: number; counts?: TextGapCounts & { runsten?: TextGapCounts; annat?: TextGapCounts };
   candidates?: TextGapCandidate[];
 }
 
@@ -283,7 +286,7 @@ export default function GapsPage() {
     { key: "size", topic: "Storlek", question: "Restes större stenar för större syften?", note: "höjd mot syfte" },
     { key: "uninterpreted", topic: "Tolkning", question: "Vilka inskrifter är osäkert tolkade?", note: `${data.open_questions.uninterpreted.count} inskrifter` },
     { key: "style", topic: "Stilgrupp", question: "Vilka stenar har osäker stilgrupp?", note: `${data.open_questions.uncertain_style.count} stenar` },
-    { key: "textgaps", topic: "Luckor i texten", question: "Vilka förlorade runor kan sannolikhetsmodellen fylla i?", note: textGaps?.counts ? `${textGaps.counts.candidates} luckor ≥ 80 %` : "beräknas" },
+    { key: "textgaps", topic: "Luckor i texten", question: "Vilka förlorade runor kan sannolikhetsmodellen fylla i?", note: textGaps?.counts ? (textGaps.counts.runsten ? `${textGaps.counts.runsten.sure ?? 0} luckor ≥ 80 % på runstenar` : `${textGaps.counts.candidates} luckor`) : "beräknas" },
   ];
   const c = found.summary.counts;
   const sigFound = found.findings.filter(f => f.significance?.significant).length;
@@ -1143,48 +1146,75 @@ function Freshness({ textGaps }: { textGaps: TextGaps | null }) {
 
 function TextGapsPanel({ data }: { data: TextGaps | null }) {
   const [prov, setProv] = useState("");
-  const rows = useMemo(() => (data?.candidates ?? []).filter(c => !prov || c.province === prov), [data, prov]);
+  // Runestones only by default (the app's rule for every count); other objects on request, with their own figures
+  const [others, setOthers] = useState(false);
+  const shown = useMemo(() => (data?.candidates ?? []).filter(c => others || c.runestone !== false), [data, others]);
+  const rows = useMemo(() => shown.filter(c => !prov || c.province === prov), [shown, prov]);
   if (!data) return <p className="text-sm text-slate-500">Hämtar luckorna …</p>;
   if (!data.available || !data.candidates) return <p className="text-sm text-slate-500">{data.note ?? "Kandidatlistan saknas."}</p>;
-  const provinces = [...new Set(data.candidates.map(c => c.province))].sort();
-  const c = data.counts!;
+  const provinces = [...new Set(shown.map(c => c.province))].sort();
+  const all = data.counts!;
+  const rs = all.runsten ?? all;
+  const ot = all.annat;
+  const pct = (x: number | undefined) => (x == null ? "–" : `${Math.round(x * 100)} %`);
+  const minP = Math.round((data.min_p ?? 0.5) * 100), sureP = Math.round((data.sure_p ?? 0.8) * 100);
   return (
     <>
       <p className="text-sm text-slate-600 mb-3 max-w-4xl">
-        Sannolikhetsmodellen (METHODS.md 8.1, {data.model_version}) har gått igenom {c.gaps_inventoried} luckor i de vikingatida
-        runstenarnas texter. {c.open} av dem har Rundata lämnat oåterställda; för {c.candidates} luckor på {c.stones} stenar
-        fyller modellen i ett känt ord med minst {Math.round((data.min_p ?? 0.8) * 100)} % kalibrerad sannolikhet. Det är
-        underlag att granska mot foto och skanning – öppna stenen och panelen <em>Vad skannern ser</em> – inte fynd.
-        Kalibreringen är prövad på luckor som utgivarna fyllt (blindtest 2026-10-17); öppna luckor kan vara svårare.
+        Sannolikhetsmodellen (METHODS.md 8.1, {data.model_version}) har gått igenom {rs.gaps_inventoried} luckor i de vikingatida
+        runstenarnas texter. {rs.open} av dem har Rundata lämnat oåterställda. I {rs.candidates} av dem, på {rs.stones} runstenar,
+        fyller modellen i ett känt ord med minst {minP} % kalibrerad sannolikhet, och i {rs.sure ?? "–"} med minst {sureP} %.
+        Det är underlag att granska mot foto, skanning och utgåvornas kommentarer – öppna stenen och panelen <em>Vad skannern ser</em> –
+        inte fynd. Kalibreringen är prövad på luckor som utgivarna fyllt (blindtest 2026-10-17); de öppna luckorna är ofta de
+        svåraste, där utgivarna själva avstått, så procenten kan vara för höga där.
+        {ot ? <> Andra föremål (berghällar, gravhällar, ben, amuletter) har {ot.candidates} luckor på samma nivå; de visas bara på begäran.</> : null}
       </p>
-      <label className="text-sm text-slate-600 mb-3 block">Landskap{" "}
-        <select value={prov} onChange={e => setProv(e.target.value)} className="liquid-glass-input-wrapper rounded-xl px-3 py-1.5 text-sm font-semibold">
-          <option value="">alla ({data.candidates.length})</option>
-          {provinces.map(p => <option key={p} value={p}>{p} ({data.candidates!.filter(x => x.province === p).length})</option>)}
-        </select>
-      </label>
+      <div className="flex flex-wrap items-center gap-4 mb-3">
+        <label className="text-sm text-slate-600">Landskap{" "}
+          <select value={prov} onChange={e => setProv(e.target.value)} className="liquid-glass-input-wrapper rounded-xl px-3 py-1.5 text-sm font-semibold">
+            <option value="">alla ({shown.length})</option>
+            {provinces.map(p => <option key={p} value={p}>{p} ({shown.filter(x => x.province === p).length})</option>)}
+          </select>
+        </label>
+        {ot ? (
+          <label className="text-sm text-slate-600 flex items-center gap-2">
+            <input type="checkbox" checked={others} onChange={e => { setOthers(e.target.checked); setProv(""); }} />
+            Visa även andra föremål ({ot.candidates})
+          </label>
+        ) : null}
+      </div>
       <div className="overflow-x-auto">
         <ExportTable><table className="w-full text-sm">
-          <thead><tr className={TH_ROW}><th className="p-2 text-left">Sten</th><th className="p-2 text-left">Hugget</th><th className="p-2 text-left">Ifyllnad</th>
-            <th className="p-2 text-left">Ord</th><th className="p-2 text-left">p</th><th className="p-2 text-left">Näst bästa</th><th className="p-2 text-left">Läsning</th></tr></thead>
+          <thead><tr className={TH_ROW}><th className="p-2 text-left">Sten</th><th className="p-2 text-left">Föremål</th>
+            <th className="p-2 text-left">Hugget</th><th className="p-2 text-left">Ifyllnad</th><th className="p-2 text-left">Ord</th>
+            <th className="p-2 text-left">Kalibrerad</th><th className="p-2 text-left">Modellens råa</th><th className="p-2 text-left">Näst bästa</th>
+            <th className="p-2 text-left">Läsning</th><th className="p-2 text-left">Översättning (utkast)</th></tr></thead>
           <tbody>
             {rows.map((r, i) => (
               <tr key={`${r.signum}-${r.gap}-${i}`} className="border-t border-slate-900/5 align-top">
                 <td className="p-2"><StoneLinks signum={r.signum} /></td>
+                <td className="p-2 text-xs text-slate-600">{r.object ?? "–"}</td>
                 <td className="p-2 font-mono text-xs" translate="no">{r.carved}</td>
                 <td className="p-2 font-mono text-xs" translate="no">{r.fill ?? "–"}</td>
                 <td className="p-2 font-semibold" translate="no">{r.word ?? "–"}</td>
-                <td className="p-2">{Math.round(r.p * 100)} %</td>
-                <td className="p-2 text-xs text-slate-600" translate="no">{r.alts[0] ? `${r.alts[0][0]} (${Math.round(r.alts[0][1] * 100)} %)` : "–"}</td>
+                <td className="p-2 font-semibold">{pct(r.p)}</td>
+                <td className="p-2 text-xs text-slate-500">{pct(r.p_model)}</td>
+                <td className="p-2 text-xs text-slate-600" translate="no">{r.alts[0] ? `${r.alts[0][0]} (${pct(r.alts[0][1])})` : "–"}</td>
                 <td className="p-2 text-xs text-slate-600 max-w-md" translate="no">{r.reading ?? "–"}</td>
+                <td className="p-2 text-xs text-slate-600 max-w-md" translate="no">{r.translation_sv ?? "–"}</td>
               </tr>
             ))}
           </tbody>
         </table></ExportTable>
       </div>
-      <p className="text-[11px] text-slate-500 mt-3">
-        Byggd {data.computed_at?.slice(0, 10)} ur luckinventeringen (scripts/runlm_gaps.py → scripts/textmodel_candidates.py).
-        En lucka kan ha flera rader när flera ifyllnader når gränsen.
+      <p className="text-[11px] text-slate-500 mt-3 max-w-4xl">
+        <strong>Kalibrerad</strong> är procenten efter kalibreringen mot utgivarnas facit; <strong>modellens råa</strong> är
+        hur mycket bättre ordet passar runorna och sammanhanget än alla andra ord modellen känner, före kalibreringen, och
+        blir lätt hög för namn och ovanliga ord. <strong>Översättningen</strong> är ett utkast ord för ord ur en ordlista som
+        modellen lärt sig av Rundatas egna översättningar utan stenen själv – ingen AI och ingen runolog har granskat den; ord
+        som ordlistan inte kan översätta står kvar på fornspråk och namn som de lästs. Byggd {data.computed_at?.slice(0, 10)} ur
+        luckinventeringen (scripts/runlm_gaps.py → scripts/textmodel_candidates.py). En lucka kan ha flera rader när flera
+        ifyllnader når gränsen.
       </p>
     </>
   );

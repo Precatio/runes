@@ -240,12 +240,19 @@ class Glossary:
                 return e
         return g[0][0] if g else w
 
-    def translate(self, words, lang="en"):
-        """A word-by-word draft: for each word its best gloss; unknown words are left as '…'."""
+    def translate(self, words, lang="en", strict=False):
+        """A word-by-word draft: for each word its best gloss; unknown words are left as '…'. strict (Swedish only): a
+        word whose English gloss has no Swedish equivalent in SV is left in its Old Norse form instead of letting the
+        English gloss through, and a name stays as read (the glossary can tie a name to another name it co-occurs
+        with)."""
         out = []
         for w in words:
             if w in ("<unk>", None):
                 out.append("…")
+                continue
+            if strict and lang == "sv" and (w.startswith("§") or w in self.names):
+                w0 = w.lstrip("§")
+                out.append(w0[:1].upper() + w0[1:])
                 continue
             if w.startswith("§") or w in self.names:  # a name: as the glossary knows it, or as read
                 e = self.best(w)
@@ -256,6 +263,9 @@ class Glossary:
             if lang == "sv":
                 if e in INF and w.endswith("a"):  # the infinitive: lät resa, lät hugga, lät göra
                     out.append(INF[e])
+                    continue
+                if strict and e not in SV and not (e and all(x in SV for x in e.split())):
+                    out.append(w)  # no Swedish equivalent: the Old Norse word itself, not the English gloss
                     continue
                 out.append(SV.get(e, " ".join(SV.get(x, x) for x in e.split())))
             else:
@@ -324,14 +334,15 @@ def _sv_name(da):
     return "-".join(p[:1].upper() + p[1:] for p in s.split("-"))
 
 
-def swedish(words, en, da=None, ows=None, reorder=True):
+def swedish(words, en, da=None, ows=None, reorder=True, strict=False):
     """A Swedish draft of a reading (normalized words, '<unk>' for a word not read). en: the English glossary; da: a
     Danish one (Glossary(..., field='translation_da', words=_danish, src='normalization_ows')), with ows from ows_map.
     A word goes through Danish when the Danish glossary knows it and the Danish word is in DA_SV (a name when the
     Danish form is the same name), unless the English glossary gives another Swedish word with a higher probability;
     otherwise through English. reorder: possessives and demonstratives that Old Norse
     puts after the noun are put before it, as in Swedish (faður sinn → sin fader, stæin þennsi → denna sten), with a
-    comma when they follow a name (efter Saxi, sin son)."""
+    comma when they follow a name (efter Saxi, sin son). strict: see Glossary.translate (used by Forskningsluckor's
+    list, scripts/textmodel_candidates.py; the panel's draft keeps the tested default)."""
     toks = []  # [Swedish, is a name, through Danish]
     for w in words:
         if w in ("<unk>", None):
@@ -352,7 +363,7 @@ def swedish(words, en, da=None, ows=None, reorder=True):
                     e = en.best(w)
                     if sv and SV.get(e) and SV[e] != sv and en.t.get(w, {}).get(e, 0.0) > p_da:
                         sv = None
-        toks.append([sv, name, True] if sv else [en.translate([w], "sv"), name, False])
+        toks.append([sv, name, True] if sv else [en.translate([w], "sv", strict=strict), name, False])
     if reorder:
         i = 0
         while i < len(toks) - 1:

@@ -1403,10 +1403,25 @@ Källkod: `src/research_gaps.py`. Underlag: Rundatas svenska vikingatida runsten
 * Ortografiska hypoteser visas med likhet, p-värde (avsnitt 7), precision, bergart och språkdrag.
 * **Luckor i texten** (från 2026-10-20, `GET /api/research/gaps/textmodel`, `scripts/textmodel_candidates.py` →
   `data/textmodel_candidates.json`): sannolikhetsmodellens (8.1) inventering av luckorna – de som Rundata lämnat
-  oåterställda och där modellen fyller i ett känt ord med minst 80 % kalibrerad sannolikhet – med stenens signum,
-  det huggna, ifyllnaden, ordet, p och näst bästa ord. Fliken visar modellversion, beräkningsdatum och
-  Rundata-utgåva. Raderna är underlag att granska mot foto och skanning (panelen "Vad skannern ser"), inte fynd;
-  flaggskeppsartikeln om luckorna bygger på samma lista efter granskning.
+  oåterställda och där modellen fyller i ett känt ord med minst 50 % kalibrerad sannolikhet (bandet ≥ 80 % räknas
+  för sig) – med stenens signum, Rundatas föremål, det huggna, ifyllnaden, ordet, kalibrerad och rå sannolikhet,
+  näst bästa ord, modellens läsning och ett svenskt översättningsutkast. Runstenar visas som standard och andra
+  föremål på begäran, med egna tal. Fliken visar modellversion, beräkningsdatum och Rundata-utgåva. Raderna är
+  underlag att granska mot foto, skanning och utgåvornas kommentarer (panelen "Vad skannern ser"), inte fynd.
+  * **Kalibreringen (rättad 2026-10-23).** Inventeringen ger modellens råa sannolikhet för ordet. Fram till
+    2026-10-23 visade listan den råa siffran under rubriken kalibrerad, med gränsen 80 %; den är ofta mycket högre än
+    den kalibrerade för namn och ovanliga ord (U 466 *viseti* 81 % rå mot 46 % kalibrerad, U 441 *arnill* 88 % mot
+    43 %). Nu kalibreras varje rad med listkalibreringen (`gap_list`, `src/textmodel.calibrate_words`) på
+    samma sätt som den anpassades på inventeringens återställda luckor (`scripts/runlm_list_calibrate.py`): ordet med
+    inventeringens alternativ, antalet förlorade runor, inte ett helt ord. Med textmodel-19 når 7 av 112 öppna
+    luckor på runstenar minst 80 % och 17 minst 50 %. Påståendet i artikeln *Runorna som fattas* (ingen av de 70
+    öppna luckor som panelen fyller på runstenar når 95 % kalibrerat) gäller fortfarande: listan och panelen räknar
+    luckorna olika (inventeringen fyller också sammanslagna luckor på fler än fyra runor och delar orden som Rundata),
+    men ingen öppen lucka på en runsten når 95 % i någon av dem utom U 765 *hans* i listan (97 %), som panelen, med
+    hela stenens övriga luckor ifyllda samtidigt, bara ger 36 %.
+  * **Översättningsutkastet** kommer ur `src/rungloss.swedish` med ordlistan för stenens femtedel (samma väg som
+    stenanalysens utkast) i strikt läge: ett ord vars engelska glosa saknar svensk motsvarighet står kvar på fornspråk
+    i stället för att den engelska glosan släpps igenom, och namn står som de lästs.
 
 ### 14b. Våra resultat mot befintlig forskning
 

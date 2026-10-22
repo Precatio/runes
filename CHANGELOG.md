@@ -5,6 +5,16 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Forskningsluckor: luckor i texten med kalibrerade procent
+- Listan över de luckor som Rundata lämnat öppna och som sannolikhetsmodellen fyller visade modellens **råa**
+  sannolikhet under rubriken kalibrerad. Den är ofta mycket högre för namn och ovanliga ord (U 466 *viseti* 81 % rå,
+  46 % kalibrerad). Nu visas den kalibrerade procenten, med den råa i en egen kolumn, och gränsen är 50 % (bandet
+  ≥ 80 % räknas för sig): 17 öppna luckor på runstenar, 7 av dem minst 80 %. METHODS.md 14.
+- Listan visar **runstenar** som standard; berghällar, gravhällar, ben och amuletter visas bara med *Visa även andra
+  föremål*. Ny kolumn **Föremål** (Rundatas beteckning).
+- Ny kolumn **Översättning (utkast)**: modellens läsning översatt ord för ord till svenska ur ordlistan som lärts av
+  Rundatas översättningar utan stenen själv (ingen AI); ord utan svensk motsvarighet står kvar på fornspråk.
+
 ### Veckans artikel
 - Den utvalda artikeln heter nu *Veckans artikel* i stället för *Månadens artikel* – på startsidan, i listan och i Admin.
 
