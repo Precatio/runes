@@ -10,6 +10,22 @@ service cloud.firestore {
         && !exists(/databases/$(database)/documents/banned/$(request.auth.uid));
     }
 
+    // A value that is absent, or a string of at most max characters
+    function optionalString(d, key, max) {
+      return !(key in d) || (d[key] is string && d[key].size() <= max);
+    }
+
+    // A value that is absent, or of the given type
+    function optionalMap(d, key) {
+      return !(key in d) || d[key] is map;
+    }
+    function optionalList(d, key, max) {
+      return !(key in d) || (d[key] is list && d[key].size() <= max);
+    }
+    function optionalInt(d, key, min, max) {
+      return !(key in d) || (d[key] is int && d[key] >= min && d[key] <= max);
+    }
+
     // Ensure all authenticated users can only read and write their own data
     match /users/{userId} {
       allow read, write: if active() && request.auth.uid == userId;
@@ -22,43 +38,125 @@ service cloud.firestore {
 
     // Shared research corpus of groove measurements (published under CC BY 4.0).
     // Every signed-in researcher can read; entries can only be created, changed
-    // or removed by their contributor.
+    // or removed by their contributor, and other researchers may only add their own verification.
+    // The fields are those written by web/src/lib/corpus.ts (CorpusEntry).
     match /corpus/{entryId} {
       function validEntry(data) {
-        return data.contributorUid == request.auth.uid
+        return data.keys().hasOnly(['id', 'signum', 'label', 'feature_type', 'contributorUid', 'contributorName',
+            'institution', 'license', 'createdAt', 'method_version', 'means', 'summary', 'slices', 'profile',
+            'provenance', 'scanner', 'notes', 'scan', 'condition', 'raw_profile_chunks', 'rune_forms', 'rune_groups',
+            'verifications', 'recomputedAt'])
+          && data.contributorUid == request.auth.uid
           && data.id == entryId
           && data.license == 'CC-BY-4.0'
           && data.signum is string && data.signum.size() > 0 && data.signum.size() < 64
           && data.feature_type in ['rune', 'ornament', 'unknown']
           && data.means is map
           && data.slices is list && data.slices.size() <= 200
-          && data.contributorName is string && data.contributorName.size() < 200;
+          && data.contributorName is string && data.contributorName.size() < 200
+          && optionalString(data, 'label', 300)
+          && optionalString(data, 'institution', 200)
+          && optionalString(data, 'createdAt', 40)
+          && optionalString(data, 'recomputedAt', 40)
+          && optionalString(data, 'method_version', 40)
+          && optionalString(data, 'scanner', 200)
+          && optionalString(data, 'notes', 5000)
+          && optionalMap(data, 'summary')
+          && optionalMap(data, 'profile')
+          && optionalMap(data, 'provenance')
+          && optionalMap(data, 'scan')
+          && optionalMap(data, 'condition')
+          // one chunk of raw profiles holds at least one slice
+          && optionalInt(data, 'raw_profile_chunks', 0, 200)
+          && optionalInt(data, 'rune_forms', 0, 1000)
+          && optionalList(data, 'rune_groups', 1000)
+          && optionalList(data, 'verifications', 20);
       }
 
-      // Another researcher may only append one verification signed with their own uid
+      // Whether the earlier verification at position i was made by the caller. Rules cannot loop over a list, so the
+      // check is written out for each of the at most 20 verifications an entry can hold.
+      function verifiedBy(vs, i) {
+        return vs.size() > i && vs[i].get('uid', null) == request.auth.uid;
+      }
+
+      function validVerification(v) {
+        return v is map
+          && v.keys().hasOnly(['uid', 'name', 'institution', 'date', 'comment'])
+          && v.keys().hasAll(['uid', 'name', 'date'])
+          && v.uid == request.auth.uid
+          && v.name is string && v.name.size() <= 200
+          && optionalString(v, 'institution', 200)
+          && v.date is string && v.date.size() <= 40
+          && optionalString(v, 'comment', 2000);
+      }
+
+      // Another researcher may only append one verification signed with their own uid: the earlier ones stay exactly
+      // as they were, and each researcher verifies an entry once
       function isVerification() {
         let before = resource.data.get('verifications', []);
         let after = request.resource.data.get('verifications', []);
         return request.resource.data.diff(resource.data).affectedKeys().hasOnly(['verifications'])
+          && resource.data.contributorUid != request.auth.uid
+          && before is list && after is list
+          && before.size() < 20
           && after.size() == before.size() + 1
-          && after[before.size()].uid == request.auth.uid
-          && resource.data.contributorUid != request.auth.uid;
+          // (a range ending at 0 is an error in the rules language, hence the first case)
+          && (before.size() == 0 || after[0:before.size()] == before)
+          && validVerification(after[before.size()])
+          && !(verifiedBy(before, 0) || verifiedBy(before, 1) || verifiedBy(before, 2) || verifiedBy(before, 3)
+            || verifiedBy(before, 4) || verifiedBy(before, 5) || verifiedBy(before, 6) || verifiedBy(before, 7)
+            || verifiedBy(before, 8) || verifiedBy(before, 9) || verifiedBy(before, 10) || verifiedBy(before, 11)
+            || verifiedBy(before, 12) || verifiedBy(before, 13) || verifiedBy(before, 14) || verifiedBy(before, 15)
+            || verifiedBy(before, 16) || verifiedBy(before, 17) || verifiedBy(before, 18) || verifiedBy(before, 19));
       }
 
       allow read: if active();
-      allow create: if active() && validEntry(request.resource.data);
+      // A new entry starts without verifications
+      allow create: if active() && validEntry(request.resource.data)
+        && request.resource.data.get('verifications', []) == [];
+      // The contributor may change the measurements (a recomputation) but not who made the entry, when, under which
+      // licence, its verifications or the stored subdocuments' counts
       allow update: if active() && (
-        (resource.data.contributorUid == request.auth.uid && validEntry(request.resource.data))
+        (resource.data.contributorUid == request.auth.uid && validEntry(request.resource.data)
+          && !request.resource.data.diff(resource.data).affectedKeys()
+            .hasAny(['id', 'contributorUid', 'createdAt', 'license', 'verifications', 'raw_profile_chunks', 'rune_forms']))
         || isVerification()
       );
       allow delete: if active() && resource.data.contributorUid == request.auth.uid;
 
-      // Raw profiles and rune forms: readable by all signed-in users, written by the contributor.
-      // getAfter() so that a batch creating the entry and its subdocuments together is allowed.
-      match /{sub}/{docId} {
+      // Raw profiles and rune forms: readable by all signed-in users, written by the contributor together with the
+      // entry itself, in the same batch (lib/corpus.ts add): getAfter() sees the entry being created, get() shows that
+      // it did not exist before. They are never changed afterwards, and only removed with the entry.
+      function newEntryOfCaller() {
+        let entry = getAfter(/databases/$(database)/documents/corpus/$(entryId));
+        return entry != null
+          && entry.data.contributorUid == request.auth.uid
+          && !exists(/databases/$(database)/documents/corpus/$(entryId));
+      }
+
+      match /raw/{docId} {
         allow read: if active();
-        allow create, update: if active() && sub in ['raw', 'runeforms']
-          && getAfter(/databases/$(database)/documents/corpus/$(entryId)).data.contributorUid == request.auth.uid;
+        allow create: if active() && newEntryOfCaller()
+          && request.resource.data.keys().hasOnly(['index', 'profiles'])
+          && request.resource.data.index is int
+          && request.resource.data.index >= 0
+          && request.resource.data.index < getAfter(/databases/$(database)/documents/corpus/$(entryId)).data.get('raw_profile_chunks', 0)
+          && docId == string(request.resource.data.index)
+          && request.resource.data.profiles is list && request.resource.data.profiles.size() <= 200;
+        allow delete: if active()
+          && get(/databases/$(database)/documents/corpus/$(entryId)).data.contributorUid == request.auth.uid;
+      }
+
+      match /runeforms/{docId} {
+        allow read: if active();
+        allow create: if active() && newEntryOfCaller()
+          && request.resource.data.keys().hasOnly(['id', 'tag', 'featureVector', 'featureVersion', 'formPng', 'grooveSummary'])
+          && request.resource.data.id == docId && docId.size() <= 200
+          && request.resource.data.tag is string && request.resource.data.tag.size() <= 100
+          && request.resource.data.featureVector is list && request.resource.data.featureVector.size() <= 20000
+          && request.resource.data.featureVersion is string && request.resource.data.featureVersion.size() <= 100
+          && optionalString(request.resource.data, 'formPng', 900000)
+          && optionalMap(request.resource.data, 'grooveSummary');
         allow delete: if active()
           && get(/databases/$(database)/documents/corpus/$(entryId)).data.contributorUid == request.auth.uid;
       }
@@ -83,39 +181,64 @@ service cloud.firestore {
     }
 
     // Votes from the public website (web/src/components/SiteVote.tsx): anyone may cast one, with exactly these fields
-    // and values; nobody can read, change or remove votes from a browser. The founder sees the result in Admin, read
-    // with the server's own access (api/routers/admin.py).
+    // and values; nobody can read, change or remove votes from a browser.
+    // The founder sees the result in Admin, read with the server's own access (api/routers/admin.py). The rules cannot
+    // limit how many votes one visitor sends (there is no identity to count by); that would take App Check.
     match /site_votes/{voteId} {
       allow create: if request.resource.data.keys().hasOnly(['question', 'choice', 'lang'])
+        && request.resource.data.keys().hasAll(['question', 'choice', 'lang'])
         && request.resource.data.question == 'webbapp'
         && request.resource.data.choice in ['ja', 'nej']
         && request.resource.data.lang in ['sv', 'en'];
       allow read, update, delete: if false;
     }
 
-    // Visitor counts from the public website (web/src/components/SiteTracker.tsx): a page or a section of the start
-    // page that was seen, with the referring site, time zone, language and kind of device – no identifier, no IP
-    // address. Anyone may add one with exactly these fields; nobody can read, change or remove them from a browser. The
-    // founder sees the summary in Admin (api/routers/admin.py).
-    function optionalString(d, key, max) {
-      return !(key in d) || (d[key] is string && d[key].size() <= max);
+    // Visitor counts from the public website (web/src/lib/track.ts, used by components/SiteTracker.tsx, the search
+    // boxes and the share and vote buttons): a page or a section of the start page that was seen, a search or a click,
+    // with the referring site, time zone, language and kind of device – no identifier, no IP address. Anyone may add
+    // one with exactly the fields of its kind; nobody can read, change or remove them from a browser. The founder sees
+    // the summary in Admin (api/routers/admin.py) and src/site_export.py counts the article views.
+    //
+    // A page address as the site's router gives it: starting with /, no spaces, at most 200 characters
+    function sitePath(v) {
+      return v is string && v.size() <= 200 && v.matches('^/\\S*$');
+    }
+    // The day of the count (the visitor's UTC date, track.ts) must be today by the server's clock, allowing one day
+    // of clock error either way, so that counts cannot be added for other days
+    function today(day) {
+      let p = day.split('-');
+      let d = timestamp.date(int(p[0]), int(p[1]), int(p[2]));
+      return request.time >= d - duration.value(1, 'd') && request.time < d + duration.value(2, 'd');
+    }
+    function siteView(d) {
+      let extra = d.kind == 'view' ? ['entry', 'ref', 'prev', 'via']
+        : d.kind == 'section' ? ['section']
+        : d.kind == 'search' ? ['label', 'hits']
+        : ['label'];
+      let needed = d.kind == 'view' ? []
+        : d.kind == 'section' ? ['section']
+        : d.kind == 'search' ? ['label', 'hits']
+        : ['label'];
+      return d.kind in ['view', 'section', 'search', 'click']
+        && d.keys().hasOnly(['kind', 'path', 'day', 'tz', 'lang', 'device'].concat(extra))
+        && d.keys().hasAll(['kind', 'path', 'day'].concat(needed))
+        && sitePath(d.path)
+        && d.day is string && d.day.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$') && today(d.day)
+        && (!('tz' in d) || (d.tz is string && d.tz.matches('^[A-Za-z0-9/_+-]{0,60}$')))
+        && (!('lang' in d) || (d.lang is string && d.lang.matches('^[A-Za-z0-9_-]{0,12}$')))
+        && (!('device' in d) || d.device in ['mobil', 'surfplatta', 'dator'])
+        && (!('entry' in d) || d.entry is bool)
+        && (!('ref' in d) || (d.ref is string && d.ref.matches('^[A-Za-z0-9.:%_\\[\\]-]{0,100}$')))
+        && (!('prev' in d) || sitePath(d.prev))
+        && (!('via' in d) || d.via in ['lank', 'enhet', 'x', 'facebook', 'linkedin', 'epost'])
+        && (!('section' in d) || (d.section is string && d.section.matches('^[A-Za-z0-9_-]{1,40}$')))
+        && (!('label' in d) || (d.label is string && d.label.size() >= 1 && d.label.size() <= 80
+          // a click is named kind:what (dela:x, ut:webbplats, sprak:en, rost:…); a search is the words
+          && (d.kind != 'click' || d.label.matches('^[a-z-]{1,12}:[\\s\\S]*$'))))
+        && (!('hits' in d) || (d.hits is int && d.hits >= 0 && d.hits <= 1000));
     }
     match /site_views/{viewId} {
-      allow create: if request.resource.data.keys().hasOnly(['kind', 'path', 'section', 'entry', 'ref', 'tz', 'lang', 'device', 'day', 'prev', 'via', 'label', 'hits'])
-        && request.resource.data.keys().hasAll(['kind', 'path', 'day'])
-        && request.resource.data.kind in ['view', 'section', 'search', 'click']
-        && optionalString(request.resource.data, 'prev', 200)
-        && (!('via' in request.resource.data) || request.resource.data.via in ['lank', 'enhet', 'x', 'facebook', 'linkedin', 'epost'])
-        && optionalString(request.resource.data, 'label', 80)
-        && (!('hits' in request.resource.data) || (request.resource.data.hits is int && request.resource.data.hits >= 0 && request.resource.data.hits <= 1000))
-        && request.resource.data.path is string && request.resource.data.path.size() <= 200
-        && request.resource.data.day is string && request.resource.data.day.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
-        && (!('entry' in request.resource.data) || request.resource.data.entry is bool)
-        && (!('device' in request.resource.data) || request.resource.data.device in ['mobil', 'surfplatta', 'dator'])
-        && optionalString(request.resource.data, 'section', 40)
-        && optionalString(request.resource.data, 'ref', 100)
-        && optionalString(request.resource.data, 'tz', 60)
-        && optionalString(request.resource.data, 'lang', 12);
+      allow create: if siteView(request.resource.data);
       allow read, update, delete: if false;
     }
 

@@ -1,3 +1,4 @@
+from functools import lru_cache
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException, Query, Request
@@ -114,6 +115,12 @@ def words(area: str = "", epoch: str = "", style: str = "", top: int = 400):
     """Ordmolnets underlag: orden på de vikingatida runstenarna, räknade per sten (hur många stenar ordet står
     på) och per förekomst. area är en trakt (runlm.AREAS) eller ett signumprefix; epoch 800/900/1000/1100 eller
     'odaterad' (epoken ur Rundatas datering eller stilgruppen, som i modellen); style en stilgrupp."""
+    return _words(id(store().inscriptions), area, epoch, style, top)
+
+
+@lru_cache(maxsize=64)
+def _words(_stamp: int, area: str, epoch: str, style: str, top: int) -> dict:
+    """Counted once per Rundata version and choice."""
     from src import runlm as rl
     from src.research_gaps import PROVINCE_NAMES
     pres = set(rl.AREAS[area].split()) if area in rl.AREAS else {area} if area else None
@@ -186,11 +193,20 @@ def _geo() -> dict:
 @router.get("/geo/trait/{key}")
 def geo_trait(key: str):
     """Ett språkdrag för alla inskrifter med koordinater: värdet per signum och hur vanligt varje värde är."""
+    from api.routers.orthography import model as orthography_model
+    from src.language_profile import TRAITS
+    if key not in TRAITS:
+        raise HTTPException(status_code=404, detail=f"Okänt språkdrag: {key}")
+    model = orthography_model()
+    return _geo_trait(id(store().inscriptions), id(model), key)
+
+
+@lru_cache(maxsize=64)
+def _geo_trait(_stamp: int, _model: int, key: str) -> dict:
+    """Computed once per Rundata version, name list and trait."""
     from collections import Counter
     from api.routers.orthography import model as orthography_model
     from src.language_profile import TRAITS, traits
-    if key not in TRAITS:
-        raise HTTPException(status_code=404, detail=f"Okänt språkdrag: {key}")
     names = orthography_model().names
     rows = {}
     for r in store().inscriptions:

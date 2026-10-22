@@ -8,6 +8,8 @@ största förskjutningen i mönsterkartan. Inget publiceras automatiskt.
 from __future__ import annotations
 
 import datetime as dt
+import json
+import os
 import re
 from functools import lru_cache
 
@@ -73,6 +75,26 @@ def _all() -> list[dict]:
 
 def _forget() -> None:
     _POSTS.update(at=0.0, posts=None)
+
+
+# Every article as it was before a save overwrote it or a deletion removed it, as JSON on this machine (git-ignored):
+# data/backup/posts/<id>/<UTC time>.json. Firestore keeps no history of its own, so this is what undoes a bad save.
+BACKUP = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "data", "backup", "posts")
+
+
+def _backup(post_id: str, doc: dict | None) -> None:
+    """Saves the previous version of an article; a failure is logged and never stops the save."""
+    if not doc:
+        return
+    try:
+        folder = os.path.join(BACKUP, re.sub(r"[^\w-]", "_", post_id))
+        os.makedirs(folder, exist_ok=True)
+        stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H%M%S.%fZ")
+        with open(os.path.join(folder, f"{stamp}.json"), "w", encoding="utf-8") as fh:
+            json.dump({"id": post_id, **_iso(doc)}, fh, ensure_ascii=False, indent=1, default=str)
+    except Exception as e:  # noqa: BLE001 - the backup must never block the save
+        from api.errors import logger
+        logger.warning("Artikeln %s kunde inte säkerhetskopieras före ändringen: %r", post_id, e)
 
 
 def _ts(v) -> dt.datetime | None:
@@ -185,6 +207,7 @@ def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
             data["month"] = req.month or old.get("month") or now.strftime("%Y-%m")
         if not old:
             data["createdAt"] = now
+        _backup(ref.id, old)
         ref.set(data, merge=True)
         if req.featured:  # only one article of the week
             for p in others:
@@ -271,7 +294,9 @@ def delete_post(post_id: str, _: dict = Depends(require_admin)):
     from src import site_export
     try:
         ref = firestore().collection(COLLECTION).document(post_id)
-        was_published = bool((ref.get().to_dict() or {}).get("published"))
+        old = ref.get().to_dict() or {}
+        was_published = bool(old.get("published"))
+        _backup(post_id, old)
         ref.delete()
         _forget()
     except Exception as e:
@@ -710,12 +735,14 @@ def site_status(_: dict = Depends(require_admin)):
 
 
 @router.post("/admin/site/publish")
-def publish_site(_: dict = Depends(require_admin)):
+def publish_site(force: bool = False, _: dict = Depends(require_admin)):
     """Publicerar webbplatsen vitkirunor.se: exporterar de publicerade artiklarna (också schemalagda) och deras figurer
-    och pushar dem till GitHub, som bygger om webbplatsen på några minuter (src/site_export.py)."""
+    och pushar dem till GitHub, som bygger om webbplatsen på några minuter (src/site_export.py). Ser exporten fel ut
+    (inga artiklar, flera som försvinner, saknade figurer) publiceras inget och skälet står i note; ?force=true
+    publicerar ändå, för en avsiktlig borttagning."""
     from src import site_export
     try:
-        out = site_export.publish_now()
+        out = site_export.publish_now(force=force)
     except Exception as e:  # noqa: BLE001 - git or the disk
         raise server_error(e, "Webbplatsen kunde inte publiceras.", status_code=503)
     return out

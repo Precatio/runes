@@ -4,7 +4,7 @@
 import Link from "next/link";
 import { inLanguage, postDate, type BlogPost } from "@/components/BlogBody";
 import { useLanguage } from "@/components/LanguageContext";
-import { ARTICLES_PATH, postPath, thumbnail } from "@/lib/blogSeo";
+import { ARTICLES_PATH, cardImage, postPath } from "@/lib/blogSeo";
 
 // "More articles" under an article: links to the others, so that a reader – and a search engine – finds them
 export default function MoreArticles({ posts }: { posts: BlogPost[] }) {
@@ -23,11 +23,11 @@ export default function MoreArticles({ posts }: { posts: BlogPost[] }) {
         {posts.map(p => {
           const v = inLanguage(p, lang);
           return (
-            <Link key={p.id} href={postPath(p.slug)}
+            <Link key={p.id} href={postPath(p.slug)} prefetch={false}
               className="group block rounded-2xl border border-slate-200 bg-white/70 overflow-hidden transition hover:-translate-y-0.5 hover:border-[#b7410e]/50 hover:shadow-lg">
               {p.image ? (
                 <div className="aspect-[16/10] overflow-hidden bg-slate-200">
-                  <img src={thumbnail(p.image, 330)} alt={p.image_alt || v.title} loading="lazy" decoding="async"
+                  <img src={cardImage(p, 330)} alt={p.image_alt || v.title} loading="lazy" decoding="async"
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
               ) : (

@@ -25,7 +25,7 @@ PASSTHROUGH = {
     "RAK", "Fp", "Pr", "KB", "MB", "GB", "STL", "OBJ", "PLY", "PNG", "JPG", "PDF", "CSV", "JSON", "ZIP", "R", "API", "AI",
     "Vitki", "GitHub", "Rundata", "Wikidata", "Zenodo", "DOI", "LinkedIn", "Claude", "Gemini", "Anthropic", "Google",
     "OpenAI", "Plotly", "Leaflet", "OpenStreetMap", "x", "y", "z", "mgcv", "Holm", "Wilcoxon", "Gräslund", "Axelson",
-    "ATA", "Fv", "SD", "SB", "NOR", "IR", "KJ", "BN", "Sc", "Br", "Vr", "NIyR", "DK", "MJy", "Ka", "Kg", "RR", "SHM",
+    "ATA", "Fv", "SB", "NOR", "IR", "KJ", "BN", "Sc", "Br", "Vr", "NIyR", "DK", "MJy", "Ka", "Kg", "RR", "SHM",
     "Sb", "SvK", "MÖLM", "RS", "Plansch",
     *"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 }

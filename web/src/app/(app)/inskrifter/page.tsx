@@ -292,6 +292,8 @@ function InscriptionsContent() {
   const signum = params.get("signum");
   const [meta, setMeta] = useState<RundataMeta | null>(null);
   const [q, setQ] = useState(params.get("q") ?? "");
+  // What is typed in the search box; copied into q (which runs the search) once typing pauses
+  const [qInput, setQInput] = useState(q);
   const [province, setProvince] = useState(params.get("province") ?? "");
   const [period, setPeriod] = useState(params.get("period") ?? "");
   const [style, setStyle] = useState(params.get("style") ?? "");
@@ -314,6 +316,7 @@ function InscriptionsContent() {
   if (urlKey !== prevUrlKey) {
     setPrevUrlKey(urlKey);
     setQ(params.get("q") ?? "");
+    setQInput(params.get("q") ?? "");
     setProvince(params.get("province") ?? "");
     setPeriod(params.get("period") ?? "");
     setStyle(params.get("style") ?? "");
@@ -329,6 +332,13 @@ function InscriptionsContent() {
     rundata.meta().then(setMeta).catch(() => setMeta(null));
     rundata.carvers().then(cs => setCarvers(cs.filter(c => c.signed + c.attributed >= 3).map(c => c.name))).catch(() => {});
   }, []);
+
+  // Free text: search when typing pauses, not on every keystroke
+  useEffect(() => {
+    if (qInput === q) return;
+    const t = setTimeout(() => { setQ(qInput); setOffset(0); }, 300);
+    return () => clearTimeout(t);
+  }, [qInput, q]);
 
   useEffect(() => {
     if (signum) return;
@@ -393,7 +403,7 @@ function InscriptionsContent() {
       ) : (
         <>
           <div className="liquid-glass-island rounded-[32px] p-6 grid grid-cols-1 md:grid-cols-6 gap-3">
-            <input value={q} onChange={e => { setQ(e.target.value); setOffset(0); }}
+            <input value={qInput} onChange={e => setQInput(e.target.value)}
               placeholder="Signum, plats, runtext, normalisering eller översättning"
               className={`${select} md:col-span-2`} />
             <select value={province} onChange={e => { setProvince(e.target.value); setOffset(0); }} className={select}>

@@ -42,7 +42,7 @@ export default function SynthesisPage() {
   const [selectedId, setSelectedId] = useState("");
   const [analysisId, setAnalysisId] = useState<string>("");
   const { aiHeaders } = useSettings();
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const { setStoneReportInput } = useAnalysis();
   const router = useRouter();
 
@@ -57,8 +57,10 @@ export default function SynthesisPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Load once the session is restored, not first with no user and again when it arrives
+    if (authLoading) return;
     db.getProjects().then(setProjects);
-  }, [user]);
+  }, [user, authLoading]);
 
   const project = projects.find(p => p.id === selectedId) ?? null;
   const [prevProjectId, setPrevProjectId] = useState<string | null>(null);

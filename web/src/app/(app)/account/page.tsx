@@ -8,7 +8,7 @@ import { db, ReportData } from "@/lib/db";
 import Link from "next/link";
 
 export default function AccountOverview() {
-  const { user, logout } = useAuth();
+  const { user, loading: authLoading, logout } = useAuth();
   const { 
     userName, userInstitution, userEmail, geminiKey, anthropicKey, aiProvider,
     setGeminiKey, setUserName, setUserInstitution, setUserEmail, setAnthropicKey, setAiProvider,
@@ -28,12 +28,13 @@ export default function AccountOverview() {
 
   useEffect(() => {
     // If not logged in and auth resolves, redirect to home.
-    if (user === null) {
+    if (!authLoading && user === null) {
       router.push("/start");
     }
-  }, [user, router]);
+  }, [user, authLoading, router]);
 
   useEffect(() => {
+    if (authLoading) return;
     async function loadStats() {
       const projs = await db.getProjects();
       setProjectCount(projs.length);
@@ -41,7 +42,7 @@ export default function AccountOverview() {
       setReports(reps);
     }
     loadStats();
-  }, [user]);
+  }, [user, authLoading]);
 
   // Copy current settings into the form whenever they change
   const settingsKey = [geminiKey, anthropicKey, aiProvider, userName, userInstitution, userEmail].join("\u0000");

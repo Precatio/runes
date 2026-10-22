@@ -216,6 +216,14 @@ export interface ReportData {
   updatedAt: string;
 }
 
+// Where saveReport managed to store a report: cloud = the signed-in user's Firestore account, local = this browser
+export interface SaveReportResult {
+  report: ReportData;
+  signedIn: boolean;
+  cloud: boolean;
+  local: boolean;
+}
+
 // A question from Pröva en egen fråga (components/OwnQuestion.tsx) saved as a finding: what was asked and the answer as
 // it was when saved, including how many questions came before it in the visit (its q is adjusted for them)
 export interface SavedQuestion {
@@ -469,7 +477,9 @@ export const db = {
     return merged.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
   },
   
-  saveReport: async (report: Omit<ReportData, "id" | "createdAt" | "updatedAt"> & { id?: string; createdAt?: string }): Promise<ReportData> => {
+  // Reports with figures can exceed Firestore's 1 MB document limit or fill the browser's storage, so the caller is told
+  // where the report actually ended up: in the account (cloud), in this browser (local), both or neither
+  saveReport: async (report: Omit<ReportData, "id" | "createdAt" | "updatedAt"> & { id?: string; createdAt?: string }): Promise<SaveReportResult> => {
     const now = new Date().toISOString();
     const isNew = !report.id;
     const reportId = report.id || "rep_" + Math.random().toString(36).substring(2, 9);
@@ -483,29 +493,38 @@ export const db = {
       updatedAt: now,
     };
 
+    let cloud = false;
     if (user) {
       const fs = await firestoreLib();
       try {
         const docRef = fs.doc(fs.db, `users/${user.uid}/reports`, reportId);
         await fs.setDoc(docRef, stripUndefined(savedReport));
+        cloud = true;
       } catch (error) {
         console.error("Failed to save report to Firestore:", error);
       }
     }
 
-    const data = localStorage.getItem(REPORT_STORAGE_KEY);
-    const reports: ReportData[] = data ? JSON.parse(data) : [];
-    const index = reports.findIndex(r => r.id === reportId);
-    
-    if (index !== -1) {
-      reports[index] = savedReport;
-    } else {
-      reports.push(savedReport);
+    let local = false;
+    try {
+      const data = localStorage.getItem(REPORT_STORAGE_KEY);
+      const reports: ReportData[] = data ? JSON.parse(data) : [];
+      const index = reports.findIndex(r => r.id === reportId);
+      
+      if (index !== -1) {
+        reports[index] = savedReport;
+      } else {
+        reports.push(savedReport);
+      }
+      
+      localStorage.setItem(REPORT_STORAGE_KEY, JSON.stringify(reports));
+      local = true;
+    } catch (e) {
+      // Browser storage full (reports carry their figures): the account copy, if any, still holds
+      console.error("Kunde inte spara rapporten lokalt:", e);
     }
     
-    localStorage.setItem(REPORT_STORAGE_KEY, JSON.stringify(reports));
-    
-    return savedReport;
+    return { report: savedReport, signedIn: !!user, cloud, local };
   },
 
   deleteReport: async (id: string): Promise<void> => {

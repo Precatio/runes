@@ -595,7 +595,7 @@ def _press(title, s, note, f, ai, opt):
                          f"Ristare (Rundata): {k['carver']}" if k["carver"] else "", f"Stilgrupp: {k['style']}" if k["style"] else "",
                          f"Översättning: ”{k['translation']}”" if k["translation"] else ""] if x]
     out += [h(1, "Fakta om stenen"), bullets(facts),
-            h(1, "Om studien"), p(f"Mätningarna är gjorda med det öppna forskningsverktyget Vitki. "
+            h(1, "Om studien"), p("Mätningarna är gjorda med det öppna forskningsverktyget Vitki. "
                                   + FILL.format("publicering, finansiering, samarbetspartner")),
             h(1, "Studiens begränsningar"), bullets(_limits(f, ai, popular=True, top=3)),
             h(1, "Kontakt"), p(opt.get("contact") or FILL.format("namn, e-post och telefon"))]

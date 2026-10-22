@@ -20,13 +20,11 @@ import argparse
 import base64
 import datetime
 import time
-import io
 import json
 import os
 import sys
 
 import requests
-from PIL import Image
 
 METRICS = ["apex_vinkel_deg", "asymmetri_deg", "spårdjup_mm", "spårbredd_mm", "djup_bredd_kvot", "bottenradie_mm",
            "ytråhet_mm"]

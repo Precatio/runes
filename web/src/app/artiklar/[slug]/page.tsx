@@ -5,7 +5,7 @@ import BlogArticle from "@/components/BlogArticle";
 import MoreArticles from "@/components/MoreArticles";
 import { getPost, listPosts, postSlugs } from "@/lib/articles";
 import { featuredFirst } from "@/lib/featured";
-import { articleJsonLd, keywords, metaDescription, pictures, postPath, SHARE_SIZE, sharePath } from "@/lib/blogSeo";
+import { articleJsonLd, commonsSizes, keywords, metaDescription, pictures, postPath, SHARE_SIZE, sharePath, withImageSizes } from "@/lib/blogSeo";
 import { enPostPath, languageAlternates } from "@/lib/blogSeo";
 
 // A published post, rendered on the server with its metadata and structured data (lib/blogSeo.ts), so that every new
@@ -46,13 +46,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const post = await getPost(decodeURIComponent(slug));
   if (!post) notFound();
   // three other articles: the article of the week first, then the newest
-  const more = featuredFirst((await listPosts()).posts.filter(p => p.slug !== post.slug)).slice(0, 3);
+  const more = await withImageSizes(featuredFirst((await listPosts()).posts.filter(p => p.slug !== post.slug)).slice(0, 3));
+  // The sizes of its Commons photos, in both languages (the reader can switch)
+  const sizes = await commonsSizes(pictures(`${post.body ?? ""}\n${post.body_en ?? ""}`).map(p => p.src));
   return (
     <BlogShell>
       <div className="max-w-3xl mx-auto px-6 pt-8 -mb-10 text-right">
         <a href={enPostPath(post.slug)} hrefLang="en" className="text-sm text-[#b7410e] font-semibold hover:underline">In English →</a>
       </div>
-      <BlogArticle post={post} />
+      <BlogArticle post={post} sizes={sizes} />
       <MoreArticles posts={more} />
       { }
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd(post)).replace(/</g, "\\u003c") }} />

@@ -5,11 +5,13 @@ import Link from "next/link";
 import { inLanguage, postDate, type BlogPost } from "@/components/BlogBody";
 import { inOrder, type Order } from "@/lib/featured";
 import { useLanguage } from "@/components/LanguageContext";
-import { postPath, thumbnail } from "@/lib/blogSeo";
+import { cardImage, commonsSrcSet, postPath } from "@/lib/blogSeo";
 import LabelChips from "@/components/LabelChips";
 
-// The article's first photo, or a rune on the page colour when it has none
-function Picture({ post, width, className }: { post: BlogPost; width: number; className: string }) {
+// The article's first photo, or a rune on the page colour when it has none. The first card is in the first view, so its
+// photo is fetched at once (eager), the others when they come near. sizes: how wide the card draws it
+function Picture({ post, width, className, eager = false, sizes }:
+  { post: BlogPost; width: number; className: string; eager?: boolean; sizes: string }) {
   if (!post.image) {
     return (
       <div className={`${className} flex items-center justify-center bg-[#f3ede4]`} aria-hidden="true">
@@ -19,7 +21,9 @@ function Picture({ post, width, className }: { post: BlogPost; width: number; cl
   }
   return (
     <div className={`${className} overflow-hidden bg-slate-200`}>
-      <img src={thumbnail(post.image, width)} alt={post.image_alt || post.title} loading="lazy" decoding="async"
+      <img src={cardImage(post, width)} srcSet={commonsSrcSet(post.image, post.image_width, width > 500 ? [500, 960] : [330, 500])}
+        sizes={post.image_width ? sizes : undefined} alt={post.image_alt || post.title} loading={eager ? "eager" : "lazy"}
+        fetchPriority={eager ? "high" : undefined} decoding="async"
         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
     </div>
   );
@@ -55,9 +59,10 @@ export default function BlogList({ posts, failed, order = "senaste" }: { posts: 
         );
         return (
           <article key={p.id}>
-            <Link href={postPath(p.slug)}
+            <Link href={postPath(p.slug)} prefetch={false}
               className={`group block rounded-2xl border border-slate-200 bg-white/70 overflow-hidden transition hover:-translate-y-0.5 hover:border-[#b7410e]/50 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#b7410e] ${big ? "" : "sm:flex"}`}>
-              <Picture post={p} width={big ? 960 : 500}
+              <Picture post={p} width={big ? 960 : 500} eager={i === 0}
+                sizes={big ? "(min-width: 768px) 720px, calc(100vw - 48px)" : "(min-width: 640px) 224px, calc(100vw - 48px)"}
                 className={big ? "aspect-[16/9] w-full" : "aspect-[16/9] w-full sm:aspect-auto sm:w-56 sm:min-h-[11rem] shrink-0"} />
               <div className="p-5 sm:p-6 flex flex-col">
                 {meta}

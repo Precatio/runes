@@ -142,7 +142,7 @@ def reference_scale(means_a: dict, means_b: dict, corpus: list[dict], carver_of,
 
 def comparability(a: dict, b: dict, ga: dict, rec_a: dict | None, rec_b: dict | None) -> list[dict]:
     """Kontroller av om de två mätningarna går att jämföra. a, b: stenarna (feature_type, provenance)."""
-    from src import geology, protocol
+    from src import geology
     from src.limitations import MIN_RUNES_COMPARE, MIN_RUNES_DESCRIBE
     out = []
     fa, fb = a.get("feature_type") or "unknown", b.get("feature_type") or "unknown"

@@ -68,7 +68,7 @@ export default async function ContactPage() {
             <ul className="mt-3 space-y-2 text-sm">
               {own.slice(0, 6).map(p => (
                 <li key={p.id} className="leading-snug">
-                  <Link href={postPath(p.slug)} className="font-semibold text-slate-800 hover:text-[#b7410e]">{p.title}</Link>
+                  <Link href={postPath(p.slug)} prefetch={false} className="font-semibold text-slate-800 hover:text-[#b7410e]">{p.title}</Link>
                   <span className="ml-2 text-slate-500">{postDate(p, "sv")}</span>
                 </li>
               ))}

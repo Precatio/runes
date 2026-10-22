@@ -28,8 +28,8 @@ from collections import Counter, defaultdict
 
 import numpy as np
 
-from src.research_gaps import (AXELSON_PROVINCES, CARVER_NOTES, carver_home, certain_carvers, has_carver, has_style,
-                               is_runestone, model_carvers, province)
+from src.research_gaps import (AXELSON_PROVINCES, CARVER_NOTES, carver_home, certain_carvers, has_carver, is_runestone,
+                               model_carvers, province)
 from src.stats import METRICS, attribute, reliability as technique_reliability
 from src.synthesis import language_check, material_check, smoothed_precision
 

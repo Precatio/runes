@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { usePathname } from "next/navigation";
 import { translations, Language, Translations } from "@/lib/translations";
 
 interface LanguageContextType {
@@ -20,6 +21,18 @@ function reveal() {
   document.documentElement.classList.remove("i18n-pending");
 }
 
+// The English edition of an article (/en/artiklar/…) is English whatever the reader has chosen
+const englishPage = (path: string | null) => !!path && /^\/en(?:\/|$)/.test(path);
+
+/** The catalog, names and terms: on the public website only the entries its pages can show (src/i18n/public-catalog.mjs),
+ *  in the app the whole catalog. The condition is written out (not PUBLIC_SITE from lib/site), so that the build leaves
+ *  the whole catalog out of the website. */
+function catalogFiles() {
+  return process.env.NEXT_PUBLIC_SITE_MODE === "public"
+    ? Promise.all([import("@/i18n/en.public.json"), import("@/i18n/names.public.json"), import("@/i18n/terms.public.json")])
+    : Promise.all([import("@/i18n/en.json"), import("@/i18n/names.json"), import("@/i18n/terms.json")]);
+}
+
 /** After the page has loaded and React has finished hydrating the parts that stream in later (Suspense), so that
  *  the translator never changes server-rendered markup that React is still comparing. */
 function settled(): Promise<void> {
@@ -35,6 +48,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   // The page is rendered in Swedish (the original) and translated in place after hydration (src/i18n/dom.ts); the
   // stored choice is read after the first render so that server and client render the same thing
   const [lang, setLangState] = useState<Language>("sv");
+  const pathname = usePathname();
+  const english = englishPage(pathname);
 
   useEffect(() => {
     const saved = stored();
@@ -43,14 +58,15 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    document.documentElement.lang = lang;
+    document.documentElement.lang = english ? "en" : lang;
+  }, [lang, english]);
+
+  useEffect(() => {
     let cancelled = false;
     (async () => {
       const dom = await import("@/i18n/dom");
       if (lang === "en") {
-        const [core, catalog, names, terms] = await Promise.all([import("@/i18n/core"), import("@/i18n/en.json"),
-                                                                 import("@/i18n/names.json"), import("@/i18n/terms.json"),
-                                                                 settled()]);
+        const [core, [catalog, names, terms]] = await Promise.all([import("@/i18n/core"), catalogFiles(), settled()]);
         if (cancelled) return;
         core.setNames(names.default as string[]);
         core.setTerms(terms.default as string[]);

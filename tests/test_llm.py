@@ -2,6 +2,7 @@
 import types as pytypes
 
 import pytest
+from fastapi import HTTPException
 from pydantic import BaseModel
 
 from api import llm
@@ -41,8 +42,9 @@ def fake_anthropic(monkeypatch, captured, content, stop_reason="end_turn"):
 def test_provider_choice():
     assert llm.ai_context("claude", "sk-ant", None).provider == "claude"
     assert llm.ai_context("gemini", None, "AIza").key == "AIza"
-    with pytest.raises(Exception):
+    with pytest.raises(HTTPException) as e:
         llm.require(llm.AIContext("claude", ""))
+    assert e.value.status_code == 401
 
 
 def test_claude_structured_answer(monkeypatch):

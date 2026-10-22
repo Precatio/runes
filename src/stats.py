@@ -7,8 +7,8 @@ from __future__ import annotations
 import math
 
 import numpy as np
-from scipy import stats as sps
-from scipy.cluster.hierarchy import dendrogram, linkage
+# scipy.stats and scipy.cluster are imported where they are used: scipy.stats alone takes about a second to import, which
+# every start of the analysis engine would otherwise pay
 
 # Mått som ingår i flervariabelanalyserna (samma ordning överallt)
 METRICS = ["apex_vinkel_deg", "asymmetri_deg", "spårdjup_mm", "spårbredd_mm",
@@ -22,6 +22,18 @@ METRIC_LABELS = {
     "bottenradie_mm": "Bottenradie (mm)",
     "ytråhet_mm": "Ytråhet (mm)",
 }
+
+
+def wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
+    """95 % konfidensintervall för en andel (Wilson); rimligt även för 20 av 20. Utan data (n = 0) är andelen okänd,
+    så intervallet är hela 0–1."""
+    if n == 0:
+        return 0.0, 1.0
+    p = k / n
+    den = 1 + z * z / n
+    centre = (p + z * z / (2 * n)) / den
+    half = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / den
+    return max(0.0, centre - half), min(1.0, centre + half)
 
 
 def _clean(values) -> np.ndarray:
@@ -38,6 +50,7 @@ def summarize(values) -> dict:
     mean = float(arr.mean())
     sd = float(arr.std(ddof=1)) if n > 1 else 0.0
     if n > 1:
+        from scipy import stats as sps
         half = float(sps.t.ppf(0.975, n - 1) * sd / math.sqrt(n))
         ci = [mean - half, mean + half]
     else:
@@ -178,6 +191,7 @@ def ward_clustering(labels: list[str], X: np.ndarray) -> dict:
     som i Kitzler Åhfeldts analyser av huggteknik."""
     if len(labels) < 3:
         return {"note": "Minst tre stenar krävs för klustring."}
+    from scipy.cluster.hierarchy import dendrogram, linkage
     Z, _, _ = standardize(X)
     L = linkage(Z, method="ward", metric="euclidean")
     dn = dendrogram(L, labels=labels, no_plot=True)

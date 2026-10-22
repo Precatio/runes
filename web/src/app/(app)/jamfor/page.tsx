@@ -39,7 +39,7 @@ function normalizeProfile(p: { x: number[]; z: number[] }) {
 const jitter = (i: number) => ((i * 9301 + 49297) % 233280) / 233280 * 0.5 - 0.25;
 
 export default function ComparePage() {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const { latest3DResults, latest3DMeta } = useAnalysis();
   const [options, setOptions] = useState<StoneOption[]>([]);
   const [corpusRefs, setCorpusRefs] = useState<CorpusRef[]>([]);
@@ -64,6 +64,8 @@ export default function ComparePage() {
   }, [latest3DResults, latest3DMeta.text]);
 
   useEffect(() => {
+    // Run once the session is restored, not first with no user and again when it arrives
+    if (authLoading) return;
     (async () => {
       const opts: StoneOption[] = [];
       const projects = await db.getProjects();
@@ -103,7 +105,7 @@ export default function ComparePage() {
       }
       setOptions(opts);
     })();
-  }, [user]);
+  }, [user, authLoading]);
 
   const all = useMemo(() => (sessionOption ? [sessionOption, ...options] : options), [sessionOption, options]);
   const a = all.find(o => o.key === aKey);

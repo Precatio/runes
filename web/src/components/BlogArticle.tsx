@@ -6,10 +6,11 @@ import LabelChips from "@/components/LabelChips";
 import { useLanguage } from "@/components/LanguageContext";
 import ShareArticle from "@/components/ShareArticle";
 import { authorOf } from "@/lib/site";
+import type { ImageSizes } from "@/lib/blogSeo";
 
 // One post, rendered on the server in Swedish (what search engines read) and shown in English when the reader has
 // chosen English and the post has an English version. The text is the author's, so the page translator leaves it alone.
-export default function BlogArticle({ post }: { post: BlogPost }) {
+export default function BlogArticle({ post, sizes }: { post: BlogPost; sizes?: ImageSizes }) {
   const { lang } = useLanguage();
   const v = inLanguage(post, lang);
   const author = authorOf(post.author);
@@ -17,7 +18,7 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
   return (
     <article className="max-w-3xl mx-auto px-6 pt-16 pb-24">
       <nav aria-label="Brödsmulor" className="text-sm">
-        <Link href="/artiklar" className="font-bold text-[#b7410e] hover:underline">← Artiklar</Link>
+        <Link href="/artiklar" prefetch={false} className="font-bold text-[#b7410e] hover:underline">← Artiklar</Link>
       </nav>
       <div className="mt-8 text-sm text-slate-500">
         <time dateTime={post.publishedAt ?? post.month}>{postDate(post, lang)}</time>
@@ -45,7 +46,7 @@ export default function BlogArticle({ post }: { post: BlogPost }) {
         </div>
       )}
       {lang === "en" && !v.en && <p className="mt-4 text-sm text-slate-500">Den här artikeln finns bara på svenska.</p>}
-      <div className="mt-10" translate="no"><BlogBody text={v.body} /></div>
+      <div className="mt-10" translate="no"><BlogBody text={v.body} sizes={sizes} /></div>
       <ShareArticle title={v.title} lang={lang === "en" ? "en" : "sv"} />
       {author && (
         <aside className="mt-16 rounded-2xl border border-slate-900/10 bg-white p-6" translate="no">

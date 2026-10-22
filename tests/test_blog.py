@@ -285,7 +285,7 @@ def test_frozen_figures_are_kept_by_content(tmp_path, monkeypatch):
     assert d["group"] == "map" and d["label"].startswith("r för ʀ – var mönstret samlas") and d["script"] == "hotspots.R"
     assert bf.describe("okänd.png") is None
     md = bf.markdown(url, d)
-    assert md.startswith(f"![r för ʀ") and "Källa: Vitkis korpusanalys i R (hotspots.R)" in md
+    assert md.startswith("![r för ʀ") and "Källa: Vitkis korpusanalys i R (hotspots.R)" in md
     res = {"hotspots": {"figures": {"hotspot_r_for_R": "hotspot_r_for_R.png"}}, "text": {"figures": {"a": "text_formler.png"}}}
     assert [x["name"] for x in bf.available(res, {"r_for_R": "r för ʀ"})] == ["hotspot_r_for_R.png", "text_formler.png"]
 
@@ -341,15 +341,30 @@ def test_statistics_are_explained_in_plain_words():
     assert "simuleringar" not in cav and "Ett kluster är en plats att titta på." in cav
 
 
+def _chart_png(width=1800, height=900) -> bytes:
+    import io
+
+    from PIL import Image, ImageDraw
+    im = Image.new("RGBA", (width, height), (255, 255, 255, 255))
+    d = ImageDraw.Draw(im)
+    d.rectangle((100, 100, 700, 800), fill=(183, 65, 14, 255))
+    d.text((800, 400), "Runstenar per landskap", fill=(15, 23, 42, 255))
+    b = io.BytesIO()
+    im.save(b, "PNG")
+    return b.getvalue()
+
+
 def test_the_website_gets_only_live_articles_and_their_figures(tmp_path, monkeypatch):
     from src import blog_figures, site_export
     monkeypatch.setattr(site_export, "CONTENT", str(tmp_path / "content" / "articles.json"))
     monkeypatch.setattr(site_export, "FIGURES", str(tmp_path / "figurer"))
+    monkeypatch.setattr(site_export, "SEARCH", str(tmp_path / "artiklar-sok.json"))
     monkeypatch.setattr(blog_figures, "DIR", str(tmp_path / "frozen"))
-    url = blog_figures.freeze(b"\x89PNG figure")
+    url = blog_figures.freeze(_chart_png())
     name = url.rsplit("/", 1)[1]
     (tmp_path / "figurer").mkdir()
     (tmp_path / "figurer" / "0123456789abcdef.png").write_bytes(b"old")  # no article uses it any more
+    (tmp_path / "figurer" / "0123456789abcdef.webp").write_bytes(b"old")
     posts = [
         {"id": "a", "slug": "live", "title": "A", "published": True, "publishedAt": "2026-10-12T10:00:00+00:00",
          "body": f"![Figur]({url})\nText.", "by": "uid", "snapshot": {"x": 1}},
@@ -361,7 +376,13 @@ def test_the_website_gets_only_live_articles_and_their_figures(tmp_path, monkeyp
     assert [p["slug"] for p in data["posts"]] == ["live"]  # a scheduled article stays out of the public repository
     assert "by" not in data["posts"][0] and "snapshot" not in data["posts"][0]
     assert out == {"articles": 1, "figures": 1, "missing_figures": []}
-    assert sorted(os.listdir(tmp_path / "figurer")) == [name]
+    # The website gets the figure as WebP under a name of its own, and the exported text points at it
+    webp = blog_figures.site_name(name)
+    assert sorted(os.listdir(tmp_path / "figurer")) == [webp]
+    assert data["posts"][0]["body"] == f"![Figur](/figurer/{webp})\nText."
+    assert posts[0]["body"] == f"![Figur]({url})\nText."  # the article itself (Firestore, the local app) is unchanged
+    index = json.loads((tmp_path / "artiklar-sok.json").read_text())
+    assert [p["slug"] for p in index["posts"]] == ["live"]
 
 
 def test_the_article_of_the_month_goes_to_the_website(tmp_path, monkeypatch):
@@ -448,3 +469,178 @@ def test_photos_are_found_on_commons_when_wikidata_does_not_answer(tmp_path, mon
     st = commons.stone_photos(["U 861"])
     assert [p["file"] for p in st[0]["photos"]] == ["U861 Norsta - KMB - 1.jpg"]  # only pictures of runestones
     assert not list(tmp_path.iterdir())  # not cached, so the next try asks Wikidata again
+
+
+def test_figures_go_to_the_website_as_webp_charts_lossless_scans_lossy(tmp_path):
+    from PIL import Image
+
+    from src import blog_figures
+    chart = tmp_path / "chart.png"
+    chart.write_bytes(_chart_png(2400, 1000))
+    noise = Image.frombytes("RGB", (1200, 800), os.urandom(1200 * 800 * 3))  # a scan render: shades everywhere
+    scan = tmp_path / "scan.png"
+    noise.save(scan)
+    a = blog_figures.to_site(str(chart), str(tmp_path / "chart.webp"))
+    b = blog_figures.to_site(str(scan), str(tmp_path / "scan.webp"))
+    assert a == {"photo": False, "size": (blog_figures.SITE_WIDTH, 667)} and b == {"photo": True, "size": (1200, 800)}
+    with Image.open(tmp_path / "chart.webp") as im:
+        assert im.format == "WEBP" and im.mode == "RGB"  # the opaque alpha channel is dropped
+        assert im.getpixel((300, 300)) == (183, 65, 14)  # lossless: the chart's colours exactly
+    assert blog_figures.site_name("0123456789abcdef.png").endswith(".webp")
+    assert blog_figures.site_name("0123456789abcdef.png") != blog_figures.site_name("fedcba9876543210.png")
+
+
+def test_commons_photos_get_the_width_the_website_needs():
+    from src import commons
+    sizes = {"Big.jpg": {"width": 4000, "size": 2_000_000}, "Small.jpg": {"width": 600, "size": 90_000},
+             "Light wide.jpg": {"width": 1200, "size": 60_000}}
+    base = "https://upload.wikimedia.org/wikipedia/commons"
+    assert commons.site_photo(f"{base}/a/ab/Big.jpg", sizes) == f"{base}/thumb/a/ab/Big.jpg/960px-Big.jpg"
+    assert commons.site_photo(f"{base}/a/ab/Small.jpg", sizes) == f"{base}/a/ab/Small.jpg"  # narrow originals stay
+    assert commons.site_photo(f"{base}/a/ab/Light_wide.jpg", sizes) == f"{base}/a/ab/Light_wide.jpg"  # and light ones
+    assert commons.site_photo(f"{base}/a/ab/Unknown.jpg", sizes) == f"{base}/a/ab/Unknown.jpg"  # Commons did not answer
+    assert commons.site_photo(f"{base}/thumb/a/ab/X_%28U_1%29.jpg/1280px-X_%28U_1%29.jpg", {}) == \
+        f"{base}/thumb/a/ab/X_%28U_1%29.jpg/960px-X_%28U_1%29.jpg"
+    assert commons.site_photo(f"{base}/thumb/a/ab/X.jpg/500px-X.jpg", {}) == f"{base}/thumb/a/ab/X.jpg/500px-X.jpg"
+    thumbs = "https://thumb.wikimedia.org/wikipedia/commons"  # Commons' newer host for thumbnails
+    assert commons.site_photo(f"{thumbs}/thumb/a/ab/X.JPG/1280px-X.JPG", {}) == f"{thumbs}/thumb/a/ab/X.JPG/960px-X.JPG"
+    assert commons.original_name(f"{base}/9/90/U_329%2C_Sn%C3%A5ttsta.JPG") == "U_329,_Snåttsta.JPG"
+
+
+def test_commons_sizes_are_cached_and_an_unreachable_commons_changes_nothing(tmp_path, monkeypatch):
+    import urllib.request
+
+    from src import commons
+    monkeypatch.setattr(commons, "SIZES", str(tmp_path / "sizes.json"))
+
+    class Answer:
+        def __enter__(self): return self
+        def __exit__(self, *a): return False
+        def read(self, *a):
+            return json.dumps({"query": {"normalized": [{"from": "File:Big_one.jpg", "to": "File:Big one.jpg"}],
+                                         "pages": {"1": {"title": "File:Big one.jpg",
+                                                         "imageinfo": [{"width": 3000, "height": 2000, "size": 900000}]}}}}).encode()
+    seen = []
+
+    def answer(req, timeout):
+        seen.append((req.get_header("User-agent"), timeout))
+        return Answer()
+    monkeypatch.setattr(urllib.request, "urlopen", answer)
+    assert commons.original_sizes(["Big_one.jpg"])["Big_one.jpg"]["width"] == 3000
+    assert seen and seen[0][0].startswith("Vitki/") and seen[0][1] == 10
+
+    def down(req, timeout):
+        raise TimeoutError("Commons does not answer")
+    monkeypatch.setattr(urllib.request, "urlopen", down)
+    assert commons.original_sizes(["Big_one.jpg"])["Big_one.jpg"]["width"] == 3000  # from the cache
+    assert commons.original_sizes(["Other.jpg"]) == {}
+
+
+def test_the_exported_articles_get_lighter_commons_photos(tmp_path, monkeypatch):
+    from src import site_export
+    base = "https://upload.wikimedia.org/wikipedia/commons"
+    monkeypatch.setattr(site_export, "_photo_sizes", lambda urls: {"Big.jpg": {"width": 3000, "size": 2_000_000}})
+    body = f"Text.\n\n![Runstenen U 1]({base}/a/ab/Big.jpg)\nU 1. Foto: B, CC BY 2.5, via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Big.jpg)."
+    posts = [{"id": "a", "slug": "live", "title": "A", "published": True, "publishedAt": "2026-10-12T10:00:00+00:00",
+              "body": body, "body_en": f"![The runestone U 1]({base}/thumb/c/cd/Y.jpg/1280px-Y.jpg)\nCaption."}]
+    site_export.export(posts, "2026-10-13T12:00:00+00:00")
+    got = json.loads(open(site_export.CONTENT, encoding="utf-8").read())["posts"][0]
+    assert f"({base}/thumb/a/ab/Big.jpg/960px-Big.jpg)\nU 1. Foto: B" in got["body"]
+    assert "[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Big.jpg)" in got["body"]  # the credit stays
+    assert got["body_en"].startswith(f"![The runestone U 1]({base}/thumb/c/cd/Y.jpg/960px-Y.jpg)")
+
+
+def test_an_export_that_looks_wrong_is_not_written_or_pushed(monkeypatch):
+    from src import site_export
+    live = {"published": True, "publishedAt": "2026-10-12T10:00:00+00:00"}
+    posts = [{"id": s, "slug": s, "title": s.upper(), **live} for s in "abcd"]
+    site_export.export(posts, "2026-10-13T12:00:00+00:00")
+    before = open(site_export.CONTENT, encoding="utf-8").read()
+    out = site_export.export([], "2026-10-14T12:00:00+00:00")  # an empty read: wrong database, credentials …
+    assert "inga publicerade artiklar" in out["blocked"] and open(site_export.CONTENT, encoding="utf-8").read() == before
+    out = site_export.export(posts[:1], "2026-10-14T12:00:00+00:00")  # three articles gone at once
+    assert "3 artiklar skulle försvinna" in out["blocked"]
+    gone = [{**posts[0], "body": "![Figur](/api/blog/figures/0123456789abcdef.png)\nFigur."}, *posts[1:]]
+    out = site_export.export(gone, "2026-10-14T12:00:00+00:00")
+    assert out["missing_figures"] == ["0123456789abcdef.png"] and "Figurer saknas" in out["blocked"]
+    assert open(site_export.CONTENT, encoding="utf-8").read() == before
+    # Removing two is an ordinary edit; a deliberate larger removal goes out with force
+    assert "blocked" not in site_export.export(posts[:2], "2026-10-14T12:00:00+00:00")
+    assert "blocked" not in site_export.export([], "2026-10-14T12:00:00+00:00", force=True)
+    assert json.loads(open(site_export.CONTENT, encoding="utf-8").read())["posts"] == []
+    # publish_now does not push a blocked export, and Admin is told why
+    site_export.export(posts, "2026-10-14T12:00:00+00:00")
+    from api.routers import blog as b
+    monkeypatch.setattr(b, "_all", lambda: [])
+    monkeypatch.setattr(site_export, "push", lambda: (_ for _ in ()).throw(AssertionError("pushed")))
+    rec = site_export.publish_now()
+    assert rec["pushed"] is False and rec["note"].startswith("Webbplatsen publicerades inte: Exporten gav inga")
+
+
+def test_a_pending_publication_survives_a_restart(monkeypatch):
+    from src import site_export
+    monkeypatch.setattr(site_export, "enabled", lambda: True)
+    timers = []
+    monkeypatch.setattr(site_export, "_later", lambda key, s, fn: timers.append(key))
+    monkeypatch.setattr(site_export, "schedule", lambda posts: None)
+    site_export.publish_soon()
+    assert os.path.exists(site_export.PENDING) and timers == ["soon"]
+    timers.clear()
+    site_export.catch_up([])  # the server restarted before the half minute was up
+    assert timers == ["soon"]
+    from api.routers import blog as b
+    monkeypatch.setattr(b, "_all", lambda: [])
+    monkeypatch.setattr(site_export, "export", lambda posts, now, force=False: {"articles": 0})
+    monkeypatch.setattr(site_export, "push", lambda: {"pushed": False, "note": "Committat men inte pushat: offline"})
+    site_export.publish_now()
+    assert os.path.exists(site_export.PENDING)  # not on GitHub yet: the next start tries again
+    monkeypatch.setattr(site_export, "push", lambda: {"pushed": True, "note": "Pushat"})
+    site_export.publish_now()
+    assert not os.path.exists(site_export.PENDING) and site_export.status()["pending"] is False
+    timers.clear()
+    site_export.catch_up([])
+    assert timers == []
+
+
+def test_page_views_are_capped_per_article_and_day_and_small_shifts_do_not_republish():
+    from src import site_export
+    flood = [{"kind": "view", "path": "/artiklar/a", "day": "2026-10-21"}] * 5000
+    rows = flood + [{"kind": "view", "path": "/en/artiklar/a", "day": "2026-10-22"}] * 3 + \
+        [{"kind": "view", "path": "/artiklar/b", "day": "2026-10-21"}] * 7
+    assert site_export.capped_views(rows) == {"a": site_export.VIEWS_PER_DAY + 3, "b": 7}
+    old = [{"slug": "a", "views": 10, "publishedAt": "2026-10-01"}, {"slug": "b", "views": 10, "publishedAt": "2026-10-02"}]
+    tie = [{**old[0], "views": 11}, old[1]]  # one view breaks the tie: the order changes, but not by much
+    assert site_export.views_order(tie) != site_export.views_order(old) and not site_export.views_moved(old, tie)
+    real = [{**old[0], "views": 16}, old[1]]
+    assert site_export.views_moved(old, real)
+    assert not site_export.views_moved(old, [{**old[0], "views": 9}, {**old[1], "views": 30}])  # b first already
+
+
+def test_an_article_is_backed_up_before_it_is_overwritten_or_deleted(monkeypatch):
+    from src import site_export
+    stored = {"x": {"slug": "x", "title": "Före", "body": "Gammal text", "published": False,
+                    "updatedAt": dt.datetime(2026, 10, 1, tzinfo=dt.timezone.utc)}}
+
+    class Snap:
+        def __init__(self, i): self.i = i
+        def to_dict(self): return dict(stored[self.i]) if self.i in stored else None
+
+    class Doc:
+        def __init__(self, i): self.id = i
+        def get(self): return Snap(self.id)
+        def delete(self): stored.pop(self.id, None)
+
+    class Col:
+        def document(self, i): return Doc(i)
+
+    monkeypatch.setattr(blog, "firestore", lambda: type("F", (), {"collection": lambda self, name: Col()})())
+    monkeypatch.setattr(blog, "_all", lambda: [])
+    monkeypatch.setattr(site_export, "schedule", lambda posts: None)
+    blog.delete_post("x", {})
+    files = os.listdir(os.path.join(blog.BACKUP, "x"))
+    assert len(files) == 1 and files[0].endswith("Z.json") and "x" not in stored
+    saved = json.loads(open(os.path.join(blog.BACKUP, "x", files[0]), encoding="utf-8").read())
+    assert saved["title"] == "Före" and saved["body"] == "Gammal text" and saved["updatedAt"].startswith("2026-10-01")
+    # A backup that cannot be written never stops the save or the deletion
+    monkeypatch.setattr(blog, "BACKUP", "/dev/null/not-a-folder")
+    blog._backup("y", {"title": "T"})

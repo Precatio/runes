@@ -294,7 +294,7 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
     if verdict == "motsäger" and status == "annan ristare" and not same_source:
         against += 1  # Runor 2020 sides with another carver than both the suggestion and Rundata
     if status == "finns redan":
-        level, text = "redan känt", f"Förslaget är redan känt i den nyare forskningen. Att metoden kommer fram till samma sak talar för metoden."
+        level, text = "redan känt", "Förslaget är redan känt i den nyare forskningen. Att metoden kommer fram till samma sak talar för metoden."
     elif verdict == "motsäger" and signed:
         level, text = "metodfel", "Stenen är signerad. Avvikelsen visar en svaghet i metoden, inte att ristaren är fel."
     elif verdict == "stämmer":

@@ -23,6 +23,7 @@ import math
 
 from src.findings import _carver_text, _finding, _oeuvre, _province_coverage, relevance
 from src.research_gaps import AXELSON_PROVINCES, has_carver, province
+from src.stats import wilson
 
 MODEL = "statistisk modell (R)"
 SERIATION = "seriation (R)"
@@ -35,16 +36,6 @@ def _d(v: float, digits: int = 2) -> str:
 
 def _pct(v: float | None) -> str:
     return "–" if v is None else f"{round(v * 100)} %"
-
-
-def wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
-    """95 % konfidensintervall för en andel (Wilson); rimligt även för 20 av 20."""
-    if n == 0:
-        return 0.0, 1.0
-    p = k / n
-    den = 1 + z * z / n
-    centre, half = (p + z * z / (2 * n)) / den, z * ((p * (1 - p) / n + z * z / (4 * n * n)) ** 0.5) / den
-    return max(0.0, centre - half), min(1.0, centre + half)
 
 
 def _reliability(att: dict, p: float) -> tuple[float, str]:
@@ -429,7 +420,7 @@ def _cult(c: dict, scan: dict | None = None) -> list[dict]:
             text += (f" Vid centralortsnamn utan kult (Husby, -tuna) är bönen inte vanligare (oddskvot {_d(pc['or'])})"
                      + (f", och med närheten till dem konstant består skillnaden vid de teofora namnen (oddskvot "
                         f"{_d(pac['or'])})." if pac.get("or") is not None else "."))
-        ca, cr = t.get("christian_a") or {}, t.get("cross_a") or {}
+        ca = t.get("christian_a") or {}
         if ca.get("or") is not None:
             text += (f" Kristna markörer överlag ({_pct(ca['share_near'])} mot {_pct(ca['share_far'])}) och kors pekar åt "
                      "samma håll men håller inte i alla kontroller." if not (ca.get("halves") or {}).get("replicated")
@@ -1106,7 +1097,7 @@ def _ends(by_style: list | None, key: str = "n", unit: str = "stenar") -> str:
     rows = [r for r in (by_style or []) if r.get(key)]
     if len(rows) < 2:
         return ""
-    return (f"Underlaget per stilgrupp: " + ", ".join(f"{r['style']} {_pct(r.get('share') or r.get('share_words'))} "
+    return ("Underlaget per stilgrupp: " + ", ".join(f"{r['style']} {_pct(r.get('share') or r.get('share_words'))} "
                                                        f"({r[key]} {unit})" for r in rows) + ".")
 
 
@@ -1126,7 +1117,7 @@ def dotted_text(rob: dict | None) -> str:
                                                   for r in yw if r.get("words", 0) >= 5) + ".")
     j = rob.get("joint_monophthong") or {}
     if j.get("tested"):
-        out.append(f"På stennivå, med tiden konstant, har stenar med stungna runor "
+        out.append("På stennivå, med tiden konstant, har stenar med stungna runor "
                    + ("färre" if j["b"] < 0 else "fler") + f" monoftongstavningar (oddskvot {_d(math.exp(j['b']))}, p {_q(j['p'])}; "
                    f"{_pct(j['mono_with_dot'])} mot {_pct(j['mono_without_dot'])})"
                    + (" – i linje med en gemensam rörelse mot fullständigare stavning." if j["b"] < 0 and j["p"] < 0.05 else "."))

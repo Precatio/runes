@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+import re
 from functools import lru_cache
 
 from fastapi import APIRouter, HTTPException, Request
@@ -32,7 +33,8 @@ def corpus_ready() -> bool:
 
 def _state() -> dict:
     fp, _, n = _corpus()
-    done = rb.JOB.result(fp) if rb.JOB.ready(fp) else None
+    # Only done.json: the page polls this every few seconds, and the modules' results are not needed for it
+    done = rb.JOB.done(fp)
     if done is None and rb.JOB.ready(fp):
         done = {}  # being written; report as not yet ready below
     st = rb.JOB.state_of(fp)
@@ -181,8 +183,9 @@ def landscape_scan():
     from src.pattern_map import PATTERNS
     if not corpus_ready():
         return {"available": False, "reason": "Korpusanalysen i R är inte beräknad (Statistik → Beräkna)."}
-    res = rb.JOB.result(fingerprint()) or {}
-    sc = (res.get("remains") or {}).get("scan") or {}
+    fp = fingerprint()
+    res = rb.JOB.done(fp) or {}
+    sc = (rb.JOB.module(fp, "remains") or {}).get("scan") or {}
     if not sc.get("available"):
         return {"available": False, "reason": sc.get("error") or "Genomsökningen saknas (lämningar och ortnamn hämtas med "
                                                                "scripts/fetch_raa_remains.py och fetch_place_names.py)."}
@@ -196,8 +199,9 @@ def hotspots():
     """Hot spots och kluster per mönster på kartan (r/hotspots.R): Morans I, Getis-Ord Gi* och Kulldorffs scanstatistik."""
     if not corpus_ready():
         return {"available": False, "reason": "Korpusanalysen i R är inte beräknad (Statistik → Beräkna)."}
-    res = rb.JOB.result(fingerprint()) or {}
-    h = res.get("hotspots") or {}
+    fp = fingerprint()
+    res = rb.JOB.done(fp) or {}
+    h = rb.JOB.module(fp, "hotspots") or {}
     if not h.get("patterns"):
         return {"available": False, "reason": (res.get("errors") or {}).get("hotspots") or "Hot spots saknas i korpusanalysen."}
     return {"available": True, "computed_at": res.get("computed_at"), **h}
@@ -208,15 +212,20 @@ def corpus_results(request: Request):
     """Resultaten av korpusanalyserna med figurernas adresser och de mönster appen ser."""
     _require_r()
     fp = fingerprint()
-    if rb.JOB.result(fp) is None:
-        raise HTTPException(status_code=409, detail="Korpusanalyserna är inte beräknade än. Starta dem med POST /api/r/corpus/run.")
+    if not rb.JOB.ready(fp):  # the results themselves are read only when the answer is not already cached
+        raise HTTPException(status_code=409, detail=_NOT_COMPUTED)
     from api.cache import cached_json, dir_version
     from src import crosscheck
     return cached_json(request, f"corpus|{fp}|{dir_version(crosscheck.CACHE)}", lambda: _corpus_results(fp))
 
 
+_NOT_COMPUTED = "Korpusanalyserna är inte beräknade än. Starta dem med POST /api/r/corpus/run."
+
+
 def _corpus_results(fp: str) -> dict:
     res = rb.JOB.result(fp)
+    if res is None:  # a file being written right now
+        raise HTTPException(status_code=409, detail=_NOT_COMPUTED)
     stone, patterns = _findings(fp)
     stone = _with_crosscheck(stone)
     html_map = (res.get("geography") or {}).get("html_map")
@@ -234,8 +243,15 @@ def _corpus_results(fp: str) -> dict:
             "package_url": "/api/r/package"}
 
 
+def _check_fp(fp: str) -> None:
+    """The corpus version in a URL is a fingerprint (rb.fingerprint: 16 hex digits), never a path such as "..". """
+    if not re.fullmatch(r"[0-9a-f]{16}", fp):
+        raise HTTPException(status_code=404, detail="Figuren finns inte.")
+
+
 @router.get("/figure/{fp}/{name}")
 def corpus_figure(fp: str, name: str):
+    _check_fp(fp)
     d = rb.JOB.directory(fp)
     if name.endswith(".html") and name == os.path.basename(name) and os.path.exists(os.path.join(d, name)):
         return FileResponse(os.path.join(d, name), media_type="text/html")
@@ -247,6 +263,7 @@ def corpus_figure(fp: str, name: str):
 
 @router.get("/figure/{fp}/{kind}/{key}/{name}")
 def stone_figure(fp: str, kind: str, key: str, name: str):
+    _check_fp(fp)
     if kind not in ("stones", "landscape") or not key.isalnum():
         raise HTTPException(status_code=404, detail="Figuren finns inte.")
     data = rb.figure(os.path.join(rb.JOB.directory(fp), kind, key), name)
@@ -286,6 +303,9 @@ def stone_analysis(signum: str, candidates: list[str], with_landscape: bool = Tr
     return res
 
 
+MAX_CANDIDATES = 10
+
+
 @router.get("/stone/{signum:path}")
 def r_stone(signum: str, candidates: str = "", landscape: bool = True, lang: str = "sv"):
     """En sten mot korpusanalyserna: kandidaternas områden, grupp, modellens sannolikheter, formler, seriation
@@ -301,7 +321,11 @@ def r_stone(signum: str, candidates: str = "", landscape: bool = True, lang: str
         raise HTTPException(status_code=422, detail="R-analysen gäller svenska vikingatida runstenar.")
     if lang not in ("sv", "en"):
         raise HTTPException(status_code=400, detail="Språket ska vara sv eller en.")
-    res = stone_analysis(rec["signum"], [c.strip() for c in candidates.split(",") if c.strip()], landscape, lang)
+    # Every new list of candidates is a new R run (about 1 GB, src/r_bridge.py): a handful of carver names, no more
+    names = [c.strip() for c in candidates.split(",") if c.strip()]
+    if len(names) > MAX_CANDIDATES or any(len(c) > 100 for c in names):
+        raise HTTPException(status_code=422, detail=f"Högst {MAX_CANDIDATES} kandidater, med namn på högst 100 tecken.")
+    res = stone_analysis(rec["signum"], names, landscape, lang)
     if res and res.get("error"):
         raise HTTPException(status_code=500, detail=res["error"])
     return _public(res)

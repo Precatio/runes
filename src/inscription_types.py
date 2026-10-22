@@ -13,8 +13,6 @@ from __future__ import annotations
 
 import re
 
-from scipy.stats import binomtest
-
 # key -> (label, definition, regex on normalization, regex on English translation, regex on transliteration)
 CATEGORIES: dict[str, tuple[str, str, str | None, str | None, str | None]] = {
     "minne": ("Minnesinskrift", "Rest eller huggen till minne av någon (\"æftiR\", \"in memory of\").",
@@ -79,6 +77,7 @@ def _bh(pvalues: list[float]) -> list[float]:
 
 
 def carver_categories(inscriptions: list[dict], certain_carvers, min_inscriptions: int = 5) -> dict:
+    from scipy.stats import binomtest  # here, not at the top: scipy.stats takes about a second to import
     texts = [r for r in inscriptions if _is_runestone(r) and _has_text(r)]
     cats = {r["signum"]: categories(r) for r in texts}
     total = len(texts)

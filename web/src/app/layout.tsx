@@ -5,9 +5,7 @@ import { Noto_Sans_Runic } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/components/LanguageContext";
 import { ThemeProvider } from "@/components/ThemeContext";
-import { SettingsProvider } from "@/components/SettingsContext";
-import { AnalysisProvider } from "@/components/AnalysisContext";
-import { AuthProvider } from "@/components/AuthContext";
+import AppProviders, { AnalysisState } from "@/components/AppProviders";
 import LoadingBar from "@/components/LoadingBar";
 import SiteTracker from "@/components/SiteTracker";
 
@@ -29,6 +27,8 @@ export const metadata: Metadata = {
                description: SITE_DESCRIPTION },
   twitter: { card: "summary_large_image", title: "Vitki – runstenar och runinskrifter", description: SITE_DESCRIPTION, images: ["/delningsbild.png"] },
   robots: { index: true, follow: true },
+  // Other sites see only the origin (vitkirunor.se) of a link or picture request, never the page's path
+  referrer: "strict-origin-when-cross-origin",
 };
 
 export default function RootLayout({
@@ -45,17 +45,13 @@ export default function RootLayout({
       <body className="antialiased selection:bg-black/10 selection:text-black">
         <LoadingBar />
         <SiteTracker />
-        <AuthProvider>
-          <SettingsProvider>
-            <ThemeProvider>
-              <LanguageProvider>
-                <AnalysisProvider>
-                  {children}
-                </AnalysisProvider>
-              </LanguageProvider>
-            </ThemeProvider>
-          </SettingsProvider>
-        </AuthProvider>
+        <AppProviders>
+          <ThemeProvider>
+            <LanguageProvider>
+              <AnalysisState>{children}</AnalysisState>
+            </LanguageProvider>
+          </ThemeProvider>
+        </AppProviders>
       </body>
     </html>
   );

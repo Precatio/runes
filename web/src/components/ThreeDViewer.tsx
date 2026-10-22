@@ -146,6 +146,8 @@ function SplineLine({ points, color = "red" }: { points: THREE.Vector3[], color?
     
     return new THREE.BufferGeometry().setFromPoints(curvePoints);
   }, [points]);
+  // R3F only disposes on unmount, not when a prop's geometry is swapped, so free each replaced line geometry here
+  useEffect(() => () => geometry.dispose(), [geometry]);
 
   if (points.length < 2) return null;
 
@@ -155,6 +157,14 @@ function SplineLine({ points, color = "red" }: { points: THREE.Vector3[], color?
       <lineBasicMaterial color={color} linewidth={5} depthTest={false} transparent={true} />
     </line>
   );
+}
+
+// A straight marker line; the points are rebuilt only when the coordinates change, not on every viewer render
+function MarkerLine({ from, to, color }: { from: Vec3; to: Vec3; color: string }) {
+  const [fx, fy, fz] = from;
+  const [tx, ty, tz] = to;
+  const points = useMemo(() => [new THREE.Vector3(fx, fy, fz), new THREE.Vector3(tx, ty, tz)], [fx, fy, fz, tx, ty, tz]);
+  return <SplineLine points={points} color={color} />;
 }
 
 interface DraggablePointProps {
@@ -373,6 +383,8 @@ function MeshModel({
   const groupRef = useRef<THREE.Group>(null);
   const [activeLineIndex, setActiveLineIndex] = useState<number>(-1);
   const [geometry, setGeometry] = useState<THREE.BufferGeometry | null>(null);
+  // A replaced scan (e.g. the lighter view model or another project) keeps its GPU buffers until disposed
+  useEffect(() => () => geometry?.dispose(), [geometry]);
   const [relativeDepthRange, setRelativeDepthRange] = useState({ min: -1, max: 0 });
 
   const [prevClearCounter, setPrevClearCounter] = useState(clearCounter);
@@ -632,7 +644,7 @@ function MeshModel({
       })}
 
       {markers?.map((m, i) => (
-        <SplineLine key={`marker-${i}`} points={[new THREE.Vector3(...m.from), new THREE.Vector3(...m.to)]} color={m.color ?? "#16a34a"} />
+        <MarkerLine key={`marker-${i}`} from={m.from} to={m.to} color={m.color ?? "#16a34a"} />
       ))}
       {autoPoints && autoPoints.length > 0 && <PointCloud points={autoPoints} size={pointSize * 0.6} />}
     </group>

@@ -6,7 +6,7 @@ import BlogBody, { postDate, type BlogPost } from "@/components/BlogBody";
 import ShareArticle from "@/components/ShareArticle";
 import { getPost, listPosts, postSlugs } from "@/lib/articles";
 import { featuredFirst } from "@/lib/featured";
-import { articleJsonLd, enPostPath, keywords, languageAlternates, metaDescription, SHARE_SIZE, sharePath } from "@/lib/blogSeo";
+import { articleJsonLd, commonsSizes, enPostPath, keywords, languageAlternates, metaDescription, pictures, SHARE_SIZE, sharePath } from "@/lib/blogSeo";
 
 // The English edition of a published article, rendered on the server so that search engines see English text and
 // the hreflang pair ties it to the Swedish original. The content is the article's own English version from the
@@ -45,7 +45,7 @@ function MoreInEnglish({ posts }: { posts: BlogPost[] }) {
       <ul className="mt-5 space-y-4">
         {posts.map(p => (
           <li key={p.slug}>
-            <Link href={enPostPath(p.slug)} className="font-bold text-[#b7410e] hover:underline">{p.title_en || p.title}</Link>
+            <Link href={enPostPath(p.slug)} prefetch={false} className="font-bold text-[#b7410e] hover:underline">{p.title_en || p.title}</Link>
             {p.summary_en && <p className="text-sm text-slate-600 mt-0.5">{metaDescription(p.summary_en, 140)}</p>}
           </li>
         ))}
@@ -59,6 +59,7 @@ export default async function EnglishPostPage({ params }: { params: Promise<{ sl
   const post = await getPost(decodeURIComponent(slug));
   if (!post?.body_en) notFound();
   const more = featuredFirst((await listPosts()).posts.filter(p => p.slug !== post.slug && p.title_en)).slice(0, 3);
+  const sizes = await commonsSizes(pictures(post.body_en).map(p => p.src));
   return (
     <BlogShell>
       <article className="max-w-3xl mx-auto px-6 pt-16 pb-14" lang="en">
@@ -75,7 +76,7 @@ export default async function EnglishPostPage({ params }: { params: Promise<{ sl
         </p>
         {post.summary_en && <p className="mt-6 text-lg text-slate-600 leading-relaxed">{post.summary_en}</p>}
         <div className="mt-10">
-          <BlogBody text={post.body_en} />
+          <BlogBody text={post.body_en} sizes={sizes} />
         </div>
         <ShareArticle title={post.title_en || post.title} lang="en" />
       </article>

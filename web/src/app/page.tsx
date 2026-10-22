@@ -12,18 +12,24 @@ import LandingArticleSearch from "@/components/LandingArticleSearch";
 import type { BlogPost } from "@/components/BlogBody";
 import { getPost, listPosts } from "@/lib/articles";
 import { featuredFirst } from "@/lib/featured";
-import { pictures } from "@/lib/blogSeo";
+import { commonsSizes, commonsFile, pictures } from "@/lib/blogSeo";
 import { AUTHORS, CONTACT_PATH, DOCS_URL, DOWNLOAD_URL, GITHUB_URL, METHODS_URL, SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
 
 // The newest articles are fetched again at most every five minutes, and at once when one is published (tag "blog")
 export const revalidate = 60;
 
-async function latestArticles(): Promise<{ posts: BlogPost[]; photo: { src: string; alt: string; credit: string | null } | null }> {
-  const { posts } = await listPosts();
+type Photo = { src: string; alt: string; credit: string | null; width?: number; height?: number };
+
+async function latestArticles(): Promise<{ posts: BlogPost[]; photo: Photo | null }> {
+  // Only the four articles the page shows (ArticleTeasers), in its order: the page's data carries no others
+  const posts = featuredFirst((await listPosts()).posts).slice(0, 4);
   if (!posts.length) return { posts, photo: null };
-  // The photo of the article shown large: the article of the week, or the latest
-  const body = (await getPost(featuredFirst(posts)[0].slug))?.body ?? "";
-  return { posts, photo: pictures(body).find(p => /wikimedia\.org/.test(p.src)) ?? null };
+  // The photo of the article shown large: the article of the week, or the latest, with its size when Commons gives it
+  const body = (await getPost(posts[0].slug))?.body ?? "";
+  const photo = pictures(body).find(p => /wikimedia\.org/.test(p.src));
+  if (!photo) return { posts, photo: null };
+  const size = (await commonsSizes([photo.src]))[commonsFile(photo.src) ?? ""];
+  return { posts, photo: size ? { ...photo, width: size[0], height: size[1] } : photo };
 }
 
 export const metadata: Metadata = {
@@ -109,15 +115,15 @@ const APP_VIEWS = [
 // 3D scans from our own studies: Sö 113, scanned by Laila Kitzler Åhfeldt (CC BY 4.0), measured in Vitki
 const SCANS = [
   {
-    src: "/bilder/skanning-so113-strykljus.webp", title: "Släpljus från fyra håll",
+    src: "/bilder/skanning-so113-strykljus.webp", width: 1200, height: 722, title: "Släpljus från fyra håll",
     text: "Så som runologer granskar en sten i fält – men i datorn, utan att vänta på rätt ljus.",
   },
   {
-    src: "/bilder/skanning-so113-vinklar.webp", title: "Mätpunkterna",
+    src: "/bilder/skanning-so113-vinklar.webp", width: 1200, height: 648, title: "Mätpunkterna",
     text: "Vitki lägger tvärsnitt genom spåren och mäter vinkel, djup och bredd. Färgen visar huggspårets vinkel i varje snitt.",
   },
   {
-    src: "/bilder/skanning-so113-profiler.webp", title: "254 tvärsnitt",
+    src: "/bilder/skanning-so113-profiler.webp", width: 913, height: 406, title: "254 tvärsnitt",
     text: "Tvärsnitten genom runorna lagda på varandra. Den röda linjen är den typiska profilen – ristarens handlag i millimeter, som kan jämföras mellan stenar.",
   },
 ];
@@ -379,7 +385,7 @@ export default async function LandingPage() {
       {/* Navigation */}
       <header className="sticky top-0 z-50 bg-[#f6f4f1]/85 backdrop-blur-md border-b border-slate-900/5">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5">
+          <Link href="/" prefetch={false} className="flex items-center gap-2.5">
             <img src="/vitki_logo.png" alt="" className="w-9 h-9" />
             <span className="text-xl font-bold tracking-tight">Vitki</span>
           </Link>
@@ -391,7 +397,7 @@ export default async function LandingPage() {
             <a href="#landskap" className="hover:text-slate-900">Nya källor</a>
             <a href="#kallor" className="hover:text-slate-900">Källor</a>
             <a href="#oppen" className="hover:text-slate-900">Öppen källkod</a>
-            <Link href={CONTACT_PATH} className="hover:text-slate-900">Kontakt</Link>
+            <Link href={CONTACT_PATH} prefetch={false} className="hover:text-slate-900">Kontakt</Link>
           </nav>
           <div className="flex items-center gap-3">
             <LanguageToggle className="px-2.5 py-1 rounded-full border border-slate-300 text-[11px] font-bold tracking-wider text-slate-600 hover:border-slate-900 hover:text-slate-900" />
@@ -561,7 +567,7 @@ andel <- tapply(stenar$bon,
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-14">
             {APP_VIEWS.map(v => (
               <figure key={v.src}>
-                <ZoomImage src={v.src} alt={`Skärmbild från Vitki: ${v.title.toLowerCase()}`} width={1600} height={1000} className="w-full h-auto"
+                <ZoomImage src={v.src} alt={`Skärmbild från Vitki: ${v.title.toLowerCase()}`} width={1600} height={965} className="w-full h-auto"
                   frameClassName="rounded-2xl overflow-hidden border border-slate-900/10 shadow-lg shadow-slate-900/5 hover:shadow-xl transition-shadow bg-[#eef0f3]" />
                 <figcaption className="mt-4">
                   <h3 className="text-lg font-bold">{v.title}</h3>
@@ -596,7 +602,7 @@ andel <- tapply(stenar$bon,
             <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
               {SCANS.map(sc => (
                 <figure key={sc.src}>
-                  <ZoomImage src={sc.src} alt={`Sö 113: ${sc.title.toLowerCase()}`} className="w-full h-auto"
+                  <ZoomImage src={sc.src} alt={`Sö 113: ${sc.title.toLowerCase()}`} width={sc.width} height={sc.height} className="w-full h-auto"
                     frameClassName="rounded-xl overflow-hidden border border-slate-900/10 bg-white" />
                   <figcaption className="mt-3">
                     <h4 className="font-bold">{sc.title}</h4>

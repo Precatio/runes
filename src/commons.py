@@ -265,3 +265,78 @@ def stone_photos(signa: list[str], per_stone: int = 6) -> list[dict]:
 def signa_in(text: str) -> list[str]:
     """De signum som nämns i en text, i den ordning de först förekommer."""
     return list(dict.fromkeys(m.group(0) for m in SIGNUM.finditer(text or "")))
+
+
+# ---- lighter photos on the public website ---------------------------------------------------------------------------
+# The articles link Commons photos either as full originals or as 1280px thumbnails, which weigh up to several MB. The
+# public website gets Commons' own 960px thumbnail instead (a standard width, about 2× the article column) when the
+# original is wider than that; a narrower or light original stays as it is, since Commons' thumbnail of it is often
+# heavier. The widths come from the Commons API, cached in data/cache/commons_sizes.json (a file's size changes only
+# with a new upload). When Commons cannot be reached the address stays as it is: the export never fails on this.
+SIZES = os.path.join(ROOT, "data", "cache", "commons_sizes.json")
+SIZES_TTL = 90 * 24 * 3600
+SITE_WIDTH = 960
+LIGHT = 150_000  # bytes: an original this light is kept even when it is wide
+_ORIGINAL = re.compile(r"^https://upload\.wikimedia\.org/wikipedia/commons/([0-9a-f]/[0-9a-f]{2})/([^/?#]+\.(?:jpe?g|png|webp))$", re.I)
+_THUMB = re.compile(r"^(https://(?:upload|thumb)\.wikimedia\.org/wikipedia/commons/thumb/[0-9a-f]/[0-9a-f]{2}/([^/?#]+))/(\d+)px-\2$")
+
+
+def original_sizes(files: list[str], timeout: float = 10) -> dict[str, dict]:
+    """Filnamn (som på Commons, utan File:) → {width, height, size} för originalen; de som inte kunde hämtas saknas."""
+    try:
+        with open(SIZES, encoding="utf-8") as fh:
+            cache = json.load(fh)
+    except (OSError, ValueError):
+        cache = {}
+    now = time.time()
+    out = {f: cache[f] for f in files if f in cache and now - cache[f].get("fetched", 0) < SIZES_TTL}
+    todo = [f for f in dict.fromkeys(files) if f not in out]
+    fetched = False
+    for i in range(0, len(todo), 50):
+        chunk = todo[i:i + 50]
+        try:
+            req = urllib.request.Request(COMMONS + "?" + urllib.parse.urlencode(
+                {"action": "query", "format": "json", "prop": "imageinfo", "iiprop": "size",
+                 "titles": "|".join("File:" + f for f in chunk)}), headers={"User-Agent": UA, "Accept": "application/json"})
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                d = json.load(r)
+        except Exception:  # noqa: BLE001 - Commons unreachable or busy: these addresses stay as they are
+            break
+        norm = {n["to"]: n["from"] for n in d.get("query", {}).get("normalized", [])}
+        for page in d.get("query", {}).get("pages", {}).values():
+            ii = (page.get("imageinfo") or [None])[0]
+            if not ii or not ii.get("width"):
+                continue
+            name = norm.get(page["title"], page["title"]).removeprefix("File:")
+            out[name] = cache[name] = {"width": ii["width"], "height": ii.get("height"), "size": ii.get("size"), "fetched": now}
+            fetched = True
+    if fetched:
+        try:
+            os.makedirs(os.path.dirname(SIZES), exist_ok=True)
+            tmp = SIZES + ".tmp"
+            with open(tmp, "w", encoding="utf-8") as fh:
+                json.dump(cache, fh, ensure_ascii=False)
+            os.replace(tmp, SIZES)
+        except OSError:
+            pass
+    return out
+
+
+def site_photo(url: str, sizes: dict[str, dict], width: int = SITE_WIDTH) -> str:
+    """Samma Commons-bild i den bredd webbplatsen behöver: en tumnagel bredare än width blir width, ett original som är
+    bredare och inte lätt blir width; allt annat (och originalen vars storlek inte är känd) står kvar som det är."""
+    m = _THUMB.match(url)
+    if m:
+        return f"{m.group(1)}/{width}px-{m.group(2)}" if int(m.group(3)) > width else url
+    m = _ORIGINAL.match(url)
+    if m:
+        s = sizes.get(urllib.parse.unquote(m.group(2)))
+        if s and s["width"] > width and (s.get("size") or LIGHT + 1) > LIGHT:
+            return f"https://upload.wikimedia.org/wikipedia/commons/thumb/{m.group(1)}/{m.group(2)}/{width}px-{m.group(2)}"
+    return url
+
+
+def original_name(url: str) -> str | None:
+    """Filnamnet på Commons för ett original (för storleksuppslaget), annars None."""
+    m = _ORIGINAL.match(url)
+    return urllib.parse.unquote(m.group(2)) if m else None

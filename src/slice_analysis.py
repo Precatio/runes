@@ -1,7 +1,5 @@
 import numpy as np
-from scipy.stats import linregress
 import trimesh
-import matplotlib.pyplot as plt
 import os
 
 DEFAULT_WINDOW_MM = 25.0
@@ -169,6 +167,7 @@ def calculate_v_angle(x, z, harmonize_mm: float | None = None):
     x_left, z_left = _wall_band(x_left, z_left, z_bottom, z[left_shoulder])
     x_right, z_right = _wall_band(x_right, z_right, z_bottom, z[right_shoulder])
 
+    from scipy.stats import linregress  # here, not at the top: scipy.stats takes about a second to import
     res_left = linregress(x_left, z_left)
     res_right = linregress(x_right, z_right)
     
@@ -229,6 +228,11 @@ def calculate_v_angle(x, z, harmonize_mm: float | None = None):
 def plot_profile(x, z, analysis_results, output_path):
     # The indices refer to the resampled profile
     x, z = analysis_results.get("x", x), analysis_results.get("z", z)
+    # Only here (the demo below): pyplot takes a third of a second to import and would pick a GUI backend, which is not
+    # safe in the server's threads
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
     plt.figure(figsize=(8, 6))
     plt.plot(x, z, 'k.', label='Uppmätt data')
     

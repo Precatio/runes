@@ -73,3 +73,15 @@ def test_most_read_order_is_by_views_then_date():
              {"slug": "c", "views": 2, "publishedAt": "2026-10-10"}, {"slug": "d", "views": 0, "publishedAt": "2026-10-20"}]
     assert views_order(posts) == ["b", "c", "a", "d"]
 
+
+
+def test_known_bots_are_left_out():
+    import datetime as dt
+    from src.site_stats import known_bot, summarize, views_by_slug
+    person = {"kind": "view", "day": "2026-10-22", "path": "/artiklar/x", "tz": "Europe/Stockholm", "lang": "sv-SE", "entry": True}
+    server = {**person, "tz": "UTC", "lang": "en-US@posix"}
+    unknown = {**person, "tz": "Etc/Unknown", "lang": "en-US"}
+    assert not known_bot(person) and known_bot(server) and known_bot(unknown)
+    assert views_by_slug([person, server, unknown]) == {"x": 1}
+    s = summarize([person, server, unknown], dt.date(2026, 10, 22), 1)
+    assert (s["views"], s["visits"]) == (1, 1)

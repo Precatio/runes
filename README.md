@@ -50,7 +50,6 @@ skriver den bara text eller gör en uttalat okalibrerad bedömning; siffror, tab
 | Webbapp (huvudgränssnitt) | Next.js + React, Firebase (inloggning/projekt) | `web/` |
 | Backend-API | Python, FastAPI, Claude/Gemini | `api/`, `src/` |
 | Statistik | R (sf, tidymodels, ranger, tidytext, FactoMineR, ca, stringdist, igraph, terra, gdistance) | `r/` |
-| Äldre prototyp | Streamlit | `app.py`, `modules/` |
 
 ## Systemkrav & Installation
 
@@ -93,7 +92,10 @@ Kräver Python 3.11+ (utvecklas på 3.13) och Node.js 20+.
 |---|---|---|---|
 | `NEXT_PUBLIC_API_URL` | web | `http://localhost:8000` | Backend-API:ts adress |
 | `PROXY_IMAGE_ALLOWED_HOSTS` | web | – | Extra värdar (kommaseparerade) som bildproxyn får hämta från |
-| `CORS_ORIGINS` | api | `http://localhost:3000` | Tillåtna ursprung (kommaseparerade) |
+| `CORS_ORIGINS` | api | `http://localhost:3000,http://127.0.0.1:3000` | Tillåtna ursprung (kommaseparerade); ändrande anrop från andra ursprung vägras |
+| `ALLOWED_HOSTS` | api | `localhost,127.0.0.1,[::1],testserver` | Värdnamn som analysmotorn svarar på (skydd mot DNS-rebinding) |
+| `R_MAX_PROCS` | api | `2` | Högst så många R-processer samtidigt för sten-, landskaps- och frågeanalyser |
+| `TEXTMODEL_BUNDLES` | api | `2` | Antal delmodeller (omkring 400 MB vardera) som sannolikhetsmodellen håller i minnet |
 | `AI_PROVIDER` | api | `claude` om en Anthropic-nyckel finns, annars `gemini` | Standardmodell när webbläsaren inte anger någon |
 | `CLAUDE_PRO_MODEL` / `CLAUDE_FAST_MODEL` | api | `claude-opus-5-5` / `claude-haiku-4-5-20251001` | Vilka Claude-modeller som används |
 | `GEMINI_PRO_MODEL` / `GEMINI_FLASH_MODEL` | api | `gemini-pro-latest` / `gemini-flash-latest` | Vilka Gemini-modeller som används |
@@ -115,14 +117,23 @@ API-nycklar som anges i webbappens inställningar sparas bara lokalt i webbläsa
 Starta backend och webbapp i var sin terminal:
 ```bash
 # Terminal 1 – backend (från projektroten)
-.venv/bin/uvicorn api.main:app --reload --port 8000
+scripts/dev_api.sh
 
 # Terminal 2 – webbapp
-cd web && npm run dev
+cd web && npm run local
 ```
-Öppna sedan http://localhost:3000.
+Öppna sedan http://127.0.0.1:3000. `npm run local` bygger appen och startar den på 127.0.0.1:3000; under utveckling
+ger `npm run dev` omladdning vid varje ändring i stället.
 
-Den äldre Streamlit-prototypen kan fortfarande startas med `./run_app.sh`.
+`scripts/dev_api.sh` startar `uvicorn api.main:app --reload --port 8000 --reload-dir api --reload-dir src`: servern
+startas om bara när koden i `api/` eller `src/` ändras, inte när artikelskript i `utdata/`, testerna eller cachen
+ändras (varje omstart tömmer minnescacherna och avbryter pågående anrop). Med `watchfiles` installerat
+(requirements.txt) bevakar uvicorn filerna med systemets händelser i stället för att gå igenom alla filer varje
+sekund. Starta inte backend med bara `--reload` från projektroten: då bevakas hela projektet, också `.venv`.
+
+Analysmotorn svarar bara på namnen `localhost`, `127.0.0.1` och `[::1]` (`ALLOWED_HOSTS`, kommaseparerat) och
+vägrar ändrande anrop (POST m.fl.) från sidor vars ursprung inte finns i `CORS_ORIGINS` (standard
+`http://localhost:3000,http://127.0.0.1:3000`), så att en främmande webbsida i webbläsaren inte kan använda den.
 
 ### Delad mätkorpus (Firestore)
 

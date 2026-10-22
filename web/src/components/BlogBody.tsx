@@ -1,6 +1,7 @@
 import { Fragment, type ReactNode } from "react";
 import { API_URL } from "@/lib/api";
 import ZoomImage from "@/components/ZoomImage";
+import { commonsAt, commonsFile, commonsSrcSet, type ImageSizes } from "@/lib/blogSeo";
 import { isPublicPath, PUBLIC_SITE } from "@/lib/site";
 
 // A blog post (GET /api/blog/posts, api/routers/blog.py). The English fields are optional; without them the Swedish
@@ -30,6 +31,9 @@ export interface BlogPost {
   // The article's first photo (Wikimedia Commons), for the thumbnail in the list
   image?: string | null;
   image_alt?: string | null;
+  // Its original's pixel size, when Commons gave it as the page was rendered (lib/blogSeo.ts withImageSizes)
+  image_width?: number | null;
+  image_height?: number | null;
 }
 
 /** The post in the chosen language: the English version when there is one. */
@@ -95,14 +99,15 @@ function inline(text: string): ReactNode[] {
 }
 
 // Pictures only from Wikimedia Commons (the stone photos the editor collects, with their licence), the blog's own copies
-// of the R analyses' figures (served by the analysis engine, /api/blog/figures/) or the site itself
+// of the R analyses' figures (served by the analysis engine, /api/blog/figures/) or the site itself. "/\\host/…" is
+// refused like "//host/…": browsers read the backslash as a slash, which would lead to another site
 const safeSrc = (src: string) => {
   if (/^\/api\/blog\/figures\/[0-9a-f]{16}\.png$/.test(src)) return PUBLIC_SITE ? src.replace("/api/blog/figures/", "/figurer/") : `${API_URL}${src}`;
-  return /^(https:\/\/(upload|thumb)\.wikimedia\.org\/|\/(?!\/|api\/))/.test(src) ? src : null;
+  return /^(https:\/\/(upload|thumb)\.wikimedia\.org\/|\/(?![\/\\]|api\/))/.test(src) && !src.includes("\\") ? src : null;
 };
 
 /** Paragraphs, "## " and "### " headings, "- " lists, "> " quotes and pictures, separated by blank lines. */
-function Blocks({ text, opening = false }: { text: string; opening?: boolean }) {
+function Blocks({ text, opening = false, sizes }: { text: string; opening?: boolean; sizes?: ImageSizes }) {
   const blocks = text.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
   return (
     <>
@@ -120,7 +125,7 @@ function Blocks({ text, opening = false }: { text: string; opening?: boolean }) 
         if (b.startsWith("## ")) return <h2 key={i} className="pt-4 text-2xl font-serif font-bold text-slate-900">{inline(b.slice(3))}</h2>;
         const lines = b.split("\n");
         const pic = /^!\[([^\]]*)\]\(([^)\s]+)\)$/.exec(lines[0]);
-        if (pic) return <Picture key={i} alt={pic[1]} src={pic[2]} caption={lines.slice(1).join(" ")} />;
+        if (pic) return <Picture key={i} alt={pic[1]} src={pic[2]} caption={lines.slice(1).join(" ")} sizes={sizes} />;
         if (lines.every(l => /^[-*] /.test(l))) {
           return <ul key={i} className="list-disc pl-6 space-y-1.5">{lines.map((l, j) => <li key={j}>{inline(l.slice(2))}</li>)}</ul>;
         }
@@ -136,24 +141,34 @@ function Blocks({ text, opening = false }: { text: string; opening?: boolean }) 
   );
 }
 
-/** ![alt](url) with the caption (photographer and licence) on the following lines. */
-function Picture({ alt, src, caption }: { alt: string; src: string; caption: string }) {
+// The picture's box: the text column (max-w-3xl less its padding) and at most 520 px high
+const COLUMN = 720, MAX_HEIGHT = 520, GUTTER = 48;
+
+/** ![alt](url) with the caption (photographer and licence) on the following lines. A Commons photo is shown as a
+ *  thumbnail about as wide as the column, never wider than its original; the original opens when it is enlarged. */
+function Picture({ alt, src, caption, sizes }: { alt: string; src: string; caption: string; sizes?: ImageSizes }) {
   const ok = safeSrc(src);
   if (!ok) return null;
+  const size = sizes?.[commonsFile(ok) ?? ""];
+  const shown = commonsAt(ok, 960, size?.[0]);
+  // How wide the picture is drawn: the column, or less for a tall picture that the height limit narrows
+  const drawn = size ? Math.round(Math.min(COLUMN, (MAX_HEIGHT * size[0]) / size[1])) : 0;
   return (
     <figure className="mt-2 mb-9">
-      <ZoomImage src={ok} alt={alt} className="w-full max-h-[520px] object-contain rounded-xl bg-slate-100" />
+      <ZoomImage src={shown} zoomSrc={ok} alt={alt} width={size?.[0]} height={size?.[1]} srcSet={commonsSrcSet(ok, size?.[0])}
+        sizes={size ? `(min-width: ${drawn + GUTTER}px) ${drawn}px, calc(100vw - ${GUTTER}px)` : undefined}
+        className="w-full max-h-[520px] object-contain rounded-xl bg-slate-100" />
       {caption && <figcaption className="mt-2.5 text-sm leading-snug text-slate-500">{inline(caption)}</figcaption>}
     </figure>
   );
 }
 
 /** ":::box Title" … ":::": a fact box (in short, how sure we are, the hypothesis). */
-function Box({ title, text }: { title: string; text: string }) {
+function Box({ title, text, sizes }: { title: string; text: string; sizes?: ImageSizes }) {
   return (
     <aside className="rounded-xl border border-[#b7410e]/20 bg-[#fbf3ee] px-5 py-4 space-y-3 text-[16px]">
       {title && <p className="text-xs font-bold uppercase tracking-wider text-[#9a350b]">{inline(title)}</p>}
-      <Blocks text={text} />
+      <Blocks text={text} sizes={sizes} />
     </aside>
   );
 }
@@ -211,13 +226,14 @@ function Chart({ title, text }: { title: string; text: string }) {
   );
 }
 
-/** The post body: the blocks of Blocks, with ":::box" and ":::chart" sections. */
-export default function BlogBody({ text }: { text: string }) {
+/** The post body: the blocks of Blocks, with ":::box" and ":::chart" sections. sizes: the Commons photos' sizes
+ *  (lib/blogSeo.ts commonsSizes), when the page knows them. */
+export default function BlogBody({ text, sizes }: { text: string; sizes?: ImageSizes }) {
   const parts: ReactNode[] = [];
   const lines = text.replace(/\r\n/g, "\n").split("\n");
   let buf: string[] = [];
   const flush = () => {
-    if (buf.join("").trim()) parts.push(<Blocks key={parts.length} text={buf.join("\n")} opening={parts.length === 0} />);
+    if (buf.join("").trim()) parts.push(<Blocks key={parts.length} text={buf.join("\n")} opening={parts.length === 0} sizes={sizes} />);
     buf = [];
   };
   for (let i = 0; i < lines.length; i++) {
@@ -228,7 +244,7 @@ export default function BlogBody({ text }: { text: string }) {
     flush();
     const inner = lines.slice(i + 1, end).join("\n");
     parts.push(open[1] === "box"
-      ? <Box key={parts.length} title={open[2]} text={inner} />
+      ? <Box key={parts.length} title={open[2]} text={inner} sizes={sizes} />
       : <Chart key={parts.length} title={open[2]} text={inner} />);
     i = end;
   }

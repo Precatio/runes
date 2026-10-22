@@ -238,13 +238,24 @@ export default function ReportPage() {
       const currentHtml = editorRef.current.innerHTML;
       const compressedHtml = await compressImagesInHtml(currentHtml);
       
-      await db.saveReport({
+      const saved = await db.saveReport({
         id: id.startsWith("rep_") ? id : undefined,
         title: project.metaText || project.name || "Rapport",
         htmlContent: compressedHtml
       });
       
-      alert("Rapporten sparades till ditt konto!");
+      // Tell the user where the report actually ended up
+      if (!saved.cloud && !saved.local) {
+        alert("Kunde inte spara rapporten.");
+        return;
+      }
+      if (saved.cloud) {
+        alert("Rapporten sparades till ditt konto!");
+      } else if (saved.signedIn) {
+        alert("Rapporten kunde inte sparas i ditt konto, bara lokalt i den här webbläsaren.");
+      } else {
+        alert("Rapporten sparades lokalt i den här webbläsaren. Logga in för att spara den i ditt konto.");
+      }
       if (!id.startsWith("rep_")) {
         router.push("/account");
       }

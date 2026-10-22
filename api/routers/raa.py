@@ -106,7 +106,8 @@ def fetch_raa_data(
     }
     
     try:
-        response = requests.get(url, params=params, headers={"Accept": "application/json"})
+        # A stalled connection would hold a server thread indefinitely: give up after 5 s to connect, 30 s to answer
+        response = requests.get(url, params=params, headers={"Accept": "application/json"}, timeout=(5, 30))
         response.raise_for_status()
         data = response.json()
     except HTTPException:

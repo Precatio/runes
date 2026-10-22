@@ -107,3 +107,50 @@ def markdown(url: str, d: dict, lang: str = "sv") -> str:
         return (f"![{d['label_en']}]({url})\n{d['label_en']}. Source: Vitki's corpus analysis in R ({d['script']}); "
                 "Scandinavian Runic-text Data Base (ODbL).")
     return f"![{d['label']}]({url})\n{d['label']}. Källa: Vitkis korpusanalys i R ({d['script']}); Samnordisk runtextdatabas (ODbL)."
+
+
+# ---- the public website's copies --------------------------------------------------------------------------------------
+# The website (src/site_export.py) gets each figure as WebP, at most SITE_WIDTH px wide (about 2× the article column):
+# renders of scans and other photo-like figures lossy (PHOTO_QUALITY), charts, maps and screenshots lossless, so that
+# their text stays sharp. The name is a hash of the frozen figure's name (itself its content hash) and these parameters,
+# so a published copy never changes; changing a parameter gives new names, and the export replaces the old files.
+SITE_WIDTH = 1600
+PHOTO_QUALITY = 86
+SITE_CODEC = f"webp w{SITE_WIDTH} q{PHOTO_QUALITY} lossless-m6"
+
+
+def site_name(name: str) -> str:
+    """The website's file name for a frozen figure (hash.png → hash.webp)."""
+    return hashlib.sha256(f"{name}|{SITE_CODEC}".encode()).hexdigest()[:16] + ".webp"
+
+
+def photo_like(im) -> bool:
+    """A render of a scan or a photo (its pixels spread over many shades) rather than a chart, map or screenshot, where
+    nearly all pixels have one of a few flat colours: under 75 % of the pixels in the 64 most common colours."""
+    from PIL import Image
+    rgb = im.convert("RGB")
+    if rgb.width > 1000:  # nearest neighbour keeps the colours as they are
+        rgb = rgb.resize((1000, max(1, round(rgb.height * 1000 / rgb.width))), Image.NEAREST)
+    colours = sorted(rgb.getcolors(rgb.width * rgb.height) or [], reverse=True)
+    return sum(n for n, _ in colours[:64]) < 0.75 * rgb.width * rgb.height
+
+
+def to_site(src: str, dst: str) -> dict:
+    """Writes the website's WebP copy of a figure (atomically); returns how it was encoded."""
+    from PIL import Image
+    with Image.open(src) as im:
+        im.load()
+        photo = photo_like(im)
+        if im.mode in ("RGBA", "LA", "PA") or "transparency" in im.info:
+            im = im.convert("RGBA")
+            if im.getchannel("A").getextrema() == (255, 255):  # R saves opaque figures with an alpha channel
+                im = im.convert("RGB")
+        elif im.mode not in ("RGB", "L"):
+            im = im.convert("RGB")
+        if im.width > SITE_WIDTH:
+            im = im.resize((SITE_WIDTH, max(1, round(im.height * SITE_WIDTH / im.width))), Image.LANCZOS)
+        opts = {"quality": PHOTO_QUALITY, "method": 6} if photo else {"lossless": True, "quality": 100, "method": 6}
+        tmp = dst + ".tmp"
+        im.save(tmp, "WEBP", **opts)
+        os.replace(tmp, dst)
+        return {"photo": photo, "size": im.size}

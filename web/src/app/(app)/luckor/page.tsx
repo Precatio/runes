@@ -226,7 +226,8 @@ function StoneLinks({ signum, stacked }: { signum: string; stacked?: boolean }) 
 }
 
 export default function GapsPage() {
-  const { user } = useAuth();
+  // Wait until Firebase has restored the session, so the heavy requests run once with the settled user's corpus
+  const { user, loading: authLoading } = useAuth();
   const [data, setData] = useState<Gaps | null>(null);
   const [found, setFound] = useState<Findings | null>(null);
   const [textGaps, setTextGaps] = useState<TextGaps | null>(null);
@@ -239,6 +240,7 @@ export default function GapsPage() {
   const [reload, setReload] = useState(0);
 
   useEffect(() => {
+    if (authLoading) return;
     let cancelled = false;
     (async () => {
       let entries: Awaited<ReturnType<typeof corpus.list>> = [];
@@ -264,7 +266,7 @@ export default function GapsPage() {
       }
     })();
     return () => { cancelled = true; };
-  }, [user, reload]);
+  }, [user, authLoading, reload]);
 
   if (error) return <div className="max-w-3xl mx-auto p-8 text-red-700 font-semibold">{error}</div>;
   if (!data || !found) return <div className="max-w-3xl mx-auto p-8 text-slate-500">Beräknar översikten …</div>;

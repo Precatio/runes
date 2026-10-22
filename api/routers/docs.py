@@ -106,9 +106,20 @@ def _r_header(path: str) -> str:
     return " ".join(x for x in lines if x)
 
 
+_CODE_PATTERNS = ("src/*.py", "scripts/*.py", "r/*.R")
+
+
 @router.get("/code")
 def code():
     """Analysmoduler, skript och R-moduler med sina egna beskrivningar (docstrings och sidhuvuden)."""
+    # Parsed once per version of the files (names and modification times), not on every visit
+    stamp = tuple(sorted((path, os.path.getmtime(path)) for pattern in _CODE_PATTERNS
+                         for path in glob.glob(os.path.join(ROOT, pattern))))
+    return _code(stamp)
+
+
+@lru_cache(maxsize=2)
+def _code(_stamp: tuple) -> dict:
     def entries(pattern, describe, skip=()):
         out = []
         for path in sorted(glob.glob(os.path.join(ROOT, pattern))):

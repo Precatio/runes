@@ -11,9 +11,10 @@ import json
 import math
 import os
 import re
+import tempfile
 import threading
 import zlib
-from collections import Counter
+from collections import Counter, OrderedDict
 from datetime import datetime, timezone
 
 from src import runlm as rl
@@ -55,9 +56,16 @@ VALIDATION = {"inside_word": 0.764, "whole_word": 0.592, "sure_right": 0.954, "r
               "with_traces": 0.842, "with_misread_traces": 0.769, "dating_epoch": 0.585, "dating_near": 0.948,
               "documented_right": 0.698, "documented_sure": 0.987}
 
-_lock = threading.Lock()
+_lock = threading.Lock()  # guards the dictionaries below; held only to look up or store, never while a model is built
+_build_lock = threading.Lock()  # one model built at a time (about 30 s and 400 MB each)
+_data_lock = threading.Lock()
 _compute = threading.Lock()  # one reading at a time: the models' caches are shared
-_bundles: dict = {}
+# The fold models kept in memory, least recently used first: about 400 MB each, so only the latest TEXTMODEL_BUNDLES
+# (a model that has to be built again gives the same readings, only 30 s later). All K by default, so a script that
+# walks the stones in signum order (folds in effectively random order) builds each model once; the API sets 2
+# (api/main.py), since a reader opens a few stones at a time.
+MAX_BUNDLES = max(1, int(os.environ.get("TEXTMODEL_BUNDLES", str(K))))
+_bundles: "OrderedDict[int, dict]" = OrderedDict()
 _loo: dict = {}
 _data: dict = {}
 
@@ -67,6 +75,13 @@ def fold_of(signum: str) -> int:
 
 
 def _records() -> dict:
+    if "sites" in _data:  # the last entry _load_records sets: the records are complete
+        return _data
+    with _data_lock:
+        return _load_records()
+
+
+def _load_records() -> dict:
     if "by" not in _data:
         recs = rl.load_rundata()
         cal = os.environ.get("RUNLM_CALIBRATION") or os.path.join(rl.ROOT, "data", "runlm_calibration.json")
@@ -90,20 +105,43 @@ def _records() -> dict:
 
 def bundle(k: int) -> dict:
     """The model, glossaries and Old Norse forms learned from every inscription outside part k."""
-    with _lock:
-        if k not in _bundles:
-            _bundles[k] = _build(lambda r: fold_of(r["signum"]) != k)
-        return _bundles[k]
+    def cached():
+        with _lock:
+            b = _bundles.get(k)
+            if b is not None:
+                _bundles.move_to_end(k)
+            return b
+    b = cached()
+    if b is not None:  # a reading whose model is built does not wait for another fold's being built
+        return b
+    with _build_lock:
+        b = cached()  # built by the request this one waited for
+        if b is None:
+            b = _build(lambda r: fold_of(r["signum"]) != k)
+            with _lock:
+                _bundles[k] = b
+                while len(_bundles) > MAX_BUNDLES:
+                    _bundles.popitem(last=False)
+        return b
 
 
 def bundle_loo(signum: str) -> dict:
     """The same, learned from every inscription but this one (leave one out): for reading a single stone, the model also
     sees the stones in its own part, such as a sister stone (Sö 208 for Sö 206). About 20 s to build; the latest is kept."""
     with _lock:
-        if signum not in _loo:
-            _loo.clear()
-            _loo[signum] = _build(lambda r: r["signum"] != signum)
-        return _loo[signum]
+        b = _loo.get(signum)
+    if b is not None:
+        return b
+    with _build_lock:
+        with _lock:
+            b = _loo.get(signum)
+        if b is None:
+            with _lock:
+                _loo.clear()  # the old one goes before the new one is built, as before
+            b = _build(lambda r: r["signum"] != signum)
+            with _lock:
+                _loo[signum] = b
+        return b
 
 
 def _build(keep) -> dict:
@@ -237,7 +275,7 @@ def alternative_reading(translit: str) -> str | None:
 
 def _parts(groups, breaks):
     """The text without its open gaps: pieces of the groups and where the reading may break at no cost."""
-    parts, sg, at = [], [], []
+    parts, sg = [], []
     for idx, grp in enumerate(groups):
         pieces = [p for p in grp.split("?") if p]
         for q, p in enumerate(pieces):
@@ -279,10 +317,11 @@ def analyze(signum: str, allowed: dict | None = None, loo: bool = False) -> dict
         out = _read(r, groups, breaks, b, allowed, base, d)
     if not allowed:
         os.makedirs(os.path.dirname(path), exist_ok=True)
-        tmp = path + ".tmp"
-        with open(tmp, "w", encoding="utf-8") as fh:
+        # a temporary file of its own: two readings of the same stone at once must not share one
+        with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=os.path.dirname(path), suffix=".tmp",
+                                         delete=False) as fh:
             json.dump(out, fh, ensure_ascii=False)
-        os.replace(tmp, path)
+        os.replace(fh.name, path)
     return out
 
 

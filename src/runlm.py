@@ -1924,7 +1924,7 @@ def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, a
         if choice in seen:
             return seen[choice]
         gs = fill(groups, choice)
-        parts, sg, offs = [], [], []
+        parts, sg = [], []
         for idx, grp in enumerate(gs):
             pieces = [p_ for p_ in grp.split("?") if p_]
             for q, p_ in enumerate(pieces):

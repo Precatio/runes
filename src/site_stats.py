@@ -61,6 +61,13 @@ def _top(counter: Counter, n: int = TOP) -> list[dict]:
     return [{"key": k, "n": v} for k, v in counter.most_common(n)]
 
 
+# Rows that certainly come from a robot. The tracker (web/src/lib/track.ts) has left robots out since 2026-10-22 by
+# their user agent; the rows written before that carry no user agent, so only the two settings no person's browser
+# has are used here: a time zone the browser cannot name, and a POSIX locale such as en-US@posix (server browsers).
+def known_bot(r: dict) -> bool:
+    return (r.get("tz") or "") == "Etc/Unknown" or "@" in (r.get("lang") or "")
+
+
 def summarize(rows: list[dict], since: dt.date, days: int, titles: dict[str, str] | None = None,
               day: str | None = None) -> dict:
     """Sammanfattar raderna från och med `since` (`days` dagar): totaler, per dag, sidor, avsnitt på startsidan,
@@ -68,6 +75,7 @@ def summarize(rows: list[dict], since: dt.date, days: int, titles: dict[str, str
     räknas allt utom stapeldiagrammet per dag bara på den dagens rader – så att ett klick på en stapel i Admin visar
     vilka sidor, länder och sökord dagen bestod av."""
     titles = titles or {}
+    rows = [r for r in rows if not known_bot(r)]
     per_day = {(since + dt.timedelta(days=i)).isoformat(): {"views": 0, "visits": 0} for i in range(days)}
     for r in rows:
         d = per_day.get(r.get("day") or "") if r.get("kind") == "view" else None
@@ -134,7 +142,7 @@ def views_by_slug(rows: list[dict]) -> dict[str, int]:
     webbplatsen. Bara rader av slaget view; andra sidor räknas inte."""
     out: Counter = Counter()
     for r in rows:
-        if r.get("kind") != "view":
+        if r.get("kind") != "view" or known_bot(r):
             continue
         m = ARTICLE_PATH.match(r.get("path") or "")
         if m:

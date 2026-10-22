@@ -84,7 +84,7 @@ def test_compare_counts_and_time_held_constant():
 
 def test_wilson_interval():
     lo, hi = nd.wilson(5, 10)
-    assert 0.2 < lo < 0.5 < hi < 0.8 and nd.wilson(0, 0) == (0.0, 0.0)
+    assert 0.2 < lo < 0.5 < hi < 0.8 and nd.wilson(0, 0) == (0.0, 1.0)
 
 
 def test_realm_definitions_name_only_known_blocks():

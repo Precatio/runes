@@ -8,7 +8,7 @@ import { useAuth } from "@/components/AuthContext";
 
 export default function DashboardPage() {
   const [projects, setProjects] = useState<ProjectData[]>([]);
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
 
   const loadProjects = async () => {
     const data = await db.getProjects();
@@ -16,9 +16,11 @@ export default function DashboardPage() {
   };
 
   useEffect(() => {
+    // Load once the session is restored, not first with no user and again when it arrives
+    if (authLoading) return;
     // eslint-disable-next-line react-hooks/set-state-in-effect
     loadProjects();
-  }, [user]);
+  }, [user, authLoading]);
 
   return (
     <>

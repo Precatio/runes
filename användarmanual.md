@@ -16,15 +16,17 @@ För att starta gränssnittet på din egen dator, öppna en terminal i mappen `a
 
 **Starta Python Backend (API):**
 ```bash
-uvicorn api.main:app --reload
+scripts/dev_api.sh
 ```
+Skriptet startar `uvicorn api.main:app --reload --port 8000 --reload-dir api --reload-dir src`, så att servern bara
+startas om när programkoden ändras – inte när du redigerar artiklar, data eller tester.
 
 **Starta Web UI (Next.js):**
 ```bash
 cd web
-npm run dev
+npm run local
 ```
-Applikationen kommer då att öppnas automatiskt i din webbläsare på `http://localhost:3000`.
+Kommandot bygger appen och startar den. Öppna sedan `http://127.0.0.1:3000` i webbläsaren.
 
 ---
 

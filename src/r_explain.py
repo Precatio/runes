@@ -395,7 +395,7 @@ def overview(res: dict) -> dict:
     """Helhetsbilden: vad analyserna tillsammans säger, i löpande text, och vad som är rimliga nästa steg."""
     g, a, an = res.get("geography") or {}, res.get("attribution") or {}, res.get("anonymous") or {}
     ch, c, cl = res.get("chronology") or {}, res.get("change") or {}, res.get("clusters") or {}
-    dl, t = res.get("dialect") or {}, res.get("text") or {}
+    dl = res.get("dialect") or {}
     paras, steps = [], []
 
     ab = {x["features"]: x for x in a.get("ablation") or []}

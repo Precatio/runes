@@ -275,6 +275,10 @@ def _safe(signum: str) -> str:
 
 def scan_ref(signum: str) -> str | None:
     p = os.path.join(REFS, signum.replace(" ", "_") + ".json")
+    # The signum comes from a URL: only a file inside REFS counts (not "../../x" anywhere on disk)
+    refs = os.path.realpath(REFS)
+    if os.path.commonpath([os.path.realpath(p), refs]) != refs:
+        return None
     return p if os.path.exists(p) else None
 
 

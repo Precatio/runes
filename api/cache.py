@@ -8,10 +8,12 @@ alltså alltid en kontroll mot servern, aldrig ett gammalt svar).
 """
 from __future__ import annotations
 
+import functools
 import gzip
 import hashlib
 import json
 import os
+import tempfile
 import threading
 from typing import Callable
 
@@ -73,6 +75,40 @@ def clear() -> None:
     with _lock:
         _entries.clear()
         _gzipped.clear()
+
+
+def write_json(path: str, obj) -> None:
+    """Writes JSON atomically through a temporary file of its own: two writers of the same file (the warm-up thread and
+    a request) never share a '<path>.tmp' that the other has already moved away."""
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=os.path.dirname(path), suffix=".tmp",
+                                     delete=False) as fh:
+        tmp = fh.name
+        try:
+            json.dump(obj, fh, ensure_ascii=False)
+        except BaseException:
+            fh.close()
+            os.unlink(tmp)
+            raise
+    os.replace(tmp, path)
+
+
+def single_flight(fn: Callable) -> Callable:
+    """Lets one call per argument tuple run at a time, so that two callers of a slow cached builder (lru_cache does not
+    stop two simultaneous misses) wait for the first one instead of computing the same thing twice. Put it above
+    @lru_cache: the second caller then finds the finished answer in the cache."""
+    locks: dict[tuple, threading.RLock] = {}
+    guard = threading.Lock()
+
+    @functools.wraps(fn)
+    def wrapper(*args):
+        with guard:
+            lock = locks.setdefault(args, threading.RLock())
+        with lock:
+            return fn(*args)
+    if hasattr(fn, "cache_clear"):
+        wrapper.cache_clear = fn.cache_clear
+    return wrapper
 
 
 def dir_version(path: str) -> str:

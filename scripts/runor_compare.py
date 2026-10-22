@@ -26,7 +26,7 @@ DAMAGE = re.compile(r"skad|omhugg|sprä?ng|avslag|avslog|slagits|lagad|lagats|s�
 SEP = re.compile(r"[\s·:'×÷+|¶⁓;,.!?\"]|§[A-Z]|\{|\}|\$|=")
 
 
-from src.runor import first_reading as _first_reading, runes  # noqa: E402  (samma jämförelse som appen visar)
+from src.runor import runes  # noqa: E402  (samma jämförelse som appen visar)
 
 
 def lost_count(reading: str) -> int:

@@ -20,6 +20,10 @@ class MeshEntry:
         self._lock = threading.Lock()
         self._vertex_tree = None
         self._face_tree = None
+        # The last view model (api/routers/threed.view_model): (target face count, binary STL, its face count), and a
+        # lock so that two requests for it decimate once
+        self.view = None
+        self.view_lock = threading.Lock()
 
     @property
     def vertex_tree(self) -> cKDTree:

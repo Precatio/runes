@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { API_URL } from "@/lib/api";
+import { PUBLIC_SITE } from "@/lib/site";
 
 // What is loading: each request to the analysis engine (bytes received of the expected size, 0 when the size is not
 // known) and a page change that has not finished
@@ -26,9 +27,15 @@ function finish(id: number) {
   if (loads.delete(id)) emit();
 }
 
+// Below this size a body arrives at once after its headers, so following its bytes would add work and show nothing
+const FOLLOW_BYTES = 64 * 1024;
+// A followed body that nobody reads for this long (the page only looked at the status) no longer holds the bar
+const IDLE_MS = 10000;
+
 /** Counts the requests to the analysis engine, and their bytes when the server gives the size (Content-Length). */
 function patchFetch() {
-  if (patched || typeof window === "undefined") return;
+  // The public website makes no requests to the analysis engine
+  if (patched || typeof window === "undefined" || PUBLIC_SITE) return;
   patched = true;
   const original = window.fetch.bind(window);
   window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
@@ -46,26 +53,41 @@ function patchFetch() {
     // without it a compressed body's size is unknown
     const total = Number(res.headers.get("x-content-length"))
       || (res.headers.get("content-encoding") ? 0 : Number(res.headers.get("content-length")) || 0);
-    if (!res.body) { finish(id); return res; }
+    // Unknown or small sizes: the load ends with the headers, and the body is left alone
+    if (!res.body || total < FOLLOW_BYTES) { finish(id); return res; }
     const load = loads.get(id);
     if (load) load.total = total;
-    // Read a copy of the body to follow the download; the page reads the original as before
-    const reader = res.clone().body!.getReader();
-    (async () => {
-      try {
-        for (;;) {
-          const { done, value } = await reader.read();
-          if (done) break;
+    // Follow the download as the page reads the body: a pass-through stream, not a copy, so the body is held only once
+    const reader = res.body.getReader();
+    let idle = window.setTimeout(() => finish(id), IDLE_MS);
+    const done = () => { window.clearTimeout(idle); finish(id); };
+    const body = new ReadableStream<Uint8Array>({
+      async pull(controller) {
+        window.clearTimeout(idle);
+        try {
+          const { done: end, value } = await reader.read();
+          if (end) { done(); controller.close(); return; }
           const l = loads.get(id);
           if (l && value) { l.got += value.length; emit(); }
+          idle = window.setTimeout(() => finish(id), IDLE_MS);
+          controller.enqueue(value);
+        } catch (e) {
+          // aborted or failed: the page handles the error
+          done();
+          controller.error(e);
         }
-      } catch {
-        // aborted or failed: the page handles the error
-      } finally {
-        finish(id);
-      }
-    })();
-    return res;
+      },
+      cancel(reason) {
+        done();
+        return reader.cancel(reason);
+      },
+    });
+    const followed = new Response(body, { status: res.status, statusText: res.statusText, headers: res.headers });
+    // Keep what a constructed Response cannot carry over
+    Object.defineProperty(followed, "url", { value: res.url });
+    Object.defineProperty(followed, "redirected", { value: res.redirected });
+    Object.defineProperty(followed, "type", { value: res.type });
+    return followed;
   };
 }
 

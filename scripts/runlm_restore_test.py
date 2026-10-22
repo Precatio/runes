@@ -11,7 +11,7 @@ import random
 import re
 import sys
 import time
-from collections import Counter, defaultdict
+from collections import Counter
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.runlm import (by_object, print_by_object, stone_divider_rate, Model, carved_groups, context, decode, edda_tokens, is_runes, key, load_rundata, norm_words,  # noqa: E402

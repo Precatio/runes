@@ -5,7 +5,7 @@
 // original, and switching back to Swedish restores the originals. Elements marked translate="no" (inscriptions,
 // user content, chat answers already in English) are left alone.
 
-import { type Catalog, translate } from "./core";
+import { type Catalog, type Lookup, translate as translateUncached } from "./core";
 
 const ATTRS = ["title", "placeholder", "aria-label", "alt"];
 const SKIP = new Set(["SCRIPT", "STYLE", "NOSCRIPT", "TEXTAREA", "CODE", "PRE", "INPUT"]);
@@ -16,6 +16,21 @@ const originalAttr = new WeakMap<Element, Record<string, string>>();
 const writtenAttr = new WeakMap<Element, Record<string, string>>();
 
 let catalog: Catalog | null = null;
+// A text's translation depends only on the text and on the catalog, names and terms, which are fixed while the
+// translator runs, so each distinct text is translated once: React re-renders and long tables repeat the same strings.
+// Emptied by start() and stop(), and when it grows past MEMO_MAX texts. A hit returns the same missing list, which
+// miss() records only once anyway.
+const memo = new Map<string, Lookup>();
+const MEMO_MAX = 50_000;
+function translate(text: string, cat: Catalog): Lookup {
+  let hit = memo.get(text);
+  if (!hit) {
+    hit = translateUncached(text, cat);
+    if (memo.size >= MEMO_MAX) memo.clear();
+    memo.set(text, hit);
+  }
+  return hit;
+}
 let observer: MutationObserver | null = null;
 const touched = new Set<Text>();
 const touchedAttr = new Set<Element>();
@@ -132,6 +147,7 @@ function onMutations(list: MutationRecord[]) {
 
 /** Translates the page now and everything React renders from here on. */
 export function start(cat: Catalog) {
+  memo.clear();
   catalog = cat;
   walk(document.body);
   if (document.title) document.title = translate(document.title, cat).text;
@@ -146,6 +162,7 @@ export function stop() {
   observer?.disconnect();
   observer = null;
   catalog = null;
+  memo.clear();
   touched.forEach(t => { if (t.isConnected && written.get(t) === t.nodeValue) t.nodeValue = original.get(t) ?? t.nodeValue; });
   touchedAttr.forEach(el => {
     const mine = writtenAttr.get(el) ?? {}, orig = originalAttr.get(el) ?? {};

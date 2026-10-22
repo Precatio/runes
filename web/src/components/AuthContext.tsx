@@ -22,6 +22,21 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// The Google access token (drive.file scope, for the Drive export) lives only for this tab's session, not in
+// localStorage where it would outlive the visit; without it the export asks the user to sign in with Google again
+const GOOGLE_TOKEN_KEY = 'google_oauth_token';
+const readGoogleToken = (): string | null => {
+  try { return sessionStorage.getItem(GOOGLE_TOKEN_KEY); } catch { return null; }
+};
+const storeGoogleToken = (token: string | null) => {
+  try {
+    if (token) sessionStorage.setItem(GOOGLE_TOKEN_KEY, token);
+    else sessionStorage.removeItem(GOOGLE_TOKEN_KEY);
+  } catch { /* storage blocked: the token stays in memory only */ }
+  // Earlier versions kept the token in localStorage; never leave a copy there
+  try { localStorage.removeItem(GOOGLE_TOKEN_KEY); } catch { /* ignore */ }
+};
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   // The public website (only the start page and the articles) has no sign-in, so Firebase is not loaded there
@@ -54,13 +69,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             })
             .catch(() => {});
         }
-        // Attempt to load token from localStorage if user is logged in
+        // Restore this session's Google token if the user is signed in
         if (currentUser) {
-          const savedToken = localStorage.getItem('google_oauth_token');
+          const savedToken = readGoogleToken();
           if (savedToken) setGoogleToken(savedToken);
+          try { localStorage.removeItem(GOOGLE_TOKEN_KEY); } catch { /* ignore */ }
         } else {
           setGoogleToken(null);
-          localStorage.removeItem('google_oauth_token');
+          storeGoogleToken(null);
         }
       });
     }).catch(() => { if (!cancelled) setLoading(false); });
@@ -76,7 +92,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       if (credential?.accessToken) {
         setGoogleToken(credential.accessToken);
-        localStorage.setItem('google_oauth_token', credential.accessToken);
+        storeGoogleToken(credential.accessToken);
       }
     } catch (error) {
       if ((error as { code?: string })?.code === "auth/user-disabled") {
@@ -99,7 +115,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const { auth, lib: { signOut } } = await firebaseAuth();
       await signOut(auth);
       setGoogleToken(null);
-      localStorage.removeItem('google_oauth_token');
+      storeGoogleToken(null);
     } catch (error) {
       console.error("Failed to logout:", error);
     }

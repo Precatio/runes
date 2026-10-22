@@ -67,6 +67,8 @@ export default function OverviewPage() {
 
 // Kept for the rest of the visit, so that returning to the page is instant (the server also caches it on disk)
 let overviewMemo: OverviewData | null = null;
+// The request in flight, shared by concurrent mounts (e.g. StrictMode's second mount) so it is sent only once
+let overviewLoading: Promise<OverviewData> | null = null;
 const profileMemo = new Map<string, Profile>();
 
 function Overview() {
@@ -82,9 +84,15 @@ function Overview() {
 
   useEffect(() => {
     if (overviewMemo) return;
-    fetch(`${API_URL}/api/research/overview`).then(r => (r.ok ? r.json() : Promise.reject(new Error(`Fel ${r.status}`))))
-      .then((d: OverviewData) => { overviewMemo = d; setData(d); })
-      .catch(e => setError(e instanceof Error ? e.message : "Kunde inte hämta översikten."));
+    let cancelled = false;
+    overviewLoading ??= fetch(`${API_URL}/api/research/overview`)
+      .then(r => (r.ok ? r.json() : Promise.reject(new Error(`Fel ${r.status}`))))
+      .then((d: OverviewData) => { overviewMemo = d; return d; })
+      .finally(() => { overviewLoading = null; });
+    overviewLoading
+      .then(d => { if (!cancelled) setData(d); })
+      .catch(e => { if (!cancelled) setError(e instanceof Error ? e.message : "Kunde inte hämta översikten."); });
+    return () => { cancelled = true; };
   }, []);
 
   const provinces = useMemo(() => [...new Set((data?.stones ?? []).map(s => s.province))].sort(), [data]);

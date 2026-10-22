@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SHOW_LOCAL_APP } from "@/lib/site";
 
-// The way into the app from the start page and the articles while it runs on this computer (next dev). The public
+// The way into the app from the start page and the articles while it runs on this computer (next dev or next start). The public
 // website has no app, and there the link is not rendered at all.
 export default function LocalAppLink({ className = "fixed bottom-4 right-4 z-50 inline shadow-lg bg-white" }: { className?: string }) {
   if (!SHOW_LOCAL_APP) return null;

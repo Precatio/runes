@@ -107,7 +107,8 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
   const [imgNote, setImgNote] = useState<string | null>(null);
   const [imgError, setImgError] = useState<string | null>(null);
   // The latest attempt to publish the website (GET /api/admin/site/publish): whether the site got the change
-  const [site, setSite] = useState<{ at?: string; pushed?: boolean; note?: string; unpushed?: boolean | null } | null>(null);
+  // blocked: the export's sanity check stopped the latest attempt (src/site_export.check); pending: a publish is queued
+  const [site, setSite] = useState<{ at?: string; pushed?: boolean; note?: string; unpushed?: boolean | null; blocked?: string; pending?: boolean } | null>(null);
   const [sitePending, setSitePending] = useState(false);
 
   const load = useCallback(() => {
@@ -279,10 +280,11 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
 
   const ready = draft.title.trim() && draft.slug.trim() && (draft.body ?? "").trim();
   // The public website: export the published articles and push them; GitHub builds the site (src/site_export.py)
-  const publishSite = async () => {
+  // force: publish although the sanity check stopped it (a deliberate removal of several articles, say)
+  const publishSite = async (force = false) => {
     setBusy("site"); setError(null); setNote(null);
     try {
-      const d = await call("/api/admin/site/publish", { method: "POST" });
+      const d = await call(`/api/admin/site/publish${force ? "?force=true" : ""}`, { method: "POST" });
       setNote(`${d.note} ${d.articles} artiklar, ${d.figures} figurer.${d.missing_figures?.length ? ` Saknade figurer: ${d.missing_figures.join(", ")}.` : ""}`);
       loadSite();
     } catch (e) {
@@ -621,6 +623,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
           <span className={`block mt-1.5 text-xs font-semibold ${sitePending ? "text-slate-500"
             : site?.pushed === false && !/redan/.test(site?.note ?? "") ? "text-red-700" : site?.unpushed ? "text-amber-700" : "text-emerald-700"}`}>
             {sitePending ? "Webbplatsen uppdateras om en halv minut …"
+              : site?.pending && site?.pushed !== false ? "En ändring väntar på publicering."
               : !site?.at ? (site?.unpushed ? "Det finns ändringar som inte har kommit ut på webbplatsen – klicka Publicera webbplatsen." : "")
               : site.pushed === false && !/redan/.test(site.note ?? "")
                 ? `Senaste försöket ${dateLabel(site.at, "sv", true)} misslyckades: ${site.note} Klicka Publicera webbplatsen för att försöka igen.`
@@ -628,9 +631,16 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
                   : `Senast publicerad ${dateLabel(site.at, "sv", true)}: ${site.note}`}
           </span>
         </p>
-        <button onClick={publishSite} disabled={busy === "site"} className="px-4 py-2 rounded-xl bg-slate-900 text-white text-sm font-bold disabled:opacity-40">
-          {busy === "site" ? "Publicerar …" : "Publicera webbplatsen"}
-        </button>
+        <div className="flex flex-wrap gap-2">
+          {site?.blocked && (
+            <button onClick={() => publishSite(true)} disabled={busy === "site"} className="px-4 py-2 rounded-xl border border-red-700 text-red-700 bg-white text-sm font-bold disabled:opacity-40">
+              Publicera ändå
+            </button>
+          )}
+          <button onClick={() => publishSite()} disabled={busy === "site"} className="px-4 py-2 rounded-xl bg-slate-900 text-white text-sm font-bold disabled:opacity-40">
+            {busy === "site" ? "Publicerar …" : "Publicera webbplatsen"}
+          </button>
+        </div>
       </div>
 
       {posts.length > 0 && (

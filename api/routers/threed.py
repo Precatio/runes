@@ -172,7 +172,10 @@ def measure_slices(entry: MeshEntry, origin, direction, up, slice_count: int, sp
             if noise_rng is not None:
                 z_2d = z_2d + noise_rng.normal(0, 0.1, size=z_2d.shape)
             res = calculate_v_angle(x_2d, z_2d)
-        except Exception:
+        except (ValueError, IndexError, FloatingPointError, np.linalg.LinAlgError) as e:
+            # A slice with too few points or a degenerate fit is skipped; any other error is a bug and is raised
+            from api.errors import logger
+            logger.debug("Snitt %d (%.2f mm) hoppades över: %r", i, offset, e)
             continue
         if not all(np.isfinite(res[k]) for k in (*METRICS, "fit_r2")):
             continue  # too few points for a wall fit
@@ -426,21 +429,25 @@ def view_model(file: UploadFile = File(None), mesh_id: str = Form(None), max_fac
     Modellen är centrerad med originalets mittpunkt, så att koordinater som väljs i den
     stämmer med analysen av originalfilen. Själva mätningarna görs alltid på originalet."""
     entry = resolve_mesh(file, mesh_id)
-    mesh = entry.mesh
     faces = entry.info["faces"]
     target = max(10_000, min(int(max_faces), faces))
-    if faces > target:
-        try:
-            mesh = mesh.simplify_quadric_decimation(face_count=target)
-        except Exception as e:
-            raise server_error(e, "Kunde inte förenkla modellen.", status_code=500)
-    data = mesh.export(file_type="stl")
+    # Decimated and exported once per mesh and size: the page asks again for the same model when it is reopened
+    with entry.view_lock:
+        if entry.view is None or entry.view[0] != target:
+            mesh = entry.mesh
+            if faces > target:
+                try:
+                    mesh = mesh.simplify_quadric_decimation(face_count=target)
+                except Exception as e:
+                    raise server_error(e, "Kunde inte förenkla modellen.", status_code=500)
+            entry.view = (target, mesh.export(file_type="stl"), len(mesh.faces))
+        _, data, view_faces = entry.view
     return Response(
         content=data,
         media_type="model/stl",
         headers={
             "X-Original-Faces": str(faces),
-            "X-View-Faces": str(len(mesh.faces)),
+            "X-View-Faces": str(view_faces),
             "X-Pre-Centered": "1",
             "X-Mesh-Id": str(entry.info.get("mesh_id", "")),
             "Access-Control-Expose-Headers": "X-Original-Faces, X-View-Faces, X-Pre-Centered, X-Mesh-Id",

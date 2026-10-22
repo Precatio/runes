@@ -11,10 +11,10 @@ on:
     paths: ["web/**", "CITATION.cff", ".github/workflows/site.yml"]
   workflow_dispatch:
 
+# Only the deploy job may publish to Pages: the build job runs the dependencies' code (npm ci, next build) and can
+# only read the repository. The actions are pinned to commits (the version in the comment), since a tag can be moved.
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
@@ -23,9 +23,13 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
           cache: npm
@@ -34,7 +38,12 @@ jobs:
         run: npm ci
         working-directory: web
       - name: Bara startsidan och artiklarna
-        run: rm -rf "web/src/app/(app)" web/src/app/api web/src/app/indexnow-key.txt
+        # The app's pages and API, and the app map's realm boundaries (public/geo), which no public page uses
+        run: rm -rf "web/src/app/(app)" web/src/app/api web/src/app/indexnow-key.txt web/public/geo
+      - name: Engelska texter för webbplatsens sidor
+        # Only the catalog entries the public pages can show (src/i18n/public-catalog.mjs), from the current catalog
+        run: npm run i18n:public
+        working-directory: web
       - name: Bygg
         run: npx next build
         working-directory: web
@@ -44,18 +53,25 @@ jobs:
           # The vote on the start page writes to this Firebase project (public; it is also in web/.firebaserc)
           NEXT_PUBLIC_FIREBASE_PROJECT_ID: runes-1656b
           NEXT_TELEMETRY_DISABLED: "1"
+      - name: Engelska sidor på engelska
+        # The English editions of the articles (/en/…) declare English as the page's language; the root layout is shared
+        # with the Swedish pages and says Swedish
+        run: find web/out/en -name '*.html' -exec sed -i 's/<html lang="sv"/<html lang="en"/' {} +
       - name: Utan Jekyll
         run: touch web/out/.nojekyll
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
           path: web/out
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5

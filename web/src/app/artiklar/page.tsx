@@ -4,7 +4,7 @@ import BlogShell from "@/components/BlogShell";
 import ArticleSearch from "@/components/ArticleSearch";
 import ContentVote from "@/components/ContentVote";
 import { listPosts } from "@/lib/articles";
-import { ARTICLES_PATH, BLOG_DESCRIPTION, BLOG_TITLE, blogJsonLd, languageAlternates } from "@/lib/blogSeo";
+import { ARTICLES_PATH, BLOG_DESCRIPTION, BLOG_TITLE, blogJsonLd, languageAlternates, withImageSizes } from "@/lib/blogSeo";
 
 // The articles about the most interesting patterns (written in Admin), rendered on the server
 export const revalidate = 60;
@@ -19,7 +19,9 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogPage() {
-  const { posts, failed } = await listPosts();
+  const list = await listPosts();
+  // With the photos' sizes, so that a card never asks Commons for a thumbnail wider than the original
+  const posts = await withImageSizes(list.posts), failed = list.failed;
   return (
     <BlogShell>
       <section className="max-w-3xl mx-auto px-6 pt-20 pb-24">

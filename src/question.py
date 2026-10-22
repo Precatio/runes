@@ -28,8 +28,8 @@ import re
 from collections import Counter, defaultdict
 
 from src import geology
-from src.nordic import wilson
 from src.research_gaps import PROVINCE_NAMES
+from src.stats import wilson
 from src.stone_size import bh
 
 MIN_GROUP = 10   # stenar på var sida om jämförelsen

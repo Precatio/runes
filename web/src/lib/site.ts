@@ -19,8 +19,9 @@ export const GITHUB_URL = "https://github.com/Precatio/runes";
 export const DOWNLOAD_URL = `${GITHUB_URL}#systemkrav--installation`;
 export const METHODS_URL = `${GITHUB_URL}/blob/main/METHODS.md`;
 export const DOCS_URL = `${GITHUB_URL}#readme`;
-// While the app runs locally (next dev), its own pages are a click away; never on the public website
-export const SHOW_LOCAL_APP = process.env.NODE_ENV === "development" && !PUBLIC_SITE;
+// While the app runs locally (next dev or a production next start), its own pages are a click away; never on the
+// public website, which is always built with NEXT_PUBLIC_SITE_MODE=public (site.yml), so that flag alone separates them
+export const SHOW_LOCAL_APP = !PUBLIC_SITE;
 
 /** The paths that exist on the public website: the start page, the articles and their figures, the news and the contact page. */
 export const isPublicPath = (href: string) => /^\/(?:$|[#?]|artiklar(?:[/?#]|$)|nyheter(?:[/?#]|$)|kontakt(?:[/?#]|$)|api\/blog\/figures\/)/.test(href);

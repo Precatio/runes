@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.stats import METRICS, attribute, compare_stones, material_baseline, reliability, summarize, ward_clustering
+from src.stats import METRICS, attribute, compare_stones, material_baseline, reliability, summarize, ward_clustering, wilson
 
 RNG = np.random.default_rng(1)
 SD = [3, 1, 0.3, 0.5, 0.03, 0.05, 0.01]
@@ -66,3 +66,11 @@ def test_attribution_reports_material_baseline_when_families_given():
         ref += [{"group": g, "label": f"{g}{k}", "values": list(RNG.normal(mu, SD)), "family": fam} for k in range(5)]
     ev = attribute(ref, [71, 3, 2, 6, .33, .2, .05])["evaluation"]
     assert ev["material_top1"] is not None and 0 < ev["material_top1"] < 1
+
+
+def test_wilson_interval():
+    lo, hi = wilson(5, 10)
+    assert 0.2 < lo < 0.5 < hi < 0.8
+    assert wilson(20, 20)[1] == 1.0 and wilson(20, 20)[0] > 0.8
+    # No data: the share is unknown, so the interval is the whole range, not a certain 0 %
+    assert wilson(0, 0) == (0.0, 1.0)

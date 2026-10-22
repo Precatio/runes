@@ -26,12 +26,28 @@ const counted = () => {
   try { return localStorage.getItem(STATS_OFF_KEY) !== "1"; } catch { return true; }
 };
 
-// Counting happens only on the public website, never on a developer's machine, in automated browsers or in a
-// browser the founder has switched off
+// Browsers that say they are robots: search engines' renderers (Googlebot renders pages with JavaScript and would
+// otherwise count as a visitor), link previews, page-speed tools and headless browsers. Same list as KNOWN_BOT_UA
+// in src/site_stats.py, which also leaves the rows written before this check out of Admin.
+const BOT_UA = /bot\b|crawl|spider|slurp|googlebot|google-inspectiontool|adsbot|mediapartners|apis-google|bingbot|bingpreview|yandex|baiduspider|duckduck|applebot|petalbot|bytespider|gptbot|claudebot|perplexity|facebookexternalhit|facebot|linkedinbot|twitterbot|slackbot|discordbot|telegrambot|whatsapp|headlesschrome|lighthouse|pagespeed|gtmetrix|pingdom|prerender|phantomjs/i;
+
+// A server-side browser gives itself away by its settings: a time zone it cannot name or a POSIX locale such as en-US@posix
+export const isBot = () => {
+  try {
+    if (navigator.webdriver || BOT_UA.test(navigator.userAgent || "")) return true;
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+    return tz === "Etc/Unknown" || (navigator.language || "").includes("@");
+  } catch {
+    return false;
+  }
+};
+
+// Counting happens only on the public website, never on a developer's machine, for robots or in a browser the
+// founder has switched off
 export const counting = () => {
   if (!PUBLIC_SITE || !SITE_PROJECT || typeof window === "undefined") return false;
   const host = window.location.hostname;
-  return host !== "localhost" && host !== "127.0.0.1" && !navigator.webdriver && counted();
+  return host !== "localhost" && host !== "127.0.0.1" && !isBot() && counted();
 };
 
 // Pages as the visitor sees them, without the trailing slash of the static export (/artiklar/x/ and /artiklar/x are one)

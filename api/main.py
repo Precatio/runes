@@ -1,7 +1,9 @@
+import logging
 import os
 import shutil
 import tempfile
 import time
+from contextlib import asynccontextmanager
 
 # Temporary files – uploaded 3D files of up to a few GB, R's working files – go to the project's own disk instead of the
 # system disk: data/cache/tmp, or VITKI_TMPDIR. Set before the routers are imported, and passed on to R and other
@@ -11,6 +13,9 @@ TMP = os.environ.get("VITKI_TMPDIR") or os.path.join(ROOT, "data", "cache", "tmp
 os.makedirs(TMP, exist_ok=True)
 os.environ["TMPDIR"] = TMP
 tempfile.tempdir = TMP
+# The text model keeps only the two latest fold models in the API (about 400 MB each; scripts keep all five), set
+# before src.textmodel is imported with the routers
+os.environ.setdefault("TEXTMODEL_BUNDLES", "2")
 
 
 def clean_tmp(max_age_s: float = 86400) -> None:
@@ -26,16 +31,30 @@ def clean_tmp(max_age_s: float = 86400) -> None:
 
 clean_tmp()
 
+
+def _log_to_stderr() -> None:
+    """The app's own messages (publishing to the website, IndexNow, Statistik i R, sign-in) at INFO and above on stderr,
+    timestamped, next to uvicorn's: without a handler only warnings got through, so api.log never showed a publish."""
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(name)s: %(message)s", "%Y-%m-%d %H:%M:%S"))
+    for name in ("runforskning", "vitki"):
+        log = logging.getLogger(name)
+        if not log.handlers:
+            log.addHandler(handler)
+            log.setLevel(logging.INFO)
+            log.propagate = False
+
+
+_log_to_stderr()
+
 from fastapi import FastAPI  # noqa: E402 - after the temporary folder is set
 from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
 from starlette.middleware.gzip import DEFAULT_EXCLUDED_CONTENT_TYPES, GZipMiddleware  # noqa: E402
+from starlette.middleware.trustedhost import TrustedHostMiddleware  # noqa: E402
+from starlette.responses import PlainTextResponse  # noqa: E402
 from api.cache import ContentLengthHeader  # noqa: E402
 from api.routers import admin, blog, chat, threed, twod, raa, synthesis, phonetics, rundata, stats, orthography, research, reports, rstats, limitations, docs, textmodel  # noqa: E402
 
-app = FastAPI(title="Vitki API")
-
-
-@app.on_event("startup")
 def _warm_caches():
     """Värmer de långsamma svaren i bakgrunden när servern startar: R-kontrollen, R-korpusens version,
     stenöversikten och fyndens tolkningsnivåer. Svaren sparas också på disk, så en omstart läser dem i stället för att räkna om."""
@@ -97,14 +116,57 @@ def _warm_caches():
             logger.warning("Webbplatsens schemaläggning: %r", e)
     threading.Thread(target=site, daemon=True).start()
 
-# Configure CORS for Next.js frontend (comma-separated list in CORS_ORIGINS)
-CORS_ORIGINS = [o.strip() for o in os.environ.get("CORS_ORIGINS", "http://localhost:3000").split(",") if o.strip()]
 
-# The last added middleware is the outermost: CORS → gzip → the uncompressed size → the app. JSON compresses to about a
-# tenth; images, zip archives and Word files are already compressed and are sent as they are.
+@asynccontextmanager
+async def _lifespan(_app):
+    """At startup: the background work in _warm_caches (a lifespan handler replaces the deprecated on_event)."""
+    _warm_caches()
+    yield
+
+
+app = FastAPI(title="Vitki API", lifespan=_lifespan)
+
+# Configure CORS for Next.js frontend (comma-separated list in CORS_ORIGINS)
+CORS_ORIGINS = [o.strip() for o in os.environ.get("CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000").split(",")
+                if o.strip()]
+# The names the engine answers to (comma-separated in ALLOWED_HOSTS). Any other Host header is refused, so that a web page
+# whose own name has been pointed at 127.0.0.1 (DNS rebinding) cannot read the engine as its own site. "testserver" is
+# the name FastAPI's TestClient uses in the tests.
+ALLOWED_HOSTS = [h.strip() for h in os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1,[::1],testserver").split(",")
+                 if h.strip()]
+
+
+class SameSiteWrites:
+    """Refuses (403) a request that changes something – anything but GET, HEAD and OPTIONS – sent by a page on another
+    site: its Origin is not one of CORS_ORIGINS, or the browser marks it cross-site. A form or a body-less POST from a
+    foreign page needs no preflight, so CORS alone does not stop it from starting R runs or 500 MB uploads. Requests
+    without these headers (the Next server, scripts, the tests) are let through."""
+
+    SAFE = {"GET", "HEAD", "OPTIONS"}
+
+    def __init__(self, app, origins):
+        self.app = app
+        self.origins = set(origins)
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] == "http" and scope["method"] not in self.SAFE:
+            headers = {k.lower(): v for k, v in scope.get("headers", [])}
+            origin = headers.get(b"origin", b"").decode("latin-1")
+            site = headers.get(b"sec-fetch-site", b"").decode("latin-1")
+            if (origin and origin not in self.origins) or (not origin and site == "cross-site"):
+                await PlainTextResponse("Cross-site request refused", status_code=403)(scope, receive, send)
+                return
+        await self.app(scope, receive, send)
+
+
+# The last added middleware is the outermost: host check → CORS → same-site writes → gzip → the uncompressed size → the
+# app. JSON compresses to about a tenth; images, zip archives, Word files and 3D view models (binary STL, which gzip
+# barely shrinks at seconds of CPU on a 75 MB model) are sent as they are.
 app.add_middleware(ContentLengthHeader)
 app.add_middleware(GZipMiddleware, minimum_size=1024, compresslevel=5, exclude_content_types=(
-    *DEFAULT_EXCLUDED_CONTENT_TYPES, "application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+    *DEFAULT_EXCLUDED_CONTENT_TYPES, "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "model/stl"))
+app.add_middleware(SameSiteWrites, origins=CORS_ORIGINS)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=CORS_ORIGINS,
@@ -113,6 +175,7 @@ app.add_middleware(
     allow_headers=["*"],
     expose_headers=["X-Content-Length", "Content-Encoding"],
 )
+app.add_middleware(TrustedHostMiddleware, allowed_hosts=ALLOWED_HOSTS)
 
 app.include_router(chat.router, prefix="/api/chat", tags=["chat"])
 app.include_router(threed.router, prefix="/api/3d", tags=["3d"])

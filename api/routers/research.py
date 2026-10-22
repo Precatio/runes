@@ -1,12 +1,13 @@
 """Forskningsluckor och prioriteringar."""
 import json
 import os
+import threading
 from functools import lru_cache
 
 from fastapi import APIRouter, Request
 from pydantic import BaseModel, Field
 
-from api.cache import cached_json, dir_version
+from api.cache import cached_json, dir_version, single_flight, write_json
 from api.rundata import store
 from api.routers.orthography import model as orthography_model
 from src import findings, research_gaps as gaps
@@ -18,6 +19,7 @@ class GapsRequest(BaseModel):
     measured_signa: list[str] = Field(default_factory=list)
 
 
+@single_flight
 @lru_cache(maxsize=1)
 def _hypotheses() -> dict:
     m, s = orthography_model(), store()
@@ -120,6 +122,7 @@ class FindingsRequest(BaseModel):
     corpus: list[dict] = Field(default_factory=list)
 
 
+@single_flight
 @lru_cache(maxsize=1)
 def _orthographic_findings() -> tuple:
     m, s = orthography_model(), store()
@@ -173,10 +176,18 @@ def _levels_path() -> str:
     return os.path.join(root, "data", "cache", "levels", f"{key}.json")
 
 
+_levels_lock = threading.Lock()
+
+
 def _with_levels(items: list[dict]) -> list[dict]:
     """Lägger tolkningens nivå (starkt, måttligt, svagt …) på varje fynd, så att listan kan visa den utan att raden
     öppnas. Samma regler som /interpret (METHODS.md 14d); nivåerna sparas på disk och räknas bara om när data eller
     koden ändras."""
+    with _levels_lock:  # one at a time: the cache file is read, extended and written back
+        return _add_levels(items)
+
+
+def _add_levels(items: list[dict]) -> list[dict]:
     from src import interpretation, stone_overview
     path = _levels_path()
     try:
@@ -200,10 +211,7 @@ def _with_levels(items: list[dict]) -> list[dict]:
             changed = True
         f["interpretation"] = cache[key]
     if changed:
-        os.makedirs(os.path.dirname(path), exist_ok=True)
-        tmp = path + ".tmp"
-        json.dump(cache, open(tmp, "w", encoding="utf-8"), ensure_ascii=False)
-        os.replace(tmp, path)
+        write_json(path, cache)
     return items
 
 
@@ -338,11 +346,36 @@ def place_test(pattern: str, kind: str, km: float = 2.0, moved: bool = False):
     return {"pattern": pattern, "kind": kind, "moved_included": moved, "result": places.near_test(rows, km)}
 
 
+def _stone_size_path(mtime: float) -> str:
+    """The size analysis' cache file: the measurements, Rundata and the code that computes it."""
+    import hashlib
+    from api.rundata import DATA_PATH
+    root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    parts = [repr(mtime), str(os.path.getmtime(DATA_PATH)) if os.path.exists(DATA_PATH) else "-"]
+    for rel in ("src/stone_size.py", "src/stone_dimensions.py", "src/inscription_types.py", "src/research_gaps.py"):
+        parts.append(hashlib.sha256(open(os.path.join(root, rel), "rb").read()).hexdigest()[:12])
+    key = hashlib.sha256("|".join(parts).encode()).hexdigest()[:16]
+    return os.path.join(root, "data", "cache", "stone_size", f"{key}.json")
+
+
+@single_flight
 @lru_cache(maxsize=2)
 def _stone_size(mtime: float) -> dict:
+    """5000 permutations per test (about 15 s): computed once per version of the data and the code and kept on disk
+    (data/cache/stone_size/), so that a restart of the server reads it instead. The answer is deterministic (a fixed
+    seed), so the saved one is the same as a new computation."""
+    from fastapi.encoders import jsonable_encoder
     from src import stone_dimensions, stone_size
-    return {**stone_size.analyse(store().inscriptions, stone_dimensions.load().get("stones") or {}),
-            "meta": stone_dimensions.load().get("meta"), "source": stone_dimensions.SOURCE}
+    path = _stone_size_path(mtime)
+    try:
+        with open(path, encoding="utf-8") as fh:
+            return json.load(fh)
+    except (OSError, ValueError):
+        pass
+    out = jsonable_encoder({**stone_size.analyse(store().inscriptions, stone_dimensions.load().get("stones") or {}),
+                            "meta": stone_dimensions.load().get("meta"), "source": stone_dimensions.SOURCE})
+    write_json(path, out)
+    return out
 
 
 @router.get("/stone_size")
@@ -354,6 +387,7 @@ def stone_size_analysis():
     return _stone_size(mtime)
 
 
+@single_flight
 @lru_cache(maxsize=2)
 def _overview_context(fp: str):
     from api.routers import rstats
@@ -381,6 +415,7 @@ def _overview_key(fp: str) -> str:
     return hashlib.sha256("|".join(parts).encode()).hexdigest()[:16]
 
 
+@single_flight
 @lru_cache(maxsize=2)
 def _overview(fp: str) -> dict:
     """Beräknas en gång per version av underlaget och sparas på disk (data/cache/overview/), så att en omstart av
@@ -395,10 +430,7 @@ def _overview(fp: str) -> dict:
         except ValueError:
             pass
     out = _compute_overview(fp)
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    tmp = path + ".tmp"
-    json.dump(out, open(tmp, "w", encoding="utf-8"), ensure_ascii=False)
-    os.replace(tmp, path)
+    write_json(path, out)
     return out
 
 

@@ -83,6 +83,104 @@ export function thumbnail(src: string, want = 500) {
   return src;
 }
 
+// A Commons picture's address, as an original (…/commons/a/ab/Name.jpg) or as a thumbnail (…/commons/thumb/a/ab/Name.jpg/960px-Name.jpg)
+const COMMONS = /^https:\/\/(?:upload|thumb)\.wikimedia\.org\/wikipedia\/commons\/(?:thumb\/)?([0-9a-f]\/[0-9a-f]{2})\/([^/]+)(?:\/(\d+)px-[^/]+)?$/;
+const COMMONS_BASE = "https://upload.wikimedia.org/wikipedia/commons";
+const BITMAP = /\.(?:jpe?g|png|gif|webp)$/i;
+
+/** The file name of a Commons picture (as in its address, with underscores), or null for other pictures. */
+export function commonsFile(src: string): string | null {
+  const m = COMMONS.exec(src);
+  if (!m) return null;
+  try { return decodeURIComponent(m[2]).replace(/ /g, "_"); } catch { return null; }
+}
+
+/** The pixel size of Commons originals, by file name (commonsFile). */
+export type ImageSizes = Record<string, [number, number]>;
+
+/**
+ * A Commons picture about `want` pixels wide (at Commons' standard thumbnail width), never larger than its original:
+ * Commons enlarges a thumbnail that is wider than the original, which only makes the file bigger. So a thumbnail wider
+ * than that is made smaller, and an original is replaced by a thumbnail only when its width (`width`, from
+ * commonsSizes) is known to be larger. Other pictures, SVG originals and anything already small enough are kept.
+ */
+export function commonsAt(src: string, want: number, width?: number | null): string {
+  const m = COMMONS.exec(src);
+  // Only photos and drawings whose thumbnails are named "960px-<name>" (not SVG, TIFF or PDF)
+  if (!m || !BITMAP.test(m[2])) return src;
+  const target = COMMONS_WIDTHS.find(w => w >= want) ?? 1280;
+  const [, dir, name, px] = m;
+  const thumb = `${COMMONS_BASE}/thumb/${dir}/${name}/${target}px-${name}`;
+  // A thumbnail wider than wanted: the wanted width, or the original when that is narrower still
+  if (px) return Number(px) <= target ? src : width && width <= target ? `${COMMONS_BASE}/${dir}/${name}` : thumb;
+  return width && width > target ? thumb : src;
+}
+
+/** srcset for a Commons picture whose original width is known: the standard thumbnails clearly narrower than the
+ *  original (a thumbnail almost as wide saves nothing), then the original itself when it is no wider than the largest. */
+export function commonsSrcSet(src: string, width?: number | null, widths = [500, 960, 1280]): string | undefined {
+  const m = COMMONS.exec(src);
+  if (!m || !width || !BITMAP.test(m[2])) return undefined;
+  const [, dir, name] = m;
+  const list = widths.filter(w => w < width * 0.8).map(w => `${COMMONS_BASE}/thumb/${dir}/${name}/${w}px-${name} ${w}w`);
+  if (width <= Math.max(...widths)) list.push(`${COMMONS_BASE}/${dir}/${name} ${width}w`);
+  return list.join(", ");
+}
+
+/** The original of a Commons picture (for the enlarged view), or the address itself. */
+export function commonsOriginal(src: string): string {
+  const m = COMMONS.exec(src);
+  return m ? `${COMMONS_BASE}/${m[1]}/${m[2]}` : src;
+}
+
+/**
+ * The sizes of the Commons pictures among `srcs`, from the Commons API, when the page is rendered on the server (50
+ * files per request, cached with the page's data). A picture the API does not answer for is left out, and is then
+ * shown as before (commonsAt keeps an original whose width is not known).
+ */
+export async function commonsSizes(srcs: (string | null | undefined)[]): Promise<ImageSizes> {
+  const files = [...new Set(srcs.map(s => (s ? commonsFile(s) : null)).filter((f): f is string => !!f))].sort();
+  const out: ImageSizes = {};
+  for (let i = 0; i < files.length; i += 50) {
+    const batch = files.slice(i, i + 50);
+    const url = "https://commons.wikimedia.org/w/api.php?action=query&format=json&formatversion=2&prop=imageinfo&iiprop=size&titles="
+      + encodeURIComponent(batch.map(f => `File:${f.replace(/_/g, " ")}`).join("|"));
+    try {
+      const r = await fetch(url, { headers: { "User-Agent": `${SITE_NAME}/1.0 (${SITE_URL}; picture sizes for the articles)` },
+                                   cache: "force-cache", signal: AbortSignal.timeout(8000) });
+      if (!r.ok) continue;
+      const data = await r.json() as { query?: { pages?: { title: string; imageinfo?: { width: number; height: number }[] }[] } };
+      for (const page of data.query?.pages ?? []) {
+        const info = page.imageinfo?.[0];
+        if (!info?.width || !info?.height) continue;
+        // "File:A b.jpg" → "A_b.jpg"; Commons capitalises only the first letter, as the address already does
+        const key = page.title.replace(/^File:/, "").replace(/ /g, "_");
+        const own = batch.find(f => f === key || f.charAt(0).toUpperCase() + f.slice(1) === key);
+        if (own) out[own] = [info.width, info.height];
+      }
+    } catch {
+      // Commons unreachable: the pictures are shown as they are
+    }
+  }
+  return out;
+}
+
+/** A list card's photo about `want` pixels wide: no wider than the original when its size is known (withImageSizes),
+ *  otherwise the standard thumbnail as before. */
+export function cardImage(post: Pick<BlogPost, "image" | "image_width">, want: number): string {
+  if (!post.image) return "";
+  return post.image_width ? commonsAt(post.image, want, post.image_width) : thumbnail(post.image, want);
+}
+
+/** The list's posts with the size of their first photo (BlogPost.image_width/image_height), when Commons knows it. */
+export async function withImageSizes(posts: BlogPost[]): Promise<BlogPost[]> {
+  const sizes = await commonsSizes(posts.map(p => p.image));
+  return posts.map(p => {
+    const size = p.image ? sizes[commonsFile(p.image) ?? ""] : undefined;
+    return size ? { ...p, image_width: size[0], image_height: size[1] } : p;
+  });
+}
+
 export function pictures(md: string) {
   return [...md.matchAll(/^!\[([^\]]*)\]\(([^)\s]+)\)\n?(.*)$/gm)].map(m => {
     const credit = /(?:Foto|Photo): ([^,]+), \[?([^\](,]+)/.exec(m[3] ?? "");

@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useEffectEvent, useRef, Suspense } from "react";
 import PlotlyGraph from "@/components/PlotlyGraph";
-import { toJpeg } from 'html-to-image';
 import { useLanguage } from "@/components/LanguageContext";
 import { useAnalysis } from "@/components/AnalysisContext";
 import { useSettings } from "@/components/SettingsContext";
@@ -20,8 +19,11 @@ import { METRICS, type SliceMetrics } from "@/lib/metrics";
 import { FEATURE_TYPES, type FeatureType } from "@/lib/metrics";
 import dynamic from 'next/dynamic';
 import { API_URL } from "@/lib/api";
-import RTIViewer from "@/components/RTIViewer";
-import TwoDAnalysis from "@/components/TwoDAnalysis";
+
+// The RTI and image tabs are opened on few visits (the mesh tab is the default), so their code loads with the tab
+const tabLoading = () => <div className="w-full py-12 text-center text-slate-500"><span>Laddar</span> …</div>;
+const RTIViewer = dynamic(() => import("@/components/RTIViewer"), { ssr: false, loading: tabLoading });
+const TwoDAnalysis = dynamic(() => import("@/components/TwoDAnalysis"), { ssr: false, loading: tabLoading });
 
 // Disable SSR for ThreeDViewer since it uses browser APIs (window, DOM)
 const ThreeDViewer = dynamic(() => import('@/components/ThreeDViewer'), {
@@ -253,6 +255,8 @@ function ThreeDPageContent() {
     const plotlyEl = document.querySelector('.js-plotly-plot') as HTMLElement;
     if (plotlyEl) {
       try {
+        // Loaded only when a project is saved with a plot
+        const { toJpeg } = await import('html-to-image');
         plotImage = await toJpeg(plotlyEl, { quality: 0.95, backgroundColor: '#ffffff' });
       } catch (e) {
         console.error("Could not capture plotly image", e);

@@ -35,6 +35,7 @@ from src.inscription_types import CATEGORIES
 from src.language_profile import DOTTED
 from src.pattern_map import mid_year, pagan
 from src.research_gaps import SWEDISH, certain_carvers, province
+from src.stats import wilson
 from src.styles import BY_CODE
 
 # Groupings: by series (country) and by realms and districts about 1025 (the map's layer of realms, epoch 1025)
@@ -273,16 +274,6 @@ def patterns(rec: dict, ft: dict[str, int] | None) -> dict[str, int | None]:
 
 
 # --- Statistics --------------------------------------------------------------------------------------------------
-
-def wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
-    if n == 0:
-        return 0.0, 0.0
-    p = k / n
-    d = 1 + z * z / n
-    c = (p + z * z / (2 * n)) / d
-    h = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / d
-    return max(0.0, c - h), min(1.0, c + h)
-
 
 def mantel_haenszel(strata: list[tuple[int, int, int, int]]) -> tuple[float | None, float | None, int]:
     """Oddskvot och CMH-test (med kontinuitetskorrektion) över tabeller (a, b, c, d); bara tabeller med båda grupperna."""

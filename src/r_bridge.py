@@ -17,8 +17,8 @@ import json
 import os
 import re
 import shutil
-import subprocess
 import sys
+import threading
 import time
 import zipfile
 from datetime import datetime, timezone
@@ -377,7 +377,34 @@ class RError(RuntimeError):
     pass
 
 
+# An R process takes up to about 1 GB: at most R_MAX_PROCS of them at a time from this process (the corpus job runs in
+# a process of its own), and one run per result folder, so that two identical requests share one run
+_slots = threading.BoundedSemaphore(max(1, int(os.environ.get("R_MAX_PROCS", "2"))))
+_dir_locks: dict[str, threading.Lock] = {}
+_dir_guard = threading.Lock()
+
+
+def _dir_lock(out_dir: str) -> threading.Lock:
+    with _dir_guard:
+        return _dir_locks.setdefault(os.path.abspath(out_dir), threading.Lock())
+
+
+def _cached_run(path: str, module: str, params: dict, out_dir: str, timeout: int) -> dict:
+    """The module's result in `path`, run first if it is missing; a second caller waits for the first one's run (and
+    never reads the file while R is still writing it)."""
+    with _dir_lock(out_dir):
+        if not os.path.exists(path):
+            run_module(module, params, out_dir, timeout=timeout)
+        with open(path, encoding="utf-8") as fh:
+            return json.load(fh)
+
+
 def run_module(module: str, params: dict, out_dir: str, timeout: int = 3600) -> dict:
+    with _slots:
+        return _run_module(module, params, out_dir, timeout)
+
+
+def _run_module(module: str, params: dict, out_dir: str, timeout: int) -> dict:
     os.makedirs(out_dir, exist_ok=True)
     params_path = os.path.join(out_dir, f"{module}_params.json")
     with open(params_path, "w", encoding="utf-8") as fh:
@@ -412,15 +439,31 @@ class CorpusJob:
     def ready(self, fp: str) -> bool:
         return os.path.exists(os.path.join(self.directory(fp), "done.json"))
 
-    def result(self, fp: str) -> dict | None:
-        d = self.directory(fp)
+    def done(self, fp: str) -> dict | None:
+        """Only done.json (when it was computed, the modules' errors), without the modules' results."""
         if not self.ready(fp):
             return None
         try:
-            out = json.load(open(os.path.join(d, "done.json"), encoding="utf-8"))
+            with open(os.path.join(self.directory(fp), "done.json"), encoding="utf-8") as fh:
+                return json.load(fh)
+        except (OSError, ValueError):  # a file being written right now
+            return None
+
+    def module(self, fp: str, module: str) -> dict | None:
+        """One module's result, or None when it is missing."""
+        p = os.path.join(self.directory(fp), f"{module}.json")
+        if not os.path.exists(p):
+            return None
+        with open(p, encoding="utf-8") as fh:
+            return json.load(fh)
+
+    def result(self, fp: str) -> dict | None:
+        out = self.done(fp)
+        if out is None:
+            return None
+        try:
             for m in MODULES:
-                p = os.path.join(d, f"{m}.json")
-                out[m] = json.load(open(p, encoding="utf-8")) if os.path.exists(p) else None
+                out[m] = self.module(fp, m)
         except ValueError:  # a file being written right now
             return None
         return out
@@ -446,10 +489,10 @@ class CorpusJob:
             fh.write(csv_data)
         _write_state(d, running=True, module=None, error=None, done_modules=[], pid=None,
                      started=datetime.now(timezone.utc).isoformat())
-        log = open(os.path.join(d, "job.log"), "a", encoding="utf-8")
-        proc = subprocess.Popen([sys.executable, "-m", "src.r_bridge", fp], cwd=ROOT, stdout=log, stderr=log,
-                                start_new_session=True)
-        _write_state(d, pid=proc.pid)
+        # posix_spawn in a session of its own (src/spawn.py): a fork of the server, with its gRPC and numpy threads, can
+        # crash before the job starts, and the job is to outlive restarts of the server
+        pid = spawn.detached([sys.executable, "-m", "src.r_bridge", fp], ROOT, os.path.join(d, "job.log"))
+        _write_state(d, pid=pid)
         return True
 
 
@@ -550,12 +593,10 @@ def stone(fp: str, signum: str, candidates: list[str], lang: str = "sv") -> dict
     key = hashlib.sha256(json.dumps([signum, sorted(candidates), lang, _scripts_hash(["common.R", "stone.R"])],
                                     ensure_ascii=False).encode()).hexdigest()[:12]
     out_dir = os.path.join(d, "stones", key)
-    path = os.path.join(out_dir, "stone.json")
-    if not os.path.exists(path):
-        run_module("stone", {"corpus": os.path.join(d, "corpus.csv"), "corpus_dir": d, "signum": signum, "lang": lang,
-                             "candidates": candidates, "water_dir": os.path.join(CACHE_DIR, "naturalearth")},
-                   out_dir, timeout=600)
-    res = json.load(open(path, encoding="utf-8"))
+    res = _cached_run(os.path.join(out_dir, "stone.json"), "stone",
+                      {"corpus": os.path.join(d, "corpus.csv"), "corpus_dir": d, "signum": signum, "lang": lang,
+                       "candidates": candidates, "water_dir": os.path.join(CACHE_DIR, "naturalearth")},
+                      out_dir, timeout=600)
     res["figure_dir"] = out_dir
     return res
 
@@ -573,12 +614,14 @@ def question(fp: str, rows: list[dict], kind: str) -> dict:
     key = hashlib.sha256(data + kind.encode() + _scripts_hash(["question.R"]).encode()).hexdigest()[:12]
     out_dir = os.path.join(CACHE_DIR, "question", fp, key)
     path = os.path.join(out_dir, "question.json")
-    if not os.path.exists(path):
-        os.makedirs(out_dir, exist_ok=True)
-        with open(os.path.join(out_dir, "data.csv"), "wb") as fh:
-            fh.write(data)
-        run_module("question", {"data": os.path.join(out_dir, "data.csv"), "kind": kind}, out_dir, timeout=180)
-    return json.load(open(path, encoding="utf-8"))
+    with _dir_lock(out_dir):  # one run per question, as in _cached_run
+        if not os.path.exists(path):
+            os.makedirs(out_dir, exist_ok=True)
+            with open(os.path.join(out_dir, "data.csv"), "wb") as fh:
+                fh.write(data)
+            run_module("question", {"data": os.path.join(out_dir, "data.csv"), "kind": kind}, out_dir, timeout=180)
+        with open(path, encoding="utf-8") as fh:
+            return json.load(fh)
 
 
 def landscape(fp: str, signum: str, uplift_m: float | None = None, lang: str = "sv") -> dict:
@@ -587,14 +630,11 @@ def landscape(fp: str, signum: str, uplift_m: float | None = None, lang: str = "
     key = hashlib.sha256(json.dumps([signum, uplift_m, lang, _scripts_hash(["common.R", "landscape.R"])],
                                     ensure_ascii=False).encode()).hexdigest()[:12]
     out_dir = os.path.join(d, "landscape", key)
-    path = os.path.join(out_dir, "landscape.json")
-    if not os.path.exists(path):
-        params = {"corpus": os.path.join(d, "corpus.csv"), "signum": signum, "lang": lang,
-                  "water_dir": os.path.join(CACHE_DIR, "naturalearth"), "tile_dir": os.path.join(CACHE_DIR, "terrain")}
-        if uplift_m is not None:
-            params["uplift_m"] = uplift_m
-        run_module("landscape", params, out_dir, timeout=900)
-    res = json.load(open(path, encoding="utf-8"))
+    params = {"corpus": os.path.join(d, "corpus.csv"), "signum": signum, "lang": lang,
+              "water_dir": os.path.join(CACHE_DIR, "naturalearth"), "tile_dir": os.path.join(CACHE_DIR, "terrain")}
+    if uplift_m is not None:
+        params["uplift_m"] = uplift_m
+    res = _cached_run(os.path.join(out_dir, "landscape.json"), "landscape", params, out_dir, timeout=900)
     res["figure_dir"] = out_dir
     return res
 

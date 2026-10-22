@@ -555,7 +555,7 @@ def draft(p: dict, res: dict, lang: str, tr=lambda t: t, label: str | None = Non
     t, w = T[lang], WORDS[lang]
     sv = lang == "sv"
     text, hyp, test, note = (tr(p.get(x) or "") for x in ("text", "hypothesis", "test", "note"))
-    k, key, topic = kind(p, res), p.get("key") or "", p.get("topic")
+    k, key = kind(p, res), p.get("key") or ""
     lab = (label or first_sentence(text)).strip()
     lab_lc = lab[0].lower() + lab[1:] if lab[:1].isupper() and not lab[1:2].isupper() else lab
     # "r för ʀ" and "o-runan" keep their small letter: a rune's name is not capitalised

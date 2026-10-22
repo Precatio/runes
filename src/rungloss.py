@@ -17,7 +17,6 @@ det som förut via engelskan.
 Används av scripts/runlm_gloss_test.py och scripts/runlm_gloss_da_test.py (prov på inskrifter som inte fanns i
 träningen) och för att ge en läsning från src/runlm.py ett översättningsutkast."""
 import difflib
-import math
 import os
 import re
 from collections import Counter, defaultdict
@@ -43,7 +42,7 @@ SV = {"stone": "sten", "stones": "stenar", "raised": "reste", "raise": "resa", "
       "coloured": "färgade", "painted": "målade", "let": "lät", "stand": "stå", "stands": "står", "here": "här",
       "foster": "foster", "uncle": "farbror", "nephew": "brorson", "kinsman": "frände", "friend": "vän", "land": "land",
       "home": "hem", "journey": "resa", "travelled": "färdades", "abroad": "utomlands", "gold": "guld", "men": "män",
-      "man": "man", "woman": "kvinna", "the": "", "a": "", "may": "", "lord": "herre", "memory": "minne",
+      "man": "man", "woman": "kvinna", "the": "", "a": "", "may": "", "lord": "herre",
       "in memory of": "efter", "sister": "syster", "grandfather": "farfar", "stepfather": "styvfar", "estate": "gods",
       "inheritance": "arv", "voyage": "färd", "sweden": "Sverige", "denmark": "Danmark", "norway": "Norge",
       "baptised": "döpt", "baptism": "dopkläder", "white": "vita", "clothes": "kläder", "path": "väg", "road": "väg",
@@ -55,7 +54,7 @@ SV = {"stone": "sten", "stones": "stenar", "raised": "reste", "raise": "resa", "
       "both": "båda", "smith": "smed", "then": "då", "live": "leva", "sea": "hav", "marked": "märkte",
       "kinsman-by-marriage": "svåger", "jarl": "jarl", "drowned": "drunknade", "gave": "gav", "own": "egen",
       "sister's": "systers", "bridges": "broar", "lies": "ligger", "buried": "begravd", "church": "kyrka",
-      "everlasting": "evig", "mercy": "nåd", "living": "levande", "stood": "stod", "sat": "satt", "travelled": "färdades",
+      "everlasting": "evig", "mercy": "nåd", "living": "levande", "stood": "stod", "sat": "satt",
       "interpret": "tyda", "secure": "säkra", "rich": "rik", "fine": "fin", "brave": "modig", "generous": "givmild"}
 # a verb in the infinitive (ræisa, haggva, gæra …) after 'lät' is glossed by the translations' past participle
 INF = {"raised": "resa", "erected": "resa", "cut": "hugga", "made": "göra", "carved": "rista", "placed": "sätta",
