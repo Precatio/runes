@@ -450,13 +450,218 @@ En modell som den här kan inte ge oss nya attribueringar. Det kan bara den som 
 - Samnordisk runtextdatabas, version 3.1 (ODbL).
 - Bilder: se bildtexterna."""
 
+ORD_EN = "zero one two three four five six seven eight nine ten eleven twelve".split()
+ord_en = lambda n: ORD_EN[n] if n < len(ORD_EN) else str(n)  # noqa: E731
+e2 = lambda x: f"{x:.2f}"  # noqa: E731
+
+
+def photo_en(signum: str, text: str, kind: str = "Photo") -> str:
+    img = {**INFO[FILES[signum]], "signum": signum}
+    cap = commons.caption(img, "en")
+    assert cap.startswith(f"{signum}. Photo: ")
+    return f"![The runestone {signum}]({img['thumb']})\n{text} {kind}: {cap[len(signum) + 9:]}"
+
+
+IMG01_EN = bild("01_stenar_utan_ristare.png", "The stone overview's chart of the stones without a carver",
+                "The stone overview in Vitki: every dot is a runestone without a carver in Rundata, and the further right, the more "
+                "strongly the evidence points to a carver. Dark blue is a new suggestion (strength at least 0.5), light blue a possible "
+                "suggestion (at least 0.3). Screenshot from Vitki.")
+IMG02_EN = bild("02_u843_panel.png", "U 843 in the stone overview",
+                "U 843 in the stone overview. The strength 0.84 comes from the model (0.72) and the spelling (0.45); of the checks only "
+                "the area can be tested (Om ✓). Screenshot from Vitki.")
+IMG04_EN = bild("04_kanske_nagon_annan.png", "The model's perhaps someone else",
+                "Statistics → Who carved? in Vitki: when none of the model's carvers reaches 35 per cent it says perhaps someone else. "
+                "Screenshot from Vitki.")
+IMG05_EN = bild("05_topplista.png", "The top list in the stone overview",
+                "The top list in the stone overview: every status except new suggestion switched off, the table sorted by the "
+                "suggestion's strength. Rundata and Support are empty, since the stones have no carver in Rundata. Screenshot from Vitki.")
+PH62_EN = photo_en("Sö 62", "Sö 62 at Hässlö in Lerbo parish, Södermanland.")
+PH158_EN = photo_en("Sö 158", "The ship on Sö 158 at Österberga in Runtuna parish: the bind-runes form the mast.")
+PH1026_EN = photo_en("U 1026", "U 1026 at Lena church in Uppland.")
+PH843_EN = photo_en("U 843", "U 843 at Hässle in Dalby parish, drawn before 1693. The stone is lost.", "Drawing")
+
+CHART_EN = f""":::chart Share correct in the blind test: Vitki against the rule “nearest carver”
+# New suggestion ({NY['n']} stones)
++Vitki | {pr(NY['precision'])} | {NY['right']} of {NY['n']}
+Nearest carver | {pr(NY['nearest_precision'])} | {NY['nearest_right']} of {NY['n']}
+# New suggestion, signed stones only ({SI['n']} stones)
++Vitki | {pr(SI['precision'])} | {SI['right']} of {SI['n']}
+Nearest carver | {pr(SI['nearest_precision'])} | {SI['nearest_right']} of {SI['n']}
+# Possible suggestion ({MO['n']} stones)
++Vitki | {pr(MO['precision'])} | {MO['right']} of {MO['n']}
+Nearest carver | {pr(MO['nearest_precision'])} | {MO['nearest_right']} of {MO['n']}
+Source: Vitki's blind test on {B['n_attributed']} runestones with a certain carver in the Scandinavian Runic-text Database 3.1; the key is Rundata's carver.
+:::"""
+
+RUNOR_EN = {"saknas": "no carver", "samma som": None}
+
+
+def runor_en(r):
+    st = r["crosscheck"]["status"]
+    if st == "samma som":
+        return "same carver as " + re.search(r"som (.+?) \(namnlös\)", r["crosscheck"]["text"]).group(1)
+    return RUNOR_EN[st]
+
+
+NEXT_EN = "\n".join(f"- **{r['signum']} at {r['place']}** – {SHOWN.get(r['carver'], r['carver'])}, strength {e2(r['strength'])} "
+                    f"(the model {e2(r['model'])}, the spelling {e2(r['ortho'])}). Runor 2020: {runor_en(r)}." for r in TOP10[5:])
+
+title_en = "Five Runestones Looking for Their Carver"
+summary_en = (f"Two of three Swedish runestones have no carver in Rundata. Vitki goes through them all and says where the evidence "
+              f"points – and in a blind test on {B['n_attributed']} stones, with the answer hidden, the new suggestions were right four "
+              "times out of five. Here are the five strongest, and how Vitki arrives at them.")
+
+body_en = f"""We now want to show one of Vitki's real strengths.
+
+Of the {len(stones):,} Swedish Viking-age runestones in the Scandinavian Runic-text Database (Rundata), {N['n_unattributed']:,} have no carver – two out of three. No one recorded who cut them, and for most of them we will never know. But the stones carry traces of their carvers: how the words are spelled, which signs separate them, the ornament, the place. These are the traces runologists follow when they attribute a stone by hand, one at a time. Vitki follows them for all the stones at once and says, for each stone, whether the evidence points to one of the carvers Vitki knows – and how strongly.
+
+It shows in the **stone overview**. There {C['nytt förslag']} stones without a carver get a *new suggestion*, which means that the evidence points strongly to a carver. Another {C['möjligt förslag']} get a *possible suggestion*. For the rest, {C['inget förslag']:,} stones, the evidence is not enough for any suggestion at all.
+
+{IMG01_EN}
+
+A suggestion is only worth something if we know how often it is right. So we do not begin with the suggestions but with a test.
+
+## First a blind test
+
+Rundata gives a certain carver for {B['n_attributed']} runestones. We let Vitki go through them one at a time with the answer hidden. The carver was removed from the stone's record, and everything Vitki knows about the carvers – where they worked, which style groups and rock types they used, how they spelled – was recounted without that stone. Then Vitki had its say, exactly as if the stone had never had a carver. How the test would be run and what would count as success we wrote down and locked before we saw a single result.
+
+As the opponent we chose the simplest rule we could think of: guess the carver behind the nearest stone with a known carver. The rule is not stupid. Carvers worked in their home districts, and the neighbouring stone often has the same carver.
+
+{CHART_EN}
+
+When Vitki gave a new suggestion it was Rundata's carver in {NY['right']} of {NY['n']} cases, **{pr(NY['precision'])} per cent** – probably somewhere between {pr(NY['ci'][0])} and {pr(NY['ci'][1])} per cent. The nearest-carver rule was right on the same stones in {pr(NY['nearest_precision'])} per cent of cases. Most telling are the stones where the two disagree: on {NY['vitki_only']} Vitki was right and the rule wrong, on {NY['nearest_only']} it was the other way round. If Vitki and the rule were equally good, a split that lopsided would almost never arise by chance (p ≈ {P_MANT} · 10{str(int(P_EXP)).translate(SUP)}). That is less likely than winning the top prize in the lottery three weeks in a row.
+
+The hardest test is the {SI['n']} signed stones among them. There the carver's name stands on the stone, so the key does not rest on any scholar's judgement of style or spelling. Vitki was right on {SI['right']} of them, the rule on {SI['nearest_right']}. Even the weaker possible suggestions beat the rule, {pr(MO['precision'])} against {pr(MO['nearest_precision'])} per cent. And the stronger the suggestion, the more often it holds: with a strength of at least 0.7 Vitki was right in {pr(TOPSTR['precision'])} per cent of cases, {TOPSTR['right']} of {TOPSTR['n']}.
+
+## How Vitki reasons
+
+How does Vitki arrive at a suggestion? Take U 843 from Hässle in Dalby parish outside Uppsala. The stone is lost, and we know it from a drawing made before 1693. According to the inscription four people had it raised in memory of their father Ulfr. Rundata gives no carver.
+
+{PH843_EN}
+
+Vitki lets two witnesses speak and then tests their evidence against four checks.
+
+The first witness is a **statistical model** in R, a so-called random forest, which has learned to recognise {len(A['carvers'])} carvers on {A['n_train']} stones with a known carver. It weighs together where the stone stands, ornament, crosses, spelling, word dividers, formulas and content. For U 843 the model says Fótr – Fot 2 in Rundata – with {pr(mp)} per cent. The model is cautious by nature. When it was tested on stones it had not been allowed to see, it said at least 70 per cent about {REL[0.7]['n']} stones and was right about all {REL[0.7]['n']}.
+
+The second witness is the **spelling**. Vitki compares the stone's text, with the names removed, with how each carver usually spells and places word dividers. U 843 most resembles Fótr's stones. When the spelling puts Fótr first it has been right {right('Fot 2')} times out of {PC['Fot 2']['predicted']}, just under two times in three. Since the text has only {r843['n_words']} words the witness is discounted further, to {e2(op)}.
+
+Then the witnesses are weighed together. Both can be wrong: the model in {pr(1 - mp)} per cent of cases, the spelling in {pr(1 - op)}. Both being wrong at the same time, if they are independent of each other, happens in {pr(1 - mp)} per cent of {pr(1 - op)} per cent of cases, that is about {pr((1 - mp) * (1 - op))} per cent. That gives the strength {e2(raw)}.
+
+Last come the checks: do the **area**, the **style group**, the **language traits** and the **rock type** agree with the carver's other stones? Every check that speaks against lowers the strength, down to half if all speak against. For U 843 one of Fótr's stones, U 841 at Dalby church, stands a kilometre away. Style group and rock type cannot be tested for the lost stone. The language traits may only speak against, never for, since the spelling has already had its say. Nothing speaks against, and the strength stays at {e2(r843['strength'])}.
+
+{IMG02_EN}
+
+The formula assumes that the witnesses are independent, and they are not entirely, because both look partly at the spelling. That is why the strength is an index for sorting the stones, not a probability. It is also why the blind test was needed: it shows what the index is worth.
+
+## Five stones
+
+Here are the five strongest new suggestions. We have not chosen them by hand: they are the stone overview's five highest, by the rule in the locked plan.
+
+{IMG05_EN}
+
+Three of the five concern **Traen**, and that name needs an explanation. Rundata gives {len(TRAEN)} runestones in Södermanland the carver Traen, {sum(r['district'] == 'Rönö hd' for r in TRAEN)} of them in Rönö hundred. But the name rests on a misreading (Gustavson & Snædal Brink 1981, pp. 196–97; Axelson 1993, p. 74), and Bianchi (2010, pp. 153–55) and Kitzler Åhfeldt (2017, pp. 65–66) see the stones as the work of several carvers rather than one. So when Vitki says Traen it means that the stone belongs among these stones, in a local tradition – not that a person called Traen cut it.
+
+### 1. Sö 62 at Hässlö – the Traen group, strength {e2(r62['strength'])}
+
+{PH62_EN}
+
+Gunni raised the stone at Hässlö in Lerbo parish in memory of his son Ragni, who died on the way west. The model gives Traen {pr(r62['model'])} per cent, and at that level it has been right nine times out of ten. The spelling also puts Traen first, but only just ahead of Tidkume, so that witness counts for somewhat less. The style group Pr1 belongs to the core of the Traen stones, and the nearest of them, Sö 49 at Ene, stands {round(n62[0])} kilometres away. One language trait speaks against: the stone writes *rasti stan* with a, where nearly all Traen stones have ai, as in *ræisti stæin*. The form with a occurs on only 6 per cent of them, against 20 per cent in the province. The simple rule would have guessed Steinkell, whose stone Sö 54 stands nearest, {round(a62[0])} kilometres away. Runor 2020 gives no carver.
+
+### 2. Sö 158 at Österberga – the Traen group, {e2(r158['strength'])}
+
+{PH158_EN}
+
+On Sö 158 in Runtuna parish, in the middle of the Traen stones' district, a ship is carved. The bind-runes form the mast, and the name of the dead father, **kitilhafþa**, stands in the sail. Runor 2020 notes that the stone was earlier read as signed by Traen. In the reading Rundata follows today, Gustavson and Snædal Brink's from 1981, there is no signature: the bind-runes in the mast become instead a judgement on the father, *þrottaR þiagn*, roughly “a thegn of strength”. That is why the stone has no carver in Rundata.
+
+Vitki knows nothing of that history; Runor's notes are not part of the evidence. Still the stone ends up among the Traen stones. The model says Traen with {pr(r158['model'])} per cent, a level at which it has been right {round(b67['n'] * b67['accuracy'])} times out of {b67['n']}, and the spelling puts Traen first. The nearest Traen stone, Sö 153 at Skarpåker, stands {round(n158[0], 1)} kilometres away, and {ord_en(sum(r['parish'] == 'Runtuna sn' for r in TRAEN))} of the group's stones stand in the same parish. Bind-runes occur on 11 per cent of the Traen stones against 5 per cent in the province.
+
+But there is a neighbour that complicates the picture. A kilometre away, also at Österberga, stands Sö 159, signed by Gunnleifr, Hrœríkr and Guðmundr. That is the stone the simple rule would have guessed, and in the blind test Vitki took that very stone for a Traen stone. So Vitki cannot separate the Traen group from the three who signed the neighbouring stone. That is a question for someone who can compare the stones themselves – and it is exactly the kind of question Vitki is good at asking.
+
+### 3. U 1026 at Lena church – Œpir, {e2(r1026['strength'])}
+
+{PH1026_EN}
+
+At Lena church in Norunda hundred two stones stand on the same spot, U 1026 and U 1027. Brandr and Sigviðr had U 1026 raised in memory of their brother Mundi, and Rundata notes that the ornament in style group Pr4 is skilfully designed.
+
+Here only the model speaks, since the text becomes too short for the spelling comparison once the names are removed. But the model speaks clearly: Œpir (Öpir 1 in Rundata), {pr(r1026['model'])} per cent. That is the surest answer it gives for any of the {len(free)} stones that have no carver at all in Rundata. Pr4 belongs to the core of Œpir's stones, and the word divider that Rundata renders with an apostrophe (') occurs on 55 per cent of Œpir's stones against 11 per cent in Uppland. The nearest Œpir stones stand at Tensta church, {round(o1026[0])} kilometres away. The simple rule would have guessed Ásmundr and Vígmundr, whose stone U 1031 at Hånsta stands {round(a1026[0])} kilometres away. That stone Vitki got right in the blind test: with the answer hidden, Vitki suggested Ásmundr.
+
+Runor 2020 says that U 1026 and U 1027 have the same carver, without naming one. Vitki gives both the same name: U 1027 gets Œpir with the strength {e2(R['U 1027']['strength'])}. Since the stones stand on the same spot that is no strong test, but different names would have been a warning. One more reservation: Œpir is the name Vitki reaches for most often. When Vitki has suggested Œpir in the blind test it has held {PER['Öpir 1'][0]} times out of {PER['Öpir 1'][1]}, the worst of all carvers Vitki has suggested more than three times. Probabilities as high as {pr(r1026['model'])} per cent, however, the model has not yet got wrong when tested.
+
+### 4. U 843 at Hässle – Fótr, {e2(r843['strength'])}
+
+U 843 we have already followed through the machinery. What makes the suggestion strong is that two witnesses looking at different things – the model at the whole, the spelling at the text – point to the same carver. The divider × occurs on 73 per cent of Fótr's stones against 15 per cent in Uppland, and *auk* for “and” on 95 per cent against 52. Here the simple rule would have guessed the same, but by a narrow margin: Fótr's stone at Dalby church stands {GAP_M} metres closer than a stone by Œpir at the same church. Another of Fótr's stones, U 844 at Viggeby bridge, got the right suggestion in the blind test. Runor 2020 gives no carver, and for the lost stone there is only the drawing to examine.
+
+### 5. Sö 72 at Kesäter – the Traen group, {e2(r72['strength'])}, and the list's weakest link
+
+Sö 72 in Västra Vingåker parish is also lost. Ulfr and a person whose name cannot be interpreted raised the stone in memory of Styrmaðr, and the inscription ends with a prayer: may God help their souls.
+
+Here only the spelling speaks. The model does not answer at all, since the stone stands more than {A['near_km']} kilometres from every stone it was trained on. The spelling puts Traen first, and when it does it has been right {right('Traen')} times out of {PC['Traen']['predicted']}. Hence the high figure. Still the suggestion is the list's weakest, for three reasons. The nearest Traen stone, Sö 112 at Kolunda, stands {round(n72[0])} kilometres away, far from the group's core. One language trait speaks against: the stone has *iftiR* (after), where the Traen stones mostly write *at*; the form *æftiR* occurs on only 15 per cent of them against 42 per cent in the province. And the blind test can say nothing about suggestions of this kind, since no stone in the test got a new suggestion on the spelling alone. Sö 72 is a suggestion to test, not to trust.
+
+## The next five
+
+{NEXT_EN}
+
+Two stones stronger than Sö 335, U 854 and U 957, are not included, because the model says *perhaps someone else* about them: none of its carvers reaches {pr(A['open_set']['threshold'])} per cent. That applies to {sum(r['someone_else'] is True for r in N['rows'])} of the {C['nytt förslag']} new suggestions.
+
+U 136 at Broby has, according to Runor 2020, the same carver as the neighbouring stone U 135, and Vitki gives both Fótr. The same holds for U 297 and U Fv1979;245 at Skånela church. In all {ord_en(len(pairs))} pairs where Runor says that two nameless stones have the same carver and both get a new suggestion, Vitki gives them the same name. For Sö 137 at Aspa there are also measurements of the carving technique: Kitzler Åhfeldt (2017, pp. 41–46) places it in a different technique group from the Traen stone Sö 164 – another sign that the Traen group holds several hands.
+
+In all, {CARV['Öpir 1']} of the {C['nytt förslag']} new suggestions concern Œpir, {CARV['Fot 2']} Fótr, {CARV['Traen']} the Traen group and {CARV['Balle']} Balli. Of them {PROVN['U']} stand in Uppland, {PROVN['Sö']} in Södermanland and {ord_en(PROVN['Vs'])} in Västmanland. None of them is contradicted by Runor 2020 – but mostly because Runor gives no carver for them either. Only for U 1015 does Runor already give a carver, and it is the same one Vitki suggests: Œpir.
+
+## What Vitki cannot do
+
+Vitki only knows carvers with enough stones to learn from: {len(A['carvers'])} in the model and {EV['n_carvers']} in the spelling comparison, {len(UNIVERSE)} in all, nearly all active in Uppland and Södermanland. A stone by someone else can still get one of their names. In the blind test {B['outside_universe']['n']} of the {B['n_attributed']} stones were carved by someone Vitki does not know, and {B['outside_universe']['nytt']} of them still got a new suggestion. They cannot be right, and they are counted in the {pr(NY['precision'])} per cent. The model can now say *perhaps someone else* when none of its carvers fits, but it also warns unnecessarily.
+
+{IMG04_EN}
+
+Nor is the key independent. In Uppland and Södermanland Rundata's attributions rest largely on Axelson's list from 1993 and on earlier scholars' judgements of style and spelling – the same kind of traces Vitki follows. That is why the signed stones are the most important test.
+
+Södermanland is Vitki's weaker province. There new suggestions were right in {SO['right']} of {SO['n']} cases ({pr(SO['precision'])} per cent), against {pr(SO['nearest_precision'])} per cent for the simple rule, and with so few stones that difference may be chance. Three of the five strongest suggestions concern Södermanland. When Vitki has suggested Traen it has held {PER['Traen'][0]} times out of {PER['Traen'][1]}, and all four misses were stones that other carvers in the province signed, among them Sö 159 at Österberga. That fits the picture of the Traen group as a local tradition rather than a hand.
+
+Of the {C['nytt förslag']} suggestions, {sum(r['lost'] for r in N['rows'])} concern lost stones. Their text and ornament we know only from older drawings and readings, and an error there follows into the evidence.
+
+A test against Runor 2020 was too small to say anything. Runor gives carvers for {EX['n']} runestones that have no carver in Rundata 3.1, but only {ord_en(EX['in_universe'])} of them have a carver Vitki knows, and none of them got a new suggestion. Of {ord_en(EX['n_mojligt'])} possible suggestions, {ord_en(EX['agree_mojligt'])} held.
+
+## What it gives us
+
+A model like this cannot give us new attributions. Only someone who examines the stones can. But it gives runology something that is hard to produce by hand: a work list of all Sweden's runestones without a carver, ordered by how strongly the evidence points, with every piece of evidence visible. It shows where scholarship's own groups hold together in the data, as when Sö 158, once read as signed by Traen, lands among the Traen stones without Vitki knowing of that reading. It finds the places where the question is open, such as Österberga. And it can say how often it is right: four times out of five, in a test where the answer was hidden.
+
+:::box The essentials in brief
+- Vitki does for all runestones at once what runologists have done by hand, one stone at a time, and can also say how often it holds: in a blind test with the answer hidden, the new suggestions were right four times out of five, about twice as often as a guess at the nearest known carver.
+- The five strongest suggestions are hypotheses to test against the stones – ornament, rune forms and carving technique – not new attributions. The weakest, Sö 72, rests on the spelling alone.
+- Traen is not a person but a group of stones with a misread name. A Traen suggestion places a stone in a local tradition in Södermanland, where Vitki is also at its least certain.
+- The strength lies in the openness: two witnesses and four checks, reported for every stone, so that anyone who knows more can see exactly where the reasoning falls short.
+:::
+
+:::box How we counted
+- The plan for the test was written and locked on 21 October 2026, before the blind test was computed (SHA-256 {SHA[:12]}…; the methods documentation, sections 1x and 14c).
+- Data: Viking-age runestones in the Scandinavian Runic-text Database 3.1, corpus version {FP}. The stone overview's rule is unchanged: new suggestion at a strength of at least 0.5, possible at at least 0.3, and the model's perhaps someone else when the first choice gets under {pr(A['open_set']['threshold'])} per cent.
+- The blind test: {B['n_attributed']} stones with a certain carver. The attribution was hidden and the carvers' provinces recounted without the stone; the model's probabilities are cross-validated, that is taken from models that did not see the stone. An independent recomputation of 60 randomly chosen stones gave exactly the same result.
+- The comparison: the carver behind the nearest other stone with a certain carver; if several stand equally near, all their carvers count. McNemar's exact test on the stones where Vitki and the rule disagree, and Wilson's 95 per cent intervals.
+- Deviations from the plan: the R module cut the list of the model's suggestions to 400 stones. The fault was corrected after the first run, which gave a new corpus version and {C['nytt förslag']} instead of 79 new suggestions; the precision was 82 per cent both before and after. The nearest-carver rule was made generous at equal distances after the first run, which raised its hit rate from 41 to {pr(NY['nearest_precision'])} per cent and makes the comparison harder for Vitki. The plan said the ten strongest would be shown with all their evidence; here five are shown in detail and five in a list, and all the evidence is in the app. The hit rates per carver and per province are additions beyond the plan.
+:::
+
+## See for yourself
+
+Open the **stone overview** in Vitki, switch off every status except *new suggestion* and choose *Show as table*. Click a stone to see what each method says about it. The model and its *perhaps someone else* are under Statistics → *Who carved?*. All the rows of the blind test are in Vitki's open source code.
+
+## Sources
+
+- Axelson, J. 1993. *Mellansvenska runristare. Förteckning över signerade och attribuerade inskrifter.* Runrön 5. Uppsala.
+- Bianchi, M. 2010. *Runor som resurs. Vikingatida skriftkultur i Uppland och Södermanland.* Runrön 20. Uppsala.
+- Gustavson, H. & Snædal Brink, T. 1981. Runfynd 1980. *Fornvännen* 76: 186–202.
+- Kitzler Åhfeldt, L. 2017. *Runristare och mobilitet i Södermanland.* Stockholm.
+- Runor. Swedish National Heritage Board, 2020 edition.
+- Scandinavian Runic-text Database, version 3.1 (ODbL).
+- Images: see the captions."""
+assert body_en.count("## ") == body.count("## ") and not re.search(r"^\|", body_en, re.M)
+
 for word in (" han ", " hans ", " hon ", " henne ", " hennes "):  # no pronouns for carvers or the people on the stones
     assert word not in body, word
 assert not re.search(r"\b(jag|mig|min)\b", body, re.I) and "beslutsunderlag" not in body.lower()  # we-voice, as the other articles
 assert not re.search(r"^\|", body, re.M)  # no tables (the article page cannot show them)
 
 out = {"slug": "fem-runstenar-soker-sin-ristare", "title": title, "summary": summary, "body": body,
-       "title_en": "", "summary_en": "", "body_en": "", "labels": ["Forskning", "Ristare"]}
+       "title_en": title_en, "summary_en": summary_en, "body_en": body_en, "labels": ["Forskning", "Ristare"]}
 json.dump(out, open(os.path.join(ROOT, "utdata", "blogg", "forslag.json"), "w"), ensure_ascii=False, indent=1)
 print(os.path.join(ROOT, "utdata", "blogg", "forslag.json"), len(body.split()), "ord")
 
