@@ -120,6 +120,13 @@ def photo(signum: str, text: str) -> str:
     return f"![Runstenen {signum}]({img['thumb']})\n{text} Foto: {cap[len(signum) + 8:]}"
 
 
+def photo_en(signum: str, text: str) -> str:
+    img = {**INFO[FILES[signum]], "signum": signum}
+    cap = commons.caption(img, "en")
+    assert cap.startswith(f"{signum}. Photo: ")
+    return f"![The runestone {signum}]({img['thumb']})\n{text} Photo: {cap[len(signum) + 9:]}"
+
+
 def fig(fil: str, alt: str, text: str, max_w: int = 1600) -> str:
     im = Image.open(os.path.join(ROOT, "utdata", "skane", fil)).convert("RGB")
     if im.width > max_w:
@@ -158,6 +165,36 @@ Uppland | {sh('bortom bygden', 'Uppland')} | {nn('bortom bygden', 'Uppland')} av
 Danmark | {sh('kors', 'Danmark')} | {nn('kors', 'Danmark')} av {N['Danmark']} med kors
 Uppland | {sh('kors', 'Uppland')} | {nn('kors', 'Uppland')} av {sv(N['Uppland'])} med kors
 Källa: Samnordisk runtextdatabas 3.1, vikingatida runstenar. Vitkis beräkning; orden räknade i normaliseringen.
+:::"""
+
+MAP_EN = fig("skane_karta.png", "Map of the Viking-age runestones of Skåne",
+             f"Skåne's {N['Skåne'] - 1} Viking-age runestones with a known site, on the approximate borders of the realms around 1025: Danish "
+             "territory in red, the Geats' in green. Nearly all stand on the plain in the south and west. Map: Vitki, from Rundata 3.1 "
+             "(ODbL); borders after Vitki's map of the realms (OpenStreetMap and Natural Earth).")
+PH_HAL_EN = photo_en("DR 295", "Hällestad 1 (DR 295), built into the wall of Hällestad church in Torna hundred: “He did not flee at Uppsala.”")
+PH_GAR_EN = photo_en("DR 330", "Gårdstånga 2 (DR 330): raised in memory of two partners, “widely renowned on viking raids”.")
+PH_SJO_EN = photo_en("DR 279", "The Sjörup stone (DR 279): Saxi placed the stone in memory of his partner Ásbjôrn, who did not flee at Uppsala but fought as long as he had a weapon.")
+CHART_EN = f""":::chart Share of the runestones that …
+# … were raised or placed by the person named first (not “had raised”)
++Skåne | {sh('ræisti/satti själv', 'Skåne')} | {nn('ræisti/satti själv', 'Skåne')} of {N['Skåne']}
+Denmark (Jutland, Funen, Zealand) | {sh('ræisti/satti själv', 'Danmark')} | {nn('ræisti/satti själv', 'Danmark')} of {N['Danmark']}
+Västergötland | {sh('ræisti/satti själv', 'Västergötland')} | {nn('ræisti/satti själv', 'Västergötland')} of {N['Västergötland']}
+Uppland | {sh('ræisti/satti själv', 'Uppland')} | {nn('ræisti/satti själv', 'Uppland')} of {N['Uppland']:,}
+# … name a partner (felagi)
++Skåne | {sh('felagi', 'Skåne')} | {nn('felagi', 'Skåne')} of {N['Skåne']}
+Denmark | {sh('felagi', 'Danmark')} | {nn('felagi', 'Danmark')} of {N['Danmark']}
+Västergötland | {sh('felagi', 'Västergötland')} | {nn('felagi', 'Västergötland')} of {N['Västergötland']}
+Uppland | {sh('felagi', 'Uppland')} | {nn('felagi', 'Uppland')} of {N['Uppland']:,}
+# … mention something beyond the district (Uppsala, Gotland, London, viking raids, the west, Sweden)
++Skåne | {sh('bortom bygden', 'Skåne')} | {nn('bortom bygden', 'Skåne')} of {N['Skåne']}
+Denmark | {sh('bortom bygden', 'Danmark')} | {nn('bortom bygden', 'Danmark')} of {N['Danmark']}
+Södermanland | {sh('bortom bygden', 'Södermanland')} | {nn('bortom bygden', 'Södermanland')} of {N['Södermanland']}
+Uppland | {sh('bortom bygden', 'Uppland')} | {nn('bortom bygden', 'Uppland')} of {N['Uppland']:,}
+# … carry a cross
++Skåne | {sh('kors', 'Skåne')} | {nn('kors', 'Skåne')} of {N['Skåne']} with a cross
+Denmark | {sh('kors', 'Danmark')} | {nn('kors', 'Danmark')} of {N['Danmark']} with a cross
+Uppland | {sh('kors', 'Uppland')} | {nn('kors', 'Uppland')} of {N['Uppland']:,} with a cross
+Source: Scandinavian Runic-text Database 3.1, Viking-age runestones. Vitki's count; the words counted in the normalisation.
 :::"""
 
 title = "Hemma mellan rikena – Skånes runstenar"
@@ -246,9 +283,98 @@ Vikingatida runstenar (också fragment) i Samnordisk runtextdatabas 3.1; Skåne 
 - Sawyer, B. 2000. *The Viking-Age Rune-Stones: Custom and Commemoration in Early Medieval Scandinavia.* Oxford.
 - Foton: se bildtexterna."""
 
+title_en = "At Home Between the Realms – the Runestones of Skåne"
+summary_en = ("I grew up in Skåne and feel neither Danish nor at home in Stockholm. So I put the question to the people who "
+              "lived here a thousand years ago: where did one belong when the stones were raised? Fifty-nine runestones "
+              "answer – without naming either king or realm.")
+
+body_en = f"""I grew up in Skåne. I do not feel Danish, and I have never felt that I belong in Stockholm. It is a common Skåne feeling, so common that it is almost a cliché, and I have long wondered how old it is. So I did what I usually do with such questions: I put it to the stones. How did a person who lived here feel when the runestones were raised? Was she part of a realm, or did she only see her own district? She cannot be asked. But what she had cut in stone can be read, and counted.
+
+## Fifty-nine stones, a single generation
+
+Skåne has {N['Skåne']} Viking-age runestones in the Scandinavian Runic-text Database, {S['lost']} of them lost and known only from older drawings. Nearly all stand on the plain: in the hundreds of Vemmenhög, Herrestad and Ljunits along the south coast stand {H['Vemmenhögs hd'] + H['Herrestads hd'] + H['Ljunits hd']} of them, in Torna hundred around Lund {H['Torna hd']}. The forest districts in the north have almost none.
+
+{MAP_EN}
+
+The first thing that strikes you is how short a time they span. {S['efter_jelling']['Skåne']} of the {N['Skåne']} are dated to the period after the Jelling stone, that is the decades around the year 1000, while Denmark's other stones are spread over a couple of centuries ({S['efter_jelling']['Danmark']} of {N['Danmark']} are from the same period). Skåne's stones were raised in a single generation – the generation that lived under Harald Bluetooth, Sweyn Forkbeard and Cnut the Great, when Lund was founded as a royal town. One of the stones in Lund says so outright: *Toki let kirkiu gørwa*, Tóki had the church made (DR 315).
+
+## They raised them themselves
+
+How do the stones say what they say? Like the Danes, not like the Swedes. On {nn('ræisti/satti själv', 'Skåne')} of the {N['Skåne']} stones the person named first raised or placed the stone personally – *resþi sten þænsi*, *satti sten þænsi* – and only {nn('lät (let) göra', 'Skåne')} say *had*. In Uppland it is the other way round: there one *had* a stone raised on {sh('lät (let) göra', 'Uppland')} per cent of the stones and raised it oneself on {sh('ræisti/satti själv', 'Uppland')}. Skåne shares its way of speaking with Denmark and with Västergötland, which we have written about before: [Raise It Yourself – or Have It Raised](/en/artiklar/reste-sjalv-eller-lat-resa). The form is Danish too: {nn('RAK', 'Skåne')} of {N['Skåne']} stones are without ornament, plain text bands, and only {nn('kors', 'Skåne')} carry a cross, against nearly every second stone in Uppland.
+
+And they have a particular expression for the one they miss. *Harþa goþan dræng*, “a very good dreng” – a young, able man – stands on {nn('harþa goþan', 'Skåne')} of Skåne's stones. The phrase occurs in Västergötland ({nn('harþa goþan', 'Västergötland')} stones) and in Denmark ({nn('harþa goþan', 'Danmark')}), but in Småland, Östergötland, Södermanland and Uppland together on a single one. *Dræng* stands on {nn('dræng', 'Skåne')} Skåne stones and *þegn* on {nn('þegn', 'Skåne')}; Káta at Rydsgård calls her husband *þægna fyrstr*, first among thegns (DR 277). Nor is it only men who raise: Káta, Tonna, Tófa, Ketiley and Ása stand as raisers on their stones, for husbands and sons.
+
+{CHART_EN}
+
+## The partner
+
+What distinguishes Skåne most is a word that hardly stands on a runestone anywhere else: *felagi*, partner, the one you shared something with – a ship, a cargo, a voyage. {nn('felagi', 'Skåne')} of Skåne's {N['Skåne']} stones are raised for a partner, {sh('felagi', 'Skåne')} per cent. In all the rest of Denmark it is {nn('felagi', 'Danmark')} stones, in Västergötland {nn('felagi', 'Västergötland')}, in Uppland {nn('felagi', 'Uppland')} of {N['Uppland']:,}. Ásbjôrn at Fosie raised his stone for Dvergr, *felaga sin, dræng goþan*. Hals and Freybjôrn at Västra Karaby for Hofi, their partner. Þólfr and Ulfr at Gårdstånga for Ásmundr Lip, their partner.
+
+{PH_GAR_EN}
+
+And the partners travelled. The neighbouring stone at Gårdstånga says of two of them: *þeR drængiaR waRu wiþa unesiR i wikingu* – those drengs were widely renowned on viking raids (DR 330). Faðir at Västra Strö had the runes cut for his brother Ôzurr, *æs nor warþ døþr i wikingu*, who died in the north on a viking raid, and another stone for Bjôrn, *æs skip atti mæþ hanum*, who owned a ship together with him (DR 334, 335). Ásbjôrn at Solberga was someone's *skipari*, seaman (DR 275). Nafni's brother Tóki died in the west (DR 266), Eyndr's brother Auði on Gotland (DR 259), Manni and Sveini *liggia i Lundunum*, lie in London (DR 337), and Hrafn at Simris was Gunnulfr's lad *a Sweþiuþu* – in Sweden (DR 344).
+
+Counting everything that points beyond the district – Uppsala, Gotland, London, viking raids, the west, Sweden – it is mentioned on {nn('bortom bygden', 'Skåne')} of Skåne's {N['Skåne']} stones, {sh('bortom bygden', 'Skåne')} per cent. That is more than anywhere else: Denmark {sh('bortom bygden', 'Danmark')} per cent, Södermanland with its Ingvar stones {sh('bortom bygden', 'Södermanland')}, Uppland {sh('bortom bygden', 'Uppland')}. Skåne's horizon was the sea. Whoever stood on the plain at Vemmenhög and looked south saw not a border but a road.
+
+## A lord, but no king
+
+So where did one belong? None of the {N['Skåne']} stones names a king. None names Denmark. That word stands on the Jelling stone, where Harald says that he won himself all of Denmark and made the Danes Christian – but those are the king's words, in Jutland.
+
+And it is not a Skåne peculiarity. Of the North's {len(ALL):,} Viking-age runestones, {len(KING)} name a king, and four of them are the kings' own: the two Jelling stones, King Sweyn's stone at Hedeby for his retainer Skarði (DR 3) and Ásfríðr's for King Sigtryggr (DR 4). Of the other four, one is the Rök stone, one is Tuna in Småland where Ôzurr was *skipari Haralds kunungs*, King Harald's seaman (Sm 42), and two say only that the man died *when kings fought* (Vg 40, DR 66). The word Denmark stands on {len(DANM)} stones: the Jelling stones, Skivum in Jutland where the dead man was *landmanna bæztr i Danmarku*, the best of landholders in Denmark (DR 133), the verse on the Karlevi stone on Öland, and Amnö in Uppland, where Brúni died in Denmark in christening robes (U 699). Sweden, *Sweþiuþ*, stands on {len(SWED)} – both Danish, Tirsted on Lolland and Simris, and both about someone who was away there. The realm was a word for kings and for those who died abroad. On Skåne's stones people belong to someone else: to a lord.
+
+{PH_HAL_EN}
+
+At Hällestad church in Torna hundred three stones sit in the church wall. The first Áskell placed for *Toka Gorms sun, seR hullan drottin* – Tóki Gormr's son, to him a faithful lord. *SaR flo ægi at Upsalum*: he did not flee at Uppsala. The drengs placed the stone for their brother on the hill, *støþan runum*, steadied by runes, and *þeR Gorms Toka gingu næstiR* – they went closest to Gormr's Tóki (DR 295). On the two others the raisers call themselves *hemþægi Toka*, Tóki's house-thegns, his retainers (DR 296, 297). And thirty kilometres away, at Sjörup, Saxi placed a stone for his partner Ásbjôrn, *saR flo ægi at Upsalum æn wa mæþ han wapn hafþi* – he did not flee at Uppsala but fought as long as he had a weapon (DR 279).
+
+{PH_SJO_EN}
+
+Scholars usually connect the four stones with the battle of Fýrisvellir outside Uppsala around 985, where a Danish army fought the king of the Swedes. What they say about belonging is clear enough without the battle: the men of Skåne went to Uppsala to fight *against* the Swedes, under a Skåne lord, Tóki Gormsson, and what counted at home was that one did not flee. Sweden was the place where Hrafn was Gunnulfr's lad, somewhere else.
+
+## The same language as the enemy
+
+One more thing about Uppsala. Those who went there to fight the Swedes spoke the Swedes' language. The whole North called its language *dǫnsk tunga*, the Danish tongue, and on the runestones grammar and words are the same from Jutland to Uppland; what separates them is custom – *satti*, raising it oneself, the partner – not language. What today makes a Skåning or a Stockholmer understand a Dane only with difficulty happened almost entirely after the runestones' time: *kaka* becoming *kage* and *gata* becoming *gade*, the endings being levelled and the glottal stop arriving, all from the twelfth and thirteenth centuries onward.
+
+A single change was under way, and it shows in the runes. The diphthong in *stæinn* was turning into *e*: *stain* was becoming *stin*. In Denmark the word is written without the diphthong in {mono('Danmark')} per cent of the attestations, in Skåne in {mono('Skåne')}. But so it is in Västergötland, in {mono('Västergötland')} per cent, and in Östergötland in {mono('Östergötland')}. It is Södermanland ({mono('Södermanland')} per cent) and Uppland ({mono('Uppland')}) that hold on to *stain*. The line in the language thus ran not at the Sound but straight through Sweden, between Geats and Swedes – the same line that the spelling drew in [The Geats Wrote Like the Danes](/en/artiklar/vastgotarna-skrev-som-danskarna). A man from Skåne and a man from Västergötland sounded alike around the year 1000. The one who differed was the Upplander, and even that was a pronunciation, not another language. Tóki Gormsson's men and the Swedes at Uppsala understood each other without an interpreter. They were enemies, not strangers.
+
+But the lord is not the realm. What the stones hold on to is smaller and closer: the partner, the brother, the father, the farm. Tumi owned Guðissnapi (DR 280). Folkvé owned Haugbýr (DR 264). Bramr at Sövestad was *bæztr bomanna ok mildastr mataR*, the best of farmers and the most generous with food (DR 291); Ólafr and Óttarr at Lund were *landmænnr goþa*, good landholders (DR 314); Steinkell at Dalby *goþan bonda* (DR 298). The Hunnestad stones stand for Gunni Hand's sons (DR 282). That is how a man of Skåne around the year 1000 says where he belongs: with his lord, among his partners, on his farm, in his village. Of the realm he says nothing.
+
+## God came last – and the stones fell silent
+
+Three of the stones pray: for Auði who died on Gotland, for Manni and Sveini in London, for Forkunn at Simris. Three of {N['Skåne']}, against every seventh stone in Uppland. The crosses are eight. Skåne's stones remain almost wholly in the old world, and the new one arrives with those who died far away – on Gotland, in London – and with Tóki who had the church made in Lund.
+
+Then it ends. Only one of Skåne's stones is dated after 1050, Simris 1, while {U_LATE} per cent of Uppland's style-dated stones belong to the style groups of precisely that time, Pr3 to Pr5. When the Mälaren valley raises the most, Skåne has stopped. The usual explanation is the church: in Lund the cathedral grew and the graves moved in under its floors, and whoever wanted to be remembered no longer needed a stone by the road. Skåne became Christian, memory moved into the church, and the stones were the last thing the old district said in its own voice.
+
+## What they answer
+
+I asked the stones whether they felt Danish. They did not answer the question, and that is the answer. None of them says Danish, none says Swedish, none says realm. They say partner, brother, father, lord, farm, dreng, and they say Uppsala, Gotland and London. To belong was to belong to people – the one you followed, the one you shared a ship with, the one you inherited land from – and to have the sea as your horizon. The realm was the king's business, written down on his stone in Jutland. The district was theirs.
+
+I recognise myself in that, more than I expected. It is not that I am Danish, and neither were they, in any sense they themselves would have understood. They were at home at Hällestad and Gårdstånga, with the road to the sea open. The question whether I belong in Stockholm they would have found hard to understand at all; they belonged to each other.
+
+If you want to test it yourself, go to Hällestad church. The stones sit in the wall, and the first says what a thousand years have not changed: that what counted was that one did not flee, and whom one went closest to.
+
+:::box The essentials in brief
+- Skåne's {N['Skåne']} runestones were raised in a single generation, the decades around the year 1000, and they speak like the stones of Denmark and Västergötland: whoever raised one did it personally, without ornament, almost without crosses, and for “a very good dreng”.
+- What distinguishes them is the partner and the sea: no stones in the North name a partner so often, and no region points so often beyond the district – Uppsala, Gotland, London, viking raids.
+- No stone names king or realm – and hardly any runestone in the North does: eight of 2,633 name a king, four of them the kings' own. Belonging on the stones is a lord, partners, brothers and the farm; at Hällestad and Sjörup it is also not having fled at Uppsala, on a Danish errand against the Swedes – who spoke the same language. What makes Danish hard for us today came only after the runestones' time.
+- The stones fall silent around 1050, when the Mälaren valley's are at their most numerous. What Skåne said in its own voice it said before the church and the realm took over memory.
+:::
+
+:::box How we counted
+Viking-age runestones (fragments included) in the Scandinavian Runic-text Database 3.1; Skåne is the DR stones whose hundred lies in Skåne, Denmark the other Danish ones except Bornholm, Blekinge and Halland. The words are counted in Rundata's normalisation, with Danish and Swedish spelling merged: *felagi*, *dræng*, *þegn*, *harþa goþan*, *let* against *resþi/satti*, God, and places beyond the district (Uppsala, Gotland, London, viking raids, the west, Sweden). The datings are Rundata's (the time of the Jelling stone, around 965, as the boundary). The diphthong is counted in the transliterations: *stain* and *stein* against *stin* and *sten*, every attestation in each region. Everything is descriptive – shares, no tests – and lies open in the repository (utdata/skane). The map's borders are Vitki's map of the realms around 1025, approximate.
+:::
+
+## Sources
+
+- Scandinavian Runic-text Database, version 3.1 (ODbL).
+- Jacobsen, L. & Moltke, E. 1941–42. *Danmarks runeindskrifter.* Copenhagen.
+- Jesch, J. 2001. *Ships and Men in the Late Viking Age: The Vocabulary of Runic Inscriptions and Skaldic Verse.* Woodbridge.
+- Sawyer, B. 2000. *The Viking-Age Rune-Stones: Custom and Commemoration in Early Medieval Scandinavia.* Oxford.
+- Photos: see the captions."""
+
 assert not re.search(r"^\|", body, re.M) and "Jag växte upp i Skåne" in body
+assert not re.search(r"^\|", body_en, re.M) and "I grew up in Skåne" in body_en and body_en.count("## ") == body.count("## ")
 out = {"slug": "hemma-mellan-rikena-skanes-runstenar", "title": title, "summary": summary, "body": body,
-       "title_en": "", "summary_en": "", "body_en": "", "labels": ["Personligt", "Norden", "Formler och syfte"]}
+       "title_en": title_en, "summary_en": summary_en, "body_en": body_en, "labels": ["Personligt", "Norden", "Formler och syfte"]}
 json.dump(out, open(os.path.join(ROOT, "utdata", "blogg", "skane.json"), "w"), ensure_ascii=False, indent=1)
 print(os.path.join(ROOT, "utdata", "blogg", "skane.json"), len(body.split()), "ord")
 
