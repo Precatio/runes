@@ -68,7 +68,7 @@ def main(argv=None):
     os.makedirs(a.out, exist_ok=True)
     signa = [signum_from(p) for p in a.files]
     seen: dict[str, int] = {}
-    for path, signum in zip(a.files, signa):
+    for path, signum in zip(a.files, signa, strict=False):
         # a stone in several files (M 14_020, M 14_040) gets one result per file: M_14_1.json, M_14_2.json
         seen[signum] = seen.get(signum, 0) + 1
         part = f"_{seen[signum]}" if signa.count(signum) > 1 else ""

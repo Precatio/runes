@@ -165,7 +165,7 @@ def export(posts: list[dict], now_iso: str, force: bool = False) -> dict:
     _write_json(SEARCH, {"posts": build_index(published)})
     keep = set(files.values())
     for old in os.listdir(FIGURES):  # figures no published article uses any more, and copies in an older format
-        if old.endswith((".png", ".webp")) and old not in keep:
+        if (old.endswith((".png", ".webp")) and old not in keep) or _half_written(old):
             os.remove(os.path.join(FIGURES, old))
     return {"articles": len(published), "figures": len(names), "missing_figures": missing}
 
@@ -250,27 +250,67 @@ def views_moved(old: list[dict], fresh: list[dict]) -> bool:
                for p in fresh)
 
 
+def _half_written(name: str) -> bool:
+    """A temporary file that an interrupted write left in the figure folder (an older export's *.webp.tmp, or
+    src/blog_figures.to_site's .*.part): never committed, and removed by the next export."""
+    return name.endswith((".tmp", ".part")) or name.startswith(".")
+
+
 def _paths() -> list[str]:
-    """What the app commits for the website: the articles, the search index and the figures."""
-    return [os.path.relpath(CONTENT, ROOT), os.path.relpath(SEARCH, ROOT), os.path.relpath(FIGURES, ROOT)]
+    """What the app commits for the website: the articles, the search index and the figures – but never a half-written
+    temporary file in the figure folder (_half_written), even when an export was killed before it could remove it."""
+    figures = os.path.relpath(FIGURES, ROOT)
+    return [os.path.relpath(CONTENT, ROOT), os.path.relpath(SEARCH, ROOT), figures,
+            f":(exclude){figures}/*.tmp", f":(exclude){figures}/*.part", f":(exclude){figures}/.*"]
+
+
+def _ahead(site_only: bool = True) -> int | None:
+    """How many commits the branch has that its upstream lacks (git rev-list --count @{u}..HEAD); None when the branch
+    has no upstream or git cannot tell. By default only the commits that touch the website's files (_paths()) count, so
+    that a code commit the developer is holding back locally never makes the app push, nor Admin report that the
+    website is behind."""
+    r = _git("rev-list", "--count", "@{u}..HEAD", *(("--", *_paths()) if site_only else ()))
+    if r.returncode:
+        return None
+    try:
+        return int((r.stdout or "").strip() or 0)
+    except ValueError:
+        return None
 
 
 def push() -> dict:
     """Committar och pushar det exporterade (bara artiklarna, sökindexet och figurerna), så att GitHub bygger om
-    webbplatsen."""
+    webbplatsen.
+
+    Committen tar bara webbplatsens filer, men `git push` skickar hela grenen: en egen commit med kod som ännu inte är
+    pushad följer med när en artikelcommit läggs ovanpå den (och site.yml driftsätter den då). Svaret säger hur många
+    sådana andra commits som följde med (others)."""
     paths = _paths()
     a = _step("add", "add", "-A", "--", *paths, tries=8)
     if a.returncode:
         return {"pushed": False, "note": "Kunde inte lägga till artiklarna i git: " + (a.stderr or a.stdout).strip()[-400:]}
     if not _git("diff", "--cached", "--quiet", "--", *paths).returncode:
-        return {"pushed": False, "note": "Webbplatsen har redan de senaste artiklarna."}
+        # Nothing new to commit – but an earlier commit whose push failed (offline, a rejected push) is still only
+        # here: it is pushed now, so that the website does not wait for the next changed article
+        if not _ahead():
+            return {"pushed": False, "note": "Webbplatsen har redan de senaste artiklarna."}
+        return _push()
     c = _step("commit", "commit", "-m", "Webbplatsen: artiklarna uppdaterade", "--", *paths, tries=8)
     if c.returncode:
         return {"pushed": False, "note": "Kunde inte committa artiklarna: " + (c.stderr or c.stdout).strip()[-400:]}
+    return _push()
+
+
+def _push() -> dict:
+    total, site = _ahead(site_only=False), _ahead()
+    others = max(0, total - site) if total is not None and site is not None else 0
     p = _step("push", "push", tries=2)
     if p.returncode:
         return {"pushed": False, "note": "Committat men inte pushat: " + (p.stderr or p.stdout).strip()[-400:]}
-    return {"pushed": True, "note": "Pushat till GitHub – webbplatsen byggs om på några minuter."}
+    note = "Pushat till GitHub – webbplatsen byggs om på några minuter."
+    if others:
+        note += f" {others} andra commit{'s' if others > 1 else ''} på grenen följde med."
+    return {"pushed": True, "note": note, "others": others}
 
 
 def check_git() -> bool:
@@ -301,7 +341,8 @@ def status() -> dict:
         out = {}
     try:
         r = _git("status", "--porcelain", "--", *_paths())
-        out["unpushed"] = bool(r.stdout.strip()) if not r.returncode else None
+        # changes not committed yet, or committed but not pushed (a push that failed)
+        out["unpushed"] = (bool(r.stdout.strip()) or bool(_ahead())) if not r.returncode else None
     except (OSError, subprocess.SubprocessError):
         out["unpushed"] = None
     out["pending"] = os.path.exists(PENDING)

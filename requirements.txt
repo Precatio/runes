@@ -1,3 +1,5 @@
+# The lowest versions the code accepts. The exact, hash-checked versions of the developer's environment, which the
+# tests are run with, are in requirements.lock (pip install --require-hashes -r requirements.lock); CI installs from it.
 trimesh>=4.0.0
 numpy>=1.24.0
 scipy>=1.10.0
@@ -13,7 +15,7 @@ scikit-learn>=1.5  # kalibreringen av sannolikhetsmodellen (scripts/runlm_gap_ca
 nltk>=3.9  # referens för Kneser–Ney-utjämningen i testerna (tests/test_runlm.py)
 
 # Backend-API (FastAPI)
-fastapi>=0.110.0
+fastapi>=0.110.0,<0.160  # 0.160 reads a missing bool Form field as False (breaks /api/3d/auto_slice)
 firebase-admin>=6.5
 uvicorn>=0.29.0
 watchfiles>=0.21  # uvicorn --reload watches files by events instead of polling every .py in the project

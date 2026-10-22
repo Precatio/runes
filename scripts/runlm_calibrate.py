@@ -71,7 +71,7 @@ def gold(r):
         a, b = translit_words(t), norm_words(N[lab])
         if len(a) != len(b):
             return None
-        ws.extend((runekey(x), normtok(y)) for x, y in zip(a, b))
+        ws.extend((runekey(x), normtok(y)) for x, y in zip(a, b, strict=False))
     if not ws or not all(is_runes(x.lower()) for x, _ in ws):
         return None
     groups = [runekey(g) for g in carved_groups(r["transliteration"])]
@@ -183,7 +183,7 @@ for k in fl:
 B = fit(W)
 bins = [0, 0.2, 0.4, 0.6, 0.8, 0.9, 1.01]
 cal = []
-for lo, hi in zip(bins, bins[1:]):
+for lo, hi in zip(bins, bins[1:], strict=False):
     raw = [x for x in W if lo <= x["p"] < hi]
     cc = [x for x in W if lo <= x["pc"] < hi]
     rare_cc = [x for x in cc if x["freq"] <= 2]

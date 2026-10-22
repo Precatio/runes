@@ -113,7 +113,7 @@ def test_r_checks_can_only_lower_the_verdict():
     assert q.apply_r(weak, {"carver": {**ok, "p": 0.5}, "place": ok})["verdict"] == "bara i hela"
 
 
-@pytest.mark.skipif(not __import__("shutil").which("Rscript"), reason="R är inte installerat")
+@pytest.mark.needs_r  # skipped without R: see tests/conftest.py
 def test_r_checks_find_the_place_behind_crosses_on_sandstone(prep, tmp_path, monkeypatch):
     """Kors är ovanligare på sandsten (Mantel–Haenszel, båda halvorna, också med ristaren som slumpeffekt), men inte när
     stenarnas läge får forma en egen yta: sandsten och färre kors hör hemma i samma trakter (r/question.R)."""

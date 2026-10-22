@@ -116,6 +116,27 @@ def _warm_caches():
             logger.warning("Webbplatsens schemaläggning: %r", e)
     threading.Thread(target=site, daemon=True).start()
 
+    # The R cache (src/r_cache.py): older corpus versions beyond the newest few, untouched for two weeks, are removed –
+    # at most once a day, after the warm-up has computed the current version; never the current results. Not while
+    # data/cache/r/prune.json says "hold": true (`python -m src.r_cache --release` lifts it)
+    def r_cache_prune():
+        import time
+        try:
+            from src import r_bridge, r_cache
+            if not r_bridge.enabled() or not r_cache.due():
+                return
+            time.sleep(float(os.environ.get("R_CACHE_PRUNE_DELAY", "120")))
+            from api.routers import rstats
+            out = r_cache.prune_daily(rstats.fingerprint())
+            if out and out.get("removed"):
+                from api.errors import logger
+                logger.info("R-cachen: %d äldre korpusversioner togs bort (%.0f MB)", out["removed"], out["bytes"] / 1e6)
+        except Exception as e:  # housekeeping; the next start tries again
+            from api.errors import logger
+            logger.warning("Städningen av R-cachen misslyckades: %r", e)
+    if os.environ.get("R_CACHE_PRUNE", "1") not in ("0", "false"):
+        threading.Thread(target=r_cache_prune, daemon=True).start()
+
 
 @asynccontextmanager
 async def _lifespan(_app):
@@ -140,20 +161,51 @@ class SameSiteWrites:
     """Refuses (403) a request that changes something – anything but GET, HEAD and OPTIONS – sent by a page on another
     site: its Origin is not one of CORS_ORIGINS, or the browser marks it cross-site. A form or a body-less POST from a
     foreign page needs no preflight, so CORS alone does not stop it from starting R runs or 500 MB uploads. Requests
-    without these headers (the Next server, scripts, the tests) are let through."""
+    without these headers (the Next server, scripts, the tests) are let through, and so are the engine's API pages
+    (FastAPI's /docs and /redoc, "Try it out"): an Origin that is the request's own scheme://host:port, for one of the
+    allowed host names, not marked cross-site, and a Referer on one of those pages.
+
+    Only the API pages get this exception, not every page the engine serves from its own origin (the R html_map
+    figures under /api/r/figure/, say). The trade-off that remains: Swagger UI loads its script from cdn.jsdelivr.net,
+    so a compromised copy of that script could write while /docs is open. A browser that sends no Referer
+    (Referrer-Policy: no-referrer) cannot use "Try it out"; curl and scripts are unaffected."""
 
     SAFE = {"GET", "HEAD", "OPTIONS"}
+    DOC_PAGES = ("/docs", "/redoc")
 
-    def __init__(self, app, origins):
+    def __init__(self, app, origins, hosts=()):
         self.app = app
         self.origins = set(origins)
+        self.hosts = {h.lower() for h in hosts}
+
+    def _own(self, scope, headers: dict) -> str | None:
+        """The engine's own origin for this request (scheme://Host), when Host is one of the allowed names."""
+        host = headers.get(b"host", b"").decode("latin-1").strip().lower()
+        name = host[:host.index("]") + 1] if host.startswith("[") and "]" in host else host.split(":")[0]
+        if not name or not ("*" in self.hosts or name in self.hosts):
+            return None
+        return f"{scope.get('scheme', 'http')}://{host}"
+
+    def _from_doc_page(self, headers: dict, own: str) -> bool:
+        """Was the request sent from one of the engine's API pages (DOC_PAGES), going by the Referer?"""
+        ref = headers.get(b"referer", b"").decode("latin-1")
+        if not ref.lower().startswith(own + "/"):
+            return False
+        path = ref[len(own):].split("?", 1)[0].split("#", 1)[0]
+        return any(path == p or path.startswith(p + "/") for p in self.DOC_PAGES)
 
     async def __call__(self, scope, receive, send):
         if scope["type"] == "http" and scope["method"] not in self.SAFE:
             headers = {k.lower(): v for k, v in scope.get("headers", [])}
             origin = headers.get(b"origin", b"").decode("latin-1")
             site = headers.get(b"sec-fetch-site", b"").decode("latin-1")
-            if (origin and origin not in self.origins) or (not origin and site == "cross-site"):
+            if origin:
+                own = self._own(scope, headers)
+                ok = origin in self.origins or (site != "cross-site" and own is not None and origin.lower() == own
+                                                and self._from_doc_page(headers, own))
+            else:
+                ok = site != "cross-site"
+            if not ok:
                 await PlainTextResponse("Cross-site request refused", status_code=403)(scope, receive, send)
                 return
         await self.app(scope, receive, send)
@@ -166,7 +218,7 @@ app.add_middleware(ContentLengthHeader)
 app.add_middleware(GZipMiddleware, minimum_size=1024, compresslevel=5, exclude_content_types=(
     *DEFAULT_EXCLUDED_CONTENT_TYPES, "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     "model/stl"))
-app.add_middleware(SameSiteWrites, origins=CORS_ORIGINS)
+app.add_middleware(SameSiteWrites, origins=CORS_ORIGINS, hosts=ALLOWED_HOSTS)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=CORS_ORIGINS,

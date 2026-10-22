@@ -22,5 +22,8 @@ NEXT_PUBLIC_SITE_MODE=public NEXT_PUBLIC_SITE_URL="${SITE_URL:-https://vitkiruno
   NEXT_PUBLIC_FIREBASE_PROJECT_ID="${NEXT_PUBLIC_FIREBASE_PROJECT_ID:-runes-1656b}" NEXT_TELEMETRY_DISABLED=1 npx next build
 # The English editions of the articles declare English as the page's language (perl: sed -i differs on macOS)
 find out/en -name '*.html' -exec perl -pi -e 's/<html lang="sv"/<html lang="en"/' {} +
+# The security policy (lib/site.ts SITE_CSP, set in app/layout.tsx) first in <head>, right after the character set, so
+# that it covers every script and stylesheet the page loads: React renders it after Next's own tags (as in site.yml)
+find out -name '*.html' -exec perl -0pi -e 's{(<meta charSet="utf-8"/>)(.*?)(<meta http-equiv="Content-Security-Policy"[^>]*>)}{$1$3$2}s' {} +
 touch out/.nojekyll
 echo "Klart: $(pwd)/out"

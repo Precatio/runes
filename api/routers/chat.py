@@ -85,4 +85,4 @@ def chat_with_ai(request: ChatRequest, ai: llm.AIContext = Depends(llm.ai_contex
     except HTTPException:
         raise
     except Exception as e:
-        raise ai_error(e)
+        raise ai_error(e) from e

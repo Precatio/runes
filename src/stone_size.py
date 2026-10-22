@@ -187,7 +187,7 @@ def analyse(inscriptions: list[dict], dims: dict, n_perm: int = N_PERM) -> dict:
         tests.append({"variable": "Statusord (þegn, drengr, styrman, skeppare, kung, gode)", "kind": "status", "key": "status",
                       **stratified_test(rows, flag, n_perm),
                       "median_with_m": float(np.median(h[flag])), "median_without_m": float(np.median(h[~flag]))})
-    for t, q in zip(tests, bh([t["p"] for t in tests])):
+    for t, q in zip(tests, bh([t["p"] for t in tests]), strict=False):
         t["q"] = q
     out["tests"] = tests
     out["correlations"] = [{"variable": "Antal namngivna personer", "key": "n_names", **within_rank_correlation(rows, "n_names", n_perm)},
@@ -204,7 +204,7 @@ def analyse(inscriptions: list[dict], dims: dict, n_perm: int = N_PERM) -> dict:
         flag = np.array([r["carver"] == name for r in rows])
         carvers.append({"carver": name, **stratified_test(rows, flag, n_perm),
                         "median_m": float(np.median(h[flag]))})
-    for c, q in zip(carvers, bh([c["p"] for c in carvers])):
+    for c, q in zip(carvers, bh([c["p"] for c in carvers]), strict=False):
         c["q"] = q
     out["carvers"] = sorted(carvers, key=lambda c: -(c["ratio"] or 0))
     rh = [r for r in rows if r.get("rune_height_cm")]

@@ -18,6 +18,10 @@ export const ARTICLES_PATH = `/artiklar${SLASH}`;
 export const postPath = (slug: string) => `/artiklar/${encodeURIComponent(slug)}${SLASH}`;
 export const EN_ARTICLES_PATH = `/en/artiklar${SLASH}`;
 export const enPostPath = (slug: string) => `/en/artiklar/${encodeURIComponent(slug)}${SLASH}`;
+/** The article's page in the reader's language: the English edition for a reader who has chosen English, when the
+ *  article has one (the list carries title_en for exactly those), otherwise the Swedish original. */
+export const readerPath = (p: Pick<BlogPost, "slug" | "title_en">, lang: string) =>
+  lang === "en" && p.title_en ? enPostPath(p.slug) : postPath(p.slug);
 export const enPostUrl = (slug: string) => `${SITE_URL}${enPostPath(slug)}`;
 // hreflang pairs; Swedish is the original and the default for everyone else
 export const languageAlternates = (slug?: string) => ({
@@ -117,12 +121,14 @@ export function commonsAt(src: string, want: number, width?: number | null): str
 }
 
 /** srcset for a Commons picture whose original width is known: the standard thumbnails clearly narrower than the
- *  original (a thumbnail almost as wide saves nothing), then the original itself when it is no wider than the largest. */
-export function commonsSrcSet(src: string, width?: number | null, widths = [500, 960, 1280]): string | undefined {
+ *  original (a thumbnail almost as wide saves nothing), then the original itself when it is no wider than the largest.
+ *  below: how much narrower than the original a thumbnail must be; 1 takes every narrower one, where the original is
+ *  left out for its weight (an original wider than the largest width). */
+export function commonsSrcSet(src: string, width?: number | null, widths = [500, 960, 1280], below = 0.8): string | undefined {
   const m = COMMONS.exec(src);
   if (!m || !width || !BITMAP.test(m[2])) return undefined;
   const [, dir, name] = m;
-  const list = widths.filter(w => w < width * 0.8).map(w => `${COMMONS_BASE}/thumb/${dir}/${name}/${w}px-${name} ${w}w`);
+  const list = widths.filter(w => w < width * below).map(w => `${COMMONS_BASE}/thumb/${dir}/${name}/${w}px-${name} ${w}w`);
   if (width <= Math.max(...widths)) list.push(`${COMMONS_BASE}/${dir}/${name} ${width}w`);
   return list.join(", ");
 }

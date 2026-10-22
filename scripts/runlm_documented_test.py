@@ -70,7 +70,7 @@ def items_for(r):
     r2 = dict(r, transliteration=t2)
     full = BRACKET.sub(lambda m: m.group(1), r["transliteration"])  # the text as read before the loss
     N = dict(rl.sections(r["normalization"]))
-    truth_groups = {tuple(g2): g3 for g2, g3 in zip(groups_of(t2, lambda lab: lab in N), groups_of(full, lambda lab: lab in N))}
+    truth_groups = {tuple(g2): g3 for g2, g3 in zip(groups_of(t2, lambda lab: lab in N), groups_of(full, lambda lab: lab in N), strict=False)}
     out = []
     for groups, gap, w, tok in G.gaps_of(r2):
         g3 = truth_groups.get(tuple(groups))

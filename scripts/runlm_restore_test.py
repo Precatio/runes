@@ -66,7 +66,7 @@ def gold(r):
         a, b = translit_words(t), norm_words(N[lab])
         if len(a) != len(b):
             return None
-        ws.extend((runekey(x), normtok(y)) for x, y in zip(a, b))
+        ws.extend((runekey(x), normtok(y)) for x, y in zip(a, b, strict=False))
     if not ws or not all(is_runes(x.lower()) for x, _ in ws):
         return None
     groups = [runekey(g) for g in carved_groups(r["transliteration"])]

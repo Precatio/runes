@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { KEYWORDS, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+import { KEYWORDS, SITE_CSP, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import Script from "next/script";
 import { Noto_Sans_Runic } from "next/font/google";
 import "./globals.css";
@@ -39,6 +39,9 @@ export default function RootLayout({
   return (
     <html lang="sv" suppressHydrationWarning className={runic.variable}>
       <head>
+        {/* The public website's security policy (lib/site.ts SITE_CSP); the app on the researcher's computer has none.
+            The condition is written out, as in AppProviders, so that the app's build leaves it out */}
+        {process.env.NEXT_PUBLIC_SITE_MODE === "public" && <meta httpEquiv="Content-Security-Policy" content={SITE_CSP} />}
         {/* English chosen earlier: keep the page hidden until it is translated (public/lang-init.js) */}
         <Script id="vitki-lang" src="/lang-init.js" strategy="beforeInteractive" />
       </head>

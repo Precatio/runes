@@ -112,7 +112,7 @@ def build(inscriptions: list[dict], names) -> dict:
                        "y": mid_year(r), "v": [v[k] for k in keys],
                        "m": int(is_moved(r))})
     kinds, dist = places.stone_distances(stones)
-    for st, d in zip(stones, dist):
+    for st, d in zip(stones, dist, strict=False):
         st["d"] = d
     return {"patterns": [{"key": k, "label": l, "group": g, "help": h} for k, l, g, h in PATTERNS],
             "place_kinds": [{"key": k, "label": l, "group": g, "help": h} for k, l, g, h in places.KINDS if k in kinds],

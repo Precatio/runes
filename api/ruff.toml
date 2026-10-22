@@ -1,0 +1,14 @@
+# Lint settings for the engine (api/), used by `ruff check api` (ruff is not part of .venv or CI: run it with
+# `pipx run ruff check api` or an installed ruff). Besides ruff's default rule set, flake8-bugbear (B) is always checked
+# here, since it catches the mistakes a request handler can make (mutable defaults, a loop variable caught by a closure,
+# an `except` that swallows too much). With this file, `ruff check api --select B` passes.
+[lint]
+extend-select = ["B"]
+
+# FastAPI declares parameters with calls in their defaults (Depends(...), File(...), Form(...)); FastAPI reads these
+# markers, they are not shared mutable defaults, so bugbear's B008 is told they are safe.
+[lint.flake8-bugbear]
+extend-immutable-calls = [
+    "fastapi.Body", "fastapi.Cookie", "fastapi.Depends", "fastapi.File", "fastapi.Form", "fastapi.Header",
+    "fastapi.Path", "fastapi.Query", "fastapi.Security",
+]

@@ -2,7 +2,11 @@
 import os
 import subprocess
 
+import pytest
+
 from src import spawn
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def test_programs_are_started_by_posix_spawn():
@@ -19,10 +23,11 @@ def test_a_working_directory_is_set_by_the_shell(tmp_path):
     assert os.path.realpath(out.stdout.strip()) == os.path.realpath(str(tmp_path))
 
 
+# A release archive (the Zenodo zip) or a plain copy has no .git folder
+@pytest.mark.skipif(not os.path.exists(os.path.join(ROOT, ".git")), reason="inte en git-utcheckning")
 def test_git_runs_in_the_repository():
-    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    out = spawn.run(["git", "rev-parse", "--show-toplevel"], cwd=root, capture_output=True, text=True)
-    assert out.returncode == 0 and os.path.realpath(out.stdout.strip()) == os.path.realpath(root)
+    out = spawn.run(["git", "rev-parse", "--show-toplevel"], cwd=ROOT, capture_output=True, text=True)
+    assert out.returncode == 0 and os.path.realpath(out.stdout.strip()) == os.path.realpath(ROOT)
 
 
 def test_a_detached_program_runs_in_its_own_session(tmp_path):

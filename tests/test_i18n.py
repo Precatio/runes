@@ -52,7 +52,7 @@ def test_same_templates_as_the_browser():
                         i18n.ROOT, json.dumps(SAMPLES)], capture_output=True, text=True, timeout=60)
     assert r.returncode == 0, r.stderr
     js = json.loads(r.stdout)
-    for text, (template, segs, with_terms) in zip(SAMPLES, js):
+    for text, (template, segs, with_terms) in zip(SAMPLES, js, strict=False):
         assert i18n.mask(text)[0] == template, text
         assert i18n.segments(text) == segs, text
         assert i18n.mask(text, True)[0] == with_terms, text

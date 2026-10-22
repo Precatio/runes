@@ -247,12 +247,12 @@ def material_baseline(labels: list[str], families: list) -> float | None:
     stenarna i samma bergartsfamilj. Ristare och bergart hänger ihop (en ristare högg ofta i traktens sten), så den
     här nivån är den träffsäkerhet huggtekniken måste överträffa för att säga något om handen. None när bergart saknas
     för alla stenar."""
-    known = [(g, f) for g, f in zip(labels, families) if f]
+    known = [(g, f) for g, f in zip(labels, families, strict=False) if f]
     if len(known) < 2:
         return None
     hits = 0
-    for i, (g, f) in enumerate(zip(labels, families)):
-        pool = [h for j, (h, f2) in enumerate(zip(labels, families)) if j != i and f and f2 == f]
+    for i, (g, f) in enumerate(zip(labels, families, strict=False)):
+        pool = [h for j, (h, f2) in enumerate(zip(labels, families, strict=False)) if j != i and f and f2 == f]
         if not pool:
             pool = [h for j, h in enumerate(labels) if j != i]
         hits += max(sorted(set(pool)), key=pool.count) == g  # sorterat: lika antal avgörs lika varje gång

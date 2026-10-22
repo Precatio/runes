@@ -34,6 +34,15 @@ runsten-l1986-9602-ahus-172-i-kristianstad-skane.webp
 depth_test_fast.png
 v_groove_plot.pdf
 data/cache/
+# utdata/ and data/blog/ are ignored by default, so analysis runs and figure uploads never show up as untracked files.
+# The files that ARE tracked under them were added on purpose with `git add -f` (git keeps tracking a file once it is
+# added, whatever .gitignore says) and belong to the published record:
+#   utdata/  the scripts, inputs and results behind published or drafted articles and the model checks:
+#            Edda (+ Edda/kallor), Malt, blindtest, blogg (+ blogg/build, blogg/forslag), forslag, huggspar, kallor,
+#            landning, lda_kategorier, luckartikel, material, mi, modellartikel, ordpar, ristare (+ ristare/ut),
+#            runlm_forfining (+ runlm_forfining/tm19), skane, sparlasare, sprakprov, stilgrupp_ai
+#   data/blog/figures/  two article figures that article scripts and saved article versions in utdata/blogg refer to
+# A new file there that should be kept is added with `git add -f <path>`; list tracked ones with `git ls-files utdata`.
 utdata/
 /.next/
 data/raa/
@@ -48,3 +57,6 @@ examples/*/ut/
 
 # Earlier versions of the articles, written before every save and deletion (api/routers/blog.py)
 data/backup/
+# Local copies kept before a model generation replaced a data file (e.g. data/runlm_calibration.json.fore-tm19-2026-10-20);
+# the record of each generation is in utdata/runlm_forfining. Add one with `git add -f` if it should be kept.
+data/*.fore-*

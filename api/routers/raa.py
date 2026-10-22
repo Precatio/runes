@@ -60,7 +60,7 @@ def extract_signum(
     except HTTPException:
         raise
     except Exception as e:
-        raise ai_error(e)
+        raise ai_error(e) from e
 
 def rundata_response(rec: dict) -> RaaResponse:
     carvers = [c for c in rec["carvers"] if c["kind"] in ("S", "A")]
@@ -113,7 +113,7 @@ def fetch_raa_data(
     except HTTPException:
         raise
     except Exception as e:
-        raise server_error(e, "Kunde inte hämta data från K-samsök.", status_code=502)
+        raise server_error(e, "Kunde inte hämta data från K-samsök.", status_code=502) from e
         
     descriptions = []
     for record in data.get("result", {}).get("records", []):

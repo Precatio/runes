@@ -59,3 +59,29 @@ export const siteCollection = (name: string) =>
 // Opening the website once with ?inte-rakna leaves that browser out of the visitor statistics (the founder's own visits)
 export const STATS_OFF_KEY = "vitki-stats-off";
 export const STATS_OFF_URL = `${SITE_URL}/?inte-rakna`;
+
+/**
+ * The public website's Content-Security-Policy, set as a <meta http-equiv> in app/layout.tsx (GitHub Pages cannot send
+ * headers), and only on the website: what its pages load and send, nothing more.
+ * - script-src 'unsafe-inline': the static export's inline bootstrap scripts (self.__next_f.push(…) with the page's
+ *   data, and the loader of public/lang-init.js) differ on every page and in every build, so hashes would have to be
+ *   computed after the build for each page; nothing on the site puts visitors' text into a script.
+ * - style-src 'unsafe-inline': React's style attributes (the charts' bars, the picture sizes).
+ * - img-src: the site's own pictures and Wikimedia Commons, where the articles' photos come from (articles.json).
+ * - connect-src: the article search's index (the site itself), the vote and visitor counts (Firestore's REST
+ *   interface, lib/track.ts and components/SiteVote.tsx) and the contact form (FormSubmit, components/ContactForm.tsx).
+ * frame-ancestors cannot be set by a meta element (browsers ignore it there and warn), so it is left out.
+ * Empty in the app, which sets no policy; the condition is written out (not PUBLIC_SITE), so that the app's build drops
+ * the policy's text altogether.
+ */
+export const SITE_CSP = process.env.NEXT_PUBLIC_SITE_MODE !== "public" ? "" : [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https://upload.wikimedia.org https://thumb.wikimedia.org https://commons.wikimedia.org",
+  "font-src 'self'",
+  `connect-src 'self' https://firestore.googleapis.com ${new URL(CONTACT_ENDPOINT).origin}`,
+  `form-action 'self' ${new URL(CONTACT_SERVICE_URL).origin}`,
+  "object-src 'none'",
+  "base-uri 'self'",
+].join("; ");

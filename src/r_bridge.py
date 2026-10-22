@@ -74,7 +74,12 @@ CSV_COLUMNS = (["signum", "province", "district", "place", "parish", "lat", "lon
 # ---- R installation ------------------------------------------------------------------------
 
 def rscript() -> str | None:
-    path = os.environ.get("RSCRIPT") or shutil.which("Rscript")
+    """Rscript att köra: RSCRIPT om den är satt (RSCRIPT='' betyder uttryckligen att R saknas, så att en körning
+    utan R kan provas på en maskin som har R), annars Rscript i PATH eller en av de vanliga platserna."""
+    env = os.environ.get("RSCRIPT")
+    if env is not None:
+        return env or None
+    path = shutil.which("Rscript")
     if path:
         return path
     for p in ("/opt/homebrew/bin/Rscript", "/usr/local/bin/Rscript", "/usr/bin/Rscript"):

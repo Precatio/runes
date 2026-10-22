@@ -126,7 +126,7 @@ def test_auto_slice_on_flat_surface_explains(client, stone_id):
 def test_summarize_selection(client):
     slices = [{m: v for m, v in zip(
         ["apex_vinkel_deg", "asymmetri_deg", "spårdjup_mm", "spårbredd_mm", "djup_bredd_kvot", "bottenradie_mm",
-         "ytråhet_mm"], [70 + i, 3, 2, 6, .33, .2, .05])} for i in range(4)]
+         "ytråhet_mm"], [70 + i, 3, 2, 6, .33, .2, .05], strict=False)} for i in range(4)]
     r = client.post("/api/stats/summarize", json={"slices": slices})
     assert r.status_code == 200 and r.json()["n"] == 4
 

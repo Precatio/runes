@@ -99,8 +99,8 @@ for name, use_prior in (("prior", True), ("uniform", False)):
     out[name] = {"n": len(P), "right": right / len(P), "within_one": near / len(P), "majority_baseline": base,
                  "per_epoch": per, "confusion": conf, "by_length": by_len, "reliability": rel}
     out[name]["by_object"] = by_object(P, lambda xp: xp[0]["sig"], {
-        "right": lambda ys: sum(pick(p) == x["true"] for x, p in ys) / len(ys),
-        "within_one": lambda ys: sum(abs(EPOCHS.index(pick(p)) - EPOCHS.index(x["true"])) <= 1 for x, p in ys) / len(ys)})
+        "right": lambda ys, pick=pick: sum(pick(p) == x["true"] for x, p in ys) / len(ys),
+        "within_one": lambda ys, pick=pick: sum(abs(EPOCHS.index(pick(p)) - EPOCHS.index(x["true"])) <= 1 for x, p in ys) / len(ys)})
     print_by_object(f"[{name}]", out[name]["by_object"])
     print(f"[{name}] rätt epok {right / len(P):.1%} av {len(P)} (största klassen {base:.1%}); högst en epok fel {near / len(P):.1%}")
     print("   per epok (rätt, antal):", per)

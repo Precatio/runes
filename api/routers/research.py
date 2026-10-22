@@ -72,7 +72,7 @@ def ask_question(req: QuestionRequest):
     try:
         out = question.ask(_question(), req.a, req.kind, key, req.earlier)
     except ValueError as e:
-        raise HTTPException(status_code=422, detail=str(e))
+        raise HTTPException(status_code=422, detail=str(e)) from e
     fp = rstats.fingerprint()
     # The two checks in R (r/question.R) when there is an answer to check and R is installed; without them the verdict
     # stands and the answer says that they could not be run

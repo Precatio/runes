@@ -4,7 +4,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { STATS_OFF_URL } from "@/lib/site";
 
 // GET /api/admin/site/stats: the public website's visitor counts (components/SiteTracker.tsx writes them), seen only here
-interface Row { key: string; n: number }
+interface Row { key: string; n: number; raw?: number }
+// The votes on the articles page: n is what is counted (at most per_day rows per topic and day), raw every row
+interface VoteTotals { counted: number; raw: number }
+interface VoteCap { per_day: number; votes: VoteTotals; vote_texts: VoteTotals }
 interface Stats {
   since: string; days: number; day: string | null; views: number; visits: number; computed_at: string;
   per_day: { day: string; views: number; visits: number }[];
@@ -12,7 +15,7 @@ interface Stats {
   sections: { key: string; n: number; share: number | null }[];
   referrers: Row[]; direct: number; countries: Row[]; languages: Row[]; devices: Row[];
   searches: { total: number; top: Row[]; no_hits: Row[] };
-  clicks: { share: Row[]; outbound: Row[]; language: Row[]; shared_pages: Row[]; votes?: Row[]; vote_texts?: Row[] };
+  clicks: { share: Row[]; outbound: Row[]; language: Row[]; shared_pages: Row[]; votes?: Row[]; vote_texts?: Row[]; vote_cap?: VoteCap };
   via: Row[]; flow: Row[]; entries: { path: string; title: string | null; n: number }[];
 }
 type Call = (path: string, init?: RequestInit) => Promise<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -28,6 +31,16 @@ const BAR_AREA = 104; // px för den högsta stapeln; talen får 26 px ovanför
 const pct = (v: number | null) => (v == null ? "–" : `${Math.round(v * 100)} %`);
 const num = (n: number) => n.toLocaleString("sv-SE");
 
+// "Begränsat: X av Y räknade" when the server's cap on votes per topic and day left rows out (they are marked *)
+function CapNote({ totals, perDay, what }: { totals?: VoteTotals; perDay?: number; what: string }) {
+  if (!totals || totals.raw <= totals.counted) return null;
+  return (
+    <p className="mb-2 text-xs font-semibold text-amber-800">
+      Begränsat: {num(totals.counted)} av {num(totals.raw)} räknade. Högst {perDay} röster per {what} och dag räknas (markerade *), så att den som skickar röster med ett skript inte kan blåsa upp resultatet.
+    </p>
+  );
+}
+
 function Bars({ rows, total, label = r => r.key }: { rows: Row[]; total: number; label?: (r: Row) => string }) {
   if (!rows.length) return <p className="text-sm text-slate-500">Inget än.</p>;
   return (
@@ -36,7 +49,9 @@ function Bars({ rows, total, label = r => r.key }: { rows: Row[]; total: number;
         <div key={r.key} className="grid grid-cols-[minmax(0,1fr)_5rem_auto] items-center gap-3 text-sm">
           <span className="truncate text-slate-700" title={label(r)}>{label(r)}</span>
           <span className="h-2 rounded-full bg-slate-100"><span className="block h-2 rounded-full bg-[#2a78d6]" style={{ width: `${total ? Math.max(2, Math.round(r.n / total * 100)) : 0}%` }} /></span>
-          <span className="w-10 text-right tabular-nums text-slate-700">{num(r.n)}</span>
+          <span className="w-10 text-right tabular-nums text-slate-700" title={r.raw != null && r.raw > r.n ? `begränsat: ${num(r.n)} av ${num(r.raw)} räknade` : undefined}>
+            {num(r.n)}{r.raw != null && r.raw > r.n && <span className="text-amber-800">*</span>}
+          </span>
         </div>
       ))}
     </div>
@@ -167,9 +182,11 @@ export default function SiteStats({ call }: { call: Call }) {
               <Bars rows={data.searches.no_hits} total={data.searches.no_hits[0]?.n ?? 0} />
             </Box>
             <Box title="Vad läsarna vill läsa mer om" note="Rösterna på artikelsidan: valda ämnen (upp till tre per röst).">
+              <CapNote totals={data.clicks.vote_cap?.votes} perDay={data.clicks.vote_cap?.per_day} what="ämne" />
               <Bars rows={data.clicks.votes ?? []} total={data.clicks.votes?.[0]?.n ?? 0} />
             </Box>
             <Box title="Läsarnas egna förslag" note="Fritext i röstningen på artikelsidan, högst 70 tecken.">
+              <CapNote totals={data.clicks.vote_cap?.vote_texts} perDay={data.clicks.vote_cap?.per_day} what="förslag" />
               <Bars rows={data.clicks.vote_texts ?? []} total={data.clicks.vote_texts?.[0]?.n ?? 0} />
             </Box>
             <Box title="Delningar per kanal" note="Klick på delningsknapparna under artiklarna.">

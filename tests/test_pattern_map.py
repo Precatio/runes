@@ -31,5 +31,5 @@ def test_build_values_follow_pattern_order():
     out = pm.build([rec], names=set())
     assert [p["key"] for p in out["patterns"]] == keys
     assert len(out["stones"]) == 1 and out["stones"][0]["y"] is not None
-    v = dict(zip(keys, out["stones"][0]["v"]))
+    v = dict(zip(keys, out["stones"][0]["v"], strict=False))
     assert v["kristen"] == 1 and v["kors"] == 1 and v["hednisk"] == 0 and v["neutral"] == 0

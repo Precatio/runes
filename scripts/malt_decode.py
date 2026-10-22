@@ -113,7 +113,7 @@ def recal(p, w, length, runes):
     p = min(max(p, 1e-4), 1 - 1e-4)
     lch = max(math.log(max(m.index.get(runes, {}).get(w, 0.0), 1e-12)), -12.0)
     x = [1.0, math.log(p / (1 - p)), math.log1p(fk[key(w)]), float(fk[key(w)] == 0), math.log(length), lch]
-    return 1 / (1 + math.exp(-sum(a * b for a, b in zip(x, B))))
+    return 1 / (1 + math.exp(-sum(a * b for a, b in zip(x, B, strict=False))))
 
 
 res = {}

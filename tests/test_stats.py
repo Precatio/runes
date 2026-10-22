@@ -7,7 +7,7 @@ SD = [3, 1, 0.3, 0.5, 0.03, 0.05, 0.01]
 
 
 def stone(mu, n=8):
-    return [dict(zip(METRICS, RNG.normal(mu, SD))) for _ in range(n)]
+    return [dict(zip(METRICS, RNG.normal(mu, SD), strict=False)) for _ in range(n)]
 
 
 def test_summarize_ci_contains_mean():

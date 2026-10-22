@@ -68,7 +68,7 @@ def _all() -> list[dict]:
         docs = firestore().collection(COLLECTION).stream()
         posts = [{"id": d.id, **_iso(d.to_dict())} for d in docs]
     except Exception as e:
-        raise server_error(e, "Blogginläggen kunde inte hämtas.", status_code=503)
+        raise server_error(e, "Blogginläggen kunde inte hämtas.", status_code=503) from e
     _POSTS.update(at=time.time(), posts=posts)
     return [dict(p) for p in posts]
 
@@ -217,7 +217,7 @@ def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
     except HTTPException:
         raise
     except Exception as e:
-        raise server_error(e, "Artikeln kunde inte sparas.", status_code=503)
+        raise server_error(e, "Artikeln kunde inte sparas.", status_code=503) from e
     if announce and indexnow(req.slug):
         ref.set({"announced": True}, merge=True)
     # The public website: published or changed articles go out within half a minute, scheduled ones at their time
@@ -248,7 +248,7 @@ def set_featured(req: FeaturedRequest, _: dict = Depends(require_admin)):
                 col.document(p["id"]).set({"featured": want}, merge=True)
         _forget()
     except Exception as e:
-        raise server_error(e, "Veckans artikel kunde inte sparas.", status_code=503)
+        raise server_error(e, "Veckans artikel kunde inte sparas.", status_code=503) from e
     from src import site_export
     site_export.publish_soon()
     return {"featured": req.id or None}
@@ -300,7 +300,7 @@ def delete_post(post_id: str, _: dict = Depends(require_admin)):
         ref.delete()
         _forget()
     except Exception as e:
-        raise server_error(e, "Inlägget kunde inte tas bort.", status_code=503)
+        raise server_error(e, "Inlägget kunde inte tas bort.", status_code=503) from e
     if was_published:
         site_export.publish_soon()
     site_export.schedule(_all())
@@ -521,7 +521,7 @@ def _patterns_or_fail() -> list[dict]:
     try:
         patterns = _patterns()
     except Exception as e:  # noqa: BLE001
-        raise server_error(e, "Mönstren kunde inte hämtas. Är korpusanalyserna i R beräknade?", status_code=503)
+        raise server_error(e, "Mönstren kunde inte hämtas. Är korpusanalyserna i R beräknade?", status_code=503) from e
     if not patterns:
         raise HTTPException(status_code=409, detail="Korpusanalyserna i R är inte beräknade ännu (Statistik → Beräkna).")
     return patterns
@@ -722,7 +722,7 @@ def images(req: ImagesRequest, _: dict = Depends(require_admin)):
     try:
         stones = commons.stone_photos(signa)
     except Exception as e:  # noqa: BLE001
-        raise server_error(e, "Bilderna kunde inte hämtas från Wikimedia Commons.", status_code=503)
+        raise server_error(e, "Bilderna kunde inte hämtas från Wikimedia Commons.", status_code=503) from e
     have = {st["signum"] for st in stones}
     return {"stones": stones, "missing": [s for s in signa if s not in have]}
 
@@ -744,5 +744,5 @@ def publish_site(force: bool = False, _: dict = Depends(require_admin)):
     try:
         out = site_export.publish_now(force=force)
     except Exception as e:  # noqa: BLE001 - git or the disk
-        raise server_error(e, "Webbplatsen kunde inte publiceras.", status_code=503)
+        raise server_error(e, "Webbplatsen kunde inte publiceras.", status_code=503) from e
     return out

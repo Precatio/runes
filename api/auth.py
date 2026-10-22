@@ -75,15 +75,15 @@ def verify(token: str) -> dict:
             logger.warning("Kunde inte kontrollera om kontot är avstängt (%r); kontrollerar bara token.", e)
             claims = fb_auth.verify_id_token(token, app=app, check_revoked=False)
     except fb_auth.UserDisabledError:
-        raise HTTPException(status_code=403, detail="Kontot är avstängt.")
+        raise HTTPException(status_code=403, detail="Kontot är avstängt.") from None
     except fb_auth.RevokedIdTokenError:
-        raise HTTPException(status_code=401, detail="Inloggningen har återkallats. Logga in igen.")
+        raise HTTPException(status_code=401, detail="Inloggningen har återkallats. Logga in igen.") from None
     except fb_auth.ExpiredIdTokenError:
-        raise HTTPException(status_code=401, detail="Inloggningen har gått ut. Logga in igen.")
+        raise HTTPException(status_code=401, detail="Inloggningen har gått ut. Logga in igen.") from None
     except HTTPException:
         raise
     except Exception:
-        raise HTTPException(status_code=401, detail="Ogiltig inloggning.")
+        raise HTTPException(status_code=401, detail="Ogiltig inloggning.") from None
     return {**claims, "uid": claims.get("uid") or claims.get("sub"), "admin": is_admin(claims)}
 
 

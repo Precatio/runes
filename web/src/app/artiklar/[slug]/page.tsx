@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import BlogShell from "@/components/BlogShell";
 import BlogArticle from "@/components/BlogArticle";
 import MoreArticles from "@/components/MoreArticles";
+import type { BlogPost } from "@/components/BlogBody";
 import { getPost, listPosts, postSlugs } from "@/lib/articles";
 import { featuredFirst } from "@/lib/featured";
 import { articleJsonLd, commonsSizes, keywords, metaDescription, pictures, postPath, SHARE_SIZE, sharePath, withImageSizes } from "@/lib/blogSeo";
@@ -16,6 +17,14 @@ export const revalidate = 60;
 // Every published article is built ahead; on the public website there are no others
 export const generateStaticParams = postSlugs;
 
+// The English fields stay out of what the Swedish page sends to the browser: a reader who chooses English is taken to
+// the English edition (/en/artiklar/…, components/LanguageContext.tsx) instead of having the text swapped in place
+const swedishOnly = ({ title_en: _t, summary_en: _s, body_en: _b, ...p }: BlogPost): BlogPost => p; // eslint-disable-line @typescript-eslint/no-unused-vars
+// A card under "Fler artiklar" keeps its English title: a reader who has chosen English on an article that is only in
+// Swedish (the frame translated in place) sees the cards in English, and each links to its English edition when the
+// article has one (readerPath, by title_en), as in the list. No texts and no English summary: the cards show neither
+const moreCard = ({ body: _b, body_en: _e, summary_en: _s, ...p }: BlogPost): BlogPost => p; // eslint-disable-line @typescript-eslint/no-unused-vars
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPost(decodeURIComponent(slug));
@@ -28,7 +37,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description,
     keywords: keywords(post),
     authors: [{ name: post.author || "Viktor Kvant" }],
-    alternates: { canonical: path, languages: languageAlternates(post.slug), types: { "application/rss+xml": "/artiklar/rss.xml" } },
+    alternates: { canonical: path, languages: post.body_en ? languageAlternates(post.slug) : undefined, types: { "application/rss+xml": "/artiklar/rss.xml" } },
     openGraph: {
       type: "article", url: path, title: post.title, description, siteName: "Vitki", locale: "sv_SE",
       publishedTime: post.publishedAt ?? undefined, modifiedTime: post.updatedAt ?? post.publishedAt ?? undefined,
@@ -46,15 +55,18 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const post = await getPost(decodeURIComponent(slug));
   if (!post) notFound();
   // three other articles: the article of the week first, then the newest
-  const more = await withImageSizes(featuredFirst((await listPosts()).posts.filter(p => p.slug !== post.slug)).slice(0, 3));
-  // The sizes of its Commons photos, in both languages (the reader can switch)
-  const sizes = await commonsSizes(pictures(`${post.body ?? ""}\n${post.body_en ?? ""}`).map(p => p.src));
+  const more = (await withImageSizes(featuredFirst((await listPosts()).posts.filter(p => p.slug !== post.slug)).slice(0, 3))).map(moreCard);
+  // The sizes of its Commons photos
+  const sizes = await commonsSizes(pictures(post.body ?? "").map(p => p.src));
+  const english = post.body_en ? enPostPath(post.slug) : null;
   return (
     <BlogShell>
-      <div className="max-w-3xl mx-auto px-6 pt-8 -mb-10 text-right">
-        <a href={enPostPath(post.slug)} hrefLang="en" className="text-sm text-[#b7410e] font-semibold hover:underline">In English →</a>
-      </div>
-      <BlogArticle post={post} sizes={sizes} />
+      {english && (
+        <div className="max-w-3xl mx-auto px-6 pt-8 -mb-10 text-right">
+          <a href={english} hrefLang="en" className="text-sm text-[#b7410e] font-semibold hover:underline">In English →</a>
+        </div>
+      )}
+      <BlogArticle post={swedishOnly(post)} sizes={sizes} english={english} />
       <MoreArticles posts={more} />
       { }
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd(post)).replace(/</g, "\\u003c") }} />

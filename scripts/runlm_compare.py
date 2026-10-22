@@ -20,7 +20,7 @@ def compare(pa, pb, key=1, n_boot=2000, seed=2026):
     _, wb = load(pb)
     assert [w[0] for w in wa] == [w[0] for w in wb], "proven gäller inte samma ord"
     by = defaultdict(lambda: [0, 0, 0])
-    for a, b in zip(wa, wb):
+    for a, b in zip(wa, wb, strict=False):
         s = by[a[0]]
         s[0] += 1; s[1] += a[key]; s[2] += b[key]
     stones = list(by.values())

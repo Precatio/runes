@@ -233,8 +233,8 @@ def stone_photos(signa: list[str], per_stone: int = 6) -> list[dict]:
             except (OSError, ValueError, KeyError):  # one category or search that fails leaves the others
                 return []
         with ThreadPoolExecutor(max_workers=6) as pool:
-            in_cat = dict(zip(cats, pool.map(lambda c: safely(category_files, c), cats.values())))
-            found = dict(zip(search, pool.map(lambda s: safely(commons_search, s), search)))
+            in_cat = dict(zip(cats, pool.map(lambda c: safely(category_files, c), cats.values()), strict=False))
+            found = dict(zip(search, pool.map(lambda s: safely(commons_search, s), search), strict=False))
         names = {s: list(dict.fromkeys(([items[s]["file"]] if (items.get(s) or {}).get("file") else [])
                                         + in_cat.get(s, []) + found.get(s, []))) for s in todo}
         info = commons_info(list({f for fs in names.values() for f in fs}))

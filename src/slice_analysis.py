@@ -407,7 +407,7 @@ def analyze_path(mesh, path_points, up_vector, window_mm=DEFAULT_WINDOW_MM, face
                                      "djup_bredd_kvot", "bottenradie_mm", "ytråhet_mm")},
          "position_mm": float(dist), "fit_r2": float(r["fit_r2"]), "profile": raw_profile(*prof),
          "point": [float(v) for v in pt], "direction": [float(v) for v in tg], "up": [float(v) for v in up_vector]}
-        for r, dist, prof, (pt, tg) in zip(results_list, distances, profiles, frames)
+        for r, dist, prof, (pt, tg) in zip(results_list, distances, profiles, frames, strict=False)
     ]
 
     return avg_results, plot_data_list[0] if len(plot_data_list) > 0 else None, depth_profile, slices

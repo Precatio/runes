@@ -54,8 +54,50 @@ def test_votes_on_the_articles_page_are_summarised():
             {"kind": "click", "path": "/artiklar", "day": "2026-10-20", "label": "rost:eddan"},
             {"kind": "click", "path": "/artiklar", "day": "2026-10-20", "label": "rost-eget:Stenarna på Öland"}]
     out = site_stats.summarize(rows, since, 1)
-    assert out["clicks"]["votes"] == [{"key": "Magi, förbannelser och skydd", "n": 2}, {"key": "Eddan och fornnordisk dikt", "n": 1}]
-    assert out["clicks"]["vote_texts"] == [{"key": "Stenarna på Öland", "n": 1}]
+    assert out["clicks"]["votes"] == [{"key": "Magi, förbannelser och skydd", "n": 2, "raw": 2},
+                                      {"key": "Eddan och fornnordisk dikt", "n": 1, "raw": 1}]
+    assert out["clicks"]["vote_texts"] == [{"key": "Stenarna på Öland", "n": 1, "raw": 1}]
+    assert out["clicks"]["vote_cap"] == {"per_day": site_stats.VOTE_CAP, "votes": {"counted": 3, "raw": 3},
+                                         "vote_texts": {"counted": 1, "raw": 1}}
+
+
+def test_votes_are_capped_per_topic_and_day_but_raw_counts_are_kept():
+    since = dt.date(2026, 10, 20)
+    click = {"kind": "click", "path": "/artiklar", "tz": "Europe/Stockholm", "lang": "sv-SE"}
+    rows = ([{**click, "day": "2026-10-20", "label": "rost:magi"}] * 25      # a scripted flood on one day
+            + [{**click, "day": "2026-10-21", "label": "rost:magi"}] * 3
+            + [{**click, "day": "2026-10-20", "label": "rost:eddan"}] * 12
+            + [{**click, "day": "2026-10-20", "label": "rost-eget:Köp billigt"}] * 40
+            + [{**click, "day": "2026-10-20", "label": "rost-eget:Stenarna på Öland"}] * 2
+            + [{**click, "day": "2026-10-20", "label": "rost:magi", "tz": "Etc/Unknown"}] * 5)  # robots: not even raw
+    out = site_stats.summarize(rows, since, 2)
+    c = out["clicks"]
+    assert c["votes"] == [{"key": "Magi, förbannelser och skydd", "n": 13, "raw": 28},
+                          {"key": "Eddan och fornnordisk dikt", "n": 10, "raw": 12}]
+    assert c["vote_texts"] == [{"key": "Köp billigt", "n": 10, "raw": 40}, {"key": "Stenarna på Öland", "n": 2, "raw": 2}]
+    assert c["vote_cap"] == {"per_day": 10, "votes": {"counted": 23, "raw": 40}, "vote_texts": {"counted": 12, "raw": 42}}
+    # A clicked day counts that day alone, with the same cap
+    one = site_stats.summarize(rows, since, 2, day="2026-10-21")["clicks"]
+    assert one["votes"] == [{"key": "Magi, förbannelser och skydd", "n": 3, "raw": 3}]
+    # The cap can be set per call
+    loose = site_stats.summarize(rows, since, 2, vote_cap=100)["clicks"]
+    assert loose["vote_cap"]["votes"] == {"counted": 40, "raw": 40}
+
+
+def test_site_votes_are_capped_per_answer_and_day():
+    utc = dt.timezone.utc
+    d1 = dt.datetime(2026, 10, 20, 9, 0, tzinfo=utc)
+    d2 = dt.datetime(2026, 10, 21, 23, 30, tzinfo=dt.timezone(dt.timedelta(hours=2)))  # 21:30 UTC, still the 21st
+    votes = ([({"question": "webbapp", "choice": "ja"}, d1)] * 30 + [({"question": "webbapp", "choice": "ja"}, d2)] * 2
+             + [({"question": "webbapp", "choice": "nej"}, d1)] * 4)
+    (q,) = site_stats.summarize_votes(votes)
+    assert q["question"] == "webbapp" and q["cap"] == 10
+    assert q["choices"] == {"ja": 12, "nej": 4} and q["total"] == 16
+    assert q["raw_choices"] == {"ja": 32, "nej": 4} and q["raw_total"] == 36
+    assert q["first"] == d1.isoformat() and q["last"] == d2.isoformat()
+    # A document without a creation time still counts (all such in one day), and has no first/last
+    (q,) = site_stats.summarize_votes([({"question": "x", "choice": "ja"}, None)] * 12)
+    assert (q["total"], q["raw_total"], q["first"], q["last"]) == (10, 12, None, None)
 
 
 def test_views_per_article_count_both_languages_and_only_views():
@@ -85,3 +127,37 @@ def test_known_bots_are_left_out():
     assert views_by_slug([person, server, unknown]) == {"x": 1}
     s = summarize([person, server, unknown], dt.date(2026, 10, 22), 1)
     assert (s["views"], s["visits"]) == (1, 1)
+
+
+def test_admin_votes_endpoint_reports_capped_and_raw_counts(monkeypatch):
+    from fastapi.testclient import TestClient
+
+    from api.auth import require_admin
+    from api.main import app
+    from api.routers import admin
+
+    class Doc:
+        def __init__(self, choice, created):
+            self.choice, self.create_time = choice, created
+
+        def to_dict(self):
+            return {"question": "webbapp", "choice": self.choice, "lang": "sv"}
+
+    class Store:
+        def collection(self, name):
+            assert name == "site_votes"
+            return self
+
+        def stream(self):
+            at = dt.datetime(2026, 10, 20, 12, tzinfo=dt.timezone.utc)
+            return [Doc("ja", at)] * 15 + [Doc("nej", at)]
+
+    monkeypatch.setattr(admin, "firestore", lambda: Store())
+    app.dependency_overrides[require_admin] = lambda: {"uid": "founder"}
+    try:
+        r = TestClient(app).get("/api/admin/site/votes")
+    finally:
+        app.dependency_overrides.pop(require_admin, None)
+    assert r.status_code == 200
+    (q,) = r.json()["questions"]
+    assert (q["total"], q["raw_total"], q["choices"], q["raw_choices"]) == (11, 16, {"ja": 10, "nej": 1}, {"ja": 15, "nej": 1})

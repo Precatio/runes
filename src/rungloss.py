@@ -299,7 +299,7 @@ def ows_map(recs):
             if lab in O:
                 a, b = norm_words(n), norm_words(O[lab])
                 if len(a) == len(b):
-                    for x, y in zip(a, b):
+                    for x, y in zip(a, b, strict=False):
                         pairs[normtok(x)][normtok(y)] += 1
     return {w: c.most_common(1)[0][0] for w, c in pairs.items()}
 

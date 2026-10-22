@@ -4,9 +4,10 @@
 import Link from "next/link";
 import { inLanguage, postDate, type BlogPost } from "@/components/BlogBody";
 import { useLanguage } from "@/components/LanguageContext";
-import { ARTICLES_PATH, cardImage, postPath } from "@/lib/blogSeo";
+import { ARTICLES_PATH, cardImage, readerPath } from "@/lib/blogSeo";
 
-// "More articles" under an article: links to the others, so that a reader – and a search engine – finds them
+// "More articles" under an article: links to the others, so that a reader – and a search engine – finds them. A reader
+// who has chosen English is linked to an article's English edition when it has one (readerPath), as in the list
 export default function MoreArticles({ posts }: { posts: BlogPost[] }) {
   const { lang } = useLanguage();
   const en = lang === "en";
@@ -23,7 +24,7 @@ export default function MoreArticles({ posts }: { posts: BlogPost[] }) {
         {posts.map(p => {
           const v = inLanguage(p, lang);
           return (
-            <Link key={p.id} href={postPath(p.slug)} prefetch={false}
+            <Link key={p.id} href={readerPath(p, lang)} prefetch={false}
               className="group block rounded-2xl border border-slate-200 bg-white/70 overflow-hidden transition hover:-translate-y-0.5 hover:border-[#b7410e]/50 hover:shadow-lg">
               {p.image ? (
                 <div className="aspect-[16/10] overflow-hidden bg-slate-200">

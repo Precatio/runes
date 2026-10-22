@@ -18,7 +18,7 @@ sammanhang den gäller:
 """
 from __future__ import annotations
 
-VERSION = "2026-10-20"
+VERSION = "2026-10-23"
 
 # Riktvärden för antal mätta runor (avsnitt 3 i METHODS.md)
 MIN_RUNES_DESCRIBE = 10
@@ -130,7 +130,7 @@ LIMITATIONS = [
      "short": "Många samband prövas samtidigt, så en del av dem är slump; fynden är idéer att pröva vidare.",
      "needed": "Förregistrerade analysplaner för de hypoteser som ska publiceras."},
     {"key": "undated", "contexts": {"statistics", "r"},
-     "title": "Hälften av runstenarna saknar datering",
+     "title": "Mer än hälften av runstenarna saknar datering",
      "text": "Tidsfrågorna räknas bara på de 1 008 runstenar som har en säker stilgrupp; 1 313 saknar en. Att ta med dem "
              "genom multipel imputation prövades 2026-10-20 enligt en låst analysplan och gav sämre skattningar än att "
              "låta dem vara (METHODS.md 1n). I samma prov höll analysen med bara de daterade stenarna sina intervall "

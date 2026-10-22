@@ -102,7 +102,7 @@ def carver_categories(inscriptions: list[dict], certain_carvers, min_inscription
             tests.append((carver, k, p))
         rows.append({"carver": carver, "n": n, "counts": counts})
     qs = _bh([t[2] for t in tests])
-    qmap = {(c, k): q for (c, k, _), q in zip(tests, qs)}
+    qmap = {(c, k): q for (c, k, _), q in zip(tests, qs, strict=False)}
     for row in rows:
         for k, v in row["counts"].items():
             v["q"] = round(float(qmap[(row["carver"], k)]), 4)

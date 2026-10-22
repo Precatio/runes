@@ -68,8 +68,59 @@ def known_bot(r: dict) -> bool:
     return (r.get("tz") or "") == "Etc/Unknown" or "@" in (r.get("lang") or "")
 
 
+# Votes are anonymous rows anyone can write with a script (Firestore's rules cannot limit how often), so Admin counts at
+# most VOTE_CAP rows per topic and day – per answer and day in site_votes, per topic or per own suggestion (the same
+# text) and day in the votes on the articles page. The raw counts are kept beside the counted ones.
+VOTE_CAP = 10
+
+
+def capped(pairs, cap: int = VOTE_CAP) -> tuple[Counter, Counter]:
+    """Räknar (nyckel, dag)-par: högst `cap` per nyckel och dag (det räknade) och alla (det råa), per nyckel."""
+    counted: Counter = Counter()
+    raw: Counter = Counter()
+    for (key, _day), n in Counter(pairs).items():
+        raw[key] += n
+        counted[key] += min(n, cap)
+    return counted, raw
+
+
+def _capped_rows(counted: Counter, raw: Counter, names: dict[str, str] | None = None, n: int = TOP) -> list[dict]:
+    # Ordered by the counted number; ties keep the order of first appearance, as Counter.most_common does
+    top = sorted(counted.items(), key=lambda kv: kv[1], reverse=True)[:n]
+    return [{"key": (names or {}).get(k, k), "n": c, "raw": raw[k]} for k, c in top]
+
+
+def _vote_day(created) -> str | None:
+    if created is None:
+        return None
+    if getattr(created, "tzinfo", None) is not None:
+        created = created.astimezone(dt.timezone.utc)
+    return created.date().isoformat()
+
+
+def summarize_votes(votes: list[tuple[dict, object]], cap: int = VOTE_CAP) -> list[dict]:
+    """Röstningen på startsidan (samlingen site_votes, web/src/components/SiteVote.tsx): röster per fråga och svar,
+    högst `cap` per svar och dag (dagen då dokumentet skapades, UTC), och de råa talen bredvid. `votes` är par av
+    dokumentets fält och dess create_time."""
+    pairs: dict[str, list] = {}
+    times: dict[str, list] = {}
+    for v, created in votes:
+        q = v.get("question", "?")
+        pairs.setdefault(q, []).append((v.get("choice", "?"), _vote_day(created)))
+        if created is not None:
+            times.setdefault(q, []).append(created)
+    out = []
+    for q, p in pairs.items():
+        counted, raw = capped(p, cap)
+        out.append({"question": q, "total": sum(counted.values()), "raw_total": sum(raw.values()),
+                    "choices": dict(counted), "raw_choices": dict(raw), "cap": cap,
+                    "first": min(times[q]).isoformat() if times.get(q) else None,
+                    "last": max(times[q]).isoformat() if times.get(q) else None})
+    return out
+
+
 def summarize(rows: list[dict], since: dt.date, days: int, titles: dict[str, str] | None = None,
-              day: str | None = None) -> dict:
+              day: str | None = None, vote_cap: int = VOTE_CAP) -> dict:
     """Sammanfattar raderna från och med `since` (`days` dagar): totaler, per dag, sidor, avsnitt på startsidan,
     hänvisande webbplatser, land, språk och enhet. `titles` ger sidornas namn (sökväg -> titel). Med `day` (ÅÅÅÅ-MM-DD)
     räknas allt utom stapeldiagrammet per dag bara på den dagens rader – så att ett klick på en stapel i Admin visar
@@ -101,6 +152,14 @@ def summarize(rows: list[dict], since: dt.date, days: int, titles: dict[str, str
         c = Counter(r["label"][len(prefix):] for r in clicks if r["label"].startswith(prefix))
         return [{"key": (names or {}).get(k, k), "n": n} for k, n in c.most_common(TOP)]
 
+    # The votes on the articles page, at most `vote_cap` rows per topic (or own suggestion) and day
+    def votes(prefix: str, names: dict[str, str] | None = None) -> tuple[list[dict], dict]:
+        counted, raw = capped(((r["label"][len(prefix):], r.get("day")) for r in clicks if r["label"].startswith(prefix)),
+                              vote_cap)
+        return _capped_rows(counted, raw, names), {"counted": sum(counted.values()), "raw": sum(raw.values())}
+
+    topic_votes, topic_totals = votes("rost:", VOTE_TOPICS)
+    text_votes, text_totals = votes("rost-eget:")
     flow = Counter((r["prev"], r.get("path") or "/") for r in views if r.get("prev"))
     entries = Counter(r.get("path") or "/" for r in views if r.get("entry"))
     return {
@@ -122,7 +181,9 @@ def summarize(rows: list[dict], since: dt.date, days: int, titles: dict[str, str
         "clicks": {"share": clicked("dela:", SHARE_CHANNELS), "outbound": clicked("ut:"),
                    "language": clicked("sprak:", LANGUAGE_CLICKS),
                    # The vote on the articles page: chosen topics and own suggestions (free text, up to 70 characters)
-                   "votes": clicked("rost:", VOTE_TOPICS), "vote_texts": clicked("rost-eget:"),
+                   # (n = counted, at most vote_cap per topic and day; raw = every row)
+                   "votes": topic_votes, "vote_texts": text_votes,
+                   "vote_cap": {"per_day": vote_cap, "votes": topic_totals, "vote_texts": text_totals},
                    "shared_pages": [{"key": title(p), "n": n} for p, n in
                                     Counter(r.get("path") or "/" for r in shares).most_common(TOP)]},
         # Besök som började i en delad länk, per delningskanal

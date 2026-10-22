@@ -15,7 +15,6 @@ from __future__ import annotations
 import math
 import re
 from collections import Counter
-from functools import lru_cache
 
 import numpy as np
 from scipy import sparse
@@ -72,7 +71,7 @@ def name_forms(inscriptions: list[dict]) -> set[str]:
         words, _ = _tokens(rec.get("transliteration", ""))
         norm = _norm_tokens(rec.get("normalization", ""))
         if norm and len(norm) == len(words):
-            for raw, (_, is_name) in zip(words, norm):
+            for raw, (_, is_name) in zip(words, norm, strict=False):
                 w = _clean_word(raw)
                 if w and is_name:
                     forms.add(w)
@@ -104,7 +103,7 @@ def features(rec: dict, names: frozenset | set = frozenset()) -> dict:
         feats["bind:andel"] = sum(t.count("^") for t in words) / len(words)
     variants = {}
     if aligned:
-        for raw, (n, is_name) in zip(words, norm):
+        for raw, (n, is_name) in zip(words, norm, strict=False):
             w = _clean_word(raw)
             if w and not is_name and "[" not in n and "(?)" not in n:
                 variants[n] = w
@@ -333,9 +332,13 @@ class OrthographyModel:
             "n_words": f["n_words"],
         }
 
-    @lru_cache(maxsize=1)
     def evaluate(self):
-        """Lämna-en-ute: hur ofta hamnar rätt ristare först / bland de tre första?"""
+        """Lämna-en-ute: hur ofta hamnar rätt ristare först / bland de tre första? Räknas en gång per modell."""
+        if "_evaluation" not in self.__dict__:  # per instance (lru_cache on a method would keep old models alive)
+            self._evaluation = self._evaluate()
+        return self._evaluation
+
+    def _evaluate(self):
         labels = self._labelled()
         if not labels:
             return None

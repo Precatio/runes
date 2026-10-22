@@ -60,13 +60,13 @@ def load(hard=False):
         for x in json.load(open(os.path.join(F, "klass3_alla.json")))["rows"]:
             if not (interpreted(x["sig"]) and x["status"] == "återställt" and x["word"] and x["word"] != "<unk>"):
                 continue
-            ok = lambda w: rl.same_word(w.lstrip("§"), x["rundata"])  # noqa: E731
+            ok = lambda w, x=x: rl.same_word(w.lstrip("§"), x["rundata"])  # noqa: E731
             cands = [(x["word"], x["p"], bool(x["agrees"]) or ok(x["word"]))] + [(w, p, ok(w)) for w, p in x["alts"]]
             gaps.append(gap(cands, len(x["fill"]), False, "restored", x["sig"], rl.object_kind(recs[x["sig"]])))
         for k in range(5):
             for x in json.load(open(os.path.join(F, f"dok_alts_f{k}.json")))["rows"]:
                 if x["gold_word"] and x.get("alts"):
-                    gaps.append(gap([(w, p, ok) for (w, p), ok in zip(x["alts"], x["alts_ok"])], x["lost"], False,
+                    gaps.append(gap([(w, p, ok) for (w, p), ok in zip(x["alts"], x["alts_ok"], strict=False)], x["lost"], False,
                                     "documented", x["sig"], x["kind"]))
     for k in range(5):
         path = os.path.join(F, f"{'svart4' if hard else 'mask4'}_f{k}.json")
@@ -140,7 +140,7 @@ def at_documented(z):
 def evaluate(gaps, P, label):
     """The chosen word (highest calibrated probability): how often right, ECE and the gaps at ≥ 95 %."""
     q = np.array([max(pp) for pp in P])
-    y = np.array([float(g["cands"][int(np.argmax(pp))][2]) for g, pp in zip(gaps, P)])
+    y = np.array([float(g["cands"][int(np.argmax(pp))][2]) for g, pp in zip(gaps, P, strict=False)])
     top = np.array([float(g["cands"][0][2]) for g in gaps])
     bins = ((0, .5), (.5, .8), (.8, .95), (.95, 1.01))
     ece = sum(abs(q[m].mean() - y[m].mean()) * m.sum() for lo, hi in bins for m in [(q >= lo) & (q < hi)] if m.any()) / len(y)
@@ -170,16 +170,16 @@ def main(argv=None):
     A = arrays(gaps)
     cv = [None] * len(gaps)
     for k in range(5):
-        th = fit([g for g, f in zip(gaps, folds) if f != k])
+        th = fit([g for g, f in zip(gaps, folds, strict=False) if f != k])
         idx = np.where(folds == k)[0]
         sub = [a[idx] for a in A]
         p, _ = probs(th, sub[0], sub[1], sub[2], at_documented(sub[4]))
-        for i, row in zip(idx, p):
+        for i, row in zip(idx, p, strict=False):
             cv[i] = row[:len(gaps[i]["cands"])]
     theta = fit(gaps)
     Ah = arrays(hard)
     ph, _ = probs(theta, Ah[0], Ah[1], Ah[2], at_documented(Ah[4]))
-    hard_P = [row[:len(g["cands"])] for g, row in zip(hard, ph)]
+    hard_P = [row[:len(g["cands"])] for g, row in zip(hard, ph, strict=False)]
     out = {"theta": [round(float(v), 5) for v in theta], "classes": KC, "kmax": KMAX, "n": len(gaps), "report": []}
     for src in SOURCES:
         for sub_label, sel in (("runstenar", lambda g: g["kind"] == "runsten"),):

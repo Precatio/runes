@@ -15,7 +15,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FONT = "/System/Library/Fonts/Apple Symbols.ttf"
-GLYPH = dict(zip("fuþorkhniastbmlR", "ᚠᚢᚦᚬᚱᚴᚼᚾᛁᛅᛋᛏᛒᛘᛚᛦ"))
+GLYPH = dict(zip("fuþorkhniastbmlR", "ᚠᚢᚦᚬᚱᚴᚼᚾᛁᛅᛋᛏᛒᛘᛚᛦ", strict=False))
 # dotted runes and late letters drawn like their base rune (a dot is easily lost)
 BASE = {"e": "i", "y": "u", "g": "k", "d": "t", "p": "b", "c": "k", "æ": "a", "ø": "o"}
 H, W, TOL = 96, 80, 5

@@ -105,7 +105,7 @@ Kräver Python 3.11+ (utvecklas på 3.13) och Node.js 20+.
 | `MESH_CACHE_SIZE` | api | `2` | Antal uppladdade 3D-modeller som hålls i analysmotorns minne |
 | `GEOLOGY_CACHE` | api | `data/cache/geology.json` | Cache för uppslag i SGU:s berggrundskarta |
 | `GEOLOGY_DISABLED` | api | – | `1` stänger av berggrundsuppslag (används i testerna) |
-| `RSCRIPT` | api | `Rscript` i PATH | Sökväg till Rscript |
+| `RSCRIPT` | api | `Rscript` i PATH | Sökväg till Rscript; tom (`RSCRIPT=`) gör att R räknas som saknat, också i testerna |
 | `R_DISABLED` | api | – | `1` stänger av statistiken i R (används i testerna) |
 | `R_CACHE_DIR` | api | `data/cache/r` | Var korpus-, sten- och landskapsanalyserna i R sparas |
 | `CROSSCHECK_DISABLED` / `CROSSCHECK_CACHE` | api | – / `data/cache/crosscheck` | Avstämning mot Runor 2020 och Wikidata |

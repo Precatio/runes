@@ -219,7 +219,7 @@ def main(argv=None):
                     near_km=args.near_km, lam_near=args.near, div_rate=dr, name_cands=args.name_cands)
                 if not combos:
                     continue
-                best = dict(zip(gaps, combos[0][0]))
+                best = dict(zip(gaps, combos[0][0], strict=False))
                 for _, _, gap, w, tok, status in ys:
                     sp = member.get(gap)
                     if sp not in best:

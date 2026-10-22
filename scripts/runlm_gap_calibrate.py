@@ -80,7 +80,7 @@ def masked_rows(prefix, top, names, recs, K=3):
     rows = [x for k in range(5) if os.path.exists(f"{prefix}_f{k}.json") for x in json.load(open(f"{prefix}_f{k}.json"))["rows"]
             if x["word"] and x["word"] != "<unk>" and x["p_word"] > 0]
     wh = np.array([x["kind"] == "helt ord" for x in rows])
-    X = np.array([features(x["p_word"], gap_class(x["word"], top, names, K > 3), x["n"], K, bool(w_)) for x, w_ in zip(rows, wh)])
+    X = np.array([features(x["p_word"], gap_class(x["word"], top, names, K > 3), x["n"], K, bool(w_)) for x, w_ in zip(rows, wh, strict=False)])
     rs = np.array([rl.object_kind(recs[x["sig"]]) == "runsten" for x in rows])
     return X, np.array([float(x["word_ok"]) for x in rows]), [x["sig"] for x in rows], rs, wh
 
@@ -104,7 +104,6 @@ def pooled(X0, y0, f0, doc_prefix, mask_prefix, top, names, recs, K):
     src = lambda n, a, b: np.hstack([np.full((n, 1), a), np.full((n, 1), b)])  # noqa: E731 – columns: masked, documented
     XA = np.vstack([np.hstack([X0, src(len(X0), 0, 0)]), np.hstack([X1, src(len(X1), 0, 1)]), np.hstack([X2, src(len(X2), 1, 0)])])
     yA, fA = np.concatenate([y0, y1, y2]), np.concatenate([f0, f1, f2])
-    off1, off2 = len(X0), len(X0) + len(X1)
     sig = lambda z: 1 / (1 + np.exp(-z))  # noqa: E731
     p1, p2 = np.zeros(len(y1)), np.zeros(len(y2))
     for k in range(5):

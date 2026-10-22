@@ -18,7 +18,7 @@ def band_segments(n_runes=6, crack=True):
         x += 55
     t = np.linspace(0, np.pi, 40)
     arc = [(150 * np.cos(a), 60 + 40 * np.sin(a)) for a in t]
-    segs += list(zip(arc[:-1], arc[1:]))
+    segs += list(zip(arc[:-1], arc[1:], strict=False))
     if crack:
         rng = np.random.default_rng(3)
         p = np.array([-150.0, -75.0])
@@ -117,7 +117,7 @@ def test_facit_evaluation_on_synthetic_stone(tmp_path):
 
 
 def test_methods_lists_every_known_limitation():
-    """METHODS.md section 18 must list the same limitations as src/limitations.py."""
+    """METHODS.md section 18 must list the same limitations as src/limitations.py, in the same order."""
     import os
 
     from src import limitations
@@ -127,6 +127,9 @@ def test_methods_lists_every_known_limitation():
     for x in limitations.LIMITATIONS:
         assert f"| {x['title']} |" in section, x["key"]
     assert limitations.VERSION in section
+    rows = [line.split("|")[1].strip() for line in section.split("\n## ", 1)[0].splitlines() if line.startswith("| ")]
+    titles = {x["title"] for x in limitations.LIMITATIONS}
+    assert [r for r in rows if r in titles] == [x["title"] for x in limitations.LIMITATIONS]
 
 
 

@@ -51,8 +51,8 @@ def score(hyp, ref):
     """Content words: how many of the draft's are in the reference (precision), how many of the reference's the draft
     has (coverage); word pairs: how many of the draft's neighbouring pairs stand together in the reference."""
     h, r_ = [w for w in hyp if w not in SV_STOP], {w for w in ref if w not in SV_STOP}
-    pairs_r = set(zip(ref, ref[1:]))
-    pairs_h = [p for p in zip(hyp, hyp[1:]) if "…" not in p]
+    pairs_r = set(zip(ref, ref[1:], strict=False))
+    pairs_h = [p for p in zip(hyp, hyp[1:], strict=False) if "…" not in p]
     return {"hit": sum(w in r_ for w in h), "n_h": len(h), "cov": len({w for w in h if w in r_}), "n_r": len(r_),
             "pair_hit": sum(p in pairs_r for p in pairs_h), "n_pair": len(pairs_h)}
 

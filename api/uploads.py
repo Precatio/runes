@@ -58,4 +58,4 @@ def decode_base64_image(data: str) -> bytes:
     try:
         return base64.b64decode(data, validate=True)
     except (binascii.Error, ValueError):
-        raise HTTPException(status_code=400, detail="Ogiltig bilddata (base64).")
+        raise HTTPException(status_code=400, detail="Ogiltig bilddata (base64).") from None

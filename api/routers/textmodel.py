@@ -28,7 +28,7 @@ def scan_traces(signum: str):
     try:
         return trace_reader.proposals(signum)
     except Exception as e:
-        raise server_error(e, "Spårläsaren kunde inte läsa skanningen.")
+        raise server_error(e, "Spårläsaren kunde inte läsa skanningen.") from e
 
 
 @router.get("/{signum:path}")
@@ -41,8 +41,8 @@ def _read(signum: str, allowed):
     try:
         return textmodel.analyze(signum, allowed)
     except KeyError:
-        raise HTTPException(status_code=404, detail=f"Signum '{signum}' finns inte i Rundata.")
+        raise HTTPException(status_code=404, detail=f"Signum '{signum}' finns inte i Rundata.") from None
     except HTTPException:
         raise
     except Exception as e:
-        raise server_error(e, "Sannolikhetsmodellen kunde inte läsa inskriften.")
+        raise server_error(e, "Sannolikhetsmodellen kunde inte läsa inskriften.") from e

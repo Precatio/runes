@@ -40,7 +40,7 @@ def test_recompute_reproduces_measurement(client):
                                               "dir_x": 0, "dir_y": 1, "dir_z": 0, "slice_count": 3}).json()
     profiles = [s["profile"] for s in r["slices"]]
     rc = client.post("/api/stats/recompute", json={"profiles": profiles}).json()
-    for a, b in zip(r["slices"], rc["slices"]):
+    for a, b in zip(r["slices"], rc["slices"], strict=False):
         assert abs(a["apex_vinkel_deg"] - b["apex_vinkel_deg"]) < 0.01  # profiles are stored rounded to 0.1 µm
 
 
@@ -67,7 +67,7 @@ def test_academic_report(client, monkeypatch):
     entries = []
     for sig, mu in [("U 729", 70), ("U 707", 72), ("U 1022", 95), ("U 1034", 97)]:
         vals = rng.normal([mu, 3, 2, 6, .33, .2, .05], [2, 1, .2, .4, .02, .03, .01])
-        entries.append({"signum": sig, "means": dict(zip(METRICS, vals)), "slices": [{}] * 4,
+        entries.append({"signum": sig, "means": dict(zip(METRICS, vals, strict=False)), "slices": [{}] * 4,
                         "feature_type": "rune", "method_version": "groove-3", "contributorName": "Test"})
     r = client.post("/api/reports/academic", json={"entries": entries, "use_ai": False}, headers=founder).json()
     assert "Tabell 2" in r["markdown"] and "Balle" in r["markdown"] and r["figures"]
@@ -97,10 +97,10 @@ def test_findings_compare_with_rundata(client):
     for carver, signa in by.items():
         for sig in signa[:3]:
             vals = rng.normal([centre[carver], 3, 2, 6, .33, .2, .05], [1, .3, .05, .1, .01, .01, .002])
-            corpus.append({"signum": sig, "feature_type": "rune", "means": dict(zip(METRICS, vals))})
+            corpus.append({"signum": sig, "feature_type": "rune", "means": dict(zip(METRICS, vals, strict=False))})
     unattributed = next(r["signum"] for r in recs if not has_carver(r) and not r["flags"]["lost"])
     vals = rng.normal([95, 3, 2, 6, .33, .2, .05], [1, .3, .05, .1, .01, .01, .002])
-    corpus.append({"signum": unattributed, "feature_type": "rune", "means": dict(zip(METRICS, vals))})
+    corpus.append({"signum": unattributed, "feature_type": "rune", "means": dict(zip(METRICS, vals, strict=False))})
 
     r = client.post("/api/research/findings", json={"corpus": corpus}).json()
     tech = [f for f in r["findings"] if f["method"] == "huggteknik"]
@@ -124,7 +124,7 @@ def test_synthesis_weighs_checks_and_reports_conflicts(client, monkeypatch):
     rng = np.random.default_rng(2)
 
     def slices(mu, n=8):
-        return [dict(zip(METRICS, rng.normal([mu, 3, 2, 6, .33, .2, .05], [1.5, .5, .1, .2, .01, .01, .002])))
+        return [dict(zip(METRICS, rng.normal([mu, 3, 2, 6, .33, .2, .05], [1.5, .5, .1, .2, .01, .01, .002]), strict=False))
                 | {"position_mm": i} for i in range(n)]
 
     by = {}

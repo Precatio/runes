@@ -189,7 +189,7 @@ def dendrogram_figure(facts: dict) -> str | None:
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     fig, ax = plt.subplots(figsize=(7, 3.5))
-    for xs, ys in zip(c["icoord"], c["dcoord"]):
+    for xs, ys in zip(c["icoord"], c["dcoord"], strict=False):
         ax.plot(xs, ys, color="#0f172a", lw=1)
     ax.set_xticks([5 + 10 * i for i in range(len(c["order"]))])
     ax.set_xticklabels(c["order"], rotation=60, ha="right", fontsize=8)
@@ -250,7 +250,7 @@ def build_document(facts: dict, author: str, institution: str, ai: dict | None) 
     else:
         blocks.append(p("Inga stenar i urvalet har en säker ristare i Rundata, så inga ristarprofiler redovisas."))
     blocks.append(table(["Signum"] + [METRIC_LABELS[m] for m in METRICS],
-                        [[s["signum"]] + [fmt(v, DIGITS[m]) for v, m in zip(s["means"], METRICS)]
+                        [[s["signum"]] + [fmt(v, DIGITS[m]) for v, m in zip(s["means"], METRICS, strict=False)]
                          for s in stones if s["means"]],
                         "Tabell 3. Medelvärden per sten."))
     fig1 = angle_figure(facts)
@@ -419,10 +419,10 @@ def to_docx(blocks: list[dict]) -> bytes:
         elif t == "table":
             tbl = doc.add_table(rows=1, cols=len(b["headers"]))
             tbl.style = "Light Grid Accent 1"
-            for cell, text in zip(tbl.rows[0].cells, b["headers"]):
+            for cell, text in zip(tbl.rows[0].cells, b["headers"], strict=False):
                 cell.text = text
             for r in b["rows"]:
-                for cell, text in zip(tbl.add_row().cells, r):
+                for cell, text in zip(tbl.add_row().cells, r, strict=False):
                     cell.text = text
             doc.add_paragraph(b["caption"]).runs[0].italic = True
         elif t == "figure":

@@ -1,7 +1,7 @@
 import { Fragment, type ReactNode } from "react";
 import { API_URL } from "@/lib/api";
 import ZoomImage from "@/components/ZoomImage";
-import { commonsAt, commonsFile, commonsSrcSet, type ImageSizes } from "@/lib/blogSeo";
+import { commonsAt, commonsFile, commonsOriginal, commonsSrcSet, type ImageSizes } from "@/lib/blogSeo";
 import { isPublicPath, PUBLIC_SITE } from "@/lib/site";
 
 // A blog post (GET /api/blog/posts, api/routers/blog.py). The English fields are optional; without them the Swedish
@@ -144,8 +144,15 @@ function Blocks({ text, opening = false, sizes }: { text: string; opening?: bool
 // The picture's box: the text column (max-w-3xl less its padding) and at most 520 px high
 const COLUMN = 720, MAX_HEIGHT = 520, GUTTER = 48;
 
+// The copies the enlarged view chooses from: Commons' standard thumbnails from 960 px up (every one narrower than the
+// original), and the original itself when it is no wider than the largest (a larger original is replaced by the 3840 px
+// copy, which no screen draws wider)
+const ZOOM_WIDTHS = [960, 1280, 1920, 3840];
+
 /** ![alt](url) with the caption (photographer and licence) on the following lines. A Commons photo is shown as a
- *  thumbnail about as wide as the column, never wider than its original; the original opens when it is enlarged. */
+ *  thumbnail about as wide as the column, never wider than its original; the original (or, for a very large one, the
+ *  largest copy the screen needs) opens when it is enlarged. The address in the text may already be a thumbnail (the
+ *  website's export shortens the originals to 960 px copies), so the enlarged view goes back to the original. */
 function Picture({ alt, src, caption, sizes }: { alt: string; src: string; caption: string; sizes?: ImageSizes }) {
   const ok = safeSrc(src);
   if (!ok) return null;
@@ -155,7 +162,7 @@ function Picture({ alt, src, caption, sizes }: { alt: string; src: string; capti
   const drawn = size ? Math.round(Math.min(COLUMN, (MAX_HEIGHT * size[0]) / size[1])) : 0;
   return (
     <figure className="mt-2 mb-9">
-      <ZoomImage src={shown} zoomSrc={ok} alt={alt} width={size?.[0]} height={size?.[1]} srcSet={commonsSrcSet(ok, size?.[0])}
+      <ZoomImage src={shown} zoomSrc={commonsOriginal(ok)} zoomSrcSet={commonsSrcSet(ok, size?.[0], ZOOM_WIDTHS, 1)} alt={alt} width={size?.[0]} height={size?.[1]} srcSet={commonsSrcSet(ok, size?.[0])}
         sizes={size ? `(min-width: ${drawn + GUTTER}px) ${drawn}px, calc(100vw - ${GUTTER}px)` : undefined}
         className="w-full max-h-[520px] object-contain rounded-xl bg-slate-100" />
       {caption && <figcaption className="mt-2.5 text-sm leading-snug text-slate-500">{inline(caption)}</figcaption>}
@@ -177,7 +184,7 @@ function Box({ title, text, sizes }: { title: string; text: string; sizes?: Imag
  * ":::chart Title" … ":::": shares as horizontal bars, one row per line "label | percent | note"; a "+" before the label
  * marks the rows the text is about, "# " starts a group and a line "Källa: …" (or "Source: …") is the caption.
  */
-function Chart({ title, text }: { title: string; text: string }) {
+function Chart({ title, text, en = false }: { title: string; text: string; en?: boolean }) {
   type Row = { label: string; value: number; note: string; hi: boolean };
   const groups: { name: string; rows: Row[] }[] = [];
   let caption = "";
@@ -193,7 +200,7 @@ function Chart({ title, text }: { title: string; text: string }) {
   }
   const max = Math.max(10, ...groups.flatMap(g => g.rows.map(r => r.value)));
   const top = Math.ceil(max / 10) * 10;
-  const pct = (v: number) => `${String(Math.round(v * 10) / 10).replace(".", ",")} %`;
+  const pct = (v: number) => `${en ? String(Math.round(v * 10) / 10) : String(Math.round(v * 10) / 10).replace(".", ",")} %`;
   return (
     <figure className="mt-2 mb-7 rounded-xl border border-slate-900/10 bg-white px-5 py-4">
       {title && <figcaption className="text-[15px] font-semibold text-slate-900">{inline(title)}</figcaption>}
@@ -221,14 +228,15 @@ function Chart({ title, text }: { title: string; text: string }) {
           </div>
         ))}
       </div>
-      <p className="mt-3 text-xs text-slate-500">Skalan går från 0 till {top} %.{caption ? " " : ""}{caption && inline(caption)}</p>
+      <p className="mt-3 text-xs text-slate-500">{en ? `The scale runs from 0 to ${top} %.` : `Skalan går från 0 till ${top} %.`}{caption ? " " : ""}{caption && inline(caption)}</p>
     </figure>
   );
 }
 
 /** The post body: the blocks of Blocks, with ":::box" and ":::chart" sections. sizes: the Commons photos' sizes
- *  (lib/blogSeo.ts commonsSizes), when the page knows them. */
-export default function BlogBody({ text, sizes }: { text: string; sizes?: ImageSizes }) {
+ *  (lib/blogSeo.ts commonsSizes), when the page knows them; lang: the text's language (the charts' decimal sign and
+ *  scale note). */
+export default function BlogBody({ text, sizes, lang = "sv" }: { text: string; sizes?: ImageSizes; lang?: "sv" | "en" }) {
   const parts: ReactNode[] = [];
   const lines = text.replace(/\r\n/g, "\n").split("\n");
   let buf: string[] = [];
@@ -245,7 +253,7 @@ export default function BlogBody({ text, sizes }: { text: string; sizes?: ImageS
     const inner = lines.slice(i + 1, end).join("\n");
     parts.push(open[1] === "box"
       ? <Box key={parts.length} title={open[2]} text={inner} sizes={sizes} />
-      : <Chart key={parts.length} title={open[2]} text={inner} />);
+      : <Chart key={parts.length} title={open[2]} text={inner} en={lang === "en"} />);
     i = end;
   }
   flush();

@@ -171,7 +171,7 @@ def recal(b: dict, p: float, w: str, runes: str, B) -> float:
     p = min(max(p, 1e-4), 1 - 1e-4)
     lch = max(math.log(max(m.index.get(runes, {}).get(w, 0.0), 1e-12)), -12.0)
     x = [1.0, math.log(p / (1 - p)), math.log1p(fk[rl.key(w)]), float(fk[rl.key(w)] == 0), math.log(len(runes)), lch]
-    return 1 / (1 + math.exp(-sum(a * c for a, c in zip(x, B))))
+    return 1 / (1 + math.exp(-sum(a * c for a, c in zip(x, B, strict=False))))
 
 
 def name_keys(recs) -> set[str]:
@@ -207,7 +207,7 @@ def calibrate_gap(p: float, word: str, n_lost: int, G, whole: bool = False) -> f
     q = min(max(p, 1e-4), 1 - 1e-4)
     oh = [1.0 if cls == k else 0.0 for k in range(K)]
     x = oh + [o * math.log(q / (1 - q)) for o in oh] + [math.log(max(1, n_lost))] + ([1.0 if whole else 0.0] if has_whole else [])
-    return 1 / (1 + math.exp(-sum(c * v for c, v in zip(B, x))))
+    return 1 / (1 + math.exp(-sum(c * v for c, v in zip(B, x, strict=False))))
 
 
 def calibrate_words(dist: dict, n_lost: int, GL, whole: bool = False) -> dict:
@@ -225,14 +225,14 @@ def calibrate_words(dist: dict, n_lost: int, GL, whole: bool = False) -> dict:
         return dist
     a, b, c, r = theta[:K], theta[K:2 * K], theta[2 * K:2 * K + 6], theta[2 * K + 6:]
     cl = [gap_class(w, top, names, composed=True) for w, _ in items]
-    us = [a[k] + b[k] * math.log(p) + (r[k] if i == 0 else 0.0) for i, ((w, p), k) in enumerate(zip(items, cl))]
+    us = [a[k] + b[k] * math.log(p) + (r[k] if i == 0 else 0.0) for i, ((w, p), k) in enumerate(zip(items, cl, strict=False))]
     z = [1.0, math.log(max(1, n_lost)), 1.0 if whole else 0.0, math.log(max(1 - items[0][1], 1e-6)), 0.0, 1.0]
-    u0 = sum(ci * zi for ci, zi in zip(c, z))
+    u0 = sum(ci * zi for ci, zi in zip(c, z, strict=False))
     mx = max(us + [u0])
     ex = [math.exp(u - mx) for u in us]
     tot = sum(ex) + math.exp(u0 - mx)
     out = {w: 0.0 for w in dist}
-    out.update({w: e / tot for (w, _), e in zip(items, ex)})
+    out.update({w: e / tot for (w, _), e in zip(items, ex, strict=False)})
     return out
 
 
@@ -363,11 +363,11 @@ def _read(r, groups, breaks, b, allowed, base, d, trace_at=None, alt=True):
     else:
         user = {fillable[int(n)]: v for n, v in (allowed or {}).items()
                 if str(n).isdigit() and int(n) < len(fillable) and len(v) == len(lost[fillable[int(n)]])}
-    trace_at = {off[sp[0]] + i: v for sp, vals in user.items() for i, v in zip(lost[sp], vals) if v}
+    trace_at = {off[sp[0]] + i: v for sp, vals in user.items() for i, v in zip(lost[sp], vals, strict=False) if v}
     traces, hard = {}, {}
     for sp in fillable:
         gi, a, e = sp
-        seen = dict(zip(lost[sp], user.get(sp, [None] * len(lost[sp]))))
+        seen = dict(zip(lost[sp], user.get(sp, [None] * len(lost[sp])), strict=False))
         cons = [seen[i] or None if i in seen else groups[gi][i] for i in range(a, e)]
         if any(c is not None for c in cons):
             traces[sp] = cons
@@ -397,7 +397,7 @@ def _read(r, groups, breaks, b, allowed, base, d, trace_at=None, alt=True):
             if fits:
                 best[n] = max(fits)[1]
     filled = list(groups)
-    for (gi, a, e), f in sorted(zip(gaps, best), key=lambda x: (-x[0][0], -x[0][1])):
+    for (gi, a, e), f in sorted(zip(gaps, best, strict=False), key=lambda x: (-x[0][0], -x[0][1])):
         filled[gi] = filled[gi][:a] + f + filled[gi][e:]
     parts, sg = _parts(filled, breaks)
     # read in the stone's branch of the spelling tree (era to landscape), as in the calibration
@@ -406,7 +406,7 @@ def _read(r, groups, breaks, b, allowed, base, d, trace_at=None, alt=True):
     at_rune = [off[gi] + k for gi, g in enumerate(filled) for k, c in enumerate(g) if c != "?"]
     # where the filled runes stand in the read text, and where the text breaks
     spans = []
-    for (gi, a, e), f in zip(gaps, best):
+    for (gi, a, _e), f in zip(gaps, best, strict=False):
         at = sum(len(x.replace("?", "")) for x in filled[:gi]) + len(filled[gi][:a].replace("?", ""))
         spans.append((at, at + len(f)))
     ends, pos = set(), 0
@@ -503,11 +503,11 @@ def _boundaries(r, groups, gaps, best, words, read, spans, at_rune, trace_at, b,
             continue
         seen.add(tuple(eg))
         eoff = _offsets(eg)
-        theirs = [(s, s + len(g)) for s, g in zip(eoff, eg)]
+        theirs = [(s, s + len(g)) for s, g in zip(eoff, eg, strict=False)]
         cuts = set(eoff[1:])
         off = _offsets(groups)
         differ = []
-        for n, ((gi, a, e), (ta, te)) in enumerate(zip(gaps, spans)):
+        for n, ((gi, a, e), (ta, te)) in enumerate(zip(gaps, spans, strict=False)):
             fa, fe = off[gi] + a, off[gi] + e
             model_iv = {(at_rune[i], at_rune[j - 1] + 1) for i, j, _, _ in read if i < te and ta < j and j > i}
             # only where the model's word runs across a boundary the editors draw, borrowing runes from the next word

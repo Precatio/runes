@@ -357,8 +357,8 @@ def _fit(X, y, w, lam: float = 1.0):
 
 
 def _auc(scores: list[float], labels: list[int]) -> float | None:
-    pos = [s for s, l in zip(scores, labels) if l]
-    neg = [s for s, l in zip(scores, labels) if not l]
+    pos = [s for s, l in zip(scores, labels, strict=False) if l]
+    neg = [s for s, l in zip(scores, labels, strict=False) if not l]
     if not pos or not neg:
         return None
     from scipy.stats import mannwhitneyu
@@ -384,11 +384,11 @@ def likeness(rows: list[dict]) -> dict:
     fold = np.array([zlib.crc32(r["s"].encode()) % 5 for r in train])
     for f in range(5):
         b = _fit(Xt[fold != f], y[fold != f], w[fold != f])
-        for r, s in zip([r for r, ff in zip(train, fold) if ff == f], 1 / (1 + np.exp(-Xt[fold == f] @ b))):
+        for r, s in zip([r for r, ff in zip(train, fold, strict=False) if ff == f], 1 / (1 + np.exp(-Xt[fold == f] @ b)), strict=False):
             score[r["s"]] = float(s)
     rest = [r for r in cand if r["s"] not in score]
     if rest:
-        for r, s in zip(rest, 1 / (1 + np.exp(-X(rest) @ beta))):
+        for r, s in zip(rest, 1 / (1 + np.exp(-X(rest) @ beta)), strict=False):
             score[r["s"]] = float(s)
     auc = _auc([score[r["s"]] for r in train], [int(r["land"] == "danmark") for r in train])
     dk = [r for r in train if r["land"] == "danmark"]

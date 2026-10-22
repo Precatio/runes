@@ -27,9 +27,10 @@ from collections import Counter, defaultdict
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EDDA = os.path.join(ROOT, "utdata/Malt/kallor/edda.json")
+RUNDATA_JSON = os.path.join(ROOT, "data/rundata.json")
 
 
-def load_rundata(path=os.path.join(ROOT, "data/rundata.json")):
+def load_rundata(path=RUNDATA_JSON):
     """All inscriptions in Rundata (data/rundata.json) as a list of records."""
     data = json.load(open(path))
     return [r for r in (data["inscriptions"] if "inscriptions" in data else data.values()) if isinstance(r, dict)]
@@ -116,7 +117,7 @@ def pairs(r, aligned=False):
             continue
         a, b = translit_words(t), norm_words(N[lab])
         if len(a) == len(b) and a:
-            out.extend(zip(a, b))
+            out.extend(zip(a, b, strict=False))
         elif aligned and a and b:
             out.extend(align(a, b))
     return out
@@ -125,7 +126,7 @@ def pairs(r, aligned=False):
 def carved_groups(t):
     """The inscription as the carver divided it: groups between dividers (line breaks are not dividers)."""
     out = []
-    for lab, p in sections(t):
+    for _lab, p in sections(t):
         p = clean_translit(p)
         for g in re.split(DIV, p):
             g = re.sub(r"\s+", "", g)
@@ -278,7 +279,7 @@ def edda_tokens(path=EDDA):
     out = []
     if not os.path.exists(path):
         return out
-    for work, text in json.load(open(path)).items():
+    for _work, text in json.load(open(path)).items():
         i = text.find("prentunar")
         text = text[i + 9:] if i >= 0 else " ".join(text.split()[60:])
         out.extend(w.lower() for w in re.findall(r"[A-Za-zÀ-ÿĀ-žǫę]+", text))
@@ -388,7 +389,7 @@ class Spelling:
         known only from the Icelandic texts, æ may also continue the older diphthong æi (written ai in runes)."""
         states = {"": 1.0}
         us = units(norm)
-        for k, u in enumerate(us):
+        for k, _u in enumerate(us):
             choice = choice_table(self.p, us, k, edda)
             nxt = defaultdict(float)
             for s, p in states.items():
@@ -497,13 +498,13 @@ class NameModel:
                     [(c1, c2) for c1 in range(1, L) for c2 in range(c1 + 1, L + 1)])
             for cut in cuts:
                 bounds = (0,) + cut + (L,)
-                chunks = [ck[a:b] for a, b in zip(bounds, bounds[1:])]
-                sc = sum(math.log(rule(w).get(ch, 0.0) + 1e-4) for (_, w), ch in zip(parts, chunks))
+                chunks = [ck[a:b] for a, b in zip(bounds, bounds[1:], strict=False)]
+                sc = sum(math.log(rule(w).get(ch, 0.0) + 1e-4) for (_, w), ch in zip(parts, chunks, strict=False))
                 if best is None or sc > best[0]:
                     best = (sc, chunks)
             if best[0] < math.log(1e-4) - 6.0:
                 continue  # more than one part unexplained: the name is probably cut wrongly
-            for (kind, w), ch in zip(parts, best[1]):
+            for (kind, w), ch in zip(parts, best[1], strict=False):
                 emp[(kind, w)][ch] += 1
         self.idx = {}
         for part, table in (("F", self.first), ("S", self.second), ("X", self.simple), ("E", self.ends)):
@@ -533,7 +534,6 @@ class NameModel:
             ends = [sp for sp in self._by_len["E"].get(n - j, []) if r_e.match(sp)]
             if not ends:
                 continue
-            qe = sum(self.ends[e] * pe for sp in ends for e, pe in self.idx["E"][sp].items())
             r_x = rx(pattern[:j])
             for sp in self._by_len["X"].get(j, []):
                 if r_x.match(sp):
@@ -685,7 +685,7 @@ def name_pairs(r):
         raw = [w for w in re.split(r"[\s,.;:!?]+", re.sub(r"(\S+)/\S+", r"\1", n_)) if re.search(r"\w", w)]
         carved = translit_words(T[lab])
         if len(raw) == len(carved):
-            pairs = list(zip(raw, carved))
+            pairs = list(zip(raw, carved, strict=False))
         else:  # a damaged text: the words that clearly line up (align), so that one lost word does not lose the rest
             plain = [w.strip('"[]').replace("[", "").replace("]", "") for w in raw]
             pairs, at = [], 0
@@ -747,7 +747,7 @@ class Model:
                 parent[x] = parent.get(parent[x], parent[x])
                 x = parent[x]
             return x
-        for sp, ws in by_spell.items():
+        for _sp, ws in by_spell.items():
             common = [w for w, c in ws.items() if c >= 2 and len(w) >= 3]
             for i_, w1 in enumerate(common):
                 for w2 in common[i_ + 1:]:
@@ -777,12 +777,12 @@ class Model:
         for r in recs:
             for _, p in sections(r.get("normalization")):
                 ws = ["<s>"] + [normtok(w) for w in norm_words(p)]
-                for a, b in zip(ws, ws[1:]):
+                for a, b in zip(ws, ws[1:], strict=False):
                     self.big[(a, b)] += 1
                     self.hist[a] += 1
                 self.uni.update(ws[1:])
                 ws3 = ["<s>"] + ws
-                for a, b, c in zip(ws3, ws3[1:], ws3[2:]):
+                for a, b, c in zip(ws3, ws3[1:], ws3[2:], strict=False):
                     if not self.big3[(a, b, c)]:
                         self.fol3[(a, b)] += 1
                     self.big3[(a, b, c)] += 1
@@ -807,7 +807,7 @@ class Model:
                 self.epoch_prior[ep] += 1
                 for _, p in sections(r.get("normalization")):
                     ws = ["<s>"] + [normtok(w) for w in norm_words(p)]
-                    for a, b in zip(ws, ws[1:]):
+                    for a, b in zip(ws, ws[1:], strict=False):
                         for lev in (ep, PHASE[ep]):  # the epoch and its phase
                             self.big_e[lev][(a, b)] += 1
                             self.hist_e[lev][a] += 1
@@ -816,7 +816,7 @@ class Model:
                 ar = "A:" + context(r)[3]
                 for _, p in sections(r.get("normalization")):
                     ws = ["<s>"] + [normtok(w) for w in norm_words(p)]
-                    for a, b in zip(ws, ws[1:]):
+                    for a, b in zip(ws, ws[1:], strict=False):
                         self.big_e[ar][(a, b)] += 1
                         self.hist_e[ar][a] += 1
         self.area_beta = area_beta
@@ -891,7 +891,7 @@ class Model:
         if lam_class:
             sents = [["<s>"] + [normtok(w) for w in norm_words(p)] for r in recs for _, p in sections(r.get("normalization"))]
             self.cl = word_classes(sents, n_classes)
-            cb = Counter((self.cl[a], self.cl[b]) for s in sents for a, b in zip(s, s[1:]))
+            cb = Counter((self.cl[a], self.cl[b]) for s in sents for a, b in zip(s, s[1:], strict=False))
             self.c_hist, self.c_big = Counter(), cb
             for (a, _), c in cb.items():
                 self.c_hist[a] += c
@@ -1087,7 +1087,7 @@ class Model:
             return out
         found = {}
         first = one(s)
-        for v, r in first.items():
+        for v, _r in first.items():
             if v != s and len(v) >= 2:
                 found[v] = min(found.get(v, 9), 1)
         if max_rules >= 2:
@@ -1129,7 +1129,7 @@ class Model:
         tot = 0.0
         for path in self.derivations(w, s):
             p = 1.0
-            for u, c, k in path:
+            for _u, c, k in path:
                 p *= choice_table(table, us, k, edda).get(c, 0.0)
             tot += p
         return tot
@@ -1554,7 +1554,7 @@ def trigram_delta(model, path):
     """How much more (log) probable the words of a reading are when each is judged by the two words before it."""
     ws = ["<s>", "<s>"] + [w for _, _, w, _ in path]
     out = 0.0
-    for u, v, w in zip(ws, ws[1:], ws[2:]):
+    for u, v, w in zip(ws, ws[1:], ws[2:], strict=False):
         if w == "<unk>" or w[0] == "§" or v == "<unk>" or v[0] == "§":
             continue
         p2, p3 = model.p_word(w, v), model.p_word3(w, u, v)
@@ -1578,7 +1578,7 @@ def word_classes(sents, K=200, dims=40, n_ctx=400, seed=0):
     wi = {w: i for i, w in enumerate(words)}
     M = np.zeros((len(words), 2 * len(ctx)))
     for s in sents:
-        for a, b in zip(s, s[1:]):
+        for a, b in zip(s, s[1:], strict=False):
             if a in ci:
                 M[wi[b], ci[a]] += 1
             if b in ci:
@@ -1651,11 +1651,11 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
     k = g1 - g0
     g = groups[gi]
     sets = [set(allowed[i]) if (allowed and allowed[i]) else None for i in range(k)]
-    ok = lambda f: all(s_ is None or ch in s_ for s_, ch in zip(sets, f))
+    ok = lambda f: all(s_ is None or ch in s_ for s_, ch in zip(sets, f, strict=False))
     soft = bool(allowed) and trace_eps > 0
     fixed = set(hard or ())
     ok_hard = lambda f: all(sets[i] is None or f[i] in sets[i] for i in fixed if i < len(f))  # noqa: E731
-    misfit = lambda f: sum(1 for i, (s_, ch) in enumerate(zip(sets, f)) if s_ is not None and ch not in s_ and i not in fixed)
+    misfit = lambda f: sum(1 for i, (s_, ch) in enumerate(zip(sets, f, strict=False)) if s_ is not None and ch not in s_ and i not in fixed)
     # a first reading of the rest of the text (the gap left open): its words give the context
     parts0, sg0 = [], []
     for idx, grp in enumerate(groups):
@@ -1883,14 +1883,14 @@ def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, a
 
     def fill(gs, choice):
         gs = list(gs)
-        for (gi, a, b), f in sorted(zip(gaps, choice), key=lambda x: (-x[0][0], -x[0][1])):
+        for (gi, a, b), f in sorted(zip(gaps, choice, strict=False), key=lambda x: (-x[0][0], -x[0][1])):
             gs[gi] = gs[gi][:a] + f + gs[gi][b:]
         return gs
 
     best = [None] * len(gaps)
     options = [[] for _ in gaps]
     wdist = {}
-    for r_ in range(rounds if len(gaps) > 1 else 1):
+    for _round in range(rounds if len(gaps) > 1 else 1):
         for n, gp in enumerate(gaps):
             choice = [best[i] if (best[i] is not None and i != n) else "?" * (gaps[i][2] - gaps[i][1]) for i in range(len(gaps))]
             wd, seg = {}, {}
@@ -1904,9 +1904,9 @@ def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, a
                 # the word in this gap, over all its candidates (the other gaps filled by their best candidates)
                 wdist[n] = _by_lemma(model, [(wd.get(f) or "<unk>", p_) for f, p_ in res])
                 if positions is not None:
-                    at = lambda f, o: next((w_ for a_, b_, w_ in seg.get(f, ()) if a_ <= o < b_), None) or "<unk>"  # noqa: E731
+                    at = lambda f, o, seg=seg: next((w_ for a_, b_, w_ in seg.get(f, ()) if a_ <= o < b_), None) or "<unk>"  # noqa: E731
                     positions[n] = [_by_lemma(model, [(at(f, o), p_) for f, p_ in res]) for o in range(gp[2] - gp[1])]
-    opts = [o or ["?" * (b - a)] for o, (_, a, b) in zip(options, gaps)]
+    opts = [o or ["?" * (b - a)] for o, (_, a, b) in zip(options, gaps, strict=False)]
     # the whole text is weighed as each gap was: with the names of nearby stones and, for soft traces, a factor
     # trace_eps for each misread trace (without these a filling the traces rule against could win the reading)
     names_arg = None if kw.get("cache") else _name_cache(
@@ -1937,7 +1937,7 @@ def restore_all(model, groups, signs=(), ctx=None, top=5, rounds=2, only=None, a
         if kw.get("trigram"):
             lz += trigram_delta(model, path_)
         if eps > 0:
-            lz += sum(misfit(gp, f) for gp, f in zip(gaps, choice)) * math.log(eps)
+            lz += sum(misfit(gp, f) for gp, f in zip(gaps, choice, strict=False)) * math.log(eps)
         at = [sum(len(x.replace("?", "")) for x in gs[:gi]) + len(gs[gi][:a].replace("?", "")) for gi, a, _ in gaps]
         words = [next((w for i_, j_, w, _ in path_ if i_ <= t < j_), None) for t in at]
         seen[choice] = (lz, choice, " ".join(w for _, _, w, _ in path_), words)

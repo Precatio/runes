@@ -58,7 +58,7 @@ def _load_upload(file: UploadFile) -> MeshEntry:
         raise
     except Exception as e:
         raise server_error(e, "Kunde inte ladda 3D-filen. Kontrollera att filen är en giltig STL/OBJ/PLY.",
-                           status_code=400)
+                           status_code=400) from e
     finally:
         if os.path.exists(tmp_path):
             os.unlink(tmp_path)
@@ -78,6 +78,23 @@ def _load_upload(file: UploadFile) -> MeshEntry:
         "centered_by": [float(v) for v in centre],
     }
     return mesh_cache.put(digest, MeshEntry(mesh, info))
+
+
+_TRUE = {"1", "true", "t", "yes", "y", "on"}
+_FALSE = {"0", "false", "f", "no", "n", "off"}
+
+
+def form_flag(value: str | None, default: bool, name: str) -> bool:
+    """A yes/no form field that is True when left out. Read as text, because FastAPI >= 0.160 turns a missing
+    `bool = Form(True)` field into False (as an unticked HTML checkbox); accepts the same words as pydantic's bool."""
+    if value is None:
+        return default
+    v = value.strip().lower()
+    if v in _TRUE:
+        return True
+    if v in _FALSE:
+        return False
+    raise HTTPException(status_code=422, detail=f"{name} måste vara true eller false.")
 
 
 def resolve_mesh(file: UploadFile | None, mesh_id: str | None, use_mock: bool = False) -> MeshEntry:
@@ -151,6 +168,10 @@ def _check_feature_type(feature_type: str):
         raise HTTPException(status_code=400, detail="feature_type måste vara rune, ornament eller unknown.")
 
 
+# What a slice's geometry normally fails with (too few points, a degenerate fit): skipped without a warning
+_GEOMETRY_ERRORS = (ValueError, IndexError, FloatingPointError, ZeroDivisionError, np.linalg.LinAlgError)
+
+
 def measure_slices(entry: MeshEntry, origin, direction, up, slice_count: int, spacing_mm: float,
                    window_mm: float, noise_rng=None):
     """Snitt med jämna mellanrum längs spåret kring origin. Returnerar (slices, huvudsnitt)."""
@@ -161,7 +182,7 @@ def measure_slices(entry: MeshEntry, origin, direction, up, slice_count: int, sp
     groove_direction = groove_direction / norm
     origin = np.asarray(origin, dtype=float)
     face_tree = None if entry.info.get("mock") else entry.face_tree
-    slices, main = [], None
+    slices, main, unexpected = [], None, []
     start = -(slice_count - 1) / 2.0 * spacing_mm
     for i in range(slice_count):
         offset = start + i * spacing_mm
@@ -172,10 +193,17 @@ def measure_slices(entry: MeshEntry, origin, direction, up, slice_count: int, sp
             if noise_rng is not None:
                 z_2d = z_2d + noise_rng.normal(0, 0.1, size=z_2d.shape)
             res = calculate_v_angle(x_2d, z_2d)
-        except (ValueError, IndexError, FloatingPointError, np.linalg.LinAlgError) as e:
-            # A slice with too few points or a degenerate fit is skipped; any other error is a bug and is raised
+        except (KeyboardInterrupt, SystemExit, MemoryError):
+            raise
+        except Exception as e:  # noqa: BLE001 - one bad slice must not stop the others
+            # A slice with too few points, a degenerate fit or an error inside trimesh/scipy at one spot is skipped
+            # (logged with what went wrong); the analysis reports how many slices succeeded. Errors that geometry
+            # normally gives are logged quietly; any other kind (a TypeError from a changed signature, say) is
+            # logged as a warning below, so that a code bug that makes every slice fail does not go unseen
             from api.errors import logger
             logger.debug("Snitt %d (%.2f mm) hoppades över: %r", i, offset, e)
+            if not isinstance(e, _GEOMETRY_ERRORS):
+                unexpected.append((i, e))
             continue
         if not all(np.isfinite(res[k]) for k in (*METRICS, "fit_r2")):
             continue  # too few points for a wall fit
@@ -183,6 +211,11 @@ def measure_slices(entry: MeshEntry, origin, direction, up, slice_count: int, sp
                                     groove_direction, up))
         if i == slice_count // 2 or main is None:
             main = {"x_2d": res["x"], "z_2d": res["z"], "res": res}
+    if unexpected:
+        from api.errors import logger
+        i, e = unexpected[0]
+        logger.warning("%d av %d snitt hoppades över av ett oväntat fel (%d lyckades); första, snitt %d: %r",
+                       len(unexpected), slice_count, len(slices), i, e)
     return slices, main
 
 
@@ -271,7 +304,7 @@ def auto_slice_endpoint(
     normal_x: float = Form(None),
     normal_y: float = Form(None),
     normal_z: float = Form(None),
-    measure: bool = Form(True),
+    measure: str | None = Form(None),
     slice_count: int = Form(3),
     meta_stone: str = Form("Granit"),
     meta_weathering: str = Form("Låg"),
@@ -279,12 +312,13 @@ def auto_slice_endpoint(
 ):
     """Ett klick per snitt: räknar ut snittets läge och riktning vid klicket och mäter direkt."""
     _check_feature_type(feature_type)
+    measure = form_flag(measure, True, "measure")
     entry = resolve_mesh(file, mesh_id)
     hint = None if normal_x is None else [normal_x, normal_y, normal_z]
     try:
         sel = auto_slice(entry.mesh, [point_x, point_y, point_z], normal_hint=hint, tree=entry.vertex_tree)
     except ValueError as e:
-        raise HTTPException(status_code=422, detail=str(e))
+        raise HTTPException(status_code=422, detail=str(e)) from e
     if not measure:
         return {"selection": sel}
     slices, main = measure_slices(entry, sel["origin"], sel["direction"], sel["up"], slice_count, 1.0, sel["window_mm"])
@@ -312,12 +346,13 @@ def auto_analyze(
     meta_weathering: str = Form("Låg"),
     resolution_mm: float = Form(None),
     harmonize_mm: float = Form(None),
-    runes_only: bool = Form(True),
+    runes_only: str | None = Form(None),
     protocol: bool = Form(False),
 ):
     """Automatisk spåranalys av den ristade ytan som vetter mot normalen (oftast kamerans riktning).
     Med runes_only (standard) mäts bara spår som känns igen som runor. Med protocol används Vitki-protokollets
     fasta parametrar (src/protocol.py); proveniensen anger alltid om analysen följer protokollet."""
+    runes_only = form_flag(runes_only, True, "runes_only")
     if protocol:
         pp = protocol_spec.PARAMETERS
         resolution_mm, sensitivity, spacing_mm = pp["resolution_mm"], pp["sensitivity"], pp["spacing_mm"]
@@ -338,9 +373,9 @@ def auto_analyze(
                                  resolution_mm=resolution_mm, harmonize_mm=harmonize_mm or None,
                                  runes_only=runes_only)
     except ValueError as e:
-        raise HTTPException(status_code=422, detail=str(e))
+        raise HTTPException(status_code=422, detail=str(e)) from e
     except Exception as e:
-        raise server_error(e, "Den automatiska analysen misslyckades.", status_code=500)
+        raise server_error(e, "Den automatiska analysen misslyckades.", status_code=500) from e
 
     accepted = [s for s in result["slices"] if s["accepted"]]
     if accepted:
@@ -377,7 +412,7 @@ def _parse_points(raw: str) -> list:
             raise ValueError
         return pts
     except (ValueError, TypeError):
-        raise HTTPException(status_code=400, detail="path_points_json måste vara en lista av [x, y, z].")
+        raise HTTPException(status_code=400, detail="path_points_json måste vara en lista av [x, y, z].") from None
 
 
 @router.post("/analyze_path")
@@ -404,7 +439,7 @@ def analyze_path_endpoint(
                                                                   window_mm=window_mm, face_tree=face_tree)
     except Exception as e:
         raise server_error(e, "Kunde inte mäta längs banan. Kontrollera att punkterna ligger i ett spår.",
-                           status_code=400)
+                           status_code=400) from e
 
     means = _means(slices)
     tool = tool_heuristic(means["apex_vinkel_deg"], meta_stone, meta_weathering)
@@ -439,7 +474,7 @@ def view_model(file: UploadFile = File(None), mesh_id: str = Form(None), max_fac
                 try:
                     mesh = mesh.simplify_quadric_decimation(face_count=target)
                 except Exception as e:
-                    raise server_error(e, "Kunde inte förenkla modellen.", status_code=500)
+                    raise server_error(e, "Kunde inte förenkla modellen.", status_code=500) from e
             entry.view = (target, mesh.export(file_type="stl"), len(mesh.faces))
         _, data, view_faces = entry.view
     return Response(
@@ -494,7 +529,7 @@ def render_depth_map(
         img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
         return {"image_base64": f"data:image/png;base64,{img_str}"}
     except Exception as e:
-        raise server_error(e, "Djupkartan kunde inte skapas.", status_code=400)
+        raise server_error(e, "Djupkartan kunde inte skapas.", status_code=400) from e
 
 
 def _estimated_normal(mesh) -> np.ndarray:
@@ -532,7 +567,7 @@ def render_relief(
     try:
         surf = Surface(entry.mesh, normal, up, max_px=1600)
     except Exception as e:
-        raise server_error(e, "Ytan kunde inte räknas fram ur modellen.", status_code=500)
+        raise server_error(e, "Ytan kunde inte räknas fram ur modellen.", status_code=500) from e
 
     def png(gray: np.ndarray) -> str:
         img = np.nan_to_num(gray, nan=1.0)

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import BlogShell from "@/components/BlogShell";
+import { SwedishEditionLink } from "@/components/LanguageToggle";
 import EnglishArticleList from "@/components/EnglishArticleList";
 import ContentVote from "@/components/ContentVote";
 import { listPosts } from "@/lib/articles";
 import { featuredFirst } from "@/lib/featured";
-import { BLOG_DESCRIPTION_EN, BLOG_TITLE_EN, EN_ARTICLES_PATH, languageAlternates } from "@/lib/blogSeo";
+import { ARTICLES_PATH, BLOG_DESCRIPTION_EN, BLOG_TITLE_EN, EN_ARTICLES_PATH, languageAlternates } from "@/lib/blogSeo";
 
 // The English index of the articles, rendered on the server; every article links its Swedish original via hreflang
 export const revalidate = 60;
@@ -24,11 +24,11 @@ export default async function EnglishBlogPage() {
   const { posts } = await listPosts();
   const withEn = featuredFirst(posts.filter(p => p.title_en));
   return (
-    <BlogShell>
+    <BlogShell lang="en">
       <section className="max-w-3xl mx-auto px-6 pt-20 pb-24" lang="en">
         <div className="flex items-center justify-between gap-4">
           <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e]">Articles</div>
-          <Link href="/artiklar/" className="text-sm text-[#b7410e] font-semibold hover:underline" hrefLang="sv">Läs på svenska →</Link>
+          <SwedishEditionLink href={ARTICLES_PATH} className="text-sm text-[#b7410e] font-semibold hover:underline">Läs på svenska →</SwedishEditionLink>
         </div>
         <h1 className="mt-3 text-4xl md:text-5xl font-serif font-bold tracking-tight">Hidden patterns of the runestones</h1>
         <p className="mt-4 text-lg text-slate-600 leading-relaxed">

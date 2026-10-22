@@ -74,7 +74,7 @@ def read_stone(r, items, own_d=False, name_scale=1.0):
                                             div_rate=dr, details=det, **{"name_scale": name_scale, **tm.FILL})
         if not combos:
             continue
-        best = dict(zip(gaps, combos[0][0]))
+        best = dict(zip(gaps, combos[0][0], strict=False))
         GL = tm._records().get("GL")
         if GL:  # as the app (textmodel-17): the word with the highest calibrated probability is the gap's choice
             for n_i, sp in enumerate(gaps):

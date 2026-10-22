@@ -38,7 +38,7 @@ def list_users(_: dict = Depends(require_admin)):
         users = list(fb_auth.list_users(app=firebase_app()).iterate_all())
     except Exception as e:
         raise server_error(e, "Kontona kunde inte hämtas. Servern behöver behörighet till Firebase "
-                              "(Application Default Credentials).", status_code=503)
+                              "(Application Default Credentials).", status_code=503) from e
     now = dt.datetime.now(dt.timezone.utc).timestamp() * 1000
     day = 86_400_000
     rows = sorted(({
@@ -74,9 +74,9 @@ def ban_user(uid: str, req: BanRequest, admin: dict = Depends(require_admin)):
         firestore().collection("banned").document(uid).set(
             {"reason": req.reason, "at": dt.datetime.now(dt.timezone.utc), "by": admin["uid"]})
     except fb_auth.UserNotFoundError:
-        raise HTTPException(status_code=404, detail="Kontot finns inte.")
+        raise HTTPException(status_code=404, detail="Kontot finns inte.") from None
     except Exception as e:
-        raise server_error(e, "Kontot kunde inte stängas av.", status_code=503)
+        raise server_error(e, "Kontot kunde inte stängas av.", status_code=503) from e
     return {"uid": uid, "disabled": True}
 
 
@@ -87,9 +87,9 @@ def unban_user(uid: str, _: dict = Depends(require_admin)):
         fb_auth.update_user(uid, disabled=False, app=firebase_app())
         firestore().collection("banned").document(uid).delete()
     except fb_auth.UserNotFoundError:
-        raise HTTPException(status_code=404, detail="Kontot finns inte.")
+        raise HTTPException(status_code=404, detail="Kontot finns inte.") from None
     except Exception as e:
-        raise server_error(e, "Kontot kunde inte öppnas igen.", status_code=503)
+        raise server_error(e, "Kontot kunde inte öppnas igen.", status_code=503) from e
     return {"uid": uid, "disabled": False}
 
 
@@ -116,7 +116,7 @@ def public_messages():
         msgs = [{"id": d.id, **{k: (v.isoformat() if hasattr(v, "isoformat") else v) for k, v in d.to_dict().items()
                                 if k in ("title", "body", "to", "level", "createdAt")}} for d in docs]
     except Exception as e:
-        raise server_error(e, "Meddelandena kunde inte hämtas.", status_code=503)
+        raise server_error(e, "Meddelandena kunde inte hämtas.", status_code=503) from e
     msgs.sort(key=lambda m: m.get("createdAt") or "", reverse=True)
     _PUBLIC.update(at=time.time(), messages=msgs)
     return {"messages": msgs}
@@ -129,7 +129,7 @@ def github(refresh: bool = False, _: dict = Depends(require_admin)):
     try:
         return github_stats.stats(refresh)
     except Exception as e:  # noqa: BLE001
-        raise server_error(e, "GitHub svarar inte just nu.", status_code=503)
+        raise server_error(e, "GitHub svarar inte just nu.", status_code=503) from e
 
 
 @router.get("/admin/messages")
@@ -139,7 +139,7 @@ def list_messages(_: dict = Depends(require_admin)):
         return {"messages": [{"id": d.id, **{k: (v.isoformat() if hasattr(v, "isoformat") else v)
                                               for k, v in d.to_dict().items()}} for d in docs]}
     except Exception as e:
-        raise server_error(e, "Meddelandena kunde inte hämtas.", status_code=503)
+        raise server_error(e, "Meddelandena kunde inte hämtas.", status_code=503) from e
 
 
 @router.post("/admin/messages")
@@ -152,7 +152,7 @@ def send_message(req: MessageRequest, admin: dict = Depends(require_admin)):
         ref.set(data)
         _PUBLIC.update(at=0.0, messages=None)
     except Exception as e:
-        raise server_error(e, "Meddelandet kunde inte skickas.", status_code=503)
+        raise server_error(e, "Meddelandet kunde inte skickas.", status_code=503) from e
     return {"id": ref.id, **{k: (v.isoformat() if hasattr(v, "isoformat") else v) for k, v in data.items()}}
 
 
@@ -162,29 +162,22 @@ def delete_message(message_id: str, _: dict = Depends(require_admin)):
         firestore().collection("messages").document(message_id).delete()
         _PUBLIC.update(at=0.0, messages=None)
     except Exception as e:
-        raise server_error(e, "Meddelandet kunde inte tas bort.", status_code=503)
+        raise server_error(e, "Meddelandet kunde inte tas bort.", status_code=503) from e
     return {"id": message_id, "deleted": True}
 
 
 @router.get("/admin/site/votes")
 def site_votes(_: dict = Depends(require_admin)):
     """Röstningen på den publika webbplatsen (web/src/components/SiteVote.tsx): antal röster per fråga och svar, och
-    när den första och den senaste rösten kom. Rösterna läses med serverns egen behörighet; webbläsare kan inte läsa dem."""
+    när den första och den senaste rösten kom. Rösterna läses med serverns egen behörighet; webbläsare kan inte läsa dem.
+    Vem som helst kan skriva röster med ett skript, så högst src/site_stats.VOTE_CAP räknas per svar och dag (`total`,
+    `choices`); de råa talen står bredvid (`raw_total`, `raw_choices`)."""
+    from src import site_stats as stats
     try:
         docs = list(firestore().collection("site_votes").stream())
     except Exception as e:  # noqa: BLE001
-        raise server_error(e, "Rösterna kunde inte hämtas.", status_code=503)
-    by: dict[str, Counter] = {}
-    times: dict[str, list] = {}
-    for d in docs:
-        v = d.to_dict() or {}
-        q = v.get("question", "?")
-        by.setdefault(q, Counter())[v.get("choice", "?")] += 1
-        if d.create_time:
-            times.setdefault(q, []).append(d.create_time)
-    return {"questions": [{"question": q, "total": sum(c.values()), "choices": dict(c),
-                           "first": min(times[q]).isoformat() if times.get(q) else None,
-                           "last": max(times[q]).isoformat() if times.get(q) else None} for q, c in by.items()]}
+        raise server_error(e, "Rösterna kunde inte hämtas.", status_code=503) from e
+    return {"questions": stats.summarize_votes([(d.to_dict() or {}, d.create_time) for d in docs])}
 
 
 _stats_cache: dict[tuple[int, str | None], tuple[float, dict]] = {}
@@ -209,7 +202,7 @@ def site_stats(days: int = 30, fresh: bool = False, day: str | None = None, _: d
         try:
             day = dt.date.fromisoformat(day).isoformat()
         except ValueError:
-            raise HTTPException(status_code=422, detail="day ska vara ett datum, ÅÅÅÅ-MM-DD.")
+            raise HTTPException(status_code=422, detail="day ska vara ett datum, ÅÅÅÅ-MM-DD.") from None
     key = (days, day)
     hit = _stats_cache.get(key)
     if hit and not fresh and time.time() - hit[0] < STATS_TTL_S:
@@ -222,7 +215,7 @@ def site_stats(days: int = 30, fresh: bool = False, day: str | None = None, _: d
             query = firestore().collection("site_views").where(filter=FieldFilter("day", ">=", since.isoformat()))
             rows = [d.to_dict() or {} for d in query.stream()]
         except Exception as e:  # noqa: BLE001
-            raise server_error(e, "Besöksstatistiken kunde inte hämtas.", status_code=503)
+            raise server_error(e, "Besöksstatistiken kunde inte hämtas.", status_code=503) from e
         _rows_cache[days] = (time.time(), rows)
     else:
         rows = raw[1]

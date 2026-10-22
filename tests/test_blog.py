@@ -442,7 +442,8 @@ def test_the_website_push_waits_for_a_busy_git_index(monkeypatch):
     monkeypatch.setattr(site_export, "_git", git)
     monkeypatch.setattr(site_export.time, "sleep", lambda s: None)
     out = site_export.push()
-    assert out["pushed"] and calls == ["add", "add", "diff", "commit", "push"]
+    # (rev-list: how many other commits the push takes along, see site_export._push)
+    assert out["pushed"] and [c for c in calls if c != "rev-list"] == ["add", "add", "diff", "commit", "push"]
 
 
 def test_the_latest_website_publish_is_recorded_for_admin(tmp_path, monkeypatch):

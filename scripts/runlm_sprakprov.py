@@ -89,11 +89,11 @@ def coincidence(runes: str) -> float:
 
 def futhark_run(segs) -> int:
     """The longest stretch of runes in futhark order (fu, uþ, þo …) within a segment."""
-    nxt = {a: b for a, b in zip(FUTHARK, FUTHARK[1:])}
+    nxt = {a: b for a, b in zip(FUTHARK, FUTHARK[1:], strict=False)}
     best = 0
     for s in segs:
         run = 1
-        for a, b in zip(s, s[1:]):
+        for a, b in zip(s, s[1:], strict=False):
             run = run + 1 if nxt.get(a) == b else 1
             best = max(best, run)
     return best

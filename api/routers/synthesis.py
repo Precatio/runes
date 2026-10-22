@@ -518,7 +518,7 @@ Svara med giltig HTML (endast <h2>, <p>, <strong>, <em>, <ul>, <li>) i dessa avs
     try:
         body = llm.generate(ai, prompt, tier="pro", temperature=0.3).text.strip().replace("```html", "").replace("```", "")
     except Exception as e:
-        raise ai_error(e, "Rapportgenereringen misslyckades.")
+        raise ai_error(e, "Rapportgenereringen misslyckades.") from e
 
     sources = request.sources or ([store().meta["attribution"]] if evidence.get("rundata") else [])
     html = (

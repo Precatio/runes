@@ -100,7 +100,7 @@ def model_significance(findings: list[dict], oof: list[dict]) -> None:
         prob = f["stats"]["probability"]
         others = [w for sg, w in null if sg != f["signum"]]
         pvals.append((1 + sum(w >= prob for w in others)) / (1 + len(others)))
-    for f, p, q in zip(findings, pvals, bh(pvals)):
+    for f, p, q in zip(findings, pvals, bh(pvals), strict=False):
         f["stats"].update({"p_value": round(p, 4), "q_value": round(q, 4), "null_n": len(null)})
 
 

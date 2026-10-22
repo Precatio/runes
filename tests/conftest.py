@@ -12,6 +12,24 @@ os.environ.setdefault("SITE_PUBLISH", "0")  # never push the public website from
 import pytest  # noqa: E402
 
 
+# One rule for every test that runs R (tests/test_r.py, tests/test_question.py): mark it `needs_r`. It is skipped when
+# src/r_bridge.rscript() finds no Rscript, so `RSCRIPT= pytest` simulates a machine without R also where R is
+# installed. A test marked `slow_r` (a corpus run of many minutes) is also skipped in CI (the CI variable that GitHub
+# Actions sets) unless R_SLOW_TESTS=1, so that it cannot run into the job's time limit if a runner has R.
+def pytest_configure(config):
+    config.addinivalue_line("markers", "needs_r: runs R; skipped when Rscript is missing or RSCRIPT is empty")
+    config.addinivalue_line("markers", "slow_r: an R run of many minutes; also skipped in CI unless R_SLOW_TESTS=1")
+
+
+def pytest_runtest_setup(item):
+    if item.get_closest_marker("needs_r") or item.get_closest_marker("slow_r"):
+        from src import r_bridge
+        if r_bridge.rscript() is None:
+            pytest.skip("R är inte installerat (Rscript saknas eller RSCRIPT är tom)")
+    if item.get_closest_marker("slow_r") and os.environ.get("CI") and os.environ.get("R_SLOW_TESTS") != "1":
+        pytest.skip("lång R-körning; körs i CI bara med R_SLOW_TESTS=1")
+
+
 @pytest.fixture(autouse=True)
 def _no_real_ai_calls(monkeypatch):
     # Tests never call a real language model, even if a key is present in .env

@@ -10,10 +10,14 @@ from __future__ import annotations
 import hashlib
 import os
 import re
+import shutil
+import tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIR = os.path.join(ROOT, "data", "blog", "figures")
 NAME = re.compile(r"^[0-9a-f]{16}\.png$")
+# Half-written copies for the website (to_site), outside web/public/figurer; data/cache is ignored by git
+TMP_DIR = os.path.join(ROOT, "data", "cache", "site_figures_tmp")
 
 # File name → group (map, time, other), Swedish and English caption, the R script
 FIXED = {
@@ -116,6 +120,7 @@ def markdown(url: str, d: dict, lang: str = "sv") -> str:
 # so a published copy never changes; changing a parameter gives new names, and the export replaces the old files.
 SITE_WIDTH = 1600
 PHOTO_QUALITY = 86
+SITE_MODE = 0o644  # the published figures: readable by everyone, as PIL's own save left them
 SITE_CODEC = f"webp w{SITE_WIDTH} q{PHOTO_QUALITY} lossless-m6"
 
 
@@ -150,7 +155,27 @@ def to_site(src: str, dst: str) -> dict:
         if im.width > SITE_WIDTH:
             im = im.resize((SITE_WIDTH, max(1, round(im.height * SITE_WIDTH / im.width))), Image.LANCZOS)
         opts = {"quality": PHOTO_QUALITY, "method": 6} if photo else {"lossless": True, "quality": 100, "method": 6}
-        tmp = dst + ".tmp"
-        im.save(tmp, "WEBP", **opts)
-        os.replace(tmp, dst)
+        # The temporary file is written outside dst's folder (TMP_DIR, not tracked by git): the export commits the whole
+        # figure folder, so a conversion that is killed half-way must never leave anything there
+        os.makedirs(TMP_DIR, exist_ok=True)
+        fd, tmp = tempfile.mkstemp(prefix="site-", suffix=".webp", dir=TMP_DIR)
+        os.close(fd)
+        try:
+            im.save(tmp, "WEBP", **opts)
+            # mkstemp makes the file owner-only (0600) and os.replace keeps that; the site's figures are -rw-r--r--
+            os.chmod(tmp, SITE_MODE)
+            try:
+                os.replace(tmp, dst)  # atomic on the same disk
+            except OSError:  # TMP_DIR on another disk than dst (a test's folder): copied, then renamed in place
+                part = os.path.join(os.path.dirname(dst), "." + os.path.basename(dst) + ".part")
+                try:
+                    shutil.copyfile(tmp, part)
+                    os.chmod(part, SITE_MODE)
+                    os.replace(part, dst)
+                finally:
+                    if os.path.exists(part):
+                        os.remove(part)
+        finally:
+            if os.path.exists(tmp):
+                os.remove(tmp)
         return {"photo": photo, "size": im.size}

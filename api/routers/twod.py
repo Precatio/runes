@@ -29,6 +29,6 @@ def extract_features(request: ExtractFeaturesRequest):
     try:
         return ExtractFeaturesResponse(**graphemes.extract(image_bytes))
     except ValueError as e:
-        raise HTTPException(status_code=422, detail=str(e))
+        raise HTTPException(status_code=422, detail=str(e)) from e
     except Exception as e:
-        raise server_error(e, "Fel vid beskrivning av runformen.")
+        raise server_error(e, "Fel vid beskrivning av runformen.") from e

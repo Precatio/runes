@@ -2,8 +2,12 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-// GET /api/admin/site/votes: the public website's vote, seen only here (components/SiteVote.tsx casts it)
-interface Question { question: string; total: number; choices: Record<string, number>; first: string | null; last: string | null }
+// GET /api/admin/site/votes: the public website's vote, seen only here (components/SiteVote.tsx casts it). Anyone can
+// script votes, so the server counts at most `cap` per answer and day (total, choices) and keeps the raw counts beside them
+interface Question {
+  question: string; total: number; choices: Record<string, number>; first: string | null; last: string | null;
+  raw_total?: number; raw_choices?: Record<string, number>; cap?: number;
+}
 const QUESTIONS: Record<string, { title: string; labels: Record<string, string> }> = {
   webbapp: { title: "Vitki i webbläsaren?", labels: { ja: "Ja, gärna", nej: "Nej, jag installerar själv" } },
 };
@@ -33,6 +37,11 @@ export default function SiteVotes({ call }: { call: (path: string, init?: Reques
         return (
           <div key={q.question} className="rounded-xl border border-slate-900/10 bg-white/70 p-4">
             <p className="font-semibold text-slate-900">{meta.title} <span className="font-normal text-slate-500">– {q.total} röster</span></p>
+            {q.raw_total != null && q.raw_total > q.total && (
+              <p className="mt-1 text-xs font-semibold text-amber-800">
+                Begränsat: {q.total} av {q.raw_total} räknade. Högst {q.cap} röster per svar och dag räknas, så att den som skickar röster med ett skript inte kan blåsa upp resultatet.
+              </p>
+            )}
             <div className="mt-3 space-y-2">
               {Object.entries(q.choices).sort((a, b) => b[1] - a[1]).map(([choice, n]) => {
                 const share = q.total ? n / q.total : 0;
@@ -40,7 +49,9 @@ export default function SiteVotes({ call }: { call: (path: string, init?: Reques
                   <div key={choice} className="grid grid-cols-[minmax(0,12rem)_1fr_auto] items-center gap-3 text-sm">
                     <span className="truncate text-slate-700">{meta.labels[choice] ?? choice}</span>
                     <span className="h-2.5 rounded-full bg-slate-100"><span className="block h-2.5 rounded-full bg-[#2a78d6]" style={{ width: `${Math.round(share * 100)}%` }} /></span>
-                    <span className="tabular-nums text-slate-700">{n} ({Math.round(share * 100)} %)</span>
+                    <span className="tabular-nums text-slate-700" title={q.raw_choices && q.raw_choices[choice] > n ? `begränsat: ${n} av ${q.raw_choices[choice]} räknade` : undefined}>
+                      {n} ({Math.round(share * 100)} %){q.raw_choices && q.raw_choices[choice] > n && <span className="text-amber-800"> av {q.raw_choices[choice]}</span>}
+                    </span>
                   </div>
                 );
               })}

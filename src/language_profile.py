@@ -182,7 +182,7 @@ def _case_pairs(rec: dict) -> list[tuple[str, str]]:
     if not norm or len(norm) != len(words):
         return []
     out = []
-    for raw, n in zip(words, norm):
+    for raw, n in zip(words, norm, strict=False):
         w = _clean_word(raw)
         if w and not n.startswith('"') and "[" not in n and "(?)" not in n:
             out.append((n, w))
@@ -252,10 +252,10 @@ def ai_counts(rec: dict) -> dict[str, int]:
     lexem i stället för bara om stenen har minst en monoftong (r/change.R)."""
     words = [(n.lower(), w) for n, w in _case_pairs(rec) if "æi" in n.lower()]
     mono = [not re.search(r"ai|ia|ei|ae", w) for _, w in words]
-    sten = [m for (n, _), m in zip(words, mono) if n.startswith("stæin")]
+    sten = [m for (n, _), m in zip(words, mono, strict=False) if n.startswith("stæin")]
     # How the monophthong is written: with dotted i (e, as in sten) or plain i (stin) – so that a move from stin to sten
     # is not mistaken for a move from stin to stain
-    mono_words = [w for (n, w), m in zip(words, mono) if m]
+    mono_words = [w for (n, w), m in zip(words, mono, strict=False) if m]
     return {"ai_n": len(words), "ai_mono": sum(mono), "ai_sten_n": len(sten), "ai_sten_mono": sum(sten),
             "ai_mono_e": sum("e" in w for w in mono_words), "ai_mono_i": sum("e" not in w for w in mono_words)}
 

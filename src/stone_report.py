@@ -187,7 +187,7 @@ def overview_figure(surf: Surface, slices: list[dict], marked: dict[int, str]) -
     _gray(ax, surf.shaded(), surf.extent)
     pts = [(surf.xy(s["point"]), s) for s in slices if s.get("point")]
     if pts:
-        xs, ys = zip(*[xy for xy, _ in pts])
+        xs, ys = zip(*[xy for xy, _ in pts], strict=False)
         angles = [s["apex_vinkel_deg"] for _, s in pts]
         sc = ax.scatter(xs, ys, c=angles, cmap="viridis", s=14, edgecolors="black", linewidths=0.3, zorder=3)
         cb = fig.colorbar(sc, ax=ax, fraction=0.035, pad=0.02)
@@ -208,7 +208,7 @@ def raking_figure(surf: Surface) -> str:
     plt = _plt()
     w, hgt = surf.extent[1], surf.extent[3]
     fig, axes = plt.subplots(2, 2, figsize=(7, 7 * hgt / w if w else 7))
-    for ax, (az, name) in zip(axes.flat, [(315, "nordväst"), (45, "nordost"), (135, "sydost"), (225, "sydväst")]):
+    for ax, (az, name) in zip(axes.flat, [(315, "nordväst"), (45, "nordost"), (135, "sydost"), (225, "sydväst")], strict=False):
         _gray(ax, surf.shaded(az, 20), surf.extent)
         ax.set_title(f"Ljus från {name}, 20°")
         ax.set_xticks([])
@@ -245,8 +245,8 @@ def spatial_figure(surf: Surface, slices: list[dict]) -> str | None:
     plt = _plt()
     w, hgt = surf.extent[1], surf.extent[3]
     fig, axes = plt.subplots(1, 3, figsize=(10, 10 / 3 * hgt / w + 0.6 if w else 4))
-    xs, ys = zip(*[xy for xy, _ in pts])
-    for ax, (m, cmap) in zip(axes, [("spårdjup_mm", "magma_r"), ("spårbredd_mm", "cividis"), ("ytråhet_mm", "plasma")]):
+    xs, ys = zip(*[xy for xy, _ in pts], strict=False)
+    for ax, (m, cmap) in zip(axes, [("spårdjup_mm", "magma_r"), ("spårbredd_mm", "cividis"), ("ytråhet_mm", "plasma")], strict=False):
         _gray(ax, surf.shaded(), surf.extent, alpha=0.55)
         sc = ax.scatter(xs, ys, c=[s[m] for _, s in pts], cmap=cmap, s=10, edgecolors="black", linewidths=0.2)
         cb = fig.colorbar(sc, ax=ax, fraction=0.046, pad=0.02, orientation="horizontal")
@@ -337,7 +337,7 @@ def overlay_figure(groups: dict[str, list[dict]]) -> str | None:
         return None
     plt = _plt()
     fig, axes = plt.subplots(1, len(data), figsize=(4.2 * len(data), 3.2), squeeze=False)
-    for ax, (ft, curves) in zip(axes.flat, data.items()):
+    for ax, (ft, curves) in zip(axes.flat, data.items(), strict=False):
         span = min(8.0, max(float(np.max(np.abs(c[0]))) for c in curves))
         grid = np.linspace(-span, span, 161)
         Z = np.array([np.interp(grid, cx, cz, left=np.nan, right=np.nan) for cx, cz in curves])
@@ -367,7 +367,7 @@ def overlay_figure(groups: dict[str, list[dict]]) -> str | None:
 def distributions_figure(groups: dict[str, list[dict]]) -> str:
     plt = _plt()
     fig, axes = plt.subplots(2, 4, figsize=(10, 4.6))
-    for ax, m in zip(axes.flat, METRICS):
+    for ax, m in zip(axes.flat, METRICS, strict=False):
         per = {}
         for ft, slices in groups.items():
             vals = np.array([s[m] for s in slices if s.get(m) is not None], float)
@@ -425,10 +425,10 @@ def groups_figure(groups: dict[str, list[dict]]) -> str | None:
         return None
     plt = _plt()
     fig, axes = plt.subplots(1, 4, figsize=(10, 2.8))
-    for ax, m in zip(axes, METRICS[:4]):
+    for ax, m in zip(axes, METRICS[:4], strict=False):
         data = [[s[m] for s in sl] for sl in usable.values()]
         bp = ax.boxplot(data, patch_artist=True, widths=0.6)
-        for patch, ft in zip(bp["boxes"], usable):
+        for patch, ft in zip(bp["boxes"], usable, strict=False):
             patch.set_facecolor(GROUP_COLORS.get(ft, ACCENT))
             patch.set_alpha(0.5)
         ax.set_xticks(range(1, len(usable) + 1))
@@ -445,7 +445,7 @@ def corpus_figure(this: dict, reference: list[dict], signum: str) -> str | None:
     plt = _plt()
     carvers = sorted({r["group"] for r in reference})
     fig, axes = plt.subplots(1, 3, figsize=(10, 0.3 * len(carvers) + 1.6), sharey=True)
-    for ax, (k, m) in zip(axes, [(0, "apex_vinkel_deg"), (2, "spårdjup_mm"), (3, "spårbredd_mm")]):
+    for ax, (k, m) in zip(axes, [(0, "apex_vinkel_deg"), (2, "spårdjup_mm"), (3, "spårbredd_mm")], strict=False):
         for y, c in enumerate(carvers):
             vals = [r["values"][k] for r in reference if r["group"] == c]
             ax.scatter(vals, [y] * len(vals), color="#64748b", s=14)
@@ -493,7 +493,7 @@ def rune_forms_figure(crops: list[dict]) -> str | None:
     fig, axes = plt.subplots(rows, cols, figsize=(1.2 * cols, 1.45 * rows), squeeze=False)
     for ax in axes.flat:
         ax.axis("off")
-    for ax, (tag, img) in zip(axes.flat, forms):
+    for ax, (tag, img) in zip(axes.flat, forms, strict=False):
         ax.imshow(np.asarray(img), cmap="gray", vmin=0, vmax=255)
         ax.set_title(tag[:14], fontsize=7)
     fig.tight_layout()

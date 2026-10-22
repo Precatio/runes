@@ -5,7 +5,7 @@ import Link from "next/link";
 import { inLanguage, postDate, type BlogPost } from "@/components/BlogBody";
 import { featuredFirst } from "@/lib/featured";
 import { useLanguage } from "@/components/LanguageContext";
-import { commonsAt, commonsSrcSet, postPath } from "@/lib/blogSeo";
+import { commonsAt, commonsSrcSet, readerPath } from "@/lib/blogSeo";
 
 // The articles on the start page: the article of the week large (or the latest, when none is chosen), with its first
 // photo, and up to three more beside it. Rendered on the server in Swedish and shown in English when the reader has
@@ -41,7 +41,7 @@ export default function ArticleTeasers({ posts, photo }: { posts: BlogPost[]; ph
         {first.featured && <div className="h-1.5 shrink-0 bg-[#b7410e]" aria-hidden />}
         <div className="flex flex-1 flex-col md:flex-row lg:flex-col xl:flex-row">
         {photo && (
-          <Link href={postPath(first.slug)} className="relative md:w-2/5 lg:w-full xl:w-2/5 shrink-0 bg-slate-100">
+          <Link href={readerPath(first, lang)} className="relative md:w-2/5 lg:w-full xl:w-2/5 shrink-0 bg-slate-100">
             <img src={commonsAt(photo.src, 960, photo.width)} srcSet={commonsSrcSet(photo.src, photo.width, [500, 960])}
               sizes={photo.width ? photoSizes(photo.width, photo.height) : undefined} alt={photo.alt} loading="lazy" decoding="async"
               className="h-64 md:h-full lg:h-64 xl:h-full w-full object-cover" />
@@ -53,10 +53,10 @@ export default function ArticleTeasers({ posts, photo }: { posts: BlogPost[]; ph
         <div className="p-7 flex flex-col">
           <div className="text-xs font-bold uppercase tracking-wider text-[#b7410e]">{first.featured ? "Veckans artikel" : "Senaste artikeln"} · {postDate(first, lang)}</div>
           <h3 className="mt-2 text-2xl md:text-3xl font-serif font-bold leading-tight" translate="no">
-            <Link href={postPath(first.slug)} className="hover:text-[#b7410e]">{v.title}</Link>
+            <Link href={readerPath(first, lang)} className="hover:text-[#b7410e]">{v.title}</Link>
           </h3>
           <p className="mt-3 text-slate-600 leading-relaxed" translate="no">{v.summary}</p>
-          <Link href={postPath(first.slug)} className="mt-5 inline-block self-start px-5 py-2.5 rounded-full bg-[#b7410e] text-white text-sm font-bold hover:bg-[#9a350b]">
+          <Link href={readerPath(first, lang)} className="mt-5 inline-block self-start px-5 py-2.5 rounded-full bg-[#b7410e] text-white text-sm font-bold hover:bg-[#9a350b]">
             Läs artikeln
           </Link>
         </div>
@@ -69,7 +69,7 @@ export default function ArticleTeasers({ posts, photo }: { posts: BlogPost[]; ph
             <article key={p.id} className="border-t-2 border-[#b7410e] pt-4">
               <div className="text-xs text-slate-500">{postDate(p, lang)}</div>
               <h3 className="mt-1 text-lg font-serif font-bold leading-snug" translate="no">
-                <Link href={postPath(p.slug)} prefetch={false} className="hover:text-[#b7410e]">{w.title}</Link>
+                <Link href={readerPath(p, lang)} prefetch={false} className="hover:text-[#b7410e]">{w.title}</Link>
               </h3>
               <p className="mt-1 text-sm text-slate-600 leading-relaxed line-clamp-3" translate="no">{w.summary}</p>
             </article>

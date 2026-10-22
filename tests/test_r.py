@@ -1,8 +1,6 @@
 """Statistik i R: export av korpusen, fynd och mönster, avstämning mot nyare källor, rapportavsnitt och – om R
 finns installerat – en körning av två R-moduler på den riktiga korpusen."""
 import json
-import os
-import shutil
 
 import pytest
 
@@ -135,8 +133,7 @@ def test_report_blocks_from_r_results():
     assert r_report.landscape_blocks(None, "Sö 113", fig, tab) == []
 
 
-needs_r = pytest.mark.skipif(not shutil.which("Rscript") and not os.path.exists("/opt/homebrew/bin/Rscript"),
-                             reason="R är inte installerat")
+needs_r = pytest.mark.needs_r  # skipped without R: see tests/conftest.py
 
 
 @needs_r
@@ -154,7 +151,7 @@ def test_r_modules_run_on_the_corpus(rows, tmp_path, monkeypatch):
     assert all(0 <= c["stability"] <= 1 for c in clusters["clusters"])
 
 
-@needs_r
+@pytest.mark.slow_r  # about half an hour with all packages: skipped in CI (tests/conftest.py)
 def test_change_module_runs_on_the_corpus(rows, tmp_path, monkeypatch):
     monkeypatch.setenv("R_DISABLED", "0")
     if not r_bridge.status()["available"]:
