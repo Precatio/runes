@@ -58,7 +58,7 @@ export function metaDescription(text: string, max = 158) {
     if ((out + sentence).trim().length > max) break;
     out += sentence;
   }
-  if (out.trim().length >= 70) return out.trim();
+  if (out.trim().length >= 110) return out.trim();  // a lone short first sentence says too little: cut mid-sentence instead
   return t.slice(0, max - 1).replace(/\s+\S*$/, "").replace(/[,;:–-]$/, "") + "…";
 }
 
@@ -92,6 +92,19 @@ export function pictures(md: string) {
 
 export const wordCount = (md: string) => plainText(md).split(" ").filter(Boolean).length;
 
+/** The bullets of the closing box "Det viktigaste i korthet" / "The essentials in brief": the article's own summary of
+ *  what it carries, which answer engines and search summaries can quote as a whole. */
+export function keyPoints(md: string) {
+  const m = /^:::box (?:Det viktigaste i korthet|The essentials in brief)\n([\s\S]*?)^:::/m.exec(md);
+  return m ? m[1].split("\n").filter(l => l.startsWith("- ")).map(l => plainText(l.slice(2))) : [];
+}
+
+/** The bullets under "## Källor" / "## Sources", as plain text. */
+export function citations(md: string) {
+  const m = /^## (?:Källor(?: och data)?|Sources(?: and data)?)\n([\s\S]*?)(?=^## |$(?![\s\S]))/m.exec(md);
+  return m ? m[1].split("\n").filter(l => l.startsWith("- ")).map(l => plainText(l.slice(2))).filter(c => !/^(Foton|Bilder|Photos|Images)[: ]/.test(c)) : [];
+}
+
 /** schema.org BlogPosting and BreadcrumbList for the post page (JSON-LD). */
 export function articleJsonLd(post: BlogPost, lang: "sv" | "en" = "sv") {
   const en = lang === "en";
@@ -103,14 +116,17 @@ export function articleJsonLd(post: BlogPost, lang: "sv" | "en" = "sv") {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
       headline: ((en && post.title_en) || post.title).slice(0, 110),
-      description: metaDescription((en ? post.summary_en : post.summary) || body),
+      description: plainText((en ? post.summary_en : post.summary) || metaDescription(body)).slice(0, 500),
+      ...(keyPoints(body).length ? { abstract: keyPoints(body).join(" ") } : {}),
+      ...(citations(body).length ? { citation: citations(body) } : {}),
+      isPartOf: { "@type": "Blog", "@id": `${SITE_URL}/artiklar/#blog`, name: SITE_NAME },
       url,
       mainEntityOfPage: { "@type": "WebPage", "@id": url },
       datePublished: published,
       dateModified: post.updatedAt ?? published,
-      author: { "@type": "Person", name: post.author || "Viktor Kvant",
+      author: { "@type": "Person", ...(post.author === "Viktor Kvant" || !post.author ? { "@id": `${SITE_URL}/#founder` } : {}), name: post.author || "Viktor Kvant",
                 ...(authorOf(post.author) ? { url: authorOf(post.author)!.url, sameAs: [authorOf(post.author)!.url], jobTitle: authorOf(post.author)!.role } : {}) },
-      publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL, logo: { "@type": "ImageObject", url: `${SITE_URL}/vitki_logo.png` } },
+      publisher: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: SITE_NAME, url: SITE_URL, logo: { "@type": "ImageObject", url: `${SITE_URL}/vitki_logo.png` } },
       image: [`${SITE_URL}${sharePath(post.slug)}`, ...pictures(body).map(p => absolute(p.src))].slice(0, 5),
       inLanguage: en ? "en" : "sv-SE",
       articleSection: en ? "Articles" : "Artiklar",
