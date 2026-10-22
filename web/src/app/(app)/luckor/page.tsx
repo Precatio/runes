@@ -1129,7 +1129,7 @@ function PrioritiesPanel({ rows }: { rows: Priority[] }) {
 function Freshness({ textGaps }: { textGaps: TextGaps | null }) {
   const [r, setR] = useState<{ computed_at?: string | null; fingerprint?: string; n_stones?: number } | null>(null);
   useEffect(() => {
-    fetch(`${API_URL}/api/rstats/status`).then(x => (x.ok ? x.json() : null)).then(d => setR(d?.corpus ?? null)).catch(() => setR(null));
+    fetch(`${API_URL}/api/r/status`).then(x => (x.ok ? x.json() : null)).then(d => setR(d?.corpus ?? null)).catch(() => setR(null));
   }, []);
   const day = (iso?: string | null) => (iso ? iso.slice(0, 10) : "–");
   return (

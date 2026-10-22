@@ -140,7 +140,7 @@ vägrar ändrande anrop (POST m.fl.) från sidor vars ursprung inte finns i `COR
 Korpusen (verifiering, råprofiler och runformer) kräver reglerna i `web/firestore.rules`. Publicera dem med
 Firebase CLI när de ändras:
 ```bash
-cd web && npx firebase-tools deploy --only firestore:rules
+cd web && npx firebase-tools deploy --only firestore   # bara regelfilen; "firestore:rules" hoppar tyst över databasen vitki
 ```
 
 ## Citering och DOI
