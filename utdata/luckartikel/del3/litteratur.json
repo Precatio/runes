@@ -1,0 +1,1020 @@
+{
+ "reconcile": {
+  "published_claim": "Runorna som fattas (web/content/articles.json, slug runorna-som-fattas, section '## Alla runstenar med luckor', built by utdata/blogg/build/build_modellartikel.py line 294 from REST_*/OPEN_* on lines 41-42) says: \"Bland luckorna på svenska runstenar som utgivarna har fyllt säger modellen minst 95 procent i 267 av 555. Bland dem som utgivarna har lämnat öppna gör den det inte i någon av de 70. Där runologerna inte kunde avgöra saken påstår sig modellen alltså aldrig veta.\" The English version says the same thing. The model was textmodel-18.",
+  "definitions": "The two statements measure different units with different probabilities. The model generation is not what separates them.\n\nPUBLISHED 70 (and 555)\n- Source chain: scripts/textmodel_batch.py (the night run) -> utdata/textmodel_batch/sammanstallning.json (textmodel-18) -> utdata/modellartikel/runstenar.py -> runstenar.json['batch']['runsten'] -> build_modellartikel_data.py D['batch'] -> build_modellartikel.py.\n- Stones: every Viking-age inscription in tm._records()['V'] that has at least one run of lost runes the panel can fill. Stones with fewer than 4 readable runes are dropped: 58 runestones, including Öl 57 and Ån Fv1908;298A. Only Rundata object containing 'runsten' is counted, so fragments and lost stones are in; grave slabs, rock faces, slate pieces and loose objects are out.\n- Unit: one row per gap as the app's panel builds it (src/textmodel.py _read). Lost runes inside one divider-delimited group are merged with rl.merge_runs. A merged run with more than MAX_GAP = 4 lost runes is not filled at all (it goes in 'open_gaps').\n- Editor status: a panel gap is matched to the first overlapping gap from scripts/runlm_gaps.gaps_of in the same carved group. scripts/luckprov.status_of then sets the status: '[' in Rundata's token means återställt; token None or '...' means ej återställt; anything else is oklart, and unmatched gaps are 'utanför provet'.\n- Probability: the panel's CALIBRATED percentage for the gap's top word, words[0]['p']. This is the joint list calibration tm.calibrate_words (gap_list in data/runlm_calibration.json), fitted at the level of the documented gaps.\n- Model: the fold model that has not seen the stone (tm.bundle(tm.fold_of(sig)), crc32 mod 5). It is held out per stone, with no loo.\n- Result: restored = 555 runestone gaps, 267 of them calibrated >= 0.95. Open = 70 gaps on 57 runestones, 0 of them >= 0.95.\n\nCURRENT FORSKNINGSLUCKOR 848 / 175 / 27\n- Source chain: scripts/runlm_gaps.py (run via the tm19 pipeline with own_d, name_cands 40, lam_class 0.2, tolerance 0.02, context_cands, by_word, near 0.1/10 km, max_gaps 2000) -> utdata/runlm_forfining/tm19/klass3_alla.json -> scripts/textmodel_candidates.py -> data/textmodel_candidates.json (copied to /Volumes/2TB/cache/perf/textgaps.json) -> GET /api/research/gaps/textmodel (api/routers/research.py line 92) -> web/src/app/(app)/luckor/page.tsx.\n- Stones: Rundata Viking-age inscriptions with transliteration and normalization from Swedish provinces (G.SW). ALL object types are included: 175 open = 112 runestone gaps, 18 on other stones and 45 on loose objects.\n- Unit: every single run of 1-4 '-' inside a carved word, with words split on Rundata's spaces and dividers. The word must keep at least 2 preserved runes. The oklart status is excluded. In total 848 = 673 restored + 175 open. Runs close together are filled jointly by merge_runs, but the merged span has NO 4-rune cap. For example, U 525 au--s--þ-- has three 2-rune runs in one span of 6 lost runes, and U Fv1946;258 -i-a-----i-iti has a span of 8. The inventory fills only its sampled gaps, not every lost rune on the stone, so the context differs from the panel's. U 765 a-s shows this: hans at 0.995 in the list, 0.29 raw and 0.36 calibrated in the panel.\n- Probability: r['p'] = words.get(word), the RAW marginal word probability from rl.restore_all. No calibration is applied anywhere in runlm_gaps.py or textmodel_candidates.py; runstenar.py calibrates this same field itself with C.features(x['p'], ...). The page and METHODS.md section 14 nonetheless call it 'kalibrerad sannolikhet' (page.tsx about line 1156; METHODS.md about line 1406). The 'Byggd' date is the file mtime, 2026-10-20.\n- Model: also held out per stone, but the folds are i % 5 over the sorted stone list, not crc32. The model is the textmodel-19 settings.\n- Result: 27 candidates with raw >= 0.80 and a known word, on 21 inscriptions (18 rows on runestones, 9 on other stones and loose objects). Rows with raw >= 0.95 and a known word: 12 rows on 10 inscriptions (14 if two <unk> rows are counted). These are Sm 47 þikra, U 765 hans, U NOR1994;26A fængit (an amulet), U 525 hiortstaðum x3, Öl 57 ræisa, Sö 280 þæiRa (Rundata: gravhäll), Sö 245 mag, Ög 115 fyrir, U 784 ok and Öl ATA4377/56A ok. On runestones alone it is 10 of the 112 open gaps.\n\nRecomputed (read-only; scripts and outputs in /Volumes/2TB/cache/luckor-del3/: scripts/reconcile_a.py, reconcile_b.py, reconcile_c.py, pub_open_rows.json, cand_vs_pub.json, tm19_pubdef.json, and the tm19 panel readings in tm19cache/). I read all 113 stones that have published-definition open gaps or Forskningsluckor candidates with the textmodel-19 fold model and today's calibration (data/runlm_calibration.json, identical to tm19/runlm_calibration_tm19.json). The cache was redirected away from the repo.",
+  "explanation": "The difference has five causes, largest first.\n\n1) RAW against CALIBRATED probability. This is the main cause. The published sentence uses the panel's calibrated percentage. The list shows the model's raw word probability while calling it calibrated. The calibration pulls high raw values down a lot, most of all for names and rare words, and the open gaps are full of those. Raw -> calibrated under textmodel-19:\n- Sm 47 þikra 0.996 -> 0.902\n- Sö 280 þæiRa 0.974 -> 0.651\n- Ög 115 fyrir 0.969 -> 0.627\n- Sö 245 mag 0.939 -> 0.631\n- U 784 ok 0.962 -> 0.899\n- U 1180 risti 0.955 -> 0.866\n- U 522 heðingunnr 0.924 -> 0.487\n- U 466 viseti 0.796 -> 0.441 (textmodel-18: 0.995 -> 0.931)\n- U NOR2000;34B skeþ 0.904 -> 0.571\n- U 441 arnilli 0.905 -> 0.414\nEven under textmodel-18, the published 70 held 5 gaps with raw >= 0.95 and 16 with raw >= 0.80. On the restored side the raw count would have been 339 of 555, not 267.\n\n2) Different population. The published figure counts runestones only. The list includes Sö 280 and Sö 23 (other stones), U Fv1946;258 (berghäll), Ån Fv1908;298A (skifferbit), the U NOR1994;26A amulet, and the U NOR2000;34B and U Fv1992;161B bones. Of the 12 rows at 95 % or more, 2 are not on runestones.\n\n3) Different unit. The panel will not fill a merged run of more than 4 lost runes, and the inventory has no such cap. So U 525 hiortstaðum (6 lost runes), U NOR1994;26A fængit and fly, Öl ATA4377/56A ok (7) and U Fv1946;258 viseti (8) are not filled by the panel at all. Öl 57 ræisa and Ån Fv1908;298A guð have fewer than 4 readable runes, so the panel cannot read them. The inventory also splits on Rundata's word spaces, so one panel gap can be several rows. U 525 contributes 3 rows to the 12.\n\n4) Different reading context. The inventory fills only its sampled gaps; the panel fills every fillable gap together. This is why U 765 hans is 0.995 in the list but 0.29 raw in the panel.\n\n5) Model version. This is minor, and it pushes the other way. The textmodel-18 inventory (utdata/runlm_forfining/klass3_alla.json) already had 14 open runestone gaps at raw >= 0.95 (15 across all objects) in the same 848/175 frame. textmodel-19 has 10 (12). The new model did not create the 95 % gaps; the old inventory had them too.\n\nUnder the published definition with textmodel-19: 0 of the 70 open runestone gaps reach calibrated >= 0.95. The highest is Sm 47 þikra at 0.902. Four reach 0.80 or more: Sm 47 þikra 0.902, U 784 ok 0.899, U 1180 risti 0.866 and Öl ATA4701/43 ok 0.819. Under textmodel-18 there were three. The set of 70 is identical, because the gap structure comes from the text and not from the model. I did NOT recompute the restored side ('267 of 555') for textmodel-19. It would need the full batch of 1,383 stones; I started it and stopped it because the machine was heavily loaded. That half of the sentence therefore remains a textmodel-18 figure.",
+  "still_true": true,
+  "numbers": [
+   "Published (tm18, runestones, calibrated panel %): restored 267/555 >= 95 %; open 0/70 >= 95 % (70 gaps on 57 stones); open >= 80 %: 3/70",
+   "Same tm18 published rows with RAW p_model: restored 339/555 >= 95 %; open 5/70 >= 95 %, 16/70 >= 80 %",
+   "Published frame, all object kinds (tm18): open 102 gaps on 80 inscriptions, 0 calibrated >= 95 %, 6 raw >= 95 %",
+   "tm19 under the published definition (recomputed, fold model, today's calibration): open runestone 0/70 >= 95 %, 4/70 >= 80 % (Sm 47 þikra 0.902, U 784 ok 0.899, U 1180 risti 0.866, Öl ATA4701/43 ok 0.819); all kinds 0/102 >= 95 %",
+   "tm19 restored-side 267/555 NOT recomputed (full 1,383-stone batch not run)",
+   "Forskningsluckor tm19 inventory: 848 gaps = 673 restored + 175 open; open = 112 runestone + 18 other stone + 45 loose object; open gap sizes 1:93, 2:49, 3:24, 4:9",
+   "Forskningsluckor candidates: 27 rows raw >= 0.80 with known word on 21 inscriptions (18 runestone rows, 4 other stone, 5 loose object)",
+   "Rows raw >= 0.95 with known word in tm19 list: 12 on 10 inscriptions (10 on runestones, out of 112 open runestone gaps); 14 including <unk>",
+   "tm18 inventory, same frame: 15 open raw >= 0.95 (14 on runestones), so the >= 95 % open gaps predate tm19",
+   "Inventory raw p on restored gaps (tm19): bin >= 0.95 has 411 gaps, mean said 0.995, right 0.976",
+   "Raw -> calibrated (tm19 panel): Sm 47 þikra 0.996->0.902; Sö 280 þæiRa 0.974->0.651; Ög 115 fyrir 0.969->0.627; Sö 245 mag 0.939->0.631; U 522 heðingunnr 0.924->0.487; U 466 viseti 0.796->0.441; U NOR2000;34B skeþ 0.904->0.571; U 441 arnilli 0.905->0.414; U 765 hans list 0.995 but panel raw 0.29 / cal 0.36",
+   "Not filled by the panel at all: U 525 hiortstaðum (6 lost runes in merged run), U NOR1994;26A fængit/fly (6 and 9), Öl ATA4377/56A (7), U Fv1946;258 viseti (8); Öl 57 and Ån Fv1908;298A have < 4 readable runes"
+  ],
+  "recommendation": "1) Do not set the list's '99.8 %' against the article's 'aldrig 95 %'. Readers would see a contradiction where there is only a scale difference. In the new article, give every candidate the panel's CALIBRATED percentage (textmodel-19: Sm 47 þikra 90 %, U 784 ok 90 %, U 1180 risti 87 %, Sö 280 þæiRa 65 %, U 522 heðingunnr 49 %, U 466 viseti 44 %, U 441 arnilli 41 %, U NOR2000;34B skeþ 57 %). Where only a raw figure exists, because the panel does not fill the gap (U 525 hiortstaðum, NOR1994;26A fængit, Öl 57, Ån Fv1908;298A), give that raw figure and say plainly that it is the model's own figure before calibration. Count runestones and other objects separately, as the object-types rule requires. Suggested sentence (sv):\n\"I artikeln Runorna som fattas skrev vi att modellen aldrig säger sig vara minst 95 procent säker i de luckor som utgivarna lämnat öppna. Det gäller fortfarande med den nya versionen: av de 70 öppna luckorna på runstenar når ingen dit, och högst kommer þikra på Sm 47 med 90 procent. Procenten i listan nedan är något annat. De visar hur mycket bättre ordet passar runorna och sammanhanget än alla andra ord modellen känner till, före den kalibrering som prövats mot utgivarnas facit. Sådana siffror blir lätt höga – i tolv luckor över 95 procent – men de betyder inte att stenen säkert säger så.\"\n\n2) The published article needs no correction of fact. Under its own definition (calibrated, runestones, panel gaps) the sentence holds with textmodel-19 too: 0 of 70. Its restored half (267 of 555) is still a textmodel-18 figure; I did not recompute it. If a clarification is wanted when the new article goes out, patch it in via Firestore only (never --update), straight after \"…påstår sig modellen alltså aldrig veta.\":\n\"(Siffran gäller appens kalibrerade procent för luckorna som panelen fyller på runstenar. Listan under Forskningsluckor visar modellens okalibrerade sannolikhet för ordet och tar med alla slags föremål; där når några öppna luckor över 95 procent.)\"\nEnglish: \"(The figure refers to the app's calibrated percentages for the gaps the panel fills on runestones. The list under Research gaps shows the model's uncalibrated word probability and includes all kinds of objects; there some open gaps exceed 95 per cent.)\"\n\n3) Separate from the articles, for Viktor to decide: the Forskningsluckor page (web/src/app/(app)/luckor/page.tsx about line 1156) and METHODS.md section 14 (about line 1406) call the list's p 'kalibrerad sannolikhet', but it is the raw restore_all marginal. Either fix the label to 'modellens egen (okalibrerade) sannolikhet', or build the list from calibrated panel values. The page text 'runstenarnas texter' should also say that 9 of the 27 rows are on other stones or loose objects. I changed nothing in the repo."
+ },
+ "stones": [
+  {
+   "signum": "U 765",
+   "place": "Klista, Vårfrukyrka sn, Åsunda hd, Enköping (Uppland); the stone is in two parts: one raised near Klista, the other in Enköpings museum",
+   "gaps": [
+    {
+     "carved": "a-s",
+     "word": "hans",
+     "p": 0.995,
+     "word_kind": "formula_or_function_word",
+     "literature_status": "discusses_without_proposal",
+     "literature": "SRI 8 (Upplands runinskrifter 3), U 765, pp. 327–329 (Pl. 88, 89). Edition reading: '. . k . . . . . . . - n : h. . . s l - . . . - : a - s : -' (letter-spaced pdftotext output, alignment uncertain). Comment: 'R. 11 torde vara a. Av r. 12 återstår hst och möjligen spår av en bst t. v. om hst. 13 s förefaller att vara säkert, likaså det följande sk.' Conclusion: 'Inskriften är tyvärr alltför skadad för att tillåta ett tolkningsförslag.' SRI proposes no restoration for r. 12 and no interpretation of the word. Rundata 3.1 and Runor 2020 both transliterate '-...k...-...-n : h...sl-...- : a-s : -...' with normalisation '... ... ... ...'. Rundata 'other' field: 'Stille (1999b:53) läser -...k...-...-n : h... : slþ...- : a-s : -...'. Stille thus also reads a-s and, as Rundata reports it, gives no restoration. Rundata attributes the stone to Tidkume (A) after Stille 1999b. The Swedish runic bibliography (riksarkivet.x-ref.se) lists only Oehrl 2011 (iconography) and Lucas 2020 (inventory) for U 765. I have not read either.",
+     "sources_checked": [
+      "Rundata 3.1 (local api.rundata store): U 765",
+      "RAÄ Runor 2020 harvest (data/raa/runor_2020.json): U 765",
+      "SRI 8, Upplands runinskrifter del 3, text U 744–775 (raa.se sri_uppland_b08_text_5.pdf), pp. 327–329",
+      "Stille 1999b (Runstenar och runristare i det vikingatida Fjädrundaland, Uppsala diss.): NOT reachable. The URN urn:nbn:se:uu:diva-51 resolves to uu.diva-portal.org diva2:165999, but the TLS handshake fails from this machine (curl: LibreSSL SSL_ERROR_SYSCALL) and WebFetch failed with 'Socket is closed'. I know it only through Rundata's quotation.",
+      "Svensk runbibliografi (riksarkivet.x-ref.se) search RUNSIG \"U 765\"",
+      "Wikidata/Commons via src/commons.py",
+      "src/scan_sources.py"
+     ],
+     "traces": "SRI 8 p. 328 describes the surface as heavily weathered with large flaked areas, and says the blasting shot in the back 'har skadat ristningsytan svårt'. For the gap rune (r. 12) SRI records 'hst och möjligen spår av en bst t. v. om hst'. The flanking runes are 11 a ('torde vara a') and 13 s ('förefaller att vara säkert'). SRI p. 328 also says runes 7–14, the gap included, are on the fragment kept in Enköpings museum, not on the part raised at Klista.",
+     "dividers_matter": "The proposal does not depend on word division. SRI calls the divider after r. 10 'relativt säkert' and the one after r. 13 secure. Rundata and Stille (via Rundata) also give ': a-s :'. The three-rune word is therefore bounded by carved dividers. 'hans' here means the h-less spelling 'ans' (a + n + s). That spelling is attested nearby, e.g. U 785 Tillinge 'halbi : ant : ans' (SRI 8 p. 368).",
+     "assessment": "This is a formula word inside a divider-bounded slot of three runes, two of which the edition considers read. The model weighs 'hans' (as ans) at 99.5 % against ars (0.2 %) and alls/als (0.1 %). The surrounding text is uninterpretable according to SRI, so the choice rests mainly on the a?s frame and the frequency of the word, not on context. The model's context reading 'sal hans' presupposes reading the preceding 'sl-...-' (Stille: 'slþ...-') as sal, which no edition does. Confirmation or refutation needs inspection of r. 12 on the Enköping museum fragment (SRI Pl. 88–89, or a new photo or scan), to see whether the staff and possible left branch fit n rather than r or l. Low content value even if right."
+    }
+   ],
+   "photo": "Commons: 'Upplands runinskrifter 765.png' (Wikidata P18), author G af Geijerstam, licence CC0. https://commons.wikimedia.org/wiki/File:Upplands_runinskrifter_765.png. Described as 'den resta stenen i Klista'. Per SRI the gap runes 7–14 are on the museum fragment in Enköping, so this photo most likely does not show the gap. No other Commons hits.",
+   "scan": "None. U 765 is in none of the Zenodo datasets in src/scan_sources.py (zenodo 11951255, 13347851, 15638873, 14046713, 14141222, 17571537).",
+   "stone_notes": "The stone was blasted apart in the 1880s. About 20 pieces were recovered in 1947 and could not all be fitted together. Rundata merges Stille's 'h... : slþ...-' into 'h...sl-...-', dropping a divider. That does not affect the a-s gap. Style Pr4, carver Tidkume (A).",
+   "verify": [
+    {
+     "signum": "U 765",
+     "word": "hans",
+     "claim_holds": true,
+     "corrected_status": "discusses_without_proposal (SRI 8 comments on r. 12 and declines any interpretation; Stille 1999b:53 known only through Rundata's quotation, which gives no restoration)",
+     "reason": "I checked every SRI quote verbatim against the pdftotext of sri_uppland_b08_text_5 (U 765 starts on p. 327, with text on pp. 328–329). The quotes are 'R. 11 torde vara a. Av r. 12 återstår hst och möjligen spår av en bst t. v. om hst. 13 s förefaller att vara säkert, likaså det följande sk.' and 'Inskriften är tyvärr alltför skadad för att tillåta ett tolkningsförslag.' Also confirmed: 'Runföljden 1—6 finnes på det vid Klista resta stycket, medan runorna 7—14 stå på det i museet i Enköping förvarade partiet', and 'Sprängskottet i stenens baksida har skadat ristningsytan svårt.' Rundata 3.1 (local store) and Runor 2020 have the same transliteration '-...k...-...-n : h...sl-...- : a-s : -...' and normalisation '... ... ... ...'. Their English translation field '... ... ... ...' contains no restoration. Their 'other' or notes field holds only the Stille 1999b:53 reading, which leaves a-s unrestored. U 765 is not among the 60 articles on RAÄ's 'Supplement till Upplands runinskrifter' page. A web search found no other edition or article that restores the word. I could not refute the status. One open point: Stille 1999b is still unreachable. Both uu.diva-portal.org and www.diva-portal.org failed with curl (LibreSSL SSL_ERROR_SYSCALL), WebFetch failed with 'Socket is closed', and a web search found no full text. The status therefore rests on SRI plus the database reports of Stille. A side note for the article, not from the literature: SRI's possible left-hand branch on r. 12 fits a rune whose branch crosses the staff (n or a). It fits r or l less well, since in long-branch runes their branches sit to the right of the staff. That makes the trace slightly favour n, but no edition says so.",
+     "extra_sources": "RAÄ 'Supplement till Upplands runinskrifter' page (fetched to /Volumes/2TB/cache/luckor-del3/skeptic/supp.html): 60 PDFs, none for U 765. Rundata translation_en field: no restoration. WebSearch '\"U 765\" Klista runsten Vårfrukyrka': rundata.info and runkartan.se only, no reading proposed. Stille 1999b: DiVA record diva2:165999 unreachable (TLS/curl and WebFetch); WebSearch found no full-text PDF."
+    }
+   ]
+  },
+  {
+   "signum": "U 784",
+   "place": "Svinnegarns skola, Svinnegarn sn, Åsunda hd, Enköping (Uppland); now in the church porch (vapenhuset)",
+   "gaps": [
+    {
+     "carved": "-uk",
+     "word": "ok",
+     "p": 0.961,
+     "word_kind": "formula_or_function_word",
+     "literature_status": "not_reachable",
+     "literature": "SRI 8 (Upplands runinskrifter 3), U 784, pp. 367–369 (Pl. 101) has only the fragment refound in 1944 (Öberg's 'högra halvan', 30 × 29 cm). It gives 'Inskrift (med det inom [ ] supplerat efter Öbergs teckning): . . . þa[iR . . ia -] . . .', normalised '. . . þæiR . . .'. The comment covers runes 2–4 and the divider ('Skiljetecknets utseende, två punkter vid sidan av varandra (• •) beror med all sannolikhet på felläsning'). SRI does not contain the '-uk' sequence at all, so it is silent on this gap. The '-uk' comes from the later reading quoted in Rundata's 'other' field: 'Stille (1999b:57f) läser ... þa(i)[R ·· ia-...]l · i... ¶ ...-uk ...'. Rundata flags the reading as new_reading and gives the reference '$=ATA Dnr 365/61'. Rundata/Runor transliteration: '...l · i... -uk ... þa[iR ...ia-...]', normalisation '... ... ... ... þæiR ...'. I could not read Stille 1999b:57f or the ATA report, so I do not know whether either discusses or restores the lost rune before -uk.",
+     "sources_checked": [
+      "Rundata 3.1 (local api.rundata store): U 784",
+      "RAÄ Runor 2020 harvest: U 784. Also U ATA365/61A, B and C, which are listed there with empty readings and notes.",
+      "SRI 8, Upplands runinskrifter del 3, text U 776–814 (raa.se sri_uppland_b08_text_6.pdf), pp. 367–369",
+      "rundata.info/inscription/u-784/ (via WebFetch): same transliteration, comment and references",
+      "Stille 1999b:57f: NOT reachable. The DiVA record diva2:165999 fails on TLS from curl and with 'Socket is closed' in WebFetch, and I found no other full text.",
+      "ATA Dnr 365/61: an unpublished archive document of Antikvarisk-topografiska arkivet, not online",
+      "Svensk runbibliografi search RUNSIG \"U 784\": only Lind 2024, 'Runor på rymmen' (student thesis). Not read, because the DiVA host is unreachable.",
+      "runkartan.se Svinnegarn 7:3 page: groups U 781, U 783, U 784 and U ATA365/61A–C, with no reading for U 784",
+      "src/commons.py, src/scan_sources.py"
+     ],
+     "traces": "No edition I could reach describes the lost rune before 'uk'. Rundata and Stille (as quoted) mark it with '-' (one lost rune), preceded by '...' (lost text of unknown length). SRI's description of damage concerns only the þaiR fragment: rune 2 a has lost its lower staff through edge damage, and the fracture runs through rune 3.",
+     "dividers_matter": "Yes, crucially. No divider is recorded before the lost rune. Both Rundata and Stille have '...' (lost runes of unknown number) before '-uk', so nothing in the carving shows that the lost rune begins a word. 'ok' requires the lost rune to be word-initial a. The model's own alternatives 'log' (3 %) and 'tok' (0.4 %) show that the reading changes if the word started earlier. The model's context ('log i ok þæiR en') also follows Rundata's order of the pieces. Stille's order differs: 'þa(i)[R ·· ia-...]l · i... ¶ ...-uk ...', with -uk on a separate line after the þaiR sequence.",
+     "assessment": "This is the commonest function word, proposed for a one-rune gap whose left boundary is not secured by any divider. It rests on a reading (Stille 1999b) that I could not check, and on an arrangement of fragments that differs between Stille and Rundata. Even if right, it adds no content. Confirming it would need Stille 1999b:57f, the ATA Dnr 365/61 report, and a photo of the fragment carrying -uk, to see whether a divider or a word start precedes the lost rune. As things stand, this is a weak candidate to publish."
+    }
+   ],
+   "photo": "No Wikidata P18 and no Commons search hits for U 784. rundata.info links four RAÄ documentation images (pub.raa.se/visa/dokumentation/782dbc9c-..., a7a68a45-..., aea1dc55-..., e60b57ea-...). The licence is unverified: pub.raa.se failed on TLS with curl and with 'Socket is closed' in WebFetch.",
+   "scan": "None. U 784 is in none of the Zenodo datasets in src/scan_sources.py.",
+   "stone_notes": "Öberg (letter 27/11 1927, quoted in SRI 8 p. 367) called the piece a 'gravhäll' of red sandstone. Rundata records the object as 'fragment av runsten', material ljusröd sandsten. The object type may need checking under the runestones-only default. Carver Balle (A) after Stille 1999b. Only the 'högra halvan' was refound in 1944. Öberg's other half is known from his 1927 drawing, and its relation to the -uk fragment (ATA Dnr 365/61) is undocumented in what I could read.",
+   "verify": [
+    {
+     "signum": "U 784",
+     "word": "ok",
+     "claim_holds": true,
+     "corrected_status": "not_reachable (SRI 8 is verifiably silent, because the -uk fragment is not in SRI at all; the source of the -uk reading, Stille 1999b:57f and ATA Dnr 365/61, is not accessible)",
+     "reason": "I checked the SRI 8 text (sri_uppland_b08_text_6), U 784 on pp. 367–369. The edition covers only the 1944 fragment, 'Fragmentet utgör det stycke som Öberg kallar »högra halvan»', with 'Inskrift (med det inom [ ] supplerat efter Öbergs teckning): . . . þa[iR . . ia -] . . .', normalised '. . . þæiR . . .'. The comment deals only with runes 2–4 and the divider ('Skiljetecknets utseende, två punkter vid sidan av varandra (• •) beror med all sannolikhet på felläsning'). The sequence -uk does not occur, so SRI is silent on this gap, as reported. Öberg's 'Det har varit en gravhäll och äro av röd sandsten' is also verbatim on p. 367. Rundata 3.1 (local store) has 'other': 'Stille (1999b:57f) läser ... þa(i)[R ·· ia-...]l · i... ¶ ...-uk ...', references '$=ATA Dnr 365/61', flag new_reading, and translation '... ... ... ... they ...', which contains no restoration. Runor 2020 matches. U ATA365/61A, B and C are listed in Rundata with an empty transliteration ('°'). U 784 is not among RAÄ's Uppland supplement articles. I too could not reach Stille 1999b (DiVA TLS failure as above). The ATA report is unpublished. So I cannot say whether the lost rune before 'uk' is discussed there. SRI also lists two other unread sources: S. B. F. Jansson's 1949 report to RAÄ (ATA) and Öberg's 1927 drawing of both halves (v. Friesens samlingar, UUB). Neither is online as far as I found. The reported weakness stands: no carved divider secures a word start before the lost rune.",
+     "extra_sources": "RAÄ Uppland supplement page: no article for U 784 or U ATA365/61. Rundata records U ATA365/61A–C: transliteration '°', nothing more. WebSearch for U 784 found only files.rundata.info/sveriges_runinskrifter/U_784.pdf (the SRI page extract, same text as SRI 8) and runkartan.se, with no restoration. Not reached: Stille 1999b:57f, ATA Dnr 365/61, Jansson report 1949 (ATA), Öberg drawing 1927 (UUB)."
+    }
+   ]
+  },
+  {
+   "signum": "U 493",
+   "place": "Brunnby (Brunnby mellangård), Östuna sn, Långhundra hd, Knivsta (Uppland); the stone is LOST",
+   "gaps": [
+    {
+     "carved": "srua-telsa",
+     "word": "vaR",
+     "p": 0.815,
+     "word_kind": "formula_or_function_word",
+     "literature_status": "proposes_different_word",
+     "literature": "SRI 7 (Upplands runinskrifter 2), U 493, pp. 331–333 (figs. 228–230, after Peringskiöld's drawing and B 210). The text is known only from Peringskiöld's 1684 drawings and woodcut: 'x k t l + srua - t e l s a : r i t a e . . . anisibuþin'. The gap is r. 8: 'Nedre delen av r. 8 är förstörd; runan kan hava varit n eller h.' On r. 10: 'K. 10 är på teckningen tydligt e, med ett kort streck vinkelrätt över hst. På träsnittet ändrat till n (L 579 läser felaktigt a).' General verdict: 'Inskriften ger ingen språklig mening. Möjligen har ristaren velat kopiera en verklig runinskrift och därigenom fått vissa runföljder, i vilka man tycker sig spåra verkliga ord: 1—3 ktl kanske namnet Kætill, 14—17 rita — retta ”uppresa”, 22—28 sibuþin möjligen, såsom redan Liljegren förmodat, fel för sin kuþan, d. v. s. sinn goðan.' Rundata and Runor 2020: transliteration '[× ktl + srua-telsa : ritae...anisibuþin]', normalisation '... ... ...', note 'Nonsensinskrift.' So SRI proposes n or h for the gap rune and offers no word for 4–13. The model's R is not among the edition's options.",
+     "sources_checked": [
+      "Rundata 3.1 (local api.rundata store): U 493 (flag lost)",
+      "RAÄ Runor 2020 harvest: U 493 (extant false, alt. B 210, L 579)",
+      "SRI 7, Upplands runinskrifter del 2, text U 481–516 (raa.se sri_uppland_b07_h03_text_1.pdf), pp. 331–333",
+      "Svensk runbibliografi search RUNSIG \"U 493\": Lind 2024 (student thesis, not read, DiVA unreachable) and Klingspor & Säve, UFT h. 2 (1872), which SRI already cites",
+      "src/commons.py, src/scan_sources.py"
+     ],
+     "traces": "The stone is lost, and no traces can be examined. Later searches for it were fruitless (SRI p. 333). The only evidence is Peringskiöld's drawing, on which the lower part of r. 8 is destroyed. SRI judges the remaining part compatible with n or h. SRI also notes the woodcut differs from the drawing at r. 10 and r. 18.",
+     "dividers_matter": "Entirely. 'srua-telsa' is a continuous sequence of ten runes with no dividers between the '+' after ktl and the ':' before rita. The word 'vaR' exists only through the model's own segmentation of this run (fill R gives ...uaR...). The alternatives vas (14.6 %) and wan (2.1 %) depend on the same segmentation.",
+     "assessment": "This is the weakest kind of candidate. The inscription is lost, it survives only in a 17th-century drawing, and both SRI and Rundata class it as a nonsense inscription. The edition's own suggestion for the damaged rune is n or h, not R, and the word boundary is supplied by the model rather than the carving. The model's 81.5 % is conditional on the sequence being language at all, which SRI explicitly doubts. It should not be presented as a filled gap. At most it is an example of the model's behaviour on non-linguistic text. Peringskiöld's drawing (SRI fig. 228) could be checked to see whether the surviving upper part of r. 8 is compatible with R at all."
+    }
+   ],
+   "photo": "None. The stone is lost, with no Wikidata P18 and no Commons hits. The only images are Peringskiöld's drawings and woodcut (F l 5:1 nr 32 b and 33, Monumenta, B 210), reproduced as SRI 7 figs. 228–230.",
+   "scan": "None. The stone is lost and is not in any dataset in src/scan_sources.py.",
+   "stone_notes": "Rundata and Runor note 'Nonsensinskrift'. SRI suggests the carver may have copied a real inscription. The stone was built into a fireplace at Brunnby mellangård (Ransakningarna 1673) and was in two pieces plus a third fragment, together about two thirds of the original. Including it among the open-gap candidates is questionable, since the gap list presupposes a linguistic text.",
+   "verify": [
+    {
+     "signum": "U 493",
+     "word": "vaR",
+     "claim_holds": true,
+     "corrected_status": "proposes_different_rune_no_word: SRI reads r. 8 as possibly n or h (not R) and calls the whole text linguistically meaningless; Liljegren 1833 leaves the gap as dots; no source proposes vaR or any word for runes 4–13",
+     "reason": "I checked the SRI 7 text (sri_uppland_b07_h03_text_1), U 493 on pp. 331–333. Verbatim: 'Inskrift (enligt Peringskiöld): x k t l + srua - t e l s a : r i t a e . . . anisibuþin'; 'Nedre delen av r. 8 är förstörd; runan kan hava varit n eller h. K. 10 är på teckningen tydligt e, med ett kort streck vinkelrätt över hst. På träsnittet ändrat till n (L 579 läser felaktigt a).' Also 'Inskriften ger ingen språklig mening. Möjligen har ristaren velat kopiera en verklig runinskrift ...', with ktl as Kætill, rita as rētta and sibuþin as 'sinn goðan'. All of these match. I also read Liljegren, Run-Urkunder 1833 (L 579, p. 59, rendered from the cached PDF page image). It reads '× Ktl + sru.....al sa: rita.. — ..ani sin kuþan', so it gives no value for r. 8 and no word for the run. Rundata and Runor give 'Nonsensinskrift.' and normalisation '... ... ...', with no restoration in the translation field. The label 'proposes_different_word' is slightly loose: SRI proposes a different rune (n or h) and explicitly no word. The substance holds, since nothing in the literature supports R or vaR. One small error in the report: 'Later searches for it were fruitless (SRI p. 333)'. On p. 332 SRI says 'Senare uppgifter om stenen saknas'. The 'fruktlösa' on p. 333 refers to attempts to verify the vague UFT 1872 report of two unknown stones in a house in the parish, which SRI suggests may refer to Peringskiöld's drawings of U 493.",
+     "extra_sources": "Liljegren, Run-Urkunder (1833), no. 579, p. 59 (/Volumes/2TB/cache/luckor-del3/pdf/liljegren_runurkunder_1833.pdf, PDF page 70; rendered to /Volumes/2TB/cache/luckor-del3/skeptic/lilj70-070.png): '× Ktl + sru.....al sa: rita.. — ..ani sin kuþan.', with no restoration of r. 8. RAÄ Uppland supplement page: no article for U 493. Rundata translation_en '... ... ...'."
+    }
+   ]
+  },
+  {
+   "signum": "U 525",
+   "place": "Österlisa, Länna sn, Frötuna och Länna skeppslag, Uppland (Norrtälje). Three fragments of a granite runestone, repaired and re-erected in 1943; carver Torfast (attributed, Rundata), style Pr3",
+   "gaps": [
+    {
+     "carved": "au--s--þ-- (gap 1 of 3: runes 32–33 in the Upplands runinskrifter (UR) II numbering; fill 'rt')",
+     "word": "hiortstaðum",
+     "p": 0.97,
+     "word_kind": "place_name",
+     "literature_status": "discusses_without_proposal",
+     "literature": "Upplands runinskrifter II (SRI 7), U 525, p. 394, prints '... - ftiR suin × foþur sin ... - - - - - n - usuns × au - - s - - þ - - ×'. The only comment on these runes is 'Efter 31 u spår nedtill av två runor; 32 har möjligen varit r.' The edition makes no restoration and states: 'Tyvärr är inskriften så skadad, att det är omöjligt att rekonstruera den i sin helhet. Endast två runföljder äro säkra, nämligen 2—17 ftiR suin×foþur sin och 25—31 usuns×au. Vad den senare inneburit, kan f. n. ej fastställas med någon säkerhet.' (p. 394). The Rundata normalisation stops at '... [æ]ftiR Svæin, faður sinn ... ...'. The Runor 2020 record has only reading P, with the same text and no notes.",
+     "sources_checked": [
+      "Rundata 3.1 record U 525 (via api.rundata store)",
+      "RAÄ Runor 2020 harvest, data/raa/runor_2020.json (U 525)",
+      "Upplands runinskrifter II (SRI 7), sri_uppland_b07_h03_text_2.pdf, pp. 393–394 (text and page image checked)"
+     ],
+     "traces": "UR II p. 394: after 31 u there are traces at the bottom of two runes, and 32 'har möjligen varit r'. Nothing is said about rune 33. Rune 31 u has a depression 'som sannolikt ej är huggen'.",
+     "dividers_matter": "Yes, but the dividers support the segmentation. The ten-rune sequence au--s--þ-- stands between two × dividers (UR p. 394: '× au - - s - - þ - - ×'), so the model's one-word reading fills exactly one divider-bounded unit.",
+     "assessment": "Of the three U 525 fills, this one fits the edition best: the model's 'r' at 32 matches UR's 'möjligen r'. The word hiortstaðum, however, is known to the model from a single source, Hs 7, the Forsa ring in Hälsingland, which is not a runestone and spells it 'hiurtstaþum'. The carved sequence starts 'au' rather than 'hiu', so the model's spelling tolerance has to absorb a mismatch in the certain runes. The probability of the whole reading is only 0.424. Checking the original stone or a scan at runes 32–39 could confirm or refute it."
+    },
+    {
+     "carved": "au--s--þ-- (gap 2 of 3: runes 35–36; fill 'ta')",
+     "word": "hiortstaðum",
+     "p": 0.97,
+     "word_kind": "place_name",
+     "literature_status": "discusses_without_proposal",
+     "literature": "UR II p. 394: '34 s har förlorat övre delen. Runan 35 har möjligen varit k. Av runan 36 återstår endast ett kort stycke nedtill. 37 þ är skadat men jämförelsevis säkert.' The edition offers no restoration (see gap 1 for its general verdict).",
+     "sources_checked": [
+      "Rundata 3.1 record U 525",
+      "RAÄ Runor 2020 harvest (U 525)",
+      "Upplands runinskrifter II (SRI 7), p. 394"
+     ],
+     "traces": "UR II p. 394: rune 35 'möjligen ... k', and only a short piece at the bottom of rune 36 survives. The neighbouring 34 s has lost its upper part. Rundata marks s and þ as uncertain: '(s)', '(þ)'.",
+     "dividers_matter": "Same as gap 1: the unit is bounded by × on both sides, so the length of the word is fixed by dividers.",
+     "assessment": "The edition's tentative trace at 35 ('möjligen k') does not match the model's 't'. This is a point against the proposal that a look at the stone could settle. The edition gives no alternative word."
+    },
+    {
+     "carved": "au--s--þ-- (gap 3 of 3: runes 38–39; fill 'um')",
+     "word": "hiortstaðum",
+     "p": 0.97,
+     "word_kind": "place_name",
+     "literature_status": "discusses_without_proposal",
+     "literature": "UR II p. 394: 'Runan 38 förefaller att ha varit ett i. Avståndet mellan 37 þ och runan 39 är 12 cm., varför det har funnits plats för en runa mellan dem. Sannolikt har en runa (38) gått förlorad i brottet.' No restoration is offered.",
+     "sources_checked": [
+      "Rundata 3.1 record U 525",
+      "RAÄ Runor 2020 harvest (U 525)",
+      "Upplands runinskrifter II (SRI 7), p. 394"
+     ],
+     "traces": "UR II p. 394: rune 38 'förefaller att ha varit ett i', yet is also said to have probably been lost in the break. The 12 cm space between 37 þ and 39 leaves room for one rune. Rune 39 is not described further, and the word ends in a × divider.",
+     "dividers_matter": "Same as gap 1: the closing × after rune 39 fixes the end of the word.",
+     "assessment": "The edition's tentative i at 38 does not match the model's 'u', so this gap also counts against the proposal. Taken together, U 525 has one fill that agrees with the edition (r), two that disagree (k vs t, i vs u), a word attested only once and outside the runestone corpus, and a spelling mismatch in the certain runes. The proposal should be treated as an untested hypothesis."
+    }
+   ],
+   "photo": "none found: Wikidata P18 has no image for U 525, a Commons search for '\"U 525\"' and 'Österlisa' gave no files, and the category 'Uppland Runic Inscription 525' is empty",
+   "scan": "no: U 525 is not in any dataset in src/scan_sources.py (Kitzler Åhfeldt / Zedig Zenodo series)",
+   "stone_notes": "Rundata lists no references beyond the edition, and the Runor 2020 record has only reading P. The edition's literature is B. Einerstam 1942 and S. B. F. Jansson 1942/1943 reports (ATA, unpublished archive reports, not consulted). The edition (1943–46) predates the Rundata carver attribution to Torfast. The model's reading of the stone is 'æftiR svæin faður sinn en §osunns hiortstaðum' (p_reading 0.424); §osunns is a name composed of name elements that the model's vocabulary does not contain. Temp files: /Volumes/2TB/cache/luckor-del3/txt_u5/sri_uppland_b07_h03_text_2.txt and /Volumes/2TB/cache/luckor-del3/img_u5/u525-20.png.",
+   "verify": [
+    {
+     "signum": "U 525",
+     "word": "hiortstaðum (gap 1, runes 32–33, fill 'rt')",
+     "claim_holds": true,
+     "corrected_status": "discusses_without_proposal, as far as the edition, Rundata and Runor go. Ohlmarks 1978 and Lijsing 1948 are unchecked and could change this.",
+     "reason": "I checked the quotes against the extracted text of UR II (sri_uppland_b07_h03_text_2.txt, p. 394) and they are accurate: 'Efter 31 u spår nedtill av två runor: 32 har möjligen varit r.'; 'Tyvärr är inskriften så skadad, att det är omöjligt att rekonstruera den i sin helhet. Endast två runföljder äro säkra, nämligen 2—17 ... och 25—31 usuns×au. Vad den senare inneburit, kan f. n. ej fastställas med någon säkerhet.' The printed transliteration has × both before 'au' and after rune 39. Rundata 3.1 (local store and rundata.info/inscription/u-525/) gives the transliteration '... -ftiR suin × (f)oþur si(n) ...-----n-usuns × au--(s)--(þ)-- ×'. Its normalisation and its English and Swedish translations end in '... ...' and have no comment field. The Runor 2020 record has only reading P, no notes, and the same text. Neither the transliteration nor the translations restore anything here. The 'carved' and 'fill' values match textgaps.json (fills rt / ta / um, alts '<unk>' 0.017 and others), and hiortstaðum's only Rundata source is Hs 7, as the finding says. One reservation: the Swedish Runic Bibliography lists four works for U 525 that the researcher did not check (see extra_sources). One of them, Ohlmarks 1978, is subtitled 'tolkade, kommenterade och delvis rekonstruerade', so it may contain a reconstruction of this sequence. I could not get its text. The status therefore holds for the scholarly edition and the databases, but not for the whole literature.",
+     "extra_sources": "Swedish Runic Bibliography (riksarkivet.x-ref.se/DocList?find=RUNSIG \"U 525\") lists: Ohlmarks, Å. 1978, 100 svenska runinskrifter: tolkade, kommenterade och delvis rekonstruerade (NOT reachable; Google Books API returned 429 quota, no online copy found); Lijsing, P. M. 1948, Roslagens äldsta inskriptioner (NOT found online); Thompson, C. W. 1975, Studies in Upplandic runography (likely the source of the Torfast attribution; Fulcrum copy behind institutional login, not read); Östling & Andersson 2016, Runstensinventering (signage inventory, unlikely to restore). The rundata.info page for U 525 has no comment field and no restoration. Temp dir: /Volumes/2TB/cache/luckor-del3/skeptic_u5/"
+    },
+    {
+     "signum": "U 525",
+     "word": "hiortstaðum (gap 2, runes 35–36, fill 'ta')",
+     "claim_holds": true,
+     "corrected_status": "discusses_without_proposal, as far as the edition, Rundata and Runor go. Ohlmarks 1978 and Lijsing 1948 are unchecked.",
+     "reason": "UR II p. 394, verified in the extracted text: '34 s har förlorat övre delen. Runan 35 har möjligen varit k. Av runan 36 återstår endast ett kort stycke nedtill. 37 þ är skadat men jämförelsevis säkert.' The quote is accurate. The trace at 35 ('möjligen k') goes against the model's 't'. Rundata marks (s) and (þ) as uncertain, which is correct. Neither Rundata nor Runor proposes anything for these runes. The same reservation about Ohlmarks 1978 ('delvis rekonstruerade') and Lijsing 1948 applies as for gap 1.",
+     "extra_sources": "Same as gap 1: Ohlmarks 1978, Lijsing 1948, Thompson 1975 and Östling & Andersson 2016, all listed in the Swedish Runic Bibliography and all unchecked or unreachable."
+    },
+    {
+     "signum": "U 525",
+     "word": "hiortstaðum (gap 3, runes 38–39, fill 'um')",
+     "claim_holds": true,
+     "corrected_status": "discusses_without_proposal, as far as the edition, Rundata and Runor go. Ohlmarks 1978 and Lijsing 1948 are unchecked.",
+     "reason": "UR II p. 394, verified: 'Runan 38 förefaller att ha varit ett i. Avståndet mellan 37 þ och runan 39 är 12 cm., varför det har funnits plats för en runa mellan dem. Sannolikt har en runa (38) gått förlorad i brottet.' The quote is accurate, and so is the finding's note that the passage contradicts itself (i seen, yet the rune is said to be lost). Rune 39 is not described. The edition's i at 38 goes against the model's 'u'. Taken together, two of the three U 525 fills contradict the edition's tentative traces (35 k vs t, 38 i vs u). The model's word also only works through spelling tolerance: the fills give 'aurtstaþum' against Hs 7 'hiurtstaþum'. Rundata, Runor and rundata.info make no proposal. The bibliography reservation from gap 1 applies here too.",
+     "extra_sources": "Same as gap 1."
+    }
+   ]
+  },
+  {
+   "signum": "U 441",
+   "place": "Prästgården, Odensala sn, Ärlinghundra hd, Uppland (Sigtuna). Lost fragment, possibly of a carved grave slab, known only from a 17th-century woodcut (B 180, Peringskiöld, Monumenta)",
+   "gaps": [
+    {
+     "carved": "a-nili (rune 2 lost; fill 'r')",
+     "word": "§arnill",
+     "p": 0.884,
+     "word_kind": "personal_name",
+     "literature_status": "proposes_different_word",
+     "literature": "Upplands runinskrifter II (SRI 7), U 441, p. 237: 'a - nili li - . . . iþ : kia . . . ok : finuiþr : ok : ir - mut . . .' and 'Till läsningen: Mellan 1 a och 3 n har sannolikt stått en runa. L 548 supplerar runorna 1—9: Arnivi lit. Mellan 27 r och 29 m finnes plats för en runa.' The edition does not normalise the first word: '... ok Finnviðr ok Ær[n]mund[r] ...'. I checked Liljegren, Run-urkunder (1833), p. 56, no. 548 'Prestgården. B. 180.' in the page image of the GUPEA copy. It reads 'Arnivi lit ... ... ..iþ: kia.. — ok: Finviþr: ok: Irnmūt —'. Liljegren therefore puts r in the same gap, as the model does, but reads rune 5 as v and gets a different word (Arnivi). The Rundata normalisation leaves the first four words as '... ... ... ...'. The Runor 2020 record has only reading P, with no notes.",
+     "sources_checked": [
+      "Rundata 3.1 record U 441",
+      "RAÄ Runor 2020 harvest (U 441; alt. signa L 548, B 180)",
+      "Upplands runinskrifter II (SRI 7), sri_uppland_b07_h02_text_2.pdf, p. 237 (text and page image checked)",
+      "Liljegren, Run-urkunder 1833, p. 56, no. 548 (GUPEA hdl 2077/68361, page image checked)"
+     ],
+     "traces": "None can be checked: the fragment 'har senare varit försvunnet och förgäves eftersökts' (UR II p. 237). The reading rests on the woodcut alone: 'Stenens form och utseende framgår ej klart av den enda bevarade avbildningen, B 180.' The edition only says that a rune 'sannolikt' stood between 1 a and 3 n. The model's second choice §anill (0.058) assumes no rune there.",
+     "dividers_matter": "Partly. No divider is printed inside 'a-nili' or between 'a-nili' and 'li-'; the boundary is shown only by a space in UR's transliteration. Liljegren divides at the same place ('Arnivi | lit'). Line order is also uncertain: 'Vilkendera raden som skall läsas först är ovisst' (UR II p. 237), which affects the context the model uses but not the gap itself.",
+     "assessment": "This is moderate support for the rune and weak support for the word. The model's r agrees with the 1833 supplement, but Liljegren read a different word (Arnivi, with v for UR's l). §arnill is a name the model has built from name elements; it is not attested as a whole word in Rundata. The stone is lost and the only witness is a 17th-century woodcut, so no trace reading can confirm or refute the proposal. At most it can be presented as one possible name reading alongside Liljegren's."
+    }
+   ],
+   "photo": "none: the stone is lost; Wikidata P18 has no image and a Commons search for '\"U 441\"' gave no files. The only image is the woodcut B 180, reproduced as UR II Fig. 151, p. 237; its licence status on Commons was not checked",
+   "scan": "no: lost stone, and not in src/scan_sources.py",
+   "stone_notes": "The edition suggests the fragment may come from a carved grave slab ('möjligen av en runristad gravsten'), while Rundata calls it 'fragment av runsten'. The model's reading is '§arnill hælli ið gærva ok finnviðr ok er mót' (p_reading 0.911). Temp files: /Volumes/2TB/cache/luckor-del3/txt_u5/sri_uppland_b07_h02_text_2.txt, /Volumes/2TB/cache/luckor-del3/txt_u5/liljegren_runurkunder.txt, /Volumes/2TB/cache/luckor-del3/img_u5/u441-24.png and /Volumes/2TB/cache/luckor-del3/img_u5/lilj-067.png.",
+   "verify": [
+    {
+     "signum": "U 441",
+     "word": "§arnill (rune 2, fill 'r')",
+     "claim_holds": true,
+     "corrected_status": "proposes_different_word: Liljegren 1833, no. 548, reads 'Arnivi lit', which puts r in the same gap but gives a different word.",
+     "reason": "UR II p. 237, verified in the extracted text (sri_uppland_b07_h02_text_2.txt): 'a - nili li- . . . iþ : kia . . . ok : finuiþr : ok : ir - mut . . .'; 'Till läsningen: Mellan 1 a och 3 n har sannolikt stått en runa. L 548 supplerar runorna 1—9: Arnivi lit. Mellan 27 r och 29 m finnes plats för en runa.'; 'Det har senare varit försvunnet och förgäves eftersökts.'; 'Den förefaller ha varit ett fragment, möjligen av en runristad gravsten.'; 'Vilkendera raden som skall läsas först är ovisst.' All accurate. I looked at the Liljegren page image myself (/Volumes/2TB/cache/luckor-del3/img_u5/lilj-067.png, printed p. 56): '548. Prestgården. B. 180. ] Arnivi lit ... ... ..iþ: kia.. — ok: Finviþr: ok: Irnmūt —'. This is accurate. Compared with UR's a-nili, Liljegren's rune 5 is v rather than l. (The handwritten notes on the facing page of this copy say nothing about 548.) rundata.info links the same Liljegren entry as 'page 72' of the Litteraturbanken facsimile, which is consistent with printed p. 56. In Rundata the normalisation and the English and Swedish translations begin with '... ... ... ...' and have no comment; Runor 2020 has only reading P and no notes. I checked Källström 2013 (Situne Dei 2013, 'Nyfunnen runsten vid Odensala kyrka', approx. p. 28). It mentions U 441 only for its history and gives no reading: 'Endast en av dessa (U 441) blev avbildad på 1600-talet, men har senare försvunnit. Det är dessutom osäkert om stenen har varit en runsten av traditionell typ eller om det snarare har rört sig om en del av ett gravmonument med anknytning till Odensala kyrka (se UR 2:237).' I also confirmed that 'Arnill' is not attested as a word anywhere in Rundata's normalisations or transliterations. Lind 2024, a study of Uppland's lost runestones, may discuss the reading but could not be found online.",
+     "extra_sources": "Källström, M. 2013, 'Nyfunnen runsten vid Odensala kyrka', Situne Dei 2013 (https://arild-hauge.com/SRI/SD2013-MK.pdf, read, approx. p. 28; mentions U 441 without proposing a reading). The Swedish Runic Bibliography also lists Lind, L. 2024, 'Runor på rymmen: en studie av Upplands försvunna runstenar' (NOT found online); Hansson, A.-L. 1982, 'Runstenar och inskrifter i Skånela, Norrsunda, Husby Ärlinghundra, Odensala' (not found online); Klingspor/[Säve] 1872/1876, 'Odensala' (= UFT 2, already cited by UR; not consulted). rundata.info/inscription/u-441/ has no comment field and no restoration."
+    }
+   ]
+  },
+  {
+   "signum": "U 522",
+   "place": "Hammarby, Länna sn, Frötuna och Länna skeppslag, Uppland. Nearly circular plate of red-brown sandstone, 78 cm across, now in SHM (6413:2)",
+   "gaps": [
+    {
+     "carved": "...fuioR---ank-n (runes 37–39 lost; fill 'hiþ')",
+     "word": "heðingunnr",
+     "p": 0.82,
+     "word_kind": "personal_name",
+     "literature_status": "discusses_without_proposal",
+     "literature": "Upplands runinskrifter II (SRI 7), U 522, p. 389, prints 'fui - mrsrimuafifafiRauaiiRiafnaRfuioR - - - ank - nfuþorkhnias - - - - - ... iu - o -' and says: 'Av runorna 37, 38 och 39 återstå endast svaga spår, som icke tillåta några säkra slutsatser om vilka runor som här ha avsetts.' Brate's 1916 protocol, quoted in UR II p. 390, says: '37 har kanske varit k eller m.' ... 'Därpå har antagligen : följt' ... '38 är mycket oklar, måhända har den varit f' ... '39 är möjligen u. Denna läsning av 38—39 är dock alltför osäker att fästa avseende vid.' The editor's verdict on the whole is: 'Det intressanta med denna inskrift, som icke ger någon språklig mening, är att den otvivelaktigt har avslutats med den 16-typiga runraden.' (p. 391). The introduction to the district says: '4 av ristningarna icke kunna sägas vara runinskrifter i vanlig mening: U 522 och 523 äro cirkelformiga sandstensplattor' (p. 387). Rundata normalises only '... <fuþorkhnias[tbmlR]> ...', and the Runor 2020 record has no other reading. Rundata cites Bianchi 2010:182f, which could not be reached: curl to uu.diva-portal.org failed with an SSL_ERROR_SYSCALL, WebFetch to diva-portal.org returned 'Socket is closed', and a web search found only a review and press coverage.",
+     "sources_checked": [
+      "Rundata 3.1 record U 522",
+      "RAÄ Runor 2020 harvest (U 522)",
+      "Upplands runinskrifter II (SRI 7), sri_uppland_b07_h03_text_2.pdf, pp. 387–391 (text and page images checked)",
+      "Bianchi 2010 (Runor som resurs), pp. 182f: NOT reachable (DiVA TLS / socket errors)"
+     ],
+     "traces": "UR II p. 389: only faint traces of 37–39. Brate 1916 (UR II p. 390): 37 has a stroke 3 cm up from the lower line with a 1 cm hook to the right, so perhaps k or m. Two points after 37 suggest a ':' divider. At 38 only part of a lower branch remains, perhaps f. Rune 39 is 'möjligen u'. None of these trace readings matches the model's h, i, þ.",
+     "dividers_matter": "Yes, decisively. The model reads 37–44 (hiþ + ank + u + n) as one word, but Brate saw a probable ':' divider right after 37 ('Därpå har antagligen : följt'), which would split the proposed word. UR also reports round depressions throughout the surface that cannot be told apart from carved points, so the word division on this stone is itself uncertain.",
+     "assessment": "This is very weak. The editor states that the inscription 'icke ger någon språklig mening' and that the plate is not a runic inscription 'i vanlig mening'. The only trace readings that exist (Brate: k/m, f, u) do not match 'hiþ', and Brate's probable divider would break the word. heðingunnr is known to the model from a single inscription, Ög 228 'hiþinkun', so the fit here rests on spelling tolerance (a for i in 'ank'). The proposal should not be presented as a gap filling: it shows the model forcing a lexical reading onto a sequence that the edition treats as non-linguistic."
+    },
+    {
+     "carved": "...ank-n fuþ(o)rkhnias (rune 43 lost; fill 'u')",
+     "word": "heðingunnr",
+     "p": 0.82,
+     "word_kind": "personal_name",
+     "literature_status": "discusses_without_proposal",
+     "literature": "UR II p. 389: 'Runan 43 ser snarast ut som ett stupat k. 44 n har bst endast t. v. om hst. Efter 44 n finnes en punkt, som möjligen är huggen.' Brate 1916 (UR II p. 390): '42 är åter mycket otydlig, troligast i ... 43 är möjligen [k-rune], stupat k med bistaven utgående 2,5 cm uppifrån eller möjligen [rune] med v. bistaven skadad. 44 är [n] med bistav blott på vänstra sidan och följd av en tydlig punkt.' Neither source proposes a restoration, and the editor's overall verdict is that the sequence has no linguistic meaning (p. 391).",
+     "sources_checked": [
+      "Rundata 3.1 record U 522",
+      "RAÄ Runor 2020 harvest (U 522)",
+      "Upplands runinskrifter II (SRI 7), pp. 389–391"
+     ],
+     "traces": "Rune 43 has visible traces that the edition describes as 'snarast ... ett stupat k' (an inverted k); Brate also says possibly an inverted k. This does not match the model's 'u'. A possibly carved point follows 44 n.",
+     "dividers_matter": "Partly. A possible point after 44 n (UR, and Brate's 'tydlig punkt') would close the model's word at the right place. The probable ':' after 37 (see the other gap) contradicts the word's start.",
+     "assessment": "This fill contradicts the only described trace (an inverted k, not u). Together with the other gap, the editor's verdict that the inscription is non-linguistic and the single-source word, the evidence counts against the proposal. The model's second choice 'endlangan' (0.164) shows that the score is not stable either."
+    }
+   ],
+   "photo": "Upplands runinskrifter 522.jpg (Wikidata P18), author John-Björn Huber, CC BY 4.0, https://commons.wikimedia.org/wiki/File:Upplands_runinskrifter_522.jpg. SHM also has a media record at http://kulturarvsdata.se/shm/media/24373, whose licence was not checked.",
+   "scan": "no: U 522 is not in any dataset in src/scan_sources.py",
+   "stone_notes": "Rundata and the edition agree that the plate ends with the 16-rune fuþark ('fuþorkhnias[tbmlR]'), and the edition treats the rest as lacking linguistic meaning. One point matters for the sibling candidate U 466 (viseti): on p. 391 UR II groups U 466 with U 427 and U 483 as inscriptions 'som tydligen också sakna språklig mening', with rune sequences ordered after the 16-rune futhark ('I U 466 t. ex. khniastbmlR'). The model's reading of U 522 is '<unk> af ef hafiR §øygæiRiR §iafnaR fuþork iaR heðingunnr fuþorkhnias iu a' (p_reading 0.282). Temp files: /Volumes/2TB/cache/luckor-del3/img_u5/u522-15.png, /Volumes/2TB/cache/luckor-del3/img_u5/u522b-16.png and /Volumes/2TB/cache/luckor-del3/txt_u5/sri_uppland_b07_h03_text_2.txt.",
+   "verify": [
+    {
+     "signum": "U 522",
+     "word": "heðingunnr (runes 37–39, fill 'hiþ')",
+     "claim_holds": true,
+     "corrected_status": "discusses_without_proposal. The edition explicitly calls the inscription non-linguistic, and Bianchi 2010 and Thompson 1972 are unchecked.",
+     "reason": "I verified these quotes from UR II pp. 387–391 in the extracted text (sri_uppland_b07_h03_text_2.txt): p. 389 'Av runorna 37, 38 och 39 återstå endast svaga spår, som icke tillåta några säkra slutsatser om vilka runor som här ha avsetts.' From Brate's 1916 protocol (p. 390): '37 har kanske varit [K] k eller [Y] m'; 'Därpå har antagligen : följt'; '38 är mycket oklar, måhända har den varit f'; '39 är möjligen [h] u. Denna läsning av 38—39 är dock alltför osäker att fästa avseende vid.' From p. 391: 'Det intressanta med denna inskrift, som icke ger någon språklig mening, är att den otvivelaktigt har avslutats med den 16-typiga runraden.' From p. 387: '4 av ristningarna icke kunna sägas vara runinskrifter i vanlig mening: U 522 och 523 äro cirkelformiga sandstensplattor'. The finding's quotes drop the rune glyphs that are printed next to the transliterations ('k eller m', 'möjligen u'), but they are otherwise faithful. The p. 391 passage on U 466 ('I U 466 t. ex. khniastbmlR') is also correct. Rundata (local store and rundata.info) normalises only '... <fuþorkhnias[tbmlR]> ...', has no comment, and cites only 'Bianchi 2010:182f'. Runor 2020 has reading P only. heðingunnr is attested only on Ög 228, as stated. textgaps.json confirms the fill hiþ, p 0.82 and alt 'endlangan' 0.164. Bianchi 2010 is a study of non-lexical inscriptions, so a lexical restoration there is very unlikely. Even so, I could not read it, and I could not read Thompson 1972 either.",
+     "extra_sources": "Bianchi, M. 2010, Runor som resurs (Runrön 20), pp. 182f, is NOT reachable. curl to uu.diva-portal.org and www.diva-portal.org failed with SSL_ERROR_SYSCALL (rc 35), http://uu.diva-portal.org returned an empty reply (rc 52), and WebFetch of the DiVA diva2:311050 FULLTEXT01.pdf gave 'Socket is closed'. The Swedish Runic Bibliography (RUNSIG \"U 522\") also lists Thompson, C. W. 1972, 'Nonsense Inscriptions in Swedish Uppland' (not found online; the title itself supports the edition's verdict) and Östling & Andersson 2016 (signage inventory)."
+    },
+    {
+     "signum": "U 522",
+     "word": "heðingunnr (rune 43, fill 'u')",
+     "claim_holds": true,
+     "corrected_status": "discusses_without_proposal. The edition describes the trace at 43 as an inverted k, which contradicts the model's u.",
+     "reason": "UR II p. 389, verified: 'Runan 43 ser snarast ut som ett stupat k. 44 n har bst endast t. v. om hst. Efter 44 n finnes en punkt, som möjligen är huggen.' Brate 1916 (p. 390), verified: '42 är åter mycket otydlig, troligast i ... 43 är möjligen K, stupat k med bistaven utgående 2,5 cm uppifrån eller möjligen ... med v. bistaven skadad. 44 är [n] med bistav blott på vänstra sidan och följd av en tydlig punkt.' No restoration is offered anywhere: not in UR, Rundata, Runor 2020 or the rundata.info translation fields. The same caveat about Bianchi 2010 and Thompson 1972 applies as for the other U 522 gap.",
+     "extra_sources": "Same as the other U 522 gap: Bianchi 2010 pp. 182f (unreachable, DiVA TLS errors) and Thompson 1972 'Nonsense Inscriptions in Swedish Uppland' (not found online)."
+    }
+   ]
+  },
+  {
+   "signum": "U 466",
+   "place": "Tibble, Vassunda sn, Ärlinghundra hd, Uppland (Knivsta kn); gråsten, style Pr2",
+   "photo": "Runestone U 466.jpg, by HannaEF, CC BY-SA 4.0 (Wikidata P18; also the only hit in a Commons search). https://commons.wikimedia.org/wiki/File:Runestone_U_466.jpg",
+   "scan": "None. src/scan_sources.lookup('U 466') returns None, so the stone is in none of the listed CC BY Zenodo series. The SRI plates (Pl. 83, 85), Bureus' drawing (Fa 10:2), the B 331 woodcut and Brate's photo from 1923 (ATA) are the only images the edition names.",
+   "stone_notes": "Rundata ('other') and Runor 2020 (notes) both say 'Nonsensinskrift'. SRI 7 (Upplands runinskrifter II, h. 2), p. 280, says the stone is 'tydligen en imitation av en runsten, utförd av en föga van och runkunnig man' and 'Inskriften ger ingen språklig mening.' The model was trained on meaningful texts, so its calibration is not valid for an imitation inscription. Its reading of the whole stone has p_reading 0.196 and contains forms such as 'hniastbmlR' and 'slapp'. Carver: Rundata 'Antagligen samma som gjort U 468. Enligt Brate Visäte (S).' Runor 2020 turns this into carver 'Visäte', attribution 'signed', certain true. That is stronger than the edition, which reports Brate's view only as his opinion. U 468 (same carver, also nonsense) has the sequence '…uis-titi' in Runor 2020. Near-name mechanism: the model settings include near=0.1 and near_km=10, and U 454 (signed 'uiseti hiuk') lies 6.1 km away, so Viseti is probably fed in as a nearby name candidate (not verified inside the model run). Recommendation: filter inscriptions that Rundata marks 'Nonsensinskrift' out of the candidate list. Sources read: /Volumes/2TB/cache/luckor-del3/txt_u5/sri_uppland_b07_h02_text_2.txt (PDF pp. 67–68 = printed pp. 280–281), rendered pages in /Volumes/2TB/cache/luckor-del3/img_u466/. Not reached: Thompson 1972 ('Nonsense inscriptions in Swedish Uppland', Studies for Einar Haugen); one web search found no online copy, so it is cited only as Rundata quotes it. Brate, Anteckningar 1923 (ATA) is unpublished. Brate 1925 (Svenska runristare) and the SRI plates were not checked.",
+   "gaps": [
+    {
+     "carved": "--kitiht (Rundata: '--(k)itiht'; two lost runes, model fill 'uk')",
+     "word": "ok",
+     "p": 0.846,
+     "word_kind": "formula_or_function_word",
+     "literature_status": "discusses_without_proposal",
+     "literature": "SRI 7 (UR II:2) p. 280: 'Inskriften ger ingen språklig mening.' Same page: 'Huruvida ristaren icke kunnat eller icke velat använda runorna för ett verkligt meddelande, är ovisst.' Brate's cryptogram reading, reported on p. 281, covers 'isfirn', 'st', 'blk' and the left-edge line, and says nothing about this group. Rundata ('other') quotes Thompson (1972:526), who reads this part as 'iþk × itiht': other runes in the place of the gap, and a divider after k. No source proposes 'ok' here.",
+     "sources_checked": [
+      "Rundata 3.1 (transliteration, normalization, 'other')",
+      "RAÄ Runor 2020 harvest (data/raa/runor_2020.json)",
+      "SRI 7, Upplands runinskrifter II h. 2, pp. 279–281 (raa.se PDF sri_uppland_b07_h02_text_2.pdf, pdf pp. 66–68)",
+      "Thompson 1972 – not reached (only via Rundata's quotation)"
+     ],
+     "traces": "Rundata gives two lost runes before '(k)itiht', with k uncertain. Thompson, as quoted in Rundata, reads 'iþk × itiht'. SRI gives no rune-by-rune commentary on this group and only says, in general, 'I allmänhet äro runorna tydliga, men ibland oklara' (p. 281). The older drawings (Bureus fig. 184, B 331 fig. 185, p. 280) were not compared.",
+     "dividers_matter": "Yes. Rundata has no divider inside '--(k)itiht', and the model splits it as 'uk' + 'kiti' + 'het'. Thompson's reading puts a divider '×' after k, which would remove the context the 'ok' fill depends on.",
+     "assessment": "Weak. The edition calls the whole inscription meaningless, an imitation of a runestone. The model's 'ok' is a formula word that it will favour in almost any two-rune slot before a name-like string. Thompson reads different runes (iþ) in the gap. The calibration (blind test on restored gaps in real texts) does not cover nonsense inscriptions. Inspecting Thompson 1972 and the plates could refute the fill but could hardly confirm it. Best dropped from the candidate list."
+    },
+    {
+     "carved": "-isit--ti (Rundata: '-isit--ti +'; first rune lost, model fill 'r'; the second run '--' in the same group gets fill 'is' at only p 0.357)",
+     "word": "viseti",
+     "p": 0.807,
+     "word_kind": "personal_name",
+     "literature_status": "proposes_different_word",
+     "literature": "SRI 7 p. 281, reporting Brate: 'E. Brate anser, att inskriften längs stenens vänstra kant måste vara att utläsa: uistRi : risitiitia, d. v. s. Viseti risti stin »Visäte ristade stenen».' Brate therefore puts the name Viseti in the preceding group 'uistRi' and reads this group as risti (stin), not as the name. SRI itself rejects any meaning (p. 280: 'Inskriften ger ingen språklig mening'). Rundata gives the carver as 'Enligt Brate Visäte (S)'. Thompson (1972:526, via Rundata) reads '-isit--tia'.",
+     "sources_checked": [
+      "Rundata 3.1",
+      "RAÄ Runor 2020 harvest",
+      "SRI 7, UR II h. 2, pp. 280–281",
+      "Thompson 1972 – not reached"
+     ],
+     "traces": "Rundata '-isit--ti' and Thompson '-isit--tia' (one extra a at the end). Brate (via SRI) read the sequence as 'risitiitia', with r as the first rune. SRI describes no traces in the two places. Note also SRI p. 281: 'Upp- och nedvänt u förekommer ett par gånger.'",
+     "dividers_matter": "Partly. The group is bounded by ':' before and '+' after, so its edges are marked. But Brate's division of the text gives the name to the previous group 'uistRi' and the verb to this one, and the model's reading line also renders 'uistRi' as 'vestri'. Which group holds the name is a matter of reading, not of the dividers.",
+     "assessment": "Weak and internally inconsistent. The displayed fill 'r' (the single most probable joint filling) spells risit-, matching Brate's risti, while the word label viseti (0.807) is the marginal summed over fillings, which would need u. The alternative risti has 0.182, and the second run of the same word is filled at only 0.357. A Visäte-signed stone (U 454) lies 6.1 km away, inside the model's 10 km near-name radius, which probably pushes viseti. The inscription is a nonsense imitation per SRI. Brate's Visäte attribution survives only as his opinion, so this cannot count as a contribution."
+    }
+   ],
+   "verify": [
+    {
+     "signum": "U 466",
+     "word": "ok",
+     "claim_holds": true,
+     "corrected_status": "discusses_without_proposal (more exactly: no source treats this group as words; the edition says the whole text is meaningless; Thompson reads other runes in the gap)",
+     "reason": "I checked every quote myself. SRI 7 (UR II:2) p. 280, in /Volumes/2TB/cache/luckor-del3/txt_u5/sri_uppland_b07_h02_text_2.txt lines 3073-3078, has 'Den är tydligen en imitation av en runsten, utförd av en föga van och runkunnig man', 'Inskriften ger ingen språklig mening' and 'Huruvida ristaren icke kunnat eller icke velat använda runorna för ett verkligt meddelande, är ovisst.' Page 281 has 'I allmänhet äro runorna tydliga, men ibland oklara'. On p. 281, Brate's cryptogram reading covers only isfirn, st and blk ('reste' and kumbl) plus the left-edge line. It says nothing about '--(k)itiht'. Rundata 3.1 'other' reads 'Nonsensinskrift. Thompson (1972:526) läser: ... rihn-- : iþk × itiht ...', which gives other runes and a divider after k, as the finding reports. The normalization and English translation are only '... <hniastbmlR> ...', so no restoration is hidden in the translation field. Runor 2020 has the same note and reading. rundata.info/inscription/u-466 gives the same. The Uppsala runforum blog post 'Runic excursion in Knivsta' only says U 466 and U 468 'bear inscriptions without recognizable words'. I found no source that proposes 'ok'. The model's own reading line ('hakon ok kiti het iunR slapp') shows that 'ok' depends on its splitting the group into words, which no edition does.",
+     "extra_sources": "Additional checks: rundata.info/inscription/u-466/ (no restoration); runforum.nordiska.uu.se/blog/runic-excursion-in-knivsta/ (only 'without recognizable words'); RAÄ Runor 2020 harvest. Not reached: Thompson 1972 ('Nonsense inscriptions in Swedish Uppland'; a web search found no online copy) and Thompson 1975, Studies in Upplandic Runography (UT Press; it treats attributions such as Visäte's, behind a paywall). Neither can be ruled out as discussing the group, but Rundata quotes Thompson's reading as 'iþk × itiht', which goes against 'ok'."
+    },
+    {
+     "signum": "U 466",
+     "word": "viseti",
+     "claim_holds": true,
+     "corrected_status": "proposes_different_word (Brate, via SRI 7 p. 281: this group = risti stin; the name Viseti goes in the preceding group uistRi)",
+     "reason": "SRI 7 p. 281 (txt lines 3095-3096) says, verbatim: 'E. Brate anser, att inskriften längs stenens vänstra kant måste vara att utläsa: uistRi : risitiitia, d. v. s. Viseti risti stin »Visäte ristade stenen».' So the only published proposal for '-isit--ti' is risti (stin), with r as the lost first rune. The model's displayed fill 'r' matches that, and its alternative risti has p 0.182. The model's own full reading in textgaps.json ends '... vestri ræisti stæin'. It does not contain viseti, which supports the finding's point that the viseti label is a marginal over fillings and does not match the best joint reading. Rundata gives the carver as 'Enligt Brate Visäte (S)'. Runor 2020 upgrades this to Visäte 'signed', certain true; I verified that in the harvest. Rundata 'other' (Thompson) reads '-isit--tia'. U 454, signed 'uiseti hiuk', lies 6.08 km away; I recomputed this from Rundata coordinates. U 468 in Runor 2020 has '…uis-titi', as reported. Nothing I found proposes viseti in this group.",
+     "extra_sources": "rundata.info/inscription/u-466/ (carver: 'According to Brate, Visäte (S)'; no name in the normalization). English Wikipedia's Visäte article and web summaries repeat Brate's attribution as tentative. Not reached: Brate 1925 (Svenska runristare), Brate's 1923 notes in ATA (unpublished), Thompson 1972 and Thompson 1975."
+    }
+   ]
+  },
+  {
+   "signum": "U Fv1946;258",
+   "place": "Fällbro, Täby sn, Danderyds skeppslag, Uppland (Täby kn); rock face (berghäll), style Pr4; carver Visäte (Rundata 'Visäte (S)')",
+   "photo": "Upplands runinskrifter Fv1946;258.jpg, by Hedning, CC BY-SA 3.0 (Wikidata P18). https://commons.wikimedia.org/wiki/File:Upplands_runinskrifter_Fv1946;258.jpg",
+   "scan": "None. src/scan_sources.lookup('U Fv1946;258') returns None; the rock face is in none of the listed Zenodo series.",
+   "stone_notes": "Rundata and Runor 2020 hold two readings. §P is Jansson 1946: '… þu-- · -i-a-----i-iti · uk ---... skib · fa-t', normalized '... ... ok ...'. §Q is from ATA Dnr 423-6000-1997, an unpublished archive report I could not reach: '… þu-ilia-- (u)isiti · (r)i(s)ti skibi · fa(s)ti', normalized '… \"Viseti risti, skip(?) <fasti>'. The candidate exists only because the inventory scored §P, where the normalization is '...'. Rundata's own §Q already reads Viseti, so this is not an open question in the database as a whole. Near-name check: Visäte-signed U 236 (6.9 km) and U 208 (9.7 km) lie inside the model's 10 km near-name radius. Whether §Q of the same record reaches the model in any way (sections are filled as separate texts) was not checked. The two readings also disagree on what follows the name (§P 'uk ---', §Q '(r)i(s)ti'). Sources: Jansson, S. B. F., 'Några okända uppländska runinskrifter', Fornvännen 41 (1946), pp. 257–260, downloaded from the arild-hauge.com mirror to /Volumes/2TB/cache/luckor-del3/pdf/fv1946_257.pdf (pages rendered in /Volumes/2TB/cache/luckor-del3/img_fv1946/). The Rundata link fornvannen.se/pdf/1940talet/1946_257.pdf redirects to pub.raa.se, which failed with 'LibreSSL SSL_connect: SSL_ERROR_SYSCALL', and WebFetch returned 'Socket is closed'.",
+   "gaps": [
+    {
+     "carved": "-i-a-----i-iti (one lost rune at position 10 = Jansson's rune 70; model fill 's'; the word spans runes 68–73)",
+     "word": "viseti",
+     "p": 0.882,
+     "word_kind": "personal_name",
+     "literature_status": "proposes_same_word",
+     "literature": "Jansson 1946, Fornvännen 41, p. 260: 'I runföljden 68—73 finnas måhända spår av ristarens namn.' On the same page he attributes the carving to Visäte on other grounds: '…kan man på grund av karakteristiska runformer, ornamentik och formulering attribuera den nyfunna runhällen till den i dessa trakter av Uppland välkände ristaren Visäte.' p. 260 also has: 'Det är beklagligt, att inskriftens senare del — ett 20-tal runor — icke går att läsa med någon säkerhet.' The later reading in Rundata §Q (ATA Dnr 423-6000-1997, unpublished and not reached) reads '(u)isiti · (r)i(s)ti', normalized 'Viseti risti'.",
+     "sources_checked": [
+      "Rundata 3.1 (§P and §Q)",
+      "RAÄ Runor 2020 harvest (readings P and Q)",
+      "Jansson 1946, Fornvännen 41 pp. 257–260 (arild-hauge.com mirror)",
+      "ATA Dnr 423-6000-1997 – unpublished archive report, not reached"
+     ],
+     "traces": "Jansson 1946 p. 259: 'I r. 68 är huvudstaven tydlig och man kan möjligen skönja svaga spår av en u-bistav. Huvudstaven i r. 69 är säker; runan gör intryck av att ha varit i. Därpå följer en avlång fördjupning, som utgår från övre slinglinjen. Den verkar huggen och kan kanske vara rester av ett svensk—norskt s.' Then: 'Efter denna runa (70 s?) finnes lågt i slingan en rund fördjupning, som icke förefaller att vara huggen. 71 i är relativt säkert. Detsamma gäller 72 t och 73 i.' So the place the model fills (70) is the one Jansson describes as a possible short-twig s, and rune 68 (inside the model's lost run) shows a staff and possibly a u-branch.",
+     "dividers_matter": "Only at the start. Jansson's transliteration has a divider after 73 ('i - iti · uk'), which marks the end of the word. There is no divider between rune 63 a and 68, because that part is weathered, so the model has to place the word start at 68 itself. §Q also has no divider before '(u)isiti'. The s fill does not depend on the division; the word identification does.",
+     "assessment": "The strongest of these candidates, but not new. The model's viseti on the §P sequence agrees with Jansson's hint, with his trace description of rune 70 as a possible s, and with the later ATA reading already in Rundata's §Q. Read soberly, it is a successful check of the model against the literature, not an open gap filled. The near-name mechanism (Visäte stones within 10 km) means the agreement is not fully independent of known carver geography. It should be labelled 'confirmed by the literature' rather than listed as an open gap. The ATA 1997 report would show how certain the (u) and s readings are."
+    }
+   ],
+   "verify": [
+    {
+     "signum": "U Fv1946;258",
+     "word": "viseti",
+     "claim_holds": true,
+     "corrected_status": "proposes_same_word (explicitly in Rundata/Runor §Q, '(u)isiti', normalized 'Viseti risti', from the unpublished ATA Dnr 423-6000-1997; only implicitly in Jansson 1946, who suggests the carver's name stands in runes 68–73 and names Visäte as the carver on other grounds, but does not spell the word)",
+     "reason": "I checked the rendered page /Volumes/2TB/cache/luckor-del3/img_fv1946/fv-05.png (Fornvännen 41, 1946, p. 260). It reads 'I runföljden 68—73 finnas måhända spår av ristarens namn. Även om detta icke har bevarats kan man på grund av karakteristiska runformer, ornamentik och formulering attribuera den nyfunna runhällen till den i dessa trakter av Uppland välkände ristaren Visäte.' It also has 'Det är beklagligt, att inskriftens senare del — ett 20-tal runor — icke går att läsa med någon säkerhet.' The pdftotext OCR garbles the numbers to '6fi—711', but the image confirms 68—73. The trace description on p. 259 is quoted correctly ('I r. 68 är huvudstaven tydlig och man kan möjligen skönja svaga spår av en u-bistav ... kan kanske vara rester av ett svensk—norskt s. Efter denna runa (70 s?) ... 71 i är relativt säkert. Detsamma gäller 72 t och 73 i'). Rundata §Q reads 'þu-ilia-- (u)isiti · (r)i(s)ti skibi · fa(s)ti', and the normalization and English translation give 'Véseti carved'. Runor 2020 has the same reading Q and lists carver Visäte as 'signed', certain true. The status is correct, but the wording should make clear that the explicit word viseti comes from the 1997 reading, which reaches us only through the database. Jansson 1946 only points to the place and the carver. Distances recomputed: U 236 6.91 km, U 208 9.70 km.",
+     "extra_sources": "English Wikipedia ('Uppland Runic Inscription Fv1946;258'; the 'Visäte' article lists it among his signed stones) and runkartan.se repeat the two Rundata readings. The search summary describes the second reading as 'published in 1997', but it is the ATA Dnr 423-6000-1997 report, which I did not reach. The fornvannen.se link was not retried. The arild-hauge.com mirror PDF is the one the first researcher used."
+    }
+   ]
+  },
+  {
+   "signum": "U Fv1992;161B",
+   "place": "Sigtuna, kv. Trädgårdsmästaren 9–10 (Sigtuna museum, find no. 11901); bone, not a runestone (Rundata 'runben, revben, fragment'; Sl 27 2018: 'En ländkota av nöt'); dated 1050–1075 (phase 4)",
+   "photo": "None found. Wikidata has no P18 for this signum, and a Commons search for the signum returned no file. The edition photos (Bengt A. Lundberg 1989/RAÄ; Magnus Källström 2018) are in the Sl 27 PDF without a stated free licence.",
+   "scan": "None. src/scan_sources.lookup('U Fv1992;161B') returns None.",
+   "stone_notes": "This object is a rune bone, not a runestone, so under the project default (runestones only, other objects reported separately) it should not be in the 27-gap runestone candidate list at all. The model's carved input '-aa--' is Fornvännen 1992's reading, which the current edition (Sl 27, 2018) has replaced with '…--!r x -a-- x fyrt x ulr…'. There, the damaged group has four runes and a divider before it, so a five-rune fill no longer has a place to go. The model reads the only fully preserved word, fyrt (fœrt 'brought', per Rundata and Sl 27), as <unk>; p_reading 0.268. The fill spells 'baarn'. That it is labelled biorn probably comes from the tolerance layer (i/e/a variation, textmodel-19); this was not verified. Sources: NOR 6 (1991) p. 18, /Volumes/2TB/cache/luckor-del3/pdf/nor6.pdf (arild-hauge.com mirror); Gustavson, Snædal & Åhlén, 'Runfynd 1989 och 1990', Fornvännen 87 (1992) p. 161, /Volumes/2TB/cache/luckor-del3/pdf/fv1992_153.pdf (arild-hauge.com mirror; the fornvannen.se/pub.raa.se link failed on TLS); H. Gustavson/M. Källström, Sl 27, Runristade lösföremål från Sigtuna, version 0.1 (2018-11-24), /Volumes/2TB/cache/luckor-del3/pdf/sl27.pdf (raa.se). Not checked: Gustavson 2012 (Vänskrift Nyström) and Källström 2014 (Vernacular Literacies), both cited in Sl 27.",
+   "gaps": [
+    {
+     "carved": "-aa-- (first rune lost; model fill 'b'; the whole group is filled as one span with the 2-rune run, giving 'baarn')",
+     "word": "biorn",
+     "p": 0.818,
+     "word_kind": "personal_name",
+     "literature_status": "discusses_without_proposal",
+     "literature": "NOR 6 (1991) p. 18: 'b) ?a??×fyrt×ulr?--. På b-sidan är endast nedre hälften av runorna bevarad.' and 'Inskriften på b-sidan är så skadad att den inte kan ges någon säker språklig tolkning.' Fv 87 (1992) p. 161 (reading '-aa--×fyrt×ulr-') repeats this verdict. Sl 27 (2018) p. 3: 'Eftersom 9 eventuellt kan ha varit h är det frestande att uppfatta detta som en form av hjälpverbet hafa', which it immediately argues against: 'Mot denna supplering talar dock avståndet mellan de två sista stavarna (runa 11–12)…'. It concludes that the runs before and after fyrt cannot be reconstructed ('Ingen av dessa runföljder går dock att rekonstruera'). No source proposes biorn.",
+     "sources_checked": [
+      "Rundata 3.1",
+      "RAÄ Runor 2020 harvest",
+      "Nytt om runer 6 (1991) p. 18",
+      "Fornvännen 87 (1992) p. 161",
+      "Sl 27, Runristade lösföremål från Sigtuna v0.1 (2018)"
+     ],
+     "traces": "Fv 1992 p. 161: 'Inga runor har funnits t. v. om de bevarade. Av de fyra första runorna är endast nedre hälften bevarad.' Sl 27 (2018) p. 2 disagrees and describes three more runes (6–8, '…--!r') and a divider to the left. For the corresponding rune 9: 'Runa 9 består av nedre delen av en huvudstav, 8 mm lång. Upptill till vänster och alldeles i brottkanten finns något som kan vara spetsen av en bistav snett nedåt vänster bevarad. Det skulle i så fall kunna handla om en a-runa, men eftersom den följande runan är a, verkar h sannolikare.' The edition names a or h, not b.",
+     "dividers_matter": "Yes. Rundata/Fv 1992 has nothing to the left of '-aa--' and a × after it. Sl 27 puts a divider before rune 9 and reads only four runes '-a--' up to the next ×. The five-rune word the model fills exists only in the 1992 reading.",
+     "assessment": "Very weak. The object is a bone, not a runestone, and is outside the list's scope. The carved input comes from a reading the current edition has superseded. The trace at this position is described as a or h. Every edition says side B cannot be interpreted. Remove from the list. If kept for the bone track, it should be re-run on the Sl 27 reading."
+    },
+    {
+     "carved": "-aa-- (last two runes lost; model fill 'rn')",
+     "word": "biorn",
+     "p": 0.818,
+     "word_kind": "personal_name",
+     "literature_status": "discusses_without_proposal",
+     "literature": "Same sources as the first gap. Sl 27 (2018) p. 3 considers 'ha[fi]' for runes 9–12 and argues against it: 'Mot denna supplering talar dock avståndet mellan de två sista stavarna (runa 11–12), som ser ut att ha stått för tätt för att ge plats för bistavar till en f-runa.' Fv 1992 p. 161: 'Inskriften på sida b är så skadad att den inte kan ges någon säker språklig tolkning'. No source proposes biorn or any rn ending.",
+     "sources_checked": [
+      "Rundata 3.1",
+      "RAÄ Runor 2020 harvest",
+      "Nytt om runer 6 (1991) p. 18",
+      "Fornvännen 87 (1992) p. 161",
+      "Sl 27 v0.1 (2018)"
+     ],
+     "traces": "Fv 1992 p. 161: of the first four runes only the lower half is preserved, and on the second 'syns en a-bistav tydligt (om runan varit o måste den andra bistaven ha varit mycket högt placerad)'. Sl 27 (2018) p. 3: 'Runorna 11 och 12 består av den nedre delen av två lodräta huvudstavar utan spår av bistavar', and the two staffs 'ser ut att ha stått för tätt' and were probably lower than the following runes. Sl 27 p. 3 also notes 'En vågrät spricka går genom runorna mellan skiljetecknet och den högra smalsidan.'",
+     "dividers_matter": "Yes, as for the first gap. In Sl 27 the group is '-a--' between two dividers (four runes), while the model fills the five-rune '-aa--' of 1992.",
+     "assessment": "Very weak, for the same reasons as the first gap. The edition reports two close-set lower staffs with no branch traces and finds even a short form like hafi doubtful. The rn fill rests on the superseded 1992 transliteration. Remove from the runestone candidate list."
+    }
+   ],
+   "verify": [
+    {
+     "signum": "U Fv1992;161B",
+     "word": "biorn (gap 1, fill b)",
+     "claim_holds": true,
+     "corrected_status": "discusses_without_proposal (and out of scope: a rune bone, not a runestone; the input is the superseded 1992 transliteration)",
+     "reason": "Every quote checks out. On NOR 6 (1991) p. 18, the rendered page /Volumes/2TB/cache/luckor-del3/img_nor6/nor6-18.png shows the page number 18: 'b) ?a??×fyrt×ulr?--. På b-sidan är endast nedre hälften av runorna bevarad.' and 'Inskriften på b-sidan är så skadad att den inte kan ges någon säker språklig tolkning.' Fv 87 (1992) p. 161 (fv1992_153.txt, around line 477) reads 'b) -aa-- x fyrt x ulr-', 'Inga runor har funnits t. v. om de bevarade. Av de fyra första runorna är endast nedre hälften bevarad', and 'Inskriften på sida b är så skadad att den inte kan ges någon säker språklig tolkning'. Sl 27 v0.1 (2018) p. 2-3 reads '…--!r x -a-- x fyrt x ulr…' and says of rune 9: 'Det skulle i så fall kunna handla om en a-runa, men eftersom den följande runan är a, verkar h sannolikare.' It then considers ha[fi] and argues against it. One small imprecision: Sl 27's 'Ingen av dessa runföljder går dock att rekonstruera' refers to the runs '…--!r' and 'ulr…' (the subject and object around fyrt), not to the gap group itself. The gap group is covered by the rejection of the ha[fi] restoration. I checked the RAÄ Sigtuna index for a newer edition, and the only Sl 27 file is the 2018-11 v0.1. Rundata 'references' is 'Sl 27; Fv 1992', and Runor 2020 has alt signa 'S 27', 'U Sl27' with the same reading P. No source proposes biorn or a b- start.",
+     "extra_sources": "RAÄ Sigtuna index (cached raa_sigtuna.html): the only Sl 27 file is the 2018 v0.1. Not reached: Gustavson 2012 ('Personnamn i inskrifterna på runföremålen från Sigtuna', Vänskrift Staffan Nyström), which Sl 27 cites at p. 106, probably for þurli on side A, and Källström 2014 (Vernacular Literacies, p. 116). Both come before Sl 27, whose 2018 text concludes that nothing can be reconstructed. A name proposal for side B there is therefore unlikely, but I did not verify it."
+    },
+    {
+     "signum": "U Fv1992;161B",
+     "word": "biorn (gap 2, fill rn)",
+     "claim_holds": true,
+     "corrected_status": "discusses_without_proposal (out of scope: bone object; the gap exists only in the 1992 transliteration)",
+     "reason": "Sl 27 v0.1 p. 3 says verbatim: 'Runorna 11 och 12 består av den nedre delen av två lodräta huvudstavar utan spår av bistavar' and 'Mot denna supplering talar dock avståndet mellan de två sista stavarna (runa 11–12), som ser ut att ha stått för tätt för att ge plats för bistavar till en f-runa.' It also has 'En vågrät spricka går genom runorna mellan skiljetecknet och den högra smalsidan.' Fv 87 (1992) p. 161 has the a-bistav remark on the second rune ('om runan varit o måste den andra bistaven ha varit mycket högt placerad'). No edition proposes an -rn ending. The model's fill 'baarn', labelled biorn, has p_reading 0.268, and its reading line reads fyrt as <unk>, as reported. Sl 27 gives four runes between the dividers ('-a--'), where Fv 1992 gives five ('-aa--'), so the five-rune slot the model fills is not in the current edition.",
+     "extra_sources": "Same as the first gap. NOR 6 p. 18, Fv 87 p. 161 and Sl 27 v0.1 pp. 2-3 checked directly. Gustavson 2012 and Källström 2014 not reached."
+    }
+   ]
+  },
+  {
+   "signum": "U NOR1994;26A",
+   "place": "Alsnö hus, Adelsö sn, Ekerö (Uppland). The object is a small bronze amulet, 60 x 14 mm, not a runestone. SHM 35224 in Rundata, SHM 35244 in Runor 2020; find no. 7530.",
+   "gaps": [
+    {
+     "carved": "?k?o?þtouf??? (side B, line 1; Rundata: ?k?o?þto(u)f???)",
+     "word": "fængit",
+     "p": 0.976,
+     "word_kind": "other_content_word",
+     "literature_status": "silent",
+     "literature": "Only one publication was found, the preliminary find report in Nytt om runer 9 (1994), p. 26 (Runverket, Stockholm). It gives only a preliminary drawing of sides a and b and no transliteration or reading: \"Amuletten var ristad på båda sidor med ca 6 mm höga runor och runliknande tecken (se den preliminära avbildningen). Den togs om hand för konservering och har ännu inte detaljgranskats av Runverket.\" The find was \"ca 3 meter framför runblocket U 11\". The report says nothing about these positions and proposes no word. Rundata and Runor 2020 have the same note: \"Nonsensinskrift, magisk?\". Their normalisation is only \"§A ... ... ... ... §B ... ...\". Nytt om runer 10–14 were searched for a later detailed examination, and nothing on Alsnö was found.",
+     "sources_checked": [
+      "Rundata 3.1 record (transliteration, note 'Nonsensinskrift, magisk?', reference http://urn.nb.no/URN:NBN:no-44952)",
+      "RAÄ Runor 2020 harvest record (same reading, reference 'P')",
+      "Nytt om runer 9 (1994), p. 26, PDF from arild-hauge.com, checked against the rendered page image",
+      "Nytt om runer 10, 11, 12, 13, 14, full-text search for Alsnö/Adelsö/find number: nothing",
+      "URN no-44952 resolves to DUO/NVA (nva.sikt.no), but the API host api.nva.sikt.no did not resolve from this machine",
+      "Web search for a later publication of the amulet: none found",
+      "Live local API /api/textmodel/U NOR1994;26A (textmodel-19, fold model, computed 2026-10-22)"
+     ],
+     "traces": "The edition describes no damage. In Rundata the gap is not lost runes. The three '?' are signs that cannot be identified, and the NOR 9 drawing shows carved signs at the end of side b, line 1. The edition calls the carving \"runor och runliknande tecken\". The model's text_groups treats Rundata's '?' as a lost rune, so it is filling unidentified carved signs, not an empty space.",
+     "dividers_matter": "Yes. Side B has no dividers, so the model sets every word boundary itself. The candidate reading 'ok þorþ dou fængit fly' covers both lines of side B, which means it crosses the ¶ line break. The fill 'iki' gives f+iki. The final t of fængit is not in the gap. It must come either from the t that starts line 2 or from the tolerance layer, and the candidate file does not say which. In the live API run on 2026-10-22, the two lines are merged into one group. That run proposes no word here: positions 10–21 stay an open gap, and the line is read 'uk þorþ to uf ... faður'.",
+     "assessment": "Weak. The object is a bronze amulet, not a runestone, so under the project's object-type rule it should not be in a runestone candidate list. Rundata classifies the text as nonsense ('magisk?'). The only edition is a preliminary drawing that was never examined in detail. The 'gap' is unidentifiable carved signs, not lost runes. The live fold-model run does not reproduce the proposal (no word for these positions), so the 97.6 % depends on the batch settings. The proposal could only be confirmed by an autopsy or a published detailed reading of the amulet (SHM). Without that, it should not be presented as a filled gap."
+    },
+    {
+     "carved": "t?????f? (side B, line 2; Rundata: t?????(f)?)",
+     "word": "fly",
+     "p": 0.846,
+     "word_kind": "other_content_word",
+     "literature_status": "silent",
+     "literature": "Same single source as above: Nytt om runer 9 (1994), p. 26. It has a preliminary drawing only and the note that the amulet \"har ännu inte detaljgranskats av Runverket\". There is no reading, no discussion of line 2 and no proposed word. Rundata/Runor: \"Nonsensinskrift, magisk?\".",
+     "sources_checked": [
+      "Rundata 3.1 record",
+      "RAÄ Runor 2020 harvest record",
+      "Nytt om runer 9 (1994), p. 26 (text and page image)",
+      "Nytt om runer 10–14 (search: nothing on the amulet)",
+      "Live local API /api/textmodel/U NOR1994;26A"
+     ],
+     "traces": "The edition reports no damage. Line 2 of side b in Rundata has one identified rune at the start (t), five unidentifiable signs, an uncertain (f), and a final unidentifiable sign '?'. The gap the model fills (gap length 1, fill 'l') is that final '?'. It is a carved sign Rundata could not identify, not a lost rune.",
+     "dividers_matter": "Yes. There are no dividers. 'fly' is the last word of a reading the model segmented itself across both lines of side B. After the fill, the carved sequence ends in ...(f)+l, so a third letter for 'fly' has no carved counterpart in Rundata's transliteration. As far as the candidate data show, that comes from the model's tolerance layer. The live fold-model run on 2026-10-22 does not propose 'fly'. It reads the end of the merged group as 'faður' at p 0.29.",
+     "assessment": "Very weak, for the same reasons as fængit: a bronze amulet, a text classed as nonsense, unidentified signs instead of lost runes, a preliminary drawing as the only source, and a proposal that the live model run does not reproduce. It should not be counted as a research gap filled on a runestone."
+    }
+   ],
+   "photo": "None. Wikidata P18 lookup and Commons searches ('U NOR1994;26A', 'U NOR1994;26', 'Alsnö hus amulett') found nothing. The only image found is the preliminary drawing in Nytt om runer 9 (1994), p. 26, and its licence is not established.",
+   "scan": "No. src/scan_sources.lookup('U NOR1994;26A') returns None; no Zenodo series in scan_sources.py covers it.",
+   "stone_notes": "Not a runestone: a bronze amulet ('bleck (amulett)'). Under the project's default rule (runestones only; other objects only if stated and reported separately), it should probably be removed from the Forskningsluckor runestone list or listed separately. Rundata and Runor note 'Nonsensinskrift, magisk?'. The SHM number differs: 35224 in Rundata, 35244 in Runor 2020. The batch candidate file (/Volumes/2TB/cache/perf/textgaps.json, computed 2026-10-20, fold=null) and the live API (fold model, 2026-10-22) disagree: the live run proposes neither fængit nor fly. Files: /Volumes/2TB/cache/luckor-del3/pdf/nor9.pdf, /Volumes/2TB/cache/luckor-del3/img/nor9-26.png, /Volumes/2TB/cache/luckor-del3/tm_U20NOR19943B26A.json",
+   "verify": [
+    {
+     "signum": "U NOR1994;26A",
+     "word": "fængit",
+     "claim_holds": true,
+     "corrected_status": "silent",
+     "reason": "I could not refute it. I checked the quote myself in /Volumes/2TB/cache/luckor-del3/pdf/nor9.txt (Nytt om runer 9, 1994, p. 26). It is verbatim: \"Amuletten var ristad på båda sidor med ca 6 mm höga runor och runliknande tecken (se den preliminåra avbildningen). Den togs om hand för konservering och har ännu inte detaljgranskats av Runverket.\" The find spot \"ca 3 meter framför runblocket U 11\" is also verbatim. There is no transliteration and no reading. NOR 10–15 (cached text) have no follow-up: the only Adelsö hits are a U 11 bibliography item (NOR 12) and false matches. I also downloaded NOR 16 (2001, publ. 2003) myself from arild-hauge.com/Nytt_om_Runer/NoR16.pdf. Its Adelsö item is a burnt bone from Birka 'Borg' (find no. 4768), not the Alsnö amulet. Rundata 3.1 normalisation and translation_en are both '§A ... ... ... ... §B ... ...', so there is no hidden restoration in the translation field. The note is 'Nonsensinskrift, magisk? Fyndnr 7530'. A K-samsök search (text=35244 and Alsnö) returns only the Runor record with the same reading. Neither the RAÄ 'Supplement till Upplands runinskrifter' page nor the cached RAÄ index lists an edition of the amulet. The object is a bronze 'bleck (amulett)', not a runestone, which I confirmed in Rundata. The SHM number is 35224 in Rundata and 35244 in Runor/K-samsök. Model check: the batch candidate is carved '?k?o?þtouf???', gap 3, fill 'iki', p 0.976, reading 'ok þorþ dou fængit fly'. The live fold run (tm_U20NOR19943B26A.json) merges side B into one group, '?k?o?þtouf???t?????f?', and has no fængit at that point. So the finding's report of the disagreement is correct.",
+     "extra_sources": "Nytt om runer 16 (2001, publ. 2003), https://www.arild-hauge.com/Nytt_om_Runer/NoR16.pdf, downloaded to /Volumes/2TB/cache/luckor-del3/skeptic3/nor16.pdf; nothing on the amulet. K-samsök API search 'text=\"35244\" and text=\"Alsnö\"' gave 1 hit, the Runor record only; 'text=\"35224\" and text=\"Alsnö\"' gave 0 hits. RAÄ Uppland supplement page (skeptic/supp.html): no entry."
+    },
+    {
+     "signum": "U NOR1994;26A",
+     "word": "fly",
+     "claim_holds": true,
+     "corrected_status": "silent",
+     "reason": "The literature is the same as for fængit and the result is the same. NOR 9 p. 26 has only the preliminary drawing and says the amulet \"har ännu inte detaljgranskats\". NOR 10–16 have no later reading. Rundata's translation_en is '... ...' for side B. The batch candidate is carved 't?????f?', gap 1, fill 'l', p 0.846, with alternatives fyr 0.057 and fi 0.044. The gap is the final unidentified sign '?', not a lost rune. The live fold run does not propose fly, which agrees with the finding. No source proposes fly or any other word.",
+     "extra_sources": "Same as for fængit: NOR 16 (2003) via arild-hauge.com and the K-samsök search; neither has a reading."
+    }
+   ]
+  },
+  {
+   "signum": "U NOR2000;34B",
+   "place": "Sigtuna, kv. Professorn 1 (Uppland). The object is a rib bone (Sl 92, find no. 7145), not a runestone. Sigtuna museum inv. 63189.",
+   "gaps": [
+    {
+     "carved": "-kiþ (Rundata '-era-nae × ¶ -kiþ'; the gap is the first sign of the second inscription)",
+     "word": "skeþ",
+     "p": 0.887,
+     "word_kind": "other_content_word",
+     "literature_status": "discusses_without_proposal",
+     "literature": "(1) H. Gustavson, 'Verksamheten vid Runverket i Stockholm', Nytt om runer 15 (2000, publ. 2001), pp. 34–35. p. 34: \"Till vänster om runorna finns en ca 50 mm lång ytskada, där runor kan ha varit inskurna.\" The bone is said to carry possibly \"två olika inskrifter på en och samma sida\", with \"Inskrift 1: ? era?nae ×\" and \"Inskrift 2: ?kiþ\". p. 35: \"Tecken 1 i inskrift 2 kan uppfattas som en k-runa med en kort och mycket lågt placerad bistav. Tecken 3 i samma inskrift kan formellt förstås som ett kortkvist-s eller en mycket kort i-runa.\" and \"Varken inskrift 1 eller inskrift 2 ger någon språkligt begriplig mening.\" (2) Newer digital SRI edition: Runristade lösföremål från Sigtuna, 'Sl 92 Sigtuna, Kv. Professorn 1', author Helmer Gustavson, contact Magnus Källström, RAÄ, version 0.3 (2025-02-06), pp. 1–3. It now reads \"Inskrift B: -k-þ\". On sign 9: \"Tecken 9 som inleder inskrift B består av en tydligt skuren lodrät stav. Från dess nedre hälft är ett kort streck skuret snett uppåt höger. Det kan uppfattas som en k-runa med en lågt ansatt bistav.\" On sign 11: \"Runa 11 kan läsas om ett kortkvist-s, knappast som en i-runa med kort huvudstav.\" Conclusion: \"Varken inskrift A eller B tycks ge en språkligt begriplig mening.\" Neither edition proposes any word.",
+     "sources_checked": [
+      "Rundata 3.1 record (refs: Sl 92; http://urn.nb.no/URN:NBN:no-44958)",
+      "RAÄ Runor 2020 harvest record (alt signa U Sl92 / S 92; note 'Två olika inskrifter ristade över varandra')",
+      "Nytt om runer 15 (2000, publ. 2001), pp. 34–35, PDF from arild-hauge.com, checked against rendered page images",
+      "RAÄ digital edition 'Runristade lösföremål från Sigtuna', Sl 92, version 0.3 (2025-02-06), https://www.raa.se/app/uploads/2025/02/Sl-92-Sigtuna-Kv.-Professorn-1-0.3.pdf",
+      "Wikström et al. 2021 (Morr 63), p. 232, is cited by the digital edition for dating only; not consulted",
+      "Live local API /api/textmodel/U NOR2000;34B (textmodel-19, fold, 2026-10-22)"
+     ],
+     "traces": "The position the model fills is not empty. Both editions describe a carved sign there. NOR 15 shows '?' and says it can be taken as a k with a short, very low branch. The 2025 edition says it is a \"tydligt skuren lodrät stav\" with a short stroke from its lower half, possibly a k. Rundata's '-' therefore marks an uncertain sign, not a lost rune. The 2025 edition also reads the third sign as short-twig s, \"knappast som en i-runa\". The model reads that sign as i/e in skeþ. To the left lies an extensive surface damage of about 50 mm, possibly burnt (2025 edition), \"där ytterligare runor kan ha funnits\". So both the number of lost runes and where the inscription starts are uncertain.",
+     "dividers_matter": "Partly. The proposed word takes all of inscription B (four signs, no internal dividers), so word division inside the group is not the issue. However, the model's reading '§hæræinna e skeþ' joins inscription A (which ends in a × divider) with inscription B. Both editions say these are two separate inscriptions with different reading directions, B cut later and over A. In addition, the 50 mm damage to the left means the true start of inscription B is unknown.",
+     "assessment": "Weak, and contradicted by the edition. The gap the model fills with s is, according to both editions, a clearly carved stave that may be a k. The newest edition reads the model's 'i' as an s. Both editions conclude that neither inscription gives linguistic sense. The object is a rib bone, not a runestone. The live fold-model run gives skeþ a calibrated p of only 0.571 (p_model 0.904), against 0.887 in the batch candidate file. The proposal is not supported. Confirmation would need an epigraphic case that sign 9 is not a k, which the published photos (Bengt A. Lundberg 2000) and the 2025 description do not suggest."
+    }
+   ],
+   "photo": "No Commons photo found (Wikidata P18 and Commons search for 'U NOR2000;34B' / 'U NOR2000;34' / 'Sigtuna runben' returned nothing). RAÄ Kulturmiljöbild has photos by Bengt A. Lundberg (2000), linked from Runor: kulturarvsdata.se/raa/kmb/16000300028518–28522. The record for 16000300028518, 'SL0092 Ben, revben med runor', gives byline Lundberg, Bengt A, media licence CC BY 4.0. It is not on Commons. The same photos appear as Fig. 1–2 in the 2025 digital edition.",
+   "scan": "No. src/scan_sources.lookup('U NOR2000;34B') returns None; no Zenodo series covers it.",
+   "stone_notes": "Not a runestone: a cattle rib bone (Sl 92) with two overlapping inscriptions. Under the object-type rule it should not be in the runestone gap list, or should be reported separately. The 2025 digital edition revises both inscriptions (A 'nera-nae x', B '-k-þ') compared with Rundata 3.1 ('-era-nae × ¶ -kiþ'). Rundata is out of date here, and the model works on the outdated i. Dating: c. 1075–1090 (Wikström et al. 2021, cited in the 2025 edition). Files: /Volumes/2TB/cache/luckor-del3/pdf/nor15.pdf, /Volumes/2TB/cache/luckor-del3/pdf/Sl-92.pdf, /Volumes/2TB/cache/luckor-del3/img/nor15-34.png, /Volumes/2TB/cache/luckor-del3/img/nor15-35.png, /Volumes/2TB/cache/luckor-del3/tm_U20NOR20003B34B.json",
+   "verify": [
+    {
+     "signum": "U NOR2000;34B",
+     "word": "skeþ",
+     "claim_holds": true,
+     "corrected_status": "discusses_without_proposal",
+     "reason": "I verified both editions verbatim myself. NOR 15 p. 34 (text and page image): \"Till vänster om runorna finns en ca 50 mm lång ytskada, där runor kan ha varit inskurna\" and \"Inskrift 2: ?kiþ\". The drawing on that page shows the damaged area next to inscription 2. NOR 15 p. 35: \"Tecken 1 i inskrift 2 kan uppfattas som en k-runa med en kort och mycket lågt placerad bistav. Tecken 3 i samma inskrift kan formellt förstås som ett kortkvist-s eller en mycket kort i-runa.\" and \"Varken inskrift 1 eller inskrift 2 ger någon språkligt begriplig mening.\" The RAÄ digital edition Sl 92, version 0.3 (2025-02-06), is still the current version linked from the RAÄ Sigtuna page. It reads \"Inskrift B: -k-þ\". It says sign 9 \"består av en tydligt skuren lodrät stav. Från dess nedre hälft är ett kort streck skuret snett uppåt höger. Det kan uppfattas som en k-runa med en lågt ansatt bistav\". It says \"Runa 11 kan läsas om ett kortkvist-s, knappast som en i-runa med kort huvudstav\", and concludes \"Varken inskrift A eller B tycks ge en språkligt begriplig mening.\" NOR 16 (2003) mentions only other Professorn 1/4 finds (Sl 97, Sl 100) and has no further discussion of Sl 92. Rundata's translation_en is '... ...'. No source proposes skeþ or any other word. The literature in fact goes against the proposal. The model fills sign 9 with s, but both editions describe a carved stave, possibly k. The model also takes sign 11 as i, which the 2025 edition calls knappast possible. The status could be sharpened to 'discusses_without_proposal, edition contradicts the fill'. Live fold run: skeþ p 0.5707 (tm_U20NOR20003B34B.json), against 0.887 in the batch file. This matches the finding.",
+     "extra_sources": "NOR 16 (2001, publ. 2003), pp. 23–24, Runverket report on Professorn 1/4 finds: nothing on Sl 92. Current RAÄ link checked: raa.se/app/uploads/2025/02/Sl-92-Sigtuna-Kv.-Professorn-1-0.3.pdf (still 0.3)."
+    }
+   ]
+  },
+  {
+   "signum": "U 1180",
+   "place": "Åby, Östervåla sn, Heby (Uppland, Våla hd). Runestone of light red sandstone, moved in 1940 to the edge of the road Östervåla kyrka–Ullfors.",
+   "gaps": [
+    {
+     "carved": "r-sisRainþnsnskna[þi]aia[s]kra (Rundata: 'hi : r-sisRainþnsnskna[þi]aia[s]kra : irþ[e](o)þiR-nosknlisuisi'; the gap is the second sign)",
+     "word": "risti",
+     "p": 0.933,
+     "word_kind": "formula_or_function_word",
+     "literature_status": "discusses_without_proposal",
+     "literature": "SRI 9 (Upplands runinskrifter 4, Wessén & Jansson 1953–58), U 1180, pp. 670–672. SRI gives no transliteration of its own (\"De runliknande tecknens utseende framgår av pl. 159\") and concludes: \"U 1180 ger oss ytterligare ett exempel på inskrifter, som icke ha någon språklig innebörd.\" It quotes v. Friesen (Upplands runstenar 1913) saying the inscription, \"där flertalet tecken dock äro verkliga runor, saknar ... mening och sammanhang\", and Bureus, who called the signs \"Ignoratæ Runæ\". SRI also quotes older readings that put a sign at the position the model fills. Liljegren (after Bautil): \"ai. rösisöainþnsnsmnanias ...\". C. Säve: \"AI. RʀSISʀAI AÞNSNSMNANIAS...\", where ʀ stands for the stupmaðr, \"uttalad som r eller ö\". Both older readings thus have ö/ʀ, not i, in second position. Rundata's transliteration cites '$=Thompson 1972:527' and is flagged as a new reading. That source (C. W. Thompson 1972) could not be reached: a web search found only his Studies in Upplandic Runography (1975), and no digitised copy.",
+     "sources_checked": [
+      "Rundata 3.1 record (note 'Nonsensinskrift, runor och runliknande tecken, jämför U 1178 och U 1179'; refs '$=Thompson 1972:527; $=Bureus (F a 10:2)')",
+      "RAÄ Runor 2020 harvest record (same reading, normalisation '… … …')",
+      "SRI 9 (Upplands runinskrifter 4), häfte 3, pp. 670–672: https://www.raa.se/runinskrifter/sri_uppland_b09_h03_text_2.pdf, text extracted and page 671 checked as an image",
+      "SRI 9 pl. 159 (photo plate): not downloaded",
+      "Thompson 1972: not reachable (web search only)",
+      "Live local API /api/textmodel/U 1180 (textmodel-19, fold, 2026-10-22)"
+     ],
+     "traces": "SRI: \"Ristningsytan är upptill vittrad, varför linjerna där äro grunda. Nedtill är ristningen djup och väl bevarad.\" SRI does not say where in the band the sign in question stands, and does not describe it. Rundata marks it '-' (lost or unreadable). The older readings (Bautil woodcut via Liljegren; Säve) recorded a ʀ/ö sign there. The model fills i and reads the carved 'risi' as risti. The t of risti is not carved, so the word is accepted only through the model's tolerance for a missing rune.",
+     "dividers_matter": "Yes, fully. Apart from 'hi :' at the start, the 26-sign group 'r-sisRainþnsnskna[þi]aia[s]kra' has no dividers. The model chooses its own boundary after 'risi' and then segments the rest into 'saR æinn þann sun saknaði a æs gærva'. The proposal exists only within that self-chosen segmentation of a sequence the editors regard as meaningless.",
+     "assessment": "Weak. The literature classes U 1180 as a nonsense inscription with runes and rune-like signs (SRI, v. Friesen, Rundata), part of a local group with U 1178 and U 1179. SRI explicitly says it has no linguistic meaning. The 93 % only means that, inside the model's segmentation, risti is the best fit for 'r?si'. That segmentation produces an obviously incoherent reading ('her risti saR æin þann sun saknaði a æs gærva er þjóðir en <unk> liðs visi', p_reading 0.41). Older recordings had ʀ/ö, not i, in this position. risti is a formula word any runologist would guess on a real memorial; on a nonsense inscription, that is exactly what the model is biased to find. The live fold run gives 0.866. It should not be presented as a filled gap."
+    }
+   ],
+   "photo": "Yes. Wikidata P18: 'Upplands runinskrifter 1180.jpg' by Uwezi, CC BY-SA 4.0 (https://commons.wikimedia.org/wiki/File:Upplands_runinskrifter_1180.jpg). Also on Commons: 'Bautil 1088 - U 1180.png' (Bautil woodcut, uploaded by Johan Göransson, CC0).",
+   "scan": "No. src/scan_sources.lookup('U 1180') returns None (U 1178 and U 1179 also have none); no Zenodo series in scan_sources.py covers it.",
+   "stone_notes": "The only true runestone of the three, but Rundata, Runor and SRI 9 all call it a nonsense inscription with runes and rune-like signs, comparable to U 1178/U 1179. SRI pp. 670–672 gives no reading of its own. Rundata's transliteration is a 'new reading' credited to Thompson 1972, which could not be checked. Note: all three objects in this batch are, by their editions, texts without linguistic meaning, and two are not runestones. They look like a systematic weakness of the candidate filter (Rundata's normalisation '...' for whole nonsense texts makes them count as 'open gaps'). It would be worth excluding records whose note says 'Nonsensinskrift' or 'ingen språklig mening', and non-runestone objects, before writing about filled gaps. Files: /Volumes/2TB/cache/luckor-del3/pdf/sri_uppland_b09_h03_text_2.pdf, /Volumes/2TB/cache/luckor-del3/pdf/b09h03_2.txt, /Volumes/2TB/cache/luckor-del3/img/u1180-40.png, /Volumes/2TB/cache/luckor-del3/tm_U201180.json",
+   "verify": [
+    {
+     "signum": "U 1180",
+     "word": "risti",
+     "claim_holds": true,
+     "corrected_status": "discusses_without_proposal",
+     "reason": "I verified the SRI 9 quotes myself in the text extract (b09h03_2.txt) and in the page image of p. 671. They are: \"Ristningsytan är upptill vittrad, varför linjerna där äro grunda. Nedtill är ristningen djup och väl bevarad. De runliknande tecknens utseende framgår av pl. 159.\" and \"Bureus kallar tecknen »Ignoratæ Runæ»\". Liljegren after Bautil: \"ai. rösisöainþnsnsmnanias ... askra: ibþaoþiRþno sknlis visi?\". C. Säve (stupmaðr \"uttalad som r eller ö, tecknas här med ʀ\"): \"AI. RʀSISʀAI AÞNSNSMNANIAS...\". p. 671: \"U 1180 ger oss ytterligare ett exempel på inskrifter, som icke ha någon språklig innebörd\". p. 672: v. Friesen, \"där flertalet tecken dock äro verkliga runor, saknar ... mening och sammanhang\". The older readings put ö/ʀ in the second position, not i, as the finding says. Rundata 3.1 has normalisation and translation_en '... ... ...', so there is no restoration in the translation field. The note is 'Nonsensinskrift, runor och runliknande tecken'. Runor 2020 has the same reading and '… … …'. U 1180 is not in the RAÄ Uppland supplement. Two sources remain unverified. (1) Thompson 1972:527 (Rundata's source for the transliteration): two web searches found only Thompson's 1975 book, so the 1972 work and its content could not be reached. (2) Bianchi 2010, Runor som resurs (Runrön 20, DiVA diva2:311050), is cited in Rundata's U 1179 note (p. 193), so it may discuss this Östervåla group. curl to www/uu.diva-portal.org failed with an SSL_ERROR_SYSCALL / empty reply, and WebFetch failed with 'Socket is closed'. Neither is likely to propose risti for an inscription both class as non-lexical, but I could not confirm that. Model check: batch reading 'her risti saR æin þann sun saknaði ...', p_reading 0.412. Live fold run: risti p 0.8663, from carved 'risi'.",
+     "extra_sources": "Tried but could not reach: Thompson 1972 (web searches return only Studies in Upplandic Runography, 1975); Bianchi 2010 Runor som resurs, DiVA diva2:311050 (TLS failure from this machine and WebFetch socket closed). Checked with nothing found: RAÄ 'Supplement till Upplands runinskrifter' list; Rundata translation_en; Runor 2020 record (reference 'P' only). Page-image crop: /Volumes/2TB/cache/luckor-del3/skeptic3/img/u1180_671_bottom.png"
+    }
+   ]
+  },
+  {
+   "signum": "Sm 47",
+   "place": "Håringe, Bolmsö sn, Västbo hd, Småland (Ljungby kommun)",
+   "gaps": [
+    {
+     "carved": "baiþ-",
+     "word": "þikra",
+     "p": 0.998,
+     "word_kind": "other_content_word",
+     "literature_status": "discusses_without_proposal",
+     "literature": "Kinander, Smålands runinskrifter (SRI 4), Sm 47, pp. 147–149 (Riksantikvarieämbetet PDF sri_smaland_b04_h02_text_1, checked against the page image). Inscription printed as \"baiþ- | kṛak | - Rr -\" (p. 148). On the gap rune: \"Av runan 5 kan man som ganska säker notera en hst. Till höger om denna synas fåror, som likna en b-bst, sannolikt ej huggna. Palmgren har ett streckat b, Låftman b.\" (p. 148). On the whole text: \"Runorna äro fördelade på tre rader, två vid den ena sidan (nr 1–9), en vid den andra (nr 10–13). De ge ingen sammanhängande inskrift med någon mening i.\" (p. 148); \"Det hela är mycket osäkert.\" (p. 149). On dating: \"Inskriften ger inga säkra hållpunkter för en datering. Enligt S. Gardell är stenen en typisk missionshäll från 1100-talet.\" (p. 149). Older readers: Hilfeling read the next row as \"huk\" (p. 148), and a tradition reported by Sjöborg read \"Hok och Rhin\" = Håkan Ring (p. 148). Rundata 3.1 and RAÄ Runor 2020 give the reading \"baiþ- ¶ k(r)ak ¶ -Rr-\" with normalisation \"... ... ...\" (no interpretation). Their note says: \"Kan vara sentida, se Kronobergsboken 2008:212f.\" Runor dates it \"V/M\" with \"Eller sentida?\". No source proposes þikra or any other word for runes 1–5.",
+     "sources_checked": [
+      "Rundata 3.1 (api.rundata store): transliteration, normalisation, note",
+      "RAÄ Runor 2020 harvest (data/raa/runor_2020.json)",
+      "Kinander, Smålands runinskrifter (SRI 4) h. 2 pp. 147–149, raa.se PDF sri_smaland_b04_h02_text_1.pdf, text and page images",
+      "Rundata normalisations searched for þikra (found only as the uninterpreted sequence <þikra> on Ög 60)",
+      "Kronobergsboken 2008:212f: NOT reached (web search found no online copy)"
+     ],
+     "traces": "SRI 4 p. 148: in the gap (rune 5) a main staff is \"ganska säker\". To its right are furrows that look like a b-branch, \"sannolikt ej huggna\". Palmgren drew a dotted b and Låftman read b. In Rundata and Runor the gap is one lost rune ('-'). The model's fill 'i' (a bare staff) is compatible with the staff Kinander accepts, while the older readers Palmgren and Låftman saw b. The whole carving is weathered: rune 2 is uncertain, rune 7 is \"osäkert\", and rune 10 and the last rune are only faint vertical strokes.",
+     "dividers_matter": "Yes, decisively. There are no dividers. The text stands in three separate rows on the two short sides of a slab (rows 1–9 on one side, 10–13 on the other; Rundata marks the row breaks with '¶'). The model's reading 'pai þikra gæiRrøð' runs straight across those breaks: þikra joins the end of row 1 (þ + the filled rune) to the start of row 2 (kra), and gæiRrøð joins the last rune of row 2 to the row on the opposite short side. The proposal exists only if the rows are read as one continuous text, which Kinander says they are not.",
+     "assessment": "Very weak, despite p = 0.998. The 'word' þikra is not an attested Old Norse word. It occurs in Rundata only as the uninterpreted sequence <þikra> on Ög 60, so the model is matching one unexplained hapax. The reading crosses row breaks and the two short sides of the slab. The edition says the runes give no coherent text. Rundata and Kinander/Gardell question whether the slab is Viking Age at all: it may be modern or a 12th-century grave slab. The only thing the model has right is that a single staff fits the trace. This should be removed from the candidate list. If anything, it is an example of the segmentation weakness, and it calls for a filter that excludes medieval or possibly modern objects and readings that cross row breaks."
+    }
+   ],
+   "photo": "none found: no Wikidata P18 for Sm 47; Commons search for 'Sm 47', 'Håringe Bolmsö' and 'Sm 47 runsten' gave nothing relevant (only an unrelated coat of arms); category 'Runestones in Ljungby Municipality' contains only 'Smålands runinskrifter 40.png'. SRI 4 reproduces Hilfeling's drawing (fig. 23, p. 148) and Sjöborg's site drawing (fig. 24, p. 149) — not free photos.",
+   "scan": "none: src/scan_sources.py lookup('Sm 47') returns None (not in any listed Zenodo CC BY series).",
+   "stone_notes": "Object: a rectangular granite slab (230 × 162 cm) with a frame and crosses, L 1669. Rundata and Runor date it 'V/M eller sentida?' and note 'Kan vara sentida'. Gardell (cited in SRI 4 p. 149) calls it a typical 'missionshäll från 1100-talet'. It probably fails the runestones-only default (object-types rule) and is doubtful as Viking-age material.",
+   "verify": [
+    {
+     "signum": "Sm 47",
+     "word": "þikra",
+     "claim_holds": true,
+     "corrected_status": "discusses_without_proposal",
+     "reason": "I checked the quotes myself in sri_smaland_b04_h02_text_1.txt, Kinander, Smålands runinskrifter (SRI 4) h. 2. They are correct. p. 148: the inscription is 'baiþ- [krak] - Rr -'; 'De ge ingen sammanhängande inskrift med någon mening i'; 'Av runan 5 kan man som ganska säker notera en hst. Till höger om denna synas fåror, som likna en b-bst, sannolikt ej huggna. Palmgren har ett streckat b, Låftman b.'; Hilfeling 'läser hela ordet huk'; the tradition 'Hok och Rhin'. p. 149: 'Det hela är mycket osäkert.' and 'Enligt S. Gardell är stenen en typisk missionshäll från 1100-talet.' Rundata 3.1 and Runor 2020 give normalisation '... ... ...' and translation_en '...', with the note 'Kan vara sentida, se Kronobergsboken 2008:212f.' No source proposes þikra or any other word. In Rundata, þikra occurs only as the uninterpreted <þikra> on Ög 60. textgaps.json confirms the model's reading 'pai þikra gæiRrøð' (p_reading 0.527), which crosses the row breaks. One correction: Rundata's object field for Sm 47 is 'runsten', not grave slab. An object-type filter alone would therefore not drop it. Excluding it needs the dating ('V/M eller sentida?') or the sources below. I could not reach Kronobergsboken 2008:212f either; a web search found no online copy.",
+     "extra_sources": "(1) RAÄ heritage register (FMIS/KMR) L1954:1964 (Runor kmrId 05a351e0-4244-4d67-beb5-5d6cfee55fae), fetched from kulturarvsdata.se/raa/lamning/xml/...: itemLabel 'Kung Rings sten, Ristning, medeltid/historisk tid'. RAÄ classifies the carving as medieval or historical, not as a Viking-age runestone. (2) Martin Hansson, 'Visingsö och Bolmsö – öar i fokus', in Visingsöartiklar (Jönköpings läns museum rapport 42, 2000), p. 133 (lucris.lub.lu.se/ws/files/4509505/3130612.pdf): 'Runstenar saknas på Bolmsö'. Both support dropping it as Viking-age material. Neither proposes a reading."
+    }
+   ]
+  },
+  {
+   "signum": "Ög 115",
+   "place": "Ånväga, Skeda sn, Hanekinds hd, Östergötland (Linköping)",
+   "gaps": [
+    {
+     "carved": "fR--",
+     "word": "fyrir",
+     "p": 0.963,
+     "word_kind": "formula_or_function_word",
+     "literature_status": "discusses_without_proposal",
+     "literature": "Brate, Östergötlands runinskrifter (SRI 2), Ög 115, p. 113 (raa.se PDF sri_ostergotland_b02_h02_text, PDF page 17, checked against the page image). \"Ristningen är mycket förvittrad.\" Among the certain items Brate lists: \"5) 20 cm därifrån kolon, efter 5 cm följt av f, 6) 12 cm från staven av f vänstra hälften av ᛦ R; 7) 26 cm från ᛦ kolon\". He concludes: \"De otydliga runor, som dessutom skönjas, hava icke kunnat med någon säkerhet fastställas, varför ingen tolkning kan givas.\" He also reports an older reading: \"C. F. Nordenskjöld läser: Isburn : risþi : stin : eftiR : I—k, vilket skulle betyda: Åsbjörn reste stenen efter I—.\" Brate does not adopt it. Nordenskjöld's reading contains a different preposition (eftiR), but neither Brate nor Rundata assigns it to the f(R)-- group. Rundata 3.1 and Runor 2020: \"...s-- : f(R)-- : ...þa--- : ...\", normalisation \"... ... ... ...\" (no interpretation). No source proposes fyrir.",
+     "sources_checked": [
+      "Rundata 3.1 (api.rundata store)",
+      "RAÄ Runor 2020 harvest",
+      "Brate, Östergötlands runinskrifter (SRI 2) h. 2 p. 113, raa.se PDF sri_ostergotland_b02_h02_text.pdf, text and page image",
+      "Rundata transliterations searched for the spelling fRri (only N 235, medieval Norway)",
+      "Nordenskjöld, Östergötl. fornminnesför. tidskr. 1 s. 24 and Reseberättelse 1870: NOT consulted directly, known only through Brate's quotation"
+     ],
+     "traces": "SRI 2 p. 113: f is certain. Of the second rune only 'vänstra hälften' of R is visible, so Rundata marks it uncertain, (R). After that come 26 cm up to the next colon, with no runes identified (Rundata: two lost runes). Brate says other indistinct runes 'skönjas' but could not be determined. The whole stone is 'mycket förvittrad'.",
+     "dividers_matter": "Yes, but in the proposal's favour. The group is bounded by colons on both sides (': f(R)-- :'), so the word division is given by the carver and the gap must be the end of a one-word group. The concern is the spelling, not the segmentation. The model's fill 'ri' gives fRri, a spelling of fyrir that occurs in Rundata only on N 235 (medieval Norway). The R itself is only half visible.",
+     "assessment": "This is a formula word inside dividers, so the model is predicting the kind of function word that any runologist would consider. The edition gives no reading and nothing that supports or contradicts fyrir. The proposal rests on a half-visible R, and the resulting spelling fRri is very rare in the corpus. Nordenskjöld's older reading has the preposition eftiR in the text; Brate rejected that reading as a whole, but it is a competing preposition. The proposal could be confirmed or refuted on a raking-light photo or scan of the 26 cm after the R: fyrir needs two runes, r and i. Until then it is a plausible guess at a function word, not a finding."
+    }
+   ],
+   "photo": "File:Ostergotland115.JPG (Wikimedia Commons, via Wikidata P18), author Skvattram, Public domain; https://commons.wikimedia.org/wiki/File:Ostergotland115.JPG (Commons description: 'runestone (not readable) south of Linköping')",
+   "scan": "none: src/scan_sources.py lookup('Ög 115') returns None (not in any listed Zenodo series)",
+   "stone_notes": "Granite runestone with an Fp-style serpent band, standing north of Ånväga; Runor dates it 1010–1050. A genuine Viking-age runestone, so the object-types rule is fine. Brate gives no interpretation. The neighbouring Ög 116 at the same place has no legible runes.",
+   "verify": [
+    {
+     "signum": "Ög 115",
+     "word": "fyrir",
+     "claim_holds": true,
+     "corrected_status": "discusses_without_proposal",
+     "reason": "I checked Brate, Östergötlands runinskrifter (SRI 2) p. 113 against the page image (PDF page 17 of sri_ostergotland_b02_h02_text.pdf). It says 'Ristningen är mycket förvittrad.'; '5) 20 cm därifrån kolon, efter 5 cm följt av f, 6) 12 cm från staven av f vänstra hälften av ᛦ R; 7) 26 cm från ᛦ kolon'; 'De otydliga runor, som dessutom skönjas, hava icke kunnat med någon säkerhet fastställas, varför ingen tolkning kan givas.' Nordenskjöld's reading is printed exactly as 'Isburn : risþi : stin : eftiR : I—k', 'Åsbjörn reste stenen efter I—.' Rundata and Runor give '...s-- : f(R)-- : ...þa--- : ...', with normalisation and translation all '...'. Nobody proposes fyrir. Two small corrections. First, Rundata dates N 235 (Bore kirke, gravhäll(?)), the only other fRri, as 'V', not medieval. Its 'fyrir Bótulf[smessu]' suggests a medieval date, but the database does not say so. Second, Brate puts 12 cm between the f staff and the half R, while his other neighbouring runes are 7–8 cm apart. Rundata's 'f(R)--', with f and R adjacent and exactly two lost runes, is therefore an editorial count, and the model's rare spelling fRri depends on it. A lost rune between f and R (e.g. the common spelling fiRi(R)) cannot be excluded from the printed measurements.",
+     "extra_sources": "RAÄ heritage register L2011:9855 (Skeda 7:1; kmrId 08dcdd98-4757-4353-a6ea-b81c110aa3b3), fetched from kulturarvsdata.se/raa/lamning/xml/...: 'Runhöjd 8-10 cm. Översättning enligt Nordenskjöld 1870-71: \"Äsbjörn reste stenen efter I-\".' The register still carries Nordenskjöld's 'efter' reading, a competing preposition, though not placed on the f(R)-- group. runkartan.se repeats only the Rundata reading. A web search for 'Ög 115' Ånväga found nothing newer than SRI 2."
+    }
+   ]
+  },
+  {
+   "signum": "Ån Fv1908;298A",
+   "place": "Rossvik, Nora sn, Ångermanland (Kramfors); SHM 13575, on deposit at Murberget, Härnösand",
+   "gaps": [
+    {
+     "carved": "ok-þ",
+     "word": "guð",
+     "p": 0.928,
+     "word_kind": "formula_or_function_word",
+     "literature_status": "silent",
+     "literature": "Fornvännen 1908 p. 298 ('Tillväxten under år 1908', the SHM acquisitions list; read from the mirror https://www.arild-hauge.com/fornvannen.se/1908_201.pdf, PDF page 99): \"13.575. Ångermanland, Nora sn. Rossvik. 2 skifferbitar med runinskrifter, den ena har formen af en liten knif; f. i jord hemkörd till gården från en backe.\" That is the whole entry: no transliteration, no reading. Rundata cites this plus \"$=Inventariehandlingar på SHM\" (unpublished museum inventory records, not reached). So the transliteration 'ok-þ' has no published source we could check. Rundata and Runor give the normalisation '...'. The sister piece Ån Fv1908;298B reads 'n-þ'. No source proposes guð or any other word.",
+     "sources_checked": [
+      "Rundata 3.1 (api.rundata store) and rundata.info/inscription/an-fv1908-298a",
+      "RAÄ Runor 2020 harvest",
+      "Fornvännen 1908 p. 298: Rundata's URL fornvannen.se/pdf/1900talet/1908_201c.pdf returned 404 (http) or no connection (https, also www.); read instead at arild-hauge.com/fornvannen.se/1908_201.pdf",
+      "SHM inventory records (Inventariehandlingar): not online, NOT reached; web search for 'SHM 13575 Rossvik' found nothing",
+      "Rundata transliterations searched: kuþ/guþ spellings common (guþ 75×)"
+     ],
+     "traces": "No source describes traces. Fornvännen 1908 gives no reading at all. Rundata and Runor record one lost rune between k and þ ('ok-þ'), without comment on damage.",
+     "dividers_matter": "Yes, decisively. The carved text has no dividers. The model's reading 'a guð' divides 'ok-þ' as o | k[u]þ, i.e. it breaks up the most obvious sequence, the conjunction 'ok' ('and'), and makes the k the first rune of guð. Its alternatives (at 0.03, ið 0.019) show that the competing segmentations get very little weight. If the sequence is ok + a two-rune remnant, guð disappears.",
+     "assessment": "Weak as a research claim. The piece is a small slate fragment, not a runestone. The only reading ('ok-þ') comes from unpublished SHM inventory records we could not see. No edition discusses the gap. The proposal depends entirely on segmenting the sequence against the obvious 'ok'. guð is a common word on runestones, but nothing on this object (no cross, no prayer formula is recorded) points to that context. To test it, one would need the object itself or a photo at SHM/Murberget. As it stands it should not be presented as a filled gap. Under the runestones-only rule it arguably should not be in the candidate list."
+    }
+   ],
+   "photo": "none found: no Wikidata P18 for Ån Fv1908;298A; Commons search for the signum and 'Rossvik Nora' gave nothing.",
+   "scan": "none: src/scan_sources.py lookup('Ån Fv1908;298A') returns None.",
+   "stone_notes": "Object type in Rundata is 'skifferbit' (one of two slate pieces; the other, 298B, is knife-shaped), dated 'V?'. It is NOT a runestone, so it falls outside the default runestones-only rule (object-types rule) and should be reported separately or dropped from the candidate list. The reading is unpublished and comes from SHM inventory records.",
+   "verify": [
+    {
+     "signum": "Ån Fv1908;298A",
+     "word": "guð",
+     "claim_holds": true,
+     "corrected_status": "silent",
+     "reason": "I checked Fornvännen 1908 p. 298 in fv1908_201.txt (page header '298 Statens Historiska Museum och K. Myntkabinettet.'). The entry reads in full: '13.575. Ångermanland, Nora sn. Rossvik. 2 skifferbitar med runinskrifter, den ena har formen af en liten knif; f. i jord hemkörd till gården från en backe.' It gives no transliteration or reading. Rundata (object 'skifferbit', new_reading flag set) and the full Runor record (data/cache/runor/be33f0b4-....json) give 'ok-þ' with interpretation '…' and translation '…'. The reference is only Fornvännen plus '$=Inventariehandlingar på SHM'. The model's reading 'a guð' (alternatives at 0.03, ið 0.019) is confirmed in textgaps.json. Minor correction: Rundata's URL http://fornvannen.se/pdf/1900talet/1908_201c.pdf now answers 302, redirecting to http://kulturarvsdata.se/raa/fornvannen/html/1908_201c, not 404. https fails with a TLS error (curl exit 35). Still not reached: the SHM inventory records.",
+     "extra_sources": "K-samsök API (serviceOrganization=SHM, text=\"13575\"): a record 'Förvärv 13575' exists (kulturarvsdata.se/shm/accession/4446FDDB-8F52-4299-9E09-EBC1839CAEAE, acquired 1908). It has no description, reading or linked slate object. K-samsök SHM search for 'Rossvik' gave 5 unrelated hits (Sparre portraits, medal, seal). samlingar.shm.se search is JavaScript-only, so nothing could be retrieved. A web search for Rossvik/Nora/skifferbit/Murberget found only the Rundata page for 298B. No source proposes any word."
+    }
+   ]
+  },
+  {
+   "signum": "Öl 57",
+   "place": "Källa ödekyrka, Källa socken, Åkerbo hd, Borgholm (Öland). The gap part is lost; three small fragments found in 1960 (formerly Öl SvK128;288) are kept in the sacristy of Källa ödekyrka (SHM 29400:V:18).",
+   "gaps": [
+    {
+     "carved": "rn--a",
+     "word": "ræisa",
+     "p": 0.969,
+     "word_kind": "formula_or_function_word",
+     "literature_status": "discusses_without_proposal",
+     "literature": "SRI 1 (Ölands runinskrifter, Brate after Söderberg), p. 125, describing Rhezelius' 1634 drawing: \"vid den andra ormens stjärt med åtta runor, ... af hvilka de första äro tre stafvar, följda af ×, 4—5 ra, 6—7 oläsliga, 8 a.\" Rune 5 carries footnote 1, \"utskr.\" followed by a variant rune form, so Rhezelius' fair copy shows rune 5 differently. Brate also says the drawn runes \"utgör slutet af en inskrift\" (same page). Neither he nor anyone else proposes a word.\nKällström, M. 2020, \"En återuppstånden runsten från Källa ödekyrka på Öland (Öl 57)\", Futhark 9–10 (2018–2019): 179–191, DOI 10.33063/diva-401071. On p. 180 he writes that the fragment kept \"åtta runor i rundjurets svans, varav de flesta tycks ha varit mer eller mindre oläsliga, men där åtminstone × ra och en avslutande a-runa kunde urskiljas. Detta är vad som är känt av inskriften på Öl 57 och det är naturligtvis omöjligt att tolka.\" Using Wallman's drawings he joins Rhezelius' fragment to the Ahlqvist/Wallman fragment and the 1960 finds. On p. 189 he gives the whole text as \"…skar… [lit ×] ṛitạ [× stain × þị…--- + ra--a]\", normalised \"… lēt rētta stæin þe[nna] …\". The final ra--a is left uninterpreted.\nRunor 2020 (RAÄ) adopts that reading and normalisation, and the Rundata logbook 2014–2020 (Owe) has the same entry for Öl 57. Rundata 3.1, which the model reads, still has only \"[...--- + rn--a]\" with normalisation \"... ...\". Ljung 2016, vol. 2, cat. no. 140 (p. 94) repeats \"[…--- + rn--a]\", normalisation \"...\", with no comment.",
+     "sources_checked": [
+      "Rundata 3.1 record Öl 57 (local store)",
+      "Runor 2020 record Öl 57 (data/raa/runor_2020.json plus raw cache: references, sources)",
+      "SRI 1 Ölands runinskrifter, häfte 2, p. 125 (raa.se PDF sri_oland_b01_h02.pdf; page image checked)",
+      "SRI 1, Efterskrift pp. 128–131 (Källa group)",
+      "Källström 2020, Futhark 9–10: 179–191 (fetched via Wayback copy of the DiVA PDF diva2:1385971; DiVA itself refused TLS from this machine)",
+      "Ljung 2016, Under runristad häll vol. 2 (katalog), cat. nos. 139–142, pp. 93–95 (Wayback copy of su.diva-portal diva2:917543 FULLTEXT02)",
+      "Samnordisk runtextdatabas loggbok 2014–2020 (runforum.nordiska.uu.se)",
+      "KMR/FMIS record Källa 164 (kulturarvsdata jsonld)",
+      "K-blogg 2023-08-16 'Utmanande runor i ödekyrkan' (Källström)",
+      "Not read: Rhezelius F c 5 original (seen only as reproduced in Källström fig. 1); Boström 1969 (Sveriges kyrkor 128); Bruce Nilsson 1973 nos. 171–173 (UMI dissertation, not online); ATA Dnr 4022/71"
+     ],
+     "traces": "The gap is known only from Rhezelius' 1634 drawing of a fragment now lost. SRI 1 p. 125 calls runes 6–7 \"oläsliga\" (illegible). Källström p. 180 says most of the eight runes seem \"mer eller mindre oläsliga\" and that only × ra and a final a could be made out. No source describes the strokes in the two lost places, and nothing can be checked on the stone. The editions also disagree with Rundata 3.1 on the second carved rune: SRI, Källström and Runor read 'a' (ra--a), while Rundata 3.1 has 'n' (rn--a). The model's input is the Rundata 'rn--a', so its tolerance layer had to treat that n as an a.",
+     "dividers_matter": "Partly. A divider (+ in Rundata and Runor, × in Källström) stands before r, and the final a is the last rune of the inscription, so the five-rune span is bounded on both sides. Inside the span no dividers are recorded. The proposal assumes ra--a is one word; nothing in the drawing shows whether it is one word or two.",
+     "assessment": "Weak, despite the 96.9 %. The letter frame r-a-?-?-a matches ræisa, but four things count against relying on it. The only witness is a 17th-century drawing in which the two runes are illegible. The model's input carries the Rundata 3.1 'n', which the editions do not read. Källström's reconstruction (Futhark 9–10, pp. 186 and 189) shows that the same inscription already has the raising formula 'lit × rita × stain × þi…' before this point, and Brate and Källström agree that these runes end the inscription, where a second raising verb would be unexpected. The model scored the gap without that context, because Rundata 3.1 lacks it. Nobody can confirm or refute it on the stone, since that part is lost. A sensible next step is to rerun the model on the Runor 2020/Källström text (…lit × rita × stain × þi…--- + ra--a) and to re-examine Rhezelius' original drawing (KB F c 5) and the Bautil copy. Until then, treat it as a letter-pattern match, not a restoration."
+    }
+   ],
+   "photo": "Wikidata P18: none. Commons has 'ÖlNf Källa Ödekyrka (2 objekt) - KMB - 16000300014152.jpg' by Bengt A. Lundberg (Kulturmiljöbild, RAÄ), CC BY 2.5, https://commons.wikimedia.org/wiki/File:%C3%96lNf_K%C3%A4lla_%C3%96dekyrka_%282_objekt%29_-_KMB_-_16000300014152.jpg. It shows the fragments found in 1960, now counted as part of Öl 57 (\"Runstensfragment funna 1960. Två med passning.\"), but not the lost tail with the gap. Rhezelius' drawing of the gap part is reproduced in Källström 2020, fig. 1 (Futhark article CC BY; the photo is credited to Kungliga biblioteket).",
+   "scan": "None. src/scan_sources.py lists no Öland series (its Zenodo datasets cover Sö, Gs/U 1144, Hs, Vg, M, Ög/Sm grave monuments), and the gap part of the stone is lost, so no scan could show it.",
+   "stone_notes": "Rundata 3.1 (the app's data) is out of date for this stone. It keeps the 1960 fragments under Öl 56 references (SK128;288) and gives Öl 57 only as the lost fragment \"[...--- + rn--a]\". Runor 2020 and the Rundata logbook merge the fragments into Öl 57 after Källström 2020: \"…skar… [lit ×] (r)it(a) [× stain × þ(i)… …--- + ra--a]\", normalised \"… lét rétta stein þe[nna] … …\". Källström p. 189 suggests [Hū]skar[l] or Skāri for the name, as possibilities only. The Runor notes record traces of red paint on the fragment with (r)it(a) (ATA Dnr 4022/71). Rundata gives style Pr3–Pr4?, Ljung gives Pr 4?. BN = Bruce E. Nilsson 1973, The Runic Inscriptions of Öland (UMI), nos. 171–173 (the KMR record confirms BN 172–173 at p. 264).",
+   "verify": [
+    {
+     "signum": "Öl 57",
+     "word": "ræisa",
+     "claim_holds": true,
+     "corrected_status": "discusses_without_proposal",
+     "reason": "I checked every quote myself and all of them match. SRI 1 (Ölands runinskrifter, häfte 2) p. 125, from the page image: \"ormens stjärt med åtta runor, ... af hvilka de första äro tre stafvar, följda af ×, 4—5 ra, 6—7 oläsliga, 8 a.\" The same page says the runes are \"slutet af en inskrift\". Footnote 1 reads \"utskr.\" followed by a rune form. Källström 2020, Futhark 9–10, p. 180: \"varav de flesta tycks ha varit mer eller mindre oläsliga ... Detta är vad som är känt av inskriften på Öl 57 och det är naturligtvis omöjligt att tolka.\" He gives the combined reading on p. 186 and his edition on p. 189 (\"…skar… [lit ×] ṛitạ [× stain × þị…--- + ra--a]\", normalised \"… lēt rētta stæin þe[nna] …\"). His English summary on p. 191 also leaves ra--a uninterpreted. The Runor 2020 raw record, Rundata-net online and the Rundata logbook all leave the final segment unnormalised, and their English and Swedish translations ('… had this stone erected …' / '… lät uppresa denna sten …') contain no restoration. Ljung 2016 cat. no. 140 is on p. 94, as stated. I also searched further. Liljegren 1833, no. 1292, reads '... lit. rita, stai — ... sial ...', and no. 1567, which the finding does not mention, reads '— ..t iera.. —'. Per Källström p. 182, L 1567 copies Rhezelius' runes and turns the divider into an e. Neither number proposes a word. Svensk runbibliografi (riksarkivet.x-ref.se, Runsignum \"Öl 57\") lists only three works: Källström 2020, Nilsson 'The runic inscriptions of Öland' (dated 1975 there), and Brate/Söderberg 1900–06. Two small corrections. First, SRI footnote 1 shows that Rhezelius' fair copy (utskrift) has a different form for rune 5, so Rundata's 'n' probably comes from that copy. It is a variant witness, not simply a reading the editions lack. Second, Källström p. 188 quotes a pencil note (Svärdström, via Holmberg) saying that Öl 57 may contain fragments of two different stones. That weakens the duplicate-raising-verb argument somewhat, though it also leaves the gap unexplained. The one listed work I could not read is Nilsson 1973/75 (UMI dissertation, not online).",
+     "extra_sources": "Liljegren, Run-urkunder 1833, nos. 1292 and 1567 (local OCR /Volumes/2TB/cache/luckor-del3/skeptic/lilj.txt): no word proposed. Svensk runbibliografi search for Runsignum \"Öl 57\": 3 hits (Källström 2020; Nilsson 1975; Brate & Söderberg 1900–06). Rundata-net page rundata.info/inscription/ol-57/: same as Runor 2020, no restoration. Källström 2020 pp. 186, 188 and 191 (summary): ra--a left uninterpreted; Svärdström's 'two stones' note on p. 188. SRI 1 p. 125 footnote 1 (page image /Volumes/2TB/cache/luckor-del3/skeptic_ol/bot.png): fair-copy variant for rune 5."
+    }
+   ]
+  },
+  {
+   "signum": "Öl ATA4377/56A",
+   "place": "Hulterstads kyrka, Hulterstads socken, Möckleby hd, Mörbylånga (Öland); in the porch (vapenhuset). Found in the church in 1951 (Ljung 2016).",
+   "gaps": [
+    {
+     "carved": "u---kirkra",
+     "word": "ok",
+     "p": 0.958,
+     "word_kind": "formula_or_function_word",
+     "literature_status": "discusses_without_proposal",
+     "literature": "There is no printed edition with commentary. Rundata 3.1 and Runor 2020 give the reading \"…---m-a u---kirkra …- na-i…\", normalised \"… … … …\" (nothing interpreted). The Runor and Rundata note records a different reading: \"Owe läser: ...neimoas^u--ek-rkra--ua · (u)... (ATA Dnr 411-4568-1998)\". Ljung 2016, vol. 2, cat. no. 131 'Hulterstad 15' (p. 89) gives the Rundata transliteration, \"Normalisering: ...\", \"Anmärkningar: -\", \"Referens: ATA 4377/56; ATA 411-4568-1998\". The KMR record for Hulterstad 75 says only that a stone found in the church in 1951 may be one \"med inskriften: '...---m-a u---kirkra ...- na-i...'\". No source proposes any word for the gap.",
+     "sources_checked": [
+      "Rundata 3.1 record (local store)",
+      "Runor 2020 record plus raw cache (references 'Ljung131; BN 47'; source ATA)",
+      "Ljung 2016 vol. 2, cat. no. 131, p. 89 (Wayback copy of DiVA diva2:917543 FULLTEXT02)",
+      "Rundata logbook 2014–2020",
+      "KMR/FMIS record Hulterstad 75 (kulturarvsdata jsonld)",
+      "Commons KMB photo descriptions ÖlNf1951 Hulterstad",
+      "Not reachable: ATA Dnr 4377/56 and ATA Dnr 411-4568-1998 (Owe), unpublished archive reports with no online copy found; Bruce Nilsson 1973 no. 47 (UMI dissertation, not online); web search for the stone gave only rundata.info mirrors"
+     ],
+     "traces": "No source describes what is visible in the three lost places. The KMB photo description (Bengt A. Lundberg 1991) says \"Reliefhugget fragment funnet 1951. Texten är mycket nött och tolkning saknas för närvarande.\" Ljung 2016 records three fragments (67×33×6, 40×33×6, 16×15×6 cm), relief, \"Rest av zoomorf ornamentik\". The two readings differ inside and around the gap. Rundata has u - - - k i r k r a. Owe (1998) has a bind-rune s^u, then - - e k - r k r a: he reads an e in the third lost place, where the model puts r, and gives no i where Rundata has one.",
+     "dividers_matter": "Yes, decisively. No divider is recorded anywhere in 'u---kirkra', in Rundata or in Owe's reading. The model's fill k-a-r makes 'uk' a word (ok) and starts a new word with the remaining runes. Rundata's space before u is an editorial word division, and Owe reads that u as part of a bind-rune s^u, so u may not even begin a word. On spelling: SRI 1, Inledning p. 13 (Söderberg) states for the Öland inscriptions \"konjunktionen »och» skrifves alltid auk\". In Rundata's Öland transliterations the form auk occurs 44 times and uk 3 times (not checked whether all three are ok).",
+     "assessment": "Weak. The high word probability rests entirely on the model's own segmentation of a sequence without dividers. The word itself is the commonest function word and would add nothing to the content. The model's whole reading of the passage ('<unk> ok arngærðr gærva <unk> i') has only 65 % probability. The only other independent reading (Owe 1998) disagrees with the fill in the third lost place, and his bind-rune s^u makes a word-initial u uncertain. 'uk' is also a minority spelling of ok on Öland. Examining the stone or the CC BY 2.5 KMB photos for the lost places (k? a? r/e?) and for any divider before u would confirm or refute it, and so would reading Owe's report ATA Dnr 411-4568-1998."
+    }
+   ],
+   "photo": "Wikidata P18: none. Commons has KMB photos 'ÖlNf1951 Hulterstad - KMB - 16000300014056.jpg' (also …14057, …14058, …14059 and …14061) by Bengt A. Lundberg, 13 Aug 1991, CC BY 2.5, e.g. https://commons.wikimedia.org/wiki/File:%C3%96lNf1951_Hulterstad_-_KMB_-_16000300014056.jpg. Rundata's image link for this stone points to the ÖlNf1951 series. The KMR record notes that one of two stones found in 1951 may be this one, so check which fragment each photo shows.",
+   "scan": "None. There is no Öland series in src/scan_sources.py or the Zenodo datasets listed there.",
+   "stone_notes": "An inscription read only in archive reports. ATA Dnr 4377/56 is the original report and ATA Dnr 411-4568-1998 is Jan Owe's re-reading, both unpublished. BN 47 = Bruce E. Nilsson 1973, The Runic Inscriptions of Öland. Ljung 2016 calls it 'Hulterstad 15', classified 'Oklar', style '?', no paint traces. The sister fragment Öl ATA4377/56B is lost (\"Försvunnen efter 1995\").",
+   "verify": [
+    {
+     "signum": "Öl ATA4377/56A",
+     "word": "ok",
+     "claim_holds": true,
+     "corrected_status": "discusses_without_proposal",
+     "reason": "Verified in the sources. Rundata 3.1, the Runor 2020 raw record and Rundata-net online all read \"…---m-a u---kirkra …- na-i…\", leave the normalisation as dots, and give an empty translation ('…'). The note \"Owe läser: ...neimoas^u--ek-rkra--ua · (u)... (ATA Dnr 411-4568-1998)\" is present. Ljung 2016 cat. no. 131 'Hulterstad 15' is on p. 89 (the page footer reads 89), with \"Normalisering: ...\", \"Översättning: ...\", \"Anmärkningar: -\" and \"Referens: ATA 4377/56; ATA 411-4568-1998\". The KMR record says \"Nr. 19 eller 20 i listan kan vara den runsten som påträffades i kyrkan 1951 med inskriften: '...---m-a u---kirkra ...- na-i...'\". Svensk runbibliografi has one hit for Runsignum \"Öl ATA4377/56A\": Nilsson, The runic inscriptions of Öland, dated 1975 there, which is unreachable. A web search found only rundata.info and runkartan mirrors. No source proposes a word for the gap. The only reading inside the gap is Owe's: he reads e in the third lost place, while the model puts r there. The finding's alignment of that point and its 'auk is the Öland norm' argument are correct; SRI 1 Inledning p. 13 reads \"konjunktionen »och» skrifves alltid auk\". My own count of the Rundata Viking-age Öland transliterations gives about 43 auk against about 3 free-standing uk (Öl 43, Öl ATA3960/71, Öl Fv1976;96A). The finding's 44/3 is in the same range. The 'discusses' label is generous, since the only 'discussion' is Owe's alternative transliteration, but 'silent' would not change the conclusion. The ATA reports (4377/56; 411-4568-1998) and Nilsson are unread.",
+     "extra_sources": "Svensk runbibliografi search for Runsignum \"Öl ATA4377/56A\": 1 hit (Nilsson 1975, UMI dissertation, not online). Rundata-net page rundata.info/inscription/ol-ata4377-56a/: no normalisation or translation, only Owe's reading in the note. Web search for \"u---kirkra\" / \"Hulterstad 15\": only database mirrors."
+    }
+   ]
+  },
+  {
+   "signum": "Öl ATA4701/43",
+   "place": "Alböke kyrkogård, Alböke socken, Slättbo hd, Borgholm (Öland); RAÄ Alböke 48:1 (L1959:5017), set up in 1943 at the SE side of the church. Discovered in 1932 according to Runverket (KMR).",
+   "gaps": [
+    {
+     "carved": "-uk",
+     "word": "ok",
+     "p": 0.869,
+     "word_kind": "formula_or_function_word",
+     "literature_status": "silent",
+     "literature": "Rundata 3.1 and Runor 2020 give the reading \"…ur × -uk ak-u… … nuk abtiʀ × auþ… …\", normalised \"… … … … ok æftiʀ Auð[biorn](?) …\". The editors normalise only the later 'nuk' as ok and leave '-uk' as \"…\". The KMR record (Alböke 48:1) says: \"Överdelen borteroderad ... Inskriften lyder: '...och efter Öd(björn?)'. Inget nr i Ölands runinskrifter, men är nr 167 hos Bruce Nilsson\", and cites \"Nilsson, Bruce, 1973, The Runic Inscriptions of Öland, nr 167, s. 261.\" The stone is not in SRI 1, and not in Ljung 2016 (it is a standing runestone, not a grave monument). No source reached discusses the lost first rune of '-uk'.",
+     "sources_checked": [
+      "Rundata 3.1 record (local store)",
+      "Runor 2020 record plus raw cache (reference 'BN 167'; source ATA)",
+      "KMR/FMIS record Alböke 48:1 (kulturarvsdata jsonld)",
+      "Commons file metadata (KMB ÖlNf1932 Alböke; OlandATA4701snstr43.JPG)",
+      "Rundata logbook 2014–2020 (no entry)",
+      "Web search for Alböke / ATA4701/43 (only runkartan.se, which mirrors Rundata)",
+      "Not reachable: ATA Dnr 4701/43 (unpublished archive report, no online copy found); Bruce Nilsson 1973 no. 167, p. 261 (UMI dissertation, not online)"
+     ],
+     "traces": "No source describes the lost rune itself. KMR says \"Nederdelen av stenen täckt med två, intill varandra löpande runslingor. Överdelen borteroderad.\" The KMB photo description (Bengt A. Lundberg 1991) says \"Inskriften är mycket sliten. Den tydbara delen lyder: ..och efter Öd-..\".",
+     "dividers_matter": "Partly. A divider × stands directly before the gap ('…ur × -uk'), so the left edge of the word is marked on the stone. After 'uk' Rundata has only a space (editorial division) before 'ak-u', so the right edge is not marked by a divider. The proposal needs '-uk' to be a whole word. On spelling: the model's fill gives auk, the usual Öland form (SRI 1 p. 13: \"konjunktionen »och» skrifves alltid auk\"; 44 auk in Rundata's Öland transliterations). The same inscription's other ok, however, is transliterated 'nuk' by the editors.",
+     "assessment": "Moderate as a letter match, low in information. One lost rune before 'uk' after a divider fits ok well, and the editors already accept ok later in the same text. But the word is the commonest function word, the second alternative (lykak, 7.6 %) shows that the model is not certain, and the right word boundary is editorial. The model's full reading of the passage ('ór ok ok u ok æftiR auð') also reads the following 'ak-u' with tolerance. A look at the stone or at the public-domain and CC BY 2.5 photos for the lost rune before 'uk' (an a would confirm), and for any divider after k, would settle it."
+    }
+   ],
+   "photo": "Wikidata P18: 'OlandATA4701snstr43.JPG' by Skvattram (2009-07-04), public domain, https://commons.wikimedia.org/wiki/File:OlandATA4701snstr43.JPG. Commons also has KMB photos 'ÖlNf1932 Alböke - KMB - 16000300014008.jpg' to …14017 by Bengt A. Lundberg (1991), CC BY 2.5, in the category 'Ölands runinskrifter ATA4701/43'.",
+   "scan": "None. There is no Öland series in src/scan_sources.py or the Zenodo datasets listed there.",
+   "stone_notes": "Red-white limestone, 1.15 × 0.6 × 0.1 m (KMR). Rundata style 'Pr1 - Pr2? [Gräslund muntligt]', an early style for Öland. Only archive literature exists: ATA Dnr 4701/43, and BN 167 = Bruce E. Nilsson 1973 p. 261. Neither could be read. Its only interpreted words are 'ok æftiʀ Auð[biorn](?)'.",
+   "verify": [
+    {
+     "signum": "Öl ATA4701/43",
+     "word": "ok",
+     "claim_holds": true,
+     "corrected_status": "silent",
+     "reason": "Verified in the sources. Rundata 3.1 and Runor 2020 give the reading \"…ur × -uk ak-u… … nuk abtiʀ × auþ… …\" and the normalisation \"… … … … ok æftiʀ Auð[biorn](?) …\". The English translation is \"... and in memory of Auðbjôrn(?) ...\" and the Swedish translation on rundata.info is the same, so neither fills '-uk'. The editors normalise only 'nuk' as ok, so leaving '-uk' as '…' is a deliberate non-restoration. The KMR record quote matches word for word: \"Överdelen borteroderad ... Inskriften lyder:\\\"...och efter Öd(björn?)\\\". Inget nr i Ölands runinskrifter, men är nr 167 hos Bruce Nilsson\", with the reference \"Nilsson, Bruce, 1973, The Runic Inscriptions of Öland, nr 167, s. 261.\" The stone is not in Ljung 2016 (no match for ATA4701 in the catalogue text), and there is no entry in the Rundata logbook. Svensk runbibliografi has one hit for Runsignum \"Öl ATA4701/43\": Nilsson, dated 1975 there, unreachable. A web search found only runkartan and rundata mirrors. The model's fill is 'a', giving auk, as stated. One caveat: 'silent' holds only for the sources that can be reached. Nilsson no. 167 and ATA Dnr 4701/43 are the only literature and neither is online.",
+     "extra_sources": "Svensk runbibliografi search for Runsignum \"Öl ATA4701/43\": 1 hit (Nilsson 1975). Rundata-net page rundata.info/inscription/ol-ata4701-43/: Swedish translation 'Ödbjörn(?)', '-uk' not restored. Web search for ATA4701/43 / Alböke 48:1: only runkartan.se (mirrors Rundata)."
+    }
+   ]
+  },
+  {
+   "signum": "Sö 280",
+   "place": "Strängnäs domkyrka, Strängnäs (Södermanland); red sandstone grave slab (gravhäll), formerly in the cathedral floor",
+   "gaps": [
+    {
+     "carved": "þ--a",
+     "word": "þæiRa",
+     "p": 0.968,
+     "word_kind": "formula_or_function_word",
+     "literature_status": "discusses_without_proposal",
+     "literature": "Rundata 3.1 normalization: \"Ulfrik ok þa ... fæðga ok <-aua>\"; Runor 2020 the same (\"ok þa … fæðga\"). The gap is open in every edition checked. SRI 3 (Brate & Wessén, Södermanlands runinskrifter, 1924–36), p. 245, translation: \"efter Ulvrik och . . ., fader och son\". SRI p. 246 treats the gap as one of the inscription's names: \"Tyvärr höra inskriftens namn till dess mest skadade eller svårlästa partier\" … \"De båda återstående namnen kunna ej fastställas.\" (the other name is 69–72 kaua). The grammar comment is on p. 246: \"Språkligt intressanta äro de båda uttrycken þau Undrlaug møðgini och (ack.) þa . . . fæðga\". SRI makes no restoration of þ--a and does not suggest a pronoun. SRI p. 246 also says Ulfrik occurs \"på en uppländsk runsten (Lingsberg, Vallentuna sn)\", which is U 241. In Rundata, U 241 is one of the only two parallels for the bigram þæiRa fæðga (\"Guð hialpi þæiRa fæðga salu\"). The other is Sö 347 \"hialpi and þæiRa fæðrga\".",
+     "sources_checked": [
+      "Rundata 3.1 (local store): transliteration and normalization",
+      "RAÄ Runor 2020 harvest (data/raa/runor_2020.json)",
+      "SRI 3 Södermanlands runinskrifter pp. 244–246 (local PDF/text utdata/kallor/sri/sri_sodermanland_b03_h04_text_2b)",
+      "Rundata corpus search for 'þæiRa fæðga' parallels",
+      "Earlier project analysis utdata/luckartikel/so280.json and the gap-article memory notes (SRI case question)"
+     ],
+     "traces": "SRI p. 245: \"52 a—57 þ äro mindre tydliga men dock säkra. Efter 57 þ ytterligare 3 (högst 4) runor i ordet, varav den sista är a (tydligt). Därframför nedre delen av en stav, som lutar svagt åt vänster; snarast u, möjligen r.\" The stone surface is worn by trampling, since the slab lay in the church floor: \"numera delvis utplånad genom trampning\" (p. 244). The older readings all have the gap: B 700 \"þ—a\"; Dybeck, Hermelin and Brate \"þ—a\"/\"þ--a\" (p. 245).",
+     "dividers_matter": "Word division is secure. The carved text has a divider on each side of the word: \"auk · þa · þ--a · faþka\". The gap size is not secure. SRI allows 3, at most 4, runes after þ including the final a, so the lost part may be 2 or 3 runes. The model assumes exactly 2, filled as iR.",
+     "assessment": "This is a weak proposal. It conflicts with grammar, with the editor's trace and with the editor's reading. The model's 97 % comes from the bigram þæiRa fæðga, which occurs only in prayers where a governing noun requires the genitive (Sö 347 and U 241, and U 241 also names an Ulfrik). On Sö 280 the phrase stands after æftiR, where SRI explicitly marks þa . . . fæðga as accusative and reads the gap as a lost name. SRI's trace before the final a is \"snarast u, möjligen r\" (ᚱ), not the ᛦ that the model's fill iR needs. SRI also allows a 3-rune gap. Close inspection of the slab or of the public-domain detail photos could support the proposal, if it showed a stave fitting ᛦ and a 2-rune space. A u trace, or room for three runes, would refute it. Either way, the case problem would remain.",
+     "p_note": "",
+     "notes": ""
+    }
+   ],
+   "photo": "Wikidata P18: 'Sö280 Strängnäs.jpg', Klaus Fuisting, public domain (https://commons.wikimedia.org/wiki/File:S%C3%B6280_Str%C3%A4ngn%C3%A4s.jpg). Other free photos: Fuisting's detail series 'Sö280 start.JPG', 'Sö280 04 bindning.jpg', 'Sö280 11/13/14 bearb.jpg', 'Sö280 15 huggspar.jpg' (public domain); 'Runsten Sö 280 Strängnäs domkyrka.jpg' and '... 2.jpg', Arkland, CC BY-SA 4.0; 'Sö280 Strängnäs domkyrka - KMB - 16000300028349/50/51.jpg', Bengt A. Lundberg, CC BY 2.5; 'Runsten, Strängnäs, Sö 280.JPG', Raphael Saulus, public domain.",
+   "scan": "None. src/scan_sources.lookup('Sö 280') returns None. The grave-slab series (gravmonument_og_sm) covers only Ög and Sm. A Zenodo API search for \"Sö 280\" gave 0 hits.",
+   "stone_notes": "Grave slab carved with a pecked-dot technique. SRI calls it the oldest evidence of a church in Strängnäs. The project already has an article draft on this gap (\"Ordet som fattades…\", 9OU3b4PKjGMpTql1ZdRl), on hold because þæiRa is genitive while SRI reads an accusative name. The literature check here confirms that hold. A second gap on the stone, ut---uk, is restored by SRI from the last word as Und[rla]ug (\"med full visshet\", p. 245). That gap is not in the candidate list.",
+   "verify": [
+    {
+     "signum": "Sö 280",
+     "word": "þæiRa",
+     "claim_holds": true,
+     "corrected_status": "discusses_without_proposal",
+     "reason": "I checked the quotes against the local SRI 3 text (utdata/kallor/sri/sri_sodermanland_b03_h04_text_2b.txt). They are verbatim, but two page numbers in the finding are wrong. (1) The Inskrift line \"auk • þa • þ - - a • faþka\" is on p. 245, with the translation \"efter Ulvrik och . . ., fader och son\". (2) The trace note is also on p. 245: \"Efter 57 þ ytterligare 3 (högst 4) runor i ordet, varav den sista är a (tydligt). Därframför nedre delen av en stav, som lutar svagt åt vänster; snarast u, möjligen r.\" The same page gives the older readings: \"B 700: ... 57—60 þ—a\", Dybeck/Hermelin \"þ—a\", Brate \"þ--a\". (3) \"Tyvärr höra inskriftens namn till dess mest skadade eller svårlästa partier\" is at the foot of p. 245, not p. 246 as the finding says. (4) \"De båda återstående namnen kunna ej fastställas\" and \"Språkligt intressanta äro de båda uttrycken þau Undrlaug møðgini och (ack.) þa . . . fæðga\" are on p. 246. (5) \"numera delvis utplånad genom trampning\" is on p. 244. SRI gives no restoration and suggests no pronoun; it treats the gap only as an unidentified name. To try to refute this, I checked several more sources. None restores the gap. Rundata 3.1 (local): normalization \"Ulfrik ok þa ... fæðga\", translation_en \"in memory of Ulfríkr and they ... father and son\". RAÄ Runor 2020: \"ok þa … fæðga\", with no notes. rundata.info/inscription/so-280 has the same normalization; its English translation reads \"Ulfríkr and ..., this father and son\", and it lists the references Ljung 45, Liljegren p. 117, Bautil p. 196. Liljegren, Run-urkunder 1833, L 958 (local PDF, page 112) reads \"Ulfrik. auk pa. p..a. fapita..\". The parallels claim also holds: in the local Rundata, þæiRa fæðga occurs only in U 241 (Lingsberg, which names Ulfrik) and Sö 347 (þæiRa fæðrga). I could not check Nordiskt runnamnslexikon (Peterson 2007). The isof.se paths I tried returned 404, and the old sprakochfolkminnen.se link from the World Tree Project page was not tested. So a later name proposal recorded in NRL cannot be excluded. Note: þ-u-r-a, Þóra (the accusative of Þóri), would match SRI's u/r trace and the accusative. No source I saw makes that proposal; this is only a remark from me.",
+     "extra_sources": "Liljegren, Run-urkunder (1833) no. 958 (/Volumes/2TB/cache/luckor-del3/pdf/liljegren_runurkunder_1833.pdf, page 112) reads \"auk pa. p..a. fapita..\", unrestored; https://rundata.info/inscription/so-280/ (fetched 2026-10-22), unrestored; local Rundata corpus check: þæiRa fæðga occurs only in U 241 and Sö 347 (G 243 has þæiRa faðiR); NRL (Peterson 2007) not reachable."
+    }
+   ]
+  },
+  {
+   "signum": "Sö 245",
+   "place": "Tungelsta, Västerhaninge sn, Haninge (Södermanland); fragment, upper part of a granite runestone, in the Tungelsta manor garden",
+   "gaps": [
+    {
+     "carved": "ma-",
+     "word": "mag",
+     "p": 0.967,
+     "word_kind": "other_content_word",
+     "literature_status": "proposes_same_word",
+     "literature": "RAÄ Runor 2020: normalization_rsv \"… [Ig]ul(?), ma[g] sinn, …\" (OWN \"… [Íg]ul(?), ma[g] sinn, …\"), with the note \"Tolkad av redaktionen.\" (interpreted by the Runor editors; no printed source is given). Rundata 3.1 leaves it open: transliteration \"...ul : ma- : san : (b)-...\", normalization \"... ... ... ...\". SRI 3 (Brate & Wessén), p. 215, gives only the transcription \"— ul : ma - :san :b\", with no comment or restoration of the gap. On p. 1409 of the same volume's text (the Sö 270 entry), SRI mentions Sö 245 only for its cross motif with a cock (\"Samma motiv finnes på de båda blott i fragment bevarade Sö 245 och 247\").",
+     "sources_checked": [
+      "Rundata 3.1 (local store)",
+      "RAÄ Runor 2020 harvest",
+      "SRI 3 Södermanlands runinskrifter p. 215 and the Sö 270 entry (local text utdata/kallor/sri/sri_sodermanland_b03_h04_text_2a)",
+      "Rundata corpus search for 'mag sinn' parallels (about 20 stones, e.g. Ög 219, Sö 352, U 1024)"
+     ],
+     "traces": "No edition describes traces in the gap. Rundata and Runor mark one lost rune after ma. SRI p. 215 says only that the ring (slingan) is damaged (\"Utom slingan, som är skadad\"). The fragment measures 0.62 × 0.86 m. SRI's illustration is Pl. 191, from Brate's 1900 drawing or photo in ATA.",
+     "dividers_matter": "Word division is secure: \"ul : ma- : san\" has dividers on both sides. The proposal depends on the gap being exactly one rune, and the following san read as sinn. Spelled \"man\", mann would also fill one rune (the model gives it 0.02).",
+     "assessment": "This is a strong proposal, but it is not new. The Runor 2020 editors already normalise ma[g] sinn, so the model reproduces an existing editorial restoration. It counts as independent agreement, not a discovery. The formula 'æftiR X, mag sinn' is well attested (about 20 Rundata texts). The main alternative with the same spelling length is mann (\"man\"), which the model rates 2 %. No traces are described, so only inspection of the fragment, or Brate's 1900 photo, could separate k from n.",
+     "p_note": "",
+     "notes": ""
+    }
+   ],
+   "photo": "Wikidata P18: 'Sö 245, Tungelsta 1900.jpg', Erik Brate, public domain (https://commons.wikimedia.org/wiki/File:S%C3%B6_245,_Tungelsta_1900.jpg). Also 'Sö245 Tungelsta - KMB - 16001000278464.jpg', Erik Brate, public domain, and 'Sö 245, Tungelsta.jpg', kenny_lex (Handen, Sweden), CC BY 2.0.",
+   "scan": "None. src/scan_sources.lookup('Sö 245') returns None, and the Zenodo search found no relevant record.",
+   "stone_notes": "Rundata attributes the stone to the carver Halvdan (A). The preceding sequence -ul is read [Íg]ul(?) by Runor. The model's reading \"ol mag sinn <unk>\" has p_reading 0.714. The project memory already records this as the one case in the forward test (Rundata 2018 open, Runor 2020 filled) where the model matched.",
+   "verify": [
+    {
+     "signum": "Sö 245",
+     "word": "mag",
+     "claim_holds": true,
+     "corrected_status": "proposes_same_word",
+     "reason": "I checked this myself. RAÄ Runor 2020 (local harvest) has normalization_rsv \"… [Ig]ul(?), ma[g] sinn, …\", normalization_ows \"… [Íg]ul(?), ma[g] sinn, …\" and the note \"Tolkad av redaktionen.\". No printed source is given. rundata.info/inscription/so-245 carries the same text, with the English translation \"... Ígull(?), his kinsman-by-marriage, ...\" and the comment \"Tolkad av redaktionen.\". Rundata 3.1 (local) has the transliteration \"...ul : ma- : san : (b)-...\", normalization \"... ... ... ...\" and translation_en \"... ...\", so the gap is open there. SRI 3, p. 215 (local text sri_sodermanland_b03_h04_text_2a.txt) gives only \"Inskrift: — ul : ma - :san :b\" and \"Utom slingan, som är skadad\", with no comment; this confirms the finding. One citation in the finding is wrong. It says \"p. 1409\", but 1409 is a line number in the OCR file. The Sö 270 passage, \"Samma motiv finnes på de båda blott i fragment bevarade Sö 245 och 247\", is on SRI 3 p. 234. SRI also mentions Sö 245 under Sö 247 on p. 216 (\"Samma motiv och samma form av korset som å Sö 245 och Sö 270\"), again only for the cross with the cock. The local Rundata has 20 texts with 'mag sinn', which matches the finding's \"about 20\". So the model's word repeats an existing editorial restoration by the Runor editors and is not a new proposal. Wikell 2009 (\"En hane gal för hedningarna\", on the Haninge cock crosses) could not be found online, so I did not check it.",
+     "extra_sources": "https://rundata.info/inscription/so-245/ (Runor-derived; translation \"his kinsman-by-marriage\"); SRI 3 p. 216 (Sö 247 entry) and p. 234 (Sö 270 entry), both mention only the motif; Snædal, Rapport om granskning och uppmålning av runinskrifter i Stockholms län 2010 (RAÄ dnr 322-907-2011, via arild-hauge.com/raa-se/rapp2011_8.pdf), which does not cover Sö 245; Wikell 2009 not reachable."
+    }
+   ]
+  },
+  {
+   "signum": "Sö 23",
+   "place": "Skälby, Mörkö sn, Södertälje (Södermanland); rock-face inscription (berghäll), fire-damaged; rediscovered 2010",
+   "gaps": [
+    {
+     "carved": "kuþa-t",
+     "word": "and",
+     "p": 0.806,
+     "word_kind": "formula_or_function_word",
+     "literature_status": "proposes_same_word",
+     "literature": "SRI 3 (Brate & Wessén), p. 16, interprets the end as a prayer with \"ande\" (soul) in this passage, but it aligns the runes differently from the model. In SRI's words (OCR text): \"dess slut tyckes hava varit välgångsönskan för hans själ: Gud hjälpe ande och själ! Ordet »Gud» är tydligt i Fa. 35—37, B. 27—29 kuþ; av »hjälpe» finns blott Fa. 38 a, B. 30—32 ai i, av »ande» Fa. 39 t, B. 33—34 it\". SRI's resulting text ends \"Gud hjälpe ande och själ!\" and is introduced with the caveat \"Av dessa osäkra och inbördes skiljaktiga läsningar kan blott en osäker tydning bitvis erhållas\" and \"Om förestående slutsatser äro riktiga\". SRI thus takes the a as a remnant of hialpi and only the t as a remnant of and, with an unknown number of runes lost between them. Wikell & Johnsson, Fornvännen 107 (2012), pp. 16–23, p. 20, report a different wording: \"Med förbehåll meddelar han i Södermanlands runinskrifter följande (osäkra) inskrift: »… Gud hjälpe hans själ!»\". That paraphrase drops \"ande\", and they make no reading of their own: \"Tolkningen av dessa överlämnas till runologerna\". Rundata 3.1 and Runor 2020 have no normalization (all '…'). Rundata's note says \"Bureus läsning enligt Fa. 10. 2 s. 83 används\".",
+     "sources_checked": [
+      "Rundata 3.1 (local store), including the 'other' note with the B 784 reading",
+      "RAÄ Runor 2020 harvest",
+      "SRI 3 Södermanlands runinskrifter p. 16 (local text utdata/kallor/sri/sri_sodermanland_b03_h01_text_1)",
+      "Wikell & Johnsson, Fornvännen 107 (2012):16–23. The fornvannen.se and pub.raa.se links failed from this machine (TLS/timeout), so it was read from the arild-hauge.com mirror, saved as /Volumes/2TB/cache/luckor-del3/pdf/so23/fv2012_016.pdf"
+     ],
+     "traces": "There are no physical traces. This part of the inscription is lost. Rundata brackets the whole passage as known only from older drawings (\"[· ai...oþi · kuþa-t auk... o...]\"). Wikell & Johnsson (Fv 2012, p. 20) could read only \"…nta…\" on the surviving 30 × 60 cm patch and state: \"Resten av hällen är ohjälpligt bortvittrad.\" The sequence kuþa-t comes from Bureus's 17th-century drawing (Fa. 10. 2 s. 83), already \"Fördärvad af eld\" (SRI p. 16). Bautil (B 784) gives the same stretch differently: \"kuþa i-...itak · sio...\" (Rundata note). SRI counts B. 30–32 \"ai i\" and B. 33–34 \"it\" here, so B 784 suggests more than one sign between a and t.",
+     "dividers_matter": "Yes, the proposal depends on division. kuþa-t has no divider inside it. The model splits it as kuþ | a-t and fills one rune (n) to make guð and, with no verb (hialpi) between. SRI divides it as kuþ | a[…] | […]t, with hialpi in between. The one-rune size of the gap rests on reading Bureus's '-' as exactly one rune. Bautil's version (i-...it) does not support that.",
+     "assessment": "The word itself is weakly supported. Literature and model agree that \"ande\" belongs in this prayer, which is a formula that is easy to guess. They disagree on how the carved runes are divided. The model's guð and without hialpi is not the usual Christian prayer formula, and SRI's alignment needs more lost runes than the one the model assumes. The source is a pair of mutually inconsistent 17th-century drawings of a fire-damaged surface that no longer exists. The proposal cannot be checked against traces, and it adds nothing beyond SRI's own uncertain interpretation. Only the original Bureus drawing, viewed as an image, could show how much space the lacuna has.",
+     "p_note": "",
+     "notes": ""
+    }
+   ],
+   "photo": "No Wikidata P18. Commons has 'Sö 23.jpg', the drawings by Johannes Bureus and by Johan Hadorph & Johan Peringskiöld, public domain (https://commons.wikimedia.org/wiki/File:S%C3%B6_23.jpg). No free photo of the rock face was found; the Fv 2012 photos (Roger Wikell) are not free-licence.",
+   "scan": "None. src/scan_sources.lookup('Sö 23') returns None, and the Zenodo search found no relevant record.",
+   "stone_notes": "Rundata flags the stone as a new reading, with most of the inscription lost and Bureus's reading used. In SRI the whole text is \"osäker\". Fv 2012 suggests the carver Östen for stylistic reasons and dates the ornament to the mid or late 11th century. The p_reading of 0.766 applies to a sequence that is itself a reconstruction from drawings.",
+   "verify": [
+    {
+     "signum": "Sö 23",
+     "word": "and",
+     "claim_holds": true,
+     "corrected_status": "proposes_same_word",
+     "reason": "SRI 3, p. 16 (local sri_sodermanland_b03_h01_text_1.txt) is verbatim. It reads: \"Av dessa osäkra och inbördes skiljaktiga läsningar kan blott en osäker tydning bitvis erhållas\"; then \"dess slut tyckes hava varit välgångsönskan för hans själ: Gud hjälpe ande och själ! Ordet »Gud» är tydligt i Fa. 35—37, B. 27—29 kuþ, av »hjälpe» finns blott Fa. 38 a, B. 30—32 ai i, av »ande» Fa. 39 t, B. 33—34 it\"; and \"Om förestående slutsatser äro riktiga ... Gud hjälpe ande och själ!\". SRI therefore names the word ande at this spot. It does so with a different alignment: the a belongs to hjälpe, the t to ande, and the lacuna holds more than the one rune the model assumes. SRI thus proposes the same word with a different segmentation, not the model's restoration a[n]t. Fornvännen 107 (2012), p. 20 (local copy /Volumes/2TB/cache/luckor-del3/pdf/so23/fv2012_016.txt) is verbatim: \"Med förbehåll meddelar han i Södermanlands runinskrifter följande (osäkra) inskrift: »... Gud hjälpe hans själ!»\" (this drops ande), \"Följande runor har vi lyckats läsa …nta…\", \"Tolkningen av dessa överlämnas till runologerna\" and \"Resten av hällen är ohjälpligt bortvittrad.\" Rundata 3.1 and Runor 2020 have no normalization (all '…'). I tried to refute this through the source Fv 2012 cites, Snædal 2010a, the RAÄ field report on the 2010 inspection. It describes the rediscovery and the poor state of the rock but gives no reading or restoration of the passage. Snædal 1990 (Från Järnatullen till Gårdarike) is a printed book that I could not reach, so I did not check it.",
+     "extra_sources": "Snædal, T., Rapport om granskning och uppmålning av runinskrifter i Stockholms län 2010 (RAÄ, dated 2010-12-28, dnr 322-907-2011), downloaded from https://www.arild-hauge.com/raa-se/rapp2011_8.pdf to /Volumes/2TB/cache/luckor-del3/pdf/snaedal/rapp2011_8.pdf. Its Sö 23 section says: \"återstår endast några runor av ristningens översta del och höger sida, samt en liten bit av nedre delens mitt\", with no reading of the gap. Snædal 1990 not checked (offline book)."
+    }
+   ]
+  },
+  {
+   "signum": "U 246",
+   "place": "Mällösa, Vallentuna sn (Uppland)",
+   "photo": "none checked",
+   "scan": "none",
+   "stone_notes": "Fragment built into a cellar wall; added 2026-10-23 from a separate check (pages verified against page images).",
+   "gaps": [
+    {
+     "carved": "-ia",
+     "word": "sinn",
+     "p": 0.557,
+     "word_kind": "formula_or_function_word",
+     "literature_status": "discusses_without_proposal",
+     "literature": "Upplands runinskrifter 1 (SRI 6), p. 412: reading '- ia — n • eftiR • hl', normalised '... æftiR H ...'. 'Till läsningen: Inskriften är på grund av sin placering svårläst. Av runan 1 synes blott stavens fot; efter 3 a synes ett kort lodrätt streck, som kan vara ett sk, eller möjligen rest av en hst. Runan 4 är skadad, troligen a eller k'. Dybeck: '. . . ain • iftiR • hu . . . .'; Säve (UFT) translates after Dybeck: '. . . (resa st)en efter Hu-'. No edition proposes sinn.",
+     "sources_checked": [
+      "SRI 6 (Upplands runinskrifter 1) p. 412, raa.se PDF sri_uppland_b06_text_6.pdf",
+      "Rundata 3.1",
+      "Runor 2020"
+     ],
+     "traces": "Of rune 1 only the foot of the staff is visible; after rune 3 a short vertical stroke that may be a divider or the rest of a main staff, so the word may continue after the gap.",
+     "dividers_matter": "yes: a possible divider or further rune after rune 3",
+     "assessment": "Weak: the edition's trace notes leave open that the word continues, and an older reading takes the next word as the end of 'stein'."
+    }
+   ],
+   "verify": []
+  },
+  {
+   "signum": "U Fv1976;108",
+   "place": "Tibble, Vassunda sn (Uppland)",
+   "photo": "none checked",
+   "scan": "none",
+   "stone_notes": "A few metres from U 466; added 2026-10-23 from a separate check (pages verified against page images).",
+   "gaps": [
+    {
+     "carved": "-in",
+     "word": "sinn",
+     "p": 0.522,
+     "word_kind": "formula_or_function_word",
+     "literature_status": "discusses_without_proposal",
+     "literature": "Gustavson, H. 1976, Runfynd 1975, Fornvännen 71, pp. 108–109: reading 'sih----...u...--...-...:-...-:- in : u--:-...', interpreted only as 'Sig-'. 'I övrigt är inskriften otolkbar till följd av sin fragmentariska karaktär. Möjligen har den aldrig givit någon språklig mening, utan varit en imitation av inskriften på en runsten.' He points to U 466, a few metres west.",
+     "sources_checked": [
+      "Fornvännen 71 (1976) pp. 108–109 (mirror arild-hauge.com)",
+      "Rundata 3.1",
+      "Runor 2020"
+     ],
+     "traces": "The inscription is 'starkt skadad'; the six rune traces in the outer frame show no side-twigs; nothing specific about the gap rune.",
+     "dividers_matter": "no",
+     "assessment": "Weak: the editor suggests the text may never have been language, an imitation of U 466."
+    }
+   ],
+   "verify": []
+  }
+ ]
+}
