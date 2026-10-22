@@ -119,7 +119,7 @@ Uppland | {sh('felagi', 'Uppland')} | {nn('felagi', 'Uppland')} av {sv(N['Upplan
 Danmark | {sh('bortom bygden', 'Danmark')} | {nn('bortom bygden', 'Danmark')} av {N['Danmark']}
 Södermanland | {sh('bortom bygden', 'Södermanland')} | {nn('bortom bygden', 'Södermanland')} av {N['Södermanland']}
 Uppland | {sh('bortom bygden', 'Uppland')} | {nn('bortom bygden', 'Uppland')} av {sv(N['Uppland'])}
-# … har ett kors eller en bön
+# … har ett kors
 +Skåne | {sh('kors', 'Skåne')} | {nn('kors', 'Skåne')} av {N['Skåne']} med kors
 Danmark | {sh('kors', 'Danmark')} | {nn('kors', 'Danmark')} av {N['Danmark']} med kors
 Uppland | {sh('kors', 'Uppland')} | {nn('kors', 'Uppland')} av {sv(N['Uppland'])} med kors
@@ -145,7 +145,7 @@ Det första som slår en är hur kort tid de spänner över. {S['efter_jelling']
 
 Hur säger stenarna det de säger? Som danskarna, inte som svearna. På {nn('ræisti/satti själv', 'Skåne')} av de {N['Skåne']} stenarna reste eller satte den som nämns först stenen själv – *resþi sten þænsi*, *satti sten þænsi* – och bara {nn('lät (let) göra', 'Skåne')} säger *lät*. I Uppland är det tvärtom: där *lät* man resa på {sh('lät (let) göra', 'Uppland')} procent av stenarna och reste själv på {sh('ræisti/satti själv', 'Uppland')}. Skåne delar sitt sätt att tala med Danmark och med Västergötland, som vi har skrivit om förut: [Västgöten reste själv – upplänningen lät resa](/artiklar/reste-sjalv-eller-lat-resa). Också formen är dansk: {nn('RAK', 'Skåne')} av {N['Skåne']} stenar är utan ornamentik, raka textband, och bara {nn('kors', 'Skåne')} bär ett kors, mot nästan varannan sten i Uppland.
 
-Och så har de ett eget ord för den de saknar. *Harþa goþan dræng*, ”en mycket god dräng” – en ung, duglig man – står på {nn('harþa goþan', 'Skåne')} av Skånes stenar. Frasen finns i Västergötland ({nn('harþa goþan', 'Västergötland')} stenar) och i Danmark ({nn('harþa goþan', 'Danmark')}), men i Småland, Östergötland, Södermanland och Uppland tillsammans på en enda. *Dræng* står på {nn('dræng', 'Skåne')} skånska stenar och *þegn* på {nn('þegn', 'Skåne')}; Kata vid Rydsgård kallar sin man *þægna fyrstr*, den främste bland tegnar (DR 277). Det är inte bara män som reser: Kata, Tonna, Tofa, Ketiley och Åsa står som resare på sina stenar, efter män och söner.
+Och så har de ett särskilt uttryck för den de saknar. *Harþa goþan dræng*, ”en mycket god dräng” – en ung, duglig man – står på {nn('harþa goþan', 'Skåne')} av Skånes stenar. Frasen finns i Västergötland ({nn('harþa goþan', 'Västergötland')} stenar) och i Danmark ({nn('harþa goþan', 'Danmark')}), men i Småland, Östergötland, Södermanland och Uppland tillsammans på en enda. *Dræng* står på {nn('dræng', 'Skåne')} skånska stenar och *þegn* på {nn('þegn', 'Skåne')}; Kata vid Rydsgård kallar sin man *þægna fyrstr*, den främste bland tegnar (DR 277). Det är inte bara män som reser: Kata, Tonna, Tofa, Ketiley och Åsa står som resare på sina stenar, efter män och söner.
 
 {CHART}
 
