@@ -53,20 +53,6 @@ export default async function ContactPage() {
           <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="hover:underline">Vitki på GitHub ↗</a>
         </div>
 
-        {own.length > 0 && (
-          <div className="mt-12">
-            <h2 className="text-2xl font-serif font-bold text-slate-900">Artiklar av {AUTHOR.name}</h2>
-            <ul className="mt-4 space-y-2.5">
-              {own.map(p => (
-                <li key={p.id} className="leading-snug">
-                  <Link href={postPath(p.slug)} className="font-semibold text-slate-900 hover:text-[#b7410e]">{p.title}</Link>
-                  <span className="ml-2 text-sm text-slate-500">{postDate(p, "sv")}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
         <div className="mt-14">
           <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e] mb-3">Kontakt</div>
           <h2 className="text-3xl font-serif font-bold tracking-tight">Skriv till Vitki</h2>
@@ -76,6 +62,20 @@ export default async function ContactPage() {
           </p>
           <div className="mt-8"><ContactForm /></div>
         </div>
+        {own.length > 0 && (
+          <div className="mt-16 border-t border-slate-900/10 pt-8">
+            <h2 className="text-xl font-serif font-bold text-slate-900">Artiklar av {AUTHOR.name}</h2>
+            <ul className="mt-3 space-y-2 text-sm">
+              {own.slice(0, 6).map(p => (
+                <li key={p.id} className="leading-snug">
+                  <Link href={postPath(p.slug)} className="font-semibold text-slate-800 hover:text-[#b7410e]">{p.title}</Link>
+                  <span className="ml-2 text-slate-500">{postDate(p, "sv")}</span>
+                </li>
+              ))}
+            </ul>
+            <Link href="/artiklar" className="mt-3 inline-block text-sm font-bold text-[#b7410e] hover:underline">Alla {own.length} artiklar →</Link>
+          </div>
+        )}
       </section>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
     </BlogShell>
