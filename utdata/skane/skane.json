@@ -1,0 +1,1467 @@
+{
+ "n": {
+  "Skåne": 59,
+  "Danmark": 138,
+  "Bornholm": 39,
+  "Västergötland": 131,
+  "Småland": 121,
+  "Östergötland": 222,
+  "Södermanland": 363,
+  "Uppland": 1178
+ },
+ "skane": [
+  {
+   "signum": "DR 258",
+   "place": "Bösarp",
+   "harad": "Skytts hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.704327,
+   "lon": 13.195013,
+   "normalization": "\"Toki satti ...",
+   "translation_en": "Tóki placed ..."
+  },
+  {
+   "signum": "DR 259",
+   "place": "Fuglie 1, Fuglie kyrka",
+   "harad": "Skytts hd",
+   "dating": "V kristen efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.447739,
+   "lon": 13.084766,
+   "normalization": "\"Øndr resþi sten þænsi æftiR \"Øþa, broþur sin, han warþ døþr a \"Gotlandi. \"Guþ hialpi hans sælu.",
+   "translation_en": "Eyndr raised this stone in memory of Auði, his brother. He died in Gotland. May God help his soul."
+  },
+  {
+   "signum": "DR 260",
+   "place": "Fuglie 2, Toftegården",
+   "harad": "Skytts hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.447502,
+   "lon": 13.083818,
+   "normalization": "\"Atti resþi sten þæssi æft \"Þorsten, sun sin.",
+   "translation_en": "Atti raised this stone in memory of Þorsteinn, his son."
+  },
+  {
+   "signum": "DR 262",
+   "place": "Fosie",
+   "harad": "Oxie hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.560579,
+   "lon": 13.028245,
+   "normalization": "\"Æsbiorn resþi sten þænsi æftiR \"Dwærg, felaga sin, dræng goþan.",
+   "translation_en": "Ásbjôrn raised this stone in memory of Dvergr, his partner, a good valiant man."
+  },
+  {
+   "signum": "DR 264",
+   "place": "Hyby 1, Vissmarlöv",
+   "harad": "Bara hd",
+   "dating": "V kristen efter-Jelling",
+   "style": "RAK",
+   "cross": true,
+   "lost": false,
+   "lat": 55.585975,
+   "lon": 13.289086,
+   "normalization": "§A \"Þorþr hio runaR þæssi ... ... §B \"Folkwi/\"Fullugi a \"Høg[by] ...",
+   "translation_en": "§A Þórðr cut these runes ... ... §B Folkvé/Fullugi owns Haugbýr ..."
+  },
+  {
+   "signum": "DR 265",
+   "place": "Hyby 2, Vissmarlöv",
+   "harad": "Bara hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": true,
+   "lat": 55.585485,
+   "lon": 13.291465,
+   "normalization": "\"<ranuiþi> \"<huas> resþi sten þæssi æftiR \"<þanfuþ>.",
+   "translation_en": "<ranuiþi> <huas> raised this stone in memory of <þanfuþ>."
+  },
+  {
+   "signum": "DR 266",
+   "place": "Uppåkra, Hjärup",
+   "harad": "Bara hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.666063,
+   "lon": 13.140859,
+   "normalization": "§A \"Nafni resþi sten þæssi æftiR \"Toka, broþur sin. §B Han warþ wæstr døþr.",
+   "translation_en": "§A Nafni raised this stone in memory of Tóki, his brother. §B He died in the west."
+  },
+  {
+   "signum": "DR 268",
+   "place": "Östra Vemmenhög, Dybäck",
+   "harad": "Vemmenhögs hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.416346,
+   "lon": 13.508686,
+   "normalization": "\"BroþiR resþi sten þæssi æftiR \"Bosa, broþur sin, harþa goþan dræng.",
+   "translation_en": "Bróðir raised this stone in memory of Bósi, his brother, a very good valiant man."
+  },
+  {
+   "signum": "DR 269",
+   "place": "Källstorp, Jordberga",
+   "harad": "Vemmenhögs hd",
+   "dating": "V kristen efter-Jelling",
+   "style": "RAK",
+   "cross": true,
+   "lost": false,
+   "lat": 55.413368,
+   "lon": 13.412423,
+   "normalization": "\"Þorkel gærþi, \"ÞorþaR sun, bro þæssi æft \"Wraga/\"Wranga, broþur sin.",
+   "translation_en": "Þorkell, Þórðr's son, made this bridge in memory of Vragi/Rangi, his brother."
+  },
+  {
+   "signum": "DR 270",
+   "place": "Skivarps kyrka",
+   "harad": "Vemmenhögs hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.705809,
+   "lon": 13.194962,
+   "normalization": "\"Tomi resþi sten þænsi æftiR \"[Gæi]Ra(?), felaga sin.",
+   "translation_en": "Tumi raised this stone in memory of Geiri(?), his partner."
+  },
+  {
+   "signum": "DR 271",
+   "place": "Tullstorps kyrka",
+   "harad": "Vemmenhögs hd",
+   "dating": "V efter-Jelling",
+   "style": "Pr1",
+   "cross": false,
+   "lost": false,
+   "lat": 55.409942,
+   "lon": 13.466609,
+   "normalization": "\"KlæppiR/\"GlippiR ok \"Asa resþu kumbl þøsi æftiR \"Ulf.",
+   "translation_en": "Kleppir/Glippir and Ása raised these monuments in memory of Ulfr."
+  },
+  {
+   "signum": "DR 272",
+   "place": "Svenstorp 1, Svenstorps kyrka",
+   "harad": "Vemmenhögs hd",
+   "dating": "V efter-Jelling(?)",
+   "style": null,
+   "cross": false,
+   "lost": true,
+   "lat": 55.456338,
+   "lon": 13.475498,
+   "normalization": "\"<uekaltr> resþi sten þæssi æft \"<stikit> ...",
+   "translation_en": "<uekaltr> raised this stone in memory of <stikit> ..."
+  },
+  {
+   "signum": "DR 273",
+   "place": "Svenstorp 2, Svenstorps kyrka",
+   "harad": "Vemmenhögs hd",
+   "dating": "V",
+   "style": "RAK",
+   "cross": false,
+   "lost": true,
+   "lat": 55.456338,
+   "lon": 13.475498,
+   "normalization": "...",
+   "translation_en": "..."
+  },
+  {
+   "signum": "DR 274",
+   "place": "Hassle-Bösarp",
+   "harad": "Vemmenhögs hd",
+   "dating": "V?",
+   "style": "RAK",
+   "cross": false,
+   "lost": true,
+   "lat": 55.456715,
+   "lon": 13.510166,
+   "normalization": "...",
+   "translation_en": "..."
+  },
+  {
+   "signum": "DR 275",
+   "place": "Solberga, Torsjö",
+   "harad": "Vemmenhögs hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.44903,
+   "lon": 13.551538,
+   "normalization": "\"BroþiR resþi sten þænsi æftiR \"Æsbiorn, broþur sin, saR waR skipari \"Øþ...",
+   "translation_en": "Bróðir raised this stone in memory of Æsbjôrn, his brother; he was Auð...'s seaman."
+  },
+  {
+   "signum": "DR 276",
+   "place": "Örsjö, Örsjögården",
+   "harad": "Vemmenhögs hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.465614,
+   "lon": 13.5656,
+   "normalization": "\"Tomi resþi sten þæssi æftiR \"Hunwiþ, broþur sin, harþa goþan dræng.",
+   "translation_en": "Tumi raised this stone in memory of Húnviðr, his brother, a very good valiant man."
+  },
+  {
+   "signum": "DR 277",
+   "place": "Rydsgård",
+   "harad": "Ljunits hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.513112,
+   "lon": 13.59661,
+   "normalization": "\"Kata gærþi kumbl þøsi æftiR \"Swen \"Ballungs sun, bonda sin. SaR was þægna fyrstr.",
+   "translation_en": "Káta made these monuments in memory of Sveinn Bôllungr's son, her husbandman. He was first among þegns."
+  },
+  {
+   "signum": "DR 278",
+   "place": "Västra Nöbbelöv, Prästgården",
+   "harad": "Ljunits hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.434876,
+   "lon": 13.617102,
+   "normalization": "\"Toki resþi sten þænsi æftiR \"Øþga, broþur sin, harþa goþan [þægn].",
+   "translation_en": "Tóki raised this stone in memory of Auðgi, his brother, a very good [þegn]."
+  },
+  {
+   "signum": "DR 279",
+   "place": "Sjörup, Sjörups gamla kyrka",
+   "harad": "Ljunits hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": true,
+   "lost": false,
+   "lat": 55.441222,
+   "lon": 13.635399,
+   "normalization": "\"Saxi satti sten þæssi æftiR \"Æsbiorn, sin felaga, \"To[f]a/\"To[k]a sun. SaR flo ægi at \"Upsalum, æn wa mæþ han wapn hafþi.",
+   "translation_en": "Saxi placed this stone in memory of Ásbjôrn Tófi's/Tóki's son, his partner. He did not flee at Uppsala, but slaughtered as long as he had a weapon."
+  },
+  {
+   "signum": "DR 280",
+   "place": "Skårby 1, Gusnava",
+   "harad": "Ljunits hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.70462,
+   "lon": 13.196123,
+   "normalization": "\"KaulfR/\"KalfR ok \"AutiR þeR sattu sten þænsi æftiR \"Toma, broþur sin, æR atti \"Guþissnapa.",
+   "translation_en": "Káulfr(?)/Kalfr(?) and Autir, they placed this stone in memory of Tumi, their brother, who owned Guðissnapi."
+  },
+  {
+   "signum": "DR 281",
+   "place": "Skårby 2, Skårby kyrka",
+   "harad": "Ljunits hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": true,
+   "lost": false,
+   "lat": 55.486724,
+   "lon": 13.713591,
+   "normalization": "\"AutiR satti sten þænsi æftiR \"Hakun.",
+   "translation_en": "Autir placed this stone in memory of Hákon."
+  },
+  {
+   "signum": "DR 282",
+   "place": "Hunnestad 1",
+   "harad": "Ljunits hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.704522,
+   "lon": 13.19613,
+   "normalization": "\"Æsbiorn ok \"Tomi þeR sattu sten þænsi æftiR \"Roi ok \"Lekfrøþ, sunu \"Gunna \"HandaR.",
+   "translation_en": "Ásbjôrn and Tumi they placed this stone in memory of Hróir and Leikfrøðr, Gunni Hand's sons."
+  },
+  {
+   "signum": "DR 283",
+   "place": "Hunnestad 2",
+   "harad": "Ljunits hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": true,
+   "lost": false,
+   "lat": 55.704556,
+   "lon": 13.196032,
+   "normalization": "\"Æsbiorn satti sten þænsi æftiR \"Toma, sun \"Gunna \"HandaR.",
+   "translation_en": "Ásbjôrn placed this stone in memory of Tumi, Gunni Hand's son."
+  },
+  {
+   "signum": "DR 287",
+   "place": "Bjäresjö 1, Bjäresjö kyrka",
+   "harad": "Herrestads hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.462164,
+   "lon": 13.749806,
+   "normalization": "\"Kari satti sten ... æftiR \"Olfun(?)/\"Alfwin(?).",
+   "translation_en": "Kári placed the stone ... in memory of Alfvin(?)/Ôlfun(?)."
+  },
+  {
+   "signum": "DR 288",
+   "place": "Bjäresjö 2",
+   "harad": "Herrestads hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.704623,
+   "lon": 13.196219,
+   "normalization": "\"Aki satti sten þænsi æftiR \"Ulf, broþur sin, harþa goþan dræng.",
+   "translation_en": "Áki placed this stone in memory of Ulfr, his brother, a very good valiant man."
+  },
+  {
+   "signum": "DR 289",
+   "place": "Bjäresjö 3, Bjärsjöholm",
+   "harad": "Herrestads hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.449759,
+   "lon": 13.777355,
+   "normalization": "\"Fraþi/\"Fræþi resþi sten þænsi æftiR \"Olaf, mag sin, dræng harþa goþan.",
+   "translation_en": "Fraði/Freði raised this stone in memory of Ólafr, his kinsman-by-marriage, a very good valiant man."
+  },
+  {
+   "signum": "DR 291",
+   "place": "Sövestad 2, Krageholm",
+   "harad": "Herrestads hd",
+   "dating": "V efter-Jelling",
+   "style": "Fp",
+   "cross": false,
+   "lost": false,
+   "lat": 55.492521,
+   "lon": 13.765884,
+   "normalization": "\"Tonna satti sten þænsi æftiR \"Bram, bonda sin, ok \"Asgotr, sunR hans. Han waR bæztr bomanna ok mildastr mataR.",
+   "translation_en": "Tonna placed this stone in memory of Bramr, her husbandman, and (so did) Ásgautr, his son. He was the best of estate-holders and the most generous with food."
+  },
+  {
+   "signum": "DR 292",
+   "place": "Sövestad 3, Krageholm",
+   "harad": "Herrestads hd",
+   "dating": "V?",
+   "style": null,
+   "cross": false,
+   "lost": true,
+   "lat": 55.488213,
+   "lon": 13.761297,
+   "normalization": "...",
+   "translation_en": "..."
+  },
+  {
+   "signum": "DR 293",
+   "place": "Stora Herrestad, Herrestad",
+   "harad": "Herrestads hd",
+   "dating": "V efter-Jelling",
+   "style": "?",
+   "cross": false,
+   "lost": true,
+   "lat": 55.476097,
+   "lon": 13.872647,
+   "normalization": "\"Kætilø let gørwa kumbl þøsi æfti[R] ... þægn algoþan, þan æs hana atti.",
+   "translation_en": "Ketiley had these monuments made in memory of ... a very good þegn, who owned her (i.e. was her husband)."
+  },
+  {
+   "signum": "DR 294",
+   "place": "Baldringe kyrka",
+   "harad": "Herrestads hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.529883,
+   "lon": 13.839883,
+   "normalization": "\"Þorgisl satti kumbl þøsi æftiR \"Toma \"Span \"FrøþaR sun, faþur sin, harþa goþan þægn.",
+   "translation_en": "Þorgísl placed these monuments in memory of his father Tumi Foresighted/Chip, Frøðr's son, a very good þegn."
+  },
+  {
+   "signum": "DR 295",
+   "place": "Hällestad 1, Hällestads kyrka",
+   "harad": "Torna hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.677584,
+   "lon": 13.420759,
+   "normalization": "§A \"Æskel satti sten þænsi æftiR \"Toka \"Gorms sun, seR hullan drottin. SaR flo ægi at \"Upsalum §B sattu drængiaR æftiR sin broþur sten a biargi støþan runum. ÞeR §C \"Gorms \"Toka gingu næstiR.",
+   "translation_en": "§A Áskell placed this stone in memory of Tóki Gormr's son, to him a faithful lord. He did not flee at Uppsala. §B Valiant men placed in memory of their brother the stone on the hill, steadied by runes. They §C went closest to Gormr's Tóki."
+  },
+  {
+   "signum": "DR 296",
+   "place": "Hällestad 2, Hällestads kyrka",
+   "harad": "Torna hd",
+   "dating": "V efter-Jelling",
+   "style": "Fp",
+   "cross": false,
+   "lost": false,
+   "lat": 55.677835,
+   "lon": 13.42076,
+   "normalization": "\"Asgotr resþi sten þænsi æftiR \"Ærru, broþur sin. Æn saR was hemþægi \"Toka. Nu skal standa sten a biargi.",
+   "translation_en": "Ásgautr raised this stone in memory of Erra, his brother. And he was Tóki's retainer. Now the stone will stand on the hill."
+  },
+  {
+   "signum": "DR 297",
+   "place": "Hällestad 3, Hällestads kyrka",
+   "harad": "Torna hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.677656,
+   "lon": 13.420755,
+   "normalization": "\"Æsbiorn, hemþægi \"Toka, satti sten þæssi æftiR \"Toka, broþur sin.",
+   "translation_en": "Ásbjôrn, Tóki's retainer, placed this stone in memory of Tóki, his brother."
+  },
+  {
+   "signum": "DR 298",
+   "place": "Dalby, Sjöstorp",
+   "harad": "Torna hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.704577,
+   "lon": 13.196206,
+   "normalization": "\"ÞorgiR resþi sten þænn[a] at \"Stenkel, faþur sin, goþan bonda, æs længi/liggR i/ .../haug[i].",
+   "translation_en": "Þorgeirr raised this stone in memory of Steinkell, his father, a good husbandman, who long / lies in ... / mound."
+  },
+  {
+   "signum": "DR 314",
+   "place": "Lund, Allhelgonakyrkan",
+   "harad": "Skåne",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": true,
+   "lost": false,
+   "lat": 55.709589,
+   "lon": 13.19358,
+   "normalization": "§A \"Þorgisl, sun \"Æsgis \"BiarnaR sonaR, resþi stena þæssi æftiR brøþr §B sina baþa \"Olaf ok \"Ottar, landmænnr goþa.",
+   "translation_en": "§A Þorgísl, son of Ásgeirr Bjôrn's son, raised these stones in memory of both of his brothers, §B Ólafr and Óttarr, good landholders."
+  },
+  {
+   "signum": "DR 315",
+   "place": "Lund, kv. Repslagaren",
+   "harad": "Skåne",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.699451,
+   "lon": 13.193015,
+   "normalization": "\"Toki let kirkiu gørwa ok ...",
+   "translation_en": "Tóki had the church made and ..."
+  },
+  {
+   "signum": "DR 316",
+   "place": "Norra Nöbbelövs kyrka",
+   "harad": "Torna hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.705809,
+   "lon": 13.194962,
+   "normalization": "\"Tofi resþi sten þæssi æftiR \"<umun>/\"Umun, sin fela[ga].",
+   "translation_en": "Tófi raised this stone in memory of <umun>/Ómunr, his partner."
+  },
+  {
+   "signum": "DR 317",
+   "place": "Vallkärra",
+   "harad": "Torna hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.705778,
+   "lon": 13.194789,
+   "normalization": "\"Tofa resþi stena þæssi æftiR \"Gamal, bonda sin, ok \"Azur, sun hans.",
+   "translation_en": "Tófa raised these stones in memory of Gamall, her husbandman, and (so did) Ôzurr, his son."
+  },
+  {
+   "signum": "DR 318",
+   "place": "Håstads kyrka",
+   "harad": "Torna hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.704327,
+   "lon": 13.195013,
+   "normalization": "\"Brandr gærþi kumbl þøsi æftiR \"Gubba, faþur sin, ok \"Efi, felagi \"Gubba.",
+   "translation_en": "Brandr made these monuments in memory of Gubbi, his father, and (so did) Efi, Gubbi's partner."
+  },
+  {
+   "signum": "DR 321",
+   "place": "Västra Karaby, Ålstorp",
+   "harad": "Harjagers hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.822276,
+   "lon": 12.999781,
+   "normalization": "§A \"Hals ok \"Frøbiorn resþu stena §B þæssi æftiR \"Hofa, felaga sin.",
+   "translation_en": "§A Hals and Freybjôrn raised these stones §B in memory of Hofi, their partner."
+  },
+  {
+   "signum": "DR 323",
+   "place": "Lilla Harrie",
+   "harad": "Harjagers hd",
+   "dating": "V Jelling",
+   "style": null,
+   "cross": false,
+   "lost": true,
+   "lat": 55.810769,
+   "lon": 13.184233,
+   "normalization": "§P Æft \"Unnar skal standa s[a] ... §Q ... æft \"Gunnar. Æ skal standa st[en] ...",
+   "translation_en": "§P In memory of Unnarr shall stand the ... §Q ... in memory of Gunnarr. Ever shall stand (the) stone ..."
+  },
+  {
+   "signum": "DR 324",
+   "place": "Stora Harrie kyrka",
+   "harad": "Harjagers hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": true,
+   "lost": false,
+   "lat": 55.805059,
+   "lon": 13.153891,
+   "normalization": "\"Birla satti ... ... æftiR \"Toka, mag sin ...",
+   "translation_en": "Birla placed ... ... in memory of Tóki, his/her kinsman-by-marriage ..."
+  },
+  {
+   "signum": "DR 325",
+   "place": "Dagstorp",
+   "harad": "Harjagers hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.70465,
+   "lon": 13.196233,
+   "normalization": "\"Sigmundr satti sten þænsi æftiR \"KlakkR(?), faþur sin.",
+   "translation_en": "Sigmundr placed this stone in memory of Klakkr(?), his father."
+  },
+  {
+   "signum": "DR 328",
+   "place": "Holmby kyrka",
+   "harad": "Frosta hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.746986,
+   "lon": 13.400325,
+   "normalization": "\"Swen resþi stena þæssi æftiR \"ÞorgiR, faþur sin.",
+   "translation_en": "Sveinn raised these stones in memory of Þorgeirr, his father."
+  },
+  {
+   "signum": "DR 329",
+   "place": "Gårdstånga 1",
+   "harad": "Frosta hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.753209,
+   "lon": 13.359205,
+   "normalization": "\"ÞolfR ok \"UlfR resþu stena þæssi æftiR \"Asmund \"Lippa, felaga sin.",
+   "translation_en": "Þólfr and Ulfr raised these stones in memory of Ásmundr Lip, their partner."
+  },
+  {
+   "signum": "DR 330",
+   "place": "Gårdstånga 2, Gårdstånga kyrka",
+   "harad": "Frosta hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.705754,
+   "lon": 13.194918,
+   "normalization": "§A \"Tosti(?) ok \"Gunnar ... stena þæssi æftiR \"... [ok] \"...biorn, felaga sin[a]. §B ÞeR drængiaR waRu w[iþa] [un]esiR i wikingu.",
+   "translation_en": "§A Tosti(?) and Gunnarr ... these stones in memory of ... [and] ...-bjôrn, their partners. §B These valiant men were widely renowned on viking raids."
+  },
+  {
+   "signum": "DR 331",
+   "place": "Gårdstånga 3, Gårdstånga kyrka",
+   "harad": "Frosta hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.705815,
+   "lon": 13.19485,
+   "normalization": "\"Azur satti stena þæssi æftiR \"Tobba.",
+   "translation_en": "Ôzurr placed these stones in memory of Tobbi."
+  },
+  {
+   "signum": "DR 333",
+   "place": "Örja",
+   "harad": "Rönnebergs hd",
+   "dating": "V Helnæs-Gørlev",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.704327,
+   "lon": 13.195013,
+   "normalization": "Stændr æft \"Frii(?)/\"Firi \"Asu [s]u[n](?) ... ... ...",
+   "translation_en": "Stand in memory of Frii(?)/Firi, Ása's son(?) ... ... ..."
+  },
+  {
+   "signum": "DR 334",
+   "place": "Västra Strö",
+   "harad": "Onsjö hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.875954,
+   "lon": 13.243049,
+   "normalization": "\"FaþiR let hoggwa runaR þæssi æftiR \"Azur, broþur sin, æs nor warþ døþr i wikingu.",
+   "translation_en": "Faðir had these runes cut in memory of Ôzurr, his brother, who died in the north on a viking raid."
+  },
+  {
+   "signum": "DR 335",
+   "place": "Västra Strö",
+   "harad": "Onsjö hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.875973,
+   "lon": 13.24308,
+   "normalization": "\"FaþiR let hoggwa sten þænsi æftiR \"Biorn, æs skip atti mæþ hanum.",
+   "translation_en": "Faðir had this stone cut in memory of Bjôrn, who owned a ship with him."
+  },
+  {
+   "signum": "DR 337",
+   "place": "Valleberga",
+   "harad": "Ingelstads hd",
+   "dating": "V kristen efter-Jelling",
+   "style": "RAK",
+   "cross": true,
+   "lost": false,
+   "lat": 55.705764,
+   "lon": 13.194981,
+   "normalization": "§A \"Swen ok \"Þorgotr/\"Þorgundr gærþu kumbl þæssi æftiR \"Manna ok \"Swena. §B \"Guþ hialpi siol þeRa wæl, æn þeR liggia i \"Lundunum.",
+   "translation_en": "§A Sveinn and Þorgautr/Þorgunn made these monuments in memory of Manni and Sveini. §B May God well help their souls. And they lie in London."
+  },
+  {
+   "signum": "DR 338",
+   "place": "Glemminge kyrka",
+   "harad": "Ingelstads hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.455519,
+   "lon": 14.02006,
+   "normalization": "\"Sweni satti sten þæssi æftiR \"Tosta hin \"Skarpa, faþur sin, harþa goþan bonda. Wærþi at ræta(?) hwas of briuti.",
+   "translation_en": "Sveini placed this stone in memory of Tosti the Sharp, his father, a very good husbandman. May whosoever breaks (it) become a warlock!"
+  },
+  {
+   "signum": "DR 339",
+   "place": "Stora Köpinge kyrka",
+   "harad": "Herrestads hd",
+   "dating": "V Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.470611,
+   "lon": 13.947626,
+   "normalization": "\"Wrestr/\"Oristr ok \"NykR ok \"Krusa resþu sten þænsi æft \"Apa/\"Æbba, felaga sin, dræng goþan.",
+   "translation_en": "Vreistr/Orrostr and Nykr and Krúsa raised this stone in memory of Api/Ebbi, their partner, a good valiant man."
+  },
+  {
+   "signum": "DR 343",
+   "place": "Östra Herrestads kyrka",
+   "harad": "Ingelstads hd",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.526041,
+   "lon": 14.165873,
+   "normalization": "\"BroþiR ok \"Toki resþu sten þænsi æftiR \"Fraþulf/\"Friþulf, faþur sin, harþa goþan þægn.",
+   "translation_en": "Bróðir and Tóki raised this stone in memory of Fraðulfr/Friðulfr, their father, a very good þegn."
+  },
+  {
+   "signum": "DR 344",
+   "place": "Simris 1, Simris kyrka",
+   "harad": "Järestads hd",
+   "dating": "V 1050-1100",
+   "style": "Pr4",
+   "cross": false,
+   "lost": false,
+   "lat": 55.53499,
+   "lon": 14.321714,
+   "normalization": "\"BiarngeR let resa sten þænna æftiR \"Rafn, broþur sin, swen \"Gunu[lf]s a \"Sweþiuþu.",
+   "translation_en": "Bjôrngeirr had this stone raised in memory of Hrafn, his brother, Gunnulfr's lad in Sweden."
+  },
+  {
+   "signum": "DR 345",
+   "place": "Simris 2, Simris kyrka",
+   "harad": "Järestads hd",
+   "dating": "V kristen efter-Jelling",
+   "style": "Fp",
+   "cross": false,
+   "lost": false,
+   "lat": 55.535008,
+   "lon": 14.321713,
+   "normalization": "\"SigrefR let resa sten þænsa æftiR \"Forkun \"<if--r>,/æf[ti]R faþur \"Asulfs, drængs \"Knuts(?)/\"Gnys(?). Hialpi \"Guþ ond hans.",
+   "translation_en": "Sigreifr had this stone raised in memory of Forkunn <if--r>,/ in memory of the father of Ásulfr, Knútr's(?)/Gnýr's(?) valiant man. May God help his spirit."
+  },
+  {
+   "signum": "DR 351",
+   "place": "?",
+   "harad": "Skåne",
+   "dating": "V efter-Jelling",
+   "style": "RAK",
+   "cross": false,
+   "lost": true,
+   "lat": null,
+   "lon": null,
+   "normalization": "\"Galin resþi sten þænsi æftiR \"Æsi, bruþur sin.",
+   "translation_en": "Galinn raised this stone in memory of Æsir, his brother."
+  },
+  {
+   "signum": "DR EM85;377",
+   "place": "Älleköpings kyrka",
+   "harad": "Villands hd",
+   "dating": "V 900-t el. b 1000-t",
+   "style": "RAK",
+   "cross": false,
+   "lost": false,
+   "lat": 55.928542,
+   "lon": 14.227628,
+   "normalization": "\"BillingR ræisti af[t] \"Skrauta stæin þænna.",
+   "translation_en": "Billingr raised this stone in memory of Skrauti."
+  },
+  {
+   "signum": "DR NOR1998;21",
+   "place": "Färlöv",
+   "harad": "Östra Göinge hd",
+   "dating": "V Helnæs-Gørlev",
+   "style": null,
+   "cross": false,
+   "lost": false,
+   "lat": 56.071251,
+   "lon": 14.084041,
+   "normalization": "§A ... §B ... ... ...",
+   "translation_en": "§A ... §B ..."
+  }
+ ],
+ "harader": {
+  "Vemmenhögs hd": 9,
+  "Herrestads hd": 8,
+  "Ljunits hd": 7,
+  "Torna hd": 7,
+  "Harjagers hd": 4,
+  "Frosta hd": 4,
+  "Skytts hd": 3,
+  "Bara hd": 3,
+  "Skåne": 3,
+  "Ingelstads hd": 3,
+  "Onsjö hd": 2,
+  "Järestads hd": 2,
+  "Oxie hd": 1,
+  "Rönnebergs hd": 1,
+  "Villands hd": 1,
+  "Östra Göinge hd": 1
+ },
+ "dating": {
+  "Skåne": {
+   "efter-Jelling": 44,
+   "kristen efter-Jelling": 5,
+   "V?": 2,
+   "Jelling": 2,
+   "Helnæs-Gørlev": 2,
+   "efter-Jelling(?)": 1,
+   "V": 1,
+   "1050-1100": 1,
+   "900-t el. b 1000-t": 1
+  },
+  "Danmark": {
+   "efter-Jelling": 43,
+   "Jelling": 27,
+   "Helnæs-Gørlev": 11,
+   "V": 11,
+   "för-Jelling": 9,
+   "kristen efter-Jelling": 7,
+   "Jelling el. efter-Jelling": 5,
+   "V?": 3,
+   "1050-1150": 3,
+   "Jelling, efter år 934": 2,
+   "Jelling(?)": 2,
+   "ca 1000": 2,
+   "Jelling, 2. hälften av 900-t": 1,
+   "efter-jelling": 1,
+   "Jelling el. kristen efter-Jelling": 1,
+   "periode 3.2": 1,
+   "Helnæs-Gørlev, ca 750-900": 1,
+   "Helnæs-Gørlev/för-Jelling": 1,
+   "Jelling/efter-Jelling": 1,
+   "1000-t": 1,
+   "b 1000-t": 1,
+   "(950-1000, typologisk datering)": 1,
+   "700-900": 1,
+   "950-975": 1,
+   "800-900-t": 1
+  }
+ },
+ "efter_jelling": {
+  "Skåne": 50,
+  "Danmark": 50
+ },
+ "lost": 8,
+ "compare": {
+  "ræisti/satti själv": {
+   "Skåne": {
+    "n": 41,
+    "share": 0.6949152542372882
+   },
+   "Danmark": {
+    "n": 70,
+    "share": 0.5072463768115942
+   },
+   "Bornholm": {
+    "n": 10,
+    "share": 0.2564102564102564
+   },
+   "Västergötland": {
+    "n": 96,
+    "share": 0.732824427480916
+   },
+   "Småland": {
+    "n": 49,
+    "share": 0.4049586776859504
+   },
+   "Östergötland": {
+    "n": 117,
+    "share": 0.527027027027027
+   },
+   "Södermanland": {
+    "n": 131,
+    "share": 0.3608815426997245
+   },
+   "Uppland": {
+    "n": 99,
+    "share": 0.08404074702886248
+   }
+  },
+  "lät (let) göra": {
+   "Skåne": {
+    "n": 6,
+    "share": 0.1016949152542373
+   },
+   "Danmark": {
+    "n": 5,
+    "share": 0.036231884057971016
+   },
+   "Bornholm": {
+    "n": 15,
+    "share": 0.38461538461538464
+   },
+   "Västergötland": {
+    "n": 3,
+    "share": 0.022900763358778626
+   },
+   "Småland": {
+    "n": 19,
+    "share": 0.15702479338842976
+   },
+   "Östergötland": {
+    "n": 20,
+    "share": 0.09009009009009009
+   },
+   "Södermanland": {
+    "n": 88,
+    "share": 0.24242424242424243
+   },
+   "Uppland": {
+    "n": 580,
+    "share": 0.4923599320882852
+   }
+  },
+  "dræng": {
+   "Skåne": {
+    "n": 9,
+    "share": 0.15254237288135594
+   },
+   "Danmark": {
+    "n": 5,
+    "share": 0.036231884057971016
+   },
+   "Bornholm": {
+    "n": 2,
+    "share": 0.05128205128205128
+   },
+   "Västergötland": {
+    "n": 16,
+    "share": 0.12213740458015267
+   },
+   "Småland": {
+    "n": 2,
+    "share": 0.01652892561983471
+   },
+   "Östergötland": {
+    "n": 11,
+    "share": 0.04954954954954955
+   },
+   "Södermanland": {
+    "n": 10,
+    "share": 0.027548209366391185
+   },
+   "Uppland": {
+    "n": 10,
+    "share": 0.008488964346349746
+   }
+  },
+  "þegn": {
+   "Skåne": {
+    "n": 5,
+    "share": 0.0847457627118644
+   },
+   "Danmark": {
+    "n": 12,
+    "share": 0.08695652173913043
+   },
+   "Bornholm": {
+    "n": 1,
+    "share": 0.02564102564102564
+   },
+   "Västergötland": {
+    "n": 18,
+    "share": 0.13740458015267176
+   },
+   "Småland": {
+    "n": 3,
+    "share": 0.024793388429752067
+   },
+   "Östergötland": {
+    "n": 2,
+    "share": 0.009009009009009009
+   },
+   "Södermanland": {
+    "n": 10,
+    "share": 0.027548209366391185
+   },
+   "Uppland": {
+    "n": 12,
+    "share": 0.010186757215619695
+   }
+  },
+  "felagi": {
+   "Skåne": {
+    "n": 8,
+    "share": 0.13559322033898305
+   },
+   "Danmark": {
+    "n": 5,
+    "share": 0.036231884057971016
+   },
+   "Bornholm": {
+    "n": 0,
+    "share": 0.0
+   },
+   "Västergötland": {
+    "n": 3,
+    "share": 0.022900763358778626
+   },
+   "Småland": {
+    "n": 0,
+    "share": 0.0
+   },
+   "Östergötland": {
+    "n": 0,
+    "share": 0.0
+   },
+   "Södermanland": {
+    "n": 1,
+    "share": 0.0027548209366391185
+   },
+   "Uppland": {
+    "n": 1,
+    "share": 0.0008488964346349745
+   }
+  },
+  "harþa goþan": {
+   "Skåne": {
+    "n": 8,
+    "share": 0.13559322033898305
+   },
+   "Danmark": {
+    "n": 9,
+    "share": 0.06521739130434782
+   },
+   "Bornholm": {
+    "n": 0,
+    "share": 0.0
+   },
+   "Västergötland": {
+    "n": 24,
+    "share": 0.183206106870229
+   },
+   "Småland": {
+    "n": 0,
+    "share": 0.0
+   },
+   "Östergötland": {
+    "n": 1,
+    "share": 0.0045045045045045045
+   },
+   "Södermanland": {
+    "n": 0,
+    "share": 0.0
+   },
+   "Uppland": {
+    "n": 0,
+    "share": 0.0
+   }
+  },
+  "goþan/goþr": {
+   "Skåne": {
+    "n": 12,
+    "share": 0.2033898305084746
+   },
+   "Danmark": {
+    "n": 21,
+    "share": 0.15217391304347827
+   },
+   "Bornholm": {
+    "n": 6,
+    "share": 0.15384615384615385
+   },
+   "Västergötland": {
+    "n": 38,
+    "share": 0.2900763358778626
+   },
+   "Småland": {
+    "n": 4,
+    "share": 0.03305785123966942
+   },
+   "Östergötland": {
+    "n": 18,
+    "share": 0.08108108108108109
+   },
+   "Södermanland": {
+    "n": 25,
+    "share": 0.06887052341597796
+   },
+   "Uppland": {
+    "n": 55,
+    "share": 0.0466893039049236
+   }
+  },
+  "Guð": {
+   "Skåne": {
+    "n": 3,
+    "share": 0.05084745762711865
+   },
+   "Danmark": {
+    "n": 4,
+    "share": 0.028985507246376812
+   },
+   "Bornholm": {
+    "n": 15,
+    "share": 0.38461538461538464
+   },
+   "Västergötland": {
+    "n": 5,
+    "share": 0.03816793893129771
+   },
+   "Småland": {
+    "n": 15,
+    "share": 0.12396694214876033
+   },
+   "Östergötland": {
+    "n": 12,
+    "share": 0.05405405405405406
+   },
+   "Södermanland": {
+    "n": 54,
+    "share": 0.1487603305785124
+   },
+   "Uppland": {
+    "n": 165,
+    "share": 0.1400679117147708
+   }
+  },
+  "bortom bygden": {
+   "Skåne": {
+    "n": 8,
+    "share": 0.13559322033898305
+   },
+   "Danmark": {
+    "n": 2,
+    "share": 0.014492753623188406
+   },
+   "Bornholm": {
+    "n": 0,
+    "share": 0.0
+   },
+   "Västergötland": {
+    "n": 4,
+    "share": 0.030534351145038167
+   },
+   "Småland": {
+    "n": 3,
+    "share": 0.024793388429752067
+   },
+   "Östergötland": {
+    "n": 8,
+    "share": 0.036036036036036036
+   },
+   "Södermanland": {
+    "n": 23,
+    "share": 0.06336088154269973
+   },
+   "Uppland": {
+    "n": 25,
+    "share": 0.021222410865874362
+   }
+  },
+  "drottin/hemþegn": {
+   "Skåne": {
+    "n": 3,
+    "share": 0.05084745762711865
+   },
+   "Danmark": {
+    "n": 7,
+    "share": 0.050724637681159424
+   },
+   "Bornholm": {
+    "n": 1,
+    "share": 0.02564102564102564
+   },
+   "Västergötland": {
+    "n": 1,
+    "share": 0.007633587786259542
+   },
+   "Småland": {
+    "n": 0,
+    "share": 0.0
+   },
+   "Östergötland": {
+    "n": 0,
+    "share": 0.0
+   },
+   "Södermanland": {
+    "n": 0,
+    "share": 0.0
+   },
+   "Uppland": {
+    "n": 4,
+    "share": 0.003395585738539898
+   }
+  },
+  "bonda": {
+   "Skåne": {
+    "n": 6,
+    "share": 0.1016949152542373
+   },
+   "Danmark": {
+    "n": 1,
+    "share": 0.007246376811594203
+   },
+   "Bornholm": {
+    "n": 2,
+    "share": 0.05128205128205128
+   },
+   "Västergötland": {
+    "n": 10,
+    "share": 0.07633587786259542
+   },
+   "Småland": {
+    "n": 2,
+    "share": 0.01652892561983471
+   },
+   "Östergötland": {
+    "n": 16,
+    "share": 0.07207207207207207
+   },
+   "Södermanland": {
+    "n": 23,
+    "share": 0.06336088154269973
+   },
+   "Uppland": {
+    "n": 95,
+    "share": 0.08064516129032258
+   }
+  },
+  "kumbl": {
+   "Skåne": {
+    "n": 6,
+    "share": 0.1016949152542373
+   },
+   "Danmark": {
+    "n": 19,
+    "share": 0.13768115942028986
+   },
+   "Bornholm": {
+    "n": 2,
+    "share": 0.05128205128205128
+   },
+   "Västergötland": {
+    "n": 14,
+    "share": 0.10687022900763359
+   },
+   "Småland": {
+    "n": 16,
+    "share": 0.1322314049586777
+   },
+   "Östergötland": {
+    "n": 12,
+    "share": 0.05405405405405406
+   },
+   "Södermanland": {
+    "n": 10,
+    "share": 0.027548209366391185
+   },
+   "Uppland": {
+    "n": 5,
+    "share": 0.004244482173174873
+   }
+  },
+  "RAK": {
+   "Skåne": {
+    "n": 49,
+    "share": 0.8305084745762712
+   },
+   "Danmark": {
+    "n": 104,
+    "share": 0.7536231884057971
+   },
+   "Bornholm": {
+    "n": 28,
+    "share": 0.717948717948718
+   },
+   "Västergötland": {
+    "n": 81,
+    "share": 0.6183206106870229
+   },
+   "Småland": {
+    "n": 36,
+    "share": 0.2975206611570248
+   },
+   "Östergötland": {
+    "n": 95,
+    "share": 0.42792792792792794
+   },
+   "Södermanland": {
+    "n": 28,
+    "share": 0.07713498622589532
+   },
+   "Uppland": {
+    "n": 50,
+    "share": 0.042444821731748725
+   }
+  },
+  "kors": {
+   "Skåne": {
+    "n": 8,
+    "share": 0.13559322033898305
+   },
+   "Danmark": {
+    "n": 8,
+    "share": 0.057971014492753624
+   },
+   "Bornholm": {
+    "n": 12,
+    "share": 0.3076923076923077
+   },
+   "Västergötland": {
+    "n": 44,
+    "share": 0.33587786259541985
+   },
+   "Småland": {
+    "n": 41,
+    "share": 0.33884297520661155
+   },
+   "Östergötland": {
+    "n": 96,
+    "share": 0.43243243243243246
+   },
+   "Södermanland": {
+    "n": 172,
+    "share": 0.4738292011019284
+   },
+   "Uppland": {
+    "n": 558,
+    "share": 0.47368421052631576
+   }
+  }
+ },
+ "lists": {
+  "ræisti/satti själv": [
+   "DR 258",
+   "DR 259",
+   "DR 260",
+   "DR 262",
+   "DR 265",
+   "DR 266",
+   "DR 268",
+   "DR 270",
+   "DR 271",
+   "DR 272",
+   "DR 275",
+   "DR 276",
+   "DR 278",
+   "DR 279",
+   "DR 280",
+   "DR 281",
+   "DR 282",
+   "DR 283",
+   "DR 287",
+   "DR 288",
+   "DR 289",
+   "DR 291",
+   "DR 294",
+   "DR 295",
+   "DR 296",
+   "DR 297",
+   "DR 298",
+   "DR 314",
+   "DR 316",
+   "DR 317",
+   "DR 321",
+   "DR 324",
+   "DR 325",
+   "DR 328",
+   "DR 329",
+   "DR 331",
+   "DR 338",
+   "DR 339",
+   "DR 343",
+   "DR 351",
+   "DR EM85;377"
+  ],
+  "lät (let) göra": [
+   "DR 293",
+   "DR 315",
+   "DR 334",
+   "DR 335",
+   "DR 344",
+   "DR 345"
+  ],
+  "dræng": [
+   "DR 262",
+   "DR 268",
+   "DR 276",
+   "DR 288",
+   "DR 289",
+   "DR 295",
+   "DR 330",
+   "DR 339",
+   "DR 345"
+  ],
+  "þegn": [
+   "DR 277",
+   "DR 278",
+   "DR 293",
+   "DR 294",
+   "DR 343"
+  ],
+  "felagi": [
+   "DR 262",
+   "DR 270",
+   "DR 279",
+   "DR 318",
+   "DR 321",
+   "DR 329",
+   "DR 330",
+   "DR 339"
+  ],
+  "harþa goþan": [
+   "DR 268",
+   "DR 276",
+   "DR 278",
+   "DR 288",
+   "DR 289",
+   "DR 294",
+   "DR 338",
+   "DR 343"
+  ],
+  "goþan/goþr": [
+   "DR 262",
+   "DR 268",
+   "DR 276",
+   "DR 278",
+   "DR 288",
+   "DR 289",
+   "DR 294",
+   "DR 298",
+   "DR 314",
+   "DR 338",
+   "DR 339",
+   "DR 343"
+  ],
+  "Guð": [
+   "DR 259",
+   "DR 337",
+   "DR 345"
+  ],
+  "bortom bygden": [
+   "DR 259",
+   "DR 266",
+   "DR 279",
+   "DR 295",
+   "DR 330",
+   "DR 334",
+   "DR 337",
+   "DR 344"
+  ],
+  "drottin/hemþegn": [
+   "DR 295",
+   "DR 296",
+   "DR 297"
+  ],
+  "bonda": [
+   "DR 277",
+   "DR 291",
+   "DR 298",
+   "DR 314",
+   "DR 317",
+   "DR 338"
+  ],
+  "kumbl": [
+   "DR 271",
+   "DR 277",
+   "DR 293",
+   "DR 294",
+   "DR 318",
+   "DR 337"
+  ]
+ },
+ "no_king_no_denmark": {
+  "kunung": [],
+  "danmark": []
+ }
+}
