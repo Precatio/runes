@@ -81,6 +81,27 @@ assert "Swen kunungR satti sten æftiR \"Skarþa, sin hemþæga" in nrm(by_all["
 assert "skipari \"Haralds kunungs" in nrm(by_all["Sm 42"]) and "eR barþus kunungaR" in nrm(by_all["Vg 40"]) and "þa kunungaR barþusk" in nrm(by_all["DR 66"])
 assert "landmanna bæztr i \"Danmarku ok fyrstr" in nrm(by_all["DR 133"]) and "a \"Danmarku i hwitawaþum" in nrm(by_all["U 699"]).replace("hvitavaðum", "hwitawaþum") or "Danmarku i hvitava" in (by_all["U 699"].get("normalization") or "")
 assert "han warþ døþr a \"Sweþiuþu" in nrm(by_all["DR 216"])
+# The language: the diphthong of stæinn kept (stain) or gone (stin), counted in the transliterations per region
+def reg_all(r):
+    s_ = r["signum"].split()[0]
+    if s_ == "DR":
+        d = (r.get("district") or "") + " " + (r.get("municipality") or "")
+        if "Skåne" in d:
+            return "Skåne"
+        return None if ("Bornholm" in d or "Blekinge" in d or "Halland" in d) else "Danmark"
+    return {"Vg": "Västergötland", "Ög": "Östergötland", "U": "Uppland", "Sö": "Södermanland"}.get(s_)
+
+
+def diphthong(reg):
+    rs = [r for r in ALL if reg_all(r) == reg]
+    stain = sum(len(re.findall(r"\bst[ae]in\b", r.get("transliteration") or "")) for r in rs)
+    stin = sum(len(re.findall(r"\bst[ie]n\b", r.get("transliteration") or "")) for r in rs)
+    return stain, stin
+
+
+DIP = {reg: diphthong(reg) for reg in ("Danmark", "Skåne", "Västergötland", "Östergötland", "Södermanland", "Uppland")}
+assert DIP == {"Danmark": (19, 55), "Skåne": (8, 22), "Västergötland": (13, 69), "Östergötland": (28, 72), "Södermanland": (118, 38), "Uppland": (270, 188)}
+mono = lambda reg: pr(DIP[reg][1] / sum(DIP[reg]))  # noqa: E731  share written without the diphthong
 # Jelling: Harald's stone DR 42 claims all Denmark
 J = next(r for r in ins if r["signum"] == "DR 42")
 assert "wan \"Danmork" in J["normalization"] and "dani gærþi kristna" in J["normalization"]
@@ -184,6 +205,12 @@ Vid Hällestads kyrka i Torna härad sitter tre stenar i kyrkväggen. Den först
 
 Forskningen brukar knyta de fyra stenarna till slaget på Fyrisvallarna utanför Uppsala omkring 985, där en dansk här stred mot sveakungen. Vad de säger om tillhörighet är tydligt nog utan slaget: skåningarna for till Uppsala för att slåss *mot* svearna, under en skånsk herre, Toke Gormsson, och det som räknades hemma var att man inte flydde. Sverige var det ställe där Ravn var Gunnulvs sven, någon annanstans.
 
+## Samma språk som fienden
+
+En sak till om Uppsala. De som for dit för att slåss mot svearna talade svearnas språk. Hela Norden kallade sitt språk *dǫnsk tunga*, den danska tungan, och på runstenarna är grammatiken och orden desamma från Jylland till Uppland; det som skiljer dem åt är seder – *satti*, *reste själv*, fälagen – inte språket. Det som i dag gör att en skåning och en stockholmare förstår en dansk med nöd och näppe hände nästan helt efter runstenarnas tid: att *kaka* blev *kage* och *gata* blev *gade*, att ändelserna slätades ut och stötljudet kom, allt från 1100- och 1200-talen och framåt.
+
+En enda förändring var på väg, och den syns i runorna. Diftongen i *stæinn* höll på att bli *e*: *stain* blev *stin*. I Danmark skrivs ordet utan diftong på {mono('Danmark')} procent av beläggen, i Skåne på {mono('Skåne')}. Men det gör Västergötland också, på {mono('Västergötland')} procent, och Östergötland på {mono('Östergötland')}. Det är Södermanland ({mono('Södermanland')} procent) och Uppland ({mono('Uppland')}) som håller fast vid *stain*. Gränsen i språket gick alltså inte vid Öresund utan tvärs genom Sverige, mellan götar och svear – samma gräns som stavningen ritade i [Västgötarna skrev som danskarna](/artiklar/vastgotarna-skrev-som-danskarna). En skåning och en västgöte lät likadant omkring år 1000. Den som avvek var upplänningen, och det var ändå ett uttal, inte ett annat språk. Toke Gormssons män och svearna vid Uppsala förstod varandra utan tolk. De var fiender, inte främlingar.
+
 Men herren är inte riket. Det som stenarna håller fast vid är mindre och närmare: fälagen, brodern, fadern, gården. Tume ägde Gudissnapa (DR 280). Folkve ägde Högby (DR 264). Bram vid Sövestad var *bæztr bomanna ok mildastr mataR*, den bäste av bönder och den mest frikostige med mat (DR 291); Olav och Ottar vid Lund var *landmænnr goþa*, goda landmän (DR 314); Stenkel vid Dalby *goþan bonda* (DR 298). Hunnestads stenar står efter Gunne Hands söner (DR 282). Det är så en skåning omkring år 1000 säger var han hör hemma: hos sin herre, bland sina fälagar, på sin gård, i sin by. Riket säger han ingenting om.
 
 ## Gud kom till sist – och stenarna tystnade
@@ -203,12 +230,12 @@ Vill du pröva det själv, gå till Hällestads kyrka. Stenarna sitter i väggen
 :::box Det viktigaste i korthet
 - Skånes {N['Skåne']} runstenar restes i en enda generation, årtiondena omkring år 1000, och de talar som Danmarks och Västergötlands stenar: den som reste gjorde det själv, utan ornamentik, nästan utan kors, och efter ”en mycket god dräng”.
 - Det som utmärker dem är fälagen och havet: inga stenar i Norden nämner så ofta en fälage, och ingen landsdel pekar så ofta bortom bygden – Uppsala, Gotland, London, viking.
-- Ingen sten nämner kung eller rike – och det gör nästan ingen runsten i Norden: åtta av 2 633 nämner en kung, fyra av dem kungarnas egna. Tillhörigheten på stenarna är en herre, fälagar, bröder och gården; vid Hällestad och Sjörup är den också att inte ha flytt vid Uppsala, på danskt uppdrag mot svearna.
+- Ingen sten nämner kung eller rike – och det gör nästan ingen runsten i Norden: åtta av 2 633 nämner en kung, fyra av dem kungarnas egna. Tillhörigheten på stenarna är en herre, fälagar, bröder och gården; vid Hällestad och Sjörup är den också att inte ha flytt vid Uppsala, på danskt uppdrag mot svearna – som talade samma språk. Det som gör danska svårt för oss i dag kom först efter runstenarnas tid.
 - Stenarna tystnar omkring 1050, när Mälardalens är som flest. Det Skåne sade med egen röst sade det före kyrkan och riket tog över minnet.
 :::
 
 :::box Så räknade vi
-Vikingatida runstenar (också fragment) i Samnordisk runtextdatabas 3.1; Skåne är de DR-stenar vars härad ligger i Skåne, Danmark de övriga danska utom Bornholm, Blekinge och Halland. Orden är räknade i Rundatas normalisering, med dansk och svensk stavning sammanförd: *felagi*, *dræng*, *þegn*, *harþa goþan*, *let* mot *resþi/satti*, Gud, och platser bortom bygden (Uppsala, Gotland, London, viking, västerut, Sverige). Dateringarna är Rundatas (Jellingstenens tid omkring 965 som gräns). Allt är beskrivande – andelar, inga test – och ligger öppet i kodförrådet (utdata/skane). Kartans gränser är Vitkis rikeskarta omkring 1025, ungefärliga.
+Vikingatida runstenar (också fragment) i Samnordisk runtextdatabas 3.1; Skåne är de DR-stenar vars härad ligger i Skåne, Danmark de övriga danska utom Bornholm, Blekinge och Halland. Orden är räknade i Rundatas normalisering, med dansk och svensk stavning sammanförd: *felagi*, *dræng*, *þegn*, *harþa goþan*, *let* mot *resþi/satti*, Gud, och platser bortom bygden (Uppsala, Gotland, London, viking, västerut, Sverige). Dateringarna är Rundatas (Jellingstenens tid omkring 965 som gräns). Diftongen är räknad i translittereringarna: *stain* och *stein* mot *stin* och *sten*, alla belägg i varje landskap. Allt är beskrivande – andelar, inga test – och ligger öppet i kodförrådet (utdata/skane). Kartans gränser är Vitkis rikeskarta omkring 1025, ungefärliga.
 :::
 
 ## Källor
