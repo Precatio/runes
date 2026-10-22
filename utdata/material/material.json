@@ -1,0 +1,696 @@
+{
+ "n_total": 6753,
+ "period": {
+  "V": 3662,
+  "M": 2748,
+  "?": 62,
+  "U": 281
+ },
+ "material_by_period": {
+  "U": {
+   "sten": 70,
+   "metall": 181,
+   "ben/horn": 15,
+   "trä": 14
+  },
+  "V": {
+   "sten": 3264,
+   "metall": 223,
+   "ben/horn": 129,
+   "trä": 34
+  },
+  "M": {
+   "sten": 794,
+   "metall": 228,
+   "ben/horn": 243,
+   "trä": 1221
+  }
+ },
+ "summary": {
+  "M|ben/horn": {
+   "n": 243,
+   "median_words": 3,
+   "kinds": {
+    "oläsligt": 98,
+    "namn/ägare": 52,
+    "futhark": 37,
+    "meddelande/annat": 32,
+    "tillverkare/ristare": 13,
+    "bön/religiös": 10,
+    "besvärjelse/skydd": 1
+   }
+  },
+  "M|metall": {
+   "n": 228,
+   "median_words": 8,
+   "kinds": {
+    "oläsligt": 70,
+    "bön/religiös": 54,
+    "namn/ägare": 36,
+    "meddelande/annat": 28,
+    "besvärjelse/skydd": 21,
+    "tillverkare/ristare": 15,
+    "futhark": 4
+   }
+  },
+  "M|sten": {
+   "n": 794,
+   "median_words": 6,
+   "kinds": {
+    "oläsligt": 169,
+    "namn/ägare": 143,
+    "bön/religiös": 141,
+    "meddelande/annat": 140,
+    "tillverkare/ristare": 137,
+    "futhark": 36,
+    "minnesinskrift": 26,
+    "besvärjelse/skydd": 2
+   }
+  },
+  "M|trä": {
+   "n": 1221,
+   "median_words": 4,
+   "kinds": {
+    "oläsligt": 422,
+    "namn/ägare": 334,
+    "meddelande/annat": 168,
+    "bön/religiös": 136,
+    "futhark": 94,
+    "tillverkare/ristare": 43,
+    "besvärjelse/skydd": 23,
+    "minnesinskrift": 1
+   }
+  },
+  "U|ben/horn": {
+   "n": 15,
+   "median_words": 3,
+   "kinds": {
+    "oläsligt": 4,
+    "namn/ägare": 4,
+    "meddelande/annat": 3,
+    "besvärjelse/skydd": 3,
+    "tillverkare/ristare": 1
+   }
+  },
+  "U|metall": {
+   "n": 181,
+   "median_words": 2,
+   "kinds": {
+    "oläsligt": 76,
+    "namn/ägare": 49,
+    "besvärjelse/skydd": 22,
+    "meddelande/annat": 17,
+    "bön/religiös": 8,
+    "futhark": 7,
+    "tillverkare/ristare": 2
+   }
+  },
+  "U|sten": {
+   "n": 70,
+   "median_words": 3,
+   "kinds": {
+    "namn/ägare": 26,
+    "meddelande/annat": 22,
+    "oläsligt": 13,
+    "besvärjelse/skydd": 2,
+    "tillverkare/ristare": 2,
+    "minnesinskrift": 2,
+    "bön/religiös": 2,
+    "futhark": 1
+   }
+  },
+  "U|trä": {
+   "n": 14,
+   "median_words": 5,
+   "kinds": {
+    "oläsligt": 6,
+    "besvärjelse/skydd": 4,
+    "meddelande/annat": 3,
+    "namn/ägare": 1
+   }
+  },
+  "V|ben/horn": {
+   "n": 129,
+   "median_words": 4,
+   "kinds": {
+    "oläsligt": 44,
+    "namn/ägare": 34,
+    "meddelande/annat": 24,
+    "futhark": 18,
+    "tillverkare/ristare": 5,
+    "besvärjelse/skydd": 2,
+    "bön/religiös": 2
+   }
+  },
+  "V|metall": {
+   "n": 223,
+   "median_words": 3,
+   "kinds": {
+    "namn/ägare": 143,
+    "oläsligt": 43,
+    "meddelande/annat": 20,
+    "tillverkare/ristare": 6,
+    "bön/religiös": 5,
+    "futhark": 4,
+    "besvärjelse/skydd": 2
+   }
+  },
+  "V|sten": {
+   "n": 3264,
+   "median_words": 11,
+   "kinds": {
+    "minnesinskrift": 1981,
+    "oläsligt": 564,
+    "meddelande/annat": 369,
+    "namn/ägare": 132,
+    "bön/religiös": 109,
+    "tillverkare/ristare": 101,
+    "futhark": 7,
+    "besvärjelse/skydd": 1
+   }
+  },
+  "V|trä": {
+   "n": 34,
+   "median_words": 8,
+   "kinds": {
+    "oläsligt": 11,
+    "meddelande/annat": 8,
+    "namn/ägare": 5,
+    "tillverkare/ristare": 5,
+    "futhark": 4,
+    "bön/religiös": 1
+   }
+  }
+ },
+ "stand": [
+  {
+   "signum": "Ög 136",
+   "place": "Röks kyrkogård",
+   "text": "A Aft Vamoþ standa runaR þaR",
+   "translation_en": "§A In memory of Vámóðr stand these runes. And Varinn coloured them, the father, in memory of his dead son. I say the folktale / to the young men, which the two war-booties were, which twelve times were taken as war-booty, both together from various men. I say this second, who nine generations ago lost his life with the Hreidgoths; and died with them for his guilt. Þjóðríkr the bold, chief of sea-warriors, ruled over the shores of the Hreiðsea. Now he sits armed on §B his Goth(ic horse), his shield strapped, the prince of the Mærings. §C I say this the twelfth, where the horse of Gunnr sees fodder on the battlefield, where twenty kings lie. This I say as thirteenth, which twenty kings sat on Sjólund for four winters, of four names, born of four brothers: five Valkis, sons of Ráðulfr, five Hreiðulfrs, sons of Rugulfr, five Háisl, sons of Hôrðr, five Gunnmundrs/Kynmundrs, sons of Bjôrn. Now I say the tales in full. Someone ... I say the folktale / to the young men, which of the line of Ingold was repaid by a wife's sacrifice. I say the folktale / to the young men, to whom is born a relative, to a valiant man. It is Vélinn. He could crush a giant. It is Vélinn ... §D I say the folktale / to the young men: Þórr. §E Sibbi of Vé, §C nonagenarian, begot (a son).",
+   "normalization": "§A Aft Vamoð standa runaR þaR. Æn Varinn faði, faðiR, aft faigian sunu. Sagum mogminni/ungmænni þat, hværiaR valraufaR vaRin tvaR þaR, svað tvalf sinnum vaRin numnaR at valraufu, baðaR saman a ymissum mannum. Þat sagum annart, hvaR fur niu aldum an urði fiaru meðr Hraiðgutum, auk do meðr hann umb sakaR. Reð ÞioðrikR hinn þurmoði, stilliR flutna, strandu HraiðmaraR. SitiR nu garuR a §B guta sinum, skialdi umb fatlaðR, skati Mæringa. §C Þat sagum tvalfta, hvar hæstR se GunnaR etu vettvangi a, kunungaR tvaiR tigiR svað a liggia. Þat sagum þrettaunda, hvariR tvaiR tigiR kunungaR satin at Siolundi fiagura vintur at fiagurum nampnum, burniR fiagurum brøðrum. ValkaR fim, Raðulfs syniR, HraiðulfaR fim, Rugulfs syniR, HaislaR fim, Haruðs syniR, GunnmundaR/KynmundaR fim, BiarnaR syniR. Nu'k m[inni] m[eðr] allu [sa]gi. AinhvaRR ... [sva]ð ... æftiR fra. Sagum mogminni/ungmænni þat, hvaR Inguldinga vaRi guldinn at kvanaR husli. Sagum mogminni/ungmænni, hvaim se burinn niðR drængi. Vilinn es þat. Knua/knyia knatti iatun. Vilinn es þat ... §D [S]agum mogminni/ungmænni: Þorr. §E Sibbi viaværi §C ol nirøðR."
+  },
+  {
+   "signum": "Sö 18",
+   "place": "Hölö kyrka",
+   "text": "[Her ska]l standa stæi[nn]",
+   "translation_en": "... had the monument erected in memory of ... their ... Hákon cut the landmark. ... made. Here shall the stone stand ...",
+   "normalization": "... letu kumbl retta æft[iR] ... ... sinn. \"Hakon hio mærki. ... gi[ærði]. [Her ska]l standa stæi[nn] ..."
+  },
+  {
+   "signum": "Sö 61",
+   "place": "Ösby",
+   "text": "\"Þorstæinn let þenna retta stæin, hæfila(?) stændr æftiR \"Þorbiorn, \"Salvi ok \"Smiþr at senn broþur",
+   "translation_en": "Þorsteinn had this stone erected, (and) Salvi and Smiðr in memory of their brother: it competently(?) stands in memory of Þorbjôrn.",
+   "normalization": "\"Þorstæinn let þenna retta stæin, hæfila(?) stændr æftiR \"Þorbiorn, \"Salvi ok \"Smiðr at senn broður."
+  },
+  {
+   "signum": "Sö 122",
+   "place": "Skresta",
+   "text": "Stæinn standr at \"Hastæin",
+   "translation_en": "The stone stands in memory of Hásteinn. The father raised (it) himself in memory of (his) dead son. Ásgautr made ...",
+   "normalization": "Stæinn standr at \"Hastæin. Ræisþi sialfR faðiR at sun dauðan. \"Asgautr gærði <tre>."
+  },
+  {
+   "signum": "Sö 137",
+   "place": "Aspa",
+   "text": "BP Stæinn saRsi standr at \"Øpi a þingstaþi at \"Þoru ver",
+   "translation_en": "§A Þóra raised this stone in memory of Œpir, her husbandman. §BP This stone stands in memory of Œpir, on the Assembly-place in memory of Þóra's husband. He armed(?) (his) men in the west. The son saw this there ... §BQ This stone stands in memory of Œpir, on the Assembly-place in memory of Þóra's husband. He armed(?) (his) men in the west. ...",
+   "normalization": "§A \"Þora ræisþi stæin þ[ann]si at \"Øpi, boanda sinn. §BP Stæinn saRsi standr at \"Øpi a þingstaði at \"Þoru ver. Hann vestarla væknti(?) karla, sa þaR sunR það. ... §BQ Stæinn saRsi standr at \"Øpi a þingstaði at \"Þoru ver. Hann vestarla væknti(?) karla. ... ... ... ..."
+  },
+  {
+   "signum": "Sö 138",
+   "place": "Aspa",
+   "text": "Hier stændr stæinn at goþan \"Øpis arfa ok \"ÞorunnaR, \"Gyllu broþurs",
+   "translation_en": "Here stands the stone in memory of Œpir's and Þórunnr's good heir, Gylla's brother. May God help (his) spirit.",
+   "normalization": "Hier stændr stæinn at goðan \"Øpis arfa ok \"ÞorunnaR, \"Gyllu broðurs. \"Guð hialpin and."
+  },
+  {
+   "signum": "Sö 159",
+   "place": "Österberga",
+   "text": "Hann vestr hafR of vaRit længi",
+   "translation_en": "Ingjaldr and Ôlvir raised this stone in memory of Þorbjôrn, their father. He has been long in the west. Hrœríkr(?), Guðmundr(?), <biu>. Gunnleifr cut the runes.",
+   "normalization": "\"Ingialdr ok \"AlveR/\"ØlveR ræisþu stæin þannsi at \"Þorbiorn, faður sinn. Hann vestr hafR of vaRit længi. \"HrøRikR(?), \"Guðmundr(?), \"<biu>. \"GunnlæifR hiogg ru[n]aR."
+  },
+  {
+   "signum": "Sö 173",
+   "place": "Tystberga",
+   "text": "B Hann hafþi vestarla um vaRit længi, dou austarla meþ \"Ingvari",
+   "translation_en": "§A Myskja and Manni/Máni had these monuments raised in memory of their brother Hróðgeirr and their father Holmsteinn. §B He had long been in the west; died in the east with Ingvarr.",
+   "normalization": "§A \"Myskia ok \"Manni/\"Mani letu ræisa kumbl þausi at broður sinn \"HroðgæiR ok faður sinn \"Holmstæin. §B Hann hafði vestarla um vaRit længi, dou austarla með \"Ingvari."
+  },
+  {
+   "signum": "Sö 204",
+   "place": "Överselö kyrka",
+   "text": "P Her skal standa stæinn <",
+   "translation_en": "§P Here shall the stone stand ... ... Várfeitr(?) in memory of his father's brother. §Q Here shall the stone stand [in memory of] Ingjaldr, [red of] runes, [raised it] Vôrrfeitr in memory of his father's brother.",
+   "normalization": "§P Her skal standa stæinn <...kialt> <runi...> ... \"Varfæitr(?) æftiR faðursbroður senn. §Q Her skal standa stæinn [at \"In]giald, runu[m ruðinn, ræisti] \"Varrfæitr æftiR faðursbroður senn."
+  },
+  {
+   "signum": "Sö 206",
+   "place": "Överselö kyrka",
+   "text": "Her skal standa stæinaR þessiR, runum ru[þ]niR, ræisti \"G[uþl]aug at syni sina, ok \"Hialmlaug at brøþr sina",
+   "translation_en": "Here shall these stones stand, reddened with runes: Guðlaug raised (them) in memory of her sons; and Hjalmlaug in memory of her brothers.",
+   "normalization": "Her skal standa stæinaR þessiR, runum ru[ð]niR, ræisti \"G[uðl]aug at syni sina, ok \"Hialmlaug at brøðr sina."
+  },
+  {
+   "signum": "Sö 340",
+   "place": "Östra Kumla",
+   "text": "Stæinn saRsi standr at \"Frosta, \"IngirunaR sun ok \"Guþlæifs",
+   "translation_en": "This stone stands in memory of Frosti, Ingirún and Guðleifr's son. Óleifr raised (this) in memory of his brother. Cross.",
+   "normalization": "Stæinn saRsi standr at \"Frosta, \"IngirunaR sun ok \"Guðlæifs. \"OlæifR ræisti æftiR broður sinn. Kross."
+  },
+  {
+   "signum": "Sm 5",
+   "place": "Transjö",
+   "text": "C manna mæstr oniþingR, eR a \"Ænglandi aldri tynþi",
+   "translation_en": "§A Gautr placed this stone in memory of Ketill §B his son. He was §C the most unvillainous of men, who forfeited his life in England.",
+   "normalization": "§A \"Gautr satti stæin þenna æftiR \"Kætil, §B sun sinn. Hann vaR §C manna mæstr oniðingR, eR a \"Ænglandi aldri tynði."
+  },
+  {
+   "signum": "Sm 16",
+   "place": "Nöbbele",
+   "text": "Þy mun go[þs manns u]m gætit verþa, meþan stæinn lifiR ok stafiR runa",
+   "translation_en": "§A Hróðsteinn and Eilífr (and) Áki and Hákon, these lads raised the remarkable monument in memory of their father, §B in memory of Kali/Kalli the deceased. So the good man will be commemorated while the stone and the rune-staves live.",
+   "normalization": "§A \"Hroðstæinn ok \"ÆilifR, \"Aki ok \"Hakon ræisþu þæiR svæinaR æftiR sinn faður kumbl kænnilikt §B æftiR \"Kala/\"Kalla dauðan. Þy mun go[ðs manns u]m gætit verða, meðan stæinn lifiR ok stafiR runa."
+  },
+  {
+   "signum": "Vg 187",
+   "place": "Vists kyrka",
+   "text": "ER a \"Ænglandi aldri tynþi",
+   "translation_en": "Geiri placed this stone in memory of Guði, his brother, who forfeited his life in England.",
+   "normalization": "\"GæiRi satti stæin þenna æftiR \"Guða, broður sinn. ER a \"Ænglandi aldri tynði."
+  },
+  {
+   "signum": "U 114",
+   "place": "Runby",
+   "text": "Þæt skal at minnum manna, meþan mænn lifa",
+   "translation_en": "§A Ingríðr had the causeway made and the stone cut in memory of Ingimarr, her husbandman, and in memory of Danr, and in memory of Banki/Baggi(?), her sons. §B They lived in Runbýr and owned the estate. May Christ help their souls. That will (stand) in memory of the men while man lives.",
+   "normalization": "§A \"Ingrið let laðbro gæra ok stæin haggva æftiR \"Ingimar, bonda sinn, ok æftiR \"Dan ok æftiR \"Banka/\"Bagga, syni sina. §B ÞæiR byggu i \"Runby ok bo attu. \"Kristr hialpi salu þæiR[a]. Þæt skal at minnum manna, meðan mænn lifa."
+  },
+  {
+   "signum": "U 323",
+   "place": "Sälna",
+   "text": "Æi mun liggia, meþ aldr lifiR, bro harþslagin, bræiþ æft goþ[an]",
+   "translation_en": "Eysteinn/Jósteinn and Jôrundr and Bjôrn, these brothers raised ... ...-steinn Clumsy(?) their father. May God help his spirit and soul, forgive him (his) guilt and sins. Ever will (it) lie, while mankind lives on, the firm-founded bridge, broad in memory of the good (one). The lads made in memory of their father. No pathside-monument will be better.",
+   "normalization": "\"Øystæinn/\"Iostæinn ok \"Iorundr ok \"Biorn þæiR brøðr ræisþu ... \"...stæin \"Drums(?), faður sinn. \"Guð hialpi hans and ok selu, forgefi hanum sakaR ok syndiR. Æi mun liggia, með aldr lifiR, bro harðslagin, bræið æft goð[an]. SvæinaR gærðu at sinn faður. Ma æigi brautaRkuml bætra verða."
+  },
+  {
+   "signum": "U 512",
+   "place": "Tjäran",
+   "text": "B [H]er skal standa stæinn viþ[r] bryggiu",
+   "translation_en": "§A Freybjôrn ... ... and Frey-...(?) ...-finnr, they raised this stone in memory of Guðmarr/Guðvarðr(?), their good father and Tumi/Tummi, their brother. May God and God's mother help their spirits and souls better than they have done. §B Here the stone will stand by the bridge. Sons placed (it) in memory of (their) good father. Geir-.../Geirr ... ... §C ... landmark in memory of husbandman ...",
+   "normalization": "§A \"Frøyb[iorn] ... ... ok \"Fr[øy]...(?) \"...f[i]ðr, þæiR ræistu stæi[n þe]nna æftiR \"Guð[m]ar/\"Guð[v]ar(?), [f]aður sinn goðan ok \"Tuma/\"Tumma, b[ro]ður sinn. \"Guð [hialp]i and þæiRa ok salu o[k \"Guðs m]oðiR bætr þan þæiR [g]ær[t] h[afa]. §B [H]er skal standa stæinn við[r] bryggiu. SyniR at faður sattu goðan. \"GæiR.../\"GæiRR ... ... §C ... mærki at boa[nda] ..."
+  },
+  {
+   "signum": "U 707",
+   "place": "Kungs-Husby kyrka",
+   "text": "Hiær mun standa stæinn næR br[aut]u",
+   "translation_en": "Ósyrgr ... this stone in memory of Kaupmaðr, his good father. He lived in Húsabýr(?) Balli carved these runes. Here will the stone stand near the path.",
+   "normalization": "\"OsyrgR ... stæin þenna at \"Kaupm[a]nn, faður sinn goðan. H[a]nn byggi i \"Hu[saby](?) \"Balli risti ru[na]R þess[a]R. Hiær mun standa stæinn næR br[aut]u."
+  },
+  {
+   "signum": "U 729",
+   "place": "Ågersta",
+   "text": "Hiær mun standa stæinn miþli byia",
+   "translation_en": "Víðhugsi had this stone raised in memory of Særeifr/Sigreifr, his good father. He lived in Ôgurstaðir. Here will the stone stand between the estates. May the valiant man / the adept who is rune-skilled interpret those runes which Balli carved.",
+   "normalization": "\"Viðhugsi let ræisa stæin þennsa æftiR \"Særæif/\"Sigræif, faður sinn goðan. Hann byggi i \"Agurstaðum. Hiær mun standa stæinn miðli byia. Raði drængR/tøkR þaR rynn se runum þæim, sum \"Balli risti."
+  },
+  {
+   "signum": "U 838",
+   "place": "Ryda kungsgård",
+   "text": "Her mun standa stæinn næR brautu ok \"Gillaug reþ gærva mærki at boa[nda] sinn",
+   "translation_en": "Þólfr(?)/Þœfr(?) and Þorfastr, they had the stone raised in memory of Þorbjôrn, their good father. Here will the stone stand near the path. And Gillaug arranged the making of the landmark in memory of her husbandman.",
+   "normalization": "\"ÞolfR(?)/\"ÞøfR(?) ok \"Þorfastr þæiR letu ræisa stæin at \"Þorbiorn, faður sinn goðan. Her mun standa stæinn næR brautu ok \"Gillaug reð gærva mærki at boa[nda] sinn."
+  },
+  {
+   "signum": "U 889",
+   "place": "Västerby",
+   "text": "Standr <nau---u> fyriR and \"Arnþors ok \"GæiR[biar]naR(?)",
+   "translation_en": "§P Ásulfr and Geirr, Fast-...'s heirs, they erected the stone. They ... for the spirit ... §Q Ásulfr and Geirr, Fastulfr's heirs, they erected the stone. Stands ... for the spirit of Arnþórr and Geirbjôrn(?).",
+   "normalization": "§P \"AsulfR ok \"GæiRR, arfaR \"Fast... stæin rettu. ÞæiR <saotr> <nau---u> fyriR and ... §Q \"AsulfR ok \"GæiRR, arfaR \"Fast[ul]fs stæin rettu þæiR. Standr <nau---u> fyriR and \"Arnþors ok \"GæiR[biar]naR(?)."
+  },
+  {
+   "signum": "U Fv1973;194",
+   "place": "Uppsala domkyrka",
+   "text": "æigi verþa, meþan st[æi]n[aR](?)",
+   "translation_en": "... had this stone erected ... christening robes ... no ... will be while the stones(?) ...",
+   "normalization": "... letu retta stæin þenna ... [hvi]tavaðum ... ... æigi verða, meðan st[æi]n[aR](?) ..."
+  },
+  {
+   "signum": "U Fv1983;228",
+   "place": "Bärmö",
+   "text": "Hiar skal standa stæinn a",
+   "translation_en": "Nesbjôrn had this stone raised in memory of Óleifr, his son. Here the stone will stand on ...",
+   "normalization": "\"Næsbiorn let ræisa stæ[i]n þennsa æftiR \"Olæif, sun sinn. Hiar skal standa stæinn a ..."
+  },
+  {
+   "signum": "Vs 15",
+   "place": "Lilla Kyringe",
+   "text": "B Stæin hafiR rettan, þann standa ma, \"Balli hi[nn] \"Rauþi æftiR broþur",
+   "translation_en": "§A Hegulfr had these landmarks made in memory of Knútr, his father, and Guðlaug, his sister. Balli erected the stone. Balli. Knútr. §B The stone has been erected so that it will stand, by Balli the Red in memory of (his) brother. Balli.",
+   "normalization": "§A \"HægulfR let gæra mærki þessa at \"Knut, faður sinn, ok \"Guðlaugu, systur hans. \"Balli retti stæin. \"Balli. \"Knutr. §B Stæin hafiR rettan, þann standa ma, \"Balli hi[nn] \"Rauði æftiR broður. \"Balli."
+  },
+  {
+   "signum": "G 203",
+   "place": "Hogräns kyrka",
+   "text": "Hiar mun standa stæinn at mærki, biærtr a bergi, en bro fyriR",
+   "translation_en": "Sigmundr had the stone raised in memory of his brothers, and the bridge made in memory of Sigbjôrn - may saint Michael help his soul - and in memory of Bótreifr and in memory of Sigreifr and in memory of Eibjôrn, father of them all, and he lived in the most southern estate. Geirviðr laid the snake-loop(?), Næmr sorted them out. / skilful he sorted them out. Sigmundr has thus produced the monument. For males, it is a known ... Here may the stone stand as a landmark, clearly on the hill, and the bridge before it. Hróðbjôrn carved these runes, Geirleifr some, who well knows how.",
+   "normalization": "\"Sigmundr let ræisa stæin æftiR brøðr sina ok bro gæra æftiR \"Sigbiærn, sankta \"Mikael hialpi [sial h]ans, ok at \"Botræif ok at \"Sigræif ok at \"Æibiærn, faður þæiRa allra, ok byggi hann i by sunnarst. \"GæiRviðr lagði ormaluR, \"NæmR/næmR innti uR. \"Sigmundr [ha]fiR sliku unnit kumbl. Karlmannum þet eR ... kunn. Hiar mun standa stæinn at mærki, biærtr a bergi, en bro fyriR. \"Hroðbiærn risti runiR þessaR, \"GæiRl[æ]ifR sumaR, eR gørla kann."
+  },
+  {
+   "signum": "G 343",
+   "place": "S:t Hans kyrkoruin",
+   "text": "Æi meþan verald vakiR, liggR mærki hiar yfiR manni þæim, eR ærfingi æftiR [g]ærþi",
+   "translation_en": "§A ... raised the monument in memory of Heilgeirr (his/her) father(?) ... God(?) ... his soul. Ever while the world is awake, lies the landmark here over that man, whose heirs made in memory of ... and Þorleifr, they carved the stone. §B ...",
+   "normalization": "§A ... ræisti kumbl æftiR \"HæilgæiR fa[ður](?) ... \"G[uð](?) ... [s]alu hans. Æi meðan verald vakiR, liggR mærki hiar yfiR manni þæim, eR ærfingi æftiR [g]ærði ... ok \"ÞorlæifR þau ristu stæin. §B ..."
+  },
+  {
+   "signum": "DR 40",
+   "place": "Randbøl",
+   "text": "ÞeR stafaR munu \"Þorgunni miok længi lifa",
+   "translation_en": "Tófi Steward raised this stone in memory of the steward's helpmate. Very long will these staves live for Þorgunnr.",
+   "normalization": "\"Tofi \"Bryti resþi sten þænsi æft lika brytia. ÞeR stafaR munu \"Þorgunni miok længi lifa."
+  },
+  {
+   "signum": "DR 131",
+   "place": "Års",
+   "text": "B Sten kwæþsk hersi standa længi, saR \"Waltoka warþa næfni",
+   "translation_en": "§A Ôzurr placed this stone in memory of Valtóki, his lord. §B The stone proclaims that it will long stand here; it will name Valtóki's cairn.",
+   "normalization": "§A \"Azur satti sten þænsi æft \"Waltoka, drottin sin. §B Sten kwæþsk hersi standa længi, saR \"Waltoka warþa næfni."
+  },
+  {
+   "signum": "DR 192",
+   "place": "Flemløse 1",
+   "text": "Æft \"Roulf stændr sten sasi, æs war nøRa goþi",
+   "translation_en": "In memory of Hróðulfr stands this stone; he was priest of the Nes-dwellers. Sons placed in memory. Ávarr coloured.",
+   "normalization": "Æft \"Roulf stændr sten sasi, æs war nøRa goþi. Sattu syniR æftiR. \"AweR faþi."
+  },
+  {
+   "signum": "DR 212",
+   "place": "Tillitse",
+   "text": "E mun standa, mæþ sten lifiR, witrind su, æR wan \"Æskel",
+   "translation_en": "§A Áskell, Súlki's son, had this stone raised in memory of himself. Ever will stand, while the stone lives, this memento, which Áskell produced. §B May Christ and Saint Michael help his soul. §C Tóki carvedthe runes in memory of Þóra, his stepmother, a good wife.",
+   "normalization": "§A \"Æskel \"Sulka sun let resa sten þænna æft sialfan sik. E mun standa, mæþ sten lifiR, witrind su, æR wan \"Æskel. §B \"Kristr hialpi siol hans ok santa \"Mikael. §C \"Toki risti runaR æftiR \"[Þ]oru, stiupmoþur sina, kunu goþa."
+  },
+  {
+   "signum": "DR 296",
+   "place": "Hällestad 2, Hällestads kyrka",
+   "text": "Nu skal standa sten a biargi",
+   "translation_en": "Ásgautr raised this stone in memory of Erra, his brother. And he was Tóki's retainer. Now the stone will stand on the hill.",
+   "normalization": "\"Asgotr resþi sten þænsi æftiR \"Ærru, broþur sin. Æn saR was hemþægi \"Toka. Nu skal standa sten a biargi."
+  },
+  {
+   "signum": "DR 298",
+   "place": "Dalby, Sjöstorp",
+   "text": "\"ÞorgiR resþi sten þænn[a] at \"Stenkel, faþur sin, goþan bonda, æs længi/liggR i/",
+   "translation_en": "Þorgeirr raised this stone in memory of Steinkell, his father, a good husbandman, who long / lies in ... / mound.",
+   "normalization": "\"ÞorgiR resþi sten þænn[a] at \"Stenkel, faþur sin, goþan bonda, æs længi/liggR i/ .../haug[i]."
+  }
+ ],
+ "n_stand": 32,
+ "n_v_stones": 3264,
+ "places": {
+  "V|trä": {
+   "Folkebibliotekstomta": 8,
+   "Sigtuna": 3,
+   "Haddeby": 3,
+   "Oseberg": 3,
+   "Rathausmarkt": 2,
+   "Christ Church Place": 2,
+   "Uppsala": 1,
+   "Hemdrup": 1
+  },
+  "V|ben/horn": {
+   "Sigtuna": 37,
+   "Lund": 14,
+   "Plessensstraße": 9,
+   "Fishamble Street": 5,
+   "Oldenburg": 5,
+   "Björkö (Birka)": 4,
+   "Ausgrabung Schild": 4,
+   "Folkebibliotekstomta": 4
+  },
+  "M|trä": {
+   "Bryggen": 391,
+   "Folkebibliotekstomta": 86,
+   "Gullskoen": 61,
+   "Borgund kirke": 38,
+   "Lödöse": 33,
+   "Lom kirke": 31,
+   "Urnes kirke": 26,
+   "Nordre Engelgården": 26
+  },
+  "M|ben/horn": {
+   "Sigtuna": 47,
+   "Lund": 40,
+   "Bryggen": 10,
+   "\"Mindets tomt\" Gamlebyen": 10,
+   "Storgaten 24/26": 8,
+   "Folkebibliotekstomta": 8,
+   "Søndre felt": 8,
+   "Lödöse": 7
+  }
+ },
+ "examples": {
+  "DR AUD1997;264": {
+   "signum": "DR AUD1997;264",
+   "object": "pinne",
+   "place": "Roskilde Havn ved Vikingeskibshallen",
+   "normalization": "\"Saxi risti runaR þess[a]R <s--rku>mannr",
+   "translation_en": "Saxi carved these runes, the <s--rku>man",
+   "period": "V",
+   "material": "trä"
+  },
+  "N A240": {
+   "signum": "N A240",
+   "object": "träslå",
+   "place": "Folkebibliotekstomta, Trondheim",
+   "normalization": "§A Vindauga álokað(?) er þetta. §B Vindauga loka[ð].",
+   "translation_en": "§A Window <alokaþs> this §B window closed.",
+   "period": "V",
+   "material": "trä"
+  },
+  "U NOR2000;34A": {
+   "signum": "U NOR2000;34A",
+   "object": "runben, revben",
+   "place": "Sigtuna, kv. Professorn 1",
+   "normalization": "§A Rað þu! §B ...",
+   "translation_en": "§A Interpret! §B ...",
+   "period": "V",
+   "material": "ben/horn"
+  },
+  "Sö Fv1981;197": {
+   "signum": "Sö Fv1981;197",
+   "object": "dubbelkam",
+   "place": "Årsta",
+   "normalization": "§A <fuþorkhnias[tbmlR]> §B <fuþorkhniast[bmlR]> §C <[fuþork]hniastbmlR>",
+   "translation_en": "§A <fuþorkhniastbmlR> §B <fuþorkhniastbmlR> §C <fuþorkhniastbmlR>",
+   "period": "V",
+   "material": "ben/horn"
+  },
+  "DR M109": {
+   "signum": "DR M109",
+   "object": "mynt",
+   "place": "",
+   "normalization": "\"Þorsten i \"Lundi.",
+   "translation_en": "Þorsteinn in Lund.",
+   "period": "V",
+   "material": "metall"
+  },
+  "N B540": {
+   "signum": "N B540",
+   "object": "svarvad träskål",
+   "place": "Bryggen, Bergen",
+   "normalization": "Kyss þú mik.",
+   "translation_en": "Kiss me.",
+   "period": "M",
+   "material": "trä"
+  },
+  "N B333": {
+   "signum": "N B333",
+   "object": "fyrkantig pinne",
+   "place": "Bryggen, Bergen",
+   "normalization": "§A \"Síra \"Jón sendir \"Gunnari \"Hvít kveðju \"Guðs ok §B sína. \"Hákon ...",
+   "translation_en": "§A Sire Jón sends Gunnar White Gods and his greeting. §B Hákon ...",
+   "period": "M",
+   "material": "trä"
+  },
+  "DR IK149,1": {
+   "signum": "DR IK149,1",
+   "object": "brakteat (B-typ)",
+   "place": "?",
+   "normalization": "Laþu, laukaz, ..., alu.",
+   "translation_en": "Invitation, leek, ..., ale.",
+   "period": "U",
+   "material": "metall"
+  },
+  "DR 196": {
+   "signum": "DR 196",
+   "object": "spjutskaft",
+   "place": "Kragehul",
+   "normalization": "Ek erilaz \"Asugislas \"<muha> haite ... ginnu ... ... ... ... ... wigju(?) ... ...",
+   "translation_en": "I, Asugisl's eril am called <muha> ... power ... ... ... ... ... hallow(?) ... ...",
+   "period": "U",
+   "material": "trä"
+  },
+  "G 88": {
+   "signum": "G 88",
+   "object": "sidohäll i gravkista",
+   "place": "Kylver",
+   "normalization": "§A <fuþarkgwhnijpezstbemlñdo> ... §B <sueus>",
+   "translation_en": "§A <fuþarkgwhnijpezstbemlñdo> ... §B <sueus>",
+   "period": "U",
+   "material": "sten"
+  },
+  "DR 42": {
+   "signum": "DR 42",
+   "object": "runsten",
+   "place": "Jelling 2",
+   "normalization": "§A \"Haraldr kunungR baþ gørwa kumbl þøsi æft \"Gorm, faþur sin, ok æft \"Þorwi, moþur sina, sa \"Haraldr æs seR wan \"Danmork §B alla ok \"Norwæg §C ok dani gærþi kristna.",
+   "translation_en": "§A King Haraldr ordered these monuments made in memory of Gormr, his father, and in memory of Þyrvé, his mother; that Haraldr who won for himself all of Denmark §B and Norway §C and made the Danes Christian.",
+   "period": "V",
+   "material": "sten"
+  },
+  "Sm 16": {
+   "signum": "Sm 16",
+   "object": "runsten",
+   "place": "Nöbbele",
+   "normalization": "§A \"Hroðstæinn ok \"ÆilifR, \"Aki ok \"Hakon ræisþu þæiR svæinaR æftiR sinn faður kumbl kænnilikt §B æftiR \"Kala/\"Kalla dauðan. Þy mun go[ðs manns u]m gætit verða, meðan stæinn lifiR ok stafiR runa.",
+   "translation_en": "§A Hróðsteinn and Eilífr (and) Áki and Hákon, these lads raised the remarkable monument in memory of their father, §B in memory of Kali/Kalli the deceased. So the good man will be commemorated while the stone and the rune-staves live.",
+   "period": "V",
+   "material": "sten"
+  },
+  "U 114": {
+   "signum": "U 114",
+   "object": "flyttblock",
+   "place": "Runby",
+   "normalization": "§A \"Ingrið let laðbro gæra ok stæin haggva æftiR \"Ingimar, bonda sinn, ok æftiR \"Dan ok æftiR \"Banka/\"Bagga, syni sina. §B ÞæiR byggu i \"Runby ok bo attu. \"Kristr hialpi salu þæiR[a]. Þæt skal at minnum manna, meðan mænn lifa.",
+   "translation_en": "§A Ingríðr had the causeway made and the stone cut in memory of Ingimarr, her husbandman, and in memory of Danr, and in memory of Banki/Baggi(?), her sons. §B They lived in Runbýr and owned the estate. May Christ help their souls. That will (stand) in memory of the men while man lives.",
+   "period": "V",
+   "material": "sten"
+  },
+  "DR 212": {
+   "signum": "DR 212",
+   "object": "runsten",
+   "place": "Tillitse",
+   "normalization": "§A \"Æskel \"Sulka sun let resa sten þænna æft sialfan sik. E mun standa, mæþ sten lifiR, witrind su, æR wan \"Æskel. §B \"Kristr hialpi siol hans ok santa \"Mikael. §C \"Toki risti runaR æftiR \"[Þ]oru, stiupmoþur sina, kunu goþa.",
+   "translation_en": "§A Áskell, Súlki's son, had this stone raised in memory of himself. Ever will stand, while the stone lives, this memento, which Áskell produced. §B May Christ and Saint Michael help his soul. §C Tóki carvedthe runes in memory of Þóra, his stepmother, a good wife.",
+   "period": "V",
+   "material": "sten"
+  },
+  "U 729": {
+   "signum": "U 729",
+   "object": "runsten",
+   "place": "Ågersta",
+   "normalization": "\"Viðhugsi let ræisa stæin þennsa æftiR \"Særæif/\"Sigræif, faður sinn goðan. Hann byggi i \"Agurstaðum. Hiær mun standa stæinn miðli byia. Raði drængR/tøkR þaR rynn se runum þæim, sum \"Balli risti.",
+   "translation_en": "Víðhugsi had this stone raised in memory of Særeifr/Sigreifr, his good father. He lived in Ôgurstaðir. Here will the stone stand between the estates. May the valiant man / the adept who is rune-skilled interpret those runes which Balli carved.",
+   "period": "V",
+   "material": "sten"
+  },
+  "U 707": {
+   "signum": "U 707",
+   "object": "runsten",
+   "place": "Kungs-Husby kyrka",
+   "normalization": "\"OsyrgR ... stæin þenna at \"Kaupm[a]nn, faður sinn goðan. H[a]nn byggi i \"Hu[saby](?) \"Balli risti ru[na]R þess[a]R. Hiær mun standa stæinn næR br[aut]u.",
+   "translation_en": "Ósyrgr ... this stone in memory of Kaupmaðr, his good father. He lived in Húsabýr(?) Balli carved these runes. Here will the stone stand near the path.",
+   "period": "V",
+   "material": "sten"
+  },
+  "Sö 206": {
+   "signum": "Sö 206",
+   "object": "runsten",
+   "place": "Överselö kyrka",
+   "normalization": "Her skal standa stæinaR þessiR, runum ru[ð]niR, ræisti \"G[uðl]aug at syni sina, ok \"Hialmlaug at brøðr sina.",
+   "translation_en": "Here shall these stones stand, reddened with runes: Guðlaug raised (them) in memory of her sons; and Hjalmlaug in memory of her brothers.",
+   "period": "V",
+   "material": "sten"
+  },
+  "G 343": {
+   "signum": "G 343",
+   "object": "gravhäll",
+   "place": "S:t Hans kyrkoruin",
+   "normalization": "§A ... ræisti kumbl æftiR \"HæilgæiR fa[ður](?) ... \"G[uð](?) ... [s]alu hans. Æi meðan verald vakiR, liggR mærki hiar yfiR manni þæim, eR ærfingi æftiR [g]ærði ... ok \"ÞorlæifR þau ristu stæin. §B ...",
+   "translation_en": "§A ... raised the monument in memory of Heilgeirr (his/her) father(?) ... God(?) ... his soul. Ever while the world is awake, lies the landmark here over that man, whose heirs made in memory of ... and Þorleifr, they carved the stone. §B ...",
+   "period": "V",
+   "material": "sten"
+  },
+  "DR 131": {
+   "signum": "DR 131",
+   "object": "runsten",
+   "place": "Års",
+   "normalization": "§A \"Azur satti sten þænsi æft \"Waltoka, drottin sin. §B Sten kwæþsk hersi standa længi, saR \"Waltoka warþa næfni.",
+   "translation_en": "§A Ôzurr placed this stone in memory of Valtóki, his lord. §B The stone proclaims that it will long stand here; it will name Valtóki's cairn.",
+   "period": "V",
+   "material": "sten"
+  },
+  "Sö 137": {
+   "signum": "Sö 137",
+   "object": "runsten",
+   "place": "Aspa",
+   "normalization": "§A \"Þora ræisþi stæin þ[ann]si at \"Øpi, boanda sinn. §BP Stæinn saRsi standr at \"Øpi a þingstaði at \"Þoru ver. Hann vestarla væknti(?) karla, sa þaR sunR það. ... §BQ Stæinn saRsi standr at \"Øpi a þingstaði at \"Þoru ver. Hann vestarla væknti(?) karla. ... ... ... ...",
+   "translation_en": "§A Þóra raised this stone in memory of Œpir, her husbandman. §BP This stone stands in memory of Œpir, on the Assembly-place in memory of Þóra's husband. He armed(?) (his) men in the west. The son saw this there ... §BQ This stone stands in memory of Œpir, on the Assembly-place in memory of Þóra's husband. He armed(?) (his) men in the west. ...",
+   "period": "V",
+   "material": "sten"
+  },
+  "Ög 136": {
+   "signum": "Ög 136",
+   "object": "runsten",
+   "place": "Röks kyrkogård",
+   "normalization": "§A Aft Vamoð standa runaR þaR. Æn Varinn faði, faðiR, aft faigian sunu. Sagum mogminni/ungmænni þat, hværiaR valraufaR vaRin tvaR þaR, svað tvalf sinnum vaRin numnaR at valraufu, baðaR saman a ymissum mannum. Þat sagum annart, hvaR fur niu aldum an urði fiaru meðr Hraiðgutum, auk do meðr hann umb sakaR. Reð ÞioðrikR hinn þurmoði, stilliR flutna, strandu HraiðmaraR. SitiR nu garuR a §B guta sinum, skialdi umb fatlaðR, skati Mæringa. §C Þat sagum tvalfta, hvar hæstR se GunnaR etu vettvangi a, kunungaR tvaiR tigiR svað a liggia. Þat sagum þrettaunda, hvariR tvaiR tigiR kunungaR satin at Siolundi fiagura vintur at fiagurum nampnum, burniR fiagurum brøðrum. ValkaR fim, Raðulfs syniR, HraiðulfaR fim, Rugulfs syniR, HaislaR fim, Haruðs syniR, GunnmundaR/KynmundaR fim, BiarnaR syniR. Nu'k m[inni] m[eðr] allu [sa]gi. AinhvaRR ... [sva]ð ... æftiR fra. Sagum mogminni/ungmænni þat, hvaR Inguldinga vaRi guldinn at kvanaR husli. Sagum mogminni/ungmænni, hvaim se burinn niðR drængi. Vilinn es þat. Knua/knyia knatti iatun. Vilinn es þat ... §D [S]agum mogminni/ungmænni: Þorr. §E Sibbi viaværi §C ol nirøðR.",
+   "translation_en": "§A In memory of Vámóðr stand these runes. And Varinn coloured them, the father, in memory of his dead son. I say the folktale / to the young men, which the two war-booties were, which twelve times were taken as war-booty, both together from various men. I say this second, who nine generations ago lost his life with the Hreidgoths; and died with them for his guilt. Þjóðríkr the bold, chief of sea-warriors, ruled over the shores of the Hreiðsea. Now he sits armed on §B his Goth(ic horse), his shield strapped, the prince of the Mærings. §C I say this the twelfth, where the horse of Gunnr sees fodder on the battlefield, where twenty kings lie. This I say as thirteenth, which twenty kings sat on Sjólund for four winters, of four names, born of four brothers: five Valkis, sons of Ráðulfr, five Hreiðulfrs, sons of Rugulfr, five Háisl, sons of Hôrðr, five Gunnmundrs/Kynmundrs, sons of Bjôrn. Now I say the tales in full. Someone ... I say the folktale / to the young men, which of the line of Ingold was repaid by a wife's sacrifice. I say the folktale / to the young men, to whom is born a relative, to a valiant man. It is Vélinn. He could crush a giant. It is Vélinn ... §D I say the folktale / to the young men: Þórr. §E Sibbi of Vé, §C nonagenarian, begot (a son).",
+   "period": "V",
+   "material": "sten"
+  },
+  "U 838": {
+   "signum": "U 838",
+   "object": "runsten",
+   "place": "Ryda kungsgård",
+   "normalization": "\"ÞolfR(?)/\"ÞøfR(?) ok \"Þorfastr þæiR letu ræisa stæin at \"Þorbiorn, faður sinn goðan. Her mun standa stæinn næR brautu ok \"Gillaug reð gærva mærki at boa[nda] sinn.",
+   "translation_en": "Þólfr(?)/Þœfr(?) and Þorfastr, they had the stone raised in memory of Þorbjôrn, their good father. Here will the stone stand near the path. And Gillaug arranged the making of the landmark in memory of her husbandman.",
+   "period": "V",
+   "material": "sten"
+  }
+ },
+ "u_stone_dating": {
+  "U 375/400-560/570 (Imer 2007)": 13,
+  "U 160-560/570 (Imer 2007)": 9,
+  "U 160-375/400 (Imer 2007)": 8,
+  "U": 5,
+  "U 375/400-460/470 (Imer 2007)": 4,
+  "U 375/400-520/530 (Imer 2007)": 4,
+  "U 520/530-700 (Imer 2007)": 3,
+  "U 160-520/530 (Imer 2007)": 3,
+  "U 520/530-560/570 (Imer 2007)": 3,
+  "U eller sentida?": 2,
+  "U 560/570-775/800 (Imer 2007)": 2,
+  "U/V 560/570-775/800 (Imer 2007)": 1,
+  "U ca 200-400": 1,
+  "U 500-t (Thuesen)": 1,
+  "U 500-t?": 1,
+  "U förvikingatida": 1,
+  "U ej äldre än m 500-t": 1,
+  "U 375/400-675 (Imer 2007)": 1,
+  "U 520/530-560/570 (Imer 2007) ; U 550-700 (Fv 2011)": 1,
+  "U 560/570-700 (Imer 2007)": 1,
+  "U 310/320-375/400 (Imer 2007)": 1,
+  "U 520/530-560/570? (Imer 2007)": 1,
+  "U 350/375-400 (Imer 2007)": 1,
+  "U 650-700 (Grønvik)": 1,
+  "U 350-400 (Knirk 2011)": 1
+ },
+ "m_wood_objects": {
+  "träinskrift": 183,
+  "fyrkantig pinne": 181,
+  "märklapp": 138,
+  "pinne": 118,
+  "stavkyrkegrafitti": 63,
+  "runkavel": 55,
+  "trästycke": 31,
+  "rund pinne": 18,
+  "sticka": 14,
+  "kors": 14,
+  "tunn platta": 10,
+  "kyrkografitti": 8
+ }
+}
