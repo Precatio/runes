@@ -27,6 +27,7 @@ sv = lambda n: f"{n:,}".replace(",", " ")  # noqa: E731
 # ---- låsningarna -----------------------------------------------------------------------------------
 assert N["Skåne"] == 59 and N["Danmark"] == 138 and N["Uppland"] == 1178 and N["Västergötland"] == 131 and N["Södermanland"] == 363
 assert S["lost"] == 8 and S["efter_jelling"] == {"Skåne": 50, "Danmark": 50}
+assert sum(1 for x in S["skane"] if not x["lost"] and "fragment" in (store().get(x["signum"]).get("object") or "")) == 3
 H = S["harader"]
 assert (H["Vemmenhögs hd"], H["Herrestads hd"], H["Ljunits hd"], H["Torna hd"]) == (9, 8, 7, 7)
 sh = lambda k, reg: pr(C[k][reg]["share"])  # noqa: E731
@@ -206,7 +207,7 @@ body = f"""Jag växte upp i Skåne. Jag känner mig inte dansk, och jag har aldr
 
 ## Femtionio stenar, en enda generation
 
-Skåne har {N['Skåne']} vikingatida runstenar i Samnordisk runtextdatabas, {S['lost']} av dem försvunna och kända bara ur äldre avbildningar. Nästan alla står på slätten: i Vemmenhögs, Herrestads och Ljunits härader längs sydkusten står {H['Vemmenhögs hd'] + H['Herrestads hd'] + H['Ljunits hd']} av dem, i Torna härad kring Lund {H['Torna hd']}. Skogsbygderna i norr har nästan inga.
+Skåne har {N['Skåne']} vikingatida runstenar i Samnordisk runtextdatabas. {S['lost']} av dem är försvunna och kända bara ur äldre avbildningar, och tre finns kvar bara som fragment; de {N['Skåne'] - S['lost'] - 3} som står kvar hela är ungefär det antal man möter i länsstyrelsens räkning, knappt femtio. Här räknar vi alla {N['Skåne']}, för de försvunna stenarnas texter är lika mycket Skånes ord som de bevarades. Nästan alla står på slätten: i Vemmenhögs, Herrestads och Ljunits härader längs sydkusten står {H['Vemmenhögs hd'] + H['Herrestads hd'] + H['Ljunits hd']} av dem, i Torna härad kring Lund {H['Torna hd']}. Skogsbygderna i norr har nästan inga.
 
 {MAP}
 
@@ -292,7 +293,7 @@ body_en = f"""I grew up in Skåne. I do not feel Danish, and I have never felt t
 
 ## Fifty-nine stones, a single generation
 
-Skåne has {N['Skåne']} Viking-age runestones in the Scandinavian Runic-text Database, {S['lost']} of them lost and known only from older drawings. Nearly all stand on the plain: in the hundreds of Vemmenhög, Herrestad and Ljunits along the south coast stand {H['Vemmenhögs hd'] + H['Herrestads hd'] + H['Ljunits hd']} of them, in Torna hundred around Lund {H['Torna hd']}. The forest districts in the north have almost none.
+Skåne has {N['Skåne']} Viking-age runestones in the Scandinavian Runic-text Database. {S['lost']} of them are lost and known only from older drawings, and three survive only as fragments; the {N['Skåne'] - S['lost'] - 3} that still stand whole are about the number the county board counts, just under fifty. Here we count all {N['Skåne']}, because the lost stones' texts are as much Skåne's words as the surviving ones'. Nearly all stand on the plain: in the hundreds of Vemmenhög, Herrestad and Ljunits along the south coast stand {H['Vemmenhögs hd'] + H['Herrestads hd'] + H['Ljunits hd']} of them, in Torna hundred around Lund {H['Torna hd']}. The forest districts in the north have almost none.
 
 {MAP_EN}
 
