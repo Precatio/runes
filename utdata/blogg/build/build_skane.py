@@ -202,7 +202,7 @@ summary = ("Jag växte upp i Skåne och känner mig varken dansk eller hemma i S
            "här för tusen år sedan: var hörde man hemma när stenarna restes? Femtionio runstenar svarar – utan att nämna "
            "vare sig kung eller rike.")
 
-body = f"""Jag växte upp i Skåne. Jag känner mig inte dansk, och jag har aldrig känt att jag hör hemma i Stockholm. Det är en vanlig skånsk känsla, så vanlig att den nästan är en kliché, och jag har länge undrat hur gammal den är. Så jag gjorde det jag brukar göra med sådana frågor: jag ställde den till stenarna. Hur kände sig en människa som levde här när runstenarna restes? Var hon en del av ett rike, eller såg hon bara sin bygd? Det går inte att fråga henne. Men det går att läsa vad hon lät hugga i sten, och räkna.
+body = f"""Jag växte upp i Skåne. Jag känner mig inte dansk, och jag har aldrig känt att jag hör hemma i Stockholm. Det är en vanlig skånsk känsla, så vanlig att den nästan är en kliché, och jag har länge undrat hur gammal den är. Hur kände sig en människa som levde här när runstenarna restes? Var hon en del av ett rike, eller såg hon bara sin bygd? Det går inte att fråga henne. Men det går att läsa vad hon lät hugga i sten, och räkna.
 
 ## Femtionio stenar, en enda generation
 
@@ -288,7 +288,7 @@ summary_en = ("I grew up in Skåne and feel neither Danish nor at home in Stockh
               "lived here a thousand years ago: where did one belong when the stones were raised? Fifty-nine runestones "
               "answer – without naming either king or realm.")
 
-body_en = f"""I grew up in Skåne. I do not feel Danish, and I have never felt that I belong in Stockholm. It is a common Skåne feeling, so common that it is almost a cliché, and I have long wondered how old it is. So I did what I usually do with such questions: I put it to the stones. How did a person who lived here feel when the runestones were raised? Was she part of a realm, or did she only see her own district? She cannot be asked. But what she had cut in stone can be read, and counted.
+body_en = f"""I grew up in Skåne. I do not feel Danish, and I have never felt that I belong in Stockholm. It is a common Skåne feeling, so common that it is almost a cliché, and I have long wondered how old it is. How did a person who lived here feel when the runestones were raised? Was she part of a realm, or did she only see her own district? She cannot be asked. But what she had cut in stone can be read, and counted.
 
 ## Fifty-nine stones, a single generation
 
