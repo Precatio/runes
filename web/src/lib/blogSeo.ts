@@ -125,7 +125,7 @@ export function articleJsonLd(post: BlogPost, lang: "sv" | "en" = "sv") {
       datePublished: published,
       dateModified: post.updatedAt ?? published,
       author: { "@type": "Person", ...(post.author === "Viktor Kvant" || !post.author ? { "@id": `${SITE_URL}/#founder` } : {}), name: post.author || "Viktor Kvant",
-                ...(authorOf(post.author) ? { url: authorOf(post.author)!.url, sameAs: [authorOf(post.author)!.url], jobTitle: authorOf(post.author)!.role } : {}) },
+                ...(authorOf(post.author) ? { url: authorOf(post.author)!.url, sameAs: [authorOf(post.author)!.linkedin], jobTitle: authorOf(post.author)!.role } : {}) },
       publisher: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: SITE_NAME, url: SITE_URL, logo: { "@type": "ImageObject", url: `${SITE_URL}/vitki_logo.png` } },
       image: [`${SITE_URL}${sharePath(post.slug)}`, ...pictures(body).map(p => absolute(p.src))].slice(0, 5),
       inLanguage: en ? "en" : "sv-SE",

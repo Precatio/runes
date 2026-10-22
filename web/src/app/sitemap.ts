@@ -13,7 +13,7 @@ const PAGES: [string, MetadataRoute.Sitemap[number]["changeFrequency"], number][
   ["/", "weekly", 1], [ARTICLES_PATH, "weekly", 0.9], [EN_ARTICLES_PATH, "weekly", 0.7],
   ["/karta", "monthly", 0.8], ["/inskrifter", "monthly", 0.8],
   ["/statistik", "monthly", 0.7], ["/luckor", "monthly", 0.7], ["/oversikt", "monthly", 0.6],
-  ["/docs", "monthly", 0.5], ["/start", "monthly", 0.5], [NEWS_PATH, "weekly", 0.5], [CONTACT_PATH, "yearly", 0.3],
+  ["/docs", "monthly", 0.5], ["/start", "monthly", 0.5], [NEWS_PATH, "weekly", 0.5], [CONTACT_PATH, "monthly", 0.6],
 ];
 const PUBLIC_PAGES = new Set(["/", ARTICLES_PATH, EN_ARTICLES_PATH, NEWS_PATH, CONTACT_PATH]);
 

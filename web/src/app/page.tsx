@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 };
 
 // Structured data (schema.org): the site and the research software, which is downloaded from GitHub
-const FOUNDER = { "@type": "Person", "@id": `${SITE_URL}/#founder`, name: "Viktor Kvant", url: AUTHORS["Viktor Kvant"].url, sameAs: [AUTHORS["Viktor Kvant"].url],
+const FOUNDER = { "@type": "Person", "@id": `${SITE_URL}/#founder`, name: "Viktor Kvant", url: AUTHORS["Viktor Kvant"].url, sameAs: [AUTHORS["Viktor Kvant"].linkedin],
                   jobTitle: AUTHORS["Viktor Kvant"].role };
 const JSON_LD = [
   {
