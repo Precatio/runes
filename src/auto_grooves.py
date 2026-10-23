@@ -525,9 +525,11 @@ def _rune_box(extent, shape, res: float, margin_mm: float = 4.0) -> list[float]:
 
 
 def _groove_map_png(hf: Heightfield, residual: np.ndarray, inner: np.ndarray, threshold: float,
-                    size: tuple[int, int]) -> str:
+                    size: tuple[int, int]) -> tuple[str, float]:
     """Ristningskarta: spårdjupet som gråskala (mörkt = djupt), utan belysning och färg.
-    Samma storlek och orientering som granskningsbilden, så att koordinaterna stämmer."""
+    Samma storlek och orientering som granskningsbilden, så att koordinaterna stämmer.
+    Returnerar bilden och djupet i mm som blir svart (95:e percentilen av djupen i rutorna som ligger djupare än
+    tröskeln; allt djupare blir också svart). Kartan maskas bara utanför skanningen (hf.region), inte i kantzonen."""
     from PIL import Image
 
     depth = np.clip(-residual, 0, None)
@@ -538,7 +540,7 @@ def _groove_map_png(hf: Heightfield, residual: np.ndarray, inner: np.ndarray, th
     img = Image.fromarray(np.flipud(gray)).resize(size, Image.LANCZOS)
     buf = io.BytesIO()
     img.save(buf, format="PNG", optimize=True)
-    return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode("ascii")
+    return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode("ascii"), ref_depth
 
 
 def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 3.0,
@@ -694,7 +696,7 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
         slices.append(rec)
 
     image_b64, width, height, scale = _overlay_png(hf, mask, wide_area, slices)
-    groove_map = _groove_map_png(hf, residual, inner, threshold, (width, height))
+    groove_map, groove_black_mm = _groove_map_png(hf, residual, inner, threshold, (width, height))
     for rec in slices:
         rec.pop("_iy", None)
         rec.pop("_ix", None)
@@ -711,6 +713,11 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
         "slices": slices,
         "image_base64": f"data:image/png;base64,{image_b64}",
         "groove_map_base64": groove_map,
+        # The groove map's grey scale, for exports: black = black_mm deep or deeper (the stone's own 95th percentile
+        # of the depths of the cells deeper than the threshold), on a grid of grid_mm cells shown at mm_per_px in the
+        # image (the grid's width in mm over the image's width in pixels; display only, nothing is measured from it)
+        "groove_map_scale": {"black_mm": groove_black_mm, "threshold_mm": threshold, "grid_mm": res,
+                             "mm_per_px": res * hf.H.shape[1] / width},
         "image_width": width,
         "image_height": height,
         "angle_color_range": list(ANGLE_COLOR_RANGE),

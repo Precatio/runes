@@ -391,10 +391,14 @@ export default function StoneAnalysisPage() {
             <label className="flex items-center gap-2"><input type="checkbox" checked={useAI} onChange={e => setUseAI(e.target.checked)} /> AI-text i syntes och rapport (märkt; annars framräknad text)</label>
             <label className="flex items-center gap-2"><input type="checkbox" checked={flip} onChange={e => setFlip(e.target.checked)} /> Analysera den andra sidan av stenen</label>
           </div>
-          <button onClick={run} disabled={!file || running}
+          <button onClick={run} disabled={!file || running} aria-describedby={!file && !running ? "stenanalys-varfor" : undefined}
             className="w-full py-3 bg-[#b7410e] hover:bg-[#9a350b] text-white font-bold rounded-2xl disabled:opacity-40">
             {running ? "Analyserar …" : "Starta stenanalysen"}
           </button>
+          {/* Why the button cannot be pressed yet (it only waits for a file) */}
+          {!file && !running && (
+            <p id="stenanalys-varfor" className="text-xs font-semibold text-slate-600 -mt-2">Välj en skanning (STL, OBJ eller PLY) först.</p>
+          )}
           <p className="text-[11px] text-slate-500">
             Tar några minuter. Den ristade sidan skattas som stenens tunnaste riktning; visar förhandsbilden fel sida, kryssa i
             &quot;den andra sidan&quot; och kör igen. Med inloggning jämförs huggtekniken också med mätkorpusen.

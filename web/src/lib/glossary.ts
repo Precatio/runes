@@ -165,3 +165,11 @@ Object.assign(GLOSSARY, {
   "Platsen som yta": "En kontroll i R (mgcv): i stället för landskapens grova gränser får stenarnas läge forma en mjuk yta över kartan, och sambandet skattas ovanpå den. Håller sambandet bara för att draget och jämförelsen hör hemma i samma trakter, försvinner det här. Flyttade stenar räknas inte.",
   "Frågor under besöket": "Ju fler frågor man prövar, desto fler slår igenom av en slump. De p-värden du fått under besöket justeras därför tillsammans (Benjamini–Hochberg) till q. Ett mönster som bara klarar p men inte q bör prövas igen på ett annat underlag.",
 });
+// Huggspårsanalysens export (components/GrooveExportMenu.tsx, src/groove_export.py)
+Object.assign(GLOSSARY, {
+  "Djup under stenytan": "Hur djupt varje punkt ligger under en referensyta som räknats fram ur skanningen och ligger i nivå med ytan runt spåren och spårkanterna, i mm – en karta över formen, där sprickor, vittring och branta partier syns lika mörka som ristning.",
+  "Ristningskarta": "Spårdjupet i den automatiska analysens rutnät i gråskala, där svart betyder black_mm eller djupare (95:e percentilen av de djupa rutorna på just denna sten), så gråtonerna kan inte jämföras mellan stenar. Svartpunkten kan sättas av skanningens kant, så runorna kan se mellangrå ut.",
+  "Strykljus": "Digitalt lågt sidoljus, 20° över ytan, där ett spår syns tydligast när ljuset faller tvärs över det och kan nästan försvinna när ljuset går längs med.",
+  "Relief": "Stenytan belyst från fyra håll på en gång, där det mörkaste värdet behålls, så att varje spår blir mörkt oavsett riktning; gråtonen är inte ett mått i millimeter.",
+  "ESRI ASCII-rutnät": "En textfil med ett tal per ruta, här djupet under stenytan i mm, som öppnas i QGIS, R (terra) eller Python, där rutor med −9999 saknar värde.",
+});

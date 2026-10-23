@@ -76,6 +76,101 @@ När din bana är perfekt placerad, klicka på knappen **Analysera spår / Extra
 
 Resultatet samt en uppskattning på vilket verktyg som använts presenteras omedelbart på skärmen!
 
+### Exportera bilder och mätdata
+I högra kolumnen på 3D-sidan finns rutan **Exportera**. Kryssa i de filer du vill ha och tryck **Ladda ned**. En
+enda fil kommer som den är; väljer du flera kommer de i en ZIP-fil. Reliefen och ristningskartan kommer alltid i en
+ZIP-fil med README.txt, också ensamma, eftersom de inte har någon synlig rad om skanningen. Vilka val som syns beror på vad du har gjort:
+bilderna ur skanningen finns så snart en 3D-modell är inläst, medan bilderna ur mätningen och tabellerna kommer när
+du har mätt. Under **Vad innehåller filerna?** står samma förklaringar som här. Första gången en bild räknas fram
+kan det ta upp till en halv minut; med **Avbryt** stoppar du nedladdningen.
+
+Är fliken för den automatiska analysen öppen exporteras den, annars mätningen som visas på sidan. Mätformen som
+står i filerna är den som analysen gjordes med, inte vilken flik som är öppen. Den automatiska analysen exporteras
+med dina etiketter från granskningen, precis som stenrapporten läser dem: snitt du märkt som uteslutna räknas inte i
+sammanfattningen och figurerna, och sammanfattningen räknas för varje grupp (runa, ornamentik, okänt). Raderna per
+runa finns bara för gruppen runa, och bara när analysen mätte enbart runor. Bilderna ur
+skanningen ses från samma håll som stenrapportens figurer, så att de stämmer med rapporten.
+
+**Bilder ur skanningen**
+- **Spårdjup som värmekarta.** Färgen visar hur djupt varje punkt ligger under en referensyta som räknats fram ur
+  skanningen genom att fylla igen fördjupningar smalare än 20 mm. Den ligger i nivå med ytan runt spåren och
+  spårkanterna, inte på en tänkt ursprunglig stenyta. Ljust betyder i nivå och svart det djupaste; skalan i mm står
+  bredvid och slutar vid stenens 99,5:e percentil, så den djupaste halva procenten blir lika svart. Kartan visar
+  formen. Spårdjupen i mättabellen blir ofta 10–40 % större än kartans, ibland mindre, eftersom de mäts i täta
+  tvärsnitt från spårkanten till botten, medan kartan är ett grövre rutnät där varje ruta har den högsta punkten i
+  sin ruta och den smala botten i ett spår sällan träffas exakt. Den yttersta
+  centimetern mot skanningens kant är tom; branta partier, sprickor, vittringsgropar och borrhål kan ändå se ut som
+  djupa spår.
+- **Spårdjup som rådata (rutnät i mm).** Samma djup som i värmekartan, som tal: ett värde i millimeter per ruta.
+  Rutans storlek står i filhuvudet och beror på skanningens täthet och stenens storlek. Filen öppnas i QGIS, i R
+  (terra) eller i Python. Rutor med −9999 ligger utanför skanningen eller i kantzonen. Koordinaterna är millimeter i
+  stenytans eget plan, inte geografiska.
+- **Reliefbild.** Stenytan belyst från fyra håll på en gång, där det mörkaste värdet behålls. Varje spår blir därför
+  mörkt, oavsett åt vilket håll det går. Gråtonen är inte ett mått i millimeter, och kontrasten är sträckt för just
+  denna sten. En pixel är en ruta i ytans rutnät.
+- **Strykljus från fyra håll.** Digitalt strykljus, 20° över ytan, som när man fotograferar en sten i lågt sidoljus.
+  Ett spår syns tydligast när ljuset faller tvärs över det och kan nästan försvinna när ljuset går längs med, så titta
+  på alla fyra. "Nordväst" betyder snett uppifrån vänster i bilden, inte ett väderstreck vid stenen.
+
+**Bilder ur mätningen**
+- **Ristningskarta.** Spårdjupet i den automatiska analysens rutnät, i gråskala och i samma läge som
+  granskningsbilden. Svart sätts vid 95:e percentilen av djupen i de rutor som ligger djupare än analysens tröskel,
+  så gråtonerna kan inte jämföras mellan stenar. Kantzonen, branta partier, sprickor och ornamentik kommer med.
+  Svart betyder black_mm eller djupare (värdet står i bildens metadata), och svartpunkten kan sättas av skanningens
+  kant, så runorna kan se mellangrå ut.
+- **Granskningsbild med mätpunkter.** Visar var programmet mätte, med en teckenförklaring under bilden. Orange är spår
+  som hittats och gråblått ytor för breda att mäta; de färgade prickarna är godkända snitt färgade efter V-vinkel och
+  de små grå bortsorterade snitt. Bilden visar analysens egen sortering, inte dina etiketter, och är till för att
+  granska analysen, inte ett resultat i sig.
+- **Snittens läge färgade efter V-vinkel.** Var varje mätt tvärsnitt ligger på stenen. Bokstäverna hör till bilden
+  med tvärsnittsprofiler. Här ser man om breda eller smala vinklar samlas i en del av ristningen, till exempel där
+  ytan är mer vittrad.
+- **Spårdjup, spårbredd och ytråhet på stenen.** Mätningarna i tabellen, ritade där de gjordes. Ytråheten är
+  hundradels millimeter och ligger nära skanningens brus.
+- **Tvärsnittsprofiler (bild).** Upp till tolv representativa tvärsnitt i lika skala på båda axlarna, med de
+  anpassade väggarna i rött och spårkanternas nivå streckad. Här ser man om måtten rimligen beskriver spåret.
+
+**Tabeller och data**
+- **Mättabell, ett tvärsnitt per rad.** V-vinkel, spårdjup, spårbredd, ytråhet, fit_r2 och snittets läge, och i den
+  automatiska analysen din etikett. Bara den automatiska analysen sorterar bort snitt med fit_r2 under 0,8. Snitt i
+  samma runa är inte oberoende mätningar, så använd sammanfattningen per runa för stenens värde. Koordinaterna är
+  millimeter i den centrerade 3D-modellen, inte i originalfilen.
+- **Sammanfattning per sten och per runa.** Medelvärden med spridning och 95-procentigt konfidensintervall, per
+  grupp. Raderna per runa ger det ärliga värdet för stenen. ICC kan bli negativ; det betyder att runorna inte skiljer
+  sig mer än snitten inom en runa. Riktmärke: minst 10 mätta runor för att beskriva en sten och minst 20 för att
+  jämföra stenar. Gissningen om verktyg är en tumregel och inte kalibrerad.
+- **Runor och kvalitetskontroll.** Det programmet har räknat som en runa (en grupp raka streck, inte en igenkänd
+  runa), med höjd, antal streck och snitt, och varför bortsorterade snitt föll bort.
+- **Tvärsnittsprofiler som tal.** De uppmätta punkterna i varje tvärsnitt, så att vem som helst kan mäta om spåren.
+- **Längdprofil.** Spårdjupet längs en bana du ritat, snitt för snitt.
+- **Hela analysen (JSON).** Allt i maskinläsbar form med proveniens: programversion, mätmetod, skanningsfilens namn
+  och fingeravtryck (SHA-256), datum, metodens kända brister och, för den automatiska analysen, dina etiketter och
+  sammanfattningarna per grupp.
+
+Tabellerna har källa och proveniens på rader som börjar med `#`. I R läses de med
+`read.csv("fil.csv", comment.char = "#", fileEncoding = "UTF-8-BOM")` och i Python med
+`pandas.read_csv("fil.csv", comment="#", encoding="utf-8-sig")`.
+
+**README.txt och kalla.json.** I ZIP-filen finns README.txt, som förklarar varje fil, enheter, skalor, vilken
+riktning bilderna är sedda från, dina etiketter, vem som ska krediteras och begränsningarna för just den här stenen
+(till exempel för få mätta runor eller avvikelser från Vitki-protokollet), och kalla.json med samma proveniens i
+maskinläsbar form.
+
+**Kreditera den som skannat stenen.** Vitki krediterar en öppen skanning (t.ex. Kitzler Åhfeldts och Zedigs serier
+på Zenodo) bara när den inlästa filen känns igen som en av datamängdens publicerade filer, på kontrollsumman eller
+på filnamn och storlek tillsammans (bara filnamnet räcker inte). Då står vem som skannat, institutionen, projektet, licensen med länk och DOI i varje fil: i
+bildernas metadata, som en rad under figurerna, överst i tabellerna och i README.txt. Att skriva in stenens signum
+räcker inte, eftersom filen kan vara en annan skanning av samma sten. Känns filen inte igen, fyll i fältet *Skannad
+av, institution, licens, DOI*; texten följer då med i filerna, märkt som din. Skicka med README.txt om du delar
+filerna vidare.
+
+Vill du ha figurerna med bildtexter, mättabeller, kvalitetskontroll och kända brister i ett och samma dokument,
+välj i stället **Skapa stenrapport**. Den innehåller samma bilder och siffror och krediterar skanningen på samma
+sätt.
+
+Finns både en automatisk analys och en mätning under resultaten, står det i menyn vilken som exporteras. Knappen
+*Exportera …* under en analys väljer den, och i menyn kan du byta.
+
 ---
 
 ## 4. Analyshistorik & Projekt
@@ -83,7 +178,7 @@ Resultatet samt en uppskattning på vilket verktyg som använts presenteras omed
 Klicka på **Min Forskning** (eller "Projekt") i huvudmenyn.
 - Så fort du klickar på "Analysera" sparas ditt tvärsnitt ner till det aktiva projektet.
 - Här kan du bygga upp ett bibliotek av analyser (t.ex. spara Snitt 1 från en runa och Snitt 2 från en annan runa).
-- Du kan generera rapporter, visa sammanslagna insikter från runologen, exportera till CSV, samt köra avancerade AI-synteser (Gemini) för att bedöma sannolikheten att flera olika mätbanor delar upphovsman (samma ristare).
+- Mätningarna exporteras från 3D-sidan under **Exportera** (bilder, mättabeller och hela analysen, se *Exportera bilder och mätdata* ovan), och **Skapa stenrapport** samlar figurer, mättabeller, kvalitetskontroll och kända brister i ett dokument (Word, LaTeX eller Markdown).
 
 ---
 *Dokumentationen senast uppdaterad för Epigraphix AI (Next.js).*

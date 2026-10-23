@@ -12,6 +12,7 @@ import { db, ProjectData } from "@/lib/db";
 import GrooveResultsPanel from "@/components/GrooveResultsPanel";
 import { fromSession } from "@/lib/stoneReport";
 import AutoGrooveReview from "@/components/AutoGrooveReview";
+import GrooveExportMenu, { scrollToExport } from "@/components/GrooveExportMenu";
 import type { SliceMarker, Vec3, ViewDirection, ViewerPoint } from "@/components/ThreeDViewer";
 import { MeshSession, type AutoAnalysisResult, type AutoLabel, type MeshInfo } from "@/lib/mesh";
 import type { ThreeDAnalysisResult } from "@/lib/db";
@@ -154,6 +155,8 @@ function ThreeDPageContent() {
 
   type MeasureMode = "manual" | "oneclick" | "auto";
   const [measureMode, setMeasureMode] = useState<MeasureMode>("oneclick");
+  // The analysis chosen for export by an "Exportera …" button or the menu's switch, and the tab it was chosen in
+  const [exportPick, setExportPick] = useState<{ which: "auto" | "result"; mode: MeasureMode } | null>(null);
   const viewDirRef = useRef<ViewDirection | null>(null);
 
   // One click per slice
@@ -681,6 +684,24 @@ function ThreeDPageContent() {
     ];
   };
 
+  // The stone report (/rapporter?typ=sten) from the measurement on the page, with runes and ornament apart
+  const canReport = !!(results || (autoResult && autoResult.counts.accepted > 0));
+  const createStoneReport = () => {
+    const input = fromSession({
+      meta, meshId: meshInfo?.mesh_id, autoResult, autoLabels, results, featureType, project: activeProject,
+    });
+    if (!input) { alert("Det finns inga godkända tvärsnitt att rapportera."); return; }
+    setStoneReportInput(input);
+    router.push("/rapporter?typ=sten");
+  };
+  // The export menu: images need the model, tables and data only a measurement
+  const showExport = !!meshInfo || canReport;
+  // Which analysis the export menu exports when both the automatic analysis and a measurement shown below exist: the
+  // one whose "Exportera …" button (or the menu's switch) was used, while the same tab is open; otherwise the tab's
+  const exportAuto = exportPick && exportPick.mode === measureMode ? exportPick.which === "auto" : measureMode === "auto";
+  const chooseExport = (which: "auto" | "result") => setExportPick({ which, mode: measureMode });
+  const exportFrom = (which: "auto" | "result") => () => { chooseExport(which); scrollToExport(); };
+
   const plotLayout = {
     title: t.threed.graph_title,
     paper_bgcolor: "transparent",
@@ -939,6 +960,11 @@ function ThreeDPageContent() {
               >
                 {reliefBusy === "2d" ? "Räknar fram reliefbild …" : "Öppna reliefbilden under Bilder och runformer"}
               </button>
+              {meshInfo && (
+                <button type="button" onClick={scrollToExport} className="text-[11px] font-semibold text-[#b7410e] hover:underline">
+                  Ladda ned bilderna (värmekarta, relief, strykljus) →
+                </button>
+              )}
             </div>
 
             {measureMode === "manual" && (
@@ -1000,11 +1026,28 @@ function ThreeDPageContent() {
               onLabelsChange={setAutoLabels}
               onUse={(r, ft) => { setFeatureType(ft); setResults(r); }}
               onSendToTwoD={() => sendGrooveMapToTwoD(autoLabels)}
+              onExport={showExport ? exportFrom("auto") : undefined}
               facitMode={facitMode && autoResult.parameters.runes_only === false}
             />
           )}
 
-          {(results || (autoResult && autoResult.counts.accepted > 0)) && (
+          {showExport && (
+            <GrooveExportMenu
+              session={() => sessionRef.current}
+              meshInfo={meshInfo}
+              getView={() => viewDirRef.current}
+              signum={metaText}
+              featureType={featureType}
+              preferAuto={exportAuto}
+              onChooseAnalysis={chooseExport}
+              result={results}
+              autoResult={autoResult}
+              autoLabels={autoLabels}
+              onCreateReport={canReport ? createStoneReport : undefined}
+            />
+          )}
+
+          {canReport && (
             <div className="liquid-glass-island rounded-[28px] px-6 py-4 flex flex-wrap items-center gap-3">
               <div className="flex-1 min-w-[240px]">
                 <p className="text-sm font-bold text-slate-900">Stenrapport</p>
@@ -1014,14 +1057,7 @@ function ThreeDPageContent() {
                 </p>
               </div>
               <button
-                onClick={() => {
-                  const input = fromSession({
-                    meta, meshId: meshInfo?.mesh_id, autoResult, autoLabels, results, featureType, project: activeProject,
-                  });
-                  if (!input) { alert("Det finns inga godkända tvärsnitt att rapportera."); return; }
-                  setStoneReportInput(input);
-                  router.push("/rapporter?typ=sten");
-                }}
+                onClick={createStoneReport}
                 className="px-5 py-2.5 bg-[#b7410e] hover:bg-[#9a350b] text-white text-sm font-bold rounded-xl"
               >
                 Skapa stenrapport
@@ -1030,7 +1066,8 @@ function ThreeDPageContent() {
           )}
 
           {results && (
-            <GrooveResultsPanel results={results} signum={metaText} featureType={featureType} />
+            <GrooveResultsPanel results={results} signum={metaText} featureType={featureType}
+              onExport={showExport ? exportFrom("result") : undefined} />
           )}
 
           {/* Graph */}

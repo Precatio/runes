@@ -1,6 +1,5 @@
 """Akademisk rapport ur mätkorpusen (Word, LaTeX, Markdown, HTML)."""
 
-import numpy as np
 from typing import Literal, Optional
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -12,7 +11,7 @@ from api.routers.research import stone_context
 from api.errors import logger
 from api import mesh_cache
 from api.rundata import store
-from src import academic, i18n, limitations, report_templates, stone_report
+from src import academic, groove_export, i18n, limitations, report_templates, stone_report
 from src.reading import validate as validate_reading
 from src.synthesis import site_geology
 from api.auth import optional_user, require_admin
@@ -134,17 +133,10 @@ class StoneReportRequest(BaseModel):
 
 
 def _view(req: StoneReportRequest):
-    v = req.view or {}
-    if v.get("normal"):
-        return v["normal"], v.get("up")
-    for a in req.analyses:
-        params = (a.get("provenance") or {}).get("parameters") or {}
-        if params.get("normal"):
-            return params["normal"], params.get("up")
-    ups = [s["up"] for a in req.analyses for s in a.get("slices") or [] if s.get("up")]
-    if ups:
-        return list(np.mean(np.asarray(ups, float), axis=0)), None
-    return None, None
+    """The carved face's normal and up: the same choice as the groove export makes (groove_export.view_normal), so
+    that the exported surface images are the report's figures."""
+    normal, up, _ = groove_export.view_normal(req.view, req.analyses)
+    return normal, up
 
 
 class AttributionRequest(BaseModel):
@@ -222,7 +214,10 @@ def stone_report_endpoint(req: StoneReportRequest,
         raise HTTPException(status_code=400, detail="Underlaget saknar uppmätta tvärsnitt. Gör en 3D-analys först.")
     if sum(len(a.get("slices") or []) for a in req.analyses) > 3000:
         raise HTTPException(status_code=400, detail="Högst 3000 tvärsnitt per rapport.")
-    facts = stone_report.build_facts(req.model_dump(), store().get)
+    # The loaded model (when still in memory) helps decide the scan credit: only a recognised published file is
+    # credited to an open dataset, never the typed signum (src/scan_sources.identify)
+    entry = mesh_cache.peek(req.mesh_id) if req.mesh_id else None
+    facts = stone_report.build_facts(req.model_dump(), store().get, entry.info if entry is not None else None)
     facts["geology"] = site_geology(facts["rundata"])
     from src import stone_dimensions
     if facts.get("rundata"):
@@ -266,7 +261,6 @@ def stone_report_endpoint(req: StoneReportRequest,
             rd["transliteration"], facts["rundata"], store().inscriptions, rd.get("others") or [])
 
     surface, surface_note = None, None
-    entry = mesh_cache.peek(req.mesh_id) if req.mesh_id else None
     normal, up = _view(req)
     if entry is not None and not entry.info.get("mock") and normal is not None:
         try:

@@ -41,6 +41,8 @@ export interface AnalysisProvenance {
     mock: boolean;
     filename?: string;
     sha256?: string;
+    md5?: string;
+    bytes?: number;
     vertices?: number;
     faces?: number;
     extent_mm?: number[];

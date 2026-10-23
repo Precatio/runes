@@ -6,6 +6,8 @@ export interface MeshInfo {
   mesh_id: string;
   filename: string;
   sha256: string;
+  md5?: string; // what Zenodo publishes for its files (src/scan_sources.identify)
+  bytes?: number;
   vertices: number;
   faces: number;
   extent_mm: number[];
@@ -68,14 +70,16 @@ export class MeshSession {
     return this.pending;
   }
 
-  // POST form fields with mesh_id; if the engine has forgotten the model (404), upload again once
-  async post(path: string, fields: Record<string, string | number | boolean>): Promise<Response> {
+  // POST form fields with mesh_id; if the engine has forgotten the model (404), upload again once. The signal aborts
+  // the request (not an upload already under way)
+  async post(path: string, fields: Record<string, string | number | boolean>, signal?: AbortSignal): Promise<Response> {
     for (let attempt = 0; attempt < 2; attempt++) {
       const info = await this.ensure();
+      signal?.throwIfAborted();
       const fd = new FormData();
       fd.append("mesh_id", info.mesh_id);
       for (const [k, v] of Object.entries(fields)) fd.append(k, String(v));
-      const res = await fetch(`${API_URL}${path}`, { method: "POST", body: fd });
+      const res = await fetch(`${API_URL}${path}`, { method: "POST", body: fd, signal });
       if (res.status === 404 && attempt === 0) {
         this.info = null;
         continue;

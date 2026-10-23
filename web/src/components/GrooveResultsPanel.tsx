@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import type { ThreeDAnalysisResult } from "@/lib/db";
 import { METRICS, METRIC_DIGITS, METRIC_LABELS, FEATURE_TYPES, type FeatureType } from "@/lib/metrics";
-import { downloadFile, safeFilename, toCSV } from "@/lib/export";
 import { corpus, CORPUS_LICENSE, type StoneCondition } from "@/lib/corpus";
 import { db, type PaleographicCrop } from "@/lib/db";
 import { useAnalysis } from "@/components/AnalysisContext";
@@ -16,9 +15,10 @@ interface Props {
   results: ThreeDAnalysisResult;
   signum: string;
   featureType: FeatureType;
+  onExport?: () => void; // scrolls to the export menu on the page
 }
 
-export default function GrooveResultsPanel({ results, signum, featureType }: Props) {
+export default function GrooveResultsPanel({ results, signum, featureType, onExport }: Props) {
   const { user } = useAuth();
   const { userName, userInstitution } = useSettings();
   const [attribution, setAttribution] = useState<GrooveAttribution | null>(null);
@@ -47,25 +47,6 @@ export default function GrooveResultsPanel({ results, signum, featureType }: Pro
   const slices = results.slices ?? [];
   const provenance = results.provenance;
   const tool = results.tool_heuristic;
-  const baseName = safeFilename(`${signum || "analys"}_${provenance?.timestamp?.slice(0, 10) ?? ""}`);
-
-  const exportCSV = () => {
-    const rows = slices.map((s, i) => ({
-      signum,
-      feature_type: featureType,
-      slice: i + 1,
-      position_mm: s.position_mm,
-      ...Object.fromEntries(METRICS.map(m => [m, s[m]])),
-      method_version: provenance?.method_version,
-      mesh_sha256: provenance?.mesh?.sha256,
-    }));
-    downloadFile(`${baseName}_snitt.csv`, toCSV(rows), "text/csv");
-  };
-
-  const exportJSON = () => {
-    const payload = { signum, feature_type: featureType, ...results };
-    downloadFile(`${baseName}.json`, JSON.stringify(payload, null, 2), "application/json");
-  };
 
   const runAttribution = async () => {
     setAttributing(true);
@@ -213,14 +194,12 @@ export default function GrooveResultsPanel({ results, signum, featureType }: Pro
       {/* Export, provenance and contribution */}
       <div className="liquid-glass-island rounded-[32px] p-6 shadow-sm border border-white/50 space-y-4">
         <div className="flex flex-wrap gap-3">
-          <button onClick={exportCSV} disabled={slices.length === 0}
-            className="px-4 py-2 bg-white border border-slate-300 hover:border-slate-900 text-slate-800 text-xs font-bold rounded-xl disabled:opacity-40">
-            Exportera snitt (CSV)
-          </button>
-          <button onClick={exportJSON}
-            className="px-4 py-2 bg-white border border-slate-300 hover:border-slate-900 text-slate-800 text-xs font-bold rounded-xl">
-            Exportera allt (JSON)
-          </button>
+          {onExport && (
+            <button onClick={onExport} title="Bilder, tabeller och hela analysen – välj i Exportera"
+              className="px-4 py-2 bg-white border border-slate-300 hover:border-slate-900 text-slate-800 text-xs font-bold rounded-xl">
+              Exportera …
+            </button>
+          )}
           <button onClick={openContribute} disabled={!user || !summary || contributed}
             className="px-4 py-2 bg-[#b7410e] hover:bg-[#9a350b] text-white text-xs font-bold rounded-xl disabled:opacity-40">
             {contributed ? "Tillagd i korpusen ✓" : "Bidra till korpusen"}

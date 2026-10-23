@@ -677,6 +677,9 @@ fliken Bilder och runformer och rapporterna räknas direkt ur skanningen i stäl
   referensytan är osäker, utelämnas.
 * Bilderna har känd upplösning (mm per pixel) och påverkas inte av zoom eller skärmens belysning. Små
   skanningar skalas upp till minst 1 200 px för läsning.
+* Bilderna kan laddas ned under Exportera (2f); för nedladdning används ytans eget rutnät utan uppskalning, och
+  normalen väljs som i stenrapporten (analysens normal eller snittens riktning), så vyn används där bara när ingen
+  analys finns.
 
 ### 2e. Robusthet
 
@@ -701,6 +704,118 @@ ytnormalen (0,37 mm på samma ställe vid 5° lutning) och glesa skanningar (en 
 tydligt sämre resultat. **För jämförelser mellan stenar ska därför samma rutnät och känslighet användas, och
 skanningar med mycket olika punkttäthet jämföras med försiktighet.** Studien är inte ett test–omtest med
 oberoende skanningar av samma sten.
+
+### 2f. Export från huggspårsanalysen
+
+Källkod: `src/groove_export.py`, `api/routers/threed.py` (`POST /api/3d/export`, `GET /api/3d/export_items`,
+`GET /api/3d/scan_credit`), `src/scan_sources.py` och `data/scan_files.json`. Under **Exportera** på 3D-sidan väljs
+vilka filer som laddas ned. Inga mätvärden räknas om, och mätmetoden är fortfarande `groove-5`: tabellerna är
+analysens snitt som de lagrats, och ristningskartan och granskningsbilden är analysens egna bilder. Bilderna ur
+skanningen räknas fram ur 3D-modellen när filerna skapas, med stenrapportens funktioner, och i den automatiska
+analysen räknas sammanfattningen och verktygstumregeln om för forskarens grupper (nedan). Filernas namn och förklaringar står på ett ställe (`ITEMS`), som både appens hjälptext och
+README.txt i paketet läser.
+
+* **Vilken analys och vilken mätform.** Den automatiska analysen exporteras när dess flik är öppen (eller när inget
+  annat är mätt), annars mätningen som visas på sidan. Knappen *Exportera …* under en analys (den automatiska
+  analysens granskning eller resultaten) väljer just den analysen, och när båda finns anger menyn vilken som
+  exporteras, med ett val att byta. Mätformen (`auto`, `oneclick`, `manual`, `path`) och
+  spårtypen läses ur analysens egen proveniens (`parameters.mode`, `feature_type`), inte ur vilken flik som är öppen.
+* **Etiketterna i den automatiska analysen** används som stenrapporten läser dem (`fromSession` i
+  `web/src/lib/stoneReport.ts`): godkända snitt utom de som märkts *uteslutna*, grupperade efter etikett (runa,
+  ornamentik, okänt; ett snitt utan etikett räknas som okänt). Sammanfattningen räknas om för varje grupp med
+  projektets egna funktioner (`summarize_slices`, och `summarize_by_rune` bara för gruppen runa och bara när
+  analysen mätte enbart runor, `parameters.runes_only`; i de andra grupperna är `rune_id` den automatiska
+  igenkänningens, som forskaren har avvisat), liksom verktygstumregeln; figurerna över snitten använder bara grupperna, i stenrapportens ordning. Mättabellen och
+  JSON-filen har alla snitt med sin etikett, och analysens egen sammanfattning över alla godkända snitt finns kvar i
+  JSON-filen.
+* **Spårdjup som värmekarta** är stenrapportens figur 2 (`stone_report.depth_figure`), bildpunkt för bildpunkt,
+  med en rad om skanningen under figuren. **Spårdjup som rådata** är samma tal som ett ESRI ASCII-rutnät: djupet är
+  −residualen mot en referensyta (morfologisk stängning, 20 mm, utjämnad 1 mm), negativa värden satta till 0,
+  kantzonen (10 mm) och ytan utanför skanningen som −9999. Referensytan ligger i nivå med ytan runt spåren och
+  spårkanterna, inte på en tänkt ursprunglig stenyta. Cellen är ytans upplösning (`Surface.res`), som beror på
+  skanningens täthet och stenens storlek (rutnätet har högst 1 800 rutor på längden). Första raden är bildens
+  överkant. Koordinaterna är millimeter i ytans eget plan; en JSON-fil bredvid anger origo, basen (u, v, n) i den
+  centrerade modellen, normalen och skanningens SHA-256.
+* Tre olika normaliseringar av djupet används, och **bara värmekartan och rutnätet kan läsas i mm**. Värmekartans
+  färgskala slutar vid stenens 99,5:e percentil, så att den djupaste halva procenten blir lika svart. Djupbilden i
+  appens Bilder ur skanningen (`render_relief`) är svart vid 99:e percentilen av djupet utanför kantzonen.
+  Ristningskartan från den automatiska analysen är svart vid 95:e percentilen av djupen i de rutor som ligger
+  djupare än analysens tröskel; skalan (`groove_map_scale`: black_mm, threshold_mm, grid_mm, mm_per_px) sparas från
+  och med nu med analysen och står i bildens metadata, och för äldre analyser står det att skalan inte sparades.
+  Ristningskartan maskas bara utanför skanningen, så kantzonen och de branta partier som analysen inte mäter i finns
+  med och kan se djupa ut. Svart betyder black_mm eller djupare, och percentilen räknas över hela rutnätet, så
+  svartpunkten kan sättas av skanningens kant och runorna se mellangrå ut. Svartpunkten flyttas inte till det mätta området, eftersom kartan och
+  black_mm också används för 2D-analysens runutsnitt. Gråtonerna i reliefen och ristningskartan kan inte jämföras
+  mellan stenar.
+* Tvärsnittens spårdjup är ofta 10–40 % större än kartans på samma ställe, ibland mindre. Tvärsnitten mäts i en tät profil från
+  spårkanten till botten, medan kartan är ett grövre rutnät (varje ruta har den högsta punkten i sin ruta) där den
+  smala botten i ett V-spår sällan träffas exakt. Spårdjup ska därför tas ur mättabellen; kartan visar formen. Branta partier innanför kantzonen, sprickor, vittringsgropar och borrhål kan se
+  lika djupa ut som ristning.
+* Relief och strykljus exporteras på ytans eget rutnät (en pixel per ruta, högst 1 800 px), inte uppskalade, och
+  bara för dem (och för ristningskartan) anges mm per pixel i metadata. Värmekartan och figurerna över snitten är
+  diagram med axlar och skalstock i mm; deras metadata anger rutnätets cellstorlek (`surface_cell_mm`) men ingen
+  storlek per pixel. Granskningsbilden och ristningskartan är analysens egna bilder; under granskningsbilden läggs en
+  teckenförklaring (spår, för breda ytor, V-vinkelskalan 30–130° och bortsorterade snitt) utan att bildens pixlar
+  ändras, så att `img_x` och `img_y` i mättabellen fortfarande gäller. Granskningsbilden visar analysens egen
+  sortering, inte forskarens etiketter.
+* **Tvärsnittsprofilerna** ritas med höjden räknad från spårkanternas nivå (medel av de högsta punkterna strax
+  utanför spårets båda kanter), samma nivå som spårbredden mäts vid; den streckade linjen är den nivån, inte en
+  rekonstruerad stenyta. Väggarna anpassas om för figuren med analysens egen utjämning (`harmonize_mm`), och varje
+  ruta har bokstaven för sin plats bland de valda snitten, samma som i figuren över snittens läge; en profil som inte
+  kan ritas hoppar över sin bokstav. De lagrade måtten ändras inte. Stenrapportens bildtexter säger detsamma.
+* **Normalen** för bilderna ur skanningen väljs med samma funktion som stenrapporten (`groove_export.view_normal`,
+  som `api/routers/reports.py` också använder): analysens egen normal (den automatiska analysens; bilderna ligger då
+  som ristningskartan), annars medelriktningen av snittens uppåtriktning. Bara när ingen analys finns används 3D-vyns
+  riktning och därefter stenens tunnaste riktning. Valet står som `normal_source` (analys, snitt, vy, uppskattad) i
+  filernas metadata och i kalla.json. Alla bilder i en export delar samma yta (`Surface`, högst 1 800 px), som i
+  stenrapporten, så att bilderna för samma analys är stenrapportens figurer.
+* **Koordinaterna**: tre system används. Tabellernas punkter och riktningar är millimeter i 3D-modellen centrerad på
+  sin omslutande lådas mitt; förskjutningen (`centered_by`) står i tabellhuvudet, så att punkterna kan föras
+  tillbaka till originalfilen. Rutnätet (.asc) är millimeter i stenytans eget plan (origo och bas i JSON-filen
+  bredvid). `img_x`, `img_y` och `box_*` är pixlar i granskningsbilden, med origo uppe till vänster. I den
+  automatiska analysen är `position_mm` provpunktens ordningsnummer över hela stenen gånger snittavståndet, inte
+  ett avstånd längs ett spår.
+* **Tabellerna** (CSV) har en rad per tvärsnitt för alla mätformer (även bortsorterade snitt i den automatiska
+  analysen, med skäl; där är `label` snittets grupp och kolumnen `feature_type` tom), sammanfattningen per grupp,
+  per snitt och per runa, runorna med kvalitetskontrollen,
+  råprofilerna och längdprofilen. Talen skrivs som de lagrats eller räknats, utan avrundning. `fit_r2` är det sämre
+  av de två väggarnas R²; bara den automatiska analysen sorterar bort snitt på den (under 0,8). ICC (envägs, ICC(1))
+  kan bli negativ när snitten i en runa skiljer sig minst lika mycket som runorna sinsemellan, och läses då som ingen
+  skillnad mellan runorna.
+* **Krediteringen** av skanningen följer med i varje fil: som iTXt-text i PNG-filerna (Title, Author, Copyright,
+  Source, Description, Software, Creation Time och en JSON-kommentar med normal, skanningsfil, skala och om
+  skanningen känts igen), som en synlig rad under figurerna och granskningsbilden (råa rutnät som relief, strykljus
+  och ristningskarta lämnas pixelexakta), som #-rader överst i tabellerna och i README.txt och kalla.json. Reliefen
+  och ristningskartan har bara metadata, som bildprogram ofta tar bort, så de skickas alltid i en ZIP med
+  README.txt, också när de laddas ned ensamma. PNG-filernas Author anger att bilden är beräknad i Vitki och vem som
+  skannat (`Vitki (beräknad); skanning: …`). Den synliga raden anger datamängden med sin DOI; den korta referensen
+  (Kitzler Åhfeldt 2024a) används bara i stenrapporten, som har en referenslista. En öppen
+  datamängd krediteras **bara när filen känns igen** som en av datamängdens publicerade filer
+  (`scan_sources.identify`): samma SHA-256 eller md5 som Zenodos fil (`data/scan_files.json`: Zenodos filnamn,
+  storlek och md5 för seriernas STL-filer, och SHA-256 för de filer vars nedladdade kopia stämde med md5), annars
+  samma filnamn och storlek. Ett filnamn utan storlek räcker inte, en annan kontrollsumma under ett publicerat namn
+  räcker inte, och ett inskrivet signum räcker aldrig. Stenrapporten avgör krediteringen på samma sätt, ur analysens
+  proveniens och den inlästa modellen. Den synliga raden anger vem som skannat, institutionen, projektet, licensen
+  med länk och DOI, och datamängdens anmärkning (till exempel att bara inskriftsytorna är skannade). En fil som visar
+  två stenar (Ög 240 och Ög 241 på samma gravhäll) anger båda. När
+  filen inte känns igen används den exporterandes egen text, märkt som hens (också i PNG-filernas Author och Source),
+  och annars en uppmaning att ange vem som skannat stenen.
+* **Indata kontrolleras**: felaktiga fält (även `rune_id` och `stroke_id`, som måste vara heltal), analyser och
+  etiketter ger 400, inbäddade bilder måste vara PNG (högst
+  25 MB och 4 000 pixlar per sida), signumet rensas från styrtecken och får vara högst 100 tecken, och felaktigt
+  formade sammanfattningar (`rune_summary.metrics`, `tool_heuristic.adjustments`) ger 400, inte ett serverfel. En
+  analys från en annan skanning än den inlästa modellen avvisas när bilder ur skanningen ska räknas fram; tabeller
+  och data, som inte behöver modellen, exporteras då med analysens egen skanningsfil och kreditering. Formuläret
+  måste vara multipart/form-data, med Content-Length högst 125 MB och högst 20 fält, och bara en export körs åt
+  gången: platsen tas innan formuläret läses, så en andra export får 429 utan att dess innehåll buffras. Exporten
+  kan avbrytas i appen, och den avbryts av sig själv när en annan modell läses in eller den exporterade analysen
+  byts.
+* Flera filer skickas som en ZIP med README.txt (vad varje fil är, enheter, skalor, normal, etiketter,
+  begränsningar, kreditering och citering) och kalla.json (proveniensen i maskinläsbar form). Begränsningarna i
+  README.txt omfattar också de som gäller just den här stenen: för få mätta runor eller snitt per grupp
+  (`limitations.specific`) och avvikelser från Vitki-protokollet och dess anmärkningar (`provenance.protocol`).
+* `render_depth_map` är äldre och visar inte spårdjup: den färgar modellens globala Z-koordinat från lägsta till
+  högsta punkt och visar därför stenens form och lutning. Den används inte i exporten.
 
 ## 3. Osäkerhet
 

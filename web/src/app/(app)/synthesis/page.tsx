@@ -201,10 +201,18 @@ export default function SynthesisPage() {
             </>
           )}
 
-          <button onClick={handleAnalyze} disabled={loading || !project}
+          <button onClick={handleAnalyze} disabled={loading || !project} aria-describedby={!project && !loading ? "syntes-varfor" : undefined}
             className="w-full py-3.5 bg-[#b7410e] hover:bg-[#9a350b] active:scale-[0.98] disabled:opacity-40 text-white font-semibold text-sm rounded-2xl transition-all shadow-lg flex justify-center items-center gap-2">
             {loading ? (<><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />{status || "Beräknar …"}</>) : "Kör syntesen"}
           </button>
+          {/* Why the button cannot be pressed yet: no project chosen, or none to choose from */}
+          {!project && !loading && (
+            <p id="syntes-varfor" className="text-xs font-semibold text-slate-600 -mt-2">
+              {projects.length ? "Välj ett projekt först." : (
+                <>Du har inga projekt än. Mät en sten i <Link href="/3d" className="underline">3D-vyn</Link> och spara mätningen i ett projekt.</>
+              )}
+            </p>
+          )}
           {error && <p className="text-sm text-red-700 font-semibold">{error}</p>}
         </div>
 

@@ -219,17 +219,30 @@ def raking_figure(surf: Surface) -> str:
     return _png(fig)
 
 
+def depth_array(surf: Surface) -> np.ndarray:
+    """Djupet under den rekonstruerade stenytan i mm (positivt = under ytan), NaN i kantzonen och utanför
+    skanningen. Rad 0 är bildens nederkant (som figurerna ritar med origin="lower")."""
+    depth = np.clip(-surf.residual, 0, None)
+    depth[~surf.inner] = np.nan
+    return depth
+
+
+def depth_vmax(surf: Surface, depth: np.ndarray | None = None) -> float:
+    """Djupkartans färgskala i mm: toppen vid 99,5:e percentilen, minst 0,1 mm."""
+    depth = depth_array(surf) if depth is None else depth
+    vmax = float(np.nanpercentile(depth, 99.5)) if np.isfinite(depth).any() else 1.0
+    return max(vmax, 0.1)
+
+
 def depth_figure(surf: Surface) -> str:
     """Djup under den rekonstruerade stenytan (morfologisk referensyta, 20 mm)."""
     plt = _plt()
-    depth = np.clip(-surf.residual, 0, None)
-    depth[~surf.inner] = np.nan
-    vmax = float(np.nanpercentile(depth, 99.5)) if np.isfinite(depth).any() else 1.0
+    depth = depth_array(surf)
     w, hgt = surf.extent[1], surf.extent[3]
     fig, ax = plt.subplots(figsize=(7, 7 * hgt / w if w else 7))
     cmap = plt.get_cmap("magma_r").copy()
     cmap.set_bad("white")
-    im = ax.imshow(depth, cmap=cmap, origin="lower", extent=surf.extent, vmin=0, vmax=max(vmax, 0.1),
+    im = ax.imshow(depth, cmap=cmap, origin="lower", extent=surf.extent, vmin=0, vmax=depth_vmax(surf, depth),
                    interpolation="bilinear")
     cb = fig.colorbar(im, ax=ax, fraction=0.035, pad=0.02)
     cb.set_label("Djup under stenytan (mm)")
@@ -258,14 +271,18 @@ def spatial_figure(surf: Surface, slices: list[dict]) -> str | None:
     return _png(fig)
 
 
-def _fit(profile: dict):
+def _fit(profile: dict, harmonize_mm: float | None = None):
+    """The walls refitted for drawing, with the analysis' own harmonize_mm (the automatic analysis smooths the profile
+    before fitting; the stored values are not changed)."""
     x, z = np.asarray(profile["x"], float), np.asarray(profile["z"], float)
     if len(x) < 10:
         return None
+    h = float(harmonize_mm) if isinstance(harmonize_mm, (int, float)) and not isinstance(harmonize_mm, bool) \
+        and np.isfinite(harmonize_mm) and harmonize_mm > 0 else None
     try:
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            m = calculate_v_angle(x, z)
+            m = calculate_v_angle(x, z, harmonize_mm=h)
     except Exception:
         return None
     if not np.isfinite(m["apex_vinkel_deg"]):
@@ -273,13 +290,19 @@ def _fit(profile: dict):
     return m["x"], m["z"], m  # the indices in m refer to the resampled profile
 
 
-def profiles_figure(slices: list[dict], picks: list[int]) -> str | None:
-    """Representativa tvärsnitt (från minsta till största V-vinkel) med anpassade spårväggar."""
+def profiles_figure(slices: list[dict], picks: list[int], harmonize_mm=None) -> str | None:
+    """Representativa tvärsnitt (från minsta till största V-vinkel) med anpassade spårväggar.
+
+    Varje ruta får bokstaven för sin plats i picks (LETTERS[j], samma som overview_figure får via marked), så att en
+    profil som inte kan ritas hoppar över sin bokstav i stället för att flytta de följande. harmonize_mm är analysens
+    utjämning: ett tal för alla snitt eller en lista parallell med slices."""
     items = []
-    for i in picks:
-        f = _fit(slices[i]["profile"]) if slices[i].get("profile") else None
+    for j, i in enumerate(picks):
+        h = harmonize_mm[i] if isinstance(harmonize_mm, (list, tuple)) and i < len(harmonize_mm) else (
+            None if isinstance(harmonize_mm, (list, tuple)) else harmonize_mm)
+        f = _fit(slices[i]["profile"], h) if slices[i].get("profile") else None
         if f:
-            items.append((i, f))
+            items.append((j, i, f))
     if not items:
         return None
     plt = _plt()
@@ -289,7 +312,7 @@ def profiles_figure(slices: list[dict], picks: list[int]) -> str | None:
     fig, axes = plt.subplots(rows, cols, figsize=(2.6 * cols, 1.45 * rows + 0.5), squeeze=False)
     for ax in axes.flat:
         ax.axis("off")
-    for k, (i, (x, z, m)) in enumerate(items):
+    for k, (j, i, (x, z, m)) in enumerate(items):
         ax = axes.flat[k]
         ax.axis("on")
         a = int(m["apex_idx"])
@@ -312,7 +335,7 @@ def profiles_figure(slices: list[dict], picks: list[int]) -> str | None:
         ax.set_aspect("equal", adjustable="box")
         ax.tick_params(labelsize=6)
         s = slices[i]
-        ax.set_title(f"{LETTERS[k]}  {s['apex_vinkel_deg']:.1f}° · d {s['spårdjup_mm']:.2f} · b {s['spårbredd_mm']:.2f} mm",
+        ax.set_title(f"{LETTERS[j]}  {s['apex_vinkel_deg']:.1f}° · d {s['spårdjup_mm']:.2f} · b {s['spårbredd_mm']:.2f} mm",
                      fontsize=7)
     fig.supxlabel("Avstånd tvärs spåret (mm)", fontsize=8)
     fig.supylabel("Höjd rel. stenytan (mm)", fontsize=8)
@@ -512,21 +535,36 @@ def _certain_carver(rec: dict | None) -> str | None:
     return cs[0] if len(cs) == 1 else None
 
 
-def build_facts(req: dict, rundata_lookup) -> dict:
+def scan_file(provenances: list[dict], mesh_info: dict | None = None) -> dict:
+    """The scan file the credit is decided by: the last analysis' provenance.mesh, completed with the loaded model's
+    info (filename, sha256, md5, bytes) when that is the same file (or the analysis names no checksum)."""
+    pm = next((pv["mesh"] for pv in reversed(provenances) if isinstance(pv.get("mesh"), dict)), None) or {}
+    em = mesh_info if isinstance(mesh_info, dict) else {}
+    if em and not em.get("mock") and (not pm.get("sha256") or pm.get("sha256") == em.get("sha256")):
+        return {**pm, **{k: em[k] for k in ("filename", "sha256", "md5", "bytes") if em.get(k) is not None}}
+    return pm
+
+
+def build_facts(req: dict, rundata_lookup, mesh_info: dict | None = None) -> dict:
+    """mesh_info is the loaded model's info (api/mesh_cache), when the report's mesh_id is still in memory."""
     signum = (req.get("signum") or "").strip()
     rec = rundata_lookup(signum) if signum else None
     groups: dict[str, list[dict]] = defaultdict(list)
     provenances = []
+    harmonize: dict[int, float | None] = {}  # id(slice) -> the analysis' harmonize_mm, for redrawing the profiles
     for a in req.get("analyses") or []:
         ft = a.get("feature_type") or "unknown"
+        h = (((a.get("provenance") or {}).get("parameters")) or {}).get("harmonize_mm")
         for s in a.get("slices") or []:
             if all(s.get(m) is not None and np.isfinite(s[m]) for m in METRICS):
                 groups[ft].append(s)
+                harmonize[id(s)] = h
         if a.get("provenance"):
             provenances.append(a["provenance"])
     order = [ft for ft in ("rune", "ornament", "unknown") if groups.get(ft)]
     groups = {ft: groups[ft] for ft in order}
     all_slices = [s for ft in order for s in groups[ft]]
+    slice_harmonize = [harmonize.get(id(s)) for s in all_slices]
     summaries = {ft: {m: summarize([s[m] for s in sl]) for m in METRICS} for ft, sl in groups.items()}
 
     comparison = None
@@ -551,18 +589,25 @@ def build_facts(req: dict, rundata_lookup) -> dict:
     attribution = attribute(reference, [this_means[m] for m in METRICS]) if this_means and reference else None
 
     prov = provenances[-1] if provenances else {}
-    # Open scan series (e.g. Kitzler Åhfeldt's on Zenodo): credit the scanner and cite the dataset
-    scan, scan_source = scan_sources.fill_scan(req.get("scan") or {}, rec["signum"] if rec else signum)
+    # Open scan series (e.g. Kitzler Åhfeldt's on Zenodo): credit the scanner and cite the dataset only when the
+    # scan file is recognised as one of the series' published files (scan_sources.identify), as the groove export
+    # does; the typed signum never attaches a third-party credit (METHODS.md 2f)
+    hit = scan_sources.identify_mesh(scan_file(provenances, mesh_info))
+    scan_source = hit["dataset"] if hit else None
+    scan = scan_sources.fill_scan(req.get("scan") or {}, scan_source)
     return {
         "signum": rec["signum"] if rec else signum,
         "rundata": rec,
         "meta": req.get("meta") or {},
         "scan": scan,
         "scan_source": scan_source,
+        "scan_file": hit["file"] if hit else None,
+        "scan_match": hit["match"] if hit else None,
         "condition": req.get("condition") or {},
         "groups": groups,
         "order": order,
         "all_slices": all_slices,
+        "slice_harmonize_mm": slice_harmonize,
         "summaries": summaries,
         "comparison": comparison,
         "main_feature": main_ft,
@@ -1009,9 +1054,11 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
                           f"{signum}. Digitalt strykljus från fyra riktningar (20° över ytan), beräknat ur 3D-modellen.",
                           "strykljus"))
         blocks.append(fig(depth_figure(surface),
-                          f"{signum}. Djup under den rekonstruerade stenytan; mörkare = djupare. Kantzonen (10 mm), där "
-                          "referensytan är osäker, är utelämnad. Kartan visar formen; spårdjupen i tabellerna är mätta i "
-                          "tvärsnitten och är något större, eftersom referensytan är utjämnad.", "djupkarta"))
+                          f"{signum}. Djup under en referensyta i nivå med ytan runt spåren och spårkanterna; "
+                          "mörkare = djupare. Kantzonen (10 mm), där referensytan är osäker, är utelämnad. Kartan visar formen; spårdjupen i tabellerna är mätta i "
+                          "täta tvärsnitt och är ofta 10–40 % större, ibland mindre, eftersom kartan är ett grövre "
+                          "rutnät där varje ruta har den högsta punkten i sin ruta och den smala botten i ett spår "
+                          "sällan träffas exakt.", "djupkarta"))
         if any(s.get("point") for s in all_slices):
             blocks.append(fig(overview_figure(surface, all_slices, marked),
                               f"{signum}. Tvärsnittens positioner färgade efter V-vinkel. Bokstäverna hänvisar till "
@@ -1024,10 +1071,12 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
                         "Ladda in skanningen i 3D-vyn och skapa rapporten igen för att få med dem."))
 
     blocks.append(h(2, "4.2 Spårprofiler"))
-    pf = profiles_figure(all_slices, picks)
+    pf = profiles_figure(all_slices, picks, f.get("slice_harmonize_mm"))
     if pf:
         blocks.append(fig(pf, f"{signum}. Representativa tvärsnitt, ordnade från minsta till största V-vinkel. Punkter: "
-                              "uppmätt profil; röda linjer: anpassade spårväggar; streckad linje: stenytans nivå. "
+                              "uppmätt profil; röda linjer: anpassade spårväggar; streckad linje: spårkanternas nivå (medel av de "
+                              "högsta punkterna strax utanför spårets kanter), som bredden mäts vid och höjden räknas "
+                              "från. "
                               "Lika skala på axlarna.", "tvarsnitt"))
     of = overlay_figure(groups)
     if of:
@@ -1271,7 +1320,8 @@ def build_document(f: dict, author: str, institution: str, ai: dict | None, surf
                     + (" " + r_report.data_text(rr_) if rr_ else "")))
     blocks.append(h(1, "Tack"))
     ss = f.get("scan_source")
-    blocks.append(p((scan_sources.credit_text(ss, signum) + " Fyll i: markägare, länsstyrelse, finansiärer.") if ss else
+    blocks.append(p((scan_sources.report_credit_text(ss, f["scan_file"]) + " Fyll i: markägare, länsstyrelse, "
+                     "finansiärer.") if ss and f.get("scan_file") else
                     "Fyll i: den som skannat stenen, markägare, länsstyrelse, finansiärer."))
     blocks.append(h(1, "Referenser"))
     refs = list(REFERENCES) + (r_report.R_REFERENCES if rr_ else [])

@@ -4,7 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import PlotlyGraph from "@/components/PlotlyGraph";
 import { API_URL } from "@/lib/api";
 import type { ThreeDAnalysisResult, ToolHeuristic } from "@/lib/db";
-import { downloadFile, safeFilename, toCSV } from "@/lib/export";
+import { downloadFile, safeFilename } from "@/lib/export";
 import { METRICS, METRIC_DIGITS, METRIC_LABELS, type FeatureType, type Metric, type SliceMetrics, type Summary } from "@/lib/metrics";
 import { angleColor, runeSampleNote, type AutoAnalysisResult, type AutoLabel, type AutoSlice } from "@/lib/mesh";
 import { useSettings } from "@/components/SettingsContext";
@@ -26,6 +26,7 @@ interface Props {
   onLabelsChange: (labels: AutoLabel[]) => void;
   onUse: (result: ThreeDAnalysisResult, featureType: FeatureType) => void;
   onSendToTwoD?: () => void;
+  onExport?: () => void; // scrolls to the export menu on the page
   facitMode?: boolean;
 }
 
@@ -36,7 +37,7 @@ function quickStats(values: number[]) {
   return { mean, sd };
 }
 
-export default function AutoGrooveReview({ result, signum, metaStone, metaWeathering, labels, onLabelsChange, onUse, onSendToTwoD, facitMode }: Props) {
+export default function AutoGrooveReview({ result, signum, metaStone, metaWeathering, labels, onLabelsChange, onUse, onSendToTwoD, onExport, facitMode }: Props) {
   const { userName } = useSettings();
   const svgRef = useRef<SVGSVGElement>(null);
   const [tool, setTool] = useState<AutoLabel>("rune");
@@ -131,23 +132,6 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
     }
   };
 
-  const exportCSV = () => {
-    const rows = result.slices.map((s, i) => ({
-      signum,
-      label: s.accepted ? labels[i] : "rejected",
-      accepted: s.accepted,
-      reason: s.reason ?? "",
-      ...Object.fromEntries(METRICS.map(m => [m, s[m]])),
-      fit_r2: s.fit_r2,
-      halfwidth_mm: s.halfwidth_mm,
-      x: s.point?.[0], y: s.point?.[1], z: s.point?.[2],
-      dir_x: s.direction?.[0], dir_y: s.direction?.[1], dir_z: s.direction?.[2],
-      method_version: result.provenance.method_version,
-      mesh_sha256: result.provenance.mesh?.sha256,
-    }));
-    downloadFile(`${safeFilename(signum || "automatisk")}_automatisk_analys.csv`, toCSV(rows), "text/csv");
-  };
-
   // Facit for evaluating the rune detection (scripts/evaluate_rune_detection.py): positions and the researcher's labels
   const saveFacit = () => {
     const marked = result.slices.flatMap((s, i) => (s.accepted && s.point && labels[i] !== "unknown"
@@ -200,9 +184,12 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
               Öppna ristningskartan i 2D
             </button>
           )}
-          <button onClick={exportCSV} className="px-3 py-2 bg-white border border-slate-300 hover:border-slate-900 text-xs font-bold rounded-xl">
-            Exportera alla snitt (CSV)
-          </button>
+          {onExport && (
+            <button onClick={onExport} title="Alla snitt, runorna, ristningskartan och granskningsbilden – välj i Exportera"
+              className="px-3 py-2 bg-white border border-slate-300 hover:border-slate-900 text-xs font-bold rounded-xl">
+              Exportera …
+            </button>
+          )}
         </div>
       </div>
 

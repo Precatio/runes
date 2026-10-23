@@ -1,0 +1,958 @@
+{
+ "_about": "STL-filerna i de öppna skanningsserierna i src/scan_sources.py, ur Zenodos filförteckningar (namn, storlek och md5 som Zenodo anger). sha256 finns för filer som laddats ned och vars md5 stämmer med Zenodos. signum är härlett ur filnamnet; null när filen inte har något signum. signa listar alla stenar när en fil visar fler än en (Ög 240 och Ög 241 är samma gravhäll). Skapad 2026-10-23.",
+ "datasets": {
+  "sodermanland": {
+   "record": 11951255,
+   "doi": "10.5281/zenodo.11951255",
+   "files": [
+    {
+     "name": "So 112_1_4 thin_closed holes.stl",
+     "size": 449223534,
+     "md5": "296e4aa63ecdf1a52259c6efc8129ff4",
+     "signum": "Sö 112",
+     "sha256": "7d234e9aa71adc3965a0890ecb25983fe3179788a044dc4896eccc82d47b16c2"
+    },
+    {
+     "name": "So 113_1_4 thin_closed holes.stl",
+     "size": 306993734,
+     "md5": "1b3f7e24e00cbcc01ae21e5a00b34a12",
+     "signum": "Sö 113"
+    },
+    {
+     "name": "So 128_1_4 thin closed holes.stl",
+     "size": 73141734,
+     "md5": "73644eac837d9dab02cbf068ab83e512",
+     "signum": "Sö 128",
+     "sha256": "004ae2df06ef8be424d00e30102838de601093d3fc3f69bf47c4bf7a24b9f717"
+    },
+    {
+     "name": "So 129_1_4_thin03_closed holes.stl",
+     "size": 98989834,
+     "md5": "e705c97c54b620005afed651f64bcf5e",
+     "signum": "Sö 129",
+     "sha256": "91c675e65465a8627a01d81efac94b77288bed6937d8f863120bf0047ac301cb"
+    },
+    {
+     "name": "So 131_1_4 thin_closed holes.stl",
+     "size": 440395534,
+     "md5": "20ebaca8827e71a36b2b598ece6e773f",
+     "signum": "Sö 131"
+    },
+    {
+     "name": "So 134_1_4 thin_closed holes.stl",
+     "size": 95214384,
+     "md5": "b00b6a9f78952f9ce1348b7edcb69165",
+     "signum": "Sö 134",
+     "sha256": "f5ef0a128aada2cea293e20b6e7ccd1d411b7020b556a837e4723ce375fcb01b"
+    },
+    {
+     "name": "So 137A_1_4 thin05_closed holes.stl",
+     "size": 97941084,
+     "md5": "23d66cf111f0e9c9863aecc750120aa2",
+     "signum": "Sö 137A",
+     "sha256": "b760c08cb8068695130e7cd2d26a1a82a59d761f69c4b7a7b44d6b401d228173"
+    },
+    {
+     "name": "So 137B_1_4 thin05 hela.stl",
+     "size": 224211234,
+     "md5": "b92f86ad01f11ea741382f5f5b63de25",
+     "signum": "Sö 137B",
+     "sha256": "6114874b030b797847fefce067044722a30e34dde6503714f435493a4747bbdd"
+    },
+    {
+     "name": "So 143_1_4 thin_closed holes.stl",
+     "size": 82282334,
+     "md5": "c37dbe3dcef75a31e61ab97e5ca576a7",
+     "signum": "Sö 143",
+     "sha256": "6d54c6efbcffa0190ab84952023ae1aa2e5b6fbc4d60795c0219f2ef495a4960"
+    },
+    {
+     "name": "So 149_1_4 thin_closed holes.stl",
+     "size": 284940384,
+     "md5": "c3956b78c98edc9a0efda9f6965c1fc0",
+     "signum": "Sö 149",
+     "sha256": "fa76a2e8c2089e1039bc7fbb44fc90aef6e6179c9f2aaeaad17d1e1bd5cf869b"
+    },
+    {
+     "name": "So 160_1_4 thin05_closed holes.stl",
+     "size": 98529134,
+     "md5": "5b16f7158c2865d7f99952cffedb5657",
+     "signum": "Sö 160",
+     "sha256": "7c460ebca3d96ebef7d34e47d55aed4735e46b32075e5d98f285faa0856fa932"
+    },
+    {
+     "name": "So 161_1_4 thin04_closed holes.stl",
+     "size": 107734784,
+     "md5": "cc8eb44e28e0e9228f23e62a87ec9f0c",
+     "signum": "Sö 161",
+     "sha256": "d8dc2f27d778409f8e1947f91f5fbc154797bfb155d2843d38ab5c5e256d2c1f"
+    },
+    {
+     "name": "So 162_1_4_closed holes.stl",
+     "size": 61151584,
+     "md5": "1935c52a26caf2f497465a645f50960f",
+     "signum": "Sö 162",
+     "sha256": "d9efd53731283f385bce3974edd55a7dd97a1c5a1514dcc8ee8c4acab1db9ee2"
+    },
+    {
+     "name": "So 163_1_4 thin05_closed holes.stl",
+     "size": 271210484,
+     "md5": "e86c7d5ae837ee689cf4eaa87efc1e81",
+     "signum": "Sö 163",
+     "sha256": "392348aa91bcf9754c2dd7595e2ff6a4511684869f50c363b475eaddc7e62d2e"
+    },
+    {
+     "name": "So 164_1_4 thin_closed holes.stl",
+     "size": 521339284,
+     "md5": "4eaac3cbe4909662bb0720600f11b079",
+     "signum": "Sö 164",
+     "sha256": "68afd93eb44626148552bab2aa4cce1ea47ad0c63953d8013453b78cb4fad962"
+    },
+    {
+     "name": "So 165_1_4 thin07_closed holes.stl",
+     "size": 274216834,
+     "md5": "565fbbf433dab94c31ed8361836e8bcf",
+     "signum": "Sö 165",
+     "sha256": "e6ed168c3248612bfcca66751a7be173df64e8515abd3bcfaa0dbbf906e8f711"
+    },
+    {
+     "name": "So 166_1_4 thin_closed holes.stl",
+     "size": 1611812834,
+     "md5": "24736555995642d71ce405b75c1cc834",
+     "signum": "Sö 166",
+     "sha256": "dbcd10ae71bf61cecee959dfe728c7293492d439fecad32a0436e6c9371d9728"
+    },
+    {
+     "name": "So 184_thin03_closed holes.stl",
+     "size": 73409884,
+     "md5": "2667b972485837be7afe19e83e86477c",
+     "signum": "Sö 184",
+     "sha256": "083147e0850265ef6f1c4f530a2c678f592a5c08f04438c81f516d7dd402a5f8"
+    },
+    {
+     "name": "So 205_thin03_closed holes.stl",
+     "size": 195454084,
+     "md5": "b845cf9fa3d68d058e55c2c716c335ca",
+     "signum": "Sö 205",
+     "sha256": "c344c0183d009cca7cabea2382bbb88821c56ca82a14c03d0761c6d29245205e"
+    },
+    {
+     "name": "So 206_thin03_closed holes.stl",
+     "size": 198837184,
+     "md5": "b4962c29333ecf59ccb3fd495d85abf3",
+     "signum": "Sö 206",
+     "sha256": "bcb91dbb7d50e531238d1a07e726f614010bed1265bf39bbd840d3ac2f2e3758"
+    },
+    {
+     "name": "So 207_thin03_closed holes.stl",
+     "size": 143193784,
+     "md5": "7da1e6862a8f65068029a33172d79f4f",
+     "signum": "Sö 207",
+     "sha256": "624727420db794433d4553da102c64a9dafa37d1c9060ce0c67bc41568e887e4"
+    },
+    {
+     "name": "So 208_thin03_closed holes.stl",
+     "size": 244815684,
+     "md5": "899b08a569a4fbaaa0aed5d54a98a590",
+     "signum": "Sö 208",
+     "sha256": "01c86b8d00ca71254dfa2d77835daed634f91f7ca99d35f846ba27013cd10534"
+    },
+    {
+     "name": "So 211_thin03_closed holes.stl",
+     "size": 388689334,
+     "md5": "80e21a6015e6a2908220d4860bee60e7",
+     "signum": "Sö 211",
+     "sha256": "296b75cba587957369a098c34b70ea81ce7313bcbb9c96d8043beb7d228ebe27"
+    },
+    {
+     "name": "So 307_1_4_thin_closed holes.stl",
+     "size": 622703734,
+     "md5": "b17844814de27251861615ea628fb467",
+     "signum": "Sö 307",
+     "sha256": "e4ef8a32b51f74f7faa104d1b897f9c766d61ac1442043ac91ecc44bfb02be3f"
+    },
+    {
+     "name": "So 319_1_4 thin05_closed holes.stl",
+     "size": 133760234,
+     "md5": "9c0fbcfad94b33db338a6d2806152bf2",
+     "signum": "Sö 319",
+     "sha256": "0fa11d89b8e698d6d41bde5ddf7de06296a7c2ace2a264cb854118a042b080a2"
+    },
+    {
+     "name": "So 333_thin05_closed holes.stl",
+     "size": 124321084,
+     "md5": "b88f2f2fd6d5b8f940c4f5ba0754f7ea",
+     "signum": "Sö 333",
+     "sha256": "f308536eaef0f95c08d2be31403027aad0991294ba3525e281b69447a60d3662"
+    },
+    {
+     "name": "So 360_1_4_thin03_closed holes.stl",
+     "size": 1184750034,
+     "md5": "1738cf6bf096c85c137016ebf9123c29",
+     "signum": "Sö 360",
+     "sha256": "e0aa63c3e064d159f6f648a67f40c076694ce94bbc5015925257fec6d91db180"
+    },
+    {
+     "name": "So 367_1_4 thin_closed holes.stl",
+     "size": 272127234,
+     "md5": "aeb14f8d74723980658e0e869b36cb3c",
+     "signum": "Sö 367",
+     "sha256": "7ea27d00a00085ccd286691fd14220ec927d5afc25a3a33f4828a54556a4cef1"
+    },
+    {
+     "name": "So 370_1_4 thin05_closed holes.stl",
+     "size": 19272334,
+     "md5": "0755f478582e659414fae0140e1550c9",
+     "signum": "Sö 370",
+     "sha256": "30b2590612bc33a7a943c32c2b329760345ff3e962b4e59c2fbe5ba135b8294e"
+    },
+    {
+     "name": "So 371_1_4.stl",
+     "size": 21737184,
+     "md5": "4c42f6a5b168f0a1cca01b83cdbafe82",
+     "signum": "Sö 371",
+     "sha256": "01a47a3e71b0c6e81123f8cccaddb641d516a7788aac22c75ab851dc747d3a46"
+    },
+    {
+     "name": "So 45_1_4 thin_closed holes.stl",
+     "size": 498555284,
+     "md5": "dfee4c1382dc96a9aae6bcebf40f0e68",
+     "signum": "Sö 45",
+     "sha256": "e19474206ef7752b8b0eef940cd5eb41e73ddc832292ed77929ccbdbe238fc1f"
+    },
+    {
+     "name": "So 52_1_4 thin05 closed holes.stl",
+     "size": 112120134,
+     "md5": "c3c561cd8e122bafcba1f6867ba65026",
+     "signum": "Sö 52",
+     "sha256": "6866191f785ceca5a0a75831353b8ba5727f821ccbfb48ca149db42eca9fca91"
+    },
+    {
+     "name": "So 75_1_4 thin05.stl",
+     "size": 423344084,
+     "md5": "632ec15323076f193fcdf1c8dd58baa6",
+     "signum": "Sö 75",
+     "sha256": "e0710058ad2c35825c5c4d6439c7a7e26098d030c8322c6cf94c3b027ec86353"
+    },
+    {
+     "name": "So Fv1948_282_1_4_thin03_closed holes.stl",
+     "size": 100228984,
+     "md5": "c557aad59e545bdd41a54197477d7cd7",
+     "signum": "Sö Fv1948;282",
+     "sha256": "da88d0cb0844825d132d74119b573061af850c4c99f5cade4152b55077887dc4"
+    },
+    {
+     "name": "So Fv1954_19_1_4 thin05_closed holes.stl",
+     "size": 78771584,
+     "md5": "078467ca85df48f18fd12090b4c5854f",
+     "signum": "Sö Fv1954;19",
+     "sha256": "435e6ae03fa35aaad4e3539a1f619edc76acf809e16989f60f0725d443780267"
+    },
+    {
+     "name": "So Fv1954_20_1_4_thin03_closed holes.stl",
+     "size": 272845434,
+     "md5": "272171a9ca28a6ee386ff62af4afcf63",
+     "signum": "Sö Fv1954;20",
+     "sha256": "da29c24b69ea6766df59c7f5fc98287d6e203f52553504d44659273f2c953e71"
+    },
+    {
+     "name": "So Fv1973_189_1_4 thin_closed holes.stl",
+     "size": 326769634,
+     "md5": "95065dd3ff677f19be9e35ad61d34d61",
+     "signum": "Sö Fv1973;189",
+     "sha256": "930a08092931f921c0384b9426b61bc2341688bd354daafc824243a2864a29ab"
+    }
+   ]
+  },
+  "asmund": {
+   "record": 13347851,
+   "doi": "10.5281/zenodo.13347851",
+   "files": [
+    {
+     "name": "Gs 11_1_4 thin05.stl",
+     "size": 656981234,
+     "md5": "54ff81691b6956c02c511dbefb7f0cc3",
+     "signum": "Gs 11"
+    },
+    {
+     "name": "Gs 13_1_4 thin04 closed holes.stl",
+     "size": 423896134,
+     "md5": "d199e6eddce88a5aff3d06b337626fcb",
+     "signum": "Gs 13"
+    },
+    {
+     "name": "U 1144 thin05 closed holes.stl",
+     "size": 814865784,
+     "md5": "9b1a7071dde88fbc59109d47112db4bd",
+     "signum": "U 1144"
+    }
+   ]
+  },
+  "halsingland": {
+   "record": 15638873,
+   "doi": "10.5281/zenodo.15638873",
+   "files": [
+    {
+     "name": "HS_10_1a_thin03.stl",
+     "size": 616863334,
+     "md5": "e701faeefed670155e226ca5f797b36b",
+     "signum": "Hs 10"
+    },
+    {
+     "name": "HS_10_1b_thin03.stl",
+     "size": 482195084,
+     "md5": "5bed867da8f2623921160e20abc52338",
+     "signum": "Hs 10"
+    },
+    {
+     "name": "HS_10_2a thin03.stl",
+     "size": 511367134,
+     "md5": "0652f5c39ee96050ff459473765526ba",
+     "signum": "Hs 10"
+    },
+    {
+     "name": "HS_10_2b thin03.stl",
+     "size": 709442784,
+     "md5": "7219f93bd92157d13afb1106cc810f3c",
+     "signum": "Hs 10"
+    },
+    {
+     "name": "HS_10_3a_thin03.stl",
+     "size": 544858684,
+     "md5": "36a7e6c8375172210b70a8dda0e17ac9",
+     "signum": "Hs 10"
+    },
+    {
+     "name": "HS_10_3b_thin03.stl",
+     "size": 717375034,
+     "md5": "1ff29dae15d8bdf028242deb7e900c32",
+     "signum": "Hs 10"
+    },
+    {
+     "name": "HS_11 thin03.stl",
+     "size": 341476284,
+     "md5": "6671500420390671e9319cb8e075e870",
+     "signum": "Hs 11"
+    },
+    {
+     "name": "HS_12 thin03.stl",
+     "size": 282283234,
+     "md5": "81f39bfb45ee92cb7a8a972032071f78",
+     "signum": "Hs 12"
+    },
+    {
+     "name": "HS_14_0_40 runes thin03.stl",
+     "size": 365137234,
+     "md5": "a785625c4ac7b3060f45de21fe3a4bb4",
+     "signum": "Hs 14"
+    },
+    {
+     "name": "HS_14_1mm_complete thin03.stl",
+     "size": 222143184,
+     "md5": "52cc7080ae318329a7ecfe899bf4b2e4",
+     "signum": "Hs 14"
+    },
+    {
+     "name": "HS_15_0_40 thin03.stl",
+     "size": 410970584,
+     "md5": "4b1aa8a789c1c4dcd7b366e989e117b6",
+     "signum": "Hs 15"
+    },
+    {
+     "name": "HS_16 thin03.stl",
+     "size": 20462934,
+     "md5": "4b20f596a46665463f9ad33903f7aa9d",
+     "signum": "Hs 16"
+    },
+    {
+     "name": "HS_1A_thin02.stl",
+     "size": 4895934,
+     "md5": "cd1ddf612c2dca30daf912489ebb5221",
+     "signum": "Hs 1"
+    },
+    {
+     "name": "HS_1B thin02.stl",
+     "size": 1356384,
+     "md5": "fddcc2c967bccde8dc16e6b3ec6a2a41",
+     "signum": "Hs 1"
+    },
+    {
+     "name": "HS_2 thin01.stl",
+     "size": 665953484,
+     "md5": "37745c2f8b7246f7e83925b41bb76273",
+     "signum": "Hs 2"
+    },
+    {
+     "name": "HS_21 thin01.stl",
+     "size": 373655834,
+     "md5": "e6ed82259f8b1b3595747df147e586ac",
+     "signum": "Hs 21"
+    },
+    {
+     "name": "HS_3 thin01.stl",
+     "size": 26882784,
+     "md5": "2e48e686a7bf8172705b78adb1d8e3bd",
+     "signum": "Hs 3"
+    },
+    {
+     "name": "HS_4 thin01.stl",
+     "size": 32401634,
+     "md5": "d85208d410feda78cfc730d8d3530bb8",
+     "signum": "Hs 4"
+    },
+    {
+     "name": "HS_6 thin03.stl",
+     "size": 374765334,
+     "md5": "ea1253f4251b66aa96b2003de9b095c8",
+     "signum": "Hs 6"
+    },
+    {
+     "name": "HS_9 thin03.stl",
+     "size": 167377184,
+     "md5": "f5db052f411ce48fdbbfef4283d06832",
+     "signum": "Hs 9"
+    }
+   ]
+  },
+  "vastergotland": {
+   "record": 14046713,
+   "doi": "10.5281/zenodo.14046713",
+   "files": [
+    {
+     "name": "Vg 102 thin03 closed.stl",
+     "size": 390525034,
+     "md5": "3f123f8f34038c9fd3b19e289a0c4a56",
+     "signum": "Vg 102"
+    },
+    {
+     "name": "Vg 103 thin03 closed.stl",
+     "size": 136151784,
+     "md5": "e60811f13d0153a19c986785349c3171",
+     "signum": "Vg 103"
+    },
+    {
+     "name": "Vg 105 thin03 closed.stl",
+     "size": 292349334,
+     "md5": "df6a37cffefe80346a2cad4be5b94ef9",
+     "signum": "Vg 105"
+    },
+    {
+     "name": "Vg 108 thin03 closed.stl",
+     "size": 96269234,
+     "md5": "f9b7890d5cb080c0043a610bb375733a",
+     "signum": "Vg 108"
+    },
+    {
+     "name": "Vg 22 thin03 closed.stl",
+     "size": 85335534,
+     "md5": "286a3d4ab6f6d71d88953e11cea673f4",
+     "signum": "Vg 22"
+    },
+    {
+     "name": "Vg 23 thin03 closed.stl",
+     "size": 69767734,
+     "md5": "28ade857b207c3be44af86d1325030e7",
+     "signum": "Vg 23"
+    },
+    {
+     "name": "Vg 24 Ljung86 Lundberg37.stl",
+     "size": 24156584,
+     "md5": "c197f44d7870647b11735720c921ed4f",
+     "signum": "Vg 24"
+    },
+    {
+     "name": "Vg 27 Ljung89 Lundberg40a sida A.stl",
+     "size": 12135634,
+     "md5": "f2f03a199eb2de2884156e5aa7bb78cc",
+     "signum": "Vg 27"
+    },
+    {
+     "name": "Vg 27 Ljung89 Lundberg40a sida B.stl",
+     "size": 12658584,
+     "md5": "6dc3a05d30c64724e58dd58f835fdf9f",
+     "signum": "Vg 27"
+    },
+    {
+     "name": "Vg 27B Ljung92 Lundberg 41.stl",
+     "size": 14622084,
+     "md5": "87373c43a028943ec9f8b5cc584817c4",
+     "signum": "Vg 27"
+    },
+    {
+     "name": "Vg 27B Ljung93 Lundberg 42.stl",
+     "size": 9773284,
+     "md5": "20132eac2e627a071fa8a32f456cefdc",
+     "signum": "Vg 27"
+    },
+    {
+     "name": "Vg 27B Ljung94 Lundberg 43.stl",
+     "size": 33228084,
+     "md5": "2d1d65bb9650bfe4ce2c8ce195cf7dc4",
+     "signum": "Vg 27"
+    },
+    {
+     "name": "Vg 27B Ljung95 Lundberg 44.stl",
+     "size": 22753084,
+     "md5": "e17de0f6a07b359b7abfb0a0d6ef03f6",
+     "signum": "Vg 27"
+    },
+    {
+     "name": "Vg 27B Ljung96 Lundberg 45.stl",
+     "size": 6942434,
+     "md5": "dbc412e3e6d67bf9e874b3004155aabd",
+     "signum": "Vg 27"
+    },
+    {
+     "name": "Vg 27B Ljung97 Lundberg46.stl",
+     "size": 8832134,
+     "md5": "b8b7818175dcfa3c4ea7e2ff283e2008",
+     "signum": "Vg 27"
+    },
+    {
+     "name": "Vg 30 thin03 closed.stl",
+     "size": 229065884,
+     "md5": "9bc3f20640b6903e540c194a50beb5da",
+     "signum": "Vg 30"
+    },
+    {
+     "name": "Vg 32 thin03 closed.stl",
+     "size": 148577884,
+     "md5": "31b8273a948d1586a115467c2126c89c",
+     "signum": "Vg 32"
+    },
+    {
+     "name": "Vg 33 thin03 closed.stl",
+     "size": 120893634,
+     "md5": "93107a80cf876d61e724ff17e9fc1cc1",
+     "signum": "Vg 33"
+    },
+    {
+     "name": "Vg 37 thin03 closed.stl",
+     "size": 81602284,
+     "md5": "9adb906080627141da4e289d563a386c",
+     "signum": "Vg 37"
+    },
+    {
+     "name": "Vg 40 thin03 closed.stl",
+     "size": 254514984,
+     "md5": "8761daa2ddf2e3655e0c8404f2351e03",
+     "signum": "Vg 40"
+    },
+    {
+     "name": "Vg 41 Ljung99 Lundberg 30 thin03.stl",
+     "size": 35378484,
+     "md5": "ad249fd127c98629055f892594499f31",
+     "signum": "Vg 41"
+    },
+    {
+     "name": "Vg 43 Ljung101 Lundberg 23 sida A_1_4 thin03.stl",
+     "size": 110730084,
+     "md5": "0a6d4c562c8d146772c853c95c068947",
+     "signum": "Vg 43"
+    },
+    {
+     "name": "Vg 43 Ljung101 Lundberg 23 sida B_1_4 thin03.stl",
+     "size": 91293134,
+     "md5": "55d1301e65a5530f4873e7477d809519",
+     "signum": "Vg 43"
+    },
+    {
+     "name": "Vg 43 Ljung102 Lundberg 24.stl",
+     "size": 75135084,
+     "md5": "43282b499ce71d22cee257d3703cfa25",
+     "signum": "Vg 43"
+    },
+    {
+     "name": "Vg 43 Ljung103 Lundberg 25 sida A.stl",
+     "size": 46295434,
+     "md5": "2f9816cf0cba049597221627c648e4f4",
+     "signum": "Vg 43"
+    },
+    {
+     "name": "Vg 43 Ljung103 Lundberg 25 sida B.stl",
+     "size": 30081834,
+     "md5": "809877c04f0cc54f8449b17f9c7f3386",
+     "signum": "Vg 43"
+    },
+    {
+     "name": "Vg 43 Ljung104 Lundberg 26 thin03.stl",
+     "size": 151901484,
+     "md5": "2a5c92efe875a644fe26b8a8d53e632e",
+     "signum": "Vg 43"
+    },
+    {
+     "name": "Vg 43 Ljung105 Lundberg 27_1_4 thin03.stl",
+     "size": 111106784,
+     "md5": "d987fe66b543824c43cb413e20faf519",
+     "signum": "Vg 43"
+    },
+    {
+     "name": "Vg 43 Ljung106 Lundberg 28_1_4_thin03.stl",
+     "size": 147272684,
+     "md5": "edef842ca9187c0ffbc3eb505bb9ebc5",
+     "signum": "Vg 43"
+    },
+    {
+     "name": "Vg 43 Ljung107 Lundberg 29_1_4 thin03.stl",
+     "size": 104758284,
+     "md5": "84d7217eadb37f5409217a604bef511b",
+     "signum": "Vg 43"
+    },
+    {
+     "name": "Vg 43 Ljung108 Lundberg 31 thin03.stl",
+     "size": 5451084,
+     "md5": "5dc60204cff5eed106ce0a9a656d5acf",
+     "signum": "Vg 43"
+    },
+    {
+     "name": "Vg 43 Ljung109 Lundberg 32.stl",
+     "size": 5913184,
+     "md5": "32826da1177caac132edfba3b2b9c596",
+     "signum": "Vg 43"
+    },
+    {
+     "name": "Vg 50 thin03 closed.stl",
+     "size": 224112434,
+     "md5": "78623a2b4f3baa3e94656520dbf3a0bf",
+     "signum": "Vg 50"
+    },
+    {
+     "name": "Vg 51 del 1 thin03.stl",
+     "size": 50116484,
+     "md5": "4763a78f5afbc9796cced761210d37cb",
+     "signum": "Vg 51"
+    },
+    {
+     "name": "Vg 51 del 2 thin03.stl",
+     "size": 48574684,
+     "md5": "0cdfb2478ba6626e3c323a4df1471915",
+     "signum": "Vg 51"
+    },
+    {
+     "name": "Vg 51 del 3 thin03.stl",
+     "size": 25476884,
+     "md5": "c85341d241e44fb9e5f7ed999b15d7c6",
+     "signum": "Vg 51"
+    },
+    {
+     "name": "Vg 51 del 4 thin03.stl",
+     "size": 22462284,
+     "md5": "40f179a613356791469b520f1ba8549d",
+     "signum": "Vg 51"
+    },
+    {
+     "name": "Vg 53 Ljung61 thin03.stl",
+     "size": 84908734,
+     "md5": "bad17071601c1d7321de77bfc4886564",
+     "signum": "Vg 53"
+    },
+    {
+     "name": "Vg ATA322-4412-2011 Ljung80 thin03.stl",
+     "size": 30822184,
+     "md5": "dcb5053e70c019c8980ee1778ff0a86b",
+     "signum": null
+    },
+    {
+     "name": "Vg ATA3940_64 Ljung98 L47 del 1.stl",
+     "size": 12855284,
+     "md5": "a0d17a7a4db742946c7814c6d5e57efa",
+     "signum": null
+    },
+    {
+     "name": "Vg ATA3940_64 Ljung98 L47 del 2 sida A.stl",
+     "size": 33216484,
+     "md5": "a9b0525105560f24c1df410f4891c765",
+     "signum": null
+    },
+    {
+     "name": "Vg ATA3940_64 Ljung98 L47 del 2 sida B.stl",
+     "size": 15984084,
+     "md5": "3bbc206f4ad6a7661aabe126c342f33f",
+     "signum": null
+    },
+    {
+     "name": "Vg GVMV89 Ljung62 del 1 thin03.stl",
+     "size": 50709184,
+     "md5": "f92caa03f43fe92838c6805c9b0c0957",
+     "signum": null
+    },
+    {
+     "name": "Vg GVMV89 Ljung62 del 2 thin03.stl",
+     "size": 37373334,
+     "md5": "cba9c22ee03fc4edb1177c6e2b7c4e23",
+     "signum": null
+    },
+    {
+     "name": "Vg GVMV89 Ljung64 thin03.stl",
+     "size": 24236434,
+     "md5": "46c15538aeb1d534fbae7b12b50c6c89",
+     "signum": null
+    },
+    {
+     "name": "Vg GVMV89 Ljung65 thin03.stl",
+     "size": 8251784,
+     "md5": "d3493a71653c1b692a389abedd1a26c6",
+     "signum": null
+    },
+    {
+     "name": "Vg GVMV89 Ljung66 thin03.stl",
+     "size": 12845334,
+     "md5": "053fccb0040be02555bacc723d0417d4",
+     "signum": null
+    },
+    {
+     "name": "Vg GVMV89 Ljung67 thin03.stl",
+     "size": 10645184,
+     "md5": "ce28d6fddc286cb0ab6fae621716a20e",
+     "signum": null
+    },
+    {
+     "name": "Vg GVMV89 Ljung68 thin03.stl",
+     "size": 44415684,
+     "md5": "9e986677fb0e934c8b1e6a1dac07e3f9",
+     "signum": null
+    },
+    {
+     "name": "Vg GVMV89 Ljung69 thin03.stl",
+     "size": 7992034,
+     "md5": "8978d7115cc66a78666247392ac24379",
+     "signum": null
+    },
+    {
+     "name": "Vg GVMV89 Ljung70 thin03.stl",
+     "size": 15126784,
+     "md5": "ff61091bcbfe2766c09eea4a8f68cda9",
+     "signum": null
+    },
+    {
+     "name": "Vg GVMV89 Ljung73 thin03.stl",
+     "size": 8567384,
+     "md5": "dd2796171850ad0ff41f39087be44702",
+     "signum": null
+    },
+    {
+     "name": "Vg GVMV89 Ljung74 thin03.stl",
+     "size": 34229034,
+     "md5": "3f87cef277575a025ee3ebfca9ede466",
+     "signum": null
+    },
+    {
+     "name": "Vg GVMV89 Ljung75 thin03.stl",
+     "size": 49365934,
+     "md5": "15c12d5e989ea36b63cc10153f85ae0e",
+     "signum": null
+    },
+    {
+     "name": "Vg GVMV89 Ljung77 thin03.stl",
+     "size": 22879284,
+     "md5": "12d243fb330fb0d6b0fe116d8ecca778",
+     "signum": null
+    },
+    {
+     "name": "Vg GVMV89 Ljung78 thin03.stl",
+     "size": 76801534,
+     "md5": "bd27ac8d1097b315239d12dd5a041405",
+     "signum": null
+    }
+   ]
+  },
+  "medelpad": {
+   "record": 14141222,
+   "doi": "10.5281/zenodo.14141222",
+   "files": [
+    {
+     "name": "M 1 Nolby thin03.stl",
+     "size": 305852584,
+     "md5": "67aefff20863408b43e71fcd351d29df",
+     "signum": "M 1",
+     "sha256": "2c91ba89237f86b3eb9a429bc807336272d87b85e716fed91f4fd46bbf402909"
+    },
+    {
+     "name": "M 10 Selånger thin03.stl",
+     "size": 102760634,
+     "md5": "309f81c5c8dce9bd29e645e5717289d1",
+     "signum": "M 10",
+     "sha256": "4a7299cba28cc7968216f5f76ba3f24d04e8f21bdffd55963458e1351d4d0f67"
+    },
+    {
+     "name": "M 11 Högom thin03.stl",
+     "size": 197966384,
+     "md5": "7c732904e26eb4d6bd77a0bb64a2b255",
+     "signum": "M 11",
+     "sha256": "98cd95aefcad1d0e5c6f532edc624f7d8f39e9a762d9b219689eeae16a71a7e6"
+    },
+    {
+     "name": "M 13 Oxsta thin03.stl",
+     "size": 154891984,
+     "md5": "481907c6bc09e746f14e89fa03696c1b",
+     "signum": "M 13",
+     "sha256": "44459eed874ce24cee8b4c91afd881e80e94a33ad6665adfe9eb60f638f859b9"
+    },
+    {
+     "name": "M 14_020 Byn thin02.stl",
+     "size": 717965934,
+     "md5": "6a437ccbc73207a7c9a60031a1f69b89",
+     "signum": "M 14",
+     "sha256": "3ebbf8ff946e458c5e6f41442b62fc1f6b7b08424a71662b11f7bbcc79d5103b"
+    },
+    {
+     "name": "M 14_040 Byn thin03.stl",
+     "size": 266290584,
+     "md5": "d9cc6187226d66f30ce91aff03d013ea",
+     "signum": "M 14",
+     "sha256": "b3ea45dd3dfc1180231c8b9af5a3feca5b6fb8d032b1cba7dcc74b2505f609b8"
+    },
+    {
+     "name": "M 15 Sköns kyrka thin02.stl",
+     "size": 210368434,
+     "md5": "7ccfad6becf73f811932fa950d5593e3",
+     "signum": "M 15",
+     "sha256": "ce214d21acfe645a308e5f7b439062b689bc794dcfcb61cac1f73001e1e175d3"
+    },
+    {
+     "name": "M 16 Sköns kyrka thin03.stl",
+     "size": 323419634,
+     "md5": "2683d8c5c9338719fd5ec562c3f4d0a3",
+     "signum": "M 16",
+     "sha256": "1524bfc43d04794120d5960e25a14d0aeae375af15897856e5b8beed81779792"
+    },
+    {
+     "name": "M 2 Svala thin03.stl",
+     "size": 116303484,
+     "md5": "e9dcb0169521c5873ba1331db0015d5a",
+     "signum": "M 2",
+     "sha256": "a4b5fb174656ed480e706746f629593a964e9fe497a4214282e4d9625c7db9e1"
+    },
+    {
+     "name": "M 3 Berga thin02.stl",
+     "size": 437151384,
+     "md5": "f6b9b7b297e6a047a42c94858c3e2f29",
+     "signum": "M 3",
+     "sha256": "4738364ead18e8648a1573e021f572f0702e8cff0bff4dcbb592047594bcf54a"
+    },
+    {
+     "name": "M 4 Attmarby thin02.stl",
+     "size": 289000134,
+     "md5": "e267ce83a69413876110c15a9a83a70e",
+     "signum": "M 4",
+     "sha256": "a9ba9b2c69799aa81dfd6cb7ea73faf26c3cac4adeb8b560321168e65654408c"
+    },
+    {
+     "name": "M 5 Attmar thin02.stl",
+     "size": 675159484,
+     "md5": "e8a398fc7fbbe72529ca497426c853be",
+     "signum": "M 5",
+     "sha256": "6811d0ce71a65a4020a8c8664dd7ebedad51454d93f548f7f2b65bb7cf32a2ee"
+    },
+    {
+     "name": "M 6 Målsta thin02.stl",
+     "size": 483818584,
+     "md5": "419df6fb174379bec5c115206ad19295",
+     "signum": "M 6",
+     "sha256": "747d59ce3a4ce9310ffe0f9b59ade3cea6eb85878b7427d21c89fdace5bf262c"
+    },
+    {
+     "name": "M 7 Tuna kyrka thin03.stl",
+     "size": 155572734,
+     "md5": "b8caa1bf68b369cbc8b9d53b682e978d",
+     "signum": "M 7",
+     "sha256": "65da69863774ba4eaf70db3f6a0462265bc29bf7a1fcc7dc2ac0c4176f3fdaeb"
+    },
+    {
+     "name": "M 8 Sköle thin03.stl",
+     "size": 269629384,
+     "md5": "ccadfac7e86ebc3de8b24e027bb2fab1",
+     "signum": "M 8",
+     "sha256": "698b0e0d7f796c913f5711bbea98e27eaa950c2bc7a0eee631aadc20d37bb2c5"
+    }
+   ]
+  },
+  "gravmonument_og_sm": {
+   "record": 17571537,
+   "doi": "10.5281/zenodo.17571537",
+   "files": [
+    {
+     "name": "Og 240_241_thin03.stl",
+     "size": 245496284,
+     "md5": "0fd30622bd5020bdf9dabd0261822bdf",
+     "signum": "Ög 240",
+     "sha256": "2bd737843b398e018d13a7fa7b6805f71bdfe95368b58328c61ee137bbaa91c9",
+     "signa": [
+      "Ög 240",
+      "Ög 241"
+     ]
+    },
+    {
+     "name": "Og 2_thin03.stl",
+     "size": 119289534,
+     "md5": "15f1cccd57823169a1e95655e5cccc78",
+     "signum": "Ög 2",
+     "sha256": "97f01639a01acd689c43c4cd00a65fc3dfb032071aa3b0f61d891533ae3f56e3"
+    },
+    {
+     "name": "Og 2b_thin03.stl",
+     "size": 158980284,
+     "md5": "c7f15f9c6f6cc3b7b8b027edf41b7edb",
+     "signum": "Ög 2",
+     "sha256": "c6ac3a17131e79754065981a36ce71624f8cdd84a06adca534ba7a760cf641fd"
+    },
+    {
+     "name": "Og 5_thin03.stl",
+     "size": 123961434,
+     "md5": "f853c250d787e2a83f2b84a96d122772",
+     "signum": "Ög 5",
+     "sha256": "aa0203218b5f9bbf468812a090eed83fc9b4307ff357575fbbde7bd4f2093d22"
+    },
+    {
+     "name": "Og 5b_thin03.stl",
+     "size": 25405284,
+     "md5": "1ce1d4b09850192916deff03744f5c6c",
+     "signum": "Ög 5",
+     "sha256": "c903248caf6208b7142afcfece12521d1e92f6969b2ea02b7913539ed06b0700"
+    },
+    {
+     "name": "Og 6_thin03.stl",
+     "size": 64163534,
+     "md5": "b2c49fce6b9a9fbaa3415f68fa6dbe96",
+     "signum": "Ög 6",
+     "sha256": "ef184c91458614a833446dbb5d1daeda531e1cd2b3be5525ff23c971be5236e4"
+    },
+    {
+     "name": "Og Hov 14_22_thin03.stl",
+     "size": 62116434,
+     "md5": "a33a58cca971e4483bea1370f6d792a3",
+     "signum": "Ög Hov14;22",
+     "sha256": "8f7fda611af085361badeff3b752e4e5be34b46d343858d6a97a94acfb5df60e"
+    },
+    {
+     "name": "Og Hov 15_22_thin03.stl",
+     "size": 95576284,
+     "md5": "90099389f14742b1f832c18755dec613",
+     "signum": "Ög Hov15;22",
+     "sha256": "1d0a1a76892fb6749f9fdf15088c974ebb05ba5c0fe8a9d1fd9619727f9c2927"
+    },
+    {
+     "name": "Og Hov12_21_thin03.stl",
+     "size": 68133984,
+     "md5": "526b8cd85acf8d6038b075eb998cfec7",
+     "signum": "Ög Hov12;21",
+     "sha256": "866e0432858ae83a13e2e7dd2bd5379402eb63eea9915b8a03d0bdd175764061"
+    },
+    {
+     "name": "Sm 124_thin03.stl",
+     "size": 272621834,
+     "md5": "91f8440efdfcdc930e37f582ff47000a",
+     "signum": "Sm 124",
+     "sha256": "62f9847c563eb7273dd93c8911e35aafb84eb2a556b21c160c81bc3ee911fbf1"
+    },
+    {
+     "name": "Sm 125_thin03.stl",
+     "size": 350247334,
+     "md5": "395fc74206940ab0d4d1cee727728d46",
+     "signum": "Sm 125",
+     "sha256": "cb56caf3be8ac3df7eaa24f4b112253de10ce03394387915c640077e20e8db84"
+    }
+   ]
+  }
+ }
+}

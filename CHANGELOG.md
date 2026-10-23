@@ -5,6 +5,48 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Huggspårsanalysen: välj vad du exporterar
+- Ny ruta **Exportera** på 3D-sidan: kryssa i vilka filer du vill ha. Varje val har en förklaring av vad filen visar
+  och hur den ska läsas (*Vad innehåller filerna?*). METHODS.md 2f.
+- **Spårdjup som värmekarta** (djup under stenytan med färgskala i mm och skalstock, samma figur som stenrapporten) och
+  som **rådata** (ESRI ASCII-rutnät i mm med en JSON-fil om koordinater och skanning), **relief**, **strykljus** från
+  fyra håll, den automatiska analysens **ristningskarta**, **granskningsbilden med teckenförklaring** och stenrapportens
+  figurer över snittens läge, mått på ytan och tvärsnittsprofiler. Relief, strykljus och rutnät är ytans rutnät
+  (ungefär skanningens punktavstånd, högst 1 800 px), en pixel per ruta, utan uppskalning.
+- En gemensam **mättabell** för alla mätformer, med de nya kolumnerna rune_id, feature, fit_r2 och snittets läge och
+  riktning; i den automatiska analysen kommer även bortsorterade snitt med, med skäl.
+- **Sammanfattning per sten och per runa**, **runor och kvalitetskontroll**, **tvärsnittsprofiler som tal**,
+  **längdprofil** och **hela analysen som JSON**, nu även för den automatiska analysen.
+- Flera filer kommer i en **ZIP** med README.txt och kalla.json. Reliefen och ristningskartan, som inte har någon
+  synlig kreditering, kommer alltid i en ZIP, också ensamma. README.txt anger också begränsningarna för just den här
+  stenen (för få mätta runor, avvikelser från Vitki-protokollet).
+- Skanningens **kreditering och proveniensen** finns i varje fil: i bildernas metadata, som en rad under figurerna,
+  överst i tabellerna och i README.txt. En öppen datamängd krediteras bara när den inlästa filen känns igen som en av
+  datamängdens publicerade filer (SHA-256 eller md5 som på Zenodo, annars filnamn och storlek; `data/scan_files.json`),
+  aldrig utifrån det signum som skrivits in, och raden anger vem som skannat, institutionen, projektet, licensen med
+  länk och DOI. Ett filnamn utan storlek räcker inte. För en okänd skanning anger du själv vem som skannat stenen,
+  och texten märks som din i alla fält. Uppladdade modeller får därför md5 och storlek i proveniensen.
+- **Stenrapporten** krediterar skanningen på samma sätt: bara när filen känns igen, inte längre utifrån signumet.
+  I figuren över tvärsnittsprofiler följer bokstäverna figuren över snittens läge också när en profil inte kan
+  ritas, och väggarna ritas med analysens egen utjämning (`harmonize_mm`); de lagrade måtten ändras inte.
+  Bildtexterna säger att den streckade linjen är spårkanternas nivå och hur kartans djup skiljer sig från
+  tvärsnittens.
+- Exportmenyn anger vilken analys som exporteras när både den automatiska analysen och en mätning finns, och knappen
+  *Exportera …* under en analys väljer just den.
+- Den automatiska analysen exporteras med **dina etiketter** som stenrapporten läser dem: uteslutna snitt räknas inte,
+  och sammanfattningen räknas om per grupp med projektets egna funktioner (per runa bara för gruppen runa, när
+  analysen mätte enbart runor). **Mätformen** i filerna läses ur analysen,
+  inte ur vilken flik som är öppen, och **bilderna ur skanningen** ses längs samma normal som stenrapportens figurer
+  (en gemensam funktion för båda).
+- Felaktiga indata ger 400 (inbäddade bilder bara som PNG och med storleksgräns, gränser för fälten och formuläret,
+  rensat signum, felformade sammanfattningar), en analys från en annan skanning än den inlästa avvisas för bilder ur
+  skanningen (tabeller exporteras med analysens egen skanningsfil), bara en export körs åt gången, och exporten kan
+  avbrytas; den avbryts också när en annan modell läses in.
+- Den automatiska analysen sparar nu ristningskartans skala (`groove_map_scale`: djupet som blir svart, tröskeln,
+  rutnätet och mm per pixel), så att kartans svarta ände kan anges i mm (8-bitars gråskala, inte ett mätvärde).
+- Inga mätvärden har ändrats; mätmetoden är fortfarande groove-5. Bara sammanfattningen i exporten av en automatisk
+  analys med etiketter skiljer sig från analysens egen, eftersom den räknas för de märkta grupperna.
+
 ### Forskningsluckor: luckor i texten med kalibrerade procent
 - Listan över de luckor som Rundata lämnat öppna och som sannolikhetsmodellen fyller visade modellens **råa**
   sannolikhet under rubriken kalibrerad. Den är ofta mycket högre för namn och ovanliga ord (U 466 *viseti* 81 % rå,

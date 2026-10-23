@@ -4,11 +4,15 @@ import hashlib
 import io
 import json
 import os
+import re
+import threading
 
 import numpy as np
 import trimesh
-from fastapi import APIRouter, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
 from fastapi.responses import Response
+from starlette.concurrency import run_in_threadpool
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from api import mesh_cache
 from api.config import APP_NAME, APP_VERSION, METHOD_VERSION
@@ -25,7 +29,8 @@ from src.slice_analysis import (
     raw_profile,
     snap_path_to_bottom,
 )
-from src import limitations
+from src import groove_export, limitations
+from src.groove_export import gray_image, relief_images  # noqa: F401 - relief_images is part of this router's API
 from src import protocol as protocol_spec
 from src.stats import METRICS, summarize_by_rune, summarize_slices
 
@@ -37,19 +42,22 @@ NO_MESH = ("Ingen 3D-modell angiven. Ladda upp en STL-, OBJ- eller PLY-fil förs
            "(appen använder aldrig testdata i stället).")
 
 
-def _sha256(path: str) -> str:
-    h = hashlib.sha256()
+def _digests(path: str) -> tuple[str, str, int]:
+    """SHA-256 (the model's id), md5 (what Zenodo publishes for its files, src/scan_sources.identify) and size."""
+    h, m, n = hashlib.sha256(), hashlib.md5(), 0
     with open(path, "rb") as f:
         for chunk in iter(lambda: f.read(1024 * 1024), b""):
             h.update(chunk)
-    return h.hexdigest()
+            m.update(chunk)
+            n += len(chunk)
+    return h.hexdigest(), m.hexdigest(), n
 
 
 def _load_upload(file: UploadFile) -> MeshEntry:
     """Läser in en uppladdad fil, centrerar den som Three.js geo.center() och lägger den i cachen."""
     tmp_path = save_mesh_upload(file)
     try:
-        digest = _sha256(tmp_path)
+        digest, md5, size = _digests(tmp_path)
         cached = mesh_cache.peek(digest)
         if cached is not None:
             return cached
@@ -72,6 +80,8 @@ def _load_upload(file: UploadFile) -> MeshEntry:
         "mesh_id": digest,
         "filename": file.filename,
         "sha256": digest,
+        "md5": md5,
+        "bytes": size,
         "vertices": int(len(mesh.vertices)),
         "faces": int(len(mesh.faces)),
         "extent_mm": [float(v) for v in mesh.extents],
@@ -496,7 +506,11 @@ def render_depth_map(
     mesh_id: str = Form(None),
     resolution: int = Form(800),
 ):
-    """Renderar en ortografisk djupkarta ovanifrån som base64-kodad PNG."""
+    """Renderar en ortografisk djupkarta ovanifrån som base64-kodad PNG.
+
+    LEGACY: inte spårdjup. Bilden är modellens globala Z-koordinat, sträckt min–max över hela föremålet, så den visar
+    stenens form och lutning, inte hur djupt spåren ligger under stenytan. Den länkas inte från exporten; använd
+    djupet under stenytan (stone_report.depth_figure / export depth_heatmap, depth_grid). Kan tas bort senare."""
     from PIL import Image
 
     resolution = max(64, min(int(resolution), 4000))
@@ -570,8 +584,7 @@ def render_relief(
         raise server_error(e, "Ytan kunde inte räknas fram ur modellen.", status_code=500) from e
 
     def png(gray: np.ndarray) -> str:
-        img = np.nan_to_num(gray, nan=1.0)
-        pil = Image.fromarray((np.flipud(np.clip(img, 0, 1)) * 255).astype(np.uint8))
+        pil = gray_image(gray)
         # Small scans give small images; enlarge so that the runes can be read
         scale = 1200 / max(pil.size)
         if scale > 1:
@@ -580,19 +593,250 @@ def render_relief(
         pil.save(buf, format="PNG", optimize=True)
         return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode("ascii")
 
-    views = {name: surf.shaded(az, 20) for name, az in
-             (("nordväst", 315), ("nordost", 45), ("sydost", 135), ("sydväst", 225))}
-    # Relief: the darkest of the four directions makes every groove dark whatever its direction
-    relief = np.nanmin(np.stack(list(views.values())), axis=0)
-    relief = (relief - np.nanpercentile(relief, 1)) / max(np.nanpercentile(relief, 99) - np.nanpercentile(relief, 1), 1e-6)
-    depth = np.clip(-surf.residual, 0, None)
-    ref = float(np.nanpercentile(depth[surf.inner], 99)) if surf.inner.any() else 1.0
-    depth_img = 1 - np.clip(depth / max(ref, 1e-6), 0, 1)
-    depth_img[~surf.inner] = np.nan
+    imgs = relief_images(surf)
     return {
-        "relief": png(relief),
-        "depth": png(depth_img),
-        "raking": {name: png(v) for name, v in views.items()},
+        "relief": png(imgs["relief"]),
+        "depth": png(imgs["depth_img"]),
+        "raking": {name: png(v) for name, v in imgs["raking"].items()},
         "resolution_mm": surf.res,
         "normal": [float(v) for v in surf.hf.n],
+        # the depth that is black in "depth" (99th percentile outside the 10 mm edge zone); the export's heat map
+        # uses the 99.5th
+        "depth_ref_mm": imgs["depth_ref_mm"],
     }
+
+
+# ---- export ----------------------------------------------------------------------------------------------------------
+# What the groove analysis can be exported as (src/groove_export.py, METHODS.md 2f): images computed from the scan,
+# the analysis' own images and the measurements as tables, with the scan's credit and provenance in every file.
+
+MAX_EXPORT_JSON = 60 * 1024 * 1024  # result_json from the browser (an automatic analysis with its images)
+# The whole request: result_json and labels_json at most MAX_EXPORT_JSON each, plus the short fields. Refused from
+# Content-Length before anything is read. The page never sends the model with an export (it sends mesh_id after
+# /api/3d/upload), so a model sent in the same request must fit in the margin
+EXPORT_BODY_MARGIN = 5 * 1024 * 1024
+MAX_EXPORT_FIELDS = 20  # the page sends 15 at most (FIELD_LIMITS, result_json, labels_json)
+MAX_EXPORT_FILES = 3
+MAX_SCAN_NOTE = 500
+# The short form fields: longer values are refused (400) instead of being cut
+FIELD_LIMITS = {"items": 2000, "signum": 400, "feature_type": 20, "mode": 20, "mesh_id": 128, "scan_note": 2000,
+                "as_zip": 10, "normal_x": 64, "normal_y": 64, "normal_z": 64, "up_x": 64, "up_y": 64, "up_z": 64}
+_MESH_ID = re.compile(r"^[A-Za-z0-9_-]{1,128}$")
+# One export at a time: an image export builds the stone surface (up to 3 million cells) and matplotlib figures,
+# and two at once would double the memory. The slot is taken before the body is read, so a second request gets 429
+# instead of waiting, and its body is never buffered.
+_EXPORT_SLOT = threading.BoundedSemaphore(1)
+TOO_BIG = "Analysen är för stor för att exporteras (max 60 MB)."
+
+
+@router.get("/export_items")
+def export_items():
+    """Exportvalen med filnamn, förklaring och vad de kräver; samma texter som README.txt i paketet."""
+    return groove_export.catalogue()
+
+
+@router.get("/scan_credit")
+def scan_credit(mesh_id: str = "", filename: str = "", sha256: str = "", md5: str = "", size: int | None = None):
+    """Krediteringen som exporterade filer får för skanningen: bara när filen känns igen som en publicerad fil i en
+    öppen serie (src/scan_sources.identify; den inlästa modellen med mesh_id, annars filnamn, kontrollsummor och
+    storlek ur analysens proveniens). Ett signum räcker inte; okänd fil ger known: false."""
+    if len(mesh_id) > 128 or len(filename) > 1000 or len(sha256) > 64 or len(md5) > 32:
+        raise HTTPException(status_code=400, detail="För långa uppgifter om skanningsfilen.")
+    entry = mesh_cache.peek(mesh_id) if mesh_id and _MESH_ID.match(mesh_id) else None
+    if entry is not None and not entry.info.get("mock"):
+        return groove_export.credit_for_mesh(entry.info)
+    return groove_export.scan_credit(filename or None, sha256 or None, md5 or None, size)
+
+
+def _bad(detail: str) -> HTTPException:
+    return HTTPException(status_code=400, detail=detail)
+
+
+def _form_vector(form: dict, keys: tuple[str, str, str], what: str) -> list[float] | None:
+    """[x, y, z] ur tre formulärfält: None när alla saknas, 400 när de är ofullständiga eller inte tal."""
+    raw = [form.get(k) for k in keys]
+    if all(v in (None, "") for v in raw):
+        return None
+    v = groove_export.unit_vector(raw) if all(v not in (None, "") for v in raw) else None
+    if v is None:
+        raise _bad(f"{what} måste anges som tre tal ({', '.join(keys)}) och får inte vara nollvektorn.")
+    return v
+
+
+async def _form_text(form, key: str, limit: int) -> str | None:
+    raw = form.get(key)
+    if raw is None:
+        return None
+    if hasattr(raw, "read"):  # sent as a Blob
+        data = await raw.read(limit + 1)
+        if len(data) > limit:
+            raise HTTPException(status_code=413, detail=TOO_BIG)
+        try:
+            return data.decode("utf-8")
+        except UnicodeDecodeError:
+            raise _bad(f"{key} måste vara UTF-8.") from None
+    if len(raw) > limit:
+        raise HTTPException(status_code=413, detail=TOO_BIG)
+    return raw
+
+
+def export_response(out: dict) -> Response:
+    """The file with its name and what was left out. Header values must be ASCII, so X-Export-Skipped
+    ("id:skäl;id:skäl") is percent-encoded UTF-8: the page reads it with decodeURIComponent."""
+    from urllib.parse import quote
+    name = out["name"]
+    skipped = quote(";".join(f"{i}:{r}" for i, r in out["skipped"]), safe=" :;,()-_.")
+    return Response(content=out["data"], media_type=out["media"], headers={
+        "Content-Disposition": f"attachment; filename=\"{name}\"; filename*=UTF-8''{quote(name)}",
+        "X-Export-Files": ",".join(out["files"]),
+        "X-Export-Skipped": skipped,
+        "Access-Control-Expose-Headers": "Content-Disposition, X-Export-Files, X-Export-Skipped",
+    })
+
+
+def _export_locked(form: dict, upload) -> Response:
+    try:
+        items = groove_export.parse_items(form.get("items") or "")
+        signum = groove_export.clean_signum(form.get("signum") or "")
+    except ValueError as e:
+        raise _bad(str(e)) from e
+    try:
+        result = json.loads(form["result_json"]) if form.get("result_json") else None
+        labels = json.loads(form["labels_json"]) if form.get("labels_json") else None
+    except (ValueError, TypeError, RecursionError):
+        raise _bad("result_json och labels_json måste vara giltig JSON.") from None
+    if result is not None and not isinstance(result, dict):
+        raise _bad("result_json måste vara ett objekt.")
+    if labels is not None and not isinstance(labels, list):
+        raise _bad("labels_json måste vara en lista.")
+    scan_note = (form.get("scan_note") or "").strip()
+    if len(scan_note) > MAX_SCAN_NOTE:
+        raise _bad(f"Texten om skanningen får vara högst {MAX_SCAN_NOTE} tecken.")
+    feature_type = form.get("feature_type") or "rune"
+    _check_feature_type(feature_type)
+    mode = form.get("mode") or None
+    if mode not in (None, "oneclick", "manual", "path", "auto"):
+        raise _bad("mode måste vara oneclick, manual, path eller auto.")
+    try:
+        as_zip = form_flag(form.get("as_zip"), False, "as_zip")
+    except HTTPException as e:
+        raise _bad(e.detail) from None
+    view_n = _form_vector(form, ("normal_x", "normal_y", "normal_z"), "Vyns riktning")
+    view_up = _form_vector(form, ("up_x", "up_y", "up_z"), "Vyns uppåtriktning")
+    mesh_id = form.get("mesh_id") or None
+    if mesh_id is not None and not _MESH_ID.match(mesh_id):
+        raise _bad("Ogiltigt mesh_id.")
+    try:
+        groove_export.validate_result(result)
+    except ValueError as e:
+        raise _bad(str(e)) from e
+
+    needs_mesh = any(i in groove_export.IMAGE_ITEMS for i in items)
+    entry = None
+    if needs_mesh:
+        if not mesh_id and upload is None:
+            raise _bad(NO_MESH)
+        entry = resolve_mesh(upload, mesh_id)  # 404 when the model has left the cache: the client uploads again
+        if entry.info.get("mock"):
+            raise _bad(NO_MESH)
+    elif mesh_id:
+        entry = mesh_cache.peek(mesh_id)  # only for the file name and fingerprint; data items need no model
+    prov_mesh = ((result or {}).get("provenance") or {}).get("mesh") or {}
+    if (entry is not None and prov_mesh.get("sha256") and entry.info.get("sha256")
+            and prov_mesh["sha256"] != entry.info["sha256"]):
+        if needs_mesh:
+            raise _bad("Analysen hör till en annan skanning än den inlästa 3D-modellen. Läs in samma fil eller mät om.")
+        # Tables and data need no model: the scan file and its credit are the analysis' own (its provenance)
+        entry = None
+
+    # The carved face's normal as the stone report chooses it (groove_export.view_normal, shared with
+    # api/routers/reports.py): the analysis' own normal, else the slices' mean up direction; with no analysis the
+    # 3D view, else the stone's thinnest direction
+    normal, up, source = groove_export.view_normal(None, [result] if result else [])
+    if normal is None and view_n:
+        normal, up, source = view_n, view_up, "vy"
+    elif normal is None:
+        source = "uppskattad"
+
+    def surface():
+        from src.stone_report import Surface
+        n = normal if normal is not None else _estimated_normal(entry.mesh)
+        return Surface(entry.mesh, n, up)  # max_px 1800, as the stone report (api/routers/reports.py)
+
+    mesh_info = entry.info if entry is not None else prov_mesh
+    credit = {**groove_export.credit_for_mesh(mesh_info), "scan_note": scan_note}
+    try:
+        out = groove_export.export(items, as_zip=as_zip, mesh_entry=entry,
+                                   surface_factory=surface if entry is not None and needs_mesh else None,
+                                   result=result, labels=labels, signum=signum, credit=credit,
+                                   view={"normal_source": source}, mode=mode, feature_type=feature_type,
+                                   tool_fn=tool_heuristic)
+    except groove_export.BadInput as e:
+        raise _bad(str(e)) from e
+    except LookupError as e:
+        raise HTTPException(status_code=422, detail="Inget av de valda kan exporteras för den här analysen.") from e
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise server_error(e, "Exporten kunde inte skapas.", status_code=500) from e
+    return export_response(out)
+
+
+@router.post("/export")
+async def export(request: Request):
+    """Valda filer ur huggspårsanalysen (src/groove_export.py): en fil som den är, flera som ZIP med README.txt och
+    kalla.json. Formuläret läses här och inte med Form-parametrar, eftersom result_json från en automatisk analys
+    med sina bilder är större än Starlettes gräns på 1 MB per fält. Bara multipart/form-data (som webbläsarens
+    FormData), med Content-Length högst 2 × MAX_EXPORT_JSON + EXPORT_BODY_MARGIN och högst MAX_EXPORT_FIELDS fält;
+    exportplatsen tas innan något läses, så att en andra export får 429 utan att dess innehåll buffras."""
+    ctype = (request.headers.get("content-type") or "").split(";", 1)[0].strip().lower()
+    if ctype != "multipart/form-data":
+        raise HTTPException(status_code=415, detail="Exporten skickas som multipart/form-data.")
+    length = request.headers.get("content-length")
+    if length is None:
+        raise HTTPException(status_code=411, detail="Content-Length saknas.")
+    try:
+        n = int(length)
+    except ValueError:
+        raise _bad("Ogiltig Content-Length.") from None
+    if n < 0:
+        raise _bad("Ogiltig Content-Length.")
+    if n > 2 * MAX_EXPORT_JSON + EXPORT_BODY_MARGIN:
+        raise HTTPException(status_code=413, detail=TOO_BIG)
+    slot = _EXPORT_SLOT  # the module's semaphore at the time of the request (tests replace it)
+    if not slot.acquire(blocking=False):
+        raise HTTPException(status_code=429, detail="En export pågår redan. Vänta tills den är klar och försök igen.")
+    try:
+        return await _export_request(request)
+    finally:
+        slot.release()
+
+
+async def _export_request(request: Request) -> Response:
+    try:
+        form = await request.form(max_files=MAX_EXPORT_FILES, max_fields=MAX_EXPORT_FIELDS,
+                                  max_part_size=MAX_EXPORT_JSON)
+    except StarletteHTTPException as e:
+        if "maximum size" in str(e.detail).lower():
+            raise HTTPException(status_code=413, detail=TOO_BIG) from e
+        raise _bad("Formuläret kunde inte läsas.") from e
+    except Exception as e:  # a malformed multipart body
+        raise _bad("Formuläret kunde inte läsas.") from e
+    try:
+        fields = {}
+        for key, limit in FIELD_LIMITS.items():
+            v = form.get(key)
+            if v is None or hasattr(v, "read"):
+                fields[key] = None
+                continue
+            v = str(v)
+            if len(v) > limit:
+                raise _bad(f"Fältet {key} är för långt (högst {limit} tecken).")
+            fields[key] = v
+        for key in ("result_json", "labels_json"):
+            fields[key] = await _form_text(form, key, MAX_EXPORT_JSON)
+        upload = form.get("file")
+        upload = upload if hasattr(upload, "read") and getattr(upload, "filename", None) else None
+        return await run_in_threadpool(_export_locked, fields, upload)
+    finally:
+        await form.close()
