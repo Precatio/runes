@@ -221,17 +221,9 @@ body = f"""Den som läser en runinskrift i en utgåva möter förr eller senare 
 
 Vi har byggt en sannolikhetsmodell som gör precis det som runologen avstod från: den föreslår vad som kan ha stått där. Den är vår egen, den är ny, och ingen utanför Vitki har ännu granskat den. Det är därför den här artikeln handlar lika mycket om hur vi prövade förslagen som om förslagen själva. Vi påstår inte att något av orden nedan är fakta. Vi visar vad modellen säger, vad utgåvorna säger, och var de möts.
 
-## Först en rättelse
-
-Medan vi skrev upptäckte vi ett fel i vår egen app. Listan över luckor under *Forskningsluckor* visade modellens råa siffror men kallade dem kalibrerade. Skillnaden är inte en detalj. Den råa siffran är modellens egen andel för ordet: hur stor del av sannolikheten som hamnar på just det ordet när modellen väger alla ord den känner till mot varandra. Den kalibrerade säger hur ofta modellen har haft rätt när den gett en sådan siffra, prövat på luckor där svaret redan är känt. När en kalibrerad siffra är 80 procent har modellen i sådana luckor haft rätt ungefär åtta gånger av tio.
-
-Den råa siffran blir lätt hög. På U 1180 var risti {EX[('U 1180', 'risti')][0]} procent rått men {EX[('U 1180', 'risti')][1]} kalibrerat, på Ög 115 föll fyrir från {EX[('Ög 115', 'fyrir')][0]} till {EX[('Ög 115', 'fyrir')][1]} procent och på U 522 namnet heðingunnr från {EX[('U 522', 'heðingunnr')][0]} till {EX[('U 522', 'heðingunnr')][1]}. För vanliga ord kan kalibreringen också höja en låg siffra. Listan visar nu den kalibrerade siffran, med den råa bredvid.
-
-Det vi skrev i [Runorna som fattas](/artiklar/runorna-som-fattas/) står sig: i ingen av de 70 öppna luckorna på runstenar som stenanalysen fyller är modellen minst 95 procent säker. Listan räknar luckorna på ett annat sätt och kommer till {RS['open']}. Där når en enda lucka över 95 procent, hans på U 765 med {P('U 765', 'hans')}, men när stenanalysen läser hela stenen på en gång får samma ord bara 36 procent. Siffran beror alltså på hur mycket av stenen modellen läser samtidigt, och det är ytterligare ett skäl att inte ta den som ett svar.
-
 ## Vad modellen föreslår
 
-Inventeringen gick igenom {RS['gaps_inventoried']} luckor på vikingatida runstenar. {RS['open']} av dem har utgivarna lämnat öppna. I {RS['candidates']} av de öppna, på {RS['stones']} stenar, föreslår modellen ett ord ur sitt ordförråd med minst 50 procent kalibrerad sannolikhet, och i {RS['sure']} med minst 80 procent.
+Inventeringen gick igenom {RS['gaps_inventoried']} luckor på vikingatida runstenar. {RS['open']} av dem har utgivarna lämnat öppna. I {RS['candidates']} av de öppna, på {RS['stones']} stenar, föreslår modellen ett ord ur sitt ordförråd med minst 50 procent kalibrerad sannolikhet, och i {RS['sure']} med minst 80 procent. Kalibrerad betyder att siffran är prövad på luckor där svaret redan är känt: när modellen säger 80 procent har den där haft rätt ungefär åtta gånger av tio. Modellens egen, okalibrerade siffra är ofta högre, och den står som ”rå” i diagrammet nedan.
 
 Ett första mönster syns direkt: modellen är som säkrast där den behövs minst. Bland de sju förslagen på minst 80 procent står ok tre gånger, hans, ræisa och risti – formelord som varje runolog kan gissa och som utgivarna ändå lämnat öppna, oftast för att runorna inte syns – och þikra på Sm 47, som vi återkommer till. Det är mindre spännande än nya namn. Men det är också vad en ärlig modell ska göra: vara säkrast där mönstret är starkast.
 
@@ -239,7 +231,7 @@ Ett första mönster syns direkt: modellen är som säkrast där den behövs min
 
 Vi läste vad utgåvorna skriver om varje lucka på runstenarna: Sveriges runinskrifter, Fornvännen, Nytt om runer och, för Öland, Magnus Källströms nyläsning i Futhark. En andra läsare gick sedan igenom varje påstående och försökte motbevisa det. Utgåvorna är sällan tysta. I de flesta fall har utgivaren sett luckan, beskrivit vad som syns och avstått från att fylla den.
 
-På U 765 skriver utgåvan om runan i luckan: ”Av r. 12 återstår hst och möjligen spår av en bst t. v. om hst.” – en huvudstav och kanske spår av en bistav. Modellen fyller i n, så att det står ans, och läser det som hans; att h saknas godtar den, eftersom ristare ibland utelämnade det. Men utgåvans slutsats står kvar: ”Inskriften är tyvärr alltför skadad för att tillåta ett tolkningsförslag.” Listan säger {P('U 765', 'hans')} procent, stenanalysen 36. Det är ett förslag som går att pröva på stenens fragment i Enköpings museum, inte ett svar.
+På U 765 skriver utgåvan om runan i luckan: ”Av r. 12 återstår hst och möjligen spår av en bst t. v. om hst.” – en huvudstav och kanske spår av en bistav. Modellen fyller i n, så att det står ans, och läser det som hans; att h saknas godtar den, eftersom ristare ibland utelämnade det. Men utgåvans slutsats står kvar: ”Inskriften är tyvärr alltför skadad för att tillåta ett tolkningsförslag.” Listan säger {P('U 765', 'hans')} procent, men stenanalysen, som läser hela stenen på en gång, bara 36. Det är ett förslag som går att pröva på stenens fragment i Enköpings museum, inte ett svar.
 
 {PH_SO245}
 
@@ -336,17 +328,9 @@ body_en = f"""Anyone who reads a runic inscription in an edition sooner or later
 
 We have built a probability model that does exactly what the runologist refrained from: it proposes what may have stood there. It is our own, it is new, and no one outside Vitki has yet examined it. That is why this article is as much about how we tested the proposals as about the proposals themselves. We do not claim that any of the words below are facts. We show what the model says, what the editions say, and where they meet.
 
-## First a correction
-
-While we were writing, we found an error in our own app. The list of gaps under *Research gaps* showed the model's raw figures but called them calibrated. The difference is not a detail. The raw figure is the model's own share for the word: how much of the probability falls on exactly that word when the model weighs every word it knows against the others. The calibrated figure says how often the model has been right when it gave such a figure, tested on gaps where the answer is already known. When a calibrated figure is 80 per cent, the model has been right about eight times out of ten in such gaps.
-
-The raw figure easily runs high. On U 1180, risti was {EX[('U 1180', 'risti')][0]} per cent raw but {EX[('U 1180', 'risti')][1]} calibrated; on Ög 115, fyrir fell from {EX[('Ög 115', 'fyrir')][0]} to {EX[('Ög 115', 'fyrir')][1]} per cent, and on U 522 the name heðingunnr from {EX[('U 522', 'heðingunnr')][0]} to {EX[('U 522', 'heðingunnr')][1]}. For common words the calibration can also raise a low figure. The list now shows the calibrated figure, with the raw one beside it.
-
-What we wrote in [The missing runes](/en/artiklar/runorna-som-fattas/) stands: in none of the 70 open gaps on runestones that the stone analysis fills is the model at least 95 per cent sure. The list counts the gaps differently and arrives at {RS['open']}. There a single gap exceeds 95 per cent, hans on U 765 with {P('U 765', 'hans')}, but when the stone analysis reads the whole stone at once, the same word gets only 36 per cent. The figure thus depends on how much of the stone the model reads at the same time, which is one more reason not to take it as an answer.
-
 ## What the model proposes
 
-The inventory went through {RS['gaps_inventoried']} gaps on Viking-age runestones. {RS['open']} of them the editors have left open. In {RS['candidates']} of the open ones, on {RS['stones']} stones, the model proposes a word from its vocabulary with at least 50 per cent calibrated probability, and in {RS['sure']} with at least 80 per cent.
+The inventory went through {RS['gaps_inventoried']} gaps on Viking-age runestones. {RS['open']} of them the editors have left open. In {RS['candidates']} of the open ones, on {RS['stones']} stones, the model proposes a word from its vocabulary with at least 50 per cent calibrated probability, and in {RS['sure']} with at least 80 per cent. Calibrated means that the figure has been tested on gaps where the answer is already known: when the model says 80 per cent, it has been right there about eight times out of ten. The model's own, uncalibrated figure is often higher, and it appears as “raw” in the chart below.
 
 A first pattern shows at once: the model is surest where it is needed least. Among the seven proposals of at least 80 per cent, ok appears three times, with hans, ræisa and risti – formula words that any runologist can guess and that the editors still left open, mostly because the runes are not visible – and þikra on Sm 47, to which we will return. That is less exciting than new names. But it is also what an honest model should do: be surest where the pattern is strongest.
 
@@ -354,7 +338,7 @@ A first pattern shows at once: the model is surest where it is needed least. Amo
 
 We read what the editions write about every gap on the runestones: Sveriges runinskrifter, Fornvännen, Nytt om runer and, for Öland, Magnus Källström's new reading in Futhark. A second reader then went through every claim and tried to refute it. The editions are seldom silent. In most cases the editor has seen the gap, described what is visible, and refrained from filling it.
 
-On U 765 the edition writes of the rune in the gap: “Av r. 12 återstår hst och möjligen spår av en bst t. v. om hst” – a main staff and perhaps traces of a branch. The model fills in n, so that it reads ans, and takes it as hans; it accepts the missing h because carvers sometimes left it out. But the edition's conclusion stands: “Inskriften är tyvärr alltför skadad för att tillåta ett tolkningsförslag” – the inscription is unfortunately too damaged to allow any proposed interpretation. The list says {P('U 765', 'hans')} per cent, the stone analysis 36. It is a proposal that can be tested on the stone's fragment in the Enköping museum, not an answer.
+On U 765 the edition writes of the rune in the gap: “Av r. 12 återstår hst och möjligen spår av en bst t. v. om hst” – a main staff and perhaps traces of a branch. The model fills in n, so that it reads ans, and takes it as hans; it accepts the missing h because carvers sometimes left it out. But the edition's conclusion stands: “Inskriften är tyvärr alltför skadad för att tillåta ett tolkningsförslag” – the inscription is unfortunately too damaged to allow any proposed interpretation. The list says {P('U 765', 'hans')} per cent, but the stone analysis, which reads the whole stone at once, only 36. It is a proposal that can be tested on the stone's fragment in the Enköping museum, not an answer.
 
 {PH_SO245_EN}
 
