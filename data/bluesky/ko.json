@@ -1,0 +1,217 @@
+{
+ "_om": "Bluesky-inlägg som grundaren har godkänt, ett per dag kl. 10 (launchd, scripts/bluesky_post.py --ko --posta). posted fylls i när inlägget gått ut. Ändra text eller datum här; ta bort en rad för att stryka ett inlägg. Godkänd av grundaren 2026-10-24; de fem första postas samma kväll med 40 minuters mellanrum.",
+ "items": [
+  {
+   "date": "2026-10-24",
+   "slug": "/",
+   "en": true,
+   "text": "Hello Bluesky! Vitki is an open research platform for Sweden's runic inscriptions: statistics on every runestone, 3D analysis of carved grooves, and a model that suggests lost runes. Open data, open code. Here we share what the stones show.",
+   "tags": [
+    "runes",
+    "archaeology"
+   ],
+   "posted": "https://bsky.app/profile/vitkirunor.bsky.social/post/3myn55emhct2i",
+   "posted_at": "2026-10-24T16:42:02+00:00"
+  },
+  {
+   "date": "2026-10-24",
+   "slug": "vem-talar-i-havamal",
+   "en": true,
+   "text": "Hávamál was composed about a thousand years ago and reached us in a single manuscript. We read it as it asks to be read: as advice to a person. On arriving as a guest, on friendship, sleepless nights – and what is left of a life.",
+   "tags": [
+    "OldNorse",
+    "Skystorians"
+   ]
+  },
+  {
+   "date": "2026-10-24",
+   "slug": "fem-runstenar-soker-sin-ristare",
+   "en": true,
+   "text": "Two in three Swedish runestones have no carver named in the runic database. In a blind test on 769 stones with the answer hidden, Vitki's suggestions were right four times in five. Here are the five strongest candidates – and how they are worked out.",
+   "tags": [
+    "runestones",
+    "archaeology"
+   ]
+  },
+  {
+   "date": "2026-10-24",
+   "slug": "2026-10-bonen-tystnade-korset-stod-kvar",
+   "en": true,
+   "text": "Around 1035 more than one runestone in three asked God to help the dead person's soul. Fifty years later only one in ten did – though the cross was still carved on the stones. Where did the prayer go?",
+   "tags": [
+    "runestones",
+    "MedievalSky"
+   ]
+  },
+  {
+   "date": "2026-10-24",
+   "slug": "dottrarna-som-runstenarna-glomde",
+   "en": true,
+   "text": "14 Swedish runestones were raised for a daughter, against 268 for a son. But where daughters appear, they appear in their own way: the stones are late, and in Uppland more than one in three is a bridge.",
+   "tags": [
+    "runestones",
+    "Skystorians"
+   ]
+  },
+  {
+   "date": "2026-10-25",
+   "slug": "maltstenen-raknad-i-stallet-for-tolkad",
+   "en": true,
+   "text": "Seven scholars have given the Malt stone seven different meanings. We let a model that has learnt the runic language from thousands of inscriptions read it instead. It confirms the core, chooses between disputed runes – and shows why a full text is out of reach.",
+   "tags": [
+    "runes",
+    "archaeology"
+   ]
+  },
+  {
+   "date": "2026-10-26",
+   "slug": "den-som-bryter-denna-sten",
+   "en": true,
+   "text": "Curses, Thor and lead amulets against fever. We went through all 6,753 runic inscriptions in the Scandinavian Runic-text Database looking for magic: in the Viking Age people protected the stone in the south and the soul in the north.",
+   "tags": [
+    "runes",
+    "MedievalSky"
+   ]
+  },
+  {
+   "date": "2026-10-27",
+   "slug": "varfor-sten",
+   "en": true,
+   "text": "Runes were carved in wood, bone and metal, but stone is what survived. Did the carvers know it would? Thirty-two Viking-age stones say so themselves. And us: what of what we write today will be left in a thousand years?",
+   "tags": [
+    "runestones",
+    "Skystorians"
+   ]
+  },
+  {
+   "date": "2026-10-28",
+   "slug": "tor-svarade-korset-och-tystnade",
+   "en": true,
+   "text": "Only six of 2,321 Swedish runestones name Thor or carry his hammer. They were carved among Christian stones, and several mimic the shape of the cross. Did Thor come to the runestones as an answer to the cross?",
+   "tags": [
+    "VikingAge",
+    "archaeology"
+   ]
+  },
+  {
+   "date": "2026-10-29",
+   "slug": "hemma-mellan-rikena-skanes-runstenar",
+   "en": true,
+   "text": "Fifty-nine runestones in Skåne, and not one names a king or a realm. Where did people belong in Skåne when the stones were raised, between Denmark and what would become Sweden?",
+   "tags": [
+    "runestones",
+    "MedievalSky"
+   ]
+  },
+  {
+   "date": "2026-10-30",
+   "slug": "hon-arvde-efter-sitt-barn-kvinnorna-pa-runstenarna",
+   "en": true,
+   "text": "Women help raise one runestone in four, but only one in thirty is raised for a woman. Were women the vanguard of Christianity, as is often said? Our figures point to inheritance instead.",
+   "tags": [
+    "womenshistory",
+    "Skystorians"
+   ]
+  },
+  {
+   "date": "2026-10-31",
+   "slug": "erik-skrev-r-och-bygden-skrev-efter",
+   "en": true,
+   "text": "Around Enköping, æftiᛦ is written with an ordinary r five times as often as in the rest of Sweden. Was it the local pronunciation? The trail leads to one carver, Erik, and to those who carved after him.",
+   "tags": [
+    "runes",
+    "archaeology"
+   ]
+  },
+  {
+   "date": "2026-11-01",
+   "slug": "vastgotarna-skrev-som-danskarna",
+   "en": true,
+   "text": "Raising runestones came from the Danish realm and took root first in Götaland – and Västergötland wrote most like the Danes. At the border there is a silent belt where almost no stones were raised.",
+   "tags": [
+    "runestones",
+    "MedievalSky"
+   ]
+  },
+  {
+   "date": "2026-11-02",
+   "slug": "undantaget-vid-randers",
+   "en": true,
+   "text": "Denmark had been Christian since Harald Bluetooth, yet Danish runestones almost never prayed for the dead. Two of the five that do before 1050 stand six kilometres apart near Randers.",
+   "tags": [
+    "runestones",
+    "Skystorians"
+   ]
+  },
+  {
+   "date": "2026-11-03",
+   "slug": "hur-spraklik-ar-en-runfoljd",
+   "en": true,
+   "text": "112 Viking-age runic inscriptions have never been interpreted beyond a single word. We tried them with the codebreakers' tools – al-Kindi's frequency analysis and Friedman's index of coincidence – and with a language test of our own.",
+   "tags": [
+    "runes",
+    "archaeology"
+   ]
+  },
+  {
+   "date": "2026-11-04",
+   "slug": "stilgruppernas-morkertal",
+   "en": true,
+   "text": "More than one runestone in three has no style group in the runic database, and the gaps are not random. Damaged, uninterpreted and peripheral stones vanish from the dating most often – and they don't behave like the rest.",
+   "tags": [
+    "runestones",
+    "MedievalSky"
+   ]
+  },
+  {
+   "date": "2026-11-05",
+   "slug": "reste-sjalv-eller-lat-resa",
+   "en": true,
+   "text": "Västergötland raised its runestones with its own hands; Uppland had others do the work. We counted the commonest words on the runestones province by province – and the words stayed at home.",
+   "tags": [
+    "runestones",
+    "Skystorians"
+   ]
+  },
+  {
+   "date": "2026-11-06",
+   "slug": "stenar-och-stavar",
+   "en": true,
+   "text": "The word stav means at least six things when it comes to runes. Five runestones mention staffs raised beside the stone. None survives, but the statistics show where they stood.",
+   "tags": [
+    "runes",
+    "archaeology"
+   ]
+  },
+  {
+   "date": "2026-11-07",
+   "slug": "2026-10-ristarsignatur-breder-ut-sig",
+   "en": true,
+   "text": "Around 1035 more than one runestone in four ended with a prayer. Fifty years later more ended with the carver's own name. But the signature didn't follow demand – it followed the carvers, from master to apprentice.",
+   "tags": [
+    "runestones",
+    "MedievalSky"
+   ]
+  },
+  {
+   "date": "2026-11-08",
+   "slug": "runorna-som-fattas",
+   "en": true,
+   "text": "Many runestones have places where runes have been lost. We are building a model that suggests what stood there and how sure it is. Here is how it is tested: six trials with known answers and calibrated percentages.",
+   "tags": [
+    "runes",
+    "Skystorians"
+   ]
+  },
+  {
+   "date": "2026-11-09",
+   "slug": "korpen-som-heter-minne",
+   "en": true,
+   "text": "A personal piece by Vitki's founder Viktor Kvant: a book in the family magazine rack, the raven above the treetops, and why Vitki came to be – with three stanzas of Hávamál.",
+   "tags": [
+    "OldNorse",
+    "archaeology"
+   ]
+  }
+ ]
+}
