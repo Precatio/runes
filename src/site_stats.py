@@ -34,7 +34,7 @@ LANGUAGES = {"sv": "svenska", "en": "engelska", "nb": "norska", "nn": "norska", 
              "fi": "finska", "is": "isländska", "de": "tyska", "fr": "franska", "nl": "nederländska", "es": "spanska",
              "it": "italienska", "pl": "polska"}
 TOP = 15
-SHARE_CHANNELS = {"lank": "Kopiera länk", "enhet": "Enhetens delning", "x": "X", "facebook": "Facebook",
+SHARE_CHANNELS = {"lank": "Kopiera länk", "enhet": "Enhetens delning", "bluesky": "Bluesky", "x": "X", "facebook": "Facebook",
                   "linkedin": "LinkedIn", "epost": "E-post"}
 LANGUAGE_CLICKS = {"en": "Till engelska versionen", "sv": "Till svenska versionen"}
 # The topics in the vote on the articles page (web/src/components/ContentVote.tsx, label "rost:<key>"; same keys there)

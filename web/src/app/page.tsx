@@ -12,7 +12,7 @@ import type { BlogPost } from "@/components/BlogBody";
 import { getPost, listPosts } from "@/lib/articles";
 import { featuredFirst } from "@/lib/featured";
 import { commonsSizes, commonsFile, pictures } from "@/lib/blogSeo";
-import { AUTHORS, CONTACT_PATH, DOCS_URL, DOWNLOAD_URL, GITHUB_URL, METHODS_URL, SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
+import { AUTHORS, BLUESKY_URL, CONTACT_PATH, DOCS_URL, DOWNLOAD_URL, GITHUB_URL, METHODS_URL, SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
 
 // The newest articles are fetched again at most every five minutes, and at once when one is published (tag "blog")
 export const revalidate = 60;
@@ -43,7 +43,7 @@ const FOUNDER = { "@type": "Person", "@id": `${SITE_URL}/#founder`, name: "Vikto
 const JSON_LD = [
   {
     "@context": "https://schema.org", "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "Vitki", url: SITE_URL,
-    logo: { "@type": "ImageObject", url: `${SITE_URL}/vitki_logo.png` }, founder: FOUNDER, sameAs: [GITHUB_URL],
+    logo: { "@type": "ImageObject", url: `${SITE_URL}/vitki_logo.png` }, founder: FOUNDER, sameAs: [GITHUB_URL, BLUESKY_URL],
     description: SITE_DESCRIPTION,
   },
   {
@@ -803,6 +803,7 @@ språk, Uppsala universitet.`}
             <Link href={CONTACT_PATH} className="hover:text-slate-900">Kontakt</Link>
             <a href={DOCS_URL} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">Dokumentation</a>
             <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">GitHub</a>
+            <a href={BLUESKY_URL} target="_blank" rel="noopener noreferrer me" className="hover:text-slate-900">Bluesky</a>
             <span>GPL-3.0</span>
             <StatsNote />
           </div>

@@ -6,6 +6,7 @@
 // ankomsten och tas bort ur adressfältet (components/SiteTracker.tsx). Själva klicket räknas också (lib/track.ts).
 import { useState, useSyncExternalStore } from "react";
 import { trackClick, type ShareChannel } from "@/lib/track";
+import { BLUESKY_HANDLE } from "@/lib/site";
 
 const BTN = "inline-flex items-center gap-1.5 rounded-full border border-slate-300 bg-white px-3.5 py-1.5 text-xs font-bold text-slate-600 hover:border-[#b7410e] hover:text-[#b7410e] transition-colors";
 
@@ -49,6 +50,10 @@ export default function ShareArticle({ title, lang = "sv" }: { title: string; la
         {canShare && (
           <button type="button" onClick={native} className={BTN}>{en ? "Share …" : "Dela …"}</button>
         )}
+        <button type="button" className={BTN}
+          onClick={() => open("bluesky", `https://bsky.app/intent/compose?text=${encodeURIComponent(`${title} ${url("bluesky")} via @${BLUESKY_HANDLE}`)}`)}>
+          Bluesky
+        </button>
         <button type="button" className={BTN}
           onClick={() => open("x", `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url("x"))}`)}>
           X

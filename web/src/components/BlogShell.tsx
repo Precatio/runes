@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import LocalAppLink from "@/components/LocalAppLink";
 import StatsNote from "@/components/StatsNote";
-import { CONTACT_PATH, DOCS_URL, EN_CONTACT_PATH, GITHUB_URL, NEWS_PATH } from "@/lib/site";
+import { BLUESKY_URL, CONTACT_PATH, DOCS_URL, EN_CONTACT_PATH, GITHUB_URL, NEWS_PATH } from "@/lib/site";
 
 // The articles' frame: the landing page's header and footer. The public website has no app, so the frame links to the
 // articles and to GitHub, where the app is downloaded. Its links are not prefetched: every page has them, and the start
@@ -24,6 +24,7 @@ export default function BlogShell({ children, lang = "sv" }: { children: ReactNo
             <Link href={en ? EN_CONTACT_PATH : CONTACT_PATH} prefetch={false} className="hover:text-slate-900">{en ? "Contact" : "Kontakt"}</Link>
             <a href={DOCS_URL} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">{en ? "Documentation" : "Dokumentation"}</a>
             <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">GitHub</a>
+            <a href={BLUESKY_URL} target="_blank" rel="noopener noreferrer me" className="hover:text-slate-900">Bluesky</a>
             <span>GPL-3.0</span>
             <StatsNote />
           </div>

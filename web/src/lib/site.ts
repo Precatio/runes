@@ -16,6 +16,9 @@ export const KEYWORDS = [
 // (next.config.ts) and are left out of the sitemap.
 export const PUBLIC_SITE = process.env.NEXT_PUBLIC_SITE_MODE === "public";
 export const GITHUB_URL = "https://github.com/Precatio/runes";
+// Vitki on Bluesky: the share button on the articles names the account, and the footer and contact page link to it
+export const BLUESKY_HANDLE = "vitkirunor.bsky.social";
+export const BLUESKY_URL = `https://bsky.app/profile/${BLUESKY_HANDLE}`;
 export const DOWNLOAD_URL = `${GITHUB_URL}#systemkrav--installation`;
 export const METHODS_URL = `${GITHUB_URL}/blob/main/METHODS.md`;
 export const DOCS_URL = `${GITHUB_URL}#readme`;

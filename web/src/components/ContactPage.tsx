@@ -4,7 +4,7 @@ import { postDate } from "@/components/BlogBody";
 import { listPosts } from "@/lib/articles";
 import { enPostPath, EN_ARTICLES_PATH, ARTICLES_PATH, postPath } from "@/lib/blogSeo";
 import { featuredFirst } from "@/lib/featured";
-import { AUTHORS, CONTACT_PATH, EN_CONTACT_PATH, GITHUB_URL, SITE_URL } from "@/lib/site";
+import { AUTHORS, BLUESKY_URL, CONTACT_PATH, EN_CONTACT_PATH, GITHUB_URL, SITE_URL } from "@/lib/site";
 
 // The author's page and the contact page in one, in Swedish (/kontakt) and English (/en/kontakt): who writes the
 // articles, what he has written, and a form that is emailed to him (ContactForm). Search engines get the same person as
@@ -80,6 +80,7 @@ export default async function ContactPage({ lang }: { lang: "sv" | "en" }) {
       <div className="mt-5 flex flex-wrap gap-4 text-sm font-bold text-[#b7410e]">
         <a href={AUTHOR.linkedin} target="_blank" rel="noopener noreferrer me" className="hover:underline">LinkedIn ↗</a>
         <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="hover:underline">{en ? "Vitki on GitHub ↗" : "Vitki på GitHub ↗"}</a>
+        <a href={BLUESKY_URL} target="_blank" rel="noopener noreferrer me" className="hover:underline">{en ? "Vitki on Bluesky ↗" : "Vitki på Bluesky ↗"}</a>
       </div>
 
       <div className="mt-14">

@@ -12,7 +12,7 @@ export const str = (v: string, max: number) => ({ stringValue: v.slice(0, max) }
 const int = (n: number) => ({ integerValue: String(Math.max(0, Math.round(n))) });
 
 // The channels a share link can name in ?via= (components/ShareArticle.tsx); anything else in the address is ignored
-export const SHARE_CHANNELS = ["lank", "enhet", "x", "facebook", "linkedin", "epost"] as const;
+export const SHARE_CHANNELS = ["lank", "enhet", "bluesky", "x", "facebook", "linkedin", "epost"] as const;
 export type ShareChannel = (typeof SHARE_CHANNELS)[number];
 
 // The share channel named in the address the visit started from, read once when the page is first loaded
