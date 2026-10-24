@@ -17,6 +17,15 @@ streckklass). Råutdata: `s0_stavlosa_filter.txt`, `s0a.txt`, `s_analys.txt/.jso
 - **0c** – se studie 4.
 
 ## Studie 1 – samma händer eller nytt hantverk?
+> **STATUS 2026-10-24 kväll: slutsatsen dras tillbaka i väntan på validering.** Viktor granskade artikelns figur och
+> såg att streckklassningen är fel åt båda hållen: på Vg 50 klassas runstavarna i slingan som långa linjer och delar av
+> ornamentiken längst ned som runor; på Hs 21 hamnar de flesta runorna inne i slingan som övriga spår eller linjer.
+> Felklassning åt båda hållen blandar grupperna och drar skillnaden mot noll, så "samma mönster" kan vara en artefakt.
+> Efterhandskontroll 1 (linjer ≥ 10 mm från runsnitt) räddar inte detta: felklassade stavar utan gröna runor intill
+> ligger kvar. Giltighetskontrollen före testet var för generös. Artikelutkastet 1hVOmooGmmEKpMozrrOR ska inte
+> publiceras. Nästa steg: mäta klassningens träffsäkerhet mot handmärkta runor och ornamentik på ett urval objekt, och
+> pröva om studien igen bara med märkta spår eller med en bättre klassning (samma arbete som stavlöst läge).
+
 - **Giltighetskontroll** (före testet; sex objekt, `scratchpad`-figur återskapas med koden i loggen): streckklassen
   *ornament* är i praktiken *långa eller böjda spår*: slingkanter, ramlinjer och ornamentik. Runorna klassas som
   runor inne i slingorna på båda objekttyperna. Stoppregeln (ornamentiken mestadels klassad som annat) utlöstes inte.
