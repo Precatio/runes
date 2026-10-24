@@ -2,6 +2,41 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "ristningskartans-kant",
+   "date": "2026-10-24",
+   "status": "nytt",
+   "title": "Ristningskartan skiljer kanten från ristningen",
+   "text": "Den automatiska analysens ristningskarta lät förut skanningens kanter avgöra vad som blev svart, så runorna kunde bli blekt grå. Nu räknas svärtan bara där analysen mäter, och kantzonen nära skanningens kant ritas blekt. Runorna syns tydligt, och mätningarna är desamma."
+  },
+  {
+   "id": "medelpad-i-korpusen",
+   "date": "2026-10-24",
+   "status": "nytt",
+   "title": "Medelpads runstenar i mätkorpusen",
+   "text": "Den delade mätkorpusen har fått 13 runstenar från Medelpad, skannade av Henrik Zedig (Länsstyrelsen Västra Götalands län) och mätta med Vitki-protokollet. Korpusen har nu 50 stenar som en ny mätning jämförs mot i syntesen."
+  },
+  {
+   "id": "spara-syntesen",
+   "date": "2026-10-24",
+   "status": "nytt",
+   "title": "Syntesen sparas i projektet",
+   "text": "För stenar där geologin listar bergarterna i närheten gick syntesen inte att spara i projektet, utan att något felmeddelande visades. Det fungerar nu."
+  },
+  {
+   "id": "valj-export",
+   "date": "2026-10-23",
+   "status": "nytt",
+   "title": "Välj vad du laddar ned ur huggspårsanalysen",
+   "text": "På 3D-sidan finns nu rutan Exportera: kryssa i vilka filer du vill ha, till exempel spårdjupet som värmekarta eller som rådata i millimeter, relief, strykljus eller ristningskartan. Varje val förklarar vad filen visar och hur den ska läsas, och skanningens kreditering följer med i varje fil."
+  },
+  {
+   "id": "luckor-kalibrerade",
+   "date": "2026-10-22",
+   "status": "nytt",
+   "title": "Forskningsluckorna med kalibrerade procent och översättning",
+   "text": "Listan över de luckor i texten som sannolikhetsmodellen fyller visar nu den kalibrerade procenten och en översättning till nutida svenska av modellens läsning, ett utkast ur Rundatas egna översättningar. Runstenar visas som standard, och andra föremål kan visas för sig."
+  },
+  {
    "id": "kanske-nagon-annan",
    "date": "2026-10-20",
    "status": "nytt",

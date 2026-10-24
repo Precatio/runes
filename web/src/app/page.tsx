@@ -1,7 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import type { Metadata } from "next";
-import LanguageToggle from "@/components/LanguageToggle";
+import SiteHeader from "@/components/SiteHeader";
 import LocalAppLink from "@/components/LocalAppLink";
 import StatsNote from "@/components/StatsNote";
 import SiteVote from "@/components/SiteVote";
@@ -383,28 +382,7 @@ export default async function LandingPage() {
     <div className="min-h-screen bg-[#f6f4f1] text-slate-900 overflow-x-hidden">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }} />
       {/* Navigation */}
-      <header className="sticky top-0 z-50 bg-[#f6f4f1]/85 backdrop-blur-md border-b border-slate-900/5">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" prefetch={false} className="flex items-center gap-2.5">
-            <img src="/vitki_logo.png" alt="" className="w-9 h-9" />
-            <span className="text-xl font-bold tracking-tight">Vitki</span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-600">
-            <a href="#artiklar" className="hover:text-slate-900">Artiklar</a>
-            <a href="#forskning" className="hover:text-slate-900">För forskningen</a>
-            <a href="#appen" className="hover:text-slate-900">Appen</a>
-            <a href="#nytt" className="hover:text-slate-900">Vad är nytt</a>
-            <a href="#landskap" className="hover:text-slate-900">Nya källor</a>
-            <a href="#kallor" className="hover:text-slate-900">Källor</a>
-            <a href="#oppen" className="hover:text-slate-900">Öppen källkod</a>
-            <Link href={CONTACT_PATH} prefetch={false} className="hover:text-slate-900">Kontakt</Link>
-          </nav>
-          <div className="flex items-center gap-3">
-            <LanguageToggle className="px-2.5 py-1 rounded-full border border-slate-300 text-[11px] font-bold tracking-wider text-slate-600 hover:border-slate-900 hover:text-slate-900" />
-            <a href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-full bg-slate-900 text-white text-sm font-bold hover:bg-black">Ladda ner Vitki</a>
-          </div>
-        </div>
-      </header>
+      <SiteHeader />
 
       {/* Hero */}
       <section className="relative overflow-hidden">
