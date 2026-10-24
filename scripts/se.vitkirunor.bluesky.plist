@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- The daily Bluesky post from the approved queue (data/bluesky/ko.json), at 10:00; launchd runs a missed time when
+     the Mac wakes. Install: cp scripts/se.vitkirunor.bluesky.plist ~/Library/LaunchAgents/ &&
+     launchctl load ~/Library/LaunchAgents/se.vitkirunor.bluesky.plist   (stop: launchctl unload …) -->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>se.vitkirunor.bluesky</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/zsh</string><string>-c</string>
+    <string>cd /Volumes/2TB/Antigrvity/Runes/aagaard-research &amp;&amp; .venv/bin/python -m scripts.bluesky_post --ko --posta &gt;&gt; /Volumes/2TB/Antigrvity/Runes/logs/bluesky.log 2&gt;&amp;1</string>
+  </array>
+  <key>StartCalendarInterval</key><dict><key>Hour</key><integer>10</integer><key>Minute</key><integer>0</integer></dict>
+</dict>
+</plist>

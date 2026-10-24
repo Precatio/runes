@@ -5,11 +5,14 @@ Kontot nås med ett applösenord (Bluesky: Inställningar → Integritet och sä
 vanliga lösenordet. Det ligger i .env som BLUESKY_HANDLE och BLUESKY_APP_PASSWORD och skrivs aldrig ut.
     .venv/bin/python -m scripts.bluesky_post SLUG --text "…" [--en] [--tagg runor --tagg vikingatid]
     .venv/bin/python -m scripts.bluesky_post SLUG --text "…" --posta     # skickar inlägget
+    .venv/bin/python -m scripts.bluesky_post --ko [--posta]             # kön: godkända inlägg med datum, ett per körning
+Kön körs dagligen av launchd (scripts/se.vitkirunor.bluesky.plist).
 """
 from __future__ import annotations
 
 import argparse
 import datetime as dt
+import json
 import os
 import re
 import sys
@@ -68,31 +71,35 @@ def facets(text: str) -> list[dict]:
     return out
 
 
-def main(argv=None):
-    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("slug")
-    ap.add_argument("--text", required=True, help="inläggets text (länken läggs i länkkortet)")
-    ap.add_argument("--en", action="store_true", help="den engelska utgåvan")
-    ap.add_argument("--tagg", action="append", default=[], help="hashtagg utan #, kan upprepas")
-    ap.add_argument("--posta", action="store_true", help="skicka inlägget (annars visas det bara)")
-    a = ap.parse_args(argv)
+KO = os.path.join(ROOT, "data", "bluesky", "ko.json")
 
-    post = article(a.slug)
-    en = a.en
+
+def card(slug: str, en: bool) -> tuple[str, str, str]:
+    """The link card: the start page ("/") or a published article, in Swedish or English."""
+    if slug == "/":
+        if en:
+            return (f"{SITE}/?via=bluesky", "Vitki – runestones and runic inscriptions",
+                    "An open research platform for Sweden's runic inscriptions: statistics on every runestone, 3D "
+                    "analysis of carved grooves and a model for lost runes. Open data and open code.")
+        return (f"{SITE}/?via=bluesky", "Vitki – runstenar och runinskrifter",
+                "En öppen forskningsplattform för Sveriges runinskrifter: statistik över alla runstenar, 3D-analys av "
+                "huggspår och en modell för förlorade runor. Öppna data och öppen kod.")
+    post = article(slug)
     if en and not post.get("body_en"):
         sys.exit("Artikeln har ingen engelsk utgåva.")
-    url = f"{SITE}{'/en' if en else ''}/artiklar/{a.slug}/?via=bluesky"
-    text = a.text.strip() + ("\n\n" + " ".join(f"#{t}" for t in a.tagg) if a.tagg else "")
-    if len(text) > LIMIT:
-        sys.exit(f"Texten har {len(text)} tecken; Bluesky tillåter {LIMIT}.")
-    title = post["title_en"] if en else post["title"]
-    desc = (post.get("summary_en") if en else post.get("summary")) or ""
-    print(f"--- inlägg ({len(text)}/{LIMIT} tecken, {'engelska' if en else 'svenska'}) ---\n{text}\n"
-          f"--- länkkort ---\n{title}\n{desc}\n{url}")
-    if not a.posta:
-        print("\n(visas bara; lägg till --posta för att skicka)")
-        return
+    url = f"{SITE}{'/en' if en else ''}/artiklar/{slug}/?via=bluesky"
+    return url, (post["title_en"] if en else post["title"]), (post.get("summary_en") if en else post.get("summary")) or ""
 
+
+def compose(text: str, tags: list[str]) -> str:
+    out = text.strip() + ("\n\n" + " ".join(f"#{t}" for t in tags) if tags else "")
+    if len(out) > LIMIT:
+        sys.exit(f"Texten har {len(out)} tecken; Bluesky tillåter {LIMIT}.")
+    return out
+
+
+def send(text: str, url: str, title: str, desc: str, en: bool) -> str:
+    """Posts and returns the post's address on bsky.app."""
     handle, pw = os.environ.get("BLUESKY_HANDLE"), os.environ.get("BLUESKY_APP_PASSWORD")
     if not handle or not pw:
         sys.exit("BLUESKY_HANDLE och BLUESKY_APP_PASSWORD saknas i .env")
@@ -114,8 +121,51 @@ def main(argv=None):
     r = requests.post(f"{PDS}/com.atproto.repo.createRecord", headers=auth, timeout=30,
                       json={"repo": sess["did"], "collection": "app.bsky.feed.post", "record": record})
     r.raise_for_status()
-    rkey = r.json()["uri"].rsplit("/", 1)[-1]
-    print(f"\nPostat: https://bsky.app/profile/{handle}/post/{rkey}")
+    return f"https://bsky.app/profile/{handle}/post/{r.json()['uri'].rsplit('/', 1)[-1]}"
+
+
+def queue(post_due: bool):
+    """data/bluesky/ko.json: posts the founder has approved, each with a planned date. At most ONE due post is sent per
+    run (the earliest), so that a missed day does not send several at once; the post's address is written back."""
+    q = json.load(open(KO, encoding="utf-8"))
+    today = dt.date.today().isoformat()
+    for item in q["items"]:
+        text = compose(item["text"], item.get("tags", []))
+        url, title, _ = card(item["slug"], item.get("en", False))
+        state = item.get("posted") or ("väntar" if item["date"] > today else "ska ut")
+        print(f"{item['date']} {item['slug'][:40]:40} {len(text):3}/{LIMIT}  {state}")
+    due = [i for i in q["items"] if not i.get("posted") and i["date"] <= today]
+    if not post_due or not due:
+        return
+    item = due[0]
+    url, title, desc = card(item["slug"], item.get("en", False))
+    item["posted"] = send(compose(item["text"], item.get("tags", [])), url, title, desc, item.get("en", False))
+    item["posted_at"] = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
+    json.dump(q, open(KO, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print("Postat:", item["posted"])
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("slug", nargs="?", help="artikelns adress, eller / för startsidan")
+    ap.add_argument("--text", help="inläggets text (länken läggs i länkkortet)")
+    ap.add_argument("--en", action="store_true", help="den engelska utgåvan")
+    ap.add_argument("--tagg", action="append", default=[], help="hashtagg utan #, kan upprepas")
+    ap.add_argument("--posta", action="store_true", help="skicka inlägget (annars visas det bara)")
+    ap.add_argument("--ko", action="store_true", help="visa kön i data/bluesky/ko.json; med --posta skickas nästa inlägg som är dags")
+    a = ap.parse_args(argv)
+    if a.ko:
+        return queue(a.posta)
+    if not a.slug or not a.text:
+        ap.error("ange artikelns adress och --text (eller --ko)")
+    text = compose(a.text, a.tagg)
+    url, title, desc = card(a.slug, a.en)
+    print(f"--- inlägg ({len(text)}/{LIMIT} tecken, {'engelska' if a.en else 'svenska'}) ---\n{text}\n"
+          f"--- länkkort ---\n{title}\n{desc}\n{url}")
+    if not a.posta:
+        print("\n(visas bara; lägg till --posta för att skicka)")
+        return
+    print("\nPostat:", send(text, url, title, desc, a.en))
 
 
 if __name__ == "__main__":
