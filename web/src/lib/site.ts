@@ -26,6 +26,7 @@ export const SHOW_LOCAL_APP = !PUBLIC_SITE;
 /** The paths that exist on the public website: the start page, the articles and their figures, the news and the contact page. */
 export const isPublicPath = (href: string) => /^\/(?:$|[#?]|artiklar(?:[/?#]|$)|nyheter(?:[/?#]|$)|kontakt(?:[/?#]|$)|api\/blog\/figures\/)/.test(href);
 export const CONTACT_PATH = PUBLIC_SITE ? "/kontakt/" : "/kontakt";
+export const EN_CONTACT_PATH = PUBLIC_SITE ? "/en/kontakt/" : "/en/kontakt";
 export const NEWS_PATH = PUBLIC_SITE ? "/nyheter/" : "/nyheter";
 
 // The contact form's receiver. The website is static, so FormSubmit (no account) emails the message on. The form is
