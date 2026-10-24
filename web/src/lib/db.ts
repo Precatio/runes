@@ -206,6 +206,9 @@ export interface ProjectData {
   paleographicCrops?: PaleographicCrop[];
   grooveAnalyses?: GrooveAnalysisRecord[];
   synthesis?: SavedSynthesis;
+  // Set on projects made by scripts/batch_scans.py ("automatisk körning"): kept apart from the user's own projects
+  autoRun?: { label: string; separate: boolean; object: string | null; series: string; files: string[];
+    normal_source: string; script: string; version: string; date: string; ai: boolean };
   createdAt: string;
   updatedAt: string;
 }
@@ -337,7 +340,8 @@ export const db = {
   getProjectBySignum: async (signum: string): Promise<ProjectData | null> => {
     if (!signum || signum.trim() === "" || signum.toLowerCase() === "okänd") return null;
     const projects = await db.getProjects();
-    return projects.find((p) => p.metaText && p.metaText.toLowerCase() === signum.toLowerCase()) || null;
+    // Only the user's own projects: new analyses are never added to a project from the automatic run
+    return projects.find((p) => !p.autoRun && p.metaText && p.metaText.toLowerCase() === signum.toLowerCase()) || null;
   },
   
   // Accepts a partial update: an existing project (by id) is merged with the given fields.
