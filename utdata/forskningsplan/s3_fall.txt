@@ -1,0 +1,9 @@
+72 runstenar med minst 10 snitt
+
+Åsmund: U 1144 (granit) till
+  Gs 11 (sandsten, Åsmund): 0.61
+  Gs 13 (sandsten, Åsmund): 0.85
+  övriga kristallina stenar: median 1.90; närmast M 10 0.19, Vg 40 0.52, Hs 15 0.58
+  rang bland alla: {'Gs 11': 5, 'Gs 13': 7} av 71
+
+Medelpad närmast Fartägns M 1: M 15 0.82, M 2 1.11, M 7 1.20, M 11 1.24, M 16 1.51, M 4 1.68, M 5 1.89, M 8 1.91, M 10 1.99, M 6 2.52, M 3 2.73, M 13 3.23

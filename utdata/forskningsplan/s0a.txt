@@ -1,0 +1,10 @@
+P-data 136 filer, A-data 0 filer
+== Steg 0a: samma sten i två filer
+Hs 14 apex_vinkel_deg    98.87 (n 168) mot   99.20 (n 11): |Δ| 0.33, SD mellan stenar 15.48 → stabilt
+Hs 14 spårdjup_mm         3.14 (n 168) mot    3.90 (n 11): |Δ| 0.76, SD mellan stenar 1.26 → UPPLÖSNINGSKÄNSLIGT
+Hs 14 spårbredd_mm        7.73 (n 168) mot   10.58 (n 11): |Δ| 2.85, SD mellan stenar 1.96 → UPPLÖSNINGSKÄNSLIGT
+Hs 14 bottenradie_mm      1.47 (n 168) mot    2.19 (n 11): |Δ| 0.72, SD mellan stenar 0.62 → UPPLÖSNINGSKÄNSLIGT
+M 14 apex_vinkel_deg   125.75 (n 2) mot  130.54 (n 2): |Δ| 4.80, SD mellan stenar 7.17 → UPPLÖSNINGSKÄNSLIGT
+M 14 spårdjup_mm         1.41 (n 2) mot    2.25 (n 2): |Δ| 0.84, SD mellan stenar 0.85 → UPPLÖSNINGSKÄNSLIGT
+M 14 spårbredd_mm        6.53 (n 2) mot   10.18 (n 2): |Δ| 3.65, SD mellan stenar 1.87 → UPPLÖSNINGSKÄNSLIGT
+M 14 bottenradie_mm      1.54 (n 2) mot    5.92 (n 2): |Δ| 4.38, SD mellan stenar 0.79 → UPPLÖSNINGSKÄNSLIGT

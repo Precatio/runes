@@ -1,0 +1,24 @@
+
+apex_vinkel_deg (5393 snitt, 9 stenar, 4 ristare, 3 bergarter)
+  sten       10.8 %  [  0.1,  19.8]
+  ristare     0.0 %  [  0.0,  13.6]
+  bergart     0.0 %  [  0.0,  15.4]
+  Residual   89.2 %  [ 72.0,  97.7]
+
+spårdjup_mm (5393 snitt, 9 stenar, 4 ristare, 3 bergarter)
+  sten       18.8 %  [  0.7,  35.1]
+  ristare     8.8 %  [  0.0,  35.5]
+  bergart     0.0 %  [  0.0,  36.7]
+  Residual   72.4 %  [ 46.2,  92.2]
+
+spårbredd_mm (5393 snitt, 9 stenar, 4 ristare, 3 bergarter)
+  sten        5.6 %  [  0.0,  14.9]
+  ristare    19.3 %  [  0.0,  45.2]
+  bergart     0.0 %  [  0.0,  24.0]
+  Residual   75.1 %  [ 49.5,  95.7]
+
+bottenradie_mm (5393 snitt, 9 stenar, 4 ristare, 3 bergarter)
+  sten        1.7 %  [  0.0,   5.3]
+  ristare    12.7 %  [  0.0,  32.0]
+  bergart     0.0 %  [  0.0,   0.0]
+  Residual   85.6 %  [ 66.8,  98.4]

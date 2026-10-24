@@ -1,0 +1,80 @@
+P-data 136 filer, A-data 142 filer
+== Steg 0a: samma sten i två filer
+Hs 14 apex_vinkel_deg    98.87 (n 168) mot   99.20 (n 11): |Δ| 0.33, SD mellan stenar 15.48 → stabilt
+Hs 14 spårdjup_mm         3.14 (n 168) mot    3.90 (n 11): |Δ| 0.76, SD mellan stenar 1.26 → UPPLÖSNINGSKÄNSLIGT
+Hs 14 spårbredd_mm        7.73 (n 168) mot   10.58 (n 11): |Δ| 2.85, SD mellan stenar 1.96 → UPPLÖSNINGSKÄNSLIGT
+Hs 14 bottenradie_mm      1.47 (n 168) mot    2.19 (n 11): |Δ| 0.72, SD mellan stenar 0.62 → UPPLÖSNINGSKÄNSLIGT
+M 14 apex_vinkel_deg   125.75 (n 2) mot  130.54 (n 2): |Δ| 4.80, SD mellan stenar 7.17 → UPPLÖSNINGSKÄNSLIGT
+M 14 spårdjup_mm         1.41 (n 2) mot    2.25 (n 2): |Δ| 0.84, SD mellan stenar 0.85 → UPPLÖSNINGSKÄNSLIGT
+M 14 spårbredd_mm        6.53 (n 2) mot   10.18 (n 2): |Δ| 3.65, SD mellan stenar 1.87 → UPPLÖSNINGSKÄNSLIGT
+M 14 bottenradie_mm      1.54 (n 2) mot    5.92 (n 2): |Δ| 4.38, SD mellan stenar 0.79 → UPPLÖSNINGSKÄNSLIGT
+
+== Studie 1: runor minus ornamentik inom objektet
+runsten: 71 objekt med minst 10 snitt i både runor och ornamentik
+gravmonument: 33 objekt med minst 10 snitt i både runor och ornamentik
+Huvudtest: 33 gravmonument mot 71 runstenar
+   apex_vinkel_deg  skillnad i median-Δ -1.20, 90 % KI [-3.21, +0.55], p 0.2861  ← huvudtest
+   spårdjup_mm      skillnad i median-Δ -0.08, 90 % KI [-0.25, +0.02], p 0.1807, q 0.2952
+   spårbredd_mm     skillnad i median-Δ -0.27, 90 % KI [-0.67, +0.20], p 0.1968, q 0.2952
+   bottenradie_mm   skillnad i median-Δ +0.03, 90 % KI [-0.10, +0.14], p 0.8313, q 0.8313
+   utfall (V-vinkel): samma mönster
+Robusthet (i) bara runstenar i sandsten/kalksten: 33 gravmonument mot 16 runstenar
+   apex_vinkel_deg  skillnad i median-Δ -2.53, 90 % KI [-4.46, +1.25], p 0.1795  ← huvudtest
+   spårdjup_mm      skillnad i median-Δ -0.08, 90 % KI [-0.26, +0.07], p 0.5173, q 0.7760
+   spårbredd_mm     skillnad i median-Δ -0.26, 90 % KI [-0.93, +0.40], p 0.4311, q 0.7760
+   bottenradie_mm   skillnad i median-Δ +0.01, 90 % KI [-0.26, +0.20], p 0.9167, q 0.9167
+   utfall (V-vinkel): samma mönster
+Robusthet (ii) utan asmund: 33 gravmonument mot 68 runstenar
+   apex_vinkel_deg  skillnad i median-Δ -1.36, 90 % KI [-3.52, +0.16], p 0.2303  ← huvudtest
+   spårdjup_mm      skillnad i median-Δ -0.07, 90 % KI [-0.24, +0.03], p 0.2427, q 0.3640
+   spårbredd_mm     skillnad i median-Δ -0.29, 90 % KI [-0.72, +0.08], p 0.1393, q 0.3640
+   bottenradie_mm   skillnad i median-Δ +0.01, 90 % KI [-0.11, +0.11], p 0.9328, q 0.9328
+   utfall (V-vinkel): samma mönster
+Robusthet (ii) utan gravmonument_og_sm: 25 gravmonument mot 71 runstenar
+   apex_vinkel_deg  skillnad i median-Δ -0.59, 90 % KI [-3.25, +1.84], p 0.5468  ← huvudtest
+   spårdjup_mm      skillnad i median-Δ -0.05, 90 % KI [-0.21, +0.06], p 0.3402, q 0.6970
+   spårbredd_mm     skillnad i median-Δ -0.11, 90 % KI [-0.61, +0.85], p 0.7591, q 0.7591
+   bottenradie_mm   skillnad i median-Δ +0.07, 90 % KI [-0.05, +0.18], p 0.4647, q 0.6970
+   utfall (V-vinkel): samma mönster
+Robusthet (ii) utan halsingland: 33 gravmonument mot 59 runstenar
+   apex_vinkel_deg  skillnad i median-Δ -1.50, 90 % KI [-3.50, +0.27], p 0.1702  ← huvudtest
+   spårdjup_mm      skillnad i median-Δ -0.07, 90 % KI [-0.23, +0.05], p 0.3032, q 0.4548
+   spårbredd_mm     skillnad i median-Δ -0.25, 90 % KI [-0.67, +0.22], p 0.1809, q 0.4548
+   bottenradie_mm   skillnad i median-Δ +0.06, 90 % KI [-0.08, +0.17], p 0.5293, q 0.5293
+   utfall (V-vinkel): samma mönster
+Robusthet (ii) utan medelpad: 33 gravmonument mot 58 runstenar
+   apex_vinkel_deg  skillnad i median-Δ -0.73, 90 % KI [-2.62, +1.44], p 0.5936  ← huvudtest
+   spårdjup_mm      skillnad i median-Δ -0.08, 90 % KI [-0.25, +0.04], p 0.2659, q 0.5702
+   spårbredd_mm     skillnad i median-Δ -0.18, 90 % KI [-0.60, +0.22], p 0.3802, q 0.5702
+   bottenradie_mm   skillnad i median-Δ +0.04, 90 % KI [-0.08, +0.15], p 0.6120, q 0.6120
+   utfall (V-vinkel): samma mönster
+Robusthet (ii) utan sodermanland: 32 gravmonument mot 37 runstenar
+   apex_vinkel_deg  skillnad i median-Δ -0.87, 90 % KI [-3.49, +1.29], p 0.5310  ← huvudtest
+   spårdjup_mm      skillnad i median-Δ -0.12, 90 % KI [-0.25, +0.02], p 0.1918, q 0.4014
+   spårbredd_mm     skillnad i median-Δ -0.28, 90 % KI [-0.73, +0.16], p 0.2676, q 0.4014
+   bottenradie_mm   skillnad i median-Δ +0.02, 90 % KI [-0.12, +0.14], p 0.8409, q 0.8409
+   utfall (V-vinkel): samma mönster
+Robusthet (ii) utan vastergotland: 9 gravmonument mot 62 runstenar
+   apex_vinkel_deg  skillnad i median-Δ -2.06, 90 % KI [-3.91, +0.14], p 0.1833  ← huvudtest
+   spårdjup_mm      skillnad i median-Δ -0.27, 90 % KI [-0.51, +0.08], p 0.0162, q 0.0486
+   spårbredd_mm     skillnad i median-Δ -0.43, 90 % KI [-1.11, -0.08], p 0.1301, q 0.1951
+   bottenradie_mm   skillnad i median-Δ -0.05, 90 % KI [-0.22, +0.07], p 0.6727, q 0.6727
+   utfall (V-vinkel): samma mönster
+Robusthet (iii) bara ATOS: 33 gravmonument mot 46 runstenar
+   apex_vinkel_deg  skillnad i median-Δ -1.12, 90 % KI [-2.91, +1.21], p 0.3967  ← huvudtest
+   spårdjup_mm      skillnad i median-Δ -0.05, 90 % KI [-0.23, +0.06], p 0.5298, q 0.5298
+   spårbredd_mm     skillnad i median-Δ -0.12, 90 % KI [-0.61, +0.33], p 0.4296, q 0.5298
+   bottenradie_mm   skillnad i median-Δ +0.08, 90 % KI [-0.07, +0.17], p 0.3373, q 0.5298
+   utfall (V-vinkel): samma mönster
+
+== Studie 2a: Hälsinglands stavlösa stenar mot övriga
+[alla] stavlösa ['Hs 10', 'Hs 12', 'Hs 14', 'Hs 15'], övriga ['Hs 1', 'Hs 11', 'Hs 16', 'Hs 2', 'Hs 21', 'Hs 3', 'Hs 4', 'Hs 6', 'Hs 9']
+   apex_vinkel_deg  stavlösa 122.07 mot övriga 127.72: -5.66, exakt p 0.697
+   spårdjup_mm      stavlösa   2.53 mot övriga   1.74: +0.79, exakt p 0.263  ← huvudmått
+   spårbredd_mm     stavlösa   9.94 mot övriga   9.27: +0.66, exakt p 0.643
+   bottenradie_mm   stavlösa   2.38 mot övriga   2.32: +0.06, exakt p 0.667
+[kristallin] stavlösa ['Hs 10', 'Hs 15'], övriga ['Hs 11', 'Hs 16', 'Hs 21', 'Hs 6', 'Hs 9']
+   apex_vinkel_deg  stavlösa 127.80 mot övriga 126.76: +1.05, exakt p 1.000
+   spårdjup_mm      stavlösa   2.16 mot övriga   2.55: -0.39, exakt p 0.810  ← huvudmått
+   spårbredd_mm     stavlösa   9.94 mot övriga  10.21: -0.28, exakt p 0.810
+   bottenradie_mm   stavlösa   2.40 mot övriga   2.32: +0.09, exakt p 0.476

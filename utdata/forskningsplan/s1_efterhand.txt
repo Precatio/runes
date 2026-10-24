@@ -1,0 +1,12 @@
+Avstånd ≥ 10 mm: 33 gravmonument, 71 runstenar
+   apex_vinkel_deg  Δ grav -1.49, runsten -0.42; skillnad -1.07 KI [-3.21, +0.57] p 0.320
+   spårdjup_mm      Δ grav -0.13, runsten -0.05; skillnad -0.09 KI [-0.25, +0.03] p 0.143
+   spårbredd_mm     Δ grav -0.69, runsten -0.41; skillnad -0.28 KI [-0.72, +0.19] p 0.221
+   bottenradie_mm   Δ grav -0.01, runsten -0.04; skillnad +0.03 KI [-0.09, +0.15] p 0.778
+   utfall: samma mönster
+Avstånd ≥ 20 mm: 33 gravmonument, 71 runstenar
+   apex_vinkel_deg  Δ grav -1.82, runsten -0.52; skillnad -1.30 KI [-2.81, +0.44] p 0.189
+   spårdjup_mm      Δ grav -0.11, runsten -0.05; skillnad -0.07 KI [-0.24, +0.07] p 0.424
+   spårbredd_mm     Δ grav -0.68, runsten -0.48; skillnad -0.20 KI [-0.61, +0.32] p 0.459
+   bottenradie_mm   Δ grav -0.03, runsten -0.00; skillnad -0.03 KI [-0.09, +0.13] p 0.893
+   utfall: samma mönster

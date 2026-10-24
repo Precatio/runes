@@ -1,0 +1,86 @@
+{
+  "apex_vinkel_deg": {
+    "n": 5393,
+    "shares": {
+      "sten": 0.1079,
+      "ristare": 0,
+      "bergart": 0,
+      "Residual": 0.8921
+    },
+    "lo": {
+      "sten": 0.00061,
+      "ristare": 0,
+      "bergart": 0,
+      "Residual": 0.72023
+    },
+    "hi": {
+      "sten": 0.19757,
+      "ristare": 0.13568,
+      "bergart": 0.15449,
+      "Residual": 0.97701
+    }
+  },
+  "spårdjup_mm": {
+    "n": 5393,
+    "shares": {
+      "sten": 0.18768,
+      "ristare": 0.08841,
+      "bergart": 0,
+      "Residual": 0.72391
+    },
+    "lo": {
+      "sten": 0.00734,
+      "ristare": 0,
+      "bergart": 0,
+      "Residual": 0.46171
+    },
+    "hi": {
+      "sten": 0.35148,
+      "ristare": 0.3554,
+      "bergart": 0.36748,
+      "Residual": 0.92186
+    }
+  },
+  "spårbredd_mm": {
+    "n": 5393,
+    "shares": {
+      "sten": 0.05564,
+      "ristare": 0.19287,
+      "bergart": 0,
+      "Residual": 0.75149
+    },
+    "lo": {
+      "sten": 7.65106e-12,
+      "ristare": 0,
+      "bergart": 0,
+      "Residual": 0.49516
+    },
+    "hi": {
+      "sten": 0.14917,
+      "ristare": 0.45213,
+      "bergart": 0.23953,
+      "Residual": 0.95669
+    }
+  },
+  "bottenradie_mm": {
+    "n": 5393,
+    "shares": {
+      "sten": 0.01695,
+      "ristare": 0.12736,
+      "bergart": 1.49752e-08,
+      "Residual": 0.85569
+    },
+    "lo": {
+      "sten": 0,
+      "ristare": 0,
+      "bergart": 3.88262e-15,
+      "Residual": 0.66779
+    },
+    "hi": {
+      "sten": 0.05342,
+      "ristare": 0.3202,
+      "bergart": 7.35839e-08,
+      "Residual": 0.98392
+    }
+  }
+}
