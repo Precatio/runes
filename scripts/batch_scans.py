@@ -106,7 +106,7 @@ def result_path(key: str, f: dict) -> str:
 
 # ---- 1. measuring ---------------------------------------------------------------------------------------------------
 
-def measure(api: str, key: str, f: dict, path: str, normals: dict) -> dict:
+def measure(api: str, key: str, f: dict, path: str, normals: dict, all_grooves: bool = False) -> dict:
     s = store()
     signa = file_signa(f)
     rec = s.get(signa[0]) if signa else None
@@ -123,6 +123,8 @@ def measure(api: str, key: str, f: dict, path: str, normals: dict) -> dict:
         normal, normal_source = rel.json()["normal"], "stenens tunnaste riktning (uppskattad, som på sidan)"
     data = {"mesh_id": mid, "normal_x": normal[0], "normal_y": normal[1], "normal_z": normal[2], "sensitivity": 3,
             "meta_stone": stone, "meta_weathering": "Okänd", "runes_only": True, "protocol": True}
+    if all_grooves:  # every groove, each slice with its stroke class (analysplaner/2026-10-24-skanningarna.md, A-data)
+        data.update({"runes_only": False, "protocol": False, "resolution_mm": 0.6})
     d = requests.post(f"{api}/api/3d/auto_analyze", data=data, timeout=3600).json()
     base = {"signum": signa[0] if signa else None, "signa": signa, "file": f["name"], "sha256": f["sha256"],
             "series": key, "stone_type": stone, "object": (rec or {}).get("object"), "normal": normal,
@@ -136,7 +138,8 @@ def measure(api: str, key: str, f: dict, path: str, normals: dict) -> dict:
             "protocol": (d.get("provenance") or {}).get("protocol"), "provenance": d["provenance"],
             "means": {m: d["summary"][m]["mean"] for m in METRICS}, "rune_summary": d.get("rune_summary"),
             "slices": [{**{m: x[m] for m in METRICS}, "position_mm": x["position_mm"], "fit_r2": x.get("fit_r2"),
-                        "rune_id": x.get("rune_id"), "profile": x.get("profile"), "point": x.get("point"),
+                        "rune_id": x.get("rune_id"), "feature": x.get("feature"), "stroke_id": x.get("stroke_id"),
+                        "profile": x.get("profile"), "point": x.get("point"),
                         "direction": x.get("direction"), "up": x.get("up")} for x in acc],
             "review_png": os.path.relpath(png, ROOT)}
 
@@ -146,14 +149,16 @@ def measure(api: str, key: str, f: dict, path: str, normals: dict) -> dict:
 def is_runestone(d: dict) -> bool:
     """Runestones only by default (METHODS 17): grave slabs, the grave-monument series and stones without a Rundata
     record are kept apart."""
-    return d["series"] != "gravmonument_og_sm" and d.get("object") == "runsten"
+    return d["series"] != "gravmonument_og_sm" and "runsten" in (d.get("object") or "")
 
 
 def corpus_rows(results: list[dict], uid: str, name: str, now: str) -> list[dict]:
     """One corpus entry per stone (the file with the most accepted slices), with the scanner credited."""
     best: dict[str, dict] = {}
     for d in results:
-        if d["series"] in CORPUS_SERIES and is_runestone(d) and "error" not in d and d.get("signum"):
+        # At least five slices, as the app's quality mark for a corpus entry
+        if (d["series"] in CORPUS_SERIES and is_runestone(d) and "error" not in d and d.get("signum")
+                and d["counts"]["accepted"] >= 5):
             if d["signum"] not in best or d["counts"]["accepted"] > best[d["signum"]]["counts"]["accepted"]:
                 best[d["signum"]] = d
     rows = []
@@ -208,6 +213,22 @@ def slim(project: dict) -> dict:
                                                            for s in a["slices"]]} for a in project["grooveAnalyses"]]}
 
 
+def firestore_safe(x, path="", found=None):
+    """Firestore cannot store a list directly inside a list; any such inner list becomes {"items": [...]} (logged)."""
+    if isinstance(x, dict):
+        return {k: firestore_safe(v, f"{path}.{k}", found) for k, v in x.items()}
+    if isinstance(x, list):
+        out = []
+        for i, v in enumerate(x):
+            if isinstance(v, list):
+                if found is not None:
+                    found.append(f"{path}[{i}]")
+                v = {"items": v}
+            out.append(firestore_safe(v, f"{path}[{i}]", found))
+        return out
+    return x
+
+
 def main(argv=None):
     import argparse
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -215,14 +236,26 @@ def main(argv=None):
     ap.add_argument("--serier", default=",".join(ORDER))
     ap.add_argument("--skriv", action="store_true", help="skriv korpus och projekt till Firestore")
     ap.add_argument("--igen", action="store_true", help="mät om filer som misslyckades förra gången")
+    ap.add_argument("--alla-spar", action="store_true",
+                    help="andra varvet: alla spår med streckklass, till utdata/automatisk_korning_alla (ingen Firestore)")
+    ap.add_argument("--fil", default=None, help="bara filer vars namn innehåller texten")
     ap.add_argument("--max-mb", type=float, default=None,
                     help="hoppa över större filer (analysmotorn tar som standard emot högst 500 MB, MAX_MESH_UPLOAD_MB)")
     a = ap.parse_args(argv)
     api, series = a.api.rstrip("/"), [s for s in a.serier.split(",") if s]
 
     # 1. Measure what has not been measured
+    global OUT
     normals = known_normals()
+    if a.alla_spar:
+        # The same normal as the protocol measurement of the same file
+        for k, f, _ in files(series):
+            if os.path.exists(result_path(k, f)):
+                normals[f["name"]] = json.load(open(result_path(k, f), encoding="utf-8"))["normal"]
+        OUT = OUT + "_alla"
     todo = files(series)
+    if a.fil:
+        todo = [t for t in todo if a.fil in t[1]["name"]]
     if a.max_mb:
         skipped = [f["name"] for _, f, _ in todo if f["size"] > a.max_mb * 2**20]
         todo = [t for t in todo if t[1]["size"] <= a.max_mb * 2**20]
@@ -238,7 +271,7 @@ def main(argv=None):
         os.makedirs(os.path.dirname(out), exist_ok=True)
         log(f"{i}/{len(todo)} mäter {f['name']} ({f['size'] / 1e6:.0f} MB)")
         try:
-            d = measure(api, key, f, path, normals)
+            d = measure(api, key, f, path, normals, a.alla_spar)
         except (requests.RequestException, ValueError, KeyError) as e:
             log(f"   misslyckades: {e!r}")  # not saved: tried again on the next run
             continue
@@ -248,7 +281,7 @@ def main(argv=None):
     results = [json.load(open(result_path(k, f), encoding="utf-8")) for k, f, _ in todo if os.path.exists(result_path(k, f))]
     ok = [d for d in results if "error" not in d]
     log(f"mätta: {len(ok)} med godkända snitt, {len(results) - len(ok)} utan")
-    if not a.skriv:
+    if not a.skriv or a.alla_spar:
         log("utan --skriv: korpus, syntes och projekt väntar")
         return
 
@@ -302,6 +335,10 @@ def main(argv=None):
         if syn:
             doc["synthesis"] = {"result": syn, "analysisId": recs[0]["id"], "featureType": "rune", "savedAt": now}
         doc = json.loads(json.dumps(slim({k: v for k, v in doc.items() if v is not None}), ensure_ascii=False))
+        found: list[str] = []
+        doc = firestore_safe(doc, "", found)
+        if found:
+            log(f"   {len(found)} listor i listor gjordes om till objekt, t.ex. {found[0]}")
         projects.document(pid).set(doc)
         top = (syn or {}).get("candidates") or []
         summary.append({"project": pid, "signum": signum, "separate": separate, "files": len(ds),

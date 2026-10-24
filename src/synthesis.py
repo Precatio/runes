@@ -278,7 +278,7 @@ def material_check(rec: dict, carver: str, inscriptions: list[dict]) -> dict | N
     fams = geology.families(material)
     used = {f for f, share in prof["families"].items() if share >= 0.1}
     fits = bool(fams & used) if fams else None
-    listing = ", ".join(f"{m} ({n})" for m, n in prof["materials"][:4])
+    listing = ", ".join(f"{x['material']} ({x['n']})" for x in prof["materials"][:4])
     text = f"Stenen: {material}. Säkra stenar av {carver} med uppgift ({prof['n']}): {listing}."
     if fits is False:
         text += " Bergarten förekommer sällan eller aldrig hos ristaren."

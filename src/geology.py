@@ -164,7 +164,8 @@ def bedrock(lat: float, lon: float, material: str = "", radius_km: float = 10.0,
     return {
         "material": material, "material_families": sorted(stone_fams),
         "at_site": at_site, "radius_km": radius_km, "sample_points": len(points), "points_with_data": n,
-        "rocks_nearby": rocks.most_common(8),
+        # Objects, not [rock, count] pairs: Firestore cannot store a list inside a list (a project's saved synthesis)
+        "rocks_nearby": [{"rock": r, "n": c} for r, c in rocks.most_common(8)],
         "families_nearby": {f: round(c / n, 3) for f, c in fam_share.most_common()} if n else {},
         "verdict": verdict, "text": text, "source": SOURCE,
         "caveat": "Runstenar är ofta flyttblock eller transporterade; avvikelse från berggrunden är en ledtråd, inte ett fel.",
@@ -189,4 +190,4 @@ def carver_materials(carver: str, inscriptions: list[dict], certain_carvers) -> 
             for f in families(r["material"]):
                 fams[f] += 1
     return {"n": n, "families": {f: round(c / n, 3) for f, c in fams.most_common()} if n else {},
-            "materials": raw.most_common(6)}
+            "materials": [{"material": m, "n": c} for m, c in raw.most_common(6)]}

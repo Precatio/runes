@@ -27,6 +27,8 @@ import src.runlm as rl
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CACHE = os.path.join(ROOT, "data", "cache", "traces")
 REFS = os.path.join(ROOT, "utdata", "Rak", "referenser_g4")
+# The other open scans (scripts/batch_scans.py): file path under skanningar/ and the normal of the protocol measurement
+REFS_AUTO = os.path.join(ROOT, "utdata", "automatisk_korning", "referenser")
 
 TAU = 0.25      # softmax temperature (swept on Sö 113; Sö 134 and Sö 207 untouched replication)
 PRIOR = 0.08    # cost per template slot: a rune with many branches must earn them
@@ -274,12 +276,15 @@ def _safe(signum: str) -> str:
 
 
 def scan_ref(signum: str) -> str | None:
-    p = os.path.join(REFS, signum.replace(" ", "_") + ".json")
-    # The signum comes from a URL: only a file inside REFS counts (not "../../x" anywhere on disk)
-    refs = os.path.realpath(REFS)
-    if os.path.commonpath([os.path.realpath(p), refs]) != refs:
-        return None
-    return p if os.path.exists(p) else None
+    for d in (REFS, REFS_AUTO):
+        p = os.path.join(d, signum.replace(" ", "_") + ".json")
+        # The signum comes from a URL: only a file inside the folder counts (not "../../x" anywhere on disk)
+        refs = os.path.realpath(d)
+        if os.path.commonpath([os.path.realpath(p), refs]) != refs:
+            return None
+        if os.path.exists(p):
+            return p
+    return None
 
 
 def features(signum: str) -> dict | None:

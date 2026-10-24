@@ -16,7 +16,8 @@
      "name": "So 113_1_4 thin_closed holes.stl",
      "size": 306993734,
      "md5": "1b3f7e24e00cbcc01ae21e5a00b34a12",
-     "signum": "Sö 113"
+     "signum": "Sö 113",
+     "sha256": "bfbcb50df546a74aec81ba4ae971fe8584acc4c2111767c22932b6dbb61e9fe2"
     },
     {
      "name": "So 128_1_4 thin closed holes.stl",
@@ -36,7 +37,8 @@
      "name": "So 131_1_4 thin_closed holes.stl",
      "size": 440395534,
      "md5": "20ebaca8827e71a36b2b598ece6e773f",
-     "signum": "Sö 131"
+     "signum": "Sö 131",
+     "sha256": "5168069934870dbc79fdcc7bd0e4ee9f7a306319253ae603fbf838f8a3a2425f"
     },
     {
      "name": "So 134_1_4 thin_closed holes.stl",
@@ -272,19 +274,22 @@
      "name": "Gs 11_1_4 thin05.stl",
      "size": 656981234,
      "md5": "54ff81691b6956c02c511dbefb7f0cc3",
-     "signum": "Gs 11"
+     "signum": "Gs 11",
+     "sha256": "f1e945e1eeffedef99d780119bdd2bff27173fc151e867bc170c1be482036442"
     },
     {
      "name": "Gs 13_1_4 thin04 closed holes.stl",
      "size": 423896134,
      "md5": "d199e6eddce88a5aff3d06b337626fcb",
-     "signum": "Gs 13"
+     "signum": "Gs 13",
+     "sha256": "b2bb76c51cdc7c8a3a306f58947d16892d8df0ea71e2e007154714a0e7d4fe92"
     },
     {
      "name": "U 1144 thin05 closed holes.stl",
      "size": 814865784,
      "md5": "9b1a7071dde88fbc59109d47112db4bd",
-     "signum": "U 1144"
+     "signum": "U 1144",
+     "sha256": "2b3c44bb0e40666cbce3ee7646e123bc29e75cbe2833494bbbd599734a6f0f86"
     }
    ]
   },
@@ -296,121 +301,141 @@
      "name": "HS_10_1a_thin03.stl",
      "size": 616863334,
      "md5": "e701faeefed670155e226ca5f797b36b",
-     "signum": "Hs 10"
+     "signum": "Hs 10",
+     "sha256": "975aa7e18d281ba9fe43a89f499f414e5b6012ebf7b1f38c192163229863326a"
     },
     {
      "name": "HS_10_1b_thin03.stl",
      "size": 482195084,
      "md5": "5bed867da8f2623921160e20abc52338",
-     "signum": "Hs 10"
+     "signum": "Hs 10",
+     "sha256": "36d9aa8d81c7675865e6c9cfd49c2a65439651ec6a504f35a6513a90ecd65a2d"
     },
     {
      "name": "HS_10_2a thin03.stl",
      "size": 511367134,
      "md5": "0652f5c39ee96050ff459473765526ba",
-     "signum": "Hs 10"
+     "signum": "Hs 10",
+     "sha256": "2009f8fd6f16c75dc1d7c0b38d27b2320a2f1dc98a90f36dd3b44c8c3cd73860"
     },
     {
      "name": "HS_10_2b thin03.stl",
      "size": 709442784,
      "md5": "7219f93bd92157d13afb1106cc810f3c",
-     "signum": "Hs 10"
+     "signum": "Hs 10",
+     "sha256": "7dfd8a5df1b4b052c5d03ee41ce2ac9e831fa63cac04e273f5952ea502e2faa8"
     },
     {
      "name": "HS_10_3a_thin03.stl",
      "size": 544858684,
      "md5": "36a7e6c8375172210b70a8dda0e17ac9",
-     "signum": "Hs 10"
+     "signum": "Hs 10",
+     "sha256": "75f8dfc20c66f783bd7c92aceb8bd22fd74098b6edc47afb7f29874e3a272490"
     },
     {
      "name": "HS_10_3b_thin03.stl",
      "size": 717375034,
      "md5": "1ff29dae15d8bdf028242deb7e900c32",
-     "signum": "Hs 10"
+     "signum": "Hs 10",
+     "sha256": "eca3af3f4080fbf78d2a88368e3e77f3a77cd4040e49a21c9981ae7505cfe061"
     },
     {
      "name": "HS_11 thin03.stl",
      "size": 341476284,
      "md5": "6671500420390671e9319cb8e075e870",
-     "signum": "Hs 11"
+     "signum": "Hs 11",
+     "sha256": "44c4bb7d3ca234cd3613fb023234dca9cd2e3c30c76eead4bafce9d184afd0d3"
     },
     {
      "name": "HS_12 thin03.stl",
      "size": 282283234,
      "md5": "81f39bfb45ee92cb7a8a972032071f78",
-     "signum": "Hs 12"
+     "signum": "Hs 12",
+     "sha256": "fed219e0b578156eda8d775069ed8db7b47a61287b8949d8761b1ea487db18c7"
     },
     {
      "name": "HS_14_0_40 runes thin03.stl",
      "size": 365137234,
      "md5": "a785625c4ac7b3060f45de21fe3a4bb4",
-     "signum": "Hs 14"
+     "signum": "Hs 14",
+     "sha256": "02b772072a7826e5be39dce06c4e1dae96f5f80b351ed281129d592e23c0d081"
     },
     {
      "name": "HS_14_1mm_complete thin03.stl",
      "size": 222143184,
      "md5": "52cc7080ae318329a7ecfe899bf4b2e4",
-     "signum": "Hs 14"
+     "signum": "Hs 14",
+     "sha256": "2d807efa2c346c0efa506ce34ca22e7a0987d5f930276dc36412f28bd346a2e8"
     },
     {
      "name": "HS_15_0_40 thin03.stl",
      "size": 410970584,
      "md5": "4b1aa8a789c1c4dcd7b366e989e117b6",
-     "signum": "Hs 15"
+     "signum": "Hs 15",
+     "sha256": "653208e549ac612e92c33f0581584ddbd24db5c21f6b9771551c158425116789"
     },
     {
      "name": "HS_16 thin03.stl",
      "size": 20462934,
      "md5": "4b20f596a46665463f9ad33903f7aa9d",
-     "signum": "Hs 16"
+     "signum": "Hs 16",
+     "sha256": "bb0c715cbd0d7a4248824b06f29b230239fb8d9e31ee1e372ac5ec13d7c6c422"
     },
     {
      "name": "HS_1A_thin02.stl",
      "size": 4895934,
      "md5": "cd1ddf612c2dca30daf912489ebb5221",
-     "signum": "Hs 1"
+     "signum": "Hs 1",
+     "sha256": "b12b49ce992387fc8b9d4a480d42dac44365b82decaabdc6a1c6b240c2bd1049"
     },
     {
      "name": "HS_1B thin02.stl",
      "size": 1356384,
      "md5": "fddcc2c967bccde8dc16e6b3ec6a2a41",
-     "signum": "Hs 1"
+     "signum": "Hs 1",
+     "sha256": "25ae9cb46c52f06facd907c1896ecad3358d249f44835260105b6ed8be85a6b1"
     },
     {
      "name": "HS_2 thin01.stl",
      "size": 665953484,
      "md5": "37745c2f8b7246f7e83925b41bb76273",
-     "signum": "Hs 2"
+     "signum": "Hs 2",
+     "sha256": "3d1135e65d8d30ed6f413d7252a731412bca5ef2def34739c4b47500e5c951bc"
     },
     {
      "name": "HS_21 thin01.stl",
      "size": 373655834,
      "md5": "e6ed82259f8b1b3595747df147e586ac",
-     "signum": "Hs 21"
+     "signum": "Hs 21",
+     "sha256": "aa021823882fc38d9b1586964d0d3f3985fd42a59ea7781366e6396dd2ccc359"
     },
     {
      "name": "HS_3 thin01.stl",
      "size": 26882784,
      "md5": "2e48e686a7bf8172705b78adb1d8e3bd",
-     "signum": "Hs 3"
+     "signum": "Hs 3",
+     "sha256": "81c60b2fbb74d3cd85ce0102d1a5f89294ef0fb7bcdf3bf82129305573bd49d2"
     },
     {
      "name": "HS_4 thin01.stl",
      "size": 32401634,
      "md5": "d85208d410feda78cfc730d8d3530bb8",
-     "signum": "Hs 4"
+     "signum": "Hs 4",
+     "sha256": "8d374d939c39ad337521e23159038cf86de59c21e992861fa8251f21a419d65b"
     },
     {
      "name": "HS_6 thin03.stl",
      "size": 374765334,
      "md5": "ea1253f4251b66aa96b2003de9b095c8",
-     "signum": "Hs 6"
+     "signum": "Hs 6",
+     "sha256": "0534780dc56c8ec6d52938ebaad9055e69f6ca08bb71243e91c18f5393273b31"
     },
     {
      "name": "HS_9 thin03.stl",
      "size": 167377184,
      "md5": "f5db052f411ce48fdbbfef4283d06832",
-     "signum": "Hs 9"
+     "signum": "Hs 9",
+     "sha256": "2dd422b7af302be91b7b5fd47ce1c197714562114dd1707527b27b0208e3a0cb"
     }
    ]
   },
@@ -422,337 +447,393 @@
      "name": "Vg 102 thin03 closed.stl",
      "size": 390525034,
      "md5": "3f123f8f34038c9fd3b19e289a0c4a56",
-     "signum": "Vg 102"
+     "signum": "Vg 102",
+     "sha256": "7ffd624fcc8b84fdfaa7bd6d482bc23ad61f6a3464b926c6dffb9ba35c234b67"
     },
     {
      "name": "Vg 103 thin03 closed.stl",
      "size": 136151784,
      "md5": "e60811f13d0153a19c986785349c3171",
-     "signum": "Vg 103"
+     "signum": "Vg 103",
+     "sha256": "d563a5eb3b2a919a091c1608fb77a73604d31257d986907b5ab8879baf8e13fc"
     },
     {
      "name": "Vg 105 thin03 closed.stl",
      "size": 292349334,
      "md5": "df6a37cffefe80346a2cad4be5b94ef9",
-     "signum": "Vg 105"
+     "signum": "Vg 105",
+     "sha256": "58ddc4c8f315dc6fb1469428d6fc014f3e2ca437f236d8991e587362e74a0e12"
     },
     {
      "name": "Vg 108 thin03 closed.stl",
      "size": 96269234,
      "md5": "f9b7890d5cb080c0043a610bb375733a",
-     "signum": "Vg 108"
+     "signum": "Vg 108",
+     "sha256": "31e417388807510a0e2dd9576ef172358d33f961ebe44e95f1bbaa4ecc034cd2"
     },
     {
      "name": "Vg 22 thin03 closed.stl",
      "size": 85335534,
      "md5": "286a3d4ab6f6d71d88953e11cea673f4",
-     "signum": "Vg 22"
+     "signum": "Vg 22",
+     "sha256": "bebcbcdaf6e815a934e55c237cbf3cc32fcd187e874818a4a2d084cc6b9bba05"
     },
     {
      "name": "Vg 23 thin03 closed.stl",
      "size": 69767734,
      "md5": "28ade857b207c3be44af86d1325030e7",
-     "signum": "Vg 23"
+     "signum": "Vg 23",
+     "sha256": "caac4f38670b695d075c3079e36261c877c601291c67d858ff9bfa023f7a7efd"
     },
     {
      "name": "Vg 24 Ljung86 Lundberg37.stl",
      "size": 24156584,
      "md5": "c197f44d7870647b11735720c921ed4f",
-     "signum": "Vg 24"
+     "signum": "Vg 24",
+     "sha256": "89283e06e27722868a5b5ed3a0ce8bfac58d3d9a0051d2e659b6a8b4e0581229"
     },
     {
      "name": "Vg 27 Ljung89 Lundberg40a sida A.stl",
      "size": 12135634,
      "md5": "f2f03a199eb2de2884156e5aa7bb78cc",
-     "signum": "Vg 27"
+     "signum": "Vg 27",
+     "sha256": "28ca1f83f4a4fe60db8fe942f9c4181b7efd395fdac2a79e61f64060a36f2293"
     },
     {
      "name": "Vg 27 Ljung89 Lundberg40a sida B.stl",
      "size": 12658584,
      "md5": "6dc3a05d30c64724e58dd58f835fdf9f",
-     "signum": "Vg 27"
+     "signum": "Vg 27",
+     "sha256": "26c67ccaf436cf9ccb2bc678184d9266983f8a6b824a2dcdf3367829b8fdcb73"
     },
     {
      "name": "Vg 27B Ljung92 Lundberg 41.stl",
      "size": 14622084,
      "md5": "87373c43a028943ec9f8b5cc584817c4",
-     "signum": "Vg 27"
+     "signum": "Vg 27",
+     "sha256": "6892abb274c374e1403bffd47fc75c4e32bbe1c9905e1c762765eb286fa09da7"
     },
     {
      "name": "Vg 27B Ljung93 Lundberg 42.stl",
      "size": 9773284,
      "md5": "20132eac2e627a071fa8a32f456cefdc",
-     "signum": "Vg 27"
+     "signum": "Vg 27",
+     "sha256": "af6910d724b63941506cb7ceb799ed438c528937e58cdd91c5af7d830897df7f"
     },
     {
      "name": "Vg 27B Ljung94 Lundberg 43.stl",
      "size": 33228084,
      "md5": "2d1d65bb9650bfe4ce2c8ce195cf7dc4",
-     "signum": "Vg 27"
+     "signum": "Vg 27",
+     "sha256": "66c878045d784a3b4f381bf4eea7ef1ea867279b19afd836b8407792c1e6ce94"
     },
     {
      "name": "Vg 27B Ljung95 Lundberg 44.stl",
      "size": 22753084,
      "md5": "e17de0f6a07b359b7abfb0a0d6ef03f6",
-     "signum": "Vg 27"
+     "signum": "Vg 27",
+     "sha256": "0e3ba52ebdad0da6642ba1cad23bd32145423541c55324ccf1a0ca003d05d947"
     },
     {
      "name": "Vg 27B Ljung96 Lundberg 45.stl",
      "size": 6942434,
      "md5": "dbc412e3e6d67bf9e874b3004155aabd",
-     "signum": "Vg 27"
+     "signum": "Vg 27",
+     "sha256": "6e173dac64f4854ef6b5a9ba2858392e36ef133ef590b947339e18f68d7d1fca"
     },
     {
      "name": "Vg 27B Ljung97 Lundberg46.stl",
      "size": 8832134,
      "md5": "b8b7818175dcfa3c4ea7e2ff283e2008",
-     "signum": "Vg 27"
+     "signum": "Vg 27",
+     "sha256": "d7fa9c1153b74191c6f3a1979428ecb1e71c915c2230174a358b6b778da8cd4c"
     },
     {
      "name": "Vg 30 thin03 closed.stl",
      "size": 229065884,
      "md5": "9bc3f20640b6903e540c194a50beb5da",
-     "signum": "Vg 30"
+     "signum": "Vg 30",
+     "sha256": "3de4ce4a992d58b5e2a9e96fdd93e45c9b699ed623aea3e4796f0f827b7c1e67"
     },
     {
      "name": "Vg 32 thin03 closed.stl",
      "size": 148577884,
      "md5": "31b8273a948d1586a115467c2126c89c",
-     "signum": "Vg 32"
+     "signum": "Vg 32",
+     "sha256": "f9b30a857294ae31c2829c0a40e4cb481f40e508b6796e9333ef482af92603a5"
     },
     {
      "name": "Vg 33 thin03 closed.stl",
      "size": 120893634,
      "md5": "93107a80cf876d61e724ff17e9fc1cc1",
-     "signum": "Vg 33"
+     "signum": "Vg 33",
+     "sha256": "152c19e3fc1b7dc120c33c2926188b17770a600c6198b25c852da1336fa1a02e"
     },
     {
      "name": "Vg 37 thin03 closed.stl",
      "size": 81602284,
      "md5": "9adb906080627141da4e289d563a386c",
-     "signum": "Vg 37"
+     "signum": "Vg 37",
+     "sha256": "a8cdf200cacf44fd758b32652461417d3b6a457c34a24c9d0c8c7ca38b39df86"
     },
     {
      "name": "Vg 40 thin03 closed.stl",
      "size": 254514984,
      "md5": "8761daa2ddf2e3655e0c8404f2351e03",
-     "signum": "Vg 40"
+     "signum": "Vg 40",
+     "sha256": "f70c1ac27423677a7337b5e341e528bf449b5b9827e6367d19be1a2781a940d3"
     },
     {
      "name": "Vg 41 Ljung99 Lundberg 30 thin03.stl",
      "size": 35378484,
      "md5": "ad249fd127c98629055f892594499f31",
-     "signum": "Vg 41"
+     "signum": "Vg 41",
+     "sha256": "f100bda6de958bf33e63c2ca0f4e4437b2bd560a8fe0265b7e831d5a67bab429"
     },
     {
      "name": "Vg 43 Ljung101 Lundberg 23 sida A_1_4 thin03.stl",
      "size": 110730084,
      "md5": "0a6d4c562c8d146772c853c95c068947",
-     "signum": "Vg 43"
+     "signum": "Vg 43",
+     "sha256": "7cf5c210b390574a1a70cd5b42f70c38ed0068e2542e847bbb2cb0c1c85bdfd2"
     },
     {
      "name": "Vg 43 Ljung101 Lundberg 23 sida B_1_4 thin03.stl",
      "size": 91293134,
      "md5": "55d1301e65a5530f4873e7477d809519",
-     "signum": "Vg 43"
+     "signum": "Vg 43",
+     "sha256": "8a60475ab4b1618cff2ad65119fb00d595e6252655f0d1bf161042435a239278"
     },
     {
      "name": "Vg 43 Ljung102 Lundberg 24.stl",
      "size": 75135084,
      "md5": "43282b499ce71d22cee257d3703cfa25",
-     "signum": "Vg 43"
+     "signum": "Vg 43",
+     "sha256": "590dafb95eaff1b19a5f5115e2f66df88a31d8f24c40a2c006bed05a4417ade6"
     },
     {
      "name": "Vg 43 Ljung103 Lundberg 25 sida A.stl",
      "size": 46295434,
      "md5": "2f9816cf0cba049597221627c648e4f4",
-     "signum": "Vg 43"
+     "signum": "Vg 43",
+     "sha256": "7171527ef672d9726d859f886819226bc24d17f4ac9f907fc972bdb6361902ec"
     },
     {
      "name": "Vg 43 Ljung103 Lundberg 25 sida B.stl",
      "size": 30081834,
      "md5": "809877c04f0cc54f8449b17f9c7f3386",
-     "signum": "Vg 43"
+     "signum": "Vg 43",
+     "sha256": "eeb9e3757d5c9f1151a0562ab87fc9b90f0c7252ebc10f75d66d21cdd9233e93"
     },
     {
      "name": "Vg 43 Ljung104 Lundberg 26 thin03.stl",
      "size": 151901484,
      "md5": "2a5c92efe875a644fe26b8a8d53e632e",
-     "signum": "Vg 43"
+     "signum": "Vg 43",
+     "sha256": "865e0010493f9e3647386c351a8092534b697b424027e9c5f24c7e8160a124a7"
     },
     {
      "name": "Vg 43 Ljung105 Lundberg 27_1_4 thin03.stl",
      "size": 111106784,
      "md5": "d987fe66b543824c43cb413e20faf519",
-     "signum": "Vg 43"
+     "signum": "Vg 43",
+     "sha256": "64abb484b2c5342fd1f1b0040a74f77f145271048ab6fd71e5a8e991f42d1dba"
     },
     {
      "name": "Vg 43 Ljung106 Lundberg 28_1_4_thin03.stl",
      "size": 147272684,
      "md5": "edef842ca9187c0ffbc3eb505bb9ebc5",
-     "signum": "Vg 43"
+     "signum": "Vg 43",
+     "sha256": "b6629cd81ff4fea4cf6f2249873ce771aa369843c23c7631b5b19f0ddb00987d"
     },
     {
      "name": "Vg 43 Ljung107 Lundberg 29_1_4 thin03.stl",
      "size": 104758284,
      "md5": "84d7217eadb37f5409217a604bef511b",
-     "signum": "Vg 43"
+     "signum": "Vg 43",
+     "sha256": "a369d2f5de2b450eb5e5a211819e22aa01fa62c821d04564579ca0f88a575124"
     },
     {
      "name": "Vg 43 Ljung108 Lundberg 31 thin03.stl",
      "size": 5451084,
      "md5": "5dc60204cff5eed106ce0a9a656d5acf",
-     "signum": "Vg 43"
+     "signum": "Vg 43",
+     "sha256": "ef68b4f546a4c13a9db65ba300b17d93561bf9914abfcf1771ad0ae04c60687c"
     },
     {
      "name": "Vg 43 Ljung109 Lundberg 32.stl",
      "size": 5913184,
      "md5": "32826da1177caac132edfba3b2b9c596",
-     "signum": "Vg 43"
+     "signum": "Vg 43",
+     "sha256": "011d6c0cc1dfce26d3c913e08369c219f9acd5527eca5e2c378bd45a0afe6ebc"
     },
     {
      "name": "Vg 50 thin03 closed.stl",
      "size": 224112434,
      "md5": "78623a2b4f3baa3e94656520dbf3a0bf",
-     "signum": "Vg 50"
+     "signum": "Vg 50",
+     "sha256": "d0e69ad42d6d0ae76acc5428d6aaf5628b22e18790d24d52561bf1ddaf8b2472"
     },
     {
      "name": "Vg 51 del 1 thin03.stl",
      "size": 50116484,
      "md5": "4763a78f5afbc9796cced761210d37cb",
-     "signum": "Vg 51"
+     "signum": "Vg 51",
+     "sha256": "a19a5de8108cecb9f27a86a712b851b161299e2b26e4aa007e2ddd316c9faaeb"
     },
     {
      "name": "Vg 51 del 2 thin03.stl",
      "size": 48574684,
      "md5": "0cdfb2478ba6626e3c323a4df1471915",
-     "signum": "Vg 51"
+     "signum": "Vg 51",
+     "sha256": "c93ce47d4691d5f79a919e44012a0d69c710eceaa3d731c6895f0a1301604180"
     },
     {
      "name": "Vg 51 del 3 thin03.stl",
      "size": 25476884,
      "md5": "c85341d241e44fb9e5f7ed999b15d7c6",
-     "signum": "Vg 51"
+     "signum": "Vg 51",
+     "sha256": "a89cedc3056fd293d132c36edc8c8dfa3642b12566212ab4c6f35b733c9752c8"
     },
     {
      "name": "Vg 51 del 4 thin03.stl",
      "size": 22462284,
      "md5": "40f179a613356791469b520f1ba8549d",
-     "signum": "Vg 51"
+     "signum": "Vg 51",
+     "sha256": "4a78171493ce2d544af95e7928610333c35228005100a9a31c080bc169e0035b"
     },
     {
      "name": "Vg 53 Ljung61 thin03.stl",
      "size": 84908734,
      "md5": "bad17071601c1d7321de77bfc4886564",
-     "signum": "Vg 53"
+     "signum": "Vg 53",
+     "sha256": "7c90d73e36b6bf58a21e5f01e62d516c35004e2c0a81bdb75f5ccf06ad647b20"
     },
     {
      "name": "Vg ATA322-4412-2011 Ljung80 thin03.stl",
      "size": 30822184,
      "md5": "dcb5053e70c019c8980ee1778ff0a86b",
-     "signum": null
+     "signum": null,
+     "sha256": "126c78b70f2b7e4577f3822682d008be77c2e3ee49732784024ec80d95e0551f"
     },
     {
      "name": "Vg ATA3940_64 Ljung98 L47 del 1.stl",
      "size": 12855284,
      "md5": "a0d17a7a4db742946c7814c6d5e57efa",
-     "signum": null
+     "signum": null,
+     "sha256": "08598a4179e8aeca3ab3677dd9faef073e41c19d6bc7d86497ecf44cddd0fd8a"
     },
     {
      "name": "Vg ATA3940_64 Ljung98 L47 del 2 sida A.stl",
      "size": 33216484,
      "md5": "a9b0525105560f24c1df410f4891c765",
-     "signum": null
+     "signum": null,
+     "sha256": "736c81c6ba1e5b49dd4fac8378335d1822f34a010c27a26e41e3d9f345c83c70"
     },
     {
      "name": "Vg ATA3940_64 Ljung98 L47 del 2 sida B.stl",
      "size": 15984084,
      "md5": "3bbc206f4ad6a7661aabe126c342f33f",
-     "signum": null
+     "signum": null,
+     "sha256": "31f1768ae0fe404f2ec8b88267fb21314d3c84000cd6e3d63ab6ab2c64285741"
     },
     {
      "name": "Vg GVMV89 Ljung62 del 1 thin03.stl",
      "size": 50709184,
      "md5": "f92caa03f43fe92838c6805c9b0c0957",
-     "signum": null
+     "signum": null,
+     "sha256": "28d40ffa70a5ae908e153a17e5c431a564c091186a261bebdf2a650b34a4ce94"
     },
     {
      "name": "Vg GVMV89 Ljung62 del 2 thin03.stl",
      "size": 37373334,
      "md5": "cba9c22ee03fc4edb1177c6e2b7c4e23",
-     "signum": null
+     "signum": null,
+     "sha256": "4cf98c2fdf98e70600b51d19fff8419ffa08d3bb21b1d07f4b5d7a489b84102c"
     },
     {
      "name": "Vg GVMV89 Ljung64 thin03.stl",
      "size": 24236434,
      "md5": "46c15538aeb1d534fbae7b12b50c6c89",
-     "signum": null
+     "signum": null,
+     "sha256": "ca45943d03e6e1baf43de468fd9dbb737152daaca9f9030d9f1b622588438e41"
     },
     {
      "name": "Vg GVMV89 Ljung65 thin03.stl",
      "size": 8251784,
      "md5": "d3493a71653c1b692a389abedd1a26c6",
-     "signum": null
+     "signum": null,
+     "sha256": "1d8979cd4a202a03b09c060e5255126303e060b19b06ea45b5af3b79076d9337"
     },
     {
      "name": "Vg GVMV89 Ljung66 thin03.stl",
      "size": 12845334,
      "md5": "053fccb0040be02555bacc723d0417d4",
-     "signum": null
+     "signum": null,
+     "sha256": "3724f0aa4f9c4d3eaf2df19b8048c16fcdaebe5c6cd1e76c1ad24fa5b7e051f3"
     },
     {
      "name": "Vg GVMV89 Ljung67 thin03.stl",
      "size": 10645184,
      "md5": "ce28d6fddc286cb0ab6fae621716a20e",
-     "signum": null
+     "signum": null,
+     "sha256": "129c687fc9b5c02cee5e49675b7771086b53405f9fe365d3d28e602b8499e010"
     },
     {
      "name": "Vg GVMV89 Ljung68 thin03.stl",
      "size": 44415684,
      "md5": "9e986677fb0e934c8b1e6a1dac07e3f9",
-     "signum": null
+     "signum": null,
+     "sha256": "4c65d53a579719f67472cea8bde16857848127f78b4a66fcbba54f3bc61180e5"
     },
     {
      "name": "Vg GVMV89 Ljung69 thin03.stl",
      "size": 7992034,
      "md5": "8978d7115cc66a78666247392ac24379",
-     "signum": null
+     "signum": null,
+     "sha256": "8598223fb9b57c584abc900cf5820bc32a3a111ede975ed39f69f8032b87a4b0"
     },
     {
      "name": "Vg GVMV89 Ljung70 thin03.stl",
      "size": 15126784,
      "md5": "ff61091bcbfe2766c09eea4a8f68cda9",
-     "signum": null
+     "signum": null,
+     "sha256": "8dcab4791dd16ef2e2a0e7187a237da633e44a6b4a5873888025231732c26de2"
     },
     {
      "name": "Vg GVMV89 Ljung73 thin03.stl",
      "size": 8567384,
      "md5": "dd2796171850ad0ff41f39087be44702",
-     "signum": null
+     "signum": null,
+     "sha256": "f6fa2a04c81e59993256e5d252a59adbfe6fdf9d287b15268cd415c6beae1c63"
     },
     {
      "name": "Vg GVMV89 Ljung74 thin03.stl",
      "size": 34229034,
      "md5": "3f87cef277575a025ee3ebfca9ede466",
-     "signum": null
+     "signum": null,
+     "sha256": "e91599e09439a219db1813dab218d890c704faf6ff40a42785d2630806dd3444"
     },
     {
      "name": "Vg GVMV89 Ljung75 thin03.stl",
      "size": 49365934,
      "md5": "15c12d5e989ea36b63cc10153f85ae0e",
-     "signum": null
+     "signum": null,
+     "sha256": "8eaa7b56ad8f088cd8e8972b01034957767a3288f4f8d6bac852314d50d89bd6"
     },
     {
      "name": "Vg GVMV89 Ljung77 thin03.stl",
      "size": 22879284,
      "md5": "12d243fb330fb0d6b0fe116d8ecca778",
-     "signum": null
+     "signum": null,
+     "sha256": "cb4c1000aea69b2e6d9b6c924f880da5a364b38a9c95bcc77b1d2a003d4bc2b2"
     },
     {
      "name": "Vg GVMV89 Ljung78 thin03.stl",
      "size": 76801534,
      "md5": "bd27ac8d1097b315239d12dd5a041405",
-     "signum": null
+     "signum": null,
+     "sha256": "7b1f23c84c5b6b6900705cacbc7eaf1f2642133a8e791fa759ce5611f8d4acf2"
     }
    ]
   },

@@ -10,7 +10,7 @@ export interface Geology {
   signum: string; place: string; material: string; material_families: string[];
   at_site: { rock: string; unit: string; minerals: string; texture: string; colour: string } | null;
   radius_km: number; points_with_data: number; sample_points: number;
-  rocks_nearby: [string, number][]; families_nearby: Record<string, number>;
+  rocks_nearby: { rock: string; n: number }[]; families_nearby: Record<string, number>;
   verdict: "på platsen" | "i närheten" | "inte i närheten" | "okänt"; text: string; source: string; caveat: string;
 }
 
@@ -67,7 +67,7 @@ export function GeologyBox({ signum, compact = false }: { signum: string; compac
         <>
           {data.at_site && <p className="mt-1">På platsen: {data.at_site.rock}{data.at_site.texture ? `, ${data.at_site.texture}` : ""} – {data.at_site.unit}</p>}
           {data.rocks_nearby.length > 0 && (
-            <p className="mt-1">Inom {data.radius_km} km ({data.points_with_data} provpunkter): {data.rocks_nearby.map(([r, n]) => `${r} (${n})`).join(", ")}</p>
+            <p className="mt-1">Inom {data.radius_km} km ({data.points_with_data} provpunkter): {data.rocks_nearby.map(({ rock, n }) => `${rock} (${n})`).join(", ")}</p>
           )}
         </>
       )}
