@@ -48,6 +48,11 @@ export default async function ContactPage() {
           Artiklarna på Vitki bygger på öppna data och öppen kod: varje siffra kan räknas om av den som vill, och metoderna
           är beskrivna i <a href={`${GITHUB_URL}/blob/main/METHODS.md`} target="_blank" rel="noopener noreferrer" className="font-semibold text-[#b7410e] hover:underline">metoddokumentationen</a>.
         </p>
+        <p className="mt-4 text-slate-600 leading-relaxed">
+          Artiklarna är samtidigt bara exempel på vad verktyget kan användas till och vilken sorts data det ger. Samma
+          data och verktyg går att använda i forskning med ett djupare och smalare fokus än en populärvetenskaplig artikel
+          kan ha – och till frågor som ingen ännu har ställt.
+        </p>
         <div className="mt-5 flex flex-wrap gap-4 text-sm font-bold text-[#b7410e]">
           <a href={AUTHOR.linkedin} target="_blank" rel="noopener noreferrer me" className="hover:underline">LinkedIn ↗</a>
           <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="hover:underline">Vitki på GitHub ↗</a>
