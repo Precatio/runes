@@ -721,7 +721,7 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
 
     accepted = [s for s in slices if s["accepted"]]
     arrays = ({"mask": mask, "wide_area": wide_area, "half_width": half_width, "branch_labels": strokes["branch_labels"],
-               "depth": -residual, "res": res} if keep_arrays else None)
+               "depth": -residual, "res": res, "region": hf.region, "inner": inner} if keep_arrays else None)
     measured_runes = sorted({s["rune_id"] for s in accepted if "rune_id" in s})
     kinds = {}
     for st in strokes["strokes"].values():
