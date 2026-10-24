@@ -137,13 +137,14 @@ ITEMS = [
      "file": "{sig}_ristningskarta.png",
      "explanation": "Spårdjupet i den automatiska analysens rutnät (0,6 mm med Vitki-protokollet), i gråskala och i "
                     "samma läge och storlek som granskningsbilden, så att punkter och rutor stämmer. Svart sätts vid "
-                    "95:e percentilen av djupen i de rutor som ligger djupare än analysens tröskel, och allt djupare "
-                    "blir också svart; värdet i mm (black_mm) står i metadata. Gråtonerna kan därför inte jämföras "
-                    "mellan stenar. Kartan är inte begränsad till det område analysen mätte i: kantzonen och branta "
-                    "partier, som analysen hoppar över, finns med och kan se djupa ut, liksom sprickor och "
-                    "ornamentik. Svart betyder black_mm eller djupare, och svartpunkten kan sättas av skanningens kant, "
-                    "så runorna kan se mellangrå ut. Bilden har ingen synlig rad om skanningen, bara metadata; därför "
-                    "kommer den alltid i en ZIP med README.txt."},
+                    "95:e percentilen av djupen i de rutor i analysens mätområde som ligger djupare än analysens "
+                    "tröskel, och allt djupare blir också svart; värdet i mm (black_mm) står i metadata. Gråtonerna kan "
+                    "därför inte jämföras mellan stenar. Kantzonen, nära skanningens kant och hål och där ytan är "
+                    "brant, är där analysen inte mäter; den ritas blekt, med en tredjedel av kontrasten, så att kantfel "
+                    "inte kan se ut som ristning. Sprickor och ornamentik i mätområdet kommer med. "
+                    "I analyser gjorda före 2026-10-24 räknades svartpunkten över hela kartan och kunde sättas av "
+                    "skanningens kant, så runorna kunde se mellangrå ut. Bilden har ingen synlig rad om skanningen, "
+                    "bara metadata; därför kommer den alltid i en ZIP med README.txt."},
     {"id": "review_image", "group": "matning", "formats": ["PNG"], "needs": ["auto", "review_image"],
      "label": "Granskningsbild med mätpunkter",
      "file": "{sig}_granskningsbild.png",
@@ -984,15 +985,19 @@ def _groove_map(ctx):
     img = _decode_png(ctx.result["groove_map_base64"], "ristningskartan")
     sc = ctx.result.get("groove_map_scale")
     ok = isinstance(sc, dict) and _finite(sc.get("black_mm")) and _finite(sc.get("threshold_mm"))
-    scale = ({"black_mm": sc.get("black_mm"), "threshold_mm": sc.get("threshold_mm"), "grid_mm": sc.get("grid_mm"),
-              "mm_per_px": sc.get("mm_per_px")} if ok else {"note": OLD_SCALE})
-    black = (f"svart = {sc['black_mm']:.2f} mm eller djupare (95:e percentilen av djupen i rutorna som ligger djupare "
-             f"än tröskeln {sc['threshold_mm']:.2f} mm)" if ok else f"svart = stenens djupaste spår ({OLD_SCALE})")
+    scale = ({k: sc.get(k) for k in ("black_mm", "threshold_mm", "grid_mm", "mm_per_px", "black_from", "edge_zone_mm",
+                                     "edge_zone_contrast") if sc.get(k) is not None} if ok else {"note": OLD_SCALE})
+    inner = ok and sc.get("black_from") == "inner"
+    black = (f"svart = {sc['black_mm']:.2f} mm eller djupare (95:e percentilen av djupen i "
+             f"{'mätområdets ' if inner else ''}rutor som ligger djupare än tröskeln {sc['threshold_mm']:.2f} mm)"
+             if ok else f"svart = stenens djupaste spår ({OLD_SCALE})")
+    edge_note = ("Kantzonen, nära skanningens kant och hål och där ytan är brant, är ritad blekt med en tredjedel av "
+                 "kontrasten, så att kantfel inte kan se ut som ristning." if inner else
+                 "Kantzonen och branta partier, som analysen inte mätte i, är med; svartpunkten kan sättas av "
+                 "skanningens kant, så runorna kan se mellangrå ut (analysen är gjord före 2026-10-24).")
     meta = ctx.png_meta("ristningskarta", f"Spårdjupet i den automatiska analysens rutnät som gråskala; vitt = i nivå "
                                           f"med referensytan, {black}. Samma läge och storlek som granskningsbilden. "
-                                          "Kantzonen och branta partier, som analysen inte mätte i, är med; "
-                                          "svartpunkten kan sättas av skanningens kant, så runorna kan se "
-                                          "mellangrå ut.",
+                                          + edge_note,
                         scale, sc.get("mm_per_px") if ok and _finite(sc.get("mm_per_px")) else None, surface=False)
     meta["Comment"].update({"normal": ctx.params.get("normal"), "up": ctx.params.get("up"), "normal_source": "analys"})
     return [(f"{ctx.sig}_ristningskarta.png", png_with_meta(img, meta), "image/png")]
@@ -1394,8 +1399,10 @@ def readme_text(ctx: _Context, items, files, skipped) -> str:
     out += [_wrap_text("Tre olika gråskalor/färgskalor används, och bara värmekartan och rutnätet kan läsas i mm. "
                        "Värmekartans färgskala slutar vid stenens 99,5:e percentil av djupet; djupbilden i appen är "
                        "svart vid 99:e percentilen; ristningskartan är svart vid 95:e percentilen av djupen i de "
-                       "rutor som ligger djupare än analysens tröskel. Allt som är djupare än toppen får samma färg. "
-                       "Ristningskartans svartpunkt kan sättas av skanningens kant, så runorna kan se mellangrå ut. "
+                       "rutor i analysens mätområde som ligger djupare än analysens tröskel. Allt som är djupare än "
+                       "toppen får samma färg. Ristningskartans kantzon ritas blekt, så att kantfel inte kan se ut som "
+                       "ristning; i analyser gjorda före 2026-10-24 räknades svartpunkten över hela kartan och kunde "
+                       "sättas av skanningens kant. "
                        "Djupet räknas från en referensyta i nivå med ytan runt spåren och spårkanterna. Tvärsnittens "
                        "spårdjup är ofta 10–40 % större än kartans, ibland mindre, eftersom tvärsnitten mäts i en tät "
                        "profil från spårkanten till botten medan kartan är ett grövre rutnät där varje ruta har den "

@@ -154,3 +154,25 @@ def test_protocol_compliance():
     c = protocol.compliance(other, protocol.METHOD_VERSION)
     assert not c["compliant"] and any("känslighet" in d for d in c["deviations"])
     assert any("rutnätet följer skanningen" in d for d in c["deviations"])
+
+
+def test_groove_map_black_point_ignores_edge_zone():
+    """Skenbart djup vid skanningens kant sätter inte svartpunkten, och kantzonen ritas blekt."""
+    import base64
+    import io
+    from types import SimpleNamespace
+
+    from PIL import Image
+
+    from src.auto_grooves import EDGE_ZONE_CONTRAST, _groove_map_png
+    region = np.ones((40, 40), bool)
+    inner = np.zeros_like(region)
+    inner[10:30, 10:30] = True
+    depth = np.zeros(region.shape)
+    depth[15:25, 20] = 2.0  # a rune in the measured area
+    depth[0:3, :] = 30.0  # false depth along the scan's edge
+    img, black = _groove_map_png(SimpleNamespace(region=region), -depth, inner, 0.3, (40, 40))
+    assert black == pytest.approx(2.0)
+    gray = np.flipud(np.asarray(Image.open(io.BytesIO(base64.b64decode(img.split(",")[1])))))
+    assert gray[20, 20] < 40  # the rune is (nearly) black
+    assert gray[1, 20] >= 255 * (1 - EDGE_ZONE_CONTRAST) - 10  # the edge never darker than the faded grey

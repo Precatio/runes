@@ -168,7 +168,7 @@ Object.assign(GLOSSARY, {
 // Huggspårsanalysens export (components/GrooveExportMenu.tsx, src/groove_export.py)
 Object.assign(GLOSSARY, {
   "Djup under stenytan": "Hur djupt varje punkt ligger under en referensyta som räknats fram ur skanningen och ligger i nivå med ytan runt spåren och spårkanterna, i mm – en karta över formen, där sprickor, vittring och branta partier syns lika mörka som ristning.",
-  "Ristningskarta": "Spårdjupet i den automatiska analysens rutnät i gråskala, där svart betyder black_mm eller djupare (95:e percentilen av de djupa rutorna på just denna sten), så gråtonerna kan inte jämföras mellan stenar. Svartpunkten kan sättas av skanningens kant, så runorna kan se mellangrå ut.",
+  "Ristningskarta": "Spårdjupet i den automatiska analysens rutnät i gråskala, där svart betyder black_mm eller djupare (95:e percentilen av de djupa rutorna i analysens mätområde på just denna sten), så gråtonerna kan inte jämföras mellan stenar. Kantzonen nära skanningens kant och hål ritas blekt, så att kantfel inte kan se ut som ristning.",
   "Strykljus": "Digitalt lågt sidoljus, 20° över ytan, där ett spår syns tydligast när ljuset faller tvärs över det och kan nästan försvinna när ljuset går längs med.",
   "Relief": "Stenytan belyst från fyra håll på en gång, där det mörkaste värdet behålls, så att varje spår blir mörkt oavsett riktning; gråtonen är inte ett mått i millimeter.",
   "ESRI ASCII-rutnät": "En textfil med ett tal per ruta, här djupet under stenytan i mm, som öppnas i QGIS, R (terra) eller Python, där rutor med −9999 saknar värde.",

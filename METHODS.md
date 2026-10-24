@@ -739,13 +739,17 @@ README.txt i paketet läser.
 * Tre olika normaliseringar av djupet används, och **bara värmekartan och rutnätet kan läsas i mm**. Värmekartans
   färgskala slutar vid stenens 99,5:e percentil, så att den djupaste halva procenten blir lika svart. Djupbilden i
   appens Bilder ur skanningen (`render_relief`) är svart vid 99:e percentilen av djupet utanför kantzonen.
-  Ristningskartan från den automatiska analysen är svart vid 95:e percentilen av djupen i de rutor som ligger
-  djupare än analysens tröskel; skalan (`groove_map_scale`: black_mm, threshold_mm, grid_mm, mm_per_px) sparas från
+  Ristningskartan från den automatiska analysen är svart vid 95:e percentilen av djupen i de rutor i analysens
+  mätområde (`inner`: utanför kantzonen och inte brant) som ligger djupare än analysens tröskel; skalan (`groove_map_scale`: black_mm, threshold_mm, grid_mm, mm_per_px) sparas från
   och med nu med analysen och står i bildens metadata, och för äldre analyser står det att skalan inte sparades.
-  Ristningskartan maskas bara utanför skanningen, så kantzonen och de branta partier som analysen inte mäter i finns
-  med och kan se djupa ut. Svart betyder black_mm eller djupare, och percentilen räknas över hela rutnätet, så
-  svartpunkten kan sättas av skanningens kant och runorna se mellangrå ut. Svartpunkten flyttas inte till det mätta området, eftersom kartan och
-  black_mm också används för 2D-analysens runutsnitt. Gråtonerna i reliefen och ristningskartan kan inte jämföras
+  Kantzonen – inom skanningen men utanför mätområdet, alltså nära skanningens kant och hål och där ytan är brant –
+  ritas med en tredjedel av kontrasten (`EDGE_ZONE_CONTRAST`), så att kantfel inte kan se ut som ristning; den visas
+  ändå, eftersom en runa kan nå ut i den. Svart betyder black_mm eller djupare. *Ändrat 2026-10-24:* tidigare räknades
+  percentilen över hela rutnätet och kantzonen ritades med full kontrast, så svartpunkten sattes ofta av skanningens
+  kant (Sö 371 8,5 mm, gravhällen Ög 5b 30 mm med uppskattad normal; nu 3,3 respektive 4,1 mm) och runorna blev
+  mellangrå. Mätningarna påverkas inte (samma snitt och samma godkända snitt); bara kartans gråskala och black_mm
+  ändras, och `groove_map_scale` har fått `black_from`, `edge_zone_mm`, `edge_zone_max_slope_deg` och
+  `edge_zone_contrast`. Kartan och runrutorna som 2D-analysen får behåller läge och storlek. Gråtonerna i reliefen och ristningskartan kan inte jämföras
   mellan stenar.
 * Tvärsnittens spårdjup är ofta 10–40 % större än kartans på samma ställe, ibland mindre. Tvärsnitten mäts i en tät profil från
   spårkanten till botten, medan kartan är ett grövre rutnät (varje ruta har den högsta punkten i sin ruta) där den

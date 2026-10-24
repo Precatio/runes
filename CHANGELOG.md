@@ -5,6 +5,13 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Ristningskartan: skanningens kanter tas inte längre för ristning
+- Den automatiska analysens ristningskarta räknade sin svarta punkt över hela kartan, så skanningens kanter och branta
+  sidor – där referensytan är osäker och visar skenbart djup – ofta blev svartast och runorna mellangrå (Sö 371: svart
+  vid 8,5 mm, gravhällen Ög 5b: 30 mm). Nu räknas svarta punkten bara i analysens mätområde, och kantzonen nära
+  skanningens kant och hål ritas blekt med en tredjedel av kontrasten. Sö 371 blir svart vid 3,3 mm och Ög 5b vid
+  4,1 mm, och runorna syns tydligt. Mätningarna ändras inte. METHODS.md 2f.
+
 ### Huggspårsanalysen: välj vad du exporterar
 - Ny ruta **Exportera** på 3D-sidan: kryssa i vilka filer du vill ha. Varje val har en förklaring av vad filen visar
   och hur den ska läsas (*Vad innehåller filerna?*). METHODS.md 2f.

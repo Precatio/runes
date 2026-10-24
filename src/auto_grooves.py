@@ -524,18 +524,36 @@ def _rune_box(extent, shape, res: float, margin_mm: float = 4.0) -> list[float]:
     return [round(c0 / nx, 4), round((ny - 1 - r1) / ny, 4), round((c1 + 1) / nx, 4), round((ny - r0) / ny, 4)]
 
 
+# The groove map's edge zone is drawn with this share of the full contrast (see _groove_map_png)
+EDGE_ZONE_CONTRAST = 1 / 3
+
+
 def _groove_map_png(hf: Heightfield, residual: np.ndarray, inner: np.ndarray, threshold: float,
                     size: tuple[int, int]) -> tuple[str, float]:
     """Ristningskarta: spårdjupet som gråskala (mörkt = djupt), utan belysning och färg.
     Samma storlek och orientering som granskningsbilden, så att koordinaterna stämmer.
-    Returnerar bilden och djupet i mm som blir svart (95:e percentilen av djupen i rutorna som ligger djupare än
-    tröskeln; allt djupare blir också svart). Kartan maskas bara utanför skanningen (hf.region), inte i kantzonen."""
+    Returnerar bilden och djupet i mm som blir svart: 95:e percentilen av djupen i de rutor i det inre området (inner,
+    samma område som analysen letar spår i) som ligger djupare än tröskeln; allt djupare blir också svart. Kantzonen –
+    inom skanningen men utanför det inre området: nära skanningens kant och hål och där ytan är brant – ritas med en
+    tredjedel av kontrasten (EDGE_ZONE_CONTRAST), så att kantfel inte kan se ut som ristning. Utanför skanningen är
+    kartan vit."""
     from PIL import Image
 
     depth = np.clip(-residual, 0, None)
-    ref_depth = float(np.percentile(depth[depth > threshold], 95)) if (depth > threshold).any() else 1.0
+    # The black point comes from the inner area only, where the analysis itself looks for grooves: near the scan's
+    # edges, holes and steep sides the reference surface is unreliable and shows false depth, which before
+    # 2026-10-24 often set the black point (Sö 371 8.5 mm, Ög 5b 30 mm) and left the runes pale grey.
+    deep_inner = (depth > threshold) & inner
+    deep_any = depth > threshold
+    ref_depth = (float(np.percentile(depth[deep_inner], 95)) if deep_inner.any()
+                 else float(np.percentile(depth[deep_any], 95)) if deep_any.any() else 1.0)
     v = np.clip(depth / max(ref_depth, 1e-6), 0, 1)
-    gray = (255 * (1 - v)).astype(np.uint8)
+    gray = 255 * (1 - v)
+    # The edge zone (inside the scan but outside the inner area) is drawn faded, so that edge artefacts cannot pass
+    # for carving: still visible (a rune may reach the edge), but never darker than a light grey.
+    edge = hf.region & ~inner
+    gray[edge] = 255 - EDGE_ZONE_CONTRAST * (255 - gray[edge])
+    gray = np.clip(gray, 0, 255).astype(np.uint8)
     gray[~hf.region] = 255
     img = Image.fromarray(np.flipud(gray)).resize(size, Image.LANCZOS)
     buf = io.BytesIO()
@@ -714,10 +732,13 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
         "image_base64": f"data:image/png;base64,{image_b64}",
         "groove_map_base64": groove_map,
         # The groove map's grey scale, for exports: black = black_mm deep or deeper (the stone's own 95th percentile
-        # of the depths of the cells deeper than the threshold), on a grid of grid_mm cells shown at mm_per_px in the
-        # image (the grid's width in mm over the image's width in pixels; display only, nothing is measured from it)
+        # of the depths of the inner-area cells deeper than the threshold); the edge zone (edge_zone_mm from the scan's
+        # edges and holes, plus steep parts) is drawn with edge_zone_contrast of the contrast; on a grid of grid_mm
+        # cells shown at mm_per_px in the image (display only, nothing is measured from it)
         "groove_map_scale": {"black_mm": groove_black_mm, "threshold_mm": threshold, "grid_mm": res,
-                             "mm_per_px": res * hf.H.shape[1] / width},
+                             "mm_per_px": res * hf.H.shape[1] / width, "black_from": "inner",
+                             "edge_zone_mm": margin, "edge_zone_max_slope_deg": max_slope_deg,
+                             "edge_zone_contrast": round(EDGE_ZONE_CONTRAST, 4)},
         "image_width": width,
         "image_height": height,
         "angle_color_range": list(ANGLE_COLOR_RANGE),

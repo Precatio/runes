@@ -114,10 +114,10 @@ skanningen ses från samma håll som stenrapportens figurer, så att de stämmer
 
 **Bilder ur mätningen**
 - **Ristningskarta.** Spårdjupet i den automatiska analysens rutnät, i gråskala och i samma läge som
-  granskningsbilden. Svart sätts vid 95:e percentilen av djupen i de rutor som ligger djupare än analysens tröskel,
-  så gråtonerna kan inte jämföras mellan stenar. Kantzonen, branta partier, sprickor och ornamentik kommer med.
-  Svart betyder black_mm eller djupare (värdet står i bildens metadata), och svartpunkten kan sättas av skanningens
-  kant, så runorna kan se mellangrå ut.
+  granskningsbilden. Svart sätts vid 95:e percentilen av djupen i de rutor i analysens mätområde som ligger djupare
+  än analysens tröskel, så gråtonerna kan inte jämföras mellan stenar. Svart betyder black_mm eller djupare (värdet
+  står i bildens metadata). Kantzonen – nära skanningens kant och hål och där ytan är brant – ritas blekt, så att
+  kantfel inte kan se ut som ristning. Sprickor och ornamentik i mätområdet kommer med.
 - **Granskningsbild med mätpunkter.** Visar var programmet mätte, med en teckenförklaring under bilden. Orange är spår
   som hittats och gråblått ytor för breda att mäta; de färgade prickarna är godkända snitt färgade efter V-vinkel och
   de små grå bortsorterade snitt. Bilden visar analysens egen sortering, inte dina etiketter, och är till för att
