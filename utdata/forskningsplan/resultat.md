@@ -63,7 +63,20 @@ streckklass). Råutdata: `s0_stavlosa_filter.txt`, `s0a.txt`, `s_analys.txt/.jso
   utanför Mälardalen.
 
 ## Studie 4 – vad skannern ser i de skadade partierna
-Pågår.
+- **Spårcacher:** 30 stenar (Medelpad 14, Hälsingland 13, Gs 11, Gs 13, U 1144), inga fel.
+- **0c Blindprovet** (led F:s upplägg, `s4_blindprov.txt`, `s4_blindprov_sammanfattning.json`): bara 9 av 30 stenar
+  kunde prövas (Rundatas orddelning måste täcka texten): Gs 11, Hs 12, Hs 21, M 1, M 2, M 3, M 5, M 8, M 15; 108 ord
+  med spår. Rätt ord: utan spår 61 %, med skannerns spår 65 %, med omflyttade spår 60 %. Sannolikheten för rätt svar:
+  0,324 → 0,365 (Wilcoxon p = 0,004 mot utan spår, p < 0,0001 mot omflyttade). Rätt ord: 4 vinner, 0 förlorar
+  (McNemar p = 0,13). **Regeln uppfylld:** spåren används också utanför Södermanland.
+- **Läsningarna** (`s4_lasningar.txt/.json`): modellen läser 28 av 30 stenar (Hs 3 och Hs 4 har för få läsbara runor);
+  13 förslag når minst 80 % kalibrerad sannolikhet. **Alla luckor med förslag är redan återställda av utgivarna i
+  Rundata** (luckinventeringen tm19, status återställt), inga är öppna. Modellens ord stämmer med utgivarnas
+  återställning i 15 av 16 luckor; den 16:e (Hs 14) skiljer bara i böjningen (He-Gylfi mot He-Gylf[a]).
+- **Tolkning:** studien ger inga nya läsningar på dessa stenar, men en oberoende bekräftelse av utgivarnas
+  återställningar och ett första belägg för att spårläsaren hjälper även på skanningar från en annan skanner
+  (HandySCAN) och andra landskap. En jämförelse runa för runa mellan spåren och de återställda runorna gick bara att
+  göra på 2 positioner och redovisas inte.
 
 ## Avvikelser från planen
 - **Studie 4, blindprovet:** planen sade "3 läsbara runor per sten, slumpfrö 1". Körs i stället som led F

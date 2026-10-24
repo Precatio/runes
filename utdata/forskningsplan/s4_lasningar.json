@@ -1,0 +1,1371 @@
+{
+ "Gs 11": {
+  "available": true,
+  "reason": null,
+  "scan": false,
+  "scan_reason": "Inskriften har inga förlorade runor.",
+  "gaps": []
+ },
+ "Gs 13": {
+  "available": true,
+  "reason": null,
+  "scan": true,
+  "scan_reason": null,
+  "gaps": [
+   {
+    "gap": 0,
+    "words": [
+     {
+      "word": "svá",
+      "p": 0.3218,
+      "p_model": 0.6053
+     },
+     {
+      "word": "sun",
+      "p": 0.0745,
+      "p_model": 0.0247
+     },
+     {
+      "word": "sú",
+      "p": 0.0617,
+      "p_model": 0.0543
+     }
+    ],
+    "scan": [
+     {
+      "pos": 0,
+      "bind": false,
+      "set": "cdgklqstuvwxyzþ",
+      "informative": true,
+      "top": [
+       [
+        "u",
+        0.473
+       ],
+       [
+        "s",
+        0.071
+       ],
+       [
+        "k",
+        0.071
+       ],
+       [
+        "l",
+        0.071
+       ],
+       [
+        "t",
+        0.071
+       ]
+      ],
+      "blobs": [
+       {
+        "cross": false,
+        "zone": "end",
+        "side": -1.0,
+        "long": true,
+        "length": 227.9,
+        "ratio": 1.118,
+        "w": 0.991
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "gap": 1,
+    "words": [
+     {
+      "word": "æftiR",
+      "p": 0.9218,
+      "p_model": 0.9844
+     },
+     {
+      "word": "baðiR",
+      "p": 0.0022,
+      "p_model": 0.001
+     },
+     {
+      "word": "api",
+      "p": 0.0015,
+      "p_model": 0.0006
+     }
+    ],
+    "scan": [
+     {
+      "pos": 0,
+      "bind": false,
+      "set": "Rabcdefghiklmnopqrstuvwxyzäåæöøþą",
+      "informative": false,
+      "top": [
+       [
+        "s",
+        0.125
+       ],
+       [
+        "u",
+        0.125
+       ],
+       [
+        "k",
+        0.125
+       ],
+       [
+        "l",
+        0.125
+       ],
+       [
+        "t",
+        0.125
+       ]
+      ],
+      "blobs": [
+       {
+        "cross": false,
+        "zone": "end",
+        "side": 1.0,
+        "long": false,
+        "length": 12.6,
+        "ratio": 0.595,
+        "w": 0.593
+       }
+      ]
+     },
+     {
+      "pos": 1,
+      "bind": false,
+      "set": "Rabcdfghklmnopqrstuvwxyzäåæöøþą",
+      "informative": true,
+      "top": [
+       [
+        "b",
+        0.253
+       ],
+       [
+        "t",
+        0.15
+       ],
+       [
+        "m",
+        0.15
+       ],
+       [
+        "R",
+        0.15
+       ],
+       [
+        "f",
+        0.06
+       ]
+      ],
+      "blobs": [
+       {
+        "cross": false,
+        "zone": "end",
+        "side": -1.0,
+        "long": false,
+        "length": 13.2,
+        "ratio": 0.654,
+        "w": 0.704
+       },
+       {
+        "cross": false,
+        "zone": "end",
+        "side": 1.0,
+        "long": false,
+        "length": 13.2,
+        "ratio": 0.692,
+        "w": 0.766
+       },
+       {
+        "cross": false,
+        "zone": "end",
+        "side": -1.0,
+        "long": false,
+        "length": 4.2,
+        "ratio": 0.593,
+        "w": 0.383
+       },
+       {
+        "cross": true,
+        "zone": "mid",
+        "side": 0,
+        "long": false,
+        "length": 15.6,
+        "ratio": 0.673,
+        "w": 0.736
+       },
+       {
+        "cross": false,
+        "zone": "mid",
+        "side": 1.0,
+        "long": false,
+        "length": 4.8,
+        "ratio": 0.617,
+        "w": 0.461
+       },
+       {
+        "cross": false,
+        "zone": "end",
+        "side": -1.0,
+        "long": false,
+        "length": 7.8,
+        "ratio": 0.679,
+        "w": 0.746
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "gap": 2,
+    "words": [
+     {
+      "word": "hann",
+      "p": 0.9748,
+      "p_model": 0.9961
+     },
+     {
+      "word": "hon",
+      "p": 0.0058,
+      "p_model": 0.0039
+     },
+     {
+      "word": "sunn",
+      "p": 0.0001,
+      "p_model": 0.0
+     }
+    ],
+    "scan": [
+     {
+      "pos": 0,
+      "bind": false,
+      "set": "bfprþ",
+      "informative": true,
+      "top": [
+       [
+        "f",
+        0.375
+       ],
+       [
+        "r",
+        0.375
+       ],
+       [
+        "b",
+        0.105
+       ],
+       [
+        "þ",
+        0.033
+       ],
+       [
+        "u",
+        0.015
+       ]
+      ],
+      "blobs": [
+       {
+        "cross": false,
+        "zone": "end",
+        "side": 1.0,
+        "long": true,
+        "length": 47.8,
+        "ratio": 0.613,
+        "w": 0.628
+       },
+       {
+        "cross": false,
+        "zone": "end",
+        "side": -1.0,
+        "long": false,
+        "length": 12.2,
+        "ratio": 0.716,
+        "w": 0.8
+       },
+       {
+        "cross": false,
+        "zone": "end",
+        "side": -1.0,
+        "long": false,
+        "length": 28.5,
+        "ratio": 0.674,
+        "w": 0.738
+       },
+       {
+        "cross": false,
+        "zone": "mid",
+        "side": -1.0,
+        "long": true,
+        "length": 110.5,
+        "ratio": 0.83,
+        "w": 0.912
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "U 1144": {
+  "available": true,
+  "reason": null,
+  "scan": true,
+  "scan_reason": null,
+  "gaps": [
+   {
+    "gap": 0,
+    "words": [
+     {
+      "word": "and",
+      "p": 0.9969,
+      "p_model": 0.9999
+     },
+     {
+      "word": "hans",
+      "p": 0.0006,
+      "p_model": 0.0001
+     },
+     {
+      "word": "<unk>",
+      "p": 0.0,
+      "p_model": 0.0
+     }
+    ],
+    "scan": [
+     {
+      "pos": 0,
+      "bind": false,
+      "set": "Rabcdefghiklmnopqrstuvwxyzäåæöøþą",
+      "informative": false,
+      "top": [
+       [
+        "u",
+        0.148
+       ],
+       [
+        "n",
+        0.144
+       ],
+       [
+        "a",
+        0.144
+       ],
+       [
+        "h",
+        0.144
+       ],
+       [
+        "o",
+        0.144
+       ]
+      ],
+      "blobs": [
+       {
+        "cross": true,
+        "zone": "mid",
+        "side": 0,
+        "long": false,
+        "length": 22.8,
+        "ratio": 0.679,
+        "w": 0.746
+       },
+       {
+        "cross": false,
+        "zone": "end",
+        "side": 1.0,
+        "long": true,
+        "length": 18.0,
+        "ratio": 0.684,
+        "w": 0.753
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "Hs 1": {
+  "available": true,
+  "reason": null,
+  "scan": false,
+  "scan_reason": "För få runor upptäckta i skanningen för att föreslå spår.",
+  "gaps": [
+   {
+    "gap": 0,
+    "words": [
+     {
+      "word": "ok",
+      "p": 0.3803,
+      "p_model": 0.4359
+     },
+     {
+      "word": "at",
+      "p": 0.2593,
+      "p_model": 0.3375
+     },
+     {
+      "word": "en",
+      "p": 0.0721,
+      "p_model": 0.0675
+     }
+    ],
+    "scan": null
+   },
+   {
+    "gap": 1,
+    "words": [
+     {
+      "word": "sibbi",
+      "p": 0.1198,
+      "p_model": 0.2362
+     },
+     {
+      "word": "tobbi",
+      "p": 0.095,
+      "p_model": 0.1651
+     },
+     {
+      "word": "øpia",
+      "p": 0.0524,
+      "p_model": 0.2776
+     }
+    ],
+    "scan": null
+   }
+  ]
+ },
+ "Hs 2": {
+  "available": true,
+  "reason": null,
+  "scan": true,
+  "scan_reason": null,
+  "gaps": []
+ },
+ "Hs 3": {
+  "available": false,
+  "reason": "För få läsbara runor för att läsa texten.",
+  "scan": false,
+  "scan_reason": "För få runor upptäckta i skanningen för att föreslå spår.",
+  "gaps": []
+ },
+ "Hs 4": {
+  "available": false,
+  "reason": "För få läsbara runor för att läsa texten.",
+  "scan": false,
+  "scan_reason": "Inskriften har inga förlorade runor.",
+  "gaps": []
+ },
+ "Hs 6": {
+  "available": true,
+  "reason": null,
+  "scan": false,
+  "scan_reason": "Inskriften har inga förlorade runor.",
+  "gaps": []
+ },
+ "Hs 9": {
+  "available": true,
+  "reason": null,
+  "scan": true,
+  "scan_reason": null,
+  "gaps": [
+   {
+    "gap": 0,
+    "words": [
+     {
+      "word": "á",
+      "p": 0.3909,
+      "p_model": 0.4324
+     },
+     {
+      "word": "i",
+      "p": 0.3078,
+      "p_model": 0.4012
+     },
+     {
+      "word": "runaR",
+      "p": 0.073,
+      "p_model": 0.0658
+     }
+    ],
+    "scan": [
+     {
+      "pos": 0,
+      "bind": false,
+      "set": "Rabcdefghiklmnopqrstuvwxyzäåæöøþą",
+      "informative": false,
+      "top": [
+       [
+        "u",
+        0.141
+       ],
+       [
+        "t",
+        0.135
+       ],
+       [
+        "m",
+        0.135
+       ],
+       [
+        "R",
+        0.135
+       ],
+       [
+        "n",
+        0.053
+       ]
+      ],
+      "blobs": [
+       {
+        "cross": false,
+        "zone": "end",
+        "side": 1.0,
+        "long": false,
+        "length": 3.8,
+        "ratio": 0.874,
+        "w": 0.562
+       },
+       {
+        "cross": true,
+        "zone": "mid",
+        "side": 0,
+        "long": false,
+        "length": 6.5,
+        "ratio": 0.888,
+        "w": 0.725
+       },
+       {
+        "cross": false,
+        "zone": "end",
+        "side": -1.0,
+        "long": true,
+        "length": 25.9,
+        "ratio": 1.092,
+        "w": 0.989
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "gap": 1,
+    "words": [
+     {
+      "word": "sun",
+      "p": 0.97,
+      "p_model": 0.9957
+     },
+     {
+      "word": "sum",
+      "p": 0.0042,
+      "p_model": 0.0024
+     },
+     {
+      "word": "sott",
+      "p": 0.0019,
+      "p_model": 0.0004
+     }
+    ],
+    "scan": [
+     {
+      "pos": 0,
+      "bind": false,
+      "set": "Rbcdfgklmpqrstuvwxyzþ",
+      "informative": true,
+      "top": [
+       [
+        "f",
+        0.215
+       ],
+       [
+        "r",
+        0.215
+       ],
+       [
+        "u",
+        0.084
+       ],
+       [
+        "t",
+        0.084
+       ],
+       [
+        "m",
+        0.084
+       ]
+      ],
+      "blobs": [
+       {
+        "cross": false,
+        "zone": "end",
+        "side": 1.0,
+        "long": false,
+        "length": 6.7,
+        "ratio": 0.699,
+        "w": 0.747
+       },
+       {
+        "cross": false,
+        "zone": "end",
+        "side": 1.0,
+        "long": false,
+        "length": 5.4,
+        "ratio": 0.506,
+        "w": 0.327
+       },
+       {
+        "cross": false,
+        "zone": "end",
+        "side": 1.0,
+        "long": false,
+        "length": 7.3,
+        "ratio": 1.027,
+        "w": 0.982
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "Hs 10": {
+  "available": true,
+  "reason": null,
+  "scan": true,
+  "scan_reason": null,
+  "gaps": [
+   {
+    "gap": 0,
+    "words": [
+     {
+      "word": "á",
+      "p": 0.4254,
+      "p_model": 0.4598
+     },
+     {
+      "word": "i",
+      "p": 0.3269,
+      "p_model": 0.4138
+     },
+     {
+      "word": "gerði",
+      "p": 0.0459,
+      "p_model": 0.0351
+     }
+    ],
+    "scan": null
+   }
+  ]
+ },
+ "Hs 11": {
+  "available": true,
+  "reason": null,
+  "scan": true,
+  "scan_reason": null,
+  "gaps": [
+   {
+    "gap": 0,
+    "words": [
+     {
+      "word": "stæin",
+      "p": 0.9591,
+      "p_model": 0.9978
+     },
+     {
+      "word": "steinn",
+      "p": 0.0031,
+      "p_model": 0.0009
+     },
+     {
+      "word": "svæinn",
+      "p": 0.0027,
+      "p_model": 0.0008
+     }
+    ],
+    "scan": null
+   },
+   {
+    "gap": 1,
+    "words": [
+     {
+      "word": "faður",
+      "p": 0.9854,
+      "p_model": 0.9994
+     },
+     {
+      "word": "garuR",
+      "p": 0.0008,
+      "p_model": 0.0002
+     },
+     {
+      "word": "maguR",
+      "p": 0.0008,
+      "p_model": 0.0002
+     }
+    ],
+    "scan": null
+   }
+  ]
+ },
+ "Hs 12": {
+  "available": true,
+  "reason": null,
+  "scan": false,
+  "scan_reason": "Inskriften har inga förlorade runor.",
+  "gaps": []
+ },
+ "Hs 14": {
+  "available": true,
+  "reason": null,
+  "scan": true,
+  "scan_reason": null,
+  "gaps": [
+   {
+    "gap": 0,
+    "words": [
+     {
+      "word": "he-gylfi",
+      "p": 0.4283,
+      "p_model": 0.9088
+     },
+     {
+      "word": "ingiulfr",
+      "p": 0.0847,
+      "p_model": 0.0531
+     },
+     {
+      "word": "ingiulfa",
+      "p": 0.0466,
+      "p_model": 0.0233
+     }
+    ],
+    "scan": null
+   }
+  ]
+ },
+ "Hs 15": {
+  "available": true,
+  "reason": null,
+  "scan": true,
+  "scan_reason": null,
+  "gaps": [
+   {
+    "gap": 0,
+    "words": [
+     {
+      "word": "he-gylfa",
+      "p": 0.9572,
+      "p_model": 0.9997
+     },
+     {
+      "word": "vifa",
+      "p": 0.0096,
+      "p_model": 0.0002
+     },
+     {
+      "word": "hafa",
+      "p": 0.0009,
+      "p_model": 0.0
+     }
+    ],
+    "scan": null
+   },
+   {
+    "gap": 1,
+    "words": [
+     {
+      "word": "hroðmundr",
+      "p": 0.9971,
+      "p_model": 1.0
+     },
+     {
+      "word": "uinþa",
+      "p": 0.0003,
+      "p_model": 0.0
+     },
+     {
+      "word": "hrømundr",
+      "p": 0.0001,
+      "p_model": 0.0
+     }
+    ],
+    "scan": null
+   },
+   {
+    "gap": 2,
+    "words": [
+     {
+      "word": "en",
+      "p": 0.4243,
+      "p_model": 0.372
+     },
+     {
+      "word": "es",
+      "p": 0.0698,
+      "p_model": 0.1563
+     },
+     {
+      "word": "æriRik",
+      "p": 0.0664,
+      "p_model": 0.2249
+     }
+    ],
+    "scan": [
+     {
+      "pos": 0,
+      "bind": false,
+      "set": "Rabcdefghiklmnopqrstuvwxyzäåæöøþą",
+      "informative": false,
+      "top": [
+       [
+        "i",
+        0.195
+       ],
+       [
+        "s",
+        0.195
+       ],
+       [
+        "u",
+        0.057
+       ],
+       [
+        "k",
+        0.057
+       ],
+       [
+        "l",
+        0.057
+       ]
+      ],
+      "blobs": []
+     }
+    ]
+   }
+  ]
+ },
+ "Hs 16": {
+  "available": true,
+  "reason": null,
+  "scan": true,
+  "scan_reason": null,
+  "gaps": [
+   {
+    "gap": 0,
+    "words": [
+     {
+      "word": "a",
+      "p": 0.3798,
+      "p_model": 0.4156
+     },
+     {
+      "word": "i",
+      "p": 0.2471,
+      "p_model": 0.3033
+     },
+     {
+      "word": "runaR",
+      "p": 0.1803,
+      "p_model": 0.2043
+     }
+    ],
+    "scan": null
+   }
+  ]
+ },
+ "Hs 21": {
+  "available": true,
+  "reason": null,
+  "scan": false,
+  "scan_reason": "Inskriften har inga förlorade runor.",
+  "gaps": []
+ },
+ "M 1": {
+  "available": true,
+  "reason": null,
+  "scan": false,
+  "scan_reason": "Inskriften har inga förlorade runor.",
+  "gaps": []
+ },
+ "M 2": {
+  "available": true,
+  "reason": null,
+  "scan": false,
+  "scan_reason": "Inskriften har inga förlorade runor.",
+  "gaps": []
+ },
+ "M 3": {
+  "available": true,
+  "reason": null,
+  "scan": false,
+  "scan_reason": "Inskriften har inga förlorade runor.",
+  "gaps": []
+ },
+ "M 4": {
+  "available": true,
+  "reason": null,
+  "scan": true,
+  "scan_reason": null,
+  "gaps": [
+   {
+    "gap": 0,
+    "words": [
+     {
+      "word": "ond",
+      "p": 0.2059,
+      "p_model": 0.3868
+     },
+     {
+      "word": "hans",
+      "p": 0.2033,
+      "p_model": 0.1734
+     },
+     {
+      "word": "kana",
+      "p": 0.1131,
+      "p_model": 0.2171
+     }
+    ],
+    "scan": [
+     {
+      "pos": 0,
+      "bind": false,
+      "set": "Rbcdefgiklmpqrstuvwxyzþ",
+      "informative": true,
+      "top": [
+       [
+        "u",
+        0.398
+       ],
+       [
+        "s",
+        0.08
+       ],
+       [
+        "k",
+        0.08
+       ],
+       [
+        "l",
+        0.08
+       ],
+       [
+        "t",
+        0.08
+       ]
+      ],
+      "blobs": [
+       {
+        "cross": false,
+        "zone": "end",
+        "side": 1.0,
+        "long": true,
+        "length": 58.4,
+        "ratio": 0.743,
+        "w": 0.833
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "M 5": {
+  "available": true,
+  "reason": null,
+  "scan": false,
+  "scan_reason": "Inskriften har inga förlorade runor.",
+  "gaps": []
+ },
+ "M 6": {
+  "available": true,
+  "reason": null,
+  "scan": true,
+  "scan_reason": null,
+  "gaps": [
+   {
+    "gap": 0,
+    "words": [
+     {
+      "word": "æftiR",
+      "p": 0.9674,
+      "p_model": 0.9977
+     },
+     {
+      "word": "ept",
+      "p": 0.0033,
+      "p_model": 0.001
+     },
+     {
+      "word": "at",
+      "p": 0.0032,
+      "p_model": 0.0009
+     }
+    ],
+    "scan": [
+     {
+      "pos": 3,
+      "bind": false,
+      "set": "Rbcdefgiklmpqrstuvwxyzþ",
+      "informative": true,
+      "top": [
+       [
+        "u",
+        0.221
+       ],
+       [
+        "t",
+        0.16
+       ],
+       [
+        "m",
+        0.16
+       ],
+       [
+        "R",
+        0.16
+       ],
+       [
+        "s",
+        0.048
+       ]
+      ],
+      "blobs": [
+       {
+        "cross": false,
+        "zone": "end",
+        "side": 1.0,
+        "long": true,
+        "length": 11.7,
+        "ratio": 0.9,
+        "w": 0.812
+       },
+       {
+        "cross": false,
+        "zone": "end",
+        "side": -1.0,
+        "long": true,
+        "length": 9.7,
+        "ratio": 0.731,
+        "w": 0.819
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "M 7": {
+  "available": true,
+  "reason": null,
+  "scan": true,
+  "scan_reason": null,
+  "gaps": [
+   {
+    "gap": 0,
+    "words": [
+     {
+      "word": "þorstæinn",
+      "p": 0.9911,
+      "p_model": 0.9993
+     },
+     {
+      "word": "þorsæinn",
+      "p": 0.0008,
+      "p_model": 0.0005
+     },
+     {
+      "word": "svæinn",
+      "p": 0.0007,
+      "p_model": 0.0001
+     }
+    ],
+    "scan": [
+     {
+      "pos": 0,
+      "bind": false,
+      "set": "Rabcdefghiklmnopqrstuvwxyzäåæöøþą",
+      "informative": false,
+      "top": [
+       [
+        "u",
+        0.116
+       ],
+       [
+        "t",
+        0.116
+       ],
+       [
+        "m",
+        0.116
+       ],
+       [
+        "R",
+        0.116
+       ],
+       [
+        "f",
+        0.116
+       ]
+      ],
+      "blobs": [
+       {
+        "cross": false,
+        "zone": "end",
+        "side": 1.0,
+        "long": false,
+        "length": 6.7,
+        "ratio": 0.708,
+        "w": 0.759
+       },
+       {
+        "cross": false,
+        "zone": "end",
+        "side": 1.0,
+        "long": true,
+        "length": 37.3,
+        "ratio": 0.923,
+        "w": 0.957
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "M 8": {
+  "available": true,
+  "reason": null,
+  "scan": false,
+  "scan_reason": "Inskriften har inga förlorade runor.",
+  "gaps": []
+ },
+ "M 10": {
+  "available": true,
+  "reason": null,
+  "scan": false,
+  "scan_reason": "Inskriften har inga förlorade runor.",
+  "gaps": []
+ },
+ "M 11": {
+  "available": true,
+  "reason": null,
+  "scan": true,
+  "scan_reason": null,
+  "gaps": [
+   {
+    "gap": 0,
+    "words": [
+     {
+      "word": "letu",
+      "p": 0.9991,
+      "p_model": 1.0
+     },
+     {
+      "word": "rettu",
+      "p": 0.0001,
+      "p_model": 0.0
+     },
+     {
+      "word": "øynd",
+      "p": 0.0,
+      "p_model": 0.0
+     }
+    ],
+    "scan": [
+     {
+      "pos": 0,
+      "bind": false,
+      "set": "Rbcdefgiklmpqrstuvwxyzþ",
+      "informative": true,
+      "top": [
+       [
+        "u",
+        0.253
+       ],
+       [
+        "t",
+        0.16
+       ],
+       [
+        "m",
+        0.16
+       ],
+       [
+        "R",
+        0.16
+       ],
+       [
+        "s",
+        0.043
+       ]
+      ],
+      "blobs": [
+       {
+        "cross": false,
+        "zone": "end",
+        "side": 1.0,
+        "long": true,
+        "length": 48.4,
+        "ratio": 0.895,
+        "w": 0.947
+       },
+       {
+        "cross": false,
+        "zone": "end",
+        "side": -1.0,
+        "long": true,
+        "length": 23.3,
+        "ratio": 0.778,
+        "w": 0.87
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "M 13": {
+  "available": true,
+  "reason": null,
+  "scan": true,
+  "scan_reason": null,
+  "gaps": [
+   {
+    "gap": 0,
+    "words": [
+     {
+      "word": "gunnaR",
+      "p": 0.3651,
+      "p_model": 0.7825
+     },
+     {
+      "word": "runaR",
+      "p": 0.1646,
+      "p_model": 0.1148
+     },
+     {
+      "word": "hennaR",
+      "p": 0.0335,
+      "p_model": 0.0418
+     }
+    ],
+    "scan": [
+     {
+      "pos": 0,
+      "bind": false,
+      "set": "Rabcdefghiklmnopqrstuvwxyzäåæöøþą",
+      "informative": false,
+      "top": [
+       [
+        "i",
+        0.195
+       ],
+       [
+        "s",
+        0.195
+       ],
+       [
+        "u",
+        0.057
+       ],
+       [
+        "k",
+        0.057
+       ],
+       [
+        "l",
+        0.057
+       ]
+      ],
+      "blobs": []
+     },
+     {
+      "pos": 1,
+      "bind": false,
+      "set": "Rbcdfgklmpqrstuvwxyzþ",
+      "informative": true,
+      "top": [
+       [
+        "u",
+        0.437
+       ],
+       [
+        "s",
+        0.075
+       ],
+       [
+        "k",
+        0.075
+       ],
+       [
+        "l",
+        0.075
+       ],
+       [
+        "t",
+        0.075
+       ]
+      ],
+      "blobs": [
+       {
+        "cross": false,
+        "zone": "end",
+        "side": -1.0,
+        "long": true,
+        "length": 72.6,
+        "ratio": 0.836,
+        "w": 0.916
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "M 14": {
+  "available": true,
+  "reason": null,
+  "scan": false,
+  "scan_reason": "För få runor upptäckta i skanningen för att föreslå spår.",
+  "gaps": [
+   {
+    "gap": 0,
+    "words": [
+     {
+      "word": "stæin",
+      "p": 0.9998,
+      "p_model": 1.0
+     },
+     {
+      "word": "<unk>",
+      "p": 0.0,
+      "p_model": 0.0
+     },
+     {
+      "word": "steig",
+      "p": 0.0,
+      "p_model": 0.0
+     }
+    ],
+    "scan": null
+   }
+  ]
+ },
+ "M 15": {
+  "available": true,
+  "reason": null,
+  "scan": false,
+  "scan_reason": "Inskriften har inga förlorade runor.",
+  "gaps": []
+ },
+ "M 16": {
+  "available": true,
+  "reason": null,
+  "scan": false,
+  "scan_reason": "Inskriften har inga förlorade runor.",
+  "gaps": []
+ }
+}

@@ -1,0 +1,158 @@
+Gs 11: 28 ord på 2–6 runor; spårmängder för 144 av 144 positioner
+   uk       (ok): utan JA skanner JA omflyttad JA
+   uk       (ok): utan JA skanner JA omflyttad JA
+   karl     (karl): utan nej skanner nej omflyttad nej
+   þaR      (þæiR): utan JA skanner JA omflyttad JA
+   bruþr    (brøðr): utan JA skanner JA omflyttad JA
+   aliR     (alliR): utan nej skanner nej omflyttad nej
+   litu     (letu): utan JA skanner JA omflyttad JA
+   rita     (retta): utan JA skanner JA omflyttad JA
+   stain    (stæin): utan JA skanner JA omflyttad JA
+   þino     (þenna): utan JA skanner JA omflyttad JA
+   abtiR    (æftiR): utan JA skanner JA omflyttad JA
+   faur     (faður): utan nej skanner JA omflyttad JA
+   sin      (sinn): utan JA skanner JA omflyttad JA
+   kuþ      (guð): utan JA skanner JA omflyttad JA
+   hialbi   (hialpi): utan JA skanner JA omflyttad JA
+   hons     (hans): utan JA skanner JA omflyttad JA
+   salu     (salu): utan JA skanner JA omflyttad JA
+   uk       (ok): utan JA skanner JA omflyttad JA
+   kuþs     (guðs): utan JA skanner JA omflyttad JA
+   muþiR    (moðiR): utan JA skanner JA omflyttad JA
+   in       (en): utan JA skanner JA omflyttad nej
+   kara     (kara): utan nej skanner JA omflyttad nej
+   sun      (sunn): utan JA skanner JA omflyttad JA
+   runoR    (runaR): utan JA skanner JA omflyttad JA
+   ritaR    (rettaR): utan nej skanner nej omflyttad nej
+   þa       (þa): utan nej skanner nej omflyttad nej
+   sat      (sat): utan nej skanner nej omflyttad nej
+   aimunt   (æimundr): utan nej skanner nej omflyttad nej
+Gs 13: Rundatas ord täcker inte texten – hoppar över
+U 1144: Rundatas ord täcker inte texten – hoppar över
+Hs 1: Rundatas ord täcker inte texten – hoppar över
+Hs 2: Rundatas ord täcker inte texten – hoppar över
+Hs 3: Rundatas ord täcker inte texten – hoppar över
+Hs 4: Rundatas ord täcker inte texten – hoppar över
+Hs 6: Rundatas ord täcker inte texten – hoppar över
+Hs 9: Rundatas ord täcker inte texten – hoppar över
+Hs 10: Rundatas ord täcker inte texten – hoppar över
+Hs 11: Rundatas ord täcker inte texten – hoppar över
+Hs 12: 15 ord på 2–6 runor; spårmängder för 43 av 70 positioner
+   þru      (þoru): utan nej skanner nej omflyttad nej
+   sun      (sunn): utan nej skanner nej omflyttad nej
+   lit      (let): utan JA skanner JA omflyttad JA
+   rita     (retta): utan nej skanner nej omflyttad JA
+   stin     (stæin): utan JA skanner JA omflyttad JA
+   þina     (þenna): utan JA skanner JA omflyttad JA
+   ak       (ok): utan JA skanner JA omflyttad JA
+   bru      (bro): utan JA skanner JA omflyttad JA
+   kirþi    (gærði): utan nej skanner nej omflyttad nej
+   aftiR    (æftiR): utan JA skanner JA omflyttad JA
+   bruþr    (brøðr): utan nej skanner JA omflyttad nej
+   sina     (sina): utan JA skanner JA omflyttad JA
+   ak       (ok): utan JA skanner JA omflyttad JA
+   at       (at): utan JA skanner JA omflyttad JA
+   kuþlaf   (guðlaf): utan nej skanner nej omflyttad nej
+Hs 14: Rundatas ord täcker inte texten – hoppar över
+Hs 15: Rundatas ord täcker inte texten – hoppar över
+Hs 16: Rundatas ord täcker inte texten – hoppar över
+Hs 21: 13 ord på 2–6 runor; spårmängder för 35 av 87 positioner
+   ok       (ok): utan nej skanner nej omflyttad nej
+   þiR      (þæiR): utan JA skanner JA omflyttad JA
+   ritu     (rettu): utan nej skanner JA omflyttad nej
+   stin     (stæin): utan JA skanner JA omflyttad JA
+   þina     (þenna): utan JA skanner JA omflyttad JA
+   aftiR    (æftiR): utan JA skanner JA omflyttad JA
+   faþur    (faður): utan JA skanner JA omflyttad JA
+   sin      (sinn): utan JA skanner – omflyttad –
+   faþi     (faði): utan nej skanner – omflyttad –
+   stin     (stæin): utan JA skanner – omflyttad –
+   þina     (þenna): utan JA skanner – omflyttad –
+   in       (hin): utan nej skanner – omflyttad –
+   kuþa     (goða): utan nej skanner nej omflyttad nej
+M 1: 11 ord på 2–6 runor; spårmängder för 41 av 77 positioner
+   uk       (ok): utan JA skanner – omflyttad –
+   uk       (ok): utan JA skanner – omflyttad –
+   friþi    (friði): utan nej skanner – omflyttad –
+   raistu   (ræistu): utan nej skanner nej omflyttad nej
+   stain    (stæin): utan JA skanner JA omflyttad JA
+   þinsa    (þennsa): utan nej skanner nej omflyttad nej
+   aftiR    (æftiR): utan JA skanner JA omflyttad JA
+   buri     (buri): utan nej skanner nej omflyttad nej
+   faþur    (faður): utan JA skanner JA omflyttad JA
+   isin     (sinn): utan JA skanner JA omflyttad JA
+   in       (en): utan nej skanner nej omflyttad nej
+M 2: 2 ord på 2–6 runor; spårmängder för 8 av 10 positioner
+   oskir    (asgæiRR): utan nej skanner nej omflyttad nej
+   barþi    (barði): utan nej skanner nej omflyttad nej
+M 3: 13 ord på 2–6 runor; spårmängder för 13 av 68 positioner
+   ak       (ok): utan nej skanner – omflyttad –
+   ritu     (rettu): utan nej skanner – omflyttad –
+   stin     (stæin): utan JA skanner – omflyttad –
+   þina     (þenna): utan JA skanner – omflyttad –
+   abtiR    (æftiR): utan JA skanner – omflyttad –
+   kiskik   (kiskik): utan nej skanner nej omflyttad nej
+   faþur    (faður): utan JA skanner JA omflyttad JA
+   sin      (sinn): utan JA skanner – omflyttad –
+   ak       (ok): utan JA skanner – omflyttad –
+   abtiR    (æftiR): utan nej skanner nej omflyttad nej
+   tisi     (disi): utan nej skanner – omflyttad –
+   muþur    (moður): utan JA skanner JA omflyttad JA
+   sina     (sina): utan JA skanner JA omflyttad JA
+M 4: Rundatas ord täcker inte texten – hoppar över
+M 5: 20 ord på 2–6 runor; spårmängder för 85 av 92 positioner
+   hokun    (hakon): utan nej skanner nej omflyttad nej
+   lit      (let): utan JA skanner JA omflyttad JA
+   rita     (retta): utan nej skanner nej omflyttad nej
+   stin     (stæin): utan JA skanner JA omflyttad JA
+   þino     (þenna): utan JA skanner JA omflyttad JA
+   obtiR    (æftiR): utan JA skanner JA omflyttad nej
+   skukna   (skygna): utan nej skanner nej omflyttad nej
+   bruþur   (broður): utan JA skanner JA omflyttad JA
+   sin      (sinn): utan JA skanner JA omflyttad JA
+   auk      (ok): utan JA skanner JA omflyttad JA
+   abtiR    (æftiR): utan JA skanner JA omflyttad JA
+   muþur    (moður): utan JA skanner JA omflyttad JA
+   sino     (sina): utan JA skanner JA omflyttad JA
+   kuþ      (guð): utan JA skanner JA omflyttad JA
+   hialbi   (hialpi): utan JA skanner JA omflyttad JA
+   þiRa     (þæiRa): utan nej skanner nej omflyttad nej
+   salu     (salu): utan nej skanner nej omflyttad nej
+   auk      (ok): utan JA skanner JA omflyttad JA
+   kuþ      (guðs): utan JA skanner JA omflyttad JA
+   muþiR    (moðiR): utan nej skanner nej omflyttad nej
+M 6: Rundatas ord täcker inte texten – hoppar över
+M 7: Rundatas ord täcker inte texten – hoppar över
+M 8: 11 ord på 2–6 runor; spårmängder för 42 av 44 positioner
+   tulha    (dolga): utan nej skanner nej omflyttad nej
+   riti     (retti): utan nej skanner nej omflyttad nej
+   stin     (stæin): utan JA skanner JA omflyttad JA
+   þino     (þenna): utan JA skanner JA omflyttad JA
+   abtiR    (æftiR): utan JA skanner JA omflyttad JA
+   salua    (salva): utan nej skanner nej omflyttad nej
+   uk       (ok): utan JA skanner JA omflyttad JA
+   at       (at): utan nej skanner nej omflyttad nej
+   biurn    (biorn): utan nej skanner nej omflyttad nej
+   sunu     (sunu): utan nej skanner nej omflyttad nej
+   sinn     (sina): utan JA skanner JA omflyttad JA
+M 10: Rundatas ord täcker inte texten – hoppar över
+M 11: Rundatas ord täcker inte texten – hoppar över
+M 13: Rundatas ord täcker inte texten – hoppar över
+M 14: Rundatas ord täcker inte texten – hoppar över
+M 15: 11 ord på 2–6 runor; spårmängder för 41 av 42 positioner
+   biurn    (biorn): utan nej skanner nej omflyttad nej
+   riti     (retti): utan nej skanner nej omflyttad nej
+   stain    (stæin): utan JA skanner JA omflyttad JA
+   þino     (þenna): utan JA skanner JA omflyttad JA
+   aftiR    (æftiR): utan JA skanner JA omflyttad JA
+   ufriþ    (ofrið): utan nej skanner nej omflyttad nej
+   auk      (ok): utan JA skanner JA omflyttad JA
+   at       (at): utan JA skanner JA omflyttad JA
+   un       (un): utan nej skanner nej omflyttad nej
+   sunu     (sunu): utan nej skanner nej omflyttad nej
+   sin      (sina): utan JA skanner JA omflyttad nej
+M 16: Rundatas ord täcker inte texten – hoppar över
+utan       ord rätt 0.61  fyllnad rätt 0.40  medel-P(facit) 0.324  (124 ord)
+skanner    ord rätt 0.65  fyllnad rätt 0.44  medel-P(facit) 0.365  (108 ord)
+omflyttad  ord rätt 0.60  fyllnad rätt 0.40  medel-P(facit) 0.327  (108 ord)
+bara ord med spår: utan 0.61  skanner 0.65  omflyttad 0.60  (108 ord)
