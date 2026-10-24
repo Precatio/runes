@@ -19,6 +19,7 @@ Kräver att analysmotorn körs (uvicorn api.main:app på port 8000).
     .venv/bin/python -m scripts.batch_scans                     # mäter det som saknas, visar resten
     .venv/bin/python -m scripts.batch_scans --skriv             # och skriver korpus och projekt till Firestore
     .venv/bin/python -m scripts.batch_scans --serier medelpad   # bara vissa serier (kommaseparerade)
+    .venv/bin/python -m scripts.batch_scans --max-mb 500        # stora filer sist (kräver höjd MAX_MESH_UPLOAD_MB)
 """
 from __future__ import annotations
 
@@ -214,12 +215,19 @@ def main(argv=None):
     ap.add_argument("--serier", default=",".join(ORDER))
     ap.add_argument("--skriv", action="store_true", help="skriv korpus och projekt till Firestore")
     ap.add_argument("--igen", action="store_true", help="mät om filer som misslyckades förra gången")
+    ap.add_argument("--max-mb", type=float, default=None,
+                    help="hoppa över större filer (analysmotorn tar som standard emot högst 500 MB, MAX_MESH_UPLOAD_MB)")
     a = ap.parse_args(argv)
     api, series = a.api.rstrip("/"), [s for s in a.serier.split(",") if s]
 
     # 1. Measure what has not been measured
     normals = known_normals()
     todo = files(series)
+    if a.max_mb:
+        skipped = [f["name"] for _, f, _ in todo if f["size"] > a.max_mb * 2**20]
+        todo = [t for t in todo if t[1]["size"] <= a.max_mb * 2**20]
+        if skipped:
+            log(f"{len(skipped)} filer över {a.max_mb:g} MB väntar: {', '.join(skipped)}")
     log(f"{len(todo)} skanningar på disken i {', '.join(series)}")
     for i, (key, f, path) in enumerate(todo, 1):
         out = result_path(key, f)
