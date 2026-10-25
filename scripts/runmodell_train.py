@@ -105,6 +105,26 @@ def split(data: list[dict], share: float, seed: int) -> tuple[list[dict], list[d
     return train, test
 
 
+class SyntheticStrips(torch.utils.data.IterableDataset):
+    """Endless batches of synthetic strips (src/runmodell_synt.py), generated in the DataLoader's worker processes."""
+    def __init__(self, texts: list[str], batch: int, seed: int):
+        self.texts, self.batch, self.seed = texts, batch, seed
+
+    def __iter__(self):
+        from src import runmodell_synt as sy
+        info = torch.utils.data.get_worker_info()
+        rng = np.random.default_rng(self.seed + (info.id if info else 0) * 7919)
+        while True:
+            items = []
+            for _ in range(self.batch):
+                t = sy.sample_text(self.texts, rng)
+                im = sy.strip(t, rng)
+                if rng.random() < 0.5:
+                    im = im[::-1, :].copy()  # runes upside down, as when a band is drawn from the other side
+                items.append((im, t))
+            yield items
+
+
 def batch_loss(model, imgs: list[np.ndarray], targets: list[str], dev, flips_ud: list[bool]) -> torch.Tensor:
     """Mean CTC loss over a batch of strips padded to the same width; per strip the smaller of read as drawn and
     read reversed (the reading direction that fits the text)."""
@@ -151,7 +171,7 @@ def evaluate(model, data, dev, shuffled=False, seed=7):
                        for lr in (False, True) for ud in (False, True))
             out.append(best)
     model.train()
-    return float(np.mean(out)) if out else float("nan")
+    return float(np.median([c for c, d in zip(out, data) if len(d["target"]) >= 10])) if out else float("nan")
 
 
 def main(argv=None):
@@ -162,6 +182,9 @@ def main(argv=None):
     ap.add_argument("--test-andel", type=float, default=0.0, help="andel av varje series stenar som hålls utanför")
     ap.add_argument("--frö", type=int, default=1)
     ap.add_argument("--batch", type=int, default=8)
+    ap.add_argument("--synt-steg", type=int, default=0, help="förträning: så många batchar syntetiska remsor först")
+    ap.add_argument("--synt-batch", type=int, default=32)
+    ap.add_argument("--arbetare", type=int, default=8, help="processer som tillverkar syntetiska remsor")
     ap.add_argument("--ut", default="/Volumes/2TB/cache/runmodell/modell.pt")
     a = ap.parse_args(argv)
     torch.manual_seed(1); random.seed(1); np.random.seed(1)
@@ -172,12 +195,43 @@ def main(argv=None):
     else:
         train = [s for s in data if s["series"] != a.holdout]
         test = [s for s in data if s["series"] == a.holdout] if a.holdout else []
+
+    print(f"{len(train)} stenar i träningen ({sum(len(s['target']) for s in train)} tecken), {len(test)} prövas; {dev}", flush=True)
     rng = random.Random(a.frö)
     import time
     t0 = time.time()
-    print(f"{len(train)} stenar i träningen ({sum(len(s['target']) for s in train)} tecken), {len(test)} prövas; {dev}", flush=True)
     model = CRNN().to(dev)
     opt = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
+    if a.synt_steg:
+        from src import runmodell_synt as sy
+        texts = sy.corpus_texts({s["signum"] for s in test if s["signum"]})
+        dl = torch.utils.data.DataLoader(SyntheticStrips(texts, a.synt_batch, a.frö), batch_size=None,
+                                         num_workers=a.arbetare, persistent_workers=True, prefetch_factor=4)
+        print(f"förträning: {a.synt_steg} batchar à {a.synt_batch} syntetiska remsor ur {len(texts)} texter, {a.arbetare} processer", flush=True)
+        sched = torch.optim.lr_scheduler.OneCycleLR(opt, max_lr=2e-3, total_steps=a.synt_steg, pct_start=0.1)
+        tot = 0.0
+        for step, items in enumerate(dl, 1):
+            ctc_f = nn.CTCLoss(blank=0, reduction="mean", zero_infinity=True)
+            W = max(im.shape[1] for im, _ in items)
+            x = torch.zeros(len(items), 1, 64, W)
+            for k, (im, _) in enumerate(items):
+                x[k, 0, :, :im.shape[1]] = torch.as_tensor(im) / 2.5
+            ys = [torch.tensor(rm.encode(t)) for _, t in items]
+            lp = model(x.to(dev)).cpu()
+            xlen = torch.tensor([max(1, min(lp.shape[0], im.shape[1] // 4)) for im, _ in items])
+            loss = ctc_f(lp, torch.cat(ys), xlen, torch.tensor([len(y) for y in ys]))
+            opt.zero_grad(); loss.backward(); nn.utils.clip_grad_norm_(model.parameters(), 5.0); opt.step(); sched.step()
+            tot += loss.item()
+            if step % max(1, a.synt_steg // 10) == 0:
+                msg = f"förträning {step}/{a.synt_steg} ({(time.time() - t0) / 60:.0f} min): förlust {tot / (a.synt_steg // 10):.3f}"
+                tot = 0.0
+                if test:
+                    msg += f", CER prövning {evaluate(model, test, dev):.2f} (mot omflyttad text {evaluate(model, test, dev, True):.2f})"
+                print(msg, flush=True)
+            if step >= a.synt_steg:
+                break
+        torch.save({"state": model.state_dict(), "alphabet": rm.ALPHABET}, os.path.splitext(a.ut)[0] + "_fortranad.pt")
+        opt = torch.optim.AdamW(model.parameters(), lr=3e-4, weight_decay=1e-4)  # gentler fine-tuning on the real stones
     for ep in range(1, a.epoker + 1):
         # Batches of strips of similar width (less padding), in a new order every epoch
         order = sorted(train, key=lambda s: s["image"].shape[1] * rng.uniform(0.8, 1.2))
