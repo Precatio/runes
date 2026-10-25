@@ -87,7 +87,10 @@ def straighten(depth: np.ndarray, points_display: list, height_display: float, s
     return np.clip(strip[::-1, :], 0, clip_mm), np.c_[C[:, 1], C[:, 0]]
 
 
-def stone_strip(series: str, stem: str, height_px: int = 64, gap_px: int = 24) -> dict | None:
+MARGIN = 1.3  # the strip is this much higher than the drawn band: tight bands cut the runes' tops and feet (Viktor, Gs 11)
+
+
+def stone_strip(series: str, stem: str, height_px: int = 64, gap_px: int = 24, margin: float = MARGIN) -> dict | None:
     """All of a stone's bands, straightened, scaled to height_px rows and joined in reading order with a gap; with the
     target text. None when the stone has no drawn bands."""
     from PIL import Image
@@ -98,7 +101,7 @@ def stone_strip(series: str, stem: str, height_px: int = 64, gap_px: int = 24) -
     meta = json.load(open(os.path.join(DEPTH_DIR, series, stem + ".json"), encoding="utf-8"))
     parts, centres = [], []
     for band in b["bands"]:
-        s, c = straighten(z["depth"], band["points"], band["height"], b.get("scale", 2))
+        s, c = straighten(z["depth"], band["points"], band["height"] * margin, b.get("scale", 2))
         if s.size == 0:
             continue
         w = max(1, round(s.shape[1] * height_px / s.shape[0]))
