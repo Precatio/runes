@@ -47,7 +47,10 @@ export default function RunmodellPage() {
   const addPoint = (e: React.MouseEvent) => {
     if (drag || !cur) return;
     const p = at(e);
-    setBands(bs => bs.map((b, i) => (i === active ? { ...b, points: [...b.points, p] } : b)));
+    // Always a band to draw in: the first click on an empty stone starts one
+    setBands(bs => (bs.length ? bs.map((b, i) => (i === active ? { ...b, points: [...b.points, p] } : b))
+                              : [{ points: [p], height: Math.round(70 / cur.res_mm) }]));
+    if (!bands.length) setActive(0);
   };
   const move = (e: React.MouseEvent) => {
     if (!drag || !cur) return;
@@ -62,16 +65,22 @@ export default function RunmodellPage() {
   // Pulls the drawn lines onto the runes (the analysis engine moves each point across the band to the densest grooves)
   const snap = async () => {
     if (!cur) return;
+    const drawn = bands.map((b, i) => [b, i] as const).filter(([b]) => b.points.length >= 2);
+    if (!drawn.length) { setMsg("Rita först minst två punkter längs slingan, sedan kan linjen fästas."); return; }
     const r = await fetch(`${API_URL}/api/runmodell/snap/${cur.series}/${cur.stem}`, {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ bands: bands.filter(b => b.points.length >= 2) }) });
-    if (r.ok) { setBands((await r.json()).bands); setMsg("Linjerna fästa mot runorna – kontrollera och spara."); }
-    else setMsg("Kunde inte fästa linjerna.");
+      body: JSON.stringify({ bands: drawn.map(([b]) => b) }) });
+    if (!r.ok) { setMsg("Kunde inte fästa linjerna."); return; }
+    const snapped: Band[] = (await r.json()).bands;
+    // Only the drawn lines are replaced; bands with fewer than two points stay as they are
+    setBands(bs => bs.map((b, i) => { const k = drawn.findIndex(([, j]) => j === i); return k >= 0 ? snapped[k] : b; }));
+    setMsg("Linjerna fästa mot runorna – kontrollera och spara.");
   };
 
   const save = async (status: "utkast" | "granskad") => {
     if (!cur) return;
     const body = { bands: bands.filter(b => b.points.length >= 2), status, by: "Vitki", note: "" };
+    if (!body.bands.length && !window.confirm("Ingen slinga har minst två punkter. Spara stenen utan slingor?")) return;
     const r = await fetch(`${API_URL}/api/runmodell/band/${cur.series}/${cur.stem}`, {
       method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
     setMsg(r.ok ? `Sparat (${body.bands.length} slingor, ${status}).` : `Kunde inte spara: ${(await r.json()).detail ?? r.status}`);
