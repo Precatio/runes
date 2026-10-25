@@ -334,5 +334,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Sö 143",
- "file": "So 143_1_4 thin_closed holes.stl"
+ "file": "So 143_1_4 thin_closed holes.stl",
+ "quality": "tydlig"
 }

@@ -130,5 +130,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Sö 162",
- "file": "So 162_1_4_closed holes.stl"
+ "file": "So 162_1_4_closed holes.stl",
+ "quality": "medel"
 }

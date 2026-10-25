@@ -178,5 +178,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "M 7",
- "file": "M 7 Tuna kyrka thin03.stl"
+ "file": "M 7 Tuna kyrka thin03.stl",
+ "quality": "tydlig"
 }

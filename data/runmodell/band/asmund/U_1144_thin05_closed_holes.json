@@ -441,5 +441,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "U 1144",
- "file": "U 1144 thin05 closed holes.stl"
+ "file": "U 1144 thin05 closed holes.stl",
+ "quality": "svår"
 }

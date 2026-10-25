@@ -649,5 +649,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Gs 13",
- "file": "Gs 13_1_4 thin04 closed holes.stl"
+ "file": "Gs 13_1_4 thin04 closed holes.stl",
+ "quality": "medel"
 }

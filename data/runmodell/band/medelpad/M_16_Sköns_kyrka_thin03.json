@@ -152,5 +152,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "M 16",
- "file": "M 16 Sköns kyrka thin03.stl"
+ "file": "M 16 Sköns kyrka thin03.stl",
+ "quality": "medel"
 }

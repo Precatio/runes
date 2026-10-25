@@ -276,5 +276,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Hs 21",
- "file": "HS_21 thin01.stl"
+ "file": "HS_21 thin01.stl",
+ "quality": "medel"
 }

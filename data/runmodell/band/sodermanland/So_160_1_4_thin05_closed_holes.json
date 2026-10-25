@@ -245,5 +245,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Sö 160",
- "file": "So 160_1_4 thin05_closed holes.stl"
+ "file": "So 160_1_4 thin05_closed holes.stl",
+ "quality": "medel"
 }

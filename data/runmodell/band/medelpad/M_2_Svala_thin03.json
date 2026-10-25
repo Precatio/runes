@@ -57,5 +57,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "M 2",
- "file": "M 2 Svala thin03.stl"
+ "file": "M 2 Svala thin03.stl",
+ "quality": "tydlig"
 }

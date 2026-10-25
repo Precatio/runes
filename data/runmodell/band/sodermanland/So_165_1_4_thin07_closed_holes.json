@@ -467,5 +467,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Sö 165",
- "file": "So 165_1_4 thin07_closed holes.stl"
+ "file": "So 165_1_4 thin07_closed holes.stl",
+ "quality": "medel"
 }

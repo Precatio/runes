@@ -325,5 +325,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Sm 125",
- "file": "Sm 125_thin03.stl"
+ "file": "Sm 125_thin03.stl",
+ "quality": "tydlig"
 }

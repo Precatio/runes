@@ -285,5 +285,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Hs 12",
- "file": "HS_12 thin03.stl"
+ "file": "HS_12 thin03.stl",
+ "quality": "medel"
 }

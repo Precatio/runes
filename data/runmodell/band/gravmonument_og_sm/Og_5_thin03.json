@@ -139,5 +139,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Ög 5",
- "file": "Og 5_thin03.stl"
+ "file": "Og 5_thin03.stl",
+ "quality": "medel"
 }

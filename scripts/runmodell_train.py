@@ -194,6 +194,8 @@ def main(argv=None):
     ap.add_argument("--batch", type=int, default=8)
     ap.add_argument("--kvalitet", default=None, help="bara stenar med dessa betyg, t.ex. tydlig eller tydlig,medel")
     ap.add_argument("--ren", action="store_true", help="utan stavlösa, delade stenar och texter under 15 tecken")
+    ap.add_argument("--start", default=None, help="börja från en sparad modell (t.ex. den syntetiskt förtränade)")
+    ap.add_argument("--forst-tydlig", type=int, default=0, help="så många epoker först med bara tydliga stenar (läroplan)")
     ap.add_argument("--synt-steg", type=int, default=0, help="förträning: så många batchar syntetiska remsor först")
     ap.add_argument("--synt-batch", type=int, default=32)
     ap.add_argument("--arbetare", type=int, default=8, help="processer som tillverkar syntetiska remsor")
@@ -214,6 +216,10 @@ def main(argv=None):
     t0 = time.time()
     model = CRNN().to(dev)
     opt = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
+    if a.start:
+        model.load_state_dict(torch.load(a.start, map_location=dev)["state"])
+        opt = torch.optim.AdamW(model.parameters(), lr=3e-4, weight_decay=1e-4)
+        print(f"start från {a.start}", flush=True)
     if a.synt_steg:
         from src import runmodell_synt as sy
         texts = sy.corpus_texts({s["signum"] for s in test if s["signum"]})
@@ -246,7 +252,10 @@ def main(argv=None):
         opt = torch.optim.AdamW(model.parameters(), lr=3e-4, weight_decay=1e-4)  # gentler fine-tuning on the real stones
     for ep in range(1, a.epoker + 1):
         # Batches of strips of similar width (less padding), in a new order every epoch
-        order = sorted(train, key=lambda s: s["image"].shape[1] * rng.uniform(0.8, 1.2))
+        pool = [s for s in train if s.get("quality") == "tydlig"] if ep <= a.forst_tydlig else train
+        if ep == 1 and a.forst_tydlig:
+            print(f"läroplan: epok 1–{a.forst_tydlig} med {len(pool)} tydliga stenar, sedan alla {len(train)}", flush=True)
+        order = sorted(pool, key=lambda s: s["image"].shape[1] * rng.uniform(0.8, 1.2))
         batches = [order[i:i + a.batch] for i in range(0, len(order), a.batch)]
         random.shuffle(batches)
         tot = 0.0
@@ -272,8 +281,13 @@ def main(argv=None):
             preds = [(cer(p := greedy(model(tensor(s["image"], lr, False).to(dev)).cpu()), s["target"]), p) for lr in (False, True)]
         e, p = min(preds)
         print(f"{s['signum']}: läst  {p[:70]}\n{'':{len(str(s['signum']))}}  text  {s['target'][:70]}  (CER {e:.2f})")
-        rows.append({"signum": s["signum"], "series": s["series"], "stem": s["stem"], "cer": e, "read": p, "text": s["target"]})
+        rows.append({"signum": s["signum"], "series": s["series"], "stem": s["stem"], "cer": e, "read": p, "text": s["target"],
+                     "quality": s.get("quality")})
     import json
+    for q in ("tydlig", "medel", "svår"):
+        sub = [s for s in test if s.get("quality") == q]
+        if sub:
+            print(f"prövning, {q}: {len(sub)} stenar, median-CER {evaluate(model, sub, dev):.2f} (mot omflyttad {evaluate(model, sub, dev, True):.2f})")
     json.dump({"train": [s["stem"] for s in train], "test": rows,
                "cer_test": evaluate(model, test, dev) if test else None,
                "cer_shuffled": evaluate(model, test, dev, True) if test else None},

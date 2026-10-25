@@ -297,5 +297,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Ög 240",
- "file": "Og 240_241_thin03.stl"
+ "file": "Og 240_241_thin03.stl",
+ "quality": "tydlig"
 }

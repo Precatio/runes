@@ -246,5 +246,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "M 8",
- "file": "M 8 Sköle thin03.stl"
+ "file": "M 8 Sköle thin03.stl",
+ "quality": "tydlig"
 }

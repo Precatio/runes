@@ -110,5 +110,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Hs 16",
- "file": "HS_16 thin03.stl"
+ "file": "HS_16 thin03.stl",
+ "quality": "medel"
 }

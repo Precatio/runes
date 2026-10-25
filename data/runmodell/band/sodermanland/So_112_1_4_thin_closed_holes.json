@@ -319,5 +319,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Sö 112",
- "file": "So 112_1_4 thin_closed holes.stl"
+ "file": "So 112_1_4 thin_closed holes.stl",
+ "quality": "medel"
 }

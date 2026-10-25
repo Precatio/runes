@@ -446,5 +446,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "M 5",
- "file": "M 5 Attmar thin02.stl"
+ "file": "M 5 Attmar thin02.stl",
+ "quality": "tydlig"
 }

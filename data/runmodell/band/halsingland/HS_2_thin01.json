@@ -513,5 +513,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Hs 2",
- "file": "HS_2 thin01.stl"
+ "file": "HS_2 thin01.stl",
+ "quality": "tydlig"
 }

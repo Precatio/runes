@@ -182,5 +182,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Hs 15",
- "file": "HS_15_0_40 thin03.stl"
+ "file": "HS_15_0_40 thin03.stl",
+ "quality": "svår"
 }

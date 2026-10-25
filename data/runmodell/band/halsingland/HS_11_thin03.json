@@ -359,5 +359,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Hs 11",
- "file": "HS_11 thin03.stl"
+ "file": "HS_11 thin03.stl",
+ "quality": "tydlig"
 }

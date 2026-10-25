@@ -631,5 +631,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Hs 6",
- "file": "HS_6 thin03.stl"
+ "file": "HS_6 thin03.stl",
+ "quality": "tydlig"
 }

@@ -122,5 +122,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Vg 53",
- "file": "Vg 53 Ljung61 thin03.stl"
+ "file": "Vg 53 Ljung61 thin03.stl",
+ "quality": "medel"
 }

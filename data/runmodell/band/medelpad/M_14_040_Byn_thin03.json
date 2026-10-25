@@ -250,5 +250,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "M 14",
- "file": "M 14_040 Byn thin03.stl"
+ "file": "M 14_040 Byn thin03.stl",
+ "quality": "svår"
 }

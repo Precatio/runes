@@ -275,5 +275,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "M 4",
- "file": "M 4 Attmarby thin02.stl"
+ "file": "M 4 Attmarby thin02.stl",
+ "quality": "medel"
 }

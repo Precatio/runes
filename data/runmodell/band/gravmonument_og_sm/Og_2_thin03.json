@@ -110,5 +110,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Ög 2",
- "file": "Og 2_thin03.stl"
+ "file": "Og 2_thin03.stl",
+ "quality": "svår"
 }

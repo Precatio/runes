@@ -181,5 +181,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "M 6",
- "file": "M 6 Målsta thin02.stl"
+ "file": "M 6 Målsta thin02.stl",
+ "quality": "medel"
 }

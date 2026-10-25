@@ -357,5 +357,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "M 3",
- "file": "M 3 Berga thin02.stl"
+ "file": "M 3 Berga thin02.stl",
+ "quality": "tydlig"
 }

@@ -85,5 +85,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Ög Hov12;21",
- "file": "Og Hov12_21_thin03.stl"
+ "file": "Og Hov12_21_thin03.stl",
+ "quality": "medel"
 }

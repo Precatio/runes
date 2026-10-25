@@ -302,5 +302,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Sö 184",
- "file": "So 184_thin03_closed holes.stl"
+ "file": "So 184_thin03_closed holes.stl",
+ "quality": "medel"
 }

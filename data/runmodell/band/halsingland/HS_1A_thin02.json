@@ -33,5 +33,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Hs 1",
- "file": "HS_1A_thin02.stl"
+ "file": "HS_1A_thin02.stl",
+ "quality": "svår"
 }

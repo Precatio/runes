@@ -49,5 +49,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "M 13",
- "file": "M 13 Oxsta thin03.stl"
+ "file": "M 13 Oxsta thin03.stl",
+ "quality": "svår"
 }

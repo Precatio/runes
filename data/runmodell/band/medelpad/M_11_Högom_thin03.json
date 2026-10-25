@@ -319,5 +319,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "M 11",
- "file": "M 11 Högom thin03.stl"
+ "file": "M 11 Högom thin03.stl",
+ "quality": "tydlig"
 }

@@ -25,5 +25,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Hs 3",
- "file": "HS_3 thin01.stl"
+ "file": "HS_3 thin01.stl",
+ "quality": "medel"
 }

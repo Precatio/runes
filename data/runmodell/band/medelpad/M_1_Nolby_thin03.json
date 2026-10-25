@@ -413,5 +413,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "M 1",
- "file": "M 1 Nolby thin03.stl"
+ "file": "M 1 Nolby thin03.stl",
+ "quality": "medel"
 }

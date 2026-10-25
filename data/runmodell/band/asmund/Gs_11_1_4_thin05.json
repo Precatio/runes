@@ -763,5 +763,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Gs 11",
- "file": "Gs 11_1_4 thin05.stl"
+ "file": "Gs 11_1_4 thin05.stl",
+ "quality": "tydlig"
 }

@@ -98,5 +98,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Ög 6",
- "file": "Og 6_thin03.stl"
+ "file": "Og 6_thin03.stl",
+ "quality": "medel"
 }

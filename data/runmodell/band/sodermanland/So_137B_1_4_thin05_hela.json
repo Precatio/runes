@@ -491,5 +491,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Sö 137B",
- "file": "So 137B_1_4 thin05 hela.stl"
+ "file": "So 137B_1_4 thin05 hela.stl",
+ "quality": "tydlig"
 }

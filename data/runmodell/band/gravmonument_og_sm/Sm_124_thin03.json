@@ -314,5 +314,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Sm 124",
- "file": "Sm 124_thin03.stl"
+ "file": "Sm 124_thin03.stl",
+ "quality": "medel"
 }

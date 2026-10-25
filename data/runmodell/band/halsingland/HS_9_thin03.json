@@ -117,5 +117,6 @@
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Hs 9",
- "file": "HS_9 thin03.stl"
+ "file": "HS_9 thin03.stl",
+ "quality": "medel"
 }
