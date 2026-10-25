@@ -29,6 +29,10 @@ DIVIDERS = set("·×:'+⁝¤|")
 def text_target(transliteration: str | None) -> str:
     """Rundata's transliteration as the model's characters (see the module text)."""
     t = transliteration or ""
+    # Rundata's §P, §Q, … are alternative readings of the same runes (another order of the text's parts): only the
+    # first is kept. §A, §B, … are the stone's sides and all belong to the text.
+    t = re.sub(r"§[Q-Z]\b.*?(?=§[A-O]\b|$)", " ", t, flags=re.S)
+    t = re.sub(r"§[A-Z]\b", " ", t)
     t = re.sub(r"\[[^\]]*\]", " ", t)  # read from older sources or uncertain
     t = re.sub(r"\.\.\.|…", " ", t)
     out = []
