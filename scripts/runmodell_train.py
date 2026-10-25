@@ -81,6 +81,50 @@ def tensor(img: np.ndarray, flip_lr=False, flip_ud=False) -> torch.Tensor:
     return torch.from_numpy(np.ascontiguousarray(x / 2.5, dtype=np.float32))[None, None]
 
 
+def augment(img: np.ndarray, rng: random.Random) -> np.ndarray:
+    """Training variation, so that the model learns the runes rather than the 28 strips: the strip stretched or
+    squeezed along the band (other carvers, other spacing), the depth scaled (other weathering, other scanner) and a
+    little noise."""
+    from PIL import Image
+    w = max(8, round(img.shape[1] * rng.uniform(0.8, 1.25)))
+    x = np.asarray(Image.fromarray(img.astype(np.float32)).resize((w, img.shape[0]), Image.BILINEAR))
+    x = x * rng.uniform(0.75, 1.25) + np.random.default_rng(rng.randrange(1 << 30)).normal(0, 0.05, x.shape)
+    return np.clip(x, 0, 3.0).astype(np.float32)
+
+
+def split(data: list[dict], share: float, seed: int) -> tuple[list[dict], list[dict]]:
+    """A share of each series' stones held out for testing (the same stones every run with the same seed)."""
+    rng = random.Random(seed)
+    train, test = [], []
+    for series in sorted({s["series"] for s in data}):
+        g = sorted((s for s in data if s["series"] == series), key=lambda s: s["stem"])
+        rng.shuffle(g)
+        k = round(len(g) * share)
+        test += g[:k]
+        train += g[k:]
+    return train, test
+
+
+def batch_loss(model, imgs: list[np.ndarray], targets: list[str], dev, flips_ud: list[bool]) -> torch.Tensor:
+    """Mean CTC loss over a batch of strips padded to the same width; per strip the smaller of read as drawn and
+    read reversed (the reading direction that fits the text)."""
+    ctc = nn.CTCLoss(blank=0, reduction="none", zero_infinity=True)
+    W = max(i.shape[1] for i in imgs)
+    ys = [torch.tensor(rm.encode(t), dtype=torch.long) for t in targets]
+    y = torch.cat(ys)
+    ylen = torch.tensor([len(t) for t in ys])
+    per_dir = []
+    for lr in (False, True):
+        x = torch.zeros(len(imgs), 1, imgs[0].shape[0], W)
+        for k, (im, ud) in enumerate(zip(imgs, flips_ud)):
+            x[k, 0, :, :im.shape[1]] = tensor(im, lr, ud)[0, 0]
+        lp = model(x.to(dev)).cpu()  # (T, B, C)
+        T = lp.shape[0]
+        xlen = torch.tensor([max(1, min(T, im.shape[1] // 4)) for im in imgs])
+        per_dir.append(ctc(lp, y, xlen, ylen) / ylen.clamp(min=1))
+    return torch.minimum(*per_dir).mean()
+
+
 def loss_both(model, ctc, img, target, dev, flip_ud):
     """CTC loss for the strip and for it reversed; the smaller one (the reading direction that fits the text)."""
     y = torch.tensor(rm.encode(target), dtype=torch.long)
@@ -115,40 +159,59 @@ def main(argv=None):
     ap.add_argument("--status", default=None, help="bara stenar med denna status (granskad), annars alla ritade")
     ap.add_argument("--holdout", default=None, help="serie som hålls utanför träningen och prövas")
     ap.add_argument("--epoker", type=int, default=300)
+    ap.add_argument("--test-andel", type=float, default=0.0, help="andel av varje series stenar som hålls utanför")
+    ap.add_argument("--frö", type=int, default=1)
+    ap.add_argument("--batch", type=int, default=8)
     ap.add_argument("--ut", default="/Volumes/2TB/cache/runmodell/modell.pt")
     a = ap.parse_args(argv)
     torch.manual_seed(1); random.seed(1); np.random.seed(1)
     dev = "mps" if torch.backends.mps.is_available() else "cpu"
     data = stones(a.status)
-    train = [s for s in data if s["series"] != a.holdout]
-    test = [s for s in data if s["series"] == a.holdout] if a.holdout else []
+    if a.test_andel:
+        train, test = split(data, a.test_andel, a.frö)
+    else:
+        train = [s for s in data if s["series"] != a.holdout]
+        test = [s for s in data if s["series"] == a.holdout] if a.holdout else []
+    rng = random.Random(a.frö)
+    import time
+    t0 = time.time()
     print(f"{len(train)} stenar i träningen ({sum(len(s['target']) for s in train)} tecken), {len(test)} prövas; {dev}", flush=True)
     model = CRNN().to(dev)
     opt = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
-    ctc = nn.CTCLoss(blank=0, zero_infinity=True)
     for ep in range(1, a.epoker + 1):
-        random.shuffle(train)
+        # Batches of strips of similar width (less padding), in a new order every epoch
+        order = sorted(train, key=lambda s: s["image"].shape[1] * rng.uniform(0.8, 1.2))
+        batches = [order[i:i + a.batch] for i in range(0, len(order), a.batch)]
+        random.shuffle(batches)
         tot = 0.0
-        for s in train:
-            loss, _ = loss_both(model, ctc, s["image"], s["target"], dev, random.random() < 0.5)
+        for bt in batches:
+            loss = batch_loss(model, [augment(s["image"], rng) for s in bt], [s["target"] for s in bt], dev,
+                              [random.random() < 0.5 for _ in bt])
             opt.zero_grad()
             loss.backward()
             nn.utils.clip_grad_norm_(model.parameters(), 5.0)
             opt.step()
-            tot += loss.item()
+            tot += loss.item() * len(bt)
         if ep % max(1, a.epoker // 10) == 0 or ep == a.epoker:
-            msg = f"epok {ep}: förlust {tot / max(1, len(train)):.3f}, CER träning {evaluate(model, train, dev):.2f}"
+            msg = f"epok {ep} ({(time.time() - t0) / 60:.0f} min): förlust {tot / max(1, len(train)):.3f}, CER träning {evaluate(model, train, dev):.2f}"
             if test:
                 msg += f", CER prövning {evaluate(model, test, dev):.2f} (mot omflyttad text {evaluate(model, test, dev, True):.2f})"
             print(msg, flush=True)
     os.makedirs(os.path.dirname(a.ut), exist_ok=True)
     torch.save({"state": model.state_dict(), "alphabet": rm.ALPHABET}, a.ut)
-    for s in (test or train)[:3]:
+    rows = []
+    for s in (test or train[:3]):
         with torch.no_grad():
             model.eval()
             preds = [(cer(p := greedy(model(tensor(s["image"], lr, False).to(dev)).cpu()), s["target"]), p) for lr in (False, True)]
         e, p = min(preds)
         print(f"{s['signum']}: läst  {p[:70]}\n{'':{len(str(s['signum']))}}  text  {s['target'][:70]}  (CER {e:.2f})")
+        rows.append({"signum": s["signum"], "series": s["series"], "stem": s["stem"], "cer": e, "read": p, "text": s["target"]})
+    import json
+    json.dump({"train": [s["stem"] for s in train], "test": rows,
+               "cer_test": evaluate(model, test, dev) if test else None,
+               "cer_shuffled": evaluate(model, test, dev, True) if test else None},
+              open(os.path.splitext(a.ut)[0] + "_resultat.json", "w"), ensure_ascii=False, indent=1)
 
 
 if __name__ == "__main__":

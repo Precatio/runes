@@ -1,0 +1,37 @@
+{
+ "bands": [
+  {
+   "points": [
+    [
+     52.7,
+     45.3
+    ],
+    [
+     65.4,
+     65.7
+    ],
+    [
+     87.3,
+     94.5
+    ],
+    [
+     107.3,
+     108.4
+    ],
+    [
+     141.9,
+     114.4
+    ]
+   ],
+   "height": 58.0
+  }
+ ],
+ "status": "granskad",
+ "rotation": 0,
+ "by": "Vitki",
+ "note": "",
+ "scale": 2,
+ "res_mm": 1.2,
+ "signum": "Hs 1",
+ "file": "HS_1A_thin02.stl"
+}

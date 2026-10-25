@@ -510,9 +510,10 @@
    "height": 115.0
   }
  ],
- "status": "utkast",
- "by": "Claude (utkast, fäst)",
- "note": "Utkast fäst mot runorna; läsriktningen ej säker.",
+ "status": "granskad",
+ "rotation": 0,
+ "by": "Vitki",
+ "note": "",
  "scale": 2,
  "res_mm": 1.2,
  "signum": "Vg 50",
