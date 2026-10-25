@@ -8,7 +8,7 @@ import { API_URL } from "@/lib/api";
 
 type Stone = { series: string; stem: string; file: string; signum: string | null; object: string | null;
   rune_types: string | null; transliteration: string | null; width: number; height: number; res_mm: number;
-  bands: number; status: string | null };
+  bands: number; status: string | null; quality: string };
 type Band = { points: [number, number][]; height: number };
 
 const COLORS = ["#b7410e", "#1d4ed8", "#15803d", "#7e22ce", "#b45309", "#0e7490"];
@@ -33,6 +33,7 @@ export default function RunmodellPage() {
   const [drag, setDrag] = useState<[number, number] | null>(null);
   const [msg, setMsg] = useState("");
   const [rot, setRot] = useState(0); // degrees clockwise the stone is shown turned; points stay in image coordinates
+  const [quality, setQuality] = useState("");
   const svg = useRef<SVGSVGElement>(null);
 
   const load = useCallback(() => fetch(`${API_URL}/api/runmodell/stones`).then(r => r.json()).then(d => d.stones as Stone[]), []);
@@ -48,6 +49,7 @@ export default function RunmodellPage() {
     const b = await r.json();
     setBands(b.bands?.length ? b.bands : [{ points: [], height: Math.round(70 / s.res_mm) }]);
     setRot(b.rotation ?? 0);
+    setQuality(b.quality ?? "");
     setActive(0);
   };
 
@@ -97,10 +99,19 @@ export default function RunmodellPage() {
     setMsg("Linjerna fästa mot runorna – kontrollera och spara.");
   };
 
+  // How readable the runes are; saved on its own, without touching the bands
+  const rate = async (q: string) => {
+    if (!cur) return;
+    const r = await fetch(`${API_URL}/api/runmodell/quality/${cur.series}/${cur.stem}`, {
+      method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ quality: q }) });
+    if (r.ok) { setQuality(q); setStones(await load()); setMsg(q ? `Betyg: ${q}.` : "Betyget borttaget."); }
+    else setMsg(`Kunde inte spara betyget: ${(await r.json()).detail ?? r.status}`);
+  };
+
   const save = async (status: "utkast" | "granskad" | "överhoppad", note = "") => {
     if (!cur) return;
     const body = { bands: status === "överhoppad" ? [] : bands.filter(b => b.points.length >= 2), status, by: "Vitki", note,
-                   rotation: rot };
+                   rotation: rot, quality };
     if (status !== "överhoppad" && !body.bands.length && !window.confirm("Ingen slinga har minst två punkter. Spara stenen utan slingor?")) return;
     const r = await fetch(`${API_URL}/api/runmodell/band/${cur.series}/${cur.stem}`, {
       method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
@@ -110,14 +121,17 @@ export default function RunmodellPage() {
   };
 
   const shown = useMemo(() => stones.filter(s =>
-    !filter || `${s.signum ?? ""} ${s.file} ${s.series}`.toLowerCase().includes(filter.toLowerCase())), [stones, filter]);
+    filter === "betyg?" ? s.status === "granskad" && !s.quality
+      : !filter || `${s.signum ?? ""} ${s.file} ${s.series}`.toLowerCase().includes(filter.toLowerCase())), [stones, filter]);
+  const unrated = stones.filter(s => s.status === "granskad" && !s.quality).length;
   const done = stones.filter(s => s.status === "granskad").length;
 
   return (
     <div className="flex h-full w-full">
       <aside className="w-72 shrink-0 border-r border-slate-200 overflow-y-auto p-3 text-sm">
         <h1 className="text-lg font-bold">Runmodell</h1>
-        <p className="text-xs text-slate-500 mb-2">{stones.length} djupbilder · {done} granskade</p>
+        <p className="text-xs text-slate-500 mb-2">{stones.length} djupbilder · {done} granskade ·{" "}
+          <button type="button" className="underline" onClick={() => setFilter(f => (f === "betyg?" ? "" : "betyg?"))}>{unrated} utan läsbarhetsbetyg</button></p>
         <input value={filter} onChange={e => setFilter(e.target.value)} placeholder="Sök signum eller fil"
           className="w-full mb-2 rounded-lg border border-slate-300 px-2 py-1" />
         <ul className="space-y-0.5">
@@ -128,6 +142,7 @@ export default function RunmodellPage() {
                 <span className="font-semibold">{s.signum ?? "–"}</span>{" "}
                 <span className="text-slate-500 text-xs">{s.file.slice(0, 26)}</span>
                 {s.status && <span className={`ml-1 text-[10px] font-bold ${s.status === "granskad" ? "text-emerald-700" : s.status === "överhoppad" ? "text-slate-400" : "text-amber-700"}`}>{s.status}</span>}
+                {s.quality && <span className="ml-1 text-[10px] font-bold text-sky-700">{s.quality}</span>}
               </button>
             </li>
           ))}
@@ -172,6 +187,12 @@ export default function RunmodellPage() {
               <button type="button" className="px-3 py-1 rounded border border-slate-400 text-slate-600"
                 onClick={() => { const why = window.prompt("Varför hoppas stenen över? (t.ex. runorna syns inte, stavlösa, för skadad)", "runorna syns inte på djupbilden"); if (why !== null) void save("överhoppad", why); }}>
                 Hoppa över</button>
+              <span className="ml-2 text-slate-500">Läsbarhet:</span>
+              {(["tydlig", "medel", "svår"] as const).map(q => (
+                <button key={q} type="button" onClick={() => void rate(quality === q ? "" : q)}
+                  title="Hur tydligt runorna syns på djupbilden; modellen tränas först på de tydliga"
+                  className={`px-2 py-1 rounded border ${quality === q ? "bg-slate-800 text-white border-slate-800" : "border-slate-300"}`}>{q}</button>
+              ))}
             </div>
             <div className="max-w-full" style={{ width: `min(100%, ${viewW}px)` }}>
               <svg ref={svg} viewBox={`0 0 ${viewW} ${viewH}`} className="block w-full h-auto cursor-crosshair select-none"

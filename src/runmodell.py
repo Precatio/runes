@@ -109,4 +109,5 @@ def stone_strip(series: str, stem: str, height_px: int = 64, gap_px: int = 24) -
         return None
     return {"image": np.concatenate(parts[:-1], axis=1), "centre": np.concatenate(centres[:-1], axis=0),
             "target": text_target(meta.get("transliteration")), "signum": meta.get("signum"), "status": b.get("status"),
+            "quality": b.get("quality", ""), "rune_types": meta.get("rune_types") or "",
             "series": series, "stem": stem}

@@ -62,7 +62,10 @@ def cer(pred: str, ref: str) -> float:
     return d[-1] / max(1, len(ref))
 
 
-def stones(status: str | None) -> list[dict]:
+def stones(status: str | None, quality: set[str] | None = None, clean: bool = False) -> list[dict]:
+    """The checked stones; with `quality` only those rated so (tydlig, medel, svår); with `clean` without fully staveless
+    inscriptions, stones split over several files (each file would get the whole stone's text) and texts under 15
+    characters."""
     out = []
     if not os.path.isdir(rm.BAND_DIR):
         return out
@@ -72,6 +75,13 @@ def stones(status: str | None) -> list[dict]:
                 s = rm.stone_strip(series, f[:-5])
                 if s and s["target"] and (status is None or s["status"] == status):
                     out.append(s)
+    if quality:
+        out = [s for s in out if s.get("quality") in quality]
+    if clean:
+        import collections
+        files = collections.Counter(s["signum"] for s in out if s["signum"])
+        out = [s for s in out if not ("stavlösa" in s["rune_types"] and "långkvist" not in s["rune_types"])
+               and files.get(s["signum"], 1) == 1 and len(s["target"]) >= 15]
     return out
 
 
@@ -182,6 +192,8 @@ def main(argv=None):
     ap.add_argument("--test-andel", type=float, default=0.0, help="andel av varje series stenar som hålls utanför")
     ap.add_argument("--frö", type=int, default=1)
     ap.add_argument("--batch", type=int, default=8)
+    ap.add_argument("--kvalitet", default=None, help="bara stenar med dessa betyg, t.ex. tydlig eller tydlig,medel")
+    ap.add_argument("--ren", action="store_true", help="utan stavlösa, delade stenar och texter under 15 tecken")
     ap.add_argument("--synt-steg", type=int, default=0, help="förträning: så många batchar syntetiska remsor först")
     ap.add_argument("--synt-batch", type=int, default=32)
     ap.add_argument("--arbetare", type=int, default=8, help="processer som tillverkar syntetiska remsor")
@@ -189,7 +201,7 @@ def main(argv=None):
     a = ap.parse_args(argv)
     torch.manual_seed(1); random.seed(1); np.random.seed(1)
     dev = "mps" if torch.backends.mps.is_available() else "cpu"
-    data = stones(a.status)
+    data = stones(a.status, set(a.kvalitet.split(",")) if a.kvalitet else None, a.ren)
     if a.test_andel:
         train, test = split(data, a.test_andel, a.frö)
     else:

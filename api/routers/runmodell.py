@@ -53,7 +53,8 @@ def stones():
         out.append({"series": series, "stem": stem, "file": m["file"], "signum": m.get("signum"), "object": m.get("object"),
                     "rune_types": m.get("rune_types"), "transliteration": m.get("transliteration"),
                     "width": m["shape"][1] // SCALE, "height": m["shape"][0] // SCALE, "res_mm": m["res_mm"] * SCALE,
-                    "bands": len((band or {}).get("bands", [])), "status": (band or {}).get("status")})
+                    "bands": len((band or {}).get("bands", [])), "status": (band or {}).get("status"),
+                    "quality": (band or {}).get("quality", "")})
     return {"stones": out}
 
 
@@ -83,6 +84,7 @@ class Bands(BaseModel):
     status: str = Field("utkast", pattern="^(utkast|granskad|överhoppad)$")  # granskad = checked by a person;
     # överhoppad = left out (runes not readable on the depth image, staveless, too damaged); the note says why
     rotation: int = Field(0, ge=0, le=270, multiple_of=90)  # how the stone is turned on the page to stand upright
+    quality: str = Field("", pattern="^(|tydlig|medel|svår)$")  # how readable the runes are on the depth image
     by: str = Field("", max_length=80)
     note: str = Field("", max_length=1000)
 
@@ -92,6 +94,25 @@ def get_band(series: str, stem: str):
     _known(series, stem)
     p = _band_path(series, stem)
     return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else {"bands": [], "status": None, "rotation": 0}
+
+
+class Quality(BaseModel):
+    quality: str = Field(..., pattern="^(|tydlig|medel|svår)$")
+
+
+@router.put("/quality/{series}/{stem}")
+def put_quality(series: str, stem: str, body: Quality):
+    """Hur läsbara runorna är på djupbilden (tydlig, medel, svår); ändrar inget annat i stenens slingor."""
+    _known(series, stem)
+    p = _band_path(series, stem)
+    if not os.path.exists(p):
+        raise HTTPException(status_code=400, detail="Spara stenens slingor först.")
+    data = json.load(open(p, encoding="utf-8"))
+    data["quality"] = body.quality
+    tmp = p + ".tmp"
+    json.dump(data, open(tmp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    os.replace(tmp, p)
+    return {"ok": True, "quality": body.quality}
 
 
 @router.put("/band/{series}/{stem}")
@@ -106,6 +127,8 @@ def put_band(series: str, stem: str, body: Bands):
     os.makedirs(os.path.dirname(p), exist_ok=True)
     data = {**body.model_dump(), "scale": SCALE, "res_mm": meta["res_mm"] * SCALE, "signum": meta.get("signum"),
             "file": meta["file"]}
+    if not body.quality and os.path.exists(p):  # a rating set earlier stays when only the bands are saved
+        data["quality"] = json.load(open(p, encoding="utf-8")).get("quality", "")
     tmp = p + ".tmp"
     json.dump(data, open(tmp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     os.replace(tmp, p)
