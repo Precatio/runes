@@ -1,0 +1,1400 @@
+{
+ "bortfall": [
+  {
+   "objekt": "Hs 16",
+   "typ": "runsten",
+   "bort": "färre än 10 snitt i runor eller ornamentik"
+  },
+  {
+   "objekt": "Hs 1",
+   "typ": "runsten",
+   "bort": "färre än 10 snitt i runor eller ornamentik"
+  },
+  {
+   "objekt": "M 3",
+   "typ": "runsten",
+   "bort": "färre än 10 snitt i runor eller ornamentik"
+  },
+  {
+   "objekt": "Sö 149",
+   "typ": "runsten",
+   "bort": "färre än 10 snitt i runor eller ornamentik"
+  }
+ ],
+ "huvud": {
+  "apex_vinkel_deg": {
+   "skillnad": -1.7408996561098533,
+   "p": 0.47365263473652636,
+   "ci90": [
+    -5.906250052428771,
+    0.964692794129458
+   ],
+   "median_grav": -0.9295156865425369,
+   "median_runsten": 0.8113839695673164,
+   "n": [
+    12,
+    42
+   ]
+  },
+  "spårdjup_mm": {
+   "skillnad": -0.25369000237296657,
+   "p": 0.1260873912608739,
+   "ci90": [
+    -0.5384671398781777,
+    0.23681725473796533
+   ],
+   "median_grav": -0.3024592287057264,
+   "median_runsten": -0.04876922633275982,
+   "n": [
+    12,
+    42
+   ],
+   "q": 0.18913108689131086
+  },
+  "spårbredd_mm": {
+   "skillnad": -0.18902386571625396,
+   "p": 0.7853214678532147,
+   "ci90": [
+    -2.054706995306674,
+    0.6116700737947437
+   ],
+   "median_grav": -0.8281149135818744,
+   "median_runsten": -0.6390910478656204,
+   "n": [
+    12,
+    42
+   ],
+   "q": 0.7853214678532147
+  },
+  "bottenradie_mm": {
+   "skillnad": -0.29659797319478765,
+   "p": 0.051794820517948204,
+   "ci90": [
+    -0.4974584105611415,
+    0.06897396170620698
+   ],
+   "median_grav": -0.22949240259968184,
+   "median_runsten": 0.0671055705951058,
+   "n": [
+    12,
+    42
+   ],
+   "q": 0.1553844615538446
+  },
+  "utfall": "obestämt"
+ },
+ "objekt": [
+  {
+   "objekt": "Gs 11",
+   "typ": "runsten",
+   "bergart": "sandsten",
+   "serie": "asmund",
+   "n_runa": 2992,
+   "n_orn": 2375,
+   "apex_vinkel_deg": -3.325954678973247,
+   "irr_apex_vinkel_deg": -6.939731209681426,
+   "spårdjup_mm": 0.1505403730200423,
+   "irr_spårdjup_mm": 0.39715287148514355,
+   "spårbredd_mm": -0.33248642940420936,
+   "irr_spårbredd_mm": -0.1361741172419979,
+   "bottenradie_mm": -0.15922764928249533,
+   "irr_bottenradie_mm": -0.19344757427529702
+  },
+  {
+   "objekt": "Gs 13",
+   "typ": "runsten",
+   "bergart": "sandsten",
+   "serie": "asmund",
+   "n_runa": 1991,
+   "n_orn": 931,
+   "apex_vinkel_deg": -4.377543442262521,
+   "irr_apex_vinkel_deg": -6.097979782252793,
+   "spårdjup_mm": 0.06350377030581655,
+   "irr_spårdjup_mm": 0.2022009632305759,
+   "spårbredd_mm": -0.9078029123556135,
+   "irr_spårbredd_mm": -1.0701321094230423,
+   "bottenradie_mm": -0.4477242911852213,
+   "irr_bottenradie_mm": -0.7741678532493452
+  },
+  {
+   "objekt": "U 1144",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "asmund",
+   "n_runa": 402,
+   "n_orn": 469,
+   "apex_vinkel_deg": 0.6653667317040117,
+   "irr_apex_vinkel_deg": -2.186424099509992,
+   "spårdjup_mm": -0.24999424020639172,
+   "irr_spårdjup_mm": 0.25641804264888646,
+   "spårbredd_mm": -1.02139286080428,
+   "irr_spårbredd_mm": 0.5041622013568521,
+   "bottenradie_mm": 0.19998837308768636,
+   "irr_bottenradie_mm": 0.12123175448194701
+  },
+  {
+   "objekt": "Ög 240",
+   "typ": "gravmonument",
+   "bergart": "kalksten",
+   "serie": "gravmonument_og_sm",
+   "n_runa": 733,
+   "n_orn": 1226,
+   "apex_vinkel_deg": -1.1926127509265143,
+   "irr_apex_vinkel_deg": -0.33873301127080424,
+   "spårdjup_mm": 0.016126311413066308,
+   "irr_spårdjup_mm": -0.04092303292887545,
+   "spårbredd_mm": -0.3505039723382275,
+   "irr_spårbredd_mm": -0.27042749298385615,
+   "bottenradie_mm": -0.45393499803746495,
+   "irr_bottenradie_mm": -0.2665385066755013
+  },
+  {
+   "objekt": "Ög 2",
+   "typ": "gravmonument",
+   "bergart": "kalksten",
+   "serie": "gravmonument_og_sm",
+   "n_runa": 154,
+   "n_orn": 449,
+   "apex_vinkel_deg": 3.9260576683610964,
+   "irr_apex_vinkel_deg": 5.822265472331182,
+   "spårdjup_mm": -0.5621978677549464,
+   "irr_spårdjup_mm": 0.16549339317182588,
+   "spårbredd_mm": -1.3057258548255213,
+   "irr_spårbredd_mm": 1.0240274083899656,
+   "bottenradie_mm": -0.32240277809972406,
+   "irr_bottenradie_mm": -0.02525712646185796
+  },
+  {
+   "objekt": "Ög 5",
+   "typ": "gravmonument",
+   "bergart": "kalksten",
+   "serie": "gravmonument_og_sm",
+   "n_runa": 123,
+   "n_orn": 150,
+   "apex_vinkel_deg": -2.4420173842178627,
+   "irr_apex_vinkel_deg": -3.537356753076182,
+   "spårdjup_mm": -0.511214878316272,
+   "irr_spårdjup_mm": 0.37283778860919314,
+   "spårbredd_mm": -2.8420743934546984,
+   "irr_spårbredd_mm": -0.744834594242274,
+   "bottenradie_mm": -0.14396729991542934,
+   "irr_bottenradie_mm": -0.30863621985255874
+  },
+  {
+   "objekt": "Ög 6",
+   "typ": "gravmonument",
+   "bergart": "kalksten",
+   "serie": "gravmonument_og_sm",
+   "n_runa": 25,
+   "n_orn": 17,
+   "apex_vinkel_deg": -0.6664186221585595,
+   "spårdjup_mm": -1.0045904879803635,
+   "spårbredd_mm": -5.074906691563353,
+   "bottenradie_mm": -2.368817901400426
+  },
+  {
+   "objekt": "Ög Hov12;21",
+   "typ": "gravmonument",
+   "bergart": "kalksten",
+   "serie": "gravmonument_og_sm",
+   "n_runa": 145,
+   "n_orn": 285,
+   "apex_vinkel_deg": 6.459159676638421,
+   "irr_apex_vinkel_deg": 5.255838023943511,
+   "spårdjup_mm": -1.1317039384953018,
+   "irr_spårdjup_mm": -2.121125078616825,
+   "spårbredd_mm": -2.6465537895340194,
+   "irr_spårbredd_mm": -4.3154583613000685,
+   "bottenradie_mm": -0.3268462177438436,
+   "irr_bottenradie_mm": -0.6041494693303315
+  },
+  {
+   "objekt": "Ög Hov14;22",
+   "typ": "gravmonument",
+   "bergart": "kalksten",
+   "serie": "gravmonument_og_sm",
+   "n_runa": 287,
+   "n_orn": 98,
+   "apex_vinkel_deg": -4.404927821718275,
+   "irr_apex_vinkel_deg": -8.953048850572117,
+   "spårdjup_mm": -0.4878294147840485,
+   "irr_spårdjup_mm": 0.40164956167622234,
+   "spårbredd_mm": -2.8782223549062884,
+   "irr_spårbredd_mm": -0.9653607157958337,
+   "bottenradie_mm": -0.31501750528393435,
+   "irr_bottenradie_mm": -0.864486782528326
+  },
+  {
+   "objekt": "Ög Hov15;22",
+   "typ": "gravmonument",
+   "bergart": "kalksten",
+   "serie": "gravmonument_og_sm",
+   "n_runa": 191,
+   "n_orn": 243,
+   "apex_vinkel_deg": -4.088078222673545,
+   "irr_apex_vinkel_deg": -5.464490384263996,
+   "spårdjup_mm": 0.18341114606660902,
+   "irr_spårdjup_mm": -0.043858351496186554,
+   "spårbredd_mm": -0.28370437838176343,
+   "irr_spårbredd_mm": -3.10186564409703,
+   "bottenradie_mm": -0.08001991125150965,
+   "irr_bottenradie_mm": -0.2915802136621264
+  },
+  {
+   "objekt": "Sm 124",
+   "typ": "gravmonument",
+   "bergart": "kalksten",
+   "serie": "gravmonument_og_sm",
+   "n_runa": 437,
+   "n_orn": 397,
+   "apex_vinkel_deg": -8.657119557721714,
+   "irr_apex_vinkel_deg": -7.353047743813335,
+   "spårdjup_mm": 0.47974442555447316,
+   "irr_spårdjup_mm": 0.7900317695079822,
+   "spårbredd_mm": -0.06766969825636515,
+   "irr_spårbredd_mm": 0.8201689184062815,
+   "bottenradie_mm": -0.5029491860653341,
+   "irr_bottenradie_mm": -0.44083291790956003
+  },
+  {
+   "objekt": "Sm 125",
+   "typ": "gravmonument",
+   "bergart": "kalksten",
+   "serie": "gravmonument_og_sm",
+   "n_runa": 394,
+   "n_orn": 295,
+   "apex_vinkel_deg": -0.1285366906831058,
+   "irr_apex_vinkel_deg": 1.1131138916109222,
+   "spårdjup_mm": 0.5916181078841465,
+   "irr_spårdjup_mm": 0.8866929348331078,
+   "spårbredd_mm": 1.147715051223841,
+   "irr_spårbredd_mm": 2.993791627060242,
+   "bottenradie_mm": 0.1575647644622249,
+   "irr_bottenradie_mm": 0.5319542174214256
+  },
+  {
+   "objekt": "Hs 11",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "halsingland",
+   "n_runa": 293,
+   "n_orn": 110,
+   "apex_vinkel_deg": -0.1154244394442685,
+   "irr_apex_vinkel_deg": 5.287546822071235,
+   "spårdjup_mm": -0.17921290140784052,
+   "irr_spårdjup_mm": 0.13610174645479045,
+   "spårbredd_mm": -0.7854583085857669,
+   "irr_spårbredd_mm": 0.9516572969834023,
+   "bottenradie_mm": 0.22301771578735963,
+   "irr_bottenradie_mm": 0.22390386970787324
+  },
+  {
+   "objekt": "Hs 12",
+   "typ": "runsten",
+   "bergart": "okänd",
+   "serie": "halsingland",
+   "n_runa": 311,
+   "n_orn": 161,
+   "apex_vinkel_deg": -5.687200771876093,
+   "irr_apex_vinkel_deg": -10.575346575200498,
+   "spårdjup_mm": 0.34404680872728477,
+   "irr_spårdjup_mm": 0.9578100610993516,
+   "spårbredd_mm": -0.1624243478610925,
+   "irr_spårbredd_mm": -0.020662590450235996,
+   "bottenradie_mm": -0.2515625017425971,
+   "irr_bottenradie_mm": 0.012585215671521155
+  },
+  {
+   "objekt": "Hs 14",
+   "typ": "runsten",
+   "bergart": "okänd",
+   "serie": "halsingland",
+   "n_runa": 433,
+   "n_orn": 51,
+   "apex_vinkel_deg": -1.4321928898656182,
+   "irr_apex_vinkel_deg": -18.566592896927105,
+   "spårdjup_mm": -0.502077667532641,
+   "irr_spårdjup_mm": 1.1124231223638943,
+   "spårbredd_mm": -0.9990996203497637,
+   "irr_spårbredd_mm": 0.8113663221572516,
+   "bottenradie_mm": -0.02034326321335045,
+   "irr_bottenradie_mm": -0.378652115471527
+  },
+  {
+   "objekt": "Hs 15",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "halsingland",
+   "n_runa": 190,
+   "n_orn": 57,
+   "apex_vinkel_deg": -7.83570329531112,
+   "irr_apex_vinkel_deg": -5.521086214147843,
+   "spårdjup_mm": 0.18268752773601848,
+   "irr_spårdjup_mm": 0.5423497090588754,
+   "spårbredd_mm": -0.954887982560539,
+   "irr_spårbredd_mm": 0.08314955754290843,
+   "bottenradie_mm": 0.22745688745412762,
+   "irr_bottenradie_mm": -0.2115982523944977
+  },
+  {
+   "objekt": "Hs 21",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "halsingland",
+   "n_runa": 517,
+   "n_orn": 63,
+   "apex_vinkel_deg": 12.571477881344236,
+   "irr_apex_vinkel_deg": 2.287928759358749,
+   "spårdjup_mm": -0.4623731952901571,
+   "irr_spårdjup_mm": 0.4162020474961433,
+   "spårbredd_mm": -3.6470508783000497,
+   "irr_spårbredd_mm": 1.7927163079223636,
+   "bottenradie_mm": 1.041836733700801,
+   "irr_bottenradie_mm": -0.2593979868413454
+  },
+  {
+   "objekt": "Hs 2",
+   "typ": "runsten",
+   "bergart": "sandsten",
+   "serie": "halsingland",
+   "n_runa": 2025,
+   "n_orn": 1694,
+   "apex_vinkel_deg": 1.5140214345260432,
+   "irr_apex_vinkel_deg": -13.248318485508165,
+   "spårdjup_mm": 0.01841807702525,
+   "irr_spårdjup_mm": 0.4963396065789394,
+   "spårbredd_mm": 0.23489052876576721,
+   "irr_spårbredd_mm": 0.20334495759600735,
+   "bottenradie_mm": 0.034388420235458295,
+   "irr_bottenradie_mm": -1.0157437248662082
+  },
+  {
+   "objekt": "Hs 3",
+   "typ": "runsten",
+   "bergart": "sandsten",
+   "serie": "halsingland",
+   "n_runa": 11,
+   "n_orn": 76,
+   "apex_vinkel_deg": 0.343452905290917,
+   "irr_apex_vinkel_deg": -2.532294695109101,
+   "spårdjup_mm": 0.553107564567598,
+   "irr_spårdjup_mm": 0.9448960986611954,
+   "spårbredd_mm": 0.37083359541441396,
+   "irr_spårbredd_mm": 1.101265912532451,
+   "bottenradie_mm": -0.4557862196688309,
+   "irr_bottenradie_mm": -0.7647411310980252
+  },
+  {
+   "objekt": "Hs 6",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "halsingland",
+   "n_runa": 1340,
+   "n_orn": 123,
+   "apex_vinkel_deg": -3.77659473732416,
+   "irr_apex_vinkel_deg": -8.472136020569096,
+   "spårdjup_mm": 0.08146343140031309,
+   "irr_spårdjup_mm": 1.0240469209970304,
+   "spårbredd_mm": -0.18971627652298295,
+   "irr_spårbredd_mm": 0.9234368342324117,
+   "bottenradie_mm": 0.06232409598714339,
+   "irr_bottenradie_mm": 0.01460032324773941
+  },
+  {
+   "objekt": "Hs 9",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "halsingland",
+   "n_runa": 334,
+   "n_orn": 150,
+   "apex_vinkel_deg": 0.9574012074306211,
+   "irr_apex_vinkel_deg": -3.9121508438547608,
+   "spårdjup_mm": -0.5470404842740533,
+   "irr_spårdjup_mm": 0.2462229672487568,
+   "spårbredd_mm": -2.4886265610888554,
+   "irr_spårbredd_mm": 0.010236574424926204,
+   "bottenradie_mm": -0.1334937217171004,
+   "irr_bottenradie_mm": -0.24459537646496177
+  },
+  {
+   "objekt": "M 10",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "medelpad",
+   "n_runa": 159,
+   "n_orn": 35,
+   "apex_vinkel_deg": 11.84454645155661,
+   "irr_apex_vinkel_deg": 1.5228199547721601,
+   "spårdjup_mm": -0.36907288982941777,
+   "irr_spårdjup_mm": 0.10014055020533696,
+   "spårbredd_mm": -2.0801731970468484,
+   "irr_spårbredd_mm": -0.5700945910813449,
+   "bottenradie_mm": 0.23122347850036573,
+   "irr_bottenradie_mm": 0.038092362932303114
+  },
+  {
+   "objekt": "M 11",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "medelpad",
+   "n_runa": 785,
+   "n_orn": 255,
+   "apex_vinkel_deg": 18.018839685706467,
+   "irr_apex_vinkel_deg": 2.727462642380644,
+   "spårdjup_mm": -1.8392726402751256,
+   "irr_spårdjup_mm": -1.155443703343349,
+   "spårbredd_mm": -1.9949465531601192,
+   "irr_spårbredd_mm": -1.8825387613443176,
+   "bottenradie_mm": 0.41456851962222085,
+   "irr_bottenradie_mm": -0.1722964645030589
+  },
+  {
+   "objekt": "M 13",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "medelpad",
+   "n_runa": 25,
+   "n_orn": 40,
+   "apex_vinkel_deg": 8.52315984127057,
+   "irr_apex_vinkel_deg": -4.080041895890162,
+   "spårdjup_mm": -0.2661295249727933,
+   "irr_spårdjup_mm": 0.7543341407645802,
+   "spårbredd_mm": 1.0213794585447324,
+   "irr_spårbredd_mm": 4.68973152816866,
+   "bottenradie_mm": 0.0358786107776119,
+   "irr_bottenradie_mm": -0.42854974337835827
+  },
+  {
+   "objekt": "M 14",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "medelpad",
+   "n_runa": 154,
+   "n_orn": 47,
+   "apex_vinkel_deg": 19.436219616078063,
+   "irr_apex_vinkel_deg": 6.315603058630614,
+   "spårdjup_mm": -0.5827853562513869,
+   "irr_spårdjup_mm": 0.2679493246761129,
+   "spårbredd_mm": -1.2571214268371023,
+   "irr_spårbredd_mm": 2.3912013415893947,
+   "bottenradie_mm": 0.43740287533521083,
+   "irr_bottenradie_mm": 0.1414300373717179
+  },
+  {
+   "objekt": "M 15",
+   "typ": "runsten",
+   "bergart": "okänd",
+   "serie": "medelpad",
+   "n_runa": 473,
+   "n_orn": 159,
+   "apex_vinkel_deg": -1.3769721642575945,
+   "irr_apex_vinkel_deg": -3.612288205227557,
+   "spårdjup_mm": 0.047629569984873665,
+   "irr_spårdjup_mm": 0.4176007619215425,
+   "spårbredd_mm": 0.5421785087181483,
+   "irr_spårbredd_mm": 0.13054886919405817,
+   "bottenradie_mm": 0.45918620527570075,
+   "irr_bottenradie_mm": 0.30154518152630283
+  },
+  {
+   "objekt": "M 16",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "medelpad",
+   "n_runa": 129,
+   "n_orn": 38,
+   "apex_vinkel_deg": 7.1512921726559,
+   "irr_apex_vinkel_deg": -0.9469554039777961,
+   "spårdjup_mm": -0.6569264712877265,
+   "irr_spårdjup_mm": 0.4188257297340132,
+   "spårbredd_mm": -1.967512789617924,
+   "irr_spårbredd_mm": 1.5737862285134625,
+   "bottenradie_mm": 0.20193858385925845,
+   "irr_bottenradie_mm": -0.14402445577537693
+  },
+  {
+   "objekt": "M 1",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "medelpad",
+   "n_runa": 436,
+   "n_orn": 101,
+   "apex_vinkel_deg": -3.4739313144551573,
+   "irr_apex_vinkel_deg": -6.643227907573959,
+   "spårdjup_mm": 0.18045588189547335,
+   "irr_spårdjup_mm": 0.20801651844437918,
+   "spårbredd_mm": -0.7338209793348156,
+   "irr_spårbredd_mm": -1.16698033091631,
+   "bottenradie_mm": 0.09609829309938744,
+   "irr_bottenradie_mm": 0.2460138997596153
+  },
+  {
+   "objekt": "M 2",
+   "typ": "runsten",
+   "bergart": "okänd",
+   "serie": "medelpad",
+   "n_runa": 68,
+   "n_orn": 13,
+   "apex_vinkel_deg": 8.993676942765191,
+   "irr_apex_vinkel_deg": -7.399158365296643,
+   "spårdjup_mm": -1.044241101603589,
+   "irr_spårdjup_mm": 1.6080551095480082,
+   "spårbredd_mm": 1.4208243079647787,
+   "irr_spårbredd_mm": 4.840233801300663,
+   "bottenradie_mm": -0.5660595254771241,
+   "irr_bottenradie_mm": 0.10272050908800345
+  },
+  {
+   "objekt": "M 4",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "medelpad",
+   "n_runa": 345,
+   "n_orn": 115,
+   "apex_vinkel_deg": 26.798351062211054,
+   "irr_apex_vinkel_deg": 12.26170046375455,
+   "spårdjup_mm": -0.7403412942142276,
+   "irr_spårdjup_mm": 0.1828494661995439,
+   "spårbredd_mm": 3.4936080356548675,
+   "irr_spårbredd_mm": 4.9360565804759595,
+   "bottenradie_mm": 1.4039278538280495,
+   "irr_bottenradie_mm": 0.7512780457805077
+  },
+  {
+   "objekt": "M 5",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "medelpad",
+   "n_runa": 600,
+   "n_orn": 542,
+   "apex_vinkel_deg": -1.2927008987948767,
+   "irr_apex_vinkel_deg": 4.138390414484633,
+   "spårdjup_mm": 0.10989759208855876,
+   "irr_spårdjup_mm": 1.115903555689512,
+   "spårbredd_mm": -0.5443611163964253,
+   "irr_spårbredd_mm": 3.823811315295714,
+   "bottenradie_mm": 0.16327649772713881,
+   "irr_bottenradie_mm": 0.5857135067736661
+  },
+  {
+   "objekt": "M 6",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "medelpad",
+   "n_runa": 137,
+   "n_orn": 34,
+   "apex_vinkel_deg": 22.279524477127822,
+   "irr_apex_vinkel_deg": 13.934096059162073,
+   "spårdjup_mm": -1.9342214265840738,
+   "irr_spårdjup_mm": 0.17621257767963439,
+   "spårbredd_mm": -2.485313614897059,
+   "irr_spårbredd_mm": 3.235320308526882,
+   "bottenradie_mm": 0.9599678927914128,
+   "irr_bottenradie_mm": 0.7541511038383792
+  },
+  {
+   "objekt": "M 7",
+   "typ": "runsten",
+   "bergart": "okänd",
+   "serie": "medelpad",
+   "n_runa": 209,
+   "n_orn": 95,
+   "apex_vinkel_deg": 6.8391438141009075,
+   "irr_apex_vinkel_deg": -0.31225015453821925,
+   "spårdjup_mm": -0.046503127206105166,
+   "irr_spårdjup_mm": 0.27188034976251796,
+   "spårbredd_mm": 1.1075334006954414,
+   "irr_spårbredd_mm": -0.1687781468744376,
+   "bottenradie_mm": 0.02299719726184657,
+   "irr_bottenradie_mm": 0.06595301399411069
+  },
+  {
+   "objekt": "M 8",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "medelpad",
+   "n_runa": 239,
+   "n_orn": 210,
+   "apex_vinkel_deg": 20.563527229257247,
+   "irr_apex_vinkel_deg": 20.544116091447947,
+   "spårdjup_mm": 0.18325308240971383,
+   "irr_spårdjup_mm": 0.9436065275922778,
+   "spårbredd_mm": 4.134470069906502,
+   "irr_spårbredd_mm": 6.945882661860257,
+   "bottenradie_mm": 0.30290940960962587,
+   "irr_bottenradie_mm": 0.7598302458453714
+  },
+  {
+   "objekt": "Sö 112",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "sodermanland",
+   "n_runa": 359,
+   "n_orn": 301,
+   "apex_vinkel_deg": 0.14669447294413374,
+   "irr_apex_vinkel_deg": -2.6754330469520937,
+   "spårdjup_mm": 0.4239475352470179,
+   "irr_spårdjup_mm": 0.9029607782295601,
+   "spårbredd_mm": 0.297268846054477,
+   "irr_spårbredd_mm": 0.8680090218528722,
+   "bottenradie_mm": 0.1648934374667279,
+   "irr_bottenradie_mm": 0.05617232917930792
+  },
+  {
+   "objekt": "Sö 113",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "sodermanland",
+   "n_runa": 505,
+   "n_orn": 34,
+   "apex_vinkel_deg": 5.836006777057506,
+   "spårdjup_mm": 0.037763407932377646,
+   "spårbredd_mm": -0.0468356820810385,
+   "bottenradie_mm": -0.1737965148032088
+  },
+  {
+   "objekt": "Sö 128",
+   "typ": "runsten",
+   "bergart": "sandsten",
+   "serie": "sodermanland",
+   "n_runa": 381,
+   "n_orn": 252,
+   "apex_vinkel_deg": -1.4576087629002075,
+   "irr_apex_vinkel_deg": -5.866798273250936,
+   "spårdjup_mm": -0.05103532545941447,
+   "irr_spårdjup_mm": 0.5040294115230624,
+   "spårbredd_mm": -0.2880620305903694,
+   "irr_spårbredd_mm": 0.1875158624672295,
+   "bottenradie_mm": 1.1773363489764304,
+   "irr_bottenradie_mm": 0.038410481135318086
+  },
+  {
+   "objekt": "Sö 129",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "sodermanland",
+   "n_runa": 326,
+   "n_orn": 87,
+   "apex_vinkel_deg": -4.68641248573249,
+   "irr_apex_vinkel_deg": -7.540086313415202,
+   "spårdjup_mm": 0.720334455190704,
+   "irr_spårdjup_mm": 0.7354290413903155,
+   "spårbredd_mm": 0.47275653923504457,
+   "irr_spårbredd_mm": 0.07900259988780789,
+   "bottenradie_mm": -0.561420210184854,
+   "irr_bottenradie_mm": -0.03747904795887047
+  },
+  {
+   "objekt": "Sö 131",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "sodermanland",
+   "n_runa": 360,
+   "n_orn": 20,
+   "apex_vinkel_deg": 2.4907851703689943,
+   "irr_apex_vinkel_deg": -0.5819661183026028,
+   "spårdjup_mm": 0.36065297223611514,
+   "irr_spårdjup_mm": 0.6525895813672133,
+   "spårbredd_mm": 1.704293617810821,
+   "irr_spårbredd_mm": 3.3355746313720775,
+   "bottenradie_mm": 0.48032832212822285,
+   "irr_bottenradie_mm": 0.5991689570099947
+  },
+  {
+   "objekt": "Sö 134",
+   "typ": "runsten",
+   "bergart": "sandsten",
+   "serie": "sodermanland",
+   "n_runa": 726,
+   "n_orn": 243,
+   "apex_vinkel_deg": 4.854408890740814,
+   "irr_apex_vinkel_deg": -3.7536675237856514,
+   "spårdjup_mm": -0.13259251359706292,
+   "irr_spårdjup_mm": 0.6018490621564903,
+   "spårbredd_mm": 0.3128626996366375,
+   "irr_spårbredd_mm": 2.190129869482538,
+   "bottenradie_mm": -0.027654752235327873,
+   "irr_bottenradie_mm": -0.032240014122564276
+  },
+  {
+   "objekt": "Sö 143",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "sodermanland",
+   "n_runa": 961,
+   "n_orn": 396,
+   "apex_vinkel_deg": -3.4943747936548846,
+   "irr_apex_vinkel_deg": -18.951463707579734,
+   "spårdjup_mm": -0.23992854228898608,
+   "irr_spårdjup_mm": 1.353673624244346,
+   "spårbredd_mm": -1.1269651486648389,
+   "irr_spårbredd_mm": 0.13830644606973053,
+   "bottenradie_mm": -0.3242143232376842,
+   "irr_bottenradie_mm": -0.8490946247843079
+  },
+  {
+   "objekt": "Sö 160",
+   "typ": "runsten",
+   "bergart": "sandsten",
+   "serie": "sodermanland",
+   "n_runa": 370,
+   "n_orn": 38,
+   "apex_vinkel_deg": 2.106900211402035,
+   "irr_apex_vinkel_deg": -1.1525936331893263,
+   "spårdjup_mm": -0.05577689188329815,
+   "irr_spårdjup_mm": 0.0588625001846077,
+   "spårbredd_mm": 0.12810641023627412,
+   "irr_spårbredd_mm": 0.9664508012221535,
+   "bottenradie_mm": 0.14537083505402215,
+   "irr_bottenradie_mm": 0.386391660346606
+  },
+  {
+   "objekt": "Sö 161",
+   "typ": "runsten",
+   "bergart": "sandsten",
+   "serie": "sodermanland",
+   "n_runa": 717,
+   "n_orn": 23,
+   "apex_vinkel_deg": -7.681059486059752,
+   "irr_apex_vinkel_deg": -5.796882021767971,
+   "spårdjup_mm": 0.08573442397130537,
+   "irr_spårdjup_mm": -0.08750701556261342,
+   "spårbredd_mm": -1.4093883882797549,
+   "irr_spårbredd_mm": -0.6812086642049664,
+   "bottenradie_mm": -1.3932456398648125,
+   "irr_bottenradie_mm": -0.43550819163292687
+  },
+  {
+   "objekt": "Sö 162",
+   "typ": "runsten",
+   "bergart": "sandsten",
+   "serie": "sodermanland",
+   "n_runa": 150,
+   "n_orn": 11,
+   "apex_vinkel_deg": 4.916292876452076,
+   "irr_apex_vinkel_deg": 0.5650860505063804,
+   "spårdjup_mm": -0.002771263644504085,
+   "irr_spårdjup_mm": -0.1014999821542657,
+   "spårbredd_mm": -1.077471482092749,
+   "irr_spårbredd_mm": 0.5306881505401115,
+   "bottenradie_mm": -2.128639802721434,
+   "irr_bottenradie_mm": -0.7954645020153945
+  },
+  {
+   "objekt": "Sö 163",
+   "typ": "runsten",
+   "bergart": "sandsten",
+   "serie": "sodermanland",
+   "n_runa": 206,
+   "n_orn": 45,
+   "apex_vinkel_deg": 7.052324971629332,
+   "irr_apex_vinkel_deg": 3.097751647323463,
+   "spårdjup_mm": -0.21915671188615926,
+   "irr_spårdjup_mm": -0.1418736431672536,
+   "spårbredd_mm": 0.9134372965996711,
+   "irr_spårbredd_mm": -0.27608435917173324,
+   "bottenradie_mm": 0.26275955430076703,
+   "irr_bottenradie_mm": 0.15900062125681247
+  },
+  {
+   "objekt": "Sö 164",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "sodermanland",
+   "n_runa": 563,
+   "n_orn": 151,
+   "apex_vinkel_deg": -3.1066178687222674,
+   "irr_apex_vinkel_deg": 0.3411831001716763,
+   "spårdjup_mm": 0.14459519764280904,
+   "irr_spårdjup_mm": 0.46565019851098244,
+   "spårbredd_mm": -0.19219208580075886,
+   "irr_spårbredd_mm": 1.8123825855694307,
+   "bottenradie_mm": -0.13423349026116904,
+   "irr_bottenradie_mm": 0.2193958173875732
+  },
+  {
+   "objekt": "Sö 165",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "sodermanland",
+   "n_runa": 389,
+   "n_orn": 25,
+   "apex_vinkel_deg": 12.52740008674364,
+   "irr_apex_vinkel_deg": 13.131874201710644,
+   "spårdjup_mm": -0.9183191366390191,
+   "irr_spårdjup_mm": -0.25700215346542876,
+   "spårbredd_mm": -1.6959171105358308,
+   "irr_spårbredd_mm": 1.559538772646496,
+   "bottenradie_mm": 0.412328218836028,
+   "irr_bottenradie_mm": 0.5645426976157657
+  },
+  {
+   "objekt": "Sö 166",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "sodermanland",
+   "n_runa": 504,
+   "n_orn": 134,
+   "apex_vinkel_deg": -5.869120356236607,
+   "irr_apex_vinkel_deg": -1.9734173659826837,
+   "spårdjup_mm": 0.1684641729630889,
+   "irr_spårdjup_mm": 0.18893086552371186,
+   "spårbredd_mm": -0.789276487710282,
+   "irr_spårbredd_mm": 0.043468834438595394,
+   "bottenradie_mm": 0.002283496762240933,
+   "irr_bottenradie_mm": 0.10021871547430727
+  },
+  {
+   "objekt": "Sö 184",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "sodermanland",
+   "n_runa": 116,
+   "n_orn": 47,
+   "apex_vinkel_deg": 2.5726924072501163,
+   "irr_apex_vinkel_deg": -1.528521796699323,
+   "spårdjup_mm": -0.28717453516500013,
+   "irr_spårdjup_mm": -0.03827129883391267,
+   "spårbredd_mm": -1.012364039460893,
+   "irr_spårbredd_mm": -0.5432341259612681,
+   "bottenradie_mm": 0.07188704520306821,
+   "irr_bottenradie_mm": -0.5744027927122393
+  },
+  {
+   "objekt": "Sö 205",
+   "typ": "runsten",
+   "bergart": "kristallin",
+   "serie": "sodermanland",
+   "n_runa": 73,
+   "n_orn": 132,
+   "apex_vinkel_deg": -1.194166451775942,
+   "irr_apex_vinkel_deg": 5.6684509859208845,
+   "spårdjup_mm": -0.03824883603955387,
+   "irr_spårdjup_mm": 0.026033032731538785,
+   "spårbredd_mm": -1.6170512221224573,
+   "irr_spårbredd_mm": 1.0397011707565262,
+   "bottenradie_mm": -0.4697486772629671,
+   "irr_bottenradie_mm": 0.2233188691184862
+  },
+  {
+   "objekt": "Vg 50",
+   "typ": "gravmonument",
+   "bergart": "kalksten",
+   "serie": "vastergotland",
+   "n_runa": 2187,
+   "n_orn": 325,
+   "apex_vinkel_deg": 6.580421782673113,
+   "irr_apex_vinkel_deg": 6.736511170255284,
+   "spårdjup_mm": -0.5559136787366894,
+   "irr_spårdjup_mm": 0.20284570676871194,
+   "spårbredd_mm": -1.940058639347379,
+   "irr_spårbredd_mm": 1.3941140435383748,
+   "bottenradie_mm": 0.27724942344628767,
+   "irr_bottenradie_mm": 0.1667582836482655
+  },
+  {
+   "objekt": "Vg 51",
+   "typ": "runsten",
+   "bergart": "sandsten",
+   "serie": "vastergotland",
+   "n_runa": 782,
+   "n_orn": 512,
+   "apex_vinkel_deg": -7.077581260795171,
+   "irr_apex_vinkel_deg": -11.418861165926728,
+   "spårdjup_mm": -0.15282798002945697,
+   "irr_spårdjup_mm": 0.16037318338867745,
+   "spårbredd_mm": -1.9368628669841907,
+   "irr_spårbredd_mm": -1.593964829901692,
+   "bottenradie_mm": -0.3351496043352302,
+   "irr_bottenradie_mm": -0.43086964120491844
+  },
+  {
+   "objekt": "Vg 53",
+   "typ": "gravmonument",
+   "bergart": "kalksten",
+   "serie": "vastergotland",
+   "n_runa": 186,
+   "n_orn": 445,
+   "apex_vinkel_deg": -5.267932616510848,
+   "irr_apex_vinkel_deg": -7.408180709775479,
+   "spårdjup_mm": 0.19296239142072835,
+   "irr_spårdjup_mm": 0.45650520654234095,
+   "spårbredd_mm": 0.30456273075658125,
+   "irr_spårbredd_mm": 0.9587950836557599,
+   "bottenradie_mm": 0.2141128606234881,
+   "irr_bottenradie_mm": 0.011242133460361625
+  },
+  {
+   "objekt": "Vg ATA322-4412-2011 Ljung80 thin03.stl",
+   "typ": "gravmonument",
+   "bergart": "okänd",
+   "serie": "vastergotland",
+   "n_runa": 37,
+   "n_orn": 137,
+   "apex_vinkel_deg": 1.0195704039338693,
+   "irr_apex_vinkel_deg": -0.2602678845761659,
+   "spårdjup_mm": -0.11708904262740427,
+   "irr_spårdjup_mm": -0.008258670435364435,
+   "spårbredd_mm": -0.3088319511929587,
+   "irr_spårbredd_mm": -0.04579452947299956,
+   "bottenradie_mm": 1.2876158142020944,
+   "irr_bottenradie_mm": 1.4481053281575988
+  }
+ ],
+ "robust_alla_utanför": {
+  "apex_vinkel_deg": {
+   "skillnad": 0.5171406465907253,
+   "p": 0.8085191480851914,
+   "ci90": [
+    -3.2807986952819106,
+    3.2416191650259445
+   ],
+   "median_grav": -0.3282925389869362,
+   "median_runsten": -0.8454331855776616,
+   "n": [
+    12,
+    44
+   ]
+  },
+  "spårdjup_mm": {
+   "skillnad": -0.14713584548260228,
+   "p": 0.24047595240475952,
+   "ci90": [
+    -0.3200251540792802,
+    0.04560561495055858
+   ],
+   "median_grav": -0.03807413810167504,
+   "median_runsten": 0.10906170738092724,
+   "n": [
+    12,
+    44
+   ],
+   "q": 0.3607139286071393
+  },
+  "spårbredd_mm": {
+   "skillnad": -0.5211754151722463,
+   "p": 0.18138186181381863,
+   "ci90": [
+    -1.523446029893778,
+    0.12042756096164847
+   ],
+   "median_grav": -0.28679925861612254,
+   "median_runsten": 0.23437615655612376,
+   "n": [
+    12,
+    44
+   ],
+   "q": 0.3607139286071393
+  },
+  "bottenradie_mm": {
+   "skillnad": -0.09097813395471832,
+   "p": 0.42725727427257276,
+   "ci90": [
+    -0.32183910842800806,
+    0.16955488126477872
+   ],
+   "median_grav": -0.11213288985424141,
+   "median_runsten": -0.021154755899523092,
+   "n": [
+    12,
+    44
+   ],
+   "q": 0.4272572742725728
+  },
+  "utfall": "samma mönster"
+ },
+ "robust_kant_1.2": {
+  "apex_vinkel_deg": {
+   "skillnad": -1.4182673713280494,
+   "p": 0.49525047495250474,
+   "ci90": [
+    -5.440325464679446,
+    1.0224682404918117
+   ],
+   "median_grav": -0.931069284929869,
+   "median_runsten": 0.4871980863981804,
+   "n": [
+    12,
+    42
+   ]
+  },
+  "spårdjup_mm": {
+   "skillnad": -0.24434240033024818,
+   "p": 0.1070892910708929,
+   "ci90": [
+    -0.5508868317567154,
+    0.2429752462085259
+   ],
+   "median_grav": -0.3138145200222362,
+   "median_runsten": -0.06947211969198802,
+   "n": [
+    12,
+    42
+   ],
+   "q": 0.16063393660633934
+  },
+  "spårbredd_mm": {
+   "skillnad": -0.38600761512041704,
+   "p": 0.4874512548745126,
+   "ci90": [
+    -2.184062223292391,
+    0.4343732112304048
+   ],
+   "median_grav": -0.841895284733357,
+   "median_runsten": -0.4558876696129399,
+   "n": [
+    12,
+    42
+   ],
+   "q": 0.4874512548745125
+  },
+  "bottenradie_mm": {
+   "skillnad": -0.24337632431158718,
+   "p": 0.10628937106289371,
+   "ci90": [
+    -0.47064705324082756,
+    0.07854571936631406
+   ],
+   "median_grav": -0.1757564470115145,
+   "median_runsten": 0.06761987730007268,
+   "n": [
+    12,
+    42
+   ],
+   "q": 0.16063393660633934
+  },
+  "utfall": "obestämt"
+ },
+ "robust_kant_1.5": {
+  "apex_vinkel_deg": {
+   "skillnad": -1.550029361595115,
+   "p": 0.4216578342165783,
+   "ci90": [
+    -5.446269241501898,
+    1.5986296699922349
+   ],
+   "median_grav": -0.9377067760481808,
+   "median_runsten": 0.6123225855469343,
+   "n": [
+    12,
+    41
+   ]
+  },
+  "spårdjup_mm": {
+   "skillnad": -0.23042254870246037,
+   "p": 0.24167583241675833,
+   "ci90": [
+    -0.5476261542829257,
+    0.25775238972391734
+   ],
+   "median_grav": -0.2942780452445356,
+   "median_runsten": -0.06385549654207523,
+   "n": [
+    12,
+    41
+   ],
+   "q": 0.3745125487451255
+  },
+  "spårbredd_mm": {
+   "skillnad": -0.17797193362810315,
+   "p": 0.8197180281971803,
+   "ci90": [
+    -2.0969980844496288,
+    0.6687503848575993
+   ],
+   "median_grav": -0.8283409139728954,
+   "median_runsten": -0.6503689803447923,
+   "n": [
+    12,
+    41
+   ],
+   "q": 0.8197180281971802
+  },
+  "bottenradie_mm": {
+   "skillnad": -0.21486202891585515,
+   "p": 0.24967503249675033,
+   "ci90": [
+    -0.4901227154709824,
+    0.10405498010977055
+   ],
+   "median_grav": -0.151509319518778,
+   "median_runsten": 0.06335270939707716,
+   "n": [
+    12,
+    41
+   ],
+   "q": 0.3745125487451255
+  },
+  "utfall": "obestämt"
+ },
+ "robust_vinkel_20": {
+  "apex_vinkel_deg": {
+   "skillnad": -1.1569081444992264,
+   "p": 0.6127387261273872,
+   "ci90": [
+    -5.7083981101949774,
+    1.9786832122776374
+   ],
+   "median_grav": -0.6789765766829561,
+   "median_runsten": 0.47793156781627033,
+   "n": [
+    12,
+    42
+   ]
+  },
+  "spårdjup_mm": {
+   "skillnad": -0.2445712528176221,
+   "p": 0.1481851814818518,
+   "ci90": [
+    -0.5257674851995655,
+    0.24991699856120708
+   ],
+   "median_grav": -0.2967397643493006,
+   "median_runsten": -0.05216851153167851,
+   "n": [
+    12,
+    42
+   ],
+   "q": 0.22227777222277773
+  },
+  "spårbredd_mm": {
+   "skillnad": -0.3003137299676304,
+   "p": 0.6855314468553144,
+   "ci90": [
+    -2.0503024878966114,
+    0.5446148666577535
+   ],
+   "median_grav": -0.8887083560417759,
+   "median_runsten": -0.5883946260741455,
+   "n": [
+    12,
+    42
+   ],
+   "q": 0.6855314468553143
+  },
+  "bottenradie_mm": {
+   "skillnad": -0.3082853247755948,
+   "p": 0.047495250474952504,
+   "ci90": [
+    -0.488913640080447,
+    0.06121047948541636
+   ],
+   "median_grav": -0.23128117823917305,
+   "median_runsten": 0.07700414653642174,
+   "n": [
+    12,
+    42
+   ],
+   "q": 0.1424857514248575
+  },
+  "utfall": "obestämt"
+ },
+ "robust_vinkel_30": {
+  "apex_vinkel_deg": {
+   "skillnad": -1.5613683083151457,
+   "p": 0.5207479252074793,
+   "ci90": [
+    -5.7674137270406645,
+    1.3910399647601182
+   ],
+   "median_grav": -0.7115731561023537,
+   "median_runsten": 0.849795152212792,
+   "n": [
+    12,
+    42
+   ]
+  },
+  "spårdjup_mm": {
+   "skillnad": -0.23112825978401158,
+   "p": 0.17378262173782622,
+   "ci90": [
+    -0.5310438864541275,
+    0.2711773656489058
+   ],
+   "median_grav": -0.2829793799783962,
+   "median_runsten": -0.05185112019438459,
+   "n": [
+    12,
+    42
+   ],
+   "q": 0.2606739326067393
+  },
+  "spårbredd_mm": {
+   "skillnad": -0.1820215242103158,
+   "p": 0.796020397960204,
+   "ci90": [
+    -1.9811386536795152,
+    0.6739561593417366
+   ],
+   "median_grav": -0.8249601513529203,
+   "median_runsten": -0.6429386271426045,
+   "n": [
+    12,
+    42
+   ],
+   "q": 0.796020397960204
+  },
+  "bottenradie_mm": {
+   "skillnad": -0.2930625822913451,
+   "p": 0.0547945205479452,
+   "ci90": [
+    -0.49164857020490094,
+    0.07310966102255538
+   ],
+   "median_grav": -0.22914891539300897,
+   "median_runsten": 0.06391366689833611,
+   "n": [
+    12,
+    42
+   ],
+   "q": 0.1643835616438356
+  },
+  "utfall": "obestämt"
+ },
+ "robust_mjuk": {
+  "apex_vinkel_deg": {
+   "skillnad": -1.272968591833454,
+   "p": 0.6567343265673433,
+   "ci90": [
+    -5.602099657199588,
+    3.448027755719984
+   ],
+   "median_grav": -0.9295156865425369,
+   "median_runsten": 0.343452905290917,
+   "n": [
+    12,
+    11
+   ]
+  },
+  "spårdjup_mm": {
+   "skillnad": -0.2996879650612223,
+   "p": 0.013298670132986702,
+   "ci90": [
+    -0.5743317557619394,
+    0.17510775044908183
+   ],
+   "median_grav": -0.3024592287057264,
+   "median_runsten": -0.002771263644504085,
+   "n": [
+    12,
+    11
+   ],
+   "q": 0.039896010398960104
+  },
+  "spårbredd_mm": {
+   "skillnad": -0.540052882991505,
+   "p": 0.44985501449855014,
+   "ci90": [
+    -2.4214126246769734,
+    0.5989709611626548
+   ],
+   "median_grav": -0.8281149135818744,
+   "median_runsten": -0.2880620305903694,
+   "n": [
+    12,
+    11
+   ],
+   "q": 0.6747825217478252
+  },
+  "bottenradie_mm": {
+   "skillnad": -0.07026475331718651,
+   "p": 0.9319068093190681,
+   "ci90": [
+    -0.3590129181572421,
+    0.43480229358391825
+   ],
+   "median_grav": -0.22949240259968184,
+   "median_runsten": -0.15922764928249533,
+   "n": [
+    12,
+    11
+   ],
+   "q": 0.931906809319068
+  },
+  "utfall": "obestämt"
+ },
+ "robust_raa": {
+  "apex_vinkel_deg": {
+   "skillnad": -0.40577969712663275,
+   "p": 0.8601139886011399,
+   "ci90": [
+    -4.548917595619898,
+    3.2817063313299077
+   ],
+   "median_grav": -0.9295156865425369,
+   "median_runsten": -0.5237359894159042,
+   "n": [
+    12,
+    20
+   ]
+  },
+  "spårdjup_mm": {
+   "skillnad": -0.2819491788636974,
+   "p": 0.027597240275972403,
+   "ci90": [
+    -0.5968191811781955,
+    0.17092947773358466
+   ],
+   "median_grav": -0.3024592287057264,
+   "median_runsten": -0.020510049842028977,
+   "n": [
+    12,
+    20
+   ],
+   "q": 0.0827917208279172
+  },
+  "spårbredd_mm": {
+   "skillnad": -0.2672334550246287,
+   "p": 0.7235276472352765,
+   "ci90": [
+    -2.0810362886324008,
+    0.6872104883669934
+   ],
+   "median_grav": -0.8281149135818744,
+   "median_runsten": -0.5608814585572457,
+   "n": [
+    12,
+    20
+   ],
+   "q": 0.7235276472352764
+  },
+  "bottenradie_mm": {
+   "skillnad": -0.1485482813514334,
+   "p": 0.45985401459854014,
+   "ci90": [
+    -0.3942898233027923,
+    0.24177933258067635
+   ],
+   "median_grav": -0.22949240259968184,
+   "median_runsten": -0.08094412124824846,
+   "n": [
+    12,
+    20
+   ],
+   "q": 0.6897810218978102
+  },
+  "utfall": "samma mönster"
+ },
+ "kanslighet": {
+  "apex_vinkel_deg": {
+   "median": -2.079920732746338,
+   "p": 0.05130973597887481,
+   "n": 52
+  },
+  "spårdjup_mm": {
+   "median": 0.32235906918585555,
+   "p": 1.665834484389034e-06,
+   "n": 52
+  },
+  "spårbredd_mm": {
+   "median": 0.5174251759484818,
+   "p": 0.005631452242517222,
+   "n": 52
+  },
+  "bottenradie_mm": {
+   "median": 0.01191367456594139,
+   "p": 0.5003673663392961,
+   "n": 52
+  }
+ }
+}

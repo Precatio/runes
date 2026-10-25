@@ -50,6 +50,23 @@ streckklass). Råutdata: `s0_stavlosa_filter.txt`, `s0a.txt`, `s_analys.txt/.jso
   Rundatapost (Varnhemsfilerna utan signum) och därmed bergart. Gravmonumenten kommer till stor del från en serie och
   en skanner (ATOS), men ATOS-varianten ger samma resultat.
 
+## Studie 1b – runor mot ornamentik med granskade runslingor (plan 2026-10-25, SHA-256 9ea218c7…)
+- **Klassningen:** Viktors granskade slingor på 66 filer plus spårets riktning (`s1b_klassning.py`). Den gamla
+  automatiska klassningen mätt mot den: av det den kallade runa ligger 26 % helt utanför textslingorna; av det den
+  kallade ornamentik är 24 % runor. Granskad visuellt på Gs 11, Vg 53 och M 1 (M 1 ofullständig där slingorna ligger tätt).
+- **Underlag:** 12 gravmonument och 42 runstenar med minst 10 snitt i båda grupperna; 4 runstenar föll bort (Hs 16, Hs 1,
+  M 3, Sö 149: för få snitt).
+- **Huvudtest (V-vinkel):** skillnad i median-Δ −1,74°, 90 % KI [−5,91; +0,96], p = 0,47. **Utfall: obestämt.**
+- **Sidotest:** djup −0,25 mm (q 0,19; gravmonumentens runor grundare än ornamentiken, −0,30 mot −0,05 mm), bredd −0,19 mm
+  (q 0,79), bottenradie −0,30 mm (p 0,052, q 0,16).
+- **Robusthet:** obestämt i kantzon 1,2 och 1,5, gränsvinkel 20° och 30°, och bara mjuk bergart (där djupet ger q = 0,04);
+  samma mönster med alla snitt utanför som ornamentik och med bara Riksantikvarieämbetets serier.
+- **Känslighet:** runor mot oregelbundna spår utanför slingorna, 52 objekt: djup +0,32 mm (p = 1,7e−6), bredd +0,52 mm
+  (p = 0,006), V-vinkel −2,1° (p = 0,051).
+- **Tolkning:** med rätt klassning går det inte att säga om gravmonumenten följer runstenarnas mönster; 12 gravmonument
+  är för få. Ledtråd att pröva i en ny låst plan: runorna på gravmonumenten är grundare än ornamentiken på samma häll.
+  Artikelutkastet 1hVOmooGmmEKpMozrrOR förblir VÄNTAR.
+
 ## Studie 2 – stavlösa runor på sten
 - **2a (pilot):** Hälsinglands stavlösa stenar (Hs 10, 12, 14, 15) mot övriga nio: spårdjup 2,53 mot 1,74 mm,
   exakt p = 0,26; bland bara kristallina stenar (2 mot 5) 2,16 mot 2,55 mm, p = 0,81. Ingen skillnad som går att
