@@ -85,13 +85,15 @@ export default function RunmodellPage() {
     setMsg("Linjerna fästa mot runorna – kontrollera och spara.");
   };
 
-  const save = async (status: "utkast" | "granskad") => {
+  const save = async (status: "utkast" | "granskad" | "överhoppad", note = "") => {
     if (!cur) return;
-    const body = { bands: bands.filter(b => b.points.length >= 2), status, by: "Vitki", note: "", rotation: rot };
-    if (!body.bands.length && !window.confirm("Ingen slinga har minst två punkter. Spara stenen utan slingor?")) return;
+    const body = { bands: status === "överhoppad" ? [] : bands.filter(b => b.points.length >= 2), status, by: "Vitki", note,
+                   rotation: rot };
+    if (status !== "överhoppad" && !body.bands.length && !window.confirm("Ingen slinga har minst två punkter. Spara stenen utan slingor?")) return;
     const r = await fetch(`${API_URL}/api/runmodell/band/${cur.series}/${cur.stem}`, {
       method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
-    setMsg(r.ok ? `Sparat (${body.bands.length} slingor, ${status}).` : `Kunde inte spara: ${(await r.json()).detail ?? r.status}`);
+    setMsg(r.ok ? (status === "överhoppad" ? "Överhoppad – tas inte med i träningen." : `Sparat (${body.bands.length} slingor, ${status}).`)
+                : `Kunde inte spara: ${(await r.json()).detail ?? r.status}`);
     setStones(await load());
   };
 
@@ -113,7 +115,7 @@ export default function RunmodellPage() {
                 className={`w-full text-left rounded px-2 py-1 hover:bg-slate-100 ${cur?.stem === s.stem ? "bg-slate-200" : ""}`}>
                 <span className="font-semibold">{s.signum ?? "–"}</span>{" "}
                 <span className="text-slate-500 text-xs">{s.file.slice(0, 26)}</span>
-                {s.status && <span className={`ml-1 text-[10px] font-bold ${s.status === "granskad" ? "text-emerald-700" : "text-amber-700"}`}>{s.status}</span>}
+                {s.status && <span className={`ml-1 text-[10px] font-bold ${s.status === "granskad" ? "text-emerald-700" : s.status === "överhoppad" ? "text-slate-400" : "text-amber-700"}`}>{s.status}</span>}
               </button>
             </li>
           ))}
@@ -155,6 +157,9 @@ export default function RunmodellPage() {
               <button type="button" onClick={() => void snap()} className="px-3 py-1 rounded border border-[#b7410e] text-[#b7410e] font-bold">Fäst mot runorna</button>
               <button type="button" onClick={() => void save("utkast")} className="px-3 py-1 rounded bg-slate-700 text-white">Spara utkast</button>
               <button type="button" onClick={() => void save("granskad")} className="px-3 py-1 rounded bg-emerald-700 text-white">Spara som granskad</button>
+              <button type="button" className="px-3 py-1 rounded border border-slate-400 text-slate-600"
+                onClick={() => { const why = window.prompt("Varför hoppas stenen över? (t.ex. runorna syns inte, stavlösa, för skadad)", "runorna syns inte på djupbilden"); if (why !== null) void save("överhoppad", why); }}>
+                Hoppa över</button>
             </div>
             <div className="max-w-full" style={{ width: `min(100%, ${viewW}px)` }}>
               <svg ref={svg} viewBox={`0 0 ${viewW} ${viewH}`} className="block w-full h-auto cursor-crosshair select-none"

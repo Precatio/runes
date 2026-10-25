@@ -1,0 +1,29 @@
+{
+ "bands": [
+  {
+   "points": [
+    [
+     529.0,
+     72.0
+    ],
+    [
+     135.0,
+     80.0
+    ],
+    [
+     51.0,
+     92.0
+    ]
+   ],
+   "height": 58.0
+  }
+ ],
+ "status": "granskad",
+ "rotation": 0,
+ "by": "Vitki",
+ "note": "",
+ "scale": 2,
+ "res_mm": 1.2,
+ "signum": "Ög 2",
+ "file": "Og 2b_thin03.stl"
+}

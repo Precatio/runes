@@ -80,7 +80,8 @@ class Band(BaseModel):
 
 class Bands(BaseModel):
     bands: list[Band] = Field(default_factory=list, max_length=20)  # in reading order
-    status: str = Field("utkast", pattern="^(utkast|granskad)$")  # granskad = checked by a person
+    status: str = Field("utkast", pattern="^(utkast|granskad|överhoppad)$")  # granskad = checked by a person;
+    # överhoppad = left out (runes not readable on the depth image, staveless, too damaged); the note says why
     rotation: int = Field(0, ge=0, le=270, multiple_of=90)  # how the stone is turned on the page to stand upright
     by: str = Field("", max_length=80)
     note: str = Field("", max_length=1000)
