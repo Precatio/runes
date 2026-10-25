@@ -205,19 +205,23 @@ kept_en = ", ".join(KEEP[:-1]) + " and " + KEEP[-1]
 words_sv = ", ".join(KEEP_WORDS[:-1]) + " och " + KEEP_WORDS[-1]
 words_en = ", ".join(KEEP_WORDS[:-1]) + " and " + KEEP_WORDS[-1]
 
-title = "Vad stod i luckan? Två modeller håller varandra i schack"  # Viktor 2026-10-25; tidigare "Tre punkter i texten"
+# Del II i serien Tyde den som kan (Viktor 2026-10-25); tidigare "Tre punkter i texten" och "Vad stod i luckan? Två modeller
+# håller varandra i schack". Adressen är oförändrad.
+title = "Tyde den som kan II – vad stod i luckan?"
 summary = ("Där en runa saknas sätter utgivarna ett streck, och där de inte vågar tolka ordet skriver de tre punkter. Vi har "
            "byggt två modeller som kontrollerar varandra: den ena föreslår vilket ord som stod i luckan, den andra mäter om "
            "texten alls är språk – och utgåvan har sista ordet. Där forskare redan vågat ett förslag landar modellen ofta på "
            "samma ord, och där den fyller i ord i inskrifter som inte är språk säger den andra modellen ifrån.")
-title_en = "What Stood in the Gap? Two Models Keep Each Other in Check"
+title_en = "Interpret, he who can II – what stood in the gap?"
 summary_en = ("Where a rune is missing, the editors put a dash, and where they do not dare to interpret the word, they write three "
               "dots. We have built two models that check each other: one proposes which word stood in the gap, the other measures "
               "whether the text is language at all – and the edition has the last word. Where scholars have already ventured a "
               "proposal, the model often lands on the same word, and where it fills in words in inscriptions that are not "
               "language, the second model objects.")
 
-body = f"""Den som läser en runinskrift i en utgåva möter förr eller senare tre punkter. Där en runa har flagnat bort, där stenen har spruckit eller där en ritning från 1600-talet inte går att lita på, sätter utgivaren ett streck för varje runa som fattas. Och där de runor som finns kvar inte räcker för att säga vilket ord det var, står det i tolkningen bara ”…”. Punkterna är inte slarv. De är ett beslut. En runolog har stått framför stenen, sett vad som finns kvar och valt att inte gissa.
+body = f"""*Del II i serien Tyde den som kan. [Den första delen](/artiklar/hur-spraklik-ar-en-runfoljd/) frågade om de inskrifter som ingen har kunnat tolka alls är språk. Den här frågar vad som stod i luckorna i de inskrifter som går att läsa – och använder del I:s språkprov som kontroll.*
+
+Den som läser en runinskrift i en utgåva möter förr eller senare tre punkter. Där en runa har flagnat bort, där stenen har spruckit eller där en ritning från 1600-talet inte går att lita på, sätter utgivaren ett streck för varje runa som fattas. Och där de runor som finns kvar inte räcker för att säga vilket ord det var, står det i tolkningen bara ”…”. Punkterna är inte slarv. De är ett beslut. En runolog har stått framför stenen, sett vad som finns kvar och valt att inte gissa.
 
 Vi har byggt en sannolikhetsmodell som gör precis det som runologen avstod från: den föreslår vad som kan ha stått där. Den är vår egen, den är ny, och ingen utanför Vitki har ännu granskat den. Därför står den aldrig ensam. Vi påstår inte att något av orden nedan är fakta. Vi visar vad modellen säger, hur förslagen prövas och var de möter utgåvorna.
 
@@ -334,7 +338,9 @@ Listan är Vitkis inventering av luckorna i Rundatas vikingatida inskrifter med 
 - *Nytt om runer* 9 (1994), s. 26.
 - Foton: se bildtexterna."""
 
-body_en = f"""Anyone who reads a runic inscription in an edition sooner or later meets three dots. Where a rune has flaked away, where the stone has cracked, or where a seventeenth-century drawing cannot be trusted, the editor puts a dash for each missing rune. And where the runes that remain are not enough to say which word it was, the interpretation just reads “…”. The dots are not carelessness. They are a decision. A runologist has stood in front of the stone, seen what is left, and chosen not to guess.
+body_en = f"""*Part II of the series Interpret, he who can. [The first part](/en/artiklar/hur-spraklik-ar-en-runfoljd/) asked whether the inscriptions no one has been able to interpret are language at all. This one asks what stood in the gaps in the inscriptions that can be read – and uses Part I's language test as a check.*
+
+Anyone who reads a runic inscription in an edition sooner or later meets three dots. Where a rune has flaked away, where the stone has cracked, or where a seventeenth-century drawing cannot be trusted, the editor puts a dash for each missing rune. And where the runes that remain are not enough to say which word it was, the interpretation just reads “…”. The dots are not carelessness. They are a decision. A runologist has stood in front of the stone, seen what is left, and chosen not to guess.
 
 We have built a probability model that does exactly what the runologist refrained from: it proposes what may have stood there. It is our own, it is new, and no one outside Vitki has yet examined it. So it never stands alone. We do not claim that any of the words below are facts. We show what the model says, how the proposals are tested and where they meet the editions.
 
