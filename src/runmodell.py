@@ -82,7 +82,9 @@ def straighten(depth: np.ndarray, points_display: list, height_display: float, s
     pts = C[None, :, :] + across[:, None, None] * norm[None, :, :]  # rows across, columns along
     d = np.nan_to_num(depth.astype(np.float32), nan=0.0)
     strip = map_coordinates(d, [pts[..., 1].ravel(), pts[..., 0].ravel()], order=1, mode="constant").reshape(pts.shape[:2])
-    return np.clip(strip, 0, clip_mm), np.c_[C[:, 1], C[:, 0]]
+    # Upright: following a band in reading direction, the runes' tops lie to the left of the direction of travel (as
+    # with any writing). The last row is the left side, so the strip is turned to put it on top (Viktor, Hs 21).
+    return np.clip(strip[::-1, :], 0, clip_mm), np.c_[C[:, 1], C[:, 0]]
 
 
 def stone_strip(series: str, stem: str, height_px: int = 64, gap_px: int = 24) -> dict | None:

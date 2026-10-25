@@ -23,6 +23,7 @@ sys.path.insert(0, ROOT)
 from src import runmodell as rm  # noqa: E402
 
 N_CLASSES = len(rm.ALPHABET) + 1  # + CTC blank
+FREE = False  # --fri-riktning: the model may choose reading direction and up/down (before 2026-10-25 always)
 
 
 class CRNN(nn.Module):
@@ -149,8 +150,8 @@ class SyntheticStrips(torch.utils.data.IterableDataset):
             for _ in range(self.batch):
                 t = sy.sample_text(self.texts, rng)
                 im = sy.strip(t, rng)
-                if rng.random() < 0.5:
-                    im = im[::-1, :].copy()  # runes upside down, as when a band is drawn from the other side
+                if FREE and rng.random() < 0.5:
+                    im = im[::-1, :].copy()  # runes upside down (only when the orientation is left to the model)
                 items.append((im, t))
             yield items
 
@@ -164,7 +165,7 @@ def batch_loss(model, imgs: list[np.ndarray], targets: list[str], dev, flips_ud:
     y = torch.cat(ys)
     ylen = torch.tensor([len(t) for t in ys])
     per_dir = []
-    for lr in (False, True):
+    for lr in ((False, True) if FREE else (False,)):
         x = torch.zeros(len(imgs), 1, imgs[0].shape[0], W)
         for k, (im, ud) in enumerate(zip(imgs, flips_ud)):
             x[k, 0, :, :im.shape[1]] = tensor(im, lr, ud)[0, 0, :, :im.shape[1]]
@@ -172,7 +173,7 @@ def batch_loss(model, imgs: list[np.ndarray], targets: list[str], dev, flips_ud:
         T = lp.shape[0]
         xlen = torch.tensor([max(1, min(T, im.shape[1] // 4)) for im in imgs])
         per_dir.append(ctc(lp, y, xlen, ylen) / ylen.clamp(min=1))
-    return torch.minimum(*per_dir).mean()
+    return (torch.minimum(*per_dir) if len(per_dir) > 1 else per_dir[0]).mean()
 
 
 def loss_both(model, ctc, img, target, dev, flip_ud):
@@ -197,8 +198,9 @@ def evaluate(model, data, dev, shuffled=False, seed=7):
             if shuffled:
                 others = [d["target"] for j, d in enumerate(data) if j != i] or [ref]
                 ref = "".join(rng.sample(list(ref), len(ref))) if len(others) == 1 else rng.choice(others)
+            orients = [(lr, ud) for lr in (False, True) for ud in (False, True)] if FREE else [(False, False)]
             best = min(cer(greedy(model(tensor(s["image"], lr, ud).to(dev)).cpu(), s["image"].shape[1] // 4), ref)
-                       for lr in (False, True) for ud in (False, True))
+                       for lr, ud in orients)
             out.append(best)
     model.train()
     free_gpu()
@@ -213,6 +215,8 @@ def main(argv=None):
     ap.add_argument("--test-andel", type=float, default=0.0, help="andel av varje series stenar som hålls utanför")
     ap.add_argument("--frö", type=int, default=1)
     ap.add_argument("--batch", type=int, default=8)
+    ap.add_argument("--fri-riktning", action="store_true", help="låt modellen välja läsriktning och upp/ned (det gamla "
+                    "sättet); annars gäller den ritade riktningen och runorna står upprätt i remsan")
     ap.add_argument("--kvalitet", default=None, help="bara stenar med dessa betyg, t.ex. tydlig eller tydlig,medel")
     ap.add_argument("--ren", action="store_true", help="utan stavlösa, delade stenar och texter under 15 tecken")
     ap.add_argument("--start", default=None, help="börja från en sparad modell (t.ex. den syntetiskt förtränade)")
@@ -222,6 +226,8 @@ def main(argv=None):
     ap.add_argument("--arbetare", type=int, default=8, help="processer som tillverkar syntetiska remsor")
     ap.add_argument("--ut", default="/Volumes/2TB/cache/runmodell/modell.pt")
     a = ap.parse_args(argv)
+    global FREE
+    FREE = a.fri_riktning
     torch.manual_seed(1); random.seed(1); np.random.seed(1)
     dev = "mps" if torch.backends.mps.is_available() else "cpu"
     data = stones(a.status, set(a.kvalitet.split(",")) if a.kvalitet else None, a.ren)
@@ -282,7 +288,7 @@ def main(argv=None):
         tot = 0.0
         for bt in batches:
             loss = batch_loss(model, [augment(s["image"], rng) for s in bt], [s["target"] for s in bt], dev,
-                              [random.random() < 0.5 for _ in bt])
+                              [FREE and random.random() < 0.5 for _ in bt])
             opt.zero_grad()
             loss.backward()
             nn.utils.clip_grad_norm_(model.parameters(), 5.0)
@@ -300,7 +306,7 @@ def main(argv=None):
     for s in (test or train[:3]):
         with torch.no_grad():
             model.eval()
-            preds = [(cer(p := greedy(model(tensor(s["image"], lr, False).to(dev)).cpu(), s["image"].shape[1] // 4), s["target"]), p) for lr in (False, True)]
+            preds = [(cer(p := greedy(model(tensor(s["image"], lr, False).to(dev)).cpu(), s["image"].shape[1] // 4), s["target"]), p) for lr in ((False, True) if FREE else (False,))]
         e, p = min(preds)
         print(f"{s['signum']}: läst  {p[:70]}\n{'':{len(str(s['signum']))}}  text  {s['target'][:70]}  (CER {e:.2f})")
         rows.append({"signum": s["signum"], "series": s["series"], "stem": s["stem"], "cer": e, "read": p, "text": s["target"],
