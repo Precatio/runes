@@ -295,6 +295,10 @@ out = {"slug": "samma-hantverk-gravhallarna-kring-1100", "title": title, "summar
 json.dump(out, open(os.path.join(ROOT, "utdata", "blogg", "gravhallar.json"), "w"), ensure_ascii=False, indent=1)
 print(os.path.join(ROOT, "utdata", "blogg", "gravhallar.json"), len(body.split()), "ord")
 
+# 2026-10-24: the stroke classification was wrong in both directions (Viktor); study 1's conclusion is withdrawn. Nothing is
+# written to Firestore from this builder until the study has been redone with the rune model (memory staveless-mode).
+if ("--update" in sys.argv or "--write" in sys.argv) and "--tillbakadragen-ok" not in sys.argv:
+    sys.exit("Studie 1 är tillbakadragen (klassningen av runor/ornamentik var fel). Gör om studien innan utkastet skrivs.")
 if "--update" in sys.argv or "--write" in sys.argv:
     from api.routers import blog
     col = blog.firestore().collection(blog.COLLECTION)
