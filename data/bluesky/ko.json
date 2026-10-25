@@ -318,6 +318,17 @@
     "Vikings",
     "Skystorians"
    ]
+  },
+  {
+   "date": "2026-11-11",
+   "slug": "tre-punkter-i-texten",
+   "en": true,
+   "text": "Where the editors wrote three dots, they chose not to guess. We built two models that check each other: one proposes the word in the gap, the other tests whether the text is language at all – and the edition has the last word. Part II of Interpret, he who can.",
+   "tags": [
+    "runes",
+    "DigitalHumanities",
+    "Skystorians"
+   ]
   }
  ]
 }
