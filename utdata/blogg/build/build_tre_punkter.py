@@ -205,12 +205,12 @@ kept_en = ", ".join(KEEP[:-1]) + " and " + KEEP[-1]
 words_sv = ", ".join(KEEP_WORDS[:-1]) + " och " + KEEP_WORDS[-1]
 words_en = ", ".join(KEEP_WORDS[:-1]) + " and " + KEEP_WORDS[-1]
 
-title = "Tre punkter i texten"
+title = "Vad stod i luckan? Två modeller håller varandra i schack"  # Viktor 2026-10-25; tidigare "Tre punkter i texten"
 summary = ("Där en runa saknas sätter utgivarna ett streck, och där de inte vågar tolka ordet skriver de tre punkter. Vi lät vår "
            "egen sannolikhetsmodell föreslå ord i just de luckorna och prövade förslagen mot utgåvorna och, där det gick, mot en "
            "andra modell. Resultatet är mindre än vi hoppades och bättre än vi fruktade: där forskare redan vågat ett förslag "
            "landar modellen ofta på samma ord, och där den fyller i ord i inskrifter som inte är språk säger den andra modellen ifrån.")
-title_en = "Three Dots in the Text"
+title_en = "What Stood in the Gap? Two Models Keep Each Other in Check"
 summary_en = ("Where a rune is missing, the editors put a dash, and where they do not dare to interpret the word, they write three "
               "dots. We let our own probability model propose words in exactly those gaps and tested the proposals against the "
               "editions and, where possible, against a second model. The result is smaller than we hoped and better than we "
