@@ -59,6 +59,16 @@ export default function RunmodellPage() {
   const newBand = () => { setBands(bs => [...bs, { points: [], height: bands[active]?.height ?? 60 }]); setActive(bands.length); };
   const dropBand = () => { setBands(bs => bs.filter((_, i) => i !== active)); setActive(0); };
 
+  // Pulls the drawn lines onto the runes (the analysis engine moves each point across the band to the densest grooves)
+  const snap = async () => {
+    if (!cur) return;
+    const r = await fetch(`${API_URL}/api/runmodell/snap/${cur.series}/${cur.stem}`, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ bands: bands.filter(b => b.points.length >= 2) }) });
+    if (r.ok) { setBands((await r.json()).bands); setMsg("Linjerna fästa mot runorna – kontrollera och spara."); }
+    else setMsg("Kunde inte fästa linjerna.");
+  };
+
   const save = async (status: "utkast" | "granskad") => {
     if (!cur) return;
     const body = { bands: bands.filter(b => b.points.length >= 2), status, by: "Vitki", note: "" };
@@ -99,7 +109,8 @@ export default function RunmodellPage() {
             <p>Välj en sten. Klicka längs mitten av runslingan <strong>i läsriktning</strong>, från textens början.
               Det halvgenomskinliga bandet ska täcka runorna men inte ramar och ornamentik utanför; ändra höjden med
               reglaget. En slinga som avbryts får en ny linje (Ny slinga), i textens ordning. Dra en punkt för att
-              flytta den.</p>
+              flytta den. Det räcker att rita grovt: <strong>Fäst mot runorna</strong> drar linjen till där spåren är tätast.
+              Spara som granskad när slingorna stämmer och läsriktningen är rätt.</p>
           </div>
         ) : (
           <>
@@ -123,6 +134,7 @@ export default function RunmodellPage() {
               <label className="flex items-center gap-1">Höjd {Math.round((bands[active]?.height ?? 0) * cur.res_mm)} mm
                 <input type="range" min={10} max={250} value={bands[active]?.height ?? 60} onChange={e => setHeight(+e.target.value)} />
               </label>
+              <button type="button" onClick={() => void snap()} className="px-3 py-1 rounded border border-[#b7410e] text-[#b7410e] font-bold">Fäst mot runorna</button>
               <button type="button" onClick={() => void save("utkast")} className="px-3 py-1 rounded bg-slate-700 text-white">Spara utkast</button>
               <button type="button" onClick={() => void save("granskad")} className="px-3 py-1 rounded bg-emerald-700 text-white">Spara som granskad</button>
             </div>

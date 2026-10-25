@@ -108,3 +108,58 @@ def put_band(series: str, stem: str, body: Bands):
     json.dump(data, open(tmp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     os.replace(tmp, p)
     return {"ok": True, "bands": len(body.bands), "status": body.status}
+
+
+def _mask_display(series: str, stem: str) -> np.ndarray:
+    """The groove mask at the drawing page's resolution and orientation (row 0 at the top, as the picture is shown)."""
+    z = np.load(os.path.join(DEPTH_DIR, series, stem + ".npz"))
+    m = np.flipud(z["mask"].astype(np.float32))
+    h, w = (m.shape[0] // SCALE) * SCALE, (m.shape[1] // SCALE) * SCALE
+    return m[:h, :w].reshape(h // SCALE, SCALE, w // SCALE, SCALE).mean(axis=(1, 3))
+
+
+def _resample(points: np.ndarray, step: float) -> np.ndarray:
+    seg = np.r_[0, np.cumsum(np.linalg.norm(np.diff(points, axis=0), axis=1))]
+    t = np.arange(0, seg[-1] + 1e-9, step)
+    return np.c_[np.interp(t, seg, points[:, 0]), np.interp(t, seg, points[:, 1])]
+
+
+def snap_band(mask: np.ndarray, points: list[list[float]], height: float, step: float = 12.0) -> list[list[float]]:
+    """Moves a roughly drawn centre line across the band to where the grooves are densest: for points every `step`
+    pixels, the offset along the normal (within ± half the band height) whose band-wide window holds the most groove;
+    the offsets are smoothed (running median), so that the line follows the band, not single runes."""
+    from scipy.ndimage import map_coordinates, median_filter
+    P = _resample(np.asarray(points, float), step)
+    if len(P) < 2:
+        return points
+    tang = np.gradient(P, axis=0)
+    tang /= np.maximum(np.linalg.norm(tang, axis=1, keepdims=True), 1e-9)
+    norm = np.c_[-tang[:, 1], tang[:, 0]]
+    offs = np.arange(-height / 2, height / 2 + 1, 2.0)
+    across = np.arange(-height / 2, height / 2 + 1, 2.0)
+    along = np.arange(-step, step + 1, 3.0)
+    best = np.zeros(len(P))
+    for i, (p, t, n) in enumerate(zip(P, tang, norm)):
+        scores = []
+        for o in offs:
+            c = p + o * n
+            pts = c[None, None, :] + along[:, None, None] * t + across[None, :, None] * n
+            vals = map_coordinates(mask, [pts[..., 1].ravel(), pts[..., 0].ravel()], order=1, mode="constant")
+            scores.append(vals.mean())
+        best[i] = offs[int(np.argmax(scores))]
+    best = median_filter(best, size=min(len(best) // 2 * 2 + 1, 9), mode="nearest")
+    # then a running mean, so that the line bends with the band but not with single runes
+    k = min(7, len(best))
+    best = np.convolve(np.pad(best, k // 2, mode="edge"), np.ones(k) / k, mode="valid")[:len(best)]
+    out = P + best[:, None] * norm
+    keep = np.r_[0, np.arange(2, len(out) - 1, 3), len(out) - 1]  # every third point, ends kept
+    return [[round(float(x), 1), round(float(y), 1)] for x, y in out[np.unique(keep)]]
+
+
+@router.post("/snap/{series}/{stem}")
+def snap(series: str, stem: str, body: Bands):
+    """Fäster de ritade mittlinjerna mot runorna (snap_band); sparar inget."""
+    _known(series, stem)
+    mask = _mask_display(series, stem)
+    return {"bands": [{"points": snap_band(mask, b.points, b.height), "height": b.height} for b in body.bands
+                      if len(b.points) >= 2]}
