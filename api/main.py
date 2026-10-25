@@ -116,6 +116,34 @@ def _warm_caches():
             logger.warning("Webbplatsens schemaläggning: %r", e)
     threading.Thread(target=site, daemon=True).start()
 
+    # Bluesky: the approved queue (data/bluesky/ko.json) posts one item a day from 18:00, through the analysis engine,
+    # which can reach the project disk (a launchd job cannot: macOS keeps it off the external volume). At most one post
+    # a day, also when the server restarts in between; nothing when no app password is set. BLUESKY_AUTOPOST=0 turns it
+    # off (the tests do).
+    def bluesky():
+        import datetime as dt
+        import json
+        import time
+        while True:
+            try:
+                from scripts import bluesky_post as bp
+                now = dt.datetime.now()
+                q = json.load(open(bp.KO, encoding="utf-8"))
+                today = now.date().isoformat()
+                posted_today = any(i.get("posted_at") and dt.datetime.fromisoformat(i["posted_at"]).astimezone().date().isoformat() == today
+                                   for i in q["items"])
+                due = any(not i.get("posted") and i["date"] <= today for i in q["items"])
+                if now.hour >= 18 and due and not posted_today and os.environ.get("BLUESKY_APP_PASSWORD"):
+                    bp.queue(True)
+                    from api.errors import logger
+                    logger.info("Bluesky: dagens inlägg ur kön postat")
+            except (Exception, SystemExit) as e:  # a failed post is tried again at the next check
+                from api.errors import logger
+                logger.warning("Bluesky-kön: %r", e)
+            time.sleep(300)
+    if os.environ.get("BLUESKY_AUTOPOST", "1") not in ("0", "false"):
+        threading.Thread(target=bluesky, daemon=True).start()
+
     # The R cache (src/r_cache.py): older corpus versions beyond the newest few, untouched for two weeks, are removed –
     # at most once a day, after the warm-up has computed the current version; never the current results. Not while
     # data/cache/r/prune.json says "hold": true (`python -m src.r_cache --release` lifts it)

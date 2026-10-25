@@ -6,7 +6,7 @@ vanliga lösenordet. Det ligger i .env som BLUESKY_HANDLE och BLUESKY_APP_PASSWO
     .venv/bin/python -m scripts.bluesky_post SLUG --text "…" [--en] [--tagg runor --tagg vikingatid]
     .venv/bin/python -m scripts.bluesky_post SLUG --text "…" --posta     # skickar inlägget
     .venv/bin/python -m scripts.bluesky_post --ko [--posta]             # kön: godkända inlägg med datum, ett per körning
-Kön körs dagligen av launchd (scripts/se.vitkirunor.bluesky.plist).
+Kön körs dagligen kl. 18 av analysmotorn (api/main.py, tråden bluesky; BLUESKY_AUTOPOST=0 stänger av).
 """
 from __future__ import annotations
 
@@ -62,9 +62,11 @@ def article(slug: str) -> dict:
 def facets(text: str) -> list[dict]:
     """Links and #tags in the text, with UTF-8 byte offsets as Bluesky wants them."""
     out = []
-    for m in re.finditer(r"https?://\S+|#[\wåäöÅÄÖ]+", text):
+    for m in re.finditer(r"https?://\S+|vitkirunor\.se\S*|#[\wåäöÅÄÖ]+", text):
         start, end = len(text[:m.start()].encode()), len(text[:m.end()].encode())
         tok = m.group(0)
+        if tok.startswith("vitkirunor.se"):
+            tok = "https://" + tok
         feature = ({"$type": "app.bsky.richtext.facet#link", "uri": tok} if tok.startswith("http")
                    else {"$type": "app.bsky.richtext.facet#tag", "tag": tok[1:]})
         out.append({"index": {"byteStart": start, "byteEnd": end}, "features": [feature]})
@@ -72,6 +74,23 @@ def facets(text: str) -> list[dict]:
 
 
 KO = os.path.join(ROOT, "data", "bluesky", "ko.json")
+
+
+MAX_IMAGE = 950_000  # under Bluesky's 1 MB per picture
+
+
+def picture(path: str) -> tuple[bytes, int, int]:
+    """A picture as JPEG under Bluesky's size limit, at most 2000 px on the long side; with its width and height."""
+    from io import BytesIO
+    from PIL import Image
+    im = Image.open(os.path.join(ROOT, path)).convert("RGB")
+    im.thumbnail((2000, 2000))
+    for q in (90, 82, 74, 66, 58):
+        out = BytesIO()
+        im.save(out, format="JPEG", quality=q, optimize=True)
+        if out.tell() <= MAX_IMAGE:
+            return out.getvalue(), im.width, im.height
+    sys.exit(f"{path} blir inte mindre än 1 MB")
 
 
 def card(slug: str, en: bool) -> tuple[str, str, str]:
@@ -98,7 +117,7 @@ def compose(text: str, tags: list[str]) -> str:
     return out
 
 
-def send(text: str, url: str, title: str, desc: str, en: bool) -> str:
+def send(text: str, url: str, title: str, desc: str, en: bool, images: list[dict] | None = None) -> str:
     """Posts and returns the post's address on bsky.app."""
     handle, pw = os.environ.get("BLUESKY_HANDLE"), os.environ.get("BLUESKY_APP_PASSWORD")
     if not handle or not pw:
@@ -107,15 +126,24 @@ def send(text: str, url: str, title: str, desc: str, en: bool) -> str:
     s.raise_for_status()
     sess = s.json()
     auth = {"Authorization": f"Bearer {sess['accessJwt']}"}
-    external = {"uri": url, "title": title, "description": desc}
-    if (pic := thumbnail(url)):
-        blob = requests.post(f"{PDS}/com.atproto.repo.uploadBlob", data=pic[0],
-                             headers={**auth, "Content-Type": pic[1]}, timeout=60)
-        blob.raise_for_status()
-        external["thumb"] = blob.json()["blob"]
+    if images:  # a picture post (up to four, each with its alt text); the link then goes in the text
+        embed = {"$type": "app.bsky.embed.images", "images": []}
+        for im in images[:4]:
+            data, w, h = picture(im["path"])
+            blob = requests.post(f"{PDS}/com.atproto.repo.uploadBlob", data=data,
+                                 headers={**auth, "Content-Type": "image/jpeg"}, timeout=60)
+            blob.raise_for_status()
+            embed["images"].append({"image": blob.json()["blob"], "alt": im["alt"], "aspectRatio": {"width": w, "height": h}})
+    else:
+        external = {"uri": url, "title": title, "description": desc}
+        if (pic := thumbnail(url)):
+            blob = requests.post(f"{PDS}/com.atproto.repo.uploadBlob", data=pic[0],
+                                 headers={**auth, "Content-Type": pic[1]}, timeout=60)
+            blob.raise_for_status()
+            external["thumb"] = blob.json()["blob"]
+        embed = {"$type": "app.bsky.embed.external", "external": external}
     record = {"$type": "app.bsky.feed.post", "text": text, "langs": ["en" if en else "sv"],
-              "createdAt": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z"),
-              "embed": {"$type": "app.bsky.embed.external", "external": external}}
+              "createdAt": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z"), "embed": embed}
     if (f := facets(text)):
         record["facets"] = f
     r = requests.post(f"{PDS}/com.atproto.repo.createRecord", headers=auth, timeout=30,
@@ -139,7 +167,8 @@ def queue(post_due: bool):
         return
     item = due[0]
     url, title, desc = card(item["slug"], item.get("en", False))
-    item["posted"] = send(compose(item["text"], item.get("tags", [])), url, title, desc, item.get("en", False))
+    item["posted"] = send(compose(item["text"], item.get("tags", [])), url, title, desc, item.get("en", False),
+                          item.get("images"))
     item["posted_at"] = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
     json.dump(q, open(KO, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print("Postat:", item["posted"])
