@@ -41,9 +41,10 @@ class CRNN(nn.Module):
         return self.out(y).log_softmax(-1).permute(1, 0, 2)
 
 
-def greedy(logp: torch.Tensor) -> str:
-    """Best path: the most probable class per step, repeats merged and blanks dropped."""
-    ids = logp.argmax(-1).squeeze(1).tolist()
+def greedy(logp: torch.Tensor, frames: int | None = None) -> str:
+    """Best path: the most probable class per step, repeats merged and blanks dropped (only the first `frames` steps,
+    the strip itself without the padding)."""
+    ids = logp.argmax(-1).squeeze(1).tolist()[:frames]
     out, prev = [], 0
     for i in ids:
         if i != prev and i != 0:
@@ -85,10 +86,29 @@ def stones(status: str | None, quality: set[str] | None = None, clean: bool = Fa
     return out
 
 
+BUCKET = 256  # widths are padded to whole steps: the GPU (MPS) keeps a compiled variant per input shape, and hundreds
+# of distinct strip widths made the process grow past 20 GB (2026-10-25)
+
+
+def padded(w: int) -> int:
+    return -(-w // BUCKET) * BUCKET
+
+
 def tensor(img: np.ndarray, flip_lr=False, flip_ud=False) -> torch.Tensor:
     x = img[:, ::-1] if flip_lr else img
     x = x[::-1, :] if flip_ud else x
-    return torch.from_numpy(np.ascontiguousarray(x / 2.5, dtype=np.float32))[None, None]
+    out = np.zeros((x.shape[0], padded(x.shape[1])), np.float32)
+    out[:, :x.shape[1]] = x / 2.5
+    return torch.from_numpy(out)[None, None]
+
+
+def free_gpu():
+    if torch.backends.mps.is_available():
+        torch.mps.empty_cache()
+
+
+def gpu_mb() -> str:
+    return f"{torch.mps.driver_allocated_memory() / 2**20:.0f} MB GPU" if torch.backends.mps.is_available() else ""
 
 
 def augment(img: np.ndarray, rng: random.Random) -> np.ndarray:
@@ -139,7 +159,7 @@ def batch_loss(model, imgs: list[np.ndarray], targets: list[str], dev, flips_ud:
     """Mean CTC loss over a batch of strips padded to the same width; per strip the smaller of read as drawn and
     read reversed (the reading direction that fits the text)."""
     ctc = nn.CTCLoss(blank=0, reduction="none", zero_infinity=True)
-    W = max(i.shape[1] for i in imgs)
+    W = padded(max(i.shape[1] for i in imgs))
     ys = [torch.tensor(rm.encode(t), dtype=torch.long) for t in targets]
     y = torch.cat(ys)
     ylen = torch.tensor([len(t) for t in ys])
@@ -147,7 +167,7 @@ def batch_loss(model, imgs: list[np.ndarray], targets: list[str], dev, flips_ud:
     for lr in (False, True):
         x = torch.zeros(len(imgs), 1, imgs[0].shape[0], W)
         for k, (im, ud) in enumerate(zip(imgs, flips_ud)):
-            x[k, 0, :, :im.shape[1]] = tensor(im, lr, ud)[0, 0]
+            x[k, 0, :, :im.shape[1]] = tensor(im, lr, ud)[0, 0, :, :im.shape[1]]
         lp = model(x.to(dev)).cpu()  # (T, B, C)
         T = lp.shape[0]
         xlen = torch.tensor([max(1, min(T, im.shape[1] // 4)) for im in imgs])
@@ -177,10 +197,11 @@ def evaluate(model, data, dev, shuffled=False, seed=7):
             if shuffled:
                 others = [d["target"] for j, d in enumerate(data) if j != i] or [ref]
                 ref = "".join(rng.sample(list(ref), len(ref))) if len(others) == 1 else rng.choice(others)
-            best = min(cer(greedy(model(tensor(s["image"], lr, ud).to(dev)).cpu()), ref)
+            best = min(cer(greedy(model(tensor(s["image"], lr, ud).to(dev)).cpu(), s["image"].shape[1] // 4), ref)
                        for lr in (False, True) for ud in (False, True))
             out.append(best)
     model.train()
+    free_gpu()
     return float(np.median([c for c, d in zip(out, data) if len(d["target"]) >= 10])) if out else float("nan")
 
 
@@ -230,7 +251,7 @@ def main(argv=None):
         tot = 0.0
         for step, items in enumerate(dl, 1):
             ctc_f = nn.CTCLoss(blank=0, reduction="mean", zero_infinity=True)
-            W = max(im.shape[1] for im, _ in items)
+            W = padded(max(im.shape[1] for im, _ in items))
             x = torch.zeros(len(items), 1, 64, W)
             for k, (im, _) in enumerate(items):
                 x[k, 0, :, :im.shape[1]] = torch.as_tensor(im) / 2.5
@@ -267,8 +288,9 @@ def main(argv=None):
             nn.utils.clip_grad_norm_(model.parameters(), 5.0)
             opt.step()
             tot += loss.item() * len(bt)
+        free_gpu()
         if ep % max(1, a.epoker // 10) == 0 or ep == a.epoker:
-            msg = f"epok {ep} ({(time.time() - t0) / 60:.0f} min): förlust {tot / max(1, len(train)):.3f}, CER träning {evaluate(model, train, dev):.2f}"
+            msg = f"epok {ep} ({(time.time() - t0) / 60:.0f} min, {gpu_mb()}): förlust {tot / max(1, len(train)):.3f}, CER träning {evaluate(model, train, dev):.2f}"
             if test:
                 msg += f", CER prövning {evaluate(model, test, dev):.2f} (mot omflyttad text {evaluate(model, test, dev, True):.2f})"
             print(msg, flush=True)
@@ -278,7 +300,7 @@ def main(argv=None):
     for s in (test or train[:3]):
         with torch.no_grad():
             model.eval()
-            preds = [(cer(p := greedy(model(tensor(s["image"], lr, False).to(dev)).cpu()), s["target"]), p) for lr in (False, True)]
+            preds = [(cer(p := greedy(model(tensor(s["image"], lr, False).to(dev)).cpu(), s["image"].shape[1] // 4), s["target"]), p) for lr in (False, True)]
         e, p = min(preds)
         print(f"{s['signum']}: läst  {p[:70]}\n{'':{len(str(s['signum']))}}  text  {s['target'][:70]}  (CER {e:.2f})")
         rows.append({"signum": s["signum"], "series": s["series"], "stem": s["stem"], "cer": e, "read": p, "text": s["target"],
