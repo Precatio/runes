@@ -13,6 +13,17 @@ type Band = { points: [number, number][]; height: number };
 
 const COLORS = ["#b7410e", "#1d4ed8", "#15803d", "#7e22ce", "#b45309", "#0e7490"];
 
+// The ribbon's two edges: the centre line moved half the band height to each side (normals from neighbouring points)
+function edges(points: [number, number][], half: number): string[] {
+  if (points.length < 2) return [];
+  const side = (s: number) => points.map((p, i) => {
+    const a = points[Math.max(0, i - 1)], b = points[Math.min(points.length - 1, i + 1)];
+    const dx = b[0] - a[0], dy = b[1] - a[1], n = Math.hypot(dx, dy) || 1;
+    return `${p[0] - (s * half * dy) / n},${p[1] + (s * half * dx) / n}`;
+  }).join(" ");
+  return [side(1), side(-1)];
+}
+
 export default function RunmodellPage() {
   const [stones, setStones] = useState<Stone[]>([]);
   const [filter, setFilter] = useState("");
@@ -66,7 +77,8 @@ export default function RunmodellPage() {
     setBands(bs => bs.map((b, i) => (i === drag[0] ? { ...b, points: b.points.map((q, j) => (j === drag[1] ? p : q)) } : b)));
   };
   const undo = () => setBands(bs => bs.map((b, i) => (i === active ? { ...b, points: b.points.slice(0, -1) } : b)));
-  const setHeight = (h: number) => setBands(bs => bs.map((b, i) => (i === active ? { ...b, height: h } : b)));
+  // The runes are usually the same height all over a stone: the height applies to every band
+  const setHeight = (h: number) => setBands(bs => bs.map(b => ({ ...b, height: h })));
   const newBand = () => { setBands(bs => [...bs, { points: [], height: bands[active]?.height ?? 60 }]); setActive(bands.length); };
   const dropBand = () => { setBands(bs => bs.filter((_, i) => i !== active)); setActive(0); };
 
@@ -150,7 +162,7 @@ export default function RunmodellPage() {
               <button type="button" onClick={newBand} className="px-2 py-1 rounded border border-slate-300">Ny slinga</button>
               <button type="button" onClick={undo} className="px-2 py-1 rounded border border-slate-300">Ångra punkt</button>
               <button type="button" onClick={dropBand} className="px-2 py-1 rounded border border-slate-300">Ta bort slingan</button>
-              <label className="flex items-center gap-1">Höjd {Math.round((bands[active]?.height ?? 0) * cur.res_mm)} mm
+              <label className="flex items-center gap-1" title="Bandets bredd tvärs över slingan, för alla slingor på stenen">Höjd {Math.round((bands[active]?.height ?? 0) * cur.res_mm)} mm
                 <input type="range" min={10} max={250} value={bands[active]?.height ?? 60} onChange={e => setHeight(+e.target.value)} />
               </label>
               <button type="button" onClick={() => setRot(r => (r + 90) % 360)} className="px-2 py-1 rounded border border-slate-300" title="Vrid stenen så att den står upprätt">↻ 90°</button>
@@ -179,7 +191,10 @@ export default function RunmodellPage() {
                   const pts = b.points.map(p => p.join(",")).join(" ");
                   return (
                     <g key={i}>
-                      <polyline points={pts} fill="none" stroke={c} strokeOpacity={0.18} strokeWidth={b.height} strokeLinejoin="round" strokeLinecap="round" />
+                      <polyline points={pts} fill="none" stroke={c} strokeOpacity={0.15} strokeWidth={b.height} strokeLinejoin="round" strokeLinecap="round" />
+                      {edges(b.points, b.height / 2).map((e, k) => (
+                        <polyline key={k} points={e} fill="none" stroke={c} strokeWidth={cur.width / 700} strokeDasharray={`${cur.width / 150} ${cur.width / 300}`} />
+                      ))}
                       <polyline points={pts} fill="none" stroke={c} strokeWidth={cur.width / 500} markerEnd={`url(#pil${i % COLORS.length})`} />
                       {b.points.map((p, j) => (
                         <circle key={j} cx={p[0]} cy={p[1]} r={cur.width / 220} fill={j === 0 ? "#fff" : c} stroke={c} strokeWidth={cur.width / 900}
