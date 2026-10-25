@@ -206,20 +206,30 @@ words_sv = ", ".join(KEEP_WORDS[:-1]) + " och " + KEEP_WORDS[-1]
 words_en = ", ".join(KEEP_WORDS[:-1]) + " and " + KEEP_WORDS[-1]
 
 title = "Vad stod i luckan? Två modeller håller varandra i schack"  # Viktor 2026-10-25; tidigare "Tre punkter i texten"
-summary = ("Där en runa saknas sätter utgivarna ett streck, och där de inte vågar tolka ordet skriver de tre punkter. Vi lät vår "
-           "egen sannolikhetsmodell föreslå ord i just de luckorna och prövade förslagen mot utgåvorna och, där det gick, mot en "
-           "andra modell. Resultatet är mindre än vi hoppades och bättre än vi fruktade: där forskare redan vågat ett förslag "
-           "landar modellen ofta på samma ord, och där den fyller i ord i inskrifter som inte är språk säger den andra modellen ifrån.")
+summary = ("Där en runa saknas sätter utgivarna ett streck, och där de inte vågar tolka ordet skriver de tre punkter. Vi har "
+           "byggt två modeller som kontrollerar varandra: den ena föreslår vilket ord som stod i luckan, den andra mäter om "
+           "texten alls är språk – och utgåvan har sista ordet. Där forskare redan vågat ett förslag landar modellen ofta på "
+           "samma ord, och där den fyller i ord i inskrifter som inte är språk säger den andra modellen ifrån.")
 title_en = "What Stood in the Gap? Two Models Keep Each Other in Check"
 summary_en = ("Where a rune is missing, the editors put a dash, and where they do not dare to interpret the word, they write three "
-              "dots. We let our own probability model propose words in exactly those gaps and tested the proposals against the "
-              "editions and, where possible, against a second model. The result is smaller than we hoped and better than we "
-              "feared: where scholars have already ventured a proposal, the model often lands on the same word, and where it fills "
-              "in words in inscriptions that are not language, the second model objects.")
+              "dots. We have built two models that check each other: one proposes which word stood in the gap, the other measures "
+              "whether the text is language at all – and the edition has the last word. Where scholars have already ventured a "
+              "proposal, the model often lands on the same word, and where it fills in words in inscriptions that are not "
+              "language, the second model objects.")
 
 body = f"""Den som läser en runinskrift i en utgåva möter förr eller senare tre punkter. Där en runa har flagnat bort, där stenen har spruckit eller där en ritning från 1600-talet inte går att lita på, sätter utgivaren ett streck för varje runa som fattas. Och där de runor som finns kvar inte räcker för att säga vilket ord det var, står det i tolkningen bara ”…”. Punkterna är inte slarv. De är ett beslut. En runolog har stått framför stenen, sett vad som finns kvar och valt att inte gissa.
 
-Vi har byggt en sannolikhetsmodell som gör precis det som runologen avstod från: den föreslår vad som kan ha stått där. Den är vår egen, den är ny, och ingen utanför Vitki har ännu granskat den. Det är därför den här artikeln handlar lika mycket om hur vi prövade förslagen som om förslagen själva. Vi påstår inte att något av orden nedan är fakta. Vi visar vad modellen säger, vad utgåvorna säger, och var de möts.
+Vi har byggt en sannolikhetsmodell som gör precis det som runologen avstod från: den föreslår vad som kan ha stått där. Den är vår egen, den är ny, och ingen utanför Vitki har ännu granskat den. Därför står den aldrig ensam. Vi påstår inte att något av orden nedan är fakta. Vi visar vad modellen säger, hur förslagen prövas och var de möter utgåvorna.
+
+## Vår lösning: två modeller som kontrollerar varandra
+
+En modell som fyller luckor har ett inbyggt problem: den hittar alltid något. Därför får varje förslag gå igenom tre prov innan vi lyfter fram det.
+
+1. **Sannolikheten är kalibrerad.** Modellens procent är prövad på luckor där svaret redan är känt, så att 80 procent betyder att den har haft rätt ungefär åtta gånger av tio.
+2. **En andra modell frågar om texten alls är språk.** Språkprovet mäter hur språklik en runföljd är, helt oberoende av den första modellen. Säger provet att inskriften inte är språk, faller förslaget. Provet kan bara bedöma inskrifter som är tillräckligt långa och otolkade.
+3. **Utgåvan har sista ordet.** Har utgivaren beskrivit spår på stenen som talar emot förslaget, går stenen före modellen.
+
+Det fungerar som en skribent och en korrekturläsare: den ena skriver fritt, den andra stryker det som inte håller, och redaktören – här utgåvan och stenen – avgör. Ingen av dem räcker ensam. Tillsammans ger de en kort lista över förslag som är värda att pröva på stenen.
 
 ## Vad modellen föreslår
 
@@ -237,7 +247,7 @@ På U 765 skriver utgåvan om runan i luckan: ”Av r. 12 återstår hst och mö
 
 På Sö 245 vid Tungelsta föreslår modellen mag, ”måg”, med {P('Sö 245', 'mag')} procent. Rundata lämnar luckan öppen, men RAÄ:s nyare databas Runor har redan fört in samma ord: *ma[g] sinn*, med anteckningen ”Tolkad av redaktionen”. Modellen har aldrig sett den läsningen. Den kom fram till samma ord på egen hand, ur runorna och ur hur runstenarnas texter brukar vara formulerade.
 
-## Fem stenar som inte talar
+## Där den andra modellen säger nej
 
 Det andra mönstret är det viktigaste. Fem av de {RS['stones']} stenarna har inskrifter som utgåvorna inte läser som språk alls:
 
@@ -251,7 +261,7 @@ Det andra mönstret är det viktigaste. Fem av de {RS['stones']} stenarna har in
 
 Ändå fyller modellen i ord där: risti med {P('U 1180', 'risti')} procent, þikra med {P('Sm 47', 'þikra')} – en runföljd som bara finns otolkad på en annan sten, Ög 60 – vaR med {P('U 493', 'vaR')}, ok med {P('U 466', 'ok')} och ett namn med {P('U 522', 'heðingunnr')}. Den är byggd för att hitta språk, och den hittar språk också där det inte finns något. Den vet inte att en ristare ibland högg runor utan att skriva ord – som prydnad, som runrad, kanske som magi.
 
-Men Vitki har en andra modell, som gör det motsatta. Språkprovet, som vi beskrev i [Tyde den som kan](/artiklar/hur-spraklik-ar-en-runfoljd/), mäter hur språklik en runföljd är: hur väl den kan förutsägas av en modell tränad på tolkade inskrifter, jämfört med riktiga texter klippta i samma längder och med samma runor i slumpvis ordning. Provets regler låstes den 16 oktober, med en rättelse av underlaget den 17 oktober, innan den här artikeln var tänkt. Det har bedömt alla fem: U 1180, U 493 och Sm 47 som ”inte språk”, U 466 och U 522 som ”runrad”, vilket betyder att minst sex runor står i futharkens ordning. Det är just de fem som utgåvorna kallar meningslösa. Tre andra stenar i listan, U 784, U 246 och Öl ATA4377/56A, bedömer provet som språklika, och där säger utgåvorna inget om att texten skulle sakna mening. De tre har, liksom Sm 47, bara tio läsbara runor, det minsta provet godtar, så de bedömningarna är svagare.
+Här kommer den andra modellen in. Språkprovet, som vi beskrev i [Tyde den som kan](/artiklar/hur-spraklik-ar-en-runfoljd/), mäter hur språklik en runföljd är: hur väl den kan förutsägas av en modell tränad på tolkade inskrifter, jämfört med riktiga texter klippta i samma längder och med samma runor i slumpvis ordning. Provets regler låstes den 16 oktober, med en rättelse av underlaget den 17 oktober, innan den här artikeln var tänkt. Det har bedömt alla fem: U 1180, U 493 och Sm 47 som ”inte språk”, U 466 och U 522 som ”runrad”, vilket betyder att minst sex runor står i futharkens ordning. Det är just de fem som utgåvorna kallar meningslösa. Tre andra stenar i listan, U 784, U 246 och Öl ATA4377/56A, bedömer provet som språklika, och där säger utgåvorna inget om att texten skulle sakna mening. De tre har, liksom Sm 47, bara tio läsbara runor, det minsta provet godtar, så de bedömningarna är svagare.
 
 Provet är inte ofelbart. Bland alla otolkade runstenar kallar det 27 ”inte språk”, och bara 9 av dem har Rundatas egna anteckningar kallat nonsensinskrifter. Det har heller bara kunnat bedöma {len(TESTED)} av de {RS['stones']} stenarna här; de andra är för korta eller redan delvis tolkade. Men där det säger ifrån, gör det det på rätt ställen.
 
@@ -304,9 +314,9 @@ När allt vägs samman står {len(KEEP)} stenar kvar där inget i de utgåvor vi
 Under *Forskningsluckor* i Vitki finns listan med alla förslag, den kalibrerade och den råa siffran, Rundatas beteckning på föremålet och ett svenskt översättningsutkast av modellens läsning. Utkastet är ord för ord ur en ordlista som modellen lärt sig av Rundatas egna översättningar, och ord den inte kan översätta står kvar på fornspråk. Öppna en sten, läs vad utgåvan skriver om luckan och se om du håller med modellen. Ofta gör man inte det, och det är just därför det är värt att pröva.
 
 :::box Det viktigaste i korthet
-- Utgivarnas tre punkter är ett beslut att inte gissa. Vår modell gissar, och därför måste varje förslag prövas mot vad utgåvan faktiskt såg på stenen.
+- Utgivarnas tre punkter är ett beslut att inte gissa. Vår lösning är att låta två modeller kontrollera varandra – den ena föreslår, den andra prövar om texten alls är språk – och att låta utgåvan och stenen få sista ordet.
 - Där forskare redan vågat ett förslag hamnar modellen ofta på samma ord, utan att ha sett läsningen. Det stämmer med blindtestet, som gjordes på en tidigare version av modellen och är det starkaste stödet vi har.
-- Modellen hittar språk också där det inte finns något, men en andra modell, språkprovet, säger ifrån just vid de inskrifter som utgåvorna kallar meningslösa. Tillsammans är de mer att lita på än var för sig.
+- Ensam hittar modellen språk också där det inte finns något. Språkprovet säger ifrån just vid de inskrifter som utgåvorna kallar meningslösa, och därför är de två tillsammans mer att lita på än var för sig.
 - Det som återstår är formelord på {len(KEEP)} stenar: inga nya namn, men en kort lista över var stenen själv kan avgöra saken.
 :::
 
@@ -326,7 +336,17 @@ Listan är Vitkis inventering av luckorna i Rundatas vikingatida inskrifter med 
 
 body_en = f"""Anyone who reads a runic inscription in an edition sooner or later meets three dots. Where a rune has flaked away, where the stone has cracked, or where a seventeenth-century drawing cannot be trusted, the editor puts a dash for each missing rune. And where the runes that remain are not enough to say which word it was, the interpretation just reads “…”. The dots are not carelessness. They are a decision. A runologist has stood in front of the stone, seen what is left, and chosen not to guess.
 
-We have built a probability model that does exactly what the runologist refrained from: it proposes what may have stood there. It is our own, it is new, and no one outside Vitki has yet examined it. That is why this article is as much about how we tested the proposals as about the proposals themselves. We do not claim that any of the words below are facts. We show what the model says, what the editions say, and where they meet.
+We have built a probability model that does exactly what the runologist refrained from: it proposes what may have stood there. It is our own, it is new, and no one outside Vitki has yet examined it. So it never stands alone. We do not claim that any of the words below are facts. We show what the model says, how the proposals are tested and where they meet the editions.
+
+## Our solution: two models that check each other
+
+A model that fills gaps has a built-in problem: it always finds something. So every proposal has to pass three tests before we bring it forward.
+
+1. **The probability is calibrated.** The model's percentages are tested on gaps where the answer is already known, so that 80 per cent means it has been right about eight times in ten.
+2. **A second model asks whether the text is language at all.** The language test measures how language-like a sequence of runes is, entirely independently of the first model. If the test says the inscription is not language, the proposal falls. The test can only judge inscriptions that are long enough and uninterpreted.
+3. **The edition has the last word.** If the editor has described traces on the stone that speak against the proposal, the stone takes precedence over the model.
+
+It works like a writer and a proofreader: one writes freely, the other strikes out what does not hold, and the editor – here the edition and the stone – decides. Neither is enough alone. Together they give a short list of proposals worth testing on the stone.
 
 ## What the model proposes
 
@@ -344,7 +364,7 @@ On U 765 the edition writes of the rune in the gap: “Av r. 12 återstår hst o
 
 On Sö 245 at Tungelsta the model proposes mag, “kinsman by marriage”, with {P('Sö 245', 'mag')} per cent. Rundata leaves the gap open, but the Swedish National Heritage Board's newer database Runor has already entered the same word: *ma[g] sinn*, with the note “Tolkad av redaktionen” – interpreted by the editors. The model has never seen that reading. It reached the same word on its own, from the runes and from how runestone texts are usually phrased.
 
-## Five stones that do not speak
+## Where the second model says no
 
 The second pattern is the most important. Five of the {RS['stones']} stones have inscriptions that the editions do not read as language at all:
 
@@ -358,7 +378,7 @@ The second pattern is the most important. Five of the {RS['stones']} stones have
 
 Still the model fills in words there: risti with {P('U 1180', 'risti')} per cent, þikra with {P('Sm 47', 'þikra')} – a rune sequence found only uninterpreted on another stone, Ög 60 – vaR with {P('U 493', 'vaR')}, ok with {P('U 466', 'ok')} and a name with {P('U 522', 'heðingunnr')}. It is built to find language, and it finds language even where there is none. It does not know that a carver sometimes cut runes without writing words – as ornament, as a rune row, perhaps as magic.
 
-But Vitki has a second model that does the opposite. The language test, which we described in [Interpret, he who can](/en/artiklar/hur-spraklik-ar-en-runfoljd/), measures how language-like a rune sequence is: how well it can be predicted by a model trained on interpreted inscriptions, compared with real texts clipped to the same lengths and with the same runes in random order. The rules of the test were locked on 16 October, with a correction of the data on 17 October, before this article was conceived. It has judged all five: U 1180, U 493 and Sm 47 as “not language”, U 466 and U 522 as “rune row”, which means that at least six runes stand in the order of the futhark. Those are exactly the five that the editions call meaningless. Three other stones in the list, U 784, U 246 and Öl ATA4377/56A, the test judges language-like, and there the editions say nothing about the text lacking meaning. Those three, like Sm 47, have only ten readable runes, the minimum the test accepts, so those judgements are weaker.
+This is where the second model comes in. The language test, which we described in [Interpret, he who can](/en/artiklar/hur-spraklik-ar-en-runfoljd/), measures how language-like a rune sequence is: how well it can be predicted by a model trained on interpreted inscriptions, compared with real texts clipped to the same lengths and with the same runes in random order. The rules of the test were locked on 16 October, with a correction of the data on 17 October, before this article was conceived. It has judged all five: U 1180, U 493 and Sm 47 as “not language”, U 466 and U 522 as “rune row”, which means that at least six runes stand in the order of the futhark. Those are exactly the five that the editions call meaningless. Three other stones in the list, U 784, U 246 and Öl ATA4377/56A, the test judges language-like, and there the editions say nothing about the text lacking meaning. Those three, like Sm 47, have only ten readable runes, the minimum the test accepts, so those judgements are weaker.
 
 The test is not infallible. Among all uninterpreted runestones it calls 27 “not language”, and Rundata's own notes call only 9 of them nonsense inscriptions. It has also been able to judge only {len(TESTED)} of the {RS['stones']} stones here; the others are too short or already partly interpreted. But where it objects, it objects in the right places.
 
@@ -411,9 +431,9 @@ When everything is weighed together, {len(KEEP)} stones remain where nothing in 
 Under *Research gaps* in Vitki is the list with every proposal, the calibrated and the raw figure, Rundata's term for the object, and a Swedish draft translation of the model's reading. The draft is word for word, from a glossary the model learned from Rundata's own translations, and words it cannot translate stay in Old Norse. Open a stone, read what the edition writes about the gap, and see whether you agree with the model. Often one does not, and that is exactly why it is worth trying.
 
 :::box The essentials in brief
-- The editors' three dots are a decision not to guess. Our model guesses, and so every proposal must be tested against what the edition actually saw on the stone.
+- The editors' three dots are a decision not to guess. Our solution is to let two models check each other – one proposes, the other tests whether the text is language at all – and to give the edition and the stone the last word.
 - Where scholars have already ventured a proposal, the model often lands on the same word without having seen the reading. That agrees with the blind test, which was made on an earlier version of the model and is the strongest support we have.
-- The model finds language even where there is none, but a second model, the language test, objects at exactly the inscriptions the editions call meaningless. Together they are more trustworthy than either alone.
+- On its own the model finds language even where there is none. The language test objects at exactly the inscriptions the editions call meaningless, and so the two together are more trustworthy than either alone.
 - What remains are formula words on {len(KEEP)} stones: no new names, but a short list of where the stone itself can settle the matter.
 :::
 
