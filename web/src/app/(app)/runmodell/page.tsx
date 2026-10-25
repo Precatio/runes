@@ -21,6 +21,7 @@ export default function RunmodellPage() {
   const [active, setActive] = useState(0);
   const [drag, setDrag] = useState<[number, number] | null>(null);
   const [msg, setMsg] = useState("");
+  const [rot, setRot] = useState(0); // degrees clockwise the stone is shown turned; points stay in image coordinates
   const svg = useRef<SVGSVGElement>(null);
 
   const load = useCallback(() => fetch(`${API_URL}/api/runmodell/stones`).then(r => r.json()).then(d => d.stones as Stone[]), []);
@@ -35,14 +36,21 @@ export default function RunmodellPage() {
     const r = await fetch(`${API_URL}/api/runmodell/band/${s.series}/${s.stem}`);
     const b = await r.json();
     setBands(b.bands?.length ? b.bands : [{ points: [], height: Math.round(70 / s.res_mm) }]);
+    setRot(b.rotation ?? 0);
     setActive(0);
   };
 
-  // Click coordinates in image pixels (the SVG's viewBox is the image)
+  // The shown (turned) picture's size, and a click taken back to the image's own pixels
+  const W = cur?.width ?? 1, H = cur?.height ?? 1;
+  const viewW = rot % 180 === 0 ? W : H, viewH = rot % 180 === 0 ? H : W;
+  const turn = rot === 90 ? `translate(${H},0) rotate(90)` : rot === 180 ? `translate(${W},${H}) rotate(180)`
+    : rot === 270 ? `translate(0,${W}) rotate(270)` : undefined;
   const at = (e: React.MouseEvent): [number, number] => {
     const r = svg.current!.getBoundingClientRect();
-    const k = cur!.width / r.width;
-    return [Math.round((e.clientX - r.left) * k), Math.round((e.clientY - r.top) * k)];
+    const k = viewW / r.width;
+    const X = (e.clientX - r.left) * k, Y = (e.clientY - r.top) * k;
+    const p = rot === 90 ? [Y, H - X] : rot === 180 ? [W - X, H - Y] : rot === 270 ? [W - Y, X] : [X, Y];
+    return [Math.round(p[0]), Math.round(p[1])];
   };
   const addPoint = (e: React.MouseEvent) => {
     if (drag || !cur) return;
@@ -79,7 +87,7 @@ export default function RunmodellPage() {
 
   const save = async (status: "utkast" | "granskad") => {
     if (!cur) return;
-    const body = { bands: bands.filter(b => b.points.length >= 2), status, by: "Vitki", note: "" };
+    const body = { bands: bands.filter(b => b.points.length >= 2), status, by: "Vitki", note: "", rotation: rot };
     if (!body.bands.length && !window.confirm("Ingen slinga har minst två punkter. Spara stenen utan slingor?")) return;
     const r = await fetch(`${API_URL}/api/runmodell/band/${cur.series}/${cur.stem}`, {
       method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
@@ -118,7 +126,7 @@ export default function RunmodellPage() {
             <p>Välj en sten. Klicka längs mitten av runslingan <strong>i läsriktning</strong>, från textens början.
               Det halvgenomskinliga bandet ska täcka runorna men inte ramar och ornamentik utanför; ändra höjden med
               reglaget. En slinga som avbryts får en ny linje (Ny slinga), i textens ordning. Dra en punkt för att
-              flytta den. Det räcker att rita grovt: <strong>Fäst mot runorna</strong> drar linjen till där spåren är tätast.
+              flytta den. Ligger stenen ned, vrid den upprätt med ↻ 90° innan du ritar. Det räcker att rita grovt: <strong>Fäst mot runorna</strong> drar linjen till där spåren är tätast.
               Spara som granskad när slingorna stämmer och läsriktningen är rätt.</p>
           </div>
         ) : (
@@ -143,16 +151,17 @@ export default function RunmodellPage() {
               <label className="flex items-center gap-1">Höjd {Math.round((bands[active]?.height ?? 0) * cur.res_mm)} mm
                 <input type="range" min={10} max={250} value={bands[active]?.height ?? 60} onChange={e => setHeight(+e.target.value)} />
               </label>
+              <button type="button" onClick={() => setRot(r => (r + 90) % 360)} className="px-2 py-1 rounded border border-slate-300" title="Vrid stenen så att den står upprätt">↻ 90°</button>
               <button type="button" onClick={() => void snap()} className="px-3 py-1 rounded border border-[#b7410e] text-[#b7410e] font-bold">Fäst mot runorna</button>
               <button type="button" onClick={() => void save("utkast")} className="px-3 py-1 rounded bg-slate-700 text-white">Spara utkast</button>
               <button type="button" onClick={() => void save("granskad")} className="px-3 py-1 rounded bg-emerald-700 text-white">Spara som granskad</button>
             </div>
-            <div className="relative inline-block max-w-full">
-              {/* eslint-disable-next-line @next/next/no-img-element -- a local depth image, not optimised */}
-              <img src={`${API_URL}/api/runmodell/depth/${cur.series}/${cur.stem}.png`} alt={`Djupbild av ${cur.signum ?? cur.file}`}
-                className="block max-w-full h-auto select-none" draggable={false} />
-              <svg ref={svg} viewBox={`0 0 ${cur.width} ${cur.height}`} className="absolute inset-0 w-full h-full cursor-crosshair"
+            <div className="max-w-full" style={{ width: `min(100%, ${viewW}px)` }}>
+              <svg ref={svg} viewBox={`0 0 ${viewW} ${viewH}`} className="block w-full h-auto cursor-crosshair select-none"
+                role="img" aria-label={`Djupbild av ${cur.signum ?? cur.file}`}
                 onClick={addPoint} onMouseMove={move} onMouseUp={() => setTimeout(() => setDrag(null), 0)}>
+                <g transform={turn}>
+                <image href={`${API_URL}/api/runmodell/depth/${cur.series}/${cur.stem}.png`} width={W} height={H} />
                 <defs>
                   {COLORS.map((c, i) => (
                     <marker key={i} id={`pil${i}`} viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
@@ -174,6 +183,7 @@ export default function RunmodellPage() {
                     </g>
                   );
                 })}
+                </g>
               </svg>
             </div>
           </>
