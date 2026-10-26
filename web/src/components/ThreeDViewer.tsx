@@ -338,6 +338,71 @@ function StoneMesh({ geometry, onClick, resetCounter, topografyMode, planeNormal
   );
 }
 
+// The stone's carved side as a direction in the model's own coordinates: the direction in which the stone is thinnest
+// (least spread of its vertices; the cross product of the two directions of greatest spread), turned towards the side
+// most of the surface faces – the same estimate the analysis engine uses when no view is given
+// (api/routers/threed.py, _estimated_normal).
+function carvedSideNormal(geometry: THREE.BufferGeometry): THREE.Vector3 | null {
+  const pos = geometry.getAttribute('position');
+  if (!pos || pos.count < 3) return null;
+  const step = Math.max(1, Math.floor(pos.count / 200000));
+  const mean = new THREE.Vector3(), v = new THREE.Vector3();
+  let n = 0;
+  for (let i = 0; i < pos.count; i += step) { mean.add(v.fromBufferAttribute(pos, i)); n++; }
+  mean.divideScalar(n);
+  const C = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  for (let i = 0; i < pos.count; i += step) {
+    v.fromBufferAttribute(pos, i).sub(mean);
+    const a = [v.x, v.y, v.z];
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) C[r * 3 + c] += a[r] * a[c];
+  }
+  const apply = (x: THREE.Vector3) => new THREE.Vector3(C[0] * x.x + C[1] * x.y + C[2] * x.z, C[3] * x.x + C[4] * x.y + C[5] * x.z, C[6] * x.x + C[7] * x.y + C[8] * x.z);
+  const power = (start: THREE.Vector3, away?: THREE.Vector3) => {
+    let x = start.clone().normalize();
+    for (let k = 0; k < 100; k++) {
+      if (away) x.sub(away.clone().multiplyScalar(x.dot(away)));
+      x = apply(x);
+      if (away) x.sub(away.clone().multiplyScalar(x.dot(away)));
+      if (x.lengthSq() === 0) return null;
+      x.normalize();
+    }
+    return x;
+  };
+  const e1 = power(new THREE.Vector3(1, 0.3, 0.2));
+  const e2 = e1 && power(new THREE.Vector3(0.2, 1, 0.3), e1);
+  if (!e1 || !e2) return null;
+  const normal = new THREE.Vector3().crossVectors(e1, e2).normalize();
+  const nrm = geometry.getAttribute('normal');
+  if (nrm) {
+    let side = 0;
+    for (let i = 0; i < nrm.count; i += step) side += v.fromBufferAttribute(nrm, i).dot(normal);
+    if (side < 0) normal.negate();
+  }
+  return normal;
+}
+
+// Turns the camera to look straight at the carved side; pressed again while already facing it, the other side
+function FaceCarvedSide({ counter, geometry, groupRef }: {
+  counter: number; geometry: THREE.BufferGeometry; groupRef: React.RefObject<THREE.Group | null>;
+}) {
+  const { camera, controls } = useThree();
+  useEffect(() => {
+    if (!counter || !groupRef.current) return;
+    const local = carvedSideNormal(geometry);
+    if (!local) return;
+    const world = local.applyQuaternion(groupRef.current.getWorldQuaternion(new THREE.Quaternion())).normalize();
+    const orbit = controls as unknown as { target: THREE.Vector3; update: () => void } | null;
+    const target = orbit?.target ?? new THREE.Vector3();
+    const toCamera = camera.position.clone().sub(target);
+    const dist = toCamera.length() || 1;
+    if (toCamera.normalize().dot(world) > 0.995) world.negate(); // already facing it: show the other side
+    camera.position.copy(target).add(world.multiplyScalar(dist));
+    camera.lookAt(target);
+    orbit?.update();
+  }, [counter]); // eslint-disable-line react-hooks/exhaustive-deps -- only on a new press
+  return null;
+}
+
 function ViewDirTracker({ groupRef, viewDirRef }: {
   groupRef: React.RefObject<THREE.Group | null>;
   viewDirRef?: React.MutableRefObject<ViewDirection | null>;
@@ -370,8 +435,9 @@ function MeshModel({
   file, onVectorSelected, onPathSelected, onAutoSnapRequest, resetCounter, setDragging, setLoading, clearCounter, snapCounter, newLineCounter,
   topografyMode, planeNormal, topoOffset, topoSensitivity, topoOpacity, cutoffDepth, layerThickness,
   meshRotation, slicerMode = 'flat', preCentered = false,
-  clickMode = 'points', onSingleClick, markers, autoPoints, viewDirRef
+  clickMode = 'points', onSingleClick, markers, autoPoints, viewDirRef, faceCounter = 0
 }: ThreeDViewerProps & { 
+  faceCounter?: number,
   resetCounter: number, setDragging: (d: boolean) => void, setLoading: (l: boolean) => void, clearCounter: number, snapCounter: number, newLineCounter: number,
   topografyMode: boolean, planeNormal: THREE.Vector3, topoOffset: number, topoSensitivity: number, topoOpacity: number, cutoffDepth: number, layerThickness: number,
   meshRotation: [number, number, number], slicerMode?: 'flat' | 'peeling'
@@ -592,6 +658,7 @@ function MeshModel({
   return (
     <group rotation={meshRotation} ref={groupRef}>
       <ViewDirTracker groupRef={groupRef} viewDirRef={viewDirRef} />
+      <FaceCarvedSide counter={faceCounter} geometry={geometry} groupRef={groupRef} />
       {geometry && (
         <Bounds fit margin={1.2}>
           <StoneMesh 
@@ -673,6 +740,7 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
   const [clearCounter, setClearCounter] = useState(0);
   const [snapCounter, setSnapCounter] = useState(0);
   const [newLineCounter, setNewLineCounter] = useState(0);
+  const [faceCounter, setFaceCounter] = useState(0);
   const [lightIntensity, setLightIntensity] = useState(1.5);
   const [ambientIntensity, setAmbientIntensity] = useState(0.5);
   const [showSettings, setShowSettings] = useState(false);
@@ -912,7 +980,14 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
               {snapMessage}
             </div>
           )}
-          <div className="absolute bottom-3 left-3 right-3 z-10 flex justify-end pointer-events-none">
+          <div className="absolute bottom-3 left-3 right-3 z-10 flex justify-end items-end gap-2 pointer-events-none">
+            {clickMode === 'view' && file && (
+              <button type="button" onClick={() => setFaceCounter(c => c + 1)}
+                title="Vrider vyn så att du ser rakt på stenens bredaste sida (stenens tunnaste riktning). Tryck igen för andra sidan."
+                className="pointer-events-auto bg-slate-900 hover:bg-black text-white px-3 py-2 rounded-xl text-[11px] font-bold shadow-md">
+                Vänd ristade sidan mot mig
+              </button>
+            )}
             <div className="bg-white/85 backdrop-blur-md px-3 py-2 rounded-xl text-[11px] font-semibold text-slate-600 border border-white/50 leading-relaxed text-right">
               Dra: rotera · Högerdra: panorera · Scroll: zooma ·{" "}
               {clickMode === 'single'
@@ -969,6 +1044,7 @@ export default function ThreeDViewer({ file, onVectorSelected, onPathSelected, o
               markers={markers}
               autoPoints={autoPoints}
               viewDirRef={viewDirRef}
+              faceCounter={faceCounter}
             />
           )}
           </Suspense>

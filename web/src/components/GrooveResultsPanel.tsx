@@ -149,6 +149,34 @@ export default function GrooveResultsPanel({ results, signum, featureType, onExp
         </div>
       </div>
 
+      {/* The rune as the unit: every rune weighs the same, whatever its number of slices (METHODS.md 3) */}
+      {results.rune_summary && results.rune_summary.n_runes >= 2 && (
+        <div className="liquid-glass-island rounded-[32px] p-6 shadow-sm border border-white/50">
+          <h3 className="text-slate-900 text-lg font-bold">Med runan som enhet</h3>
+          <p className="text-xs text-slate-500 font-medium mt-1 max-w-2xl">
+            Medelvärdet av {results.rune_summary.n_runes} runors egna medelvärden, så att varje runa väger lika mycket hur
+            många snitt den än har. Intervallet är ett 95 %-konfidensintervall räknat på runorna. ICC visar hur stor del av
+            spridningen som ligger mellan runorna snarare än inom dem.
+          </p>
+          <ul className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1 text-sm text-slate-700">
+            {METRICS.map(m => {
+              const r = results.rune_summary!.metrics[m];
+              const digits = METRIC_DIGITS[m];
+              if (!r || r.mean === null) return null;
+              return (
+                <li key={m} className="flex justify-between gap-3 border-b border-slate-900/5 py-1">
+                  <span className="text-slate-500">{METRIC_LABELS[m]}</span>
+                  <span className="font-mono text-xs">
+                    {r.mean.toFixed(digits)}{r.ci95 ? ` (${r.ci95[0].toFixed(digits)}–${r.ci95[1].toFixed(digits)})` : ""}
+                    {r.icc !== null ? ` · ICC ${r.icc.toFixed(2)}` : ""}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
+
       {/* Attribution against the shared corpus */}
       <div className="liquid-glass-island rounded-[32px] p-6 shadow-sm border border-white/50">
         <div className="flex items-start justify-between gap-4 mb-3">

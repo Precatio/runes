@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useEffectEvent, useRef, Suspense } from "react";
+import { useState, useEffect, useEffectEvent, useMemo, useRef, Suspense } from "react";
 import PlotlyGraph from "@/components/PlotlyGraph";
 import { useLanguage } from "@/components/LanguageContext";
 import { useAnalysis } from "@/components/AnalysisContext";
@@ -14,7 +14,7 @@ import { fromSession } from "@/lib/stoneReport";
 import AutoGrooveReview from "@/components/AutoGrooveReview";
 import GrooveExportMenu, { scrollToExport } from "@/components/GrooveExportMenu";
 import type { SliceMarker, Vec3, ViewDirection, ViewerPoint } from "@/components/ThreeDViewer";
-import { MeshSession, type AutoAnalysisResult, type AutoLabel, type MeshInfo } from "@/lib/mesh";
+import { MeshSession, withMarkedRunes, type AutoAnalysisResult, type AutoLabel, type MeshInfo } from "@/lib/mesh";
 import type { ThreeDAnalysisResult } from "@/lib/db";
 import { METRICS, type SliceMetrics } from "@/lib/metrics";
 import { FEATURE_TYPES, type FeatureType } from "@/lib/metrics";
@@ -167,8 +167,13 @@ function ThreeDPageContent() {
   const [clickMessage, setClickMessage] = useState<string | null>(null);
 
   // Automatic analysis
-  const [autoResult, setAutoResult] = useState<AutoAnalysisResult | null>(null);
+  const [autoRaw, setAutoRaw] = useState<AutoAnalysisResult | null>(null);
   const [autoLabels, setAutoLabels] = useState<AutoLabel[]>([]);
+  // Runes marked by hand in the review image (one click per rune, reading order); they replace the automatic rune
+  // grouping in everything that uses the analysis
+  const [runeMarks, setRuneMarks] = useState<[number, number][]>([]);
+  const autoResult = useMemo(() => (autoRaw ? withMarkedRunes(autoRaw, autoLabels, runeMarks) : null), [autoRaw, autoLabels, runeMarks]);
+  const setAutoResult = (r: AutoAnalysisResult | null) => { setAutoRaw(r); setRuneMarks([]); };
   const [autoBusy, setAutoBusy] = useState(false);
   const [autoError, setAutoError] = useState<string | null>(null);
   const [autoSpacing, setAutoSpacing] = useState(3);
@@ -178,6 +183,7 @@ function ThreeDPageContent() {
   const [facitMode, setFacitMode] = useState(false);
   // Vitki protocol (PROTOCOL.md): fixed parameters so that stones are comparable
   const [useProtocol, setUseProtocol] = useState(true);
+  const [autoMeasure, setAutoMeasure] = useState<"runes" | "ornament">("runes"); // what the automatic analysis measures
   const { t } = useLanguage();
   const { aiHeaders } = useSettings();
 
@@ -409,12 +415,15 @@ function ThreeDPageContent() {
         normal_x: view.toward[0], normal_y: view.toward[1], normal_z: view.toward[2],
         up_x: view.up[0], up_y: view.up[1], up_z: view.up[2],
         spacing_mm: autoSpacing, sensitivity: autoSensitivity, max_halfwidth_mm: autoMaxWidth / 2,
-        meta_stone: metaStone, meta_weathering: metaWeathering, runes_only: !facitMode,
-        protocol: useProtocol && !facitMode,
+        meta_stone: metaStone, meta_weathering: metaWeathering,
+        measure: facitMode ? "all" : autoMeasure,
+        // the Vitki protocol measures runes; ornament is measured with the chosen parameters
+        protocol: useProtocol && !facitMode && autoMeasure === "runes",
       });
       setAutoResult(data);
       // In facit mode nothing is pre-marked, so that the program's suggestion does not steer the researcher
-      setAutoLabels(data.slices.map(sl => (!sl.accepted ? "excluded" : facitMode ? "unknown" : sl.feature === "rune" ? "rune" : "unknown")));
+      setAutoLabels(data.slices.map(sl => (!sl.accepted ? "excluded" : facitMode ? "unknown"
+        : sl.feature === "rune" ? "rune" : sl.feature === "ornament" ? "ornament" : "unknown")));
       if (data.counts.accepted === 0) {
         setAutoError("Inga spår kunde mätas på den sida som vetter mot dig. Kontrollera att den ristade sidan är vänd mot kameran, eller prova högre känslighet.");
       }
@@ -426,9 +435,10 @@ function ThreeDPageContent() {
   };
 
   const LABEL_COLORS: Record<AutoLabel, string> = { rune: "#b7410e", ornament: "#0369a1", unknown: "#0f172a", excluded: "#94a3b8" };
-  const autoPoints: ViewerPoint[] = autoResult
-    ? autoResult.slices.flatMap((sl, i) => (sl.accepted && sl.point ? [{ position: sl.point, color: LABEL_COLORS[autoLabels[i] ?? "unknown"] }] : []))
-    : [];
+  // From the analysis itself, not the rune marks: marking runes then does not redraw the 3D view
+  const autoPoints: ViewerPoint[] = useMemo(() => (autoRaw
+    ? autoRaw.slices.flatMap((sl, i) => (sl.accepted && sl.point ? [{ position: sl.point, color: LABEL_COLORS[autoLabels[i] ?? "unknown"] }] : []))
+    : []), [autoRaw, autoLabels]);
 
   // Images computed from the scan itself (raking light from four directions, combined relief, depth below the
   // stone surface), seen from the carved side that faces the camera. Independent of zoom and screen lighting.
@@ -630,7 +640,7 @@ function ThreeDPageContent() {
       ? { done: selection !== "none", text: selection !== "none" ? "Spår markerat." : "Håll Shift och klicka två punkter tvärs över ett spår, eller flera längs spåret." }
       : measureMode === "oneclick"
       ? { done: clickMarkers.length > 0, text: clickMarkers.length > 0 ? `${clickMarkers.length} snitt mätta (${clickSlices.length} tvärsnitt).` : "Håll Shift och klicka mitt i ett spår – varje klick mäter ett snitt." }
-      : { done: !!autoResult, text: autoResult ? "Automatisk analys klar – granska resultatet nedan." : "Vrid stenen så att den ristade sidan vetter mot dig och starta analysen." },
+      : { done: !!autoResult, text: autoResult ? "Automatisk analys klar – granska resultatet nedan." : "Vrid stenen så att den ristade sidan vetter mot dig (knappen Vänd ristade sidan mot mig i 3D-vyn) och starta analysen." },
   ];
 
   const getPlotData = () => {
@@ -792,6 +802,34 @@ function ThreeDPageContent() {
 
             {measureMode === "auto" && file && (
               <div className="space-y-3 rounded-xl border border-slate-200 bg-white/70 p-3">
+                <div>
+                  <div className="text-[11px] font-bold text-slate-500 mb-1">Vad ska mätas?</div>
+                  <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="Vad ska mätas">
+                    {([["runes", "Runor"], ["ornament", "Ornamentik"]] as const).map(([v, name]) => (
+                      <button key={v} type="button" role="radio" aria-checked={autoMeasure === v} disabled={facitMode}
+                        onClick={() => setAutoMeasure(v)}
+                        className={`py-1.5 rounded-lg text-xs font-bold border ${autoMeasure === v && !facitMode ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-600 border-slate-300"} disabled:opacity-40`}>
+                        {name}</button>
+                    ))}
+                  </div>
+                </div>
+                <details className="text-[11px] text-slate-600 leading-relaxed" open>
+                  <summary className="cursor-pointer font-bold text-slate-700">Så avgör Vitki vad som är runor</summary>
+                  <ol className="mt-1.5 list-decimal pl-4 space-y-1">
+                    <li>Vitki letar först upp <strong>runslingorna</strong> – banden som texten står i – på stenens djupbild.
+                      För de öppna skanningarna används slingor som har ritats och granskats för hand; annars föreslår
+                      slingmodellen dem.</li>
+                    <li>Ett tvärsnitt räknas som <strong>runa</strong> om det ligger inne i en slinga och går tvärs eller snett
+                      över den. Spår som löper längs slingan är <strong>slingkanter</strong> och mäts inte.</li>
+                    <li>Spår <strong>utanför slingorna</strong> räknas som ornamentik. Väljer du Ornamentik mäts de i stället.</li>
+                    <li>I granskningsbilden syns slingorna som ett <strong>ljusblått fält</strong>. Ligger en runa utanför det
+                      blå, eller ornamentik inne i det, har slingorna blivit fel: vrid stenen så att den ristade sidan vetter
+                      rakt mot dig (knappen <em>Vänd ristade sidan mot mig</em> i 3D-vyn) och kör igen, eller mät runorna
+                      för hand med <em>Ett klick</em> eller <em>Manuellt</em>.</li>
+                    <li>Vill du att varje runa ska väga lika mycket, klicka på <strong>Markera runorna</strong> i granskningen och
+                      klicka en gång mitt på varje runa, i läsordning.</li>
+                  </ol>
+                </details>
                 <label className="flex items-start gap-2 text-[11px] text-slate-600">
                   <input type="checkbox" checked={useProtocol} onChange={e => setUseProtocol(e.target.checked)} className="mt-0.5" />
                   <span><strong>Vitki-protokollet</strong> (rekommenderas): fasta parametrar – 0,6 mm rutnät, känslighet normal,
@@ -825,6 +863,21 @@ function ThreeDPageContent() {
                   {autoBusy ? (<><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Analyserar stenen …</>) : "Kör automatisk analys"}
                 </button>
                 {autoError && <p className="text-xs text-amber-800">{autoError}</p>}
+                {autoResult && !facitMode && (
+                  autoResult.bands?.source ? (
+                    <p className="text-[11px] text-slate-600" role="status">
+                      <strong>Runslingor:</strong>{" "}
+                      {autoResult.bands.source === "ritade" ? "ritade och granskade för hand" : "föreslagna av slingmodellen – kontrollera dem i granskningsbilden"}
+                      {autoResult.bands.coverage != null ? ` (täcker ${Math.round(autoResult.bands.coverage * 100)} % av ytan)` : ""}.
+                      {" "}Mätt: {autoResult.parameters.measure === "ornament" ? "ornamentiken utanför slingorna" : "runorna i slingorna"}.
+                    </p>
+                  ) : (
+                    <p className="text-[11px] text-amber-800" role="status">
+                      <strong>Inga runslingor hittades</strong>, så analysen föll tillbaka på den äldre igenkänningen, som kan
+                      blanda ihop runor och ornamentik. Kontrollera granskningsbilden noga eller mät runorna för hand.
+                    </p>
+                  )
+                )}
               </div>
             )}
 
@@ -1024,6 +1077,8 @@ function ThreeDPageContent() {
               metaWeathering={metaWeathering}
               labels={autoLabels}
               onLabelsChange={setAutoLabels}
+              runeMarks={runeMarks}
+              onRuneMarksChange={setRuneMarks}
               onUse={(r, ft) => { setFeatureType(ft); setResults(r); }}
               onSendToTwoD={() => sendGrooveMapToTwoD(autoLabels)}
               onExport={showExport ? exportFrom("auto") : undefined}

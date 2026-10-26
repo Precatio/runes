@@ -1,7 +1,7 @@
 ## Vitki-protokollet
 
 **Protokoll för automatisk mätning av huggspår i 3D-skanningar av runstenar.**
-Version: `vitki-groove-1-utkast` · mätmetod `groove-5` · status: **utkast** – låses (`vitki-groove-1`) när Vitki
+Version: `vitki-groove-1-utkast` · mätmetod `groove-6` · status: **utkast** – låses (`vitki-groove-1`) när Vitki
 släpps i en version med DOI. Maskinläsbar form: `src/protocol.py`. Metoderna beskrivs i detalj i METHODS.md.
 
 ### P1. Syfte
@@ -24,7 +24,7 @@ dokumentation av kulturarv: metoden ska vara öppen, varje steg dokumenterat (pa
 
 | Parameter | Värde | Varför |
 |---|---|---|
-| Mätmetod | `groove-5` | Resultat är bara jämförbara inom samma metodversion |
+| Mätmetod | `groove-6` | Resultat är bara jämförbara inom samma metodversion |
 | Rutnät (`resolution_mm`) | 0,6 mm, fast | Samma rutnät oavsett skanningens täthet (METHODS.md 2, 2e) |
 | Känslighet (`sensitivity`) | 3 (tröskel = max(0,3 mm, 3 × brus)) | Känslighet 2,5 ändrar stenens vinkel med 2,8° i median |
 | Snittavstånd (`spacing_mm`) | 3 mm | |
@@ -92,7 +92,7 @@ råprofilerna eller skanningen.
 
 ### P9. Att hänvisa till protokollet
 
-> Huggspåren mättes enligt Vitki-protokollet för automatisk huggspårsmätning (vitki-groove-1, mätmetod groove-5;
+> Huggspåren mättes enligt Vitki-protokollet för automatisk huggspårsmätning (vitki-groove-1, mätmetod groove-6;
 > Vitki version X.Y.Z, DOI …).
 
 Så länge protokollet är ett utkast anges `vitki-groove-1-utkast` och att protokollet inte är låst.

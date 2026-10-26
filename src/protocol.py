@@ -6,7 +6,7 @@ dem, och proveniensen anger om analysen följde protokollet och vilka avvikelser
 from __future__ import annotations
 
 VERSION = "vitki-groove-1-utkast"  # blir "vitki-groove-1" när protokollet låses vid en release med DOI
-METHOD_VERSION = "groove-5"  # mätmetoden protokollet gäller (api/config.py; kontrolleras i testerna)
+METHOD_VERSION = "groove-6"  # mätmetoden protokollet gäller (api/config.py; kontrolleras i testerna)
 
 # Parametrar för analyze_grooves. Rutnätet är fast (inte skanningens egen upplösning), så att stenar skannade med
 # olika punkttäthet mäts på samma sätt (METHODS.md 2, 2e).

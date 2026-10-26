@@ -128,7 +128,12 @@ def test_summarize_selection(client):
         ["apex_vinkel_deg", "asymmetri_deg", "spårdjup_mm", "spårbredd_mm", "djup_bredd_kvot", "bottenradie_mm",
          "ytråhet_mm"], [70 + i, 3, 2, 6, .33, .2, .05], strict=False)} for i in range(4)]
     r = client.post("/api/stats/summarize", json={"slices": slices})
-    assert r.status_code == 200 and r.json()["n"] == 4
+    assert r.status_code == 200 and r.json()["n"] == 4 and r.json()["rune_summary"] is None
+    # with rune numbers (runes marked by hand) the rune is the unit: the mean of the runes' own means
+    for i, s in enumerate(slices):
+        s["rune_id"] = 1 if i < 3 else 2
+    rs = client.post("/api/stats/summarize", json={"slices": slices}).json()["rune_summary"]
+    assert rs["n_runes"] == 2 and rs["metrics"]["apex_vinkel_deg"]["mean"] == (71 + 73) / 2
 
 
 def test_extract_features_rejects_bad_base64(client):

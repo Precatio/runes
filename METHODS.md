@@ -495,7 +495,7 @@ ovanligare där B gäller? Ingen fri text och ingen AI; frågan byggs av två li
   utforskandet inte kan bli starkare än så utan en analysplan. *Räkna om* ställer samma fråga på korpusen som den är
   nu, som enda fråga, och säger om korpusen har ändrats sedan.
 
-## 2. Huggspårsmått (mätmetod `groove-5`)
+## 2. Huggspårsmått (mätmetod `groove-6`)
 
 Källkod: `src/slice_analysis.py`.
 
@@ -552,6 +552,12 @@ upplösning (`harmonize_mm`); båda sparas bland parametrarna.
   som stängs av runstavar – eller insidan av en runas båge – blev en enda yta som räknades som för bred
   och inte mättes (på Sö 113 65 700 mm² mot nu 1 900 mm²). Själva tvärsnittsmätningen är oförändrad från
   `groove-4`; mätningar med ett klick eller manuellt är jämförbara, automatiska analyser bör göras om.
+* `groove-6` (2026-10-26): **runslingorna avgör vad som är runor** i den automatiska analysen (avsnitt 2c,
+  *Runslingorna*). Den tidigare streckklassningen, som bedömde varje spår efter längd och form, visade sig fel åt
+  båda hållen: mätt mot granskade slingor på 66 skanningar låg 26 % av det den kallade runor helt utanför
+  textslingorna, och 24 % av det den kallade ornamentik var runor (Viktor Kvant 2026-10-24;
+  `utdata/forskningsplan/resultat.md`, studie 1b). Själva tvärsnittsmätningen är oförändrad; vilka snitt som räknas
+  som runor ändras, så automatiska analyser och korpusposter mätta med `groove-5` bör göras om.
 
 ### 2b. Ett klick per snitt
 
@@ -662,6 +668,40 @@ blir ornamentik och sprickan oregelbunden (`tests/test_auto_grooves.py`). På S�
 klassningen visuellt: slinglinjerna mellan raderna och i slingorna sorteras bort, liksom raka vittringsspår
 i Sö 128:s mittfält; de som mäts är nästan bara stavar och bistavar. Svagt böjda eller avbrutna stavar
 missas ibland. Igenkänningen är regelbaserad och inte validerad mot en handmärkt referens.
+
+**Runslingorna (groove-6).** Vad som är runor avgörs av var runslingorna – banden som texten står i – går:
+* **Slingorna:** för de öppna skanningarna används slingor som ritats och granskats för hand på sidan Runmodell
+  (`data/runmodell/band/`), igenkända på filens SHA-256. De förs över från djupbildens rutnät till analysens genom
+  stenens yta: varje ruta i analysen tas till sin punkt på ytan och slås upp i djupbilden, så att slingorna hamnar
+  rätt även när stenen är vriden något annorlunda (högst 20° mellan normalerna). Knappen *Vänd ristade sidan mot mig*
+  i 3D-vyn vrider vyn mot stenens tunnaste riktning (minsta spridningen av modellens punkter, vänd mot den sida där mest
+  yta pekar; samma skattning som analysmotorn använder utan vy). Annars föreslår
+  **slingmodellen** dem: ett litet U-nät (`data/runmodell/slingmodell.pt`, `src/rune_bands.py`) tränat på 95 granskade
+  stenar, som på stenens djupbild (2,4 mm per pixel) markerar var slingorna går. På 24 stenar som hölls utanför
+  träningen överlappade modellens slingor de ritade med i mitten 59 % (IoU; bäst Sö 333 0,83, sämst stavlösa Hs 14
+  0,10).
+* **Klassningen:** slingans riktning i varje punkt skattas ur en strukturtensor av den utjämnade slingmasken (fönster
+  12 mm). Ett snitt är **runa** om det ligger inne i en slinga och spåret går mer än 25° från slingans riktning;
+  **slingkant** om spåret går längs slingan, inne i den eller högst 8 mm utanför; **gräns** om det ligger högst 8 mm
+  utanför och inte går längs den (runspetsar, korsningar); annars **utanför**. Spårets riktning tas ur mittlinjen
+  kring punkten.
+* **Vad som mäts:** *Runor* mäter snitten klassade som runa; *Ornamentik* mäter snitten utanför slingorna som
+  streckklassningen ser som långa, jämna spår (ornamentik, ramar, kors), inte korta krokiga spår (möjliga sprickor).
+  *Allt* (facit-läget) mäter alla spår.
+* **Reserv:** finns inga slingor (ingen modell, ingen PyTorch eller inga slingor på stenen) används
+  streckklassningen som förut, och analysen säger det. Granskningsbilden visar slingorna som ett ljusblått fält.
+* **Begränsningar:** slingmodellen är tränad på öppna skanningar från två skannertyper och sex serier; stavlösa runor
+  och små fragment hittar den dåligt. Slingorna är förslag som användaren ska granska i granskningsbilden.
+
+**Runor markerade för hand.** Analysens egen runindelning (grupper av sammanhängande raka streck) är inte validerad.
+I granskningen kan användaren i stället klicka en gång mitt på varje runa, i läsordning, utan att ange vilken runa
+det är (`withMarkedRunes` i `web/src/lib/mesh.ts`). Varje godkänt snitt som är märkt som runa hör då till den närmaste
+markeringen, om den ligger inom 1,5 gånger mediandistansen mellan två på varandra följande markeringar; snitt längre
+bort hör inte till någon runa. Markeringarnas nummer blir `rune_id`, så medelvärden med runan som enhet (avsnitt 3),
+jämförelser mellan stenar (avsnitt 4) och exporterna räknas på de markerade runorna. Varje snitt behåller sina mått,
+och i proveniensen står antalet markeringar (`rune_marks`). Resultatpanelen visar då också måtten med runan som enhet
+(`rune_summary` från `/api/stats/summarize`, när snitten bär minst två runnummer). Gränsen mellan två runor blir mittlinjen mellan deras
+markeringar, så tätt ristade runor och bindrunor kan få snitt från grannen; markera då mitt i runans stav.
 
 ### 2d. Bilder ur skanningen
 

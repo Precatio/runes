@@ -76,6 +76,33 @@ När din bana är perfekt placerad, klicka på knappen **Analysera spår / Extra
 
 Resultatet samt en uppskattning på vilket verktyg som använts presenteras omedelbart på skärmen!
 
+### Automatisk analys: runor eller ornamentik
+Under fliken för den automatiska analysen väljer du först **Vad ska mätas?**: **Runor** (förvalt) eller
+**Ornamentik**. Vitki letar upp stenens *runslingor*, banden som texten står i, och avgör med dem vad som är vad:
+
+- Ett tvärsnitt räknas som **runa** om det ligger inne i en slinga och går tvärs eller snett över den.
+- Spår som löper längs slingan är **slingkanter** och mäts inte.
+- Spår **utanför slingorna** räknas som ornamentik och mäts bara när du väljer Ornamentik.
+
+Slingorna kommer från de handritade och granskade slingorna när skanningen är en av de öppna filerna, annars från
+slingmodellen. Under resultatet står vilken källa som användes, hur stor del av ytan slingorna täcker och vad som
+mättes. I granskningsbilden syns slingorna som ett ljusblått fält. Ligger en runa utanför det blå, eller ornamentik
+inne i det, har slingorna blivit fel: vrid stenen så att den ristade sidan vetter rakt mot dig och kör igen, eller
+mät runorna för hand med en mätbana. Hittas inga slingor alls visas en varning, och analysen faller tillbaka på den
+äldre igenkänningen, som kan blanda ihop runor och ornamentik. Mätformen är groove-6 (METHODS.md 2c).
+
+**Vänd ristade sidan mot mig.** Knappen nere till vänster i 3D-vyn vrider stenen så att du ser rakt på dess bredaste
+sida. Tryck igen för den andra sidan. Analysen mäter det som vetter mot dig, så gör det innan du kör den: på M 15 gav
+en vy 15° snett 91 godkända snitt, en rak vy 449.
+
+**Markera runorna.** I granskningen kan du klicka en gång mitt på varje runa, i läsordning (knappen **Markera
+runorna**). Du behöver inte veta vilken runa det är. Varje snitt som är märkt som runa hör sedan till den närmaste
+markeringen, och måtten räknas med runan som enhet, så att en runa med många snitt inte väger tyngre än en med få.
+Snitt långt från alla markeringar visas bleka och hör inte till någon runa. När du sedan använder runorna som resultat
+visar rutan **Med runan som enhet** stenens mått räknade på runornas medelvärden, med 95 %-intervall och ICC. **Ångra senaste** tar bort den sista
+markeringen och **Ta bort alla** börjar om. Riktvärdet är minst 10 mätta runor för att beskriva en sten och 20 för att
+jämföra den med andra.
+
 ### Exportera bilder och mätdata
 I högra kolumnen på 3D-sidan finns rutan **Exportera**. Kryssa i de filer du vill ha och tryck **Ladda ned**. En
 enda fil kommer som den är; väljer du flera kommer de i en ZIP-fil. Reliefen och ristningskartan kommer alltid i en

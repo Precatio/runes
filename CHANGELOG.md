@@ -5,6 +5,31 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Huggspårsanalysen mäter bara runorna – eller bara ornamentiken (groove-6)
+- Den automatiska analysen avgör nu vad som är runor med hjälp av **runslingorna**, inte strecklängder. Mätt mot
+  handritade slingor låg 26 % av den gamla klassningens "runor" utanför textslingorna och 24 % av dess "ornamentik"
+  var runor (utdata/forskningsplan/resultat.md, studie 1b).
+- Slingorna kommer från de ritade och granskade slingorna (sidan Runmodell) när skanningen är en av de öppna filerna –
+  förda över till analysens rutnät genom stenens yta, så att de gäller även när stenen är vriden upp till 20° – annars
+  från **slingmodellen** (data/runmodell/slingmodell.pt, ett U-nät tränat på 95 granskade stenar; mitten av
+  överlappet på provstenarna 59 %). Ett snitt är runa inne i slingan och mer än 25° från dess riktning; spår längs
+  slingan är slingkanter och mäts inte; spår utanför slingorna är ornamentik.
+- Nytt val **Vad ska mätas? Runor / Ornamentik** med en förklaring i verktyget av hur valet görs, en statusrad om
+  slingornas källa och täckning, slingorna som ljusblått fält i granskningsbilden och en varning när inga slingor
+  hittas (då gäller den gamla klassningen). Bortsorterade snitt får skälen *slingkant, inte runa*, *vid slingans
+  kant* och *utanför runslingorna*.
+- **Markera runorna** i granskningen: ett klick mitt på varje runa, i läsordning, utan att ange vilken runa det är.
+  Varje runsnitt hör till den närmaste markeringen (inom 1,5 gånger mediandistansen mellan markeringarna), och
+  markeringarna ersätter den automatiska runindelningen i resultat, jämförelser och export (runtabellen säger att
+  runorna är markerade för hand). METHODS.md 2c.
+- Rutan **Med runan som enhet** i resultatet: stenens mått som medelvärdet av runornas egna medelvärden, med
+  95 %-konfidensintervall och ICC (`rune_summary` från `/api/stats/summarize`).
+- Knappen **Vänd ristade sidan mot mig** i 3D-vyn vrider vyn mot stenens tunnaste riktning; tryck igen för andra
+  sidan. På M 15 gav en vy 15° snett 91 godkända snitt, en rak vy 449.
+- Granskningens markeringar ritas inte om i 3D-vyn för varje klick (punkterna där räknas ur analysen själv).
+- API: `measure` (runes, ornament, all) och `bands` i den automatiska analysen. Mätformen höjs till **groove-6**;
+  mätningar gjorda med groove-5 är inte direkt jämförbara när stenen har ornamentik. METHODS.md 2c.
+
 ### Ristningskartan: skanningens kanter tas inte längre för ristning
 - Den automatiska analysens ristningskarta räknade sin svarta punkt över hela kartan, så skanningens kanter och branta
   sidor – där referensytan är osäker och visar skenbart djup – ofta blev svartast och runorna mellangrå (Sö 371: svart

@@ -12,6 +12,7 @@ import pytest
 from fastapi.testclient import TestClient
 from PIL import Image
 
+from api.config import METHOD_VERSION
 from api.main import app
 from api.routers import threed
 from src import groove_export, stone_report
@@ -261,7 +262,7 @@ def test_export_every_item_from_an_automatic_analysis(client, stone, auto):
             assert text["Author"] == "Vitki (beräknad); skanning: okänd skannare", name
             assert "Bilden är beräknad i Vitki" in text["Description"], name
             assert groove_export.UNKNOWN_SCAN in text["Description"], name
-            assert text["Software"] == "Vitki 3.0.0" and json.loads(text["Comment"])["method_version"] == "groove-5"
+            assert text["Software"] == "Vitki 3.0.0" and json.loads(text["Comment"])["method_version"] == METHOD_VERSION
     # the full JSON: the result without its images, plus labels, credit and export
     full = json.loads(files["So_370_analys.json"])
     assert full["type"] == "vitki-groove-export" and full["schema"] == 1 and full["mode"] == "auto"
@@ -342,6 +343,27 @@ def test_summary_runes_and_profiles_csv(client, auto):
     mine = [r_ for r_ in rows if int(r_[0]) == i]
     assert [float(r_[4]) for r_ in mine] == first["profile"]["x"]
     assert [float(r_[5]) for r_ in mine] == first["profile"]["z"]
+
+
+def test_runes_marked_by_hand(client, auto):
+    """One click per rune in the review image (web/src/lib/mesh.ts withMarkedRunes): the marks' numbers are the
+    rune_id, the per-rune summary groups by them, and the rune table says the runes were marked by hand."""
+    marked = json.loads(json.dumps(auto))
+    acc = [s for s in marked["slices"] if s["accepted"]]
+    for k, s in enumerate(acc):
+        s["rune_id"] = 1 + k % 3
+    marked["runes"] = [{"id": k, "n_strokes": None, "height_mm": None, "n_slices": sum(1 for s in acc if s["rune_id"] == k),
+                        "box": [0.1, 0.1, 0.2, 0.2]} for k in (1, 2, 3)]
+    marked["parameters"]["runes_marked_by_hand"] = 3
+    marked["provenance"]["parameters"]["rune_marks"] = {"n_marks": 3, "reach_px": 40, "by": "hand"}
+    files = _zip(_export(client, "", ["summary_csv", "runes_csv"], marked, mode="auto",
+                         labels_json=json.dumps(_labels(marked))).content)
+    meta, header, rows = _csv_rows(files["vitki_runor.csv"])
+    assert [int(r[0]) for r in rows] == [1, 2, 3] and rows[0][1] == "" and rows[0][2] == ""
+    assert any("markerade för hand" in m for m in meta)
+    _, _, srows = _csv_rows(files["vitki_sammanfattning.csv"])
+    row = next(r for r in srows if r[:3] == ["rune", "per_runa", "apex_vinkel_deg"])
+    assert int(row[11]) == 3
 
 
 def test_depth_grid_header_and_values(client, stone, auto):

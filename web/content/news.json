@@ -2,6 +2,20 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "markera-runorna",
+   "date": "2026-10-26",
+   "status": "nytt",
+   "title": "Ett klick per runa",
+   "text": "I granskningen av den automatiska analysen kan du nu klicka en gång mitt på varje runa. Du behöver inte veta vilken runa det är. Vitki fördelar mätpunkterna på dina runor, så att varje runa väger lika mycket i stenens medelvärden och i jämförelser med andra stenar."
+  },
+  {
+   "id": "runor-eller-ornamentik",
+   "date": "2026-10-26",
+   "status": "nytt",
+   "title": "Huggspårsanalysen mäter bara runorna",
+   "text": "Den automatiska analysen letar nu upp runslingorna och mäter bara spåren inne i dem, så att ornamentik och slingornas kanter inte blandas in i runornas mått. Vill du hellre mäta ornamentiken väljer du det. Slingorna syns som ett ljusblått fält i granskningsbilden, så att du kan se om de hamnade rätt."
+  },
+  {
    "id": "ristningskartans-kant",
    "date": "2026-10-24",
    "status": "nytt",

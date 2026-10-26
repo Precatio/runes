@@ -190,7 +190,7 @@ LIMITATIONS = [
                "utgåvor."},
     {"key": "software", "contexts": {"software", "grooves", "attribution", "comparison"},
      "title": "Programvaran är under utveckling",
-     "text": "Mätmetoden har ändrats flera gånger (groove-1 till groove-5 under oktober 2026) efter att fel hittats. "
+     "text": "Mätmetoden har ändrats flera gånger (groove-1 till groove-6 under oktober 2026) efter att fel hittats. "
              "Resultat är bara jämförbara inom samma metodversion, som anges i varje analys. Koden är inte granskad av "
              "utomstående, och ingen låst version med DOI finns ännu.",
      "short": "Verktyget är nytt och ändras fortfarande; versionen anges så att resultaten kan upprepas.",

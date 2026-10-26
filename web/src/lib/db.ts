@@ -61,6 +61,8 @@ export interface ToolHeuristic {
 export interface ThreeDAnalysisResult {
   results: GrooveMetrics;
   summary?: Record<Metric, Summary>;
+  // the stone's measurements with the rune as the unit (n = runes), when the slices carry rune numbers
+  rune_summary?: { n_runes: number; metrics: Record<Metric, Summary & { n_slices: number; icc: number | null }> } | null;
   slices?: SliceMetrics[];
   provenance?: AnalysisProvenance;
   tool_heuristic?: ToolHeuristic;

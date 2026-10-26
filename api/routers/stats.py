@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
 from api.rundata import store
-from src.stats import METRICS, attribute, summarize_slices, ward_clustering
+from src.stats import METRICS, attribute, summarize_by_rune, summarize_slices, ward_clustering
 
 router = APIRouter()
 
@@ -65,7 +65,8 @@ class SummarizeRequest(BaseModel):
 
 @router.post("/summarize")
 def summarize(req: SummarizeRequest):
-    """Sammanfattning (medel, SD, n, 95 % KI) och verktygsheuristik för ett urval snitt."""
+    """Sammanfattning (medel, SD, n, 95 % KI) och verktygsheuristik för ett urval snitt; när snitten bär runnummer
+    (rune_id, till exempel runor markerade för hand) även måtten med runan som enhet (src/stats.summarize_by_rune)."""
     from api.routers.threed import tool_heuristic
 
     slices = [s for s in req.slices if all(isinstance(s.get(m), (int, float)) for m in METRICS)]
@@ -73,7 +74,9 @@ def summarize(req: SummarizeRequest):
         raise HTTPException(status_code=400, detail="Urvalet innehåller inga mätbara snitt.")
     summary = summarize_slices(slices)
     means = {m: summary[m]["mean"] for m in METRICS}
+    runes = {s.get("rune_id") for s in slices if s.get("rune_id") is not None}
     return {"summary": summary, "means": means, "n": len(slices),
+            "rune_summary": summarize_by_rune(slices) if len(runes) >= 2 else None,
             "tool_heuristic": tool_heuristic(means["apex_vinkel_deg"], req.meta_stone, req.meta_weathering)}
 
 

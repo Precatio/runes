@@ -358,15 +358,24 @@ def auto_analyze(
     harmonize_mm: float = Form(None),
     runes_only: str | None = Form(None),
     protocol: bool = Form(False),
+    measure: str | None = Form(None),
+    bands: str | None = Form(None),
 ):
     """Automatisk spåranalys av den ristade ytan som vetter mot normalen (oftast kamerans riktning).
-    Med runes_only (standard) mäts bara spår som känns igen som runor. Med protocol används Vitki-protokollets
-    fasta parametrar (src/protocol.py); proveniensen anger alltid om analysen följer protokollet."""
+    measure: runes (standard) mäter bara runor, ornament bara ornamentiken, all allt (för facit). Runslingorna
+    avgör vad som är runor (bands, standard på): ritade slingor för de öppna skanningarna, annars slingmodellens
+    förslag; utan slingor används den gamla streckklassningen. runes_only gäller när measure saknas. Med protocol
+    används Vitki-protokollets fasta parametrar (src/protocol.py); proveniensen anger alltid om analysen följer det."""
     runes_only = form_flag(runes_only, True, "runes_only")
+    use_bands = form_flag(bands, True, "bands")
+    if measure is not None and measure not in ("runes", "ornament", "all"):
+        raise HTTPException(status_code=400, detail="Mät runor (runes), ornamentik (ornament) eller allt (all).")
+    measure = measure or ("runes" if runes_only else "all")
     if protocol:
         pp = protocol_spec.PARAMETERS
         resolution_mm, sensitivity, spacing_mm = pp["resolution_mm"], pp["sensitivity"], pp["spacing_mm"]
         max_halfwidth_mm, harmonize_mm, runes_only = pp["max_halfwidth_mm"], pp["harmonize_mm"], pp["runes_only"]
+        measure = "runes" if runes_only else measure
     if not 0.5 <= spacing_mm <= 50 or not 1 <= sensitivity <= 10:
         raise HTTPException(status_code=400, detail="Ogiltiga parametrar för automatisk analys.")
     # Fixed grid resolution and harmonised profiles make stones from scans of different density comparable
@@ -381,7 +390,8 @@ def auto_analyze(
                                  face_tree=entry.face_tree,
                                  up=None if up_x is None else [up_x, up_y, up_z],
                                  resolution_mm=resolution_mm, harmonize_mm=harmonize_mm or None,
-                                 runes_only=runes_only)
+                                 runes_only=measure == "runes", measure=measure, bands=use_bands,
+                                 sha256=entry.info.get("sha256"))
     except ValueError as e:
         raise HTTPException(status_code=422, detail=str(e)) from e
     except Exception as e:
@@ -390,12 +400,12 @@ def auto_analyze(
     accepted = [s for s in result["slices"] if s["accepted"]]
     if accepted:
         result["summary"] = summarize_slices(accepted)
-        if runes_only:
+        if measure == "runes":
             result["rune_summary"] = summarize_by_rune(accepted)
         result["tool_heuristic"] = tool_heuristic(float(np.mean([s["apex_vinkel_deg"] for s in accepted])),
                                                   meta_stone, meta_weathering)
     params = {"mode": "automatic", **result["parameters"], "meta_stone": meta_stone, "meta_weathering": meta_weathering}
-    result["provenance"] = provenance(entry.info, params, "rune" if runes_only else "unknown")
+    result["provenance"] = provenance(entry.info, params, {"runes": "rune", "ornament": "ornament"}.get(measure, "unknown"))
     result["provenance"]["protocol"] = protocol_spec.compliance(result["parameters"], METHOD_VERSION)
     return result
 

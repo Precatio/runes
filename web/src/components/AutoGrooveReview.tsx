@@ -28,6 +28,8 @@ interface Props {
   onSendToTwoD?: () => void;
   onExport?: () => void; // scrolls to the export menu on the page
   facitMode?: boolean;
+  runeMarks?: [number, number][]; // runes marked by hand, image pixels, reading order (withMarkedRunes)
+  onRuneMarksChange?: (marks: [number, number][]) => void;
 }
 
 function quickStats(values: number[]) {
@@ -37,10 +39,11 @@ function quickStats(values: number[]) {
   return { mean, sd };
 }
 
-export default function AutoGrooveReview({ result, signum, metaStone, metaWeathering, labels, onLabelsChange, onUse, onSendToTwoD, onExport, facitMode }: Props) {
+export default function AutoGrooveReview({ result, signum, metaStone, metaWeathering, labels, onLabelsChange, onUse, onSendToTwoD, onExport, facitMode, runeMarks = [], onRuneMarksChange }: Props) {
   const { userName } = useSettings();
   const svgRef = useRef<SVGSVGElement>(null);
   const [tool, setTool] = useState<AutoLabel>("rune");
+  const [marking, setMarking] = useState(false); // one click = one rune, instead of boxes and picking slices
   const [drag, setDrag] = useState<{ x0: number; y0: number; x1: number; y1: number } | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
   const [using, setUsing] = useState(false);
@@ -58,7 +61,9 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
     const [xa, xb] = [Math.min(drag.x0, drag.x1), Math.max(drag.x0, drag.x1)];
     const [ya, yb] = [Math.min(drag.y0, drag.y1), Math.max(drag.y0, drag.y1)];
     const isClick = xb - xa < 4 && yb - ya < 4;
-    if (isClick) {
+    if (marking) {
+      if (isClick && onRuneMarksChange) onRuneMarksChange([...runeMarks, [Math.round(drag.x0), Math.round(drag.y0)]]);
+    } else if (isClick) {
       // Select the nearest accepted point
       let best = -1;
       let bestD = 12 * 12;
@@ -103,7 +108,8 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
         body: JSON.stringify({ slices, meta_stone: metaStone, meta_weathering: metaWeathering }),
       });
       if (!res.ok) throw new Error((await res.json().catch(() => null))?.detail || "Sammanfattningen misslyckades");
-      const body: { summary: Record<Metric, Summary>; means: Record<Metric, number>; n: number; tool_heuristic: ToolHeuristic } = await res.json();
+      const body: { summary: Record<Metric, Summary>; means: Record<Metric, number>; n: number; tool_heuristic: ToolHeuristic;
+        rune_summary: ThreeDAnalysisResult["rune_summary"] } = await res.json();
       // Representative profile: the slice closest to the median angle
       const sorted = [...picked].sort((a, b) => (a.apex_vinkel_deg ?? 0) - (b.apex_vinkel_deg ?? 0));
       const rep = sorted[Math.floor(sorted.length / 2)];
@@ -113,6 +119,7 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
           troligt_verktyg: body.tool_heuristic.label,
         },
         summary: body.summary,
+        rune_summary: body.rune_summary,
         slices,
         tool_heuristic: body.tool_heuristic,
         provenance: {
@@ -141,6 +148,8 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
       mesh: result.provenance.mesh, method_version: result.provenance.method_version, parameters: result.parameters,
       legend: { rune: "runa", ornament: "slinglinje eller ornamentik", excluded: "spricka, vittring eller annat som inte är huggning" },
       labels: marked,
+      // one click per rune in reading order, image pixels of the review image (image_width × image_height)
+      rune_marks: runeMarks, image_width: W, image_height: H,
     };
     downloadFile(`${safeFilename(signum || "sten")}_facit.json`, JSON.stringify(facit, null, 1), "application/json");
   };
@@ -150,6 +159,9 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
   const reasons = Object.entries(result.counts.rejection_reasons).sort((a, b) => b[1] - a[1]);
   const runesOnly = result.parameters.runes_only === true;
   const runeNote = runesOnly ? runeSampleNote(result.counts.runes_measured ?? 0) : null;
+  const runeSlices = result.slices.filter((s, i) => s.accepted && labels[i] === "rune");
+  const assigned = runeSlices.filter(s => s.rune_id != null).length;
+  const emptyMarks = runeMarks.length - (result.runes?.length ?? 0);
 
   return (
     <div className="liquid-glass-island rounded-[32px] p-6 shadow-sm border border-white/50 space-y-5">
@@ -162,6 +174,7 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
             Orange = hittade spår, grått = för brett för ett huggspår (mäts inte).
             {runesOnly && " Bara spår som känns igen som runor mäts; ornamentik, slingkanter och möjliga sprickor visas som små grå punkter."}
             {" "}Dra en ruta för att märka punkter, klicka på en punkt för att se dess profil.
+            {!facitMode && onRuneMarksChange && " Med Markera runorna klickar du en gång på varje runa, så räknas måtten per runa."}
           </p>
           {result.provenance.protocol && (
             <p className={`text-xs mt-2 ${result.provenance.protocol.compliant ? "text-emerald-800" : "text-amber-900"}`}>
@@ -196,15 +209,44 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
       <div className="flex flex-wrap items-center gap-2">
         <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mr-1">Märk med ruta:</span>
         {(Object.keys(LABELS) as AutoLabel[]).map(l => (
-          <button key={l} type="button" onClick={() => setTool(l)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold border ${tool === l ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-700 border-slate-300"}`}>
+          <button key={l} type="button" onClick={() => { setTool(l); setMarking(false); }}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold border ${tool === l && !marking ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-700 border-slate-300"}`}>
             <span className="inline-block w-2.5 h-2.5 rounded-full mr-1.5 align-middle" style={{ background: LABELS[l].color }} />
             {LABELS[l].name}
           </button>
         ))}
         <button type="button" onClick={() => onLabelsChange(result.slices.map(s => (!s.accepted ? "excluded" : !facitMode && s.feature === "rune" ? "rune" : "unknown")))}
           className="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-500 hover:text-slate-900">Återställ</button>
+        {onRuneMarksChange && !facitMode && (
+          <button type="button" onClick={() => setMarking(m => !m)} disabled={!runeSlices.length}
+            title="Ett klick mitt på varje runa, i läsordning"
+            className={`ml-auto px-3 py-1.5 rounded-lg text-xs font-bold border disabled:opacity-40 ${marking ? "bg-[#b7410e] text-white border-[#b7410e]" : "bg-white text-[#b7410e] border-[#b7410e]"}`}>
+            {marking ? "Klar med runorna" : "Markera runorna"}
+          </button>
+        )}
       </div>
+
+      {onRuneMarksChange && !facitMode && (marking || runeMarks.length > 0) && (
+        <div className="rounded-xl border border-orange-200 bg-orange-50 px-4 py-3 text-xs text-slate-700 space-y-2">
+          <p><strong>Markera runorna.</strong> Klicka en gång mitt på varje runa, i läsordning. Du behöver inte veta
+            vilken runa det är. Varje snitt som är märkt som runa hör sedan till den närmaste markeringen, så att
+            måtten räknas med runan som enhet: varje runa väger lika mycket, hur många snitt den än har. Snitt långt
+            från alla markeringar, till exempel i en runa du hoppat över, hör inte till någon runa och visas bleka.</p>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-semibold">
+              {runeMarks.length} runor markerade · {assigned} av {runeSlices.length} runsnitt fördelade
+              {emptyMarks > 0 ? ` · ${emptyMarks} markeringar utan snitt` : ""}
+            </span>
+            <button type="button" disabled={!runeMarks.length} onClick={() => onRuneMarksChange(runeMarks.slice(0, -1))}
+              className="px-2.5 py-1 rounded-lg border border-slate-300 bg-white font-bold disabled:opacity-40">Ångra senaste</button>
+            <button type="button" disabled={!runeMarks.length} onClick={() => onRuneMarksChange([])}
+              className="px-2.5 py-1 rounded-lg border border-slate-300 bg-white font-bold disabled:opacity-40">Ta bort alla</button>
+          </div>
+          {runeMarks.length > 0 && runeMarks.length < 10 && (
+            <p className="text-amber-900">Riktvärdet är minst 10 mätta runor för att beskriva en sten och 20 för att jämföra den med andra.</p>
+          )}
+        </div>
+      )}
 
       {facitMode && (
         <div className="rounded-xl border border-sky-200 bg-sky-50 px-4 py-3 text-xs text-slate-700 space-y-2">
@@ -230,9 +272,16 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
           {result.slices.map((s, i) => s.accepted && (
             <circle key={i} cx={s.img_x} cy={s.img_y} r={i === selected ? 7 : 4.5}
               fill={labels[i] === "excluded" ? "#cbd5e1" : angleColor(s.apex_vinkel_deg ?? 0, range)}
-              stroke={LABELS[labels[i]].color} strokeWidth={labels[i] === "unknown" ? 1 : 2.5} />
+              stroke={LABELS[labels[i]].color} strokeWidth={labels[i] === "unknown" ? 1 : 2.5}
+              opacity={runeMarks.length && labels[i] === "rune" && s.rune_id == null ? 0.3 : 1} />
           ))}
-          {drag && (
+          {runeMarks.map(([x, y], k) => (
+            <g key={`m${k}`} pointerEvents="none">
+              <circle cx={x} cy={y} r={11} fill="#fff" stroke="#b7410e" strokeWidth={3} />
+              <text x={x} y={y} textAnchor="middle" dominantBaseline="central" fontSize={k < 9 ? 12 : 10} fontWeight={700} fill="#b7410e">{k + 1}</text>
+            </g>
+          ))}
+          {drag && !marking && (
             <rect x={Math.min(drag.x0, drag.x1)} y={Math.min(drag.y0, drag.y1)} width={Math.abs(drag.x1 - drag.x0)} height={Math.abs(drag.y1 - drag.y0)}
               fill={`${LABELS[tool].color}22`} stroke={LABELS[tool].color} strokeWidth={2} strokeDasharray="6 4" />
           )}

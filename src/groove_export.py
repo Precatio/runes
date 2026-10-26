@@ -39,7 +39,7 @@ from src.stats import METRICS, summarize_by_rune, summarize_slices
 
 APP_NAME = "Vitki"
 APP_VERSION = "3.0.0"
-METHOD_VERSION = "groove-5"
+METHOD_VERSION = "groove-6"
 try:  # the API's own constants when they are importable (they are the source of truth)
     from api.config import APP_NAME, APP_VERSION, METHOD_VERSION  # noqa: F811
 except Exception:  # pragma: no cover - src used without the api package
@@ -229,7 +229,7 @@ ITEMS = [
      "explanation": "Hela analysen i maskinläsbar form: alla snitt med profiler, sammanfattningar, inställningar och "
                     "kvalitetskontroll. För den automatiska analysen kommer också runor, streck, skälen till "
                     "bortsorterade snitt, dina etiketter och sammanfattningarna per grupp med. Proveniensen anger "
-                    "programversion, mätmetod (groove-5), skanningsfilens namn och SHA-256-fingeravtryck, datum och "
+                    "programversion, mätmetod (groove-6), skanningsfilens namn och SHA-256-fingeravtryck, datum och "
                     "metodens kända brister. Det är filen som behövs för att göra om eller granska analysen."},
 ]
 BY_ID = {x["id"]: x for x in ITEMS}
@@ -1176,9 +1176,17 @@ def _runes_csv(ctx):
         notes.append("strokes: " + ", ".join(f"{k} {v}" for k, v in c["strokes"].items()))
     if isinstance(c.get("rejection_reasons"), dict):
         notes += [f"rejection_reason: {k}: {v}" for k, v in c["rejection_reasons"].items()]
-    notes += ["En runa är här en grupp sammanhängande raka streck, inte en igenkänd runa; igenkänningen är inte "
-              "validerad. box_* är rutan i granskningsbildens pixlar (origo uppe till vänster). n_slices är analysens "
-              "godkända snitt i runan, före dina etiketter."]
+    prov = ctx.result.get("provenance") if isinstance(ctx.result.get("provenance"), dict) else {}
+    if ((ctx.result.get("parameters") or {}).get("runes_marked_by_hand")
+            or (prov.get("parameters") or {}).get("rune_marks")):
+        notes += ["Runorna är markerade för hand i granskningsbilden, ett klick per runa i läsordning; rune_id är "
+                  "markeringens nummer, och varje snitt märkt som runa hör till den närmaste markeringen. n_strokes och "
+                  "height_mm mäts inte för markerade runor. box_* är rutan runt runans snitt i granskningsbildens "
+                  "pixlar (origo uppe till vänster)."]
+    else:
+        notes += ["En runa är här en grupp sammanhängande raka streck, inte en igenkänd runa; igenkänningen är inte "
+                  "validerad. box_* är rutan i granskningsbildens pixlar (origo uppe till vänster). n_slices är "
+                  "analysens godkända snitt i runan, före dina etiketter."]
     return [(f"{ctx.sig}_runor.csv", csv_with_header(ctx.csv_meta("runor och kvalitetskontroll", notes), RUNE_COLUMNS,
                                                      rows), "text/csv; charset=utf-8")]
 

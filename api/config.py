@@ -19,4 +19,6 @@ APP_VERSION = "3.0.0"
 # groove-4: profilen räknas om till jämnt punktavstånd och alla fönster anges i mm (2026-10-06).
 # groove-5: automatiska analysen mäter bara spår som känns igen som runor, och fyller bara små hål i
 #           spårmasken (slingband som stängs av stavar räknades förut som en enda bred yta) (2026-10-10).
-METHOD_VERSION = "groove-5"
+# groove-6: runslingorna avgör vad som är runor och ornamentik i den automatiska analysen (ritade slingor för de öppna
+#           skanningarna, annars slingmodellens förslag; src/rune_bands.py); streckklassningen är reserv (2026-10-26).
+METHOD_VERSION = "groove-6"

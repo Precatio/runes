@@ -32,7 +32,7 @@ def band_segments(n_runes=6, crack=True):
 @pytest.fixture(scope="module")
 def band_result():
     mesh = rune_stone(size=(420, 240), resolution=0.6, segments=band_segments(), depth_mm=3.0, opening_angle_deg=80)
-    return analyze_grooves(mesh, [0, 0, 1])
+    return analyze_grooves(mesh, [0, 0, 1], bands=False)  # the stroke classification on its own
 
 
 def test_only_runes_are_measured(band_result):
@@ -176,3 +176,65 @@ def test_groove_map_black_point_ignores_edge_zone():
     gray = np.flipud(np.asarray(Image.open(io.BytesIO(base64.b64decode(img.split(",")[1])))))
     assert gray[20, 20] < 40  # the rune is (nearly) black
     assert gray[1, 20] >= 255 * (1 - EDGE_ZONE_CONTRAST) - 10  # the edge never darker than the faded grey
+
+
+def test_runic_band_decides_what_is_a_rune(monkeypatch):
+    """With a runic band (here the area between the two band lines, given to the analysis as drawn bands would be),
+    the runes inside it are measured, the band lines are band edges and the arc and the crack outside it are not."""
+    from src import rune_bands
+    mesh = rune_stone(size=(420, 240), resolution=0.6, segments=band_segments(), depth_mm=3.0, opening_angle_deg=80)
+
+    def fake_bands(depth, region, res, hf, sha256):
+        H, W = depth.shape
+        yy = (np.arange(H) - H / 2) * res  # mm from the stone's middle, rows run along y
+        mask = np.zeros((H, W), bool)
+        mask[np.abs(yy) <= 42] = True        # between the band lines at ±45 mm
+        mask &= region
+        f = rune_bands.band_field(mask, res)
+        f.update({"source": "ritade", "empty": False, "coverage": float(mask[region].mean())})
+        return f
+    monkeypatch.setattr(rune_bands, "bands_for", fake_bands)
+    r = analyze_grooves(mesh, [0, 0, 1])
+    acc = [s for s in r["slices"] if s["accepted"]]
+    assert acc and all(s["band"] == "runa" for s in acc)
+    assert r["bands"]["source"] == "ritade" and r["parameters"]["measure"] == "runes"
+    reasons = r["counts"]["rejection_reasons"]
+    assert reasons.get("slingkant, inte runa", 0) > 0 and reasons.get("utanför runslingorna", 0) > 0
+    assert abs(np.mean([s["apex_vinkel_deg"] for s in acc]) - 80) < 3
+    orn = analyze_grooves(mesh, [0, 0, 1], measure="ornament")
+    acc_o = [s for s in orn["slices"] if s["accepted"]]
+    assert acc_o and all(s["band"] == "utanför" for s in acc_o)
+
+
+def test_drawn_bands_follow_the_stone_when_it_is_turned(tmp_path, monkeypatch):
+    """Checked bands drawn on the depth image (src/rune_bands.drawn) are carried over through the stone's surface, so
+    that they land on the same place on the stone when the analysis looks at it from a slightly different direction."""
+    import json
+    import trimesh
+    from src import rune_bands
+    from src.auto_grooves import Heightfield, basis
+    mesh = trimesh.creation.box(extents=[300, 200, 20])
+    mesh = trimesh.Trimesh(*trimesh.remesh.subdivide_to_size(mesh.vertices, mesh.faces, 4.0))
+    normal, up, res = [0, 0, 1], [0, 1, 0], 1.0
+    hf0 = Heightfield.from_mesh(mesh, normal, resolution=res, up=up)
+    (tmp_path / "djup" / "s").mkdir(parents=True)
+    (tmp_path / "band" / "s").mkdir(parents=True)
+    json.dump({"sha256": "abc", "normal": normal, "up": up, "res_mm": res, "shape": list(hf0.H.shape),
+               "a0": hf0.a0, "b0": hf0.b0}, open(tmp_path / "djup" / "s" / "x.json", "w"))
+    # a horizontal band through the middle of the stone, 40 mm high (drawing page: half resolution, row 0 at the top)
+    H, W = hf0.H.shape
+    json.dump({"status": "granskad", "scale": 2, "bands": [{"points": [[20, H / 4], [W / 2 - 20, H / 4]], "height": 20}]},
+              open(tmp_path / "band" / "s" / "x.json", "w"))
+    monkeypatch.setattr(rune_bands, "DEPTH_DIR", str(tmp_path / "djup"))
+    monkeypatch.setattr(rune_bands, "BAND_DIR", str(tmp_path / "band"))
+    for deg in (0, 10):
+        t = np.radians(deg)
+        hf = Heightfield.from_mesh(mesh, [np.sin(t), 0, np.cos(t)], resolution=res, up=up)
+        m = rune_bands.drawn("abc", hf)
+        assert m is not None and m.any()
+        # the band's cells are on the stone's middle line (y ≈ 0) and nowhere else
+        iy, ix = np.nonzero(m)
+        y = hf.b0 + iy * res
+        assert abs(np.median(y)) < 3 and np.abs(y).max() < 25
+    assert rune_bands.drawn("abc", Heightfield.from_mesh(mesh, [np.sin(0.6), 0, np.cos(0.6)], resolution=res, up=up)) is None
+    assert rune_bands.drawn("other", hf0) is None

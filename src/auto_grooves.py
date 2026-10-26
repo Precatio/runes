@@ -467,6 +467,13 @@ STROKE_REASONS = {
     "irregular": "inte runa: kort, krokigt eller ojämnt spår (möjlig spricka)",
     "isolated": "inte runa: ensamt rakt spår utan andra runor intill",
 }
+# With the runic bands (src/rune_bands.py) a cross-section's kind comes from where it lies and how it runs
+BAND_REASONS = {
+    "band": "slingkant, inte runa",
+    "border": "vid slingans kant",
+    "outside": "utanför runslingorna",
+    "rune": "runa (ornamentik valdes)",
+}
 
 
 def _angle_color(angle: float) -> tuple[int, int, int]:
@@ -478,7 +485,7 @@ def _angle_color(angle: float) -> tuple[int, int, int]:
 
 
 def _overlay_png(hf: Heightfield, mask: np.ndarray, wide: np.ndarray, slices: list[dict],
-                 max_side: int = 1600) -> tuple[str, int, int, float]:
+                 max_side: int = 1600, bands: np.ndarray | None = None) -> tuple[str, int, int, float]:
     from PIL import Image, ImageDraw
 
     gy, gx = np.gradient(hf.H, hf.res)
@@ -488,6 +495,8 @@ def _overlay_png(hf: Heightfield, mask: np.ndarray, wide: np.ndarray, slices: li
     shade = np.clip(0.35 + 0.65 * shade / max(lz, 1e-6), 0, 1)
     rgb = np.dstack([shade * 235, shade * 232, shade * 226])
     rgb[~hf.region] = (245, 245, 245)
+    if bands is not None:  # the runic bands, light blue under the grooves
+        rgb[bands & hf.region] = rgb[bands & hf.region] * 0.7 + np.array([120, 170, 230], dtype=float) * 0.3
     tint = np.array([183, 65, 14], dtype=float)
     narrow = mask & ~wide
     rgb[narrow] = rgb[narrow] * 0.55 + tint * 0.45
@@ -567,12 +576,18 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
                     max_halfwidth_mm: float = 8.0, max_slope_deg: float = 45.0, up=None,
                     resolution_mm: float | None = None, harmonize_mm: float | None = None,
                     runes_only: bool = True, rune_min_mm: float = 12.0, rune_max_mm: float = 250.0,
-                    keep_arrays: bool = False) -> dict:
+                    keep_arrays: bool = False, measure: str | None = None, bands: bool = True,
+                    sha256: str | None = None) -> dict:
     """Hittar spåren i höjdfältet och mäter tvärsnitt genom själva mesh-filen, med samma
     profilutdragning och samma calculate_v_angle som den manuella analysen.
 
-    Med runes_only mäts bara snitt på streck som classify_strokes känner igen som runor; övriga
-    spår (ornamentik, slingkanter, möjliga sprickor) visas men mäts inte."""
+    measure: "runes" (bara runor), "ornament" (bara ornamentik) eller "all"; utan measure gäller runes_only.
+    Med bands avgör runslingorna vad som är runor (src/rune_bands.py: ritade slingor för de öppna skanningarna,
+    annars slingmodellens förslag); utan slingor används streckklassningen (classify_strokes) som förut.
+    Övriga spår visas men mäts inte."""
+    measure = measure or ("runes" if runes_only else "all")
+    if measure not in ("runes", "ornament", "all"):
+        raise ValueError("measure ska vara runes, ornament eller all")
     hf = Heightfield.from_mesh(mesh, normal, max_cells=max_cells, resolution=resolution_mm, up=up)
     edges = mesh.edges_unique_length
     mesh_spacing = float(np.median(edges)) if len(edges) else float("nan")
@@ -593,6 +608,14 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
     d_in = residual[inner]
     noise = 1.4826 * float(np.median(np.abs(d_in - np.median(d_in))))
     threshold = max(min_depth_mm, sensitivity * noise)
+    band = None
+    if bands and measure in ("runes", "ornament"):
+        from src import rune_bands
+        try:
+            band = rune_bands.bands_for(-residual, hf.region, res, hf, sha256)
+        except Exception as e:  # the old stroke classification is the fallback
+            band = {"source": None, "empty": True, "error": repr(e)}
+    use_band = bool(band) and not band.get("empty")
 
     mask = (residual < -threshold) & inner
     mask = ndimage.binary_opening(mask)
@@ -653,12 +676,29 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
         hw = float(half_width[iy, ix])
         rec: dict = {"_iy": float(iy), "_ix": float(ix), "halfwidth_mm": hw, "position_mm": k * spacing_mm}
         sid, stroke = stroke_at(iy, ix)
-        rec["feature"] = stroke["kind"] if stroke else "irregular"
-        if stroke and stroke["kind"] == "rune":
+        old = stroke["kind"] if stroke else "irregular"
+        rec["feature"] = old
+        if use_band:
+            # The groove's direction from the centre line around the point, against the band's direction there
+            near = skel_coords[tree.query_ball_point([iy, ix], max(3.0, 2.0 * hw) / res)].astype(float) if tree is not None else []
+            if len(near) >= 3:
+                cc = near - near.mean(axis=0)
+                ty0, tx0 = np.linalg.eigh(cc.T @ cc)[1][:, -1]
+            else:
+                ty0, tx0 = 0.0, 0.0
+            kind = rune_bands.classify(band, int(iy), int(ix), float(ty0), float(tx0)) if len(near) >= 3 else "utanför"
+            rec["band"] = kind
+            rec["feature"] = {"runa": "rune", "slingkant": "band", "gräns": "border"}.get(
+                kind, "ornament" if old in ("ornament", "rune") else old)
+        if rec["feature"] == "rune" and stroke and stroke["kind"] == "rune":
             rec["rune_id"] = int(stroke["rune"])
             rec["stroke_id"] = int(sid)
-        if runes_only and rec["feature"] != "rune":
-            reject(rec, STROKE_REASONS[rec["feature"]])
+        if measure == "runes" and rec["feature"] != "rune":
+            reject(rec, (BAND_REASONS.get(rec["feature"]) or BAND_REASONS["outside"]) if use_band else STROKE_REASONS[rec["feature"]])
+            slices.append(rec)
+            continue
+        if measure == "ornament" and rec["feature"] != "ornament":
+            reject(rec, BAND_REASONS.get(rec["feature"], "inte ornamentik: " + STROKE_REASONS.get(rec["feature"], rec["feature"])))
             slices.append(rec)
             continue
         if hw < 2 * res:
@@ -713,7 +753,7 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
             rec["profile"] = raw_profile(s, z)
         slices.append(rec)
 
-    image_b64, width, height, scale = _overlay_png(hf, mask, wide_area, slices)
+    image_b64, width, height, scale = _overlay_png(hf, mask, wide_area, slices, bands=band["mask"] if use_band else None)
     groove_map, groove_black_mm = _groove_map_png(hf, residual, inner, threshold, (width, height))
     for rec in slices:
         rec.pop("_iy", None)
@@ -721,7 +761,8 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
 
     accepted = [s for s in slices if s["accepted"]]
     arrays = ({"mask": mask, "wide_area": wide_area, "half_width": half_width, "branch_labels": strokes["branch_labels"],
-               "depth": -residual, "res": res, "region": hf.region, "inner": inner} if keep_arrays else None)
+               "depth": -residual, "res": res, "region": hf.region, "inner": inner,
+               "bands": band["mask"] if use_band else None} if keep_arrays else None)
     measured_runes = sorted({s["rune_id"] for s in accepted if "rune_id" in s})
     kinds = {}
     for st in strokes["strokes"].values():
@@ -739,6 +780,11 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
                              "mm_per_px": res * hf.H.shape[1] / width, "black_from": "inner",
                              "edge_zone_mm": margin, "edge_zone_max_slope_deg": max_slope_deg,
                              "edge_zone_contrast": round(EDGE_ZONE_CONTRAST, 4)},
+        # Where the runic bands came from (ritade, modellen) and how much of the scan they cover; None when the
+        # stroke classification decided (measure all, no bands, or no band model)
+        "bands": ({"source": band["source"], "coverage": round(band["coverage"], 4)} if use_band
+                  else {"source": None, "note": (band or {}).get("error") or ("inga slingor hittades" if band else
+                        "slingorna användes inte")}),
         "image_width": width,
         "image_height": height,
         "angle_color_range": list(ANGLE_COLOR_RANGE),
@@ -784,7 +830,9 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
             "min_fit_r2": min_fit_r2,
             "max_halfwidth_mm": max_halfwidth_mm,
             "max_slope_deg": max_slope_deg,
-            "runes_only": runes_only,
+            "runes_only": measure == "runes",
+            "measure": measure,
+            "bands_source": band["source"] if use_band else None,
             "rune_min_mm": rune_min_mm,
             "rune_max_mm": rune_max_mm,
             "image_scale": scale,
