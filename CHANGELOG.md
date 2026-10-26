@@ -5,6 +5,12 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Sökmotorerna får veta om nya artiklar
+- IndexNow-pingen (Bing m.fl.) skickas nu från webbplatsens bygge när GitHub Pages har publicerat sidorna, för de
+  artiklar som är nya, ändrade eller borttagna, på båda språken (scripts/indexnow_ping.py). Den gamla pingen från den
+  lokala appen kördes aldrig: den saknade nyckel och fick inte köras från en lokal dator. Nyckeln är offentlig, som
+  IndexNow kräver (web/public/<nyckel>.txt).
+
 ### Huggspårsanalysen mäter bara runorna – eller bara ornamentiken (groove-6)
 - Den automatiska analysen avgör nu vad som är runor med hjälp av **runslingorna**, inte strecklängder. Mätt mot
   handritade slingor låg 26 % av den gamla klassningens "runor" utanför textslingorna och 24 % av dess "ornamentik"

@@ -314,14 +314,6 @@ def test_the_publication_time():
     assert blog.publication_time(None, later, now) == now  # a scheduled article published at once
 
 
-def test_indexnow_only_with_a_key_and_a_public_site(monkeypatch):
-    monkeypatch.delenv("INDEXNOW_KEY", raising=False)
-    assert blog.indexnow("x") is False
-    monkeypatch.setenv("INDEXNOW_KEY", "abc123")
-    monkeypatch.setenv("SITE_URL", "http://localhost:3000")
-    assert blog.indexnow("x") is False
-
-
 def test_statistics_are_explained_in_plain_words():
     from src import blog_topics as bt
     bh = "Kulldorffs scanstatistik, Benjamini–Hochberg över mönstren"

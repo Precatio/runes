@@ -120,16 +120,10 @@ def is_live(p: dict, now: dt.datetime | None = None) -> bool:
 
 
 def _published() -> list[dict]:
-    """The live articles, newest first. One that has just gone live (scheduled) is announced to the search engines."""
+    """The live articles, newest first. The search engines hear about new and changed articles from the website's
+    build, once GitHub Pages has published them (scripts/indexnow_ping.py, .github/workflows/site.yml)."""
     now = dt.datetime.now(dt.timezone.utc)
     posts = [p for p in _all() if is_live(p, now)]
-    for p in posts:
-        if not p.get("announced") and indexnow(p["slug"]):
-            try:
-                firestore().collection(COLLECTION).document(p["id"]).set({"announced": True}, merge=True)
-                _forget()
-            except Exception:  # noqa: BLE001 - announced again next time
-                pass
     return sorted(posts, key=lambda p: (p.get("publishedAt") or p.get("month") or ""), reverse=True)
 
 
@@ -192,7 +186,6 @@ def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
         raise HTTPException(status_code=409, detail=f"Adressen /artiklar/{req.slug} används redan av en annan artikel.")
     now = dt.datetime.now(dt.timezone.utc)
     data = {**req.model_dump(exclude={"id", "publish_at"}), "updatedAt": now, "by": admin["uid"]}
-    announce = False
     try:
         col = firestore().collection(COLLECTION)
         ref = col.document(req.id) if req.id else col.document()
@@ -202,7 +195,6 @@ def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
             data["month"] = data["publishedAt"].strftime("%Y-%m")
             if not old.get("snapshot"):
                 data["snapshot"] = _snapshot()
-            announce = data["publishedAt"] <= now and not old.get("announced")
         else:
             data["month"] = req.month or old.get("month") or now.strftime("%Y-%m")
         if not old:
@@ -218,8 +210,6 @@ def save_post(req: PostRequest, admin: dict = Depends(require_admin)):
         raise
     except Exception as e:
         raise server_error(e, "Artikeln kunde inte sparas.", status_code=503) from e
-    if announce and indexnow(req.slug):
-        ref.set({"announced": True}, merge=True)
     # The public website: published or changed articles go out within half a minute, scheduled ones at their time
     from src import site_export
     if req.published or old.get("published"):
@@ -262,31 +252,6 @@ def publication_time(publish_at: dt.datetime | None, before: dt.datetime | None,
     if before is not None and before <= now:
         return before
     return now
-
-
-def indexnow(slug: str) -> bool:
-    """Tells the search engines that use IndexNow (Bing, Yandex, Seznam, Naver …) about a newly published post, the
-    blog and the sitemap, in the background. Only when INDEXNOW_KEY is set (in production; the key is served at
-    /indexnow-key.txt by the web app) and SITE_URL is a public https address – never from a local machine."""
-    import os
-    import threading
-    key, site = os.environ.get("INDEXNOW_KEY", "").strip(), os.environ.get("SITE_URL", "https://vitkirunor.se").rstrip("/")
-    if not key or not site.startswith("https://") or "localhost" in site:
-        return False
-    host = site.split("://", 1)[1].split("/", 1)[0]
-    body = {"host": host, "key": key, "keyLocation": f"{site}/indexnow-key.txt",
-            "urlList": [f"{site}/artiklar/{slug}", f"{site}/artiklar", f"{site}/sitemap.xml"]}
-
-    def ping():
-        import requests
-        from api.errors import logger
-        try:
-            r = requests.post("https://api.indexnow.org/indexnow", json=body, timeout=10)
-            logger.info("IndexNow %s: %s", slug, r.status_code)
-        except Exception as e:  # noqa: BLE001 - a failed ping only delays indexing
-            logger.warning("IndexNow misslyckades: %r", e)
-    threading.Thread(target=ping, daemon=True).start()
-    return True
 
 
 @router.delete("/admin/blog/posts/{post_id}")

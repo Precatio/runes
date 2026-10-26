@@ -33,7 +33,7 @@ clean_tmp()
 
 
 def _log_to_stderr() -> None:
-    """The app's own messages (publishing to the website, IndexNow, Statistik i R, sign-in) at INFO and above on stderr,
+    """The app's own messages (publishing to the website, Statistik i R, sign-in) at INFO and above on stderr,
     timestamped, next to uvicorn's: without a handler only warnings got through, so api.log never showed a publish."""
     handler = logging.StreamHandler()
     handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(name)s: %(message)s", "%Y-%m-%d %H:%M:%S"))

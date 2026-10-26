@@ -79,3 +79,26 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
+
+  # The search engines that use IndexNow hear about new, changed and removed articles once the pages are live
+  # (scripts/indexnow_ping.py; the key is public by design, web/public/<key>.txt). A failed ping only warns.
+  indexnow:
+    needs: deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - name: Förra versionen av artiklarna
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: |
+          if [ -n "$BEFORE" ] && [ "$BEFORE" != "0000000000000000000000000000000000000000" ]; then
+            git fetch --depth=1 origin "$BEFORE" || echo "::warning::Förra versionen kunde inte hämtas"
+          fi
+      - name: Pinga IndexNow
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: python3 scripts/indexnow_ping.py
