@@ -105,10 +105,9 @@ assert 0.9 <= NIO_AV_TIO < 0.95 and 0.83 <= (T["drengr"]["n"] - T["drengr"]["k"]
 assert 3.5 <= (T["drengr"]["k"] / T["drengr"]["n"]) / (T["alla"]["k"] / T["alla"]["n"]) <= 4.5 and 1 / T["drengr"]["p"] > 10000
 
 # ---- photographs from Wikimedia Commons (via Wikidata), credits pinned ----------------------------------------------
-FILES = commons.wikidata_files(["Sö 130", "Vs 24", "DR 212"])
+FILES = commons.wikidata_files(["Sö 130"])
 INFO = commons.commons_info([FILES[s] for s in FILES])
-CREDIT = {"Sö 130": ("Berig", "CC BY-SA 3.0"), "Vs 24": ("Users Zoeds, Zoeds on sv.wikipedia", "Public domain"),
-          "DR 212": ("Photographer Roberto Fortuna, commisioned by the Danish National Museum", "CC BY-SA 3.0")}
+CREDIT = {"Sö 130": ("Berig", "CC BY-SA 3.0")}
 IMG_CR = "https://upload.wikimedia.org/wikipedia/commons/5/50/Codex_Regius_of_Eddaic_Poems.jpg"
 PAGE_CR = "https://commons.wikimedia.org/wiki/File:Codex_Regius_of_Eddaic_Poems.jpg"
 
@@ -126,14 +125,9 @@ def photo(signum: str, text: str, lang: str = "sv") -> str:
     return f"![{alt}]({img['thumb']})\n{text} {'Foto' if lang == 'sv' else 'Photo'}: {rest}"
 
 
-SHOWN = {"Users Zoeds, Zoeds on sv.wikipedia": "Gustaf Eriksson (via Zoeds)",
-         "Photographer Roberto Fortuna, commisioned by the Danish National Museum": "Roberto Fortuna, Nationalmuseet"}
+SHOWN: dict[str, str] = {}  # photographer names to show instead of the author field, when they differ
 PH_130 = photo("Sö 130", "Hagstugan (Sö 130) i Sparsta, Södermanland: fyra söner åt sin far, ”mild i ord och god på mat”. Stenen är en av sju med formeln.")
-PH_24 = photo("Vs 24", "Odendisastenen vid Hassmyra (Vs 24), Västmanland: den enda runsten som berömmer en husfru, ”ingen bättre kommer till Hassmyra”.")
-PH_212 = photo("DR 212", "Tillitse (DR 212) på Lolland: Áskell reste stenen åt sig själv, ”alltid skall det stå, så länge stenen lever”.")
 PH_130_EN = photo("Sö 130", "Hagstugan (Sö 130) at Sparsta, Södermanland: four sons for their father, “gentle in speech and free with food”. One of seven stones with the formula.", "en")
-PH_24_EN = photo("Vs 24", "The Óðindísa stone at Hassmyra (Vs 24), Västmanland: the only runestone that praises a housewife, “no better will come to Hassmyra”.", "en")
-PH_212_EN = photo("DR 212", "Tillitse (DR 212) on Lolland: Áskell raised the stone for himself, “ever will it stand, while the stone lives”.", "en")
 CR = f"![Uppslag ur Codex Regius]({IMG_CR})\nCodex Regius (GKS 2365 4to), nedskriven omkring 1270, Hávamáls enda medeltida källa. Bild: public domain, via [Wikimedia Commons]({PAGE_CR})."
 CR_EN = f"![A spread of Codex Regius]({IMG_CR})\nCodex Regius (GKS 2365 4to), written down around 1270, Hávamál's only medieval source. Image: public domain, via [Wikimedia Commons]({PAGE_CR})."
 
@@ -237,8 +231,6 @@ Jag fann aldrig en så givmild man, eller så god på mat, att det inte var väl
 
 **Den som sköter sitt.** Þorsteinn i Turinge (Sö 338) var en av *beztra manna, á landi ok í liði úti*, de bästa män i land och i följe ute, och bröderna *heldu sína húskarla vel*: de höll sina huskarlar väl. Det är den enda sten som berömmer någon för hur han höll sitt husfolk, och den gör det på samma sten som berättar att han stupade i Gårdarike. Odindisa i Hassmyra (Vs 24) får stenens enda husfruberöm: *kemr hýfreyja til Hôsumýra eigi betri, en býi ráðr* – det kommer ingen bättre husfru till Hassmyra, som råder över gården. Hávamál: *bú er betra, þótt lítit sé* (36), eget hem är bättre, om än litet.
 
-{PH_24}
-
 **Utan skam.** Özurr i Århus (DR 68) *dó manna mest óníðingr*, dog som den minst nidingaktiga av män. Toke Gormsson i Hällestad (DR 295) *fló eigi at Uppsôlum*, flydde inte vid Uppsala. Det är här modet står, och det är värt att se hur det står: inte som anfall utan som att inte svika. Hávamál 16 säger varför den fege ändå inte vinner något: *ósnjallr maðr hyggsk munu ey lifa, ef hann við víg varask; en elli gefr hánum engi frið* – den fege tror att han ska leva för evigt om han undviker strid, men ålderdomen ger honom ingen frid. Och i strof 48 står mod och generositet i samma rad: *mildir, fræknir menn bazt lifa*, frikostiga, tappra män lever bäst.
 
 **Skicklig.** Gunnleifr (U 654) dräptes i österled med Ingvar, men det ristaren ville ha sagt om honom var att han *kunni vel knerri stýra*, kunde styra en knarr väl. Astrid i Dynna (N 68) var *mær hônnurst á Haðalandi*, den händigaste mön i Hadeland; hennes mor byggde en bro åt henne. Hávamál saknar ordet för hantverk men inte tanken: var inte skomakare eller skaftmakare åt andra, säger strof 126, om du inte kan det – ett dåligt skaft blir din olycka.
@@ -248,8 +240,6 @@ Jag fann aldrig en så givmild man, eller så god på mat, att det inte var väl
 > *Deyr fé, deyja frændr, deyr sjalfr it sama, en orðstírr deyr aldregi, hveim er sér góðan getr.*
 
 Fä dör, fränder dör, själv dör man likaså; men ryktet dör aldrig för den som vinner sig ett gott. Áskell på Lolland (DR 212) formulerade det i sten: *æ mun standa, með steinn lifir*, alltid skall det stå, så länge stenen lever. Och strof 72 vet vem som reser stenarna: *sjaldan bautarsteinar standa brautu nær, nema reisi niðr at nið* – sällan står bautastenar vid vägen, om inte ättling reser dem åt ättling.
-
-{PH_212}
 
 ## Vad dikten lär ut
 
@@ -373,8 +363,6 @@ I never found a man so generous, or so free with food, that a gift was not welco
 
 **Minding one's own.** Þorsteinn of Turinge (Sö 338) was one of the *beztra manna, á landi ok í liði úti*, the best of men at home and in the host abroad, and the brothers *heldu sína húskarla vel*: they kept their household men well. It is the only stone that praises someone for how he kept his household, and it does so on the same stone that tells how he fell in Garðaríki. Óðindísa of Hassmyra (Vs 24) gets the stones' one word of praise for a housewife: *kemr hýfreyja til Hôsumýra eigi betri, en býi ráðr* – no better housewife will come to Hassmyra, who rules the farm. Hávamál: *bú er betra, þótt lítit sé* (36), a home of one's own is better, though it be small.
 
-{PH_24_EN}
-
 **Without shame.** Ôzurr of Århus (DR 68) *dó manna mest óníðingr*, died the least villainous of men. Tóki Gormsson of Hällestad (DR 295) *fló eigi at Uppsôlum*, did not flee at Uppsala. This is where courage stands, and it is worth seeing how it stands: not as attack but as not failing others. Hávamál 16 says why the coward gains nothing anyway: *ósnjallr maðr hyggsk munu ey lifa, ef hann við víg varask; en elli gefr hánum engi frið* – the coward thinks he will live for ever if he shuns the fight, but old age gives him no peace. And in stanza 48 courage and generosity share a line: *mildir, fræknir menn bazt lifa*, generous, brave men live best.
 
 **Skilled.** Gunnleifr (U 654) was killed in the east with Ingvarr, but what the carver wanted said of him was that he *kunni vel knerri stýra*, could steer a cargo ship well. Ástríðr of Dynna (N 68) was *mær hônnurst á Haðalandi*, the handiest maiden in Hadeland; her mother built a bridge for her. Hávamál has no word for craft but has the thought: be no shoemaker or shaft-maker for others, says stanza 126, unless you can do it – a bad shaft will be your undoing.
@@ -384,8 +372,6 @@ I never found a man so generous, or so free with food, that a gift was not welco
 > *Deyr fé, deyja frændr, deyr sjalfr it sama, en orðstírr deyr aldregi, hveim er sér góðan getr.*
 
 Cattle die, kinsmen die, you yourself die likewise; but a good name never dies for the one who earns it. Áskell on Lolland (DR 212) put it in stone: *æ mun standa, með steinn lifir*, ever will it stand, while the stone lives. And stanza 72 knows who raises the stones: *sjaldan bautarsteinar standa brautu nær, nema reisi niðr at nið* – seldom do memorial stones stand by the road unless kin raise them for kin.
-
-{PH_212_EN}
 
 ## What the poem teaches
 
@@ -436,7 +422,7 @@ It is a list that has not aged, and that is perhaps the most unexpected thing. R
 
 for b in (body, body_en):
     assert not re.search(r"^\|", b, re.M)  # BlogBody has no tables
-    assert b.count(":::box") == 2 and b.count(":::chart") == 3 and b.count("![") == 4
+    assert b.count(":::box") == 2 and b.count(":::chart") == 3 and b.count("![") == 2
 out = {"slug": "mild-i-ord-och-god-pa-mat", "title": title, "summary": summary, "body": body,
        "title_en": title_en, "summary_en": summary_en, "body_en": body_en,
        "labels": ["Forskning", "Eddan", "Formler och syfte", "Tolkning"]}
