@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useEffectEvent, useMemo, useRef, Suspense } from "react";
+import { useState, useEffect, useEffectEvent, useRef, Suspense } from "react";
 import PlotlyGraph from "@/components/PlotlyGraph";
 import { useLanguage } from "@/components/LanguageContext";
 import { useAnalysis } from "@/components/AnalysisContext";
@@ -172,7 +172,8 @@ function ThreeDPageContent() {
   // Runes marked by hand in the review image (one click per rune, reading order); they replace the automatic rune
   // grouping in everything that uses the analysis
   const [runeMarks, setRuneMarks] = useState<[number, number][]>([]);
-  const autoResult = useMemo(() => (autoRaw ? withMarkedRunes(autoRaw, autoLabels, runeMarks) : null), [autoRaw, autoLabels, runeMarks]);
+  // (no useMemo: the React Compiler memoizes this on its inputs)
+  const autoResult = autoRaw ? withMarkedRunes(autoRaw, autoLabels, runeMarks) : null;
   const setAutoResult = (r: AutoAnalysisResult | null) => { setAutoRaw(r); setRuneMarks([]); };
   const [autoBusy, setAutoBusy] = useState(false);
   const [autoError, setAutoError] = useState<string | null>(null);
@@ -436,9 +437,9 @@ function ThreeDPageContent() {
 
   const LABEL_COLORS: Record<AutoLabel, string> = { rune: "#b7410e", ornament: "#0369a1", unknown: "#0f172a", excluded: "#94a3b8" };
   // From the analysis itself, not the rune marks: marking runes then does not redraw the 3D view
-  const autoPoints: ViewerPoint[] = useMemo(() => (autoRaw
+  const autoPoints: ViewerPoint[] = autoRaw
     ? autoRaw.slices.flatMap((sl, i) => (sl.accepted && sl.point ? [{ position: sl.point, color: LABEL_COLORS[autoLabels[i] ?? "unknown"] }] : []))
-    : []), [autoRaw, autoLabels]);
+    : [];
 
   // Images computed from the scan itself (raking light from four directions, combined relief, depth below the
   // stone surface), seen from the carved side that faces the camera. Independent of zoom and screen lighting.
