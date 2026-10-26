@@ -23,6 +23,7 @@ class RaaResponse(BaseModel):
     source: str = "ksamsok-ai"  # "rundata" när uppgifterna kommer direkt från Rundata
     signum: Optional[str] = None
     attribution: Optional[str] = None
+    rune_types: Optional[str] = None  # Rundatas runtyper, t.ex. "stavlösa" (3D-sidan slår då på stavlöst läge)
 
 class ExtractSignumRequest(BaseModel):
     filename: str
@@ -80,6 +81,7 @@ def rundata_response(rec: dict) -> RaaResponse:
         source="rundata",
         signum=rec["signum"],
         attribution=store().meta["attribution"],
+        rune_types=rec.get("rune_types") or None,
     )
 
 

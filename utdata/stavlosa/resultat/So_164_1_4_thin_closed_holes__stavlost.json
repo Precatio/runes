@@ -1,0 +1,49 @@
+{
+ "series": "sodermanland",
+ "stem": "So_164_1_4_thin_closed_holes",
+ "signum": "Sö 164",
+ "rune_types": "långkvist, stavlösa och lönnrunor (kvistrunor)",
+ "staveless": true,
+ "bands_used": true,
+ "text_runor": 176,
+ "runor_matta": 84,
+ "runsnitt": 561,
+ "godkanda": 561,
+ "runor_hittade": 110,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.2821
+ },
+ "counts": {
+  "candidates": 3370,
+  "accepted": 561,
+  "rejected": 2809,
+  "rejection_reasons": {
+   "utanför runslingorna": 1602,
+   "slingkant, inte runa": 443,
+   "vid slingans kant": 68,
+   "för få punkter i snittet": 25,
+   "dålig väggpassning": 47,
+   "spårkant hittades inte": 399,
+   "för grunt": 186,
+   "för smalt för upplösningen": 36,
+   "orimlig vinkel": 3
+  },
+  "groove_area_mm2": 124735.31999999998,
+  "wide_area_mm2": 697.68,
+  "strokes": {
+   "irregular": 1002,
+   "rune": 72,
+   "isolated": 125,
+   "ornament": 101
+  },
+  "runes_identified": 110,
+  "runes_measured": 84
+ },
+ "parametrar": {
+  "staveless": true,
+  "staveless_gap_mm": 12.66,
+  "band_height_mm": 84.4
+ },
+ "seconds": 70
+}

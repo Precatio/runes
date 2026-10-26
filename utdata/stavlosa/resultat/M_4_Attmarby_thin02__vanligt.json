@@ -1,0 +1,46 @@
+{
+ "series": "medelpad",
+ "stem": "M_4_Attmarby_thin02",
+ "signum": "M 4",
+ "rune_types": "långkvist samt stavlösa för r, u och s",
+ "staveless": false,
+ "bands_used": true,
+ "text_runor": 99,
+ "runor_matta": 11,
+ "runsnitt": 343,
+ "godkanda": 343,
+ "runor_hittade": 28,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.2101
+ },
+ "counts": {
+  "candidates": 2133,
+  "accepted": 343,
+  "rejected": 1790,
+  "rejection_reasons": {
+   "utanför runslingorna": 1176,
+   "slingkant, inte runa": 290,
+   "för smalt för upplösningen": 27,
+   "för få punkter i snittet": 30,
+   "dålig väggpassning": 83,
+   "vid slingans kant": 87,
+   "spårkant hittades inte": 49,
+   "orimlig vinkel": 6,
+   "för grunt": 38,
+   "botten utanför mittlinjen": 3,
+   "anpassningen misslyckades": 1
+  },
+  "groove_area_mm2": 129205.79999999999,
+  "wide_area_mm2": 16037.279999999999,
+  "strokes": {
+   "irregular": 898,
+   "ornament": 59,
+   "isolated": 109,
+   "rune": 33
+  },
+  "runes_identified": 28,
+  "runes_measured": 11
+ },
+ "seconds": 43
+}

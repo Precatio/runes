@@ -360,6 +360,7 @@ def auto_analyze(
     protocol: bool = Form(False),
     measure: str | None = Form(None),
     bands: str | None = Form(None),
+    staveless: str | None = Form(None),
 ):
     """Automatisk spåranalys av den ristade ytan som vetter mot normalen (oftast kamerans riktning).
     measure: runes (standard) mäter bara runor, ornament bara ornamentiken, all allt (för facit). Runslingorna
@@ -368,6 +369,7 @@ def auto_analyze(
     används Vitki-protokollets fasta parametrar (src/protocol.py); proveniensen anger alltid om analysen följer det."""
     runes_only = form_flag(runes_only, True, "runes_only")
     use_bands = form_flag(bands, True, "bands")
+    use_staveless = form_flag(staveless, False, "staveless")
     if measure is not None and measure not in ("runes", "ornament", "all"):
         raise HTTPException(status_code=400, detail="Mät runor (runes), ornamentik (ornament) eller allt (all).")
     measure = measure or ("runes" if runes_only else "all")
@@ -391,7 +393,7 @@ def auto_analyze(
                                  up=None if up_x is None else [up_x, up_y, up_z],
                                  resolution_mm=resolution_mm, harmonize_mm=harmonize_mm or None,
                                  runes_only=measure == "runes", measure=measure, bands=use_bands,
-                                 sha256=entry.info.get("sha256"))
+                                 sha256=entry.info.get("sha256"), staveless=use_staveless)
     except ValueError as e:
         raise HTTPException(status_code=422, detail=str(e)) from e
     except Exception as e:

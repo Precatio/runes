@@ -1,0 +1,43 @@
+{
+ "series": "medelpad",
+ "stem": "M_3_Berga_thin02",
+ "signum": "M 3",
+ "rune_types": "långkvist + stavlösa för r och u",
+ "staveless": false,
+ "bands_used": true,
+ "text_runor": 68,
+ "runor_matta": 7,
+ "runsnitt": 199,
+ "godkanda": 199,
+ "runor_hittade": 13,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.2652
+ },
+ "counts": {
+  "candidates": 1501,
+  "accepted": 199,
+  "rejected": 1302,
+  "rejection_reasons": {
+   "slingkant, inte runa": 358,
+   "utanför runslingorna": 528,
+   "spårkant hittades inte": 93,
+   "för grunt": 167,
+   "för smalt för upplösningen": 31,
+   "dålig väggpassning": 73,
+   "vid slingans kant": 47,
+   "för få punkter i snittet": 5
+  },
+  "groove_area_mm2": 64026.719999999994,
+  "wide_area_mm2": 160.92,
+  "strokes": {
+   "irregular": 701,
+   "ornament": 28,
+   "isolated": 75,
+   "rune": 20
+  },
+  "runes_identified": 13,
+  "runes_measured": 7
+ },
+ "seconds": 61
+}

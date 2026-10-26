@@ -1,0 +1,324 @@
+[
+ {
+  "fil": "HS_10_1a_thin03",
+  "signum": "Hs 10",
+  "stavlosa": true,
+  "text": 225,
+  "streck": 26,
+  "takt_mm": 4.0,
+  "runor_takt": 21,
+  "runor_fast": {
+   "0.1": 20,
+   "0.15": 17,
+   "0.2": 15
+  }
+ },
+ {
+  "fil": "HS_10_1b_thin03",
+  "signum": "Hs 10",
+  "stavlosa": true,
+  "text": 225,
+  "streck": 74,
+  "takt_mm": 6.0,
+  "runor_takt": 36,
+  "runor_fast": {
+   "0.1": 25,
+   "0.15": 23,
+   "0.2": 19
+  }
+ },
+ {
+  "fil": "HS_10_2a_thin03",
+  "signum": "Hs 10",
+  "stavlosa": true,
+  "text": 225,
+  "streck": 138,
+  "takt_mm": 8.0,
+  "runor_takt": 67,
+  "runor_fast": {
+   "0.1": 53,
+   "0.15": 42,
+   "0.2": 33
+  }
+ },
+ {
+  "fil": "HS_10_2b_thin03",
+  "signum": "Hs 10",
+  "stavlosa": true,
+  "text": 225,
+  "streck": 91,
+  "takt_mm": 7.0,
+  "runor_takt": 54,
+  "runor_fast": {
+   "0.1": 45,
+   "0.15": 38,
+   "0.2": 37
+  }
+ },
+ {
+  "fil": "HS_10_3a_thin03",
+  "signum": "Hs 10",
+  "stavlosa": true,
+  "text": 225,
+  "streck": 77,
+  "takt_mm": 5.0,
+  "runor_takt": 50,
+  "runor_fast": {
+   "0.1": 38,
+   "0.15": 32,
+   "0.2": 25
+  }
+ },
+ {
+  "fil": "HS_10_3b_thin03",
+  "signum": "Hs 10",
+  "stavlosa": true,
+  "text": 225,
+  "streck": 68,
+  "takt_mm": 6.0,
+  "runor_takt": 38,
+  "runor_fast": {
+   "0.1": 35,
+   "0.15": 30,
+   "0.2": 27
+  }
+ },
+ {
+  "fil": "HS_11_thin03",
+  "signum": "Hs 11",
+  "stavlosa": false,
+  "text": 76,
+  "streck": 433,
+  "takt_mm": 22.0,
+  "runor_takt": 114,
+  "runor_fast": {
+   "0.1": 114,
+   "0.15": 76,
+   "0.2": 55
+  }
+ },
+ {
+  "fil": "HS_12_thin03",
+  "signum": "Hs 12",
+  "stavlosa": true,
+  "text": 145,
+  "streck": 325,
+  "takt_mm": 12.0,
+  "runor_takt": 135,
+  "runor_fast": {
+   "0.1": 103,
+   "0.15": 62,
+   "0.2": 54
+  }
+ },
+ {
+  "fil": "HS_14_0_40_runes_thin03",
+  "signum": "Hs 14",
+  "stavlosa": true,
+  "text": 267,
+  "streck": 469,
+  "takt_mm": 56.0,
+  "runor_takt": 36,
+  "runor_fast": {
+   "0.1": 149,
+   "0.15": 110,
+   "0.2": 79
+  }
+ },
+ {
+  "fil": "HS_14_1mm_complete_thin03",
+  "signum": "Hs 14",
+  "stavlosa": true,
+  "text": 267,
+  "streck": 222,
+  "takt_mm": 12.0,
+  "runor_takt": 128,
+  "runor_fast": {
+   "0.1": 111,
+   "0.15": 90,
+   "0.2": 78
+  }
+ },
+ {
+  "fil": "HS_15_0_40_thin03",
+  "signum": "Hs 15",
+  "stavlosa": true,
+  "text": 84,
+  "streck": 210,
+  "takt_mm": 19.0,
+  "runor_takt": 64,
+  "runor_fast": {
+   "0.1": 57,
+   "0.15": 44,
+   "0.2": 31
+  }
+ },
+ {
+  "fil": "HS_16_thin03",
+  "signum": "Hs 16",
+  "stavlosa": false,
+  "text": 22,
+  "streck": 127,
+  "takt_mm": 50.0,
+  "runor_takt": 7,
+  "runor_fast": {
+   "0.1": 29,
+   "0.15": 17,
+   "0.2": 11
+  }
+ },
+ {
+  "fil": "HS_21_thin01",
+  "signum": "Hs 21",
+  "stavlosa": false,
+  "text": 45,
+  "streck": 572,
+  "takt_mm": 60.0,
+  "runor_takt": 8,
+  "runor_fast": {
+   "0.1": 15,
+   "0.15": 8,
+   "0.2": 8
+  }
+ },
+ {
+  "fil": "HS_2_thin01",
+  "signum": "Hs 2",
+  "stavlosa": false,
+  "text": 206,
+  "streck": 509,
+  "takt_mm": 10.0,
+  "runor_takt": 182,
+  "runor_fast": {
+   "0.1": 142,
+   "0.15": 102,
+   "0.2": 74
+  }
+ },
+ {
+  "fil": "HS_6_thin03",
+  "signum": "Hs 6",
+  "stavlosa": false,
+  "text": 106,
+  "streck": 507,
+  "takt_mm": 27.0,
+  "runor_takt": 40,
+  "runor_fast": {
+   "0.1": 55,
+   "0.15": 38,
+   "0.2": 28
+  }
+ },
+ {
+  "fil": "M_11_Högom_thin03",
+  "signum": "M 11",
+  "stavlosa": false,
+  "text": 145,
+  "streck": 334,
+  "takt_mm": 40.0,
+  "runor_takt": 33,
+  "runor_fast": {
+   "0.1": 81,
+   "0.15": 53,
+   "0.2": 33
+  }
+ },
+ {
+  "fil": "M_15_Sköns_kyrka_thin02",
+  "signum": "M 15",
+  "stavlosa": false,
+  "text": 42,
+  "streck": 283,
+  "takt_mm": 12.0,
+  "runor_takt": 76,
+  "runor_fast": {
+   "0.1": 51,
+   "0.15": 37,
+   "0.2": 28
+  }
+ },
+ {
+  "fil": "M_1_Nolby_thin03",
+  "signum": "M 1",
+  "stavlosa": false,
+  "text": 77,
+  "streck": 406,
+  "takt_mm": 9.0,
+  "runor_takt": 158,
+  "runor_fast": {
+   "0.1": 117,
+   "0.15": 96,
+   "0.2": 67
+  }
+ },
+ {
+  "fil": "M_3_Berga_thin02",
+  "signum": "M 3",
+  "stavlosa": true,
+  "text": 68,
+  "streck": 352,
+  "takt_mm": 55.0,
+  "runor_takt": 53,
+  "runor_fast": {
+   "0.1": 95,
+   "0.15": 72,
+   "0.2": 54
+  }
+ },
+ {
+  "fil": "M_4_Attmarby_thin02",
+  "signum": "M 4",
+  "stavlosa": true,
+  "text": 99,
+  "streck": 405,
+  "takt_mm": 12.0,
+  "runor_takt": 120,
+  "runor_fast": {
+   "0.1": 85,
+   "0.15": 50,
+   "0.2": 28
+  }
+ },
+ {
+  "fil": "M_7_Tuna_kyrka_thin03",
+  "signum": "M 7",
+  "stavlosa": true,
+  "text": 33,
+  "streck": 170,
+  "takt_mm": 9.0,
+  "runor_takt": 81,
+  "runor_fast": {
+   "0.1": 66,
+   "0.15": 46,
+   "0.2": 37
+  }
+ },
+ {
+  "fil": "M_8_Sköle_thin03",
+  "signum": "M 8",
+  "stavlosa": true,
+  "text": 32,
+  "streck": 280,
+  "takt_mm": 50.0,
+  "runor_takt": 29,
+  "runor_fast": {
+   "0.1": 79,
+   "0.15": 56,
+   "0.2": 39
+  }
+ },
+ {
+  "fil": "So_164_1_4_thin_closed_holes",
+  "signum": "Sö 164",
+  "stavlosa": true,
+  "text": 176,
+  "streck": 516,
+  "takt_mm": 25.0,
+  "runor_takt": 84,
+  "runor_fast": {
+   "0.1": 71,
+   "0.15": 49,
+   "0.2": 29
+  }
+ }
+]

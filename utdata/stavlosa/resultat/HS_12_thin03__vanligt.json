@@ -1,0 +1,44 @@
+{
+ "series": "halsingland",
+ "stem": "HS_12_thin03",
+ "signum": "Hs 12",
+ "rune_types": "stavlösa",
+ "staveless": false,
+ "bands_used": true,
+ "text_runor": 145,
+ "runor_matta": 16,
+ "runsnitt": 303,
+ "godkanda": 303,
+ "runor_hittade": 43,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.2576
+ },
+ "counts": {
+  "candidates": 1905,
+  "accepted": 303,
+  "rejected": 1602,
+  "rejection_reasons": {
+   "utanför runslingorna": 797,
+   "slingkant, inte runa": 490,
+   "vid slingans kant": 79,
+   "för smalt för upplösningen": 26,
+   "för grunt": 56,
+   "spårkant hittades inte": 110,
+   "dålig väggpassning": 34,
+   "för få punkter i snittet": 9,
+   "orimlig vinkel": 1
+  },
+  "groove_area_mm2": 73767.95999999999,
+  "wide_area_mm2": 486.0,
+  "strokes": {
+   "irregular": 560,
+   "rune": 49,
+   "ornament": 53,
+   "isolated": 45
+  },
+  "runes_identified": 43,
+  "runes_measured": 16
+ },
+ "seconds": 38
+}

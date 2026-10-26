@@ -1,0 +1,42 @@
+{
+ "series": "halsingland",
+ "stem": "HS_10_2a_thin03",
+ "signum": "Hs 10",
+ "rune_types": "stavlösa",
+ "staveless": false,
+ "bands_used": true,
+ "text_runor": 225,
+ "runor_matta": 0,
+ "runsnitt": 20,
+ "godkanda": 20,
+ "runor_hittade": 0,
+ "slingor": {
+  "source": "modellen",
+  "coverage": 0.0301
+ },
+ "counts": {
+  "candidates": 2548,
+  "accepted": 20,
+  "rejected": 2528,
+  "rejection_reasons": {
+   "utanför runslingorna": 2229,
+   "dålig väggpassning": 16,
+   "för grunt": 46,
+   "för smalt för upplösningen": 15,
+   "slingkant, inte runa": 160,
+   "vid slingans kant": 48,
+   "spårkant hittades inte": 13,
+   "orimlig vinkel": 1
+  },
+  "groove_area_mm2": 101178.0,
+  "wide_area_mm2": 0.0,
+  "strokes": {
+   "irregular": 2417,
+   "isolated": 116,
+   "ornament": 21
+  },
+  "runes_identified": 0,
+  "runes_measured": 0
+ },
+ "seconds": 91
+}

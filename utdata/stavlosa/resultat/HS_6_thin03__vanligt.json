@@ -1,0 +1,44 @@
+{
+ "series": "halsingland",
+ "stem": "HS_6_thin03",
+ "signum": "Hs 6",
+ "rune_types": "",
+ "staveless": false,
+ "bands_used": true,
+ "text_runor": 106,
+ "runor_matta": 69,
+ "runsnitt": 1365,
+ "godkanda": 1365,
+ "runor_hittade": 89,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.3259
+ },
+ "counts": {
+  "candidates": 3626,
+  "accepted": 1365,
+  "rejected": 2261,
+  "rejection_reasons": {
+   "utanför runslingorna": 1149,
+   "slingkant, inte runa": 542,
+   "spårkant hittades inte": 209,
+   "vid slingans kant": 255,
+   "för grunt": 23,
+   "dålig väggpassning": 51,
+   "för få punkter i snittet": 18,
+   "för smalt för upplösningen": 12,
+   "orimlig vinkel": 2
+  },
+  "groove_area_mm2": 186388.55999999997,
+  "wide_area_mm2": 13295.159999999998,
+  "strokes": {
+   "irregular": 508,
+   "ornament": 74,
+   "rune": 153,
+   "isolated": 63
+  },
+  "runes_identified": 89,
+  "runes_measured": 69
+ },
+ "seconds": 72
+}

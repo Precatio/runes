@@ -1,0 +1,49 @@
+{
+ "series": "halsingland",
+ "stem": "HS_2_thin01",
+ "signum": "Hs 2",
+ "rune_types": "",
+ "staveless": true,
+ "bands_used": true,
+ "text_runor": 206,
+ "runor_matta": 168,
+ "runsnitt": 2031,
+ "godkanda": 2031,
+ "runor_hittade": 187,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.1524
+ },
+ "counts": {
+  "candidates": 7861,
+  "accepted": 2031,
+  "rejected": 5830,
+  "rejection_reasons": {
+   "utanför runslingorna": 4590,
+   "slingkant, inte runa": 812,
+   "vid slingans kant": 303,
+   "orimlig vinkel": 20,
+   "dålig väggpassning": 32,
+   "spårkant hittades inte": 13,
+   "för smalt för upplösningen": 34,
+   "för få punkter i snittet": 18,
+   "för grunt": 8
+  },
+  "groove_area_mm2": 289150.92,
+  "wide_area_mm2": 26298.0,
+  "strokes": {
+   "isolated": 114,
+   "irregular": 2216,
+   "ornament": 202,
+   "rune": 226
+  },
+  "runes_identified": 187,
+  "runes_measured": 168
+ },
+ "parametrar": {
+  "staveless": true,
+  "staveless_gap_mm": 7.64,
+  "band_height_mm": 50.9
+ },
+ "seconds": 111
+}

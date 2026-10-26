@@ -693,6 +693,44 @@ missas ibland. Igenkänningen är regelbaserad och inte validerad mot en handmä
 * **Begränsningar:** slingmodellen är tränad på öppna skanningar från två skannertyper och sex serier; stavlösa runor
   och små fragment hittar den dåligt. Slingorna är förslag som användaren ska granska i granskningsbilden.
 
+**Stavlöst läge (2026-10-26, `src/staveless.py`).** Stavlösa runor (hälsingerunor, och r/u på en del medelpadska
+stenar) har ingen huvudstav: en runa är ett eller några korta streck, ofta halva slinghöjden. Med slingorna mäts deras
+snitt (rätt placerade slingor gav 1,4–3,5 runsnitt per runa i texten på de stavlösa stenarna, som på vanliga stenar),
+men runindelningen bygger på streck som sitter ihop och är minst 12 mm långa, så nästan inga snitt fick en runa: Hs 15
+197 runsnitt och 5 runor, Hs 12 303 och 16. I stavlöst läge delas runorna i stället efter var strecken står längs
+slingan. Vilka snitt som mäts och deras mått är desamma som utan läget; bara runtillhörigheten (`rune_id`) ändras.
+* **Slingorna var för sig:** ritade slingor behåller var sitt nummer (`rune_bands.drawn_labels`), så att rader som
+  ritats sida vid sida inte flyter ihop där de möts (Hs 14:s fem slingor blev annars tre fält, Hs 15:s två ett);
+  modellens slingor delas i sammanhängande fält. Slinghöjden räknas för varje slinga (två gånger 90:e percentilen av
+  avståndet till kanten).
+* **Koordinat längs slingan:** slingan skelettiseras på ett rutnät om 2 mm; avståndet längs skelettet från dess ena
+  ände är koordinaten, och varje cell får värdet från närmaste skelettpunkt, så att koordinaten inte ändras tvärs
+  över slingan. Slingans riktning är riktningen där koordinaten ökar.
+* **Runstreck:** en gren av mittlinjen som till minst hälften ligger i slingan, högst 1,5 slinghöjder lång, högst 0,4
+  slinghöjder utsträckt längs slingan och, om den är längre än en fjärdedel av slinghöjden, mer än 25° från slingans
+  riktning (annars är den en bit slingkant).
+* **Runor:** strecken ordnas längs slingan; ett streck hör till föregående runa om luckan dit är högst 0,15
+  slinghöjder och runan då blir högst 0,45 slinghöjder bred längs slingan. Breddtaket hindrar att tätt ristade runor
+  kedjas ihop.
+* **Hur gränsen valdes:** två regler bestämdes före provet och föll. Den största relativa luckan i stenens sorterade
+  avstånd landade antingen på några mm (för många runor) eller på 30–47 mm (Sö 164: 5 runor av 176). Runornas takt ur
+  autokorrelationen av strecken längs slingan gav takter mellan 4 och 60 mm. Gränsen 0,15 och taket 0,45 slinghöjder
+  valdes därefter, med textens runantal och fullstora granskningsbilder av Hs 15 och Hs 12 som stöd; de är alltså
+  inte förhandsbestämda. Indelningen är ett ungefärligt förslag – den exakta görs med *Markera runorna* nedan.
+* **Utan slingor:** streckklassningen med minsta runstreck 5 mm (i stället för 12) och grannavståndet 4 gånger runans
+  höjd (i stället för 2,5).
+* **Påslaget:** av användaren på 3D-sidan, och automatiskt när Rundata anger stavlösa runor och ingen annan runtyp för
+  stenen (Hs 10, 12, 14, 15; 3D-sidan och stenanalysen). På blandade stenar (långkvist med stavlösa r och u: M 3, M 7,
+  M 8) delade läget runorna för fint, så där lämnas valet till användaren. Av som standard.
+* **Prövning** (`utdata/stavlosa/`: `matning.py`, `kor.sh`, `tabell.py`; 15 skanningar av stenar med stavlösa runor
+  och 8 vanliga, Vitki-protokollet, ritade slingor där de finns). Runor med minst ett godkänt snitt, utan → med läget:
+  Hs 12 16 → 60 (145 runor i texten), Hs 14 26 → 89 (267; skanningen av runpartiet), Hs 15 5 → 48 (84). Hs 10 har inga
+  ritade slingor och slingmodellen hittar dem dåligt: de sex fragmenten gav 8–38 godkända snitt var och 5 → 39 runor
+  sammanlagt. Antalet runor läget hittade mot textens: Hs 12 100 av 145, Hs 14 168 av 267, Hs 15 66 av 84. På blandade
+  stenar och vanliga stenar delar läget runorna för fint (M 7 68 mot 33 i texten, M 8 92 mot 32, de vanliga i median
+  1,45 gånger textens antal), eftersom stavarna där delas i flera streck längs slingan. Vilka snitt som mäts och deras
+  mått är oförändrade (provat på en syntetisk sten i `tests/test_auto_grooves.py`).
+
 **Runor markerade för hand.** Analysens egen runindelning (grupper av sammanhängande raka streck) är inte validerad.
 I granskningen kan användaren i stället klicka en gång mitt på varje runa, i läsordning, utan att ange vilken runa
 det är (`withMarkedRunes` i `web/src/lib/mesh.ts`). Varje godkänt snitt som är märkt som runa hör då till den närmaste

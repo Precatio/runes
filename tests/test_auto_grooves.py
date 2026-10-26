@@ -238,3 +238,36 @@ def test_drawn_bands_follow_the_stone_when_it_is_turned(tmp_path, monkeypatch):
         assert abs(np.median(y)) < 3 and np.abs(y).max() < 25
     assert rune_bands.drawn("abc", Heightfield.from_mesh(mesh, [np.sin(0.6), 0, np.cos(0.6)], resolution=res, up=up)) is None
     assert rune_bands.drawn("other", hf0) is None
+
+
+def test_staveless_runes_are_split_along_the_band(monkeypatch):
+    """Staveless runes (src/staveless.py): seven runes of two short strokes each, no staves, in a band 90 mm high. The
+    ordinary rune division (touching strokes of at least 12 mm) finds almost none of them; staveless mode splits them
+    along the band into about seven runes, each with its own number on the slices. Off, the analysis is unchanged."""
+    from src import rune_bands
+    segs = [((-200, 45), (200, 45)), ((-200, -45), (200, -45))]
+    x = -165
+    for i in range(7):
+        segs.append(((x, -5), (x, 7)))                                         # a short upright stroke, 12 mm
+        segs.append(((x + 4, 12), (x + 11, 20)) if i % 2 else ((x + 4, -12), (x + 11, -20)))  # a short twig, ~11 mm
+        x += 50
+    mesh = rune_stone(size=(440, 240), resolution=0.6, segments=segs, depth_mm=2.0, opening_angle_deg=80)
+
+    def fake_bands(depth, region, res, hf, sha256):
+        H, W = depth.shape  # the band: the stone's own y within ±42 mm, whichever way the grid's rows run
+        wy = (hf.a0 + np.arange(W) * res)[None, :] * hf.u[1] + (hf.b0 + np.arange(H) * res)[:, None] * hf.v[1]
+        mask = (np.abs(wy) <= 42) & region
+        f = rune_bands.band_field(mask, res)
+        f.update({"source": "ritade", "empty": False, "coverage": float(mask[region].mean())})
+        return f
+    monkeypatch.setattr(rune_bands, "bands_for", fake_bands)
+    plain = analyze_grooves(mesh, [0, 0, 1])
+    sl = analyze_grooves(mesh, [0, 0, 1], staveless=True)
+    ids = lambda r: {s["rune_id"] for s in r["slices"] if s["accepted"] and "rune_id" in s}  # noqa: E731
+    assert len(ids(plain)) <= 2
+    assert 6 <= len(ids(sl)) <= 8 and 6 <= sl["counts"]["runes_identified"] <= 8
+    assert sl["parameters"]["staveless"] is True and plain["parameters"]["staveless"] is False
+    assert sl["parameters"]["staveless_gap_mm"] > 0
+    # the measurements themselves are the same: only which rune a slice belongs to changes
+    key = lambda r: sorted((round(s["apex_vinkel_deg"], 6), s["position_mm"]) for s in r["slices"] if s["accepted"])  # noqa: E731
+    assert key(plain) == key(sl)

@@ -1,0 +1,48 @@
+{
+ "series": "medelpad",
+ "stem": "M_11_Högom_thin03",
+ "signum": "M 11",
+ "rune_types": "",
+ "staveless": true,
+ "bands_used": true,
+ "text_runor": 145,
+ "runor_matta": 100,
+ "runsnitt": 783,
+ "godkanda": 783,
+ "runor_hittade": 114,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.2347
+ },
+ "counts": {
+  "candidates": 2425,
+  "accepted": 783,
+  "rejected": 1642,
+  "rejection_reasons": {
+   "utanför runslingorna": 860,
+   "för smalt för upplösningen": 23,
+   "spårkant hittades inte": 162,
+   "slingkant, inte runa": 501,
+   "dålig väggpassning": 26,
+   "vid slingans kant": 43,
+   "för grunt": 18,
+   "för få punkter i snittet": 9
+  },
+  "groove_area_mm2": 108514.8,
+  "wide_area_mm2": 7340.4,
+  "strokes": {
+   "irregular": 472,
+   "rune": 96,
+   "ornament": 82,
+   "isolated": 34
+  },
+  "runes_identified": 114,
+  "runes_measured": 100
+ },
+ "parametrar": {
+  "staveless": true,
+  "staveless_gap_mm": 9.29,
+  "band_height_mm": 61.9
+ },
+ "seconds": 933
+}

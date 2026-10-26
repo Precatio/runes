@@ -1,0 +1,50 @@
+{
+ "series": "halsingland",
+ "stem": "HS_14_0_40_runes_thin03",
+ "signum": "Hs 14",
+ "rune_types": "stavlösa",
+ "staveless": true,
+ "bands_used": true,
+ "text_runor": 267,
+ "runor_matta": 89,
+ "runsnitt": 384,
+ "godkanda": 384,
+ "runor_hittade": 168,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.1988
+ },
+ "counts": {
+  "candidates": 3321,
+  "accepted": 384,
+  "rejected": 2937,
+  "rejection_reasons": {
+   "utanför runslingorna": 1529,
+   "slingkant, inte runa": 685,
+   "vid slingans kant": 195,
+   "spårkant hittades inte": 369,
+   "för smalt för upplösningen": 50,
+   "för få punkter i snittet": 65,
+   "dålig väggpassning": 32,
+   "för grunt": 6,
+   "botten utanför mittlinjen": 2,
+   "orimlig vinkel": 4
+  },
+  "groove_area_mm2": 113236.91999999998,
+  "wide_area_mm2": 13580.639999999998,
+  "strokes": {
+   "irregular": 1178,
+   "isolated": 123,
+   "ornament": 86,
+   "rune": 63
+  },
+  "runes_identified": 168,
+  "runes_measured": 89
+ },
+ "parametrar": {
+  "staveless": true,
+  "staveless_gap_mm": 7.2,
+  "band_height_mm": 48.0
+ },
+ "seconds": 62
+}

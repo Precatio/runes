@@ -94,23 +94,33 @@ def predicted(depth: np.ndarray, region: np.ndarray, res: float) -> np.ndarray |
     return full
 
 
-def _drawn_on_depth_grid(b: dict, shape) -> np.ndarray:
-    """The checked bands as a mask on the depth image's own grid (row 0 at the bottom, as the analysis grids)."""
+def _drawn_on_depth_grid(b: dict, shape, labels: bool = False) -> np.ndarray:
+    """The checked bands as a mask on the depth image's own grid (row 0 at the bottom, as the analysis grids). With
+    labels, each drawn band gets its own number (1, 2, …; where bands overlap, the one drawn later), so that bands drawn
+    side by side stay apart even where they touch (stavlöst läge, src/staveless.py)."""
     from PIL import Image, ImageDraw
     scale = b.get("scale", 2)
     img = Image.new("L", (shape[1], shape[0]), 0)
     d = ImageDraw.Draw(img)
-    for band in b["bands"]:
+    for i, band in enumerate(b["bands"][:255], start=1):
         # drawing-page pixels (half resolution, row 0 at the top) → grid cells (row 0 at the bottom)
         pts = [(x * scale, (shape[0] - 1) - y * scale) for x, y in band["points"]]
         w = max(1, int(round(band["height"] * scale)))
-        d.line(pts, fill=255, width=w, joint="curve")
+        fill = i if labels else 255
+        d.line(pts, fill=fill, width=w, joint="curve")
         for p in (pts[0], pts[-1]):
-            d.ellipse([p[0] - w / 2, p[1] - w / 2, p[0] + w / 2, p[1] + w / 2], fill=255)
-    return np.asarray(img) > 127
+            d.ellipse([p[0] - w / 2, p[1] - w / 2, p[0] + w / 2, p[1] + w / 2], fill=fill)
+    a = np.asarray(img)
+    return a.astype(np.int32) if labels else a > 127
 
 
 def drawn(sha256: str | None, hf) -> np.ndarray | None:
+    """Viktor's checked bands for this exact file, as a mask on the analysis grid (see drawn_labels)."""
+    lab = drawn_labels(sha256, hf)
+    return None if lab is None else lab > 0
+
+
+def drawn_labels(sha256: str | None, hf) -> np.ndarray | None:
     """Viktor's checked bands for this exact file (same SHA-256), carried over to the analysis grid: every analysis
     cell is taken to its point on the stone's surface (hf.to_world with the cell's height) and looked up in the depth
     image's grid (the same centred mesh, scripts/depth_dataset.py). None when there are no checked bands, or the
@@ -133,7 +143,7 @@ def drawn(sha256: str | None, hf) -> np.ndarray | None:
         if float(np.degrees(np.arccos(np.clip(abs(n0 @ hf.n), -1, 1)))) > MAX_TILT_DEG:
             return None
         shape0, res0 = meta["shape"], float(meta["res_mm"])
-        mask0 = _drawn_on_depth_grid(b, shape0)
+        mask0 = _drawn_on_depth_grid(b, shape0, labels=True)
         ny, nx = hf.H.shape
         a = (hf.a0 + np.arange(nx) * hf.res)[None, :]
         bb = (hf.b0 + np.arange(ny) * hf.res)[:, None]
@@ -142,9 +152,9 @@ def drawn(sha256: str | None, hf) -> np.ndarray | None:
         jx = np.rint((a * (hf.u @ u0) + bb * (hf.v @ u0) + h * (hf.n @ u0) - meta["a0"]) / res0).astype(np.int64)
         jy = np.rint((a * (hf.u @ v0) + bb * (hf.v @ v0) + h * (hf.n @ v0) - meta["b0"]) / res0).astype(np.int64)
         ok = (jx >= 0) & (jx < shape0[1]) & (jy >= 0) & (jy < shape0[0])
-        out = np.zeros((ny, nx), bool)
+        out = np.zeros((ny, nx), np.int32)
         out[ok] = mask0[jy[ok], jx[ok]]
-        return out & hf.region
+        return np.where(hf.region, out, 0)
     return None
 
 
@@ -164,7 +174,8 @@ def band_field(mask: np.ndarray, res: float) -> dict:
 def bands_for(depth: np.ndarray, region: np.ndarray, res: float, hf, sha256: str | None) -> dict | None:
     """The bands for an analysis (hf: its Heightfield): drawn when available, else the model's; with their field and
     where they came from."""
-    mask = drawn(sha256, hf)
+    pieces = drawn_labels(sha256, hf)
+    mask = None if pieces is None else pieces > 0
     source = "ritade"
     if mask is None:
         p = predicted(depth, region, res)
@@ -176,6 +187,8 @@ def bands_for(depth: np.ndarray, region: np.ndarray, res: float, hf, sha256: str
         return {"source": source, "empty": True}
     field = band_field(mask, res)
     field.update({"source": source, "empty": False, "coverage": float(mask[region].mean()) if region.any() else 0.0})
+    if pieces is not None:
+        field["pieces"] = pieces  # each drawn band on its own (src/staveless.py); the classification uses the mask
     return field
 
 

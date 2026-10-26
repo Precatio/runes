@@ -1,0 +1,45 @@
+{
+ "series": "halsingland",
+ "stem": "HS_21_thin01",
+ "signum": "Hs 21",
+ "rune_types": "",
+ "staveless": false,
+ "bands_used": true,
+ "text_runor": 45,
+ "runor_matta": 20,
+ "runsnitt": 475,
+ "godkanda": 475,
+ "runor_hittade": 35,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.2608
+ },
+ "counts": {
+  "candidates": 3107,
+  "accepted": 475,
+  "rejected": 2632,
+  "rejection_reasons": {
+   "utanför runslingorna": 1561,
+   "slingkant, inte runa": 697,
+   "vid slingans kant": 32,
+   "orimlig vinkel": 51,
+   "dålig väggpassning": 111,
+   "för få punkter i snittet": 51,
+   "för smalt för upplösningen": 43,
+   "för grunt": 50,
+   "spårkant hittades inte": 33,
+   "botten utanför mittlinjen": 3
+  },
+  "groove_area_mm2": 159859.08,
+  "wide_area_mm2": 12564.0,
+  "strokes": {
+   "irregular": 1390,
+   "isolated": 114,
+   "ornament": 78,
+   "rune": 42
+  },
+  "runes_identified": 35,
+  "runes_measured": 20
+ },
+ "seconds": 63
+}

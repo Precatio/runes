@@ -1,0 +1,45 @@
+{
+ "series": "medelpad",
+ "stem": "M_1_Nolby_thin03",
+ "signum": "M 1",
+ "rune_types": "",
+ "staveless": false,
+ "bands_used": true,
+ "text_runor": 77,
+ "runor_matta": 15,
+ "runsnitt": 418,
+ "godkanda": 418,
+ "runor_hittade": 41,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.2842
+ },
+ "counts": {
+  "candidates": 2442,
+  "accepted": 418,
+  "rejected": 2024,
+  "rejection_reasons": {
+   "utanför runslingorna": 1002,
+   "vid slingans kant": 151,
+   "dålig väggpassning": 62,
+   "spårkant hittades inte": 278,
+   "för grunt": 87,
+   "slingkant, inte runa": 393,
+   "för få punkter i snittet": 13,
+   "för smalt för upplösningen": 35,
+   "botten utanför mittlinjen": 1,
+   "orimlig vinkel": 2
+  },
+  "groove_area_mm2": 92396.87999999999,
+  "wide_area_mm2": 1241.64,
+  "strokes": {
+   "irregular": 753,
+   "isolated": 111,
+   "ornament": 74,
+   "rune": 47
+  },
+  "runes_identified": 41,
+  "runes_measured": 15
+ },
+ "seconds": 49
+}

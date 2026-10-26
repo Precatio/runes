@@ -1,0 +1,44 @@
+{
+ "series": "medelpad",
+ "stem": "M_7_Tuna_kyrka_thin03",
+ "signum": "M 7",
+ "rune_types": "långkvist och stavlösa",
+ "staveless": false,
+ "bands_used": true,
+ "text_runor": 33,
+ "runor_matta": 15,
+ "runsnitt": 205,
+ "godkanda": 205,
+ "runor_hittade": 39,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.1225
+ },
+ "counts": {
+  "candidates": 1714,
+  "accepted": 205,
+  "rejected": 1509,
+  "rejection_reasons": {
+   "utanför runslingorna": 1031,
+   "vid slingans kant": 77,
+   "för få punkter i snittet": 6,
+   "slingkant, inte runa": 253,
+   "dålig väggpassning": 22,
+   "spårkant hittades inte": 71,
+   "för smalt för upplösningen": 13,
+   "för grunt": 34,
+   "orimlig vinkel": 2
+  },
+  "groove_area_mm2": 67445.64,
+  "wide_area_mm2": 3273.8399999999997,
+  "strokes": {
+   "irregular": 505,
+   "ornament": 54,
+   "isolated": 33,
+   "rune": 54
+  },
+  "runes_identified": 39,
+  "runes_measured": 15
+ },
+ "seconds": 25
+}

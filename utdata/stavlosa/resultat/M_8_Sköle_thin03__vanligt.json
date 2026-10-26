@@ -1,0 +1,45 @@
+{
+ "series": "medelpad",
+ "stem": "M_8_Sköle_thin03",
+ "signum": "M 8",
+ "rune_types": "långkvist och stavlösa för r och u",
+ "staveless": false,
+ "bands_used": true,
+ "text_runor": 32,
+ "runor_matta": 17,
+ "runsnitt": 231,
+ "godkanda": 231,
+ "runor_hittade": 49,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.1746
+ },
+ "counts": {
+  "candidates": 2350,
+  "accepted": 231,
+  "rejected": 2119,
+  "rejection_reasons": {
+   "utanför runslingorna": 1630,
+   "vid slingans kant": 70,
+   "slingkant, inte runa": 257,
+   "spårkant hittades inte": 49,
+   "för få punkter i snittet": 38,
+   "dålig väggpassning": 52,
+   "för grunt": 11,
+   "för smalt för upplösningen": 9,
+   "botten utanför mittlinjen": 2,
+   "orimlig vinkel": 1
+  },
+  "groove_area_mm2": 134392.68,
+  "wide_area_mm2": 36428.4,
+  "strokes": {
+   "irregular": 635,
+   "isolated": 96,
+   "rune": 64,
+   "ornament": 78
+  },
+  "runes_identified": 49,
+  "runes_measured": 17
+ },
+ "seconds": 42
+}
