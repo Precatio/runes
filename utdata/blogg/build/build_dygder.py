@@ -14,7 +14,9 @@ from collections import Counter
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 sys.path.insert(0, ROOT)
 from api.rundata import store  # noqa: E402
-from src import commons  # noqa: E402
+from src import blog_figures, commons  # noqa: E402
+sys.path.insert(0, os.path.dirname(__file__))
+import dygder_figurer  # noqa: E402
 
 D = os.path.join(ROOT, "utdata", "dygder")
 R = json.load(open(os.path.join(D, "dygder_runstenar.json"), encoding="utf-8"))
@@ -105,11 +107,9 @@ assert 0.9 <= NIO_AV_TIO < 0.95 and 0.83 <= (T["drengr"]["n"] - T["drengr"]["k"]
 assert 3.5 <= (T["drengr"]["k"] / T["drengr"]["n"]) / (T["alla"]["k"] / T["alla"]["n"]) <= 4.5 and 1 / T["drengr"]["p"] > 10000
 
 # ---- photographs from Wikimedia Commons (via Wikidata), credits pinned ----------------------------------------------
-FILES = commons.wikidata_files(["Sö 130"])
+FILES = {**commons.wikidata_files(["Sö 130"]), "Codex Regius": "GKS 2365 4to, 0017r - 42.jpg"}
 INFO = commons.commons_info([FILES[s] for s in FILES])
-CREDIT = {"Sö 130": ("Berig", "CC BY-SA 3.0")}
-IMG_CR = "https://upload.wikimedia.org/wikipedia/commons/5/50/Codex_Regius_of_Eddaic_Poems.jpg"
-PAGE_CR = "https://commons.wikimedia.org/wiki/File:Codex_Regius_of_Eddaic_Poems.jpg"
+CREDIT = {"Sö 130": ("Berig", "CC BY-SA 3.0"), "Codex Regius": ("Thorsteinn1996", "CC BY-SA 4.0")}
 
 
 def photo(signum: str, text: str, lang: str = "sv") -> str:
@@ -118,7 +118,8 @@ def photo(signum: str, text: str, lang: str = "sv") -> str:
     cap = commons.caption(img, lang)
     lead = f"{signum}. Foto: " if lang == "sv" else f"{signum}. Photo: "
     assert cap.startswith(lead)
-    alt = f"Runstenen {signum}" if lang == "sv" else f"The runestone {signum}"
+    alt = (f"Runstenen {signum}" if lang == "sv" else f"The runestone {signum}") if signum != "Codex Regius" else (
+        "Ett blad ur Codex Regius" if lang == "sv" else "A leaf of Codex Regius")
     rest = cap[len(lead):]
     for raw, shown in SHOWN.items():  # the file pages name the photographers; the author field has uploader or museum text
         rest = rest.replace(raw, shown)
@@ -128,8 +129,14 @@ def photo(signum: str, text: str, lang: str = "sv") -> str:
 SHOWN: dict[str, str] = {}  # photographer names to show instead of the author field, when they differ
 PH_130 = photo("Sö 130", "Hagstugan (Sö 130) i Sparsta, Södermanland: fyra söner åt sin far, ”mild i ord och god på mat”. Stenen är en av sju med formeln.")
 PH_130_EN = photo("Sö 130", "Hagstugan (Sö 130) at Sparsta, Södermanland: four sons for their father, “gentle in speech and free with food”. One of seven stones with the formula.", "en")
-CR = f"![Uppslag ur Codex Regius]({IMG_CR})\nCodex Regius (GKS 2365 4to), nedskriven omkring 1270, Hávamáls enda medeltida källa. Bild: public domain, via [Wikimedia Commons]({PAGE_CR})."
-CR_EN = f"![A spread of Codex Regius]({IMG_CR})\nCodex Regius (GKS 2365 4to), written down around 1270, Hávamál's only medieval source. Image: public domain, via [Wikimedia Commons]({PAGE_CR})."
+CR = photo("Codex Regius", "Ett blad ur Codex Regius (GKS 2365 4to, fol. 17r), handskriften från omkring 1270 som är Hávamáls enda medeltida källa. På det här bladet börjar Þrymskviða.")
+CR_EN = photo("Codex Regius", "A leaf of Codex Regius (GKS 2365 4to, fol. 17r), the manuscript of about 1270 that is Hávamál's only medieval source. On this leaf Þrymskviða begins.", "en")
+
+# the two figures of other kinds than the bar chart: the stanza map and the dot plot
+FIG_HAV = f"![Strofkarta över Hávamál: ämne per strof]({blog_figures.freeze(dygder_figurer.strofkarta('sv'))})\nVar i dikten ämnena står: en kolumn per strof, en rad per ämne, en fylld ruta där ämnet förekommer. Talet till höger är antalet strofer. Vänskapen samlas i strof 41–52 och i Loddfáfnismál; runorna och galdrarna står sist. Vår läsning, en eller flera ämnen per strof; listan ligger öppen i kodförrådet (utdata/dygder/havamal_teman.csv)."
+FIG_HAV_EN = f"![Stanza map of Hávamál: theme per stanza]({blog_figures.freeze(dygder_figurer.strofkarta('en'))})\nWhere in the poem the themes stand: one column per stanza, one row per theme, a filled cell where the theme occurs. The number at the right is the count of stanzas. Friendship gathers in stanzas 41–52 and in Loddfáfnismál; the runes and spells come last. Our reading, one or more themes per stanza; the list is open in the code repository (utdata/dygder/havamal_teman.csv)."
+FIG_EDDA = f"![Punktdiagram: värdeord per tusen ord i fyra grupper av eddadikter]({blog_figures.freeze(dygder_figurer.punktdiagram('sv'))})\nVärdeord per tusen ord. Hávamál i rost, de övriga gudadikterna, hjältedikterna och de kristna dikterna (Hugsvinnsmál, Sólarljóð) i grått; den ljusa linjen visar spännvidden. Hávamál leder i allt som rör andra människor; hjältedikterna leder i strid och hämnd. Källa: de normaliserade texterna från vår Hávamálartikel, Snorres prosa inte medräknad; ordlistorna i kodförrådet (utdata/dygder/dygder_edda.py)."
+FIG_EDDA_EN = f"![Dot plot: value words per thousand words in four groups of Eddic poems]({blog_figures.freeze(dygder_figurer.punktdiagram('en'))})\nValue words per thousand words. Hávamál in rust; the other mythological poems, the heroic poems and the Christian poems (Hugsvinnsmál, Sólarljóð) in grey; the pale line shows the range. Hávamál leads in everything that concerns other people; the heroic poems lead in fighting and revenge. Source: the normalised texts from our Hávamál article, Snorri's prose not included; the word lists are in the code repository (utdata/dygder/dygder_edda.py)."
 
 # ---- figures -----------------------------------------------------------------------------------------------------------
 CHART = f""":::chart Vad runstenarna säger om den döde, antal stenar av {tus(N)} vikingatida runstenar
@@ -247,7 +254,7 @@ Fä dör, fränder dör, själv dör man likaså; men ryktet dör aldrig för de
 
 Vi läste alla strofer och antecknade vad var och en handlar om. I de {len(RAD)} rådstroferna – gästvisdomen och Loddfáfnismál – är vänskapen det största ämnet, var femte strof. Sedan ordet, förståndet, gästfriheten och måttan. Mod och strid: {tc['MOD']} strofer av {len(RAD)}.
 
-{CHART_HAV}
+{FIG_HAV}
 
 Det finns också något i dikten som inte har något ord på stenarna: omsorgen om den svage. *Get þú váluðum vel* (135), behandla den fattige väl. *At hárum þul hlæ þú aldregi* (134), skratta aldrig åt en gråhårig talare. Och strof 133: *er-at maðr svá góðr at galli né fylgi, né svá illr, at einugi dugi* – ingen är så god att han saknar fel, eller så dålig att han inte duger till något.
 
@@ -255,7 +262,7 @@ Det finns också något i dikten som inte har något ord på stenarna: omsorgen 
 
 Krigaren finns, men han bor i ett annat hus. Vi räknade värdeorden i fyra grupper av eddadikter. Ord för vänskap står {svn(H['vänskap'])} gånger per tusen ord i Hávamál och mindre än en gång i hjältedikterna; ord för strid {svn(HJ['strid'])} gånger per tusen i hjältedikterna. Hämnd – *hefna*, *bróðurbani* – finns i hjältedikterna och gudadikterna och till och med i de kristna. I Hávamál står ordet inte en enda gång.
 
-{CHART_EDDA}
+{FIG_EDDA}
 
 På stenarna är det *drengr* som drar åt striden. Drengr-stenarna nämner strid eller färder utomlands fyra gånger så ofta som stenar i allmänhet: {T['drengr']['k']} av {T['drengr']['n']} mot {T['alla']['k']} av {tus(T['alla']['n'])}, en skillnad slumpen skulle ge färre än en gång på tiotusen. *Þegn* har inget sådant samband. Men också bland drengerna nämner fem av sex varken strid eller resa. Ordet ligger mellan ”krigare” och ”en man man kan lita på”, och stenarna lutar åt det senare.
 
@@ -379,7 +386,7 @@ Cattle die, kinsmen die, you yourself die likewise; but a good name never dies f
 
 We read every stanza and noted what each is about. In the {len(RAD)} advice stanzas – the guest wisdom and Loddfáfnismál – friendship is the largest subject, one stanza in five. Then speech, understanding, hospitality and moderation. Courage and fighting: {tc['MOD']} stanzas out of {len(RAD)}.
 
-{en_chart(CHART_HAV)}
+{FIG_HAV_EN}
 
 There is also something in the poem that has no word on the stones: care for the weak. *Get þú váluðum vel* (135), treat the poor well. *At hárum þul hlæ þú aldregi* (134), never laugh at a grey-haired speaker. And stanza 133: *er-at maðr svá góðr at galli né fylgi, né svá illr, at einugi dugi* – no one is so good that no fault goes with him, nor so bad that he is good for nothing.
 
@@ -387,7 +394,7 @@ There is also something in the poem that has no word on the stones: care for the
 
 The warrior exists, but he lives in another house. We counted value words in four groups of Eddic poems. Words for friendship stand {svn(H['vänskap']).replace(',', '.')} times per thousand words in Hávamál and less than once in the heroic poems; words for fighting {svn(HJ['strid']).replace(',', '.')} times per thousand in the heroic poems. Revenge – *hefna*, *bróðurbani* – occurs in the heroic poems and the mythological ones and even in the Christian ones. In Hávamál the word does not occur once.
 
-{en_chart(CHART_EDDA)}
+{FIG_EDDA_EN}
 
 On the stones it is *drengr* that leans towards fighting. The drengr stones mention battle or journeys abroad four times as often as stones in general: {T['drengr']['k']} of {T['drengr']['n']} against {T['alla']['k']} of {tus(T['alla']['n'])}, a difference chance would produce less than once in ten thousand. *Þegn* has no such link. But even among the drengs, five in six mention neither battle nor journey. The word lies between "warrior" and "a man you can rely on", and the stones lean towards the latter.
 
@@ -422,7 +429,7 @@ It is a list that has not aged, and that is perhaps the most unexpected thing. R
 
 for b in (body, body_en):
     assert not re.search(r"^\|", b, re.M)  # BlogBody has no tables
-    assert b.count(":::box") == 2 and b.count(":::chart") == 3 and b.count("![") == 2
+    assert b.count(":::box") == 2 and b.count(":::chart") == 1 and b.count("![") == 4
 out = {"slug": "mild-i-ord-och-god-pa-mat", "title": title, "summary": summary, "body": body,
        "title_en": title_en, "summary_en": summary_en, "body_en": body_en,
        "labels": ["Forskning", "Eddan", "Formler och syfte", "Tolkning"]}
