@@ -14,6 +14,7 @@ from collections import Counter
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 sys.path.insert(0, ROOT)
 from api.rundata import store  # noqa: E402
+from src import commons  # noqa: E402
 
 D = os.path.join(ROOT, "utdata", "dygder")
 R = json.load(open(os.path.join(D, "dygder_runstenar.json"), encoding="utf-8"))
@@ -102,6 +103,34 @@ assert KR["hämnd"] > 0 and GU["hämnd"] > 0
 NIO_AV_TIO = T["egenskap_men_inte_krig"] / N_EG
 assert 0.9 <= NIO_AV_TIO < 0.95 and 0.83 <= (T["drengr"]["n"] - T["drengr"]["k"]) / T["drengr"]["n"] <= 0.87
 assert 3.5 <= (T["drengr"]["k"] / T["drengr"]["n"]) / (T["alla"]["k"] / T["alla"]["n"]) <= 4.5 and 1 / T["drengr"]["p"] > 10000
+
+# ---- photographs from Wikimedia Commons (via Wikidata), credits pinned ----------------------------------------------
+FILES = commons.wikidata_files(["Sö 130", "Vs 24", "DR 212"])
+INFO = commons.commons_info([FILES[s] for s in FILES])
+CREDIT = {"Sö 130": ("Berig", "CC BY-SA 3.0"), "Vs 24": ("Users Zoeds, Zoeds on sv.wikipedia", "Public domain"),
+          "DR 212": ("Photographer Roberto Fortuna, commisioned by the Danish National Museum", "CC BY-SA 3.0")}
+IMG_CR = "https://upload.wikimedia.org/wikipedia/commons/5/50/Codex_Regius_of_Eddaic_Poems.jpg"
+PAGE_CR = "https://commons.wikimedia.org/wiki/File:Codex_Regius_of_Eddaic_Poems.jpg"
+
+
+def photo(signum: str, text: str, lang: str = "sv") -> str:
+    img = {**INFO[FILES[signum]], "signum": signum}
+    assert (img["author"], img["licence"]) == CREDIT[signum], (signum, img["author"], img["licence"])
+    cap = commons.caption(img, lang)
+    lead = f"{signum}. Foto: " if lang == "sv" else f"{signum}. Photo: "
+    assert cap.startswith(lead)
+    alt = f"Runstenen {signum}" if lang == "sv" else f"The runestone {signum}"
+    return f"![{alt}]({img['thumb']})\n{text} {'Foto' if lang == 'sv' else 'Photo'}: {cap[len(lead):]}"
+
+
+PH_130 = photo("Sö 130", "Hagstugan (Sö 130) i Sparsta, Södermanland: fyra söner åt sin far, ”mild i ord och god på mat”. Stenen är en av sju med formeln.")
+PH_24 = photo("Vs 24", "Odendisastenen vid Hassmyra (Vs 24), Västmanland: den enda runsten som berömmer en husfru, ”ingen bättre kommer till Hassmyra”.")
+PH_212 = photo("DR 212", "Tillitse (DR 212) på Lolland: Áskell reste stenen åt sig själv, ”alltid skall det stå, så länge stenen lever”.")
+PH_130_EN = photo("Sö 130", "Hagstugan (Sö 130) at Sparsta, Södermanland: four sons for their father, “gentle in speech and free with food”. One of seven stones with the formula.", "en")
+PH_24_EN = photo("Vs 24", "The Óðindísa stone at Hassmyra (Vs 24), Västmanland: the only runestone that praises a housewife, “no better will come to Hassmyra”.", "en")
+PH_212_EN = photo("DR 212", "Tillitse (DR 212) on Lolland: Áskell raised the stone for himself, “ever will it stand, while the stone lives”.", "en")
+CR = f"![Uppslag ur Codex Regius]({IMG_CR})\nCodex Regius (GKS 2365 4to), nedskriven omkring 1270, Hávamáls enda medeltida källa. Bild: public domain, via [Wikimedia Commons]({PAGE_CR})."
+CR_EN = f"![A spread of Codex Regius]({IMG_CR})\nCodex Regius (GKS 2365 4to), written down around 1270, Hávamál's only medieval source. Image: public domain, via [Wikimedia Commons]({PAGE_CR})."
 
 # ---- figures -----------------------------------------------------------------------------------------------------------
 CHART = f""":::chart Vad runstenarna säger om den döde, antal stenar av {tus(N)} vikingatida runstenar
@@ -197,9 +226,13 @@ Så här ser han ut, den människa som stenarna och dikten håller för god. Vi 
 
 Jag fann aldrig en så givmild man, eller så god på mat, att det inte var välkommet att ta emot. Den parallellen är gammal; David Evans noterade den i sin utgåva 1986, efter Sven B. F. Jansson. Det vi lägger till är att formeln inte är ett undantag: sju stenar har den, från Småland till Uppland och Skåne, och Hávamáls ekonomi – *gjalda gjöf við gjöf*, gälda gåva med gåva – är dess förklaring. Att bjuda var att binda människor till sig. *Með halfum hleif ok með höllu keri fekk ek mér félaga* (52): med ett halvt bröd och en lutad bägare fick jag mig en följeslagare.
 
+{PH_130}
+
 **Mild i ord.** Kari i Gillberga (U 1146) hette *hinn málspaki*, den talvise. Holmbjörn i Gådi (U 739) reste själv sin sten och lät skriva att han var *mildr matar ok málsrisinn*, generös med mat och rask i tal. Sveinn i Ivla (Sm 44) var mild mot de sina och god på mat, *í orðlofi allra miklu* – mycket prisad av alla. Hávamál ägnar var femte rådstrof åt ordet: att tala lagom, att tiga, att lyssna. Gästen behöver *orðs ok endrþögu* (4), ett ord och tystnad i gengäld.
 
 **Den som sköter sitt.** Þorsteinn i Turinge (Sö 338) var en av *beztra manna, á landi ok í liði úti*, de bästa män i land och i följe ute, och bröderna *heldu sína húskarla vel*: de höll sina huskarlar väl. Det är den enda sten som berömmer någon för hur han höll sitt husfolk, och den gör det på samma sten som berättar att han stupade i Gårdarike. Odindisa i Hassmyra (Vs 24) får stenens enda husfruberöm: *kemr hýfreyja til Hôsumýra eigi betri, en býi ráðr* – det kommer ingen bättre husfru till Hassmyra, som råder över gården. Hávamál: *bú er betra, þótt lítit sé* (36), eget hem är bättre, om än litet.
+
+{PH_24}
 
 **Utan skam.** Özurr i Århus (DR 68) *dó manna mest óníðingr*, dog som den minst nidingaktiga av män. Toke Gormsson i Hällestad (DR 295) *fló eigi at Uppsôlum*, flydde inte vid Uppsala. Det är här modet står, och det är värt att se hur det står: inte som anfall utan som att inte svika. Hávamál 16 säger varför den fege ändå inte vinner något: *ósnjallr maðr hyggsk munu ey lifa, ef hann við víg varask; en elli gefr hánum engi frið* – den fege tror att han ska leva för evigt om han undviker strid, men ålderdomen ger honom ingen frid. Och i strof 48 står mod och generositet i samma rad: *mildir, fræknir menn bazt lifa*, frikostiga, tappra män lever bäst.
 
@@ -211,7 +244,11 @@ Jag fann aldrig en så givmild man, eller så god på mat, att det inte var väl
 
 Fä dör, fränder dör, själv dör man likaså; men ryktet dör aldrig för den som vinner sig ett gott. Áskell på Lolland (DR 212) formulerade det i sten: *æ mun standa, með steinn lifir*, alltid skall det stå, så länge stenen lever. Och strof 72 vet vem som reser stenarna: *sjaldan bautarsteinar standa brautu nær, nema reisi niðr at nið* – sällan står bautastenar vid vägen, om inte ättling reser dem åt ättling.
 
+{PH_212}
+
 ## Vad dikten lär ut
+
+{CR}
 
 Vi läste alla strofer och antecknade vad var och en handlar om. I de {len(RAD)} rådstroferna – gästvisdomen och Loddfáfnismál – är vänskapen det största ämnet, var femte strof. Sedan ordet, förståndet, gästfriheten och måttan. Mod och strid: {tc['MOD']} strofer av {len(RAD)}.
 
@@ -325,9 +362,13 @@ This is what the person the stones and the poem hold to be good looks like. We l
 
 I never found a man so generous, or so free with food, that a gift was not welcome. That parallel is old; David Evans noted it in his edition of 1986, after Sven B. F. Jansson. What we add is that the formula is not an exception: seven stones carry it, from Småland to Uppland and Skåne, and Hávamál's economy – *gjalda gjöf við gjöf*, repay gift with gift – is its explanation. To give was to bind people to you. *Með halfum hleif ok með höllu keri fekk ek mér félaga* (52): with half a loaf and a tilted cup I got myself a companion.
 
+{PH_130_EN}
+
 **Gentle in speech.** Kári of Gillberga (U 1146) was called *hinn málspaki*, the wise in speech. Holmbjôrn of Gådi (U 739) raised his own stone and had it say that he was *mildr matar ok málsrisinn*, generous with food and quick of speech. Sveinn of Ivla (Sm 44) was gentle to his own and free with food, *í orðlofi allra miklu* – greatly praised by all. Hávamál gives one advice stanza in five to the word: speaking in measure, keeping silent, listening. The guest needs *orðs ok endrþögu* (4), a word, and silence in return.
 
 **Minding one's own.** Þorsteinn of Turinge (Sö 338) was one of the *beztra manna, á landi ok í liði úti*, the best of men at home and in the host abroad, and the brothers *heldu sína húskarla vel*: they kept their household men well. It is the only stone that praises someone for how he kept his household, and it does so on the same stone that tells how he fell in Garðaríki. Óðindísa of Hassmyra (Vs 24) gets the stones' one word of praise for a housewife: *kemr hýfreyja til Hôsumýra eigi betri, en býi ráðr* – no better housewife will come to Hassmyra, who rules the farm. Hávamál: *bú er betra, þótt lítit sé* (36), a home of one's own is better, though it be small.
+
+{PH_24_EN}
 
 **Without shame.** Ôzurr of Århus (DR 68) *dó manna mest óníðingr*, died the least villainous of men. Tóki Gormsson of Hällestad (DR 295) *fló eigi at Uppsôlum*, did not flee at Uppsala. This is where courage stands, and it is worth seeing how it stands: not as attack but as not failing others. Hávamál 16 says why the coward gains nothing anyway: *ósnjallr maðr hyggsk munu ey lifa, ef hann við víg varask; en elli gefr hánum engi frið* – the coward thinks he will live for ever if he shuns the fight, but old age gives him no peace. And in stanza 48 courage and generosity share a line: *mildir, fræknir menn bazt lifa*, generous, brave men live best.
 
@@ -339,7 +380,11 @@ I never found a man so generous, or so free with food, that a gift was not welco
 
 Cattle die, kinsmen die, you yourself die likewise; but a good name never dies for the one who earns it. Áskell on Lolland (DR 212) put it in stone: *æ mun standa, með steinn lifir*, ever will it stand, while the stone lives. And stanza 72 knows who raises the stones: *sjaldan bautarsteinar standa brautu nær, nema reisi niðr at nið* – seldom do memorial stones stand by the road unless kin raise them for kin.
 
+{PH_212_EN}
+
 ## What the poem teaches
+
+{CR_EN}
 
 We read every stanza and noted what each is about. In the {len(RAD)} advice stanzas – the guest wisdom and Loddfáfnismál – friendship is the largest subject, one stanza in five. Then speech, understanding, hospitality and moderation. Courage and fighting: {tc['MOD']} stanzas out of {len(RAD)}.
 
@@ -386,7 +431,7 @@ It is a list that has not aged, and that is perhaps the most unexpected thing. R
 
 for b in (body, body_en):
     assert not re.search(r"^\|", b, re.M)  # BlogBody has no tables
-    assert b.count(":::box") == 2 and b.count(":::chart") == 3
+    assert b.count(":::box") == 2 and b.count(":::chart") == 3 and b.count("![") == 4
 out = {"slug": "mild-i-ord-och-god-pa-mat", "title": title, "summary": summary, "body": body,
        "title_en": title_en, "summary_en": summary_en, "body_en": body_en,
        "labels": ["Forskning", "Eddan", "Formler och syfte", "Tolkning"]}
