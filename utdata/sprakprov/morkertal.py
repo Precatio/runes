@@ -13,7 +13,7 @@ lägger till det artikeln behöver:
                      (R-korpusen), med valideringens rho och medelfel.
   dating_model       textmodellens dateringsprov (korsvaliderat; src/textmodel.VALIDATION).
 Skriver morkertal.json.
-    cd aagaard-research && PYTHONPATH=. .venv/bin/python utdata/sprakprov/morkertal.py"""
+    PYTHONPATH=. .venv/bin/python utdata/sprakprov/morkertal.py"""
 import csv
 import glob
 import json

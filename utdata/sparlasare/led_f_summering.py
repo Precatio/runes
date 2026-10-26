@@ -4,7 +4,7 @@ höjer skannerspåren facits sannolikhet i riktig luckfyllnad? Parade Wilcoxonte
 Dessutom samma tabell för enbart stenar med pålitlig parning (täckningen minst två standardavvikelser över den
 omkastade textens), eftersom böjda slingor kan kasta om radordningen och då hamnar spåren på fel positioner –
 ett provbänksproblem, inte ett produktionsproblem: i panelen är luckans plats känd.
-    cd aagaard-research && .venv/bin/python utdata/sparlasare/led_f_summering.py"""
+    .venv/bin/python utdata/sparlasare/led_f_summering.py"""
 import glob
 import json
 import os

@@ -2,12 +2,13 @@
 dess base-fält). Alla tal läses ur datafilen och grindas med asserts; ingen siffra skrivs för hand i texten.
     cd utdata/blogg/build && PYTHONDONTWRITEBYTECODE=1 ../../../.venv/bin/python build_morkertal.py [--write]
 --write sparar ett NYTT opublicerat utkast i Firestore (vägrar om adressen redan används)."""
+_PROJ = str(__import__("pathlib").Path(__file__).resolve().parents[3])  # projektmappen, var den än ligger
 import datetime as dt
 import json
 import os
 import sys
 
-ROOT = "/Volumes/2TB/Antigrvity/Runes/aagaard-research"
+ROOT = _PROJ
 sys.path.insert(0, ROOT)
 
 D = json.load(open(os.path.join(ROOT, "utdata", "sprakprov", "morkertal.json")))

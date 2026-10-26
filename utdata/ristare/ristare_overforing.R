@@ -1,7 +1,8 @@
 # Överföringstest: gränsen tas fram på ristare från ett landskap och prövas på ristare i ett annat. Kandidatgrupperna ligger
 # i landskap (Ög, Sm, Vg, M) där nästan inga stenar har ristare i Rundata; här prövas om gränsen från Uppland/Södermanland
 # fungerar någon annanstans. Samma förfarande som r/anonymous.R och ristare_heldout.R.
-.here <- "/Volumes/2TB/Antigrvity/Runes/aagaard-research/r"
+.proj <- local({f <- sub("^--file=", "", grep("^--file=", commandArgs(FALSE), value = TRUE)); if (length(f)) normalizePath(file.path(dirname(f[1]), "../..")) else normalizePath(".")})  # projektmappen (Rscript), annars arbetsmappen
+.here <- file.path(.proj, "r")
 source(file.path(.here, "common.R"))
 suppressPackageStartupMessages({ library(cluster); library(igraph) })
 a <- cli_args(); P <- a$params; out <- a$out; cdir <- P$corpus_dir

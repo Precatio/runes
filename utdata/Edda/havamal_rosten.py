@@ -10,6 +10,8 @@ hedniska dialogerna. Två mått kontrolleras mot sina egna artefakter: Loddfáfn
 och trollsångernas formel 'kann ek'. Måtten som inte överlever redovisas som kasserade. Skriver havamal_rosten.json.
     .venv/bin/python utdata/Edda/havamal_rosten.py
 """
+import os
+_PROJ = str(__import__("pathlib").Path(__file__).resolve().parents[2])  # projektmappen, var den än ligger
 import csv
 import json
 import re
@@ -17,7 +19,7 @@ from collections import Counter
 
 from scipy.stats import fisher_exact
 
-ROT = "/Volumes/2TB/Antigrvity/Runes/aagaard-research/utdata/Edda"
+ROT = os.path.join(_PROJ, "utdata/Edda")
 d = {r["namn"]: r["text"].split() for r in csv.DictReader(open(f"{ROT}/edda_karta_texter.csv"))}
 DELAR = ("Hávamál_gnomisk", "Hávamál_kvinnoråd_Gunnlöd", "Hávamál_Loddfáfnismál", "Hávamál_Runatal_Ljóðatal")
 HAV = sum((d[k] for k in DELAR), [])

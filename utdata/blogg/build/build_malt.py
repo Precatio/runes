@@ -6,13 +6,14 @@ build_malt_v2.py (släktskapen med Rök).
 Körs efter src/runlm.py-analyserna (scripts/runlm_calibrate.py och scripts/malt_decode.py):
     PYTHONDONTWRITEBYTECODE=1 .venv/bin/python utdata/blogg/build/build_malt.py [--write | --update DOKUMENT-ID]
 Skriver utdata/blogg/malt.json; --write sparar ett nytt opublicerat utkast, --update skriver över ett opublicerat utkast."""
+_PROJ = str(__import__("pathlib").Path(__file__).resolve().parents[3])  # projektmappen, var den än ligger
 import datetime as dt
 import json
 import math
 import os
 import sys
 
-ROOT = "/Volumes/2TB/Antigrvity/Runes/aagaard-research"
+ROOT = _PROJ
 sys.path.insert(0, ROOT)
 from src import blog_maps  # noqa: E402
 

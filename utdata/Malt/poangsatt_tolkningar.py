@@ -9,6 +9,7 @@ språk", inte "fel" - det sägs i artikeln. Andrahandsläsningarna (T/B/S/F) po�
 Skriver tolkningar_poang.json.
     .venv/bin/python utdata/Malt/poangsatt_tolkningar.py
 """
+_PROJ = str(__import__("pathlib").Path(__file__).resolve().parents[2])  # projektmappen, var den än ligger
 import json
 import math
 import re
@@ -17,7 +18,7 @@ import sys
 import unicodedata
 from collections import Counter
 
-ROT = "/Volumes/2TB/Antigrvity/Runes/aagaard-research"
+ROT = _PROJ
 sys.path.insert(0, ROT)
 from src import runlm as rl  # noqa: E402
 

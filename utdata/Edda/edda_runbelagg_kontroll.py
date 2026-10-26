@@ -5,19 +5,21 @@ sällsynta ordtyper och får automatiskt lägre belagd andel. Här dras i ställ
 (utan återläggning) ur varje text, många gånger, och andelen belagda ordTYPER mäts per prov.
 Resultat → edda_runbelagg_kontroll.json.
 """
+import os
+_PROJ = str(__import__("pathlib").Path(__file__).resolve().parents[2])  # projektmappen, var den än ligger
 import json
 import random
 import re
 import statistics
 import sys
 
-sys.path.insert(0, "/Volumes/2TB/Antigrvity/Runes/aagaard-research")
+sys.path.insert(0, _PROJ)
 from src import runlm as rl
 
 BUDGET = 600   # löpord per prov; texter under budgeten redovisas men flaggas
 ITER = 300
 
-texter = json.load(open("/Volumes/2TB/Antigrvity/Runes/aagaard-research/utdata/Malt/kallor/edda.json"))
+texter = json.load(open(os.path.join(_PROJ, "utdata/Malt/kallor/edda.json")))
 runkeys = set()
 for r in rl.load_rundata():
     if rl.viking(r):
@@ -42,7 +44,7 @@ for namn, text in texter.items():
                   "sd": round(statistics.stdev(andelar), 4) if len(andelar) > 1 else None})
 rader.sort(key=lambda r: -r["andel"])
 json.dump({"budget": BUDGET, "iterationer": ITER, "texter": rader},
-          open("/Volumes/2TB/Antigrvity/Runes/aagaard-research/utdata/Edda/edda_runbelagg_kontroll.json", "w"),
+          open(os.path.join(_PROJ, "utdata/Edda/edda_runbelagg_kontroll.json"), "w"),
           ensure_ascii=False, indent=1)
 for r in rader:
     print(f"{r['andel']:.3f}±{r['sd'] or 0:.3f} {'KORT ' if r['kort'] else ''}{r['dikt']} ({r['löpord']})")

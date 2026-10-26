@@ -7,11 +7,12 @@ attributionsmodellen (samma kontext som Syntes & Attribuering): stöder stil, sp
 R-modellens posteriorer att det är Visätes sten? Utdata: kandidatlista.json + kandidatlista.md.
     .venv/bin/python -m utdata.luckartikel.bygg_kandidatlista
 """
+_PROJ = str(__import__("pathlib").Path(__file__).resolve().parents[2])  # projektmappen, var den än ligger
 import json
 import re
 import sys
 
-ROOT = "/Volumes/2TB/Antigrvity/Runes/aagaard-research"
+ROOT = _PROJ
 sys.path.insert(0, ROOT)
 
 d = json.load(open(f"{ROOT}/utdata/Malt/runlm_luckor.json"))

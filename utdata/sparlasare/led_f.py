@@ -5,7 +5,7 @@ runor som parats mot ordets positioner, mjuka: trace_eps), och med samma mängde
 positioner (kontroll: hjälper spåren för att de läser stenen, eller bara för att mängder krymper sökrymden?).
 Parningen upptäckt runa ↔ textposition görs som i led A–E men behåller textpositionen. I skarp användning pekar
 panelen ut var luckan sitter, så parningen behövs bara här, för att få facit.
-    cd aagaard-research && PYTHONPATH=. .venv/bin/python utdata/sparlasare/led_f.py"""
+    PYTHONPATH=. .venv/bin/python utdata/sparlasare/led_f.py"""
 import json
 import math
 import os

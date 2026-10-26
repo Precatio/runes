@@ -5,17 +5,19 @@ ristad ordning, nyckel-normaliserade (rl.key), personnamn hopslagna till platsh�
 (normaliseringen skriver namn med stor bokstav). Satsgräns = skiljetecken i normaliseringen, så
 ordpar aldrig räknas över satsgräns. Utdata: ordpar_satser.csv.
 """
+import os
+_PROJ = str(__import__("pathlib").Path(__file__).resolve().parents[2])  # projektmappen, var den än ligger
 import csv
 import re
 import sys
 
-sys.path.insert(0, "/Volumes/2TB/Antigrvity/Runes/aagaard-research")
+sys.path.insert(0, _PROJ)
 from src import runlm as rl
 
 recs = [r for r in rl.load_rundata() if rl.viking(r) and rl.object_kind(r) == "runsten"
         and r.get("normalization")]
 
-with open("/Volumes/2TB/Antigrvity/Runes/aagaard-research/utdata/ordpar/ordpar_satser.csv",
+with open(os.path.join(_PROJ, "utdata/ordpar/ordpar_satser.csv"),
           "w", newline="") as f:
     w = csv.writer(f)
     w.writerow(["signum", "prefix", "region", "epok", "sats", "ord"])

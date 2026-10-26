@@ -5,7 +5,7 @@ korsande eller ej, ände eller mitt, samma eller motsatt sida (relativt, prövas
 (som u:s båge) eller kort. En runa är möjlig om de funna bistavarna ryms i någon av dess mallar (saknade bistavar är
 tillåtna – detektorn missar långt oftare än den hittar på). Blir mängden tom räknas den som "säger inget" (alla 16).
 Samma parning och slumpkontroll som förut.
-    cd aagaard-research && PYTHONPATH=. .venv/bin/python utdata/sparlasare/led_c.py ["Sö 113"]"""
+    PYTHONPATH=. .venv/bin/python utdata/sparlasare/led_c.py ["Sö 113"]"""
 import itertools
 import json
 import os

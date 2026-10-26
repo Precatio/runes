@@ -4,7 +4,7 @@ bytet). Underlag, alla regenererade av tm19-tåget (tm19_pipeline.py) i utdata/r
 mask4_f* (= tol02_f*), gapprovet klass3_alla, de dokumenterade luckorna dok5_f*, dateringsprovet datering_tm14
 (opåverkat). textmodel-18:s underlag ligger kvar på toppnivån. Spårproven (with_traces, with_misread_traces) är äldre
 och gäller alla slags inskrifter, precis som i tidigare versioner.
-    cd aagaard-research && RUNLM_CALIBRATION=utdata/runlm_forfining/tm19/runlm_calibration_tm19.json \\
+    RUNLM_CALIBRATION=utdata/runlm_forfining/tm19/runlm_calibration_tm19.json \\
         PYTHONPATH=. .venv/bin/python utdata/runlm_forfining/validering_tm19.py"""
 import json
 

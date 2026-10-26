@@ -6,7 +6,7 @@ så att runor med många bistavar (b, f, r) inte blir billiga soptunnor för bru
 P(runa) = softmax(−kostnad/TAU) med golv, precis den form sannolikhetsmodellens mjuka spår (restore allowed=) vill ha.
 Utvärdering som förut: radordning + parning mot translittereringen, omkastad text som slumpkontroll; nu mäts medel-P för
 facitrunan, topp-1 och topp-3. Blobbarna cachas per sten (den tunga djupbilden räknas en gång).
-    cd aagaard-research && PYTHONPATH=. .venv/bin/python utdata/sparlasare/led_e.py ["Sö 113"] [--sweep]"""
+    PYTHONPATH=. .venv/bin/python utdata/sparlasare/led_e.py ["Sö 113"] [--sweep]"""
 import itertools
 import json
 import math

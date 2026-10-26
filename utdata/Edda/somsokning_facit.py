@@ -6,13 +6,14 @@ valideras först mot Hávamál (ska återfinna sömmarna 112 och 138, ingen vid 
 Hyndluljóð, där Völuspá in skamma (strof 29-44) är ett känt främmande block - ett inbyggt facit.
 Först därefter läses Völuspás karta. Resultat → somsokning_facit.json.
 """
+_PROJ = str(__import__("pathlib").Path(__file__).resolve().parents[2])  # projektmappen, var den än ligger
 import csv
 import json
 import re
 import statistics
 import sys
 
-ROT = "/Volumes/2TB/Antigrvity/Runes/aagaard-research"
+ROT = _PROJ
 sys.path.insert(0, ROT)
 MFW_N = 50
 

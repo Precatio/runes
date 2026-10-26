@@ -7,7 +7,7 @@ dynamisk programmering (fyra rad-/riktningskombinationer, den bästa väljs), oc
   snävhet    mängdens medelstorlek (16 = säger ingenting)
   slumpen    samma parning mot omkastade texter (20 gånger) – ligger täckningen inte klart över den är allt värdelöst
 Skriver <signum>_grooves.json (cache av den automatiska analysen) och led_a.json.
-    cd aagaard-research && PYTHONPATH=. .venv/bin/python utdata/sparlasare/led_a.py ["Sö 113"]"""
+    PYTHONPATH=. .venv/bin/python utdata/sparlasare/led_a.py ["Sö 113"]"""
 import json
 import math
 import os

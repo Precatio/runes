@@ -3,7 +3,7 @@ redovisas för sig). Runstenar = Rundatas föremål "runsten", också fragment o
 berghällar, block m.m.; lösa föremål = metall, ben, horn, trä m.m. Läsprovet (kalib_klass.json), maskeringsprovet
 (maskklass_f*.json), de verkliga luckorna med den korsvaliderade kalibreringen (klass_alla.json) och nattkörningen
 (sammanstallning.json, med utgivarnas status som i batch_status.py). Skriver runstenar.json.
-    cd aagaard-research && PYTHONPATH=. .venv/bin/python utdata/modellartikel/runstenar.py"""
+    PYTHONPATH=. .venv/bin/python utdata/modellartikel/runstenar.py"""
 import json
 import os
 import re

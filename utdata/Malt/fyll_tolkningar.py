@@ -5,9 +5,11 @@ kallor/litteratur/heltoft2017.txt = Danske Studier 2017, 27-100), aldrig ur minn
 rad; obs förklarar var tolkningens orddelning avviker från Rundatas gruppindelning. Grønviks läsning
 sammanfattas på ANF s. 20-21, Heltofts i sluttabellen Danske Studier s. 93-94.
 """
+import os
+_PROJ = str(__import__("pathlib").Path(__file__).resolve().parents[2])  # projektmappen, var den än ligger
 import json
 
-FIL = "/Volumes/2TB/Antigrvity/Runes/aagaard-research/utdata/Malt/tolkningar_ord.json"
+FIL = os.path.join(_PROJ, "utdata/Malt/tolkningar_ord.json")
 d = json.load(open(FIL))
 
 G = [

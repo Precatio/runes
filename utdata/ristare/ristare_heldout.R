@@ -4,7 +4,8 @@
 # som är samma ristare) jämförs med lika stora grupper av närliggande stenar i samma provmängd (bara geografi).
 # Upprepas REP gånger med nya indelningar. Körs med samma params som anonymous.R.
 #   Rscript utdata/ristare/ristare_heldout.R <params.json> utdata/ristare/ut
-.here <- "/Volumes/2TB/Antigrvity/Runes/aagaard-research/r"
+.proj <- local({f <- sub("^--file=", "", grep("^--file=", commandArgs(FALSE), value = TRUE)); if (length(f)) normalizePath(file.path(dirname(f[1]), "../..")) else normalizePath(".")})  # projektmappen (Rscript), annars arbetsmappen
+.here <- file.path(.proj, "r")
 source(file.path(.here, "common.R"))
 suppressPackageStartupMessages({ library(cluster); library(igraph) })
 a <- cli_args(); P <- a$params; out <- a$out; cdir <- P$corpus_dir

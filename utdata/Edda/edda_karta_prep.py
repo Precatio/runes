@@ -5,12 +5,13 @@ sidhuvudsskräp och tokeniseras; Hávamál byts mot sina fyra delar; Völuspá i
 Hyndluljóð); Hugsvinnsmál (Finnur Jónssons utgåva, heimskringla.no) extraheras ur nedladdad HTML och
 sparas i kallor/. Utdata: edda_karta_texter.csv (namn, ljodahattr, n_ord, text).
 """
+_PROJ = str(__import__("pathlib").Path(__file__).resolve().parents[2])  # projektmappen, var den än ligger
 import csv
 import html as H
 import json
 import re
 
-ROT = "/Volumes/2TB/Antigrvity/Runes/aagaard-research"
+ROT = _PROJ
 HUGSVINN_HTML = "/Volumes/2TB/Antigrvity/Runes/downloads/hugsvinnsmal/hugsvinnsmal.html"
 MIN_ORD = 600
 

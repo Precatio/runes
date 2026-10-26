@@ -4,7 +4,7 @@ regler slår fel. Här får varje runmall en kostnad: en observerad bistav som i
 brus eller vittring), en mallbistav som inte observerats kostar 0,25 (detektorn missar ofta), en ändobservation i en
 mittplats 0,3, korsning mot icke-korsning går inte alls. Runans kostnad är den billigaste mallens, och mängden är alla
 runor inom 0,75 av den bästa – aldrig tom. Det är samma tanke som i sannolikhetsmodellen: säg inte mer än provet tål.
-    cd aagaard-research && PYTHONPATH=. .venv/bin/python utdata/sparlasare/led_d.py ["Sö 113"]"""
+    PYTHONPATH=. .venv/bin/python utdata/sparlasare/led_d.py ["Sö 113"]"""
 import itertools
 import json
 import os

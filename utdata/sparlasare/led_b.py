@@ -3,7 +3,7 @@
 pixlar som ligger i spår men utanför stavarnas egen bredd och utanför slinglinjerna. Sammanhängande blobbar som sitter
 fast i en stav och är avlånga blir bistavar, med läge (ände/mitt), sida och korsning. Sedan samma mängder, parning och
 slumpkontroll som i led A.
-    cd aagaard-research && PYTHONPATH=. .venv/bin/python utdata/sparlasare/led_b.py ["Sö 113"]"""
+    PYTHONPATH=. .venv/bin/python utdata/sparlasare/led_b.py ["Sö 113"]"""
 import json
 import os
 import random

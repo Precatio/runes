@@ -3,7 +3,7 @@ med den omskattade kalibreringen i data/runlm_calibration.json. Underlag (alla r
 --name_cands 40): maskeringsprovet mask4_f*, gapprovet klass3_alla, de dokumenterade luckorna dok5_f*, dateringsprovet
 datering_tm14 (opåverkat av namnkvoten). Spårproven (with_traces, with_misread_traces) är äldre och gäller alla slags
 inskrifter, precis som i tidigare versioner.
-    cd aagaard-research && PYTHONPATH=. .venv/bin/python utdata/runlm_forfining/validering_tm18.py"""
+    PYTHONPATH=. .venv/bin/python utdata/runlm_forfining/validering_tm18.py"""
 import json
 
 import numpy as np

@@ -4,7 +4,7 @@ varje mängd gratis, så att en skadad men upptäckt runa kan hamna på sin plat
 kedja (textmodel-17, modellen tränad utan stenens fald, panelens inställningar) i två villkor: utan spår och med
 spårläsarens mängd på de luckpositioner som fick en upptäckt runa. Facit är utgivarnas återställning i Rundata.
 Obs: parningen behövs bara i provbänken; i panelen pekar användaren ut luckan på stenen.
-    cd aagaard-research && PYTHONPATH=. .venv/bin/python utdata/sparlasare/led_g.py [signum ...]"""
+    PYTHONPATH=. .venv/bin/python utdata/sparlasare/led_g.py [signum ...]"""
 import json
 import math
 import os
