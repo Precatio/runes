@@ -120,9 +120,14 @@ def photo(signum: str, text: str, lang: str = "sv") -> str:
     lead = f"{signum}. Foto: " if lang == "sv" else f"{signum}. Photo: "
     assert cap.startswith(lead)
     alt = f"Runstenen {signum}" if lang == "sv" else f"The runestone {signum}"
-    return f"![{alt}]({img['thumb']})\n{text} {'Foto' if lang == 'sv' else 'Photo'}: {cap[len(lead):]}"
+    rest = cap[len(lead):]
+    for raw, shown in SHOWN.items():  # the file pages name the photographers; the author field has uploader or museum text
+        rest = rest.replace(raw, shown)
+    return f"![{alt}]({img['thumb']})\n{text} {'Foto' if lang == 'sv' else 'Photo'}: {rest}"
 
 
+SHOWN = {"Users Zoeds, Zoeds on sv.wikipedia": "Gustaf Eriksson (via Zoeds)",
+         "Photographer Roberto Fortuna, commisioned by the Danish National Museum": "Roberto Fortuna, Nationalmuseet"}
 PH_130 = photo("Sö 130", "Hagstugan (Sö 130) i Sparsta, Södermanland: fyra söner åt sin far, ”mild i ord och god på mat”. Stenen är en av sju med formeln.")
 PH_24 = photo("Vs 24", "Odendisastenen vid Hassmyra (Vs 24), Västmanland: den enda runsten som berömmer en husfru, ”ingen bättre kommer till Hassmyra”.")
 PH_212 = photo("DR 212", "Tillitse (DR 212) på Lolland: Áskell reste stenen åt sig själv, ”alltid skall det stå, så länge stenen lever”.")
