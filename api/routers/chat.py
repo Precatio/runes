@@ -27,7 +27,7 @@ class ChatResponse(BaseModel):
     reply: str
     tokens_used: int = 0
 
-# Define system instruction just like in the Streamlit app
+# The assistant's standing instruction
 SYSTEM_INSTRUCTION = """
 Du heter Rune och är en AI-assistent i Vitki-projektet. Du agerar som en kritisk vän: en runolog och epigrafiker som
 granskar noggrant men också hjälper forskaren att se vad ett mönster kan betyda.

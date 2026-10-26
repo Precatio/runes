@@ -1,15 +1,15 @@
 # Manuella utvecklingsskript
 
-Lösa skript för felsökning mot externa tjänster (Gemini, K-samsök) och benchmark.
-De är inte automatiska tester – de riktiga testerna ligger i `tests/` och körs med `pytest`.
+Lösa skript för datahämtning, analysunderlag, modellträning och publicering. De är inte automatiska tester – de
+riktiga testerna ligger i `tests/` och körs med `pytest`. Varje skript beskriver sig själv överst i filen.
 
 Kör från projektroten så att `api` och `src` kan importeras:
 
 ```bash
-.venv/bin/python -m scripts.list_all_models
+.venv/bin/python -m scripts.measure_stones --help
 ```
 
-Skript som anropar Gemini läser nyckeln från miljövariabeln `GEMINI_API_KEY`.
+Skript som anropar en språkmodell läser nyckeln från `.env` (`ANTHROPIC_API_KEY`, eller `GEMINI_API_KEY`).
 
 ## Engelsk översättning (METHODS.md 15f)
 

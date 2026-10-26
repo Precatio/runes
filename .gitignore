@@ -1,7 +1,6 @@
 # Hemligheter
 .env
 .env.*
-.streamlit/secrets.toml
 
 # Python
 .venv/

@@ -1,6 +1,6 @@
-# Epigraphix AI – Användarmanual
+# Vitki – Användarmanual
 
-Välkommen till Epigraphix AI, ett modernt forskningsverktyg för kvantitativ analys av huggspår i 3D-skannade runstenar (och andra historiska inskriptioner). Verktyget låter dig ladda upp 3D-modeller direkt i webbläsaren, rita mätbanor längs runskåror, inspektera stenen topografiskt, extrahera matematiska tvärsnitt, och använda artificiell intelligens för stilistisk analys.
+Välkommen till Vitki, ett modernt forskningsverktyg för kvantitativ analys av huggspår i 3D-skannade runstenar (och andra historiska inskriptioner). Verktyget låter dig ladda upp 3D-modeller direkt i webbläsaren, rita mätbanor längs runskåror, inspektera stenen topografiskt, extrahera matematiska tvärsnitt, och använda artificiell intelligens för stilistisk analys.
 
 ---
 
@@ -12,7 +12,7 @@ Välkommen till Epigraphix AI, ett modernt forskningsverktyg för kvantitativ an
 - En modern webbläsare med stöd för WebGL (Chrome, Firefox, Safari, Edge)
 
 ### Starta applikationen
-För att starta gränssnittet på din egen dator, öppna en terminal i mappen `aagaard-research` och starta både backend och frontend (förslagsvis i två separata terminalfönster):
+För att starta gränssnittet på din egen dator, öppna en terminal i projektmappen och starta både backend och frontend (förslagsvis i två separata terminalfönster):
 
 **Starta Python Backend (API):**
 ```bash
@@ -208,4 +208,4 @@ Klicka på **Min Forskning** (eller "Projekt") i huvudmenyn.
 - Mätningarna exporteras från 3D-sidan under **Exportera** (bilder, mättabeller och hela analysen, se *Exportera bilder och mätdata* ovan), och **Skapa stenrapport** samlar figurer, mättabeller, kvalitetskontroll och kända brister i ett dokument (Word, LaTeX eller Markdown).
 
 ---
-*Dokumentationen senast uppdaterad för Epigraphix AI (Next.js).*
+*Dokumentationen gäller Vitki (webbappen i Next.js och analysmotorn i FastAPI).*
