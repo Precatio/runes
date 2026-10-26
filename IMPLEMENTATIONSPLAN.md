@@ -93,12 +93,9 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
 - Ett test som låser METHODS-siffrorna mot resultatfilerna (som artikelbyggarna gör), så att 1g-fallet
   ("30 stenar" när det var 28) inte återkommer: `tests/test_methods_numbers.py`.
 
-### 3.2 Rundata → Runor 2020  (en session, stor effekt) — DELVIS 2026-10-20: Runor visas bredvid Rundata (src/runor.py, inskriftssidan); själva bytet återstår och kräver analysplan
-- Underlag finns: `scripts/fetch_runor.py`, `scripts/runor_compare.py`, 184 flyttade stenar, 43 nya texter.
-- **Kod:** `scripts/build_rundata.py` får Runor som primär källa med Rundata 3.1 som fallback per fält; fältet
-  `source_version` per inskrift. Alla R-moduler körs om (nytt fingeravtryck). Bristposten `rundata` ändras.
-- **Kontroll:** jämför artiklarnas låsta siffror före/efter (byggskripten faller om något ändras – gå igenom
-  varje assert och avgör om artikeln ska patchas). Räkna hur många "nya" fynd som redan finns i Runor.
+### 3.2 Rundata → Runor 2020  — STRUKEN 2026-10-26 (Viktor: vi byter inte)
+- Rundata förblir analysernas källa. Det som redan finns står kvar: Runor 2020 visas bredvid Rundata på
+  inskriftssidan (`src/runor.py`), och jämförelsen i `scripts/runor_compare.py` går att köra om.
 
 ### 3.3 Materialstratifiering överallt  — KLAR 2026-10-20 (R-modellen: Bergart-delmodell 19 % = majoritet; träff per familj i Statistik)
 - `r/attribution.R`: korsvalidering grupperad så att material inte läcker; redovisa träff per bergartsfamilj.
@@ -108,7 +105,7 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
 
 ### 3.4 Preregistrerade analysplaner  — KLAR 2026-10-20 (ANALYSPLAN.md, METHODS 1x)
 - Mall `utdata/<spår>/analysplan.md` + `analysis_plan.sha256` (som Rak-studien). Krav i METHODS 1x: varje artikel
-  som gör ett nytt anspråk hänvisar till sin plan och dess hash. Börja med toleranslagret (1.4) och Runor-bytet (3.2).
+  som gör ett nytt anspråk hänvisar till sin plan och dess hash. Började med toleranslagret (1.4).
 
 ### 3.5 Okända ristare: litteraturkontroll  (Viktor)
 - De fem robusta grupperna (Konungsund, Vetlanda, Leksberg, Husaby, Kölaby) mot Sveriges runinskrifter och
