@@ -156,6 +156,22 @@ känd/okänd …) och *drag B* eller *plats/tid* (landskap, härad, epok), och f
 
 ---
 
+## Prioordning 2026-10-26: det som går att göra utan Viktor
+1. **Stavlöst läge** i den automatiska huggspårsanalysen. Prövas mot Rundatas runantal på Hs 10, 12, 14, 15 och
+   M 3, 4, 7, 8; vanliga stenar ska ge samma resultat som före. Metodversion i METHODS, CHANGELOG och news.json.
+2. **API:ts minne vid stora skanningar.** Arbetsprocessen lämnar inte tillbaka minnet efter stora mesher (30 GB efter
+   nio skanningar 2026-10-24). Mål: stabil minnesnivå i en batch utan omstart mellan filerna.
+3. **IndexNow från bygget av webbplatsen.** Pingen körs i dag aldrig (ingen nyckel, och den vägrar köra lokalt).
+   Nyckelfil i web/public och ping i site.yml efter publiceringen.
+4. **Rökprov för webbappen i CI.** Playwright: startsidan, en artikelsida på svenska och engelska, 3D-sidan laddar.
+5. **Textmodellen: variantkvot** (ny låst plan, efter tm19:s diagnos att varianterna inte når kandidatlistan).
+6. **Relativa sökvägar** i de cirka tjugo skripten i utdata/ som hårdkodar projektmappens fulla sökväg.
+7. **Dela upp de största sidfilerna** (statistik, luckor, 3d, ThreeDViewer) utan att ändra vad användaren ser.
+
+Kräver Viktor och står därför inte i listan: granskning av fler slingor, facit (1.1), test–omtest (1.2),
+litteraturkontroll (3.5), DOI (4.3), beslut om runläsaren och om K-samsöks AI-tolkning, Så gör du för Stenrapport
+och Syntes (inloggat projekt) och all publicering.
+
 ## Väntande beslut som planen behöver från Viktor
 1. ~~Stilbedömningen~~ – beslutat 2026-10-20: bort.
 2. ~~Egen läsning~~ – beslutat: fält i Syntes (A).
