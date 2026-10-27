@@ -1,0 +1,85 @@
+signum,omrade,foremal,kategori,kristet,signatur,namn
+Sh 1,Shetland,fragment av gravhäll?,namn,0,0,Grímr:nordiskt
+Sh 2,Shetland,fragment av gravhäll?,oläsligt,0,0,
+Sh 3,Shetland,fragment av gravhäll,minne,0,0,Þorbjôrn:nordiskt
+Sh 4,Shetland,fragment av runsten,minne,0,0,
+Or 8,Orkney,2 sammanhörande fragment av runsten,minne,0,0,
+Or 9,Orkney,fragment av runsten,oläsligt,0,0,
+Or 11,Orkney,hörntand,futhark,0,0,
+Or 12,Orkney,nål,oläsligt,0,0,
+Or 15,Orkney,"runben, revben",vardag,0,0,
+Or 16,Orkney,fragment av runsten,oläsligt,0,0,
+Or 17,Orkney,fragment av gravhäll,ristare,0,1,Ás-:nordiskt
+Or 18,Orkney,runsten,minne,0,0,Þorfinnr:nordiskt
+Or 19,Orkney,"revben, fragment, 7 st",oläsligt,0,0,
+Or 20,Orkney,stenfragment,oläsligt,0,0,
+Or 21,Orkney,bleck,oläsligt,0,0,
+Sc 1,Skottland,platta,namn,0,0,Grimketill:nordiskt
+Sc 2,Skottland,keltisk brosch,ägare,0,0,Melbrigða:gaeliskt
+Sc 8,Skottland,kors,minne,1,0,Þorgerðr:nordiskt;Steinarr:nordiskt
+Sc 10,Skottland,sönderbrutet kors,minne,1,0,
+Sc 11,Skottland,kors avsett att ligga,minne,1,0,Ingulfr:nordiskt
+Sc 14,Skottland,gravhäll,minne,0,0,Kali:nordiskt;Ôlvir:nordiskt;Fugl:nordiskt
+Sc 15,Skottland,sten,minne,0,0,Gunnhildr:nordiskt
+E 2,England,gavelsten i gravkista,minne,0,0,Ginna:osäkert;Tóki:nordiskt
+E 4,England,kamfodral,ristare,0,1,Þorfastr:nordiskt
+E 7,England,"fragment av gravhäll, gavelhäll",oläsligt,0,0,
+E 8,England,solurssten,oläsligt,0,0,
+E 10,England,stenfragment,oläsligt,0,0,
+E 12,England,runsten,oläsligt,0,0,
+E 13,England,skulderblad,ristare,0,1,Þórðr:nordiskt
+E 14,England,skulderblad,namn,0,0,Wulfric:anglosaxiskt
+E 15,England,brosch,futhark,0,0,
+E 16,England,"runben, revben",vardag,0,0,
+E 18,England,sländtrissa,magi,0,0,Úlfljót:nordiskt
+E 19,England,fragment av stenkors,minne,1,0,Maelmuire:gaeliskt
+E DR419,England,handskrift,magi,0,0,
+IM AndreasVIII,Isle of Man,stenkors,minne,1,0,
+IM MM99,Isle of Man,stenkors,minne,1,1,Ófeigr:nordiskt;Gautr:nordiskt;Bjôrn:nordiskt
+IM MM101,Isle of Man,stenkors,minne,1,1,Melbrigði:gaeliskt;Aðakán:gaeliskt;Gautr:nordiskt
+IM MM102,Isle of Man,fragment av stenkors,minne,1,0,
+IM MM106,Isle of Man,stenkors,minne,1,0,Áleifr:nordiskt;Ljótulfr:nordiskt;Ulfr:nordiskt
+IM MM107,Isle of Man,stenkors,ristare,1,1,Ásrøðr:nordiskt
+IM MM110,Isle of Man,fragment av stenkors,oläsligt,1,0,
+IM MM111,Isle of Man,fragment av stenkors,oläsligt,1,0,
+IM MM112,Isle of Man,stenkors,minne,1,0,Þorsteinn:nordiskt;Ófeigr:nordiskt;Krínán:gaeliskt
+IM MM113,Isle of Man,stenkors,minne,1,0,
+IM MM118,Isle of Man,stenkors,minne,1,0,Druian:gaeliskt;Dufgal:gaeliskt;Aþmiul:gaeliskt
+IM MM121,Isle of Man,fragment av gravhäll,oläsligt,0,0,
+IM MM123,Isle of Man,fragment av stenkors,minne,1,0,
+IM MM126,Isle of Man,stenkors,minne,1,0,Grímr:nordiskt;Hróðmundr:nordiskt
+IM MM127,Isle of Man,stenkors,minne,1,0,Þorb-:nordiskt
+IM MM128,Isle of Man,stenkors,minne,1,0,Þorvaldr:nordiskt
+IM MM129,Isle of Man,stenkors,namn,1,0,Grímr:nordiskt
+IM MM130,Isle of Man,gammalt iriskt stenkors,minne,1,0,Mallymkun:gaeliskt;Malmury:gaeliskt;Dufgal:gaeliskt;Aðísl:nordiskt
+IM MM131,Isle of Man,stenkors,minne,1,0,Sandulfr:nordiskt;Arinbjôrg:nordiskt
+IM MM132,Isle of Man,stenkors,minne,1,0,Iualfir:osäkert;Þórulfr:nordiskt;Fríða:nordiskt
+IM MM133,Isle of Man,litet fragment av stenkors,oläsligt,1,0,
+IM MM135,Isle of Man,stenkors,minne,1,0,Þorleifr:nordiskt;Fiak:gaeliskt;Hafr:nordiskt
+IM MM136,Isle of Man,stenkors,minne,1,0,Oddr:nordiskt;Frakki:nordiskt
+IM MM138,Isle of Man,stenkors,minne,1,0,Hrosketill:nordiskt
+IM MM139,Isle of Man,stenkors,minne,1,0,Þorbjôrn:nordiskt
+IM MM140,Isle of Man,stenkors,minne,1,0,Ástríðr:nordiskt;Oddr:nordiskt
+IM MM141,Isle of Man,gammalt iriskt stenkors,minne,1,1,Myrgjôl:gaeliskt;Þúríð:nordiskt
+IM MM142,Isle of Man,stenkors,minne,1,1,Heðinn:nordiskt;Hlífhildr:nordiskt;Árni:nordiskt;Sigurðr:nordiskt
+IM MM159,Isle of Man,fragment av stenkors,oläsligt,1,0,
+IM MM175,Isle of Man,gravhäll,minne,0,0,Cuan:gaeliskt;Mael-B…:gaeliskt
+IM MM176,Isle of Man,fragment,oläsligt,0,0,
+IM MM193,Isle of Man,fragment av gravhäll,oläsligt,0,0,
+IM MM200,Isle of Man,fragment,ristare,0,1,
+IR 1,Irland,ändskoning till rem,ägare,0,0,Domnall:gaeliskt
+IR 2,Irland,fragment av stammen av ett stenkors,minne,1,0,Þorgrímr:nordiskt
+IR 3,Irland,överliggare av sten till dörr,ristare,0,1,
+IR 4,Irland,paddel,ägare,0,0,Geirlak:nordiskt
+IR 5,Irland,"runben, revben",ägare,0,0,Ónn:nordiskt;Ása:nordiskt
+IR 6,Irland,hyvel,vardag,0,0,
+IR 7,Irland,trähandtag med doppsko av kopparlegering,namn,0,0,Stillingr:nordiskt
+IR 8,Irland,"runben, revben",vardag,0,0,Gnúpr:nordiskt
+IR 9,Irland,skulderblad,oläsligt,0,0,
+IR 10,Irland,skulderblad,magi,1,0,
+IR 11,Irland,pinne,futhark,0,0,
+IR 12,Irland,hjorthorn,vardag,0,0,
+IR 13,Irland,"runben, revben",oläsligt,0,0,
+IR 14,Irland,kam,futhark,0,0,Unnr:nordiskt
+IR 15,Irland,armring,oläsligt,0,0,
+IR 16,Irland,runben,vardag,0,0,

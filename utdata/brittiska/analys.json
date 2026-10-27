@@ -1,0 +1,427 @@
+{
+ "n": 149,
+ "by_area_period": {
+  "Shetland|V": 4,
+  "Shetland|?": 1,
+  "Shetland|M": 2,
+  "Orkney|?": 8,
+  "Orkney|V": 11,
+  "Orkney|M": 37,
+  "Skottland|V": 7,
+  "Skottland|M": 8,
+  "England|M": 6,
+  "England|V": 13,
+  "England|?": 1,
+  "Isle of Man|V": 33,
+  "Isle of Man|M": 2,
+  "Irland|V": 16
+ },
+ "viking": 84,
+ "rune_types_viking": {
+  "ej angivet": 43,
+  "kortkvist": 34,
+  "kortkvist men långkvist-a": 1,
+  "kortkvist, dock ej b": 1,
+  "kortkvist men ett långkvist-a": 1,
+  "w en anglosaxisk runa": 1,
+  "bindrunor och kvistrunor": 1,
+  "långkvist": 1,
+  "långkvist, förutom s": 1
+ },
+ "objects_viking": {
+  "fragment av gravhäll?": 2,
+  "fragment av gravhäll": 4,
+  "fragment av runsten": 3,
+  "2 sammanhörande fragment av runsten": 1,
+  "hörntand": 1,
+  "nål": 1,
+  "runben, revben": 5,
+  "runsten": 2,
+  "revben, fragment, 7 st": 1,
+  "stenfragment": 2,
+  "bleck": 1,
+  "platta": 1,
+  "keltisk brosch": 1,
+  "kors": 1,
+  "sönderbrutet kors": 1,
+  "kors avsett att ligga": 1,
+  "gravhäll": 2,
+  "sten": 1,
+  "gavelsten i gravkista": 1,
+  "kamfodral": 1,
+  "fragment av gravhäll, gavelhäll": 1,
+  "solurssten": 1,
+  "skulderblad": 4,
+  "brosch": 1,
+  "sländtrissa": 1,
+  "fragment av stenkors": 6,
+  "handskrift": 1,
+  "stenkors": 20,
+  "gammalt iriskt stenkors": 2,
+  "litet fragment av stenkors": 1,
+  "fragment": 2,
+  "ändskoning till rem": 1,
+  "fragment av stammen av ett stenkors": 1,
+  "överliggare av sten till dörr": 1,
+  "paddel": 1,
+  "hyvel": 1,
+  "trähandtag med doppsko av kopparlegering": 1,
+  "pinne": 1,
+  "hjorthorn": 1,
+  "kam": 1,
+  "armring": 1,
+  "runben": 1
+ },
+ "women_commemorated": {
+  "Sverige": {
+   "women": 43,
+   "men": 1228,
+   "share": 0.03383162863886703
+  },
+  "Danmark": {
+   "women": 7,
+   "men": 126,
+   "share": 0.05263157894736842
+  },
+  "Norge": {
+   "women": 5,
+   "men": 23,
+   "share": 0.17857142857142858
+  },
+  "Brittiska öarna": {
+   "women": 1,
+   "men": 2,
+   "share": 0.3333333333333333
+  },
+  "Brittiska öarna utom Man": {
+   "women": 1,
+   "men": 2,
+   "share": 0.3333333333333333
+  },
+  "Brittiska öarna alla": {
+   "women": 10,
+   "men": 6,
+   "share": 0.625
+  },
+  "Isle of Man": {
+   "women": 9,
+   "men": 4,
+   "share": 0.6923076923076923
+  }
+ },
+ "women_tests": {
+  "Isle of Man mot Norge": {
+   "odds_ratio": 10.35,
+   "p": 0.0033059765922603523
+  },
+  "Brittiska öarna mot Norge": {
+   "odds_ratio": 7.666666666666667,
+   "p": 0.0067936809631483465
+  },
+  "Isle of Man mot Sverige": {
+   "odds_ratio": 64.25581395348837,
+   "p": 9.148472942206519e-11
+  },
+  "Brittiska öarna mot Sverige": {
+   "odds_ratio": 47.5968992248062,
+   "p": 3.905108303916142e-11
+  },
+  "Isle of Man mot Danmark": {
+   "odds_ratio": 40.5,
+   "p": 1.0470960960785508e-07
+  },
+  "Brittiska öarna mot Danmark": {
+   "odds_ratio": 30.0,
+   "p": 1.0721529769461154e-07
+  }
+ },
+ "scandinavian_stones": {
+  "Sverige": 2320,
+  "Danmark": 239,
+  "Norge": 66
+ },
+ "naming_islands": {
+  "Sverige|England": 28,
+  "Danmark|England": 1,
+  "Norge|England": 1
+ },
+ "naming_islands_list": [
+  {
+   "signum": "Ög 104",
+   "region": "Sverige",
+   "place": "England",
+   "style": "Fp",
+   "translation": "Rauðr raised this stone in memory of Tóki, his brother, a very good valiant man, who was killed in England."
+  },
+  {
+   "signum": "Ög Fv1950;341",
+   "region": "Sverige",
+   "place": "England",
+   "style": "Fp",
+   "translation": "...-bjôrn and Ásbjôrn, they raised this stone in memory of Vígfastr, their father, Helga's son. He died in England."
+  },
+  {
+   "signum": "Sö 46",
+   "region": "Sverige",
+   "place": "England",
+   "style": "RAK",
+   "translation": "Áskell and Gnauðimaðr(?) raised this stone in memory of their brother Sverri(?), who died in England. Ketill and Spakr(?) made this monument."
+  },
+  {
+   "signum": "Sö 55",
+   "region": "Sverige",
+   "place": "England",
+   "style": "Pr2",
+   "translation": "Þorsteinn had this stone raised in memory of himself and his son Hefnir. The young valiant man travelled to England; then died grievously at home. May God help their souls. Brúni and Slóði, they carved this stone."
+  },
+  {
+   "signum": "Sö 83",
+   "region": "Sverige",
+   "place": "England",
+   "style": "Pr4",
+   "translation": "He drowned in England's ..."
+  },
+  {
+   "signum": "Sö 160",
+   "region": "Sverige",
+   "place": "England",
+   "style": "?",
+   "translation": "Eybjôrn raised this stone in memory of Skerðir. He died in the retinue in England."
+  },
+  {
+   "signum": "Sö 166",
+   "region": "Sverige",
+   "place": "England",
+   "style": "RAK",
+   "translation": "Grjótgarðr (and) Einriði, the sons made (the stone) in memory of (their) able father. Guðvér was in the west; divided (up) payment in England; manfully attacked townships in Saxony."
+  },
+  {
+   "signum": "Sö 207",
+   "region": "Sverige",
+   "place": "England",
+   "style": "Fp",
+   "translation": "Guð-... ... his father. He competently travelled to England. May God help his soul."
+  },
+  {
+   "signum": "Sm 5",
+   "region": "Sverige",
+   "place": "England",
+   "style": "RAK",
+   "translation": "§A Gautr placed this stone in memory of Ketill §B his son. He was §C the most unvillainous of men, who forfeited his life in England."
+  },
+  {
+   "signum": "Sm 27",
+   "region": "Sverige",
+   "place": "England",
+   "style": "RAK",
+   "translation": "Þórðr raised this/these(?) monument(s) ... met his end in England."
+  },
+  {
+   "signum": "Sm 29",
+   "region": "Sverige",
+   "place": "England",
+   "style": "RAK",
+   "translation": "... raised the stone in memory of Þorgeirr, his father. He met his end in England."
+  },
+  {
+   "signum": "Sm 77",
+   "region": "Sverige",
+   "place": "England",
+   "style": "RAK [Gräslund muntligt]",
+   "translation": "Vrái placed this stone in memory of Gunni, his brother. He died in England."
+  },
+  {
+   "signum": "Sm 101",
+   "region": "Sverige",
+   "place": "England",
+   "style": "RAK [Gräslund muntligt]",
+   "translation": "Gunnkell placed this stone in memory of Gunnarr, his father, Hróði's son. Helgi laid him, his brother, in a stone coffin in Bath in England."
+  },
+  {
+   "signum": "Sm 104",
+   "region": "Sverige",
+   "place": "England",
+   "style": null,
+   "translation": "... in the west in England(?)."
+  },
+  {
+   "signum": "Vg 20",
+   "region": "Sverige",
+   "place": "England",
+   "style": "RAK",
+   "translation": "... raised the stone in memory of Guðmarr(?), his son, who was killed in England."
+  },
+  {
+   "signum": "Vg 187",
+   "region": "Sverige",
+   "place": "England",
+   "style": "RAK",
+   "translation": "Geiri placed this stone in memory of Guði, his brother, who forfeited his life in England."
+  },
+  {
+   "signum": "U 194",
+   "region": "Sverige",
+   "place": "England",
+   "style": "Pr3",
+   "translation": "Ál/Áli/Alli had this stone raised in memory of himself. He took Knútr's payment in England. May God help his spirit."
+  },
+  {
+   "signum": "U 241",
+   "region": "Sverige",
+   "place": "England",
+   "style": "Pr3",
+   "translation": "And Danr and Húskarl and Sveinn had the stone erected in memory of Ulfríkr, their father's father. He had taken two payments in England. May God and God's mother help the souls of the father and son."
+  },
+  {
+   "signum": "U 344",
+   "region": "Sverige",
+   "place": "England",
+   "style": "Pr3",
+   "translation": "And Ulfr has taken three payments in England. That was the first that Tosti paid. Then Þorketill paid. Then Knútr paid."
+  },
+  {
+   "signum": "U 539",
+   "region": "Sverige",
+   "place": "England",
+   "style": "RAK",
+   "translation": "§A Djarfr and Órœkja and Vígi and Jógeirr and Geirhjalmr, all of these brothers had §B this stone raised in memory of Sveinn, their brother. He died in Jútland. He meant to §C travel to England. May God and God's mother help his spirit and soul better than he deserved."
+  },
+  {
+   "signum": "U 616",
+   "region": "Sverige",
+   "place": "England",
+   "style": "Pr1",
+   "translation": "<fir--riui> had the monument erected in memory of his father Bósi(?)/Bausi(?) and (his) brother <kuru->. May God help <ul> <kuru> fell abroad in England."
+  },
+  {
+   "signum": "U 812",
+   "region": "Sverige",
+   "place": "England",
+   "style": "Pr2",
+   "translation": "his father. He died in England."
+  },
+  {
+   "signum": "U 978",
+   "region": "Sverige",
+   "place": "England",
+   "style": "Pr2",
+   "translation": "Sigviðr, traveller to England, raised this stone in memory of Védjarfr, (his) father ... ... ..."
+  },
+  {
+   "signum": "U 1181",
+   "region": "Sverige",
+   "place": "England",
+   "style": "Fp",
+   "translation": "... had (the stone) cut ... (in memory of) himself, traveller to England, grandfather of <kunu-s>."
+  },
+  {
+   "signum": "Vs 5",
+   "region": "Sverige",
+   "place": "England",
+   "style": "Fp",
+   "translation": "<kra-hni-> had the stone raised ... travelled to England, died in Spjallboði's ... May God help his soul ... Siggi cut the runes."
+  },
+  {
+   "signum": "Vs 9",
+   "region": "Sverige",
+   "place": "England",
+   "style": "Pr3",
+   "translation": "Gísl had the bridge made in memory of Ásl/Ôsl, his son. He died in England. May God help his spirit and soul."
+  },
+  {
+   "signum": "Vs 18",
+   "region": "Sverige",
+   "place": "England",
+   "style": "Fp",
+   "translation": "Gunnvaldr had this stone raised in memory of Geirfastr, his son, a good valiant man. And (he) had travelled to England. May God help his soul."
+  },
+  {
+   "signum": "Gs 8",
+   "region": "Sverige",
+   "place": "England",
+   "style": "RAK",
+   "translation": "Ásmundr ... ... He was abroad in the west in England ..."
+  },
+  {
+   "signum": "DR 6",
+   "region": "Danmark",
+   "place": "England",
+   "style": "?",
+   "translation": "§A ... had the stone raised in memory of §B ... ... ... dead ... ... and Guðmundr, they carved §C the runes. (He) rests at Skía in England. Christ ... ..."
+  },
+  {
+   "signum": "N 184",
+   "region": "Norge",
+   "place": "England",
+   "style": "RAK",
+   "translation": "Arnsteinn raised this stone in memory of Bjórr his son who died in the retinue when Knútr attacked England. God is one."
+  }
+ ],
+ "categories": {
+  "namn": 5,
+  "oläsligt": 21,
+  "minne": 35,
+  "futhark": 4,
+  "vardag": 6,
+  "ristare": 6,
+  "ägare": 4,
+  "magi": 3
+ },
+ "categories_by_area": {
+  "Shetland|namn": 1,
+  "Shetland|oläsligt": 1,
+  "Shetland|minne": 2,
+  "Orkney|minne": 2,
+  "Orkney|oläsligt": 6,
+  "Orkney|futhark": 1,
+  "Orkney|vardag": 1,
+  "Orkney|ristare": 1,
+  "Skottland|namn": 1,
+  "Skottland|ägare": 1,
+  "Skottland|minne": 5,
+  "England|minne": 2,
+  "England|ristare": 2,
+  "England|oläsligt": 4,
+  "England|namn": 1,
+  "England|futhark": 1,
+  "England|vardag": 1,
+  "England|magi": 2,
+  "Isle of Man|minne": 23,
+  "Isle of Man|ristare": 2,
+  "Isle of Man|oläsligt": 7,
+  "Isle of Man|namn": 1,
+  "Irland|ägare": 3,
+  "Irland|minne": 1,
+  "Irland|ristare": 1,
+  "Irland|vardag": 4,
+  "Irland|namn": 1,
+  "Irland|oläsligt": 3,
+  "Irland|magi": 1,
+  "Irland|futhark": 2
+ },
+ "name_origins": {
+  "nordiskt": 56,
+  "gaeliskt": 16,
+  "osäkert": 2,
+  "anglosaxiskt": 1
+ },
+ "gaelic_in": [
+  "Sc 2",
+  "E 19",
+  "IM MM101",
+  "IM MM112",
+  "IM MM118",
+  "IM MM130",
+  "IM MM135",
+  "IM MM141",
+  "IM MM175",
+  "IR 1"
+ ],
+ "mixed": [
+  "IM MM101",
+  "IM MM112",
+  "IM MM130",
+  "IM MM135",
+  "IM MM141"
+ ]
+}
