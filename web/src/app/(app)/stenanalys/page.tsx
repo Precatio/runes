@@ -19,6 +19,7 @@ import { safeFilename } from "@/lib/export";
 import { MeshSession, runeSampleNote, type AutoAnalysisResult } from "@/lib/mesh";
 import { METRICS, type FeatureType, type Metric, type SliceMetrics } from "@/lib/metrics";
 import { rundata, type Inscription } from "@/lib/rundata";
+import { allStaveless } from "@/lib/staveless";
 import type { SynthesisResult } from "@/lib/synthesis";
 
 type StepState = "väntar" | "pågår" | "klart" | "misslyckades" | "hoppades över";
@@ -147,6 +148,8 @@ export default function StoneAnalysisPage() {
           const d = await session.postJSON<AutoAnalysisResult>("/api/3d/auto_analyze", {
             normal_x: normal[0], normal_y: normal[1], normal_z: normal[2], sensitivity: k, meta_stone: stone, meta_weathering: weathering,
             runes_only: featureType === "rune",
+            // Staveless runes split along the band when Rundata says the stone has them (src/staveless.py)
+            staveless: featureType === "rune" && allStaveless(rec?.rune_types),
             // The main analysis follows the Vitki protocol; the other sensitivities keep its fixed grid
             ...(featureType === "rune" && k === 3 ? { protocol: true } : { resolution_mm: 0.6 }),
           });

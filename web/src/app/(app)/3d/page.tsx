@@ -1,19 +1,21 @@
 "use client";
 
 import { useState, useEffect, useEffectEvent, useRef, Suspense } from "react";
-import PlotlyGraph from "@/components/PlotlyGraph";
 import { useLanguage } from "@/components/LanguageContext";
 import { useAnalysis } from "@/components/AnalysisContext";
 import { useSettings } from "@/components/SettingsContext";
 import { useRouter, useSearchParams } from "next/navigation";
 import { dataURLToFile } from "@/lib/images";
-import Link from "next/link";
 import { db, ProjectData } from "@/lib/db";
 import GrooveResultsPanel from "@/components/GrooveResultsPanel";
 import { fromSession } from "@/lib/stoneReport";
 import AutoGrooveReview from "@/components/AutoGrooveReview";
 import GrooveExportMenu, { scrollToExport } from "@/components/GrooveExportMenu";
 import type { SliceMarker, Vec3, ViewDirection, ViewerPoint } from "@/components/ThreeDViewer";
+import AutoAnalysisOptions from "./_delar/AutoAnalysisOptions";
+import { allStaveless } from "@/lib/staveless";
+import ProfileGraphs from "./_delar/ProfileGraphs";
+import StoneMetaFields from "./_delar/StoneMetaFields";
 import { MeshSession, withMarkedRunes, type AutoAnalysisResult, type AutoLabel, type MeshInfo } from "@/lib/mesh";
 import type { ThreeDAnalysisResult } from "@/lib/db";
 import { METRICS, type SliceMetrics } from "@/lib/metrics";
@@ -185,6 +187,9 @@ function ThreeDPageContent() {
   // Vitki protocol (PROTOCOL.md): fixed parameters so that stones are comparable
   const [useProtocol, setUseProtocol] = useState(true);
   const [autoMeasure, setAutoMeasure] = useState<"runes" | "ornament">("runes"); // what the automatic analysis measures
+  // Staveless runes (src/staveless.py): runes split along the band; switched on when Rundata says the stone has them
+  const [autoStaveless, setAutoStaveless] = useState(false);
+  const [runeTypes, setRuneTypes] = useState<string | null>(null);
   const { t } = useLanguage();
   const { aiHeaders } = useSettings();
 
@@ -418,6 +423,7 @@ function ThreeDPageContent() {
         spacing_mm: autoSpacing, sensitivity: autoSensitivity, max_halfwidth_mm: autoMaxWidth / 2,
         meta_stone: metaStone, meta_weathering: metaWeathering,
         measure: facitMode ? "all" : autoMeasure,
+        staveless: autoStaveless && autoMeasure === "runes" && !facitMode,
         // the Vitki protocol measures runes; ornament is measured with the chosen parameters
         protocol: useProtocol && !facitMode && autoMeasure === "runes",
       });
@@ -527,6 +533,9 @@ function ThreeDPageContent() {
         period: keep(data.period, "Okänd", meta.period),
       });
       setRaaSource({ source: data.source, signum: data.signum, attribution: data.attribution });
+      const types: string | null = data.rune_types ?? null;
+      setRuneTypes(types);
+      setAutoStaveless(allStaveless(types));
       if (interactive) {
         alert(`Hämtade uppgifter (${data.source === "rundata" ? "Rundata" : "K-samsök, AI-tolkat"}):\n` +
           `Material: ${data.material}\nRistare: ${data.attributed_carver}\nPlats: ${data.location}\nStil: ${data.ornamentation}\nDatering: ${data.period}`);
@@ -802,84 +811,13 @@ function ThreeDPageContent() {
             </div>
 
             {measureMode === "auto" && file && (
-              <div className="space-y-3 rounded-xl border border-slate-200 bg-white/70 p-3">
-                <div>
-                  <div className="text-[11px] font-bold text-slate-500 mb-1">Vad ska mätas?</div>
-                  <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="Vad ska mätas">
-                    {([["runes", "Runor"], ["ornament", "Ornamentik"]] as const).map(([v, name]) => (
-                      <button key={v} type="button" role="radio" aria-checked={autoMeasure === v} disabled={facitMode}
-                        onClick={() => setAutoMeasure(v)}
-                        className={`py-1.5 rounded-lg text-xs font-bold border ${autoMeasure === v && !facitMode ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-600 border-slate-300"} disabled:opacity-40`}>
-                        {name}</button>
-                    ))}
-                  </div>
-                </div>
-                <details className="text-[11px] text-slate-600 leading-relaxed" open>
-                  <summary className="cursor-pointer font-bold text-slate-700">Så avgör Vitki vad som är runor</summary>
-                  <ol className="mt-1.5 list-decimal pl-4 space-y-1">
-                    <li>Vitki letar först upp <strong>runslingorna</strong> – banden som texten står i – på stenens djupbild.
-                      För de öppna skanningarna används slingor som har ritats och granskats för hand; annars föreslår
-                      slingmodellen dem.</li>
-                    <li>Ett tvärsnitt räknas som <strong>runa</strong> om det ligger inne i en slinga och går tvärs eller snett
-                      över den. Spår som löper längs slingan är <strong>slingkanter</strong> och mäts inte.</li>
-                    <li>Spår <strong>utanför slingorna</strong> räknas som ornamentik. Väljer du Ornamentik mäts de i stället.</li>
-                    <li>I granskningsbilden syns slingorna som ett <strong>ljusblått fält</strong>. Ligger en runa utanför det
-                      blå, eller ornamentik inne i det, har slingorna blivit fel: vrid stenen så att den ristade sidan vetter
-                      rakt mot dig (knappen <em>Vänd ristade sidan mot mig</em> i 3D-vyn) och kör igen, eller mät runorna
-                      för hand med <em>Ett klick</em> eller <em>Manuellt</em>.</li>
-                    <li>Vill du att varje runa ska väga lika mycket, klicka på <strong>Markera runorna</strong> i granskningen och
-                      klicka en gång mitt på varje runa, i läsordning.</li>
-                  </ol>
-                </details>
-                <label className="flex items-start gap-2 text-[11px] text-slate-600">
-                  <input type="checkbox" checked={useProtocol} onChange={e => setUseProtocol(e.target.checked)} className="mt-0.5" />
-                  <span><strong>Vitki-protokollet</strong> (rekommenderas): fasta parametrar – 0,6 mm rutnät, känslighet normal,
-                    3 mm mellan snitten – så att stenen kan jämföras med andra stenar.{" "}
-                    <a href="/docs/metod#vitki-protokollet" className="underline">Läs mer</a></span>
-                </label>
-                <div className={`grid grid-cols-3 gap-2 ${useProtocol && !facitMode ? "opacity-40 pointer-events-none" : ""}`}>
-                  <label className="text-[11px] font-bold text-slate-500">Avstånd
-                    <select value={autoSpacing} onChange={e => setAutoSpacing(+e.target.value)} className="mt-1 w-full liquid-glass-input-wrapper rounded-lg px-2 py-1.5 text-xs font-semibold outline-none">
-                      {[2, 3, 5, 8].map(v => <option key={v} value={v}>{v} mm</option>)}
-                    </select>
-                  </label>
-                  <label className="text-[11px] font-bold text-slate-500">Känslighet
-                    <select value={autoSensitivity} onChange={e => setAutoSensitivity(+e.target.value)} className="mt-1 w-full liquid-glass-input-wrapper rounded-lg px-2 py-1.5 text-xs font-semibold outline-none">
-                      <option value={4}>Låg</option><option value={3}>Normal</option><option value={2}>Hög</option>
-                    </select>
-                  </label>
-                  <label className="text-[11px] font-bold text-slate-500">Max bredd
-                    <select value={autoMaxWidth} onChange={e => setAutoMaxWidth(+e.target.value)} className="mt-1 w-full liquid-glass-input-wrapper rounded-lg px-2 py-1.5 text-xs font-semibold outline-none">
-                      {[10, 16, 24, 32].map(v => <option key={v} value={v}>{v} mm</option>)}
-                    </select>
-                  </label>
-                </div>
-                <label className="flex items-start gap-2 text-[11px] text-slate-600">
-                  <input type="checkbox" checked={facitMode} onChange={e => setFacitMode(e.target.checked)} className="mt-0.5" />
-                  <span><strong>Facit-läge:</strong> mät alla spår och märk själv vilka som är runor. Märkningen sparas som
-                    facit och används för att mäta hur träffsäker runigenkänningen är.</span>
-                </label>
-                <button type="button" onClick={runAutoAnalysis} disabled={!uploadDone || autoBusy}
-                  className="w-full py-3 bg-slate-900 hover:bg-black text-white font-semibold text-sm rounded-xl disabled:opacity-40 flex justify-center items-center gap-2">
-                  {autoBusy ? (<><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Analyserar stenen …</>) : "Kör automatisk analys"}
-                </button>
-                {autoError && <p className="text-xs text-amber-800">{autoError}</p>}
-                {autoResult && !facitMode && (
-                  autoResult.bands?.source ? (
-                    <p className="text-[11px] text-slate-600" role="status">
-                      <strong>Runslingor:</strong>{" "}
-                      {autoResult.bands.source === "ritade" ? "ritade och granskade för hand" : "föreslagna av slingmodellen – kontrollera dem i granskningsbilden"}
-                      {autoResult.bands.coverage != null ? ` (täcker ${Math.round(autoResult.bands.coverage * 100)} % av ytan)` : ""}.
-                      {" "}Mätt: {autoResult.parameters.measure === "ornament" ? "ornamentiken utanför slingorna" : "runorna i slingorna"}.
-                    </p>
-                  ) : (
-                    <p className="text-[11px] text-amber-800" role="status">
-                      <strong>Inga runslingor hittades</strong>, så analysen föll tillbaka på den äldre igenkänningen, som kan
-                      blanda ihop runor och ornamentik. Kontrollera granskningsbilden noga eller mät runorna för hand.
-                    </p>
-                  )
-                )}
-              </div>
+              <AutoAnalysisOptions
+                autoMeasure={autoMeasure} setAutoMeasure={setAutoMeasure} facitMode={facitMode} setFacitMode={setFacitMode}
+                autoStaveless={autoStaveless} setAutoStaveless={setAutoStaveless} runeTypes={runeTypes}
+                useProtocol={useProtocol} setUseProtocol={setUseProtocol} autoSpacing={autoSpacing} setAutoSpacing={setAutoSpacing}
+                autoSensitivity={autoSensitivity} setAutoSensitivity={setAutoSensitivity} autoMaxWidth={autoMaxWidth}
+                setAutoMaxWidth={setAutoMaxWidth} canRun={uploadDone} autoBusy={autoBusy} onRun={runAutoAnalysis}
+                autoError={autoError} autoResult={autoResult} />
             )}
 
             {(preparingView || viewFile) && (
@@ -909,96 +847,10 @@ function ThreeDPageContent() {
               </select>
             </div>
 
-            <div className="space-y-5 pt-2">
-              <div>
-                <label className="block text-slate-500 text-[12px] mb-2 font-bold uppercase tracking-wider">Stenart</label>
-                <select value={metaStone} onChange={e => setMetaStone(e.target.value)} className="w-full liquid-glass-input-wrapper rounded-xl px-4 py-2.5 text-slate-900 text-sm font-semibold outline-none">
-                  <option value="Granit">Granit</option>
-                  <option value="Gnejs">Gnejs</option>
-                  <option value="Gråsten">Gråsten</option>
-                  <option value="Sandsten">Sandsten</option>
-                  <option value="Kalksten">Kalksten</option>
-                  <option value="Skiffer">Skiffer</option>
-                  <option value="Porfyr">Porfyr</option>
-                  <option value="Kvartsit">Kvartsit</option>
-                  <option value="Okänd">Okänd</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-slate-500 text-[12px] mb-2 font-bold uppercase tracking-wider">Yttre påverkan (Vittring)</label>
-                <select value={metaWeathering} onChange={e => setMetaWeathering(e.target.value)} className="w-full liquid-glass-input-wrapper rounded-xl px-4 py-2.5 text-slate-900 text-sm font-semibold outline-none">
-                  <option value="Låg">Låg</option>
-                  <option value="Medel">Medel</option>
-                  <option value="Hög">Hög</option>
-                </select>
-              </div>
-
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <label className="block text-slate-500 text-[12px] font-bold uppercase tracking-wider">Signum (RAÄ)</label>
-                  <button 
-                    type="button" 
-                    onClick={handleFetchRAA}
-                    disabled={fetchingRaa || !metaText}
-                    className="text-[10px] bg-slate-900 hover:bg-black text-white font-bold px-3 py-1.5 rounded-full transition-colors flex items-center gap-1.5 disabled:opacity-50 shadow-sm"
-                  >
-                    {fetchingRaa ? (
-                      <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    ) : (
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3">
-                        <path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clipRule="evenodd" />
-                      </svg>
-                    )}
-                    {fetchingRaa ? "Hämtar..." : "Autofyll info"}
-                  </button>
-                </div>
-                <input 
-                  type="text" 
-                  placeholder="t.ex. Sö 112" 
-                  value={metaText} 
-                  onChange={e => setMetaText(e.target.value)} 
-                  className="w-full liquid-glass-input-wrapper rounded-xl px-4 py-2.5 text-slate-900 text-sm font-semibold outline-none placeholder:text-slate-400"
-                />
-                
-                {/* Auto-fetched Hypothesis Info */}
-                {(attributedCarver || location || metaOrnamentation || metaPeriod) && (
-                  <div className="mt-3 bg-slate-900/5 rounded-xl p-3 border border-slate-900/10 animate-in fade-in grid grid-cols-2 gap-2">
-                    {raaSource && (
-                      <div className="col-span-2 text-[10px] font-bold uppercase tracking-wider">
-                        {raaSource.source === "rundata" ? (
-                          <Link href={`/inskrifter?signum=${encodeURIComponent(raaSource.signum || metaText)}`} className="text-emerald-700 hover:underline">
-                            Källa: Rundata (Samnordisk runtextdatabas) →
-                          </Link>
-                        ) : (
-                          <span className="text-amber-700">Källa: K-samsök, tolkat av AI – kontrollera uppgifterna</span>
-                        )}
-                      </div>
-                    )}
-                    {attributedCarver && (
-                      <div className="text-[11px] text-slate-600 mb-1">
-                        <span className="font-bold uppercase tracking-wider text-slate-900">Ristare:</span> {attributedCarver}
-                      </div>
-                    )}
-                    {location && (
-                      <div className="text-[11px] text-slate-600">
-                        <span className="font-bold uppercase tracking-wider text-slate-900">Plats:</span> {location}
-                      </div>
-                    )}
-                    {metaOrnamentation && (
-                      <div className="text-[11px] text-slate-600">
-                        <span className="font-bold uppercase tracking-wider text-slate-900">Stilgrupp:</span> {metaOrnamentation}
-                      </div>
-                    )}
-                    {metaPeriod && (
-                      <div className="text-[11px] text-slate-600">
-                        <span className="font-bold uppercase tracking-wider text-slate-900">Datering (RAÄ):</span> {metaPeriod}
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            </div>
+            <StoneMetaFields metaStone={metaStone} setMetaStone={setMetaStone} metaWeathering={metaWeathering}
+              setMetaWeathering={setMetaWeathering} metaText={metaText} setMetaText={setMetaText} handleFetchRAA={handleFetchRAA}
+              fetchingRaa={fetchingRaa} attributedCarver={attributedCarver} location={location}
+              metaOrnamentation={metaOrnamentation} metaPeriod={metaPeriod} raaSource={raaSource} />
 
             <div className="pt-4 border-t border-slate-900/10 space-y-2">
               <div className="text-xs font-bold uppercase tracking-wider text-slate-500">Bilder ur skanningen</div>
@@ -1128,67 +980,7 @@ function ThreeDPageContent() {
 
           {/* Graph */}
           {results && (
-            <div className="liquid-glass-island rounded-[36px] p-6 flex flex-col items-center justify-center relative shadow-sm border border-white/50 animate-in fade-in slide-in-from-bottom-8">
-              
-              <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* V-form Graph */}
-                <div>
-                  <h3 className="font-bold text-sm text-slate-700 mb-2">Tvärsnittsprofil (V-form)</h3>
-                  <div className="bg-white/80 rounded-2xl border border-white p-2 shadow-inner h-[300px]">
-                    <PlotlyGraph 
-                      data={getPlotData()}
-                      layout={{...plotLayout, margin: { l: 40, r: 20, t: 20, b: 40 }, showlegend: false, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)' }}
-                    />
-                  </div>
-                </div>
-                
-                {/* Longitudinal Depth Profile */}
-                {results.depth_profile && results.depth_profile.distances.length > 0 ? (
-                  <div>
-                    <h3 className="font-bold text-sm text-slate-700 mb-2">Topografisk Längdprofil (Djup längs banan)</h3>
-                    <div className="bg-white/80 rounded-2xl border border-white p-2 shadow-inner h-[300px]">
-                      <PlotlyGraph 
-                        data={[
-                          { 
-                            x: results.depth_profile.distances, 
-                            y: results.depth_profile.depths, 
-                            mode: 'lines+markers', 
-                            line: { color: '#b7410e', shape: 'spline' }, 
-                            marker: { size: 4 },
-                            fill: 'tozeroy',
-                            fillcolor: 'rgba(183, 65, 14, 0.1)',
-                            name: 'Djup' 
-                          }
-                        ]}
-                        layout={{
-                          margin: { l: 40, r: 20, t: 20, b: 40 },
-                          xaxis: { title: 'Avstånd längs spår (mm)' },
-                          yaxis: { 
-                            title: 'Spårdjup (mm)', 
-                            autorange: 'reversed' // Reversed so deeper is lower
-                          },
-                          showlegend: false,
-                          paper_bgcolor: 'rgba(0,0,0,0)',
-                          plot_bgcolor: 'rgba(0,0,0,0)'
-                        }}
-                      />
-                    </div>
-                  </div>
-                ) : (
-                  <div>
-                    <h3 className="font-bold text-sm text-slate-700 mb-2">Topografisk Längdprofil</h3>
-                    <div className="flex flex-col items-center justify-center h-[300px] bg-white/50 rounded-2xl border border-white/50 shadow-inner">
-                      <p className="text-slate-500 text-sm font-medium">Rita en bana (Path) på stenen</p>
-                      <p className="text-slate-400 text-xs mt-1">för att se spårdjupet längs skåran.</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-              
-              <div className="mt-6 text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                💡 Tips: Dra en rektangel i graferna för att zooma &nbsp;&bull;&nbsp; Dubbelklicka för att återställa
-              </div>
-            </div>
+            <ProfileGraphs results={results} plotData={getPlotData()} plotLayout={plotLayout} />
           )}
 
           {results && (

@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "stavlosa-runor",
+   "date": "2026-10-26",
+   "status": "nytt",
+   "title": "Stavlösa runor delas upp i runor",
+   "text": "Hälsingerunor och andra stavlösa runor saknar huvudstav, så den automatiska analysen kunde mäta deras spår men inte säga vilken runa ett snitt hörde till. Med det nya valet Stavlösa runor delas strecken upp i runor efter var de står längs slingan. Valet slås på av sig självt när Rundata anger att alla stenens runor är stavlösa. Indelningen är ett ungefärligt förslag; vill du ha den exakt markerar du runorna för hand."
+  },
+  {
    "id": "markera-runorna",
    "date": "2026-10-26",
    "status": "nytt",
