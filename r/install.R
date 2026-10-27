@@ -4,10 +4,10 @@ pk <- c("jsonlite", "dplyr", "tidyr", "stringr", "ggplot2", "ragg", "sf", "leafl
         "tidytext", "cluster", "FactoMineR", "factoextra", "tidymodels", "ranger",
         "ca", "stringdist", "igraph", "tidygraph", "ggraph", "terra", "gdistance", "raster", "png", "mgcv",
         "spdep", "smerc",
-        # 2026-10-27: model checks and plain-words effects (DHARMa, marginaleffects), shape analysis of runes and groove
+        # 2026-10-27: model checks and plain-words effects (DHARMa, with mgcViz for mgcv models; marginaleffects), shape analysis of runes and groove
         # profiles (geomorph: landmarks and curves; Momocs is archived on CRAN and not available for R 4.6), stylometry
         # (stylo), point patterns and spatial models (spatstat, spaMM, glmmTMB)
-        "marginaleffects", "DHARMa", "geomorph", "stylo", "spatstat", "spaMM", "glmmTMB")
+        "marginaleffects", "DHARMa", "mgcViz", "geomorph", "stylo", "spatstat", "spaMM", "glmmTMB")
 miss <- pk[!vapply(pk, requireNamespace, logical(1), quietly = TRUE)]
 if (length(miss)) {
   message("Installerar: ", paste(miss, collapse = ", "))

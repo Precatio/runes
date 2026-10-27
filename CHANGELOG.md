@@ -5,6 +5,10 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Pröva en egen fråga: andelar och modellkontroll
+- Kontrollerna i R visar också andelen med och utan det valda draget med övrigt lika (marginaleffects), och en
+  modellkontroll med simulerade residualer (DHARMa) som varnar om modellen inte passar datan (METHODS.md 1y).
+
 ### Referensbibliotek för runformer
 - Ny sida **Runbibliotek** (menyn Korpusen): klicka på runorna på de öppna 3D-skanningarnas djupbilder i läsordning, så
   märks varje runa med sin bokstav ur Rundatas text och stenens ristare. Utsnitten vrids upprätt efter läsriktningen.

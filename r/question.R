@@ -10,8 +10,16 @@
 #    läge (km) i stället för landskapens grova gränser. Håller sambandet bara för att draget och jämförelsen hör hemma i
 #    samma trakt, försvinner det. Flyttade stenar räknas inte, eftersom deras plats inte är den ursprungliga. Inte för
 #    landskapsfrågor: där är platsen själva jämförelsen.
-# Laddar bara jsonlite, lme4 och mgcv (inte common.R), så att en fråga tar några sekunder.
+# 3. För båda (2026-10-27): andelen med A när B finns och när det inte finns, med övrigt som i datan
+#    (marginaleffects::avg_predictions; för ristarmodellen en typisk ristare, re.form = NA), så att svaret kan sägas i
+#    andelar och inte bara som oddskvot; och en modellkontroll med simulerade residualer (DHARMa): är residualerna jämnt
+#    fördelade, finns överspridning, och – för ristarmodellen, som inte har platsen i sig – finns ett kvarvarande rumsligt
+#    mönster (stenar på samma plats slås ihop). Kontrollen ändrar inte domen; den visas, så att en modell som inte passar
+#    datan syns.
+# Laddar bara jsonlite, lme4, mgcv, marginaleffects och DHARMa (inte common.R), så att en fråga tar några sekunder.
 suppressPackageStartupMessages({ library(jsonlite); library(lme4); library(mgcv) })
+has_me <- requireNamespace("marginaleffects", quietly = TRUE)
+has_dh <- requireNamespace("DHARMa", quietly = TRUE)
 options(warn = 1)
 
 args <- commandArgs(TRUE)
@@ -30,6 +38,41 @@ wald <- function(est, se, model, extra = list()) {
 }
 safe <- function(expr) tryCatch(expr, error = function(e) list(error = conditionMessage(e)))
 
+# The share with A when B is absent (x = 0) and present (x = 1), averaged over the data as it is
+shares <- function(m, ...) {
+  if (!has_me) return(NULL)
+  tryCatch({
+    pr <- marginaleffects::avg_predictions(m, variables = list(x = c(0, 1)), ...)
+    pr <- as.data.frame(pr)
+    k <- match(c(0, 1), pr$x)
+    list(without = pr$estimate[k[1]], with = pr$estimate[k[2]],
+         without_ci = c(pr$conf.low[k[1]], pr$conf.high[k[1]]), with_ci = c(pr$conf.low[k[2]], pr$conf.high[k[2]]))
+  }, error = function(e) list(error = conditionMessage(e)))
+}
+
+# DHARMa's checks on simulated residuals; spatial only when coordinates are given (locations with several stones pooled)
+model_check <- function(m, coords = NULL) {
+  if (!has_dh) return(NULL)
+  tryCatch({
+    set.seed(1)
+    r <- DHARMa::simulateResiduals(m, n = 250, plot = FALSE)
+    out <- list(uniformity_p = DHARMa::testUniformity(r, plot = FALSE)$p.value,
+                dispersion_p = DHARMa::testDispersion(r, plot = FALSE)$p.value)
+    if (!is.null(coords)) {
+      # only stones with a place of their own (not moved); stones on the same spot (to the km) are pooled
+      sel <- !is.na(coords$xk) & !is.na(coords$yk) & coords$moved == 0
+      if (sum(sel) > 30) {
+        g <- paste(round(coords$xk), round(coords$yk))
+        rg <- DHARMa::recalculateResiduals(r, group = g, sel = sel)
+        first <- which(sel)[!duplicated(g[sel])]
+        out$spatial_p <- DHARMa::testSpatialAutocorrelation(rg, x = coords$xk[first], y = coords$yk[first], plot = FALSE)$p.value
+      }
+    }
+    out$ok <- all(unlist(out) >= 0.05)
+    out
+  }, error = function(e) list(error = conditionMessage(e)))
+}
+
 fixed <- switch(kind, landskap = "epoch", tid = "province", c("province", "epoch"))
 # A fixed term with one level says nothing and makes the design singular
 fixed <- Filter(function(v) nlevels(droplevels(d[[v]])) > 1, fixed)
@@ -40,7 +83,8 @@ carver <- safe({
   cf <- summary(m)$coefficients
   wald(cf["x", 1], cf["x", 2], "glmer(y ~ x + landskap + tidsskikt + (1 | ristare eller socken))",
        list(n = nrow(d), groups = nlevels(droplevels(d$hand)), sd_hand = as.numeric(attr(VarCorr(m)$hand, "stddev")),
-            singular = isSingular(m)))
+            singular = isSingular(m), shares = shares(m, re.form = NA),
+            check = model_check(m, d[, c("xk", "yk", "moved")])))
 })
 
 place <- if (kind == "landskap") list(skipped = "landskap") else safe({
@@ -51,7 +95,7 @@ place <- if (kind == "landskap") list(skipped = "landskap") else safe({
   pt <- summary(m)$p.table
   st <- summary(m)$s.table
   wald(pt["x", 1], pt["x", 2], "gam(y ~ x + tidsskikt + s(öst–väst, nord–syd))",
-       list(n = nrow(dd), edf = st[1, "edf"]))
+       list(n = nrow(dd), edf = st[1, "edf"], shares = shares(m), check = model_check(m)))
 })
 
 dir.create(out, showWarnings = FALSE, recursive = TRUE)

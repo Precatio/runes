@@ -567,6 +567,12 @@ upplösning (`harmonize_mm`); båda sparas bland parametrarna.
   `utdata/forskningsplan/resultat.md`, studie 1b). Själva tvärsnittsmätningen är oförändrad; vilka snitt som räknas
   som runor ändras, så automatiska analyser och korpusposter mätta med `groove-5` bör göras om.
 
+*Andelar och modellkontroll (2026-10-27).* Båda kontrollerna i R ger också andelen med A när B finns och när det inte
+finns, med övrigt som i datan (marginaleffects; ristarmodellen för en typisk ristare), och en modellkontroll med
+simulerade residualer (DHARMa, 250 simuleringar): jämn fördelning, spridning och – för ristarmodellen, som inte har
+platsen i sig – kvarvarande rumsligt mönster bland stenar på ursprunglig plats. Kontrollen ändrar inte domen; en varning
+visas vid svaret.
+
 ### 2b. Ett klick per snitt
 
 Källkod: `src/auto_grooves.py` (`auto_slice`). Användaren klickar en gång i ett spår.

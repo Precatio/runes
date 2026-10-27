@@ -32,7 +32,10 @@ interface Answer {
   r_checks?: { available: boolean; carver?: RCheck; place?: RCheck; carver_holds?: boolean | null; place_holds?: boolean | null };
 }
 // A check in R (r/question.R): the odds ratio with the carver as a random effect (lme4) or the place as a surface (mgcv)
-interface RCheck { or?: number; ci?: [number, number]; p?: number; direction?: number; n?: number; groups?: number; skipped?: string; error?: string }
+// shares: the share with A without and with B, other things as in the data (marginaleffects); check: DHARMa's model checks
+interface RCheck { or?: number; ci?: [number, number]; p?: number; direction?: number; n?: number; groups?: number; skipped?: string; error?: string;
+  shares?: { without?: number; with?: number; error?: string } | null;
+  check?: { uniformity_p?: number; dispersion_p?: number; spatial_p?: number; ok?: boolean; error?: string } | null }
 type Kind = "drag" | "landskap" | "tid" | "bergart";
 interface Asked { a: string; b: string; verdict: Answer["verdict"]; p: number }
 
@@ -314,6 +317,19 @@ function RCheckLine({ label, tip, c, holds, available, more }: { label: string; 
     <li>
       <Tip text={tip}>{label}</Tip>: oddskvot {num(c.or)} (95 %: {num(c.ci?.[0])}–{num(c.ci?.[1])}), p {pIs(c.p)} –{" "}
       {holds ? <>samma riktning, {more ? "vanligare" : "ovanligare"}, och under 0,05: håller.</> : <strong>håller inte.</strong>}
+      {c.shares?.without != null && c.shares?.with != null && (
+        <span className="block text-slate-600">{`Med övrigt lika: ${pct(c.shares.with)} med B mot ${pct(c.shares.without)} utan.`}</span>
+      )}
+      {c.check && !c.check.error && (
+        <span className={`block ${c.check.ok ? "text-slate-500" : "text-amber-700"}`}>
+          {c.check.ok ? "Modellkontrollen (simulerade residualer) visar inget som talar emot modellen."
+            : `Modellkontrollen varnar: ${[
+              (c.check.uniformity_p ?? 1) < 0.05 && "residualerna är inte jämnt fördelade",
+              (c.check.dispersion_p ?? 1) < 0.05 && "spridningen är större eller mindre än modellen väntar",
+              (c.check.spatial_p ?? 1) < 0.05 && "det finns ett rumsligt mönster kvar",
+            ].filter(Boolean).join(", ")}. Läs resultatet med försiktighet.`}
+        </span>
+      )}
     </li>
   );
 }
