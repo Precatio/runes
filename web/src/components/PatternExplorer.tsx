@@ -332,7 +332,7 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
 
       <details className={box}>
         <summary className="cursor-pointer text-sm font-bold text-slate-800">
-          Alla samband i landskapet (R){scan?.available ? `: ${scan.n_replicated} håller i båda halvorna av ${scan.n_tests} prövade` : ""}
+          Alla samband i landskapet (R){scan?.available ? (scan.n_sig === 0 ? `: inget av ${scan.n_tests} prövade klarar justeringen` : `: ${scan.n_replicated} håller i båda halvorna av ${scan.n_tests} prövade`) : ""}
         </summary>
         <div className="mt-3">
           <LandscapeScan scan={scan} current={nearKind ? { feature: patternKey, kind: nearKind } : undefined}

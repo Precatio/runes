@@ -149,11 +149,19 @@ halvorna blir mönster att pröva i Forskningsluckor (mönstret *utan religiösa
 spegelbilden av de kristna markörerna); de som bara klarar justeringen sammanfattas som indikationer. På kartan visas
 genomsökningen som ett rutnät med mönster mot platser.
 
-Beräkning 2026-10-12 (117 kombinationer): tio klarar justeringen och fyra håller i båda halvorna. Kristna markörer och
-kors blir vanligare närmare centralortsnamn (oddskvot 1,24 respektive 1,23 när avståndet halveras), och kristen bön
-närmare medeltida kyrkor (1,26); alla tre håller också med tiden konstant. Sambandet mellan bön och teofora namn är
-svagare utan vald radie (1,26, q 0,047, bara i den ena halvan), vilket talar för att eliten och de tidiga kyrkorna
-förklarar en del av det som syns vid kultnamnen.
+Beräkning 2026-10-21 (117 kombinationer, 1 144 stenar på ursprunglig plats): ingen klarar justeringen (lägsta q
+0,075). 20 har p under 0,05, där slumpen ensam väntas ge omkring 6, men flera prov mäter nästan samma sak (kristna
+markörer, kors, utan religiösa markörer), så överskottet är osäkert. Starkast: kristna markörer och kors närmare
+centralortsnamn (oddskvot 1,22 och 1,20 när avståndet halveras, q 0,07, inte i båda halvorna, svagare med tiden
+konstant), bro- och vägbygge närmare medeltida kyrkor (1,37, med tiden konstant 1,47) och själsbön närmare teofora
+ortnamn (1,31, i båda halvorna men q 0,09). Den tidigare beräkningen 2026-10-12 (tio klarade justeringen, fyra höll i
+båda halvorna) gjordes före rättelsen av flyttade stenar (avsnitt 1c, *Rättelse 2026-10-12*) och gäller inte längre.
+
+*Visningen* (kartsidan, *Alla samband i landskapet*, från 2026-10-27): först en sammanfattning i ord – hur många samband
+som klarar justeringen och håller i båda halvorna, hur många som har p under 0,05 mot vad slumpen ger, och de starkaste
+sambanden i tre nivåer (håller; bara i den ena halvan; starkast men inte säkra), vart och ett med andelarna inom
+radien, oddskvoten med och utan tiden konstant och hur säkert det är. Därefter rutnätet, där antydningar (p under 0,05
+men inte efter justeringen) har en blek ton och streckad kant.
 
 ### 1f. Hot spots och kluster
 

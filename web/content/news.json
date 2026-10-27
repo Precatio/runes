@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "samband-i-landskapet",
+   "date": "2026-10-27",
+   "status": "nytt",
+   "title": "Sambanden i landskapet förklaras i ord",
+   "text": "Genomsökningen av landskapet på kartsidan börjar nu med en sammanfattning: hur många av sambanden mellan mönster och platser som håller, hur många som bara antyder något, och de starkaste av dem med andelar, med och utan tiden konstant. Just nu klarar inget av de 117 sambanden justeringen för de många proven, och det står nu rakt ut. Svaga antydningar syns som bleka rutor i rutnätet."
+  },
+  {
    "id": "stavlosa-runor",
    "date": "2026-10-26",
    "status": "nytt",

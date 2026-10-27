@@ -5,6 +5,14 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Sambanden i landskapet förklaras i ord
+- *Alla samband i landskapet (R)* på kartsidan börjar med en sammanfattning: hur många av de 117 sambanden som klarar
+  justeringen och håller i båda halvorna, hur många som har p under 0,05 mot vad slumpen ger, och de starkaste i tre
+  nivåer, vart och ett med andelarna, oddskvoten med och utan tiden konstant och hur säkert det är. Rutnätet visar
+  antydningar (p under 0,05, inte efter justeringen) med blek ton och streckad kant, och har en förklaring av färgerna.
+- Rättelse i METHODS.md 1e: siffrorna från 2026-10-12 (tio klarade justeringen) var från före rättelsen av flyttade
+  stenar. Den gällande beräkningen (2026-10-21) har inget samband som klarar justeringen.
+
 ### Stavlösa runor delas upp i runor
 - Nytt val **Stavlösa runor** i den automatiska analysen (src/staveless.py): strecken delas upp i runor efter var de står
   längs slingan i stället för efter vilka streck som sitter ihop. Vilka snitt som mäts och deras mått är desamma; bara
