@@ -13,7 +13,7 @@ from collections import Counter
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 sys.path.insert(0, ROOT)
 from api.rundata import store  # noqa: E402
-from src import commons  # noqa: E402
+from src import blog_figures, commons  # noqa: E402
 
 D = os.path.join(ROOT, "utdata", "brittiska")
 A = json.load(open(os.path.join(D, "analys.json"), encoding="utf-8"))
@@ -88,6 +88,26 @@ PIC_344 = picture("U 344", "Ulfs sten i Yttergärde (U 344), nu vid Orkesta kyrk
 PIC_344_EN = picture("U 344", "Ulfr's stone from Yttergärde (U 344), now at Orkesta church in Uppland. He took three payments in England, came home and told it in stone.",
                      "Photo: Berig, CC BY 2.5,")
 
+# ---- the map (brittiska_karta.py: Vitki's map base, OpenStreetMap tiles; Irish find places placed by us) -------------
+assert store().get("IR 1")["place"] == "Greenmount" and sum(store().get(f"IR {i}")["parish"] == "Dublin" for i in range(1, 17)) == 12
+
+
+def karta(lang: str, text: str) -> str:
+    import io
+
+    from PIL import Image
+    im = Image.open(os.path.join(ROOT, "utdata", "blogg", "brittiska", f"karta_{lang}.png")).convert("RGB")
+    im = im.resize((1200, round(im.height * 1200 / im.width)), Image.LANCZOS)  # no palette reduction: it merges the marker colours
+    buf = io.BytesIO()
+    im.save(buf, "PNG", optimize=True)
+    data = buf.getvalue()
+    assert len(data) < 1_400_000, len(data)
+    return f"![{'Karta' if lang == 'sv' else 'Map'}]({blog_figures.freeze(data)})\n{text}"
+
+
+MAP = karta("sv", f"Var de skrevs: de {N_V} vikingatida runinskrifterna på de brittiska öarna, färgade efter vad de handlar om. Isle of Man är förstorad uppe till vänster. Inskrifter från samma plats ligger i en ring runt platsen. Rundata har inga koordinater för de irländska fynden, så dem har vi satt ut efter fyndplatsens namn. Karta: Vitki, kartunderlag © OpenStreetMap-bidragsgivare (ODbL).")
+MAP_EN = karta("en", f"Where they were written: the {N_V} Viking-age runic inscriptions of the British Isles, coloured by what they are about. The Isle of Man is enlarged at top left. Inscriptions from one place lie in a ring around it. Rundata has no coordinates for the Irish finds, so we placed them by the name of the find place. Map: Vitki, map data © OpenStreetMap contributors (ODbL).")
+
 # ---- figures -------------------------------------------------------------------------------------------------------------
 def readable(areas):
     return sum(AREA_V[a] - BYA[(a, "oläsligt")] for a in areas)
@@ -154,7 +174,7 @@ for ch in (CHART_CAT, CHART_W):
     assert not re.search(r"[åäö]", en_chart(ch)), en_chart(ch)
 
 # ---- the article ----------------------------------------------------------------------------------------------------------
-title = "Två av tre kors för en kvinna – vikingarnas runor på de brittiska öarna"
+title = "Vad berättar runskrifterna på de brittiska öarna?"
 summary = (f"På de brittiska öarna finns {N_V} runinskrifter från vikingatiden. Vi har läst dem alla och frågat vilka som "
            "skrev dem och vad de ville säga. På Isle of Man restes två av tre kors efter en kvinna, nordiska och gaeliska namn "
            "står i samma familjer, och svenskarna, som ristade om England hemma, syns nästan inte alls.")
@@ -171,13 +191,15 @@ I Samnordisk runtextdatabas finns {N_ALL} runinskrifter från England, Irland, S
 
 Vi läste resten och delade in dem efter vad de handlar om. Det visade sig inte finnas ett runskrivande på öarna, utan tre.
 
+{MAP}
+
 {CHART_CAT}
 
 ## Tre slags människor
 
 **Familjerna på öarna.** På Isle of Man och de skotska öarna är nästan allt som går att läsa minnesmonument: {MEM_ISLES} av {READ_ISLES} inskrifter. Det är kors, inte runstenar, och de står vid kyrkor. Den som reste dem var bofast, kristen och hade en gård att lämna efter sig. *Sandulfr hinn Svarti reisti kross þenna eptir Arinbjôrgu, konu sína* – Sandulf den svarte reste det här korset efter Arinbjôrg, sin hustru. Mer än så säger inte stenen, men binamnet säger något om håret eller humöret, och korset står vid kyrkan i Andreas så att hennes namn ska finnas kvar.
 
-**Folket i Dublin.** I Irland finns ett enda kors. Resten är små saker från staden Dublin, där utgrävningarna vid Fishamble Street och Christ Church Place har gett tusentals föremål från vikingatidens hamnstad. Här skriver man på det som ligger nära till hands: revben, skulderblad, en kam, ett handtag. *Domnall Selshôfuð á sverð þetta* – Domnall Sälhuvud äger det här svärdet, på svärdsremmens ände. En gael med ett nordiskt öknamn. *Ónn á Ásu*, Ónn äger Åsa – på ett revben, och om det är ett skämt eller ett anspråk vet ingen. *Gnúpr gnúfði*, Gnupr hängde med huvudet. *Horn hjartar lá á ósi ár*: hjorthornet låg vid åmynningen. Det är hantverkare och handelsmän som har en stund över, och det är den enda platsen på öarna där runorna låter som vardagsprat.
+**Folket i Dublin.** I Irland finns ett enda kors. Nästan allt annat är små saker från staden Dublin, där utgrävningarna vid Fishamble Street och Christ Church Place har gett tusentals föremål från vikingatidens hamnstad. Här skriver man på det som ligger nära till hands: revben, skulderblad, en kam, ett handtag. *Domnall Selshôfuð á sverð þetta* – Domnall Sälhuvud äger det här svärdet. Det står på ändbeslaget till en svärdsrem, funnet vid Greenmount i grevskapet Louth, en bit norr om Dublin. En gael med ett nordiskt öknamn. *Ónn á Ásu*, Ónn äger Åsa – på ett revben, och om det är ett skämt eller ett anspråk vet ingen. *Gnúpr gnúfði*, Gnupr hängde med huvudet. *Horn hjartar lá á ósi ár*: hjorthornet låg vid åmynningen. Det är hantverkare och handelsmän som har en stund över, och det är den enda platsen på öarna där runorna låter som vardagsprat.
 
 **De tillfälliga i England.** I England är det annorlunda igen. Där finns ristarnas och tillverkarnas namn, och där finns gudarna. På en sländtrissa från Saltfleetby står *Óðinn ok Heimdallr ok Þjálfa, þeir hjálpa þér Úlfljót* – Oden och Heimdall och Tjalve, de hjälper dig, Ulvljot. Spinning var kvinnors arbete, och Úlfljót kan vara ett kvinnonamn. Någon har spunnit med trissan och bett de gamla gudarna om hjälp. Gravstenen vid St Paul's i London är huggen i skandinavisk stil på Knuts tid, och de flesta engelska inskrifterna har inga minnen av släkt alls. England var platsen dit man kom med en här eller ett skepp och sedan reste igen.
 
@@ -239,7 +261,7 @@ Bilden som träder fram är enkel. Svenskarna åkte till England som soldater oc
 - Kermode, P. M. C. 1907. *Manx Crosses*. London.
 - Vitkis artikel [Hon ärvde efter sitt barn – kvinnorna på runstenarna](/artiklar/hon-arvde-efter-sitt-barn-kvinnorna-pa-runstenarna/)."""
 
-title_en = "Two crosses in three for a woman – the Vikings' runes in the British Isles"
+title_en = "What do the runic inscriptions of the British Isles tell us?"
 summary_en = (f"There are {N_V} Viking-age runic inscriptions in the British Isles. We read them all and asked who wrote "
               "them and what they wanted to say. On the Isle of Man two crosses in three were raised for a woman, Norse and "
               "Gaelic names stand in the same families, and the Swedes, who carved about England at home, hardly show at all.")
@@ -256,13 +278,15 @@ The Scandinavian Runic-text Database has {N_ALL} runic inscriptions from England
 
 We read the rest and sorted them by what they are about. It turned out there was not one runic writing in the islands, but three.
 
+{MAP_EN}
+
 {en_chart(CHART_CAT)}
 
 ## Three kinds of people
 
 **The families of the islands.** On the Isle of Man and the Scottish isles nearly everything that can be read is a memorial: {MEM_ISLES} of {READ_ISLES} inscriptions. They are crosses, not runestones, and they stand at churches. Whoever raised them was settled, Christian and had a farm to leave behind. *Sandulfr hinn Svarti reisti kross þenna eptir Arinbjôrgu, konu sína* – Sandulfr the Black raised this cross for Arinbjôrg, his wife. The stone says no more than that, but the nickname says something about his hair or his temper, and the cross stands at the church in Andreas so that her name would remain.
 
-**The people of Dublin.** In Ireland there is a single cross. The rest are small things from the town of Dublin, where the excavations at Fishamble Street and Christ Church Place have yielded thousands of objects from the Viking-age port. Here people wrote on what was at hand: ribs, shoulder blades, a comb, a handle. *Domnall Selshôfuð á sverð þetta* – Domnall Seal's-head owns this sword, on the end of a sword belt. A Gael with a Norse nickname. *Ónn á Ásu*, Ónn owns Ása – on a rib, and whether it is a joke or a claim nobody knows. *Gnúpr gnúfði*, Gnúpr drooped. *Horn hjartar lá á ósi ár*: the deer's antler lay at the river mouth. These are craftsmen and traders with a moment to spare, and it is the only place in the islands where the runes sound like everyday talk.
+**The people of Dublin.** In Ireland there is a single cross. Nearly everything else is small things from the town of Dublin, where the excavations at Fishamble Street and Christ Church Place have yielded thousands of objects from the Viking-age port. Here people wrote on what was at hand: ribs, shoulder blades, a comb, a handle. *Domnall Selshôfuð á sverð þetta* – Domnall Seal's-head owns this sword. It is on the end fitting of a sword belt, found at Greenmount in County Louth, some way north of Dublin. A Gael with a Norse nickname. *Ónn á Ásu*, Ónn owns Ása – on a rib, and whether it is a joke or a claim nobody knows. *Gnúpr gnúfði*, Gnúpr drooped. *Horn hjartar lá á ósi ár*: the deer's antler lay at the river mouth. These are craftsmen and traders with a moment to spare, and it is the only place in the islands where the runes sound like everyday talk.
 
 **The passers-through in England.** England is different again. There are the carvers' and makers' names, and there are the gods. On a spindle whorl from Saltfleetby stands *Óðinn ok Heimdallr ok Þjálfa, þeir hjálpa þér Úlfljót* – Óðinn and Heimdallr and Þjálfi, they help you, Úlfljót. Spinning was women's work, and Úlfljót may be a woman's name. Someone spun with the whorl and asked the old gods for help. The grave stone at St Paul's in London is cut in Scandinavian style in Knútr's time, and most of the English inscriptions remember no kin at all. England was the place one came to with an army or a ship, and then left again.
 
@@ -326,10 +350,10 @@ The picture that emerges is simple. The Swedes went to England as soldiers and t
 
 for b in (body, body_en):
     assert not re.search(r"^\|", b, re.M)  # BlogBody has no tables
-    assert b.count(":::box") == 2 and b.count(":::chart") == 2 and b.count("![") == 2
+    assert b.count(":::box") == 2 and b.count(":::chart") == 2 and b.count("![") == 3
     blocks = [ln.strip() for ln in b.split("\n") if ln.strip().startswith(":::")]
     assert all(o.startswith(":::") and o != ":::" and c == ":::" for o, c in zip(blocks[::2], blocks[1::2])) and len(blocks) % 2 == 0, blocks
-out = {"slug": "tva-av-tre-kors-for-en-kvinna", "title": title, "summary": summary, "body": body,
+out = {"slug": "vad-berattar-runskrifterna-pa-de-brittiska-oarna", "title": title, "summary": summary, "body": body,
        "title_en": title_en, "summary_en": summary_en, "body_en": body_en,
        "labels": ["Forskning", "Kvinnor och barn", "Norden", "Geografi"]}
 json.dump(out, open(os.path.join(ROOT, "utdata", "blogg", "brittiska.json"), "w"), ensure_ascii=False, indent=1)
