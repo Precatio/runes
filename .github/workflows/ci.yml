@@ -51,6 +51,34 @@ jobs:
       - name: Lint
         run: npx eslint src
 
+  e2e:
+    name: Webbappen i webbläsaren (röktester)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: web
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+      CI: "1"
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Installera
+        run: npm ci --no-audit --no-fund
+      - name: Chromium för Playwright
+        run: npx playwright install --with-deps chromium
+      - name: Röktester
+        # playwright.config.ts builds and starts the app (webServer) and loads the start page, the article list, an
+        # article in Swedish and English and the 3D page; an uncaught error in a page fails the test
+        run: npx playwright test
+
   python:
     name: Python-testerna
     runs-on: ubuntu-24.04

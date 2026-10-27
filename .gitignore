@@ -59,3 +59,7 @@ data/backup/
 # Local copies kept before a model generation replaced a data file (e.g. data/runlm_calibration.json.fore-tm19-2026-10-20);
 # the record of each generation is in utdata/runlm_forfining. Add one with `git add -f` if it should be kept.
 data/*.fore-*
+
+# Playwright (web/e2e)
+web/test-results/
+web/playwright-report/
