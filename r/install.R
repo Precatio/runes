@@ -3,11 +3,15 @@
 pk <- c("jsonlite", "dplyr", "tidyr", "stringr", "ggplot2", "ragg", "sf", "leaflet", "htmlwidgets",
         "tidytext", "cluster", "FactoMineR", "factoextra", "tidymodels", "ranger",
         "ca", "stringdist", "igraph", "tidygraph", "ggraph", "terra", "gdistance", "raster", "png", "mgcv",
-        "spdep", "smerc")
+        "spdep", "smerc",
+        # 2026-10-27: model checks and plain-words effects (DHARMa, marginaleffects), shape analysis of runes and groove
+        # profiles (geomorph: landmarks and curves; Momocs is archived on CRAN and not available for R 4.6), stylometry
+        # (stylo), point patterns and spatial models (spatstat, spaMM, glmmTMB)
+        "marginaleffects", "DHARMa", "geomorph", "stylo", "spatstat", "spaMM", "glmmTMB")
 miss <- pk[!vapply(pk, requireNamespace, logical(1), quietly = TRUE)]
 if (length(miss)) {
   message("Installerar: ", paste(miss, collapse = ", "))
-  install.packages(miss, repos = "https://cloud.r-project.org", Ncpus = max(1, parallel::detectCores() - 1))
+  install.packages(miss, repos = "https://cloud.r-project.org", Ncpus = 2)  # two at a time: compiling glmmTMB and friends takes a lot of memory (16 GB machine)
 }
 still <- pk[!vapply(pk, requireNamespace, logical(1), quietly = TRUE)]
 if (length(still)) stop("Kunde inte installera: ", paste(still, collapse = ", "))
