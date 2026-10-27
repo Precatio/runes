@@ -7198,7 +7198,6 @@
 "I den strängare nollmodellen, där namnen blandas inom häradet, håller {0} länkar.":"In the stricter null model, where the names are shuffled within the hundred, {0} links hold.",
 "Av Rundatas parstenar hittas {0} av {1}.":"Of Rundata's paired stones, {0} of {1} are found.",
 "Av de {0} som missas delar {1} inget läst namn alls, {2} bara ett namn och {3} två eller fler utan att länken skiljer sig från slumpen.":"Of the {0} missed, {1} share no read name at all, {2} only one name and {3} two or more without the link standing out from chance.",
-"Av de {0} par som Rundatas anmärkningar knyter ihop hittas {1}.":"Of the {0} pairs that Rundata's notes tie together, {1} are found.",
 "Jarlabankes fem stenar om {0} hittas inte: q högst {1}, {2}–{3} med slumpfelet, över gränsen {4}.":"Jarlabanke's five stones around {0} are not found: q at most {1}, {2}–{3} with the Monte Carlo error, above the cut {4}.",
 "Jarlabankes fem stenar om {0} hittas inte: q högst {1}, över gränsen {2}.":"Jarlabanke's five stones around {0} are not found: q at most {1}, above the cut {2}.",
 "Jarlabankes fem stenar om {0} hittas (q högst {1}, {2}–{3} med slumpfelet).":"Jarlabanke's five stones around {0} are found (q at most {1}, {2}–{3} with the Monte Carlo error).",
@@ -7261,5 +7260,16 @@
 "Reglerna bakom tolkningen står i avsnitt {0}d.":"The rules behind the interpretation are described in section {0}d.",
 "Också i den strängare prövningen inom häradet håller:":"Also in the stricter test within the hundred, these hold:",
 "Inte i den strängare prövningen inom häradet:":"Not in the stricter test within the hundred:",
-"Bara en länk mellan landskap håller, och inte i den strängare prövningen inom häradet.":"Only one link between provinces holds, and not in the stricter test within the hundred."
+"Bara en länk mellan landskap håller, och inte i den strängare prövningen inom häradet.":"Only one link between provinces holds, and not in the stricter test within the hundred.",
+"Av de {0} par som Rundatas anmärkningar nämner tillsammans (en del av anmärkningarna säger att stenarna inte hör ihop) hittas {1}.":"Of the {0} pairs that Rundata's notes mention together (some of the notes say the stones do not belong together), {1} are found.",
+"{0} länkar håller, och familjerna som går att följa var lokala: stenarna står i median drygt en kilometer isär.":"{0} links hold, and the families that can be followed were local: the stones stand just over a kilometre apart in the median.",
+"Resestenarna i {0} säger oftare än i {1} att mannen dog borta, sammantaget över riktningarna ({2} % mot {3} %).":"Overall across the directions, the journey stones in {0} say more often than in {1} that the man died abroad ({2} % against {3} %).",
+"Resestenarna i {0} säger mer sällan än i {1} att mannen dog borta ({2} % mot {3} %).":"The journey stones in {0} say less often than in {1} that the man died abroad ({2} % against {3} %).",
+"Resestenarna i {0} säger mer sällan än i {1} att mannen dog borta, sammantaget över riktningarna ({2} % mot {3} %).":"Overall across the directions, the journey stones in {0} say less often than in {1} that the man died abroad ({2} % against {3} %).",
+"Resestenarna i {0} säger oftare än i {1} att mannen dog borta ({2} % mot {3} %; de råa andelarna pekar åt andra hållet).":"The journey stones in {0} say more often than in {1} that the man died abroad ({2} % against {3} %; the raw shares point the other way).",
+"Resestenarna i {0} säger oftare än i {1} att mannen dog borta, sammantaget över riktningarna ({2} % mot {3} %; de råa andelarna pekar åt andra hållet).":"Overall across the directions, the journey stones in {0} say more often than in {1} that the man died abroad ({2} % against {3} %; the raw shares point the other way).",
+"Resestenarna i {0} säger mer sällan än i {1} att mannen dog borta ({2} % mot {3} %; de råa andelarna pekar åt andra hållet).":"The journey stones in {0} say less often than in {1} that the man died abroad ({2} % against {3} %; the raw shares point the other way).",
+"Resestenarna i {0} säger mer sällan än i {1} att mannen dog borta, sammantaget över riktningarna ({2} % mot {3} %; de råa andelarna pekar åt andra hållet).":"Overall across the directions, the journey stones in {0} say less often than in {1} that the man died abroad ({2} % against {3} %; the raw shares point the other way).",
+"{0} länkar håller, och familjerna som går att följa höll sig i stort sett på samma plats: stenarna står i median några hundra meter isär.":"{0} links hold, and the families that can be followed stayed more or less in one place: the stones stand a few hundred metres apart in the median.",
+"Ingen länk mellan landskap håller.":"No link between provinces holds."
 }

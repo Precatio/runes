@@ -1,9 +1,9 @@
 """Fynd per sten utöver attribueringen: sådant om en enskild sten som inte står i Rundata.
 
 Fyra slags fynd, i samma form som appens övriga fynd per sten (src/findings._finding: stämmer / nytt / motsäger, med
-belägg, nyhet och relevans). Luckorna i texten och Runorfynden gäller bara svenska vikingatida runstenar; släktlänkarna
-följer data/links.json, och egna fynd kan gälla vilket föremål som helst – de bär då runestone=False och räknas för sig
-i src/findings.summarize (other_objects):
+belägg, nyhet och relevans). Alla fyra gäller bara svenska vikingatida runstenar (appens grundregel): en släktlänk till
+en dansk eller norsk sten visas på den svenska stenen men ger inget fynd på den andra, och ett eget fynd om något annat
+hoppas över:
 
   luckor i texten   en förlorad runa som sannolikhetsmodellen fyller i med minst 80 % kalibrerad säkerhet där Rundata
                     inte har återställt ordet (data/textmodel_candidates.json, METHODS.md 8.1); kandidater att granska
@@ -260,7 +260,7 @@ def link_findings(lookup, inscriptions: list[dict], ctx=None) -> list[dict]:
             continue
         for this, other in ((x["a"], x["b"]), (x["b"], x["a"])):
             rec = lookup(this)
-            if not rec:
+            if not rec or not is_runestone(rec):  # Swedish Viking-age runestones only, as the other kinds
                 continue
             rel, rr = stone_relevance(rec)
             parsten = tuple(sorted((this, other))) in pars

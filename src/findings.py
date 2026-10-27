@@ -320,8 +320,8 @@ def summarize(findings: list[dict]) -> dict:
         out[f["verdict"]] += 1
         by_method[f["method"]][f["verdict"]] += 1
     # The headline count of likely new knowledge: a family link stands on both its stones (src/stone_findings.
-    # link_findings) but is one piece of knowledge, so each linked pair counts once; findings about objects other than
-    # Swedish Viking-age runestones (own findings may concern any object) are counted for themselves, not in the headline
+    # link_findings) but is one piece of knowledge, so each linked pair counts once. Stone findings cover Swedish Viking-age runestones
+    # only (src/stone_findings), so other_objects stays 0 unless that rule changes
     from src.stone_findings import LINK
     likely, link_pairs, other_objects = 0, set(), 0
     for f in findings:

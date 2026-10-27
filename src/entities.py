@@ -107,24 +107,65 @@ def _is_marked(word: str, marked: list[str]) -> bool:
     return any(m[:k] == f[:k] for m in marked if len(m) >= 2)
 
 
-def _licensed(persons: list[dict], marked: list[str]) -> set[str]:
-    """The person keys that a marked name in the normalization can carry: each marked name word licenses at most one
-    person, paired by the longest common beginning. Two readings of one name word ("Runa ... / He died on Runi's voyage",
-    Vs 22) then give one person, not two."""
+def _slots(rec: dict) -> list[list[str]]:
+    """Namnorden i normaliseringen som licenser: ett per citerad namngrupp, med alla dess läsningar i samma licens
+    ("Véfriðr/"Véfrøðr, "Ál/Áli/"Alli), förledet i ett sammansatt namn ("Hrafnunga-"Tófi) som en egen licens och ett
+    fragment ("<kar-...>) som en egen licens."""
+    ows = re.sub(r"[\[\]<>]", "", rec.get("normalization_ows") or "")
+    groups = re.findall(r'"([^\s,.;:()!?]+(?:/"?[^\s,.;:()!?]+)*)', ows)
+    out = []
+    for g in groups:
+        # the first part of a compound ("Hrafnunga-"Tófi, "Guða-"Skeggi) is a name word of its own; the readings after a
+        # slash are one name word read in different ways
+        lead = re.match(r'([^/"]+-)"', g)
+        if lead:
+            out.append([fold(lead.group(1))])
+            g = g[lead.end():]
+        alts = [fold(w) for w in re.split(r'[/"]', g) if len(w) >= 2]
+        if alts:
+            out.append(alts)
+    return out
+
+
+def _licensed(persons: list[dict], slots: list[list[str]]) -> tuple[set[str], set[str]]:
+    """Vilka personer namnorden bär: varje namnord (licens) bär högst en person, ihopparat så att så många personer som
+    möjligt får en licens (en största matchning, med längsta gemensamma början först). Ger (bärda, osäkra): en person som
+    får sitt namnord i konkurrens med en annan läsning av samma ord ("Runa ... / He died on Runi's voyage", Vs 22) är
+    osäker – vilken läsning som är rätt går inte att avgöra med reglerna – och används inte för att länka stenar."""
     def common(a: str, b: str) -> int:
         n = 0
         while n < min(len(a), len(b)) and a[n] == b[n]:
             n += 1
         return n
     keys = list(dict.fromkeys(p["key"] for p in persons))
-    pairs = sorted(((common(k, m), -ki, -mi, k, mi) for ki, k in enumerate(keys) for mi, m in enumerate(marked)
-                    if len(m) >= 2 and _is_marked(k, [m])), reverse=True)
-    used_k, used_m = set(), set()
-    for _, _, _, k, mi in pairs:
-        if k not in used_k and mi not in used_m:
-            used_k.add(k)
-            used_m.add(mi)
-    return used_k
+    weight = {k: {si: max(common(k, m) for m in slot) for si, slot in enumerate(slots) if any(_is_marked(k, [m]) for m in slot)}
+              for k in keys}
+    owner: dict[int, str] = {}
+
+    def augment(k: str, seen: set) -> bool:
+        for si in sorted(weight[k], key=lambda x: -weight[k][x]):
+            if si in seen:
+                continue
+            seen.add(si)
+            if si not in owner or augment(owner[si], seen):
+                owner[si] = k
+                return True
+        return False
+
+    for k in sorted(keys, key=lambda k: -max(weight[k].values(), default=0)):
+        augment(k, set())
+    carried = set(owner.values())
+    uncertain = set()
+    for k in keys:
+        if k in carried or not weight[k]:
+            continue
+        # k lost out: the name word it fits best is carried by another reading, whose claim is the weakest among them
+        best = max(weight[k].values())
+        rivals = [si for si, w in weight[k].items() if w == best and si in owner]
+        if rivals:
+            si = min(rivals, key=lambda x: weight[owner[x]].get(x, 0))
+            uncertain.add(owner[si])
+    return carried, uncertain
 
 
 def _compound(a: str, b: str) -> str:
@@ -407,8 +448,11 @@ def extract(rec: dict) -> dict:
                 f = (r["p"]["key"], r["rel"], to)
                 if f not in facts:
                     facts.append(f)
-    ok = _licensed(persons, marked)
+    ok, unsure = _licensed(persons, _slots(rec))
     if len(ok) < len({p["key"] for p in persons}):
         persons = [p for p in persons if p["key"] in ok]
         facts = [f for f in facts if f[0] in ok and f[2] in ok]
+    for p in persons:
+        if p["key"] in unsure:
+            p["uncertain"] = True
     return {"signum": rec["signum"], "persons": persons, "places": places, "events": sorted(events), "facts": facts}

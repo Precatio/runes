@@ -78,7 +78,8 @@ def stones(inscriptions: list[dict]) -> dict[str, dict]:
                             "from": d["style_from"], "to": d["style_to"], "carvers": sorted(gaps.certain_carvers(r)),
                             "persons": e["persons"], "places": [p["key"] for p in e["places"]], "events": e["events"],
                             "facts": [list(f) for f in e["facts"]],
-                            "names": {p["key"] for p in e["persons"] if p["role"] != "ristare"},
+                            # a name whose reading is uncertain (two readings of one name word) links nothing
+                            "names": {p["key"] for p in e["persons"] if p["role"] != "ristare" and not p.get("uncertain")},
                             "pron": _pronoun_sex(r.get("translation_en") or "", e["persons"], e["facts"]),
                             "other": r.get("other") or ""}
     return out

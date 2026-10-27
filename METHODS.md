@@ -536,8 +536,9 @@ motsäger, med belägg, nyhet och relevans):
   andra föremål redovisas för sig i `utdata/runor/jamforelse.json`). Runor matchas mot Rundata på exakt signum – i
   jämförelsen, i fynden och på inskriftssidan (`src/runor.py`) – så att Närkes Nä 11 inte blandas ihop med Norges N A11.
   Uppgifterna är en nyare källa, inte appens upptäckter, och får därför lågt nyhetsvärde (0,3) och en fast bedömning.
-* **Samma familj (namnlänk):** länkarna ur avsnitt 1r utan motsägelser i släktskap eller tid (29 länkar). Varje länk
-  står på båda stenarna, så de ger 58 fynd; i rubriktalet "sannolikt ny kunskap" räknas varje länk en gång. Länkar som Rundata redan gör – parstenar och stenar som Rundatas
+* **Samma familj (namnlänk):** länkarna ur avsnitt 1r utan motsägelser i släktskap eller tid (28 länkar). Varje länk
+  står på båda stenarna, så de ger ett fynd på varje svensk runsten i länken (danska och norska stenar ingår i
+  länkmodellen men får inga egna fynd; och fem av länkarna knyter Rundata redan ihop); i rubriktalet "sannolikt ny kunskap" räknas varje länk en gång. Länkar som Rundata redan gör – parstenar och stenar som Rundatas
   anmärkningar knyter ihop på annat sätt ("Utgör ett monument tillsammans med …") – räknas som *stämmer* (5 länkar).
 * **Egna fynd:** det vi kommit fram till om en sten i artiklar och analyser, fört in för hand med källa och datum i
   `data/stone_findings.json`. En rad med okänt verdict (annat än stämmer, nytt, motsäger), utan signum eller text,
@@ -590,20 +591,21 @@ med", "Samma brödrakrets som nämns på"). Ett första försök med Fellegi–S
 fjärdedel av alla namnpar som träffar, eftersom modellen fångade "två stenar i Uppland med kända ristare" i stället för
 identitet; den metoden används inte.
 
-Resultat 2026-10-27 (efter granskningen samma dag): 421 par delar namn (63 par som bara delar de vanligaste namnen
-prövas inte), slumpen ger omkring 365. 29 länkar håller med q under 0,1, lika många i alla omdragningar och med alla
-fyra frön (23 med den strängare nollmodellen). De står i median 1,3 km isär, 86 % inom 10 km. Fem av dem knyter Rundata
-redan ihop; de visas som bekräftelser, inte som nya fynd. Ásfríðrs stenar i Hedeby (DR 2, DR 4) hittas. Jarlabankes fem
-stenar om Täby hittas inte: de delar bara Jarlabanke och Täby, och q blir 0,105 (0,104–0,107 med slumpfelet), strax
-över gränsen. Den första versionen (q 0,0986, 35 länkar) byggde på en nollmodell som tappade namn när en sten drog samma
-namn två gånger, och på 200 körningar där resultatet berodde på slumpfröet. Varje märkt namn i normaliseringen bär
-högst en person, så att två alternativa översättningar av ett namnord (Vs 22: "Runa … / … Runi's voyage") inte blir två
-personer. Av Rundatas 14 parstenar hittas 2; av de 12
-som missas delar 5 inget läst namn alls, 3 bara ett namn och 4 två eller fler utan att länken skiljer sig från slumpen.
-Över landskapsgränserna håller bara U 1041–Vs 22 (Rúnfastr och Rúna, 78 km), och inte i den strängare prövningen;
-länken U 1003–Vs 22 byggde på den andra, alternativa läsningen av samma namnord och föll bort. Två
-länkar mellan landskap som först såg starka ut avfärdas av motsägelser i släktskapen (U 759–Vg 59: olika fäder; Hs 14–Sö
-11). Länkarna visas som fynd per sten och mönstret i Statistik (R) under Formler och släkt.
+Resultat 2026-10-27 (efter granskningen samma dag): 420 par delar namn (63 par som bara delar de vanligaste namnen
+prövas inte), slumpen ger omkring 365. 28 länkar håller med q under 0,1, lika många i alla omdragningar och med alla
+fyra frön (23 med den strängare nollmodellen). De står i median 0,3 km isär, 89 % inom 10 km: familjerna som går att
+följa över flera stenar höll sig i stort sett på samma plats. Fem av länkarna knyter Rundata redan ihop; de visas som
+bekräftelser, inte som nya fynd. Ásfríðrs stenar i Hedeby (DR 2, DR 4) hittas. Jarlabankes fem stenar om Täby hittas
+inte: de delar bara Jarlabanke och Täby, och q blir 0,107 (0,105–0,109 med slumpfelet), strax över gränsen. Ingen
+länk över landskapsgränserna håller. Den första versionen (q 0,0986, 35 länkar, två länkar mellan Uppland och
+Västmanland) byggde på en nollmodell som tappade namn när en sten drog samma namn två gånger, och på att ett namnord med
+två läsningar blev två personer: Vs 22 har ett enda namnord, "Rúna", som Rundata översätter både "Runa" och "Runi's".
+Nu bär varje citerad namngrupp i normaliseringen högst en person (förledet i ett sammansatt namn, "Hrafnunga-"Tófi, är
+en egen namngrupp), och en person vars namnord också kan läsas som ett annat namn räknas som osäker och används inte
+för att länka stenar. Av Rundatas 14 parstenar hittas 2; av de 12 som missas delar 5 inget läst namn alls, 3 bara ett
+namn och 4 två eller fler utan att länken skiljer sig från slumpen. Två länkar mellan landskap som först såg starka ut
+avfärdas av motsägelser i släktskapen (U 759–Vg 59: olika fäder; Hs 14–Sö 11). Länkarna visas som fynd per sten på de
+svenska runstenarna och som mönstret i Statistik (R) under Formler och släkt.
 
 ### 1s. Samlad datering av odaterade stenar: prövad och inte införd (2026-10-27)
 
