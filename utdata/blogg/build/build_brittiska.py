@@ -89,39 +89,57 @@ PIC_344_EN = picture("U 344", "Ulfr's stone from Yttergärde (U 344), now at Ork
                      "Photo: Berig, CC BY 2.5,")
 
 # ---- figures -------------------------------------------------------------------------------------------------------------
-CHART_CAT = f""":::chart Vad de skrev, vikingatida runinskrifter på de brittiska öarna ({N_V})
+def readable(areas):
+    return sum(AREA_V[a] - BYA[(a, "oläsligt")] for a in areas)
+
+
+def row(label, areas, cats, hi=False):
+    k, n = sum(BYA[(a, c)] for a in areas for c in cats), readable(areas)
+    return f"{'+' if hi else ''}{label} | {pct(k, n)} | {k} av {n}"
+
+
+EVERYDAY = ("ägare", "namn", "vardag", "futhark")
+# every readable inscription falls in one of the chart's rows, so each area adds up to its readable total
+assert all(sum(BYA[(a, c)] for a in g for c in ("minne", "ristare", "magi") + EVERYDAY) == readable(g)
+           for g in (ISLES, ["Irland"], ["England"]))
+assert readable(ISLES) == READ_ISLES and readable(["Irland"]) == 13 and readable(["England"]) == 9
+CHART_CAT = f""":::chart Vad de skrev, andel av de läsbara vikingatida runinskrifterna i varje område
 # Isle of Man och de skotska öarna
-+minnesmonument (kors, stenar) | {MEM_ISLES} | {MEM_ISLES} av {sum(AREA_V[a] for a in ISLES)}
-ristarens eller tillverkarens namn | {sum(BYA[(a, 'ristare')] for a in ISLES)} |
-ägare, namn, vardag, futhark | {sum(BYA[(a, k)] for a in ISLES for k in ('ägare', 'namn', 'vardag', 'futhark'))} |
+{row("minnesmonument (kors, stenar)", ISLES, ["minne"], True)}
+{row("ristarens eller tillverkarens namn", ISLES, ["ristare"])}
+{row("ägare, namn, vardag, futhark", ISLES, EVERYDAY)}
 # Irland (mest Dublin)
-minnesmonument | {BYA[('Irland', 'minne')]} | {BYA[('Irland', 'minne')]} av {AREA_V['Irland']}
-+ägare, namn, vardag, futhark | {IR_EVERYDAY} |
-magi och böner | {BYA[('Irland', 'magi')]} |
+{row("minnesmonument", ["Irland"], ["minne"])}
+{row("ägare, namn, vardag, futhark", ["Irland"], EVERYDAY, True)}
+{row("ristarens eller tillverkarens namn", ["Irland"], ["ristare"])}
+{row("magi och böner", ["Irland"], ["magi"])}
 # England
-minnesmonument | {BYA[('England', 'minne')]} | {BYA[('England', 'minne')]} av {AREA_V['England']}
-ristarens eller tillverkarens namn | {BYA[('England', 'ristare')]} |
-+magi och gudar | {BYA[('England', 'magi')]} |
-Källa: Samnordisk runtextdatabas 3.1, alla {N_V} vikingatida inskrifter från England, Irland, Skottland, Orkney, Shetland och Isle of Man; {CAT['oläsligt']} fragment som inte går att läsa är inte med. Vår kodning, öppen i kodförrådet (utdata/brittiska/kodning.csv)."""
+{row("minnesmonument", ["England"], ["minne"])}
+{row("ristarens eller tillverkarens namn", ["England"], ["ristare"])}
+{row("ägare, namn, vardag, futhark", ["England"], EVERYDAY)}
+{row("magi och gudar", ["England"], ["magi"], True)}
+Källa: Samnordisk runtextdatabas 3.1, de {N_V} vikingatida inskrifterna från England, Irland, Skottland, Orkney, Shetland och Isle of Man; {CAT['oläsligt']} fragment som inte går att läsa är inte med. Vår kodning, öppen i kodförrådet (utdata/brittiska/kodning.csv). Procent.
+:::"""
 
 CHART_W = f""":::chart Andel kvinnor bland dem som monumentet restes efter, när släktskapen anges
 +Isle of Man | {pct(MAN['women'], MAN['women'] + MAN['men'])} | {MAN['women']} av {MAN['women'] + MAN['men']} kors
 Norge | {pct(NOR['women'], NOR['women'] + NOR['men'])} | {NOR['women']} av {NOR['women'] + NOR['men']} runstenar
 Danmark | {pct(DEN['women'], DEN['women'] + DEN['men'])} | {DEN['women']} av {DEN['women'] + DEN['men']}
 Sverige | {pct(SWE['women'], SWE['women'] + SWE['men'])} | {SWE['women']} av {tus(SWE['women'] + SWE['men'])}
-Källa: Samnordisk runtextdatabas 3.1, vikingatida monument där översättningen anger den dödes släktskap med den som reste det (”his wife”, ”her son” …), samma mått som i vår artikel om kvinnorna på runstenarna. Procent."""
+Källa: Samnordisk runtextdatabas 3.1, vikingatida monument där översättningen anger den dödes släktskap med den som reste det (”his wife”, ”her son” …), samma mått som i vår artikel om kvinnorna på runstenarna. Procent.
+:::"""
 
 
 def en_chart(ch: str) -> str:
-    for a, b in [("Vad de skrev, vikingatida runinskrifter på de brittiska öarna", "What they wrote, Viking-age runic inscriptions in the British Isles"),
+    for a, b in [("Vad de skrev, andel av de läsbara vikingatida runinskrifterna i varje område", "What they wrote, share of the readable Viking-age runic inscriptions in each area"),
                  ("# Isle of Man och de skotska öarna", "# The Isle of Man and the Scottish isles"),
                  ("minnesmonument (kors, stenar)", "memorials (crosses, stones)"), ("ristarens eller tillverkarens namn", "the carver's or maker's name"),
                  ("ägare, namn, vardag, futhark", "owner, name, everyday, futhark"), ("# Irland (mest Dublin)", "# Ireland (mostly Dublin)"),
                  ("minnesmonument", "memorials"), ("magi och böner", "magic and prayers"), ("magi och gudar", "magic and gods"),
                  (" av ", " of "),
-                 ("Källa: Samnordisk runtextdatabas 3.1, alla", "Source: Scandinavian Runic-text Database 3.1, all"),
-                 ("vikingatida inskrifter från England, Irland, Skottland, Orkney, Shetland och Isle of Man;", "Viking-age inscriptions from England, Ireland, Scotland, Orkney, Shetland and the Isle of Man;"),
-                 ("fragment som inte går att läsa är inte med. Vår kodning, öppen i kodförrådet", "fragments that cannot be read are left out. Our coding, open in the code repository"),
+                 ("Källa: Samnordisk runtextdatabas 3.1, de", "Source: Scandinavian Runic-text Database 3.1, the"),
+                 ("vikingatida inskrifterna från England, Irland, Skottland, Orkney, Shetland och Isle of Man;", "Viking-age inscriptions from England, Ireland, Scotland, Orkney, Shetland and the Isle of Man;"),
+                 ("fragment som inte går att läsa är inte med. Vår kodning, öppen i kodförrådet", "fragments that cannot be read are left out. Our coding, open in the code repository"), ("kodning.csv). Procent.", "kodning.csv). Per cent."),
                  ("Andel kvinnor bland dem som monumentet restes efter, när släktskapen anges", "Share of women among those the monument was raised for, where the kinship is stated"),
                  ("Källa: Samnordisk runtextdatabas 3.1, vikingatida monument där översättningen anger den dödes släktskap med den som reste det (”his wife”, ”her son” …), samma mått som i vår artikel om kvinnorna på runstenarna. Procent.",
                   "Source: Scandinavian Runic-text Database 3.1, Viking-age monuments where the translation states the dead person's kinship with the one who raised it (“his wife”, “her son” …), the same measure as in our article on the women of the runestones. Per cent."),
@@ -132,6 +150,7 @@ def en_chart(ch: str) -> str:
 
 
 for ch in (CHART_CAT, CHART_W):
+    assert ch.rstrip().endswith("\n:::"), "a chart must end with its own ::: line"
     assert not re.search(r"[åäö]", en_chart(ch)), en_chart(ch)
 
 # ---- the article ----------------------------------------------------------------------------------------------------------
@@ -308,6 +327,8 @@ The picture that emerges is simple. The Swedes went to England as soldiers and t
 for b in (body, body_en):
     assert not re.search(r"^\|", b, re.M)  # BlogBody has no tables
     assert b.count(":::box") == 2 and b.count(":::chart") == 2 and b.count("![") == 2
+    blocks = [ln.strip() for ln in b.split("\n") if ln.strip().startswith(":::")]
+    assert all(o.startswith(":::") and o != ":::" and c == ":::" for o, c in zip(blocks[::2], blocks[1::2])) and len(blocks) % 2 == 0, blocks
 out = {"slug": "dar-hustrurna-fick-kors", "title": title, "summary": summary, "body": body,
        "title_en": title_en, "summary_en": summary_en, "body_en": body_en,
        "labels": ["Forskning", "Kvinnor och barn", "Norden", "Geografi"]}
