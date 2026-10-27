@@ -7258,5 +7258,8 @@
 "Väger samman beläggen …":"Weighing the evidence …",
 "Tolkningen kunde inte hämtas.":"The interpretation could not be fetched.",
 "Fel {0}":"Error {0}",
-"Reglerna bakom tolkningen står i avsnitt {0}d.":"The rules behind the interpretation are described in section {0}d."
+"Reglerna bakom tolkningen står i avsnitt {0}d.":"The rules behind the interpretation are described in section {0}d.",
+"Också i den strängare prövningen inom häradet håller:":"Also in the stricter test within the hundred, these hold:",
+"Inte i den strängare prövningen inom häradet:":"Not in the stricter test within the hundred:",
+"Bara en länk mellan landskap håller, och inte i den strängare prövningen inom häradet.":"Only one link between provinces holds, and not in the stricter test within the hundred."
 }

@@ -107,6 +107,26 @@ def _is_marked(word: str, marked: list[str]) -> bool:
     return any(m[:k] == f[:k] for m in marked if len(m) >= 2)
 
 
+def _licensed(persons: list[dict], marked: list[str]) -> set[str]:
+    """The person keys that a marked name in the normalization can carry: each marked name word licenses at most one
+    person, paired by the longest common beginning. Two readings of one name word ("Runa ... / He died on Runi's voyage",
+    Vs 22) then give one person, not two."""
+    def common(a: str, b: str) -> int:
+        n = 0
+        while n < min(len(a), len(b)) and a[n] == b[n]:
+            n += 1
+        return n
+    keys = list(dict.fromkeys(p["key"] for p in persons))
+    pairs = sorted(((common(k, m), -ki, -mi, k, mi) for ki, k in enumerate(keys) for mi, m in enumerate(marked)
+                    if len(m) >= 2 and _is_marked(k, [m])), reverse=True)
+    used_k, used_m = set(), set()
+    for _, _, _, k, mi in pairs:
+        if k not in used_k and mi not in used_m:
+            used_k.add(k)
+            used_m.add(mi)
+    return used_k
+
+
 def _compound(a: str, b: str) -> str:
     a, b = a.lower(), (b or "").lower()
     if not b:
@@ -387,4 +407,8 @@ def extract(rec: dict) -> dict:
                 f = (r["p"]["key"], r["rel"], to)
                 if f not in facts:
                     facts.append(f)
+    ok = _licensed(persons, marked)
+    if len(ok) < len({p["key"] for p in persons}):
+        persons = [p for p in persons if p["key"] in ok]
+        facts = [f for f in facts if f[0] in ok and f[2] in ok]
     return {"signum": rec["signum"], "persons": persons, "places": places, "events": sorted(events), "facts": facts}

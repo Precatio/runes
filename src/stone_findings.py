@@ -209,8 +209,8 @@ def runor_findings(lookup, inscriptions: list[dict], ctx=None) -> list[dict]:
 def manual_findings(lookup, inscriptions: list[dict], ctx=None) -> list[dict]:
     """Egna fynd om enskilda stenar (data/stone_findings.json): {signum, verdict, ours, existing, evidence, novelty,
     source, date, method?}. Rader med fel eller saknade fält hoppas över (och loggas), så att ett skrivfel i filen inte
-    fäller hela listan. Ett eget fynd kan gälla vilket föremål som helst; det bär runestone (svensk vikingatida runsten
-    eller inte), och src/findings.summarize räknar fynd om andra föremål för sig."""
+    fäller hela listan. Bara svenska vikingatida runstenar tas med (appens grundregel); ett eget fynd om ett annat föremål
+    eller en sten utanför Sverige hoppas över och loggas."""
     d = _load(MANUAL) or {}
     out = []
     for i, x in enumerate(d.get("findings") or []):
@@ -233,6 +233,9 @@ def manual_findings(lookup, inscriptions: list[dict], ctx=None) -> list[dict]:
         rec = lookup(x["signum"])
         if not rec:
             log.warning("stone_findings.json, rad %d: %s finns inte i Rundata – hoppas över", i, x["signum"])
+            continue
+        if not is_runestone(rec):
+            log.warning("stone_findings.json, rad %d: %s är inte en svensk vikingatida runsten – hoppas över", i, x["signum"])
             continue
         rel, rr = stone_relevance(rec)
         out.append(_stone(_finding(rec, x.get("method") or OWN, verdict, x["ours"], x.get("existing", "–"),

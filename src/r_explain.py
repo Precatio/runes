@@ -443,7 +443,13 @@ def messages(m: dict) -> dict | None:
         legibility_text(m),
     ]
     confidence = "troligt" if differs and holds_time and holds_carver else "osäkert"
-    short = (f"Resestenarna i Götaland säger {which} än i Svealand att mannen dog borta ({_pct(g_all)} mot {_pct(s_all)})."
+    # The pooled raw shares can point the other way than the Mantel–Haenszel ratio (Simpson): say so, and say
+    # "sammantaget" when the two directions do not agree
+    raw_agrees = (g_all > s_all) == bool(more) if more is not None else True
+    short = (f"Resestenarna i Götaland säger {which} än i Svealand att mannen dog borta"
+             + ("" if same else ", sammantaget över riktningarna")
+             + f" ({_pct(g_all)} mot {_pct(s_all)}" + ("" if raw_agrees else "; de råa andelarna pekar åt andra hållet")
+             + ")."
              if differs else
              f"Resestenarna i Götaland och Svealand skiljer sig inte påvisbart i hur ofta de säger att mannen dog borta "
              f"({_pct(g_all)} mot {_pct(s_all)}).")

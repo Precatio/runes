@@ -27,4 +27,6 @@ ligger), `water_dir` (Natural Earth, valfri) och `seed`; stenmodulerna dessutom 
 | `landscape.R` | sten | `landscape.json`, `landskap_*.png` |
 
 Ordningen i korpusen är den i `MODULES` i `src/r_bridge.py`. Reproducerbarhetspaketet från appen innehåller
-skripten, data och `KOR_OM.R`, som kör allt i rätt ordning.
+skripten, data och `KOR_OM.R`, som kör alla korpusanalyser i rätt ordning. Lämningarna och avstånden till vatten körs
+bara om man själv lägger Riksantikvarieämbetets och ortnamnens filer i `data/` och Natural Earths vattenlager i
+`naturalearth/` (se LASMIG.txt i paketet).

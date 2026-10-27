@@ -217,4 +217,5 @@ LIMITATIONS = [
 
 def data_text(r: dict) -> str:
     return ("R-analysernas skript, korpusens CSV, resultat och sessionInfo() finns i ett reproducerbarhetspaket som kan "
-            "laddas ner från appen och köras om i R utan appen (KOR_OM.R).")
+            "laddas ner från appen och köras om i R utan appen (KOR_OM.R), utom lämningarna och avstånden till vatten, som "
+            "kräver filer man själv lägger till (se LASMIG.txt i paketet).")

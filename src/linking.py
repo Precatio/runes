@@ -491,9 +491,9 @@ def patterns(path: str) -> list[dict]:
                  else "Över landskapsgränserna håller bara en länk." if len(cross) == 1
                  else f"Över landskapsgränserna håller bara {len(cross)} länkar.")
     if strict:
-        sents.append(f"Den strängare prövningen inom häradet klarar: {listed(strict)}.")
+        sents.append(f"Också i den strängare prövningen inom häradet håller: {listed(strict)}.")
     if loose:
-        sents.append(f"Den strängare prövningen inom häradet klarar inte: {listed(loose)}.")
+        sents.append(f"Inte i den strängare prövningen inom häradet: {listed(loose)}.")
     if killed:
         kinds = [" ".join(x["contradictions"]) for x in killed]
         n_kin = sum(1 for c in kinds if "olika " in c)
@@ -522,7 +522,8 @@ def patterns(path: str) -> list[dict]:
                     "eller fler utan att länken skiljer sig från slumpen.")
     noted = d["validation"].get("rundata_noted") or {}
     if noted.get("n"):
-        note.append(f"Av de {noted['n']} par som Rundatas anmärkningar knyter ihop hittas {noted['found']}.")
+        note.append(f"Av de {noted['n']} par som Rundatas anmärkningar nämner tillsammans (en del av anmärkningarna säger "
+                    f"att stenarna inte hör ihop) hittas {noted['found']}.")
     jar = d["validation"].get("jarlabanke") or {}
     if jar.get("q_max") is not None:
         jv = jar.get("q_max_interval")

@@ -320,7 +320,8 @@ Tolkningarna är förslag som följer reservationerna i 1l och reglerna i 1x, in
 `GET /api/r/package` ger en zip med R-skripten, korpusens CSV, budskapens CSV (`messages.csv`),
 resultaten, `sessionInfo()` och `KOR_OM.R`, som kör om alla korpusanalyser i R utan appen, i samma ordning som appen.
 Lämningarna runt stenarna körs bara om Riksantikvarieämbetets och ortnamnens filer läggs i `data/` (lamningar.csv,
-kultnamn.csv, platser.csv, kyrkor.csv), eftersom de inte följer med paketet. Sidan Statistik (R) länkar till R-skripten
+kultnamn.csv, platser.csv, kyrkor.csv), och avstånden till vatten bara om Natural Earths vattenlager läggs i
+`naturalearth/`, eftersom de inte följer med paketet. Sidan Statistik (R) länkar till R-skripten
 på GitHub. Paketen installeras med
 `Rscript r/install.R` (sf kräver GDAL, GEOS, PROJ och udunits; ragg kräver fribidi och harfbuzz; nloptr kräver
 cmake).
@@ -480,7 +481,7 @@ Resultat 2026-10-27 (efter rättade budskapsregler, samma dag):
   Götaland, också med minst tio ord (Fisher p 0,011 och 0,002).
 * Götalandsstenarna berömmer den döde oftare: 92 av 490 mot 136 av 1 275, oddskvot 1,8 (p 0,003); med minst tio ord
   81 av 331 mot 129 av 1 004, oddskvot 1,8 (1,2–2,8), p 0,007.
-* Götalandsstenarna nämner resor mer sällan: 28 av 490 mot 108 av 1 275, oddskvot 0,50 (0,29–0,85), p 0,007. Med minst
+* Götalandsstenarna nämner resor mer sällan: 28 av 490 mot 108 av 1 275, oddskvot 0,50 (0,30–0,83), p 0,007. Med minst
   tio ord håller skillnaden, men svagare: 25 av 331 mot 96 av 1 004, oddskvot 0,56 (0,32–0,98), p 0,04. Utan justering
   för tid och ristare är den inte signifikant (Fisher p 0,06 vid fyra ord, 0,32 vid tio).
 * Att Götalandsstenarna mer sällan säger hur mannen dog (oddskvot 0,56, p 0,02) håller inte med minst tio ord (0,64,
@@ -491,8 +492,10 @@ inte att skilja med de här stenarna. En sten som inte säger att mannen dog bor
 (levande resenärer, stenar resenären reste själv, fragment). Stenarna visar vad de efterlevande valde att berätta, inte
 hur många som dog.
 
-En granskning samma dag ändrade två saker. Reglerna snävades in: namnet Ingvarr hade räknats som en resa österut och
-Gotland som utanför Norden. Utfallet byttes också, från "säger hur eller var han dog" till "dog utanför Norden", så att
+En granskning samma dag ändrade två saker. Reglerna rättades åt båda håll: namnet Ingvarr hade räknats som en resa
+österut (11 stenar utan död borta föll bort), och nya ortnamn (Lombardiet, Lívland, Tafeistaland), matchning över
+luckor och "dog med dem" lade till 8 dödsfall utanför Norden; att Gotland nu räknas till Norden påverkar inte
+resestenarna. Utfallet byttes också, från "säger hur eller var han dog" till "dog utanför Norden", så att
 en död hemma (Sö 55) eller i Norden (U 539) inte räknas. Före båda ändringarna var siffrorna 24 av 28 mot 58 av 106;
 med de gamla reglerna och det nya utfallet 23 av 28 mot 55 av 106. Siffrorna ovan gäller efter båda ändringarna.
 
@@ -533,13 +536,13 @@ motsäger, med belägg, nyhet och relevans):
   andra föremål redovisas för sig i `utdata/runor/jamforelse.json`). Runor matchas mot Rundata på exakt signum – i
   jämförelsen, i fynden och på inskriftssidan (`src/runor.py`) – så att Närkes Nä 11 inte blandas ihop med Norges N A11.
   Uppgifterna är en nyare källa, inte appens upptäckter, och får därför lågt nyhetsvärde (0,3) och en fast bedömning.
-* **Samma familj (namnlänk):** länkarna ur avsnitt 1r utan motsägelser i släktskap eller tid (30 länkar). Varje länk
-  står på båda stenarna, så de ger 60 fynd; i rubriktalet "sannolikt ny kunskap" räknas varje länk en gång. Länkar som Rundata redan gör – parstenar och stenar som Rundatas
+* **Samma familj (namnlänk):** länkarna ur avsnitt 1r utan motsägelser i släktskap eller tid (29 länkar). Varje länk
+  står på båda stenarna, så de ger 58 fynd; i rubriktalet "sannolikt ny kunskap" räknas varje länk en gång. Länkar som Rundata redan gör – parstenar och stenar som Rundatas
   anmärkningar knyter ihop på annat sätt ("Utgör ett monument tillsammans med …") – räknas som *stämmer* (5 länkar).
 * **Egna fynd:** det vi kommit fram till om en sten i artiklar och analyser, fört in för hand med källa och datum i
   `data/stone_findings.json`. En rad med okänt verdict (annat än stämmer, nytt, motsäger), utan signum eller text,
-  eller med belägg eller nyhet utanför 0–1 hoppas över och loggas. Ett eget fynd om ett annat föremål än en svensk
-  vikingatida runsten märks som sådant och räknas för sig, inte i rubriktalet.
+  eller med belägg eller nyhet utanför 0–1 hoppas över och loggas. Bara svenska vikingatida runstenar tas med; ett eget fynd om ett annat
+  föremål eller en sten utanför Sverige hoppas över och loggas.
 
 Fynden gäller en sten, inte en ristare. Relevansen räknas därför bara efter om stenen finns kvar (0,6) eller är
 försvunnen (0,3), inte efter hur många stenar i landskapet som har ristare. De får ingen tolkningsnivå (avsnitt 14d).
@@ -563,8 +566,8 @@ resare med egen släktskap och aldrig en person till sig själv. Bara runstenar 
 två urval om 60 runstenar. Det första (frö 2026, 92 personer) användes medan reglerna rättades och är alltså ingen
 oberoende prövning: rätt roll för 98 % av personerna (86 % före rättelserna). Det andra (frö 4242, 135 personer, 52
 släktfakta) märktes blint, innan programmets svar setts: rätt roll för 90 % av personerna (81 % före rättelserna), rätt
-släktskap för 78 % av de minnes som hittas, och 38 av 52 släktfakta (73 %) hittas, varav 3 av de 41 programmet gav är
-fel. Rollerna blir alltså nästan alltid rätt, men ungefär vart fjärde släktband på stenen fångas inte. Det som oftast
+släktskap för 78 % av de minnes som hittas, och 38 av 52 släktfakta (73 %) hittas, och av de 41 fakta programmet gav vid den blinda prövningen var 3 fel (efter en rättelse som urvalet visade på, att
+pronomenet ska stämma med resarna, är 1 av 39 fel, men den siffran är inte längre blind). Rollerna blir alltså nästan alltid rätt, men ungefär vart fjärde släktband på stenen fångas inte. Det som oftast
 missas är ett släktord som skiljs från namnet av ett komma eller ett ortnamn, släktskap utanför ordlistan och namn som
 bara finns som fragment.
 
@@ -587,15 +590,18 @@ med", "Samma brödrakrets som nämns på"). Ett första försök med Fellegi–S
 fjärdedel av alla namnpar som träffar, eftersom modellen fångade "två stenar i Uppland med kända ristare" i stället för
 identitet; den metoden används inte.
 
-Resultat 2026-10-27 (efter granskningen samma dag): 422 par delar namn (63 par som bara delar de vanligaste namnen
-prövas inte), slumpen ger omkring 364. 30 länkar håller med q under 0,1, lika många i alla omdragningar och med alla
-fyra frön (23 med den strängare nollmodellen). De står i median 2,3 km isär, 83 % inom 10 km. Fem av dem knyter Rundata
+Resultat 2026-10-27 (efter granskningen samma dag): 421 par delar namn (63 par som bara delar de vanligaste namnen
+prövas inte), slumpen ger omkring 365. 29 länkar håller med q under 0,1, lika många i alla omdragningar och med alla
+fyra frön (23 med den strängare nollmodellen). De står i median 1,3 km isär, 86 % inom 10 km. Fem av dem knyter Rundata
 redan ihop; de visas som bekräftelser, inte som nya fynd. Ásfríðrs stenar i Hedeby (DR 2, DR 4) hittas. Jarlabankes fem
-stenar om Täby hittas inte: de delar bara Jarlabanke och Täby, och q blir 0,104 (0,102–0,106 med slumpfelet), strax
+stenar om Täby hittas inte: de delar bara Jarlabanke och Täby, och q blir 0,105 (0,104–0,107 med slumpfelet), strax
 över gränsen. Den första versionen (q 0,0986, 35 länkar) byggde på en nollmodell som tappade namn när en sten drog samma
-namn två gånger, och på 200 körningar där resultatet berodde på slumpfröet. Av Rundatas 14 parstenar hittas 2; av de 12
+namn två gånger, och på 200 körningar där resultatet berodde på slumpfröet. Varje märkt namn i normaliseringen bär
+högst en person, så att två alternativa översättningar av ett namnord (Vs 22: "Runa … / … Runi's voyage") inte blir två
+personer. Av Rundatas 14 parstenar hittas 2; av de 12
 som missas delar 5 inget läst namn alls, 3 bara ett namn och 4 två eller fler utan att länken skiljer sig från slumpen.
-Över landskapsgränserna håller bara U 1041–Vs 22 och U 1003–Vs 22, och ingen av dem i den strängare prövningen. Två
+Över landskapsgränserna håller bara U 1041–Vs 22 (Rúnfastr och Rúna, 78 km), och inte i den strängare prövningen;
+länken U 1003–Vs 22 byggde på den andra, alternativa läsningen av samma namnord och föll bort. Två
 länkar mellan landskap som först såg starka ut avfärdas av motsägelser i släktskapen (U 759–Vg 59: olika fäder; Hs 14–Sö
 11). Länkarna visas som fynd per sten och mönstret i Statistik (R) under Formler och släkt.
 
