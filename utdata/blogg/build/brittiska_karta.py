@@ -5,7 +5,9 @@ färgade efter vad de handlar om (vår kodning, utdata/brittiska/kodning.csv), p
 Rundata har inga koordinater för de irländska inskrifterna; vi sätter dem efter fyndplatsen (IRISH nedan, ungefärliga
 lägen). Inskrifter på samma punkt läggs i en solrosspiral runt punkten så att alla syns.
     PLAYWRIGHT_BROWSERS_PATH=/Volumes/2TB/cache/ms-playwright .venv/bin/python utdata/blogg/build/brittiska_karta.py
-Skriver utdata/blogg/brittiska/karta_sv.png och karta_en.png.
+Kartan från hemmaperspektivet: de nordiska runinskrifter som nämner resor västerut (utdata/brittiska/hemma.json), efter
+vad stenen säger om resenären (handkodat i utdata/brittiska/hemma_kodning.csv).
+Skriver utdata/blogg/brittiska/karta_{sv,en}.png och hemma_{sv,en}.png.
 """
 import csv
 import json
@@ -35,6 +37,24 @@ LABEL = {"sv": {"minne": "minnesmonument", "vardag": "ägare, namn, vardag, futh
          "en": {"minne": "memorials", "vardag": "owner, name, everyday, futhark", "ristare": "the carver's or maker's name",
                 "magi": "magic, gods, prayers", "oläsligt": "cannot be read", "man": "Isle of Man", "osm": "© OpenStreetMap contributors"}}
 
+# Places Rundata gives no coordinates for (approximate): Busdorf by Hedeby, the town of Schleswig, Galteland in Evje
+HOME_PLACES = {"DR 3": (54.4917, 9.5592), "DR 6": (54.5153, 9.5697), "N 184": (58.5850, 7.7950)}
+HOME_COLOR = {"dog": "#b7410e", "hem": "#0891b2", "resa": "#94a3b8"}
+HOME_LABEL = {"sv": {"dog": "dog i väster", "hem": "kom hem", "resa": "bara resan nämns", "osm": "© OpenStreetMap-bidragsgivare"},
+              "en": {"dog": "died in the west", "hem": "came home", "resa": "only the journey is mentioned", "osm": "© OpenStreetMap contributors"}}
+
+
+def home_points():
+    rows = list(csv.DictReader(open(os.path.join(ROOT, "utdata", "brittiska", "hemma_kodning.csv"), encoding="utf-8")))
+    s, out = store(), []
+    for r in rows:
+        if r["utfall"] == "utesluten":
+            continue
+        rec = s.get(r["signum"])
+        lat, lon = (rec.get("lat"), rec.get("lon")) if rec.get("lat") else HOME_PLACES[r["signum"]]
+        out.append({"signum": r["signum"], "lat": lat, "lon": lon, "g": r["utfall"], "man": False})
+    return out
+
 
 def points():
     rows = list(csv.DictReader(open(os.path.join(ROOT, "utdata", "brittiska", "kodning.csv"), encoding="utf-8")))
@@ -53,23 +73,23 @@ HTML = """<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet
 <script src="file://LEAFLET/leaflet.js"></script>
 <style>
  html,body{margin:0;background:#fff;font-family:-apple-system,Helvetica,Arial,sans-serif}
- #wrap{position:relative;width:740px;height:1000px}
+ #wrap{position:relative;width:WIDTHpx;height:HEIGHTpx}
  #main{position:absolute;inset:0}
  #manbox{position:absolute;left:16px;top:16px;width:270px;height:250px;border:2px solid #0f172a;border-radius:10px;overflow:hidden;z-index:900;background:#aad3df}
  #man{width:100%;height:100%}
  .tag{position:absolute;z-index:1000;background:rgba(255,255,255,.92);border-radius:8px;color:#0f172a}
  #mantag{left:26px;top:24px;padding:3px 8px;font-size:15px;font-weight:600}
- #legend{left:16px;bottom:16px;padding:12px 14px;font-size:15px;line-height:1.55}
+ #legend{left:16px;LEGENDPOS:16px;padding:12px 14px;font-size:15px;line-height:1.55}
  #legend i{display:inline-block;width:13px;height:13px;border-radius:50%;margin-right:8px;vertical-align:-1px;border:1px solid #0f172a}
  #osm{right:6px;bottom:6px;padding:2px 6px;font-size:11px;color:#475569}
  .leaflet-control-attribution,.leaflet-control-zoom{display:none}
 </style></head><body><div id="wrap"><div id="main"></div><div id="manbox"><div id="man"></div></div>
 <div class="tag" id="mantag"></div><div class="tag" id="legend"></div><div class="tag" id="osm"></div></div>
 <script>
-const P = POINTS, C = COLORS, L = LABELS, COUNT = COUNTS;
-document.getElementById('mantag').textContent = L.man;
+const P = POINTS, C = COLORS, L = LABELS, COUNT = COUNTS, KEYS = LEGENDKEYS;
+document.getElementById('mantag').textContent = L.man || '';
 document.getElementById('osm').textContent = L.osm;
-document.getElementById('legend').innerHTML = ['minne','vardag','ristare','magi','oläsligt']
+document.getElementById('legend').innerHTML = KEYS
   .map(k => `<div><i style="background:${C[k]}"></i>${L[k]} (${COUNT[k]})</div>`).join('');
 window.tiles = 0;
 function make(id, pts, bounds, r, pad) {
@@ -96,39 +116,49 @@ function make(id, pts, bounds, r, pad) {
 }
 const L_ = window.L;
 const all = L_.latLngBounds(P.map(p => [p.lat, p.lon]));
-const manPts = P.filter(p => p.man), manB = L_.latLngBounds(manPts.map(p => [p.lat, p.lon]));
+const manPts = P.filter(p => p.man);
 const main = make('main', P.filter(p => !p.man), all, 5.5, [12, 12]);
-L_.rectangle(manB.pad(0.25), {color:'#0f172a', weight:2, fill:false}).addTo(main);
-make('man', manPts, manB, 6, [24, 24]);
+if (manPts.length) {
+  const manB = L_.latLngBounds(manPts.map(p => [p.lat, p.lon]));
+  L_.rectangle(manB.pad(0.25), {color:'#0f172a', weight:2, fill:false}).addTo(main);
+  make('man', manPts, manB, 6, [24, 24]);
+} else {
+  document.getElementById('manbox').style.display = 'none';
+  document.getElementById('mantag').style.display = 'none';
+}
 </script></body></html>"""
 
 
-def render(lang: str, pts: list) -> str:
-    counts = {k: sum(p["g"] == k for p in pts) for k in COLOR}
-    assert counts == {"minne": 35, "vardag": 19, "ristare": 6, "magi": 3, "oläsligt": 21}, counts
-    html = (HTML.replace("LEAFLET", LEAFLET).replace("POINTS", json.dumps(pts)).replace("COLORS", json.dumps(COLOR))
-            .replace("LABELS", json.dumps(LABEL[lang], ensure_ascii=False)).replace("COUNTS", json.dumps(counts)))
-    path = os.path.join(OUT, f"karta_{lang}.html")
+def render(name: str, lang: str, pts: list, color: dict, label: dict, size=(740, 1000), legend="bottom") -> str:
+    counts = {k: sum(p["g"] == k for p in pts) for k in color}
+    html = (HTML.replace("LEAFLET", LEAFLET).replace("POINTS", json.dumps(pts)).replace("COLORS", json.dumps(color))
+            .replace("LABELS", json.dumps(label[lang], ensure_ascii=False)).replace("COUNTS", json.dumps(counts))
+            .replace("LEGENDKEYS", json.dumps(list(color), ensure_ascii=False)).replace("WIDTH", str(size[0]))
+            .replace("HEIGHT", str(size[1])).replace("LEGENDPOS", legend))
+    path = os.path.join(OUT, f"{name}_{lang}.html")
     open(path, "w", encoding="utf-8").write(html)
     return path
 
 
 if __name__ == "__main__":
-    pts = points()
+    pts, home = points(), home_points()
+    assert {k: sum(p["g"] == k for p in pts) for k in COLOR} == {"minne": 35, "vardag": 19, "ristare": 6, "magi": 3, "oläsligt": 21}
+    assert {k: sum(p["g"] == k for p in home) for k in HOME_COLOR} == {"dog": 29, "hem": 7, "resa": 15}
+    MAPS = [("karta", pts, COLOR, LABEL, (740, 1000), "bottom"), ("hemma", home, HOME_COLOR, HOME_LABEL, (1050, 1080), "top")]
     with sync_playwright() as p:
         b = p.chromium.launch()
         # OpenStreetMap's tile servers ask for a referring site; the same tiles as on Vitki's map
-        ctx = b.new_context(viewport={"width": 740, "height": 1000}, device_scale_factor=2,
+        ctx = b.new_context(viewport={"width": 1100, "height": 1150}, device_scale_factor=2,
                             extra_http_headers={"Referer": "https://vitkirunor.se/"})
-        for lang in ("sv", "en"):
+        for (name, pp, color, label, size, legend), lang in [(m, lg) for m in MAPS for lg in ("sv", "en")]:
             pg = ctx.new_page()
             errs = []
             pg.on("pageerror", lambda e: errs.append(str(e)))
-            pg.goto("file://" + render(lang, pts), wait_until="networkidle", timeout=120000)
+            pg.goto("file://" + render(name, lang, pp, color, label, size, legend), wait_until="networkidle", timeout=120000)
             pg.wait_for_function("window.tiles === 0 && [...document.querySelectorAll('img.leaflet-tile')]"
                                  ".every(i => i.complete && i.naturalWidth > 0)", timeout=120000)
             pg.wait_for_timeout(1500)
             assert not errs, errs
-            pg.locator("#wrap").screenshot(path=os.path.join(OUT, f"karta_{lang}.png"))
-            print("sparade", f"karta_{lang}.png")
+            pg.locator("#wrap").screenshot(path=os.path.join(OUT, f"{name}_{lang}.png"))
+            print("sparade", f"{name}_{lang}.png")
         b.close()

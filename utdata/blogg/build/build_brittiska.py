@@ -92,12 +92,12 @@ PIC_344_EN = picture("U 344", "Ulfr's stone from Yttergärde (U 344), now at Ork
 assert store().get("IR 1")["place"] == "Greenmount" and sum(store().get(f"IR {i}")["parish"] == "Dublin" for i in range(1, 17)) == 12
 
 
-def karta(lang: str, text: str) -> str:
+def karta(lang: str, text: str, name: str = "karta", width: int = 1200) -> str:
     import io
 
     from PIL import Image
-    im = Image.open(os.path.join(ROOT, "utdata", "blogg", "brittiska", f"karta_{lang}.png")).convert("RGB")
-    im = im.resize((1200, round(im.height * 1200 / im.width)), Image.LANCZOS)  # no palette reduction: it merges the marker colours
+    im = Image.open(os.path.join(ROOT, "utdata", "blogg", "brittiska", f"{name}_{lang}.png")).convert("RGB")
+    im = im.resize((width, round(im.height * width / im.width)), Image.LANCZOS)  # no palette reduction: it merges the marker colours
     buf = io.BytesIO()
     im.save(buf, "PNG", optimize=True)
     data = buf.getvalue()
@@ -106,6 +106,43 @@ def karta(lang: str, text: str) -> str:
 
 
 MAP = karta("sv", f"Var de skrevs: de {N_V} vikingatida runinskrifterna på de brittiska öarna, färgade efter vad de handlar om. Isle of Man är förstorad uppe till vänster. Inskrifter från samma plats ligger i en ring runt platsen. Rundata har inga koordinater för de irländska fynden, så dem har vi satt ut efter fyndplatsens namn. Karta: Vitki, kartunderlag © OpenStreetMap-bidragsgivare (ODbL).")
+# ---- the home perspective (utdata/brittiska/hemma.py + hemma_kodning.csv, map in brittiska_karta.py) ------------------
+import subprocess  # noqa: E402
+
+from scipy.stats import fisher_exact  # noqa: E402
+
+HK = list(csv.DictReader(open(os.path.join(D, "hemma_kodning.csv"), encoding="utf-8")))
+H = Counter(r["utfall"] for r in HK)
+H_ALL, H_UT = len(HK), H["utesluten"]
+assert (H_ALL, H["dog"], H["hem"], H["resa"], H_UT) == (55, 29, 7, 15, 4)  # "Fyra" / "four" in the text
+_G, _S = {"Ög", "Sm", "Vg"}, {"Sö", "U", "Vs", "Gs"}
+GOT = [sum(r["utfall"] == "dog" for r in HK if r["signum"].split()[0] in _G),
+       sum(r["utfall"] in ("hem", "resa") for r in HK if r["signum"].split()[0] in _G)]
+SVE = [sum(r["utfall"] == "dog" for r in HK if r["signum"].split()[0] in _S),
+       sum(r["utfall"] in ("hem", "resa") for r in HK if r["signum"].split()[0] in _S)]
+assert GOT == [14, 2] and SVE == [11, 18]
+assert 0.001 < fisher_exact([GOT, SVE])[1] < 0.002
+# within the style groups: R's exact conditional Mantel–Haenszel test over RAK / later styles
+_rows = ["signum,region,stil,dog"]
+for r in HK:
+    pre, st = r["signum"].split()[0], (store().get(r["signum"]).get("style") or "")
+    if r["utfall"] == "utesluten" or pre not in _G | _S or not st or st.startswith("?"):
+        continue
+    _rows.append(f"{r['signum']},{'G' if pre in _G else 'S'},{'RAK' if st.startswith('RAK') else 'senare'},{int(r['utfall'] == 'dog')}")
+_csv = os.path.join(D, "hemma_strata.csv")
+open(_csv, "w", encoding="utf-8").write("\n".join(_rows) + "\n")
+P_STRAT = float(subprocess.run(["Rscript", "-e", f'd<-read.csv("{_csv}"); cat(mantelhaen.test(xtabs(~region+dog+stil,d), exact=TRUE)$p.value)'],
+                               capture_output=True, text=True, check=True).stdout)
+assert 0.005 < P_STRAT < 0.006, P_STRAT
+P_STRAT_TXT = "fem"
+
+
+def hkarta(lang: str, text: str) -> str:
+    return karta(lang, text, "hemma", 1000)
+
+
+HMAP = hkarta("sv", f"De {H_ALL - H_UT} nordiska runinskrifter från vikingatiden som nämner en resa västerut, efter vad de säger om resenären. Inskrifter från samma plats ligger i en ring runt platsen. Tre stenar i Danmark och Norge saknar koordinater i Rundata och är utsatta av oss efter fyndplatsen. Karta: Vitki, kartunderlag © OpenStreetMap-bidragsgivare (ODbL).")
+HMAP_EN = hkarta("en", f"The {H_ALL - H_UT} Viking-age runic inscriptions in Scandinavia that mention a journey west, by what they say about the traveller. Inscriptions from one place lie in a ring around it. Three stones in Denmark and Norway lack coordinates in Rundata and were placed by us by the find place. Map: Vitki, map data © OpenStreetMap contributors (ODbL).")
 MAP_EN = karta("en", f"Where they were written: the {N_V} Viking-age runic inscriptions of the British Isles, coloured by what they are about. The Isle of Man is enlarged at top left. Inscriptions from one place lie in a ring around it. Rundata has no coordinates for the Irish finds, so we placed them by the name of the find place. Map: Vitki, map data © OpenStreetMap contributors (ODbL).")
 
 # ---- figures -------------------------------------------------------------------------------------------------------------
@@ -235,13 +272,26 @@ Men på öarna själva syns de nästan inte. Ingen av de {N_V} inskrifterna näm
 
 Är svenskarna då överrepresenterade? Bara på hemmaplan, och inte ens där. Räknat per sten nämner de svenska stenarna England ungefär lika ofta som de norska: en av {round(ST['Sverige'] / SWE_ENG)} svenska runstenar, en av {ST['Norge']} norska. Att det finns så många svenska Englandsstenar beror på att det finns så många svenska runstenar. De danska nämner England nästan aldrig – en av {ST['Danmark']} – men många danska runstenar restes före Knuts tid i England.
 
-Bilden som träder fram är enkel. Svenskarna åkte till England som soldater och tog betalt, och de som kom hem reste stenar i Uppland och Småland. Norrmännen och folket från Hebriderna stannade, gifte sig med gaeler och reste kors vid kyrkorna på Man. Det var de som skrev på öarna.
+## Två berättelser hemma
+
+Stenarna hemma berättar inte samma sak överallt. Vi har läst alla {H_ALL} vikingatida inskrifter i Norden som nämner en resa västerut, och fört dem till tre grupper: {H['dog']} säger att mannen dog där borta, {H['hem']} att han kom hem, och {H['resa']} nämner bara resan. Fyra lämnade vi utanför, tre för att läsningen är osäker och en, U 539, för att Sveinn dog på Jylland innan han hann till England.
+
+{HMAP}
+
+I Götaland – Västergötland, Östergötland och Småland – säger {GOT[0]} av {sum(GOT)} stenar att mannen dog i väster. Ketill i Transjö, Tóki som dräptes i England, Gunnarr som hans bror Helgi lade i en stenkista i Bath. I Svealand, de flesta i Mälardalen, gäller det {SVE[0]} av {sum(SVE)}. Där berättar stenarna i stället om gäld och resor och om män som kom hem: Ulfr med sina tre gälder, Áli som reste sin sten åt sig själv, Hefnir som for till England och sedan dog hemma.
+
+Götalandsstenarna är i regel äldre än de uppländska, och därför prövade vi skillnaden inom varje stilgrupp för sig. Den håller. Jämför man stenar av samma ålder skulle en så stor skillnad uppstå av en slump ungefär {P_STRAT_TXT} gånger på tusen.
+
+Varför vet vi inte. Kanske for männen från Götaland i andra härar, med den danske kungen före Knuts tid, och färre kom tillbaka. Kanske var seden olika: i Götaland restes en sten när en man dog borta, i Mälardalen också över den som kom hem med silver och dog i sin säng. Stenarna visar vad de efterlevande valde att berätta, inte hur många som dog. Det är en ny iakttagelse, och den behöver prövas mot fler slags källor.
+
+Bilden som träder fram är enkel. Svenskarna åkte till England som soldater och tog betalt, och i Götaland restes stenarna oftast efter dem som inte kom hem. Norrmännen och folket från Hebriderna stannade, gifte sig med gaeler och reste kors vid kyrkorna på Man. Det var de som skrev på öarna.
 
 :::box Det viktigaste i korthet
 - Runorna på de brittiska öarna kommer från tre olika världar: familjerna på Man och de skotska öarna, som reste kors vid kyrkorna; hamnfolket i Dublin, som skrev om ägande och vardag; och de tillfälliga i England, med ristarnamn och gamla gudar.
 - På Isle of Man restes {MAN['women']} av {MAN['women'] + MAN['men']} kors efter en kvinna, mot ungefär en sten av trettio i Sverige. Där syns också en kvinna som ristade runor, Þuríð.
 - Gaeliska och nordiska namn står i samma familjer på korsen. Det är inte erövrare vi läser utan blandade familjer.
 - Svenskarna berättade om England hemma, på {SWE_ENG} stenar, men lämnade nästan inga spår på öarna. Det var norrmän och folk från Hebriderna som skrev där.
+- Hemma berättade stenarna olika saker: i Götaland sörjde man dem som dog i väster, i Mälardalen talade man om gäld och om dem som kom hem.
 :::
 
 :::box Hur vi räknade
@@ -249,6 +299,7 @@ Bilden som träder fram är enkel. Svenskarna åkte till England som soldater oc
 - **Kvinnorna:** samma mått som i vår artikel om kvinnorna på runstenarna: bland monument där översättningen anger den dödes släktskap med den som reste det, andelen där den döde är en kvinna. För Skandinavien räknar vi bara runstenar, för öarna alla minnesmonument, eftersom korsen där fyller samma funktion. Skillnaden mot Norge är prövad med Fishers exakta test.
 - **Namnen:** {N_NAMES} personnamn, bestämda som nordiska, gaeliska eller anglosaxiska efter Barnes och Page. Två är osäkra.
 - **Svenskarna:** vikingatida runstenar i Sverige, Danmark och Norge vars översättning nämner England, Irland eller Skottland. Bara England nämns.
+- **Resorna västerut:** alla vikingatida inskrifter i Norden som nämner England, London, Bath eller väster, handkodade efter vad de säger om resenären (utdata/brittiska/hemma_kodning.csv). Götaland mot Mälardalen är prövat med Fishers exakta test, och inom stilgrupperna (RAK mot senare stilar) med ett exakt Mantel–Haenszel-test.
 - **Porträtten:** allt vi säger om personerna står i inskrifterna. Där vi målar en scen runt dem säger vi det.
 - **Gränser:** talen från öarna är små, och en del inskrifter är fragment. Att kvinnorna syns där monumentet handlar om minne och inte arv är en hypotes som vi inte har prövat.
 :::
@@ -322,13 +373,26 @@ But in the islands themselves they hardly show. None of the {N_V} inscriptions m
 
 Are the Swedes over-represented, then? Only at home, and not even there. Per stone, the Swedish stones mention England about as often as the Norwegian ones: one in {round(ST['Sverige'] / SWE_ENG)} Swedish runestones, one in {ST['Norge']} Norwegian. That there are so many Swedish England stones is because there are so many Swedish runestones. The Danish ones hardly ever mention England – one in {ST['Danmark']} – but many Danish runestones were raised before Knútr's time in England.
 
-The picture that emerges is simple. The Swedes went to England as soldiers and took payment, and those who came home raised stones in Uppland and Småland. The Norwegians and the people of the Hebrides stayed, married Gaels and raised crosses at the churches on Man. They were the ones who wrote in the islands.
+## Two stories at home
+
+The stones at home do not tell the same thing everywhere. We read all {H_ALL} Viking-age inscriptions in Scandinavia that mention a journey west, and sorted them into three groups: {H['dog']} say the man died there, {H['hem']} that he came home, and {H['resa']} mention only the journey. We left four out, three because the reading is uncertain and one, U 539, because Sveinn died in Jutland before he reached England.
+
+{HMAP_EN}
+
+In Götaland – Västergötland, Östergötland and Småland – {GOT[0]} of {sum(GOT)} stones say the man died in the west. Ketill at Transjö, Tóki who was killed in England, Gunnarr whom his brother Helgi laid in a stone coffin at Bath. In Svealand, most of it the Mälaren valley, it is {SVE[0]} of {sum(SVE)}. There the stones tell instead of payments and journeys and of men who came home: Ulfr with his three payments, Áli who raised his stone for himself, Hefnir who went to England and then died at home.
+
+The Götaland stones are as a rule older than those of Uppland, so we tested the difference within each style group separately. It holds. Comparing stones of the same age, so large a difference would arise by chance about {P_STRAT_TXT} times in a thousand.
+
+Why, we do not know. Perhaps the men of Götaland went in other armies, with the Danish king before Knútr's time, and fewer came back. Perhaps the custom differed: in Götaland a stone was raised when a man died abroad, in the Mälaren valley also over the man who came home with silver and died in his bed. The stones show what the survivors chose to tell, not how many died. It is a new observation, and it needs testing against other kinds of sources.
+
+The picture that emerges is simple. The Swedes went to England as soldiers and took payment, and in Götaland the stones were mostly raised for those who did not come home. The Norwegians and the people of the Hebrides stayed, married Gaels and raised crosses at the churches on Man. They were the ones who wrote in the islands.
 
 :::box The essentials in brief
 - The runes of the British Isles come from three different worlds: the families of Man and the Scottish isles, who raised crosses at the churches; the port people of Dublin, who wrote about ownership and everyday things; and the passers-through in England, with carvers' names and old gods.
 - On the Isle of Man {MAN['women']} of {MAN['women'] + MAN['men']} crosses were raised for a woman, against about one stone in thirty in Sweden. There also stands a woman who carved runes, Þuríð.
 - Gaelic and Norse names stand in the same families on the crosses. What we read is not conquerors but mixed families.
 - The Swedes told of England at home, on {SWE_ENG} stones, but left hardly any trace in the islands. It was Norwegians and Hebrideans who wrote there.
+- At home the stones told different things: in Götaland they mourned those who died in the west, in the Mälaren valley they spoke of payments and of those who came home.
 :::
 
 :::box How we counted
@@ -336,6 +400,7 @@ The picture that emerges is simple. The Swedes went to England as soldiers and t
 - **The women:** the same measure as in our article on the women of the runestones: among monuments where the translation states the dead person's kinship with the one who raised it, the share where the dead person is a woman. For Scandinavia we count runestones only, for the islands all memorials, since the crosses there serve the same purpose. The difference from Norway is tested with Fisher's exact test.
 - **The names:** {N_NAMES} personal names, classed as Norse, Gaelic or Anglo-Saxon after Barnes and Page. Two are uncertain.
 - **The Swedes:** Viking-age runestones in Sweden, Denmark and Norway whose translation mentions England, Ireland or Scotland. Only England is mentioned.
+- **The journeys west:** all Viking-age inscriptions in Scandinavia that mention England, London, Bath or the west, hand-coded by what they say about the traveller (utdata/brittiska/hemma_kodning.csv). Götaland against the Mälaren valley is tested with Fisher's exact test, and within the style groups (RAK against later styles) with an exact Mantel–Haenszel test.
 - **The portraits:** everything we say about the people is in the inscriptions. Where we paint a scene around them, we say so.
 - **Limits:** the numbers from the islands are small, and some inscriptions are fragments. That the women show where the monument is about memory and not inheritance is a hypothesis we have not tested.
 :::
@@ -350,7 +415,7 @@ The picture that emerges is simple. The Swedes went to England as soldiers and t
 
 for b in (body, body_en):
     assert not re.search(r"^\|", b, re.M)  # BlogBody has no tables
-    assert b.count(":::box") == 2 and b.count(":::chart") == 2 and b.count("![") == 3
+    assert b.count(":::box") == 2 and b.count(":::chart") == 2 and b.count("![") == 4
     blocks = [ln.strip() for ln in b.split("\n") if ln.strip().startswith(":::")]
     assert all(o.startswith(":::") and o != ":::" and c == ":::" for o, c in zip(blocks[::2], blocks[1::2])) and len(blocks) % 2 == 0, blocks
 out = {"slug": "vad-berattar-runskrifterna-pa-de-brittiska-oarna", "title": title, "summary": summary, "body": body,
