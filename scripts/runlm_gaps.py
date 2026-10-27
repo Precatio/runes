@@ -24,6 +24,9 @@ from src.runlm import (DIV, Model, by_object, print_by_object, clean_translit, c
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SWEDISH = set("U Sö Ög Vg Sm Öl G Nä Vs Gs Hs M J Ån Lp D Vr Bo Ds".split())
+# The countries whose inscriptions can be searched for gaps: Sweden (default), Denmark (DR, with Skåne, Halland, Blekinge
+# and South Schleswig) and Norway (N); never other countries (utdata/runlm_forfining/tm19/analysplan_dkno.md)
+COUNTRIES = {"sv": SWEDISH, "dk": {"DR"}, "no": {"N"}}
 ALL = load_rundata()
 V = [r for r in ALL if viking(r) and r.get("transliteration") and r.get("normalization") and r["signum"] != "DR NOR1988;5"]
 SW = [r for r in V if re.match(r"\S+", r["signum"]).group(0) in SWEDISH]
@@ -165,10 +168,12 @@ def main(argv=None):
     ap.add_argument("--own_d", action="store_true", help="ristarens egen andel markerade ordgränser (stone_divider_rate)")
     ap.add_argument("--name_cands", type=int, default=0, help="namn ur namnled som passar de bevarade runorna (egen kvot)")
     ap.add_argument("--separate", action="store_true", help="fyll varje följd av förlorade runor för sig (som före 2026-10-16)")
+    ap.add_argument("--countries", default="sv", help="länderna vars inskrifter söks igenom: sv, dk, no (kommaseparerat)")
     ap.add_argument("--out", default=None)
     args = ap.parse_args(argv)
+    wanted = set().union(*(COUNTRIES[c.strip()] for c in args.countries.split(",")))
     items = []
-    for r in SW:
+    for r in [r for r in V if re.match(r"\S+", r["signum"]).group(0) in wanted]:
         for groups, gap, w, tok in gaps_of(r):
             status = "återställt" if tok and "[" in tok else "ej återställt" if (tok is None or tok == "...") else "oklart"
             if status != "oklart":
