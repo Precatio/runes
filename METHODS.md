@@ -499,6 +499,16 @@ korrektionen blev 0). Sannolikheterna per tidsskikt är kalibrerade (fel 0,046) 
 Appen räknar som förut bara på daterade stenar. Nästa steg kräver finare facit, inte en ny modell på samma data
 (`utdata/datering/resultat.md`).
 
+### 1t. Luckor i texten på danska och norska inskrifter: prövat och inte infört (2026-10-27)
+
+Luckinventeringen (avsnitt 8.1, `scripts/runlm_gaps.py --countries dk,no`) kördes med tm19-inställningarna på de
+vikingatida inskrifterna med signum DR och N, femfaldigt över stenarna, enligt en plan låst före körningen
+(`utdata/runlm_forfining/tm19/analysplan_dkno.md`). Facit var de 81 luckor Rundata återställt. Modellen kom fram till
+Rundatas ord i 43 % (Danmark 51 %, Norge 17 %) mot 75 % för de svenska, och bland förslag med kalibrerad sannolikhet
+minst 0,8 i 67 % (svenska 95 %). Båda kraven föll, och Luckor i texten visar som förut bara svenska inskrifter. Modellen
+har lärt sig språket främst av svenska inskrifter; för danska och norska krävs egna språkskikt och en kalibrering per
+land (`dkno_resultat.md`). Andra länder söks aldrig igenom.
+
 ### 1x. Försiktighet i påståendena, djärvhet i hypoteserna
 
 **Förregistrerade analysplaner (från 2026-10-20).** En artikel som gör ett nytt anspråk hänvisar till en analysplan som

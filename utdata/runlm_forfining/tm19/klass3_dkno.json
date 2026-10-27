@@ -1,0 +1,4852 @@
+{
+ "settings": {
+  "max_gaps": 2000,
+  "lam_name": 0.05,
+  "lam_class": 0.2,
+  "lam_doc": 0.0,
+  "window": -1,
+  "char_fills": 15,
+  "context_cands": true,
+  "n_cands": 100,
+  "tolerance": 0.02,
+  "area_lm": false,
+  "by_word": true,
+  "near": 0.1,
+  "near_km": 10.0,
+  "fold": 0,
+  "own_d": true,
+  "name_cands": 40,
+  "separate": false,
+  "countries": "dk,no",
+  "out": "utdata/runlm_forfining/tm19/klass3_dkno_f0.json"
+ },
+ "rows": [
+  {
+   "sig": "DR 106",
+   "carved": "k--k",
+   "gap": 2,
+   "fill": "ui",
+   "p": 0.5145179617509936,
+   "span": [
+    12,
+    1,
+    3
+   ],
+   "alts": [
+    [
+     "krok",
+     0.446
+    ],
+    [
+     "gauk",
+     0.011
+    ],
+    [
+     "§glægg",
+     0.008
+    ]
+   ],
+   "word": "kvig",
+   "rundata": "K[ro]k",
+   "status": "återställt",
+   "reading": "øyvindr ok u ok tola ok þorgæiRR <unk> gærðu kumbl þøsi æft kvig sun harða goðan þegn",
+   "p_reading": 0.5154052085345884,
+   "agrees": false,
+   "context": "þusi aft kuik sunharþa kuþan"
+  },
+  {
+   "sig": "DR 126",
+   "carved": "-rt",
+   "gap": 1,
+   "fill": "i",
+   "p": 0.4523050013401385,
+   "span": [
+    7,
+    0,
+    1
+   ],
+   "alts": [
+    [
+     "gært",
+     0.275
+    ],
+    [
+     "ort",
+     0.226
+    ],
+    [
+     "<unk>",
+     0.03
+    ]
+   ],
+   "word": "ert",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "þar sten resþi sten þænsi æftiR auðgaut ok i all faður ert guð runaR",
+   "p_reading": 0.4475393358667944,
+   "agrees": null,
+   "context": "aukutaoki?al faþur irt kuþ?runar"
+  },
+  {
+   "sig": "DR 126",
+   "carved": "þar-tin",
+   "gap": 1,
+   "fill": "s",
+   "p": 0.8237629115154971,
+   "span": [
+    0,
+    3,
+    4
+   ],
+   "alts": [
+    [
+     "<unk>",
+     0.157
+    ],
+    [
+     "þarft",
+     0.016
+    ],
+    [
+     "lettin",
+     0.003
+    ]
+   ],
+   "word": "sten",
+   "rundata": "Þor[s]ten",
+   "status": "återställt",
+   "reading": "þar sten resþi sten þænsi æftiR auðgaut ok i all faður ert guð runaR",
+   "p_reading": 0.4475393358667944,
+   "agrees": false,
+   "context": "þarstin rasþi stin"
+  },
+  {
+   "sig": "DR 189",
+   "carved": "--otR",
+   "gap": 2,
+   "fill": "st",
+   "p": 0.9980285431964439,
+   "span": [
+    0,
+    0,
+    2
+   ],
+   "alts": [
+    [
+     "§þrottR",
+     0.001
+    ],
+    [
+     "§broddR",
+     0.0
+    ],
+    [
+     "snotr",
+     0.0
+    ]
+   ],
+   "word": "stændr",
+   "rundata": "[st]ændR",
+   "status": "återställt",
+   "reading": "stændr stæinn sasi satti <unk>",
+   "p_reading": 0.9986335216179597,
+   "agrees": true,
+   "context": "stotRstainsasisatiru"
+  },
+  {
+   "sig": "DR 228",
+   "carved": "-ruþr",
+   "gap": 1,
+   "fill": "b",
+   "p": 0.9998834411850002,
+   "span": [
+    6,
+    0,
+    1
+   ],
+   "alts": [
+    [
+     "fróðr",
+     0.0
+    ],
+    [
+     "§hroðr",
+     0.0
+    ],
+    [
+     "§þruðr",
+     0.0
+    ]
+   ],
+   "word": "broþur",
+   "rundata": "[b]roþur",
+   "status": "återställt",
+   "reading": "æskel satti <unk> asi at tofa broþur sin <unk>",
+   "p_reading": 0.9999033000495847,
+   "agrees": true,
+   "context": "at tufa bruþr sin h??"
+  },
+  {
+   "sig": "DR 279",
+   "carved": "tu-as",
+   "gap": 1,
+   "fill": "u",
+   "p": 0.5577004965634353,
+   "span": [
+    8,
+    2,
+    3
+   ],
+   "alts": [
+    [
+     "<unk>",
+     0.342
+    ],
+    [
+     "toki",
+     0.043
+    ],
+    [
+     "tomi",
+     0.03
+    ]
+   ],
+   "word": "vas",
+   "rundata": "To[f]a",
+   "status": "återställt",
+   "reading": "saxi satti sten þæssi <unk> asbiorn sin felaga <unk> vas sunn saR flo ægi at upp sölum hann vaR með hann vápn hafði",
+   "p_reading": 0.630986352135083,
+   "agrees": false,
+   "context": "sin filago tuuas sun saR"
+  },
+  {
+   "sig": "DR 344",
+   "carved": "kunu--s",
+   "gap": 2,
+   "fill": "lf",
+   "p": 0.5629819406574054,
+   "span": [
+    10,
+    4,
+    6
+   ],
+   "alts": [
+    [
+     "konungs",
+     0.339
+    ],
+    [
+     "kunungs",
+     0.038
+    ],
+    [
+     "§gunnviðs",
+     0.01
+    ]
+   ],
+   "word": "gunnulfs",
+   "rundata": "Gunu[lf]s",
+   "status": "återställt",
+   "reading": "biarngæiR let ræisa stæin þenna æftiR rafn broður sinn svæin gunnulfs a sweþiuþu",
+   "p_reading": 0.6109367319846819,
+   "agrees": true,
+   "context": "sin suin kunulfs asuiþiuþu"
+  },
+  {
+   "sig": "DR 391",
+   "carved": "-ofi",
+   "gap": 1,
+   "fill": "b",
+   "p": 0.6853884130355773,
+   "span": [
+    3,
+    3,
+    4
+   ],
+   "alts": [
+    [
+     "tofi",
+     0.313
+    ],
+    [
+     "hofi",
+     0.001
+    ],
+    [
+     "lofi",
+     0.0
+    ]
+   ],
+   "word": "bofi",
+   "rundata": "[T]ofi",
+   "status": "återställt",
+   "reading": "barni ok sibbi ok bofi þæiR ræistu <unk>",
+   "p_reading": 0.6855154323123631,
+   "agrees": false,
+   "context": "auk sibi aukbofi þeiR reistu"
+  },
+  {
+   "sig": "DR 62",
+   "carved": "-u-s",
+   "gap": 1,
+   "fill": "r",
+   "p": 0.17861975232710614,
+   "span": [
+    14,
+    0,
+    3
+   ],
+   "alts": [
+    [
+     "guðs",
+     0.122
+    ],
+    [
+     "hwas",
+     0.11
+    ],
+    [
+     "þurs",
+     0.09
+    ]
+   ],
+   "word": "fors",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "frøystæinn satti sten þænsi æft §gyrð <unk> mann sin broþur sigvalda a twæggia a fors æiði",
+   "p_reading": 0.43712360511257514,
+   "agrees": null,
+   "context": "tuegia a furs eþi"
+  },
+  {
+   "sig": "DR 62",
+   "carved": "-u-s",
+   "gap": 1,
+   "fill": "f",
+   "p": 0.17861975232710614,
+   "span": [
+    14,
+    0,
+    3
+   ],
+   "alts": [
+    [
+     "guðs",
+     0.122
+    ],
+    [
+     "hwas",
+     0.11
+    ],
+    [
+     "þurs",
+     0.09
+    ]
+   ],
+   "word": "fors",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "frøystæinn satti sten þænsi æft §gyrð <unk> mann sin broþur sigvalda a twæggia a fors æiði",
+   "p_reading": 0.43712360511257514,
+   "agrees": null,
+   "context": "tuegia a furs eþi"
+  },
+  {
+   "sig": "DR 82",
+   "carved": "-aisþi",
+   "gap": 1,
+   "fill": "r",
+   "p": 0.9986215168090447,
+   "span": [
+    0,
+    0,
+    1
+   ],
+   "alts": [
+    [
+     "<unk>",
+     0.001
+    ],
+    [
+     "næsti",
+     0.0
+    ],
+    [
+     "a",
+     0.0
+    ]
+   ],
+   "word": "ræisþi",
+   "rundata": "[r]esþi",
+   "status": "återställt",
+   "reading": "ræisþi <unk> æft skipara sina þeiri ok tofa",
+   "p_reading": 0.9986772862106386,
+   "agrees": true,
+   "context": "raisþi ?si iftskibara"
+  },
+  {
+   "sig": "DR AUD1996;276",
+   "carved": "siub--",
+   "gap": 2,
+   "fill": "st",
+   "p": 0.5265133276262064,
+   "span": [
+    0,
+    4,
+    6
+   ],
+   "alts": [
+    [
+     "stora",
+     0.23
+    ],
+    [
+     "øpi",
+     0.109
+    ],
+    [
+     "øpiR",
+     0.018
+    ]
+   ],
+   "word": "<unk>",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "<unk> upp stora þat í ám gorm",
+   "p_reading": 0.24141357544839415,
+   "agrees": null,
+   "context": "siubstora þtiam gor?"
+  },
+  {
+   "sig": "DR AUD1996;276",
+   "carved": "gor-",
+   "gap": 1,
+   "fill": "m",
+   "p": 0.6831574745326471,
+   "span": [
+    2,
+    3,
+    4
+   ],
+   "alts": [
+    [
+     "garð",
+     0.294
+    ],
+    [
+     "gört",
+     0.014
+    ],
+    [
+     "görva",
+     0.006
+    ]
+   ],
+   "word": "gorm",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "<unk> upp stora þat í ám gorm",
+   "p_reading": 0.24141357544839415,
+   "agrees": null,
+   "context": "siub??ora þtiam gorm"
+  },
+  {
+   "sig": "DR DKSl16",
+   "carved": "fuþ-nkhk",
+   "gap": 1,
+   "fill": "i",
+   "p": 0.7187386914862665,
+   "span": [
+    0,
+    3,
+    4
+   ],
+   "alts": [
+    [
+     "ung",
+     0.168
+    ],
+    [
+     "mag",
+     0.06
+    ],
+    [
+     "§ang",
+     0.034
+    ]
+   ],
+   "word": "ing",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "fuþork ing haggva",
+   "p_reading": 0.7196112716909404,
+   "agrees": null,
+   "context": "fuþinkhku"
+  },
+  {
+   "sig": "DR EM85;377",
+   "carved": "af-",
+   "gap": 1,
+   "fill": "t",
+   "p": 0.8611534878290004,
+   "span": [
+    0,
+    14,
+    15
+   ],
+   "alts": [
+    [
+     "hafa",
+     0.046
+    ],
+    [
+     "æftiR",
+     0.033
+    ],
+    [
+     "af",
+     0.025
+    ]
+   ],
+   "word": "ept",
+   "rundata": "af[t]",
+   "status": "återställt",
+   "reading": "blæikR reisti ept skreyta stæin þenna",
+   "p_reading": 0.8918369914524783,
+   "agrees": false,
+   "context": "bilikrraistiaftskrautastainþina"
+  },
+  {
+   "sig": "DR M34",
+   "carved": "eu--uebratr",
+   "gap": 2,
+   "fill": "ka",
+   "p": 0.8647534455591348,
+   "span": [
+    0,
+    2,
+    4
+   ],
+   "alts": [
+    [
+     "vivi",
+     0.052
+    ],
+    [
+     "haggva",
+     0.03
+    ],
+    [
+     "æva",
+     0.012
+    ]
+   ],
+   "word": "ok",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "ok ave brandr i lundi",
+   "p_reading": 0.4669395801871467,
+   "agrees": null,
+   "context": "eukauebratrilundi"
+  },
+  {
+   "sig": "DR MNOR2004;9",
+   "carved": "-or-ii",
+   "gap": 1,
+   "fill": "k",
+   "p": 0.3559222195219993,
+   "span": [
+    1,
+    0,
+    4
+   ],
+   "alts": [
+    [
+     "§þorvii",
+     0.299
+    ],
+    [
+     "§þorbii",
+     0.137
+    ],
+    [
+     "§borgbyi",
+     0.048
+    ]
+   ],
+   "word": "§þorgæiRi",
+   "rundata": "[Þ]or[b]iorn",
+   "status": "återställt",
+   "reading": "su en §þorgæiRi",
+   "p_reading": 0.4308965380235826,
+   "agrees": false,
+   "context": "su?in þorkii"
+  },
+  {
+   "sig": "DR MNOR2004;9",
+   "carved": "-or-ii",
+   "gap": 1,
+   "fill": "þ",
+   "p": 0.3559222195219993,
+   "span": [
+    1,
+    0,
+    4
+   ],
+   "alts": [
+    [
+     "§þorvii",
+     0.299
+    ],
+    [
+     "§þorbii",
+     0.137
+    ],
+    [
+     "§borgbyi",
+     0.048
+    ]
+   ],
+   "word": "§þorgæiRi",
+   "rundata": "[Þ]or[b]iorn",
+   "status": "återställt",
+   "reading": "su en §þorgæiRi",
+   "p_reading": 0.4308965380235826,
+   "agrees": false,
+   "context": "su?in þorkii"
+  },
+  {
+   "sig": "DR Schl4",
+   "carved": "kiirnmirih-l",
+   "gap": 1,
+   "fill": "u",
+   "p": 0.6915707657447684,
+   "span": [
+    0,
+    10,
+    11
+   ],
+   "alts": [
+    [
+     "ægil",
+     0.237
+    ],
+    [
+     "hal",
+     0.07
+    ],
+    [
+     "§hyl",
+     0.0
+    ]
+   ],
+   "word": "igul",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "giarn mér igul",
+   "p_reading": 0.6922524636890361,
+   "agrees": null,
+   "context": "kiirnmirihul"
+  },
+  {
+   "sig": "DR Schl4",
+   "carved": "kris-",
+   "gap": 1,
+   "fill": "t",
+   "p": 0.9985250391684318,
+   "span": [
+    0,
+    4,
+    5
+   ],
+   "alts": [
+    [
+     "<unk>",
+     0.001
+    ],
+    [
+     "§krisl",
+     0.001
+    ],
+    [
+     "krist",
+     0.0
+    ]
+   ],
+   "word": "kristr",
+   "rundata": "Kris[t]",
+   "status": "återställt",
+   "reading": "kristr hialp swen har bára",
+   "p_reading": 0.998556309140592,
+   "agrees": false,
+   "context": "krist hialb suein"
+  },
+  {
+   "sig": "N 237",
+   "carved": "-iu",
+   "gap": 1,
+   "fill": "h",
+   "p": 0.666597434537378,
+   "span": [
+    7,
+    0,
+    1
+   ],
+   "alts": [
+    [
+     "niu",
+     0.137
+    ],
+    [
+     "þiu",
+     0.099
+    ],
+    [
+     "biu",
+     0.081
+    ]
+   ],
+   "word": "hio",
+   "rundata": "[h]jó",
+   "status": "återställt",
+   "reading": "unn ræisti stæin þennsi æftiR hall <unk> ma sinn ulfríkr hio",
+   "p_reading": 0.6737768869496992,
+   "agrees": false,
+   "context": "sin ulfrkr hiu"
+  },
+  {
+   "sig": "N 237",
+   "carved": "þi-",
+   "gap": 1,
+   "fill": "i",
+   "p": 0.7340982366374811,
+   "span": [
+    3,
+    2,
+    3
+   ],
+   "alts": [
+    [
+     "þikra",
+     0.17
+    ],
+    [
+     "<unk>",
+     0.035
+    ],
+    [
+     "þæiR",
+     0.027
+    ]
+   ],
+   "word": "þæiRa",
+   "rundata": "þi[nni]",
+   "status": "återställt",
+   "reading": "hialpi guð sal þæiRa þrond",
+   "p_reading": 0.7599502189967277,
+   "agrees": false,
+   "context": "kuþ sal þiiraþrt"
+  },
+  {
+   "sig": "N 540",
+   "carved": "furu-",
+   "gap": 1,
+   "fill": "s",
+   "p": 0.598843364161929,
+   "span": [
+    0,
+    4,
+    5
+   ],
+   "alts": [
+    [
+     "vitring",
+     0.142
+    ],
+    [
+     "ok",
+     0.073
+    ],
+    [
+     "forn",
+     0.051
+    ]
+   ],
+   "word": "fyrstr",
+   "rundata": "Fóru[m]",
+   "status": "återställt",
+   "reading": "fyrstr ækki af runaR island sa",
+   "p_reading": 0.6916237885313897,
+   "agrees": false,
+   "context": "furustrikiafrislatsa"
+  },
+  {
+   "sig": "N A11",
+   "carved": "-ua",
+   "gap": 1,
+   "fill": "s",
+   "p": 0.3209040281342365,
+   "span": [
+    5,
+    2,
+    4
+   ],
+   "alts": [
+    [
+     "haggva",
+     0.165
+    ],
+    [
+     "þora",
+     0.082
+    ],
+    [
+     "tva",
+     0.072
+    ]
+   ],
+   "word": "swa",
+   "rundata": "[s]vá",
+   "status": "återställt",
+   "reading": "þá er osi þaðan ok swa stæina þessa",
+   "p_reading": 0.46270819398021573,
+   "agrees": false,
+   "context": "??? þaþan auksua staina þisa"
+  },
+  {
+   "sig": "N A11",
+   "carved": "au-",
+   "gap": 1,
+   "fill": "k",
+   "p": 0.8595786145381784,
+   "span": [
+    5,
+    2,
+    4
+   ],
+   "alts": [
+    [
+     "eyglóa",
+     0.046
+    ],
+    [
+     "<unk>",
+     0.021
+    ],
+    [
+     "haggva",
+     0.014
+    ]
+   ],
+   "word": "ok",
+   "rundata": "o[k]",
+   "status": "återställt",
+   "reading": "þá er osi þaðan ok swa stæina þessa",
+   "p_reading": 0.46270819398021573,
+   "agrees": true,
+   "context": "??? þaþan auksua staina þisa"
+  },
+  {
+   "sig": "N A282",
+   "carved": "ui-",
+   "gap": 1,
+   "fill": "t",
+   "p": 0.18649685038516195,
+   "span": [
+    3,
+    2,
+    3
+   ],
+   "alts": [
+    [
+     "vil",
+     0.164
+    ],
+    [
+     "wær",
+     0.145
+    ],
+    [
+     "við",
+     0.138
+    ]
+   ],
+   "word": "vit",
+   "rundata": "v[el]",
+   "status": "återställt",
+   "reading": "ek hann æikøy vit",
+   "p_reading": 0.2519132896397345,
+   "agrees": false,
+   "context": "an ikeu uit"
+  },
+  {
+   "sig": "DR 109",
+   "carved": "miuk-",
+   "gap": 1,
+   "fill": "i",
+   "p": 0.5315263076480079,
+   "span": [
+    6,
+    4,
+    5
+   ],
+   "alts": [
+    [
+     "a",
+     0.368
+    ],
+    [
+     "<unk>",
+     0.046
+    ],
+    [
+     "er",
+     0.03
+    ]
+   ],
+   "word": "i",
+   "rundata": "Miuk[a]",
+   "status": "återställt",
+   "reading": "þoriR ræisti stæin þenna æftiR fastulf miok i",
+   "p_reading": 0.5604168285726938,
+   "agrees": false,
+   "context": "aftiR fastulf miuki"
+  },
+  {
+   "sig": "DR 133",
+   "carved": "þri-",
+   "gap": 1,
+   "fill": "a",
+   "p": 0.4695619614022008,
+   "span": [
+    7,
+    3,
+    4
+   ],
+   "alts": [
+    [
+     "þriR",
+     0.417
+    ],
+    [
+     "þrim",
+     0.087
+    ],
+    [
+     "þrjú",
+     0.009
+    ]
+   ],
+   "word": "þria",
+   "rundata": "tri[u]",
+   "status": "återställt",
+   "reading": "þau møðrgin þorwi ok oþinkor ok guðmundr þria ræisþi kumbl þausi heift gisl hinn <unk> hann vas lönd manna bæztr i danmarku ok fyrstr",
+   "p_reading": 0.1450582732102041,
+   "agrees": false,
+   "context": "auk kuþmuntr þria ??isþ? kumbl"
+  },
+  {
+   "sig": "DR 133",
+   "carved": "ki--",
+   "gap": 2,
+   "fill": "sl",
+   "p": 0.08568592508074757,
+   "span": [
+    12,
+    2,
+    4
+   ],
+   "alts": [
+    [
+     "ginna",
+     0.085
+    ],
+    [
+     "gæiRi",
+     0.083
+    ],
+    [
+     "gæra",
+     0.074
+    ]
+   ],
+   "word": "gisl",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "þau møðrgin þorwi ok oþinkor ok guðmundr þria ræisþi kumbl þausi heift gisl hinn <unk> hann vas lönd manna bæztr i danmarku ok fyrstr",
+   "p_reading": 0.1450582732102041,
+   "agrees": null,
+   "context": "þausi aift kisl hin huþskahon"
+  },
+  {
+   "sig": "DR 133",
+   "carved": "--isþ-",
+   "gap": 2,
+   "fill": "ra",
+   "p": 0.680588487459262,
+   "span": [
+    8,
+    0,
+    6
+   ],
+   "alts": [
+    [
+     "resþu",
+     0.319
+    ],
+    [
+     "uisþi",
+     0.0
+    ],
+    [
+     "<unk>",
+     0.0
+    ]
+   ],
+   "word": "ræisþi",
+   "rundata": "[r]esþ[u]",
+   "status": "återställt",
+   "reading": "þau møðrgin þorwi ok oþinkor ok guðmundr þria ræisþi kumbl þausi heift gisl hinn <unk> hann vas lönd manna bæztr i danmarku ok fyrstr",
+   "p_reading": 0.1450582732102041,
+   "agrees": false,
+   "context": "kuþmuntr þri? raisþi kumbl þausi"
+  },
+  {
+   "sig": "DR 133",
+   "carved": "--isþ-",
+   "gap": 1,
+   "fill": "i",
+   "p": 0.680588487459262,
+   "span": [
+    8,
+    0,
+    6
+   ],
+   "alts": [
+    [
+     "resþu",
+     0.319
+    ],
+    [
+     "uisþi",
+     0.0
+    ],
+    [
+     "<unk>",
+     0.0
+    ]
+   ],
+   "word": "ræisþi",
+   "rundata": "[r]esþ[u]",
+   "status": "återställt",
+   "reading": "þau møðrgin þorwi ok oþinkor ok guðmundr þria ræisþi kumbl þausi heift gisl hinn <unk> hann vas lönd manna bæztr i danmarku ok fyrstr",
+   "p_reading": 0.1450582732102041,
+   "agrees": false,
+   "context": "kuþmuntr þri? raisþi kumbl þausi"
+  },
+  {
+   "sig": "DR 212",
+   "carved": "-oru",
+   "gap": 1,
+   "fill": "þ",
+   "p": 0.9359044233187034,
+   "span": [
+    4,
+    0,
+    1
+   ],
+   "alts": [
+    [
+     "váru",
+     0.03
+    ],
+    [
+     "fóru",
+     0.026
+    ],
+    [
+     "báru",
+     0.005
+    ]
+   ],
+   "word": "þoru",
+   "rundata": "[Þ]oru",
+   "status": "återställt",
+   "reading": "toki risti runaR æftiR þoru stiup moður sina konu goða",
+   "p_reading": 0.9380289648664903,
+   "agrees": true,
+   "context": "runaR eftiR þoru stiubmoþur sina"
+  },
+  {
+   "sig": "DR 239",
+   "carved": "ru--r",
+   "gap": 2,
+   "fill": "na",
+   "p": 0.8551127138727852,
+   "span": [
+    1,
+    9,
+    11
+   ],
+   "alts": [
+    [
+     "ulfR",
+     0.024
+    ],
+    [
+     "viðr",
+     0.013
+    ],
+    [
+     "ruþur",
+     0.011
+    ]
+   ],
+   "word": "runaR",
+   "rundata": "ru[na]R",
+   "status": "återställt",
+   "reading": "þeim gai iesus <unk> iak satti runaR rett kunni armundr kröpp",
+   "p_reading": 0.8741984343471927,
+   "agrees": true,
+   "context": "þmkiiissstttiiilll iaksatarunarritkuniarmutRkrub??????"
+  },
+  {
+   "sig": "DR 293",
+   "carved": "afti-",
+   "gap": 1,
+   "fill": "R",
+   "p": 0.9995516131574935,
+   "span": [
+    5,
+    4,
+    5
+   ],
+   "alts": [
+    [
+     "en",
+     0.0
+    ],
+    [
+     "æs",
+     0.0
+    ],
+    [
+     "ek",
+     0.0
+    ]
+   ],
+   "word": "æftiR",
+   "rundata": "æfti[R]",
+   "status": "återställt",
+   "reading": "kætiløy let gærva kumbl þausi æftiR þiagn al goþan þan er hana átti",
+   "p_reading": 0.7576797222651472,
+   "agrees": true,
+   "context": "kubl þausi aftiR þiakn al"
+  },
+  {
+   "sig": "DR 354",
+   "carved": "ifi-",
+   "gap": 1,
+   "fill": "R",
+   "p": 0.9952305225927198,
+   "span": [
+    6,
+    3,
+    4
+   ],
+   "alts": [
+    [
+     "æft",
+     0.004
+    ],
+    [
+     "<unk>",
+     0.0
+    ],
+    [
+     "hefik",
+     0.0
+    ]
+   ],
+   "word": "æftiR",
+   "rundata": "yfi[R]",
+   "status": "återställt",
+   "reading": "efi ok þorgutr þæiR lagðu stæin æftiR þorlak guð hialpi sal hans",
+   "p_reading": 0.6685421716932215,
+   "agrees": false,
+   "context": "lagþu stin ifiR þorlak kuþ"
+  },
+  {
+   "sig": "DR 404",
+   "carved": "þ-nsi",
+   "gap": 1,
+   "fill": "a",
+   "p": 0.9999999984716067,
+   "span": [
+    2,
+    1,
+    2
+   ],
+   "alts": [
+    [
+     "<unk>",
+     0.0
+    ],
+    [
+     "þøn",
+     0.0
+    ],
+    [
+     "þegn",
+     0.0
+    ]
+   ],
+   "word": "þannsi",
+   "rundata": "þ[æ]nsi",
+   "status": "återställt",
+   "reading": "ræistu stæin þannsi æftiR svæin broður sinn goðan <unk> sel ok guðs moðiR",
+   "p_reading": 0.28096794597133323,
+   "agrees": true,
+   "context": "raist? stin þansi aiftiR suin"
+  },
+  {
+   "sig": "DR 404",
+   "carved": "raist-",
+   "gap": 1,
+   "fill": "u",
+   "p": 0.5007909884816522,
+   "span": [
+    0,
+    5,
+    6
+   ],
+   "alts": [
+    [
+     "ræisti",
+     0.499
+    ],
+    [
+     "reistr",
+     0.0
+    ],
+    [
+     "reista",
+     0.0
+    ]
+   ],
+   "word": "ræistu",
+   "rundata": "resþ[i]",
+   "status": "återställt",
+   "reading": "ræistu stæin þannsi æftiR svæin broður sinn goðan <unk> sel ok guðs moðiR",
+   "p_reading": 0.28096794597133323,
+   "agrees": false,
+   "context": "raistu stin þ?nsi"
+  },
+  {
+   "sig": "DR 63",
+   "carved": "ua--",
+   "gap": 2,
+   "fill": "rþ",
+   "p": 0.8549920571437344,
+   "span": [
+    8,
+    2,
+    4
+   ],
+   "alts": [
+    [
+     "vaRu",
+     0.041
+    ],
+    [
+     "vari",
+     0.01
+    ],
+    [
+     "var",
+     0.009
+    ]
+   ],
+   "word": "varð",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "<unk> <unk> n þænsi i <unk> amunda er varð u at heþaby",
+   "p_reading": 0.9997130888092258,
+   "agrees": null,
+   "context": "omuta s uarþ ?u t"
+  },
+  {
+   "sig": "DR 83",
+   "carved": "-uþi",
+   "gap": 1,
+   "fill": "a",
+   "p": 0.32796950850767265,
+   "span": [
+    0,
+    0,
+    1
+   ],
+   "alts": [
+    [
+     "§guþi",
+     0.268
+    ],
+    [
+     "boði",
+     0.213
+    ],
+    [
+     "roði",
+     0.068
+    ]
+   ],
+   "word": "auði",
+   "rundata": "[G]uði",
+   "status": "återställt",
+   "reading": "auði <unk> <unk> resþi sten þænsi æftiR orøkiu ok gærðu brøðr sina tva siarði ok síð retti saR mannr æs auði minni því",
+   "p_reading": 0.9508052760465966,
+   "agrees": false,
+   "context": "auþi bi??li risþi"
+  },
+  {
+   "sig": "DR AUD1997;264",
+   "carved": "þis-r",
+   "gap": 1,
+   "fill": "a",
+   "p": 0.9776115007615416,
+   "span": [
+    3,
+    3,
+    4
+   ],
+   "alts": [
+    [
+     "þessar",
+     0.007
+    ],
+    [
+     "§þisurs",
+     0.006
+    ],
+    [
+     "kross",
+     0.005
+    ]
+   ],
+   "word": "þessaR",
+   "rundata": "þess[a]R",
+   "status": "återställt",
+   "reading": "saxi risti runaR þessaR er ruggu mandr",
+   "p_reading": 0.9513785536096541,
+   "agrees": true,
+   "context": "risti runar þisars??rku matr"
+  },
+  {
+   "sig": "DR EM85;239",
+   "carved": "þþþuuu?nnn?",
+   "gap": 1,
+   "fill": "a",
+   "p": 0.8202613274054824,
+   "span": [
+    5,
+    9,
+    14
+   ],
+   "alts": [
+    [
+     "vann",
+     0.083
+    ],
+    [
+     "örninn",
+     0.046
+    ],
+    [
+     "vin",
+     0.024
+    ]
+   ],
+   "word": "<unk>",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "þorgot ru satti stæin þennsi æftiR halfdan faður sinn það §þou vann en nu",
+   "p_reading": 0.6627532861872811,
+   "agrees": null,
+   "context": "aftiRhalftan fauþur sinþþþuuuannnu"
+  },
+  {
+   "sig": "DR EM85;239",
+   "carved": "þþþuuu?nnn?",
+   "gap": 1,
+   "fill": "u",
+   "p": 0.5720802442794536,
+   "span": [
+    5,
+    9,
+    14
+   ],
+   "alts": [
+    [
+     "nu",
+     0.313
+    ],
+    [
+     "né",
+     0.059
+    ],
+    [
+     "nanna",
+     0.026
+    ]
+   ],
+   "word": "<unk>",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "þorgot ru satti stæin þennsi æftiR halfdan faður sinn það §þou vann en nu",
+   "p_reading": 0.6627532861872811,
+   "agrees": null,
+   "context": "aftiRhalftan fauþur sinþþþuuuannnu"
+  },
+  {
+   "sig": "DR EM85;466A",
+   "carved": "-ni",
+   "gap": 1,
+   "fill": "u",
+   "p": 0.5294533910565972,
+   "span": [
+    0,
+    0,
+    1
+   ],
+   "alts": [
+    [
+     "ani",
+     0.245
+    ],
+    [
+     "ænni",
+     0.105
+    ],
+    [
+     "gunni",
+     0.043
+    ]
+   ],
+   "word": "uni",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "uni muhumaa",
+   "p_reading": 0.6196336336864583,
+   "agrees": null,
+   "context": "uni mma"
+  },
+  {
+   "sig": "DR M44",
+   "carved": "krimk-l",
+   "gap": 1,
+   "fill": "i",
+   "p": 0.9999658890956895,
+   "span": [
+    0,
+    5,
+    6
+   ],
+   "alts": [
+    [
+     "gul",
+     0.0
+    ],
+    [
+     "kol",
+     0.0
+    ],
+    [
+     "kuml",
+     0.0
+    ]
+   ],
+   "word": "grimkel",
+   "rundata": "Grimk[e]l",
+   "status": "återställt",
+   "reading": "grimkel i lundi",
+   "p_reading": 0.8655701574038004,
+   "agrees": true,
+   "context": "krimkililunti"
+  },
+  {
+   "sig": "DR NOR1998;21",
+   "carved": "----iu-uiAA---Ar-rm",
+   "gap": 4,
+   "fill": "suiþ",
+   "p": 0.29210600609923865,
+   "span": [
+    0,
+    0,
+    7
+   ],
+   "alts": [
+    [
+     "gunnbiorn",
+     0.154
+    ],
+    [
+     "þorbiorn",
+     0.076
+    ],
+    [
+     "ulfljót",
+     0.053
+    ]
+   ],
+   "word": "sveþiuðu",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "sveþiuðu en asgærðr þrim",
+   "p_reading": 0.3369128423107817,
+   "agrees": null,
+   "context": "suiþiuþuiaa???ar?rm"
+  },
+  {
+   "sig": "DR NOR1998;21",
+   "carved": "----iu-uiAA---Ar-rm",
+   "gap": 1,
+   "fill": "þ",
+   "p": 0.4576835165598976,
+   "span": [
+    0,
+    11,
+    17
+   ],
+   "alts": [
+    [
+     "grim",
+     0.159
+    ],
+    [
+     "asbiorn",
+     0.128
+    ],
+    [
+     "orm",
+     0.046
+    ]
+   ],
+   "word": "þrim",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "sveþiuðu en asgærðr þrim",
+   "p_reading": 0.3369128423107817,
+   "agrees": null,
+   "context": "????iu?uiaaskiarþrm"
+  },
+  {
+   "sig": "DR NOR1998;21",
+   "carved": "----iu-uiAA---Ar-rm",
+   "gap": 1,
+   "fill": "þ",
+   "p": 0.29210600609923865,
+   "span": [
+    0,
+    0,
+    7
+   ],
+   "alts": [
+    [
+     "gunnbiorn",
+     0.154
+    ],
+    [
+     "þorbiorn",
+     0.076
+    ],
+    [
+     "ulfljót",
+     0.053
+    ]
+   ],
+   "word": "sveþiuðu",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "sveþiuðu en asgærðr þrim",
+   "p_reading": 0.3369128423107817,
+   "agrees": null,
+   "context": "suiþiuþuiaa???ar?rm"
+  },
+  {
+   "sig": "DR NOR1998;21",
+   "carved": "----iu-uiAA---Ar-rm",
+   "gap": 3,
+   "fill": "ski",
+   "p": 0.3162142029265829,
+   "span": [
+    0,
+    11,
+    17
+   ],
+   "alts": [
+    [
+     "asbiorn",
+     0.128
+    ],
+    [
+     "§auðgær",
+     0.058
+    ],
+    [
+     "ingvarr",
+     0.052
+    ]
+   ],
+   "word": "asgærðr",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "sveþiuðu en asgærðr þrim",
+   "p_reading": 0.3369128423107817,
+   "agrees": null,
+   "context": "????iu?uiaaskiarþrm"
+  },
+  {
+   "sig": "N 160",
+   "carved": "ru--r",
+   "gap": 2,
+   "fill": "na",
+   "p": 0.5562786563873899,
+   "span": [
+    4,
+    2,
+    4
+   ],
+   "alts": [
+    [
+     "broþur",
+     0.355
+    ],
+    [
+     "rulur",
+     0.036
+    ],
+    [
+     "hroðmar",
+     0.022
+    ]
+   ],
+   "word": "runaR",
+   "rundata": "rú[na]r",
+   "status": "återställt",
+   "reading": "§þorallr rett sa skal raða runaR",
+   "p_reading": 0.5257412153275483,
+   "agrees": false,
+   "context": "saskal raþa runar"
+  },
+  {
+   "sig": "N 252",
+   "carved": "--a--n--------",
+   "gap": 2,
+   "fill": "hf",
+   "p": 0.5259244797156327,
+   "span": [
+    9,
+    0,
+    5
+   ],
+   "alts": [
+    [
+     "grafinn",
+     0.341
+    ],
+    [
+     "drepinn",
+     0.065
+    ],
+    [
+     "svikinn",
+     0.054
+    ]
+   ],
+   "word": "farinn",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "§hallf er brestr ræisti stæin þenna ept §arnlling drottin sin er en vas farinn æs hann barðisk við olæif",
+   "p_reading": 0.5337871290225039,
+   "agrees": null,
+   "context": "sin ?s?inuas hfarin???????? ishan bariþisk"
+  },
+  {
+   "sig": "N 252",
+   "carved": "--a--n--------",
+   "gap": 2,
+   "fill": "ri",
+   "p": 0.5259244797156327,
+   "span": [
+    9,
+    0,
+    5
+   ],
+   "alts": [
+    [
+     "grafinn",
+     0.341
+    ],
+    [
+     "drepinn",
+     0.065
+    ],
+    [
+     "svikinn",
+     0.054
+    ]
+   ],
+   "word": "farinn",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "§hallf er brestr ræisti stæin þenna ept §arnlling drottin sin er en vas farinn æs hann barðisk við olæif",
+   "p_reading": 0.5337871290225039,
+   "agrees": null,
+   "context": "sin ?s?inuas hfarin???????? ishan bariþisk"
+  },
+  {
+   "sig": "N 544",
+   "carved": "--in",
+   "gap": 2,
+   "fill": "st",
+   "p": 0.9883116580187238,
+   "span": [
+    1,
+    0,
+    2
+   ],
+   "alts": [
+    [
+     "stein",
+     0.007
+    ],
+    [
+     "svæinn",
+     0.003
+    ],
+    [
+     "óðinn",
+     0.0
+    ]
+   ],
+   "word": "stæin",
+   "rundata": "[ste]in",
+   "status": "återställt",
+   "reading": "stæin þenna",
+   "p_reading": 0.9728892002089101,
+   "agrees": false,
+   "context": "? stin þana"
+  },
+  {
+   "sig": "N A178",
+   "carved": "-halkia---",
+   "gap": 3,
+   "fill": "rþi",
+   "p": 0.3577328363053383,
+   "span": [
+    0,
+    7,
+    10
+   ],
+   "alts": [
+    [
+     "gærðu",
+     0.134
+    ],
+    [
+     "gærva",
+     0.068
+    ],
+    [
+     "hialpi",
+     0.061
+    ]
+   ],
+   "word": "gærði",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "ægil gærði",
+   "p_reading": 0.29345935584835464,
+   "agrees": null,
+   "context": "?halkiarþi"
+  },
+  {
+   "sig": "N A178",
+   "carved": "-halkia---",
+   "gap": 1,
+   "fill": "i",
+   "p": 0.5223379221686977,
+   "span": [
+    0,
+    0,
+    1
+   ],
+   "alts": [
+    [
+     "a",
+     0.356
+    ],
+    [
+     "§roall",
+     0.04
+    ],
+    [
+     "er",
+     0.019
+    ]
+   ],
+   "word": "ægil",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "ægil gærði",
+   "p_reading": 0.29345935584835464,
+   "agrees": null,
+   "context": "ihalkia???"
+  },
+  {
+   "sig": "N A3",
+   "carved": "þunrau----",
+   "gap": 4,
+   "fill": "ksin",
+   "p": 0.6390398416457399,
+   "span": [
+    0,
+    6,
+    10
+   ],
+   "alts": [
+    [
+     "øystæinn",
+     0.214
+    ],
+    [
+     "æftiR",
+     0.096
+    ],
+    [
+     "§øyfast",
+     0.012
+    ]
+   ],
+   "word": "ok",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "§þunnr ok sinn",
+   "p_reading": 0.5611437872720096,
+   "agrees": null,
+   "context": "þunrauksin"
+  },
+  {
+   "sig": "DR 110",
+   "carved": "ki-mutr",
+   "gap": 1,
+   "fill": "R",
+   "p": 0.8075309200789269,
+   "span": [
+    0,
+    2,
+    3
+   ],
+   "alts": [
+    [
+     "gismundr",
+     0.186
+    ],
+    [
+     "§kætmundr",
+     0.003
+    ],
+    [
+     "§ginmundr",
+     0.002
+    ]
+   ],
+   "word": "gæiRmundr",
+   "rundata": "Ge[R]mundr",
+   "status": "återställt",
+   "reading": "gæiRmundr n gærði minni u æft sassurr §star resþi sten æft dauðan",
+   "p_reading": 0.7841224522233725,
+   "agrees": true,
+   "context": "kiRmutr n karþi"
+  },
+  {
+   "sig": "DR 134",
+   "carved": "os-uþ",
+   "gap": 1,
+   "fill": "m",
+   "p": 0.3914900581823287,
+   "span": [
+    4,
+    18,
+    19
+   ],
+   "alts": [
+    [
+     "§asguð",
+     0.198
+    ],
+    [
+     "§asruð",
+     0.187
+    ],
+    [
+     "asboð",
+     0.181
+    ]
+   ],
+   "word": "<unk>",
+   "rundata": "As[b]oþ",
+   "status": "återställt",
+   "reading": "azur let hirðir §gygæiRs sun rest runaR þæssi at <unk>",
+   "p_reading": 0.3812532027548462,
+   "agrees": false,
+   "context": "kukis sun raistrunarþasiatosmuþtrunik"
+  },
+  {
+   "sig": "DR 216",
+   "carved": "hiltu--R",
+   "gap": 2,
+   "fill": "fi",
+   "p": 0.7217268682729099,
+   "span": [
+    0,
+    14,
+    16
+   ],
+   "alts": [
+    [
+     "þæiR",
+     0.131
+    ],
+    [
+     "hildolfr",
+     0.076
+    ],
+    [
+     "dottiR",
+     0.015
+    ]
+   ],
+   "word": "yfiR",
+   "rundata": "Hildu[ng]R/Hildv[ig]R",
+   "status": "återställt",
+   "reading": "§asraðr ok helt yfiR resþu sten þænsi æft froða fyr and i sun sin æn han was þa fain <unk>",
+   "p_reading": 0.8278352052732806,
+   "agrees": false,
+   "context": "osraþraukhiltufiRraisþustainþansiaftfroþafrontisinsinianhanuasþofoinkuaiRa"
+  },
+  {
+   "sig": "DR 254",
+   "carved": "iþkafthonsrnr-isi",
+   "gap": 1,
+   "fill": "þ",
+   "p": 0.4966735587987191,
+   "span": [
+    6,
+    13,
+    14
+   ],
+   "alts": [
+    [
+     "resþi",
+     0.288
+    ],
+    [
+     "vissi",
+     0.101
+    ],
+    [
+     "disi",
+     0.043
+    ]
+   ],
+   "word": "þessi",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "§aslæikiR ræisti stæin eigi sa fioll sinn oð en uku nætR skeþ løysa i ið gaft hans §ôrnr þessi",
+   "p_reading": 0.5346662804451621,
+   "agrees": null,
+   "context": "ukunitRskþlasa?? i iþkafthonsrnrþisi"
+  },
+  {
+   "sig": "DR 298",
+   "carved": "huk--",
+   "gap": 2,
+   "fill": "sa",
+   "p": 0.43861365756461884,
+   "span": [
+    13,
+    3,
+    5
+   ],
+   "alts": [
+    [
+     "hoggwa",
+     0.236
+    ],
+    [
+     "hugþi",
+     0.129
+    ],
+    [
+     "hugat",
+     0.063
+    ]
+   ],
+   "word": "oxa",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "þorgæiRR ræisþi stæin þenna at <unk> faður sinn goðan bonda as liki lagi oxa",
+   "p_reading": 0.9557658659317192,
+   "agrees": null,
+   "context": "liki liki huksa"
+  },
+  {
+   "sig": "DR 372",
+   "carved": "su---",
+   "gap": 3,
+   "fill": "ein",
+   "p": 0.23235026198653574,
+   "span": [
+    3,
+    2,
+    5
+   ],
+   "alts": [
+    [
+     "svæin",
+     0.18
+    ],
+    [
+     "syniR",
+     0.178
+    ],
+    [
+     "sonaR",
+     0.076
+    ]
+   ],
+   "word": "swen",
+   "rundata": "Sw[en]",
+   "status": "återställt",
+   "reading": "þorstæinn let haggva hefjendr swen goðr þegn",
+   "p_reading": 0.5482910771813372,
+   "agrees": true,
+   "context": "let hkaefetR suein koþr þign"
+  },
+  {
+   "sig": "DR 405",
+   "carved": "hi-",
+   "gap": 1,
+   "fill": "u",
+   "p": 0.8651537753990189,
+   "span": [
+    4,
+    2,
+    3
+   ],
+   "alts": [
+    [
+     "hiogg",
+     0.117
+    ],
+    [
+     "hinn",
+     0.007
+    ],
+    [
+     "het",
+     0.005
+    ]
+   ],
+   "word": "hio",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "<unk> §skorps <unk> §skorps má <unk> má <unk> hio runaR hann <unk>",
+   "p_reading": 0.8370940720364766,
+   "agrees": null,
+   "context": "ma?ra ma?ræ hiu ?r ha"
+  },
+  {
+   "sig": "DR 65",
+   "carved": "s-a-naR",
+   "gap": 1,
+   "fill": "t",
+   "p": 0.6927106563972155,
+   "span": [
+    2,
+    1,
+    4
+   ],
+   "alts": [
+    [
+     "svæinaR",
+     0.287
+    ],
+    [
+     "stafnar",
+     0.004
+    ],
+    [
+     "skafnar",
+     0.004
+    ]
+   ],
+   "word": "stæinaR",
+   "rundata": "s[t]enaR",
+   "status": "återställt",
+   "reading": "asgæiRR <unk> stæinaR þa",
+   "p_reading": 0.6824110639323522,
+   "agrees": true,
+   "context": "oskaiR biar stainaR þa ?????"
+  },
+  {
+   "sig": "DR 65",
+   "carved": "s-a-naR",
+   "gap": 1,
+   "fill": "i",
+   "p": 0.6927106563972155,
+   "span": [
+    2,
+    1,
+    4
+   ],
+   "alts": [
+    [
+     "svæinaR",
+     0.287
+    ],
+    [
+     "stafnar",
+     0.004
+    ],
+    [
+     "skafnar",
+     0.004
+    ]
+   ],
+   "word": "stæinaR",
+   "rundata": "s[t]enaR",
+   "status": "återställt",
+   "reading": "asgæiRR <unk> stæinaR þa",
+   "p_reading": 0.6824110639323522,
+   "agrees": true,
+   "context": "oskaiR biar stainaR þa ?????"
+  },
+  {
+   "sig": "DR 94",
+   "carved": "m-rgt",
+   "gap": 1,
+   "fill": "a",
+   "p": 0.9999963285678941,
+   "span": [
+    13,
+    1,
+    2
+   ],
+   "alts": [
+    [
+     "mörg",
+     0.0
+    ],
+    [
+     "meðr",
+     0.0
+    ],
+    [
+     "<unk>",
+     0.0
+    ]
+   ],
+   "word": "margt",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "toli ræisti stæin þannsi æftiR kal at sun sinn miok goðan ok þau munu minni margt §iof þæiR <unk>",
+   "p_reading": 0.5137807920386448,
+   "agrees": null,
+   "context": "þau munumini margt iuf þirta"
+  },
+  {
+   "sig": "DR 94",
+   "carved": "ris-i",
+   "gap": 1,
+   "fill": "þ",
+   "p": 0.9999991041285343,
+   "span": [
+    1,
+    3,
+    4
+   ],
+   "alts": [
+    [
+     "<unk>",
+     0.0
+    ],
+    [
+     "risinn",
+     0.0
+    ],
+    [
+     "ræisa",
+     0.0
+    ]
+   ],
+   "word": "ræisti",
+   "rundata": "res[þ]i",
+   "status": "återställt",
+   "reading": "toli ræisti stæin þannsi æftiR kal at sun sinn miok goðan ok þau munu minni margt §iof þæiR <unk>",
+   "p_reading": 0.5137807920386448,
+   "agrees": true,
+   "context": "tuli risþi stin þasi"
+  },
+  {
+   "sig": "DR EM85;265",
+   "carved": "risþ-",
+   "gap": 1,
+   "fill": "i",
+   "p": 0.9685219594289812,
+   "span": [
+    2,
+    4,
+    7
+   ],
+   "alts": [
+    [
+     "stæin",
+     0.031
+    ],
+    [
+     "<unk>",
+     0.0
+    ],
+    [
+     "ræisþu",
+     0.0
+    ]
+   ],
+   "word": "resþi",
+   "rundata": "resþ[i]",
+   "status": "återställt",
+   "reading": "þorkell §sviðbalki resþi sten þænsi <unk> toka <unk> næR sik",
+   "p_reading": 0.991270874146268,
+   "agrees": true,
+   "context": "þurkil suiþbalki risþistin þinsi R"
+  },
+  {
+   "sig": "DR EM85;265",
+   "carved": "--in",
+   "gap": 2,
+   "fill": "st",
+   "p": 0.9601837907525541,
+   "span": [
+    2,
+    4,
+    7
+   ],
+   "alts": [
+    [
+     "stæin",
+     0.04
+    ],
+    [
+     "<unk>",
+     0.0
+    ],
+    [
+     "óðinn",
+     0.0
+    ]
+   ],
+   "word": "sten",
+   "rundata": "[st]en",
+   "status": "återställt",
+   "reading": "þorkell §sviðbalki resþi sten þænsi <unk> toka <unk> næR sik",
+   "p_reading": 0.991270874146268,
+   "agrees": true,
+   "context": "þurkil suiþbalki risþistin þinsi R"
+  },
+  {
+   "sig": "DR EM85;531",
+   "carved": "s-in",
+   "gap": 1,
+   "fill": "t",
+   "p": 0.9791425595022142,
+   "span": [
+    1,
+    1,
+    2
+   ],
+   "alts": [
+    [
+     "stæin",
+     0.011
+    ],
+    [
+     "svæinn",
+     0.009
+    ],
+    [
+     "§sigæinn",
+     0.0
+    ]
+   ],
+   "word": "sten",
+   "rundata": "s[t]en",
+   "status": "återställt",
+   "reading": "þú sten þæssi aurik broður sinn",
+   "p_reading": 0.9885405547023849,
+   "agrees": true,
+   "context": "þu stinþosi ?? urik"
+  },
+  {
+   "sig": "DR M59B",
+   "carved": "mu?to?i",
+   "gap": 1,
+   "fill": "n",
+   "p": 0.3821228714740347,
+   "span": [
+    0,
+    2,
+    6
+   ],
+   "alts": [
+    [
+     "§mul",
+     0.116
+    ],
+    [
+     "myskia",
+     0.094
+    ],
+    [
+     "§mur",
+     0.09
+    ]
+   ],
+   "word": "mun",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "mun toli",
+   "p_reading": 0.3680863497288034,
+   "agrees": null,
+   "context": "muntoli"
+  },
+  {
+   "sig": "DR M59B",
+   "carved": "mu?to?i",
+   "gap": 1,
+   "fill": "l",
+   "p": 0.30512825839732716,
+   "span": [
+    0,
+    2,
+    6
+   ],
+   "alts": [
+    [
+     "toki",
+     0.202
+    ],
+    [
+     "tofi",
+     0.188
+    ],
+    [
+     "tobbi",
+     0.066
+    ]
+   ],
+   "word": "toli",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "mun toli",
+   "p_reading": 0.3680863497288034,
+   "agrees": null,
+   "context": "muntoli"
+  },
+  {
+   "sig": "DR NOR1998;9A",
+   "carved": "bau-s",
+   "gap": 1,
+   "fill": "s",
+   "p": 0.5385032727969935,
+   "span": [
+    5,
+    3,
+    4
+   ],
+   "alts": [
+    [
+     "baugs",
+     0.411
+    ],
+    [
+     "vas",
+     0.013
+    ],
+    [
+     "§bavis",
+     0.011
+    ]
+   ],
+   "word": "§bauss",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "u va a sinn hiar hlífar kati §bauss gerði",
+   "p_reading": 0.559238407834202,
+   "agrees": null,
+   "context": "lifar kati bauss k??"
+  },
+  {
+   "sig": "N 163",
+   "carved": "ris-u",
+   "gap": 1,
+   "fill": "t",
+   "p": 0.6329945786708749,
+   "span": [
+    2,
+    3,
+    4
+   ],
+   "alts": [
+    [
+     "resþu",
+     0.366
+    ],
+    [
+     "risnøy",
+     0.001
+    ],
+    [
+     "rysiu",
+     0.0
+    ]
+   ],
+   "word": "reistu",
+   "rundata": "reis[t]u",
+   "status": "återställt",
+   "reading": "arngæiRs synir reistu illu þessa æftiR §þiuðulf <unk> auðmundr risti runaR þessaR ok þeR hans and rammr sun",
+   "p_reading": 0.40097118088653355,
+   "agrees": true,
+   "context": "arnkairs sunir ristu eluþesa eftir"
+  },
+  {
+   "sig": "N 163",
+   "carved": "mrs--",
+   "gap": 2,
+   "fill": "un",
+   "p": 0.7079532048441791,
+   "span": [
+    11,
+    9,
+    11
+   ],
+   "alts": [
+    [
+     "saR",
+     0.049
+    ],
+    [
+     "ræisti",
+     0.045
+    ],
+    [
+     "sum",
+     0.036
+    ]
+   ],
+   "word": "sun",
+   "rundata": "mœrs[ki]",
+   "status": "återställt",
+   "reading": "arngæiRs synir reistu illu þessa æftiR §þiuðulf <unk> auðmundr risti runaR þessaR ok þeR hans and rammr sun",
+   "p_reading": 0.40097118088653355,
+   "agrees": false,
+   "context": "þesarauk þeir onlotrmrsun"
+  },
+  {
+   "sig": "N 259",
+   "carved": "r-is-u",
+   "gap": 1,
+   "fill": "a",
+   "p": 0.9999997282806752,
+   "span": [
+    3,
+    1,
+    5
+   ],
+   "alts": [
+    [
+     "<unk>",
+     0.0
+    ],
+    [
+     "§ruistu",
+     0.0
+    ],
+    [
+     "§ruislu",
+     0.0
+    ]
+   ],
+   "word": "ræistu",
+   "rundata": "r[e]is[t]u",
+   "status": "återställt",
+   "reading": "þormóðr ok þorgærðr ræistu stæin þenna æftiR §gaut",
+   "p_reading": 0.8471596434835147,
+   "agrees": false,
+   "context": "auk þurkarþr raistu stain þinaaftirkau"
+  },
+  {
+   "sig": "N 259",
+   "carved": "r-is-u",
+   "gap": 1,
+   "fill": "t",
+   "p": 0.9999997282806752,
+   "span": [
+    3,
+    1,
+    5
+   ],
+   "alts": [
+    [
+     "<unk>",
+     0.0
+    ],
+    [
+     "§ruistu",
+     0.0
+    ],
+    [
+     "§ruislu",
+     0.0
+    ]
+   ],
+   "word": "ræistu",
+   "rundata": "r[e]is[t]u",
+   "status": "återställt",
+   "reading": "þormóðr ok þorgærðr ræistu stæin þenna æftiR §gaut",
+   "p_reading": 0.8471596434835147,
+   "agrees": false,
+   "context": "auk þurkarþr raistu stain þinaaftirkau"
+  },
+  {
+   "sig": "N 61",
+   "carved": "--ti",
+   "gap": 2,
+   "fill": "ha",
+   "p": 0.16519578849937064,
+   "span": [
+    8,
+    0,
+    2
+   ],
+   "alts": [
+    [
+     "satti",
+     0.112
+    ],
+    [
+     "sotti",
+     0.11
+    ],
+    [
+     "retti",
+     0.081
+    ]
+   ],
+   "word": "atti",
+   "rundata": "[á]tti",
+   "status": "återställt",
+   "reading": "iorunn ræisti stæin þenna æftiR øy hon æs hana atti ok førði af hrygg æiriki útan §orulf ave",
+   "p_reading": 0.5860452608252821,
+   "agrees": true,
+   "context": "is hana hati auk furþi"
+  },
+  {
+   "sig": "N 61",
+   "carved": "----ir",
+   "gap": 4,
+   "fill": "ifit",
+   "p": 0.18819377894242847,
+   "span": [
+    3,
+    0,
+    4
+   ],
+   "alts": [
+    [
+     "fastr",
+     0.178
+    ],
+    [
+     "þenna",
+     0.127
+    ],
+    [
+     "stendr",
+     0.119
+    ]
+   ],
+   "word": "eptir",
+   "rundata": "[mæt]ir",
+   "status": "återställt",
+   "reading": "ok munda stein eptir þøsi",
+   "p_reading": 0.9300812423876127,
+   "agrees": false,
+   "context": "munta stain ifitir þusi"
+  },
+  {
+   "sig": "N A186",
+   "carved": "sn--lt",
+   "gap": 2,
+   "fill": "ka",
+   "p": 0.1791731924342435,
+   "span": [
+    1,
+    2,
+    4
+   ],
+   "alts": [
+    [
+     "<unk>",
+     0.148
+    ],
+    [
+     "syniR",
+     0.088
+    ],
+    [
+     "snoR",
+     0.069
+    ]
+   ],
+   "word": "galt",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "en arngæiRs son galt",
+   "p_reading": 0.3858454679533288,
+   "agrees": null,
+   "context": "enark??rs snkalt"
+  },
+  {
+   "sig": "N A186",
+   "carved": "enark--rs",
+   "gap": 2,
+   "fill": "ai",
+   "p": 0.820076434797191,
+   "span": [
+    0,
+    5,
+    7
+   ],
+   "alts": [
+    [
+     "gunnars",
+     0.076
+    ],
+    [
+     "fors",
+     0.031
+    ],
+    [
+     "<unk>",
+     0.025
+    ]
+   ],
+   "word": "arngæiRs",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "en arngæiRs son galt",
+   "p_reading": 0.3858454679533288,
+   "agrees": null,
+   "context": "enarkairs sn??lt"
+  },
+  {
+   "sig": "N A325",
+   "carved": "kriþi--a",
+   "gap": 2,
+   "fill": "st",
+   "p": 0.8182818703835095,
+   "span": [
+    2,
+    5,
+    7
+   ],
+   "alts": [
+    [
+     "græðir",
+     0.049
+    ],
+    [
+     "iuta",
+     0.024
+    ],
+    [
+     "þikra",
+     0.012
+    ]
+   ],
+   "word": "<unk>",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "<unk> reisti <unk>",
+   "p_reading": 0.6404182239492557,
+   "agrees": null,
+   "context": "ckalti raicti kriþista"
+  },
+  {
+   "sig": "DR 114",
+   "carved": "-auþi",
+   "gap": 1,
+   "fill": "r",
+   "p": 0.9038753727514633,
+   "span": [
+    8,
+    0,
+    1
+   ],
+   "alts": [
+    [
+     "dauði",
+     0.036
+    ],
+    [
+     "øþi",
+     0.033
+    ],
+    [
+     "nauðiR",
+     0.009
+    ]
+   ],
+   "word": "rauði",
+   "rundata": "[d]øþi",
+   "status": "återställt",
+   "reading": "resþi sten þænsi æft moþur sina ok gyi rauði sem verst magi",
+   "p_reading": 0.9173635433513861,
+   "agrees": false,
+   "context": "auk ku rauþi sam uarst"
+  },
+  {
+   "sig": "DR 154",
+   "carved": "----iR",
+   "gap": 4,
+   "fill": "þurk",
+   "p": 0.23695168430638164,
+   "span": [
+    5,
+    4,
+    8
+   ],
+   "alts": [
+    [
+     "guðveR",
+     0.157
+    ],
+    [
+     "ristiR",
+     0.106
+    ],
+    [
+     "burniR",
+     0.082
+    ]
+   ],
+   "word": "þorgiR",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "asa satti sten þænsi æftiR toku þorgiR a wær sin goþan æs warþ veginn a §aufu heþi ok va er hemþægi saga §iodis",
+   "p_reading": 0.3599445606874594,
+   "agrees": null,
+   "context": "þonsi aftiR tukuþurkiR ?a ?ir"
+  },
+  {
+   "sig": "DR 154",
+   "carved": "-ir",
+   "gap": 1,
+   "fill": "u",
+   "p": 0.9724547993287179,
+   "span": [
+    7,
+    0,
+    1
+   ],
+   "alts": [
+    [
+     "þér",
+     0.007
+    ],
+    [
+     "her",
+     0.006
+    ],
+    [
+     "seR",
+     0.005
+    ]
+   ],
+   "word": "wær",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "asa satti sten þænsi æftiR toku þorgiR a wær sin goþan æs warþ veginn a §aufu heþi ok va er hemþægi saga §iodis",
+   "p_reading": 0.3599445606874594,
+   "agrees": null,
+   "context": "tuku????iR ?a uir sin kuþon"
+  },
+  {
+   "sig": "DR 217",
+   "carved": "ha-",
+   "gap": 1,
+   "fill": "n",
+   "p": 0.340854690850337,
+   "span": [
+    5,
+    2,
+    3
+   ],
+   "alts": [
+    [
+     "§halaf",
+     0.197
+    ],
+    [
+     "rafn",
+     0.169
+    ],
+    [
+     "hans",
+     0.102
+    ]
+   ],
+   "word": "hann",
+   "rundata": "ha[l]",
+   "status": "återställt",
+   "reading": "§sotr swen ok suðr dana §guða ol at hann hafn orminum sam",
+   "p_reading": 0.3918757576987485,
+   "agrees": false,
+   "context": "kuaul at hanafnurminumsom"
+  },
+  {
+   "sig": "DR 217",
+   "carved": "-uk",
+   "gap": 1,
+   "fill": "a",
+   "p": 0.9964523710041536,
+   "span": [
+    3,
+    0,
+    1
+   ],
+   "alts": [
+    [
+     "tok",
+     0.002
+    ],
+    [
+     "log",
+     0.0
+    ],
+    [
+     "hrygg",
+     0.0
+    ]
+   ],
+   "word": "ok",
+   "rundata": "[l]ok",
+   "status": "återställt",
+   "reading": "bæztr hann vas §sotr swen ok",
+   "p_reading": 0.9368030107606696,
+   "agrees": false,
+   "context": "hanuas sutrsuia auk"
+  },
+  {
+   "sig": "DR 263",
+   "carved": "auab-k",
+   "gap": 1,
+   "fill": "a",
+   "p": 0.45772058125481196,
+   "span": [
+    1,
+    4,
+    5
+   ],
+   "alts": [
+    [
+     "§bugg",
+     0.344
+    ],
+    [
+     "byggi",
+     0.066
+    ],
+    [
+     "§bog",
+     0.047
+    ]
+   ],
+   "word": "§bagg",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "<unk> tok <unk> feaR <unk> sina iak asu því launat æva §bagg swafa gat",
+   "p_reading": 0.2815690380923685,
+   "agrees": null,
+   "context": "RRRRRRRRRRRRRRRR?aþitukfaukafiaRsisinaiakasuþuilaunat auabaksuafakat"
+  },
+  {
+   "sig": "DR 263",
+   "carved": "-aþi",
+   "gap": 1,
+   "fill": "f",
+   "p": 0.9765010454430791,
+   "span": [
+    0,
+    16,
+    17
+   ],
+   "alts": [
+    [
+     "baði",
+     0.023
+    ]
+   ],
+   "word": "<unk>",
+   "rundata": "[R]aþi",
+   "status": "återställt",
+   "reading": "<unk> tok <unk> feaR <unk> sina iak asu því launat æva §bagg swafa gat",
+   "p_reading": 0.2815690380923685,
+   "agrees": false,
+   "context": "RRRRRRRRRRRRRRRRfaþitukfaukafiaRsisinaiakasuþuilaunat auab?ksuafakat"
+  },
+  {
+   "sig": "DR 311",
+   "carved": "-on",
+   "gap": 1,
+   "fill": "h",
+   "p": 0.36328488885167703,
+   "span": [
+    3,
+    0,
+    1
+   ],
+   "alts": [
+    [
+     "son",
+     0.176
+    ],
+    [
+     "þann",
+     0.169
+    ],
+    [
+     "ion",
+     0.14
+    ]
+   ],
+   "word": "hann",
+   "rundata": "[m]an",
+   "status": "återställt",
+   "reading": "§skvaraR ingimarr hafa hann mun grænd a §alland ti",
+   "p_reading": 0.4280522556261268,
+   "agrees": false,
+   "context": "ikimar afa hon mn krat"
+  },
+  {
+   "sig": "DR 383",
+   "carved": "as--l",
+   "gap": 2,
+   "fill": "ki",
+   "p": 0.8429516865390645,
+   "span": [
+    9,
+    2,
+    4
+   ],
+   "alts": [
+    [
+     "askel",
+     0.121
+    ],
+    [
+     "§asisl",
+     0.016
+    ],
+    [
+     "§astil",
+     0.013
+    ]
+   ],
+   "word": "æskel",
+   "rundata": "Æs[ke]l",
+   "status": "återställt",
+   "reading": "<unk> bro þim hæim ræistu kumbl þatsi a ok æftiR æskel bróður sinn guð <unk>",
+   "p_reading": 0.511462611219112,
+   "agrees": true,
+   "context": "uk afteR askil bruþuR sin"
+  },
+  {
+   "sig": "DR 383",
+   "carved": "raist-",
+   "gap": 1,
+   "fill": "u",
+   "p": 0.5258276856465985,
+   "span": [
+    3,
+    5,
+    6
+   ],
+   "alts": [
+    [
+     "ræisti",
+     0.473
+    ],
+    [
+     "reistr",
+     0.001
+    ],
+    [
+     "reista",
+     0.0
+    ]
+   ],
+   "word": "ræistu",
+   "rundata": "resþ[u]",
+   "status": "återställt",
+   "reading": "<unk> bro þim hæim ræistu kumbl þatsi a ok æftiR æskel bróður sinn guð <unk>",
+   "p_reading": 0.511462611219112,
+   "agrees": true,
+   "context": "bruþim aim raistu kumbl þitsi"
+  },
+  {
+   "sig": "DR 44",
+   "carved": "kun-r",
+   "gap": 1,
+   "fill": "a",
+   "p": 0.9561905262254862,
+   "span": [
+    2,
+    3,
+    4
+   ],
+   "alts": [
+    [
+     "gunnur",
+     0.036
+    ],
+    [
+     "§kuntr",
+     0.003
+    ],
+    [
+     "konungr",
+     0.001
+    ]
+   ],
+   "word": "gunnar",
+   "rundata": "Gunn[a]r",
+   "status": "återställt",
+   "reading": "<unk> æft gunnar <unk>",
+   "p_reading": 0.8779640019899142,
+   "agrees": true,
+   "context": "si uft kunar tr?"
+  },
+  {
+   "sig": "DR 68",
+   "carved": "-usti",
+   "gap": 1,
+   "fill": "t",
+   "p": 0.9967201184546177,
+   "span": [
+    0,
+    0,
+    1
+   ],
+   "alts": [
+    [
+     "kusta",
+     0.002
+    ],
+    [
+     "risti",
+     0.001
+    ],
+    [
+     "§øysti",
+     0.0
+    ]
+   ],
+   "word": "tosti",
+   "rundata": "[T]osti",
+   "status": "återställt",
+   "reading": "tosti ok hofi ok þæiR frøbiorn resþu sten þænsi æftiR assur saxa felaga sin harþa",
+   "p_reading": 0.99595084075655,
+   "agrees": true,
+   "context": "tusti auk hufi"
+  },
+  {
+   "sig": "DR 98",
+   "carved": "ri--i",
+   "gap": 2,
+   "fill": "sþ",
+   "p": 0.999954228604747,
+   "span": [
+    1,
+    2,
+    4
+   ],
+   "alts": [
+    [
+     "rikvi",
+     0.0
+    ],
+    [
+     "rifla",
+     0.0
+    ],
+    [
+     "riuði",
+     0.0
+    ]
+   ],
+   "word": "resþi",
+   "rundata": "re[sþ]i",
+   "status": "återställt",
+   "reading": "tofa resþi sten þænni æftiR §tum ver sinn en þegn saR u ór tveggja hinn",
+   "p_reading": 0.7944131658152886,
+   "agrees": true,
+   "context": "tufa risþi stin þani"
+  },
+  {
+   "sig": "DR DKBh66",
+   "carved": "??kan??????",
+   "gap": 2,
+   "fill": "au",
+   "p": 0.2863807026329815,
+   "span": [
+    0,
+    0,
+    2
+   ],
+   "alts": [
+    [
+     "langan",
+     0.078
+    ],
+    [
+     "dagan",
+     0.069
+    ],
+    [
+     "engan",
+     0.055
+    ]
+   ],
+   "word": "ok",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "ok hann",
+   "p_reading": 0.8889076756618663,
+   "agrees": null,
+   "context": "aukan??????"
+  },
+  {
+   "sig": "DR EM85;356",
+   "carved": "i--a--lhnifka",
+   "gap": 2,
+   "fill": "ma",
+   "p": 0.23054076070906088,
+   "span": [
+    1,
+    1,
+    6
+   ],
+   "alts": [
+    [
+     "gamall",
+     0.159
+    ],
+    [
+     "§ingkætill",
+     0.116
+    ],
+    [
+     "kætill",
+     0.114
+    ]
+   ],
+   "word": "§hælg",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "§ku-k- ok §borRik §ingigæiR es gamall nef <unk> viR <unk> ave",
+   "p_reading": 0.540312383202533,
+   "agrees": null,
+   "context": "kukukuburRikikiki iskamalhnifka uiRsiiue"
+  },
+  {
+   "sig": "DR EM85;356",
+   "carved": "i--a--lhnifka",
+   "gap": 2,
+   "fill": "sk",
+   "p": 0.25776185253987793,
+   "span": [
+    1,
+    1,
+    6
+   ],
+   "alts": [
+    [
+     "§æsga",
+     0.231
+    ],
+    [
+     "§ingkætill",
+     0.116
+    ],
+    [
+     "eggjar",
+     0.078
+    ]
+   ],
+   "word": "es",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "§ku-k- ok §borRik §ingigæiR es gamall nef <unk> viR <unk> ave",
+   "p_reading": 0.540312383202533,
+   "agrees": null,
+   "context": "kukukuburRikikiki iskamalhnifka uiRsiiue"
+  },
+  {
+   "sig": "DR Fv1988;238",
+   "carved": "-tli-u",
+   "gap": 1,
+   "fill": "t",
+   "p": 0.974522703409997,
+   "span": [
+    0,
+    0,
+    5
+   ],
+   "alts": [
+    [
+     "liku",
+     0.008
+    ],
+    [
+     "þau",
+     0.007
+    ],
+    [
+     "utlængiu",
+     0.004
+    ]
+   ],
+   "word": "letu",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "at letu",
+   "p_reading": 0.9871906413516293,
+   "agrees": null,
+   "context": "atlitu"
+  },
+  {
+   "sig": "DR Fv1988;238",
+   "carved": "-tli-u",
+   "gap": 1,
+   "fill": "a",
+   "p": 0.8222250658879348,
+   "span": [
+    0,
+    0,
+    5
+   ],
+   "alts": [
+    [
+     "út",
+     0.053
+    ],
+    [
+     "it",
+     0.044
+    ],
+    [
+     "æt",
+     0.018
+    ]
+   ],
+   "word": "at",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "at letu",
+   "p_reading": 0.9871906413516293,
+   "agrees": null,
+   "context": "atlitu"
+  },
+  {
+   "sig": "DR M7",
+   "carved": "alfr-k",
+   "gap": 1,
+   "fill": "i",
+   "p": 0.9995287376585551,
+   "span": [
+    0,
+    4,
+    5
+   ],
+   "alts": [
+    [
+     "§alfrygg",
+     0.0
+    ],
+    [
+     "ok",
+     0.0
+    ],
+    [
+     "hiogg",
+     0.0
+    ]
+   ],
+   "word": "alfrik",
+   "rundata": "Alfr[i]k",
+   "status": "återställt",
+   "reading": "alfrik",
+   "p_reading": 0.9609775774342971,
+   "agrees": true,
+   "context": "alfrik"
+  },
+  {
+   "sig": "DR Schl15",
+   "carved": "ab-",
+   "gap": 1,
+   "fill": "a",
+   "p": 0.46165147673738605,
+   "span": [
+    0,
+    2,
+    3
+   ],
+   "alts": [
+    [
+     "æft",
+     0.24
+    ],
+    [
+     "api",
+     0.235
+    ],
+    [
+     "§æbbr",
+     0.043
+    ]
+   ],
+   "word": "apa",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "apa",
+   "p_reading": 0.4681693801444737,
+   "agrees": null,
+   "context": "aba"
+  },
+  {
+   "sig": "N 208",
+   "carved": "þ---ar--n---",
+   "gap": 3,
+   "fill": "ukR",
+   "p": 0.659970943165986,
+   "span": [
+    0,
+    1,
+    12
+   ],
+   "alts": [
+    [
+     "sumarlangan",
+     0.329
+    ],
+    [
+     "ullarkenningar",
+     0.005
+    ],
+    [
+     "§kan-its",
+     0.003
+    ]
+   ],
+   "word": "viðarteinungr",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "þú viðarteinungr §anasuiþ þet ok rettu en gunnarr ræistu stæin þenna broður sinn",
+   "p_reading": 0.2384252510811064,
+   "agrees": null,
+   "context": "þuiþartinukR ???s??þ þitak?rtu"
+  },
+  {
+   "sig": "N 208",
+   "carved": "ra----",
+   "gap": 4,
+   "fill": "istu",
+   "p": 0.812269196405924,
+   "span": [
+    4,
+    2,
+    6
+   ],
+   "alts": [
+    [
+     "ræisti",
+     0.188
+    ],
+    [
+     "satti",
+     0.0
+    ],
+    [
+     "retti",
+     0.0
+    ]
+   ],
+   "word": "ræistu",
+   "rundata": "re[isti]",
+   "status": "återställt",
+   "reading": "þú viðarteinungr §anasuiþ þet ok rettu en gunnarr ræistu stæin þenna broður sinn",
+   "p_reading": 0.2384252510811064,
+   "agrees": false,
+   "context": "þitak?rtu inkunar raistu s?a?? þonobruþursin"
+  },
+  {
+   "sig": "N 208",
+   "carved": "þ---ar--n---",
+   "gap": 2,
+   "fill": "ti",
+   "p": 0.659970943165986,
+   "span": [
+    0,
+    1,
+    12
+   ],
+   "alts": [
+    [
+     "sumarlangan",
+     0.329
+    ],
+    [
+     "ullarkenningar",
+     0.005
+    ],
+    [
+     "§kan-its",
+     0.003
+    ]
+   ],
+   "word": "viðarteinungr",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "þú viðarteinungr §anasuiþ þet ok rettu en gunnarr ræistu stæin þenna broður sinn",
+   "p_reading": 0.2384252510811064,
+   "agrees": null,
+   "context": "þuiþartinukR ???s??þ þitak?rtu"
+  },
+  {
+   "sig": "N 208",
+   "carved": "s-a--",
+   "gap": 2,
+   "fill": "in",
+   "p": 0.9999763780631501,
+   "span": [
+    5,
+    1,
+    5
+   ],
+   "alts": [
+    [
+     "snáld",
+     0.0
+    ],
+    [
+     "stein",
+     0.0
+    ],
+    [
+     "sveinn",
+     0.0
+    ]
+   ],
+   "word": "stæin",
+   "rundata": "s[t]e[in]",
+   "status": "återställt",
+   "reading": "þú viðarteinungr §anasuiþ þet ok rettu en gunnarr ræistu stæin þenna broður sinn",
+   "p_reading": 0.2384252510811064,
+   "agrees": false,
+   "context": "inkunar ra???? stain þonobruþursin"
+  },
+  {
+   "sig": "N 208",
+   "carved": "s-a--",
+   "gap": 1,
+   "fill": "t",
+   "p": 0.9999763826841783,
+   "span": [
+    5,
+    1,
+    5
+   ],
+   "alts": [
+    [
+     "snáld",
+     0.0
+    ],
+    [
+     "stein",
+     0.0
+    ],
+    [
+     "sveinn",
+     0.0
+    ]
+   ],
+   "word": "stæin",
+   "rundata": "s[t]e[in]",
+   "status": "återställt",
+   "reading": "þú viðarteinungr §anasuiþ þet ok rettu en gunnarr ræistu stæin þenna broður sinn",
+   "p_reading": 0.2384252510811064,
+   "agrees": false,
+   "context": "inkunar ra???? stain þonobruþursin"
+  },
+  {
+   "sig": "N 208",
+   "carved": "---s--þ",
+   "gap": 2,
+   "fill": "ui",
+   "p": 0.5238982098915504,
+   "span": [
+    1,
+    0,
+    6
+   ],
+   "alts": [
+    [
+     "§liðsmað",
+     0.453
+    ],
+    [
+     "ræist",
+     0.011
+    ],
+    [
+     "stað",
+     0.004
+    ]
+   ],
+   "word": "§anasuiþ",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "þú viðarteinungr §anasuiþ þet ok rettu en gunnarr ræistu stæin þenna broður sinn",
+   "p_reading": 0.2384252510811064,
+   "agrees": null,
+   "context": "þ???ar??n??? anasuiþ þitak?rtu inkunar"
+  },
+  {
+   "sig": "N 208",
+   "carved": "---s--þ",
+   "gap": 3,
+   "fill": "ana",
+   "p": 0.5238982098915504,
+   "span": [
+    1,
+    0,
+    6
+   ],
+   "alts": [
+    [
+     "§liðsmað",
+     0.453
+    ],
+    [
+     "ræist",
+     0.011
+    ],
+    [
+     "fyr",
+     0.004
+    ]
+   ],
+   "word": "§anasuiþ",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "þú viðarteinungr §anasuiþ þet ok rettu en gunnarr ræistu stæin þenna broður sinn",
+   "p_reading": 0.2384252510811064,
+   "agrees": null,
+   "context": "þ???ar??n??? anasuiþ þitak?rtu inkunar"
+  },
+  {
+   "sig": "N 208",
+   "carved": "þ---ar--n---",
+   "gap": 3,
+   "fill": "uiþ",
+   "p": 0.6626524973574728,
+   "span": [
+    0,
+    1,
+    12
+   ],
+   "alts": [
+    [
+     "sumarlangan",
+     0.329
+    ],
+    [
+     "<unk>",
+     0.006
+    ],
+    [
+     "nýgervingar",
+     0.001
+    ]
+   ],
+   "word": "þú",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "þú viðarteinungr §anasuiþ þet ok rettu en gunnarr ræistu stæin þenna broður sinn",
+   "p_reading": 0.2384252510811064,
+   "agrees": null,
+   "context": "þuiþartinukR ???s??þ þitak?rtu"
+  },
+  {
+   "sig": "N 66",
+   "carved": "isa---",
+   "gap": 3,
+   "fill": "kum",
+   "p": 0.17113615541256155,
+   "span": [
+    6,
+    3,
+    6
+   ],
+   "alts": [
+    [
+     "<unk>",
+     0.128
+    ],
+    [
+     "§æsæinna",
+     0.063
+    ],
+    [
+     "§æsornr",
+     0.061
+    ]
+   ],
+   "word": "sakum",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "§unvarur ræisti stæin þenna æftiR anund i sakum hann sun þæiRa",
+   "p_reading": 0.15315858262688423,
+   "agrees": null,
+   "context": "aftir anut isakum ha??????sun ??ra"
+  },
+  {
+   "sig": "N 66",
+   "carved": "--ra",
+   "gap": 2,
+   "fill": "þi",
+   "p": 0.30262281135351915,
+   "span": [
+    8,
+    0,
+    2
+   ],
+   "alts": [
+    [
+     "gærva",
+     0.161
+    ],
+    [
+     "þora",
+     0.088
+    ],
+    [
+     "fara",
+     0.066
+    ]
+   ],
+   "word": "þæiRa",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "§unvarur ræisti stæin þenna æftiR anund i sakum hann sun þæiRa",
+   "p_reading": 0.15315858262688423,
+   "agrees": null,
+   "context": "isa??? ha??????sun þira"
+  },
+  {
+   "sig": "N A222",
+   "carved": "-bkrain",
+   "gap": 1,
+   "fill": "u",
+   "p": 0.905056255616933,
+   "span": [
+    0,
+    0,
+    1
+   ],
+   "alts": [
+    [
+     "nb",
+     0.048
+    ],
+    [
+     "<unk>",
+     0.025
+    ],
+    [
+     "spakR",
+     0.015
+    ]
+   ],
+   "word": "upp",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "upp græin kol ræisti stæin þenna",
+   "p_reading": 0.9200017668501794,
+   "agrees": null,
+   "context": "ubkrain kul rasti"
+  },
+  {
+   "sig": "N A222",
+   "carved": "-nlh",
+   "gap": 1,
+   "fill": "s",
+   "p": 0.9890384319592339,
+   "span": [
+    0,
+    0,
+    1
+   ],
+   "alts": [
+    [
+     "en",
+     0.01
+    ],
+    [
+     "dan",
+     0.0
+    ]
+   ],
+   "word": "<unk>",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "<unk> en þa mann <unk> haislaR",
+   "p_reading": 0.29437174089232615,
+   "agrees": null,
+   "context": "snlh anþamanbiþh hislar"
+  },
+  {
+   "sig": "DR 116",
+   "carved": "faþu-",
+   "gap": 1,
+   "fill": "r",
+   "p": 0.9994524826852145,
+   "span": [
+    7,
+    4,
+    5
+   ],
+   "alts": [
+    [
+     "hvitavaðum",
+     0.0
+    ],
+    [
+     "<unk>",
+     0.0
+    ],
+    [
+     "a",
+     0.0
+    ]
+   ],
+   "word": "faður",
+   "rundata": "faþu[r]",
+   "status": "återställt",
+   "reading": "toki resþi sten þænsi æft þorsten sinn broður ok æigi sinn faður",
+   "p_reading": 0.97376180270722,
+   "agrees": true,
+   "context": "nukigi sin faþur"
+  },
+  {
+   "sig": "DR 116",
+   "carved": "ris--",
+   "gap": 2,
+   "fill": "þi",
+   "p": 0.9871988593802252,
+   "span": [
+    1,
+    3,
+    6
+   ],
+   "alts": [
+    [
+     "resþu",
+     0.013
+    ],
+    [
+     "resa",
+     0.0
+    ],
+    [
+     "risinn",
+     0.0
+    ]
+   ],
+   "word": "resþi",
+   "rundata": "res[þi]",
+   "status": "återställt",
+   "reading": "toki resþi sten þænsi æft þorsten sinn broður ok æigi sinn faður",
+   "p_reading": 0.97376180270722,
+   "agrees": true,
+   "context": "tuki risþistin þansi iftþurstin"
+  },
+  {
+   "sig": "DR 116",
+   "carved": "-tin",
+   "gap": 1,
+   "fill": "s",
+   "p": 0.9999896380632064,
+   "span": [
+    1,
+    3,
+    6
+   ],
+   "alts": [
+    [
+     "stæin",
+     0.0
+    ],
+    [
+     "ræisti",
+     0.0
+    ],
+    [
+     "<unk>",
+     0.0
+    ]
+   ],
+   "word": "sten",
+   "rundata": "[s]ten",
+   "status": "återställt",
+   "reading": "toki resþi sten þænsi æft þorsten sinn broður ok æigi sinn faður",
+   "p_reading": 0.97376180270722,
+   "agrees": true,
+   "context": "tuki risþistin þansi iftþurstin"
+  },
+  {
+   "sig": "DR 116",
+   "carved": "-ruþur",
+   "gap": 1,
+   "fill": "b",
+   "p": 0.9759773259960705,
+   "span": [
+    4,
+    3,
+    4
+   ],
+   "alts": [
+    [
+     "<unk>",
+     0.018
+    ],
+    [
+     "sins",
+     0.002
+    ],
+    [
+     "sina",
+     0.002
+    ]
+   ],
+   "word": "broður",
+   "rundata": "[b]roþur",
+   "status": "återställt",
+   "reading": "toki resþi sten þænsi æft þorsten sinn broður ok æigi sinn faður",
+   "p_reading": 0.97376180270722,
+   "agrees": true,
+   "context": "þansi iftþurstin sinbruþur nukigi sin"
+  },
+  {
+   "sig": "DR 188",
+   "carved": "þiauburi-",
+   "gap": 1,
+   "fill": "k",
+   "p": 0.9503259886087367,
+   "span": [
+    3,
+    8,
+    9
+   ],
+   "alts": [
+    [
+     "burinn",
+     0.026
+    ],
+    [
+     "<unk>",
+     0.014
+    ],
+    [
+     "vrið",
+     0.009
+    ]
+   ],
+   "word": "øyborg",
+   "rundata": "Þiuþbur[g]",
+   "status": "återställt",
+   "reading": "auðu §friðR löst æft <unk> øyborg",
+   "p_reading": 0.9558528370429837,
+   "agrees": false,
+   "context": "last oft þiauburik"
+  },
+  {
+   "sig": "DR 220",
+   "carved": "--sur",
+   "gap": 2,
+   "fill": "at",
+   "p": 0.8503190266518741,
+   "span": [
+    0,
+    0,
+    2
+   ],
+   "alts": [
+    [
+     "sazur",
+     0.132
+    ],
+    [
+     "susur",
+     0.01
+    ],
+    [
+     "ansur",
+     0.004
+    ]
+   ],
+   "word": "azur",
+   "rundata": "[Sa]sur",
+   "status": "återställt",
+   "reading": "azur satti sten þænsi æft ösku broður sinn hann varð dauðr a <unk> þor wigi runaR",
+   "p_reading": 0.790405770295754,
+   "agrees": false,
+   "context": "atsur sati stin"
+  },
+  {
+   "sig": "DR 270",
+   "carved": "--Ra",
+   "gap": 2,
+   "fill": "ki",
+   "p": 0.8206777601338688,
+   "span": [
+    5,
+    0,
+    2
+   ],
+   "alts": [
+    [
+     "þæiRa",
+     0.132
+    ],
+    [
+     "wæRa",
+     0.014
+    ],
+    [
+     "nøRa",
+     0.012
+    ]
+   ],
+   "word": "gæiRa",
+   "rundata": "[Gæi]Ra",
+   "status": "återställt",
+   "reading": "tomi resþi sten <unk> æftiR gæiRa felaga sin",
+   "p_reading": 0.5431657259717056,
+   "agrees": true,
+   "context": "þasni iftiR kiRa filaka sia"
+  },
+  {
+   "sig": "DR 330",
+   "carved": "sin-",
+   "gap": 1,
+   "fill": "t",
+   "p": 0.9799163924058062,
+   "span": [
+    10,
+    3,
+    4
+   ],
+   "alts": [
+    [
+     "sins",
+     0.016
+    ],
+    [
+     "sínu",
+     0.002
+    ],
+    [
+     "ok",
+     0.001
+    ]
+   ],
+   "word": "sin",
+   "rundata": "sin[a]",
+   "status": "återställt",
+   "reading": "viseti ok gunnarr u stena þæssi æftiR <unk> biorn felaga sin",
+   "p_reading": 0.702632279825544,
+   "agrees": true,
+   "context": "biurn filaka sint"
+  },
+  {
+   "sig": "DR 384",
+   "carved": "k-þs",
+   "gap": 1,
+   "fill": "u",
+   "p": 0.9999994689256884,
+   "span": [
+    12,
+    3,
+    4
+   ],
+   "alts": [
+    [
+     "§kaþs",
+     0.0
+    ],
+    [
+     "§-krþs",
+     0.0
+    ],
+    [
+     "geðs",
+     0.0
+    ]
+   ],
+   "word": "guðs",
+   "rundata": "G[u]þs",
+   "status": "återställt",
+   "reading": "þorstæinn ok svæinn ræistu æftiR §alfwin faður sinn ok æftiR þorlak broður sinn guð hialpi and þæiRa ok guðs moðiR",
+   "p_reading": 0.9980934933228262,
+   "agrees": true,
+   "context": "kuþhialbiont þaiRa ukkuþsmuþiR"
+  },
+  {
+   "sig": "DR 6",
+   "carved": "-uilis",
+   "gap": 1,
+   "fill": "h",
+   "p": 0.25275921087532466,
+   "span": [
+    3,
+    0,
+    1
+   ],
+   "alts": [
+    [
+     "ok",
+     0.215
+    ],
+    [
+     "boi",
+     0.118
+    ],
+    [
+     "§svill",
+     0.116
+    ]
+   ],
+   "word": "vílis",
+   "rundata": "[h]wilis",
+   "status": "återställt",
+   "reading": "eR a ænglandi i skiu vílis <unk>",
+   "p_reading": 0.3603363576648365,
+   "agrees": false,
+   "context": "aenklanti iskiu huilis kr"
+  },
+  {
+   "sig": "DR 78",
+   "carved": "hib-a",
+   "gap": 1,
+   "fill": "i",
+   "p": 0.639335758510215,
+   "span": [
+    7,
+    3,
+    4
+   ],
+   "alts": [
+    [
+     "epla",
+     0.356
+    ],
+    [
+     "baða",
+     0.003
+    ],
+    [
+     "byi",
+     0.001
+    ]
+   ],
+   "word": "<unk>",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "tofa resþi sten þænsi æftiR tosta sun sinn <unk> trygg",
+   "p_reading": 0.48526291996861726,
+   "agrees": null,
+   "context": "sun sin hibia truk"
+  },
+  {
+   "sig": "DR AUD1996;274",
+   "carved": "ikul-",
+   "gap": 1,
+   "fill": "r",
+   "p": 0.31961797903697003,
+   "span": [
+    0,
+    4,
+    5
+   ],
+   "alts": [
+    [
+     "§igulli",
+     0.197
+    ],
+    [
+     "§igulla",
+     0.166
+    ],
+    [
+     "ingulf",
+     0.145
+    ]
+   ],
+   "word": "§igullr",
+   "rundata": "Ingul[fR]",
+   "status": "återställt",
+   "reading": "§igullr en",
+   "p_reading": 0.3745594529716388,
+   "agrees": false,
+   "context": "ikulr in"
+  },
+  {
+   "sig": "DR AUD1996;274",
+   "carved": "urt--R",
+   "gap": 2,
+   "fill": "um",
+   "p": 0.5578268415366643,
+   "span": [
+    26,
+    3,
+    5
+   ],
+   "alts": [
+    [
+     "§ortilR",
+     0.085
+    ],
+    [
+     "orti",
+     0.057
+    ],
+    [
+     "tvaR",
+     0.057
+    ]
+   ],
+   "word": "hórdómr",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "þurgundr §kæryggs dottiR resþi stæin t ept þóri wær sin þolfs sun a <unk> æn tofi smiþr hio frænda hans sten veldr a uR staþ æn stukku hórdómr n a hirð <unk>",
+   "p_reading": 0.3079644262932306,
+   "agrees": null,
+   "context": "ian stuk? urtumR ??n a????"
+  },
+  {
+   "sig": "DR AUD1996;274",
+   "carved": "stuk-",
+   "gap": 1,
+   "fill": "u",
+   "p": 0.477850062866958,
+   "span": [
+    25,
+    4,
+    5
+   ],
+   "alts": [
+    [
+     "stokki",
+     0.167
+    ],
+    [
+     "stokka",
+     0.083
+    ],
+    [
+     "styggs",
+     0.064
+    ]
+   ],
+   "word": "stukku",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "þurgundr §kæryggs dottiR resþi stæin t ept þóri wær sin þolfs sun a <unk> æn tofi smiþr hio frænda hans sten veldr a uR staþ æn stukku hórdómr n a hirð <unk>",
+   "p_reading": 0.3079644262932306,
+   "agrees": null,
+   "context": "staþ ian stuku urt??R ??n"
+  },
+  {
+   "sig": "DR DKSJy76",
+   "carved": "r-s-au--n-nr-mh--",
+   "gap": 1,
+   "fill": "?",
+   "p": 0.0,
+   "span": [
+    0,
+    4,
+    20
+   ],
+   "alts": [],
+   "word": null,
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "§orrr i ok <unk> u <unk>",
+   "p_reading": 1.0,
+   "agrees": null,
+   "context": "?uRr???????????????? i uk"
+  },
+  {
+   "sig": "DR DKSJy76",
+   "carved": "r-s-au--n-nr-mh--",
+   "gap": 2,
+   "fill": "??",
+   "p": 0.0,
+   "span": [
+    0,
+    4,
+    20
+   ],
+   "alts": [],
+   "word": null,
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "§orrr i ok <unk> u <unk>",
+   "p_reading": 1.0,
+   "agrees": null,
+   "context": "?uRr???????????????? i uk"
+  },
+  {
+   "sig": "DR DKSJy76",
+   "carved": "r-s-au--n-nr-mh--",
+   "gap": 1,
+   "fill": "?",
+   "p": 0.0,
+   "span": [
+    0,
+    4,
+    20
+   ],
+   "alts": [],
+   "word": null,
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "§orrr i ok <unk> u <unk>",
+   "p_reading": 1.0,
+   "agrees": null,
+   "context": "?uRr???????????????? i uk"
+  },
+  {
+   "sig": "DR DKSJy76",
+   "carved": "r-s-au--n-nr-mh--",
+   "gap": 1,
+   "fill": "?",
+   "p": 0.0,
+   "span": [
+    0,
+    4,
+    20
+   ],
+   "alts": [],
+   "word": null,
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "§orrr i ok <unk> u <unk>",
+   "p_reading": 1.0,
+   "agrees": null,
+   "context": "?uRr???????????????? i uk"
+  },
+  {
+   "sig": "DR DKSJy76",
+   "carved": "r-s-au--n-nr-mh--",
+   "gap": 1,
+   "fill": "?",
+   "p": 0.0,
+   "span": [
+    0,
+    4,
+    20
+   ],
+   "alts": [],
+   "word": null,
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "§orrr i ok <unk> u <unk>",
+   "p_reading": 1.0,
+   "agrees": null,
+   "context": "?uRr???????????????? i uk"
+  },
+  {
+   "sig": "DR DKSJy76",
+   "carved": "r-s-au--n-nr-mh--",
+   "gap": 2,
+   "fill": "??",
+   "p": 0.0,
+   "span": [
+    0,
+    4,
+    20
+   ],
+   "alts": [],
+   "word": null,
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "§orrr i ok <unk> u <unk>",
+   "p_reading": 1.0,
+   "agrees": null,
+   "context": "?uRr???????????????? i uk"
+  },
+  {
+   "sig": "DR DKSJy76",
+   "carved": "ra----uh----R",
+   "gap": 4,
+   "fill": "irþi",
+   "p": 0.26311824121400085,
+   "span": [
+    0,
+    21,
+    31
+   ],
+   "alts": [
+    [
+     "landhirþiR",
+     0.254
+    ],
+    [
+     "liknhvataR",
+     0.193
+    ],
+    [
+     "ragnhildaR",
+     0.148
+    ]
+   ],
+   "word": "grikkhafniR",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "hjálminn allgoðan þursa <unk> landhirþiR ræist i hans",
+   "p_reading": 0.26750800122651025,
+   "agrees": null,
+   "context": "?alminh???u?anþursaralantuhirþiR?ras?ians"
+  },
+  {
+   "sig": "DR DKSJy76",
+   "carved": "h---u-an",
+   "gap": 1,
+   "fill": "þ",
+   "p": 0.9001708063647246,
+   "span": [
+    0,
+    7,
+    12
+   ],
+   "alts": [
+    [
+     "halfdan",
+     0.087
+    ],
+    [
+     "aldum",
+     0.006
+    ],
+    [
+     "hæilfos",
+     0.002
+    ]
+   ],
+   "word": "allgoðan",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "hjálminn allgoðan þursa <unk> landhirþiR ræist i hans",
+   "p_reading": 0.26750800122651025,
+   "agrees": null,
+   "context": "?alminhalkuþanþursara????uh????R?ras?ians"
+  },
+  {
+   "sig": "DR DKSJy76",
+   "carved": "ra----uh----R",
+   "gap": 4,
+   "fill": "lant",
+   "p": 0.26311824121400085,
+   "span": [
+    0,
+    21,
+    31
+   ],
+   "alts": [
+    [
+     "landhirþiR",
+     0.254
+    ],
+    [
+     "liknhvataR",
+     0.193
+    ],
+    [
+     "ragnhildaR",
+     0.148
+    ]
+   ],
+   "word": "grikkhafniR",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "hjálminn allgoðan þursa <unk> landhirþiR ræist i hans",
+   "p_reading": 0.26750800122651025,
+   "agrees": null,
+   "context": "?alminh???u?anþursaralantuhirþiR?ras?ians"
+  },
+  {
+   "sig": "DR DKSJy76",
+   "carved": "h---u-an",
+   "gap": 3,
+   "fill": "alk",
+   "p": 0.9001708063647246,
+   "span": [
+    0,
+    7,
+    12
+   ],
+   "alts": [
+    [
+     "halfdan",
+     0.087
+    ],
+    [
+     "aldum",
+     0.006
+    ],
+    [
+     "hæilfos",
+     0.002
+    ]
+   ],
+   "word": "allgoðan",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "hjálminn allgoðan þursa <unk> landhirþiR ræist i hans",
+   "p_reading": 0.26750800122651025,
+   "agrees": null,
+   "context": "?alminhalkuþanþursara????uh????R?ras?ians"
+  },
+  {
+   "sig": "DR EM85;371B",
+   "carved": "-lt",
+   "gap": 1,
+   "fill": "a",
+   "p": 0.6484173393731407,
+   "span": [
+    7,
+    0,
+    1
+   ],
+   "alts": [
+    [
+     "illt",
+     0.276
+    ],
+    [
+     "ald",
+     0.027
+    ],
+    [
+     "galt",
+     0.022
+    ]
+   ],
+   "word": "allt",
+   "rundata": "[i]lt",
+   "status": "återställt",
+   "reading": "auðigr <unk> fyrr ok þat fuþork <unk> allt §olkarli kafi þú at valR ok iu liggR",
+   "p_reading": 0.22980040476878033,
+   "agrees": false,
+   "context": "fu suiarþ alt ul???li kafiþu"
+  },
+  {
+   "sig": "DR EM85;371B",
+   "carved": "ul-",
+   "gap": 1,
+   "fill": "k",
+   "p": 0.26117830107383594,
+   "span": [
+    8,
+    2,
+    5
+   ],
+   "alts": [
+    [
+     "§olkarli",
+     0.259
+    ],
+    [
+     "ulfkell",
+     0.107
+    ],
+    [
+     "ulkel",
+     0.103
+    ]
+   ],
+   "word": "§olgisli",
+   "rundata": "oll[i]",
+   "status": "återställt",
+   "reading": "auðigr <unk> fyrr ok þat fuþork <unk> allt §olkarli kafi þú at valR ok iu liggR",
+   "p_reading": 0.22980040476878033,
+   "agrees": false,
+   "context": "suiarþ ?lt ulkarli kafiþu at"
+  },
+  {
+   "sig": "DR EM85;371B",
+   "carved": "--li",
+   "gap": 2,
+   "fill": "ar",
+   "p": 0.26117830107383594,
+   "span": [
+    8,
+    2,
+    5
+   ],
+   "alts": [
+    [
+     "§olkarli",
+     0.259
+    ],
+    [
+     "ulfkell",
+     0.107
+    ],
+    [
+     "ulkel",
+     0.103
+    ]
+   ],
+   "word": "§olgisli",
+   "rundata": "[æþ]li",
+   "status": "återställt",
+   "reading": "auðigr <unk> fyrr ok þat fuþork <unk> allt §olkarli kafi þú at valR ok iu liggR",
+   "p_reading": 0.22980040476878033,
+   "agrees": false,
+   "context": "suiarþ ?lt ulkarli kafiþu at"
+  },
+  {
+   "sig": "DR EM85;371B",
+   "carved": "-lt",
+   "gap": 1,
+   "fill": "a",
+   "p": 0.6484173393731407,
+   "span": [
+    7,
+    0,
+    1
+   ],
+   "alts": [
+    [
+     "illt",
+     0.276
+    ],
+    [
+     "ald",
+     0.027
+    ],
+    [
+     "galt",
+     0.022
+    ]
+   ],
+   "word": "allt",
+   "rundata": "[i]lt",
+   "status": "återställt",
+   "reading": "auðigr <unk> fyrr ok þat fuþork <unk> allt §olkarli kafi þú at valR ok iu liggR",
+   "p_reading": 0.22980040476878033,
+   "agrees": false,
+   "context": "fu suiarþ alt ul???li kafiþu"
+  },
+  {
+   "sig": "DR M103",
+   "carved": "þorg--",
+   "gap": 2,
+   "fill": "ot",
+   "p": 0.6423434069823026,
+   "span": [
+    0,
+    10,
+    12
+   ],
+   "alts": [
+    [
+     "þorgunn",
+     0.227
+    ],
+    [
+     "þorgiR",
+     0.04
+    ],
+    [
+     "þorgeirr",
+     0.025
+    ]
+   ],
+   "word": "þorgot",
+   "rundata": "Þorg[ot]",
+   "status": "återställt",
+   "reading": "þorgot þorgot",
+   "p_reading": 0.9663705722997079,
+   "agrees": true,
+   "context": "þorgotþorgot"
+  },
+  {
+   "sig": "DR MNOR2002;11B",
+   "carved": "ailm-r",
+   "gap": 1,
+   "fill": "e",
+   "p": 0.9999999662789059,
+   "span": [
+    0,
+    4,
+    5
+   ],
+   "alts": [
+    [
+     "<unk>",
+     0.0
+    ],
+    [
+     "myr",
+     0.0
+    ],
+    [
+     "meðr",
+     0.0
+    ]
+   ],
+   "word": "ailmær",
+   "rundata": "Ailm[a]r",
+   "status": "återställt",
+   "reading": "ailmær lundi i",
+   "p_reading": 0.8403914676416514,
+   "agrees": false,
+   "context": "ailmer?lund i"
+  },
+  {
+   "sig": "DR Schl20",
+   "carved": "-þui",
+   "gap": 1,
+   "fill": "u",
+   "p": 0.41941081127027047,
+   "span": [
+    0,
+    0,
+    1
+   ],
+   "alts": [
+    [
+     "guðvi",
+     0.241
+    ],
+    [
+     "§aðvi",
+     0.156
+    ],
+    [
+     "roðvi",
+     0.082
+    ]
+   ],
+   "word": "§auðvi",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "§auðvi",
+   "p_reading": 0.3546751876943515,
+   "agrees": null,
+   "context": "uþui"
+  },
+  {
+   "sig": "N 230",
+   "carved": "runa-",
+   "gap": 1,
+   "fill": "R",
+   "p": 0.9920540810955369,
+   "span": [
+    2,
+    8,
+    9
+   ],
+   "alts": [
+    [
+     "a",
+     0.004
+    ],
+    [
+     "at",
+     0.002
+    ],
+    [
+     "i",
+     0.001
+    ]
+   ],
+   "word": "runaR",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "ok tok til kag §kar i i <unk> i it a runaR",
+   "p_reading": 0.6693520752955179,
+   "agrees": null,
+   "context": "auktktilkkkar iitb iitorunaR"
+  },
+  {
+   "sig": "N 97",
+   "carved": "k-afiaishþ--t--",
+   "gap": 1,
+   "fill": "r",
+   "p": 0.9204557940717788,
+   "span": [
+    1,
+    4,
+    5
+   ],
+   "alts": [
+    [
+     "<unk>",
+     0.053
+    ],
+    [
+     "sankta",
+     0.012
+    ],
+    [
+     "knif",
+     0.004
+    ]
+   ],
+   "word": "krefja",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "alla í <unk> senn krefja es hað æftiR",
+   "p_reading": 0.3436279642262823,
+   "agrees": null,
+   "context": "alaibha senkrafiaishþ??t??"
+  },
+  {
+   "sig": "N 97",
+   "carved": "k-afiaishþ--t--",
+   "gap": 2,
+   "fill": "ef",
+   "p": 0.5255696253126286,
+   "span": [
+    1,
+    13,
+    18
+   ],
+   "alts": [
+    [
+     "æshæiði",
+     0.128
+    ],
+    [
+     "dottur",
+     0.088
+    ],
+    [
+     "kætill",
+     0.052
+    ]
+   ],
+   "word": "æftiR",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "alla í <unk> senn krefja es hað æftiR",
+   "p_reading": 0.3436279642262823,
+   "agrees": null,
+   "context": "alaibha senk?afiaishþeftiR"
+  },
+  {
+   "sig": "N 97",
+   "carved": "k-afiaishþ--t--",
+   "gap": 2,
+   "fill": "iR",
+   "p": 0.5255696253126286,
+   "span": [
+    1,
+    13,
+    18
+   ],
+   "alts": [
+    [
+     "stæin",
+     0.134
+    ],
+    [
+     "dottur",
+     0.088
+    ],
+    [
+     "kætill",
+     0.054
+    ]
+   ],
+   "word": "æftiR",
+   "rundata": "...",
+   "status": "ej återställt",
+   "reading": "alla í <unk> senn krefja es hað æftiR",
+   "p_reading": 0.3436279642262823,
+   "agrees": null,
+   "context": "alaibha senk?afiaishþeftiR"
+  },
+  {
+   "sig": "N A240",
+   "carved": "loka-",
+   "gap": 1,
+   "fill": "t",
+   "p": 0.4117604006536275,
+   "span": [
+    1,
+    4,
+    5
+   ],
+   "alts": [
+    [
+     "laugaR",
+     0.392
+    ],
+    [
+     "hann",
+     0.066
+    ],
+    [
+     "ok",
+     0.045
+    ]
+   ],
+   "word": "at",
+   "rundata": "loka[ð]",
+   "status": "återställt",
+   "reading": "vit ok í log at",
+   "p_reading": 0.47026071713290923,
+   "agrees": false,
+   "context": "uitauki lokat"
+  }
+ ]
+}
