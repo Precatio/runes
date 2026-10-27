@@ -1,0 +1,29 @@
+{
+ "folds": [
+  0
+ ],
+ "base": "tol02",
+ "new": "vq20",
+ "words": {
+  "inne i ord": {
+   "won": 0,
+   "lost": 0,
+   "n": 139
+  },
+  "helt ord": {
+   "won": 0,
+   "lost": 0,
+   "n": 139
+  }
+ },
+ "rune_top1": {
+  "won": 0,
+  "lost": 0
+ },
+ "sure_errors": {
+  "base": 4,
+  "new": 4
+ },
+ "won": [],
+ "lost": []
+}

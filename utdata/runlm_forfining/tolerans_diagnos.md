@@ -87,3 +87,15 @@ punkt 7 håller → `textmodel.VERSION` = textmodel-19, `MODEL` får `tolerance=
 `validering_tm19.py`: inne i ord 0,764 (0,755), hela ord 0,592 (0,587), säkra rätt 0,954 (0,951), dokumenterade
 0,698 (0,690). METHODS 8.1 har versionsnoten; bristposten `textmodel_tolerance` är ny. Blindtestet (textmodel-17)
 upprepas inte – engångsprov enligt protokollet. Nästa kandidat (ny plan krävs): egen kvot för varianter.
+
+## Utfall 2026-10-27: variantkvoten (analysplan_tm20.md) – negativ, kvoten förblir av
+
+Kontrollen höll: med kvoten 0 gav den ändrade koden exakt samma 324 rader som textmodel-19 (tol02_f0). På urvalsvecket
+(veck 0, runstenar, 139 luckor av varje slag) gav kvoterna 10, 20 och 40 **noll vunna och noll förlorade** ord, både inne
+i ord och hela ord, ingen ändring av runan först, och fel bland svar ≥ 95 % 4 → 4. Mekanismen slog till: sannolikheten
+för förstavalet ändrades i 253, 262 respektive 265 av 324 luckor, så de tillagda varianterna når poängsättningen – men
+ingen av dem vinner en enda lucka, eftersom straffet λ per regel gäller i poängsättningen och de belagda stavningarna
+redan finns bland kandidaterna. Enligt planens punkt 5 (inget värde över noll på veck 0) avbryts kvoten; veck 1–4 körs
+inte och `var_cands` förblir 0 (koden står kvar, avstängd). Slutsats för nästa försök: flaskhalsen är inte vilka
+fyllnader som prövas utan hur de bedöms; en ny plan skulle behöva pröva straffet i poängsättningen, inte kandidaturvalet.
+Filer: vq0_f0.json (kontrollen), vq10/20/40_f0.json, tm19_ab_vq*_0.json.

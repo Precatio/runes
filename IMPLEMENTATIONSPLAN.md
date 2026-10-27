@@ -164,7 +164,7 @@ känd/okänd …) och *drag B* eller *plats/tid* (landskap, härad, epok), och f
 3. **KLAR 2026-10-26 (2d5e93d, cbebfc0).** **IndexNow från bygget av webbplatsen.** Pingen körs i dag aldrig (ingen nyckel, och den vägrar köra lokalt).
    Nyckelfil i web/public och ping i site.yml efter publiceringen.
 4. **KLAR 2026-10-27 (a3130f5, 8af49d8).** **Rökprov för webbappen i CI.** Playwright: startsidan, en artikelsida på svenska och engelska, 3D-sidan laddar.
-5. **PÅGÅR:** plan låst (ed4e578), kontrollen höll, kvot 10 och 20 gav noll ändring på veck 0. **Textmodellen: variantkvot** (ny låst plan, efter tm19:s diagnos att varianterna inte når kandidatlistan).
+5. **KLAR 2026-10-27, negativt:** plan låst (ed4e578), kontrollen höll; kvot 10, 20 och 40 gav noll vunna och noll förlorade ord på veck 0 (sannolikheterna ändrades men inget svar), så kvoten avbröts enligt planen (tolerans_diagnos.md). **Textmodellen: variantkvot** (ny låst plan, efter tm19:s diagnos att varianterna inte når kandidatlistan).
 6. **KLAR 2026-10-26 (51a959f; 126 skript).** **Relativa sökvägar** i de cirka tjugo skripten i utdata/ som hårdkodar projektmappens fulla sökväg.
 7. **KLAR 2026-10-27 (938dfa8).** **Dela upp de största sidfilerna** (statistik, luckor, 3d, ThreeDViewer) utan att ändra vad användaren ser.
 
