@@ -83,8 +83,13 @@ konstant: mot stilgruppens mittår (per 50 år), mot kristna markörer (kors ell
 för brostenar, och varje samband prövas i korpusens två halvor (uppdelade per socken som i `change.R`). Stenar som
 enligt Rundatas placering står vid eller i en kyrka, i en vägg, ett museum eller en samling räknas inte, eftersom de är
 flyttade, och inte heller stenar vars plats i Rundata är en kyrka, kyrkogård, kyrkoruin, prästgård, ett kloster, slott,
-en skola eller ett museum ("Frustuna kyrka", "Veta kyrkogård"), eftersom de inte kan skiljas från flyttade stenar
-(1 176 av 2 321; kolumnen `moved` i korpusens CSV, `is_moved` i `src/r_bridge.py`).
+en skola eller ett museum ("Frustuna kyrka", "Veta kyrkogård"), eftersom de inte kan skiljas från flyttade stenar.
+Sedan 2026-10-27 räknas också stenar vars placering säger att de flyttats ("Flyttad 100 m åt N", "förd till
+Eskilstuna") eller nämner en annan plats än fyndplatsen ("Vid Hummelsta, Stora Mellösa sn", "Står vid Sö 109"), men
+inte när placeringen bara beskriver var på platsen stenen står (väderstreck och avstånd, gårdsplanen, byn, en väg)
+eller när stenen förts tillbaka ("Återfördes till Brobybro 1955"); sex texter utan ortnamn är avgjorda för hand
+(`src/placement.py`). Det gav 47 flyttade stenar till: 1 223 av 2 321 (kolumnen `moved` i korpusens CSV, `is_moved`
+i `src/r_bridge.py`).
 
 *Rättelse 2026-10-12.* Fram till den här dagen prövades bara placeringen, som oftast är tom för stenar vid kyrkor;
 omkring 420 stenar vid kyrkor räknades därför som stående på sin ursprungliga plats. Det gav ett skenbart samband
@@ -523,15 +528,11 @@ motsäger, med belägg, nyhet och relevans):
   kandidater att granska mot foto eller skanning, inte färdiga fynd, och får därför bedömningen "Kandidat att granska mot
   foto eller skanning" i stället för tumregelns etiketter.
 * **Runor 2020:** stenar som Riksantikvarieämbetets nyare utgåva anger som inte stående på ursprunglig plats men som
-  appens flyttregel (`src/r_bridge.is_moved`, en regel över Rundatas plats och placering – Rundata har ingen
-  flyttflagga) räknar som stående på plats (187 runstenar). 37 av dem har en placeringstext i Rundata. Där texten nämner
-  en annan plats än fyndplatsen – ett annat ortnamn, en annan socken eller en annan sten som står någon annanstans
-  (`src/stone_findings.placement_elsewhere`; alla 37 är genomgångna för hand, och fyra är avgjorda för hand: Sm 76 och
-  U 1079 nej, Sm 80 och U Fv1992;157 ja) – säger Rundata i själva verket detsamma som Runor. De 30 stenarna räknas som
-  *stämmer* ("Rundatas placering säger detsamma – appens flyttregel missar den") och visar en lucka i flyttregeln, inte
-  en motsägelse. De övriga sju placeringstexterna beskriver bara hur stenen står ("På gårdsplanen", "Rest vid den gamla
-  vägen") och ger ingen flyttuppgift; de räknas tillsammans med de 150 stenarna utan placeringstext som *motsäger* (157)
-  med bedömningen "Uppgift i nyare källa – kontrollera platsen". Dessutom läsningar där Runor har färre förlorade och
+  appens flyttregel (`src/r_bridge.is_moved`; Rundata har ingen flyttflagga, regeln läser Rundatas plats och placering)
+  räknar som stående på plats: 154 runstenar, alla *motsäger*, med bedömningen "Uppgift i nyare källa – kontrollera
+  platsen". Till och med 2026-10-27 var de 187; 30 av dem hade en placeringstext som redan säger att stenen står
+  någon annanstans, och sedan flyttregeln läser placeringstexten (avsnitt 1c, `src/placement.py`) räknas de som
+  flyttade och ger inget fynd. Dessutom läsningar där Runor har färre förlorade och
   fler säkert lästa runor än Rundata (runor inom parentes räknas inte), bara på svenska vikingatida runstenar (1: Sö 260;
   andra föremål redovisas för sig i `utdata/runor/jamforelse.json`). Runor matchas mot Rundata på exakt signum – i
   jämförelsen, i fynden och på inskriftssidan (`src/runor.py`) – så att Närkes Nä 11 inte blandas ihop med Norges N A11.
@@ -2457,7 +2458,7 @@ När filen finns visar inskriftssidan Runors uppgifter bredvid Rundatas: ursprun
 datering, anteckningar och läsningen om den ändrats sedan 2018 (281 inskrifter, 77 av dem svenska vikingatida
 runstenar; jämförelsen normaliserar ʀ/R, …/... och §P/§Q). Runor slås upp på exakt signum, så att Närkes Nä 1–34 inte
 får Norges N A1–N A34. Inget räknas om på Runors uppgifter, och appen byter inte källa (IMPLEMENTATIONSPLAN.md 3.2,
-struken 2026-10-26): ett byte skulle ha krävt en ny analysplan, eftersom 187 "in situ"-stenar är flyttade enligt Runor
+struken 2026-10-26): ett byte skulle ha krävt en ny analysplan, eftersom 154 "in situ"-stenar är flyttade enligt Runor
 och landskapsresultaten då ändras.
 
 * **Samnordisk runtextdatabas** (Institutionen för nordiska språk, Uppsala universitet), version 2014 med

@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "flyttade-stenar-placering",
+   "date": "2026-10-27",
+   "status": "nytt",
+   "title": "Flyttade stenar enligt Rundatas placeringstext",
+   "text": "Appens regel för flyttade stenar läser nu också Rundatas placeringstext: en sten räknas som flyttad när texten säger att den flyttats eller står vid en annan plats än fyndplatsen. 47 runstenar till räknas som flyttade, och analyserna av stenarnas omgivning – vatten, lämningar, ortnamn och hot spots – räknas om utan dem."
+  },
+  {
    "id": "lankmodellen",
    "date": "2026-10-27",
    "status": "nytt",

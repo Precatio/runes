@@ -27,9 +27,9 @@ from __future__ import annotations
 import json
 import logging
 import os
-import re
 
 from src.findings import VERDICTS, _finding, stone_relevance
+from src.placement import placement_elsewhere  # noqa: F401  (re-exported)
 from src.research_gaps import is_runestone
 
 log = logging.getLogger(__name__)
@@ -60,49 +60,6 @@ ASSESS_RUNOR_READING = "Uppgift i nyare källa – kontrollera läsningen"
 # Hand-checked 2026-10-27: the stones Runor 2020 calls moved whose Rundata placement text the rule in
 # placement_elsewhere gets wrong. The other stones with a placement text were checked against the rule by hand too
 # (METHODS.md 1q).
-PLACEMENT_CHECKED = {
-    "Sm 76": False,         # 'I Gästgivaregårdens trädgård.' – the inn's garden; not said to be away from Komstad
-    "U 1079": False,        # 'En del i Sundbro, fyra i Forkarby.' – four of the five pieces are at the find place
-    "Sm 80": True,          # 'Vid Vallsjö herrgård.' – the manor, not Vallsjö stomhemman where the stone was found
-    "U Fv1992;157": True,   # 'I inrikeshallen Arlanda 2.' – the terminal hall, not the field on Måby land
-}
-_STONE_REF = re.compile(r"(?<![A-Za-zÅÄÖåäö])(U|Sö|Ög|Öl|Vg|Sm|Gs|Vs|Nä|Hs|M|Ån|D|Hr|J|Lp|Ds|Bo|G|DR|N)\s?(\d{1,4})(?!\d)")
-_NAME = re.compile(r"[A-ZÅÄÖ][\wåäöé-]+")
-
-
-def placement_elsewhere(rec: dict, lookup) -> bool:
-    """Om Rundatas placeringstext nämner en annan plats än fyndplatsen: ett ortnamn som inte ingår i platsen ('Vid
-    Hummelsta, Stora Mellösa sn' för Tälje bro), en annan socken ('Vid Rosta kvarn, Bälinge sn' för en sten i Ärentuna)
-    eller en annan sten som står någon annanstans ('Står vid Sö 109'). En text som bara beskriver hur stenen står ('På
-    gårdsplanen', 'Rest vid den gamla vägen', 'Inmurat i källaren vid Årby' i Årby) räknas inte. Ett fåtal texter är
-    avgjorda för hand (PLACEMENT_CHECKED)."""
-    if rec["signum"] in PLACEMENT_CHECKED:
-        return PLACEMENT_CHECKED[rec["signum"]]
-    text = (rec.get("placement") or "").strip()
-    if not text:
-        return False
-    place = (rec.get("place") or "").lower()
-    parish = set(re.findall(r"[\wåäöé-]+", (rec.get("parish") or "").lower()))
-    for prefix, number in _STONE_REF.findall(text):
-        other = lookup(f"{prefix} {number}")
-        other_place = ((other or {}).get("place") or "").lower()
-        if other and other is not rec and other_place and other_place not in place and place not in other_place:
-            return True
-    for sentence in re.split(r"[.;]\s*", _STONE_REF.sub(" ", text)):
-        for m in _NAME.finditer(sentence):
-            word = m.group(0).lower()
-            if m.start() == 0 or len(word) < 2:  # the first word of a sentence ('Vid', 'I', 'Nu'), 'V' for väster
-                continue
-            if re.match(r"\s+sn\b", sentence[m.end():]):  # 'Bälinge sn': another parish
-                if word not in parish:
-                    return True
-                continue
-            stem = word[:-1] if word.endswith("s") and len(word) > 3 else word  # genitive 'Jönköpings'
-            if word not in place and stem not in place:
-                return True
-    return False
-
-
 def _stone(f: dict, assessment: str | None = None) -> dict:
     """Märker ett fynd som fynd om en sten (inte om en ristare); en fast bedömning ersätter tumregelns etikett."""
     f["stone_finding"] = True

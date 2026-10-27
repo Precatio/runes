@@ -185,8 +185,12 @@ MOVED_PLACE = re.compile(r"kyrka\b|kyrkan\b|kyrkogård|kyrkoruin|ödekyrk|kyrkoh
 
 
 def is_moved(r: dict) -> bool:
-    """Om stenen inte står där den restes, enligt Rundatas placering eller plats (MOVED, MOVED_PLACE)."""
-    return bool(MOVED.search(r.get("placement") or "") or MOVED_PLACE.search(r.get("place") or ""))
+    """Om stenen inte står där den restes, enligt Rundatas placering eller plats (MOVED, MOVED_PLACE), eller för att
+    placeringstexten säger att den flyttats eller nämner en annan plats än fyndplatsen (src/placement.py, 2026-10-27)."""
+    if MOVED.search(r.get("placement") or "") or MOVED_PLACE.search(r.get("place") or ""):
+        return True
+    from src.placement import placement_elsewhere
+    return placement_elsewhere(r)
 
 
 def core_words(normalization: str) -> int:

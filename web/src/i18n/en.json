@@ -7271,5 +7271,8 @@
 "Resestenarna i {0} säger mer sällan än i {1} att mannen dog borta ({2} % mot {3} %; de råa andelarna pekar åt andra hållet).":"The journey stones in {0} say less often than in {1} that the man died abroad ({2} % against {3} %; the raw shares point the other way).",
 "Resestenarna i {0} säger mer sällan än i {1} att mannen dog borta, sammantaget över riktningarna ({2} % mot {3} %; de råa andelarna pekar åt andra hållet).":"Overall across the directions, the journey stones in {0} say less often than in {1} that the man died abroad ({2} % against {3} %; the raw shares point the other way).",
 "{0} länkar håller, och familjerna som går att följa höll sig i stort sett på samma plats: stenarna står i median några hundra meter isär.":"{0} links hold, and the families that can be followed stayed more or less in one place: the stones stand a few hundred metres apart in the median.",
-"Ingen länk mellan landskap håller.":"No link between provinces holds."
+"Ingen länk mellan landskap håller.":"No link between provinces holds.",
+"Flyttade stenar enligt Rundatas placeringstext":"Moved stones according to Rundata's placement text",
+"Appens regel för flyttade stenar läser nu också Rundatas placeringstext: en sten räknas som flyttad när texten säger att den flyttats eller står vid en annan plats än fyndplatsen.":"The app's rule for moved stones now also reads Rundata's placement text: a stone counts as moved when the text says it was moved or stands at another place than the find place.",
+"{0} runstenar till räknas som flyttade, och analyserna av stenarnas omgivning – vatten, lämningar, ortnamn och hot spots – räknas om utan dem.":"{0} more runestones count as moved, and the analyses of the stones' surroundings – water, remains, place names and hot spots – are recomputed without them."
 }
