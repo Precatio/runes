@@ -7,7 +7,8 @@ import { useAnalysis } from "@/components/AnalysisContext";
 import { DocsNote } from "@/components/KnownLimitations";
 import { InfoTip, PageIntro, SigBadge, Tip } from "@/components/Explain";
 import { GLOSSARY } from "@/lib/glossary";
-import { corpus } from "@/lib/corpus";
+import { corpus, type CorpusEntry } from "@/lib/corpus";
+import RuneFormCompare from "@/components/RuneFormCompare";
 import { db } from "@/lib/db";
 import { FEATURE_TYPES, METRIC_DIGITS, formatSummary, type FeatureType, type SliceMetrics } from "@/lib/metrics";
 import { formatP, stats, type ComparisonResult } from "@/lib/stats";
@@ -22,6 +23,7 @@ interface StoneOption {
   slices: SliceMetrics[];
   provenance?: Record<string, unknown>;
   profile?: { x: number[]; z: number[] };
+  entry?: CorpusEntry; // a stone from the shared corpus: its shared rune forms
 }
 interface CorpusRef { signum?: string; feature_type?: string; means?: Record<string, number>; method_version?: string }
 
@@ -97,6 +99,7 @@ export default function ComparePage() {
               slices: e.slices,
               provenance: e.provenance as unknown as Record<string, unknown>,
               profile: e.profile,
+              entry: e,
             });
           }
         } catch (e) {
@@ -150,7 +153,8 @@ export default function ComparePage() {
     <div className="flex flex-col w-full max-w-6xl mx-auto p-4 md:p-6 space-y-6">
       <PageIntro title="Jämför två stenar"
         lead={<>Kan två stenar vara huggna av samma hand? Huggspåren jämförs runa mot runa, avståndet ställs mot stenpar i den delade
-          mätkorpusen – par av samma och av olika ristare – och har stenarna signum jämförs också ristare, stil, stavning och språkdrag.</>}
+          mätkorpusen – par av samma och av olika ristare – och har stenarna signum jämförs också ristare, stil, stavning och språkdrag.
+          Har du sparat runutsnitt för stenarna jämförs också runformerna.</>}
         howTo={[
           <>Välj två uppmätta stenar och tryck Jämför. Slutsatsen kommer först, sedan om mätningarna alls går att jämföra.</>,
           <>En <strong>signifikant skillnad</strong> i huggspåren talar för olika händer (eller olika bergart, verktyg, vittring). Ingen signifikant skillnad betyder bara att mätningarna inte skiljer stenarna åt – inte att de är huggna av samma ristare.</>,
@@ -335,6 +339,16 @@ export default function ComparePage() {
             )}
           </div>
         </>
+      )}
+
+      {a && b && aKey !== bKey && (
+        <div className="liquid-glass-island rounded-[32px] p-6">
+          <h3 className="font-bold text-slate-900 mb-1">Runformerna</h3>
+          <p className="text-xs text-slate-500 mb-3">
+            Runutsnitten för stenarna, samma runa sida vid sida (A blå, B orange). Visas så snart två stenar är valda.
+          </p>
+          <RuneFormCompare a={{ label: "A", signum: a.signum, entry: a.entry }} b={{ label: "B", signum: b.signum, entry: b.entry }} />
+        </div>
       )}
     </div>
   );

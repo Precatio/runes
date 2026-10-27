@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactCrop, { type PercentCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { useAnalysis } from "@/components/AnalysisContext";
@@ -11,6 +11,8 @@ import { API_URL } from "@/lib/api";
 import { drawScaled, persistentDataURL } from "@/lib/images";
 import { RUNE_TAGS, UNKNOWN_RUNE_TAG } from "@/lib/runes";
 import { rundata, type Inscription } from "@/lib/rundata";
+import { loadAllCrops as fetchAllCrops, rotateCanvas, type CropWithStone } from "@/lib/runeForms";
+import RuneCropDetail from "@/components/RuneCropDetail";
 
 const THUMB_MAX_SIDE = 256;
 const FEATURE_MAX_SIDE = 512;
@@ -35,18 +37,6 @@ const SOURCE_LABEL: Record<TwoDSourceKind, string> = {
   "groove-map": "Ristningskarta från 3D-analysen",
   rti: "Vy från RTI-visaren",
 };
-
-interface CropWithStone {
-  crop: PaleographicCrop;
-  projectId: string;
-  signum: string;
-}
-
-function cosine(a: number[], b: number[]) {
-  let dot = 0, na = 0, nb = 0;
-  for (let i = 0; i < a.length; i++) { dot += a[i] * b[i]; na += a[i] * a[i]; nb += b[i] * b[i]; }
-  return na && nb ? dot / Math.sqrt(na * nb) : 0;
-}
 
 const fmt = (v: number, d = 1) => v.toFixed(d).replace(".", ",");
 
@@ -73,7 +63,9 @@ export default function TwoDAnalysis() {
 
   const [allCrops, setAllCrops] = useState<CropWithStone[]>([]);
   const [comparingTo, setComparingTo] = useState<CropWithStone | null>(null);
-  const [sameTagOnly, setSameTagOnly] = useState(true);
+  // A new crop is turned this much (clockwise, degrees) before it is described, so a rune in a slanting band stands up
+  const [cropTurn, setCropTurn] = useState(0);
+  const [turnPreview, setTurnPreview] = useState<string | null>(null);
   const [rundataRec, setRundataRec] = useState<Inscription | null>(null);
 
   const imgRef = useRef<HTMLImageElement>(null);
@@ -89,21 +81,11 @@ export default function TwoDAnalysis() {
   const isBinarySource = sourceKind === "groove-map" || sourceKind === "3d-snapshot" || sourceKind === "3d-relief";
 
   // ---- data loading ------------------------------------------------------------------------
-  const loadAllCrops = async () => {
-    const projects = await db.getProjects();
-    setAllCrops(projects.flatMap(p => (p.paleographicCrops ?? []).map(crop => ({
-      crop, projectId: p.id, signum: p.metaText || p.name,
-    }))));
-  };
+  const loadAllCrops = async () => setAllCrops(await fetchAllCrops());
 
   useEffect(() => {
     let cancelled = false;
-    db.getProjects().then(projects => {
-      if (cancelled) return;
-      setAllCrops(projects.flatMap(p => (p.paleographicCrops ?? []).map(crop => ({
-        crop, projectId: p.id, signum: p.metaText || p.name,
-      }))));
-    });
+    fetchAllCrops().then(all => { if (!cancelled) setAllCrops(all); });
     return () => { cancelled = true; };
   }, [activeProjectId]);
 
@@ -216,10 +198,12 @@ export default function TwoDAnalysis() {
 
   // A rune crop with its form description; thumbSide is smaller for automatic crops
   const buildCrop = async (pc: PercentCrop, tag: string, extra: Partial<PaleographicCrop> = {},
-                           thumbSide = THUMB_MAX_SIDE): Promise<PaleographicCrop> => {
-    const thumb = processedCanvas(thumbSide, pc);
-    const featureCanvas = processedCanvas(FEATURE_MAX_SIDE, pc);
-    if (!thumb || !featureCanvas) throw new Error("Kunde inte läsa utsnittet.");
+                           thumbSide = THUMB_MAX_SIDE, turn = 0): Promise<PaleographicCrop> => {
+    const thumb0 = processedCanvas(thumbSide, pc);
+    const feature0 = processedCanvas(FEATURE_MAX_SIDE, pc);
+    if (!thumb0 || !feature0) throw new Error("Kunde inte läsa utsnittet.");
+    const thumb = turn ? rotateCanvas(thumb0, turn) : thumb0;
+    const featureCanvas = turn ? rotateCanvas(feature0, turn) : feature0;
     const thumbnail = thumb.toDataURL(isBinarySource ? "image/png" : "image/jpeg", thumbSide < THUMB_MAX_SIDE ? 0.7 : 0.8);
     const res = await fetch(`${API_URL}/api/2d/extract_features`, {
       method: "POST",
@@ -240,9 +224,18 @@ export default function TwoDAnalysis() {
       sourceKind,
       grooveSummary: grooveSummaryFor(pc),
       createdAt: new Date().toISOString(),
+      ...(turn ? { rotationDeg: turn } : {}),
       ...extra,
     };
   };
+
+  // A preview of the crop as it will be saved, turned (set when the crop or the turn changes)
+  const showTurned = (pc: PercentCrop | null, turn: number) => {
+    if (!pc || pc.width <= 0 || !turn) { setTurnPreview(null); return; }
+    const c = processedCanvas(160, pc);
+    setTurnPreview(c ? rotateCanvas(c, turn).toDataURL("image/png") : null);
+  };
+  const changeTurn = (turn: number) => { setCropTurn(turn); showTurned(completedCrop, turn); };
 
   const storeCrops = async (crops: PaleographicCrop[]) => {
     const projectId = await resolveProjectId();
@@ -266,7 +259,7 @@ export default function TwoDAnalysis() {
     }
     setSavingCrop(true);
     try {
-      await storeCrops([await buildCrop(completedCrop, cropTag)]);
+      await storeCrops([await buildCrop(completedCrop, cropTag, {}, THUMB_MAX_SIDE, cropTurn)]);
     } catch (err) {
       alert(err instanceof Error ? err.message : "Kunde inte spara utsnittet.");
     } finally {
@@ -356,18 +349,6 @@ export default function TwoDAnalysis() {
     }
   };
 
-  // ---- rune form comparison ----------------------------------------------------------------
-  const comparison = useMemo(() => {
-    if (!comparingTo?.crop.featureVector) return [];
-    const ref = comparingTo.crop;
-    return allCrops
-      .filter(c => c.crop.id !== ref.id && c.crop.featureVector && c.crop.featureVersion === ref.featureVersion)
-      .filter(c => !sameTagOnly || c.crop.tag === ref.tag)
-      .map(c => ({ ...c, similarity: cosine(ref.featureVector!, c.crop.featureVector!) }))
-      .sort((a, b) => b.similarity - a.similarity)
-      .slice(0, 12);
-  }, [comparingTo, allCrops, sameTagOnly]);
-
   const projectCrops = allCrops.filter(c => c.projectId === activeProjectId);
 
   return (
@@ -441,7 +422,7 @@ export default function TwoDAnalysis() {
                   )}
                 </div>
                 <div className="relative w-full rounded-3xl overflow-hidden bg-slate-900/5 flex items-center justify-center p-4">
-                  <ReactCrop crop={crop} onChange={(_, pc) => setCrop(pc)} onComplete={(_, pc) => setCompletedCrop(pc)} className="max-h-[500px] relative">
+                  <ReactCrop crop={crop} onChange={(_, pc) => setCrop(pc)} onComplete={(_, pc) => { setCompletedCrop(pc); showTurned(pc, cropTurn); }} className="max-h-[500px] relative">
                     <img ref={imgRef} src={imagePreview} alt="Runsten"
                       style={{ filter: `brightness(${brightness}%) contrast(${contrast}%) ${channel !== "all" ? `url(#channel-${channel})` : ""}` }}
                       className="w-auto h-auto max-h-[460px] object-contain shadow-sm" />
@@ -501,6 +482,25 @@ export default function TwoDAnalysis() {
                 {savingCrop ? "Sparar..." : "Spara runutsnitt"}
               </button>
             </form>
+            {imagePreview && (
+              <div className="w-full mt-2 flex items-center gap-3 text-xs text-slate-600">
+                <span className="font-bold text-slate-700 whitespace-nowrap">Vrid utsnittet</span>
+                {([[-90, "↺ 90°"], [-45, "↺ 45°"], [45, "↻ 45°"], [90, "↻ 90°"]] as const).map(([d, label]) => (
+                  <button key={d} type="button" onClick={() => changeTurn(((cropTurn + d + 540) % 360) - 180)}
+                    className="px-2 py-1 rounded-lg border border-slate-300 bg-white font-bold hover:border-slate-900">{label}</button>
+                ))}
+                <input type="range" min={-180} max={180} value={cropTurn} onChange={e => changeTurn(Number(e.target.value))}
+                  className="flex-1 accent-[#b7410e]" aria-label="Vridning av nya utsnitt i grader" />
+                <span className="tabular-nums w-20 text-right">{cropTurn > 0 ? `medurs ${cropTurn}°` : cropTurn < 0 ? `moturs ${-cropTurn}°` : "ingen"}</span>
+                {turnPreview && <img src={turnPreview} alt="Utsnittet vridet" className="w-12 h-12 object-contain border border-slate-200 rounded bg-white" />}
+              </div>
+            )}
+            {imagePreview && (
+              <p className="w-full mt-1 text-[11px] text-slate-500">
+                Står texten i en lutande slinga, vrid utsnittet så att runan står upprätt innan du sparar. Formjämförelsen
+                tar hänsyn till riktningen. Vridningen gäller nya utsnitt tills du ändrar den.
+              </p>
+            )}
 
             <div className="w-full mt-4 rounded-2xl border border-slate-200 bg-white/60 p-4">
               <div className="flex items-center justify-between gap-3">
@@ -552,7 +552,7 @@ export default function TwoDAnalysis() {
             {projectCrops.length > 0 && (
               <div className="liquid-glass-island rounded-[36px] p-6 border border-white/50">
                 <h3 className="text-lg font-bold text-slate-800 mb-1">Runutsnitt i projektet ({projectCrops.length})</h3>
-                <p className="text-xs text-slate-500 mb-4">Klicka på ett utsnitt för att jämföra formen med samma runa på andra stenar.</p>
+                <p className="text-xs text-slate-500 mb-4">Klicka på ett utsnitt för att vrida det, ändra runa eller jämföra formen med samma runa på andra stenar och hos olika ristare.</p>
                 <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                   {projectCrops.map(c => (
                     <button key={c.crop.id} type="button" onClick={() => setComparingTo(c)}
@@ -573,43 +573,8 @@ export default function TwoDAnalysis() {
             )}
 
             {comparingTo && (
-              <div className="liquid-glass-island rounded-[36px] p-6 border border-[#b7410e]/20">
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-lg font-bold text-slate-800">Mest lika runformer</h3>
-                  <button onClick={() => setComparingTo(null)} className="text-xs text-slate-500 hover:text-slate-900">Stäng</button>
-                </div>
-                <div className="flex gap-4 items-start mb-3">
-                  {comparingTo.crop.formPng && <img src={comparingTo.crop.formPng} alt="Normaliserad form" className="w-16 h-16 border border-slate-200 rounded-lg bg-white" />}
-                  <div className="text-xs text-slate-600">
-                    <div className="font-bold text-slate-900">{comparingTo.crop.tag} · {comparingTo.signum}</div>
-                    <label className="flex items-center gap-2 mt-1"><input type="checkbox" checked={sameTagOnly} onChange={e => setSameTagOnly(e.target.checked)} /> Bara samma runa</label>
-                    {!comparingTo.crop.featureVersion && <p className="text-amber-700 mt-1">Utsnittet är sparat med en äldre beskrivning – spara det på nytt för att jämföra.</p>}
-                  </div>
-                </div>
-                {comparison.length === 0 ? (
-                  <p className="text-sm text-slate-500">Inga jämförbara utsnitt ännu. Spara samma runa från fler stenar.</p>
-                ) : (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    {comparison.map(c => (
-                      <div key={c.crop.id} className="bg-white border border-slate-200 rounded-xl overflow-hidden">
-                        <div className="h-20 flex items-center justify-center bg-slate-50 p-1.5">
-                          <img src={c.crop.imageBase64} alt={c.crop.tag} className="max-w-full max-h-full object-contain" />
-                        </div>
-                        <div className="px-2 py-1.5 text-[11px]">
-                          <div className="font-bold text-slate-800 truncate">{c.signum}</div>
-                          <div className="text-slate-500">{c.crop.tag} · formlikhet {fmt(c.similarity, 2)}</div>
-                          {c.crop.grooveSummary && <div className="text-emerald-700">{fmt(c.crop.grooveSummary.angle_mean)}° ({c.crop.grooveSummary.n} snitt)</div>}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-                <p className="text-[11px] text-slate-500 mt-3">
-                  Formlikheten jämför normaliserade svartvita runformer (kantriktningar, täthet och proportioner). På
-                  syntetiska testrunor hittas samma runa i 85 % av fallen; på verkliga foton påverkar skador och vittring.
-                  Den är ett underlag för jämförelse, inte ett bevis för samma ristare.
-                </p>
-              </div>
+              <RuneCropDetail key={comparingTo.crop.id} item={comparingTo} all={allCrops} onClose={() => setComparingTo(null)}
+                onChanged={updated => { setComparingTo(updated); loadAllCrops(); }} />
             )}
 
             <div className="liquid-glass-island rounded-[36px] p-6 border border-white/50 space-y-4">

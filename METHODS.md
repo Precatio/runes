@@ -1526,6 +1526,24 @@ Till 2026-10-20 en egen sida (*2D-bildanalys*) med AI-bedömning av stilgrupp; n
   till tre decimaler, så att ett projekt med många utsnitt ryms inom gränsen på 1 MB; högst 40 sparas åt gången.
   AI-markeringen av runor i andra bilder (`/api/2d/detect_runes`, med en AI-translitterering per ruta) togs bort
   2026-10-20 tillsammans med AI-läsningen (avsnitt 8).
+* **Vridning (2026-10-27, `web/src/lib/runeForms.ts`).** Formbeskrivningen (HOG) tar hänsyn till riktningen, så en
+  runa i en slinga som lutar jämförs fel med upprätta runor. Ett utsnitt kan vridas innan det sparas (vridningen gäller
+  nya utsnitt tills den ändras) och ett sparat utsnitt kan vridas i efterhand. Utsnittet vrids runt sin mitt på en duk
+  som rymmer hela det vridna utsnittet; hörnen fylls med medianen av kantens gråton, så att de inte blir nya kanter.
+  Formbeskrivningen räknas om på det vridna utsnittet; för ett sparat utsnitt görs det på miniatyren, som är det enda som
+  sparas, så varje vridning som inte är en multipel av 90° omsamplar den. Vridningen sparas (`rotationDeg`, medurs
+  positiv). I ett prov med syntetiska t-runor var en runa i 45° lutning 0,18 lik en upprätt runa av samma form, och
+  0,82 efter vridningen.
+* **Ändra runa och ta bort** ett sparat utsnitt, så att automatiska utsnitt sparade som obestämd runa kan anges senare.
+* **Jämför med ristare** (`RuneCropDetail`): samma runa på stenar i användarens projekt, grupperade efter de ristare
+  Rundata anger med säkerhet (signerad eller attribuerad, inte osäker), med formlikheten i medel mot utsnittet, antalet
+  utsnitt och stenar. Raden *Samma sten* (utsnittets syskon på samma sten) är referensen: ristarens egen variation.
+  Stenar utan säker ristare bildar en egen grupp. Få utsnitt ger stor osäkerhet; det är ett underlag, inte ett prov.
+* **Jämför två stenar** (`RuneFormCompare`, avsnitt 4): för varje runa som båda stenarna har utsnitt av,
+  formlikheten i medel över alla par mellan stenarna mot medelvärdet av likheten inom stenarna. Är likheten mellan
+  stenarna minst lika stor som inom dem (marginal 0,02) skiljer formen inte stenarna åt. Liknar runorna på samma sten
+  inte varandra (under 0,5) varnar sidan för olika vridning. Utsnitten kommer ur användarens projekt (efter signum) och,
+  för en korpuspost, ur de runformer som delats med den.
 
 ## 13. Syntes och attribuering
 

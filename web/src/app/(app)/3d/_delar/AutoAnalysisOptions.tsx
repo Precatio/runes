@@ -52,7 +52,7 @@ export default function AutoAnalysisOptions({
             {allStaveless(runeTypes)
               ? "Påslaget, eftersom Rundata anger stavlösa runor för stenen."
               : someStaveless(runeTypes)
-                ? "Rundata anger stavlösa runor bara för en del av runorna; slå på läget om de flesta är stavlösa."
+                ? "Rundata anger stavlösa runor bara för en del av runorna. Slå på läget om de flesta är stavlösa."
                 : "Slå på det om stenen har stavlösa runor."}{" "}
             Indelningen är ett ungefärligt förslag; vill du ha den exakt, markera runorna för hand i granskningen.</span>
         </label>

@@ -95,6 +95,7 @@ export interface PaleographicCrop {
   grooveSummary?: GrooveSummaryLite; // groove measurements inside the crop (groove map only)
   auto?: "ai" | "3d"; // found automatically: by the AI in the image, or as a rune recognised by the 3D analysis
   confidence?: number; // the AI's own confidence (0–100), uncalibrated
+  rotationDeg?: number; // turned this much clockwise (negative: anticlockwise) to stand upright, src: lib/runeForms.ts
   createdAt: string;
 }
 

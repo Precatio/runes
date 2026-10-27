@@ -5,6 +5,14 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Runutsnitt: vrid, jämför med ristare och mellan två stenar
+- Ett runutsnitt kan vridas så att runan står upprätt, både när det sparas och i efterhand; formbeskrivningen räknas om
+  (METHODS.md 12). Runan kan ändras och utsnittet tas bort.
+- Nytt: *Jämför med ristare* för ett sparat utsnitt – samma runa grupperad efter de ristare Rundata anger med säkerhet,
+  med stenens egna runor som referens.
+- *Jämför två stenar* visar stenarnas runutsnitt sida vid sida, per runa, med likheten mellan stenarna mot likheten inom
+  dem.
+
 ### Sambanden i landskapet förklaras i ord
 - *Alla samband i landskapet (R)* på kartsidan börjar med en sammanfattning: hur många av de 117 sambanden som klarar
   justeringen och håller i båda halvorna, hur många som har p under 0,05 mot vad slumpen ger, och de starkaste i tre
