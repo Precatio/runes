@@ -9,6 +9,14 @@ from src import textmodel
 router = APIRouter()
 
 
+def canonical(signum: str) -> str:
+    """Rundata's own form of a signum, so that "sö113" or "SÖ 113" reads Sö 113 (as the Rundata lookup does); the input
+    as it is when Rundata does not have it."""
+    from api.rundata import store
+    rec = store().get(signum)
+    return rec["signum"] if rec else signum.strip()
+
+
 class Traces(BaseModel):
     # gap number → for each lost rune of the gap the runes its visible remains allow ("" or null: nothing visible)
     allowed: dict[int, list[str | None]]
@@ -26,7 +34,7 @@ def scan_traces(signum: str):
     visar vad skannern ser, och spåren räknas först när användaren bekräftar dem (POST /traces)."""
     from src import trace_reader
     try:
-        return trace_reader.proposals(signum)
+        return trace_reader.proposals(canonical(signum))
     except Exception as e:
         raise server_error(e, "Spårläsaren kunde inte läsa skanningen.") from e
 
@@ -38,6 +46,7 @@ def read(signum: str):
 
 
 def _read(signum: str, allowed):
+    signum = canonical(signum)
     try:
         return textmodel.analyze(signum, allowed)
     except KeyError:

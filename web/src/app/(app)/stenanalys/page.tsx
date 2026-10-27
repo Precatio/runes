@@ -108,6 +108,10 @@ export default function StoneAnalysisPage() {
     return () => clearTimeout(t);
   }, [signum]);
 
+  // Rundata's own form of the signum ("sö113" → "Sö 113") for every call and the report, so that a signum typed
+  // without a space or in lower case still finds the stone in every step (the lookup above folds it)
+  const sig = rec?.signum ?? signum.trim();
+
   const mark = (key: string, state: StepState, result?: string) =>
     setSteps(ss => ss.map(s => (s.key === key ? { ...s, state, result: result ?? s.result } : s)));
 
@@ -191,14 +195,16 @@ export default function StoneAnalysisPage() {
       if (signum.trim() && rec) {
         mark("textmodel", "pågår", "modellen läser inskriften (första gången upp till en minut) …");
         try {
-          const tmRes = await fetch(`${API_URL}/api/textmodel/${encodeURIComponent(signum.trim())}`);
+          const tmRes = await fetch(`${API_URL}/api/textmodel/${encodeURIComponent(sig)}`);
+          // A failed call says why (the engine's own message), not only that the model could not read the inscription
           const tm: { available?: boolean; reason?: string; gaps?: { words?: { word: string; p: number }[] }[] } =
-            tmRes.ok ? await tmRes.json() : {};
+            tmRes.ok ? await tmRes.json()
+              : { available: false, reason: (await tmRes.json().catch(() => null))?.detail ?? `analysmotorn svarade ${tmRes.status}` };
           if (tm.available) {
             const gaps = (tm.gaps ?? []).filter(g => g.words?.length);
             const best = gaps.slice(0, 3).map(g => `${g.words![0].word} (${Math.round(100 * g.words![0].p)} %)`).join(", ");
             const scan: { available?: boolean; gaps?: Record<string, unknown> } | null =
-              await fetch(`${API_URL}/api/textmodel/scantraces/${encodeURIComponent(signum.trim())}`)
+              await fetch(`${API_URL}/api/textmodel/scantraces/${encodeURIComponent(sig)}`)
                 .then(r => (r.ok ? r.json() : null)).catch(() => null);
             const seen = scan?.available ? Object.keys(scan.gaps ?? {}).length : 0;
             const text = gaps.length
@@ -222,7 +228,7 @@ export default function StoneAnalysisPage() {
       const rs = await fetch(`${API_URL}/api/synthesis/analyze`, {
         method: "POST", headers: { ...headers, "Content-Type": "application/json" },
         body: JSON.stringify({
-          signum: signum || "Okänd", stoneType: stone, weathering,
+          signum: sig || "Okänd", stoneType: stone, weathering,
           analyses: [{ id: analysis.id, feature_type: featureType, savedAt: analysis.savedAt,
             slices: slices.map(s => ({ ...Object.fromEntries(METRICS.map(m => [m, s[m]])), position_mm: s.position_mm })) }],
           analysis_id: analysis.id,
@@ -243,7 +249,7 @@ export default function StoneAnalysisPage() {
       if (signum.trim() && rec) {
         mark("research", "pågår");
         const names = synthesis.candidates.slice(0, 3).map(c => c.name).join(",");
-        const rr0 = await fetch(`${API_URL}/api/research/stone/${encodeURIComponent(signum.trim())}?candidates=${encodeURIComponent(names)}`);
+        const rr0 = await fetch(`${API_URL}/api/research/stone/${encodeURIComponent(sig)}?candidates=${encodeURIComponent(names)}`);
         if (rr0.ok) {
           const ctx: { purpose: { label: string }[]; carvers: { carver: string; style: string | null; style_k: number; style_n: number }[];
             status: { carver: boolean } } = await rr0.json();
@@ -263,7 +269,7 @@ export default function StoneAnalysisPage() {
       if (signum.trim() && rec) {
         mark("rstats", "pågår", "kontrollerar R på servern …");
         try {
-          const text = await runR(signum.trim(), synthesis.candidates.slice(0, 3).map(c => c.name),
+          const text = await runR(sig, synthesis.candidates.slice(0, 3).map(c => c.name),
             msg => mark("rstats", "pågår", msg));
           if (text) { wfSteps.push({ name: "Statistik i R", result: text }); mark("rstats", "klart", text); }
           else mark("rstats", "hoppades över", "R finns inte på servern");
@@ -278,8 +284,8 @@ export default function StoneAnalysisPage() {
       // 9. Report
       mark("report", "pågår");
       const body = {
-        signum, author: userName, institution: userInstitution, lang,
-        meta: { stone, weathering, text: signum }, scan, condition: { weathering: weathering.toLowerCase() },
+        signum: sig, author: userName, institution: userInstitution, lang,
+        meta: { stone, weathering, text: sig }, scan, condition: { weathering: weathering.toLowerCase() },
         analyses: [analysis], counts: main.counts, mesh_id: info.mesh_id, view: { normal },
         corpus: (entries ?? []).map(e => ({ signum: e.signum, feature_type: e.feature_type, means: e.means })),
         synthesis,
@@ -306,7 +312,7 @@ export default function StoneAnalysisPage() {
     }
   };
 
-  const base = safeFilename(`${signum || file?.name || "sten"} stenanalys`);
+  const base = safeFilename(`${sig || file?.name || "sten"} stenanalys`);
   const downloadDocx = async () => {
     if (!last.current || !report) return;
     setBusyDocx(true);
@@ -327,10 +333,10 @@ export default function StoneAnalysisPage() {
   const saveProject = async () => {
     if (!last.current) return;
     const { analysis, synthesis, raking } = last.current;
-    const existing = signum ? await db.getProjectBySignum(signum) : null;
+    const existing = sig ? await db.getProjectBySignum(sig) : null;
     const p = await db.saveProject({
-      id: existing?.id, name: existing?.name ?? (signum || file?.name || "Stenanalys"), fileName: file?.name ?? "",
-      metaText: signum, metaStone: stone, metaWeathering: weathering, slices: existing?.slices ?? [],
+      id: existing?.id, name: existing?.name ?? (sig || file?.name || "Stenanalys"), fileName: file?.name ?? "",
+      metaText: sig, metaStone: stone, metaWeathering: weathering, slices: existing?.slices ?? [],
       grooveAnalyses: [...(existing?.grooveAnalyses ?? []), analysis],
       twoDImage: raking,
       synthesis: synthesis ? { result: synthesis, analysisId: analysis.id, featureType, savedAt: new Date().toISOString() } : existing?.synthesis,

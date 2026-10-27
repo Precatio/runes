@@ -700,6 +700,7 @@
 "Analysera vyn i {0}D":"Analyse the view in {0}D",
 "analyseras hela korpusen i R: ristarnas områden och avstånd till vatten, grupper av stil och språk, formler och stavning, dialekter, en korsvaliderad attribueringsmodell, seriation mot Gräslunds kronologi och formelnätverk.":"the whole corpus is analysed in R: the carvers' areas and distance to water, groups of style and language, formulae and spelling, dialects, a cross-validated attribution model, seriation against Gräslund's chronology and formula networks.",
 "Analyserna behöver räknas om för den här versionen av data.":"The analyses need to be recomputed for this version of the data.",
+"analysmotorn svarade {0}":"the analysis engine answered {0}",
 "Analysparametrar (för reproducerbarhet).":"Analysis parameters (for reproducibility).",
 "Analysparametrar och proveniens":"Analysis parameters and provenance",
 "analysplan":"analysis plan",

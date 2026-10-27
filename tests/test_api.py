@@ -368,3 +368,11 @@ def test_signed_stone_never_gets_a_proposal(client):
     assert "Förslag till omprövning" not in md
 
 
+
+
+def test_textmodel_reads_a_signum_typed_without_space_or_capitals():
+    """The stone analysis sent "sö113" as typed, and the probability model answered 404 although Rundata has Sö 113."""
+    from api.routers.textmodel import canonical
+    assert canonical("sö113") == "Sö 113"
+    assert canonical(" SÖ 113 ") == "Sö 113"
+    assert canonical("Xx 999") == "Xx 999"
