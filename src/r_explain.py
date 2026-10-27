@@ -380,7 +380,11 @@ def _cell(t: dict, region: str, direction: str) -> tuple[int, int]:
 
 
 def messages(m: dict) -> dict | None:
-    """Budskapen (r/messages.R): vad stenarna berättar om den döde, per landsdel, och resorna i väst och öst."""
+    """Budskapen (r/messages.R): vad stenarna berättar om den döde, per landsdel, och resorna i väst och öst. Texten
+    byggs ur testen och säger inte mer än de visar: ett högt interaktions-p är inget bevis för samma skillnad åt båda
+    håll, och en sten som inte säger att mannen dog borta säger inte att han kom hem."""
+    from src.r_findings import (legibility_text, message_separated, rule_check_text, separation_sentence, strict_text,
+                                travel_direction_agreement, travel_direction_text, travel_tests_text)
     els = {e["key"]: e for e in m.get("elements") or []}
     t = m.get("travel") or {}
     if not els or not t.get("n"):
@@ -389,34 +393,68 @@ def messages(m: dict) -> dict | None:
     sv, sw = _cell(t, "Svealand", "väst"), _cell(t, "Svealand", "öst")
     g_all = (gv[0] + gw[0]) / max(1, gv[1] + gw[1])
     s_all = (sv[0] + sw[0]) / max(1, sv[1] + sw[1])
-    mh, gam = t.get("mh") or {}, t.get("common") or {}
-    p_int = t.get("p_interaction")
-    sep = [e for e in els.values() if e.get("separation")]
+    mh, mh_t, gam = t.get("mh") or {}, t.get("mh_time") or {}, t.get("common") or {}
+    differs = mh.get("p") is not None and mh["p"] < 0.05
+    holds_time = mh_t.get("p") is not None and mh_t["p"] < 0.05
+    holds_carver = gam.get("p") is not None and gam["p"] < 0.05
+    # Riktningen ur Mantel–Haenszel-kvoten (inte ur de sammanslagna råa andelarna), och "inom varje riktning" bara när
+    # båda riktningarnas andelar pekar åt samma håll
+    more, same = travel_direction_agreement(t)
+    which = "oftare" if (more if more is not None else g_all > s_all) else "mer sällan"
+    answer = (f"När en sten i Götaland nämner en resa utanför Norden säger den i {_pct(g_all)} av fallen att mannen dog "
+              f"utanför Norden: {gv[0]} av {gv[1]} västerut och {gw[0]} av {gw[1]} österut. I Svealand gäller det "
+              f"{sv[0]} av {sv[1]} västerut och {sw[0]} av {sw[1]} österut. ")
+    if differs:
+        answer += ((f"Inom varje riktning säger götländska resestenar det {which}" if same else
+                    f"Sammantaget över riktningarna säger götländska resestenar det {which}, men inte i båda riktningarna "
+                    "var för sig")
+                   + f" (exakt test med riktningen som skikt, p {_p(mh['p'])})")
+        if mh_t.get("p") is not None:
+            answer += (f", och skillnaden håller också inom tidsskikten (samma test med riktning och tidsskikt som skikt, "
+                       f"p {_p(mh_t['p'])})." if holds_time else
+                       f", men inom riktning och tidsskikt samtidigt går den inte att säkerställa (p {_p(mh_t['p'])}).")
+        else:
+            answer += "."
+    else:
+        answer += (f"Någon skillnad mellan landsdelarna går inte att visa (exakt test med riktningen som skikt, "
+                   f"p {_p(mh.get('p'))}).")
+    answer += " " + travel_direction_text(t)
+    seps = message_separated(els)
+    if seps:
+        answer += " " + " ".join(separation_sentence(pr, ab, sep) for pr, ab, sep in seps)
+    r, b = (els.get("resa") or {}).get("model") or {}, (els.get("berom") or {}).get("model") or {}
+    r_less = r.get("p") is not None and r["p"] < 0.05 and r["or"] < 1
+    b_more = b.get("p") is not None and b["p"] < 0.05 and b["or"] > 1
+    interpretation = [
+        ("Två förklaringar går inte att skilja åt med de här stenarna: en sed i hur man berättade – i Götaland nämndes "
+         "resan främst när mannen dog borta – eller att götländska resenärer oftare dog borta. En sten som inte säger att "
+         "mannen dog borta behöver inte gälla någon som kom hem: dit hör också stenar över levande resenärer, stenar som "
+         "resenären reste själv och fragment.") if differs and which == "oftare" else "",
+        (f"Götalandsstenarna nämner resor mer sällan (oddskvot {_d(r['or'], 2)}) men berömmer den döde oftare (oddskvot "
+         f"{_d(b['or'], 1)}), båda efter tid och ristare. "
+         + strict_text(els.get("resa") or {}) + " "
+         "Att minnet där gällde mannen snarare än färden är en hypotes; stenarna prövar den inte.") if r_less and b_more else "",
+    ]
+    not_saying = [
+        "Stenarna visar vad de efterlevande valde att berätta, inte hur många som dog.",
+        travel_tests_text(t) + (" Socken och landsdel går därför inte att skilja helt."
+                                if gam.get("p") is not None and not holds_carver else ""),
+        rule_check_text(m.get("rule_check")),
+        legibility_text(m),
+    ]
+    confidence = "troligt" if differs and holds_time and holds_carver else "osäkert"
+    short = (f"Resestenarna i Götaland säger {which} än i Svealand att mannen dog borta ({_pct(g_all)} mot {_pct(s_all)})."
+             if differs else
+             f"Resestenarna i Götaland och Svealand skiljer sig inte påvisbart i hur ofta de säger att mannen dog borta "
+             f"({_pct(g_all)} mot {_pct(s_all)}).")
     return _section(
         "messages", "Vad berättar stenarna om den döde, och var?",
         "Samma minnesformel kunde bära olika berättelser: hur mannen dog, att han reste, vad han ärvde eller "
         "ägde, vilket beröm han fick. Vad de efterlevande valde att berätta skiljer trakterna åt och säger något om "
         "seden, inte bara om vad som hände.",
         {"value": f"{_pct(g_all)} mot {_pct(s_all)}",
-         "label": "av resestenarna säger att mannen dog borta, i Götaland mot Svealand"},
-        f"När en sten i Götaland nämner en resa utanför Norden säger den nästan alltid att mannen dog där: "
-        f"{gv[0]} av {gv[1]} västerut och {gw[0]} av {gw[1]} österut. I Svealand gäller det {sv[0]} av {sv[1]} "
-        f"västerut och {sw[0]} av {sw[1]} österut. Skillnaden är densamma åt båda håll"
-        + (f" (interaktion p {_d(p_int, 2)})" if p_int is not None else "")
-        + f", och den håller över riktningarna och tidsskikten (exakt test, p {_d(mh.get('p'), 4)})."
-        + (" Arv och stenar resta åt sig själv i livstiden finns i Svealand men inte i Götaland." if sep else ""),
-        "troligt",
-        ["Att skillnaden är densamma i väst och öst talar för en sed i hur man berättade, inte för att en viss färd var "
-         "farligare: i Götaland restes stenen över den som inte kom hem, i Svealand också över den som kom hem.",
-         "Götalandsstenarna nämner resor mer sällan men berömmer den döde oftare – minnet gällde mannen, inte "
-         "färden."],
-        ["Stenarna visar vad de efterlevande valde att berätta, inte hur många som dog.",
-         f"Med ristaren eller socknen som slumpeffekt blir skillnaden osäker (oddskvot {_d(gam.get('or'), 1)}, "
-         f"95 % KI {_d(gam.get('lo'), 1)}–{_d(gam.get('hi'), 0)}): götländska resestenar är få och sprids över många "
-         "socknar, så socken och landsdel går inte att skilja helt.",
-         "Budskapen klassas med en regel per budskap i den engelska översättningen; den stämmer med handkodningen i 50 av "
-         "51 västerinskrifter, men är inte prövad på alla budskap."],
-        "I Götaland berättar resestenarna om döden, i Svealand också om resan – åt båda håll.")
+         "label": "av resestenarna säger att mannen dog utanför Norden, i Götaland mot Svealand"},
+        answer, confidence, interpretation, not_saying, short)
 
 
 ORDER = ["attribution", "anonymous", "change", "chronology", "geography", "text", "words", "messages", "clusters", "network"]

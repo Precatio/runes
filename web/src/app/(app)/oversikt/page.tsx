@@ -78,10 +78,14 @@ function Overview() {
   const [province, setProvince] = useState("");
   const [carver, setCarver] = useState("");
   const [query, setQuery] = useState("");
-  // The statuses picked: none picked shows every stone with some evidence (all but "inget förslag"); a click shows only
-  // the statuses picked, and a click on a picked one takes it away again
+  // Three states. Default (nothing picked, showAll off): every stone with some evidence, i.e. all but "inget förslag".
+  // "Visa alla" (showAll on, nothing picked): every status. Picked: only the statuses in `chosen`. From the default or
+  // from "Visa alla" a click on a status shows only that status; further clicks add or take away; taking away the
+  // last picked status goes back to the default. "Återställ urvalet" always goes back to the default.
   const [chosen, setChosen] = useState<Set<Status>>(new Set());
-  const shows = (st: Status) => (chosen.size ? chosen.has(st) : st !== "inget förslag");
+  const [showAll, setShowAll] = useState(false);
+  const shows = (st: Status) => (chosen.size ? chosen.has(st) : showAll || st !== "inget förslag");
+  const isDefault = !chosen.size && !showAll;
   const [selected, setSelected] = useState<string | null>(params.get("signum"));
   const [showTable, setShowTable] = useState(false);
 
@@ -103,9 +107,13 @@ function Overview() {
   const rows = useMemo(() => (data?.stones ?? []).filter(s =>
     shows(s.status) && (!province || s.province === province)
     && (!carver || s.carver === carver || s.alternative?.carver === carver)
-    && (!query || s.signum.toLowerCase().includes(query.toLowerCase()) || s.place.toLowerCase().includes(query.toLowerCase()))), [data, chosen, province, carver, query]); // eslint-disable-line react-hooks/exhaustive-deps
+    && (!query || s.signum.toLowerCase().includes(query.toLowerCase()) || s.place.toLowerCase().includes(query.toLowerCase()))), [data, chosen, showAll, province, carver, query]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const toggle = (st: Status) => setChosen(h => { const n = new Set(h); if (n.has(st)) n.delete(st); else n.add(st); return n; });
+  const toggle = (st: Status) => {
+    setShowAll(false);
+    setChosen(h => { const n = new Set(h); if (n.has(st)) n.delete(st); else n.add(st); return n; });
+  };
+  const resetStatuses = () => { setChosen(new Set()); setShowAll(false); };
   const pick = (e: { points?: { customdata?: string }[] }) => { const s = e.points?.[0]?.customdata; if (s) setSelected(s); };
 
   if (error) return <div className="max-w-3xl mx-auto p-8 text-red-700 font-semibold">{error}</div>;
@@ -214,9 +222,16 @@ function Overview() {
             <span className={`font-semibold ${chosen.has(st) ? "text-white/70" : "text-slate-500"}`}>{data.counts[st]}</span>
           </button>
         ))}
-        {chosen.size > 0 && (
-          <button type="button" onClick={() => setChosen(new Set())} className="px-3 py-1.5 rounded-xl text-xs font-bold text-[#b7410e] hover:underline">
+        {/* "Visa alla" shows every status, "inget förslag" too, without picking any, so a click on a status still means
+            "only this one"; the reset goes back to the default (all with evidence) */}
+        {(chosen.size > 0 || !showAll) && (
+          <button type="button" onClick={() => { setChosen(new Set()); setShowAll(true); }} className="px-3 py-1.5 rounded-xl text-xs font-bold text-[#b7410e] hover:underline">
             Visa alla
+          </button>
+        )}
+        {!isDefault && (
+          <button type="button" onClick={resetStatuses} className="px-3 py-1.5 rounded-xl text-xs font-bold text-[#b7410e] hover:underline">
+            Återställ urvalet
           </button>
         )}
       </div>
@@ -263,7 +278,9 @@ function Overview() {
 
           <section className="liquid-glass-island rounded-[24px] p-4">
             <h3 className="font-bold text-slate-900">Stenar utan ristare i Rundata</h3>
-            <p className="text-xs text-slate-500 mb-1">Längre åt höger: beläggen pekar starkare mot en ristare. Stenar utan något förslag visas inte här ({data.counts["inget förslag"]}).</p>
+            <p className="text-xs text-slate-500 mb-1">Längre åt höger: beläggen pekar starkare mot en ristare. {shows("inget förslag")
+              ? `Stenar utan något förslag visas här när de har något belägg (${unattributed.filter(s => s.status === "inget förslag").length} av ${rows.filter(s => s.status === "inget förslag").length}).`
+              : `Stenar utan något förslag visas inte här (${data.counts["inget förslag"]}).`}</p>
             <div style={{ height: Math.max(220, 34 * provOrder.length + 90) }}>
               <PlotlyGraph data={unTraces} onClick={pick} layout={{
                 autosize: true, margin: { l: 56, r: 16, t: 10, b: 50 }, paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)",

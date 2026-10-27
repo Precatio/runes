@@ -215,9 +215,11 @@ def corpus_results(request: Request):
     fp = fingerprint()
     if not rb.JOB.ready(fp):  # the results themselves are read only when the answer is not already cached
         raise HTTPException(status_code=409, detail=_NOT_COMPUTED)
-    from api.cache import cached_json, dir_version
+    from api.cache import cached_json, dir_version, findings_version
     from src import crosscheck
-    return cached_json(request, f"corpus|{fp}|{dir_version(crosscheck.CACHE)}", lambda: _corpus_results(fp))
+    # The day (the 30-day "Nytt"/"Ändrat" window) and the data files the builder reads belong in the key
+    return cached_json(request, f"corpus|{fp}|{dir_version(crosscheck.CACHE)}|{findings_version()}",
+                       lambda: _corpus_results(fp))
 
 
 _NOT_COMPUTED = "Korpusanalyserna är inte beräknade än. Starta dem med POST /api/r/corpus/run."
@@ -348,7 +350,8 @@ def _public(res: dict) -> dict:
 
 @router.get("/package")
 def r_package(signum: str = "", candidates: str = ""):
-    """Reproducerbarhetspaket (zip): R-skripten, korpusen, resultaten och ett skript som kör om allt."""
+    """Reproducerbarhetspaket (zip): R-skripten, korpusen och budskapen, resultaten och ett skript som kör om alla
+    korpusanalyser (lämningarna bara med RAÄ:s och ortnamnens filer, som inte följer med; se LASMIG.txt)."""
     _require_r()
     if not corpus_ready():
         raise HTTPException(status_code=409, detail="Korpusanalyserna är inte beräknade än.")

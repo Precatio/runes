@@ -15,6 +15,10 @@ Slutsatsens nivåer:
   måttligt      beläggen ≥ 0,35 och minst lika många andra belägg för som emot
   svagt         i övriga fall, och när ett fynd som motsäger Rundata står mot ett stöd ≥ 0,6 för Rundatas ristare
                 från de andra metoderna
+
+Nivåerna gäller ristarförslag. Fynd om en sten som inte föreslår någon ristare (luckor i texten, Runor 2020, släktlänkar
+och egna fynd, src/stone_findings.py) får ett eget kort resonemang och nivån 'ej tillämplig' (stone_interpretation);
+de får ingen nivå i listan och sorteras inte efter nivå.
 """
 from __future__ import annotations
 
@@ -137,8 +141,62 @@ def _model_agrees(rec: dict, sug: str, ctx: dict) -> bool:
     return bool(probs) and max(probs, key=probs.get) == sug and probs[sug] >= 0.5
 
 
+NOT_APPLICABLE = "ej tillämplig"
+
+
+def is_stone_finding(f: dict) -> bool:
+    """Ett fynd om en sten utan ristarförslag (src/stone_findings.py)."""
+    from src import stone_findings
+    return bool(f.get("stone_finding")) or (not f.get("suggested") and f.get("method") in stone_findings.METHODS)
+
+
+def stone_interpretation(f: dict, rec: dict) -> dict:
+    """Ett kort resonemang för fynd om en sten: vad fyndet säger, var uppgiften kommer ifrån och hur den kan prövas.
+    Ristarreglerna (andra belägg för ristaren, metodfel vid signerad sten, nivåerna starkt–svagt) gäller inte här."""
+    from src import stone_findings as sf
+    method = f.get("method", "")
+    existing = (f.get("existing") or "").strip()
+    # The existing-side texts of the stone findings are sentences about Rundata ("Rundata lämnar ordet oåterställt")
+    say = f"{f.get('ours', '')}" + (f" {existing}." if existing and existing != "–" else "")
+    gap = f.get("gap") or {}
+    if method == sf.TEXTGAP:
+        source = (f"Fyllnaden kommer från appens sannolikhetsmodell för runtexter (kalibrerad säkerhet "
+                  f"{round((gap.get('p') or f.get('evidence') or 0) * 100)} %). Den bygger på texten ensam, inte på stenen.")
+        check = ("granska luckan mot foto, skanning eller stenen själv – om spår av runorna som modellen föreslår syns och "
+                 "om de ryms i luckan")
+    elif method == sf.RUNOR_PLACE:
+        source = ("Uppgiften kommer från Riksantikvarieämbetets Runor 2020, en nyare utgåva, inte från appens metoder. "
+                  + ("Att appen ändå räknar stenen som stående på plats är en lucka i appens flyttregel, inte en "
+                     "motsägelse mellan källorna." if f.get("verdict") == "stämmer" else
+                     "Rundata har ingen flyttflagga; att stenen räknas som stående på plats är appens regel."))
+        check = ("kontrollera stenens plats i Runor och i Sveriges runinskrifter; om stenen är flyttad ska den inte räknas "
+                 "i analyserna av omgivningen (vatten, lämningar, landskap)")
+    elif method == sf.RUNOR_READING:
+        source = ("Läsningen kommer från Riksantikvarieämbetets Runor 2020, en nyare utgåva, inte från appens metoder. "
+                  "Bara säkert lästa runor räknas, inte runor inom parentes.")
+        check = "jämför de två läsningarna med foto eller skanning av stenen"
+    elif method == sf.LINK:
+        source = (f"Länken bygger på namnen som stenarna delar och på hur ofta så många namn delas av slump inom "
+                  f"landskapet (andel falska länkar {round((f.get('q') or 0) * 100)} %). Den säger inget om ristaren.")
+        check = (f"läs båda inskrifterna ({rec['signum']} och {f.get('linked')}) och pröva om personerna är desamma: "
+                 "släktled, ordningen bland arvingarna och dateringen")
+    else:
+        source = f"Ett eget fynd, fört in för hand (källa: {f.get('source') or '–'})."
+        check = "gå tillbaka till källan och pröva fyndet mot stenen"
+    paragraphs = [
+        {"title": "Vad fyndet säger", "text": say},
+        {"title": "Var uppgiften kommer ifrån", "text": source},
+        {"title": "Tolkning",
+         "text": ("Fyndet gäller stenen, inte en ristare, så nivåerna för ristarförslag (starkt, måttligt, svagt, metodfel) "
+                  "är inte tillämpliga. Det som skulle kunna avgöra frågan: " + check + ".")},
+    ]
+    return {"paragraphs": paragraphs, "level": NOT_APPLICABLE, "support": 0, "against": 0}
+
+
 def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
     """f: fyndet; rec: Rundatas post; ctx: stone_overview.context; profile: stone_overview.stone(..., detail=True)."""
+    if is_stone_finding(f):
+        return stone_interpretation(f, rec)
     sug = f.get("suggested")
     verdict = f.get("verdict")
     method = f.get("method", "")

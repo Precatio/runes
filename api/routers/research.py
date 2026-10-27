@@ -138,9 +138,13 @@ def research_findings_endpoint(req: FindingsRequest):
 
 def findings_key(req: FindingsRequest) -> str:
     import hashlib
+    from api.cache import findings_version
     from src import crosscheck
     body = hashlib.sha256(req.model_dump_json().encode()).hexdigest()[:16]
-    return f"findings|{body}|{_fp()}|{dir_version(crosscheck.CACHE)}|{id(store().inscriptions)}"
+    # The stone findings' input files (own findings, links, gap candidates, Runor) are part of the key, so that an edit
+    # to data/stone_findings.json shows without restarting the API (the same key part as /api/r/corpus)
+    return (f"findings|{body}|{_fp()}|{dir_version(crosscheck.CACHE)}|{id(store().inscriptions)}"
+            f"|{findings_version()}")
 
 
 def research_findings(req: FindingsRequest):
@@ -197,6 +201,8 @@ def _add_levels(items: list[dict]) -> list[dict]:
         cache = {}
     s, ctx, profiles, changed = store(), None, {}, False
     for f in items:
+        if interpretation.is_stone_finding(f):
+            continue  # the levels are for carver suggestions; a stone finding gets its own reasoning in /interpret
         key = "|".join(str(x) for x in (f["signum"], f["method"], f.get("suggested"), f.get("score"),
                                         (f.get("crosscheck") or {}).get("status")))
         if key not in cache:

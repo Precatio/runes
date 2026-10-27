@@ -2,8 +2,11 @@
 
 Appen bygger på Rundata 3.1 (2018). Runor 2020 är skördad till data/raa/runor_2020.json (scripts/fetch_runor.py,
 inte i git); när filen finns visas Runors uppgifter om en inskrift bredvid Rundatas – ursprunglig plats, bevarad,
-anteckningar, datering och en läsning som ändrats sedan 2018 (METHODS.md 17). Ett steg mot att byta källa
-(IMPLEMENTATIONSPLAN.md 3.2); inget räknas om på Runors uppgifter ännu.
+anteckningar, datering och en läsning som ändrats sedan 2018 (METHODS.md 17). Appen byter inte källa
+(IMPLEMENTATIONSPLAN.md 3.2 är struken 2026-10-26); inget räknas om på Runors uppgifter.
+
+Runor slås upp på exakt signum först och på fold_signum bara som reserv, som i api/rundata.RundataStore: annars får
+Närkes Nä 1–34 Runors norska N A1–N A34 (båda blir 'na<n>').
 """
 from __future__ import annotations
 
@@ -12,6 +15,7 @@ import json
 import os
 import re
 import threading
+import unicodedata
 
 from src.signum import fold_signum
 
@@ -21,7 +25,14 @@ EDITION = "Runor, Riksantikvarieämbetet (Samnordisk runtextdatabas, utgåva 202
 SEP = re.compile(r"[\s·:'×÷+|¶⁓;,.!?\"]|§[A-Z]|\{|\}|\$|=")
 
 _lock = threading.Lock()
-_index: dict | None = None
+# (exact, folded): the exact signum first, as in api/rundata.RundataStore. fold_signum drops diacritics, so the Närke
+# 'Nä 11' and the Norwegian 'N A11' share the folded key 'na11', and Runor lists N A1–N A34 before Nä 1–34
+_index: tuple[dict, dict] | None = None
+
+
+def _exact_key(signum: str) -> str:
+    """Signumet som det skrivs, bara utan mellanslag (samma nyckel som api/rundata._exact_key)."""
+    return re.sub(r"[\s_]+", "", unicodedata.normalize("NFC", signum or ""))
 
 
 def _lit(v):
@@ -58,24 +69,36 @@ def available() -> bool:
     return os.path.exists(PATH)
 
 
-def _load() -> dict:
+def _load() -> tuple[dict, dict]:
     global _index
     with _lock:
         if _index is None:
+            exact: dict = {}
             idx: dict = {}
             if available():
                 with open(PATH, encoding="utf-8") as f:
-                    for rec in json.load(f)["inscriptions"]:
-                        idx.setdefault(fold_signum(rec["signum"]), rec)
-                        for alt in _lit(rec.get("alt_signa")) or []:
-                            if isinstance(alt, str) and alt.strip():
-                                idx.setdefault(fold_signum(alt), rec)
-            _index = idx
+                    recs = json.load(f)["inscriptions"]
+                # Exact keys: every record's own signum before any alternative signum, so that the alt signum 'N A14'
+                # of Bo Peterson1992 cannot take the place of Runor's own record for a stone
+                for rec in recs:
+                    exact.setdefault(_exact_key(rec["signum"]), rec)
+                for rec in recs:
+                    for alt in _lit(rec.get("alt_signa")) or []:
+                        if isinstance(alt, str) and alt.strip():
+                            exact.setdefault(_exact_key(alt), rec)
+                # Folded keys, the fallback (case, 'So 113' for 'Sö 113'): unchanged order, first record wins
+                for rec in recs:
+                    idx.setdefault(fold_signum(rec["signum"]), rec)
+                    for alt in _lit(rec.get("alt_signa")) or []:
+                        if isinstance(alt, str) and alt.strip():
+                            idx.setdefault(fold_signum(alt), rec)
+            _index = (exact, idx)
     return _index
 
 
 def record(signum: str) -> dict | None:
-    return _load().get(fold_signum(signum))
+    exact, idx = _load()
+    return exact.get(_exact_key(signum)) or idx.get(fold_signum(signum))
 
 
 def for_inscription(rec: dict) -> dict | None:

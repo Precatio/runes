@@ -5,6 +5,7 @@ Filen byggs med `python -m scripts.build_rundata`.
 import json
 import os
 import re
+import unicodedata
 from collections import Counter
 from functools import lru_cache
 from typing import Optional
@@ -33,7 +34,7 @@ DATA_PATH = os.environ.get(
 )
 
 SIGNUM_IN_TEXT_RE = re.compile(
-    r"(?<![A-Za-zÅÄÖåäö])(U|Sö|So|Ög|Og|Öl|Ol|Vg|Sm|Gs|Vs|Nä|Na|Hs|M|Ån|An|D|Hr|J|Lp|Ds|Bo|G|DR|N|IS|IM|E|GR|Or)"
+    r"(?<![A-Za-zÅÄÖåäö])(U|Sö|So|Ög|Og|Öl|Ol|Vg|Sm|Gs|Vs|Nä|Na|Hs|M|Ån|An|D|Hr|J|Lp|Ds|Bo|G|DR|N ?A|N|IS|IM|E|GR|Or)"
     # A number followed by a percent sign or a decimal is a share ("Vg 84 %", "U 26,5 %"), not a signum
     r"[\s_]?(\d{1,4})(?![\d])(?![,.]\d)(?!\s*(?:%|procent))"
 )
@@ -50,21 +51,43 @@ def same_carver_as(rec: dict) -> list[str]:
     return [f"{a} {b}" for a, b in SIGNUM_IN_TEXT_RE.findall(m.group(1))]
 
 
+NORWEGIAN_A = re.compile(r"NA\d")  # the exact key of the Norwegian series 'N A1', 'N A11' (Närke is 'Nä', ASCII 'Na')
+
+
+def _exact_key(signum: str) -> str:
+    """Signumet som det skrivs, bara utan mellanslag: håller isär signa som fold_signum slår ihop ("N A11" och "Nä 11")."""
+    return re.sub(r"[\s_]+", "", unicodedata.normalize("NFC", signum or ""))
+
+
 class RundataStore:
     def __init__(self, data: dict):
         self.meta = data["meta"]
         self.inscriptions: list[dict] = data["inscriptions"]
         self.by_key: dict[str, dict] = {}
+        # Exact signa first: fold_signum drops diacritics, so the Norwegian 'N A11' and the Närke 'Nä 11' share a folded
+        # key; the folded key stays the fallback for everything else (case, 'So 113' for 'Sö 113', aliases)
+        self.by_exact: dict[str, dict] = {}
         for rec in self.inscriptions:
+            self.by_exact.setdefault(_exact_key(rec["signum"]), rec)
             self.by_key.setdefault(fold_signum(rec["signum"]), rec)
             rec["same_carver_as"] = same_carver_as(rec)
         for alias, target in data.get("aliases", {}).items():
-            rec = self.by_key.get(fold_signum(target))
+            rec = self.by_exact.get(_exact_key(target)) or self.by_key.get(fold_signum(target))
             if rec:
+                # The exact alias too, after every record signum: the alias 'N A14' (Bo Peterson1992) shares the folded
+                # key 'na14' with the Närke Nä 14, so without it the folded key handed 'N A14' to Nä 14
+                self.by_exact.setdefault(_exact_key(alias), rec)
                 self.by_key.setdefault(fold_signum(alias), rec)
 
     def get(self, signum: str) -> Optional[dict]:
-        return self.by_key.get(fold_signum(signum))
+        rec = self.by_exact.get(_exact_key(signum))
+        if rec:
+            return rec
+        rec = self.by_key.get(fold_signum(signum))
+        # A Norwegian 'N A12' that Rundata lacks must not fall back to the Närke Nä 12 through the folded key
+        if rec and NORWEGIAN_A.match(_exact_key(signum)) and not NORWEGIAN_A.match(_exact_key(rec["signum"])):
+            return None
+        return rec
 
     def find_in_text(self, text: str) -> list[dict]:
         """Hittar signum som nämns i fri text (t.ex. ett filnamn eller ett chattmeddelande)."""
@@ -81,12 +104,15 @@ class RundataStore:
                gap: str = "", signa: str = "", category: str = "", certain: bool = False):
         q_l, carver_l = q.lower().strip(), carver.lower().strip()
         gap_test = GAP_FILTERS.get(gap)
-        wanted = {fold_signum(x) for x in signa.split(",") if x.strip()} if signa else None
+        # The wanted records through get() (exact signum first), not through folded keys: a list with 'Nä 11' must not
+        # also bring the Norwegian 'N A11'
+        wanted = {id(r) for r in (self.get(x.strip()) for x in signa.split(",") if x.strip()) if r} if signa else None
+        q_rec = self.get(q.strip()) if q.strip() else None
         results = []
         for rec in self.inscriptions:
             if gap_test and not gap_test(rec):
                 continue
-            if wanted is not None and fold_signum(rec["signum"]) not in wanted:
+            if wanted is not None and id(rec) not in wanted:
                 continue
             # Same population as the category statistics: Viking Age runestones
             if category and (not is_runestone_any(rec) or category not in inscription_categories(rec)):
@@ -107,7 +133,7 @@ class RundataStore:
             if q_l:
                 hay = " ".join((rec["signum"], rec["place"], rec["parish"], rec["transliteration"],
                                 rec["normalization"], rec["translation_en"], rec["carver_raw"])).lower()
-                if q_l not in hay and fold_signum(q) != fold_signum(rec["signum"]):
+                if q_l not in hay and rec is not q_rec:
                     continue
             results.append(rec)
         return {"total": len(results), "results": results[offset:offset + limit]}

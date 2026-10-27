@@ -317,8 +317,11 @@ Tolkningarna är förslag som följer reservationerna i 1l och reglerna i 1x, in
 
 ### 1k. Reproducerbarhet
 
-`GET /api/r/package` (knappen på sidan Statistik) ger en zip med R-skripten, korpusens CSV,
-resultaten, `sessionInfo()` och `KOR_OM.R`, som kör om allt i R utan appen. Paketen installeras med
+`GET /api/r/package` ger en zip med R-skripten, korpusens CSV, budskapens CSV (`messages.csv`),
+resultaten, `sessionInfo()` och `KOR_OM.R`, som kör om alla korpusanalyser i R utan appen, i samma ordning som appen.
+Lämningarna runt stenarna körs bara om Riksantikvarieämbetets och ortnamnens filer läggs i `data/` (lamningar.csv,
+kultnamn.csv, platser.csv, kyrkor.csv), eftersom de inte följer med paketet. Sidan Statistik (R) länkar till R-skripten
+på GitHub. Paketen installeras med
 `Rscript r/install.R` (sf kräver GDAL, GEOS, PROJ och udunits; ragg kräver fribidi och harfbuzz; nloptr kräver
 cmake).
 
@@ -420,24 +423,78 @@ vikingatida runsten klassas efter vad den berättar om den döde: om den säger 
 Norden, om den nämner en resa eller vistelse utanför Norden (och åt vilket håll), gäld, guld eller silver, arv, gård och
 ägande, om stenen restes åt resaren själv i livstiden, och om den döde får beröm. En regel per budskap söker i Rundatas
 engelska översättning; ett budskap räknas en gång per sten. Stenar med färre än fyra läsbara ord räknas inte (budskapet
-är okänt). Reglerna stämmer med en handkodning av de 55 nordiska inskrifter som nämner en resa västerut i 50 av 51
-fall (`utdata/brittiska/hemma_kodning.csv`); den enda avvikelsen (Sö 173) är en man som var i väst men dog i öst, och
-där har regeln rätt. Övriga budskap är inte handkontrollerade.
+är okänt); översättarens tillägg inom parentes, ordalternativ med snedstreck och namnfragment räknas inte som ord.
+Regeln prövar inte att själva minnesformeln är bevarad, så ett fragment med fyra ord räknas som en sten utan budskapen.
+Götalands läsbara stenar är oftare fragment: 159 av 490 (32 %) har färre än tio läsbara ord, mot 271 av 1 275 (21 %) i
+Svealand. Varje test görs därför också bara på stenar med minst tio läsbara ord (samma test, kolumnen legible_words från
+src/messages.py). Resa och död borta gäller resor utanför Norden: Gotland,
+Danmark, Hedeby och Skåne räknas som Norden, Finland och Estland som utanför. En resa kräver ett mål eller en riktning
+("for med Ingvar", "i Grekland"); "for" utan mål räknas inte, och namnet Ingvarr räknas bara i tågets egna formler,
+inte när en man bara heter Ingvarr. Jerusalem, Jordan, Italien och Langobardernas land räknas som öst, eftersom
+inskrifterna själva säger att vägen dit gick österut (Sö 65, Sö Fv1954;22, U 605). "Säger hur eller var han dog" kräver
+ett sätt eller en plats: "här ligger", "begravd" och ett ensamt "dog" räknas inte; Rök (Ög 136) klassas bara på
+minnesformeln, eftersom resten handlar om sagogestalter. Beröm räknas inte när den berömde är den som reste eller
+ristade stenen (också i presens, "raises", och utan verb, "able lads in memory of"), och inte när berömmet gäller Gud,
+Maria ("God's good maid"), minnesmärket ("the good landmark") eller ett bruk ("made good use of").
+
+Reglerna jämförs med två handkodningar (`scripts/check_messages.py`): de 55 nordiska inskrifter som nämner en resa
+västerut (`utdata/brittiska/hemma_kodning.csv`), där död borta stämmer i 50 av 51 fall (den enda avvikelsen, Sö 173,
+är en man som var i väst men dog i öst, och där har regeln rätt), och 162 handkodade stenar om österfärder och
+angränsande fall (`data/messages_facit_ost.csv`: alla 97 stenar som de tidigare reglerna räknade som österfärder, 32
+svåra fall och 33 slumpvis dragna stenar), där resa stämmer i 161, död borta och dödsuppgift i alla 162 och riktningen
+i 94 av 95. Österurvalet kodades medan reglerna rättades och är därför inte ett oberoende prov; det slumpvisa urvalet
+(33 av 33 rätt) är närmare ett sådant. Övriga budskap (gäld, arv, gård, egen sten, beröm) är bara stickprovskontrollerade. Överensstämmelsen skrivs till
+`data/messages_check.json` (med md5-summan av `src/messages.py`), som `r/messages.R` läser och fliken Budskap visar.
 
 Modellen prövar varje budskap mot landsdel (Götaland, Svealand, Gotland, Norrland) med logistisk regression (mgcv),
 tidsskikt efter stilgruppens mittår (odaterade stenar som eget skikt) och ristaren som slumpeffekt (stenar utan säker
 ristare grupperade per socken, som i 1h). Som kontroll görs samma modell bara på daterade stenar, med mittåret som
 jämn kurva. När ett budskap saknas helt i en landsdel går ingen oddskvot att skatta, och då redovisas Fishers exakta
-test. Resestenarna prövas för sig: bland stenar om en resa utanför Norden, säger stenen att mannen dog där? Prövat mot
-landsdel och riktning (väst/öst), med exakt Mantel–Haenszel över riktningarna och en interaktion (likelihoodkvot) för
-om skillnaden är densamma åt båda håll.
+test; det gör det också när budskapet är för sällsynt för modellen (färre än 15 stenar med budskapet, eller utan det, i
+Götaland och Svealand tillsammans), och då redovisas Fishers oddskvot utan justering. Resestenarna prövas för sig:
+bland stenar om en resa utanför Norden, säger stenen att mannen dog utanför Norden (budskapet "död utanför Norden"; en
+död hemma eller i Norden, som Sö 55 och U 539, räknas inte)? Prövat mot landsdel och riktning (väst/öst) med exakt
+Mantel–Haenszel med riktningen som skikt, samma test med riktning × tidsskikt som skikt (skikt där bara en landsdel
+eller ett utfall finns bär ingen information och tas bort; resetesten gäller bara stenar med en enda riktning, så 7
+resestenar med båda riktningarna eller ingen räknas inte: Vg 197 i Götaland, Sö 173, U 349, U 504, U 611, U 614 och
+U 948 i Svealand), logistisk regression med riktning och tidsskikt, samma
+modell med ristaren eller socknen som slumpeffekt, och en interaktion (likelihoodkvot) för om skillnaden mellan
+landsdelarna skiljer sig mellan väst och öst, redovisad med kvoten mellan oddskvoterna och dess intervall. Ett högt
+interaktions-p visar inte att skillnaden är densamma; med få götländska resestenar är testet svagt.
 
-Resultat 2026-10-27: i Götaland säger 24 av 28 resestenar att mannen dog borta, i Svealand 58 av 106 (exakt test p
-0,002); skillnaden är densamma i väst och öst (interaktion p 0,58). Med ristaren eller socknen som slumpeffekt blir den
-osäker (oddskvot 4,8, 95 % KI 0,5–50), eftersom de götländska resestenarna är få och spridda över många socknar. Arv
-och stenar resta åt sig själv finns i Svealand men inte i Götaland; Götalandsstenarna berömmer den döde oftare
-(oddskvot 1,9) och nämner resor mer sällan (0,46). Tolkningen är en sed i hur man berättade, inte en skillnad i hur
-många som dog: stenarna visar vad de efterlevande valde att berätta.
+Resultat 2026-10-27 (efter rättade budskapsregler, samma dag):
+
+* I Götaland säger 24 av 27 resestenar med en enda riktning att mannen dog utanför Norden (13 av 15 västerut, 11 av 12
+  österut); med Vg 197 är det 25 av 28. I Svealand är det 62 av 102 (11 av 29 och 51 av 73).
+* Med riktningen som skikt: oddskvot 7,9 (95 % KI 2,0–47), p 0,0008. Med riktning × tidsskikt som skikt: 5,9 (1,4–36),
+  p 0,008, i 5 skikt med båda landsdelarna och båda utfallen, som rymmer 105 av 129 resestenar. Logistisk regression
+  med tidsskikt: 6,9 (1,7–27), p 0,006. Bara stenar med minst tio läsbara ord, med riktningen som skikt: 10,4 (2,1–105),
+  p 0,0008 (114 resestenar).
+* Med ristaren eller socknen som slumpeffekt är skillnaden inte signifikant (oddskvot 8,7, 95 % KI 0,4–189, p 0,17),
+  eftersom de götländska resestenarna är få och spridda över många socknar.
+* Någon skillnad mellan väst och öst går inte att visa (interaktion p 0,64), men intervallet för kvoten mellan
+  oddskvoterna (öst/väst 0,51, 95 % KI 0,03–7,9) är brett. Västerut ger Fishers exakta test oddskvot 10 (1,8–109),
+  p 0,003, och modellen med tidsskikt 8,2 (1,4–47), p 0,019; österut Fisher 4,7 (0,6–213), p 0,17, och modellen 4,5
+  (0,5–39), p 0,18.
+* Arv (19 av 1 275 mot 0 av 490) och stenar resta åt sig själv (25 av 1 275 mot 0 av 490) finns i Svealand men inte i
+  Götaland, också med minst tio ord (Fisher p 0,011 och 0,002).
+* Götalandsstenarna berömmer den döde oftare: 92 av 490 mot 136 av 1 275, oddskvot 1,8 (p 0,003); med minst tio ord
+  81 av 331 mot 129 av 1 004, oddskvot 1,8 (1,2–2,8), p 0,007.
+* Götalandsstenarna nämner resor mer sällan: 28 av 490 mot 108 av 1 275, oddskvot 0,50 (0,29–0,85), p 0,007. Med minst
+  tio ord håller skillnaden, men svagare: 25 av 331 mot 96 av 1 004, oddskvot 0,56 (0,32–0,98), p 0,04. Utan justering
+  för tid och ristare är den inte signifikant (Fisher p 0,06 vid fyra ord, 0,32 vid tio).
+* Att Götalandsstenarna mer sällan säger hur mannen dog (oddskvot 0,56, p 0,02) håller inte med minst tio ord (0,64,
+  p 0,11).
+
+Om skillnaden i resestenarna speglar en sed i hur man berättade eller att götländska resenärer oftare dog borta går
+inte att skilja med de här stenarna. En sten som inte säger att mannen dog borta behöver inte gälla någon som kom hem
+(levande resenärer, stenar resenären reste själv, fragment). Stenarna visar vad de efterlevande valde att berätta, inte
+hur många som dog.
+
+En granskning samma dag ändrade två saker. Reglerna snävades in: namnet Ingvarr hade räknats som en resa österut och
+Gotland som utanför Norden. Utfallet byttes också, från "säger hur eller var han dog" till "dog utanför Norden", så att
+en död hemma (Sö 55) eller i Norden (U 539) inte räknas. Före båda ändringarna var siffrorna 24 av 28 mot 58 av 106;
+med de gamla reglerna och det nya utfallet 23 av 28 mot 55 av 106. Siffrorna ovan gäller efter båda ändringarna.
 
 ### 1p. Nya mönster märks (2026-10-27)
 
@@ -445,7 +502,11 @@ Källkod: `src/pattern_registry.py`, `data/pattern_registry.json`. Varje mönste
 register när det först dyker upp, med datum, och statusbyten (till exempel från "mönster att pröva" till "bekräftar")
 förs in när de sker. Statistik (R) och Forskningsluckor märker mönstret **Nytt** de första 30 dagarna efter att det
 dök upp och **Ändrat** de första 30 dagarna efter ett statusbyte, och Statistik (R) listar dem överst. Registret
-såddes 2026-10-27 med de 40 mönster som fanns i körningen från 2026-10-21; de räknas som kända sedan tidigare.
+såddes 2026-10-27 med de 40 mönster som fanns i körningen från 2026-10-21; de räknas som kända sedan tidigare. Nyckeln
+är en per mönster och ändras inte med statusen (till exempel kinship:<relation> både som begränsning och som mönster att
+pröva); korrespondensanalysens mönster har dimensionen i nyckeln (formula:<dim>, ca_unexplained:<dim>). Svaren från
+Statistik (R) och Forskningsluckor sparas per dag och per version av fynd- och länkfilerna, så att märkningen följer
+30-dagarsfönstret.
 
 ### 1q. Fynd per sten utöver attribueringen (2026-10-27)
 
@@ -454,37 +515,89 @@ utöver ristar- och dateringsfynden med sådant om en enskild sten som inte stå
 motsäger, med belägg, nyhet och relevans):
 
 * **Luckor i texten:** förlorade runor som sannolikhetsmodellen fyller i med minst 80 % kalibrerad säkerhet där Rundata
-  inte återställt ordet (`data/textmodel_candidates.json`, avsnitt 8.1). Belägget är den kalibrerade sannolikheten.
+  inte återställt ordet (`data/textmodel_candidates.json`, avsnitt 8.1), bara på svenska vikingatida runstenar (andra
+  föremål visas i fliken Luckor i texten med egna tal). Belägget är den kalibrerade sannolikheten. Raderna är
+  kandidater att granska mot foto eller skanning, inte färdiga fynd, och får därför bedömningen "Kandidat att granska mot
+  foto eller skanning" i stället för tumregelns etiketter.
 * **Runor 2020:** stenar som Riksantikvarieämbetets nyare utgåva anger som inte stående på ursprunglig plats men som
-  Rundata inte märker som flyttade (187 runstenar), och läsningar med fler runor (10). Uppgifterna är en nyare källa,
-  inte appens upptäckter, och får därför lågt nyhetsvärde (0,3) så att de rangordnas under appens egna resultat.
+  appens flyttregel (`src/r_bridge.is_moved`, en regel över Rundatas plats och placering – Rundata har ingen
+  flyttflagga) räknar som stående på plats (187 runstenar). 37 av dem har en placeringstext i Rundata. Där texten nämner
+  en annan plats än fyndplatsen – ett annat ortnamn, en annan socken eller en annan sten som står någon annanstans
+  (`src/stone_findings.placement_elsewhere`; alla 37 är genomgångna för hand, och fyra är avgjorda för hand: Sm 76 och
+  U 1079 nej, Sm 80 och U Fv1992;157 ja) – säger Rundata i själva verket detsamma som Runor. De 30 stenarna räknas som
+  *stämmer* ("Rundatas placering säger detsamma – appens flyttregel missar den") och visar en lucka i flyttregeln, inte
+  en motsägelse. De övriga sju placeringstexterna beskriver bara hur stenen står ("På gårdsplanen", "Rest vid den gamla
+  vägen") och ger ingen flyttuppgift; de räknas tillsammans med de 150 stenarna utan placeringstext som *motsäger* (157)
+  med bedömningen "Uppgift i nyare källa – kontrollera platsen". Dessutom läsningar där Runor har färre förlorade och
+  fler säkert lästa runor än Rundata (runor inom parentes räknas inte), bara på svenska vikingatida runstenar (1: Sö 260;
+  andra föremål redovisas för sig i `utdata/runor/jamforelse.json`). Runor matchas mot Rundata på exakt signum – i
+  jämförelsen, i fynden och på inskriftssidan (`src/runor.py`) – så att Närkes Nä 11 inte blandas ihop med Norges N A11.
+  Uppgifterna är en nyare källa, inte appens upptäckter, och får därför lågt nyhetsvärde (0,3) och en fast bedömning.
+* **Samma familj (namnlänk):** länkarna ur avsnitt 1r utan motsägelser i släktskap eller tid (30 länkar). Varje länk
+  står på båda stenarna, så de ger 60 fynd; i rubriktalet "sannolikt ny kunskap" räknas varje länk en gång. Länkar som Rundata redan gör – parstenar och stenar som Rundatas
+  anmärkningar knyter ihop på annat sätt ("Utgör ett monument tillsammans med …") – räknas som *stämmer* (5 länkar).
 * **Egna fynd:** det vi kommit fram till om en sten i artiklar och analyser, fört in för hand med källa och datum i
-  `data/stone_findings.json`.
+  `data/stone_findings.json`. En rad med okänt verdict (annat än stämmer, nytt, motsäger), utan signum eller text,
+  eller med belägg eller nyhet utanför 0–1 hoppas över och loggas. Ett eget fynd om ett annat föremål än en svensk
+  vikingatida runsten märks som sådant och räknas för sig, inte i rubriktalet.
+
+Fynden gäller en sten, inte en ristare. Relevansen räknas därför bara efter om stenen finns kvar (0,6) eller är
+försvunnen (0,3), inte efter hur många stenar i landskapet som har ristare. De får ingen tolkningsnivå (avsnitt 14d).
 
 ### 1r. Samma familjer på flera stenar: länkmodellen (2026-10-27)
 
 Källkod: `src/entities.py` (enheterna), `src/linking.py` (länkarna), `scripts/link_entities.py` → `data/links.json`.
 Ur Rundatas engelska översättning läses varje runstens personer med roll (den som reser, den som minns, ristaren,
 nämnd), släktskap ("Ketill, his son"; "Alríkr, Sigríðr's son"), gårdsnamn (namn efter in/at/from/on, och efter of när
-namnet har en ortnamnsändelse) och händelser (resmålen utanför Norden, Ingvarståget, Knuts gäld). Ett namn räknas bara
-när det motsvarar ett ord som normaliseringen märker som namn. Bara runstenar ingår.
+namnet har en ortnamnsändelse) och händelser (resmålen utanför Norden, Ingvarståget, även "in Ingvarr's retinue", och
+Knuts gäld, även "when Knútr attacked England"). Ett namn räknas bara när det motsvarar ett ord som normaliseringen
+märker som namn, också när det är delvis kompletterat ("[Íg]ulfastr"). Satserna delas vid punkt, semikolon och utrop men
+inte vid en lucka (...), så att den som reser och den som minns på en skadad sten hamnar i samma sats. Ett namn som efter en lucka står i en
+annan utsaga räknas bara som nämnt, och ingen blir ristare över en lucka om han har ett eget verb före den. En medresare med
+egen minnesformel ("…, and Heðindís in memory of her husbandman") räknas som resare, beställaren i "had the stone cut"
+och "ordered Œpir to carve" som resare och den som får uppdraget som ristare. Ett sammansatt släktled ("his father's
+father", "his brother's son") blir farfar, brorson och så vidare och räknas aldrig som förälder; ett pluralt släktord
+gäller hela uppräkningen, både efter namnen ("Jafri and Vígr, his brothers") och före dem ("his sons Sveinn and
+Hrœmingr"); "mother-in-law" räknas aldrig som mor, och "his wife's brother" blir svåger. Släktfakta ges till resarna i samma sats, men inte till en
+resare med egen släktskap och aldrig en person till sig själv. Bara runstenar ingår. Extraktionen är prövad för hand på
+två urval om 60 runstenar. Det första (frö 2026, 92 personer) användes medan reglerna rättades och är alltså ingen
+oberoende prövning: rätt roll för 98 % av personerna (86 % före rättelserna). Det andra (frö 4242, 135 personer, 52
+släktfakta) märktes blint, innan programmets svar setts: rätt roll för 90 % av personerna (81 % före rättelserna), rätt
+släktskap för 78 % av de minnes som hittas, och 38 av 52 släktfakta (73 %) hittas, varav 3 av de 41 programmet gav är
+fel. Rollerna blir alltså nästan alltid rätt, men ungefär vart fjärde släktband på stenen fångas inte. Det som oftast
+missas är ett släktord som skiljs från namnet av ett komma eller ett ortnamn, släktskap utanför ordlistan och namn som
+bara finns som fragment.
 
-Två runstenar länkas när de delar minst två personnamn eller ett gårdsnamn (ristarna räknas inte). Varje delat namn
-vägs efter hur ovanligt det är, log(N/n). Nollmodellen blandar personnamnen mellan stenarna inom landskapet 200
-gånger; andelen falska länkar vid en viss styrka (q) är antalet lika starka länkar i nollmodellen delat med antalet i
-data. Den strängare nollmodellen blandar inom häradet, så att lokala namnseder inte ser ut som släkter. En länk
-avfärdas när stenarna motsäger varandra: samma namn med olika föräldrar, eller en person som är död på en äldre sten
-och reser en sten på en yngre (stilgruppernas datering). Ett första försök med Fellegi–Sunter-länkning skattad med EM
-gav upp till en fjärdedel av alla namnpar som träffar, eftersom modellen fångade "två stenar i Uppland med kända
-ristare" i stället för identitet; den metoden används inte.
+Två runstenar länkas när de delar minst två personnamn eller ett gårdsnamn (ristarna räknas inte), och minst ett av de
+delade namnen står på högst 60 runstenar: par som bara delar de vanligaste namnen (Sveinn, Bjôrn, Þorsteinn, Ulfr)
+prövas inte, varken i data eller i nollmodellen. Varje delat namn vägs efter hur ovanligt det är, log(N/n).
+Nollmodellen blandar personnamnen mellan stenarna inom landskapet 2000 gånger; varje sten behåller sitt antal namn och
+varje namn sitt antal stenar, och ingen sten får samma namn två gånger. Andelen falska länkar vid en viss styrka (q) är
+antalet lika starka länkar i nollmodellen delat med antalet i data. Slumpfelet i q redovisas med ett intervall
+(nollkörningarna dragna om 500 gånger) och med tre andra slumpfrön. Den strängare nollmodellen blandar inom häradet, så
+att lokala namnseder inte ser ut som släkter. En länk avfärdas när stenarna motsäger varandra: olika fäder eller olika
+mödrar för samma namn (en mor på den ena stenen och en far på den andra är ingen motsägelse; förälderns kön tas ur släktorden i hela
+materialet, därefter ur pronomenet vid den dödes släktord, "his son" eller "her son", och sist ur namnets ändelse, som
+stämmer för 661 av 729 namn vars kön materialet ger och motsäger 4), eller en person som är död
+på en sten och reser en sten som enligt stilgrupperna är minst 30 år yngre. Tidsregeln gäller inte stenar på samma
+plats (inom 1 km) eller stenar som Rundatas anmärkningar knyter ihop, eftersom stilgruppernas datering kan ha fel
+ordning (U 845 och U 844). En motsägelse är därför ett skäl till tvivel, inte ett motbevis. En länk markeras som känd
+i Rundata när någon av stenarnas anmärkning nämner den andra stenen ("Parsten till", "Utgör ett monument tillsammans
+med", "Samma brödrakrets som nämns på"). Ett första försök med Fellegi–Sunter-länkning skattad med EM gav upp till en
+fjärdedel av alla namnpar som träffar, eftersom modellen fångade "två stenar i Uppland med kända ristare" i stället för
+identitet; den metoden används inte.
 
-Resultat 2026-10-27: 357 par delar namn, slumpen ger omkring 279. 35 länkar håller
-med q under 0,1 (18 med den strängare nollmodellen), i median 3,6 km
-isär. Jarlabankes fem stenar om Täby hittas (q 0,0986), liksom Ásfríðrs
-stenar i Hedeby (DR 2, DR 4). Av Rundatas 13 parstenar hittas 2: parstenar delar
-ofta bara ett namn. Fyra länkar mellan landskap som först såg starka ut avfärdas av motsägelser (till exempel Geiri och
-Guði på U 579 och Vg 187: Guði är död på den äldre stenen och reser sten på den yngre). Länkarna visas som fynd per sten
-och mönstret i Statistik (R) under Formler och släkt.
+Resultat 2026-10-27 (efter granskningen samma dag): 422 par delar namn (63 par som bara delar de vanligaste namnen
+prövas inte), slumpen ger omkring 364. 30 länkar håller med q under 0,1, lika många i alla omdragningar och med alla
+fyra frön (23 med den strängare nollmodellen). De står i median 2,3 km isär, 83 % inom 10 km. Fem av dem knyter Rundata
+redan ihop; de visas som bekräftelser, inte som nya fynd. Ásfríðrs stenar i Hedeby (DR 2, DR 4) hittas. Jarlabankes fem
+stenar om Täby hittas inte: de delar bara Jarlabanke och Täby, och q blir 0,104 (0,102–0,106 med slumpfelet), strax
+över gränsen. Den första versionen (q 0,0986, 35 länkar) byggde på en nollmodell som tappade namn när en sten drog samma
+namn två gånger, och på 200 körningar där resultatet berodde på slumpfröet. Av Rundatas 14 parstenar hittas 2; av de 12
+som missas delar 5 inget läst namn alls, 3 bara ett namn och 4 två eller fler utan att länken skiljer sig från slumpen.
+Över landskapsgränserna håller bara U 1041–Vs 22 och U 1003–Vs 22, och ingen av dem i den strängare prövningen. Två
+länkar mellan landskap som först såg starka ut avfärdas av motsägelser i släktskapen (U 759–Vg 59: olika fäder; Hs 14–Sö
+11). Länkarna visas som fynd per sten och mönstret i Statistik (R) under Formler och släkt.
 
 ### 1s. Samlad datering av odaterade stenar: prövad och inte införd (2026-10-27)
 
@@ -492,12 +605,22 @@ Om språkdrag, innehåll, kors, runtyp, seriationen och platsen tillsammans kan 
 stilgrupp prövades i tre versioner, var och en med en plan låst före körningen (`utdata/datering/analysplan*.md`):
 kvantilregressionsskog (v1), samma med konforma intervall (v2) och en sannolikhetsskog över tidsskikten (v3), alla med
 femfaldig korsvalidering grupperad per socken. Kraven: medelfelet minst 15 % under landskapets median, en osäkerhet
-som håller och inte sämre än seriationen i Uppland. Utfallet blev nej. Skogens median daterar 25 % bättre än
-landskapets median (15,1 mot 20,2 år) och bättre än seriationen i Uppland, men årsintervallen täcker 96 % i stället
-för 80 %: stilgruppernas mittår har bara sex värden, så ett intervall på den skalan kan inte kalibreras (den konforma
-korrektionen blev 0). Sannolikheterna per tidsskikt är kalibrerade (fel 0,046) men ger ett sämre förväntat år (18,1).
-Appen räknar som förut bara på daterade stenar. Nästa steg kräver finare facit, inte en ny modell på samma data
-(`utdata/datering/resultat.md`).
+som håller och ett medelfel i Uppland högst 2 år större än seriationens. Utfallet blev nej. Räknat över alla 1 008
+daterade stenar daterar skogens median 25 % bättre än landskapets median (15,1 mot 20,2 år), och på de 501
+upplandsstenar som har seriationsdatering bättre än seriationen (16,4 mot 20,6). Nästan hela vinsten ligger i
+Uppland: på alla 560 upplandsstenar 17,4 år mot landskapets median 26,3. Utanför Uppland är modellen bara 4 % bättre
+(12,1 mot 12,6), där i första hand genom platsen, och sämre än landskapets median i Sö, Öl, G, J och Vr; språkdrag
+och innehåll ensamma slår inte medianen där. För texter på högst tre ord, som 57 % av de odaterade stenarna har, är
+vinsten 7 %. Årsintervallen "täcker" 96 % i stället för 80 %, men det säger lite: stilgruppernas mittår har bara sex
+värden, intervallens gränser hamnar på dem och 57 % av stenarna ligger exakt på en gräns, så kravet kan varken klaras
+eller fällas på ett meningsfullt sätt (den konforma korrektionen blev 0). I v3 klarar den mest sannolika klassens
+sannolikhet kalibreringskravet (fel 0,046), men sannolikheterna är något för försiktiga: i de mellersta facken träffar
+modellen 6–10 procentenheter oftare än den anger. v3 föll på att planen tog det förväntade året (18,1 år) som
+punktskattning; det drar mot mitten när sannolikheterna är utspridda. Sannolikheternas median ger 15,4 år, men det
+syntes först efter körningen och kan inte prövas i en ny plan på samma 1 008 stenar, eftersom en sådan plan inte vore
+låst före resultatet (avsnitt 1x). Enligt plan v3 är arbetet med samlad datering avslutat tills nya data finns: finare
+facit (dendro- eller arkeologiska dateringar, uppdelade stilgrupper) eller nydaterade stenar som inte ingått i någon av
+körningarna. Appen räknar som förut bara på daterade stenar (`utdata/datering/resultat.md`).
 
 ### 1t. Luckor i texten på danska och norska inskrifter: prövat och inte infört (2026-10-27)
 
@@ -1801,7 +1924,9 @@ Varje fynd får en **uppskattning** = belägg × nyhet × relevans (var och en 0
   0,55–0,6 utanför, där attribueringar kan finnas i litteraturen utan att stå i Rundata), avvikelser mot
   attribuerade stenar 0,7 men mot signerade 0,05 – där talar avvikelsen mot metoden, inte mot ristaren.
 * **Relevans**: andelen stenar med ristare i landskapet (lägre andel = större behov), ristarens antal
-  säkra inskrifter, och om stenen finns kvar att undersöka.
+  säkra inskrifter, och om stenen finns kvar att undersöka. En sten utanför tabellen över ristartäckning (stenar utanför
+  Sverige) får mittvärdet och skälet "ristartäckningen räknas bara för svenska runstenar", inte 0 %. Fynd per sten
+  utöver attribueringen (avsnitt 1q) räknar relevansen bara efter om stenen finns kvar.
 
 Bedömningen ("Sannolikt ny och relevant kunskap", "Värd en omprövning", "Oberoende bekräftelse" m.fl.)
 är en tumregel för att prioritera fortsatt arbete, inte en granskning av forskningsläget.
@@ -1904,6 +2029,11 @@ urvalet (×0,75 vid justerat p 0,05–0,2, ×0,5 vid högre), och slutsatsen sä
 räcker för att attribuera stenen – ett negativt resultat som också kan pröva äldre attribueringar gjorda på samma
 grund. När den föreslagna ristaren står för minst 10 % av landskapets attribuerade stenar påpekas att produktiva
 ristare drar till sig förslag, och att träffsäkerheten för deras förslag mäter metoden i allmänhet snarare än stenen.
+
+Nivåerna gäller ristarförslag. Fynd om en sten utan ristarförslag (luckor i texten, Runor 2020, släktlänkar och egna
+fynd, avsnitt 1q) får ett eget kort resonemang i tre steg: vad fyndet säger, var uppgiften kommer ifrån och vad som
+skulle kunna avgöra frågan. Deras nivå är *ej tillämplig*. De får ingen nivå i fyndlistan och sorteras inte efter nivå,
+och regeln om metodfel vid en signerad sten gäller aldrig dem.
 
 **Efter granskningen av U 1026** (2026-10-11). Attribueringsmodellen använder själv plats, stil och språkdrag, så när
 den föreslår en ristare räknas område, stilgrupp och språkdrag inte som oberoende stöd; de visas, och de kan tala
@@ -2314,11 +2444,13 @@ Innan resultat jämförs direkt bör samma referensstenar mätas med båda metod
 ## 17. Datakällor och licenser
 
 **Runor 2020 bredvid Rundata 2018 (från 2026-10-20, `src/runor.py`).** Appens beräkningar bygger på Rundata 3.1 (2018).
-Runor (RAÄ, utgåva 2020) är skördad i sin helhet (`scripts/fetch_runor.py` → `data/raa/runor_2020.json`, inte i git);
-när filen finns visar inskriftssidan Runors uppgifter bredvid Rundatas: ursprunglig plats eller flyttad, bevarad,
-datering, anteckningar och läsningen om den ändrats sedan 2018 (299 inskrifter; jämförelsen normaliserar ʀ/R, …/... och
-§P/§Q). Inget räknas om på Runors uppgifter; bytet av källa är planerat (IMPLEMENTATIONSPLAN.md 3.2) och kräver en
-analysplan, eftersom 184 "in situ"-stenar är flyttade enligt Runor och landskapsresultaten då ändras.
+Runor (RAÄ, utgåva 2020) är skördad i sin helhet (`scripts/fetch_runor.py` → `data/raa/runor_2020.json`, inte i git).
+När filen finns visar inskriftssidan Runors uppgifter bredvid Rundatas: ursprunglig plats eller flyttad, bevarad,
+datering, anteckningar och läsningen om den ändrats sedan 2018 (281 inskrifter, 77 av dem svenska vikingatida
+runstenar; jämförelsen normaliserar ʀ/R, …/... och §P/§Q). Runor slås upp på exakt signum, så att Närkes Nä 1–34 inte
+får Norges N A1–N A34. Inget räknas om på Runors uppgifter, och appen byter inte källa (IMPLEMENTATIONSPLAN.md 3.2,
+struken 2026-10-26): ett byte skulle ha krävt en ny analysplan, eftersom 187 "in situ"-stenar är flyttade enligt Runor
+och landskapsresultaten då ändras.
 
 * **Samnordisk runtextdatabas** (Institutionen för nordiska språk, Uppsala universitet), version 2014 med
   RUNDATA.xls från 2018. Open Database License (databasen) / Database Contents License (innehållet).

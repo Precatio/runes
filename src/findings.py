@@ -63,9 +63,14 @@ def _oeuvre(inscriptions: list[dict]) -> Counter:
 
 def relevance(rec: dict, carver: str | None, coverage: dict[str, float], oeuvre: Counter) -> tuple[float, list[str]]:
     reasons = []
-    cov = coverage.get(province(rec), 0.0)
-    r = 0.35 + 0.3 * (1 - cov)
-    reasons.append(f"{round(cov * 100)} % av stenarna i landskapet har ristare i Rundata")
+    cov = coverage.get(province(rec))
+    if cov is None:
+        # The coverage table counts Swedish runestones only: a stone outside it gets the middle value, not a false 0 %
+        r = 0.35 + 0.3 * 0.5
+        reasons.append("ristartäckningen räknas bara för svenska runstenar; ingen jämförelse för landskapet")
+    else:
+        r = 0.35 + 0.3 * (1 - cov)
+        reasons.append(f"{round(cov * 100)} % av stenarna i landskapet har ristare i Rundata")
     if carver:
         n = oeuvre.get(carver, 0)
         r += 0.25 * min(1.0, math.log1p(n) / math.log(100))
@@ -76,6 +81,14 @@ def relevance(rec: dict, carver: str | None, coverage: dict[str, float], oeuvre:
     else:
         r += 0.1
     return max(0.0, min(1.0, r)), reasons
+
+
+def stone_relevance(rec: dict) -> tuple[float, list[str]]:
+    """Relevans för fynd om en sten som inte gäller en ristare (luckor i texten, Runor 2020, släktlänkar, egna fynd):
+    hur många stenar i landskapet som har ristare säger inget om dem, så bara om stenen finns kvar att undersöka räknas."""
+    if rec["flags"]["lost"]:
+        return 0.3, ["stenen är försvunnen och kan inte undersökas vidare"]
+    return 0.6, ["stenen finns kvar och kan undersökas"]
 
 
 def assessment(verdict: str, evidence: float, novelty: float, relevance_: float, independent: bool) -> str:
@@ -302,7 +315,24 @@ def summarize(findings: list[dict]) -> dict:
     out = {v: 0 for v in VERDICTS}
     by_method: dict[str, Counter] = defaultdict(Counter)
     for f in findings:
+        if f.get("verdict") not in out:  # a hand-entered finding with a misspelt verdict must not fail the whole list
+            continue
         out[f["verdict"]] += 1
         by_method[f["method"]][f["verdict"]] += 1
-    likely_new = sum(1 for f in findings if f["assessment"].startswith("Sannolikt ny"))
-    return {"counts": out, "by_method": {m: dict(c) for m, c in by_method.items()}, "likely_new": likely_new}
+    # The headline count of likely new knowledge: a family link stands on both its stones (src/stone_findings.
+    # link_findings) but is one piece of knowledge, so each linked pair counts once; findings about objects other than
+    # Swedish Viking-age runestones (own findings may concern any object) are counted for themselves, not in the headline
+    from src.stone_findings import LINK
+    likely, link_pairs, other_objects = 0, set(), 0
+    for f in findings:
+        if f.get("stone_finding") and f.get("runestone") is False:
+            other_objects += 1
+            continue
+        if not f["assessment"].startswith("Sannolikt ny"):
+            continue
+        if f.get("method") == LINK and f.get("linked"):
+            link_pairs.add(tuple(sorted((f["signum"], f["linked"]))))
+        else:
+            likely += 1
+    return {"counts": out, "by_method": {m: dict(c) for m, c in by_method.items()},
+            "likely_new": likely + len(link_pairs), "likely_new_links": len(link_pairs), "other_objects": other_objects}

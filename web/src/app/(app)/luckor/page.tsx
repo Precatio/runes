@@ -82,7 +82,7 @@ export default function GapsPage() {
     findings: {
       topic: "Våra resultat", question: "Vad säger appens analyser jämfört med forskningen?",
       why: "Appens metoder – stavning, den statistiska modellen, seriationen, okända ristare och huggteknik – ställs mot Rundata, som här står för den publicerade forskningen.",
-      headline: { value: String(found.summary.likely_new), label: "fynd som sannolikt är ny kunskap enligt uppskattningen" },
+      headline: { value: String(found.summary.likely_new), label: "fynd som sannolikt är ny kunskap enligt uppskattningen (en släktlänk räknas en gång)" },
       answer: <>{c.stämmer} av appens resultat stämmer med Rundata, {c.nytt} säger något som Rundata saknar och {c.motsäger} pekar på något annat. {sigFound} av fynden är <strong>statistiskt signifikanta</strong>.</>,
       interpretation: [
         "Bekräftelserna är ett test av metoderna: att de ofta kommer fram till samma ristare som forskningen talar för att de fungerar.",

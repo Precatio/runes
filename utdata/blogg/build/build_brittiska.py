@@ -105,7 +105,7 @@ def karta(lang: str, text: str, name: str = "karta", width: int = 1200) -> str:
     return f"![{'Karta' if lang == 'sv' else 'Map'}]({blog_figures.freeze(data)})\n{text}"
 
 
-MAP = karta("sv", f"Var de skrevs: de {N_V} vikingatida runinskrifterna på de brittiska öarna, färgade efter vad de handlar om. Isle of Man är förstorad uppe till vänster. Inskrifter från samma plats ligger i en ring runt platsen. Rundata har inga koordinater för de irländska fynden, så dem har vi satt ut efter fyndplatsens namn. Karta: Vitki, kartunderlag © OpenStreetMap-bidragsgivare (ODbL).")
+MAP = karta("sv", f"Var de skrevs: de {N_V} vikingatida runinskrifterna på de brittiska öarna, färgade efter vad de handlar om. Isle of Man är förstorad uppe till vänster. Inskrifter från samma plats ligger i en ring runt platsen. Medeltida inskrifter, som de i Maeshowe och Cumbria, är inte med. Rundata har inga koordinater för de irländska fynden, så dem har vi satt ut efter fyndplatsens namn. Karta: Vitki, kartunderlag © OpenStreetMap-bidragsgivare (ODbL).")
 # ---- the home perspective (utdata/brittiska/hemma.py + hemma_kodning.csv, map in brittiska_karta.py) ------------------
 import subprocess  # noqa: E402
 
@@ -143,7 +143,7 @@ def hkarta(lang: str, text: str) -> str:
 
 HMAP = hkarta("sv", f"De {H_ALL - H_UT} nordiska runinskrifter från vikingatiden som nämner en resa västerut, efter vad de säger om resenären. Inskrifter från samma plats ligger i en ring runt platsen. Tre stenar i Danmark och Norge saknar koordinater i Rundata och är utsatta av oss efter fyndplatsen. Karta: Vitki, kartunderlag © OpenStreetMap-bidragsgivare (ODbL).")
 HMAP_EN = hkarta("en", f"The {H_ALL - H_UT} Viking-age runic inscriptions in Scandinavia that mention a journey west, by what they say about the traveller. Inscriptions from one place lie in a ring around it. Three stones in Denmark and Norway lack coordinates in Rundata and were placed by us by the find place. Map: Vitki, map data © OpenStreetMap contributors (ODbL).")
-MAP_EN = karta("en", f"Where they were written: the {N_V} Viking-age runic inscriptions of the British Isles, coloured by what they are about. The Isle of Man is enlarged at top left. Inscriptions from one place lie in a ring around it. Rundata has no coordinates for the Irish finds, so we placed them by the name of the find place. Map: Vitki, map data © OpenStreetMap contributors (ODbL).")
+MAP_EN = karta("en", f"Where they were written: the {N_V} Viking-age runic inscriptions of the British Isles, coloured by what they are about. The Isle of Man is enlarged at top left. Inscriptions from one place lie in a ring around it. Medieval inscriptions, such as those in Maeshowe and Cumbria, are not included. Rundata has no coordinates for the Irish finds, so we placed them by the name of the find place. Map: Vitki, map data © OpenStreetMap contributors (ODbL).")
 
 # ---- figures -------------------------------------------------------------------------------------------------------------
 def readable(areas):
@@ -295,7 +295,7 @@ Bilden som träder fram är enkel. Svenskarna åkte till England som soldater oc
 :::
 
 :::box Hur vi räknade
-- **Inskrifterna:** alla {N_ALL} runinskrifter i Samnordisk runtextdatabas 3.1 från England, Irland, Skottland, Orkney, Shetland och Isle of Man. Vi räknar de {N_V} som databasen daterar till vikingatiden. Vi har läst varje inskrift och fört den till en kategori: minnesmonument, ristare eller tillverkare, ägare, namn, vardag, futhark, magi, eller oläslig. Kodningen är öppen.
+- **Inskrifterna:** alla {N_ALL} runinskrifter i Samnordisk runtextdatabas 3.1 från England, Irland, Skottland, Orkney, Shetland och Isle of Man. Vi räknar de {N_V} som databasen daterar till vikingatiden. De övriga {N_ALL - N_V} är inte med: 55 daterar Rundata till medeltiden – väggristningarna i Maeshowe på Orkney, inskrifterna på Holy Island i Skottland och de i Cumbria (Bridekirk, Carlisle Cathedral, Dearham, Pennington och Conishead, 1100- och 1200-talen) – och 10 saknar datering. Urvalet följer dateringen, inte runformerna eller språket. Vi har läst varje inskrift och fört den till en kategori: minnesmonument, ristare eller tillverkare, ägare, namn, vardag, futhark, magi, eller oläslig. Kodningen är öppen.
 - **Kvinnorna:** samma mått som i vår artikel om kvinnorna på runstenarna: bland monument där översättningen anger den dödes släktskap med den som reste det, andelen där den döde är en kvinna. För Skandinavien räknar vi bara runstenar, för öarna alla minnesmonument, eftersom korsen där fyller samma funktion. Skillnaden mot Norge är prövad med Fishers exakta test.
 - **Namnen:** {N_NAMES} personnamn, bestämda som nordiska, gaeliska eller anglosaxiska efter Barnes och Page. Två är osäkra.
 - **Svenskarna:** vikingatida runstenar i Sverige, Danmark och Norge vars översättning nämner England, Irland eller Skottland. Bara England nämns.
@@ -396,7 +396,7 @@ The picture that emerges is simple. The Swedes went to England as soldiers and t
 :::
 
 :::box How we counted
-- **The inscriptions:** all {N_ALL} runic inscriptions in the Scandinavian Runic-text Database 3.1 from England, Ireland, Scotland, Orkney, Shetland and the Isle of Man. We count the {N_V} the database dates to the Viking Age. We read every inscription and assigned it to a category: memorial, carver or maker, owner, name, everyday, futhark, magic, or unreadable. The coding is open.
+- **The inscriptions:** all {N_ALL} runic inscriptions in the Scandinavian Runic-text Database 3.1 from England, Ireland, Scotland, Orkney, Shetland and the Isle of Man. We count the {N_V} the database dates to the Viking Age. The other {N_ALL - N_V} are left out: Rundata dates 55 of them to the Middle Ages – the graffiti in Maeshowe on Orkney, the inscriptions on Holy Island in Scotland and those in Cumbria (Bridekirk, Carlisle Cathedral, Dearham, Pennington and Conishead, 12th and 13th centuries) – and 10 are undated. The selection follows the dating, not the rune forms or the language. We read every inscription and assigned it to a category: memorial, carver or maker, owner, name, everyday, futhark, magic, or unreadable. The coding is open.
 - **The women:** the same measure as in our article on the women of the runestones: among monuments where the translation states the dead person's kinship with the one who raised it, the share where the dead person is a woman. For Scandinavia we count runestones only, for the islands all memorials, since the crosses there serve the same purpose. The difference from Norway is tested with Fisher's exact test.
 - **The names:** {N_NAMES} personal names, classed as Norse, Gaelic or Anglo-Saxon after Barnes and Page. Two are uncertain.
 - **The Swedes:** Viking-age runestones in Sweden, Denmark and Norway whose translation mentions England, Ireland or Scotland. Only England is mentioned.

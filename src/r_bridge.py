@@ -304,9 +304,16 @@ def _remains_hash() -> str:
 
 
 def _messages_hash() -> str:
-    """The message rules (src/messages.py): the messages module is recomputed when they change."""
-    with open(os.path.join(ROOT, "src", "messages.py"), "rb") as fh:
-        return hashlib.sha256(fh.read()).hexdigest()[:16]
+    """The message rules (src/messages.py) and their hand-coded check (data/messages_check.json, which messages.R reads):
+    the messages module is recomputed when either changes."""
+    h = hashlib.sha256()
+    for path in (os.path.join(ROOT, "src", "messages.py"), os.path.join(ROOT, "data", "messages_check.json")):
+        if os.path.exists(path):
+            with open(path, "rb") as fh:
+                h.update(fh.read())
+        else:
+            h.update(b"none")
+    return h.hexdigest()[:16]
 
 
 def write_messages(path: str):
@@ -720,6 +727,12 @@ def package(fp: str, signum: str | None = None, candidates: list[str] | None = N
             if name.endswith(".R") or name == "README.md":
                 z.write(os.path.join(R_DIR, name), f"r/{name}")
         z.write(os.path.join(d, "corpus.csv"), "data/corpus.csv")
+        if os.path.exists(os.path.join(d, "messages.csv")):  # an input of messages.R, not only a result
+            z.write(os.path.join(d, "messages.csv"), "data/messages.csv")
+        from src import pattern_map, places  # the figures' labels (hotspots.R, remains.R), as run_corpus gives them
+        z.writestr("data/etiketter.json", json.dumps(
+            {"pattern_labels": {k: label for k, label, *_ in pattern_map.PATTERNS},
+             "kind_labels": {k: label for k, label, *_ in places.KINDS}}, ensure_ascii=False, indent=1))
         for name in sorted(os.listdir(d)):
             if name.endswith((".json", ".png", ".csv", ".html")) and name != "corpus.csv" and "_params" not in name:
                 z.write(os.path.join(d, name), f"resultat/korpus/{name}")
@@ -736,14 +749,22 @@ def package(fp: str, signum: str | None = None, candidates: list[str] | None = N
 
 
 def _rerun_script(signum: str | None, candidates: list[str]) -> str:
+    # Every corpus module, in the order the app runs them (later modules read the earlier ones' results in om/), with
+    # the same parameters as run_corpus; the remains and place names are optional files the user adds under data/
+    modules = ", ".join(f'"{m}"' for m in MODULES)
     lines = [
         "# Kör om analyserna från projektets rotmapp i paketet: Rscript KOR_OM.R",
         "# Paketen installeras med: Rscript r/install.R",
         'dir.create("om", showWarnings = FALSE)',
+        'opt <- function(f) if (file.exists(f)) normalizePath(f) else NULL',
+        'lab <- if (file.exists("data/etiketter.json")) jsonlite::fromJSON("data/etiketter.json", simplifyVector = FALSE) else list()',
         'params <- list(corpus = normalizePath("data/corpus.csv"), corpus_dir = normalizePath("om"),',
-        '               water_dir = if (dir.exists("naturalearth")) normalizePath("naturalearth") else NULL, seed = 2026)',
+        '               water_dir = if (dir.exists("naturalearth")) normalizePath("naturalearth") else NULL, seed = 2026,',
+        '               messages = opt("data/messages.csv"), remains = opt("data/lamningar.csv"),',
+        '               cult_names = opt("data/kultnamn.csv"), places = opt("data/platser.csv"),',
+        '               churches = opt("data/kyrkor.csv"), pattern_labels = lab$pattern_labels, kind_labels = lab$kind_labels)',
         'p <- file.path("om", "params.json"); jsonlite::write_json(params, p, auto_unbox = TRUE, null = "null")',
-        'for (m in c("geography", "clusters", "text", "attribution"))',
+        f'for (m in c({modules}))',
         '  system2("Rscript", c("--vanilla", file.path("r", paste0(m, ".R")), p, "om"))',
     ]
     if signum:
@@ -761,13 +782,21 @@ def _rerun_script(signum: str | None, candidates: list[str]) -> str:
 def _readme(signum: str | None) -> str:
     return (
         "Reproducerbarhetspaket – Vitki, statistik i R\n\n"
-        "r/              R-skripten som appen kör (geografi, klustring, text, attribueringsmodell, sten)\n"
+        "r/              R-skripten som appen kör (" + ", ".join(MODULE_LABELS[m][:1].lower() + MODULE_LABELS[m][1:] for m in MODULES)
+        + (", stenen" if signum else "") + ")\n"
         "data/corpus.csv korpusen: svenska vikingatida runstenar ur Samnordisk runtextdatabas, med kategorier\n"
         "                och språkdrag som appen räknat fram (se METHODS.md)\n"
+        "data/messages.csv budskapen per sten (indata till messages.R)\n"
+        "data/etiketter.json mönstrens och platsernas namn för figurerna\n"
         "resultat/       appens resultat, figurer och sessionInfo() för den körning som gav dem\n"
-        "KOR_OM.R        kör om allt; resultaten hamnar i om/\n\n"
+        "KOR_OM.R        kör om alla " + str(len(MODULES)) + " korpusanalyser" + (" och stenens analys" if signum else "")
+        + "; resultaten hamnar i om/\n\n"
         "Avstånd till vatten kräver Natural Earths lager (1:10 milj.) i mappen naturalearth/ med undermapparna\n"
-        + ", ".join(WATER_LAYERS) + "; utan dem hoppas den delen över.\n\n"
+        + ", ".join(WATER_LAYERS) + "; utan dem hoppas den delen över.\n"
+        "Lämningarna runt stenarna (remains.R) kräver data/lamningar.csv (Riksantikvarieämbetets Kulturmiljöregister,\n"
+        "hämtad med appens scripts/fetch_raa_remains.py) och, för ortnamnen och kyrkorna, data/kultnamn.csv,\n"
+        "data/platser.csv och data/kyrkor.csv (scripts/fetch_place_names.py). De följer inte med paketet; utan dem\n"
+        "skriver remains.R bara att lämningarna saknas, och lämningarnas resultat i resultat/korpus/ går inte att köra om.\n\n"
         "Källa: Samnordisk runtextdatabas, Institutionen för nordiska språk, Uppsala universitet (ODbL-1.0 / DbCL-1.0).\n"
         + (f"Stenen i paketet: {signum}.\n" if signum else "")
     )

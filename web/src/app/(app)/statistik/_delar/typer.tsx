@@ -116,11 +116,17 @@ export interface Corpus {
     ca: { inertia: number[]; provinces: { code: string; x: number; y: number; n: number }[];
       words: { w: string; x: number; y: number; n: number }[] };
     neighbors: { a: string; b: string; dist: number }[] };
-  messages?: Dict & { method: string; n_stones: number; n_legible: number; elements: MessageElement[];
-    travel: { n: number; cells: { region: string; direction: string; n: number; k: number }[]; common: OddsRow | null;
-      common_glm: OddsRow | null; mh: OddsRow; p_interaction: number | null;
-      by_direction: (OddsRow & { direction: string; fisher_p: number })[] };
-    home: { n: number; cells: { region: string; n: number; k: number }[]; model: OddsRow | null } };
+  messages?: Dict & { method: string; n_stones: number; n_legible: number; min_events?: number;
+    legibility?: MessageLegibility | null; elements: MessageElement[];
+    travel: { n: number; outcome?: string; cells: { region: string; direction: string; n: number; k: number }[];
+      /** All journey stones per region, also those with both directions or none; single = with one direction. */
+      all_journeys?: { region: string; n: number; k: number; single: number }[];
+      common: OddsRow | null; common_glm: OddsRow | null; mh: MhRow; mh_time?: MhRow | null;
+      mh_strict?: (MhRow & { words: number }) | null; p_interaction: number | null; interaction?: OddsRow | null;
+      /** or/lo/hi/p: the model with time layers; fisher: Fisher's exact test on the raw table (fisher_p = fisher.p). */
+      by_direction: (OddsRow & { direction: string; n?: number; fisher_p: number; fisher?: OddsRow })[] };
+    home: { n: number; cells: { region: string; n: number; k: number }[]; model: OddsRow | null };
+    rule_check?: MessageRuleCheck | null };
   sections?: Section[];
   overview?: { paragraphs: string[]; next_steps: string[] };
 }
@@ -128,10 +134,27 @@ export interface Corpus {
 export type Tab = "overview" | "question" | "geography" | "clusters" | "text" | "attribution" | "anonymous" | "chronology" | "change" | "network" | "words" | "messages";
 
 export interface OddsRow { or: number; lo: number; hi: number | null; p: number }
+/** Exact Mantel–Haenszel: the strata that carry information and the stones in them. */
+export type MhRow = OddsRow & { strata?: number; n?: number };
 export interface MessageElement {
   key: string; label: string; n: number; k: number; separation: boolean; n_dated?: number;
   by_region: { region: string; n: number; k: number; share: number | null }[];
   adjusted?: { region: string; share: number }[]; model?: OddsRow | null; model_dated?: OddsRow | null; fisher: OddsRow;
+  /** The same test on stones with at least `words` legible words (the legibility sensitivity). */
+  strict?: { words: number; n: number; k: number; by_region: { region: string; n: number; k: number }[];
+    fisher: OddsRow; model?: OddsRow | null } | null;
+}
+/** Legible stones per region (at least min_words legible words) and those with at least strict_words. */
+export interface MessageLegibility {
+  min_words: number; strict_words: number;
+  by_region: { region: string; n: number; legible: number; strict: number }[];
+}
+/** The message rules against the hand codings (data/messages_check.json, scripts/check_messages.py): [same, of]. */
+export interface MessageRuleCheck {
+  rules_md5: string; stale?: boolean; unchecked: string[];
+  west: { file: string; n: number; dod_borta: [number, number]; resa: [number, number]; riktning: [number, number] };
+  east: { file: string; n: number; samples: Record<string, { n: number; resa: [number, number]; dod_borta: [number, number];
+    dod_uppgift: [number, number]; riktning: [number, number] }> };
 }
 
 export interface Section {

@@ -120,6 +120,34 @@ def dir_version(path: str) -> str:
     return f"{len(stamps)}:{max(stamps, default=0):.0f}"
 
 
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Data files the findings and the corpus patterns read fresh when they are built (src/stone_findings.py,
+# src/linking.py, src/pattern_registry.py). The API reloader watches only api/ and src/, so a change under data/ must
+# reach the cache through the key.
+FINDINGS_DATA = tuple(os.path.join(_ROOT, *p) for p in (
+    ("data", "links.json"), ("data", "stone_findings.json"), ("data", "textmodel_candidates.json"),
+    ("data", "pattern_registry.json"), ("data", "raa", "runor_2020.json"), ("utdata", "runor", "jamforelse.json")))
+
+
+def files_version(paths) -> str:
+    """Senaste ändring för varje fil (0 för en fil som saknas), som del av en nyckel."""
+    out = []
+    for p in paths:
+        try:
+            out.append(f"{os.stat(p).st_mtime_ns}")
+        except OSError:
+            out.append("0")
+    return ":".join(out)
+
+
+def findings_version() -> str:
+    """Dagens datum och datafilernas ändringstider, som del av nyckeln till svar med fynd och mönster: märkningen
+    "Nytt"/"Ändrat" gäller i 30 dagar (src/pattern_registry.NEW_DAYS), och egna fynd, länkarna och luckorna i texten
+    läses ur data/ som inte startar om servern."""
+    from datetime import date
+    return f"{date.today().isoformat()}|{files_version(FINDINGS_DATA)}"
+
+
 class ContentLengthHeader:
     """Lägger svarets okomprimerade storlek i X-Content-Length, före komprimeringen, så att laddningsraden kan visa
     verklig andel också när svaret skickas gzip-komprimerat (components/LoadingBar.tsx)."""

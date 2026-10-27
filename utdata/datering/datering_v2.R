@@ -36,7 +36,9 @@ feat2 <- c(feat, "lm800", "lm900", "lm1000", "lm1100", "lm_has")
 dd <- d[!is.na(d$year), ]
 cat("Daterade stenar:", nrow(dd), " odaterade:", sum(is.na(d$year)), "\n")
 # Conformalized quantile regression: train on 70 % of the parishes, the 80th percentile of max(q10 - y, y - q90) on the
-# other 30 % widens or narrows the interval
+# other 30 % widens or narrows the interval. Returns Q and the half forest: as in the plan and in split CQR, q10 and q90
+# for the test stones must come from the same forest that Q was calibrated on (only the median comes from the full fold).
+# Post-hoc correction 2026-10-27 (review): the first run applied Q to q10/q90 of the full-fold forest; see resultat.md.
 conformal <- function(tr, features, seed) {
   set.seed(seed)
   g <- unique(tr$parish_g); cal <- sample(g, round(0.3 * length(g)))
@@ -44,8 +46,11 @@ conformal <- function(tr, features, seed) {
   fit <- ranger(reformulate(features, "year"), a, num.trees = 500, quantreg = TRUE, seed = seed)
   q <- predict(fit, b, type = "quantiles", quantiles = c(0.1, 0.9))$predictions
   E <- pmax(q[, 1] - b$year, b$year - q[, 2])
-  unname(quantile(E, 0.8 * (1 + 1 / nrow(b)), type = 1))
+  list(Q = unname(quantile(E, 0.8 * (1 + 1 / nrow(b)), type = 1)), fit = fit)
 }
+# predict.ranger draws its own seed from R's generator; the extra half-forest prediction keeps the generator's state so
+# folds and point estimates are the same as in the first run
+keep_rng <- function(expr) { rs <- .Random.seed; on.exit(assign(".Random.seed", rs, envir = globalenv())); expr }
 cv <- function(features, reps = 3) {
   out <- list()
   for (r in seq_len(reps)) {
@@ -56,8 +61,9 @@ cv <- function(features, reps = 3) {
       tr <- dd[f != k, ]; te <- f == k
       fit <- ranger(reformulate(features, "year"), tr, num.trees = 500, quantreg = TRUE, seed = 2026 + r * 10 + k)
       q <- predict(fit, dd[te, ], type = "quantiles", quantiles = c(0.1, 0.5, 0.9))$predictions
-      Q <- conformal(tr, features, 2026 + r * 10 + k)
-      pred$lo[te] <- q[, 1] - Q; pred$med[te] <- q[, 2]; pred$hi[te] <- q[, 3] + Q; pred$Q[te] <- Q
+      cf <- conformal(tr, features, 2026 + r * 10 + k); Q <- cf$Q
+      qh <- keep_rng(predict(cf$fit, dd[te, ], type = "quantiles", quantiles = c(0.1, 0.9))$predictions)
+      pred$lo[te] <- qh[, 1] - Q; pred$med[te] <- q[, 2]; pred$hi[te] <- qh[, 2] + Q; pred$Q[te] <- Q
       pm <- tapply(tr$year, as.character(tr$province), median)
       pred$b1[te] <- ifelse(as.character(dd$province[te]) %in% names(pm), pm[as.character(dd$province[te])], median(tr$year))
     }
@@ -85,10 +91,11 @@ print(str(res[c("M1", "M2", "uppland", "pass", "passed")]))
 
 if (all(pass)) {  # the plan's step after a pass: train on all dated stones and date the undated ones
   fit <- ranger(reformulate(feat, "year"), dd, num.trees = 500, quantreg = TRUE, seed = 2026)
-  Q <- conformal(dd, feat, 2026)
+  cf <- conformal(dd, feat, 2026); Q <- cf$Q
   un <- d[is.na(d$year), ]
-  q <- predict(fit, un, type = "quantiles", quantiles = c(0.1, 0.5, 0.9))$predictions
-  write.csv(data.frame(signum = un$signum, province = un$province, lo = round(q[, 1] - Q), med = round(q[, 2]), hi = round(q[, 3] + Q)),
+  q <- predict(fit, un, type = "quantiles", quantiles = 0.5)$predictions
+  qh <- predict(cf$fit, un, type = "quantiles", quantiles = c(0.1, 0.9))$predictions
+  write.csv(data.frame(signum = un$signum, province = un$province, lo = round(qh[, 1] - Q), med = round(q[, 1]), hi = round(qh[, 2] + Q)),
             "utdata/datering/dateringar.csv", row.names = FALSE)
   cat("Daterade", nrow(un), "stenar utan stilgrupp\n")
 }

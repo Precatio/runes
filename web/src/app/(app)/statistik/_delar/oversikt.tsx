@@ -180,8 +180,9 @@ export function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => v
         </div>
         <p className="text-xs text-slate-500">
           De starkaste nya och motsägande resultaten för enskilda stenar. Utöver ristare och datering ingår förlorade runor som
-          sannolikhetsmodellen fyller i med minst 80 % säkerhet, uppgifter i Runor 2020 som saknas i eller motsäger Rundata
-          (flyttade stenar, nyare läsningar) och egna fynd från artiklar och analyser. &quot;Nyare källor&quot; visar avstämningen mot Runor 2020 och
+          sannolikhetsmodellen fyller i med minst 80 % säkerhet (kandidater att granska mot stenen), uppgifter i Runor 2020
+          som saknas i eller motsäger Rundata (flyttade stenar, nyare läsningar), släktlänkar mellan stenar som delar namn
+          (varje länk står på båda stenarna) och egna fynd från artiklar och analyser. &quot;Nyare källor&quot; visar avstämningen mot Runor 2020 och
           Wikidata (görs i <Link href="/luckor" className="text-[#b7410e] hover:underline">Forskningsluckor</Link>, där varje fynd också
           får en tolkning). Ett förslag är en hypotes för en runolog att pröva, inte en attribuering.
         </p>
@@ -191,7 +192,7 @@ export function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => v
               <Th>Rundata</Th><Th>Nyare källor</Th><Th>Bedömning</Th></tr></thead>
             <tbody>
               {top.map(f => (
-                <tr key={`${f.signum}|${f.method}`} className="border-t border-slate-900/5">
+                <tr key={`${f.signum}|${f.method}|${f.suggested ?? ""}|${f.ours}`} className="border-t border-slate-900/5">
                   <td className="p-2 font-semibold"><Link href={`/inskrifter/${encodeURIComponent(f.signum)}`} className="hover:underline">{f.signum}</Link>
                     <div className="text-[11px] text-slate-500 font-normal" translate="no">{f.place}</div></td>
                   <td className="p-2 text-xs">{f.method}</td>

@@ -80,7 +80,9 @@ export function PatternBadges({ pt }: { pt: Pattern }) {
 export function NewBadge({ pt }: { pt: Pattern }) {
   if (!pt.new) return null;
   const pill = "px-2 py-0.5 rounded-lg border text-[11px] font-bold whitespace-nowrap";
-  const day = (d?: string | null) => (d ? new Date(d).toLocaleDateString("sv-SE", { day: "numeric", month: "long", year: "numeric" }) : "");
+  // The date as numbers (2026-10-27), not a month name: the translator masks numbers, so one catalog entry serves
+  // every month
+  const day = (d?: string | null) => (d ? d.slice(0, 10) : "");
   return pt.new === "nytt" ? (
     <span className={`${pill} border-violet-300 bg-violet-50 text-violet-800`}
           title={`Mönstret dök upp i analyserna ${day(pt.first_seen)}. Det märks som nytt i 30 dagar.`}>
@@ -88,7 +90,7 @@ export function NewBadge({ pt }: { pt: Pattern }) {
     </span>
   ) : (
     <span className={`${pill} border-violet-200 bg-white text-violet-700`}
-          title={`Statusen ändrades ${day(pt.status_changed)}${pt.previous_status ? ` (förut: ${pt.previous_status})` : ""}.`}>
+          title={`Statusen ändrades ${day(pt.status_changed)}.${pt.previous_status ? ` Förut: ${pt.previous_status}.` : ""}`}>
       Ändrat
     </span>
   );

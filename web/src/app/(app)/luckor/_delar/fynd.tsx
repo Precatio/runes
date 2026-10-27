@@ -20,6 +20,13 @@ const CC_STYLE: Record<string, string> = {
   "saknas": "bg-emerald-50 text-emerald-800 border-emerald-200",
 };
 
+// A stone can have several findings by the same method (two family links, two filled gaps), so the row id also needs
+// what tells them apart; it is the React key, the open state and the interpretation cache key
+function findingId(f: Finding): string {
+  const x = f as Finding & { linked?: string; gap?: { carved?: string } };
+  return [f.signum, f.method, f.suggested ?? "", x.linked ?? "", x.gap?.carved ?? "", f.ours].join("|");
+}
+
 function CrossCheckCell({ cc }: { cc?: CrossCheck }) {
   if (!cc) return <span className="text-slate-400" title="Inte avstämd mot nyare källor">–</span>;
   return <span className={`px-2 py-0.5 rounded-lg border text-[11px] font-bold whitespace-nowrap ${CC_STYLE[cc.status] ?? ""}`}
@@ -243,7 +250,7 @@ export function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; l
           </thead>
           <tbody>
             {sorted.slice(0, 300).map(f => {
-              const id = `${f.signum}|${f.method}`;
+              const id = findingId(f);
               return (
                 <FindingRow key={id} f={f} open={open === id} onToggle={() => setOpen(open === id ? null : id)} />
               );
@@ -264,7 +271,7 @@ const LEVEL_STYLE: Record<string, string> = {
 
 // A reasoned reading of the finding, weighing its evidence against the other methods and newer sources
 function InterpretationBox({ f }: { f: Finding }) {
-  const key = `${f.signum}|${f.method}|${f.suggested ?? ""}|${f.crosscheck?.status ?? ""}`;
+  const key = `${findingId(f)}|${f.crosscheck?.status ?? ""}`;
   const [it, setIt] = useState<Interpretation | null>(interpretations.get(key) ?? null);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
@@ -282,7 +289,7 @@ function InterpretationBox({ f }: { f: Finding }) {
       <div className="flex flex-wrap items-baseline gap-2 mb-1">
         <span className="font-bold uppercase tracking-wider text-[10px] text-slate-500">Tolkning</span>
         <span className="text-xs font-bold text-slate-900">{it.level}</span>
-        <span className="text-[11px] text-slate-500">· {it.support} andra belägg för, {it.against} emot</span>
+        {it.level !== "ej tillämplig" && <span className="text-[11px] text-slate-500">· {it.support} andra belägg för, {it.against} emot</span>}
       </div>
       <p className="text-sm text-slate-900 font-medium">{last.text}</p>
       <details className="mt-2">

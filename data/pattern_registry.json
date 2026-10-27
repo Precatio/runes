@@ -235,17 +235,23 @@
    "status": "indikation",
    "text": "Själsbön på bro- och vägstenar: 27 % mot 18 % på andra stenar (oddskvot 1,83, 95 % KI 1,12–2,97, q 0,046; en av 3 prövade kombinationer av stentyp och drag, Holm), med plats och ristare konstanta. Håller med tiden konstant (daterade stenar, n 804), med textlängden utan bro- och bönefraserna konstant"
   },
-  "Släkt och formler|kinship_composition:broder": {
+  "Släkt och formler|kinship:broder": {
    "first_seen": "2026-10-21",
    "seeded": true,
    "status": "begränsning",
    "text": "Relationen 'broder' ser ovanligare ut på sena stenar (14 % mot 22 %; q 0,028), men skillnaden försvinner inom landskapen (q 0,603)."
   },
-  "Släkt och formler|kinship_composition:partner/kamrat": {
+  "Släkt och formler|kinship:partner/kamrat": {
    "first_seen": "2026-10-21",
    "seeded": true,
    "status": "begränsning",
    "text": "Relationen 'partner/kamrat' ser ovanligare ut på sena stenar (1 % mot 4 %; q 0,033), men skillnaden försvinner inom landskapen (q 0,943)."
+  },
+  "Släkter över stenar|links_local": {
+   "first_seen": "2026-10-27",
+   "seeded": false,
+   "status": "mönster att pröva",
+   "text": "Av 357 par av runstenar som delar minst två namn eller ett gårdsnamn ger slumpen omkring 279. 35 länkar håller (andel falska under 10 %), och de står i median 3,6 km isär, 73 % inom 10 km. Familjerna som går att följa över flera stenar var lokala: 4 länkar mellan landskap som först såg starka ut fal"
   },
   "Språk|dialect": {
    "first_seen": "2026-10-21",

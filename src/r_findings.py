@@ -267,7 +267,7 @@ def significance(value: float | None, kind: str = "q", test: str = "") -> dict:
 def finding_significance(f: dict) -> dict:
     """Signifikansen för ett fynd per sten, efter metod: ortografins p-värde justerat för att den bästa av alla
     ristare valts, huggteknikens permutationstest och modellens förslag mot de sannolikheter felaktiga ristare får
-    (model_significance)."""
+    (model_significance) samt släktlänkarnas andel falska länkar i nollmodellen (q, src/linking.py)."""
     st = f.get("stats") or {}
     method = f.get("method", "")
     if method in ("ortografi", "samlade belägg") and st.get("p_adjusted") is not None:
@@ -280,6 +280,10 @@ def finding_significance(f: dict) -> dict:
                                                 "felaktig ristare minst lika hög sannolikhet; Benjamini–Hochberg över modellens förslag")
     if method.startswith("statistisk modell"):
         return significance(None, test="kalibrerad sannolikhet, prövad med korsvalidering – inget signifikanstest")
+    from src.stone_findings import LINK
+    if method == LINK and f.get("q") is not None:
+        return significance(f["q"], "q", "andel falska länkar vid samma styrka i nollmodellen (namnen blandade inom "
+                                         "landskapet)")
     return significance(None)
 
 
@@ -764,7 +768,7 @@ def corpus_patterns(res: dict) -> list[dict]:
                                      f"{_pct(x['eta2_time'])} (slump {_pct(x['eta2_time_null95'])})")
                 exc_c = (dim["eta2_carver"] or 0) - (dim.get("eta2_carver_null95") or 0)
                 exc_t = (dim["eta2_time"] or 0) - (dim.get("eta2_time_null95") or 0)
-                out.append({"key": "formula", "topic": "Formelval", "status": "bekräftar",
+                out.append({"key": f"formula:{dim['dim']}", "topic": "Formelval", "status": "bekräftar",
                             "text": f"Formelvalet följer ristaren mer än tiden (CA-dimension {dim['dim']}, {_d(dim['inertia_pct'], 1)} % "
                                     f"av inertin, daterade stenar): ristaren förklarar {_pct(dim['eta2_carver'])} av variationen "
                                     f"(slumpnivå {_pct(dim['eta2_carver_null95'])}, alltså {round(exc_c * 100)} procentenheter "
@@ -779,7 +783,7 @@ def corpus_patterns(res: dict) -> list[dict]:
                                     "tidstopp med ristaren konstant, så en tidseffekt finns, men den är mindre.",
                             "significance": significance(dim.get("p_carver"), "p", "eta² för ristare mot permutationer")})
             if dim["unexplained"]:
-                out.append({"key": "ca_unexplained", "topic": "Datering", "status": "mönster att pröva",
+                out.append({"key": f"ca_unexplained:{dim['dim']}", "topic": "Datering", "status": "mönster att pröva",
                             "text": f"I hela korpusen följer CA-dimension {dim['dim']} ({_d(dim['inertia_pct'], 1)} % av inertin) "
                                     f"varken tid (rho {_d(dim['rho_time'])}"
                                     + (f"; eta² mot stilgrupp {_d(dim['eta2_time'])}" if dim.get("eta2_time") is not None else "")
@@ -801,7 +805,7 @@ def corpus_patterns(res: dict) -> list[dict]:
             comp = (nw.get("kinship_strata") or {}).get("composition") or []
             ctext = "; ".join(f"{c['period']}: {_pct(c['share_top'])} från {c['top']}" for c in comp)
             if gone:
-                out.append({"key": f"kinship_composition:{k['relation']}", "topic": "Släkt och formler", "status": "begränsning",
+                out.append({"key": f"kinship:{k['relation']}", "topic": "Släkt och formler", "status": "begränsning",
                             "text": f"Relationen '{k['relation']}' ser {trend} ut på sena stenar ({_pct(k['late'])} mot "
                                     f"{_pct(k['early'])}; q {_d(k['q_period'], 3)}), men skillnaden försvinner inom landskapen "
                                     f"(q {_d(strat, 3)}).",
@@ -852,9 +856,202 @@ def corpus_patterns(res: dict) -> list[dict]:
         sig = pt.get("significance") or {}
         if sig.get("significant") and pt.get("status") in reasons:
             pt["significance"] = {**sig, "qualified": reasons[pt["status"]]}
-        hyp = HYPOTHESES.get((pt.get("topic"), pt.get("key"))) or HYPOTHESES.get((pt.get("topic"), None))
+        kind = str(pt.get("key") or "").split(":")[0]
+        hyp = (HYPOTHESES.get((pt.get("topic"), pt.get("key"))) or HYPOTHESES.get((pt.get("topic"), kind))
+               or HYPOTHESES.get((pt.get("topic"), None)))
         if hyp and pt.get("status") != "begränsning":
             pt["hypothesis"], pt["test"] = hyp
+    return out
+
+
+_NUMBER_WORDS = {1: "Ett", 2: "Två", 3: "Tre", 4: "Fyra", 5: "Fem", 6: "Sex", 7: "Sju", 8: "Åtta"}
+
+
+def _count_word(n: int, one: str, many: str) -> str:
+    """'Ett budskap', 'Två budskap', '9 budskap'."""
+    return f"{_NUMBER_WORDS.get(n, str(n))} {one if n == 1 else many}"
+
+
+def _and_list(items: list[str]) -> str:
+    return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " och " + items[-1]
+
+
+def _dn(v, digits: int = 2) -> str:
+    return "–" if v is None else _d(v, digits)
+
+
+def _odds(o: dict | None, digits: int = 1) -> str:
+    """'oddskvot 5,5, 95 % KI 1,7–24'."""
+    if not o or o.get("or") is None:
+        return "oddskvot –"
+    hi = o.get("hi")
+    return (f"oddskvot {_d(o['or'], digits)}, 95 % KI {_dn(o.get('lo'), digits)}–"
+            + ("∞" if hi is None or math.isinf(hi) else _d(hi, 0 if hi >= 10 else digits)))
+
+
+def message_separated(els: dict) -> list[tuple[str, str, list[dict]]]:
+    """Budskap som finns i bara den ena av Götaland och Svealand (Fishers exakta test, p < 0,05), grupperade efter
+    landsdelen där de finns: [(finns i, saknas i, [{key, label, br, p}])]. Används av mönstren och förklaringen."""
+    groups: dict[tuple[str, str], list[dict]] = {}
+    for e in els.values():
+        p = (e.get("fisher") or {}).get("p")
+        if not e.get("separation") or p is None or p >= 0.05:
+            continue
+        br = {b["region"]: b for b in e.get("by_region") or []}
+        gk, sk = (br.get("Götaland") or {}).get("k") or 0, (br.get("Svealand") or {}).get("k") or 0
+        if bool(gk) == bool(sk):
+            continue
+        present, absent = ("Svealand", "Götaland") if sk else ("Götaland", "Svealand")
+        groups.setdefault((present, absent), []).append({"key": e["key"], "label": e["label"], "br": br, "p": p})
+    return [(pr, ab, sep) for (pr, ab), sep in groups.items()]
+
+
+def separation_sentence(present: str, absent: str, sep: list[dict]) -> str:
+    """'Arv och rest åt sig själv i livstiden finns i Svealand men inte i Götaland.'"""
+    labels = [e["label"] for e in sep]
+    labels = [labels[0]] + [x[:1].lower() + x[1:] for x in labels[1:]]
+    return f"{_and_list(labels)} finns i {present} men inte i {absent}."
+
+
+def _direction_row(name: str, x: dict | None) -> str:
+    """En riktning: Fishers exakta test (oddskvot, intervall och p ur samma test) och modellen med tidsskikt (oddskvot,
+    intervall och p ur modellen). Äldre resultat utan Fishers oddskvot visar modellen och Fishers p för sig."""
+    x = x or {}
+    model = f"med tidsskikt {_odds(x)}, p {_dn(x.get('p'), 3)}"
+    if x.get("fisher"):
+        return f"{name} Fishers exakta test {_odds(x['fisher'])}, p {_dn(x['fisher'].get('p'), 3)}; {model}"
+    return f"{name} {model}; Fishers exakta test utan justering p {_dn(x.get('fisher_p'), 3)}"
+
+
+def travel_direction_text(t: dict) -> str:
+    """Vad interaktionen säger om väst och öst, utan att läsa ett högt p som bevis för samma skillnad."""
+    p_int, ia = t.get("p_interaction"), t.get("interaction") or {}
+    cells = {(c["region"], c["direction"]): c for c in t.get("cells") or []}
+    gw, ge = (cells.get(("Götaland", "väst")) or {}).get("n", 0), (cells.get(("Götaland", "öst")) or {}).get("n", 0)
+    bd = {x["direction"]: x for x in t.get("by_direction") or []}
+    per_dir = (f"Riktning för riktning: {_direction_row('västerut', bd.get('väst'))}; "
+               f"{_direction_row('österut', bd.get('öst'))}.")
+    if p_int is None:
+        return per_dir
+    ratio = (f" Kvoten mellan oddskvoterna öst och väst är {_d(ia['or'], 2)} (95 % KI {_dn(ia.get('lo'), 2)}–"
+             f"{_dn(ia.get('hi'), 1)}); 1 betyder samma skillnad åt båda håll, och intervallet visar hur osäker kvoten är."
+             if ia.get("or") is not None and p_int >= 0.05 else "")
+    if p_int >= 0.05:
+        return (f"Någon skillnad mellan väst och öst går inte att visa (interaktion p {_d(p_int, 2)}), men det betyder inte "
+                f"att skillnaden är densamma: testet är svagt med {gw} götländska resestenar västerut och {ge} österut."
+                + ratio + " " + per_dir)
+    return f"Skillnaden mellan landsdelarna är inte densamma i väst och öst (interaktion p {_d(p_int, 3)}). " + per_dir
+
+
+def travel_direction_agreement(t: dict) -> tuple[bool | None, bool]:
+    """(säger Götalands resestenar oftare att mannen dog borta enligt Mantel–Haenszel-kvoten, pekar båda riktningarnas
+    råa andelar åt samma håll som kvoten). None när kvoten saknas."""
+    mh = t.get("mh") or {}
+    if mh.get("or") is None:
+        return None, False
+    more = mh["or"] > 1
+    cells = {(c["region"], c["direction"]): c for c in t.get("cells") or []}
+    same = True
+    for d in ("väst", "öst"):
+        g, s = cells.get(("Götaland", d)) or {}, cells.get(("Svealand", d)) or {}
+        if not g.get("n") or not s.get("n"):
+            same = False
+            continue
+        gs, ss = g["k"] / g["n"], s["k"] / s["n"]
+        same = same and ((gs > ss) if more else (gs < ss))
+    return more, same
+
+
+def travel_scope_text(t: dict) -> str:
+    """Vilka resestenar testen gäller: bara de med en enda riktning (väst eller öst)."""
+    aj = t.get("all_journeys") or []
+    if not aj:
+        return ""
+    left = sum(x["n"] - x["single"] for x in aj)
+    per = ", ".join(f"{x['region']} {x['n'] - x['single']}" for x in aj)
+    return (f"Testen gäller de {sum(x['single'] for x in aj)} resestenar i Götaland och Svealand som har en enda riktning; "
+            f"{left} med båda riktningarna eller ingen ({per}) räknas inte." if left else "")
+
+
+def travel_tests_text(t: dict) -> str:
+    """Vilka test skillnaden mellan landsdelarna håller i, och vad varje test tar hänsyn till."""
+    mh, mh_t, glm, gam = (t.get("mh") or {}), (t.get("mh_time") or {}), (t.get("common_glm") or {}), (t.get("common") or {})
+    out = [f"Exakt Mantel–Haenszel med riktningen som skikt: {_odds(mh)}, p {_dn(mh.get('p'), 4)}."]
+    if mh_t.get("p") is not None:
+        kept = (f" ({mh_t['strata']} skikt med båda landsdelarna och båda utfallen, {mh_t['n']} av {t['n']} resestenar; "
+                "skikt där alla stenar kommer från samma landsdel eller har samma utfall bär ingen information)"
+                if mh_t.get("strata") and mh_t.get("n") is not None and t.get("n") else "")
+        out.append(f"Med riktning × tidsskikt (stilgruppernas period, odaterade som eget skikt) som skikt: {_odds(mh_t)}, "
+                   f"p {_dn(mh_t['p'], 3)}" + kept + ".")
+    if glm.get("p") is not None:
+        out.append(f"Logistisk regression med riktning och tidsskikt: {_odds(glm)}, p {_dn(glm['p'], 3)}.")
+    ms = t.get("mh_strict") or {}
+    if ms.get("p") is not None:
+        out.append(f"Exakt Mantel–Haenszel med riktningen som skikt, bara på stenar med minst {ms['words']} läsbara ord: "
+                   f"{_odds(ms)}, p {_dn(ms['p'], 4)} ({ms.get('n')} resestenar).")
+    scope = travel_scope_text(t)
+    if scope:
+        out.append(scope)
+    if gam.get("p") is not None:  # sist, så att en förklaring av socknen kan följa
+        out.append(f"Med ristaren eller socknen som slumpeffekt: {_odds(gam)}, p {_dn(gam['p'], 2)}"
+                   + (" – skillnaden blir osäker, eftersom de götländska resestenarna är få och spridda över många socknar."
+                      if gam["p"] >= 0.05 else "."))
+    return " ".join(out)
+
+
+def strict_text(e: dict, digits: int = 2) -> str:
+    """Känsligheten för läsbarhetsgränsen: samma modell på stenar med minst STRICT_WORDS läsbara ord."""
+    st = e.get("strict") or {}
+    m = st.get("model") or {}
+    if m.get("p") is None:
+        return ""
+    br = {x["region"]: x for x in st.get("by_region") or []}
+    g, v = br.get("Götaland") or {}, br.get("Svealand") or {}
+    n_ = lambda x: f"{x:,}".replace(",", "\u00a0") if isinstance(x, int) else str(x)  # noqa: E731
+    return (f"Bara stenar med minst {st['words']} läsbara ord: {n_(g.get('k'))} av {n_(g.get('n'))} mot {n_(v.get('k'))} av "
+            f"{n_(v.get('n'))}, oddskvot {_d(m['or'], digits)} (95 % KI {_dn(m.get('lo'), digits)}–{_dn(m.get('hi'), digits)}), "
+            f"p {_dn(m['p'], 3)} efter tid och ristare.")
+
+
+def legibility_text(m: dict) -> str:
+    """Hur fragmentariska de läsbara stenarna är per landsdel: läsbara stenar med färre än STRICT_WORDS ord."""
+    lg = m.get("legibility") or {}
+    br = {x["region"]: x for x in lg.get("by_region") or []}
+    g, v = br.get("Götaland"), br.get("Svealand")
+    if not g or not v or not g.get("legible") or not v.get("legible"):
+        return ""
+    n_ = lambda x: f"{x:,}".replace(",", "\u00a0")  # noqa: E731
+    return (f"Läsbar betyder minst {lg['min_words']} läsbara ord, och då räknas ett fragment som en sten utan budskapet. "
+            f"Färre än {lg['strict_words']} läsbara ord har {n_(g['legible'] - g['strict'])} av {n_(g['legible'])} läsbara "
+            f"stenar i Götaland ({_pct((g['legible'] - g['strict']) / g['legible'])}) och {n_(v['legible'] - v['strict'])} "
+            f"av {n_(v['legible'])} i Svealand ({_pct((v['legible'] - v['strict']) / v['legible'])}).")
+
+
+_UNCHECKED_WORDS = {"gald": "gäld", "arv": "arv", "gard": "gård", "egen": "egen sten", "berom": "beröm",
+                    "resa": "resa", "dod_borta": "död borta", "dod_uppgift": "dödsuppgift"}
+
+
+def rule_check_text(rc: dict | None) -> str:
+    """Hur väl budskapsreglerna stämmer med handkodningarna (data/messages_check.json via r/messages.R)."""
+    if not rc:
+        return ("Budskapen klassas med en regel per budskap i den engelska översättningen; hur väl reglerna stämmer med "
+                "handkodningarna redovisar scripts/check_messages.py (METHODS.md 1o).")
+    w, e = rc.get("west") or {}, rc.get("east") or {}
+    al, sl = (e.get("samples") or {}).get("alla") or {}, (e.get("samples") or {}).get("slump") or {}
+    f = lambda x: f"{x[0]} av {x[1]}" if x else "–"  # noqa: E731
+    out = ("Budskapen klassas med en regel per budskap i den engelska översättningen. Mot handkodningen av "
+           f"{w.get('n')} västerinskrifter ({w.get('file')}) stämmer död borta i {f(w.get('dod_borta'))}; mot "
+           f"{al.get('n')} handkodade stenar om österfärder och angränsande fall ({e.get('file')}) stämmer resa i "
+           f"{f(al.get('resa'))}, död borta i {f(al.get('dod_borta'))}, dödsuppgift i {f(al.get('dod_uppgift'))} och "
+           f"riktningen i {f(al.get('riktning'))}.")
+    if sl.get("n"):
+        out += (f" Österurvalet kodades medan reglerna rättades; i dess slumpvisa del ({sl['n']} stenar) stämmer resa i "
+                f"{f(sl.get('resa'))} och död borta i {f(sl.get('dod_borta'))}.")
+    un = [_UNCHECKED_WORDS.get(k, k) for k in rc.get("unchecked") or []]
+    if un:
+        out += f" {_and_list(un)[:1].upper()}{_and_list(un)[1:]} är bara stickprovskontrollerade."
+    if rc.get("stale"):
+        out += " Kontrollen gjordes med en tidigare version av reglerna."
     return out
 
 
@@ -865,59 +1062,96 @@ def _message_patterns(m: dict) -> list[dict]:
     n_ = lambda x: f"{x:,}".replace(",", "\u00a0") if isinstance(x, int) else str(x)  # noqa: E731  (1 287)
     els = {e["key"]: e for e in m.get("elements") or []}
     t = m.get("travel") or {}
-    if t.get("n") and t.get("mh"):
+    mh, mh_t = t.get("mh") or {}, t.get("mh_time") or {}
+    if t.get("n") and mh.get("p") is not None and mh["p"] < 0.05:
         cells = {(c["region"], c["direction"]): (c["k"], c["n"]) for c in t.get("cells") or []}
         g = [sum(cells.get(("Götaland", d), (0, 0))[i] for d in ("väst", "öst")) for i in (0, 1)]
         v = [sum(cells.get(("Svealand", d), (0, 0))[i] for d in ("väst", "öst")) for i in (0, 1)]
-        gam = t.get("common") or {}
-        out.append({"key": "messages_travel_death", "topic": "Budskap", "status": "mönster att pröva",
-                    "text": f"När en sten nämner en resa utanför Norden säger den i Götaland nästan alltid att mannen dog där "
-                            f"({n_(g[0])} av {n_(g[1])}, {_pct(g[0] / max(1, g[1]))}), i Svealand i drygt hälften ({n_(v[0])} av {n_(v[1])}, "
-                            f"{_pct(v[0] / max(1, v[1]))}). Skillnaden är densamma i väst och öst (interaktion p "
-                            f"{_d(t.get('p_interaction'), 2)}), så den speglar en sed i hur man berättade snarare än farligare färder.",
-                    "note": "Prövat inom tidsskikt (stilgruppernas period, odaterade som eget skikt) och riktning. Med ristaren eller "
-                            f"socknen som slumpeffekt blir skillnaden osäker (oddskvot {_d(gam.get('or'), 1)}, 95 % KI "
-                            f"{_d(gam.get('lo'), 1)}–{_d(gam.get('hi'), 0)}), eftersom de götländska resestenarna är få och "
-                            "spridda över många socknar. Budskapen klassas med regler i den engelska översättningen (src/messages.py).",
-                    "significance": significance(t["mh"].get("p"), "p", "exakt Mantel–Haenszel, riktningen som skikt")})
-    sep = [e for e in els.values() if e.get("separation") and (e.get("fisher") or {}).get("p", 1) < 0.05]
-    if sep:
+        timed = mh_t.get("p") is not None
+        holds_time = timed and mh_t["p"] < 0.05
+        more, same = travel_direction_agreement(t)
+        raw_more = g[0] / max(1, g[1]) > v[0] / max(1, v[1])
+        out.append({"key": "messages_travel_death", "topic": "Budskap",
+                    "status": "mönster att pröva" if holds_time or not timed else "indikation",
+                    "text": f"När en sten nämner en resa utanför Norden säger den i Götaland {'oftare' if more else 'mer sällan'} "
+                            f"än i Svealand att mannen dog utanför Norden"
+                            + (" i båda riktningarna" if same else " sammantaget över riktningarna") +
+                            f": {n_(g[0])} av {n_(g[1])} ({_pct(g[0] / max(1, g[1]))}) mot {n_(v[0])} av {n_(v[1])} "
+                            f"({_pct(v[0] / max(1, v[1]))})"
+                            + (" (de råa andelarna pekar åt andra hållet, eftersom riktningarna är olika vanliga i "
+                               "landsdelarna)" if raw_more != more else "") + ". "
+                            + travel_direction_text(t)
+                            + (" Om skillnaden speglar en sed i hur man berättade eller att götländska resenärer oftare dog "
+                               "borta skiljer stenarna inte åt." if more else ""),
+                    "note": travel_tests_text(t) + " Budskapen klassas med regler i den engelska översättningen "
+                            "(src/messages.py); en sten som inte säger att mannen dog borta kan gälla en levande resenär, "
+                            "en sten som resenären reste själv eller ett fragment, inte nödvändigtvis någon som kom hem.",
+                    "significance": significance(mh_t["p"], "p", "exakt Mantel–Haenszel, riktning × tidsskikt som skikt")
+                    if timed else significance(mh["p"], "p", "exakt Mantel–Haenszel, riktningen som skikt")})
+    for present, absent, sep in message_separated(els):
+        keys = {e["key"] for e in sep}
+        known = present == "Svealand" and keys <= {"arv", "egen"}
         parts = []
         for e in sep:
-            br = {b["region"]: b for b in e.get("by_region") or []}
-            parts.append(f"{e['label'].lower()} ({n_(br.get('Svealand', {}).get('k'))} av {n_(br.get('Svealand', {}).get('n'))} läsbara "
-                         f"stenar i Svealand, {n_(br.get('Götaland', {}).get('k'))} av {n_(br.get('Götaland', {}).get('n'))} i Götaland)")
-        out.append({"key": "messages_svealand_only", "topic": "Budskap", "status": "bekräftar",
-                    "text": "Två budskap finns i Svealand men inte i Götaland: " + "; ".join(parts) + ".",
-                    "note": "Känt sedan tidigare: arvsstenarna och stenarna som resarna reste åt sig själva i livstiden (som "
-                            "Jarlabankes) hör till Uppland och Södermanland. Här bekräftat med samma regler för hela landet.",
-                    "significance": significance(max(e["fisher"]["p"] for e in sep), "p", "Fishers exakta test (högsta p)")})
+            br = e["br"]
+            parts.append(f"{e['label'].lower()} ({n_(br.get(present, {}).get('k'))} av {n_(br.get(present, {}).get('n'))} "
+                         f"läsbara stenar i {present}, {n_(br.get(absent, {}).get('k'))} av {n_(br.get(absent, {}).get('n'))} "
+                         f"i {absent})")
+        named = [x for k, x in (("arv", "arvsstenarna"),
+                                ("egen", "stenarna som resarna reste åt sig själva i livstiden (som Jarlabankes)")) if k in keys]
+        out.append({"key": f"messages_{'svealand' if present == 'Svealand' else 'gotaland'}_only", "topic": "Budskap",
+                    "status": "bekräftar" if known else "mönster att pröva",
+                    "text": f"{_count_word(len(sep), 'budskap', 'budskap')} finns i {present} men inte i {absent}: "
+                            + "; ".join(parts) + ".",
+                    "note": ("Känt sedan tidigare: " + " och ".join(named) + " hör till Uppland och Södermanland. Här "
+                             "bekräftat med samma regler för hela landet." if known else
+                             f"Budskapet saknas helt bland de läsbara stenarna i {absent}, så ingen oddskvot går att skatta; "
+                             "Fishers exakta test står i stället.")
+                            + " Budskapen klassas med regler i den engelska översättningen (src/messages.py).",
+                    "significance": significance(max(e["p"] for e in sep), "p", "Fishers exakta test (högsta p)")})
     b = els.get("berom") or {}
-    if (b.get("model") or {}).get("p") is not None and b["model"]["p"] < 0.05:
+    if (b.get("model") or {}).get("p") is not None and b["model"]["p"] < 0.05 and b["model"]["or"] > 1:
         br = {x["region"]: x for x in b.get("by_region") or []}
         out.append({"key": "messages_praise", "topic": "Budskap", "status": "bekräftar",
                     "text": f"Götalandsstenarna berömmer den döde oftare än Svealandsstenarna ({n_(br['Götaland']['k'])} av "
                             f"{n_(br['Götaland']['n'])} mot {n_(br['Svealand']['k'])} av {n_(br['Svealand']['n'])}; oddskvot "
                             f"{_d(b['model']['or'], 1)} efter tid och ristare).",
                     "note": "Känt sedan tidigare för Västergötlands drengr- och þegn-stenar; här prövat för hela Götaland med tid och "
-                            "ristare som kontroll. Beröm räknas med en ordlista (god, dugande, bäst, givmild …).",
+                            "ristare som kontroll. Beröm räknas med en ordlista (god, dugande, bäst, givmild …). "
+                            + strict_text(b, 1),
                     "significance": significance(b["model"]["p"], "p", "logistisk regression med ristaren som slumpeffekt")})
     r = els.get("resa") or {}
-    if (r.get("model") or {}).get("p") is not None and r["model"]["p"] < 0.05:
+    if (r.get("model") or {}).get("p") is not None and r["model"]["p"] < 0.05 and r["model"]["or"] < 1:
         br = {x["region"]: x for x in r.get("by_region") or []}
-        out.append({"key": "messages_travel_less", "topic": "Budskap", "status": "mönster att pröva",
+        aj = {x["region"]: x for x in t.get("all_journeys") or []}.get("Götaland")
+        if aj:  # alla resestenar, också de med båda riktningarna eller ingen
+            gk, gn = aj["k"], aj["n"]
+        else:
+            gc = [c for c in t.get("cells") or [] if c.get("region") == "Götaland"]
+            gk, gn = sum(c["k"] for c in gc), sum(c["n"] for c in gc)
+        sm = ((r.get("strict") or {}).get("model") or {})
+        holds_strict = sm.get("p") is not None and sm["p"] < 0.05 and sm["or"] < 1
+        out.append({"key": "messages_travel_less", "topic": "Budskap",
+                    "status": "mönster att pröva" if holds_strict or sm.get("p") is None else "indikation",
                     "text": f"Götalandsstenarna nämner resor utanför Norden mer sällan än Svealandsstenarna ({n_(br['Götaland']['k'])} av "
                             f"{n_(br['Götaland']['n'])} mot {n_(br['Svealand']['k'])} av {n_(br['Svealand']['n'])}; oddskvot "
-                            f"{_d(r['model']['or'], 2)} efter tid och ristare) – men när de gör det, gäller det oftast en död.",
+                            f"{_d(r['model']['or'], 2)} efter tid och ristare)" + (
+                                f" – men när de gör det, säger {n_(gk)} av {n_(gn)}"
+                                + ("" if aj else " med en enda riktning") + " att mannen dog utanför Norden."
+                                if gn and gk / gn > 0.5 else ".")
+                            + (" " + strict_text(r) + (" Skillnaden håller alltså också på de mer fullständiga stenarna, men "
+                                                       "svagare." if holds_strict else " På de mer fullständiga stenarna "
+                                                       "går skillnaden inte att säkerställa.") if sm.get("p") is not None else ""),
                     "note": "Färre resestenar kan betyda färre resor eller att resan bara berättades när den slutade i döden; "
-                            "datan skiljer inte de två åt.",
+                            "datan skiljer inte de två åt. " + legibility_text(m),
                     "significance": significance(r["model"]["p"], "p", "logistisk regression med ristaren som slumpeffekt")})
     return out
 
 
 # A hypothesis for each kind of pattern, in the app's two vocabularies: a claim says "visar" or "är förenligt med", a
 # hypothesis says "vi föreslår" or "kan tyda på". The hypothesis is bold on purpose; the test says what would show it
-# wrong. (topic, key) → (hypothesis, test); (topic, None) is the default for the topic.
+# wrong. (topic, key) → (hypothesis, test); a key such as "kinship:son" or "formula:1" also finds its kind
+# ("kinship", "formula"), and (topic, None) is the default for the topic.
 HYPOTHESES: dict[tuple[str, str | None], tuple[str, str]] = {
     ("Förändring", None): (
         "Vi föreslår att förändringen spreds som en ny vana – i skrift eller tro – genom ristarnätverken, och att den bars av "

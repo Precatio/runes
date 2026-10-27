@@ -1,0 +1,108 @@
+{
+ "rules_md5": "4d5c5cc234cb32068fe4424653b9eed7",
+ "unchecked": [
+  "gald",
+  "arv",
+  "gard",
+  "egen",
+  "berom"
+ ],
+ "west": {
+  "file": "utdata/brittiska/hemma_kodning.csv",
+  "n": 51,
+  "dod_borta": [
+   50,
+   51
+  ],
+  "resa": [
+   51,
+   51
+  ],
+  "riktning": [
+   51,
+   51
+  ]
+ },
+ "east": {
+  "file": "data/messages_facit_ost.csv",
+  "n": 162,
+  "samples": {
+   "alla": {
+    "n": 162,
+    "resa": [
+     161,
+     162
+    ],
+    "dod_borta": [
+     162,
+     162
+    ],
+    "dod_uppgift": [
+     162,
+     162
+    ],
+    "riktning": [
+     94,
+     95
+    ]
+   },
+   "öst": {
+    "n": 97,
+    "resa": [
+     97,
+     97
+    ],
+    "dod_borta": [
+     97,
+     97
+    ],
+    "dod_uppgift": [
+     97,
+     97
+    ],
+    "riktning": [
+     84,
+     85
+    ]
+   },
+   "tillägg": {
+    "n": 32,
+    "resa": [
+     31,
+     32
+    ],
+    "dod_borta": [
+     32,
+     32
+    ],
+    "dod_uppgift": [
+     32,
+     32
+    ],
+    "riktning": [
+     8,
+     8
+    ]
+   },
+   "slump": {
+    "n": 33,
+    "resa": [
+     33,
+     33
+    ],
+    "dod_borta": [
+     33,
+     33
+    ],
+    "dod_uppgift": [
+     33,
+     33
+    ],
+    "riktning": [
+     2,
+     2
+    ]
+   }
+  }
+ }
+}

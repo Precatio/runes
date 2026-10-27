@@ -86,3 +86,17 @@ def test_percentages_are_not_signa():
     found = lambda t: [f"{a} {b}" for a, b in SIGNUM_IN_TEXT_RE.findall(t)]
     assert found("andelen var Vg 84 % och U 26,5 % mot Sö 12 procent") == []
     assert found("jämför U 735 och Sö 113. Se också U_1026.stl") == ["U 735", "Sö 113", "U 1026"]
+
+
+def test_norwegian_n_a_signa_are_kept_apart_from_narke():
+    """fold_signum makes 'Nä 11' and 'N A11' the same key; the exact signum must win (lookup, aliases, search, text)."""
+    s = store()
+    assert s.get("Nä 11")["signum"] == "Nä 11" and s.get("N A11")["signum"] == "N A11"
+    assert s.get("Na 11")["signum"] == "Nä 11"  # the ASCII spelling of Närke still works
+    assert s.get("N A14")["signum"] == "Bo Peterson1992"  # an alias, not the Närke Nä 14
+    assert s.get("N A12") is None and s.get("Nä 12")["signum"] == "Nä 12"  # Rundata has no N A12
+    assert [r["signum"] for r in s.search(signa="Nä 11")["results"]] == ["Nä 11"]
+    assert [r["signum"] for r in s.search(signa="N A11")["results"]] == ["N A11"]
+    assert [r["signum"] for r in s.search(q="Nä 11")["results"]] == ["Nä 11"]
+    assert [r["signum"] for r in s.find_in_text("Nä 11 och N A11 och NA12")] == ["Nä 11", "N A11"]
+    assert all(s.get(r["signum"]) is r for r in s.inscriptions)
