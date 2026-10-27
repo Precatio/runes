@@ -7039,5 +7039,14 @@
 "Nya mönster i datan märks nu Nytt och samlas överst i Statistik (R).":"New patterns in the data are now marked New and gathered at the top of Statistics (R).",
 "I Stenöversikten visar ett klick på en status nu bara den, och fler kan läggas till.":"In the Stone overview a click on a status now shows only that status, and more can be added.",
 "Fynd per sten visar nu också förlorade runor som textmodellen fyller i, stenar som Runor {0} anger som flyttade och nyare läsningar, utöver ristarförslagen.":"Findings per stone now also show lost runes the text model fills in, stones that Runor {0} gives as moved, and newer readings, besides the carver suggestions.",
-"Fynd per {0} visar nu också förlorade runor som textmodellen fyller i, stenar som Runor {1} anger som flyttade och nyare läsningar, utöver ristarförslagen.":"Findings per {0} now also show lost runes the text model fills in, stones that Runor {1} gives as moved, and newer readings, besides the carver suggestions."
+"Fynd per {0} visar nu också förlorade runor som textmodellen fyller i, stenar som Runor {1} anger som flyttade och nyare läsningar, utöver ristarförslagen.":"Findings per {0} now also show lost runes the text model fills in, stones that Runor {1} gives as moved, and newer readings, besides the carver suggestions.",
+"Samma familjer på flera runstenar":"The same families on several runestones",
+"En ny modell läser personer, släktskap, gårdar och resmål ur inskrifterna och länkar stenar som delar namn mer än slumpen ger.":"A new model reads people, kinship, farms and destinations from the inscriptions and links stones that share names more than chance gives.",
+"{0} länkar håller, och familjerna som går att följa var lokala: stenarna står i median några kilometer isär.":"{0} links hold, and the families that can be followed were local: the stones stand a few kilometres apart in the median.",
+"Länkar mellan landskap som först ser starka ut faller nästan alla på motsägelser, som samma namn med olika fäder.":"Links between provinces that look strong at first nearly all fall on contradictions, such as the same name with different fathers.",
+"Länkarna visas som fynd per sten och som ett nytt mönster i Statistik (R).":"The links are shown as findings per stone and as a new pattern in Statistics (R).",
+"Släkter över stenar":"Families across stones",
+"samma familj (namnlänk)":"same family (name link)",
+"Rundata länkar inte stenarna":"Rundata does not link the stones",
+"Rundata kallar stenarna parstenar":"Rundata calls the stones a pair"
 }
