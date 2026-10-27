@@ -6,7 +6,8 @@ textens runor i läsordning. Forskaren klickar mitt på varje runa; klick nummer
 som inte syns hoppas över). Klicken sparas i data/runbibliotek/<serie>/<fil>.json, i den visade bildens koordinater
 (1,2 mm per pixel, raden 0 överst), tillsammans med rutans storlek.
 
-Varje runa klipps ut ur djupbilden i full upplösning (0,6 mm) och vrids upprätt efter läsriktningen där den står
+Varje runa klipps ut ur djupbilden i full upplösning (0,6 mm), vrids upprätt efter läsriktningen där den står och
+smalnas av till RUNE_WIDTH av rutan längs läsriktningen (så att grannrunorna inte kommer med)
 (riktningen från runan före till runan efter, när de står nära; runornas toppar ligger till vänster om läsriktningen).
 Djupet normaliseras inom rutan (5:e–97:e percentilen), så att grunda och djupa ristningar ger samma kontrast. Utsnittet
 får samma formbeskrivning som runutsnitten i appen (src/graphemes.py), så att de kan jämföras."""
@@ -32,6 +33,8 @@ LIB_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "data", "runbiblio
 CROP_PX = 128          # the crop image's side
 DEFAULT_BOX_MM = 50.0  # the box when the stone has no drawn bands
 NEAR_BOXES = 3.0       # neighbours farther apart than this many boxes are in another row: not used for the direction
+RUNE_WIDTH = 0.6       # the crop's width along the reading direction, as a share of the box (runes are taller than
+                       # wide; a square box the band's height reaches into the neighbouring runes)
 
 
 # ---- the text as runes -----------------------------------------------------------------------------------------------
@@ -181,9 +184,34 @@ def _grey(series: str, stem: str) -> tuple[np.ndarray, np.ndarray]:
     return np.flipud(d), np.flipud(z["region"].astype(bool))
 
 
-def _direction(marks: list[dict], k: int, box: float) -> float:
-    """The reading direction at mark k (radians, display coordinates, y down): from the placed rune before to the
-    placed rune after, when they stand within NEAR_BOXES boxes; 0 (left to right) when nothing is near."""
+def band_direction(bands: list[dict], x: float, y: float) -> float | None:
+    """The reading direction of the drawn band at (x, y): the direction of the nearest segment of the nearest band (the
+    bands are drawn in reading direction, api/routers/runmodell.py), when the point lies within the band's height of it;
+    None otherwise."""
+    best = None
+    for b in bands:
+        pts = b.get("points") or []
+        for (x0, y0), (x1, y1) in zip(pts, pts[1:]):
+            dx, dy = x1 - x0, y1 - y0
+            ll = dx * dx + dy * dy
+            if ll <= 0:
+                continue
+            t = max(0.0, min(1.0, ((x - x0) * dx + (y - y0) * dy) / ll))
+            d = math.hypot(x - (x0 + t * dx), y - (y0 + t * dy))
+            if d <= b.get("height", 0) and (best is None or d < best[0]):
+                best = (d, math.atan2(dy, dx))
+    return best[1] if best else None
+
+
+def _direction(marks: list[dict], k: int, box: float, bands: list[dict] | None = None) -> float:
+    """The reading direction at mark k (radians, display coordinates, y down): the drawn band's direction where the rune
+    stands (band_direction), so that the order of the clicks does not matter; without a band, from the placed rune
+    before to the placed rune after when they stand within NEAR_BOXES boxes; 0 (left to right) when nothing is near."""
+    here = next((m for m in marks if m["i"] == k and not m.get("skip") and m.get("x") is not None), None)
+    if here is not None and bands:
+        a = band_direction(bands, here["x"], here["y"])
+        if a is not None:
+            return a
     placed = [m for m in marks if not m.get("skip") and m.get("x") is not None]
     idx = next((j for j, m in enumerate(placed) if m["i"] == k), None)
     if idx is None:
@@ -223,11 +251,17 @@ def crop_png(series: str, stem: str, k: int) -> bytes:
     g = 255 * (1 - np.clip((win - lo) / max(hi - lo, 0.2), 0, 1))
     g[~ok] = 255
     img = Image.fromarray(g.astype(np.uint8))
-    angle = math.degrees(_direction(lib["marks"], k, lib["box"]))
+    bp = _band_path(series, stem)
+    bands = json.load(open(bp, encoding="utf-8")).get("bands", []) if os.path.exists(bp) else []
+    angle = math.degrees(_direction(lib["marks"], k, lib["box"], bands))
     img = img.rotate(angle, resample=Image.BICUBIC, fillcolor=255)  # turns the reading direction to point right
     c = half
     r = int(round(side / 2))
-    img = img.crop((c - r, c - r, c + r, c + r)).resize((CROP_PX, CROP_PX), Image.LANCZOS)
+    rw = int(round(side * RUNE_WIDTH / 2))
+    narrow = img.crop((c - rw, c - r, c + rw, c + r))  # the rune's own width, the box's full height
+    img = Image.new("L", (2 * r, 2 * r), 255)
+    img.paste(narrow, (r - rw, 0))  # centred on a square, so the output keeps its size and the rune its proportions
+    img = img.resize((CROP_PX, CROP_PX), Image.LANCZOS)
     buf = io.BytesIO()
     img.save(buf, format="PNG", optimize=True)
     return buf.getvalue()

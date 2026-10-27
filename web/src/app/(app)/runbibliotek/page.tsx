@@ -22,6 +22,26 @@ type Form = { series: string; stem: string; i: number; signum: string; letter: s
   carvers: CarverRef[]; url: string; status: string | null };
 type CarverSummary = { carver: string; signed: boolean; stones: string[]; runes: number; letters: Record<string, number> };
 
+// The crop's width along the reading direction, as a share of the box (api/routers/runbibliotek.py RUNE_WIDTH)
+const RUNE_WIDTH = 0.6;
+
+// The drawn band's reading direction at a point (the nearest segment of the nearest band, within the band's height),
+// as api/routers/runbibliotek.band_direction: the order of the clicks does not matter
+function bandDirection(bands: Band[], x: number, y: number): number | null {
+  let best: [number, number] | null = null;
+  for (const b of bands) {
+    for (let k = 0; k + 1 < b.points.length; k++) {
+      const [x0, y0] = b.points[k], [x1, y1] = b.points[k + 1];
+      const dx = x1 - x0, dy = y1 - y0, ll = dx * dx + dy * dy;
+      if (ll <= 0) continue;
+      const t = Math.max(0, Math.min(1, ((x - x0) * dx + (y - y0) * dy) / ll));
+      const d = Math.hypot(x - (x0 + t * dx), y - (y0 + t * dy));
+      if (d <= b.height && (!best || d < best[0])) best = [d, Math.atan2(dy, dx)];
+    }
+  }
+  return best ? best[1] : null;
+}
+
 const carverText = (cs: CarverRef[]) => cs.filter(c => !c.uncertain).map(c => `${c.name}${c.kind === "S" ? " (signerad)" : ""}`).join(", ")
   || (cs.length ? `${cs.map(c => c.name).join(", ")} (osäker)` : "ingen ristare i Rundata");
 
@@ -120,20 +140,31 @@ function Build() {
     setStones(await load());
   };
 
-  // A preview of the last placed runes, cut out as the library will (turned by the reading direction)
-  const preview = (m: Mark, ms: Mark[]) => {
-    if (!img || m.x == null || m.y == null) return null;
+  // The reading direction at a mark (radians, y down): the drawn band's where the rune stands; without a band, from the
+  // placed rune before to the one after, when near
+  const directionAt = (m: Mark, ms: Mark[]) => {
+    const fromBand = cur && m.x != null ? bandDirection(cur.bands, m.x, m.y!) : null;
+    if (fromBand !== null) return fromBand;
     const placed = ms.filter(q => !q.skip && q.x != null);
     const j = placed.findIndex(q => q.i === m.i);
     const near = (q?: Mark) => q && q.x != null && Math.hypot(q.x - m.x!, q.y! - m.y!) <= 3 * box ? q : undefined;
     const a = near(placed[j - 1]) ?? m, b = near(placed[j + 1]) ?? m;
-    const ang = a === b ? 0 : Math.atan2(b.y! - a.y!, b.x! - a.x!);
+    return a === b ? 0 : Math.atan2(b.y! - a.y!, b.x! - a.x!);
+  };
+  // A preview of the last placed runes, cut out as the library will (turned by the reading direction, the rune's width)
+  const preview = (m: Mark, ms: Mark[]) => {
+    if (!img || m.x == null || m.y == null) return null;
+    const ang = directionAt(m, ms);
     const c = document.createElement("canvas");
     c.width = c.height = 72;
     const ctx = c.getContext("2d")!;
     ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, 72, 72);
+    ctx.save();
     ctx.translate(36, 36); ctx.scale(72 / box, 72 / box); ctx.rotate(-ang);
     ctx.drawImage(img, -m.x, -m.y);
+    ctx.restore();
+    const side = (72 * (1 - RUNE_WIDTH)) / 2;
+    ctx.fillRect(0, 0, side, 72); ctx.fillRect(72 - side, 0, side, 72);
     return c.toDataURL();
   };
 
@@ -173,7 +204,8 @@ function Build() {
               markerad. Klicka mitt på den runan i djupbilden. Appen går då vidare till nästa runa i texten.</p>
             <p>Syns en runa inte, eller är den för skadad, tryck på Hoppa över. Klickar du på en runa i texten kan du
               placera om den. Rutan ska rymma en hel runa, och storleken ändras med reglaget. Utsnitten vrids upprätt
-              efter läsriktningen, som går från runan före till runan efter.</p>
+              efter slingans läsriktning där runan står, så du kan klicka runorna i vilken ordning du vill, bara du väljer
+              rätt runa i texten. Klicka inte samma runa på stenen två gånger.</p>
             <p>Börja gärna med stenar som Rundata anger som signerade: de är det säkra facit när biblioteket prövas.</p>
           </div>
         ) : (
@@ -247,7 +279,8 @@ function Build() {
                   ))}
                   {marks.filter(m => !m.skip && m.x != null).map(m => (
                     <g key={m.i}>
-                      <rect x={m.x! - box / 2} y={m.y! - box / 2} width={box} height={box} fill="none"
+                      <rect x={m.x! - (box * RUNE_WIDTH) / 2} y={m.y! - box / 2} width={box * RUNE_WIDTH} height={box} fill="none"
+                        transform={`rotate(${(directionAt(m, marks) * 180) / Math.PI} ${m.x} ${m.y})`}
                         stroke={m.i === cursor ? "#b7410e" : "#15803d"} strokeWidth={W / 600} />
                       <text x={m.x! - box / 2} y={m.y! - box / 2 - W / 300} fontSize={W / 60} fill="#15803d">{m.i + 1} {runeForLetter(cur.runes[m.i]?.letter ?? "", cur.rune_types)}</text>
                     </g>

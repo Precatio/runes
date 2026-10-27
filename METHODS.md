@@ -1559,9 +1559,12 @@ runutsnitt kan jämföras med en känd ristares runor.
   (koordinater i den visade bilden, 1,2 mm per pixel), med rutans storlek (som standard de ritade slingornas höjd,
   annars 50 mm) och status (utkast eller granskad).
 * **Utsnitten:** varje runa klipps ur djupbilden i full upplösning (0,6 mm), med djupet normaliserat inom rutan (5:e–97:e
-  percentilen, mörkt = djupt), och vrids upprätt efter läsriktningen där den står: riktningen från runan före till
-  runan efter, när de står inom tre rutor (annars vänster till höger). Runornas toppar ligger till vänster om
-  läsriktningen. Utsnittet får samma formbeskrivning som runutsnitten i appen (avsnitt 12).
+  percentilen, mörkt = djupt), och vrids upprätt efter läsriktningen där den står: den ritade slingans riktning vid
+  runan (närmaste segment av närmaste slinga, inom slingans höjd; slingorna är ritade i läsriktning), så att klickens
+  ordning inte spelar roll; utan slinga riktningen från runan före till runan efter, när de står inom tre rutor (annars
+  vänster till höger). Runornas toppar ligger till vänster om
+  läsriktningen. Längs läsriktningen smalnas utsnittet av till 0,6 av rutan (runor är högre än breda, och en kvadrat
+  med slingans höjd når in i grannrunorna). Utsnittet får samma formbeskrivning som runutsnitten i appen (avsnitt 12).
 * **Ristaren:** de ristare Rundata anger som signerade eller attribuerade och inte osäkra. Rundatas attribueringar
   bygger delvis på runformer, så när biblioteket prövas som stöd för attribuering är de **signerade** stenarna facit;
   annars blir provet cirkulärt.

@@ -30,3 +30,13 @@ def test_two_readings_of_the_same_text_count_once():
     """Gs 11 has §P and §Q, two readings of one text: only the first is the stone's runes. Sides (§A, §B) are all kept."""
     assert "".join(x["letter"] for x in runes_of("§P þiuþkiR uk karl §Q þiuþkiR auk karl")) == "þiuþkiRukkarl"
     assert "".join(x["letter"] for x in runes_of("§A kunar §B raisti")) == "kunarraisti"
+
+
+def test_the_band_gives_the_direction_whatever_the_click_order():
+    from api.routers.runbibliotek import band_direction
+    band = [{"points": [[0, 0], [100, 0], [100, 100]], "height": 20}]  # right, then down
+    assert band_direction(band, 50, 5) == 0.0
+    assert abs(band_direction(band, 95, 60) - math.radians(90)) < 1e-9
+    assert band_direction(band, 50, 60) is None  # outside the band
+    marks = [{"i": 0, "x": 50, "y": 5}, {"i": 1, "x": 95, "y": 60}]  # far apart: no neighbours
+    assert abs(_direction(marks, 1, box=10, bands=band) - math.radians(90)) < 1e-9
