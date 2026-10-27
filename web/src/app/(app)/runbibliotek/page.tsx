@@ -7,6 +7,7 @@
 // ristare" (components/RuneCropDetail.tsx).
 import { useCallback, useEffect, useRef, useState } from "react";
 import { API_URL } from "@/lib/api";
+import { runeForLetter } from "@/lib/runes";
 
 type CarverRef = { name: string; kind: string; uncertain: boolean };
 type StoneRow = { series: string; stem: string; file: string; signum: string | null; rune_types: string | null;
@@ -183,7 +184,11 @@ function Build() {
               {cur.rune_types && <span className="text-slate-500">· {cur.rune_types}</span>}
               <span className="ml-auto text-emerald-800">{msg}</span>
             </div>
-            <div className="mb-2 flex flex-wrap gap-x-2 gap-y-1 font-mono text-sm bg-slate-50 border border-slate-200 rounded p-2">
+            <p className="mb-1 text-[11px] text-slate-500">
+              Texten i den yngre futharken, med Rundatas bokstav under varje runa
+              {/stavlös/i.test(cur.rune_types ?? "") ? ". Stavlösa runor finns inte som tecken, så de visas som kortkvistrunor." : "."}
+            </p>
+            <div className="mb-2 flex flex-wrap gap-x-3 gap-y-2 text-sm bg-slate-50 border border-slate-200 rounded p-2">
               {Object.values(cur.runes.reduce<Record<number, Rune[]>>((acc, r) => { (acc[r.word] ??= []).push(r); return acc; }, {})).map((w, k) => (
                 <span key={k} className="flex">
                   {w.map(r => {
@@ -193,7 +198,10 @@ function Build() {
                     return (
                       <button key={r.i} type="button" disabled={r.lost} onClick={() => setCursor(r.i)}
                         title={`Runa ${r.i + 1}${r.uncertain ? " (osäker läsning)" : ""}`}
-                        className={`px-0.5 rounded ${cls} ${r.uncertain ? "italic" : ""}`}>{r.letter}</button>
+                        className={`px-0.5 rounded flex flex-col items-center leading-none ${cls} ${r.uncertain ? "opacity-70" : ""}`}>
+                        <span className="text-xl">{runeForLetter(r.letter, cur.rune_types)}</span>
+                        <span className="text-[9px] font-mono text-slate-500 mt-0.5">{r.letter}</span>
+                      </button>
                     );
                   })}
                 </span>
@@ -201,7 +209,8 @@ function Build() {
             </div>
             <div className="flex flex-wrap items-center gap-2 mb-2 text-sm">
               {current ? (
-                <span className="font-bold">{`På tur: runa ${cursor + 1}`}{" "}<span className="font-mono">{current.letter}</span>{current.uncertain ? " (osäker)" : ""}</span>
+                <span className="font-bold">{`På tur: runa ${cursor + 1}`}{" "}<span className="text-2xl align-middle">{runeForLetter(current.letter, cur.rune_types)}</span>{" "}
+                  <span className="font-mono text-xs text-slate-500">{current.letter}</span>{current.uncertain ? " (osäker)" : ""}</span>
               ) : <span className="font-bold">Alla runor är placerade eller överhoppade.</span>}
               <button type="button" onClick={skip} disabled={!current} className="px-2 py-1 rounded border border-slate-300 disabled:opacity-40">Hoppa över</button>
               <button type="button" onClick={undo} className="px-2 py-1 rounded border border-slate-300">Ångra</button>
@@ -220,7 +229,7 @@ function Build() {
                   return src ? (
                     <div key={m.i} className="text-center text-[10px] text-slate-500">
                       <img src={src} alt={`Runa ${m.i + 1}`} className="w-16 h-16 border border-slate-200 rounded" />
-                      {m.i + 1} {cur.runes[m.i]?.letter}
+                      {m.i + 1} {runeForLetter(cur.runes[m.i]?.letter ?? "", cur.rune_types)}
                     </div>
                   ) : null;
                 })}
@@ -240,7 +249,7 @@ function Build() {
                     <g key={m.i}>
                       <rect x={m.x! - box / 2} y={m.y! - box / 2} width={box} height={box} fill="none"
                         stroke={m.i === cursor ? "#b7410e" : "#15803d"} strokeWidth={W / 600} />
-                      <text x={m.x! - box / 2} y={m.y! - box / 2 - W / 300} fontSize={W / 70} fill="#15803d">{m.i + 1} {cur.runes[m.i]?.letter}</text>
+                      <text x={m.x! - box / 2} y={m.y! - box / 2 - W / 300} fontSize={W / 60} fill="#15803d">{m.i + 1} {runeForLetter(cur.runes[m.i]?.letter ?? "", cur.rune_types)}</text>
                     </g>
                   ))}
                 </g>
@@ -299,7 +308,7 @@ function Library() {
               return acc;
             }, {})).sort((a, b) => b[1] - a[1]).map(([l, n]) => (
               <button key={l} type="button" onClick={() => void pick(l)}
-                className={`px-2 py-1 rounded border font-mono ${letter === l ? "bg-slate-900 text-white border-slate-900" : "border-slate-300"}`}>{l} <span className="text-[10px]">{n}</span></button>
+                className={`px-2 py-1 rounded border ${letter === l ? "bg-slate-900 text-white border-slate-900" : "border-slate-300"}`}><span className="text-lg">{runeForLetter(l)}</span> <span className="font-mono text-xs">{l}</span> <span className="text-[10px]">{n}</span></button>
             ))}
           </div>
         </div>

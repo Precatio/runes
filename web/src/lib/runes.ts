@@ -56,3 +56,20 @@ export function letterOfTag(tag: string): string | null {
   const parts = m[1].split("/");
   return parts[parts.length - 1] || null;
 }
+
+// A letter of Rundata's transliteration as a younger-futhark rune, for showing a text as runes (the reference
+// library's work page). Short-twig forms when Rundata gives short-twig runes and no long-branch ones for the stone.
+// Staveless (Hälsinge) runes are not in Unicode; they are shown as short-twig runes, their nearest kin.
+const LONG_BRANCH: Record<string, string> = {
+  f: "ᚠ", u: "ᚢ", "þ": "ᚦ", "ð": "ᚦ", o: "ᚬ", "ą": "ᚬ", r: "ᚱ", k: "ᚴ", h: "ᚼ", n: "ᚾ", i: "ᛁ", a: "ᛅ", s: "ᛋ",
+  t: "ᛏ", b: "ᛒ", m: "ᛘ", l: "ᛚ", R: "ᛦ", "ʀ": "ᛦ", e: "ᛂ", g: "ᚵ", d: "ᛑ", p: "ᛔ", y: "ᚤ", "æ": "ᛅ", "ø": "ᚯ",
+  c: "ᛍ", v: "ᚠ", w: "ᚢ", z: "ᛎ", q: "ᚴ", x: "ᛋ",
+};
+const SHORT_TWIG: Record<string, string> = { a: "ᛆ", "æ": "ᛆ", s: "ᛌ", t: "ᛐ", n: "ᚿ", h: "ᚽ", m: "ᛙ", R: "ᛧ", "ʀ": "ᛧ", b: "ᛓ", o: "ᚭ", "ą": "ᚭ" };
+
+export function runeForLetter(letter: string, runeTypes?: string | null): string {
+  if (letter === "-") return "–";
+  const t = (runeTypes ?? "").toLowerCase();
+  const short = (/kortkvist|stavlös/.test(t)) && !/långkvist/.test(t);
+  return (short && SHORT_TWIG[letter]) || LONG_BRANCH[letter] || LONG_BRANCH[letter.toLowerCase()] || letter;
+}
