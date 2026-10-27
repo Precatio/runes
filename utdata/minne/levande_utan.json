@@ -1,0 +1,32 @@
+[
+ {
+  "efter": "M_1_Nolby_thin03",
+  "levande_modeller": 3,
+  "gb_punkter_trianglar": 0.67
+ },
+ {
+  "efter": "M_11_Högom_thin03",
+  "levande_modeller": 6,
+  "gb_punkter_trianglar": 1.1
+ },
+ {
+  "efter": "M_4_Attmarby_thin02",
+  "levande_modeller": 7,
+  "gb_punkter_trianglar": 1.44
+ },
+ {
+  "efter": "M_15_Sköns_kyrka_thin02",
+  "levande_modeller": 8,
+  "gb_punkter_trianglar": 1.48
+ },
+ {
+  "efter": "M_8_Sköle_thin03",
+  "levande_modeller": 4,
+  "gb_punkter_trianglar": 0.74
+ },
+ {
+  "efter": "M_3_Berga_thin02",
+  "levande_modeller": 4,
+  "gb_punkter_trianglar": 1.14
+ }
+]

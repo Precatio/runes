@@ -1,0 +1,30 @@
+[
+ {
+  "steg": "start",
+  "rss_gb": 0.16
+ },
+ {
+  "steg": "HS_10_1b_thin03",
+  "rss_gb": 4.4,
+  "godkanda": 14,
+  "sekunder": 414
+ },
+ {
+  "steg": "HS_10_3a_thin03",
+  "rss_gb": 2.52,
+  "godkanda": 17,
+  "sekunder": 1036
+ },
+ {
+  "steg": "HS_10_1a_thin03",
+  "rss_gb": 2.84,
+  "godkanda": 8,
+  "sekunder": 2615
+ },
+ {
+  "steg": "HS_10_3b_thin03",
+  "rss_gb": 3.56,
+  "godkanda": 38,
+  "sekunder": 3113
+ }
+]

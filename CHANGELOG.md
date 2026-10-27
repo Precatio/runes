@@ -5,6 +5,29 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Stavlösa runor delas upp i runor
+- Nytt val **Stavlösa runor** i den automatiska analysen (src/staveless.py): strecken delas upp i runor efter var de står
+  längs slingan i stället för efter vilka streck som sitter ihop. Vilka snitt som mäts och deras mått är desamma; bara
+  runtillhörigheten ändras, så att medelvärden med runan som enhet går att räkna på stavlösa stenar.
+- Ritade slingor behåller var sitt nummer (rune_bands.drawn_labels), så att rader som ritats sida vid sida inte flyter
+  ihop.
+- Valet slås på av sig självt när Rundata anger att alla stenens runor är stavlösa (3D-sidan via /api/raa/fetch, som nu
+  också ger `rune_types`, och stenanalysen). Utan slingor godtas kortare runstreck (5 mm i stället för 12).
+- Prövat på 15 skanningar av stenar med stavlösa runor och 8 vanliga (utdata/stavlosa/): runor med mått Hs 12 16 → 60,
+  Hs 14 26 → 89, Hs 15 5 → 48. På blandade och vanliga stenar delar läget runorna för fint, och två förhandsbestämda
+  regler för gränsen mellan runor föll; de fasta värdena valdes efter provet (METHODS.md 2c). Indelningen är ett
+  ungefärligt förslag – den exakta görs med Markera runorna.
+
+### Analysmotorn släpper minnet efter stora skanningar
+- En 3D-modell som lämnar analysmotorns cache frigörs nu direkt. trimesh-modellerna ingår i referenscykler och
+  frigjordes förut först när Pythons skräpsamlare råkade köra, vilket i en server med stora numpy-fält sällan sker:
+  efter nio skanningar på 0,5–1,6 GB höll motorn 30 GB. Cachen städar när en modell lämnar den, och de tunga
+  3D-anropen följs av en städning när svaret har skickats (api/mesh_cache.py, CollectAfter3D i api/main.py).
+- Prov med sex skanningar uppladdade i rad och cachen på en modell (utdata/minne/levande.py): med städningen lever en
+  modell efter varje uppladdning; utan den levde 3–8 modeller, med upp till 1,5 GB bara i punkter och trianglar (deras
+  cacher och sökträd kommer till). Ett första prov som mätte processens RSS var inte avgörande, eftersom datorn växlade
+  mot disk (utdata/minne/minnesprov.py).
+
 ### Sökmotorerna får veta om nya artiklar
 - IndexNow-pingen (Bing m.fl.) skickas nu från webbplatsens bygge när GitHub Pages har publicerat sidorna, för de
   artiklar som är nya, ändrade eller borttagna, på båda språken (scripts/indexnow_ping.py). Den gamla pingen från den

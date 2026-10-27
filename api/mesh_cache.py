@@ -2,7 +2,13 @@
 
 En skanning laddas upp en gång och får ett id (filens SHA-256). Alla senare anrop (snitt, ett klick,
 automatisk analys, visningsmodell) använder id:t i stället för att skicka filen igen.
+
+Minnet: en trimesh-modell ingår i referenscykler (modellen och dess cache pekar på varandra), så den frigörs inte när
+den lämnar cachen utan först när Pythons skräpsamlare körs – och den körs sällan i en server som mest hanterar stora
+numpy-fält. Efter nio skanningar på 0,5–1,6 GB höll analysmotorn 30 GB (2026-10-24). Därför städas det uttryckligen
+när en modell lämnar cachen (put) och efter de tunga 3D-anropen (api/main.py, CollectAfter3D).
 """
+import gc
 import os
 import threading
 from collections import OrderedDict
@@ -45,11 +51,15 @@ _lock = threading.Lock()
 
 
 def put(mesh_id: str, entry: MeshEntry) -> MeshEntry:
+    evicted = []
     with _lock:
         _cache[mesh_id] = entry
         _cache.move_to_end(mesh_id)
         while len(_cache) > MAX_ENTRIES:
-            _cache.popitem(last=False)
+            evicted.append(_cache.popitem(last=False)[1])
+    if evicted:
+        evicted.clear()
+        gc.collect()  # the evicted models are in reference cycles: free them now, not at some later collection
     return entry
 
 

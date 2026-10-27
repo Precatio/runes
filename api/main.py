@@ -239,9 +239,30 @@ class SameSiteWrites:
         await self.app(scope, receive, send)
 
 
+class CollectAfter3D:
+    """Runs the garbage collector after the heavy 3D calls (upload, analyses, view models, images, export), in a worker
+    thread once the response has been sent. Their meshes, height fields and trimesh copies sit in reference cycles,
+    which Python otherwise frees only at a rare full collection, so a session of large scans kept tens of gigabytes
+    (api/mesh_cache.py)."""
+    HEAVY = ("/api/3d/upload", "/api/3d/analyze", "/api/3d/auto_analyze", "/api/3d/analyze_path", "/api/3d/view_model",
+             "/api/3d/render_depth_map", "/api/3d/render_relief", "/api/3d/export")
+
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        await self.app(scope, receive, send)
+        if scope["type"] == "http" and scope.get("method") == "POST" and scope.get("path", "").startswith(self.HEAVY):
+            import gc
+
+            import anyio
+            await anyio.to_thread.run_sync(gc.collect)
+
+
 # The last added middleware is the outermost: host check → CORS → same-site writes → gzip → the uncompressed size → the
 # app. JSON compresses to about a tenth; images, zip archives, Word files and 3D view models (binary STL, which gzip
 # barely shrinks at seconds of CPU on a 75 MB model) are sent as they are.
+app.add_middleware(CollectAfter3D)
 app.add_middleware(ContentLengthHeader)
 app.add_middleware(GZipMiddleware, minimum_size=1024, compresslevel=5, exclude_content_types=(
     *DEFAULT_EXCLUDED_CONTENT_TYPES, "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
