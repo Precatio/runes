@@ -24,3 +24,9 @@ def test_the_reading_direction_follows_the_neighbours():
     assert _direction(marks, 3, box=10) == 0.0  # alone, far from the others: left to right
     marks[1]["skip"] = True
     assert abs(_direction(marks, 2, box=10) - math.radians(45)) < 1e-9  # the skipped rune is passed over
+
+
+def test_two_readings_of_the_same_text_count_once():
+    """Gs 11 has §P and §Q, two readings of one text: only the first is the stone's runes. Sides (§A, §B) are all kept."""
+    assert "".join(x["letter"] for x in runes_of("§P þiuþkiR uk karl §Q þiuþkiR auk karl")) == "þiuþkiRukkarl"
+    assert "".join(x["letter"] for x in runes_of("§A kunar §B raisti")) == "kunarraisti"

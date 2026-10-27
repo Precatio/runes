@@ -38,8 +38,13 @@ NEAR_BOXES = 3.0       # neighbours farther apart than this many boxes are in an
 def runes_of(translit: str | None) -> list[dict]:
     """Rundata's transliteration as runes in reading order: {i, letter, uncertain, lost, word}. Letters are runes;
     a letter in parentheses is uncertain; '-' is a lost rune (cannot be placed); '[…]' (known only from older records,
-    not on the stone), '...', section marks (§A) and dividers are left out. word counts the words, for display."""
-    t = re.sub(r"§[A-ZÅÄÖ]", " ", translit or "")
+    not on the stone), '...', section marks (§A) and dividers are left out; of two readings (§P, §Q) only the first. word counts the words, for display."""
+    t = translit or ""
+    # §P and §Q are two readings of the same text (Rundata): the first one only. §A, §B … are parts of the inscription
+    # (sides, bands) and are all kept.
+    if "§P" in t:
+        t = t.split("§P", 1)[1].split("§Q", 1)[0]
+    t = re.sub(r"§[A-ZÅÄÖ]", " ", t)
     t = re.sub(r"\[[^\]]*\]", " ", t)
     t = t.replace("...", " … ")
     out, word, uncertain = [], 0, False
