@@ -37,7 +37,7 @@ IR_EVERYDAY = BYA[("Irland", "ägare")] + BYA[("Irland", "vardag")] + BYA[("Irla
 assert IR_EVERYDAY == 10
 W = A["women_commemorated"]
 MAN, NOR, DEN, SWE = W["Isle of Man"], W["Norge"], W["Danmark"], W["Sverige"]
-assert (MAN["women"], MAN["men"]) == (9, 4) and (NOR["women"], NOR["men"]) == (5, 23)
+assert (MAN["women"], MAN["men"]) == (9, 4) and round(3 * MAN["women"] / 13) == 2  # "två av tre" and (NOR["women"], NOR["men"]) == (5, 23)
 assert (DEN["women"], DEN["men"]) == (7, 126) and (SWE["women"], SWE["men"]) == (43, 1228)
 P_NOR = A["women_tests"]["Isle of Man mot Norge"]["p"]
 assert 0.002 < P_NOR < 0.004
@@ -154,9 +154,9 @@ for ch in (CHART_CAT, CHART_W):
     assert not re.search(r"[åäö]", en_chart(ch)), en_chart(ch)
 
 # ---- the article ----------------------------------------------------------------------------------------------------------
-title = "Där hustrurna fick kors"
+title = "Två av tre kors för en kvinna – vikingarnas runor på de brittiska öarna"
 summary = (f"På de brittiska öarna finns {N_V} runinskrifter från vikingatiden. Vi har läst dem alla och frågat vilka som "
-           "skrev dem och vad de ville säga. På Isle of Man restes vartannat kors efter en kvinna, nordiska och gaeliska namn "
+           "skrev dem och vad de ville säga. På Isle of Man restes två av tre kors efter en kvinna, nordiska och gaeliska namn "
            "står i samma familjer, och svenskarna, som ristade om England hemma, syns nästan inte alls.")
 
 body = f"""Föreställ dig en man som går längs kusten på Isle of Man med sina mejslar. Han heter Gautr, och det mesta vi vet om honom har han själv skrivit. Han är son till Bjôrn från Kollr – ön Coll i Hebriderna – och han är stolt nog att säga det i sten. På ett kors i Andreas står *en Gautr gerði, sonr Bjarnar frá Kolli*: men Gautr gjorde det, Bjôrns son från Coll. På ett annat, i Kirk Michael, säger han mer: *Gautr gerði þenna ok alla í Môn* – Gautr gjorde det här och alla på Man.
@@ -239,9 +239,9 @@ Bilden som träder fram är enkel. Svenskarna åkte till England som soldater oc
 - Kermode, P. M. C. 1907. *Manx Crosses*. London.
 - Vitkis artikel [Hon ärvde efter sitt barn – kvinnorna på runstenarna](/artiklar/hon-arvde-efter-sitt-barn-kvinnorna-pa-runstenarna/)."""
 
-title_en = "Where wives got crosses"
+title_en = "Two crosses in three for a woman – the Vikings' runes in the British Isles"
 summary_en = (f"There are {N_V} Viking-age runic inscriptions in the British Isles. We read them all and asked who wrote "
-              "them and what they wanted to say. On the Isle of Man every second cross was raised for a woman, Norse and "
+              "them and what they wanted to say. On the Isle of Man two crosses in three were raised for a woman, Norse and "
               "Gaelic names stand in the same families, and the Swedes, who carved about England at home, hardly show at all.")
 
 body_en = f"""Picture a man walking the coast of the Isle of Man with his chisels. His name is Gautr, and most of what we know about him he wrote himself. He is the son of Bjôrn from Kollr – the island of Coll in the Hebrides – and he is proud enough to say so in stone. On a cross at Andreas stands *en Gautr gerði, sonr Bjarnar frá Kolli*: but Gautr made it, son of Bjôrn from Coll. On another, at Kirk Michael, he says more: *Gautr gerði þenna ok alla í Môn* – Gautr made this one and all in Man.
@@ -329,7 +329,7 @@ for b in (body, body_en):
     assert b.count(":::box") == 2 and b.count(":::chart") == 2 and b.count("![") == 2
     blocks = [ln.strip() for ln in b.split("\n") if ln.strip().startswith(":::")]
     assert all(o.startswith(":::") and o != ":::" and c == ":::" for o, c in zip(blocks[::2], blocks[1::2])) and len(blocks) % 2 == 0, blocks
-out = {"slug": "dar-hustrurna-fick-kors", "title": title, "summary": summary, "body": body,
+out = {"slug": "tva-av-tre-kors-for-en-kvinna", "title": title, "summary": summary, "body": body,
        "title_en": title_en, "summary_en": summary_en, "body_en": body_en,
        "labels": ["Forskning", "Kvinnor och barn", "Norden", "Geografi"]}
 json.dump(out, open(os.path.join(ROOT, "utdata", "blogg", "brittiska.json"), "w"), ensure_ascii=False, indent=1)
