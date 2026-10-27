@@ -5,7 +5,10 @@ import Link from "next/link";
 import { API_URL } from "@/lib/api";
 import OwnQuestion from "@/components/OwnQuestion";
 import type { Corpus, Status, Tab } from "./_delar/typer";
-import { TOPIC, memo } from "./_delar/gemensamt";
+import { PATTERN_TOPICS, TOPIC, memo } from "./_delar/gemensamt";
+import { Messages } from "./_delar/budskap";
+import { NewBadge } from "@/components/PatternCard";
+import { GITHUB_URL } from "@/lib/site";
 import { Overview } from "./_delar/oversikt";
 import { Geography } from "./_delar/geografi";
 import { Change, Chronology, Clusters, Network, TextTab, Words } from "./_delar/text";
@@ -126,6 +129,7 @@ export default function StatistikPage() {
 
       {data && (
         <>
+          <NewPatterns data={data} onOpen={setTab} />
           <nav aria-label="Frågor" className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
             {[{ key: "overview" as Tab, question: "Vad säger statistiken sammantaget?", confidence: null as Level | null },
               { key: "question" as Tab, question: "Pröva en egen fråga", confidence: null as Level | null },
@@ -155,6 +159,7 @@ export default function StatistikPage() {
             {tab === "change" && <Change data={data} />}
             {tab === "network" && <Network data={data} />}
             {tab === "words" && <Words data={data} />}
+            {tab === "messages" && <Messages data={data} />}
           </div>
           {status?.r.available && (
             <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 px-1">
@@ -164,13 +169,41 @@ export default function StatistikPage() {
                 <Link href="/stenanalys" className="text-[#b7410e] hover:underline">stenanalysen</Link> och ställs mot forskningen i{" "}
                 <Link href="/luckor" className="text-[#b7410e] hover:underline">Forskningsluckor</Link>.
               </span>
-              <a href={`${API_URL}/api/r/package`} className="px-3 py-1.5 rounded-xl border border-slate-300 bg-white font-bold text-slate-700 hover:bg-slate-50">
-                Ladda ner R-skript, data och resultat
+              <a href={`${GITHUB_URL}/tree/main/r`} target="_blank" rel="noopener noreferrer"
+                className="px-3 py-1.5 rounded-xl border border-slate-300 bg-white font-bold text-slate-700 hover:bg-slate-50">
+                R-skripten på GitHub ↗
               </a>
             </div>
           )}
         </>
       )}
     </div>
+  );
+}
+
+const firstSentence = (t: string) => { const s = t.split(/(?<=[a-zåäö0-9)])\.\s/)[0].trim(); return /[.!?]$/.test(s) ? s : `${s}.`; };
+
+/** The patterns that appeared (or changed status) in the last 30 days, first on the page, each opening its question. */
+function NewPatterns({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void }) {
+  const fresh = (data.patterns ?? []).filter(p => p.new);
+  if (!fresh.length) return null;
+  const tabOf = (topic: string) => (Object.entries(PATTERN_TOPICS).find(([, ts]) => ts.includes(topic))?.[0] ?? "overview") as Tab;
+  return (
+    <section aria-label="Nya mönster" className="rounded-[24px] border border-violet-200 bg-violet-50/60 p-4 md:p-5 space-y-2">
+      <h3 className="text-sm font-bold uppercase tracking-wider text-violet-900">Nya mönster i datan ({fresh.length})</h3>
+      <p className="text-xs text-violet-900/80">Mönster som dykt upp eller bytt status de senaste 30 dagarna. Klicka för att öppna frågan de hör till.</p>
+      <ul className="space-y-1.5">
+        {fresh.map(p => (
+          <li key={`${p.topic}|${p.key}`}>
+            <button type="button" onClick={() => onOpen(tabOf(p.topic))}
+              className="w-full text-left flex flex-wrap items-start gap-2 rounded-xl bg-white/80 border border-violet-100 px-3 py-2 hover:border-violet-300">
+              <NewBadge pt={p} />
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#b7410e] pt-0.5">{p.topic}</span>
+              <span className="text-sm text-slate-800 flex-1 min-w-[16rem]">{firstSentence(p.text)}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }

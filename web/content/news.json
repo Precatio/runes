@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "budskap-och-nya-monster",
+   "date": "2026-10-27",
+   "status": "nytt",
+   "title": "Vad stenarna berättar om den döde – och nya mönster märks",
+   "text": "Statistik (R) har fått en ny fråga, Budskap: vad runstenarna berättar om den döde – hur han dog, resor, gäld, arv, gård och beröm – och hur det skiljer mellan landsdelarna. Det första fyndet: när en sten i Götaland nämner en resa säger den nästan alltid att mannen dog borta, lika ofta i öst som i väst, medan stenarna i Svealand också berättar om dem som kom hem. Nya mönster i datan märks nu Nytt och samlas överst i Statistik (R). I Stenöversikten visar ett klick på en status nu bara den, och fler kan läggas till. Fynd per sten visar nu också förlorade runor som textmodellen fyller i, stenar som Runor 2020 anger som flyttade och nyare läsningar, utöver ristarförslagen."
+  },
+  {
    "id": "runbibliotek",
    "date": "2026-10-27",
    "status": "nytt",

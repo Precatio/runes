@@ -35,13 +35,14 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 R_DIR = os.path.join(ROOT, "r")
 CACHE_DIR = os.environ.get("R_CACHE_DIR", os.path.join(ROOT, "data", "cache", "r"))
 MODULES = ("geography", "clusters", "text", "attribution", "anonymous", "chronology", "dialect", "network", "change",
-           "remains", "hotspots", "words")
+           "remains", "hotspots", "words", "messages")
 STONE_MODULES = ("stone", "landscape")
 MODULE_LABELS = {"geography": "Geografi", "clusters": "Klustring och MCA", "text": "Text och formler",
                  "attribution": "Attribueringsmodell", "anonymous": "Okända ristare",
                  "chronology": "Seriation och datering",
                  "dialect": "Stavning och dialekter", "network": "Formelnätverk", "change": "Förändring i tid och rum",
-                 "remains": "Lämningar runt stenarna", "hotspots": "Hot spots och kluster", "words": "Ordförrådet"}
+                 "remains": "Lämningar runt stenarna", "hotspots": "Hot spots och kluster", "words": "Ordförrådet",
+                 "messages": "Budskapen"}
 REQUIRED_PACKAGES = ("jsonlite", "dplyr", "tidyr", "stringr", "ggplot2", "sf", "leaflet", "htmlwidgets",
                      "tidytext", "cluster", "FactoMineR", "factoextra", "tidymodels", "ranger", "ragg",
                      "ca", "stringdist", "igraph", "tidygraph", "ggraph", "terra", "gdistance", "raster", "png", "mgcv",
@@ -280,7 +281,8 @@ MODULE_FILES = {"geography": ("geography*", "geografi_*", "ristare_karta*"), "cl
                 "text": ("text*",), "attribution": ("attribution*", "modell_*"), "anonymous": ("anonymous*", "okanda_*"),
                 "chronology": ("chronology*", "seriation_*"), "dialect": ("dialect*", "dialekt_*"),
                 "network": ("network*", "natverk_*"), "change": ("change*", "forandring_*"),
-                "remains": ("remains*", "lamningar_*", "landskap_genomsokning*"), "hotspots": ("hotspots*", "hotspot_*")}
+                "remains": ("remains*", "lamningar_*", "landskap_genomsokning*"), "hotspots": ("hotspots*", "hotspot_*"),
+                "messages": ("messages*", "budskap_*")}
 
 # Kulturmiljöregistret's remains (scripts/fetch_raa_remains.py) and the place names and medieval churches
 # (scripts/fetch_place_names.py), read by remains.R; not part of the repository
@@ -301,6 +303,24 @@ def _remains_hash() -> str:
     return h.hexdigest()[:16]
 
 
+def _messages_hash() -> str:
+    """The message rules (src/messages.py): the messages module is recomputed when they change."""
+    with open(os.path.join(ROOT, "src", "messages.py"), "rb") as fh:
+        return hashlib.sha256(fh.read()).hexdigest()[:16]
+
+
+def write_messages(path: str):
+    """The messages of each runestone (src/messages.py) for r/messages.R, beside the corpus."""
+    from api.rundata import store
+    from src import messages
+    rows = messages.rows(store().inscriptions)
+    with open(path, "w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(rows[0]))
+        w.writeheader()
+        for r in rows:
+            w.writerow({k: ("" if v is None else v) for k, v in r.items()})
+
+
 def _if_exists(path: str) -> str | None:
     return path if os.path.exists(path) else None
 
@@ -312,7 +332,7 @@ def module_hashes(csv_data: bytes) -> dict[str, str]:
     out: dict[str, str] = {}
     for m in MODULES:  # run order, so upstream versions exist
         key = (base + _scripts_hash([f"{m}.R"]) + "".join(out[u] for u in DEPENDS.get(m, ()))
-               + (_remains_hash() if m == "remains" else ""))
+               + (_remains_hash() if m == "remains" else "") + (_messages_hash() if m == "messages" else ""))
         out[m] = hashlib.sha256(key.encode()).hexdigest()[:16]
     return out
 
@@ -350,7 +370,8 @@ def _copy_module(module: str, src: str, dst: str):
 def fingerprint(data: bytes) -> str:
     """Korpusens version: data och korpusmodulernas skript (inte sten- och landskapsskripten)."""
     scripts = ["common.R"] + [f"{m}.R" for m in MODULES]
-    return hashlib.sha256(data + _scripts_hash(scripts).encode() + _remains_hash().encode()).hexdigest()[:16]
+    return hashlib.sha256(data + _scripts_hash(scripts).encode() + _remains_hash().encode()
+                          + _messages_hash().encode()).hexdigest()[:16]
 
 
 # ---- water data ----------------------------------------------------------------------------
@@ -533,8 +554,10 @@ def run_corpus(fp: str):
     errors, done = {}, []
     try:
         water = ensure_water()
+        write_messages(os.path.join(d, "messages.csv"))
         from src import pattern_map, places
         params = {"corpus": os.path.join(d, "corpus.csv"), "water_dir": water, "corpus_dir": d, "seed": 2026,
+                  "messages": os.path.join(d, "messages.csv"),
                   "tile_dir": os.path.join(CACHE_DIR, "terrain"), "remains": _if_exists(REMAINS),
                   "cult_names": _if_exists(CULT_NAMES), "places": _if_exists(PLACES), "churches": _if_exists(CHURCHES),
                   # The names of the map's patterns and kinds of place, for the figures' labels (hotspots.R, remains.R)

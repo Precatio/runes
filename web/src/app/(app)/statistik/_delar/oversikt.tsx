@@ -179,7 +179,9 @@ export function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => v
           ))}
         </div>
         <p className="text-xs text-slate-500">
-          De starkaste nya och motsägande resultaten för enskilda stenar. &quot;Nyare källor&quot; visar avstämningen mot Runor 2020 och
+          De starkaste nya och motsägande resultaten för enskilda stenar. Utöver ristare och datering ingår förlorade runor som
+          sannolikhetsmodellen fyller i med minst 80 % säkerhet, uppgifter i Runor 2020 som saknas i eller motsäger Rundata
+          (flyttade stenar, nyare läsningar) och egna fynd från artiklar och analyser. &quot;Nyare källor&quot; visar avstämningen mot Runor 2020 och
           Wikidata (görs i <Link href="/luckor" className="text-[#b7410e] hover:underline">Forskningsluckor</Link>, där varje fynd också
           får en tolkning). Ett förslag är en hypotes för en runolog att pröva, inte en attribuering.
         </p>

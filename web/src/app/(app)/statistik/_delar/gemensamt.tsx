@@ -65,13 +65,14 @@ export function Method({ text, caveat }: { text?: string; caveat?: string }) {
 export const PATTERN_TOPICS: Record<string, string[]> = {
   geography: ["Geografi"], attribution: ["Attribuering"], text: ["Språk"], clusters: ["Stil och innehåll"],
   chronology: ["Datering"], network: ["Släkt och formler"], anonymous: ["Okända ristare"], change: ["Förändring", "Regional skillnad", "Samband"],
+  messages: ["Budskap"],
 };
 export const patternsFor = (patterns: Pattern[], key: string) => patterns.filter(p => (PATTERN_TOPICS[key] ?? []).includes(p.topic));
 
 export const TOPIC: Record<string, string> = {
   attribution: "Vem ristade?", anonymous: "Okända ristare", change: "Förändring", chronology: "Datering",
   geography: "Geografi", text: "Stavning och dialekt", clusters: "Grupper av stenar", network: "Formler och släkt",
-  words: "Ordförrådet", question: "Egen fråga",
+  words: "Ordförrådet", messages: "Budskap", question: "Egen fråga",
 };
 
 // The answer first: question, why it matters, the key number, the answer, a suggested interpretation and its limits

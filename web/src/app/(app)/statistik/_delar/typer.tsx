@@ -116,11 +116,23 @@ export interface Corpus {
     ca: { inertia: number[]; provinces: { code: string; x: number; y: number; n: number }[];
       words: { w: string; x: number; y: number; n: number }[] };
     neighbors: { a: string; b: string; dist: number }[] };
+  messages?: Dict & { method: string; n_stones: number; n_legible: number; elements: MessageElement[];
+    travel: { n: number; cells: { region: string; direction: string; n: number; k: number }[]; common: OddsRow | null;
+      common_glm: OddsRow | null; mh: OddsRow; p_interaction: number | null;
+      by_direction: (OddsRow & { direction: string; fisher_p: number })[] };
+    home: { n: number; cells: { region: string; n: number; k: number }[]; model: OddsRow | null } };
   sections?: Section[];
   overview?: { paragraphs: string[]; next_steps: string[] };
 }
 
-export type Tab = "overview" | "question" | "geography" | "clusters" | "text" | "attribution" | "anonymous" | "chronology" | "change" | "network" | "words";
+export type Tab = "overview" | "question" | "geography" | "clusters" | "text" | "attribution" | "anonymous" | "chronology" | "change" | "network" | "words" | "messages";
+
+export interface OddsRow { or: number; lo: number; hi: number | null; p: number }
+export interface MessageElement {
+  key: string; label: string; n: number; k: number; separation: boolean; n_dated?: number;
+  by_region: { region: string; n: number; k: number; share: number | null }[];
+  adjusted?: { region: string; share: number }[]; model?: OddsRow | null; model_dated?: OddsRow | null; fisher: OddsRow;
+}
 
 export interface Section {
   key: Tab; question: string; why: string; headline: { value: string; label: string }; answer: string; short: string;

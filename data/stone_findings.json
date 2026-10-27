@@ -1,0 +1,4 @@
+{
+ "_om": "Egna fynd om enskilda stenar som inte står i Rundata (src/stone_findings.py): signum, verdict (nytt/motsäger/stämmer), ours, existing, evidence och novelty (0–1), source, date. Visas i Fynd per sten.",
+ "findings": []
+}

@@ -78,7 +78,10 @@ function Overview() {
   const [province, setProvince] = useState("");
   const [carver, setCarver] = useState("");
   const [query, setQuery] = useState("");
-  const [hidden, setHidden] = useState<Set<Status>>(new Set(["inget förslag"]));
+  // The statuses picked: none picked shows every stone with some evidence (all but "inget förslag"); a click shows only
+  // the statuses picked, and a click on a picked one takes it away again
+  const [chosen, setChosen] = useState<Set<Status>>(new Set());
+  const shows = (st: Status) => (chosen.size ? chosen.has(st) : st !== "inget förslag");
   const [selected, setSelected] = useState<string | null>(params.get("signum"));
   const [showTable, setShowTable] = useState(false);
 
@@ -98,11 +101,11 @@ function Overview() {
   const provinces = useMemo(() => [...new Set((data?.stones ?? []).map(s => s.province))].sort(), [data]);
   const carvers = useMemo(() => [...new Set((data?.stones ?? []).flatMap(s => [s.carver, s.alternative?.carver]).filter(Boolean) as string[])].sort(), [data]);
   const rows = useMemo(() => (data?.stones ?? []).filter(s =>
-    !hidden.has(s.status) && (!province || s.province === province)
+    shows(s.status) && (!province || s.province === province)
     && (!carver || s.carver === carver || s.alternative?.carver === carver)
-    && (!query || s.signum.toLowerCase().includes(query.toLowerCase()) || s.place.toLowerCase().includes(query.toLowerCase()))), [data, hidden, province, carver, query]);
+    && (!query || s.signum.toLowerCase().includes(query.toLowerCase()) || s.place.toLowerCase().includes(query.toLowerCase()))), [data, chosen, province, carver, query]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const toggle = (st: Status) => setHidden(h => { const n = new Set(h); if (n.has(st)) n.delete(st); else n.add(st); return n; });
+  const toggle = (st: Status) => setChosen(h => { const n = new Set(h); if (n.has(st)) n.delete(st); else n.add(st); return n; });
   const pick = (e: { points?: { customdata?: string }[] }) => { const s = e.points?.[0]?.customdata; if (s) setSelected(s); };
 
   if (error) return <div className="max-w-3xl mx-auto p-8 text-red-700 font-semibold">{error}</div>;
@@ -201,13 +204,21 @@ function Overview() {
       })()}
       <DocsNote anchor="14c-översikt-per-sten">Hur måtten och statusen räknas, och hur ofta de larmar i onödan, står i avsnitt 14c.</DocsNote>
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         {data.status_order.map(st => (
-          <button key={st} onClick={() => toggle(st)} title={STATUS[st].text}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold border flex items-center gap-1.5 ${hidden.has(st) ? "bg-white text-slate-400 border-slate-200 line-through" : "bg-white text-slate-800 border-slate-300"}`}>
-            <span style={{ color: STATUS[st].color }}>{STATUS[st].icon}</span>{st} <span className="text-slate-500 font-semibold">{data.counts[st]}</span>
+          <button key={st} onClick={() => toggle(st)} aria-pressed={chosen.has(st)}
+            title={`${STATUS[st].text} Klicka för att visa bara den här statusen; klicka på fler för att lägga till dem.`}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold border flex items-center gap-1.5 ${chosen.has(st)
+              ? "bg-slate-900 text-white border-slate-900" : shows(st) ? "bg-white text-slate-800 border-slate-300" : "bg-white text-slate-400 border-slate-200"}`}>
+            <span style={{ color: STATUS[st].color }}>{STATUS[st].icon}</span>{st}
+            <span className={`font-semibold ${chosen.has(st) ? "text-white/70" : "text-slate-500"}`}>{data.counts[st]}</span>
           </button>
         ))}
+        {chosen.size > 0 && (
+          <button type="button" onClick={() => setChosen(new Set())} className="px-3 py-1.5 rounded-xl text-xs font-bold text-[#b7410e] hover:underline">
+            Visa alla
+          </button>
+        )}
       </div>
       <div className="flex flex-wrap gap-3 items-end">
         <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 min-w-0 max-w-full">Landskap

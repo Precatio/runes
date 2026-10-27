@@ -1,0 +1,269 @@
+{
+ "created": "2026-10-21",
+ "patterns": {
+  "Attribuering|model": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "bekräftar",
+   "text": "Modellen hittar rätt ristare i 73 % av fallen (bland tre främsta 87 %); språk och innehåll ensamt 61 %, geografi ensamt 44 %, mot 19 % om man alltid gissar på den vanligaste ristaren. Med hela socknar utelämnade: 69 %. Med hela härader utelämnade: 59 %."
+  },
+  "Budskap|messages_praise": {
+   "first_seen": "2026-10-27",
+   "seeded": false,
+   "status": "bekräftar",
+   "text": "Götalandsstenarna berömmer den döde oftare än Svealandsstenarna (95 av 507 mot 130 av 1287; oddskvot 1,9 efter tid och ristare)."
+  },
+  "Budskap|messages_svealand_only": {
+   "first_seen": "2026-10-27",
+   "seeded": false,
+   "status": "bekräftar",
+   "text": "Två budskap finns i Svealand men inte i Götaland: arv (19 av 1287 läsbara stenar i Svealand, 0 av 507 i Götaland); rest åt sig själv i livstiden (22 av 1287 läsbara stenar i Svealand, 0 av 507 i Götaland)."
+  },
+  "Budskap|messages_travel_death": {
+   "first_seen": "2026-10-27",
+   "seeded": false,
+   "status": "mönster att pröva",
+   "text": "När en sten nämner en resa utanför Norden säger den i Götaland nästan alltid att mannen dog där (24 av 28, 86 %), i Svealand i drygt hälften (58 av 106, 55 %). Skillnaden är densamma i väst och öst (interaktion p 0,58), så den speglar en sed i hur man berättade snarare än farligare färder."
+  },
+  "Budskap|messages_travel_less": {
+   "first_seen": "2026-10-27",
+   "seeded": false,
+   "status": "mönster att pröva",
+   "text": "Götalandsstenarna nämner resor utanför Norden mer sällan än Svealandsstenarna (30 av 507 mot 127 av 1287; oddskvot 0,46 efter tid och ristare) – men när de gör det, gäller det oftast en död."
+  },
+  "Datering|seriation": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "bekräftar",
+   "text": "I Uppland ordnar seriationen av språk och innehåll stenarna i samma följd som Gräslunds stilkronologi (rho 0,54, 0,54 med latituden konstant), utan att ornamentiken ingick."
+  },
+  "Förändring|ai_alla": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "mönster att pröva",
+   "text": "Monoftong i något ai-ord (stin för stain) blir ovanligare över tid, med plats och ristare konstanta: 69 % omkring 998 och 22 % omkring 1115 (q 0,028). 9 av 10 omräkningar med årtal dragna inom stilgruppernas intervall gav också ett signifikant samband. Håller i båda halvorna av korpusen, uppdelad pe"
+  },
+  "Förändring|au_och": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "indikation",
+   "text": "Monoftong i 'och' (uk för auk) är ovanligast omkring 1053 (95 % intervall 1013–1063), med plats och ristare konstanta: 39 % omkring 998 och 41 % omkring 1085 (q 0,039). Som minst 18 %; dalen hamnar 1038, 1043, 1048, 1053 i omräkningarna med nya årtal. 7 av 10 omräkningar med årtal dragna inom stilgr"
+  },
+  "Förändring|bon": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "bekräftar",
+   "text": "Kristen bön är vanligast omkring 1038 (95 % intervall 1023–1048), med plats och ristare konstanta: 16 % omkring 998 och 2 % omkring 1115 (q < 0,001). Som mest 30 %; toppen hamnar 1028, 1033, 1038 i omräkningarna med nya årtal. 10 av 10 omräkningar med årtal dragna inom stilgruppernas intervall gav o"
+  },
+  "Förändring|cross": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "begränsning",
+   "text": "Kors förändras, men toppens läge går inte att bestämma (95 % intervall 998–1038 når periodens kant), med plats och ristare konstanta: 63 % omkring 998 och 40 % omkring 1115 (q 0,023). 10 av 10 omräkningar med årtal dragna inom stilgruppernas intervall gav också ett signifikant samband. Håller inte i"
+  },
+  "Förändring|o_runa": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "bekräftar",
+   "text": "o-runan för o-ljud (broþur för bruþur) blir vanligare över tid, med plats och ristare konstanta: 4 % omkring 998 och 43 % omkring 1085 (q < 0,001). 10 av 10 omräkningar med årtal dragna inom stilgruppernas intervall gav också ett signifikant samband. Håller i båda halvorna av korpusen, uppdelad per "
+  },
+  "Förändring|r_for_R": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "indikation",
+   "text": "r för ʀ (æftir för æftiR) förändras, men toppens läge går inte att bestämma (95 % intervall 1013–1115 når periodens kant), med plats och ristare konstanta: 15 % omkring 998 och 10 % omkring 1115 (q 0,041). 7 av 10 omräkningar med årtal dragna inom stilgruppernas intervall gav också ett signifikant s"
+  },
+  "Förändring|signatur": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "bekräftar",
+   "text": "Ristarsignatur blir vanligare över tid, med plats och ristare konstanta: 6 % omkring 998 och 28 % omkring 1115 (q 0,002). 10 av 10 omräkningar med årtal dragna inom stilgruppernas intervall gav också ett signifikant samband. Håller i båda halvorna av korpusen, uppdelad per socken (A: p 0,010; B: p 0"
+  },
+  "Förändring|sjal": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "indikation",
+   "text": "Själsbön är vanligast omkring 1038 (95 % intervall 1018–1048), med plats och ristare konstanta: 15 % omkring 998 och 2 % omkring 1115 (q 0,001). Som mest 27 %; toppen hamnar 1028, 1033, 1038 i omräkningarna med nya årtal. 10 av 10 omräkningar med årtal dragna inom stilgruppernas intervall gav också "
+  },
+  "Förändring|stungen_e": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "bekräftar",
+   "text": "Stungen i (e) blir vanligare över tid, med plats och ristare konstanta: 30 % omkring 998 och 80 % omkring 1115 (q < 0,001). 10 av 10 omräkningar med årtal dragna inom stilgruppernas intervall gav också ett signifikant samband. Håller i båda halvorna av korpusen, uppdelad per socken (A: p < 0,001; B:"
+  },
+  "Förändring|stungen_y": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "bekräftar",
+   "text": "Stungen u (y) blir vanligare över tid, med plats och ristare konstanta: 11 % omkring 998 och 47 % omkring 1115 (q < 0,001). 10 av 10 omräkningar med årtal dragna inom stilgruppernas intervall gav också ett signifikant samband. Håller i båda halvorna av korpusen, uppdelad per socken (A: p < 0,001; B:"
+  },
+  "Förändring|stungna": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "bekräftar",
+   "text": "Stungna runor blir vanligare över tid, med plats och ristare konstanta: 35 % omkring 998 och 85 % omkring 1115 (q < 0,001). 10 av 10 omräkningar med årtal dragna inom stilgruppernas intervall gav också ett signifikant samband. Håller i båda halvorna av korpusen, uppdelad per socken (A: p < 0,001; B:"
+  },
+  "Geografi|areas": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "bekräftar",
+   "text": "Stöder antagandet om regional verksamhet: 24 av 29 ristare med minst 5 säkra stenar arbetade inom ett mindre område än slumpvisa stenar ur samma landskap (q < 0,05); deras område är i median 42 % av slumpstenarnas. Med strängare jämförelser – bara signerade stenar: 1 av 6 (område i median 63 % av no"
+  },
+  "Geografi|cult_churches": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "indikation",
+   "text": "Teofora ortnamn ligger oftare inom 1 km från en medeltida kyrka än andra ortnamn i samma trakter (9 % av 67 namn mot 2,5 %; oddskvot 3,83)."
+  },
+  "Geografi|cult_prayer": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "indikation",
+   "text": "Kristen bön är vanligare på runstenar inom 2 km från ett teoforiskt ortnamn (ett gudanamn med en sakral efterled, som Torsvi, Odensala, Ullevi och Frösö): 32 % mot 15 % av övriga stenar (oddskvot 2,50, 1,38–4,53, med landskapet konstant; 57 stenar vid 18 namn). Håller inte i båda halvorna av korpuse"
+  },
+  "Geografi|hotspot_fard_Sö 317": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "indikation",
+   "text": "Utlandsfärd klustrar: inom 44,2 km från klustrets mitt har 20 % av 108 stenar mönstret, mot 6 % av övriga (3,64 gånger så vanligt; Kulldorffs scanstatistik, p 0,009). Håller i båda halvorna av korpusen. Klustrets mitt: Sö 317. Stenar per landskap: Sö 108."
+  },
+  "Geografi|hotspot_monoftong_Vg 189": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "indikation",
+   "text": "Monoftong (stin) klustrar: inom 109,9 km från klustrets mitt har 95 % av 58 stenar mönstret, mot 48 % av övriga (1,98 gånger så vanligt; Kulldorffs scanstatistik, p 0,033). Håller i båda halvorna av korpusen. Klustrets mitt: Vg 189. Stenar per landskap: Vg 37, Sm 21."
+  },
+  "Geografi|hotspot_r_for_R_U 768": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "mönster att pröva",
+   "text": "r för ʀ klustrar: inom 22,0 km från klustrets mitt har 62 % av 52 stenar mönstret, mot 12 % av övriga (4,93 gånger så vanligt; Kulldorffs scanstatistik, p 0,001). Håller i båda halvorna av korpusen. Klustrets mitt: U 768. Stenar per landskap: U 50, Vs 2."
+  },
+  "Geografi|prayer_early_churches": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "indikation",
+   "text": "Kristen bön följer de tidiga kyrkorna: oddskvoten för en bön är 1,23 (1,05–1,44) när avståndet till närmaste kyrka uppförd 1200 eller tidigare halveras, men 1,00 (0,84–1,20) för kyrkor uppförda senare, med landskapet konstant (skillnaden p 0,071). Inom 2 km från en tidig kyrka bär 25 % av stenarna e"
+  },
+  "Geografi|remains_bridges": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "begränsning",
+   "text": "Stenar som nämner bro- eller vägbygge står inte oftare inom 500 m från en registrerad färdväg än andra stenar (oddskvot 1,70, 1,03–2,81, med landskapet konstant). Alla runstenar: 19 % inom 500 m från en färdväg, mot 7 % av slumppunkterna. Håller inte i båda halvorna av korpusen."
+  },
+  "Geografi|remains_graves": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "bekräftar",
+   "text": "66 % av runstenarna står inom 500 m från ett registrerat gravfält, mot 24 % av slumpvisa punkter på land i samma trakter (median 0,30 mot 1,04 km). Inom 500 m från en hög: 32 % mot 10 %. Gäller i Ög, Sm, Sö, U, Vg. Närheten består över tiden (före omkring 1050 64 %, efter 70 %) och är lika stor för "
+  },
+  "Geografi|water": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "bekräftar",
+   "text": "Runstenarna står närmare vatten än slumpvisa punkter på land inom 5 km från andra runstenar (median 4,16 mot 5,60 km, p < 0,001). Mot hela landskapets runstensområde: 6,19 km."
+  },
+  "Geografi|water_bridges": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "begränsning",
+   "text": "Stenar som nämner bro- eller vägbygge står längre från vattnet i kartlagret (median 6,02 mot 4,10 km)."
+  },
+  "Geografi|water_viking": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "mönster att pröva",
+   "text": "Mot en modellerad strandlinje omkring år 1000 står runstenarna närmare vatten än slumpvisa punkter i samma landskap (median 3,61 mot 5,31 km, p < 0,001; 2254 stenar). Stenarnas avstånd är 68 % av slumppunkternas, mot 74 % med dagens vatten – närheten blir tydligare med dåtidens strand. Håller i 3 av"
+  },
+  "Okända ristare|anonymous": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "mönster att pröva",
+   "text": "8 nya grupper av stenar utan ristare (93 stenar) liknar varandra lika mycket som en ristares stenar och liknar ingen känd ristare i närheten. Appen har gett dem arbetsnamn efter typstenens socken: Konungsundsristaren (28 stenar), Vibyristaren (14 stenar), Vetlandaristaren (14 stenar), Kölabyristaren"
+  },
+  "Regional skillnad|ai_alla": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "bekräftar",
+   "text": "Monoftong i något ai-ord (stin för stain): landskapen skiljer sig (q < 0,001 för den samlade skillnaden, justerat för alla drag). Skattat för år 1050 och en typisk ristare: Vg 84 % (65 %–93 %, 17 stenar från mittperioden); Ög 80 % (63 %–91 %, 25 stenar från mittperioden); U 55 % (46 %–64 %, 169 sten"
+  },
+  "Regional skillnad|bon": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "indikation",
+   "text": "Kristen bön: landskapen skiljer sig (q 0,011 för den samlade skillnaden, justerat för alla drag). Skattat för år 1050 och en typisk ristare: U 33 % (25 %–42 %, 208 stenar från mittperioden); Sö 20 % (13 %–30 %, 113 stenar från mittperioden); Ög 11 % (4 %–23 %, 31 stenar från mittperioden); Vg 10 % ("
+  },
+  "Regional skillnad|cross": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "indikation",
+   "text": "Kors: landskapen skiljer sig (q 0,002 för den samlade skillnaden, justerat för alla drag). Skattat för år 1050 och en typisk ristare: U 75 % (68 %–82 %, 208 stenar från mittperioden); Sö 61 % (50 %–71 %, 113 stenar från mittperioden); Ög 51 % (35 %–66 %, 31 stenar från mittperioden); Vg 38 % (23 %–5"
+  },
+  "Regional skillnad|preposition": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "mönster att pröva",
+   "text": "Prepositionen at (i stället för æftiR): landskapen skiljer sig (q < 0,001 för den samlade skillnaden, justerat för alla drag). Skattat för år 1050 och en typisk ristare: Sö 58 % (44 %–72 %, 97 stenar från mittperioden); U 26 % (18 %–35 %, 192 stenar från mittperioden). Bland landskap med tillräcklig"
+  },
+  "Regional skillnad|r_for_R": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "indikation",
+   "text": "r för ʀ (æftir för æftiR): landskapen skiljer sig (q 0,049 för den samlade skillnaden, justerat för alla drag). Skattat för år 1050 och en typisk ristare: U 27 % (18 %–38 %, 142 stenar från mittperioden); Vg 16 % (6 %–36 %, 19 stenar från mittperioden); Sö 10 % (4 %–20 %, 57 stenar från mittperioden"
+  },
+  "Regional skillnad|sjal": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "indikation",
+   "text": "Själsbön: landskapen skiljer sig (q < 0,001 för den samlade skillnaden, justerat för alla drag). Skattat för år 1050 och en typisk ristare: U 31 % (23 %–40 %, 208 stenar från mittperioden); Sö 15 % (9 %–24 %, 113 stenar från mittperioden); Ög 7 % (3 %–18 %, 31 stenar från mittperioden); Vg 5 % (2 %–"
+  },
+  "Regional skillnad|stungen_e": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "indikation",
+   "text": "Stungen i (e): landskapen skiljer sig (q 0,011 för den samlade skillnaden, justerat för alla drag). Skattat för år 1050 och en typisk ristare: Ög 61 % (43 %–76 %, 31 stenar från mittperioden); Vg 57 % (40 %–74 %, 19 stenar från mittperioden); Sö 48 % (37 %–60 %, 113 stenar från mittperioden); U 38 %"
+  },
+  "Regional skillnad|stungna": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "indikation",
+   "text": "Stungna runor: landskapen skiljer sig (q 0,049 för den samlade skillnaden, justerat för alla drag). Skattat för år 1050 och en typisk ristare: Ög 69 % (54 %–82 %, 31 stenar från mittperioden); Vg 67 % (49 %–81 %, 19 stenar från mittperioden); Sö 63 % (51 %–73 %, 113 stenar från mittperioden); U 51 %"
+  },
+  "Samband|bro_sjal": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "indikation",
+   "text": "Själsbön på bro- och vägstenar: 27 % mot 18 % på andra stenar (oddskvot 1,83, 95 % KI 1,12–2,97, q 0,046; en av 3 prövade kombinationer av stentyp och drag, Holm), med plats och ristare konstanta. Håller med tiden konstant (daterade stenar, n 804), med textlängden utan bro- och bönefraserna konstant"
+  },
+  "Släkt och formler|kinship_composition:broder": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "begränsning",
+   "text": "Relationen 'broder' ser ovanligare ut på sena stenar (14 % mot 22 %; q 0,028), men skillnaden försvinner inom landskapen (q 0,603)."
+  },
+  "Släkt och formler|kinship_composition:partner/kamrat": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "begränsning",
+   "text": "Relationen 'partner/kamrat' ser ovanligare ut på sena stenar (1 % mot 4 %; q 0,033), men skillnaden försvinner inom landskapen (q 0,943)."
+  },
+  "Språk|dialect": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "bekräftar",
+   "text": "Geografisk struktur i stavningen: ju längre ifrån varandra två härader ligger, desto mer skiljer sig stavningen (Mantel r 0,29, p 0,004, 38 härader). Kontroller: inom U r 0,24 (p 0,035, 20 härader); bara stenar utan ristare r 0,20 (p 0,037); med skillnaden i medeldatering konstant r 0,33."
+  },
+  "Språk|spelling": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "bekräftar",
+   "text": "Stavningen av vanliga ord skiljer ristarna åt; tydligast för 'ok' (Cramérs V 0,85)."
+  },
+  "Stil och innehåll|clusters": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "bekräftar",
+   "text": "Klustringen ger 3 grupper med svag men verklig struktur (silhuett 0,27, mot högst 0,11 i 19 datamängder där varje variabel blandats om). Ristarna hålls ihop: i genomsnitt 61 % av en ristares stenar hamnar i samma grupp, mot 47 % om grupperna vore slumpmässiga."
+  }
+ }
+}

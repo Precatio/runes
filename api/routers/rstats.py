@@ -122,7 +122,8 @@ def findings() -> tuple[list[dict], list[dict]]:
     if not corpus_ready():
         return [], []
     stone, patterns = _findings(fingerprint())
-    return _with_crosscheck(stone), patterns
+    from src import pattern_registry
+    return _with_crosscheck(stone), pattern_registry.annotate(patterns)
 
 
 @router.get("/pattern-articles")
@@ -227,7 +228,11 @@ def _corpus_results(fp: str) -> dict:
     if res is None:  # a file being written right now
         raise HTTPException(status_code=409, detail=_NOT_COMPUTED)
     stone, patterns = _findings(fp)
-    stone = _with_crosscheck(stone)
+    from src import stone_findings  # also what Rundata lacks about a stone beyond attribution (gaps, Runor 2020, own)
+    s_ = store()
+    stone = _with_crosscheck(stone) + stone_findings.all_findings(s_.get, s_.inscriptions)
+    from src import pattern_registry
+    patterns = pattern_registry.annotate(patterns)  # "Nytt" the first 30 days after a pattern appears
     html_map = (res.get("geography") or {}).get("html_map")
     from src import r_explain
     return {**res, "figure_urls": _figure_urls(fp, res), "patterns": patterns, "sections": r_explain.sections(res),

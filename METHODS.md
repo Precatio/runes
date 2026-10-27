@@ -413,6 +413,54 @@ daterade stenarna höll däremot sina intervall också med det realistiska bortf
 tidsfrågorna mindre precisa men tycks inte snedvrida dem. Appen räknar därför som förut bara på daterade stenar.
 Redovisning: `utdata/mi/resultat.md`, `utdata/mi/validering.json`. En imputation med samspel kräver en ny plan.
 
+### 1o. Budskapen: vad stenarna berättar om den döde (2026-10-27)
+
+Källkod: `src/messages.py` (klassningen), `r/messages.R` (modellen), fliken Budskap i Statistik (R). Varje svensk
+vikingatida runsten klassas efter vad den berättar om den döde: om den säger hur eller var han dog, om han dog utanför
+Norden, om den nämner en resa eller vistelse utanför Norden (och åt vilket håll), gäld, guld eller silver, arv, gård och
+ägande, om stenen restes åt resaren själv i livstiden, och om den döde får beröm. En regel per budskap söker i Rundatas
+engelska översättning; ett budskap räknas en gång per sten. Stenar med färre än fyra läsbara ord räknas inte (budskapet
+är okänt). Reglerna stämmer med en handkodning av de 55 nordiska inskrifter som nämner en resa västerut i 50 av 51
+fall (`utdata/brittiska/hemma_kodning.csv`); den enda avvikelsen (Sö 173) är en man som var i väst men dog i öst, och
+där har regeln rätt. Övriga budskap är inte handkontrollerade.
+
+Modellen prövar varje budskap mot landsdel (Götaland, Svealand, Gotland, Norrland) med logistisk regression (mgcv),
+tidsskikt efter stilgruppens mittår (odaterade stenar som eget skikt) och ristaren som slumpeffekt (stenar utan säker
+ristare grupperade per socken, som i 1h). Som kontroll görs samma modell bara på daterade stenar, med mittåret som
+jämn kurva. När ett budskap saknas helt i en landsdel går ingen oddskvot att skatta, och då redovisas Fishers exakta
+test. Resestenarna prövas för sig: bland stenar om en resa utanför Norden, säger stenen att mannen dog där? Prövat mot
+landsdel och riktning (väst/öst), med exakt Mantel–Haenszel över riktningarna och en interaktion (likelihoodkvot) för
+om skillnaden är densamma åt båda håll.
+
+Resultat 2026-10-27: i Götaland säger 24 av 28 resestenar att mannen dog borta, i Svealand 58 av 106 (exakt test p
+0,002); skillnaden är densamma i väst och öst (interaktion p 0,58). Med ristaren eller socknen som slumpeffekt blir den
+osäker (oddskvot 4,8, 95 % KI 0,5–50), eftersom de götländska resestenarna är få och spridda över många socknar. Arv
+och stenar resta åt sig själv finns i Svealand men inte i Götaland; Götalandsstenarna berömmer den döde oftare
+(oddskvot 1,9) och nämner resor mer sällan (0,46). Tolkningen är en sed i hur man berättade, inte en skillnad i hur
+många som dog: stenarna visar vad de efterlevande valde att berätta.
+
+### 1p. Nya mönster märks (2026-10-27)
+
+Källkod: `src/pattern_registry.py`, `data/pattern_registry.json`. Varje mönster i korpusanalyserna förs in i ett
+register när det först dyker upp, med datum, och statusbyten (till exempel från "mönster att pröva" till "bekräftar")
+förs in när de sker. Statistik (R) och Forskningsluckor märker mönstret **Nytt** de första 30 dagarna efter att det
+dök upp och **Ändrat** de första 30 dagarna efter ett statusbyte, och Statistik (R) listar dem överst. Registret
+såddes 2026-10-27 med de 40 mönster som fanns i körningen från 2026-10-21; de räknas som kända sedan tidigare.
+
+### 1q. Fynd per sten utöver attribueringen (2026-10-27)
+
+Källkod: `src/stone_findings.py`. Listan Fynd per sten (Statistik (R) och Våra resultat i Forskningsluckor) tar
+utöver ristar- och dateringsfynden med sådant om en enskild sten som inte står i Rundata, i samma form (stämmer, nytt,
+motsäger, med belägg, nyhet och relevans):
+
+* **Luckor i texten:** förlorade runor som sannolikhetsmodellen fyller i med minst 80 % kalibrerad säkerhet där Rundata
+  inte återställt ordet (`data/textmodel_candidates.json`, avsnitt 8.1). Belägget är den kalibrerade sannolikheten.
+* **Runor 2020:** stenar som Riksantikvarieämbetets nyare utgåva anger som inte stående på ursprunglig plats men som
+  Rundata inte märker som flyttade (187 runstenar), och läsningar med fler runor (10). Uppgifterna är en nyare källa,
+  inte appens upptäckter, och får därför lågt nyhetsvärde (0,3) så att de rangordnas under appens egna resultat.
+* **Egna fynd:** det vi kommit fram till om en sten i artiklar och analyser, fört in för hand med källa och datum i
+  `data/stone_findings.json`.
+
 ### 1x. Försiktighet i påståendena, djärvhet i hypoteserna
 
 **Förregistrerade analysplaner (från 2026-10-20).** En artikel som gör ett nytt anspråk hänvisar till en analysplan som

@@ -16,6 +16,12 @@ export interface Pattern {
   test?: string;
   replicated?: boolean | null;
   small?: boolean;
+  // The pattern registry (src/pattern_registry.py): when the pattern first appeared, and "nytt" / "ändrat" the first
+  // 30 days after it appeared or its status changed
+  first_seen?: string | null;
+  new?: "nytt" | "ändrat";
+  previous_status?: string;
+  status_changed?: string;
 }
 
 /** What we see, a hypothesis and how it can be tested; the caveats folded away so that they do not drown the idea. */
@@ -46,6 +52,7 @@ export function PatternBadges({ pt }: { pt: Pattern }) {
   const pill = "px-2 py-0.5 rounded-lg border text-[11px] font-bold whitespace-nowrap";
   return (
     <>
+      <NewBadge pt={pt} />
       {pt.replicated === true && (
         <span className={`${pill} border-emerald-300 bg-emerald-50 text-emerald-800`}
               title="Mönstret håller i båda halvorna av korpusen, uppdelad per socken – ett tydligt mönster, inte ett utslag av några få socknar eller ristare.">
@@ -66,6 +73,24 @@ export function PatternBadges({ pt }: { pt: Pattern }) {
       )}
       <ArticleBadge pt={pt} />
     </>
+  );
+}
+
+/** "Nytt" the first 30 days after a pattern appeared in the analyses, "Ändrat" after its status changed. */
+export function NewBadge({ pt }: { pt: Pattern }) {
+  if (!pt.new) return null;
+  const pill = "px-2 py-0.5 rounded-lg border text-[11px] font-bold whitespace-nowrap";
+  const day = (d?: string | null) => (d ? new Date(d).toLocaleDateString("sv-SE", { day: "numeric", month: "long", year: "numeric" }) : "");
+  return pt.new === "nytt" ? (
+    <span className={`${pill} border-violet-300 bg-violet-50 text-violet-800`}
+          title={`Mönstret dök upp i analyserna ${day(pt.first_seen)}. Det märks som nytt i 30 dagar.`}>
+      Nytt
+    </span>
+  ) : (
+    <span className={`${pill} border-violet-200 bg-white text-violet-700`}
+          title={`Statusen ändrades ${day(pt.status_changed)}${pt.previous_status ? ` (förut: ${pt.previous_status})` : ""}.`}>
+      Ändrat
+    </span>
   );
 }
 

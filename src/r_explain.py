@@ -372,7 +372,54 @@ def words(w: dict) -> dict | None:
         "Ordvalet skiljer landskapen åt även när tiden räknats bort, och flera formelord byter skepnad över tid.")
 
 
-ORDER = ["attribution", "anonymous", "change", "chronology", "geography", "text", "words", "clusters", "network"]
+def _cell(t: dict, region: str, direction: str) -> tuple[int, int]:
+    for c in t.get("cells") or []:
+        if c.get("region") == region and c.get("direction") == direction:
+            return c.get("k", 0), c.get("n", 0)
+    return 0, 0
+
+
+def messages(m: dict) -> dict | None:
+    """Budskapen (r/messages.R): vad stenarna berättar om den döde, per landsdel, och resorna i väst och öst."""
+    els = {e["key"]: e for e in m.get("elements") or []}
+    t = m.get("travel") or {}
+    if not els or not t.get("n"):
+        return None
+    gv, gw = _cell(t, "Götaland", "väst"), _cell(t, "Götaland", "öst")
+    sv, sw = _cell(t, "Svealand", "väst"), _cell(t, "Svealand", "öst")
+    g_all = (gv[0] + gw[0]) / max(1, gv[1] + gw[1])
+    s_all = (sv[0] + sw[0]) / max(1, sv[1] + sw[1])
+    mh, gam = t.get("mh") or {}, t.get("common") or {}
+    p_int = t.get("p_interaction")
+    sep = [e for e in els.values() if e.get("separation")]
+    return _section(
+        "messages", "Vad berättar stenarna om den döde, och var?",
+        "Samma minnesformel kunde bära olika berättelser: hur mannen dog, att han reste, vad han ärvde eller "
+        "ägde, vilket beröm han fick. Vad de efterlevande valde att berätta skiljer trakterna åt och säger något om "
+        "seden, inte bara om vad som hände.",
+        {"value": f"{_pct(g_all)} mot {_pct(s_all)}",
+         "label": "av resestenarna säger att mannen dog borta, i Götaland mot Svealand"},
+        f"När en sten i Götaland nämner en resa utanför Norden säger den nästan alltid att mannen dog där: "
+        f"{gv[0]} av {gv[1]} västerut och {gw[0]} av {gw[1]} österut. I Svealand gäller det {sv[0]} av {sv[1]} "
+        f"västerut och {sw[0]} av {sw[1]} österut. Skillnaden är densamma åt båda håll"
+        + (f" (interaktion p {_d(p_int, 2)})" if p_int is not None else "")
+        + f", och den håller över riktningarna och tidsskikten (exakt test, p {_d(mh.get('p'), 4)})."
+        + (" Arv och stenar resta åt sig själv i livstiden finns i Svealand men inte i Götaland." if sep else ""),
+        "troligt",
+        ["Att skillnaden är densamma i väst och öst talar för en sed i hur man berättade, inte för att en viss färd var "
+         "farligare: i Götaland restes stenen över den som inte kom hem, i Svealand också över den som kom hem.",
+         "Götalandsstenarna nämner resor mer sällan men berömmer den döde oftare – minnet gällde mannen, inte "
+         "färden."],
+        ["Stenarna visar vad de efterlevande valde att berätta, inte hur många som dog.",
+         f"Med ristaren eller socknen som slumpeffekt blir skillnaden osäker (oddskvot {_d(gam.get('or'), 1)}, "
+         f"95 % KI {_d(gam.get('lo'), 1)}–{_d(gam.get('hi'), 0)}): götländska resestenar är få och sprids över många "
+         "socknar, så socken och landsdel går inte att skilja helt.",
+         "Budskapen klassas med en regel per budskap i den engelska översättningen; den stämmer med handkodningen i 50 av "
+         "51 västerinskrifter, men är inte prövad på alla budskap."],
+        "I Götaland berättar resestenarna om döden, i Svealand också om resan – åt båda håll.")
+
+
+ORDER = ["attribution", "anonymous", "change", "chronology", "geography", "text", "words", "messages", "clusters", "network"]
 
 
 def sections(res: dict) -> list[dict]:
@@ -385,6 +432,7 @@ def sections(res: dict) -> list[dict]:
         "change": change(res.get("change") or {}),
         "text": language(res.get("text") or {}, res.get("dialect") or {}),
         "words": words(res.get("words") or {}),
+        "messages": messages(res.get("messages") or {}),
         "clusters": clusters(res.get("clusters") or {}),
         "network": network(res.get("network") or {}),
     }

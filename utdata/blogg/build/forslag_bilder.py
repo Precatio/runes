@@ -40,13 +40,12 @@ with sync_playwright() as p:
                   clip={"x": box["x"], "y": box["y"], "width": box["width"], "height": cut["y"] - box["y"] - 8})
     print("sparade 02_u843_panel.png")
 
-    # The top of the list: every status but "nytt förslag" switched off, the table sorted by strength, ten rows. A wide
+    # The top of the list: only "nytt förslag" picked, the table sorted by strength, ten rows. A wide
     # window keeps each row on one line; the column "Metoder" (Rundata's carver's sources, 0 here) is left out
     wide = b.new_page(viewport={"width": 1920, "height": 1600}, device_scale_factor=2)
     wide.goto("http://localhost:3000/oversikt", wait_until="networkidle", timeout=300000)
     wide.get_by_role("heading", name="Stenar utan ristare i Rundata").wait_for(timeout=300000)
-    for st in ("kan vara felbedömd", "omstridd", "stöds", "svagt underlag", "signerad", "möjligt förslag", "inget förslag"):
-        wide.locator("button", has_text=st).first.click()
+    wide.locator("button", has_text="nytt förslag").first.click()  # a click shows only that status
     wide.get_by_role("button", name="Visa som tabell").click()
     table = wide.locator("table").first
     table.wait_for(timeout=60000)

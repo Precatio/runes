@@ -150,7 +150,8 @@ def research_findings(req: FindingsRequest):
     from api.routers import rstats
     r_items, r_patterns = rstats.findings()
     r_items = findings.add_extras(r_items, s.get, s.inscriptions, orthography_model().names)
-    items = rstats._with_crosscheck(list(_orthographic_findings())) + extra + r_items
+    from src import stone_findings  # gap fills, Runor 2020 and our own findings: what Rundata lacks about a stone
+    items = rstats._with_crosscheck(list(_orthographic_findings())) + extra + r_items + stone_findings.all_findings(s.get, s.inscriptions)
     from src.r_findings import finding_significance
     for f in items:
         f["significance"] = finding_significance(f)

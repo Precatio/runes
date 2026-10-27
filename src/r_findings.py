@@ -801,7 +801,7 @@ def corpus_patterns(res: dict) -> list[dict]:
             comp = (nw.get("kinship_strata") or {}).get("composition") or []
             ctext = "; ".join(f"{c['period']}: {_pct(c['share_top'])} från {c['top']}" for c in comp)
             if gone:
-                out.append({"key": "kinship_composition", "topic": "Släkt och formler", "status": "begränsning",
+                out.append({"key": f"kinship_composition:{k['relation']}", "topic": "Släkt och formler", "status": "begränsning",
                             "text": f"Relationen '{k['relation']}' ser {trend} ut på sena stenar ({_pct(k['late'])} mot "
                                     f"{_pct(k['early'])}; q {_d(k['q_period'], 3)}), men skillnaden försvinner inom landskapen "
                                     f"(q {_d(strat, 3)}).",
@@ -809,7 +809,7 @@ def corpus_patterns(res: dict) -> list[dict]:
                                     "var stenarna står, inte en förändring över tid.",
                             "significance": significance(strat, "q", "Cochran–Mantel–Haenszel per landskap, Benjamini–Hochberg")})
                 continue
-            out.append({"key": "kinship", "topic": "Släkt och formler", "status": "mönster att pröva", "small": bool(weak),
+            out.append({"key": f"kinship:{k['relation']}", "topic": "Släkt och formler", "status": "mönster att pröva", "small": bool(weak),
                         "text": f"Relationen '{k['relation']}' är {trend} på sena stenar (efter ca 1050: {_pct(k['late'])}, "
                                 f"före: {_pct(k['early'])}; q {_d(k['q_period'], 3)}).",
                         "note": ((WEAK_NOTE + " ") if weak else "") + "Tidsindelningen bygger på Gräslunds stilgrupper och gäller "
@@ -842,6 +842,7 @@ def corpus_patterns(res: dict) -> list[dict]:
                             "etiketter och kan krocka med benämningar i litteratur som appen inte har.",
                     "significance": significance(None, test="validerad på stenar med känd ristare i stället för ett signifikanstest")})
     out += change_patterns(res.get("change") or {})
+    out += _message_patterns(res.get("messages") or {})
     # A significant test on a pattern that is only an indication or a weak effect: the mark says both, so that
     # "Signifikant" and "indikation" do not stand side by side unexplained
     reasons = {"indikation": "testet är signifikant i huvudmodellen, men resultatet håller inte i alla kontroller eller i "
@@ -854,6 +855,63 @@ def corpus_patterns(res: dict) -> list[dict]:
         hyp = HYPOTHESES.get((pt.get("topic"), pt.get("key"))) or HYPOTHESES.get((pt.get("topic"), None))
         if hyp and pt.get("status") != "begränsning":
             pt["hypothesis"], pt["test"] = hyp
+    return out
+
+
+def _message_patterns(m: dict) -> list[dict]:
+    """Mönstren ur budskapsmodellen (r/messages.R): resestenarnas dödsuppgift i Götaland och Svealand, budskap som
+    bara finns i den ena landsdelen, och beröm och resor efter landsdel."""
+    out = []
+    n_ = lambda x: f"{x:,}".replace(",", "\u00a0") if isinstance(x, int) else str(x)  # noqa: E731  (1 287)
+    els = {e["key"]: e for e in m.get("elements") or []}
+    t = m.get("travel") or {}
+    if t.get("n") and t.get("mh"):
+        cells = {(c["region"], c["direction"]): (c["k"], c["n"]) for c in t.get("cells") or []}
+        g = [sum(cells.get(("Götaland", d), (0, 0))[i] for d in ("väst", "öst")) for i in (0, 1)]
+        v = [sum(cells.get(("Svealand", d), (0, 0))[i] for d in ("väst", "öst")) for i in (0, 1)]
+        gam = t.get("common") or {}
+        out.append({"key": "messages_travel_death", "topic": "Budskap", "status": "mönster att pröva",
+                    "text": f"När en sten nämner en resa utanför Norden säger den i Götaland nästan alltid att mannen dog där "
+                            f"({n_(g[0])} av {n_(g[1])}, {_pct(g[0] / max(1, g[1]))}), i Svealand i drygt hälften ({n_(v[0])} av {n_(v[1])}, "
+                            f"{_pct(v[0] / max(1, v[1]))}). Skillnaden är densamma i väst och öst (interaktion p "
+                            f"{_d(t.get('p_interaction'), 2)}), så den speglar en sed i hur man berättade snarare än farligare färder.",
+                    "note": "Prövat inom tidsskikt (stilgruppernas period, odaterade som eget skikt) och riktning. Med ristaren eller "
+                            f"socknen som slumpeffekt blir skillnaden osäker (oddskvot {_d(gam.get('or'), 1)}, 95 % KI "
+                            f"{_d(gam.get('lo'), 1)}–{_d(gam.get('hi'), 0)}), eftersom de götländska resestenarna är få och "
+                            "spridda över många socknar. Budskapen klassas med regler i den engelska översättningen (src/messages.py).",
+                    "significance": significance(t["mh"].get("p"), "p", "exakt Mantel–Haenszel, riktningen som skikt")})
+    sep = [e for e in els.values() if e.get("separation") and (e.get("fisher") or {}).get("p", 1) < 0.05]
+    if sep:
+        parts = []
+        for e in sep:
+            br = {b["region"]: b for b in e.get("by_region") or []}
+            parts.append(f"{e['label'].lower()} ({n_(br.get('Svealand', {}).get('k'))} av {n_(br.get('Svealand', {}).get('n'))} läsbara "
+                         f"stenar i Svealand, {n_(br.get('Götaland', {}).get('k'))} av {n_(br.get('Götaland', {}).get('n'))} i Götaland)")
+        out.append({"key": "messages_svealand_only", "topic": "Budskap", "status": "bekräftar",
+                    "text": "Två budskap finns i Svealand men inte i Götaland: " + "; ".join(parts) + ".",
+                    "note": "Känt sedan tidigare: arvsstenarna och stenarna som resarna reste åt sig själva i livstiden (som "
+                            "Jarlabankes) hör till Uppland och Södermanland. Här bekräftat med samma regler för hela landet.",
+                    "significance": significance(max(e["fisher"]["p"] for e in sep), "p", "Fishers exakta test (högsta p)")})
+    b = els.get("berom") or {}
+    if (b.get("model") or {}).get("p") is not None and b["model"]["p"] < 0.05:
+        br = {x["region"]: x for x in b.get("by_region") or []}
+        out.append({"key": "messages_praise", "topic": "Budskap", "status": "bekräftar",
+                    "text": f"Götalandsstenarna berömmer den döde oftare än Svealandsstenarna ({n_(br['Götaland']['k'])} av "
+                            f"{n_(br['Götaland']['n'])} mot {n_(br['Svealand']['k'])} av {n_(br['Svealand']['n'])}; oddskvot "
+                            f"{_d(b['model']['or'], 1)} efter tid och ristare).",
+                    "note": "Känt sedan tidigare för Västergötlands drengr- och þegn-stenar; här prövat för hela Götaland med tid och "
+                            "ristare som kontroll. Beröm räknas med en ordlista (god, dugande, bäst, givmild …).",
+                    "significance": significance(b["model"]["p"], "p", "logistisk regression med ristaren som slumpeffekt")})
+    r = els.get("resa") or {}
+    if (r.get("model") or {}).get("p") is not None and r["model"]["p"] < 0.05:
+        br = {x["region"]: x for x in r.get("by_region") or []}
+        out.append({"key": "messages_travel_less", "topic": "Budskap", "status": "mönster att pröva",
+                    "text": f"Götalandsstenarna nämner resor utanför Norden mer sällan än Svealandsstenarna ({n_(br['Götaland']['k'])} av "
+                            f"{n_(br['Götaland']['n'])} mot {n_(br['Svealand']['k'])} av {n_(br['Svealand']['n'])}; oddskvot "
+                            f"{_d(r['model']['or'], 2)} efter tid och ristare) – men när de gör det, gäller det oftast en död.",
+                    "note": "Färre resestenar kan betyda färre resor eller att resan bara berättades när den slutade i döden; "
+                            "datan skiljer inte de två åt.",
+                    "significance": significance(r["model"]["p"], "p", "logistisk regression med ristaren som slumpeffekt")})
     return out
 
 
