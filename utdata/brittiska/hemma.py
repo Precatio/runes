@@ -28,8 +28,8 @@ DIED = re.compile(r"\b(died|killed|fell|forfeited|drowned|lies|lie|met (his|thei
 
 
 def has(names: set, n: str) -> bool:
-    """A crude inflection match: the nominative's stem plus up to three letters (Ófeigr ~ Ófeig, Ófeigs)."""
-    s = re.sub(r"(ir|r|i|a|l)$", "", n) if len(n) > 4 else n
+    """A crude inflection match: the nominative's stem plus up to three letters (Ófeigr ~ Ófeig, Ófeigs; Heðinn ~ Heðin)."""
+    s = re.sub(r"(nn|ir|r|i|a|l)$", lambda m: "n" if m.group(1) == "nn" else "", n) if len(n) > 4 else n
     rx = re.compile("^" + s.replace("ô", "[ôǫa]") + r"\w{0,3}$")
     return any(rx.match(t) for t in names)
 
@@ -63,6 +63,7 @@ def main():
                 freq.setdefault(n, sum(has(t, n) for t in toks))
             exp = freq[x] * freq[y] / len(recs)
             expected += exp
+            out.setdefault("freq", {}).update({x: freq[x], y: freq[y]})
             hits = [recs[i]["signum"] for i, t in enumerate(toks) if has(t, x) and has(t, y)]
             pairs.append({"isles": row["signum"], "names": [x, y], "expected": exp, "hits": hits})
     out["pairs_tested"], out["pairs_expected"] = len(pairs), expected

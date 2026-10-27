@@ -233,8 +233,56 @@
   }
  },
  "fate_p": 1.0,
+ "freq": {
+  "Steinarr": 2,
+  "Þorgerðr": 10,
+  "Fugl": 1,
+  "Kali": 5,
+  "Ôlvir": 10,
+  "Ginna": 2,
+  "Tóki": 22,
+  "Bjôrn": 109,
+  "Gautr": 10,
+  "Ófeigr": 28,
+  "Aðakán": 0,
+  "Melbrigði": 0,
+  "Ljótulfr": 0,
+  "Ulfr": 51,
+  "Áleifr": 1,
+  "Krínán": 0,
+  "Þorsteinn": 80,
+  "Aþmiul": 0,
+  "Druian": 0,
+  "Dufgal": 0,
+  "Grímr": 15,
+  "Hróðmundr": 5,
+  "Aðísl": 2,
+  "Mallymkun": 0,
+  "Malmury": 0,
+  "Arinbjôrg": 0,
+  "Sandulfr": 0,
+  "Fríða": 0,
+  "Iualfir": 0,
+  "Þórulfr": 4,
+  "Fiak": 0,
+  "Hafr": 0,
+  "Þorleifr": 2,
+  "Frakki": 0,
+  "Oddr": 5,
+  "Ástríðr": 13,
+  "Myrgjôl": 0,
+  "Þúríð": 0,
+  "Heðinn": 13,
+  "Hlífhildr": 0,
+  "Sigurðr": 4,
+  "Árni": 1,
+  "Cuan": 0,
+  "Mael-B…": 0,
+  "Ása": 17,
+  "Ónn": 2
+ },
  "pairs_tested": 45,
- "pairs_expected": 1.696816004508312,
+ "pairs_expected": 1.9963369963369961,
  "pairs_found": [
   {
    "isles": "IM MM99",
@@ -264,7 +312,7 @@
     "Ófeigr",
     "Þorsteinn"
    ],
-   "expected": 0.34714003944773175,
+   "expected": 0.631163708086785,
    "hits": [
     "U 653"
    ]
@@ -275,7 +323,7 @@
     "Heðinn",
     "Sigurðr"
    ],
-   "expected": 0.0022541561003099463,
+   "expected": 0.014652014652014652,
    "hits": [
     "M 9"
    ]
