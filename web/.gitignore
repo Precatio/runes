@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# a build beside the running app (NEXT_DIST_DIR=.next-staging), for a restart without downtime
+/.next-staging/
