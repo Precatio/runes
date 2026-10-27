@@ -486,6 +486,19 @@ ofta bara ett namn. Fyra länkar mellan landskap som först såg starka ut avfä
 Guði på U 579 och Vg 187: Guði är död på den äldre stenen och reser sten på den yngre). Länkarna visas som fynd per sten
 och mönstret i Statistik (R) under Formler och släkt.
 
+### 1s. Samlad datering av odaterade stenar: prövad och inte införd (2026-10-27)
+
+Om språkdrag, innehåll, kors, runtyp, seriationen och platsen tillsammans kan datera de 1 313 runstenarna utan
+stilgrupp prövades i tre versioner, var och en med en plan låst före körningen (`utdata/datering/analysplan*.md`):
+kvantilregressionsskog (v1), samma med konforma intervall (v2) och en sannolikhetsskog över tidsskikten (v3), alla med
+femfaldig korsvalidering grupperad per socken. Kraven: medelfelet minst 15 % under landskapets median, en osäkerhet
+som håller och inte sämre än seriationen i Uppland. Utfallet blev nej. Skogens median daterar 25 % bättre än
+landskapets median (15,1 mot 20,2 år) och bättre än seriationen i Uppland, men årsintervallen täcker 96 % i stället
+för 80 %: stilgruppernas mittår har bara sex värden, så ett intervall på den skalan kan inte kalibreras (den konforma
+korrektionen blev 0). Sannolikheterna per tidsskikt är kalibrerade (fel 0,046) men ger ett sämre förväntat år (18,1).
+Appen räknar som förut bara på daterade stenar. Nästa steg kräver finare facit, inte en ny modell på samma data
+(`utdata/datering/resultat.md`).
+
 ### 1x. Försiktighet i påståendena, djärvhet i hypoteserna
 
 **Förregistrerade analysplaner (från 2026-10-20).** En artikel som gör ett nytt anspråk hänvisar till en analysplan som
