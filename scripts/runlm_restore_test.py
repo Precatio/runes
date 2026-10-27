@@ -28,6 +28,7 @@ ap.add_argument("--context_cands", action="store_true", help="kandidatord vägs 
 ap.add_argument("--name_cands", type=int, default=0, help="namn ur namnled som passar de bevarade runorna")
 ap.add_argument("--adapt", type=float, default=0.0, help="stenens egen stavning ur resten av texten (styrka)")
 ap.add_argument("--n_cands", type=int, default=60)
+ap.add_argument("--var_cands", type=int, default=0, help="toleransvarianternas egen kvot (0 = av; textmodel-20-kandidat)")
 ap.add_argument("--tolerance", type=float, default=0.0, help="toleranslagret: straff per stavningsregel (0 = av; textmodel-19-kandidat)")
 ap.add_argument("--trigram", action="store_true", help="kandidaterna bedöms också efter följder om tre ord")
 ap.add_argument("--cache", type=float, default=0.0, help="ord som redan står på stenen (vikt)")
@@ -173,7 +174,7 @@ for k in folds:
             dr = stone_divider_rate(m, masked) if args.own_d else None
             res = restore(m, masked, (gi, g0, g1), words=wd, div_rate=dr, window=None if args.window < 0 else args.window,
                           use_doc=args.lam_doc > 0, char_fills=args.char_fills, context_cands=args.context_cands,
-                          name_cands=args.name_cands, adapt=args.adapt, n_cands=args.n_cands, trigram=args.trigram,
+                          name_cands=args.name_cands, var_cands=args.var_cands, adapt=args.adapt, n_cands=args.n_cands, trigram=args.trigram,
                           cache=args.cache, area=context(r)[3] if args.area_lm else None, by_word=args.by_word,
                           site=(float(r["lat"]), float(r["lon"])) if (args.near and r.get("lat") is not None) else None,
                           near_km=args.near_km, lam_near=args.near, allowed=allowed, ctx=ctx,

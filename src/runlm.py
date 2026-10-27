@@ -1615,7 +1615,7 @@ def _name_cache(model, site, near_km, lam_near, near_sites, carver, lam_carver):
 def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_doc=False, char_fills=0,
             context_cands=False, name_cands=0, adapt=0.0, trigram=False, cache=0.0, area=None, by_word=False,
             words=None, site=None, near_km=20.0, lam_near=0.0, near_sites=None, allowed=None, carver=None, lam_carver=0.0,
-            trace_eps=0.0, segments=None, hard=None, div_rate=None, name_scale=1.0):
+            trace_eps=0.0, segments=None, hard=None, div_rate=None, name_scale=1.0, var_cands=0):
     """Fill a run of lost runes. groups are the carved groups (dividers between them) with every lost rune written '?';
     gap is (group index, first position, last position + 1) of the run to fill. Candidate fillings come from the words
     whose spelling fits the preserved runes around the gap (and, for gaps of one or two runes, every combination of
@@ -1646,6 +1646,9 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
     runs filled as one, merge_runs) has a word for each part; `words` has only the word where the gap starts.
     div_rate: the share of word boundaries the carver marks (stone_divider_rate); default the corpus rate.
     name_scale: a factor on composed names (§) while the gap is filled.
+    var_cands: that many fillings that only the tolerance layer makes (a rule-made variant, not a carved spelling of any
+    word), ranked by word frequency × P(the spelling it was made from | word), without the penalty – appended after the
+    vocabulary's candidates, so that they reach the scoring, where the penalty applies as before (analysplan_tm20.md).
     Returns [(filling, probability)], best first, over the candidates considered."""
     gi, g0, g1 = gap
     k = g1 - g0
@@ -1686,6 +1689,8 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
         cache_arg = names_arg
     pre = defaultdict(float)
     pre_names = defaultdict(float)
+    pre_vars = defaultdict(float)
+    tolv = getattr(model, "tol_variants", None) or {}
     ntok = sum(model.uni.values()) or 1
     # windows inside the group that cover the gap; a candidate word is weighed by how common it is (or how well it
     # fits between the words before and after) and how well its spelling fits (other lost runes are wildcards)
@@ -1703,6 +1708,11 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
                     else:
                         sc = max(p_ * (model.uni.get(w, 0) + 0.5) / ntok for w, p_ in model.index[key_].items())
                     pre[f] = max(pre[f], sc)
+                    tv = tolv.get(key_) if var_cands else None
+                    if tv and all(w in tv for w in model.index[key_]):  # made only by the tolerance layer
+                        vs = max(model.index[src_].get(w, 0.0) * (model.uni.get(w, 0) + 0.5) / ntok
+                                 for w, (src_, _k) in tv.items())
+                        pre_vars[f] = max(pre_vars[f], vs)
             for cr in near_spell:  # a name as it was carved on a nearby stone
                 if len(cr) == b - a and pat.match(cr):
                     pre[cr[g0 - a:g1 - a]] = max(pre[cr[g0 - a:g1 - a]], 0.5)
@@ -1719,6 +1729,9 @@ def restore(model, groups, gap, signs=(), ctx=None, window=2, n_cands=60, use_do
     cands = [f for f in ranked if ok(f)][:n_cands]
     if soft:  # the best candidates whatever the traces say, in case a trace is misread
         cands += [f for f in ranked[:n_cands] if f not in cands and ok_hard(f)]
+    if pre_vars:  # the tolerance variants' quota (textmodel-20 candidate), before the names'
+        varied = [f for f, _ in sorted(pre_vars.items(), key=lambda kv: -kv[1])]
+        cands += [f for f in varied if f not in cands and (ok(f) or (soft and ok_hard(f)))][:var_cands]
     if pre_names:  # the name matcher's quota, appended after the vocabulary's candidates
         named = [f for f, _ in sorted(pre_names.items(), key=lambda kv: -kv[1])]
         cands += [f for f in named if f not in cands and (ok(f) or (soft and ok_hard(f)))][:name_cands]
