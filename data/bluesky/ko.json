@@ -150,9 +150,9 @@
    "text": "Curses, Thor and lead amulets against fever. We went through all 6,753 runic inscriptions in the Scandinavian Runic-text Database looking for magic: in the Viking Age people protected the stone in the south and the soul in the north.",
    "tags": [
     "runology",
-    "OldNorse",
     "MedievalSky",
-    "archaeology"
+    "VikingAge",
+    "Vikings"
    ]
   },
   {
@@ -162,9 +162,9 @@
    "text": "Runes were carved in wood, bone and metal, but stone is what survived. Did the carvers know it would? Thirty-two Viking-age stones say so themselves. And us: what of what we write today will be left in a thousand years?",
    "tags": [
     "runestones",
-    "archaeology",
-    "EarlyMedieval",
-    "Skystorians"
+    "Skystorians",
+    "VikingAge",
+    "Vikings"
    ]
   },
   {
@@ -174,9 +174,9 @@
    "text": "Only six of 2,321 Swedish runestones name Thor or carry his hammer. They were carved among Christian stones, and several mimic the shape of the cross. Did Thor come to the runestones as an answer to the cross?",
    "tags": [
     "runestones",
-    "OldNorse",
     "MedievalSky",
-    "EarlyMedieval"
+    "VikingAge",
+    "Vikings"
    ]
   },
   {
@@ -186,9 +186,9 @@
    "text": "Fifty-nine runestones in Skåne, and not one names a king or a realm. Where did people belong in Skåne when the stones were raised, between Denmark and what would become Sweden?",
    "tags": [
     "runestones",
-    "runology",
-    "EarlyMedieval",
-    "Skystorians"
+    "Skystorians",
+    "VikingAge",
+    "Vikings"
    ]
   },
   {
@@ -212,9 +212,9 @@
    "text": "Around Enköping, æftiᛦ is written with an ordinary r five times as often as in the rest of Sweden. Was it the local pronunciation? The trail leads to one carver, Erik, and to those who carved after him.",
    "tags": [
     "runology",
-    "OldNorse",
-    "HistoricalLinguistics",
-    "Skystorians"
+    "Skystorians",
+    "VikingAge",
+    "Vikings"
    ]
   },
   {
@@ -224,9 +224,9 @@
    "text": "Raising runestones came from the Danish realm and took root first in Götaland – and Västergötland wrote most like the Danes. At the border there is a silent belt where almost no stones were raised.",
    "tags": [
     "runestones",
-    "runology",
     "MedievalSky",
-    "HistoricalLinguistics"
+    "VikingAge",
+    "Vikings"
    ]
   },
   {
@@ -236,9 +236,9 @@
    "text": "Denmark had been Christian since Harald Bluetooth, yet Danish runestones almost never prayed for the dead. Two of the five that do before 1050 stand six kilometres apart near Randers.",
    "tags": [
     "runestones",
-    "runology",
-    "EarlyMedieval",
-    "Skystorians"
+    "Skystorians",
+    "VikingAge",
+    "Vikings"
    ]
   },
   {
@@ -248,9 +248,9 @@
    "text": "112 Viking-age runic inscriptions have never been interpreted beyond a single word. We tried them with the codebreakers' tools – al-Kindi's frequency analysis and Friedman's index of coincidence – and with a language test of our own.",
    "tags": [
     "runology",
-    "epigraphy",
-    "DigitalHumanities",
-    "MedievalSky"
+    "MedievalSky",
+    "VikingAge",
+    "Vikings"
    ]
   },
   {
@@ -260,9 +260,9 @@
    "text": "More than one runestone in three has no style group in the runic database, and the gaps are not random. Damaged, uninterpreted and peripheral stones vanish from the dating most often – and they don't behave like the rest.",
    "tags": [
     "runestones",
-    "runology",
-    "archaeology",
-    "DigitalHumanities"
+    "MedievalSky",
+    "VikingAge",
+    "Vikings"
    ]
   },
   {
@@ -272,9 +272,9 @@
    "text": "Västergötland raised its runestones with its own hands; Uppland had others do the work. We counted the commonest words on the runestones province by province – and the words stayed at home.",
    "tags": [
     "runology",
-    "OldNorse",
-    "HistoricalLinguistics",
-    "Skystorians"
+    "Skystorians",
+    "VikingAge",
+    "Vikings"
    ]
   },
   {
@@ -284,9 +284,9 @@
    "text": "The word stav means at least six things when it comes to runes. Five runestones mention staffs raised beside the stone. None survives, but the statistics show where they stood.",
    "tags": [
     "runology",
-    "OldNorse",
-    "archaeology",
-    "MedievalSky"
+    "MedievalSky",
+    "VikingAge",
+    "Vikings"
    ]
   },
   {
@@ -296,9 +296,9 @@
    "text": "Around 1035 more than one runestone in four ended with a prayer. Fifty years later more ended with the carver's own name. But the signature didn't follow demand – it followed the carvers, from master to apprentice.",
    "tags": [
     "runestones",
-    "runology",
-    "EarlyMedieval",
-    "Skystorians"
+    "Skystorians",
+    "VikingAge",
+    "Vikings"
    ]
   },
   {
@@ -308,9 +308,9 @@
    "text": "Many runestones have places where runes have been lost. We are building a model that suggests what stood there and how sure it is. Here is how it is tested: six trials with known answers and calibrated percentages.",
    "tags": [
     "runology",
-    "epigraphy",
-    "DigitalHumanities",
-    "MedievalSky"
+    "MedievalSky",
+    "VikingAge",
+    "Vikings"
    ]
   },
   {
@@ -320,8 +320,9 @@
    "text": "A personal piece by Vitki's founder Viktor Kvant: a book in the family magazine rack, the raven above the treetops, and why Vitki came to be – with three stanzas of Hávamál.",
    "tags": [
     "OldNorse",
-    "sagas",
-    "Skystorians"
+    "Skystorians",
+    "VikingAge",
+    "Vikings"
    ]
   },
   {
@@ -332,7 +333,8 @@
    "tags": [
     "runology",
     "Skystorians",
-    "epigraphy"
+    "VikingAge",
+    "Vikings"
    ]
   }
  ]
