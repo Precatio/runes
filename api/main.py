@@ -53,7 +53,7 @@ from starlette.middleware.gzip import DEFAULT_EXCLUDED_CONTENT_TYPES, GZipMiddle
 from starlette.middleware.trustedhost import TrustedHostMiddleware  # noqa: E402
 from starlette.responses import PlainTextResponse  # noqa: E402
 from api.cache import ContentLengthHeader  # noqa: E402
-from api.routers import admin, blog, chat, threed, twod, raa, synthesis, phonetics, rundata, stats, orthography, research, reports, rstats, limitations, docs, textmodel, runmodell  # noqa: E402
+from api.routers import admin, blog, chat, threed, twod, raa, synthesis, phonetics, rundata, stats, orthography, research, reports, rstats, limitations, docs, textmodel, runmodell, runbibliotek  # noqa: E402
 
 def _warm_caches():
     """Värmer de långsamma svaren i bakgrunden när servern startar: R-kontrollen, R-korpusens version,
@@ -294,6 +294,7 @@ app.include_router(docs.router, prefix="/api/docs", tags=["docs"])
 app.include_router(rstats.router, prefix="/api/r", tags=["r"])
 app.include_router(textmodel.router, prefix="/api/textmodel", tags=["textmodel"])
 app.include_router(runmodell.router, prefix="/api/runmodell", tags=["runmodell"])
+app.include_router(runbibliotek.router, prefix="/api/runbibliotek", tags=["runbibliotek"])
 app.include_router(admin.router, prefix="/api", tags=["admin"])
 app.include_router(blog.router, prefix="/api", tags=["blog"])
 

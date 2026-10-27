@@ -46,3 +46,13 @@ export function tagForTranslit(t: string): string {
   const hit = RUNE_TAGS.find(r => r.group === "Långkvist" && r.tag.split(" ")[1] === t);
   return hit ? hit.tag : UNKNOWN_RUNE_TAG;
 }
+
+/** The letter a rune tag stands for in Rundata's transliteration ("ᛏ t" → "t", "ᚬ ą/o" → "o", "ᛐ t (kortkvist)" → "t"),
+ * or null for tags that are not a rune (undetermined, dividers, ornament, cross). */
+export function letterOfTag(tag: string): string | null {
+  if (RUNE_TAGS.find(r => r.tag === tag)?.group === "Övrigt") return null;
+  const m = tag.match(/^\S+\s+([^\s(]+)/u);
+  if (!m || !/^[\p{L}/]+$/u.test(m[1])) return null;
+  const parts = m[1].split("/");
+  return parts[parts.length - 1] || null;
+}

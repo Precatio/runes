@@ -12,6 +12,7 @@ export interface Translations {
     inscriptions: string;
     map: string;
     corpus: string;
+    runeLibrary: string;
     compare: string;
     gaps: string;
     overview: string;
@@ -71,6 +72,7 @@ export const translations: Record<Language, Translations> = {
       inscriptions: "Inskrifter (Rundata)",
       map: "Karta",
       corpus: "Mätkorpus",
+      runeLibrary: "Runbibliotek",
       compare: "Jämför stenar",
       gaps: "Forskningsluckor",
       overview: "Stenöversikt",
@@ -128,6 +130,7 @@ export const translations: Record<Language, Translations> = {
       inscriptions: "Inscriptions (Rundata)",
       map: "Map",
       corpus: "Measurement corpus",
+      runeLibrary: "Rune library",
       compare: "Compare stones",
       gaps: "Research gaps",
       overview: "Stone overview",

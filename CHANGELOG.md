@@ -5,6 +5,12 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Referensbibliotek för runformer
+- Ny sida **Runbibliotek** (menyn Korpusen): klicka på runorna på de öppna 3D-skanningarnas djupbilder i läsordning, så
+  märks varje runa med sin bokstav ur Rundatas text och stenens ristare. Utsnitten vrids upprätt efter läsriktningen.
+  Biblioteket visas per ristare och runa, med de signerande ristarna markerade (METHODS.md 12b).
+- *Jämför med ristare* för ett runutsnitt tar med bibliotekets runor av samma bokstav.
+
 ### Runutsnitt: vrid, jämför med ristare och mellan två stenar
 - Ett runutsnitt kan vridas så att runan står upprätt, både när det sparas och i efterhand; formbeskrivningen räknas om
   (METHODS.md 12). Runan kan ändras och utsnittet tas bort.

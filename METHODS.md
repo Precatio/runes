@@ -1545,6 +1545,32 @@ Till 2026-10-20 en egen sida (*2D-bildanalys*) med AI-bedömning av stilgrupp; n
   inte varandra (under 0,5) varnar sidan för olika vridning. Utsnitten kommer ur användarens projekt (efter signum) och,
   för en korpuspost, ur de runformer som delats med den.
 
+### 12b. Referensbiblioteket för runformer (2026-10-27)
+
+Källkod: `api/routers/runbibliotek.py`, sidan `/runbibliotek`. Ett bibliotek med runor på de öppna 3D-skanningarna
+(avsnitt 17), märkta med vilken runa i Rundatas text de är och vilken ristare Rundata anger för stenen, så att ett
+runutsnitt kan jämföras med en känd ristares runor.
+
+* **Texten som runor:** Rundatas translitterering delas i runor i läsordning. Bokstäver är runor; en bokstav inom
+  parentes är en osäker läsning; `-` är en förlorad runa och kan inte placeras; `[…]` (känt bara ur äldre uppteckningar,
+  inte på stenen), `...`, avsnittsmärken (§A) och skiljetecken räknas inte.
+* **Märkningen:** forskaren klickar mitt på varje runa på skanningens djupbild i läsordning; klick nummer k hör till
+  textens runa nummer k. Runor som inte syns hoppas över. Klicken sparas i `data/runbibliotek/<serie>/<fil>.json`
+  (koordinater i den visade bilden, 1,2 mm per pixel), med rutans storlek (som standard de ritade slingornas höjd,
+  annars 50 mm) och status (utkast eller granskad).
+* **Utsnitten:** varje runa klipps ur djupbilden i full upplösning (0,6 mm), med djupet normaliserat inom rutan (5:e–97:e
+  percentilen, mörkt = djupt), och vrids upprätt efter läsriktningen där den står: riktningen från runan före till
+  runan efter, när de står inom tre rutor (annars vänster till höger). Runornas toppar ligger till vänster om
+  läsriktningen. Utsnittet får samma formbeskrivning som runutsnitten i appen (avsnitt 12).
+* **Ristaren:** de ristare Rundata anger som signerade eller attribuerade och inte osäkra. Rundatas attribueringar
+  bygger delvis på runformer, så när biblioteket prövas som stöd för attribuering är de **signerade** stenarna facit;
+  annars blir provet cirkulärt.
+* **Användning:** biblioteket visas per ristare och runa, och *Jämför med ristare* för ett runutsnitt (avsnitt 12) tar
+  med bibliotekets runor av samma bokstav. Biblioteket bygger på djupbilder; ett utsnitt ur ristningskartan från
+  3D-analysen jämförs därför bäst med det, ett foto ger andra kanter.
+* **Inte prövat än:** att formlikheten pekar ut rätt ristare oftare än slumpen. Det prövas med en låst analysplan på
+  signerade stenar när biblioteket har runor från flera ristare.
+
 ## 13. Syntes och attribuering
 
 Källkod: `src/synthesis.py`, `api/routers/synthesis.py`. Kandidaterna räknas fram deterministiskt:

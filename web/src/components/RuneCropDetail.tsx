@@ -5,7 +5,8 @@
 // until it stands as in an upright row), set or change which rune it is, remove it, and compare its form with the same
 // rune on other stones – the most alike, and grouped by the carvers Rundata names for the stones.
 import { useEffect, useState } from "react";
-import { RUNE_TAGS } from "@/lib/runes";
+import { API_URL } from "@/lib/api";
+import { RUNE_TAGS, letterOfTag } from "@/lib/runes";
 import { rundata, type Inscription } from "@/lib/rundata";
 import {
   carversOf, comparable, cosine, saveCrop, turnCrop, type CropWithStone,
@@ -26,9 +27,28 @@ export default function RuneCropDetail({ item, all, onClose, onChanged }: {
   const [view, setView] = useState<"alike" | "carvers">("alike");
   const [recs, setRecs] = useState<Record<string, Inscription | null>>({});
   const crop = item.crop;
+  // The reference library (api/routers/runbibliotek.py): the same letter cut out of the open scans' depth images
+  const letter = letterOfTag(crop.tag);
+  const [lib, setLib] = useState<CropWithStone[]>([]);
+  const [useLib, setUseLib] = useState(true);
+  useEffect(() => {
+    if (!letter) return;
+    let cancelled = false;
+    fetch(`${API_URL}/api/runbibliotek/forms?letter=${encodeURIComponent(letter)}`)
+      .then(r => (r.ok ? r.json() : { forms: [] }))
+      .then((d: { forms: { series: string; stem: string; i: number; signum: string; url: string; feature_vector: number[]; feature_version: string }[] }) => {
+        if (cancelled) return;
+        setLib(d.forms.map(f => ({ projectId: "bibliotek", signum: f.signum, crop: {
+          id: `lib:${f.series}/${f.stem}/${f.i}`, tag: crop.tag, imageBase64: `${API_URL}${f.url}`, coordinates: [],
+          featureVector: f.feature_vector, featureVersion: f.feature_version, createdAt: "" } })));
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, [letter, crop.tag]);
+  const pool = useLib ? [...all, ...lib] : all;
 
   // Rundata for every stone that has crops, for the carvers (fetched once per stone)
-  const signa = [...new Set(all.map(c => c.signum).filter(Boolean))];
+  const signa = [...new Set(pool.map(c => c.signum).filter(Boolean))];
   const signaKey = signa.join("|");
   useEffect(() => {
     let cancelled = false;
@@ -40,7 +60,7 @@ export default function RuneCropDetail({ item, all, onClose, onChanged }: {
   // eslint-disable-next-line react-hooks/exhaustive-deps -- signaKey stands for signa
   }, [signaKey, recs]);
 
-  const others = all.filter(c => c.crop.id !== crop.id && comparable(crop, c.crop) && (!sameTagOnly || c.crop.tag === crop.tag));
+  const others = pool.filter(c => c.crop.id !== crop.id && comparable(crop, c.crop) && (!sameTagOnly || c.crop.tag === crop.tag));
   const alike = others
     .map(c => ({ ...c, likeness: cosine(crop.featureVector!, c.crop.featureVector!) }))
     .sort((a, b) => b.likeness - a.likeness);
@@ -152,6 +172,16 @@ export default function RuneCropDetail({ item, all, onClose, onChanged }: {
         ))}
       </div>
 
+      <label className="flex items-center gap-2 text-xs text-slate-600">
+        <input type="checkbox" checked={useLib} onChange={e => setUseLib(e.target.checked)} />
+        <span>{`Ta med referensbiblioteket (${lib.length} runor ${letter ?? ""})`}</span>
+      </label>
+      {useLib && lib.length > 0 && (
+        <p className="text-[11px] text-slate-500 -mt-2">
+          Biblioteket är utklippt ur 3D-skanningarnas djupbilder. Ett utsnitt ur ristningskartan från 3D-analysen jämförs
+          därför bäst med det. Ett foto ger andra kanter.
+        </p>
+      )}
       {!crop.featureVersion && <p className="text-xs text-amber-700">Utsnittet är sparat med en äldre formbeskrivning. En vridning ger det en ny, så att det kan jämföras.</p>}
 
       {view === "alike" && (
