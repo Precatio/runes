@@ -232,6 +232,8 @@ def _corpus_results(fp: str) -> dict:
     s_ = store()
     stone = _with_crosscheck(stone) + stone_findings.all_findings(s_.get, s_.inscriptions)
     from src import pattern_registry
+    from src import linking
+    patterns = patterns + linking.patterns(os.path.join(os.path.dirname(rb.ROOT + "/"), "data", "links.json"))
     patterns = pattern_registry.annotate(patterns)  # "Nytt" the first 30 days after a pattern appears
     html_map = (res.get("geography") or {}).get("html_map")
     from src import r_explain

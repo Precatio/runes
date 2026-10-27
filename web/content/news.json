@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "lankmodellen",
+   "date": "2026-10-27",
+   "status": "nytt",
+   "title": "Samma familjer på flera runstenar",
+   "text": "En ny modell läser personer, släktskap, gårdar och resmål ur inskrifterna och länkar stenar som delar namn mer än slumpen ger. 35 länkar håller, och familjerna som går att följa var lokala: stenarna står i median några kilometer isär. Länkar mellan landskap som först ser starka ut faller nästan alla på motsägelser, som samma namn med olika fäder. Länkarna visas som fynd per sten och som ett nytt mönster i Statistik (R)."
+  },
+  {
    "id": "budskap-och-nya-monster",
    "date": "2026-10-27",
    "status": "nytt",

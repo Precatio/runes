@@ -27,11 +27,13 @@ CANDIDATES = os.path.join(ROOT, "data", "textmodel_candidates.json")
 RUNOR = os.path.join(ROOT, "data", "raa", "runor_2020.json")
 RUNOR_COMPARE = os.path.join(ROOT, "utdata", "runor", "jamforelse.json")
 MANUAL = os.path.join(ROOT, "data", "stone_findings.json")
+LINKS = os.path.join(ROOT, "data", "links.json")
 
 TEXTGAP = "luckor i texten (sannolikhetsmodell)"
 RUNOR_PLACE = "Runor 2020 (ursprunglig plats)"
 RUNOR_READING = "Runor 2020 (läsning)"
 OWN = "egna fynd"
+LINK = "samma familj (namnlänk)"
 # A newer source, not our discovery: it tells the researcher something Rundata lacks, but ranks below the app's own results
 NOVELTY_RUNOR = 0.3
 
@@ -124,7 +126,38 @@ def manual_findings(lookup, inscriptions: list[dict], ctx=None) -> list[dict]:
     return out
 
 
+def link_findings(lookup, inscriptions: list[dict], ctx=None) -> list[dict]:
+    """Stenar som delar namn med en annan sten mer än slumpen ger (data/links.json, src/linking.py), utan motsägelser i
+    släktskap eller tid: troligen samma familj. Rundatas parstenar räknas som bekräftelser."""
+    d = _load(LINKS) or {}
+    cut = d.get("fdr_cut", 0.1)
+    pars = {tuple(p) for p in ((d.get("validation") or {}).get("parsten") or {}).get("pairs") or []}
+    cov, oeu = ctx or (_province_coverage(inscriptions), _oeuvre(inscriptions))
+    out = []
+    for x in d.get("links") or []:
+        if x["q"] >= cut or x.get("contradictions"):
+            continue
+        for this, other in ((x["a"], x["b"]), (x["b"], x["a"])):
+            rec = lookup(this)
+            if not rec:
+                continue
+            rel, rr = relevance(rec, None, cov, oeu)
+            known = tuple(sorted((this, other))) in pars
+            where = f", {x['km']:.0f} km bort".replace(".", ",") if x.get("km") is not None else ""
+            ev = max(0.0, 1 - x["q"] * 5)
+            out.append(_finding(rec, LINK, "stämmer" if known else "nytt",
+                                f"Delar namnen {', '.join(x['names'])} med {other}{where}: troligen samma familj.",
+                                "Rundata kallar stenarna parstenar" if known else "Rundata länkar inte stenarna",
+                                ev, 0.6, rel,
+                                {"belägg": [f"andel falska länkar vid samma styrka {round(x['q'] * 100)} % (namnen blandade inom "
+                                            f"landskapet), {round(x.get('q_district', 1) * 100)} % inom häradet",
+                                            "släktskap och datering motsäger inte länken"],
+                                 "nyhet": [] if known else ["en släktlänk mellan stenarna som Rundata inte anger"],
+                                 "relevans": rr}, known, linked=other, shared=x["names"], q=x["q"]))
+    return out
+
+
 def all_findings(lookup, inscriptions: list[dict]) -> list[dict]:
     ctx = (_province_coverage(inscriptions), _oeuvre(inscriptions))
     return (textgap_findings(lookup, inscriptions, ctx) + runor_findings(lookup, inscriptions, ctx)
-            + manual_findings(lookup, inscriptions, ctx))
+            + manual_findings(lookup, inscriptions, ctx) + link_findings(lookup, inscriptions, ctx))

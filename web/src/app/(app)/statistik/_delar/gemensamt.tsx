@@ -64,7 +64,7 @@ export function Method({ text, caveat }: { text?: string; caveat?: string }) {
 
 export const PATTERN_TOPICS: Record<string, string[]> = {
   geography: ["Geografi"], attribution: ["Attribuering"], text: ["Språk"], clusters: ["Stil och innehåll"],
-  chronology: ["Datering"], network: ["Släkt och formler"], anonymous: ["Okända ristare"], change: ["Förändring", "Regional skillnad", "Samband"],
+  chronology: ["Datering"], network: ["Släkt och formler", "Släkter över stenar"], anonymous: ["Okända ristare"], change: ["Förändring", "Regional skillnad", "Samband"],
   messages: ["Budskap"],
 };
 export const patternsFor = (patterns: Pattern[], key: string) => patterns.filter(p => (PATTERN_TOPICS[key] ?? []).includes(p.topic));

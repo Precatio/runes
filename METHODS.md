@@ -461,6 +461,31 @@ motsäger, med belägg, nyhet och relevans):
 * **Egna fynd:** det vi kommit fram till om en sten i artiklar och analyser, fört in för hand med källa och datum i
   `data/stone_findings.json`.
 
+### 1r. Samma familjer på flera stenar: länkmodellen (2026-10-27)
+
+Källkod: `src/entities.py` (enheterna), `src/linking.py` (länkarna), `scripts/link_entities.py` → `data/links.json`.
+Ur Rundatas engelska översättning läses varje runstens personer med roll (den som reser, den som minns, ristaren,
+nämnd), släktskap ("Ketill, his son"; "Alríkr, Sigríðr's son"), gårdsnamn (namn efter in/at/from/on, och efter of när
+namnet har en ortnamnsändelse) och händelser (resmålen utanför Norden, Ingvarståget, Knuts gäld). Ett namn räknas bara
+när det motsvarar ett ord som normaliseringen märker som namn. Bara runstenar ingår.
+
+Två runstenar länkas när de delar minst två personnamn eller ett gårdsnamn (ristarna räknas inte). Varje delat namn
+vägs efter hur ovanligt det är, log(N/n). Nollmodellen blandar personnamnen mellan stenarna inom landskapet 200
+gånger; andelen falska länkar vid en viss styrka (q) är antalet lika starka länkar i nollmodellen delat med antalet i
+data. Den strängare nollmodellen blandar inom häradet, så att lokala namnseder inte ser ut som släkter. En länk
+avfärdas när stenarna motsäger varandra: samma namn med olika föräldrar, eller en person som är död på en äldre sten
+och reser en sten på en yngre (stilgruppernas datering). Ett första försök med Fellegi–Sunter-länkning skattad med EM
+gav upp till en fjärdedel av alla namnpar som träffar, eftersom modellen fångade "två stenar i Uppland med kända
+ristare" i stället för identitet; den metoden används inte.
+
+Resultat 2026-10-27: 357 par delar namn, slumpen ger omkring 279. 35 länkar håller
+med q under 0,1 (18 med den strängare nollmodellen), i median 3,6 km
+isär. Jarlabankes fem stenar om Täby hittas (q 0,0986), liksom Ásfríðrs
+stenar i Hedeby (DR 2, DR 4). Av Rundatas 13 parstenar hittas 2: parstenar delar
+ofta bara ett namn. Fyra länkar mellan landskap som först såg starka ut avfärdas av motsägelser (till exempel Geiri och
+Guði på U 579 och Vg 187: Guði är död på den äldre stenen och reser sten på den yngre). Länkarna visas som fynd per sten
+och mönstret i Statistik (R) under Formler och släkt.
+
 ### 1x. Försiktighet i påståendena, djärvhet i hypoteserna
 
 **Förregistrerade analysplaner (från 2026-10-20).** En artikel som gör ett nytt anspråk hänvisar till en analysplan som
