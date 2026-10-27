@@ -22,7 +22,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:
@@ -67,7 +67,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       pages: write
       id-token: write
@@ -82,7 +82,7 @@ jobs:
   # (scripts/indexnow_ping.py; the key is public by design, web/public/<key>.txt). A failed ping only warns.
   indexnow:
     needs: deploy
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:
