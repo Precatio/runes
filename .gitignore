@@ -63,3 +63,4 @@ data/*.fore-*
 # Playwright (web/e2e)
 web/test-results/
 web/playwright-report/
+web/.next-e2e/

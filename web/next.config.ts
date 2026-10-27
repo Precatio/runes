@@ -6,9 +6,13 @@ import type { NextConfig } from "next";
 // a page and the folder of its sub-pages never collide.
 const PUBLIC_SITE = process.env.NEXT_PUBLIC_SITE_MODE === "public";
 
+// NEXT_DIST_DIR builds beside the running app (e.g. a test build without the analysis engine) instead of over it
+const distDir = process.env.NEXT_DIST_DIR || undefined;
+
 const nextConfig: NextConfig = PUBLIC_SITE
   ? { output: "export", trailingSlash: true, images: { unoptimized: true } }
   : {
+      ...(distDir ? { distDir } : {}),
       async redirects() {
         return [
           // The articles were called a blog at /blogg before 2026-10-13; old links lead to the same article
