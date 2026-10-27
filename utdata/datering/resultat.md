@@ -14,3 +14,11 @@ grupperad per socken (3 upprepningar), 1 008 daterade runstenar (`validering.jso
 M2 (med språkdateringen) gav 14,5 år och täckningen 0,961. Punktskattningen är alltså bättre än både landskapets median
 och seriationen, men intervallen är för vida: skogens kvantiler tar med variationen inom stilgruppernas egna spann.
 Enligt planen förs ingenting in i appen. En ny plan (version 2) kalibrerar intervallen och låses före den körningen.
+
+## Version 2 (plan 84256b0f…): inte godkänd
+
+Den konforma korrektionen blev exakt 0 i alla vecken, och täckningen 0,957 som i v1 (`validering_v2.json`).
+Diagnos: facit, stilgruppens mittår, har bara sex värden (997,5, 1030, 1035, 1065, 1085, 1115). Kvantilerna hamnar på
+dessa värden, avvikelsen max(q10 − y, y − q90) är 0 för de flesta stenar, och ett intervall som omfattar sina
+gränsgrupper täcker mer än nominellt. Ett 80 %-intervall går inte att kalibrera på en så grov skala; felet ligger i
+måttet på osäkerheten, inte i punktskattningen (medelfel 15,2 år mot 20,3 för landskapets median).
