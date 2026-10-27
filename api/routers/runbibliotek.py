@@ -139,6 +139,8 @@ class Mark(BaseModel):
     x: float | None = None                      # centre in displayed pixels; None when skipped
     y: float | None = None
     skip: bool = False                          # not visible, too damaged, or not a rune that can be cut out
+    w: float | None = Field(None, gt=2, lt=500)  # this rune's own box, across and along the band (displayed pixels),
+    h: float | None = Field(None, gt=2, lt=500)  # when the researcher has resized it; else the stone's box
 
 
 class Marks(BaseModel):
@@ -238,8 +240,10 @@ def crop_png(series: str, stem: str, k: int) -> bytes:
     depth, region = _grey(series, stem)
     s = SCALE
     cy, cx = mark["y"] * s, mark["x"] * s
-    side = lib["box"] * s
-    half = int(math.ceil(side * 0.75))  # room for the turn (√2 / 2 ≈ 0.71)
+    side = (mark.get("h") or lib["box"]) * s                     # the rune's height (across the band)
+    width = (mark.get("w") or lib["box"] * RUNE_WIDTH) * s       # its width (along the reading direction)
+    big = max(side, width)
+    half = int(math.ceil(big * 0.75))  # room for the turn (√2 / 2 ≈ 0.71)
     y0, x0 = int(round(cy)) - half, int(round(cx)) - half
     win = np.zeros((2 * half, 2 * half), np.float32)
     ok = np.zeros_like(win, bool)
@@ -256,11 +260,11 @@ def crop_png(series: str, stem: str, k: int) -> bytes:
     angle = math.degrees(_direction(lib["marks"], k, lib["box"], bands))
     img = img.rotate(angle, resample=Image.BICUBIC, fillcolor=255)  # turns the reading direction to point right
     c = half
-    r = int(round(side / 2))
-    rw = int(round(side * RUNE_WIDTH / 2))
-    narrow = img.crop((c - rw, c - r, c + rw, c + r))  # the rune's own width, the box's full height
+    rh, rw = int(round(side / 2)), int(round(width / 2))
+    narrow = img.crop((c - rw, c - rh, c + rw, c + rh))  # the rune's own box: its width along, its height across
+    r = int(round(big / 2))
     img = Image.new("L", (2 * r, 2 * r), 255)
-    img.paste(narrow, (r - rw, 0))  # centred on a square, so the output keeps its size and the rune its proportions
+    img.paste(narrow, (r - rw, r - rh))  # centred on a square, so the output keeps its size and the rune its proportions
     img = img.resize((CROP_PX, CROP_PX), Image.LANCZOS)
     buf = io.BytesIO()
     img.save(buf, format="PNG", optimize=True)

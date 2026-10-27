@@ -13,7 +13,8 @@ type CarverRef = { name: string; kind: string; uncertain: boolean };
 type StoneRow = { series: string; stem: string; file: string; signum: string | null; rune_types: string | null;
   carvers: CarverRef[]; runes: number; placed: number; skipped: number; status: string | null };
 type Rune = { i: number; letter: string; uncertain: boolean; lost: boolean; word: number };
-type Mark = { i: number; x: number | null; y: number | null; skip: boolean };
+// w, h: the rune's own box (along and across the band, displayed pixels) when resized; else the stone's box
+type Mark = { i: number; x: number | null; y: number | null; skip: boolean; w?: number | null; h?: number | null };
 type Band = { points: [number, number][]; height: number };
 type Stone = { series: string; stem: string; signum: string | null; file: string; rune_types: string | null;
   transliteration: string | null; runes: Rune[]; carvers: CarverRef[]; width: number; height: number; res_mm: number;
@@ -74,6 +75,9 @@ function Build() {
   const [msg, setMsg] = useState("");
   const [img, setImg] = useState<HTMLImageElement | null>(null);
   const svg = useRef<SVGSVGElement>(null);
+  // Moving or resizing a placed box: which mark, how, and where the drag started; a drag is not also a click
+  const [drag, setDrag] = useState<{ i: number; kind: "move" | "size"; from: [number, number]; x: number; y: number } | null>(null);
+  const dragged = useRef(false);
 
   const load = useCallback(() => fetch(`${API_URL}/api/runbibliotek/stones`).then(r => r.json()).then(d => d.stones as StoneRow[]), []);
   useEffect(() => {
@@ -113,6 +117,7 @@ function Build() {
   };
 
   const place = (e: React.MouseEvent) => {
+    if (dragged.current) { dragged.current = false; return; }
     if (!cur || cursor >= cur.runes.length) return;
     const [x, y] = at(e);
     const ms = [...marks.filter(m => m.i !== cursor), { i: cursor, x, y, skip: false }].sort((a, b) => a.i - b.i);
@@ -151,6 +156,29 @@ function Build() {
     const a = near(placed[j - 1]) ?? m, b = near(placed[j + 1]) ?? m;
     return a === b ? 0 : Math.atan2(b.y! - a.y!, b.x! - a.x!);
   };
+  const hOf = (m: Mark) => m.h ?? box;
+  const wOf = (m: Mark) => m.w ?? box * RUNE_WIDTH;
+  // Dragging: the box follows the pointer (move), or its corner does (resize, in the box's own turned frame)
+  const onMove = (e: React.MouseEvent) => {
+    if (!drag || !cur) return;
+    const p = at(e);
+    dragged.current = true;
+    setMarks(ms => ms.map(m => {
+      if (m.i !== drag.i || m.x == null) return m;
+      if (drag.kind === "move") return { ...m, x: Math.round((drag.x + p[0] - drag.from[0]) * 10) / 10, y: Math.round((drag.y + p[1] - drag.from[1]) * 10) / 10 };
+      const a = directionAt(m, ms), dx = p[0] - m.x, dy = p[1] - m.y!;
+      const along = Math.abs(dx * Math.cos(a) + dy * Math.sin(a)), across = Math.abs(-dx * Math.sin(a) + dy * Math.cos(a));
+      return { ...m, w: Math.max(6, Math.round(2 * along)), h: Math.max(6, Math.round(2 * across)) };
+    }));
+  };
+  const startDrag = (e: React.MouseEvent, m: Mark, kind: "move" | "size") => {
+    e.stopPropagation();
+    dragged.current = false;
+    setCursor(m.i);
+    setDrag({ i: m.i, kind, from: at(e), x: m.x!, y: m.y! });
+  };
+  const resetSize = (i: number) => setMarks(ms => ms.map(m => (m.i === i ? { ...m, w: null, h: null } : m)));
+
   // A preview of the last placed runes, cut out as the library will (turned by the reading direction, the rune's width)
   const preview = (m: Mark, ms: Mark[]) => {
     if (!img || m.x == null || m.y == null) return null;
@@ -160,11 +188,13 @@ function Build() {
     const ctx = c.getContext("2d")!;
     ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, 72, 72);
     ctx.save();
-    ctx.translate(36, 36); ctx.scale(72 / box, 72 / box); ctx.rotate(-ang);
+    const big = Math.max(hOf(m), wOf(m));
+    ctx.translate(36, 36); ctx.scale(72 / big, 72 / big); ctx.rotate(-ang);
     ctx.drawImage(img, -m.x, -m.y);
     ctx.restore();
-    const side = (72 * (1 - RUNE_WIDTH)) / 2;
-    ctx.fillRect(0, 0, side, 72); ctx.fillRect(72 - side, 0, side, 72);
+    const sw = (72 * (1 - wOf(m) / big)) / 2, sh = (72 * (1 - hOf(m) / big)) / 2;
+    ctx.fillRect(0, 0, sw, 72); ctx.fillRect(72 - sw, 0, sw, 72);
+    ctx.fillRect(0, 0, 72, sh); ctx.fillRect(0, 72 - sh, 72, sh);
     return c.toDataURL();
   };
 
@@ -206,6 +236,8 @@ function Build() {
               placera om den. Rutan ska rymma en hel runa, och storleken ändras med reglaget. Utsnitten vrids upprätt
               efter slingans läsriktning där runan står, så du kan klicka runorna i vilken ordning du vill, bara du väljer
               rätt runa i texten. Klicka inte samma runa på stenen två gånger.</p>
+            <p>En placerad ruta kan dras till rätt plats, och hörnhandtaget ändrar dess bredd och höjd. Dubbelklicka på
+              rutan för att återgå till standardstorleken.</p>
             <p>Börja gärna med stenar som Rundata anger som signerade: de är det säkra facit när biblioteket prövas.</p>
           </div>
         ) : (
@@ -270,7 +302,8 @@ function Build() {
             )}
             <div className="max-w-full" style={{ width: `min(100%, ${viewW}px)` }}>
               <svg ref={svg} viewBox={`0 0 ${viewW} ${viewH}`} className="block w-full h-auto cursor-crosshair select-none"
-                role="img" aria-label={`Djupbild av ${cur.signum ?? cur.file}`} onClick={place}>
+                role="img" aria-label={`Djupbild av ${cur.signum ?? cur.file}`} onClick={place}
+                onMouseMove={onMove} onMouseUp={() => setDrag(null)} onMouseLeave={() => setDrag(null)}>
                 <g transform={turn}>
                   <image href={`${API_URL}/api/runmodell/depth/${cur.series}/${cur.stem}.png`} width={W} height={H} />
                   {cur.bands.map((b, i) => (
@@ -279,9 +312,19 @@ function Build() {
                   ))}
                   {marks.filter(m => !m.skip && m.x != null).map(m => (
                     <g key={m.i}>
-                      <rect x={m.x! - (box * RUNE_WIDTH) / 2} y={m.y! - box / 2} width={box * RUNE_WIDTH} height={box} fill="none"
-                        transform={`rotate(${(directionAt(m, marks) * 180) / Math.PI} ${m.x} ${m.y})`}
-                        stroke={m.i === cursor ? "#b7410e" : "#15803d"} strokeWidth={W / 600} />
+                      <g transform={`translate(${m.x} ${m.y}) rotate(${(directionAt(m, marks) * 180) / Math.PI})`}>
+                        <rect x={-wOf(m) / 2} y={-hOf(m) / 2} width={wOf(m)} height={hOf(m)} fill="#15803d" fillOpacity={0.04}
+                          stroke={m.i === cursor ? "#b7410e" : "#15803d"} strokeWidth={W / 600} className="cursor-move"
+                          onMouseDown={e => startDrag(e, m, "move")} onClick={e => e.stopPropagation()}
+                          onDoubleClick={e => { e.stopPropagation(); resetSize(m.i); }}>
+                          <title>Dra för att flytta, dubbelklicka för rutans standardstorlek</title>
+                        </rect>
+                        <rect x={wOf(m) / 2 - W / 160} y={hOf(m) / 2 - W / 160} width={W / 80} height={W / 80}
+                          fill={m.i === cursor ? "#b7410e" : "#15803d"} className="cursor-nwse-resize"
+                          onMouseDown={e => startDrag(e, m, "size")} onClick={e => e.stopPropagation()}>
+                          <title>Dra för att ändra rutans storlek</title>
+                        </rect>
+                      </g>
                       <text x={m.x! - box / 2} y={m.y! - box / 2 - W / 300} fontSize={W / 60} fill="#15803d">{m.i + 1} {runeForLetter(cur.runes[m.i]?.letter ?? "", cur.rune_types)}</text>
                     </g>
                   ))}

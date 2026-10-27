@@ -1557,7 +1557,8 @@ runutsnitt kan jämföras med en känd ristares runor.
 * **Märkningen:** forskaren klickar mitt på varje runa på skanningens djupbild i läsordning; klick nummer k hör till
   textens runa nummer k. Runor som inte syns hoppas över. Klicken sparas i `data/runbibliotek/<serie>/<fil>.json`
   (koordinater i den visade bilden, 1,2 mm per pixel), med rutans storlek (som standard de ritade slingornas höjd,
-  annars 50 mm) och status (utkast eller granskad).
+  annars 50 mm) och status (utkast eller granskad). En placerad ruta kan flyttas och få egen bredd och höjd (längs och
+  tvärs slingan, `w` och `h`); utsnittet följer då rutan.
 * **Utsnitten:** varje runa klipps ur djupbilden i full upplösning (0,6 mm), med djupet normaliserat inom rutan (5:e–97:e
   percentilen, mörkt = djupt), och vrids upprätt efter läsriktningen där den står: den ritade slingans riktning vid
   runan (närmaste segment av närmaste slinga, inom slingans höjd; slingorna är ritade i läsriktning), så att klickens
