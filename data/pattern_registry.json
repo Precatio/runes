@@ -117,8 +117,10 @@
   },
   "Geografi|cult_prayer": {
    "first_seen": "2026-10-21",
+   "previous_status": "indikation",
    "seeded": true,
-   "status": "indikation",
+   "status": "mönster att pröva",
+   "status_changed": "2026-10-27",
    "text": "Kristen bön är vanligare på runstenar inom 2 km från ett teoforiskt ortnamn (ett gudanamn med en sakral efterled, som Torsvi, Odensala, Ullevi och Frösö): 32 % mot 15 % av övriga stenar (oddskvot 2,50, 1,38–4,53, med landskapet konstant; 57 stenar vid 18 namn). Håller inte i båda halvorna av korpuse"
   },
   "Geografi|hotspot_fard_Sö 317": {
@@ -127,11 +129,23 @@
    "status": "indikation",
    "text": "Utlandsfärd klustrar: inom 44,2 km från klustrets mitt har 20 % av 108 stenar mönstret, mot 6 % av övriga (3,64 gånger så vanligt; Kulldorffs scanstatistik, p 0,009). Håller i båda halvorna av korpusen. Klustrets mitt: Sö 317. Stenar per landskap: Sö 108."
   },
+  "Geografi|hotspot_fard_Sö 61": {
+   "first_seen": "2026-10-27",
+   "seeded": false,
+   "status": "indikation",
+   "text": "Utlandsfärd klustrar: inom 26,1 km från klustrets mitt har 25 % av 64 stenar mönstret, mot 6 % av övriga (4,30 gånger så vanligt; Kulldorffs scanstatistik, p 0,021). Håller i båda halvorna av korpusen. Klustrets mitt: Sö 61. Stenar per landskap: Sö 64."
+  },
   "Geografi|hotspot_monoftong_Vg 189": {
    "first_seen": "2026-10-21",
    "seeded": true,
    "status": "indikation",
    "text": "Monoftong (stin) klustrar: inom 109,9 km från klustrets mitt har 95 % av 58 stenar mönstret, mot 48 % av övriga (1,98 gånger så vanligt; Kulldorffs scanstatistik, p 0,033). Håller i båda halvorna av korpusen. Klustrets mitt: Vg 189. Stenar per landskap: Vg 37, Sm 21."
+  },
+  "Geografi|hotspot_r_for_R_U 1172": {
+   "first_seen": "2026-10-27",
+   "seeded": false,
+   "status": "mönster att pröva",
+   "text": "r för ʀ klustrar: inom 30,4 km från klustrets mitt har 67 % av 36 stenar mönstret, mot 13 % av övriga (5,06 gånger så vanligt; Kulldorffs scanstatistik, p 0,001). Håller i båda halvorna av korpusen. Klustrets mitt: U 1172. Stenar per landskap: U 35, Vs 1."
   },
   "Geografi|hotspot_r_for_R_U 768": {
    "first_seen": "2026-10-21",
