@@ -336,6 +336,19 @@
     "VikingAge",
     "Vikings"
    ]
+  },
+  {
+   "date": "2026-11-12",
+   "slug": "vikingarnas-varld",
+   "en": true,
+   "text": "Miklagarðr, Serkland, Orkney, Greenland: we counted every place outside Scandinavia on runestones and in sagas. Swedish stones look east, sagas about the Icelanders' ancestors west – and sagas about the ancient past east again.",
+   "tags": [
+    "OldNorse",
+    "MedievalSky",
+    "Skystorians",
+    "runestones",
+    "VikingAge"
+   ]
   }
  ]
 }
