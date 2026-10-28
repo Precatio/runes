@@ -21,10 +21,11 @@ from src.styles import BY_CODE
 
 # Gudens namn, inte namn på Þór- (Þorkell, Þori, avbrutna Þor...): dubbelt r och inget som fortsätter ordet
 THOR = re.compile(r"(?<![\wÞþ])Þ[oó]rr(?![\wÞþ\[]|\.\.)")
-RITUAL = re.compile(r"\bvigi\b|\bræti\b|\bargi\b|\bseiðr")
+# The curse "become a ræti/argr": also the Danish ræta (DR 230, DR 338) and the uncertain <rata> with argRi (Vg 67)
+RITUAL = re.compile(r"\bvigi\b|\bræt[ia]\b|<rata>|\bargR?i\b|\bseiðr")
 # alu as a word of its own: not "(s)alu" (salu, the soul, with an uncertain first rune) or "alu-" (a broken word)
 ALU = re.compile(r"(?<![\w()\[\]-])alu(?![\w()\[\]-])")
-RITUAL_EN = re.compile(r"\bThor\b|\bhallow|\bwretch|\bpervert|\bsorcer|\bwitch|\bcurse")
+RITUAL_EN = re.compile(r"\bThor\b|\bhallow|\bwretch|\bpervert|\bsorcer|\bwitch|\bwarlock|\bcurse")
 THOR_MOTIF = re.compile(r"torshammar|tors fiskafänge|torsmask", re.I)
 
 # key, label, group, help

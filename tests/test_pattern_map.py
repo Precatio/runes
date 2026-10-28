@@ -22,6 +22,12 @@ def test_thor_motifs_and_rituals():
     assert not pm.pagan(_rec(transliteration=": miþ alu- kr-snum :"))
     assert not pm.pagan(_rec(transliteration="fuþarkhniastbmlR"))
     assert not pm.pagan(_rec(other="Bilder ur berättelsen om Sigurd Fafnesbane."))
+    # the curse in its Danish form and on Saleby (Vg 67); the name Vígi is not the formula
+    assert pm.pagan(_rec(normalization="Wærþi at ræta(?) hwas of briuti."))
+    assert pm.pagan(_rec(normalization="Verði at <rata> ok at argRi konu saR es haggvi"))
+    assert pm.pagan(_rec(translation_en="May whosoever breaks (it) become a warlock!"))
+    assert not pm.pagan(_rec(normalization='"Vigi ræisti stæin'))
+    assert not pm.pagan(_rec(translation_en="He woefully encountered maleficence with Eldi's sons."))
 
 
 def test_build_values_follow_pattern_order():
