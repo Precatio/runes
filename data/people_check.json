@@ -1,0 +1,509 @@
+{
+ "datum": "2026-10-28",
+ "urval": "60 slumpvisa läsbara svenska runstenar (minst 6 ord), random.seed(20261028)",
+ "kodning": {
+  "U 627": {
+   "resare_k": 0,
+   "resare_m": 3,
+   "rel": "foralder"
+  },
+  "U 448": {
+   "resare_k": 0,
+   "resare_m": 2,
+   "rel": "foralder"
+  },
+  "U 814": {
+   "resare_k": 0,
+   "resare_m": 2,
+   "rel": "foralder"
+  },
+  "U 912": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "foralder"
+  },
+  "U 511": {
+   "resare_k": 0,
+   "resare_m": 4,
+   "rel": "foralder"
+  },
+  "Ög 13": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "foralder"
+  },
+  "U 496": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": ""
+  },
+  "U 798": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": ""
+  },
+  "Sö 202": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "foralder"
+  },
+  "Öl Köping51": {
+   "resare_k": 0,
+   "resare_m": 0,
+   "rel": "make"
+  },
+  "U 283": {
+   "resare_k": 0,
+   "resare_m": 3,
+   "rel": ""
+  },
+  "U 404": {
+   "resare_k": 0,
+   "resare_m": 0,
+   "rel": ""
+  },
+  "Sö 19": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "foralder"
+  },
+  "U 1146": {
+   "resare_k": 0,
+   "resare_m": 3,
+   "rel": "foralder"
+  },
+  "Sö 345B": {
+   "resare_k": 0,
+   "resare_m": 0,
+   "rel": "syskon"
+  },
+  "Öl 17": {
+   "resare_k": 1,
+   "resare_m": 0,
+   "rel": "syskon"
+  },
+  "U 166": {
+   "resare_k": 1,
+   "resare_m": 1,
+   "rel": "barn"
+  },
+  "Sö 262": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "foralder"
+  },
+  "U 559": {
+   "resare_k": 0,
+   "resare_m": 0,
+   "rel": ""
+  },
+  "U 1160": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "foralder"
+  },
+  "Sö 211": {
+   "resare_k": 0,
+   "resare_m": 5,
+   "rel": "foralder"
+  },
+  "U 513": {
+   "resare_k": 0,
+   "resare_m": 4,
+   "rel": "syskon"
+  },
+  "U 721": {
+   "resare_k": 1,
+   "resare_m": 0,
+   "rel": ""
+  },
+  "U 1038": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "syskon"
+  },
+  "U 939": {
+   "resare_k": 0,
+   "resare_m": 2,
+   "rel": "foralder"
+  },
+  "U 1035": {
+   "resare_k": 1,
+   "resare_m": 0,
+   "rel": "foralder|make"
+  },
+  "G 370": {
+   "resare_k": 0,
+   "resare_m": 2,
+   "rel": "foralder"
+  },
+  "Öl Köping41": {
+   "resare_k": 0,
+   "resare_m": 0,
+   "rel": "barn"
+  },
+  "U 514": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "foralder"
+  },
+  "U Fv1973;194": {
+   "resare_k": 0,
+   "resare_m": 0,
+   "rel": ""
+  },
+  "Öl 3": {
+   "resare_k": 0,
+   "resare_m": 0,
+   "rel": ""
+  },
+  "Sö 203": {
+   "resare_k": 0,
+   "resare_m": 2,
+   "rel": "syskon"
+  },
+  "U 19": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "foralder"
+  },
+  "Vg 35": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "slakt"
+  },
+  "U 732": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "syskon"
+  },
+  "Sö 174": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "barn"
+  },
+  "Sö 207": {
+   "resare_k": 0,
+   "resare_m": 0,
+   "rel": "foralder"
+  },
+  "U 177": {
+   "resare_k": 1,
+   "resare_m": 0,
+   "rel": "foralder"
+  },
+  "Ög 136": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "barn"
+  },
+  "U 608": {
+   "resare_k": 0,
+   "resare_m": 2,
+   "rel": ""
+  },
+  "Hs 9": {
+   "resare_k": 0,
+   "resare_m": 0,
+   "rel": "barn"
+  },
+  "U ATA3600/65": {
+   "resare_k": 0,
+   "resare_m": 0,
+   "rel": ""
+  },
+  "Sö 194": {
+   "resare_k": 0,
+   "resare_m": 2,
+   "rel": "foralder"
+  },
+  "U 1154": {
+   "resare_k": 1,
+   "resare_m": 0,
+   "rel": "make"
+  },
+  "Öl Köping52": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "foralder"
+  },
+  "U 792": {
+   "resare_k": 0,
+   "resare_m": 2,
+   "rel": "foralder|slakt"
+  },
+  "Ög 130": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "syskon"
+  },
+  "Sö 157": {
+   "resare_k": 1,
+   "resare_m": 1,
+   "rel": "make"
+  },
+  "U 246": {
+   "resare_k": 0,
+   "resare_m": 0,
+   "rel": ""
+  },
+  "Ög 42": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "barn"
+  },
+  "U 716": {
+   "resare_k": 1,
+   "resare_m": 1,
+   "rel": "foralder|make"
+  },
+  "U 390": {
+   "resare_k": 1,
+   "resare_m": 1,
+   "rel": "foralder|make"
+  },
+  "Vg 13": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "barn|foralder"
+  },
+  "Sö 52": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "foralder"
+  },
+  "Sö 51": {
+   "resare_k": 0,
+   "resare_m": 2,
+   "rel": "syskon"
+  },
+  "U 985": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "foralder"
+  },
+  "Sö 18": {
+   "resare_k": 0,
+   "resare_m": 0,
+   "rel": ""
+  },
+  "U 943": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": ""
+  },
+  "Vg 183": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "syskon"
+  },
+  "U 874": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "foralder"
+  }
+ },
+ "kodning2": {
+  "U 428": {
+   "resare_k": 1,
+   "resare_m": 1,
+   "rel": "barn"
+  },
+  "U 155": {
+   "resare_k": 0,
+   "resare_m": 2,
+   "rel": "syskon"
+  },
+  "Sö 271": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "foralder"
+  },
+  "U 731": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": ""
+  },
+  "Vg 73": {
+   "resare_k": 0,
+   "resare_m": 2,
+   "rel": "foralder"
+  },
+  "U 206": {
+   "resare_k": 0,
+   "resare_m": 0,
+   "rel": ""
+  },
+  "Sm 16": {
+   "resare_k": 0,
+   "resare_m": 4,
+   "rel": "foralder"
+  },
+  "Sö 136": {
+   "resare_k": 0,
+   "resare_m": 2,
+   "rel": "foralder"
+  },
+  "U 960": {
+   "resare_k": 1,
+   "resare_m": 1,
+   "rel": "barn"
+  },
+  "U 863": {
+   "resare_k": 0,
+   "resare_m": 0,
+   "rel": ""
+  },
+  "U 201": {
+   "resare_k": 0,
+   "resare_m": 4,
+   "rel": "foralder"
+  },
+  "U 890": {
+   "resare_k": 1,
+   "resare_m": 2,
+   "rel": "foralder"
+  },
+  "U 106": {
+   "resare_k": 0,
+   "resare_m": 2,
+   "rel": "foralder"
+  },
+  "G 207": {
+   "resare_k": 0,
+   "resare_m": 3,
+   "rel": ""
+  },
+  "Ög 151": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": ""
+  },
+  "U 1111": {
+   "resare_k": 1,
+   "resare_m": 2,
+   "rel": "foralder|make"
+  },
+  "Sö Fv1973;189": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "foralder"
+  },
+  "U 899": {
+   "resare_k": 0,
+   "resare_m": 2,
+   "rel": "foralder"
+  },
+  "Sö 382": {
+   "resare_k": 0,
+   "resare_m": 0,
+   "rel": "foralder"
+  },
+  "Sö 45": {
+   "resare_k": 0,
+   "resare_m": 2,
+   "rel": "foralder|syskon"
+  },
+  "U 104": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "foralder|syskon"
+  },
+  "M 15": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "barn"
+  },
+  "U 786": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "syskon"
+  },
+  "Sö 283": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": ""
+  },
+  "G 37": {
+   "resare_k": 0,
+   "resare_m": 2,
+   "rel": "foralder"
+  },
+  "U 333": {
+   "resare_k": 0,
+   "resare_m": 3,
+   "rel": "foralder"
+  },
+  "Sö 10": {
+   "resare_k": 0,
+   "resare_m": 3,
+   "rel": "foralder"
+  },
+  "Sö 351": {
+   "resare_k": 0,
+   "resare_m": 0,
+   "rel": "foralder"
+  },
+  "Vg 124": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "foralder"
+  },
+  "U 585": {
+   "resare_k": 0,
+   "resare_m": 2,
+   "rel": "barn"
+  },
+  "Ög 197": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "syskon"
+  },
+  "U 1090": {
+   "resare_k": 1,
+   "resare_m": 1,
+   "rel": "syskon"
+  },
+  "Sö 317": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "barn"
+  },
+  "Ög 146": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "foralder"
+  },
+  "Sm 107": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": ""
+  },
+  "Sm 7": {
+   "resare_k": 0,
+   "resare_m": 2,
+   "rel": ""
+  },
+  "Sö 170": {
+   "resare_k": 0,
+   "resare_m": 3,
+   "rel": "foralder"
+  },
+  "U 149": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": ""
+  },
+  "U 23": {
+   "resare_k": 0,
+   "resare_m": 1,
+   "rel": "foralder"
+  },
+  "Sö 190": {
+   "resare_k": 0,
+   "resare_m": 4,
+   "rel": "foralder|syskon"
+  }
+ },
+ "urval2": "40 nya slumpvisa läsbara svenska runstenar utan urval 1, random.seed(20261029); kodade före jämförelsen"
+}
