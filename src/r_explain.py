@@ -463,7 +463,52 @@ def messages(m: dict) -> dict | None:
         answer, confidence, interpretation, not_saying, short)
 
 
-ORDER = ["attribution", "anonymous", "change", "chronology", "geography", "text", "words", "messages", "clusters", "network"]
+def people(m: dict) -> dict | None:
+    """Människorna (r/people.R): kvinnor bland resarna, de dödas plats i släkten och vad stenarna säger om dem."""
+    tests = {t["key"]: t for t in m.get("tests") or []}
+    kl = tests.get("kvinna_landsdel")
+    if not kl or (kl.get("main") or {}).get("too_few"):
+        return None
+    sr = kl["main"].get("shares_region") or {}
+    db, dr, th = tests.get("dod_borta_ung") or {}, tests.get("drengr_ung") or {}, tests.get("thegn_ung") or {}
+    br, kt = tests.get("bro_kvinna") or {}, tests.get("kvinna_tid") or {}
+    sh = lambda t, k: _pct(((t.get("main") or {}).get("shares") or {}).get(k, 0))  # noqa: E731
+    firm = lambda t: t.get("status") == "bekräftar"  # noqa: E731
+    word = {"bekräftar": "bekräftat", "mönster att pröva": "ett mönster att pröva", "indikation": "en indikation",
+            "ingen skillnad påvisad": "ingen skillnad påvisad", "för få": "för få stenar"}
+    st = lambda t: word.get(t.get("status"), t.get("status") or "")  # noqa: E731
+    answer = (f"En kvinna finns bland resarna på {_pct(sr.get('Svealand', 0))} av stenarna i Svealand men {_pct(sr.get('Götaland', 0))} "
+              f"i Götaland, med tid och ristare konstanta – {st(kl)}. "
+              + (f"Söner och bröder dog oftare utanför Norden än fäder och makar: {sh(db, '1')} av stenarna efter dem säger det, "
+                 f"mot {sh(db, '0')} – {st(db)}. " if db else "")
+              + (f"Orden följer den dödes plats i släkten: drengr sägs om söner och bröder ({sh(dr, '1')} mot {sh(dr, '0')}), "
+                 f"þegn om fäder och makar ({sh(th, '0')} mot {sh(th, '1')}) – " + (f"båda {st(dr)}" if st(dr) == st(th) else
+                 f"{st(dr)} respektive {st(th)}").replace("båda ett mönster", "båda mönster") + ". " if dr and th else "")
+              + (f"Stenar med en kvinna bland resarna nämner inte oftare bro eller väg ({sh(br, '1')} mot {sh(br, '0')})." if br else ""))
+    interpretation = [
+        "Färderna tycks ha varit de ungas: de som inte kom hem sörjdes oftare av föräldrar och syskon än av änkor och barn.",
+        "Att kvinnor oftare står bland resarna i Svealand kan spegla arvsrätt och seden att flera i familjen står på stenen; "
+        "stenarna skiljer inte de förklaringarna åt.",
+    ]
+    not_saying = [
+        "Kön och relation läses ur Rundatas översättning med regler som har fel på omkring en sten av tjugo, oftast där "
+        "texten har luckor (METHODS.md).",
+        "drengr och þegn kan också säga något om ställning och följe, inte bara om ålder.",
+        "Stenarna visar vem som reste dem och vad de valde att säga, inte hur familjerna faktiskt såg ut.",
+    ]
+    confidence = "troligt" if firm(kl) and firm(db) else "osäkert"
+    return _section(
+        "people", "Vilka reste stenarna, och efter vem?",
+        "Varje runsten är ett beslut i en familj: vem som reser den, efter vem och vad som sägs. Mönstren i det säger "
+        "något om hur familjerna var ordnade och vilka som gav sig av.",
+        {"value": f"{_pct(sr.get('Svealand', 0))} mot {_pct(sr.get('Götaland', 0))}",
+         "label": "av stenarna har en kvinna bland resarna, i Svealand mot Götaland"},
+        answer, confidence, interpretation, not_saying,
+        f"En kvinna finns bland resarna oftare i Svealand än i Götaland, och söner och bröder dog oftare utanför Norden än fäder och makar.")
+
+
+ORDER = ["attribution", "anonymous", "change", "chronology", "geography", "text", "words", "messages", "people", "clusters",
+         "network"]
 
 
 def sections(res: dict) -> list[dict]:
@@ -477,6 +522,7 @@ def sections(res: dict) -> list[dict]:
         "text": language(res.get("text") or {}, res.get("dialect") or {}),
         "words": words(res.get("words") or {}),
         "messages": messages(res.get("messages") or {}),
+        "people": people(res.get("people") or {}),
         "clusters": clusters(res.get("clusters") or {}),
         "network": network(res.get("network") or {}),
     }

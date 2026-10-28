@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "manniskorna",
+   "date": "2026-10-28",
+   "status": "nytt",
+   "title": "Människorna på runstenarna",
+   "text": "Statistiken har en ny del, Människorna: vem som reste stenen, efter vem och i vilken relation, och om resarna var kvinnor eller män. Sex frågor prövas med landsdel, tid och ristare konstanta, enligt en plan som låstes före testen. Två håller i båda halvorna av materialet: en kvinna står bland resarna på 31 % av stenarna i Svealand mot 17 % i Götaland, och söner och bröder dog oftare utanför Norden än fäder och makar."
+  },
+  {
    "id": "flyttade-stenar-placering",
    "date": "2026-10-27",
    "status": "nytt",

@@ -641,6 +641,36 @@ minst 0,8 i 67 % (svenska 95 %). Båda kraven föll, och Luckor i texten visar s
 har lärt sig språket främst av svenska inskrifter; för danska och norska krävs egna språkskikt och en kalibrering per
 land (`dkno_resultat.md`). Andra länder söks aldrig igenom.
 
+### 1u. Människorna: vem reste stenen och efter vem (2026-10-28)
+
+`src/people.py` ger en rad per vikingatida runsten: antal resare och deras kön, antal döda och deras kön, den dödes
+relation till resaren i grupper (barn, förälder, syskon, make/maka, annan släkt, utan släkt), om stenen restes åt
+resaren själv, beröm (*drengr*, *þegn*, god/bäst), landsdel och budskapet ”dog utanför Norden” ur `src/messages.py`.
+Personerna och relationerna kommer ur länkmodellens extraktion (`src/entities.py`, 1r); relationer utan namn (”in memory
+of their father”) läses ur texten.
+
+Könet bestäms i ordningen relation (mor, dotter, hustru … / son, far, bror …), en ensam resares possessiv i sin formel
+(”her son”, ”his son”) och den som reser efter sin make eller hustru, ett namnlexikon byggt ur de stegen på alla
+runstenar, och sist namnets ändelse (-laug, -hildr, -fríðr, -gerðr, -dís … eller -a för kvinnor; -r, -i, -n, -l för män).
+Samma ordning som artikeln om kvinnorna, nu på entitetsmodellens personer.
+
+Kontroll mot handkodning (`data/people_check.json`): urval 1, 60 slumpvisa läsbara svenska stenar som reglerna
+justerades mot; urval 2, 40 nya stenar som reglerna aldrig sett, kodade före jämförelsen: kvinna bland resarna 39/40,
+antal män bland resarna 38/40, relationsgrupp 38/40. Felen gäller stenar med luckor, där namn och relationer missas
+snarare än läggs till.
+
+`r/people.R` prövar sex frågor enligt den låsta planen `analysplaner/2026-10-28-manniskorna.md`: kvinna bland resarna
+mot landsdel och mot tid; *drengr*, *þegn* och död utanför Norden mot om den döde (alla döda män) var son eller bror
+eller far eller make; bro eller väg mot kvinna bland resarna. Logistisk regression (mgcv) med landsdel, tidsskikt och
+ristaren som slumpeffekt (som 1o), Holm-korrigering över de sex testen, replikering i två halvor delade socken för
+socken (som 1h) och fem robusthetsprov (minst tio läsbara ord, kön bestämt för alla resare, utan ristarens
+slumpeffekt, bara Uppland, söner mot fäder). Status: bekräftar (Holm-p < 0,05 och p < 0,05 åt samma håll i båda
+halvorna), mönster att pröva (Holm men inte båda halvorna), indikation (bara okorrigerat p < 0,05). Första körningen
+(2026-10-28): kvinna bland resarna 31 % i Svealand mot 17 % i Götaland (bekräftar); söner och bröder dog utanför
+Norden på 10 % mot 3 % av stenarna efter fäder och makar (bekräftar); *drengr* om söner och bröder och *þegn* om fäder
+och makar (mönster att pröva); kvinnor bland resarna ökar över tid (indikation); bro eller väg är inte vanligare med
+en kvinna bland resarna (ingen skillnad).
+
 ### 1x. Försiktighet i påståendena, djärvhet i hypoteserna
 
 **Förregistrerade analysplaner (från 2026-10-20).** En artikel som gör ett nytt anspråk hänvisar till en analysplan som

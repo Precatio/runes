@@ -127,13 +127,19 @@ export interface Corpus {
       by_direction: (OddsRow & { direction: string; n?: number; fisher_p: number; fisher?: OddsRow })[] };
     home: { n: number; cells: { region: string; n: number; k: number }[]; model: OddsRow | null };
     rule_check?: MessageRuleCheck | null };
+  people?: Dict & { method: string; plan: string; n_stones: number; min_events: number; tests: PeopleTest[] };
   sections?: Section[];
   overview?: { paragraphs: string[]; next_steps: string[] };
 }
 
-export type Tab = "overview" | "question" | "geography" | "clusters" | "text" | "attribution" | "anonymous" | "chronology" | "change" | "network" | "words" | "messages";
+export type Tab = "overview" | "question" | "geography" | "clusters" | "text" | "attribution" | "anonymous" | "chronology" | "change" | "network" | "words" | "messages" | "people";
 
 export interface OddsRow { or: number; lo: number; hi: number | null; p: number }
+/** One test of the people module (r/people.R): the model's odds ratio, and the shares with x set to 0 and 1 for all stones. */
+export interface PeopleFit { n: number; k: number; too_few: boolean; or?: number; lo?: number; hi?: number; p?: number;
+  p_holm?: number; shares?: { "0": number; "1": number }; shares_region?: { Svealand: number; Götaland: number } }
+export interface PeopleTest { key: string; label: string; status: string; replicated: boolean; main: PeopleFit;
+  halves: { A: PeopleFit; B: PeopleFit }; robustness: Record<string, PeopleFit | null> }
 /** Exact Mantel–Haenszel: the strata that carry information and the stones in them. */
 export type MhRow = OddsRow & { strata?: number; n?: number };
 export interface MessageElement {

@@ -7,6 +7,7 @@ import OwnQuestion from "@/components/OwnQuestion";
 import type { Corpus, Status, Tab } from "./_delar/typer";
 import { PATTERN_TOPICS, TOPIC, memo } from "./_delar/gemensamt";
 import { Messages } from "./_delar/budskap";
+import { People } from "./_delar/manniskor";
 import { NewBadge } from "@/components/PatternCard";
 import { GITHUB_URL } from "@/lib/site";
 import { Overview } from "./_delar/oversikt";
@@ -160,6 +161,7 @@ export default function StatistikPage() {
             {tab === "network" && <Network data={data} />}
             {tab === "words" && <Words data={data} />}
             {tab === "messages" && <Messages data={data} />}
+            {tab === "people" && <People data={data} />}
           </div>
           {status?.r.available && (
             <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 px-1">

@@ -41,7 +41,7 @@ def placement_elsewhere(rec: dict, lookup=None) -> bool:
     eller en annan sten som står någon annanstans ('Står vid Sö 109'). En text som bara beskriver hur stenen står ('På
     gårdsplanen', 'Rest vid den gamla vägen', 'Inmurat i källaren vid Årby' i Årby) räknas inte. Ett fåtal texter är
     avgjorda för hand (PLACEMENT_CHECKED)."""
-    if rec["signum"] in PLACEMENT_CHECKED:
+    if rec.get("signum") in PLACEMENT_CHECKED:
         return PLACEMENT_CHECKED[rec["signum"]]
     if lookup is None:
         from api.rundata import store

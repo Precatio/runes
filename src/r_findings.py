@@ -847,6 +847,7 @@ def corpus_patterns(res: dict) -> list[dict]:
                     "significance": significance(None, test="validerad på stenar med känd ristare i stället för ett signifikanstest")})
     out += change_patterns(res.get("change") or {})
     out += _message_patterns(res.get("messages") or {})
+    out += _people_patterns(res.get("people") or {})
     # A significant test on a pattern that is only an indication or a weak effect: the mark says both, so that
     # "Signifikant" and "indikation" do not stand side by side unexplained
     reasons = {"indikation": "testet är signifikant i huvudmodellen, men resultatet håller inte i alla kontroller eller i "
@@ -1052,6 +1053,70 @@ def rule_check_text(rc: dict | None) -> str:
         out += f" {_and_list(un)[:1].upper()}{_and_list(un)[1:]} är bara stickprovskontrollerade."
     if rc.get("stale"):
         out += " Kontrollen gjordes med en tidigare version av reglerna."
+    return out
+
+
+def _people_patterns(m: dict) -> list[dict]:
+    """Mönstren ur människomodulen (r/people.R, låst plan analysplaner/2026-10-28-manniskorna.md): kvinnor bland
+    resarna efter landsdel och tid, drengr och þegn efter den dödes plats i släkten, död utanför Norden efter samma,
+    och broarna. Status som modulen satte den enligt planen; 'ingen skillnad påvisad' för broarna blir en begränsning."""
+    out = []
+    tests = {t["key"]: t for t in m.get("tests") or []}
+    note = ("Kön och relation läses ur Rundatas engelska översättning med regler (src/people.py) som har fel på omkring en "
+            "sten av tjugo, oftast där texten har luckor (METHODS.md). Prövat enligt en låst plan med landsdel, tidsskikt och "
+            "ristaren som slumpeffekt, och i två halvor av korpusen delade socken för socken.")
+    sig = lambda mm: significance(mm.get("p_holm"), "p", "logistisk regression med ristaren som slumpeffekt, "  # noqa: E731
+                                                          "Holm-korrigerat över sex test")
+    ok = {"bekräftar", "mönster att pröva", "indikation"}
+
+    def odds(mm, k=2):
+        return f"oddskvot {_d(mm['or'], k)}, troligen mellan {_d(mm['lo'], k)} och {_d(mm['hi'], k)}"
+
+    t = tests.get("kvinna_landsdel")
+    if t and t.get("status") in ok:
+        mm, sr = t["main"], t["main"].get("shares_region") or {}
+        out.append({"key": "people_kvinna_landsdel", "topic": "Människorna", "status": t["status"],
+                    "text": f"En kvinna finns bland resarna på {_pct(sr.get('Svealand', 0))} av stenarna i Svealand mot "
+                            f"{_pct(sr.get('Götaland', 0))} i Götaland, med tid och ristare konstanta ({odds(mm)}; "
+                            f"{mm['k']} av {mm['n']} stenar med känd resare har en kvinna bland resarna).",
+                    "note": note, "significance": sig(mm)})
+    t = tests.get("kvinna_tid")
+    if t and t.get("status") in ok:
+        mm = t["main"]
+        out.append({"key": "people_kvinna_tid", "topic": "Människorna", "status": t["status"],
+                    "text": f"Kvinnor bland resarna blir {'vanligare' if mm['or'] > 1 else 'ovanligare'} under 1000-talet: "
+                            f"oddsen ändras med en faktor {_d(mm['or'], 2)} per 50 år, med landsdel och ristare konstanta.",
+                    "note": note, "significance": sig(mm)})
+    for key, word, young_first in (("drengr_ung", "drengr", True), ("thegn_ung", "þegn", False)):
+        t = tests.get(key)
+        if t and t.get("status") in ok:
+            mm, sh = t["main"], t["main"].get("shares") or {}
+            y, o = sh.get("1", 0), sh.get("0", 0)
+            out.append({"key": f"people_{key}", "topic": "Människorna", "status": t["status"],
+                        "text": (f"{word} sägs om söner och bröder snarare än om fäder och makar: {_pct(y)} av stenarna efter "
+                                 f"söner och bröder mot {_pct(o)} efter fäder och makar" if young_first else
+                                 f"{word} sägs om fäder och makar snarare än om söner och bröder: {_pct(o)} av stenarna efter "
+                                 f"fäder och makar mot {_pct(y)} efter söner och bröder")
+                                + f", med landsdel, tid och ristare konstanta ({odds(mm)}).",
+                        "note": note + " Orden kan också säga något om ställning och följe, inte bara om ålder.",
+                        "significance": sig(mm)})
+    t = tests.get("dod_borta_ung")
+    if t and t.get("status") in ok:
+        mm, sh = t["main"], t["main"].get("shares") or {}
+        out.append({"key": "people_dod_borta_ung", "topic": "Människorna", "status": t["status"],
+                    "text": f"Söner och bröder dog oftare utanför Norden än fäder och makar: {_pct(sh.get('1', 0))} av stenarna efter "
+                            f"söner och bröder säger att den döde dog utanför Norden, mot {_pct(sh.get('0', 0))} efter fäder och "
+                            f"makar, med landsdel, tid och ristare konstanta ({odds(mm)}).",
+                    "note": note + " Söner och bröder sörjs av föräldrar och syskon, fäder och makar av barn och änkor: "
+                                   "färderna tycks ha varit de ungas, före familjen.",
+                    "significance": sig(mm)})
+    t = tests.get("bro_kvinna")
+    if t and t.get("status") == "ingen skillnad påvisad" and not (t["main"].get("too_few")):
+        mm, sh = t["main"], t["main"].get("shares") or {}
+        out.append({"key": "people_bro_kvinna", "topic": "Människorna", "status": "begränsning",
+                    "text": f"Stenar med en kvinna bland resarna nämner inte oftare bro eller väg än andra ({_pct(sh.get('1', 0))} "
+                            f"mot {_pct(sh.get('0', 0))}, med landsdel, tid och ristare konstanta; {odds(mm)}).",
+                    "note": note, "significance": sig(mm)})
     return out
 
 

@@ -35,14 +35,14 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 R_DIR = os.path.join(ROOT, "r")
 CACHE_DIR = os.environ.get("R_CACHE_DIR", os.path.join(ROOT, "data", "cache", "r"))
 MODULES = ("geography", "clusters", "text", "attribution", "anonymous", "chronology", "dialect", "network", "change",
-           "remains", "hotspots", "words", "messages")
+           "remains", "hotspots", "words", "messages", "people")
 STONE_MODULES = ("stone", "landscape")
 MODULE_LABELS = {"geography": "Geografi", "clusters": "Klustring och MCA", "text": "Text och formler",
                  "attribution": "Attribueringsmodell", "anonymous": "Okända ristare",
                  "chronology": "Seriation och datering",
                  "dialect": "Stavning och dialekter", "network": "Formelnätverk", "change": "Förändring i tid och rum",
                  "remains": "Lämningar runt stenarna", "hotspots": "Hot spots och kluster", "words": "Ordförrådet",
-                 "messages": "Budskapen"}
+                 "messages": "Budskapen", "people": "Människorna"}
 REQUIRED_PACKAGES = ("jsonlite", "dplyr", "tidyr", "stringr", "ggplot2", "sf", "leaflet", "htmlwidgets",
                      "tidytext", "cluster", "FactoMineR", "factoextra", "tidymodels", "ranger", "ragg",
                      "ca", "stringdist", "igraph", "tidygraph", "ggraph", "terra", "gdistance", "raster", "png", "mgcv",
@@ -286,7 +286,7 @@ MODULE_FILES = {"geography": ("geography*", "geografi_*", "ristare_karta*"), "cl
                 "chronology": ("chronology*", "seriation_*"), "dialect": ("dialect*", "dialekt_*"),
                 "network": ("network*", "natverk_*"), "change": ("change*", "forandring_*"),
                 "remains": ("remains*", "lamningar_*", "landskap_genomsokning*"), "hotspots": ("hotspots*", "hotspot_*"),
-                "messages": ("messages*", "budskap_*")}
+                "messages": ("messages*", "budskap_*"), "people": ("people*", "manniskor_*")}
 
 # Kulturmiljöregistret's remains (scripts/fetch_raa_remains.py) and the place names and medieval churches
 # (scripts/fetch_place_names.py), read by remains.R; not part of the repository
@@ -320,6 +320,32 @@ def _messages_hash() -> str:
     return h.hexdigest()[:16]
 
 
+def _people_hash() -> str:
+    """The people rules (src/people.py, which reads src/entities.py and src/messages.py) and their hand-coded check
+    (data/people_check.json): the people module is recomputed when any of them changes."""
+    h = hashlib.sha256()
+    for path in [os.path.join(ROOT, "src", f) for f in ("people.py", "entities.py", "messages.py")] + [
+            os.path.join(ROOT, "data", "people_check.json")]:
+        if os.path.exists(path):
+            with open(path, "rb") as fh:
+                h.update(fh.read())
+        else:
+            h.update(b"none")
+    return h.hexdigest()[:16]
+
+
+def write_people(path: str):
+    """Who raised each runestone, for whom, in which relation and of which gender (src/people.py), for r/people.R."""
+    from api.rundata import store
+    from src import people
+    rows = people.rows(store().inscriptions)
+    with open(path, "w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(rows[0]))
+        w.writeheader()
+        for r in rows:
+            w.writerow({k: ("" if v is None else v) for k, v in r.items()})
+
+
 def write_messages(path: str):
     """The messages of each runestone (src/messages.py) for r/messages.R, beside the corpus."""
     from api.rundata import store
@@ -343,7 +369,8 @@ def module_hashes(csv_data: bytes) -> dict[str, str]:
     out: dict[str, str] = {}
     for m in MODULES:  # run order, so upstream versions exist
         key = (base + _scripts_hash([f"{m}.R"]) + "".join(out[u] for u in DEPENDS.get(m, ()))
-               + (_remains_hash() if m == "remains" else "") + (_messages_hash() if m == "messages" else ""))
+               + (_remains_hash() if m == "remains" else "") + (_messages_hash() if m == "messages" else "")
+               + (_people_hash() if m == "people" else ""))
         out[m] = hashlib.sha256(key.encode()).hexdigest()[:16]
     return out
 
@@ -382,7 +409,7 @@ def fingerprint(data: bytes) -> str:
     """Korpusens version: data och korpusmodulernas skript (inte sten- och landskapsskripten)."""
     scripts = ["common.R"] + [f"{m}.R" for m in MODULES]
     return hashlib.sha256(data + _scripts_hash(scripts).encode() + _remains_hash().encode()
-                          + _messages_hash().encode()).hexdigest()[:16]
+                          + _messages_hash().encode() + _people_hash().encode()).hexdigest()[:16]
 
 
 # ---- water data ----------------------------------------------------------------------------
@@ -566,9 +593,10 @@ def run_corpus(fp: str):
     try:
         water = ensure_water()
         write_messages(os.path.join(d, "messages.csv"))
+        write_people(os.path.join(d, "people.csv"))
         from src import pattern_map, places
         params = {"corpus": os.path.join(d, "corpus.csv"), "water_dir": water, "corpus_dir": d, "seed": 2026,
-                  "messages": os.path.join(d, "messages.csv"),
+                  "messages": os.path.join(d, "messages.csv"), "people": os.path.join(d, "people.csv"),
                   "tile_dir": os.path.join(CACHE_DIR, "terrain"), "remains": _if_exists(REMAINS),
                   "cult_names": _if_exists(CULT_NAMES), "places": _if_exists(PLACES), "churches": _if_exists(CHURCHES),
                   # The names of the map's patterns and kinds of place, for the figures' labels (hotspots.R, remains.R)
@@ -731,8 +759,9 @@ def package(fp: str, signum: str | None = None, candidates: list[str] | None = N
             if name.endswith(".R") or name == "README.md":
                 z.write(os.path.join(R_DIR, name), f"r/{name}")
         z.write(os.path.join(d, "corpus.csv"), "data/corpus.csv")
-        if os.path.exists(os.path.join(d, "messages.csv")):  # an input of messages.R, not only a result
-            z.write(os.path.join(d, "messages.csv"), "data/messages.csv")
+        for inp in ("messages.csv", "people.csv"):  # inputs of messages.R and people.R, not only results
+            if os.path.exists(os.path.join(d, inp)):
+                z.write(os.path.join(d, inp), f"data/{inp}")
         from src import pattern_map, places  # the figures' labels (hotspots.R, remains.R), as run_corpus gives them
         z.writestr("data/etiketter.json", json.dumps(
             {"pattern_labels": {k: label for k, label, *_ in pattern_map.PATTERNS},
@@ -764,7 +793,7 @@ def _rerun_script(signum: str | None, candidates: list[str]) -> str:
         'lab <- if (file.exists("data/etiketter.json")) jsonlite::fromJSON("data/etiketter.json", simplifyVector = FALSE) else list()',
         'params <- list(corpus = normalizePath("data/corpus.csv"), corpus_dir = normalizePath("om"),',
         '               water_dir = if (dir.exists("naturalearth")) normalizePath("naturalearth") else NULL, seed = 2026,',
-        '               messages = opt("data/messages.csv"), remains = opt("data/lamningar.csv"),',
+        '               messages = opt("data/messages.csv"), people = opt("data/people.csv"), remains = opt("data/lamningar.csv"),',
         '               cult_names = opt("data/kultnamn.csv"), places = opt("data/platser.csv"),',
         '               churches = opt("data/kyrkor.csv"), pattern_labels = lab$pattern_labels, kind_labels = lab$kind_labels)',
         'p <- file.path("om", "params.json"); jsonlite::write_json(params, p, auto_unbox = TRUE, null = "null")',
@@ -791,6 +820,7 @@ def _readme(signum: str | None) -> str:
         "data/corpus.csv korpusen: svenska vikingatida runstenar ur Samnordisk runtextdatabas, med kategorier\n"
         "                och språkdrag som appen räknat fram (se METHODS.md)\n"
         "data/messages.csv budskapen per sten (indata till messages.R)\n"
+        "data/people.csv resare och döda per sten, kön och relation (indata till people.R)\n"
         "data/etiketter.json mönstrens och platsernas namn för figurerna\n"
         "resultat/       appens resultat, figurer och sessionInfo() för den körning som gav dem\n"
         "KOR_OM.R        kör om alla " + str(len(MODULES)) + " korpusanalyser" + (" och stenens analys" if signum else "")
