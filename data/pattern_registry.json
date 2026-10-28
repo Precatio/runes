@@ -189,6 +189,42 @@
    "status": "mönster att pröva",
    "text": "Mot en modellerad strandlinje omkring år 1000 står runstenarna närmare vatten än slumpvisa punkter i samma landskap (median 3,61 mot 5,31 km, p < 0,001; 2254 stenar). Stenarnas avstånd är 68 % av slumppunkternas, mot 74 % med dagens vatten – närheten blir tydligare med dåtidens strand. Håller i 3 av"
   },
+  "Människorna|people_bro_kvinna": {
+   "first_seen": "2026-10-28",
+   "seeded": false,
+   "status": "begränsning",
+   "text": "Stenar med en kvinna bland resarna nämner inte oftare bro eller väg än andra (8 % mot 7 %, med landsdel, tid och ristare konstanta; oddskvot 1,18, troligen mellan 0,76 och 1,84)."
+  },
+  "Människorna|people_dod_borta_ung": {
+   "first_seen": "2026-10-28",
+   "seeded": false,
+   "status": "bekräftar",
+   "text": "Söner och bröder dog oftare utanför Norden än fäder och makar: 10 % av stenarna efter söner och bröder säger att den döde dog utanför Norden, mot 3 % efter fäder och makar, med landsdel, tid och ristare konstanta (oddskvot 4,10, troligen mellan 2,18 och 7,69)."
+  },
+  "Människorna|people_drengr_ung": {
+   "first_seen": "2026-10-28",
+   "seeded": false,
+   "status": "mönster att pröva",
+   "text": "drengr sägs om söner och bröder snarare än om fäder och makar: 6 % av stenarna efter söner och bröder mot 1 % efter fäder och makar, med landsdel, tid och ristare konstanta (oddskvot 8,71, troligen mellan 2,98 och 25,48)."
+  },
+  "Människorna|people_kvinna_landsdel": {
+   "first_seen": "2026-10-28",
+   "seeded": false,
+   "status": "bekräftar",
+   "text": "En kvinna finns bland resarna på 31 % av stenarna i Svealand mot 17 % i Götaland, med tid och ristare konstanta (oddskvot 0,46, troligen mellan 0,32 och 0,66; 391 av 1425 stenar med känd resare har en kvinna bland resarna)."
+  },
+  "Människorna|people_kvinna_tid": {
+   "first_seen": "2026-10-28",
+   "seeded": false,
+   "status": "indikation",
+   "text": "Kvinnor bland resarna blir vanligare under 1000-talet: oddsen ändras med en faktor 1,30 per 50 år, med landsdel och ristare konstanta."
+  },
+  "Människorna|people_thegn_ung": {
+   "first_seen": "2026-10-28",
+   "seeded": false,
+   "status": "mönster att pröva",
+   "text": "þegn sägs om fäder och makar snarare än om söner och bröder: 4 % av stenarna efter fäder och makar mot 1 % efter söner och bröder, med landsdel, tid och ristare konstanta (oddskvot 0,22, troligen mellan 0,08 och 0,63)."
+  },
   "Okända ristare|anonymous": {
    "first_seen": "2026-10-21",
    "seeded": true,
