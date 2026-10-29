@@ -1,4 +1,5 @@
-# Avståndet mellan runstenarna (spatstat), enligt den låsta planen analysplaner/2026-10-28-avstand-mellan-stenar.md.
+# Avståndet mellan runstenarna (spatstat), enligt den låsta planen analysplaner/2026-10-28-avstand-mellan-stenar.md
+# och dess tillägg (-tillagg.md, 2026-10-29): tätheten med 10 km bandbredd och ett golv på 5 % av medeltätheten.
 #   Rscript utdata/avstand/avstand.R KORPUS.csv NATURALEARTH_DIR LAMNINGAR.csv UTMAPP
 # Skriver avstand.json, figurer och en logg i UTMAPP.
 .args <- commandArgs(trailingOnly = TRUE)
@@ -10,7 +11,7 @@ sf_use_s2(FALSE)
 set.seed(2026)
 corpus_path <- .args[1]; ne_dir <- .args[2]; remains_path <- .args[3]; out <- .args[4]
 dir.create(out, showWarnings = FALSE, recursive = TRUE)
-NSIM <- as.integer(Sys.getenv("NSIM", "999")); MERGE_M <- 25; BUFFER_M <- 5000; SIGMA <- 2000; RINT <- c(100, 1000)
+NSIM <- as.integer(Sys.getenv("NSIM", "999")); MERGE_M <- 25; BUFFER_M <- 5000; SIGMA <- 10000; FLOOR <- 0.05; RINT <- c(100, 1000)
 
 d <- read_corpus(corpus_path)
 d <- d[!is.na(d$lat) & !is.na(d$lon), ]
@@ -40,11 +41,23 @@ pattern <- function(prov, merge = TRUE) {
   list(X = X, win_sf = win_sf, n_stones = sum(inp))
 }
 
-# DCLF-testet på L(r) − r mot inhomogen Poisson med kärnskattad täthet; tätheten skattas om för varje simulering
-dclf_kernel <- function(X, sigma = SIGMA, rint = RINT) {
+# Tätheten i punkterna: lämna en ute, med ett golv (tillägget): en sten utan grannar får inte en täthet nära noll
+lam_points <- function(Y, sigma, floor) {
+  m <- Y$n / area(Window(Y))
+  pmax(as.numeric(density(Y, sigma = sigma, at = "points", leaveoneout = TRUE, positive = TRUE)), floor * m)
+}
+Lfloor <- function(Y, ..., sigma, floor) Linhom(Y, lambda = lam_points(Y, sigma, floor), ...)
+gfloor <- function(Y, ..., sigma, floor) pcfinhom(Y, lambda = lam_points(Y, sigma, floor), ...)
+lam_image <- function(X, sigma, floor) {
   lam <- density(X, sigma = sigma, edge = TRUE, positive = TRUE)
+  m <- X$n / area(Window(X))
+  eval.im(pmax(lam, floor * m))
+}
+# DCLF-testet på L(r) − r mot inhomogen Poisson; tätheten skattas om på samma sätt för varje simulering
+dclf_kernel <- function(X, sigma = SIGMA, rint = RINT, floor = FLOOR) {
+  lam <- lam_image(X, sigma, floor)
   sim <- lapply(seq_len(NSIM), function(i) rpoispp(lam))  # simulated in advance: spatstat evaluates expressions elsewhere
-  t <- dclf.test(X, Linhom, sigma = sigma, positive = TRUE, simulate = sim, nsim = NSIM, rinterval = rint, verbose = FALSE,
+  t <- dclf.test(X, Lfloor, sigma = sigma, floor = floor, simulate = sim, nsim = NSIM, rinterval = rint, verbose = FALSE,
                  savefuns = TRUE, alternative = "two.sided", correction = "translate")
   direction(t, X, rint)
 }
@@ -80,7 +93,8 @@ halves <- function(X, sigma = SIGMA) {
   })
 }
 
-res <- list(plan = "analysplaner/2026-10-28-avstand-mellan-stenar.md", nsim = NSIM, merge_m = MERGE_M, sigma_m = SIGMA,
+res <- list(plan = "analysplaner/2026-10-28-avstand-mellan-stenar.md + -tillagg.md", nsim = NSIM, merge_m = MERGE_M,
+            sigma_m = SIGMA, floor = FLOOR,
             rinterval_m = RINT, provinces = list())
 for (prov in c("U", "Sö")) {
   P <- pattern(prov)
@@ -90,14 +104,14 @@ for (prov in c("U", "Sö")) {
   nn <- nndist(X)
   r <- list(n_stones = P$n_stones, n_sites = X$n, main = main,
             halves = halves(X),
-            robustness = list(sigma_1km = dclf_kernel(X, 1000), sigma_4km = dclf_kernel(X, 4000),
-                              covariates = tryCatch(dclf_covariate(X, P$win_sf), error = function(e) list(error = conditionMessage(e))),
+            robustness = list(sigma_5km = dclf_kernel(X, 5000), sigma_20km = dclf_kernel(X, 20000),
+                              floor_1pct = dclf_kernel(X, floor = 0.01), floor_10pct = dclf_kernel(X, floor = 0.10),
                               no_merge = dclf_kernel(pattern(prov, merge = FALSE)$X),
                               r_100_500 = dclf_kernel(X, SIGMA, c(100, 500))),
             nearest_m = as.list(quantile(nn, c(0.1, 0.25, 0.5, 0.75, 0.9))))
   # Figur: global envelopp för g(r)
-  lam0 <- density(X, sigma = SIGMA, positive = TRUE)
-  env <- envelope(X, pcfinhom, sigma = SIGMA, positive = TRUE, simulate = lapply(seq_len(2 * NSIM), function(i) rpoispp(lam0)),
+  lam0 <- lam_image(X, SIGMA, FLOOR)
+  env <- envelope(X, gfloor, sigma = SIGMA, floor = FLOOR, simulate = lapply(seq_len(2 * NSIM), function(i) rpoispp(lam0)),
                   nsim = NSIM, global = TRUE, r = seq(0, 3000, by = 25), verbose = FALSE)
   png(file.path(out, paste0("g_", prov, ".png")), width = 1400, height = 900, res = 200)
   plot(env, main = paste(prov, "– parkorrelation g(r) mot inhomogen Poisson"), xlab = "r (m)", legend = FALSE)

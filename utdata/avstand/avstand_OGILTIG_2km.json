@@ -1,0 +1,187 @@
+{
+  "plan": "analysplaner/2026-10-28-avstand-mellan-stenar.md",
+  "nsim": 999,
+  "merge_m": 25,
+  "sigma_m": 2000,
+  "rinterval_m": [100, 1000],
+  "provinces": {
+    "U": {
+      "n_stones": 458,
+      "n_sites": 420,
+      "main": {
+        "p": 0.437,
+        "statistic": [
+          [594.571523982545, 437]
+        ],
+        "n": 420,
+        "mean_dev_m": -0.729470829388821,
+        "direction": "regelbundet",
+        "p_holm": 0.684
+      },
+      "halves": {
+        "vast": {
+          "p": 0.274,
+          "statistic": [
+            [260728.327593678, 274]
+          ],
+          "n": 210,
+          "mean_dev_m": -15.4177045237787,
+          "direction": "regelbundet"
+        },
+        "ost": {
+          "p": 0.428,
+          "statistic": [
+            [40870.1364798367, 428]
+          ],
+          "n": 210,
+          "mean_dev_m": -6.01262310326636,
+          "direction": "regelbundet"
+        }
+      },
+      "robustness": {
+        "sigma_1km": {
+          "p": 0.833,
+          "statistic": [
+            [6.04730022865839e-08, 833]
+          ],
+          "n": 420,
+          "mean_dev_m": -7.13276154901003e-06,
+          "direction": "regelbundet"
+        },
+        "sigma_4km": {
+          "p": 0.593,
+          "statistic": [
+            [6239728.84906237, 593]
+          ],
+          "n": 420,
+          "mean_dev_m": -74.7905964135406,
+          "direction": "regelbundet"
+        },
+        "covariates": {
+          "p": 0.01,
+          "statistic": [
+            [356627286.251874, 10]
+          ],
+          "n": 420,
+          "mean_dev_m": -570.257013235975,
+          "direction": "regelbundet"
+        },
+        "no_merge": {
+          "p": 0.425,
+          "statistic": [
+            [1134.53922539088, 425]
+          ],
+          "n": 452,
+          "mean_dev_m": -0.998817983420022,
+          "direction": "regelbundet"
+        },
+        "r_100_500": {
+          "p": 0.43,
+          "statistic": [
+            [316.211393422039, 430]
+          ],
+          "n": 420,
+          "mean_dev_m": -0.836855273506626,
+          "direction": "regelbundet"
+        }
+      },
+      "nearest_m": {
+        "10%": 167.904370494619,
+        "25%": 424.556096749298,
+        "50%": 1115.69423760368,
+        "75%": 2165.57782517978,
+        "90%": 4251.52242018766
+      },
+      "status": "ingen avvikelse från slumpen påvisad"
+    },
+    "Sö": {
+      "n_stones": 168,
+      "n_sites": 149,
+      "main": {
+        "p": 0.342,
+        "statistic": [
+          [11713.1194635911, 342]
+        ],
+        "n": 149,
+        "mean_dev_m": -3.15627399774103,
+        "direction": "regelbundet",
+        "p_holm": 0.684
+      },
+      "halves": {
+        "vast": {
+          "p": 0.365,
+          "statistic": [
+            [6774.65230701136, 365]
+          ],
+          "n": 75,
+          "mean_dev_m": -2.37605727770739,
+          "direction": "regelbundet"
+        },
+        "ost": {
+          "p": 0.861,
+          "statistic": [
+            [732505.11421962, 861]
+          ],
+          "n": 74,
+          "mean_dev_m": -22.2969397689016,
+          "direction": "regelbundet"
+        }
+      },
+      "robustness": {
+        "sigma_1km": {
+          "p": 0.369,
+          "statistic": [
+            [0.00496807809329959, 369]
+          ],
+          "n": 149,
+          "mean_dev_m": -0.00208660273269365,
+          "direction": "regelbundet"
+        },
+        "sigma_4km": {
+          "p": 0.715,
+          "statistic": [
+            [5050566.56415, 715]
+          ],
+          "n": 149,
+          "mean_dev_m": -33.2319591822719,
+          "direction": "regelbundet"
+        },
+        "covariates": {
+          "p": 0.049,
+          "statistic": [
+            [199074650.026891, 49]
+          ],
+          "n": 149,
+          "mean_dev_m": -389.699565185273,
+          "direction": "regelbundet"
+        },
+        "no_merge": {
+          "p": 0.31,
+          "statistic": [
+            [25274.3897398828, 310]
+          ],
+          "n": 166,
+          "mean_dev_m": -4.5789822599258,
+          "direction": "regelbundet"
+        },
+        "r_100_500": {
+          "p": 0.456,
+          "statistic": [
+            [772.454841095757, 456]
+          ],
+          "n": 149,
+          "mean_dev_m": -1.2947446196019,
+          "direction": "regelbundet"
+        }
+      },
+      "nearest_m": {
+        "10%": 189.888782584335,
+        "25%": 606.298097457787,
+        "50%": 1350.63745287508,
+        "75%": 3077.3365837202,
+        "90%": 5968.12806173094
+      },
+      "status": "ingen avvikelse från slumpen påvisad"
+    }
+  }
+}

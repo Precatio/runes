@@ -1,0 +1,206 @@
+{
+  "plan": "analysplaner/2026-10-28-avstand-mellan-stenar.md + -tillagg.md",
+  "nsim": 999,
+  "merge_m": 25,
+  "sigma_m": 10000,
+  "floor": 0.05,
+  "rinterval_m": [100, 1000],
+  "provinces": {
+    "U": {
+      "n_stones": 458,
+      "n_sites": 420,
+      "main": {
+        "p": 0.004,
+        "statistic": [
+          [313318558.057758, 4]
+        ],
+        "n": 420,
+        "mean_dev_m": 587.310673292431,
+        "direction": "klumpat",
+        "p_holm": 0.006
+      },
+      "halves": {
+        "vast": {
+          "p": 0.044,
+          "statistic": [
+            [78680548.9230959, 44]
+          ],
+          "n": 210,
+          "mean_dev_m": 294.199502050127,
+          "direction": "klumpat"
+        },
+        "ost": {
+          "p": 0.012,
+          "statistic": [
+            [643509101.48103, 12]
+          ],
+          "n": 210,
+          "mean_dev_m": 838.837786554287,
+          "direction": "klumpat"
+        }
+      },
+      "robustness": {
+        "sigma_5km": {
+          "p": 0.003,
+          "statistic": [
+            [130955811.304644, 3]
+          ],
+          "n": 420,
+          "mean_dev_m": 380.029084958869,
+          "direction": "klumpat"
+        },
+        "sigma_20km": {
+          "p": 0.001,
+          "statistic": [
+            [408103986.202627, 1]
+          ],
+          "n": 420,
+          "mean_dev_m": 671.53729573583,
+          "direction": "klumpat"
+        },
+        "floor_1pct": {
+          "p": 0.002,
+          "statistic": [
+            [295044827.356957, 2]
+          ],
+          "n": 420,
+          "mean_dev_m": 570.027126201537,
+          "direction": "klumpat"
+        },
+        "floor_10pct": {
+          "p": 0.003,
+          "statistic": [
+            [337704191.194193, 3]
+          ],
+          "n": 420,
+          "mean_dev_m": 609.72001048348,
+          "direction": "klumpat"
+        },
+        "no_merge": {
+          "p": 0.001,
+          "statistic": [
+            [836277385.514364, 1]
+          ],
+          "n": 452,
+          "mean_dev_m": 962.50529255076,
+          "direction": "klumpat"
+        },
+        "r_100_500": {
+          "p": 0.005,
+          "statistic": [
+            [113739803.482877, 5]
+          ],
+          "n": 420,
+          "mean_dev_m": 533.156931527962,
+          "direction": "klumpat"
+        }
+      },
+      "nearest_m": {
+        "10%": 167.904370494619,
+        "25%": 424.556096749298,
+        "50%": 1115.69423760368,
+        "75%": 2165.57782517978,
+        "90%": 4251.52242018766
+      },
+      "status": "klumpat"
+    },
+    "Sö": {
+      "n_stones": 168,
+      "n_sites": 149,
+      "main": {
+        "p": 0.003,
+        "statistic": [
+          [893732976.901977, 3]
+        ],
+        "n": 149,
+        "mean_dev_m": 977.159070649479,
+        "direction": "klumpat",
+        "p_holm": 0.006
+      },
+      "halves": {
+        "vast": {
+          "p": 0.004,
+          "statistic": [
+            [1607248397.42419, 4]
+          ],
+          "n": 75,
+          "mean_dev_m": 1244.04543912629,
+          "direction": "klumpat"
+        },
+        "ost": {
+          "p": 0.003,
+          "statistic": [
+            [1180647840.79442, 3]
+          ],
+          "n": 74,
+          "mean_dev_m": 1081.70542267728,
+          "direction": "klumpat"
+        }
+      },
+      "robustness": {
+        "sigma_5km": {
+          "p": 0.003,
+          "statistic": [
+            [277128394.090221, 3]
+          ],
+          "n": 149,
+          "mean_dev_m": 554.152281642633,
+          "direction": "klumpat"
+        },
+        "sigma_20km": {
+          "p": 0.001,
+          "statistic": [
+            [1343028867.79057, 1]
+          ],
+          "n": 149,
+          "mean_dev_m": 1198.55230640587,
+          "direction": "klumpat"
+        },
+        "floor_1pct": {
+          "p": 0.001,
+          "statistic": [
+            [871147544.749865, 1]
+          ],
+          "n": 149,
+          "mean_dev_m": 964.448394563999,
+          "direction": "klumpat"
+        },
+        "floor_10pct": {
+          "p": 0.004,
+          "statistic": [
+            [867071417.832433, 4]
+          ],
+          "n": 149,
+          "mean_dev_m": 961.810663945119,
+          "direction": "klumpat"
+        },
+        "no_merge": {
+          "p": 0.001,
+          "statistic": [
+            [2027746788.03143, 1]
+          ],
+          "n": 166,
+          "mean_dev_m": 1498.98142407145,
+          "direction": "klumpat"
+        },
+        "r_100_500": {
+          "p": 0.001,
+          "statistic": [
+            [233030023.667854, 1]
+          ],
+          "n": 149,
+          "mean_dev_m": 758.813898333425,
+          "direction": "klumpat"
+        }
+      },
+      "nearest_m": {
+        "10%": 189.888782584335,
+        "25%": 606.298097457787,
+        "50%": 1350.63745287508,
+        "75%": 3077.3365837202,
+        "90%": 5968.12806173094
+      },
+      "status": "klumpat"
+    }
+  }
+}
