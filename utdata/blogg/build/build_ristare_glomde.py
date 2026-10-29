@@ -65,6 +65,14 @@ assert (BP["U"]["n"], BP["U"]["missing"], BP["Sö"]["missing"]) == (120, 2, 0)
 OUT_US = SIG["outside_U_So"]
 assert (OUT_US["n"], OUT_US["missing"]) == (38, 18)
 assert (PAR["n_pairs"], PAR["same_group"], PAR["expected_from_neighbours"]) == (9, 6, 4.82) and PAR["merged_signed_carvers"]
+# Signed runestones in Västergötland and Uppland: the database against Källström (the rates in the text)
+import collections as _c  # noqa: E402
+from src.research_gaps import is_runestone as _isr, province as _prov  # noqa: E402
+_rs = [r for r in recs if _isr(r)]
+_n = _c.Counter(_prov(r) for r in _rs)
+_db = _c.Counter(_prov(r) for r in _rs if any(c["kind"] == "S" for c in r["carvers"]))
+assert (_n["Vg"], _db["Vg"], BP["Vg"]["n"]) == (131, 1, 5) and round(_n["Vg"] / BP["Vg"]["n"]) == 26
+assert round(_n["U"] / BP["U"]["n"]) == 10
 MISS_NAMED = [m["signum"] for m in SIG["missing"] if m["named"]]
 assert SIG["n_missing"] - SIG["n_missing_named"] == 7
 assert set(MISS_NAMED) == {"G 200", "G 203", "G 276", "Vg 119", "Vg 130", "Vg 180", "Vg 181", "Ög 8", "Ög 64", "U 422",
@@ -129,7 +137,7 @@ Magnus Källström gick i sin avhandling *Mästare och minnesmärken* (2007) ige
 
 Uppland är nästan komplett: {BP['U']['missing']} av {BP['U']['n']} signerade stenar saknar ristare. Det är där forskningen om ristare har bedrivits, med Öpir, Åsmund och Balle. I övriga landskap är bilden en annan. I Västergötland saknas {BP['Vg']['missing']} av {BP['Vg']['n']}, i Östergötland {BP['Ög']['missing']} av {BP['Ög']['n']}, på Gotland {BP['G']['missing']} av {BP['G']['n']}. Viking och Grimulv på Ög 8, Lófi på Ög 64 i Bjälbo, Hrómundr på Hs 14 i Hälsingland, Tryggve på Vg 130 och Funnen på Vg 180 – alla har skrivit sitt namn på stenen, och ingen av dem finns i databasens ristarfält.
 
-Det är ingen slump i enstaka poster. Databasens ristaruppgifter bygger till stor del på forskning om Mälardalen och har bara delvis förts in för resten av landet. Följden är att varje statistisk studie av ristare – vår egen inräknad – ser ett Sverige där nästan alla ristare bodde i Uppland. När vi tidigare skrev att en procent av Västergötlands runstenar har en ristare, var det databasen vi mätte, inte vad forskningen vet.
+Det är ingen slump i enstaka poster. Databasens ristaruppgifter bygger till stor del på forskning om Mälardalen och har bara delvis förts in för resten av landet. Följden syns i varje statistisk studie av ristare som bygger på databasen – vår egen inräknad. I Västergötland står 1 av 131 runstenar som signerad där; enligt Källström är de 5. Uppland dominerar ändå, också med hans siffror – en av tio uppländska runstenar är signerad, mot en av tjugosex i Västergötland – så att signerandet var vanligast i Mälardalen är ingen illusion. Men databasen gör skillnaden större än den var, och när vi tidigare skrev att en procent av Västergötlands runstenar har en ristare, var det databasen vi mätte, inte vad forskningen vet.
 
 ## Kan en modell hitta dem ändå?
 
@@ -166,7 +174,7 @@ Tre grupper finns inte beskrivna som en ristares verk i Sveriges runinskrifter e
 
 :::box Det viktigaste i korthet
 - Databasen som runstatistiken bygger på vet mindre än forskningen: utanför Uppland och Södermanland saknar den ristaren på nästan varannan runsten som ristaren signerade.
-- Det betyder att bilden av vikingatidens ristare som ett uppländskt fenomen delvis är en bild av databasen.
+- Ristarna signerade oftast i Uppland – det håller. Men databasen gör skillnaden större än den var, och den som räknar ristare utanför Mälardalen räknar luckor i databasen.
 - En modell kan hitta bygdernas skrivmiljöer i stenarna, men inte – ännu – de enskilda händerna.
 - Nästa gång du läser en runsten: titta efter sista meningen. *Hiogg*, *risti*, *fáði* – där står ibland den som höll minnet vid liv åt andra, men som själv aldrig blev ihågkommen.
 :::
@@ -208,7 +216,7 @@ In his dissertation *Mästare och minnesmärken* (2007), Magnus Källström went
 
 Uppland is nearly complete: {BP['U']['missing']} of {BP['U']['n']} signed stones lack a carver. That is where research on carvers has been done, with Œpir, Ásmundr and Balli. Elsewhere the picture is different. In Västergötland {BP['Vg']['missing']} of {BP['Vg']['n']} are missing, in Östergötland {BP['Ög']['missing']} of {BP['Ög']['n']}, on Gotland {BP['G']['missing']} of {BP['G']['n']}. Víkingr and Grímulfr on Ög 8, Lófi on Ög 64 at Bjälbo, Hrómundr on Hs 14 in Hälsingland, Tryggvi on Vg 130 and Fundinn on Vg 180 – all wrote their names on the stone, and none of them is in the database's carver field.
 
-This is no accident of single records. The database's carver data rest largely on research on the Mälaren region and have only partly been entered for the rest of the country. As a result every statistical study of carvers – ours included – sees a Sweden where nearly all carvers lived in Uppland. When we wrote earlier that one per cent of Västergötland's runestones have a carver, it was the database we measured, not what research knows.
+This is no accident of single records. The database's carver data rest largely on research on the Mälaren region and have only partly been entered for the rest of the country. The consequence shows in every statistical study of carvers that rests on the database – ours included. In Västergötland 1 of 131 runestones is listed as signed there; according to Källström there are 5. Uppland still dominates, even with his figures – one in ten Uppland runestones is signed, against one in twenty-six in Västergötland – so that signing was most common in the Mälaren region is no illusion. But the database makes the difference larger than it was, and when we wrote earlier that one per cent of Västergötland's runestones have a carver, it was the database we measured, not what research knows.
 
 ## Can a model find them anyway?
 
@@ -245,7 +253,7 @@ Three groups are not described as one carver's work in Sveriges runinskrifter or
 
 :::box The essentials in brief
 - The database that runic statistics rest on knows less than research does: outside Uppland and Södermanland it lacks the carver on nearly every other runestone that the carver signed.
-- That means the picture of the Viking-age carvers as an Uppland phenomenon is partly a picture of the database.
+- Carvers signed most often in Uppland – that holds. But the database makes the difference larger than it was, and whoever counts carvers outside the Mälaren region is counting gaps in the database.
 - A model can find the districts' writing milieus in the stones, but not – yet – the individual hands.
 - Next time you read a runestone, look at the last sentence. *Hiogg*, *risti*, *fáði* – there, sometimes, stands the one who kept the memory of others alive, but was never remembered himself.
 :::
