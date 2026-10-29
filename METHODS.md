@@ -241,7 +241,9 @@ Leksberg (Vg 11, 13, 15 samme ristare) är redan beskrivna, med signaturer som R
 metoden är det svagt (granskat 2026-10-29): av nio par som SRI knyter till samme ristare, där båda stenarna analyseras,
 ligger sex i samma grupp, mot 4,8 väntade om man bara ser till hur ofta grannar på samma avstånd hamnar i samma grupp;
 Leksbergsgruppen är i praktiken hela den lokala klungan, och Kölabygruppen slår ihop två olika signerade ristare
-(Håvard på Vg 181, Tryggve på Vg 130). Grupperna motsvarar alltså skrivmiljöer snarare än enskilda ristare. Konungsund har ett par (Ög 46/233), Vetlanda en omstridd signatur (Sm 111
+(Håvard på Vg 181, Tryggve på Vg 130). Grupperna motsvarar alltså skrivmiljöer snarare än enskilda ristare. Parprovet: `utdata/okanda_ristare/sri_par.py`.
+
+**Ristarfältet mot Källströms katalog (2026-10-29, `utdata/signaturer/jamfor.py`).** Av 177 svenska runstenar med en ristarsignatur av typ B:1–2 i Källström (2007, Bilaga 1) som finns i Rundata saknar 20 ristare i Rundata, och alla 20 saknar den också i Runor 2020; 13 av dem har ett läsbart namn. Uppland 2 av 120, Södermanland 0 av 19, övriga Sverige 18 av 38. Täckningssiffrorna ovan (andelen stenar med ristare per landskap) mäter alltså databasen, inte forskningen. Konungsund har ett par (Ög 46/233), Vetlanda en omstridd signatur (Sm 111
 aku- hio[gg](?), Källström s. 342, mot Kinanders bön), Husaby inget. Tabellen visar litteraturen per grupp, och fynd per
 sten som litteraturen redan knyter till en ristare märks "stämmer" i stället för "nytt".
 

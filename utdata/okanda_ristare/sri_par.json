@@ -1,0 +1,109 @@
+{
+ "n_pairs": 9,
+ "same_group": 6,
+ "expected_from_neighbours": 4.82,
+ "merged_signed_carvers": [
+  [
+   "Vg 181",
+   "Vg 130"
+  ]
+ ],
+ "pairs": [
+  {
+   "a": "Vg 181",
+   "b": "Vg 158",
+   "source": "SRI V",
+   "tested": true,
+   "km": 29.5,
+   "same_group": true,
+   "neighbours_same_group": 0.3076923076923077,
+   "n_neighbours": 26
+  },
+  {
+   "a": "Vg 179",
+   "b": "Vg 184",
+   "source": "SRI V",
+   "tested": true,
+   "km": 33.2,
+   "same_group": true,
+   "neighbours_same_group": 0.3103448275862069,
+   "n_neighbours": 29
+  },
+  {
+   "a": "Vg 130",
+   "b": "Vg 139",
+   "source": "SRI V",
+   "tested": true,
+   "km": 8.3,
+   "same_group": false,
+   "neighbours_same_group": 0.0,
+   "n_neighbours": 3
+  },
+  {
+   "a": "Vg 152",
+   "b": "Vg 151",
+   "source": "SRI V",
+   "tested": false
+  },
+  {
+   "a": "Vg 11",
+   "b": "Vg 13",
+   "source": "SRI V",
+   "tested": true,
+   "km": 1.3,
+   "same_group": true,
+   "neighbours_same_group": 1.0,
+   "n_neighbours": 3
+  },
+  {
+   "a": "Vg 11",
+   "b": "Vg 15",
+   "source": "SRI V",
+   "tested": true,
+   "km": 1.0,
+   "same_group": true,
+   "neighbours_same_group": 1.0,
+   "n_neighbours": 3
+  },
+  {
+   "a": "Vg 13",
+   "b": "Vg 15",
+   "source": "SRI V",
+   "tested": true,
+   "km": 2.0,
+   "same_group": true,
+   "neighbours_same_group": 1.0,
+   "n_neighbours": 3
+  },
+  {
+   "a": "Vg 2",
+   "b": "Vg 4",
+   "source": "SRI V",
+   "tested": true,
+   "km": 13.9,
+   "same_group": false,
+   "neighbours_same_group": 0.5714285714285714,
+   "n_neighbours": 7
+  },
+  {
+   "a": "Ög 46",
+   "b": "Ög 233",
+   "source": "SRI II",
+   "tested": true,
+   "km": 19.3,
+   "same_group": true,
+   "neighbours_same_group": 0.46153846153846156,
+   "n_neighbours": 26
+  },
+  {
+   "a": "Ög 225",
+   "b": "Ög 231",
+   "source": "SRI II",
+   "tested": true,
+   "km": 6.4,
+   "same_group": false,
+   "neighbours_same_group": 0.16666666666666666,
+   "n_neighbours": 6
+  }
+ ]
+}

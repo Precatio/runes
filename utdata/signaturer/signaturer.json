@@ -1,0 +1,225 @@
+{
+ "source": "Källström 2007, Bilaga 1; Rundata 3.1 (2018)",
+ "n_catalogue_swedish": 318,
+ "core_definition": "typ B:1–2 (ristarsignatur bredvid annan text), runsten, finns i Rundata",
+ "n_core": 177,
+ "n_missing": 20,
+ "n_missing_named": 13,
+ "by_province": {
+  "U": {
+   "n": 120,
+   "missing": 2
+  },
+  "Sö": {
+   "n": 19,
+   "missing": 0
+  },
+  "Vs": {
+   "n": 7,
+   "missing": 1
+  },
+  "Ög": {
+   "n": 6,
+   "missing": 3
+  },
+  "Vg": {
+   "n": 5,
+   "missing": 4
+  },
+  "G": {
+   "n": 4,
+   "missing": 3
+  },
+  "Hs": {
+   "n": 4,
+   "missing": 2
+  },
+  "M": {
+   "n": 4,
+   "missing": 2
+  },
+  "Öl": {
+   "n": 3,
+   "missing": 1
+  },
+  "Sm": {
+   "n": 2,
+   "missing": 1
+  },
+  "Gs": {
+   "n": 2,
+   "missing": 0
+  },
+  "J": {
+   "n": 1,
+   "missing": 1
+  }
+ },
+ "n_missing_also_runor": 20,
+ "missing": [
+  {
+   "signum": "Sm 111",
+   "type": "B:2",
+   "normalization": "aku- hio[gg](?).",
+   "named": false,
+   "named_note": "aku- – namnet skadat, läsningen omstridd",
+   "runor_carvers": []
+  },
+  {
+   "signum": "Öl Köping18",
+   "type": "B:1",
+   "normalization": "... hiogg.",
+   "named": false,
+   "named_note": null,
+   "runor_carvers": []
+  },
+  {
+   "signum": "G 200",
+   "type": "B:1",
+   "normalization": "Auðvaldr rísti r[únaR(?)] ...",
+   "named": true,
+   "named_note": null,
+   "runor_carvers": []
+  },
+  {
+   "signum": "G 203",
+   "type": "B:1",
+   "normalization": "| roþ£biern risti run!iR [þ]esa kaiRl-ifR sumaR aR karla kan",
+   "named": true,
+   "named_note": "Hróðbiôrn rísti – raden ovan är translittereringen",
+   "runor_carvers": []
+  },
+  {
+   "signum": "G 276",
+   "type": "B:1",
+   "normalization": "Aldviðr, Libbi, Æinarr rístu.",
+   "named": true,
+   "named_note": null,
+   "runor_carvers": []
+  },
+  {
+   "signum": "Vg 119",
+   "type": "B:1",
+   "normalization": "Ok ráð rúnaR þáR rægi[n]kundu þar, sváð AlríkR lubu fáði.",
+   "named": true,
+   "named_note": null,
+   "runor_carvers": []
+  },
+  {
+   "signum": "Vg 130",
+   "type": "B:2",
+   "normalization": "Hiogg Trygg(v)i(?).",
+   "named": true,
+   "named_note": null,
+   "runor_carvers": []
+  },
+  {
+   "signum": "Vg 180",
+   "type": "B:2",
+   "normalization": "... [F]undinn [hi]ogg.",
+   "named": true,
+   "named_note": "[F]undinn [hi]ogg – namnet till största delen bevarat",
+   "runor_carvers": []
+  },
+  {
+   "signum": "Vg 181",
+   "type": "B:1",
+   "normalization": "H(á)varðr(?) hiogg s[tæin].",
+   "named": true,
+   "named_note": null,
+   "runor_carvers": []
+  },
+  {
+   "signum": "Ög 8",
+   "type": "B:1",
+   "normalization": "VíkingR fáði ok GrímulfR.",
+   "named": true,
+   "named_note": null,
+   "runor_carvers": []
+  },
+  {
+   "signum": "Ög 64",
+   "type": "B:1",
+   "normalization": "Lófi ræist rúnaR þess(a)R.",
+   "named": true,
+   "named_note": null,
+   "runor_carvers": []
+  },
+  {
+   "signum": "Ög 146",
+   "type": "B:2",
+   "normalization": "... [hio]gg stæin þenna.",
+   "named": false,
+   "named_note": null,
+   "runor_carvers": []
+  },
+  {
+   "signum": "Vs 16",
+   "type": "B:2",
+   "normalization": "... rísti.",
+   "named": false,
+   "named_note": null,
+   "runor_carvers": []
+  },
+  {
+   "signum": "U 422",
+   "type": "B/BI:1",
+   "normalization": "sin si...",
+   "named": true,
+   "named_note": "Gunnarr rísti rúnaR enligt översättningen; normaliseringsraden avbruten i utdraget",
+   "runor_carvers": []
+  },
+  {
+   "signum": "U Fv1992;156",
+   "type": "B:1",
+   "normalization": "... hiogg stæin.",
+   "named": false,
+   "named_note": null,
+   "runor_carvers": []
+  },
+  {
+   "signum": "Hs 14",
+   "type": "B:1",
+   "normalization": "Hrómundr Hé-Gylfa sun fáði rúnaR þessaR.",
+   "named": true,
+   "named_note": null,
+   "runor_carvers": []
+  },
+  {
+   "signum": "Hs 16",
+   "type": "B:1",
+   "normalization": "... [ma]rkaði stæin þenn[a].",
+   "named": false,
+   "named_note": null,
+   "runor_carvers": []
+  },
+  {
+   "signum": "M 2",
+   "type": "B:2",
+   "normalization": "Ásgærðr/ÁsgæiRR barði.",
+   "named": true,
+   "named_note": null,
+   "runor_carvers": []
+  },
+  {
+   "signum": "M 4",
+   "type": "B:2",
+   "normalization": "… [mark]aðu(?) stæin þenna.",
+   "named": false,
+   "named_note": null,
+   "runor_carvers": []
+  },
+  {
+   "signum": "J RS1928;66",
+   "type": "B:1",
+   "normalization": "Triúnn(?) ræist ok Stæinn rúnaR þessaR.",
+   "named": true,
+   "named_note": null,
+   "runor_carvers": []
+  }
+ ],
+ "outside_U_So": {
+  "n": 38,
+  "missing": 18
+ }
+}
