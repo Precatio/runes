@@ -140,9 +140,11 @@ export function LadderDetails({ pt }: { pt: Pattern }) {
 export function PatternBody({ pt }: { pt: Pattern }) {
   return (
     <div className="space-y-2">
-      <p className="text-sm text-slate-800 leading-relaxed">
-        {pt.hypothesis && <span className="font-semibold text-slate-900">Vad vi ser: </span>}{pt.text}
-      </p>
+      {pt.text && (
+        <p className="text-sm text-slate-800 leading-relaxed">
+          {pt.hypothesis && <span className="font-semibold text-slate-900">Vad vi ser: </span>}{pt.text}
+        </p>
+      )}
       {pt.hypothesis && (
         <div className="rounded-lg border border-amber-200 bg-amber-50/70 px-3 py-2 text-sm leading-relaxed text-slate-800">
           <p><span className="font-semibold text-amber-900">Hypotes: </span>{pt.hypothesis}</p>

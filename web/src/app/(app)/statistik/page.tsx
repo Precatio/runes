@@ -5,10 +5,10 @@ import Link from "next/link";
 import { API_URL } from "@/lib/api";
 import OwnQuestion from "@/components/OwnQuestion";
 import type { Corpus, Status, Tab } from "./_delar/typer";
-import { PATTERN_TOPICS, TOPIC, memo } from "./_delar/gemensamt";
+import { TOPIC, memo } from "./_delar/gemensamt";
 import { Messages } from "./_delar/budskap";
 import { People } from "./_delar/manniskor";
-import { NewBadge } from "@/components/PatternCard";
+import { NewPatterns } from "./_delar/nya";
 import { GITHUB_URL } from "@/lib/site";
 import { Overview } from "./_delar/oversikt";
 import { Geography } from "./_delar/geografi";
@@ -183,29 +183,3 @@ export default function StatistikPage() {
   );
 }
 
-const firstSentence = (t: string) => { const s = t.split(/(?<=[a-zåäö0-9)])\.\s/)[0].trim(); return /[.!?]$/.test(s) ? s : `${s}.`; };
-
-/** The patterns that appeared (or changed status) in the last 30 days, first on the page, each opening its question. */
-function NewPatterns({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void }) {
-  const fresh = (data.patterns ?? []).filter(p => p.new);
-  if (!fresh.length) return null;
-  const tabOf = (topic: string) => (Object.entries(PATTERN_TOPICS).find(([, ts]) => ts.includes(topic))?.[0] ?? "overview") as Tab;
-  return (
-    <section aria-label="Nya mönster" className="rounded-[24px] border border-violet-200 bg-violet-50/60 p-4 md:p-5 space-y-2">
-      <h3 className="text-sm font-bold uppercase tracking-wider text-violet-900">Nya mönster i datan ({fresh.length})</h3>
-      <p className="text-xs text-violet-900/80">Mönster som dykt upp eller bytt status de senaste 30 dagarna. Ett nytt mönster märks Nytt först när det håller i båda halvorna av korpusen och klarar den gemensamma justeringen över alla mönster; innan dess Nytt, obekräftat. Klicka för att öppna frågan de hör till.</p>
-      <ul className="space-y-1.5">
-        {fresh.map(p => (
-          <li key={`${p.topic}|${p.key}`}>
-            <button type="button" onClick={() => onOpen(tabOf(p.topic))}
-              className="w-full text-left flex flex-wrap items-start gap-2 rounded-xl bg-white/80 border border-violet-100 px-3 py-2 hover:border-violet-300">
-              <NewBadge pt={p} />
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#b7410e] pt-0.5">{p.topic}</span>
-              <span className="text-sm text-slate-800 flex-1 min-w-[16rem]">{firstSentence(p.text)}</span>
-            </button>
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}
