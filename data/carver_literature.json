@@ -1,0 +1,236 @@
+{
+ "_om": "Ristarattribueringar i litteraturen som saknas i Rundatas ristarfält, för stenar i de möjliga okända ristarnas grupper (Statistik → Okända ristare). Genomläst 2026-10-29 i de digitaliserade Sveriges runinskrifter och i Källström (2007); citaten är kontrollerade mot texten (utdata/okanda_ristare/litteratur.md). stones = stenar som attribueringen gäller, outside = stenar utanför gruppen som den knyter dem till. nearby_signed = signerade stenar utanför gruppen i dess bygd; anchor = en av gruppens stenar som posten knyts till.",
+ "sources": {
+  "SRI II": "Brate, E. 1911–18. Östergötlands runinskrifter (Sveriges runinskrifter II). Stockholm.",
+  "SRI IV": "Kinander, R. 1935–61. Smålands runinskrifter (Sveriges runinskrifter IV). Stockholm.",
+  "SRI V": "Jungner, H. & Svärdström, E. 1940–70. Västergötlands runinskrifter (Sveriges runinskrifter V). Stockholm.",
+  "Källström 2007": "Källström, M. 2007. Mästare och minnesmärken. Studier kring vikingatida runristare och skriftmiljöer i Norden. Stockholm Studies in Scandinavian Philology NS 43. Stockholm."
+ },
+ "attributions": [
+  {
+   "stones": [
+    "Sm 111"
+   ],
+   "carver": "aku-(?)",
+   "kind": "signerad (osäker)",
+   "source": "Källström 2007",
+   "page": "s. 208, 342",
+   "text": "Slutet läses aku- hio[gg](?) »aku- högg(?)» och tas upp som ristarsignatur (efter Strid, ATA dnr 5317/85, och Varenius m.fl. 2002), mot Kinanders läsning som bön (SRI IV s. 249); namnet är skadat och tolkningen osäker (Ágautr? Ôgurr?)."
+  },
+  {
+   "stones": [
+    "Vg 181",
+    "Vg 158"
+   ],
+   "carver": "Hávarðr(?)",
+   "kind": "signerad",
+   "source": "SRI V",
+   "page": "s. 296, 325 f.",
+   "text": "Vg 181 är signerad ”H[á]varðr(?) hiogg stein”; Vg 158 är ”sannolikt utförd av samme man som har signerat Vg 181”. Källström (2007 s. 350) tar upp Vg 181 som signatur: »Håvard(?) högg stenen»."
+  },
+  {
+   "stones": [
+    "Vg 179",
+    "Vg 184"
+   ],
+   "carver": null,
+   "kind": "samme ristare",
+   "source": "SRI V",
+   "page": "s. 323, 331",
+   "text": "Vg 184 ”synes vara ristad av samme man, som utfört Vg 179”."
+  },
+  {
+   "stones": [
+    "Vg 130"
+   ],
+   "outside": [
+    "Vg 139"
+   ],
+   "carver": "Tryggvi(?)",
+   "kind": "signerad",
+   "source": "SRI V",
+   "page": "s. 250 f.",
+   "text": "Vg 130 är signerad Trygge(?); Vg 139 är möjligen ristad av samme man. Källström (2007 s. 350): »Högg Tryggve(?)», ingen bättre tolkning än SRI:s."
+  },
+  {
+   "stones": [
+    "Vg 152"
+   ],
+   "outside": [
+    "Vg 151"
+   ],
+   "carver": null,
+   "kind": "samme ristare",
+   "source": "SRI V",
+   "page": "s. 282 ff.",
+   "text": "Vg 151 och Vg 152 är med all sannolikhet ristade av samme man."
+  },
+  {
+   "stones": [
+    "Vg 11",
+    "Vg 13",
+    "Vg 15"
+   ],
+   "carver": null,
+   "kind": "samme ristare",
+   "source": "SRI V",
+   "page": "s. 20, 25, 29",
+   "text": "”troligt, att samme ristare utfört Vg 13 och 15 samt troligen även Vg 11”."
+  },
+  {
+   "stones": [
+    "Vg 2"
+   ],
+   "outside": [
+    "Vg 4"
+   ],
+   "carver": null,
+   "kind": "samme ristare",
+   "source": "SRI V",
+   "page": "s. 4 f.",
+   "text": "Vg 2 ”torde få tillskrivas samme ristare” som Vg 4."
+  },
+  {
+   "stones": [
+    "Ög 46",
+    "Ög 233"
+   ],
+   "carver": null,
+   "kind": "samme ristare",
+   "source": "SRI II",
+   "page": "s. 217",
+   "text": "Samme resare (Vebjörn), och ”ristaren ock sannolikt den samme”."
+  },
+  {
+   "stones": [
+    "Ög 225"
+   ],
+   "outside": [
+    "Ög 231"
+   ],
+   "carver": null,
+   "kind": "samme ristare",
+   "source": "SRI II",
+   "page": "s. 210",
+   "text": "”ristad av samma hand som Ög. 231” (Ihrfors, citerad av Brate)."
+  }
+ ],
+ "checked": {
+  "date": "2026-10-29",
+  "volumes": [
+   "SRI II",
+   "SRI IV",
+   "SRI V",
+   "Källström 2007"
+  ],
+  "stones": [
+   "Ög 13",
+   "Ög 14",
+   "Ög 20",
+   "Ög 25",
+   "Ög 34",
+   "Ög 46",
+   "Ög 47",
+   "Ög 105",
+   "Ög 112",
+   "Ög 128",
+   "Ög 148",
+   "Ög 149",
+   "Ög 153",
+   "Ög 170",
+   "Ög 172",
+   "Ög 176",
+   "Ög 192",
+   "Ög 219",
+   "Ög 221",
+   "Ög 225",
+   "Ög 230",
+   "Ög 232",
+   "Ög 233",
+   "Ög 236",
+   "Ög 237",
+   "Sm 69",
+   "Sm 76",
+   "Sm 77",
+   "Sm 78",
+   "Sm 80",
+   "Sm 85",
+   "Sm 89",
+   "Sm 98",
+   "Sm 99",
+   "Sm 101",
+   "Sm 105",
+   "Sm 110",
+   "Sm 111",
+   "Sm 134",
+   "Vg 130",
+   "Vg 152",
+   "Vg 154",
+   "Vg 157",
+   "Vg 158",
+   "Vg 173",
+   "Vg 179",
+   "Vg 181",
+   "Vg 182",
+   "Vg 183",
+   "Vg 184",
+   "Vg 187",
+   "Vg 2",
+   "Vg 9",
+   "Vg 11",
+   "Vg 13",
+   "Vg 15",
+   "Vg 16",
+   "Vg 37",
+   "Vg 45",
+   "Vg 51",
+   "Vg 56"
+  ],
+  "not_checked": [
+   "Ög 155",
+   "Ög 158",
+   "Ög Fv1966;102",
+   "Vg NOR1997;27",
+   "Vg 39",
+   "Vg 77"
+  ],
+  "not_read": "Kitzler Åhfeldt, L. 2002. Work and Worship; Larsson i Studia anthroponymica Scandinavica 26; Varenius, Gustavson & Agertz 2002 (Om runstenar i Jönköpings län)."
+ },
+ "nearby_signed": [
+  {
+   "stone": "Ög 234",
+   "near": "Konungsund (Östra Stenby, intill Ög 231 och Ög 233)",
+   "text": "karl * rist * stin * þisa »Karl ristade(?) denna sten»; Källström (2007 s. 85 ff., 355) diskuterar om rist är ræist »ristade» eller förkortat ræisti »reste» (Brate: reste). Ög 235 samma Karl (uist).",
+   "source": "Källström 2007",
+   "anchor": "Ög 233"
+  },
+  {
+   "stone": "Ög N288",
+   "near": "Konungsund (Östra Husby)",
+   "text": "Oklunda, »Gunnar ristade dessa runor» (Källström 2007 s. 356); ristning i fast häll.",
+   "source": "Källström 2007",
+   "anchor": "Ög 13"
+  },
+  {
+   "stone": "Vg 180",
+   "near": "Kölaby (Kölaby sn)",
+   "text": "[F]undinn [hi]ogg »Funnen högg» (Källström 2007 s. 77, 350).",
+   "source": "Källström 2007",
+   "anchor": "Vg 179"
+  },
+  {
+   "stone": "Vg 59",
+   "near": "Husaby (Norra Härene, Kinnefjärdings hd)",
+   "text": "Hjälm och Hjälle högg runorna (Källström 2007 s. 348; i Rundata).",
+   "source": "Källström 2007",
+   "anchor": "Vg 51"
+  },
+  {
+   "stone": "Sm 96",
+   "near": "Vetlanda (Lannaskede)",
+   "text": "þurstin : rist »Torsten ristade(?)/reste(?)» (Källström 2007 s. 85 ff., 342).",
+   "source": "Källström 2007",
+   "anchor": "Sm 110"
+  }
+ ]
+}

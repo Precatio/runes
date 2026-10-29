@@ -22,12 +22,16 @@ interface ChangeFeature {
   provinces: { p_differ: number; q_differ?: number; p_differ_nocarver?: number; rows: { province: string; n: number; share1050: number; lo1050: number; hi1050: number; cross_year: number | null; cross_lo: number | null; cross_hi: number | null }[] } | null;
   space: { n: number; p: number; high: string[] | string; low: string[] | string } | null;
 }
-interface AnonGroup {
+export interface AnonGroup {
   id: number; name?: string | null; status: "candidate" | "known"; type_stone: string; n: number; spread_km: number;
   stones: string[]; parishes: string[] | string; styles: { style: string; n: number }[] | null; stability: number;
   robust_no_time?: number; robust?: boolean; known_carvers_near?: number; attributed_share_area?: number;
   marks: { feature: string; share_group: number; share_area: number }[] | null;
   nearest_carver: { carver: string; n: number; dist: number; km: number; as_close_as_same_carver: boolean } | null;
+  // What Sveriges runinskrifter already says about the group's stones (src/carver_literature.py)
+  literature?: { status: "beskriven" | "delvis beskriven" | "inget i litteraturen" | "inte kontrollerad"; n_covered: number; n_read: number;
+    attributions: { stones: string[]; outside?: string[]; carver: string | null; kind: string; reference: string; text: string; source_full?: string }[];
+    nearby_signed?: { stone: string; text: string }[]; not_read?: string };
   model: { n: number; carver: string; share: number; mean_p: number } | null;
 }
 interface ChangeAssoc {

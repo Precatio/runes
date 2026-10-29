@@ -216,16 +216,24 @@ def seriation_findings(chron: dict, stones: list[dict], lookup, inscriptions: li
     return out
 
 
+def _and(items: list[str]) -> str:
+    return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " och " + items[-1]
+
+
 def anonymous_findings(anon: dict, lookup, inscriptions: list[dict]) -> list[dict]:
     """Stenar i grupper som kan vara en okänd ristare eller verkstad (r/anonymous.R)."""
     v = anon.get("validation") or {}
     if not v.get("purity"):
         return []
     coverage, oeuvre = _province_coverage(inscriptions), _oeuvre(inscriptions)
+    from src import carver_literature
+    anon = carver_literature.annotate(anon)
+    lit_stone = carver_literature.by_stone()
     out = []
     for g in anon.get("groups") or []:
         if g.get("status") != "candidate" or not g.get("name"):
             continue
+        lit = g.get("literature") or {}
         marks = "; ".join(f"{m['feature']} ({_pct(m['share_group'])} mot {_pct(m['share_area'])} i trakten)"
                           for m in (g.get("marks") or [])[:3])
         evidence = min(0.6, v["purity"]) * min(g.get("stability") or 0, g.get("robust_no_time") if g.get("robust_no_time") is not None else 1)
@@ -236,19 +244,31 @@ def anonymous_findings(anon: dict, lookup, inscriptions: list[dict]) -> list[dic
             rel, rel_reasons = relevance(rec, None, coverage, oeuvre)
             ours = (f"Ingår i en grupp av {g['n']} stenar utan ristare som liknar varandra lika mycket som en ristares "
                     f"stenar – arbetsnamn {g['name']} (typsten {g['type_stone']})")
-            out.append(_finding(rec, ANONYMOUS, "nytt", ours, _carver_text(rec), evidence, 0.6, rel,
+            # Sveriges runinskrifter already ties this stone to a carver that Rundata lacks: the group agrees with it
+            a = lit_stone.get(signum)
+            lit_ev = ([f"{a['source']} {a['page']}: {a['text']}"] if a else []) + (
+                [f"gruppen är {lit['status']} i Sveriges runinskrifter ({lit['n_covered']} av {g['n']} stenar)"]
+                if lit.get("status") in ("beskriven", "delvis beskriven") and not a else [])
+            out.append(_finding(rec, ANONYMOUS, "stämmer" if a else "nytt", ours, _carver_text(rec), evidence, 0.6, rel,
                                 {"belägg": [f"när metoden prövades på stenar med känd ristare bestod en grupp i genomsnitt "
                                             f"till {_pct(v['purity'])} av samma ristare, mot {_pct(v['purity_geography'])} "
                                             "för lika många närliggande stenar",
                                             f"gruppen återkommer till {_pct(g.get('stability') or 0)} när en femtedel av "
                                             "länkarna tas bort och till "
                                             f"{_pct(g.get('robust_no_time') or 0)} när dragen som följer tiden tas bort"]
-                                           + ([f"utmärks av {marks}"] if marks else []),
-                                 "nyhet": ["ingen ristare i Rundata, och gruppen liknar ingen känd ristare i närheten",
+                                           + ([f"utmärks av {marks}"] if marks else []) + lit_ev,
+                                 "nyhet": (["Sveriges runinskrifter knyter redan stenen till en ristare (" +
+                                            (a["carver"] or "samme ristare som " + ", ".join(
+                                                x for x in a["stones"] + a.get("outside", []) if x != signum)) +
+                                            "), men Rundatas ristarfält saknar det"] if a else []) + [
+                                           "ingen ristare i Rundata, och gruppen liknar ingen känd ristare i närheten",
                                            "metoden är prövad där ristare är kända (nästan bara Uppland och Södermanland), "
                                            "inte i det här landskapet",
-                                           "arbetsnamnet är en etikett för gruppen, inte en person – kontrollera mot "
-                                           "litteraturen om gruppen redan är beskriven"],
+                                           "arbetsnamnet är en etikett för gruppen, inte en person – " + (
+                                               f"Sveriges runinskrifter är genomläst för {lit['n_read']} av gruppens "
+                                               f"{g['n']} stenar ({lit['status']}), liksom Källström 2007"
+                                               if lit.get("status") not in (None, "inte kontrollerad") else
+                                               "kontrollera mot litteraturen om gruppen redan är beskriven")],
                                  "relevans": rel_reasons}, True,
                                 stats={"group": g["name"], "type_stone": g["type_stone"], "n": g["n"],
                                        "purity": v["purity"], "stability": g.get("stability")}))
@@ -819,15 +839,24 @@ def corpus_patterns(res: dict) -> list[dict]:
                         "note": ((WEAK_NOTE + " ") if weak else "") + "Tidsindelningen bygger på Gräslunds stilgrupper och gäller "
                                 "stenar med säker stilgrupp.",
                         "significance": significance(k["q_period"], "q", "Fishers exakta test, Benjamini–Hochberg")})
-    an = res.get("anonymous") or {}
+    from src import carver_literature
+    an = carver_literature.annotate(res.get("anonymous") or {})
     if an.get("groups"):
         v = an["validation"]; cands = [g for g in an["groups"] if g["status"] == "candidate"]
+        # What Sveriges runinskrifter already says about the groups' stones (data/carver_literature.json)
+        lit_known = [g for g in cands if (g.get("literature") or {}).get("status") in ("beskriven", "delvis beskriven")]
+        lit_none = [g for g in cands if (g.get("literature") or {}).get("status") == "inget i litteraturen"]
+        lit_text = ((f" {len(lit_known)} av dem är helt eller delvis beskrivna i Sveriges runinskrifter eller hos Källström (2007), där Rundatas "
+                     "ristarfält saknar attribueringen (" + ", ".join(f"{g['name']}: {g['literature']['n_covered']} av "
+                                                                        f"{g['n']} stenar" for g in lit_known) + ")"
+                     + (f"; {_and([g['name'] for g in lit_none])} har ingen sådan anmärkning där" if lit_none else "")
+                     + ".") if lit_known or lit_none else "")
         out.append({"key": "anonymous", "topic": "Okända ristare", "status": "mönster att pröva",
                     "text": f"{len(cands)} {'ny grupp' if len(cands) == 1 else 'nya grupper'} av stenar utan ristare "
                             f"({sum(g['n'] for g in cands)} stenar) liknar varandra lika mycket som en ristares stenar och "
                             "liknar ingen känd ristare i närheten. Appen har gett dem arbetsnamn efter typstenens socken: "
                             + ", ".join(f"{g['name']} ({g['n']} stenar)" for g in cands[:4]) + ". "
-                            f"{len(an['groups']) - len(cands)} andra grupper liknar en känd ristare.",
+                            f"{len(an['groups']) - len(cands)} andra grupper liknar en känd ristare." + lit_text,
                     "note": f"Prövat på stenar med känd ristare bestod en grupp i genomsnitt till {_pct(v['purity'])} av "
                             f"samma ristare, mot {_pct(v['purity_geography'])} för lika många närliggande stenar – omkring en "
                             "tredjedel av en typisk grupp kommer alltså från andra ristare, och geografin förklarar redan mycket. "

@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "okanda-ristare-litteratur",
+   "date": "2026-10-29",
+   "status": "nytt",
+   "title": "Okända ristare jämförda med litteraturen",
+   "text": "Tabellen över möjliga okända ristare i Statistik har fått en kolumn för vad litteraturen redan säger om gruppernas stenar, ur Sveriges runinskrifter och Källströms Mästare och minnesmärken. Två av de västgötska grupperna är redan beskrivna där, med signaturer som Rundatas ristarfält saknar – ett första belägg för att metoden hittar verkliga ristare också utanför Mälardalen. Konungsund, Vetlanda och Husaby är inte beskrivna som ristargrupper."
+  },
+  {
    "id": "robusthetstrappan",
    "date": "2026-10-29",
    "status": "nytt",

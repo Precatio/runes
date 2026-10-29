@@ -3,7 +3,7 @@ import { Details, Tip, asList } from "@/components/Explain";
 import { GLOSSARY } from "@/lib/glossary";
 import Link from "next/link";
 import ExportTable from "@/components/ExportTable";
-import type { Corpus } from "./typer";
+import type { AnonGroup, Corpus } from "./typer";
 import { Fig, Method, PROVINCE_NAMES, SectionIntro, Stones, Th, d2, pc } from "./gemensamt";
 import { sectionOf } from "./oversikt";
 
@@ -141,6 +141,31 @@ function SomeoneElse({ a }: { a: Corpus["attribution"] }) {
   );
 }
 
+const LIT_STYLE: Record<string, string> = {
+  "beskriven": "bg-sky-50 text-sky-900 border-sky-200", "delvis beskriven": "bg-sky-50 text-sky-800 border-sky-200",
+  "inget i litteraturen": "bg-emerald-50 text-emerald-900 border-emerald-200", "inte kontrollerad": "bg-slate-100 text-slate-600 border-slate-200",
+};
+
+/** What Sveriges runinskrifter says about a candidate group: status, and each attribution with its page. */
+function Literature({ lit, n }: { lit?: AnonGroup["literature"]; n: number }) {
+  if (!lit) return <>–</>;
+  return (
+    <div className="space-y-1">
+      <span className={`inline-block rounded-full border px-2 py-0.5 font-semibold ${LIT_STYLE[lit.status] ?? ""}`}>
+        {lit.status === "beskriven" || lit.status === "delvis beskriven" ? `${lit.status === "beskriven" ? "Beskriven" : "Delvis beskriven"}: ${lit.n_covered} av ${n} stenar`
+          : lit.status === "inget i litteraturen" ? `Inget i SRI (${lit.n_read} av ${n} stenar lästa)` : "Inte kontrollerad"}
+      </span>
+      {lit.attributions.map((a, i) => (
+        <div key={i}><span className="font-semibold">{a.carver ? `${a.carver}: ` : ""}</span>{a.text} <span className="text-slate-500">({a.reference})</span></div>
+      ))}
+      {(lit.nearby_signed ?? []).map(x => (
+        <div key={x.stone} className="text-slate-600"><span className="font-semibold">Signerad i bygden, utanför gruppen: </span>
+          <Link href={`/inskrifter/${encodeURIComponent(x.stone)}`} className="hover:underline">{x.stone}</Link> – {x.text}</div>
+      ))}
+    </div>
+  );
+}
+
 export function Anonymous({ data }: { data: Corpus }) {
   const a = data.anonymous, f = data.figure_urls.anonymous || {};
   if (!a) return <p className="text-sm text-slate-600">Analysen av okända ristare saknas i den här beräkningen; beräkna korpusanalyserna på nytt.</p>;
@@ -182,7 +207,8 @@ export function Anonymous({ data }: { data: Corpus }) {
           <ExportTable><table className="w-full text-sm">
             <thead><tr><Th>Nr</Th><Th>Arbetsnamn</Th><Th>Stenar</Th><Th>Socknar</Th>
               <Th>Stilgrupper</Th><Th>Utmärks av (gruppen mot trakten)</Th><Th>Stabilitet</Th><Th tip="Hur stor del av gruppen som återkommer när stilgrupp, kors, stungna runor, böner och signaturer – drag som följer tiden – tas bort, och gränsen räknas om.">Utan tidsdragen</Th>
-              <Th>Närmast liknande ristare i Rundata</Th></tr></thead>
+              <Th>Närmast liknande ristare i Rundata</Th>
+              <Th tip="Vad Sveriges runinskrifter (Brate, Kinander, Jungner & Svärdström) och Källström, Mästare och minnesmärken (2007), redan säger om gruppens stenar – attribueringar och signaturer som Rundatas ristarfält saknar.">Litteraturen</Th></tr></thead>
             <tbody>{cands.map(g => {
               const parishes = asList(g.parishes);
               return (
@@ -199,6 +225,7 @@ export function Anonymous({ data }: { data: Corpus }) {
                     <span className={`inline-block rounded-full border px-2 py-0.5 text-xs font-semibold ${g.robust ? "bg-emerald-50 text-emerald-900 border-emerald-200" : "bg-slate-100 text-slate-600 border-slate-200"}`}>
                       {pc(g.robust_no_time)}{g.robust ? " håller" : " delvis"}</span>)}</td>
                   <td className="p-2 text-xs">{g.nearest_carver ? `${g.nearest_carver.carver} (${d2(g.nearest_carver.km, 0)} km bort, inte lika nära som samma ristares stenar)` : "ingen inom 50 km"}</td>
+                  <td className="p-2 text-xs min-w-[16rem]"><Literature lit={g.literature} n={g.n} /></td>
                 </tr>
               );
             })}</tbody>

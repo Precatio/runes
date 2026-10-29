@@ -145,6 +145,9 @@ def anonymous(an: dict) -> dict | None:
     held = (f" När gränsen i stället togs fram på andra ristare än de som prövades var grupperna {_pct(ho['purity'])} samma "
             f"ristare, mot {_pct(ho['purity_geography'])} för närliggande stenar." if ho.get("purity") else "")
     in_cand = cov.get("carvers_in_candidate_provinces")
+    lit = {g["name"]: (g.get("literature") or {}) for g in cands}
+    lit_known = [n for n, x in lit.items() if x.get("status") in ("beskriven", "delvis beskriven")]
+    lit_none = [n for n, x in lit.items() if x.get("status") == "inget i litteraturen"]
     return _section(
         "anonymous", "Finns det ristare som ännu inte har namn?",
         "Om en grupp stenar utan ristare liknar varandra lika mycket som en ristares stenar, kan det vara en okänd "
@@ -157,6 +160,10 @@ def anonymous(an: dict) -> dict | None:
         f"{_pct(v.get('purity_geography'))} om man bara tar närliggande stenar.{held}",
         "osäkert",
         [f"Kandidaterna finns i {_names(provs[:4])}, där få stenar har en ristare i Rundata." if provs else None,
+         (f"Sveriges runinskrifter knyter redan en del av stenarna till en ristare som Rundata saknar: "
+          f"{_names(lit_known)} är helt eller delvis beskrivna där"
+          + (f", {_names(lit_none)} inte" if lit_none else "") + ", enligt Sveriges runinskrifter och Källström (2007).")
+         if lit_known or lit_none else None,
          f"{known} andra grupper liknar en känd ristare. Att metoden där hittar kända ristare talar för att den fångar "
          "verkliga ristargrupper." if known else None,
          "Nästa steg är att jämföra ornamentik, runformer och huggteknik på stenarna i en grupp."],

@@ -233,6 +233,8 @@ def corpus_results(request: Request):
     # The day (the 30-day "Nytt"/"Ändrat" window), the data files the builder reads and the robustness ladder (computed
     # after the corpus) belong in the key
     rob = os.path.getmtime(robustness.path(fp)) if os.path.exists(robustness.path(fp)) else 0
+    from src import carver_literature
+    rob = f"{rob}|{os.path.getmtime(carver_literature.PATH) if os.path.exists(carver_literature.PATH) else 0}"
     return cached_json(request, f"corpus|{fp}|{dir_version(crosscheck.CACHE)}|{findings_version()}|{rob}",
                        lambda: _corpus_results(fp))
 
@@ -255,6 +257,8 @@ def _corpus_results(fp: str) -> dict:
     patterns = pattern_registry.annotate(patterns)  # "Nytt" the first 30 days after a pattern appears, once confirmed
     html_map = (res.get("geography") or {}).get("html_map")
     from src import r_explain
+    from src import carver_literature  # what Sveriges runinskrifter says about the unknown carvers' stones
+    res = {**res, "anonymous": carver_literature.annotate(res.get("anonymous") or {})}
     return {**res, "figure_urls": _figure_urls(fp, res), "patterns": patterns, "sections": r_explain.sections(res),
             "overview": r_explain.overview(res),
             "robustness": _robust_summary(fp, patterns),
