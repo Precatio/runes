@@ -1,8 +1,8 @@
 "use client";
 
 // Bedrock at the stone's site (SGU) and the inscription's language traits, shared by the pages that
-// compare stones and carvers.
-import { useState } from "react";
+// compare stones and carvers, and where the literature register mentions the stone.
+import { useEffect, useState } from "react";
 import { API_URL } from "@/lib/api";
 import ExportTable from "@/components/ExportTable";
 
@@ -142,6 +142,87 @@ export function LanguageTable({ comparison }: { comparison: LanguageComparison }
         annat (t.ex. stungna runor bredvid stungen i, själsbön bredvid bön) visas men räknas inte, och ett drag som stämmer med
         ristaren men är lika vanligt i hela landskapet säger lite om just den ristaren.
       </p>
+    </div>
+  );
+}
+
+// The literature register (src/literature.py): where dissertations and editions mention the stone
+interface LitSnippet { page: string; text: string; entry?: boolean }
+interface LitWork {
+  work: { id: string; author: string; year: number; title: string; kind: string; series?: string; url?: string; access: string };
+  pages: string[]; n: number; snippets: LitSnippet[]; entry_pages: string[];
+}
+interface LitCatalogWork { id: string; author: string; year: number; title: string; access: string; indexed: boolean; n_stones: number; url?: string }
+
+const ACCESS: Record<string, string> = { "öppen": "fri fulltext", "sverige": "fulltext inom Sverige", "tryck": "bara tryckt" };
+
+/** Where the dissertations and editions in the register mention the stone, with printed page and a short excerpt. */
+export function LiteratureBox({ signum }: { signum: string }) {
+  const [data, setData] = useState<{ works: LitWork[]; n_indexed: number } | null>(null);
+  const [catalog, setCatalog] = useState<LitCatalogWork[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`${API_URL}/api/research/literature/${enc(signum)}`)
+      .then(r => (r.ok ? r.json() : Promise.reject(new Error("Litteraturen kunde inte hämtas."))))
+      .then(d => { if (!cancelled) setData(d); })
+      .catch(e => { if (!cancelled) setError(e.message); });
+    return () => { cancelled = true; };
+  }, [signum]);
+  const loadCatalog = () => {
+    if (catalog) return;
+    fetch(`${API_URL}/api/research/literature`).then(r => r.json()).then(d => setCatalog(d.works)).catch(() => setCatalog([]));
+  };
+  if (error) return <p className="text-xs text-red-700">{error}</p>;
+  if (!data) return <p className="text-xs text-slate-500">Söker i litteraturregistret …</p>;
+  return (
+    <div className="space-y-3 text-sm">
+      {data.works.length === 0 ? (
+        <p className="text-xs text-slate-600">Ingen av de {data.n_indexed} indexerade avhandlingarna och utgåvorna nämner stenen.</p>
+      ) : (
+        <ul className="space-y-2">
+          {data.works.map(w => (
+            <li key={w.work.id} className="rounded-xl border border-slate-200 bg-white/80 px-3 py-2">
+              <div className="flex flex-wrap items-baseline gap-x-2">
+                <span className="font-semibold text-slate-900">{w.work.author.split(",")[0]} {w.work.year}</span>
+                <span className="text-xs text-slate-600 italic">{w.work.title}</span>
+                <span className="text-[11px] text-slate-500">{w.work.kind}</span>
+              </div>
+              <div className="text-xs text-slate-700 mt-0.5">
+                s. {w.pages.map((p, i) => (
+                  <span key={p}>{i > 0 && ", "}<span className={w.entry_pages.includes(p) ? "font-bold" : ""}
+                    title={w.entry_pages.includes(p) ? "Stenens egen artikel i utgåvan" : undefined}>{p}</span></span>
+                ))}
+                {w.entry_pages.length > 0 && <span className="text-slate-500"> (fetstil: stenens egen artikel)</span>}
+                {w.work.url && <> · <a href={w.work.url} target="_blank" rel="noreferrer" className="text-[#b7410e] underline">{ACCESS[w.work.access] ?? "verket"}</a></>}
+              </div>
+              <details className="mt-1">
+                <summary className="cursor-pointer text-xs font-semibold text-slate-600 hover:text-slate-900">Utdrag ({Math.min(w.snippets.length, w.n)} av {w.n})</summary>
+                <ul className="mt-1 space-y-1">
+                  {w.snippets.map((s, i) => (
+                    <li key={i} className="text-xs text-slate-600 leading-relaxed"><span className="font-semibold text-slate-500">s. {s.page}: </span><span translate="no">{s.text}</span></li>
+                  ))}
+                </ul>
+              </details>
+            </li>
+          ))}
+        </ul>
+      )}
+      <details onToggle={e => { if ((e.target as HTMLDetailsElement).open) loadCatalog(); }} className="text-xs text-slate-500">
+        <summary className="cursor-pointer font-semibold text-slate-600 hover:text-slate-900">Vilka verk finns i registret?</summary>
+        {catalog && (
+          <ul className="mt-1 space-y-0.5">
+            {catalog.map(c => (
+              <li key={c.id}>
+                <span className={c.indexed ? "text-emerald-700 font-semibold" : "text-slate-400"}>{c.indexed ? "✓" : "○"}</span>{" "}
+                {c.author.split(",")[0]} {c.year}, <span className="italic">{c.title}</span>
+                {c.indexed ? ` – ${c.n_stones} stenar` : ` – inte indexerad (${ACCESS[c.access] ?? c.access})`}
+              </li>
+            ))}
+          </ul>
+        )}
+      </details>
+      <p className="text-[11px] text-slate-500">Korta utdrag med tryckt sida ur appens litteraturregister. Ett signum kan nämnas i förbigående; läs sidan innan något citeras.</p>
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { SOURCES, download, fileName, toCSV, toXLSX } from "@/lib/exportTable";
-import { GeologyBox, LanguageTraits } from "@/components/StoneContext";
+import { GeologyBox, LanguageTraits, LiteratureBox } from "@/components/StoneContext";
 import TextModelPanel from "@/components/TextModelPanel";
 import { SIMILARITY_HELP, fmtP } from "@/lib/significance";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -180,6 +180,10 @@ function InscriptionDetail({ signum, meta }: { signum: string; meta: RundataMeta
             <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Språkdrag (fonetisk stil och språkbruk)</div>
             <LanguageTraits signum={rec.signum} />
           </div>
+        </div>
+        <div className="space-y-2 pt-2 border-t border-slate-900/5">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500">Litteraturen om stenen</div>
+          <LiteratureBox signum={rec.signum} />
         </div>
         <Attribution meta={meta} />
       </div>

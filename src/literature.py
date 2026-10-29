@@ -1,0 +1,99 @@
+"""Litteraturregistret: var avhandlingar och utgåvor om vikingatida runinskrifter nämner en sten.
+
+data/literature/catalog.json listar verken (författare, år, titel, tillgång, filnamn). De verk vars PDF finns i
+LITERATURE_DIR (standard /Volumes/2TB/litteratur) indexeras av scripts/build_literature_index.py: texten tas ut sida för
+sida (pdftotext), varje runsignum som finns i Rundata letas upp, och för varje träff sparas den tryckta sidan och ett
+kort utdrag runt omnämnandet. Indexet ligger i data/cache/literature/index.json och följer inte med kodförrådet, eftersom
+det bygger på upphovsrättsskyddade texter; appen visar bara korta utdrag med sidhänvisning.
+"""
+from __future__ import annotations
+
+import json
+import os
+import re
+
+from src.signum import fold_signum
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CATALOG = os.path.join(ROOT, "data", "literature", "catalog.json")
+INDEX = os.path.join(ROOT, "data", "cache", "literature", "index.json")
+DIR = os.environ.get("LITERATURE_DIR", "/Volumes/2TB/litteratur")
+SNIPPET = 110  # characters on each side of a mention
+_cache: dict[str, tuple[float, dict]] = {}
+
+
+def _load(path: str) -> dict:
+    try:
+        mtime = os.path.getmtime(path)
+    except OSError:
+        return {}
+    hit = _cache.get(path)
+    if hit and hit[0] == mtime:
+        return hit[1]
+    with open(path, encoding="utf-8") as fh:
+        data = json.load(fh)
+    _cache[path] = (mtime, data)
+    return data
+
+
+def catalog() -> list[dict]:
+    """Verken, med om de är indexerade och hur många stenar de nämner."""
+    idx = _load(INDEX)
+    stats = idx.get("works") or {}
+    return [{**w, "indexed": w["id"] in stats, "n_stones": (stats.get(w["id"]) or {}).get("n_stones", 0),
+             "n_pages": (stats.get(w["id"]) or {}).get("n_pages", 0)} for w in _load(CATALOG).get("works") or []]
+
+
+def files(work: dict) -> list[str]:
+    return [f for f in (work.get("files") or ([work["file"]] if work.get("file") else []))]
+
+
+def for_stone(signum: str) -> dict:
+    """Vad litteraturen i registret säger om stenen: per verk, sidorna och utdragen."""
+    idx = _load(INDEX)
+    works = {w["id"]: w for w in _load(CATALOG).get("works") or []}
+    hits = (idx.get("stones") or {}).get(fold_signum(signum)) or []
+    by_work: dict[str, list[dict]] = {}
+    for h in hits:
+        by_work.setdefault(h["work"], []).append(h)
+    out = []
+    for wid, hs in by_work.items():
+        w = works.get(wid)
+        if not w:
+            continue
+        hs = sorted(hs, key=lambda h: not h.get("entry"))  # the stone's own article in an edition first
+        pages = sorted({h["page"] for h in hs}, key=lambda p: (not str(p).isdigit(), int(p) if str(p).isdigit() else 0, str(p)))
+        out.append({"work": {k: w.get(k) for k in ("id", "author", "year", "title", "kind", "series", "url", "access")},
+                    "pages": pages, "n": len(hs), "snippets": hs[:4],
+                    "entry_pages": [h["page"] for h in hs if h.get("entry")]})
+    out.sort(key=lambda x: (x["work"]["kind"] != "avhandling", -x["n"]))
+    return {"signum": signum, "works": out, "n_indexed": len(idx.get("works") or {}),
+            "built": idx.get("built"), "source_note": "Utdrag ur verken i appens litteraturregister (data/literature/catalog.json)."}
+
+
+# --- indexing (scripts/build_literature_index.py) ---
+
+def signum_pattern(prefixes: list[str]) -> re.Pattern:
+    """Ett signum i löptext: prefix (U, Sö, Ög, DR …), valfri punkt, mellanslag, nummer eller Fv-signum."""
+    alt = "|".join(sorted((re.escape(p) for p in prefixes), key=len, reverse=True))
+    return re.compile(rf"(?<![\wÅÄÖåäöÆØæø])({alt})\.?\s?((?:Fv|NOR|ATA|SvS|ÖgFv|ÖgHC|DR|Sl)?\s?\d{{1,4}}(?:;\d{{1,4}})?[A-Z]?)(?![\d\w])")
+
+
+def printed_page(page_text: str, fallback: int) -> str:
+    """Sidans tryckta nummer: en rad med bara ett tal högst upp eller längst ned, eller ett tal först eller sist i ett
+    sidhuvud med versaler (SRI: "252 VÄSTERGÖTLAND. VILSKE HÄRAD." eller "… LYSINGS HD. 127"); annars PDF-sidan."""
+    lines = [ln.strip() for ln in page_text.splitlines() if ln.strip()]
+    for ln in lines[:2][::-1] + lines[-2:][::-1]:
+        if re.fullmatch(r"\d{1,4}", ln):
+            return ln
+    if lines:
+        head = lines[0]
+        caps = sum(ch.isupper() for ch in head) > 8
+        m = re.search(r"\s(\d{1,4})$", head) or re.match(r"^(\d{1,4})\s", head)
+        if caps and m:
+            return m.group(1)
+    return f"pdf {fallback}"
+
+
+# SRI's own article for a stone: "179. Kölaby sn, Stommen." or "233. Östra Stenby kyrka, Östkinds hd."
+ENTRY = re.compile(r"^\s*(\d{1,3})\.\s+[A-ZÅÄÖ][^\n]{2,90}?\b(?:sn|socken|kyrka|kyrkogård|hd|stad|landsförs)\b", re.M)

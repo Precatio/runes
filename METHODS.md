@@ -756,6 +756,17 @@ Mönster som prövas på annat sätt får ingen trappa och behåller sitt eget t
 attribueringsmodellen, seriationen, ristargrupperna, de okända ristarna och länkarna. Detsamma gäller budskap som bara
 finns i en landsdel, eftersom en nollcell inte kan skattas med regression.
 
+### 1w. Litteraturregistret (2026-10-29)
+
+`data/literature/catalog.json` listar avhandlingar och utgåvor om vikingatida runinskrifter med tillgång (fri fulltext,
+bara inom Sverige, bara tryck). Verk vars PDF finns i `LITERATURE_DIR` indexeras av `scripts/build_literature_index.py`:
+texten tas ut sida för sida (pdftotext), varje runsignum som finns i Rundata letas upp i löptexten (prefix, valfri punkt,
+nummer eller Fv-signum), och för varje sten och sida sparas den tryckta sidan och ett kort utdrag. I utgåvorna (SRI II,
+IV, V) räknas också artikelrubriker som "179. Kölaby sn" som stenens egen artikel. Indexet ligger i
+`data/cache/literature/` och följer inte med kodförrådet, eftersom det bygger på upphovsrättsskyddade texter. Stenens sida
+visar per verk sidorna (den egna artikeln i fetstil) och utdragen. Ett signum kan nämnas i förbigående eller i en lista,
+och OCR-fel gör att enstaka omnämnanden missas; registret visar var en sten nämns, inte vad som sägs om den.
+
 ### 1x. Försiktighet i påståendena, djärvhet i hypoteserna
 
 **Förregistrerade analysplaner (från 2026-10-20).** En artikel som gör ett nytt anspråk hänvisar till en analysplan som

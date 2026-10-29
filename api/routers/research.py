@@ -240,6 +240,24 @@ def stone_geology(signum: str, radius_km: float = 10.0):
                                                                                 rec.get("material") or "", radius_km)}
 
 
+@router.get("/literature")
+def literature_catalog():
+    """Litteraturregistret: verken, om de är indexerade och hur många stenar de nämner (src/literature.py)."""
+    from src import literature
+    return {"works": literature.catalog()}
+
+
+@router.get("/literature/{signum:path}")
+def stone_literature(signum: str):
+    """Var avhandlingarna och utgåvorna i registret nämner stenen, med tryckt sida och korta utdrag."""
+    from fastapi import HTTPException
+    from src import literature
+    rec = store().get(signum)
+    if not rec:
+        raise HTTPException(status_code=404, detail=f"Signum '{signum}' finns inte i Rundata.")
+    return literature.for_stone(rec["signum"])
+
+
 @router.get("/language/{signum:path}")
 def stone_language(signum: str, carver: str = ""):
     """Språkdrag i inskriften, och jämförda med en ristares inskrifter om en ristare anges."""
