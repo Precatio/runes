@@ -1,0 +1,4604 @@
+{
+ "plan": "analysplaner/2026-10-29-namnen-som-levde-kvar.md",
+ "belagg": 25541,
+ "brev": 3290,
+ "H1": {
+  "alla": {
+   "n": 25541,
+   "brev": 3290,
+   "or": 0.959105107730692,
+   "lo": 0.884427985409551,
+   "hi": 1.04008763048032,
+   "p": 0.31267938503293
+  },
+  "A": {
+   "n": 12927,
+   "brev": 1668,
+   "or": 0.985895353833111,
+   "lo": 0.878861332628075,
+   "hi": 1.10596474395245,
+   "p": 0.80857429420091
+  },
+  "B": {
+   "n": 12614,
+   "brev": 1622,
+   "or": 0.931238304390187,
+   "lo": 0.831866367258692,
+   "hi": 1.04248087637113,
+   "p": 0.215944826422341
+  }
+ },
+ "H2": {
+  "alla": {
+   "personer": 1230,
+   "andel_barn_N": 0.46422764227642277,
+   "andel_fader_N": 0.5585365853658537,
+   "barn_N_fader_K": 259,
+   "barn_K_fader_N": 375,
+   "p": 4.665353385468242e-06
+  },
+  "A": {
+   "personer": 625,
+   "andel_barn_N": 0.4528,
+   "andel_fader_N": 0.5584,
+   "barn_N_fader_K": 129,
+   "barn_K_fader_N": 195,
+   "p": 0.00029181572365562095
+  },
+  "B": {
+   "personer": 605,
+   "andel_barn_N": 0.47603305785123967,
+   "andel_fader_N": 0.5586776859504132,
+   "barn_N_fader_K": 130,
+   "barn_K_fader_N": 180,
+   "p": 0.005301755406832022
+  },
+  "per_period": {
+   "(1200, 1350]": {
+    "personer": 27,
+    "andel_barn_N": 0.25925925925925924,
+    "andel_fader_N": 0.4444444444444444,
+    "barn_N_fader_K": 3,
+    "barn_K_fader_N": 8,
+    "p": 0.2265625
+   },
+   "(1350, 1400]": {
+    "personer": 406,
+    "andel_barn_N": 0.46798029556650245,
+    "andel_fader_N": 0.583743842364532,
+    "barn_N_fader_K": 86,
+    "barn_K_fader_N": 133,
+    "p": 0.0018158804804117334
+   },
+   "(1400, 1450]": {
+    "personer": 796,
+    "andel_barn_N": 0.46984924623115576,
+    "andel_fader_N": 0.550251256281407,
+    "barn_N_fader_K": 170,
+    "barn_K_fader_N": 234,
+    "p": 0.001688773312913974
+   },
+   "(1450, 1600]": {
+    "personer": 1,
+    "andel_barn_N": 0.0,
+    "andel_fader_N": 0.0,
+    "barn_N_fader_K": 0,
+    "barn_K_fader_N": 0,
+    "p": null
+   }
+  },
+  "forekomster": {
+   "personer": 6467,
+   "andel_barn_N": 0.4730168548012989,
+   "andel_fader_N": 0.45028606772846763,
+   "barn_N_fader_K": 1843,
+   "barn_K_fader_N": 1696,
+   "p": 0.014107859473842292
+  }
+ },
+ "H3": {
+  "overlevde_gudanamn": "14/29",
+  "overlevde_ovriga": "25/71",
+  "odds_ratio": 1.7173333333333334,
+  "p": 0.2622756356876833,
+  "namn": [
+   {
+    "nyckel": "sveinn",
+    "runstenar": 124,
+    "i_breven": 1,
+    "belagg_i_breven": 356,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "bjorn",
+    "runstenar": 104,
+    "i_breven": 1,
+    "belagg_i_breven": 268,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "thorsteinn",
+    "runstenar": 75,
+    "i_breven": 1,
+    "belagg_i_breven": 123,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "ulfr",
+    "runstenar": 71,
+    "i_breven": 1,
+    "belagg_i_breven": 217,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "onundr",
+    "runstenar": 57,
+    "i_breven": 1,
+    "belagg_i_breven": 157,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "thorbjorn",
+    "runstenar": 53,
+    "i_breven": 1,
+    "belagg_i_breven": 5,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "gunnarr",
+    "runstenar": 50,
+    "i_breven": 1,
+    "belagg_i_breven": 63,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "oepir",
+    "runstenar": 49,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "eysteinn",
+    "runstenar": 47,
+    "i_breven": 1,
+    "belagg_i_breven": 18,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "thorir",
+    "runstenar": 45,
+    "i_breven": 1,
+    "belagg_i_breven": 268,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "halfdan",
+    "runstenar": 45,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "asbjorn",
+    "runstenar": 36,
+    "i_breven": 1,
+    "belagg_i_breven": 124,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "ketill",
+    "runstenar": 32,
+    "i_breven": 1,
+    "belagg_i_breven": 39,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "asmundr",
+    "runstenar": 30,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "ingifastr",
+    "runstenar": 28,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "ozurr",
+    "runstenar": 28,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "karl",
+    "runstenar": 27,
+    "i_breven": 1,
+    "belagg_i_breven": 936,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "freysteinn",
+    "runstenar": 26,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "thorkell",
+    "runstenar": 26,
+    "i_breven": 1,
+    "belagg_i_breven": 21,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "ofeigr",
+    "runstenar": 26,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "oleifr",
+    "runstenar": 26,
+    "i_breven": 1,
+    "belagg_i_breven": 1422,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "holmsteinn",
+    "runstenar": 26,
+    "i_breven": 1,
+    "belagg_i_breven": 68,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "ingjaldr",
+    "runstenar": 24,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "balli",
+    "runstenar": 23,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "holmfastr",
+    "runstenar": 22,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "hakon",
+    "runstenar": 22,
+    "i_breven": 1,
+    "belagg_i_breven": 347,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "asgautr",
+    "runstenar": 22,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "jorundr",
+    "runstenar": 22,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "sibbi",
+    "runstenar": 22,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "holmfridr",
+    "runstenar": 21,
+    "i_breven": 1,
+    "belagg_i_breven": 8,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "vebjorn",
+    "runstenar": 20,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "gudmundr",
+    "runstenar": 20,
+    "i_breven": 1,
+    "belagg_i_breven": 89,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "thordr",
+    "runstenar": 20,
+    "i_breven": 1,
+    "belagg_i_breven": 202,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "sigsteinn",
+    "runstenar": 20,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "gunni",
+    "runstenar": 20,
+    "i_breven": 1,
+    "belagg_i_breven": 14,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "toki",
+    "runstenar": 20,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "igull",
+    "runstenar": 19,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "gillaug",
+    "runstenar": 19,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "thjalfi",
+    "runstenar": 19,
+    "i_breven": 1,
+    "belagg_i_breven": 11,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "holmgeirr",
+    "runstenar": 19,
+    "i_breven": 1,
+    "belagg_i_breven": 42,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "thegn",
+    "runstenar": 19,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "inga",
+    "runstenar": 19,
+    "i_breven": 1,
+    "belagg_i_breven": 20,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "gudfastr",
+    "runstenar": 19,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "gudlaug",
+    "runstenar": 18,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "tosti",
+    "runstenar": 18,
+    "i_breven": 1,
+    "belagg_i_breven": 19,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "gisl",
+    "runstenar": 18,
+    "i_breven": 1,
+    "belagg_i_breven": 15,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "askell",
+    "runstenar": 18,
+    "i_breven": 1,
+    "belagg_i_breven": 57,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "vikingr",
+    "runstenar": 18,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "sigfastr",
+    "runstenar": 18,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "olafr",
+    "runstenar": 17,
+    "i_breven": 1,
+    "belagg_i_breven": 1422,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "andvettr",
+    "runstenar": 17,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "sigbjorn",
+    "runstenar": 17,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "bruni",
+    "runstenar": 16,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "gyridr",
+    "runstenar": 16,
+    "i_breven": 1,
+    "belagg_i_breven": 5,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "steinn",
+    "runstenar": 16,
+    "i_breven": 1,
+    "belagg_i_breven": 404,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "geirbjorn",
+    "runstenar": 16,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "fullugi",
+    "runstenar": 16,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "djarfr",
+    "runstenar": 16,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "thorfastr",
+    "runstenar": 15,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "svarthofdi",
+    "runstenar": 15,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "kari",
+    "runstenar": 15,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "vefastr",
+    "runstenar": 15,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "sigvidr",
+    "runstenar": 15,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "sighvatr",
+    "runstenar": 14,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "igulfastr",
+    "runstenar": 14,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "veseti",
+    "runstenar": 14,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "igulbjorn",
+    "runstenar": 14,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "ketilbjorn",
+    "runstenar": 14,
+    "i_breven": 1,
+    "belagg_i_breven": 18,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "jarl",
+    "runstenar": 14,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "thorgisl",
+    "runstenar": 14,
+    "i_breven": 1,
+    "belagg_i_breven": 62,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "helgi",
+    "runstenar": 14,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "sigridr",
+    "runstenar": 14,
+    "i_breven": 1,
+    "belagg_i_breven": 28,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "thorgautr",
+    "runstenar": 14,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "thorgeirr",
+    "runstenar": 14,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "ingvarr",
+    "runstenar": 13,
+    "i_breven": 1,
+    "belagg_i_breven": 12,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "freygeirr",
+    "runstenar": 13,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "hemingr",
+    "runstenar": 13,
+    "i_breven": 1,
+    "belagg_i_breven": 166,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "fasti",
+    "runstenar": 13,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "fastulfr",
+    "runstenar": 13,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "hrolfr",
+    "runstenar": 13,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "asgeirr",
+    "runstenar": 13,
+    "i_breven": 1,
+    "belagg_i_breven": 8,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "eyndr",
+    "runstenar": 13,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "ketilmundr",
+    "runstenar": 13,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "gerdarr",
+    "runstenar": 12,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "tidkumi",
+    "runstenar": 12,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "illugi",
+    "runstenar": 12,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "thorgerdr",
+    "runstenar": 12,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "ingigerdr",
+    "runstenar": 12,
+    "i_breven": 1,
+    "belagg_i_breven": 39,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "thorunnr",
+    "runstenar": 12,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "eistr",
+    "runstenar": 12,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "hlifsteinn",
+    "runstenar": 12,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "holmi",
+    "runstenar": 12,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "jofurr",
+    "runstenar": 11,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "astridr",
+    "runstenar": 11,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "geirmundr",
+    "runstenar": 11,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "helga",
+    "runstenar": 11,
+    "i_breven": 1,
+    "belagg_i_breven": 48,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "danr",
+    "runstenar": 11,
+    "i_breven": 1,
+    "belagg_i_breven": 56,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "sigreifr",
+    "runstenar": 10,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 0
+   },
+   {
+    "nyckel": "gudbjorn",
+    "runstenar": 10,
+    "i_breven": 0,
+    "belagg_i_breven": 0,
+    "gudanamn": 1
+   },
+   {
+    "nyckel": "ingimundr",
+    "runstenar": 10,
+    "i_breven": 1,
+    "belagg_i_breven": 76,
+    "gudanamn": 1
+   }
+  ]
+ },
+ "H4": {
+  "alla": {
+   "n": 25541,
+   "brev": 3290,
+   "or": 0.508037055774058,
+   "lo": 0.441337715584009,
+   "hi": 0.584816662899602,
+   "p": 4.07383556748232e-21
+  },
+  "A": {
+   "n": 12927,
+   "brev": 1668,
+   "or": 0.499028302693704,
+   "lo": 0.409196156901829,
+   "hi": 0.608581587800943,
+   "p": 6.67328403586152e-12
+  },
+  "B": {
+   "n": 12614,
+   "brev": 1622,
+   "or": 0.517296546975191,
+   "lo": 0.423879718848208,
+   "hi": 0.63130106398953,
+   "p": 8.77993165723692e-11
+  }
+ },
+ "holm": {
+  "H4": 1.629534226992928e-20,
+  "H2": 1.3996060156404727e-05,
+  "H3": 0.5245512713753666,
+  "H1": 0.5245512713753666
+ },
+ "status": {
+  "H1": "ingen skillnad påvisad",
+  "H2": "håller",
+  "H3": "ingen skillnad påvisad",
+  "H4": "håller"
+ },
+ "robusthet": {
+  "H1_saekra": {
+   "n": 25426,
+   "brev": 3289,
+   "or": 0.955042169282979,
+   "lo": 0.880423878401879,
+   "hi": 1.03598456094168,
+   "p": 0.267747525577003
+  },
+  "H1_magnus_nordiskt": {
+   "n": 25541,
+   "brev": 3290,
+   "or": 0.779781486194817,
+   "lo": 0.716773480506176,
+   "hi": 0.848328213514252,
+   "p": 7.18761838438267e-09
+  },
+  "H1_utan_stockholm": {
+   "n": 24773,
+   "brev": 3158,
+   "or": 0.975370174317933,
+   "lo": 0.897667796339235,
+   "hi": 1.05979849207989,
+   "p": 0.556007660123812
+  },
+  "H4_saekra": {
+   "n": 25426,
+   "brev": 3289,
+   "or": 0.500970297552955,
+   "lo": 0.434955873983468,
+   "hi": 0.577003907848903,
+   "p": 9.00380514028666e-22
+  },
+  "H4_utan_stockholm": {
+   "n": 24773,
+   "brev": 3158,
+   "or": 0.511954674950627,
+   "lo": 0.444563518233762,
+   "hi": 0.589561622701538,
+   "p": 1.43986640575611e-20
+  }
+ },
+ "beskrivning": {
+  "per_halvsekel": {
+   "1200": {
+    "belagg": 8,
+    "andel_N": 0.375
+   },
+   "1250": {
+    "belagg": 26,
+    "andel_N": 0.15384615384615385
+   },
+   "1300": {
+    "belagg": 244,
+    "andel_N": 0.4016393442622951
+   },
+   "1350": {
+    "belagg": 6150,
+    "andel_N": 0.44926829268292684
+   },
+   "1400": {
+    "belagg": 19066,
+    "andel_N": 0.4210112241686772
+   },
+   "1450": {
+    "belagg": 23,
+    "andel_N": 0.2608695652173913
+   },
+   "1500": {
+    "belagg": 24,
+    "andel_N": 0.5
+   }
+  },
+  "per_kon": {
+   "k": 0.28349944629014395,
+   "m": 0.43821360859490205
+  },
+  "vanligaste": {
+   "1300": {
+    "Magnus": 54,
+    "Nils": 22,
+    "Peder": 15,
+    "Erik": 12,
+    "Johan": 11,
+    "Sven": 11,
+    "Olof": 9,
+    "Karl": 8,
+    "Abraham": 7,
+    "Håkan": 6,
+    "Knut": 6,
+    "Tore": 6,
+    "Guttorm": 5,
+    "Katarina": 5,
+    "Gustav": 5
+   },
+   "1350": {
+    "Nils": 532,
+    "Peder": 485,
+    "Magnus": 460,
+    "Bo": 446,
+    "Olof": 308,
+    "Johan": 275,
+    "Jöns": 257,
+    "Jon": 227,
+    "Lars": 216,
+    "Karl": 213,
+    "Erik": 141,
+    "Birger": 138,
+    "Anders": 135,
+    "Håkan": 133,
+    "Sten": 91
+   },
+   "1400": {
+    "Nils": 1706,
+    "Peder": 1220,
+    "Olof": 1100,
+    "Lars": 962,
+    "Jöns": 886,
+    "Magnus": 793,
+    "Karl": 713,
+    "Erik": 648,
+    "Bengt": 634,
+    "Anders": 524,
+    "Knut": 519,
+    "Johan": 515,
+    "Jon": 388,
+    "Sten": 312,
+    "Abraham": 289
+   },
+   "1450": {
+    "Nils": 3,
+    "Anna": 2,
+    "Bengt": 2,
+    "Bo": 2,
+    "Cecilia": 2,
+    "Lars": 2,
+    "Staffan": 2,
+    "Elin": 1,
+    "Erik": 1,
+    "Hemming": 1,
+    "Johan": 1,
+    "Karl": 1,
+    "Katarina": 1,
+    "Mattias": 1,
+    "Sigrid": 1
+   },
+   "1500": {
+    "Olof": 5,
+    "Kristina": 3,
+    "Lars": 3,
+    "Ingeborg": 2,
+    "Anders": 1,
+    "Arvid": 1,
+    "Bengt": 1,
+    "Gunnar": 1,
+    "Jöns": 1,
+    "Karl": 1,
+    "Knut": 1,
+    "Mårten": 1,
+    "Nils": 1,
+    "Peder": 1,
+    "Sven": 1
+   }
+  },
+  "ort": {
+   "": {
+    "belagg": 4513,
+    "andel_N": 0.3822291158874363
+   },
+   "\"Tingsstället i \"\"Horixberg\"\"\"": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "(Aska häradsting)": {
+    "belagg": 10,
+    "andel_N": 0.7
+   },
+   "(Bankekinds härad)": {
+    "belagg": 85,
+    "andel_N": 0.49411764705882355
+   },
+   "(Bankekinds häradsting)": {
+    "belagg": 31,
+    "andel_N": 0.4838709677419355
+   },
+   "(Biskops-)Arnö i (Över-)Grans socken": {
+    "belagg": 11,
+    "andel_N": 0.8181818181818182
+   },
+   "(Dala-)Husby": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "(Ekholmen)": {
+    "belagg": 16,
+    "andel_N": 0.5625
+   },
+   "(Eklöt)": {
+    "belagg": 20,
+    "andel_N": 0.5
+   },
+   "(Hanekinds härads tingsplats)": {
+    "belagg": 17,
+    "andel_N": 0.6470588235294118
+   },
+   "(Memmings häradsting)": {
+    "belagg": 13,
+    "andel_N": 0.6153846153846154
+   },
+   "(Motala)": {
+    "belagg": 87,
+    "andel_N": 0.45977011494252873
+   },
+   "(Norr-)Tälje": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "(Norra) Vi kyrka": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "(På tinget i Kimito)": {
+    "belagg": 19,
+    "andel_N": 0.3157894736842105
+   },
+   "(Selebo härad)": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "(Simtuna ting)": {
+    "belagg": 19,
+    "andel_N": 0.631578947368421
+   },
+   "(Stockholm)": {
+    "belagg": 19,
+    "andel_N": 0.42105263157894735
+   },
+   "(Söder-)Tälje": {
+    "belagg": 15,
+    "andel_N": 0.4
+   },
+   "(Söder-)Tälje stad": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "(Söderköping?)": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "(Södra) Vi i Sevede": {
+    "belagg": 6,
+    "andel_N": 0.5
+   },
+   "(Uppsala)": {
+    "belagg": 6,
+    "andel_N": 0.16666666666666666
+   },
+   "(Vadstena)": {
+    "belagg": 5,
+    "andel_N": 0.2
+   },
+   "(Väster-)Färnebo": {
+    "belagg": 3,
+    "andel_N": 0.0
+   },
+   "(Västervik)": {
+    "belagg": 14,
+    "andel_N": 0.5
+   },
+   "(Västerås)": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "(Våla häradsting)": {
+    "belagg": 18,
+    "andel_N": 0.5555555555555556
+   },
+   "(på tinget i Hogstad)": {
+    "belagg": 10,
+    "andel_N": 0.5
+   },
+   "(Åbo)": {
+    "belagg": 54,
+    "andel_N": 0.35185185185185186
+   },
+   "(Öknebo ting)": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "(Öster-)Lövsta": {
+    "belagg": 4,
+    "andel_N": 0.75
+   },
+   "(Östra) Stenby kyrka": {
+    "belagg": 4,
+    "andel_N": 0.75
+   },
+   "Agord i Billebergs sn": {
+    "belagg": 8,
+    "andel_N": 0.125
+   },
+   "Agunnaryd": {
+    "belagg": 6,
+    "andel_N": 0.5
+   },
+   "Almö": {
+    "belagg": 18,
+    "andel_N": 0.3888888888888889
+   },
+   "Alsnö": {
+    "belagg": 4,
+    "andel_N": 0.25
+   },
+   "Alunda ting": {
+    "belagg": 8,
+    "andel_N": 0.375
+   },
+   "Alvastra": {
+    "belagg": 11,
+    "andel_N": 0.18181818181818182
+   },
+   "Alvastra kloster": {
+    "belagg": 8,
+    "andel_N": 0.625
+   },
+   "Alvesta (i Jäders socken)": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "Ammer": {
+    "belagg": 3,
+    "andel_N": 1.0
+   },
+   "Amundshytta": {
+    "belagg": 15,
+    "andel_N": 0.26666666666666666
+   },
+   "Aneboda": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "Anundahög": {
+    "belagg": 14,
+    "andel_N": 0.21428571428571427
+   },
+   "Anundahögs tingsställe": {
+    "belagg": 18,
+    "andel_N": 0.3333333333333333
+   },
+   "Anundshög": {
+    "belagg": 90,
+    "andel_N": 0.2777777777777778
+   },
+   "Arboga": {
+    "belagg": 177,
+    "andel_N": 0.3615819209039548
+   },
+   "Aringsås": {
+    "belagg": 25,
+    "andel_N": 0.28
+   },
+   "Arkö": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Arnö": {
+    "belagg": 20,
+    "andel_N": 0.2
+   },
+   "Asa": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Asa (Ås?) kyrka": {
+    "belagg": 6,
+    "andel_N": 0.0
+   },
+   "Asaka": {
+    "belagg": 25,
+    "andel_N": 0.68
+   },
+   "Asby": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Askeby": {
+    "belagg": 24,
+    "andel_N": 0.375
+   },
+   "Askeby kloster": {
+    "belagg": 7,
+    "andel_N": 0.5714285714285714
+   },
+   "Askers sockenstämma": {
+    "belagg": 15,
+    "andel_N": 0.3333333333333333
+   },
+   "Askersund": {
+    "belagg": 11,
+    "andel_N": 0.5454545454545454
+   },
+   "Aspa löt": {
+    "belagg": 3,
+    "andel_N": 1.0
+   },
+   "Aspenäs": {
+    "belagg": 3,
+    "andel_N": 0.0
+   },
+   "Aspnäs": {
+    "belagg": 20,
+    "andel_N": 0.3
+   },
+   "Axvall": {
+    "belagg": 32,
+    "andel_N": 0.59375
+   },
+   "Baholm": {
+    "belagg": 11,
+    "andel_N": 0.7272727272727273
+   },
+   "Baholma ting": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Banafjäl (Grundsunda sn)": {
+    "belagg": 11,
+    "andel_N": 0.7272727272727273
+   },
+   "Bankekinds härads tingsplats": {
+    "belagg": 51,
+    "andel_N": 0.7450980392156863
+   },
+   "Barkarö": {
+    "belagg": 14,
+    "andel_N": 0.6428571428571429
+   },
+   "Berg": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Berga": {
+    "belagg": 16,
+    "andel_N": 0.375
+   },
+   "Berga kyrka": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Berghem": {
+    "belagg": 10,
+    "andel_N": 1.0
+   },
+   "Bergkvara": {
+    "belagg": 3,
+    "andel_N": 0.0
+   },
+   "Bergsjö sn": {
+    "belagg": 12,
+    "andel_N": 0.5
+   },
+   "Bergunda": {
+    "belagg": 3,
+    "andel_N": 0.0
+   },
+   "Birkevik": {
+    "belagg": 8,
+    "andel_N": 0.125
+   },
+   "Biskops-Arnö": {
+    "belagg": 19,
+    "andel_N": 0.631578947368421
+   },
+   "Biskopsbro": {
+    "belagg": 11,
+    "andel_N": 0.45454545454545453
+   },
+   "Biskopsgården Tynnelsö": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Bitterna": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Bitterna kyrka": {
+    "belagg": 7,
+    "andel_N": 0.42857142857142855
+   },
+   "Bjärka": {
+    "belagg": 59,
+    "andel_N": 0.6440677966101694
+   },
+   "Bjärkaholm": {
+    "belagg": 16,
+    "andel_N": 0.5625
+   },
+   "Bjärsvik i (Ny-)Kils socken": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Björnlunda": {
+    "belagg": 9,
+    "andel_N": 0.3333333333333333
+   },
+   "Björnö": {
+    "belagg": 23,
+    "andel_N": 0.43478260869565216
+   },
+   "Björsäter": {
+    "belagg": 12,
+    "andel_N": 0.16666666666666666
+   },
+   "Blacksta kyrka": {
+    "belagg": 4,
+    "andel_N": 0.0
+   },
+   "Bo": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Bo (nu Trollebo)": {
+    "belagg": 11,
+    "andel_N": 0.5454545454545454
+   },
+   "Bobergs hd:s tingsställe": {
+    "belagg": 6,
+    "andel_N": 0.6666666666666666
+   },
+   "Bogesund (nu Ulricehamn)": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Bohus": {
+    "belagg": 6,
+    "andel_N": 0.5
+   },
+   "Bollnäs": {
+    "belagg": 9,
+    "andel_N": 0.2222222222222222
+   },
+   "Bolstad": {
+    "belagg": 7,
+    "andel_N": 0.2857142857142857
+   },
+   "Bordsjö": {
+    "belagg": 7,
+    "andel_N": 0.2857142857142857
+   },
+   "Borgholm": {
+    "belagg": 10,
+    "andel_N": 0.5
+   },
+   "Borgholms slott": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "Borgsjö": {
+    "belagg": 12,
+    "andel_N": 0.5833333333333334
+   },
+   "Borgunda": {
+    "belagg": 6,
+    "andel_N": 0.3333333333333333
+   },
+   "Borgå": {
+    "belagg": 13,
+    "andel_N": 0.46153846153846156
+   },
+   "Bottna": {
+    "belagg": 20,
+    "andel_N": 0.4
+   },
+   "Bragnum": {
+    "belagg": 4,
+    "andel_N": 0.25
+   },
+   "Bredestad": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Bredestads ting": {
+    "belagg": 15,
+    "andel_N": 0.26666666666666666
+   },
+   "Bredvassa": {
+    "belagg": 57,
+    "andel_N": 0.47368421052631576
+   },
+   "Bringetofta": {
+    "belagg": 7,
+    "andel_N": 0.42857142857142855
+   },
+   "Brink": {
+    "belagg": 6,
+    "andel_N": 0.3333333333333333
+   },
+   "Bro": {
+    "belagg": 7,
+    "andel_N": 0.5714285714285714
+   },
+   "Bro socken": {
+    "belagg": 17,
+    "andel_N": 0.5882352941176471
+   },
+   "Broby": {
+    "belagg": 13,
+    "andel_N": 0.38461538461538464
+   },
+   "Bromsta": {
+    "belagg": 29,
+    "andel_N": 0.6206896551724138
+   },
+   "Brunflo": {
+    "belagg": 15,
+    "andel_N": 0.7333333333333333
+   },
+   "Bräcke": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Bråbo (härads)ting": {
+    "belagg": 11,
+    "andel_N": 0.5454545454545454
+   },
+   "Bråbo häradsting": {
+    "belagg": 11,
+    "andel_N": 0.45454545454545453
+   },
+   "Burseryd": {
+    "belagg": 4,
+    "andel_N": 0.75
+   },
+   "By kyrka": {
+    "belagg": 10,
+    "andel_N": 0.6
+   },
+   "Bysta": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Båholmen": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Böksholm": {
+    "belagg": 5,
+    "andel_N": 0.0
+   },
+   "Børsyoholm": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Daga härads tingsställe": {
+    "belagg": 16,
+    "andel_N": 0.1875
+   },
+   "Dalaborg": {
+    "belagg": 15,
+    "andel_N": 0.7333333333333333
+   },
+   "Dalum": {
+    "belagg": 14,
+    "andel_N": 0.5714285714285714
+   },
+   "Danderyds ting": {
+    "belagg": 4,
+    "andel_N": 0.0
+   },
+   "Dingtuna": {
+    "belagg": 21,
+    "andel_N": 0.38095238095238093
+   },
+   "Dingtuna kyrka": {
+    "belagg": 18,
+    "andel_N": 0.7222222222222222
+   },
+   "Diuidze": {
+    "belagg": 5,
+    "andel_N": 0.0
+   },
+   "Djurarp": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Doretorps kyrka": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Draftinge": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "Döderhult": {
+    "belagg": 24,
+    "andel_N": 0.5416666666666666
+   },
+   "Ed": {
+    "belagg": 20,
+    "andel_N": 0.3
+   },
+   "Eds kyrka i Tjust": {
+    "belagg": 8,
+    "andel_N": 0.0
+   },
+   "Edsberg": {
+    "belagg": 14,
+    "andel_N": 0.2857142857142857
+   },
+   "Edsbergs häradsting": {
+    "belagg": 12,
+    "andel_N": 0.08333333333333333
+   },
+   "Edshult": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Edsviken": {
+    "belagg": 24,
+    "andel_N": 0.3333333333333333
+   },
+   "Eka": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "Ekeby": {
+    "belagg": 14,
+    "andel_N": 0.35714285714285715
+   },
+   "Ekesjö": {
+    "belagg": 10,
+    "andel_N": 0.5
+   },
+   "Ekesjö tingsplats (Västra härad, Njudung)": {
+    "belagg": 10,
+    "andel_N": 0.3
+   },
+   "Ekholm": {
+    "belagg": 23,
+    "andel_N": 0.43478260869565216
+   },
+   "Ekholmen": {
+    "belagg": 13,
+    "andel_N": 0.38461538461538464
+   },
+   "Ekhult": {
+    "belagg": 38,
+    "andel_N": 0.631578947368421
+   },
+   "Eklöt": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Eklöts tingsställe": {
+    "belagg": 37,
+    "andel_N": 0.35135135135135137
+   },
+   "Eklööt": {
+    "belagg": 16,
+    "andel_N": 0.25
+   },
+   "Eknön vid Stäkeborg": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Ekornarp": {
+    "belagg": 5,
+    "andel_N": 0.6
+   },
+   "Eksjö": {
+    "belagg": 23,
+    "andel_N": 0.34782608695652173
+   },
+   "Eksjö (S. Vedbo härad)": {
+    "belagg": 3,
+    "andel_N": 0.0
+   },
+   "Eksta": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Eldsund": {
+    "belagg": 21,
+    "andel_N": 0.5238095238095238
+   },
+   "Elfsta": {
+    "belagg": 7,
+    "andel_N": 0.7142857142857143
+   },
+   "Elgaryd": {
+    "belagg": 8,
+    "andel_N": 0.25
+   },
+   "Ellsunds tingsställe": {
+    "belagg": 34,
+    "andel_N": 0.4117647058823529
+   },
+   "Eneby": {
+    "belagg": 7,
+    "andel_N": 0.42857142857142855
+   },
+   "Enköping": {
+    "belagg": 58,
+    "andel_N": 0.4827586206896552
+   },
+   "Eplaholm": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Ervalla": {
+    "belagg": 10,
+    "andel_N": 0.3
+   },
+   "Eskilstuna": {
+    "belagg": 21,
+    "andel_N": 0.47619047619047616
+   },
+   "Espelunda i Fornåsa sn": {
+    "belagg": 8,
+    "andel_N": 0.5
+   },
+   "Estuna sn": {
+    "belagg": 7,
+    "andel_N": 0.5714285714285714
+   },
+   "Ettak (Wætak)": {
+    "belagg": 5,
+    "andel_N": 0.6
+   },
+   "Eura": {
+    "belagg": 16,
+    "andel_N": 0.25
+   },
+   "Eura-Åminne": {
+    "belagg": 5,
+    "andel_N": 0.6
+   },
+   "Fagrahed": {
+    "belagg": 16,
+    "andel_N": 0.1875
+   },
+   "Falköping": {
+    "belagg": 20,
+    "andel_N": 0.45
+   },
+   "Falsterbo": {
+    "belagg": 8,
+    "andel_N": 0.0
+   },
+   "Fastaraby": {
+    "belagg": 20,
+    "andel_N": 0.3
+   },
+   "Fastarby": {
+    "belagg": 12,
+    "andel_N": 0.16666666666666666
+   },
+   "Fellingsbro": {
+    "belagg": 5,
+    "andel_N": 0.0
+   },
+   "Fenneslunda": {
+    "belagg": 6,
+    "andel_N": 0.8333333333333334
+   },
+   "Fernebo": {
+    "belagg": 18,
+    "andel_N": 0.3888888888888889
+   },
+   "Finnekumla": {
+    "belagg": 7,
+    "andel_N": 0.7142857142857143
+   },
+   "Finnströms kyrka": {
+    "belagg": 13,
+    "andel_N": 0.15384615384615385
+   },
+   "Finntorp": {
+    "belagg": 5,
+    "andel_N": 0.4
+   },
+   "Fjäre häradsting": {
+    "belagg": 22,
+    "andel_N": 0.6818181818181818
+   },
+   "Flatarydh": {
+    "belagg": 7,
+    "andel_N": 0.8571428571428571
+   },
+   "Flensborg": {
+    "belagg": 13,
+    "andel_N": 0.8461538461538461
+   },
+   "Flensburg": {
+    "belagg": 10,
+    "andel_N": 0.6
+   },
+   "Flishult": {
+    "belagg": 5,
+    "andel_N": 0.6
+   },
+   "Flistad": {
+    "belagg": 2,
+    "andel_N": 1.0
+   },
+   "Floby kyrka": {
+    "belagg": 6,
+    "andel_N": 0.3333333333333333
+   },
+   "Floda kyrka": {
+    "belagg": 3,
+    "andel_N": 0.0
+   },
+   "Flyduby (Flisby?)": {
+    "belagg": 4,
+    "andel_N": 1.0
+   },
+   "Flätteryd": {
+    "belagg": 5,
+    "andel_N": 0.6
+   },
+   "Fogdö": {
+    "belagg": 7,
+    "andel_N": 0.7142857142857143
+   },
+   "Folklandsting": {
+    "belagg": 9,
+    "andel_N": 0.7777777777777778
+   },
+   "Folkärna": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Folkärna ting": {
+    "belagg": 13,
+    "andel_N": 0.3076923076923077
+   },
+   "Fornåsa": {
+    "belagg": 10,
+    "andel_N": 0.3
+   },
+   "Fornåsa kyrka": {
+    "belagg": 6,
+    "andel_N": 0.5
+   },
+   "Forstena": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "Foseta": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Fristad": {
+    "belagg": 50,
+    "andel_N": 0.38
+   },
+   "Frötuna ting": {
+    "belagg": 26,
+    "andel_N": 0.15384615384615385
+   },
+   "Fundbo": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Fursby": {
+    "belagg": 7,
+    "andel_N": 0.5714285714285714
+   },
+   "Färlöf": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Fästared": {
+    "belagg": 13,
+    "andel_N": 0.5384615384615384
+   },
+   "Fästered": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "Fågelvik": {
+    "belagg": 8,
+    "andel_N": 0.25
+   },
+   "Fållnäs": {
+    "belagg": 18,
+    "andel_N": 0.2777777777777778
+   },
+   "Fæidaby": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Förberg": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Förberg (Frösön)": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Förenäs i Edshults socken": {
+    "belagg": 11,
+    "andel_N": 0.2727272727272727
+   },
+   "Gamleby": {
+    "belagg": 5,
+    "andel_N": 0.4
+   },
+   "Gammalkil": {
+    "belagg": 40,
+    "andel_N": 0.425
+   },
+   "Garpenberg": {
+    "belagg": 16,
+    "andel_N": 0.5625
+   },
+   "Gerum": {
+    "belagg": 9,
+    "andel_N": 0.3333333333333333
+   },
+   "Gillberga": {
+    "belagg": 6,
+    "andel_N": 0.0
+   },
+   "Gingri": {
+    "belagg": 4,
+    "andel_N": 0.75
+   },
+   "Glanshammar": {
+    "belagg": 8,
+    "andel_N": 0.25
+   },
+   "Glaskulla": {
+    "belagg": 4,
+    "andel_N": 1.0
+   },
+   "Gripsholms slott": {
+    "belagg": 11,
+    "andel_N": 0.45454545454545453
+   },
+   "Grolanda": {
+    "belagg": 6,
+    "andel_N": 0.5
+   },
+   "Gräsgårds kyrka": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Grönskog": {
+    "belagg": 11,
+    "andel_N": 0.8181818181818182
+   },
+   "Gudhem": {
+    "belagg": 31,
+    "andel_N": 0.45161290322580644
+   },
+   "Gudhems kloster": {
+    "belagg": 32,
+    "andel_N": 0.625
+   },
+   "Gullbergs häradsting": {
+    "belagg": 12,
+    "andel_N": 0.5833333333333334
+   },
+   "Gumlösa": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Gummetorp": {
+    "belagg": 7,
+    "andel_N": 0.7142857142857143
+   },
+   "Gunnarstorp": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Gurre slott": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "Gällstad kyrka": {
+    "belagg": 16,
+    "andel_N": 0.5625
+   },
+   "Gärstad": {
+    "belagg": 14,
+    "andel_N": 0.6428571428571429
+   },
+   "Gårdeby kyrka": {
+    "belagg": 11,
+    "andel_N": 0.36363636363636365
+   },
+   "Gårdveda": {
+    "belagg": 51,
+    "andel_N": 0.4117647058823529
+   },
+   "Gåsevadholm": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Göksholm": {
+    "belagg": 4,
+    "andel_N": 0.25
+   },
+   "Götene": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Haganäs": {
+    "belagg": 16,
+    "andel_N": 0.4375
+   },
+   "Hagby": {
+    "belagg": 5,
+    "andel_N": 0.0
+   },
+   "Hagunda häradsting": {
+    "belagg": 28,
+    "andel_N": 0.17857142857142858
+   },
+   "Hagunda ting": {
+    "belagg": 16,
+    "andel_N": 0.5625
+   },
+   "Halmstad": {
+    "belagg": 16,
+    "andel_N": 0.375
+   },
+   "Halstad": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "Hamneda": {
+    "belagg": 21,
+    "andel_N": 0.2857142857142857
+   },
+   "Hamneda tingsställe": {
+    "belagg": 9,
+    "andel_N": 0.0
+   },
+   "Hamrånge": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Hanekinds häradsting": {
+    "belagg": 4,
+    "andel_N": 0.0
+   },
+   "Haraker": {
+    "belagg": 15,
+    "andel_N": 0.3333333333333333
+   },
+   "Hardeberga": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Hardemo": {
+    "belagg": 12,
+    "andel_N": 0.4166666666666667
+   },
+   "Harpsund": {
+    "belagg": 10,
+    "andel_N": 0.3
+   },
+   "Hattula by": {
+    "belagg": 7,
+    "andel_N": 0.42857142857142855
+   },
+   "Hedemora": {
+    "belagg": 22,
+    "andel_N": 0.22727272727272727
+   },
+   "Hedene": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Hedensö": {
+    "belagg": 5,
+    "andel_N": 0.2
+   },
+   "Hedesunda": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Hedåker": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Helgeandshuset i Söderköping": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Helgesta": {
+    "belagg": 7,
+    "andel_N": 0.14285714285714285
+   },
+   "Hellestad": {
+    "belagg": 9,
+    "andel_N": 0.4444444444444444
+   },
+   "Helsingborg": {
+    "belagg": 97,
+    "andel_N": 0.3711340206185567
+   },
+   "Helsingborgs slott": {
+    "belagg": 18,
+    "andel_N": 0.5555555555555556
+   },
+   "Helsingör": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "Hermannekulla": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Hestra": {
+    "belagg": 5,
+    "andel_N": 1.0
+   },
+   "Hierpås": {
+    "belagg": 9,
+    "andel_N": 0.6666666666666666
+   },
+   "Hillersbo": {
+    "belagg": 19,
+    "andel_N": 0.05263157894736842
+   },
+   "Hilulfsboda": {
+    "belagg": 4,
+    "andel_N": 0.25
+   },
+   "Himmeta kyrka": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "Hjelmseryds kyrka": {
+    "belagg": 4,
+    "andel_N": 0.75
+   },
+   "Hjältorp": {
+    "belagg": 10,
+    "andel_N": 0.3
+   },
+   "Hoby": {
+    "belagg": 11,
+    "andel_N": 0.36363636363636365
+   },
+   "Hof": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Hofs kyrka": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Hogstad": {
+    "belagg": 33,
+    "andel_N": 0.45454545454545453
+   },
+   "Horn i Svärta socken": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "Hosaby": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Hov": {
+    "belagg": 25,
+    "andel_N": 0.36
+   },
+   "Humlarum": {
+    "belagg": 5,
+    "andel_N": 0.2
+   },
+   "Hummelsätter": {
+    "belagg": 5,
+    "andel_N": 0.4
+   },
+   "Husby": {
+    "belagg": 9,
+    "andel_N": 0.0
+   },
+   "Husby kungsgård": {
+    "belagg": 13,
+    "andel_N": 0.3076923076923077
+   },
+   "Huseryd": {
+    "belagg": 63,
+    "andel_N": 0.5873015873015873
+   },
+   "Huvudstad i Vadstena socken": {
+    "belagg": 10,
+    "andel_N": 0.9
+   },
+   "Hälla": {
+    "belagg": 25,
+    "andel_N": 0.2
+   },
+   "Hällstad": {
+    "belagg": 13,
+    "andel_N": 0.23076923076923078
+   },
+   "Händene": {
+    "belagg": 18,
+    "andel_N": 0.6666666666666666
+   },
+   "Häradstinget i Skurusäter (i Skärkinds härad)": {
+    "belagg": 24,
+    "andel_N": 0.5833333333333334
+   },
+   "Häradstinget i Västervik": {
+    "belagg": 11,
+    "andel_N": 0.36363636363636365
+   },
+   "Härlöv": {
+    "belagg": 9,
+    "andel_N": 0.3333333333333333
+   },
+   "Hässelby": {
+    "belagg": 14,
+    "andel_N": 0.35714285714285715
+   },
+   "Hästholmen": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Håbo hd:s tingsställe": {
+    "belagg": 16,
+    "andel_N": 0.25
+   },
+   "Håbo hundares tingsplats": {
+    "belagg": 7,
+    "andel_N": 0.7142857142857143
+   },
+   "Håbo härads tingsställe": {
+    "belagg": 48,
+    "andel_N": 0.2916666666666667
+   },
+   "Hårsta": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Håtuna": {
+    "belagg": 16,
+    "andel_N": 0.375
+   },
+   "Högsby": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Högsrum": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Höjentorp": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Höreda": {
+    "belagg": 20,
+    "andel_N": 0.5
+   },
+   "Ingeasa": {
+    "belagg": 29,
+    "andel_N": 0.3103448275862069
+   },
+   "Ingeasa tingsställe": {
+    "belagg": 9,
+    "andel_N": 0.7777777777777778
+   },
+   "Ingeåsa": {
+    "belagg": 2,
+    "andel_N": 1.0
+   },
+   "Ingå": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Ingå socken": {
+    "belagg": 41,
+    "andel_N": 0.5121951219512195
+   },
+   "Ingåsa": {
+    "belagg": 16,
+    "andel_N": 0.375
+   },
+   "Istorp": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "Julita kloster": {
+    "belagg": 5,
+    "andel_N": 0.6
+   },
+   "Jungfrubo": {
+    "belagg": 8,
+    "andel_N": 0.25
+   },
+   "Juskön vid Söderköping": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Jäder": {
+    "belagg": 15,
+    "andel_N": 0.13333333333333333
+   },
+   "Jämtland": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "Järna i Gryts sn": {
+    "belagg": 14,
+    "andel_N": 0.14285714285714285
+   },
+   "Järnberget": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Järnboda": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Jönköping": {
+    "belagg": 87,
+    "andel_N": 0.367816091954023
+   },
+   "Jönåkers hd:s tingsställe": {
+    "belagg": 18,
+    "andel_N": 0.3888888888888889
+   },
+   "Jönåkers härads tingsställe": {
+    "belagg": 17,
+    "andel_N": 0.23529411764705882
+   },
+   "Jönåkers häradsting": {
+    "belagg": 100,
+    "andel_N": 0.48
+   },
+   "Kallundborg": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Kalmar": {
+    "belagg": 170,
+    "andel_N": 0.5058823529411764
+   },
+   "Kalmar slott": {
+    "belagg": 22,
+    "andel_N": 0.5454545454545454
+   },
+   "Kalsberg": {
+    "belagg": 5,
+    "andel_N": 0.2
+   },
+   "Kangaris by i Piikkis socken": {
+    "belagg": 12,
+    "andel_N": 0.16666666666666666
+   },
+   "Karleby": {
+    "belagg": 17,
+    "andel_N": 0.23529411764705882
+   },
+   "Karlstorp": {
+    "belagg": 14,
+    "andel_N": 0.6428571428571429
+   },
+   "Karsnäs": {
+    "belagg": 12,
+    "andel_N": 0.4166666666666667
+   },
+   "Kimitto": {
+    "belagg": 16,
+    "andel_N": 0.25
+   },
+   "Kind": {
+    "belagg": 14,
+    "andel_N": 0.7142857142857143
+   },
+   "Kinna": {
+    "belagg": 6,
+    "andel_N": 0.3333333333333333
+   },
+   "Kisa kyrka": {
+    "belagg": 22,
+    "andel_N": 0.3181818181818182
+   },
+   "Kjellunda": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Kjula": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Kjula ås": {
+    "belagg": 115,
+    "andel_N": 0.40869565217391307
+   },
+   "Kjulo gård": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "Kjällberga": {
+    "belagg": 5,
+    "andel_N": 0.4
+   },
+   "Knista häradsting": {
+    "belagg": 25,
+    "andel_N": 0.2
+   },
+   "Kolhögen": {
+    "belagg": 8,
+    "andel_N": 0.625
+   },
+   "Konungsberg1": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Konungsund": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Kopparberget": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Krabby": {
+    "belagg": 2,
+    "andel_N": 1.0
+   },
+   "Kristdala": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Kronoberg": {
+    "belagg": 17,
+    "andel_N": 0.23529411764705882
+   },
+   "Kråkerum": {
+    "belagg": 28,
+    "andel_N": 0.5714285714285714
+   },
+   "Kulltorps kyrka": {
+    "belagg": 5,
+    "andel_N": 0.6
+   },
+   "Kullögha": {
+    "belagg": 14,
+    "andel_N": 0.2857142857142857
+   },
+   "Kumla": {
+    "belagg": 10,
+    "andel_N": 0.4
+   },
+   "Kumla häradsting": {
+    "belagg": 28,
+    "andel_N": 0.4642857142857143
+   },
+   "Kumo": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Kumo landsting": {
+    "belagg": 34,
+    "andel_N": 0.3235294117647059
+   },
+   "Kundby": {
+    "belagg": 16,
+    "andel_N": 0.4375
+   },
+   "Kungsbacka": {
+    "belagg": 9,
+    "andel_N": 0.3333333333333333
+   },
+   "Käfsjö kyrka": {
+    "belagg": 6,
+    "andel_N": 0.5
+   },
+   "Källby": {
+    "belagg": 5,
+    "andel_N": 0.8
+   },
+   "Källebo": {
+    "belagg": 5,
+    "andel_N": 0.4
+   },
+   "Källslöt": {
+    "belagg": 79,
+    "andel_N": 0.379746835443038
+   },
+   "Källunda": {
+    "belagg": 14,
+    "andel_N": 0.42857142857142855
+   },
+   "Kävsjö": {
+    "belagg": 12,
+    "andel_N": 0.6666666666666666
+   },
+   "Kåfveta": {
+    "belagg": 5,
+    "andel_N": 0.0
+   },
+   "Kårsta": {
+    "belagg": 8,
+    "andel_N": 0.5
+   },
+   "Kælslöt": {
+    "belagg": 41,
+    "andel_N": 0.3170731707317073
+   },
+   "Köpenhamn": {
+    "belagg": 130,
+    "andel_N": 0.3769230769230769
+   },
+   "Köpenhamns slott": {
+    "belagg": 2,
+    "andel_N": 1.0
+   },
+   "Köping": {
+    "belagg": 44,
+    "andel_N": 0.5227272727272727
+   },
+   "Köpings slott": {
+    "belagg": 7,
+    "andel_N": 0.5714285714285714
+   },
+   "Köpings ting, Slättbo härad": {
+    "belagg": 9,
+    "andel_N": 0.2222222222222222
+   },
+   "Laalands (Lollands) Albue": {
+    "belagg": 27,
+    "andel_N": 0.4074074074074074
+   },
+   "Ladeby (i Lista sn, Västrarekarne hd)": {
+    "belagg": 6,
+    "andel_N": 0.6666666666666666
+   },
+   "Lagatorp": {
+    "belagg": 19,
+    "andel_N": 0.47368421052631576
+   },
+   "Laglösaköping": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Lagmansbo": {
+    "belagg": 8,
+    "andel_N": 0.75
+   },
+   "Lagmansryd": {
+    "belagg": 4,
+    "andel_N": 0.25
+   },
+   "Lammas by": {
+    "belagg": 28,
+    "andel_N": 0.25
+   },
+   "Landstinget i Skåne": {
+    "belagg": 17,
+    "andel_N": 0.23529411764705882
+   },
+   "Langmansboo": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "Lankis by": {
+    "belagg": 41,
+    "andel_N": 0.3902439024390244
+   },
+   "Lekeryd": {
+    "belagg": 16,
+    "andel_N": 0.5
+   },
+   "Lenhofda": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "Lenhovda": {
+    "belagg": 9,
+    "andel_N": 0.5555555555555556
+   },
+   "Lerboga": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Lidhem": {
+    "belagg": 4,
+    "andel_N": 0.0
+   },
+   "Lidhult": {
+    "belagg": 10,
+    "andel_N": 0.2
+   },
+   "Lina": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Lina (nu Lidhem)": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "Lindberga": {
+    "belagg": 5,
+    "andel_N": 0.0
+   },
+   "Linderås (1)": {
+    "belagg": 11,
+    "andel_N": 0.36363636363636365
+   },
+   "Lindstad": {
+    "belagg": 9,
+    "andel_N": 0.6666666666666666
+   },
+   "Lindö": {
+    "belagg": 3,
+    "andel_N": 0.0
+   },
+   "Linköping": {
+    "belagg": 736,
+    "andel_N": 0.48777173913043476
+   },
+   "Ljungby": {
+    "belagg": 4,
+    "andel_N": 0.25
+   },
+   "Ljungs kyrka": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Ljungsåkra": {
+    "belagg": 3,
+    "andel_N": 0.0
+   },
+   "Ljuskala": {
+    "belagg": 17,
+    "andel_N": 0.29411764705882354
+   },
+   "Loftsryd": {
+    "belagg": 5,
+    "andel_N": 0.2
+   },
+   "Lommaryd": {
+    "belagg": 6,
+    "andel_N": 0.3333333333333333
+   },
+   "Ludgo": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "Lund": {
+    "belagg": 170,
+    "andel_N": 0.19411764705882353
+   },
+   "Lunda i Fundbo sn1": {
+    "belagg": 6,
+    "andel_N": 0.5
+   },
+   "Lundboberg": {
+    "belagg": 15,
+    "andel_N": 0.5333333333333333
+   },
+   "Lundbobergs tingsplats": {
+    "belagg": 13,
+    "andel_N": 0.23076923076923078
+   },
+   "Lundby i Åkerbo hd": {
+    "belagg": 50,
+    "andel_N": 0.46
+   },
+   "Lunds landsting": {
+    "belagg": 32,
+    "andel_N": 0.0
+   },
+   "Lunds landstingsställe": {
+    "belagg": 20,
+    "andel_N": 0.15
+   },
+   "Luttra": {
+    "belagg": 23,
+    "andel_N": 0.34782608695652173
+   },
+   "Lytisberg": {
+    "belagg": 12,
+    "andel_N": 0.5
+   },
+   "Lädja": {
+    "belagg": 4,
+    "andel_N": 0.25
+   },
+   "Länna": {
+    "belagg": 18,
+    "andel_N": 0.05555555555555555
+   },
+   "Länna kyrka": {
+    "belagg": 29,
+    "andel_N": 0.5517241379310345
+   },
+   "Långaryd": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Långhundra hd:s tingsställe": {
+    "belagg": 21,
+    "andel_N": 0.38095238095238093
+   },
+   "Lödby": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "Lödöse": {
+    "belagg": 91,
+    "andel_N": 0.45054945054945056
+   },
+   "Lödöse?": {
+    "belagg": 5,
+    "andel_N": 0.2
+   },
+   "Malma": {
+    "belagg": 5,
+    "andel_N": 0.4
+   },
+   "Malmö": {
+    "belagg": 7,
+    "andel_N": 0.14285714285714285
+   },
+   "Marghanes": {
+    "belagg": 6,
+    "andel_N": 0.3333333333333333
+   },
+   "Marieborg": {
+    "belagg": 136,
+    "andel_N": 0.5735294117647058
+   },
+   "Masko": {
+    "belagg": 13,
+    "andel_N": 0.38461538461538464
+   },
+   "Mellinge": {
+    "belagg": 3,
+    "andel_N": 0.0
+   },
+   "Mellplana": {
+    "belagg": 9,
+    "andel_N": 0.4444444444444444
+   },
+   "Mellösa härads tingsställe": {
+    "belagg": 15,
+    "andel_N": 0.26666666666666666
+   },
+   "Memmings häradsting": {
+    "belagg": 10,
+    "andel_N": 0.3
+   },
+   "Merum": {
+    "belagg": 10,
+    "andel_N": 0.3
+   },
+   "Misterhult": {
+    "belagg": 7,
+    "andel_N": 0.7142857142857143
+   },
+   "Molanda": {
+    "belagg": 10,
+    "andel_N": 0.1
+   },
+   "Mordviken, Bräcke socken": {
+    "belagg": 94,
+    "andel_N": 0.48936170212765956
+   },
+   "Motala": {
+    "belagg": 35,
+    "andel_N": 0.45714285714285713
+   },
+   "Munkeboda": {
+    "belagg": 9,
+    "andel_N": 0.4444444444444444
+   },
+   "Munktorp": {
+    "belagg": 71,
+    "andel_N": 0.2676056338028169
+   },
+   "Måtteby": {
+    "belagg": 14,
+    "andel_N": 0.5
+   },
+   "Mönsterås": {
+    "belagg": 7,
+    "andel_N": 0.42857142857142855
+   },
+   "Mörby": {
+    "belagg": 10,
+    "andel_N": 0.8
+   },
+   "Mörsil": {
+    "belagg": 8,
+    "andel_N": 0.5
+   },
+   "Naum": {
+    "belagg": 16,
+    "andel_N": 0.1875
+   },
+   "Nedre Hasla i Ekby socken": {
+    "belagg": 15,
+    "andel_N": 0.4666666666666667
+   },
+   "Nicktuna": {
+    "belagg": 16,
+    "andel_N": 0.25
+   },
+   "Nintona?": {
+    "belagg": 6,
+    "andel_N": 0.16666666666666666
+   },
+   "Njutånger": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Noby": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Nor": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Norberg": {
+    "belagg": 10,
+    "andel_N": 0.0
+   },
+   "Norbergs kyrka": {
+    "belagg": 5,
+    "andel_N": 0.8
+   },
+   "Norby": {
+    "belagg": 9,
+    "andel_N": 0.4444444444444444
+   },
+   "Norra Vi kyrka": {
+    "belagg": 7,
+    "andel_N": 0.0
+   },
+   "Norrala": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Norrbo hundares ting": {
+    "belagg": 13,
+    "andel_N": 0.07692307692307693
+   },
+   "Norrbo härads tingsställe": {
+    "belagg": 25,
+    "andel_N": 0.16
+   },
+   "Norrbo häradsting": {
+    "belagg": 14,
+    "andel_N": 0.14285714285714285
+   },
+   "Norrby": {
+    "belagg": 28,
+    "andel_N": 0.17857142857142858
+   },
+   "Norrbärke": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Norrköping": {
+    "belagg": 81,
+    "andel_N": 0.5432098765432098
+   },
+   "Norrvika": {
+    "belagg": 6,
+    "andel_N": 0.3333333333333333
+   },
+   "Nummis by": {
+    "belagg": 75,
+    "andel_N": 0.21333333333333335
+   },
+   "Nummis sockenting": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Nyanäs": {
+    "belagg": 9,
+    "andel_N": 0.2222222222222222
+   },
+   "Nydala": {
+    "belagg": 168,
+    "andel_N": 0.5416666666666666
+   },
+   "Nydala kloster": {
+    "belagg": 33,
+    "andel_N": 0.5757575757575758
+   },
+   "Nykyrka": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "Nyköping": {
+    "belagg": 417,
+    "andel_N": 0.5635491606714629
+   },
+   "Nynäs": {
+    "belagg": 13,
+    "andel_N": 0.38461538461538464
+   },
+   "Nynäs i Björklinge socken": {
+    "belagg": 4,
+    "andel_N": 0.75
+   },
+   "Närdinghundra härads tingsplats": {
+    "belagg": 12,
+    "andel_N": 0.16666666666666666
+   },
+   "Närdinghundra ting": {
+    "belagg": 11,
+    "andel_N": 0.2727272727272727
+   },
+   "Närlunda": {
+    "belagg": 20,
+    "andel_N": 0.25
+   },
+   "Näs kyrka": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "Näsby": {
+    "belagg": 17,
+    "andel_N": 0.6470588235294118
+   },
+   "Näsby i Blacksta socken": {
+    "belagg": 6,
+    "andel_N": 0.6666666666666666
+   },
+   "Näsby i Österhaninge socken": {
+    "belagg": 11,
+    "andel_N": 0.36363636363636365
+   },
+   "Näshulta sn": {
+    "belagg": 4,
+    "andel_N": 0.0
+   },
+   "Näshults kyrka": {
+    "belagg": 8,
+    "andel_N": 0.25
+   },
+   "Näskott": {
+    "belagg": 10,
+    "andel_N": 0.7
+   },
+   "Näskotts kyrka": {
+    "belagg": 13,
+    "andel_N": 0.46153846153846156
+   },
+   "Nässelsta": {
+    "belagg": 8,
+    "andel_N": 0.25
+   },
+   "Odensvi": {
+    "belagg": 5,
+    "andel_N": 0.0
+   },
+   "Opensten": {
+    "belagg": 30,
+    "andel_N": 0.36666666666666664
+   },
+   "Oppeby": {
+    "belagg": 4,
+    "andel_N": 0.25
+   },
+   "Oppensten": {
+    "belagg": 5,
+    "andel_N": 0.2
+   },
+   "Oppunda": {
+    "belagg": 34,
+    "andel_N": 0.7647058823529411
+   },
+   "Oppunda hd": {
+    "belagg": 6,
+    "andel_N": 0.3333333333333333
+   },
+   "Oppunda hd:s tingsställe": {
+    "belagg": 19,
+    "andel_N": 0.2631578947368421
+   },
+   "Oppunda häradsting": {
+    "belagg": 42,
+    "andel_N": 0.42857142857142855
+   },
+   "Oppunda ting": {
+    "belagg": 13,
+    "andel_N": 0.23076923076923078
+   },
+   "Oppunda tingsställe": {
+    "belagg": 17,
+    "andel_N": 0.5294117647058824
+   },
+   "Orrviken": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Ovansjö": {
+    "belagg": 4,
+    "andel_N": 0.25
+   },
+   "Oviken": {
+    "belagg": 4,
+    "andel_N": 0.25
+   },
+   "Ovikens kyrka": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "Penningby": {
+    "belagg": 21,
+    "andel_N": 0.5238095238095238
+   },
+   "Persby": {
+    "belagg": 18,
+    "andel_N": 0.4444444444444444
+   },
+   "Piikkis socken": {
+    "belagg": 8,
+    "andel_N": 0.125
+   },
+   "Piksborg": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Piksborgs slott": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Pitkämäki by": {
+    "belagg": 20,
+    "andel_N": 0.2
+   },
+   "Pjätteryd": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "På Järnberget (troligen i Närke)": {
+    "belagg": 4,
+    "andel_N": 0.0
+   },
+   "På häradstinget i Västervik": {
+    "belagg": 11,
+    "andel_N": 0.36363636363636365
+   },
+   "På landstinget i Strängnäs": {
+    "belagg": 12,
+    "andel_N": 0.3333333333333333
+   },
+   "På rättaretinget": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "På rättartinget i Melstad": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "På tinget i Enköping": {
+    "belagg": 4,
+    "andel_N": 0.25
+   },
+   "På tinget i Hamneda": {
+    "belagg": 11,
+    "andel_N": 0.36363636363636365
+   },
+   "På tinget i Hogstad": {
+    "belagg": 21,
+    "andel_N": 0.42857142857142855
+   },
+   "På tinget i Lagunda": {
+    "belagg": 25,
+    "andel_N": 0.44
+   },
+   "På tinget i Skurusäter": {
+    "belagg": 22,
+    "andel_N": 0.5454545454545454
+   },
+   "Rackeby": {
+    "belagg": 9,
+    "andel_N": 0.8888888888888888
+   },
+   "Ragunda": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Randhem": {
+    "belagg": 6,
+    "andel_N": 0.8333333333333334
+   },
+   "Rangkulla": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Rasbo": {
+    "belagg": 10,
+    "andel_N": 0.1
+   },
+   "Raseborg": {
+    "belagg": 7,
+    "andel_N": 0.42857142857142855
+   },
+   "Reaby": {
+    "belagg": 15,
+    "andel_N": 0.2
+   },
+   "Refteled": {
+    "belagg": 29,
+    "andel_N": 0.5172413793103449
+   },
+   "Repelä": {
+    "belagg": 16,
+    "andel_N": 0.125
+   },
+   "Repelä by": {
+    "belagg": 12,
+    "andel_N": 0.08333333333333333
+   },
+   "Riala": {
+    "belagg": 5,
+    "andel_N": 0.0
+   },
+   "Ridö": {
+    "belagg": 6,
+    "andel_N": 0.5
+   },
+   "Rimbo": {
+    "belagg": 18,
+    "andel_N": 0.2777777777777778
+   },
+   "Ring": {
+    "belagg": 11,
+    "andel_N": 0.8181818181818182
+   },
+   "Ringshult": {
+    "belagg": 16,
+    "andel_N": 0.5625
+   },
+   "Rinkesta": {
+    "belagg": 5,
+    "andel_N": 0.4
+   },
+   "Riseberga": {
+    "belagg": 9,
+    "andel_N": 0.5555555555555556
+   },
+   "Riseberga kloster": {
+    "belagg": 16,
+    "andel_N": 0.25
+   },
+   "Risinge": {
+    "belagg": 7,
+    "andel_N": 0.7142857142857143
+   },
+   "Risla": {
+    "belagg": 43,
+    "andel_N": 0.5348837209302325
+   },
+   "Rizlo ting": {
+    "belagg": 15,
+    "andel_N": 0.5333333333333333
+   },
+   "Rogberga kyrka": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Rogsta": {
+    "belagg": 10,
+    "andel_N": 0.7
+   },
+   "Rosendal": {
+    "belagg": 7,
+    "andel_N": 0.0
+   },
+   "Rossvik": {
+    "belagg": 9,
+    "andel_N": 0.1111111111111111
+   },
+   "Rottne": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Ruds gård (i Örs socken)": {
+    "belagg": 11,
+    "andel_N": 0.2727272727272727
+   },
+   "Rumblaborg": {
+    "belagg": 8,
+    "andel_N": 0.375
+   },
+   "Rumlaborg": {
+    "belagg": 2,
+    "andel_N": 1.0
+   },
+   "Rundholm (?)": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Runsten, på räfsteting": {
+    "belagg": 8,
+    "andel_N": 0.625
+   },
+   "Runstens sn": {
+    "belagg": 4,
+    "andel_N": 0.25
+   },
+   "Runsö": {
+    "belagg": 6,
+    "andel_N": 0.6666666666666666
+   },
+   "Ryd": {
+    "belagg": 10,
+    "andel_N": 0.5
+   },
+   "Rydaholm": {
+    "belagg": 5,
+    "andel_N": 0.6
+   },
+   "Rynks tingsställe": {
+    "belagg": 11,
+    "andel_N": 0.6363636363636364
+   },
+   "Rysla": {
+    "belagg": 39,
+    "andel_N": 0.48717948717948717
+   },
+   "Rysla ting": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Ryttern": {
+    "belagg": 6,
+    "andel_N": 0.3333333333333333
+   },
+   "Ryzla": {
+    "belagg": 13,
+    "andel_N": 0.5384615384615384
+   },
+   "Ryzla ting": {
+    "belagg": 13,
+    "andel_N": 0.5384615384615384
+   },
+   "Ryzlo ting": {
+    "belagg": 14,
+    "andel_N": 0.6428571428571429
+   },
+   "Räfsnäs": {
+    "belagg": 8,
+    "andel_N": 0.375
+   },
+   "Räntemäki": {
+    "belagg": 8,
+    "andel_N": 0.125
+   },
+   "Räsla": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "Rättartinget i Flytthem": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Rävsta": {
+    "belagg": 6,
+    "andel_N": 0.3333333333333333
+   },
+   "Rävsund": {
+    "belagg": 12,
+    "andel_N": 0.75
+   },
+   "Råstorp": {
+    "belagg": 7,
+    "andel_N": 0.42857142857142855
+   },
+   "Rödön": {
+    "belagg": 16,
+    "andel_N": 0.6875
+   },
+   "Röne": {
+    "belagg": 7,
+    "andel_N": 0.2857142857142857
+   },
+   "Rönäs": {
+    "belagg": 5,
+    "andel_N": 0.4
+   },
+   "Rönö": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Rörbo": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Rörvik": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "S:ta Klara kloster (vid Sthlm)": {
+    "belagg": 5,
+    "andel_N": 0.0
+   },
+   "Sandby": {
+    "belagg": 11,
+    "andel_N": 0.36363636363636365
+   },
+   "Sandnäsby": {
+    "belagg": 32,
+    "andel_N": 0.21875
+   },
+   "Sandsjö": {
+    "belagg": 8,
+    "andel_N": 0.875
+   },
+   "Sannagården på Hisingen": {
+    "belagg": 13,
+    "andel_N": 0.23076923076923078
+   },
+   "Satterstad i Häradshammars socken": {
+    "belagg": 23,
+    "andel_N": 0.5652173913043478
+   },
+   "Sattsarp": {
+    "belagg": 14,
+    "andel_N": 0.14285714285714285
+   },
+   "Saxköbing": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Segersjö": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Segerstad": {
+    "belagg": 14,
+    "andel_N": 0.35714285714285715
+   },
+   "Sekkistad kyrka": {
+    "belagg": 7,
+    "andel_N": 0.5714285714285714
+   },
+   "Selebo häradsting": {
+    "belagg": 15,
+    "andel_N": 0.26666666666666666
+   },
+   "Seminghundra häradsting": {
+    "belagg": 22,
+    "andel_N": 0.5
+   },
+   "Seminghundra ting": {
+    "belagg": 13,
+    "andel_N": 0.46153846153846156
+   },
+   "Siende härads tingsställe": {
+    "belagg": 20,
+    "andel_N": 0.35
+   },
+   "Siggeby": {
+    "belagg": 17,
+    "andel_N": 0.47058823529411764
+   },
+   "Sigtuna": {
+    "belagg": 17,
+    "andel_N": 0.5294117647058824
+   },
+   "Simtuna": {
+    "belagg": 12,
+    "andel_N": 0.16666666666666666
+   },
+   "Simtuna häradsting": {
+    "belagg": 18,
+    "andel_N": 0.3333333333333333
+   },
+   "Simtuna ting": {
+    "belagg": 19,
+    "andel_N": 0.6842105263157895
+   },
+   "Sjöboda": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "Sjögle": {
+    "belagg": 5,
+    "andel_N": 0.4
+   },
+   "Sjöholm": {
+    "belagg": 6,
+    "andel_N": 0.5
+   },
+   "Sjökumla tingsplats (Aska härad)": {
+    "belagg": 13,
+    "andel_N": 0.5384615384615384
+   },
+   "Skanör": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Skara": {
+    "belagg": 345,
+    "andel_N": 0.5797101449275363
+   },
+   "Skatna tingsställe": {
+    "belagg": 24,
+    "andel_N": 0.5416666666666666
+   },
+   "Skattmansö": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Skattna": {
+    "belagg": 11,
+    "andel_N": 0.5454545454545454
+   },
+   "Skattna tingsställe": {
+    "belagg": 29,
+    "andel_N": 0.6551724137931034
+   },
+   "Skeda kyrka": {
+    "belagg": 4,
+    "andel_N": 0.75
+   },
+   "Skedala i Halland": {
+    "belagg": 9,
+    "andel_N": 0.0
+   },
+   "Skedevi (korr. av SD:s Sköfde)": {
+    "belagg": 6,
+    "andel_N": 0.6666666666666666
+   },
+   "Skindynohagh (Valkebo hd)": {
+    "belagg": 4,
+    "andel_N": 0.25
+   },
+   "Sko kloster": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Skoftaby": {
+    "belagg": 14,
+    "andel_N": 0.5714285714285714
+   },
+   "Skolasta (nu Marieberg)": {
+    "belagg": 8,
+    "andel_N": 0.25
+   },
+   "Skultuna": {
+    "belagg": 15,
+    "andel_N": 0.4
+   },
+   "Skultuna ting": {
+    "belagg": 39,
+    "andel_N": 0.07692307692307693
+   },
+   "Skurusäter": {
+    "belagg": 82,
+    "andel_N": 0.5
+   },
+   "Skurusäter (i Skärkinds härad)": {
+    "belagg": 12,
+    "andel_N": 0.6666666666666666
+   },
+   "Skurusäters ting": {
+    "belagg": 35,
+    "andel_N": 0.42857142857142855
+   },
+   "Skurusäters tingsställe": {
+    "belagg": 30,
+    "andel_N": 0.5
+   },
+   "Skyllinge": {
+    "belagg": 3,
+    "andel_N": 0.0
+   },
+   "Skänninge": {
+    "belagg": 320,
+    "andel_N": 0.49375
+   },
+   "Skänninge kloster": {
+    "belagg": 6,
+    "andel_N": 0.6666666666666666
+   },
+   "Skärkind": {
+    "belagg": 11,
+    "andel_N": 0.7272727272727273
+   },
+   "Skärkinds härad": {
+    "belagg": 31,
+    "andel_N": 0.4838709677419355
+   },
+   "Skärkinds kyrka": {
+    "belagg": 8,
+    "andel_N": 0.375
+   },
+   "Skärlunda": {
+    "belagg": 40,
+    "andel_N": 0.45
+   },
+   "Skärlunda tingsställe": {
+    "belagg": 24,
+    "andel_N": 0.5416666666666666
+   },
+   "Skärlöv (Hulterstad)": {
+    "belagg": 6,
+    "andel_N": 0.0
+   },
+   "Skärlöv(-sby Hulterstad, Öland)": {
+    "belagg": 21,
+    "andel_N": 0.38095238095238093
+   },
+   "Skärplinge": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Skärvum": {
+    "belagg": 4,
+    "andel_N": 0.75
+   },
+   "Skåfteby": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Skår": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Sköllersta": {
+    "belagg": 8,
+    "andel_N": 0.875
+   },
+   "Sköllersta häradsting": {
+    "belagg": 7,
+    "andel_N": 0.42857142857142855
+   },
+   "Skövde": {
+    "belagg": 5,
+    "andel_N": 0.2
+   },
+   "Slaka kyrka": {
+    "belagg": 30,
+    "andel_N": 0.43333333333333335
+   },
+   "Slestad": {
+    "belagg": 4,
+    "andel_N": 0.25
+   },
+   "Slesvig": {
+    "belagg": 20,
+    "andel_N": 0.25
+   },
+   "Slättemo ting": {
+    "belagg": 36,
+    "andel_N": 0.3888888888888889
+   },
+   "Slättemo ting i Bankekinds härad": {
+    "belagg": 74,
+    "andel_N": 0.35135135135135137
+   },
+   "Slätthög": {
+    "belagg": 4,
+    "andel_N": 0.25
+   },
+   "Slätthögs kyrka": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Smedby": {
+    "belagg": 7,
+    "andel_N": 0.0
+   },
+   "Snevringe hd:s tingsställe": {
+    "belagg": 19,
+    "andel_N": 0.15789473684210525
+   },
+   "Snevringe hundaresting": {
+    "belagg": 15,
+    "andel_N": 0.3333333333333333
+   },
+   "Snevringe häradsting": {
+    "belagg": 63,
+    "andel_N": 0.47619047619047616
+   },
+   "Snevringe ting": {
+    "belagg": 16,
+    "andel_N": 0.375
+   },
+   "Sockenkyrkan (i Bällefors)": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Sollentuna häradsting": {
+    "belagg": 39,
+    "andel_N": 0.41025641025641024
+   },
+   "Solvik": {
+    "belagg": 36,
+    "andel_N": 0.5277777777777778
+   },
+   "Sommarsættræ": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Spelvik": {
+    "belagg": 9,
+    "andel_N": 0.2222222222222222
+   },
+   "Staby": {
+    "belagg": 17,
+    "andel_N": 0.5882352941176471
+   },
+   "Stala kyrka": {
+    "belagg": 4,
+    "andel_N": 0.75
+   },
+   "Stalberg": {
+    "belagg": 10,
+    "andel_N": 0.2
+   },
+   "Stalbergs tingsställe": {
+    "belagg": 11,
+    "andel_N": 0.45454545454545453
+   },
+   "Stavsåkra ting": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "Stegeborg": {
+    "belagg": 11,
+    "andel_N": 0.36363636363636365
+   },
+   "Stegeholm": {
+    "belagg": 128,
+    "andel_N": 0.5234375
+   },
+   "Stenhammar": {
+    "belagg": 10,
+    "andel_N": 0.9
+   },
+   "Stensta": {
+    "belagg": 16,
+    "andel_N": 0.5
+   },
+   "Stenstad": {
+    "belagg": 12,
+    "andel_N": 0.5
+   },
+   "Stensö": {
+    "belagg": 26,
+    "andel_N": 0.5384615384615384
+   },
+   "Stigtomta": {
+    "belagg": 17,
+    "andel_N": 0.4117647058823529
+   },
+   "Stigtomta kyrka": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Stigtomta ting": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Stockholm": {
+    "belagg": 705,
+    "andel_N": 0.4297872340425532
+   },
+   "Stockholm slott": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Stockholms gråbrödrakloster": {
+    "belagg": 21,
+    "andel_N": 0.7619047619047619
+   },
+   "Stockholms rådstuga": {
+    "belagg": 7,
+    "andel_N": 0.2857142857142857
+   },
+   "Stockholms slott": {
+    "belagg": 11,
+    "andel_N": 0.7272727272727273
+   },
+   "Stora Tuna kyrka": {
+    "belagg": 9,
+    "andel_N": 0.6666666666666666
+   },
+   "Strängnäs": {
+    "belagg": 1215,
+    "andel_N": 0.4831275720164609
+   },
+   "Strängnäs domkyrka": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "Stubbarp": {
+    "belagg": 5,
+    "andel_N": 0.4
+   },
+   "Stynaborg": {
+    "belagg": 5,
+    "andel_N": 0.4
+   },
+   "Styra i Aska hd": {
+    "belagg": 144,
+    "andel_N": 0.4791666666666667
+   },
+   "Stäkeholm": {
+    "belagg": 39,
+    "andel_N": 0.28205128205128205
+   },
+   "Stäkeholm / Stegeholm": {
+    "belagg": 12,
+    "andel_N": 0.4166666666666667
+   },
+   "Stålbergs ting": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Sundboholm": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Sundby": {
+    "belagg": 27,
+    "andel_N": 0.37037037037037035
+   },
+   "Sundholm": {
+    "belagg": 16,
+    "andel_N": 0.3125
+   },
+   "Sundholms slott": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Sunds kyrka": {
+    "belagg": 89,
+    "andel_N": 0.449438202247191
+   },
+   "Sunne sn": {
+    "belagg": 5,
+    "andel_N": 0.2
+   },
+   "Sunnerbo häradsting": {
+    "belagg": 5,
+    "andel_N": 1.0
+   },
+   "Sunnerbo ting": {
+    "belagg": 17,
+    "andel_N": 0.5882352941176471
+   },
+   "Sutarsåås": {
+    "belagg": 4,
+    "andel_N": 1.0
+   },
+   "Suthretorp": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Svansered": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "Svartsjö": {
+    "belagg": 29,
+    "andel_N": 0.7586206896551724
+   },
+   "Svenljunga": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Svinstad": {
+    "belagg": 12,
+    "andel_N": 0.25
+   },
+   "Säby (Julita)": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Säby (Julita) kloster": {
+    "belagg": 5,
+    "andel_N": 0.2
+   },
+   "Säby kloster": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Säby kyrka": {
+    "belagg": 12,
+    "andel_N": 0.5
+   },
+   "Säckestad": {
+    "belagg": 26,
+    "andel_N": 0.5
+   },
+   "Säckestad kyrka": {
+    "belagg": 5,
+    "andel_N": 0.8
+   },
+   "Säckstad": {
+    "belagg": 3,
+    "andel_N": 0.0
+   },
+   "Särna": {
+    "belagg": 18,
+    "andel_N": 0.7222222222222222
+   },
+   "Sätra": {
+    "belagg": 35,
+    "andel_N": 0.6285714285714286
+   },
+   "Sättila": {
+    "belagg": 5,
+    "andel_N": 0.0
+   },
+   "Sääksmäki": {
+    "belagg": 20,
+    "andel_N": 0.4
+   },
+   "Sånga": {
+    "belagg": 16,
+    "andel_N": 0.125
+   },
+   "Sånna": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "Söderby": {
+    "belagg": 46,
+    "andel_N": 0.391304347826087
+   },
+   "Söderby i Munsö sn": {
+    "belagg": 61,
+    "andel_N": 0.26229508196721313
+   },
+   "Söderbärkes kyrka": {
+    "belagg": 7,
+    "andel_N": 0.0
+   },
+   "Söderköping": {
+    "belagg": 319,
+    "andel_N": 0.49216300940438873
+   },
+   "Söderköpings rådhus": {
+    "belagg": 8,
+    "andel_N": 0.375
+   },
+   "Sölvesborg": {
+    "belagg": 6,
+    "andel_N": 0.6666666666666666
+   },
+   "Sölvesborgs slott": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Söne": {
+    "belagg": 5,
+    "andel_N": 0.4
+   },
+   "Sötåsa": {
+    "belagg": 4,
+    "andel_N": 0.25
+   },
+   "Tandla": {
+    "belagg": 43,
+    "andel_N": 0.16279069767441862
+   },
+   "Tavastehus": {
+    "belagg": 18,
+    "andel_N": 0.2222222222222222
+   },
+   "Tega": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Tegnesta": {
+    "belagg": 23,
+    "andel_N": 0.34782608695652173
+   },
+   "Telge": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Tenala socken": {
+    "belagg": 5,
+    "andel_N": 0.4
+   },
+   "Thun": {
+    "belagg": 3,
+    "andel_N": 0.0
+   },
+   "Thæflesrums ting": {
+    "belagg": 17,
+    "andel_N": 0.6470588235294118
+   },
+   "Thæga": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "Thötö": {
+    "belagg": 3,
+    "andel_N": 1.0
+   },
+   "Tierp": {
+    "belagg": 24,
+    "andel_N": 0.20833333333333334
+   },
+   "Tinget i Färnebo": {
+    "belagg": 7,
+    "andel_N": 0.8571428571428571
+   },
+   "Tingsstället Eklöt": {
+    "belagg": 13,
+    "andel_N": 0.5384615384615384
+   },
+   "Tingsstället Fagrahed": {
+    "belagg": 38,
+    "andel_N": 0.42105263157894735
+   },
+   "Tingsstället Hamneda": {
+    "belagg": 5,
+    "andel_N": 0.2
+   },
+   "Tingsstället Ingasa": {
+    "belagg": 28,
+    "andel_N": 0.14285714285714285
+   },
+   "Tingsstället Lundboberg": {
+    "belagg": 18,
+    "andel_N": 0.2777777777777778
+   },
+   "Tingsstället Skultuna": {
+    "belagg": 14,
+    "andel_N": 0.42857142857142855
+   },
+   "Tingsstället Stalberg": {
+    "belagg": 14,
+    "andel_N": 0.5714285714285714
+   },
+   "Tingsstället i Tenala sn": {
+    "belagg": 11,
+    "andel_N": 0.09090909090909091
+   },
+   "Tingsstället vid Vaksala kyrka": {
+    "belagg": 19,
+    "andel_N": 0.2631578947368421
+   },
+   "Tingstad": {
+    "belagg": 21,
+    "andel_N": 0.7142857142857143
+   },
+   "Tingstad kyrka": {
+    "belagg": 13,
+    "andel_N": 0.7692307692307693
+   },
+   "Tingstället Aspa löt": {
+    "belagg": 9,
+    "andel_N": 0.4444444444444444
+   },
+   "Tingvalla": {
+    "belagg": 13,
+    "andel_N": 0.5384615384615384
+   },
+   "Tjurbo häradsting": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Tofta": {
+    "belagg": 6,
+    "andel_N": 1.0
+   },
+   "Tolko by": {
+    "belagg": 13,
+    "andel_N": 0.23076923076923078
+   },
+   "Torp (Medelpad)": {
+    "belagg": 12,
+    "andel_N": 0.4166666666666667
+   },
+   "Torp i Medelpad": {
+    "belagg": 6,
+    "andel_N": 1.0
+   },
+   "Torpa kyrka": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Torshälla": {
+    "belagg": 77,
+    "andel_N": 0.4935064935064935
+   },
+   "Torsvi": {
+    "belagg": 5,
+    "andel_N": 0.4
+   },
+   "Torsåkers prästgård": {
+    "belagg": 8,
+    "andel_N": 0.5
+   },
+   "Torsång": {
+    "belagg": 40,
+    "andel_N": 0.4
+   },
+   "Tortuna": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Tortuna tingsställe": {
+    "belagg": 17,
+    "andel_N": 0.11764705882352941
+   },
+   "Trästena": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Trögd": {
+    "belagg": 18,
+    "andel_N": 0.4444444444444444
+   },
+   "Trögds härads ting": {
+    "belagg": 17,
+    "andel_N": 0.4117647058823529
+   },
+   "Trögds häradsting": {
+    "belagg": 17,
+    "andel_N": 0.7058823529411765
+   },
+   "Tuhundra hd:s tingsställe": {
+    "belagg": 21,
+    "andel_N": 0.42857142857142855
+   },
+   "Tuhundra härads tingsstad": {
+    "belagg": 22,
+    "andel_N": 0.5454545454545454
+   },
+   "Tuhundra häradsting": {
+    "belagg": 59,
+    "andel_N": 0.4576271186440678
+   },
+   "Tullus i Näskotts sn": {
+    "belagg": 10,
+    "andel_N": 0.7
+   },
+   "Tummelsta": {
+    "belagg": 7,
+    "andel_N": 0.14285714285714285
+   },
+   "Tun": {
+    "belagg": 9,
+    "andel_N": 0.6666666666666666
+   },
+   "Tuna": {
+    "belagg": 22,
+    "andel_N": 0.5909090909090909
+   },
+   "Tuna på Selaön": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Tuna ting": {
+    "belagg": 5,
+    "andel_N": 0.0
+   },
+   "Tunsberghus vid Tönsberg": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Turinge": {
+    "belagg": 10,
+    "andel_N": 0.5
+   },
+   "Tynnelsö": {
+    "belagg": 18,
+    "andel_N": 0.2222222222222222
+   },
+   "Tälje": {
+    "belagg": 23,
+    "andel_N": 0.5217391304347826
+   },
+   "Tälje (= Södertälje stad)": {
+    "belagg": 4,
+    "andel_N": 0.25
+   },
+   "Tälje (= Södertälje)": {
+    "belagg": 15,
+    "andel_N": 0.6666666666666666
+   },
+   "Tängene": {
+    "belagg": 2,
+    "andel_N": 1.0
+   },
+   "Tönsberg": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Törnevalla kyrka": {
+    "belagg": 21,
+    "andel_N": 0.7142857142857143
+   },
+   "Tövsala": {
+    "belagg": 25,
+    "andel_N": 0.12
+   },
+   "Ulfsby": {
+    "belagg": 17,
+    "andel_N": 0.29411764705882354
+   },
+   "Ulleråkers häradsting": {
+    "belagg": 11,
+    "andel_N": 0.36363636363636365
+   },
+   "Ulleråkers ting": {
+    "belagg": 14,
+    "andel_N": 0.35714285714285715
+   },
+   "Ulleråkers tingsplats": {
+    "belagg": 9,
+    "andel_N": 0.2222222222222222
+   },
+   "Ulleråkers tingsställe": {
+    "belagg": 10,
+    "andel_N": 0.4
+   },
+   "Unnaryd": {
+    "belagg": 14,
+    "andel_N": 0.5714285714285714
+   },
+   "Upplanda": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Upplunda": {
+    "belagg": 5,
+    "andel_N": 0.4
+   },
+   "Uppsala": {
+    "belagg": 1542,
+    "andel_N": 0.4578469520103761
+   },
+   "Uskela by": {
+    "belagg": 23,
+    "andel_N": 0.21739130434782608
+   },
+   "Uttervad": {
+    "belagg": 12,
+    "andel_N": 0.5
+   },
+   "Vad": {
+    "belagg": 12,
+    "andel_N": 0.3333333333333333
+   },
+   "Vads kyrka": {
+    "belagg": 5,
+    "andel_N": 0.2
+   },
+   "Vadsbro kyrka": {
+    "belagg": 17,
+    "andel_N": 0.47058823529411764
+   },
+   "Vadsbro tingsställe": {
+    "belagg": 31,
+    "andel_N": 0.22580645161290322
+   },
+   "Vadstena": {
+    "belagg": 985,
+    "andel_N": 0.516751269035533
+   },
+   "Vadstena kloster": {
+    "belagg": 133,
+    "andel_N": 0.556390977443609
+   },
+   "Vaksala kyrka": {
+    "belagg": 18,
+    "andel_N": 0.1111111111111111
+   },
+   "Vaksala tingsställe": {
+    "belagg": 51,
+    "andel_N": 0.11764705882352941
+   },
+   "Valby": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Valkebo härads tingsplats": {
+    "belagg": 15,
+    "andel_N": 0.3333333333333333
+   },
+   "Valkebo häradsting": {
+    "belagg": 14,
+    "andel_N": 0.42857142857142855
+   },
+   "Valko by": {
+    "belagg": 5,
+    "andel_N": 0.6
+   },
+   "Vallby": {
+    "belagg": 7,
+    "andel_N": 0.42857142857142855
+   },
+   "Valsjö": {
+    "belagg": 4,
+    "andel_N": 0.25
+   },
+   "Vappa": {
+    "belagg": 4,
+    "andel_N": 0.75
+   },
+   "Varberg": {
+    "belagg": 22,
+    "andel_N": 0.13636363636363635
+   },
+   "Vargarn": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Vargarn (i Lista sn, Västra Rekarne hd)": {
+    "belagg": 5,
+    "andel_N": 0.2
+   },
+   "Varnhem": {
+    "belagg": 10,
+    "andel_N": 0.2
+   },
+   "Varnhems kloster": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Veckholms kyrka": {
+    "belagg": 7,
+    "andel_N": 0.5714285714285714
+   },
+   "Veddige": {
+    "belagg": 3,
+    "andel_N": 0.0
+   },
+   "Vederslöv": {
+    "belagg": 7,
+    "andel_N": 0.2857142857142857
+   },
+   "Vemo": {
+    "belagg": 10,
+    "andel_N": 0.4
+   },
+   "Vemo häradsting": {
+    "belagg": 21,
+    "andel_N": 0.42857142857142855
+   },
+   "Vengarn": {
+    "belagg": 5,
+    "andel_N": 0.4
+   },
+   "Vestbo häradsting": {
+    "belagg": 18,
+    "andel_N": 0.16666666666666666
+   },
+   "Vetlanda": {
+    "belagg": 28,
+    "andel_N": 0.35714285714285715
+   },
+   "Via": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "Viborg": {
+    "belagg": 23,
+    "andel_N": 0.43478260869565216
+   },
+   "Viborgs slott": {
+    "belagg": 20,
+    "andel_N": 0.8
+   },
+   "Viby": {
+    "belagg": 5,
+    "andel_N": 0.0
+   },
+   "Vid (Söder-)Tälje": {
+    "belagg": 12,
+    "andel_N": 0.9166666666666666
+   },
+   "Vid Stockholm": {
+    "belagg": 3,
+    "andel_N": 1.0
+   },
+   "Viggeby": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "Vik": {
+    "belagg": 13,
+    "andel_N": 0.5384615384615384
+   },
+   "Vimmerby": {
+    "belagg": 50,
+    "andel_N": 0.34
+   },
+   "Vinberga": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Vindö": {
+    "belagg": 8,
+    "andel_N": 0.375
+   },
+   "Ving": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "Vinsarp": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "Vinäs": {
+    "belagg": 43,
+    "andel_N": 0.5348837209302325
+   },
+   "Vinäs (i Västra Eds socken)": {
+    "belagg": 6,
+    "andel_N": 0.3333333333333333
+   },
+   "Virestad": {
+    "belagg": 5,
+    "andel_N": 0.8
+   },
+   "Virmo": {
+    "belagg": 50,
+    "andel_N": 0.3
+   },
+   "Virserum": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Visby": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Visnum": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Vittene i Lena sn": {
+    "belagg": 7,
+    "andel_N": 0.5714285714285714
+   },
+   "Vordingsborgs slott": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Vreta": {
+    "belagg": 28,
+    "andel_N": 0.5
+   },
+   "Vreta kloster": {
+    "belagg": 12,
+    "andel_N": 0.5833333333333334
+   },
+   "Vrigstad": {
+    "belagg": 18,
+    "andel_N": 0.5555555555555556
+   },
+   "Vrikstads kyrka": {
+    "belagg": 2,
+    "andel_N": 1.0
+   },
+   "Vä i Refteleds sn": {
+    "belagg": 12,
+    "andel_N": 0.5
+   },
+   "Väddö": {
+    "belagg": 7,
+    "andel_N": 0.5714285714285714
+   },
+   "Väla": {
+    "belagg": 3,
+    "andel_N": 0.0
+   },
+   "Värnamo": {
+    "belagg": 50,
+    "andel_N": 0.4
+   },
+   "Väsby": {
+    "belagg": 14,
+    "andel_N": 0.7857142857142857
+   },
+   "Väster Rekarne hd:s tingsställe": {
+    "belagg": 16,
+    "andel_N": 0.5625
+   },
+   "Väster Rekarne ting": {
+    "belagg": 22,
+    "andel_N": 0.6363636363636364
+   },
+   "Väster-Rekarne tingsställe": {
+    "belagg": 18,
+    "andel_N": 0.3888888888888889
+   },
+   "Västervik": {
+    "belagg": 109,
+    "andel_N": 0.44954128440366975
+   },
+   "Västervik (Gamleby)": {
+    "belagg": 10,
+    "andel_N": 0.7
+   },
+   "Västerås": {
+    "belagg": 642,
+    "andel_N": 0.35514018691588783
+   },
+   "Västerås landsting": {
+    "belagg": 15,
+    "andel_N": 0.26666666666666666
+   },
+   "Västerås slott": {
+    "belagg": 17,
+    "andel_N": 0.23529411764705882
+   },
+   "Västlandaholm": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Västra härads tingsställe": {
+    "belagg": 16,
+    "andel_N": 0.375
+   },
+   "Växjö": {
+    "belagg": 150,
+    "andel_N": 0.38666666666666666
+   },
+   "Våla": {
+    "belagg": 20,
+    "andel_N": 0.35
+   },
+   "Våla häradsting": {
+    "belagg": 11,
+    "andel_N": 0.2727272727272727
+   },
+   "Vårdsätra": {
+    "belagg": 17,
+    "andel_N": 0.7058823529411765
+   },
+   "Vårfruberga": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Wadzstadh": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Wathnya": {
+    "belagg": 5,
+    "andel_N": 0.4
+   },
+   "Wistala by": {
+    "belagg": 45,
+    "andel_N": 0.28888888888888886
+   },
+   "Wäija by": {
+    "belagg": 22,
+    "andel_N": 0.13636363636363635
+   },
+   "Ystad": {
+    "belagg": 4,
+    "andel_N": 0.0
+   },
+   "Yxnö i Häradshammars socken på Vikbolandet": {
+    "belagg": 4,
+    "andel_N": 0.25
+   },
+   "Yxnö i Östkind": {
+    "belagg": 14,
+    "andel_N": 0.6428571428571429
+   },
+   "Yxnö på Vikbolandet": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "[Tjust härads tingsplats]": {
+    "belagg": 14,
+    "andel_N": 0.7142857142857143
+   },
+   "borgen Konungsberg(1": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "u.o.": {
+    "belagg": 53,
+    "andel_N": 0.49056603773584906
+   },
+   "Änga": {
+    "belagg": 14,
+    "andel_N": 0.5714285714285714
+   },
+   "Ängsö": {
+    "belagg": 2,
+    "andel_N": 0.0
+   },
+   "Äpplaholm": {
+    "belagg": 5,
+    "andel_N": 0.2
+   },
+   "Äppleholm": {
+    "belagg": 5,
+    "andel_N": 0.6
+   },
+   "Å socken": {
+    "belagg": 17,
+    "andel_N": 0.47058823529411764
+   },
+   "Åbo": {
+    "belagg": 411,
+    "andel_N": 0.26034063260340634
+   },
+   "Åboö (i Ripsa socken)": {
+    "belagg": 3,
+    "andel_N": 0.0
+   },
+   "Åby": {
+    "belagg": 33,
+    "andel_N": 0.36363636363636365
+   },
+   "Åkerby i Fundbo sn": {
+    "belagg": 17,
+    "andel_N": 0.5294117647058824
+   },
+   "Åkers kyrka": {
+    "belagg": 7,
+    "andel_N": 0.7142857142857143
+   },
+   "Åkerö": {
+    "belagg": 5,
+    "andel_N": 0.0
+   },
+   "Ålhem": {
+    "belagg": 6,
+    "andel_N": 0.16666666666666666
+   },
+   "Årnäs": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "Ås kloster": {
+    "belagg": 23,
+    "andel_N": 0.34782608695652173
+   },
+   "Åseda": {
+    "belagg": 4,
+    "andel_N": 0.5
+   },
+   "Åsenhöga kyrka": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Åsle": {
+    "belagg": 11,
+    "andel_N": 0.18181818181818182
+   },
+   "Åsunda häradsting": {
+    "belagg": 28,
+    "andel_N": 0.5
+   },
+   "Æbleholm": {
+    "belagg": 11,
+    "andel_N": 0.6363636363636364
+   },
+   "Ö (troligen i Björsäters socken)": {
+    "belagg": 6,
+    "andel_N": 0.6666666666666666
+   },
+   "Ö. Rekarne hd:s tingsställe": {
+    "belagg": 53,
+    "andel_N": 0.4716981132075472
+   },
+   "Öglunda": {
+    "belagg": 5,
+    "andel_N": 0.6
+   },
+   "Öklittha ting": {
+    "belagg": 10,
+    "andel_N": 0.1
+   },
+   "Öklytha ting": {
+    "belagg": 31,
+    "andel_N": 0.0967741935483871
+   },
+   "Ökna": {
+    "belagg": 11,
+    "andel_N": 0.36363636363636365
+   },
+   "Ör": {
+    "belagg": 1,
+    "andel_N": 1.0
+   },
+   "Örby": {
+    "belagg": 11,
+    "andel_N": 0.7272727272727273
+   },
+   "Örebro": {
+    "belagg": 76,
+    "andel_N": 0.4868421052631579
+   },
+   "Örebro slott": {
+    "belagg": 6,
+    "andel_N": 1.0
+   },
+   "Öresten": {
+    "belagg": 22,
+    "andel_N": 0.045454545454545456
+   },
+   "Örestens slott": {
+    "belagg": 3,
+    "andel_N": 0.6666666666666666
+   },
+   "Öslöf": {
+    "belagg": 20,
+    "andel_N": 0.2
+   },
+   "Össjö": {
+    "belagg": 1,
+    "andel_N": 0.0
+   },
+   "Öster-Rekarne tingsställe": {
+    "belagg": 58,
+    "andel_N": 0.3793103448275862
+   },
+   "Öster-Rekarnes tingsställe": {
+    "belagg": 15,
+    "andel_N": 0.2
+   },
+   "Österby": {
+    "belagg": 23,
+    "andel_N": 0.6956521739130435
+   },
+   "Österrekarne ting": {
+    "belagg": 10,
+    "andel_N": 0.3
+   },
+   "Österrekarnes ting": {
+    "belagg": 2,
+    "andel_N": 0.5
+   },
+   "Östkinds häradsting": {
+    "belagg": 21,
+    "andel_N": 0.6190476190476191
+   },
+   "Östra Ryds kyrka": {
+    "belagg": 3,
+    "andel_N": 0.3333333333333333
+   },
+   "Överselö": {
+    "belagg": 1,
+    "andel_N": 0.0
+   }
+  }
+ }
+}
