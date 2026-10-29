@@ -234,7 +234,9 @@ def corpus_results(request: Request):
     # after the corpus) belong in the key
     rob = os.path.getmtime(robustness.path(fp)) if os.path.exists(robustness.path(fp)) else 0
     from src import carver_literature
-    rob = f"{rob}|{os.path.getmtime(carver_literature.PATH) if os.path.exists(carver_literature.PATH) else 0}"
+    from src import literature
+    rob = (f"{rob}|{os.path.getmtime(carver_literature.PATH) if os.path.exists(carver_literature.PATH) else 0}"
+           f"|{literature.version()}")
     return cached_json(request, f"corpus|{fp}|{dir_version(crosscheck.CACHE)}|{findings_version()}|{rob}",
                        lambda: _corpus_results(fp))
 
@@ -250,6 +252,8 @@ def _corpus_results(fp: str) -> dict:
     from src import stone_findings  # also what Rundata lacks about a stone beyond attribution (gaps, Runor 2020, own)
     s_ = store()
     stone = _with_crosscheck(stone) + stone_findings.all_findings(s_.get, s_.inscriptions)
+    from src import literature  # where dissertations and editions discuss the stone
+    literature.annotate_findings(stone)
     from src import pattern_registry
     from src import linking
     patterns = patterns + linking.patterns(os.path.join(os.path.dirname(rb.ROOT + "/"), "data", "links.json"))
@@ -267,7 +271,9 @@ def _corpus_results(fp: str) -> dict:
                                  "crosschecked": sum(1 for f in stone if f.get("crosscheck")),
                                  "already_known": sum(1 for f in stone if (f.get("crosscheck") or {}).get("status") == "finns redan"),
                                  "still_new": sum(1 for f in stone if f["verdict"] == "nytt" and
-                                                  (f.get("crosscheck") or {}).get("status") in ("saknas", "samma som"))},
+                                                  (f.get("crosscheck") or {}).get("status") in ("saknas", "samma som")),
+                                 "in_literature": sum(1 for f in stone if f.get("literature")),
+                                 "new_in_literature": sum(1 for f in stone if f["verdict"] == "nytt" and f.get("literature"))},
             "findings": sorted(stone, key=lambda f: -f["score"]),
             "html_map_url": f"/api/r/figure/{fp}/{html_map}" if html_map else None,
             "package_url": "/api/r/package"}

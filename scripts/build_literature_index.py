@@ -33,11 +33,13 @@ def main():
             continue
         found, n_pages = set(), 0
         for path in paths:
-            for i, raw in enumerate(pages(path), start=1):
+            raws = pages(path)
+            printed = literature.fill_pages([literature.printed_page(raw, i) for i, raw in enumerate(raws, start=1)])
+            for i, raw in enumerate(raws, start=1):
                 n_pages += 1
                 text = re.sub(r"-\n\s*", "", raw)          # words hyphenated over a line break
                 flat = re.sub(r"\s+", " ", text)
-                page = literature.printed_page(raw, i)
+                page = printed[i - 1]
                 seen_here = set()
                 # A register or list (an index of signa, a catalogue table): more signa than words on the page
                 n_signa = len({fold_signum(f"{m.group(1)} {m.group(2)}") for m in rx.finditer(flat)} & signa.keys())

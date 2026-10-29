@@ -189,9 +189,9 @@ export function LiteratureBox({ signum }: { signum: string }) {
                 <span className="text-[11px] text-slate-500">{w.work.kind}</span>
               </div>
               <div className="text-xs text-slate-700 mt-0.5">
-                {w.pages.length > 0 ? "s. " : ""}{w.pages.map((p, i) => (
+                {w.pages.map((p, i) => (
                   <span key={p}>{i > 0 && ", "}<span className={w.entry_pages.includes(p) ? "font-bold" : ""}
-                    title={w.entry_pages.includes(p) ? "Stenens egen artikel i utgåvan" : undefined}>{p}</span></span>
+                    title={w.entry_pages.includes(p) ? "Stenens egen artikel i utgåvan" : undefined}>{p.startsWith("pdf ") ? `pdf-sida ${p.slice(4)}` : `s. ${p}`}</span></span>
                 ))}
                 {w.entry_pages.length > 0 && <span className="text-slate-500"> (fetstil: stenens egen artikel)</span>}
                 {w.list_pages.length > 0 && <span className="text-slate-500">{w.pages.length ? "; " : ""}i register eller listor s. {w.list_pages.join(", ")}</span>}
@@ -201,7 +201,7 @@ export function LiteratureBox({ signum }: { signum: string }) {
                 <summary className="cursor-pointer text-xs font-semibold text-slate-600 hover:text-slate-900">Utdrag ({Math.min(w.snippets.length, w.n)} av {w.n})</summary>
                 <ul className="mt-1 space-y-1">
                   {w.snippets.map((s, i) => (
-                    <li key={i} className="text-xs text-slate-600 leading-relaxed"><span className="font-semibold text-slate-500">s. {s.page}: </span><span translate="no">{s.text}</span></li>
+                    <li key={i} className="text-xs text-slate-600 leading-relaxed"><span className="font-semibold text-slate-500">{s.page.startsWith("pdf ") ? `pdf-sida ${s.page.slice(4)}` : `s. ${s.page}`}: </span><span translate="no">{s.text}</span></li>
                   ))}
                 </ul>
               </details>}

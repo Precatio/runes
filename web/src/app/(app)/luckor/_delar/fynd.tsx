@@ -12,6 +12,8 @@ import { useWrittenFilter } from "@/lib/patternArticles";
 import type { CrossCheck, Finding, Findings, Interpretation, RPattern, Verdict } from "./typer";
 import { Chip, LEVELS, LEVEL_RANK, LanguageCell, LevelBadge, MaterialCell, Score, SortTh, StoneLinks, TH_ROW, VERDICT_STYLE, useSorted } from "./gemensamt";
 
+const pageLabel = (p: string) => (p.startsWith("pdf ") ? `pdf-sida ${p.slice(4)}` : `s. ${p}`);
+
 const CC_STYLE: Record<string, string> = {
   "finns redan": "bg-sky-50 text-sky-800 border-sky-200",
   "nämns": "bg-sky-50 text-sky-800 border-sky-200",
@@ -138,6 +140,7 @@ export function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; l
   const [method, setMethod] = useState("");
   const [onlyLikely, setOnlyLikely] = useState(false);
   const [onlySignificant, setOnlySignificant] = useState(false);
+  const [notInLiterature, setNotInLiterature] = useState(false);
   const [level, setLevel] = useState("");
   const [open, setOpen] = useState<string | null>(null);
   const methods = Object.keys(data.summary.by_method);
@@ -145,8 +148,9 @@ export function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; l
     (!verdict || f.verdict === verdict) && (!method || f.method === method)
     && (!onlyLikely || f.assessment.startsWith("Sannolikt ny") || f.assessment === "Värd en omprövning")
     && (!onlySignificant || f.significance?.significant === true)
+    && (!notInLiterature || !f.literature)
     && (!level || f.interpretation?.level === level)),
-  [data.findings, verdict, method, onlyLikely, onlySignificant, level]);
+  [data.findings, verdict, method, onlyLikely, onlySignificant, notInLiterature, level]);
   const levelCounts = useMemo(() => {
     const c: Record<string, number> = {};
     for (const f of data.findings) if (f.interpretation) c[f.interpretation.level] = (c[f.interpretation.level] ?? 0) + 1;
@@ -202,6 +206,12 @@ export function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; l
           className={`px-3 py-1.5 rounded-xl border text-xs font-bold ${onlySignificant ? "bg-emerald-700 border-emerald-700 text-white" : "bg-white border-slate-300 text-emerald-800 hover:bg-emerald-50"}`}>
           <Tip text={GLOSSARY["Statistiskt signifikant"] + " Ortografin (justerat p), statistiska modellen (q, mot de sannolikheter felaktiga ristare får) och huggtekniken har ett signifikanstest per sten; seriationen och grupperna av stenar utan ristare är skattningar utan test."}>
             ✓ Bara statistiskt signifikanta ({nSignificant})
+          </Tip>
+        </button>
+        <button onClick={() => setNotInLiterature(!notInLiterature)} aria-pressed={notInLiterature}
+          className={`px-3 py-1.5 rounded-xl border text-xs font-bold ${notInLiterature ? "bg-[#b7410e] border-[#b7410e] text-white" : "bg-white border-slate-300 text-[#9a350b] hover:bg-[#b7410e]/5"}`}>
+          <Tip text="Döljer fynd på stenar som diskuteras i någon avhandling eller utgåva i litteraturregistret. Det som blir kvar har ingen litteratur att läsa först – i de verk registret har.">
+            Inte i litteraturen ({data.findings.filter(f => !f.literature).length})
           </Tip>
         </button>
         <span className="text-slate-500">{sorted.length} fynd</span>
@@ -328,6 +338,8 @@ function FindingRow({ f, open, onToggle }: { f: Finding; open: boolean; onToggle
           <div className="text-[11px] text-slate-500 mt-0.5">Rundata: {f.existing}</div>
           <div className="flex flex-wrap gap-1.5 mt-1.5">
             {f.crosscheck && <Chip label="Nyare källor"><CrossCheckCell cc={f.crosscheck} /></Chip>}
+            {f.literature && <Chip label="Litteratur" title="Stenen diskuteras i avhandlingar eller utgåvor i litteraturregistret – läs sidorna innan fyndet kallas nytt.">
+              <span translate="no">{f.literature.works.slice(0, 2).map(w => `${w.author} ${w.year}`).join(", ")}{f.literature.n_works > 2 ? ` +${f.literature.n_works - 2}` : ""}</span></Chip>}
             {f.material && <Chip label="Bergart" title={GLOSSARY["Bergart"]}><MaterialCell x={f} /></Chip>}
             {f.language?.comparable ? <Chip label="Språkdrag" title={GLOSSARY["Språkdrag"]}><LanguageCell x={f} /></Chip> : null}
             <span className="sm:hidden"><Chip label="Uppskattning">{Math.round(f.score * 100)}</Chip></span>
@@ -365,6 +377,18 @@ function FindingRow({ f, open, onToggle }: { f: Finding; open: boolean; onToggle
                 )}
                 {f.crosscheck.runor?.references?.length ? <p>Litteratur i Runor att kontrollera: {f.crosscheck.runor.references.join("; ")}</p> : null}
                 {f.crosscheck.wikidata && <p>{f.crosscheck.wikidata.text}</p>}
+              </div>
+            )}
+            {f.literature && (
+              <div className="mt-3 pt-3 border-t border-slate-900/5 space-y-1">
+                <div className="font-bold uppercase tracking-wider text-[10px] text-slate-500">Litteraturen om stenen</div>
+                <ul className="space-y-0.5">
+                  {f.literature.works.map(w => (
+                    <li key={w.id}><span className="font-semibold" translate="no">{w.author} {w.year}</span>, <span className="italic" translate="no">{w.title}</span>:{" "}
+                      {w.pages.map(p => (w.entry_pages.includes(p) ? `${pageLabel(p)} (stenens artikel)` : pageLabel(p))).join(", ")}</li>
+                  ))}
+                </ul>
+                <Link href={`/inskrifter?signum=${encodeURIComponent(f.signum)}`} className="text-[#b7410e] hover:underline">Utdragen på stenens sida</Link>
               </div>
             )}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3 pt-3 border-t border-slate-900/5">

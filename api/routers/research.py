@@ -143,8 +143,9 @@ def findings_key(req: FindingsRequest) -> str:
     body = hashlib.sha256(req.model_dump_json().encode()).hexdigest()[:16]
     # The stone findings' input files (own findings, links, gap candidates, Runor) are part of the key, so that an edit
     # to data/stone_findings.json shows without restarting the API (the same key part as /api/r/corpus)
+    from src import literature
     return (f"findings|{body}|{_fp()}|{dir_version(crosscheck.CACHE)}|{id(store().inscriptions)}"
-            f"|{findings_version()}")
+            f"|{findings_version()}|{literature.version()}")
 
 
 def research_findings(req: FindingsRequest):
@@ -156,6 +157,8 @@ def research_findings(req: FindingsRequest):
     r_items = findings.add_extras(r_items, s.get, s.inscriptions, orthography_model().names)
     from src import stone_findings  # gap fills, Runor 2020 and our own findings: what Rundata lacks about a stone
     items = rstats._with_crosscheck(list(_orthographic_findings())) + extra + r_items + stone_findings.all_findings(s.get, s.inscriptions)
+    from src import literature  # where dissertations and editions discuss the stone (src/literature.py)
+    literature.annotate_findings(items)
     from src.r_findings import finding_significance
     for f in items:
         f["significance"] = finding_significance(f)

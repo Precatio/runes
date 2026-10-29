@@ -75,7 +75,16 @@ export const postDate = (p: Pick<BlogPost, "publishedAt" | "month">, lang = "sv"
 
 // Links only to the web or to the public website's own pages (the start page and the articles), never javascript: or
 // data:, and never into the app, which is not on the public website – such a link is shown as plain text
-const safeHref = (href: string) => (/^https?:\/\//.test(href) || isPublicPath(href) ? href : null);
+const safeHref = (href: string) => (/^https?:\/\//.test(href) ? href : isPublicPath(href) ? withSlash(href) : null);
+
+// The public website is static with a trailing slash on every page (/artiklar/x/); a link without it gets a redirect,
+// which search engines report as "page with redirect". Internal links get the slash there, before any ?query or #hash.
+const withSlash = (href: string) => {
+  if (!PUBLIC_SITE) return href;
+  const m = href.match(/^([^?#]*)(.*)$/);
+  const path = m?.[1] ?? href, rest = m?.[2] ?? "";
+  return path.endsWith("/") || /\.[a-z0-9]+$/i.test(path) ? href : `${path}/${rest}`;
+};
 
 /** **bold**, *italic* and [text](url) inside a line. */
 function inline(text: string): ReactNode[] {

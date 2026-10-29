@@ -19,3 +19,8 @@ def test_printed_page():
 def test_sri_entry_heading():
     t = "slut på förra.\n   179. Kölaby sn, Stommen. Nu på kyrkogården.\n    233. Östra Stenby kyrka, Östkinds hd.\n 12. Se ovan."
     assert [m.group(1) for m in lit.ENTRY.finditer(t)] == ["179", "233"]
+
+
+def test_fill_pages_and_labels():
+    assert lit.fill_pages(["34", "pdf 39", "36", "pdf 41"]) == ["34", "35", "36", "pdf 41"]
+    assert lit.page_label("342") == "s. 342" and lit.page_label("pdf 40") == "pdf-sida 40"

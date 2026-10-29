@@ -75,6 +75,42 @@ def for_stone(signum: str) -> dict:
             "built": idx.get("built"), "source_note": "Utdrag ur verken i appens litteraturregister (data/literature/catalog.json)."}
 
 
+def annotate_findings(items: list[dict]) -> list[dict]:
+    """Fynden per sten med var litteraturen i registret diskuterar stenen (inte register och listor). Domen ändras inte –
+    att en sten nämns betyder inte att fyndet redan är beskrivet – men ett "nytt" fynd får en anmärkning i nyheten med
+    verk och sidor att läsa först. Fynden ändras på plats och returneras."""
+    cache: dict[str, list[dict]] = {}
+    for f in items:
+        sig = f.get("signum")
+        if not sig:
+            continue
+        if sig not in cache:
+            cache[sig] = [{"id": w["work"]["id"], "author": w["work"]["author"].split(",")[0], "year": w["work"]["year"],
+                           "title": w["work"]["title"], "kind": w["work"]["kind"], "pages": w["pages"],
+                           "entry_pages": w["entry_pages"]}
+                          for w in for_stone(sig)["works"] if w["pages"]]
+        works = cache[sig]
+        if not works:
+            continue
+        f["literature"] = {"works": works, "n_works": len(works)}
+        if f.get("verdict") == "nytt":
+            refs = "; ".join(f"{w['author']} {w['year']} " + ", ".join(page_label(x) for x in w["pages"][:4]).replace(", s. ", ", ")
+                             for w in works[:3])
+            note = f"stenen diskuteras i litteraturregistret ({refs}) – läs sidorna innan fyndet kallas nytt"
+            reasons = f.setdefault("reasons", {}).setdefault("nyhet", [])
+            if note not in reasons:
+                reasons.append(note)
+    return items
+
+
+def version() -> float:
+    """Indexets ändringstid, för cachenycklar."""
+    try:
+        return os.path.getmtime(INDEX)
+    except OSError:
+        return 0.0
+
+
 # --- indexing (scripts/build_literature_index.py) ---
 
 def signum_pattern(prefixes: list[str]) -> re.Pattern:
@@ -97,6 +133,21 @@ def printed_page(page_text: str, fallback: int) -> str:
         if caps and m:
             return m.group(1)
     return f"pdf {fallback}"
+
+
+def fill_pages(pages: list[str]) -> list[str]:
+    """Sidor utan läsbart nummer (OCR) får numret mellan grannarnas, när sidan före och efter skiljer sig med två."""
+    out = list(pages)
+    for i in range(1, len(out) - 1):
+        a, b = out[i - 1], out[i + 1]
+        if out[i].startswith("pdf") and a.isdigit() and b.isdigit() and int(b) - int(a) == 2:
+            out[i] = str(int(a) + 1)
+    return out
+
+
+def page_label(p: str) -> str:
+    """"342" -> "s. 342", "pdf 40" -> "pdf-sida 40"."""
+    return f"pdf-sida {p[4:]}" if p.startswith("pdf ") else f"s. {p}"
 
 
 # SRI's own article for a stone: "179. Kölaby sn, Stommen." or "233. Östra Stenby kyrka, Östkinds hd."

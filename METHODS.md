@@ -765,7 +765,7 @@ nummer eller Fv-signum), och för varje sten och sida sparas den tryckta sidan o
 IV, V) räknas också artikelrubriker som "179. Kölaby sn" som stenens egen artikel. Indexet ligger i
 `data/cache/literature/` och följer inte med kodförrådet, eftersom det bygger på upphovsrättsskyddade texter. Stenens sida
 visar per verk sidorna (den egna artikeln i fetstil) och utdragen. Ett signum kan nämnas i förbigående eller i en lista,
-och OCR-fel gör att enstaka omnämnanden missas; registret visar var en sten nämns, inte vad som sägs om den.
+och OCR-fel gör att enstaka omnämnanden missas; registret visar var en sten nämns, inte vad som sägs om den. Sidor där antalet signum per ord är över 0,3 (register, kataloglistor) räknas som listor och visas utan utdrag; sidor utan läsbart nummer får numret mellan grannarnas. Fynden per sten (Forskningsluckor, Statistik) får verken och sidorna där stenen diskuteras (`literature.annotate_findings`); domen ändras inte, men ett fynd märkt "nytt" får en anmärkning att läsa sidorna först, och listan kan filtreras på fynd vars sten inte diskuteras i registret.
 
 ### 1x. Försiktighet i påståendena, djärvhet i hypoteserna
 
