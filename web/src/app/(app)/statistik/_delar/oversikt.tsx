@@ -18,7 +18,7 @@ const STATUS_STYLE: Record<string, string> = {
 export const sectionOf = (data: Corpus, key: Tab) => (data.sections ?? []).find(x => x.key === key);
 
 // The statistically significant results, so that they stand out from the descriptive ones
-function SignificantBox({ patterns, onOpen }: { patterns: Pattern[]; onOpen: (t: Tab) => void }) {
+function SignificantBox({ patterns, onOpen, robust }: { patterns: Pattern[]; onOpen: (t: Tab) => void; robust?: Corpus["robustness"] }) {
   const tested = patterns.filter(p => p.significance && p.significance.significant !== null);
   const sig = tested.filter(p => p.significance?.significant);
   const untested = patterns.filter(p => p.significance && p.significance.significant === null);
@@ -39,6 +39,17 @@ function SignificantBox({ patterns, onOpen }: { patterns: Pattern[]; onOpen: (t:
         samtidigt – är under 0,05: ett så tydligt mönster vore ovanligt om det inte fanns något verkligt samband. Det är inte sannolikheten att mönstret är verkligt, och det säger inte att tolkningen av det är rätt.
         {untested.length > 0 && ` ${untested.length} resultat är inte prövade med signifikanstest (t.ex. attribueringsmodellen, som i stället prövats med korsvalidering).`}
       </p>
+      {robust?.available ? (
+        <p className="text-sm text-slate-700 mt-2 max-w-4xl">
+          <strong>Alla mönster samtidigt:</strong> med en gemensam justering (Benjamini–Hochberg) över alla {robust.n_fdr} mönster
+          med ett p-värde klarar {robust.fdr_ok} q under 0,05. {robust.n_ladder} mönster går att räkna om sten för sten i
+          robusthetstrappan – samma kontroller för alla: ristaren och socknen som slumpeffekter, platsen som yta, båda halvorna,
+          utan ett landskap i taget och utan flyttade stenar – och {robust.all_rungs} av dem håller i varje steg.
+          {" "}{robust.confirmed} mönster är bekräftade (båda halvorna och den gemensamma justeringen); bara de märks <em>Nytt</em> när de dyker upp.
+        </p>
+      ) : robust && (
+        <p className="text-xs text-slate-500 mt-2">Robusthetstrappan räknas i bakgrunden och visas här när den är klar.</p>
+      )}
       <div className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
         {topics.map(topic => (
           <div key={topic} className="rounded-2xl bg-white border border-emerald-100 p-4">
@@ -90,7 +101,7 @@ export function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => v
         </div>
       )}
 
-      <SignificantBox patterns={patterns} onOpen={onOpen} />
+      <SignificantBox patterns={patterns} onOpen={onOpen} robust={data.robustness} />
 
       <section>
         <h3 className="text-xl font-bold text-slate-900 mb-1">Frågorna i korthet</h3>

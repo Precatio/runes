@@ -1,6 +1,8 @@
 """Mönsterregistret: när varje mönster i korpusanalyserna (src/r_findings.corpus_patterns) först sågs, och när dess
 status senast ändrades. Statistik (R) och Forskningsluckor märker ett mönster "Nytt" de första NEW_DAYS dagarna efter
-att det dök upp, och "Ändrat" när statusen bytts (t.ex. från "mönster att pröva" till "bekräftar").
+att det dök upp, och "Ändrat" när statusen bytts (t.ex. från "mönster att pröva" till "bekräftar"). Ett nytt mönster
+som inte är bekräftat i robusthetstrappan (src/robustness.py: båda halvorna och den gemensamma BH-justeringen) märks
+"Nytt, obekräftat" (new = "obekräftat") i stället.
 
 Registret ligger i data/pattern_registry.json och följer med kodförrådet, så att det går att se när ett mönster kom
 till. Första gången registret skapas förs de mönster som redan finns in som kända (inte nya): märkningen gäller det som
@@ -80,7 +82,9 @@ def annotate(patterns: list[dict], today: str | None = None) -> list[dict]:
         q = {**p, "first_seen": None if e.get("seeded") else e.get("first_seen")}
         age_new, age_changed = _age(e.get("first_seen"), t), _age(e.get("status_changed"), t)
         if not e.get("seeded") and age_new is not None and age_new <= NEW_DAYS:
-            q["new"] = "nytt"
+            # "Nytt" only once the pattern is confirmed (both halves and the common BH, src/robustness.py); before
+            # that, or where it cannot be split-half tested, "obekräftat". Without the ladder (confirmed missing) as before
+            q["new"] = "nytt" if p.get("confirmed", True) is True else "obekräftat"
         elif age_changed is not None and age_changed <= NEW_DAYS:
             q["new"] = "ändrat"
             q["previous_status"] = e.get("previous_status")

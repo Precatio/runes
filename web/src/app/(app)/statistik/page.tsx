@@ -193,7 +193,7 @@ function NewPatterns({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => void 
   return (
     <section aria-label="Nya mönster" className="rounded-[24px] border border-violet-200 bg-violet-50/60 p-4 md:p-5 space-y-2">
       <h3 className="text-sm font-bold uppercase tracking-wider text-violet-900">Nya mönster i datan ({fresh.length})</h3>
-      <p className="text-xs text-violet-900/80">Mönster som dykt upp eller bytt status de senaste 30 dagarna. Klicka för att öppna frågan de hör till.</p>
+      <p className="text-xs text-violet-900/80">Mönster som dykt upp eller bytt status de senaste 30 dagarna. Ett nytt mönster märks Nytt först när det håller i båda halvorna av korpusen och klarar den gemensamma justeringen över alla mönster; innan dess Nytt, obekräftat. Klicka för att öppna frågan de hör till.</p>
       <ul className="space-y-1.5">
         {fresh.map(p => (
           <li key={`${p.topic}|${p.key}`}>

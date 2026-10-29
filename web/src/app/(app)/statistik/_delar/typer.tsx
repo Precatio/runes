@@ -130,6 +130,8 @@ export interface Corpus {
   people?: Dict & { method: string; plan: string; n_stones: number; min_events: number; tests: PeopleTest[] };
   sections?: Section[];
   overview?: { paragraphs: string[]; next_steps: string[] };
+  // The robustness ladder over all patterns (src/robustness.py); available false until it has been computed
+  robustness?: { available: boolean; n_patterns?: number; n_ladder?: number; all_rungs?: number; confirmed?: number; n_fdr?: number; fdr_ok?: number };
 }
 
 export type Tab = "overview" | "question" | "geography" | "clusters" | "text" | "attribution" | "anonymous" | "chronology" | "change" | "network" | "words" | "messages" | "people";

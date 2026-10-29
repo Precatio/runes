@@ -1852,7 +1852,7 @@ def change_patterns(ch: dict) -> list[dict]:
             if not holm_prov:
                 notes.append(BH_NOTE)
             out.append({"key": f["key"], "topic": "Regional skillnad", "status": status,
-                        "replicated": rep_prov if tested_h else None,
+                        "replicated": rep_prov if tested_h else None, "pair": [hi["province"], lo["province"]],
                         "text": f"{f['label']}: landskapen skiljer sig (q {_q(q_prov)} för den samlade skillnaden, justerat för "
                                 f"alla drag). Skattat för år 1050 och en typisk ristare: {all_txt}. Bland landskap med "
                                 f"tillräckligt underlag störst skillnad mellan {hi['province']} och {lo['province']}"

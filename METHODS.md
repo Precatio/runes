@@ -671,6 +671,76 @@ Norden på 10 % mot 3 % av stenarna efter fäder och makar (bekräftar); *drengr
 och makar (mönster att pröva); kvinnor bland resarna ökar över tid (indikation); bro eller väg är inte vanligare med
 en kvinna bland resarna (ingen skillnad).
 
+### 1v. Robusthetstrappan och den gemensamma justeringen (2026-10-29)
+
+Mönstren i Statistik (R) kommer ur olika moduler med olika test, så det har inte gått att jämföra hur väl de håller.
+`src/robustness.py` och `r/robustness.R` lägger samma kontroller på varje mönster som kan räknas om sten för sten. Varje
+mönster blir då ett samband mellan ett utfall *y* (0/1) och en jämförelse *x*.
+
+Jämförelserna per typ av mönster:
+
+- Förändring: tiden i 50-årssteg (stilgruppens mittår), med 1000 mot 1100 som skillnad.
+- Regional skillnad: det visade paret av landskap. Paret är utvalt.
+- Samband: stentypen.
+- Hot spot: inom klustrets radie mot utanför. Klustret valdes på hela korpusen, så trappan prövar inte själva valet.
+- Kultnamn: bön inom 2 km från ett teoforiskt namn.
+- Budskap: Götaland mot Svealand.
+- Människorna: samma jämförelser som `r/people.R`.
+
+Alla mönster använder samma tidsskikt som Pröva en egen fråga (1y). De justerade stegen kan därför skilja sig något från
+modulens egen siffra.
+
+Stegen:
+
+1. **Rått:** logistisk regression *y ~ x*.
+2. **Justerat:** för landskap och tidsskikt. Den justering som är själva jämförelsen tas bort. En landskaps- eller
+   landsdelsskillnad justeras alltså inte för landskapet, och en tidsförändring inte för tidsskiktet.
+3. **Ristaren som slumpeffekt** (lme4). Stenar utan säker ristare grupperas per socken.
+4. **Socknen som slumpeffekt.** Här skiljs socken från region (punkt 2 i planen): håller en skillnad mellan landskap
+   också när socknarna får variera sinsemellan, eller är den några socknars egenhet?
+5. **Platsen som yta** (mgcv, *s(öst, nord)*), utan flyttade stenar. Steget görs inte där platsen är själva
+   jämförelsen.
+6. **Halvorna:** det justerade steget i var halva av korpusen. Hela socknar fördelas växelvis inom landskapet, som i
+   `src/question.halves`. Halvorna bestäms en gång och oberoende av mönstren.
+7. **Utan ett landskap i taget:** landskap med minst 30 stenar. Riktningen ska hålla utan vart och ett av dem. p < 0,05
+   krävs bara där minst två tredjedelar av stenarna är kvar: utan Uppland försvinner ofta halva underlaget, och ett
+   test på halva materialet kan inte krävas vara signifikant. Den sämsta utgången redovisas, liksom de landskap utan
+   vilka riktningen vänder. Steget görs inte för hot spots, eftersom varje kluster ligger inom ett landskap.
+8. **Utan flyttade stenar:** dels enligt Rundatas placering (1c), dels också enligt Runor 2020:s uppgift om
+   ursprunglig plats (original = nej; punkt 7). Steget görs för mönster som hänger på platsen.
+
+Ett steg håller när p < 0,05 och riktningen är densamma som i det justerade steget. Kortet visar ”Robust *k*/*n*”.
+
+Till varje mönster läggs också:
+
+- **Skillnaden i procentenheter** (marginaleffects::avg_comparisons på den justerade modellen, medelvärdet över
+  stenarna som de är), med andelen på var sida. En ”typisk ristare” (re.form = NA) prövades först, men med en stark
+  ristareffekt hamnar den vid skalans kant och döljer skillnader som syns tydligt i datan.
+- **En modellkontroll** med DHARMa: residualernas fördelning, överspridning och kvarvarande rumsligt mönster.
+- **Kodningsfelen**, där en regel kodar utfallet eller jämförelsen och det finns ett handkodat facit. Underlaget är
+  budskapen resa och död utanför Norden (`data/messages_facit_ost.csv`, `utdata/brittiska/hemma_kodning.csv`) och
+  en kvinna bland resarna (`data/people_check.json`, båda urvalen, 100 slumpvisa stenar). Ur facit räknas hur ofta
+  regelns ja och regelns nej stämmer. I 200 omräkningar dras varje stens ”sanna” värde ur de andelarna (Jeffreys
+  fördelning), och den justerade modellen räknas om. Resultatet är hur stor andel av omräkningarna där mönstret håller.
+  Budskap utan facit (beröm, arv, gäld, gård, egen sten) märks som okontrollerade.
+
+**Gemensam justering och bekräftelse (punkt 3).** Alla visade mönster får en gemensam Benjamini–Hochberg-justering
+(*q_global*). Där trappan finns används dess justerade p, annars mönstrets eget p. Ett mönster som bara redovisar
+q tas med som q, vilket är försiktigt. Där jämförelsen själv valdes ur datan – en hot spot, det landskapspar som skilde
+sig mest – vet trappans p inget om valet. Där används det största av trappans p och mönstrets eget, till exempel
+scanstatistikens p för ett kluster.
+
+Ett mönster är bekräftat när det håller i båda halvorna och *q_global* < 0,05. Mönster utan trappa bedöms på sin egen
+halvprovning. Mönsterregistret märker nu ett nytt mönster ”Nytt” först när det är bekräftat; innan dess märks det
+”Nytt, obekräftat” (`src/pattern_registry.annotate`).
+
+Trappan räknas sist i korpusjobbet och sparas som `robustness.json` i jobbets mapp. Nyckeln bygger på underlaget och
+skriptet. Saknas trappan räknar API:t den i bakgrunden, och mönstren visas utan den så länge.
+
+Mönster som prövas på annat sätt får ingen trappa och behåller sitt eget test. Det gäller avstånd mot slumppunkter,
+attribueringsmodellen, seriationen, ristargrupperna, de okända ristarna och länkarna. Detsamma gäller budskap som bara
+finns i en landsdel, eftersom en nollcell inte kan skattas med regression.
+
 ### 1x. Försiktighet i påståendena, djärvhet i hypoteserna
 
 **Förregistrerade analysplaner (från 2026-10-20).** En artikel som gör ett nytt anspråk hänvisar till en analysplan som

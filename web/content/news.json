@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "robusthetstrappan",
+   "date": "2026-10-29",
+   "status": "nytt",
+   "title": "Robusthetstrappan: samma kontroller för alla mönster",
+   "text": "Varje mönster i Statistik (R) som kan räknas om sten för sten går nu igenom samma trappa av kontroller: ristaren och socknen som slumpeffekter, platsen som yta, båda halvorna av materialet, utan ett landskap i taget och utan flyttade stenar enligt både Rundata och Runor 2020. Skillnaden visas i procentenheter, och där en regel kodar budskapet förs kodningsfelen ur handkodningen vidare in i resultatet. Alla mönster justeras dessutom tillsammans, och ett nytt mönster märks Nytt först när det är bekräftat. 15 av 33 mönster håller i varje steg."
+  },
+  {
    "id": "manniskorna",
    "date": "2026-10-28",
    "status": "nytt",

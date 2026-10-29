@@ -635,6 +635,13 @@ def run_corpus(fp: str):
                        "module_hashes": versions, "reused": reused},
                       fh, ensure_ascii=False)
         os.replace(tmp, os.path.join(d, "done.json"))  # atomic: readers never see a half-written file
+        # The robustness ladder over the finished patterns (src/robustness.py); the results are shown before it is done
+        _write_state(d, module="robustness")
+        try:
+            from src import r_findings, robustness
+            robustness.run(fp, r_findings.corpus_patterns(JOB.result(fp) or {}))
+        except Exception as e:
+            errors["robustness"] = str(e)
         _write_state(d, running=False, module=None, error="; ".join(errors.values()) or None)
     except Exception as e:
         _write_state(d, running=False, module=None, error=str(e))

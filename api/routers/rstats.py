@@ -121,9 +121,22 @@ def findings() -> tuple[list[dict], list[dict]]:
     """R-fynden för Forskningsluckor, eller tomma listor om korpusanalysen inte är beräknad."""
     if not corpus_ready():
         return [], []
-    stone, patterns = _findings(fingerprint())
+    fp = fingerprint()
+    stone, patterns = _findings(fp)
     from src import pattern_registry
-    return _with_crosscheck(stone), pattern_registry.annotate(patterns)
+    return _with_crosscheck(stone), pattern_registry.annotate(_robust(fp, patterns))
+
+
+def _robust(fp: str, patterns: list[dict]) -> list[dict]:
+    """Robusthetstrappan och den gemensamma BH-justeringen över alla mönster (src/robustness.py). Saknas trappan för
+    den här versionen av data räknas den i bakgrunden, och mönstren visas utan den så länge."""
+    from src import robustness
+    rob = robustness.load(fp)
+    if rob is None:
+        if not rb.JOB.state_of(fp).get("running"):  # the corpus job runs it itself at the end
+            robustness.start(fp, _findings(fp)[1])
+        return patterns
+    return robustness.annotate(patterns, rob)
 
 
 @router.get("/pattern-articles")
@@ -216,9 +229,11 @@ def corpus_results(request: Request):
     if not rb.JOB.ready(fp):  # the results themselves are read only when the answer is not already cached
         raise HTTPException(status_code=409, detail=_NOT_COMPUTED)
     from api.cache import cached_json, dir_version, findings_version
-    from src import crosscheck
-    # The day (the 30-day "Nytt"/"Ändrat" window) and the data files the builder reads belong in the key
-    return cached_json(request, f"corpus|{fp}|{dir_version(crosscheck.CACHE)}|{findings_version()}",
+    from src import crosscheck, robustness
+    # The day (the 30-day "Nytt"/"Ändrat" window), the data files the builder reads and the robustness ladder (computed
+    # after the corpus) belong in the key
+    rob = os.path.getmtime(robustness.path(fp)) if os.path.exists(robustness.path(fp)) else 0
+    return cached_json(request, f"corpus|{fp}|{dir_version(crosscheck.CACHE)}|{findings_version()}|{rob}",
                        lambda: _corpus_results(fp))
 
 
@@ -236,11 +251,13 @@ def _corpus_results(fp: str) -> dict:
     from src import pattern_registry
     from src import linking
     patterns = patterns + linking.patterns(os.path.join(os.path.dirname(rb.ROOT + "/"), "data", "links.json"))
-    patterns = pattern_registry.annotate(patterns)  # "Nytt" the first 30 days after a pattern appears
+    patterns = _robust(fp, patterns)
+    patterns = pattern_registry.annotate(patterns)  # "Nytt" the first 30 days after a pattern appears, once confirmed
     html_map = (res.get("geography") or {}).get("html_map")
     from src import r_explain
     return {**res, "figure_urls": _figure_urls(fp, res), "patterns": patterns, "sections": r_explain.sections(res),
             "overview": r_explain.overview(res),
+            "robustness": _robust_summary(fp, patterns),
             "findings_summary": {"n": len(stone), "new": sum(f["verdict"] == "nytt" for f in stone),
                                  "contradicts": sum(f["verdict"] == "motsäger" for f in stone),
                                  "crosschecked": sum(1 for f in stone if f.get("crosscheck")),
@@ -250,6 +267,15 @@ def _corpus_results(fp: str) -> dict:
             "findings": sorted(stone, key=lambda f: -f["score"]),
             "html_map_url": f"/api/r/figure/{fp}/{html_map}" if html_map else None,
             "package_url": "/api/r/package"}
+
+
+def _robust_summary(fp: str, patterns: list[dict]) -> dict:
+    from src import robustness
+    rob = robustness.load(fp)
+    if rob is None:
+        return {"available": False}
+    return {"available": True, **robustness.summary(patterns), "facit": rob.get("facit"),
+            "packages": rob.get("packages")}
 
 
 def _check_fp(fp: str) -> None:
