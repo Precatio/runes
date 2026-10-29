@@ -1,4 +1,4 @@
-"""Artikeln "Ristarna som databasen glömde" (sv + en): Källströms katalog över ristarsignaturer mot Rundatas och Runor
+"""Artikeln "Ristarna som aldrig blev ihågkomna" (sv + en): Källströms katalog över ristarsignaturer mot Rundatas och Runor
 2020:s ristarfält (utdata/signaturer/), och Vitkis försök att hitta ristarna ändå (r/anonymous.R, utdata/okanda_ristare/) –
 modigt i tolkningen, tydligt i bristerna (Viktor 2026-10-29). Siffrorna låses mot signaturer.json, sri_par.json,
 okanda_ristare.json och mastare_del12.json; litteraturen mot data/carver_literature.json.
@@ -102,7 +102,7 @@ def chart(lang):
     return "\n".join(rows) + "\n:::"
 
 
-title = "Ristarna som databasen glömde"
+title = "Ristarna som aldrig blev ihågkomna"
 summary = (f"Utanför Uppland och Södermanland saknar rundatabasen ristaren på nästan varannan runsten som ristaren "
            f"signerade. Vi räknade, och försökte sedan hitta de glömda ristarna med en modell. Det gick halvvägs.")
 
@@ -168,7 +168,7 @@ Tre grupper finns inte beskrivna som en ristares verk i Sveriges runinskrifter e
 - Databasen som runstatistiken bygger på vet mindre än forskningen: utanför Uppland och Södermanland saknar den ristaren på nästan varannan runsten som ristaren signerade.
 - Det betyder att bilden av vikingatidens ristare som ett uppländskt fenomen delvis är en bild av databasen.
 - En modell kan hitta bygdernas skrivmiljöer i stenarna, men inte – ännu – de enskilda händerna.
-- Nästa gång du läser en runsten: titta efter sista meningen. *Hiogg*, *risti*, *fáði* – där står ibland en människa som databasen glömt.
+- Nästa gång du läser en runsten: titta efter sista meningen. *Hiogg*, *risti*, *fáði* – där står ibland den som höll minnet vid liv åt andra, men som själv aldrig blev ihågkommen.
 :::
 
 ## Källor
@@ -181,7 +181,7 @@ Tre grupper finns inte beskrivna som en ristares verk i Sveriges runinskrifter e
 - Vitkis räkning, metod och de låsta planerna ligger öppet på [GitHub](https://github.com/Precatio/runes).
 - Foton: Wikimedia Commons, med fotograf och licens i bildtexterna."""
 
-title_en = "The carvers the database forgot"
+title_en = "The carvers no one remembered"
 summary_en = ("Outside Uppland and Södermanland, the runic database lacks the carver on nearly every other runestone that "
               "the carver signed. We counted, and then tried to find the forgotten carvers with a model. We got halfway.")
 
@@ -247,7 +247,7 @@ Three groups are not described as one carver's work in Sveriges runinskrifter or
 - The database that runic statistics rest on knows less than research does: outside Uppland and Södermanland it lacks the carver on nearly every other runestone that the carver signed.
 - That means the picture of the Viking-age carvers as an Uppland phenomenon is partly a picture of the database.
 - A model can find the districts' writing milieus in the stones, but not – yet – the individual hands.
-- Next time you read a runestone, look at the last sentence. *Hiogg*, *risti*, *fáði* – there, sometimes, stands a person the database has forgotten.
+- Next time you read a runestone, look at the last sentence. *Hiogg*, *risti*, *fáði* – there, sometimes, stands the one who kept the memory of others alive, but was never remembered himself.
 :::
 
 ## Sources
@@ -265,7 +265,7 @@ for b in (body, body_en):
     assert not re.search(r"^\|", b, re.M), "BlogBody har inga tabeller"
     assert b.count(":::chart") + b.count(":::box") == len(re.findall(r"^:::$", b, re.M)), "varje ruta och diagram ska stängas"
 
-out = {"slug": "ristarna-som-databasen-glomde", "title": title, "summary": summary, "body": body,
+out = {"slug": "ristarna-som-aldrig-blev-ihagkomna", "title": title, "summary": summary, "body": body,
        "title_en": title_en, "summary_en": summary_en, "body_en": body_en,
        "labels": ["Forskning", "Ristare", "Sannolikhetsmodellen"]}
 path = os.path.join(ROOT, "utdata", "blogg", "ristare_glomde.json")
