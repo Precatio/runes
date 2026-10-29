@@ -184,8 +184,8 @@ export function LiteratureBox({ signum }: { signum: string }) {
           {data.works.map(w => (
             <li key={w.work.id} className="rounded-xl border border-slate-200 bg-white/80 px-3 py-2">
               <div className="flex flex-wrap items-baseline gap-x-2">
-                <span className="font-semibold text-slate-900">{w.work.author.split(",")[0]} {w.work.year}</span>
-                <span className="text-xs text-slate-600 italic">{w.work.title}</span>
+                <span className="font-semibold text-slate-900" translate="no">{w.work.author.split(",")[0]} {w.work.year}</span>
+                <span className="text-xs text-slate-600 italic" translate="no">{w.work.title}</span>
                 <span className="text-[11px] text-slate-500">{w.work.kind}</span>
               </div>
               <div className="text-xs text-slate-700 mt-0.5">
@@ -216,7 +216,7 @@ export function LiteratureBox({ signum }: { signum: string }) {
             {catalog.map(c => (
               <li key={c.id}>
                 <span className={c.indexed ? "text-emerald-700 font-semibold" : "text-slate-400"}>{c.indexed ? "✓" : "○"}</span>{" "}
-                {c.author.split(",")[0]} {c.year}, <span className="italic">{c.title}</span>
+                <span translate="no">{c.author.split(",")[0]} {c.year}, <span className="italic">{c.title}</span></span>
                 {c.indexed ? ` – ${c.n_stones} stenar` : ` – inte indexerad (${ACCESS[c.access] ?? c.access})`}
               </li>
             ))}
