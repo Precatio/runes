@@ -1,0 +1,66 @@
+{
+ "plan": "analysplaner/2026-10-29-familjens-plats.md",
+ "n_insitu": 836,
+ "n_grupp": 185,
+ "n_ensam": 472,
+ "t14": {
+  "groups": 42,
+  "stones": 97,
+  "mean_styles": 1.5714285714285714,
+  "expected": 1.9204277570614205,
+  "p": 1.0
+ },
+ "t15": {
+  "pairs": 134,
+  "share_mixed": 0.23134328358208955,
+  "expected": 0.31070719012199727,
+  "share_both_christian": 0.007462686567164179,
+  "p": 0.0984,
+  "direction": "färre blandade"
+ },
+ "t14_A": {
+  "groups": 25,
+  "stones": 62,
+  "mean_styles": 1.68,
+  "expected": 2.0180778077807777,
+  "p": 0.9999
+ },
+ "t15_A": {
+  "pairs": 90,
+  "share_mixed": 0.2,
+  "expected": 0.3154948828216155,
+  "share_both_christian": 0.011111111111111112,
+  "p": 0.0734,
+  "direction": "färre blandade"
+ },
+ "t14_B": {
+  "groups": 17,
+  "stones": 35,
+  "mean_styles": 1.411764705882353,
+  "expected": 1.7770247612996593,
+  "p": 0.9996
+ },
+ "t15_B": {
+  "pairs": 44,
+  "share_mixed": 0.29545454545454547,
+  "expected": 0.302548436661848,
+  "share_both_christian": 0.0,
+  "p": 1.0,
+  "direction": "färre blandade"
+ },
+ "t14_U_So": {
+  "groups": 41,
+  "stones": 95,
+  "mean_styles": 1.5853658536585367,
+  "expected": 1.9234923492349234,
+  "p": 1.0
+ },
+ "t15_U_So": {
+  "pairs": 126,
+  "share_mixed": 0.23015873015873015,
+  "expected": 0.30931108983914263,
+  "share_both_christian": 0.0,
+  "p": 0.12,
+  "direction": "färre blandade"
+ }
+}
