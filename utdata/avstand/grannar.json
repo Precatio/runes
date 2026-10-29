@@ -1,0 +1,212 @@
+{
+ "plan": "analysplaner/2026-10-29-grannstenarna.md",
+ "n_stones": 626,
+ "common_names_removed": [
+  "asbjorn",
+  "asgautr",
+  "bjorn",
+  "eysteinn",
+  "freysteinn",
+  "gunnarr",
+  "halfdan",
+  "ingifastr",
+  "ingjaldr",
+  "karl",
+  "ketill",
+  "ofeigr",
+  "oleifr",
+  "onundr",
+  "ozurr",
+  "sveinn",
+  "thorbjorn",
+  "thorir",
+  "thorsteinn",
+  "ulfr"
+ ],
+ "main": {
+  "samma_ristare": {
+   "ratio": 2.206485882024042,
+   "near_pairs": 35,
+   "far_pairs": 2077,
+   "share_near": 0.5428571428571428,
+   "share_far": 0.2460279248916707,
+   "p": 0.0459,
+   "p_holm": 0.1836,
+   "U_ratio": 2.4601032816924873,
+   "So_ratio": 1.190721649484536,
+   "utslag": "antydan"
+  },
+  "samma_namn": {
+   "ratio": 7.886413440467495,
+   "near_pairs": 74,
+   "far_pairs": 4983,
+   "share_near": 0.17567567567567569,
+   "share_far": 0.022275737507525588,
+   "p": 0.0002,
+   "p_holm": 0.0012000000000000001,
+   "U_ratio": 8.188590287600189,
+   "So_ratio": 5.827272727272727,
+   "utslag": "håller"
+  },
+  "samma_stilgrupp": {
+   "ratio": 1.5956037954809201,
+   "near_pairs": 57,
+   "far_pairs": 3224,
+   "share_near": 0.5087719298245614,
+   "share_far": 0.3188585607940447,
+   "p": 0.0178,
+   "p_holm": 0.089,
+   "U_ratio": 1.6087431693989072,
+   "So_ratio": 1.3515687851971037,
+   "utslag": "antydan"
+  },
+  "bro": {
+   "ratio": 0.0,
+   "near_pairs": 126,
+   "far_pairs": 7423,
+   "share_near": 0.0,
+   "share_far": 0.008756567425569177,
+   "p": 1.0,
+   "p_holm": 1.0,
+   "U_ratio": 0.0,
+   "So_ratio": 0.0,
+   "utslag": "ingen skillnad påvisad"
+  },
+  "resa": {
+   "ratio": 2.031472359058566,
+   "near_pairs": 126,
+   "far_pairs": 7423,
+   "share_near": 0.015873015873015872,
+   "share_far": 0.007813552472046343,
+   "p": 0.2095,
+   "p_holm": 0.6285,
+   "U_ratio": 4.176282051282051,
+   "So_ratio": 0.0,
+   "utslag": "ingen skillnad påvisad"
+  },
+  "kristen": {
+   "ratio": 0.0,
+   "near_pairs": 126,
+   "far_pairs": 7423,
+   "share_near": 0.0,
+   "share_far": 0.03677758318739054,
+   "p": 1.0,
+   "p_holm": 1.0,
+   "U_ratio": 0.0,
+   "So_ratio": 0.0,
+   "utslag": "ingen skillnad påvisad"
+  }
+ },
+ "robustness": {
+  "nara_300": {
+   "samma_ristare": {
+    "ratio": 1.8290606653620352,
+    "near_pairs": 20,
+    "far_pairs": 2077,
+    "share_near": 0.45,
+    "share_far": 0.2460279248916707,
+    "p": 0.155
+   },
+   "samma_namn": {
+    "ratio": 7.641173087981598,
+    "near_pairs": 47,
+    "far_pairs": 4983,
+    "share_near": 0.1702127659574468,
+    "share_far": 0.022275737507525588,
+    "p": 0.0005
+   },
+   "samma_stilgrupp": {
+    "ratio": 1.411284046692607,
+    "near_pairs": 40,
+    "far_pairs": 3224,
+    "share_near": 0.45,
+    "share_far": 0.3188585607940447,
+    "p": 0.094
+   },
+   "bro": {
+    "ratio": 0.0,
+    "near_pairs": 80,
+    "far_pairs": 7423,
+    "share_near": 0.0,
+    "share_far": 0.008756567425569177,
+    "p": 1.0
+   },
+   "resa": {
+    "ratio": 3.1995689655172415,
+    "near_pairs": 80,
+    "far_pairs": 7423,
+    "share_near": 0.025,
+    "share_far": 0.007813552472046343,
+    "p": 0.1085
+   },
+   "kristen": {
+    "ratio": 0.0,
+    "near_pairs": 80,
+    "far_pairs": 7423,
+    "share_near": 0.0,
+    "share_far": 0.03677758318739054,
+    "p": 1.0
+   }
+  },
+  "fjarran_1_5km": {
+   "samma_ristare": {
+    "ratio": 1.6874663072776281,
+    "near_pairs": 35,
+    "far_pairs": 659,
+    "share_near": 0.5428571428571428,
+    "share_far": 0.3216995447647951,
+    "p": 0.1495
+   },
+   "samma_namn": {
+    "ratio": 6.680180180180181,
+    "near_pairs": 74,
+    "far_pairs": 1483,
+    "share_near": 0.17567567567567569,
+    "share_far": 0.026298044504383007,
+    "p": 0.001
+   },
+   "samma_stilgrupp": {
+    "ratio": 1.463269123818191,
+    "near_pairs": 57,
+    "far_pairs": 998,
+    "share_near": 0.5087719298245614,
+    "share_far": 0.34769539078156314,
+    "p": 0.049
+   },
+   "bro": {
+    "ratio": 0.0,
+    "near_pairs": 126,
+    "far_pairs": 2211,
+    "share_near": 0.0,
+    "share_far": 0.010402532790592492,
+    "p": 1.0
+   },
+   "resa": {
+    "ratio": 1.6712018140589568,
+    "near_pairs": 126,
+    "far_pairs": 2211,
+    "share_near": 0.015873015873015872,
+    "share_far": 0.009497964721845319,
+    "p": 0.2645
+   },
+   "kristen": {
+    "ratio": 0.0,
+    "near_pairs": 126,
+    "far_pairs": 2211,
+    "share_near": 0.0,
+    "share_far": 0.04296698326549073,
+    "p": 1.0
+   }
+  },
+  "namn_alla": {
+   "samma_namn": {
+    "ratio": 5.204198473282443,
+    "near_pairs": 88,
+    "far_pairs": 5454,
+    "share_near": 0.25,
+    "share_far": 0.048038137147048035,
+    "p": 0.0005
+   }
+  }
+ }
+}
