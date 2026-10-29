@@ -237,8 +237,11 @@ p 5·10⁻¹³). (3) En logistisk modell kalibrerad på 912 grupper som metoden 
 Kölaby 78 %, Konungsund 76 % (grundfrekvens 84 %) – giltig där metoden kan prövas. Bergart skiljer inte rena från
 blandade grupper. (4) Litteraturen (`data/carver_literature.json`, `src/carver_literature.py`; SRI II, IV, V och
 Källström 2007): Kölaby (Vg 181 signerad Håvard(?), Vg 158 samme man, Vg 179/184 samme ristare, Vg 130 Tryggve(?)) och
-Leksberg (Vg 11, 13, 15 samme ristare) är redan beskrivna, med signaturer som Rundatas ristarfält saknar – det första
-belägget för metoden utanför Mälardalen. Konungsund har ett par (Ög 46/233), Vetlanda en omstridd signatur (Sm 111
+Leksberg (Vg 11, 13, 15 samme ristare) är redan beskrivna, med signaturer som Rundatas ristarfält saknar. Som prov på
+metoden är det svagt (granskat 2026-10-29): av nio par som SRI knyter till samme ristare, där båda stenarna analyseras,
+ligger sex i samma grupp, mot 4,8 väntade om man bara ser till hur ofta grannar på samma avstånd hamnar i samma grupp;
+Leksbergsgruppen är i praktiken hela den lokala klungan, och Kölabygruppen slår ihop två olika signerade ristare
+(Håvard på Vg 181, Tryggve på Vg 130). Grupperna motsvarar alltså skrivmiljöer snarare än enskilda ristare. Konungsund har ett par (Ög 46/233), Vetlanda en omstridd signatur (Sm 111
 aku- hio[gg](?), Källström s. 342, mot Kinanders bön), Husaby inget. Tabellen visar litteraturen per grupp, och fynd per
 sten som litteraturen redan knyter till en ristare märks "stämmer" i stället för "nytt".
 
