@@ -158,7 +158,8 @@ const ACCESS: Record<string, string> = { "öppen": "fri fulltext", "sverige": "f
 
 /** Where the dissertations and editions in the register mention the stone, with printed page and a short excerpt. */
 export function LiteratureBox({ signum }: { signum: string }) {
-  const [data, setData] = useState<{ works: LitWork[]; n_indexed: number } | null>(null);
+  const [data, setData] = useState<{ works: LitWork[]; n_indexed: number;
+    carver?: { carver: string | null; kind: string; same_as: string[]; reference: string; text?: string } | null } | null>(null);
   const [catalog, setCatalog] = useState<LitCatalogWork[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
@@ -175,8 +176,19 @@ export function LiteratureBox({ signum }: { signum: string }) {
   };
   if (error) return <p className="text-xs text-red-700">{error}</p>;
   if (!data) return <p className="text-xs text-slate-500">Söker i litteraturregistret …</p>;
+  const c = data.carver;
   return (
     <div className="space-y-3 text-sm">
+      {c && (
+        <div className="rounded-xl border border-[#b7410e]/25 bg-[#b7410e]/5 px-3 py-2">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-[#9a350b]">Ristare enligt litteraturen</div>
+          <p className="text-sm text-slate-800">
+            <span className="font-semibold" translate="no">{c.carver ?? "samme ristare som " + c.same_as.join(", ")}</span>
+            {c.carver && c.same_as.length > 0 && <> – samme ristare som {c.same_as.join(", ")}</>} ({c.kind}; {c.reference}).
+          </p>
+          <p className="text-[11px] text-slate-500">Saknas i Rundatas och Runor 2020:s ristarfält; appens statistik räknar med Rundata.</p>
+        </div>
+      )}
       {data.works.length === 0 ? (
         <p className="text-xs text-slate-600">Ingen av de {data.n_indexed} indexerade avhandlingarna och utgåvorna nämner stenen.</p>
       ) : (

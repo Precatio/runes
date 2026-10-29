@@ -168,7 +168,7 @@ function Literature({ lit, n }: { lit?: AnonGroup["literature"]; n: number }) {
 
 export function Anonymous({ data }: { data: Corpus }) {
   const a = data.anonymous, f = data.figure_urls.anonymous || {};
-  if (!a) return <p className="text-sm text-slate-600">Analysen av okända ristare saknas i den här beräkningen; beräkna korpusanalyserna på nytt.</p>;
+  if (!a) return <p className="text-sm text-slate-600">Analysen av skrivmiljöer saknas i den här beräkningen; beräkna korpusanalyserna på nytt.</p>;
   const v = a.validation, cal = a.calibration, ho = v.heldout, cov = a.coverage;
   const cands = [...a.groups.filter(g => g.status === "candidate")].sort((x, y) => Number(!!y.robust) - Number(!!x.robust) || y.n - x.n);
   const known = a.groups.filter(g => g.status === "known");
@@ -176,7 +176,7 @@ export function Anonymous({ data }: { data: Corpus }) {
   const candProv = cov ? asList(cov.candidate_provinces) : [];
   const prov = (c: string) => PROVINCE_NAMES[c] || c;
   const boxes: [string, string][] = [
-    ["Möjliga okända ristare", `${cands.length} grupper`],
+    ["Möjliga skrivmiljöer", `${cands.length} grupper`],
     ["Håller utan tidsdragen", `${nRobust} av ${cands.length}`],
     ["Liknar en känd ristare", `${known.length} grupper`],
     ["Prövat på kända ristare", `${pc(v.purity)} mot ${pc(v.purity_geography)} för närhet`],
@@ -199,10 +199,23 @@ export function Anonymous({ data }: { data: Corpus }) {
           finns i Uppland och {cov.carvers_by_province["Sö"] ?? 0} i Södermanland, men bara {cov.carvers_in_candidate_provinces} i
           kandidaternas landskap. Där har {candProv.map(c => `${pc(cov.share_attributed[c])} av stenarna i ${prov(c)}`).join(", ")} en ristare i Rundata,
           mot {pc(cov.share_attributed.U)} i Uppland. Om gränsen för vad som räknas som lika gäller i de landskapen är inte prövat, så grupperna där är hypoteser.
+          {a.signature_coverage && <> Andelarna mäter databasen, inte forskningen: av {a.signature_coverage.n} runstenar med en ristarsignatur
+            i Källströms katalog (2007) saknar {a.signature_coverage.missing} ristare i Rundata – {a.signature_coverage.outside_U_So.missing} av{" "}
+            {a.signature_coverage.outside_U_So.n} utanför Uppland och Södermanland. Ristaren enligt litteraturen visas på stenens sida.</>}
+        </div>
+      )}
+      {a.literature_pairs && a.literature_pairs.n_pairs > 0 && (
+        <div className="rounded-2xl border border-[#b7410e]/25 bg-[#b7410e]/5 p-4 text-sm text-slate-800">
+          <strong>Skrivmiljöer, inte ristare.</strong> Utanför Mälardalen kan grupperna prövas mot det Sveriges runinskrifter och
+          Källström (2007) säger. Av {a.literature_pairs.n_pairs} par stenar som litteraturen knyter till samme ristare hamnar{" "}
+          {a.literature_pairs.same_group} i samma grupp – men {a.literature_pairs.expected_from_neighbours.toLocaleString("sv-SE")} vore
+          väntade bara av att grannstenar grupperas ihop.
+          {a.literature_pairs.merged.length > 0 && <> Och {a.literature_pairs.merged.map(m => `grupp ${m.group} rymmer två signerade ristare (${m.carvers.join(" och ")})`).join("; ")}.</>}
+          {" "}Grupperna visar alltså en verkstads eller en bygds sätt att skriva, inte en enskild hand. Arbetsnamnen följer typstenens socken.
         </div>
       )}
       <Fig src={f.map} alt="Grupper av stenar utan ristare" narrow />
-      <Details title={`Möjliga okända ristare (${cands.length})`} open>
+      <Details title={`Möjliga skrivmiljöer (${cands.length})`} open>
         <div className="overflow-x-auto">
           <ExportTable><table className="w-full text-sm">
             <thead><tr><Th>Nr</Th><Th>Arbetsnamn</Th><Th>Stenar</Th><Th>Socknar</Th>

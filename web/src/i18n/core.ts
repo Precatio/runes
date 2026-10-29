@@ -54,11 +54,16 @@ const TRAIL = /[.,;:!?)”"'’]+$/u;
 const TRAIL_KEEP_QUOTE = /[.,;:!?)”"’]+$/u;
 const TRAIL_KEEP_PAREN = /[.,;:!?]+$/u;
 
-/** Replaces names, numbers and (with withTerms) terms by {0}, {1}, … in order of appearance. */
-export function mask(text: string, withTerms = false): Masked {
+// A quoted stretch – a runic sequence ('a-s'), a reading ("gerði n <unk> sal hans") – kept as it is
+const QUOTED = /(['"])([^'"\n]{1,160})\1/g;
+
+/** Replaces names, numbers and (with withTerms) terms by {0}, {1}, … in order of appearance; with withQuotes also
+ *  quoted stretches, which are kept as written. */
+export function mask(text: string, withTerms = false, withQuotes = false): Masked {
   const tokens: string[] = [];
   const kinds: Kind[] = [];
   let out = text;
+  if (withQuotes) out = out.replace(QUOTED, q => { tokens.push(q); kinds.push("name"); return mark(tokens.length - 1); });
   if (names.size || (withTerms && terms.size)) {
     // The longest name or term first at each word
     const words = out.split(/(\s+)/);
@@ -166,8 +171,11 @@ const LABEL = /^(\p{L}[\p{L}-]*(?: \p{L}[\p{L}-]*){0,2}(?: \([^)]{1,12}\))?:)(\s
 
 /** One sentence as a template: first with names and numbers only (the catalog's older entries), then with terms. */
 function lookup(text: string, catalog: Catalog, missing: string[]): string | undefined {
-  for (const withTerms of [false, true]) {
-    const m = mask(text, withTerms);
+  // Names and numbers; then terms too; then quoted runic sequences and readings as well (generated finding texts)
+  for (const [withTerms, withQuotes] of [[false, false], [true, false], [true, true]] as const) {
+    if (withQuotes && !QUOTED.test(text)) continue;
+    QUOTED.lastIndex = 0;
+    const m = mask(text, withTerms, withQuotes);
     const hit = find(catalog, m.template);
     if (hit !== undefined) return unmask(hit, m, catalog, missing);
     if (needsNothing(m.template)) return unmask(plainWords(m.template), m, catalog, missing);
@@ -192,11 +200,11 @@ export function translate(text: string, catalog: Catalog): Lookup {
     const label = core.match(LABEL);
     if (label) {
       const head = lookup(label[1], catalog, missing);
-      if (head === undefined) missing.push(mask(label[1], true).template);
+      if (head === undefined) missing.push(mask(label[1], true, true).template);
       const rest = one(core.slice(label[0].length));
       return part.replace(core, (head ?? label[1]) + label[2] + rest.trim());
     }
-    missing.push(mask(core, true).template);
+    missing.push(mask(core, true, true).template);
     return part;
   };
   const parts = segments(body);

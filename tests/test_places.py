@@ -69,7 +69,12 @@ def test_hotspot_patterns():
         {"key": "arv", "moran": {"i": 0.0, "p": 0.4, "q_bh": 0.45}, "clusters": [cl("U 96", 0.09, True)]},
         {"key": "o_runa", "moran": {"i": 0.16, "p": 1e-14, "q_bh": 1e-13}, "clusters": [cl("U 921", 0.09, False)]}]}
     pats = {p["key"]: p for p in rf._hotspots(h)}
-    assert set(pats) == {"hotspot_r_for_R_U 768", "hotspot_arv_U 96"}          # not replicated: left out
-    assert pats["hotspot_r_for_R_U 768"]["status"] == "mönster att pröva"
-    assert pats["hotspot_arv_U 96"]["status"] == "indikation"
-    assert "Klustrets mitt: U 768." in pats["hotspot_r_for_R_U 768"]["text"] and "U 51" in pats["hotspot_r_for_R_U 768"]["text"]
+    # keys by trait and province, not by the centre stone, so that a cluster whose centre moves stays the same pattern
+    assert set(pats) == {"hotspot_r_for_R_U", "hotspot_arv_U"}          # not replicated: left out
+    assert pats["hotspot_r_for_R_U"]["status"] == "mönster att pröva"
+    assert pats["hotspot_arv_U"]["status"] == "indikation"
+    assert "Klustrets mitt: U 768." in pats["hotspot_r_for_R_U"]["text"] and "U 51" in pats["hotspot_r_for_R_U"]["text"]
+    # two clusters for the same trait in the same province: the larger keeps the plain key
+    h2 = {"patterns": [{"key": "r_for_R", "moran": {"i": 0.1, "p": 0.01, "q_bh": 0.01},
+                        "clusters": [cl("U 1", 0.01, True), {**cl("U 2", 0.01, True), "n": 80}]}]}
+    assert rf.hotspot_keys(h2) == {("r_for_R", "U 2"): "hotspot_r_for_R_U", ("r_for_R", "U 1"): "hotspot_r_for_R_U_2"}

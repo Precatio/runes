@@ -262,7 +262,7 @@ def _corpus_results(fp: str) -> dict:
     html_map = (res.get("geography") or {}).get("html_map")
     from src import r_explain
     from src import carver_literature  # what Sveriges runinskrifter says about the unknown carvers' stones
-    res = {**res, "anonymous": carver_literature.annotate(res.get("anonymous") or {})}
+    res = {**res, "anonymous": carver_literature.annotate_with_pairs(res.get("anonymous") or {}, fp)}
     return {**res, "figure_urls": _figure_urls(fp, res), "patterns": patterns, "sections": r_explain.sections(res),
             "overview": r_explain.overview(res),
             "robustness": _robust_summary(fp, patterns),

@@ -1,6 +1,6 @@
 # Pröva en egen fråga: två kontroller i R av sambandet som src/question.py räknar med Mantel–Haenszel (METHODS.md 1y).
 #   Rscript --vanilla r/question.R params.json utmapp
-# params: data (CSV med y, x, province, epoch, hand, xk, yk, moved) och kind (drag, landskap, tid eller bergart).
+# params: data (CSV med y, x, province, epoch, hand, parish, xk, yk, moved) och kind (drag, landskap, tid eller bergart).
 #
 # 1. Ristaren som slumpeffekt (lme4::glmer, logistisk): y ~ x + landskap + tidsskikt + (1 | hand). "hand" är den
 #    säkra ristaren, och stenar utan säker ristare grupperas per socken, som i r/words.R och r/change.R. Då räknas en
@@ -87,6 +87,17 @@ carver <- safe({
             check = model_check(m, d[, c("xk", "yk", "moved")])))
 })
 
+# 4. Socknen som slumpeffekt (2026-10-29, som robusthetstrappan): håller sambandet när socknarna får skilja sig
+#    sinsemellan, eller är det några socknars egenhet? Saknas socknen i underlaget räknas steget inte.
+parish <- if (!"parish" %in% names(d)) list(skipped = "socken saknas") else safe({
+  d$parish <- factor(d$parish)
+  f <- reformulate(c("x", fixed, "(1 | parish)"), "y")
+  m <- glmer(f, data = d, family = binomial, control = glmerControl(optimizer = "bobyqa", calc.derivs = FALSE), nAGQ = 1)
+  cf <- summary(m)$coefficients
+  wald(cf["x", 1], cf["x", 2], "glmer(y ~ x + landskap + tidsskikt + (1 | socken))",
+       list(n = nrow(d), groups = nlevels(droplevels(d$parish)), singular = isSingular(m)))
+})
+
 place <- if (kind == "landskap") list(skipped = "landskap") else safe({
   dd <- d[!is.na(d$xk) & !is.na(d$yk) & d$moved == 0, ]
   dd$epoch <- droplevels(dd$epoch)
@@ -99,4 +110,4 @@ place <- if (kind == "landskap") list(skipped = "landskap") else safe({
 })
 
 dir.create(out, showWarnings = FALSE, recursive = TRUE)
-write_json(list(carver = carver, place = place), file.path(out, "question.json"), auto_unbox = TRUE, digits = NA)
+write_json(list(carver = carver, place = place, parish = parish), file.path(out, "question.json"), auto_unbox = TRUE, digits = NA)

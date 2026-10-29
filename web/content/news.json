@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "skrivmiljoer-och-litteraturens-ristare",
+   "date": "2026-10-29",
+   "status": "nytt",
+   "title": "Skrivmiljöer och ristarna i litteraturen",
+   "text": "Fliken Okända ristare heter nu Skrivmiljöer: prövade mot Sveriges runinskrifter och Källström visar grupperna en verkstads eller en bygds sätt att skriva, inte enskilda ristare, och fliken redovisar provet öppet. Stenar som Källström tar upp som signerade men som saknar ristare i databasen visar nu ristaren enligt litteraturen, med sida. Egna frågor prövas också utan ett landskap i taget och med socknen som slumpeffekt, och nollresultat märks inte längre som nya mönster."
+  },
+  {
    "id": "litteraturregistret",
    "date": "2026-10-29",
    "status": "nytt",

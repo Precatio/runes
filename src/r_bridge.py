@@ -38,7 +38,7 @@ MODULES = ("geography", "clusters", "text", "attribution", "anonymous", "chronol
            "remains", "hotspots", "words", "messages", "people")
 STONE_MODULES = ("stone", "landscape")
 MODULE_LABELS = {"geography": "Geografi", "clusters": "Klustring och MCA", "text": "Text och formler",
-                 "attribution": "Attribueringsmodell", "anonymous": "Okända ristare",
+                 "attribution": "Attribueringsmodell", "anonymous": "Skrivmiljöer",
                  "chronology": "Seriation och datering",
                  "dialect": "Stavning och dialekter", "network": "Formelnätverk", "change": "Förändring i tid och rum",
                  "remains": "Lämningar runt stenarna", "hotspots": "Hot spots och kluster", "words": "Ordförrådet",
@@ -678,7 +678,7 @@ def stone(fp: str, signum: str, candidates: list[str], lang: str = "sv") -> dict
 def question(fp: str, rows: list[dict], kind: str) -> dict:
     """Kontrollerna i R för Pröva en egen fråga (r/question.R): ristaren som slumpeffekt och platsen som yta. Cachade
     per korpusversion, underlag och skript, så att samma fråga räknas en gång."""
-    cols = ["signum", "y", "x", "province", "epoch", "hand", "xk", "yk", "moved"]
+    cols = ["signum", "y", "x", "province", "epoch", "hand", "parish", "xk", "yk", "moved"]
     buf = io.StringIO()
     w = csv.DictWriter(buf, fieldnames=cols, lineterminator="\n")
     w.writeheader()

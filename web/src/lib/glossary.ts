@@ -3,7 +3,7 @@
 export const GLOSSARY: Record<string, string> = {
   "q": "p-värde justerat för att många test görs samtidigt (Holm eller Benjamini–Hochberg). Under 0,05 räknas som signifikant; ju lägre, desto starkare.",
   "p": "Sannolikheten att få ett minst lika tydligt resultat om det inte fanns något samband. Under 0,05 brukar räknas som statistiskt signifikant.",
-  "Fynd per sten": "Antal resultat från R-analyserna som gäller en enskild sten: attribueringsmodellen, seriationen och okända ristare.",
+  "Fynd per sten": "Antal resultat från R-analyserna som gäller en enskild sten: attribueringsmodellen, seriationen och skrivmiljöerna.",
   "Nya mot Rundata": "Fynd som säger något Rundata inte anger, t.ex. en ristare för en sten som saknar ristare.",
   "Motsäger Rundata": "Fynd som pekar på något annat än Rundata, t.ex. en annan ristare än den attribuerade.",
   "Finns redan i nyare källa": "Fyndet står redan i Runor 2020 eller Wikidata – en bekräftelse av metoden snarare än ny kunskap.",
@@ -77,7 +77,7 @@ export const GLOSSARY: Record<string, string> = {
   "Attribueringsmodellen": "Vad attribueringsmodellen föreslår för gruppens stenar.",
   "Håller utan tidsdragen": "Grupper som återfinns till minst 65 % när stilgrupp, kors, stungna runor, böner och signaturer – drag som följer tiden – tas bort och gränsen räknas om. De samlar då inte bara stenar från samma tid.",
   "Prövat på ristare metoden inte sett": "Ristarna delas slumpvis i tre delar; gränsen tas fram på två och prövas på den tredje. Andelen av en grupp som är samma ristare, mot lika många närliggande stenar.",
-  "Möjliga okända ristare": "Grupper av stenar utan ristare som liknar varandra lika mycket som en ristares stenar och inte liknar någon känd ristare i närheten.",
+  "Möjliga skrivmiljöer": "Grupper av stenar utan ristare som skriver lika enhetligt som en ristares stenar och inte liknar någon känd ristare i närheten – en verkstad eller en bygds skrivsed. En grupp kan rymma flera ristare.",
   "Liknar en känd ristare": "Grupper som liknar en känd ristare – underlag för attribuering snarare än en ny ristare.",
   "Prövat på kända ristare": "När metoden kördes på stenar med känd ristare, som om ristaren vore okänd: hur stor del av en grupp som i genomsnitt var samma ristare.",
   "Bara närliggande stenar": "Samma mått för grupper av lika många närliggande stenar. Skillnaden mot rutan bredvid är vad handens drag (stavning, språk, formler, stil) tillför utöver platsen.",

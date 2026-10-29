@@ -24,8 +24,8 @@ def test_unknown_carvers_numbers_in_methods_1g():
     a = latest_run("anonymous")
     if not a:
         pytest.skip("ingen korpusanalys på maskinen")
-    sec = METHODS.split("### 1g. Okända ristare", 1)[1].split("\n### ", 1)[0]
-    m = re.search(r"blev det (\d+) grupper, varav (\d+) möjliga okända ristare", sec)
+    sec = METHODS.split("### 1g. Skrivmiljöer", 1)[1].split("\n### ", 1)[0]
+    m = re.search(r"blev det (\d+) grupper, varav (\d+) möjliga skrivmiljöer", sec)
     assert m, "1g saknar meningen om antal grupper"
     assert (int(m.group(1)), int(m.group(2))) == (len(a["groups"]), a["n_candidates"])
     for g in a["groups"]:

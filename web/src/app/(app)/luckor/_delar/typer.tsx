@@ -39,7 +39,7 @@ export interface Finding extends StoneExtras {
   reasons: { belägg: string[]; nyhet: string[]; relevans: string[] };
   crosscheck?: CrossCheck;
   // Where dissertations and editions in the literature register discuss the stone (src/literature.py)
-  literature?: { n_works: number; works: { id: string; author: string; year: number; title: string; kind: string; pages: string[]; entry_pages: string[] }[] };
+  literature?: { n_works: number; carver?: { carver: string | null; kind: string; same_as: string[]; reference: string } | null; works: { id: string; author: string; year: number; title: string; kind: string; pages: string[]; entry_pages: string[] }[] };
   significance?: Significance;
   // The reasoned conclusion (same rules as the interpretation shown when the row is opened; METHODS.md 14d)
   interpretation?: { level: string; support: number; against: number };

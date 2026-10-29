@@ -137,7 +137,14 @@ def _feature(res: dict, key: str) -> dict | None:
 
 
 def _hotspot(res: dict, key: str) -> tuple[dict, dict] | None:
-    """The hotspot pattern and cluster behind a key such as hotspot_r_for_R_U 768."""
+    """The hotspot pattern and cluster behind a key such as hotspot_r_for_R_U (or the older hotspot_r_for_R_U 768)."""
+    from src.r_findings import hotspot_keys
+    h = res.get("hotspots") or {}
+    for (pk, centre), k in hotspot_keys(h).items():
+        if k == key:
+            p = next((x for x in h.get("patterns") or [] if x.get("key") == pk), None)
+            c = next((c for c in (p or {}).get("clusters") or [] if c.get("center") == centre), None)
+            return (p, c) if p and c else None
     m = re.match(r"^hotspot_(.+)_([^_]+ \d+[A-Z]?)$", key or "")
     if not m:
         return None
@@ -224,7 +231,7 @@ T = {
                    "generic": "ett mönster som håller"},
         "title": {"peak": "{Label} kommer och går", "rises": "{Label} breder ut sig", "falls": "{Label} försvinner",
                   "regional": "{Label} – en skillnad mellan landskapen", "cluster": "{Label} – ett kluster i {region}",
-                  "water": "Runstenarna vid vikingatidens stränder", "anonymous": "Okända ristare träder fram",
+                  "water": "Runstenarna vid vikingatidens stränder", "anonymous": "Skrivmiljöer träder fram",
                   "remains": "Runstenarna vid de dödas platser"},
         "short": "Kort sagt", "sure": "Så säkra är vi", "hyp": "Vår hypotes", "first": "En första prövning",
         "further": "Så kan hypotesen prövas vidare", "caveats": "Förbehåll", "yourself": "Se själv", "sources": "Källor och data",

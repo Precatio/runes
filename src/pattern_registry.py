@@ -81,7 +81,9 @@ def annotate(patterns: list[dict], today: str | None = None) -> list[dict]:
         e = reg["patterns"].get(key(p)) or {}
         q = {**p, "first_seen": None if e.get("seeded") else e.get("first_seen")}
         age_new, age_changed = _age(e.get("first_seen"), t), _age(e.get("status_changed"), t)
-        if not e.get("seeded") and age_new is not None and age_new <= NEW_DAYS:
+        # A limitation ("begränsning": no difference found, or a result that cannot be read as a pattern) is never
+        # marked new – a null result is no news; a pattern that changed status to it is still marked "ändrat"
+        if not e.get("seeded") and age_new is not None and age_new <= NEW_DAYS and p.get("status") != "begränsning":
             # "Nytt" only once the pattern is confirmed (both halves and the common BH, src/robustness.py); before
             # that, or where it cannot be split-half tested, "obekräftat". Without the ladder (confirmed missing) as before
             q["new"] = "nytt" if p.get("confirmed", True) is True else "obekräftat"

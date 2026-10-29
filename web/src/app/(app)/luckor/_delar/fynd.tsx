@@ -339,7 +339,9 @@ function FindingRow({ f, open, onToggle }: { f: Finding; open: boolean; onToggle
           <div className="flex flex-wrap gap-1.5 mt-1.5">
             {f.crosscheck && <Chip label="Nyare källor"><CrossCheckCell cc={f.crosscheck} /></Chip>}
             {f.literature && <Chip label="Litteratur" title="Stenen diskuteras i avhandlingar eller utgåvor i litteraturregistret – läs sidorna innan fyndet kallas nytt.">
-              <span translate="no">{f.literature.works.slice(0, 2).map(w => `${w.author} ${w.year}`).join(", ")}{f.literature.n_works > 2 ? ` +${f.literature.n_works - 2}` : ""}</span></Chip>}
+              <span translate="no">{f.literature.carver ? `ristare: ${f.literature.carver.carver ?? "samme som " + f.literature.carver.same_as.join(", ")}` : ""}
+                {f.literature.carver && f.literature.n_works ? " · " : ""}
+                {f.literature.works.slice(0, 2).map(w => `${w.author} ${w.year}`).join(", ")}{f.literature.n_works > 2 ? ` +${f.literature.n_works - 2}` : ""}</span></Chip>}
             {f.material && <Chip label="Bergart" title={GLOSSARY["Bergart"]}><MaterialCell x={f} /></Chip>}
             {f.language?.comparable ? <Chip label="Språkdrag" title={GLOSSARY["Språkdrag"]}><LanguageCell x={f} /></Chip> : null}
             <span className="sm:hidden"><Chip label="Uppskattning">{Math.round(f.score * 100)}</Chip></span>

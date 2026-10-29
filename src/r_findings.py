@@ -7,7 +7,7 @@ Fynd per sten (samma bedömning som övriga fynd: stämmer / nytt / motsäger, m
                          den anger – inte sannolikheten själv, som är försiktig (underskattar).
   seriation (R)          tidig eller sen placering i Upplands seriation för stenar utan stilgrupp; svagt
                          belägg, eftersom tidsskattningen bara är något bättre än att gissa medelåret.
-  okänd ristare (R)      stenen ingår i en grupp av stenar utan ristare som liknar varandra lika mycket som en
+  skrivmiljö (R)         stenen ingår i en grupp av stenar utan ristare som liknar varandra lika mycket som en
                          ristares stenar och inte liknar någon känd ristare i närheten (arbetsnamn efter typstenens
                          socken). Belägget är hur rena grupperna blev när metoden prövades på stenar med känd ristare.
 
@@ -27,7 +27,7 @@ from src.stats import wilson
 
 MODEL = "statistisk modell (R)"
 SERIATION = "seriation (R)"
-ANONYMOUS = "okänd ristare (R)"
+ANONYMOUS = "skrivmiljö (R)"
 
 
 def _d(v: float, digits: int = 2) -> str:
@@ -221,7 +221,7 @@ def _and(items: list[str]) -> str:
 
 
 def anonymous_findings(anon: dict, lookup, inscriptions: list[dict]) -> list[dict]:
-    """Stenar i grupper som kan vara en okänd ristare eller verkstad (r/anonymous.R)."""
+    """Stenar i grupper som kan vara en skrivmiljö – en verkstad eller en bygds skrivsed (r/anonymous.R)."""
     v = anon.get("validation") or {}
     if not v.get("purity"):
         return []
@@ -242,8 +242,8 @@ def anonymous_findings(anon: dict, lookup, inscriptions: list[dict]) -> list[dic
             if not rec or has_carver(rec):
                 continue
             rel, rel_reasons = relevance(rec, None, coverage, oeuvre)
-            ours = (f"Ingår i en grupp av {g['n']} stenar utan ristare som liknar varandra lika mycket som en ristares "
-                    f"stenar – arbetsnamn {g['name']} (typsten {g['type_stone']})")
+            ours = (f"Ingår i en grupp av {g['n']} stenar utan ristare som skriver lika enhetligt som en ristares stenar – "
+                    f"en möjlig skrivmiljö, arbetsnamn {g['name']} (typsten {g['type_stone']})")
             # Sveriges runinskrifter already ties this stone to a carver that Rundata lacks: the group agrees with it
             a = lit_stone.get(signum)
             lit_ev = ([f"{a['source']} {a['page']}: {a['text']}"] if a else []) + (
@@ -262,6 +262,8 @@ def anonymous_findings(anon: dict, lookup, inscriptions: list[dict]) -> list[dic
                                                 x for x in a["stones"] + a.get("outside", []) if x != signum)) +
                                             "), men Rundatas ristarfält saknar det"] if a else []) + [
                                            "ingen ristare i Rundata, och gruppen liknar ingen känd ristare i närheten",
+                                           "en grupp kan rymma flera ristare: prövat mot litteraturen visar grupperna "
+                                           "skrivmiljöer snarare än enskilda händer",
                                            "metoden är prövad där ristare är kända (nästan bara Uppland och Södermanland), "
                                            "inte i det här landskapet",
                                            "arbetsnamnet är en etikett för gruppen, inte en person – " + (
@@ -590,10 +592,26 @@ def _scan(sc: dict) -> list[dict]:
     return out
 
 
+def hotspot_keys(h: dict) -> dict[tuple[str, str], str]:
+    """(mönster, klustrets mitt) -> mönstrets nyckel: hotspot_<drag>_<landskapet med flest av klustrets stenar>. Mittstenen
+    ingår inte, så att ett kluster vars mitt flyttar en sten (t.ex. när flyttregeln ändras) förblir samma mönster; två
+    kluster för samma drag i samma landskap får _2, _3 i storleksordning."""
+    out, used = {}, {}
+    for p in h.get("patterns") or []:
+        for c in sorted(p.get("clusters") or [], key=lambda c: -(c.get("n") or 0)):
+            provs = c.get("provinces") or {}
+            dom = max(provs.items(), key=lambda x: (x[1], x[0]))[0] if provs else (c.get("center") or "").split(" ")[0]
+            base = f"hotspot_{p['key']}_{dom}"
+            used[base] = used.get(base, 0) + 1
+            out[(p["key"], c.get("center"))] = base if used[base] == 1 else f"{base}_{used[base]}"
+    return out
+
+
 def _hotspots(h: dict) -> list[dict]:
     """Kluster ur Kulldorffs scanstatistik (r/hotspots.R): ett mönster per kluster som håller i båda halvorna."""
     from src.pattern_map import PATTERNS
     flabel = {k: l for k, l, *_ in PATTERNS}
+    keys = hotspot_keys(h)
     out = []
     for p in h.get("patterns") or []:
         if p["key"] == "neutral":
@@ -614,7 +632,7 @@ def _hotspots(h: dict) -> list[dict]:
                        "Klarar inte justeringen över alla mönster (Benjamini–Hochberg); en indikation. ")
                     + f"Mönstret som helhet: Morans I {_d(p['moran']['i'])} (q {_q(p['moran']['q_bh'])}). Ett kluster "
                     "är en plats att titta närmare på – en ristare, en verkstad eller en bygd – inte en förklaring.")
-            out.append({"key": f"hotspot_{p['key']}_{c['center']}", "topic": "Geografi",
+            out.append({"key": keys[(p["key"], c.get("center"))], "topic": "Geografi",
                         "status": "mönster att pröva" if strong else "indikation", "replicated": True, "text": text,
                         "note": note,
                         "hypothesis": "Klustret kan vara en ristares eller verkstads vana, eller en lokal sed i bygden.",
@@ -840,7 +858,7 @@ def corpus_patterns(res: dict) -> list[dict]:
                                 "stenar med säker stilgrupp.",
                         "significance": significance(k["q_period"], "q", "Fishers exakta test, Benjamini–Hochberg")})
     from src import carver_literature
-    an = carver_literature.annotate(res.get("anonymous") or {})
+    an = carver_literature.annotate_with_pairs(res.get("anonymous") or {}, res.get("fingerprint"))
     if an.get("groups"):
         v = an["validation"]; cands = [g for g in an["groups"] if g["status"] == "candidate"]
         # What Sveriges runinskrifter already says about the groups' stones (data/carver_literature.json)
@@ -851,12 +869,18 @@ def corpus_patterns(res: dict) -> list[dict]:
                                                                         f"{g['n']} stenar" for g in lit_known) + ")"
                      + (f"; {_and([g['name'] for g in lit_none])} har ingen sådan anmärkning där" if lit_none else "")
                      + ".") if lit_known or lit_none else "")
-        out.append({"key": "anonymous", "topic": "Okända ristare", "status": "mönster att pröva",
-                    "text": f"{len(cands)} {'ny grupp' if len(cands) == 1 else 'nya grupper'} av stenar utan ristare "
-                            f"({sum(g['n'] for g in cands)} stenar) liknar varandra lika mycket som en ristares stenar och "
-                            "liknar ingen känd ristare i närheten. Appen har gett dem arbetsnamn efter typstenens socken: "
+        lp = an.get("literature_pairs") or {}
+        pair_text = ((f" Prövat mot litteraturen hamnar stenar som knyts till samme ristare i samma grupp i {lp['same_group']} "
+                      f"av {lp['n_pairs']} fall, mot {_d(lp['expected_from_neighbours'], 1)} väntade bara av närheten"
+                      + (" – och en grupp rymmer två olika signerade ristare" if lp.get("merged") else "")
+                      + ": grupperna är skrivmiljöer, inte enskilda ristare.") if lp.get("n_pairs") else "")
+        out.append({"key": "anonymous", "topic": "Skrivmiljöer", "status": "mönster att pröva",
+                    "text": f"{len(cands)} {'grupp' if len(cands) == 1 else 'grupper'} av stenar utan ristare "
+                            f"({sum(g['n'] for g in cands)} stenar) skriver lika enhetligt som en ristares stenar och "
+                            "liknar ingen känd ristare i närheten – möjliga verkstäder eller bygders skrivsed. Appen har gett "
+                            "dem arbetsnamn efter typstenens socken: "
                             + ", ".join(f"{g['name']} ({g['n']} stenar)" for g in cands[:4]) + ". "
-                            f"{len(an['groups']) - len(cands)} andra grupper liknar en känd ristare." + lit_text,
+                            f"{len(an['groups']) - len(cands)} andra grupper liknar en känd ristare." + lit_text + pair_text,
                     "note": f"Prövat på stenar med känd ristare bestod en grupp i genomsnitt till {_pct(v['purity'])} av "
                             f"samma ristare, mot {_pct(v['purity_geography'])} för lika många närliggande stenar – omkring en "
                             "tredjedel av en typisk grupp kommer alltså från andra ristare, och geografin förklarar redan mycket. "
@@ -1363,9 +1387,11 @@ HYPOTHESES: dict[tuple[str, str | None], tuple[str, str]] = {
         "Vi föreslår att formelvalet var ristarens kännetecken lika mycket som ornamentiken – att ristare hade fasta formulär.",
         "Pröva på signerade stenar och på ristare som arbetade länge: ändrade de formulär över tid, eller följde de "
         "beställaren?"),
-    ("Okända ristare", "anonymous"): (
-        "Grupperna kan vara verkstäder eller ristare som forskningen inte har namngett.",
-        "Jämför ornamentik, runformer och huggteknik på gruppens stenar; en verklig ristare bör synas i alla tre."),
+    ("Skrivmiljöer", "anonymous"): (
+        "Grupperna kan vara verkstäder, skolor eller en bygds skrivsed – och ibland en ristare som forskningen inte har "
+        "namngett.",
+        "Jämför ornamentik, runformer och huggteknik på gruppens stenar; en enskild ristare bör synas i alla tre, en "
+        "skrivmiljö bara i texten."),
     ("Samband", None): (
         "Vi föreslår att brobyggen var själagåvor och att själsbönen förstärkte budskapet.",
         "Brostenar med själsbön bör stå närmare kyrkor eller färdvägar till kyrkor än brostenar utan; det kan prövas mot "

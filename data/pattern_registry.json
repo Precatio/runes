@@ -123,31 +123,19 @@
    "status_changed": "2026-10-27",
    "text": "Kristen bön är vanligare på runstenar inom 2 km från ett teoforiskt ortnamn (ett gudanamn med en sakral efterled, som Torsvi, Odensala, Ullevi och Frösö): 32 % mot 15 % av övriga stenar (oddskvot 2,50, 1,38–4,53, med landskapet konstant; 57 stenar vid 18 namn). Håller inte i båda halvorna av korpuse"
   },
-  "Geografi|hotspot_fard_Sö 317": {
+  "Geografi|hotspot_fard_Sö": {
    "first_seen": "2026-10-21",
    "seeded": true,
    "status": "indikation",
    "text": "Utlandsfärd klustrar: inom 44,2 km från klustrets mitt har 20 % av 108 stenar mönstret, mot 6 % av övriga (3,64 gånger så vanligt; Kulldorffs scanstatistik, p 0,009). Håller i båda halvorna av korpusen. Klustrets mitt: Sö 317. Stenar per landskap: Sö 108."
   },
-  "Geografi|hotspot_fard_Sö 61": {
-   "first_seen": "2026-10-27",
-   "seeded": false,
-   "status": "indikation",
-   "text": "Utlandsfärd klustrar: inom 26,1 km från klustrets mitt har 25 % av 64 stenar mönstret, mot 6 % av övriga (4,30 gånger så vanligt; Kulldorffs scanstatistik, p 0,021). Håller i båda halvorna av korpusen. Klustrets mitt: Sö 61. Stenar per landskap: Sö 64."
-  },
-  "Geografi|hotspot_monoftong_Vg 189": {
+  "Geografi|hotspot_monoftong_Vg": {
    "first_seen": "2026-10-21",
    "seeded": true,
    "status": "indikation",
    "text": "Monoftong (stin) klustrar: inom 109,9 km från klustrets mitt har 95 % av 58 stenar mönstret, mot 48 % av övriga (1,98 gånger så vanligt; Kulldorffs scanstatistik, p 0,033). Håller i båda halvorna av korpusen. Klustrets mitt: Vg 189. Stenar per landskap: Vg 37, Sm 21."
   },
-  "Geografi|hotspot_r_for_R_U 1172": {
-   "first_seen": "2026-10-27",
-   "seeded": false,
-   "status": "mönster att pröva",
-   "text": "r för ʀ klustrar: inom 30,4 km från klustrets mitt har 67 % av 36 stenar mönstret, mot 13 % av övriga (5,06 gånger så vanligt; Kulldorffs scanstatistik, p 0,001). Håller i båda halvorna av korpusen. Klustrets mitt: U 1172. Stenar per landskap: U 35, Vs 1."
-  },
-  "Geografi|hotspot_r_for_R_U 768": {
+  "Geografi|hotspot_r_for_R_U": {
    "first_seen": "2026-10-21",
    "seeded": true,
    "status": "mönster att pröva",
@@ -226,8 +214,8 @@
    "text": "þegn sägs om fäder och makar snarare än om söner och bröder: 4 % av stenarna efter fäder och makar mot 1 % efter söner och bröder, med landsdel, tid och ristare konstanta (oddskvot 0,22, troligen mellan 0,08 och 0,63)."
   },
   "Okända ristare|anonymous": {
-   "first_seen": "2026-10-21",
-   "seeded": true,
+   "first_seen": "2026-10-29",
+   "seeded": false,
    "status": "mönster att pröva",
    "text": "8 nya grupper av stenar utan ristare (93 stenar) liknar varandra lika mycket som en ristares stenar och liknar ingen känd ristare i närheten. Appen har gett dem arbetsnamn efter typstenens socken: Konungsundsristaren (28 stenar), Vibyristaren (14 stenar), Vetlandaristaren (14 stenar), Kölabyristaren"
   },
@@ -284,6 +272,12 @@
    "seeded": true,
    "status": "indikation",
    "text": "Själsbön på bro- och vägstenar: 27 % mot 18 % på andra stenar (oddskvot 1,83, 95 % KI 1,12–2,97, q 0,046; en av 3 prövade kombinationer av stentyp och drag, Holm), med plats och ristare konstanta. Håller med tiden konstant (daterade stenar, n 804), med textlängden utan bro- och bönefraserna konstant"
+  },
+  "Skrivmiljöer|anonymous": {
+   "first_seen": "2026-10-21",
+   "seeded": true,
+   "status": "mönster att pröva",
+   "text": "8 nya grupper av stenar utan ristare (93 stenar) liknar varandra lika mycket som en ristares stenar och liknar ingen känd ristare i närheten. Appen har gett dem arbetsnamn efter typstenens socken: Konungsundsristaren (28 stenar), Vibyristaren (14 stenar), Vetlandaristaren (14 stenar), Kölabyristaren"
   },
   "Släkt och formler|kinship:broder": {
    "first_seen": "2026-10-21",

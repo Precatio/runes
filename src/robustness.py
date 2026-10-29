@@ -215,10 +215,12 @@ def build(rows: list[dict], patterns: list[dict], hotspots: dict | None, msg_row
     msg = {m["signum"]: m for m in msg_rows}
     ppl = {p["signum"]: p for p in people_rows}
     mfac, pfac = message_facit(msg), people_facit(ppl)
+    from src.r_findings import hotspot_keys
+    hk = hotspot_keys(hotspots or {})
     clusters = {}
     for hp in (hotspots or {}).get("patterns") or []:
         for c in hp.get("clusters") or []:
-            clusters[f"hotspot_{hp['key']}_{c['center']}"] = (hp["key"], c)
+            clusters[hk[(hp["key"], c.get("center"))]] = (hp["key"], c)
     lines: list[dict] = []
     specs: list[dict] = []
 

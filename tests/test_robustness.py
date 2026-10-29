@@ -66,3 +66,10 @@ def test_new_badge_waits_for_confirmation(tmp_path, monkeypatch):
             {"topic": "T", "key": "old", "status": "s"}]
     out = {p["key"]: p.get("new") for p in pattern_registry.annotate(pats, "2026-10-29")}
     assert out == {"yes": "nytt", "no": "obekräftat", "cannot": "obekräftat", "old": "nytt"}
+
+
+def test_limitation_is_never_new(tmp_path, monkeypatch):
+    monkeypatch.setattr(pattern_registry, "PATH", str(tmp_path / "reg.json"))
+    pattern_registry.update([], "2026-10-01")
+    pats = [{"topic": "T", "key": "null", "status": "begränsning", "confirmed": False}]
+    assert pattern_registry.annotate(pats, "2026-10-29")[0].get("new") is None

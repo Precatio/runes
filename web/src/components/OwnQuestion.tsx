@@ -28,8 +28,9 @@ interface Answer {
   difference?: { value: number; ci: [number, number] }; adjusted?: MH;
   halves?: { A: Half; B: Half; replicated: boolean };
   carver_check?: { carver: string; n: number; or: number | null; p: number; holds: boolean } | null;
+  province_check?: { without: string; n: number; or: number | null; p: number; holds: boolean; all_hold: boolean; n_provinces: number; flips: string[] } | null;
   q?: number; n_questions?: number; corpus?: string;
-  r_checks?: { available: boolean; carver?: RCheck; place?: RCheck; carver_holds?: boolean | null; place_holds?: boolean | null };
+  r_checks?: { available: boolean; carver?: RCheck; place?: RCheck; parish?: RCheck; carver_holds?: boolean | null; place_holds?: boolean | null; parish_holds?: boolean | null };
 }
 // A check in R (r/question.R): the odds ratio with the carver as a random effect (lme4) or the place as a surface (mgcv)
 // shares: the share with A without and with B, other things as in the data (marginaleffects); check: DHARMa's model checks
@@ -274,8 +275,21 @@ function Result({ d }: { d: Answer }) {
                 {cc.holds ? " håller skillnaden fortfarande" : " håller skillnaden inte"} (p {pIs(cc.p)}).
               </li>
             )}
+            {d.province_check && (
+              <li>
+                <Tip text="Frågan räknas om utan ett landskap i taget (landskap med minst 30 stenar). Riktningen ska hålla utan vart och ett; p under 0,05 krävs bara där minst två tredjedelar av stenarna är kvar – samma regel som robusthetstrappan i Statistik (R).">Utan ett landskap i taget</Tip>:{" "}
+                sämst utan <strong>{d.province_check.without}</strong> ({d.province_check.n} stenar kvar): oddskvot {num(d.province_check.or)}, p {pIs(d.province_check.p)} –{" "}
+                {d.province_check.all_hold ? "håller utan vart och ett av landskapen." : <strong>håller inte utan alla landskap.</strong>}
+                {d.province_check.flips.length > 0 && <> Riktningen vänder utan {d.province_check.flips.join(", ")}.</>}
+                {d.province_check.or != null && d.adjusted?.or != null && Math.abs(Math.log(d.province_check.or)) < Math.abs(Math.log(d.adjusted.or)) / 3 && (
+                  <span className="block text-amber-700">Utan {d.province_check.without} är sambandet nästan borta: det bärs till stor del av ett landskap.</span>
+                )}
+              </li>
+            )}
             <RCheckLine label="Ristaren som slumpeffekt" tip={GLOSSARY["Ristaren som slumpeffekt"]} c={d.r_checks?.carver}
               holds={d.r_checks?.carver_holds} available={d.r_checks?.available} more={more} />
+            <RCheckLine label="Socknen som slumpeffekt" tip="Samma modell med socknen som slumpeffekt i stället för ristaren: håller sambandet när socknarna får skilja sig sinsemellan, eller är det några socknars egenhet?" c={d.r_checks?.parish}
+              holds={d.r_checks?.parish_holds} available={d.r_checks?.available} more={more} />
             <RCheckLine label="Platsen som yta" tip={GLOSSARY["Platsen som yta"]} c={d.r_checks?.place}
               holds={d.r_checks?.place_holds} available={d.r_checks?.available} more={more} />
             {d.q != null && d.n_questions != null && d.n_questions > 1 && (

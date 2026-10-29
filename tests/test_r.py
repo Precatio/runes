@@ -221,7 +221,7 @@ def test_anonymous_groups_become_findings_with_a_working_name():
     assert any("inte en person" in r for r in f["reasons"]["nyhet"])
     # Groups that resemble a known carver are not reported as unknown carvers
     pats = r_findings.corpus_patterns({"anonymous": _anonymous(signa)})
-    assert any(p["topic"] == "Okända ristare" and "1 ny grupp av" in p["text"] and "Fröderydsristaren" in p["text"] for p in pats)
+    assert any(p["topic"] == "Skrivmiljöer" and "1 grupp av" in p["text"] and "Fröderydsristaren" in p["text"] for p in pats)
 
 
 def test_unchanged_modules_are_reused_from_an_earlier_run(tmp_path, monkeypatch):

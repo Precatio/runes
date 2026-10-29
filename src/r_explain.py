@@ -148,27 +148,33 @@ def anonymous(an: dict) -> dict | None:
     lit = {g["name"]: (g.get("literature") or {}) for g in cands}
     lit_known = [n for n, x in lit.items() if x.get("status") in ("beskriven", "delvis beskriven")]
     lit_none = [n for n, x in lit.items() if x.get("status") == "inget i litteraturen"]
+    lp = an.get("literature_pairs") or {}
+    pairs = (f" Prövat mot litteraturen utanför Mälardalen hamnar stenar som Sveriges runinskrifter knyter till samme ristare "
+             f"i samma grupp i {lp['same_group']} av {lp['n_pairs']} fall – men {_d(lp['expected_from_neighbours'], 1)} "
+             "vore väntade bara av att grannstenar grupperas ihop"
+             + (", och en grupp rymmer två olika signerade ristare" if lp.get("merged") else "")
+             + ". Grupperna är därför skrivmiljöer – en bygds, en verkstads eller en skolas sätt att skriva – och inte "
+             "enskilda ristare." if lp.get("n_pairs") else "")
     return _section(
-        "anonymous", "Finns det ristare som ännu inte har namn?",
-        "Om en grupp stenar utan ristare liknar varandra lika mycket som en ristares stenar, kan det vara en okänd "
-        "ristare eller verkstad.",
-        {"value": str(len(robust)), "label": f"av {len(cands)} möjliga okända ristare håller även utan de tidsberoende dragen"},
+        "anonymous", "Finns det skrivmiljöer som ännu inte är beskrivna?",
+        "Stenar utan ristare som skriver på samma sätt kan visa en verkstad eller en bygds skrivsed – och var en okänd "
+        "ristare kan ha arbetat.",
+        {"value": str(len(robust)), "label": f"av {len(cands)} möjliga skrivmiljöer håller även utan de tidsberoende dragen"},
         f"{len(cands)} grupper av stenar utan ristare liknar varandra i stavning, språk, formler och stil lika mycket som "
         f"en ristares stenar, utan att likna någon känd ristare i närheten; {len(robust)} av dem återfinns också när "
         "stilgrupp, kors och andra drag som följer tiden tas bort" + (f" – t.ex. {examples}" if examples else "")
-        + f". Prövad på kända ristare bestod en sådan grupp i genomsnitt till {_pct(v['purity'])} av samma ristare, mot "
-        f"{_pct(v.get('purity_geography'))} om man bara tar närliggande stenar.{held}",
+        + f". Prövad på kända ristare i Uppland och Södermanland bestod en sådan grupp i genomsnitt till {_pct(v['purity'])} "
+        f"av samma ristare, mot {_pct(v.get('purity_geography'))} om man bara tar närliggande stenar.{held}{pairs}",
         "osäkert",
         [f"Kandidaterna finns i {_names(provs[:4])}, där få stenar har en ristare i Rundata." if provs else None,
          (f"Sveriges runinskrifter knyter redan en del av stenarna till en ristare som Rundata saknar: "
           f"{_names(lit_known)} är helt eller delvis beskrivna där"
           + (f", {_names(lit_none)} inte" if lit_none else "") + ", enligt Sveriges runinskrifter och Källström (2007).")
          if lit_known or lit_none else None,
-         f"{known} andra grupper liknar en känd ristare. Att metoden där hittar kända ristare talar för att den fångar "
-         "verkliga ristargrupper." if known else None,
+         f"{known} andra grupper liknar en känd ristare." if known else None,
          "Nästa steg är att jämföra ornamentik, runformer och huggteknik på stenarna i en grupp."],
-        ["Arbetsnamnen är etiketter för grupperna, inte namn på personer.",
-         "En grupp kan vara en ristare, en verkstad eller en lokal tradition som flera följde.",
+        ["Arbetsnamnen är etiketter efter typstenens socken, inte namn på personer.",
+         "En grupp kan rymma flera ristare; den visar en skrivmiljö, inte en hand.",
          (f"Metoden är bara prövad där ristare är kända: {cov.get('carvers_by_province', {}).get('U', 0)} av de "
           f"{cov.get('n_carvers')} kända ristarna finns i Uppland och {cov.get('carvers_by_province', {}).get('Sö', 0)} i "
           f"Södermanland, och bara {in_cand} i landskapen med kandidater. Om gränsen gäller där är inte prövat.")
@@ -177,8 +183,7 @@ def anonymous(an: dict) -> dict | None:
          "Drag som listas för en grupp är de där den skiljer sig mest från trakten; eftersom grupperna bildas på just de "
          "dragen visar listan hur gruppen ser ut, inte att den är en hand.",
          "Grupperna kan redan vara beskrivna i Sveriges runinskrifter eller annan litteratur som appen inte har."],
-        f"Kanske – {len(robust)} grupper av stenar utan ristare kan vara okända ristare eller verkstäder, "
-        f"men det är inte prövat utanför Mälardalen.")
+        f"Ja, som skrivmiljöer – {len(robust)} grupper håller, men de skiljer inte ut enskilda ristare.")
 
 
 def chronology(ch: dict) -> dict | None:
@@ -565,12 +570,11 @@ def overview(res: dict) -> dict:
                     provs.append(p)
         v = an.get("validation") or {}
         paras.append(
-            f"**Okända ristare.** Där få stenar är attribuerade – i {_names(provs[:4])} – finns {len(cands)} grupper av "
-            "stenar som liknar varandra lika mycket som en ristares stenar utan att likna någon känd ristare, t.ex. "
-            + ", ".join(x["name"] for x in cands[:3]) + ". De har fått arbetsnamn efter socken. Metoden är prövad på kända "
-            f"ristare (i genomsnitt {_pct(v.get('purity'))} av en grupp samma ristare), men varje grupp är en hypotes: det "
-            "kan vara en ristare, en verkstad eller en lokal tradition.")
-        steps.append("Jämför ornamentik, runformer och gärna huggspår (3D) på stenarna i de okända ristarnas grupper.")
+            f"**Skrivmiljöer.** Där få stenar är attribuerade – i {_names(provs[:4])} – finns {len(cands)} grupper av "
+            "stenar som skriver på samma sätt utan att likna någon känd ristare, t.ex. "
+            + ", ".join(x["name"] for x in cands[:3]) + ". De har fått arbetsnamn efter socken. Prövade mot litteraturen "
+            "rymmer grupperna ofta flera ristare: de visar en verkstad eller en bygds skrivsed, inte en enskild hand.")
+        steps.append("Jämför ornamentik, runformer och gärna huggspår (3D) på stenarna i skrivmiljöernas grupper.")
 
     v = ch.get("validation") or {}
     feats = {f["key"]: f for f in c.get("features") or []}
@@ -638,10 +642,10 @@ def overview(res: dict) -> dict:
     if bro and _sig((bro.get("all") or {}).get("q")) and (bro.get("halves") or {}).get("replicated"):
         new_patterns.append("själsbönen på brostenar")
     if cands:
-        new_patterns.append(f"{len(cands)} möjliga okända ristare")
+        new_patterns.append(f"{len(cands)} möjliga skrivmiljöer")
     paras.append(
         "**Sammantaget** ger statistiken tre slags bidrag: stöd för etablerade tolkningar (lokala ristare, stilkronologin), "
-        "verktyg för att föreslå ristare och hitta okända, och nya mönster att pröva"
+        "verktyg för att föreslå ristare och hitta skrivmiljöer, och nya mönster att pröva"
         + (" – " + ", ".join(new_patterns) if new_patterns else "") + ". Resultaten är förslag för runologisk granskning, "
         "inte färdiga slutsatser; reservationerna står under varje fråga.")
     return {"paragraphs": paras, "next_steps": steps}

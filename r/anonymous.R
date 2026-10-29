@@ -158,11 +158,12 @@ label_of <- function(col) {
   c(formula_raising = "Resarformel", formula_monument = "Monument", formula_order = "Ordföljd",
     formula_signature = "Ristarsignatur", formula_prayer = "Bön")[[col]]
 }
-# "Vagnhärads sn (nu Trosa-Vagnhärad)" -> "Vagnhäradsristaren", "Grästorps köping (Tengene sn)" -> "Grästorpsristaren"
+# "Vagnhärads sn (nu Trosa-Vagnhärad)" -> "Vagnhäradsgruppen", "Grästorps köping (Tengene sn)" -> "Grästorpsgruppen". Gruppen,
+# inte ristaren: prövat mot litteraturen (2026-10-29) motsvarar grupperna skrivmiljöer, inte enskilda ristare
 work_name <- function(parish) {
   p <- trimws(gsub("\\s*\\(.*?\\)", "", parish))
   p <- trimws(gsub("\\s+(sn|socken|köping|stad|landsförs\\.?)$", "", p))
-  if (grepl(" ", p)) paste0(p, "-", tr("ristaren", "carver")) else paste0(p, tr("ristaren", " carver"))
+  if (grepl(" ", p)) paste0(p, "-", tr("gruppen", "group")) else paste0(p, tr("gruppen", " group"))
 }
 
 desc <- lapply(seq_along(groups), function(i) {
@@ -244,7 +245,7 @@ if (length(desc)) {
     geom_label(data = lab, aes(x, y, label = id, colour = status), size = 2.4, linewidth = 0.2,
                label.padding = unit(0.1, "lines"), fill = "white", show.legend = FALSE) +
     scale_colour_manual(values = c(candidate = ACCENT, known = SERIES[1]),
-                        labels = c(candidate = tr("möjlig okänd ristare", "possible unknown carver"),
+                        labels = c(candidate = tr("möjlig skrivmiljö", "possible writing milieu"),
                                    known = tr("liknar en känd ristare", "resembles a known carver")), name = NULL) +
     labs(title = tr("Grupper av stenar utan ristare", "Groups of stones without a carver"),
          subtitle = tr("Numren hänvisar till tabellen; grå punkter är övriga stenar med läsbar text",

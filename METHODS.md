@@ -185,7 +185,7 @@ ristare, en verkstad eller en bygd), inte en förklaring.
 
 *Kartbilder* (från 2026-10-12): för varje mönster som klustrar (Morans I, q < 0,05) och har heta eller kalla stenar eller ett kluster ritar `hotspots.R` en karta `hotspot_<mönster>.png`: andelen stenar med mönstret per sexkant om 25 km (minst 5 stenar), stenarna i heta och kalla områden (Gi*) och klustren (Kulldorff) som ringar, på Natural Earths land. Genomsökningen av landskapet ritas av `remains.R` som `landskap_genomsokning.png`. Figurerna kan användas i artiklarna (15g); en artikel får en egen kopia under figurens innehållshash (`src/blog_figures.py`, `/api/blog/figures/`), så att bilden finns kvar när korpusanalysen räknas om.
 
-### 1g. Okända ristare
+### 1g. Skrivmiljöer (tidigare Okända ristare)
 
 Källkod: `r/anonymous.R` (från 2026-10-11). Kan en gruppering i statistiken vara en ristare som ännu inte
 har namn? Stenar med minst fem läsbara ord jämförs i *handens drag* – stilgrupp, kors, kortkvistrunor, språkdrag
@@ -199,10 +199,10 @@ en grupp är samma ristare, jämfört med grupper av lika många närliggande st
 den valideringen (15–30 km, kvot 4–12), så träffsäkerheten kan vara något överskattad. Resultat (beräkning
 2026-10-20): en grupp bestod i genomsnitt till 69 % av samma ristare, mot 43 % för bara
 närliggande stenar, och 60 % av grupperna till minst tre fjärdedelar; av länkade par med känd ristare var 71 % samma
-ristare. Bland stenarna utan ristare blev det 16 grupper, varav 8 möjliga okända ristare: Konungsundsristaren (28
-stenar, Östergötland), Vibyristaren (14, Östergötland), Vetlandaristaren (14, Småland), Kölabyristaren (13,
-Västergötland), Sättnaristaren (7, Medelpad), Leksbergsristaren och Husabyristaren (6 vardera, Västergötland) och
-Dalumsristaren (5, Västergötland). Stabiliteten mäts som hur stor del av gruppen som återkommer (Jaccard) när en
+ristare. Bland stenarna utan ristare blev det 16 grupper, varav 8 möjliga skrivmiljöer: Konungsundsgruppen (28
+stenar, Östergötland), Vibygruppen (14, Östergötland), Vetlandagruppen (14, Småland), Kölabygruppen (13,
+Västergötland), Sättnagruppen (7, Medelpad), Leksbergsgruppen och Husabygruppen (6 vardera, Västergötland) och
+Dalumsgruppen (5, Västergötland). Stabiliteten mäts som hur stor del av gruppen som återkommer (Jaccard) när en
 femtedel av länkarna tas bort. Varje grupp jämförs med kända ristare inom 50 km: den räknas som lik en känd ristare när
 ristarens stenar i genomsnitt ligger lika nära gruppen som två stenar av samma ristare brukar göra, eller när
 attribueringsmodellen föreslår samma ristare med minst 50 % för hälften av gruppens stenar. Övriga grupper får ett
@@ -751,7 +751,9 @@ sig mest – vet trappans p inget om valet. Där används det största av trappa
 scanstatistikens p för ett kluster.
 
 Ett mönster är bekräftat när det håller i båda halvorna och *q_global* < 0,05. Mönster utan trappa bedöms på sin egen
-halvprovning. Mönsterregistret märker nu ett nytt mönster ”Nytt” först när det är bekräftat; innan dess märks det
+halvprovning. Ett mönster med status ”begränsning” (ett nollresultat) märks aldrig Nytt. Hot spots har från 2026-10-29
+nyckeln hotspot_<drag>_<landskap> i stället för klustrets mittsten, så att ett kluster vars mitt flyttar en sten
+förblir samma mönster (registret flyttades över). Mönsterregistret märker nu ett nytt mönster ”Nytt” först när det är bekräftat; innan dess märks det
 ”Nytt, obekräftat” (`src/pattern_registry.annotate`).
 
 Trappan räknas sist i korpusjobbet och sparas som `robustness.json` i jobbets mapp. Nyckeln bygger på underlaget och
@@ -760,6 +762,17 @@ skriptet. Saknas trappan räknar API:t den i bakgrunden, och mönstren visas uta
 Mönster som prövas på annat sätt får ingen trappa och behåller sitt eget test. Det gäller avstånd mot slumppunkter,
 attribueringsmodellen, seriationen, ristargrupperna, de okända ristarna och länkarna. Detsamma gäller budskap som bara
 finns i en landsdel, eftersom en nollcell inte kan skattas med regression.
+
+**Namnbyte 2026-10-29.** Prövat mot litteraturen motsvarar grupperna skrivmiljöer – en verkstad, en skola eller en
+bygds skrivsed – och inte enskilda ristare. Fliken heter därför *Skrivmiljöer*, mönstret har ämnet Skrivmiljöer och
+grupperna arbetsnamn som ”Konungsundsgruppen” (r/anonymous.R). Parprovet räknas i appen (`carver_literature.pair_test`)
+och visas i fliken. Fynd per sten på stenar som litteraturen knyter till en ristare märks ”stämmer”.
+
+**Ristare enligt litteraturen (2026-10-29).** `data/carver_literature.json` har förutom SRI:s attribueringar Källströms
+namngivna signaturer (typ B:1–2, runstenar) som saknas i Rundatas och Runor 2020:s ristarfält, 13 stenar med sida i
+katalogen. Lagret hålls skilt från Rundata: appens statistik räknar med Rundatas ristare, men stenens sida visar
+”Ristare enligt litteraturen”, fynden per sten får uppgiften i nyheten, och fliken Skrivmiljöer redovisar hur många
+signerade runstenar som saknar ristare i databasen (20 av 177; 18 av 38 utanför Uppland och Södermanland).
 
 ### 1w. Litteraturregistret (2026-10-29)
 
@@ -805,6 +818,12 @@ när något *påstås* och djärvhet när något *föreslås*. Sedan 2026-10-12 
   Försiktighet ändrar formuleringen men tar aldrig bort ett ärligt märkt mönster.
 
 ### 1y. Pröva en egen fråga
+
+**Tillägg 2026-10-29:** samma två steg som robusthetstrappan (1v) har lagts till: *utan ett landskap i taget*
+(Mantel–Haenszel utan varje landskap med minst 30 stenar; riktningen ska hålla, p < 0,05 krävs där minst två
+tredjedelar av stenarna är kvar; den sämsta utgången och de landskap utan vilka riktningen vänder redovisas, och svaret
+varnar när sambandet nästan försvinner utan ett landskap) och *socknen som slumpeffekt* (r/question.R, glmer med
+(1 | socken)). Stegen visas men ändrar inte domen.
 
 Kortet *Pröva en egen fråga* på Statistik (R) (`src/question.py`, `POST /api/research/question`, sedan 2026-10-20) låter
 en forskare ställa en egen fråga till korpusen med samma disciplin som R-modulerna: är draget A vanligare eller

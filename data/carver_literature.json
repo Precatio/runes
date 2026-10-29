@@ -1,5 +1,5 @@
 {
- "_om": "Ristarattribueringar i litteraturen som saknas i Rundatas ristarfält, för stenar i de möjliga okända ristarnas grupper (Statistik → Okända ristare). Genomläst 2026-10-29 i de digitaliserade Sveriges runinskrifter och i Källström (2007); citaten är kontrollerade mot texten (utdata/okanda_ristare/litteratur.md). stones = stenar som attribueringen gäller, outside = stenar utanför gruppen som den knyter dem till. nearby_signed = signerade stenar utanför gruppen i dess bygd; anchor = en av gruppens stenar som posten knyts till.",
+ "_om": "Ristarattribueringar i litteraturen som saknas i Rundatas ristarfält, för stenar i de möjliga okända ristarnas grupper (Statistik → Okända ristare). Genomläst 2026-10-29 i de digitaliserade Sveriges runinskrifter och i Källström (2007); citaten är kontrollerade mot texten (utdata/okanda_ristare/litteratur.md). stones = stenar som attribueringen gäller, outside = stenar utanför gruppen som den knyter dem till. nearby_signed = signerade stenar utanför gruppen i dess bygd; anchor = en av gruppens stenar som posten knyts till. signatures = Källströms namngivna ristarsignaturer (typ B:1–2, runstenar) som saknas i Rundatas och Runor 2020:s ristarfält; signature_coverage = hur många signerade runstenar som saknar ristare per landskap.",
  "sources": {
   "SRI II": "Brate, E. 1911–18. Östergötlands runinskrifter (Sveriges runinskrifter II). Stockholm.",
   "SRI IV": "Kinander, R. 1935–61. Smålands runinskrifter (Sveriges runinskrifter IV). Stockholm.",
@@ -232,5 +232,172 @@
    "source": "Källström 2007",
    "anchor": "Sm 110"
   }
- ]
+ ],
+ "signatures": [
+  {
+   "signum": "G 200",
+   "carver": "Auðvaldr",
+   "type": "B:1",
+   "source": "Källström 2007",
+   "page": "s. 347",
+   "text": "Auðvaldr rísti r[únaR(?)] ..."
+  },
+  {
+   "signum": "G 203",
+   "carver": "Hróðbiôrn",
+   "type": "B:1",
+   "source": "Källström 2007",
+   "page": "s. 347",
+   "text": "| roþ£biern risti run!iR [þ]esa kaiRl-ifR sumaR aR karla kan"
+  },
+  {
+   "signum": "G 276",
+   "carver": "Aldviðr, Libbi, Æinarr",
+   "type": "B:1",
+   "source": "Källström 2007",
+   "page": "s. 347",
+   "text": "Aldviðr, Libbi, Æinarr rístu."
+  },
+  {
+   "signum": "Vg 119",
+   "carver": "AlríkR",
+   "type": "B:1",
+   "source": "Källström 2007",
+   "page": "s. 349",
+   "text": "Ok ráð rúnaR þáR rægi[n]kundu þar, sváð AlríkR lubu fáði."
+  },
+  {
+   "signum": "Vg 130",
+   "carver": "Tryggvi(?)",
+   "type": "B:2",
+   "source": "Källström 2007",
+   "page": "s. 350",
+   "text": "Hiogg Trygg(v)i(?)."
+  },
+  {
+   "signum": "Vg 180",
+   "carver": "Fundinn",
+   "type": "B:2",
+   "source": "Källström 2007",
+   "page": "s. 350",
+   "text": "... [F]undinn [hi]ogg."
+  },
+  {
+   "signum": "Vg 181",
+   "carver": "Hávarðr(?)",
+   "type": "B:1",
+   "source": "Källström 2007",
+   "page": "s. 350",
+   "text": "H(á)varðr(?) hiogg s[tæin]."
+  },
+  {
+   "signum": "Ög 8",
+   "carver": "VíkingR, GrímulfR",
+   "type": "B:1",
+   "source": "Källström 2007",
+   "page": "s. 350",
+   "text": "VíkingR fáði ok GrímulfR."
+  },
+  {
+   "signum": "Ög 64",
+   "carver": "Lófi",
+   "type": "B:1",
+   "source": "Källström 2007",
+   "page": "s. 351",
+   "text": "Lófi ræist rúnaR þess(a)R."
+  },
+  {
+   "signum": "U 422",
+   "carver": "Gunnarr",
+   "type": "B/BI:1",
+   "source": "Källström 2007",
+   "page": "s. 379",
+   "text": "sin si..."
+  },
+  {
+   "signum": "Hs 14",
+   "carver": "Hrómundr",
+   "type": "B:1",
+   "source": "Källström 2007",
+   "page": "s. 411",
+   "text": "Hrómundr Hé-Gylfa sun fáði rúnaR þessaR."
+  },
+  {
+   "signum": "M 2",
+   "carver": "Ásgærðr/ÁsgæiRR",
+   "type": "B:2",
+   "source": "Källström 2007",
+   "page": "s. 413",
+   "text": "Ásgærðr/ÁsgæiRR barði."
+  },
+  {
+   "signum": "J RS1928;66",
+   "carver": "Triúnn(?), Stæinn",
+   "type": "B:1",
+   "source": "Källström 2007",
+   "page": "s. 415",
+   "text": "Triúnn(?) ræist ok Stæinn rúnaR þessaR."
+  }
+ ],
+ "signature_coverage": {
+  "definition": "typ B:1–2 (ristarsignatur bredvid annan text), runsten, finns i Rundata",
+  "n": 177,
+  "missing": 20,
+  "missing_named": 13,
+  "by_province": {
+   "U": {
+    "n": 120,
+    "missing": 2
+   },
+   "Sö": {
+    "n": 19,
+    "missing": 0
+   },
+   "Vs": {
+    "n": 7,
+    "missing": 1
+   },
+   "Ög": {
+    "n": 6,
+    "missing": 3
+   },
+   "Vg": {
+    "n": 5,
+    "missing": 4
+   },
+   "G": {
+    "n": 4,
+    "missing": 3
+   },
+   "Hs": {
+    "n": 4,
+    "missing": 2
+   },
+   "M": {
+    "n": 4,
+    "missing": 2
+   },
+   "Öl": {
+    "n": 3,
+    "missing": 1
+   },
+   "Sm": {
+    "n": 2,
+    "missing": 1
+   },
+   "Gs": {
+    "n": 2,
+    "missing": 0
+   },
+   "J": {
+    "n": 1,
+    "missing": 1
+   }
+  },
+  "outside_U_So": {
+   "n": 38,
+   "missing": 18
+  },
+  "script": "utdata/signaturer/jamfor.py"
+ }
 }

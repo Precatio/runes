@@ -47,6 +47,33 @@ def main() -> None:
             # "Trögds" is the genitive form; the plain form is also used in the app's texts
             if key == "district" and base.endswith("s"):
                 names.add(base[:-1])
+    # The people named on the stones (src/entities.py, normalized Old Norse: Áli, Ingifastr, Ragnfríðr), which generated
+    # texts such as the link findings put into sentences ("Delar namnen Áli, Ingifast … med U 123")
+    from src import entities
+    for r in store().inscriptions:
+        try:
+            for p in entities.extract(r)["persons"]:
+                if p.get("name") and not p.get("uncertain"):
+                    names.add(p["name"])
+        except Exception:  # noqa: BLE001 – a record the extraction cannot read gives no names
+            continue
+    # The name forms the link model writes in its findings (data/links.json: "Ingifast", "Sigvaldi")
+    try:
+        for l in json.load(open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data",
+                                             "links.json"), encoding="utf-8")).get("links") or []:
+            names.update(l.get("names") or [])
+    except (OSError, ValueError):
+        pass
+    # The writing milieus' working names (r/anonymous.R: "Konungsundsgruppen"), from every computed corpus
+    import glob
+    for path in glob.glob(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "cache", "r",
+                                       "corpus", "*", "anonymous.json")):
+        try:
+            for g in json.load(open(path, encoding="utf-8")).get("groups") or []:
+                if g.get("name"):
+                    names.add(g["name"])
+        except (OSError, ValueError):
+            continue
     names = {n for n in names if n and n not in STOP and len(n) > 1 and not re.search(r"[?()\[\]{}]", n)
              and re.match(r"^\w", n)}
     os.makedirs(os.path.dirname(OUT), exist_ok=True)

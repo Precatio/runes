@@ -71,7 +71,9 @@ def for_stone(signum: str) -> dict:
                     "list_pages": sorted({h["page"] for h in lists}, key=order),
                     "entry_pages": [h["page"] for h in text if h.get("entry")]})
     out.sort(key=lambda x: (x["n"] == 0, x["work"]["kind"] != "avhandling", -x["n"]))
+    from src import carver_literature  # the carver according to the literature, where Rundata has none
     return {"signum": signum, "works": out, "n_indexed": len(idx.get("works") or {}),
+            "carver": carver_literature.carver_for(signum),
             "built": idx.get("built"), "source_note": "Utdrag ur verken i appens litteraturregister (data/literature/catalog.json)."}
 
 
@@ -90,9 +92,17 @@ def annotate_findings(items: list[dict]) -> list[dict]:
                            "entry_pages": w["entry_pages"]}
                           for w in for_stone(sig)["works"] if w["pages"]]
         works = cache[sig]
-        if not works:
+        from src import carver_literature
+        carver = carver_literature.carver_for(sig)
+        if carver:  # the carver according to the literature, which Rundata lacks
+            note = (f"litteraturen anger ristaren: {carver['carver'] or 'samme ristare som ' + ', '.join(carver['same_as'])} "
+                    f"({carver['kind']}; {carver['reference']})")
+            reasons = f.setdefault("reasons", {}).setdefault("nyhet", [])
+            if note not in reasons:
+                reasons.append(note)
+        if not works and not carver:
             continue
-        f["literature"] = {"works": works, "n_works": len(works)}
+        f["literature"] = {"works": works, "n_works": len(works), "carver": carver}
         if f.get("verdict") == "nytt":
             refs = "; ".join(f"{w['author']} {w['year']} " + ", ".join(page_label(x) for x in w["pages"][:4]).replace(", s. ", ", ")
                              for w in works[:3])

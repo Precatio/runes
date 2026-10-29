@@ -37,6 +37,7 @@ MIN_TRAIT = 5    # stenar med och utan draget
 MIN_PROVINCE = 15
 ALPHA = 0.05
 N_CARVERS = 5
+MIN_LOPO = 30   # landskap med minst så många stenar lämnas ut ett i taget (som robusthetstrappan, METHODS.md 1v)
 SPLITS = (1020, 1050, 1075)  # samma tidsgränser som kartan (web/src/lib/patternMap.ts)
 
 
@@ -230,6 +231,7 @@ def prepare(rows: list[dict]) -> dict:
         hand = r.get("carver") or f"_{r['province']}:{r.get('parish') or r['signum']}"
         stones.append({"signum": r["signum"], "province": r["province"], "epoch": epoch(r), "year": mid_year(r),
                        "family": family(r), "half": h[r["signum"]], "carver": r.get("carver") or "",
+                       "parish": f"{r['province']}:{r.get('parish') or r['signum']}",
                        "hand": hand, "xk": xk, "yk": yk, "moved": int(r.get("moved") or 0),
                        "v": {k: fn(r) for k, (_, _, _, fn) in VAR.items()}})
     return {"stones": stones}
@@ -418,6 +420,25 @@ def ask(prep: dict, a: str, kind: str, key, earlier: list[float] | None = None, 
                          "holds": res["p"] < ALPHA and res["direction"] == whole["direction"]}
         out["carver_check"] = worst
 
+    # Without one province at a time (provinces with at least MIN_LOPO stones; for a province question not the province
+    # itself): the direction must hold without each, p < 0.05 only where two thirds of the stones remain – as the
+    # robustness ladder in Statistik (R)
+    provs = [p for p, n_p in Counter(s["province"] for s, _, _ in by_signum.values()).items()
+             if n_p >= MIN_LOPO and not (kind == "landskap" and p == key)]
+    if len(provs) >= 2:
+        runs = []
+        for p in provs:
+            sub = [(b["stratum"](s), x, y) for s, x, y in by_signum.values() if s["province"] != p]
+            res = mantel_haenszel(_tables(sub))
+            if res["p"] is None:
+                continue
+            ok = res["direction"] == whole["direction"] and (res["p"] < ALPHA or len(sub) < 2 / 3 * len(items))
+            runs.append({"without": p, "n": len(sub), "or": res["or"], "p": res["p"], "direction": res["direction"], "holds": ok})
+        if runs:
+            worst = max(runs, key=lambda r: (not r["holds"], r["p"]))
+            out["province_check"] = {**worst, "all_hold": all(r["holds"] for r in runs), "n_provinces": len(runs),
+                                     "flips": [r["without"] for r in runs if r["direction"] != whole["direction"]]}
+
     ps = [p for p in (earlier or []) if p is not None and 0 <= p <= 1] + [whole["p"]]
     out["q"] = bh(ps)[-1]
     out["n_questions"] = len(ps)
@@ -442,7 +463,7 @@ def r_rows(prep: dict, a: str, kind: str, key) -> list[dict]:
         if x is None or y is None:
             continue
         out.append({"signum": s["signum"], "y": y, "x": x, "province": s["province"], "epoch": s["epoch"],
-                    "hand": s["hand"], "xk": s["xk"], "yk": s["yk"], "moved": s["moved"]})
+                    "hand": s["hand"], "parish": s["parish"], "xk": s["xk"], "yk": s["yk"], "moved": s["moved"]})
     return out
 
 
@@ -462,6 +483,7 @@ def apply_r(out: dict, checks: dict | None) -> dict:
 
     hc, hp = holds(checks.get("carver")), holds(checks.get("place"))
     out["r_checks"]["carver_holds"], out["r_checks"]["place_holds"] = hc, hp
+    out["r_checks"]["parish_holds"] = holds(checks.get("parish"))
     if out.get("verdict") in ("håller", "håller men inte justerat"):
         if hc is False:
             out["verdict"] = "beror på ristarna"

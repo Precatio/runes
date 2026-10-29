@@ -111,7 +111,10 @@ export interface Corpus {
     coverage?: { carvers_by_province: Record<string, number>; n_carvers: number; share_attributed: Record<string, number>;
       n_stones_province: Record<string, number>; candidate_provinces: string[] | string; carvers_in_candidate_provinces: number };
     n_robust?: number; robust_min?: number;
-    groups: AnonGroup[] };
+    groups: AnonGroup[];
+    // Same-carver pairs from the literature against the groups (src/carver_literature.pair_test)
+    signature_coverage?: { n: number; missing: number; missing_named: number; outside_U_So: { n: number; missing: number }; by_province: Record<string, { n: number; missing: number }> };
+    literature_pairs?: { n_pairs: number; same_group: number; expected_from_neighbours: number; merged: { group: number; carvers: string[] }[] } };
   words?: Dict & { method: string; n_stones: number; n_dated: number; n_words_tested: number;
     provinces_tested: string[] | string; n_region_tests: number; n_time_tests: number;
     region: { word: string; province: string; logodds: number; q: number; k_in: number; n_in: number;

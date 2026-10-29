@@ -38,7 +38,7 @@ const FIG_HELP: Record<string, string> = {
   "Dragen över tid": "Punkterna är andelen stenar med draget i varje stilgrupp, med 95 % intervall (större punkt = fler stenar). Den blå linjen är den justerade andelen med plats och ristare konstanta: förändringen över tid när man rensat för att olika perioder har stenar från olika trakter och ristare. Rubriken anger förloppet och q-värdet.",
   "Var dragen är vanligast": "Modellens skattade andel stenar med draget för en typisk ristare; mörkare blå = vanligare. Kartan visas bara nära stenar där draget kan bestämmas, och bara för drag där platsen spelar roll.",
   "Landskapen omkring 1050": "Skattad andel stenar med draget omkring år 1050 i varje landskap, med 95 % intervall. Intervall som inte överlappar tyder på en verklig skillnad mellan landskapen.",
-  "Grupper av stenar utan ristare": "Röda punkter är grupper som kan vara en okänd ristare eller verkstad, blå är grupper som liknar en känd ristare. Numren hänvisar till tabellerna nedan; grått är övriga stenar med läsbar text.",
+  "Grupper av stenar utan ristare": "Röda punkter är grupper som kan vara en skrivmiljö – en verkstad eller en bygds skrivsed, blå är grupper som liknar en känd ristare. Numren hänvisar till tabellerna nedan; grått är övriga stenar med läsbar text.",
 };
 
 // A column heading; the explanation is looked up from the heading text unless given
@@ -64,13 +64,13 @@ export function Method({ text, caveat }: { text?: string; caveat?: string }) {
 
 export const PATTERN_TOPICS: Record<string, string[]> = {
   geography: ["Geografi"], attribution: ["Attribuering"], text: ["Språk"], clusters: ["Stil och innehåll"],
-  chronology: ["Datering"], network: ["Släkt och formler", "Släkter över stenar"], anonymous: ["Okända ristare"], change: ["Förändring", "Regional skillnad", "Samband"],
+  chronology: ["Datering"], network: ["Släkt och formler", "Släkter över stenar"], anonymous: ["Skrivmiljöer", "Okända ristare"], change: ["Förändring", "Regional skillnad", "Samband"],
   messages: ["Budskap"], people: ["Människorna"],
 };
 export const patternsFor = (patterns: Pattern[], key: string) => patterns.filter(p => (PATTERN_TOPICS[key] ?? []).includes(p.topic));
 
 export const TOPIC: Record<string, string> = {
-  attribution: "Vem ristade?", anonymous: "Okända ristare", change: "Förändring", chronology: "Datering",
+  attribution: "Vem ristade?", anonymous: "Skrivmiljöer", change: "Förändring", chronology: "Datering",
   geography: "Geografi", text: "Stavning och dialekt", clusters: "Grupper av stenar", network: "Formler och släkt",
   words: "Ordförrådet", messages: "Budskap", people: "Människorna", question: "Egen fråga",
 };
