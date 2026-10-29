@@ -90,7 +90,7 @@ def textgap_findings(lookup, inscriptions: list[dict], ctx=None) -> list[dict]:
             continue
         rel, rr = stone_relevance(rec)
         alts = ", ".join(f"{a[0]} {round(a[1] * 100)} %" for a in (c.get("alts") or [])[:2])
-        ours = (f"Luckan i '{c['carved']}' kan fyllas med '{c['fill']}', så att ordet blir {c['word']} "
+        ours = (f"Luckan i '{c['carved']}' kan fyllas med '{c['fill']}', så att ordet blir '{c['word']}' "
                 f"({round(c['p'] * 100)} % kalibrerad säkerhet)"
                 + (f"; läsningen blir \"{c['reading']}\"" if c.get("reading") else "") + ".")
         out.append(_stone(_finding(rec, TEXTGAP, "nytt", ours, "Rundata lämnar ordet oåterställt", min(1.0, c["p"]), 0.7, rel,
