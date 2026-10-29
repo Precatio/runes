@@ -1,0 +1,136 @@
+{
+ "plan": "analysplaner/2026-10-29-en-generation.md",
+ "main": {
+  "groups": 36,
+  "stones": 84,
+  "mean_styles": 1.5833333333333333,
+  "expected": 1.9332127657210165,
+  "p": 0.0001,
+  "share_all_same": 0.4722222222222222,
+  "share_all_same_expected": 0.21282406018379615,
+  "p_all_same": 0.0001,
+  "span_years": 19.86111111111111,
+  "span_expected": 36.13968341278572,
+  "provinces": {
+   "U": 32,
+   "Sö": 4
+  }
+ },
+ "halves": {
+  "A": {
+   "groups": 20,
+   "stones": 51,
+   "mean_styles": 1.7,
+   "expected": 2.0572057205720573,
+   "p": 0.003,
+   "share_all_same": 0.4,
+   "share_all_same_expected": 0.18014301430143015,
+   "p_all_same": 0.0112,
+   "span_years": 22.625,
+   "span_expected": 40.20423292329233,
+   "provinces": {
+    "U": 19,
+    "Sö": 1
+   }
+  },
+  "B": {
+   "groups": 16,
+   "stones": 33,
+   "mean_styles": 1.4375,
+   "expected": 1.780659315931593,
+   "p": 0.0043,
+   "share_all_same": 0.5625,
+   "share_all_same_expected": 0.2513376337633763,
+   "p_all_same": 0.0064,
+   "span_years": 16.40625,
+   "span_expected": 31.166616661666165,
+   "provinces": {
+    "U": 13,
+    "Sö": 3
+   }
+  }
+ },
+ "status": "håller",
+ "robustness": {
+  "bygd_5km": {
+   "groups": 16,
+   "stones": 39,
+   "mean_styles": 1.5,
+   "expected": 1.969528202820282,
+   "p": 0.0004,
+   "share_all_same": 0.5625,
+   "share_all_same_expected": 0.21432768276827682,
+   "p_all_same": 0.0009,
+   "span_years": 14.21875,
+   "span_expected": 38.69104097909791,
+   "provinces": {
+    "U": 15,
+    "Sö": 1
+   }
+  },
+  "bygd_20km": {
+   "groups": 40,
+   "stones": 92,
+   "mean_styles": 1.575,
+   "expected": 1.927140214021402,
+   "p": 0.0001,
+   "share_all_same": 0.475,
+   "share_all_same_expected": 0.20624812481248125,
+   "p_all_same": 0.0001,
+   "span_years": 19.25,
+   "span_expected": 35.03010926092609,
+   "provinces": {
+    "U": 32,
+    "Sö": 8
+   }
+  },
+  "pool_pa_plats": {
+   "groups": 34,
+   "stones": 79,
+   "mean_styles": 1.5588235294117647,
+   "expected": 1.8630304206891277,
+   "p": 0.0004,
+   "share_all_same": 0.5,
+   "share_all_same_expected": 0.2602171981904073,
+   "p_all_same": 0.0013,
+   "span_years": 19.485294117647058,
+   "span_expected": 31.740085773283212,
+   "provinces": {
+    "U": 31,
+    "Sö": 3
+   }
+  },
+  "utan_en_ristare": {
+   "groups": 28,
+   "stones": 67,
+   "mean_styles": 1.7142857142857142,
+   "expected": 1.9582386810109584,
+   "p": 0.0103,
+   "share_all_same": 0.35714285714285715,
+   "share_all_same_expected": 0.21192119211921193,
+   "p_all_same": 0.0458,
+   "span_years": 24.464285714285715,
+   "span_expected": 37.01972875859014,
+   "provinces": {
+    "U": 26,
+    "Sö": 2
+   }
+  },
+  "U_So": {
+   "groups": 36,
+   "stones": 84,
+   "mean_styles": 1.5833333333333333,
+   "expected": 1.9347851451811848,
+   "p": 0.0001,
+   "share_all_same": 0.4722222222222222,
+   "share_all_same_expected": 0.21068495738462736,
+   "p_all_same": 0.0001,
+   "span_years": 19.86111111111111,
+   "span_expected": 36.242110322143326,
+   "provinces": {
+    "U": 32,
+    "Sö": 4
+   }
+  }
+ }
+}
