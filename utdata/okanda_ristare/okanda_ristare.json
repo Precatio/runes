@@ -1,0 +1,1461 @@
+{
+ "plan": "analysplaner/2026-10-29-okanda-ristare-oberoende.md",
+ "fingerprint": "3f58e9339191761e",
+ "B": 9999,
+ "radius_km": 30,
+ "control": {
+  "n_carvers": 26,
+  "summary": {
+   "rock": {
+    "k": 24,
+    "p": 2.0861304844642592e-09,
+    "share_p05": 0.25
+   },
+   "height": {
+    "k": 22,
+    "p": 3.157527141649969e-05,
+    "share_p05": 0.18181818181818182
+   },
+   "names": {
+    "k": 26,
+    "p": 8.88335470255586e-19,
+    "share_p05": 0.46153846153846156
+   }
+  },
+  "carvers": [
+   {
+    "carver": "Amunde",
+    "n": 12,
+    "n_pool": 130,
+    "rock": {
+     "n_data": 7,
+     "tested": true,
+     "obs": 0.9523809523809523,
+     "null_mean": 0.6640985599281428,
+     "p": 0.0594,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 5,
+     "tested": true,
+     "obs": 1.2874008873371334,
+     "null_mean": 0.3874112445075084,
+     "p": 0.9998964159933706,
+     "n_null": 9653
+    },
+    "names": {
+     "n_data": 12,
+     "tested": true,
+     "obs": 0.21212121212121213,
+     "null_mean": 0.03664305824521846,
+     "p": 0.0001,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Arbjörn",
+    "n": 18,
+    "n_pool": 623,
+    "rock": {
+     "n_data": 15,
+     "tested": true,
+     "obs": 0.8095238095238095,
+     "null_mean": 0.649097227290782,
+     "p": 0.1084,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 11,
+     "tested": true,
+     "obs": 0.3455164642594346,
+     "null_mean": 0.5002886116641371,
+     "p": 0.4958,
+     "n_null": 9999
+    },
+    "names": {
+     "n_data": 18,
+     "tested": true,
+     "obs": 0.026143790849673203,
+     "null_mean": 0.027871414592439643,
+     "p": 0.5803,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Balle",
+    "n": 67,
+    "n_pool": 310,
+    "rock": {
+     "n_data": 58,
+     "tested": true,
+     "obs": 0.6823956442831216,
+     "null_mean": 0.5668382104933902,
+     "p": 0.0166,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 49,
+     "tested": true,
+     "obs": 0.7187874554498275,
+     "null_mean": 0.33765727726939876,
+     "p": 1.0,
+     "n_null": 9999
+    },
+    "names": {
+     "n_data": 67,
+     "tested": true,
+     "obs": 0.1013116236996834,
+     "null_mean": 0.01773058355134473,
+     "p": 0.0001,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Björn 2 eller -björn",
+    "n": 6,
+    "n_pool": 119,
+    "rock": {
+     "n_data": 2,
+     "tested": false
+    },
+    "height": {
+     "n_data": 4,
+     "tested": true,
+     "obs": 0.19344436126761447,
+     "null_mean": 1.4766860184170938,
+     "p": 0.053144375553587246,
+     "n_null": 2257
+    },
+    "names": {
+     "n_data": 6,
+     "tested": true,
+     "obs": 0.06666666666666667,
+     "null_mean": 0.054765476547654755,
+     "p": 0.5188,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Erik",
+    "n": 19,
+    "n_pool": 255,
+    "rock": {
+     "n_data": 17,
+     "tested": true,
+     "obs": 0.7794117647058824,
+     "null_mean": 0.7799569989678706,
+     "p": 0.6572,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 14,
+     "tested": true,
+     "obs": 0.28918194756588994,
+     "null_mean": 0.6401191956737627,
+     "p": 0.0001,
+     "n_null": 9999
+    },
+    "names": {
+     "n_data": 19,
+     "tested": true,
+     "obs": 0.04093567251461988,
+     "null_mean": 0.054975673005897084,
+     "p": 1.0,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Fot 2",
+    "n": 53,
+    "n_pool": 655,
+    "rock": {
+     "n_data": 48,
+     "tested": true,
+     "obs": 0.8803191489361702,
+     "null_mean": 0.6371571845708648,
+     "p": 0.0013,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 34,
+     "tested": true,
+     "obs": 0.5937949403794357,
+     "null_mean": 0.7189790373225996,
+     "p": 0.2753,
+     "n_null": 9999
+    },
+    "names": {
+     "n_data": 53,
+     "tested": true,
+     "obs": 0.0841799709724238,
+     "null_mean": 0.028902745136632678,
+     "p": 0.0001,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Grim skald",
+    "n": 7,
+    "n_pool": 523,
+    "rock": {
+     "n_data": 3,
+     "tested": false
+    },
+    "height": {
+     "n_data": 3,
+     "tested": false
+    },
+    "names": {
+     "n_data": 7,
+     "tested": true,
+     "obs": 0.0,
+     "null_mean": 0.014496687764014497,
+     "p": 1.0,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Gudfast",
+    "n": 7,
+    "n_pool": 326,
+    "rock": {
+     "n_data": 6,
+     "tested": true,
+     "obs": 1.0,
+     "null_mean": 0.8730419783693923,
+     "p": 0.6518361581920904,
+     "n_null": 9911
+    },
+    "height": {
+     "n_data": 4,
+     "tested": true,
+     "obs": 0.12012065805502992,
+     "null_mean": 0.7423486531392242,
+     "p": 0.023032629558541268,
+     "n_null": 8335
+    },
+    "names": {
+     "n_data": 7,
+     "tested": true,
+     "obs": 0.14285714285714285,
+     "null_mean": 0.044275856157044276,
+     "p": 0.0838,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Gunnar",
+    "n": 34,
+    "n_pool": 507,
+    "rock": {
+     "n_data": 29,
+     "tested": true,
+     "obs": 0.8522167487684729,
+     "null_mean": 0.5233368534353565,
+     "p": 0.0001,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 23,
+     "tested": true,
+     "obs": 0.9999548370492585,
+     "null_mean": 0.6592897151112912,
+     "p": 0.9279,
+     "n_null": 9999
+    },
+    "names": {
+     "n_data": 34,
+     "tested": true,
+     "obs": 0.05525846702317291,
+     "null_mean": 0.016525716742797274,
+     "p": 0.0004,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Halvdan",
+    "n": 17,
+    "n_pool": 133,
+    "rock": {
+     "n_data": 10,
+     "tested": true,
+     "obs": 0.8666666666666667,
+     "null_mean": 0.4996614227902063,
+     "p": 0.0048,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 10,
+     "tested": true,
+     "obs": 0.26304210244452886,
+     "null_mean": 0.5648216847962109,
+     "p": 0.014304422282663444,
+     "n_null": 9926
+    },
+    "names": {
+     "n_data": 17,
+     "tested": true,
+     "obs": 0.10294117647058823,
+     "null_mean": 0.028062365060035416,
+     "p": 0.0021,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Ingulv",
+    "n": 5,
+    "n_pool": 294,
+    "rock": {
+     "n_data": 4,
+     "tested": true,
+     "obs": 1.0,
+     "null_mean": 0.8290771108634506,
+     "p": 0.6485195797516714,
+     "n_null": 6281
+    },
+    "height": {
+     "n_data": 4,
+     "tested": true,
+     "obs": 0.16344724496518612,
+     "null_mean": 0.730872016938092,
+     "p": 0.07852193995381063,
+     "n_null": 2164
+    },
+    "names": {
+     "n_data": 5,
+     "tested": true,
+     "obs": 0.3,
+     "null_mean": 0.023972397239723973,
+     "p": 0.0059,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Likbjörn",
+    "n": 11,
+    "n_pool": 383,
+    "rock": {
+     "n_data": 7,
+     "tested": true,
+     "obs": 1.0,
+     "null_mean": 0.7081524580670738,
+     "p": 0.24347127360385698,
+     "n_null": 9955
+    },
+    "height": {
+     "n_data": 6,
+     "tested": true,
+     "obs": 0.41280182378138947,
+     "null_mean": 0.6257297406018651,
+     "p": 0.4781772451546087,
+     "n_null": 6758
+    },
+    "names": {
+     "n_data": 11,
+     "tested": true,
+     "obs": 0.05454545454545454,
+     "null_mean": 0.013946849230377582,
+     "p": 0.0608,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Livsten",
+    "n": 12,
+    "n_pool": 203,
+    "rock": {
+     "n_data": 12,
+     "tested": true,
+     "obs": 1.0,
+     "null_mean": 0.8780290150227144,
+     "p": 0.4259,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 10,
+     "tested": true,
+     "obs": 0.9247807177706696,
+     "null_mean": 0.4983553023874936,
+     "p": 0.9492949294929492,
+     "n_null": 9998
+    },
+    "names": {
+     "n_data": 12,
+     "tested": true,
+     "obs": 0.10606060606060606,
+     "null_mean": 0.024752475247524754,
+     "p": 0.0101,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Tidkume",
+    "n": 12,
+    "n_pool": 293,
+    "rock": {
+     "n_data": 10,
+     "tested": true,
+     "obs": 1.0,
+     "null_mean": 0.7419062396860177,
+     "p": 0.1513,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 6,
+     "tested": true,
+     "obs": 0.37027608784467564,
+     "null_mean": 0.49347822361201094,
+     "p": 0.4338301490447134,
+     "n_null": 9996
+    },
+    "names": {
+     "n_data": 12,
+     "tested": true,
+     "obs": 0.12121212121212122,
+     "null_mean": 0.02399179311870581,
+     "p": 0.0034,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Torbjörn 2",
+    "n": 17,
+    "n_pool": 606,
+    "rock": {
+     "n_data": 16,
+     "tested": true,
+     "obs": 0.44166666666666665,
+     "null_mean": 0.650466470419348,
+     "p": 0.9341,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 9,
+     "tested": true,
+     "obs": 0.8195709384663783,
+     "null_mean": 0.642796111243432,
+     "p": 0.7177354709418837,
+     "n_null": 9979
+    },
+    "names": {
+     "n_data": 17,
+     "tested": true,
+     "obs": 0.007352941176470588,
+     "null_mean": 0.02255151985786814,
+     "p": 0.9336,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Torbjörn skald",
+    "n": 9,
+    "n_pool": 498,
+    "rock": {
+     "n_data": 8,
+     "tested": true,
+     "obs": 0.5357142857142857,
+     "null_mean": 0.6546305424193213,
+     "p": 0.7025,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 1,
+     "tested": false
+    },
+    "names": {
+     "n_data": 9,
+     "tested": true,
+     "obs": 0.19444444444444445,
+     "null_mean": 0.023644031069773645,
+     "p": 0.0014,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Tore 1",
+    "n": 9,
+    "n_pool": 123,
+    "rock": {
+     "n_data": 8,
+     "tested": true,
+     "obs": 0.9642857142857143,
+     "null_mean": 0.4350948586922184,
+     "p": 0.0001,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 5,
+     "tested": true,
+     "obs": 0.4906901170742839,
+     "null_mean": 1.417081401086696,
+     "p": 0.00010821339681852613,
+     "n_null": 9240
+    },
+    "names": {
+     "n_data": 9,
+     "tested": true,
+     "obs": 0.027777777777777776,
+     "null_mean": 0.03498405396095165,
+     "p": 0.7159,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Torfast",
+    "n": 5,
+    "n_pool": 479,
+    "rock": {
+     "n_data": 5,
+     "tested": true,
+     "obs": 1.0,
+     "null_mean": 0.7688886581524936,
+     "p": 0.49356312292358806,
+     "n_null": 9631
+    },
+    "height": {
+     "n_data": 3,
+     "tested": false
+    },
+    "names": {
+     "n_data": 5,
+     "tested": true,
+     "obs": 0.1,
+     "null_mean": 0.036573657365736575,
+     "p": 0.3028,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Torgöt Fotsarve",
+    "n": 5,
+    "n_pool": 547,
+    "rock": {
+     "n_data": 5,
+     "tested": true,
+     "obs": 1.0,
+     "null_mean": 0.6942785758900687,
+     "p": 0.39995003747189606,
+     "n_null": 8005
+    },
+    "height": {
+     "n_data": 4,
+     "tested": true,
+     "obs": 0.2994383999104418,
+     "null_mean": 0.7582768059609998,
+     "p": 0.28038507821901326,
+     "n_null": 2492
+    },
+    "names": {
+     "n_data": 5,
+     "tested": true,
+     "obs": 0.1,
+     "null_mean": 0.026142614261426146,
+     "p": 0.2277,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Torsten",
+    "n": 5,
+    "n_pool": 477,
+    "rock": {
+     "n_data": 4,
+     "tested": true,
+     "obs": 1.0,
+     "null_mean": 0.6705762171895561,
+     "p": 0.34507115404591254,
+     "n_null": 9626
+    },
+    "height": {
+     "n_data": 4,
+     "tested": true,
+     "obs": 0.2415368401065079,
+     "null_mean": 0.7069269745638687,
+     "p": 0.1583916083916084,
+     "n_null": 2859
+    },
+    "names": {
+     "n_data": 5,
+     "tested": true,
+     "obs": 0.0,
+     "null_mean": 0.044664466446644666,
+     "p": 1.0,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Traen",
+    "n": 22,
+    "n_pool": 115,
+    "rock": {
+     "n_data": 18,
+     "tested": true,
+     "obs": 0.7124183006535948,
+     "null_mean": 0.6190029681170204,
+     "p": 0.1945,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 15,
+     "tested": true,
+     "obs": 0.5312282586642622,
+     "null_mean": 0.6238544997531908,
+     "p": 0.3175,
+     "n_null": 9999
+    },
+    "names": {
+     "n_data": 22,
+     "tested": true,
+     "obs": 0.021645021645021644,
+     "null_mean": 0.025258802936570714,
+     "p": 0.6579,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Vidbjörn",
+    "n": 8,
+    "n_pool": 117,
+    "rock": {
+     "n_data": 7,
+     "tested": true,
+     "obs": 0.5238095238095238,
+     "null_mean": 0.4332340545933791,
+     "p": 0.2523452157598499,
+     "n_null": 9593
+    },
+    "height": {
+     "n_data": 2,
+     "tested": false
+    },
+    "names": {
+     "n_data": 8,
+     "tested": true,
+     "obs": 0.07142857142857142,
+     "null_mean": 0.032681839612532675,
+     "p": 0.1852,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Visäte",
+    "n": 29,
+    "n_pool": 563,
+    "rock": {
+     "n_data": 27,
+     "tested": true,
+     "obs": 0.7378917378917379,
+     "null_mean": 0.6235472950158997,
+     "p": 0.1226,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 22,
+     "tested": true,
+     "obs": 0.37338526664344057,
+     "null_mean": 0.6282982517866258,
+     "p": 0.20652065206520653,
+     "n_null": 9998
+    },
+    "names": {
+     "n_data": 29,
+     "tested": true,
+     "obs": 0.07881773399014778,
+     "null_mean": 0.0341881478788273,
+     "p": 0.0071,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Äskil 2",
+    "n": 7,
+    "n_pool": 414,
+    "rock": {
+     "n_data": 5,
+     "tested": true,
+     "obs": 1.0,
+     "null_mean": 0.580551797050422,
+     "p": 0.15784114052953158,
+     "n_null": 9819
+    },
+    "height": {
+     "n_data": 4,
+     "tested": true,
+     "obs": 0.4183707429620484,
+     "null_mean": 0.556655666312208,
+     "p": 0.6241962774957699,
+     "n_null": 5909
+    },
+    "names": {
+     "n_data": 7,
+     "tested": true,
+     "obs": 0.0,
+     "null_mean": 0.015472975869015474,
+     "p": 1.0,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Åsmund",
+    "n": 45,
+    "n_pool": 644,
+    "rock": {
+     "n_data": 39,
+     "tested": true,
+     "obs": 0.9554655870445344,
+     "null_mean": 0.6504414935897043,
+     "p": 0.0001,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 24,
+     "tested": true,
+     "obs": 0.38607107180077566,
+     "null_mean": 0.6771960573629797,
+     "p": 0.1205,
+     "n_null": 9999
+    },
+    "names": {
+     "n_data": 45,
+     "tested": true,
+     "obs": 0.09898989898989899,
+     "null_mean": 0.02132708220316981,
+     "p": 0.0001,
+     "n_null": 9999
+    }
+   },
+   {
+    "carver": "Öpir 1",
+    "n": 94,
+    "n_pool": 617,
+    "rock": {
+     "n_data": 85,
+     "tested": true,
+     "obs": 0.6358543417366946,
+     "null_mean": 0.6525780338658489,
+     "p": 0.6328,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 62,
+     "tested": true,
+     "obs": 0.5917637206176725,
+     "null_mean": 0.7260442044750202,
+     "p": 0.1922,
+     "n_null": 9999
+    },
+    "names": {
+     "n_data": 94,
+     "tested": true,
+     "obs": 0.18943033630748113,
+     "null_mean": 0.023545273767825194,
+     "p": 0.0001,
+     "n_null": 9999
+    }
+   }
+  ]
+ },
+ "candidates": {
+  "summary": {
+   "rock": {
+    "k": 5,
+    "p": 0.0007563712003937968,
+    "share_p05": 0.4
+   },
+   "height": {
+    "k": 3,
+    "p": 0.3163604363523032,
+    "share_p05": 0.0
+   },
+   "names": {
+    "k": 5,
+    "p": 0.01746838835300979,
+    "share_p05": 0.2
+   }
+  },
+  "groups": [
+   {
+    "n": 28,
+    "n_pool": 63,
+    "rock": {
+     "n_data": 24,
+     "tested": true,
+     "obs": 0.9202898550724637,
+     "null_mean": 0.7657366294981124,
+     "p": 0.0001,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 23,
+     "tested": true,
+     "obs": 0.30418912666236175,
+     "null_mean": 0.3793912794628197,
+     "p": 0.1145,
+     "n_null": 9999
+    },
+    "names": {
+     "n_data": 28,
+     "tested": true,
+     "obs": 0.026455026455026454,
+     "null_mean": 0.032570717389199234,
+     "p": 0.7783,
+     "n_null": 9999
+    },
+    "id": 2,
+    "parish": "Konungsunds",
+    "type_stone": "Ög 13",
+    "stones": [
+     "Ög 13",
+     "Ög 14",
+     "Ög 20",
+     "Ög 25",
+     "Ög 34",
+     "Ög 46",
+     "Ög 47",
+     "Ög 105",
+     "Ög 112",
+     "Ög 128",
+     "Ög 148",
+     "Ög 149",
+     "Ög 153",
+     "Ög 155",
+     "Ög 158",
+     "Ög 170",
+     "Ög 172",
+     "Ög 176",
+     "Ög 192",
+     "Ög 219",
+     "Ög 221",
+     "Ög 225",
+     "Ög 230",
+     "Ög 232",
+     "Ög 233",
+     "Ög 236",
+     "Ög 237",
+     "Ög Fv1966;102"
+    ],
+    "rocks": {
+     "granitoid": 22,
+     "gnejs": 1,
+     "okänd": 4,
+     "gnejs/granitoid": 1
+    },
+    "heights_m": [
+     1.35,
+     1.55,
+     1.2,
+     1.85,
+     1.48,
+     2.1,
+     2.2,
+     1.38,
+     1.65,
+     1.5,
+     2.1,
+     2.2,
+     1.35,
+     2.8,
+     2.1,
+     2.08,
+     2.5,
+     1.3,
+     1.5,
+     1.1,
+     1.3,
+     1.8,
+     2.4
+    ],
+    "shared_names": {
+     "sigsteinn": 2,
+     "vebjorn": 2,
+     "asbjorn": 2,
+     "thorsteinn": 4,
+     "gudmundr": 2
+    },
+    "refs": {
+     "Ög 13": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 13",
+      "Brate, E, Östergötlands runinskrifter, Ög 13 och 14, s. 13 ff., samt där angiven litteratur."
+     ],
+     "Ög 14": [
+      "Brate, E, Östergötlands runinskrifter, Ög 13 och 14, s. 13 ff., samt där angiven litteratur.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 14"
+     ],
+     "Ög 20": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 20",
+      "Brate, E, Östergötlands runinskrifter, Ög 20, s. 18 f., samt där angiven litteratur."
+     ],
+     "Ög 25": [],
+     "Ög 34": [
+      "Brate, E, Östergötlands runinskrifter, Ög 34, s. 32 f., samt där angiven litteratur.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 34"
+     ],
+     "Ög 46": [
+      "Nordenskjöld, C. F. 1872. Östergötlands minnesmärken. Antikvarisk tidskrift för Sverige",
+      "Helander, Christina. 2009. Scramasax, boplats och gravar i Skälstad. RAÄ 1, 15 och 133, Skälstad 1:2 m fl, Kvillinge socken, Norrköpings kommun, Östergötlands län. Arkeologisk förundersökning och särskild undersökning. Riksantikvarieämbetet UV Öst, rapport 2009:57. (Raä dnr: 3.4.2-2106-2011)",
+      "Säve. P. A. 1864. Reseberättelse 1861, Antiqvariat tidskrift för Sverige",
+      "N D Edluns samlingar ATA.",
+      "ATA 3702/52.",
+      "Se skisser i boken.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 46",
+      "Ternströn, Clas. Rapport. Arkeologisk förundersökning. Östergötlands länsmuseum. (Dnr: 321-833-2002)",
+      "A Bennett ATA Dn 473/75.",
+      "Nordén, A. 1922. Saga och sägen i Bråbygden.",
+      "Brate, E. 1911. Östergötlands runinskrifter, Ög 46-48, s. 46 ff., samt där angiven litteratur."
+     ],
+     "Ög 47": [
+      "ATA 3702/52.",
+      "Se skisser i boken.",
+      "N D Edluns samlingar ATA.",
+      "Ternströn, Clas. Rapport. Arkeologisk förundersökning. Östergötlands länsmuseum. (Dnr: 321-833-2002)",
+      "Nordenskjöld, C. F. 1872. Östergötlands minnesmärken. Antikvarisk tidskrift för Sverige",
+      "Säve. P. A. 1864. Reseberättelse 1861, Antiqvariat tidskrift för Sverige",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 47",
+      "Nordén, A. 1922. Saga och sägen i Bråbygden.",
+      "Brate, E. 1911. Östergötlands runinskrifter, Ög 46-48, s. 46 ff., samt där angiven litteratur.",
+      "Helander, Christina. 2009. Scramasax, boplats och gravar i Skälstad. RAÄ 1, 15 och 133, Skälstad 1:2 m fl, Kvillinge socken, Norrköpings kommun, Östergötlands län. Arkeologisk förundersökning och särskild undersökning. Riksantikvarieämbetet UV Öst, rapport 2009:57. (Raä dnr: 3.4.2-2106-2011)",
+      "A Bennett ATA Dn 473/75."
+     ],
+     "Ög 105": [
+      "Brate, E, Östergötlands runinskrifter, Ög 105-108, s. 105 ff., samt där angiven litteratur.",
+      "RAÄ:s inv, 1945, NRG. Widegren: Ny beskrivning öfver Östergötlad, del 1817/Ridderstad: ÖGL beskrivning öfver Sveriges rike/ Fornminnesförening 1907/Säve: Antikvarisk tidskrift I Nordensköld: Östergötlands minnesmärken 1870,1871 ATA Ödlunds fornminnesbeskrivning till Östgötska socknar,ATA.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 105"
+     ],
+     "Ög 112": [],
+     "Ög 128": [
+      "S.B.F. Jansson, \"Linköpingsbygdens runstenar\" (Linköpings Historia I) 1976",
+      "Brate, E, Östergötlands runinskrifter, Ög 128, s. 123 f., samt där angiven litteratur.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 128",
+      "Raä:s inv 1945, nr 91; B Cnattingiust RAÄ, Dnr 3977/58 S B F Jansson brev t RAÄ, Dnr 2638/50, Nibbelblad 1930 nr 35, ÖLM; Kyrkoinventering 1829 ATA; drn 6568/63."
+     ],
+     "Ög 148": [
+      "Brate, E, Östergötlands runinskrifter, Ög 147-151, s. 139 ff., samt där angiven litteratur.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 148",
+      "N.D. Edlunds samlingar ATA C.F. Nordenskiölds original 1870-71TA"
+     ],
+     "Ög 149": [
+      "Brate, E, Östergötlands runinskrifter, Ög 147-151, s. 139 ff., samt där angiven litteratur.",
+      "N.D. Edlunds samlingar ATA C.F. Nordenskiölds original 1870-71TA",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 149"
+     ],
+     "Ög 153": [
+      "Ang flytt av Ög 153: Rapport 5/5-2003 Dnr 322-1776-2003 (ATA)",
+      "Brate, E, Östergötlands runinskrifter, Ög 153 och Ög 154, s. 144 ff., samt där angiven litteratur.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 153",
+      "C F Nordenskjöld original870-71, ATA. N D Edlunds samlingar, ATA."
+     ],
+     "Ög 155": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 155",
+      "Nordenskjöld 1870-71 ATA.",
+      "Brate, E, Östergötlands runinskrifter, Ög 155, s. 146 ff., samt där angiven litteratur."
+     ],
+     "Ög 158": [
+      "Brate, E, Östergötlands runinskrifter, Ög 156 och Ög 157, s. 148 ff., samt där angiven litteratur.",
+      "S.B.F, Fornännen 1959 s. 93-97."
+     ],
+     "Ög 170": [
+      "Brate, E, Östergötlands runinskrifter, Ög 170, s. 158 f., samt där angiven litteratur.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 170",
+      "Nordenskjöld 1879."
+     ],
+     "Ög 172": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 172",
+      "Brate, E, Östergötlands runinskrifter, Ög 172, s. 162 f., samt där angiven litteratur."
+     ],
+     "Ög 176": [
+      "Brate, E, Östergötlands runinskrifter, Ög 176, s. 165 f., samt där angiven litteratur.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 176"
+     ],
+     "Ög 192": [],
+     "Ög 219": [
+      "Brate, E, Östergötlands runinskrifter, Ög 219, s. 206, samt där angiven litteratur.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 219"
+     ],
+     "Ög 221": [
+      "Nordensköld 1871.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 221",
+      "Brate, E, Östergötlands runinskrifter, Ög 221, s. 207, samt där angiven litteratur."
+     ],
+     "Ög 225": [
+      "Brate, E, Östergötlands runinskrifter, Ög 225, s. 210, samt där angiven litteratur.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 225",
+      "SGU bl Nordensköld 1870-71 ATAD Edlunds samlingar ATA."
+     ],
+     "Ög 230": [
+      "Brate, E, Östergötlands runinskrifter, Ög 230, s. 214, samt där angiven litteratur.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 230",
+      "C F Nordenskjöld 1870-71orig ATA C F Broocman \"Besiktning...\" 1760 A P Ekborn 1817. SGU bladet Gottenvik 1878."
+     ],
+     "Ög 232": [
+      "Brate, E, Östergötlands runinskrifter, Ög 231-236, s. 214 ff., samt där angiven litteratur.",
+      "Ridderstad, A 1918. Östergötlands beskrivning med dess städer samt landsbygdens socknar och alla egendomar, s.982",
+      "Sveriges bebyggelse, Östergörtlands län, del IX 1952, s.816.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 232",
+      "Helmer Gustavsson, 8141/74, 580/75,503/75, 2035/75, 8114/74, 8101/74.",
+      "Nordenskjöld, C.F 1870-71. Östergötlands minnesmärken. Original ATA.",
+      "Nordén, A, Östergötlands runinskrifter. Supplement till Erik Brates \"Östergötlands runinskrifter\". Manuskript i ATA."
+     ],
+     "Ög 233": [
+      "Helmer Gustavsson, 8141/74, 580/75,503/75, 2035/75, 8114/74, 8101/74.",
+      "Nordenskjöld, C.F 1870-71. Östergötlands minnesmärken. Original ATA.",
+      "Ridderstad, A 1918. Östergötlands beskrivning med dess städer samt landsbygdens socknar och alla egendomar, s.982",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 233",
+      "Nordén, A, Östergötlands runinskrifter. Supplement till Erik Brates \"Östergötlands runinskrifter\". Manuskript i ATA.",
+      "Brate, E, Östergötlands runinskrifter, Ög 231-236, s. 214 ff., samt där angiven litteratur.",
+      "Sveriges bebyggelse, Östergörtlands län, del IX 1952, s.816."
+     ],
+     "Ög 236": [
+      "Nordenskjöld, C.F 1870-71. Östergötlands minnesmärken. Original ATA.",
+      "Brate, E, Östergötlands runinskrifter, Ög 231-236, s. 214 ff., samt där angiven litteratur.",
+      "Sveriges bebyggelse, Östergörtlands län, del IX 1952, s.816.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 236",
+      "Helmer Gustavsson, 8141/74, 580/75,503/75, 2035/75, 8114/74, 8101/74.",
+      "Nordén, A, Östergötlands runinskrifter. Supplement till Erik Brates \"Östergötlands runinskrifter\". Manuskript i ATA.",
+      "Ridderstad, A 1918. Östergötlands beskrivning med dess städer samt landsbygdens socknar och alla egendomar, s.982"
+     ],
+     "Ög 237": [
+      "C F Nordenskjöld 1870-71, original ATA.",
+      "Brate, E, Östergötlands runinskrifter, Ög 237, s. 219 f., samt där angiven litteratur.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Ög 237"
+     ],
+     "Ög Fv1966;102": [
+      "S B F Jansson: Några runfynd 1965, Fornvännen 1966:2 ATA 294/66"
+     ]
+    }
+   },
+   {
+    "n": 14,
+    "n_pool": 31,
+    "rock": {
+     "n_data": 13,
+     "tested": true,
+     "obs": 0.47435897435897434,
+     "null_mean": 0.6110109495798064,
+     "p": 0.8151,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 13,
+     "tested": true,
+     "obs": 0.4824133698093662,
+     "null_mean": 0.41821341044332505,
+     "p": 0.7961,
+     "n_null": 9999
+    },
+    "names": {
+     "n_data": 14,
+     "tested": true,
+     "obs": 0.03296703296703297,
+     "null_mean": 0.029151266775029154,
+     "p": 0.4731,
+     "n_null": 9999
+    },
+    "id": 5,
+    "parish": "Vetlanda",
+    "type_stone": "Sm 110",
+    "stones": [
+     "Sm 69",
+     "Sm 76",
+     "Sm 77",
+     "Sm 78",
+     "Sm 80",
+     "Sm 85",
+     "Sm 89",
+     "Sm 98",
+     "Sm 99",
+     "Sm 101",
+     "Sm 105",
+     "Sm 110",
+     "Sm 111",
+     "Sm 134"
+    ],
+    "rocks": {
+     "vulkanisk": 1,
+     "granitoid": 9,
+     "gnejs/sandsten": 1,
+     "kvartsit": 1,
+     "sandsten": 1,
+     "okänd": 1
+    },
+    "heights_m": [
+     1.4,
+     0.7,
+     0.3,
+     1.6,
+     1.35,
+     1.65,
+     1.6,
+     1.55,
+     2.5,
+     1.35,
+     1.65,
+     1.65,
+     1.4
+    ],
+    "shared_names": {
+     "vrai": 2,
+     "thorbjorn": 2,
+     "gunnarr": 2
+    },
+    "refs": {
+     "Sm 69": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Sm 69",
+      "Kinander, R, 1935-61, Smålands runinskrifter, Sm 69, s. 184 f."
+     ],
+     "Sm 76": [
+      "RAÄ-inv 1953.",
+      "N Gillgren 1935, nr 16.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Sm 76",
+      "O VFreesen.",
+      "Nordenskjöld.",
+      "Kinander, R, 1935-61, Smålands runinskrifter, Sm 76, s. 194 ff."
+     ],
+     "Sm 77": [
+      "Stenström1950, nr 14.",
+      "Gillgren 1935.",
+      "RAÄ-inv 1953.",
+      "Nordenskjöld.",
+      "Kinander, R, 1935-61, Smålands runinskrifter, Sm 77, s. 197 f."
+     ],
+     "Sm 78": [
+      "Kinander, R, 1935-61, Smålands runinskrifter, Sm 78, s. 198",
+      "SmålandsDagblad 16/3 1935.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Sm 78",
+      "Säfsjö Nyheter 4/12 1935.",
+      "Wilstadius: Rannsakningarna Smål.hemb.böcker 9.",
+      "SmålandsAllehanda 21/1 1958.",
+      "C Claesson 1934, nr 12."
+     ],
+     "Sm 80": [
+      "ATA dnr 4370/38.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Sm 80",
+      "Kinander, R, 1935-61, Smålands runinskrifter, Sm 80, s. 200 ff.",
+      "Smålands dagblad 16/3 1935.",
+      "Vetlanda Tidning 10/11 1939.",
+      "Säfsjönyheter 4/12 1935.",
+      "Avskrift efter C OHyllen-Carallius."
+     ],
+     "Sm 85": [
+      "Kinander, R, 1935-61, Smålands runinskrifter, Sm 85, s. 211 f.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Sm 85"
+     ],
+     "Sm 89": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Sm 89",
+      "Kinander, R, 1935-61, Smålands runinskrifter, Sm 89, s. 215 f."
+     ],
+     "Sm 98": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Sm 98",
+      "Kinander, R, 1935-61, Smålands runinskrifter, Sm 98, s. 227 f."
+     ],
+     "Sm 99": [
+      "Kinander, R, 1935-61, Smålands runinskrifter, Sm 99, s. 228 ff.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Sm 99"
+     ],
+     "Sm 101": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Sm 101",
+      "Kinander, R, 1935-61, Smålands runinskrifter, Sm 101, s. 232 ff."
+     ],
+     "Sm 105": [
+      "Kinander, R, 1935-61, Smålands runinskrifter, Sm 105, s. 237 f.",
+      "SGU 1885 (beskr. t. geol. kartan), Rannsakningar",
+      "Ennes: L 1220; Liljegren; Fullständig ?? 4, 1220: Jordenskjöld, s. 4; Sjöborg, Saml. III, Pl.58:188; Wallman; Wiezelgren. III, s 180, Friberg. Göranssson, J, Bautil 1750.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Sm 105"
+     ],
+     "Sm 110": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Sm 110",
+      "Kinander, R, 1935-61, Smålands runinskrifter, Sm 110, s. 244 ff."
+     ],
+     "Sm 111": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Sm 111",
+      "Kinander, R, 1935-61, Smålands runinskrifter, Sm 11, s. 247 ff."
+     ],
+     "Sm 134": [
+      "ATA, Hults sn, Sandshult, 27.9 1907.",
+      "M Frykman: Ö fl-anal. Jönköpings kommun, Df:s PM 1981:21.",
+      "Kinander, R, 1935-61, Smålands runinskrifter, Sm 134, s. 280",
+      "N O Holst: Beskr t. geol. bl. ser. AB N:o8, Hvetlanda.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Sm 134"
+     ]
+    }
+   },
+   {
+    "n": 13,
+    "n_pool": 36,
+    "rock": {
+     "n_data": 11,
+     "tested": true,
+     "obs": 0.5636363636363636,
+     "null_mean": 0.4038046295472038,
+     "p": 0.0084,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 12,
+     "tested": true,
+     "obs": 0.26625241245409936,
+     "null_mean": 0.3037184830093164,
+     "p": 0.3233,
+     "n_null": 9999
+    },
+    "names": {
+     "n_data": 13,
+     "tested": true,
+     "obs": 0.07692307692307693,
+     "null_mean": 0.012060180377012059,
+     "p": 0.0011,
+     "n_null": 9999
+    },
+    "id": 6,
+    "parish": "Kölaby",
+    "type_stone": "Vg 179",
+    "stones": [
+     "Vg 130",
+     "Vg 152",
+     "Vg 154",
+     "Vg 157",
+     "Vg 158",
+     "Vg 173",
+     "Vg 179",
+     "Vg 181",
+     "Vg 182",
+     "Vg 183",
+     "Vg 184",
+     "Vg 187",
+     "Vg NOR1997;27"
+    ],
+    "rocks": {
+     "gnejs": 4,
+     "granitoid": 6,
+     "gnejs/granitoid": 1,
+     "okänd": 2
+    },
+    "heights_m": [
+     2.4,
+     2.25,
+     1.6,
+     1.66,
+     1.85,
+     1.5,
+     1.8,
+     2.1,
+     1.4,
+     1.4,
+     1.8,
+     2.95
+    ],
+    "shared_names": {
+     "asbjorn": 3,
+     "thordr": 2,
+     "geiri": 2,
+     "gufi": 2
+    },
+    "refs": {
+     "Vg 130": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 130",
+      "Västergötlands runinskrifter, sid 250 ff. ATA Dnr 2522:34. Hildings resa, 1791, sid 85, Kungliga Biblioteket. Torin, ruinskrifter nr 77. Säve, Antiqvarisk tidskrift III, sid 119. Liljegren, nr 1360. Västergötlandsforminnesförenings Tidskrift I:2, 1872. Periusskiölds Monumenta X. Sjöbergs reseberättelse för 1816, ATA. Skaraborgaren 22/6 1934. Falköpings tidning 7/7 1934. Bantil, nr 980, 1750. Montelius, Falbygdens fornminnen, Falköping förr och nu, 1910. Falbygden, nr 30, sid 40 och 42, 1976. Västergötlands fornminnesförenings tidskrift, sid 19, 1938. ATA Dnr 1471/34."
+     ],
+     "Vg 152": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 152",
+      "Junger och Svärdström, 1958-70, Västergötlands runinskrifter, Vg 152, s. 283 f., samt där angiven litteratur."
+     ],
+     "Vg 154": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 154",
+      "Junger och Svärdström, 1958-70, Västergötlands runinskrifter, Vg 154, s. 286 ff., samt där angiven litteratur."
+     ],
+     "Vg 157": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 157",
+      "Junger och Svärdström, 1958-70, Västergötlands runinskrifter, Vg 157, s. 292 f., samt där angiven litteratur."
+     ],
+     "Vg 158": [
+      "Junger och Svärdström, 1958-70, Västergötlands runinskrifter, Vg 158, s. 294 ff., samt där angiven litteratur.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 158"
+     ],
+     "Vg 173": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 173",
+      "Junger och Svärdström, 1958-70, Västergötlands runinskrifter, Vg 173, s. 311 ff., samt där angiven litteratur."
+     ],
+     "Vg 179": [
+      "Junger och Svärdström, 1958-70, Västergötlands runinskrifter, Vg 179, s. 322 f., samt där angiven litteratur.",
+      "Extern identitet: Ansvarig organisation: iksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 179"
+     ],
+     "Vg 181": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 181",
+      "Västergötlands runinskrifter, sid 324 ff. Nr 54 i 1933 års inventering."
+     ],
+     "Vg 182": [
+      "Västergötlands runinskrifter, sid 327 f. Nr 2 i 1933 års inventering.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 182"
+     ],
+     "Vg 183": [],
+     "Vg 184": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 184",
+      "Västergötlands Runinskrifter, Vg 184, sid 330 f. Fasta fornlämningar i Gudhems härad (nr 14a, b, c) nämner och tyder stenen. H Gustavsson 1978, ATA Dnr 5907, ang björk som fallit på Bjärka 7:3 och mossbelupen minnessten samt åtgärder. Sahlström, 1925. Säve, 1862."
+     ],
+     "Vg 187": [
+      "Junger och Svärdström, 1958-70, Västergötlands runinskrifter, Vg 187, s. 335, samt där angiven litteratur.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 187"
+     ],
+     "Vg NOR1997;27": []
+    }
+   },
+   {
+    "n": 6,
+    "n_pool": 9,
+    "rock": {
+     "n_data": 6,
+     "tested": true,
+     "obs": 0.4666666666666667,
+     "null_mean": 0.4587558755875588,
+     "p": 0.5113,
+     "n_null": 9999
+    },
+    "height": {
+     "n_data": 0,
+     "tested": false
+    },
+    "names": {
+     "n_data": 6,
+     "tested": true,
+     "obs": 0.4,
+     "null_mean": 0.14105410541054106,
+     "p": 0.0512,
+     "n_null": 9999
+    },
+    "id": 12,
+    "parish": "Leksbergs",
+    "type_stone": "Vg 11",
+    "stones": [
+     "Vg 2",
+     "Vg 9",
+     "Vg 11",
+     "Vg 13",
+     "Vg 15",
+     "Vg 16"
+    ],
+    "rocks": {
+     "gnejs": 2,
+     "granitoid": 4
+    },
+    "heights_m": [],
+    "shared_names": {
+     "ketill": 2,
+     "thorir": 4
+    },
+    "refs": {
+     "Vg 2": [
+      "Västergötlands ruinskrifter, Vg 2, sid 3f.N. Hassle pastorat och Hasslerörs kommun, Forsell, 1968. K.E.Sahlström, 1922.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 2"
+     ],
+     "Vg 9": [
+      "Västergötlands runinskrifter, sid 16 f. KE Sahlström 1/7 1922, nr 6, ATA. Torin, Westergötlands runinskrifter, 3 saml. (Westergötlands fornminnesförenings tidskrift, 4-5 häftet). SGU Mariestad Aa nr 163, s 51. Sjögren, Sverige IV, sid 420, 1933.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 9"
+     ],
+     "Vg 11": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 11",
+      "Västergötlands runinskrifter, sid 18 ff. Peringskiöld, Mon X. Torin, Westergötlands ruinskrifter, 24, 1938. KE Sahlström, nr 6, 1/7 1922, ATA. SGU Mariestad, Aa nr 163, sid 51. Sjögren, Sverige IV, sid 420, 1933."
+     ],
+     "Vg 13": [
+      "Västergötlands runinskrifter, sid 24 f, 1958. KE Sahlström, 30/61922, nr 7, ATA. Torin, Westergötlands runinskrifter, sid 25, 1938. Sjögren, Sverige IV, sid 420, 1933.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 13"
+     ],
+     "Vg 15": [
+      "Västergötlands runinskrifter, sid 27 f. Sahlström, ant.nr 1, 1922, ATA. SGU Mariestad, Aa nr 163, sid 51.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 15"
+     ],
+     "Vg 16": [
+      "Västergötlands runinskrifter, sid 29 f. PA Säve, Berättelse för 1862, sid 125 f. Västergötland, Beskrivningar från 1700-talet över Blidsbergs, Hössnas, Odenåkers, Offerstads och Ransbergs församlingar, sid 38, 1976.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 16"
+     ]
+    }
+   },
+   {
+    "n": 6,
+    "n_pool": 25,
+    "rock": {
+     "n_data": 6,
+     "tested": true,
+     "obs": 0.26666666666666666,
+     "null_mean": 0.37615019452475285,
+     "p": 0.7408993576017131,
+     "n_null": 9339
+    },
+    "height": {
+     "n_data": 0,
+     "tested": false
+    },
+    "names": {
+     "n_data": 6,
+     "tested": true,
+     "obs": 0.0,
+     "null_mean": 0.024462446244624462,
+     "p": 1.0,
+     "n_null": 9999
+    },
+    "id": 13,
+    "parish": "Husaby",
+    "type_stone": "Vg 51",
+    "stones": [
+     "Vg 37",
+     "Vg 39",
+     "Vg 45",
+     "Vg 51",
+     "Vg 56",
+     "Vg 77"
+    ],
+    "rocks": {
+     "granitoid": 3,
+     "gnejs": 1,
+     "sandsten": 2
+    },
+    "heights_m": [],
+    "shared_names": {},
+    "refs": {
+     "Vg 37": [
+      "Västergötlands runinskrifter, sid 55 ff. Sjögren m fl, Sverige, del IV, sid 330. Västergötlands fornminnesförenings tidskrift, häfte 10, 1899. Västergötlands fornminnesförenings tidskrift, häfte 2, 1872. K Torin, Västergötlands runinskrifter. Rannsakningar efter antikviteter, band II, häfte 1. Kinnefjerdings och Kållands härader samt staden Lidköping beskrifne af Claës Johan Ljungström, 1871. PA Säve, berättelse för år 1863, ATA. Sjöberg, Reseberättelse 1816, Brevserie I, ATA. G Djurklou, berättelse rör \"Antiqvitets intendentens verksamhet under år 1868\". Peringskiöld, Mon X. Skaraborgsbygden, Del V, 1933. J Högman, Beskrivning över Rackeby och Skalunda 1787. Skaraborgsbygden V, 1933.",
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 37"
+     ],
+     "Vg 39": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 39",
+      "Västergötlands runinskrifter, sid 58. Sjögren m.fl, Sverige, del IV, sid 330. Västergötlands fornminnesförenings tidskrift, 2+3, 1903. GA Bohlin, Två nyupptäckta runstenar. Skara tidning, 10/7, 1901. Skaraborgsbygden, Del V, 1933. ATA, dnr 2724/38. ATA, dnr 4915/36."
+     ],
+     "Vg 45": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 45",
+      "Västergötlands runinskrifter, sid 63 f. Sjögren m fl, Sverige IV, sid 329. J Högman, Beskrifning över Rackeby och Skalunda (1972, serie Västergötland), 1787. PA Säves berättelse för år 1863, ATA. Kinnefjerdings och Kållands härader samt staden Lidköping beskrifven af CJ Ljungström, 1871. Sjöberg, Reseberättelse, Brevserie I, 1816, ATA. ATA dnr 3342/46. CJ Ljungström, ATA, 1869. Skaraborgsbygden: Vänerstranden. Selinge, Med arkeologen Sverige runt, 1980. Västergötlands fornminnesförenings tidskrift, häfte 3, 1877. K Torin, Västergötlands runinskrifter. Västergötlands fornminnesförenings tidskrift, häfte 10, 1899."
+     ],
+     "Vg 51": [
+      "Digelius 1740 Disputation. Västergötlands runinskrifter,Skaraborgs län sid. 69-75. Vg. 51. SHM 11645. C J Ljungströms1971. Beskrifning."
+     ],
+     "Vg 56": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 56",
+      "Västergötlands runinskrifter, sid 79 ff. Sahlström, Inventering, 1919, ATA. ATA dnr 2315/65, 215/65, 7840/72, 7543/74. PA Säve, Berättelser för 1862, original i ATA. GA Hellman, Karta, 1964. Digelius disp, 1740."
+     ],
+     "Vg 77": [
+      "Extern identitet: Ansvarig organisation: Riksantikvarieämbetet, Externt register: Sveriges runinskrifter, Extern identitet: Vg 77",
+      "Västergötlands runinskrifter, sid 130 f. Valle härads fornminnen nr 13. Hilfelings resa, 1791. KB Peringskölds, Mon X. Brusewitz, Westergötland, 1861. H Hildebrand, 1971. Valle härad, Reseberättelse, 1871. Axel Fridén, 12/6 1926, nr 15."
+     ]
+    }
+   }
+  ]
+ },
+ "p": {
+  "H1": 0.0007563712003937968,
+  "H2": 0.3163604363523032,
+  "H3": 0.01746838835300979
+ },
+ "holm": {
+  "H1": 0.0022691136011813904,
+  "H3": 0.03493677670601958,
+  "H2": 0.3163604363523032
+ },
+ "holds": {
+  "H1": true,
+  "H2": false,
+  "H3": true
+ },
+ "informative": {
+  "H1": true,
+  "H2": true,
+  "H3": true
+ },
+ "reading": "familjens beställningar möjliga"
+}
