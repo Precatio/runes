@@ -1,0 +1,1293 @@
+signum,province,pk,half,style,kristen,foralder,barn,rel,skikt,sen,kr,obs,allit,exp
+Öl 5,Öl,Mörbylånga sn,A,Pr3,0,kati,aldi,father,sen,1.0,0,0.0,0.0,0.0
+Öl 5,Öl,Mörbylånga sn,A,Pr3,0,kati,ketill,father,sen,1.0,0,0.0,1.0,0.0
+Öl 9,Öl,Kastlösa sn,B,,1,sveinn,asgautr,father,odaterad,,1,0.0,0.0,0.07403701850925462
+Öl 18,Öl,Segerstads sn,B,,0,hrodmarr,ingjaldr,father,odaterad,,0,0.0,0.0,0.0
+Öl 18,Öl,Segerstads sn,B,,0,hrodmarr,nefr,father,odaterad,,0,0.0,0.0,0.0
+Öl 18,Öl,Segerstads sn,B,,0,hrodmarr,sveinn,father,odaterad,,0,0.0,0.0,0.0
+Öl 23,Öl,Stenåsa sn,B,,1,borggeirr,gudmundr,father,odaterad,,1,0.0,0.0,0.0
+Öl 23,Öl,Stenåsa sn,B,,1,borggeirr,asgautr,father,odaterad,,1,0.0,0.0,0.0
+Öl 23,Öl,Stenåsa sn,B,,1,borggeirr,saebjorn,father,odaterad,,1,0.0,0.0,0.0
+Öl 23,Öl,Stenåsa sn,B,,1,borggeirr,geirbjorn,father,odaterad,,1,0.0,0.0,0.0
+Öl 28,Öl,Gårdby sn,A,,0,herthrudr,smidr,son,odaterad,,0,0.0,0.0,0.0670335167583792
+Öl 36,Öl,Runstens sn,B,,0,fastulfr,herfridr,father,odaterad,,0,0.0,0.0,0.0
+Öl 36,Öl,Runstens sn,B,,0,fastulfr,vidbjorn,father,odaterad,,0,0.0,0.0,0.0
+Öl 37,Öl,Runstens sn,B,Pr3,0,unn,olafr,father,sen,1.0,0,0.0,1.0,0.0
+Öl 37,Öl,Runstens sn,B,Pr3,0,unn,gamall,father,sen,1.0,0,0.0,0.0,0.0
+Öl 37,Öl,Runstens sn,B,Pr3,0,unn,saxi,father,sen,1.0,0,0.0,0.0,0.0
+Öl 41,Öl,Gärdslösa sn,A,Pr3,0,avir,eysteinn,father,sen,1.0,0,0.0,1.0,0.0
+Öl 41,Öl,Gärdslösa sn,A,Pr3,0,avir,sighvatr,father,sen,1.0,0,0.0,0.0,0.0
+Öl 41,Öl,Gärdslösa sn,A,Pr3,0,avir,audhvatr,father,sen,1.0,0,0.0,1.0,0.0
+Öl 46,Öl,Köpings sn,A,,1,gunnfuss,thorir,father,odaterad,,1,0.0,0.0,0.0
+Öl 46,Öl,Köpings sn,A,,1,gunnfuss,thorsteinn,father,odaterad,,1,0.0,0.0,0.0
+Öl 46,Öl,Köpings sn,A,,1,gunnfuss,thorfastr,father,odaterad,,1,0.0,0.0,0.0
+Ög 8,Ög,Västra Stenby sn,A,RAK,0,stigr,eyvindr,son,tidig,0.0,0,0.0,0.0,0.02001000500250125
+Ög 11,Ög,Vårdsbergs sn,B,RAK,0,thorir,eysteinn,father,tidig,0.0,0,0.0,0.0,0.11955977988994497
+Ög 14,Ög,Konungsunds sn,A,,0,hroarr,jarni,son,odaterad,,0,0.0,0.0,0.02301150575287644
+Ög 17,Ög,Kuddby sn,B,Pr3,0,sigbjorn,ofradr,father,sen,1.0,0,0.0,0.0,0.0
+Ög 17,Ög,Kuddby sn,B,Pr3,0,sigbjorn,gudulfr,father,sen,1.0,0,0.0,0.0,0.0
+Ög 20,Ög,Kuddby sn,B,RAK,0,kjallakr,holmgeirr,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 20,Ög,Kuddby sn,B,RAK,0,kjallakr,brandi,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 21,Ög,Kuddby sn,B,,0,sveinn,brun,son,odaterad,,0,0.0,0.0,0.04602301150575288
+Ög 22,Ög,Kuddby sn,B,RAK,0,thorgautr,asbjorn,father,tidig,0.0,0,0.0,0.0,0.11305652826413207
+Ög 22,Ög,Kuddby sn,B,RAK,0,thorgautr,ali,father,tidig,0.0,0,0.0,0.0,0.11855927963981991
+Ög 22,Ög,Kuddby sn,B,RAK,0,thorgautr,oroekja,father,tidig,0.0,0,0.0,0.0,0.11605802901450725
+Ög 23,Ög,Kuddby sn,B,Fp,0,raudi,thorlakr,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 26,Ög,Östra Ny sn,B,,0,onundr,otr,son,odaterad,,0,0.0,1.0,0.02451225612806403
+Ög 27,Ög,Östra Ny sn,B,,0,thjalfarr,thorir,father,odaterad,,0,0.0,1.0,0.0
+Ög 30,Ög,Tåby sn (eg. Furingstads sn),B,Fp,0,sigsteinn,ingvarr,son,tidig,0.0,0,0.0,0.0,0.13156578289144572
+Ög 42,Ög,Älvestads sn,A,RAK,0,hrolfr,thorsteinn,son,tidig,0.0,0,0.0,0.0,0.0
+Ög 44,Ög,Kvillinge sn,B,,0,karl,karli,father,odaterad,,0,0.0,1.0,0.0
+Ög 47,Ög,Kvillinge sn,B,RAK,0,askell,thorfrida,father,tidig,0.0,0,0.0,0.0,0.0895447723861931
+Ög 61,Ög,Flistads sn,B,RAK,0,asbjorn,sigrun,father,tidig,0.0,0,0.0,0.0,0.07653826913456728
+Ög 70,Ög,Ekeby sn,B,RAK,0,thorgautr,bodi,father,tidig,0.0,0,0.0,0.0,0.10755377688844422
+Ög 70,Ög,Ekeby sn,B,RAK,0,thorgautr,tosti,father,tidig,0.0,0,0.0,0.0,0.11405702851425713
+Ög 70,Ög,Ekeby sn,B,RAK,0,thorgautr,toki,father,tidig,0.0,0,0.0,0.0,0.09304652326163082
+Ög 82,Ög,Högby sn,A,RAK,0,tosti,eyvindr,förälder till,tidig,0.0,0,0.0,0.0,0.05002501250625312
+Ög 83,Ög,Högby sn,A,,0,thora,sveinn,son,odaterad,,0,0.0,0.0,0.021010505252626314
+Ög 92,Ög,Väderstads sn,A,RAK,0,bruni,gautulfr,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 92,Ög,Väderstads sn,A,RAK,0,bruni,sveinn,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 97,Ög,Åsbo sn,B,RAK,1,vesteinn,gudmundr,father,tidig,0.0,1,0.0,0.0,0.1310655327663832
+Ög 99,Ög,Mogata sn,A,Pr2,1,soti,geirmundr,father,tidig,0.0,1,0.0,0.0,0.0
+Ög 99,Ög,Mogata sn,A,Pr2,1,soti,onundr,father,tidig,0.0,1,0.0,0.0,0.0
+Ög 103,Ög,Kaga sn,A,Fp,0,lid-bofi,tofi,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 105,Ög,Kärna sn,B,RAK,0,veseti,thorsteinn,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 109,Ög,Kärna sn,B,,0,smidr,onundr,son,odaterad,,0,0.0,0.0,0.0
+Ög 113,Ög,Sankt Lars sn (nu Linköping),B,,1,verun,bofi,son,odaterad,,1,0.0,0.0,0.0
+Ög 113,Ög,Sankt Lars sn (nu Linköping),B,,1,verun,asgerdr,daughter,odaterad,,1,0.0,0.0,0.0
+Ög 118,Ög,Slaka sn,B,RAK,0,bergsveinn,gunnarr,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 118,Ög,Slaka sn,B,RAK,0,bergsveinn,hemingr,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 119,Ög,Slaka sn,B,RAK,0,ofaeti,sigdan,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 120,Ög,Slaka sn,B,RAK,0,thorbjorn,grimulfr,father,tidig,0.0,0,0.0,0.0,0.1470735367683842
+Ög 121,Ög,Slaka sn,B,RAK,0,svarti,asmundr,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 124,Ög,Slaka sn,B,,0,ketill,ottarr,father,odaterad,,0,0.0,0.0,0.028514257128564282
+Ög 133,Ög,Heda sn,A,RAK,1,saxi,broddr,father,tidig,0.0,1,0.0,0.0,0.0
+Ög 135,Ög,Kumla sn,A,,0,kagr,skaungr,father,odaterad,,0,0.0,0.0,0.0
+Ög 135,Ög,Kumla sn,A,,0,kagr,ozurr,father,odaterad,,0,0.0,0.0,0.0
+Ög 142,Ög,Stora Åby sn,B,RAK,0,hermodr,vekell,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 146,Ög,Dagsbergs sn,B,Fp,0,hrolfr,ofradr,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 148,Ög,Furingstads sn,A,RAK,0,helga,asmundr,son,tidig,0.0,0,0.0,0.0,0.0
+Ög 149,Ög,Furingstads sn,A,,0,hrolfr,hakon,father,odaterad,,0,0.0,1.0,0.0
+Ög 149,Ög,Furingstads sn,A,,0,hrolfr,sigsteinn,father,odaterad,,0,0.0,0.0,0.0
+Ög 153,Ög,Styrstads sn,B,,0,hroerikr,frodi,sons,odaterad,,0,0.0,0.0,0.0
+Ög 153,Ög,Styrstads sn,B,,0,hroerikr,asbjorn,sons,odaterad,,0,0.0,0.0,0.0
+Ög 154,Ög,Styrstads sn,B,,1,eyjarr,asa,father,odaterad,,1,0.0,1.0,0.0
+Ög 155,Ög,Styrstads sn,B,,0,thorfridr,asgautr,sons,odaterad,,0,0.0,0.0,0.04052026013006503
+Ög 155,Ög,Styrstads sn,B,,0,thorfridr,gauti,sons,odaterad,,0,0.0,0.0,0.04402201100550275
+Ög 156,Ög,Tingstads sn,A,Pr2,0,tola,thorlakr,son,tidig,0.0,0,0.0,0.0,0.05652826413206603
+Ög 158,Ög,Tingstads sn,A,Fp,0,vigdjarfr,svarthofdi,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 161,Ög,Kimstads sn,B,KB,1,jarl,sveinn,father,odaterad,,1,0.0,0.0,0.0
+Ög 163,Ög,Kullerstads sn,A,,1,adisa,gudfastr,son,odaterad,,1,0.0,0.0,0.0
+Ög 172,Ög,Skärkinds sn,A,,0,stybbir,gautr,father,odaterad,,0,0.0,0.0,0.0
+Ög 172,Ög,Skärkinds sn,A,,0,stybbir,fastulfr,father,odaterad,,0,0.0,0.0,0.0
+Ög 172,Ög,Skärkinds sn,A,,0,stybbir,bjorn,father,odaterad,,0,0.0,0.0,0.0
+Ög 172,Ög,Skärkinds sn,A,,0,stybbir,hrodsteinn,father,odaterad,,0,0.0,0.0,0.0
+Ög 176,Ög,Skärkinds sn,A,RAK,0,gudmundr,skardi,father,tidig,0.0,0,0.0,0.0,0.07453726863431716
+Ög 180,Ög,Gammalkils sn,B,,0,hrolfr,halfdan,father,odaterad,,0,0.0,1.0,0.0
+Ög 186,Ög,Sjögestads sn,B,Fp,0,gautr,skeri,son,tidig,0.0,0,0.0,0.0,0.0
+Ög 187,Ög,Sjögestads sn,B,,0,dyri,josteinn,father,odaterad,,0,0.0,0.0,0.0
+Ög 194,Ög,Härberga sn (nu Herrberga),B,,0,krokr,danr,father,odaterad,,0,0.0,0.0,0.0
+Ög 199,Ög,Sya sn,B,,0,gisl,holmsteinn,father,odaterad,,0,0.0,0.0,0.0
+Ög 208,Ög,Viby sn (eg. Sjögestads sn),B,RAK,0,ofeigr,vigi,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 210,Ög,Viby sn,A,KB,0,gaeslingr,tosti,father,odaterad,,0,0.0,0.0,0.0
+Ög 211,Ög,Viby sn,A,RAK,0,saxi,fullugi,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 214,Ög,Västerlösa sn,B,,0,ofeigr,ulfr,father,odaterad,,0,0.0,1.0,0.0
+Ög 215,Ög,Västra Ryds sn,A,,0,rambi,ozurr,son,odaterad,,0,0.0,0.0,0.0
+Ög 217,Ög,Sunds sn,A,RAK,0,grein,bjorn,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 221,Ög,Törnevalla sn,A,Fp,0,danski,eyndr,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 224,Ög,Törnevalla sn,A,,0,halfdan,astridr,father,odaterad,,0,0.0,0.0,0.02501250625312656
+Ög 224,Ög,Törnevalla sn,A,,0,halfdan,asvaldi,father,odaterad,,0,0.0,0.0,0.021510755377688845
+Ög 224,Ög,Törnevalla sn,A,,0,halfdan,augmundr,father,odaterad,,0,0.0,0.0,0.018509254627313655
+Ög 225,Ög,Östra Husby sn,B,Fp,0,thorsteinn,throndr,father,tidig,0.0,0,0.0,1.0,0.16558279139569784
+Ög 226,Ög,Östra Husby sn,B,,0,ingimarr,thora,father,odaterad,,0,0.0,0.0,0.0
+Ög 226,Ög,Östra Husby sn,B,,0,ingimarr,aslakr,father,odaterad,,0,0.0,1.0,0.0
+Ög 229,Ög,Östra Husby sn,B,Fp,1,geiri,eysteinn,father,tidig,0.0,1,0.0,0.0,0.01950975487743872
+Ög 229,Ög,Östra Husby sn,B,Fp,1,geiri,oroekja,father,tidig,0.0,1,0.0,0.0,0.01900950475237619
+Ög 230,Ög,Häradshammars sn,B,,0,tholfr,ketill,son,odaterad,,0,0.0,0.0,0.027013506753376687
+Ög 231,Ög,Östra Stenby sn,B,Fp,1,steinarr,sveinn,father,tidig,0.0,1,0.0,1.0,0.018009004502251125
+Ög 231,Ög,Östra Stenby sn,B,Fp,1,steinarr,steinn,father,tidig,0.0,1,0.0,1.0,0.02051025512756378
+Ög 231,Ög,Östra Stenby sn,B,Fp,1,steinarr,johan,father,tidig,0.0,1,0.0,0.0,0.02051025512756378
+Ög 231,Ög,Östra Stenby sn,B,Fp,1,steinarr,ragni,father,tidig,0.0,1,0.0,0.0,0.02501250625312656
+Ög 232,Ög,Östra Stenby sn,B,Fp,0,bergvidr,agoti,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 232,Ög,Östra Stenby sn,B,Fp,0,bergvidr,ulfr,father,tidig,0.0,0,0.0,0.0,0.0
+Ög 236,Ög,Östra Stenby sn,B,RAK,0,ofeigr,eysteinn,son,tidig,0.0,0,0.0,1.0,0.0
+Ög ATA5503/61,Ög,Rystads sn,A,,0,freysteinn,thorsteinn,father,odaterad,,0,1.0,0.0,0.128064032016008
+Ög Fv1950;341,Ög,Sankt Lars sn (nu Linköping),B,Fp,0,vigfastr,asbjorn,father,tidig,0.0,0,0.0,0.0,0.0
+Ög Fv1966;102,Ög,Söderköping,B,Fp,0,gunnhvatr,thorsteinn,sons,tidig,0.0,0,0.0,0.0,0.022011005502751375
+Ög Fv1966;102,Ög,Söderköping,B,Fp,0,gunnhvatr,thorlakr,sons,tidig,0.0,0,0.0,0.0,0.017508754377188594
+Ög Fv1970;310,Ög,Kullerstads sn,A,,0,hakon,gunnarr,son,odaterad,,0,0.0,0.0,0.018009004502251125
+Ög Fv1983;240,Ög,Appuna sn,B,,0,tofi,tolir,son,odaterad,,0,1.0,1.0,0.08054027013506754
+Ög MÖLM1960;230,Ög,Törnevalla sn,A,,0,eygeirr,drengr,förälder till,odaterad,,0,0.0,0.0,0.0
+Sö 3,Sö,Björnlunda sn,A,Fp,0,gjaflaugr,styfjaldr,son,tidig,0.0,0,0.0,0.0,0.0
+Sö 3,Sö,Björnlunda sn,A,Fp,0,gylla,styfjaldr,son,tidig,0.0,0,0.0,0.0,0.0065032516258129065
+Sö 7,Sö,Björnlunda sn,A,,1,bjorn,sveinaldi,father,odaterad,,1,0.0,0.0,0.01950975487743872
+Sö 7,Sö,Björnlunda sn,A,,1,bjorn,sveinungr,father,odaterad,,1,0.0,0.0,0.022011005502751375
+Sö 7,Sö,Björnlunda sn,A,,1,bjorn,asi,father,odaterad,,1,0.0,0.0,0.02351175587793897
+Sö 7,Sö,Björnlunda sn,A,,1,bjorn,gas,father,odaterad,,1,0.0,0.0,0.01900950475237619
+Sö 8,Sö,Dillnäs sn (nu Gåsinge-Dillnäs),B,Fp,1,vreidr,gylla,father,tidig,0.0,1,0.0,0.0,0.0
+Sö 8,Sö,Dillnäs sn (nu Gåsinge-Dillnäs),B,Fp,1,vreidr,ragnthrudr,father,tidig,0.0,1,0.0,0.0,0.0
+Sö 9,Sö,Dillnäs sn (nu Gåsinge-Dillnäs),B,Fp,1,bergvidr,ulfr,son,tidig,0.0,1,0.0,0.0,0.0
+Sö 9,Sö,Dillnäs sn (nu Gåsinge-Dillnäs),B,Fp,1,helga,ulfr,son,tidig,0.0,1,0.0,0.0,0.014507253626813406
+Sö 10,Sö,Frustuna sn,B,Fp,1,jarl,ingimarr,father,tidig,0.0,1,0.0,0.0,0.0
+Sö 10,Sö,Frustuna sn,B,Fp,1,jarl,ingimundr,father,tidig,0.0,1,0.0,0.0,0.0
+Sö 10,Sö,Frustuna sn,B,Fp,1,jarl,sveinungr,father,tidig,0.0,1,0.0,0.0,0.0
+Sö 11,Sö,Gryts sn,A,Pr2,1,freybjorn,hrodmundr,son,tidig,0.0,1,0.0,0.0,0.0785392696348174
+Sö 11,Sö,Gryts sn,A,Pr2,1,gudrun,hrodmundr,son,tidig,0.0,1,0.0,0.0,0.0240120060030015
+Sö 19,Sö,Hölö sn,A,Pr3,1,ketilhofdi,tarr,father,sen,1.0,1,0.0,0.0,0.0
+Sö 20,Sö,Hölö sn,A,,0,thorfastr,gudmundr,father,odaterad,,0,0.0,0.0,0.07403701850925462
+Sö 21,Sö,Mörkö sn,B,,0,jorundr,vreidr,father,odaterad,,0,0.0,0.0,0.05002501250625312
+Sö 22,Sö,Mörkö sn,B,,0,ormi,thrjozkr,father,odaterad,,0,0.0,0.0,0.008504252126063032
+Sö 22,Sö,Mörkö sn,B,,0,ormi,frosti,father,odaterad,,0,0.0,0.0,0.013006503251625813
+Sö 25,Sö,Trosa sn (nu Trosa-Vagnhärad),A,,0,sveinn,vegautr,father,odaterad,,0,0.0,0.0,0.0
+Sö 25,Sö,Trosa sn (nu Trosa-Vagnhärad),A,,0,sveinn,ingjaldr,father,odaterad,,0,0.0,0.0,0.0
+Sö 25,Sö,Trosa sn (nu Trosa-Vagnhärad),A,,0,sveinn,ozurr,father,odaterad,,0,0.0,0.0,0.0
+Sö 28,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),B,,0,grimr,djarfr,father,odaterad,,0,0.0,0.0,0.0
+Sö 30,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),B,Fp,1,ingimarr,steinkell,son,tidig,0.0,1,0.0,0.0,0.04502251125562781
+Sö 30,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),B,Fp,1,arnve,steinkell,son,tidig,0.0,1,0.0,0.0,0.030515257628814407
+Sö 31,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),B,,0,thorir,hroaldr,father,odaterad,,0,0.0,0.0,0.04252126063031516
+Sö 31,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),B,,0,thorir,oleif,father,odaterad,,0,0.0,0.0,0.04402201100550275
+Sö 36,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),B,KB,0,oleifr,thorgeirr,father,odaterad,,0,0.0,0.0,0.013006503251625813
+Sö 36,Sö,Vagnhärads sn (nu Trosa-Vagnhärad),B,KB,0,oleifr,orri,father,odaterad,,0,0.0,1.0,0.010505252626313157
+Sö 40,Sö,Västerljungs sn,B,Pr2,0,geirmarr,honefr,father,tidig,0.0,0,0.0,0.0,0.018509254627313655
+Sö 44,Sö,Bergshammars sn,A,,0,steinbjorg,vebjorn,son,odaterad,,0,0.0,0.0,0.013006503251625813
+Sö 45,Sö,Sankt Nicolai (Nikolai) sn (nu Nyköping),B,Fp,0,freysteinn,geirfastr,father,tidig,0.0,0,0.0,0.0,0.04702351175587794
+Sö 45,Sö,Sankt Nicolai (Nikolai) sn (nu Nyköping),B,Fp,0,freysteinn,eistfari,father,tidig,0.0,0,0.0,0.0,0.0415207603801901
+Sö 47,Sö,Nykyrka sn,A,,0,hroerikr,asmundr,son,odaterad,,0,0.0,0.0,0.0
+Sö 49,Sö,Stigtomta sn,B,Fp,0,bysja,thordr,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 49,Sö,Stigtomta sn,B,Fp,0,bysja,toki,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 50,Sö,Tuna sn,A,,0,thorbjorn,eyndr,son,odaterad,,0,0.0,0.0,0.08254127063531766
+Sö 50,Sö,Tuna sn,A,,0,freylaug,eyndr,son,odaterad,,0,0.0,0.0,0.02051025512756378
+Sö 52,Sö,Bettna sn,A,Fp,0,oleifr,freygeirr,father,tidig,0.0,0,0.0,0.0,0.0065032516258129065
+Sö 53,Sö,Bettna sn,A,,0,olafr,sylfa,son,odaterad,,0,0.0,0.0,0.010005002501250625
+Sö 55,Sö,Blacksta sn,A,Pr2,1,thorsteinn,hefnir,son,tidig,0.0,1,0.0,0.0,0.11005502751375688
+Sö 60,Sö,Husby-Oppunda sn,B,KB,0,sveinn,auda,father,odaterad,,0,0.0,0.0,0.0
+Sö 60,Sö,Husby-Oppunda sn,B,KB,0,sveinn,inga,father,odaterad,,0,0.0,0.0,0.0
+Sö 60,Sö,Husby-Oppunda sn,B,KB,0,sveinn,erindis,father,odaterad,,0,0.0,0.0,0.0
+Sö 62,Sö,Lerbo sn,B,Pr1,0,gunni,ragni,son,tidig,0.0,0,1.0,0.0,0.030515257628814407
+Sö 64,Sö,Stora Malms sn,A,Pr1,0,etill,gufi,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 64,Sö,Stora Malms sn,A,Pr1,0,etill,thorgisl,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 64,Sö,Stora Malms sn,A,Pr1,0,etill,veketill,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 64,Sö,Stora Malms sn,A,Pr1,0,etill,ingivaldr,father,tidig,0.0,0,0.0,1.0,0.0
+Sö 67,Sö,Sköldinge sn,B,,1,geirmundr,oleifr,father,odaterad,,1,0.0,0.0,0.04502251125562781
+Sö 67,Sö,Sköldinge sn,B,,1,geirmundr,geirmundr,father (samma namn),odaterad,,1,1.0,1.0,0.054527263631815905
+Sö 68,Sö,Sköldinge sn,B,Fp,0,harmsorgi,svertingr,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 69,Sö,Sköldinge sn,B,,0,gunni,kani,förälder till,odaterad,,0,1.0,0.0,0.013506753376688344
+Sö 74,Sö,Västra Vingåkers sn,A,Pr1,0,thorir,gorm,son,tidig,0.0,0,0.0,0.0,0.08254127063531766
+Sö 76,Sö,Lista sn,A,Fp,1,veulfr,tofa,father,tidig,0.0,1,0.0,0.0,0.06503251625812906
+Sö 88,Sö,Öja sn,A,Fp,0,gelfr,steinn,father,tidig,0.0,0,0.0,0.0,0.010005002501250625
+Sö 88,Sö,Öja sn,A,Fp,0,gelfr,fastulfr,father,tidig,0.0,0,0.0,0.0,0.0080040020010005
+Sö 88,Sö,Öja sn,A,Fp,0,gelfr,herjulfr,father,tidig,0.0,0,0.0,0.0,0.0065032516258129065
+Sö 90,Sö,Hammarby sn,B,Fp,0,eist,andvettr,father,tidig,0.0,0,0.0,1.0,0.015007503751875938
+Sö 102,Sö,Jäders sn,A,Pr2,1,amoda,gunni,son,tidig,0.0,1,0.0,0.0,0.0
+Sö 103,Sö,Jäders sn,A,,0,holmfastr,bjorn,father,odaterad,,0,0.0,0.0,0.030015007503751877
+Sö 104,Sö,Kjula sn,B,,0,hedinfastr,freysteinn,father,odaterad,,0,0.0,0.0,0.02351175587793897
+Sö 106,Sö,Kjula sn,B,Pr1,0,sigridr,alrikr,förälder till,tidig,0.0,0,0.0,0.0,0.013006503251625813
+Sö 106,Sö,Kjula sn,B,Pr1,0,spjot,alrikr,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 107,Sö,Klosters sn (Eskilstuna),A,,0,skarfr,hrodleifr,father,odaterad,,0,0.0,0.0,0.0
+Sö 108,Sö,Klosters sn (Eskilstuna),A,Fp,0,ulfr,gunnulfr,father,tidig,0.0,0,0.0,0.0,0.031015507753876938
+Sö 111,Sö,Stenkvista sn,B,Fp,0,thjodmundr,helgi,father,tidig,0.0,0,0.0,0.0,0.05052526263131566
+Sö 111,Sö,Stenkvista sn,B,Fp,0,thjodmundr,freygeirr,father,tidig,0.0,0,0.0,0.0,0.057028514257128564
+Sö 111,Sö,Stenkvista sn,B,Fp,0,thjodmundr,thorgautr,father,tidig,0.0,0,0.0,1.0,0.04752376188094047
+Sö 112,Sö,Stenkvista sn,B,Fp,0,thorkell,vigdjarfr,father,tidig,0.0,0,0.0,0.0,0.10205102551275638
+Sö 112,Sö,Stenkvista sn,B,Fp,0,thorkell,djarfr,father,tidig,0.0,0,0.0,0.0,0.10505252626313157
+Sö 115,Sö,Stenkvista sn,B,Fp,0,holmdjarfr,veulfr,father,tidig,0.0,0,0.0,0.0,0.02351175587793897
+Sö 115,Sö,Stenkvista sn,B,Fp,0,holmdjarfr,alfdis,father,tidig,0.0,0,0.0,0.0,0.02301150575287644
+Sö 115,Sö,Stenkvista sn,B,Fp,0,holmdjarfr,throtti,father,tidig,0.0,0,0.0,0.0,0.021510755377688845
+Sö 124,Sö,Bogsta sn,B,Pr4,0,thorgrimr,holmsteinn,father,sen,1.0,0,0.0,0.0,0.0
+Sö 124,Sö,Bogsta sn,B,Pr4,0,thorgrimr,sigvidr,father,sen,1.0,0,0.0,0.0,0.0
+Sö 125,Sö,Bogsta sn,B,,1,brynjulfr,ketilfastr,father,odaterad,,1,0.0,0.0,0.01250625312656328
+Sö 128,Sö,Lids sn,B,Pr2,0,steinfridr,thorunnr,mother,tidig,0.0,0,0.0,0.0,0.030515257628814407
+Sö 128,Sö,Lids sn,B,Pr2,0,steinfridr,steinbjorg,mother,tidig,0.0,0,1.0,1.0,0.03501750875437719
+Sö 132,Sö,Lids sn,B,KB,0,bjorn,thrudrun,father,odaterad,,0,0.0,0.0,0.02001000500250125
+Sö 141,Sö,Ludgo sn,B,,0,slodi,igulbjorn,son,odaterad,,0,0.0,0.0,0.0
+Sö 141,Sö,Ludgo sn,B,,0,ragnfridr,igulbjorn,son,odaterad,,0,0.0,0.0,0.0
+Sö 143,Sö,Runtuna sn,A,KB,1,eyjarr,ingulfr,son,odaterad,,1,0.0,1.0,0.0
+Sö 147,Sö,Runtuna sn,A,RAK,0,almgautr,thorunnr,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 147,Sö,Runtuna sn,A,RAK,0,almgautr,skirlaug,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 148,Sö,Runtuna sn,A,,0,farulfr,thjodulfr,father,odaterad,,0,0.0,0.0,0.022011005502751375
+Sö 148,Sö,Runtuna sn,A,,0,farulfr,bui,father,odaterad,,0,0.0,0.0,0.027013506753376687
+Sö 149,Sö,Runtuna sn,A,KB,1,onundr,gunnarr,son,odaterad,,1,0.0,0.0,0.03901950975487744
+Sö 149,Sö,Runtuna sn,A,KB,1,gylla,gunnarr,son,odaterad,,1,0.0,1.0,0.0
+Sö 154,Sö,Runtuna sn,A,Pr1,0,gunnarr,lydbjorn,son,tidig,0.0,0,0.0,0.0,0.01150575287643822
+Sö 155,Sö,Runtuna sn,A,,0,ulfr,brynjulfr,father,odaterad,,0,0.0,0.0,0.01950975487743872
+Sö 155,Sö,Runtuna sn,A,,0,ulfr,onundr,father,odaterad,,0,0.0,1.0,0.026013006503251626
+Sö 158,Sö,Runtuna sn,A,Fp,0,ketilhofdi,banki,father,tidig,0.0,0,0.0,0.0,0.017008504252126064
+Sö 158,Sö,Runtuna sn,A,Fp,0,ketilhofdi,folksteinn,father,tidig,0.0,0,0.0,0.0,0.02351175587793897
+Sö 159,Sö,Runtuna sn,A,,0,thorbjorn,ingjaldr,father,odaterad,,0,0.0,0.0,0.07653826913456728
+Sö 159,Sö,Runtuna sn,A,,0,thorbjorn,olvir,father,odaterad,,0,0.0,0.0,0.09004502251125562
+Sö 164,Sö,Råby-Rönö sn,B,RAK,0,gudmarr,gudbjorn,father,tidig,0.0,0,1.0,1.0,0.0335167583791896
+Sö 164,Sö,Råby-Rönö sn,B,RAK,0,gudmarr,oddi,father,tidig,0.0,0,0.0,0.0,0.03551775887943972
+Sö 167,Sö,Spelviks sn,A,Fp,0,venjotr,gudmundr,son,tidig,0.0,0,0.0,0.0,0.03601800900450225
+Sö 170,Sö,Svärta sn,B,,0,baulfr,vesteinn,father,odaterad,,0,0.0,0.0,0.021510755377688845
+Sö 170,Sö,Svärta sn,B,,0,baulfr,agmundr,father,odaterad,,0,0.0,0.0,0.018509254627313655
+Sö 170,Sö,Svärta sn,B,,0,baulfr,gudver,father,odaterad,,0,0.0,0.0,0.02301150575287644
+Sö 173,Sö,Tystberga sn,B,,0,holmsteinn,myskja,father,odaterad,,0,0.0,0.0,0.09154577288644322
+Sö 173,Sö,Tystberga sn,B,,0,holmsteinn,manni,father,odaterad,,0,0.0,0.0,0.08404202101050526
+Sö 174,Sö,Aspö sn,A,Pr1,1,olafr,bjorn,son,tidig,0.0,1,0.0,0.0,0.0080040020010005
+Sö 179,Sö,Kärnbo sn,B,Fp,0,tola,haraldr,son,tidig,0.0,0,0.0,0.0,0.01250625312656328
+Sö 183,Sö,Kärnbo sn,B,Fp,0,slora,sibbi,father,tidig,0.0,0,0.0,1.0,0.0
+Sö 183,Sö,Kärnbo sn,B,Fp,0,slora,rysja,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 187,Sö,Toresunds sn,A,,1,svidbalki,thordr,father,odaterad,,1,0.0,0.0,0.0
+Sö 187,Sö,Toresunds sn,A,,1,svidbalki,bruni,father,odaterad,,1,0.0,0.0,0.0
+Sö 187,Sö,Toresunds sn,A,,1,svidbalki,tidkumi,father,odaterad,,1,0.0,0.0,0.0
+Sö 190,Sö,Ytterenhörna sn,A,Pr2,1,asl,onundr,father,tidig,0.0,1,0.0,1.0,0.0
+Sö 190,Sö,Ytterenhörna sn,A,Pr2,1,asl,svaraldr,father,tidig,0.0,1,0.0,0.0,0.0
+Sö 190,Sö,Ytterenhörna sn,A,Pr2,1,asl,finnvidr,father,tidig,0.0,1,0.0,0.0,0.0
+Sö 192,Sö,Ytterselö sn,A,Pr3,1,inga,fari,son,sen,1.0,1,0.0,0.0,0.0
+Sö 194,Sö,Ytterselö sn,A,Fp,0,thorketill,ingimundr,father,tidig,0.0,0,0.0,0.0,0.09304652326163082
+Sö 194,Sö,Ytterselö sn,A,Fp,0,thorketill,thjalfi,father,tidig,0.0,0,0.0,1.0,0.10105052526263132
+Sö 196,Sö,Ytterselö sn,A,Fp,0,eyjulfr,ingifridr,father,tidig,0.0,0,0.0,1.0,0.007503751875937969
+Sö 196,Sö,Ytterselö sn,A,Fp,0,eyjulfr,ginna,father,tidig,0.0,0,0.0,0.0,0.004502251125562781
+Sö 196,Sö,Ytterselö sn,A,Fp,0,eyjulfr,eyjulfr,father (samma namn),tidig,0.0,0,1.0,1.0,0.005502751375687844
+Sö 200,Sö,Ytterselö sn,A,Fp,0,arnsteinn,throtti,father,tidig,0.0,0,0.0,0.0,0.03301650825412707
+Sö 200,Sö,Ytterselö sn,A,Fp,0,arnsteinn,hrodleifr,father,tidig,0.0,0,0.0,0.0,0.03401700850425213
+Sö 200,Sö,Ytterselö sn,A,Fp,0,arnsteinn,eysteinn,father,tidig,0.0,0,1.0,1.0,0.030015007503751877
+Sö 200,Sö,Ytterselö sn,A,Fp,0,arnsteinn,nasi,father,tidig,0.0,0,0.0,0.0,0.03401700850425213
+Sö 200,Sö,Ytterselö sn,A,Fp,0,arnsteinn,gleggi,father,tidig,0.0,0,0.0,0.0,0.029514757378689346
+Sö 202,Sö,Ytterselö sn,A,Fp,0,ospaki,thorbjorn,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 205,Sö,Överselö sn,A,,0,karl,ingjaldr,father,odaterad,,0,0.0,0.0,0.0080040020010005
+Sö 205,Sö,Överselö sn,A,,0,karl,veseti,father,odaterad,,0,0.0,0.0,0.01150575287643822
+Sö 205,Sö,Överselö sn,A,,0,karl,steinulfr,father,odaterad,,0,0.0,0.0,0.01150575287643822
+Sö 211,Sö,Överselö sn,A,Fp,0,ulfr,steinulfr,father,tidig,0.0,0,0.0,0.0,0.03451725862931466
+Sö 211,Sö,Överselö sn,A,Fp,0,ulfr,haki,father,tidig,0.0,0,0.0,0.0,0.03951975987993997
+Sö 211,Sö,Överselö sn,A,Fp,0,ulfr,thrydrikr,father,tidig,0.0,0,0.0,0.0,0.03801900950475238
+Sö 211,Sö,Överselö sn,A,Fp,0,ulfr,eybjorn,father,tidig,0.0,0,0.0,1.0,0.03701850925462731
+Sö 211,Sö,Överselö sn,A,Fp,0,ulfr,oflati,father,tidig,0.0,0,0.0,1.0,0.03801900950475238
+Sö 214,Sö,Överselö sn,A,Fp,0,vegeirr,sveinn,father,tidig,0.0,0,0.0,0.0,0.05152576288144072
+Sö 217,Sö,Sorunda sn,B,Fp,0,otryggr,svertingr,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 217,Sö,Sorunda sn,B,Fp,0,otryggr,kari,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 217,Sö,Sorunda sn,B,Fp,0,otryggr,gudmundr,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 217,Sö,Sorunda sn,B,Fp,0,otryggr,skari,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 217,Sö,Sorunda sn,B,Fp,0,otryggr,knutr,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 224,Sö,Sorunda sn,B,Fp,0,fasti,raggi,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 224,Sö,Sorunda sn,B,Fp,0,fasti,saxi,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 224,Sö,Sorunda sn,B,Fp,0,fasti,dyntr,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 226,Sö,Sorunda sn,B,Fp,0,geirbjorn,bjorn,father,tidig,0.0,0,0.0,0.0,0.0655327663831916
+Sö 226,Sö,Sorunda sn,B,Fp,0,geirbjorn,vebjorn,father,tidig,0.0,0,1.0,0.0,0.07053526763381691
+Sö 226,Sö,Sorunda sn,B,Fp,0,geirbjorn,hrafni,father,tidig,0.0,0,0.0,0.0,0.06303151575787894
+Sö 226,Sö,Sorunda sn,B,Fp,0,geirbjorn,ketilbjorn,father,tidig,0.0,0,1.0,0.0,0.06353176588294147
+Sö 229,Sö,Sorunda sn,B,Fp,0,igulbjorn,ketilbjorn,father,tidig,0.0,0,1.0,0.0,0.0560280140070035
+Sö 229,Sö,Sorunda sn,B,Fp,0,igulbjorn,thorbjorn,father,tidig,0.0,0,1.0,0.0,0.054027013506753374
+Sö 229,Sö,Sorunda sn,B,Fp,0,igulbjorn,thorketill,father,tidig,0.0,0,0.0,0.0,0.058529264632316155
+Sö 229,Sö,Sorunda sn,B,Fp,0,igulbjorn,farmadr,father,tidig,0.0,0,0.0,0.0,0.054027013506753374
+Sö 229,Sö,Sorunda sn,B,Fp,0,igulbjorn,sveinn,father,tidig,0.0,0,0.0,0.0,0.058529264632316155
+Sö 232,Sö,Sorunda sn,B,KB,0,thorbjorn,freysteinn,father,odaterad,,0,0.0,0.0,0.08104052026013006
+Sö 232,Sö,Sorunda sn,B,KB,0,thorbjorn,igull,father,odaterad,,0,0.0,0.0,0.08254127063531766
+Sö 233,Sö,Sorunda sn,B,Fp,0,thorir,gunni,father,tidig,0.0,0,0.0,0.0,0.08254127063531766
+Sö 233,Sö,Sorunda sn,B,Fp,0,thorir,thorfastr,father,tidig,0.0,0,1.0,1.0,0.09254627313656828
+Sö 234,Sö,Sorunda sn,B,,0,gunni,ormgeirr,father,odaterad,,0,0.0,0.0,0.015507753876938469
+Sö 234,Sö,Sorunda sn,B,,0,gunni,jogeirr,father,odaterad,,0,0.0,0.0,0.01150575287643822
+Sö 234,Sö,Sorunda sn,B,,0,gunni,jofursteinn,father,odaterad,,0,0.0,0.0,0.016008004002001
+Sö 235,Sö,Sorunda sn,B,Pr3,0,vedjarfr,gudbjorn,father,sen,1.0,0,0.0,0.0,0.10805402701350675
+Sö 237,Sö,Västerhaninge sn,A,,0,fastbjorn,thegn,father,odaterad,,0,0.0,0.0,0.03601800900450225
+Sö 237,Sö,Västerhaninge sn,A,,0,thorir,onundr,son,odaterad,,0,0.0,0.0,0.04952476238119059
+Sö 237,Sö,Västerhaninge sn,A,,0,thegn,onundr,son,odaterad,,0,0.0,0.0,0.014507253626813406
+Sö 240,Sö,Västerhaninge sn,A,Fp,0,hrodgisl,sveinn,father,tidig,0.0,0,0.0,0.0,0.029514757378689346
+Sö 250,Sö,Ösmo sn,B,Fp,0,halfdan,saxi,förälder till,tidig,0.0,0,0.0,0.0,0.006003001500750375
+Sö 251,Sö,Ösmo sn,B,Pr2,0,slodi,diselfr,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 251,Sö,Ösmo sn,B,Pr2,0,slodi,inga,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 254,Sö,Ösmo sn,B,Fp,0,alfhildr,eysteinn,förälder till,tidig,0.0,0,0.0,1.0,0.01150575287643822
+Sö 254,Sö,Ösmo sn,B,Fp,0,tosti,sveinn,father,tidig,0.0,0,0.0,0.0,0.01150575287643822
+Sö 254,Sö,Ösmo sn,B,Fp,0,tosti,steinn,father,tidig,0.0,0,0.0,0.0,0.014507253626813406
+Sö 256,Sö,Ösmo sn,B,Pr1,0,freygeirr,svarthofdi,father,tidig,0.0,0,0.0,0.0,0.018009004502251125
+Sö 256,Sö,Ösmo sn,B,Pr1,0,freygeirr,vidfari,father,tidig,0.0,0,0.0,0.0,0.026513256628314157
+Sö 256,Sö,Ösmo sn,B,Pr1,0,freygeirr,vebjorn,father,tidig,0.0,0,0.0,0.0,0.01950975487743872
+Sö 256,Sö,Ösmo sn,B,Pr1,0,freygeirr,onundr,father,tidig,0.0,0,0.0,0.0,0.02051025512756378
+Sö 260,Sö,Österhaninge sn,A,,0,hakon,ulfr,förälder till,odaterad,,0,0.0,0.0,0.0
+Sö 263,Sö,Österhaninge sn,A,Fp,0,eyvindr,gullaug,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 263,Sö,Österhaninge sn,A,Fp,0,eyvindr,gudlaug,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 265,Sö,Österhaninge sn,A,Fp,0,gasi,ozurr,son,tidig,0.0,0,0.0,0.0,0.025512756378189096
+Sö 266,Sö,Österhaninge sn,A,Fp,0,jorunnr,andvettr,son,tidig,0.0,0,0.0,0.0,0.02001000500250125
+Sö 268,Sö,Österhaninge sn,A,Pr1,0,hjalmvidr,thorgautr,son,tidig,0.0,0,0.0,0.0,0.0
+Sö 269,Sö,Österhaninge sn,A,,0,vikingr,onundr,father,odaterad,,0,0.0,0.0,0.0
+Sö 271,Sö,Österhaninge sn,A,Fp,0,thjalfi,hallsteinn,father,tidig,0.0,0,0.0,0.0,0.010005002501250625
+Sö 272,Sö,Österhaninge sn,A,,0,thorfastr,halfdan,son,odaterad,,0,0.0,0.0,0.07253626813406704
+Sö 273,Sö,Österhaninge sn,A,Fp,0,sigrodr,signjotr,father,tidig,0.0,0,1.0,1.0,0.015007503751875938
+Sö 288,Sö,Botkyrka sn,B,Pr2,1,tjorvi,sibbi,father,tidig,0.0,1,0.0,0.0,0.0
+Sö 288,Sö,Botkyrka sn,B,Pr2,1,tjorvi,jorunnr,father,tidig,0.0,1,0.0,0.0,0.0
+Sö 288,Sö,Botkyrka sn,B,Pr2,1,tjorvi,thorgunnr,father,tidig,0.0,1,0.0,0.0,0.0
+Sö 288,Sö,Botkyrka sn,B,Pr2,1,tjorvi,ingigerdr,father,tidig,0.0,1,0.0,0.0,0.0
+Sö 289,Sö,Botkyrka sn,B,Pr2,1,ketilbjorn,bjorn,father,tidig,0.0,1,0.0,0.0,0.061030515257628815
+Sö 289,Sö,Botkyrka sn,B,Pr2,1,ketilbjorn,holm-,father,tidig,0.0,1,0.0,0.0,0.061530765382691345
+Sö 291,Sö,Grödinge sn,A,Pr2,0,hroaldr,farulfr,father,tidig,0.0,0,0.0,0.0,0.01200600300150075
+Sö 291,Sö,Grödinge sn,A,Pr2,0,hroaldr,ulfr,father,tidig,0.0,0,0.0,0.0,0.018509254627313655
+Sö 291,Sö,Grödinge sn,A,Pr2,0,hroaldr,sigsteinn,father,tidig,0.0,0,0.0,0.0,0.010505252626313157
+Sö 291,Sö,Grödinge sn,A,Pr2,0,hroaldr,gunnarr,father,tidig,0.0,0,0.0,0.0,0.017008504252126064
+Sö 293,Sö,Grödinge sn,A,,0,tolir,eyvindr,father,odaterad,,0,0.0,0.0,0.0
+Sö 293,Sö,Grödinge sn,A,,0,tolir,gerdarr,father,odaterad,,0,0.0,0.0,0.0
+Sö 293,Sö,Grödinge sn,A,,0,tolir,ingjaldr,father,odaterad,,0,0.0,0.0,0.0
+Sö 293,Sö,Grödinge sn,A,,0,tolir,tidkumi,father,odaterad,,0,0.0,1.0,0.0
+Sö 293,Sö,Grödinge sn,A,,0,tolir,sigreifr,father,odaterad,,0,0.0,0.0,0.0
+Sö 294,Sö,Grödinge sn,A,Pr3,0,ulfr,vefastr,father,sen,1.0,0,0.0,0.0,0.0
+Sö 294,Sö,Grödinge sn,A,Pr3,0,ulfr,sigvidr,father,sen,1.0,0,0.0,0.0,0.0
+Sö 298,Sö,Grödinge sn,A,Pr3,0,vigmarr,haurr,father,sen,1.0,0,0.0,0.0,0.0
+Sö 298,Sö,Grödinge sn,A,Pr3,0,vigmarr,karl,father,sen,1.0,0,0.0,0.0,0.0
+Sö 298,Sö,Grödinge sn,A,Pr3,0,vigmarr,sighjalmr,father,sen,1.0,0,0.0,0.0,0.0
+Sö 298,Sö,Grödinge sn,A,Pr3,0,vigmarr,vehjalmr,father,sen,1.0,0,0.0,1.0,0.0
+Sö 298,Sö,Grödinge sn,A,Pr3,0,vigmarr,kari,father,sen,1.0,0,0.0,0.0,0.0
+Sö 303,Sö,Salems sn,B,,0,gudlaug,thorgeirr,sons,odaterad,,0,0.0,0.0,0.01200600300150075
+Sö 303,Sö,Salems sn,B,,0,gudlaug,frosti,sons,odaterad,,0,0.0,0.0,0.015007503751875938
+Sö 304,Sö,Salems sn,B,Fp,0,goti,oroekja,son,tidig,0.0,0,0.0,0.0,0.0
+Sö 305,Sö,Botkyrka sn,B,Pr3,0,thorkell,sibbi,father,sen,1.0,0,0.0,0.0,0.0
+Sö 305,Sö,Botkyrka sn,B,Pr3,0,thorkell,tjorvi,father,sen,1.0,0,0.0,0.0,0.0
+Sö 306,Sö,Salems sn,B,,0,ketilbjorn,bjorn,father,odaterad,,0,0.0,0.0,0.04652326163081541
+Sö 306,Sö,Salems sn,B,,0,ketilbjorn,fasti,father,odaterad,,0,0.0,0.0,0.04302151075537769
+Sö 307,Sö,Södertälje,A,RAK,0,thorsteinn,ulfhedinn,father,tidig,0.0,0,0.0,0.0,0.128064032016008
+Sö 308,Sö,Södertälje,A,Pr5,0,holmfastr,ingifastr,sons,sen,1.0,0,1.0,0.0,0.21260630315157578
+Sö 308,Sö,Södertälje,A,Pr5,0,hrodelfr,ingifastr,sons,sen,1.0,0,0.0,0.0,0.0
+Sö 310,Sö,Södertälje,A,,0,klefi,holmfastr,father,odaterad,,0,0.0,0.0,0.0
+Sö 317,Sö,Flens sn,B,Fp,0,sighvatr,olafr,son,tidig,0.0,0,0.0,0.0,0.017008504252126064
+Sö 318,Sö,Helgesta sn,A,Pr2,1,vreidr,kylfingr,father,tidig,0.0,1,0.0,0.0,0.0
+Sö 318,Sö,Helgesta sn,A,Pr2,1,vreidr,holmgeirr,father,tidig,0.0,1,0.0,0.0,0.0
+Sö 319,Sö,Årdala sn,B,RAK,0,geirbjorn,finnvidr,father,tidig,0.0,0,0.0,0.0,0.06753376688344172
+Sö 325,Sö,Härads sn,A,Pr2,0,sveinir,kaupi,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 328,Sö,Strängnäs landsförsamling (nu Aspö sn),A,Pr2,0,gudver,thorulfr,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 328,Sö,Strängnäs landsförsamling (nu Aspö sn),A,Pr2,0,gudver,undrlaug,father,tidig,0.0,0,0.0,0.0,0.0
+Sö 333,Sö,Åkers sn,B,Fp,0,amundi,runulfr,son,tidig,0.0,0,0.0,0.0,0.0
+Sö 338,Sö,Turinge sn,A,Pr4,0,thorsteinn,ketill,father,sen,1.0,0,0.0,0.0,0.05952976488244122
+Sö 338,Sö,Turinge sn,A,Pr4,0,thorsteinn,bjorn,father,sen,1.0,0,0.0,0.0,0.06853426713356678
+Sö 339,Sö,Turinge sn,A,RAK,0,styrbjorn,kjallakr,father,tidig,0.0,0,0.0,0.0,0.064032016008004
+Sö 343,Sö,Tveta sn,B,KB,0,arnfastr,ingjaldr,father,odaterad,,0,0.0,1.0,0.02301150575287644
+Sö 343,Sö,Tveta sn,B,KB,0,arnfastr,thorsteinn,father,odaterad,,0,0.0,0.0,0.02501250625312656
+Sö 349,Sö,Ytterjärna sn,B,,1,thegn,ingi,father,odaterad,,1,0.0,0.0,0.01250625312656328
+Sö 349,Sö,Ytterjärna sn,B,,1,thegn,ketill,father,odaterad,,1,0.0,0.0,0.011005502751375688
+Sö 350,Sö,Ytterjärna sn,B,Fp,1,orri,ulfr,father,tidig,0.0,1,0.0,1.0,0.013006503251625813
+Sö 350,Sö,Ytterjärna sn,B,Fp,1,orri,igull,father,tidig,0.0,1,0.0,1.0,0.02051025512756378
+Sö 360,Sö,Blacksta sn,A,RAK,0,hrutr,thorbjorn,förälder till,tidig,0.0,0,0.0,0.0,0.0
+Sö 363,Sö,Tumbo sn,A,KB,1,thorsteinn,eysteinn,father,odaterad,,1,1.0,0.0,0.10355177588794397
+Sö 367,Sö,Sankt Nicolai sn (nu Nyköping),A,RAK,0,hrolfr,hamundr,father,tidig,0.0,0,0.0,1.0,0.0
+Sö 367,Sö,Sankt Nicolai sn (nu Nyköping),A,RAK,0,hrolfr,ulfr,father,tidig,0.0,0,0.0,0.0,0.0
+Sö ATA322-4237-2011,Sö,Österhaninge sn,A,,1,halfdan,gunnarr,father,odaterad,,1,0.0,0.0,0.013506753376688344
+Sö ATA322-4237-2011,Sö,Österhaninge sn,A,,1,halfdan,ulfr,father,odaterad,,1,0.0,0.0,0.014007003501750876
+Sö ATA322-4237-2011,Sö,Österhaninge sn,A,,1,halfdan,sighjalmr,father,odaterad,,1,0.0,0.0,0.013006503251625813
+Sö Fv1948;289,Sö,Ludgo sn,B,Fp,0,astridr,ragnvaldr,son,tidig,0.0,0,0.0,0.0,0.0
+Sö Fv1948;295,Sö,Lunda sn,B,Fp,0,ragnvaldr,halfdan,father,tidig,0.0,0,0.0,0.0,0.018509254627313655
+Sö Fv1948;298,Sö,Ösmo sn,B,Pr1,0,nesbjorn,bjarni,father,tidig,0.0,0,0.0,0.0,0.0
+Sö Fv1948;298,Sö,Ösmo sn,B,Pr1,0,nesbjorn,geirr,father,tidig,0.0,0,0.0,0.0,0.0
+Sö Fv1971;208,Sö,Ösmo sn,B,,0,kari,vigmarr,father,odaterad,,0,0.0,0.0,0.022011005502751375
+Sö Fv1973;189,Sö,Julita sn,B,RAK,0,thorkell,ormarr,father,tidig,0.0,0,0.0,0.0,0.10705352676338169
+Sö Fv1982;235,Sö,Spelviks sn,A,KB,0,oepir,eygeirr,father,odaterad,,0,0.0,1.0,0.0
+Sm 1,Sm,Aringsås sn,A,,1,hrodmundr,vignjotr,father,odaterad,,1,0.0,0.0,0.0
+Sm 5,Sm,Hjortsberga sn,B,RAK,0,gautr,ketill,son,tidig,0.0,0,0.0,0.0,0.0
+Sm 8,Sm,Dänningelanda sn,B,,0,thjodgeirr,hedinn,son,odaterad,,0,0.0,0.0,0.0
+Sm 8,Sm,Dänningelanda sn,B,,0,hrodelfr,hedinn,son,odaterad,,0,0.0,1.0,0.0
+Sm 10,Sm,Växjö,A,Pr2,1,grimr,gunnarr,förälder till,tidig,0.0,1,0.0,1.0,0.0
+Sm 13,Sm,Uråsa sn,B,RAK,0,spakr,sveinn,sons,tidig,0.0,0,0.0,1.0,0.0
+Sm 13,Sm,Uråsa sn,B,RAK,0,spakr,hroemingr,sons,tidig,0.0,0,0.0,0.0,0.0
+Sm 35,Sm,Ljungby sn,A,RAK,0,astradr,gautradr,father,tidig,0.0,0,0.0,0.0,0.0
+Sm 37,Sm,Nöttja sn,A,RAK,1,eyndr,ozurr,father,tidig,0.0,1,0.0,1.0,0.0
+Sm 39,Sm,Ryssby sn,A,,0,soni,gunni,father,odaterad,,0,1.0,0.0,0.0240120060030015
+Sm 48,Sm,Bredaryds sn (nu Forsheda sn),A,,0,ofeigr,oddi,son,odaterad,,0,0.0,1.0,0.0
+Sm 52,Sm,Forsheda sn,A,RAK,0,hlifsteinn,hrolfr,father,tidig,0.0,0,0.0,1.0,0.0
+Sm 52,Sm,Forsheda sn,A,RAK,0,hlifsteinn,askell,father,tidig,0.0,0,0.0,0.0,0.0
+Sm 60,Sm,Rydaholms sn,B,RAK,0,gudmundr,sveinn,father,tidig,0.0,0,0.0,0.0,0.0
+Sm 60,Sm,Rydaholms sn,B,RAK,0,gudmundr,starki,father,tidig,0.0,0,0.0,0.0,0.0
+Sm 61,Sm,Tånnö sn,A,RAK,1,gudvardr,audi,son,tidig,0.0,1,0.0,0.0,0.061530765382691345
+Sm 61,Sm,Tånnö sn,A,RAK,1,karl,steinn,son,tidig,0.0,1,0.0,0.0,0.0
+Sm 62,Sm,Voxtorps sn,B,RAK,0,tosti,etti,son,tidig,0.0,0,0.0,0.0,0.05952976488244122
+Sm 64,Sm,Värnamo,A,RAK,1,thorunnr,sveinn,sons,tidig,0.0,1,0.0,0.0,0.0
+Sm 64,Sm,Värnamo,A,RAK,1,thorunnr,tofi,sons,tidig,0.0,1,0.0,0.0,0.0
+Sm 71,Sm,Norra Sandsjö sn,A,RAK,0,heggi,erinvardr,father,tidig,0.0,0,0.0,0.0,0.0
+Sm 73,Sm,Skepperstads sn,A,,0,thorgautr,holmi,father,odaterad,,0,0.0,0.0,0.20110055027513757
+Sm 76,Sm,Sävsjö (f.d. Norra Ljunga sn),A,,0,vrai,tofa,father,odaterad,,0,0.0,0.0,0.0
+Sm 78,Sm,Sävsjö (Vallsjö sn),B,,0,olafr,sibbi,son,odaterad,,0,0.0,0.0,0.0
+Sm 80,Sm,Sävsjö (Vallsjö sn),B,,0,thjalfi,veseti,father,odaterad,,0,0.0,0.0,0.021510755377688845
+Sm 80,Sm,Sävsjö (Vallsjö sn),B,,0,thjalfi,ivarr,father,odaterad,,0,0.0,0.0,0.031015507753876938
+Sm 80,Sm,Sävsjö (Vallsjö sn),B,,0,thjalfi,sylfa,father,odaterad,,0,0.0,0.0,0.02801400700350175
+Sm 91,Sm,Alseda sn,A,,0,helgi,ozurr,son,odaterad,,0,0.0,0.0,0.02001000500250125
+Sm 93,Sm,Björkö sn,B,,0,hrolfr,sveinn,sons,odaterad,,0,0.0,0.0,0.0
+Sm 93,Sm,Björkö sn,B,,0,hrolfr,thorsteinn,sons,odaterad,,0,0.0,0.0,0.0
+Sm 96,Sm,Lannaskede sn,A,,0,thorsteinn,gudi,son,odaterad,,0,0.0,0.0,0.1745872936468234
+Sm 96,Sm,Lannaskede sn,A,,0,gunnvor,thorsteinn,mother,odaterad,,0,0.0,0.0,0.028514257128564282
+Sm 99,Sm,Myresjö sn,B,,0,verskulfr,thordr,father,odaterad,,0,0.0,0.0,0.0
+Sm 99,Sm,Myresjö sn,B,,0,verskulfr,thorbjorn,father,odaterad,,0,0.0,0.0,0.0
+Sm 100,Sm,Nävelsjö sn,B,,1,thormarr,saxi,son,odaterad,,1,0.0,0.0,0.17958979489744872
+Sm 101,Sm,Nävelsjö sn,B,,0,gunnarr,gunnkell,father,odaterad,,0,1.0,1.0,0.02351175587793897
+Sm 109,Sm,Vetlanda,A,,0,hardsteinn,nagr,förälder till,odaterad,,0,0.0,0.0,0.0
+Sm 110,Sm,Vetlanda,A,,0,haera,arinmundr,father,odaterad,,0,0.0,0.0,0.0
+Sm 122,Sm,Gränna landsförsamling,B,,0,sveinn,goti,son,odaterad,,0,0.0,0.0,0.04602301150575288
+Sm 126,Sm,Visingsö sn,B,,0,gudfastr,thordr,father,odaterad,,0,0.0,0.0,0.026513256628314157
+Sm 126,Sm,Visingsö sn,B,,0,gudfastr,asgautr,father,odaterad,,0,0.0,0.0,0.02801400700350175
+Sm 129,Sm,Säby sn (nu Tranås),A,,0,geirmundr,thordr,father,odaterad,,0,0.0,0.0,0.0
+Sm 132,Sm,Flisby sn,B,,0,finnr,helgi,father,odaterad,,0,0.0,0.0,0.0
+Sm 133,Sm,Flisby sn,B,,0,gloggr,thorbjorn,son,odaterad,,0,0.0,0.0,0.0
+Sm 134,Sm,Hults sn,A,,0,gunnarr,gudfastr,father,odaterad,,0,0.0,1.0,0.02801400700350175
+Sm 140,Sm,Höreda sn,B,,0,sveinn,eynjotr,father,odaterad,,0,0.0,0.0,0.05502751375687844
+Sm 142,Sm,Mellby sn,B,,0,fastmundr,sveinn,father,odaterad,,0,0.0,0.0,0.0
+Sm 146,Sm,Ukna sn,A,,0,sebbi,halfdan,father,odaterad,,0,0.0,0.0,0.0
+Sm 148,Sm,Västra Eds sn,B,,0,egill,geira,father,odaterad,,0,0.0,0.0,0.0
+Sm 148,Sm,Västra Eds sn,B,,0,egill,ketill,father,odaterad,,0,0.0,0.0,0.0
+Sm 149,Sm,Västra Eds sn,B,,0,fastlaug,thjalfi,son,odaterad,,0,0.0,0.0,0.0
+Sm 153,Sm,Högsby sn,A,,0,bofi,tosti,father,odaterad,,0,0.0,0.0,0.0
+Sm 154,Sm,Högsby sn,A,,1,halfdan,sigtryggr,father,odaterad,,1,0.0,0.0,0.01950975487743872
+Sm SvS1973;4,Sm,Mellby sn,B,,1,tryggulfr,venjotr,father,odaterad,,1,0.0,0.0,0.0
+Vg 3,Vg,Bällefors sn,B,RAK,0,thorsteinn,tumi,father,tidig,0.0,0,0.0,0.0,0.16708354177088544
+Vg 4,Vg,Eks sn,A,RAK,0,oddr,thorsteinn,son,tidig,0.0,0,0.0,0.0,0.0335167583791896
+Vg 11,Vg,Leksbergs sn,A,,0,thorir,ketill,son,odaterad,,0,0.0,0.0,0.13206603301650827
+Vg 14,Vg,Lyrestads sn,A,RAK,0,gunnarr,hettingr,father,tidig,0.0,0,0.0,0.0,0.02301150575287644
+Vg 14,Vg,Lyrestads sn,A,RAK,0,gunnarr,hervardr,father,tidig,0.0,0,0.0,0.0,0.03151575787893947
+Vg 15,Vg,Mariestads sn,A,Fp,0,hroarr,thorir,son,tidig,0.0,0,0.0,0.0,0.03501750875437719
+Vg 16,Vg,Tidavads sn (nu Ekby sn),B,RAK,0,thorir,asti,father,tidig,0.0,0,0.0,0.0,0.15457728864432216
+Vg 33,Vg,Mellby sn,B,RAK,0,geirvarr,tosti,son,tidig,0.0,0,0.0,0.0,0.0
+Vg 37,Vg,Rackeby sn,B,,0,audgrimr,askell,son,odaterad,,0,0.0,1.0,0.0
+Vg 39,Vg,Rackeby sn,B,,0,thrasi,halfdan,son,odaterad,,0,0.0,0.0,0.0
+Vg 40,Vg,Råda sn,B,,0,thorkell,gunni,son,odaterad,,0,0.0,0.0,0.24012006003001501
+Vg 45,Vg,Skalunda sn,A,,0,saerli,algisl,father,odaterad,,0,0.0,0.0,0.0
+Vg 51,Vg,Husaby sn,B,,0,olafr,hreidarr,son,odaterad,,0,0.0,0.0,0.0
+Vg 55,Vg,Källby sn,A,,1,fari,ulfr,father,odaterad,,1,0.0,0.0,0.0
+Vg 55,Vg,Källby sn,A,,1,fari,ragnarr,father,odaterad,,1,0.0,0.0,0.0
+Vg 59,Vg,Norra Härene sn,B,RAK,0,fotr,hrefningr,father,tidig,0.0,0,0.0,0.0,0.0
+Vg 59,Vg,Norra Härene sn,B,RAK,0,fotr,gjalli,father,tidig,0.0,0,0.0,0.0,0.0
+Vg 59,Vg,Norra Härene sn,B,RAK,0,fotr,brynjulfr,father,tidig,0.0,0,0.0,0.0,0.0
+Vg 59,Vg,Norra Härene sn,B,RAK,0,fotr,gjafulfr,father,tidig,0.0,0,0.0,0.0,0.0
+Vg 61,Vg,Edsvära sn,A,RAK,0,tola,geirr,son,tidig,0.0,0,0.0,0.0,0.061530765382691345
+Vg 73,Vg,Synnerby sn,B,RAK,0,veurdr,karr,father,tidig,0.0,0,0.0,0.0,0.0
+Vg 73,Vg,Synnerby sn,B,RAK,0,veurdr,kali,father,tidig,0.0,0,0.0,0.0,0.0
+Vg 74,Vg,Vinköls sn,A,RAK,0,asgautr,agoti,father,tidig,0.0,0,0.0,1.0,0.12756378189094547
+Vg 77,Vg,Eggby sn,B,RAK,0,auga,asbjorn,son,tidig,0.0,0,0.0,1.0,0.0
+Vg 92,Vg,Högstena sn,A,RAK,0,ozurr,jorundr,father,tidig,0.0,0,0.0,0.0,0.0
+Vg 92,Vg,Högstena sn,A,RAK,0,ozurr,audin,father,tidig,0.0,0,0.0,1.0,0.0
+Vg 102,Vg,Håle sn,B,,0,audketill,asgautr,father,odaterad,,0,0.0,1.0,0.0
+Vg 117,Vg,Levene sn,B,RAK,1,herulfr,varr,sons,tidig,0.0,1,0.0,0.0,0.06303151575787894
+Vg 117,Vg,Levene sn,B,RAK,1,herulfr,thorgautr,sons,tidig,0.0,1,0.0,0.0,0.04752376188094047
+Vg 119,Vg,Sparlösa sn,A,,0,eirikr,eivisl,förälder till,odaterad,,0,0.0,1.0,0.0
+Vg 124,Vg,Ryda sn,B,RAK,0,toki,asmundr,father,tidig,0.0,0,0.0,0.0,0.04902451225612806
+Vg 127,Vg,Larvs sn,B,Fp,1,sigtryggr,gunnarr,förälder till,tidig,0.0,1,0.0,0.0,0.0
+Vg 133,Vg,Marka sn,B,RAK,0,sida,steinthorir,förälder till,tidig,0.0,0,0.0,1.0,0.0
+Vg 137,Vg,Kinneve sn (nu Kinneved),B,RAK,0,freysteinn,ali,father,tidig,0.0,0,0.0,0.0,0.060530265132566284
+Vg 137,Vg,Kinneve sn (nu Kinneved),B,RAK,0,freysteinn,karli,father,tidig,0.0,0,0.0,0.0,0.05052526263131566
+Vg 157,Vg,Hovs sn,A,Fp,0,fundinn,thordr,father,tidig,0.0,0,0.0,0.0,0.0
+Vg 160,Vg,Hällstads sn,B,RAK,0,thorvidr,thorir,father,tidig,0.0,0,1.0,1.0,0.13706853426713356
+Vg 162,Vg,Möne sn,B,Fp,0,vebjorn,tolir,son,tidig,0.0,0,0.0,0.0,0.054027013506753374
+Vg 169,Vg,Södra Vings sn,A,,0,tolir,thorir,sons,odaterad,,0,0.0,0.0,0.0
+Vg 169,Vg,Södra Vings sn,A,,0,thorny,thorir,sons,odaterad,,0,0.0,1.0,0.0
+Vg 169,Vg,Södra Vings sn,A,,0,tolir,klakki,sons,odaterad,,0,0.0,0.0,0.0
+Vg 169,Vg,Södra Vings sn,A,,0,thorny,klakki,sons,odaterad,,0,0.0,0.0,0.0
+Vg 174,Vg,Dalums sn,A,RAK,0,gamli,helgi,son,tidig,0.0,0,0.0,0.0,0.0
+Vg 175,Vg,Dalums sn,A,RAK,0,thorsteinn,refr,father,tidig,0.0,0,0.0,0.0,0.16708354177088544
+Vg 175,Vg,Dalums sn,A,RAK,0,thorsteinn,vesteinn,father,tidig,0.0,0,1.0,0.0,0.16808404202101052
+Vg 179,Vg,Kölaby sn,A,Fp,0,thjodulfr,styrr,förälder till,tidig,0.0,0,0.0,0.0,0.0
+Vg 181,Vg,Norra Åsarps sn,B,Pr1,0,gufi,olafr,son,tidig,0.0,0,0.0,0.0,0.0
+Vg 190,Vg,Månstads sn,A,,0,ingjaldr,grimulfr,son,odaterad,,0,0.0,0.0,0.0
+Vg 192,Vg,Nittorps sn,A,RAK,0,sveinn,froi,son,tidig,0.0,0,0.0,0.0,0.0
+Vg 194,Vg,Svenljunga sn,A,Fp,0,gudmundr,ormarr,son,tidig,0.0,0,0.0,0.0,0.02801400700350175
+Vg 198,Vg,Dalums sn,A,,0,bruni,askell,son,odaterad,,0,0.0,0.0,0.0
+U 2,U,Adelsö sn,B,,1,ernbjorn,ofeigr,father,odaterad,,1,0.0,1.0,0.0830415207603802
+U 14,U,Munsö sn,B,Pr1,0,toki,forkunnr,son,tidig,0.0,0,0.0,0.0,0.0
+U 14,U,Munsö sn,B,Pr1,0,thorgerdr,forkunnr,son,tidig,0.0,0,0.0,0.0,0.0830415207603802
+U 19,U,Ekerö sn,A,RAK,0,hadski,freysteinn,father,tidig,0.0,0,0.0,0.0,0.0
+U 30,U,Hilleshögs sn,A,Pr2,1,sigfastr,steinulfr,father,tidig,0.0,1,0.0,1.0,0.05052526263131566
+U 32,U,Sånga sn,B,Pr1,1,sveinn,ofeigr,father,tidig,0.0,1,0.0,0.0,0.04752376188094047
+U 32,U,Sånga sn,B,Pr1,1,sveinn,krokr,father,tidig,0.0,1,0.0,0.0,0.03701850925462731
+U 32,U,Sånga sn,B,Pr1,1,sveinn,steinn,father,tidig,0.0,1,1.0,1.0,0.04652326163081541
+U 32,U,Sånga sn,B,Pr1,1,sveinn,helgi,father,tidig,0.0,1,0.0,0.0,0.032016008004002
+U 34,U,Sånga sn,B,Pr1,1,vikingr,sveinn,father,tidig,0.0,1,0.0,0.0,0.004502251125562781
+U 34,U,Sånga sn,B,Pr1,1,vikingr,halfdan,father,tidig,0.0,1,0.0,0.0,0.009004502251125562
+U 34,U,Sånga sn,B,Pr1,1,vikingr,thora,father,tidig,0.0,1,0.0,0.0,0.00400200100050025
+U 35,U,Sånga sn,B,Pr2,0,vegisl,adisl,father,tidig,0.0,0,0.0,0.0,0.01900950475237619
+U 35,U,Sånga sn,B,Pr2,0,vegisl,asl,father,tidig,0.0,0,0.0,0.0,0.01900950475237619
+U 35,U,Sånga sn,B,Pr2,0,vegisl,olafr,father,tidig,0.0,0,0.0,0.0,0.016508254127063533
+U 37,U,Sånga sn,B,Pr2,1,kari,otryggr,father,tidig,0.0,1,0.0,0.0,0.03901950975487744
+U 37,U,Sånga sn,B,Pr2,1,kari,bondi,father,tidig,0.0,1,0.0,0.0,0.03801900950475238
+U 37,U,Sånga sn,B,Pr2,1,kari,alfrikr,father,tidig,0.0,1,0.0,0.0,0.04452226113056528
+U 40,U,Skå sn,B,Pr3,0,asulfr,asbjorn,father,sen,1.0,0,1.0,1.0,0.022011005502751375
+U 40,U,Skå sn,B,Pr3,0,asulfr,gunnelfr,father,sen,1.0,0,0.0,0.0,0.029014507253626812
+U 42,U,Skå sn,B,Pr4,0,kjallakr,kvigr,son,sen,1.0,0,0.0,1.0,0.0
+U 43,U,Skå sn,B,Pr3,0,jorundr,ofeigr,father,sen,1.0,0,0.0,0.0,0.014507253626813406
+U 43,U,Skå sn,B,Pr3,0,jorundr,sigmarr,father,sen,1.0,0,0.0,0.0,0.01150575287643822
+U 43,U,Skå sn,B,Pr3,0,jorundr,freybjorn,father,sen,1.0,0,0.0,0.0,0.016008004002001
+U 44,U,Skå sn,B,Pr4,0,eisti,eysteinn,father,sen,1.0,0,0.0,1.0,0.014507253626813406
+U 44,U,Skå sn,B,Pr4,0,eisti,freysteinn,father,sen,1.0,0,0.0,0.0,0.017508754377188594
+U 47,U,Lovö sn,A,Pr3,0,vigr,thorgisl,father,sen,1.0,0,0.0,0.0,0.03301650825412707
+U 47,U,Lovö sn,A,Pr3,0,vigr,signjotr,father,sen,1.0,0,0.0,0.0,0.01900950475237619
+U 48,U,Lovö sn,A,Pr4,0,illugi,thingfastr,son,sen,1.0,0,0.0,0.0,0.0015007503751875938
+U 51,U,Lovö sn,A,Pr3,0,gubbi,igulbjorn,father,sen,1.0,0,0.0,0.0,0.005502751375687844
+U 51,U,Lovö sn,A,Pr3,0,gubbi,vebjorn,father,sen,1.0,0,0.0,0.0,0.009504752376188095
+U 51,U,Lovö sn,A,Pr3,0,gubbi,hugbjorn,father,sen,1.0,0,0.0,0.0,0.009004502251125562
+U 57,U,Stockholm,B,Pr3,0,bjorn,sinarr,father,sen,1.0,0,0.0,0.0,0.017008504252126064
+U 57,U,Stockholm,B,Pr3,0,bjorn,thorkell,father,sen,1.0,0,0.0,0.0,0.02001000500250125
+U 57,U,Stockholm,B,Pr3,0,bjorn,vefastr,father,sen,1.0,0,0.0,0.0,0.018509254627313655
+U 60,U,Stockholm,B,,0,bjorn,ingifridr,father,odaterad,,0,0.0,0.0,0.01950975487743872
+U 61,U,Spånga sn,B,RAK,0,bjorn,hjalmvidr,father,tidig,0.0,0,0.0,0.0,0.0080040020010005
+U 61,U,Spånga sn,B,RAK,0,bjorn,thorbjorn,father,tidig,0.0,0,0.0,0.0,0.007503751875937969
+U 61,U,Spånga sn,B,RAK,0,bjorn,gunnbjorn,father,tidig,0.0,0,0.0,0.0,0.006003001500750375
+U 61,U,Spånga sn,B,RAK,0,bjorn,halfdan,father,tidig,0.0,0,0.0,0.0,0.0080040020010005
+U 69,U,Spånga sn,B,RAK,1,ragnelfr,onundr,son,tidig,0.0,1,0.0,0.0,0.0
+U 70,U,Spånga sn,B,Pr1,0,djarfr,eistr,son,tidig,0.0,0,0.0,0.0,0.022511255627813906
+U 75,U,Spånga sn,B,Pr4,0,egvidr,sigvidr,father,sen,1.0,0,0.0,0.0,0.0
+U 75,U,Spånga sn,B,Pr4,0,holmfridr,sigvidr,mother,sen,1.0,0,0.0,0.0,0.02451225612806403
+U 77,U,Spånga sn (nu Sundbyberg),B,Pr4,0,jobjorn,holmsteinn,father,sen,1.0,0,0.0,0.0,0.0880440220110055
+U 77,U,Spånga sn (nu Sundbyberg),B,Pr4,0,jobjorn,hosvi,father,sen,1.0,0,0.0,0.0,0.0895447723861931
+U 79,U,Spånga sn,B,Pr3,0,bersa,gyi,father,sen,1.0,0,0.0,0.0,0.0030015007503751876
+U 79,U,Spånga sn,B,Pr3,0,bersa,sveinn,father,sen,1.0,0,0.0,0.0,0.00400200100050025
+U 89,U,Järfälla sn,B,Pr2,0,holmfastr,helga,father,tidig,0.0,0,0.0,1.0,0.03801900950475238
+U 89,U,Järfälla sn,B,Pr2,0,holmfastr,holmfridr,father,tidig,0.0,0,1.0,1.0,0.0400200100050025
+U 94,U,Sollentuna sn,A,,1,geirrodr,fullugi,father,odaterad,,1,0.0,0.0,0.008504252126063032
+U 94,U,Sollentuna sn,A,,1,geirrodr,gunnarr,father,odaterad,,1,0.0,1.0,0.01200600300150075
+U 98,U,Sollentuna sn,A,,0,sigtryggr,ingithora,father,odaterad,,0,0.0,0.0,0.0050025012506253125
+U 98,U,Sollentuna sn,A,,0,ingithora,ragnfastr,son,odaterad,,0,0.0,0.0,0.0065032516258129065
+U 100,U,Sollentuna sn,A,Pr4,0,gyridr,ulfkell,son,sen,1.0,0,0.0,0.0,0.0065032516258129065
+U 103,U,Sollentuna sn,A,Pr1,0,tidkumi,sveinn,father,tidig,0.0,0,0.0,0.0,0.0
+U 103,U,Sollentuna sn,A,Pr1,0,tidkumi,ketilmundr,father,tidig,0.0,0,0.0,0.0,0.0
+U 103,U,Sollentuna sn,A,Pr1,0,tidkumi,erinmundr,father,tidig,0.0,0,0.0,0.0,0.0
+U 104,U,Eds sn,B,Pr5,0,sveinn,thorsteinn,father,sen,1.0,0,0.0,0.0,0.02301150575287644
+U 106,U,Eds sn,B,,0,tunna,gunnarr,mother,odaterad,,0,0.0,0.0,0.0
+U 106,U,Eds sn,B,,0,tunna,sveinn,mother,odaterad,,0,0.0,0.0,0.0
+U 107,U,Eds sn,B,,0,geirlakr,hemingr,son,odaterad,,0,0.0,0.0,0.0050025012506253125
+U 115,U,Eds sn,B,Pr5,0,ragnfridr,finnvidr,förälder till,sen,1.0,0,0.0,0.0,0.005502751375687844
+U 117,U,Eds sn,B,Pr4,0,thorfastr,geirbjorn,son,sen,1.0,0,0.0,0.0,0.1295647823911956
+U 117,U,Eds sn,B,Pr4,0,ingilaug,geirbjorn,son,sen,1.0,0,0.0,0.0,0.04352176088044022
+U 118,U,Eds sn,B,Pr4,0,hemingr,ragnfastr,father,sen,1.0,0,0.0,0.0,0.009504752376188095
+U 119,U,Eds sn,B,Pr3,0,steinn,skagi,father,sen,1.0,0,0.0,1.0,0.021010505252626314
+U 126,U,Solna sn,A,Fp,1,forkunnr,thorgeirr,son,tidig,0.0,1,0.0,0.0,0.01200600300150075
+U 131,U,Danderyds sn,B,Pr3,0,thorsteinn,thegn,father,sen,1.0,0,0.0,1.0,0.11005502751375688
+U 131,U,Danderyds sn,B,Pr3,0,thorsteinn,danr,father,sen,1.0,0,0.0,0.0,0.10005002501250625
+U 133,U,Täby sn,B,Pr3,0,gudlaug,holmi,son,sen,1.0,0,0.0,0.0,0.01250625312656328
+U 135,U,Täby sn,B,Pr2,0,eysteinn,ingifastr,father,tidig,0.0,0,0.0,1.0,0.04852426213106553
+U 135,U,Täby sn,B,Pr2,0,eysteinn,sveinn,father,tidig,0.0,0,0.0,0.0,0.05202601300650325
+U 135,U,Täby sn,B,Pr2,0,eysteinn,eysteinn,father (samma namn),tidig,0.0,0,1.0,1.0,0.03451725862931466
+U 137,U,Täby sn,B,Pr2,0,eysteinn,kagr,son,tidig,0.0,0,0.0,0.0,0.04252126063031516
+U 137,U,Täby sn,B,Pr2,0,astridr,kagr,son,tidig,0.0,0,0.0,0.0,0.0
+U 142,U,Täby sn,B,Pr4,0,jarlabanki,ingifastr,father,sen,1.0,0,0.0,0.0,0.0
+U 150,U,Täby sn,B,,0,jarlabanki,sveinn,son,odaterad,,0,0.0,0.0,0.0
+U 150,U,Täby sn,B,,0,fastve,sveinn,son,odaterad,,0,0.0,0.0,0.01900950475237619
+U 151,U,Täby sn,B,,0,igull,thorbjorn,father,odaterad,,0,0.0,0.0,0.00400200100050025
+U 151,U,Täby sn,B,,0,igull,ingithora,father,odaterad,,0,0.0,1.0,0.0025012506253126563
+U 152,U,Täby sn,B,Pr4,0,holmfridr,sighvatr,son,sen,1.0,0,0.0,0.0,0.02001000500250125
+U 159,U,Täby sn,B,,0,halfdan,gismundr,father,odaterad,,0,0.0,0.0,0.00400200100050025
+U 159,U,Täby sn,B,,0,halfdan,hemingr,father,odaterad,,0,0.0,1.0,0.002001000500250125
+U 160,U,Täby sn,B,Pr1,1,ulfr,ulfketill,father,tidig,0.0,1,0.0,1.0,0.004502251125562781
+U 160,U,Täby sn,B,Pr1,1,ulfr,gyi,father,tidig,0.0,1,0.0,0.0,0.005502751375687844
+U 160,U,Täby sn,B,Pr1,1,ulfr,uni,father,tidig,0.0,1,0.0,1.0,0.005502751375687844
+U 162,U,Täby sn,B,,0,vesteinn,grimr,father,odaterad,,0,0.0,0.0,0.03951975987993997
+U 169,U,Östra Ryds sn,B,RAK,0,holmsteinn,freysteinn,son,tidig,0.0,0,1.0,0.0,0.05302651325662831
+U 169,U,Östra Ryds sn,B,RAK,0,orm-,freysteinn,son,tidig,0.0,0,0.0,0.0,0.0
+U 170,U,Östra Ryds sn,B,,0,gunni,agni,son,odaterad,,0,1.0,0.0,0.017008504252126064
+U 170,U,Östra Ryds sn,B,,0,asa,agni,son,odaterad,,0,0.0,1.0,0.0
+U 172,U,Lidingö,A,Pr3,1,bjorn,kari,father,sen,1.0,1,0.0,0.0,0.02451225612806403
+U 172,U,Lidingö,A,Pr3,1,bjorn,ingjaldr,father,sen,1.0,1,0.0,0.0,0.01950975487743872
+U 173,U,Värmdö sn,A,Pr5,0,andvettr,skalli,father,sen,1.0,0,0.0,0.0,0.009004502251125562
+U 173,U,Värmdö sn,A,Pr5,0,andvettr,sibbi,father,sen,1.0,0,0.0,0.0,0.010505252626313157
+U 173,U,Värmdö sn,A,Pr5,0,andvettr,hlifsteinn,father,sen,1.0,0,0.0,0.0,0.008504252126063032
+U 176,U,Österåkers sn,A,,0,eibjorn,geirdjarfr,father,odaterad,,0,0.0,0.0,0.0670335167583792
+U 176,U,Österåkers sn,A,,0,eibjorn,thorbjorn,father,odaterad,,0,1.0,0.0,0.07153576788394198
+U 176,U,Österåkers sn,A,,0,eibjorn,thormundr,father,odaterad,,0,0.0,0.0,0.08054027013506754
+U 181,U,Össeby-Garns sn,A,Pr5,0,eistr,asgautr,father,sen,1.0,0,0.0,1.0,0.014007003501750876
+U 181,U,Össeby-Garns sn,A,Pr5,0,eistr,sveinn,father,sen,1.0,0,0.0,0.0,0.010005002501250625
+U 181,U,Össeby-Garns sn,A,Pr5,0,eistr,ingifastr,father,sen,1.0,0,0.0,1.0,0.015007503751875938
+U 181,U,Össeby-Garns sn,A,Pr5,0,eistr,ingibjorn,father,sen,1.0,0,0.0,1.0,0.013006503251625813
+U 186,U,Össeby-Garns sn,A,Pr2,0,jargeirr,trani,father,tidig,0.0,0,0.0,0.0,0.00400200100050025
+U 186,U,Össeby-Garns sn,A,Pr2,0,jargeirr,asbjorn,father,tidig,0.0,0,0.0,0.0,0.007003501750875438
+U 189,U,Össeby-Garns sn,A,,0,kvigbjorn,freysteinn,father,odaterad,,0,0.0,0.0,0.0
+U 189,U,Össeby-Garns sn,A,,0,kvigbjorn,kati,father,odaterad,,0,0.0,1.0,0.0
+U 189,U,Össeby-Garns sn,A,,0,kvigbjorn,koelingi,father,odaterad,,0,0.0,1.0,0.0
+U 189,U,Össeby-Garns sn,A,,0,kvigbjorn,bersa,father,odaterad,,0,0.0,0.0,0.0
+U 190,U,Össeby-Garns sn,A,Pr4,0,myndill,fastbjorn,father,sen,1.0,0,0.0,0.0,0.0
+U 200,U,Vada sn,B,RAK,1,thjalfi,thordr,förälder till,tidig,0.0,1,0.0,1.0,0.006003001500750375
+U 201,U,Angarns sn,A,Pr1,1,toki,thegn,father,tidig,0.0,1,0.0,0.0,0.0
+U 201,U,Angarns sn,A,Pr1,1,toki,gautdjarfr,father,tidig,0.0,1,0.0,0.0,0.0
+U 201,U,Angarns sn,A,Pr1,1,toki,sunnhvatr,father,tidig,0.0,1,0.0,0.0,0.0
+U 201,U,Angarns sn,A,Pr1,1,toki,thorulfr,father,tidig,0.0,1,0.0,0.0,0.0
+U 203,U,Angarns sn,A,Pr3,0,ali,ulfr,son,sen,1.0,0,0.0,1.0,0.0
+U 216,U,Vallentuna sn,A,Pr5,0,eysteinn,johan,father,sen,1.0,0,0.0,0.0,0.058029014507253625
+U 229,U,Vallentuna sn,A,Pr4,0,oddi,halfdan,father,sen,1.0,0,0.0,0.0,0.0
+U 229,U,Vallentuna sn,A,Pr4,0,oddi,tobbi,father,sen,1.0,0,0.0,0.0,0.0
+U 231,U,Vallentuna sn,A,Pr5,0,halfdan,hedinve,father,sen,1.0,0,0.0,1.0,0.013006503251625813
+U 231,U,Vallentuna sn,A,Pr5,0,halfdan,eysteinn,father,sen,1.0,0,0.0,0.0,0.014007003501750876
+U 231,U,Vallentuna sn,A,Pr5,0,halfdan,ulfr,father,sen,1.0,0,0.0,0.0,0.013006503251625813
+U 231,U,Vallentuna sn,A,Pr5,0,halfdan,olafr,father,sen,1.0,0,0.0,0.0,0.016508254127063533
+U 232,U,Vallentuna sn,A,Pr5,0,tobbi,tosti,father,sen,1.0,0,1.0,1.0,0.010505252626313157
+U 232,U,Vallentuna sn,A,Pr5,0,tobbi,sigfuss,father,sen,1.0,0,0.0,0.0,0.013006503251625813
+U 232,U,Vallentuna sn,A,Pr5,0,tobbi,sigmarr,father,sen,1.0,0,0.0,0.0,0.010505252626313157
+U 233,U,Vallentuna sn,A,Pr4,0,olafr,eilafr,father,sen,1.0,0,0.0,1.0,0.015507753876938469
+U 233,U,Vallentuna sn,A,Pr4,0,olafr,asmundr,father,sen,1.0,0,0.0,1.0,0.014507253626813406
+U 233,U,Vallentuna sn,A,Pr4,0,olafr,eysteinn,father,sen,1.0,0,0.0,1.0,0.022011005502751375
+U 233,U,Vallentuna sn,A,Pr4,0,gudlaug,danr,son,sen,1.0,0,0.0,0.0,0.006003001500750375
+U 237,U,Vallentuna sn,A,,1,ulfr,gerdarr,father,odaterad,,1,0.0,0.0,0.014007003501750876
+U 237,U,Vallentuna sn,A,,1,ulfr,fullugi,father,odaterad,,1,0.0,0.0,0.015507753876938469
+U 237,U,Vallentuna sn,A,,1,ulfr,sigreifr,father,odaterad,,1,0.0,0.0,0.013006503251625813
+U 237,U,Vallentuna sn,A,,1,ulfr,sibbi,father,odaterad,,1,0.0,0.0,0.010505252626313157
+U 237,U,Vallentuna sn,A,,1,ulfr,sighvatr,father,odaterad,,1,0.0,0.0,0.017508754377188594
+U 238,U,Vallentuna sn,A,Pr3,0,astridr,sveinn,son,sen,1.0,0,0.0,0.0,0.0010005002501250625
+U 243,U,Vallentuna sn,A,Pr3,1,holmlaugr,fasti,sons,sen,1.0,1,0.0,0.0,0.02301150575287644
+U 243,U,Vallentuna sn,A,Pr3,1,holmfridr,fasti,sons,sen,1.0,1,0.0,0.0,0.029014507253626812
+U 243,U,Vallentuna sn,A,Pr3,1,holmlaugr,sigfastr,sons,sen,1.0,1,0.0,0.0,0.026513256628314157
+U 243,U,Vallentuna sn,A,Pr3,1,holmfridr,sigfastr,sons,sen,1.0,1,0.0,0.0,0.0240120060030015
+U 252,U,Fresta sn,B,Pr5,0,gudlaug,brynjulfr,mother,sen,1.0,0,0.0,0.0,0.01150575287643822
+U 252,U,Fresta sn,B,Pr5,0,gudlaug,ulfr,mother,sen,1.0,0,0.0,0.0,0.009004502251125562
+U 256,U,Fresta sn,B,Pr3,0,ulfr,ingjaldr,father,sen,1.0,0,0.0,1.0,0.011005502751375688
+U 256,U,Fresta sn,B,Pr3,0,ulfr,hemingr,father,sen,1.0,0,0.0,0.0,0.01150575287643822
+U 258,U,Fresta sn,B,RAK,0,geirbjorn,gunnarr,father,tidig,0.0,0,0.0,1.0,0.11305652826413207
+U 258,U,Fresta sn,B,RAK,0,geirbjorn,sassurr,father,tidig,0.0,0,0.0,0.0,0.1055527763881941
+U 259,U,Fresta sn,B,Pr4,0,kari,frosti,son,sen,1.0,0,0.0,0.0,0.02051025512756378
+U 260,U,Fresta sn,B,Pr4,0,sigfastr,gismundr,father,sen,1.0,0,0.0,0.0,0.10705352676338169
+U 260,U,Fresta sn,B,Pr4,0,sigfastr,vikingr,father,sen,1.0,0,0.0,0.0,0.09954977488744372
+U 267,U,Fresta sn,B,Pr4,0,gillaug,bjorn,son,sen,1.0,0,0.0,0.0,0.0025012506253126563
+U 273,U,Hammarby sn,B,,0,djarfr,illugi,father,odaterad,,0,0.0,0.0,0.025512756378189096
+U 276,U,Hammarby sn,B,Pr1,1,geirbjorn,djarfr,father,tidig,0.0,1,0.0,0.0,0.11555777888944473
+U 276,U,Hammarby sn,B,Pr1,1,geirbjorn,andsvarr,father,tidig,0.0,1,0.0,0.0,0.10655327663831916
+U 276,U,Hammarby sn,B,Pr1,1,geirbjorn,fullugi,father,tidig,0.0,1,0.0,0.0,0.10105052526263132
+U 281,U,Hammarby sn,B,Pr4,0,sibbi,vebjorn,father,sen,1.0,0,0.0,0.0,0.013006503251625813
+U 281,U,Hammarby sn,B,Pr4,0,sibbi,huskardi,father,sen,1.0,0,0.0,0.0,0.011005502751375688
+U 285,U,Hammarby sn,B,Pr4,0,holmlaugr,oleifr,son,sen,1.0,0,0.0,0.0,0.026013006503251626
+U 287,U,Hammarby sn,B,Pr4,0,kjallakr,ingifastr,son,sen,1.0,0,0.0,0.0,0.0
+U 288,U,Hammarby sn,B,Pr5,0,olafr,gunni,son,sen,1.0,0,0.0,0.0,0.0240120060030015
+U 288,U,Hammarby sn,B,Pr5,0,gunnhildr,gunni,son,sen,1.0,0,0.0,1.0,0.016008004002001
+U 289,U,Hammarby sn,B,Pr3,0,holmgeirr,holmfastr,father,sen,1.0,0,1.0,1.0,0.05052526263131566
+U 293,U,Hammarby sn,B,,1,ketill,forkunnr,father,odaterad,,1,0.0,0.0,0.0
+U 293,U,Hammarby sn,B,,1,ketill,thorir,father,odaterad,,1,0.0,0.0,0.0
+U 295,U,Skånela sn,A,Pr4,0,vegeirr,bersa,son,sen,1.0,0,0.0,0.0,0.05552776388194097
+U 296,U,Skånela sn,A,,0,ingivaldr,ingimundr,son,odaterad,,0,1.0,1.0,0.030515257628814407
+U 296,U,Skånela sn,A,,0,gislaug,ingimundr,son,odaterad,,0,0.0,0.0,0.006003001500750375
+U 297,U,Skånela sn,A,Pr4,0,sigbjorn,jobjorn,father,sen,1.0,0,1.0,0.0,0.12456228114057029
+U 304,U,Skånela sn,A,,0,manni,fullugi,father,odaterad,,0,0.0,0.0,0.0
+U 304,U,Skånela sn,A,,0,manni,haukr,father,odaterad,,0,0.0,0.0,0.0
+U 312,U,Skånela sn,A,Pr4,0,farulfr,gunnarr,förälder till,sen,1.0,0,0.0,0.0,0.00400200100050025
+U 314,U,Skånela sn,A,,0,holmdis,jofurfast,daughter,odaterad,,0,0.0,0.0,0.03301650825412707
+U 315,U,Skånela sn,A,Pr4,0,gunnarr,thordr,son,sen,1.0,0,0.0,0.0,0.015007503751875938
+U 315,U,Skånela sn,A,Pr4,0,holmdis,thordr,son,sen,1.0,0,0.0,0.0,0.026513256628314157
+U 325,U,Markims sn,A,Pr4,0,freysteinn,thellinefr,father,sen,1.0,0,0.0,0.0,0.05202601300650325
+U 325,U,Markims sn,A,Pr4,0,freysteinn,thor-,father,sen,1.0,0,0.0,0.0,0.057528764382191094
+U 326,U,Markims sn,A,Pr1,0,holmgerdr,sveinn,son,tidig,0.0,0,0.0,0.0,0.016508254127063533
+U 326,U,Markims sn,A,Pr1,0,sigrodr,sveinn,son,tidig,0.0,0,0.0,1.0,0.026513256628314157
+U 328,U,Markims sn,A,Pr1,0,onaemr,gyridr,father,tidig,0.0,0,0.0,0.0,0.0
+U 328,U,Markims sn,A,Pr1,0,onaemr,gudlaug,father,tidig,0.0,0,0.0,0.0,0.0
+U 333,U,Orkesta sn,A,Pr3,0,brusi,osnikinn,father,sen,1.0,0,0.0,0.0,0.014007003501750876
+U 333,U,Orkesta sn,A,Pr3,0,brusi,signjotr,father,sen,1.0,0,0.0,0.0,0.011005502751375688
+U 333,U,Orkesta sn,A,Pr3,0,brusi,sigvidr,father,sen,1.0,0,0.0,0.0,0.009004502251125562
+U 335,U,Orkesta sn,A,Pr1,0,haera,holmi,father,tidig,0.0,0,0.0,1.0,0.0
+U 341,U,Orkesta sn,A,RAK,1,kalfr,ingjaldr,father,tidig,0.0,1,0.0,0.0,0.03601800900450225
+U 341,U,Orkesta sn,A,RAK,1,ragnve,ingjaldr,mother,tidig,0.0,1,0.0,0.0,0.013006503251625813
+U 343,U,Orkesta sn,A,,1,ulfr,karsi,father,odaterad,,1,0.0,0.0,0.01900950475237619
+U 346,U,Frösunda sn,B,,1,ragnfridr,bjorn,son,odaterad,,1,0.0,0.0,0.01950975487743872
+U 352,U,Frösunda sn,B,Pr4,0,siglaug,sigvidr,son,sen,1.0,0,1.0,1.0,0.05252626313156578
+U 356,U,Lunda sn,A,Pr3,1,ragnfridr,bjorn,son,sen,1.0,1,0.0,0.0,0.0050025012506253125
+U 357,U,Skepptuna sn,A,Pr4,0,holmi,vargas,father,sen,1.0,0,0.0,0.0,0.0015007503751875938
+U 357,U,Skepptuna sn,A,Pr4,0,holmi,arnkell,father,sen,1.0,0,0.0,0.0,0.0030015007503751876
+U 357,U,Skepptuna sn,A,Pr4,0,holmi,andvettr,father,sen,1.0,0,0.0,0.0,0.005502751375687844
+U 358,U,Skepptuna sn,A,RAK,1,folkmarr,folkbjorn,son,tidig,0.0,1,1.0,1.0,0.006003001500750375
+U 362,U,Skepptuna sn,A,,0,ingjaldr,ketilfastr,father,odaterad,,0,0.0,0.0,0.0
+U 362,U,Skepptuna sn,A,,0,ingjaldr,nefr,father,odaterad,,0,0.0,0.0,0.0
+U 362,U,Skepptuna sn,A,,0,ingjaldr,ofeigr,father,odaterad,,0,0.0,1.0,0.0
+U 372,U,Skepptuna sn,A,Pr2,1,sighvatr,thorsteinn,father,tidig,0.0,1,0.0,0.0,0.02501250625312656
+U 372,U,Skepptuna sn,A,Pr2,1,sighvatr,thegn,father,tidig,0.0,1,0.0,0.0,0.030015007503751877
+U 372,U,Skepptuna sn,A,Pr2,1,sighvatr,sjalfi,father,tidig,0.0,1,0.0,1.0,0.0240120060030015
+U 372,U,Skepptuna sn,A,Pr2,1,sighvatr,gilla,father,tidig,0.0,1,0.0,0.0,0.02451225612806403
+U 375,U,Vidbo sn,A,Pr2,0,sigfastr,vinaman,son,tidig,0.0,0,0.0,0.0,0.04752376188094047
+U 375,U,Vidbo sn,A,Pr2,0,ginnlaug,vinaman,son,tidig,0.0,0,0.0,0.0,0.0065032516258129065
+U 376,U,Vidbo sn,A,Pr4,0,inga,ragni,son,sen,1.0,0,0.0,0.0,0.0
+U 377,U,Vidbo sn,A,Pr4,0,gunnarr,olaug,daughter,sen,1.0,0,0.0,0.0,0.018009004502251125
+U 377,U,Vidbo sn,A,Pr4,0,ketiley,olaug,daughter,sen,1.0,0,0.0,0.0,0.03401700850425213
+U 378,U,Vidbo sn,A,Pr4,0,igull,sveinn,father,sen,1.0,0,0.0,0.0,0.0025012506253126563
+U 378,U,Vidbo sn,A,Pr4,0,igull,igulfastr,father,sen,1.0,0,0.0,1.0,0.005502751375687844
+U 378,U,Vidbo sn,A,Pr4,0,aselfr,sveinn,mother,sen,1.0,0,0.0,0.0,0.021510755377688845
+U 378,U,Vidbo sn,A,Pr4,0,aselfr,igulfastr,mother,sen,1.0,0,0.0,1.0,0.02451225612806403
+U 410,U,Sankt Olovs sn (Sankt Olof),A,Pr3,0,sigsteinn,styrbjorn,father,sen,1.0,0,0.0,1.0,0.0975487743871936
+U 418,U,Norrsunda sn,B,Pr3,1,thorsteinn,thorfastr,father,sen,1.0,1,1.0,1.0,0.09054527263631816
+U 418,U,Norrsunda sn,B,Pr3,1,thorsteinn,ketilve,father,sen,1.0,1,0.0,0.0,0.09854927463731866
+U 419,U,Norrsunda sn,B,Pr2,1,gunnarr,eysteinn,förälder till,tidig,0.0,1,0.0,0.0,0.03851925962981491
+U 421,U,Norrsunda sn,B,,0,ketill,ketilve,father,odaterad,,0,0.0,1.0,0.0
+U 423,U,Norrsunda sn,B,Pr3,1,ingulfr,ketill,father,sen,1.0,1,0.0,0.0,0.01200600300150075
+U 424,U,Norrsunda sn,B,,1,gyi,tafsi,son,odaterad,,1,0.0,0.0,0.0
+U 425,U,Norrsunda sn,B,,0,gudmarr,jorundr,father,odaterad,,0,0.0,0.0,0.026513256628314157
+U 425,U,Norrsunda sn,B,,0,gudmarr,onundr,father,odaterad,,0,0.0,0.0,0.030515257628814407
+U 426,U,Norrsunda sn,B,Pr1,0,thorsteinn,jorundr,son,tidig,0.0,0,0.0,0.0,0.1135567783891946
+U 428,U,Norrsunda sn,B,Pr3,0,gunnarr,vighjalmr,son,sen,1.0,0,0.0,0.0,0.02301150575287644
+U 428,U,Norrsunda sn,B,Pr3,0,gullaug,vighjalmr,son,sen,1.0,0,0.0,0.0,0.002001000500250125
+U 429,U,Norrsunda sn,B,,0,borgulfr,thorir,father,odaterad,,0,0.0,0.0,0.0
+U 429,U,Norrsunda sn,B,,0,borgulfr,hroda,father,odaterad,,0,0.0,0.0,0.0
+U 430,U,Norrsunda sn,B,Pr1,0,borgulfr,thorbjorn,son,tidig,0.0,0,0.0,0.0,0.0
+U 430,U,Norrsunda sn,B,Pr1,0,gudlaug,thorbjorn,son,tidig,0.0,0,0.0,0.0,0.015007503751875938
+U 431,U,Norrsunda sn,B,Pr2,1,tofa,gunnarr,son,tidig,0.0,1,0.0,0.0,0.005502751375687844
+U 431,U,Norrsunda sn,B,Pr2,1,hemingr,gunnarr,son,tidig,0.0,1,0.0,0.0,0.01250625312656328
+U 432,U,Norrsunda sn,B,,0,vikingr,krokr,sons,odaterad,,0,0.0,0.0,0.003501750875437719
+U 432,U,Norrsunda sn,B,,0,vikingr,asbjorn,sons,odaterad,,0,0.0,0.0,0.0065032516258129065
+U 433,U,Husby-Ärlinghundra sn,A,,0,finnvidr,bjorn,förälder till,odaterad,,0,0.0,0.0,0.010005002501250625
+U 438,U,Husby-Ärlinghundra sn,A,,1,bruni,throndr,father,odaterad,,1,0.0,0.0,0.0
+U 438,U,Husby-Ärlinghundra sn,A,,1,bruni,riki,father,odaterad,,1,0.0,0.0,0.0
+U 438,U,Husby-Ärlinghundra sn,A,,1,bruni,gudrun,father,odaterad,,1,0.0,0.0,0.0
+U 439,U,Husby-Ärlinghundra sn,A,Fp,0,saebjorn,herleif,father,tidig,0.0,0,0.0,0.0,0.10605302651325663
+U 439,U,Husby-Ärlinghundra sn,A,Fp,0,saebjorn,thorgerdr,father,tidig,0.0,0,0.0,0.0,0.09254627313656828
+U 444,U,Odensala sn,B,Fp,0,borgulf,ulfr,father,tidig,0.0,0,0.0,0.0,0.0
+U 444,U,Odensala sn,B,Fp,0,borgulf,herbjorn,father,tidig,0.0,0,0.0,0.0,0.0
+U 444,U,Odensala sn,B,Fp,0,borgulf,nesbjorn,father,tidig,0.0,0,0.0,0.0,0.0
+U 444,U,Odensala sn,B,Fp,0,borgulf,hemingr,father,tidig,0.0,0,0.0,0.0,0.0
+U 445,U,Odensala sn,B,Pr4,0,nesbjorn,kylfingr,father,sen,1.0,0,0.0,0.0,0.0
+U 448,U,Odensala sn,B,,0,thorsteinn,igull,father,odaterad,,0,0.0,0.0,0.0945472736368184
+U 448,U,Odensala sn,B,,0,thorsteinn,bjorn,father,odaterad,,0,0.0,0.0,0.1040520260130065
+U 453,U,Odensala sn,B,Pr3,1,gansi,thorkell,father,sen,1.0,1,0.0,0.0,0.0
+U 453,U,Odensala sn,B,Pr3,1,gansi,gisl,father,sen,1.0,1,0.0,1.0,0.0
+U 455,U,Odensala sn,B,Pr4,0,thorkell,ingifastr,father,sen,1.0,0,0.0,0.0,0.08354177088544272
+U 455,U,Odensala sn,B,Pr4,0,gunnhildr,ingifastr,mother,sen,1.0,0,0.0,0.0,0.014007003501750876
+U 456,U,Odensala sn,B,,0,thegn,ing-,father,odaterad,,0,0.0,0.0,0.0
+U 456,U,Odensala sn,B,,0,thegn,thorbjorn,father,odaterad,,0,0.0,1.0,0.0
+U 457,U,Haga sn,A,Pr1,1,svarthofdi,onund,son,tidig,0.0,1,0.0,0.0,0.0
+U 458,U,Haga sn,A,,0,svarthofdi,eistr,father,odaterad,,0,0.0,0.0,0.01150575287643822
+U 459,U,Haga sn,A,Pr2,0,eistr,saxi,father,tidig,0.0,0,0.0,0.0,0.005502751375687844
+U 460,U,Haga sn,A,Pr4,0,oleifr,ingifastr,father,sen,1.0,0,0.0,1.0,0.013506753376688344
+U 461,U,Haga sn,A,Pr2,1,eistr,fastulfr,father,tidig,0.0,1,0.0,0.0,0.007003501750875438
+U 461,U,Haga sn,A,Pr2,1,eistr,oeringr,father,tidig,0.0,1,0.0,1.0,0.0065032516258129065
+U 461,U,Haga sn,A,Pr2,1,eistr,geirr,father,tidig,0.0,1,0.0,0.0,0.0065032516258129065
+U 461,U,Haga sn,A,Pr2,1,eistr,holmlaug,father,tidig,0.0,1,0.0,0.0,0.004502251125562781
+U 462,U,Vassunda sn,B,,0,halfdan,djarfr,father,odaterad,,0,0.0,0.0,0.0065032516258129065
+U 462,U,Vassunda sn,B,,0,halfdan,gunnarr,father,odaterad,,0,0.0,0.0,0.00400200100050025
+U 462,U,Vassunda sn,B,,0,halfdan,gulley,father,odaterad,,0,0.0,0.0,0.008504252126063032
+U 463,U,Vassunda sn,B,Pr4,0,holmsteinn,vedraldi,father,sen,1.0,0,0.0,0.0,0.0655327663831916
+U 463,U,Vassunda sn,B,Pr4,0,holmsteinn,vigi,father,sen,1.0,0,0.0,0.0,0.07953976988494248
+U 464,U,Vassunda sn,B,,1,tora,hrodleifr,son,odaterad,,1,0.0,0.0,0.0030015007503751876
+U 471,U,Knivsta sn,B,Pr3,1,onundr,fullugi,father,sen,1.0,1,0.0,0.0,0.01900950475237619
+U 471,U,Knivsta sn,B,Pr3,1,onundr,ulfr,father,sen,1.0,1,0.0,1.0,0.016008004002001
+U 471,U,Knivsta sn,B,Pr3,1,onundr,ageirr,father,sen,1.0,1,0.0,1.0,0.01150575287643822
+U 472,U,Knivsta sn,B,,0,eiki-nefr,gillaug,förälder till,odaterad,,0,0.0,0.0,0.0
+U 479,U,Alsike sn,A,Pr1,0,sigulfr,asmundr,father,tidig,0.0,0,0.0,0.0,0.061030515257628815
+U 480,U,Alsike sn,A,Pr3,0,soti,holmgeirr,father,sen,1.0,0,0.0,0.0,0.007003501750875438
+U 480,U,Alsike sn,A,Pr3,0,soti,gunni,father,sen,1.0,0,0.0,0.0,0.006003001500750375
+U 481,U,Lagga sn,A,Pr4,0,thorbjorn,thorgisl,father,sen,1.0,0,1.0,1.0,0.13856928464232116
+U 481,U,Lagga sn,A,Pr4,0,thorbjorn,thorsteinn,father,sen,1.0,0,1.0,1.0,0.14657328664332167
+U 481,U,Lagga sn,A,Pr4,0,thorbjorn,vebjorn,father,sen,1.0,0,1.0,0.0,0.14107053526763383
+U 481,U,Lagga sn,A,Pr4,0,thorbjorn,oleifr,father,sen,1.0,0,0.0,0.0,0.14657328664332167
+U 484,U,Lagga sn,A,Pr2,0,vidfari,oeringr,father,tidig,0.0,0,0.0,0.0,0.004502251125562781
+U 485,U,Lagga sn,A,Pr5,0,sigvidr,throtti,father,sen,1.0,0,0.0,0.0,0.048024012006003
+U 485,U,Lagga sn,A,Pr5,0,sigvidr,ingulfr,father,sen,1.0,0,0.0,0.0,0.058529264632316155
+U 489,U,Lagga sn,A,Pr4,0,gullaug,gillaug,daughter,sen,1.0,0,0.0,1.0,0.0030015007503751876
+U 492,U,Lagga sn,A,Pr4,0,bjorn,asbjorn,father,sen,1.0,0,0.0,0.0,0.021510755377688845
+U 492,U,Lagga sn,A,Pr4,0,bjorn,gisl,father,sen,1.0,0,0.0,0.0,0.017008504252126064
+U 492,U,Lagga sn,A,Pr4,0,bjorn,audbjorn,father,sen,1.0,0,0.0,0.0,0.011005502751375688
+U 494,U,Husby-Långhundra sn,B,,0,reginmundr,brunkell,father,odaterad,,0,0.0,0.0,0.0
+U 498,U,Husby-Långhundra sn,B,,0,ingifridr,onundr,förälder till,odaterad,,0,0.0,1.0,0.04502251125562781
+U 498,U,Husby-Långhundra sn,B,,0,kall,vikingr,father,odaterad,,0,0.0,0.0,0.027013506753376687
+U 498,U,Husby-Långhundra sn,B,,0,kall,onundr,father,odaterad,,0,0.0,0.0,0.030015007503751877
+U 503,U,Närtuna sn,B,,0,ketilfastr,ernfastr,father,odaterad,,0,1.0,0.0,0.07103551775887944
+U 503,U,Närtuna sn,B,,0,ketilfastr,erngautr,father,odaterad,,0,0.0,0.0,0.06303151575787894
+U 504,U,Närtuna sn,B,RAK,1,asgautr,ketilfastr,father,tidig,0.0,1,0.0,0.0,0.018509254627313655
+U 505,U,Kårsta sn,B,,0,alrikr,helgi,son,odaterad,,0,0.0,0.0,0.0
+U 510,U,Kårsta sn,B,Pr4,0,thorsteinn,freysteinn,father,sen,1.0,0,1.0,0.0,0.10005002501250625
+U 510,U,Kårsta sn,B,Pr4,0,thorsteinn,thorbjorn,father,sen,1.0,0,1.0,1.0,0.09304652326163082
+U 510,U,Kårsta sn,B,Pr4,0,thorsteinn,fasti,father,sen,1.0,0,0.0,0.0,0.09354677338669334
+U 510,U,Kårsta sn,B,Pr4,0,thorsteinn,venjotr,father,sen,1.0,0,0.0,0.0,0.10205102551275638
+U 510,U,Kårsta sn,B,Pr4,0,thorsteinn,ulfr,father,sen,1.0,0,0.0,0.0,0.10755377688844422
+U 510,U,Kårsta sn,B,Pr4,0,thorsteinn,gunndjarfr,father,sen,1.0,0,0.0,0.0,0.09104552276138068
+U 511,U,Kårsta sn,B,Pr4,0,fasti,vedjarfr,father,sen,1.0,0,0.0,0.0,0.008504252126063032
+U 511,U,Kårsta sn,B,Pr4,0,fasti,danr,father,sen,1.0,0,0.0,0.0,0.009004502251125562
+U 511,U,Kårsta sn,B,Pr4,0,fasti,fastarr,father,sen,1.0,0,0.0,1.0,0.008504252126063032
+U 511,U,Kårsta sn,B,Pr4,0,fasti,halfdan,father,sen,1.0,0,0.0,0.0,0.00400200100050025
+U 512,U,Fasterna sn,B,RAK,1,gudmarr,freybjorn,father,tidig,0.0,1,0.0,0.0,0.007003501750875438
+U 512,U,Fasterna sn,B,RAK,1,gudmarr,frey-,father,tidig,0.0,1,0.0,0.0,0.00400200100050025
+U 514,U,Rimbo sn,B,Pr4,0,ketilfastr,onundr,father,sen,1.0,0,0.0,0.0,0.06503251625812906
+U 515,U,Rimbo sn,B,Pr4,1,alfgeirr,gunni,father,sen,1.0,1,0.0,0.0,0.029514757378689346
+U 519,U,Skederids sn,B,Fp,1,geirbjorn,jobjorn,father,tidig,0.0,1,1.0,0.0,0.10655327663831916
+U 519,U,Skederids sn,B,Fp,1,geirbjorn,enni,father,tidig,0.0,1,0.0,0.0,0.10905452726363181
+U 530,U,Norrtälje,B,,0,broddr,ormi,father,odaterad,,0,0.0,0.0,0.0
+U 530,U,Norrtälje,B,,0,broddr,holmvidr,father,odaterad,,0,0.0,0.0,0.0
+U 530,U,Norrtälje,B,,0,broddr,holmfastr,father,odaterad,,0,0.0,0.0,0.0
+U 533,U,Roslags-Bro sn,B,Pr1,0,sigthrudr,onundr,son,tidig,0.0,0,0.0,0.0,0.029014507253626812
+U 545,U,Husby-Lyhundra sn (nu Husby-Sjuhundra),B,Pr4,0,sigrodr,gunnhildr,father,sen,1.0,0,0.0,0.0,0.04952476238119059
+U 559,U,Malsta sn,A,Pr5,1,andsvarr,snaebjorn,förälder till,sen,1.0,1,0.0,0.0,0.0
+U 565,U,Malsta sn,A,,0,manni,oleifr,son,odaterad,,0,0.0,0.0,0.0
+U 565,U,Malsta sn,A,,0,afridr,oleifr,son,odaterad,,0,0.0,1.0,0.006003001500750375
+U 570,U,Lohärads sn,B,Pr3,0,otryggvi,aki,father,sen,1.0,0,0.0,1.0,0.0
+U 570,U,Lohärads sn,B,Pr3,0,otryggvi,sveinn,father,sen,1.0,0,0.0,0.0,0.0
+U 573,U,Lohärads sn,B,Pr3,0,vigi,alfgautr,father,sen,1.0,0,0.0,0.0,0.03501750875437719
+U 573,U,Lohärads sn,B,Pr3,0,vigi,vigdjarfr,father,sen,1.0,0,0.0,1.0,0.029514757378689346
+U 582,U,Söderby-Karls sn,A,,0,bjorn,otryggr,son,odaterad,,0,0.0,0.0,0.017008504252126064
+U 582,U,Söderby-Karls sn,A,,0,igulfridr,otryggr,son,odaterad,,0,0.0,1.0,0.030515257628814407
+U 586,U,Edsbro sn,A,RAK,1,toki,gunnbjorn,father,tidig,0.0,1,0.0,0.0,0.0
+U 586,U,Edsbro sn,A,RAK,1,toki,asbjorn,father,tidig,0.0,1,0.0,0.0,0.0
+U 586,U,Edsbro sn,A,RAK,1,toki,sighvatr,father,tidig,0.0,1,0.0,0.0,0.0
+U 592,U,Knutby sn,B,,0,lodinn,otryggr,father,odaterad,,0,0.0,0.0,0.0025012506253126563
+U 592,U,Knutby sn,B,,0,lodinn,sigtryggr,father,odaterad,,0,0.0,0.0,0.0050025012506253125
+U 592,U,Knutby sn,B,,0,lodinn,asgeirr,father,odaterad,,0,0.0,0.0,0.003501750875437719
+U 597,U,Hökhuvuds sn,B,Pr4,0,vedjarfr,adjarfr,father,sen,1.0,0,0.0,0.0,0.03851925962981491
+U 597,U,Hökhuvuds sn,B,Pr4,0,vedjarfr,fullugi,father,sen,1.0,0,0.0,0.0,0.032016008004002
+U 600,U,Börstils sn,B,Pr4,0,geirhildr,spraki,son,sen,1.0,0,0.0,0.0,0.0065032516258129065
+U 613,U,Västra Ryds sn,A,,1,una,eysteinn,son,odaterad,,1,0.0,1.0,0.0
+U 615,U,Västra Ryds sn,A,KB,1,brusi,sigvidr,father,odaterad,,1,0.0,0.0,0.028514257128564282
+U 617,U,Bro sn,A,RAK,1,holmgeirr,ginnlaug,förälder till,tidig,0.0,1,0.0,0.0,0.02001000500250125
+U 618,U,Bro sn,A,Pr5,0,klemet,ingridr,father,sen,1.0,0,0.0,0.0,0.0
+U 618,U,Bro sn,A,Pr5,0,klemet,gyridr,father,sen,1.0,0,0.0,0.0,0.0
+U 622,U,Bro sn,A,,1,gunnhildr,horsefni,son,odaterad,,1,0.0,0.0,0.01150575287643822
+U 623,U,Bro sn,A,Pr2,0,vefastr,gyridr,father,tidig,0.0,0,0.0,0.0,0.03901950975487744
+U 623,U,Bro sn,A,Pr2,0,vefastr,sigvidr,father,tidig,0.0,0,0.0,0.0,0.04652326163081541
+U 623,U,Bro sn,A,Pr2,0,vefastr,sigfastr,father,tidig,0.0,0,1.0,0.0,0.03951975987993997
+U 624,U,Bro sn,A,Pr4,0,igull,sveinn,father,sen,1.0,0,0.0,0.0,0.002001000500250125
+U 624,U,Bro sn,A,Pr4,0,igull,bjorn,father,sen,1.0,0,0.0,0.0,0.0050025012506253125
+U 624,U,Bro sn,A,Pr4,0,igull,igulfastr,father,sen,1.0,0,0.0,1.0,0.007003501750875438
+U 627,U,Håbo-Tibble sn,A,,1,asbjorn,onundr,father,odaterad,,1,0.0,1.0,0.06353176588294147
+U 627,U,Håbo-Tibble sn,A,,1,asbjorn,gautr,father,odaterad,,1,0.0,0.0,0.06303151575787894
+U 627,U,Håbo-Tibble sn,A,,1,asbjorn,njosi,father,odaterad,,1,0.0,0.0,0.06653326663331666
+U 628,U,Håbo-Tibble sn,A,,0,holmsteinn,thorbjorn,father,odaterad,,0,0.0,0.0,0.06653326663331666
+U 628,U,Håbo-Tibble sn,A,,0,holmsteinn,ormr,father,odaterad,,0,0.0,0.0,0.06603301650825413
+U 628,U,Håbo-Tibble sn,A,,0,holmsteinn,hjalmfastr,father,odaterad,,0,0.0,1.0,0.06953476738369184
+U 628,U,Håbo-Tibble sn,A,,0,holmsteinn,knakr,father,odaterad,,0,0.0,0.0,0.05952976488244122
+U 628,U,Håbo-Tibble sn,A,,0,holmsteinn,thorsteinn,father,odaterad,,0,1.0,0.0,0.061530765382691345
+U 629,U,Håbo-Tibble sn,A,Pr3,1,arngisl,illugi,father,sen,1.0,1,0.0,1.0,0.01150575287643822
+U 629,U,Håbo-Tibble sn,A,Pr3,1,arngisl,fullugi,father,sen,1.0,1,0.0,0.0,0.016508254127063533
+U 630,U,Håbo-Tibble sn,A,Pr2,0,gunndjarfr,freybjorn,father,tidig,0.0,0,0.0,0.0,0.057028514257128564
+U 631,U,Kalmar sn,A,,0,soegsi,nikulas,father,odaterad,,0,0.0,0.0,0.0
+U 636,U,Kalmar sn,A,Fp,0,olve,arnfastr,son,tidig,0.0,0,0.0,1.0,0.02501250625312656
+U 637,U,Kalmar sn,A,Pr2,0,ulfr,snari,father,tidig,0.0,0,0.0,0.0,0.0025012506253126563
+U 637,U,Kalmar sn,A,Pr2,0,ulfr,ketilbjorn,father,tidig,0.0,0,0.0,0.0,0.007003501750875438
+U 640,U,Kalmar sn,A,Pr3,0,andvettr,kuss,father,sen,1.0,0,0.0,0.0,0.009004502251125562
+U 640,U,Kalmar sn,A,Pr3,0,andvettr,sighjalmr,father,sen,1.0,0,0.0,0.0,0.01150575287643822
+U 642,U,Yttergrans sn,B,Pr4,0,gildi,hedingeirr,father,sen,1.0,0,0.0,0.0,0.03601800900450225
+U 642,U,Yttergrans sn,B,Pr4,0,gildi,bjorn,father,sen,1.0,0,0.0,0.0,0.02751375687843922
+U 644,U,Yttergrans sn,B,Fp,1,gunnleifr,andvettr,father,tidig,0.0,1,0.0,0.0,0.058029014507253625
+U 644,U,Yttergrans sn,B,Fp,1,gunnleifr,karr,father,tidig,0.0,1,0.0,0.0,0.04502251125562781
+U 644,U,Yttergrans sn,B,Fp,1,gunnleifr,blesi,father,tidig,0.0,1,0.0,0.0,0.05302651325662831
+U 644,U,Yttergrans sn,B,Fp,1,gunnleifr,djarfr,father,tidig,0.0,1,0.0,0.0,0.060530265132566284
+U 646,U,Yttergrans sn,B,,0,thorgautr,steinbjorn,father,odaterad,,0,0.0,0.0,0.07903951975987994
+U 647,U,Övergrans sn,A,,0,sigdjarfr,gillaug,father,odaterad,,0,0.0,0.0,0.0720360180090045
+U 649,U,Övergrans sn,A,Pr2,0,gudrikr,vikingr,father,tidig,0.0,0,0.0,0.0,0.010005002501250625
+U 649,U,Övergrans sn,A,Pr2,0,gudrikr,balsi,father,tidig,0.0,0,0.0,0.0,0.01250625312656328
+U 649,U,Övergrans sn,A,Pr2,0,gudrikr,hemingr,father,tidig,0.0,0,0.0,0.0,0.017508754377188594
+U 650,U,Övergrans sn,A,,1,sigreifr,ulfgeirr,father,odaterad,,1,0.0,0.0,0.03851925962981491
+U 650,U,Övergrans sn,A,,1,sigreifr,halfdan,father,odaterad,,1,0.0,0.0,0.03801900950475238
+U 652,U,Övergrans sn,A,Pr2,0,gunnhildr,thjalfi,son,tidig,0.0,0,0.0,0.0,0.04202101050525263
+U 653,U,Övergrans sn,A,,0,vefastr,thorkell,father,odaterad,,0,0.0,0.0,0.06253126563281641
+U 653,U,Övergrans sn,A,,0,vefastr,ofeigr,father,odaterad,,0,0.0,0.0,0.058529264632316155
+U 653,U,Övergrans sn,A,,0,vefastr,thorsteinn,father,odaterad,,0,0.0,0.0,0.05002501250625312
+U 654,U,Övergrans sn,A,Fp,1,gunnleifr,andvettr,father,tidig,0.0,1,0.0,0.0,0.053526763381690844
+U 654,U,Övergrans sn,A,Fp,1,gunnleifr,karr,father,tidig,0.0,1,0.0,0.0,0.05552776388194097
+U 654,U,Övergrans sn,A,Fp,1,gunnleifr,blesi,father,tidig,0.0,1,0.0,0.0,0.05552776388194097
+U 654,U,Övergrans sn,A,Fp,1,gunnleifr,djarfr,father,tidig,0.0,1,0.0,0.0,0.058529264632316155
+U 656,U,Håtuna sn,A,Pr2,0,hrodelfr,agmundr,son,tidig,0.0,0,0.0,0.0,0.010505252626313157
+U 657,U,Håtuna sn,A,Pr2,0,ulfr,ozurr,father,tidig,0.0,0,0.0,1.0,0.0030015007503751876
+U 660,U,Håtuna sn,A,Pr4,0,geirfastr,andvettr,father,sen,1.0,0,0.0,0.0,0.0720360180090045
+U 660,U,Håtuna sn,A,Pr4,0,geirfastr,vighjalmr,father,sen,1.0,0,0.0,0.0,0.07303651825912956
+U 660,U,Håtuna sn,A,Pr4,0,geirfastr,kali,father,sen,1.0,0,0.0,0.0,0.06803401700850426
+U 661,U,Håtuna sn,A,Fp,1,onundr,geirve,father,tidig,0.0,1,0.0,0.0,0.021510755377688845
+U 661,U,Håtuna sn,A,Fp,1,onundr,gulla,father,tidig,0.0,1,0.0,0.0,0.01900950475237619
+U 663,U,Håtuna sn,A,,0,asgunnr,thorgisl,son,odaterad,,0,0.0,0.0,0.0080040020010005
+U 665,U,Häggeby sn,A,Pr2,0,ozurr,igulfastr,father,tidig,0.0,0,0.0,1.0,0.0030015007503751876
+U 665,U,Häggeby sn,A,Pr2,0,ozurr,fadi,father,tidig,0.0,0,0.0,0.0,0.009504752376188095
+U 665,U,Häggeby sn,A,Pr2,0,ozurr,fastulfr,father,tidig,0.0,0,0.0,0.0,0.005502751375687844
+U 668,U,Häggeby sn,A,Pr3,1,geiri,styrkarr,father,sen,1.0,1,0.0,0.0,0.0050025012506253125
+U 668,U,Häggeby sn,A,Pr3,1,geiri,hjorvardr,father,sen,1.0,1,0.0,0.0,0.005502751375687844
+U 674,U,Häggeby sn,A,,0,osyrg,fili,father,odaterad,,0,0.0,0.0,0.0
+U 674,U,Häggeby sn,A,,0,osyrg,svarthofdi,father,odaterad,,0,0.0,0.0,0.0
+U 674,U,Häggeby sn,A,,0,osyrg,djarfr,father,odaterad,,0,0.0,0.0,0.0
+U 674,U,Häggeby sn,A,,0,osyrg,ofeigr,father,odaterad,,0,0.0,1.0,0.0
+U 678,U,Skoklosters sn,A,RAK,0,thordr,andvettr,father,tidig,0.0,0,0.0,0.0,0.1055527763881941
+U 678,U,Skoklosters sn,A,RAK,0,thordr,gulleifr,father,tidig,0.0,0,0.0,0.0,0.0945472736368184
+U 678,U,Skoklosters sn,A,RAK,0,thordr,gunnarr,father,tidig,0.0,0,0.0,0.0,0.0865432716358179
+U 678,U,Skoklosters sn,A,RAK,0,thordr,haursi,father,tidig,0.0,0,0.0,0.0,0.10105052526263132
+U 678,U,Skoklosters sn,A,RAK,0,thordr,hrodleifr,father,tidig,0.0,0,0.0,0.0,0.09954977488744372
+U 682,U,Skoklosters sn,A,,0,thora,sibbi,son,odaterad,,0,0.0,0.0,0.004502251125562781
+U 683,U,Skoklosters sn,A,Pr2,0,gunnarr,kari,father,tidig,0.0,0,0.0,0.0,0.0415207603801901
+U 683,U,Skoklosters sn,A,Pr2,0,gunnarr,ofeigr,father,tidig,0.0,0,0.0,0.0,0.04302151075537769
+U 684,U,Skoklosters sn,A,Pr4,0,hegvidr,sigvidr,father,sen,1.0,0,0.0,0.0,0.0
+U 684,U,Skoklosters sn,A,Pr4,0,hegvidr,sveinn,father,sen,1.0,0,0.0,0.0,0.0
+U 685,U,Skoklosters sn,A,Pr2,0,geirmundr,olafr,father,tidig,0.0,0,0.0,0.0,0.03401700850425213
+U 685,U,Skoklosters sn,A,Pr2,0,geirmundr,arnmundr,father,tidig,0.0,0,1.0,0.0,0.025512756378189096
+U 686,U,Skoklosters sn,A,Pr2,0,vebjorn,thorbjorn,father,tidig,0.0,0,1.0,0.0,0.11155577788894447
+U 686,U,Skoklosters sn,A,Pr2,0,vebjorn,vidfari,father,tidig,0.0,0,0.0,1.0,0.11255627813906953
+U 690,U,Arnö sn (nu Kungs-Husby sn),B,Pr3,1,inga,sigsteinn,son,sen,1.0,1,0.0,0.0,0.0
+U 691,U,Arnö sn (nu Aspö sn),A,Pr4,1,bjorn,styrbjorn,son,sen,1.0,1,0.0,0.0,0.017508754377188594
+U 692,U,Arnö sn (nu Aspö sn),A,Pr4,0,slora,hrodmundr,father,sen,1.0,0,0.0,0.0,0.026013006503251626
+U 692,U,Arnö sn (nu Aspö sn),A,Pr4,0,slora,gudmundr,father,sen,1.0,0,0.0,0.0,0.026513256628314157
+U 695,U,Veckholms sn,B,Pr3,0,sigridr,oleifr,son,sen,1.0,0,0.0,0.0,0.06303151575787894
+U 703,U,Veckholms sn,B,Pr3,0,asve,arnulfr,son,sen,1.0,0,0.0,1.0,0.05202601300650325
+U 706,U,Veckholms sn,B,,0,vegautr,holmfastr,father,odaterad,,0,0.0,0.0,0.01200600300150075
+U 716,U,Lillkyrka sn,A,Pr4,0,gudfastr,bruni,father,sen,1.0,0,0.0,0.0,0.06753376688344172
+U 720,U,Vallby sn,A,,0,japr,myndill,father,odaterad,,0,0.0,0.0,0.004502251125562781
+U 720,U,Vallby sn,A,,0,japr,farbjorn,father,odaterad,,0,0.0,0.0,0.005502751375687844
+U 720,U,Vallby sn,A,,0,japr,arngeirr,father,odaterad,,0,0.0,0.0,0.00400200100050025
+U 723,U,Löts sn,A,Pr3,0,goti,eygeirr,father,sen,1.0,0,0.0,0.0,0.0030015007503751876
+U 723,U,Löts sn,A,Pr3,0,goti,freygeirr,father,sen,1.0,0,0.0,0.0,0.0025012506253126563
+U 726,U,Löts sn,A,Fp,1,asbjorn,thorir,father,tidig,0.0,1,0.0,0.0,0.1040520260130065
+U 729,U,Löts sn,A,Pr3,0,saereifr,vidhugsi,father,sen,1.0,0,0.0,0.0,0.0015007503751875938
+U 735,U,Villberga sn,A,Pr3,0,vedraldi,sigtryggr,son,sen,1.0,0,0.0,0.0,0.0025012506253126563
+U 735,U,Villberga sn,A,Pr3,0,langgarn,sigtryggr,son,sen,1.0,0,0.0,0.0,0.0
+U 735,U,Villberga sn,A,Pr3,0,arngerdr,sigtryggr,son,sen,1.0,0,0.0,0.0,0.014507253626813406
+U 742,U,Boglösa sn,B,Pr4,0,osyrg,ari,father,sen,1.0,0,0.0,1.0,0.0
+U 746,U,Husby-Sjutolfts sn,B,Pr4,0,vegisl,sigreifr,son,sen,1.0,0,0.0,0.0,0.04702351175587794
+U 751,U,Husby-Sjutolfts sn,B,Pr3,0,eibjorn,holmgeirr,father,sen,1.0,0,0.0,0.0,0.09004502251125562
+U 751,U,Husby-Sjutolfts sn,B,Pr3,0,eibjorn,lafsi,father,sen,1.0,0,0.0,0.0,0.09954977488744372
+U 758,U,Enköping,B,Pr4,1,igull,ingibjorn,father,sen,1.0,1,0.0,1.0,0.004502251125562781
+U 759,U,Enköping,B,Pr4,1,asgeirr,brynjulfr,father,sen,1.0,1,0.0,0.0,0.04852426213106553
+U 759,U,Enköping,B,Pr4,1,asgeirr,hrefningr,father,sen,1.0,1,0.0,0.0,0.05002501250625312
+U 759,U,Enköping,B,Pr4,1,asgeirr,sigvaldi,father,sen,1.0,1,0.0,0.0,0.04452226113056528
+U 762,U,Vårfrukyrka sn,B,Fp,0,jorundr,jarl,son,tidig,0.0,0,0.0,1.0,0.013506753376688344
+U 763,U,Vårfrukyrka sn,B,Pr4,0,gunnbjorn,bruni,father,sen,1.0,0,0.0,0.0,0.10155077538769385
+U 763,U,Vårfrukyrka sn,B,Pr4,0,gunnbjorn,holmsteinn,father,sen,1.0,0,0.0,0.0,0.09304652326163082
+U 766,U,Vårfrukyrka sn,B,Pr4,0,gudfastr,eistr,son,sen,1.0,0,0.0,0.0,0.064032016008004
+U 769,U,Vårfrukyrka sn,B,Fp,1,skardi,otryggr,son,tidig,0.0,1,0.0,0.0,0.0
+U 770,U,Vårfrukyrka sn,B,Pr3,0,ofeigr,hedindis,father,sen,1.0,0,0.0,0.0,0.0005002501250625312
+U 770,U,Vårfrukyrka sn,B,Pr3,0,ofeigr,erndis,father,sen,1.0,0,0.0,1.0,0.004502251125562781
+U 774,U,Enköpings-Näs sn,A,Fp,1,asleikr,eybjorn,father,tidig,0.0,1,0.0,1.0,0.02051025512756378
+U 774,U,Enköpings-Näs sn,A,Fp,1,asleikr,thorgisl,father,tidig,0.0,1,0.0,0.0,0.02051025512756378
+U 776,U,Enköpings-Näs sn,A,,0,vidbjorn,steinn,father,odaterad,,0,0.0,0.0,0.0
+U 778,U,Svinnegarns sn,B,Fp,1,thjalfi,banki,son,tidig,0.0,1,0.0,0.0,0.0050025012506253125
+U 778,U,Svinnegarns sn,B,Fp,1,holmlaug,banki,son,tidig,0.0,1,0.0,0.0,0.022511255627813906
+U 779,U,Svinnegarns sn,B,Fp,1,jorundr,jarl,son,tidig,0.0,1,0.0,1.0,0.018509254627313655
+U 790,U,Tillinge sn,A,,0,runi,sverri,sons,odaterad,,0,0.0,0.0,0.03451725862931466
+U 792,U,Tillinge sn,A,Fp,0,haursi,karr,father,tidig,0.0,0,0.0,0.0,0.01200600300150075
+U 796,U,Sparrsätra sn,A,Pr4,0,saegrimr,afastr,son,sen,1.0,0,0.0,0.0,0.0
+U 797,U,Sparrsätra sn,A,Pr4,0,osnikinn,varr,father,sen,1.0,0,0.0,0.0,0.002001000500250125
+U 797,U,Sparrsätra sn,A,Pr4,0,osnikinn,kari,father,sen,1.0,0,0.0,0.0,0.0025012506253126563
+U 800,U,Långtora sn,A,,0,asgautr,myndill,son,odaterad,,0,0.0,0.0,0.016008004002001
+U 802,U,Långtora sn,A,,0,vikingr,smidr,son,odaterad,,0,0.0,0.0,0.0030015007503751876
+U 808,U,Fröslunda sn,B,Pr3,1,halfdan,gisl,father,sen,1.0,1,0.0,0.0,0.008504252126063032
+U 808,U,Fröslunda sn,B,Pr3,1,halfdan,ingimundr,father,sen,1.0,1,0.0,0.0,0.016008004002001
+U 808,U,Fröslunda sn,B,Pr3,1,eydis,gisl,mother,sen,1.0,1,0.0,0.0,0.03401700850425213
+U 808,U,Fröslunda sn,B,Pr3,1,eydis,ingimundr,mother,sen,1.0,1,0.0,1.0,0.03451725862931466
+U 809,U,Fröslunda sn,B,Fp,0,andvettr,bjorn,father,tidig,0.0,0,0.0,0.0,0.022511255627813906
+U 809,U,Fröslunda sn,B,Fp,0,andvettr,gisl,father,tidig,0.0,0,0.0,0.0,0.022511255627813906
+U 814,U,Hjälsta sn,A,Pr3,0,holmgeirr,sljor,father,sen,1.0,0,0.0,0.0,0.05152576288144072
+U 814,U,Hjälsta sn,A,Pr3,0,holmgeirr,danr,father,sen,1.0,0,0.0,0.0,0.03851925962981491
+U 817,U,Hjälsta sn,A,,0,gulli,audgeirr,father,odaterad,,0,0.0,0.0,0.0
+U 817,U,Hjälsta sn,A,,0,gulli,ageirr,father,odaterad,,0,0.0,0.0,0.0
+U 821,U,Kulla sn,A,Pr4,0,hedinfastr,astridr,father,sen,1.0,0,0.0,0.0,0.06653326663331666
+U 821,U,Kulla sn,A,Pr4,0,auda,audgerdr,daughter,sen,1.0,0,0.0,1.0,0.014007003501750876
+U 826,U,Holms sn,A,,0,ingimundr,gudbjorn,father,odaterad,,0,0.0,0.0,0.04752376188094047
+U 828,U,Fittja sn,B,Pr4,1,erngisl,kagr,father,sen,1.0,1,0.0,0.0,0.01900950475237619
+U 828,U,Fittja sn,B,Pr4,1,erngisl,hakon,father,sen,1.0,1,0.0,0.0,0.01900950475237619
+U 831,U,Giresta sn,A,,0,igull,lodinn,son,odaterad,,0,0.0,0.0,0.0065032516258129065
+U 838,U,Nysätra sn,B,Pr3,0,thorbjorn,tholfr,father,sen,1.0,0,0.0,1.0,0.13706853426713356
+U 838,U,Nysätra sn,B,Pr3,0,thorbjorn,thorfastr,father,sen,1.0,0,1.0,1.0,0.14457228614307155
+U 839,U,Nysätra sn,B,Pr4,0,amundi,onundr,son,sen,1.0,0,0.0,1.0,0.0
+U 839,U,Nysätra sn,B,Pr4,0,audgerdr,onundr,son,sen,1.0,0,0.0,1.0,0.02351175587793897
+U 840,U,Dalby sn,A,Pr4,0,thorsteinn,holmfridr,father,sen,1.0,0,0.0,0.0,0.1025512756378189
+U 840,U,Dalby sn,A,Pr4,0,thorsteinn,folkve,father,sen,1.0,0,0.0,0.0,0.09004502251125562
+U 843,U,Dalby sn,A,,0,ulfr,hardgeirr,father,odaterad,,0,0.0,0.0,0.014007003501750876
+U 843,U,Dalby sn,A,,0,ulfr,thorsteinn,father,odaterad,,0,0.0,0.0,0.013006503251625813
+U 843,U,Dalby sn,A,,0,ulfr,mungeirr,father,odaterad,,0,0.0,0.0,0.017508754377188594
+U 843,U,Dalby sn,A,,0,ulfr,ketilmundr,father,odaterad,,0,0.0,0.0,0.014507253626813406
+U 844,U,Dalby sn,A,Pr4,0,thorsteinn,gisl,father,sen,1.0,0,0.0,0.0,0.09254627313656828
+U 844,U,Dalby sn,A,Pr4,0,thorsteinn,bjorn,father,sen,1.0,0,0.0,0.0,0.09504752376188094
+U 844,U,Dalby sn,A,Pr4,0,thorsteinn,asgeirr,father,sen,1.0,0,0.0,0.0,0.09554777388694347
+U 847,U,Västeråkers sn,B,Pr4,0,asgeirr,adjarfr,sons,sen,1.0,0,0.0,1.0,0.04602301150575288
+U 847,U,Västeråkers sn,B,Pr4,0,gislaug,adjarfr,sons,sen,1.0,0,0.0,0.0,0.004502251125562781
+U 847,U,Västeråkers sn,B,Pr4,0,asgeirr,slodi,sons,sen,1.0,0,0.0,0.0,0.04902451225612806
+U 847,U,Västeråkers sn,B,Pr4,0,gislaug,slodi,sons,sen,1.0,0,0.0,0.0,0.00400200100050025
+U 854,U,Balingsta sn,A,Pr4,0,holmfridr,sigurdr,sons,sen,1.0,0,0.0,0.0,0.021010505252626314
+U 854,U,Balingsta sn,A,Pr4,0,holmfridr,sig-,sons,sen,1.0,0,0.0,0.0,0.026013006503251626
+U 855,U,Balingsta sn,A,,0,ingi-,eistr,son,odaterad,,0,0.0,1.0,0.0
+U 855,U,Balingsta sn,A,,0,jogerdr,eistr,son,odaterad,,0,0.0,0.0,0.014507253626813406
+U 861,U,Balingsta sn,A,,0,sigthorn,adjarfr,son,odaterad,,0,0.0,0.0,0.0
+U 861,U,Balingsta sn,A,,0,sigthorn,mey,daughter,odaterad,,0,0.0,0.0,0.0
+U 865,U,Balingsta sn,A,,0,spjallbodi,igulfastr,father,odaterad,,0,0.0,0.0,0.0
+U 865,U,Balingsta sn,A,,0,spjallbodi,vedraldi,father,odaterad,,0,0.0,0.0,0.0
+U 866,U,Gryta sn,A,,1,kari,krokr,father,odaterad,,1,0.0,1.0,0.03901950975487744
+U 867,U,Gryta sn,A,,1,thjalfi,bolla,daughter,odaterad,,1,0.0,0.0,0.010005002501250625
+U 867,U,Gryta sn,A,,1,thjalfi,ali,father,odaterad,,1,0.0,0.0,0.009504752376188095
+U 867,U,Gryta sn,A,,1,thjalfi,oleifr,father,odaterad,,1,0.0,0.0,0.01250625312656328
+U 867,U,Gryta sn,A,,1,thjalfi,thjalfi,father (samma namn),odaterad,,1,1.0,1.0,0.010505252626313157
+U 873,U,Gryta sn,A,Pr3,1,holmgeirr,thingfastr,father,sen,1.0,1,0.0,0.0,0.04402201100550275
+U 874,U,Hagby sn,A,,0,geirfastr,jarl,father,odaterad,,0,0.0,0.0,0.07753876938469234
+U 885,U,Skogstibble sn (nu Skogs-Tibble),B,Pr4,0,sighvatr,vigr,father,sen,1.0,0,0.0,0.0,0.061030515257628815
+U 885,U,Skogstibble sn (nu Skogs-Tibble),B,Pr4,0,sighvatr,sigsteinn,father,sen,1.0,0,1.0,1.0,0.05652826413206603
+U 885,U,Skogstibble sn (nu Skogs-Tibble),B,Pr4,0,sighvatr,karl,father,sen,1.0,0,0.0,0.0,0.05202601300650325
+U 887,U,Skogstibble sn (nu Skogs-Tibble),B,Pr4,0,borggeirr,jogeirr,father,sen,1.0,0,1.0,0.0,0.02801400700350175
+U 887,U,Skogstibble sn (nu Skogs-Tibble),B,Pr4,0,borggeirr,fastgeirr,father,sen,1.0,0,1.0,0.0,0.027013506753376687
+U 887,U,Skogstibble sn (nu Skogs-Tibble),B,Pr4,0,borggeirr,audrikr,father,sen,1.0,0,0.0,0.0,0.026013006503251626
+U 893,U,Uppsala-Näs sn,B,,0,vigbjorn,eyndr,father,odaterad,,0,0.0,0.0,0.054027013506753374
+U 893,U,Uppsala-Näs sn,B,,0,vigbjorn,onundr,father,odaterad,,0,0.0,0.0,0.05952976488244122
+U 893,U,Uppsala-Näs sn,B,,0,vigbjorn,ingigerdr,father,odaterad,,0,0.0,0.0,0.057528764382191094
+U 894,U,Uppsala-Näs sn,B,Pr4,0,onundr,abjorn,father,sen,1.0,0,0.0,1.0,0.015507753876938469
+U 894,U,Uppsala-Näs sn,B,Pr4,0,onundr,holmbjorn,father,sen,1.0,0,0.0,0.0,0.02001000500250125
+U 894,U,Uppsala-Näs sn,B,Pr4,0,onundr,saxi,father,sen,1.0,0,0.0,0.0,0.02051025512756378
+U 895,U,Bondkyrka sn (nu Uppsala),B,Pr4,0,borgfastr,danr,father,sen,1.0,0,0.0,0.0,0.05102551275637819
+U 895,U,Bondkyrka sn (nu Uppsala),B,Pr4,0,borgfastr,skalli,father,sen,1.0,0,0.0,0.0,0.054027013506753374
+U 895,U,Bondkyrka sn (nu Uppsala),B,Pr4,0,borgfastr,bjorn,father,sen,1.0,0,0.0,1.0,0.05902951475737869
+U 899,U,Bondkyrka sn (nu Uppsala),B,Pr4,0,sveinn,thorgisl,father,sen,1.0,0,0.0,0.0,0.01950975487743872
+U 899,U,Bondkyrka sn (nu Uppsala),B,Pr4,0,sveinn,gisl,father,sen,1.0,0,0.0,0.0,0.01900950475237619
+U 901,U,Läby sn,B,,0,jofurr,karl,father,odaterad,,0,0.0,0.0,0.0
+U 901,U,Läby sn,B,,0,jofurr,igulbjorn,father,odaterad,,0,0.0,0.0,0.0
+U 904,U,Läby sn,B,Pr3,0,jofurr,jarl,father,sen,1.0,0,0.0,1.0,0.017008504252126064
+U 906,U,Vänge sn,A,Pr5,0,tidfridr,holmgeirr,son,sen,1.0,0,0.0,0.0,0.0
+U 907,U,Vänge sn,A,Pr4,0,thorsteinn,fastbjorn,father,sen,1.0,0,0.0,0.0,0.11455727863931967
+U 907,U,Vänge sn,A,Pr4,0,thorsteinn,jarl,father,sen,1.0,0,0.0,0.0,0.09354677338669334
+U 908,U,Vänge sn,A,Pr4,0,bina,thorir,father,sen,1.0,0,0.0,0.0,0.0
+U 912,U,Börje sn,A,KB,0,borggeirr,sigfrodr,father,odaterad,,0,0.0,0.0,0.02751375687843922
+U 913,U,Börje sn,A,Pr4,0,halfdan,eyndr,father,sen,1.0,0,0.0,0.0,0.013006503251625813
+U 913,U,Börje sn,A,Pr4,0,halfdan,throndr,father,sen,1.0,0,0.0,0.0,0.015007503751875938
+U 914,U,Börje sn,A,Pr5,0,stydingr,ingigerdr,father,sen,1.0,0,0.0,0.0,0.0
+U 915,U,Börje sn,A,,0,sigsteinn,sveinn,father,odaterad,,0,0.0,1.0,0.0735367683841921
+U 915,U,Börje sn,A,,0,sigsteinn,gislaug,father,odaterad,,0,0.0,0.0,0.08254127063531766
+U 915,U,Börje sn,A,,0,sigsteinn,sveini,father,odaterad,,0,0.0,1.0,0.08754377188594298
+U 917,U,Jumkils sn,A,Pr4,0,jorundr,ernfastr,father,sen,1.0,0,0.0,0.0,0.013006503251625813
+U 917,U,Jumkils sn,A,Pr4,0,jorundr,steinbjorn,father,sen,1.0,0,0.0,0.0,0.015007503751875938
+U 917,U,Jumkils sn,A,Pr4,0,jorundr,thorsteinn,father,sen,1.0,0,0.0,0.0,0.014007003501750876
+U 918,U,Jumkils sn,A,Pr5,0,gudfastr,ketilmundr,son,sen,1.0,0,0.0,0.0,0.07753876938469234
+U 919,U,Jumkils sn,A,Pr4,0,hals,gudfastr,father,sen,1.0,0,0.0,0.0,0.0
+U 919,U,Jumkils sn,A,Pr4,0,hals,throndr,father,sen,1.0,0,0.0,0.0,0.0
+U 922,U,Uppsala,A,Pr4,0,ingifastr,ingimundr,father,sen,1.0,0,1.0,1.0,0.07103551775887944
+U 922,U,Uppsala,A,Pr4,0,ingifastr,thordr,father,sen,1.0,0,0.0,0.0,0.08254127063531766
+U 922,U,Uppsala,A,Pr4,0,ingifastr,jarl,father,sen,1.0,0,0.0,0.0,0.0945472736368184
+U 922,U,Uppsala,A,Pr4,0,ingifastr,vigbjorn,father,sen,1.0,0,0.0,0.0,0.06303151575787894
+U 925,U,Uppsala,A,Pr4,0,igulbjorn,kagr,son,sen,1.0,0,0.0,0.0,0.10055027513756878
+U 925,U,Uppsala,A,Pr4,0,halfdan,kagr,son,sen,1.0,0,0.0,0.0,0.011005502751375688
+U 925,U,Uppsala,A,Pr4,0,thjalfi,kagr,son,sen,1.0,0,0.0,0.0,0.0
+U 926,U,Uppsala,A,,0,tobbi,sibbi,son,odaterad,,0,1.0,0.0,0.015007503751875938
+U 926,U,Uppsala,A,,0,gunn-,sibbi,son,odaterad,,0,0.0,0.0,0.0
+U 938,U,Uppsala,A,Pr4,0,igulgeirr,holmfastr,father,sen,1.0,0,0.0,0.0,0.04202101050525263
+U 939,U,Uppsala,A,Pr4,0,igulfastr,forkunnr,father,sen,1.0,0,0.0,0.0,0.05302651325662831
+U 939,U,Uppsala,A,Pr4,0,igulfastr,bruni,father,sen,1.0,0,0.0,0.0,0.06303151575787894
+U 940,U,Uppsala,A,Pr3,1,ketilfastr,igull,father,sen,1.0,1,0.0,0.0,0.08054027013506754
+U 940,U,Uppsala,A,Pr3,1,ketilfastr,thorgeirr,father,sen,1.0,1,0.0,0.0,0.07803901950975488
+U 940,U,Uppsala,A,Pr3,1,ketilfastr,gillaug,father,sen,1.0,1,0.0,0.0,0.0670335167583792
+U 940,U,Uppsala,A,Pr3,1,ketilfastr,hond,father,sen,1.0,1,0.0,0.0,0.06803401700850426
+U 942,U,Uppsala,A,,1,jorundr,gerdarr,son,odaterad,,1,0.0,0.0,0.02801400700350175
+U 944,U,Uppsala,A,,0,kjula,drosbui,father,odaterad,,0,0.0,0.0,0.0
+U 945,U,Danmarks sn,B,Pr3,1,ofeigr,signjotr,father,sen,1.0,1,0.0,0.0,0.002001000500250125
+U 945,U,Danmarks sn,B,Pr3,1,ofeigr,avidr,father,sen,1.0,1,0.0,1.0,0.0025012506253126563
+U 948,U,Danmarks sn,B,Pr4,0,stydingr,arni,son,sen,1.0,0,0.0,0.0,0.0
+U 952,U,Danmarks sn,B,Pr4,0,andsvarr,tryggr,son,sen,1.0,0,0.0,0.0,0.0
+U 952,U,Danmarks sn,B,Pr4,0,stodbjorn,askell,father,sen,1.0,0,0.0,0.0,0.005502751375687844
+U 952,U,Danmarks sn,B,Pr4,0,stodbjorn,stodkell,father,sen,1.0,0,0.0,1.0,0.00400200100050025
+U 955,U,Danmarks sn,B,,0,lafsi,thorsteinn,father,odaterad,,0,0.0,0.0,0.0
+U 955,U,Danmarks sn,B,,0,lafsi,gyra,father,odaterad,,0,0.0,0.0,0.0
+U 957,U,Danmarks sn,B,,0,jarl,gerdarr,father,odaterad,,0,0.0,0.0,0.02751375687843922
+U 957,U,Danmarks sn,B,,0,jarl,ulfr,father,odaterad,,0,0.0,0.0,0.021010505252626314
+U 957,U,Danmarks sn,B,,0,jarl,holmbjorn,father,odaterad,,0,0.0,0.0,0.022511255627813906
+U 957,U,Danmarks sn,B,,0,jarl,abjorn,father,odaterad,,0,0.0,0.0,0.021010505252626314
+U 957,U,Danmarks sn,B,,0,jarl,runi,father,odaterad,,0,0.0,0.0,0.02751375687843922
+U 959,U,Vaksala sn,B,Pr5,0,onundr,runa,förälder till,sen,1.0,0,0.0,0.0,0.013506753376688344
+U 961,U,Vaksala sn,B,Pr4,0,ketilbjorn,hylia,father,sen,1.0,0,0.0,0.0,0.08754377188594298
+U 963,U,Vaksala sn,B,RAK,1,igulbjorn,neskonungr,father,tidig,0.0,1,0.0,0.0,0.09654827413706854
+U 977,U,Vaksala sn,B,,0,gunnarr,ernfridr,father,odaterad,,0,0.0,0.0,0.017008504252126064
+U 978,U,Gamla Uppsala sn (nu Uppsala),B,Pr2,0,vedjarfr,sigvidr,father,tidig,0.0,0,0.0,0.0,0.04402201100550275
+U 980,U,Gamla Uppsala sn (nu Uppsala),B,,0,vefastr,eilifr,father,odaterad,,0,0.0,0.0,0.057028514257128564
+U 980,U,Gamla Uppsala sn (nu Uppsala),B,,0,vefastr,sigvidr,father,odaterad,,0,0.0,0.0,0.05252626313156578
+U 984,U,Gamla Uppsala sn (nu Uppsala),B,,0,holmgeirr,veseti,father,odaterad,,0,0.0,0.0,0.04652326163081541
+U 984,U,Gamla Uppsala sn (nu Uppsala),B,,0,holmgeirr,likvidr,father,odaterad,,0,0.0,0.0,0.04452226113056528
+U 984,U,Gamla Uppsala sn (nu Uppsala),B,,0,holmgeirr,rikvidr,father,odaterad,,0,0.0,0.0,0.04702351175587794
+U 985,U,Gamla Uppsala sn (nu Uppsala),B,,0,vegeirr,karl,father,odaterad,,0,0.0,0.0,0.03501750875437719
+U 987,U,Funbo sn,A,Pr3,1,ketill,thorsteinn,son,sen,1.0,1,0.0,0.0,0.0025012506253126563
+U 987,U,Funbo sn,A,Pr3,1,gyridr,thorsteinn,son,sen,1.0,1,0.0,0.0,0.008504252126063032
+U 990,U,Funbo sn,A,Fp,1,haursi,vedr,father,tidig,0.0,1,0.0,0.0,0.013506753376688344
+U 990,U,Funbo sn,A,Fp,1,haursi,thegn,father,tidig,0.0,1,0.0,0.0,0.01200600300150075
+U 990,U,Funbo sn,A,Fp,1,haursi,gunnarr,father,tidig,0.0,1,0.0,0.0,0.015007503751875938
+U 993,U,Funbo sn,A,Pr4,0,vigi,jon,father,sen,1.0,0,0.0,0.0,0.03251625812906453
+U 993,U,Funbo sn,A,Pr4,0,vigi,jofurfast,father,sen,1.0,0,0.0,0.0,0.02751375687843922
+U 996,U,Funbo sn,A,Pr4,0,thorir,ingridr,father,sen,1.0,0,0.0,0.0,0.07303651825912956
+U 996,U,Funbo sn,A,Pr4,0,thorir,ingigerdr,father,sen,1.0,0,0.0,0.0,0.07403701850925462
+U 996,U,Funbo sn,A,Pr4,0,thorir,thorir,father (samma namn),sen,1.0,0,1.0,1.0,0.08204102051025512
+U 997,U,Funbo sn,A,Pr4,0,igull,rikvidr,father,sen,1.0,0,0.0,0.0,0.0050025012506253125
+U 999,U,Funbo sn,A,Fp,0,thegn,haursi,father,tidig,0.0,0,0.0,0.0,0.015507753876938469
+U 999,U,Funbo sn,A,Fp,0,thegn,ketill,father,tidig,0.0,0,0.0,0.0,0.018509254627313655
+U 1003,U,Rasbo sn,A,,1,runi,runfastr,father,odaterad,,1,1.0,1.0,0.025512756378189096
+U 1005,U,Rasbo sn,A,,0,toli,gisl,father,odaterad,,0,0.0,0.0,0.00400200100050025
+U 1005,U,Rasbo sn,A,,0,gisl,ernfastr,son,odaterad,,0,0.0,0.0,0.009004502251125562
+U 1006,U,Rasbo sn,A,Pr4,0,svartungr,vigdjarfr,father,sen,1.0,0,0.0,0.0,0.00400200100050025
+U 1006,U,Rasbo sn,A,Pr4,0,svartungr,jorundr,father,sen,1.0,0,0.0,0.0,0.0065032516258129065
+U 1006,U,Rasbo sn,A,Pr4,0,svartungr,sigbjorn,father,sen,1.0,0,0.0,1.0,0.007003501750875438
+U 1007,U,Rasbo sn,A,Pr4,0,sigbjorn,audbjorn,father,sen,1.0,0,1.0,0.0,0.12206103051525763
+U 1009,U,Rasbo sn,A,Pr3,0,fastbjorn,vreidr,father,sen,1.0,0,0.0,0.0,0.10305152576288144
+U 1010,U,Rasbo sn,A,Pr4,0,thjodmundr,thormundr,father,sen,1.0,0,1.0,1.0,0.021010505252626314
+U 1012,U,Rasbokils sn,A,,0,bjorn,spraki,father,odaterad,,0,0.0,0.0,0.018009004502251125
+U 1012,U,Rasbokils sn,A,,0,bjorn,thorbjorn,father,odaterad,,0,0.0,0.0,0.01900950475237619
+U 1012,U,Rasbokils sn,A,,0,bjorn,othveginn,father,odaterad,,0,0.0,0.0,0.02001000500250125
+U 1012,U,Rasbokils sn,A,,0,bjorn,ginnlaug,father,odaterad,,0,0.0,0.0,0.021510755377688845
+U 1012,U,Rasbokils sn,A,,0,bjorn,afridr,father,odaterad,,0,0.0,0.0,0.014507253626813406
+U 1014,U,Ärentuna sn,A,Pr5,0,holmgeirr,igulfastr,sons,sen,1.0,0,0.0,0.0,0.04902451225612806
+U 1014,U,Ärentuna sn,A,Pr5,0,holmgeirr,svarthofdi,sons,sen,1.0,0,0.0,0.0,0.05252626313156578
+U 1015,U,Ärentuna sn,A,,0,jofurr,oering,son,odaterad,,0,0.0,0.0,0.0
+U 1017,U,Ärentuna sn,A,,0,asleikr,runfridr,father,odaterad,,0,0.0,0.0,0.013506753376688344
+U 1018,U,Ärentuna sn,A,Pr4,0,hjalmgeirr,agoti,father,sen,1.0,0,0.0,0.0,0.03251625812906453
+U 1018,U,Ärentuna sn,A,Pr4,0,hjalmgeirr,svarthofdi,father,sen,1.0,0,0.0,0.0,0.022011005502751375
+U 1019,U,Ärentuna sn,A,Pr4,0,igulfastr,hemingr,father,sen,1.0,0,0.0,0.0,0.06903451725862932
+U 1022,U,Ärentuna sn,A,Pr4,0,illugi,vigi,father,sen,1.0,0,0.0,0.0,0.0015007503751875938
+U 1022,U,Ärentuna sn,A,Pr4,0,illugi,halfdan,father,sen,1.0,0,0.0,0.0,0.0050025012506253125
+U 1022,U,Ärentuna sn,A,Pr4,0,illugi,eilifr,father,sen,1.0,0,0.0,1.0,0.0030015007503751876
+U 1022,U,Ärentuna sn,A,Pr4,0,illugi,hakon,father,sen,1.0,0,0.0,0.0,0.0015007503751875938
+U 1022,U,Ärentuna sn,A,Pr4,0,illugi,runfridr,father,sen,1.0,0,0.0,0.0,0.0030015007503751876
+U 1023,U,Ärentuna sn,A,,0,ernfastr,ketilbjorn,father,odaterad,,0,0.0,0.0,0.062031015507753876
+U 1023,U,Ärentuna sn,A,,0,ernfastr,fasta,father,odaterad,,0,0.0,0.0,0.05502751375687844
+U 1031,U,Lena sn,B,,0,jon,sigdjarfr,father,odaterad,,0,0.0,0.0,0.0
+U 1031,U,Lena sn,B,,0,jon,holmbjorn,father,odaterad,,0,0.0,0.0,0.0
+U 1031,U,Lena sn,B,,0,jon,thorbjorn,father,odaterad,,0,0.0,0.0,0.0
+U 1033,U,Lena sn,B,,1,jarl,nasi,father,odaterad,,1,0.0,0.0,0.02001000500250125
+U 1034,U,Tensta sn,B,Pr5,0,thorfastr,thorbjorn,father,sen,1.0,0,1.0,1.0,0.10205102551275638
+U 1034,U,Tensta sn,B,Pr5,0,thorfastr,thorsteinn,father,sen,1.0,0,1.0,1.0,0.12356178089044523
+U 1034,U,Tensta sn,B,Pr5,0,thorfastr,styrbjorn,father,sen,1.0,0,0.0,0.0,0.12606303151575787
+U 1036,U,Tensta sn,B,Pr4,1,helga,andvettr,son,sen,1.0,1,0.0,0.0,0.0
+U 1039,U,Tensta sn,B,Pr4,1,gulli,stodbjorn,father,sen,1.0,1,0.0,0.0,0.005502751375687844
+U 1039,U,Tensta sn,B,Pr4,1,gulli,eysteinn,father,sen,1.0,1,0.0,0.0,0.0025012506253126563
+U 1041,U,Tensta sn,B,,0,runfastr,hagbardr,father,odaterad,,0,0.0,0.0,0.011005502751375688
+U 1041,U,Tensta sn,B,,0,runfastr,ingigerdr,father,odaterad,,0,0.0,0.0,0.01150575287643822
+U 1041,U,Tensta sn,B,,0,runa,hagbardr,mother,odaterad,,0,0.0,0.0,0.02351175587793897
+U 1041,U,Tensta sn,B,,0,runa,ingigerdr,mother,odaterad,,0,0.0,0.0,0.0240120060030015
+U 1042,U,Tensta sn,B,Pr4,0,bjorn,rikhvatr,father,sen,1.0,0,0.0,0.0,0.015007503751875938
+U 1042,U,Tensta sn,B,Pr4,0,sigridr,rikhvatr,mother,sen,1.0,0,0.0,0.0,0.06753376688344172
+U 1043,U,Tensta sn,B,,1,ofeigr,ulfr,father,odaterad,,1,0.0,1.0,0.015507753876938469
+U 1043,U,Tensta sn,B,,1,ofeigr,gudfastr,father,odaterad,,1,0.0,0.0,0.02051025512756378
+U 1043,U,Tensta sn,B,,1,ofeigr,gudmundr,father,odaterad,,1,0.0,0.0,0.021010505252626314
+U 1045,U,Björklinge sn,B,,0,bjarnhofdi,bjarnhofdi,father (samma namn),odaterad,,0,1.0,1.0,0.009004502251125562
+U 1047,U,Björklinge sn,B,Pr4,0,eybjorn,eygeirr,father,sen,1.0,0,1.0,1.0,0.1040520260130065
+U 1047,U,Björklinge sn,B,Pr4,0,eybjorn,ketilbjorn,father,sen,1.0,0,1.0,0.0,0.10705352676338169
+U 1047,U,Björklinge sn,B,Pr4,0,eybjorn,gisl,father,sen,1.0,0,0.0,0.0,0.10505252626313157
+U 1047,U,Björklinge sn,B,Pr4,0,eybjorn,igull,father,sen,1.0,0,0.0,1.0,0.11805902951475739
+U 1048,U,Björklinge sn,B,,0,gillaug,jorundr,son,odaterad,,0,0.0,0.0,0.01250625312656328
+U 1050,U,Björklinge sn,B,,0,eistr,holmgeirr,father,odaterad,,0,0.0,0.0,0.02301150575287644
+U 1051,U,Björklinge sn,B,,0,vigmundr,jofast,father,odaterad,,0,0.0,0.0,0.02501250625312656
+U 1053,U,Björklinge sn,B,,0,ketill,kolr,son,odaterad,,0,0.0,1.0,0.0
+U 1053,U,Björklinge sn,B,,0,ingileif,kolr,son,odaterad,,0,0.0,0.0,0.0
+U 1056,U,Björklinge sn,B,Pr4,0,ofeigr,veseti,father,sen,1.0,0,0.0,0.0,0.0025012506253126563
+U 1056,U,Björklinge sn,B,Pr4,0,ofeigr,jofurr,father,sen,1.0,0,0.0,0.0,0.002001000500250125
+U 1060,U,Björklinge sn,B,,0,eistr,karl,father,odaterad,,0,0.0,0.0,0.016008004002001
+U 1062,U,Viksta sn,A,Pr4,0,gangulfr,audbjorn,son,sen,1.0,0,0.0,0.0,0.0
+U 1062,U,Viksta sn,A,Pr4,0,beinvidr,audbjorn,son,sen,1.0,0,0.0,0.0,0.0
+U 1065,U,Viksta sn,A,Pr4,0,sveinn,runvidr,father,sen,1.0,0,0.0,0.0,0.029514757378689346
+U 1065,U,Viksta sn,A,Pr4,0,kari,jofurr,father,sen,1.0,0,0.0,0.0,0.015507753876938469
+U 1067,U,Åkerby sn,B,Pr1,1,styrr,odalfridr,father,tidig,0.0,1,0.0,0.0,0.02051025512756378
+U 1070,U,Åkerby sn,B,Pr4,0,thordr,gamall,father,sen,1.0,0,0.0,0.0,0.06603301650825413
+U 1073,U,Bälinge sn,B,Pr5,0,ingifastr,jofurr,father,sen,1.0,0,0.0,0.0,0.07803901950975488
+U 1073,U,Bälinge sn,B,Pr5,0,ingifastr,stodbjorn,father,sen,1.0,0,0.0,0.0,0.08754377188594298
+U 1074,U,Bälinge sn,B,,0,asfridr,djarfr,son,odaterad,,0,0.0,0.0,0.021010505252626314
+U 1075,U,Bälinge sn,B,,0,gunnarr,oleifr,father,odaterad,,0,0.0,0.0,0.01150575287643822
+U 1075,U,Bälinge sn,B,,0,gunnarr,thorsteinn,father,odaterad,,0,0.0,0.0,0.01200600300150075
+U 1080,U,Bälinge sn,B,,0,halfdan,sighvatr,father,odaterad,,0,0.0,0.0,0.0050025012506253125
+U 1080,U,Bälinge sn,B,,0,halfdan,karl,father,odaterad,,0,0.0,0.0,0.0050025012506253125
+U 1083,U,Bälinge sn,B,,0,nefgeirr,arta,father,odaterad,,0,0.0,0.0,0.0
+U 1084,U,Bälinge sn,B,Pr5,0,bjorn,abjorn,father,sen,1.0,0,0.0,0.0,0.018009004502251125
+U 1084,U,Bälinge sn,B,Pr5,0,bjorn,ingjaldr,father,sen,1.0,0,0.0,0.0,0.016508254127063533
+U 1084,U,Bälinge sn,B,Pr5,0,bjorn,hemingr,father,sen,1.0,0,0.0,0.0,0.016008004002001
+U 1086,U,Bälinge sn,B,Pr4,0,vigbjorn,jofurr,father,sen,1.0,0,0.0,0.0,0.08854427213606804
+U 1087,U,Bälinge sn,B,Pr4,0,fastve,gerdarr,sons,sen,1.0,0,0.0,0.0,0.04402201100550275
+U 1087,U,Bälinge sn,B,Pr4,0,fastve,otryggr,sons,sen,1.0,0,0.0,0.0,0.04702351175587794
+U 1089,U,Bälinge sn,B,Pr4,0,ingjaldr,vigi,father,sen,1.0,0,0.0,0.0,0.010005002501250625
+U 1094,U,Bälinge sn,B,Pr4,1,bjorn,brusi,father,sen,1.0,1,0.0,1.0,0.016008004002001
+U 1094,U,Bälinge sn,B,Pr4,1,bjorn,thorbjorn,father,sen,1.0,1,0.0,0.0,0.02051025512756378
+U 1096,U,Bälinge sn,B,Pr5,0,gunnelfr,asbjorn,sons,sen,1.0,0,0.0,0.0,0.016508254127063533
+U 1096,U,Bälinge sn,B,Pr5,0,gunnelfr,goti,sons,sen,1.0,0,0.0,1.0,0.015007503751875938
+U 1098,U,Bälinge sn,B,,0,fastulfr,jofurfridr,father,odaterad,,0,0.0,0.0,0.017008504252126064
+U 1102,U,Bälinge sn,B,Pr4,0,gudsteinn,hrodleifr,father,sen,1.0,0,0.0,0.0,0.057528764382191094
+U 1102,U,Bälinge sn,B,Pr4,0,gudsteinn,gas,father,sen,1.0,0,0.0,1.0,0.054527263631815905
+U 1102,U,Bälinge sn,B,Pr4,0,gudsteinn,fastlaug,father,sen,1.0,0,0.0,0.0,0.05902951475737869
+U 1106,U,Bälinge sn,B,Pr4,0,asbjorn,jorundr,father,sen,1.0,0,0.0,0.0,0.09654827413706854
+U 1106,U,Bälinge sn,B,Pr4,0,asbjorn,brynjulfr,father,sen,1.0,0,0.0,0.0,0.10305152576288144
+U 1106,U,Bälinge sn,B,Pr4,0,asbjorn,ingifastr,father,sen,1.0,0,0.0,1.0,0.0895447723861931
+U 1107,U,Bälinge sn,B,Pr4,0,gillaug,fastarr,son,sen,1.0,0,0.0,0.0,0.005502751375687844
+U 1108,U,Skuttunge sn,A,Pr4,0,ketilmundr,kagr,son,sen,1.0,0,0.0,1.0,0.028514257128564282
+U 1116,U,Skuttunge sn,A,Pr4,0,nefgeirr,vebjorn,father,sen,1.0,0,0.0,0.0,0.0
+U 1116,U,Skuttunge sn,A,Pr4,0,nefgeirr,skotlakr,father,sen,1.0,0,0.0,0.0,0.0
+U 1116,U,Skuttunge sn,A,Pr4,0,nefgeirr,hrodleifr,father,sen,1.0,0,0.0,0.0,0.0
+U 1119,U,Skuttunge sn,A,Pr4,0,othvegin,ragna,father,sen,1.0,0,0.0,0.0,0.0
+U 1122,U,Stavby sn,B,Pr4,1,hemkell,sveinn,father,sen,1.0,1,0.0,0.0,0.0
+U 1122,U,Stavby sn,B,Pr4,1,hemkell,sibbi,father,sen,1.0,1,0.0,0.0,0.0
+U 1122,U,Stavby sn,B,Pr4,1,hemkell,gunnarr,father,sen,1.0,1,0.0,0.0,0.0
+U 1131,U,Alunda sn,B,Pr4,0,fullugi,jofurr,father,sen,1.0,0,0.0,0.0,0.01250625312656328
+U 1132,U,Skäfthammars sn,A,Pr4,0,bjorn,ljotr,father,sen,1.0,0,0.0,0.0,0.021510755377688845
+U 1132,U,Skäfthammars sn,A,Pr4,0,bjorn,throtti,father,sen,1.0,0,0.0,0.0,0.014507253626813406
+U 1132,U,Skäfthammars sn,A,Pr4,0,bjorn,audvidr,father,sen,1.0,0,0.0,0.0,0.022511255627813906
+U 1132,U,Skäfthammars sn,A,Pr4,0,fastheidr,ljotr,mother,sen,1.0,0,0.0,0.0,0.015507753876938469
+U 1132,U,Skäfthammars sn,A,Pr4,0,fastheidr,throtti,mother,sen,1.0,0,0.0,0.0,0.021510755377688845
+U 1132,U,Skäfthammars sn,A,Pr4,0,fastheidr,audvidr,mother,sen,1.0,0,0.0,0.0,0.0240120060030015
+U 1142,U,Vendels sn,B,,0,hvithofdi,fastulfr,father,odaterad,,0,0.0,0.0,0.0
+U 1143,U,Tierps sn,B,,1,gunnvidr,klettr,father,odaterad,,1,0.0,0.0,0.032016008004002
+U 1143,U,Tierps sn,B,,1,gunnvidr,bleikr,father,odaterad,,1,0.0,0.0,0.03151575787893947
+U 1144,U,Tierps sn,B,Pr3,1,geiri,geirfastr,father,sen,1.0,1,0.0,1.0,0.00400200100050025
+U 1144,U,Tierps sn,B,Pr3,1,geiri,honefr,father,sen,1.0,1,0.0,0.0,0.0080040020010005
+U 1144,U,Tierps sn,B,Pr3,1,geiri,hrafn,father,sen,1.0,1,0.0,0.0,0.005502751375687844
+U 1144,U,Tierps sn,B,Pr3,1,geiri,folkbjorn,father,sen,1.0,1,0.0,0.0,0.005502751375687844
+U 1144,U,Tierps sn,B,Pr3,1,geiri,thorir,father,sen,1.0,1,0.0,0.0,0.0065032516258129065
+U 1145,U,Tierps sn,B,,1,fasti,rikr,father,odaterad,,1,0.0,0.0,0.014507253626813406
+U 1149,U,Älvkarleby sn,A,Pr2,1,geirmundi,thorbjorn,father,tidig,0.0,1,0.0,0.0,0.0
+U 1149,U,Älvkarleby sn,A,Pr2,1,geirmundi,knutr,father,tidig,0.0,1,0.0,0.0,0.0
+U 1151,U,Frösthults sn,B,Fp,1,hedindis,engli,son,tidig,0.0,1,0.0,0.0,0.0
+U 1158,U,Simtuna sn,B,,0,freygeirr,gudsteinn,father,odaterad,,0,0.0,0.0,0.02751375687843922
+U 1158,U,Simtuna sn,B,,0,freygeirr,eistr,father,odaterad,,0,0.0,0.0,0.0335167583791896
+U 1158,U,Simtuna sn,B,,0,freygeirr,aki,father,odaterad,,0,0.0,0.0,0.0415207603801901
+U 1160,U,Simtuna sn,B,Pr4,0,igulbjorn,lidsmadr,father,sen,1.0,0,0.0,0.0,0.0880440220110055
+U 1161,U,Altuna sn,A,Pr3,0,holmfastr,vefastr,father,sen,1.0,0,1.0,0.0,0.08554277138569284
+U 1161,U,Altuna sn,A,Pr3,0,holmfastr,folkadr,father,sen,1.0,0,0.0,0.0,0.08254127063531766
+U 1161,U,Altuna sn,A,Pr3,0,holmfastr,gudvarr,father,sen,1.0,0,0.0,0.0,0.06803401700850426
+U 1162,U,Altuna sn,A,Pr4,0,ozurr,bjorn,father,sen,1.0,0,0.0,0.0,0.0
+U 1162,U,Altuna sn,A,Pr4,0,ozurr,halfdan,father,sen,1.0,0,0.0,0.0,0.0
+U 1163,U,Altuna sn,A,Pr2,0,erinbjorn,vidbjorn,father,tidig,0.0,0,0.0,0.0,0.016508254127063533
+U 1163,U,Altuna sn,A,Pr2,0,erinbjorn,eringeirr,father,tidig,0.0,0,1.0,1.0,0.013506753376688344
+U 1163,U,Altuna sn,A,Pr2,0,erinbjorn,nasi,father,tidig,0.0,0,0.0,0.0,0.011005502751375688
+U 1168,U,Österunda sn,B,Pr4,0,gislaug,jorundr,son,sen,1.0,0,0.0,0.0,0.004502251125562781
+U 1173,U,Vittinge sn,A,Fp,1,hjalmr,ari,father,tidig,0.0,1,0.0,0.0,0.0
+U 1174,U,Vittinge sn,A,Pr4,0,gunn-,bjarngeirr,son,sen,1.0,0,0.0,0.0,0.0
+U 1177,U,Harbo sn,A,Pr4,0,tobbi,asgerdr,father,sen,1.0,0,0.0,0.0,0.014007003501750876
+U ATA6243/65,U,"Vårfrukyrka sn, Enköpings stad",A,Pr3,0,freysteinn,thorsteinn,förälder till,sen,1.0,0,1.0,0.0,0.048024012006003
+U ATA322-4042-2009,U,Vallentuna sn,A,,0,freysteinn,djarfr,father,odaterad,,0,0.0,0.0,0.03551775887943972
+U Fv1953;263,U,Sollentuna sn,A,Pr5,0,helga,eysteinn,sons,sen,1.0,0,0.0,0.0,0.0
+U Fv1953;263,U,Sollentuna sn,A,Pr5,0,helga,hemingr,sons,sen,1.0,0,0.0,1.0,0.0
+U Fv1953;266,U,Spånga sn,B,Pr3,0,bjorn,knutr,father,sen,1.0,0,0.0,0.0,0.018509254627313655
+U Fv1953;266,U,Spånga sn,B,Pr3,0,bjorn,thorgisl,father,sen,1.0,0,0.0,0.0,0.017008504252126064
+U Fv1953;266,U,Spånga sn,B,Pr3,0,bjorn,eysteinn,father,sen,1.0,0,0.0,0.0,0.015507753876938469
+U Fv1955;216,U,Sankt Pers sn,B,Pr2,1,gudrikr,thorkell,son,tidig,0.0,1,0.0,0.0,0.01200600300150075
+U Fv1955;216,U,Sankt Pers sn,B,Pr2,1,gillaug,thorkell,son,tidig,0.0,1,0.0,0.0,0.0
+U Fv1959;188,U,Hammarby sn,B,Pr4,0,sigsteinn,eileifr,son,sen,1.0,0,0.0,0.0,0.08904452226113056
+U Fv1959;188,U,Hammarby sn,B,Pr4,0,erinve,eileifr,son,sen,1.0,0,0.0,1.0,0.026013006503251626
+U Fv1968;279B,U,Sollentuna sn,A,,0,illugi,sigfastr,father,odaterad,,0,0.0,0.0,0.005502751375687844
+U Fv1968;279B,U,Sollentuna sn,A,,0,illugi,onaemr,father,odaterad,,0,0.0,1.0,0.005502751375687844
+U Fv1973;146,U,Tillinge sn,A,Pr4,0,gisl,haraldr,father,sen,1.0,0,0.0,0.0,0.03551775887943972
+U Fv1973;146,U,Tillinge sn,A,Pr4,0,gisl,erngisl,father,sen,1.0,0,0.0,0.0,0.0335167583791896
+U Fv1973;146,U,Tillinge sn,A,Pr4,0,gisl,halfdan,father,sen,1.0,0,0.0,0.0,0.03301650825412707
+U Fv1976;104,U,Uppsala,A,,0,vigmarr,rikr,father,odaterad,,0,0.0,0.0,0.0
+U Fv1976;104,U,Uppsala,A,,0,vigmarr,holti,father,odaterad,,0,0.0,0.0,0.0
+U Fv1976;104,U,Uppsala,A,,0,vigmarr,fastgeirr,father,odaterad,,0,0.0,0.0,0.0
+U Fv1983;228,U,Sankt Pers sn,B,Pr3,0,nesbjorn,oleifr,son,sen,1.0,0,0.0,0.0,0.0
+U Fv1990;32B,U,Funbo sn,A,,0,hemingr,staki,father,odaterad,,0,0.0,0.0,0.01150575287643822
+U Fv1990;32B,U,Funbo sn,A,,0,hemingr,thjalfi,father,odaterad,,0,0.0,0.0,0.007503751875937969
+U Fv1992;156,U,Husby-Ärlinghundra sn,A,,1,vefastr,sigfastr,father,odaterad,,1,1.0,0.0,0.05552776388194097
+U Fv1992;156,U,Husby-Ärlinghundra sn,A,,1,vefastr,sigfuss,father,odaterad,,1,0.0,0.0,0.054527263631815905
+U Fv1992;156,U,Husby-Ärlinghundra sn,A,,1,vefastr,hedinfrida,father,odaterad,,1,0.0,0.0,0.04902451225612806
+U Fv1993;231,U,Frösunda sn,B,,0,fulnir,bjorn,father,odaterad,,0,0.0,0.0,0.0
+U NOR2003;23,U,Vada sn,B,,0,olaug,holmi,son,odaterad,,0,0.0,0.0,0.018009004502251125
+Vs 1,Vs,Rytterns sn (Rytterne),B,Pr1,0,gudleifr,slagvi,son,tidig,0.0,0,0.0,0.0,0.0
+Vs 9,Vs,Västerås (f.d. Lundby sn),A,Pr3,1,gisl,asl,son,sen,1.0,1,0.0,0.0,0.0
+Vs 13,Vs,Västerås (f.d. Badelunda sn),B,,0,folkvidr,hedinn,son,odaterad,,0,0.0,0.0,0.0
+Vs 15,Vs,Björksta sn,B,Pr4,0,knutr,hegulfr,father,sen,1.0,0,0.0,0.0,0.0
+Vs 18,Vs,Skultuna sn,B,Fp,1,gunnvaldr,geirfastr,son,tidig,0.0,1,0.0,1.0,0.0
+Vs 20,Vs,Romfartuna sn,A,,0,vebjorn,djuri,father,odaterad,,0,0.0,0.0,0.1965982991495748
+Vs 20,Vs,Romfartuna sn,A,,0,vebjorn,johan,father,odaterad,,0,0.0,0.0,0.19109554777388693
+Vs 27,Vs,Kila sn,A,,0,sigthorn,thorbjorn,father,odaterad,,0,0.0,0.0,0.0
+Vs 27,Vs,Kila sn,A,,0,sigthorn,ingifastr,father,odaterad,,0,0.0,0.0,0.0
+Vs 29,Vs,Sala landsförsamling,A,Pr4,0,holmi,veseti,father,sen,1.0,0,0.0,0.0,0.0
+Vs 29,Vs,Sala landsförsamling,A,Pr4,0,holmi,halfdan,father,sen,1.0,0,0.0,1.0,0.0
+Nä 11,Nä,Askers sn,B,,1,eibjorn,bjorn,father,odaterad,,1,0.0,0.0,0.0
+Nä 11,Nä,Askers sn,B,,1,eibjorn,geirhvatr,father,odaterad,,1,0.0,0.0,0.0
+Nä 14,Nä,Stora Mellösa sn,B,,0,vebjorg,sveinn,son,odaterad,,0,0.0,0.0,0.0
+Nä 23,Nä,Glanshammars sn,A,,0,sigrikr,reidubuinn,son,odaterad,,0,0.0,0.0,0.0
+Nä 26,Nä,Glanshammars sn,A,Pr2,0,bruni,thorgeirr,father,tidig,0.0,0,0.0,0.0,0.0
+Nä 26,Nä,Glanshammars sn,A,Pr2,0,holma,thorgeirr,mother,tidig,0.0,0,0.0,0.0,0.0
+Nä 28,Nä,Glanshammars sn,A,,1,gunnhvatr,sveinn,father,odaterad,,1,0.0,0.0,0.14207103551775888
+Nä 32,Nä,Götlunda sn,B,,0,holmi,ulfr,father,odaterad,,0,0.0,0.0,0.0
+Nä 32,Nä,Götlunda sn,B,,0,holmi,onundr,father,odaterad,,0,0.0,0.0,0.0
+Nä 34,Nä,Rinkaby sn,B,,0,thorheidr,lydbjorn,son,odaterad,,0,0.0,0.0,0.0
+Gs 9,Gs,Årsunda sn,A,Pr2,0,gudelfr,onundr,mother,tidig,0.0,0,0.0,0.0,0.14657328664332167
+Gs 11,Gs,Valbo sn (nu Gävle),B,Pr2,1,thjodmundr,thjodgeirr,father,tidig,0.0,1,1.0,1.0,0.4227113556778389
+Gs 11,Gs,Valbo sn (nu Gävle),B,Pr2,1,thjodmundr,gudleifr,father,tidig,0.0,1,0.0,0.0,0.42471235617808906
+Gs 11,Gs,Valbo sn (nu Gävle),B,Pr2,1,thjodmundr,karl,father,tidig,0.0,1,0.0,0.0,0.4317158579289645
+Gs 11,Gs,Valbo sn (nu Gävle),B,Pr2,1,kari,asmundr,förälder till,tidig,0.0,1,0.0,0.0,0.14457228614307155
+Gs 11,Gs,Valbo sn (nu Gävle),B,Pr2,1,thjodmundr,eimundr,father,tidig,0.0,1,1.0,0.0,0.43721860930465234
+Gs 12,Gs,Valbo sn,A,Pr2,1,idaldr,eibjorn,son,tidig,0.0,1,0.0,1.0,0.0
+Gs 19,Gs,Ockelbo sn,A,,0,blesa,svarthofdi,son,odaterad,,0,0.0,0.0,0.0
+Hs 6,Hs,Järvsö sn,B,Pr1,0,djuri,unnulfr,father,tidig,0.0,0,0.0,0.0,0.0
+Hs 6,Hs,Järvsö sn,B,Pr1,0,djuri,fjolvarr,father,tidig,0.0,0,0.0,0.0,0.0
+Hs 6,Hs,Järvsö sn,B,Pr1,0,haurlaug,unnulfr,mother,tidig,0.0,0,0.0,0.0,0.0
+Hs 6,Hs,Järvsö sn,B,Pr1,0,haurlaug,fjolvarr,mother,tidig,0.0,0,0.0,0.0,0.0
+Hs 10,Hs,Hälsingtuna sn,A,Pr2,0,lini,alfrunar,förälder till,tidig,0.0,0,0.0,0.0,0.0
+Hs 10,Hs,Hälsingtuna sn,A,Pr2,0,asbjorn,brusi,förälder till,tidig,0.0,0,0.0,0.0,0.0
+Hs 11,Hs,Högs sn,A,,1,oddi,vefastr,father,odaterad,,1,0.0,0.0,0.0
+Hs 12,Hs,Högs sn,A,RAK,0,thoru,gudnjotr,förälder till,tidig,0.0,0,0.0,0.0,0.0
+Hs 12,Hs,Högs sn,A,RAK,0,thror,gudnjotr,förälder till,tidig,0.0,0,0.0,0.0,0.0
+Hs 14,Hs,Rogsta sn,B,,0,brisi,he-gylfir,förälder till,odaterad,,0,0.0,0.0,0.0
+Hs 14,Hs,Rogsta sn,B,,0,he-gylfir,hrodmundr,förälder till,odaterad,,0,0.0,1.0,0.327663831915958
+M 1,M,Njurunda sn,A,Pr1,0,burir,bergsveinn,father,tidig,0.0,0,0.0,1.0,0.0
+M 1,M,Njurunda sn,A,Pr1,0,burir,sigfastr,father,tidig,0.0,0,0.0,0.0,0.0
+M 1,M,Njurunda sn,A,Pr1,0,burir,fridi,father,tidig,0.0,0,0.0,0.0,0.0
+M 3,M,Njurunda sn,A,,0,dis,althrudr,mother,odaterad,,0,0.0,0.0,0.0
+M 3,M,Njurunda sn,A,,0,dis,sigreifr,mother,odaterad,,0,0.0,0.0,0.0
+M 5,M,Attmars sn,B,Pr2,1,althrudr,hakon,mother,tidig,0.0,1,0.0,0.0,0.0
+M 6,M,Tuna sn,A,,0,hakon,onundr,father,odaterad,,0,0.0,0.0,0.0
+M 8,M,Tuna sn,A,,0,dolga,bjorn,sons,odaterad,,0,0.0,0.0,0.0
+M 11,M,Selångers sn,A,,0,gunnvidr,thorsteinn,son,odaterad,,0,0.0,0.0,0.0
+M 11,M,Selångers sn,A,,0,thorgerdr,thorsteinn,son,odaterad,,0,1.0,1.0,0.19109554777388693
+M 14,M,Sättna sn,B,,0,igull,sigurdr,father,odaterad,,0,0.0,0.0,0.0
+M 14,M,Sättna sn,B,,0,igull,sveinn,father,odaterad,,0,0.0,0.0,0.0
+M 14,M,Sättna sn,B,,0,igull,hordr,father,odaterad,,0,0.0,0.0,0.0
+J RS1928;66,J,Frösö sn,A,Pr3,1,gudfastr,austmadr,förälder till,sen,1.0,1,0.0,0.0,0.0
+G 113,G,Ardre sn,A,,0,liknhvatr,ottarr,father,odaterad,,0,0.0,0.0,0.0
+G 113,G,Ardre sn,A,,0,liknhvatr,geirhvatr,father,odaterad,,0,0.0,0.0,0.0
+G 113,G,Ardre sn,A,,0,liknhvatr,eihvatr,father,odaterad,,0,0.0,0.0,0.0
+G 309,G,Hangvars sn,A,,0,leiku,leiknarr,father,odaterad,,0,0.0,1.0,0.0
+G 325,G,Rute sn,A,,0,hrodlaug,fridbjorn,son,odaterad,,0,0.0,0.0,0.0
+G 370,G,Hablingbo sn,B,Pr3,0,helgi,hvatarr,father,sen,1.0,0,0.0,1.0,0.0
+G 370,G,Hablingbo sn,B,Pr3,0,helgi,heilgeirr,father,sen,1.0,0,0.0,1.0,0.0

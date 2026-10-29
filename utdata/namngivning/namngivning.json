@@ -1,0 +1,480 @@
+{
+ "plan": "analysplaner/2026-10-29-namngivning-i-familjen.md",
+ "resultat": {
+  "alla": {
+   "H1": {
+    "par": 1292,
+    "andel": 0.053405572755417956,
+    "vantat": 0.02782422205068804,
+    "p": 0.0001
+   },
+   "H2": {
+    "par": 1292,
+    "andel": 0.14860681114551083,
+    "vantat": 0.12453102895428862,
+    "p": 0.0043
+   },
+   "H3": {
+    "par": 847,
+    "n_1": 414,
+    "overskott_1": 0.031214882803720697,
+    "overskott_0": 0.026125071773762172,
+    "skillnad": 0.005089811029958525,
+    "p": 0.886
+   },
+   "H4": {
+    "par": 1292,
+    "n_1": 274,
+    "overskott_1": 0.011472889729536303,
+    "overskott_0": 0.029069053190642468,
+    "skillnad": -0.017596163461106165,
+    "p": 0.2184
+   },
+   "H5": {
+    "par": 1066,
+    "andel": 0.06660412757973734,
+    "vantat": 0.02896696799135823,
+    "p": 0.0001
+   }
+  },
+  "A": {
+   "H1": {
+    "par": 652,
+    "andel": 0.049079754601226995,
+    "vantat": 0.023444829145491234,
+    "p": 0.0002
+   },
+   "H2": {
+    "par": 652,
+    "andel": 0.13803680981595093,
+    "vantat": 0.13013141804978043,
+    "p": 0.2754
+   },
+   "H3": {
+    "par": 421,
+    "n_1": 215,
+    "overskott_1": 0.027785986016263944,
+    "overskott_0": 0.019730739155985763,
+    "skillnad": 0.00805524686027818,
+    "p": 0.9712
+   },
+   "H4": {
+    "par": 652,
+    "n_1": 135,
+    "overskott_1": 0.016586070813184375,
+    "overskott_0": 0.026378759979602956,
+    "skillnad": -0.00979268916641858,
+    "p": 0.677
+   },
+   "H5": {
+    "par": 549,
+    "andel": 0.06557377049180328,
+    "vantat": 0.03139676444875817,
+    "p": 0.0001
+   }
+  },
+  "B": {
+   "H1": {
+    "par": 640,
+    "andel": 0.0578125,
+    "vantat": 0.033786659915991606,
+    "p": 0.0005
+   },
+   "H2": {
+    "par": 640,
+    "andel": 0.159375,
+    "vantat": 0.12167576132613261,
+    "p": 0.0011
+   },
+   "H3": {
+    "par": 426,
+    "n_1": 199,
+    "overskott_1": 0.03491946978514383,
+    "overskott_0": 0.03192785820222887,
+    "skillnad": 0.0029916115829149575,
+    "p": 0.8352
+   },
+   "H4": {
+    "par": 640,
+    "n_1": 139,
+    "overskott_1": 0.0065068505475759444,
+    "overskott_0": 0.03184526394933994,
+    "skillnad": -0.025338413401763994,
+    "p": 0.2098
+   },
+   "H5": {
+    "par": 517,
+    "andel": 0.06769825918762089,
+    "vantat": 0.0326191226472744,
+    "p": 0.0001
+   }
+  }
+ },
+ "holm": {
+  "H1": 0.0005,
+  "H5": 0.0005,
+  "H2": 0.0129,
+  "H4": 0.4368,
+  "H3": 0.886
+ },
+ "status": {
+  "H1": "håller",
+  "H2": "antydan",
+  "H3": "ingen skillnad påvisad",
+  "H4": "ingen skillnad påvisad",
+  "H5": "håller"
+ },
+ "beskrivning": {
+  "par": 1292,
+  "syskonpar": 1066,
+  "samma_namn": 6,
+  "vanligaste_arvda_led": [
+   [
+    "bjorn",
+    11
+   ],
+   [
+    "thor",
+    10
+   ],
+   [
+    "steinn",
+    8
+   ],
+   [
+    "fastr",
+    5
+   ],
+   [
+    "ni",
+    4
+   ],
+   [
+    "sig",
+    3
+   ],
+   [
+    "mundr",
+    3
+   ],
+   [
+    "to",
+    2
+   ],
+   [
+    "holm",
+    2
+   ],
+   [
+    "ingi",
+    2
+   ],
+   [
+    "geirr",
+    2
+   ],
+   [
+    "stein",
+    1
+   ],
+   [
+    "gud",
+    1
+   ],
+   [
+    "gunn",
+    1
+   ],
+   [
+    "einn",
+    1
+   ],
+   [
+    "as",
+    1
+   ],
+   [
+    "folk",
+    1
+   ],
+   [
+    "bbi",
+    1
+   ],
+   [
+    "ru",
+    1
+   ],
+   [
+    "ey",
+    1
+   ]
+  ],
+  "per_skikt": {
+   "odaterad": {
+    "par": 445,
+    "delat": 0.04044943820224719,
+    "vantat": 0.02134662837036496,
+    "allit": 0.1258426966292135
+   },
+   "sen": {
+    "par": 414,
+    "delat": 0.06280193236714976,
+    "vantat": 0.03158704956342906,
+    "allit": 0.1859903381642512
+   },
+   "tidig": {
+    "par": 433,
+    "delat": 0.057736720554272515,
+    "vantat": 0.03161164878051034,
+    "allit": 0.13625866050808313
+   }
+  },
+  "mor_vs_far": {
+   "false": {
+    "par": 1265,
+    "delat": 0.05375494071146245,
+    "vantat": 0.02819037977486767
+   },
+   "true": {
+    "par": 27,
+    "delat": 0.037037037037037035,
+    "vantat": 0.022344505586126398
+   }
+  },
+  "exempel_samma_namn": [
+   {
+    "signum": "Sö 67",
+    "foralder": "geirmundr",
+    "rel": "father (samma namn)"
+   },
+   {
+    "signum": "Sö 196",
+    "foralder": "eyjulfr",
+    "rel": "father (samma namn)"
+   },
+   {
+    "signum": "U 135",
+    "foralder": "eysteinn",
+    "rel": "father (samma namn)"
+   },
+   {
+    "signum": "U 867",
+    "foralder": "thjalfi",
+    "rel": "father (samma namn)"
+   },
+   {
+    "signum": "U 996",
+    "foralder": "thorir",
+    "rel": "father (samma namn)"
+   },
+   {
+    "signum": "U 1045",
+    "foralder": "bjarnhofdi",
+    "rel": "father (samma namn)"
+   }
+  ],
+  "exempel_delat": [
+   {
+    "signum": "Ög ATA5503/61",
+    "foralder": "freysteinn",
+    "barn": "thorsteinn"
+   },
+   {
+    "signum": "Ög Fv1983;240",
+    "foralder": "tofi",
+    "barn": "tolir"
+   },
+   {
+    "signum": "Sö 62",
+    "foralder": "gunni",
+    "barn": "ragni"
+   },
+   {
+    "signum": "Sö 69",
+    "foralder": "gunni",
+    "barn": "kani"
+   },
+   {
+    "signum": "Sö 128",
+    "foralder": "steinfridr",
+    "barn": "steinbjorg"
+   },
+   {
+    "signum": "Sö 164",
+    "foralder": "gudmarr",
+    "barn": "gudbjorn"
+   },
+   {
+    "signum": "Sö 200",
+    "foralder": "arnsteinn",
+    "barn": "eysteinn"
+   },
+   {
+    "signum": "Sö 226",
+    "foralder": "geirbjorn",
+    "barn": "vebjorn"
+   },
+   {
+    "signum": "Sö 226",
+    "foralder": "geirbjorn",
+    "barn": "ketilbjorn"
+   },
+   {
+    "signum": "Sö 229",
+    "foralder": "igulbjorn",
+    "barn": "ketilbjorn"
+   },
+   {
+    "signum": "Sö 229",
+    "foralder": "igulbjorn",
+    "barn": "thorbjorn"
+   },
+   {
+    "signum": "Sö 233",
+    "foralder": "thorir",
+    "barn": "thorfastr"
+   },
+   {
+    "signum": "Sö 273",
+    "foralder": "sigrodr",
+    "barn": "signjotr"
+   },
+   {
+    "signum": "Sö 308",
+    "foralder": "holmfastr",
+    "barn": "ingifastr"
+   },
+   {
+    "signum": "Sö 363",
+    "foralder": "thorsteinn",
+    "barn": "eysteinn"
+   },
+   {
+    "signum": "Sm 39",
+    "foralder": "soni",
+    "barn": "gunni"
+   },
+   {
+    "signum": "Sm 101",
+    "foralder": "gunnarr",
+    "barn": "gunnkell"
+   },
+   {
+    "signum": "Vg 160",
+    "foralder": "thorvidr",
+    "barn": "thorir"
+   },
+   {
+    "signum": "Vg 175",
+    "foralder": "thorsteinn",
+    "barn": "vesteinn"
+   },
+   {
+    "signum": "U 32",
+    "foralder": "sveinn",
+    "barn": "steinn"
+   },
+   {
+    "signum": "U 40",
+    "foralder": "asulfr",
+    "barn": "asbjorn"
+   },
+   {
+    "signum": "U 89",
+    "foralder": "holmfastr",
+    "barn": "holmfridr"
+   },
+   {
+    "signum": "U 169",
+    "foralder": "holmsteinn",
+    "barn": "freysteinn"
+   },
+   {
+    "signum": "U 170",
+    "foralder": "gunni",
+    "barn": "agni"
+   },
+   {
+    "signum": "U 176",
+    "foralder": "eibjorn",
+    "barn": "thorbjorn"
+   },
+   {
+    "signum": "U 232",
+    "foralder": "tobbi",
+    "barn": "tosti"
+   },
+   {
+    "signum": "U 289",
+    "foralder": "holmgeirr",
+    "barn": "holmfastr"
+   },
+   {
+    "signum": "U 296",
+    "foralder": "ingivaldr",
+    "barn": "ingimundr"
+   },
+   {
+    "signum": "U 297",
+    "foralder": "sigbjorn",
+    "barn": "jobjorn"
+   },
+   {
+    "signum": "U 352",
+    "foralder": "siglaug",
+    "barn": "sigvidr"
+   },
+   {
+    "signum": "U 358",
+    "foralder": "folkmarr",
+    "barn": "folkbjorn"
+   },
+   {
+    "signum": "U 418",
+    "foralder": "thorsteinn",
+    "barn": "thorfastr"
+   },
+   {
+    "signum": "U 481",
+    "foralder": "thorbjorn",
+    "barn": "thorgisl"
+   },
+   {
+    "signum": "U 481",
+    "foralder": "thorbjorn",
+    "barn": "thorsteinn"
+   },
+   {
+    "signum": "U 481",
+    "foralder": "thorbjorn",
+    "barn": "vebjorn"
+   },
+   {
+    "signum": "U 503",
+    "foralder": "ketilfastr",
+    "barn": "ernfastr"
+   },
+   {
+    "signum": "U 510",
+    "foralder": "thorsteinn",
+    "barn": "freysteinn"
+   },
+   {
+    "signum": "U 510",
+    "foralder": "thorsteinn",
+    "barn": "thorbjorn"
+   },
+   {
+    "signum": "U 519",
+    "foralder": "geirbjorn",
+    "barn": "jobjorn"
+   },
+   {
+    "signum": "U 623",
+    "foralder": "vefastr",
+    "barn": "sigfastr"
+   }
+  ]
+ }
+}
