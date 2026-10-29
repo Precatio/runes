@@ -207,18 +207,18 @@ export function NewBadge({ pt }: { pt: Pattern }) {
   // every month
   const day = (d?: string | null) => (d ? d.slice(0, 10) : "");
   if (pt.new === "obekräftat") return (
-    <span className={`${pill} border-dashed border-violet-300 bg-white text-violet-700`}
+    <span className={`${pill} border-dashed border-[#b7410e]/40 bg-white text-[#9a350b]`}
           title={`Mönstret dök upp i analyserna ${day(pt.first_seen)} men är inte bekräftat: det håller inte i båda halvorna av korpusen, klarar inte den gemensamma justeringen över alla mönster, eller går inte att pröva i halvor.`}>
       Nytt, obekräftat
     </span>
   );
   return pt.new === "nytt" ? (
-    <span className={`${pill} border-violet-300 bg-violet-50 text-violet-800`}
+    <span className={`${pill} border-[#b7410e]/40 bg-[#b7410e]/5 text-[#9a350b]`}
           title={`Mönstret dök upp i analyserna ${day(pt.first_seen)} och är bekräftat i båda halvorna av korpusen. Det märks som nytt i 30 dagar.`}>
       Nytt
     </span>
   ) : (
-    <span className={`${pill} border-violet-200 bg-white text-violet-700`}
+    <span className={`${pill} border-[#b7410e]/25 bg-white text-[#9a350b]`}
           title={`Statusen ändrades ${day(pt.status_changed)}.${pt.previous_status ? ` Förut: ${pt.previous_status}.` : ""}`}>
       Ändrat
     </span>

@@ -39,6 +39,10 @@ def main():
                 flat = re.sub(r"\s+", " ", text)
                 page = literature.printed_page(raw, i)
                 seen_here = set()
+                # A register or list (an index of signa, a catalogue table): more signa than words on the page
+                n_signa = len({fold_signum(f"{m.group(1)} {m.group(2)}") for m in rx.finditer(flat)} & signa.keys())
+                n_words = len(re.findall(r"[A-Za-zÅÄÖåäöÆØæøÞþÐð]{4,}", flat))
+                is_list = n_signa / max(n_words, 1) > literature.LIST_RATIO
                 if w.get("entry_prefix"):  # the edition's own articles, headed "179. Kölaby sn …"
                     for m in literature.ENTRY.finditer(text):
                         key = fold_signum(f"{w['entry_prefix']} {m.group(1)}")
@@ -53,8 +57,12 @@ def main():
                         continue
                     seen_here.add(key)  # one hit per stone and page
                     a, b = max(0, m.start() - literature.SNIPPET), min(len(flat), m.end() + literature.SNIPPET)
-                    stones.setdefault(key, []).append({"work": w["id"], "page": page, "file": os.path.basename(path),
-                                                       "text": ("…" if a else "") + flat[a:b].strip() + ("…" if b < len(flat) else "")})
+                    hit = {"work": w["id"], "page": page, "file": os.path.basename(path)}
+                    if is_list:
+                        hit["list"] = True
+                    else:
+                        hit["text"] = ("…" if a else "") + flat[a:b].strip() + ("…" if b < len(flat) else "")
+                    stones.setdefault(key, []).append(hit)
                     found.add(key)
         works[w["id"]] = {"n_stones": len(found), "n_pages": n_pages}
         print(f"{w['id']}: {n_pages} sidor, {len(found)} stenar", flush=True)

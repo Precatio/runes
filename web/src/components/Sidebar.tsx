@@ -258,7 +258,7 @@ export default function Sidebar({ open = false, onClose }: { open?: boolean; onC
               {user.photoURL ? (
                 <img src={user.photoURL} alt="Profile" className="w-8 h-8 rounded-full shadow-sm" />
               ) : (
-                <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-xs shadow-sm">
+                <div className="w-8 h-8 rounded-full bg-[#b7410e]/15 flex items-center justify-center text-[#9a350b] font-bold text-xs shadow-sm">
                   {getInitials(user.displayName || user.email || "?")}
                 </div>
               )}

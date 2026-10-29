@@ -150,7 +150,7 @@ export function LanguageTable({ comparison }: { comparison: LanguageComparison }
 interface LitSnippet { page: string; text: string; entry?: boolean }
 interface LitWork {
   work: { id: string; author: string; year: number; title: string; kind: string; series?: string; url?: string; access: string };
-  pages: string[]; n: number; snippets: LitSnippet[]; entry_pages: string[];
+  pages: string[]; n: number; snippets: LitSnippet[]; entry_pages: string[]; list_pages: string[];
 }
 interface LitCatalogWork { id: string; author: string; year: number; title: string; access: string; indexed: boolean; n_stones: number; url?: string }
 
@@ -189,21 +189,22 @@ export function LiteratureBox({ signum }: { signum: string }) {
                 <span className="text-[11px] text-slate-500">{w.work.kind}</span>
               </div>
               <div className="text-xs text-slate-700 mt-0.5">
-                s. {w.pages.map((p, i) => (
+                {w.pages.length > 0 ? "s. " : ""}{w.pages.map((p, i) => (
                   <span key={p}>{i > 0 && ", "}<span className={w.entry_pages.includes(p) ? "font-bold" : ""}
                     title={w.entry_pages.includes(p) ? "Stenens egen artikel i utgåvan" : undefined}>{p}</span></span>
                 ))}
                 {w.entry_pages.length > 0 && <span className="text-slate-500"> (fetstil: stenens egen artikel)</span>}
+                {w.list_pages.length > 0 && <span className="text-slate-500">{w.pages.length ? "; " : ""}i register eller listor s. {w.list_pages.join(", ")}</span>}
                 {w.work.url && <> · <a href={w.work.url} target="_blank" rel="noreferrer" className="text-[#b7410e] underline">{ACCESS[w.work.access] ?? "verket"}</a></>}
               </div>
-              <details className="mt-1">
+              {w.snippets.length > 0 && <details className="mt-1">
                 <summary className="cursor-pointer text-xs font-semibold text-slate-600 hover:text-slate-900">Utdrag ({Math.min(w.snippets.length, w.n)} av {w.n})</summary>
                 <ul className="mt-1 space-y-1">
                   {w.snippets.map((s, i) => (
                     <li key={i} className="text-xs text-slate-600 leading-relaxed"><span className="font-semibold text-slate-500">s. {s.page}: </span><span translate="no">{s.text}</span></li>
                   ))}
                 </ul>
-              </details>
+              </details>}
             </li>
           ))}
         </ul>

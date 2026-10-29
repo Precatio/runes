@@ -16,7 +16,7 @@ const CC_STYLE: Record<string, string> = {
   "finns redan": "bg-sky-50 text-sky-800 border-sky-200",
   "nämns": "bg-sky-50 text-sky-800 border-sky-200",
   "annan ristare": "bg-rose-50 text-rose-800 border-rose-200",
-  "samma som": "bg-violet-50 text-violet-800 border-violet-200",
+  "samma som": "bg-[#b7410e]/5 text-[#9a350b] border-[#b7410e]/25",
   "saknas": "bg-emerald-50 text-emerald-800 border-emerald-200",
 };
 

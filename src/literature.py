@@ -19,6 +19,7 @@ CATALOG = os.path.join(ROOT, "data", "literature", "catalog.json")
 INDEX = os.path.join(ROOT, "data", "cache", "literature", "index.json")
 DIR = os.environ.get("LITERATURE_DIR", "/Volumes/2TB/litteratur")
 SNIPPET = 110  # characters on each side of a mention
+LIST_RATIO = 0.3  # distinct signa per word above which a page is a register or list (measured: text ≤ 0.22, registers ≥ 0.47)
 _cache: dict[str, tuple[float, dict]] = {}
 
 
@@ -62,11 +63,14 @@ def for_stone(signum: str) -> dict:
         if not w:
             continue
         hs = sorted(hs, key=lambda h: not h.get("entry"))  # the stone's own article in an edition first
-        pages = sorted({h["page"] for h in hs}, key=lambda p: (not str(p).isdigit(), int(p) if str(p).isdigit() else 0, str(p)))
+        text = [h for h in hs if not h.get("list")]
+        lists = [h for h in hs if h.get("list")]
+        order = lambda p: (not str(p).isdigit(), int(p) if str(p).isdigit() else 0, str(p))  # noqa: E731
         out.append({"work": {k: w.get(k) for k in ("id", "author", "year", "title", "kind", "series", "url", "access")},
-                    "pages": pages, "n": len(hs), "snippets": hs[:4],
-                    "entry_pages": [h["page"] for h in hs if h.get("entry")]})
-    out.sort(key=lambda x: (x["work"]["kind"] != "avhandling", -x["n"]))
+                    "pages": sorted({h["page"] for h in text}, key=order), "n": len(text), "snippets": text[:4],
+                    "list_pages": sorted({h["page"] for h in lists}, key=order),
+                    "entry_pages": [h["page"] for h in text if h.get("entry")]})
+    out.sort(key=lambda x: (x["n"] == 0, x["work"]["kind"] != "avhandling", -x["n"]))
     return {"signum": signum, "works": out, "n_indexed": len(idx.get("works") or {}),
             "built": idx.get("built"), "source_note": "Utdrag ur verken i appens litteraturregister (data/literature/catalog.json)."}
 

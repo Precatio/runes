@@ -12,9 +12,9 @@ import { PATTERN_TOPICS, TOPIC } from "./gemensamt";
 type State = "bekräftat" | "obekräftat" | "ändrat";
 const STATE: Record<State, { label: string; help: string; pill: string; dot: string; short: string }> = {
   "bekräftat": { label: "Nytt · bekräftat", help: "Nytt och bekräftat: håller i båda halvorna av korpusen och klarar den gemensamma justeringen över alla mönster.",
-    pill: "border-violet-300 bg-violet-600 text-white", dot: "bg-violet-600", short: "Bekräftade" },
+    pill: "border-[#b7410e]/40 bg-[#b7410e] text-white", dot: "bg-[#b7410e]", short: "Bekräftade" },
   "obekräftat": { label: "Nytt · obekräftat", help: "Nytt men inte bekräftat: håller inte i båda halvorna, klarar inte den gemensamma justeringen, eller går inte att pröva i halvor.",
-    pill: "border-dashed border-violet-300 bg-white text-violet-700", dot: "bg-violet-300", short: "Obekräftade" },
+    pill: "border-dashed border-[#b7410e]/40 bg-white text-[#9a350b]", dot: "bg-[#b7410e]/40", short: "Obekräftade" },
   "ändrat": { label: "Ändrad status", help: "Mönstret fanns redan men har bytt status de senaste 30 dagarna.",
     pill: "border-slate-300 bg-slate-50 text-slate-700", dot: "bg-slate-400", short: "Ändrade" },
 };
@@ -67,7 +67,7 @@ function Card({ pt, onOpen }: { pt: Pattern; onOpen: (t: Tab) => void }) {
   const q = fmtQ(pt.q_global);
   const diff = pt.ladder?.effect?.diff;
   return (
-    <li className="rounded-2xl border border-slate-200 bg-white p-3.5 shadow-sm hover:border-violet-300 transition-colors flex flex-col gap-2">
+    <li className="rounded-2xl border border-slate-200 bg-white p-3.5 shadow-sm hover:border-[#b7410e]/40 transition-colors flex flex-col gap-2">
       <div className="flex items-center gap-2">
         <span className={`px-2 py-0.5 rounded-lg border text-[11px] font-bold ${st.pill}`} title={st.help}>{st.label}</span>
         <span className="ml-auto text-[11px] text-slate-400 tabular-nums whitespace-nowrap">
@@ -118,20 +118,20 @@ export function NewPatterns({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) =
   const cmp = (a: Pattern, b: Pattern) => { const x = rank(a), y = rank(b); for (let i = 0; i < x.length; i++) if (x[i] !== y[i]) return x[i] - y[i]; return 0; };
   const groups = topics.map(([t]) => [t, shown.filter(p => p.topic === t).sort(cmp)] as const).filter(([, ps]) => ps.length);
   const chip = (active: boolean) => `px-3 py-1.5 rounded-xl border text-xs font-semibold transition-colors ${active
-    ? "bg-slate-900 border-slate-900 text-white" : "bg-white border-slate-200 text-slate-700 hover:border-violet-300"}`;
+    ? "bg-slate-900 border-slate-900 text-white" : "bg-white border-slate-200 text-slate-700 hover:border-[#b7410e]/40"}`;
 
   return (
-    <section aria-label="Nya mönster" className="rounded-[24px] border border-violet-200 bg-violet-50/50 p-4 md:p-6 space-y-4">
+    <section aria-label="Nya mönster" className="rounded-[24px] border border-[#b7410e]/25 bg-[#b7410e]/[0.03] p-4 md:p-6 space-y-4">
       <div className="flex flex-wrap items-start gap-3">
         <div className="flex-1 min-w-[16rem]">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-violet-900">Nya mönster i datan</h3>
-          <p className="text-xs text-violet-900/80 mt-1 max-w-3xl">
+          <h3 className="text-sm font-bold uppercase tracking-wider text-[#7c2d0a]">Nya mönster i datan</h3>
+          <p className="text-xs text-[#7c2d0a]/80 mt-1 max-w-3xl">
             Mönster som dykt upp eller bytt status de senaste 30 dagarna. Ett nytt mönster är <strong>bekräftat</strong> när det håller i båda
             halvorna av korpusen och klarar den gemensamma justeringen över alla mönster.
           </p>
         </div>
         <button type="button" onClick={() => setCollapsed(!collapsed)} aria-expanded={!collapsed}
-          className="px-3 py-1.5 rounded-xl border border-violet-200 bg-white text-xs font-semibold text-violet-900 hover:border-violet-400">
+          className="px-3 py-1.5 rounded-xl border border-[#b7410e]/25 bg-white text-xs font-semibold text-[#7c2d0a] hover:border-[#b7410e]/60">
           {collapsed ? `Visa alla ${fresh.length}` : "Fäll ihop"}
         </button>
       </div>
@@ -140,7 +140,7 @@ export function NewPatterns({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) =
         {ORDER.map(s => (
           <button key={s} type="button" onClick={() => { setState(state === s ? "alla" : s); setCollapsed(false); }} aria-pressed={state === s}
             title={STATE[s].help}
-            className={`text-left rounded-2xl border p-2.5 md:p-3 transition-colors ${state === s ? "border-violet-500 bg-white ring-2 ring-violet-200" : "border-violet-100 bg-white/80 hover:border-violet-300"}`}>
+            className={`text-left rounded-2xl border p-2.5 md:p-3 transition-colors ${state === s ? "border-[#b7410e] bg-white ring-2 ring-[#b7410e]/25" : "border-[#b7410e]/15 bg-white/80 hover:border-[#b7410e]/40"}`}>
             <div className="flex items-center gap-1.5 text-[10px] md:text-[11px] font-bold uppercase tracking-wide md:tracking-wider text-slate-500">
               <span className={`h-2 w-2 shrink-0 rounded-full ${STATE[s].dot}`} />{STATE[s].short}
             </div>
@@ -161,7 +161,7 @@ export function NewPatterns({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) =
               </button>
             ))}
             {(state !== "alla" || topic !== "alla") && (
-              <button type="button" onClick={() => { setState("alla"); setTopic("alla"); }} className="px-2 text-xs font-semibold text-violet-800 hover:underline">
+              <button type="button" onClick={() => { setState("alla"); setTopic("alla"); }} className="px-2 text-xs font-semibold text-[#9a350b] hover:underline">
                 Rensa filter
               </button>
             )}
@@ -174,14 +174,14 @@ export function NewPatterns({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) =
                 <div className="flex items-baseline gap-2">
                   <h4 className="text-[11px] font-bold uppercase tracking-wider text-[#b7410e]">{t}</h4>
                   <span className="text-[11px] text-slate-500">{ps.length} {ps.length === 1 ? "mönster" : "mönster"}</span>
-                  <span className="flex-1 border-t border-violet-100" />
+                  <span className="flex-1 border-t border-[#b7410e]/15" />
                 </div>
                 <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
                   {(expanded.includes(t) || topic === t ? ps : ps.slice(0, PER_TOPIC)).map(p => <Card key={`${p.topic}|${p.key}`} pt={p} onOpen={onOpen} />)}
                 </ul>
                 {ps.length > PER_TOPIC && topic !== t && (
                   <button type="button" onClick={() => setExpanded(expanded.includes(t) ? expanded.filter(x => x !== t) : [...expanded, t])}
-                    className="text-xs font-semibold text-violet-800 hover:underline">
+                    className="text-xs font-semibold text-[#9a350b] hover:underline">
                     {expanded.includes(t) ? `Visa färre i ${t}` : `Visa alla ${ps.length} i ${t}`}
                   </button>
                 )}
