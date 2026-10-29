@@ -233,7 +233,7 @@ ingår i likheten, med en positiv kontroll på 26 kända ristare i Uppland och S
 alla tre, också namnen, så delade namn skiljer inte en ristare från en släkts beställningar. (2) Tidsspannen (32,5 år)
 ryms i en ristares livsgärning; grupperna delar ovanliga stavningar oftare än trakten (Fisher p 0,005; kontrollen
 p 5·10⁻¹³). (3) En logistisk modell kalibrerad på 912 grupper som metoden bildar på kända ristare i hållet-utanför-läge
-(AUC 0,90) ger sannolikheten att minst tre fjärdedelar av en grupp är en hand: Vetlanda 98 %, Leksberg 95 %, Husaby 88 %,
+(AUC 0,90) ger sannolikheten att minst tre fjärdedelar av en grupp är en hand: Vetlanda 98 %, Leksberg 94 %, Husaby 88 %,
 Kölaby 78 %, Konungsund 76 % (grundfrekvens 84 %) – giltig där metoden kan prövas. Bergart skiljer inte rena från
 blandade grupper. (4) Litteraturen (`data/carver_literature.json`, `src/carver_literature.py`; SRI II, IV, V och
 Källström 2007): Kölaby (Vg 181 signerad Håvard(?), Vg 158 samme man, Vg 179/184 samme ristare, Vg 130 Tryggve(?)) och

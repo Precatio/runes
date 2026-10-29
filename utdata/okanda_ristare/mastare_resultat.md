@@ -35,7 +35,7 @@ stavningar skiljer (0,71 mot 0,55; koefficient +1,6); namn gör det inte.
 | Grupp | En mästare (≥ 3/4 av stenarna) | Alla stenar en hand | Utanför kalibreringen |
 |---|---|---|---|
 | Vetlanda (Sm, 14) | 98 % (96–99) | 42 % (28–57) | – |
-| Leksberg (Vg, 6) | 95 % (90–98) | 59 % (44–72) | spridningen (1,9 km, tätare än alla) |
+| Leksberg (Vg, 6) | 94 % (90–98) | 59 % (44–72) | spridningen (1,9 km, tätare än alla) |
 | Husaby (Vg, 6) | 88 % (83–94) | 62 % (49–75) | – |
 | Kölaby (Vg, 13) | 78 % (62–89) | 45 % (32–62) | spridningen, bergarten |
 | Konungsund (Ög, 28) | 76 % (56–91) | 8 % (3–18) | bergarten |
