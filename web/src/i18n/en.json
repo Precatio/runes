@@ -7583,5 +7583,11 @@
 "– inte indexerad (bara tryckt)":"– not indexed (print only)",
 "Varje stens sida visar nu var avhandlingar och utgåvor nämner den, med tryckt sida och ett kort utdrag.":"Each stone's page now shows where dissertations and editions mention it, with the printed page and a short excerpt.",
 "Registret börjar med Sveriges runinskrifter för {0}, {1} och {2}, Källströms Mästare och minnesmärken, Zilmers avhandling om resorna österut och Sterns om runstenarnas bilder – sammanlagt {3} stenar – och växer när fler avhandlingar läggs till.":"The register starts with Sveriges runinskrifter for {0}, {1} and {2}, Källström's Mästare och minnesmärken, Zilmer's dissertation on the eastern journeys and Stern's on runestone images – {3} stones in all – and grows as more dissertations are added.",
-"sidor, register eller listor":"pages, registers or lists"
+"sidor, register eller listor":"pages, registers or lists",
+"Inte i litteraturen ({0})":"Not in the literature ({0})",
+"Döljer fynd på stenar som diskuteras i någon avhandling eller utgåva i litteraturregistret.":"Hides findings on stones discussed in a dissertation or edition in the literature register.",
+"Det som blir kvar har ingen litteratur att läsa först – i de verk registret har.":"What remains has no literature to read first – in the works the register holds.",
+"Stenen diskuteras i avhandlingar eller utgåvor i litteraturregistret – läs sidorna innan fyndet kallas nytt.":"The stone is discussed in dissertations or editions in the literature register – read the pages before calling the finding new.",
+"Utdragen på stenens sida":"The excerpts on the stone's page",
+"(stenens artikel)":"(the stone's article)"
 }
