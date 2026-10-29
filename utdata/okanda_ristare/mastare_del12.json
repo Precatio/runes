@@ -1,0 +1,134 @@
+{
+ "part1": {
+  "Konungsund": {
+   "n_styled": 17,
+   "span": 32.5,
+   "styles": {
+    "Fp": 6,
+    "ingen": 11,
+    "RAK": 11
+   },
+   "n_ref_carvers": 7,
+   "ref_p90": 86.0,
+   "percentile": 0.14285714285714285,
+   "verdict": "förenligt",
+   "coverage": 0.4375
+  },
+  "Vetlanda": {
+   "n_styled": 1,
+   "verdict": "går inte att bedöma"
+  },
+  "Kölaby": {
+   "n_styled": 12,
+   "span": 32.5,
+   "styles": {
+    "Pr1": 3,
+    "RAK": 5,
+    "Fp": 4,
+    "ingen": 1
+   },
+   "n_ref_carvers": 8,
+   "ref_p90": 85.75,
+   "percentile": 0.125,
+   "verdict": "förenligt",
+   "coverage": 0.3333333333333333
+  },
+  "Leksberg": {
+   "n_styled": 5,
+   "span": 32.5,
+   "styles": {
+    "RAK": 3,
+    "ingen": 1,
+    "Fp": 2
+   },
+   "n_ref_carvers": 16,
+   "ref_p90": 76.25,
+   "percentile": 0.4375,
+   "verdict": "förenligt",
+   "coverage": 0.38461538461538464
+  },
+  "Husaby": {
+   "n_styled": 2,
+   "verdict": "går inte att bedöma"
+  },
+  "_kända_ristare_U_Sö": {
+   "coverage_median": 0.12307692307692308,
+   "coverage_p90": 0.34222222222222226,
+   "n": 27
+  }
+ },
+ "part2": {
+  "control": {
+   "n": 26,
+   "k": 19,
+   "p": 5.414081205053001e-13,
+   "share_p05": 0.47368421052631576
+  },
+  "candidates": [
+   {
+    "group": "Konungsund",
+    "tested": true,
+    "obs": 0.015384615384615385,
+    "null_mean": 0.0012213092771148578,
+    "pct": 0.9673967396739674,
+    "p": 0.0327,
+    "n_with_spellings": 26,
+    "shared_rare": {
+     "ræisti=rasti": 3,
+     "ræisti=resti": 2,
+     "stæin=tsin": 2
+    }
+   },
+   {
+    "group": "Vetlanda",
+    "tested": true,
+    "obs": 0.0,
+    "null_mean": 0.026600731955041843,
+    "pct": 0.3659439450026441,
+    "p": 1.0,
+    "n_with_spellings": 12,
+    "shared_rare": {}
+   },
+   {
+    "group": "Kölaby",
+    "tested": true,
+    "obs": 0.030303030303030304,
+    "null_mean": 0.0,
+    "pct": 1.0,
+    "p": 0.0001,
+    "n_with_spellings": 12,
+    "shared_rare": {
+     "æftir=eftR": 2,
+     "stæin=stein": 2
+    }
+   },
+   {
+    "group": "Leksberg",
+    "tested": true,
+    "obs": 0.16666666666666666,
+    "null_mean": 0.16666666666666663,
+    "pct": 0.5,
+    "p": 1.0,
+    "n_with_spellings": 4,
+    "shared_rare": {
+     "æftir=iftir": 2
+    }
+   },
+   {
+    "group": "Husaby",
+    "tested": true,
+    "obs": 0.0,
+    "null_mean": 0.0,
+    "pct": 0.5,
+    "p": 1.0,
+    "n_with_spellings": 5,
+    "shared_rare": {}
+   }
+  ],
+  "H5": {
+   "k": 5,
+   "p": 0.00487137084884535
+  },
+  "verdict": "håller"
+ }
+}
