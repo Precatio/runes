@@ -85,7 +85,7 @@ export const translations: Record<Language, Translations> = {
       group_resources: "Resurser",
       settings: "Inställningar & API",
       built_by: "Utvecklad av",
-      optimized_for: "Ett öppet verktyg för runstenarna – 3D-mätning, läsning, statistik och kartor, för forskare och nyfikna",
+      optimized_for: "Ett öppet verktyg för runstenarna – 3D-mätning, läsning, statistik och kartor, för forskare och studenter",
       license_note: "Fri programvara (GPL-3.0); upphovsangivelsen ska bevaras i ändrade versioner",
     },
     chat: {
@@ -143,7 +143,7 @@ export const translations: Record<Language, Translations> = {
       group_resources: "Resources",
       settings: "Settings & API",
       built_by: "Developed by",
-      optimized_for: "An open tool for the runestones – 3D measurement, reading, statistics and maps, for researchers and the curious",
+      optimized_for: "An open tool for the runestones – 3D measurement, reading, statistics and maps, for researchers and students",
       license_note: "Free software (GPL-3.0); the attribution must be kept in modified versions",
     },
     chat: {
