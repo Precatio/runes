@@ -54,6 +54,17 @@ ALL = x[men & (x.dod_borta == 1)]  # every stone for a man who died abroad, what
 WIDOW = {"n": len(ALL), "make": int(ALL.rel_make.sum())}
 assert WIDOW == {"n": 69, "make": 4}, WIDOW
 
+# ---- the robustness ladder (src/robustness.py, METHODS 1v) on the same patterns --------------------------------------
+from src import r_findings, robustness  # noqa: E402
+from src import r_bridge as _rb  # noqa: E402
+_ann = robustness.annotate(r_findings.corpus_patterns(_rb.JOB.result(FP)), robustness.load(FP))
+_by = {p["key"]: p for p in _ann}
+LAD = {**_by["people_dod_borta_ung"]["ladder"], "n_fdr": robustness.summary(_ann)["n_fdr"]}
+LAD_DR, LAD_TH = _by["people_drengr_ung"]["ladder"], _by["people_thegn_ung"]["ladder"]
+assert LAD["passed"] == LAD["tested"] == 8 and _by["people_dod_borta_ung"]["confirmed"] is True
+assert not _by["people_drengr_ung"]["confirmed"] and not _by["people_thegn_ung"]["confirmed"]
+assert 3 < RAW_RATIO < 4 if (RAW_RATIO := (41 / 393) / (15 / 552)) else False
+
 # ---- the quotations, verbatim -----------------------------------------------------------------------------------------
 Q = {s: BY[s]["normalization"].strip() for s in ("Vg 61", "Vg 59", "U 1087", "Vg 181", "U 346")}
 assert Q["Vg 61"] == '"Tola satti stæin þ[annsi æft]iR "GæiR, sun sinn, harða goðan dræng. Sa varð dauðr a vestrvegum i vikingu.'
@@ -105,7 +116,7 @@ def chart(lang):
 
 title = "Färderna var de ungas"
 summary = ("Vem dog i öster och väster? Vi läste runstenarnas släktord och räknade: söner och bröder dog utanför Norden "
-           f"ungefär fyra gånger så ofta som fäder och makar. Och orden för de döda följer samma linje – *drengr* om de unga, "
+           f"tre till fyra gånger så ofta som fäder och makar. Och orden för de döda följer samma linje – *drengr* om de unga, "
            f"*þegn* om de äldre.")
 
 body = f"""*{plain(Q['Vg 61'])}*
@@ -127,7 +138,7 @@ På stenarna efter män som dog i öster och väster står ofta en mor eller en 
 
 En runsten säger nästan alltid vem som reste den och vem den döde var för dem: *sun sinn*, sin son; *faður sinn*, sin far; *broður sinn*, sin bror. Vi läste de relationerna på alla läsbara svenska runstenar med en regel i Rundatas översättning och kontrollerade den mot vår egen läsning av hundra stenar. Sedan delade vi de döda männen i två grupper: söner och bröder – de som oftast var unga när de dog – och fäder och makar, som hade hunnit få familj.
 
-Skillnaden är stor. Av {RAW['y_n']} stenar efter söner och bröder säger {RAW['y_k']} att den döde dog utanför Norden. Av {RAW['o_n']} stenar efter fäder och makar gör {RAW['o_k']} det. När vi håller landsdel, tid och ristare konstanta blir det {pc(DB_Y)} mot {pc(DB_O)} procent. En son eller bror som dog hade alltså ungefär fyra gånger så stor chans att ha dött i öster eller väster som en far eller make (oddskvot {d1(DB_OR)}, troligen mellan {d1(DB_LO)} och {d1(DB_HI)}). En så tydlig skillnad skulle uppstå av en slump i färre än ett fall av tiotusen.
+Skillnaden är stor. Av {RAW['y_n']} stenar efter söner och bröder säger {RAW['y_k']} att den döde dog utanför Norden. Av {RAW['o_n']} stenar efter fäder och makar gör {RAW['o_k']} det. När vi håller landsdel, tid och ristare konstanta blir det {pc(DB_Y)} mot {pc(DB_O)} procent. En son eller bror som dog hade alltså dött i öster eller väster tre till fyra gånger så ofta som en far eller make (oddskvoten är {d1(DB_OR)}, troligen mellan {d1(DB_LO)} och {d1(DB_HI)}). En så tydlig skillnad skulle uppstå av en slump i färre än ett fall av tiotusen.
 
 {chart('sv')}
 
@@ -161,6 +172,7 @@ Att *drengr* och *þegn* kan höra till olika skeden i livet har forskningen fö
 - **Planen låstes först.** Vad som skulle prövas och när ett resultat räknas som säkert bestämdes innan något test kördes.
 - **Samma tid, trakt och ristare.** Varje jämförelse hålls konstant för landsdel, tidsskikt och ristare, så att skillnaden inte bara speglar att vissa trakter eller verkstäder skrev mer om resor.
 - **Två halvor.** Resultatet om döden borta syns i båda halvorna av materialet; orden *drengr* och *þegn* gör det inte, och de redovisas därför som ett mönster att pröva.
+- **Samma kontroller som allt annat.** I Vitkis robusthetstrappa – ristaren och socknen som slumpeffekter, platsen som yta, utan ett landskap i taget – håller döden borta i alla {LAD['tested']} steg, och den klarar den gemensamma justeringen över alla {LAD['n_fdr']} mönster i statistiken. *drengr* håller i {LAD_DR['passed']} av {LAD_DR['tested']}, *þegn* i {LAD_TH['passed']} av {LAD_TH['tested']}.
 - **Läsningen är kontrollerad.** Relationen läses ur översättningen med regler som stämde med vår egen läsning i 38 av 40 nya stenar.
 :::
 
@@ -181,7 +193,7 @@ Den kan prövas vidare: om färderna var de ungas bör stenar efter döda borta 
 
 :::box Det viktigaste i korthet
 - Runstenarna efter dem som dog i öster och väster restes oftast av föräldrar och syskon, inte av änkor och barn.
-- Söner och bröder dog utanför Norden ungefär fyra gånger så ofta som fäder och makar, också när tid, trakt och ristare hålls konstanta.
+- Söner och bröder dog utanför Norden tre till fyra gånger så ofta som fäder och makar, också när tid, trakt och ristare hålls konstanta.
 - Färderna tycks ha hört till ungdomen, till tiden innan egen gård och familj – och orden för de döda, *drengr* om de unga och *þegn* om de äldre, pekar åt samma håll, även om de är för få för att vara säkra.
 - Nästa gång du står vid en runsten: se vem som reste den. En mor eller en bror vid stenen berättar ofta om en ung man som for.
 :::
@@ -196,7 +208,7 @@ Den kan prövas vidare: om färderna var de ungas bör stenar efter döda borta 
 
 title_en = "The journeys belonged to the young"
 summary_en = ("Who died in the east and the west? We read the runestones' words for kin and counted: sons and brothers "
-              "died outside Scandinavia about four times as often as fathers and husbands. And the words for the dead "
+              "died outside Scandinavia three to four times as often as fathers and husbands. And the words for the dead "
               "follow the same line – *drengr* for the young, *þegn* for the older.")
 
 body_en = f"""*{plain(Q['Vg 61'])}*
@@ -218,7 +230,7 @@ On the stones for men who died in the east and the west, a mother or a father of
 
 A runestone nearly always says who raised it and who the dead man was to them: *sun sinn*, his son; *faður sinn*, his father; *broður sinn*, his brother. We read those relations on all legible Swedish runestones with a rule in Rundata's translation and checked it against our own reading of a hundred stones. Then we divided the dead men into two groups: sons and brothers – most often young when they died – and fathers and husbands, who had had time to found a family.
 
-The difference is large. Of {RAW['y_n']} stones for sons and brothers, {RAW['y_k']} say that the dead man died outside Scandinavia. Of {RAW['o_n']} stones for fathers and husbands, {RAW['o_k']} do. With region, time and carver held constant that is {pc(DB_Y)} against {pc(DB_O)} per cent. A son or brother who died was thus about four times as likely to have died in the east or the west as a father or husband (odds ratio {DB_OR:.1f}, probably between {DB_LO:.1f} and {DB_HI:.1f}). A difference this clear would arise by chance in fewer than one case in ten thousand.
+The difference is large. Of {RAW['y_n']} stones for sons and brothers, {RAW['y_k']} say that the dead man died outside Scandinavia. Of {RAW['o_n']} stones for fathers and husbands, {RAW['o_k']} do. With region, time and carver held constant that is {pc(DB_Y)} against {pc(DB_O)} per cent. A son or brother who died had thus died in the east or the west three to four times as often as a father or husband (the odds ratio is {DB_OR:.1f}, probably between {DB_LO:.1f} and {DB_HI:.1f}). A difference this clear would arise by chance in fewer than one case in ten thousand.
 
 {chart('en')}
 
@@ -252,6 +264,7 @@ That *drengr* and *þegn* may belong to different stages of life has been sugges
 - **The plan was locked first.** What would be tested, and when a result counts as firm, was decided before any test was run.
 - **The same time, district and carver.** Every comparison holds region, time layer and carver constant, so that the difference does not merely reflect that some districts or workshops wrote more about journeys.
 - **Two halves.** The result on death abroad shows in both halves of the material; the words *drengr* and *þegn* do not, and are therefore reported as a pattern to test.
+- **The same checks as everything else.** In Vitki's robustness ladder – the carver and the parish as random effects, the place as a surface, without one province at a time – death abroad holds at all {LAD['tested']} steps, and it passes the common adjustment over all {LAD['n_fdr']} patterns in the statistics. *drengr* holds at {LAD_DR['passed']} of {LAD_DR['tested']}, *þegn* at {LAD_TH['passed']} of {LAD_TH['tested']}.
 - **The reading is checked.** The relation is read from the translation with rules that agreed with our own reading on 38 of 40 new stones.
 :::
 
@@ -272,7 +285,7 @@ It can be tested further: if the journeys belonged to the young, stones for thos
 
 :::box The essentials in brief
 - The runestones for those who died in the east and the west were most often raised by parents and siblings, not by widows and children.
-- Sons and brothers died outside Scandinavia about four times as often as fathers and husbands, also when time, district and carver are held constant.
+- Sons and brothers died outside Scandinavia three to four times as often as fathers and husbands, also when time, district and carver are held constant.
 - The journeys seem to have belonged to youth, to the time before a farm and a family of one's own – and the words for the dead, *drengr* for the young and *þegn* for the older, point the same way, although they are too few to be sure.
 - Next time you stand by a runestone: look at who raised it. A mother or a brother by the stone often tells of a young man who went away.
 :::
