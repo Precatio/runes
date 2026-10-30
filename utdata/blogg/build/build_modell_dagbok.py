@@ -22,6 +22,7 @@ en_ = lambda n: f"{n:,}"  # noqa: E731
 # ---- the locked numbers -----------------------------------------------------------------------------------------------
 V = tm.VALIDATION
 assert tm.VERSION == "textmodel-19"
+VERSION_N = int(tm.VERSION.split("-")[1])  # "nitton versioner"
 assert (pc(V["inside_word"]), pc(V["whole_word"]), pc(V["sure_right"]), pc(V["documented_right"])) == (76, 59, 95, 70)
 assert (pc(V["dating_epoch"]), pc(V["dating_near"]), pc(V["with_traces"])) == (59, 95, 84)
 N_V = sum(1 for r in rl.load_rundata() if rl.viking(r) and r.get("transliteration"))
@@ -86,13 +87,13 @@ def chart_src(lang):
 
 
 title = "Hur bra är vår modell egentligen? En dag bakom kulisserna"
-summary = ("Viktor frågade mitt på dagen hur kompetent vår sannolikhetsmodell är jämfört med annat som finns, och om den går att "
+summary = ("Mitt på dagen kom frågan hur kompetent vår sannolikhetsmodell är jämfört med annat som finns, och om den går att "
            "göra bättre. Här är svaret, berättat från den dagen: fem processer som räknar, en Rökläsning som misslyckas på "
            "rätt sätt, en jämförelse med DeepMinds Ithaca, och en lista på vad vi tänker mata modellen med.")
 
 body = f"""**11.11.** Fem processer startar. Var och en bygger sin egen upplaga av textmodellen, med en femtedel av stenarna undanhållna, och fyller sedan {T['words']['inne i ord']['n']} dolda luckor inne i ord och lika många hela dolda ord med appens egen inställning. Det är ett prov vi aldrig gjort förut, fast vi borde: siffrorna appen visar var mätta med en enklare inställning än den appen själv använder. Ingen av processerna skriver något förrän den är klar. Det är ett fel i provskriptet, inte i modellen, och det ska rättas.
 
-Så ser en dag ut när vi arbetar med modellen. Den här artikeln är ett försök att visa det, därför att frågan kom mitt i dagen: hur bra är den egentligen, jämfört med annat som finns? Och går den att göra bättre?
+Så ser en dag ut när vi arbetar med modellen, och sådana dagar har det blivit många. Modellen har byggts om i {VERSION_N} versioner sedan mitten av oktober: stavningsmodellen, ordföljden, Eddans ordförråd, kalibreringen, ristarens egen stavning, namnen byggda av namnled, spåren från 3D-skanningar, toleransen för ovanliga stavningar. Varje version har körts genom samma prov med stenar undanhållna, och flera försök har förkastats därför att de inte höll – en variantkvot i förra veckan, en gemensam datering, en imputering av odaterade stenar. Den här artikeln är ett försök att visa hur det går till, därför att frågan kom mitt i dagen: hur bra är den egentligen, jämfört med annat som finns? Och går den att göra bättre?
 
 :::box Kort sagt
 - Modellen läser och fyller luckor i vikingatida runtexter med sannolikheter. Mätt på stenar den aldrig sett har den rätt i {pc(V['inside_word'])} procent av runorna inne i ett ord och {pc(V['whole_word'])} procent av hela förlorade ord, och det den kallar säkert stämmer i {pc(V['sure_right'])} procent.
@@ -131,7 +132,7 @@ Det viktigaste i Ithaca-studien var inte modellens siffra. Historiker ensamma å
 
 Modellen har tre svagheter som vi vet om. Ordförrådet är Rundata och Eddan, så ett ord som bara står på en sten är osynligt. Sammanhanget är två ord i rad. Och korpusen är liten, vilket ingen kan ändra: det finns inte fler vikingatida runtexter. Den första svagheten går att göra något åt.
 
-**14.00.** Frågan kommer: kan ordförrådet utökas, och med vad? Vi tog fram vad som finns.
+**14.00.** Nästa fråga: kan ordförrådet utökas, och med vad? Vi tog fram vad som finns.
 
 {chart_src('sv')}
 
@@ -165,13 +166,13 @@ Vi kommer inte att byta ut modellen mot en stor språkmodell. Inte för att de �
 - heimskringla.no och sagadb.org för sagatexterna; Vitkis metodbeskrivning (METHODS.md 8.1), proven och de låsta planerna ligger öppet på [GitHub](https://github.com/Precatio/runes)."""
 
 title_en = "How good is our model, really? A day behind the scenes"
-summary_en = ("In the middle of the day Viktor asked how capable our probability model is compared with what else exists, and "
+summary_en = ("In the middle of the day the question came up how capable our probability model is compared with what else exists, and "
               "whether it can be made better. Here is the answer, told from that day: five processes computing, a reading of "
               "the Rök stone that fails in the right way, a comparison with DeepMind's Ithaca, and a list of what we plan to feed the model.")
 
 body_en = f"""**11.11.** Five processes start. Each builds its own edition of the text model with a fifth of the stones held out, and then fills {T['words']['inne i ord']['n']} hidden gaps inside words and as many whole hidden words with the app's own settings. It is a test we have never run before, though we should have: the figures the app shows were measured with a simpler setting than the one the app itself uses. None of the processes writes anything until it is done. That is a flaw in the test script, not in the model, and it will be fixed.
 
-That is what a day looks like when we work on the model. This article is an attempt to show it, because the question came in the middle of the day: how good is it, really, compared with what else exists? And can it be made better?
+That is what a day looks like when we work on the model, and there have been many such days. The model has been rebuilt in {VERSION_N} versions since mid-October: the spelling model, the word order, the Edda's vocabulary, the calibration, the carver's own spelling, names built from name elements, the traces from 3D scans, the tolerance for unusual spellings. Every version has been run through the same tests with stones held out, and several attempts have been discarded because they did not hold – a variant quota last week, a joint dating, an imputation of undated stones. This article is an attempt to show how that works, because the question came in the middle of the day: how good is it, really, compared with what else exists? And can it be made better?
 
 :::box In short
 - The model reads and fills gaps in Viking-age runic texts with probabilities. Measured on stones it has never seen, it gets {pc(V['inside_word'])} per cent of the runes inside a word right and {pc(V['whole_word'])} per cent of whole lost words, and what it calls certain is right {pc(V['sure_right'])} per cent of the time.
@@ -210,7 +211,7 @@ The most important thing in the Ithaca study was not the model's figure. Histori
 
 The model has three weaknesses we know of. Its vocabulary is Rundata and the Edda, so a word that stands on one stone only is invisible. Its context is two words in a row. And the corpus is small, which no one can change: there are no more Viking-age runic texts. The first weakness can be addressed.
 
-**14.00.** The question comes: can the vocabulary be extended, and with what? We took stock of what exists.
+**14.00.** The next question: can the vocabulary be extended, and with what? We took stock of what exists.
 
 {chart_src('en')}
 
