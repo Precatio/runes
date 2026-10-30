@@ -241,7 +241,9 @@ function MapContent() {
   const label = "flex flex-col gap-1 text-[11px] font-bold uppercase tracking-wider text-slate-500 min-w-0";
 
   return (
-    <div className="flex flex-col h-full w-full max-w-7xl mx-auto p-4 md:p-6 gap-4">
+    {/* min-h-full, not h-full: the pattern view is taller than the window, and the note the app layout puts after
+        the page must come after all of it, not at the window's height */}
+    <div className="flex flex-col min-h-full w-full max-w-7xl mx-auto p-4 md:p-6 gap-4">
       <div>
         <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-2">Karta</h2>
         <p className="text-slate-600 text-[16px] leading-relaxed max-w-3xl font-medium">
