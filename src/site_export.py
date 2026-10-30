@@ -170,8 +170,19 @@ def export(posts: list[dict], now_iso: str, force: bool = False) -> dict:
     return {"articles": len(published), "figures": len(names), "missing_figures": missing}
 
 
+# The API loads .env into its environment, and .env holds GITHUB_TOKEN: the fine-grained read-only token that
+# src/github_stats.py uses for the repo's traffic figures. gh's credential helper (git config credential.helper) takes
+# GITHUB_TOKEN or GH_TOKEN from the environment before the keyring, so git would push with the read-only token and get
+# "Permission denied" (2026-10-30). Git therefore runs without those variables and uses the login in the keyring.
+TOKEN_VARS = ("GITHUB_TOKEN", "GH_TOKEN", "GH_ENTERPRISE_TOKEN")
+
+
+def git_env() -> dict:
+    return {k: v for k, v in os.environ.items() if k not in TOKEN_VARS}
+
+
 def _git(*args: str) -> subprocess.CompletedProcess:
-    return spawn.run(["git", *args], cwd=ROOT, capture_output=True, text=True, timeout=120)  # src/spawn.py: no fork
+    return spawn.run(["git", *args], cwd=ROOT, capture_output=True, text=True, timeout=120, env=git_env())  # src/spawn.py: no fork
 
 
 def _step(name: str, *args: str, tries: int = 1) -> subprocess.CompletedProcess:
