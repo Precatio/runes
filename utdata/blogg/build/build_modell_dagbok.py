@@ -251,7 +251,9 @@ for b in (body, body_en):
 
 out = {"slug": "hur-bra-ar-var-modell-egentligen", "title": title, "summary": summary, "body": body,
        "title_en": title_en, "summary_en": summary_en, "body_en": body_en,
-       "labels": ["Pågående arbete", "Metod", "Sannolikhetsmodellen"]}
+       "labels": ["Pågående arbete", "Sannolikhetsmodellen"]}
+from src import blog_labels  # noqa: E402  (Admin avvisar ogiltiga etiketter med 422; samma kontroll här)
+assert blog_labels.check(out["labels"]) is None, blog_labels.check(out["labels"])
 path = os.path.join(ROOT, "utdata", "blogg", "modell_dagbok.json")
 json.dump(out, open(path, "w"), ensure_ascii=False, indent=1)
 print(path, len(body.split()), "ord,", len(body_en.split()), "words")
