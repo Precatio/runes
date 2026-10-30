@@ -87,7 +87,7 @@ def chart_src(lang):
     return "\n".join(rows) + "\n:::"
 
 
-title = "Hur bra är vår modell egentligen? En dag bakom kulisserna"
+title = "Hur bra är vår sannolikhetsmodell egentligen? En dag bakom kulisserna"
 summary = ("Mitt på dagen kom frågan hur kompetent vår sannolikhetsmodell är jämfört med annat som finns, och om den går att "
            "göra bättre. Här är svaret, berättat från den dagen: fem processer som räknar, en Rökläsning som misslyckas på "
            "rätt sätt, en jämförelse med DeepMinds Ithaca, och en lista på vad vi tänker mata modellen med.")
@@ -168,7 +168,7 @@ Vi kommer inte att byta ut modellen mot en stor språkmodell. Inte för att de �
 - Zoëga, Geir T. 1910. *A Concise Dictionary of Old Icelandic*. Oxford.
 - heimskringla.no och sagadb.org för sagatexterna; Vitkis metodbeskrivning (METHODS.md 8.1), proven och de låsta planerna ligger öppet på [GitHub](https://github.com/Precatio/runes)."""
 
-title_en = "How good is our model, really? A day behind the scenes"
+title_en = "How good is our probability model, really? A day behind the scenes"
 summary_en = ("In the middle of the day the question came up how capable our probability model is compared with what else exists, and "
               "whether it can be made better. Here is the answer, told from that day: five processes computing, a reading of "
               "the Rök stone that fails in the right way, a comparison with DeepMind's Ithaca, and a list of what we plan to feed the model.")

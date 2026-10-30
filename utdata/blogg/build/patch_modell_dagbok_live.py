@@ -16,7 +16,7 @@ ref = blog.firestore().collection(blog.COLLECTION).document("q4oZASaFEZtHMyKGQtB
 old = ref.get().to_dict()
 assert old and old["slug"] == new["slug"] == "hur-bra-ar-var-modell-egentligen" and old.get("published")
 blog._backup(ref.id, old)
-ref.set({k: new[k] for k in ("summary", "body", "summary_en", "body_en")} | {"updatedAt": dt.datetime.now(dt.timezone.utc)},
+ref.set({k: new[k] for k in ("title", "summary", "body", "title_en", "summary_en", "body_en")} | {"updatedAt": dt.datetime.now(dt.timezone.utc)},
         merge=True)
 blog._forget()
 print("artikeln uppdaterad; publiceringsdatum oförändrat:", old.get("publishedAt"))
