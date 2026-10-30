@@ -1,0 +1,290 @@
+{
+ "rows": [
+  {
+   "runes": "suaa",
+   "real": [
+    true,
+    true,
+    true
+   ],
+   "shuffled_rate": [
+    0.7233333333333334,
+    0.7233333333333334,
+    1.0
+   ]
+  },
+  {
+   "runes": "tit",
+   "real": [
+    true,
+    true,
+    false
+   ],
+   "shuffled_rate": [
+    1.0,
+    1.0,
+    0.0
+   ]
+  },
+  {
+   "runes": "ulti",
+   "real": [
+    true,
+    true,
+    true
+   ],
+   "shuffled_rate": [
+    0.4666666666666667,
+    0.4666666666666667,
+    0.8433333333333334
+   ]
+  },
+  {
+   "runes": "tul",
+   "real": [
+    true,
+    true,
+    false
+   ],
+   "shuffled_rate": [
+    0.5433333333333333,
+    0.5433333333333333,
+    0.0
+   ]
+  },
+  {
+   "runes": "isi",
+   "real": [
+    true,
+    true,
+    false
+   ],
+   "shuffled_rate": [
+    1.0,
+    1.0,
+    0.0
+   ]
+  },
+  {
+   "runes": "alisti",
+   "real": [
+    false,
+    true,
+    true
+   ],
+   "shuffled_rate": [
+    0.12333333333333334,
+    0.7766666666666666,
+    0.69
+   ]
+  },
+  {
+   "runes": "uifr",
+   "real": [
+    true,
+    true,
+    false
+   ],
+   "shuffled_rate": [
+    0.4,
+    0.4,
+    0.6333333333333333
+   ]
+  },
+  {
+   "runes": "þuR",
+   "real": [
+    true,
+    true,
+    false
+   ],
+   "shuffled_rate": [
+    0.8666666666666667,
+    0.8666666666666667,
+    0.0
+   ]
+  },
+  {
+   "runes": "afr",
+   "real": [
+    false,
+    false,
+    false
+   ],
+   "shuffled_rate": [
+    0.5166666666666667,
+    0.5166666666666667,
+    0.0
+   ]
+  },
+  {
+   "runes": "aft",
+   "real": [
+    false,
+    false,
+    false
+   ],
+   "shuffled_rate": [
+    0.13,
+    0.13,
+    0.0
+   ]
+  },
+  {
+   "runes": "asini",
+   "real": [
+    false,
+    true,
+    true
+   ],
+   "shuffled_rate": [
+    0.3466666666666667,
+    1.0,
+    0.7766666666666666
+   ]
+  },
+  {
+   "runes": "kul",
+   "real": [
+    true,
+    true,
+    false
+   ],
+   "shuffled_rate": [
+    0.65,
+    0.65,
+    0.0
+   ]
+  },
+  {
+   "runes": "finR",
+   "real": [
+    true,
+    true,
+    false
+   ],
+   "shuffled_rate": [
+    0.16,
+    0.16,
+    0.0
+   ]
+  },
+  {
+   "runes": "fal",
+   "real": [
+    true,
+    true,
+    false
+   ],
+   "shuffled_rate": [
+    0.6966666666666667,
+    0.6966666666666667,
+    0.0
+   ]
+  },
+  {
+   "runes": "suli",
+   "real": [
+    true,
+    true,
+    true
+   ],
+   "shuffled_rate": [
+    0.25666666666666665,
+    0.25666666666666665,
+    0.64
+   ]
+  },
+  {
+   "runes": "alta",
+   "real": [
+    true,
+    true,
+    true
+   ],
+   "shuffled_rate": [
+    0.65,
+    0.65,
+    0.79
+   ]
+  },
+  {
+   "runes": "utu",
+   "real": [
+    true,
+    true,
+    false
+   ],
+   "shuffled_rate": [
+    1.0,
+    1.0,
+    0.0
+   ]
+  },
+  {
+   "runes": "tuu",
+   "real": [
+    true,
+    true,
+    false
+   ],
+   "shuffled_rate": [
+    1.0,
+    1.0,
+    0.0
+   ]
+  },
+  {
+   "runes": "bili",
+   "real": [
+    true,
+    true,
+    true
+   ],
+   "shuffled_rate": [
+    0.36,
+    0.36,
+    0.36333333333333334
+   ]
+  },
+  {
+   "runes": "kakR",
+   "real": [
+    false,
+    false,
+    false
+   ],
+   "shuffled_rate": [
+    0.4866666666666667,
+    0.4866666666666667,
+    0.0
+   ]
+  },
+  {
+   "runes": "tuR",
+   "real": [
+    true,
+    true,
+    false
+   ],
+   "shuffled_rate": [
+    0.84,
+    0.84,
+    0.0
+   ]
+  }
+ ],
+ "total": {
+  "n": 21,
+  "real": [
+   16,
+   18,
+   7
+  ],
+  "shuffled_expected": [
+   12.2,
+   13.5,
+   5.7
+  ]
+ }
+}
