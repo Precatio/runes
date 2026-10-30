@@ -1,0 +1,83 @@
+{
+ "A": {
+  "base": "tol02",
+  "new": "app",
+  "words": {
+   "inne i ord": {
+    "won": 14,
+    "lost": 12,
+    "n": 698
+   },
+   "helt ord": {
+    "won": 21,
+    "lost": 21,
+    "n": 698
+   }
+  },
+  "accuracy": {
+   "inne i ord": {
+    "tol02": 0.7636,
+    "app": 0.7665
+   },
+   "helt ord": {
+    "tol02": 0.5917,
+    "app": 0.5917
+   }
+  },
+  "rune_top1": [
+   26,
+   29
+  ],
+  "sure": {
+   "tol02": [
+    409,
+    19
+   ],
+   "app": [
+    342,
+    15
+   ]
+  }
+ },
+ "B": {
+  "base": "app",
+  "new": "app3",
+  "words": {
+   "inne i ord": {
+    "won": 8,
+    "lost": 6,
+    "n": 698
+   },
+   "helt ord": {
+    "won": 16,
+    "lost": 22,
+    "n": 698
+   }
+  },
+  "accuracy": {
+   "inne i ord": {
+    "app": 0.7665,
+    "app3": 0.7693
+   },
+   "helt ord": {
+    "app": 0.5917,
+    "app3": 0.5831
+   }
+  },
+  "rune_top1": [
+   22,
+   34
+  ],
+  "sure": {
+   "app": [
+    342,
+    15
+   ],
+   "app3": [
+    430,
+    17
+   ]
+  }
+ },
+ "B_holds": false
+}
