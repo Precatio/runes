@@ -320,6 +320,8 @@ for b in (body, body_en):
 out = {"slug": "ingen-pa-runstenarna-hette-freja", "title": title, "summary": summary, "body": body,
        "title_en": title_en, "summary_en": summary_en, "body_en": body_en,
        "labels": ["Forskning", "Språk och stavning", "Tro och magi", "Eddan"]}
+from src import blog_labels  # noqa: E402  (Admin avvisar ogiltiga etiketter med 422; samma kontroll här)
+assert blog_labels.check(out["labels"]) is None, blog_labels.check(out["labels"])
 path = os.path.join(ROOT, "utdata", "blogg", "namn_utanfor.json")
 json.dump(out, open(path, "w"), ensure_ascii=False, indent=1)
 print(path, len(body.split()), "ord,", len(body_en.split()), "words")
