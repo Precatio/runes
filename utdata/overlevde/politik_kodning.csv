@@ -1,0 +1,54 @@
+slag,namn,stenar,kod,i_dag,belägg,signa
+titel,konungr,3,lever,kung,sv.wiktionary: manligt statsöverhuvud i en monarki,Sm 42 Vg 40 Ög 136
+titel,styrimaðr,3,lever,styrman,sv.wiktionary: person som styr ett fartyg,Sö 161 U 1011 U Fv1976;104
+titel,skipari,2,lever,skeppare,sv.wiktionary: befälhavare på ett mindre fartyg,Sm 42 Sö 335
+titel,þingstaðr,3,lever,ting,"sv.wiktionary: juridik, beslutsmöte; tingsrätt sedan 1971 (sv.wikipedia Tingsrätt)",Sö 137 U 212 U 225
+titel,drengr,53,sjönk,dräng,"sv.wiktionary: fornsv. drænger 'ung man, tjänare'; sv.wikipedia: anställd i jordbruket",Nä 23 Sm 48 Sm 93 Sö 113 Sö 130 Sö 155 Sö 163 Sö 164 Sö 167 Sö 177 Sö 179 Sö 320 Sö 55 U 166 U 289 U 610 U 729 U 767 U 768 U 796 U 802 U 808 U 972 Vg 112 Vg 114 Vg 123 Vg 126 Vg 127 Vg 130 Vg 153 Vg 154 Vg 157 Vg 162 Vg 179 Vg 181 Vg 184 Vg 32 Vg 61 Vg 90 Vs 18 Vs 19 Vs 22 Vs 3 Ög 104 Ög 111 Ög 122 Ög 130 Ög 136 Ög 201 Ög 60 Ög 81 Ög Fv1965;54 Öl 28
+titel,jarl,2,historisk,jarl,"sv.wikipedia Jarl: ämbetet avskaffat 1308, siste store innehavaren Birger jarl d. 1266; riksjarl = dux regni, 'rikets hertig'",Sm 76 U 617
+titel,stallari,1,historisk,stallare,sv.wikipedia Stallare: ersattes under 1200-talet av marsken,Sm 76
+titel,bryti,1,historisk,bryte,sv.wikipedia Bryte: nordisk titel under folkvandringstid och vikingatid,Sö 42
+titel,húskarl,3,historisk,huskarl,inget uppslag i sv.wiktionary; sv.wikipedia under Hird,Sö 338 U 330 U 335
+titel,hundari,1,historisk,hundare,sv.wikipedia Härad: hundare undanträngdes under unionstiden av ordet härad,U 212
+titel,dróttinn,5,historisk,drott,sv.wiktionary drott: taggat historia; lever i drottning; på runstenarna alltid om Gud,U 1143 U 627 U 759 U 942 Vg 127
+titel,þegn,21,borta,,ingen svensk ättling (sv.wikipedia Tegn; jfr eng. thane),Sm 35 Sm 37 Vg 101 Vg 102 Vg 103 Vg 108 Vg 113 Vg 115 Vg 137 Vg 150 Vg 151 Vg 152 Vg 157 Vg 158 Vg 59 Vg 62 Vg 73 Vg 74 Vg 8 Vg NOR1997;27 Ög 200
+titel,landmaðr,1,borta,,ingen svensk ättling,Sö 338
+titel,hersir,1,borta,,ingen svensk ättling; läsningen på Sö 136 är osäker,Sö 136
+titel,þingalið,1,borta,,ingen svensk ättling: Knut den stores livgarde i England,U 668
+titel,liðs forungi,1,borta,,ingen svensk ättling ('följets anförare'),Sö 338
+ny titel,hertig,0,lån,hertig,"sv.wiktionary: belagt sedan 1285, fornsv. hærtogher av lågtyska hertoch",
+ny titel,greve,0,lån,greve,sv.wiktionary: av lågtyska grēve,
+ny titel,marsk,0,lån,marsk,sv.wiktionary: av lågtyska marschalk 'stallmästare'; sv.wikipedia: i Sverige först 1268,
+ny titel,fogde,0,lån,fogde,sv.wiktionary: av latinets vocatus (en.wiktionary: via lågtyska voget),
+ny titel,riddare,0,lån,riddare,en.wiktionary: av lågtyska ridder,
+ny titel,kansler,0,lån,kansler,"en.wiktionary: av fornfranska cancelier, medeltidslatin cancellarius",
+ny titel,riksdag,0,lån,riksdag,en.wiktionary: översättningslån av tyskans Reichstag,
+ny titel,biskop,0,lån,biskop,sv.wiktionary: av grekiska episkopos (genom kyrkan),
+ny titel,präst,0,lån,präst,"en.wiktionary: fornsv. præster, fornvästnordiska prestr (latinets presbyter, genom kyrkan)",
+ny titel,frälse,0,nordiskt,frälse,sv.wiktionary: fornsv. frælse; sv.wikipedia: Alsnö stadga 1280,
+ny titel,härad,0,nordiskt,härad,sv.wiktionary: fornvästnordiska hærað,
+ny titel,lagman,0,nordiskt,lagman,en.wiktionary: fornvästnordiska lǫgmaðr; sv.wiktionary: titeln återupprättades 1971,
+ny titel,socken,0,nordiskt,socken,sv.wiktionary: fornvästnordiska sókn,
+ny titel,ledung,0,nordiskt,ledung,sv.wiktionary: fornvästnordiska leiðangr,
+ny titel,adel,0,nordiskt,adel,"en.wiktionary: fornsv. aþal, fornvästnordiska aðal, starkt påverkat av lågtyska adel",
+område,England,26,samma,England,,Gs 8 Sm 101 Sm 27 Sm 5 Sm 77 Sö 160 Sö 166 Sö 207 Sö 46 Sö 55 Sö 83 U 1151 U 194 U 241 U 344 U 539 U 616 U 812 U 978 Vg 187 Vg 20 Vs 18 Vs 5 Vs 9 Ög 104 Ög Fv1950;341
+område,Danmork,3,samma,Danmark,,U 699 U 896 Öl 1
+område,Gotland,4,samma,Gotland,,Sö 174 U 414 U 527 U 614
+område,Skáney,2,samma,Skåne,,Sm 52 Sö 333
+område,Frísar,1,samma,Friesland,,U 379
+område,Bað,1,samma,Bath,,Sm 101
+område,Eistland,3,samma,Estland,,Sö 45 U 439 Vg 181
+område,Finnland,1,samma,Finland,,U 582
+område,Tafeistaland,3,samma,Tavastland,,Gs 13 U 467 U 722
+område,Semgallar,1,samma,Semgallen,,Sö 198
+område,Domisnes,1,samma,Domesnäs,,Sö 198
+område,Virland,3,historisk,Wierland (Virumaa),,U 346 U 356 U 533
+område,Lífland,1,historisk,Livland,,U 698
+område,Svíþjóð,2,bytt,Sverige,,Sö 140 Sö Fv1948;289
+område,Garðar,6,bytt,Ryssland (Kievriket),,Sö 130 Sö 148 Sö 338 U 636 Vs 1 Öl 28
+område,Holmgarðr,1,bytt,Novgorod,,U 1003
+område,Grikkland / Grikkir,24,bytt,Bysantinska riket,,Sm 46 Sö 163 Sö 165 Sö 170 Sö 82 Sö 85 Sö Fv1954;20 U 1016 U 1087 U 136 U 140 U 201 U 270 U 358 U 374 U 431 U 446 U 518 U 540 U 73 U 792 Vg 178 Ög 81 Ög 94
+område,Langbarðaland,3,bytt,Italien,,Sö 65 U 133 U 141
+område,Serkland,6,bytt,kalifatet (inget nutida namn),,Sö 131 Sö 179 Sö 279 Sö 281 U 439 U 785
+område,Jórsalir,1,bytt,Jerusalem,,U 136
+område,Saxland,1,bytt,Tyskland,,Sö 166
+område,Heiðabýr,2,bytt,"Hedeby, övergivet",,Sö 16 U 1048

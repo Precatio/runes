@@ -1,0 +1,152 @@
+{
+ "titles": {
+  "lever": {
+   "words": [
+    "konungr",
+    "styrimaðr",
+    "skipari",
+    "þingstaðr"
+   ],
+   "n": 4,
+   "stones": 10
+  },
+  "sjönk": {
+   "words": [
+    "drengr"
+   ],
+   "n": 1,
+   "stones": 53
+  },
+  "historisk": {
+   "words": [
+    "jarl",
+    "stallari",
+    "bryti",
+    "húskarl",
+    "hundari",
+    "dróttinn"
+   ],
+   "n": 6,
+   "stones": 12
+  },
+  "borta": {
+   "words": [
+    "þegn",
+    "landmaðr",
+    "hersir",
+    "þingalið",
+    "liðs forungi"
+   ],
+   "n": 5,
+   "stones": 24
+  }
+ },
+ "n_titles": 16,
+ "title_stones": {
+  "konungr": 3,
+  "jarl": 2,
+  "þegn": 21,
+  "drengr": 53,
+  "hersir": 1,
+  "landmaðr": 1,
+  "húskarl": 3,
+  "þingalið": 1,
+  "stallari": 1,
+  "bryti": 1,
+  "styrimaðr": 3,
+  "skipari": 2,
+  "liðs forungi": 1,
+  "dróttinn": 5,
+  "þingstaðr": 3,
+  "hundari": 1
+ },
+ "new": {
+  "lån": [
+   "hertig",
+   "greve",
+   "marsk",
+   "fogde",
+   "riddare",
+   "kansler",
+   "riksdag",
+   "biskop",
+   "präst"
+  ],
+  "nordiskt": [
+   "frälse",
+   "härad",
+   "lagman",
+   "socken",
+   "ledung",
+   "adel"
+  ]
+ },
+ "areas": {
+  "samma": {
+   "words": [
+    "England",
+    "Danmork",
+    "Gotland",
+    "Skáney",
+    "Frísar",
+    "Bað",
+    "Eistland",
+    "Finnland",
+    "Tafeistaland",
+    "Semgallar",
+    "Domisnes"
+   ],
+   "n": 11,
+   "stones": 44
+  },
+  "historisk": {
+   "words": [
+    "Virland",
+    "Lífland"
+   ],
+   "n": 2,
+   "stones": 4
+  },
+  "bytt": {
+   "words": [
+    "Svíþjóð",
+    "Garðar",
+    "Holmgarðr",
+    "Grikkland / Grikkir",
+    "Langbarðaland",
+    "Serkland",
+    "Jórsalir",
+    "Saxland",
+    "Heiðabýr"
+   ],
+   "n": 9,
+   "stones": 45
+  }
+ },
+ "n_areas": 22,
+ "area_stones": {
+  "Svíþjóð": 2,
+  "Danmork": 3,
+  "Gotland": 4,
+  "Skáney": 2,
+  "England": 26,
+  "Saxland": 1,
+  "Frísar": 1,
+  "Heiðabýr": 2,
+  "Bað": 1,
+  "Langbarðaland": 3,
+  "Grikkland / Grikkir": 24,
+  "Jórsalir": 1,
+  "Serkland": 6,
+  "Garðar": 6,
+  "Holmgarðr": 1,
+  "Eistland": 3,
+  "Virland": 3,
+  "Lífland": 1,
+  "Semgallar": 1,
+  "Domisnes": 1,
+  "Finnland": 1,
+  "Tafeistaland": 3
+ },
+ "area_any_stones": 91
+}
