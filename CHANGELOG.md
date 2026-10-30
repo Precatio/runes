@@ -5,6 +5,11 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Webbplatsens publicering från appen
+- Publicering från Admin fick 403 från GitHub ("denied to Precatio"): API:t läser .env, vars `GITHUB_TOKEN` är den
+  skrivskyddade statistik-token, och gh:s hjälpprogram tog den före nyckelringen. Git körs nu utan tokenvariablerna
+  (`src/site_export.git_env`, prov i tests/test_site_export_env.py).
+
 ### Pröva en egen fråga: andelar och modellkontroll
 - Kontrollerna i R visar också andelen med och utan det valda draget med övrigt lika (marginaleffects), och en
   modellkontroll med simulerade residualer (DHARMa) som varnar om modellen inte passar datan (METHODS.md 1y).
