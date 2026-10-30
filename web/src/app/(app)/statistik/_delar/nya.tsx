@@ -8,6 +8,7 @@ import { Tip } from "@/components/Explain";
 import { GLOSSARY } from "@/lib/glossary";
 import type { Corpus, Tab } from "./typer";
 import { PATTERN_TOPICS, TOPIC } from "./gemensamt";
+import { SEGMENT } from "@/lib/tone";
 
 type State = "bekräftat" | "obekräftat" | "ändrat";
 const STATE: Record<State, { label: string; help: string; pill: string; dot: string; short: string }> = {
@@ -21,7 +22,7 @@ const STATE: Record<State, { label: string; help: string; pill: string; dot: str
 const stateOf = (p: Pattern): State => (p.new === "ändrat" ? "ändrat" : p.new === "obekräftat" ? "obekräftat" : "bekräftat");
 const ORDER: State[] = ["bekräftat", "obekräftat", "ändrat"];
 // The research status as a dot: agrees with research, a pattern to test, or weaker
-const STATUS_DOT: Record<string, string> = { "bekräftar": "bg-emerald-500", "mönster att pröva": "bg-amber-500" };
+const STATUS_DOT: Record<string, string> = { "bekräftar": SEGMENT.yes, "mönster att pröva": "bg-slate-400" };
 const PER_TOPIC = 3;  // cards per topic before "Visa alla"
 
 const firstSentence = (t: string) => { const s = t.split(/(?<=[a-zåäö0-9)])\.\s/)[0].trim(); return /[.!?]$/.test(s) ? s : `${s}.`; };
@@ -44,7 +45,7 @@ function useStored<T>(name: string, initial: T): [T, (v: T) => void] {
   return [v, set];
 }
 
-/** The ladder as a row of small segments: green holds, red fails, grey not tested. */
+/** The ladder as a row of small segments: rust holds, dark grey fails, light grey not tested. */
 function LadderMeter({ pt }: { pt: Pattern }) {
   const l = pt.ladder;
   if (!l) return <span className="text-[11px] text-slate-400" title="Mönstret prövas på annat sätt än med robusthetstrappan.">egen prövning</span>;
@@ -52,7 +53,7 @@ function LadderMeter({ pt }: { pt: Pattern }) {
     <span className="inline-flex items-center gap-1.5" title={l.rungs.map(r => `${r.holds === true ? "✓" : r.holds === false ? "✗" : "–"} ${r.label}`).join("\n")}>
       <span className="inline-flex gap-[2px]" aria-hidden>
         {l.rungs.map(r => (
-          <span key={r.key} className={`h-2.5 w-1.5 rounded-[2px] ${r.holds === true ? "bg-emerald-500" : r.holds === false ? "bg-rose-400" : "bg-slate-200"}`} />
+          <span key={r.key} className={`h-2.5 w-1.5 rounded-[2px] ${r.holds === true ? SEGMENT.yes : r.holds === false ? SEGMENT.no : SEGMENT.none}`} />
         ))}
       </span>
       <span className="text-[11px] font-semibold text-slate-600 tabular-nums">{l.passed}/{l.tested}</span>

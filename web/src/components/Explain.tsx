@@ -5,6 +5,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { GLOSSARY } from "@/lib/glossary";
+import { TONE } from "@/lib/tone";
 
 // A term with an explanation on hover, focus or tap. The box is placed on the page itself (portal), so that tables
 // with their own scrolling do not cut it off.
@@ -86,8 +87,8 @@ export function Md({ text }: { text: string }) {
 
 export type Level = "säkert" | "troligt" | "osäkert";
 export const LEVEL_STYLE: Record<Level, string> = {
-  "säkert": "bg-emerald-50 text-emerald-800 border-emerald-200",
-  "troligt": "bg-amber-50 text-amber-900 border-amber-200",
+  "säkert": TONE.tint,
+  "troligt": TONE.outline,
   "osäkert": "bg-slate-100 text-slate-700 border-slate-300",
 };
 export const LEVEL_HELP: Record<Level, string> = {
@@ -114,7 +115,7 @@ export function SigBadge({ sig, compact }: { sig?: Significance | null; compact?
   if (!sig) return null;
   if (sig.significant && sig.qualified) {
     return (
-      <span className="inline-flex w-fit self-start shrink-0 items-center rounded-full border border-amber-300 bg-amber-50 px-2.5 py-0.5 text-[11px] font-bold text-amber-900">
+      <span className={`inline-flex w-fit self-start shrink-0 items-center rounded-full border px-2.5 py-0.5 text-[11px] font-bold ${TONE.caution}`}>
         <Tip text={`Signifikant men osäkert: ${sig.label ?? ""}${sig.test ? ` (${sig.test})` : ""} – ${sig.qualified}.`}>
           Signifikant men osäkert{compact ? "" : ` · ${sig.label}`}
         </Tip>
@@ -123,7 +124,7 @@ export function SigBadge({ sig, compact }: { sig?: Significance | null; compact?
   }
   if (sig.significant) {
     return (
-      <span className="inline-flex w-fit self-start shrink-0 items-center rounded-full bg-emerald-700 px-2.5 py-0.5 text-[11px] font-bold text-white">
+      <span className={`inline-flex w-fit self-start shrink-0 items-center rounded-full border px-2.5 py-0.5 text-[11px] font-bold ${TONE.fill}`}>
         <Tip text={`Statistiskt signifikant: ${sig.label}${sig.test ? ` (${sig.test})` : ""}. Under 0,05 betyder att ett så tydligt resultat vore ovanligt (färre än 5 av 100 fall) om det inte fanns något verkligt samband, även när man räknar med att många saker prövats. Det är inte sannolikheten att resultatet är sant.`}>
           ✓ Signifikant{compact ? "" : ` · ${sig.label}`}
         </Tip>

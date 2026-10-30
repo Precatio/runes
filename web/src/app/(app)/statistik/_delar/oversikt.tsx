@@ -7,10 +7,11 @@ import ExportTable from "@/components/ExportTable";
 import { useWrittenFilter } from "@/lib/patternArticles";
 import type { Corpus, Tab } from "./typer";
 import { PATTERN_TOPICS, TOPIC, Th, patternsFor } from "./gemensamt";
+import { TONE } from "@/lib/tone";
 
 const STATUS_STYLE: Record<string, string> = {
-  "bekräftar": "bg-emerald-50 text-emerald-800 border-emerald-200",
-  "mönster att pröva": "bg-amber-50 text-amber-900 border-amber-200",
+  "bekräftar": TONE.outline,
+  "mönster att pröva": TONE.tint,
   "begränsning": "bg-slate-100 text-slate-700 border-slate-300", "svagt": "bg-slate-100 text-slate-700 border-slate-300",
   "svag effekt": "bg-slate-100 text-slate-700 border-slate-300", "indikation": "bg-slate-100 text-slate-700 border-slate-300",
 };
@@ -26,13 +27,13 @@ function SignificantBox({ patterns, onOpen, robust }: { patterns: Pattern[]; onO
   const sectionOfTopic = (topic: string) => (Object.entries(PATTERN_TOPICS).find(([, ts]) => ts.includes(topic))?.[0] ?? "overview") as Tab;
   const topics = Array.from(new Set(sig.map(p => p.topic)));
   return (
-    <section className="rounded-3xl border border-emerald-200 bg-emerald-50/60 p-6 md:p-8">
+    <section className="rounded-3xl border border-slate-200 bg-white p-6 md:p-8">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <div>
-          <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-800">Statistiskt signifikant</div>
+          <div className="text-[11px] font-bold uppercase tracking-wider text-[#b7410e]">Statistiskt signifikant</div>
           <h3 className="text-2xl font-bold tracking-tight text-slate-900">Upptäckter som klarar signifikanstestet</h3>
         </div>
-        <div className="text-sm text-slate-700"><span className="text-3xl font-bold text-emerald-800">{sig.length}</span> av {tested.length} prövade resultat</div>
+        <div className="text-sm text-slate-700"><span className="text-3xl font-bold text-[#b7410e]">{sig.length}</span> av {tested.length} prövade resultat</div>
       </div>
       <p className="text-sm text-slate-700 mt-2 max-w-4xl">
         Ett resultat är <strong>statistiskt signifikant</strong> när p-värdet – eller q, som tar hänsyn till att många saker prövats
@@ -52,7 +53,7 @@ function SignificantBox({ patterns, onOpen, robust }: { patterns: Pattern[]; onO
       )}
       <div className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
         {topics.map(topic => (
-          <div key={topic} className="rounded-2xl bg-white border border-emerald-100 p-4">
+          <div key={topic} className="rounded-2xl bg-slate-50/60 border border-slate-200 p-4">
             <button type="button" onClick={() => onOpen(sectionOfTopic(topic))} className="text-[11px] font-bold uppercase tracking-wider text-[#b7410e] hover:underline">
               {topic} →
             </button>
@@ -126,7 +127,7 @@ export function Overview({ data, onOpen }: { data: Corpus; onOpen: (t: Tab) => v
               {(() => {
                 const ts = patternsFor(data.patterns, x.key), k = ts.filter(t => t.significance?.significant).length;
                 return ts.length > 0 ? (
-                  <span className={`text-xs font-semibold ${k ? "text-emerald-800" : "text-slate-500"}`}>
+                  <span className={`text-xs font-semibold ${k ? "text-[#9a350b]" : "text-slate-500"}`}>
                     {k ? `✓ ${k} av ${ts.length} resultat statistiskt signifikanta` : `Inget av ${ts.length} resultat statistiskt signifikant`}
                   </span>
                 ) : null;

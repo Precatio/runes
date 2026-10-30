@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { Significance } from "./Explain";
 import { patternKey, usePatternArticles, useHideWritten } from "@/lib/patternArticles";
+import { MARK, NOTE_BOX, NOTE_LABEL, TONE } from "@/lib/tone";
 
 // A corpus pattern from the R analyses (src/r_findings.py)
 export interface Pattern {
@@ -95,7 +96,7 @@ export function LadderDetails({ pt }: { pt: Pattern }) {
         <ul className="space-y-0.5">
           {l.rungs.map(r => (
             <li key={r.key} className="flex flex-wrap gap-x-2">
-              <span className={`w-4 font-bold ${r.holds === true ? "text-emerald-700" : r.holds === false ? "text-red-700" : "text-slate-400"}`}>
+              <span className={`w-4 font-bold ${r.holds === true ? MARK.yes : r.holds === false ? MARK.no : MARK.none}`}>
                 {r.holds === true ? "✓" : r.holds === false ? "✗" : "–"}
               </span>
               <span className="text-slate-800">{r.label}{r.without ? ` (sämst utan ${r.without})` : ""}{r.flips?.length ? ` – riktningen vänder utan ${r.flips.join(", ")}` : ""}</span>
@@ -146,9 +147,9 @@ export function PatternBody({ pt }: { pt: Pattern }) {
         </p>
       )}
       {pt.hypothesis && (
-        <div className="rounded-lg border border-amber-200 bg-amber-50/70 px-3 py-2 text-sm leading-relaxed text-slate-800">
-          <p><span className="font-semibold text-amber-900">Hypotes: </span>{pt.hypothesis}</p>
-          {pt.test && <p className="mt-1"><span className="font-semibold text-amber-900">Så kan den prövas: </span>{pt.test}</p>}
+        <div className={NOTE_BOX}>
+          <p><span className={NOTE_LABEL}>Hypotes: </span>{pt.hypothesis}</p>
+          {pt.test && <p className="mt-1"><span className={NOTE_LABEL}>Så kan den prövas: </span>{pt.test}</p>}
         </div>
       )}
       <LadderDetails pt={pt} />
@@ -169,7 +170,7 @@ export function PatternBadges({ pt }: { pt: Pattern }) {
     <>
       <NewBadge pt={pt} />
       {pt.replicated === true && (
-        <span className={`${pill} border-emerald-300 bg-emerald-50 text-emerald-800`}
+        <span className={`${pill} ${TONE.fill}`}
               title="Mönstret håller i båda halvorna av korpusen, uppdelad per socken – ett tydligt mönster, inte ett utslag av några få socknar eller ristare.">
           ✓ Håller i båda halvorna
         </span>
@@ -181,14 +182,14 @@ export function PatternBadges({ pt }: { pt: Pattern }) {
         </span>
       )}
       {pt.ladder && (
-        <span className={`${pill} ${pt.ladder.passed === pt.ladder.tested ? "border-emerald-300 bg-emerald-50 text-emerald-800"
-          : pt.ladder.passed >= pt.ladder.tested - 1 ? "border-amber-200 bg-amber-50 text-amber-800" : "border-slate-300 bg-slate-50 text-slate-600"}`}
+        <span className={`${pill} ${pt.ladder.passed === pt.ladder.tested ? TONE.tint
+          : pt.ladder.passed >= pt.ladder.tested - 1 ? TONE.outline : TONE.neutral}`}
               title="Robusthetstrappan: hur många av de gemensamma kontrollerna mönstret klarar (rått, justerat, ristare, socken, plats, båda halvorna, utan ett landskap i taget, utan flyttade stenar). Se Robusthetstrappan under mönstret.">
           Robust {pt.ladder.passed}/{pt.ladder.tested}
         </span>
       )}
       {pt.small && (
-        <span className={`${pill} border-sky-200 bg-sky-50 text-sky-800`}
+        <span className={`${pill} ${TONE.neutral}`}
               title="En liten men stabil förändring (under 10 procentenheter) – ett mönster, men ett litet.">
           liten effekt
         </span>

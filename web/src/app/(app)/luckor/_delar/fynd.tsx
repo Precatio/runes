@@ -11,15 +11,16 @@ import SavedQuestions from "@/components/SavedQuestions";
 import { useWrittenFilter } from "@/lib/patternArticles";
 import type { CrossCheck, Finding, Findings, Interpretation, RPattern, Verdict } from "./typer";
 import { Chip, LEVELS, LEVEL_RANK, LanguageCell, LevelBadge, MaterialCell, Score, SortTh, StoneLinks, TH_ROW, VERDICT_STYLE, useSorted } from "./gemensamt";
+import { TONE, toggle } from "@/lib/tone";
 
 const pageLabel = (p: string) => (p.startsWith("pdf ") ? `pdf-sida ${p.slice(4)}` : `s. ${p}`);
 
 const CC_STYLE: Record<string, string> = {
-  "finns redan": "bg-sky-50 text-sky-800 border-sky-200",
-  "nämns": "bg-sky-50 text-sky-800 border-sky-200",
-  "annan ristare": "bg-rose-50 text-rose-800 border-rose-200",
-  "samma som": "bg-[#b7410e]/5 text-[#9a350b] border-[#b7410e]/25",
-  "saknas": "bg-emerald-50 text-emerald-800 border-emerald-200",
+  "finns redan": TONE.neutral,
+  "nämns": TONE.neutral,
+  "annan ristare": TONE.caution,
+  "samma som": TONE.tint,
+  "saknas": TONE.outline,
 };
 
 // A stone can have several findings by the same method (two family links, two filled gaps), so the row id also needs
@@ -37,11 +38,11 @@ function CrossCheckCell({ cc }: { cc?: CrossCheck }) {
 
 // Corpus-wide patterns from the R analyses: what confirms earlier research, what is worth testing, and the limits
 const PATTERN_GROUPS: { key: string; label: string; statuses: string[]; accent: string; pill: string; help: string }[] = [
-  { key: "test", label: "Att pröva", statuses: ["mönster att pröva"], accent: "border-l-amber-500", pill: "bg-amber-50 text-amber-900 border-amber-200",
+  { key: "test", label: "Att pröva", statuses: ["mönster att pröva"], accent: "border-l-[#b7410e]", pill: TONE.tint,
     help: "Nya mönster som statistiken visar och som håller i båda halvorna av korpusen – tydliga hypoteser för runologer att pröva." },
-  { key: "confirm", label: "Bekräftar", statuses: ["bekräftar"], accent: "border-l-emerald-600", pill: "bg-emerald-50 text-emerald-800 border-emerald-200",
+  { key: "confirm", label: "Bekräftar", statuses: ["bekräftar"], accent: "border-l-slate-800", pill: TONE.outline,
     help: "Mönster som stämmer med det forskningen redan antar, nu med mätbar osäkerhet." },
-  { key: "hint", label: "Indikationer", statuses: ["indikation"], accent: "border-l-amber-300", pill: "bg-amber-50/50 text-amber-800 border-amber-200",
+  { key: "hint", label: "Indikationer", statuses: ["indikation"], accent: "border-l-slate-300", pill: TONE.neutral,
     help: "Mönster som syns i hela korpusen men inte håller i alla kontroller eller i båda halvorna – idéer att pröva, med förbehåll." },
   { key: "limit", label: "Begränsningar", statuses: ["begränsning", "svagt", "svag effekt"], accent: "border-l-slate-400", pill: "bg-slate-100 text-slate-700 border-slate-300",
     help: "Cirkulära jämförelser och det metoden eller datan inte klarar." },
@@ -82,13 +83,13 @@ function PatternsBox({ patterns: all }: { patterns: RPattern[] }) {
           ) : null;
         })}
         <button onClick={() => setOnlySig(!onlySig)}
-          className={`px-3 py-1.5 rounded-xl border text-xs font-bold ${onlySig ? "bg-emerald-700 border-emerald-700 text-white" : "bg-white border-slate-300 text-emerald-800 hover:bg-emerald-50"}`}>
+          className={toggle(onlySig)}>
           ✓ Statistiskt signifikanta {nSig}
         </button>
         <HideWrittenToggle written={written} />
       </div>
       <p className="text-xs text-slate-500 mb-3 max-w-4xl">
-        Tre frågor per mönster: <strong>är det statistiskt signifikant</strong> (grönt märke), <strong>håller det i båda
+        Tre frågor per mönster: <strong>är det statistiskt signifikant</strong> (rostfärgat märke), <strong>håller det i båda
         halvorna</strong> av korpusen (uppdelad per socken – då är det ett tydligt mönster) och <strong>är det känt</strong> i
         forskningen (bekräftar) eller nytt (att pröva). Varje mönster har en hypotes om vad det kan betyda och hur den kan
         prövas – hypotesen är djärv med avsikt, påståendet är försiktigt.
@@ -203,7 +204,7 @@ export function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; l
           {methods.map(m => <option key={m} value={m}>{m}</option>)}
         </select>
         <button onClick={() => setOnlySignificant(!onlySignificant)}
-          className={`px-3 py-1.5 rounded-xl border text-xs font-bold ${onlySignificant ? "bg-emerald-700 border-emerald-700 text-white" : "bg-white border-slate-300 text-emerald-800 hover:bg-emerald-50"}`}>
+          className={toggle(onlySignificant)}>
           <Tip text={GLOSSARY["Statistiskt signifikant"] + " Ortografin (justerat p), statistiska modellen (q, mot de sannolikheter felaktiga ristare får) och huggtekniken har ett signifikanstest per sten; seriationen och grupperna av stenar utan ristare är skattningar utan test."}>
             ✓ Bara statistiskt signifikanta ({nSignificant})
           </Tip>
@@ -222,7 +223,7 @@ export function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; l
           </button>
         )}
         {checkError && <span className="text-xs text-red-700">{checkError}</span>}
-        {data.technique_note && <span className="text-amber-800 text-xs">{data.technique_note}{!loggedIn && " Logga in för att ta med mätkorpusen."}</span>}
+        {data.technique_note && <span className="text-slate-600 text-xs">{data.technique_note}{!loggedIn && " Logga in för att ta med mätkorpusen."}</span>}
       </div>
       <div className="flex flex-wrap items-center gap-2 mb-3 text-xs">
         <span className="font-bold uppercase tracking-wider text-[11px] text-slate-500">Tolkning<InfoTip text={GLOSSARY["Tolkning"]} /></span>
@@ -275,8 +276,8 @@ export function FindingsPanel({ data, loggedIn, onRefresh }: { data: Findings; l
 }
 const interpretations = new Map<string, Interpretation>();
 const LEVEL_STYLE: Record<string, string> = {
-  starkt: "border-emerald-300 bg-emerald-50/60", "måttligt": "border-sky-300 bg-sky-50/60", svagt: "border-slate-300 bg-slate-50",
-  "redan känt": "border-slate-300 bg-slate-50", metodfel: "border-amber-300 bg-amber-50/60", "bekräftelse": "border-emerald-200 bg-white",
+  starkt: "border-[#b7410e]/40 bg-[#b7410e]/5", "måttligt": "border-[#b7410e]/25 bg-white", svagt: "border-slate-300 bg-slate-50",
+  "redan känt": "border-slate-300 bg-slate-50", metodfel: "border-slate-300 bg-slate-100", "bekräftelse": "border-slate-200 bg-white",
 };
 
 // A reasoned reading of the finding, weighing its evidence against the other methods and newer sources

@@ -3,13 +3,14 @@ import Link from "next/link";
 import { InfoTip, Tip } from "@/components/Explain";
 import { GLOSSARY } from "@/lib/glossary";
 import type { Finding, SortState, SortValue, StoneExtras, Verdict } from "./typer";
+import { MARK, TONE } from "@/lib/tone";
 
 export function MaterialCell({ x }: { x: StoneExtras }) {
   if (!x.material) return <span className="text-slate-400">–</span>;
   const mark = x.material_fit === true ? "✓" : x.material_fit === false ? "!" : "";
   return (
-    <span title={x.material_text ?? ""} className={x.material_fit === false ? "text-amber-800" : ""}>
-      {x.material} {mark && <span className={`font-bold ${x.material_fit ? "text-emerald-700" : "text-amber-700"}`}>{mark}</span>}
+    <span title={x.material_text ?? ""} className={x.material_fit === false ? "text-slate-800 font-semibold" : ""}>
+      {x.material} {mark && <span className={`font-bold ${x.material_fit ? MARK.yes : MARK.no}`}>{mark}</span>}
     </span>
   );
 }
@@ -17,7 +18,7 @@ export function MaterialCell({ x }: { x: StoneExtras }) {
 export function LanguageCell({ x }: { x: StoneExtras }) {
   if (!x.language || !x.language.comparable) return <span className="text-slate-400">–</span>;
   return (
-    <span title={x.language.text} className={x.language.fits === false ? "text-amber-800 font-semibold" : ""}>
+    <span title={x.language.text} className={x.language.fits === false ? "text-slate-800 font-semibold" : ""}>
       {x.language.agree}/{x.language.comparable}
     </span>
   );
@@ -53,24 +54,24 @@ export function useSorted<T>(rows: T[], get: Record<string, (r: T) => SortValue>
 }
 
 export const VERDICT_STYLE: Record<Verdict, string> = {
-  "stämmer": "bg-emerald-50 text-emerald-800 border-emerald-200",
-  "nytt": "bg-sky-50 text-sky-800 border-sky-200",
-  "motsäger": "bg-amber-50 text-amber-900 border-amber-200",
+  "stämmer": TONE.neutral,
+  "nytt": TONE.tint,
+  "motsäger": TONE.caution,
 };
 
 // The interpretation's conclusion, strongest first; dots make the scale readable without colour
 export const LEVELS: { key: string; dots: string; style: string; help: string }[] = [
-  { key: "starkt", dots: "●●●", style: "bg-emerald-50 text-emerald-900 border-emerald-400",
+  { key: "starkt", dots: "●●●", style: TONE.fill,
     help: "Minst två oberoende belägg för och inget emot (för ortografin dessutom justerat p under 0,05)." },
-  { key: "måttligt", dots: "●●○", style: "bg-sky-50 text-sky-900 border-sky-300",
+  { key: "måttligt", dots: "●●○", style: TONE.tint,
     help: "Belägg för, minst lika många för som emot, men inte tillräckligt för starkt. En prövbar hypotes." },
   { key: "svagt", dots: "●○○", style: "bg-slate-50 text-slate-700 border-slate-300",
     help: "Lite stöd, belägg emot eller en stilgrupp som talar emot." },
-  { key: "bekräftelse", dots: "✓", style: "bg-white text-emerald-800 border-emerald-200",
+  { key: "bekräftelse", dots: "✓", style: TONE.outline,
     help: "Metoden kommer fram till samma sak som Rundata." },
   { key: "redan känt", dots: "○", style: "bg-white text-slate-600 border-slate-200",
     help: "Förslaget finns redan i nyare källor (Runor 2020 eller Wikidata)." },
-  { key: "metodfel", dots: "!", style: "bg-amber-50 text-amber-900 border-amber-300",
+  { key: "metodfel", dots: "!", style: TONE.caution,
     help: "Fyndet motsäger en signerad sten – en svaghet i metoden, inte ett fel i Rundata." },
 ];
 export const LEVEL_RANK = Object.fromEntries(LEVELS.map((l, i) => [l.key, LEVELS.length - i]));
