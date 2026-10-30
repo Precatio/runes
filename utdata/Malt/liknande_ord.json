@@ -1,0 +1,1776 @@
+{
+ "targets": [
+  {
+   "runes": "suaa",
+   "model_word": "§svæa",
+   "model_p": 0.06,
+   "whole": [
+    {
+     "word": "svá",
+     "n": 3129,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "svá",
+     "n": 2122,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "svá",
+     "n": 784,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "svá",
+     "n": 267,
+     "source": "samtidssagor",
+     "distance": 0
+    },
+    {
+     "word": "svá",
+     "n": 12,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "sóa",
+     "n": 1,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "syá",
+     "n": 1,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "sóa",
+     "n": 1,
+     "source": "heimskringla",
+     "distance": 0
+    }
+   ],
+   "splits": [
+    {
+     "a": "su",
+     "b": "aa",
+     "a_words": [
+      {
+       "word": "svo",
+       "n": 6179,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      },
+      {
+       "word": "sáu",
+       "n": 287,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      },
+      {
+       "word": "sú",
+       "n": 263,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      }
+     ],
+     "b_words": [
+      {
+       "word": "áa",
+       "n": 1,
+       "source": "edda",
+       "distance": 0
+      },
+      {
+       "word": "áa",
+       "n": 1,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "runes": "i",
+   "model_word": "i",
+   "model_p": 0.28,
+   "whole": [
+    {
+     "word": "ei",
+     "n": 395,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "ii",
+     "n": 36,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "iii",
+     "n": 34,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "ái",
+     "n": 5,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "ei",
+     "n": 5,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "ii",
+     "n": 4,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "iii",
+     "n": 2,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "ái",
+     "n": 2,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "iiii",
+     "n": 1,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "ii",
+     "n": 1,
+     "source": "samtidssagor",
+     "distance": 0
+    },
+    {
+     "word": "iii",
+     "n": 1,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    }
+   ],
+   "splits": []
+  },
+  {
+   "runes": "tit",
+   "model_word": "let",
+   "model_p": 0.38,
+   "whole": [
+    {
+     "word": "títt",
+     "n": 48,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "títt",
+     "n": 24,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "títt",
+     "n": 18,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "títt",
+     "n": 6,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "dáit",
+     "n": 2,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "tét",
+     "n": 1,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "titt",
+     "n": 1,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "dett",
+     "n": 1,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "titt",
+     "n": 1,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "tét",
+     "n": 1,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "títt",
+     "n": 1,
+     "source": "samtidssagor",
+     "distance": 0
+    },
+    {
+     "word": "dett",
+     "n": 1,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    }
+   ],
+   "splits": []
+  },
+  {
+   "runes": "ulti",
+   "model_word": "hulti",
+   "model_p": 0.2,
+   "whole": [
+    {
+     "word": "voldi",
+     "n": 1,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    }
+   ],
+   "splits": [
+    {
+     "a": "ul",
+     "b": "ti",
+     "a_words": [
+      {
+       "word": "öll",
+       "n": 355,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      },
+      {
+       "word": "öll",
+       "n": 224,
+       "source": "fornaldarsagor",
+       "distance": 0
+      },
+      {
+       "word": "öll",
+       "n": 155,
+       "source": "heimskringla",
+       "distance": 0
+      }
+     ],
+     "b_words": [
+      {
+       "word": "tái",
+       "n": 3,
+       "source": "edda",
+       "distance": 0
+      },
+      {
+       "word": "dæi",
+       "n": 3,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      },
+      {
+       "word": "dæi",
+       "n": 2,
+       "source": "fornaldarsagor",
+       "distance": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "runes": "tul",
+   "model_word": "§tol",
+   "model_p": 0.12,
+   "whole": [
+    {
+     "word": "dvöl",
+     "n": 23,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "dul",
+     "n": 9,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "dvöl",
+     "n": 7,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "dul",
+     "n": 7,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "dvöl",
+     "n": 7,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "dul",
+     "n": 5,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "dyl",
+     "n": 4,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "tól",
+     "n": 2,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "dul",
+     "n": 2,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "töl",
+     "n": 2,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "dvöl",
+     "n": 1,
+     "source": "edda",
+     "distance": 0
+    }
+   ],
+   "splits": []
+  },
+  {
+   "runes": "isi",
+   "model_word": "isi",
+   "model_p": 0.15,
+   "whole": [
+    {
+     "word": "ísi",
+     "n": 5,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "ísi",
+     "n": 4,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "æsi",
+     "n": 3,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "ísi",
+     "n": 3,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "æsi",
+     "n": 1,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "essi",
+     "n": 1,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "æsi",
+     "n": 1,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    }
+   ],
+   "splits": []
+  },
+  {
+   "runes": "alisti",
+   "model_word": "§alisti",
+   "model_p": 0.22,
+   "whole": [
+    {
+     "word": "áliti",
+     "n": 9,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 1
+    },
+    {
+     "word": "áliti",
+     "n": 8,
+     "source": "fornaldarsagor",
+     "distance": 1
+    },
+    {
+     "word": "læsti",
+     "n": 7,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 1
+    },
+    {
+     "word": "læsti",
+     "n": 6,
+     "source": "fornaldarsagor",
+     "distance": 1
+    },
+    {
+     "word": "áliti",
+     "n": 4,
+     "source": "edda",
+     "distance": 1
+    },
+    {
+     "word": "lesti",
+     "n": 3,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 1
+    },
+    {
+     "word": "glæsti",
+     "n": 2,
+     "source": "heimskringla",
+     "distance": 1
+    },
+    {
+     "word": "lesti",
+     "n": 2,
+     "source": "heimskringla",
+     "distance": 1
+    },
+    {
+     "word": "lesti",
+     "n": 1,
+     "source": "edda",
+     "distance": 1
+    },
+    {
+     "word": "læsti",
+     "n": 1,
+     "source": "edda",
+     "distance": 1
+    },
+    {
+     "word": "læsti",
+     "n": 1,
+     "source": "heimskringla",
+     "distance": 1
+    },
+    {
+     "word": "alist",
+     "n": 1,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 1
+    }
+   ],
+   "splits": [
+    {
+     "a": "al",
+     "b": "isti",
+     "a_words": [
+      {
+       "word": "al",
+       "n": 3,
+       "source": "fornaldarsagor",
+       "distance": 0
+      },
+      {
+       "word": "al",
+       "n": 2,
+       "source": "edda",
+       "distance": 0
+      },
+      {
+       "word": "ál",
+       "n": 2,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      }
+     ],
+     "b_words": [
+      {
+       "word": "æsti",
+       "n": 2,
+       "source": "samtidssagor",
+       "distance": 0
+      }
+     ]
+    },
+    {
+     "a": "ali",
+     "b": "sti",
+     "a_words": [
+      {
+       "word": "áli",
+       "n": 10,
+       "source": "fornaldarsagor",
+       "distance": 0
+      },
+      {
+       "word": "áli",
+       "n": 10,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      },
+      {
+       "word": "áli",
+       "n": 6,
+       "source": "heimskringla",
+       "distance": 0
+      }
+     ],
+     "b_words": [
+      {
+       "word": "sté",
+       "n": 29,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      },
+      {
+       "word": "sté",
+       "n": 18,
+       "source": "fornaldarsagor",
+       "distance": 0
+      },
+      {
+       "word": "sté",
+       "n": 3,
+       "source": "edda",
+       "distance": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "runes": "is",
+   "model_word": "es",
+   "model_p": 0.29,
+   "whole": [
+    {
+     "word": "es",
+     "n": 33,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "es",
+     "n": 14,
+     "source": "samtidssagor",
+     "distance": 0
+    },
+    {
+     "word": "íss",
+     "n": 8,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "ís",
+     "n": 8,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "ess",
+     "n": 7,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "íss",
+     "n": 6,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "ís",
+     "n": 4,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "ís",
+     "n": 3,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "ís",
+     "n": 2,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "es",
+     "n": 2,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "íss",
+     "n": 1,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "íss",
+     "n": 1,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    }
+   ],
+   "splits": []
+  },
+  {
+   "runes": "uifr",
+   "model_word": "§vifr",
+   "model_p": 0.09,
+   "whole": [
+    {
+     "word": "vefr",
+     "n": 4,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "vefr",
+     "n": 2,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "vefr",
+     "n": 1,
+     "source": "edda",
+     "distance": 0
+    }
+   ],
+   "splits": []
+  },
+  {
+   "runes": "þuR",
+   "model_word": "þórr",
+   "model_p": 0.33,
+   "whole": [
+    {
+     "word": "þórr",
+     "n": 209,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "þór",
+     "n": 39,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "þór",
+     "n": 39,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "þórr",
+     "n": 16,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "þurr",
+     "n": 9,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "þór",
+     "n": 8,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "þór",
+     "n": 4,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "þórr",
+     "n": 2,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "þeyr",
+     "n": 2,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "þurr",
+     "n": 1,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "þeyr",
+     "n": 1,
+     "source": "samtidssagor",
+     "distance": 0
+    }
+   ],
+   "splits": []
+  },
+  {
+   "runes": "afr",
+   "model_word": "<unk>",
+   "model_p": 0,
+   "whole": [],
+   "splits": []
+  },
+  {
+   "runes": "aft",
+   "model_word": "æft",
+   "model_p": 0.41,
+   "whole": [],
+   "splits": []
+  },
+  {
+   "runes": "asini",
+   "model_word": "§asæinni",
+   "model_p": 0.1,
+   "whole": [
+    {
+     "word": "sinni",
+     "n": 576,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 1
+    },
+    {
+     "word": "sinni",
+     "n": 282,
+     "source": "fornaldarsagor",
+     "distance": 1
+    },
+    {
+     "word": "sinni",
+     "n": 156,
+     "source": "heimskringla",
+     "distance": 1
+    },
+    {
+     "word": "sinni",
+     "n": 43,
+     "source": "edda",
+     "distance": 1
+    },
+    {
+     "word": "sinni",
+     "n": 36,
+     "source": "samtidssagor",
+     "distance": 1
+    },
+    {
+     "word": "seinni",
+     "n": 9,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 1
+    },
+    {
+     "word": "ásinn",
+     "n": 9,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 1
+    },
+    {
+     "word": "seinni",
+     "n": 2,
+     "source": "heimskringla",
+     "distance": 1
+    },
+    {
+     "word": "ássins",
+     "n": 1,
+     "source": "edda",
+     "distance": 1
+    },
+    {
+     "word": "árinni",
+     "n": 1,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 1
+    },
+    {
+     "word": "sínni",
+     "n": 1,
+     "source": "heimskringla",
+     "distance": 1
+    },
+    {
+     "word": "seinni",
+     "n": 1,
+     "source": "fornaldarsagor",
+     "distance": 1
+    }
+   ],
+   "splits": [
+    {
+     "a": "as",
+     "b": "ini",
+     "a_words": [
+      {
+       "word": "ás",
+       "n": 16,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      },
+      {
+       "word": "áss",
+       "n": 15,
+       "source": "edda",
+       "distance": 0
+      },
+      {
+       "word": "ás",
+       "n": 9,
+       "source": "edda",
+       "distance": 0
+      }
+     ],
+     "b_words": [
+      {
+       "word": "inni",
+       "n": 211,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      },
+      {
+       "word": "inni",
+       "n": 93,
+       "source": "fornaldarsagor",
+       "distance": 0
+      },
+      {
+       "word": "einni",
+       "n": 65,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      }
+     ]
+    },
+    {
+     "a": "asi",
+     "b": "ni",
+     "a_words": [
+      {
+       "word": "ási",
+       "n": 16,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      },
+      {
+       "word": "ási",
+       "n": 4,
+       "source": "heimskringla",
+       "distance": 0
+      }
+     ],
+     "b_words": [
+      {
+       "word": "né",
+       "n": 239,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      },
+      {
+       "word": "né",
+       "n": 195,
+       "source": "fornaldarsagor",
+       "distance": 0
+      },
+      {
+       "word": "né",
+       "n": 191,
+       "source": "edda",
+       "distance": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "runes": "kul",
+   "model_word": "gull",
+   "model_p": 0.22,
+   "whole": [
+    {
+     "word": "gull",
+     "n": 133,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "gull",
+     "n": 64,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "kol",
+     "n": 40,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "gull",
+     "n": 31,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "gull",
+     "n": 23,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "koll",
+     "n": 13,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "gól",
+     "n": 11,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "kol",
+     "n": 11,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "koll",
+     "n": 6,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "göll",
+     "n": 3,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "gull",
+     "n": 2,
+     "source": "samtidssagor",
+     "distance": 0
+    },
+    {
+     "word": "kýl",
+     "n": 1,
+     "source": "heimskringla",
+     "distance": 0
+    }
+   ],
+   "splits": []
+  },
+  {
+   "runes": "finR",
+   "model_word": "§finnR",
+   "model_p": 0.4,
+   "whole": [
+    {
+     "word": "finnr",
+     "n": 114,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "finnr",
+     "n": 64,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "finnr",
+     "n": 6,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "finnr",
+     "n": 4,
+     "source": "samtidssagor",
+     "distance": 0
+    },
+    {
+     "word": "finnr",
+     "n": 3,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    }
+   ],
+   "splits": []
+  },
+  {
+   "runes": "fal",
+   "model_word": "fioll",
+   "model_p": 0.36,
+   "whole": [
+    {
+     "word": "fall",
+     "n": 97,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "fall",
+     "n": 55,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "fall",
+     "n": 30,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "fal",
+     "n": 11,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "fal",
+     "n": 6,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "fal",
+     "n": 4,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "fal",
+     "n": 3,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "fall",
+     "n": 3,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "fall",
+     "n": 3,
+     "source": "samtidssagor",
+     "distance": 0
+    },
+    {
+     "word": "fal",
+     "n": 2,
+     "source": "samtidssagor",
+     "distance": 0
+    }
+   ],
+   "splits": []
+  },
+  {
+   "runes": "i",
+   "model_word": "i",
+   "model_p": 0.4,
+   "whole": [
+    {
+     "word": "ei",
+     "n": 395,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "ii",
+     "n": 36,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "iii",
+     "n": 34,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "ái",
+     "n": 5,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "ei",
+     "n": 5,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "ii",
+     "n": 4,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "iii",
+     "n": 2,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "ái",
+     "n": 2,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "iiii",
+     "n": 1,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "ii",
+     "n": 1,
+     "source": "samtidssagor",
+     "distance": 0
+    },
+    {
+     "word": "iii",
+     "n": 1,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    }
+   ],
+   "splits": []
+  },
+  {
+   "runes": "suli",
+   "model_word": "solli",
+   "model_p": 0.2,
+   "whole": [
+    {
+     "word": "solli",
+     "n": 2,
+     "source": "edda",
+     "distance": 0
+    }
+   ],
+   "splits": [
+    {
+     "a": "su",
+     "b": "li",
+     "a_words": [
+      {
+       "word": "svo",
+       "n": 6179,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      },
+      {
+       "word": "sáu",
+       "n": 287,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      },
+      {
+       "word": "sú",
+       "n": 263,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      }
+     ],
+     "b_words": [
+      {
+       "word": "læ",
+       "n": 2,
+       "source": "heimskringla",
+       "distance": 0
+      },
+      {
+       "word": "læ",
+       "n": 2,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      },
+      {
+       "word": "læ",
+       "n": 1,
+       "source": "edda",
+       "distance": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "runes": "alta",
+   "model_word": "alda",
+   "model_p": 0.33,
+   "whole": [
+    {
+     "word": "alda",
+     "n": 20,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "alda",
+     "n": 4,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "alda",
+     "n": 1,
+     "source": "fornaldarsagor",
+     "distance": 0
+    }
+   ],
+   "splits": [
+    {
+     "a": "al",
+     "b": "ta",
+     "a_words": [
+      {
+       "word": "al",
+       "n": 3,
+       "source": "fornaldarsagor",
+       "distance": 0
+      },
+      {
+       "word": "al",
+       "n": 2,
+       "source": "edda",
+       "distance": 0
+      },
+      {
+       "word": "ál",
+       "n": 2,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      }
+     ],
+     "b_words": [
+      {
+       "word": "tá",
+       "n": 3,
+       "source": "edda",
+       "distance": 0
+      },
+      {
+       "word": "ta",
+       "n": 3,
+       "source": "heimskringla",
+       "distance": 0
+      },
+      {
+       "word": "da",
+       "n": 2,
+       "source": "heimskringla",
+       "distance": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "runes": "utu",
+   "model_word": "letu",
+   "model_p": 0.45,
+   "whole": [
+    {
+     "word": "óttu",
+     "n": 3,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "óttu",
+     "n": 2,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "óttu",
+     "n": 2,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "eyddu",
+     "n": 2,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "eyddu",
+     "n": 2,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "vöttu",
+     "n": 2,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "vöttu",
+     "n": 1,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "öttu",
+     "n": 1,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "ottó",
+     "n": 1,
+     "source": "fornaldarsagor",
+     "distance": 0
+    }
+   ],
+   "splits": []
+  },
+  {
+   "runes": "tuu",
+   "model_word": "§tou",
+   "model_p": 0.05,
+   "whole": [
+    {
+     "word": "tvo",
+     "n": 292,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "tvö",
+     "n": 148,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "tvau",
+     "n": 56,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "dó",
+     "n": 42,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "tu",
+     "n": 32,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "dó",
+     "n": 27,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "tvau",
+     "n": 20,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "tvau",
+     "n": 13,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "dó",
+     "n": 13,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "dó",
+     "n": 8,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "tvau",
+     "n": 8,
+     "source": "samtidssagor",
+     "distance": 0
+    },
+    {
+     "word": "tó",
+     "n": 3,
+     "source": "fornaldarsagor",
+     "distance": 0
+    }
+   ],
+   "splits": []
+  },
+  {
+   "runes": "ut",
+   "model_word": "ut",
+   "model_p": 0.21,
+   "whole": [
+    {
+     "word": "út",
+     "n": 1897,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "út",
+     "n": 584,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "út",
+     "n": 429,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "út",
+     "n": 89,
+     "source": "samtidssagor",
+     "distance": 0
+    },
+    {
+     "word": "út",
+     "n": 72,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "odd",
+     "n": 41,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "odd",
+     "n": 40,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "eytt",
+     "n": 10,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "eytt",
+     "n": 8,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "ótt",
+     "n": 4,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "odd",
+     "n": 3,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "ótt",
+     "n": 1,
+     "source": "edda",
+     "distance": 0
+    }
+   ],
+   "splits": []
+  },
+  {
+   "runes": "bili",
+   "model_word": "bili",
+   "model_p": 0.19,
+   "whole": [
+    {
+     "word": "beli",
+     "n": 52,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "bili",
+     "n": 39,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "bili",
+     "n": 9,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "bili",
+     "n": 9,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "bæli",
+     "n": 8,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "bili",
+     "n": 4,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "beli",
+     "n": 2,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "pelli",
+     "n": 2,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "bæli",
+     "n": 1,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "bæli",
+     "n": 1,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "bili",
+     "n": 1,
+     "source": "samtidssagor",
+     "distance": 0
+    }
+   ],
+   "splits": [
+    {
+     "a": "bi",
+     "b": "li",
+     "a_words": [
+      {
+       "word": "bæ",
+       "n": 226,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      },
+      {
+       "word": "bæ",
+       "n": 44,
+       "source": "fornaldarsagor",
+       "distance": 0
+      },
+      {
+       "word": "bæ",
+       "n": 25,
+       "source": "samtidssagor",
+       "distance": 0
+      }
+     ],
+     "b_words": [
+      {
+       "word": "læ",
+       "n": 2,
+       "source": "heimskringla",
+       "distance": 0
+      },
+      {
+       "word": "læ",
+       "n": 2,
+       "source": "islänningasagor (nutida stavning)",
+       "distance": 0
+      },
+      {
+       "word": "læ",
+       "n": 1,
+       "source": "edda",
+       "distance": 0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "runes": "kakR",
+   "model_word": "kagR",
+   "model_p": 0.46,
+   "whole": [],
+   "splits": []
+  },
+  {
+   "runes": "tuR",
+   "model_word": "týr",
+   "model_p": 0.13,
+   "whole": [
+    {
+     "word": "dyr",
+     "n": 89,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "dýr",
+     "n": 63,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "dýr",
+     "n": 25,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "dyrr",
+     "n": 24,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "týr",
+     "n": 15,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "deyr",
+     "n": 15,
+     "source": "fornaldarsagor",
+     "distance": 0
+    },
+    {
+     "word": "deyr",
+     "n": 15,
+     "source": "islänningasagor (nutida stavning)",
+     "distance": 0
+    },
+    {
+     "word": "dýr",
+     "n": 12,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "dyrr",
+     "n": 11,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "dýr",
+     "n": 9,
+     "source": "edda",
+     "distance": 0
+    },
+    {
+     "word": "dyrr",
+     "n": 9,
+     "source": "heimskringla",
+     "distance": 0
+    },
+    {
+     "word": "deyr",
+     "n": 4,
+     "source": "heimskringla",
+     "distance": 0
+    }
+   ],
+   "splits": []
+  }
+ ],
+ "sources": [
+  "edda",
+  "heimskringla",
+  "fornaldarsagor",
+  "samtidssagor",
+  "islänningasagor (nutida stavning)"
+ ],
+ "n_keys": 56192
+}
