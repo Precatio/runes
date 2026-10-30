@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "kallstrom-i-ristarforslagen",
+   "date": "2026-10-30",
+   "status": "nytt",
+   "title": "Källström i ristarförslagen",
+   "text": "När Forskningsluckor föreslår en ristare till en sten som saknar ristare står det nu också om Källström (Mästare och minnesmärken, 2007) tar upp stenen – med sidorna att läsa – eller inte, bredvid Axelson och Runor 2020."
+  },
+  {
    "id": "skrivmiljoer-och-litteraturens-ristare",
    "date": "2026-10-29",
    "status": "nytt",

@@ -20,6 +20,7 @@ INDEX = os.path.join(ROOT, "data", "cache", "literature", "index.json")
 DIR = os.environ.get("LITERATURE_DIR", "/Volumes/2TB/litteratur")
 SNIPPET = 110  # characters on each side of a mention
 LIST_RATIO = 0.3  # distinct signa per word above which a page is a register or list (measured: text ≤ 0.22, registers ≥ 0.47)
+KALLSTROM = "kallstrom2007"  # Mästare och minnesmärken: named in every carver suggestion that is called new
 _cache: dict[str, tuple[float, dict]] = {}
 
 
@@ -43,6 +44,11 @@ def catalog() -> list[dict]:
     stats = idx.get("works") or {}
     return [{**w, "indexed": w["id"] in stats, "n_stones": (stats.get(w["id"]) or {}).get("n_stones", 0),
              "n_pages": (stats.get(w["id"]) or {}).get("n_pages", 0)} for w in _load(CATALOG).get("works") or []]
+
+
+def indexed() -> set[str]:
+    """Verken vars text finns i indexet (bara då kan registret säga att ett verk inte nämner en sten)."""
+    return set(_load(INDEX).get("works") or {})
 
 
 def files(work: dict) -> list[str]:
@@ -100,12 +106,25 @@ def annotate_findings(items: list[dict]) -> list[dict]:
             reasons = f.setdefault("reasons", {}).setdefault("nyhet", [])
             if note not in reasons:
                 reasons.append(note)
+        carver_claim = f.get("verdict") == "nytt" and f.get("suggested")
+        if carver_claim and KALLSTROM in indexed():
+            # Källström (2007) is the survey of Viking-age carvers, so a carver suggestion says outright whether he
+            # takes the stone up, next to "Axelson (1993) attribuerade inte stenen"
+            k = next((w for w in works if w["id"] == KALLSTROM), None)
+            note = (f"Källström (2007) tar upp stenen ({', '.join(page_label(x) for x in k['pages'][:4]).replace(', s. ', ', ')})"
+                    f" – läs där om ristaren innan förslaget kallas nytt" if k else
+                    "Källström (2007) tar inte upp stenen i sin text om ristarna")
+            reasons = f.setdefault("reasons", {}).setdefault("nyhet", [])
+            if note not in reasons:
+                ax = next((i for i, r in enumerate(reasons) if r.startswith("Axelson")), None)
+                reasons.insert(ax + 1 if ax is not None else len(reasons), note)
         if not works and not carver:
             continue
         f["literature"] = {"works": works, "n_works": len(works), "carver": carver}
-        if f.get("verdict") == "nytt":
+        others = [w for w in works if not (carver_claim and w["id"] == KALLSTROM)]
+        if f.get("verdict") == "nytt" and others:
             refs = "; ".join(f"{w['author']} {w['year']} " + ", ".join(page_label(x) for x in w["pages"][:4]).replace(", s. ", ", ")
-                             for w in works[:3])
+                             for w in others[:3])
             note = f"stenen diskuteras i litteraturregistret ({refs}) – läs sidorna innan fyndet kallas nytt"
             reasons = f.setdefault("reasons", {}).setdefault("nyhet", [])
             if note not in reasons:
