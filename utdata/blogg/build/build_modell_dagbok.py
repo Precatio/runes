@@ -40,6 +40,10 @@ assert (R["epochs_in_training"]["800"], R["epochs_in_training"]["900"]) == (19, 
 T = json.load(open(os.path.join(ROOT, "utdata", "runlm_forfining", "tm21_sammanfattning.json"), encoding="utf-8"))["A"]
 assert (pc(T["accuracy"]["inne i ord"]["app"]), pc(T["accuracy"]["helt ord"]["app"])) == (77, 59)
 assert T["sure"]["tol02"] == [409, 19] and T["sure"]["app"] == [342, 15] and T["words"]["inne i ord"]["n"] == 698
+S = json.load(open(os.path.join(ROOT, "utdata", "runlm_forfining", "tm21_sammanfattning.json"), encoding="utf-8"))
+B = S["B"]
+assert not S["B_holds"] and B["words"]["inne i ord"]["won"] == 8 and B["words"]["inne i ord"]["lost"] == 6
+assert B["words"]["helt ord"]["won"] == 16 and B["words"]["helt ord"]["lost"] == 22 and B["sure"]["app3"] == [430, 17]
 # the text we have for the vocabulary step (analysplaner/2026-10-30-litteraturlexikon.md)
 def words_in(folder):
     return sum(len(re.findall(r"\w+", open(f, encoding="utf-8").read())) for f in glob.glob(os.path.join(ROOT, "utdata", "varlden", "korpus", folder, "*.txt")))
@@ -121,7 +125,7 @@ Siffrorna kommer från prov där hela stenar hålls undan. Vi döljer runor i te
 
 Och kalibreringen: av de svar modellen ger minst 95 procent stämmer {pc(V['sure_right'])} procent. I ett prov på {C['n_inscriptions']} inskrifter var kalibreringsfelet under en procentenhet, och för sällsynta ord, där modeller brukar skryta, sade den i snitt {pc(C['rare_mean_pc'])} procent och hade rätt i {pc(C['rare_acc'])}. Det är därför Rökläsningen inte är ett misslyckande. En modell som läser fel och vet om det är användbar. En som läser fel med säkerhet är farlig.
 
-**11.52.** Första steget klart. Med appens egen inställning blev det {pc(T['accuracy']['inne i ord']['app'])} procent inne i ord och {pc(T['accuracy']['helt ord']['app'])} procent hela ord: samma som de publicerade siffrorna. Men appen är försiktigare: {T['sure']['app'][0]} säkra svar med {T['sure']['app'][1]} fel, mot {T['sure']['tol02'][0]} med {T['sure']['tol02'][1]} i det enklare provet. Det var dagens viktigaste besked, och det var inte spännande, vilket är som det ska. Steg två – om modellen blir bättre av att bedöma kandidaterna efter följder om tre ord – startar direkt och kör fortfarande när detta skrivs.
+**11.52.** Första steget klart. Med appens egen inställning blev det {pc(T['accuracy']['inne i ord']['app'])} procent inne i ord och {pc(T['accuracy']['helt ord']['app'])} procent hela ord: samma som de publicerade siffrorna. Men appen är försiktigare: {T['sure']['app'][0]} säkra svar med {T['sure']['app'][1]} fel, mot {T['sure']['tol02'][0]} med {T['sure']['tol02'][1]} i det enklare provet. Det var dagens viktigaste besked, och det var inte spännande, vilket är som det ska. Steg två – om modellen blir bättre av att bedöma kandidaterna efter följder om tre ord – startar direkt.
 
 ## Jämfört med annat
 
@@ -148,6 +152,8 @@ Källorna är inte likvärdiga, och ordningen är viktig:
 - **Lexikonen:** Zoëgas ordbok över fornisländskan är fri att använda, och Lena Petersons *Nordiskt runnamnslexikon* ligger sedan i dag som en tabell med {sp(PET)} uppslag. Det är lexikonet som kan lära modellen bygga namn som Vífrøðr, som alla uttolkare av Maltstenen läser och som modellen inte kan stava.
 
 Risken är lika tydlig som vinsten. Fler ord betyder fler kandidater, och fler kandidater betyder fler falska träffar på korta luckor. Därför är planen låst innan något räknas: varje källa får en egen vikt som väljs på ett enda prov, och lexikonet godkänns bara om modellen vinner fler ord än den förlorar utan att de säkra felen blir fler. Sedan läser vi om Malt och Rök och räknar hur många okända följder som återstår. Det är det provet som avgör om Maltstenen kommer en bit närmare, eller inte alls.
+
+**17.48.** Steg två klart, efter sex timmar. Trigrammen vinner {B['words']['inne i ord']['won']} ord och förlorar {B['words']['inne i ord']['lost']} inne i ord, men förlorar fler hela ord än de vinner ({B['words']['helt ord']['won']} mot {B['words']['helt ord']['lost']}), och de gör modellen säkrare på fler svar – {B['sure']['app3'][0]} i stället för {T['sure']['app'][0]} – med fler fel, {B['sure']['app3'][1]} mot {T['sure']['app'][1]}. Planen krävde vinst i båda slagen utan fler säkra fel. Den håller inte. Ingenting ändras i appen, och det står i loggen som ett negativt resultat, som variantkvoten förra veckan. Så slutar de flesta dagar med modellen: ett prov som visar var den inte blir bättre. Det är de dagarna som gör att siffrorna går att lita på.
 
 ## Vad vi inte gör
 
@@ -202,7 +208,7 @@ The figures come from tests where whole stones are held out. We hide runes in te
 
 And the calibration: of the answers the model gives at 95 per cent or more, {pc(V['sure_right'])} per cent are right. In a test on {C['n_inscriptions']} inscriptions the calibration error was under one percentage point, and for rare words, where models tend to boast, it said {pc(C['rare_mean_pc'])} per cent on average and was right {pc(C['rare_acc'])} per cent of the time. That is why the Rök reading is not a failure. A model that reads wrongly and knows it is useful. One that reads wrongly with confidence is dangerous.
 
-**11.52.** Step one done. With the app's own settings it came to {pc(T['accuracy']['inne i ord']['app'])} per cent inside words and {pc(T['accuracy']['helt ord']['app'])} per cent whole words: the same as the published figures. But the app is more cautious: {T['sure']['app'][0]} confident answers with {T['sure']['app'][1]} errors, against {T['sure']['tol02'][0]} with {T['sure']['tol02'][1]} in the simpler test. That was the day's most important news, and it was not exciting, which is as it should be. Step two – whether the model improves by judging candidates on sequences of three words – starts at once and is still running as this is written.
+**11.52.** Step one done. With the app's own settings it came to {pc(T['accuracy']['inne i ord']['app'])} per cent inside words and {pc(T['accuracy']['helt ord']['app'])} per cent whole words: the same as the published figures. But the app is more cautious: {T['sure']['app'][0]} confident answers with {T['sure']['app'][1]} errors, against {T['sure']['tol02'][0]} with {T['sure']['tol02'][1]} in the simpler test. That was the day's most important news, and it was not exciting, which is as it should be. Step two – whether the model improves by judging candidates on sequences of three words – starts at once.
 
 ## Compared with others
 
@@ -229,6 +235,8 @@ The sources are not equal, and the order matters:
 - **The lexica:** Zoëga's dictionary of Old Icelandic is free to use, and Lena Peterson's *Nordiskt runnamnslexikon* has since today been a table of {en_(PET)} entries. It is the lexicon that can teach the model to build names like Vífrøðr, which every interpreter of the Malt stone reads and which the model cannot spell.
 
 The risk is as clear as the gain. More words mean more candidates, and more candidates mean more false hits in short gaps. That is why the plan is locked before anything is counted: each source gets a weight of its own chosen on a single test, and the lexicon is approved only if the model wins more words than it loses without the confident errors growing. Then we read Malt and Rök again and count how many unknown sequences remain. That test decides whether the Malt stone comes a step closer, or not at all.
+
+**17.48.** Step two done, after six hours. The trigrams win {B['words']['inne i ord']['won']} words and lose {B['words']['inne i ord']['lost']} inside words, but lose more whole words than they win ({B['words']['helt ord']['won']} against {B['words']['helt ord']['lost']}), and they make the model confident about more answers – {B['sure']['app3'][0]} instead of {T['sure']['app'][0]} – with more errors, {B['sure']['app3'][1]} against {T['sure']['app'][1]}. The plan required gains in both kinds without more confident errors. It does not hold. Nothing changes in the app, and it goes in the log as a negative result, like the variant quota last week. That is how most days with the model end: a test that shows where it does not get better. Those are the days that make the figures trustworthy.
 
 ## What we will not do
 
