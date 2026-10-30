@@ -1,0 +1,62 @@
+30 slumpade poster: Sterns bildcell → våra kategorier (granska att kategorierna stämmer)
+
+1.A         U 855          | rider with spear              2.75 x 2.12 hunting cervine quadruped with bird; skiing archer; bird
+    → ryttare, fågel, fyrfotadjur, människa
+1.A         Sö 101         | Sigurðr scenes   4.70 wide, on rock wall, 0.70- 3.40 above ground
+    → sigurd
+1.A         Vg 32          | humanoid with belt
+    → människa
+1.B         U 901          | 3 humanoids,         2 fragments 1consecrating the others with cross; non-specific quadruped
+    → fyrfotadjur, människa, kors
+1.A         DR 285         | leonine quadruped
+    → fyrfotadjur
+1.A         DR Aud1996;274 | mask
+    → mask
+1.B         Sö 239         | )   rider               damaged
+    → ryttare
+1.A         N 61           | riders/hunters;          2.50 x 0.47 horse; bird
+    → ryttare, häst, fågel
+1.A         U 1071         | bird
+    → fågel
+1.B         U 78           | face                  damaged, image to                         of rest
+    → mask
+1.A         DR 290         | humanoid with       1.65 x 0.98 cross-staff
+    → människa
+1.B         Ög 196         | body of non-specific   lost damaged quadruped
+    → fyrfotadjur
+1.A         Sö 311-313     | nn 1 (S)   lupine quadruped     whole carving is 2.30 x 1.55 on rock wall, Sö 313 is 0.46 wide
+    → fyrfotadjur
+1.A         DR 280         | leonine quadruped
+    → fyrfotadjur
+1.A         Gs 9           | Sigurðr                      2.10 x 0.85 (was c. 0.18 wider)
+    → sigurd
+1.A tillägg DR 123         | 2 quadrupeds on        1.47 x 0.54 x back, at least one     0.47 with antlers
+    → fyrfotadjur
+1.A         Vg 124         | sword
+    → (ingen kategori)
+1.A         DR 335         | mask
+    → mask
+1.A         U 79           | non-specific        2.40 x 0.72 x quadruped           0.53
+    → fyrfotadjur
+1.A         Gs 19          | s        Sigurðr; other               was c. 2.30 x and the Kulturhistoriske Centralregister. MJy in this
+    → sigurd
+1.B         Sö 290         | )   bird?               damaged
+    → fågel
+1.A         Vg 150         | 
+    → (ingen kategori)
+1.A         DR 314         | 2 masks; 2 lupine   3.96 x 0.48 x quadrupeds
+    → mask, fyrfotadjur
+1.B         Sö Sb1965;19   | bird? on cross      damaged
+    → fågel, kors
+1.A         Ög MÖLM1960;230 | ship                     [??]
+    → skepp
+1.A         Sö 327         | e     Sigurðr scenes      2.50 x 1.65 on erratic block
+    → sigurd
+1.B         U 694          | ;    bird                   lost fragment A)
+    → fågel
+1.B         U 670          | face                   damaged
+    → mask
+1.C         DR 187         | leonine quadruped                         runestone
+    → fyrfotadjur
+1.B         U 1123         | 2 non-specific       damaged quadrupeds
+    → fyrfotadjur
