@@ -48,7 +48,7 @@ finns: tre av fyra namn som levde i medeltiden lever i dag, men många av dagens
 
 ## Förbehåll
 - Ordkodningen är en bedömning; källan står för varje ord. Maktens ord är få (9), och kungar och jarlar nämns nästan
-  aldrig på runstenarna (*konungr* på 4 stenar, *jarl* som titel på ingen), så de ord som prövas är de som användes där.
+  aldrig på runstenarna (*konungr* på 3 stenar, *jarl* som titel på 2: Håkon jarl, Sm 76 och U 617), så de ord som prövas är de som användes där.
 - Namnöversättningen med regler missar namn som ändrat form mer, och ger falska träffar som har rättats för hand
   (listan i `namn.py`). SCB räknar dagens bärare; ett namn kan ha dött och återupplivats.
 - N1 och kvinnonamnen: utslaget går åt motsatt håll mot planen och är därför ett fynd att pröva, inte bekräftat.
@@ -59,3 +59,22 @@ finns: tre av fyra namn som levde i medeltiden lever i dag, men många av dagens
   *góða* och *vi*.
 - SCB:s första hämtning (via tabellens kodlista) missade manliga namn; datan hämtades om med filter "all".
 - Känslighetsprovet med á→a och f→v lades till efter granskningen.
+- Rättelse 2026-10-30: `ord.py` sökte *jarl* men Rundata stavar *iarl*; mönstret är rättat (`\biarls?\b`). Ordet står
+  som titel på 2 stenar (U 498 <iarlR> är ett otolkat namn), under gränsen 3, så `ord.json` är oförändrad (kontrollerat).
+
+## Tillägg (beskrivande, inte i planen): maktens titlar och kartan
+Lagt till 2026-10-30 på Viktors begäran. Kod `politik.py` (räkning + belägg ur sv/en Wiktionary och sv Wikipedia,
+`politik_underlag.json`) och `politik_analys.py` (kodning med belägg, `politik_kodning.csv`; summor `politik.json`).
+
+- **Titlar och ämbetsord på svenska runstenar: 16.** Lever med samma innebörd 4 (*konungr*, *styrimaðr*, *skipari*,
+  *þingstaðr*); sjönk 1 (*drengr*); bara historisk term 6 (jarl, stallare, bryte, huskarl, hundare, drott); borta 5
+  (*þegn*, *landmaðr*, *hersir*?, *þingalið*, *liðs forungi*). *þegn* 21 stenar, 18 i Vg. Titlarna står oftast med en
+  herre i genitiv (Sm 42, Sm 76, U 335, Sö 335). *dróttinn* (5) gäller på alla stenarna Gud.
+- **Medeltidens maktord:** lån 9 (hertig 1285 < lty. hertoch, greve, marsk, fogde, riddare, kansler, riksdag ≈ Reichstag,
+  biskop, präst); nordiska 6 (frälse, härad, lagman, socken, ledung, adel – det sista starkt påverkat av lty. adel).
+  Läsning (ej räknad): kronans och kyrkans titlar lånades, bygdens institutioner behöll nordiska ord. jarl → hertig
+  (riksjarl = dux regni), stallare → marsk (1200-talet), hundare → härad (unionstiden), tingsrätt + lagman 1971.
+- **Områden:** 22 länder/platser på 91 stenar; samma namn 11 (44 stenar), bara historiskt 2 (4), bytt eller borta 9
+  (45): Svitjod → Sverige (folk → rike), Garðar, Holmgarðr, Grikkland (Bysans), Langbarðaland, Serkland, Jórsalir,
+  Saxland, Hedeby. Svitjod-stenarna (Sö 140, Sö Fv1948;289) står båda i Ludgo sn.
+- Förbehåll: beskrivande; kodningen är en bedömning med belägg per ord; många titlar på en enda sten.

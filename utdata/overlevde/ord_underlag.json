@@ -1,7 +1,7 @@
 {
  "counts": {
   "konungr": 3,
-  "jarl": 0,
+  "jarl": 2,
   "þegn": 21,
   "drengr": 53,
   "hersir": 0,
@@ -80,7 +80,7 @@
   {
    "domain": "makt",
    "lemma": "jarl",
-   "regex": "\\bjarl\\w*",
+   "regex": "\\biarls?\\b|\\bjarls?\\b",
    "modern": "jarl"
   },
   {

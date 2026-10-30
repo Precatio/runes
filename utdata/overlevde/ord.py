@@ -18,7 +18,7 @@ from src.research_gaps import is_runestone  # noqa: E402
 # domain, lemma, regex on the normalization (word forms), modern descendant(s) to look up ("" = none known)
 WORDS = [
     # makt och rang
-    ("makt", "konungr", r"\bkunung\w*", "kung|konung"), ("makt", "jarl", r"\bjarl\w*", "jarl"),
+    ("makt", "konungr", r"\bkunung\w*", "kung|konung"), ("makt", "jarl", r"\biarls?\b|\bjarls?\b", "jarl"),
     ("makt", "þegn", r"\bþegn\w*", ""), ("makt", "drengr", r"\bdræng\w*", "dräng"),
     ("makt", "hersir", r"\bhersi\w*", ""), ("makt", "goði", r"\bgoða\b|\bgoði\b", ""),
     ("makt", "landmaðr", r"\blandmann\w*|\blandmænn\w*", ""), ("makt", "húskarl", r"\bhuskarl\w*", "huskarl"),
