@@ -5,16 +5,16 @@ Plan: `analysplaner/2026-10-30-namnen-och-orden-som-overlevde.md` (låst, SHA-25
 SCB: tilltalsnamn med minst 10 bärare 31 december 2020 (BE0001TNamn10).
 
 ## Del A – Personnamnen
-391 namn förekommer på minst tre svenska vikingatida runstenar. **82 lever** i dag (minst 10 bärare): 21 % av namnen,
-37 % viktat efter hur vanliga de var på stenarna. Granskningen tog bort sex falska träffar (Dan, Elif, Hera, Kali, Uni,
+391 namn förekommer på minst tre svenska vikingatida runstenar. **85 lever** i dag (minst 10 bärare): 22 % av namnen,
+37 % viktat efter hur vanliga de var på stenarna (rättat 2026-10-30, se Avvikelser; förut 82, 21 %). Granskningen tog bort sex falska träffar (Dan, Elif, Hera, Kali, Uni,
 Ved – samma stavning, annat namn). Känslighetsprov (inte i planen, efter granskningen): med á→a och f→v (Ástríðr →
 Astrid, Tófa → Tova) och utan namnfragment lever 85 av 385 (22 %); fyra nya falska träffar togs bort där.
 
-- **N1 Kvinnorna – faller, och går åt andra hållet.** Kvinnonamn lever *oftare* än mansnamn: 33 % (20 av 61) mot 19 %
-  (62 av 330); ensidigt p 0,99 för planens riktning. Tvåsidigt p 0,017 (känslighetsprovet 36 % mot 21 %, p 0,007) –
+- **N1 Kvinnorna – faller, och går åt andra hållet.** Kvinnonamn lever *oftare* än mansnamn: 33 % (20 av 61) mot 20 %
+  (65 av 330); ensidigt p 0,99 för planens riktning. Tvåsidigt p 0,017 (känslighetsprovet 36 % mot 21 %, p 0,007) –
   ett resultat åt motsatt håll mot planen, inte prövat i förväg.
 - **N2 Gudarna – håller, åt andra hållet än makthypotesen väntade.** Namn med gudanamn eller *guð* som förled (Tor-, Ås-,
-  Frey-, Ingi-, Gud-) lever dubbelt så ofta som andra: 39 % (22 av 56) mot 18 % (60 av 335), p 0,0006, Holm 0,001
+  Frey-, Ingi-, Gud-) lever dubbelt så ofta som andra: 39 % (22 av 56) mot 19 % (63 av 335), p 0,0013, Holm 0,003
   (känslighetsprovet 45 % mot 20 %, p 0,00005). De hedniska namnen trängdes inte undan.
 - **N3 Makten – går inte att pröva.** Bara 6 namn bärs av någon som kallas *þegn*, *drengr* eller annan titel (gränsen
   var 15).
@@ -59,6 +59,11 @@ finns: tre av fyra namn som levde i medeltiden lever i dag, men många av dagens
   *góða* och *vi*.
 - SCB:s första hämtning (via tabellens kodlista) missade manliga namn; datan hämtades om med filter "all".
 - Känslighetsprovet med á→a och f→v lades till efter granskningen.
+- Rättelse 2026-10-30 (Viktors fråga om Helge): namnreglerna saknade fornnordiska svaga mansnamn *-i* → *-e*. Regeln
+  lades till för män (för kvinnor ger *-a* → *-e* mansnamn). Granskning av de nio nya träffarna: Kåre, Helge, Rune,
+  Froste godtas; Åse (kvinnonamn), Vide (nytt naturnamn), Manne, Tobbe (nutida smeknamn) och Sone (oklart) är falska.
+  85 av 391 lever (förut 82); N2 39 % mot 19 %, Holm 0,003 – håller; N1 33 mot 20 %; känslighetsprovet 88 av 385.
+  Den publicerade artikeln rättades samma dag (patch_overlevde_live.py) med en rättelserad.
 - Rättelse 2026-10-30: `ord.py` sökte *jarl* men Rundata stavar *iarl*; mönstret är rättat (`\biarls?\b`). Ordet står
   som titel på 2 stenar (U 498 <iarlR> är ett otolkat namn), under gränsen 3, så `ord.json` är oförändrad (kontrollerat).
 

@@ -25,20 +25,26 @@ sp = lambda n: f"{n:,}".replace(",", " ")  # noqa: E731  (Swedish thousands sepa
 en = lambda n: f"{n:,}"  # noqa: E731
 
 # ---- the locked numbers -----------------------------------------------------------------------------------------------
-assert (N["n_names"], N["alive"]) == (391, 82) and pc(N["share"]) == 21 and pc(N["bearer_weighted"]) == 37
+assert (N["n_names"], N["alive"]) == (391, 85) and pc(N["share"]) == 22 and pc(N["bearer_weighted"]) == 37
 TH, TO = N["N2"]["a"], N["N2"]["b"]
-assert (TH, TO) == ([22, 34], [60, 275]) and N["N2"]["holm"] < 0.002
+assert (TH, TO) == ([22, 34], [63, 272]) and N["N2"]["holm"] < 0.003
+HELGI = next(int(r["stones"]) for r in __import__("csv").DictReader(open(os.path.join(O, "namn.csv"), encoding="utf-8")) if r["name"] == "Helgi")
+assert HELGI == 14
+ONE_IN = int(1 / N["N2"]["p"]) // 100 * 100  # "i ungefär ett fall av sjuhundra"
+assert ONE_IN == 700
 WO, MA = N["N1"]["a"], N["N1"]["b"]
-assert (WO, MA) == ([20, 41], [62, 268])
+assert (WO, MA) == ([20, 41], [65, 265])
 CH = N["chain"]
-assert (CH["in_letters"], CH["in_letters_alive"], CH["not_in_letters"], CH["not_in_letters_alive"]) == (60, 44, 331, 38)
-assert (NX["n_names"], NX["alive"]) == (385, 85)
+assert (CH["in_letters"], CH["in_letters_alive"], CH["not_in_letters"], CH["not_in_letters_alive"]) == (60, 44, 331, 41)
+assert (NX["n_names"], NX["alive"]) == (385, 88)
+N_FALSE = len(NX["false_hits"])
+assert N_FALSE == 15
 assert W["W1"]["table"] == [[9, 8], [23, 4]] and W["W1"]["p"] < 0.025
 assert W["description_rank_only"]["table"][0] == [2, 7]
 BY = W["by_domain"]
 assert BY["makt"]["lever"] == ["konungr", "styrimaðr"] and BY["makt"]["ändrad"] == ["drengr"]
 assert set(BY["makt"]["borta"]) == {"þegn", "húskarl", "lið", "dróttinn", "félagi", "sveinn (följesman)"}
-K = {k: SCB[k] for k in ("Torsten", "Torbjörn", "Tore", "Tord", "Ingrid", "Ingvar", "Åsa", "Erik", "Björn", "Sven",
+K = {k: SCB[k] for k in ("Helge", "Rune", "Kåre", "Torsten", "Torbjörn", "Tore", "Tord", "Ingrid", "Ingvar", "Åsa", "Erik", "Björn", "Sven",
                          "Håkan", "Knut", "Harald", "Ulf", "Gunnar")}
 assert (K["Torsten"], K["Ulf"], K["Erik"], K["Ingrid"]) == (3540, 31585, 55968, 40300)
 pn = lambda a: pc(a[0] / sum(a))  # noqa: E731
@@ -197,14 +203,14 @@ Det är en av få saker som har överlevt från vikingatiden i vardagen: namnen.
 
 Runstenarna är fulla av namn: de som reste stenen, de döda, ibland ristaren. Vi tog alla personnamn som står på minst tre svenska runstenar – {N['n_names']} namn – och översatte dem till nutida form: Þorsteinn blir Torsten, Ásbjôrn Esbjörn, Sveinn Sven. Sedan jämförde vi med Statistiska centralbyråns lista över förnamn som minst tio svenskar bär.
 
-{N['alive']} av namnen lever i dag – {pc(N['share'])} procent. Räknar man efter hur vanliga de var på stenarna blir det {pc(N['bearer_weighted'])} procent, eftersom de vanligaste namnen oftare har överlevt. Ulf, som tog tre gälder i England, har {sp(K['Ulf'])} namnar i dag.
+{N['alive']} av namnen lever i dag – {pc(N['share'])} procent. Räknar man efter hur vanliga de var på stenarna blir det {pc(N['bearer_weighted'])} procent, eftersom de vanligaste namnen oftare har överlevt. Ulf, som tog tre gälder i England, har {sp(K['Ulf'])} namnar i dag. Helgi står på {HELGI} runstenar och heter i dag Helge ({sp(K['Helge'])} bärare); Rúni är Rune ({sp(K['Rune'])}) och Kári är Kåre ({sp(K['Kåre'])}).
 
 
 Kunganamnen klarade sig nästan alla: Erik ({sp(K['Erik'])} bärare), Björn ({sp(K['Björn'])}), Sven ({sp(K['Sven'])}), Håkan ({sp(K['Håkan'])}), Knut ({sp(K['Knut'])}) och Harald ({sp(K['Harald'])}). Men de flesta namnen dog. Önund, Ingefast, Freysten, Holmsten, Holmfast, Gudfast och Vebjörn stod på många runstenar och bärs av färre än tio svenskar i dag.
 
 ## Gudarna fick behålla namnen
 
-Om makthypotesen stämde borde namnen med en hednisk gud i ha försvunnit först. Det är tvärtom. Namn som börjar på Tor-, Ås-, Frey-, Ingi- eller Gud- lever i {pn(TH)} procent av fallen, övriga namn i {pn(TO)} procent. Skillnaden är så stor att den skulle uppstå av en slump i färre än ett fall av tusen.
+Om makthypotesen stämde borde namnen med en hednisk gud i ha försvunnit först. Det är tvärtom. Namn som börjar på Tor-, Ås-, Frey-, Ingi- eller Gud- lever i {pn(TH)} procent av fallen, övriga namn i {pn(TO)} procent. Skillnaden är så stor att den skulle uppstå av en slump i ungefär ett fall av sjuhundra.
 
 {chart('sv')}
 
@@ -272,8 +278,9 @@ Och Sverige självt. *Sveþiuð*, Svitjod, står på två runstenar, båda i Lud
 - **Det vi visar:** att vart femte namn på runstenarna lever i dag, att namnen med en gud i har klarat sig dubbelt så bra som andra, och att orden för makt har överlevt sämre än orden för vardag. Planen låstes innan vi räknade.
 - **Det vi tror:** att kristnandet och den nya kungamakten bytte ut maktens språk uppifrån – kronans och kyrkans titlar kom utifrån – men lät familjernas namnskick och bygdens institutioner vara.
 - **Det vi inte kan visa:** att kvinnonamnen klarade sig bättre – det gick åt andra hållet mot vad vi väntade, så det är en iakttagelse. Vi kan inte heller säga hur många namn som levt hela vägen och hur många som återupplivats.
-- **Svagheterna:** namnen är översatta till nutida form med regler, och tio träffar där ett modernt namn bara råkar se likadant ut – som Elif och Hera – är borttagna för hand. Ordens betydelse är vår bedömning, med Wiktionary som belägg. Maktens ord är få, och kungar och jarlar nämns nästan aldrig på runstenarna.
+- **Svagheterna:** namnen är översatta till nutida form med regler, och {N_FALSE} träffar där ett modernt namn bara råkar se likadant ut eller har ett annat ursprung – som Elif, Hera och Vide – är borttagna för hand. Ordens betydelse är vår bedömning, med Wiktionary som belägg. Maktens ord är få, och kungar och jarlar nämns nästan aldrig på runstenarna.
 - **Titlarna och kartan:** genomgången gjordes efter den låsta planen och prövar inget. Många titlar står på en enda sten, och vad varje ord har blivit bygger på Wiktionary och Wikipedia – kodningen ligger öppet med belägg för varje ord. Att lånorden gällde kronan och de nordiska orden bygden är vår läsning av den listan, inte en räkning.
+- **Rättat den 30 oktober 2026:** vår regel för att översätta namnen missade att fornnordiska mansnamn på *-i* slutar på *-e* i dag – Helgi är Helge, Rúni är Rune. Med den rättelsen lever {N['alive']} namn i stället för 82, {pc(N['share'])} i stället för 21 procent. Slutsatserna står sig.
 - **En rättelse under arbetet:** vår första sökning missade *jarl*, eftersom Rundata stavar ordet *iarl*. Det står på två stenar och når inte gränsen på tre, så ordtestet påverkas inte.
 :::
 
@@ -319,14 +326,14 @@ It is one of few things from the Viking Age that have survived in everyday life:
 
 The runestones are full of names: those who raised the stone, the dead, sometimes the carver. We took every personal name that stands on at least three Swedish runestones – {N['n_names']} names – and translated them into their present form: Þorsteinn becomes Torsten, Ásbjôrn Esbjörn, Sveinn Sven. Then we compared them with Statistics Sweden's list of first names that at least ten Swedes bear.
 
-{N['alive']} of the names live on today – {pc(N['share'])} per cent. Counting by how common they were on the stones, it is {pc(N['bearer_weighted'])} per cent, since the most common names survived more often. Ulfr, who took three payments in England, has {en(K['Ulf'])} namesakes today.
+{N['alive']} of the names live on today – {pc(N['share'])} per cent. Counting by how common they were on the stones, it is {pc(N['bearer_weighted'])} per cent, since the most common names survived more often. Ulfr, who took three payments in England, has {en(K['Ulf'])} namesakes today. Helgi stands on {HELGI} runestones and is Helge today ({en(K['Helge'])} bearers); Rúni is Rune ({en(K['Rune'])}) and Kári is Kåre ({en(K['Kåre'])}).
 
 
 The kings' names nearly all made it: Erik ({en(K['Erik'])} bearers), Björn ({en(K['Björn'])}), Sven ({en(K['Sven'])}), Håkan ({en(K['Håkan'])}), Knut ({en(K['Knut'])}) and Harald ({en(K['Harald'])}). But most of the names died. Ônundr, Ingifastr, Freysteinn, Holmsteinn, Holmfastr, Guðfastr and Vébjôrn stood on many runestones and are borne by fewer than ten Swedes today.
 
 ## The gods kept their names
 
-If the power hypothesis were right, the names with a pagan god in them ought to have vanished first. It is the other way round. Names beginning with Þór-, Ás-, Frey-, Ingi- or Guð- live on in {pn(TH)} per cent of cases, other names in {pn(TO)} per cent. The difference is so large that it would arise by chance in fewer than one case in a thousand.
+If the power hypothesis were right, the names with a pagan god in them ought to have vanished first. It is the other way round. Names beginning with Þór-, Ás-, Frey-, Ingi- or Guð- live on in {pn(TH)} per cent of cases, other names in {pn(TO)} per cent. The difference is so large that it would arise by chance in about one case in seven hundred.
 
 {chart('en')}
 
@@ -394,8 +401,9 @@ And Sweden itself. *Sveþiuð*, Svitjod, stands on two runestones, both in Ludgo
 - **What we show:** that one name in five on the runestones lives on today, that names with a god in them have fared twice as well as others, and that the words for power have survived less well than the words for everyday life. The plan was locked before we counted.
 - **What we believe:** that Christianisation and the new royal power replaced the language of power from the top – the titles of the crown and the church came from outside – but left the families' naming customs and the local institutions alone.
 - **What we cannot show:** that women's names fared better – it went the opposite way to what we expected, so it is an observation. Nor can we say how many names lived all the way and how many were revived.
-- **The weaknesses:** the names are translated into present form by rules, and ten hits where a modern name merely looks the same – like Elif and Hera – were removed by hand. The words' meaning is our judgement, with Wiktionary as evidence. The words of power are few, and kings and jarls are almost never named on the runestones.
+- **The weaknesses:** the names are translated into present form by rules, and {N_FALSE} hits where a modern name merely looks the same or has another origin – like Elif, Hera and Vide – were removed by hand. The words' meaning is our judgement, with Wiktionary as evidence. The words of power are few, and kings and jarls are almost never named on the runestones.
 - **The titles and the map:** the review was done after the locked plan and tests nothing. Many titles stand on a single stone, and what each word has become rests on Wiktionary and Wikipedia – the coding is open, with evidence for every word. That the loans concerned the crown and the Norse words the countryside is our reading of that list, not a count.
+- **Corrected on 30 October 2026:** our rule for translating the names missed that Old Norse men's names in *-i* end in *-e* today – Helgi is Helge, Rúni is Rune. With that correction {N['alive']} names live on instead of 82, {pc(N['share'])} instead of 21 per cent. The conclusions stand.
 - **A correction along the way:** our first search missed *jarl*, since Rundata spells the word *iarl*. It stands on two stones and does not reach the threshold of three, so the word test is unaffected.
 :::
 

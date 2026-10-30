@@ -1,8 +1,8 @@
 {
  "n_names": 385,
- "alive": 85,
- "share": 0.22077922077922077,
- "bearer_weighted": 0.37603993344425957,
+ "alive": 88,
+ "share": 0.22857142857142856,
+ "bearer_weighted": 0.3829728230726567,
  "false_hits": {
   "Danr": "Dan i dag är främst bibliskt (Daniel/Dan), inte runstenens Danr",
   "Eilífr": "Elif är ett turkiskt kvinnonamn",
@@ -10,11 +10,15 @@
   "Kali": "Kali i dag är ett indiskt eller finskt namn",
   "Uni": "Uni i dag är ett utländskt kort namn, inte runstenens Uni",
   "Veðr": "Ved i dag är inte runstenens Veðr",
+  "Ási": "Åse bärs i dag bara av kvinnor (det norska kvinnonamnet), inte runstenens mansnamn Ási",
+  "Viði": "Vide är ett nytt naturnamn (89 bärare 1999, 1 665 år 2020), inte runstenens Viði",
+  "Manni": "Manne är i dag en kortform av Emanuel eller Herman",
+  "Tobbi": "Tobbe är i dag ett smeknamn för Tobias eller Torbjörn",
+  "Soni": "Sone har oklart ursprung i dag",
   "Áli": "Ali i dag är det arabiska namnet, inte runstenens Áli",
   "Káti": "Kati i dag är ett finskt kvinnonamn",
   "Sylfa": "Sylva är latinets Silvia",
-  "Óleifr": "Olev är estniskt; Óleifr bör motsvara Olof, som regeln inte når",
-  "Kári": "Kari i dag är finskt eller norskt och tvetydigt (Kåre vore ättlingen)"
+  "Óleifr": "Olev är estniskt; Óleifr bör motsvara Olof, som regeln inte når"
  },
  "N1": {
   "a": [
@@ -22,14 +26,14 @@
    39
   ],
   "b": [
-   63,
-   261
+   66,
+   258
   ],
   "share_a": 0.36065573770491804,
-  "share_b": 0.19444444444444445,
-  "or": 2.336996336996337,
-  "p": 0.9982016181949706,
-  "holm": 0.9982016181949706
+  "share_b": 0.2037037037037037,
+  "or": 2.2051282051282053,
+  "p": 0.9968964383424004,
+  "holm": 0.9968964383424004
  },
  "N2": {
   "a": [
@@ -37,14 +41,14 @@
    29
   ],
   "b": [
-   61,
-   271
+   64,
+   268
   ],
   "share_a": 0.4528301886792453,
-  "share_b": 0.18373493975903615,
-  "or": 3.676653476540418,
-  "p": 5.031498572679152e-05,
-  "holm": 0.00010062997145358304
+  "share_b": 0.1927710843373494,
+  "or": 3.4655172413793105,
+  "p": 8.395333467164294e-05,
+  "holm": 0.00016790666934328588
  },
  "N3": {
   "too_few": 6,
@@ -104,12 +108,12 @@
    "alive": 1
   }
  ],
- "without_christian_share": 0.21671018276762402,
+ "without_christian_share": 0.2245430809399478,
  "chain": {
   "in_letters": 60,
   "in_letters_alive": 44,
   "not_in_letters": 325,
-  "not_in_letters_alive": 41
+  "not_in_letters_alive": 44
  },
  "top_alive": [
   {

@@ -1,15 +1,20 @@
 {
  "n_names": 391,
- "alive": 82,
- "share": 0.20971867007672634,
- "bearer_weighted": 0.36771177117711773,
+ "alive": 85,
+ "share": 0.21739130434782608,
+ "bearer_weighted": 0.37458745874587457,
  "false_hits": {
   "Danr": "Dan i dag är främst bibliskt (Daniel/Dan), inte runstenens Danr",
   "Eilífr": "Elif är ett turkiskt kvinnonamn",
   "Hæra": "Hera är den grekiska gudinnan",
   "Kali": "Kali i dag är ett indiskt eller finskt namn",
   "Uni": "Uni i dag är ett utländskt kort namn, inte runstenens Uni",
-  "Veðr": "Ved i dag är inte runstenens Veðr"
+  "Veðr": "Ved i dag är inte runstenens Veðr",
+  "Ási": "Åse bärs i dag bara av kvinnor (det norska kvinnonamnet), inte runstenens mansnamn Ási",
+  "Viði": "Vide är ett nytt naturnamn (89 bärare 1999, 1 665 år 2020), inte runstenens Viði",
+  "Manni": "Manne är i dag en kortform av Emanuel eller Herman",
+  "Tobbi": "Tobbe är i dag ett smeknamn för Tobias eller Torbjörn",
+  "Soni": "Sone har oklart ursprung i dag"
  },
  "N1": {
   "a": [
@@ -17,14 +22,14 @@
    41
   ],
   "b": [
-   62,
-   268
+   65,
+   265
   ],
   "share_a": 0.32786885245901637,
-  "share_b": 0.18787878787878787,
-  "or": 2.108575924468922,
-  "p": 0.9944035551146347,
-  "holm": 0.9944035551146347
+  "share_b": 0.19696969696969696,
+  "or": 1.9887429643527204,
+  "p": 0.990929412641724,
+  "holm": 0.990929412641724
  },
  "N2": {
   "a": [
@@ -32,14 +37,14 @@
    34
   ],
   "b": [
-   60,
-   275
+   63,
+   272
   ],
   "share_a": 0.39285714285714285,
-  "share_b": 0.1791044776119403,
-  "or": 2.965686274509804,
-  "p": 0.0006336336930866871,
-  "holm": 0.0012672673861733742
+  "share_b": 0.1880597014925373,
+  "or": 2.7936507936507935,
+  "p": 0.0013439784228108688,
+  "holm": 0.0026879568456217376
  },
  "N3": {
   "too_few": 6,
@@ -99,12 +104,12 @@
    "alive": 1
   }
  ],
- "without_christian_share": 0.20565552699228792,
+ "without_christian_share": 0.2133676092544987,
  "chain": {
   "in_letters": 60,
   "in_letters_alive": 44,
   "not_in_letters": 331,
-  "not_in_letters_alive": 38
+  "not_in_letters_alive": 41
  },
  "top_alive": [
   {

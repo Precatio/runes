@@ -87,9 +87,14 @@ def _translit(n, a_long="å"):
     return re.sub(r"nn$", "n", t)
 
 
-def rules(n):
+def rules(n, sex="?"):
     t = _translit(n)
     out = {t}
+    # Old Norse weak masculines end in -i where Swedish has -e (Helgi → Helge, Áki → Åke, Kári → Kåre). Added
+    # 2026-10-30 after Viktor asked about Helge; not in the locked plan (resultat.md, Avvikelser). Men only: for women
+    # -a → -e gives men's names (Helga → Helge, Þóra → Tore).
+    if sex == "m" and t.endswith("i"):
+        out.add(t[:-1] + "e")
     for a, b in (("ä", "e"), ("å", "o"), ("o", "å")):
         out |= {x.replace(a, b) for x in list(out)}
     if EXTRA:  # á as a (Ástríðr → Astrid) and f as v (Tófa → Tova), on the name itself, not chained
@@ -114,17 +119,26 @@ FALSE = {"Danr": "Dan i dag är främst bibliskt (Daniel/Dan), inte runstenens D
          "Kali": "Kali i dag är ett indiskt eller finskt namn",
          "Uni": "Uni i dag är ett utländskt kort namn, inte runstenens Uni",
          "Veðr": "Ved i dag är inte runstenens Veðr",
+         # from the -i → -e rule (2026-10-30): forms whose modern use has another origin
+         "Ási": "Åse bärs i dag bara av kvinnor (det norska kvinnonamnet), inte runstenens mansnamn Ási",
+         "Viði": "Vide är ett nytt naturnamn (89 bärare 1999, 1 665 år 2020), inte runstenens Viði",
+         "Manni": "Manne är i dag en kortform av Emanuel eller Herman",
+         "Tobbi": "Tobbe är i dag ett smeknamn för Tobias eller Torbjörn",
+         "Soni": "Sone har oklart ursprung i dag",
          **({"Áli": "Ali i dag är det arabiska namnet, inte runstenens Áli",
              "Káti": "Kati i dag är ett finskt kvinnonamn", "Sylfa": "Sylva är latinets Silvia",
              "Óleifr": "Olev är estniskt; Óleifr bör motsvara Olof, som regeln inte når",
-             "Kári": "Kari i dag är finskt eller norskt och tvetydigt (Kåre vore ättlingen)"} if EXTRA else {})}
+             } if EXTRA else {})}
+# False modern forms of a name that otherwise has a true descendant: only that form is left out
+FALSE_FORMS = {("Kári", "Kari"): "Kari i dag är finskt eller norskt och tvetydigt; Kåre är ättlingen"}
 CHRISTIAN = {"Jóhan", "Jón", "Kristr", "Pétr", "Andreas", "Nikulás"}  # Christian names already on the runestones
 
 rows, matches = [], []
 for n, k in sorted(names.items(), key=lambda x: -x[1]):
     sx = sex_of(n)
-    cands = sorted(by_key.get(fold(n), set()) | rules(n))
-    hits = {} if n in FALSE else {c: alive_any[c] for c in cands if alive_any[c] >= MIN_BEARERS}
+    cands = sorted(by_key.get(fold(n), set()) | rules(n, sx))
+    hits = {} if n in FALSE else {c: alive_any[c] for c in cands
+                                  if alive_any[c] >= MIN_BEARERS and (n, c) not in FALSE_FORMS}
     best = max(hits, key=hits.get) if hits else ""
     rows.append({"name": n, "stones": k, "sex": sx, "theophoric": int(bool(THEO.match(n))), "royal": int(n in ROYAL),
                  "titled": int(titled[n]), "in_medieval_lexicon": int(bool(by_key.get(fold(n)))),
