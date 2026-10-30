@@ -1,0 +1,72 @@
+{
+ "husaby_satti": {
+  "group": 5,
+  "n_group": 6,
+  "local": 7,
+  "n_local": 52,
+  "p": 0.0009229319231716249,
+  "stones": [
+   "Vg 37",
+   "Vg 39",
+   "Vg 45",
+   "Vg 51",
+   "Vg 56"
+  ]
+ },
+ "texts": {
+  "2": {
+   "Ög 13": "\"Sigstæinn ræisti stæin þennsa æftiR \"<i-ui>, faður sinn.",
+   "Ög 14": "\"Hroarr ræisti stæin þannsi æftiR \"Iarna, sun sinn.",
+   "Ög 20": "\"HolmgæiRR ok \"Brandi þæiR ræisþu stæin þenna æftiR \"Kiulak, faður sinn.",
+   "Ög 25": "\"StyðingR/\"StøðingR ræisti stæin þannsa æftiR \"Iarli, broður sinn.",
+   "Ög 34": "\"Hlifundr ræisþi stæin þenna æftiR \"Unn, broður sinn.",
+   "Ög 46": "\"Vibiorn ræisti stæin þennsa æftiR \"Sylfu/\"Solfu, broður sinn.",
+   "Ög 47": "\"Þorfriða ræisti stæin þennsi æftiR \"Æskel/\"Isikil, faður sinn, ok \"Asbiorn, broður sinn.",
+   "Ög 105": "\"Þorstæinn ræisti stæin æftiR \"Viseta, faður sinn, bonda nytan, eR vaR hann sunn \"Gisa.",
+   "Ög 112": "\"Olof ræisþi stæin þennsi æftiR \"Hofi/\"Høfi/\"Hyfi, bonda sinn goðan.",
+   "Ög 128": "\"Sandøy let ræisa stæin þennsa æftiR \"Fasta, bonda sinn, ok brøðr sina tva \"Guðmund ok \"Sigbiorn.",
+   "Ög 148": "\"Hælga ræisti stæin þannsi æftiR \"Asmund, sun sinn.",
+   "Ög 149": "\"[Ha]kon(?) ok \"Sigstæinn ræisþu æftiR \"Hrolf, faður sinn, [s]tæin þannsi.",
+   "Ög 153": "\"HrøRikR ræisþi stæin þennsa æftiR \"Froða ok \"Asbiorn, sunu sina.",
+   "Ög 155": "\"Þorfriðr/\"Þorfreðr ræisti æftiR \"Asgaut ok \"Gauta, sunu sina, stæin þannsi. Hann \"Gauti ændaðis i \"Ingvars hælfningi.",
+   "Ög 158": "\"Svarthaufði ræisti stæin þessa æftiR \"Vigdiarf, faður s[inn].",
+   "Ög 170": "\"Hallstæinn ræisti stæin þannsi yfiR faður sinn \"Sini(?).",
+   "Ög 172": "\"Gautr ok \"FastulfR ok \"Biorn ok \"Roðstæinn þæiR ræistu stæin þenna æ[f]tiR \"Stybbi, faður sinn goðan.",
+   "Ög 176": "\"Skarði ræisþi stæin þannsi æftiR \"Guðmund, faður sinn.",
+   "Ög 192": "\"Þora let ræisa stæin þenna æftiR \"Hælga, bonda sinn.",
+   "Ög 219": "\"Øygautr/\"Auðgautr ræisþi stæin þannsi æftiR \"Sigfus, mag sinn.",
+   "Ög 221": "\"Øyndr ræisti stæin þannsi æftiR \"Danska, faður sinn, bonda goðan.",
+   "Ög 225": "\"Þrondr ræisti stæin þennsa æftiR \"Þorstæin, faður sinn.",
+   "Ög 230": "\"ÞolfR ræisti stæin þennsa æftiR \"Kætil, sun sinn.",
+   "Ög 232": "\"Aguti ok \"UlfR þæiR letu ræisa stæin þennsa æftiR \"Bergvið, faður sinn.",
+   "Ög 233": "\"Vibiorn ræisti stæin þennsa æftiR \"ÞorgæiR, broður sinn.",
+   "Ög 236": "\"OfagR ræisþi stæin þennsa æftiR \"Øystæin, sun sinn.",
+   "Ög 237": "\"Þorstæinn ok \"Sunviðr(?) þæiR ræistu stæin þenna æf[tiR \"Ka]rl(?), broður sinn.",
+   "Ög Fv1966;102": "\"Gunnhvatr ræisþi stæin þannsi æftiR \"Þorstæin ok \"Þorlak, syni sina."
+  },
+  "5": {
+   "Sm 69": "\"GæiRbiorn satti stæin þenna æftiR \"Svæin(?)/\"Svæll(?), broður sinn.",
+   "Sm 76": "\"Tofa ræisti stæin þenna æftiR \"Vraa, faður sinn, stallara \"HakonaR iarls.",
+   "Sm 77": "\"Vrai satti stæin þannsi æftiR \"Gunna, broður sinn. Hann vaR dauðr a \"Ænglandi.",
+   "Sm 78": "\"OlafR satti stæin þannsi æftiR \"Sibba, sun sinn.",
+   "Sm 80": "\"Viseti ok \"Ivarr/\"Ioarr ok \"Sylfa, brøðr þriR, gærðu bro þessi ok sattu stæin þenna æftiR \"Þialfa, faður sinn.",
+   "Sm 85": "\"<ku-k-R> ok þæiR brøðr ræistu s[tæin þa]nnsi æftiR \"Martin(?) sinn faður, sun \"Þorstæins(?).",
+   "Sm 89": "\"Boi satti stæin þenna æftiR \"Þorgaut, broður.",
+   "Sm 98": "... satti stæin þannsi æftiR \"Tota/\"Dota, sun ..., broður \"Gauts/\"Gauss.",
+   "Sm 99": "\"Þorðr ok \"Þorbiorn gærðu bro þessi æftiR \"Værskulf, faður sinn.",
+   "Sm 101": "\"Gunnkell satti stæin þannsi æftiR \"Gunnar, faður sinn, sun \"Hroða. \"Hælgi lagði hann i stæinþro, broður sinn, a \"Ænglandi i \"Baðum.",
+   "Sm 105": "\"Hælga satti stæin þenna at \"Øymund broður.",
+   "Sm 110": "\"Arinmundr satti stæin þannsi æftiR \"Hæru, faður s[inn] o[k] brøðr sina \"Þorbiorn ok \"Nefa.",
+   "Sm 111": "\"Vigautr ræisti stæin þannsi æftiR \"GæiRfast, broður sinn. \"Agau[tr](?) hio[gg](?).",
+   "Sm 134": "\"Guðfastr ræisti stæin þenna æftiR \"Gunnar, faður sinn."
+  },
+  "13": {
+   "Vg 37": "\"AuðgrimR(?) satti stæin þannsi æftiR \"Æskel, sun ...",
+   "Vg 39": "\"Þrasi satti stæin þannsi æftiR \"Halfdan, sun sinn.",
+   "Vg 45": "\"<hragli> ok \"Algisl sattu stæin þennsi æftiR \"Serla, faður sinn.",
+   "Vg 51": "\"OlafR satti stæin þannsi æftiR \"Hræiðar, sun sinn.",
+   "Vg 56": "\"Styr[l]akR/\"Styr[l]augr satti stæin þannsi æftiR \"<kaur>, faður sinn.",
+   "Vg 77": "\"Auga ræisti stæin þannsi æftiR \"Asbiorn, sun sinn."
+  }
+ }
+}
