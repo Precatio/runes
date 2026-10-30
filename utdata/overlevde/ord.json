@@ -1,0 +1,119 @@
+{
+ "n_words": 44,
+ "excluded": {
+  "goði": "Rundatas normalisering skiljer inte goða (gode) från góða (god)",
+  "vé": "ve/vi i normaliseringen är tvetydiga"
+ },
+ "W1": {
+  "table": [
+   [
+    9,
+    8
+   ],
+   [
+    23,
+    4
+   ]
+  ],
+  "share_power": 0.5294117647058824,
+  "share_other": 0.8518518518518519,
+  "or": 0.1956521739130435,
+  "p": 0.02394013732342537
+ },
+ "description_rank_only": {
+  "table": [
+   [
+    2,
+    7
+   ],
+   [
+    23,
+    4
+   ]
+  ],
+  "share": 0.2222222222222222,
+  "or": 0.049689440993788817,
+  "p": 0.0010959890073938359
+ },
+ "by_domain": {
+  "makt": {
+   "lever": [
+    "konungr",
+    "styrimaðr"
+   ],
+   "ändrad": [
+    "drengr"
+   ],
+   "borta": [
+    "þegn",
+    "húskarl",
+    "lið",
+    "dróttinn",
+    "félagi",
+    "sveinn (följesman)"
+   ]
+  },
+  "lag": {
+   "lever": [
+    "þing",
+    "arfr"
+   ],
+   "ändrad": [],
+   "borta": []
+  },
+  "kult": {
+   "lever": [
+    "Guð",
+    "Kristr",
+    "sál",
+    "and (ônd)",
+    "heilagr"
+   ],
+   "ändrad": [
+    "Þórr"
+   ],
+   "borta": []
+  },
+  "släkt": {
+   "lever": [
+    "faðir",
+    "móðir",
+    "bróðir",
+    "systir",
+    "sonr",
+    "dóttir",
+    "mágr",
+    "frændi"
+   ],
+   "ändrad": [
+    "kona",
+    "bóndi (make)",
+    "fóstri"
+   ],
+   "borta": []
+  },
+  "vardag": {
+   "lever": [
+    "steinn",
+    "brú",
+    "vegr",
+    "land",
+    "skip",
+    "bý",
+    "haugr",
+    "eyja",
+    "dauðr",
+    "deyja",
+    "fara",
+    "ráða",
+    "rísta",
+    "hôggva",
+    "góðr"
+   ],
+   "ändrad": [
+    "kuml"
+   ],
+   "borta": []
+  }
+ }
+}

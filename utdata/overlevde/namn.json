@@ -1,0 +1,388 @@
+{
+ "n_names": 391,
+ "alive": 82,
+ "share": 0.20971867007672634,
+ "bearer_weighted": 0.36771177117711773,
+ "false_hits": {
+  "Danr": "Dan i dag är främst bibliskt (Daniel/Dan), inte runstenens Danr",
+  "Eilífr": "Elif är ett turkiskt kvinnonamn",
+  "Hæra": "Hera är den grekiska gudinnan",
+  "Kali": "Kali i dag är ett indiskt eller finskt namn",
+  "Uni": "Uni i dag är ett utländskt kort namn, inte runstenens Uni",
+  "Veðr": "Ved i dag är inte runstenens Veðr"
+ },
+ "N1": {
+  "a": [
+   20,
+   41
+  ],
+  "b": [
+   62,
+   268
+  ],
+  "share_a": 0.32786885245901637,
+  "share_b": 0.18787878787878787,
+  "or": 2.108575924468922,
+  "p": 0.9944035551146347,
+  "holm": 0.9944035551146347
+ },
+ "N2": {
+  "a": [
+   22,
+   34
+  ],
+  "b": [
+   60,
+   275
+  ],
+  "share_a": 0.39285714285714285,
+  "share_b": 0.1791044776119403,
+  "or": 2.965686274509804,
+  "p": 0.0006336336930866871,
+  "holm": 0.0012672673861733742
+ },
+ "N3": {
+  "too_few": 6,
+  "names": [
+   "Karl",
+   "Guðlaug",
+   "Ingimundr",
+   "Haursi",
+   "Haukr",
+   "Veðr"
+  ]
+ },
+ "royal": [
+  {
+   "name": "Sveinn",
+   "modern": "Sven",
+   "bearers": 31115
+  },
+  {
+   "name": "Bjôrn",
+   "modern": "Björn",
+   "bearers": 34656
+  },
+  {
+   "name": "Hákon",
+   "modern": "Håkan",
+   "bearers": 25508
+  },
+  {
+   "name": "Knútr",
+   "modern": "Knut",
+   "bearers": 4473
+  },
+  {
+   "name": "Haraldr",
+   "modern": "Harald",
+   "bearers": 2647
+  },
+  {
+   "name": "Eiríkr",
+   "modern": "Erik",
+   "bearers": 55968
+  },
+  {
+   "name": "Steinkell",
+   "modern": "",
+   "bearers": 0
+  }
+ ],
+ "christian": [
+  {
+   "name": "Jóhan",
+   "alive": 1
+  },
+  {
+   "name": "Jón",
+   "alive": 1
+  }
+ ],
+ "without_christian_share": 0.20565552699228792,
+ "chain": {
+  "in_letters": 60,
+  "in_letters_alive": 44,
+  "not_in_letters": 331,
+  "not_in_letters_alive": 38
+ },
+ "top_alive": [
+  {
+   "name": "Sveinn",
+   "modern": "Sven",
+   "stones": 122,
+   "bearers": 31115
+  },
+  {
+   "name": "Bjôrn",
+   "modern": "Björn",
+   "stones": 103,
+   "bearers": 34656
+  },
+  {
+   "name": "Þorsteinn",
+   "modern": "Torsten",
+   "stones": 73,
+   "bearers": 3540
+  },
+  {
+   "name": "Ulfr",
+   "modern": "Ulf",
+   "stones": 69,
+   "bearers": 31585
+  },
+  {
+   "name": "Þorbjôrn",
+   "modern": "Torbjörn",
+   "stones": 52,
+   "bearers": 11220
+  },
+  {
+   "name": "Gunnarr",
+   "modern": "Gunnar",
+   "stones": 49,
+   "bearers": 14850
+  },
+  {
+   "name": "Eysteinn",
+   "modern": "Östen",
+   "stones": 46,
+   "bearers": 805
+  },
+  {
+   "name": "Þórir",
+   "modern": "Tore",
+   "stones": 44,
+   "bearers": 5029
+  },
+  {
+   "name": "Ásbjôrn",
+   "modern": "Esbjörn",
+   "stones": 36,
+   "bearers": 494
+  },
+  {
+   "name": "Ketill",
+   "modern": "Kettil",
+   "stones": 32,
+   "bearers": 38
+  },
+  {
+   "name": "Ásmundr",
+   "modern": "Åsmund",
+   "stones": 30,
+   "bearers": 11
+  },
+  {
+   "name": "Karl",
+   "modern": "Karl",
+   "stones": 27,
+   "bearers": 36689
+  },
+  {
+   "name": "Þorkell",
+   "modern": "Torkel",
+   "stones": 26,
+   "bearers": 409
+  },
+  {
+   "name": "Hákon",
+   "modern": "Håkan",
+   "stones": 21,
+   "bearers": 25508
+  },
+  {
+   "name": "Sigsteinn",
+   "modern": "Sigsten",
+   "stones": 20,
+   "bearers": 30
+  },
+  {
+   "name": "Guðmundr",
+   "modern": "Gudmund",
+   "stones": 20,
+   "bearers": 67
+  },
+  {
+   "name": "Gunni",
+   "modern": "Gunni",
+   "stones": 20,
+   "bearers": 506
+  },
+  {
+   "name": "Þórðr",
+   "modern": "Tord",
+   "stones": 20,
+   "bearers": 4809
+  },
+  {
+   "name": "Holmgeirr",
+   "modern": "Holger",
+   "stones": 19,
+   "bearers": 1829
+  },
+  {
+   "name": "Þóra",
+   "modern": "Tora",
+   "stones": 19,
+   "bearers": 1352
+  },
+  {
+   "name": "Inga",
+   "modern": "Inga",
+   "stones": 19,
+   "bearers": 10351
+  },
+  {
+   "name": "Áskell",
+   "modern": "Eskil",
+   "stones": 18,
+   "bearers": 1884
+  },
+  {
+   "name": "Víkingr",
+   "modern": "Viking",
+   "stones": 17,
+   "bearers": 568
+  },
+  {
+   "name": "Tosti",
+   "modern": "Toste",
+   "stones": 17,
+   "bearers": 48
+  },
+  {
+   "name": "Steinn",
+   "modern": "Sten",
+   "stones": 16,
+   "bearers": 9048
+  }
+ ],
+ "top_dead": [
+  {
+   "name": "Ônundr",
+   "stones": 56,
+   "sex": "m"
+  },
+  {
+   "name": "Œpir",
+   "stones": 49,
+   "sex": "m"
+  },
+  {
+   "name": "Halfdan",
+   "stones": 44,
+   "sex": "m"
+  },
+  {
+   "name": "Ingifastr",
+   "stones": 28,
+   "sex": "m"
+  },
+  {
+   "name": "Ôzurr",
+   "stones": 27,
+   "sex": "m"
+  },
+  {
+   "name": "Freysteinn",
+   "stones": 26,
+   "sex": "m"
+  },
+  {
+   "name": "Holmsteinn",
+   "stones": 26,
+   "sex": "m"
+  },
+  {
+   "name": "Ófeigr",
+   "stones": 26,
+   "sex": "m"
+  },
+  {
+   "name": "Óleifr",
+   "stones": 26,
+   "sex": "m"
+  },
+  {
+   "name": "Ingjaldr",
+   "stones": 24,
+   "sex": "m"
+  },
+  {
+   "name": "Ásgautr",
+   "stones": 22,
+   "sex": "m"
+  },
+  {
+   "name": "Jôrundr",
+   "stones": 22,
+   "sex": "m"
+  },
+  {
+   "name": "Balli",
+   "stones": 22,
+   "sex": "m"
+  },
+  {
+   "name": "Holmfastr",
+   "stones": 22,
+   "sex": "m"
+  },
+  {
+   "name": "Sibbi",
+   "stones": 21,
+   "sex": "m"
+  },
+  {
+   "name": "Holmfríðr",
+   "stones": 21,
+   "sex": "k"
+  },
+  {
+   "name": "Vébjôrn",
+   "stones": 20,
+   "sex": "m"
+  },
+  {
+   "name": "Guðfastr",
+   "stones": 19,
+   "sex": "m"
+  },
+  {
+   "name": "Ígull",
+   "stones": 19,
+   "sex": "m"
+  },
+  {
+   "name": "Þegn",
+   "stones": 18,
+   "sex": "m"
+  },
+  {
+   "name": "Guðlaug",
+   "stones": 18,
+   "sex": "k"
+  },
+  {
+   "name": "Tóki",
+   "stones": 18,
+   "sex": "m"
+  },
+  {
+   "name": "Gísl",
+   "stones": 18,
+   "sex": "m"
+  },
+  {
+   "name": "Sigfastr",
+   "stones": 18,
+   "sex": "m"
+  },
+  {
+   "name": "Gillaug",
+   "stones": 18,
+   "sex": "k"
+  }
+ ]
+}

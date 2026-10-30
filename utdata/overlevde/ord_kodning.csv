@@ -1,0 +1,45 @@
+domain,lemma,stones,code,modern,basis
+makt,konungr,3,lever,kung,manligt statsöverhuvud i en monarki
+makt,þegn,21,borta,,ingen svensk ättling (jfr eng. thane)
+makt,drengr,53,ändrad,dräng,från hedersord för duglig ung man till 'manlig medhjälpare i jordbruket'; även nedsättande
+makt,húskarl,3,borta,huskarl,"bara som historisk term, inget uppslag i Wiktionary"
+makt,styrimaðr,3,lever,styrman,person som styr ett fartyg
+makt,lið,11,borta,,"'lid' (följe, här) är försvunnet; 'led' är ett annat ord"
+makt,dróttinn,5,borta,drott,"taggat historia: 'hövding, furste' – men avledningen drottning lever"
+makt,félagi,5,borta,,ingen svensk ättling (jfr eng. fellow)
+makt,sveinn (följesman),4,borta,sven,taggat historia/ålderdomligt
+lag,þing,5,lever,ting,"juridik: sammankomst för gemensamma angelägenheter, beslutsmöte (tingsrätt)"
+lag,arfr,8,lever,arv,något som ärvs
+kult,Guð,371,lever,Gud,den ende guden
+kult,Kristr,12,lever,Krist,Jesus Krist (inget eget uppslag i Wiktionary; jfr Kristus)
+kult,sál,82,lever,själ,människans inre odödliga väsen
+kult,and (ônd),163,lever,ande,immateriell substans; övernaturligt väsen
+kult,heilagr,5,lever,helig,"av religiös betydelse, vördad"
+kult,Þórr,3,ändrad,Tor,"lever som gud i mytologin och som namn, inte i kult"
+släkt,faðir,636,lever,fader/far,manlig förälder
+släkt,móðir,32,lever,moder/mor,kvinnlig förälder
+släkt,bróðir,323,lever,broder/bror,manligt syskon
+släkt,systir,12,lever,syster,kvinnligt syskon
+släkt,sonr,370,lever,son,manlig avkomma
+släkt,dóttir,18,lever,dotter,kvinnlig avkomma
+släkt,kona,9,ändrad,kona,taggat ålderdomligt
+släkt,bóndi (make),153,ändrad,bonde,"betyder i dag lantbrukare, inte make"
+släkt,fóstri,3,ändrad,foster-,"lever bara i sammansättningar (fosterbarn, fosterfar)"
+släkt,mágr,23,lever,måg,ens barns make
+släkt,frændi,14,lever,frände,(manlig) släkting
+vardag,steinn,1184,lever,sten,
+vardag,brú,117,lever,bro,
+vardag,vegr,5,lever,väg,
+vardag,land,6,lever,land,
+vardag,skip,3,lever,skepp,
+vardag,kuml,65,ändrad,kummel,minnesmärke → stenhög som sjömärke
+vardag,bý,6,lever,by,
+vardag,haugr,3,lever,hög,
+vardag,eyja,4,lever,ö,
+vardag,dauðr,55,lever,död,
+vardag,deyja,19,lever,dö,
+vardag,fara,11,lever,fara,resa; något ålderdomligt men i bruk
+vardag,ráða,7,lever,råda,
+vardag,rísta,140,lever,rista,
+vardag,hôggva,68,lever,hugga,
+vardag,góðr,161,lever,god,
