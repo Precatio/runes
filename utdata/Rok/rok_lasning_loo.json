@@ -1,0 +1,2046 @@
+{
+ "signum": "Ög 136",
+ "version": "textmodel-19",
+ "validation": {
+  "inside_word": 0.764,
+  "whole_word": 0.592,
+  "sure_right": 0.954,
+  "rundata_sure": 0.996,
+  "with_traces": 0.842,
+  "with_misread_traces": 0.769,
+  "dating_epoch": 0.585,
+  "dating_near": 0.948,
+  "documented_right": 0.698,
+  "documented_sure": 0.987
+ },
+ "model": "loo",
+ "available": true,
+ "computed_at": "2026-10-30T10:32:50.450192+00:00",
+ "calibrated": true,
+ "gap_calibrated": true,
+ "groups": [
+  "aftuamuþstontarunaRþaR",
+  "inuarinfaþifaþiRaftfaikionsunusakummukminiþathuariaRualraubaRuaRintuaRþaRsuaþtualfsinumuaRinnumnaRtualraububaþaRsomonoumisummonum",
+  "þatsakumonarthuaRfurniualtumonurþifiarumiRhraiþkutumauktumiRonubsakaRraiþþiaurikRhinþurmuþistiliRflutnastrontuhraiþmaraRsitiRnukaruRo",
+  "kutasinumskialtiubfatlaþRskatimarika",
+  "þatsakumtualftahuarhistRsikunaRituuituokionkunukaRtuaiRtikiRsuaþolikia",
+  "þatsakumþritauntahuariRtuaiRtikiRkunukaRsatintsiuluntifiakurauinturatfiakurumnabnumburniRfiakurumbruþrum",
+  "ualkaRfimraþulfssuniRhraiþulfaRfimrukulfssuniRhoislaRfimharuþssuniRkunmuntaRfimbirnaRsuniR",
+  "nukm???m??alu??kiainhuaR?þ",
+  "þ",
+  "ftiRfrasagwmmogmeniþadhoaRigoldigaoaRigoldindgoonaRhosliairfbsakummukminibfrbnhnfinbuaimansitfbnhburinniþhnuRtrokiuilinisþat",
+  "rhfþknuorhisknatiiatunuilinis",
+  "þatnit",
+  "?akummukminiþur",
+  "sibiuiauari",
+  "ulniruþR"
+ ],
+ "reading": [
+  {
+   "runes": "aft",
+   "word": "æft",
+   "name": false,
+   "unknown": false,
+   "p": 0.4245,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "ua",
+   "word": "va",
+   "name": false,
+   "unknown": false,
+   "p": 0.0922,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "muþ",
+   "word": "muþ",
+   "name": false,
+   "unknown": false,
+   "p": 0.1228,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "stonta",
+   "word": "standa",
+   "name": false,
+   "unknown": false,
+   "p": 0.9527,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "runaR",
+   "word": "runaR",
+   "name": false,
+   "unknown": false,
+   "p": 0.9824,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "þaR",
+   "word": "þaR",
+   "name": false,
+   "unknown": false,
+   "p": 0.6458,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "in",
+   "word": "en",
+   "name": false,
+   "unknown": false,
+   "p": 0.4379,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "uarin",
+   "word": "varin",
+   "name": false,
+   "unknown": false,
+   "p": 0.7336,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "faþi",
+   "word": "faði",
+   "name": false,
+   "unknown": false,
+   "p": 0.7582,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "faþiR",
+   "word": "faðiR",
+   "name": false,
+   "unknown": false,
+   "p": 0.8249,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "aft",
+   "word": "æft",
+   "name": false,
+   "unknown": false,
+   "p": 0.478,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "faik",
+   "word": "faing",
+   "name": true,
+   "unknown": false,
+   "p": 0.0691,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "ion",
+   "word": "ion",
+   "name": false,
+   "unknown": false,
+   "p": 0.2042,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "sunu",
+   "word": "sunu",
+   "name": false,
+   "unknown": false,
+   "p": 0.4489,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "sakum",
+   "word": "sakum",
+   "name": false,
+   "unknown": false,
+   "p": 0.5216,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "muk",
+   "word": "miok",
+   "name": false,
+   "unknown": false,
+   "p": 0.2225,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "mini",
+   "word": "minni",
+   "name": false,
+   "unknown": false,
+   "p": 0.5135,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "þat",
+   "word": "þat",
+   "name": false,
+   "unknown": false,
+   "p": 0.5388,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "huariaR",
+   "word": "huæriaR",
+   "name": false,
+   "unknown": false,
+   "p": 0.8119,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "ualr",
+   "word": "valR",
+   "name": false,
+   "unknown": false,
+   "p": 0.3264,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "a",
+   "word": "a",
+   "name": false,
+   "unknown": false,
+   "p": 0.1681,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "ub",
+   "word": "of",
+   "name": false,
+   "unknown": false,
+   "p": 0.1058,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "aR",
+   "word": "eR",
+   "name": false,
+   "unknown": false,
+   "p": 0.5808,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "uaR",
+   "word": "vaR",
+   "name": false,
+   "unknown": false,
+   "p": 0.94,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "int",
+   "word": "innt",
+   "name": false,
+   "unknown": false,
+   "p": 0.2858,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "uaR",
+   "word": "vaR",
+   "name": false,
+   "unknown": false,
+   "p": 0.5868,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "þaR",
+   "word": "þaR",
+   "name": false,
+   "unknown": false,
+   "p": 0.3989,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "suaþ",
+   "word": "svað",
+   "name": false,
+   "unknown": false,
+   "p": 0.8264,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "tualf",
+   "word": "tolf",
+   "name": false,
+   "unknown": false,
+   "p": 0.9511,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "sinum",
+   "word": "sinum",
+   "name": false,
+   "unknown": false,
+   "p": 0.8112,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "uaR",
+   "word": "vaR",
+   "name": false,
+   "unknown": false,
+   "p": 0.7163,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "in",
+   "word": "in",
+   "name": false,
+   "unknown": false,
+   "p": 0.3028,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "numna",
+   "word": "nomina",
+   "name": false,
+   "unknown": false,
+   "p": 0.4377,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "Rtu",
+   "word": "<unk>",
+   "name": false,
+   "unknown": true,
+   "p": 0.8239,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "alra",
+   "word": "allra",
+   "name": false,
+   "unknown": false,
+   "p": 0.6273,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "ubu",
+   "word": "ubbu",
+   "name": true,
+   "unknown": false,
+   "p": 0.092,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "baþaR",
+   "word": "baðaR",
+   "name": false,
+   "unknown": false,
+   "p": 0.4901,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "so",
+   "word": "sá",
+   "name": false,
+   "unknown": false,
+   "p": 0.1683,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "mono",
+   "word": "manna",
+   "name": false,
+   "unknown": false,
+   "p": 0.4696,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "umisum",
+   "word": "ýmissum",
+   "name": false,
+   "unknown": false,
+   "p": 0.6211,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "monum",
+   "word": "mönnum",
+   "name": false,
+   "unknown": false,
+   "p": 0.7516,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "þat",
+   "word": "þat",
+   "name": false,
+   "unknown": false,
+   "p": 0.4541,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "sakum",
+   "word": "sakum",
+   "name": false,
+   "unknown": false,
+   "p": 0.45,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "on",
+   "word": "on",
+   "name": false,
+   "unknown": false,
+   "p": 0.2349,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "art",
+   "word": "-art",
+   "name": true,
+   "unknown": false,
+   "p": 0.0412,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "huaR",
+   "word": "hvaR",
+   "name": false,
+   "unknown": false,
+   "p": 0.4074,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "furn",
+   "word": "forn",
+   "name": false,
+   "unknown": false,
+   "p": 0.2102,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "iu",
+   "word": "iu",
+   "name": false,
+   "unknown": false,
+   "p": 0.0401,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "altum",
+   "word": "aldum",
+   "name": false,
+   "unknown": false,
+   "p": 0.3778,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "on",
+   "word": "hann",
+   "name": false,
+   "unknown": false,
+   "p": 0.3061,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "urþi",
+   "word": "orði",
+   "name": false,
+   "unknown": false,
+   "p": 0.2232,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "fiaru",
+   "word": "fiorvi",
+   "name": false,
+   "unknown": false,
+   "p": 0.2897,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "miR",
+   "word": "með",
+   "name": false,
+   "unknown": false,
+   "p": 0.3276,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "hraiþkutum",
+   "word": "hreiðgotum",
+   "name": false,
+   "unknown": false,
+   "p": 0.9892,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "auk",
+   "word": "ok",
+   "name": false,
+   "unknown": false,
+   "p": 0.9735,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "tumiR",
+   "word": "tumiR",
+   "name": true,
+   "unknown": false,
+   "p": 0.1531,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "on",
+   "word": "on",
+   "name": false,
+   "unknown": false,
+   "p": 0.2066,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "ub",
+   "word": "upp",
+   "name": false,
+   "unknown": false,
+   "p": 0.1489,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "sakaR",
+   "word": "sakaR",
+   "name": false,
+   "unknown": false,
+   "p": 0.592,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "raiþ",
+   "word": "reið",
+   "name": false,
+   "unknown": false,
+   "p": 0.5285,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "þi",
+   "word": "<unk>",
+   "name": false,
+   "unknown": true,
+   "p": 0.3942,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "aurikR",
+   "word": "øyrikR",
+   "name": false,
+   "unknown": false,
+   "p": 0.5759,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "hin",
+   "word": "hin",
+   "name": false,
+   "unknown": false,
+   "p": 0.4958,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "þurmuþi",
+   "word": "þormóði",
+   "name": true,
+   "unknown": false,
+   "p": 0.3544,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "stiliR",
+   "word": "stillir",
+   "name": false,
+   "unknown": false,
+   "p": 0.4925,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "flutna",
+   "word": "flotna",
+   "name": false,
+   "unknown": false,
+   "p": 0.2474,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "strontu",
+   "word": "ströndu",
+   "name": false,
+   "unknown": false,
+   "p": 0.2751,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "hraiþmar",
+   "word": "hreiðmarr",
+   "name": false,
+   "unknown": false,
+   "p": 0.8134,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "aR",
+   "word": "eR",
+   "name": false,
+   "unknown": false,
+   "p": 0.3374,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "sitiR",
+   "word": "syndiR",
+   "name": false,
+   "unknown": false,
+   "p": 0.2237,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "nuka",
+   "word": "nokka",
+   "name": false,
+   "unknown": false,
+   "p": 0.333,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "ruR",
+   "word": "rauR",
+   "name": false,
+   "unknown": false,
+   "p": 0.1524,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "o",
+   "word": "a",
+   "name": false,
+   "unknown": false,
+   "p": 0.3829,
+   "filled": false,
+   "break_after": true
+  },
+  {
+   "runes": "kuta",
+   "word": "guta",
+   "name": false,
+   "unknown": false,
+   "p": 0.2404,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "sinum",
+   "word": "sinum",
+   "name": false,
+   "unknown": false,
+   "p": 0.5699,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "s",
+   "word": "er",
+   "name": false,
+   "unknown": false,
+   "p": 0.103,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "kialti",
+   "word": "gialdi",
+   "name": false,
+   "unknown": false,
+   "p": 0.3738,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "ub",
+   "word": "upp",
+   "name": false,
+   "unknown": false,
+   "p": 0.1464,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "fatlaþR",
+   "word": "fatlaðr",
+   "name": false,
+   "unknown": false,
+   "p": 0.9836,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "skati",
+   "word": "skati",
+   "name": false,
+   "unknown": false,
+   "p": 0.9096,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "marika",
+   "word": "marka",
+   "name": false,
+   "unknown": false,
+   "p": 0.4592,
+   "filled": false,
+   "break_after": true
+  },
+  {
+   "runes": "þat",
+   "word": "þat",
+   "name": false,
+   "unknown": false,
+   "p": 0.3842,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "sakum",
+   "word": "sakum",
+   "name": false,
+   "unknown": false,
+   "p": 0.4174,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "tualf",
+   "word": "tolf",
+   "name": false,
+   "unknown": false,
+   "p": 0.2687,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "ta",
+   "word": "<unk>",
+   "name": false,
+   "unknown": true,
+   "p": 0.3038,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "huar",
+   "word": "vaR",
+   "name": false,
+   "unknown": false,
+   "p": 0.4435,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "histR",
+   "word": "hestr",
+   "name": false,
+   "unknown": false,
+   "p": 0.7869,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "sikunaR",
+   "word": "siggunnaR",
+   "name": false,
+   "unknown": false,
+   "p": 0.8721,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "itu",
+   "word": "ættu",
+   "name": false,
+   "unknown": false,
+   "p": 0.1058,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "uitu",
+   "word": "vindau",
+   "name": false,
+   "unknown": false,
+   "p": 0.1403,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "ok",
+   "word": "ok",
+   "name": false,
+   "unknown": false,
+   "p": 0.7288,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "ion",
+   "word": "ion",
+   "name": false,
+   "unknown": false,
+   "p": 0.3627,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "kunukaR",
+   "word": "kunungaR",
+   "name": false,
+   "unknown": false,
+   "p": 0.8427,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "tuaiR",
+   "word": "tvæiR",
+   "name": false,
+   "unknown": false,
+   "p": 0.8809,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "tikiR",
+   "word": "tigir",
+   "name": false,
+   "unknown": false,
+   "p": 0.394,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "sua",
+   "word": "svá",
+   "name": false,
+   "unknown": false,
+   "p": 0.2847,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "þo",
+   "word": "þø",
+   "name": false,
+   "unknown": false,
+   "p": 0.2067,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "likia",
+   "word": "liggia",
+   "name": false,
+   "unknown": false,
+   "p": 0.499,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "þat",
+   "word": "þat",
+   "name": false,
+   "unknown": false,
+   "p": 0.4761,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "sakum",
+   "word": "sakum",
+   "name": false,
+   "unknown": false,
+   "p": 0.5733,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "þrita",
+   "word": "þræta",
+   "name": false,
+   "unknown": false,
+   "p": 0.2439,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "unta",
+   "word": "unta",
+   "name": false,
+   "unknown": false,
+   "p": 0.2778,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "huariR",
+   "word": "hverir",
+   "name": false,
+   "unknown": false,
+   "p": 0.167,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "tuaiR",
+   "word": "tvæiR",
+   "name": false,
+   "unknown": false,
+   "p": 0.8835,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "tikiR",
+   "word": "tigir",
+   "name": false,
+   "unknown": false,
+   "p": 0.4069,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "kunukaR",
+   "word": "kunungaR",
+   "name": false,
+   "unknown": false,
+   "p": 0.8901,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "sat",
+   "word": "sat",
+   "name": false,
+   "unknown": false,
+   "p": 0.2545,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "int",
+   "word": "innt",
+   "name": false,
+   "unknown": false,
+   "p": 0.1899,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "siu",
+   "word": "sjau",
+   "name": false,
+   "unknown": false,
+   "p": 0.1037,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "lunti",
+   "word": "lundi",
+   "name": false,
+   "unknown": false,
+   "p": 0.8164,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "fiakur",
+   "word": "fiakur",
+   "name": true,
+   "unknown": false,
+   "p": 0.1533,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "auintur",
+   "word": "eyvindr",
+   "name": false,
+   "unknown": false,
+   "p": 0.4853,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "at",
+   "word": "at",
+   "name": false,
+   "unknown": false,
+   "p": 0.8342,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "fiakur",
+   "word": "fiakur",
+   "name": true,
+   "unknown": false,
+   "p": 0.1498,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "umn",
+   "word": "umun",
+   "name": false,
+   "unknown": false,
+   "p": 0.1221,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "abnum",
+   "word": "vápnum",
+   "name": false,
+   "unknown": false,
+   "p": 0.6135,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "burniR",
+   "word": "bornir",
+   "name": false,
+   "unknown": false,
+   "p": 0.6782,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "fiak",
+   "word": "fiak",
+   "name": false,
+   "unknown": false,
+   "p": 0.3487,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "urum",
+   "word": "orm",
+   "name": false,
+   "unknown": false,
+   "p": 0.2024,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "bruþr",
+   "word": "brøðr",
+   "name": false,
+   "unknown": false,
+   "p": 0.6896,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "um",
+   "word": "um",
+   "name": false,
+   "unknown": false,
+   "p": 0.5244,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "ual",
+   "word": "val",
+   "name": false,
+   "unknown": false,
+   "p": 0.2165,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "kaR",
+   "word": "gæiRR",
+   "name": false,
+   "unknown": false,
+   "p": 0.3467,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "fim",
+   "word": "fimm",
+   "name": false,
+   "unknown": false,
+   "p": 0.2552,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "raþ",
+   "word": "ráð",
+   "name": false,
+   "unknown": false,
+   "p": 0.4151,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "ulfs",
+   "word": "ulfs",
+   "name": false,
+   "unknown": false,
+   "p": 0.5871,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "suniR",
+   "word": "syniR",
+   "name": false,
+   "unknown": false,
+   "p": 0.9712,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "hraiþulfaR",
+   "word": "hreiðulfaR",
+   "name": true,
+   "unknown": false,
+   "p": 0.7806,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "fim",
+   "word": "fimm",
+   "name": false,
+   "unknown": false,
+   "p": 0.1776,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "ruk",
+   "word": "hrygg",
+   "name": false,
+   "unknown": false,
+   "p": 0.1294,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "ulfs",
+   "word": "ulfs",
+   "name": false,
+   "unknown": false,
+   "p": 0.7232,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "suniR",
+   "word": "syniR",
+   "name": false,
+   "unknown": false,
+   "p": 0.9853,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "hoislaR",
+   "word": "hoislaR",
+   "name": true,
+   "unknown": false,
+   "p": 0.3258,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "fim",
+   "word": "fimm",
+   "name": false,
+   "unknown": false,
+   "p": 0.1742,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "haruþs",
+   "word": "harðs",
+   "name": false,
+   "unknown": false,
+   "p": 0.138,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "suniR",
+   "word": "syniR",
+   "name": false,
+   "unknown": false,
+   "p": 0.9386,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "kunmuntaR",
+   "word": "gunnmundaR",
+   "name": true,
+   "unknown": false,
+   "p": 0.7552,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "fim",
+   "word": "fimm",
+   "name": false,
+   "unknown": false,
+   "p": 0.1743,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "birnaR",
+   "word": "biarnaR",
+   "name": false,
+   "unknown": false,
+   "p": 0.8738,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "suniR",
+   "word": "sonaR",
+   "name": false,
+   "unknown": false,
+   "p": 0.5716,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "nu",
+   "word": "nu",
+   "name": false,
+   "unknown": false,
+   "p": 0.4227,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "km",
+   "word": "kvam",
+   "name": false,
+   "unknown": false,
+   "p": 0.1121,
+   "filled": false,
+   "break_after": true
+  },
+  {
+   "runes": "m",
+   "word": "<unk>",
+   "name": false,
+   "unknown": true,
+   "p": 1.0,
+   "filled": false,
+   "break_after": true
+  },
+  {
+   "runes": "alu",
+   "word": "alve",
+   "name": false,
+   "unknown": false,
+   "p": 0.0759,
+   "filled": false,
+   "break_after": true
+  },
+  {
+   "runes": "kiain",
+   "word": "giæinn",
+   "name": true,
+   "unknown": false,
+   "p": 0.1971,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "huaR",
+   "word": "hvaR",
+   "name": false,
+   "unknown": false,
+   "p": 0.3961,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "kþ",
+   "word": "guð",
+   "name": false,
+   "unknown": false,
+   "p": 0.3164,
+   "filled": true,
+   "break_after": true
+  },
+  {
+   "runes": "þ",
+   "word": "t",
+   "name": false,
+   "unknown": false,
+   "p": 0.0958,
+   "filled": false,
+   "break_after": true
+  },
+  {
+   "runes": "ftiR",
+   "word": "æftiR",
+   "name": false,
+   "unknown": false,
+   "p": 0.937,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "fra",
+   "word": "frá",
+   "name": false,
+   "unknown": false,
+   "p": 0.125,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "sagwmmog",
+   "word": "<unk>",
+   "name": false,
+   "unknown": true,
+   "p": 0.4105,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "men",
+   "word": "mænn",
+   "name": false,
+   "unknown": false,
+   "p": 0.1555,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "iþa",
+   "word": "eða",
+   "name": false,
+   "unknown": false,
+   "p": 0.1274,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "d",
+   "word": "dagR",
+   "name": false,
+   "unknown": false,
+   "p": 0.0491,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "hoaR",
+   "word": "hoaR",
+   "name": true,
+   "unknown": false,
+   "p": 0.0778,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "i",
+   "word": "i",
+   "name": false,
+   "unknown": false,
+   "p": 0.1628,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "goldigaoaR",
+   "word": "<unk>",
+   "name": false,
+   "unknown": true,
+   "p": 0.1701,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "igol",
+   "word": "ígul",
+   "name": false,
+   "unknown": false,
+   "p": 0.1886,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "d",
+   "word": "dagR",
+   "name": false,
+   "unknown": false,
+   "p": 0.0422,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "in",
+   "word": "en",
+   "name": false,
+   "unknown": false,
+   "p": 0.2583,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "dgoonaR",
+   "word": "<unk>",
+   "name": false,
+   "unknown": true,
+   "p": 0.4394,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "hosl",
+   "word": "asl",
+   "name": false,
+   "unknown": false,
+   "p": 0.3527,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "i",
+   "word": "i",
+   "name": false,
+   "unknown": false,
+   "p": 0.1591,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "airfb",
+   "word": "<unk>",
+   "name": false,
+   "unknown": true,
+   "p": 0.2355,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "sakum",
+   "word": "sakum",
+   "name": false,
+   "unknown": false,
+   "p": 0.2274,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "muk",
+   "word": "miok",
+   "name": false,
+   "unknown": false,
+   "p": 0.2386,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "mini",
+   "word": "minni",
+   "name": false,
+   "unknown": false,
+   "p": 0.3347,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "bfrbn",
+   "word": "<unk>",
+   "name": false,
+   "unknown": true,
+   "p": 0.2918,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "hn",
+   "word": "hann",
+   "name": false,
+   "unknown": false,
+   "p": 0.1933,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "fin",
+   "word": "finn",
+   "name": false,
+   "unknown": false,
+   "p": 0.1731,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "buaimansitfbnh",
+   "word": "<unk>",
+   "name": false,
+   "unknown": true,
+   "p": 0.3991,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "burin",
+   "word": "borinn",
+   "name": false,
+   "unknown": false,
+   "p": 0.4958,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "niþ",
+   "word": "nið",
+   "name": false,
+   "unknown": false,
+   "p": 0.1499,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "hn",
+   "word": "hann",
+   "name": false,
+   "unknown": false,
+   "p": 0.5132,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "uR",
+   "word": "vaR",
+   "name": false,
+   "unknown": false,
+   "p": 0.3995,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "troki",
+   "word": "dragi",
+   "name": false,
+   "unknown": false,
+   "p": 0.7521,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "uil",
+   "word": "wæl",
+   "name": false,
+   "unknown": false,
+   "p": 0.2647,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "in",
+   "word": "æn",
+   "name": false,
+   "unknown": false,
+   "p": 0.4961,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "is",
+   "word": "æs",
+   "name": false,
+   "unknown": false,
+   "p": 0.2924,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "þat",
+   "word": "þat",
+   "name": false,
+   "unknown": false,
+   "p": 0.5383,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "rhfþknuorh",
+   "word": "<unk>",
+   "name": false,
+   "unknown": true,
+   "p": 0.3093,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "is",
+   "word": "es",
+   "name": false,
+   "unknown": false,
+   "p": 0.1369,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "knati",
+   "word": "knátti",
+   "name": false,
+   "unknown": false,
+   "p": 0.3078,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "iatun",
+   "word": "jötunn",
+   "name": false,
+   "unknown": false,
+   "p": 0.7057,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "uil",
+   "word": "wæl",
+   "name": false,
+   "unknown": false,
+   "p": 0.3326,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "in",
+   "word": "æn",
+   "name": false,
+   "unknown": false,
+   "p": 0.5269,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "is",
+   "word": "æs",
+   "name": false,
+   "unknown": false,
+   "p": 0.3282,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "þat",
+   "word": "þat",
+   "name": false,
+   "unknown": false,
+   "p": 0.511,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "nit",
+   "word": "nit",
+   "name": false,
+   "unknown": false,
+   "p": 0.4207,
+   "filled": false,
+   "break_after": true
+  },
+  {
+   "runes": "sakum",
+   "word": "sakum",
+   "name": false,
+   "unknown": false,
+   "p": 0.3201,
+   "filled": true,
+   "break_after": false
+  },
+  {
+   "runes": "muk",
+   "word": "miok",
+   "name": false,
+   "unknown": false,
+   "p": 0.2205,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "mini",
+   "word": "minni",
+   "name": false,
+   "unknown": false,
+   "p": 0.4978,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "þur",
+   "word": "þor",
+   "name": false,
+   "unknown": false,
+   "p": 0.4679,
+   "filled": false,
+   "break_after": true
+  },
+  {
+   "runes": "sibi",
+   "word": "sibbi",
+   "name": false,
+   "unknown": false,
+   "p": 0.3948,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "uia",
+   "word": "wea",
+   "name": false,
+   "unknown": false,
+   "p": 0.2038,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "uari",
+   "word": "vari",
+   "name": false,
+   "unknown": false,
+   "p": 0.3245,
+   "filled": false,
+   "break_after": true
+  },
+  {
+   "runes": "uln",
+   "word": "uln",
+   "name": false,
+   "unknown": false,
+   "p": 0.3979,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "i",
+   "word": "i",
+   "name": false,
+   "unknown": false,
+   "p": 0.1948,
+   "filled": false,
+   "break_after": false
+  },
+  {
+   "runes": "ruþR",
+   "word": "rýðr",
+   "name": false,
+   "unknown": false,
+   "p": 0.1114,
+   "filled": false,
+   "break_after": true
+  }
+ ],
+ "gaps": [
+  {
+   "number": 0,
+   "group": 7,
+   "start": 24,
+   "end": 25,
+   "carved": "nukm???m??alu??kiainhuaR?þ",
+   "n": 1,
+   "lost": [
+    0
+   ],
+   "best": "k",
+   "fills": [
+    {
+     "fill": "i",
+     "p": 0.3861,
+     "word": "it"
+    },
+    {
+     "fill": "k",
+     "p": 0.299,
+     "word": "guð"
+    },
+    {
+     "fill": "g",
+     "p": 0.0015,
+     "word": "guþ"
+    },
+    {
+     "fill": "u",
+     "p": 0.1039,
+     "word": "øþ"
+    },
+    {
+     "fill": "y",
+     "p": 0.0272,
+     "word": "øþ"
+    },
+    {
+     "fill": "o",
+     "p": 0.0219,
+     "word": "oð"
+    },
+    {
+     "fill": "e",
+     "p": 0.0713,
+     "word": "et"
+    },
+    {
+     "fill": "m",
+     "p": 0.0406,
+     "word": "með"
+    }
+   ],
+   "words": [
+    {
+     "word": "guð",
+     "p": 0.3164,
+     "p_model": 0.3005
+    },
+    {
+     "word": "it",
+     "p": 0.1375,
+     "p_model": 0.3861
+    },
+    {
+     "word": "øþ",
+     "p": 0.0907,
+     "p_model": 0.153
+    },
+    {
+     "word": "et",
+     "p": 0.0432,
+     "p_model": 0.0713
+    },
+    {
+     "word": "at",
+     "p": 0.0385,
+     "p_model": 0.0213
+    },
+    {
+     "word": "með",
+     "p": 0.0294,
+     "p_model": 0.0406
+    }
+   ],
+   "traces": null
+  },
+  {
+   "number": 1,
+   "group": 12,
+   "start": 0,
+   "end": 1,
+   "carved": "?akummukminiþur",
+   "n": 1,
+   "lost": [
+    0
+   ],
+   "best": "s",
+   "fills": [
+    {
+     "fill": "s",
+     "p": 0.6971,
+     "word": "sakum"
+    },
+    {
+     "fill": "t",
+     "p": 0.1676,
+     "word": "tecum"
+    },
+    {
+     "fill": "i",
+     "p": 0.0577,
+     "word": "i"
+    },
+    {
+     "fill": "þ",
+     "p": 0.0169,
+     "word": "þingum"
+    },
+    {
+     "fill": "h",
+     "p": 0.016,
+     "word": "angum"
+    },
+    {
+     "fill": "u",
+     "p": 0.0124,
+     "word": "vágum"
+    },
+    {
+     "fill": "l",
+     "p": 0.0105,
+     "word": "löngum"
+    },
+    {
+     "fill": "m",
+     "p": 0.0083,
+     "word": "mögum"
+    }
+   ],
+   "words": [
+    {
+     "word": "sakum",
+     "p": 0.3201,
+     "p_model": 0.6971
+    },
+    {
+     "word": "i",
+     "p": 0.1322,
+     "p_model": 0.0577
+    },
+    {
+     "word": "tecum",
+     "p": 0.1204,
+     "p_model": 0.1676
+    },
+    {
+     "word": "þingum",
+     "p": 0.025,
+     "p_model": 0.0169
+    },
+    {
+     "word": "angum",
+     "p": 0.0241,
+     "p_model": 0.016
+    },
+    {
+     "word": "vágum",
+     "p": 0.0203,
+     "p_model": 0.0124
+    }
+   ],
+   "traces": null
+  }
+ ],
+ "open_gaps": [
+  {
+   "group": 7,
+   "start": 4,
+   "end": 15,
+   "n": 7
+  }
+ ],
+ "dating": {
+  "epochs": [
+   {
+    "epoch": "800",
+    "label": "800-talet",
+    "p": 0.2179
+   },
+   {
+    "epoch": "900",
+    "label": "900-talet",
+    "p": 0.7754
+   },
+   {
+    "epoch": "1000",
+    "label": "1000–1070",
+    "p": 0.0038
+   },
+   {
+    "epoch": "1100",
+    "label": "1070–1150",
+    "p": 0.0029
+   }
+  ],
+  "calibrated": true,
+  "rundata": "V 800-t"
+ },
+ "translation": {
+  "sv": "efter broder broder stå runor de och Varinn färgade fader efter Faing Jón söner suit detta mycket that ancestress Valr på som var people var de that sin twelve var i namn … alla Ubbu båda han män ýmissum mönnum that suit på -art runor ancient minne generation han engaged life med hreiðgotum och TumiR på up clumsy pauper … Eyríkr Þormóði stillir flotna ströndu hreiðmarr som forgive Nokki cairn på Goti sin som payment up fatlaðr cheftain sten that suit twelve … var hestr Erngautr Þorlôf Vindey och Jón kungar twosome tigir dessa han ligger that suit þræta resa hverir twosome tigir kungar satt people seven Lund Fiakur Eyvindr efter Fiakur Ómunr vápnum bornir Fiak Ormr bröder väl -geirr five tyda Ulfr's söner HreiðulfaR five devour Ulfr's söner HoislaR five harðs söner Turgillus five Bjôrn's son nu came … Ôlvir Giæinn runor Gud Steinn's efter från … män otherwise Dagr HoaR i … Ígull Dagr och … Ásl i … suit detta mycket … han Finnr … borinn nið han var drags väl och som that … som knátti jötunn väl och som that nit suit detta mycket Þor- Sibbi sanctuary our þuli i rýðr",
+  "en": "in memory of brother brother stand runes they and Varinn coloured father in memory of Faing Jón sons suit very memorial that ancestress Valr owns the who was people was they that twelve his was in names … all Ubbu both who men ýmissum mönnum that suit lund -art runes ancient memory generation he engaged life with hreiðgotum and TumiR lund up clumsy pauper … Eyríkr the Þormóði stillir flotna ströndu hreiðmarr who forgive Nokki cairn owns Goti his is payment up fatlaðr cheftain stone that suit twelve … was hestr Erngautr Þorlôf Vindey and Jón kings twosome tigir he this lie that suit þræta raised hverir twosome tigir kings sat people seven Lund Fiakur Eyvindr in memory of Fiakur Ómunr vápnum bornir Fiak Ormr brothers the well -geirr five interpret Ulfr's sons HreiðulfaR five devour Ulfr's sons HoislaR five harðs sons Turgillus five Bjôrn's son now came … Ôlvir Giæinn runes God Steinn's in memory of from … men otherwise Dagr HoaR in … Ígull Dagr and … Ásl in … suit very memorial … he Finnr … borinn nið he was drags well and who that … who knátti jötunn well and who that nit suit very memorial Þor- Sibbi sanctuary our þuli in rýðr"
+ },
+ "boundaries": []
+}
