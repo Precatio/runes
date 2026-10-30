@@ -383,6 +383,20 @@
    ],
    "posted": "https://bsky.app/profile/vitkirunor.bsky.social/post/3mz3fgvknvb2i",
    "posted_at": "2026-10-30T08:48:00+00:00"
+  },
+  {
+   "date": "2026-10-31",
+   "slug": "hur-bra-ar-var-modell-egentligen",
+   "en": true,
+   "text": "How good is our runic text model, really? A day behind the scenes: five processes computing, a reading of the Rök stone that fails honestly, a comparison with DeepMind's Ithaca, and the sources we plan to feed the model next.",
+   "tags": [
+    "DigitalHumanities",
+    "ComputationalLinguistics",
+    "OldNorse",
+    "MedievalSky",
+    "runestones",
+    "VikingAge"
+   ]
   }
  ]
 }
