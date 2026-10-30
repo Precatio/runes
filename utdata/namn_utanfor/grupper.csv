@@ -1,0 +1,194 @@
+namn,grupp,kön,n1999,n2020,tillväxt,runform,grund
+Gun,annan runtext,K,24339,16389,-0.3954,Gunn|Gunnr,koder
+Ola,annan runtext,M,9390,9889,0.0518,Ola|Óla,wikipedia
+Alf,annan runtext,M,15208,8668,-0.5619,Alfr,koder
+Ylva,annan runtext,K,7287,7566,0.0375,Ylva,koder
+Vidar,annan runtext,M,527,4142,2.0535,Víðar|Víðarr,koder
+Olov,annan runtext,M,5207,2871,-0.5946,Olof,wikipedia
+Tor,annan runtext,M,2760,2648,-0.0413,Thor|Þor|Þorr|Þór,koder
+Alvar,annan runtext,M,1377,2014,0.3791,Alfar,koder
+Alve,annan runtext,M,254,1458,1.7314,Alve,wikipedia
+Erling,annan runtext,M,1941,1292,-0.4057,Erling|Erlingr,koder
+Turid,annan runtext,K,281,327,0.1491,Þúríð,wikipedia
+Torvald,annan runtext,M,405,250,-0.4749,Þorvaldr,koder
+Nore,annan runtext,M,191,217,0.1246,Nore,wikipedia
+Uffe,annan runtext,M,39,93,0.8008,Uffi,wikipedia
+Thorvald,annan runtext,M,92,67,-0.298,Þorvaldr,wikipedia
+Siv,myt,K,30417,19532,-0.4429,,koder
+Alva,myt,K,3854,14851,1.348,,granskning: fornnordiska alv
+Saga,myt,K,2353,11851,1.615,,koder
+Signe,myt,K,11797,8952,-0.2758,,koder
+Freja,myt,K,562,7085,2.5261,,koder
+Liv,myt,K,1173,5036,1.4538,,wikipedia
+Hilda,myt,K,3099,4449,0.3611,,granskning: fornnordiska hildr
+Ebbe,myt,M,1418,4273,1.1007,,koder
+Ingalill,myt,K,3934,3162,-0.2181,,wikipedia
+Yngve,myt,M,5632,2566,-0.7851,,wikipedia
+Hjördis,myt,K,4029,1895,-0.7529,,koder
+Torgny,myt,M,2039,1755,-0.1496,,koder
+Eira,myt,K,1044,1513,0.3696,,wikipedia
+Idun,myt,K,43,1313,3.3127,,koder
+Embla,myt,K,130,1112,2.1131,,koder
+Ingvor,myt,K,1379,1011,-0.3091,,koder
+Nanna,myt,K,1626,920,-0.5672,,koder
+Frej,myt,M,248,815,1.1759,,granskning: fornnordiska Freyr
+Siw,myt,K,610,659,0.0767,,wikipedia
+Torborg,myt,K,752,239,-1.1322,,wikipedia
+Sif,myt,K,452,189,-0.8568,,wikipedia
+Balder,myt,M,35,104,1.0025,,wikipedia
+Sigyn,myt,K,141,99,-0.3392,,wikipedia
+Ask,myt,M,12,82,1.6327,,koder
+Åslög,myt,K,29,19,-0.3483,,wikipedia
+Linnar,myt,M,14,12,-0.1112,,wikipedia
+Erik,runsten,M,76616,55968,-0.314,Eiríkr,koder
+Ingrid,runsten,K,71997,40300,-0.5802,Ingríðr,koder
+Bo,runsten,M,53140,37591,-0.3461,Búi,koder
+Karl,runsten,M,98366,36689,-0.9861,Karl,koder
+Björn,runsten,M,40308,34656,-0.1511,Bjôrn,koder
+Inger,runsten,K,45424,34316,-0.2804,Ingigerðr,ord
+Ulf,runsten,M,39208,31585,-0.2162,Ulfr,koder
+Sven,runsten,M,73529,31115,-0.8599,Svein|Sveinn,granskning: fornnordiska Sveinn
+Åsa,runsten,K,28829,26936,-0.0679,Ása,koder
+Kjell,runsten,M,39282,26700,-0.386,Ketill,koder
+Håkan,runsten,M,26464,25508,-0.0368,Hákon,koder
+Rolf,runsten,M,37664,23330,-0.4789,Hrólfr,koder
+Stig,runsten,M,45639,20800,-0.7857,Stigr,koder
+Astrid,runsten,K,23548,15846,-0.396,Ástriðr|Ástríðr,koder
+Gunnar,runsten,M,26836,14850,-0.5916,Gunnarr,koder
+Åke,runsten,M,24983,13345,-0.6269,Áki,koder
+Torbjörn,runsten,M,11710,11220,-0.0427,Þorbjôrn,koder
+Olof,runsten,M,17873,10923,-0.4922,Ólôf,koder
+Arne,runsten,M,23081,10754,-0.7635,Árni,koder
+Inga,runsten,K,27655,10351,-0.9824,Inga,koder
+Eric,runsten,M,6993,9407,0.2964,Eiríkr,koder
+Sten,runsten,M,17661,9048,-0.6685,Steinn,koder
+Ingemar,runsten,M,9337,7521,-0.2162,Ingimarr,koder
+Rune,runsten,M,15644,6603,-0.8621,Rúni,koder
+Tove,runsten,K,4417,6522,0.3894,Tófa,wikipedia
+Tuva,runsten,K,255,6443,3.2108,Tófa,wikipedia
+Gudrun,runsten,K,10339,6388,-0.4812,Guðrún,koder
+Gunvor,runsten,K,13677,6323,-0.7711,Gunnvôr,koder
+Sigrid,runsten,K,8107,6287,-0.2541,Sigríðr,koder
+Sixten,runsten,M,2219,6116,1.0124,Sigsteinn,koder
+Ingegerd,runsten,K,9671,6018,-0.4741,Ingigerðr,koder
+Tyra,runsten,K,3720,5976,0.4735,Þyrvé,koder
+Siri,runsten,K,4725,5802,0.2051,Sigríðr,koder
+Love,runsten,M,1039,5326,1.6305,Lófi,granskning: runsvenska Lófi
+Ingvar,runsten,M,8679,5209,-0.5101,Ingvarr,koder
+Tore,runsten,M,9517,5029,-0.6374,Þóri|Þórir,koder
+Tord,runsten,M,7104,4809,-0.3898,Þórðr,koder
+Sune,runsten,M,7789,4604,-0.5253,Suni,koder
+Knut,runsten,M,11858,4473,-0.9742,Knútr,koder
+Bror,runsten,M,14189,4319,-1.1886,Bróðir,wikipedia
+Ivar,runsten,M,3614,4083,0.1219,Ívarr,koder
+Folke,runsten,M,6846,3809,-0.5857,Folki,koder
+Torsten,runsten,M,7873,3540,-0.7985,Þorsteinn,koder
+Sigge,runsten,M,268,3450,2.5381,Siggi,wikipedia
+Inge,runsten,M,4851,3098,-0.4478,Ingi,granskning: fornnordiska Ingi
+Tova,runsten,K,752,2872,1.3351,Tófa,ord
+Ture,runsten,M,4272,2855,-0.4024,Þórir,koder
+Göte,runsten,M,6949,2714,-0.9391,Gauti|Goti,koder
+Gunhild,runsten,K,9751,2678,-1.2909,Gunnhildr,koder
+Harald,runsten,M,3417,2647,-0.2549,Haraldr,koder
+Ingegärd,runsten,K,5358,2601,-0.7217,Ingigerðr,koder
+Dag,runsten,M,2534,2361,-0.0706,Dagr,koder
+Einar,runsten,M,3289,2295,-0.3592,Einarr,koder
+Gunborg,runsten,K,8006,2151,-1.3126,Gunnborga,koder
+Ragnar,runsten,M,4032,2003,-0.6984,Ragnarr,koder
+Ragnhild,runsten,K,4667,1945,-0.8738,Ragnhildr,koder
+Uno,runsten,M,3707,1924,-0.6546,Uni,koder
+Eskil,runsten,M,1509,1884,0.2213,Áskell,koder
+Holger,runsten,M,2570,1829,-0.3394,Holmgeirr,granskning: Holmgeirr
+Helge,runsten,M,5108,1659,-1.1226,Helgi,koder
+Ingeborg,runsten,K,5667,1558,-1.2889,Ingibjôrg,koder
+Tora,runsten,K,2196,1352,-0.4836,Tóra|Þóra,koder
+Helga,runsten,K,4602,1335,-1.2349,Helga,koder
+Disa,runsten,K,1019,1330,0.2652,Dísa,koder
+Jarl,runsten,M,2059,1294,-0.4631,Jarl,wikipedia
+Bjarne,runsten,M,1526,1276,-0.1783,Bjarni,koder
+Agne,runsten,M,1806,1112,-0.4832,Agni,koder
+Ingmar,runsten,M,1413,1101,-0.2485,Ingimarr,koder
+Thorbjörn,runsten,M,930,944,0.0149,Þorbjôrn,koder
+Östen,runsten,M,1364,805,-0.5248,Eysteinn,koder
+Sverker,runsten,M,828,742,-0.109,Sverkir,koder
+Estrid,runsten,K,620,735,0.1689,Ástríðr,wikipedia
+Thyra,runsten,K,446,727,0.4843,Þyrvé,koder
+Thord,runsten,M,813,706,-0.1402,Þórðr,koder
+Runa,runsten,K,1117,626,-0.5756,Rúna,wikipedia
+Viking,runsten,M,333,568,0.5278,Víkingr,koder
+Thore,runsten,M,679,527,-0.2513,Þóri|Þórir,granskning: fornnordiska Þórir
+Elof,runsten,M,1004,510,-0.6725,Eilafr,koder
+Sigurd,runsten,M,1405,507,-1.013,Sigurðr,wikipedia
+Esbjörn,runsten,M,521,494,-0.0527,Ásbjôrn,koder
+Egil,runsten,M,381,476,0.22,Egill,koder
+Ragna,runsten,K,836,429,-0.6615,Ragna,wikipedia
+Enar,runsten,M,847,416,-0.705,Einarr,koder
+Torkel,runsten,M,434,409,-0.0586,Þorkell,koder
+Thure,runsten,M,489,345,-0.3446,Þórir,koder
+Frode,runsten,M,122,305,0.8924,Fróði,wikipedia
+Tryggve,runsten,M,372,262,-0.345,Tryggvi,koder
+Alfhild,runsten,K,1274,210,-1.7832,Alfhildr,wikipedia
+Olaf,runsten,M,158,205,0.2534,Ólafr,koder
+Geir,runsten,M,187,198,0.0557,Geirr,koder
+Alrik,runsten,M,297,175,-0.5175,Alríkr,granskning: fornnordiska Alfrekr (runsten Vg 119)
+Sigfrid,runsten,M,538,148,-1.2667,Sigfrøðr,koder
+Styrbjörn,runsten,M,150,146,-0.0261,Styrbjôrn,wikipedia
+Öyvind,runsten,M,109,112,0.026,Eyvindr,wikipedia
+Ragnvald,runsten,M,216,106,-0.6886,Ragnvaldr,koder
+Ejnar,runsten,M,439,98,-1.4611,Einarr,koder
+Germund,runsten,M,86,75,-0.1288,Geirmundr,koder
+Gudmund,runsten,M,97,67,-0.3483,Guðmund|Guðmundr,koder
+Brynolf,runsten,M,110,66,-0.4823,Brynjulfr,koder
+Hemming,runsten,M,64,47,-0.2829,Hemingr,koder
+Kettil,runsten,M,29,38,0.2348,Ketill,wikipedia
+Hakon,runsten,M,57,32,-0.5162,Hákon,koder
+Asger,runsten,M,20,30,0.3365,Ásgeirr,koder
+Anund,runsten,M,39,22,-0.4884,Ônundr,koder
+Svenning,runsten,M,27,18,-0.3302,Sveinungr,wikipedia
+Gudmar,runsten,M,23,14,-0.3878,Guðmarr,wikipedia
+Ingemund,runsten,M,17,10,-0.383,Ingimundr,koder
+Leif,övrigt,M,44888,33083,-0.3051,,koder
+Frida,övrigt,K,18870,21659,0.1378,,granskning: fornnordiska fridh
+Gustav,övrigt,M,15484,21044,0.3067,,koder
+Olle,övrigt,M,7360,14105,0.6501,,wikipedia
+Gunnel,övrigt,K,17846,12509,-0.3552,,wikipedia
+Arvid,övrigt,M,4195,12186,1.0656,,koder
+Erika,övrigt,K,9973,10537,0.055,,granskning: femininum av Erik
+Gerd,övrigt,K,16929,10190,-0.5074,,koder
+Ove,övrigt,M,11484,8047,-0.3555,,"granskning: fornnordiska Áfi, via danskan"
+Börje,övrigt,M,10880,6507,-0.5137,,wikipedia
+Eivor,övrigt,K,9159,4692,-0.6684,,koder
+Bodil,övrigt,K,4956,4573,-0.0803,,wikipedia
+Gösta,övrigt,M,14052,4499,-1.1382,,wikipedia
+Sture,övrigt,M,8642,4068,-0.7528,,wikipedia
+Loke,övrigt,M,100,3862,3.6063,,koder
+Meja,övrigt,K,27,3711,4.7547,,wikipedia
+Hjalmar,övrigt,M,1122,3331,1.0852,,koder
+Kaj,övrigt,M,4648,3321,-0.3357,,wikipedia
+Kalle,övrigt,M,1403,2629,0.6263,,granskning: Karl
+Algot,övrigt,M,876,2255,0.9421,,koder
+Birger,övrigt,M,4635,2168,-0.7586,,koder
+Dagny,övrigt,K,6173,1519,-1.3997,,koder
+Jerker,övrigt,M,1500,1499,-0.0007,,koder
+Boel,övrigt,K,1492,1425,-0.0458,,wikipedia
+Erland,övrigt,M,2029,1237,-0.4933,,wikipedia
+Calle,övrigt,M,538,1234,0.825,,granskning: Karl
+Gerda,övrigt,K,4328,928,-1.5356,,koder
+Hilding,övrigt,M,1376,848,-0.4818,,koder
+Görel,övrigt,K,997,827,-0.1859,,wikipedia
+Göta,övrigt,K,3606,793,-1.5096,,wikipedia
+Assar,övrigt,M,706,731,0.0346,,koder
+Hulda,övrigt,K,1861,441,-1.4312,,granskning: nordiska huld
+Hildur,övrigt,K,2744,387,-1.9477,,koder
+Daga,övrigt,K,844,262,-1.1568,,wikipedia
+Orvar,övrigt,M,292,211,-0.3185,,granskning: fornnordiska ǫrvar
+Tyr,övrigt,M,12,211,2.5421,,koder
+Ambjörn,övrigt,M,144,148,0.0265,,koder
+Fritiof,övrigt,M,172,122,-0.332,,koder
+Gunde,övrigt,M,146,102,-0.3445,,koder
+Solgerd,övrigt,K,140,100,-0.3228,,koder
+Magnhild,övrigt,K,502,98,-1.5938,,wikipedia
+Hervor,övrigt,K,226,85,-0.9426,,wikipedia
+Alpha,övrigt,M,15,71,1.335,,granskning: femininum av Alf
+Alfrida,övrigt,K,107,66,-0.4558,,granskning: fornnordiska Alfridh
+Rodny,övrigt,M,28,20,-0.2776,,koder
