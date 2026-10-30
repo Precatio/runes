@@ -19,7 +19,7 @@ Astrid, Tófa → Tova) och utan namnfragment lever 85 av 385 (22 %); fyra nya f
 - **N3 Makten – går inte att pröva.** Bara 6 namn bärs av någon som kallas *þegn*, *drengr* eller annan titel (gränsen
   var 15).
 - **Kedjan genom medeltiden:** av de 60 namn som finns i breven 1350–1450 lever 44 (73 %) i dag; av de 331 som inte
-  finns där lever 38 (11 %) – de flesta av dem troligen återupplivade senare (Åsa, Tora, Runa, Viking).
+  finns där lever 41 (12 %) – de flesta av dem troligen återupplivade senare (Åsa, Tora, Runa, Viking).
 - **Kunganamnen** lever alla utom Steinkell: Erik (55 968 bärare), Björn (34 656), Sven (31 115), Håkan (25 508),
   Knut (4 473), Harald (2 647).
 - Vanligast bland de döda: Ônundr, Œpir, Halfdan (Halvdan finns, men under 10 bärare), Ingifastr, Ôzurr, Freysteinn,
