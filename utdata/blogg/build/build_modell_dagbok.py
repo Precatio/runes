@@ -15,7 +15,7 @@ sys.path.insert(0, ROOT)
 from src import runlm as rl  # noqa: E402
 from src import textmodel as tm  # noqa: E402
 
-pc = lambda x: round(100 * x)  # noqa: E731
+pc = lambda x: int(100 * x + 0.5)  # noqa: E731  (halva avrundas uppåt: 58,5 → 59)
 sp = lambda n: f"{n:,}".replace(",", " ")  # noqa: E731
 en_ = lambda n: f"{n:,}"  # noqa: E731
 
