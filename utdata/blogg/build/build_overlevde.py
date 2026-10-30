@@ -52,7 +52,20 @@ Q["U 344"] = Q["U 344"].split(". ")[0] + "."  # the first sentence: Ulfr's three
 
 # ---- photographs ------------------------------------------------------------------------------------------------------
 FILES = commons.wikidata_files(["Sö 179", "U 344"])
-INFO = commons.commons_info(list(FILES.values()))
+THOR = "Lorenz Frølich - Æsir-Thor - NMH 425-1925 - Nationalmuseum.jpg"
+INFO = commons.commons_info(list(FILES.values()) + [THOR])
+assert INFO[THOR]["licence"] == "Public domain" and "Frølich" in INFO[THOR]["author"]
+
+
+def thor(lang):
+    page = "https://commons.wikimedia.org/wiki/File:" + THOR.replace(" ", "_")
+    if lang == "sv":
+        return (f"![Tor, tecknad av Lorenz Frølich]({INFO[THOR]['thumb']})\nTor med hammaren, omgiven av slingrande "
+                f"ormdjur som på en runsten. Akvarell av Lorenz Frølich (1820–1908), Nationalmuseum (NMH 425/1925). "
+                f"Fri från upphovsrätt, via [Wikimedia Commons]({page}).")
+    return (f"![Thor, drawn by Lorenz Frølich]({INFO[THOR]['thumb']})\nThor with his hammer, framed by intertwined serpents "
+            f"as on a runestone. Watercolour by Lorenz Frølich (1820–1908), Nationalmuseum, Stockholm (NMH 425/1925). "
+            f"Public domain, via [Wikimedia Commons]({page}).")
 LIC = {"CC BY-SA 3.0": "https://creativecommons.org/licenses/by-sa/3.0/", "CC BY 2.5": "https://creativecommons.org/licenses/by/2.5/"}
 CRED = {"Sö 179": ("Tåggas", "CC BY-SA 3.0"), "U 344": ("Berig", "CC BY 2.5")}
 for s, (who, lic) in CRED.items():
@@ -104,6 +117,8 @@ summary = (f"Var femte namn på runstenarna bärs fortfarande av svenskar – oc
 
 body = f"""Nästan tusen år efter att de sista runstenarna restes heter {sp(K['Torsten'])} svenskar Torsten, {sp(K['Torbjörn'])} Torbjörn och {sp(K['Ingrid'])} Ingrid. Tor föll när kristendomen kom. Hans namn gjorde det inte.
 
+{thor('sv')}
+
 Det är en av få saker som har överlevt från vikingatiden i vardagen: namnen. Vi ville veta hur många – och om det är slump vilka. Vår hypotes var att det som hörde makten till inte överlevde. Den gamla eliten, dess titlar, dess lag och dess gudar borde ha ersatts av kyrkans och kungamaktens ord, medan familjens vardag levde vidare. Halva hypotesen höll. Den andra halvan föll – åt ett håll vi inte väntade oss.
 
 :::box Kort sagt
@@ -119,7 +134,6 @@ Runstenarna är fulla av namn: de som reste stenen, de döda, ibland ristaren. V
 
 {N['alive']} av namnen lever i dag – {pc(N['share'])} procent. Räknar man efter hur vanliga de var på stenarna blir det {pc(N['bearer_weighted'])} procent, eftersom de vanligaste namnen oftare har överlevt. Ulf, som tog tre gälder i England, har {sp(K['Ulf'])} namnar i dag.
 
-{photo('U 344', '*' + Q['U 344'] + '* Och Ulf har tagit tre gälder i England (U 344, Orkesta i Uppland). I dag heter ' + sp(K['Ulf']) + ' svenskar Ulf.', 'sv')}
 
 Kunganamnen klarade sig nästan alla: Erik ({sp(K['Erik'])} bärare), Björn ({sp(K['Björn'])}), Sven ({sp(K['Sven'])}), Håkan ({sp(K['Håkan'])}), Knut ({sp(K['Knut'])}) och Harald ({sp(K['Harald'])}). Men de flesta namnen dog. Önund, Ingefast, Freysten, Holmsten, Holmfast, Gudfast och Vebjörn stod på många runstenar och bärs av färre än tio svenskar i dag.
 
@@ -180,6 +194,8 @@ summary_en = ("One in five names on the runestones is still borne by Swedes – 
 
 body_en = f"""Almost a thousand years after the last runestones were raised, {en(K['Torsten'])} Swedes are called Torsten, {en(K['Torbjörn'])} Torbjörn and {en(K['Ingrid'])} Ingrid. Thor fell when Christianity came. His name did not.
 
+{thor('en')}
+
 It is one of few things from the Viking Age that have survived in everyday life: the names. We wanted to know how many – and whether it is chance which ones. Our hypothesis was that what belonged to power did not survive. The old elite, its titles, its law and its gods ought to have been replaced by the words of the church and the crown, while the everyday life of the family lived on. Half of the hypothesis held. The other half failed – in a direction we did not expect.
 
 :::box In short
@@ -195,7 +211,6 @@ The runestones are full of names: those who raised the stone, the dead, sometime
 
 {N['alive']} of the names live on today – {pc(N['share'])} per cent. Counting by how common they were on the stones, it is {pc(N['bearer_weighted'])} per cent, since the most common names survived more often. Ulfr, who took three payments in England, has {en(K['Ulf'])} namesakes today.
 
-{photo('U 344', '*' + Q['U 344'] + '* And Ulfr has taken three payments in England (U 344, Orkesta in Uppland). Today ' + en(K['Ulf']) + ' Swedes are called Ulf.', 'en')}
 
 The kings' names nearly all made it: Erik ({en(K['Erik'])} bearers), Björn ({en(K['Björn'])}), Sven ({en(K['Sven'])}), Håkan ({en(K['Håkan'])}), Knut ({en(K['Knut'])}) and Harald ({en(K['Harald'])}). But most of the names died. Ônundr, Ingifastr, Freysteinn, Holmsteinn, Holmfastr, Guðfastr and Vébjôrn stood on many runestones and are borne by fewer than ten Swedes today.
 
