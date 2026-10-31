@@ -69,6 +69,21 @@ export function parseTimeline(line: string): ReportEvent[] {
     .filter((x): x is RegExpExecArray => !!x).map(x => ({ label: x[1], date: x[2] }));
 }
 
+/** The study's span as a date range in words: "11–31 oktober 2026", "28 september–3 oktober 2026" or across years in
+ *  full. From the timeline's first event to its last (the publication date is shown separately on the paper). */
+export function studySpan(timeline: ReportEvent[], lang: "sv" | "en" = "sv"): string | null {
+  if (!timeline.length) return null;
+  const ds = timeline.map(e => e.date).sort();
+  const [a, b] = [ds[0], ds[ds.length - 1]].map(x => new Date(`${x}T12:00:00Z`));
+  const loc = lang === "en" ? "en-GB" : "sv-SE";
+  const f = (d: Date, o: Intl.DateTimeFormatOptions) => d.toLocaleDateString(loc, { timeZone: "Europe/Stockholm", ...o });
+  const full = (d: Date) => f(d, { day: "numeric", month: "long", year: "numeric" });
+  if (ds[0] === ds[ds.length - 1]) return full(a);
+  if (a.getUTCFullYear() !== b.getUTCFullYear()) return `${full(a)}–${full(b)}`;
+  if (a.getUTCMonth() !== b.getUTCMonth()) return `${f(a, { day: "numeric", month: "long" })}–${full(b)}`;
+  return `${f(a, { day: "numeric" })}–${full(b)}`;
+}
+
 export interface ReportHeader {
   author: string;
   affiliation: string;
