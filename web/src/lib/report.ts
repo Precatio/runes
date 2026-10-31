@@ -55,10 +55,23 @@ export function parseForm(line: string): ReportForm {
   return REPORT_FORMS.find(f => m && (f.sv === m[1] || f.en === m[1])) ?? REPORT_FORMS[0];
 }
 
+/** One step in the study's timeline (mallen version 3): what happened and the day, in time order. */
+export interface ReportEvent { label: string; date: string }
+
+/** The timeline sentence of a header line: events separated by semicolons, each ending in an ISO date. */
+export function parseTimeline(line: string): ReportEvent[] {
+  const m = /(?:Tidslinje|Timeline):\s*(.+?)\.\s+(?:Analysen är gjord|The analysis was made|Licens|Licence)/.exec(line);
+  if (!m) return [];
+  return m[1].split(/;\s*/).map(x => /^(.*?)\s+(\d{4}-\d{2}-\d{2})$/.exec(x.trim()))
+    .filter((x): x is RegExpExecArray => !!x).map(x => ({ label: x[1], date: x[2] }));
+}
+
 export interface ReportHeader {
   author: string;
   affiliation: string;
   form: ReportForm;
+  /** The study's history before this version: "Tidslinje: analysplanen låstes 2026-10-28; materialet frystes 2026-10-29." */
+  timeline: ReportEvent[];
   version: string | null;
   date: string | null;
   appVersion: string | null;
@@ -95,6 +108,7 @@ export function parseHeader(line: string): ReportHeader | null {
     author: who[1].trim(),
     affiliation: who[2].trim(),
     form: parseForm(s),
+    timeline: parseTimeline(s),
     version: v?.[1] ?? null,
     date: v?.[2] ?? null,
     appVersion: pick(/Vitki\s+(\d+\.\d+\.\d+)/, s),
@@ -235,6 +249,7 @@ export function reportJsonLd(post: BlogPost, lang: "sv" | "en" = "sv") {
       author: { "@type": "Person", "@id": `${SITE_URL}/#founder`, name: h?.author ?? "Viktor Kvant",
                 ...(h?.affiliation ? { affiliation: h.affiliation } : {}) },
       publisher: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: SITE_NAME, url: SITE_URL },
+      ...(h?.timeline.length ? { dateCreated: h.timeline[0].date } : {}),
       datePublished: published,
       dateModified: post.updatedAt ?? published,
       ...(h?.version ? { version: h.version, reportNumber: `${en ? "Report version" : "Rapportversion"} ${h.version}` } : {}),

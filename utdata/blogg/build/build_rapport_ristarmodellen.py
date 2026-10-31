@@ -21,9 +21,11 @@ DONE = json.load(open(os.path.join(C, "done.json"), encoding="utf-8"))
 assert DONE["fingerprint"] == FP and DONE["r_version"].startswith("R version 4.6.1")
 APP_VERSION = json.load(open(os.path.join(ROOT, "web", "package.json")))["version"]
 assert APP_VERSION == "3.0.0"
-assert open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().startswith("7ae79aa3")
+assert open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().startswith("d857ec3f")
 REPORT_VERSION = 1
-TODAY = dt.date.today().isoformat()
+TODAY = "2026-10-31"  # rapportversionens datum, fast i byggaren (mallen version 3)
+TL_SV = "modellen byggdes 2026-10-05; blindprovets plan låstes 2026-10-21; blindprovet kördes 2026-10-21; provet kördes om på dagens material 2026-10-31"
+TL_EN = "the model was built 2026-10-05; the plan of the blind test was locked 2026-10-21; the blind test was run 2026-10-21; the test was rerun on today's material 2026-10-31"
 FD = os.path.join(ROOT, "utdata", "forslag")
 PLAN_SHA = open(os.path.join(FD, "analysis_plan_forslag.sha256")).read().split()[0]
 assert PLAN_SHA.startswith("5ed0b2f3")
@@ -148,7 +150,7 @@ def carvers(sv):
     return "; ".join(f"{k}: {a} {of} {b}" for k, (a, b) in BIG)
 
 
-body = f"""*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapportversion {REPORT_VERSION}, {TODAY}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, runristare, attribuering, random forest, blindprov, förregistrering, ortografi. Konkurrerande intressen: inga. Finansiering: ingen.*
+body = f"""*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapportversion {REPORT_VERSION}, {TODAY}. Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, runristare, attribuering, random forest, blindprov, förregistrering, ortografi. Konkurrerande intressen: inga. Finansiering: ingen.*
 
 ## Sammanfattning
 
@@ -271,7 +273,7 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 :::
 """
 
-body_en = f"""*Viktor Kvant, independent researcher. Methods report, partially tested. Report version {REPORT_VERSION}, {TODAY}. The analysis was made in Vitki {APP_VERSION}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, rune carvers, attribution, random forest, blind test, pre-registration, orthography. Competing interests: none. Funding: none.*
+body_en = f"""*Viktor Kvant, independent researcher. Methods report, partially tested. Report version {REPORT_VERSION}, {TODAY}. Timeline: {TL_EN}. The analysis was made in Vitki {APP_VERSION}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, rune carvers, attribution, random forest, blind test, pre-registration, orthography. Competing interests: none. Funding: none.*
 
 ## Abstract
 

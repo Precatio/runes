@@ -24,7 +24,8 @@ export default function ReportList({ posts, lang }: { posts: BlogPost[]; lang: "
       <li key={p.slug} className="border-b border-slate-900/15 py-8">
         <p className="text-[12px] uppercase tracking-[0.15em] text-slate-500">
           {[dateLabel(p.publishedAt ?? h?.date, lang), h?.version && `${en ? "Report version" : "Rapportversion"} ${h.version}`,
-            en ? (h?.form ?? REPORT_FORMS[0]).en : (h?.form ?? REPORT_FORMS[0]).sv].filter(Boolean).join("  ·  ")}
+            en ? (h?.form ?? REPORT_FORMS[0]).en : (h?.form ?? REPORT_FORMS[0]).sv,
+            h?.timeline.length && `${en ? "Work began" : "Arbetet inleddes"} ${dateLabel(h.timeline[0].date, lang)}`].filter(Boolean).join("  ·  ")}
         </p>
         <Heading className="mt-2 text-[1.45rem] sm:text-[1.6rem] leading-snug font-semibold text-slate-900" style={{ fontFamily: "var(--font-paper), var(--font-serif)" }}>
           <Link href={href} prefetch={false} className="hover:text-[#9a350b]">{title}</Link>

@@ -109,7 +109,9 @@ assert FT["t8_kristen"]["utslag"] == "ingen skillnad påvisad" and d2(FT["t8_kri
 SON_SV, SON_GO = pc(107 / 195), pc(13 / 70)
 assert (SON_SV, SON_GO) == (55, 19)
 
-TODAY = dt.date.today().isoformat()
+TODAY = "2026-10-31"  # rapportversionens datum, fast i byggaren (mallen version 3)
+TL_SV = "analysplanen låstes 2026-10-28; uppföljningens plan låstes 2026-10-29; materialet frystes 2026-10-29"
+TL_EN = "the analysis plan was locked 2026-10-28; the follow-up plan was locked 2026-10-29; the material was frozen 2026-10-29"
 ORc = f"{d2(M['or'])} (95 %-intervall {d2(M['lo'])}–{d2(M['hi'])})"
 ORe = f"{d2e(M['or'])} (95 % interval {d2e(M['lo'])}–{d2e(M['hi'])})"
 
@@ -154,7 +156,7 @@ from src.messages import REGION  # noqa: E402
 assert sorted(k for k, v in REGION.items() if v == "Svealand") == sorted(["U", "Sö", "Vs", "Nä", "Gs", "D", "Vr"])
 assert sorted(k for k, v in REGION.items() if v == "Götaland") == sorted(["Ög", "Vg", "Sm", "Öl", "Bo", "Hr", "Ds"])
 
-body = f"""*Viktor Kvant, oberoende forskare. Rapportversion {REPORT_VERSION}, {TODAY}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, kvinnor, resare, Svealand, Götaland, logistisk regression, förregistrering. Konkurrerande intressen: inga. Finansiering: ingen.*
+body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion {REPORT_VERSION}, {TODAY}. Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, kvinnor, resare, Svealand, Götaland, logistisk regression, förregistrering. Konkurrerande intressen: inga. Finansiering: ingen.*
 
 ## Sammanfattning
 
@@ -288,7 +290,7 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 :::
 """
 
-body_en = f"""*Viktor Kvant, independent researcher. Report version {REPORT_VERSION}, {TODAY}. The analysis was made in Vitki {APP_VERSION}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, women, sponsors, Svealand, Götaland, logistic regression, pre-registration. Competing interests: none. Funding: none.*
+body_en = f"""*Viktor Kvant, independent researcher. Fully tested finding. Report version {REPORT_VERSION}, {TODAY}. Timeline: {TL_EN}. The analysis was made in Vitki {APP_VERSION}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, women, sponsors, Svealand, Götaland, logistic regression, pre-registration. Competing interests: none. Funding: none.*
 
 ## Abstract
 

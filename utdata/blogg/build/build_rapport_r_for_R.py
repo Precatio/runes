@@ -24,7 +24,9 @@ assert DONE["fingerprint"] == FP and DONE["r_version"].startswith("R version 4.6
 APP_VERSION = json.load(open(os.path.join(ROOT, "web", "package.json")))["version"]
 assert APP_VERSION == "3.0.0"
 REPORT_VERSION = 1
-TODAY = dt.date.today().isoformat()
+TODAY = "2026-10-31"  # rapportversionens datum, fast i byggaren (mallen version 3)
+TL_SV = "klustret upptäcktes 2026-10-12; den populära artikeln publicerades 2026-10-13; materialet frystes 2026-10-29"
+TL_EN = "the cluster was found 2026-10-12; the popular article was published 2026-10-13; the material was frozen 2026-10-29"
 
 pc = lambda x: int(100 * x + 0.5 + 1e-9)  # noqa: E731  (half up; the result files round to 3 decimals, 0.565 is 56.5 %)
 d2 = lambda x: f"{x:.2f}".replace(".", ",")  # noqa: E731
@@ -160,7 +162,7 @@ summary_en = ("Runestones on which the sound ʀ is written with the ordinary r-r
 CITE_EN = (f"Kvant, V. ({TODAY[:4]}). {title_en}. Research report, report version {REPORT_VERSION}; analysis in Vitki {APP_VERSION}. "
            f"https://vitkirunor.se/en/forskningsrapporter/{SLUG}")
 
-body = f"""*Viktor Kvant, oberoende forskare. Rapportversion {REPORT_VERSION}, {TODAY}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, yr-runan, ʀ, r, Uppland, ristare, rumslig statistik. Konkurrerande intressen: inga. Finansiering: ingen.*
+body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion {REPORT_VERSION}, {TODAY}. Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, yr-runan, ʀ, r, Uppland, ristare, rumslig statistik. Konkurrerande intressen: inga. Finansiering: ingen.*
 
 ## Sammanfattning
 
@@ -311,7 +313,7 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 :::
 """
 
-body_en = f"""*Viktor Kvant, independent researcher. Report version {REPORT_VERSION}, {TODAY}. The analysis was made in Vitki {APP_VERSION}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, yr-rune, ʀ, r, Uppland, carvers, spatial statistics. Competing interests: none. Funding: none.*
+body_en = f"""*Viktor Kvant, independent researcher. Fully tested finding. Report version {REPORT_VERSION}, {TODAY}. Timeline: {TL_EN}. The analysis was made in Vitki {APP_VERSION}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, yr-rune, ʀ, r, Uppland, carvers, spatial statistics. Competing interests: none. Funding: none.*
 
 ## Abstract
 

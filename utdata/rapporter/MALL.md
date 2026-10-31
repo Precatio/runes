@@ -1,13 +1,14 @@
-# Forskningsrapport – mallen, version 2 (2026-10-31)
+# Forskningsrapport – mallen, version 3 (2026-10-31)
 
-**LÅST 2026-10-31.** Version 2 ersätter version 1 (`MALL_v1.md`, låst samma dag, SHA-256 a03372f5…, se
-`MALL_v1.md.sha256`). Skäl, Viktor 2026-10-31: ”det känns som att vi har många viktiga fynd i appen som inte klarar
-alla steg men som ändå behöver lyftas fram för forskningen, och då behöver vi en form för dessa” och ”ok då kör vi på
-dessa två” (nivåerna Fullt prövat och Delvis prövat). Version 1 saknade dessutom form för metodrapporter (ristarmodellens
-blindprov) och datanotiser (Rundata mot Runor 2020). Förebilden är fortfarande rapporten om kvinnorna bland resarna
-(`utdata/blogg/build/build_rapport_kvinnor.py`). Rapporter byggda på version 1 behåller den; de fyra publicerade
-(kvinnorna, r för ʀ, sönerna och bröderna, familjegrupperna) är Fullt prövade fynd. Formen ändras bara genom en ny
-version av mallen med datum och skäl; kontrollsumman står i `MALL.md.sha256`.
+**LÅST 2026-10-31.** Version 3 ersätter version 2 (`MALL_v2.md`, låst samma dag, SHA-256 7ae79aa3…, se
+`MALL_v2.md.sha256`), som ersatte version 1 (`MALL_v1.md`). Skäl, Viktor 2026-10-31: ”alla våra rapporter får dagens
+datum trots att vi jobbat med den underliggande datan för rapporterna under lång tid” och ”lägg in alla datumen”.
+Ändringen gäller bara rubrikraden och hur datumen visas: varje rapport får en **tidslinje** för studien, och
+rapportversionens datum är **fast** i byggaren i stället för dagens datum när byggaren körs. Version 2 lade till
+nivåerna (Fullt prövat och Delvis prövat), metodrapporter och datanotiser (Viktor: ”ok då kör vi på dessa två”). De sex
+rapporter som fanns 2026-10-31 fick tidslinje och formmening samma dag; inget annat i dem ändrades. Förebilden är
+fortfarande rapporten om kvinnorna bland resarna (`utdata/blogg/build/build_rapport_kvinnor.py`). Formen ändras bara
+genom en ny version av mallen med datum och skäl; kontrollsumman står i `MALL.md.sha256`.
 
 En rapport per fynd, alltså ett påstående; delmått av samma påstående (stungen i och stungen u) får ingå. Etiketten är
 **Rapport** (en typ per artikel) + ämnen; formen och nivån står i rubrikraden, inte som etikett. Byggare i
@@ -74,12 +75,24 @@ Runor 2020) och vad den gör med analyser. Den prövar ingen hypotes och får d�
   gör med analyser, 5 Råd till den som använder källan, Data och kod, Referenser, korthetsrutan. Längd 800–2 000 ord.
 - Titeln är avvikelsen med antal.
 
+## Datumen
+
+- **Rapportversionens datum** står i rubrikraden (”Rapportversion 1, 2026-10-31.”) och skrivs som en konstant i
+  byggaren, aldrig som dagens datum när byggaren körs. En ny version får ett nytt datum och en ändringslogg.
+- **Tidslinjen** står direkt efter versionsmeningen: ”Tidslinje: händelse ÅÅÅÅ-MM-DD; händelse ÅÅÅÅ-MM-DD.” På engelska
+  ”Timeline: event YYYY-MM-DD; event YYYY-MM-DD.” Händelserna står i tidsordning som korta fraser i preteritum, med
+  ISO-datum sist: när arbetet med fyndet började (mönstret upptäcktes, analysplanen låstes, modellen byggdes), planer och
+  tillägg som låstes, när materialet frystes, replikeringar och omkörningar. Publiceringen hör inte dit; den visas för
+  sig. Varje datum ska gå att belägga i versionshanteringen eller i planens kontrollsumma.
+- **På sajten** visas tidslinjen under versionsraden på rapportsidan, listan visar när arbetet inleddes (tidslinjens
+  första händelse), och den strukturerade datan får samma datum som dateCreated bredvid datePublished.
+
 ## Märkningen
 
-- **Rubrikraden** (punkt 0 nedan): direkt efter författarmeningen står formen med punkt: ”Fullt prövat fynd.”,
+- **Rubrikraden** (punkt 0 nedan): direkt efter författarmeningen står formen med punkt, sedan versionsmeningen och tidslinjen (se Datumen): ”Fullt prövat fynd.”,
   ”Delvis prövat fynd.”, ”Metodrapport, fullt prövad.”, ”Metodrapport, delvis prövad.” eller ”Datanotis.” På engelska
   ”Fully tested finding.”, ”Partially tested finding.”, ”Methods report, fully tested.”, ”Methods report, partially
-  tested.”, ”Data note.” Saknas formen är rapporten byggd på version 1 och räknas som Fullt prövat fynd.
+  tested.”, ”Data note.” Saknas formen räknas rapporten som Fullt prövat fynd (så byggdes version 1).
 - **Sammanfattningen** börjar, för allt utom nivå 1, med en mening om vad som inte är prövat eller faller.
 - **På sajten** syns formen som märke på rapportsidan och i listan. Listan visar fynd på nivå 1 före nivå 2, sedan
   metodrapporter och datanotiser. Den strukturerade datan får formens engelska namn som genre. Märkningen byggs i
@@ -99,7 +112,7 @@ och appens flikar står bara under Data och kod. Byggaren ska kontrollera detta 
 
 Ingen numrering av rapporterna i titeln; typen Rapport och versionsraden räcker.
 
-0. **Huvud** (kursiv rad först i texten): författare och tillhörighet, formen (se Märkningen), version och datum, licens (CC BY 4.0),
+0. **Huvud** (kursiv rad först i texten): författare och tillhörighet, formen (se Märkningen), version och datum, tidslinjen (se Datumen), licens (CC BY 4.0),
    citeringsrad till den engelska versionen, nyckelord, konkurrerande intressen, finansiering.
 1. **Sammanfattning**, strukturerad: bakgrund och syfte, material, metod, resultat (effekt och osäkerhet i siffror),
    slutsats. Säg vad som inte visats.

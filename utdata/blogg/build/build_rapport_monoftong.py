@@ -27,9 +27,11 @@ assert DONE["fingerprint"] == FP and DONE["r_version"].startswith("R version 4.6
 APP_VERSION = json.load(open(os.path.join(ROOT, "web", "package.json")))["version"]
 assert APP_VERSION == "3.0.0"
 MALL_SHA = open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().split()[0]
-assert MALL_SHA.startswith("7ae79aa3")  # mallens version 2
+assert MALL_SHA.startswith("d857ec3f")  # mallens version 3
 REPORT_VERSION = 1
-TODAY = dt.date.today().isoformat()
+TODAY = "2026-10-31"  # rapportversionens datum, fast i byggaren (mallen version 3)
+TL_SV = "mönstret upptäcktes och mätkontrollerna lades till 2026-10-11; materialet frystes 2026-10-29; kodningen kontrollerades 2026-10-31"
+TL_EN = "the pattern was found and the checks of the measurement were added 2026-10-11; the material was frozen 2026-10-29; the coding was checked 2026-10-31"
 CH = json.load(open(os.path.join(C, "change.json"), encoding="utf-8"))
 ROB = json.load(open(os.path.join(C, "robustness.json"), encoding="utf-8"))
 MD = os.path.join(ROOT, "utdata", "monoftong")
@@ -191,7 +193,7 @@ def chart(sv):
     return "\n".join(rows)
 
 
-body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion {REPORT_VERSION}, {TODAY}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, runsvenska, monoftongering, stavning, skriftnorm, ristare, stilkronologi, logistisk regression. Konkurrerande intressen: inga. Finansiering: ingen.*
+body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion {REPORT_VERSION}, {TODAY}. Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, runsvenska, monoftongering, stavning, skriftnorm, ristare, stilkronologi, logistisk regression. Konkurrerande intressen: inga. Finansiering: ingen.*
 
 ## Sammanfattning
 
@@ -322,7 +324,7 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 :::
 """
 
-body_en = f"""*Viktor Kvant, independent researcher. Fully tested finding. Report version {REPORT_VERSION}, {TODAY}. The analysis was made in Vitki {APP_VERSION}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, Runic Swedish, monophthongisation, spelling, written norm, carvers, stylistic chronology, logistic regression. Competing interests: none. Funding: none.*
+body_en = f"""*Viktor Kvant, independent researcher. Fully tested finding. Report version {REPORT_VERSION}, {TODAY}. Timeline: {TL_EN}. The analysis was made in Vitki {APP_VERSION}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, Runic Swedish, monophthongisation, spelling, written norm, carvers, stylistic chronology, logistic regression. Competing interests: none. Funding: none.*
 
 ## Abstract
 

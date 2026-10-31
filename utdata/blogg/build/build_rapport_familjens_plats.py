@@ -16,7 +16,9 @@ from src import blog_labels  # noqa: E402
 APP_VERSION = json.load(open(os.path.join(ROOT, "web", "package.json")))["version"]
 assert APP_VERSION == "3.0.0"
 REPORT_VERSION = 1
-TODAY = dt.date.today().isoformat()
+TODAY = "2026-10-31"  # rapportversionens datum, fast i byggaren (mallen version 3)
+TL_SV = "den första analysplanen låstes 2026-10-28; de följande planerna låstes 2026-10-29; materialet frystes 2026-10-29; tilläggsplanen och replikeringen låstes 2026-10-31"
+TL_EN = "the first analysis plan was locked 2026-10-28; the following plans were locked 2026-10-29; the material was frozen 2026-10-29; the addendum and the replication were locked 2026-10-31"
 FP = "3f58e9339191761e"
 U = os.path.join(ROOT, "utdata")
 J = lambda *p: json.load(open(os.path.join(U, *p), encoding="utf-8"))  # noqa: E731
@@ -130,7 +132,7 @@ def chart(sv):
     return "\n".join(rows)
 
 
-body = f"""*Viktor Kvant, oberoende forskare. Rapportversion {REPORT_VERSION}, {TODAY}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, gravfält, familj, stengrupper, rumslig statistik, punktmönster, förregistrering. Konkurrerande intressen: inga. Finansiering: ingen.*
+body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion {REPORT_VERSION}, {TODAY}. Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, gravfält, familj, stengrupper, rumslig statistik, punktmönster, förregistrering. Konkurrerande intressen: inga. Finansiering: ingen.*
 
 ## Sammanfattning
 
@@ -257,7 +259,7 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 :::
 """
 
-body_en = f"""*Viktor Kvant, independent researcher. Report version {REPORT_VERSION}, {TODAY}. The analysis was made in Vitki {APP_VERSION}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, grave fields, family, stone groups, spatial statistics, point patterns, pre-registration. Competing interests: none. Funding: none.*
+body_en = f"""*Viktor Kvant, independent researcher. Fully tested finding. Report version {REPORT_VERSION}, {TODAY}. Timeline: {TL_EN}. The analysis was made in Vitki {APP_VERSION}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, grave fields, family, stone groups, spatial statistics, point patterns, pre-registration. Competing interests: none. Funding: none.*
 
 ## Abstract
 

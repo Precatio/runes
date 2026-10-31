@@ -16,11 +16,11 @@ const T = {
   sv: { kind: "Forskningsrapport", back: "← Forskningsrapporter", other: "Read in English →", version: "Rapportversion", published: "Publicerad",
         analysis: "Analys i Vitki", licence: "Licens", keywords: "Nyckelord", highlights: "Huvudpunkter", contents: "Innehåll",
         competing: "Konkurrerande intressen", funding: "Finansiering", cite: "Citera som", abstract: "Sammanfattning",
-        updated: "Senast ändrad", series: "Vitki – forskningsrapporter" },
+        updated: "Senast ändrad", series: "Vitki – forskningsrapporter", timeline: "Studiens tidslinje" },
   en: { kind: "Research report", back: "← Research reports", other: "Läs på svenska →", version: "Report version", published: "Published",
         analysis: "Analysis in Vitki", licence: "Licence", keywords: "Keywords", highlights: "Highlights", contents: "Contents",
         competing: "Competing interests", funding: "Funding", cite: "Cite as", abstract: "Abstract",
-        updated: "Last changed", series: "Vitki – research reports" },
+        updated: "Last changed", series: "Vitki – research reports", timeline: "Timeline of the study" },
 };
 
 export default function ReportPaper({ post, lang, sizes, otherHref }: { post: BlogPost; lang: "sv" | "en"; sizes?: ImageSizes; otherHref?: string | null }) {
@@ -58,6 +58,12 @@ export default function ReportPaper({ post, lang, sizes, otherHref }: { post: Bl
           {h?.affiliation && <p className="mt-1 text-sm italic text-slate-600">{h.affiliation[0].toUpperCase() + h.affiliation.slice(1)} · Vitki</p>}
           {meta.length > 0 && <p className="mt-4 text-[13px] text-slate-500">{meta.join("  ·  ")}</p>}
           {changed && <p className="mt-1 text-[13px] text-slate-500">{t.updated} {dateLabel(changed, lang)}</p>}
+          {h && h.timeline.length > 0 && (
+            <p className="mt-2 text-[13px] text-slate-500">
+              <span className="font-semibold">{t.timeline}:</span>{" "}
+              {h.timeline.map(e => `${e.label[0].toUpperCase() + e.label.slice(1)} ${dateLabel(e.date, lang)}`).join("  ·  ")}
+            </p>
+          )}
           <div className="mt-6"><ReportCite citation={citation} bibtex={bibtex(post, h)} lang={lang} /></div>
         </header>
 
