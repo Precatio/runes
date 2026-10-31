@@ -21,3 +21,11 @@ Fyndet kvalar som **Fullt prövat fynd** i rapportmallen version 4.
 
 ## Avvikelser
 Inga.
+
+## Explorativt, utanför planen: omblandning inom härad
+Familjer i samma bygd delar ett lokalt namnförråd, så omblandning inom landskapet kan överskatta arvet. Med
+omblandningen inom härad (`harad.py`, `harad.json`): **H1** 5,3 % mot 3,3 % väntat, p 0,0001 (113 härader) – håller;
+**H5** 6,7 % mot 5,6 % väntat, p 0,053 (100 härader) – krymper och är inte signifikant. För syskonen är den
+omblandningen dock skev uppåt: en sten med flera syskon ger många par, och i ett litet härad blir den slumpvisa
+partnern ofta ett annat syskon i samma familj. Rapporten bygger påståendet på förälder–barn och redovisar syskonen med
+det här förbehållet.
