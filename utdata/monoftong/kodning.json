@@ -1,0 +1,312 @@
+{
+ "n_stones": 649,
+ "n_words": 1278,
+ "rule_mono_words": 599,
+ "strict": {
+  "diftong": 679,
+  "monoftong": 520,
+  "osäkert": 79
+ },
+ "rule_mono_to_uncertain": 79,
+ "uncertain_examples": {
+  "stan": 25,
+  "rasa": 11,
+  "þaR": 7,
+  "rasti": 6,
+  "stn": 5,
+  "rastu": 4,
+  "rstu": 2,
+  "arisa": 2,
+  "siin": 2,
+  "stun": 1,
+  "uit": 1,
+  "rasi": 1,
+  "stahin": 1,
+  "rasþi": 1,
+  "arsti": 1
+ },
+ "stones_changed": 28,
+ "stones_dropped": 16,
+ "sample": [
+  {
+   "signum": "Sö 140",
+   "norm": "ræisþi",
+   "translit": "raisþi",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "U 202",
+   "norm": "stæin",
+   "translit": "stain",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "U 854",
+   "norm": "stæin",
+   "translit": "stain",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "U 907",
+   "norm": "stæin",
+   "translit": "stain",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "Sö 75",
+   "norm": "stæin",
+   "translit": "stain",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "Vg 73",
+   "norm": "stæin",
+   "translit": "stin",
+   "rule": "monoftong",
+   "strict": "monoftong"
+  },
+  {
+   "signum": "Nä 9",
+   "norm": "stæin",
+   "translit": "stin",
+   "rule": "monoftong",
+   "strict": "monoftong"
+  },
+  {
+   "signum": "G 134",
+   "norm": "ræisa",
+   "translit": "raisa",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "U 1092",
+   "norm": "stæin",
+   "translit": "stin",
+   "rule": "monoftong",
+   "strict": "monoftong"
+  },
+  {
+   "signum": "U 621",
+   "norm": "ræisa",
+   "translit": "risa",
+   "rule": "monoftong",
+   "strict": "monoftong"
+  },
+  {
+   "signum": "U 1161",
+   "norm": "ræisa",
+   "translit": "resa",
+   "rule": "monoftong",
+   "strict": "monoftong"
+  },
+  {
+   "signum": "U 1063",
+   "norm": "ræisa",
+   "translit": "raisa",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "U 810",
+   "norm": "ræisa",
+   "translit": "raisa",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "U Fv1958;250",
+   "norm": "ræisa",
+   "translit": "raisa",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "U 669",
+   "norm": "stæin",
+   "translit": "stain",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "Vg 139",
+   "norm": "ræisti",
+   "translit": "risþi",
+   "rule": "monoftong",
+   "strict": "monoftong"
+  },
+  {
+   "signum": "Öl 25",
+   "norm": "stæin",
+   "translit": "stain",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "Hs 12",
+   "norm": "stæin",
+   "translit": "stin",
+   "rule": "monoftong",
+   "strict": "monoftong"
+  },
+  {
+   "signum": "Sö 10",
+   "norm": "ræisa",
+   "translit": "raisa",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "Sö 122",
+   "norm": "Ræisþi",
+   "translit": "raisþi",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "U 91",
+   "norm": "ræisa",
+   "translit": "rnisn",
+   "rule": "monoftong",
+   "strict": "monoftong"
+  },
+  {
+   "signum": "Sö 62",
+   "norm": "ræisti",
+   "translit": "rasti",
+   "rule": "monoftong",
+   "strict": "osäkert"
+  },
+  {
+   "signum": "U 700",
+   "norm": "ræisa",
+   "translit": "risa",
+   "rule": "monoftong",
+   "strict": "monoftong"
+  },
+  {
+   "signum": "Ög 10",
+   "norm": "ræisa",
+   "translit": "risa",
+   "rule": "monoftong",
+   "strict": "monoftong"
+  },
+  {
+   "signum": "U 810",
+   "norm": "þæiR",
+   "translit": "þair",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "U 194",
+   "norm": "ræisa",
+   "translit": "raisa",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "Vg 13",
+   "norm": "ræisti",
+   "translit": "risti",
+   "rule": "monoftong",
+   "strict": "monoftong"
+  },
+  {
+   "signum": "U 481",
+   "norm": "stæin",
+   "translit": "stin",
+   "rule": "monoftong",
+   "strict": "monoftong"
+  },
+  {
+   "signum": "Vg 175",
+   "norm": "ræistu",
+   "translit": "risþu",
+   "rule": "monoftong",
+   "strict": "monoftong"
+  },
+  {
+   "signum": "U 287",
+   "norm": "ræisa",
+   "translit": "raisa",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "U 329",
+   "norm": "stæina",
+   "translit": "staina",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "U 409",
+   "norm": "ræisa",
+   "translit": "rasa",
+   "rule": "monoftong",
+   "strict": "osäkert"
+  },
+  {
+   "signum": "U 914",
+   "norm": "ræisa",
+   "translit": "raisa",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "Ög Fv1966;102",
+   "norm": "ræisþi",
+   "translit": "raisþi",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "U 258",
+   "norm": "þæiR",
+   "translit": "þiR",
+   "rule": "monoftong",
+   "strict": "monoftong"
+  },
+  {
+   "signum": "Sö 48",
+   "norm": "þæiR",
+   "translit": "þeiR",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "U 1094",
+   "norm": "stæin",
+   "translit": "stain",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "U 1020",
+   "norm": "ræisa",
+   "translit": "raisa",
+   "rule": "diftong",
+   "strict": "diftong"
+  },
+  {
+   "signum": "U 104",
+   "norm": "þæiR",
+   "translit": "þiR",
+   "rule": "monoftong",
+   "strict": "monoftong"
+  },
+  {
+   "signum": "U 91",
+   "norm": "stæin",
+   "translit": "stnia",
+   "rule": "diftong",
+   "strict": "diftong"
+  }
+ ]
+}

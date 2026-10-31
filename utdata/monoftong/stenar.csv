@@ -1,0 +1,650 @@
+signum,province,half,t50,hand,y_rule,y_strict,n_words,n_mono_strict,n_uncertain
+Öl 4,Öl,A,0.7,S:Öl:Resmo sn,0,0.0,2,0,0
+Öl 5,Öl,A,0.3,S:Öl:Mörbylånga sn,0,0.0,1,0,0
+Öl 13,Öl,A,-1.05,S:Öl:Södra Möckleby sn,0,0.0,2,0,0
+Öl 25,Öl,A,-1.05,S:Öl:Sandby sn (nu Gårdby sn),0,0.0,1,0,0
+Öl 26,Öl,B,0.7,S:Öl:Sandby sn,0,0.0,2,0,0
+Öl 27,Öl,B,0.7,S:Öl:Sandby sn,0,0.0,2,0,0
+Öl 31,Öl,B,0.3,S:Öl:Runstens sn,0,0.0,2,0,0
+Öl 37,Öl,B,0.3,S:Öl:Runstens sn,0,0.0,4,0,0
+Öl 39,Öl,A,-0.3,S:Öl:Gärdslösa sn,0,0.0,3,0,0
+Öl 40,Öl,A,-0.3,S:Öl:Gärdslösa sn,0,0.0,2,0,0
+Öl 41,Öl,A,0.3,S:Öl:Gärdslösa sn,0,0.0,2,0,0
+Ög 10,Ög,A,-1.05,S:Ög:Askeby sn,1,1.0,2,2,0
+Ög 11,Ög,B,-1.05,S:Ög:Vårdsbergs sn,1,1.0,2,2,0
+Ög 13,Ög,A,-0.4,S:Ög:Konungsunds sn,1,1.0,2,2,0
+Ög 18,Ög,B,-1.05,S:Ög:Kuddby sn,1,1.0,1,1,0
+Ög 20,Ög,B,-1.05,S:Ög:Kuddby sn,1,1.0,3,1,0
+Ög 22,Ög,B,-1.05,S:Ög:Kuddby sn,1,1.0,3,1,0
+Ög 30,Ög,B,-0.4,S:Ög:Tåby sn (eg. Furingstads sn),1,0.0,2,0,1
+Ög 34,Ög,A,-1.05,S:Ög:Å sn,1,1.0,2,1,0
+Ög 42,Ög,A,-1.05,S:Ög:Älvestads sn,1,1.0,2,2,0
+Ög 47,Ög,B,-1.05,S:Ög:Kvillinge sn,1,1.0,2,2,0
+Ög 61,Ög,B,-1.05,S:Ög:Flistads sn,0,0.0,2,0,0
+Ög 66,Ög,B,-0.4,S:Ög:Bjälbo sn,1,1.0,4,3,0
+Ög 67,Ög,B,-1.05,S:Ög:Ekeby sn,1,1.0,2,2,0
+Ög 71,Ög,B,-1.05,S:Ög:Ekeby sn,1,1.0,2,2,0
+Ög 81,Ög,A,-0.4,R:Torkel,1,1.0,4,4,0
+Ög 84,Ög,A,-1.05,R:Torkel,1,1.0,2,2,0
+Ög 85,Ög,A,-1.05,S:Ög:Högby sn,1,1.0,1,1,0
+Ög 88,Ög,A,-1.05,S:Ög:Högby sn,1,1.0,2,2,0
+Ög 89,Ög,A,-1.05,S:Ög:Högby sn,1,1.0,1,1,0
+Ög 91,Ög,A,-1.05,S:Ög:Järstads sn,1,1.0,2,2,0
+Ög 92,Ög,A,-1.05,S:Ög:Väderstads sn,1,1.0,2,2,0
+Ög 93,Ög,A,-0.4,S:Ög:Väderstads sn,0,0.0,2,0,0
+Ög 94,Ög,A,-0.4,S:Ög:Väderstads sn,1,1.0,1,1,0
+Ög 97,Ög,B,-1.05,S:Ög:Åsbo sn,1,1.0,2,2,0
+Ög 98,Ög,B,-1.05,S:Ög:Åsbo sn,1,1.0,1,1,0
+Ög 99,Ög,A,-0.3,S:Ög:Mogata sn,1,1.0,3,3,0
+Ög 103,Ög,A,-0.4,S:Ög:Kaga sn,0,0.0,2,0,0
+Ög 104,Ög,A,-0.4,S:Ög:Kaga sn,1,1.0,2,2,0
+Ög 105,Ög,B,-1.05,S:Ög:Kärna sn,1,1.0,2,2,0
+Ög 111,Ög,A,-0.4,S:Ög:Landeryds sn,1,1.0,2,1,1
+Ög 112,Ög,A,-1.05,S:Ög:Landeryds sn,1,1.0,2,2,0
+Ög 118,Ög,B,-1.05,S:Ög:Slaka sn,1,1.0,2,2,0
+Ög 119,Ög,B,-1.05,S:Ög:Slaka sn,1,1.0,1,1,0
+Ög 121,Ög,B,-1.05,S:Ög:Slaka sn,1,1.0,3,3,0
+Ög 128,Ög,B,-1.05,S:Ög:Linköping,1,1.0,2,1,0
+Ög 129,Ög,B,-1.05,S:Ög:Linköping,1,1.0,3,1,0
+Ög 131,Ög,A,-1.05,S:Ög:Heda sn,1,1.0,1,1,0
+Ög 133,Ög,A,-1.05,S:Ög:Heda sn,0,0.0,3,0,0
+Ög 146,Ög,B,-0.4,S:Ög:Dagsbergs sn,1,1.0,2,2,0
+Ög 148,Ög,A,-1.05,S:Ög:Furingstads sn,1,1.0,2,1,0
+Ög 151,Ög,A,-1.05,S:Ög:Furingstads sn,1,1.0,2,1,1
+Ög 156,Ög,A,-0.3,S:Ög:Tingstads sn,0,0.0,2,0,0
+Ög 158,Ög,A,-0.4,S:Ög:Tingstads sn,1,0.0,2,0,1
+Ög 176,Ög,A,-1.05,S:Ög:Skärkinds sn,1,1.0,2,1,0
+Ög 179,Ög,A,-0.4,S:Ög:Vadstena,1,1.0,1,1,0
+Ög 184,Ög,B,-0.4,S:Ög:Sjögestads sn,1,1.0,1,1,0
+Ög 186,Ög,B,-0.4,R:Anund,0,0.0,1,0,0
+Ög 189,Ög,B,-0.4,S:Ög:Vikingstads sn,1,1.0,2,2,0
+Ög 201,Ög,B,-1.05,S:Ög:Veta sn,1,1.0,3,2,0
+Ög 203,Ög,B,-1.05,S:Ög:Veta sn,1,1.0,2,2,0
+Ög 208,Ög,B,-1.05,S:Ög:Viby sn (eg. Sjögestads sn),1,1.0,2,2,0
+Ög 211,Ög,A,-1.05,S:Ög:Viby sn,1,1.0,2,1,0
+Ög 212,Ög,A,-1.05,S:Ög:Viby sn,1,1.0,2,2,0
+Ög 217,Ög,A,-1.05,S:Ög:Sunds sn,0,0.0,2,0,0
+Ög 219,Ög,B,-1.05,S:Ög:Lillkyrka sn,1,1.0,2,2,0
+Ög 221,Ög,A,-0.4,S:Ög:Törnevalla sn,1,1.0,2,1,1
+Ög 225,Ög,B,-0.4,S:Ög:Östra Husby sn,1,1.0,2,2,0
+Ög 228,Ög,B,-0.3,S:Ög:Östra Husby sn,1,,1,0,1
+Ög 229,Ög,B,-0.4,S:Ög:Östra Husby sn,0,0.0,1,0,0
+Ög 232,Ög,B,-0.4,S:Ög:Östra Stenby sn,1,1.0,3,2,1
+Ög 234,Ög,B,-1.05,S:Ög:Östra Stenby sn,1,1.0,2,2,0
+Ög 236,Ög,B,-1.05,S:Ög:Östra Stenby sn,0,0.0,2,0,0
+Ög 237,Ög,B,-1.05,S:Ög:Östra Stenby sn,1,1.0,3,1,0
+Ög ATA6488/60,Ög,A,-1.05,S:Ög:Skänninge,1,1.0,1,1,0
+Ög Fv1950;341,Ög,B,-0.4,S:Ög:Sankt Lars sn (nu Linköping),1,1.0,3,3,0
+Ög Fv1959;249,Ög,B,-1.05,S:Ög:Söderköping,0,0.0,1,0,0
+Ög Fv1965;54,Ög,A,-1.05,S:Ög:Viby sn,1,1.0,1,1,0
+Ög Fv1966;102,Ög,B,-0.4,S:Ög:Söderköping,1,1.0,2,1,0
+Ög Fv1975;174,Ög,A,-0.4,S:Ög:Väderstads sn,1,1.0,1,1,0
+Sö 3,Sö,A,-0.4,S:Sö:Björnlunda sn,0,0.0,1,0,0
+Sö 8,Sö,B,-0.4,R:Tore 1,0,0.0,2,0,0
+Sö 9,Sö,B,-0.4,R:Traen,0,0.0,2,0,0
+Sö 10,Sö,B,-0.4,R:Tore 1,0,0.0,3,0,0
+Sö 11,Sö,A,-0.3,R:Öpir 2,0,0.0,1,0,0
+Sö 14,Sö,A,-0.4,R:Traen,1,0.0,3,0,1
+Sö 19,Sö,A,0.3,S:Sö:Hölö sn,0,0.0,2,0,0
+Sö 33,Sö,B,-0.4,S:Sö:Vagnhärads sn (nu Trosa-Vagnhärad),0,0.0,2,0,0
+Sö 35,Sö,B,-0.3,R:Tore 1,0,0.0,3,0,0
+Sö 37,Sö,B,-0.3,S:Sö:Vagnhärads sn (nu Trosa-Vagnhärad),0,0.0,2,0,0
+Sö 40,Sö,B,-0.3,R:Skamhals 2,0,0.0,1,0,0
+Sö 46,Sö,A,-1.05,S:Sö:Nykyrka sn,0,0.0,2,0,0
+Sö 48,Sö,B,0.3,S:Sö:Stigtomta sn,0,0.0,3,0,0
+Sö 49,Sö,B,-0.4,R:Traen,0,0.0,2,0,0
+Sö 52,Sö,A,-0.4,S:Sö:Bettna sn,0,0.0,2,0,0
+Sö 54,Sö,A,-0.3,R:Stenkil,1,1.0,4,1,0
+Sö 55,Sö,A,-0.3,S:Sö:Blacksta sn,1,0.0,5,0,1
+Sö 61,Sö,B,-0.3,S:Sö:Husby-Oppunda sn,0,0.0,1,0,0
+Sö 62,Sö,B,-0.4,S:Sö:Lerbo sn,1,,2,0,2
+Sö 72,Sö,B,-0.4,S:Sö:Västra Vingåkers sn,0,0.0,3,0,0
+Sö 73,Sö,B,-1.05,S:Sö:Västra Vingåkers sn,0,0.0,2,0,0
+Sö 74,Sö,B,-0.4,S:Sö:Västra Vingåkers sn,0,0.0,2,0,0
+Sö 75,Sö,A,-0.4,S:Sö:Vrena sn,0,0.0,2,0,0
+Sö 88,Sö,A,-0.4,S:Sö:Öja sn,1,1.0,2,2,0
+Sö 90,Sö,B,-0.4,R:Traen,0,0.0,2,0,0
+Sö 102,Sö,A,-0.3,S:Sö:Jäders sn,0,0.0,2,0,0
+Sö 106,Sö,B,-0.4,S:Sö:Kjula sn,0,0.0,2,0,0
+Sö 108,Sö,A,-0.4,S:Sö:Klosters sn (Eskilstuna),0,0.0,2,0,0
+Sö 111,Sö,B,-0.4,S:Sö:Stenkvista sn,0,0.0,1,0,0
+Sö 113,Sö,B,-1.05,S:Sö:Stenkvista sn,1,1.0,2,1,0
+Sö 121,Sö,A,-1.05,S:Sö:Allhelgona sn (nu Helgona),1,,1,0,1
+Sö 122,Sö,A,-0.3,R:Traen,0,0.0,2,0,0
+Sö 123,Sö,A,-1.05,R:Traen,1,1.0,2,1,1
+Sö 124,Sö,B,0.7,S:Sö:Bogsta sn,0,0.0,2,0,0
+Sö 128,Sö,B,-0.3,S:Sö:Lids sn,1,,2,0,2
+Sö 131,Sö,B,-1.05,S:Sö:Lids sn,0,0.0,3,0,0
+Sö 134,Sö,B,-1.05,S:Sö:Ludgo sn,0,0.0,2,0,0
+Sö 137,Sö,B,-1.05,S:Sö:Ludgo sn,1,1.0,4,1,0
+Sö 138,Sö,B,-0.4,S:Sö:Ludgo sn,1,1.0,1,1,0
+Sö 140,Sö,B,-0.4,S:Sö:Ludgo sn,0,0.0,4,0,0
+Sö 151,Sö,A,-0.4,R:Traen,1,0.0,2,0,1
+Sö 154,Sö,A,-0.4,R:Traen,0,0.0,4,0,0
+Sö 158,Sö,A,-0.4,S:Sö:Runtuna sn,1,1.0,3,2,0
+Sö 161,Sö,B,-1.05,S:Sö:Råby-Rönö sn,1,1.0,2,2,0
+Sö 163,Sö,B,-0.4,S:Sö:Råby-Rönö sn,0,0.0,1,0,0
+Sö 164,Sö,B,-1.05,R:Traen,1,0.0,6,0,2
+Sö 167,Sö,A,-0.4,R:Traen,0,0.0,2,0,0
+Sö 174,Sö,A,-0.4,S:Sö:Aspö sn,0,0.0,1,0,0
+Sö 178,Sö,B,0.7,R:Brune,0,0.0,3,0,0
+Sö 179,Sö,B,-0.4,R:Äskil 2,0,0.0,3,0,0
+Sö 183,Sö,B,-0.4,S:Sö:Kärnbo sn,1,1.0,3,2,0
+Sö 190,Sö,A,-0.3,S:Sö:Ytterenhörna sn,0,0.0,2,0,0
+Sö 192,Sö,A,0.3,R:Balle,1,0.0,2,0,1
+Sö 194,Sö,A,-0.4,R:Balle,1,1.0,3,3,0
+Sö 202,Sö,A,-0.4,S:Sö:Ytterselö sn,1,1.0,2,1,0
+Sö 203,Sö,A,0.3,R:Balle,1,,2,0,2
+Sö 204,Sö,A,0.7,R:Äsbjörn,0,0.0,2,0,0
+Sö 206,Sö,A,0.7,R:Äsbjörn,0,0.0,2,0,0
+Sö 209,Sö,A,-0.4,R:Balle,1,1.0,3,1,0
+Sö 211,Sö,A,-0.4,R:Äskil 1,0,0.0,2,0,0
+Sö 214,Sö,A,-0.4,R:Balle,0,0.0,2,0,0
+Sö 217,Sö,B,-0.4,R:Amunde,0,0.0,2,0,0
+Sö 224,Sö,B,-0.4,S:Sö:Sorunda sn,0,0.0,2,0,0
+Sö 226,Sö,B,-0.4,R:Amunde,0,0.0,1,0,0
+Sö 228,Sö,B,0.3,S:Sö:Sorunda sn,0,0.0,1,0,0
+Sö 229,Sö,B,-0.4,R:Amunde,0,0.0,2,0,0
+Sö 233,Sö,B,-0.4,R:Amunde,0,0.0,2,0,0
+Sö 235,Sö,B,0.3,R:Halvdan,0,0.0,1,0,0
+Sö 240,Sö,A,-0.4,R:Amunde,0,0.0,2,0,0
+Sö 241,Sö,A,-0.4,R:Björn 2 eller -björn,1,1.0,2,2,0
+Sö 244,Sö,A,-0.3,R:Halvdan,1,1.0,1,1,0
+Sö 250,Sö,B,-0.4,S:Sö:Ösmo sn,0,0.0,2,0,0
+Sö 251,Sö,B,-0.3,R:Östen 2,0,0.0,1,0,0
+Sö 254,Sö,B,-0.4,R:Amunde,0,0.0,2,0,0
+Sö 258,Sö,B,-0.4,R:Björn 2 eller -björn,1,,2,0,2
+Sö 262,Sö,A,0.3,R:Halvdan,1,1.0,2,2,0
+Sö 265,Sö,A,-0.4,R:Åsbjörn,0,0.0,2,0,0
+Sö 266,Sö,A,-0.4,R:Åsbjörn,0,0.0,2,0,0
+Sö 268,Sö,A,-0.4,R:Amunde,0,0.0,2,0,0
+Sö 273,Sö,A,-0.4,R:Amunde,0,0.0,1,0,0
+Sö 281,Sö,B,-0.3,S:Sö:Strängnäs,1,1.0,1,1,0
+Sö 285,Sö,B,-0.3,S:Sö:Botkyrka sn,1,1.0,2,2,0
+Sö 288,Sö,B,-0.3,S:Sö:Botkyrka sn,0,0.0,2,0,0
+Sö 289,Sö,B,-0.3,S:Sö:Botkyrka sn,1,1.0,2,1,1
+Sö 290,Sö,B,-0.3,R:Halvdan,0,0.0,2,0,0
+Sö 291,Sö,A,-0.3,S:Sö:Grödinge sn,1,1.0,3,1,0
+Sö 292,Sö,A,0.3,R:Halvdan,0,0.0,1,0,0
+Sö 296,Sö,A,-0.4,S:Sö:Grödinge sn,0,0.0,2,0,0
+Sö 297,Sö,A,-0.3,R:Halvdan,0,0.0,1,0,0
+Sö 298,Sö,A,0.3,R:Halvdan,0,0.0,1,0,0
+Sö 299,Sö,A,-0.4,R:Åsgöt,0,0.0,1,0,0
+Sö 304,Sö,B,-0.4,R:Åsgöt,0,0.0,2,0,0
+Sö 305,Sö,B,0.3,S:Sö:Botkyrka sn,0,0.0,2,0,0
+Sö 307,Sö,A,-1.05,S:Sö:Södertälje,0,0.0,2,0,0
+Sö 314,Sö,B,-0.3,S:Sö:Torshälla,0,0.0,1,0,0
+Sö 325,Sö,A,-0.3,S:Sö:Härads sn,1,1.0,2,2,0
+Sö 328,Sö,A,-0.3,S:Sö:Strängnäs landsförsamling (nu Aspö sn),1,1.0,2,1,0
+Sö 333,Sö,B,-0.4,S:Sö:Åkers sn,1,1.0,2,2,0
+Sö 335,Sö,B,-0.4,S:Sö:Åkers sn,0,0.0,2,0,0
+Sö 338,Sö,A,0.7,R:Östen 1,1,0.0,4,0,1
+Sö 341,Sö,A,-0.4,S:Sö:Turinge sn,1,,1,0,1
+Sö 346,Sö,B,-0.4,S:Sö:Ytterjärna sn,1,1.0,3,1,2
+Sö 347,Sö,B,0.3,S:Sö:Ytterjärna sn,0,0.0,4,0,0
+Sö 352,Sö,B,-0.4,R:Traen,1,1.0,2,1,0
+Sö 360,Sö,A,-1.05,S:Sö:Blacksta sn,1,1.0,2,1,0
+Sö 367,Sö,A,-1.05,S:Sö:Sankt Nicolai sn (nu Nyköping),0,0.0,3,0,0
+Sö 370,Sö,B,-1.05,S:Sö:Ludgo sn,0,0.0,1,0,0
+Sö 382,Sö,B,-0.4,S:Sö:Åkers sn,1,1.0,2,2,0
+Sö Fv1948;295,Sö,B,-0.4,S:Sö:Lunda sn,1,,1,0,1
+Sö Fv1948;298,Sö,B,-0.4,S:Sö:Ösmo sn,1,1.0,1,1,0
+Sö Fv1954;20,Sö,A,-1.05,R:Björn 3,1,1.0,2,2,0
+Sö Fv1959;262,Sö,A,-0.3,S:Sö:Österhaninge sn,0,0.0,1,0,0
+Sö Fv1973;189,Sö,B,-1.05,S:Sö:Julita sn,1,1.0,2,1,0
+Sm 5,Sm,B,-1.05,S:Sm:Hjortsberga sn,1,1.0,1,1,0
+Sm 11,Sm,B,-1.05,S:Sm:Furuby sn,0,0.0,1,0,0
+Sm 16,Sm,B,-1.05,S:Sm:Östra Torsås sn,1,1.0,4,1,0
+Sm 19,Sm,A,-1.05,S:Sm:Gårdsby sn,0,0.0,3,0,0
+Sm 20,Sm,A,-1.05,S:Sm:Söraby sn,0,0.0,1,0,0
+Sm 29,Sm,A,-1.05,S:Sm:Berga sn (nu Vittaryds sn),1,1.0,2,2,0
+Sm 33,Sm,B,-1.05,S:Sm:Hamneda sn,1,1.0,1,1,0
+Sm 42,Sm,A,-1.05,S:Sm:Ryssby sn,1,1.0,2,2,0
+Sm 61,Sm,A,-1.05,S:Sm:Tånnö sn,1,1.0,2,1,0
+Sm 64,Sm,A,-1.05,S:Sm:Värnamo,1,1.0,2,2,0
+Sm 71,Sm,A,-1.05,S:Sm:Norra Sandsjö sn,0,0.0,2,0,0
+Sm 85,Sm,A,-0.4,S:Sm:Alseda sn,1,1.0,2,2,0
+Sm 131,Sm,B,-0.4,S:Sm:Flisby sn,1,1.0,1,1,0
+Vg 2,Vg,A,-1.05,S:Vg:Berga sn,0,0.0,2,0,0
+Vg 3,Vg,B,-1.05,S:Vg:Bällefors sn,1,1.0,2,2,0
+Vg 4,Vg,A,-1.05,S:Vg:Eks sn,0,0.0,3,0,0
+Vg 6,Vg,B,-1.05,S:Vg:Fägre sn,0,0.0,2,0,0
+Vg 8,Vg,B,-0.4,S:Vg:Hjälstads sn,1,1.0,2,2,0
+Vg 9,Vg,A,-1.05,S:Vg:Leksbergs sn,1,,2,0,2
+Vg 13,Vg,A,-0.4,S:Vg:Leksbergs sn,1,1.0,2,2,0
+Vg 15,Vg,A,-0.4,S:Vg:Mariestads sn,0,0.0,2,0,0
+Vg 16,Vg,B,-1.05,S:Vg:Tidavads sn (nu Ekby sn),1,1.0,3,2,0
+Vg 18,Vg,A,-1.05,S:Vg:Gösslunda sn,1,1.0,2,2,0
+Vg 20,Vg,A,-1.05,S:Vg:Gösslunda sn,1,1.0,2,2,0
+Vg 30,Vg,B,-1.05,S:Vg:Järpås sn,1,1.0,1,1,0
+Vg 32,Vg,A,-1.05,S:Vg:Kållands-Åsaka sn,1,1.0,2,2,0
+Vg 33,Vg,B,-1.05,S:Vg:Mellby sn,1,1.0,3,3,0
+Vg 35,Vg,A,-1.05,S:Vg:Otterstads sn,1,1.0,2,2,0
+Vg 48,Vg,B,-1.05,S:Vg:Strö sn,1,1.0,1,1,0
+Vg 56,Vg,A,-1.05,S:Vg:Källby sn,1,1.0,1,1,0
+Vg 59,Vg,B,-1.05,S:Vg:Norra Härene sn,1,1.0,2,2,0
+Vg 61,Vg,A,-1.05,S:Vg:Edsvära sn,1,1.0,1,1,0
+Vg 62,Vg,A,-1.05,S:Vg:Edsvära sn,1,1.0,2,2,0
+Vg 73,Vg,B,-1.05,S:Vg:Synnerby sn,1,1.0,2,1,0
+Vg 77,Vg,B,-1.05,S:Vg:Eggby sn,0,0.0,2,0,0
+Vg 90,Vg,B,-1.05,S:Vg:Håkantorps sn,1,1.0,1,1,0
+Vg 92,Vg,A,-1.05,S:Vg:Högstena sn,1,1.0,1,1,0
+Vg 100,Vg,A,-1.05,S:Vg:Flo sn,1,1.0,1,1,0
+Vg 108,Vg,A,-1.05,S:Vg:Tängs sn,1,1.0,2,2,0
+Vg 113,Vg,B,-1.05,S:Vg:Bjärby sn,1,1.0,2,1,1
+Vg 116,Vg,B,-1.05,S:Vg:Hyringa sn,1,1.0,2,2,0
+Vg 117,Vg,B,-1.05,S:Vg:Levene sn,1,1.0,3,3,0
+Vg 122,Vg,B,-0.4,S:Vg:Barne-Åsaka sn,1,1.0,2,2,0
+Vg 123,Vg,B,-1.05,S:Vg:Barne-Åsaka sn,1,1.0,2,2,0
+Vg 124,Vg,B,-1.05,S:Vg:Ryda sn,1,1.0,2,2,0
+Vg 127,Vg,B,-0.4,S:Vg:Larvs sn,1,1.0,2,2,0
+Vg 128,Vg,B,-1.05,S:Vg:Österbitterna sn,1,1.0,2,2,0
+Vg 130,Vg,A,-0.4,S:Vg:Grolanda sn,1,1.0,2,2,0
+Vg 133,Vg,B,-1.05,S:Vg:Marka sn,1,1.0,2,1,0
+Vg 135,Vg,B,-1.05,S:Vg:Kinneve sn (nu Kinneved),1,1.0,2,2,0
+Vg 137,Vg,B,-1.05,S:Vg:Kinneve sn (nu Kinneved),1,1.0,3,3,0
+Vg 139,Vg,A,-0.4,S:Vg:Vårkumla sn,1,1.0,2,2,0
+Vg 152,Vg,B,-1.05,S:Vg:Eggvena sn,1,1.0,2,2,0
+Vg 154,Vg,B,-1.05,S:Vg:Fölene sn,1,1.0,2,2,0
+Vg 155,Vg,A,-1.05,S:Vg:Hols sn,1,1.0,1,1,0
+Vg 156,Vg,A,-1.05,S:Vg:Remmene sn,1,1.0,2,1,1
+Vg 157,Vg,A,-0.4,S:Vg:Hovs sn,1,1.0,2,2,0
+Vg 158,Vg,B,-0.4,S:Vg:Fänneslunda sn,1,1.0,2,2,0
+Vg 160,Vg,B,-1.05,S:Vg:Hällstads sn,1,1.0,2,1,1
+Vg 161,Vg,A,-1.05,S:Vg:Härna sn,1,1.0,2,2,0
+Vg 162,Vg,B,-0.4,S:Vg:Möne sn,1,1.0,3,3,0
+Vg 172,Vg,B,-1.05,S:Vg:Blidsbergs sn,1,1.0,1,1,0
+Vg 173,Vg,A,-1.05,S:Vg:Böne sn,0,0.0,1,0,0
+Vg 174,Vg,A,-1.05,S:Vg:Dalums sn,1,1.0,2,2,0
+Vg 175,Vg,A,-1.05,S:Vg:Dalums sn,1,1.0,2,2,0
+Vg 177,Vg,A,-1.05,S:Vg:Humla sn,1,1.0,1,1,0
+Vg 178,Vg,A,-0.4,S:Vg:Kölaby sn,1,1.0,2,2,0
+Vg 179,Vg,A,-0.4,S:Vg:Kölaby sn,1,1.0,2,2,0
+Vg 181,Vg,B,-0.4,S:Vg:Norra Åsarps sn,1,1.0,2,2,0
+Vg 182,Vg,B,-0.4,S:Vg:Norra Åsarps sn,0,0.0,2,0,0
+Vg 184,Vg,B,-0.4,S:Vg:Smula sn,1,1.0,3,3,0
+Vg 186,Vg,A,-0.4,S:Vg:Timmele sn,1,1.0,2,1,0
+Vg 187,Vg,B,-1.05,S:Vg:Vists sn (nu Ulricehamn),1,1.0,1,1,0
+Vg 189,Vg,B,-0.4,S:Vg:Länghems sn,1,1.0,1,1,0
+Vg 192,Vg,A,-1.05,S:Vg:Nittorps sn,1,1.0,2,2,0
+Vg 195,Vg,A,-1.05,S:Vg:Tranemo sn,1,1.0,1,1,0
+U 17,U,A,-0.3,S:U:Ekerö sn,1,1.0,2,1,0
+U 19,U,A,-1.05,R:Torbjörn 2,0,0.0,2,0,0
+U 30,U,A,-0.3,S:U:Hilleshögs sn,0,0.0,2,0,0
+U 32,U,B,-0.4,S:U:Sånga sn,0,0.0,3,0,0
+U 34,U,B,-0.4,R:Balle,0,0.0,3,0,0
+U 35,U,B,-0.3,S:U:Sånga sn,0,0.0,3,0,0
+U 36,U,B,0.7,R:Öpir 1,0,0.0,2,0,0
+U 37,U,B,-0.3,R:Torbjörn skald,0,0.0,2,0,0
+U 42,U,B,0.7,S:U:Skå sn,0,0.0,2,0,0
+U 43,U,B,0.3,R:Ärnfast,1,1.0,2,1,0
+U 47,U,B,0.3,R:Ärnfast,1,1.0,3,1,0
+U 48,U,B,0.7,S:U:Lovö sn,0,0.0,2,0,0
+U 53,U,B,0.7,S:U:Stockholm,0,0.0,1,0,0
+U 56,U,B,-0.3,S:U:Stockholm,1,1.0,3,2,0
+U 61,U,B,-1.05,R:Gunnar,1,1.0,3,1,0
+U 62,U,B,0.3,R:Fot 2,0,0.0,2,0,0
+U 72,U,B,0.3,R:Visäte,0,0.0,2,0,0
+U 73,U,B,0.3,R:Visäte,1,1.0,3,1,0
+U 75,U,B,0.7,R:Visäte,0,0.0,2,0,0
+U 77,U,B,0.7,S:U:Spånga sn (nu Sundbyberg),0,0.0,2,0,0
+U 79,U,B,0.3,R:Ärnfast,0,0.0,4,0,0
+U 84,U,B,0.7,S:U:Järfälla sn,0,0.0,1,0,0
+U 89,U,B,-0.3,S:U:Järfälla sn,0,0.0,1,0,0
+U 91,U,B,0.3,S:U:Järfälla sn,1,1.0,4,3,0
+U 92,U,B,-1.05,S:U:Järfälla sn,0,0.0,1,0,0
+U 100,U,A,0.7,S:U:Sollentuna sn,0,0.0,2,0,0
+U 103,U,A,-0.4,R:Gunnar,1,1.0,3,3,0
+U 104,U,B,1.3,R:Öpir 1,1,1.0,1,1,0
+U 117,U,B,0.7,R:Öpir 1,0,0.0,2,0,0
+U 119,U,B,0.3,R:Visäte,0,0.0,2,0,0
+U 121,U,A,0.7,S:U:Solna sn,0,0.0,3,0,0
+U 122,U,A,0.7,R:Öpir 1,0,0.0,2,0,0
+U 124,U,A,0.3,S:U:Solna sn,1,0.0,3,0,1
+U 131,U,B,0.3,R:Fot 2,0,0.0,2,0,0
+U 135,U,B,-0.3,S:U:Täby sn,0,0.0,2,0,0
+U 136,U,B,-0.3,S:U:Täby sn,0,0.0,2,0,0
+U 137,U,B,-0.3,S:U:Täby sn,1,1.0,2,1,0
+U 142,U,B,0.7,R:Öpir 1,0,0.0,2,0,0
+U 147,U,B,0.7,S:U:Täby sn,0,0.0,1,0,0
+U 152,U,B,0.7,S:U:Täby sn,0,0.0,1,0,0
+U 153,U,B,0.3,S:U:Täby sn,0,0.0,2,0,0
+U 160,U,B,-0.4,S:U:Täby sn,1,1.0,3,3,0
+U 167,U,B,0.3,R:Fot 2,0,0.0,2,0,0
+U 173,U,A,1.3,R:Öpir 1,0,0.0,2,0,0
+U 177,U,B,0.7,S:U:Roslagskulla sn (Roslags-Kulla),0,0.0,3,0,0
+U 179,U,B,1.3,R:Öpir 1,0,0.0,1,0,0
+U 182,U,A,0.7,S:U:Össeby-Garns sn,0,0.0,2,0,0
+U 186,U,A,-0.3,S:U:Össeby-Garns sn,1,1.0,3,3,0
+U 190,U,A,0.7,R:Samma som gjort U 509. Torsten,0,0.0,1,0,0
+U 193,U,A,0.7,S:U:Össeby-Garns sn,1,1.0,1,1,0
+U 194,U,A,0.3,S:U:Össeby-Garns sn,0,0.0,2,0,0
+U 195,U,A,1.3,R:Öpir 1,0,0.0,2,0,0
+U 200,U,B,-1.05,R:Gunnar,1,1.0,3,3,0
+U 201,U,A,-0.4,R:Gunnar,1,1.0,3,3,0
+U 202,U,A,0.3,R:Fot 2,0,0.0,2,0,0
+U 204,U,A,-0.4,S:U:Angarns sn,1,1.0,2,1,0
+U 207,U,A,0.3,R:Visäte,1,1.0,2,1,0
+U 208,U,A,0.3,R:Visäte,1,1.0,2,2,0
+U 211,U,A,0.7,S:U:Angarns sn,0,0.0,1,0,0
+U 214,U,A,-1.05,R:Drosboe,1,1.0,2,2,0
+U 216,U,A,1.3,R:Drosboe,0,0.0,2,0,0
+U 225,U,A,-1.05,R:Gunnar,1,1.0,4,2,1
+U 226,U,A,-0.4,R:Gunnar,1,1.0,3,3,0
+U 227,U,A,0.7,S:U:Vallentuna sn,0,0.0,2,0,0
+U 229,U,A,0.7,R:Öpir 1,1,1.0,2,2,0
+U 231,U,A,1.3,R:Öpir 1,0,0.0,2,0,0
+U 232,U,A,1.3,R:Öpir 1,0,0.0,1,0,0
+U 233,U,A,0.7,R:Öpir 1,1,1.0,2,1,0
+U 235,U,A,-1.05,S:U:Vallentuna sn,1,1.0,2,1,1
+U 236,U,A,0.3,R:Visäte,0,0.0,2,0,0
+U 238,U,A,0.3,R:Visäte,0,0.0,2,0,0
+U 240,U,A,0.3,R:Åsmund,1,1.0,2,1,0
+U 241,U,A,0.3,R:Åsmund,1,1.0,2,2,0
+U 243,U,A,0.3,R:Visäte,1,1.0,3,1,0
+U 256,U,B,0.3,R:Fot 2,0,0.0,2,0,0
+U 258,U,B,-1.05,R:Gunnar,1,1.0,3,3,0
+U 267,U,B,0.7,R:Fot 2,1,1.0,2,1,0
+U 269,U,B,0.7,R:Fot 2,1,1.0,2,1,0
+U 272,U,B,0.7,S:U:Hammarby sn,0,0.0,1,0,0
+U 275,U,B,0.7,S:U:Hammarby sn,0,0.0,2,0,0
+U 276,U,B,-0.4,S:U:Hammarby sn,1,1.0,3,3,0
+U 286,U,B,0.7,R:Fot 2,0,0.0,2,0,0
+U 287,U,B,0.7,R:Öpir 1,0,0.0,2,0,0
+U 288,U,B,1.3,R:Öpir 1,0,0.0,2,0,0
+U 295,U,A,0.7,S:U:Skånela sn,0,0.0,2,0,0
+U 297,U,A,0.7,S:U:Skånela sn,0,0.0,2,0,0
+U 313,U,A,0.3,R:-fast,0,0.0,1,0,0
+U 321,U,A,0.7,R:Sven 1,0,0.0,2,0,0
+U 325,U,A,0.7,R:Torsten,0,0.0,1,0,0
+U 326,U,A,-0.4,R:Gunnar,1,1.0,3,2,0
+U 328,U,A,-0.4,S:U:Markims sn,1,1.0,2,2,0
+U 329,U,A,0.3,R:Fot 2,0,0.0,2,0,0
+U 330,U,A,0.3,R:Fot 2,0,0.0,2,0,0
+U 334,U,A,0.7,R:Kättil 3,0,0.0,1,0,0
+U 335,U,A,-0.4,S:U:Orkesta sn,1,1.0,2,2,0
+U 336,U,A,-1.05,S:U:Orkesta sn,1,1.0,3,3,0
+U 338,U,A,-1.05,R:Gunnar,1,1.0,2,2,0
+U 341,U,A,-1.05,R:Gunnar,1,1.0,3,2,0
+U 349,U,B,-1.05,R:Gunnar,1,1.0,2,2,0
+U 352,U,B,0.7,R:Torsten,0,0.0,1,0,0
+U 354,U,A,-0.3,S:U:Lunda sn,1,0.0,2,0,1
+U 356,U,A,0.3,R:Åsmund,1,0.0,3,0,1
+U 357,U,A,0.7,R:Åsmund,1,1.0,3,1,1
+U 358,U,A,-1.05,R:Gunnar,1,1.0,2,2,0
+U 371,U,A,-1.05,R:Gunnar,1,1.0,3,3,0
+U 372,U,A,-0.3,R:Åsmund,0,0.0,3,0,0
+U 373,U,A,0.3,S:U:Skepptuna sn,0,0.0,1,0,0
+U 375,U,A,-0.3,S:U:Vidbo sn,0,0.0,1,0,0
+U 376,U,A,0.7,S:U:Vidbo sn,0,0.0,1,0,0
+U 377,U,A,0.7,R:Sven 1,0,0.0,1,0,0
+U 389,U,B,0.7,S:U:Sigtuna,0,0.0,1,0,0
+U 390,U,B,-0.3,R:Fot 2,0,0.0,1,0,0
+U 405,U,A,-0.4,S:U:Ekerö sn,0,0.0,1,0,0
+U 409,U,B,0.3,S:U:Sankt Olovs sn (Sankt Olof) (nu Odensala sn),1,0.0,2,0,1
+U 411,U,A,0.7,S:U:Sankt Olovs sn (Sankt Olof),1,1.0,2,1,0
+U 419,U,B,-0.3,S:U:Norrsunda sn,1,1.0,2,1,0
+U 426,U,B,-0.4,S:U:Norrsunda sn,0,0.0,2,0,0
+U 428,U,B,0.3,R:Fot 2,0,0.0,4,0,0
+U 430,U,B,-0.4,S:U:Norrsunda sn,1,1.0,2,1,0
+U 435,U,A,-0.3,S:U:Husby-Ärlinghundra sn,1,1.0,1,1,0
+U 439,U,A,-0.4,R:Äskil 2,0,0.0,2,0,0
+U 444,U,B,-0.4,S:U:Odensala sn,1,1.0,2,1,0
+U 445,U,B,0.7,R:Fot 2,0,0.0,2,0,0
+U 454,U,B,0.3,R:Visäte,1,1.0,2,2,0
+U 455,U,B,0.7,R:Fot 2,0,0.0,2,0,0
+U 457,U,A,-0.4,R:Torbjörn 2,0,0.0,2,0,0
+U 460,U,A,0.7,S:U:Haga sn,0,0.0,2,0,0
+U 461,U,A,-0.3,S:U:Haga sn,0,0.0,2,0,0
+U 463,U,B,0.7,S:U:Vassunda sn,0,0.0,2,0,0
+U 471,U,B,0.3,R:Fot 2,0,0.0,2,0,0
+U 474,U,B,-0.4,R:Torbjörn 2,0,0.0,2,0,0
+U 478,U,B,-0.4,R:Torbjörn 2,0,0.0,2,0,0
+U 479,U,A,-0.4,R:Ulvkell,1,1.0,1,1,0
+U 480,U,A,0.3,R:Fot 2,0,0.0,2,0,0
+U 481,U,A,0.7,R:Fot 2,1,1.0,2,1,0
+U 485,U,A,1.3,S:U:Lagga sn,0,0.0,1,0,0
+U 490,U,A,-1.05,R:Gunnar,1,1.0,3,3,0
+U 492,U,A,0.7,S:U:Lagga sn,1,1.0,1,1,0
+U 504,U,B,-1.05,R:Gunnar,1,1.0,2,2,0
+U 508,U,B,-1.05,R:Gunnar,1,1.0,2,2,0
+U 510,U,B,0.7,S:U:Kårsta sn,1,1.0,3,1,0
+U 511,U,B,0.7,R:Visäte,0,0.0,2,0,0
+U 512,U,B,-1.05,R:Gunnar,1,1.0,5,5,0
+U 514,U,B,0.7,S:U:Rimbo sn,0,0.0,1,0,0
+U 515,U,B,0.7,R:Torsten,0,0.0,1,0,0
+U 517,U,B,-0.3,R:Torbjörn skald,0,0.0,1,0,0
+U 518,U,B,-1.05,R:Gunnar,1,1.0,3,3,0
+U 519,U,B,-0.4,R:þuliR,1,1.0,1,1,0
+U 524,U,B,-0.3,R:Vidbjörn,1,1.0,2,1,0
+U 533,U,B,-0.4,R:Torbjörn skald,0,0.0,2,0,0
+U 539,U,B,-1.05,R:Gunnar,1,1.0,3,3,0
+U 572,U,B,0.7,S:U:Lohärads sn,0,0.0,1,0,0
+U 573,U,B,0.3,S:U:Lohärads sn,1,0.0,2,0,1
+U 574,U,A,-0.3,R:Vidbjörn,0,0.0,1,0,0
+U 604,U,A,0.7,S:U:Stockholms-Näs sn (nu Kungsängen),0,0.0,2,0,0
+U 611,U,A,-0.4,S:U:Västra Ryds sn,1,,1,0,1
+U 614,U,A,0.3,R:Visäte,1,1.0,3,1,0
+U 617,U,A,-1.05,R:Gunnar,0,0.0,3,0,0
+U 618,U,A,1.3,R:Öpir 1,0,0.0,1,0,0
+U 621,U,A,-0.3,R:Visäte,1,1.0,2,2,0
+U 623,U,A,-0.3,S:U:Bro sn,1,1.0,2,1,0
+U 624,U,A,0.7,S:U:Bro sn,1,1.0,2,1,0
+U 630,U,A,-0.3,R:Arbjörn,0,0.0,2,0,0
+U 635,U,A,0.7,S:U:Kalmar sn,1,1.0,2,1,0
+U 636,U,A,-0.4,S:U:Kalmar sn,1,1.0,2,1,1
+U 640,U,A,0.3,R:Fot 2,1,1.0,2,1,0
+U 642,U,B,0.7,R:Fot 2,0,0.0,1,0,0
+U 643,U,B,0.7,S:U:Yttergrans sn,0,0.0,2,0,0
+U 644,U,B,-0.4,S:U:Yttergrans sn,1,1.0,3,1,0
+U 645,U,B,0.3,R:Åsmund,1,1.0,2,2,0
+U 648,U,A,0.7,S:U:Övergrans sn,0,0.0,2,0,0
+U 649,U,A,-0.3,S:U:Övergrans sn,0,0.0,2,0,0
+U 654,U,A,-0.4,S:U:Övergrans sn,1,1.0,4,1,0
+U 659,U,A,-0.3,S:U:Håtuna sn,0,0.0,2,0,0
+U 660,U,A,0.7,R:Fot 2,1,1.0,2,1,0
+U 661,U,A,-0.4,S:U:Håtuna sn,1,1.0,2,1,0
+U 662,U,A,-0.3,S:U:Håtuna sn,1,,1,0,1
+U 665,U,A,-0.3,S:U:Häggeby sn,0,0.0,1,0,0
+U 667,U,A,-0.3,R:Arbjörn,0,0.0,1,0,0
+U 668,U,A,0.3,S:U:Häggeby sn,0,0.0,2,0,0
+U 669,U,A,0.7,S:U:Häggeby sn,0,0.0,3,0,0
+U 671,U,A,-0.4,S:U:Häggeby sn,0,0.0,2,0,0
+U 676,U,A,-0.3,R:Arbjörn,0,0.0,4,0,0
+U 679,U,A,-0.3,S:U:Skoklosters sn,0,0.0,2,0,0
+U 684,U,A,0.7,R:Öpir 1,0,0.0,1,0,0
+U 685,U,A,-0.3,S:U:Skoklosters sn,0,0.0,2,0,0
+U 689,U,A,-0.3,R:Arbjörn,0,0.0,1,0,0
+U 691,U,A,0.7,S:U:Arnö sn (nu Aspö sn),1,1.0,1,1,0
+U 692,U,A,0.7,S:U:Arnö sn (nu Aspö sn),1,1.0,2,2,0
+U 700,U,B,-0.4,R:Balle,1,1.0,1,1,0
+U 716,U,A,0.7,S:U:Lillkyrka sn,1,1.0,2,2,0
+U 719,U,A,0.7,S:U:Vallby sn,1,1.0,1,1,0
+U 723,U,A,0.3,R:Balle,1,0.0,2,0,1
+U 724,U,A,0.3,R:Balle,1,1.0,3,1,1
+U 726,U,A,-0.4,R:Balle,1,1.0,2,2,0
+U 729,U,A,0.3,R:Balle,1,1.0,4,1,1
+U 732,U,A,-0.4,S:U:Villberga sn,0,0.0,2,0,0
+U 735,U,A,0.3,R:Balle,1,0.0,2,0,1
+U 739,U,A,0.3,R:Balle,1,0.0,2,0,1
+U 740,U,A,0.3,R:Balle,0,0.0,2,0,0
+U 744,U,B,0.3,R:Balle,1,0.0,3,0,1
+U 745,U,B,-0.4,S:U:Husby-Sjutolfts sn,1,1.0,1,1,0
+U 746,U,B,0.7,S:U:Husby-Sjutolfts sn,1,0.0,3,0,1
+U 749,U,B,0.3,R:Balle,1,0.0,3,0,2
+U 750,U,B,0.3,R:Balle,1,1.0,3,1,0
+U 751,U,B,0.3,R:Balle,0,0.0,3,0,0
+U 753,U,B,0.3,R:Balle,0,0.0,2,0,0
+U 755,U,B,-0.4,S:U:Litslena sn,1,0.0,2,0,1
+U 758,U,B,0.7,R:Tidkume,1,1.0,3,3,0
+U 759,U,B,0.7,R:Tidkume,1,1.0,2,2,0
+U 762,U,B,-0.4,R:Erik,0,0.0,2,0,0
+U 763,U,B,0.7,R:Tidkume,1,1.0,2,2,0
+U 764,U,B,0.7,R:Tidkume,1,1.0,2,2,0
+U 766,U,B,0.7,R:Livsten,1,1.0,1,1,0
+U 768,U,B,-0.4,R:Erik,1,0.0,2,0,1
+U 769,U,B,-0.4,R:Erik,0,0.0,2,0,0
+U 770,U,B,0.3,R:Balle,1,,3,0,3
+U 773,U,A,0.3,S:U:Enköpings-Näs sn,0,0.0,1,0,0
+U 774,U,A,-0.4,R:Erik,0,0.0,2,0,0
+U 779,U,B,-0.4,R:Erik,0,0.0,2,0,0
+U 780,U,B,0.7,R:Livsten,1,1.0,1,1,0
+U 785,U,A,-0.4,S:U:Tillinge sn,1,1.0,2,2,0
+U 786,U,A,-0.4,R:Torbjörn 2,1,1.0,2,2,0
+U 789,U,A,0.7,R:Livsten,1,1.0,1,1,0
+U 792,U,A,-0.4,R:Balle,1,1.0,2,2,0
+U 793,U,A,-0.4,R:Erik,1,1.0,2,1,0
+U 795,U,A,0.7,R:Livsten,1,1.0,1,1,0
+U 798,U,A,-0.4,R:Erik,0,0.0,2,0,0
+U 803,U,A,0.7,S:U:Långtora sn,0,0.0,2,0,0
+U 809,U,B,-0.4,R:Torbjörn 2,1,1.0,2,2,0
+U 810,U,B,0.3,R:Balle,1,0.0,3,0,1
+U 814,U,A,0.3,R:Fot 2,0,0.0,2,0,0
+U 815,U,A,0.3,R:Balle,0,0.0,2,0,0
+U 821,U,A,0.7,R:Torgöt Fotsarve,0,0.0,2,0,0
+U 827,U,A,0.7,R:Öpir 1,0,0.0,2,0,0
+U 836,U,B,0.7,S:U:Nysätra sn,0,0.0,2,0,0
+U 838,U,B,0.3,R:Balle,1,0.0,4,0,1
+U 839,U,B,0.7,R:Torgöt Fotsarve,1,1.0,2,1,0
+U 840,U,A,0.7,R:Öpir 1,1,1.0,2,1,0
+U 842,U,A,1.3,R:Öpir 1,0,0.0,1,0,0
+U 844,U,A,0.7,R:Fot 2,0,0.0,2,0,0
+U 854,U,A,0.7,S:U:Balingsta sn,0,0.0,2,0,0
+U 857,U,A,-0.4,R:Erik,0,0.0,1,0,0
+U 860,U,A,0.3,R:Åsmund,1,1.0,1,1,0
+U 871,U,A,0.7,R:Åsmund,1,1.0,1,1,0
+U 873,U,A,0.3,R:Balle,1,0.0,3,0,1
+U 875,U,A,0.3,R:Åsmund,1,1.0,1,1,0
+U 876,U,A,-0.4,S:U:Hagby sn,0,0.0,2,0,0
+U 887,U,B,0.7,R:Örik,1,1.0,1,1,0
+U 889,U,A,0.7,R:Öpir 1,1,1.0,4,4,0
+U 891,U,B,-0.3,R:Arbjörn,0,0.0,1,0,0
+U 899,U,B,0.7,R:Fot 2,0,0.0,2,0,0
+U 904,U,B,0.3,S:U:Läby sn,1,1.0,1,1,0
+U 907,U,A,0.7,R:Öpir 1,0,0.0,1,0,0
+U 908,U,A,0.7,S:U:Vänge sn,0,0.0,1,0,0
+U 913,U,A,0.7,R:Sven 4,0,0.0,1,0,0
+U 914,U,A,1.3,R:Öpir 1,0,0.0,2,0,0
+U 918,U,A,1.3,R:Gudfast,1,1.0,1,1,0
+U 919,U,A,0.7,R:Tord,1,1.0,1,1,0
+U 925,U,A,0.7,R:Öpir 1,1,1.0,2,2,0
+U 933,U,A,1.3,R:Öpir 1,0,0.0,2,0,0
+U 934,U,A,0.7,S:U:Uppsala,0,0.0,1,0,0
+U 937,U,A,0.3,R:Fot 2,1,0.0,2,0,1
+U 938,U,A,0.7,R:Öpir 1,1,1.0,2,2,0
+U 940,U,A,0.3,S:U:Uppsala,0,0.0,2,0,0
+U 948,U,B,0.7,S:U:Danmarks sn,1,1.0,2,2,0
+U 950,U,B,0.7,R:Öpir 1,1,1.0,2,2,0
+U 961,U,B,0.7,S:U:Vaksala sn,0,0.0,2,0,0
+U 964,U,B,-0.4,S:U:Vaksala sn,1,1.0,1,1,0
+U 970,U,B,1.3,R:Öpir 1,0,0.0,1,0,0
+U 974,U,B,1.3,R:Öpir 1,0,0.0,2,0,0
+U 987,U,A,0.3,R:Torfast,1,1.0,5,3,2
+U 990,U,A,-0.4,S:U:Funbo sn,0,0.0,2,0,0
+U 993,U,A,0.7,S:U:Funbo sn,1,1.0,2,1,0
+U 995,U,A,0.7,S:U:Funbo sn,1,1.0,2,1,0
+U 996,U,A,0.7,S:U:Funbo sn,1,1.0,2,2,0
+U 997,U,A,0.7,S:U:Funbo sn,1,1.0,2,1,0
+U 998,U,A,-0.3,R:Åsmund,0,0.0,2,0,0
+U 999,U,A,-0.4,S:U:Funbo sn,0,0.0,2,0,0
+U 1007,U,A,0.7,R:Manne,1,1.0,1,1,0
+U 1009,U,A,0.3,R:Åsmund,1,1.0,1,1,0
+U 1010,U,A,0.7,R:Manne,1,1.0,1,1,0
+U 1011,U,A,0.7,S:U:Rasbo sn,0,0.0,1,0,0
+U 1018,U,A,0.7,S:U:Ärentuna sn,1,1.0,1,1,0
+U 1019,U,A,0.7,S:U:Ärentuna sn,0,0.0,1,0,0
+U 1020,U,A,0.7,S:U:Ärentuna sn,1,1.0,2,1,0
+U 1026,U,B,0.7,S:U:Lena sn,1,1.0,2,2,0
+U 1032,U,B,0.7,S:U:Lena sn,0,0.0,1,0,0
+U 1034,U,B,1.3,R:Öpir 1,0,0.0,2,0,0
+U 1039,U,B,0.7,S:U:Tensta sn,1,,2,0,2
+U 1040,U,B,0.7,S:U:Tensta sn,1,1.0,2,2,0
+U 1044,U,B,1.3,R:Öpir 1,0,0.0,1,0,0
+U 1046,U,B,0.7,S:U:Björklinge sn,1,1.0,2,2,0
+U 1047,U,B,0.7,S:U:Björklinge sn,1,1.0,1,1,0
+U 1056,U,B,0.7,S:U:Björklinge sn,0,0.0,2,0,0
+U 1057,U,B,0.7,R:kahu,1,1.0,2,2,0
+U 1062,U,A,0.7,R:Ingulv,1,1.0,1,1,0
+U 1063,U,A,0.7,R:Öpir 1,0,0.0,2,0,0
+U 1065,U,A,0.7,R:Ingulv,1,1.0,4,4,0
+U 1066,U,B,-0.4,R:Brand,1,1.0,2,2,0
+U 1067,U,B,-0.4,R:Brand,1,1.0,3,1,0
+U 1069,U,B,0.7,S:U:Åkerby sn,1,1.0,1,1,0
+U 1070,U,B,0.7,R:Gudfast,1,1.0,1,1,0
+U 1086,U,B,0.7,R:Öpir 1,0,0.0,2,0,0
+U 1088,U,B,0.7,S:U:Bälinge sn,1,1.0,2,1,1
+U 1092,U,B,0.7,R:Kjule,1,1.0,2,2,0
+U 1094,U,B,0.7,S:U:Bälinge sn,0,0.0,2,0,0
+U 1096,U,B,1.3,R:Öpir 1,0,0.0,2,0,0
+U 1116,U,A,0.7,R:Gudfast,1,1.0,2,2,0
+U 1118,U,A,0.7,S:U:Skuttunge sn,0,0.0,1,0,0
+U 1122,U,B,0.7,S:U:Stavby sn,1,1.0,2,2,0
+U 1127,U,B,0.3,S:U:Alunda sn,1,1.0,3,3,0
+U 1131,U,B,0.7,R:Önjut,1,,1,0,1
+U 1144,U,B,0.3,R:Åsmund,1,1.0,1,1,0
+U 1146,U,B,-0.4,S:U:Tolfta sn,0,0.0,1,0,0
+U 1149,U,A,-0.3,S:U:Älvkarleby sn,1,1.0,3,1,0
+U 1151,U,B,-0.4,S:U:Frösthults sn,0,0.0,2,0,0
+U 1152,U,B,0.7,R:Livsten,1,1.0,1,1,0
+U 1153,U,B,-0.4,R:Erik,1,1.0,2,1,0
+U 1154,U,B,-0.4,R:Erik,1,1.0,2,1,0
+U 1155,U,B,-0.4,R:Erik,0,0.0,2,0,0
+U 1156,U,B,-0.4,R:Erik,0,0.0,2,0,0
+U 1157,U,B,-0.4,R:Erik,0,0.0,2,0,0
+U 1160,U,B,0.7,R:Livsten,1,1.0,1,1,0
+U 1161,U,A,0.3,S:U:Altuna sn,1,1.0,2,2,0
+U 1163,U,A,-0.3,S:U:Altuna sn,1,1.0,2,1,1
+U 1165,U,B,-0.4,R:Erik,0,0.0,2,0,0
+U 1167,U,A,0.7,S:U:Torstuna sn,1,,1,0,1
+U 1172,U,A,-0.4,R:Erik,1,0.0,3,0,1
+U 1173,U,A,-0.4,R:Erik,1,0.0,2,0,1
+U 1174,U,A,0.7,S:U:Vittinge sn,1,1.0,2,2,0
+U 1176,U,B,0.7,R:Öpir 1,1,1.0,2,2,0
+U 1177,U,A,0.7,R:Öpir 1,1,1.0,2,2,0
+U ATA5734/59,U,A,-1.05,S:U:Skånela sn,1,1.0,1,1,0
+U ATA6243/65,U,A,0.3,R:Tidkume,1,1.0,3,3,0
+U Fv1953;266,U,B,0.3,R:Snare,0,0.0,3,0,0
+U Fv1953;274,U,A,-0.3,S:U:Skånela sn,0,0.0,2,0,0
+U Fv1955;216,U,B,-0.3,S:U:Sankt Pers sn,0,0.0,2,0,0
+U Fv1958;250,U,B,0.3,S:U:Sigtuna,0,0.0,2,0,0
+U Fv1959;188,U,B,0.7,S:U:Hammarby sn,0,0.0,1,0,0
+U Fv1972;172,U,B,0.7,R:Visäte,0,0.0,1,0,0
+U Fv1972;272,U,A,1.3,S:U:Össeby-Garns sn,0,0.0,1,0,0
+U Fv1973;146,U,A,0.7,R:Livsten,1,1.0,1,1,0
+U Fv1973;194,U,A,0.7,S:U:Uppsala,0,0.0,2,0,0
+U Fv1976;107,U,A,0.7,R:Öpir 1,1,1.0,2,2,0
+U Fv1978;226,U,A,-0.4,R:Sune,1,,2,0,2
+U Fv1983;228,U,B,0.3,R:Torbjörn 2,0,0.0,2,0,0
+U Fv1992;169,U,A,-1.05,S:U:Ununge sn,0,0.0,2,0,0
+Vs 1,Vs,B,-0.4,S:Vs:Rytterns sn (Rytterne),1,1.0,1,1,0
+Vs 15,Vs,B,0.7,R:Balle,1,1.0,2,1,0
+Vs 16,Vs,B,0.3,S:Vs:Tortuna sn,1,1.0,2,2,0
+Vs 18,Vs,B,-0.4,S:Vs:Skultuna sn,1,1.0,2,2,0
+Vs 24,Vs,A,0.7,R:Balle,1,1.0,2,2,0
+Vs 29,Vs,A,0.7,R:Livsten,1,1.0,1,1,0
+Vs Fv1988;36,Vs,A,-0.4,S:Vs:Hubbo sn,1,1.0,2,2,0
+Nä 9,Nä,A,-1.05,S:Nä:Kumla sn,1,1.0,2,2,0
+Nä 16,Nä,A,-1.05,S:Nä:Almby sn (nu Örebro),1,1.0,1,1,0
+Nä 29,Nä,A,-0.4,S:Nä:Glanshammars sn,1,1.0,1,1,0
+Nä 31,Nä,B,-0.4,S:Nä:Götlunda sn,0,0.0,1,0,0
+Gs 1,Gs,B,0.7,R:Önjut,1,1.0,2,1,0
+Gs 4,Gs,A,0.7,R:Öpir 1,1,1.0,1,1,0
+Gs 7,Gs,A,-1.05,S:Gs:Torsåkers sn,1,1.0,1,1,0
+Gs 11,Gs,B,-0.3,R:Åsmund,1,0.0,4,0,2
+Gs 12,Gs,A,-0.3,R:Åsmund,1,1.0,7,2,2
+Gs 13,Gs,B,-0.3,S:Gs:Valbo sn (nu Gävle),0,0.0,2,0,0
+Hs 6,Hs,B,-0.4,S:Hs:Järvsö sn,1,1.0,2,2,0
+Hs 10,Hs,A,-0.3,S:Hs:Hälsingtuna sn,1,1.0,4,4,0
+Hs 12,Hs,A,-1.05,S:Hs:Högs sn,1,1.0,2,2,0
+Hs 15,Hs,B,-1.05,S:Hs:Rogsta sn,0,0.0,1,0,0
+Hs 21,Hs,A,-1.05,R:Gunnborga,1,1.0,3,3,0
+M 1,M,A,-0.4,R:Fartägn,0,0.0,2,0,0
+M 5,M,B,-0.3,S:M:Attmars sn,1,1.0,2,2,0
+M 9,M,A,0.3,S:M:Selångers sn,0,0.0,2,0,0
+J RS1928;66,J,A,0.3,S:J:Frösö sn,0,0.0,1,0,0
+G 37,G,A,0.3,S:G:Grötlingbo sn,0,0.0,1,0,0
+G 80,G,A,0.3,S:G:Linde sn,0,0.0,1,0,0
+G 134,G,A,0.7,S:G:Sjonhems sn,0,0.0,2,0,0
+G 135,G,A,0.7,S:G:Sjonhems sn,1,1.0,1,1,0
+G 200,G,A,0.7,S:G:Atlingbo sn,0,0.0,1,0,0
+G 370,G,B,0.3,S:G:Hablingbo sn,0,0.0,2,0,0
