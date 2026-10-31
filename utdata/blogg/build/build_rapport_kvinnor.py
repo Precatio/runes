@@ -1,4 +1,4 @@
-"""Forskningsrapport 1 (mallen utdata/rapporter/MALL.md): "Kvinnor reste runstenar oftare i Svealand än i Götaland –
+"""Forskningsrapport (mallen utdata/rapporter/MALL.md, kanonisk IMRaD-/registrerad form): "Kvinnor reste runstenar oftare i Svealand än i Götaland –
 31 mot 17 procent" (sv + en). Fyndet ur människomodulen (r/people.R, låst plan analysplaner/2026-10-28-manniskorna.md),
 robusthetstrappan (src/robustness.py, METHODS 1v) och uppföljningen (analysplaner/2026-10-29-kvinnorna-i-svealand.md).
 Alla siffror asserteras mot korpusjobbets filer (data/cache/r/corpus/<FP>/) och utdata/kvinnor_landsdel/kvinnor_landsdel.json.
@@ -49,6 +49,7 @@ assert M["p"] < 1e-4 and 1e-4 < M["p_holm"] < 2e-4
 assert (pc(M["shares_region"]["Svealand"]), pc(M["shares_region"]["Götaland"])) == (31, 17)
 assert (HA["n"], HB["n"]) == (730, 695) and d2(HA["or"]) == "0,41" and d2(HB["or"]) == "0,51"
 assert HA["p"] < 0.001 and 0.005 < HB["p"] < 0.01
+assert (pc(HA["shares_region"]["Svealand"]), pc(HA["shares_region"]["Götaland"]), pc(HB["shares_region"]["Svealand"]), pc(HB["shares_region"]["Götaland"])) == (30, 15, 31, 19)
 assert (RO["ord10"]["n"], d2(RO["ord10"]["or"])) == (951, "0,51") and RO["ord10"]["p"] < 0.005
 assert (RO["kon_bestamt"]["n"], d2(RO["kon_bestamt"]["or"])) == (1390, "0,46") and RO["kon_bestamt"]["p"] < 1e-4
 assert d2(RO["utan_ristare"]["or"]) == "0,46" and RO["utan_ristare"]["p"] < 1e-5
@@ -113,212 +114,308 @@ ORc = f"{d2(M['or'])} (95 %-intervall {d2(M['lo'])}–{d2(M['hi'])})"
 ORe = f"{d2e(M['or'])} (95 % interval {d2e(M['lo'])}–{d2e(M['hi'])})"
 
 title = "Kvinnor reste runstenar oftare i Svealand än i Götaland – 31 mot 17 procent"
-summary = ("Forskningsrapport 1. På 31 procent av Svealands runstenar med känd resare står en kvinna bland resarna, mot "
+summary = ("Förregistrerad studie. På 31 procent av Svealands runstenar med känd resare står en kvinna bland resarna, mot "
            "17 procent i Götaland. Skillnaden håller med tid och ristare konstanta, i båda halvorna av materialet och i "
            "robusthetstrappans alla steg. Den beror inte på änkor eller ensamma kvinnor utan på att modern stod med på sonens sten.")
+title_en = "Women raised runestones more often in Svealand than in Götaland – 31 against 17 percent"
+summary_en = ("Pre-registered study. A woman stands among the raisers on 31 percent of Svealand's runestones with a known raiser, "
+              "against 17 percent in Götaland. The difference holds with time and carver constant, in both halves of the "
+              "material and at every rung of the robustness ladder. It is not widows or lone women: the mother stood on her son's stone.")
+SLUG = "kvinnor-bland-resarna-svealand-gotaland"
+CITE_EN = f"Kvant, V. ({TODAY[:4]}). {title_en}. Vitki, version 1. https://vitkirunor.se/en/artiklar/{SLUG}"
 
-body = f"""*Forskningsrapport 1, version 1 ({TODAY}). Fyndet är bekräftat i Vitkis statistik: det håller i båda halvorna av korpusen och klarar den gemensamma justeringen över alla visade mönster. Rapporten följer den fasta mallen för Vitkis forskningsrapporter: planen låstes före resultaten och redovisas som den löd.*
+
+def chart(sv):
+    rows = [":::chart En kvinna bland resarna, andel av stenarna med känd resare" if sv else
+            ":::chart A woman among the raisers, share of the stones with a known raiser",
+            "# " + ("Med tid och ristare konstanta" if sv else "With time and carver constant"),
+            f"+Svealand | {pc(M['shares_region']['Svealand'])} | {'rått' if sv else 'raw'} {324} {'av' if sv else 'of'} {sp(1013) if sv else en_n(1013)}",
+            f"Götaland | {pc(M['shares_region']['Götaland'])} | {'rått' if sv else 'raw'} {61} {'av' if sv else 'of'} 370",
+            "# " + ("Halva A" if sv else "Half A"),
+            f"+Svealand | {pc(HA['shares_region']['Svealand'])} | {HA['n']} {'stenar' if sv else 'stones'}",
+            f"Götaland | {pc(HA['shares_region']['Götaland'])} |",
+            "# " + ("Halva B" if sv else "Half B"),
+            f"+Svealand | {pc(HB['shares_region']['Svealand'])} | {HB['n']} {'stenar' if sv else 'stones'}",
+            f"Götaland | {pc(HB['shares_region']['Götaland'])} |",
+            ("Källa: Rundata. Modellens andelar (marginaleffekter) med tid och ristare konstanta." if sv else "Source: Rundata. Model shares (marginal effects) with time and carver constant."),
+            ":::"]
+    return "\n".join(rows)
+
+
+SV_PROV = "Uppland, Södermanland, Västmanland, Närke, Gästrikland, Dalarna och Värmland"
+GO_PROV = "Östergötland, Västergötland, Småland, Öland, Bohuslän, Halland och Dalsland"
+EN_SV_PROV = "Uppland, Södermanland, Västmanland, Närke, Gästrikland, Dalarna and Värmland"
+EN_GO_PROV = "Östergötland, Västergötland, Småland, Öland, Bohuslän, Halland and Dalsland"
+# the provinces as the code maps them (src/messages.REGION), so that the text cannot drift from the analysis
+from src.messages import REGION  # noqa: E402
+assert sorted(k for k, v in REGION.items() if v == "Svealand") == sorted(["U", "Sö", "Vs", "Nä", "Gs", "D", "Vr"])
+assert sorted(k for k, v in REGION.items() if v == "Götaland") == sorted(["Ög", "Vg", "Sm", "Öl", "Bo", "Hr", "Ds"])
+
+body = f"""*Viktor Kvant, oberoende forskare. Version 1, {TODAY}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, kvinnor, resare, Svealand, Götaland, logistisk regression, förregistrering. Konkurrerande intressen: inga. Finansiering: ingen.*
 
 ## Sammanfattning
 
-Bland Sveriges vikingatida runstenar med minst en identifierad resare står en kvinna bland resarna på {pc(M['shares_region']['Svealand'])} procent av stenarna i Svealand mot {pc(M['shares_region']['Götaland'])} procent i Götaland, när tidsskikt och ristare hålls konstanta. Oddskvoten Götaland mot Svealand är {ORc}: oddsen att en kvinna står med är mindre än hälften så stora i Götaland. Skillnaden är {-round(100 * EF['diff'])} procentenheter (troligen mellan {DIFF_CI[1]} och {DIFF_CI[0]}). Den håller i materialets båda halvor, i robusthetstrappans alla {ME['ladder']['tested']} steg och i den gemensamma justeringen över de {N_SHOWN} mönster som statistiken visar. En uppföljande låst studie visar att skillnaden inte beror på änkor efter färderna, inte på ensamma kvinnor och inte på kristnandet, utan på rollerna: i Svealand stod modern med på sonens sten på {SON_SV} procent av stenarna efter söner, i Götaland på {SON_GO} procent. Rapporten säger inget om varför seden skilde sig; det är nästa fråga.
+**Bakgrund och syfte.** Att kvinnor reste runstenar är känt, och att deras andel skiftar mellan landskapen har iakttagits förr. Frågan här är om skillnaden mellan Svealand och Götaland står kvar när stenarnas ålder och ristarnas egna vanor hålls konstanta, och om den tål en fast serie känslighetsanalyser.
+**Material.** {sp(M['n'])} läsbara svenska runstenar från vikingatiden med minst en namngiven eller omnämnd resare, ur Samnordisk runtextdatabas (Rundata): {sp(1013)} i Svealand och {sp(370)} i Götaland. Resarnas kön är bestämt med regler som kontrollerats mot handkodning.
+**Metod.** Förregistrerad logistisk regression med landsdel och dateringsperiod som förklarande variabler och ristaren som slumpeffekt; Holm-korrigering över studiens sex test; intern replikering i två på förhand bestämda halvor av materialet; åtta känslighetsanalyser; justering för alla {N_SHOWN} samband som projektet redovisar (Benjamini–Hochberg).
+**Resultat.** En kvinna bland resarna på {pc(M['shares_region']['Svealand'])} procent av stenarna i Svealand mot {pc(M['shares_region']['Götaland'])} procent i Götaland; oddskvot Götaland mot Svealand {ORc}, {pfmt(M['p'])}, Holm-korrigerat {pfmt(M['p_holm'])}. Samma riktning och signifikant i båda halvorna, och alla känslighetsanalyser håller; justerat för alla samband q < 0,001. En uppföljande förregistrerad studie finner att skillnaden sitter i rollerna – modern står med på sonens sten på {SON_SV} mot {SON_GO} procent – och inte hos änkor, ensamma kvinnor eller i kristnandet.
+**Slutsats.** Skillnaden är verklig och stor, men den gäller minnesseden, inte kvinnors ställning, och den bärs i hög grad av Uppland.
 
-## Fråga och hypotes som den låstes
+## 1. Inledning
 
-Frågan ställdes i analysplanen för människomodulen, `analysplaner/2026-10-28-manniskorna.md`, låst den 28 oktober 2026 med SHA-256 `{PLAN_SHA[:16]}…` innan någon modell körts. Test 1 i planen lyder: *kvinnor bland resarna, landsdel* – utfallet är minst en kvinna bland resarna, bland stenar med minst en identifierad resare; modellen är utfall ~ landsdel + tidsskikt + ristaren som slumpeffekt; måttet är oddskvoten Götaland mot Svealand. Planen hade sex test med gemensam Holm-korrigering, och tolkningsreglerna var bestämda i förväg: *bekräftar* kräver Holm-p under 0,05 och samma riktning med p under 0,05 i var och en av korpusens två halvor.
+Kvinnorna på runstenarna har varit ett eget forskningsfält sedan 1990-talet. Judith Jesch (1991) samlade vad inskrifterna säger om kvinnor, och Birgit Sawyer (2000) räknade dem som reste stenarna landskap för landskap och visade att kvinnornas andel skiftar mellan landskapen. Sawyer läste stenarna som arvshandlingar: den som reste stenen visade sig som arvinge, och där kvinnor kunde ärva syntes de oftare. Anne-Sofie Gräslund (1995) har diskuterat samma kvinnor i förhållande till kristnandet. Räkningarna i den litteraturen är råa andelar. De tar inte hänsyn till att stenarna i Svealand i genomsnitt är yngre än i Götaland, eller till att några få ristare står för många stenar i Uppland.
 
-Innan planen låstes hade jag sett en siffra: {sp(391)} läsbara svenska stenar har en kvinna bland resarna. Ingen jämförelse mellan landsdelar hade gjorts. Det står i planen under ”Före låsningen”.
+Syftet är att pröva om skillnaden mellan Svealand och Götaland håller när stenarnas ålder och ristarna hålls konstanta, med en modell som bestämdes innan den kördes, och att låta den gå igenom samma känslighetsanalyser som projektets alla andra samband. Studien säger inget nytt om varför kvinnor reste stenar. Den prövar om den regionala skillnaden är ett fynd att bygga vidare på.
 
-## Material
+## 2. Förregistrering: hypotes och plan
 
-- **Korpus.** Samnordisk runtextdatabas (Rundata) i Vitkis korpusjobb med fingeravtryck `{FP}`, beräknat 2026-10-29. Svenska vikingatida runstenar: {sp(PE['n_stones'])} stenar. Runstenar enbart; andra föremål ingår inte.
-- **Urval.** Läsbara stenar med minst en identifierad resare: {sp(M['n'])}. Av dem ligger {sp(1013)} i Svealand och {sp(370)} i Götaland; {N_OTHER} ligger på Gotland eller i Norrland och ingår i modellen som egna nivåer men inte i jämförelsen.
-- **Utfallet.** Minst en kvinna bland resarna. Resarnas kön läses ur Rundatas engelska översättning med regler i `src/people.py`: först relationen (mor, dotter, hustru; son, far, bror), sedan en ensam resares possessiv i formeln (*her son*, *his son*), sedan ett namnlexikon byggt ur de stegen, och sist namnets ändelse. Kontroll mot handkodning på ett nytt urval om 40 stenar som reglerna aldrig sett: 39 av 40 rätt. I robusthetstrappans facit ({ROB['facit']['people']['kvinna']['n']} handkodade stenar) var regelns ja rätt {CO['ppv'][0]} gånger av {CO['ppv'][0]} och regelns nej rätt {CO['npv'][0]} gånger av {CO['npv'][0]}. Felen finns där texten har luckor, och de missar kvinnor oftare än de lägger till.
-- **Jämförelsen.** Landsdel som i budskapsmodulen: Götaland mot Svealand.
-- **Justeringar.** Tidsskikt efter stilgruppering (före 1010, 1010–1040, 1040–1070, efter 1070, odaterad) och ristaren som slumpeffekt; stenar utan säker ristare grupperas per socken.
+Hypotesen, modellen och tolkningsreglerna skrevs ned i en analysplan den 28 oktober 2026, innan någon modell hade körts. Planen gällde en större studie av vilka som reste runstenarna och efter vem, med sex test; detta är det första. Planen är tidsstämplad i projektets versionshantering och har kontrollsumman SHA-256 `{PLAN_SHA[:16]}…`, så att varje senare ändring skulle synas (se Data och kod).
 
-## Metod
+Testet lyder i planen: utfallet är minst en kvinna bland resarna, bland stenar med minst en identifierad resare; modellen är utfall ~ landsdel + dateringsperiod + ristaren som slumpeffekt; måttet är oddskvoten Götaland mot Svealand. De sex testen korrigeras tillsammans med Holms metod. Tolkningsreglerna bestämdes i förväg: ett test *bekräftar* när Holm-p är under 0,05 och riktningen är densamma med p under 0,05 i var och en av materialets två halvor; ett *mönster att pröva* har Holm-p under 0,05 men håller inte i båda halvorna; en *indikation* har bara okorrigerat p under 0,05.
 
-Logistisk regression i mgcv (R {DONE['r_version'].split()[2]}), utfallet mot landsdel och tidsskikt med ristaren som slumpeffekt. Holm-korrigering över planens sex test. Replikering i två halvor av korpusen: hela socknar fördelas växelvis inom landskapet, halvorna är fasta och bestämdes oberoende av mönstren. Fem robusthetsprov enligt planen: minst tio läsbara ord, kön bestämt för alla resare, utan ristarens slumpeffekt, bara Uppland, och söner mot fäder (det sista gäller bara testen om de döda).
+Innan planen låstes hade jag sett en siffra: {sp(391)} läsbara svenska stenar har en kvinna bland resarna. Ingen jämförelse mellan landsdelar hade gjorts. Det står i planen.
 
-Därtill robusthetstrappan (`src/robustness.py`, `r/robustness.R`, METHODS.md 1v), som lägger samma kontroller på varje mönster i statistiken som kan räknas sten för sten: rått, justerat, ristaren som slumpeffekt, socknen som slumpeffekt, halvorna, och utan ett landskap i taget (landskap med minst {ROB['min_province']} stenar). Steget *platsen som yta* görs inte här, eftersom jämförelsen själv är geografisk. Ett steg håller när p < {str(ROB['alpha']).replace('.', ',')} och riktningen är densamma som i det justerade steget; utan ett landskap i taget krävs signifikans bara där minst två tredjedelar av stenarna är kvar. Alla visade mönster får en gemensam Benjamini–Hochberg-justering, q_global. Ett mönster är bekräftat när det håller i båda halvorna och q_global < 0,05.
+Analyserna i avsnitt 5.1–5.3 är de som planen föreskriver. Uppföljningen i 5.4 kommer ur en andra analysplan, skriven och låst den 29 oktober 2026 (SHA-256 `{FU_SHA[:16]}…`) efter att huvudresultatet var känt. Den är alltså förregistrerad men inte en del av det första testet, och den redovisas som uppföljning. Inga explorativa analyser ingår.
 
-Trappan räknas på de {sp(P['n'])} stenarna i Svealand och Götaland (modulens egen modell har {sp(M['n'])}, eftersom Gotland och Norrland är med som nivåer där). Trappans justerade steg använder statistikens gemensamma tidsskikt, så dess siffror kan skilja sig något från modulens.
+## 3. Material
 
-## Resultat
+- **Källa.** Samnordisk runtextdatabas (Rundata), Institutionen för nordiska språk vid Uppsala universitet: translitterering, normalisering, översättning, landskap, socken, ristare och stilgruppering för varje inskrift. Materialet frystes för analysen den 29 oktober 2026.
+- **Stenarna.** Alla vikingatida runstenar i de svenska landskapen: {sp(PE['n_stones'])} stenar. Bara runstenar; andra föremål med runor ingår inte. Skåne och Blekinge, som var danska under vikingatiden, förs i Rundata till Danmark och ingår inte.
+- **Urval.** Stenar vars text är så bevarad att resarna kan läsas, och där minst en resare kan identifieras: {sp(M['n'])} stenar. Av dem ligger {sp(1013)} i Svealand och {sp(370)} i Götaland. {N_OTHER} ligger på Gotland eller i Norrland; de ingår i modellen som egna nivåer men jämförs inte.
+- **Landsdelarna** efter dagens landskap: Svealand är {SV_PROV}; Götaland är {GO_PROV}.
+- **Utfallet** är att minst en kvinna står bland resarna. Resarnas kön läses ur Rundatas engelska översättning med regler i fyra steg: först relationen (mor, dotter, hustru; son, far, bror), sedan den ensamma resarens possessiv i formeln (*her son*, *his son*), sedan ett namnlexikon som byggts ur de två första stegen, och sist namnets ändelse. Reglerna kontrollerades mot handkodning på ett nytt urval om 40 stenar som reglerna aldrig sett: 39 av 40 rätt. I de handkodade kontrollurvalen tillsammans ({ROB['facit']['people']['kvinna']['n']} stenar som kunde jämföras) var regelns ja rätt {CO['ppv'][0]} gånger av {CO['ppv'][0]} och regelns nej rätt {CO['npv'][0]} gånger av {CO['npv'][0]}. Felen finns där texten har luckor, och de missar kvinnor oftare än de lägger till.
+- **Dateringsperiod** efter stenens ornamentikstil (Gräslund 2006): före 1010, 1010–1040, 1040–1070, efter 1070, och odaterad som egen grupp.
+- **Ristaren.** Den ristare Rundata anger. Stenar utan känd ristare grupperas per socken.
 
-**Huvudtalet.** Rått: {324} av {sp(1013)} stenar i Svealand ({round(RAW_SV)} procent) mot {61} av {370} i Götaland ({round(RAW_GO)} procent). Med tid och ristare konstanta: {pc(M['shares_region']['Svealand'])} mot {pc(M['shares_region']['Götaland'])} procent. Oddskvot Götaland mot Svealand {ORc}, {pfmt(M['p'])}, Holm-korrigerat {pfmt(M['p_holm'])}. I klartext: om man drar en sten på måfå i vardera landsdelen är det nästan dubbelt så vanligt att Svealandsstenen har en kvinna bland resarna, och ett så stort utslag av slump är så sällsynt att det inte är värt att räkna med.
+## 4. Metod
 
-**Halvorna.** Halva A: {sp(HA['n'])} stenar, oddskvot {d2(HA['or'])} ({d2(HA['lo'])}–{d2(HA['hi'])}), {pfmt(HA['p'])}. Halva B: {sp(HB['n'])} stenar, oddskvot {d2(HB['or'])} ({d2(HB['lo'])}–{d2(HB['hi'])}), {pfmt(HB['p'])}. Samma riktning och signifikant i båda: *bekräftar* enligt planens regel.
+**4.1 Modellen.** Logistisk regression i R-paketet mgcv (R {DONE['r_version'].split()[2]}; Wood 2017): utfallet mot landsdel och dateringsperiod, med ristaren som slumpeffekt. Slumpeffekten ger varje ristare en egen nivå, så att en flitig ristares vanor inte räknas som en landsdels sed. Andelarna per landsdel är modellens marginaleffekter, det vill säga medelvärdet över stenarna som de är.
 
-**Planens robusthetsprov.**
+**4.2 Korrigering och replikering.** Holm-korrigering (Holm 1979) över studiens sex test. Intern replikering: materialet delades i två halvor socken för socken, med hela socknar växelvis inom varje landskap. Indelningen gjordes en gång, före studien och lika för alla projektets analyser, och testet ska hålla i var halva för sig. Därtill fem robusthetsprov som planen föreskriver: bara stenar med minst tio läsbara ord, bara stenar där alla resares kön är bestämt, modellen utan ristarens slumpeffekt, bara Uppland, och söner mot fäder (det sista gäller bara studiens test om de döda).
+
+**4.3 Känslighetsanalyser.** Projektet lägger samma fasta serie känslighetsanalyser på varje samband det redovisar, oavsett vilken studie sambandet kommer ur: rå modell; modellen justerad för dateringsperiod; ristaren som slumpeffekt; socknen som slumpeffekt, för att se om skillnaden är några socknars egenhet; var halva för sig; och modellen omräknad utan ett landskap i taget (landskap med minst {ROB['min_province']} stenar). En analys med stenens läge som rumslig yta görs inte här, eftersom jämförelsen själv är geografisk. En analys håller när p är under {str(ROB['alpha']).replace('.', ',')} och riktningen är densamma som i den justerade modellen. När ett landskap tas bort krävs signifikans bara där minst två tredjedelar av stenarna är kvar; annars räcker riktningen.
+
+Eftersom projektet prövar många samband justeras p-värdena dessutom tillsammans för alla {N_SHOWN} samband som redovisas (Benjamini & Hochberg 1995). Det justerade värdet kallas q nedan. Ett samband räknas som bekräftat när det håller i båda halvorna och q är under 0,05. Modellens antaganden prövas med simulerade residualer (DHARMa; Hartig 2022). Felen i könsbestämningen prövas genom att modellen räknas om {CO['n_sim']} gånger, där varje stens ”sanna” utfall dras ur kontrollurvalets träffandelar.
+
+Känslighetsanalyserna räknas på de {sp(P['n'])} stenarna i Svealand och Götaland. Huvudmodellen har {sp(M['n'])}, eftersom Gotland och Norrland är med som egna nivåer där. Känslighetsanalyserna använder projektets gemensamma dateringsperioder, så siffrorna kan skilja sig något från huvudtestets.
+
+**4.4 Avvikelser från planen.** Inga för huvudplanen. I uppföljningens plan kördes ett av testen (en ensam kvinna reser stenen) först med en variabel som saknades i datafilen, vilket gav noll stenar. Variabeln räknades sedan fram exakt som planen definierar den och testet kördes om. Inget annat ändrades.
+
+## 5. Resultat
+
+**5.1 Huvudtestet.** Rått står en kvinna bland resarna på {324} av {sp(1013)} stenar i Svealand ({round(RAW_SV)} procent) mot {61} av {370} i Götaland ({round(RAW_GO)} procent). Med tid och ristare konstanta är andelarna {pc(M['shares_region']['Svealand'])} mot {pc(M['shares_region']['Götaland'])} procent. Oddskvoten Götaland mot Svealand är {ORc}, {pfmt(M['p'])}, Holm-korrigerat {pfmt(M['p_holm'])}. I klartext: drar man en sten på måfå i vardera landsdelen är det nästan dubbelt så vanligt att Svealandsstenen har en kvinna bland resarna, och ett så stort utslag av ren slump är så sällsynt att det inte är värt att räkna med. Halva A: {sp(HA['n'])} stenar, oddskvot {d2(HA['or'])} ({d2(HA['lo'])}–{d2(HA['hi'])}), {pfmt(HA['p'])}. Halva B: {sp(HB['n'])} stenar, oddskvot {d2(HB['or'])} ({d2(HB['lo'])}–{d2(HB['hi'])}), {pfmt(HB['p'])}. Samma riktning och signifikant i båda halvorna: testet *bekräftar* enligt planens regel.
+
+{chart(True)}
+
+**5.2 Planens robusthetsprov.**
 
 - Bara stenar med minst tio läsbara ord: {sp(RO['ord10']['n'])} stenar, oddskvot {d2(RO['ord10']['or'])}, {pfmt(RO['ord10']['p'])}.
 - Bara stenar där alla resares kön är bestämt: {sp(RO['kon_bestamt']['n'])} stenar, oddskvot {d2(RO['kon_bestamt']['or'])}, {pfmt(RO['kon_bestamt']['p'])}.
 - Utan ristarens slumpeffekt: oddskvot {d2(RO['utan_ristare']['or'])}, {pfmt(RO['utan_ristare']['p'])}.
-- Bara Uppland: går inte att pröva, eftersom jämförelsen är mellan landsdelar och Uppland ligger helt i Svealand.
+- Bara Uppland: kan inte prövas, eftersom jämförelsen gäller landsdelar och Uppland ligger helt i Svealand.
 
-**Robusthetstrappan** ({sp(P['n'])} stenar, {P['k']} med en kvinna bland resarna). Alla {ME['ladder']['tested']} steg håller:
+**5.3 Känslighetsanalyserna** ({sp(P['n'])} stenar, {P['k']} med en kvinna bland resarna). Alla {ME['ladder']['tested']} håller:
 
-- Rått: oddskvot {d2(RU['raw']['or'])} ({d2(RU['raw']['ci'][0])}–{d2(RU['raw']['ci'][1])}), {pfmt(RU['raw']['p'])}.
-- Justerat för tidsskikt: {d2(RU['adjusted']['or'])} ({d2(RU['adjusted']['ci'][0])}–{d2(RU['adjusted']['ci'][1])}), {pfmt(RU['adjusted']['p'])}.
-- Ristaren som slumpeffekt ({RU['carver']['groups']} grupper): {d2(RU['carver']['or'])} ({d2(RU['carver']['ci'][0])}–{d2(RU['carver']['ci'][1])}), {pfmt(RU['carver']['p'])}.
+- Rå modell: oddskvot {d2(RU['raw']['or'])} ({d2(RU['raw']['ci'][0])}–{d2(RU['raw']['ci'][1])}), {pfmt(RU['raw']['p'])}.
+- Justerad för dateringsperiod: {d2(RU['adjusted']['or'])} ({d2(RU['adjusted']['ci'][0])}–{d2(RU['adjusted']['ci'][1])}), {pfmt(RU['adjusted']['p'])}.
+- Ristaren som slumpeffekt ({RU['carver']['groups']} ristare och sockengrupper): {d2(RU['carver']['or'])} ({d2(RU['carver']['ci'][0])}–{d2(RU['carver']['ci'][1])}), {pfmt(RU['carver']['p'])}.
 - Socknen som slumpeffekt ({RU['parish']['groups']} socknar): {d2(RU['parish']['or'])} ({d2(RU['parish']['ci'][0])}–{d2(RU['parish']['ci'][1])}), {pfmt(RU['parish']['p'])}. Skillnaden är alltså inte några socknars egenhet.
 - Halva A ({RU['half_A']['n']} stenar): {d2(RU['half_A']['or'])}, {pfmt(RU['half_A']['p'])}. Halva B ({RU['half_B']['n']} stenar): {d2(RU['half_B']['or'])}, {pfmt(RU['half_B']['p'])}.
-- Utan ett landskap i taget ({LO['n_provinces']} landskap prövade): riktningen håller utan vart och ett av dem; inget landskap vänder den. Sämst utan Uppland, då {LO['n']} stenar är kvar: oddskvot {d2(LO['or'])} ({d2(LO['ci'][0])}–{d2(LO['ci'][1])}), {pfmt(LO['p'])}. Utan Uppland försvinner mer än hälften av Svealands stenar, så där kräver regeln bara riktningen – men det är också rapportens svagaste punkt, och den ska sägas rakt ut: skillnaden bärs till stor del av Uppland.
-- Skillnad i procentenheter på den justerade modellen: {pc(EF['share_lo'])} mot {pc(EF['share_hi'])} procent, {-round(100 * EF['diff'])} enheter (troligen mellan {DIFF_CI[1]} och {DIFF_CI[0]}).
-- Modellkontroll (DHARMa): residualernas fördelning p = {str(round(CK['uniformity_p'], 2)).replace('.', ',')}, överspridning p = {str(round(CK['dispersion_p'], 2)).replace('.', ',')}, rumsligt mönster p = {str(round(CK['spatial_p'], 2)).replace('.', ',')}. Inget avvikande.
-- Kodningsfelen: i {CO['n_sim']} omräkningar där varje stens ”sanna” värde dras ur facits träffandelar håller mönstret i {pc(CO['share_holds'])} procent; oddskvotens median {d2(CO['or_median'])}, spann {d2(CO['or_range'][0])}–{d2(CO['or_range'][1])}.
-- Gemensam justering över de {N_SHOWN} mönster statistiken visar i dag: q_global < 0,001. Fyndet är ett av {N_ALL} mönster som håller i trappans alla steg.
+- Utan ett landskap i taget ({LO['n_provinces']} landskap prövade): riktningen håller utan vart och ett av dem, och inget landskap vänder den. Svagast utan Uppland, då {LO['n']} stenar är kvar: oddskvot {d2(LO['or'])} ({d2(LO['ci'][0])}–{d2(LO['ci'][1])}), {pfmt(LO['p'])}. Utan Uppland försvinner mer än hälften av Svealands stenar, och där krävs bara riktningen.
+- Skillnaden i procentenheter i den justerade modellen: {pc(EF['share_lo'])} mot {pc(EF['share_hi'])} procent, {-round(100 * EF['diff'])} enheter (troligen mellan {DIFF_CI[1]} och {DIFF_CI[0]}).
+- Modellens antaganden: residualernas fördelning p = {str(round(CK['uniformity_p'], 2)).replace('.', ',')}, överspridning p = {str(round(CK['dispersion_p'], 2)).replace('.', ',')}, kvarvarande rumsligt mönster p = {str(round(CK['spatial_p'], 2)).replace('.', ',')}. Inget avvikande.
+- Felen i könsbestämningen: sambandet håller i {pc(CO['share_holds'])} procent av de {CO['n_sim']} omräkningarna; oddskvotens median {d2(CO['or_median'])}, spann {d2(CO['or_range'][0])}–{d2(CO['or_range'][1])}.
+- Justerat för alla {N_SHOWN} samband som projektet redovisar: q < 0,001. Sambandet är ett av {N_ALL} som håller i alla känslighetsanalyser.
 
-## Tolkning och svagheter
+**5.4 Uppföljning (andra förregistrerade planen).** Fem förhandsbestämda förklaringar till vad skillnaden består i, prövade med samma modell och samma tolkningsregler:
 
-Fyndet är en skillnad i sed, inte i befolkning: det säger att en kvinna oftare *nämns bland dem som reste stenen* i Svealand, inte att kvinnor där hade mer makt eller egendom. Vad skillnaden består i prövades i en uppföljande låst plan (`analysplaner/2026-10-29-kvinnorna-i-svealand.md`, SHA-256 `{FU_SHA[:16]}…`), med fem förhandsbestämda hypoteser:
-
-- **Änkor efter färderna – stöds inte.** Kvinna reser efter make: {96} av {sp(1013)} i Svealand mot {23} av {370} i Götaland, oddskvot {d2(FT['t1_anka']['main']['or'])}, ingen skillnad. Utan resestenar finns skillnaden kvar och blir något större (oddskvot {d2(FT['t2_utan_resa']['main']['or'])}, håller i båda halvorna).
-- **Seden att räkna upp familjen – förklarar en femtedel.** Med antalet resare konstant: oddskvot {d2(FT['t3_antal']['main']['or'])}; {round(100 * FU['attenuation_B'])} procent av skillnaden på logoddsskalan försvinner, under planens gräns på hälften.
+- **Änkor efter färderna – stöds inte.** En kvinna reser stenen efter sin make: {96} av {sp(1013)} i Svealand mot {23} av {370} i Götaland, oddskvot {d2(FT['t1_anka']['main']['or'])}, ingen skillnad. Utan stenarna som nämner resor finns skillnaden kvar och blir något större (oddskvot {d2(FT['t2_utan_resa']['main']['or'])}, håller i båda halvorna).
+- **Seden att räkna upp familjen – förklarar en femtedel.** Med antalet resare konstant: oddskvot {d2(FT['t3_antal']['main']['or'])}. {round(100 * FU['attenuation_B'])} procent av skillnaden på logoddsskalan försvinner, under planens gräns på hälften.
 - **Egen ställning – stöds inte.** En ensam kvinna reser stenen: {137} av {sp(1013)} mot {44} av {370}, oddskvot {d2(FT['t4_ensam']['main']['or'])}, ingen skillnad.
-- **Rollerna – här sitter skillnaden.** Stenar efter söner: modern står med på {107} av {195} i Svealand ({SON_SV} procent) mot {13} av {70} i Götaland ({SON_GO} procent), oddskvot {d2(FT['t5_son']['main']['or'])}, Holm-korrigerat p = 0,015, men i halvorna p = 0,058 och 0,031: en antydan enligt planens regel, inte ett bekräftat fynd. Stenar efter fäder: dotter eller hustru med på {66} av {415} mot {9} av {117}, oddskvot {d2(FT['t6_far']['main']['or'])}, antydan.
-- **Kristnandet – inget samband.** Kristen markör och kvinna bland resarna: oddskvot {d2(FT['t8_kristen']['main']['or'])}, p = 0,16, och ingen skillnad mellan landsdelarna.
+- **Rollerna – här sitter skillnaden.** På stenar efter söner står modern med på {107} av {195} i Svealand ({SON_SV} procent) mot {13} av {70} i Götaland ({SON_GO} procent), oddskvot {d2(FT['t5_son']['main']['or'])}, Holm-korrigerat p = 0,015. I halvorna är p = 0,058 och 0,031, så enligt planens regel är det en indikation, inte ett bekräftat fynd. På stenar efter fäder står dotter eller hustru med på {66} av {415} mot {9} av {117}, oddskvot {d2(FT['t6_far']['main']['or'])}, också en indikation.
+- **Kristnandet – inget samband.** Ett kristet kännetecken på stenen (kors eller bön) och en kvinna bland resarna: oddskvot {d2(FT['t8_kristen']['main']['or'])}, p = 0,16, och ingen skillnad mellan landsdelarna.
 
-Så läser jag det: kvinnorna i Svealand var inte fler som änkor och inte fler som ensamma resare. Modern stod med på sonens sten, tillsammans med fadern och syskonen. Det pekar mot familjens sätt att minnas, och mot arvsrätten – en mor kunde ärva efter sitt barn – snarare än mot färderna eller kristnandet. Men det är en tolkning av en antydan; själva rapporten står på huvudfyndet.
+## 6. Diskussion
 
-Svagheter, i ordning efter vikt:
+**Vad fyndet säger.** Skillnaden mellan Svealand och Götaland beror inte på att Svealands stenar är yngre eller på att några ristare där ristade många stenar. Den står kvar när båda hålls konstanta, i var halva för sig och i varje känslighetsanalys. Det är en skillnad i sed, inte i befolkning: en kvinna *nämns* oftare bland dem som reste stenen i Svealand. Det säger inte att kvinnor där hade mer makt eller egendom.
+
+**Mot tidigare forskning.** Sawyers (2000) iakttagelse att kvinnornas andel skiftar mellan landskapen står sig alltså också när ålder och ristare hålls konstanta. Uppföljningen pekar åt samma håll som hennes tolkning. Kvinnorna i Svealand var inte oftare änkor och inte oftare ensamma resare; modern stod med på sonens sten tillsammans med fadern och syskonen. Det stämmer med en arvsregel där en mor kunde ärva efter sitt barn, bättre än med färderna eller kristnandet (jfr Gräslund 1995). Men rollfyndet är en indikation enligt planens regel, och tolkningen är en tolkning. Rapporten står på huvudfyndet.
+
+**Svagheter, i ordning efter vikt.**
 
 1. **Uppland bär mycket.** Utan Uppland är oddskvoten {d2(LO['or'])} och intervallet når över 1. Riktningen håller i alla landskap, men den säkra skillnaden är i hög grad en skillnad mellan Uppland och Götaland.
-2. **Könet är läst med regler.** Reglerna har fel på ungefär en sten av tjugo, oftast där texten har luckor, och missar kvinnor oftare än de lägger till. Om luckorna vore vanligare i Götaland skulle det förstärka skillnaden på fel grund; robusthetsprovet med minst tio läsbara ord ger oddskvot {d2(RO['ord10']['or'])}, så det förklarar inte fyndet.
-3. **Tidsskikten vilar på stildatering.** Odaterade stenar är ett eget skikt. En annan datering skulle kunna flytta siffrorna något men knappast riktningen, eftersom det råa och det justerade steget nästan sammanfaller.
-4. **Landsdel är en grov indelning.** Att skillnaden är störst mellan Uppland och Götaland syns redan; vad som händer i gränslandskapen är inte prövat här.
+2. **Könet är bestämt med regler.** Reglerna har fel på ungefär en sten av tjugo, oftast där texten har luckor, och de missar kvinnor oftare än de lägger till. Vore luckorna vanligare i Götaland skulle det förstärka skillnaden på fel grund. Med bara stenar med minst tio läsbara ord är oddskvoten {d2(RO['ord10']['or'])}, så det förklarar inte fyndet.
+3. **Dateringen vilar på ornamentikstil.** Odaterade stenar är en egen grupp. En annan datering kunde flytta siffrorna något men knappast riktningen, eftersom den råa och den justerade modellen nästan sammanfaller.
+4. **Landsdel är en grov indelning.** Att skillnaden är störst mellan Uppland och Götaland syns redan. Vad som händer i gränslandskapen är inte prövat här.
 
-Vad som skulle fälla fyndet: en handkodning av könet på ett stort urval som visar fler fel i den ena landsdelen än i den andra, eller en omräkning med en annan datering där det justerade steget inte längre håller.
+**Vad som skulle fälla fyndet.** En handkodning av könet på ett stort urval som visar fler fel i den ena landsdelen än i den andra, eller en omräkning med en annan datering där den justerade modellen inte längre håller.
 
-## Reproduktion
+## 7. Slutsats
 
-- Mätningen: `src/people.py` ger en rad per sten (`people.csv`); kontrollen mot handkodning ligger i `data/people_check.json`.
-- Modellen: `r/people.R` enligt planen; trappan `r/robustness.R` via `src/robustness.py`. Allt körs av korpusjobbet i Vitki (Statistik, R), som sparar resultatet under korpusens fingeravtryck `{FP}` i `data/cache/r/corpus/`.
-- Uppföljningen: `utdata/kvinnor_landsdel/analys.R`, resultat i `utdata/kvinnor_landsdel/resultat.md`.
-- Denna rapport byggs av `utdata/blogg/build/build_rapport_kvinnor.py`, som läser varje siffra ur de filerna och stannar om något inte stämmer.
-- Koden ligger öppet på [GitHub](https://github.com/Precatio/runes) (GPL-3.0). Mönstret visas i appen under Statistik → Människorna, med trappan steg för steg.
+En kvinna står bland resarna på {pc(M['shares_region']['Svealand'])} procent av Svealands runstenar med känd resare mot {pc(M['shares_region']['Götaland'])} procent av Götalands, med ålder och ristare konstanta, och skillnaden tål varje känslighetsanalys. Den beror på hur familjen mindes sina döda – modern på sonens sten – och är därför ett fynd om minnesseden, inte ett mått på kvinnors ställning. Nästa fråga är varför seden skilde sig, och den kräver annat material än inskrifternas egna ord.
+
+## Data och kod
+
+Analysen är gjord i Vitki, ett öppet forskningsverktyg för runstenar ([vitkirunor.se](https://vitkirunor.se)). All kod, analysplanerna och resultatfilerna finns öppet på [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
+
+- Analysplanerna: `analysplaner/2026-10-28-manniskorna.md` och `analysplaner/2026-10-29-kvinnorna-i-svealand.md`, med kontrollsummor i filerna `.sha256` bredvid.
+- Könsbestämningen: `src/people.py`; handkodningen: `data/people_check.json`.
+- Huvudmodellen: `r/people.R`. Känslighetsanalyserna: `r/robustness.R` och `src/robustness.py` (metodbeskrivning i `METHODS.md`, avsnitt 1u och 1v). Resultaten sparas under materialets version `{FP}`.
+- Uppföljningen: `utdata/kvinnor_landsdel/analys.R`, resultat och avvikelser i `utdata/kvinnor_landsdel/resultat.md`.
+- Rapporten byggs av `utdata/blogg/build/build_rapport_kvinnor.py`, som läser varje siffra ur resultatfilerna och stannar om något inte stämmer.
+- I Vitki visas sambandet under Statistik, Människorna, med känslighetsanalyserna steg för steg. En populär framställning av kvinnorna på stenarna finns i [Döttrarna som runstenarna glömde](/artiklar/dottrarna-som-runstenarna-glomde).
 
 ## Referenser
 
-- Samnordisk runtextdatabas (Rundata), Institutionen för nordiska språk, Uppsala universitet. Open Database License.
-- Benjamini, Yoav & Hochberg, Yosef 1995. ”Controlling the false discovery rate”. *Journal of the Royal Statistical Society B* 57 (1).
-- Hartig, Florian 2022. *DHARMa: Residual diagnostics for hierarchical regression models*. R-paket.
-- Holm, Sture 1979. ”A simple sequentially rejective multiple test procedure”. *Scandinavian Journal of Statistics* 6 (2).
-- Sawyer, Birgit 2000. *The Viking-Age Rune-Stones: Custom and Commemoration in Early Medieval Scandinavia*. Oxford University Press.
-- Wood, Simon N. 2017. *Generalized Additive Models: An Introduction with R*. 2 uppl. Chapman & Hall.
-- Vitki: METHODS.md avsnitt 1u (Människorna) och 1v (Robusthetstrappan). Populär framställning av kvinnorna på stenarna: [Döttrarna som runstenarna glömde](/artiklar/dottrarna-som-runstenarna-glomde).
+- Benjamini, Y. & Hochberg, Y. 1995. Controlling the false discovery rate: a practical and powerful approach to multiple testing. *Journal of the Royal Statistical Society B* 57 (1), s. 289–300.
+- Gräslund, A.-S. 1995. Runstenskvinnorna ännu en gång. *Tor* 27, s. 459–474.
+- Gräslund, A.-S. 2006. Dating the Swedish Viking-Age rune stones on stylistic grounds. I: M. Stoklund m.fl. (red.), *Runes and their Secrets: Studies in Runology*. Köpenhamn: Museum Tusculanum Press, s. 117–139.
+- Hartig, F. 2022. *DHARMa: Residual diagnostics for hierarchical (multi-level/mixed) regression models*. R-paket.
+- Holm, S. 1979. A simple sequentially rejective multiple test procedure. *Scandinavian Journal of Statistics* 6 (2), s. 65–70.
+- Jesch, J. 1991. *Women in the Viking Age*. Woodbridge: Boydell.
+- Kvant, V. 2026. *Vitki: metodbeskrivning* (METHODS.md). https://github.com/Precatio/runes
+- Samnordisk runtextdatabas (Rundata). Institutionen för nordiska språk, Uppsala universitet. Open Database License.
+- Sawyer, B. 2000. *The Viking-Age Rune-Stones: Custom and Commemoration in Early Medieval Scandinavia*. Oxford: Oxford University Press.
+- Wood, S. N. 2017. *Generalized Additive Models: An Introduction with R*. 2 uppl. Boca Raton: Chapman & Hall/CRC.
 
 :::box Det viktigaste i korthet
 - I Svealand nämndes en kvinna bland dem som reste stenen nästan dubbelt så ofta som i Götaland, och skillnaden tål varje kontroll vi har.
 - Den beror inte på änkor eller ensamma kvinnor: det var modern som stod med på sonens sten, tillsammans med fadern och syskonen.
-- Skillnaden är en skillnad i sed och minne, inte i kvinnors makt – och den bärs till stor del av Uppland.
+- Skillnaden gäller minnesseden, inte kvinnors makt – och den bärs till stor del av Uppland.
 :::
 """
 
-title_en = "Women raised runestones more often in Svealand than in Götaland – 31 against 17 percent"
-summary_en = ("Research report 1. A woman stands among the raisers on 31 percent of Svealand's runestones with a known raiser, "
-              "against 17 percent in Götaland. The difference holds with time and carver constant, in both halves of the "
-              "material and at every rung of the robustness ladder. It is not widows or lone women: the mother stood on her son's stone.")
+body_en = f"""*Viktor Kvant, independent researcher. Version 1, {TODAY}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, women, sponsors, Svealand, Götaland, logistic regression, pre-registration. Competing interests: none. Funding: none.*
 
-body_en = f"""*Research report 1, version 1 ({TODAY}). The finding is confirmed in Vitki's statistics: it holds in both halves of the corpus and passes the common adjustment over every pattern shown. The report follows the fixed form of Vitki's research reports: the plan was locked before the results and is reported as it read.*
+## Abstract
 
-## Summary
+**Background and aim.** That women raised runestones is known, and that their share varies between provinces has been observed before. The question here is whether the difference between Svealand and Götaland remains when the age of the stones and the habits of individual carvers are held constant, and whether it withstands a fixed series of sensitivity analyses.
+**Material.** {en_n(M['n'])} legible Swedish Viking-Age runestones with at least one named or mentioned sponsor, from the Scandinavian Runic-text Database (Rundata): {en_n(1013)} in Svealand and {en_n(370)} in Götaland. The sponsors' sex is determined by rules checked against hand coding.
+**Method.** Pre-registered logistic regression with region and dating period as explanatory variables and the carver as a random effect; Holm correction over the study's six tests; internal replication in two pre-defined halves of the material; eight sensitivity analyses; adjustment for all {N_SHOWN} associations the project reports (Benjamini–Hochberg).
+**Results.** A woman among the sponsors on {pc(M['shares_region']['Svealand'])} percent of the stones in Svealand against {pc(M['shares_region']['Götaland'])} percent in Götaland; odds ratio Götaland against Svealand {ORe}, {pfmt(M['p'], True)}, Holm-corrected {pfmt(M['p_holm'], True)}. Same direction and significant in both halves, and every sensitivity analysis holds; adjusted for all associations q < 0.001. A follow-up pre-registered study finds that the difference lies in the roles – the mother appears on her son's stone on {SON_SV} against {SON_GO} percent – and not in widows, lone women or Christianisation.
+**Conclusion.** The difference is real and large, but it concerns commemorative custom, not women's standing, and it is carried to a large degree by Uppland.
 
-Among Sweden's Viking-Age runestones with at least one identified raiser, a woman stands among the raisers on {pc(M['shares_region']['Svealand'])} percent of the stones in Svealand against {pc(M['shares_region']['Götaland'])} percent in Götaland, with time layer and carver held constant. The odds ratio Götaland against Svealand is {ORe}: the odds of a woman being named are less than half as large in Götaland. The difference is {-round(100 * EF['diff'])} percentage points (probably between {DIFF_CI[1]} and {DIFF_CI[0]}). It holds in both halves of the material, at all {ME['ladder']['tested']} rungs of the robustness ladder and in the common adjustment over the {N_SHOWN} patterns the statistics show. A follow-up locked study shows that the difference is not due to widows after the journeys, not to lone women and not to Christianisation, but to roles: in Svealand the mother stood on her son's stone on {SON_SV} percent of the stones for sons, in Götaland on {SON_GO} percent. The report says nothing about why the custom differed; that is the next question.
+## 1. Introduction
 
-## Question and hypothesis as locked
+The women of the runestones have been a field of their own since the 1990s. Judith Jesch (1991) gathered what the inscriptions say about women, and Birgit Sawyer (2000) counted the sponsors province by province and showed that the share of women varies between provinces. Sawyer read the stones as documents of inheritance: whoever raised the stone presented herself or himself as the heir, and where women could inherit they appeared more often. Anne-Sofie Gräslund (1995) has discussed the same women in relation to Christianisation. The counts in that literature are raw shares. They take no account of the fact that the stones of Svealand are on average younger than those of Götaland, or that a few carvers account for many stones in Uppland.
 
-The question was posed in the analysis plan for the people module, `analysplaner/2026-10-28-manniskorna.md`, locked on 28 October 2026 with SHA-256 `{PLAN_SHA[:16]}…` before any model had been run. Test 1 reads: *women among the raisers, region* – the outcome is at least one woman among the raisers, among stones with at least one identified raiser; the model is outcome ~ region + time layer + carver as a random effect; the measure is the odds ratio Götaland against Svealand. The plan had six tests with a common Holm correction, and the rules of interpretation were fixed in advance: *confirms* requires Holm p below 0.05 and the same direction with p below 0.05 in each of the corpus's two halves.
+The aim is to test whether the difference between Svealand and Götaland holds when the age of the stones and the carvers are held constant, with a model fixed before it was run, and to let it pass the same sensitivity analyses as every other association in the project. The study says nothing new about why women raised stones. It tests whether the regional difference is a finding to build on.
 
-Before the plan was locked I had seen one figure: {en_n(391)} legible Swedish stones have a woman among the raisers. No comparison between regions had been made. That is stated in the plan under ”Before locking”.
+## 2. Pre-registration: hypothesis and plan
 
-## Material
+The hypothesis, the model and the rules of interpretation were written down in an analysis plan on 28 October 2026, before any model had been run. The plan concerned a larger study of who raised the runestones and for whom, with six tests; this is the first. The plan is time-stamped in the project's version control and has the SHA-256 checksum `{PLAN_SHA[:16]}…`, so that any later change would show (see Data and code).
 
-- **Corpus.** The Scandinavian Runic-text Database (Rundata) in Vitki's corpus job with fingerprint `{FP}`, computed 2026-10-29. Swedish Viking-Age runestones: {en_n(PE['n_stones'])} stones. Runestones only; other objects are not included.
-- **Selection.** Legible stones with at least one identified raiser: {en_n(M['n'])}. Of these, {en_n(1013)} lie in Svealand and {en_n(370)} in Götaland; {N_OTHER} lie on Gotland or in Norrland and enter the model as their own levels but not the comparison.
-- **The outcome.** At least one woman among the raisers. The raisers' sex is read from Rundata's English translation by rules in `src/people.py`: first the relation (mother, daughter, wife; son, father, brother), then a lone raiser's possessive in the formula (*her son*, *his son*), then a name lexicon built from those steps, and last the name's ending. Checked against hand coding on a new sample of 40 stones the rules had never seen: 39 of 40 right. In the ladder's key ({ROB['facit']['people']['kvinna']['n']} hand-coded stones) the rule's yes was right {CO['ppv'][0]} times of {CO['ppv'][0]} and its no {CO['npv'][0]} times of {CO['npv'][0]}. The errors sit where the text has gaps, and they miss women more often than they add them.
-- **The comparison.** Region as in the message module: Götaland against Svealand.
-- **Adjustments.** Time layer by style group (before 1010, 1010–1040, 1040–1070, after 1070, undated) and the carver as a random effect; stones without a certain carver are grouped by parish.
+The test reads in the plan: the outcome is at least one woman among the sponsors, among stones with at least one identified sponsor; the model is outcome ~ region + dating period + carver as a random effect; the measure is the odds ratio Götaland against Svealand. The six tests are corrected together by Holm's method. The rules of interpretation were fixed in advance: a test *confirms* when Holm p is below 0.05 and the direction is the same with p below 0.05 in each of the material's two halves; a *pattern to test* has Holm p below 0.05 but does not hold in both halves; an *indication* has only uncorrected p below 0.05.
 
-## Method
+Before the plan was locked I had seen one figure: {en_n(391)} legible Swedish stones have a woman among the sponsors. No comparison between regions had been made. The plan says so.
 
-Logistic regression in mgcv (R {DONE['r_version'].split()[2]}), the outcome against region and time layer with the carver as a random effect. Holm correction over the plan's six tests. Replication in two halves of the corpus: whole parishes are dealt alternately within each province, the halves are fixed and were set independently of the patterns. Five robustness checks by the plan: at least ten legible words, sex determined for every raiser, without the carver effect, Uppland only, and sons against fathers (the last applies only to the tests about the dead).
+The analyses in sections 5.1–5.3 are those the plan prescribes. The follow-up in 5.4 comes from a second analysis plan, written and locked on 29 October 2026 (SHA-256 `{FU_SHA[:16]}…`) after the main result was known. It is thus pre-registered but not part of the first test, and it is reported as a follow-up. No exploratory analyses are included.
 
-In addition the robustness ladder (`src/robustness.py`, `r/robustness.R`, METHODS.md 1v), which applies the same checks to every pattern in the statistics that can be computed stone by stone: raw, adjusted, carver as a random effect, parish as a random effect, the halves, and without one province at a time (provinces with at least {ROB['min_province']} stones). The rung *place as a surface* is not made here, since the comparison itself is geographic. A rung holds when p < {ROB['alpha']} and the direction is the same as at the adjusted rung; without one province at a time, significance is required only where at least two thirds of the stones remain. Every pattern shown gets a common Benjamini–Hochberg adjustment, q_global. A pattern is confirmed when it holds in both halves and q_global < 0.05.
+## 3. Material
 
-The ladder is computed on the {en_n(P['n'])} stones in Svealand and Götaland (the module's own model has {en_n(M['n'])}, since Gotland and Norrland are levels there). The ladder's adjusted rung uses the statistics' common time layers, so its figures can differ slightly from the module's.
+- **Source.** The Scandinavian Runic-text Database (Rundata), Department of Scandinavian Languages, Uppsala University: transliteration, normalisation, translation, province, parish, carver and style group for each inscription. The material was frozen for the analysis on 29 October 2026.
+- **The stones.** All Viking-Age runestones in the Swedish provinces: {en_n(PE['n_stones'])} stones. Runestones only; other objects with runes are not included. Skåne and Blekinge, Danish in the Viking Age, are counted as Denmark in Rundata and are not included.
+- **Selection.** Stones whose text is preserved well enough for the sponsors to be read, and where at least one sponsor can be identified: {en_n(M['n'])} stones. Of these, {en_n(1013)} lie in Svealand and {en_n(370)} in Götaland. {N_OTHER} lie on Gotland or in Norrland; they enter the model as their own levels but are not compared.
+- **The regions** by today's provinces: Svealand is {EN_SV_PROV}; Götaland is {EN_GO_PROV}.
+- **The outcome** is that at least one woman stands among the sponsors. The sponsors' sex is read from Rundata's English translation by rules in four steps: first the relation (mother, daughter, wife; son, father, brother), then a lone sponsor's possessive in the formula (*her son*, *his son*), then a name lexicon built from the first two steps, and last the name's ending. The rules were checked against hand coding on a new sample of 40 stones the rules had never seen: 39 of 40 right. In the hand-coded samples together ({ROB['facit']['people']['kvinna']['n']} stones that could be compared) the rule's yes was right {CO['ppv'][0]} times of {CO['ppv'][0]} and its no {CO['npv'][0]} times of {CO['npv'][0]}. The errors sit where the text has gaps, and they miss women more often than they add them.
+- **Dating period** by the stone's ornamental style (Gräslund 2006): before 1010, 1010–1040, 1040–1070, after 1070, and undated as a group of its own.
+- **The carver.** The carver Rundata gives. Stones without a known carver are grouped by parish.
 
-## Results
+## 4. Method
 
-**The main figure.** Raw: {324} of {en_n(1013)} stones in Svealand ({round(RAW_SV)} percent) against {61} of {370} in Götaland ({round(RAW_GO)} percent). With time and carver constant: {pc(M['shares_region']['Svealand'])} against {pc(M['shares_region']['Götaland'])} percent. Odds ratio Götaland against Svealand {ORe}, {pfmt(M['p'], True)}, Holm-corrected {pfmt(M['p_holm'], True)}. In plain words: draw a stone at random in each region, and it is nearly twice as common that the Svealand stone has a woman among the raisers; a swing that large by chance is too rare to reckon with.
+**4.1 The model.** Logistic regression with the R package mgcv (R {DONE['r_version'].split()[2]}; Wood 2017): the outcome against region and dating period, with the carver as a random effect. The random effect gives each carver a level of their own, so that a prolific carver's habits are not counted as a region's custom. The shares per region are the model's marginal effects, that is, the average over the stones as they are.
 
-**The halves.** Half A: {en_n(HA['n'])} stones, odds ratio {d2e(HA['or'])} ({d2e(HA['lo'])}–{d2e(HA['hi'])}), {pfmt(HA['p'], True)}. Half B: {en_n(HB['n'])} stones, odds ratio {d2e(HB['or'])} ({d2e(HB['lo'])}–{d2e(HB['hi'])}), {pfmt(HB['p'], True)}. Same direction and significant in both: *confirms* by the plan's rule.
+**4.2 Correction and replication.** Holm correction (Holm 1979) over the study's six tests. Internal replication: the material was divided into two halves parish by parish, with whole parishes dealt alternately within each province. The division was made once, before the study and the same for all the project's analyses, and the test must hold in each half on its own. In addition, five robustness checks prescribed by the plan: only stones with at least ten legible words, only stones where every sponsor's sex is determined, the model without the carver effect, Uppland only, and sons against fathers (the last applies only to the study's tests about the dead).
 
-**The plan's robustness checks.**
+**4.3 Sensitivity analyses.** The project applies the same fixed series of sensitivity analyses to every association it reports, whatever study the association comes from: the raw model; the model adjusted for dating period; the carver as a random effect; the parish as a random effect, to see whether the difference is the peculiarity of a few parishes; each half on its own; and the model refitted without one province at a time (provinces with at least {ROB['min_province']} stones). An analysis with the stone's location as a spatial surface is not made here, since the comparison itself is geographic. An analysis holds when p is below {ROB['alpha']} and the direction is the same as in the adjusted model. When a province is removed, significance is required only where at least two thirds of the stones remain; otherwise the direction suffices.
+
+Since the project tests many associations, the p-values are also adjusted together for all {N_SHOWN} associations reported (Benjamini & Hochberg 1995). The adjusted value is called q below. An association counts as confirmed when it holds in both halves and q is below 0.05. The model's assumptions are checked with simulated residuals (DHARMa; Hartig 2022). The errors in the sex determination are tested by refitting the model {CO['n_sim']} times, with each stone's ”true” outcome drawn from the hit rates in the hand-coded sample.
+
+The sensitivity analyses are computed on the {en_n(P['n'])} stones in Svealand and Götaland. The main model has {en_n(M['n'])}, since Gotland and Norrland are included there as levels of their own. The sensitivity analyses use the project's common dating periods, so their figures can differ slightly from the main test's.
+
+**4.4 Deviations from the plan.** None for the main plan. In the follow-up plan, one of the tests (a lone woman raises the stone) was first run with a variable that was missing from the data file, which gave zero stones. The variable was then computed exactly as the plan defines it and the test rerun. Nothing else was changed.
+
+## 5. Results
+
+**5.1 The main test.** Raw, a woman stands among the sponsors on {324} of {en_n(1013)} stones in Svealand ({round(RAW_SV)} percent) against {61} of {370} in Götaland ({round(RAW_GO)} percent). With time and carver constant the shares are {pc(M['shares_region']['Svealand'])} against {pc(M['shares_region']['Götaland'])} percent. The odds ratio Götaland against Svealand is {ORe}, {pfmt(M['p'], True)}, Holm-corrected {pfmt(M['p_holm'], True)}. In plain words: draw a stone at random in each region, and it is nearly twice as common that the Svealand stone has a woman among the sponsors; a swing that large from chance alone is too rare to reckon with. Half A: {en_n(HA['n'])} stones, odds ratio {d2e(HA['or'])} ({d2e(HA['lo'])}–{d2e(HA['hi'])}), {pfmt(HA['p'], True)}. Half B: {en_n(HB['n'])} stones, odds ratio {d2e(HB['or'])} ({d2e(HB['lo'])}–{d2e(HB['hi'])}), {pfmt(HB['p'], True)}. Same direction and significant in both halves: the test *confirms* by the plan's rule.
+
+{chart(False)}
+
+**5.2 The plan's robustness checks.**
 
 - Only stones with at least ten legible words: {en_n(RO['ord10']['n'])} stones, odds ratio {d2e(RO['ord10']['or'])}, {pfmt(RO['ord10']['p'], True)}.
-- Only stones where every raiser's sex is determined: {en_n(RO['kon_bestamt']['n'])} stones, odds ratio {d2e(RO['kon_bestamt']['or'])}, {pfmt(RO['kon_bestamt']['p'], True)}.
+- Only stones where every sponsor's sex is determined: {en_n(RO['kon_bestamt']['n'])} stones, odds ratio {d2e(RO['kon_bestamt']['or'])}, {pfmt(RO['kon_bestamt']['p'], True)}.
 - Without the carver effect: odds ratio {d2e(RO['utan_ristare']['or'])}, {pfmt(RO['utan_ristare']['p'], True)}.
-- Uppland only: cannot be tested, since the comparison is between regions and Uppland lies wholly in Svealand.
+- Uppland only: cannot be tested, since the comparison concerns regions and Uppland lies wholly in Svealand.
 
-**The robustness ladder** ({en_n(P['n'])} stones, {P['k']} with a woman among the raisers). All {ME['ladder']['tested']} rungs hold:
+**5.3 The sensitivity analyses** ({en_n(P['n'])} stones, {P['k']} with a woman among the sponsors). All {ME['ladder']['tested']} hold:
 
-- Raw: odds ratio {d2e(RU['raw']['or'])} ({d2e(RU['raw']['ci'][0])}–{d2e(RU['raw']['ci'][1])}), {pfmt(RU['raw']['p'], True)}.
-- Adjusted for time layer: {d2e(RU['adjusted']['or'])} ({d2e(RU['adjusted']['ci'][0])}–{d2e(RU['adjusted']['ci'][1])}), {pfmt(RU['adjusted']['p'], True)}.
-- Carver as a random effect ({RU['carver']['groups']} groups): {d2e(RU['carver']['or'])} ({d2e(RU['carver']['ci'][0])}–{d2e(RU['carver']['ci'][1])}), {pfmt(RU['carver']['p'], True)}.
+- Raw model: odds ratio {d2e(RU['raw']['or'])} ({d2e(RU['raw']['ci'][0])}–{d2e(RU['raw']['ci'][1])}), {pfmt(RU['raw']['p'], True)}.
+- Adjusted for dating period: {d2e(RU['adjusted']['or'])} ({d2e(RU['adjusted']['ci'][0])}–{d2e(RU['adjusted']['ci'][1])}), {pfmt(RU['adjusted']['p'], True)}.
+- Carver as a random effect ({RU['carver']['groups']} carvers and parish groups): {d2e(RU['carver']['or'])} ({d2e(RU['carver']['ci'][0])}–{d2e(RU['carver']['ci'][1])}), {pfmt(RU['carver']['p'], True)}.
 - Parish as a random effect ({RU['parish']['groups']} parishes): {d2e(RU['parish']['or'])} ({d2e(RU['parish']['ci'][0])}–{d2e(RU['parish']['ci'][1])}), {pfmt(RU['parish']['p'], True)}. The difference is not the peculiarity of a few parishes.
 - Half A ({RU['half_A']['n']} stones): {d2e(RU['half_A']['or'])}, {pfmt(RU['half_A']['p'], True)}. Half B ({RU['half_B']['n']} stones): {d2e(RU['half_B']['or'])}, {pfmt(RU['half_B']['p'], True)}.
-- Without one province at a time ({LO['n_provinces']} provinces tested): the direction holds without each of them; no province turns it. Worst without Uppland, when {LO['n']} stones remain: odds ratio {d2e(LO['or'])} ({d2e(LO['ci'][0])}–{d2e(LO['ci'][1])}), {pfmt(LO['p'], True)}. Without Uppland more than half of Svealand's stones are gone, so there the rule requires only the direction – but it is also the report's weakest point, and it should be said plainly: the difference is carried to a large degree by Uppland.
-- Difference in percentage points on the adjusted model: {pc(EF['share_lo'])} against {pc(EF['share_hi'])} percent, {-round(100 * EF['diff'])} points (probably between {DIFF_CI[1]} and {DIFF_CI[0]}).
-- Model check (DHARMa): residual distribution p = {round(CK['uniformity_p'], 2)}, overdispersion p = {round(CK['dispersion_p'], 2)}, spatial pattern p = {round(CK['spatial_p'], 2)}. Nothing amiss.
-- Coding errors: in {CO['n_sim']} recomputations where each stone's ”true” value is drawn from the key's hit rates, the pattern holds in {pc(CO['share_holds'])} percent; median odds ratio {d2e(CO['or_median'])}, range {d2e(CO['or_range'][0])}–{d2e(CO['or_range'][1])}.
-- Common adjustment over the {N_SHOWN} patterns the statistics show today: q_global < 0.001. The finding is one of {N_ALL} patterns that hold at every rung of the ladder.
+- Without one province at a time ({LO['n_provinces']} provinces tested): the direction holds without each of them, and no province turns it. Weakest without Uppland, when {LO['n']} stones remain: odds ratio {d2e(LO['or'])} ({d2e(LO['ci'][0])}–{d2e(LO['ci'][1])}), {pfmt(LO['p'], True)}. Without Uppland more than half of Svealand's stones are gone, and there only the direction is required.
+- The difference in percentage points in the adjusted model: {pc(EF['share_lo'])} against {pc(EF['share_hi'])} percent, {-round(100 * EF['diff'])} points (probably between {DIFF_CI[1]} and {DIFF_CI[0]}).
+- The model's assumptions: residual distribution p = {round(CK['uniformity_p'], 2)}, overdispersion p = {round(CK['dispersion_p'], 2)}, remaining spatial pattern p = {round(CK['spatial_p'], 2)}. Nothing amiss.
+- Errors in the sex determination: the association holds in {pc(CO['share_holds'])} percent of the {CO['n_sim']} refits; median odds ratio {d2e(CO['or_median'])}, range {d2e(CO['or_range'][0])}–{d2e(CO['or_range'][1])}.
+- Adjusted for all {N_SHOWN} associations the project reports: q < 0.001. The association is one of {N_ALL} that hold in every sensitivity analysis.
 
-## Interpretation and weaknesses
+**5.4 Follow-up (second pre-registered plan).** Five pre-set explanations of what the difference consists of, tested with the same model and the same rules of interpretation:
 
-The finding is a difference in custom, not in population: it says that a woman is more often *named among those who raised the stone* in Svealand, not that women there had more power or property. What the difference consists of was tested in a follow-up locked plan (`analysplaner/2026-10-29-kvinnorna-i-svealand.md`, SHA-256 `{FU_SHA[:16]}…`), with five pre-set hypotheses:
-
-- **Widows after the journeys – not supported.** A woman raises for her husband: {96} of {en_n(1013)} in Svealand against {23} of {370} in Götaland, odds ratio {d2e(FT['t1_anka']['main']['or'])}, no difference. Without the journey stones the difference remains and grows slightly (odds ratio {d2e(FT['t2_utan_resa']['main']['or'])}, holds in both halves).
-- **The custom of listing the family – explains a fifth.** With the number of raisers constant: odds ratio {d2e(FT['t3_antal']['main']['or'])}; {round(100 * FU['attenuation_B'])} percent of the difference on the log-odds scale disappears, below the plan's limit of half.
+- **Widows after the journeys – not supported.** A woman raises the stone for her husband: {96} of {en_n(1013)} in Svealand against {23} of {370} in Götaland, odds ratio {d2e(FT['t1_anka']['main']['or'])}, no difference. Without the stones that mention journeys the difference remains and grows slightly (odds ratio {d2e(FT['t2_utan_resa']['main']['or'])}, holds in both halves).
+- **The custom of listing the family – explains a fifth.** With the number of sponsors constant: odds ratio {d2e(FT['t3_antal']['main']['or'])}. {round(100 * FU['attenuation_B'])} percent of the difference on the log-odds scale disappears, below the plan's limit of half.
 - **A position of her own – not supported.** A lone woman raises the stone: {137} of {en_n(1013)} against {44} of {370}, odds ratio {d2e(FT['t4_ensam']['main']['or'])}, no difference.
-- **The roles – this is where the difference sits.** Stones for sons: the mother stands on {107} of {195} in Svealand ({SON_SV} percent) against {13} of {70} in Götaland ({SON_GO} percent), odds ratio {d2e(FT['t5_son']['main']['or'])}, Holm-corrected p = 0.015, but in the halves p = 0.058 and 0.031: an indication by the plan's rule, not a confirmed finding. Stones for fathers: daughter or wife on {66} of {415} against {9} of {117}, odds ratio {d2e(FT['t6_far']['main']['or'])}, an indication.
-- **Christianisation – no association.** Christian marker and a woman among the raisers: odds ratio {d2e(FT['t8_kristen']['main']['or'])}, p = 0.16, and no difference between the regions.
+- **The roles – this is where the difference lies.** On stones for sons the mother appears on {107} of {195} in Svealand ({SON_SV} percent) against {13} of {70} in Götaland ({SON_GO} percent), odds ratio {d2e(FT['t5_son']['main']['or'])}, Holm-corrected p = 0.015. In the halves p = 0.058 and 0.031, so by the plan's rule it is an indication, not a confirmed finding. On stones for fathers a daughter or wife appears on {66} of {415} against {9} of {117}, odds ratio {d2e(FT['t6_far']['main']['or'])}, also an indication.
+- **Christianisation – no association.** A Christian feature on the stone (cross or prayer) and a woman among the sponsors: odds ratio {d2e(FT['t8_kristen']['main']['or'])}, p = 0.16, and no difference between the regions.
 
-This is how I read it: the women of Svealand were not more often widows and not more often lone raisers. The mother stood on her son's stone, together with the father and the siblings. That points to the family's way of remembering, and to inheritance – a mother could inherit from her child – rather than to the journeys or to Christianisation. But that is an interpretation of an indication; the report itself rests on the main finding.
+## 6. Discussion
 
-Weaknesses, in order of weight:
+**What the finding says.** The difference between Svealand and Götaland is not due to Svealand's stones being younger or to a few carvers there carving many stones. It remains when both are held constant, in each half and in every sensitivity analysis. It is a difference in custom, not in population: a woman is more often *named* among those who raised the stone in Svealand. It does not say that women there had more power or property.
+
+**Against earlier research.** Sawyer's (2000) observation that the share of women varies between provinces thus stands also when age and carver are held constant. The follow-up points the same way as her interpretation. The women of Svealand were not more often widows and not more often lone sponsors; the mother appeared on her son's stone together with the father and the siblings. That fits a rule of inheritance under which a mother could inherit from her child better than it fits the journeys or Christianisation (cf. Gräslund 1995). But the role finding is an indication by the plan's rule, and the interpretation is an interpretation. The report rests on the main finding.
+
+**Weaknesses, in order of weight.**
 
 1. **Uppland carries much.** Without Uppland the odds ratio is {d2e(LO['or'])} and the interval reaches above 1. The direction holds in every province, but the certain difference is to a large degree a difference between Uppland and Götaland.
-2. **Sex is read by rules.** The rules err on about one stone in twenty, mostly where the text has gaps, and they miss women more often than they add them. If gaps were more common in Götaland that would strengthen the difference on false grounds; the check with at least ten legible words gives an odds ratio of {d2e(RO['ord10']['or'])}, so that does not explain the finding.
-3. **The time layers rest on style dating.** Undated stones are a layer of their own. Another dating could move the figures slightly but hardly the direction, since the raw and the adjusted rungs nearly coincide.
-4. **Region is a coarse division.** That the difference is largest between Uppland and Götaland is already visible; what happens in the border provinces is not tested here.
+2. **Sex is determined by rules.** The rules err on about one stone in twenty, mostly where the text has gaps, and they miss women more often than they add them. If gaps were more common in Götaland that would strengthen the difference on false grounds. With only stones of at least ten legible words the odds ratio is {d2e(RO['ord10']['or'])}, so that does not explain the finding.
+3. **The dating rests on ornamental style.** Undated stones are a group of their own. Another dating could move the figures slightly but hardly the direction, since the raw and the adjusted models nearly coincide.
+4. **Region is a coarse division.** That the difference is largest between Uppland and Götaland is already visible. What happens in the border provinces is not tested here.
 
-What would overturn the finding: a hand coding of sex on a large sample showing more errors in one region than in the other, or a recomputation with another dating where the adjusted rung no longer holds.
+**What would overturn the finding.** A hand coding of sex on a large sample showing more errors in one region than in the other, or a recomputation with another dating in which the adjusted model no longer holds.
 
-## Reproduction
+## 7. Conclusion
 
-- The measurement: `src/people.py` gives one row per stone (`people.csv`); the check against hand coding is in `data/people_check.json`.
-- The model: `r/people.R` by the plan; the ladder `r/robustness.R` through `src/robustness.py`. All of it is run by the corpus job in Vitki (Statistics, R), which saves the result under the corpus fingerprint `{FP}` in `data/cache/r/corpus/`.
-- The follow-up: `utdata/kvinnor_landsdel/analys.R`, results in `utdata/kvinnor_landsdel/resultat.md`.
-- This report is built by `utdata/blogg/build/build_rapport_kvinnor.py`, which reads every figure from those files and stops if anything disagrees.
-- The code is open on [GitHub](https://github.com/Precatio/runes) (GPL-3.0). The pattern is shown in the app under Statistics → The people, with the ladder rung by rung.
+A woman stands among the sponsors on {pc(M['shares_region']['Svealand'])} percent of Svealand's runestones with a known sponsor against {pc(M['shares_region']['Götaland'])} percent of Götaland's, with age and carver constant, and the difference withstands every sensitivity analysis. It is due to how the family remembered its dead – the mother on her son's stone – and is therefore a finding about commemorative custom, not a measure of women's standing. The next question is why the custom differed, and it needs other material than the inscriptions' own words.
+
+## Data and code
+
+The analysis was made in Vitki, an open research tool for runestones ([vitkirunor.se](https://vitkirunor.se/en)). All code, the analysis plans and the result files are openly available on [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
+
+- The analysis plans: `analysplaner/2026-10-28-manniskorna.md` and `analysplaner/2026-10-29-kvinnorna-i-svealand.md`, with checksums in the `.sha256` files beside them.
+- The sex determination: `src/people.py`; the hand coding: `data/people_check.json`.
+- The main model: `r/people.R`. The sensitivity analyses: `r/robustness.R` and `src/robustness.py` (method description in `METHODS.md`, sections 1u and 1v). The results are saved under the material's version `{FP}`.
+- The follow-up: `utdata/kvinnor_landsdel/analys.R`, results and deviations in `utdata/kvinnor_landsdel/resultat.md`.
+- The report is built by `utdata/blogg/build/build_rapport_kvinnor.py`, which reads every figure from the result files and stops if anything disagrees.
+- In Vitki the association is shown under Statistics, The people, with the sensitivity analyses step by step. A popular account of the women on the stones is [The daughters the runestones forgot](/en/artiklar/dottrarna-som-runstenarna-glomde).
 
 ## References
 
-- Scandinavian Runic-text Database (Rundata), Department of Scandinavian Languages, Uppsala University. Open Database License.
-- Benjamini, Yoav & Hochberg, Yosef 1995. ”Controlling the false discovery rate”. *Journal of the Royal Statistical Society B* 57 (1).
-- Hartig, Florian 2022. *DHARMa: Residual diagnostics for hierarchical regression models*. R package.
-- Holm, Sture 1979. ”A simple sequentially rejective multiple test procedure”. *Scandinavian Journal of Statistics* 6 (2).
-- Sawyer, Birgit 2000. *The Viking-Age Rune-Stones: Custom and Commemoration in Early Medieval Scandinavia*. Oxford University Press.
-- Wood, Simon N. 2017. *Generalized Additive Models: An Introduction with R*. 2nd ed. Chapman & Hall.
-- Vitki: METHODS.md sections 1u (The people) and 1v (The robustness ladder). Popular account of the women on the stones: [The daughters the runestones forgot](/en/artiklar/dottrarna-som-runstenarna-glomde).
+- Benjamini, Y. & Hochberg, Y. 1995. Controlling the false discovery rate: a practical and powerful approach to multiple testing. *Journal of the Royal Statistical Society B* 57 (1), pp. 289–300.
+- Gräslund, A.-S. 1995. Runstenskvinnorna ännu en gång. *Tor* 27, pp. 459–474.
+- Gräslund, A.-S. 2006. Dating the Swedish Viking-Age rune stones on stylistic grounds. In: M. Stoklund et al. (eds), *Runes and their Secrets: Studies in Runology*. Copenhagen: Museum Tusculanum Press, pp. 117–139.
+- Hartig, F. 2022. *DHARMa: Residual diagnostics for hierarchical (multi-level/mixed) regression models*. R package.
+- Holm, S. 1979. A simple sequentially rejective multiple test procedure. *Scandinavian Journal of Statistics* 6 (2), pp. 65–70.
+- Jesch, J. 1991. *Women in the Viking Age*. Woodbridge: Boydell.
+- Kvant, V. 2026. *Vitki: method description* (METHODS.md). https://github.com/Precatio/runes
+- Scandinavian Runic-text Database (Rundata). Department of Scandinavian Languages, Uppsala University. Open Database License.
+- Sawyer, B. 2000. *The Viking-Age Rune-Stones: Custom and Commemoration in Early Medieval Scandinavia*. Oxford: Oxford University Press.
+- Wood, S. N. 2017. *Generalized Additive Models: An Introduction with R*. 2nd ed. Boca Raton: Chapman & Hall/CRC.
 
 :::box The essentials
 - In Svealand a woman was named among those who raised the stone nearly twice as often as in Götaland, and the difference withstands every check we have.
-- It is not widows or lone women: it was the mother who stood on her son's stone, together with the father and the siblings.
-- The difference is one of custom and memory, not of women's power – and it is carried to a large degree by Uppland.
+- It is not widows or lone women: it was the mother who appeared on her son's stone, together with the father and the siblings.
+- The difference concerns commemorative custom, not women's power – and it is carried to a large degree by Uppland.
 :::
 """
 
@@ -328,7 +425,7 @@ for b in (body, body_en):
     assert "{" not in b and "}" not in b
 assert "Det viktigaste i korthet" in body
 
-out = {"slug": "rapport-1-kvinnor-bland-resarna-svealand-gotaland", "title": title, "summary": summary, "body": body,
+out = {"slug": SLUG, "title": title, "summary": summary, "body": body,
        "title_en": title_en, "summary_en": summary_en, "body_en": body_en,
        "labels": ["Rapport", "Kvinnor och barn", "Geografi"]}
 assert blog_labels.check(out["labels"]) is None

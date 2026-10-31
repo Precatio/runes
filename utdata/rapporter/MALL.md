@@ -12,22 +12,40 @@ internationella fältet och Google Scholar läser engelska), den svenska är lä
 egna termer. Båda sidorna är märkta ScholarlyArticle i den strukturerade datan.
 Titeln är påståendet med siffrorna i, inte ämnet. Längd 1 500–3 000 ord. Inga tabeller (BlogBody), listor i stället.
 
-## Fasta rubriker, i denna ordning
+## Skriv för en läsare som aldrig sett Vitki
 
-1. **Sammanfattning** (sv i texten, en i den engelska versionen): fyndet i en mening med effekt och osäkerhet,
-   materialet i en mening, vad som prövats, vad som inte visats.
-2. **Fråga och hypotes som den låstes**: planens fil, datum och SHA-256; hypotesen ordagrant; förutbestämda gränser.
-3. **Material**: Rundata-version/korpusens fingerprint, urvalet steg för steg med antal (vikingatida, svenska
-   landskap, läsbara, flyttfiltret), vad som mäts och hur (regel + facit mot handkodning med felandel).
-4. **Metod**: modellen i ord (utfall, jämförelse, justeringar, slumpeffekter), programvara, korrigering för flera
-   test, halvorna, trappan.
-5. **Resultat**: huvudtalet (andelar, oddskvot med 95 %-intervall, p, Holm-p, q_global), båda halvorna var för sig,
-   trappan steg för steg som lista, modellkontroll, kodningsfelens inverkan.
-6. **Tolkning och svagheter**: vad fyndet säger, vad det inte säger, alternativa förklaringar som prövats
-   (med hänvisning till uppföljande låsta planer), vad som skulle fälla det.
-7. **Reproduktion**: kommando, skript, commit/fingerprint, data, licens, hur man ser mönstret i appen.
-8. **Referenser** i Futhark-stil.
-9. `:::box Det viktigaste i korthet` (korthetsregeln) – tolkningen, inte sifferrepris.
+Rapporten ska gå att läsa av en runolog eller statistiker som inte känner appen. I löptexten (allt före Data och kod):
+inga interna namn – inte modulnamn (människomodulen, budskapsmodulen), inte robusthetstrappan, q_global, korpusjobb,
+fingeravtryck, facit, flikar i appen eller filvägar. Beskriv i stället vad saken är: ”en förregistrerad studie av vilka
+som reste stenarna”, ”en fast serie känslighetsanalyser”, ”justerat för alla N samband projektet redovisar
+(Benjamini–Hochberg), q”, ”handkodat kontrollurval”, ”Rundata, fryst för analysen den …”. Definiera varje begrepp
+första gången (slumpeffekt, halvorna, marginaleffekt) och räkna upp landskapen bakom en landsdel. Filvägar, versionsnyckel
+och appens flikar står bara under Data och kod. Byggaren ska kontrollera detta (sök efter jargong före Data och kod).
+
+## Fasta rubriker, i denna ordning (IMRaD i registrerad form)
+
+Ingen numrering av rapporterna i titeln; typen Rapport och versionsraden räcker.
+
+0. **Huvud** (kursiv rad först i texten): författare och tillhörighet, version och datum, licens (CC BY 4.0),
+   citeringsrad till den engelska versionen, nyckelord, konkurrerande intressen, finansiering.
+1. **Sammanfattning**, strukturerad: bakgrund och syfte, material, metod, resultat (effekt och osäkerhet i siffror),
+   slutsats. Säg vad som inte visats.
+2. **1. Inledning**: tidigare forskning med referenser, vad som saknas i den, studiens syfte.
+3. **2. Förregistrering**: planens fil, datum och SHA-256; hypotesen ordagrant; förutbestämda gränser och
+   tolkningsregler; vad som var sett före låsningen; vilka analyser som är konfirmatoriska, vilka som är uppföljning
+   (egen låst plan) och vilka som är explorativa.
+4. **3. Material**: korpusens fingerprint, urvalet steg för steg med antal (vikingatida, svenska landskap, läsbara,
+   flyttfiltret), vad som mäts och hur (regel + facit mot handkodning med felandel), jämförelsen, justeringarna.
+5. **4. Metod**: 4.1 modellen, 4.2 korrigering och replikering (halvorna), 4.3 robusthetstrappan, 4.4 avvikelser
+   från planen (alltid med, också när det är ”inga”).
+6. **5. Resultat**: 5.1 konfirmatoriskt huvudtest med halvorna och ett diagram, 5.2 planens robusthetsprov,
+   5.3 trappan steg för steg som lista med modellkontroll, kodningsfel och q_global, 5.4 uppföljning (märkt).
+7. **6. Diskussion**: vad fyndet säger, mot tidigare forskning, svagheter i ordning efter vikt, vad som skulle
+   fälla fyndet.
+8. **7. Slutsats**, kort.
+9. **Data och kod**: skript, fingerprint, kommando, licens, var mönstret syns i appen, länk till populär artikel.
+10. **Referenser** i Futhark-stil (efternamn, initial, år, titel, serie, sidor).
+11. `:::box Det viktigaste i korthet` (sajtens korthetsregel) – tolkningen, inte sifferrepris.
 
 ## Versioner
 v1 med datum i rubrikraden under titeln. En rättelse ger v2 med en ändringslogg sist i rapporten (vad, varför, när);
