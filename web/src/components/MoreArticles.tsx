@@ -16,7 +16,7 @@ export default function MoreArticles({ posts }: { posts: BlogPost[] }) {
     <section className="max-w-3xl mx-auto px-6 pb-24" aria-labelledby="fler-artiklar">
       <div className="border-t border-slate-900/10 pt-10 flex items-baseline justify-between gap-4">
         <h2 id="fler-artiklar" className="text-2xl font-serif font-bold">{en ? "More articles" : "Fler artiklar"}</h2>
-        <Link href={ARTICLES_PATH} className="text-sm font-bold text-[#b7410e] hover:underline">
+        <Link href={ARTICLES_PATH} className="tap text-sm font-bold text-[#b7410e] hover:underline">
           {en ? "All articles →" : "Alla artiklar →"}
         </Link>
       </div>

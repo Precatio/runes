@@ -80,7 +80,7 @@ export default function ArticleTeasers({ posts, photo }: { posts: BlogPost[]; ph
             Artiklarna berättar om de mönster som Vitkis analyser hittar i runstenarna – för alla som är intresserade av
             runor och vikingatid, med statistiken förklarad och prövad.
           </p>
-          <Link href="/artiklar" className="mt-3 inline-block text-sm font-bold text-[#b7410e] hover:underline">Alla artiklar →</Link>
+          <Link href="/artiklar" className="tap mt-3 text-sm font-bold text-[#b7410e] hover:underline">Alla artiklar →</Link>
         </div>
       </div>
     </div>

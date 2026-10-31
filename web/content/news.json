@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "meny-pa-mobilen",
+   "date": "2026-10-31",
+   "status": "nytt",
+   "title": "Menyn på mobilen",
+   "text": "Webbplatsen har nu en meny på mobil och surfplatta: knappen med tre streck öppnar artiklarna, forskningsrapporterna, nyheterna, kontakt och startsidans avsnitt. Länkarna har fått större tryckytor, och sidfoten leder också till artiklarna och forskningsrapporterna."
+  },
+  {
    "id": "forskningsrapporter",
    "date": "2026-10-31",
    "status": "nytt",

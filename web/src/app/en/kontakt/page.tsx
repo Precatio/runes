@@ -19,7 +19,7 @@ export default function EnglishContactPage() {
   return (
     <BlogShell lang="en">
       <div className="max-w-2xl mx-auto px-6 pt-8 -mb-12 text-right">
-        <SwedishEditionLink href={CONTACT_PATH} className="text-sm text-[#b7410e] font-semibold hover:underline">Läs på svenska →</SwedishEditionLink>
+        <SwedishEditionLink href={CONTACT_PATH} className="tap text-sm text-[#b7410e] font-semibold hover:underline">Läs på svenska →</SwedishEditionLink>
       </div>
       <ContactPage lang="en" />
     </BlogShell>

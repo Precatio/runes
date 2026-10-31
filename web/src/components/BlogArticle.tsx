@@ -23,7 +23,7 @@ export default function BlogArticle({ post, sizes, english = null }: { post: Blo
   return (
     <article className="max-w-3xl mx-auto px-6 pt-16 pb-24">
       <nav aria-label="Brödsmulor" className="text-sm">
-        <Link href="/artiklar" prefetch={false} className="font-bold text-[#b7410e] hover:underline">← Artiklar</Link>
+        <Link href="/artiklar" prefetch={false} className="tap font-bold text-[#b7410e] hover:underline">← Artiklar</Link>
       </nav>
       <div className="mt-8 text-sm text-slate-500">
         <time dateTime={post.publishedAt ?? post.month}>{postDate(post, lang)}</time>

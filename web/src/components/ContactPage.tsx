@@ -78,9 +78,9 @@ export default async function ContactPage({ lang }: { lang: "sv" | "en" }) {
         </>
       )}
       <div className="mt-5 flex flex-wrap gap-4 text-sm font-bold text-[#b7410e]">
-        <a href={AUTHOR.linkedin} target="_blank" rel="noopener noreferrer me" className="hover:underline">LinkedIn ↗</a>
-        <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="hover:underline">{en ? "Vitki on GitHub ↗" : "Vitki på GitHub ↗"}</a>
-        <a href={BLUESKY_URL} target="_blank" rel="noopener noreferrer me" className="hover:underline">{en ? "Vitki on Bluesky ↗" : "Vitki på Bluesky ↗"}</a>
+        <a href={AUTHOR.linkedin} target="_blank" rel="noopener noreferrer me" className="tap hover:underline">LinkedIn ↗</a>
+        <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="tap hover:underline">{en ? "Vitki on GitHub ↗" : "Vitki på GitHub ↗"}</a>
+        <a href={BLUESKY_URL} target="_blank" rel="noopener noreferrer me" className="tap hover:underline">{en ? "Vitki on Bluesky ↗" : "Vitki på Bluesky ↗"}</a>
       </div>
 
       <div className="mt-14">
@@ -106,7 +106,7 @@ export default async function ContactPage({ lang }: { lang: "sv" | "en" }) {
               </li>
             ))}
           </ul>
-          <Link href={en ? EN_ARTICLES_PATH : ARTICLES_PATH} className="mt-3 inline-block text-sm font-bold text-[#b7410e] hover:underline">
+          <Link href={en ? EN_ARTICLES_PATH : ARTICLES_PATH} className="tap mt-3 text-sm font-bold text-[#b7410e] hover:underline">
             {en ? `All ${own.length} articles →` : `Alla ${own.length} artiklar →`}</Link>
         </div>
       )}

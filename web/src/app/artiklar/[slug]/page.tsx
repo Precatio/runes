@@ -66,7 +66,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     <BlogShell>
       {english && (
         <div className="max-w-3xl mx-auto px-6 pt-8 -mb-10 text-right">
-          <a href={english} hrefLang="en" className="text-sm text-[#b7410e] font-semibold hover:underline">In English →</a>
+          <a href={english} hrefLang="en" className="tap text-sm text-[#b7410e] font-semibold hover:underline">In English →</a>
         </div>
       )}
       <BlogArticle post={swedishOnly(post)} sizes={sizes} english={english} />

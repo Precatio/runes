@@ -78,8 +78,8 @@ export default async function EnglishPostPage({ params }: { params: Promise<{ sl
     <BlogShell lang="en">
       <article className="max-w-3xl mx-auto px-6 pt-16 pb-14" lang="en">
         <nav aria-label="Breadcrumb" className="flex items-center justify-between gap-4 text-sm">
-          <Link href={EN_ARTICLES_PATH} prefetch={false} className="font-bold text-[#b7410e] hover:underline">← Articles</Link>
-          <SwedishEditionLink href={postPath(post.slug)} className="text-[#b7410e] font-semibold hover:underline">
+          <Link href={EN_ARTICLES_PATH} prefetch={false} className="tap font-bold text-[#b7410e] hover:underline">← Articles</Link>
+          <SwedishEditionLink href={postPath(post.slug)} className="tap text-[#b7410e] font-semibold hover:underline">
             Läs på svenska →
           </SwedishEditionLink>
         </nav>

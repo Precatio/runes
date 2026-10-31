@@ -30,7 +30,7 @@ export default async function EnglishReportsPage() {
       <section className="max-w-4xl mx-auto px-6 pt-20 pb-24" lang="en">
         <div className="flex items-center justify-between gap-4 mb-3">
           <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e]">{REPORTS_TITLE_EN}</div>
-          <Link href={REPORTS_PATH} hrefLang="sv" className="text-sm text-[#b7410e] font-semibold hover:underline">På svenska →</Link>
+          <Link href={REPORTS_PATH} hrefLang="sv" className="tap text-sm text-[#b7410e] font-semibold hover:underline">På svenska →</Link>
         </div>
         <h1 className="text-4xl md:text-5xl font-serif font-bold tracking-tight">Research findings from the runestones</h1>
         <p className="mt-4 text-lg text-slate-600 leading-relaxed">

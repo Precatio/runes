@@ -35,8 +35,8 @@ export default function ReportList({ posts, lang }: { posts: BlogPost[]; lang: "
               <p className="mt-2 text-sm text-slate-500"><span className="font-semibold">{en ? "Keywords" : "Nyckelord"}:</span> <span className="italic">{h.keywords.join(", ")}</span></p>
             )}
             <p className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm font-semibold">
-              <Link href={href} prefetch={false} className="text-[#b7410e] hover:underline">{en ? "Read the report →" : "Läs rapporten →"}</Link>
-              {other && <a href={other} hrefLang={en ? "sv" : "en"} className="text-slate-600 hover:text-[#9a350b] hover:underline">{en ? "På svenska" : "In English"}</a>}
+              <Link href={href} prefetch={false} className="tap text-[#b7410e] hover:underline">{en ? "Read the report →" : "Läs rapporten →"}</Link>
+              {other && <a href={other} hrefLang={en ? "sv" : "en"} className="tap text-slate-600 hover:text-[#9a350b] hover:underline">{en ? "På svenska" : "In English"}</a>}
             </p>
           </li>
         );

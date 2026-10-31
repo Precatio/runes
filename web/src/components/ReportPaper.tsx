@@ -42,8 +42,8 @@ export default function ReportPaper({ post, lang, sizes, otherHref }: { post: Bl
     <div className={`${paperFace.variable} report-print`}>
       {!en && <EnglishEdition href={otherHref ?? null} />}
       <nav aria-label={en ? "Breadcrumb" : "Brödsmulor"} className="no-print max-w-5xl mx-auto px-4 sm:px-6 pt-8 flex items-center justify-between gap-4 text-sm">
-        <Link href={en ? EN_REPORTS_PATH : REPORTS_PATH} prefetch={false} className="font-bold text-[#b7410e] hover:underline">{t.back}</Link>
-        {otherHref && <a href={otherHref} hrefLang={en ? "sv" : "en"} className="font-semibold text-[#b7410e] hover:underline">{t.other}</a>}
+        <Link href={en ? EN_REPORTS_PATH : REPORTS_PATH} prefetch={false} className="tap font-bold text-[#b7410e] hover:underline">{t.back}</Link>
+        {otherHref && <a href={otherHref} hrefLang={en ? "sv" : "en"} className="tap font-semibold text-[#b7410e] hover:underline">{t.other}</a>}
       </nav>
       <article lang={en ? "en" : "sv"} className="report-sheet max-w-5xl mx-auto mt-6 mb-16 bg-white border border-slate-900/10 shadow-sm px-5 sm:px-10 lg:px-16 py-10 sm:py-14" translate="no">
         <header className="text-center max-w-3xl mx-auto">

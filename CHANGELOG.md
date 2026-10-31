@@ -5,6 +5,14 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Webbplatsen på mobilen
+- Meny under 1024 px (`web/src/components/MobileMenu.tsx`): knapp med tre streck, panel med artiklarna,
+  forskningsrapporterna, nyheterna och kontakt överst, startsidans avsnitt och nedladdningen; stängs med länk, Escape
+  eller tryck utanför, låser sidans scroll, flyttar fokus. Panelen ligger i en portal (sidhuvudets backdrop-filter gör
+  annars sidhuvudet till fasta elements containing block). Nedladdningsknappen ligger i menyn på telefoner.
+- Större tryckytor (klassen `.tap`) på brödsmulor, språklänkar och sidfotens länkar; språkknappen 36 px hög; etikettchips
+  12 px. Sidfoten länkar också till Artiklar och Forskningsrapporter.
+
 ### Forskningsrapporter som egen sektion
 - Inlägg med etiketten Rapport visas inte längre bland artiklarna utan under `/forskningsrapporter` (och
   `/en/forskningsrapporter`), uppställda som vetenskapliga papers (`web/src/components/ReportPaper.tsx`): titelblock med

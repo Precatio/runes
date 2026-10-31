@@ -30,7 +30,7 @@ export default async function EnglishBlogPage() {
       <section className="max-w-3xl mx-auto px-6 pt-20 pb-24" lang="en">
         <div className="flex items-center justify-between gap-4">
           <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e]">Articles</div>
-          <SwedishEditionLink href={ARTICLES_PATH} className="text-sm text-[#b7410e] font-semibold hover:underline">Läs på svenska →</SwedishEditionLink>
+          <SwedishEditionLink href={ARTICLES_PATH} className="tap text-sm text-[#b7410e] font-semibold hover:underline">Läs på svenska →</SwedishEditionLink>
         </div>
         <h1 className="mt-3 text-4xl md:text-5xl font-serif font-bold tracking-tight">Hidden patterns of the runestones</h1>
         <p className="mt-4 text-lg text-slate-600 leading-relaxed">

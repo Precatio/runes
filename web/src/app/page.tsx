@@ -12,8 +12,8 @@ import LandingArticleSearch from "@/components/LandingArticleSearch";
 import type { BlogPost } from "@/components/BlogBody";
 import { getPost, listPosts } from "@/lib/articles";
 import { featuredFirst } from "@/lib/featured";
-import { commonsSizes, commonsFile, pictures } from "@/lib/blogSeo";
-import { AUTHORS, BLUESKY_URL, CONTACT_PATH, DOCS_URL, DOWNLOAD_URL, GITHUB_URL, METHODS_URL, SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
+import { ARTICLES_PATH, commonsSizes, commonsFile, pictures } from "@/lib/blogSeo";
+import { AUTHORS, BLUESKY_URL, CONTACT_PATH, DOCS_URL, DOWNLOAD_URL, GITHUB_URL, METHODS_URL, NEWS_PATH, SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
 
 // The newest articles are fetched again at most every five minutes, and at once when one is published (tag "blog")
 export const revalidate = 60;
@@ -504,7 +504,7 @@ andel <- tapply(stenar$bon,
               <span className="font-bold text-slate-900">Forskningsrapporter.</span> De fynd som har klarat alla kontroller skrivs
               upp i vetenskaplig form – förregistrering, metod, resultat, diskussion och referenser – med version och citering.
             </p>
-            <Link href={REPORTS_PATH} prefetch={false} className="shrink-0 text-sm font-bold text-[#b7410e] hover:underline">Läs forskningsrapporterna →</Link>
+            <Link href={REPORTS_PATH} prefetch={false} className="tap shrink-0 text-sm font-bold text-[#b7410e] hover:underline">Läs forskningsrapporterna →</Link>
           </div>
 
           <div className="mt-20 rounded-3xl border-2 border-[#b7410e]/20 bg-[#b7410e]/[0.03] p-10 md:p-12">
@@ -679,7 +679,7 @@ andel <- tapply(stenar$bon,
               <div key={s.name} className="rounded-2xl bg-white border border-slate-200 p-5">
                 <div className="font-bold text-slate-900">
                   {s.href ? (
-                    <a href={s.href} target="_blank" rel="noopener noreferrer" className="hover:text-[#b7410e]">{s.name} ↗</a>
+                    <a href={s.href} target="_blank" rel="noopener noreferrer" className="tap hover:text-[#b7410e]">{s.name} ↗</a>
                   ) : s.name}
                 </div>
                 <p className="mt-1.5 text-sm text-slate-600 leading-relaxed">{s.detail}</p>
@@ -808,11 +808,14 @@ språk, Uppsala universitet.`}
             Vitki · Grundat av{" "}
             <a href="https://www.linkedin.com/in/viktor-kvant-555180108/" target="_blank" rel="noopener noreferrer" className="font-semibold text-slate-700 hover:text-[#b7410e]">Viktor Kvant</a>
           </div>
-          <div className="flex flex-wrap items-center gap-5">
-            <Link href={CONTACT_PATH} className="hover:text-slate-900">Kontakt</Link>
-            <a href={DOCS_URL} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">Dokumentation</a>
-            <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">GitHub</a>
-            <a href={BLUESKY_URL} target="_blank" rel="noopener noreferrer me" className="hover:text-slate-900">Bluesky</a>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+            <Link href={ARTICLES_PATH} prefetch={false} className="tap hover:text-slate-900">Artiklar</Link>
+            <Link href={REPORTS_PATH} prefetch={false} className="tap hover:text-slate-900">Forskningsrapporter</Link>
+            <Link href={NEWS_PATH} prefetch={false} className="tap hover:text-slate-900">Nyheter</Link>
+            <Link href={CONTACT_PATH} className="tap hover:text-slate-900">Kontakt</Link>
+            <a href={DOCS_URL} target="_blank" rel="noopener noreferrer" className="tap hover:text-slate-900">Dokumentation</a>
+            <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="tap hover:text-slate-900">GitHub</a>
+            <a href={BLUESKY_URL} target="_blank" rel="noopener noreferrer me" className="tap hover:text-slate-900">Bluesky</a>
             <span>GPL-3.0</span>
             <StatsNote />
           </div>

@@ -26,7 +26,7 @@ export default async function BlogPage() {
   return (
     <BlogShell>
       <section className="max-w-3xl mx-auto px-6 pt-20 pb-24">
-        <div className="flex items-center justify-between gap-4 mb-3"><div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e]">Artiklar</div><Link href="/en/artiklar/" hrefLang="en" className="text-sm text-[#b7410e] font-semibold hover:underline">In English →</Link></div>
+        <div className="flex items-center justify-between gap-4 mb-3"><div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e]">Artiklar</div><Link href="/en/artiklar/" hrefLang="en" className="tap text-sm text-[#b7410e] font-semibold hover:underline">In English →</Link></div>
         <h1 className="text-4xl md:text-5xl font-serif font-bold tracking-tight">Mönster i runstenarna</h1>
         <p className="mt-4 text-lg text-slate-600 leading-relaxed">
           Här skriver vi om de mest intressanta mönstren i de svenska runstenarna – vad vi ser, vad det kan betyda och
