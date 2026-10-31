@@ -125,7 +125,7 @@ SLUG = "kvinnor-bland-resarna-svealand-gotaland"
 APP_VERSION = json.load(open(os.path.join(ROOT, "web", "package.json")))["version"]  # Vitki's own version (the program)
 assert APP_VERSION == "3.0.0"
 REPORT_VERSION = 1  # the report's own version; a correction gives 2 with a changelog
-CITE_EN = f"Kvant, V. ({TODAY[:4]}). {title_en}. Research report, report version {REPORT_VERSION}; analysis in Vitki {APP_VERSION}. https://vitkirunor.se/en/artiklar/{SLUG}"
+CITE_EN = f"Kvant, V. ({TODAY[:4]}). {title_en}. Research report, report version {REPORT_VERSION}; analysis in Vitki {APP_VERSION}. https://vitkirunor.se/en/forskningsrapporter/{SLUG}"
 
 
 def chart(sv):

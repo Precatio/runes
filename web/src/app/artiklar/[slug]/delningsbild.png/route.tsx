@@ -6,6 +6,7 @@ import { getPost, postSlugs } from "@/lib/articles";
 import { postDate } from "@/components/BlogBody";
 import { commonsAt, commonsFile, commonsSizes, pictures } from "@/lib/blogSeo";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { isReport } from "@/lib/report";
 
 // The picture shown when an article is shared (Open Graph and Twitter/X): its title, date and first photo, made
 // automatically for every article, at /artiklar/…/delningsbild.png – a file with its extension, which also the static
@@ -57,7 +58,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ slug: s
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "70px", width: photo ? 760 : 1200 }}>
           <div style={{ display: "flex", alignItems: "center", fontSize: 26, fontWeight: 700, color: "#b7410e", letterSpacing: 3 }}>
             <img src={logo} alt="" width={48} height={40} style={{ marginRight: 16, borderRadius: 8 }} />
-            VITKI · ARTIKLAR
+            {post && isReport(post) ? "VITKI · FORSKNINGSRAPPORT" : "VITKI · ARTIKLAR"}
           </div>
           <div style={{ fontSize: big, fontWeight: 800, lineHeight: 1.08, marginTop: 28 }}>{title}</div>
           <div style={{ fontSize: 26, color: "#64748b", marginTop: 32 }}>

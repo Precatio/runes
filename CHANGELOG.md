@@ -5,6 +5,17 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Forskningsrapporter som egen sektion
+- Inlägg med etiketten Rapport visas inte längre bland artiklarna utan under `/forskningsrapporter` (och
+  `/en/forskningsrapporter`), uppställda som vetenskapliga papers (`web/src/components/ReportPaper.tsx`): titelblock med
+  författare, rapportversion, Vitkis version och licens; sammanfattning med nyckelord; huvudpunkter; innehållsförteckning;
+  numrerade avsnitt; figurtexter; referenser med hängande indrag; citering och BibTeX; utskrift och PDF i A4. Typsnittet
+  är Source Serif 4. En gammal adress under `/artiklar` leder vidare.
+- Sökmotorer: schema.org ScholarlyArticle/Report, Google Scholars `citation_*`-taggar, sitemap med hög prioritet,
+  samlingssida (CollectionPage), hreflang mellan svenska och engelska, länkar från startsidan och artikellistorna.
+- Sidhuvudet: länken Forskningsrapporter; startsidans fyra sista ankarlänkar visas först från 1800 px, så att menyn
+  aldrig bryts. Artikeltexten kan nu visa `kod`.
+
 ### Webbplatsens publicering från appen
 - Publicering från Admin fick 403 från GitHub ("denied to Precatio"): API:t läser .env, vars `GITHUB_TOKEN` är den
   skrivskyddade statistik-token, och gh:s hjälpprogram tog den före nyckelringen. Git körs nu utan tokenvariablerna

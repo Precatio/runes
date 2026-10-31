@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import BlogShell from "@/components/BlogShell";
 import { SwedishEditionLink } from "@/components/LanguageToggle";
 import BlogBody, { postDate, type BlogPost } from "@/components/BlogBody";
@@ -8,6 +8,7 @@ import LabelChips from "@/components/LabelChips";
 import { AuthorByline, AuthorCard } from "@/components/ArticleAuthor";
 import ShareArticle from "@/components/ShareArticle";
 import { getPost, listPosts, postSlugs } from "@/lib/articles";
+import { isReport, enReportPath } from "@/lib/report";
 import { featuredFirst } from "@/lib/featured";
 import { authorOf } from "@/lib/site";
 import { articleJsonLd, commonsSizes, enPostPath, EN_ARTICLES_PATH, postPath, keywords, languageAlternates, metaDescription, pictures, SHARE_SIZE, sharePath } from "@/lib/blogSeo";
@@ -67,6 +68,7 @@ export default async function EnglishPostPage({ params }: { params: Promise<{ sl
   const { slug } = await params;
   const post = await getPost(decodeURIComponent(slug));
   if (!post?.body_en) notFound();
+  if (isReport(post)) permanentRedirect(enReportPath(post.slug));
   const more = featuredFirst((await listPosts()).posts.filter(p => p.slug !== post.slug && p.title_en)).slice(0, 3);
   const sizes = await commonsSizes(pictures(post.body_en).map(p => p.src));
   const author = authorOf(post.author);

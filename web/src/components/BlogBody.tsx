@@ -86,15 +86,16 @@ const withSlash = (href: string) => {
   return path.endsWith("/") || /\.[a-z0-9]+$/i.test(path) ? href : `${path}/${rest}`;
 };
 
-/** **bold**, *italic* and [text](url) inside a line. */
+/** **bold**, *italic*, [text](url) and `code` (file names in the research reports' Data and code) inside a line. */
 function inline(text: string): ReactNode[] {
   const out: ReactNode[] = [];
-  const re = /\*\*(.+?)\*\*|\*(.+?)\*|\[([^\]]+)\]\(([^)\s]+)\)/g;
+  const re = /\*\*(.+?)\*\*|\*(.+?)\*|\[([^\]]+)\]\(([^)\s]+)\)|`([^`]+)`/g;
   let last = 0, m: RegExpExecArray | null, i = 0;
   while ((m = re.exec(text))) {
     if (m.index > last) out.push(text.slice(last, m.index));
     if (m[1] !== undefined) out.push(<strong key={i++} className="font-semibold text-slate-900">{m[1]}</strong>);
     else if (m[2] !== undefined) out.push(<em key={i++}>{m[2]}</em>);
+    else if (m[5] !== undefined) out.push(<code key={i++} className="rounded bg-slate-100 px-1 py-0.5 font-mono text-[0.82em] text-slate-800 break-words">{m[5]}</code>);
     else {
       const href = safeHref(m[4]);
       out.push(href

@@ -26,8 +26,8 @@ export const DOCS_URL = `${GITHUB_URL}#readme`;
 // public website, which is always built with NEXT_PUBLIC_SITE_MODE=public (site.yml), so that flag alone separates them
 export const SHOW_LOCAL_APP = !PUBLIC_SITE;
 
-/** The paths that exist on the public website: the start page, the articles and their figures, the news and the contact page. */
-export const isPublicPath = (href: string) => /^\/(?:$|[#?]|artiklar(?:[/?#]|$)|nyheter(?:[/?#]|$)|kontakt(?:[/?#]|$)|api\/blog\/figures\/)/.test(href);
+/** The paths that exist on the public website: the start page, the articles and their figures, the research reports, the news and the contact page. */
+export const isPublicPath = (href: string) => /^\/(?:$|[#?]|artiklar(?:[/?#]|$)|forskningsrapporter(?:[/?#]|$)|en\/(?:forskningsrapporter|artiklar)(?:[/?#]|$)|nyheter(?:[/?#]|$)|kontakt(?:[/?#]|$)|api\/blog\/figures\/)/.test(href);
 export const CONTACT_PATH = PUBLIC_SITE ? "/kontakt/" : "/kontakt";
 export const EN_CONTACT_PATH = PUBLIC_SITE ? "/en/kontakt/" : "/en/kontakt";
 export const NEWS_PATH = PUBLIC_SITE ? "/nyheter/" : "/nyheter";

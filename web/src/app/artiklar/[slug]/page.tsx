@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import BlogShell from "@/components/BlogShell";
 import BlogArticle from "@/components/BlogArticle";
 import MoreArticles from "@/components/MoreArticles";
 import type { BlogPost } from "@/components/BlogBody";
 import { getPost, listPosts, postSlugs } from "@/lib/articles";
+import { isReport, reportPath } from "@/lib/report";
 import { featuredFirst } from "@/lib/featured";
 import { articleJsonLd, commonsSizes, keywords, metaDescription, pictures, postPath, SHARE_SIZE, sharePath, withImageSizes } from "@/lib/blogSeo";
 import { enPostPath, languageAlternates } from "@/lib/blogSeo";
@@ -54,6 +55,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const { slug } = await params;
   const post = await getPost(decodeURIComponent(slug));
   if (!post) notFound();
+  // A research report has its own section and paper layout (app/rapporter); an old address under /artiklar leads there
+  if (isReport(post)) permanentRedirect(reportPath(post.slug));
   // three other articles: the article of the week first, then the newest
   const more = (await withImageSizes(featuredFirst((await listPosts()).posts.filter(p => p.slug !== post.slug)).slice(0, 3))).map(moreCard);
   // The sizes of its Commons photos

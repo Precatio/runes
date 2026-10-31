@@ -158,7 +158,7 @@ summary_en = ("Runestones on which the sound ʀ is written with the ordinary r-r
               "halves of the material and in every sensitivity analysis. The carver Erik wrote so on all his stones, but the "
               "cluster remains without them.")
 CITE_EN = (f"Kvant, V. ({TODAY[:4]}). {title_en}. Research report, report version {REPORT_VERSION}; analysis in Vitki {APP_VERSION}. "
-           f"https://vitkirunor.se/en/artiklar/{SLUG}")
+           f"https://vitkirunor.se/en/forskningsrapporter/{SLUG}")
 
 body = f"""*Viktor Kvant, oberoende forskare. Rapportversion {REPORT_VERSION}, {TODAY}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, yr-runan, ʀ, r, Uppland, ristare, rumslig statistik. Konkurrerande intressen: inga. Finansiering: ingen.*
 
@@ -222,10 +222,10 @@ Analyserna i avsnitt 5.1–5.3 är de som metoden föreskriver för varje drag. 
 **5.1 Klustret.** Draget samlas tydligt geografiskt: Morans I = {d2(MO['i'])} (p < 0,001). Det mest extrema området har sin mitt i U 1172 vid Holm i Vittinge socken och en radie på {d1(CL['radius_km'])} kilometer. Där har {CL['cases']} av {CL['n']} stenar r för ʀ ({pc(CL['rate_in'])} procent), mot {pc(CL['rate_out'])} procent av stenarna i resten av landet: {d2(CL['rr'])} gånger så vanligt. Scanstatistikens p = 0,001, det lägsta värdet {H['nsim']} simuleringar kan ge; justerat för de {N_TRAITS} dragen q = 0,013. Av de {N_TRAITS} dragen är det det enda vars kluster klarar justeringen. Klustrets stenar ligger i {len(PAR)} socknar, flest i Simtuna ({PAR['Simtuna sn']}), Vårfrukyrka, Tillinge, Nysätra, Fröslunda och Jumkil (3 vardera). I halva A har {pc(HA['rate_in'])} procent av stenarna inom klustret draget mot {pc(HA['rate_out'])} utanför (oddskvot {round(HA['or'])}, {pfmt(HA['p'])}); i halva B {pc(HB['rate_in'])} mot {pc(HB['rate_out'])} procent (oddskvot {d1(HB['or'])}, {pfmt(HB['p'])}).
 
 ![Figur 1. ʀ skrivet med r-runan: stenarna och klustret]({FIGS['riket_sv']})
-Figur 1. Varje punkt är en runsten där draget kan avgöras; rost: r för ʀ minst en gång, grå: bara yr-runan. Ringen är klustret. Källa: Rundata; kustlinjer och sjöar: Natural Earth.
+**Figur 1.** Varje punkt är en runsten där draget kan avgöras; rost: r för ʀ minst en gång, grå: bara yr-runan. Ringen är klustret. Källa: Rundata; kustlinjer och sjöar: Natural Earth.
 
 ![Figur 2. Klustret i västra Uppland]({FIGS['zoom_sv']})
-Figur 2. Klustret i närbild. Svart ring runt en punkt: en av ristaren Eriks säkert attribuerade stenar. Källa: Rundata; kustlinjer och sjöar: Natural Earth.
+**Figur 2.** Klustret i närbild. Svart ring runt en punkt: en av ristaren Eriks säkert attribuerade stenar. Källa: Rundata; kustlinjer och sjöar: Natural Earth.
 
 **5.2 Känslighetsanalyserna** ({sp(P['n'])} stenar, {P['k']} med draget). Alla {ME['ladder']['tested']} håller:
 
@@ -373,10 +373,10 @@ The analyses in sections 5.1–5.3 are those the method prescribes for every tra
 **5.1 The cluster.** The trait clusters clearly: Moran's I = {MO['i']:.2f} (p < 0.001). The most extreme area has its centre at U 1172 at Holm in Vittinge parish and a radius of {CL['radius_km']:.1f} kilometres. There {CL['cases']} of {CL['n']} stones have r for ʀ ({pc(CL['rate_in'])} percent), against {pc(CL['rate_out'])} percent of the stones in the rest of the country: {CL['rr']:.2f} times as common. Scan p = 0.001, the lowest value {H['nsim']} simulations can give; adjusted for the {N_TRAITS} traits q = 0.013. Of the {N_TRAITS} traits it is the only one whose cluster passes the adjustment. The cluster's stones lie in {len(PAR)} parishes, most in Simtuna ({PAR['Simtuna sn']}), Vårfrukyrka, Tillinge, Nysätra, Fröslunda and Jumkil (3 each). In half A, {pc(HA['rate_in'])} percent of the stones within the cluster have the trait against {pc(HA['rate_out'])} outside (odds ratio {round(HA['or'])}, {pfmt(HA['p'], True)}); in half B {pc(HB['rate_in'])} against {pc(HB['rate_out'])} percent (odds ratio {HB['or']:.1f}, {pfmt(HB['p'], True)}).
 
 ![Figure 1. ʀ written with the r-rune: the stones and the cluster]({FIGS['riket_en']})
-Figure 1. Each point is a runestone where the trait can be decided; rust: r for ʀ at least once, grey: the yr-rune only. The ring is the cluster. Source: Rundata; coastlines and lakes: Natural Earth.
+**Figure 1.** Each point is a runestone where the trait can be decided; rust: r for ʀ at least once, grey: the yr-rune only. The ring is the cluster. Source: Rundata; coastlines and lakes: Natural Earth.
 
 ![Figure 2. The cluster in western Uppland]({FIGS['zoom_en']})
-Figure 2. The cluster close up. Black ring around a point: one of the carver Erik's securely attributed stones. Source: Rundata; coastlines and lakes: Natural Earth.
+**Figure 2.** The cluster close up. Black ring around a point: one of the carver Erik's securely attributed stones. Source: Rundata; coastlines and lakes: Natural Earth.
 
 **5.2 The sensitivity analyses** ({en_n(P['n'])} stones, {P['k']} with the trait). All {ME['ladder']['tested']} hold:
 

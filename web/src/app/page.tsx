@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { REPORTS_PATH } from "@/lib/report";
 import type { Metadata } from "next";
 import SiteHeader from "@/components/SiteHeader";
 import LocalAppLink from "@/components/LocalAppLink";
@@ -496,6 +497,14 @@ andel <- tapply(stenar$bon,
                 <p className="mt-2 text-slate-600 leading-relaxed">{u.text}</p>
               </div>
             ))}
+          </div>
+
+          <div className="mt-16 border-t border-slate-900/10 pt-8 flex flex-col md:flex-row md:items-baseline md:justify-between gap-3">
+            <p className="text-slate-700 leading-relaxed max-w-3xl">
+              <span className="font-bold text-slate-900">Forskningsrapporter.</span> De fynd som har klarat alla kontroller skrivs
+              upp i vetenskaplig form – förregistrering, metod, resultat, diskussion och referenser – med version och citering.
+            </p>
+            <Link href={REPORTS_PATH} prefetch={false} className="shrink-0 text-sm font-bold text-[#b7410e] hover:underline">Läs forskningsrapporterna →</Link>
           </div>
 
           <div className="mt-20 rounded-3xl border-2 border-[#b7410e]/20 bg-[#b7410e]/[0.03] p-10 md:p-12">

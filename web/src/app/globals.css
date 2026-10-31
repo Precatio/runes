@@ -183,3 +183,50 @@ body {
 .realm-label { background: none; border: none; }
 .realm-label span { display: block; transform: translate(-50%, -50%); white-space: nowrap; font-size: 12px; font-weight: 800;
   letter-spacing: 0.08em; text-transform: uppercase; text-shadow: 0 0 3px #fff, 0 0 3px #fff, 0 0 6px #fff; }
+
+/* The research reports laid out as a paper (src/components/ReportPaper.tsx): Source Serif 4 (--font-paper, loaded only on
+   the report pages), justified and hyphenated text, numbered sections, figures with captions, references with hanging
+   indents. The article body's own classes (components/BlogBody.tsx) are overridden here, inside .report-body only. */
+.report-print { --paper-face: var(--font-paper), ui-serif, Georgia, "Times New Roman", serif, var(--font-runic); }
+.report-sheet, .report-title, .report-h2 { font-family: var(--paper-face); }
+.report-body > div { font-family: var(--paper-face); font-size: 17.5px; line-height: 1.68; color: #1e293b; }
+.report-body p, .report-body li { text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+.report-body > div > * + * { margin-top: 0.95em; }
+.report-body strong { font-weight: 600; color: #0f172a; }
+.report-body a { color: #9a350b; }
+.report-body h3 { font-family: var(--paper-face); font-size: 1.1rem; font-weight: 600; font-style: italic; }
+.report-body ul, .report-body ol { padding-left: 1.4em; }
+.report-body li + li { margin-top: 0.35em; }
+.report-body figure { margin: 1.6em 0 1.8em; }
+.report-body figure img { border-radius: 0; background: #fff; border: 1px solid #e2e8f0; max-height: 640px; }
+.report-body figcaption { font-family: var(--paper-face); font-size: 15px; line-height: 1.5; color: #334155; text-align: left; }
+.report-body aside { border-radius: 0; background: #faf8f5; border-color: #e7e0d8; }
+.report-body figure.rounded-xl { border-radius: 0; }
+.report-abstract-body > div { font-size: 16.5px; line-height: 1.62; }
+.report-abstract-body p { text-align: justify; }
+.report-highlights ul { list-style: none; padding-left: 0; }
+.report-highlights li { position: relative; padding-left: 1.2em; }
+.report-highlights li::before { content: "■"; position: absolute; left: 0; top: 0.05em; font-size: 0.6em; color: #b7410e; line-height: 2.2; }
+.report-refs ul { list-style: none; padding-left: 0; }
+.report-refs li { padding-left: 2em; text-indent: -2em; text-align: left; font-size: 15.5px; line-height: 1.5; }
+.report-data li, .report-data p { text-align: left; }
+.report-data code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.82em; }
+/* On a phone a justified column leaves wide gaps between the words: ragged right there */
+@media (max-width: 640px) {
+  .report-body p, .report-body li, .report-abstract-body p { text-align: left; hyphens: manual; }
+}
+
+@media print {
+  .report-print header ~ * { break-inside: auto; }
+  body:has(.report-print) header:not(.report-print header), body:has(.report-print) footer, .report-print .no-print,
+  body:has(.report-print) .fixed { display: none !important; }
+  body:has(.report-print) main { background: white; }
+  .report-sheet { border: none !important; box-shadow: none !important; margin: 0 !important; padding: 0 !important; max-width: none !important; }
+  .report-body > div { font-size: 10.5pt; line-height: 1.45; }
+  .report-abstract-body > div { font-size: 10pt; }
+  .report-refs li { font-size: 9.5pt; }
+  .report-print h2 { break-after: avoid; }
+  .report-print figure { break-inside: avoid; }
+  .report-print a { color: inherit; text-decoration: none; }
+  @page { size: A4; margin: 18mm 18mm 20mm; }
+}

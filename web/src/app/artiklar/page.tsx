@@ -4,6 +4,7 @@ import BlogShell from "@/components/BlogShell";
 import ArticleSearch from "@/components/ArticleSearch";
 import ContentVote from "@/components/ContentVote";
 import { listPosts } from "@/lib/articles";
+import { REPORTS_PATH } from "@/lib/report";
 import { ARTICLES_PATH, BLOG_DESCRIPTION, BLOG_TITLE, blogJsonLd, languageAlternates, withImageSizes } from "@/lib/blogSeo";
 
 // The articles about the most interesting patterns (written in Admin), rendered on the server
@@ -30,6 +31,10 @@ export default async function BlogPage() {
         <p className="mt-4 text-lg text-slate-600 leading-relaxed">
           Här skriver vi om de mest intressanta mönstren i de svenska runstenarna – vad vi ser, vad det kan betyda och
           hur det kan prövas. Siffrorna kommer från Vitkis analyser och förklaras i texten.
+        </p>
+        <p className="mt-3 text-sm text-slate-500">
+          De fynd som har klarat alla kontroller finns också i vetenskaplig form, med version och citering, under{" "}
+          <Link href={REPORTS_PATH} prefetch={false} className="font-semibold text-[#b7410e] hover:underline">Forskningsrapporter</Link>.
         </p>
         <div className="mt-10"><ArticleSearch posts={posts} failed={failed} /></div>
         <ContentVote />
