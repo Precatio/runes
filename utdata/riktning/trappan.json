@@ -1,0 +1,119 @@
+{
+ "plan": "analysplaner/2026-10-31-riktning-trappan.md",
+ "rungs": {
+  "huvud": {
+   "n": 123,
+   "medel_cos": 0.3663941585922616,
+   "vantat": 0.01262854172262516,
+   "p": 0.0001,
+   "andel_inom_45": 0.4959349593495935,
+   "holds": true
+  },
+  "halva_A": {
+   "n": 71,
+   "medel_cos": 0.445399977820783,
+   "vantat": 0.03711329136323162,
+   "p": 0.0001,
+   "andel_inom_45": 0.5492957746478874,
+   "holds": true
+  },
+  "halva_B": {
+   "n": 52,
+   "medel_cos": 0.2585208284917805,
+   "vantat": 0.05091996743086373,
+   "p": 0.0158,
+   "andel_inom_45": 0.4230769230769231,
+   "holds": true
+  },
+  "socken": {
+   "n": 123,
+   "medel_cos": 0.3643076180056048,
+   "vantat": 0.015955511048293805,
+   "p": 0.0001,
+   "andel_inom_45": 0.4959349593495935,
+   "holds": true
+  },
+  "en_per_ristare": {
+   "n": 93,
+   "medel_cos": 0.38452796977794834,
+   "vantat": 0.02666513181635861,
+   "p": 0.0001,
+   "andel_inom_45": 0.5053763440860215,
+   "holds": true
+  },
+  "utan_aterresta": {
+   "n": 109,
+   "medel_cos": 0.42610283817326167,
+   "vantat": 0.020972204637800956,
+   "p": 0.0001,
+   "andel_inom_45": 0.5229357798165137,
+   "holds": true
+  },
+  "utan_flyttade_runor": {
+   "n": 113,
+   "medel_cos": 0.34729821329874716,
+   "vantat": 0.006164437224763229,
+   "p": 0.0001,
+   "andel_inom_45": 0.48672566371681414,
+   "holds": true
+  },
+  "dagens_flyttregel": {
+   "n": 123,
+   "medel_cos": 0.3663941585922616,
+   "vantat": 0.012514939105984536,
+   "p": 0.0001,
+   "andel_inom_45": 0.4959349593495935,
+   "holds": true
+  },
+  "bara_text": {
+   "n": 69,
+   "medel_cos": 0.48922418618986274,
+   "vantat": 0.06562660027378253,
+   "p": 0.0001,
+   "andel_inom_45": 0.6231884057971014,
+   "holds": true
+  },
+  "bara_registrerad": {
+   "n": 80,
+   "medel_cos": 0.1625932690430008,
+   "vantat": 0.005357804425076375,
+   "p": 0.0197,
+   "andel_inom_45": 0.275,
+   "holds": true
+  }
+ },
+ "lopo": {
+  "U": {
+   "n": 62,
+   "medel_cos": 0.4997477013990207,
+   "vantat": 0.054984538178188797,
+   "p": 0.0001,
+   "andel_inom_45": 0.5645161290322581,
+   "andel_kvar": 0.5040650406504065
+  },
+  "Sö": {
+   "n": 92,
+   "medel_cos": 0.2894364752751217,
+   "vantat": 0.014687912322032044,
+   "p": 0.0001,
+   "andel_inom_45": 0.42391304347826086,
+   "andel_kvar": 0.7479674796747967
+  },
+  "Ög": {
+   "n": 113,
+   "medel_cos": 0.3608304943533589,
+   "vantat": 0.014894277955058514,
+   "p": 0.0001,
+   "andel_inom_45": 0.5132743362831859,
+   "andel_kvar": 0.9186991869918699
+  }
+ },
+ "lopo_holds": true,
+ "n_reerected": 14,
+ "n_reerected_alla_219": 29,
+ "n_moved_runor": 10,
+ "n_moved_now": 0,
+ "n_carvers": 20,
+ "n_parishes": 76,
+ "all_hold": true
+}
