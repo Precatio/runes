@@ -318,19 +318,20 @@ function StoneTable({ rows, onPick }: { rows: StoneRow[]; onPick: (s: string) =>
   const sorted = [...rows].sort((a, b) => (b.alternative?.strength ?? 0) - (a.alternative?.strength ?? 0));
   return (
     <div className="overflow-x-auto mt-2 liquid-glass-island rounded-[24px] p-3">
-      <ExportTable><table className="w-full text-sm">
-        <thead><tr className="text-left text-[11px] uppercase tracking-wider text-slate-500">
+      <ExportTable><table className="w-full text-xs table-fixed">
+        <colgroup><col className="w-[30%]" /><col className="w-[16%]" /><col className="w-[18%]" /><col className="w-[9%]" /><col className="w-[18%]" /><col className="w-[9%]" /></colgroup>
+        <thead><tr className="text-left text-[10px] uppercase tracking-wide text-slate-500 align-bottom">
           {["Sten", "Status", "Rundata", "Stöd", "Starkaste alternativ", "Metoder"].map(h => (
-            <th key={h} className="p-2">{h}<InfoTip text={GLOSSARY[h]} /></th>
+            <th key={h} className="p-1.5 whitespace-normal break-words">{h}<InfoTip text={GLOSSARY[h]} /></th>
           ))}</tr></thead>
         <tbody>{sorted.slice(0, 400).map(s => (
           <tr key={s.signum} onClick={() => onPick(s.signum)} className="border-t border-slate-900/5 cursor-pointer hover:bg-slate-50">
-            <td className="p-2 font-semibold">{s.signum} <span className="text-slate-500 font-normal" translate="no">{s.place}</span></td>
-            <td className="p-2"><span style={{ color: STATUS[s.status].color }}>{STATUS[s.status].icon}</span> {s.status}</td>
-            <td className="p-2">{s.carver ?? "–"}{s.carver_kind === "?" ? " (osäker)" : s.carver_kind === "S" ? " (signerad)" : ""}</td>
-            <td className="p-2">{d2(s.support)}</td>
-            <td className="p-2">{s.alternative ? `${s.alternative.carver} (${d2(s.alternative.strength)})` : "–"}</td>
-            <td className="p-2">{s.n_sources}</td>
+            <td className="p-1.5 font-semibold break-words">{s.signum} <span className="text-slate-500 font-normal" translate="no">{s.place}</span></td>
+            <td className="p-1.5 break-words"><span style={{ color: STATUS[s.status].color }}>{STATUS[s.status].icon}</span> {s.status}</td>
+            <td className="p-1.5 break-words">{s.carver ?? "–"}{s.carver_kind === "?" ? " (osäker)" : s.carver_kind === "S" ? " (signerad)" : ""}</td>
+            <td className="p-1.5">{d2(s.support)}</td>
+            <td className="p-1.5 break-words">{s.alternative ? `${s.alternative.carver} (${d2(s.alternative.strength)})` : "–"}</td>
+            <td className="p-1.5">{s.n_sources}</td>
           </tr>
         ))}</tbody>
       </table></ExportTable>
