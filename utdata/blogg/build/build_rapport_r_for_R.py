@@ -108,6 +108,9 @@ B = k[(k.carver == "Balle") & (k.carvers_uncertain == 0)]
 B_IN, B_OUT = frac(B[B.inside]), frac(B[~B.inside])
 P_B = fisher(B_IN, B_OUT)[1]
 assert (B_IN, B_OUT) == ((3, 5), (5, 19)) and 0.25 < P_B < 0.35
+A = k[(k.carver == "Åsmund") & (k.carvers_uncertain == 0)]
+A_IN, A_OUT = frac(A[A.inside]), frac(A[~A.inside])
+assert (A_IN, A_OUT) == ((0, 3), (0, 10))
 U_OUT, SO, VG = frac(k[(k.province == "U") & ~k.inside]), frac(k[k.province == "Sö"]), frac(k[k.province == "Vg"])
 assert (U_OUT, SO, VG) == ((39, 244), (7, 80), (9, 41))
 # Erik's signed stone is not counted: a gap breaks the word pairing (hand reading in the text)
@@ -161,7 +164,7 @@ body = f"""*Viktor Kvant, oberoende forskare. Rapportversion {REPORT_VERSION}, {
 **Material.** {sp(PAT['n'])} vikingatida runstenar i de svenska landskapen där det går att avgöra hur ʀ är skrivet och som står kvar på sin ursprungliga plats, ur Samnordisk runtextdatabas (Rundata).
 **Metod.** Rumslig autokorrelation (Morans I), lokala heta områden (Getis-Ord Gi∗) och Kulldorffs rumsliga scanstatistik med 999 Monte Carlo-simuleringar, justerat för de {N_TRAITS} stavnings- och innehållsdrag som skannades; intern replikering i två på förhand bestämda halvor av materialet; åtta känslighetsanalyser; justering för alla {N_SHOWN} samband som projektet redovisar.
 **Resultat.** Inom {d1(CL['radius_km'])} kilometer från Holm i Vittinge socken har {CL['cases']} av {CL['n']} stenar r för ʀ ({pc(CL['rate_in'])} procent), mot {pc(CL['rate_out'])} procent i resten av landet; skanningens p = 0,001, justerat för de {N_TRAITS} dragen q = 0,013. Samma riktning i båda halvorna ({pc(HA['rate_in'])} mot {pc(HA['rate_out'])} och {pc(HB['rate_in'])} mot {pc(HB['rate_out'])} procent), alla känslighetsanalyser håller, och justerat för alla samband q = {QG}. Explorativt: ristaren Erik skrev r på alla sina {E_IN[1] + E_OUT[1]} säkert attribuerade stenar, men klustret står kvar utan dem ({NE_IN[0]} av {NE_IN[1]} stenar), och bland de senare stenarna i bygden är stavningen fyra gånger så vanlig som i övriga Uppland.
-**Slutsats.** Västra Uppland är det område i Sverige där ʀ oftast skrevs med r. Om det speglar bygdens uttal eller en skrivvana som ristarna förde vidare kan materialet inte avgöra.
+**Slutsats.** Västra Uppland är det område i Sverige där ʀ oftast skrevs med r. Stavningen följde ristaren snarare än platsen, och vi föreslår att klustret är en skrivtradition som började med Erik och fördes vidare. Tidigare forskning har läst Eriks r som uttal; det kan materialet ännu inte utesluta.
 
 ## 1. Inledning
 
@@ -169,7 +172,7 @@ Runsvenskan hade två r-ljud. Det ena, r, är det vanliga. Det andra, ʀ, går t
 
 Patrik Larsson (2002) har i sin avhandling om yr-runan gått igenom hur äldre ʀ betecknas i alla nordiska runinskrifter. Han visar att andelen skrivningar med r-runa efter vokal är betydligt högre i Uppland, Västergötland och på Gotland (18–28 procent) än i andra landskap med många belägg (avsnitt 7.2.2), och att den uppländska gruppen i stilen Fp till stor del består av inskrifter av ristaren Erik, som konsekvent skriver r-runa för ʀ (avsnitt 7.2.3). Per Stille (1999, s. 206) har i sin studie av ristarna i Fjädrundaland iakttagit detsamma om Erik och dragit slutsatsen att r och ʀ hade fallit samman i hans språk. Larsson för Erik till de ristare som inte tycks ha haft kvar någon skillnad mellan ljuden (avsnitt 7.2.1) och argumenterar för att den ökande användningen av r-runan i stort speglar en pågående språkförändring, inte en ortografisk reform (avsnitt 7.3).
 
-Det som saknas i den litteraturen är ett mått på om stavningen samlas geografiskt mer än slumpen ger, oberoende av landskapsgränser, och om en sådan samling står kvar när stenarnas ålder och ristarnas egna vanor hålls konstanta. Syftet med den här studien är att mäta det. Studien tar inte ställning till hur r och ʀ uttalades.
+Det som saknas i den litteraturen är ett mått på om stavningen samlas geografiskt mer än slumpen ger, oberoende av landskapsgränser, och om en sådan samling står kvar när stenarnas ålder och ristarnas egna vanor hålls konstanta. Syftet med den här studien är att mäta det, och att pröva vad mätningen säger om den förklaring tidigare forskning har gett. Uttalet prövas inte direkt, men avsnitt 6 tar ställning till vad mönstret säger om det.
 
 ## 2. Förregistrering: vad som var bestämt i förväg och vad som är explorativt
 
@@ -241,12 +244,23 @@ Figur 2. Klustret i närbild. Svart ring runt en punkt: en av ristaren Eriks sä
 - **Klustret utan Erik.** Utan alla stenar som attribuerats till Erik har {NE_IN[0]} av {NE_IN[1]} stenar inom klustret draget ({pc(NE_IN[0] / NE_IN[1])} procent), mot {ALL_OUT[0]} av {ALL_OUT[1]} utanför ({pc(ALL_OUT[0] / ALL_OUT[1])} procent), {pfmt(P_NE)}.
 - **De senare stenarna.** Bland stenarna i stilgrupperna Pr3–Pr5 har {LA_IN[0]} av {LA_IN[1]} inom klustret draget ({pc(LA_IN[0] / LA_IN[1])} procent), mot {LA_U_OUT[0]} av {LA_U_OUT[1]} i övriga Uppland ({pc(LA_U_OUT[0] / LA_U_OUT[1])} procent), {pfmt(P_LATE)}.
 - **Balle**, som ristade i bygden en generation efter Erik, har r för ʀ på {B_IN[0]} av {B_IN[1]} stenar inom klustret och {B_OUT[0]} av {B_OUT[1]} utanför ({pfmt(P_B)}). Det är för få stenar för att säga om han skrev annorlunda i bygden än utanför.
+- **Åsmund**, som ristade på många håll i Uppland, skrev yr-runan på alla sina {A_IN[1] + A_OUT[1]} säkert attribuerade stenar där draget kan avgöras, också de {A_IN[1]} som står inom klustret.
 
 ## 6. Diskussion
 
 **Vad fyndet säger.** Västra Uppland är det område i Sverige där ʀ oftast skrevs med r-runan, och det är inte en följd av att stenarna där är tidiga eller av att en enda ristare ristade många av dem: klustret står kvar med dateringsperiod och ristare konstanta, i var halva för sig och utan flyttade stenar. I den tidiga generationen bärs det nästan helt av Erik. Att det står kvar utan hans stenar, och att de senare stenarna i bygden skriver r fyra gånger så ofta som i övriga Uppland, visar att stavningen inte försvann med honom.
 
-**Mot tidigare forskning.** Resultatet bekräftar och preciserar Larssons (2002) iakttagelse att Uppland och Västergötland skiljer ut sig. Inom Uppland pekar det ut ett bestämt område, och det återfinner hans västgötska grupp utan att ha letat efter den. Det bekräftar också Stilles (1999) iakttagelse om Erik. Däremot kan materialet inte avgöra den fråga som Stille och Larsson besvarar: om stavningen speglar uttalet. Både ett bygdemål där ljuden fallit samman och en skrivvana som ristarna lärde av varandra förutsäger att de senare stenarna i bygden skriver r oftare. Det enda prov som skiljer förklaringarna åt – om samma ristare skrev r oftare i bygden än utanför – har för få stenar (Balle: {B_IN[0]} av {B_IN[1]} mot {B_OUT[0]} av {B_OUT[1]}). Larssons argument för uttalet (avsnitt 7.3), att ristarna samtidigt betecknar palatalisering och använder s-runan för ʀ, vilket rimligen följer uttalet, väger därför tyngre än något i den här studien. Den populära artikeln från oktober föreslog en skrivtradition; den här rapporten finner inte stöd för att den förklaringen är bättre än uttalet.
+**Mot tidigare forskning.** Resultatet bekräftar och preciserar Larssons (2002) iakttagelse att Uppland och Västergötland skiljer ut sig. Inom Uppland pekar det ut ett bestämt område, och det återfinner hans västgötska grupp utan att ha letat efter den. Det bekräftar också Stilles (1999) iakttagelse om Erik.
+
+**Där vi går emot tidigare forskning.** Stille läser Eriks r som tecken på att r och ʀ hade fallit samman i hans tal, och Larsson menar att r-runans frammarsch i stort speglar en språkförändring, inte en ortografisk reform (avsnitt 7.3). Larssons huvudskäl är att ristarna samtidigt betecknar palatalisering och använder s-runan för ʀ, vilket rimligen följer uttalet. Det är ett argument om runskriften i stort. Det visar att många ristare skrev efter örat, men inte att varje ristare gjorde det, och det förklarar inte varför en enda bygd skiljer sig så skarpt från resten av landet.
+
+För västra Uppland föreslår vi en annan förklaring: att r för ʀ där var en skrivtradition som började med Erik och fördes vidare av ristarna i bygden. Tre iakttagelser stöder den.
+
+1. Erik skrev r utan ett enda undantag, på alla femton stenar, också på den utanför bygden. Larsson tar, med Lena Peterson, ristarnas vacklan mellan runorna som tecken på en ljudförändring som pågår (avsnitt 7.3). Erik vacklar inte alls; han skriver som efter en regel.
+2. Åsmund skrev yr-runa på alla sina tretton stenar, också de tre inom klustret. Det talar emot att platsen eller beställarna avgjorde stavningen. Den följde ristaren.
+3. Stavningen lever kvar i samma bygd efter Erik, fyra gånger så vanlig bland de senare stenarna som i övriga Uppland, och klustret står kvar när ristaren hålls konstant.
+
+Hypotesen är inte bevisad, och Stilles och Larssons förklaring är inte utesluten. Talen är små: Erik har en sten utanför bygden och Åsmund tre inom den. Talade Erik och ristarna efter honom själva ett mål där ljuden fallit samman, ger det samma mönster som en skrivtradition. Balle pekar dessutom svagt åt andra hållet: han skrev r oftare inom klustret än utanför ({B_IN[0]} av {B_IN[1]} mot {B_OUT[0]} av {B_OUT[1]}, {pfmt(P_B)}). Det som skiljer förklaringarna åt är om de senare r-stenarna i bygden står i Eriks tradition – samma ornamentik, samma formler, samma stavning i övrigt – eller bara i samma bygd. Det är nästa prov.
 
 **Svagheter, i ordning efter vikt.**
 
@@ -259,7 +273,7 @@ Figur 2. Klustret i närbild. Svart ring runt en punkt: en av ristaren Eriks sä
 
 ## 7. Slutsats
 
-Inom {d1(CL['radius_km'])} kilometer från Holm i Vittinge har {pc(CL['rate_in'])} procent av runstenarna r för ʀ, mot {pc(CL['rate_out'])} procent i resten av landet, och samlingen tål varje känslighetsanalys. Den börjar med ristaren Erik men står kvar utan honom och lever vidare bland de senare stenarna i bygden. Om den speglar bygdens uttal eller en skrivvana kan runstenarna själva inte avgöra; det kräver ett prov där samma ristare har ristat många stenar både i och utanför bygden.
+Inom {d1(CL['radius_km'])} kilometer från Holm i Vittinge har {pc(CL['rate_in'])} procent av runstenarna r för ʀ, mot {pc(CL['rate_out'])} procent i resten av landet, och samlingen tål varje känslighetsanalys. Den börjar med ristaren Erik men står kvar utan honom och lever vidare bland de senare stenarna i bygden. Stavningen följde ristaren snarare än platsen, och vi föreslår att klustret är en skrivtradition. Att det i stället speglar ristarnas eget uttal, som Stille och Larsson menar, kan runstenarna ännu inte utesluta; provet är om de senare r-stenarna står i Eriks tradition eller bara i hans bygd.
 
 ## Data och kod
 
@@ -289,7 +303,7 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 :::box Det viktigaste i korthet
 - I västra Uppland, kring Simtuna, Vårfrukyrka och Tillinge, skrevs det gamla ljudet ʀ med vanlig r-runa långt oftare än någon annanstans i Sverige.
 - Ristaren Erik skrev så på varje sten, men bygden fortsatte efter honom – samlingen är inte en enda mans vana.
-- Om folk där redan uttalade ʀ som r, eller om ristarna lärde sig stava så av varandra, kan stenarna inte avgöra. Det är nästa fråga.
+- Vår hypotes är att det var en skrivtradition som fördes vidare, inte ett uttal. Tidigare forskning har läst det som uttal, och stenarna kan ännu inte avgöra vem som har rätt.
 :::
 """
 
@@ -301,7 +315,7 @@ body_en = f"""*Viktor Kvant, independent researcher. Report version {REPORT_VERS
 **Material.** {en_n(PAT['n'])} Viking-Age runestones in the Swedish provinces where it can be decided how ʀ is written and which stand at their original site, from the Scandinavian Runic-text Database (Rundata).
 **Method.** Spatial autocorrelation (Moran's I), local hot spots (Getis-Ord Gi∗) and Kulldorff's spatial scan statistic with 999 Monte Carlo simulations, adjusted for the {N_TRAITS} spelling and content traits scanned; internal replication in two pre-defined halves of the material; eight sensitivity analyses; adjustment for all {N_SHOWN} associations the project reports.
 **Results.** Within {CL['radius_km']:.1f} kilometres of Holm in Vittinge parish, {CL['cases']} of {CL['n']} stones have r for ʀ ({pc(CL['rate_in'])} percent), against {pc(CL['rate_out'])} percent in the rest of the country; scan p = 0.001, adjusted for the {N_TRAITS} traits q = 0.013. Same direction in both halves ({pc(HA['rate_in'])} against {pc(HA['rate_out'])} and {pc(HB['rate_in'])} against {pc(HB['rate_out'])} percent), every sensitivity analysis holds, and adjusted for all associations q = {QGe}. Exploratory: the carver Erik wrote r on all his {E_IN[1] + E_OUT[1]} securely attributed stones, but the cluster remains without them ({NE_IN[0]} of {NE_IN[1]} stones), and among the later stones of the district the spelling is four times as common as in the rest of Uppland.
-**Conclusion.** Western Uppland is the area of Sweden where ʀ was most often written with r. Whether this reflects the district's pronunciation or a writing habit the carvers passed on, the material cannot decide.
+**Conclusion.** Western Uppland is the area of Sweden where ʀ was most often written with r. The spelling followed the carver rather than the place, and we propose that the cluster is a writing tradition that began with Erik and was passed on. Earlier research has read Erik's r as pronunciation; the material cannot yet rule that out.
 
 ## 1. Introduction
 
@@ -309,7 +323,7 @@ Runic Swedish had two r-sounds. One, r, is the ordinary one. The other, ʀ, goes
 
 Patrik Larsson (2002), in his dissertation on the yr-rune, went through how older ʀ is written in all Scandinavian runic inscriptions. He shows that the share of spellings with the r-rune after a vowel is markedly higher in Uppland, Västergötland and on Gotland (18–28 percent) than in other provinces with many instances (section 7.2.2), and that the Uppland group in the Fp style consists largely of inscriptions by the carver Erik, who consistently writes the r-rune for ʀ (section 7.2.3). Per Stille (1999, p. 206), in his study of the carvers of Fjädrundaland, observed the same of Erik and concluded that r and ʀ had merged in his speech. Larsson places Erik among the carvers who seem to have kept no distinction between the sounds (section 7.2.1) and argues that the growing use of the r-rune on the whole reflects an ongoing language change, not an orthographic reform (section 7.3).
 
-What that literature lacks is a measure of whether the spelling clusters geographically more than chance would give, independently of provincial boundaries, and whether such a cluster remains when the age of the stones and the habits of individual carvers are held constant. The aim of this study is to measure that. The study takes no position on how r and ʀ were pronounced.
+What that literature lacks is a measure of whether the spelling clusters geographically more than chance would give, independently of provincial boundaries, and whether such a cluster remains when the age of the stones and the habits of individual carvers are held constant. The aim of this study is to measure that, and to test what the measurement says about the explanation earlier research has given. Pronunciation is not tested directly, but section 6 takes a position on what the pattern says about it.
 
 ## 2. Pre-registration: what was fixed in advance and what is exploratory
 
@@ -381,12 +395,23 @@ Figure 2. The cluster close up. Black ring around a point: one of the carver Eri
 - **The cluster without Erik.** Without every stone attributed to Erik, {NE_IN[0]} of {NE_IN[1]} stones within the cluster have the trait ({pc(NE_IN[0] / NE_IN[1])} percent), against {ALL_OUT[0]} of {ALL_OUT[1]} outside ({pc(ALL_OUT[0] / ALL_OUT[1])} percent), {pfmt(P_NE, True)}.
 - **The later stones.** Among the stones in the style groups Pr3–Pr5, {LA_IN[0]} of {LA_IN[1]} within the cluster have the trait ({pc(LA_IN[0] / LA_IN[1])} percent), against {LA_U_OUT[0]} of {LA_U_OUT[1]} in the rest of Uppland ({pc(LA_U_OUT[0] / LA_U_OUT[1])} percent), {pfmt(P_LATE, True)}.
 - **Balli**, who carved in the district a generation after Erik, has r for ʀ on {B_IN[0]} of {B_IN[1]} stones within the cluster and {B_OUT[0]} of {B_OUT[1]} outside ({pfmt(P_B, True)}). That is too few stones to say whether he wrote differently in the district than outside it.
+- **Åsmund**, who carved in many parts of Uppland, wrote the yr-rune on all his {A_IN[1] + A_OUT[1]} securely attributed stones where the trait can be decided, including the {A_IN[1]} that stand within the cluster.
 
 ## 6. Discussion
 
 **What the finding says.** Western Uppland is the area of Sweden where ʀ was most often written with the r-rune, and that is not because the stones there are early or because a single carver carved many of them: the cluster remains with dating period and carver constant, in each half and without moved stones. In the early generation it is carried almost wholly by Erik. That it remains without his stones, and that the later stones of the district write r four times as often as the rest of Uppland, shows that the spelling did not disappear with him.
 
-**Against earlier research.** The result confirms and sharpens Larsson's (2002) observation that Uppland and Västergötland stand out. Within Uppland it singles out a definite area, and it recovers his group in Västergötland without having looked for it. It also confirms Stille's (1999) observation about Erik. The material cannot, however, decide the question that Stille and Larsson answer: whether the spelling reflects pronunciation. Both a local speech in which the sounds had merged and a writing habit the carvers learned from one another predict that the later stones of the district write r more often. The one test that separates the explanations – whether the same carver wrote r more often in the district than outside – has too few stones (Balli: {B_IN[0]} of {B_IN[1]} against {B_OUT[0]} of {B_OUT[1]}). Larsson's argument for pronunciation (section 7.3), that the carvers at the same time mark palatalisation and use the s-rune for ʀ, which must reasonably follow pronunciation, therefore weighs more than anything in this study. The popular article from October proposed a writing tradition; this report finds no support for that explanation being better than pronunciation.
+**Against earlier research.** The result confirms and sharpens Larsson's (2002) observation that Uppland and Västergötland stand out. Within Uppland it singles out a definite area, and it recovers his group in Västergötland without having looked for it. It also confirms Stille's (1999) observation about Erik.
+
+**Where we depart from earlier research.** Stille reads Erik's r as a sign that r and ʀ had merged in his speech, and Larsson holds that the advance of the r-rune on the whole reflects a language change, not an orthographic reform (section 7.3). Larsson's main reason is that the carvers at the same time mark palatalisation and use the s-rune for ʀ, which must reasonably follow pronunciation. That is an argument about runic writing at large. It shows that many carvers wrote by ear, but not that every carver did, and it does not explain why a single district differs so sharply from the rest of the country.
+
+For western Uppland we propose another explanation: that r for ʀ there was a writing tradition that began with Erik and was passed on by the carvers of the district. Three observations support it.
+
+1. Erik wrote r without a single exception, on all fifteen stones, including the one outside the district. Larsson, with Lena Peterson, takes the carvers' wavering between the runes as a sign of a sound change in progress (section 7.3). Erik does not waver at all; he writes as if by a rule.
+2. Åsmund wrote the yr-rune on all his thirteen stones, including the three within the cluster. That speaks against the place or the patrons deciding the spelling. It followed the carver.
+3. The spelling lives on in the same district after Erik, four times as common among the later stones as in the rest of Uppland, and the cluster remains when the carver is held constant.
+
+The hypothesis is not proven, and Stille's and Larsson's explanation is not ruled out. The numbers are small: Erik has one stone outside the district and Åsmund three within it. If Erik and the carvers after him themselves spoke a variety in which the sounds had merged, that gives the same pattern as a writing tradition. Balli, moreover, points weakly the other way: he wrote r more often within the cluster than outside it ({B_IN[0]} of {B_IN[1]} against {B_OUT[0]} of {B_OUT[1]}, {pfmt(P_B, True)}). What separates the explanations is whether the later r-stones of the district stand in Erik's tradition – the same ornament, the same formulas, the same spelling otherwise – or merely in the same district. That is the next test.
 
 **Weaknesses, in order of weight.**
 
@@ -399,7 +424,7 @@ Figure 2. The cluster close up. Black ring around a point: one of the carver Eri
 
 ## 7. Conclusion
 
-Within {CL['radius_km']:.1f} kilometres of Holm in Vittinge, {pc(CL['rate_in'])} percent of the runestones have r for ʀ, against {pc(CL['rate_out'])} percent in the rest of the country, and the cluster withstands every sensitivity analysis. It begins with the carver Erik but remains without him and lives on among the later stones of the district. Whether it reflects the district's pronunciation or a writing habit, the runestones themselves cannot decide; that needs a test in which the same carver carved many stones both in and outside the district.
+Within {CL['radius_km']:.1f} kilometres of Holm in Vittinge, {pc(CL['rate_in'])} percent of the runestones have r for ʀ, against {pc(CL['rate_out'])} percent in the rest of the country, and the cluster withstands every sensitivity analysis. It begins with the carver Erik but remains without him and lives on among the later stones of the district. The spelling followed the carver rather than the place, and we propose that the cluster is a writing tradition. That it instead reflects the carvers' own pronunciation, as Stille and Larsson hold, the runestones cannot yet rule out; the test is whether the later r-stones stand in Erik's tradition or merely in his district.
 
 ## Data and code
 
@@ -429,7 +454,7 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 :::box The essentials
 - In western Uppland, around Simtuna, Vårfrukyrka and Tillinge, the old sound ʀ was written with the ordinary r-rune far more often than anywhere else in Sweden.
 - The carver Erik wrote so on every stone, but the district carried on after him – the cluster is not one man's habit.
-- Whether people there already pronounced ʀ as r, or the carvers learned to spell so from one another, the stones cannot decide. That is the next question.
+- Our hypothesis is that it was a writing tradition that was passed on, not a pronunciation. Earlier research has read it as pronunciation, and the stones cannot yet decide who is right.
 :::
 """
 
