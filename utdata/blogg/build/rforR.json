@@ -1,0 +1,277 @@
+{
+ "cluster": {
+  "center": "U 1172",
+  "radius_km": 30.4,
+  "n": 36,
+  "cases": 24,
+  "rate_in": 0.667,
+  "rate_out": 0.132,
+  "rr": 5.058,
+  "p": 0.001,
+  "q_bh": 0.013
+ },
+ "halves": {
+  "A": {
+   "rate_in": 0.846,
+   "rate_out": 0.116,
+   "or": 40.805,
+   "p": 1.71e-08
+  },
+  "B": {
+   "rate_in": 0.565,
+   "rate_out": 0.149,
+   "or": 7.328,
+   "p": 2.07e-05
+  },
+  "replicated": true
+ },
+ "moran": {
+  "i": 0.183,
+  "p": 3.22e-21,
+  "q_bh": 2.09e-20
+ },
+ "n_known": 514,
+ "share_all": 0.16926070038910507,
+ "erik": {
+  "n_in": 13,
+  "k_in": 13,
+  "n_out": 2,
+  "k_out": 2,
+  "p": 1.0,
+  "styles": {
+   "Fp": 15
+  },
+  "out_places": {
+   "Villberga sn": 1,
+   "Enköpings-Näs sn": 1
+  },
+  "out_median_km": 37.84714973143479
+ },
+ "balle": {
+  "n_in": 7,
+  "k_in": 5,
+  "n_out": 20,
+  "k_out": 6,
+  "p": 0.08400842313885794,
+  "styles": {
+   "Pr3": 14,
+   "Fp": 7,
+   "–": 4,
+   "Pr1": 1,
+   "Pr4": 1
+  },
+  "out_places": {
+   "Löts sn": 4,
+   "Villberga sn": 3,
+   "Husby-Sjutolfts sn": 3,
+   "Ytterselö sn": 2,
+   "Boglösa sn": 2,
+   "Toresunds sn": 1
+  },
+  "out_median_km": 41.34428782862346
+ },
+ "inside_by_carver": {
+  "Erik": {
+   "size": 11,
+   "sum": 11
+  },
+  "okänd": {
+   "size": 8,
+   "sum": 5
+  },
+  "Balle": {
+   "size": 5,
+   "sum": 3
+  },
+  "Åsmund": {
+   "size": 3,
+   "sum": 0
+  },
+  "Gudfast": {
+   "size": 2,
+   "sum": 0
+  },
+  "Litle": {
+   "size": 1,
+   "sum": 1
+  },
+  "Rune": {
+   "size": 1,
+   "sum": 1
+  },
+  "Torbjörn 2": {
+   "size": 1,
+   "sum": 1
+  }
+ },
+ "inside_time": {
+  "Fp": {
+   "size": 15,
+   "sum": 15
+  },
+  "KB": {
+   "size": 1,
+   "sum": 0
+  },
+  "Pr3": {
+   "size": 6,
+   "sum": 2
+  },
+  "Pr4": {
+   "size": 9,
+   "sum": 5
+  },
+  "Pr5": {
+   "size": 1,
+   "sum": 0
+  }
+ },
+ "words_in": {
+  "R_n": 61,
+  "R_r": 29,
+  "r_n": 17,
+  "r_R": 0,
+  "eftir_n": 34,
+  "eftir_r": 18
+ },
+ "words_out": {
+  "R_n": 721,
+  "R_r": 77,
+  "r_n": 360,
+  "r_R": 5,
+  "eftir_n": 460,
+  "eftir_r": 44
+ },
+ "hyper_p": 1.0,
+ "hyper_or": 0.0,
+ "words_erik_in": {
+  "R_n": 15,
+  "R_r": 15,
+  "r_n": 3,
+  "r_R": 0,
+  "eftir_n": 14,
+  "eftir_r": 14
+ },
+ "words_erik_out": {
+  "R_n": 2,
+  "R_r": 2,
+  "r_n": 0,
+  "r_R": 0,
+  "eftir_n": 2,
+  "eftir_r": 2
+ },
+ "words_balle_in": {
+  "R_n": 11,
+  "R_r": 6,
+  "r_n": 6,
+  "r_R": 0,
+  "eftir_n": 2,
+  "eftir_r": 1
+ },
+ "words_balle_out": {
+  "R_n": 25,
+  "R_r": 6,
+  "r_n": 16,
+  "r_R": 0,
+  "eftir_n": 7,
+  "eftir_r": 2
+ },
+ "unsigned": [
+  {
+   "signum": "U 755",
+   "place": "Kälsta",
+   "parish": "Litslena sn",
+   "style": "Fp"
+  },
+  {
+   "signum": "U 803",
+   "place": "Långtora by",
+   "parish": "Långtora sn",
+   "style": "Pr4"
+  },
+  {
+   "signum": "U 1069",
+   "place": "Berga",
+   "parish": "Åkerby sn",
+   "style": "Pr4"
+  },
+  {
+   "signum": "U 1104",
+   "place": "Tuna",
+   "parish": "Bälinge sn",
+   "style": "Pr4"
+  },
+  {
+   "signum": "U 1151",
+   "place": "Brunnby",
+   "parish": "Frösthults sn",
+   "style": "Fp"
+  }
+ ],
+ "bands": [
+  {
+   "from": 0,
+   "to": 30,
+   "n": 35,
+   "share": 0.6571428571428571
+  },
+  {
+   "from": 30,
+   "to": 50,
+   "n": 100,
+   "share": 0.22
+  },
+  {
+   "from": 50,
+   "to": 100,
+   "n": 173,
+   "share": 0.10982658959537572
+  },
+  {
+   "from": 100,
+   "to": 200,
+   "n": 101,
+   "share": 0.09900990099009901
+  },
+  {
+   "from": 200,
+   "to": 2000,
+   "n": 105,
+   "share": 0.12380952380952381
+  }
+ ],
+ "provinces": {
+  "U": {
+   "n": 279,
+   "share": 0.2222222222222222
+  },
+  "Sö": {
+   "n": 80,
+   "share": 0.0875
+  },
+  "Ög": {
+   "n": 46,
+   "share": 0.021739130434782608
+  },
+  "Sm": {
+   "n": 44,
+   "share": 0.09090909090909091
+  },
+  "Vg": {
+   "n": 41,
+   "share": 0.21951219512195122
+  },
+  "Öl": {
+   "n": 8,
+   "share": 0.0
+  },
+  "Nä": {
+   "n": 6,
+   "share": 0.5
+  },
+  "Vs": {
+   "n": 4,
+   "share": 0.25
+  }
+ }
+}

@@ -108,6 +108,10 @@ B = k[(k.carver == "Balle") & (k.carvers_uncertain == 0)]
 B_IN, B_OUT = frac(B[B.inside]), frac(B[~B.inside])
 P_B = fisher(B_IN, B_OUT)[1]
 assert (B_IN, B_OUT) == ((3, 5), (5, 19)) and 0.25 < P_B < 0.35
+BALL = k[k.carvers_all.fillna("").str.contains("Balle")]  # Balli with the uncertain attributions too
+BA_IN, BA_OUT = frac(BALL[BALL.inside]), frac(BALL[~BALL.inside])
+P_BA = fisher(BA_IN, BA_OUT)[1]
+assert (BA_IN, BA_OUT) == ((5, 7), (6, 20)) and 0.08 < P_BA < 0.09
 A = k[(k.carver == "Åsmund") & (k.carvers_uncertain == 0)]
 A_IN, A_OUT = frac(A[A.inside]), frac(A[~A.inside])
 assert (A_IN, A_OUT) == ((0, 3), (0, 10))
@@ -243,7 +247,7 @@ Figur 2. Klustret i närbild. Svart ring runt en punkt: en av ristaren Eriks sä
 - **De tidiga stenarna.** Inom klustret har alla {EA_IN[1]} tidiga stenar r för ʀ, och {EA_IN[1] - 2} av dem är attribuerade till Erik. Utanför klustret har {EA_OUT[0]} av {EA_OUT[1]} tidiga stenar draget ({pc(EA_OUT[0] / EA_OUT[1])} procent). I Uppland utanför klustret har {FP_U_OUT[0]} av {FP_U_OUT[1]} stenar i stilen Fp det.
 - **Klustret utan Erik.** Utan alla stenar som attribuerats till Erik har {NE_IN[0]} av {NE_IN[1]} stenar inom klustret draget ({pc(NE_IN[0] / NE_IN[1])} procent), mot {ALL_OUT[0]} av {ALL_OUT[1]} utanför ({pc(ALL_OUT[0] / ALL_OUT[1])} procent), {pfmt(P_NE)}.
 - **De senare stenarna.** Bland stenarna i stilgrupperna Pr3–Pr5 har {LA_IN[0]} av {LA_IN[1]} inom klustret draget ({pc(LA_IN[0] / LA_IN[1])} procent), mot {LA_U_OUT[0]} av {LA_U_OUT[1]} i övriga Uppland ({pc(LA_U_OUT[0] / LA_U_OUT[1])} procent), {pfmt(P_LATE)}.
-- **Balle**, som ristade i bygden en generation efter Erik, har r för ʀ på {B_IN[0]} av {B_IN[1]} stenar inom klustret och {B_OUT[0]} av {B_OUT[1]} utanför ({pfmt(P_B)}). Det är för få stenar för att säga om han skrev annorlunda i bygden än utanför.
+- **Balle**, som ristade i bygden en generation efter Erik, har r för ʀ på {B_IN[0]} av {B_IN[1]} stenar inom klustret och {B_OUT[0]} av {B_OUT[1]} utanför ({pfmt(P_B)}); räknas också de osäkert attribuerade stenarna med blir det {BA_IN[0]} av {BA_IN[1]} mot {BA_OUT[0]} av {BA_OUT[1]} ({pfmt(P_BA)}). Skillnaden går åt det håll ett bygdemål förutsäger, men stenarna är för få för att den ska vara säker.
 - **Åsmund**, som ristade på många håll i Uppland, skrev yr-runan på alla sina {A_IN[1] + A_OUT[1]} säkert attribuerade stenar där draget kan avgöras, också de {A_IN[1]} som står inom klustret.
 
 ## 6. Diskussion
@@ -260,7 +264,7 @@ För västra Uppland föreslår vi en annan förklaring: att r för ʀ där var 
 2. Åsmund skrev yr-runa på alla sina tretton stenar, också de tre inom klustret. Det talar emot att platsen eller beställarna avgjorde stavningen. Den följde ristaren.
 3. Stavningen lever kvar i samma bygd efter Erik, fyra gånger så vanlig bland de senare stenarna som i övriga Uppland, och klustret står kvar när ristaren hålls konstant.
 
-Hypotesen är inte bevisad, och Stilles och Larssons förklaring är inte utesluten. Talen är små: Erik har en sten utanför bygden och Åsmund tre inom den. Talade Erik och ristarna efter honom själva ett mål där ljuden fallit samman, ger det samma mönster som en skrivtradition. Balle pekar dessutom svagt åt andra hållet: han skrev r oftare inom klustret än utanför ({B_IN[0]} av {B_IN[1]} mot {B_OUT[0]} av {B_OUT[1]}, {pfmt(P_B)}). Det som skiljer förklaringarna åt är om de senare r-stenarna i bygden står i Eriks tradition – samma ornamentik, samma formler, samma stavning i övrigt – eller bara i samma bygd. Det är nästa prov.
+Hypotesen är inte bevisad, och Stilles och Larssons förklaring är inte utesluten. Talen är små: Erik har en sten utanför bygden och Åsmund tre inom den. Talade Erik och ristarna efter honom själva ett mål där ljuden fallit samman, ger det samma mönster som en skrivtradition. Balle pekar dessutom åt andra hållet: han skrev r oftare inom klustret än utanför ({B_IN[0]} av {B_IN[1]} mot {B_OUT[0]} av {B_OUT[1]}, {pfmt(P_B)}; med de osäkert attribuerade stenarna {BA_IN[0]} av {BA_IN[1]} mot {BA_OUT[0]} av {BA_OUT[1]}, {pfmt(P_BA)}). Det som skiljer förklaringarna åt är om de senare r-stenarna i bygden står i Eriks tradition – samma ornamentik, samma formler, samma stavning i övrigt – eller bara i samma bygd. Det är nästa prov.
 
 **Svagheter, i ordning efter vikt.**
 
@@ -394,7 +398,7 @@ Figure 2. The cluster close up. Black ring around a point: one of the carver Eri
 - **The early stones.** Within the cluster all {EA_IN[1]} early stones have r for ʀ, and {EA_IN[1] - 2} of them are attributed to Erik. Outside the cluster {EA_OUT[0]} of {EA_OUT[1]} early stones have the trait ({pc(EA_OUT[0] / EA_OUT[1])} percent). In Uppland outside the cluster {FP_U_OUT[0]} of {FP_U_OUT[1]} stones in the Fp style have it.
 - **The cluster without Erik.** Without every stone attributed to Erik, {NE_IN[0]} of {NE_IN[1]} stones within the cluster have the trait ({pc(NE_IN[0] / NE_IN[1])} percent), against {ALL_OUT[0]} of {ALL_OUT[1]} outside ({pc(ALL_OUT[0] / ALL_OUT[1])} percent), {pfmt(P_NE, True)}.
 - **The later stones.** Among the stones in the style groups Pr3–Pr5, {LA_IN[0]} of {LA_IN[1]} within the cluster have the trait ({pc(LA_IN[0] / LA_IN[1])} percent), against {LA_U_OUT[0]} of {LA_U_OUT[1]} in the rest of Uppland ({pc(LA_U_OUT[0] / LA_U_OUT[1])} percent), {pfmt(P_LATE, True)}.
-- **Balli**, who carved in the district a generation after Erik, has r for ʀ on {B_IN[0]} of {B_IN[1]} stones within the cluster and {B_OUT[0]} of {B_OUT[1]} outside ({pfmt(P_B, True)}). That is too few stones to say whether he wrote differently in the district than outside it.
+- **Balli**, who carved in the district a generation after Erik, has r for ʀ on {B_IN[0]} of {B_IN[1]} stones within the cluster and {B_OUT[0]} of {B_OUT[1]} outside ({pfmt(P_B, True)}); counting also the uncertainly attributed stones it is {BA_IN[0]} of {BA_IN[1]} against {BA_OUT[0]} of {BA_OUT[1]} ({pfmt(P_BA, True)}). The difference goes the way a local speech predicts, but the stones are too few for it to be certain.
 - **Åsmund**, who carved in many parts of Uppland, wrote the yr-rune on all his {A_IN[1] + A_OUT[1]} securely attributed stones where the trait can be decided, including the {A_IN[1]} that stand within the cluster.
 
 ## 6. Discussion
@@ -411,7 +415,7 @@ For western Uppland we propose another explanation: that r for ʀ there was a wr
 2. Åsmund wrote the yr-rune on all his thirteen stones, including the three within the cluster. That speaks against the place or the patrons deciding the spelling. It followed the carver.
 3. The spelling lives on in the same district after Erik, four times as common among the later stones as in the rest of Uppland, and the cluster remains when the carver is held constant.
 
-The hypothesis is not proven, and Stille's and Larsson's explanation is not ruled out. The numbers are small: Erik has one stone outside the district and Åsmund three within it. If Erik and the carvers after him themselves spoke a variety in which the sounds had merged, that gives the same pattern as a writing tradition. Balli, moreover, points weakly the other way: he wrote r more often within the cluster than outside it ({B_IN[0]} of {B_IN[1]} against {B_OUT[0]} of {B_OUT[1]}, {pfmt(P_B, True)}). What separates the explanations is whether the later r-stones of the district stand in Erik's tradition – the same ornament, the same formulas, the same spelling otherwise – or merely in the same district. That is the next test.
+The hypothesis is not proven, and Stille's and Larsson's explanation is not ruled out. The numbers are small: Erik has one stone outside the district and Åsmund three within it. If Erik and the carvers after him themselves spoke a variety in which the sounds had merged, that gives the same pattern as a writing tradition. Balli, moreover, points the other way: he wrote r more often within the cluster than outside it ({B_IN[0]} of {B_IN[1]} against {B_OUT[0]} of {B_OUT[1]}, {pfmt(P_B, True)}; with the uncertainly attributed stones {BA_IN[0]} of {BA_IN[1]} against {BA_OUT[0]} of {BA_OUT[1]}, {pfmt(P_BA, True)}). What separates the explanations is whether the later r-stones of the district stand in Erik's tradition – the same ornament, the same formulas, the same spelling otherwise – or merely in the same district. That is the next test.
 
 **Weaknesses, in order of weight.**
 

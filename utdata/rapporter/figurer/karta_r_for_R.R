@@ -25,10 +25,15 @@ pts <- pts[order(pts$val, decreasing = TRUE), ]   # r on top
 circ <- st_buffer(st_transform(st_sfc(st_point(c(cl$lon, cl$lat)), crs = 4326), 3006), cl$radius_km * 1000)
 bb <- st_bbox(st_transform(view, 3006)); bz <- st_bbox(st_transform(zoom, 3006))
 erik <- pts[pts$carver %in% "Erik" & pts$carvers_uncertain %in% 0, ]
-draw <- function(lang, z = FALSE) {
+draw <- function(lang, z = FALSE, art = FALSE) {
   sv <- lang == "sv"
   b <- if (z) bz else bb
-  lab <- if (sv) c(r = "r för ʀ (minst en gång)", R = "bara ʀ-runan") else c(r = "r for ʀ (at least once)", R = "the ʀ-rune only")
+  tr <- function(x) if (!art) x else {
+    for (pr in list(c("r för ʀ", "r i stället för yr-runan"), c("r for ʀ", "r instead of the yr-rune"), c("bara ʀ-runan", "bara yr-runan"),
+                    c("the ʀ-rune only", "the yr-rune only"), c("ʀ skrivet med r-runan", "r i stället för yr-runan"),
+                    c("ʀ written with the r-rune", "r instead of the yr-rune"))) x <- gsub(pr[1], pr[2], x, fixed = TRUE)
+    x }
+  lab <- tr(if (sv) c(r = "r för ʀ (minst en gång)", R = "bara ʀ-runan") else c(r = "r for ʀ (at least once)", R = "the ʀ-rune only"))
   ggplot() +
     geom_sf(data = land, fill = "#f4f4f2", colour = "#94a3b8", linewidth = 0.25) +
     geom_sf(data = lakes, fill = "white", colour = "#cbd5e1", linewidth = 0.15) +
@@ -38,14 +43,14 @@ draw <- function(lang, z = FALSE) {
     scale_colour_manual(values = c(r = "#b7410e", R = "#94a3b8"), labels = lab, name = NULL) +
     scale_size_manual(values = if (z) c(r = 2.8, R = 1.8) else c(r = 1.5, R = 0.9), labels = lab, name = NULL) +
     coord_sf(xlim = c(b["xmin"], b["xmax"]), ylim = c(b["ymin"], b["ymax"]), expand = FALSE, datum = NA) +
-    labs(title = if (z) (if (sv) "Klustret i västra Uppland" else "The cluster in western Uppland") else
-                   (if (sv) "ʀ skrivet med r-runan: stenarna och klustret" else "ʀ written with the r-rune: the stones and the cluster"),
-         subtitle = if (z) sprintf(if (sv) "Ringen: %.0f km runt %s; %d av %d stenar inom den har r för ʀ.\nSvart ring runt punkten: en av ristaren Eriks %d säkert attribuerade stenar." else
+    labs(title = tr(if (z) (if (sv) "Klustret i västra Uppland" else "The cluster in western Uppland") else
+                   (if (sv) "ʀ skrivet med r-runan: stenarna och klustret" else "ʀ written with the r-rune: the stones and the cluster")),
+         subtitle = tr(if (z) sprintf(if (sv) "Ringen: %.0f km runt %s; %d av %d stenar inom den har r för ʀ.\nSvart ring runt punkten: en av ristaren Eriks %d säkert attribuerade stenar." else
                                      "The ring: %.0f km around %s; %d of %d stones within it have r for ʀ.\nBlack ring around a point: one of the carver Erik's %d securely attributed stones.",
                                    cl$radius_km, cl$center, cl$cases, cl$n, nrow(erik)) else
                     sprintf(if (sv) "Varje punkt är en runsten där draget kan avgöras (%d stenar; flyttade stenar ingår inte).\nRingen: klustret, %.0f km runt %s, där %d av %d stenar har r för ʀ." else
                               "Each point is a runestone where the trait can be decided (%d stones; moved stones excluded).\nThe ring: the cluster, %.0f km around %s, where %d of %d stones have r for ʀ.",
-                            nrow(pts), cl$radius_km, cl$center, cl$cases, cl$n),
+                            nrow(pts), cl$radius_km, cl$center, cl$cases, cl$n)),
          caption = if (sv) "Källa: Samnordisk runtextdatabas (Rundata, ODbL). Kustlinjer och sjöar: Natural Earth." else
                      "Source: Scandinavian Runic-text Database (Rundata, ODbL). Coastlines and lakes: Natural Earth.") +
     theme_void(base_size = 11) +
@@ -60,6 +65,8 @@ draw <- function(lang, z = FALSE) {
 for (lang in c("sv", "en")) {
   ggsave(file.path(out, sprintf("karta_r_for_R_%s.png", lang)), draw(lang), width = 6.4, height = 7.6, dpi = 220, device = ragg::agg_png, bg = "white")
   ggsave(file.path(out, sprintf("karta_r_for_R_zoom_%s.png", lang)), draw(lang, TRUE), width = 6.8, height = 5.6, dpi = 220, device = ragg::agg_png, bg = "white")
+  ggsave(file.path(out, sprintf("artikel_r_for_R_%s.png", lang)), draw(lang, FALSE, TRUE), width = 6.4, height = 7.6, dpi = 220, device = ragg::agg_png, bg = "white")
+  ggsave(file.path(out, sprintf("artikel_r_for_R_zoom_%s.png", lang)), draw(lang, TRUE, TRUE), width = 6.8, height = 5.6, dpi = 220, device = ragg::agg_png, bg = "white")
 }
 cat("Erik:", nrow(erik), "stenar på kartan\n")
 cat("klart", nrow(pts), "stenar\n")
