@@ -1,5 +1,9 @@
 # Forskningsrapport – mallen (2026-10-31)
 
+**LÅST 2026-10-31** (Viktor: ”jag är nöjd med rapporten nu, lås den formen”). Förebilden är rapporten om kvinnorna
+bland resarna (`utdata/blogg/build/build_rapport_kvinnor.py`). Formen ändras bara genom en ny version av mallen med
+datum och skäl; kontrollsumman står i `MALL.md.sha256`. Rapporter som byggts på en äldre version av mallen behåller den.
+
 En rapport per fynd. Bara fynd som är **bekräftade** i Statistik (håller i båda halvorna av korpusen, delade socken
 för socken, och q_global < 0,05 i den gemensamma Benjamini–Hochberg-justeringen över alla visade mönster) och som
 har gått **hela robusthetstrappan** (METHODS.md 1v). Rapporten är registrerad till formen: planen låstes före
