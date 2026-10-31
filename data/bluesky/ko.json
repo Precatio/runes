@@ -480,6 +480,62 @@
     "VikingAge"
    ],
    "text": "Methods report: in a blind test locked in advance, statistical carver suggestions from the runic texts were right on 82 % of the confident ones, against 44 % for the carver of the nearest stone."
+  },
+  {
+   "date": "2026-11-20",
+   "en": true,
+   "slug": "ristningen-vand-mot-vagen",
+   "tags": [
+    "runology",
+    "runestones",
+    "OpenScience",
+    "MedievalSky",
+    "Skystorians",
+    "VikingAge"
+   ],
+   "text": "Research report: half of Swedish runestones turn their inscription within 45 degrees of the road, against a quarter by chance. Not towards the sun, not towards the farm. The carvers wrote for those passing by."
+  },
+  {
+   "date": "2026-11-21",
+   "en": true,
+   "slug": "skanningen-som-ledtrad",
+   "tags": [
+    "runology",
+    "runestones",
+    "DigitalHumanities",
+    "OpenScience",
+    "MedievalSky",
+    "VikingAge"
+   ],
+   "text": "Methods report: 3D-scan traces help a language model fill in hidden words on runestones, 60 % right against 54 % without, and shuffled traces make it worse. Scans by Laila Kitzler Åhfeldt, CC BY."
+  },
+  {
+   "date": "2026-11-22",
+   "en": true,
+   "slug": "barnen-arvde-namnled",
+   "tags": [
+    "runology",
+    "runestones",
+    "OpenScience",
+    "MedievalSky",
+    "Skystorians",
+    "VikingAge"
+   ],
+   "text": "Research report: on Swedish runestones parent and child share a name element, like Holmger and Holmfast, in 5.3 % of pairs, against 2.8 % by chance. A custom for some families, alive through the whole runestone era."
+  },
+  {
+   "date": "2026-11-23",
+   "en": true,
+   "slug": "seriationen-foljer-stilkronologin",
+   "tags": [
+    "runology",
+    "runestones",
+    "OpenScience",
+    "MedievalSky",
+    "Skystorians",
+    "VikingAge"
+   ],
+   "text": "Research report: ordered only by language and content, Uppland's runestones fall in the same sequence as the stylistic chronology built on their ornament. Two independent clocks, showing roughly the same time."
   }
  ]
 }
