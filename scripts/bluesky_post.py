@@ -106,7 +106,9 @@ def card(slug: str, en: bool) -> tuple[str, str, str]:
     post = article(slug)
     if en and not post.get("body_en"):
         sys.exit("Artikeln har ingen engelsk utgåva.")
-    url = f"{SITE}{'/en' if en else ''}/artiklar/{slug}/?via=bluesky"
+    # a research report has its own section on the site (/forskningsrapporter), an article /artiklar
+    section = "forskningsrapporter" if "Rapport" in (post.get("labels") or []) else "artiklar"
+    url = f"{SITE}{'/en' if en else ''}/{section}/{slug}/?via=bluesky"
     return url, (post["title_en"] if en else post["title"]), (post.get("summary_en") if en else post.get("summary")) or ""
 
 

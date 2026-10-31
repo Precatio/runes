@@ -391,12 +391,81 @@
    "text": "How good is our runic text model, really? A day behind the scenes: five processes computing, a reading of the Rök stone that fails honestly, a comparison with DeepMind's Ithaca, and the sources we plan to feed the model next.",
    "tags": [
     "DigitalHumanities",
-    "ComputationalLinguistics",
     "OldNorse",
     "MedievalSky",
     "runestones",
     "VikingAge"
    ]
+  },
+  {
+   "date": "2026-11-14",
+   "en": true,
+   "slug": "kvinnor-bland-resarna-svealand-gotaland",
+   "tags": [
+    "runology",
+    "runestones",
+    "OpenScience",
+    "MedievalSky",
+    "Skystorians",
+    "VikingAge"
+   ],
+   "text": "Research report: a woman is among the raisers on 31 % of Swedish runestones in Svealand, 17 % in Götaland. Pre-registered, with age, region and carver held constant, and in both halves of the material."
+  },
+  {
+   "date": "2026-11-15",
+   "en": true,
+   "slug": "soner-och-broder-dog-utanfor-norden",
+   "tags": [
+    "runology",
+    "runestones",
+    "OpenScience",
+    "MedievalSky",
+    "Skystorians",
+    "VikingAge"
+   ],
+   "text": "Research report: sons and brothers died abroad on 10 % of their runestones, fathers and husbands on 3 %. Pre-registered and robust to every check. The journeys east and west belonged to the young."
+  },
+  {
+   "date": "2026-11-16",
+   "en": true,
+   "slug": "familjegrupper-vid-gravfalten",
+   "tags": [
+    "runology",
+    "runestones",
+    "OpenScience",
+    "MedievalSky",
+    "Skystorians",
+    "VikingAge"
+   ],
+   "text": "Research report: runestones gather in family groups. Stones within 500 m name the same person eight times as often as stones 2–10 km apart, and groups stand by grave fields in four cases of five."
+  },
+  {
+   "date": "2026-11-17",
+   "en": true,
+   "slug": "r-for-yr-runan-vastra-uppland",
+   "tags": [
+    "runology",
+    "runestones",
+    "OpenScience",
+    "MedievalSky",
+    "Skystorians",
+    "VikingAge"
+   ],
+   "text": "Research report: in western Uppland ʀ was written with the ordinary r-rune five times as often as elsewhere in Sweden, around Holm in Vittinge, where the carver Erik never wavered. A writing tradition?"
+  },
+  {
+   "date": "2026-11-18",
+   "en": true,
+   "slug": "monoftongstavningen-blir-ovanligare",
+   "tags": [
+    "runology",
+    "runestones",
+    "OpenScience",
+    "MedievalSky",
+    "Skystorians",
+    "VikingAge"
+   ],
+   "text": "Research report: stin for stain has been used to date the monophthong in Sweden. On the runestones it grows rarer, from 69 to 22 %. The late Upplandic spelling looks like a written norm, not speech."
   }
  ]
 }
