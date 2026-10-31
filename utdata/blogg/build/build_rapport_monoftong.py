@@ -27,7 +27,7 @@ assert DONE["fingerprint"] == FP and DONE["r_version"].startswith("R version 4.6
 APP_VERSION = json.load(open(os.path.join(ROOT, "web", "package.json")))["version"]
 assert APP_VERSION == "3.0.0"
 MALL_SHA = open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().split()[0]
-assert MALL_SHA.startswith("d857ec3f")  # mallens version 3
+assert MALL_SHA.startswith("611a4d5f")  # mallens version 4
 REPORT_VERSION = 1
 TODAY = "2026-10-31"  # rapportversionens datum, fast i byggaren (mallen version 3)
 TL_SV = "mönstret upptäcktes och mätkontrollerna lades till 2026-10-11; materialet frystes 2026-10-29; kodningen kontrollerades 2026-10-31"
@@ -240,7 +240,7 @@ p-värdet är korrigerat för de {N_TIME} drag som prövades och för alla {N_SH
 
 ## 5. Resultat
 
-**5.1 Huvudtestet.** Med läge och ristare konstanta sjunker andelen från {pc(T['first'])} procent omkring år {T['year_first']} till {pc(T['last'])} procent omkring {T['year_last']}, en förändring på {pc(-T['change'])} procentenheter (95 %-intervall {pc(-T['change_hi'])}–{pc(-T['change_lo'])}), {pfmt(T['p'])}, Holm-korrigerat {pfmt(T['q'])}. Kurvan sjunker inte jämnt: den går från {pc(T['first'])} till {pc(CURVE[1028]['share'])} procent fram till omkring 1030, ligger nästan still till omkring 1070 ({pc(CURVE[1068]['share'])} procent) och sjunker sedan igen. Halva A: {HA['n']} stenar, från {pc(HA['first'])} till {pc(HA['last'])} procent, {pfmt(HA['p'])}. Halva B: {HB['n']} stenar, från {pc(HB['first'])} till {pc(HB['last'])} procent, {pfmt(HB['p'])}. Förändringen håller alltså i båda halvorna.
+**5.1 Huvudtestet.** Med läge och ristare konstanta sjunker andelen från {pc(T['first'])} procent omkring år {T['year_first']} till {pc(T['last'])} procent omkring {T['year_last']}, en förändring på {pc(-T['change'])} procentenheter (95 %-intervall {pc(-T['change_hi'])}–{pc(-T['change_lo'])}), {pfmt(T['p'])}, Holm-korrigerat {pfmt(T['q'])}. Kurvan sjunker inte jämnt: den går från {pc(T['first'])} till {pc(CURVE[1028]['share'])} procent fram till omkring 1030, ligger nästan still till omkring 1070 ({pc(CURVE[1068]['share'])} procent) och sjunker sedan igen. Halva A: {HA['n']} stenar, från {pc(HA['first'])} till {pc(HA['last'])} procent, {pfmt(HA['p'])}. Halva B: {HB['n']} stenar, från {pc(HB['first'])} till {pc(HB['last'])} procent, {pfmt(HB['p'])}. Förändringen håller alltså i båda halvorna. I klartext: omkring år 1000 hade ungefär sju stenar av tio minst ett ord stavat med monoftong, omkring 1115 ungefär två av tio. Känslighetsanalysernas oddskvot på omkring 0,5 per 50 år betyder att oddsen för monoftongstavning ungefär halveras på femtio år.
 
 {chart(True)}
 
@@ -371,7 +371,7 @@ The p-value is corrected for the {N_TIME} traits tested and for all {N_SHOWN} as
 
 ## 5. Results
 
-**5.1 The main test.** With location and carver constant the share falls from {pc(T['first'])} percent around {T['year_first']} to {pc(T['last'])} percent around {T['year_last']}, a change of {pc(-T['change'])} percentage points (95 % interval {pc(-T['change_hi'])}–{pc(-T['change_lo'])}), {pfmt(T['p'], True)}, Holm-corrected {pfmt(T['q'], True)}. The curve does not fall evenly: it goes from {pc(T['first'])} to {pc(CURVE[1028]['share'])} percent up to about 1030, hardly moves until about 1070 ({pc(CURVE[1068]['share'])} percent) and then falls again. Half A: {HA['n']} stones, from {pc(HA['first'])} to {pc(HA['last'])} percent, {pfmt(HA['p'], True)}. Half B: {HB['n']} stones, from {pc(HB['first'])} to {pc(HB['last'])} percent, {pfmt(HB['p'], True)}. The change thus holds in both halves.
+**5.1 The main test.** With location and carver constant the share falls from {pc(T['first'])} percent around {T['year_first']} to {pc(T['last'])} percent around {T['year_last']}, a change of {pc(-T['change'])} percentage points (95 % interval {pc(-T['change_hi'])}–{pc(-T['change_lo'])}), {pfmt(T['p'], True)}, Holm-corrected {pfmt(T['q'], True)}. The curve does not fall evenly: it goes from {pc(T['first'])} to {pc(CURVE[1028]['share'])} percent up to about 1030, hardly moves until about 1070 ({pc(CURVE[1068]['share'])} percent) and then falls again. Half A: {HA['n']} stones, from {pc(HA['first'])} to {pc(HA['last'])} percent, {pfmt(HA['p'], True)}. Half B: {HB['n']} stones, from {pc(HB['first'])} to {pc(HB['last'])} percent, {pfmt(HB['p'], True)}. The change thus holds in both halves. In plain words: around 1000 about seven stones in ten had at least one word spelled with a monophthong, around 1115 about two in ten. The sensitivity analyses' odds ratio of about 0.5 per 50 years means that the odds of a monophthong spelling roughly halve in fifty years.
 
 {chart(False)}
 
@@ -455,6 +455,10 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 :::
 """
 
+# the plain-words sentence rests on these numbers (mallen version 4)
+assert (pc(T['first']), pc(T['last'])) == (69, 22)
+assert 0.5 <= RU['adjusted']['or'] < 0.6
+assert "I klartext" in body and "In plain words" in body_en
 JARGON = r"modul\w*|trapp\w*|q_global|korpusjobb|fingeravtryck|fingerprint|facit|Vitkis|Vitki's|\bthe app\b|\bappen\b|`[^`]*/[^`]*`|METHODS"
 for b in (body, body_en):
     assert not re.search(r"^\|", b, re.M), "BlogBody har inga tabeller"

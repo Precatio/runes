@@ -5,7 +5,7 @@ import ReportList from "@/components/ReportList";
 import { getPost, listReports } from "@/lib/articles";
 import type { BlogPost } from "@/components/BlogBody";
 import { EN_ARTICLES_PATH } from "@/lib/blogSeo";
-import { EN_REPORTS_PATH, REPORTS_DESCRIPTION_EN, REPORTS_PATH, REPORTS_TITLE_EN, reportAlternates, reportsJsonLd } from "@/lib/report";
+import { EN_REPORTS_PATH, EN_TERMS_PATH, REPORTS_DESCRIPTION_EN, REPORTS_PATH, REPORTS_TITLE_EN, reportAlternates, reportsJsonLd } from "@/lib/report";
 
 // The English list of the research reports (the reports' own English versions)
 export const revalidate = 60;
@@ -42,7 +42,7 @@ export default async function EnglishReportsPage() {
           pre-registration, material, method, results, discussion and references – and states its version and how to cite it.
         </p>
         <p className="mt-3 text-sm text-slate-500">
-          Popular-science texts on the same patterns are under <Link href={EN_ARTICLES_PATH} prefetch={false} className="font-semibold text-[#b7410e] hover:underline">Articles</Link>.
+          Popular-science texts on the same patterns are under <Link href={EN_ARTICLES_PATH} prefetch={false} className="font-semibold text-[#b7410e] hover:underline">Articles</Link>. The statistical terms are explained in the <Link href={EN_TERMS_PATH} prefetch={false} className="font-semibold text-[#b7410e] hover:underline">glossary</Link>.
         </p>
         <ReportList posts={posts} lang="en" />
       </section>

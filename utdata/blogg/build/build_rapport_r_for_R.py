@@ -252,6 +252,8 @@ Analyserna i avsnitt 5.1–5.3 är de som metoden föreskriver för varje drag. 
 - **Balle**, som ristade i bygden en generation efter Erik, har r för ʀ på {B_IN[0]} av {B_IN[1]} stenar inom klustret och {B_OUT[0]} av {B_OUT[1]} utanför ({pfmt(P_B)}); räknas också de osäkert attribuerade stenarna med blir det {BA_IN[0]} av {BA_IN[1]} mot {BA_OUT[0]} av {BA_OUT[1]} ({pfmt(P_BA)}). Skillnaden går åt det håll ett bygdemål förutsäger, men stenarna är för få för att den ska vara säker.
 - **Åsmund**, som ristade på många håll i Uppland, skrev yr-runan på alla sina {A_IN[1] + A_OUT[1]} säkert attribuerade stenar där draget kan avgöras, också de {A_IN[1]} som står inom klustret.
 
+**I klartext.** Inom tre mil från Holm i Vittinge skriver två stenar av tre ʀ med den vanliga r-runan, i resten av landet ungefär en av åtta, och i ingen av 999 slumpvisa omfördelningar av stavningen blev något område lika extremt.
+
 ## 6. Diskussion
 
 **Vad fyndet säger.** Västra Uppland är det område i Sverige där ʀ oftast skrevs med r-runan, och det är inte en följd av att stenarna där är tidiga eller av att en enda ristare ristade många av dem: klustret står kvar med dateringsperiod och ristare konstanta, i var halva för sig och utan flyttade stenar. I den tidiga generationen bärs det nästan helt av Erik. Att det står kvar utan hans stenar, och att de senare stenarna i bygden skriver r fyra gånger så ofta som i övriga Uppland, visar att stavningen inte försvann med honom.
@@ -403,6 +405,8 @@ The analyses in sections 5.1–5.3 are those the method prescribes for every tra
 - **Balli**, who carved in the district a generation after Erik, has r for ʀ on {B_IN[0]} of {B_IN[1]} stones within the cluster and {B_OUT[0]} of {B_OUT[1]} outside ({pfmt(P_B, True)}); counting also the uncertainly attributed stones it is {BA_IN[0]} of {BA_IN[1]} against {BA_OUT[0]} of {BA_OUT[1]} ({pfmt(P_BA, True)}). The difference goes the way a local speech predicts, but the stones are too few for it to be certain.
 - **Åsmund**, who carved in many parts of Uppland, wrote the yr-rune on all his {A_IN[1] + A_OUT[1]} securely attributed stones where the trait can be decided, including the {A_IN[1]} that stand within the cluster.
 
+**In plain words.** Within thirty kilometres of Holm in Vittinge two stones in three write ʀ with the ordinary r-rune, in the rest of the country about one in eight, and in none of 999 random redistributions of the spelling did any area become as extreme.
+
 ## 6. Discussion
 
 **What the finding says.** Western Uppland is the area of Sweden where ʀ was most often written with the r-rune, and that is not because the stones there are early or because a single carver carved many of them: the cluster remains with dating period and carver constant, in each half and without moved stones. In the early generation it is carried almost wholly by Erik. That it remains without his stones, and that the later stones of the district write r four times as often as the rest of Uppland, shows that the spelling did not disappear with him.
@@ -464,6 +468,12 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 :::
 """
 
+# the plain-words sentence rests on these numbers (mallen version 4)
+assert "24 av 36 stenar" in body
+assert "mot 13 procent av stenarna i resten" in body
+assert "999 simuleringar" in body
+assert "30,4 kilometer" in body
+assert "I klartext" in body and "In plain words" in body_en
 JARGON = r"modul\w*|trapp\w*|q_global|korpusjobb|fingeravtryck|fingerprint|facit|Vitkis|Vitki's|\bthe app\b|\bappen\b|`[^`]*/[^`]*`|METHODS"
 for b in (body, body_en):
     assert not re.search(r"^\|", b, re.M), "BlogBody har inga tabeller"

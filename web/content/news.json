@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "ordlista-rapporter",
+   "date": "2026-10-31",
+   "status": "nytt",
+   "title": "Ordlista för forskningsrapporterna",
+   "text": "De statistiska begreppen i forskningsrapporterna förklaras nu i vanliga ord i en egen ordlista: vad p-värde, oddskvot, 95 %-intervall, slumpeffekt, halvorna, känslighetsanalyser, förregistrering, korsvalidering och blindprov betyder och hur siffrorna ska läsas. Varje rapport länkar dit, och varje rapport säger dessutom sitt huvudresultat i klartext."
+  },
+  {
    "id": "rapporternas-nivaer",
    "date": "2026-10-31",
    "status": "nytt",

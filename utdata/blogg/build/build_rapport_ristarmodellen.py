@@ -21,7 +21,7 @@ DONE = json.load(open(os.path.join(C, "done.json"), encoding="utf-8"))
 assert DONE["fingerprint"] == FP and DONE["r_version"].startswith("R version 4.6.1")
 APP_VERSION = json.load(open(os.path.join(ROOT, "web", "package.json")))["version"]
 assert APP_VERSION == "3.0.0"
-assert open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().startswith("d857ec3f")
+assert open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().startswith("611a4d5f")
 REPORT_VERSION = 1
 TODAY = "2026-10-31"  # rapportversionens datum, fast i byggaren (mallen version 3)
 TL_SV = "modellen byggdes 2026-10-05; blindprovets plan låstes 2026-10-21; blindprovet kördes 2026-10-21; provet kördes om på dagens material 2026-10-31"
@@ -207,6 +207,8 @@ Avsnitt 5.1 och 5.4 är planens prov. Avsnitt 5.2 och 5.3 är tillägg utöver p
 - **Efter styrka:** 0,5–0,6 rätt på {BS['0.5–0.6']['right']} av {BS['0.5–0.6']['n']}; 0,6–0,7 på {BS['0.6–0.7']['right']} av {BS['0.6–0.7']['n']}; minst 0,7 på {BS['0.7–1.01']['right']} av {BS['0.7–1.01']['n']}.
 - **Ristare utanför de 28:** {BP['outside_universe']['nytt']} av de {BP['outside_universe']['n']} stenarna fick ändå ett säkert förslag, som med nödvändighet är fel; de ingår i siffrorna ovan.
 
+I klartext: när regeln ger ett säkert förslag har den rätt ungefär fyra gånger av fem, och en gissning efter närmaste sten har rätt drygt två gånger av fem.
+
 {chart(True)}
 
 **5.2 Per landskap och per ristare (utöver planen).** Uppland: {PU['right']} av {PU['n']} ({pc(PU['precision'])} procent) mot {pc(PU['nearest_precision'])} procent, {pfmt(PU['mcnemar_p'])}. Södermanland: {PS['right']} av {PS['n']} ({pc(PS['precision'])} procent) mot {PS['nearest_right']} ({pc(PS['nearest_precision'])} procent), {pfmt(PS['mcnemar_p'])}, alltså ingen säker skillnad. Per föreslagen ristare med fler än tre säkra förslag: {carvers(True)}. Öpir har lägst andel rätt. Alla fyra fel för Traen ({', '.join(TRAEN_MISS)}) gäller stenar som är signerade av andra ristare i Södermanland.
@@ -330,6 +332,8 @@ Sections 5.1 and 5.4 are the plan's tests. Sections 5.2 and 5.3 are additions be
 - **By strength:** 0.5–0.6 right on {BS['0.5–0.6']['right']} of {BS['0.5–0.6']['n']}; 0.6–0.7 on {BS['0.6–0.7']['right']} of {BS['0.6–0.7']['n']}; at least 0.7 on {BS['0.7–1.01']['right']} of {BS['0.7–1.01']['n']}.
 - **Carvers outside the 28:** {BP['outside_universe']['nytt']} of the {BP['outside_universe']['n']} stones still received a confident suggestion, which is necessarily wrong; they are included in the figures above.
 
+In plain words: when the rule gives a confident suggestion it is right about four times in five, and a guess by the nearest stone is right just over two times in five.
+
 {chart(False)}
 
 **5.2 By province and by carver (beyond the plan).** Uppland: {PU['right']} of {PU['n']} ({pc(PU['precision'])} percent) against {pc(PU['nearest_precision'])} percent, {pfmt(PU['mcnemar_p'], True)}. Södermanland: {PS['right']} of {PS['n']} ({pc(PS['precision'])} percent) against {PS['nearest_right']} ({pc(PS['nearest_precision'])} percent), {pfmt(PS['mcnemar_p'], True)}, so no clear difference. By suggested carver with more than three confident suggestions: {carvers(False)}. Öpir has the lowest share right. All four errors for Traen ({', '.join(TRAEN_MISS)}) concern stones signed by other carvers in Södermanland.
@@ -396,6 +400,9 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 :::
 """
 
+# the plain-words sentence rests on these numbers (mallen version 4)
+assert pc(NY['precision']) == 82 and pc(NY['nearest_precision']) == 44
+assert "I klartext" in body and "In plain words" in body_en
 JARGON = r"modul\w*|trapp\w*|q_global|korpusjobb|fingeravtryck|fingerprint|facit|Vitkis|Vitki's|\bthe app\b|\bappen\b|`[^`]*/[^`]*`|METHODS"
 for b in (body, body_en):
     assert not re.search(r"^\|", b, re.M), "BlogBody har inga tabeller"

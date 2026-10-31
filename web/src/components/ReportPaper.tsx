@@ -3,7 +3,7 @@ import BlogBody, { dateLabel, type BlogPost } from "@/components/BlogBody";
 import ReportCite from "@/components/ReportCite";
 import EnglishEdition from "@/components/EnglishEdition";
 import type { ImageSizes } from "@/lib/blogSeo";
-import { bibtex, EN_REPORTS_PATH, REPORT_FORMS, REPORTS_PATH, reportParts } from "@/lib/report";
+import { bibtex, EN_REPORTS_PATH, EN_TERMS_PATH, REPORT_FORMS, REPORTS_PATH, reportParts, TERMS_PATH } from "@/lib/report";
 import { CONTACT_PATH, EN_CONTACT_PATH } from "@/lib/site";
 import { paperFace } from "@/lib/paperFont";
 
@@ -76,6 +76,10 @@ export default function ReportPaper({ post, lang, sizes, otherHref }: { post: Bl
             {h && h.keywords.length > 0 && (
               <p className="mt-4 text-[15px] text-slate-700"><span className="font-semibold">{t.keywords}:</span> <span className="italic">{h.keywords.join(", ")}</span></p>
             )}
+            <p className="no-print mt-3 text-[14px] text-slate-600">
+              {en ? "The statistical terms are explained in plain words in the " : "De statistiska begreppen förklaras i vanliga ord i "}
+              <Link href={en ? EN_TERMS_PATH : TERMS_PATH} prefetch={false} className="font-semibold text-[#b7410e] hover:underline">{en ? "glossary" : "ordlistan"}</Link>.
+            </p>
           </section>
         )}
 

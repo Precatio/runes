@@ -1,6 +1,12 @@
-# Forskningsrapport – mallen, version 3 (2026-10-31)
+# Forskningsrapport – mallen, version 4 (2026-10-31)
 
-**LÅST 2026-10-31.** Version 3 ersätter version 2 (`MALL_v2.md`, låst samma dag, SHA-256 7ae79aa3…, se
+**LÅST 2026-10-31.** Version 4 ersätter version 3 (`MALL_v3.md`, låst samma dag, SHA-256 d857ec3f…). Skäl: Viktor
+2026-10-31 frågade ”behöver vi förklara de statistiska termerna i våra forskningsanalyser?” och sade sedan ”gör alla
+saker du föreslår”. Ändringen: varje rapport säger sitt huvudresultat **i klartext**, och de statistiska termerna
+förklaras i en gemensam **ordlista** (se Skriv för en läsare som aldrig sett Vitki). De rapporter som saknade en
+klartextmening fick den samma dag; inget annat i dem ändrades. Versionshistoriken nedan gäller i övrigt.
+
+Version 3 (låst 2026-10-31) ersatte version 2 (`MALL_v2.md`, låst samma dag, SHA-256 7ae79aa3…, se
 `MALL_v2.md.sha256`), som ersatte version 1 (`MALL_v1.md`). Skäl, Viktor 2026-10-31: ”alla våra rapporter får dagens
 datum trots att vi jobbat med den underliggande datan för rapporterna under lång tid” och ”lägg in alla datumen”.
 Ändringen gäller bara rubrikraden och hur datumen visas: varje rapport får en **tidslinje** för studien, och
@@ -107,6 +113,15 @@ som reste stenarna”, ”en fast serie känslighetsanalyser”, ”justerat fö
 (Benjamini–Hochberg), q”, ”handkodat kontrollurval”, ”Rundata, fryst för analysen den …”. Definiera varje begrepp
 första gången (slumpeffekt, halvorna, marginaleffekt) och räkna upp landskapen bakom en landsdel. Filvägar, versionsnyckel
 och appens flikar står bara under Data och kod. Byggaren ska kontrollera detta (sök efter jargong före Data och kod).
+
+**Klartext och ordlista (från version 4).** Huvudresultatet sägs en gång i resultatdelen i klartext, utan statistiska
+termer, i en mening eller ett stycke som börjar ”I klartext” (på engelska ”In plain words”): vad andelarna betyder som
+”sju av tio”, vad effektmåttet betyder (”oddsen ungefär halveras på femtio år”). Slutsatsen i sammanfattningen skrivs
+på samma sätt. Siffrorna i klartextmeningen asserteras i byggaren som alla andra. De statistiska termerna förklaras i
+ordlistan (`web/src/lib/reportTerms.ts`, sidan /forskningsrapporter/begrepp och /en/forskningsrapporter/begrepp), som
+varje rapportsida länkar till. En term som en rapport använder och som saknas i ordlistan förklaras vid första
+användning eller läggs till i ordlistan. Siffrorna förklaras inte en och en, som i artiklarna: rapporten ska gå att läsa
+för en statistiker utan att bli omständlig.
 
 ## Fasta rubriker, i denna ordning (IMRaD i registrerad form)
 

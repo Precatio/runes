@@ -6,7 +6,7 @@ import EnglishEdition from "@/components/EnglishEdition";
 import { getPost, listReports } from "@/lib/articles";
 import type { BlogPost } from "@/components/BlogBody";
 import { ARTICLES_PATH } from "@/lib/blogSeo";
-import { EN_REPORTS_PATH, REPORTS_DESCRIPTION, REPORTS_PATH, REPORTS_TITLE, reportAlternates, reportsJsonLd } from "@/lib/report";
+import { EN_REPORTS_PATH, REPORTS_DESCRIPTION, REPORTS_PATH, REPORTS_TITLE, reportAlternates, reportsJsonLd, TERMS_PATH } from "@/lib/report";
 
 // The research reports: confirmed findings in the locked scholarly form (utdata/rapporter/MALL.md), each laid out as a
 // paper (components/ReportPaper.tsx). Rendered on the server, like the articles.
@@ -46,7 +46,7 @@ export default async function ReportsPage() {
           diskussion och referenser – och anger sin version och hur den citeras.
         </p>
         <p className="mt-3 text-sm text-slate-500">
-          Populärvetenskapliga texter om samma mönster finns under <Link href={ARTICLES_PATH} prefetch={false} className="font-semibold text-[#b7410e] hover:underline">Artiklar</Link>.
+          Populärvetenskapliga texter om samma mönster finns under <Link href={ARTICLES_PATH} prefetch={false} className="font-semibold text-[#b7410e] hover:underline">Artiklar</Link>. De statistiska begreppen förklaras i <Link href={TERMS_PATH} prefetch={false} className="font-semibold text-[#b7410e] hover:underline">ordlistan</Link>.
         </p>
         <ReportList posts={posts} lang="sv" />
       </section>

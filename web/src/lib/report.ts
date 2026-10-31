@@ -17,6 +17,9 @@ export const reportPath = (slug: string) => `/forskningsrapporter/${encodeURICom
 export const enReportPath = (slug: string) => `/en/forskningsrapporter/${encodeURIComponent(slug)}${SLASH}`;
 export const reportUrl = (slug: string) => `${SITE_URL}${reportPath(slug)}`;
 export const enReportUrl = (slug: string) => `${SITE_URL}${enReportPath(slug)}`;
+/** The glossary of the reports' statistical terms (lib/reportTerms.ts). */
+export const TERMS_PATH = `/forskningsrapporter/begrepp${SLASH}`;
+export const EN_TERMS_PATH = `/en/forskningsrapporter/begrepp${SLASH}`;
 export const reportSharePath = (slug: string) => `/forskningsrapporter/${encodeURIComponent(slug)}/delningsbild.png`;
 export const reportAlternates = (slug?: string) => ({
   sv: slug ? reportPath(slug) : REPORTS_PATH,

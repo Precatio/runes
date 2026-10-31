@@ -206,6 +206,8 @@ Gravhögar, färdvägar och gränsmärken skiljer inte grupperna från de ensamm
 
 **5.4 En grupp restes inom en generation.** {G['groups']} grupper med {G['stones']} stildaterade stenar ({G['provinces']['U']} i Uppland, {G['provinces']['Sö']} i Södermanland) har i medel {d2(G['mean_styles'])} olika stilgrupper, mot {d2(G['expected'])} för lika många stenar ur samma bygd, {pfmt(G['p'])}; halva A {pfmt(GH['A']['p'])}, halva B {pfmt(GH['B']['p'])}. {pc(G['share_all_same'])} procent av grupperna har alla stenar i samma stilgrupp mot {pc(G['share_all_same_expected'])} procent väntat, och spannet mellan gruppens tidigaste och senaste sten är i medel {round(G['span_years'])} år mot {round(G['span_expected'])} år. Utan grupper där en och samma ristare gjort alla stenar ({NOC['groups']} grupper kvar) är det {d2(NOC['mean_styles'])} mot {d2(NOC['expected'])}, {pfmt(NOC['p'])}: svagare, men kvar. Exempel är Täby (U 135, 136, 137 och 140, alla i stilgrupp Pr2) och Skokloster (U 685, 686 och 689, alla Pr2); motexempel med tidsdjup finns, som Vårfrukyrka (Fp och Pr4).
 
+**I klartext.** Runstenarna står närmare varandra än slumpen ger. Två stenar inom 500 meter från varandra nämner samma person ungefär åtta gånger så ofta som två stenar som står 2–10 kilometer isär. Stenar i en sådan grupp står vid ett gravfält i fyra fall av fem, de ensamma i drygt hälften av fallen, och stenarna i en grupp ligger närmare varandra i tid än stenar ur samma bygd: i medel tjugo år mellan den tidigaste och den senaste.
+
 ## 6. Diskussion
 
 **Vad fynden säger.** Fyra mätningar pekar åt samma håll. Runstenar samlas i grupper på några hundra meter, stenarna i en grupp nämner samma människor, grupperna står vid gravfälten, och en grupp restes på kort tid. Den enklaste läsningen är att gruppen är familjens plats: en familj som under en generation reste flera stenar vid sitt gravfält, efter far, söner och bröder. Vägarna och broarna förklarar inte grupperna – grannstenar är inte oftare båda brostenar eller resestenar, och grupperna står inte oftare vid färdvägar än de ensamma stenarna.
@@ -333,6 +335,8 @@ Burial mounds, roads and boundary markers do not set the groups apart from the l
 
 **5.4 A group was raised within one generation.** {G['groups']} groups with {G['stones']} style-dated stones ({G['provinces']['U']} in Uppland, {G['provinces']['Sö']} in Södermanland) have on average {G['mean_styles']:.2f} different style groups, against {G['expected']:.2f} for as many stones from the same district, {pfmt(G['p'], True)}; half A {pfmt(GH['A']['p'], True)}, half B {pfmt(GH['B']['p'], True)}. {pc(G['share_all_same'])} percent of the groups have all their stones in the same style group against {pc(G['share_all_same_expected'])} percent expected, and the span between a group's earliest and latest stone is on average {round(G['span_years'])} years against {round(G['span_expected'])}. Without groups in which one and the same carver made every stone ({NOC['groups']} groups remain) it is {NOC['mean_styles']:.2f} against {NOC['expected']:.2f}, {pfmt(NOC['p'], True)}: weaker, but present. Examples are Täby (U 135, 136, 137 and 140, all in style group Pr2) and Skokloster (U 685, 686 and 689, all Pr2); counter-examples with time depth exist, such as Vårfrukyrka (Fp and Pr4).
 
+**In plain words.** The runestones stand closer together than chance gives. Two stones within 500 metres of each other name the same person about eight times as often as two stones 2–10 kilometres apart. Stones in such a group stand by a grave field in four cases of five, lone stones in just over half, and the stones of a group lie closer together in time than stones from the same district: on average twenty years between the earliest and the latest.
+
 ## 6. Discussion
 
 **What the findings say.** Four measurements point the same way. Runestones gather in groups of a few hundred metres, the stones of a group name the same people, the groups stand by the grave fields, and a group was raised within a short time. The simplest reading is that the group is the family's place: a family that within one generation raised several stones by its grave field, for a father, sons and brothers. The roads and bridges do not explain the groups – neighbouring stones are not more often both bridge stones or journey stones, and the groups do not stand by roads more often than the lone stones.
@@ -386,6 +390,12 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 :::
 """
 
+# the plain-words sentence rests on these numbers (mallen version 4)
+assert "7,9 gånger så ofta" in body
+assert "82 procent av stenarna i grupp" in body
+assert "mot 55 procent av de ensamma" in body
+assert "i medel 20 år mot 36 år" in body
+assert "I klartext" in body and "In plain words" in body_en
 JARGON = r"modul\w*|trapp\w*|q_global|korpusjobb|fingeravtryck|fingerprint|facit|Vitkis|Vitki's|\bthe app\b|\bappen\b|`[^`]*/[^`]*`|METHODS"
 for b in (body, body_en):
     assert not re.search(r"^\|", b, re.M), "BlogBody har inga tabeller"
