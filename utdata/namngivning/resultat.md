@@ -13,8 +13,7 @@ och 1 066 syskonpar (en gång per socken); 9 999 omblandningar inom landskapet.
   bara i halva B (A p 0,28).
 - **H3 Över tid – ingen skillnad påvisad.** Överskottet är lika stort på sena stenar (Pr3–Pr5) som på tidiga
   (3,1 mot 2,6 procentenheter, p 0,89).
-- **H4 Kristna stenar – ingen skillnad påvisad.** Överskottet är något mindre på stenar med kristen markör (1,2 mot
-  2,9 procentenheter) men inte säkert (p 0,22).
+- **H4 Kristna stenar – ingen skillnad påvisad.** Överskottet är något mindre på stenar med kristen markör (1,1 mot 2,9 procentenheter; avrundningen rättad 2026-10-31) men inte säkert (p 0,22).
 
 ## Robusthet (inte förplanerad)
 Den datadrivna leddelningen ger några skräpled (*-ni*, *-bbi*, *-einn*). Utan led kortare än tre bokstäver och utan
