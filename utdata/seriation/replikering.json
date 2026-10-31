@@ -1,0 +1,54 @@
+{
+  "plan": "analysplaner/2026-10-31-seriation-halvor-sodermanland.md",
+  "corpus": "e83202e01a5e6d27",
+  "uppland": {
+    "n_stones": 818,
+    "n_dated": 501,
+    "n_attributes": 65,
+    "rho": 0.54294118,
+    "p": 9.37723768e-40,
+    "partial_rho": 0.53865854,
+    "within_district": 0.50751039,
+    "n_districts": 23,
+    "inertia_pct": 7.32223813
+  },
+  "half_A": {
+    "n_stones": 422,
+    "n_dated": 264,
+    "n_attributes": 54,
+    "rho": 0.51109232,
+    "p": 5.69089009e-19,
+    "partial_rho": 0.50520411,
+    "within_district": 0.46263158,
+    "n_districts": 14,
+    "inertia_pct": 9.32774401,
+    "p_holm": 1.70726703e-18
+  },
+  "half_B": {
+    "n_stones": 394,
+    "n_dated": 236,
+    "n_attributes": 54,
+    "rho": 0.5361277,
+    "p": 5.80449958e-19,
+    "partial_rho": 0.52857666,
+    "within_district": 0.5155239,
+    "n_districts": 16,
+    "inertia_pct": 8.67064556,
+    "p_holm": 1.70726703e-18
+  },
+  "sodermanland": {
+    "n_stones": 270,
+    "n_dated": 151,
+    "n_attributes": 44,
+    "rho": 0.31981962,
+    "p": 0.00006254,
+    "partial_rho": 0.28784504,
+    "within_district": 0.24118134,
+    "n_districts": 11,
+    "inertia_pct": 11.40312614,
+    "p_holm": 0.00006254
+  },
+  "halves_hold": true,
+  "sodermanland_status": "replikerat",
+  "sodermanland_geografi": true
+}
