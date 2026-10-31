@@ -1,0 +1,78 @@
+{
+  "plan": "analysplaner/2026-10-31-avstand-replikering.md",
+  "nsim": 999,
+  "merge_m": 25,
+  "sigma_m": 10000,
+  "floor": 0.05,
+  "rinterval_m": [100, 1000],
+  "main": {
+    "p": 0.004,
+    "statistic": [
+      [771197.90815523, 4]
+    ],
+    "n": 158,
+    "mean_dev_m": 878.17874499,
+    "direction": "klumpat",
+    "n_stones": 167
+  },
+  "halves": {
+    "vast": {
+      "p": 0.023,
+      "statistic": [
+        [945307.96291573, 23]
+      ],
+      "n": 79,
+      "mean_dev_m": 972.26949089,
+      "direction": "klumpat"
+    },
+    "ost": {
+      "p": 0.011,
+      "statistic": [
+        [984667.47101839, 11]
+      ],
+      "n": 79,
+      "mean_dev_m": 992.30412224,
+      "direction": "klumpat"
+    }
+  },
+  "nearest_m": {
+    "10%": 839.81392658,
+    "25%": 1709.50054107,
+    "50%": 4070.64207922,
+    "75%": 7473.05482224,
+    "90%": 11181.39366527
+  },
+  "provinces": {
+    "Ög": {
+      "p": 0.199,
+      "statistic": [
+        [118677285.39730291, 199]
+      ],
+      "n": 51,
+      "mean_dev_m": 202.42528822,
+      "direction": "klumpat",
+      "n_stones": 59
+    },
+    "Vg": {
+      "p": 0.003,
+      "statistic": [
+        [1612311150.65972424, 3]
+      ],
+      "n": 55,
+      "mean_dev_m": 1146.61149803,
+      "direction": "klumpat",
+      "n_stones": 56
+    },
+    "Sm": {
+      "p": 0.023,
+      "statistic": [
+        [534041023.92970437, 23]
+      ],
+      "n": 52,
+      "mean_dev_m": 763.82968831,
+      "direction": "klumpat",
+      "n_stones": 52
+    }
+  },
+  "status": "replikerat"
+}
