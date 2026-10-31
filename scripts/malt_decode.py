@@ -5,7 +5,7 @@ kombinationer, och sannolikheten för varje läsning av en omstridd runa är den
 som den står för (lika förhand). För varje ord ges modellens sannolikhet och den kalibrerade sannolikheten
 (malt_avkod_kalibrering.json). Modellen byggs med samma inställningar som i provet; om epoken gissas ur texten
 (steg 3) dateras Maltstenen också: hur sannolik är texten på 800-talet, 900-talet, 1000–1070 och 1070–1150?
-Skriver malt_avkodning.json.
+Skriver malt_avkodning.json (eller MALT_OUT; med RUNLM_LIT/RUNLM_LEX/RUNLM_NAMES_LIT läses stenen med litteraturlexikonet).
     .venv/bin/python -m scripts.malt_decode [--dating-only]"""
 import itertools
 import json
@@ -57,8 +57,17 @@ EPOCH_MODE = CFG.get("epoch", "none") if CFG.get("contexts") else "none"
 MALT_PATH = context(next(r for r in RECS if r["signum"] == MALT))[:CFG.get("levels", 5)]
 
 
+def _lexicon():
+    """The literature lexicon (textmodel-22 candidate) through the same environment variables as src/textmodel
+    (RUNLM_LIT, RUNLM_LEX, RUNLM_NAMES_LIT); unset = off, as in the published reading."""
+    if not any(os.environ.get(k) for k in ("RUNLM_LIT", "RUNLM_LEX", "RUNLM_NAMES_LIT")):
+        return {}
+    from src import textmodel as tm
+    return tm._lexicon_kwargs(lambda r: r["signum"] != MALT)
+
+
 def build(lam_unk, lam_edda):
-    return Model(V, edda_tokens=edda_tokens(), lam_unk=lam_unk, lam_edda=lam_edda, aligned=CFG.get("aligned", False),
+    return Model(V, edda_tokens=edda_tokens(), lam_unk=lam_unk, lam_edda=lam_edda, aligned=CFG.get("aligned", False), **_lexicon(),
                  contexts=CFG.get("contexts", False), alpha=CFG.get("alpha", 20.0), kappa_e=CFG.get("kappa_e", 5.0),
                  lm_beta=CFG.get("lm_beta", 0.0), spelling_recs=MED, lam_name=CFG.get("lam_name", 0.0))
 
@@ -228,4 +237,4 @@ json.dump({"config": CFG, "epoch_post": epoch_post, "epoch_uniform": epoch_unifo
            "exp_right": exp_right, "n_known": len(pcs), "n_unk": n_unk, "all_right": all_right, "forced_all": forced_all, "strong": strong,
            "sensitivity": sens, "points": point_post, "best": list(best_v), "best_share": math.exp(lz[best_v] - mx) / Zs, "reading": R, "forced": F,
            "alt_readings": alt_read, "d": m.d, "n_pairs": m.n_pairs, "n_vocab": len(m.uni), "n_edda": len(m.pe)},
-          open(os.path.join(OUT, "malt_avkodning.json"), "w"), ensure_ascii=False, indent=1, default=str)
+          open(os.environ.get("MALT_OUT") or os.path.join(OUT, "malt_avkodning.json"), "w"), ensure_ascii=False, indent=1, default=str)

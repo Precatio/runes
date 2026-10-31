@@ -10,7 +10,9 @@ sys.path.insert(0, ".")
 from src import runlm as rl  # noqa: E402
 from src import textmodel as tm  # noqa: E402
 
-R = json.load(open("utdata/Rok/rok_lasning_loo.json", encoding="utf-8"))
+IN = sys.argv[1] if len(sys.argv) > 1 else "utdata/Rok/rok_lasning_loo.json"  # another reading (tm22: with the lexicon)
+OUT = sys.argv[2] if len(sys.argv) > 2 else "utdata/Rok/jamforelse.json"
+R = json.load(open(IN, encoding="utf-8"))
 M = tm.bundle_loo("Ög 136")["model"]  # the same model that read the stone, for its lemma (æft = aft, varin = varinn)
 same_word = lambda a, b: bool(a) and bool(b) and M.lemma(a) == M.lemma(b)  # noqa: E731
 rec = next(r for r in json.load(open("data/rundata.json", encoding="utf-8"))["inscriptions"] if r["signum"] == "Ög 136")
@@ -70,7 +72,7 @@ ep = Counter(rl.epoch(r) for r in rl.load_rundata() if rl.viking(r) and r.get("t
 tot = {k: sum(v[k] for v in per_sec.values()) for k in ("rundata_words", "comparable", "n", "span_ok", "word_ok", "sure", "sure_ok")}
 print("stenar per epok i träningen:", dict(ep))
 json.dump({"per_section": per_sec, "total": tot, "dating": R["dating"], "carved_runes": carved_len, "epochs_in_training": dict(ep)},
-          open("utdata/Rok/jamforelse.json", "w"), ensure_ascii=False, indent=1)
+          open(OUT, "w"), ensure_ascii=False, indent=1)
 for lab, v in per_sec.items():
     print(f"§{lab} {LABEL.get(lab[:1], '')}: Rundata {v['rundata_words']} ord, jämförbara {v['comparable']}, placerade {v['n']} | avgränsade rätt {v['span_ok']} | samma ord {v['word_ok']} | "
           f"säkra (≥95 %) {v['sure']}, av dem rätt {v['sure_ok']}")

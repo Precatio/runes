@@ -144,10 +144,31 @@ def bundle_loo(signum: str) -> dict:
         return b
 
 
+def _lexicon_kwargs(keep) -> dict:
+    """The literature lexicon (textmodel-22 candidate, analysplaner/2026-10-30-litteraturlexikon.md) for the tests
+    that read through this layer (documented gaps, Malt, Rök): RUNLM_LIT and RUNLM_LEX are the weights of the
+    literature list and the dictionary list, RUNLM_NAMES_LIT=1 adds Peterson's names (none whose entry cites a
+    held-out stone). Unset = off, which is the app's setting."""
+    lit, lex, names = float(os.environ.get("RUNLM_LIT") or 0), float(os.environ.get("RUNLM_LEX") or 0), os.environ.get("RUNLM_NAMES_LIT")
+    if not (lit or lex or names):
+        return {}
+    ld = os.path.join(rl.ROOT, "data", "cache", "literature", "lexikon")
+    out = {}
+    if lit:
+        out.update(lit_tokens=json.load(open(os.path.join(ld, "litteratur.json"))), lam_lit=lit)
+    if lex:
+        out.update(lex_words=json.load(open(os.path.join(ld, "lexikon.json"))), lam_lex=lex)
+    if names:
+        held = {re.sub(r"\s+", "", r["signum"]) for r in _records()["V"] if not keep(r)}
+        out["extra_names"] = [n["name"] for n in json.load(open(os.path.join(ld, "namn.json")))
+                              if not any(re.sub(r"\s+", "", x) in held for x in n["signa"])]
+    return out
+
+
 def _build(keep) -> dict:
     if True:
         d = _records()
-        m = rl.Model([r for r in d["V"] if keep(r)], edda_tokens=d["edda"], **MODEL)
+        m = rl.Model([r for r in d["V"] if keep(r)], edda_tokens=d["edda"], **MODEL, **_lexicon_kwargs(keep))
         rest = [r for r in d["recs"] if keep(r)]
         da_recs = [dict(r, translation_da=d["da"][r["signum"]]) for r in rest if r["signum"] in d["da"]]
         # how common each word is in the texts the model learned from, over all its normalized forms (for recal)

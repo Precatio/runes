@@ -49,6 +49,9 @@ ap.add_argument("--carver_names", type=float, default=0.0, help="namn från rist
 ap.add_argument("--only_carver", action="store_true", help="bara stenar med känd ristare (samma luckor som annars)")
 ap.add_argument("--own_d", action="store_true", help="ristarens egen andel markerade ordgränser (stone_divider_rate)")
 ap.add_argument("--hard", action="store_true", help="bara ord som inte är bland de 50 vanligaste (formelord)")
+ap.add_argument("--lit", type=float, default=0.0, help="litteraturens ordlista (data/cache/literature/lexikon/litteratur.json), vikt (0 = av; textmodel-22-kandidat)")
+ap.add_argument("--lex", type=float, default=0.0, help="Zoëgas uppslagsord (lexikon.json), vikt (0 = av)")
+ap.add_argument("--names_lit", action="store_true", help="Petersons runnamn (namn.json) i namnmodellen; namn vars belägg citerar en provsten utesluts i det vecket")
 ap.add_argument("--out", default=None)
 args = ap.parse_args()
 
@@ -56,6 +59,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MALT = "DR NOR1988;5"
 V = [r for r in load_rundata() if viking(r) and r.get("transliteration") and r.get("normalization") and r["signum"] != MALT]
 ET = edda_tokens()
+LEXDIR = os.path.join(ROOT, "data/cache/literature/lexikon")
+LIT = json.load(open(os.path.join(LEXDIR, "litteratur.json"))) if args.lit else None
+LEX = json.load(open(os.path.join(LEXDIR, "lexikon.json"))) if args.lex else None
+NAMES_LIT = json.load(open(os.path.join(LEXDIR, "namn.json"))) if args.names_lit else []
 
 
 def gold(r):
@@ -138,8 +145,10 @@ t0 = time.time()
 for k in folds:
     test = cands[k::K]
     tset = {r["signum"] for r, _ in test}
+    tnorm = {re.sub(r"\s+", "", s) for s in tset}
+    xnames = [n["name"] for n in NAMES_LIT if not any(re.sub(r"\s+", "", x) in tnorm for x in n["signa"])]  # no name whose entry cites a test stone
     m = Model([r for r in V if r["signum"] not in tset], edda_tokens=ET, aligned=True, lam_name=args.lam_name, lam_class=args.lam_class, tolerance=args.tolerance,
-              lam_doc=args.lam_doc, area_lm=args.area_lm,
+              lam_doc=args.lam_doc, area_lm=args.area_lm, lit_tokens=LIT, lam_lit=args.lit, lex_words=LEX, lam_lex=args.lex, extra_names=xnames,
               **(dict(contexts=True, alpha=100.0, kappa_e=50.0, lm_beta=200.0) if args.contexts else {}))
     for i_, (r, (groups, gw)) in enumerate(test, 1):
         if i_ == 1 or i_ % 10 == 0 or i_ == len(test):  # progress: the fold runs for hours and wrote nothing until done (tm21)

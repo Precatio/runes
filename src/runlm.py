@@ -710,7 +710,7 @@ class Model:
     def __init__(self, recs, edda_tokens=(), lam_edda=0.03, lam_unk=0.01, D=0.75, d=None, kappa=2.0, exclude=(),
                  aligned=False, contexts=False, alpha=20.0, kappa_e=5.0, lm_beta=0.0, spelling_recs=(), lam_name=0.0,
                  cv_chars=False, lam_doc=0.0, area_lm=False, area_beta=200.0, lam_class=0.0, n_classes=200,
-                 tolerance=0.0, tol_max_rules=2):
+                 tolerance=0.0, tol_max_rules=2, lit_tokens=None, lam_lit=0.0, lex_words=None, lam_lex=0.0, extra_names=()):
         """recs: Viking-Age inscriptions for the language and spelling. aligned: also use sections whose word counts
         differ (step 2). contexts: spelling by era, epoch, area, region and carver, and word sequences by epoch (step 3);
         alpha is how many observations a level needs to outweigh the level above it. spelling_recs: further inscriptions
@@ -720,7 +720,12 @@ class Model:
         with rule-made variants (final -R dropped, h- added or dropped, an unstressed vowel dropped or shifted among
         i/e/a, a nasal dropped before a stop, a svarabhakti vowel inserted), each rule costing the factor `tolerance`,
         at most tol_max_rules rules per variant. A carver's unattested spelling of a known word can then be reached
-        (utdata/runlm_forfining/tolerans_diagnos.md); off by default."""
+        (utdata/runlm_forfining/tolerans_diagnos.md); off by default. lit_tokens / lam_lit and lex_words / lam_lex
+        (textmodel-22 candidate, analysplaner/2026-10-30-litteraturlexikon.md): a word list from the Old Norse and Old
+        Swedish literature ({word: count}) and a dictionary's headwords ({word: 1}), each mixed into P(word) with its
+        own weight exactly as the Edda list is, their spellings derived by the rules; a list with weight 0 is not
+        loaded, so the vocabulary is unchanged. extra_names: normalized names from a name lexicon (Peterson 2007),
+        added to the name model with one attestation each where the texts do not know them."""
         recs = [r for r in recs if r["signum"] not in set(exclude)]
         self.aligned, self.contexts, self.alpha, self.kappa, self.kappa_e = aligned, contexts, alpha, kappa, kappa_e
         self.lm_beta = lm_beta  # how many occurrences of a word an epoch needs before its own word sequences get half the weight
@@ -828,6 +833,15 @@ class Model:
         ne = sum(ec.values()) or 1
         self.pe = {w: c / ne for w, c in ec.items()}
         self.lam_edda, self.lam_unk = lam_edda, lam_unk
+        self.lam_lit, self.lam_lex = (lam_lit if lit_tokens else 0.0), (lam_lex if lex_words else 0.0)
+        lc = Counter()
+        if self.lam_lit:
+            for w, c in (lit_tokens.items() if hasattr(lit_tokens, "items") else Counter(lit_tokens).items()):
+                lc[normtok(w)] += c
+        nl = sum(lc.values()) or 1
+        self.pl = {w: c / nl for w, c in lc.items()}
+        xs = sorted({normtok(w) for w in lex_words}) if self.lam_lex else []
+        self.px = {w: 1.0 / len(xs) for w in xs}
         self.char = (CVCharModel if cv_chars else CharModel)([a for a, _ in tp])
         self.cvchar = None  # built on demand, to propose fillings rune by rune
         self._train_words = [a for a, _ in tp]
@@ -865,7 +879,7 @@ class Model:
         # index: rune string → {word: P(runes | word)}
         self.index = defaultdict(dict)
         self.rule_z = {}  # the share of a word's spellings the beam keeps; context spellings are scaled the same way
-        vocab = sorted(set(self.uni) | set(self.pe))  # a fixed order, so that runs are reproducible
+        vocab = sorted(set(self.uni) | set(self.pe) | set(self.pl) | set(self.px))  # a fixed order, so that runs are reproducible
         for w in vocab:
             if not re.fullmatch(r"[a-zþðæøåöäąǫœáéíóúýęR]+", w):
                 continue
@@ -929,6 +943,10 @@ class Model:
                             nm[w] += 1
                             after[prev] += 1
                         prev = w
+            for n in extra_names:  # a name lexicon's names the texts do not know: one attestation each
+                n = normtok(n)
+                if n not in nm and re.fullmatch(r"[a-zþðæøåöäąǫœáéíóúýęR]+", n):
+                    nm[n] += 1
             self.names = NameModel(nm, self.spell, carved=[x for r in recs for x in name_pairs(r)])
             self.name_f0 = sum(after.values()) / max(1, sum(after_all.values()))
             self.name_after = {w: (after[w] + 5 * self.name_f0) / (after_all[w] + 5) for w in after_all}
@@ -979,7 +997,7 @@ class Model:
         h = self.hist2.get((u, v), 0)
         if not h:
             return p2
-        lr = 1 - self.lam_edda - self.lam_unk
+        lr = 1 - self.lam_edda - self.lam_unk - self.lam_lit - self.lam_lex
         gam = self.D * self.fol3[(u, v)] / h
         return lr * max(self.big3.get((u, v, w), 0) - self.D, 0) / h + gam * p2
 
@@ -996,7 +1014,7 @@ class Model:
     def p_word(self, w, prev, ep=None, doc=None, cache=None, area=None):
         """P(w | prev) for a lexicon word (the unknown word is handled separately); with an epoch, the epoch's own
         word sequences back off to those of its phase, and those to the whole Viking Age."""
-        lr = 1 - self.lam_edda - self.lam_unk
+        lr = 1 - self.lam_edda - self.lam_unk - self.lam_lit - self.lam_lex
         pc = self.pc.get(w, 0.0)
         if prev in self.hist:
             pk = max(self.big.get((prev, w), 0) - self.D, 0) / self.hist[prev] + self.gamma[prev] * pc
@@ -1018,6 +1036,8 @@ class Model:
         if self.lam_class and w in self.cl:
             pk = (1 - self.lam_class) * pk + self.lam_class * self.p_class(w, prev)
         p = lr * pk + self.lam_edda * self.pe.get(w, 0.0)
+        if self.lam_lit or self.lam_lex:
+            p += self.lam_lit * self.pl.get(w, 0.0) + self.lam_lex * self.px.get(w, 0.0)
         if doc and self.lam_doc:
             p = (1 - self.lam_doc) * p + self.lam_doc * lr * self.p_doc(doc).get(w, 0.0)
         if cache:  # (weight, {word: share}) – words read elsewhere in the same inscription
