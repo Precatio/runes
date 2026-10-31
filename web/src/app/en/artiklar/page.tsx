@@ -38,7 +38,7 @@ export default async function EnglishBlogPage() {
           can be tested. The figures come from Vitki&apos;s open analyses and are explained in the text.
         </p>
         <p className="mt-3 text-sm text-slate-500">
-          The findings that have passed every check are also written up in scholarly form, with version and citation, under{" "}
+          The tested findings are also written up in scholarly form, marked by how thoroughly they were tested, with version and citation, under{" "}
           <Link href={EN_REPORTS_PATH} prefetch={false} className="font-semibold text-[#b7410e] hover:underline">Research reports</Link>.
         </p>
         <EnglishArticleList posts={withEn} />

@@ -34,10 +34,12 @@ export default async function EnglishReportsPage() {
         </div>
         <h1 className="text-4xl md:text-5xl font-serif font-bold tracking-tight">Research findings from the runestones</h1>
         <p className="mt-4 text-lg text-slate-600 leading-relaxed">
-          These are the findings from Vitki&apos;s analyses that have passed every check: they hold in both halves of the
-          material, in a fixed series of sensitivity analyses and in an adjustment for all the associations we test. Each
-          report follows the same scholarly form – pre-registration, material, method, results, discussion and references –
-          and states its version and how to cite it.
+          These are the findings and methods from Vitki&apos;s analyses that have been tested by fixed rules, marked by how
+          thoroughly. A fully tested finding holds in both halves of the material, in a fixed series of sensitivity analyses
+          and in an adjustment for all the associations we test. A partially tested finding holds in both halves and after
+          the adjustment, but not in every sensitivity analysis; what is missing is stated first in the abstract. A methods
+          report tests a method in a blind test locked in advance. Each report follows the same scholarly form –
+          pre-registration, material, method, results, discussion and references – and states its version and how to cite it.
         </p>
         <p className="mt-3 text-sm text-slate-500">
           Popular-science texts on the same patterns are under <Link href={EN_ARTICLES_PATH} prefetch={false} className="font-semibold text-[#b7410e] hover:underline">Articles</Link>.

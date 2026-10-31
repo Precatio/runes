@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "rapporternas-nivaer",
+   "date": "2026-10-31",
+   "status": "nytt",
+   "title": "Forskningsrapporterna märks efter hur hårt de prövats",
+   "text": "Varje forskningsrapport bär nu ett märke som säger hur hårt fyndet har prövats: fullt prövat fynd, delvis prövat fynd, metodrapport eller datanotis. Ett delvis prövat fynd håller i båda halvorna av materialet och efter justeringen för alla samband, men inte i alla känslighetsanalyser, och vad som saknas står först i sammanfattningen. Listan över rapporterna grupperas efter märket, med de fullt prövade först."
+  },
+  {
    "id": "meny-pa-mobilen",
    "date": "2026-10-31",
    "status": "nytt",

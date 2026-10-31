@@ -33,7 +33,7 @@ export default async function BlogPage() {
           hur det kan prövas. Siffrorna kommer från Vitkis analyser och förklaras i texten.
         </p>
         <p className="mt-3 text-sm text-slate-500">
-          De fynd som har klarat alla kontroller finns också i vetenskaplig form, med version och citering, under{" "}
+          De prövade fynden finns också i vetenskaplig form, märkta efter hur hårt de prövats, med version och citering, under{" "}
           <Link href={REPORTS_PATH} prefetch={false} className="font-semibold text-[#b7410e] hover:underline">Forskningsrapporter</Link>.
         </p>
         <div className="mt-10"><ArticleSearch posts={posts} failed={failed} /></div>

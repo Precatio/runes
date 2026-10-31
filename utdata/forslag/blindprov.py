@@ -24,7 +24,7 @@ from src.nordic import wilson  # noqa: E402
 from src.research_gaps import certain_carvers, has_carver, is_runestone, province  # noqa: E402
 from src.signum import fold_signum  # noqa: E402
 
-FP = sys.argv[1] if len(sys.argv) > 1 else "5fdfd1e095bfb6fb"
+FP = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("--") else "5fdfd1e095bfb6fb"
 RDIR = os.path.join(ROOT, "data", "cache", "r", "corpus", FP)
 OPEN = json.load(open(os.path.join(RDIR, "attribution.json"), encoding="utf-8"))["open_set"]
 THRESHOLD = OPEN["threshold"]
@@ -156,7 +156,9 @@ out["external"] = {"n": len(ext), "in_universe": sum(e["in_universe"] for e in e
                    "agree_mojligt": sum(e["agrees"] and e["status"] == "möjligt förslag" for e in ext),
                    "n_mojligt": sum(e["status"] == "möjligt förslag" for e in ext), "rows": ext}
 
-json.dump(out, open(os.path.join(ROOT, "utdata", "forslag", "blindprov.json"), "w"), ensure_ascii=False, indent=1)
+# --out PATH writes elsewhere, so that a rerun on a later corpus version does not overwrite the locked result
+OUT_PATH = sys.argv[sys.argv.index("--out") + 1] if "--out" in sys.argv else os.path.join(ROOT, "utdata", "forslag", "blindprov.json")
+json.dump(out, open(OUT_PATH, "w"), ensure_ascii=False, indent=1)
 for k in ("nytt", "mojligt", "nytt_signed", "nytt_model_named", "nytt_someone_else", "nytt_no_model"):
     s = out[k]
     print(f"{s['label']:38} n {s['n']:4}  rätt {s['right']:4} ({(s['precision'] or 0):.2f}, {s['ci'][0] or 0:.2f}–{s['ci'][1] or 0:.2f})"

@@ -38,10 +38,12 @@ export default async function ReportsPage() {
         </div>
         <h1 className="text-4xl md:text-5xl font-serif font-bold tracking-tight">Forskningsresultat ur runstenarna</h1>
         <p className="mt-4 text-lg text-slate-600 leading-relaxed">
-          Här står de fynd ur Vitkis analyser som har klarat alla kontroller: de håller i båda halvorna av materialet, i en
-          fast serie känslighetsanalyser och i en justering för alla samband vi prövar. Varje rapport följer samma
-          vetenskapliga form – förregistrering, material, metod, resultat, diskussion och referenser – och anger sin version
-          och hur den citeras.
+          Här står de fynd och metoder ur Vitkis analyser som har prövats efter fasta regler, märkta efter hur hårt. Ett
+          fullt prövat fynd håller i båda halvorna av materialet, i en fast serie känslighetsanalyser och i en justering för
+          alla samband vi prövar. Ett delvis prövat fynd håller i båda halvorna och efter justeringen, men inte i alla
+          känslighetsanalyser; vad som saknas står först i sammanfattningen. En metodrapport prövar en metod i ett blindprov
+          som låstes i förväg. Varje rapport följer samma vetenskapliga form – förregistrering, material, metod, resultat,
+          diskussion och referenser – och anger sin version och hur den citeras.
         </p>
         <p className="mt-3 text-sm text-slate-500">
           Populärvetenskapliga texter om samma mönster finns under <Link href={ARTICLES_PATH} prefetch={false} className="font-semibold text-[#b7410e] hover:underline">Artiklar</Link>.

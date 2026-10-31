@@ -26,14 +26,39 @@ export const reportAlternates = (slug?: string) => ({
 
 export const REPORTS_TITLE = "Forskningsrapporter";
 export const REPORTS_TITLE_EN = "Research reports";
-export const REPORTS_DESCRIPTION = "Bekräftade fynd ur Vitkis analyser av Sveriges runstenar, i vetenskaplig form: förregistrering, "
-  + "material, metod, resultat, diskussion och referenser – med version och citering.";
-export const REPORTS_DESCRIPTION_EN = "Confirmed findings from Vitki's analyses of Sweden's runestones, in scholarly form: "
-  + "pre-registration, material, method, results, discussion and references – with version and citation.";
+export const REPORTS_DESCRIPTION = "Prövade fynd och metoder ur Vitkis analyser av Sveriges runstenar, i vetenskaplig form: förregistrering, "
+  + "material, metod, resultat, diskussion och referenser – märkta efter hur hårt de prövats, med version och citering.";
+export const REPORTS_DESCRIPTION_EN = "Tested findings and methods from Vitki's analyses of Sweden's runestones, in scholarly form: "
+  + "pre-registration, material, method, results, discussion and references – marked by how thoroughly they were tested, with version and citation.";
+
+/** The report's form and level (utdata/rapporter/MALL.md, version 2), written right after the author sentence in the
+ *  header line. A report without it was built on version 1 of the template and is a fully tested finding. */
+export interface ReportForm { key: "full" | "partial" | "method-full" | "method-partial" | "data"; sv: string; en: string; rank: number;
+  group: { sv: string; en: string } }
+const GROUPS = {
+  full: { sv: "Fullt prövade fynd", en: "Fully tested findings" },
+  partial: { sv: "Delvis prövade fynd", en: "Partially tested findings" },
+  method: { sv: "Metodrapporter", en: "Methods reports" },
+  data: { sv: "Datanotiser", en: "Data notes" },
+};
+export const REPORT_FORMS: ReportForm[] = [
+  { key: "full", sv: "Fullt prövat fynd", en: "Fully tested finding", rank: 0, group: GROUPS.full },
+  { key: "partial", sv: "Delvis prövat fynd", en: "Partially tested finding", rank: 1, group: GROUPS.partial },
+  { key: "method-full", sv: "Metodrapport, fullt prövad", en: "Methods report, fully tested", rank: 2, group: GROUPS.method },
+  { key: "method-partial", sv: "Metodrapport, delvis prövad", en: "Methods report, partially tested", rank: 2, group: GROUPS.method },
+  { key: "data", sv: "Datanotis", en: "Data note", rank: 3, group: GROUPS.data },
+];
+const FORM_RE = new RegExp(`(?:^|\\.\\s)(${REPORT_FORMS.flatMap(f => [f.sv, f.en]).map(x => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})\\.`);
+/** The form named in a header line (the first sentence after the author), or a fully tested finding. */
+export function parseForm(line: string): ReportForm {
+  const m = FORM_RE.exec(line.replace(/^\*|\*$/g, ""));
+  return REPORT_FORMS.find(f => m && (f.sv === m[1] || f.en === m[1])) ?? REPORT_FORMS[0];
+}
 
 export interface ReportHeader {
   author: string;
   affiliation: string;
+  form: ReportForm;
   version: string | null;
   date: string | null;
   appVersion: string | null;
@@ -69,6 +94,7 @@ export function parseHeader(line: string): ReportHeader | null {
   return {
     author: who[1].trim(),
     affiliation: who[2].trim(),
+    form: parseForm(s),
     version: v?.[1] ?? null,
     date: v?.[2] ?? null,
     appVersion: pick(/Vitki\s+(\d+\.\d+\.\d+)/, s),
@@ -216,7 +242,7 @@ export function reportJsonLd(post: BlogPost, lang: "sv" | "en" = "sv") {
       license: "https://creativecommons.org/licenses/by/4.0/",
       isAccessibleForFree: true,
       inLanguage: en ? "en" : "sv-SE",
-      genre: en ? "research report" : "forskningsrapport",
+      genre: (h?.form ?? REPORT_FORMS[0]).en,
       isPartOf: { "@type": "CreativeWorkSeries", name: en ? `${SITE_NAME} – ${REPORTS_TITLE_EN}` : `${SITE_NAME} – ${REPORTS_TITLE}`,
                   url: `${SITE_URL}${en ? EN_REPORTS_PATH : REPORTS_PATH}` },
       url,

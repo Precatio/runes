@@ -3,7 +3,7 @@ import BlogBody, { dateLabel, type BlogPost } from "@/components/BlogBody";
 import ReportCite from "@/components/ReportCite";
 import EnglishEdition from "@/components/EnglishEdition";
 import type { ImageSizes } from "@/lib/blogSeo";
-import { bibtex, EN_REPORTS_PATH, REPORTS_PATH, reportParts } from "@/lib/report";
+import { bibtex, EN_REPORTS_PATH, REPORT_FORMS, REPORTS_PATH, reportParts } from "@/lib/report";
 import { CONTACT_PATH, EN_CONTACT_PATH } from "@/lib/site";
 import { paperFace } from "@/lib/paperFont";
 
@@ -29,6 +29,7 @@ export default function ReportPaper({ post, lang, sizes, otherHref }: { post: Bl
   const title = (en && post.title_en) || post.title;
   const parts = reportParts((en ? post.body_en : post.body) ?? "");
   const h = parts.header;
+  const form = h?.form ?? REPORT_FORMS[0];
   const published = post.publishedAt ?? h?.date ?? null;
   const changed = post.updatedAt && published && post.updatedAt.slice(0, 10) !== published.slice(0, 10) ? post.updatedAt : null;
   const citation = h?.citation ?? `Kvant, V. ${title}.`;
@@ -48,6 +49,8 @@ export default function ReportPaper({ post, lang, sizes, otherHref }: { post: Bl
       <article lang={en ? "en" : "sv"} className="report-sheet max-w-5xl mx-auto mt-6 mb-16 bg-white border border-slate-900/10 shadow-sm px-5 sm:px-10 lg:px-16 py-10 sm:py-14" translate="no">
         <header className="text-center max-w-3xl mx-auto">
           <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#9a350b]">{t.kind} · Vitki</p>
+          {/* the form and level (utdata/rapporter/MALL.md, version 2): how thoroughly the finding or method was tested */}
+          <p className="mt-3"><span className={`inline-block rounded-full border px-3 py-0.5 text-[12px] font-semibold ${form.key === "full" || form.key === "method-full" ? "border-[#9a350b] text-[#9a350b]" : "border-slate-400 text-slate-600"}`}>{en ? form.en : form.sv}</span></p>
           <h1 className="report-title mt-5 text-[1.9rem] sm:text-[2.35rem] leading-[1.18] font-semibold text-slate-900">{title}</h1>
           <p className="mt-6 text-[1.05rem] text-slate-900">
             <Link href={en ? EN_CONTACT_PATH : CONTACT_PATH} prefetch={false} className="font-semibold hover:underline">{h?.author ?? post.author ?? "Viktor Kvant"}</Link>

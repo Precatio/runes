@@ -501,8 +501,8 @@ andel <- tapply(stenar$bon,
 
           <div className="mt-16 border-t border-slate-900/10 pt-8 flex flex-col md:flex-row md:items-baseline md:justify-between gap-3">
             <p className="text-slate-700 leading-relaxed max-w-3xl">
-              <span className="font-bold text-slate-900">Forskningsrapporter.</span> De fynd som har klarat alla kontroller skrivs
-              upp i vetenskaplig form – förregistrering, metod, resultat, diskussion och referenser – med version och citering.
+              <span className="font-bold text-slate-900">Forskningsrapporter.</span> De fynd och metoder som har prövats efter fasta
+              regler skrivs upp i vetenskaplig form, märkta efter hur hårt de prövats – förregistrering, metod, resultat, diskussion och referenser – med version och citering.
             </p>
             <Link href={REPORTS_PATH} prefetch={false} className="tap shrink-0 text-sm font-bold text-[#b7410e] hover:underline">Läs forskningsrapporterna →</Link>
           </div>
