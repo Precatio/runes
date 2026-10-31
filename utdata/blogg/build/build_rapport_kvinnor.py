@@ -122,7 +122,10 @@ summary_en = ("Pre-registered study. A woman stands among the raisers on 31 perc
               "against 17 percent in Götaland. The difference holds with time and carver constant, in both halves of the "
               "material and at every rung of the robustness ladder. It is not widows or lone women: the mother stood on her son's stone.")
 SLUG = "kvinnor-bland-resarna-svealand-gotaland"
-CITE_EN = f"Kvant, V. ({TODAY[:4]}). {title_en}. Vitki, version 1. https://vitkirunor.se/en/artiklar/{SLUG}"
+APP_VERSION = json.load(open(os.path.join(ROOT, "web", "package.json")))["version"]  # Vitki's own version (the program)
+assert APP_VERSION == "3.0.0"
+REPORT_VERSION = 1  # the report's own version; a correction gives 2 with a changelog
+CITE_EN = f"Kvant, V. ({TODAY[:4]}). {title_en}. Research report, report version {REPORT_VERSION}; analysis in Vitki {APP_VERSION}. https://vitkirunor.se/en/artiklar/{SLUG}"
 
 
 def chart(sv):
@@ -151,7 +154,7 @@ from src.messages import REGION  # noqa: E402
 assert sorted(k for k, v in REGION.items() if v == "Svealand") == sorted(["U", "Sö", "Vs", "Nä", "Gs", "D", "Vr"])
 assert sorted(k for k, v in REGION.items() if v == "Götaland") == sorted(["Ög", "Vg", "Sm", "Öl", "Bo", "Hr", "Ds"])
 
-body = f"""*Viktor Kvant, oberoende forskare. Version 1, {TODAY}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, kvinnor, resare, Svealand, Götaland, logistisk regression, förregistrering. Konkurrerande intressen: inga. Finansiering: ingen.*
+body = f"""*Viktor Kvant, oberoende forskare. Rapportversion {REPORT_VERSION}, {TODAY}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, kvinnor, resare, Svealand, Götaland, logistisk regression, förregistrering. Konkurrerande intressen: inga. Finansiering: ingen.*
 
 ## Sammanfattning
 
@@ -256,7 +259,7 @@ En kvinna står bland resarna på {pc(M['shares_region']['Svealand'])} procent a
 
 ## Data och kod
 
-Analysen är gjord i Vitki, ett öppet forskningsverktyg för runstenar ([vitkirunor.se](https://vitkirunor.se)). All kod, analysplanerna och resultatfilerna finns öppet på [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
+Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runstenar ([vitkirunor.se](https://vitkirunor.se)), med de ändringar som gjorts efter den versionen fram till den 31 oktober 2026 (commit `3766fd2` i GitHub-arkivet). Någon release med DOI finns ännu inte; när den görs hänvisar rapporten till den. All kod, analysplanerna och resultatfilerna finns öppet på [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
 
 - Analysplanerna: `analysplaner/2026-10-28-manniskorna.md` och `analysplaner/2026-10-29-kvinnorna-i-svealand.md`, med kontrollsummor i filerna `.sha256` bredvid.
 - Könsbestämningen: `src/people.py`; handkodningen: `data/people_check.json`.
@@ -273,7 +276,7 @@ Analysen är gjord i Vitki, ett öppet forskningsverktyg för runstenar ([vitkir
 - Hartig, F. 2022. *DHARMa: Residual diagnostics for hierarchical (multi-level/mixed) regression models*. R-paket.
 - Holm, S. 1979. A simple sequentially rejective multiple test procedure. *Scandinavian Journal of Statistics* 6 (2), s. 65–70.
 - Jesch, J. 1991. *Women in the Viking Age*. Woodbridge: Boydell.
-- Kvant, V. 2026. *Vitki: metodbeskrivning* (METHODS.md). https://github.com/Precatio/runes
+- Kvant, V. 2026. *Vitki {APP_VERSION}: metodbeskrivning* (METHODS.md). https://github.com/Precatio/runes
 - Samnordisk runtextdatabas (Rundata). Institutionen för nordiska språk, Uppsala universitet. Open Database License.
 - Sawyer, B. 2000. *The Viking-Age Rune-Stones: Custom and Commemoration in Early Medieval Scandinavia*. Oxford: Oxford University Press.
 - Wood, S. N. 2017. *Generalized Additive Models: An Introduction with R*. 2 uppl. Boca Raton: Chapman & Hall/CRC.
@@ -285,7 +288,7 @@ Analysen är gjord i Vitki, ett öppet forskningsverktyg för runstenar ([vitkir
 :::
 """
 
-body_en = f"""*Viktor Kvant, independent researcher. Version 1, {TODAY}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, women, sponsors, Svealand, Götaland, logistic regression, pre-registration. Competing interests: none. Funding: none.*
+body_en = f"""*Viktor Kvant, independent researcher. Report version {REPORT_VERSION}, {TODAY}. The analysis was made in Vitki {APP_VERSION}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, women, sponsors, Svealand, Götaland, logistic regression, pre-registration. Competing interests: none. Funding: none.*
 
 ## Abstract
 
@@ -390,7 +393,7 @@ A woman stands among the sponsors on {pc(M['shares_region']['Svealand'])} percen
 
 ## Data and code
 
-The analysis was made in Vitki, an open research tool for runestones ([vitkirunor.se](https://vitkirunor.se/en)). All code, the analysis plans and the result files are openly available on [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
+The analysis was made in Vitki {APP_VERSION}, an open research tool for runestones ([vitkirunor.se](https://vitkirunor.se/en)), with the changes made after that version up to 31 October 2026 (commit `3766fd2` in the GitHub repository). No release with a DOI exists yet; when one is made, the report will refer to it. All code, the analysis plans and the result files are openly available on [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
 
 - The analysis plans: `analysplaner/2026-10-28-manniskorna.md` and `analysplaner/2026-10-29-kvinnorna-i-svealand.md`, with checksums in the `.sha256` files beside them.
 - The sex determination: `src/people.py`; the hand coding: `data/people_check.json`.
@@ -407,7 +410,7 @@ The analysis was made in Vitki, an open research tool for runestones ([vitkiruno
 - Hartig, F. 2022. *DHARMa: Residual diagnostics for hierarchical (multi-level/mixed) regression models*. R package.
 - Holm, S. 1979. A simple sequentially rejective multiple test procedure. *Scandinavian Journal of Statistics* 6 (2), pp. 65–70.
 - Jesch, J. 1991. *Women in the Viking Age*. Woodbridge: Boydell.
-- Kvant, V. 2026. *Vitki: method description* (METHODS.md). https://github.com/Precatio/runes
+- Kvant, V. 2026. *Vitki {APP_VERSION}: method description* (METHODS.md). https://github.com/Precatio/runes
 - Scandinavian Runic-text Database (Rundata). Department of Scandinavian Languages, Uppsala University. Open Database License.
 - Sawyer, B. 2000. *The Viking-Age Rune-Stones: Custom and Commemoration in Early Medieval Scandinavia*. Oxford: Oxford University Press.
 - Wood, S. N. 2017. *Generalized Additive Models: An Introduction with R*. 2nd ed. Boca Raton: Chapman & Hall/CRC.

@@ -48,5 +48,8 @@ Ingen numrering av rapporterna i titeln; typen Rapport och versionsraden räcker
 11. `:::box Det viktigaste i korthet` (sajtens korthetsregel) – tolkningen, inte sifferrepris.
 
 ## Versioner
+Två versioner hålls isär: **rapportversionen** (1, 2 … efter rättelser) och **Vitkis version** (programmet, ur
+web/package.json, i dag 3.0.0), plus commit för kodläget så länge ingen release med DOI finns. Skriv aldrig bara
+”version 1”.
 v1 med datum i rubrikraden under titeln. En rättelse ger v2 med en ändringslogg sist i rapporten (vad, varför, när);
 aldrig tyst patch. DOI via Zenodo när repot släpps (RELEASING.md): rapporten hänvisar då till den versionen.
