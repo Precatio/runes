@@ -7,6 +7,8 @@ import BlogBody, { dateLabel, postDate, type BlogPost } from "@/components/BlogB
 import { useSettings } from "@/components/SettingsContext";
 import { useAuth } from "@/components/AuthContext";
 import { metaDescription, postUrl, seoChecks } from "@/lib/blogSeo";
+import ReportPaper from "@/components/ReportPaper";
+import { isReport, REPORT_LABEL, reportUrl } from "@/lib/report";
 import { API_URL } from "@/lib/api";
 
 const field = "liquid-glass-input-wrapper rounded-xl px-3 py-2 text-sm outline-none w-full";
@@ -82,6 +84,43 @@ function insertPicture(text: string, signum: string, block: string) {
 const empty = (author: string): Draft => ({ slug: "", title: "", summary: "", body: "", title_en: "", summary_en: "", body_en: "",
                                            month: "", author, topic: "", featured: false, labels: [] });
 
+// A new research report: the locked form's headings (utdata/rapporter/MALL.md), with the header line the report page
+// reads its version, citation and keywords from (lib/report.ts). The builders in utdata/blogg/build write the real ones.
+const REPORT_TEMPLATE = (date: string) => `*Viktor Kvant, oberoende forskare. Rapportversion 1, ${date}. Analysen är gjord i Vitki 3.0.0. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: Kvant, V. (${date.slice(0, 4)}). TITLE. Research report, report version 1; analysis in Vitki 3.0.0. https://vitkirunor.se/en/forskningsrapporter/ADRESS. Nyckelord: runstenar, vikingatid. Konkurrerande intressen: inga. Finansiering: ingen.*
+
+## Sammanfattning
+
+**Bakgrund och syfte.** …
+**Material.** …
+**Metod.** …
+**Resultat.** …
+**Slutsats.** …
+
+## 1. Inledning
+
+## 2. Förregistrering: hypotes och plan
+
+## 3. Material
+
+## 4. Metod
+
+**4.4 Avvikelser från planen.** …
+
+## 5. Resultat
+
+## 6. Diskussion
+
+## 7. Slutsats
+
+## Data och kod
+
+## Referenser
+
+:::box Det viktigaste i korthet
+- …
+:::`;
+const emptyReport = (author: string): Draft => ({ ...empty(author), labels: [REPORT_LABEL], body: REPORT_TEMPLATE(new Date().toISOString().slice(0, 10)) });
+
 // The articles (api/routers/blog.py): written here and published at once or at a chosen time. "Utkast från det som är nytt" fills
 // the form with the patterns and findings that are new or changed since the last published post, to edit from.
 export default function BlogAdmin({ call }: { call: (path: string, init?: RequestInit) => Promise<any> }) { // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -93,6 +132,10 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
   }, [authHeaders]);
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [draft, setDraft] = useState<Draft>(() => empty(userName));
+  // A research report (label "Rapport") is edited in its own mode: its own address, no "article of the week", and the
+  // preview shows it as the paper it becomes (components/ReportPaper.tsx)
+  const report = isReport(draft);
+  const where = report ? "/forskningsrapporter/" : "/artiklar/";
   const [slugTouched, setSlugTouched] = useState(false);
   const [showEn, setShowEn] = useState(false);
   const [preview, setPreview] = useState(false);
@@ -231,8 +274,8 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
       const d = await call("/api/admin/blog/posts", { method: "POST", body: JSON.stringify({ ...draft, published: mode !== "draft", publish_at }) });
       setDraft(x => ({ ...x, id: d.post.id }));
       if (mode !== "schedule") setPublishAt("");
-      setNote(mode === "draft" ? "Sparat som utkast." : mode === "now" ? `Publicerad: /artiklar/${d.post.slug}`
-        : `Schemalagd: går live ${dateLabel(d.post.publishedAt, "sv", true)} på /artiklar/${d.post.slug}`);
+      setNote(mode === "draft" ? "Sparat som utkast." : mode === "now" ? `Publicerad: ${where}${d.post.slug}`
+        : `Schemalagd: går live ${dateLabel(d.post.publishedAt, "sv", true)} på ${where}${d.post.slug}`);
       load();
       refreshBlog();
       if (mode !== "draft" || draft.id) siteSoon();
@@ -294,6 +337,7 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
     }
   };
   return (
+    <>
     <section className="liquid-glass-island rounded-[24px] p-4 sm:p-6 space-y-4">
       <div className="flex flex-wrap items-center gap-3 justify-between">
         <div>
@@ -310,8 +354,10 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
           <button onClick={() => fromFindings()} disabled={busy === "draft"} className="px-4 py-2 rounded-xl border border-[#b7410e] text-[#b7410e] bg-white text-sm font-bold disabled:opacity-40">
             {busy === "draft" ? "Skapar …" : "Utkast från det som är nytt"}
           </button>
-          <button onClick={() => { setDraft(empty(userName)); setPublishAt(""); setSlugTouched(false); setSources([]); setNote(null); }}
+          <button onClick={() => { setDraft(empty(userName)); setPublishAt(""); setSlugTouched(false); setSources([]); setNote(null); setPreview(false); }}
             className="px-4 py-2 rounded-xl border border-slate-300 bg-white text-sm font-bold">Ny artikel</button>
+          <button onClick={() => { setDraft(emptyReport(userName)); setPublishAt(""); setSlugTouched(false); setSources([]); setNote(null); setPreview(false); }}
+            className="px-4 py-2 rounded-xl border border-slate-700 bg-white text-sm font-bold text-slate-800">Ny forskningsrapport</button>
         </div>
       </div>
       {error && <p className="text-sm font-semibold text-red-700">{error}</p>}
@@ -346,6 +392,17 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
         </div>
       )}
       {note && <p className="text-sm font-semibold text-emerald-700">{note}</p>}
+      {report && (
+        <div className="rounded-xl border-l-4 border-slate-800 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+          <p className="font-bold text-slate-900" style={{ fontFamily: "var(--font-serif)" }}>Du redigerar en forskningsrapport</p>
+          <p className="mt-1 max-w-3xl">
+            Den visas som ett vetenskapligt paper under <Link href="/forskningsrapporter" className="text-[#b7410e] underline">/forskningsrapporter</Link>, inte bland artiklarna.
+            Formen är låst (utdata/rapporter/MALL.md): huvudraden först i texten (författare, rapportversion, Vitkis version, licens,
+            citering, nyckelord), sedan Sammanfattning och de numrerade avsnitten. Rapporterna byggs helst av sina byggare i
+            utdata/blogg/build, som kontrollerar varje siffra; ändringar här skrivs över nästa gång byggaren körs.
+          </p>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
         <label className="text-xs font-bold text-slate-600 sm:col-span-1">Publiceringstid (valfri)
@@ -355,12 +412,12 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
         <label className="text-xs font-bold text-slate-600 sm:col-span-2">Författare
           <input value={draft.author ?? ""} onChange={e => set("author", e.target.value)} placeholder="Namn (från Inställningar)" className={`${field} mt-1`} />
         </label>
-        <label className="text-xs font-bold text-slate-600 sm:col-span-1 flex items-start gap-2 pt-5">
+        {!report && <label className="text-xs font-bold text-slate-600 sm:col-span-1 flex items-start gap-2 pt-5">
           <input type="checkbox" checked={!!draft.featured} onChange={e => setDraft(d => ({ ...d, featured: e.target.checked }))} className="mt-0.5" />
           <span>Veckans artikel
             <span className="block font-normal text-slate-500">Visas först och stort på startsidan och först bland artiklarna, oavsett datum. Bara en åt gången; kan också sättas direkt i listan nedan.</span>
           </span>
-        </label>
+        </label>}
         <div className="sm:col-span-4 text-xs font-bold text-slate-600">Etiketter
           <span className="block font-normal text-slate-500">En typ (vad slags text) och ett eller flera ämnen, högst {MAX_LABELS} tillsammans. Läsaren filtrerar artikellistan på dem.</span>
           {[["Typ", TYPES], ["Ämne", SUBJECTS]].map(([name, pairs]) => (
@@ -389,13 +446,17 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
         <input value={draft.title} onChange={e => set("title", e.target.value)} placeholder="Rubrik" maxLength={160} className={`${field} sm:col-span-4 font-semibold`} />
         <label className="text-xs font-bold text-slate-600 sm:col-span-4">Adress
           <div className="flex items-center gap-1 mt-1">
-            <span className="text-sm text-slate-500">/artiklar/</span>
+            <span className="text-sm text-slate-500">{where}</span>
             <input value={draft.slug} onChange={e => { setSlugTouched(true); set("slug", slugify(e.target.value)); }} className={field} />
           </div>
         </label>
         <textarea value={draft.summary} onChange={e => set("summary", e.target.value)} placeholder="Ingress (en eller två meningar)" rows={2} maxLength={600} className={`${field} sm:col-span-4`} />
         {preview ? (
-          <div className="sm:col-span-4 rounded-xl border border-slate-200 bg-white p-5"><BlogBody text={draft.body ?? ""} /></div>
+          report
+            ? <div className="sm:col-span-4 rounded-xl border border-slate-200 bg-[#f6f4f1] max-h-[80vh] overflow-y-auto">
+                <ReportPaper post={{ ...draft, id: draft.id ?? "utkast", published: false, publishedAt: null, updatedAt: null }} lang="sv" />
+              </div>
+            : <div className="sm:col-span-4 rounded-xl border border-slate-200 bg-white p-5"><BlogBody text={draft.body ?? ""} /></div>
         ) : (
           <textarea value={draft.body} onChange={e => set("body", e.target.value)} rows={18} maxLength={40000}
             placeholder={"Text. ## Rubrik, - punktlista, **fet**, *kursiv*, [länk](/karta). Tom rad mellan stycken. Se Formatering nedan."}
@@ -417,12 +478,12 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
         // structured data and share image by itself when it is published
         const checks = seoChecks({ ...draft, body: draft.body ?? "" });
         const passed = checks.filter(c => c.ok).length;
-        const title = `${draft.title || "Rubrik"} | Vitki`;
+        const title = `${draft.title || "Rubrik"}${report ? " – forskningsrapport" : ""} | Vitki`;
         return (
           <details className="rounded-xl border border-slate-200 bg-white/60 p-3">
             <summary className="cursor-pointer text-sm font-bold text-slate-700">SEO-kontroll ({passed} av {checks.length} uppfyllda)</summary>
             <div className="mt-3 rounded-lg border border-slate-200 bg-white p-3 max-w-2xl">
-              <p className="text-[11px] text-slate-500 truncate" translate="no">{postUrl(draft.slug || "adress")}</p>
+              <p className="text-[11px] text-slate-500 truncate" translate="no">{(report ? reportUrl : postUrl)(draft.slug || "adress")}</p>
               <p className="text-[17px] text-[#1a0dab] leading-snug truncate" translate="no">{title.length > 62 ? `${title.slice(0, 60)}…` : title}</p>
               <p className="text-xs text-slate-600 leading-snug" translate="no">{metaDescription(draft.summary || draft.body || "") || "Ingressen blir beskrivningen."}</p>
             </div>
@@ -435,8 +496,9 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
               ))}
             </ul>
             <p className="mt-2 text-[11px] text-slate-500">
-              När artikeln publiceras får sidan av sig själv titel, beskrivning, kanonisk adress, Open Graph och Twitter-kort,
-              strukturerade data (BlogPosting), en egen delningsbild med första fotot, plats i sitemap och RSS-flödet.
+              {report
+                ? "När rapporten publiceras får sidan av sig själv titel, beskrivning, kanonisk adress, hreflang till den engelska versionen, Google Scholars citation-taggar (titel, författare, datum, nyckelord, referenser), strukturerade data (ScholarlyArticle och Report), en delningsbild och plats i sitemap med hög prioritet."
+                : "När artikeln publiceras får sidan av sig själv titel, beskrivning, kanonisk adress, Open Graph och Twitter-kort, strukturerade data (BlogPosting), en egen delningsbild med första fotot, plats i sitemap och RSS-flödet."}
             </p>
           </details>
         );
@@ -643,9 +705,9 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
         </div>
       </div>
 
-      {posts.length > 0 && (
+      {posts.some(p => !isReport(p)) && (
         <ul className="divide-y divide-slate-900/5 pt-2">
-          {posts.map(p => (
+          {posts.filter(p => !isReport(p)).map(p => (
             <li key={p.id} className="py-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
               <span className="text-[11px] text-slate-500 w-36 shrink-0">
                 {p.published && isFuture(p.publishedAt) ? dateLabel(p.publishedAt, "sv", true) : p.published ? postDate(p) : dateLabel(p.updatedAt)}
@@ -672,5 +734,44 @@ export default function BlogAdmin({ call }: { call: (path: string, init?: Reques
         </ul>
       )}
     </section>
+
+    <section className="liquid-glass-island rounded-[24px] p-4 sm:p-6 space-y-3 mt-6">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h3 className="text-lg font-bold text-slate-900" style={{ fontFamily: "var(--font-serif)" }}>Forskningsrapporter</h3>
+          <p className="text-sm text-slate-600 max-w-3xl">
+            Bekräftade fynd i den låsta vetenskapliga formen (utdata/rapporter/MALL.md), på <Link href="/forskningsrapporter" className="text-[#b7410e] underline">/forskningsrapporter</Link> som
+            papers med sammanfattning, numrerade avsnitt, referenser och citering. De byggs av sina byggare i utdata/blogg/build och
+            redigeras här bara undantagsvis; publicera och avpublicera som en artikel.
+          </p>
+        </div>
+        <button onClick={() => { setDraft(emptyReport(userName)); setPublishAt(""); setSlugTouched(false); setSources([]); setNote(null); setPreview(false); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+          className="px-4 py-2 rounded-xl border border-slate-700 bg-white text-sm font-bold text-slate-800">Ny forskningsrapport</button>
+      </div>
+      {posts.some(isReport)
+        ? <ul className="divide-y divide-slate-900/5">
+            {posts.filter(isReport).map(p => (
+              <li key={p.id} className="py-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+              <span className="text-[11px] text-slate-500 w-36 shrink-0">
+                {p.published && isFuture(p.publishedAt) ? dateLabel(p.publishedAt, "sv", true) : p.published ? postDate(p) : dateLabel(p.updatedAt)}
+              </span>
+              {p.published && isFuture(p.publishedAt)
+                ? <span className="text-[10px] font-bold rounded-md px-1.5 border border-amber-300 bg-amber-50 text-amber-800">schemalagd</span>
+                : <span className={`text-[10px] font-bold rounded-md px-1.5 border ${p.published ? "border-emerald-300 bg-emerald-50 text-emerald-800" : "border-slate-300 bg-slate-50 text-slate-600"}`}>
+                    {p.published ? "publicerad" : "utkast"}
+                  </span>}
+
+              <span className="text-[10px] font-bold uppercase tracking-wider rounded-md px-1.5 border border-slate-700 text-slate-800">rapport</span>
+              <span className="min-w-0 flex-1 font-semibold text-slate-900 truncate" translate="no" style={{ fontFamily: "var(--font-serif)" }}>{p.title}</span>
+
+              <button onClick={() => edit(p)} className="text-xs font-semibold text-[#b7410e] hover:underline">Redigera</button>
+              {p.published && <button onClick={() => unpublish(p)} className="text-xs font-semibold text-slate-500 hover:text-slate-900">Avpublicera</button>}
+              <button onClick={() => remove(p)} className="text-xs font-semibold text-slate-500 hover:text-red-700">Ta bort</button>
+            </li>
+            ))}
+          </ul>
+        : <p className="text-sm text-slate-500">Inga forskningsrapporter än.</p>}
+    </section>
+    </>
   );
 }
