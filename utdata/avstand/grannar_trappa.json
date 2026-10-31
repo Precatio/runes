@@ -1,0 +1,79 @@
+{
+ "plan": "analysplaner/2026-10-31-familjens-plats-trappan.md",
+ "test": "B: samma personnamn, nära par mot jämförelsepar",
+ "rungs": {
+  "main": {
+   "ratio": 7.886413440467495,
+   "near_pairs": 74,
+   "far_pairs": 4983,
+   "share_near": 0.17567567567567569,
+   "share_far": 0.022275737507525588,
+   "p": 0.0001,
+   "n_stones": 626,
+   "holds": true
+  },
+  "half_A": {
+   "ratio": 9.337370242214531,
+   "near_pairs": 34,
+   "far_pairs": 1542,
+   "share_near": 0.20588235294117646,
+   "share_far": 0.02204928664072633,
+   "p": 0.0024,
+   "n_stones": 312,
+   "holds": true
+  },
+  "half_B": {
+   "ratio": 5.83235294117647,
+   "near_pairs": 40,
+   "far_pairs": 1322,
+   "share_near": 0.15,
+   "share_far": 0.025718608169440244,
+   "p": 0.0045,
+   "n_stones": 314,
+   "holds": true
+  },
+  "only_U": {
+   "ratio": 8.188590287600189,
+   "near_pairs": 63,
+   "far_pairs": 4342,
+   "share_near": 0.19047619047619047,
+   "share_far": 0.023261169967756793,
+   "p": 0.0002,
+   "n_stones": 458,
+   "share_of_pairs": 0.8513513513513513,
+   "holds": true
+  },
+  "only_Sö": {
+   "ratio": 5.827272727272727,
+   "near_pairs": 11,
+   "far_pairs": 641,
+   "share_near": 0.09090909090909091,
+   "share_far": 0.015600624024960999,
+   "p": 0.09426024241210057,
+   "n_stones": 168,
+   "share_of_pairs": 0.14864864864864866,
+   "holds": true
+  },
+  "no_same_carver": {
+   "ratio": 7.109922346850733,
+   "near_pairs": 61,
+   "far_pairs": 4578,
+   "share_near": 0.14754098360655737,
+   "share_far": 0.020751419833988642,
+   "p": 0.0003,
+   "n_stones": 626,
+   "holds": true
+  },
+  "moved_runor": {
+   "ratio": 9.573770491803279,
+   "near_pairs": 44,
+   "far_pairs": 3212,
+   "share_near": 0.18181818181818182,
+   "share_far": 0.018991282689912826,
+   "p": 0.0003,
+   "n_stones": 493,
+   "holds": true
+  }
+ },
+ "n_moved_runor_dropped": 133
+}
