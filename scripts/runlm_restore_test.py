@@ -141,7 +141,9 @@ for k in folds:
     m = Model([r for r in V if r["signum"] not in tset], edda_tokens=ET, aligned=True, lam_name=args.lam_name, lam_class=args.lam_class, tolerance=args.tolerance,
               lam_doc=args.lam_doc, area_lm=args.area_lm,
               **(dict(contexts=True, alpha=100.0, kappa_e=50.0, lm_beta=200.0) if args.contexts else {}))
-    for r, (groups, gw) in test:
+    for i_, (r, (groups, gw)) in enumerate(test, 1):
+        if i_ == 1 or i_ % 10 == 0 or i_ == len(test):  # progress: the fold runs for hours and wrote nothing until done (tm21)
+            print(f"veck {k}: sten {i_} av {len(test)} ({r['signum']}), {time.time() - t0:.0f} s", file=sys.stderr, flush=True)
         for kind in ("inne i ord", "helt ord"):
             if kind == "inne i ord":
                 words = [w for w in gw if w[1] - w[0] >= 3 and not (args.hard and key(normtok(w[3])) in FORMULA)]
