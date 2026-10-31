@@ -12,6 +12,7 @@ TYPES = [
     ("Så gör du", "How to"),              # steg för steg i Vitki, med skärmbilder
     ("Pågående arbete", "Work in progress"),
     ("Personligt", "Personal"),
+    ("Rapport", "Report"),                # forskningsrapport i fast form (utdata/rapporter/MALL.md): bekräftade fynd, citerbara
 ]
 SUBJECTS = [
     ("Ristare", "Carvers"),

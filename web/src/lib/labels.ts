@@ -7,6 +7,7 @@ export const TYPES: [string, string][] = [
   ["Så gör du", "How to"],
   ["Pågående arbete", "Work in progress"],
   ["Personligt", "Personal"],
+  ["Rapport", "Report"],
 ];
 export const SUBJECTS: [string, string][] = [
   ["Ristare", "Carvers"],

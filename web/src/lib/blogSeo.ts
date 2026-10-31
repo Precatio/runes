@@ -215,10 +215,14 @@ export function articleJsonLd(post: BlogPost, lang: "sv" | "en" = "sv") {
   const url = en ? enPostUrl(post.slug) : postUrl(post.slug);
   const body = (en ? post.body_en : post.body) ?? "";
   const published = post.publishedAt ?? undefined;
+  // A research report (label "Rapport": a confirmed finding in the fixed form of utdata/rapporter/MALL.md) is marked
+  // as a ScholarlyArticle so that scholarly search engines and AI overviews find it as research, not as a blog post
+  const report = (post.labels ?? []).includes("Rapport");
   return [
     {
       "@context": "https://schema.org",
-      "@type": "BlogPosting",
+      "@type": report ? "ScholarlyArticle" : "BlogPosting",
+      ...(report ? { genre: en ? "research report" : "forskningsrapport", license: "https://creativecommons.org/licenses/by/4.0/" } : {}),
       headline: ((en && post.title_en) || post.title).slice(0, 110),
       description: plainText((en ? post.summary_en : post.summary) || metaDescription(body)).slice(0, 500),
       ...(keyPoints(body).length ? { abstract: keyPoints(body).join(" ") } : {}),
@@ -233,7 +237,7 @@ export function articleJsonLd(post: BlogPost, lang: "sv" | "en" = "sv") {
       publisher: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: SITE_NAME, url: SITE_URL, logo: { "@type": "ImageObject", url: `${SITE_URL}/vitki_logo.png` } },
       image: [`${SITE_URL}${sharePath(post.slug)}`, ...pictures(body).map(p => absolute(p.src))].slice(0, 5),
       inLanguage: en ? "en" : "sv-SE",
-      articleSection: en ? "Articles" : "Artiklar",
+      articleSection: report ? (en ? "Research reports" : "Forskningsrapporter") : en ? "Articles" : "Artiklar",
       keywords: keywords(post).join(", "),
       wordCount: wordCount(body),
       isAccessibleForFree: true,
