@@ -23,8 +23,8 @@ Plan: `analysplaner/2026-10-23-strand-och-gravfalt.md` (SHA-256 4ddb7d6c…), ti
 - Östergötland: 89 stenar mot 890 punkter: median 445 mot 658 m, inom 500 m 53 % mot 39 %, AUC 0,587, p = 0,003, q = 0,005.
 - Småland: 69 stenar mot 690 punkter: median 474 mot 715 m, inom 500 m 52 % mot 36 %, AUC 0,594, p = 0,005, q = 0,006.
 - Västergötland: 64 stenar mot 640 punkter: median 602 mot 935 m, inom 500 m 42 % mot 29 %, AUC 0,614, p = 0,001, q = 0,003.
-- Öland: 20 stenar mot 200 punkter: median 782 mot 1 111 m, inom 500 m 40 % mot 26 %, AUC 0,607, p = 0,057, q = 0,057.
-- Halva A (190 socknar): 543 stenar mot 5 585 punkter: median 305 mot 577 m, inom 500 m 64 % mot 44 %, AUC 0,639, p = 4,4·10⁻²⁷. Halva B (187 socknar): 556 stenar mot 5 405 punkter: median 305 mot 530 m, inom 500 m 64 % mot 47 %, AUC 0,619, p = 1,0·10⁻²⁰.
+- Öland: 20 stenar mot 200 punkter: median 782 mot 1 111 m, inom 500 m 40 % mot 27 %, AUC 0,607, p = 0,057, q = 0,057.
+- Halva A (190 socknar): 543 stenar mot 5 585 punkter: median 305 mot 577 m, inom 500 m 65 % mot 44 %, AUC 0,639, p = 4,4·10⁻²⁷. Halva B (187 socknar): 556 stenar mot 5 405 punkter: median 305 mot 530 m, inom 500 m 64 % mot 47 %, AUC 0,619, p = 1,0·10⁻²⁰.
 - Platser i stället för stenar (R4, 935 platser): 935 stenar mot 10 990 punkter: median 316 mot 555 m, inom 500 m 63 % mot 46 %, AUC 0,626, p = 1,0·10⁻³⁷.
 - Mönstret syns i fem landskap (q < 0,05): Uppland, Södermanland, Östergötland, Småland, Västergötland. Öland, med 20 stenar, går åt samma håll men räcker inte.
 
@@ -37,13 +37,13 @@ Plan: `analysplaner/2026-10-23-strand-och-gravfalt.md` (SHA-256 4ddb7d6c…), ti
 - Per landskap (AUC då / nu): Uppland 0,633 / 0,622; Södermanland 0,670 / 0,660; Östergötland 0,587 / 0,572; Småland 0,594 / 0,601; Västergötland 0,614 / 0,622; Öland 0,607 / 0,580. Dåtidens vatten passar bättre i Uppland, Södermanland, Östergötland och på Öland; i Småland och Västergötland passar dagens vatten lika bra eller något bättre.
 
 ## H3: gravfälten
-- **Alla:** 1 099 stenar mot 10 990 punkter: median 304 mot 1 045 m, inom 500 m 66 % mot 24 %, AUC 0,784, p = 8,4·10⁻²¹³; andelen inom 500 m p = 1,3·10⁻²⁰³. I klartext: två av tre stenar står inom 500 m från ett registrerat gravfält, mot en av fyra punkter.
+- **Alla:** 1 099 stenar mot 10 990 punkter: median 304 mot 1 045 m, inom 500 m 67 % mot 24 %, AUC 0,784, p = 8,4·10⁻²¹³; andelen inom 500 m p = 1,3·10⁻²⁰³. I klartext: två av tre stenar står inom 500 m från ett registrerat gravfält, mot en av fyra punkter.
 - Uppland: 623 stenar mot 6 230 punkter: median 274 mot 966 m, inom 500 m 73 % mot 26 %, AUC 0,816, p = 4,3·10⁻¹⁵⁰, q = 2,6·10⁻¹⁴⁹.
 - Södermanland: 234 stenar mot 2 340 punkter: median 254 mot 1 003 m, inom 500 m 75 % mot 25 %, AUC 0,820, p = 3,7·10⁻⁵⁹, q = 1,1·10⁻⁵⁸.
 - Östergötland: 89 stenar mot 890 punkter: median 479 mot 902 m, inom 500 m 53 % mot 27 %, AUC 0,675, p = 2,5·10⁻⁸, q = 3,7·10⁻⁸.
 - Småland: 69 stenar mot 690 punkter: median 855 mot 1 674 m, inom 500 m 35 % mot 9 %, AUC 0,713, p = 2,7·10⁻⁹, q = 5,5·10⁻⁹.
 - Västergötland: 64 stenar mot 640 punkter: median 839 mot 1 693 m, inom 500 m 34 % mot 6 %, AUC 0,698, p = 8,9·10⁻⁸, q = 1,1·10⁻⁷.
-- Öland: 20 stenar mot 200 punkter: median 1 058 mot 1 050 m, inom 500 m 25 % mot 20 %, AUC 0,519, p = 0,39, q = 0,39.
+- Öland: 20 stenar mot 200 punkter: median 1 058 mot 1 050 m, inom 500 m 25 % mot 21 %, AUC 0,519, p = 0,39, q = 0,39.
 - Halva A: 543 stenar mot 5 585 punkter: median 301 mot 1 113 m, inom 500 m 64 % mot 22 %, AUC 0,790, p = 1,5·10⁻¹¹⁰. Halva B: 556 stenar mot 5 405 punkter: median 310 mot 983 m, inom 500 m 69 % mot 25 %, AUC 0,778, p = 4,5·10⁻¹⁰⁴.
 - Platser (R4, 935): 935 stenar mot 10 990 punkter: median 329 mot 1 045 m, inom 500 m 64 % mot 24 %, AUC 0,771, p = 1,9·10⁻¹⁶⁷.
 
@@ -69,7 +69,7 @@ Plan: `analysplaner/2026-10-23-strand-och-gravfalt.md` (SHA-256 4ddb7d6c…), ti
 
 ## Trappan (tilläggsplanen 2026-11-01)
 **Vattnet år 1050: alla steg håller.**
-- Halva A: 543 stenar mot 5 585 punkter: median 305 mot 577 m, inom 500 m 64 % mot 44 %, AUC 0,639, p = 4,4·10⁻²⁷.
+- Halva A: 543 stenar mot 5 585 punkter: median 305 mot 577 m, inom 500 m 65 % mot 44 %, AUC 0,639, p = 4,4·10⁻²⁷.
 - Halva B: 556 stenar mot 5 405 punkter: median 305 mot 530 m, inom 500 m 64 % mot 47 %, AUC 0,619, p = 1,0·10⁻²⁰.
 - Socknen som enhet, 373 socknar: 373 stenar mot 10 990 punkter: median 336 mot 555 m, inom 500 m 62 % mot 46 %, AUC 0,607, p = 1,2·10⁻¹².
 - En sten per ristare, 332 bort: 767 stenar mot 7 879 punkter: median 313 mot 570 m, inom 500 m 62 % mot 45 %, AUC 0,621, p = 8,4·10⁻²⁹.

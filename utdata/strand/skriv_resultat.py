@@ -32,7 +32,7 @@ def p(x):
 
 
 def pc(x):
-    return f"{round(100 * x)} %"
+    return f"{int(100 * x + 0.5 + 1e-9)} %"  # halvt uppåt, som i rapportbyggarna
 
 
 def row(r, unit="vattnet"):
