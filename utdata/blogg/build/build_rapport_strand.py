@@ -155,10 +155,10 @@ def figure(name, lang, caption):
     return f"![{caption.split('.')[0]}]({url})\n{caption}"
 
 
-FIG1_SV = figure("karta_oversikt", "sv", "Figur 1. Mälardalen år 1050 och i dag enligt SGU:s modell. Ljusblått är vatten då men land i dag. Rutan visar området i figur 2.")
-FIG1_EN = figure("karta_oversikt", "en", "Figure 1. The Lake Mälaren region in AD 1050 and today in SGU's model. Light blue is water then but land today. The box shows the area of figure 2.")
-FIG2_SV = figure("karta_detalj", "sv", f"Figur 2. Vad som mättes, kring Vassunda, Håtuna och Haga i Uppland: avståndet från varje sten (rött) och slumppunkt (grått) till närmaste vatten år 1050. Median här: stenarna {IL['median_stones_m']} meter, punkterna {IL['median_random_m']}.")
-FIG2_EN = figure("karta_detalj", "en", f"Figure 2. What was measured, around Vassunda, Håtuna and Haga in Uppland: the distance from each stone (red) and random point (grey) to the nearest water of AD 1050. Median here: stones {IL['median_stones_m']} metres, points {IL['median_random_m']}.")
+FIG1_SV = figure("karta_oversikt", "sv", "Figur 1. Mälardalen år 1050 och i dag. Ljusblått är vatten då men land i dag. Rutan visar området i figur 2. Karta: Vitki, efter SGU:s modell (CC BY 4.0) och Rundata.")
+FIG1_EN = figure("karta_oversikt", "en", "Figure 1. The Lake Mälaren region in AD 1050 and today. Light blue is water then but land today. The box shows the area of figure 2. Map: Vitki, after SGU's model (CC BY 4.0) and Rundata.")
+FIG2_SV = figure("karta_detalj", "sv", f"Figur 2. Vad som mättes, kring Vassunda, Håtuna och Haga i Uppland: avståndet från varje sten (rött) och slumppunkt (grått) till närmaste vatten år 1050. Median här: stenarna {IL['median_stones_m']} meter, punkterna {IL['median_random_m']}. Karta: Vitki, efter SGU:s modell och Rundata.")
+FIG2_EN = figure("karta_detalj", "en", f"Figure 2. What was measured, around Vassunda, Håtuna and Haga in Uppland: the distance from each stone (red) and random point (grey) to the nearest water of AD 1050. Median here: stones {IL['median_stones_m']} metres, points {IL['median_random_m']}. Map: Vitki, after SGU's model and Rundata.")
 
 
 SLUG = "runstenarna-vid-sin-tids-vatten"
@@ -193,7 +193,7 @@ Gunnar Ekholm (1950) frågade var runstenarna restes. Torun Zachrisson (1998) ha
 
 Att mäta närheten till vatten är svårt. Landet har höjt sig sedan vikingatiden, i Mälardalen med omkring fem meter, så en sten som stod vid en vik kan i dag stå på torr mark, och en sten vid dagens strand kan ha stått långt från vattnet. SGU:s strandförskjutningsmodell (SGU 2022, efter Påsse & Daniels 2015) ger en öppen modell över hela landet för var vattnet låg vid olika tider.
 
-Vi känner inte till någon studie som har mätt avståndet till vattnet på stenarnas egen tid för hela det svenska materialet, med en modell för strandförskjutningen, bara stenar som står kvar och en jämförelse med marken i samma bygd. Syftet här är att göra det och att pröva om sambandet med vattnet finns kvar när närheten till gravfälten hålls lika.
+Vi känner inte till någon studie som har mätt avståndet till vattnet på stenarnas egen tid för hela det svenska materialet, med en modell för strandförskjutningen, bara stenar som står kvar och en jämförelse med marken i samma bygd. Syftet är att göra det och pröva om sambandet finns kvar när närheten till gravfälten hålls lika.
 
 ## 2. Förregistrering: hypotes och plan
 
@@ -246,7 +246,7 @@ Dagens vatten (H2): mot vattnet år 1949 står {pc(NOW['within_500_stones'])} pr
 - Bara havet, utan modellens sjöar: {rung(R2)}. I Östergötland, Småland och Västergötland säger provet inget, eftersom de flesta stenar och punkter där ligger mil från havet.
 - Utan de {R5['n_excluded']} stenar som står i modellens vatten år 1050: {rung(R5)}.
 - Den oberoende höjdmodellen: landhöjningen en meter lägre: {rung(R6['minus1'], n=False)}; lika: {rung(R6['zero'], n=False)}; en meter högre: {rung(R6['plus1'], n=False)}. Mönstret hänger alltså inte på SGU:s höjdmodell.
-- Punkter inom två kilometer: AUC {num(R7['r2km']['water']['auc'], 3)}; inom tio kilometer: AUC {num(R7['r10km']['water']['auc'], 3)}. För gravfälten växer skillnaden med radien (AUC {num(R7['r2km']['grave']['auc'], 3)} och {num(R7['r10km']['grave']['auc'], 3)}).
+- Punkter inom två kilometer: AUC {num(R7['r2km']['water']['auc'], 3)}; inom tio kilometer: AUC {num(R7['r10km']['water']['auc'], 3)}.
 
 Vatten och gravfält samtidigt, i en logistisk regression med landskapet konstant: när avståndet till vattnet halveras blir oddsen att platsen har en runsten {num(S['S1a']['or'], 2)} gånger så stora (95 %-intervall {num(S['S1a']['lo'], 2)}–{num(S['S1a']['hi'], 2)}), med avståndet till gravfälten lika; för gravfälten är oddskvoten {num(S['S1b']['or'], 2)} ({num(S['S1b']['lo'], 2)}–{num(S['S1b']['hi'], 2)}). Båda håller i båda halvorna och efter korrigering. I klartext: vattnet är inte bara ett tecken på att gravfälten ligger där, och tvärtom; gravfälten väger ungefär dubbelt så tungt.
 
@@ -346,7 +346,7 @@ Gunnar Ekholm (1950) asked where the runestones were raised. Torun Zachrisson (1
 
 Measuring the nearness to water is hard. The land has risen since the Viking Age, in the Mälaren valley by about five metres, so a stone that stood by a bay may now stand on dry land, and a stone by today's shore may have stood far from the water. SGU's shore displacement model (SGU 2022, after Påsse & Daniels 2015) gives an open model for the whole country of where the water lay at different times.
 
-We know of no study that has measured the distance to the water of the stones' own time for the whole Swedish material, with a model of shore displacement, only stones that still stand in place, and a comparison with the land in the same district. The aim here is to do so and to test whether the association with water remains when nearness to the grave fields is held equal.
+We know of no study that has measured the distance to the water of the stones' own time for the whole Swedish material, with a model of shore displacement, only stones that still stand in place, and a comparison with the land in the same district. The aim is to do so and test whether the association remains when nearness to the grave fields is held equal.
 
 ## 2. Pre-registration: hypothesis and plan
 
@@ -399,7 +399,7 @@ Today's water (H2): relative to the water of 1949, {pc(NOW['within_500_stones'])
 - Only the sea, without the model's lakes: {rung(R2, True)}. In Östergötland, Småland and Västergötland the test says nothing, since most stones and points there lie tens of kilometres from the sea.
 - Without the {R5['n_excluded']} stones that stand in the model's water of AD 1050: {rung(R5, True)}.
 - The independent elevation model: land uplift one metre lower: {rung(R6['minus1'], True, False)}; equal: {rung(R6['zero'], True, False)}; one metre higher: {rung(R6['plus1'], True, False)}. The pattern thus does not depend on SGU's elevation model.
-- Points within two kilometres: AUC {num(R7['r2km']['water']['auc'], 3, True)}; within ten kilometres: AUC {num(R7['r10km']['water']['auc'], 3, True)}. For the grave fields the difference grows with the radius (AUC {num(R7['r2km']['grave']['auc'], 3, True)} and {num(R7['r10km']['grave']['auc'], 3, True)}).
+- Points within two kilometres: AUC {num(R7['r2km']['water']['auc'], 3, True)}; within ten kilometres: AUC {num(R7['r10km']['water']['auc'], 3, True)}.
 
 Water and grave fields together, in a logistic regression with the province held constant: when the distance to the water halves, the odds that the place has a runestone become {num(S['S1a']['or'], 2, True)} times as large (95 % interval {num(S['S1a']['lo'], 2, True)}–{num(S['S1a']['hi'], 2, True)}), with the distance to the grave fields equal; for the grave fields the odds ratio is {num(S['S1b']['or'], 2, True)} ({num(S['S1b']['lo'], 2, True)}–{num(S['S1b']['hi'], 2, True)}). Both hold in both halves and after correction. In plain words: the water is not merely a sign that the grave fields lie there, nor the other way round; the grave fields weigh about twice as much.
 

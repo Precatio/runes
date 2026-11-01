@@ -16,6 +16,8 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..")
 sys.path.insert(0, ROOT)
 from src import blog_figures, blog_labels, r_findings, robustness  # noqa: E402
 from src import r_bridge as rb  # noqa: E402
+sys.path.insert(0, os.path.join(ROOT, "utdata", "rapporter", "figurer"))
+from figur import andringslogg  # noqa: E402
 
 FP = "e83202e01a5e6d27"
 C = os.path.join(ROOT, "data", "cache", "r", "corpus", FP)
@@ -23,8 +25,8 @@ DONE = json.load(open(os.path.join(C, "done.json"), encoding="utf-8"))
 assert DONE["fingerprint"] == FP and DONE["r_version"].startswith("R version 4.6.1")
 APP_VERSION = json.load(open(os.path.join(ROOT, "web", "package.json")))["version"]
 assert APP_VERSION == "3.0.0"
-REPORT_VERSION = 1
-TODAY = "2026-10-31"  # rapportversionens datum, fast i byggaren (mallen version 3)
+REPORT_VERSION = 2  # version 1: 2026-10-31
+TODAY = "2026-11-01"  # rapportversionens datum, fast i byggaren (mallen version 3)
 TL_SV = "klustret upptäcktes 2026-10-12; den populära artikeln publicerades 2026-10-13; materialet frystes 2026-10-29"
 TL_EN = "the cluster was found 2026-10-12; the popular article was published 2026-10-13; the material was frozen 2026-10-29"
 
@@ -162,6 +164,9 @@ summary_en = ("Runestones on which the sound ʀ is written with the ordinary r-r
 CITE_EN = (f"Kvant, V. ({TODAY[:4]}). {title_en}. Research report, report version {REPORT_VERSION}; analysis in Vitki {APP_VERSION}. "
            f"https://vitkirunor.se/en/forskningsrapporter/{SLUG}")
 
+LOG_SV = andringslogg("sv", 2, TODAY, "Bildtexterna säger nu att kartorna är gjorda av Vitki.", "The captions now say that the maps were made by Vitki.")
+LOG_EN = andringslogg("en", 2, TODAY, "Bildtexterna säger nu att kartorna är gjorda av Vitki.", "The captions now say that the maps were made by Vitki.")
+
 body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion {REPORT_VERSION}, {TODAY}. Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, yr-runan, ʀ, r, Uppland, ristare, rumslig statistik. Konkurrerande intressen: inga. Finansiering: ingen.*
 
 ## Sammanfattning
@@ -224,10 +229,10 @@ Analyserna i avsnitt 5.1–5.3 är de som metoden föreskriver för varje drag. 
 **5.1 Klustret.** Draget samlas tydligt geografiskt: Morans I = {d2(MO['i'])} (p < 0,001). Det mest extrema området har sin mitt i U 1172 vid Holm i Vittinge socken och en radie på {d1(CL['radius_km'])} kilometer. Där har {CL['cases']} av {CL['n']} stenar r för ʀ ({pc(CL['rate_in'])} procent), mot {pc(CL['rate_out'])} procent av stenarna i resten av landet: {d2(CL['rr'])} gånger så vanligt. Scanstatistikens p = 0,001, det lägsta värdet {H['nsim']} simuleringar kan ge; justerat för de {N_TRAITS} dragen q = 0,013. Av de {N_TRAITS} dragen är det det enda vars kluster klarar justeringen. Klustrets stenar ligger i {len(PAR)} socknar, flest i Simtuna ({PAR['Simtuna sn']}), Vårfrukyrka, Tillinge, Nysätra, Fröslunda och Jumkil (3 vardera). I halva A har {pc(HA['rate_in'])} procent av stenarna inom klustret draget mot {pc(HA['rate_out'])} utanför (oddskvot {round(HA['or'])}, {pfmt(HA['p'])}); i halva B {pc(HB['rate_in'])} mot {pc(HB['rate_out'])} procent (oddskvot {d1(HB['or'])}, {pfmt(HB['p'])}).
 
 ![Figur 1. ʀ skrivet med r-runan: stenarna och klustret]({FIGS['riket_sv']})
-**Figur 1.** Varje punkt är en runsten där draget kan avgöras; rost: r för ʀ minst en gång, grå: bara yr-runan. Ringen är klustret. Källa: Rundata; kustlinjer och sjöar: Natural Earth.
+**Figur 1.** Varje punkt är en runsten där draget kan avgöras; rost: r för ʀ minst en gång, grå: bara yr-runan. Ringen är klustret. Karta: Vitki, ur Rundata; kustlinjer och sjöar: Natural Earth.
 
 ![Figur 2. Klustret i västra Uppland]({FIGS['zoom_sv']})
-**Figur 2.** Klustret i närbild. Svart ring runt en punkt: en av ristaren Eriks säkert attribuerade stenar. Källa: Rundata; kustlinjer och sjöar: Natural Earth.
+**Figur 2.** Klustret i närbild. Svart ring runt en punkt: en av ristaren Eriks säkert attribuerade stenar. Karta: Vitki, ur Rundata; kustlinjer och sjöar: Natural Earth.
 
 **5.2 Känslighetsanalyserna** ({sp(P['n'])} stenar, {P['k']} med draget). Alla {ME['ladder']['tested']} håller:
 
@@ -313,6 +318,8 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 - Ristaren Erik skrev så på varje sten, men bygden fortsatte efter honom – samlingen är inte en enda mans vana.
 - Vår hypotes är att det var en skrivtradition som fördes vidare, inte ett uttal. Tidigare forskning har läst det som uttal, och stenarna kan ännu inte avgöra vem som har rätt.
 :::
+
+{LOG_SV}
 """
 
 body_en = f"""*Viktor Kvant, independent researcher. Fully tested finding. Report version {REPORT_VERSION}, {TODAY}. Timeline: {TL_EN}. The analysis was made in Vitki {APP_VERSION}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, yr-rune, ʀ, r, Uppland, carvers, spatial statistics. Competing interests: none. Funding: none.*
@@ -377,10 +384,10 @@ The analyses in sections 5.1–5.3 are those the method prescribes for every tra
 **5.1 The cluster.** The trait clusters clearly: Moran's I = {MO['i']:.2f} (p < 0.001). The most extreme area has its centre at U 1172 at Holm in Vittinge parish and a radius of {CL['radius_km']:.1f} kilometres. There {CL['cases']} of {CL['n']} stones have r for ʀ ({pc(CL['rate_in'])} percent), against {pc(CL['rate_out'])} percent of the stones in the rest of the country: {CL['rr']:.2f} times as common. Scan p = 0.001, the lowest value {H['nsim']} simulations can give; adjusted for the {N_TRAITS} traits q = 0.013. Of the {N_TRAITS} traits it is the only one whose cluster passes the adjustment. The cluster's stones lie in {len(PAR)} parishes, most in Simtuna ({PAR['Simtuna sn']}), Vårfrukyrka, Tillinge, Nysätra, Fröslunda and Jumkil (3 each). In half A, {pc(HA['rate_in'])} percent of the stones within the cluster have the trait against {pc(HA['rate_out'])} outside (odds ratio {round(HA['or'])}, {pfmt(HA['p'], True)}); in half B {pc(HB['rate_in'])} against {pc(HB['rate_out'])} percent (odds ratio {HB['or']:.1f}, {pfmt(HB['p'], True)}).
 
 ![Figure 1. ʀ written with the r-rune: the stones and the cluster]({FIGS['riket_en']})
-**Figure 1.** Each point is a runestone where the trait can be decided; rust: r for ʀ at least once, grey: the yr-rune only. The ring is the cluster. Source: Rundata; coastlines and lakes: Natural Earth.
+**Figure 1.** Each point is a runestone where the trait can be decided; rust: r for ʀ at least once, grey: the yr-rune only. The ring is the cluster. Map: Vitki, from Rundata; coastlines and lakes: Natural Earth.
 
 ![Figure 2. The cluster in western Uppland]({FIGS['zoom_en']})
-**Figure 2.** The cluster close up. Black ring around a point: one of the carver Erik's securely attributed stones. Source: Rundata; coastlines and lakes: Natural Earth.
+**Figure 2.** The cluster close up. Black ring around a point: one of the carver Erik's securely attributed stones. Map: Vitki, from Rundata; coastlines and lakes: Natural Earth.
 
 **5.2 The sensitivity analyses** ({en_n(P['n'])} stones, {P['k']} with the trait). All {ME['ladder']['tested']} hold:
 
@@ -466,6 +473,8 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 - The carver Erik wrote so on every stone, but the district carried on after him – the cluster is not one man's habit.
 - Our hypothesis is that it was a writing tradition that was passed on, not a pronunciation. Earlier research has read it as pronunciation, and the stones cannot yet decide who is right.
 :::
+
+{LOG_EN}
 """
 
 # the plain-words sentence rests on these numbers (mallen version 4)

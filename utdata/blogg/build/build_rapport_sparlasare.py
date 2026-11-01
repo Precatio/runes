@@ -12,12 +12,14 @@ import sys
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 sys.path.insert(0, ROOT)
 from src import blog_labels  # noqa: E402
+sys.path.insert(0, os.path.join(ROOT, "utdata", "rapporter", "figurer"))
+from figur import FIG, andringslogg, bild  # noqa: E402
 
 APP_VERSION = json.load(open(os.path.join(ROOT, "web", "package.json")))["version"]
 assert APP_VERSION == "3.0.0"
 assert open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().startswith("611a4d5f")  # mallens version 4
-REPORT_VERSION = 1
-TODAY = "2026-10-31"  # rapportversionens datum, fast i byggaren (mallen version 3)
+REPORT_VERSION = 2  # version 1: 2026-10-31
+TODAY = "2026-11-01"  # rapportversionens datum, fast i byggaren (mallen version 3)
 TL_SV = "spårläsaren byggdes och ställdes in på Sö 113 2026-10-17; det skarpa provet kördes 2026-10-17; provet på verkliga luckor kördes 2026-10-17; provet räknades om utan Sö 113 2026-10-31"
 TL_EN = "the trace reader was built and tuned on Sö 113 2026-10-17; the sharp test was run 2026-10-17; the test on real gaps was run 2026-10-17; the test was recomputed without Sö 113 2026-10-31"
 SD = os.path.join(ROOT, "utdata", "sparlasare")
@@ -98,6 +100,14 @@ def chart(sv):
     return "\n".join(rows)
 
 
+SP, SC = FIG["spar"], FIG["spar_counts"]
+assert SC == {"n": 157, "wrong_to_right": 10, "right_to_wrong": 0}
+assert (SP["gain"]["sig"], SP["loss"]["sig"], SP["loss"]["truth_allowed"]) == ("Sö 112", "Sö 319", [False, True, False])
+FIG_SV = bild("spar", "sv", "Figur 1. Vad spåren säger om ett dolt ord. Rutorna visar för varje runa vilka av runradens 16 runor skanningen tillåter; rätt runa har en ring. Till vänster ordet där spåren hjälpte mest (Sö 112), till höger ordet där de sänkte sannolikheten för rätt svar mest (Sö 319), där spåren utesluter rätt runa på två av tre platser. I inget av de 157 orden gjorde spåren ett rätt ord fel; i 10 gjorde de ett fel ord rätt. Illustration: Vitki, ur Laila Kitzler Åhfeldts 3D-skanningar (Riksantikvarieämbetet, projektet Runristandets dynamik; Zenodo, CC BY 4.0) och Rundata.")
+FIG_EN = bild("spar", "en", "Figure 1. What the traces say about a hidden word. For each rune the boxes show which of the 16 runes of the futhark the scan allows; the right rune is circled. Left, the word where the traces helped most (Sö 112); right, the word where they lowered the probability of the right answer most (Sö 319), where the traces rule out the right rune in two of three places. In none of the 157 words did the traces make a right word wrong; in 10 they made a wrong word right. Illustration: Vitki, from Laila Kitzler Åhfeldt's 3D scans (Swedish National Heritage Board, project Runristandets dynamik; Zenodo, CC BY 4.0) and Rundata.")
+LOG_SV = andringslogg("sv", 2, TODAY, "Figur 1 tillagd: vad spåren säger om ett dolt ord, i två exempel valda efter en regel som anges i bildtexten.", "Figure 1 added: what the traces say about a hidden word, in two examples chosen by a rule given in the caption.")
+LOG_EN = andringslogg("en", 2, TODAY, "Figur 1 tillagd: vad spåren säger om ett dolt ord, i två exempel valda efter en regel som anges i bildtexten.", "Figure 1 added: what the traces say about a hidden word, in two examples chosen by a rule given in the caption.")
+
 body = f"""*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapportversion {REPORT_VERSION}, {TODAY}. Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, 3D-skanning, skadade runor, språkmodell, luckor, rekonstruktion, Södermanland. Konkurrerande intressen: inga. Finansiering: ingen.*
 
 ## Sammanfattning
@@ -141,6 +151,8 @@ Provet var inte låst i en plan. Spårläsaren byggdes i steg den 17 oktober 202
 **5.1 Det skarpa provet.** {A['n']} ord på {A['stones']} stenar. Rätt ord: {d1(MN['utan']['word_ok'])} procent utan spår, {d1(MN['skanner']['word_ok'])} procent med spåren och {d1(MN['omflyttad']['word_ok'])} procent med spåren omflyttade. Sannolikheten för det rätta ordet: {d3(MN['utan']['p_truth'])} utan, {d3(MN['skanner']['p_truth'])} med och {d3(MN['omflyttad']['p_truth'])} med omflyttade spår. Spåren gav högre sannolikhet än inga spår, {pexp(SU['p'])}, och högre än omflyttade spår, {pexp(SO['p'])}. Omflyttade spår gav lägre sannolikhet än inga spår, {pf(OU['p'])}: fel ledtrådar skadar. I klartext: med skanningens hjälp blev ungefär sex dolda ord av tio rätt i stället för drygt fem, och när ledtrådarna kastades om blev det sämre än utan dem.
 
 {chart(True)}
+
+{FIG_SV}
 
 **5.2 Utan Sö 113.** Utan stenen där inställningarna togs fram: {XU['n']} ord på {XU['stones']} stenar, {d1(XU['means']['utan']['word_ok'])} procent rätt utan spår, {d1(XU['means']['skanner']['word_ok'])} med och {d1(XU['means']['omflyttad']['word_ok'])} med omflyttade; spåren mot inga spår {pexp(XU['skanner_vs_utan']['p'])}, mot omflyttade {pexp(XU['skanner_vs_omflyttad']['p'])}.
 
@@ -193,6 +205,8 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 - Skanningen och språket kan alltså läsa en runsten tillsammans: det ena visar vad som syns, det andra vad som går att säga.
 - Vid svåra skador kan spåren leda fel, så en människa måste se och bekräfta dem först.
 :::
+
+{LOG_SV}
 """
 
 body_en = f"""*Viktor Kvant, independent researcher. Methods report, partially tested. Report version {REPORT_VERSION}, {TODAY}. Timeline: {TL_EN}. The analysis was made in Vitki {APP_VERSION}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, 3D scanning, damaged runes, language model, lacunae, restoration, Södermanland. Competing interests: none. Funding: none.*
@@ -238,6 +252,8 @@ The test was not locked in a plan. The trace reader was built in steps on 17 Oct
 **5.1 The sharp test.** {A['n']} words on {A['stones']} stones. Right word: {e1(MN['utan']['word_ok'])} percent without traces, {e1(MN['skanner']['word_ok'])} percent with the traces and {e1(MN['omflyttad']['word_ok'])} percent with the traces shuffled. The probability of the right word: {MN['utan']['p_truth']:.3f} without, {MN['skanner']['p_truth']:.3f} with and {MN['omflyttad']['p_truth']:.3f} with shuffled traces. The traces gave a higher probability than no traces, {pexp(SU['p'], True)}, and higher than shuffled traces, {pexp(SO['p'], True)}. Shuffled traces gave a lower probability than no traces, {pf(OU['p'], True)}: wrong clues hurt. In plain words: with the scan's help about six hidden words in ten came out right instead of just over five, and when the clues were shuffled it was worse than without them.
 
 {chart(False)}
+
+{FIG_EN}
 
 **5.2 Without Sö 113.** Without the stone on which the settings were derived: {XU['n']} words on {XU['stones']} stones, {e1(XU['means']['utan']['word_ok'])} percent right without traces, {e1(XU['means']['skanner']['word_ok'])} with and {e1(XU['means']['omflyttad']['word_ok'])} with shuffled; the traces against no traces {pexp(XU['skanner_vs_utan']['p'], True)}, against shuffled {pexp(XU['skanner_vs_omflyttad']['p'], True)}.
 
@@ -290,6 +306,8 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 - The scan and the language can thus read a runestone together: one shows what can be seen, the other what can be said.
 - At severe damage the traces can mislead, so a human must see and confirm them first.
 :::
+
+{LOG_EN}
 """
 
 JARGON = r"modul\w*|trapp\w*|q_global|korpusjobb|fingeravtryck|fingerprint|facit|Vitkis|Vitki's|\bthe app\b|\bappen\b|`[^`]*/[^`]*`|METHODS"
@@ -302,7 +320,7 @@ for b in (body, body_en):
 assert "Det viktigaste i korthet" in body and "## 2. Förregistrering" in body and "## 6. Diskussion" in body
 assert "I klartext" in body and "In plain words" in body_en  # mallen version 4
 assert "## Sammanfattning\n\n**Vad som inte är prövat.**" in body
-assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapportversion 1, 2026-10-31. Tidslinje: ")
+assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapportversion 2, 2026-11-01. Tidslinje: ")
 
 out = {"slug": SLUG, "title": title, "summary": summary, "body": body, "title_en": title_en, "summary_en": summary_en,
        "body_en": body_en, "labels": ["Rapport", "Huggspår och 3D", "Sannolikhetsmodellen"]}

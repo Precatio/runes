@@ -12,8 +12,8 @@ d <- S$all6[S$all6$signum %in% st$signum, c("signum", "province", "x", "y")]
 d$then <- st$then[match(d$signum, st$signum)]
 rnd <- bind_rows(lapply(c("U", "Sö"), function(pv) readRDS(file.path(WORK, paste0(pv_key(pv), "_avstand.rds")))$rnd$main))
 
-SRC_SV <- "Källor: SGU, Strandförskjutningsmodell (öppna data, CC BY 4.0; Påsse & Daniels 2015); Rundata (Samnordisk runtextdatabas)."
-SRC_EN <- "Sources: Geological Survey of Sweden (SGU), shore displacement model (open data, CC BY 4.0; Påsse & Daniels 2015); Rundata (Scandinavian Runic-text Database)."
+SRC_SV <- "Karta: Vitki. Källor: SGU, Strandförskjutningsmodell (öppna data, CC BY 4.0; Påsse & Daniels 2015); Rundata (Samnordisk runtextdatabas)."
+SRC_EN <- "Map: Vitki. Sources: Geological Survey of Sweden (SGU), shore displacement model (open data, CC BY 4.0; Påsse & Daniels 2015); Rundata (Scandinavian Runic-text Database)."
 FILL <- c("#f4f1ea", "#bcd6ee", "#5b8fc9")
 classes <- function(tmpl) {
   w49 <- water_mask(NOW, tmpl); w1050 <- water_mask(MAIN, tmpl)

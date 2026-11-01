@@ -12,12 +12,14 @@ import sys
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 sys.path.insert(0, ROOT)
 from src import blog_labels  # noqa: E402
+sys.path.insert(0, os.path.join(ROOT, "utdata", "rapporter", "figurer"))
+from figur import FIG, andringslogg, bild  # noqa: E402
 
 APP_VERSION = json.load(open(os.path.join(ROOT, "web", "package.json")))["version"]
 assert APP_VERSION == "3.0.0"
 assert open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().startswith("611a4d5f")  # mallens version 4
-REPORT_VERSION = 1
-TODAY = "2026-10-31"  # rapportversionens datum, fast i byggaren (mallen version 3)
+REPORT_VERSION = 2  # version 1: 2026-10-31
+TODAY = "2026-11-01"  # rapportversionens datum, fast i byggaren (mallen version 3)
 TL_SV = "analysplanen låstes 2026-10-29; analysen kördes 2026-10-29; tilläggsplanen för känslighetsanalyserna låstes och kördes 2026-10-31"
 TL_EN = "the analysis plan was locked 2026-10-29; the analysis was run 2026-10-29; the addendum plan for the sensitivity analyses was locked and run 2026-10-31"
 RD = os.path.join(ROOT, "utdata", "riktning")
@@ -103,6 +105,12 @@ def rung_en(k, label):
     return f"- {label} ({r['n']} stones): mean cos {r['medel_cos']:.2f} against {r['vantat']:.2f}, {pfmt(r['p'], True)}."
 
 
+assert FIG["vag"]["n"] == 123 and FIG["vag"]["toward"] == 31 and round(FIG["vag"]["expected"]) == 8
+FIG_SV = bild("vag", "sv", "Figur 1. Till vänster måttet: vinkeln v mellan hållet ristningen vetter åt och riktningen till vägen. Till höger de 123 stenarna: 31 vetter mot vägen inom ett väderstreck, mot omkring 8 om riktningen vore slumpvis. Illustration och diagram: Vitki, ur Riksantikvarieämbetets kulturmiljöregister och Rundata.")
+FIG_EN = bild("vag", "en", "Figure 1. Left, the measure: the angle v between the direction the inscription faces and the direction to the road. Right, the 123 stones: 31 face the road within one compass point, against about 8 if the direction were random. Illustration and chart: Vitki, from the Swedish register of ancient monuments and Rundata.")
+LOG_SV = andringslogg("sv", 2, TODAY, "Figur 1 tillagd: en skiss av måttet och ett rosdiagram över hur ristningarna vetter i förhållande till vägen.", "Figure 1 added: a sketch of the measure and a rose diagram of how the inscriptions face relative to the road.")
+LOG_EN = andringslogg("en", 2, TODAY, "Figur 1 tillagd: en skiss av måttet och ett rosdiagram över hur ristningarna vetter i förhållande till vägen.", "Figure 1 added: a sketch of the measure and a rose diagram of how the inscriptions face relative to the road.")
+
 body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion {REPORT_VERSION}, {TODAY}. Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, vägar, placering, ristningens riktning, cirkulär statistik, Kulturmiljöregistret, förregistrering. Konkurrerande intressen: inga. Finansiering: ingen.*
 
 ## Sammanfattning
@@ -152,6 +160,8 @@ Planen innehöll inte projektets fasta känslighetsanalyser, som är byggda för
 **5.1 Mot vägen (H2).** Av de {H2['n']} stenarna med väg vänder {pc(H2['andel_inom_45'])} procent ristningen inom 45 grader från vägen. Medel-cos är {d2(H2['medel_cos'])} mot {d2(H2['vantat'])} väntat, {pfmt(H2['p'])}, det lägsta värde 9 999 omblandningar kan ge, och Holm-korrigerat p = 0,0004. Halva A: {HA['H2']['n']} stenar, medel-cos {d2(HA['H2']['medel_cos'])}, {pfmt(HA['H2']['p'])}. Halva B: {HB['H2']['n']} stenar, medel-cos {d2(HB['H2']['medel_cos'])}, {pfmt(HB['H2']['p'])}. H2 *håller* enligt planens regel. I klartext: av de stenar där vi vet var vägen gick vänder hälften texten mot vägen, inom 45 grader åt vardera hållet; om riktningen vore slumpvis skulle en fjärdedel göra det.
 
 {chart(True)}
+
+{FIG_SV}
 
 **5.2 Väderstrecket, gården och broarna (H1, H3, H4).** Riktningarna är jämnt spridda över kompassen: Rayleighs test {pfmt(H1['p'])}. Väster är vanligast ({ST['V']} stenar), sedan norr ({ST['N']}), öster ({ST['Ö']}) och söder ({ST['S']}); {pc(DESC['andel_soder'])} procent vetter mot söder, sydost eller sydväst. Mot gården: medel-cos {d2(H3['medel_cos'])} mot {d2(H3['vantat'])}, {pfmt(H3['p'])}. Bro- och vägstenarna ({H4['n_bro']} med väg) vänds inte mer mot vägen än andra stenar: {pfmt(H4['p'])}. Ingen av dem håller.
 
@@ -217,6 +227,8 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 - Ristarna skrev för den som gick förbi: stenen var ett budskap till vägfarande, inte bara ett minne vid hemmet.
 - Det tål varje kontroll vi har, men vägen i registret är ofta dagens väg, så nästa prov är de gamla kartorna.
 :::
+
+{LOG_SV}
 """
 
 body_en = f"""*Viktor Kvant, independent researcher. Fully tested finding. Report version {REPORT_VERSION}, {TODAY}. Timeline: {TL_EN}. The analysis was made in Vitki {APP_VERSION}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, roads, placement, orientation of the inscription, circular statistics, Swedish register of ancient monuments, pre-registration. Competing interests: none. Funding: none.*
@@ -268,6 +280,8 @@ The plan did not contain the project's fixed sensitivity analyses, which are bui
 **5.1 Towards the road (H2).** Of the {H2['n']} stones with a road, {pc(H2['andel_inom_45'])} percent turn the inscription within 45 degrees of the road. The mean cos is {H2['medel_cos']:.2f} against {H2['vantat']:.2f} expected, {pfmt(H2['p'], True)}, the lowest value 9,999 shuffles can give, and Holm-corrected p = 0.0004. Half A: {HA['H2']['n']} stones, mean cos {HA['H2']['medel_cos']:.2f}, {pfmt(HA['H2']['p'], True)}. Half B: {HB['H2']['n']} stones, mean cos {HB['H2']['medel_cos']:.2f}, {pfmt(HB['H2']['p'], True)}. H2 *holds* by the plan's rule. In plain words: of the stones where we know where the road ran, half turn their text towards the road, within 45 degrees either way; if the direction were random, a quarter would.
 
 {chart(False)}
+
+{FIG_EN}
 
 **5.2 The compass, the farm and the bridges (H1, H3, H4).** The directions are spread evenly over the compass: Rayleigh's test {pfmt(H1['p'], True)}. West is the most common ({ST['V']} stones), then north ({ST['N']}), east ({ST['Ö']}) and south ({ST['S']}); {pc(DESC['andel_soder'])} percent face south, south-east or south-west. Towards the farm: mean cos {H3['medel_cos']:.2f} against {H3['vantat']:.2f}, {pfmt(H3['p'], True)}. The bridge and road stones ({H4['n_bro']} with a road) are not turned towards the road more than other stones: {pfmt(H4['p'], True)}. None of these holds.
 
@@ -333,6 +347,8 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 - The carvers wrote for those who passed by: the stone was a message to travellers, not only a memorial by the home.
 - It withstands every check we have, but the road in the register is often today's road, so the next test is the old maps.
 :::
+
+{LOG_EN}
 """
 
 JARGON = r"modul\w*|trapp\w*|q_global|korpusjobb|fingeravtryck|fingerprint|facit|Vitkis|Vitki's|\bthe app\b|\bappen\b|`[^`]*/[^`]*`|METHODS"
@@ -344,7 +360,7 @@ for b in (body, body_en):
     assert not re.findall(JARGON, head), re.findall(JARGON, head)
 assert "Det viktigaste i korthet" in body and "## 2. Förregistrering" in body and "## 6. Diskussion" in body
 assert "I klartext" in body and "In plain words" in body_en  # mallen version 4
-assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion 1, 2026-10-31. Tidslinje: ")
+assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion 2, 2026-11-01. Tidslinje: ")
 
 out = {"slug": SLUG, "title": title, "summary": summary, "body": body, "title_en": title_en, "summary_en": summary_en,
        "body_en": body_en, "labels": ["Rapport", "Geografi"]}

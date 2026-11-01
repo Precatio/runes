@@ -1,0 +1,110 @@
+{
+ "vag": {
+  "n": 123,
+  "within45": 0.4959349593495935,
+  "toward": 31,
+  "away": 5,
+  "expected": 7.6875
+ },
+ "seriation": {
+  "n": 501,
+  "rho": 0.543,
+  "medians": {
+   "RAK": -0.9845,
+   "Fp": -0.636,
+   "Pr1": -0.21150000000000002,
+   "Pr2": 0.099,
+   "Pr3": 0.3045,
+   "Pr4": 0.672,
+   "Pr5": 0.913
+  }
+ },
+ "familj": {
+  "n_pairs_total": 13,
+  "group_pairs": 2,
+  "group_stones": 3,
+  "stones": [
+   "U 293",
+   "U 294",
+   "U Fv1972;172"
+  ],
+  "names": [
+   "Forkunnr",
+   "Guðlaug"
+  ],
+  "parishes": [
+   "Hammarby sn"
+  ],
+  "n_gravfalt_in_window": 8,
+  "n_stones_in_window": 5,
+  "side_m": 1603,
+  "ties": 1,
+  "pairs": [
+   [
+    "U 293",
+    "U 294",
+    [
+     "Forkunnr"
+    ],
+    227
+   ],
+   [
+    "U 294",
+    "U Fv1972;172",
+    [
+     "Guðlaug"
+    ],
+    138
+   ]
+  ]
+ },
+ "spar_counts": {
+  "n": 157,
+  "wrong_to_right": 10,
+  "right_to_wrong": 0
+ },
+ "spar": {
+  "gain": {
+   "sig": "Sö 112",
+   "truth": "þiakn",
+   "word": "þiagn",
+   "utan": "faþur",
+   "skanner": "þiakn",
+   "p_utan": 0.0,
+   "p_skanner": 0.9049946338304995,
+   "allowed": [
+    11,
+    6,
+    16,
+    11,
+    16
+   ],
+   "truth_allowed": [
+    true,
+    true,
+    true,
+    true,
+    true
+   ]
+  },
+  "loss": {
+   "sig": "Sö 319",
+   "truth": "han",
+   "word": "hann",
+   "utan": "han",
+   "skanner": "han",
+   "p_utan": 0.7445459779394087,
+   "p_skanner": 0.4619643361116039,
+   "allowed": [
+    6,
+    16,
+    11
+   ],
+   "truth_allowed": [
+    false,
+    true,
+    false
+   ]
+  }
+ }
+}

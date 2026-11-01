@@ -12,11 +12,13 @@ import sys
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 sys.path.insert(0, ROOT)
 from src import blog_labels  # noqa: E402
+sys.path.insert(0, os.path.join(ROOT, "utdata", "rapporter", "figurer"))
+from figur import FIG, andringslogg, bild  # noqa: E402
 
 APP_VERSION = json.load(open(os.path.join(ROOT, "web", "package.json")))["version"]
 assert APP_VERSION == "3.0.0"
-REPORT_VERSION = 1
-TODAY = "2026-10-31"  # rapportversionens datum, fast i byggaren (mallen version 3)
+REPORT_VERSION = 2  # version 1: 2026-10-31
+TODAY = "2026-11-01"  # rapportversionens datum, fast i byggaren (mallen version 3)
 TL_SV = "den första analysplanen låstes 2026-10-28; de följande planerna låstes 2026-10-29; materialet frystes 2026-10-29; tilläggsplanen och replikeringen låstes 2026-10-31"
 TL_EN = "the first analysis plan was locked 2026-10-28; the following plans were locked 2026-10-29; the material was frozen 2026-10-29; the addendum and the replication were locked 2026-10-31"
 FP = "3f58e9339191761e"
@@ -132,6 +134,14 @@ def chart(sv):
     return "\n".join(rows)
 
 
+FA = FIG["familj"]
+assert (FA["n_pairs_total"], FA["group_pairs"], FA["stones"], FA["ties"]) == (13, 2, ["U 293", "U 294", "U Fv1972;172"], 1)
+assert FA["pairs"] == [["U 293", "U 294", ["Forkunnr"], 227], ["U 294", "U Fv1972;172", ["Guðlaug"], 138]]
+FIG_SV = bild("familj", "sv", "Figur 1. Ett exempel: stenarna i Hammarby socken i Uppland. Av de 13 stenpar 25–500 meter från varandra som nämner samma person bildar de här den enda gruppen med två par: U 293 och U 294 nämner båda Forkunnr, U 294 och U Fv1972;172 båda Guðlaug. Grå ringar är registrerade gravfält. Karta: Vitki, ur Rundata och Riksantikvarieämbetets kulturmiljöregister.")
+FIG_EN = bild("familj", "en", "Figure 1. An example: the stones in Hammarby parish in Uppland. Of the 13 pairs of stones 25–500 metres apart that name the same person, these form the only group with two pairs: U 293 and U 294 both name Forkunnr, U 294 and U Fv1972;172 both Guðlaug. Grey rings are registered grave fields. Map: Vitki, from Rundata and the Swedish register of ancient monuments.")
+LOG_SV = andringslogg("sv", 2, TODAY, "Figur 1 tillagd: en karta över en verklig familjegrupp vid gravfält, vald efter en regel som anges i bildtexten.", "Figure 1 added: a map of a real family group by grave fields, chosen by a rule given in the caption.")
+LOG_EN = andringslogg("en", 2, TODAY, "Figur 1 tillagd: en karta över en verklig familjegrupp vid gravfält, vald efter en regel som anges i bildtexten.", "Figure 1 added: a map of a real family group by grave fields, chosen by a rule given in the caption.")
+
 body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion {REPORT_VERSION}, {TODAY}. Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, gravfält, familj, stengrupper, rumslig statistik, punktmönster, förregistrering. Konkurrerande intressen: inga. Finansiering: ingen.*
 
 ## Sammanfattning
@@ -204,6 +214,8 @@ Gravhögar, färdvägar och gränsmärken skiljer inte grupperna från de ensamm
 
 {chart(True)}
 
+{FIG_SV}
+
 **5.4 En grupp restes inom en generation.** {G['groups']} grupper med {G['stones']} stildaterade stenar ({G['provinces']['U']} i Uppland, {G['provinces']['Sö']} i Södermanland) har i medel {d2(G['mean_styles'])} olika stilgrupper, mot {d2(G['expected'])} för lika många stenar ur samma bygd, {pfmt(G['p'])}; halva A {pfmt(GH['A']['p'])}, halva B {pfmt(GH['B']['p'])}. {pc(G['share_all_same'])} procent av grupperna har alla stenar i samma stilgrupp mot {pc(G['share_all_same_expected'])} procent väntat, och spannet mellan gruppens tidigaste och senaste sten är i medel {round(G['span_years'])} år mot {round(G['span_expected'])} år. Utan grupper där en och samma ristare gjort alla stenar ({NOC['groups']} grupper kvar) är det {d2(NOC['mean_styles'])} mot {d2(NOC['expected'])}, {pfmt(NOC['p'])}: svagare, men kvar. Exempel är Täby (U 135, 136, 137 och 140, alla i stilgrupp Pr2) och Skokloster (U 685, 686 och 689, alla Pr2); motexempel med tidsdjup finns, som Vårfrukyrka (Fp och Pr4).
 
 **I klartext.** Runstenarna står närmare varandra än slumpen ger. Två stenar inom 500 meter från varandra nämner samma person ungefär åtta gånger så ofta som två stenar som står 2–10 kilometer isär. Stenar i en sådan grupp står vid ett gravfält i fyra fall av fem, de ensamma i drygt hälften av fallen, och stenarna i en grupp ligger närmare varandra i tid än stenar ur samma bygd: i medel tjugo år mellan den tidigaste och den senaste.
@@ -259,6 +271,8 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 - Grupperna står vid gravfälten och restes oftast inom en generation: familjens monument vid familjens gravplats, inte vägens eller gränsens.
 - Mönstret är tydligast i Uppland, där stenarna står kvar; där är det också säkrast.
 :::
+
+{LOG_SV}
 """
 
 body_en = f"""*Viktor Kvant, independent researcher. Fully tested finding. Report version {REPORT_VERSION}, {TODAY}. Timeline: {TL_EN}. The analysis was made in Vitki {APP_VERSION}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, grave fields, family, stone groups, spatial statistics, point patterns, pre-registration. Competing interests: none. Funding: none.*
@@ -333,6 +347,8 @@ Burial mounds, roads and boundary markers do not set the groups apart from the l
 
 {chart(False)}
 
+{FIG_EN}
+
 **5.4 A group was raised within one generation.** {G['groups']} groups with {G['stones']} style-dated stones ({G['provinces']['U']} in Uppland, {G['provinces']['Sö']} in Södermanland) have on average {G['mean_styles']:.2f} different style groups, against {G['expected']:.2f} for as many stones from the same district, {pfmt(G['p'], True)}; half A {pfmt(GH['A']['p'], True)}, half B {pfmt(GH['B']['p'], True)}. {pc(G['share_all_same'])} percent of the groups have all their stones in the same style group against {pc(G['share_all_same_expected'])} percent expected, and the span between a group's earliest and latest stone is on average {round(G['span_years'])} years against {round(G['span_expected'])}. Without groups in which one and the same carver made every stone ({NOC['groups']} groups remain) it is {NOC['mean_styles']:.2f} against {NOC['expected']:.2f}, {pfmt(NOC['p'], True)}: weaker, but present. Examples are Täby (U 135, 136, 137 and 140, all in style group Pr2) and Skokloster (U 685, 686 and 689, all Pr2); counter-examples with time depth exist, such as Vårfrukyrka (Fp and Pr4).
 
 **In plain words.** The runestones stand closer together than chance gives. Two stones within 500 metres of each other name the same person about eight times as often as two stones 2–10 kilometres apart. Stones in such a group stand by a grave field in four cases of five, lone stones in just over half, and the stones of a group lie closer together in time than stones from the same district: on average twenty years between the earliest and the latest.
@@ -388,6 +404,8 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 - The groups stand by the grave fields and were usually raised within one generation: the family's monument by the family's burial place, not the road's or the boundary's.
 - The pattern is clearest in Uppland, where the stones still stand; that is also where it is surest.
 :::
+
+{LOG_EN}
 """
 
 # the plain-words sentence rests on these numbers (mallen version 4)

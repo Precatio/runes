@@ -12,13 +12,15 @@ import sys
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 sys.path.insert(0, ROOT)
 from src import blog_labels  # noqa: E402
+sys.path.insert(0, os.path.join(ROOT, "utdata", "rapporter", "figurer"))
+from figur import FIG, andringslogg, bild  # noqa: E402
 
 FP = "e83202e01a5e6d27"
 APP_VERSION = json.load(open(os.path.join(ROOT, "web", "package.json")))["version"]
 assert APP_VERSION == "3.0.0"
 assert open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().startswith("611a4d5f")  # mallens version 4
-REPORT_VERSION = 1
-TODAY = "2026-10-31"  # rapportversionens datum, fast i byggaren (mallen version 3)
+REPORT_VERSION = 2  # version 1: 2026-10-31
+TODAY = "2026-11-01"  # rapportversionens datum, fast i byggaren (mallen version 3)
 TL_SV = "seriationen gjordes första gången 2026-10-05; materialet frystes 2026-10-29; planen för halvorna och Södermanland låstes och kördes 2026-10-31"
 TL_EN = "the seriation was first made 2026-10-05; the material was frozen 2026-10-29; the plan for the halves and Södermanland was locked and run 2026-10-31"
 CH = json.load(open(os.path.join(ROOT, "data", "cache", "r", "corpus", FP, "chronology.json"), encoding="utf-8"))
@@ -85,6 +87,12 @@ def chart(sv):
     return "\n".join(rows)
 
 
+assert FIG["seriation"]["n"] == 501 and f"{FIG['seriation']['rho']:.2f}" == "0.54"
+FIG_SV = bild("seriation", "sv", "Figur 1. Upplands 501 stildaterade runstenar, ordnade bara efter språk och innehåll, mot stilgruppen. Varje punkt är en sten och strecket mittvärdet i gruppen: ordningen stiger med stilgrupperna, men spridningen inom varje grupp är stor. Diagram: Vitki, ur Rundata; stilgrupperna efter Gräslund (2006).")
+FIG_EN = bild("seriation", "en", "Figure 1. Uppland's 501 style-dated runestones, ordered by language and content alone, against the style group. Each dot is a stone and the bar the middle value of the group: the order rises with the style groups, but the spread within each group is large. Chart: Vitki, from Rundata; the style groups after Gräslund (2006).")
+LOG_SV = andringslogg("sv", 2, TODAY, "Figur 1 tillagd: varje stildaterad sten i Uppland, ordnad efter språk och innehåll, mot stilgruppen.", "Figure 1 added: every style-dated stone in Uppland, ordered by language and content, against the style group.")
+LOG_EN = andringslogg("en", 2, TODAY, "Figur 1 tillagd: varje stildaterad sten i Uppland, ordnad efter språk och innehåll, mot stilgruppen.", "Figure 1 added: every style-dated stone in Uppland, ordered by language and content, against the style group.")
+
 body = f"""*Viktor Kvant, oberoende forskare. Delvis prövat fynd. Rapportversion {REPORT_VERSION}, {TODAY}. Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, seriation, korrespondensanalys, stilkronologi, datering, Uppland, Södermanland. Konkurrerande intressen: inga. Finansiering: ingen.*
 
 ## Sammanfattning
@@ -134,6 +142,8 @@ Den 31 oktober 2026 låstes en plan för två prövningar innan de kördes (kont
 
 {chart(True)}
 
+{FIG_SV}
+
 **5.2 Varianterna (explorativa).** Utan kors {d2(VR['no_cross']['rho'])}, utan utlandsfärder {d2(VR['no_anchor']['rho'])}, utan de drag som förändras över tid {d2(VR['no_changing']['rho'])}, utan allt detta {d2(VR['strict']['rho'])}. Inom härad ({VR['within_district']['groups']} härader) {d2(VR['within_district']['rho'])}; inom ristare ({VR['within_carver']['groups']} ristare med minst fem daterade stenar, {VR['within_carver']['n']} stenar) bara {d2(VR['within_carver']['rho'])}.
 
 **5.3 Södermanland (replikering).** {SO['n_dated']} daterade stenar: rho {d2(SO['rho'])}, Holm-korrigerat p = {pexp(SO['p_holm'])}; *replikerat* enligt planens regel. Med latituden konstant {d2(SO['partial_rho'])}, under planens gräns 0,3, så sambandet kan delvis vara geografiskt. Inom härad {d2(SO['within_district'])} ({SO['n_districts']} härader).
@@ -182,6 +192,8 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 - Det ger stilkronologin ett stöd som inte bygger på ornamenten själva.
 - Klockorna går mest mellan ristarna, inte inom dem, och de räcker inte för att datera en enskild sten.
 :::
+
+{LOG_SV}
 """
 
 body_en = f"""*Viktor Kvant, independent researcher. Partially tested finding. Report version {REPORT_VERSION}, {TODAY}. Timeline: {TL_EN}. The analysis was made in Vitki {APP_VERSION}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, seriation, correspondence analysis, stylistic chronology, dating, Uppland, Södermanland. Competing interests: none. Funding: none.*
@@ -233,6 +245,8 @@ On 31 October 2026 a plan for two tests was locked before they were run (SHA-256
 
 {chart(False)}
 
+{FIG_EN}
+
 **5.2 The variants (exploratory).** Without crosses {VR['no_cross']['rho']:.2f}, without journeys abroad {VR['no_anchor']['rho']:.2f}, without the traits that change over time {VR['no_changing']['rho']:.2f}, without all of these {VR['strict']['rho']:.2f}. Within hundreds ({VR['within_district']['groups']} hundreds) {VR['within_district']['rho']:.2f}; within carvers ({VR['within_carver']['groups']} carvers with at least five dated stones, {VR['within_carver']['n']} stones) only {VR['within_carver']['rho']:.2f}.
 
 **5.3 Södermanland (replication).** {SO['n_dated']} dated stones: rho {SO['rho']:.2f}, Holm-corrected p = {pexp(SO['p_holm'], True)}; *replicated* by the plan's rule. With latitude held constant {SO['partial_rho']:.2f}, below the plan's limit of 0.3, so the association may be partly geographical. Within hundreds {SO['within_district']:.2f} ({SO['n_districts']} hundreds).
@@ -281,6 +295,8 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 - That gives the stylistic chronology support that does not rest on the ornaments themselves.
 - The clocks run mostly between the carvers, not within them, and they are not enough to date a single stone.
 :::
+
+{LOG_EN}
 """
 
 JARGON = r"modul\w*|trapp\w*|q_global|korpusjobb|fingeravtryck|fingerprint|facit|Vitkis|Vitki's|\bthe app\b|\bappen\b|`[^`]*/[^`]*`|METHODS"
@@ -293,7 +309,7 @@ for b in (body, body_en):
 assert "Det viktigaste i korthet" in body and "## 2. Förregistrering" in body and "## 6. Diskussion" in body
 assert "I klartext" in body and "In plain words" in body_en  # mallen version 4
 assert "## Sammanfattning\n\n**Vad som inte är prövat.**" in body  # mallen v2: status först för allt utom nivå 1
-assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Delvis prövat fynd. Rapportversion 1, 2026-10-31. Tidslinje: ")
+assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Delvis prövat fynd. Rapportversion 2, 2026-11-01. Tidslinje: ")
 
 out = {"slug": SLUG, "title": title, "summary": summary, "body": body, "title_en": title_en, "summary_en": summary_en,
        "body_en": body_en, "labels": ["Rapport", "Datering och stil", "Språk och stavning"]}
