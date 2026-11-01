@@ -1,0 +1,707 @@
+{
+ "plan": "analysplaner/2026-11-01-malt-besvarjelser.md",
+ "plan_sha": "44d8fa9f",
+ "n": {
+  "memorial": 1814,
+  "charm_viking": 15,
+  "charm_medieval": 78
+ },
+ "charm_viking": [
+  "Öl Fv1976;96A",
+  "Öl Fv1976;96B",
+  "Öl SAS1989;43",
+  "U ANF1937;163",
+  "U AST1;150",
+  "U ATA351-1796-2014",
+  "U Fv1933;134",
+  "U NOR2002;26",
+  "DR 410",
+  "DR EM85;151B",
+  "DR AUD1999;288",
+  "DR DKBh63",
+  "DR DKSJy76",
+  "E DR419",
+  "RU Melnikova2001;196"
+ ],
+ "A": {
+  "main": {
+   "auc": 0.9512872166616436,
+   "n_windows": [
+    2741,
+    23
+   ],
+   "malt_windows": [
+    0.5703046781485679,
+    0.009449302015306707,
+    0.03652451277485157,
+    0.5416056532726494,
+    0.7470382665037456
+   ],
+   "malt_mean": 0.38098448254302425,
+   "coef": {
+    "bitar_per_runa": 1.5412804456796696,
+    "koincidens": 0.05422770279978471,
+    "vokaler": 0.09424280035852532,
+    "upprepning3": 1.2216831057753552,
+    "trippelruna": 0.3601214932142091,
+    "skiljetecken": -3.7133810053825713,
+    "korta_grupper": 0.059930361404962953
+   },
+   "verdict": "liknar minnesstenar"
+  },
+  "medieval": {
+   "auc": 0.9894199197373221,
+   "n_windows": [
+    2741,
+    151
+   ],
+   "malt_windows": [
+    0.619421616600259,
+    0.1919111507050513,
+    0.08605477837232704,
+    0.20883017710832205,
+    0.034720340564365494
+   ],
+   "malt_mean": 0.22818761267006496,
+   "coef": {
+    "bitar_per_runa": 3.557551214282559,
+    "koincidens": -0.022559949464367672,
+    "vokaler": -0.3442116372269331,
+    "upprepning3": 0.5710953274760827,
+    "trippelruna": -0.18994384275719206,
+    "skiljetecken": -0.5574142227065166,
+    "korta_grupper": -0.10872447247213671
+   },
+   "verdict": "liknar minnesstenar"
+  },
+  "no_lm": {
+   "auc": 0.9552131085132369,
+   "n_windows": [
+    2741,
+    23
+   ],
+   "malt_windows": [
+    0.09154023975032116,
+    0.001519380269394712,
+    0.02804397726350728,
+    0.3195019536064287,
+    0.013020373533461992
+   ],
+   "malt_mean": 0.09072518488462276,
+   "coef": {
+    "koincidens": 0.023429475015652415,
+    "vokaler": 0.0201060575892302,
+    "upprepning3": 1.2030079484764515,
+    "trippelruna": 0.33139463480626236,
+    "skiljetecken": -4.474706382357226,
+    "korta_grupper": 0.13540850556477577
+   },
+   "verdict": "liknar minnesstenar"
+  },
+  "danish_memorial": {
+   "auc": 0.938520213577422,
+   "n_windows": [
+    285,
+    23
+   ],
+   "malt_windows": [
+    0.5204388790466663,
+    0.04400796971981142,
+    0.16270878886224538,
+    0.6275669739532661,
+    0.005912288729379433
+   ],
+   "malt_mean": 0.27212698006227376,
+   "coef": {
+    "bitar_per_runa": 0.7607786482972283,
+    "koincidens": -0.09822544234264749,
+    "vokaler": -0.09582001671712992,
+    "upprepning3": 0.8112319575789485,
+    "trippelruna": 0.018350219436312164,
+    "skiljetecken": -3.150738835148822,
+    "korta_grupper": 0.5207957846564764
+   },
+   "verdict": "liknar minnesstenar"
+  },
+  "means": {
+   "malt": {
+    "bitar_per_runa": 3.94998954672774,
+    "koincidens": 0.09347826086956522,
+    "vokaler": 0.4916666666666667,
+    "upprepning3": 0.10909090909090909,
+    "trippelruna": 0.2,
+    "skiljetecken": 0.125,
+    "korta_grupper": 0.0
+   },
+   "memorial": {
+    "bitar_per_runa": 3.019416593550236,
+    "koincidens": 0.07977094998651722,
+    "vokaler": 0.42469293445214645,
+    "upprepning3": 0.04061225166661173,
+    "trippelruna": 0.0018241517694272164,
+    "skiljetecken": 0.16952450443876926,
+    "korta_grupper": 0.06236688035301679
+   },
+   "charm_viking": {
+    "bitar_per_runa": 3.9972368070174373,
+    "koincidens": 0.08868935097668557,
+    "vokaler": 0.44202898550724634,
+    "upprepning3": 0.08498023715415019,
+    "trippelruna": 0.08695652173913043,
+    "skiljetecken": 0.009057971014492752,
+    "korta_grupper": 0.043478260869565216
+   },
+   "charm_medieval": {
+    "bitar_per_runa": 5.925390368512959,
+    "koincidens": 0.0762549188981668,
+    "vokaler": 0.43846578366445893,
+    "upprepning3": 0.09482239614689952,
+    "trippelruna": 0.006622516556291391,
+    "skiljetecken": 0.09023178807947017,
+    "korta_grupper": 0.06516871649321981
+   },
+   "DR EM85;371B": {
+    "bitar_per_runa": 4.007900457308913,
+    "koincidens": 0.07850241545893721,
+    "vokaler": 0.4861111111111111,
+    "upprepning3": 0.0,
+    "trippelruna": 0.0,
+    "skiljetecken": 0.20833333333333334,
+    "korta_grupper": 0.21666666666666667
+   },
+   "DR 239": {
+    "bitar_per_runa": 3.8270598615951648,
+    "koincidens": 0.09057971014492754,
+    "vokaler": 0.38888888888888884,
+    "upprepning3": 0.030303030303030304,
+    "trippelruna": 0.3333333333333333,
+    "skiljetecken": 0.06944444444444443,
+    "korta_grupper": 0.0
+   }
+  },
+  "dist_from_malt": {
+   "memorial": 4.643203043478466,
+   "charm_viking": 3.084492536009509,
+   "charm_medieval": 5.348660046847857,
+   "DR EM85;371B": 4.736093166648724,
+   "DR 239": 3.532641446076384
+  }
+ },
+ "B": {
+  "targets": {
+   "dvärg": {
+    "forms": [
+     "dverga",
+     "dværg"
+    ],
+    "n_forms": 2,
+    "malt": 0.6,
+    "p95": 0.8,
+    "percentile": 0.22085889570552147,
+    "above_p95": false,
+    "best_pair": [
+     "karþi",
+     "dverga"
+    ]
+   },
+   "Billing": {
+    "forms": [
+     "billingr"
+    ],
+    "n_forms": 1,
+    "malt": 0.5454545454545454,
+    "p95": 0.6666666666666667,
+    "percentile": 0.7791411042944786,
+    "above_p95": false,
+    "best_pair": [
+     "tuuutbilikakR",
+     "billingr"
+    ]
+   },
+   "Tyr": {
+    "forms": [
+     "tyr",
+     "týr"
+    ],
+    "n_forms": 2,
+    "malt": 0.6666666666666667,
+    "p95": 1.0,
+    "percentile": 0.3496932515337423,
+    "above_p95": false,
+    "best_pair": [
+     "huaR",
+     "tyr"
+    ]
+   },
+   "ut": {
+    "forms": [
+     "ut",
+     "út"
+    ],
+    "n_forms": 2,
+    "malt": 0.6666666666666667,
+    "p95": 1.0,
+    "percentile": 0.294478527607362,
+    "above_p95": false,
+    "best_pair": [
+     "utu",
+     "ut"
+    ]
+   }
+  },
+  "controls_above": 1,
+  "controls": {
+   "drosboi": {
+    "malt": 0.6666666666666667,
+    "p95": 0.6666666666666667,
+    "above_p95": false,
+    "best_pair": [
+     "huaRisi",
+     "drosboi"
+    ]
+   },
+   "ingialdr": {
+    "malt": 0.5,
+    "p95": 0.7142857142857143,
+    "above_p95": false,
+    "best_pair": [
+     "karþi",
+     "ingialdr"
+    ]
+   },
+   "rett": {
+    "malt": 0.5,
+    "p95": 0.75,
+    "above_p95": false,
+    "best_pair": [
+     "huaRis",
+     "rett"
+    ]
+   },
+   "ronviðr": {
+    "malt": 0.5,
+    "p95": 0.8333333333333334,
+    "above_p95": false,
+    "best_pair": [
+     "finR",
+     "ronviðr"
+    ]
+   },
+   "twæggia": {
+    "malt": 0.5,
+    "p95": 0.75,
+    "above_p95": false,
+    "best_pair": [
+     "fali",
+     "twæggia"
+    ]
+   },
+   "cantant": {
+    "malt": 0.6,
+    "p95": 0.8,
+    "above_p95": false,
+    "best_pair": [
+     "karþi",
+     "cantant"
+    ]
+   },
+   "guðmar": {
+    "malt": 0.5,
+    "p95": 0.7095238095238098,
+    "above_p95": false,
+    "best_pair": [
+     "karþi",
+     "guðmar"
+    ]
+   },
+   "stæinarr": {
+    "malt": 0.5555555555555556,
+    "p95": 0.8333333333333334,
+    "above_p95": false,
+    "best_pair": [
+     "taitirunoR",
+     "stæinarr"
+    ]
+   },
+   "sægæirr": {
+    "malt": 0.6,
+    "p95": 0.8,
+    "above_p95": false,
+    "best_pair": [
+     "suli",
+     "sægæirr"
+    ]
+   },
+   "silki": {
+    "malt": 0.8,
+    "p95": 0.8,
+    "above_p95": false,
+    "best_pair": [
+     "suli",
+     "silki"
+    ]
+   },
+   "mer": {
+    "malt": 0.6666666666666667,
+    "p95": 0.6666666666666667,
+    "above_p95": false,
+    "best_pair": [
+     "huaR",
+     "mer"
+    ]
+   },
+   "þyrviar": {
+    "malt": 0.6,
+    "p95": 0.8,
+    "above_p95": false,
+    "best_pair": [
+     "huaRis",
+     "þyrviar"
+    ]
+   },
+   "skuli": {
+    "malt": 0.8,
+    "p95": 0.8,
+    "above_p95": false,
+    "best_pair": [
+     "suli",
+     "skuli"
+    ]
+   },
+   "siggone": {
+    "malt": 0.5,
+    "p95": 0.6666666666666667,
+    "above_p95": false,
+    "best_pair": [
+     "huaRisi",
+     "siggone"
+    ]
+   },
+   "æsgærði": {
+    "malt": 0.7142857142857143,
+    "p95": 0.7142857142857143,
+    "above_p95": false,
+    "best_pair": [
+     "karþi",
+     "æsgærði"
+    ]
+   },
+   "þrimr": {
+    "malt": 0.4444444444444444,
+    "p95": 0.6,
+    "above_p95": false,
+    "best_pair": [
+     "taitirunoR",
+     "þrimr"
+    ]
+   },
+   "þorir": {
+    "malt": 0.6,
+    "p95": 0.8,
+    "above_p95": false,
+    "best_pair": [
+     "huaRis",
+     "þorir"
+    ]
+   },
+   "quo": {
+    "malt": 0.5,
+    "p95": 0.6666666666666667,
+    "above_p95": false,
+    "best_pair": [
+     "suaai",
+     "quo"
+    ]
+   },
+   "þer": {
+    "malt": 0.6666666666666667,
+    "p95": 1.0,
+    "above_p95": false,
+    "best_pair": [
+     "huaR",
+     "þer"
+    ]
+   },
+   "þorulfr": {
+    "malt": 0.5555555555555556,
+    "p95": 0.7142857142857143,
+    "above_p95": false,
+    "best_pair": [
+     "taitirunoR",
+     "þorulfr"
+    ]
+   },
+   "spiall": {
+    "malt": 0.5,
+    "p95": 0.6,
+    "above_p95": false,
+    "best_pair": [
+     "suaai",
+     "spiall"
+    ]
+   },
+   "mína": {
+    "malt": 0.5,
+    "p95": 0.75,
+    "above_p95": false,
+    "best_pair": [
+     "finR",
+     "mína"
+    ]
+   },
+   "hafgrími": {
+    "malt": 0.5714285714285714,
+    "p95": 0.5714285714285714,
+    "above_p95": false,
+    "best_pair": [
+     "huaRisi",
+     "hafgrími"
+    ]
+   },
+   "adis": {
+    "malt": 0.75,
+    "p95": 0.75,
+    "above_p95": false,
+    "best_pair": [
+     "huaRis",
+     "adis"
+    ]
+   },
+   "swasum": {
+    "malt": 0.6,
+    "p95": 0.6666666666666667,
+    "above_p95": false,
+    "best_pair": [
+     "suli",
+     "swasum"
+    ]
+   },
+   "botfriðr": {
+    "malt": 0.5555555555555556,
+    "p95": 0.625,
+    "above_p95": false,
+    "best_pair": [
+     "taitirunoR",
+     "botfriðr"
+    ]
+   },
+   "debita": {
+    "malt": 0.5,
+    "p95": 0.6666666666666667,
+    "above_p95": false,
+    "best_pair": [
+     "titultitul",
+     "debita"
+    ]
+   },
+   "huki": {
+    "malt": 0.6666666666666667,
+    "p95": 1.0,
+    "above_p95": false,
+    "best_pair": [
+     "utu",
+     "huki"
+    ]
+   },
+   "bætra": {
+    "malt": 0.6,
+    "p95": 0.8,
+    "above_p95": false,
+    "best_pair": [
+     "utu",
+     "bætra"
+    ]
+   },
+   "nescit": {
+    "malt": 0.4,
+    "p95": 0.6666666666666667,
+    "above_p95": false,
+    "best_pair": [
+     "tuRrakituli",
+     "nescit"
+    ]
+   },
+   "aldum": {
+    "malt": 0.8,
+    "p95": 0.6666666666666667,
+    "above_p95": true,
+    "best_pair": [
+     "alta",
+     "aldum"
+    ]
+   },
+   "vindau": {
+    "malt": 1.0,
+    "p95": 1.0,
+    "above_p95": false,
+    "best_pair": [
+     "utu",
+     "vindau"
+    ]
+   },
+   "querule": {
+    "malt": 0.6666666666666667,
+    "p95": 0.7142857142857143,
+    "above_p95": false,
+    "best_pair": [
+     "huaRisi",
+     "querule"
+    ]
+   },
+   "vigrim": {
+    "malt": 0.6,
+    "p95": 0.6225000000000002,
+    "above_p95": false,
+    "best_pair": [
+     "huaRis",
+     "vigrim"
+    ]
+   },
+   "ignibus": {
+    "malt": 0.5555555555555556,
+    "p95": 0.5714285714285714,
+    "above_p95": false,
+    "best_pair": [
+     "ukiuinrunoR",
+     "ignibus"
+    ]
+   },
+   "grat": {
+    "malt": 0.5,
+    "p95": 0.75,
+    "above_p95": false,
+    "best_pair": [
+     "huaRis",
+     "grat"
+    ]
+   },
+   "londu": {
+    "malt": 0.75,
+    "p95": 1.0,
+    "above_p95": false,
+    "best_pair": [
+     "utu",
+     "londu"
+    ]
+   },
+   "harra": {
+    "malt": 0.75,
+    "p95": 0.75,
+    "above_p95": false,
+    "best_pair": [
+     "huaRis",
+     "harra"
+    ]
+   },
+   "katu": {
+    "malt": 0.8,
+    "p95": 0.9800000000000011,
+    "above_p95": false,
+    "best_pair": [
+     "karþi",
+     "katu"
+    ]
+   },
+   "kmuai": {
+    "malt": 0.4,
+    "p95": 0.6666666666666667,
+    "above_p95": false,
+    "best_pair": [
+     "karþi",
+     "kmuai"
+    ]
+   },
+   "laddu": {
+    "malt": 0.75,
+    "p95": 1.0,
+    "above_p95": false,
+    "best_pair": [
+     "utu",
+     "laddu"
+    ]
+   },
+   "úþyrmis": {
+    "malt": 0.5714285714285714,
+    "p95": 0.7142857142857143,
+    "above_p95": false,
+    "best_pair": [
+     "huaRis",
+     "úþyrmis"
+    ]
+   },
+   "roþ": {
+    "malt": 0.5,
+    "p95": 0.75,
+    "above_p95": false,
+    "best_pair": [
+     "huaRis",
+     "roþ"
+    ]
+   },
+   "tolf": {
+    "malt": 0.5,
+    "p95": 0.75,
+    "above_p95": false,
+    "best_pair": [
+     "fali",
+     "tolf"
+    ]
+   },
+   "bollu": {
+    "malt": 0.75,
+    "p95": 0.75,
+    "above_p95": false,
+    "best_pair": [
+     "fali",
+     "bollu"
+    ]
+   },
+   "æivisl": {
+    "malt": 0.4,
+    "p95": 0.6666666666666667,
+    "above_p95": false,
+    "best_pair": [
+     "huaRisi",
+     "æivisl"
+    ]
+   },
+   "jósep": {
+    "malt": 0.5,
+    "p95": 0.75,
+    "above_p95": false,
+    "best_pair": [
+     "suaai",
+     "jósep"
+    ]
+   },
+   "brunnu": {
+    "malt": 0.6,
+    "p95": 0.8,
+    "above_p95": false,
+    "best_pair": [
+     "huaRisi",
+     "brunnu"
+    ]
+   },
+   "simon": {
+    "malt": 0.6,
+    "p95": 0.6666666666666667,
+    "above_p95": false,
+    "best_pair": [
+     "suli",
+     "simon"
+    ]
+   },
+   "segþi": {
+    "malt": 0.6,
+    "p95": 0.8,
+    "above_p95": false,
+    "best_pair": [
+     "karþi",
+     "segþi"
+    ]
+   }
+  },
+  "discriminates": true
+ }
+}
