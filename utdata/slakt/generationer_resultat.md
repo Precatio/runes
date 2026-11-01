@@ -4,7 +4,7 @@ Låst plan `analysplaner/2026-11-01-slaktnatverket-generationer.md` (sha 5fc275f
 
 ## Svar
 
-**Ja, med en reservation.** Av 30 personer som reser en sten och själva minns på en annan har minnesstenen senare stilgrupp för 16, samma för 10 och tidigare för 4 (teckentest, ensidigt, p = 0,0059). Fem av planens sex steg håller. Steg 1 (halvorna) faller: i den ena halvan är det 7 mot 2 (p = 0,0898), i den andra 9 mot 2 (p = 0,0327). Riktningen är densamma i båda, men den ena halvan är för liten för att nå p < 0,05. Enligt planen är fyndet därför **Delvis prövat**.
+**Ja, med en reservation.** Av 30 personer som reser en sten och själva minns på en annan har minnesstenen senare stilgrupp för 16, samma för 10 och tidigare för 4 (teckentest, ensidigt, p = 0,0059). Fem av planens sex steg håller. Steg 1 (halvorna) faller: i den ena halvan är det 7 mot 2 (p = 0,0898), i den andra 9 mot 2 (p = 0,0327). Riktningen är densamma i båda, men den ena halvan är för liten för att nå p < 0,05. Enligt planen är fyndet därför **Delvis prövat**. Forskningsrapportmallens golv (p < 0,05 och samma riktning i båda halvorna) nås inte, så fyndet blir **ingen rapport**. Det kan nämnas i artiklar som en antydan, eller prövas på nytt under en ny låst plan när fler släktsamband finns (till exempel Mueller-Vollmers släktträd).
 
 ## Huvudprov och steg
 

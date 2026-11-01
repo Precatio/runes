@@ -29,7 +29,10 @@ lines = [
     f"halvan är det {S['1_halvor']['halves'][0]['later']} mot {S['1_halvor']['halves'][0]['earlier']} "
     f"(p = {pf(S['1_halvor']['halves'][0]['p'])}), i den andra {S['1_halvor']['halves'][1]['later']} mot "
     f"{S['1_halvor']['halves'][1]['earlier']} (p = {pf(S['1_halvor']['halves'][1]['p'])}). Riktningen är densamma i "
-    "båda, men den ena halvan är för liten för att nå p < 0,05. Enligt planen är fyndet därför **Delvis prövat**.", "",
+    "båda, men den ena halvan är för liten för att nå p < 0,05. Enligt planen är fyndet därför **Delvis prövat**. "
+    "Forskningsrapportmallens golv (p < 0,05 och samma riktning i båda halvorna) nås inte, så fyndet blir **ingen "
+    "rapport**. Det kan nämnas i artiklar som en antydan, eller prövas på nytt under en ny låst plan när fler släktsamband "
+    "finns (till exempel Mueller-Vollmers släktträd).", "",
     "## Huvudprov och steg", "",
     "| Prov | Personer | Senare | Lika | Tidigare | p | |", "|---|---|---|---|---|---|---|",
     row("Huvudprovet (Williams säkra par + appens 61 länkar)", P),
