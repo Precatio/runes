@@ -1,0 +1,1532 @@
+{
+ "n_links": 61,
+ "n_families": 42,
+ "stones_in_families": 95,
+ "persons_in_families": 175,
+ "persons_on_2plus": 105,
+ "by_size": {
+  "2": 35,
+  "3": 3,
+  "4": 4
+ },
+ "by_generations": {
+  "1": 14,
+  "2": 24,
+  "3": 4
+ },
+ "by_province": {
+  "U": 32,
+  "Sö": 4,
+  "G": 2,
+  "Hs": 1,
+  "Sm": 1,
+  "Vg": 1,
+  "Ög": 1
+ },
+ "families": [
+  {
+   "stones": [
+    "U 100",
+    "U 160",
+    "U 161",
+    "U 225"
+   ],
+   "n_stones": 4,
+   "n_persons": 9,
+   "persons_on_2plus": [
+    "Gýi",
+    "Ulfkell",
+    "Ulfr"
+   ],
+   "generations": 2,
+   "max_km": 8.1,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Sollentuna sn",
+    "Täby sn",
+    "Vallentuna sn"
+   ],
+   "relations": [
+    [
+     "Holmdís",
+     "sister",
+     "Gyríðr"
+    ],
+    [
+     "Ulfkell",
+     "son",
+     "Gyríðr"
+    ],
+    [
+     "Ulfr",
+     "father",
+     "Gýi"
+    ],
+    [
+     "Ulfr",
+     "father",
+     "Ulfketill"
+    ],
+    [
+     "Ulfr",
+     "father",
+     "Uni"
+    ]
+   ],
+   "women": 1
+  },
+  {
+   "stones": [
+    "U 937",
+    "U 990",
+    "U 991",
+    "U 999"
+   ],
+   "n_stones": 4,
+   "n_persons": 6,
+   "persons_on_2plus": [
+    "Gunnarr",
+    "Haursi",
+    "Veðr",
+    "Þegn"
+   ],
+   "generations": 3,
+   "max_km": 10.9,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Funbo sn",
+    "Uppsala"
+   ],
+   "relations": [
+    [
+     "Haursi",
+     "father",
+     "Gunnarr"
+    ],
+    [
+     "Haursi",
+     "father",
+     "Veðr"
+    ],
+    [
+     "Haursi",
+     "father",
+     "Þegn"
+    ],
+    [
+     "Veðr",
+     "brother",
+     "Gunnarr"
+    ],
+    [
+     "Veðr",
+     "brother",
+     "Þegn"
+    ],
+    [
+     "Þegn",
+     "father",
+     "Haursi"
+    ],
+    [
+     "Þegn",
+     "father",
+     "Ketill"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 312",
+    "U 313",
+    "U 314",
+    "U 315"
+   ],
+   "n_stones": 4,
+   "n_persons": 5,
+   "persons_on_2plus": [
+    "Farulfr",
+    "Gunnarr",
+    "Holmdís",
+    "Jôfurfast"
+   ],
+   "generations": 3,
+   "max_km": 0.3,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Skånela sn"
+   ],
+   "relations": [
+    [
+     "Farulfr",
+     "förälder till",
+     "Gunnarr"
+    ],
+    [
+     "Jôfurfast",
+     "daughter",
+     "Holmdís"
+    ],
+    [
+     "Þórðr",
+     "son",
+     "Gunnarr"
+    ],
+    [
+     "Þórðr",
+     "son",
+     "Holmdís"
+    ]
+   ],
+   "women": 1
+  },
+  {
+   "stones": [
+    "U 164",
+    "U 165",
+    "U 212",
+    "U 261"
+   ],
+   "n_stones": 4,
+   "n_persons": 1,
+   "persons_on_2plus": [
+    "Jarlabanki"
+   ],
+   "generations": 1,
+   "max_km": 6.8,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Fresta sn",
+    "Täby sn",
+    "Vallentuna sn"
+   ],
+   "relations": [],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 142",
+    "U 147",
+    "U 287"
+   ],
+   "n_stones": 3,
+   "n_persons": 6,
+   "persons_on_2plus": [
+    "Ingifastr",
+    "Ingvarr",
+    "Jórunnr"
+   ],
+   "generations": 2,
+   "max_km": 9.9,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Hammarby sn",
+    "Täby sn"
+   ],
+   "relations": [
+    [
+     "Ingifastr",
+     "son",
+     "Kjallakr"
+    ],
+    [
+     "Jarlabanki",
+     "father",
+     "Ingifastr"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 643",
+    "U 644",
+    "U 654"
+   ],
+   "n_stones": 3,
+   "n_persons": 6,
+   "persons_on_2plus": [
+    "Andvéttr",
+    "Blesi",
+    "Djarfr",
+    "Gunnleifr",
+    "Kárr"
+   ],
+   "generations": 2,
+   "max_km": 8.5,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Yttergrans sn",
+    "Övergrans sn"
+   ],
+   "relations": [
+    [
+     "Gunnleifr",
+     "father",
+     "Andvéttr"
+    ],
+    [
+     "Gunnleifr",
+     "father",
+     "Blesi"
+    ],
+    [
+     "Gunnleifr",
+     "father",
+     "Djarfr"
+    ],
+    [
+     "Gunnleifr",
+     "father",
+     "Kárr"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 329",
+    "U 330",
+    "U 332"
+   ],
+   "n_stones": 3,
+   "n_persons": 5,
+   "persons_on_2plus": [
+    "Inga",
+    "Ragnfastr"
+   ],
+   "generations": 1,
+   "max_km": 0.7,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Markims sn"
+   ],
+   "relations": [
+    [
+     "Ragnfastr",
+     "husbandman",
+     "Inga"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "Hs 14",
+    "Hs 15"
+   ],
+   "n_stones": 2,
+   "n_persons": 15,
+   "persons_on_2plus": [
+    "Brísi",
+    "Hróðmundr",
+    "Hé-Gylfir",
+    "Unn"
+   ],
+   "generations": 3,
+   "max_km": 2.5,
+   "provinces": [
+    "Hs"
+   ],
+   "parishes": [
+    "Rogsta sn"
+   ],
+   "relations": [
+    [
+     "Brísi",
+     "förälder till",
+     "Hé-Gylfir"
+    ],
+    [
+     "Hé-Gylfir",
+     "förälder till",
+     "Hróðmundr"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 77",
+    "U 78"
+   ],
+   "n_stones": 2,
+   "n_persons": 6,
+   "persons_on_2plus": [
+    "Holmsteinn",
+    "Hôsvi"
+   ],
+   "generations": 2,
+   "max_km": 1.7,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Spånga sn (nu Sundbyberg)"
+   ],
+   "relations": [
+    [
+     "Holmsteinn",
+     "brother",
+     "Hôsvi"
+    ],
+    [
+     "Holmsteinn",
+     "brother",
+     "Ketiley"
+    ],
+    [
+     "Holmsteinn",
+     "brother",
+     "Sigríðr"
+    ],
+    [
+     "Jóbjôrn",
+     "father",
+     "Holmsteinn"
+    ],
+    [
+     "Jóbjôrn",
+     "father",
+     "Hôsvi"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 240",
+    "U 241"
+   ],
+   "n_stones": 2,
+   "n_persons": 6,
+   "persons_on_2plus": [
+    "Danr",
+    "Húskarl",
+    "Sveinn"
+   ],
+   "generations": 1,
+   "max_km": 0.2,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Vallentuna sn"
+   ],
+   "relations": [
+    [
+     "Ulfríkr",
+     "grandfather",
+     "Danr"
+    ],
+    [
+     "Ulfríkr",
+     "grandfather",
+     "Húskarl"
+    ],
+    [
+     "Ulfríkr",
+     "grandfather",
+     "Sveinn"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 273",
+    "U 276"
+   ],
+   "n_stones": 2,
+   "n_persons": 6,
+   "persons_on_2plus": [
+    "Djarfr",
+    "Fullugi"
+   ],
+   "generations": 3,
+   "max_km": 0.5,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Hammarby sn"
+   ],
+   "relations": [
+    [
+     "Djarfr",
+     "father",
+     "Illugi"
+    ],
+    [
+     "Geirbjôrn",
+     "father",
+     "Andsvarr"
+    ],
+    [
+     "Geirbjôrn",
+     "father",
+     "Djarfr"
+    ],
+    [
+     "Geirbjôrn",
+     "father",
+     "Fullugi"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 513",
+    "U 540"
+   ],
+   "n_stones": 2,
+   "n_persons": 6,
+   "persons_on_2plus": [
+    "Eiríkr",
+    "Hákon",
+    "Ingvarr"
+   ],
+   "generations": 1,
+   "max_km": 7.8,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Husby-Lyhundra sn (nu Husby-Sjuhundra)",
+    "Rimbo sn"
+   ],
+   "relations": [
+    [
+     "Ragnarr",
+     "brother",
+     "Eiríkr"
+    ],
+    [
+     "Ragnarr",
+     "brother",
+     "Hákon"
+    ],
+    [
+     "Ragnarr",
+     "brother",
+     "Ingvarr"
+    ],
+    [
+     "Ragnarr",
+     "brother",
+     "Ônundr"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 1027",
+    "U 1047"
+   ],
+   "n_stones": 2,
+   "n_persons": 6,
+   "persons_on_2plus": [
+    "Gísl",
+    "Ígull"
+   ],
+   "generations": 2,
+   "max_km": 9.5,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Björklinge sn",
+    "Lena sn"
+   ],
+   "relations": [
+    [
+     "Eybjôrn",
+     "father",
+     "Eygeirr"
+    ],
+    [
+     "Eybjôrn",
+     "father",
+     "Gísl"
+    ],
+    [
+     "Eybjôrn",
+     "father",
+     "Ketilbjôrn"
+    ],
+    [
+     "Eybjôrn",
+     "father",
+     "Ígull"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "Sö 206",
+    "Sö 208"
+   ],
+   "n_stones": 2,
+   "n_persons": 5,
+   "persons_on_2plus": [
+    "Guðlaug",
+    "Hjalmlaug"
+   ],
+   "generations": 1,
+   "max_km": 0.0,
+   "provinces": [
+    "Sö"
+   ],
+   "parishes": [
+    "Överselö sn"
+   ],
+   "relations": [],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 453",
+    "U 454"
+   ],
+   "n_stones": 2,
+   "n_persons": 5,
+   "persons_on_2plus": [
+    "Gísl",
+    "Þorkell"
+   ],
+   "generations": 2,
+   "max_km": 0.0,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Odensala sn"
+   ],
+   "relations": [
+    [
+     "Gansi",
+     "father",
+     "Gísl"
+    ],
+    [
+     "Gansi",
+     "father",
+     "Þorkell"
+    ],
+    [
+     "Styrbjôrn",
+     "brother",
+     "Gísl"
+    ],
+    [
+     "Styrbjôrn",
+     "brother",
+     "Þorkell"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "Sö 173",
+    "Sö 374"
+   ],
+   "n_stones": 2,
+   "n_persons": 4,
+   "persons_on_2plus": [
+    "Manni",
+    "Myskja"
+   ],
+   "generations": 2,
+   "max_km": 0.0,
+   "provinces": [
+    "Sö"
+   ],
+   "parishes": [
+    "Tystberga sn"
+   ],
+   "relations": [
+    [
+     "Holmsteinn",
+     "father",
+     "Manni"
+    ],
+    [
+     "Holmsteinn",
+     "father",
+     "Myskja"
+    ],
+    [
+     "Hróðgeirr",
+     "brother",
+     "Manni"
+    ],
+    [
+     "Hróðgeirr",
+     "brother",
+     "Myskja"
+    ],
+    [
+     "Manni",
+     "brother",
+     "Myskja"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "Sö 290",
+    "Sö 301"
+   ],
+   "n_stones": 2,
+   "n_persons": 4,
+   "persons_on_2plus": [
+    "Sveinn",
+    "Þórir"
+   ],
+   "generations": 1,
+   "max_km": 1.2,
+   "provinces": [
+    "Sö"
+   ],
+   "parishes": [
+    "Brännkyrka sn",
+    "Huddinge sn"
+   ],
+   "relations": [
+    [
+     "Vénjótr",
+     "brother",
+     "Sveinn"
+    ],
+    [
+     "Vénjótr",
+     "brother",
+     "Þórir"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 285",
+    "U 286"
+   ],
+   "n_stones": 2,
+   "n_persons": 4,
+   "persons_on_2plus": [
+    "Holmlaugr",
+    "Óleifr"
+   ],
+   "generations": 2,
+   "max_km": 0.4,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Hammarby sn"
+   ],
+   "relations": [
+    [
+     "Ketilmundr",
+     "brother",
+     "Holmlaugr"
+    ],
+    [
+     "Óleifr",
+     "son",
+     "Holmlaugr"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 668",
+    "U 669"
+   ],
+   "n_stones": 2,
+   "n_persons": 4,
+   "persons_on_2plus": [
+    "Hjôrvarðr",
+    "Styrkárr"
+   ],
+   "generations": 2,
+   "max_km": 0.0,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Häggeby sn"
+   ],
+   "relations": [
+    [
+     "Geiri",
+     "father",
+     "Hjôrvarðr"
+    ],
+    [
+     "Geiri",
+     "father",
+     "Styrkárr"
+    ],
+    [
+     "Gísl",
+     "brother",
+     "Hjôrvarðr"
+    ],
+    [
+     "Gísl",
+     "brother",
+     "Styrkárr"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 844",
+    "U 845"
+   ],
+   "n_stones": 2,
+   "n_persons": 4,
+   "persons_on_2plus": [
+    "Bjôrn",
+    "Gísl",
+    "Ásgeirr"
+   ],
+   "generations": 2,
+   "max_km": 0.2,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Dalby sn"
+   ],
+   "relations": [
+    [
+     "Bjôrn",
+     "brother",
+     "Gísl"
+    ],
+    [
+     "Bjôrn",
+     "brother",
+     "Ásgeirr"
+    ],
+    [
+     "Þorsteinn",
+     "father",
+     "Bjôrn"
+    ],
+    [
+     "Þorsteinn",
+     "father",
+     "Gísl"
+    ],
+    [
+     "Þorsteinn",
+     "father",
+     "Ásgeirr"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 901",
+    "U 904"
+   ],
+   "n_stones": 2,
+   "n_persons": 4,
+   "persons_on_2plus": [
+    "Jôfurr",
+    "Karl",
+    "Ígulbjôrn"
+   ],
+   "generations": 2,
+   "max_km": 0.0,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Läby sn"
+   ],
+   "relations": [
+    [
+     "Jôfurr",
+     "father",
+     "Jarl"
+    ],
+    [
+     "Jôfurr",
+     "father",
+     "Karl"
+    ],
+    [
+     "Jôfurr",
+     "father",
+     "Ígulbjôrn"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 941",
+    "U 986"
+   ],
+   "n_stones": 2,
+   "n_persons": 4,
+   "persons_on_2plus": [
+    "Ingifast",
+    "Sigvaldi",
+    "Áli"
+   ],
+   "generations": 1,
+   "max_km": 5.0,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Gamla Uppsala sn (nu Uppsala)",
+    "Uppsala"
+   ],
+   "relations": [
+    [
+     "Gelfr",
+     "husbandman",
+     "Ingifast"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "G 111",
+    "G 112"
+   ],
+   "n_stones": 2,
+   "n_persons": 4,
+   "persons_on_2plus": [
+    "Hróðþjóð",
+    "Sibba"
+   ],
+   "generations": 1,
+   "max_km": 0.0,
+   "provinces": [
+    "G"
+   ],
+   "parishes": [
+    "Ardre sn"
+   ],
+   "relations": [
+    [
+     "Hróðþjóð",
+     "wife",
+     "Sibba"
+    ]
+   ],
+   "women": 1
+  },
+  {
+   "stones": [
+    "Sm 36",
+    "Sm 37"
+   ],
+   "n_stones": 2,
+   "n_persons": 3,
+   "persons_on_2plus": [
+    "Eyndr",
+    "Ôzurr"
+   ],
+   "generations": 2,
+   "max_km": 1.5,
+   "provinces": [
+    "Sm"
+   ],
+   "parishes": [
+    "Nöttja sn"
+   ],
+   "relations": [
+    [
+     "Eyndr",
+     "father",
+     "Ôzurr"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "Vg 11",
+    "Vg 13"
+   ],
+   "n_stones": 2,
+   "n_persons": 3,
+   "persons_on_2plus": [
+    "Ketill",
+    "Þórir"
+   ],
+   "generations": 2,
+   "max_km": 1.3,
+   "provinces": [
+    "Vg"
+   ],
+   "parishes": [
+    "Leksbergs sn"
+   ],
+   "relations": [
+    [
+     "Ketill",
+     "son",
+     "Þórir"
+    ],
+    [
+     "Ólôf",
+     "foster-mother",
+     "Þórir"
+    ]
+   ],
+   "women": 1
+  },
+  {
+   "stones": [
+    "U 136",
+    "U 137"
+   ],
+   "n_stones": 2,
+   "n_persons": 3,
+   "persons_on_2plus": [
+    "Eysteinn",
+    "Ástríðr"
+   ],
+   "generations": 2,
+   "max_km": 0.0,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Täby sn"
+   ],
+   "relations": [
+    [
+     "Eysteinn",
+     "husbandman",
+     "Ástríðr"
+    ],
+    [
+     "Kagr",
+     "son",
+     "Eysteinn"
+    ],
+    [
+     "Kagr",
+     "son",
+     "Ástríðr"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 255",
+    "U 269"
+   ],
+   "n_stones": 2,
+   "n_persons": 3,
+   "persons_on_2plus": [
+    "Bjôrn",
+    "Illugi"
+   ],
+   "generations": 1,
+   "max_km": 1.8,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Fresta sn"
+   ],
+   "relations": [
+    [
+     "Bjôrn",
+     "brother",
+     "Illugi"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 346",
+    "U 356"
+   ],
+   "n_stones": 2,
+   "n_persons": 3,
+   "persons_on_2plus": [
+    "Bjôrn",
+    "Ketilmundr",
+    "Ragnfríðr"
+   ],
+   "generations": 2,
+   "max_km": 7.7,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Frösunda sn",
+    "Lunda sn"
+   ],
+   "relations": [
+    [
+     "Bjôrn",
+     "son",
+     "Ragnfríðr"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 640",
+    "U 648"
+   ],
+   "n_stones": 2,
+   "n_persons": 3,
+   "persons_on_2plus": [
+    "Kúss",
+    "Sighjalmr"
+   ],
+   "generations": 2,
+   "max_km": 8.3,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Kalmar sn",
+    "Övergrans sn"
+   ],
+   "relations": [
+    [
+     "Andvéttr",
+     "father",
+     "Kúss"
+    ],
+    [
+     "Andvéttr",
+     "father",
+     "Sighjalmr"
+    ],
+    [
+     "Kúss",
+     "brother",
+     "Sighjalmr"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 641",
+    "U 642"
+   ],
+   "n_stones": 2,
+   "n_persons": 3,
+   "persons_on_2plus": [
+    "Bjôrn",
+    "Gildi",
+    "Heðingeirr"
+   ],
+   "generations": 2,
+   "max_km": 8.3,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Yttergrans sn",
+    "Yttergrans sn (nu Övergrans sn)"
+   ],
+   "relations": [
+    [
+     "Gildi",
+     "father",
+     "Bjôrn"
+    ],
+    [
+     "Gildi",
+     "father",
+     "Heðingeirr"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 723",
+    "U 724"
+   ],
+   "n_stones": 2,
+   "n_persons": 3,
+   "persons_on_2plus": [
+    "Eygeirr",
+    "Freygeirr",
+    "Goti"
+   ],
+   "generations": 2,
+   "max_km": 0.0,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Löts sn"
+   ],
+   "relations": [
+    [
+     "Goti",
+     "father",
+     "Eygeirr"
+    ],
+    [
+     "Goti",
+     "father",
+     "Freygeirr"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 763",
+    "U 764"
+   ],
+   "n_stones": 2,
+   "n_persons": 3,
+   "persons_on_2plus": [
+    "Brúni",
+    "Gunnbjôrn",
+    "Holmsteinn"
+   ],
+   "generations": 2,
+   "max_km": 0.0,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Vårfrukyrka sn"
+   ],
+   "relations": [
+    [
+     "Gunnbjôrn",
+     "father",
+     "Brúni"
+    ],
+    [
+     "Gunnbjôrn",
+     "father",
+     "Holmsteinn"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 859",
+    "U 860"
+   ],
+   "n_stones": 2,
+   "n_persons": 3,
+   "persons_on_2plus": [
+    "Fastbjôrn",
+    "Ingifastr",
+    "Þórunnr"
+   ],
+   "generations": 1,
+   "max_km": 2.3,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Balingsta sn"
+   ],
+   "relations": [
+    [
+     "Ingifastr",
+     "husbandman",
+     "Fastbjôrn"
+    ],
+    [
+     "Ingifastr",
+     "husbandman",
+     "Þórunnr"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 1050",
+    "U 1060"
+   ],
+   "n_stones": 2,
+   "n_persons": 3,
+   "persons_on_2plus": [
+    "Eistr",
+    "Holmgeirr"
+   ],
+   "generations": 2,
+   "max_km": 0.5,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Björklinge sn"
+   ],
+   "relations": [
+    [
+     "Eistr",
+     "father",
+     "Holmgeirr"
+    ],
+    [
+     "Eistr",
+     "father",
+     "Karl"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "G 207",
+    "G 208"
+   ],
+   "n_stones": 2,
+   "n_persons": 3,
+   "persons_on_2plus": [
+    "Bótmundr",
+    "Bótreifr",
+    "Gunnvarr"
+   ],
+   "generations": 1,
+   "max_km": 0.0,
+   "provinces": [
+    "G"
+   ],
+   "parishes": [
+    "Stenkumla sn"
+   ],
+   "relations": [],
+   "women": 0
+  },
+  {
+   "stones": [
+    "Ög 162",
+    "Ög Fv1970;310"
+   ],
+   "n_stones": 2,
+   "n_persons": 2,
+   "persons_on_2plus": [
+    "Gunnarr",
+    "Hákon"
+   ],
+   "generations": 2,
+   "max_km": 0.5,
+   "provinces": [
+    "Ög"
+   ],
+   "parishes": [
+    "Kullerstads sn"
+   ],
+   "relations": [
+    [
+     "Gunnarr",
+     "son",
+     "Hákon"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "Sö 122",
+    "Sö 123"
+   ],
+   "n_stones": 2,
+   "n_persons": 2,
+   "persons_on_2plus": [
+    "Hásteinn",
+    "Ásgautr"
+   ],
+   "generations": 1,
+   "max_km": 0.0,
+   "provinces": [
+    "Sö"
+   ],
+   "parishes": [
+    "Allhelgona sn (nu Helgona)"
+   ],
+   "relations": [],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 133",
+    "U 141"
+   ],
+   "n_stones": 2,
+   "n_persons": 2,
+   "persons_on_2plus": [
+    "Guðlaug",
+    "Holmi"
+   ],
+   "generations": 2,
+   "max_km": 1.2,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Täby sn"
+   ],
+   "relations": [
+    [
+     "Holmi",
+     "son",
+     "Guðlaug"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 297",
+    "U Fv1979;245"
+   ],
+   "n_stones": 2,
+   "n_persons": 2,
+   "persons_on_2plus": [
+    "Jóbjôrn",
+    "Sigbjôrn"
+   ],
+   "generations": 2,
+   "max_km": 0.0,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Skånela sn"
+   ],
+   "relations": [
+    [
+     "Sigbjôrn",
+     "father",
+     "Jóbjôrn"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 700",
+    "U 701"
+   ],
+   "n_stones": 2,
+   "n_persons": 2,
+   "persons_on_2plus": [
+    "Goti",
+    "Ingjaldr"
+   ],
+   "generations": 1,
+   "max_km": 1.0,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Veckholms sn"
+   ],
+   "relations": [
+    [
+     "Ingjaldr",
+     "brother",
+     "Goti"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 712",
+    "U 713"
+   ],
+   "n_stones": 2,
+   "n_persons": 2,
+   "persons_on_2plus": [
+    "Geirbjôrn",
+    "Óleifr"
+   ],
+   "generations": 1,
+   "max_km": 0.1,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Kungs-Husby sn"
+   ],
+   "relations": [
+    [
+     "Geirbjôrn",
+     "brother",
+     "Óleifr"
+    ]
+   ],
+   "women": 0
+  },
+  {
+   "stones": [
+    "U 762",
+    "U 779"
+   ],
+   "n_stones": 2,
+   "n_persons": 2,
+   "persons_on_2plus": [
+    "Jarl",
+    "Jôrundr"
+   ],
+   "generations": 2,
+   "max_km": 9.2,
+   "provinces": [
+    "U"
+   ],
+   "parishes": [
+    "Svinnegarns sn",
+    "Vårfrukyrka sn"
+   ],
+   "relations": [
+    [
+     "Jarl",
+     "son",
+     "Jôrundr"
+    ]
+   ],
+   "women": 0
+  }
+ ]
+}
