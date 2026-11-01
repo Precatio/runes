@@ -1,0 +1,55 @@
+{
+ "modell": {
+  "sure": {
+   "sig": "Sm 134",
+   "word": "æftiR",
+   "n": 5,
+   "ok": true,
+   "q": 0.9781463840977406,
+   "top3": [
+    [
+     "æftiR",
+     0.998647,
+     true
+    ],
+    [
+     "varin",
+     0.000841,
+     false
+    ],
+    [
+     "yfiR",
+     0.000116,
+     false
+    ]
+   ]
+  },
+  "unsure": {
+   "sig": "Sm 64",
+   "word": "satti",
+   "n": 4,
+   "ok": true,
+   "q": 0.238100320717145,
+   "top3": [
+    [
+     "satti",
+     0.256762,
+     true
+    ],
+    [
+     "letu",
+     0.213856,
+     false
+    ],
+    [
+     "ræisti",
+     0.204203,
+     false
+    ]
+   ]
+  }
+ },
+ "hillersjo": {
+  "translation_en": "Interpret! Geirmundr got Geirlaug (to wife) in her maidenhood. Then they got a son, before he (= Geirmundr) drowned. And then the son died. Then she got Guðríkr. He ... this. Then they got children. And one maid lived; she was called Inga. Ragnfastr of Snotastaðir got her (to wife). Then he died, and thereafter the son. And the mother came to inherit from her son. Then she got Eiríkr. Then she died. Then Geirlaug came to inherit from Inga, her daughter. Þorbjôrn Skald carved the runes."
+ }
+}

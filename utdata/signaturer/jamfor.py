@@ -74,6 +74,8 @@ out = {"source": "Källström 2007, Bilaga 1; Rundata 3.1 (2018)", "n_catalogue_
 mu = {p: v for p, v in out["by_province"].items() if p in ("U", "Sö")}
 out["outside_U_So"] = {"n": sum(v["n"] for p, v in out["by_province"].items() if p not in mu),
                        "missing": sum(v["missing"] for p, v in out["by_province"].items() if p not in mu)}
+# Alla stenar i kärnan med om ristaren finns i Rundata (för kartan i artikeln, 2026-11-01)
+out["core"] = [{"signum": x["signum"], "rundata_carver": bool(x["rundata_carvers"])} for x in core]
 json.dump(out, open(os.path.join(OUT, "signaturer.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 print(json.dumps({k: out[k] for k in ("n_catalogue_swedish", "n_core", "n_missing", "n_missing_named", "n_missing_also_runor", "outside_U_So")}, ensure_ascii=False))
 print(out["by_province"])

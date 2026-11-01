@@ -221,5 +221,715 @@
  "outside_U_So": {
   "n": 38,
   "missing": 18
- }
+ },
+ "core": [
+  {
+   "signum": "Sm 1",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sm 111",
+   "rundata_carver": false
+  },
+  {
+   "signum": "Öl 28",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Öl 43",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Öl Köping18",
+   "rundata_carver": false
+  },
+  {
+   "signum": "G 113",
+   "rundata_carver": true
+  },
+  {
+   "signum": "G 200",
+   "rundata_carver": false
+  },
+  {
+   "signum": "G 203",
+   "rundata_carver": false
+  },
+  {
+   "signum": "G 276",
+   "rundata_carver": false
+  },
+  {
+   "signum": "Vg 59",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Vg 119",
+   "rundata_carver": false
+  },
+  {
+   "signum": "Vg 130",
+   "rundata_carver": false
+  },
+  {
+   "signum": "Vg 180",
+   "rundata_carver": false
+  },
+  {
+   "signum": "Vg 181",
+   "rundata_carver": false
+  },
+  {
+   "signum": "Ög 8",
+   "rundata_carver": false
+  },
+  {
+   "signum": "Ög 64",
+   "rundata_carver": false
+  },
+  {
+   "signum": "Ög 81",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Ög 146",
+   "rundata_carver": false
+  },
+  {
+   "signum": "Ög 165",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Ög 186",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sö 11",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sö 35",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sö 40",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sö 46",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sö 54",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sö 82",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sö 159",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sö 178",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sö 190",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sö 203",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sö 210",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sö 213",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sö 214",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sö 233",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sö 241",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sö 268",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sö 333",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sö 374",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Sö Fv1954;20",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Vs 5",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Vs 13",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Vs 16",
+   "rundata_carver": false
+  },
+  {
+   "signum": "Vs 20",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Vs 24",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Vs 27",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Vs 29",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 23",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 36",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 37",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 43",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 44",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 74",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 104",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 118",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 142",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 167",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 177",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 181",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 208",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 216",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 226",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 229",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 236",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 247",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 279",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 287",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 288",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 301",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 321",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 334",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 353",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 356",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 376",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 379",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 382",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 405",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 422",
+   "rundata_carver": false
+  },
+  {
+   "signum": "U 462",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 464",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 467",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 479",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 485",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 489",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 505",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 519",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 524",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 532",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 541",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 599",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 629",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 652",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 654",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 678",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 692",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 699",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 705",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 707",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 712",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 721",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 726",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 729",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 734",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 740",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 744",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 746",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 750",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 753",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 759",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 767",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 770",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 775",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 778",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 796",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 819",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 824",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 828",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 847",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 859",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 862",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 873",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 887",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 893",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 896",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 913",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 919",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 922",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 929",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 945",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 947",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 948",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 951",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 969",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 973",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 993",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 998",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1007",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1022",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1034",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1039",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1040",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1041",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1042",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1052",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1063",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1067",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1072",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1095",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1104",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1106",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1117",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1132",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1138",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1139",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1142",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1143",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1144",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1149",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1158",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1164",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1165",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U 1177",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U Fv1948;168",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U Fv1953;266",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U Fv1976;104",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U Fv1976;107",
+   "rundata_carver": true
+  },
+  {
+   "signum": "U Fv1992;156",
+   "rundata_carver": false
+  },
+  {
+   "signum": "Gs 11",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Gs 13",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Hs 11",
+   "rundata_carver": true
+  },
+  {
+   "signum": "Hs 14",
+   "rundata_carver": false
+  },
+  {
+   "signum": "Hs 16",
+   "rundata_carver": false
+  },
+  {
+   "signum": "Hs 21",
+   "rundata_carver": true
+  },
+  {
+   "signum": "M 1",
+   "rundata_carver": true
+  },
+  {
+   "signum": "M 2",
+   "rundata_carver": false
+  },
+  {
+   "signum": "M 4",
+   "rundata_carver": false
+  },
+  {
+   "signum": "M 7",
+   "rundata_carver": true
+  },
+  {
+   "signum": "J RS1928;66",
+   "rundata_carver": false
+  }
+ ]
 }
