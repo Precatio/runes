@@ -1,0 +1,219 @@
+{
+ "plan": "analysplaner/2026-11-01-malt-upprepningar.md",
+ "plan_sha": "0a087882",
+ "malt": {
+  "runes": 136,
+  "groups": 18,
+  "T5": "titul",
+  "T4": "titul",
+  "T3": "titul",
+  "D3": 0.2835820895522388,
+  "D4": 0.15037593984962405,
+  "D5": 0.07575757575757576,
+  "D4_range_64": [
+   0.14285714285714285,
+   0.16417910447761194
+  ]
+ },
+ "malt_rundata": {
+  "runes": 152,
+  "D4": 0.136986301369863,
+  "T5": "titul",
+  "translit": "§A sua ai ÷ titultitul ¶ fuþorkhniastbmlR §B huaR is i : alisti osa : huaR is (:) ¶ uifrþuR : karþi : afr aft asini fauþr ¶ kul:finR : fal(s) : taitirunoR ' u ¶ (a)iuinrunoR : sulialta : huaR : ? ¶ utu ÷ tuuut bilikikR : tuR ra(k)(i) ¶ (t)(u)(l)i"
+ },
+ "q2": {
+  "n": 163,
+  "by_country": {
+   "SE": 143,
+   "DK": 20
+  },
+  "D3": {
+   "malt": 0.2835820895522388,
+   "p95": 0.47802310654685504,
+   "median": 0.1978021978021978,
+   "percentile": 0.7975460122699386,
+   "above_p95": "False"
+  },
+  "D4": {
+   "malt": 0.15037593984962405,
+   "p95": 0.35637054354178876,
+   "median": 0.06521739130434782,
+   "percentile": 0.8282208588957055,
+   "above_p95": "False"
+  },
+  "D5": {
+   "malt": 0.07575757575757576,
+   "p95": 0.2491424116424118,
+   "median": 0.02,
+   "percentile": 0.7852760736196319,
+   "above_p95": "False"
+  },
+  "D4_all64_above_p95": false,
+  "D4_by_country": {
+   "SE": {
+    "n": 143,
+    "percentile": 0.8251748251748252
+   },
+   "DK": {
+    "n": 20,
+    "percentile": 0.85
+   }
+  },
+  "D4_rundata_translit": {
+   "D4": 0.136986301369863,
+   "percentile": 0.7975460122699386,
+   "above_p95": "False"
+  },
+  "holds": false,
+  "top": [
+   {
+    "signum": "U 422",
+    "D4": 1.0,
+    "runes": 104
+   },
+   {
+    "signum": "U Fv1978;226",
+    "D4": 0.96,
+    "runes": 94
+   },
+   {
+    "signum": "Sm 96",
+    "D4": 0.9418604651162791,
+    "runes": 175
+   },
+   {
+    "signum": "U 805",
+    "D4": 0.825503355704698,
+    "runes": 161
+   },
+   {
+    "signum": "Bo Boije4",
+    "D4": 0.6842105263157895,
+    "runes": 91
+   },
+   {
+    "signum": "DR 399",
+    "D4": 0.49324324324324326,
+    "runes": 151
+   },
+   {
+    "signum": "U 932",
+    "D4": 0.45454545454545453,
+    "runes": 108
+   },
+   {
+    "signum": "DR 401",
+    "D4": 0.40860215053763443,
+    "runes": 100
+   },
+   {
+    "signum": "Vg 17",
+    "D4": 0.3620689655172414,
+    "runes": 131
+   },
+   {
+    "signum": "U 212",
+    "D4": 0.3050847457627119,
+    "runes": 133
+   }
+  ]
+ },
+ "q1": {
+  "runsten": {
+   "n": 2189,
+   "T5": 3,
+   "T4": 7,
+   "T3": 32
+  },
+  "annan sten": {
+   "n": 296,
+   "T5": 0,
+   "T4": 0,
+   "T3": 1
+  },
+  "lösa föremål": {
+   "n": 234,
+   "T5": 1,
+   "T4": 1,
+   "T3": 3
+  }
+ },
+ "q1_list": [
+  {
+   "signum": "Sm 144",
+   "kind": "runsten",
+   "runes": 81,
+   "X": "kuþaskakifaþi",
+   "normalization": "§P §A SunR naut smiða \"Kata, §B \"VifriðaR/\"VifrøðaR [s]un[aR]. §C \"Guða-\"Skæggi/\"Skakki/\"Skagi faði. §Q §A \"Guða-\"Skæggi faði. §B SunR naut smiða \"Kata. §C Vif siðaR unn[i].",
+   "translation_en": "§P §AB The son made good use of Káti Véfríðarson's/Véfrøðarson's handiwork. §C Guða-Skeggi/Skakki/Skagi coloured. §Q Goða-Skeggi (i.e. Skeggi of the goði or goðar) coloured. The son got (or: made good use of) Káti's handiwork. The wife late"
+  },
+  {
+   "signum": "DR M107",
+   "kind": "lösa föremål",
+   "runes": 12,
+   "X": "þurkil",
+   "normalization": "\"Þorkel, \"Þorkel.",
+   "translation_en": "Þorkell, Þorkell."
+  },
+  {
+   "signum": "Sö 54",
+   "kind": "runsten",
+   "runes": 130,
+   "X": "stain",
+   "normalization": "§A \"Þorstæinn ok \"Øystæinn ok \"Nattfari ræistu stæin at \"Finnvið ok \"Olæif, \"Þorkel, brøðr sina. VaRu alliR \"Vikings syniR, landburniR mænn, letu retta stæin. §B \"Stæinkell ræist runaR.",
+   "translation_en": "§A Þorsteinn and Eysteinn and Náttfari raised the stone in memory of Finnviðr and Óleifr (and) Þorkell, their brothers. (They) were all Víkingr's sons, men born to land(ed property), (who) had the stone erected. §B Steinkell carved the rune"
+  },
+  {
+   "signum": "U 241",
+   "kind": "runsten",
+   "runes": 121,
+   "X": "faþur",
+   "normalization": "En \"Dan ok \"Huskarl ok \"Svæinn letu retta stæin æftiR \"Ulfrik, faðurfaður sinn. Hann hafði a \"Ænglandi tu giald takit. \"Guð hialpi þæiRa fæðga salu ok \"Guðs moðiR.",
+   "translation_en": "And Danr and Húskarl and Sveinn had the stone erected in memory of Ulfríkr, their father's father. He had taken two payments in England. May God and God's mother help the souls of the father and son."
+  },
+  {
+   "signum": "U 1039",
+   "kind": "runsten",
+   "runes": 119,
+   "X": "giri",
+   "normalization": "§AP \"Stoðbiorn(?) ok \"Øystæinn/\"Æistæinn rettu stæin æftiR faður sinn \"Gulla(?). Miskunn gæri(?) \"Kristr, lettin salu hans. §AQ \"Stoðbiorn(?) ok \"Øystæinn/\"Æistæinn rettu stæin æftiR faður sinn \"Gulla \"Myskiu. \"Kristr lettin salu hans. §B \"",
+   "translation_en": "§AP Stóðbjôrn(?) and Eysteinn erected the stone in memory of their father Gulli(?). May Christ have mercy(?), relieve his soul. §AQ Stóðbjôrn(?) and Eysteinn erected the stone in memory of their father Gulli Myskja. May Christ relieve his s"
+  },
+  {
+   "signum": "U 193",
+   "kind": "runsten",
+   "runes": 61,
+   "X": "itur",
+   "normalization": "\"Gunna ok \"Ingialdr, \"Illugi, þau letu rettu retta stæin æptiR \"Sigfasta, boanda \"Gu[nn]u.",
+   "translation_en": "Gunna and Ingjaldr (and) Illugi, they had the stone erected in memory of Sigfasti, Gunna's husbandman."
+  },
+  {
+   "signum": "U 847",
+   "kind": "runsten",
+   "runes": 205,
+   "X": "itur",
+   "normalization": "§P \"Asgæi[RR(?) ok \"G]islaug letu <ritu> retta stæin þenna at tva(?) syni sina \"Adiarf ok \"Sloða. \"Asmundr hio runaR rettaR þæim raða skal. En \"Asmundr ... risti. §Q \"Asgæi[RR(?) ok \"G]islaug letu <ritu> retta stæin þenna at syni sina \"Adia",
+   "translation_en": "§P Ásgeirr(?) and Gíslaug had this stone ... erected in memory of their two(?) sons Ádjarfr and Slóði. Ásmundr cut the right runes, for him who will interpret. And Ásmundr ... carved. §Q Ásgeirr(?) and Gíslaug had this stone ... erected in "
+  },
+  {
+   "signum": "Ög 136",
+   "kind": "runsten",
+   "runes": 772,
+   "X": "faþi",
+   "normalization": "§A Aft Vamoð standa runaR þaR. Æn Varinn faði, faðiR, aft faigian sunu. Sagum mogminni/ungmænni þat, hværiaR valraufaR vaRin tvaR þaR, svað tvalf sinnum vaRin numnaR at valraufu, baðaR saman a ymissum mannum. Þat sagum annart, hvaR fur niu ",
+   "translation_en": "§A In memory of Vámóðr stand these runes. And Varinn coloured them, the father, in memory of his dead son. I say the folktale / to the young men, which the two war-booties were, which twelve times were taken as war-booty, both together from"
+  }
+ ],
+ "q3_groups": {
+  "inte språk": {
+   "n": 55,
+   "median_D4": 0.0,
+   "malt_percentile": 0.9636363636363636
+  },
+  "språklik": {
+   "n": 35,
+   "median_D4": 0.0,
+   "malt_percentile": 0.9428571428571428
+  }
+ }
+}
