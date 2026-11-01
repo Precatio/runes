@@ -2,17 +2,21 @@
 
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import landDefs from "@/lib/historiska_land.json";
 import { useEffect, useMemo, useState } from "react";
 import { API_URL } from "@/lib/api";
 import { GLOSSARY } from "@/lib/glossary";
 import { Tip } from "@/components/Explain";
 import {
-  nearPlace, periodShares, PLACE_STYLE, SPLITS, splitOf, provinceTable, SHARE_CLASSES, TOO_FEW, type MapCircle, type MapMarker, type PatternStone,
+  nearPlace, periodShares, PLACE_STYLE, SPLITS, splitOf, provinceTable, groupTable, SHARE_CLASSES, TOO_FEW, type MapCircle, type MapMarker, type PatternStone,
   type PlaceKind, type PlaceLayer,
 } from "@/lib/patternMap";
 import type { Scan } from "@/components/LandscapeScan";
 import ExportTable from "@/components/ExportTable";
 import RealmPanel from "@/components/RealmPanel";
+
+// The Viking Age lands by id, for the share table (Uppland's folklands, Småland's small lands)
+const LAND_NAMES: Record<string, string> = Object.fromEntries(landDefs.epoch.regions.map(r => [r.id, r.name]));
 
 const PatternMaps = dynamic(() => import("@/components/PatternMap"), {
   ssr: false,
@@ -128,6 +132,17 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
                                 [data, nearKind, nearKm, f.nearonly]);
   const periods = useMemo(() => (data && patternKey ? periodShares(data.stones, patternKey, splitYear) : null), [data, patternKey, splitYear]);
   const provinces = useMemo(() => (data && patternKey ? provinceTable(data.stones, patternKey) : []), [data, patternKey]);
+  // The same table by the Viking Age lands: Uppland's folklands and Småland's small lands (historiska_land.json,
+  // stones joined to a land by their parish in scripts/assign_sten_land.py); the other provinces as they are
+  const [division, setDivision] = useState<"landskap" | "land">("landskap");
+  const [stoneLand, setStoneLand] = useState<Record<string, string> | null>(null);
+  useEffect(() => {
+    if (division !== "land" || stoneLand) return;
+    fetch("/geo/sten_land.json").then(r => (r.ok ? r.json() : Promise.reject())).then(setStoneLand).catch(() => setDivision("landskap"));
+  }, [division, stoneLand]);
+  const lands = useMemo(() => (data && patternKey && stoneLand
+    ? groupTable(data.stones, patternKey, st => stoneLand[st.s] ?? st.p) : []), [data, patternKey, stoneLand]);
+  const groupName = (g: string) => LAND_NAMES[g] ?? (g === "U" || g === "Sm" ? `${provinceName(g)} (land okänt)` : provinceName(g));
 
   // Clusters and hot or cold stones of the chosen pattern, when comparing with clusters
   const coords = useMemo(() => new Map((data?.stones ?? []).map(s => [s.s, s])), [data]);
@@ -341,12 +356,24 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
       </details>
       <details className={box}>
         <summary className="cursor-pointer text-sm font-bold text-slate-800">Andel per landskap (samma siffror som tabell)</summary>
+        <div className="flex flex-wrap items-center gap-1 mt-2" role="group" aria-label="Indelning">
+          {([["landskap", "Dagens landskap"], ["land", "Vikingatida indelning"]] as const).map(([k, label]) => (
+            <button key={k} onClick={() => setDivision(k)} aria-pressed={division === k}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold border ${division === k ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50"}`}>{label}</button>
+          ))}
+        </div>
+        {division === "land" && (
+          <p className="text-xs text-slate-500 mt-2">
+            Uppland delat i folkland och Småland i små land, efter stenens socken; övriga landskap som i dag. Indelningen är
+            känd ur medeltida källor och gränserna är ungefärliga (se kartans gränslager, läget Små land).
+          </p>
+        )}
         <div className="overflow-x-auto mt-2">
           <ExportTable><table className="text-sm min-w-[360px]">
-            <thead><tr className="text-left text-[11px] uppercase tracking-wider text-slate-500"><th className="p-2">Landskap</th><th className="p-2">Stenar</th><th className="p-2">Med mönstret</th><th className="p-2">Andel</th></tr></thead>
+            <thead><tr className="text-left text-[11px] uppercase tracking-wider text-slate-500"><th className="p-2">{division === "land" ? "Land" : "Landskap"}</th><th className="p-2">Stenar</th><th className="p-2">Med mönstret</th><th className="p-2">Andel</th></tr></thead>
             <tbody>
-              {provinces.filter(r => r.n >= MIN_STONES).map(r => (
-                <tr key={r.p} className="border-t border-slate-900/5"><td className="p-2">{provinceName(r.p)}</td><td className="p-2">{r.n}</td><td className="p-2">{r.k}</td><td className="p-2 font-semibold">{pct(r.share)}</td></tr>
+              {(division === "land" ? lands : provinces).filter(r => r.n >= MIN_STONES).map(r => (
+                <tr key={r.p} className="border-t border-slate-900/5"><td className="p-2">{division === "land" ? groupName(r.p) : provinceName(r.p)}</td><td className="p-2">{r.n}</td><td className="p-2">{r.k}</td><td className="p-2 font-semibold">{pct(r.share)}</td></tr>
               ))}
             </tbody>
           </table></ExportTable>

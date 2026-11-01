@@ -42,6 +42,20 @@ export const TOO_FEW = "#e7e5e0";
 export const colorOf = (share: number) => SHARE_CLASSES.find(c => share < c.max)?.color ?? SHARE_CLASSES[4].color;
 
 /** The share per province, as a table beside the map (the same numbers without the map). */
+// The share per group: per province by default, or per any grouping of the stones (the Viking Age lands)
+export function groupTable(stones: PatternStone[], key: string, groupOf: (st: PatternStone) => string) {
+  const by = new Map<string, { n: number; k: number }>();
+  for (const st of stones) {
+    const val = st.v[key];
+    if (val === null || val === undefined) continue;
+    const g = groupOf(st);
+    const c = by.get(g) ?? { n: 0, k: 0 };
+    c.n += 1; c.k += val;
+    by.set(g, c);
+  }
+  return [...by.entries()].map(([p, c]) => ({ p, ...c, share: c.k / c.n })).sort((a, b) => b.n - a.n);
+}
+
 export function provinceTable(stones: PatternStone[], key: string) {
   const by = new Map<string, { n: number; k: number }>();
   for (const st of stones) {

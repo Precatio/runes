@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "andel-vikingatida-land",
+   "date": "2026-11-01",
+   "status": "nytt",
+   "title": "Andelen per vikingatida land på kartsidan",
+   "text": "Tabellen Andel per landskap under mönsterkartan kan nu också visa den vikingatida indelningen: Uppland delat i Tiundaland, Attundaland, Fjädrundaland och Roden, Småland i sina små land. Varje sten hör till landet genom sin socken."
+  },
+  {
    "id": "vikingastader-karta",
    "date": "2026-11-01",
    "status": "nytt",
