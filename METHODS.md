@@ -559,8 +559,10 @@ motsäger, med belägg, nyhet och relevans):
   Uppgifterna är en nyare källa, inte appens upptäckter, och får därför lågt nyhetsvärde (0,3) och en fast bedömning.
 * **Samma familj (namnlänk):** länkarna ur avsnitt 1r utan motsägelser i släktskap eller tid (70 länkar sedan 2026-11-01, tidigare 28). Varje länk
   står på båda stenarna, så de ger ett fynd på varje svensk runsten i länken (danska och norska stenar ingår i
-  länkmodellen men får inga egna fynd; och fem av länkarna knyter Rundata redan ihop); i rubriktalet "sannolikt ny kunskap" räknas varje länk en gång. Länkar som Rundata redan gör – parstenar och stenar som Rundatas
-  anmärkningar knyter ihop på annat sätt ("Utgör ett monument tillsammans med …") – räknas som *stämmer* (5 länkar).
+  länkmodellen men får inga egna fynd; och fem av länkarna knyter Rundata redan ihop); i rubriktalet "sannolikt ny kunskap" räknas varje länk en gång. Länkar som redan är kända räknas som *stämmer*: parstenar och stenar som Rundatas
+  anmärkningar knyter ihop på annat sätt ("Utgör ett monument tillsammans med …"), och sedan 2026-11-01 också länkar
+  mellan stenar i samma grupp i Williams förteckning (Åsrunan 1990, bilaga) och par som Peterson (Nordiskt runnamnslexikon
+  2007) anger avser samma person. Av de 61 svenska länkarna 2026-11-01 är 3 inte kända i någon av källorna.
 * **Egna fynd:** det vi kommit fram till om en sten i artiklar och analyser, fört in för hand med källa och datum i
   `data/stone_findings.json`. En rad med okänt verdict (annat än stämmer, nytt, motsäger), utan signum eller text,
   eller med belägg eller nyhet utanför 0–1 hoppas över och loggas. Bara svenska vikingatida runstenar tas med; ett eget fynd om ett annat

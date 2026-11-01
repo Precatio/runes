@@ -40,6 +40,12 @@ RUNOR = os.path.join(ROOT, "data", "raa", "runor_2020.json")
 RUNOR_COMPARE = os.path.join(ROOT, "utdata", "runor", "jamforelse.json")
 MANUAL = os.path.join(ROOT, "data", "stone_findings.json")
 LINKS = os.path.join(ROOT, "data", "links.json")
+# Williams 1990 (Åsrunan, bilaga s. 185–187): runologins förteckning över inskrifter med genealogiskt samband, avskriven för
+# hand 2026-11-01 (utdata/slakt/williams1990_bilaga.py). En länk mellan stenar i samma grupp där är redan känd.
+WILLIAMS = os.path.join(ROOT, "utdata", "slakt", "williams1990_bilaga.json")
+# Peterson 2007 (Nordiskt runnamnslexikon): anmärkningarna att belägg på två stenar avser samma person, utan ristare och
+# utan Ingvars-, Knuts- och Frögersstenarna (utdata/slakt/peterson2007_samma_person.py)
+PETERSON = os.path.join(ROOT, "utdata", "slakt", "peterson2007_samma_person.json")
 
 TEXTGAP = "luckor i texten (sannolikhetsmodell)"
 RUNOR_PLACE = "Runor 2020 (ursprunglig plats)"
@@ -211,6 +217,13 @@ def link_findings(lookup, inscriptions: list[dict], ctx=None) -> list[dict]:
     d = _load(LINKS) or {}
     cut = d.get("fdr_cut", 0.1)
     pars = {tuple(p) for p in ((d.get("validation") or {}).get("parsten") or {}).get("pairs") or []}
+    peterson = {tuple(sorted((p["a"], p["b"]))) for p in (_load(PETERSON) or {}).get("pairs") or []
+                if p.get("stones") and not p.get("carver")}
+    wgroup: dict[str, set[int]] = {}
+    for gi, g in enumerate((_load(WILLIAMS) or {}).get("groups") or []):
+        for m in g["members"]:
+            if m.get("rundata"):
+                wgroup.setdefault(m["rundata"], set()).add(gi)
     out = []
     for x in d.get("links") or []:
         if x["q"] >= cut or x.get("contradictions"):
@@ -221,18 +234,25 @@ def link_findings(lookup, inscriptions: list[dict], ctx=None) -> list[dict]:
                 continue
             rel, rr = stone_relevance(rec)
             parsten = tuple(sorted((this, other))) in pars
-            known = parsten or bool(x.get("rundata_linked"))
+            williams = bool(wgroup.get(this, set()) & wgroup.get(other, set()))
+            pet = tuple(sorted((this, other))) in peterson
+            known = parsten or bool(x.get("rundata_linked")) or williams or pet
             where = f", {x['km']:.0f} km bort".replace(".", ",") if x.get("km") is not None else ""
             ev = max(0.0, 1 - x["q"] * 5)
             out.append(_stone(_finding(rec, LINK, "stämmer" if known else "nytt",
                                 f"Delar namnen {', '.join(x['names'])} med {other}{where}: troligen samma familj.",
                                 "Rundata kallar stenarna parstenar" if parsten
-                                else "Rundata anger att stenarna hör ihop" if known else "Rundata länkar inte stenarna",
+                                else "Rundata anger att stenarna hör ihop" if x.get("rundata_linked")
+                                else "Williams (1990) knyter samman stenarna" if williams
+                                else "Peterson (2007) anger att samma person står på båda" if pet
+                                else "Varken Rundata, Williams (1990) eller Peterson (2007) länkar stenarna",
                                 ev, 0.6, rel,
-                                {"belägg": [f"andel falska länkar vid samma styrka {round(x['q'] * 100)} % (namnen blandade inom "
-                                            f"landskapet), {round(x.get('q_district', 1) * 100)} % inom häradet",
-                                            "släktskap och datering motsäger inte länken"],
-                                 "nyhet": [] if known else ["en släktlänk mellan stenarna som Rundata inte anger"],
+                                {"belägg": [f"andel falska länkar vid samma styrka och samma avstånd {round(x['q'] * 100)} % "
+                                            f"(namnen blandade inom landskapet), {round(x.get('q_district', 1) * 100)} % inom häradet",
+                                            "släktskap och datering motsäger inte länken",
+                                            "sättet att räkna efter avstånd valdes efter att ha sett Williams förteckning "
+                                            "(1990); ett blint handprov var inte avgörande (METHODS 1r)"],
+                                 "nyhet": [] if known else ["en släktlänk som varken Rundata, Williams (1990) eller Peterson (2007) anger"],
                                  "relevans": rr}, known, linked=other, shared=x["names"], q=x["q"])))
     return out
 
