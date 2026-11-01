@@ -1,6 +1,6 @@
 "use client";
 
-import { CERTAINTY, DASH, EPOCHS, epochOf, REALM_SOURCES, REALM_UNKNOWN, REALMS, type Certainty } from "@/lib/realms";
+import { CERTAINTY, DASH, EPOCHS, epochOf, REALM_SOURCES, REALM_UNKNOWN, REALMS, TOWN_SOURCES, TOWN_TYPES, townMark, townsAt, type Certainty } from "@/lib/realms";
 
 // The choice of time for the layer of realms, its legend and, folded, what each area builds on and the sources
 // (src/lib/realms.ts). The same on the point map and the pattern map.
@@ -21,6 +21,8 @@ export default function RealmPanel({ value, onChange }: { value: string; onChang
   // (the contested areas are shown by their kind of line, not as a realm)
   const realms = epoch ? [...new Set(epoch.regions.map(r => r.realm))].filter(r => r !== "omstridd") : [];
   const kinds = epoch ? [...new Set(epoch.regions.map(r => r.certainty))] : [];
+  const towns = townsAt(epoch?.key);
+  const townTypes = [...new Set(towns.map(t => t.type))];
   return (
     <div className="space-y-2">
       <div className="flex flex-wrap items-center gap-1" role="group" aria-label="Riken och gränser">
@@ -41,6 +43,7 @@ export default function RealmPanel({ value, onChange }: { value: string; onChang
           </div>
           <div className="flex flex-wrap gap-x-3 gap-y-1 text-slate-500">
             {kinds.map(k => <span key={k} className="flex items-center gap-1.5"><Swatch color="#475569" certainty={k} />{CERTAINTY[k]}</span>)}
+            {townTypes.map(k => <span key={k} className="flex items-center gap-1.5"><span dangerouslySetInnerHTML={{ __html: townMark(k) }} />{TOWN_TYPES[k]?.label ?? k}</span>)}
           </div>
           <details>
             <summary className="cursor-pointer font-semibold text-slate-700">{epoch.title}: vad gränserna bygger på</summary>
@@ -56,6 +59,17 @@ export default function RealmPanel({ value, onChange }: { value: string; onChang
               </ul>
               {!epoch.sources && <p className="text-slate-500">{REALM_UNKNOWN}</p>}
               <p className="text-slate-500"><span className="font-semibold">Källor:</span> {(epoch.sources ?? REALM_SOURCES).join(" ")}</p>
+              {towns.length > 0 && (
+                <>
+                  <p className="font-semibold pt-1">Handelsplatser, centralplatser och städer</p>
+                  <ul className="space-y-1">
+                    {towns.map(t => (
+                      <li key={t.id}><span className="font-semibold">{t.name}</span> ({(TOWN_TYPES[t.type]?.label ?? t.type).toLowerCase()}): {t.period}.{t.note && <> {t.note}</>}</li>
+                    ))}
+                  </ul>
+                  <p className="text-slate-500"><span className="font-semibold">Källor:</span> {TOWN_SOURCES.join(" ")}</p>
+                </>
+              )}
             </div>
           </details>
         </div>

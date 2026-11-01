@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "vikingastader-karta",
+   "date": "2026-11-01",
+   "status": "nytt",
+   "title": "Vikingatidens handelsplatser och första städer på kartan",
+   "text": "När rikenas gränser visas på kartan står nu också handelsplatserna, centralplatserna och de första städerna som fanns vid den tiden: omkring 890 Ribe, Hedeby, Kaupang, Birka, Uppåkra, Gamla Uppsala och de andra, omkring 1025 även Sigtuna, Lund och Skara. I läget Små land visas alla. Vad källan säger om varje plats och källorna står under kartan."
+  },
+  {
    "id": "sma-land-karta",
    "date": "2026-11-01",
    "status": "nytt",

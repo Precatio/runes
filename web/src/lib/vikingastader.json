@@ -1,0 +1,37 @@
+{
+  "about": "Vikingatidens handelsplatser, centralplatser och första städer i Norden för kartans gränslager. Urvalet och typerna följer svenska Wikipedias Vikingatida städer i Norden och Stad (Sverige) samt engelska Wikipedias Emporium (early medieval), hämtade 2026-11-01; lägena ur Wikidata. Årtalen from och to är ungefärliga och styr bara vid vilken av kartans tidpunkter platsen visas; vad källan säger om tiden står i period.",
+  "types": {
+    "handelsplats": { "label": "Handelsplats", "symbol": "ring" },
+    "centralplats": { "label": "Centralplats", "symbol": "square" },
+    "stad": { "label": "Tidig stad", "symbol": "dot" }
+  },
+  "places": [
+    { "id": "ribe", "name": "Ribe", "type": "handelsplats", "lat": 55.3272, "lon": 8.7631, "from": 705, "to": null, "period": "fast bebyggelse från början av 700-talet; Ansgar besökte platsen på 820-talet", "note": "Nordens äldsta kända handelsplats; fortsatte som stad." },
+    { "id": "hedeby", "name": "Hedeby", "type": "handelsplats", "lat": 54.4911, "lon": 9.5653, "from": 750, "to": 1066, "period": "äldsta bebyggelsen andra hälften av 700-talet; handel 700–1000-talet; stadsvall vid mitten av 900-talet", "note": "Ansågs vara Nordens mest betydande handelsstad under vikingatiden." },
+    { "id": "kaupang", "name": "Kaupang", "type": "handelsplats", "lat": 59.0308, "lon": 10.1075, "from": 800, "to": 960, "period": "vikingatid; försvann och ersattes av Sarpsborg och Oslo", "note": "Den stora handelsplatsen i södra Norge (Skiringssal hos Ottar)." },
+    { "id": "birka", "name": "Birka", "type": "handelsplats", "lat": 59.3367, "lon": 17.545, "from": 750, "to": 975, "period": "Ansgar besökte platsen på 820-talet; försvann i slutet av 900-talet", "note": "Stadsliknande samhälle på Björkö i Mälaren; ersattes av Sigtuna." },
+    { "id": "kopingsvik", "name": "Köpingsvik", "type": "handelsplats", "lat": 56.8833, "lon": 16.7167, "from": 800, "to": 1050, "period": "vikingatid", "note": "Stor handelsplats på Öland." },
+    { "id": "paviken", "name": "Paviken", "type": "handelsplats", "lat": 57.4547, "lon": 18.1408, "from": 700, "to": 1000, "period": "vikingatid; tycks ha ersatts av Västergarn", "note": "Handelsplats på Gotlands västkust." },
+    { "id": "vastergarn", "name": "Västergarn", "type": "handelsplats", "lat": 57.4462, "lon": 18.1393, "from": 1000, "to": 1200, "period": "efterträdde Paviken; halvcirkelvall", "note": "Visby blev stad först under tidig medeltid." },
+    { "id": "uppakra", "name": "Uppåkra", "type": "centralplats", "lat": 55.667, "lon": 13.1709, "from": -100, "to": 990, "period": "bebyggelse från tiden kring Kristi födelse; efterträddes av Lund i slutet av 900-talet", "note": "Stadsliknande centralplats med fast handelsplats." },
+    { "id": "gamla_uppsala", "name": "Gamla Uppsala", "type": "centralplats", "lat": 59.8944, "lon": 17.6389, "from": 500, "to": 1100, "period": "järnålder och vikingatid", "note": "Större centralplats och den hedniska kultens centrum; ingen stad." },
+    { "id": "sigtuna", "name": "Sigtuna", "type": "stad", "lat": 59.6173, "lon": 17.7236, "from": 980, "to": null, "period": "grundad i slutet av 900-talet", "note": "Ersatte Birka." },
+    { "id": "lund", "name": "Lund", "type": "stad", "lat": 55.7083, "lon": 13.1992, "from": 990, "to": null, "period": "grundad i slutet av 900-talet, då under dansk kung", "note": "Efterträdde Uppåkra, enligt källan med stor sannolikhet på Harald Blåtands order." },
+    { "id": "skara", "name": "Skara", "type": "stad", "lat": 58.3842, "lon": 13.4349, "from": 990, "to": null, "period": "grundad i slutet av 900-talet enligt Stad (Sverige); tidigt en betydande ort", "note": "Västergötlands centralort." },
+    { "id": "linkoping", "name": "Linköping", "type": "stad", "lat": 58.4094, "lon": 15.6257, "from": 1050, "to": null, "period": "anor i sen vikingatid", "note": "Ligger mitt i ett vikingatida centralområde." },
+    { "id": "viborg", "name": "Viborg", "type": "stad", "lat": 56.45, "lon": 9.4, "from": 1000, "to": null, "period": "stadsliknande bebyggelse 900–1100-tal (källans rubrik)", "note": "Nämns bland det dåtida Danmarks städer." },
+    { "id": "aarhus", "name": "Århus", "type": "stad", "lat": 56.1564, "lon": 10.2097, "from": 950, "to": null, "period": "stadsliknande bebyggelse 900–1100-tal (källans rubrik)", "note": "Nämns bland det dåtida Danmarks städer." },
+    { "id": "roskilde", "name": "Roskilde", "type": "stad", "lat": 55.6417, "lon": 12.0808, "from": 1000, "to": null, "period": "stadsliknande bebyggelse 900–1100-tal (källans rubrik)", "note": "Nämns bland det dåtida Danmarks städer." },
+    { "id": "helsingborg", "name": "Helsingborg", "type": "stad", "lat": 56.0424, "lon": 12.721, "from": 1050, "to": null, "period": "stadsliknande bebyggelse 900–1100-tal (källans rubrik)", "note": "Nämns bland det dåtida Danmarks städer." },
+    { "id": "kopenhamn", "name": "Köpenhamn", "type": "stad", "lat": 55.6761, "lon": 12.5689, "from": 1080, "to": null, "period": "stadsliknande bebyggelse 900–1100-tal (källans rubrik)", "note": "Nämns bland det dåtida Danmarks städer; den yngsta i listan." },
+    { "id": "tonsberg", "name": "Tønsberg", "type": "stad", "lat": 59.267, "lon": 10.409, "from": 871, "to": null, "period": "grundad 871 enligt källan, räknas som Norges äldsta stad", "note": "Årtalet 871 är traditionens, inte arkeologins." },
+    { "id": "sarpsborg", "name": "Sarpsborg", "type": "stad", "lat": 59.2839, "lon": 11.1096, "from": 1010, "to": null, "period": "uppstod när Kaupang försvann", "note": "" },
+    { "id": "oslo", "name": "Oslo", "type": "stad", "lat": 59.9133, "lon": 10.7389, "from": 1040, "to": null, "period": "uppstod när Kaupang försvann", "note": "" },
+    { "id": "trondheim", "name": "Trondheim", "type": "stad", "lat": 63.44, "lon": 10.4, "from": 1000, "to": null, "period": "utvecklades till en stad av stor betydelse, särskilt efter Olav den heliges död 1030", "note": "Nidaros." }
+  ],
+  "sources": [
+    "Svenska Wikipedia, hämtad 2026-11-01: Vikingatida städer i Norden; Stad (Sverige).",
+    "Engelska Wikipedia, hämtad 2026-11-01: Emporium (early medieval).",
+    "Lägen: Wikidata (CC0)."
+  ]
+}

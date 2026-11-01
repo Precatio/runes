@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { divIcon, type PathOptions } from "leaflet";
 import { GeoJSON, Marker, Pane } from "react-leaflet";
 import type { Feature, FeatureCollection, Geometry } from "geojson";
-import { DASH, REALMS, urlOf, type Certainty } from "@/lib/realms";
+import { DASH, REALMS, townMark, townsAt, urlOf, type Certainty } from "@/lib/realms";
 
 // The realms' approximate borders at the chosen time (src/lib/realms.ts), drawn under the stones on the point map and as
 // outlines over the hexagons on the pattern map. Neither the areas nor the names take the mouse, so that the stones'
@@ -58,7 +58,12 @@ export default function RealmLayer({ epoch, outline = false }: { epoch: string; 
           <Marker key={`${epoch}-${f.properties.id}`} position={[f.properties.label_lat, f.properties.label_lon]}
             interactive={false} keyboard={false}
             icon={divIcon({ className: "realm-label", iconSize: [0, 0],
-                            html: `<span style="color:${REALMS[f.properties.realm]?.color ?? "#334155"}">${esc(f.properties.label)}</span>` })} />
+                            html: `<span style="color:${REALMS[f.properties.realm]?.color ?? "#334155"}${epoch === "land" ? ";font-size:9px;letter-spacing:0.02em" : ""}">${esc(f.properties.label)}</span>` })} />
+        ))}
+        {townsAt(epoch).map(t => (
+          <Marker key={`town-${t.id}`} position={[t.lat, t.lon]} interactive={false} keyboard={false}
+            icon={divIcon({ className: "realm-town", iconSize: [0, 0],
+                            html: `<span style="position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:3px;white-space:nowrap;font:600 10px system-ui,sans-serif;color:#7c2d12;text-shadow:0 0 2px #fff,0 0 2px #fff">${townMark(t.type)}<span style="position:absolute;left:12px">${esc(t.name)}</span></span>` })} />
         ))}
       </Pane>
     </>
