@@ -28,6 +28,14 @@ if (is.null(P$remains) || !file.exists(P$remains)) {
 
 d <- read_corpus(P$corpus) %>% filter(!is.na(lat), !is.na(lon))
 if ("moved" %in% names(d)) d <- d %>% filter(is.na(moved) | moved == 0)
+# The Viking Age division for the scan's regional term (2026-11-01): Uppland's folklands and Småland's small lands
+# (web/public/geo/sten_land.json, scripts/assign_sten_land.py), the other provinces as today
+d$region <- d$province
+if (!is.null(P$stone_lands) && file.exists(P$stone_lands)) {
+  sl <- jsonlite::fromJSON(P$stone_lands)
+  hit <- d$signum %in% names(sl)
+  d$region[hit] <- unlist(sl[d$signum[hit]])
+}
 d$year <- ifelse(!is.na(d$style_from), (d$style_from + d$style_to) / 2, NA)
 d$t50 <- (d$year - 1050) / 50
 pts <- st_transform(st_as_sf(d, coords = c("lon", "lat"), crs = 4326, remove = FALSE), SWEREF)
@@ -326,7 +334,7 @@ SCAN_KINDS <- c("cult_a", "cult_b", "central", "church", "gravfalt", "hog", "vag
 SCAN_KINDS <- SCAN_KINDS[paste0("km_", SCAN_KINDS) %in% names(d)]
 SCAN_RADIUS <- c(cult_a = 2, cult_b = 2, central = 2, church = 2, gravfalt = 0.5, hog = 0.5, vag = 0.5, bro = 0.5, fornborg = 0.5)
 SCAN_MIN <- 15   # stones with and without the pattern
-scan <- tryCatch({
+run_scan <- function(strata) tryCatch({
   feats <- grep("^pm_", names(d), value = TRUE)
   cells <- list()
   for (fe in feats) for (k in SCAN_KINDS) {
@@ -336,10 +344,10 @@ scan <- tryCatch({
     dd$y <- as.integer(dd[[fe]])
     dd$closer <- -log2(km[ok] + 0.25)          # one unit = the distance halves
     if (sum(dd$y) < SCAN_MIN || sum(1 - dd$y) < SCAN_MIN) next
-    r <- with_halves(dd, as.formula(paste("y ~ closer", prov)), "closer")
+    r <- with_halves(dd, as.formula(paste("y ~ closer", strata)), "closer")
     if (is.null(r)) next
     dt <- dd[!is.na(dd$t50), ]
-    rt <- if (sum(dt$y) >= SCAN_MIN && sum(1 - dt$y) >= SCAN_MIN) fit_term(dt, as.formula(paste("y ~ closer + t50", prov)), "closer") else NULL
+    rt <- if (sum(dt$y) >= SCAN_MIN && sum(1 - dt$y) >= SCAN_MIN) fit_term(dt, as.formula(paste("y ~ closer + t50", strata)), "closer") else NULL
     near <- km[ok] < SCAN_RADIUS[[k]]
     cells[[length(cells) + 1]] <- c(list(feature = sub("^pm_", "", fe), kind = k, radius_km = SCAN_RADIUS[[k]],
                                          n_near = sum(near), share_near = share(dd$y[near]), share_far = share(dd$y[!near]),
@@ -351,6 +359,13 @@ scan <- tryCatch({
        n_sig = sum(q < 0.05), n_replicated = sum(q < 0.05 & sapply(cells, function(x) isTRUE(x$halves$replicated))),
        cells = cells)
 }, error = function(e) list(available = FALSE, error = conditionMessage(e)))
+# The regional term is the Viking Age division; the same scan with today's provinces is kept as a comparison
+scan <- run_scan(if (length(unique(d$region)) > 1) " + factor(region)" else "")
+scan_prov <- run_scan(prov)
+if (isTRUE(scan$available)) {
+  scan$strata <- "vikingatida indelning"
+  scan$province_version <- if (isTRUE(scan_prov$available)) scan_prov[c("n_tests", "n_sig", "n_replicated")] else NULL
+}
 
 # The scan as a figure: every pattern against every kind of place, warm where the pattern is more common nearer the
 # places, cool where it is rarer; pale where the cell does not survive the adjustment (Benjamini–Hochberg); ✓ where it
@@ -376,8 +391,8 @@ fig_scan <- tryCatch(if (isTRUE(scan$available) && length(scan$cells)) {
     scale_colour_manual(values = c(`TRUE` = INK, `FALSE` = MUTED), guide = "none") +
     labs(x = NULL, y = NULL,
          title = tr("Dolda mönster i landskapet", "Hidden patterns in the landscape"),
-         subtitle = paste(strwrap(tr(sprintf("Oddskvot när avståndet till platsen halveras, med landskapet konstant; %d kombinationer, %d klarar justeringen (Benjamini–Hochberg). Blekt: klarar den inte. ✓: håller i båda halvorna.", scan$n_tests, scan$n_sig),
-                                     sprintf("Odds ratio when the distance to the place halves, province held constant; %d combinations, %d survive the adjustment (Benjamini–Hochberg). Pale: does not. ✓: holds in both halves.", scan$n_tests, scan$n_sig)), 120), collapse = "\n"),
+         subtitle = paste(strwrap(tr(sprintf("Oddskvot när avståndet till platsen halveras, med den vikingatida indelningen konstant; %d kombinationer, %d klarar justeringen (Benjamini–Hochberg). Blekt: klarar den inte. ✓: håller i båda halvorna.", scan$n_tests, scan$n_sig),
+                                     sprintf("Odds ratio when the distance to the place halves, the Viking Age division held constant; %d combinations, %d survive the adjustment (Benjamini–Hochberg). Pale: does not. ✓: holds in both halves.", scan$n_tests, scan$n_sig)), 120), collapse = "\n"),
          caption = tr("Flyttade stenar räknas inte. Källa: Vitki, r/remains.R; Rundata (ODbL), Kulturmiljöregistret (RAÄ), OpenStreetMap (ODbL), Wikidata (CC0).",
                       "Moved stones are left out. Source: Vitki, r/remains.R; Rundata (ODbL), Cultural Heritage Register (RAÄ), OpenStreetMap (ODbL), Wikidata (CC0).")) +
     theme_runor(9) + theme(panel.grid.major = element_blank(), axis.text.x = element_text(angle = 30, hjust = 1),

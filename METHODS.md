@@ -145,7 +145,7 @@ Källkod: `r/remains.R` (från 2026-10-12). En systematisk sökning efter dolda 
 mönster på mönsterkartan (kolumnerna `pm_*` i korpusens CSV, samma definitioner som kartan, `src/pattern_map.py`)
 prövas mot avståndet till varje sorts plats – teofora och sakrala ortnamn, centralortsnamn, medeltida kyrkor, gravfält,
 högar, färdvägar, broar och fornborgar. Ingen radie väljs: modellen är en logistisk regression på log2 av avståndet
-(plus 250 m, så att en sten vid själva platsen inte blir oändligt nära) med landskapet konstant, och effekten anges som
+(plus 250 m, så att en sten vid själva platsen inte blir oändligt nära) med regionen konstant, och effekten anges som
 oddskvoten när avståndet halveras (över 1: vanligare närmare platserna). Kombinationer där mönstret finns på färre än
 15 stenar eller saknas på färre än 15 prövas inte. Alla kombinationer justeras tillsammans (Benjamini–Hochberg), varje
 prövas också i korpusens två halvor och med tiden konstant, och flyttade stenar räknas inte. Andelen inom 2 km (ortnamn,
@@ -153,6 +153,13 @@ kyrkor) eller 500 m (fornlämningar) redovisas bara som läshjälp. Kombinatione
 halvorna blir mönster att pröva i Forskningsluckor (mönstret *utan religiösa markörer* utelämnas, eftersom det är
 spegelbilden av de kristna markörerna); de som bara klarar justeringen sammanfattas som indikationer. På kartan visas
 genomsökningen som ett rutnät med mönster mot platser.
+
+*Regionen (från 2026-11-01).* Regionen i modellen är den vikingatida indelningen: Upplands folkland (Tiundaland,
+Attundaland, Fjädrundaland, Roden) och Smålands små land, där stenen knyts till landet genom sin socken
+(`scripts/assign_sten_land.py`, `web/public/geo/sten_land.json`; landen i `web/src/lib/historiska_land.json`), och
+övriga landskap som i dag. Tidigare var regionen dagens landskap, som inte fanns på vikingatiden (Viktor 2026-11-01).
+Samma genomsökning med dagens landskap räknas fortfarande som jämförelse. Beräkning 2026-11-01: 0 av 117 klarar
+justeringen med båda indelningarna (lägsta q 0,40 med den vikingatida).
 
 Beräkning 2026-10-21 (117 kombinationer, 1 144 stenar på ursprunglig plats): ingen klarar justeringen (lägsta q
 0,075). 20 har p under 0,05, där slumpen ensam väntas ge omkring 6, men flera prov mäter nästan samma sak (kristna
@@ -162,7 +169,7 @@ konstant), bro- och vägbygge närmare medeltida kyrkor (1,37, med tiden konstan
 ortnamn (1,31, i båda halvorna men q 0,09). Den tidigare beräkningen 2026-10-12 (tio klarade justeringen, fyra höll i
 båda halvorna) gjordes före rättelsen av flyttade stenar (avsnitt 1c, *Rättelse 2026-10-12*) och gäller inte längre.
 
-*Visningen* (kartsidan, *Alla samband i landskapet*, från 2026-10-27): först en sammanfattning i ord – hur många samband
+*Visningen* (kartsidan, *Alla samband med platserna runt stenarna*, tidigare *Alla samband i landskapet*, från 2026-10-27): först en sammanfattning i ord – hur många samband
 som klarar justeringen och håller i båda halvorna, hur många som har p under 0,05 mot vad slumpen ger, och de starkaste
 sambanden i tre nivåer (håller; bara i den ena halvan; starkast men inte säkra), vart och ett med andelarna inom
 radien, oddskvoten med och utan tiden konstant och hur säkert det är. Därefter rutnätet, där antydningar (p under 0,05

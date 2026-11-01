@@ -14,6 +14,8 @@ export interface ScanCell {
 export interface Scan {
   available: boolean; reason?: string; computed_at?: string; n_tests: number; n_sig: number; n_replicated: number;
   kinds: string[]; kind_labels: Record<string, string>; features: { key: string; label: string; group: string }[]; cells: ScanCell[];
+  // The regional term (from 2026-11-01 the Viking Age division) and the same scan with today's provinces
+  strata?: string; province_version?: { n_tests: number; n_sig: number; n_replicated: number } | null;
 }
 
 // Diverging: warm when the pattern is more common nearer the places, cool when it is rarer. Full colour when the cell
@@ -84,6 +86,9 @@ function Summary({ scan }: { scan: Scan }) {
         <p>{more
           ? `${below} har p under 0,05, där slumpen ensam väntas ge omkring ${expected}. Det kan betyda att det finns svaga samband i landskapet. Men flera av proven mäter nästan samma sak (kristna markörer, kors och stenar utan religiösa markörer), så överskottet är osäkrare än det ser ut.`
           : `${below} har p under 0,05, ungefär så många som slumpen ensam väntas ge (omkring ${expected}).`}</p>
+        {scan.province_version && (
+          <p className="text-xs text-slate-500">{`Regionen hålls konstant med den vikingatida indelningen. Med dagens landskap i stället klarar ${scan.province_version.n_sig} av ${scan.province_version.n_tests} justeringen.`}</p>
+        )}
       </div>
       {rep.length > 0 && (
         <div>
@@ -150,8 +155,8 @@ export default function LandscapeScan({ onPick, current, scan: given }: {
         <div className="mt-1.5 space-y-1.5 leading-relaxed">
           <p>
             Varje samband är en logistisk regression på avståndet från stenen till närmaste plats av sorten, utan vald
-            radie och med landskapet konstant. Flyttade stenar räknas inte, eftersom deras avstånd säger inget om var de
-            restes.
+            radie och med den vikingatida indelningen konstant: Upplands folkland, Smålands små land och övriga landskap
+            som i dag. Flyttade stenar räknas inte, eftersom deras avstånd säger inget om var de restes.
           </p>
           <p>
             Oddskvoten 1,20 betyder att oddsen för att en sten har mönstret är 20 % högre för varje gång avståndet till

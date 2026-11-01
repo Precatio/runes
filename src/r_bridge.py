@@ -294,11 +294,13 @@ REMAINS = os.path.join(ROOT, "data", "raa", "lamningar.csv")
 CULT_NAMES = os.path.join(ROOT, "data", "ortnamn", "kultnamn.csv")
 PLACES = os.path.join(ROOT, "data", "ortnamn", "platser.csv")
 CHURCHES = os.path.join(ROOT, "data", "ortnamn", "kyrkor.csv")
+# Each stone's Viking Age land (scripts/assign_sten_land.py), for the regional term of the scan in remains.R
+STONE_LANDS = os.path.join(ROOT, "web", "public", "geo", "sten_land.json")
 
 
 def _remains_hash() -> str:
     h = hashlib.sha256()
-    for path in (REMAINS, CULT_NAMES, PLACES, CHURCHES):
+    for path in (REMAINS, CULT_NAMES, PLACES, CHURCHES, STONE_LANDS):
         if os.path.exists(path):
             with open(path, "rb") as fh:
                 h.update(fh.read())
@@ -599,6 +601,7 @@ def run_corpus(fp: str):
                   "messages": os.path.join(d, "messages.csv"), "people": os.path.join(d, "people.csv"),
                   "tile_dir": os.path.join(CACHE_DIR, "terrain"), "remains": _if_exists(REMAINS),
                   "cult_names": _if_exists(CULT_NAMES), "places": _if_exists(PLACES), "churches": _if_exists(CHURCHES),
+                  "stone_lands": _if_exists(STONE_LANDS),
                   # The names of the map's patterns and kinds of place, for the figures' labels (hotspots.R, remains.R)
                   "pattern_labels": {k: label for k, label, *_ in pattern_map.PATTERNS},
                   "kind_labels": {k: label for k, label, *_ in places.KINDS}}

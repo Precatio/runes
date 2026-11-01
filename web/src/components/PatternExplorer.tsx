@@ -347,7 +347,7 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
 
       <details className={box}>
         <summary className="cursor-pointer text-sm font-bold text-slate-800">
-          Alla samband i landskapet (R){scan?.available ? (scan.n_sig === 0 ? `: inget av ${scan.n_tests} prövade klarar justeringen` : `: ${scan.n_replicated} håller i båda halvorna av ${scan.n_tests} prövade`) : ""}
+          Alla samband med platserna runt stenarna (R){scan?.available ? (scan.n_sig === 0 ? `: inget av ${scan.n_tests} prövade klarar justeringen` : `: ${scan.n_replicated} håller i båda halvorna av ${scan.n_tests} prövade`) : ""}
         </summary>
         <div className="mt-3">
           <LandscapeScan scan={scan} current={nearKind ? { feature: patternKey, kind: nearKind } : undefined}
@@ -407,7 +407,7 @@ export default function PatternExplorer({ f, set, patch, onError, provinceName: 
           <p>{`Oddskvot ${n2(test.or_mh)} med landskapet konstant (p ${pText(test.p_mh)}).`}</p>
           <p className="text-xs text-slate-500">
             Ett utforskande prov: flyttade stenar räknas inte, men tiden hålls inte konstant och den som prövar många
-            kombinationer hittar några skillnader av en slump. Pröva hellre under ”Alla samband i landskapet” nedan, där alla
+            kombinationer hittar några skillnader av en slump. Pröva hellre under ”Alla samband med platserna runt stenarna” nedan, där alla
             kombinationer är justerade tillsammans och prövade i båda halvorna.
           </p>
         </div>
