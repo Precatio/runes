@@ -408,7 +408,8 @@ function MapContent() {
 
       {error && <p className="text-red-700 font-semibold">{error}</p>}
 
-      <div className="liquid-glass-island rounded-[24px] sm:rounded-[32px] p-1.5 sm:p-2 flex-1 min-h-[70dvh] sm:min-h-[520px] relative">
+      {/* A fixed height: the page is min-h-full, so a min-height here would leave the map (h-full) at zero height */}
+      <div className="liquid-glass-island rounded-[24px] sm:rounded-[32px] p-1.5 sm:p-2 h-[70dvh] sm:h-[640px] relative">
         <RuneMap points={visible} colorFor={colorFor} selected={selected} realm={f.borders || undefined}
           fitKey={nFilters ? JSON.stringify({ ...f, color: "", borders: "" }) + (matches ? matches.size : "") + (trait ? trait.key : "") + (overview ? "o" : "") : undefined} />
         <div className="absolute bottom-3 left-3 sm:bottom-6 sm:left-6 z-[500] bg-white/90 rounded-xl px-3 py-2 shadow text-[11px] sm:text-xs space-y-1 max-h-[40%] sm:max-h-[60%] max-w-[60%] overflow-y-auto">
