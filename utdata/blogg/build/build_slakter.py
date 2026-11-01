@@ -35,6 +35,16 @@ assert (INS["U 261"]["parish"], INS["U 212"]["parish"], INS["U 127"]["parish"]) 
 for p in [("U 312", "U 313"), ("G 111", "G 112"), ("Hs 14", "Hs 15"), ("U 941", "U 986"), ("U 1027", "U 1047"), ("U 147", "U 287"),
           ("U 164", "U 165")]:
     assert tuple(sorted(p)) in pairs, p
+G = J("utdata", "slakt", "generationer.json")                      # steg 2b, låst plan 5fc275f0
+GP, GH = G["primary"], G["steps"]["1_halvor"]["halves"]
+assert (GP["n"], GP["later"], GP["ties"], GP["earlier"]) == (30, 16, 10, 4) and 0.005 < GP["p"] < 0.0065
+assert [(h["later"], h["earlier"], h["holds"]) for h in GH] == [(7, 2, False), (9, 2, True)]
+GJ = G["steps"]["3_utan_jarlabanke"]
+assert (GJ["later"], GJ["earlier"]) == (14, 3)
+assert [INS[s_]["style"] for s_ in ("U 77", "U 78", "U 844", "U 845")] == ["Pr4", "Pr5", "Pr4", "Pr2"]
+assert INS["U 77"]["place"] == INS["U 78"]["place"] == "Råsta" and INS["U 844"]["place"] == INS["U 845"]["place"]
+assert [c["name"] for c in INS["U 845"]["carvers"]] == ["Arbjörn"] and [c["name"] for c in INS["U 844"]["carvers"]] == ["Fot 2"]
+assert any(c["person"] == "Bjôrn" and c["raised"][0]["signum"] == "U 844" for c in G["earlier_cases"])
 FAM = [set(f["stones"]) for f in F["families"]]
 assert any({"U 100", "U 160", "U 161", "U 225"} == fs for fs in FAM)              # Ulvs söner: fyra stenar i samma släkt
 assert any({"U 164", "U 165", "U 212", "U 261"} == fs for fs in FAM)              # Jarlabanke: fyra stenar, U 127 utanför
@@ -106,6 +116,16 @@ Så kommer vi fram till {len(sure)} länkar mellan svenska runstenar, och de kny
 
 **Jarlabanke.** Fyra av Jarlabankes stenar, i Täby, Vallentuna och Fresta, hänger ihop, de där han säger att han {q('U 164', 'æinn atti allan Tæby')}, "ensam ägde hela Täby". En femte, U 127 i Danderyd, står mer än en mil bort. Där ger slumpen för många namnpar för att länken ska bli säker, fast den är äkta.
 
+## Stenarna kommer i rätt ordning
+
+Den som reser en sten lever när den reses. Står samma person sedan som död på en annan sten, måste den stenen vara yngre. Det ger oss ett sätt att pröva länkarna mot något som inte bygger på namnen, nämligen dateringen. Runologerna daterar stenarna efter ornamentiken, i stilgrupper som Anne-Sofie Gräslund har ordnat i tid.
+
+På gården Råsta i Spånga socken reste två bröder en sten efter sin far: {q('U 77', 'Holmstæinn ok Hosvi letu ræisa stæin æftiR Iobiorn, faður sinn')} – "Holmsten och Hosve lät resa stenen efter Jobjörn, sin far." På en annan sten vid samma gård är Holmsten själv död: {q('U 78', 'Hosvi ok Sigriðr ok Kætiløy letu ræisa stæin þenna æftiR Holmstæin, broður sinn.')} – "Hosve och Sigrid och Kättilö lät resa denna sten efter Holmsten, sin bror." Den andra stenen är ristad i en yngre stil än den första, som den ska.
+
+Vi har räknat på alla sådana fall i släkterna som runologerna och vår modell har knutit ihop. {GP['n']} personer reser först en sten och står sedan som döda på en annan, och båda stenarna har en stilgrupp. För {GP['ties']} av dem är stilen densamma, vilket är väntat, eftersom en stilgrupp spänner över ungefär en generation. Av de övriga {GP['later'] + GP['earlier']} är den senare stenen ristad i en yngre stil i {GP['later']} fall och i en äldre i {GP['earlier']}. Om stilen inte sade något om tiden skulle en så sned fördelning uppstå ungefär sex gånger på tusen. Gräslund prövade själv sin datering mot Jarlabankes släkt och fick ett delvis motsägelsefullt resultat (Larsson 1996). Utan Jarlabankes stenar blir det {GJ['later']} mot {GJ['earlier']}.
+
+Det är ändå en antydan och inget prövat fynd. När vi delar släkterna i två halvor håller det tydligt bara i den ena; i den andra är fallen för få, {GH[0]['later']} mot {GH[0]['earlier']}. Och de fall som går åt fel håll är värda att läsa. Vid Viggby bro i Dalby socken reste tre bröder en sten efter sin far: {q('U 844', 'Gisl ok Biorn ok AsgæiRR letu ræisa stæin at Þorstæin, faður sinn.')} – "Gisl och Björn och Asger lät resa stenen efter Torsten, sin far." Sedan dog Björn, och på en annan sten vid samma bro står {q('U 845', 'Gisl ok AsgæiRR ræistu stæin þenna æftiR Biorn, broður sinn, annan æftiR faður sinn.')} – "Gisl och Asger reste denna sten efter Björn, sin bror, den andra efter sin far." Texten säger alltså själv i vilken ordning stenarna kom. Ändå räknas Björns sten, som ristaren Arbjörn gjorde, till en stilgrupp som dateras ungefär femtio år före faderns. Antingen ristade Arbjörn i en äldre stil än sin samtid, eller så behöver dateringen ses över.
+
 ## Tre länkar som ingen har gjort – och en som troligen är fel
 
 Tre av länkarna står varken i Rundata, hos Williams eller i Petersons lexikon. Vi har inte gått igenom all senare litteratur, så de är förslag att pröva, inte fynd.
@@ -125,16 +145,19 @@ Det modellen ger är inte en ny förteckning som ersätter runologernas. Det är
 :::box Det viktigaste i korthet
 - Samma människor står ofta på flera runstenar, och när stenarna läggs bredvid varandra framträder familjer: en mor vid Harg som sörjde två barn, en änkling i Ardre som förlorade hustru och dotter.
 - Släkterna höll sig nära sina gårdar. Därför går de att skilja från slumpen när namnen prövas på samma avstånd.
+- Släktleden och dateringen pekar oftast åt samma håll: den som först reser en sten får sin egen i en yngre stil. Det talar för att både länkarna och stilgrupperna håller, men underlaget är litet, och där texten säger emot stilen, som vid Viggby bro, behövs en runolog.
 - Nio av tio av våra länkar har runologerna redan gjort för hand. Tre är nya förslag, och en av dem är troligen fel, vilket visar att en modell inte ersätter den som läser.
 :::
 
 ## Källor
 
+- Gräslund, A.-S. 2006. Dating the Swedish Viking-Age rune stones on stylistic grounds. I: M. Stoklund m.fl. (red.), *Runes and their Secrets: Studies in Runology*. Köpenhamn: Museum Tusculanum Press, s. 117–139.
+- Larsson, M. G. 1996. Tvegifte i Täby? Några synpunkter på Jarlabanke-stenarnas datering och placering. *Fornvännen* 91, s. 143–151.
 - Peterson, L. 2007. *Nordiskt runnamnslexikon*. 5 uppl. Uppsala: Institutet för språk och folkminnen.
 - Samnordisk runtextdatabas (Rundata). Institutionen för nordiska språk, Uppsala universitet.
 - Sawyer, B. 2000. *The Viking-Age Rune-Stones: Custom and Commemoration in Early Medieval Scandinavia*. Oxford: Oxford University Press.
 - Williams, H. 1990. *Åsrunan. Användning och ljudvärde i runsvenska steninskrifter*. Runrön 3. Uppsala: Institutionen för nordiska språk. Bilaga: Inskrifter med genealogiskt samband, s. 185–187.
-- Metoden, länkarna och det blinda provet: Vitkis metodbeskrivning, avsnitt 1r, och planerna `analysplaner/2026-11-01-slaktnatverket-steg1.md` och `-steg1b.md` på [GitHub](https://github.com/Precatio/runes).
+- Metoden, länkarna och det blinda provet: Vitkis metodbeskrivning, avsnitt 1r, och planerna `analysplaner/2026-11-01-slaktnatverket-steg1.md`, `-steg1b.md` och `-generationer.md` på [GitHub](https://github.com/Precatio/runes).
 """
 
 body_en = f"""Anyone who has done family history knows the feeling when the same name turns up in two places: a grandfather in a parish register, the same name on the same farm in an estate inventory. That is how you know it is the same person. The runestones can be read the same way. Only the names are older.
@@ -174,6 +197,16 @@ That gives us {len(sure)} links between Swedish runestones, and they tie togethe
 
 **Jarlabanke.** Four of Jarlabanke's stones, in Täby, Vallentuna and Fresta, hang together, those where he says that he {q('U 164', 'æinn atti allan Tæby')}, "alone owned all of Täby". A fifth, U 127 in Danderyd, stands more than ten kilometres away. There chance gives too many name pairs for the link to be sure, though it is real.
 
+## The stones come in the right order
+
+Whoever raises a stone is alive when it is raised. If the same person later stands as dead on another stone, that stone must be younger. This gives us a way to test the links against something that does not rest on the names, namely the dating. Runologists date the stones by their ornament, in style groups that Anne-Sofie Gräslund has put in order in time.
+
+At the farm of Råsta in Spånga parish two brothers raised a stone for their father: {q('U 77', 'Holmstæinn ok Hosvi letu ræisa stæin æftiR Iobiorn, faður sinn')} – "Holmsteinn and Hôsvi had the stone raised in memory of Jóbjôrn, their father." On another stone at the same farm Holmsteinn himself is dead: {q('U 78', 'Hosvi ok Sigriðr ok Kætiløy letu ræisa stæin þenna æftiR Holmstæin, broður sinn.')} – "Hôsvi and Sigríðr and Ketiley had this stone raised in memory of Holmsteinn, their brother." The second stone is carved in a younger style than the first, as it should be.
+
+We have counted every such case in the families that the runologists and our model have joined. {GP['n']} people first raise a stone and then stand as dead on another, and both stones have a style group. For {GP['ties']} of them the style is the same, which is expected, since a style group spans about a generation. Of the other {GP['later'] + GP['earlier']}, the later stone is carved in a younger style in {GP['later']} cases and in an older one in {GP['earlier']}. If the style said nothing about time, so lopsided a split would arise about six times in a thousand. Gräslund herself tested her dating against Jarlabanke's family and got a partly contradictory result (Larsson 1996). Without Jarlabanke's stones it is {GJ['later']} to {GJ['earlier']}.
+
+It is still an indication, not a tested finding. When we split the families into two halves, it holds clearly in only one; in the other the cases are too few, {GH[0]['later']} to {GH[0]['earlier']}. And the cases that go the wrong way are worth reading. At Viggby bridge in Dalby parish three brothers raised a stone for their father: {q('U 844', 'Gisl ok Biorn ok AsgæiRR letu ræisa stæin at Þorstæin, faður sinn.')} – "Gísl and Bjôrn and Ásgeirr had the stone raised in memory of Þorsteinn, their father." Then Bjôrn died, and on another stone at the same bridge stands {q('U 845', 'Gisl ok AsgæiRR ræistu stæin þenna æftiR Biorn, broður sinn, annan æftiR faður sinn.')} – "Gísl and Ásgeirr raised this stone in memory of Bjôrn, their brother, the other in memory of their father." The text itself says in which order the stones came. Yet Bjôrn's stone, made by the carver Arbjôrn, belongs to a style group dated about fifty years before the father's. Either Arbjôrn carved in an older style than his contemporaries, or the dating needs another look.
+
 ## Three links nobody has made – and one that is probably wrong
 
 Three of the links stand neither in Rundata, in Williams nor in Peterson's lexicon. We have not gone through all later literature, so they are proposals to test, not findings.
@@ -193,16 +226,19 @@ What the model gives is not a new list that replaces the runologists'. It is a l
 :::box The essentials in brief
 - The same people often stand on several runestones, and when the stones are laid side by side families appear: a mother at Harg who mourned two children, a widower at Ardre who lost wife and daughter.
 - The families stayed close to their farms. That is why they can be told apart from chance when the names are tested at the same distance.
+- The family lines and the dating mostly point the same way: whoever first raises a stone gets their own in a younger style. That suggests both the links and the style groups hold, but the evidence is small, and where the text contradicts the style, as at Viggby bridge, a runologist is needed.
 - Nine in ten of our links the runologists had already made by hand. Three are new proposals, and one of them is probably wrong, which shows that a model does not replace the reader.
 :::
 
 ## Sources
 
+- Gräslund, A.-S. 2006. Dating the Swedish Viking-Age rune stones on stylistic grounds. In: M. Stoklund et al. (eds), *Runes and their Secrets: Studies in Runology*. Copenhagen: Museum Tusculanum Press, pp. 117–139.
+- Larsson, M. G. 1996. Tvegifte i Täby? Några synpunkter på Jarlabanke-stenarnas datering och placering [Bigamy at Täby? Some aspects of the dating and location of the Jarlabanke stones]. *Fornvännen* 91, pp. 143–151.
 - Peterson, L. 2007. *Nordiskt runnamnslexikon*. 5th ed. Uppsala: Institutet för språk och folkminnen.
 - Scandinavian Runic-text Database (Rundata). Department of Scandinavian Languages, Uppsala University.
 - Sawyer, B. 2000. *The Viking-Age Rune-Stones: Custom and Commemoration in Early Medieval Scandinavia*. Oxford: Oxford University Press.
 - Williams, H. 1990. *Åsrunan. Användning och ljudvärde i runsvenska steninskrifter*. Runrön 3. Uppsala: Department of Scandinavian Languages. Appendix: Inscriptions with genealogical ties, pp. 185–187.
-- The method, the links and the blind test: Vitki's method description, section 1r, and the plans `analysplaner/2026-11-01-slaktnatverket-steg1.md` and `-steg1b.md` on [GitHub](https://github.com/Precatio/runes).
+- The method, the links and the blind test: Vitki's method description, section 1r, and the plans `analysplaner/2026-11-01-slaktnatverket-steg1.md`, `-steg1b.md` and `-generationer.md` on [GitHub](https://github.com/Precatio/runes).
 """
 
 for b in (body, body_en):
