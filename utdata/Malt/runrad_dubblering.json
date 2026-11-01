@@ -1,0 +1,3096 @@
+{
+ "plan": "analysplaner/2026-11-01-malt-runrad-dubblering.md",
+ "plan_sha": "0d9e7e19",
+ "A": [
+  {
+   "signum": "Sö Fv1981;197",
+   "kind": "lösa föremål",
+   "object": "dubbelkam",
+   "row_len": 11,
+   "before": [],
+   "after": [],
+   "runes_besides_row": 0,
+   "tandem_any": [],
+   "translit": "§A fuþorkhnias... §B fuþorkhniast... §C ...hn(i)(a)stbm(l)R",
+   "normalization": "§A <fuþorkhnias[tbmlR]> §B <fuþorkhniast[bmlR]> §C <[fuþork]hniastbmlR>",
+   "translation_en": "§A <fuþorkhniastbmlR> §B <fuþorkhniastbmlR> §C <fuþorkhniastbmlR>"
+  },
+  {
+   "signum": "U 466",
+   "kind": "runsten",
+   "object": "runsten",
+   "row_len": 11,
+   "before": [],
+   "after": [
+    "rihaR"
+   ],
+   "runes_besides_row": 47,
+   "tandem_any": [],
+   "translit": "+ tsfirnstblk hniastbmlR a : rihaR : --- : riha--- : --(k)itiht · in(R)slbmui :+ ¶ ui(s)tRi : -isit--ti +",
+   "normalization": "... <hniastbmlR> ... ... ... ... ... ... ... ...",
+   "translation_en": "... <hniastbmlR> ... ... ... ... ... ... ... ..."
+  },
+  {
+   "signum": "U 483",
+   "kind": "runsten",
+   "object": "runsten",
+   "row_len": 7,
+   "before": [
+    "fisnhlnstbmlstihnaist"
+   ],
+   "after": [
+    "þui",
+    "risii"
+   ],
+   "runes_besides_row": 102,
+   "tandem_any": [],
+   "translit": "+ fisnhlnstbmlstihnaist · irnastb[ml]R[usthtoinsbklRstio]hinastimR ++ þui × risii × þoris[t...]ai · stkistknstþihuoiist × iistbmkRis^tithit---t-- +",
+   "normalization": "... ... ... ... ... ... ...",
+   "translation_en": "... ... ... ... ... ... ..."
+  },
+  {
+   "signum": "U 522",
+   "kind": "runsten",
+   "object": "runsten",
+   "row_len": 11,
+   "before": [],
+   "after": [],
+   "runes_besides_row": 42,
+   "tandem_any": [],
+   "translit": "fui-mrsrimuafifafiRauaiiRiafnaRfuioR---ank-n fuþ(o)rkhnias----- ...iu-o-",
+   "normalization": "... <fuþorkhnias[tbmlR]> ...",
+   "translation_en": "... <fuþorkhniastbmlR> ..."
+  },
+  {
+   "signum": "U 754",
+   "kind": "runsten",
+   "object": "runsten",
+   "row_len": 9,
+   "before": [],
+   "after": [],
+   "runes_besides_row": 1,
+   "tandem_any": [],
+   "translit": "fuþork hnis ...",
+   "normalization": "<fuþork> <hni[a]s> ...",
+   "translation_en": "<fuþork hnias> ..."
+  },
+  {
+   "signum": "U Fv1986;220C",
+   "kind": "lösa föremål",
+   "object": "runben, revben",
+   "row_len": 9,
+   "before": [],
+   "after": [],
+   "runes_besides_row": 1,
+   "tandem_any": [],
+   "translit": "fuþorkhnis",
+   "normalization": "<fuþorkhni[a]s>",
+   "translation_en": "<fuþorkhnias>"
+  },
+  {
+   "signum": "U Fv1992;161C",
+   "kind": "lösa föremål",
+   "object": "skaft",
+   "row_len": 15,
+   "before": [],
+   "after": [],
+   "runes_besides_row": 29,
+   "tandem_any": [],
+   "translit": "§A fuþorkhniastbml §B burka(R) a naskal þina kuþumutr riti §C fuþorkhniastbmlR",
+   "normalization": "§A <fuþorkhniastbml[R]> §B \"BorggæiRR)(?) a ... þenna. \"Guðmundr(?) risti(?). §C <fuþorkhniastbmlR>",
+   "translation_en": "§A <fuþorkhniastbmlR> §B Borgeirr(?) owns this ... Guðmundr(?) carved(?). §C <fuþorkhniastbmlR>"
+  },
+  {
+   "signum": "G 110",
+   "kind": "annan sten",
+   "object": "bildsten med runor",
+   "row_len": 8,
+   "before": [],
+   "after": [],
+   "runes_besides_row": 54,
+   "tandem_any": [
+    "ist"
+   ],
+   "translit": "§A fuþorkhn... ...fuþr-... §B ... (r)aisti stainin aft iurulf bruþur sin ÷ sikuif(i)r(t)(u)(a)(n)k(i)sifil",
+   "normalization": "§A <fuþork> ... §B ... ræisti stæininn aft \"Hiorulf/\"Iorulf, broður sinn ...",
+   "translation_en": "§A <fuþork> ... §B ... raised the stone in memory of Hjôrulfr/Jórulfr, his brother ..."
+  },
+  {
+   "signum": "G 281",
+   "kind": "annan sten",
+   "object": "bryne",
+   "row_len": 16,
+   "before": [],
+   "after": [],
+   "runes_besides_row": 7,
+   "tandem_any": [],
+   "translit": "fuþorkhniastbmlR fuRkant",
+   "normalization": "<fuþorkhniastbmlR> <fuRkant>",
+   "translation_en": "<fuþorkhniastbmlR> <fuRkant>"
+  },
+  {
+   "signum": "G 311",
+   "kind": "annan sten",
+   "object": "bryne",
+   "row_len": 16,
+   "before": [],
+   "after": [],
+   "runes_besides_row": 0,
+   "tandem_any": [],
+   "translit": "fuþork · hnias tbmlR",
+   "normalization": "<fuþork hnias tbmlR>",
+   "translation_en": "<fuþork hnias tbmlR>"
+  },
+  {
+   "signum": "DR 239",
+   "kind": "runsten",
+   "object": "runsten",
+   "row_len": 16,
+   "before": [
+    "stinþonsi",
+    "aftuþinkaur"
+   ],
+   "after": [
+    "niutualkums"
+   ],
+   "runes_besides_row": 88,
+   "tandem_any": [],
+   "translit": "§A þiauþui ÷ risþi ÷ stin þonsi ÷ aft uþinkaur ÷ ¶ fuþorkhniastbmlR ÷ niut ual kums : §B þmkiiissstttiiilll (:) iak sata ru--r| |ri(t) ¶ kuni armutR kru(b)------",
+   "normalization": "§A \"Þiuþwi resþi sten þænsi æft \"Oþinkor <fuþorkhniastbmlR> niut wæl kumbls! §B þistill/mistill/kistill, iak satta ru[na]R ret. \"Gunni, \"Armundr ...",
+   "translation_en": "§A Þjóðvé raised this stone in memory of Oðinkárr <fuþorkhniastbmlR> Make good use of the monument! §B Thistle, mistletoe, casket; I placed the runes rightly. Gunni, Arnmundr ..."
+  },
+  {
+   "signum": "DR EM85;371A",
+   "kind": "lösa föremål",
+   "object": "pinne",
+   "row_len": 16,
+   "before": [],
+   "after": [
+    "kuka",
+    "kuikui"
+   ],
+   "runes_besides_row": 39,
+   "tandem_any": [
+    "kui"
+   ],
+   "translit": "§A ÷ safuR ÷ sofu ÷ hiþini ÷ fiui ÷ ¶ ÷ faki ÷ kl §B ÷ fuþorkhniastbmlR ÷ ¶ ÷ kuka ÷ kuikui ÷ saoR",
+   "normalization": "§A ... ... ... ... ... ... §B <fuþorkhniastbmlR> ... ... ...",
+   "translation_en": "§A ... ... ... ... ... ... §B <fuþorkhniastbmlR> ... ... ..."
+  },
+  {
+   "signum": "DR NOR1988;5",
+   "kind": "runsten",
+   "object": "runsten",
+   "row_len": 16,
+   "before": [
+    "suaai"
+   ],
+   "after": [],
+   "runes_besides_row": 136,
+   "tandem_any": [
+    "titul"
+   ],
+   "translit": "§A sua ai ÷ titultitul ¶ fuþorkhniastbmlR §B huaR is i : alisti osa : huaR is (:) ¶ uifrþuR : karþi : afr aft asini fauþr ¶ kul:finR : fal(s) : taitirunoR ' u ¶ (a)iuinrunoR : sulialta : huaR : ? ¶ utu ÷ tuuut bilikikR : tuR ra(k)(i) ¶ (t)(u)(l)i",
+   "normalization": "§A Swa æ(?) ... <fuþorkhniastbmlR> §B HvaR æs(?) i(?) ... \"Asa/asa, hvaR æs \"Vifreþr/\"Vifrøþr gærþi ... æft ... faþur. \"Kolfinnr/\"Gullfinnr fal/fals tæitirunaR ok ævinrunaR ... hvaR ... ... ... \"BillingR(?) ... ... \"Tuli/\"Toli.",
+   "translation_en": "§A Thus ever(?) ... <fuþorkhniastbmlR> §B Who is(?) ... ... Æsir's, who is Véfriðr /Véfrøðr made ... in memory of ... father. Kolfinnr/Gullfinnr concealed runes of gladness and runes of eternal friendship ... who ... ... ... ... ... ... Tuli/Tóli."
+  },
+  {
+   "signum": "DR NOR2003;6",
+   "kind": "lösa föremål",
+   "object": "remändebeslag",
+   "row_len": 7,
+   "before": [],
+   "after": [],
+   "runes_besides_row": 7,
+   "tandem_any": [],
+   "translit": "f...orkhaiastbm(l)r",
+   "normalization": "<f[uþ]orkhniastbmlR>",
+   "translation_en": "<fuþorkhniastbmlR>"
+  },
+  {
+   "signum": "DR Schl11",
+   "kind": "lösa föremål",
+   "object": "runben",
+   "row_len": 15,
+   "before": [],
+   "after": [],
+   "runes_besides_row": 3,
+   "tandem_any": [],
+   "translit": "fuþorkhni¶¶astbmli ¶ ...(k)r '",
+   "normalization": "<fuþorkhniastbml[R]> ...",
+   "translation_en": "<fuþorkhniastbmlR> ..."
+  },
+  {
+   "signum": "DR Schl12",
+   "kind": "lösa föremål",
+   "object": "runben",
+   "row_len": 16,
+   "before": [],
+   "after": [],
+   "runes_besides_row": 3,
+   "tandem_any": [],
+   "translit": "§A ÷^ ^÷f÷u÷þ÷o÷r÷k :^ ^÷h÷n÷i÷a÷s ·^ ^÷t÷b÷m÷l÷R §B (k)(þ)(k)",
+   "normalization": "§A <fuþork> <hnias> <tbmlR> §B ...",
+   "translation_en": "§A <fuþork> <hnias> <tbmlR> §B ..."
+  },
+  {
+   "signum": "N 513",
+   "kind": "lösa föremål",
+   "object": "putsinskrift",
+   "row_len": 10,
+   "before": [],
+   "after": [],
+   "runes_besides_row": 0,
+   "tandem_any": [],
+   "translit": "fuþo^rkhnia",
+   "normalization": "<fuþorkhnia[s]>",
+   "translation_en": "<fuþorkhnias>"
+  },
+  {
+   "signum": "FR 4",
+   "kind": "lösa föremål",
+   "object": "pinne",
+   "row_len": 14,
+   "before": [],
+   "after": [],
+   "runes_besides_row": 0,
+   "tandem_any": [],
+   "translit": "fuþorkhniastb(m)...",
+   "normalization": "<fuþorkhniastbm[lR]>",
+   "translation_en": "<fuþorkhniastbmlR>"
+  },
+  {
+   "signum": "GR 76",
+   "kind": "lösa föremål",
+   "object": "pinne",
+   "row_len": 16,
+   "before": [],
+   "after": [],
+   "runes_besides_row": 52,
+   "tandem_any": [],
+   "translit": "§A + o : sa ÷ sa ÷ sa ÷ is ÷ osa ÷ sat + bibrau ÷ haitir ÷ mar ÷ su ÷ is ÷ sitr ÷ o ÷ blan-- §B ---- ¶ fuþorkhniastbml(R) ¶ - §C ...aaal??? · ?????? · ??? · ?? · ??????aaaaa??? · ??? · ??? · ??? · ??? · ????(?)... §D ----",
+   "normalization": "§A Á sæ, sæ, sæ, es \"Ása/ása sat/sát. \"<bibrau> heitir mær sú es sitr á \"Blán[i](?)/\"Blán[um](?) §B ... <fuþorkhniastbmlR> ... §C ... ... ... ... ... ... ... ... ... ... §D ...",
+   "translation_en": "§A On the sea, the sea, the sea, is the ambush of the Æsir/where Ása sat. <bibrau> is the name of the maid who is sitting on The Blue One/Ones (= the blue vault(s) of heaven)(?). §B ... <fuþorkhniastbmlR> ... §C ... ... ... ... ... ... ... ... ... ... §D ..."
+  },
+  {
+   "signum": "Or 11",
+   "kind": "lösa föremål",
+   "object": "hörntand",
+   "row_len": 6,
+   "before": [],
+   "after": [],
+   "runes_besides_row": 0,
+   "tandem_any": [],
+   "translit": "fuþork-",
+   "normalization": "<fuþork[h]>",
+   "translation_en": "<fuþorkh>"
+  },
+  {
+   "signum": "E 15",
+   "kind": "lösa föremål",
+   "object": "brosch",
+   "row_len": 14,
+   "before": [],
+   "after": [],
+   "runes_besides_row": 3,
+   "tandem_any": [],
+   "translit": "§A fuþorkhniastbmm §B fu",
+   "normalization": "§A <fuþorkhniastbm[lR]> §B ...",
+   "translation_en": "§A <fuþorkhniastbmlR> §B ..."
+  },
+  {
+   "signum": "IR 11",
+   "kind": "lösa föremål",
+   "object": "pinne",
+   "row_len": 16,
+   "before": [],
+   "after": [],
+   "runes_besides_row": 0,
+   "tandem_any": [],
+   "translit": "§A fuþork × hniastbmlR §B fuþorkhniastbmlR",
+   "normalization": "§A <fuþork hniastbmlR> §B <fuþorkhniastbmlR>",
+   "translation_en": "§A fuþork inscription §B fuþork inscription"
+  },
+  {
+   "signum": "RU Melnikova2001;251",
+   "kind": "lösa föremål",
+   "object": "runben, fragment",
+   "row_len": 11,
+   "before": [],
+   "after": [],
+   "runes_besides_row": 0,
+   "tandem_any": [],
+   "translit": "...khniastbmlR",
+   "normalization": "<[fuþor]khniastbmlR>",
+   "translation_en": "<fuþorkhniastbmlR>"
+  }
+ ],
+ "A_counts": {
+  "lösa föremål": 14,
+  "runsten": 6,
+  "annan sten": 3
+ },
+ "A_medieval": {
+  "? | annan sten | bara raden": 1,
+  "M | annan sten | annan text": 9,
+  "M | annan sten | bara raden": 14,
+  "M | lösa föremål | annan text": 54,
+  "M | lösa föremål | bara raden": 62,
+  "M | runsten | bara raden": 1
+ },
+ "B1_counts": {
+  "M | annan sten | XX": 2,
+  "M | annan sten | n": 460,
+  "M | lösa föremål | XX": 34,
+  "M | lösa föremål | n": 983,
+  "M | runsten | XX": 1,
+  "M | runsten | n": 58,
+  "V | annan sten | XX": 1,
+  "V | annan sten | n": 296,
+  "V | lösa föremål | XX": 3,
+  "V | lösa föremål | n": 234,
+  "V | runsten | XX": 31,
+  "V | runsten | n": 2190,
+  "övr | annan sten | n": 9,
+  "övr | lösa föremål | XX": 3,
+  "övr | lösa föremål | n": 79,
+  "övr | runsten | XX": 1,
+  "övr | runsten | n": 38
+ },
+ "B1_viking": [
+  {
+   "signum": "Ög 136",
+   "kind": "runsten",
+   "X": [
+    "faþi"
+   ],
+   "group": [
+    "inuarinfaþifaþiRaftfaikionsunusakummukminiþathuariaRualraubaRuaRintuaRþaRsuaþtualfsinumuaRinnumnaRtualraububaþaRsomonoumisummonum"
+   ],
+   "normalization": "§A Aft Vamoð standa runaR þaR. Æn Varinn faði, faðiR, aft faigian sunu. Sagum mogminni/ungmænni þat, hværiaR valraufaR vaRin tvaR þaR, svað tvalf sinnum vaRin numnaR at valraufu, baðaR saman a ymissum mannum. Þat sagum annart, hvaR fur niu aldum an urði fiaru ",
+   "translation_en": "§A In memory of Vámóðr stand these runes. And Varinn coloured them, the father, in memory of his dead son. I say the folktale / to the young men, which the two war-booties were, which twelve times wer"
+  },
+  {
+   "signum": "Ög 203",
+   "kind": "runsten",
+   "X": [
+    "ist"
+   ],
+   "group": [
+    "rististin"
+   ],
+   "normalization": "... \"<k-k-> ræisti stæin þennsi ... \"Vibiorn, sun(?) ...",
+   "translation_en": "... raised this stone ... Vébjôrn, son(?) ..."
+  },
+  {
+   "signum": "Sö 70",
+   "kind": "runsten",
+   "X": [
+    "sin"
+   ],
+   "group": [
+    "bruþursinsinalR"
+   ],
+   "normalization": "\"Kætilhaufði ok \"Stæinkætill þæiR ræistu stæin þannsi at \"Sigkætil, broður sinn, snialliR syniR \"OlofaR.",
+   "translation_en": "Ketilhôfði and Steinketill, Ólôf's able sons, they raised this stone in memory of Sigketill, their brother."
+  },
+  {
+   "signum": "Sö 132",
+   "kind": "runsten",
+   "X": [
+    "þru"
+   ],
+   "group": [
+    "þruþrun"
+   ],
+   "normalization": "\"Þruðrun ræisti(?) stæin at faður sinn \"Biorn i \"Sand[u]m.",
+   "translation_en": "Þrúðrún raised(?) the stone in memory of her father Bjôrn of Sandarr."
+  },
+  {
+   "signum": "Sö 151",
+   "kind": "runsten",
+   "X": [
+    "unu"
+   ],
+   "group": [
+    "iunuunutnit"
+   ],
+   "normalization": "§A \"Næsbiorn, sunn \"Spars/\"Spôrs, ræisþi [st]æi[n æfti]R \"Svæin, broður sinn, þrottaR þiagn. §P <iunu> <unut> <nit> <nb> <st> <ai> §Q <uini> <nin> <nn> <nb> <s> <ai> §B stæin æftiR \"Svæi[n].",
+   "translation_en": "§A Nesbjôrn, Sparr's/Spôrr's son, raised the stone in memory of Sveinn, his brother, a þegn of strength. ... §B the stone in memory of Sveinn."
+  },
+  {
+   "signum": "Sm 46",
+   "kind": "runsten",
+   "X": [
+    "rik"
+   ],
+   "group": [
+    "trikrikum"
+   ],
+   "normalization": "\"...vi gærði kumbl þessi æftiR \"Svæin, sun sinn, eR ændaðis austr i \"Grikkium.",
+   "translation_en": "...-vé made these monuments in memory of Sveinn, her son, who met his end in the east in Greece."
+  },
+  {
+   "signum": "Vg 13",
+   "kind": "runsten",
+   "X": [
+    "ist"
+   ],
+   "group": [
+    "rististin"
+   ],
+   "normalization": "\"ÞoriR \"Skorpa/\"Skaufa ræisti stæin þenna æftiR \"Kætil, sun sinn, ok æftiR \"Olof, fostru sina.",
+   "translation_en": "Þórir Rusk/Tuft(-bearer) raised this stone in memory of Ketill, his son, and in memory of Ólôf, his foster-mother/daughter"
+  },
+  {
+   "signum": "U 42",
+   "kind": "runsten",
+   "X": [
+    "ais"
+   ],
+   "group": [
+    "raisaistain"
+   ],
+   "normalization": "\"KiulakR let ræisa stæin æftiR \"Kvig, sun(?) sinn go[ð]an.",
+   "translation_en": "Kjallakr/Kjullakr had the stone raised in memory of Kvígr, his good son(?)."
+  },
+  {
+   "signum": "U 77",
+   "kind": "runsten",
+   "X": [
+    "ais"
+   ],
+   "group": [
+    "raisaistain"
+   ],
+   "normalization": "\"Holmstæinn ok \"Hosvi letu ræisa stæin æftiR \"Iobiorn, faður sinn, ok \"Gyrið(?) æftiR.",
+   "translation_en": "Holmsteinn and Hôsvi had the stone raised in memory of Jóbjôrn, their father; and Gyríðr(?) in memory of (him)."
+  },
+  {
+   "signum": "U 193",
+   "kind": "runsten",
+   "X": [
+    "itur"
+   ],
+   "group": [
+    "kunoaukinkialtriluhiþohliturituritastinabtiRsihfastabuantaku"
+   ],
+   "normalization": "\"Gunna ok \"Ingialdr, \"Illugi, þau letu rettu retta stæin æptiR \"Sigfasta, boanda \"Gu[nn]u.",
+   "translation_en": "Gunna and Ingjaldr (and) Illugi, they had the stone erected in memory of Sigfasti, Gunna's husbandman."
+  },
+  {
+   "signum": "U 200",
+   "kind": "runsten",
+   "X": [
+    "ist",
+    "þiR"
+   ],
+   "group": [
+    "rististinþina",
+    "atbruþursinaukosamuþiRþiRa"
+   ],
+   "normalization": "\"Finnviðr ræisti stæin þenna æftiR broður sinn, \"Þorðr, \"Þialfa sun. \"Guð hialpi and hans ok \"Guðs moðiR. Hann gærði bro at broður sinn, ok \"Asa, moðiR þæiRa.",
+   "translation_en": "Finnviðr raised this stone in memory of his brother Þórðr, Þjalfi's son. May God and God's mother help his spirit. He made the bridge in memory of his brother and (so did) Ása, their mother."
+  },
+  {
+   "signum": "U 208",
+   "kind": "runsten",
+   "X": [
+    "sti"
+   ],
+   "group": [
+    "rstistina"
+   ],
+   "normalization": "Ristu/Ræistu mærki at mann mætan, syniR allgoðiR at sinn faður \"Sterkar. \"Viseti risti stæina.",
+   "translation_en": "In memory of their father Styrkárr, excellent sons carved/raised the landmark in memory of a venerable man. Véseti carved the stones."
+  },
+  {
+   "signum": "U 241",
+   "kind": "runsten",
+   "X": [
+    "faþur"
+   ],
+   "group": [
+    "faþurfaþursino"
+   ],
+   "normalization": "En \"Dan ok \"Huskarl ok \"Svæinn letu retta stæin æftiR \"Ulfrik, faðurfaður sinn. Hann hafði a \"Ænglandi tu giald takit. \"Guð hialpi þæiRa fæðga salu ok \"Guðs moðiR.",
+   "translation_en": "And Danr and Húskarl and Sveinn had the stone erected in memory of Ulfríkr, their father's father. He had taken two payments in England. May God and God's mother help the souls of the father and son."
+  },
+  {
+   "signum": "U 345",
+   "kind": "runsten",
+   "X": [
+    "itu"
+   ],
+   "group": [
+    "þituituitiiftiR"
+   ],
+   "normalization": "... ræisti stæin þenna æftiR \"Orm, sun ... æftiR s[i]k ok let gærva bro þa[s]i fyriR and ok salu þæiRa ... vitring þasi <þit> <uit> <uiti> æftiR",
+   "translation_en": "... raised this stone in memory of Ormr, son ... in memory of himself and had this bridge made for their spirit and soul ... this memento ... in memory of"
+  },
+  {
+   "signum": "U 432",
+   "kind": "runsten",
+   "X": [
+    "uka"
+   ],
+   "group": [
+    "uikinkrlitraisastainatsunisinakrukaukasbiarnsuainþisiuar"
+   ],
+   "normalization": "\"VikingR let ræisa stæin at suni sina \"Krok ok \"Asbiorn. Svæinn þessi vaR ... <suni> <ki-t> <kirþa>",
+   "translation_en": "Víkingr had the stone raised in memory of his sons Krókr and Ásbjôrn. This lad was ..."
+  },
+  {
+   "signum": "U 647",
+   "kind": "runsten",
+   "X": [
+    "ist"
+   ],
+   "group": [
+    "rististainaþis"
+   ],
+   "normalization": "\"Gillaug let ræisa stæin at \"Sigdiarf, faður sinn, boanda \"HolmfriðaR. \"Balli risti stæina þess[a] baða.",
+   "translation_en": "Gillaug had the stone raised in memory of Sigdjarfr, her father, Holmfríðr's husbandman. Balli carved both of these stones."
+  },
+  {
+   "signum": "U 847",
+   "kind": "runsten",
+   "X": [
+    "itur"
+   ],
+   "group": [
+    "liturituritastinþinoottosunisino"
+   ],
+   "normalization": "§P \"Asgæi[RR(?) ok \"G]islaug letu <ritu> retta stæin þenna at tva(?) syni sina \"Adiarf ok \"Sloða. \"Asmundr hio runaR rettaR þæim raða skal. En \"Asmundr ... risti. §Q \"Asgæi[RR(?) ok \"G]islaug letu <ritu> retta stæin þenna at syni sina \"Adiarf ok \"Sloða. \"Asmun",
+   "translation_en": "§P Ásgeirr(?) and Gíslaug had this stone ... erected in memory of their two(?) sons Ádjarfr and Slóði. Ásmundr cut the right runes, for him who will interpret. And Ásmundr ... carved. §Q Ásgeirr(?) an"
+  },
+  {
+   "signum": "U 849",
+   "kind": "runsten",
+   "X": [
+    "ist"
+   ],
+   "group": [
+    "raististuþiþ"
+   ],
+   "normalization": "\"[I]gull(?) ok \"HaukR gærðu staf, en \"Nasi/\"Næsi ok \"Anundr ræistu s[tæin] ... ræisti ... ...",
+   "translation_en": "Ígull(?) and Haukr made the staff. And Nasi/Nesi and Ônundr raised the stone ... raised ... ..."
+  },
+  {
+   "signum": "U 946",
+   "kind": "runsten",
+   "X": [
+    "kat"
+   ],
+   "group": [
+    "litiRaisaatakaaoukatkatilarnukin"
+   ],
+   "normalization": "\"Gusi/\"Gussi/\"Kusi let ræisa at \"Aka ok at \"Kætil araukinn(?).",
+   "translation_en": "Gusi/Gussi/Kúsi had (this) raised in memory of Áki and in memory of Ketill the aged.(?)"
+  },
+  {
+   "signum": "U 1039",
+   "kind": "runsten",
+   "X": [
+    "giri"
+   ],
+   "group": [
+    "girigiristrlitin"
+   ],
+   "normalization": "§AP \"Stoðbiorn(?) ok \"Øystæinn/\"Æistæinn rettu stæin æftiR faður sinn \"Gulla(?). Miskunn gæri(?) \"Kristr, lettin salu hans. §AQ \"Stoðbiorn(?) ok \"Øystæinn/\"Æistæinn rettu stæin æftiR faður sinn \"Gulla \"Myskiu. \"Kristr lettin salu hans. §B \"Kiuli(?) ristiR runa",
+   "translation_en": "§AP Stóðbjôrn(?) and Eysteinn erected the stone in memory of their father Gulli(?). May Christ have mercy(?), relieve his soul. §AQ Stóðbjôrn(?) and Eysteinn erected the stone in memory of their fathe"
+  },
+  {
+   "signum": "M 4",
+   "kind": "runsten",
+   "X": [
+    "ist"
+   ],
+   "group": [
+    "ukiraistist"
+   ],
+   "normalization": "§P \"[T]oki/\"[Full]ugi/\"[Ill]ugi ræisti st[æin] ... for austr meðr \"Ing[va]ri(?) ... ... stæin þenna. §Q \"[T]oki/\"[Full]ugi/\"[Ill]ugi ræisti st[æin] ... for austr meðr \"Ing[va]ri(?) ... [mar]kaðu(?) stæin þenna.",
+   "translation_en": "§P Tóki/Fullugi/Illugi raised the stone ... travelled to the east with Ingvarr(?) ... ... this stone. §Q Tóki/Fullugi/Illugi raised the stone ... travelled to the east with Ingvarr(?) ... marked(?) th"
+  },
+  {
+   "signum": "M 11",
+   "kind": "runsten",
+   "X": [
+    "nau"
+   ],
+   "group": [
+    "ituraisastainaftiRþurstainsunsininaunaukauntrbruþrhons"
+   ],
+   "normalization": "§P \"Gunnviðr ok \"Þorgærð þaun [l]etu ræisa stæin æftiR \"Þorstæin, sun sinn. En \"Aun ok \"Øyndr [vaRu] brøðr hans. §Q \"Gunnuðr ok \"Þorgau[t]r þau [l]etu ræisa stæin æftiR \"Þorstæin, sun sinn. En \"Ôrn ok \"Øyndr [vaRu] brøðr hans.",
+   "translation_en": "Gunnviðr/Gunnuðr and Þorgerðr/Þorgautr, they had the stone raised in memory of Þorsteinn, their son. And Aun/Ôrn and Eyndr were his brothers."
+  },
+  {
+   "signum": "M 17",
+   "kind": "runsten",
+   "X": [
+    "ist"
+   ],
+   "group": [
+    "raististainþinsaaftiRulaif"
+   ],
+   "normalization": "... ræisti stæin þennsa æftiR \"Olæif ... [rist]i run[aR].",
+   "translation_en": "... raised this stone in memory of Óleifr ... carved the runes."
+  },
+  {
+   "signum": "G 110",
+   "kind": "annan sten",
+   "X": [
+    "ist"
+   ],
+   "group": [
+    "raististaininaftiurulfbruþursin"
+   ],
+   "normalization": "§A <fuþork> ... §B ... ræisti stæininn aft \"Hiorulf/\"Iorulf, broður sinn ...",
+   "translation_en": "§A <fuþork> ... §B ... raised the stone in memory of Hjôrulfr/Jórulfr, his brother ..."
+  },
+  {
+   "signum": "DR 216",
+   "kind": "runsten",
+   "X": [
+    "sin"
+   ],
+   "group": [
+    "RraisþustainþansiaftfroþafrontisinsinianhanuasþofoinkuaiRa"
+   ],
+   "normalization": "§A \"Asraþr ok \"Hildu[ng]R/\"Hildv[ig]R/\"Hildu[lf]R resþu sten þænsi æft \"Fraþa/\"Fræþa, frænda sin sin, æn han was þa fækn(?) wæRa, §B æn han warþ døþr a \"Sweþiuþu ok was fyrst(?) i(?) \"Friggis(?) liði(?) þa alliR wikingaR.",
+   "translation_en": "§A Ástráðr and Hildungr/Hildvígr/Hildulfr raised this stone in memory of Fraði/Freði, their kinsman. And he was then the terror(?) of men. §B And he died in Sweden and was thereafter the first(?) in(?"
+  },
+  {
+   "signum": "DR 254",
+   "kind": "runsten",
+   "X": [
+    "ist"
+   ],
+   "group": [
+    "raististain"
+   ],
+   "normalization": "\"Aslek resti sten ... ... ... ...",
+   "translation_en": "Ásleikr raised the stone ... ... ... ..."
+  },
+  {
+   "signum": "DR M107",
+   "kind": "lösa föremål",
+   "X": [
+    "þurkil"
+   ],
+   "group": [
+    "þurkilþurkil"
+   ],
+   "normalization": "\"Þorkel, \"Þorkel.",
+   "translation_en": "Þorkell, Þorkell."
+  },
+  {
+   "signum": "DR EM85;371A",
+   "kind": "lösa föremål",
+   "X": [
+    "kui"
+   ],
+   "group": [
+    "kuikui"
+   ],
+   "normalization": "§A ... ... ... ... ... ... §B <fuþorkhniastbmlR> ... ... ...",
+   "translation_en": "§A ... ... ... ... ... ... §B <fuþorkhniastbmlR> ... ... ..."
+  },
+  {
+   "signum": "N 62",
+   "kind": "runsten",
+   "X": [
+    "ist"
+   ],
+   "group": [
+    "reististeinþanaeftir"
+   ],
+   "normalization": "\"Engli reisti stein þenna eptir \"Þórald, son sinn, er varð dauðr í \"Vitaholmi, miðli \"Ustaholms ok \"Garða.",
+   "translation_en": "Engli raised this stone in memory of Þóraldr, his son, who died in Vitaholmr - between Ustaholmr and Garðar (Russia)."
+  },
+  {
+   "signum": "N 217",
+   "kind": "runsten",
+   "X": [
+    "ist"
+   ],
+   "group": [
+    "rististinþina"
+   ],
+   "normalization": "... reisti stein þenna.",
+   "translation_en": "... raised this stone"
+  },
+  {
+   "signum": "N 228",
+   "kind": "runsten",
+   "X": [
+    "ist"
+   ],
+   "group": [
+    "raististainþon"
+   ],
+   "normalization": "\"Helgi reisti stein þann ept \"Ketil, bróður sinn.",
+   "translation_en": "Helgi raised this stone in memory of his brother Ketill."
+  },
+  {
+   "signum": "N 239",
+   "kind": "runsten",
+   "X": [
+    "ist"
+   ],
+   "group": [
+    "raististnþonaaft"
+   ],
+   "normalization": "\"Þorbjôrn \"Skald reisti stein þenna ept \"<soi->þóri, son sinn, er á \"Danmôrku fell.",
+   "translation_en": "Þorbjôrn Skald raised this stone in memory of <soi->þórir, his son, who fell in Denmark."
+  },
+  {
+   "signum": "N 453",
+   "kind": "runsten",
+   "X": [
+    "ist"
+   ],
+   "group": [
+    "utarraististainaftiraurnfauþursin"
+   ],
+   "normalization": "§P \"Óttarr reisti stein eptir \"Ôrn, fôður sinn. §Q \"Óttarr reisti stein ept \"Bjôrn, fôður sinn.",
+   "translation_en": "§P Óttarr raised the stone in memory of Ôrn, his father. §Q Óttarr raised the stone in memory of Bjôrn, his father."
+  },
+  {
+   "signum": "E DR419",
+   "kind": "lösa föremål",
+   "X": [
+    "þra"
+   ],
+   "group": [
+    "kurilsarþuarafarþunufuntinistuþuruigiþikþorsatrutiniurilsarþuarauiþraþrauari"
+   ],
+   "normalization": "\"Gyrill sárþvara, far þú nú, fundinn ertu; \"Þórr vígi þik, þursa dróttinn, \"Gyrill sárþvara. Viðr aðra vari.",
+   "translation_en": "Gyril wound-causer, go now, you are found. Thor hallow you (to perdition), lord of giants (demons), Gyril wound-causer. Against blood-poison (literally: blood-vessel pus)."
+  }
+ ],
+ "B2": {
+  "edda": {
+   "words": 90852,
+   "ww": 38,
+   "ww_per_10k": 4.182626689561045,
+   "ww_top": [
+    [
+     "hárbarðr",
+     5
+    ],
+    [
+     "þórr",
+     4
+    ],
+    [
+     "hann",
+     3
+    ],
+    [
+     "þá",
+     3
+    ],
+    [
+     "var",
+     2
+    ],
+    [
+     "grípir",
+     2
+    ],
+    [
+     "eiða",
+     2
+    ],
+    [
+     "erfivörðu",
+     2
+    ],
+    [
+     "varð",
+     1
+    ],
+    [
+     "skal",
+     1
+    ],
+    [
+     "kvað",
+     1
+    ],
+    [
+     "ek",
+     1
+    ],
+    [
+     "gaft",
+     1
+    ],
+    [
+     "at",
+     1
+    ],
+    [
+     "óðalvöllu",
+     1
+    ],
+    [
+     "bar",
+     1
+    ],
+    [
+     "barni",
+     1
+    ],
+    [
+     "ekki",
+     1
+    ],
+    [
+     "ganga",
+     1
+    ],
+    [
+     "men",
+     1
+    ],
+    [
+     "eru",
+     1
+    ],
+    [
+     "tunga",
+     1
+    ],
+    [
+     "hár",
+     1
+    ]
+   ],
+   "redup": 172,
+   "redup_top": [
+    [
+     "svarar",
+     53
+    ],
+    [
+     "sumum",
+     9
+    ],
+    [
+     "heitit",
+     6
+    ],
+    [
+     "níðaðar",
+     6
+    ],
+    [
+     "ginnungagap",
+     6
+    ],
+    [
+     "heinin",
+     5
+    ],
+    [
+     "skarar",
+     4
+    ],
+    [
+     "standandi",
+     3
+    ],
+    [
+     "farar",
+     3
+    ],
+    [
+     "lastastöfum",
+     3
+    ],
+    [
+     "mennirnir",
+     3
+    ],
+    [
+     "heinina",
+     3
+    ],
+    [
+     "smíðuðu",
+     2
+    ],
+    [
+     "ganganda",
+     2
+    ],
+    [
+     "ratatoskr",
+     2
+    ],
+    [
+     "steinsins",
+     2
+    ],
+    [
+     "taumum",
+     2
+    ],
+    [
+     "steininn",
+     2
+    ],
+    [
+     "gangandi",
+     2
+    ],
+    [
+     "kvernunum",
+     2
+    ],
+    [
+     "bálfarar",
+     2
+    ],
+    [
+     "beinunum",
+     2
+    ],
+    [
+     "varnanar",
+     2
+    ],
+    [
+     "heininni",
+     2
+    ],
+    [
+     "spænirnir",
+     2
+    ],
+    [
+     "vananið",
+     2
+    ],
+    [
+     "sexhöfðaðan",
+     1
+    ],
+    [
+     "þríhöfðuðum",
+     1
+    ],
+    [
+     "fjölhöfðaða",
+     1
+    ],
+    [
+     "standanda",
+     1
+    ],
+    [
+     "hratat",
+     1
+    ],
+    [
+     "ratat",
+     1
+    ],
+    [
+     "arar",
+     1
+    ],
+    [
+     "biðið",
+     1
+    ],
+    [
+     "fararbroddi",
+     1
+    ],
+    [
+     "vágmarar",
+     1
+    ],
+    [
+     "glatat",
+     1
+    ],
+    [
+     "kvikvir",
+     1
+    ],
+    [
+     "glaumvarar",
+     1
+    ],
+    [
+     "forðuðu",
+     1
+    ]
+   ],
+   "ww_list": [
+    {
+     "work": "Völuspá",
+     "word": "var",
+     "context": "alda þat er ekki var var a sandr né"
+    },
+    {
+     "work": "Hávamál",
+     "word": "varð",
+     "context": "garði gunnlaðar ölr ek varð varð ofrölvi at ins"
+    },
+    {
+     "work": "Hávamál",
+     "word": "skal",
+     "context": "sé firr farinn ganga skal skal a gestr vera"
+    },
+    {
+     "work": "Hárbarðsljóð",
+     "word": "hárbarðr",
+     "context": "hvat vanntu þá meðan hárbarðr hárbarðr kvað var ek"
+    },
+    {
+     "work": "Hárbarðsljóð",
+     "word": "þórr",
+     "context": "hvat vanntu þá meðan þórr þórr kvað ek drap"
+    },
+    {
+     "work": "Hárbarðsljóð",
+     "word": "hárbarðr",
+     "context": "hvat vanntu þá meðan hárbarðr hárbarðr kvað miklar manvélar"
+    },
+    {
+     "work": "Hárbarðsljóð",
+     "word": "þórr",
+     "context": "hvat vanntu þá meðan þórr þórr kvað ek var"
+    },
+    {
+     "work": "Hárbarðsljóð",
+     "word": "hárbarðr",
+     "context": "hvat vanntu þá meðan hárbarðr hárbarðr kvað var ek"
+    },
+    {
+     "work": "Hárbarðsljóð",
+     "word": "þórr",
+     "context": "engar hvat vanntu þá þórr þórr kvað ek var"
+    },
+    {
+     "work": "Hárbarðsljóð",
+     "word": "hárbarðr",
+     "context": "hvat vanntu þá meðan hárbarðr hárbarðr kvað ek var"
+    },
+    {
+     "work": "Hárbarðsljóð",
+     "word": "þórr",
+     "context": "hvat vanntu þá meðan þórr þórr kvað brúðir berserkja"
+    },
+    {
+     "work": "Hárbarðsljóð",
+     "word": "hárbarðr",
+     "context": "þjalfa hvat vanntu meðan hárbarðr hárbarðr kvað ek vark"
+    },
+    {
+     "work": "Lokasenna",
+     "word": "kvað",
+     "context": "fyr nágrindr neðan loki kvað kvað ek fyr ásum"
+    },
+    {
+     "work": "Lokasenna",
+     "word": "hann",
+     "context": "líki þar tóku æsir hann hann var bundinn með"
+    },
+    {
+     "work": "Þrymskviða",
+     "word": "ek",
+     "context": "veiztu verða vergjarnasta ef ek ek með þér í"
+    },
+    {
+     "work": "Helgakviða_Hjörvarðssonar",
+     "word": "hann",
+     "context": "ekki nafn festist við hann hann sat á haugi"
+    },
+    {
+     "work": "Grípisspá",
+     "word": "grípir",
+     "context": "með öllu enn segðu grípir grípir kvað lit hefir"
+    },
+    {
+     "work": "Grípisspá",
+     "word": "grípir",
+     "context": "eggjar rjóða enn segðu grípir grípir kvað þá er"
+    },
+    {
+     "work": "Reginsmál",
+     "word": "gaft",
+     "context": "hreiðmarr sagði gjafar þú gaft gaft at tu ástgjafar"
+    },
+    {
+     "work": "Sigurðarkviða_in_meiri",
+     "word": "eiða",
+     "context": "mér hefir sigurðr selda eiða eiða selda alla logna"
+    },
+    {
+     "work": "Sigurðarkviða_in_skamma",
+     "word": "eiða",
+     "context": "vinna sverði rofna svarna eiða eiða svarna unnar tryggðir"
+    },
+    {
+     "work": "Sigurðarkviða_in_skamma",
+     "word": "at",
+     "context": "skæða skatna mengi mun at at vilja versæl gefin"
+    },
+    {
+     "work": "Sigurðarkviða_in_skamma",
+     "word": "erfivörðu",
+     "context": "mun hún sér jóð erfivörðu erfivörðu jónakrs sonum mun"
+    },
+    {
+     "work": "Guðrúnarhvöt",
+     "word": "erfivörðu",
+     "context": "ól ek mér jóð erfivörðu erfivörðu jónakrs sonum en"
+    },
+    {
+     "work": "Rígsþula",
+     "word": "óðalvöllu",
+     "context": "þann bað hann eignask óðalvöllu óðalvöllu aldnar byggðir reið"
+    },
+    {
+     "work": "Völuspá_in_skamma",
+     "word": "bar",
+     "context": "bar hann greip of bar bar hann eistla ok"
+    },
+    {
+     "work": "Hlöðskviða",
+     "word": "barni",
+     "context": "þetta er þiggjanda þýjar barni barni þýjar þótt sé"
+    },
+    {
+     "work": "Hlöðskviða",
+     "word": "þá",
+     "context": "hann mátti tala við þá þá kallar hann hári"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "var",
+     "context": "alda þat er ekki var var a sandr né"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "ekki",
+     "context": "kom heim mælti hann ekki ekki svaf hann ekki"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "hann",
+     "context": "var til lagt við hann hann tók til inn"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "ganga",
+     "context": "þeir munu þá sofa ganga ganga þau þá undir"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "þá",
+     "context": "tók arf eftir báða þá þá svarar brynhildr meira"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "þá",
+     "context": "alvápnaðan ok vill drepa þá þá tók hrólfr kraki"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "men",
+     "context": "títt var at hafa men men ok hringar eru"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "eru",
+     "context": "en kerlingar er gamlar eru eru enn þau kvenna"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "tunga",
+     "context": "sker orða munnr eða tunga tunga er oft kölluð"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "hár",
+     "context": "konr hafa skoft heitir hár hár er svá kennt"
+    }
+   ],
+   "redup_list": [
+    {
+     "work": "Völuspá",
+     "word": "smíðuðu",
+     "X": "ðu",
+     "context": "hátimbruðu afla lögðu auð smíðuðu tangir skópu ok"
+    },
+    {
+     "work": "Völuspá",
+     "word": "standandi",
+     "X": "and",
+     "context": "höfuð skelfr yggdrasils askr standandi ymr it aldna"
+    },
+    {
+     "work": "Hávamál",
+     "word": "ganganda",
+     "X": "gan",
+     "context": "hafðu aldregi gest né ganganda oft vitu ógörla"
+    },
+    {
+     "work": "Vafþrúðnismál",
+     "word": "sexhöfðaðan",
+     "X": "ða",
+     "context": "gat ins fróða jötuns sexhöfðaðan son óðinn kvað"
+    },
+    {
+     "work": "Grímnismál",
+     "word": "ratatoskr",
+     "X": "at",
+     "context": "hrímþursar þriðju mennskir menn ratatoskr heitir íkorni er"
+    },
+    {
+     "work": "Skírnismál",
+     "word": "þríhöfðuðum",
+     "X": "ðu",
+     "context": "tárum trega með þursi þríhöfðuðum þú skalt æ"
+    },
+    {
+     "work": "Hárbarðsljóð",
+     "word": "farar",
+     "X": "ar",
+     "context": "aldregi mundu glepja féhirði farar þórr kvað ráð"
+    },
+    {
+     "work": "Hárbarðsljóð",
+     "word": "steinsins",
+     "X": "ins",
+     "context": "til stokksins önnur til steinsins haltu svá til"
+    },
+    {
+     "work": "Hárbarðsljóð",
+     "word": "svarar",
+     "X": "ar",
+     "context": "þú mér skætingu einni svarar launa mun ek"
+    },
+    {
+     "work": "Hymiskviða",
+     "word": "skarar",
+     "X": "ar",
+     "context": "borði hamri kníði háfjall skarar ofljótt ofan ulfs"
+    },
+    {
+     "work": "Hymiskviða",
+     "word": "fjölhöfðaða",
+     "X": "ða",
+     "context": "hymi austan folkdrótt fara fjölhöfðaða hóf hann sér"
+    },
+    {
+     "work": "Hymiskviða",
+     "word": "standanda",
+     "X": "and",
+     "context": "sér af herðum hver standanda veifði hann mjöllni"
+    },
+    {
+     "work": "Lokasenna",
+     "word": "lastastöfum",
+     "X": "ast",
+     "context": "síðr oss loki kveði lastastöfum ægis höllu í"
+    },
+    {
+     "work": "Lokasenna",
+     "word": "lastastöfum",
+     "X": "ast",
+     "context": "þú loka kveðir a lastastöfum ægis höllu í"
+    },
+    {
+     "work": "Lokasenna",
+     "word": "lastastöfum",
+     "X": "ast",
+     "context": "loka ek kveðk a lastastöfum ægis höllu í"
+    },
+    {
+     "work": "Alvíssmál",
+     "word": "hratat",
+     "X": "at",
+     "context": "heim í sinni snúask hratat um mægi mun"
+    },
+    {
+     "work": "Alvíssmál",
+     "word": "heitit",
+     "X": "it",
+     "context": "heima þá er þér heitit var at sá"
+    },
+    {
+     "work": "Alvíssmál",
+     "word": "ratat",
+     "X": "at",
+     "context": "heiti ek hef víða ratat sonr em ek"
+    },
+    {
+     "work": "Völundarkviða",
+     "word": "níðaðar",
+     "X": "ða",
+     "context": "úti stóð kunnig kván níðaðar hon inn of"
+    },
+    {
+     "work": "Völundarkviða",
+     "word": "níðaðar",
+     "X": "ða",
+     "context": "á dýr séa synir níðaðar í sævarstöð kómu"
+    },
+    {
+     "work": "Völundarkviða",
+     "word": "níðaðar",
+     "X": "ða",
+     "context": "sendi hann kunnigri konu níðaðar en ór tönnum"
+    },
+    {
+     "work": "Völundarkviða",
+     "word": "níðaðar",
+     "X": "ða",
+     "context": "fitjum þeim er mik níðaðar námu rekkar hlæjandi"
+    },
+    {
+     "work": "Völundarkviða",
+     "word": "níðaðar",
+     "X": "ða",
+     "context": "úti stendr kunnig kván níðaðar ok hon inn"
+    },
+    {
+     "work": "Völundarkviða",
+     "word": "níðaðar",
+     "X": "ða",
+     "context": "senda ek kunnigri kván níðaðar en úr tönnum"
+    },
+    {
+     "work": "Helgakviða_Hjörvarðssonar",
+     "word": "svarar",
+     "X": "ar",
+     "context": "arfi at ráða hjörvarðr svarar at hann mundi"
+    },
+    {
+     "work": "Helgakviða_Hjörvarðssonar",
+     "word": "taumum",
+     "X": "um",
+     "context": "ok hafði orma at taumum ok bauð fylgð"
+    },
+    {
+     "work": "Helgakviða_Hundingsbana_I",
+     "word": "arar",
+     "X": "ar",
+     "context": "var alda þat er arar gullu hnigu heilög"
+    },
+    {
+     "work": "Helgakviða_Hundingsbana_I",
+     "word": "heitit",
+     "X": "it",
+     "context": "faðir meyju sinni grimmum heitit granmars syni en"
+    },
+    {
+     "work": "Helgakviða_Hundingsbana_I",
+     "word": "biðið",
+     "X": "ið",
+     "context": "bjóða ok burum þeira biðið skjótliga til skipa"
+    },
+    {
+     "work": "Völsungakviða_in_forna",
+     "word": "fararbroddi",
+     "X": "ar",
+     "context": "þykkja mér fríð í fararbroddi verpr vígroða um"
+    },
+    {
+     "work": "Reginsmál",
+     "word": "steininn",
+     "X": "in",
+     "context": "dvergrinn gekk inn í steininn ok mælti þat"
+    },
+    {
+     "work": "Reginsmál",
+     "word": "vágmarar",
+     "X": "ar",
+     "context": "sveita stokkin mun at vágmarar vind of standask"
+    },
+    {
+     "work": "Sigrdrífumál",
+     "word": "heitit",
+     "X": "it",
+     "context": "hafði óðinn hánum sigri heitit en annarr hét"
+    },
+    {
+     "work": "Sigrdrífumál",
+     "word": "sumum",
+     "X": "um",
+     "context": "verit mörgum at móðtrega sumum at bana sumum"
+    },
+    {
+     "work": "Sigrdrífumál",
+     "word": "sumum",
+     "X": "um",
+     "context": "móðtrega sumum at bana sumum at bölstöfum fjölð"
+    },
+    {
+     "work": "Helreið_Brynhildar",
+     "word": "glatat",
+     "X": "at",
+     "context": "þú hefir gjúka of glatat börnum ok búi"
+    },
+    {
+     "work": "Helreið_Brynhildar",
+     "word": "kvikvir",
+     "X": "kvi",
+     "context": "lengi konur ok karlar kvikvir fæðask við skulum"
+    },
+    {
+     "work": "Dráp_Niflunga",
+     "word": "glaumvarar",
+     "X": "ar",
+     "context": "eigi þá fekk hann glaumvarar en högni átti"
+    },
+    {
+     "work": "Guðrúnarkviða_in_forna",
+     "word": "skarar",
+     "X": "ar",
+     "context": "hjalma skalmum gyrðir höfðu skarar jarpar hverr vildi"
+    },
+    {
+     "work": "Oddrúnarkviða",
+     "word": "standandi",
+     "X": "and",
+     "context": "at hári kom höll standandi svipti hon söðli"
+    },
+    {
+     "work": "Atlamál_in_grænlenzku",
+     "word": "forðuðu",
+     "X": "ðu",
+     "context": "er þat orð heyrðu forðuðu fingrum ok fengu"
+    },
+    {
+     "work": "Atlamál_in_grænlenzku",
+     "word": "viðfarar",
+     "X": "ar",
+     "context": "í hug henni högna viðfarar talði happ hánum"
+    },
+    {
+     "work": "Guðrúnarhvöt",
+     "word": "eikiköstinn",
+     "X": "ik",
+     "context": "heimi hlaðið ér jarlar eikiköstinn látið þann und"
+    },
+    {
+     "work": "Rígsþula",
+     "word": "riðuðu",
+     "X": "ðu",
+     "context": "rifti rauðan ok rjóðan riðuðu augu hann nam"
+    },
+    {
+     "work": "Rígsþula",
+     "word": "gangandi",
+     "X": "gan",
+     "context": "þar ór runni rígr gangandi rígr gangandi rúnar"
+    },
+    {
+     "work": "Rígsþula",
+     "word": "gangandi",
+     "X": "gan",
+     "context": "runni rígr gangandi rígr gangandi rúnar kendi sitt"
+    },
+    {
+     "work": "Hyndluljóð",
+     "word": "sumum",
+     "X": "um",
+     "context": "þiggja gefr hann sigr sumum en sumum aura"
+    },
+    {
+     "work": "Hyndluljóð",
+     "word": "sumum",
+     "X": "um",
+     "context": "hann sigr sumum en sumum aura mælsku mörgum"
+    },
+    {
+     "work": "Gróttasöngr",
+     "word": "kvernunum",
+     "X": "nu",
+     "context": "en sú náttúra fylgði kvernunum at þat mólst"
+    },
+    {
+     "work": "Grógaldr",
+     "word": "farar",
+     "X": "ar",
+     "context": "léi þér æ friðdrjúgrar farar þann gel ek"
+    },
+    {
+     "work": "Hervararkviða",
+     "word": "hervararkviða",
+     "X": "ar",
+     "context": "hervararkviða hitt hefr mær"
+    },
+    {
+     "work": "Hervararkviða",
+     "word": "svarar",
+     "X": "ar",
+     "context": "dýrt vápn fela þá svarar angantýr hervör dóttir"
+    },
+    {
+     "work": "Hlöðskviða",
+     "word": "ganganda",
+     "X": "gan",
+     "context": "sitjanda silfri mæla en ganganda þik gulli steypa"
+    },
+    {
+     "work": "Hlöðskviða",
+     "word": "hervarar",
+     "X": "ar",
+     "context": "mannfallinu í lið þeira hervarar ok um síðir"
+    },
+    {
+     "work": "Hálfsrekkaljóð",
+     "word": "skarar",
+     "X": "ar",
+     "context": "brenni skjöldungs liði of skarar fjöllum innsteinn kvað"
+    },
+    {
+     "work": "Heiðreksgátur",
+     "word": "svarar",
+     "X": "ar",
+     "context": "ek sé eigi gestumblindi svarar lítt em ek"
+    },
+    {
+     "work": "Heiðreksgátur",
+     "word": "sumum",
+     "X": "um",
+     "context": "margmæltir þar af en sumum vefst tungubragð gestumblindi"
+    },
+    {
+     "work": "Heiðreksgátur",
+     "word": "svarar",
+     "X": "ar",
+     "context": "ríkra manna spurningar gestumblindi svarar frest eru böls"
+    },
+    {
+     "work": "Heiðreksgátur",
+     "word": "sumum",
+     "X": "um",
+     "context": "leita ok sést því sumum yfir sé ek"
+    },
+    {
+     "work": "Heiðreksgátur",
+     "word": "svarar",
+     "X": "ar",
+     "context": "manna þú ert gestumblindi svarar slíkr em ek"
+    },
+    {
+     "work": "Heiðreksgátur",
+     "word": "svarar",
+     "X": "ar",
+     "context": "af þessum þrautum konungr svarar upp skaltu bera"
+    },
+    {
+     "work": "Heiðreksgátur",
+     "word": "sumum",
+     "X": "um",
+     "context": "geirum mætir gefr líf sumum leggr við lófa"
+    },
+    {
+     "work": "Heiðreksgátur",
+     "word": "svarar",
+     "X": "ar",
+     "context": "þú at gátu þá svarar konungr þessa gátu"
+    },
+    {
+     "work": "Heiðreksgátur",
+     "word": "svarar",
+     "X": "ar",
+     "context": "á bál hafðr konungr svarar undr ok argskap"
+    },
+    {
+     "work": "Eddubrot",
+     "word": "svarar",
+     "X": "ar",
+     "context": "at lofti líðr hon svarar né ek flýg"
+    },
+    {
+     "work": "Eddubrot",
+     "word": "mennirnir",
+     "X": "nir",
+     "context": "en allir gerðu þat mennirnir ok kykvendin ok"
+    },
+    {
+     "work": "Eddubrot",
+     "word": "svarar",
+     "X": "ar",
+     "context": "baldr ór helju hon svarar þökk mun gráta"
+    },
+    {
+     "work": "Eddubrot",
+     "word": "bálfarar",
+     "X": "ar",
+     "context": "gráta þurrum tárum baldrs bálfarar kyks né dauðs"
+    },
+    {
+     "work": "Sólarljóð",
+     "word": "heitit",
+     "X": "it",
+     "context": "ek ætlumk því mér heitit var sá hefir"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "öxnirnir",
+     "X": "nir",
+     "context": "leysti landit ok drógu öxnirnir þat land út"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "hverr höllina átti hann svarar at þat var"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "höfðingja þeira væri sá svarar er hann leiddi"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "jörð væri ger þá svarar hárr þá var"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "hvat var áðr hárr svarar svá sem segir"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "ginnungagap",
+     "X": "ga",
+     "context": "yfir annat allt í ginnungagap þá mælti jafnhárr"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "ginnungagap",
+     "X": "ga",
+     "context": "ginnungagap þá mælti jafnhárr ginnungagap þat er vissi"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "ginnungagaps",
+     "X": "ga",
+     "context": "en inn syðri hlutr ginnungagaps léttist mót gneistum"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "ginnungagap",
+     "X": "ga",
+     "context": "heitt ok ljóst en ginnungagap var svá hlætt"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "sagðir þú frá þá svarar hárr fyr engan"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "hvat lifði hann hárr svarar næst var þat"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "hvat fæddist kýrin hárr svarar hon sleikði hrímsteinana"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "hrímsteinana",
+     "X": "na",
+     "context": "hárr svarar hon sleikði hrímsteinana er saltir váru"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "steinana",
+     "X": "na",
+     "context": "dag er hon sleikði steinana kom ór steininum"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "steininum",
+     "X": "in",
+     "context": "sleikði steinana kom ór steininum at kveldi manns"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "hvárir váru ríkari þá svarar hárr synir bors"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "ginnungagap",
+     "X": "ga",
+     "context": "ok fluttu í mitt ginnungagap ok gerðu af"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "beinunum",
+     "X": "nu",
+     "context": "holdinu en björgin af beinunum grjót ok urðir"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "sumum",
+     "X": "um",
+     "context": "gáfu staðar öllum eldingum sumum á himni sumar"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "var jörðin háttuð þá svarar hárr hon er"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "mennirnir",
+     "X": "nir",
+     "context": "dægrum ok hvaðan kómu mennirnir þeir er heim"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "sumum",
+     "X": "um",
+     "context": "kæla þá en í sumum fræðum er þat"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "hræddist bana sinn þá svarar hárr eigi er"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "himins af jörðu þá svarar hárr ok hló"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "smíðuðu",
+     "X": "ðu",
+     "context": "önnur ok því næst smíðuðu þeir málm ok"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "kvinnanna",
+     "X": "nna",
+     "context": "en spilltist af tilkvámu kvinnanna þær kómu ór"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "eða helgistaðrinn goðanna hárr svarar þat er at"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "ginnungagap",
+     "X": "ga",
+     "context": "þar sem forðum var ginnungagap in þriðja stendr"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "ratatoskr",
+     "X": "at",
+     "context": "íkorni sá er heitir ratatoskr renn upp ok"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "úlfinn slíta mundu þá svarar úlfrinn svá lízt"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "slitit",
+     "X": "it",
+     "context": "fær eigi þetta band slitit þá muntu ekki"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "illiliga",
+     "X": "li",
+     "context": "gómsparri hans hann grenjar illiliga ok slefa renn"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "ván af honum hárr svarar svá mikils virðu"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "at lofti líðr hon svarar né ek flýg"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "ekki við menn þá svarar freyr ok sagði"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "vel launa þér þá svarar skírnir sagði svá"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "hann þá iðrast þá svarar hárr lítit mark"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "vera allmikit fjölmenni þá svarar hárr satt er"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "banans",
+     "X": "an",
+     "context": "sár ok sviða til banans annat kann ek"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "vera fyrir durum þá svarar hárr hví spyrr"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "beinunum",
+     "X": "nu",
+     "context": "skyldu kasta á hafrstökurnar beinunum þjálfi sonr búanda"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "gekk aftr skyndiliga ok svarar at hann var"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "sinn en ek þá svarar útgarða loki íþrótt"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "beinin",
+     "X": "in",
+     "context": "etit slátr allt ok beinin með ok svá"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "í öðrum drykk þórr svarar engu setr hornit"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "þú hér af þórr svarar freista má ek"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "em ek reiðr þá svarar útgarða loki ok"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "ekki þessa hefnt hárr svarar eigi er þat"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "hrönnunum",
+     "X": "nu",
+     "context": "af honum höfuðit við hrönnunum en ek hygg"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "í þessi ferð hárr svarar vera mun at"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "at eira baldri þá svarar frigg vex viðarteinungr"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "ekki at baldri hann svarar því at ek"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "farar",
+     "X": "ar",
+     "context": "óðins er til þeirar farar varð þá var"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "taumum",
+     "X": "um",
+     "context": "ok hafði höggorm at taumum þá hljóp hon"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "hlunnunum",
+     "X": "nu",
+     "context": "at eldr hraut ór hlunnunum ok lönd öll"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "hér á helveg hann svarar at ek skal"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "mennirnir",
+     "X": "nir",
+     "context": "en allir gerðu þat mennirnir ok kykvendin ok"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "bálfarar",
+     "X": "ar",
+     "context": "gráta þurrum tárum baldrs bálfarar kyks né dauðs"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "varnanar",
+     "X": "na",
+     "context": "er þat fyrir því varnanar vert ef maðr"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "himinninn",
+     "X": "inn",
+     "context": "í þessum gný klofnar himinninn ok ríða þaðan"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "standandi",
+     "X": "and",
+     "context": "höfuð skelfr yggdrasils askr standandi ymr it aldna"
+    },
+    {
+     "work": "Gylfaginning",
+     "word": "svarar",
+     "X": "ar",
+     "context": "um allar aldir þá svarar þriði margar eru"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "heitit",
+     "X": "it",
+     "context": "þingit ok var honum heitit bana eða píslum"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "svarar",
+     "X": "ar",
+     "context": "kyns var hann bragi svarar ölvaldi hét faðir"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "svarar",
+     "X": "ar",
+     "context": "þér kallið skáldskap bragi svarar þat váru upphöf"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "svarar",
+     "X": "ar",
+     "context": "komst at miðinum bragi svarar sjá saga er"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "heinina",
+     "X": "in",
+     "context": "miklu betr ok föluðu heinina en hann mat"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "heininni",
+     "X": "in",
+     "context": "selja en hann kastaði heininni í loft upp"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "spænirnir",
+     "X": "nir",
+     "context": "í nafarsraufina ok hrjóta spænirnir upp í móti"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "spænirnir",
+     "X": "nir",
+     "context": "sinn þá fuku inn spænirnir þá brást bölverkr"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "vananið",
+     "X": "an",
+     "context": "kalla hann vanaguð eða vananið eða van ok"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "vananið",
+     "X": "an",
+     "context": "ok enn vanaguð ok vananið ok vanr ok"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "svarar",
+     "X": "ar",
+     "context": "at gildi ása þá svarar hrungnir ok sér"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "heinina",
+     "X": "in",
+     "context": "stóð á en tvíhendi heinina því næst sá"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "heinina",
+     "X": "in",
+     "context": "hrungni hrungnir færir upp heinina báðum höndum ok"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "heinin",
+     "X": "in",
+     "context": "flugi ok brotnar sundr heinin fellr annarr hlutr"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "heinin",
+     "X": "in",
+     "context": "til þrúðvanga ok stóð heinin í höfði honum"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "heinin",
+     "X": "in",
+     "context": "þór til þess er heinin losnaði en er"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "heininni",
+     "X": "in",
+     "context": "at braut myndi ná heininni þá vildi hann"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "heinin",
+     "X": "in",
+     "context": "enga galdra ok varð heinin eigi lausari ok"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "varnanar",
+     "X": "na",
+     "context": "er þat boðit til varnanar at kasta hein"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "heinin",
+     "X": "in",
+     "context": "því at þá hrærist heinin í höfði þór"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "svarar",
+     "X": "ar",
+     "context": "þórs til geirröðargarða þá svarar bragi mikillar frásagnar"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "varar",
+     "X": "ar",
+     "context": "haustköld skotar hélðum holmrönd varar öndri ok enn"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "steinsins",
+     "X": "ins",
+     "context": "undirkúlu en jötun ála steinsins en gull rödd"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "steininn",
+     "X": "in",
+     "context": "er þeir koma í steininn þá bar dvergrinn"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "svarar",
+     "X": "ar",
+     "context": "helminga með þeim fáfnir svarar svá at lítil"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "svarar",
+     "X": "ar",
+     "context": "eftir báða þá þá svarar brynhildr meira er"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "eiðsvarar",
+     "X": "ar",
+     "context": "því at þeir váru eiðsvarar sigurðar þá eggjuðu"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "svarar",
+     "X": "ar",
+     "context": "hitti jörmunrekk konung hann svarar at hann myndi"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "hirðmenninir",
+     "X": "ni",
+     "context": "lifði þá stóðu upp hirðmenninir ok sóttu þá"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "kvernunum",
+     "X": "nu",
+     "context": "en sú náttúra fylgði kvernunum at þat mólst"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "svarar",
+     "X": "ar",
+     "context": "þér hann konung þá svarar konungr þú sveinn"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "riðmarar",
+     "X": "ar",
+     "context": "hrynserk viðum brynju hruðusk riðmarar róða rastar varð"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "svarar",
+     "X": "ar",
+     "context": "engrar vægðar ván högni svarar stirt dóttur sinni"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "svarar",
+     "X": "ar",
+     "context": "gull at bótum þá svarar högni of síð"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "jórsalalandi",
+     "X": "al",
+     "context": "þann konung er ræðr jórsalalandi at kalla jórsalakonung"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "skarar",
+     "X": "ar",
+     "context": "greppr fyr gumnum geðsnjallr skarar fjalli rétt er"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "dómarar",
+     "X": "ar",
+     "context": "skulu ok vera réttir dómarar ok réttir landvarnarmenn"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "ginnungagap",
+     "X": "ga",
+     "context": "ok veðranna loft heitir ginnungagap ok meðalheimr foglheimr"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "jötnana",
+     "X": "na",
+     "context": "ok svá at nefna jötnana eða kenna þá"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "greinina",
+     "X": "in",
+     "context": "ef aðra skal hafa greinina en áðr þykki"
+    },
+    {
+     "work": "Skáldskaparmál",
+     "word": "heitit",
+     "X": "it",
+     "context": "þau er saman eigu heitit margir hlutir"
+    }
+   ]
+  },
+  "sagor": {
+   "words": 1561558,
+   "ww": 276,
+   "ww_per_10k": 1.7674655696426262,
+   "ww_top": [
+    [
+     "hann",
+     55
+    ],
+    [
+     "að",
+     38
+    ],
+    [
+     "at",
+     24
+    ],
+    [
+     "þá",
+     14
+    ],
+    [
+     "er",
+     11
+    ],
+    [
+     "þeir",
+     6
+    ],
+    [
+     "þar",
+     5
+    ],
+    [
+     "var",
+     5
+    ],
+    [
+     "fram",
+     4
+    ],
+    [
+     "og",
+     4
+    ],
+    [
+     "eigi",
+     4
+    ],
+    [
+     "kafli",
+     4
+    ],
+    [
+     "konungr",
+     3
+    ],
+    [
+     "en",
+     3
+    ],
+    [
+     "gunnar",
+     3
+    ],
+    [
+     "vindum",
+     3
+    ],
+    [
+     "það",
+     3
+    ],
+    [
+     "því",
+     3
+    ],
+    [
+     "hans",
+     2
+    ],
+    [
+     "svá",
+     2
+    ],
+    [
+     "síðan",
+     2
+    ],
+    [
+     "ekki",
+     2
+    ],
+    [
+     "þórir",
+     2
+    ],
+    [
+     "suma",
+     2
+    ],
+    [
+     "já",
+     2
+    ]
+   ],
+   "redup": 4462,
+   "redup_top": [
+    [
+     "svarar",
+     2534
+    ],
+    [
+     "sveinninn",
+     148
+    ],
+    [
+     "heitit",
+     77
+    ],
+    [
+     "sveininn",
+     74
+    ],
+    [
+     "farar",
+     70
+    ],
+    [
+     "morgininn",
+     69
+    ],
+    [
+     "liðið",
+     64
+    ],
+    [
+     "sumum",
+     57
+    ],
+    [
+     "þessarar",
+     57
+    ],
+    [
+     "riðið",
+     52
+    ],
+    [
+     "sveininum",
+     34
+    ],
+    [
+     "snarar",
+     28
+    ],
+    [
+     "sveinana",
+     26
+    ],
+    [
+     "steininn",
+     25
+    ],
+    [
+     "steininum",
+     25
+    ],
+    [
+     "heimamaður",
+     25
+    ],
+    [
+     "mennirnir",
+     20
+    ],
+    [
+     "samfarar",
+     17
+    ],
+    [
+     "hornunum",
+     15
+    ],
+    [
+     "litit",
+     14
+    ],
+    [
+     "steinninn",
+     13
+    ],
+    [
+     "ganganda",
+     13
+    ],
+    [
+     "gangandi",
+     12
+    ],
+    [
+     "standandi",
+     12
+    ],
+    [
+     "hervarar",
+     12
+    ],
+    [
+     "fastast",
+     12
+    ],
+    [
+     "fararinnar",
+     12
+    ],
+    [
+     "himininn",
+     12
+    ],
+    [
+     "hundadal",
+     12
+    ],
+    [
+     "slitit",
+     11
+    ],
+    [
+     "sveinunum",
+     11
+    ],
+    [
+     "fararefni",
+     11
+    ],
+    [
+     "skarar",
+     9
+    ],
+    [
+     "fylkingararm",
+     8
+    ],
+    [
+     "illiligr",
+     8
+    ],
+    [
+     "biðið",
+     8
+    ],
+    [
+     "heimamann",
+     8
+    ],
+    [
+     "ásbjarnarnesi",
+     8
+    ],
+    [
+     "konunum",
+     7
+    ],
+    [
+     "hvetvetna",
+     7
+    ]
+   ],
+   "ww_list": [
+    {
+     "work": "Bósa_saga_ok_Herrauðs.txt",
+     "word": "þeir",
+     "context": "vera þrællinn ok stilltu þeir þeir nú at honum"
+    },
+    {
+     "work": "Bósa_saga_ok_Herrauðs.txt",
+     "word": "þat",
+     "context": "kvað eigi hættligt um þat þat er nú sem"
+    },
+    {
+     "work": "Egils_saga_einhenda_ok_Ásmundar_berserkjabana.txt",
+     "word": "hann",
+     "context": "fyrir konung ok kvöddu hann hann tók vel kveðju"
+    },
+    {
+     "work": "Egils_saga_einhenda_ok_Ásmundar_berserkjabana.txt",
+     "word": "er",
+     "context": "með þeiri sem af er er þar búit um"
+    },
+    {
+     "work": "Egils_saga_einhenda_ok_Ásmundar_berserkjabana.txt",
+     "word": "at",
+     "context": "sjau dögum kerling var at at renna mjólk hún"
+    },
+    {
+     "work": "Gautreks_saga.txt",
+     "word": "at",
+     "context": "eigi þykkja líkligr til at at engu mundi vilja"
+    },
+    {
+     "work": "Gautreks_saga.txt",
+     "word": "þá",
+     "context": "engum sættum á við þá þá þykki mér mikil"
+    },
+    {
+     "work": "Göngu-Hrólfs_saga.txt",
+     "word": "hann",
+     "context": "fyrir jarl ok kvöddu hann hann tók vel kveðju"
+    },
+    {
+     "work": "Hervarar_saga_ok_Heiðreks.txt",
+     "word": "barni",
+     "context": "þetta er þiggjanda þýjar barni barni þýjar þótt sé"
+    },
+    {
+     "work": "Hervarar_saga_ok_Heiðreks.txt",
+     "word": "þá",
+     "context": "hann mátti tala við þá þá kallar hann hári"
+    },
+    {
+     "work": "Hrólfs_saga_Gautrekssonar.txt",
+     "word": "at",
+     "context": "fóru þess engan veg at at eigi kæmi ráð"
+    },
+    {
+     "work": "Hrólfs_saga_Gautrekssonar.txt",
+     "word": "at",
+     "context": "tíma sem opt bar at at faðir þinn kom"
+    },
+    {
+     "work": "Hrólfs_saga_Gautrekssonar.txt",
+     "word": "þar",
+     "context": "á skóginn ok leynast þar þar til er þeir"
+    },
+    {
+     "work": "Hrólfs_saga_Gautrekssonar.txt",
+     "word": "at",
+     "context": "þurftu þeir þá margir at at ganga áðr þeir"
+    },
+    {
+     "work": "Hrólfs_saga_kraka_ok_kappa_hans.txt",
+     "word": "hann",
+     "context": "sonr hans ríki eptir hann hann var grimmr maðr"
+    },
+    {
+     "work": "Hrólfs_saga_kraka_ok_kappa_hans.txt",
+     "word": "drífa",
+     "context": "hrólfs konungs en önnur drífa drífa var heima með"
+    },
+    {
+     "work": "Hrólfs_saga_kraka_ok_kappa_hans.txt",
+     "word": "björn",
+     "context": "sér þenna inn grimma björn björn ferr at henni"
+    },
+    {
+     "work": "Hrólfs_saga_kraka_ok_kappa_hans.txt",
+     "word": "at",
+     "context": "skuldar eru þau ódæmi at at aldri þverrar lið"
+    },
+    {
+     "work": "Hrómundar_saga_Gripssonar.txt",
+     "word": "at",
+     "context": "svá gengust þeir hart at at grjót ok steinar"
+    },
+    {
+     "work": "Hversu_Noregr_byggðist.txt",
+     "word": "adam",
+     "context": "kapítuli ætt haralds frá adam adam skapaði guð fyrst"
+    },
+    {
+     "work": "Hversu_Noregr_byggðist.txt",
+     "word": "hans",
+     "context": "manna seth var sonr hans hans sonr enos hans"
+    },
+    {
+     "work": "Hálfs_saga_ok_Hálfsrekka.txt",
+     "word": "þá",
+     "context": "gullit allt hann grét þá þá stóð bragi upp"
+    },
+    {
+     "work": "Norna-Gests_þáttr.txt",
+     "word": "gýgr",
+     "context": "þær á brynhildr ok gýgr gýgr kvað skaltu í"
+    },
+    {
+     "work": "Ragnars_saga_loðbrókar_ok_sona_hans.txt",
+     "word": "er",
+     "context": "sér segja hverr sá er er við þessu gengr"
+    },
+    {
+     "work": "Ragnars_saga_loðbrókar_ok_sona_hans.txt",
+     "word": "at",
+     "context": "ok hugðist honum svá at at engir væri jafnfrægir"
+    },
+    {
+     "work": "Ragnars_saga_loðbrókar_ok_sona_hans.txt",
+     "word": "at",
+     "context": "ok er hann var at at reka flóttann segir"
+    },
+    {
+     "work": "Sturlaugs_saga_starfsama.txt",
+     "word": "sturlaugr",
+     "context": "þeir feðgar ingólfr ok sturlaugr sturlaugr mælti við menn"
+    },
+    {
+     "work": "Sturlaugs_saga_starfsama.txt",
+     "word": "svá",
+     "context": "eða þykki þér eigi svá svá er mér ok"
+    },
+    {
+     "work": "Sörla_saga_sterka.txt",
+     "word": "er",
+     "context": "þenna vetr x kapítuli er er vára tók lét"
+    },
+    {
+     "work": "Sörla_saga_sterka.txt",
+     "word": "at",
+     "context": "ef hann kann hér at at bera en ek"
+    },
+    {
+     "work": "Sörla_þáttr_eða_Heðins_saga_ok_Högna.txt",
+     "word": "síðan",
+     "context": "ok stóð aldri upp síðan síðan drap hann þar"
+    },
+    {
+     "work": "Völsunga_saga.txt",
+     "word": "hún",
+     "context": "sigurðr svarar eigi sefr hún hún hefir stórræði með"
+    },
+    {
+     "work": "Yngvars_saga_víðförla.txt",
+     "word": "at",
+     "context": "en treystist þó eigi at at gera því at"
+    },
+    {
+     "work": "Yngvars_saga_víðförla.txt",
+     "word": "hann",
+     "context": "sem risafótrinn lá svalg hann hann þegar hann var"
+    },
+    {
+     "work": "Áns_saga_bogsveigis.txt",
+     "word": "at",
+     "context": "hafa sem ván var at at gefa fóli því"
+    },
+    {
+     "work": "Áns_saga_bogsveigis.txt",
+     "word": "hann",
+     "context": "annat augat síðan geldi hann hann eptir þat leysti"
+    },
+    {
+     "work": "Áns_saga_bogsveigis.txt",
+     "word": "hann",
+     "context": "hann eptir þat leysti hann hann ok fekk honum"
+    },
+    {
+     "work": "Áns_saga_bogsveigis.txt",
+     "word": "þeir",
+     "context": "trélurkinn ok svá gerðu þeir þeir sneru nú til"
+    },
+    {
+     "work": "Ásmundar_saga_kappabana.txt",
+     "word": "einnar",
+     "context": "ek þik bróðir bænar einnar einnar bænar eigi þú"
+    },
+    {
+     "work": "Örvar-Odds_saga.txt",
+     "word": "hættu",
+     "context": "er kallaðr öðru nafni hættu hættu sagði rauðgrani ok"
+    }
+   ],
+   "redup_list": [
+    {
+     "work": "Bósa_saga_ok_Herrauðs.txt",
+     "word": "heitit",
+     "X": "it",
+     "context": "kapítuli hringr hefir konungr heitit er réð fyrir"
+    },
+    {
+     "work": "Bósa_saga_ok_Herrauðs.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "vilið hann krefja konungr svarar þá reiðuliga mikit"
+    },
+    {
+     "work": "Bósa_saga_ok_Herrauðs.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "ok várrar svívirðu herrauðr svarar þá lítill mannskaði"
+    },
+    {
+     "work": "Bósa_saga_ok_Herrauðs.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "svá hátt hangit þá svarar herrauðr reiðr mjök"
+    },
+    {
+     "work": "Bósa_saga_ok_Herrauðs.txt",
+     "word": "hristist",
+     "X": "ist",
+     "context": "villist vættir verði ódæmi hristist hamrar heimr sturlist"
+    },
+    {
+     "work": "Bósa_saga_ok_Herrauðs.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "viltu þulu lengri þá svarar konungr þegi þú"
+    },
+    {
+     "work": "Bósa_saga_ok_Herrauðs.txt",
+     "word": "sveininn",
+     "X": "in",
+     "context": "hann en herrauðr kyrkti sveininn til bana síðan"
+    },
+    {
+     "work": "Bósa_saga_ok_Herrauðs.txt",
+     "word": "sveinninn",
+     "X": "inn",
+     "context": "í þann búning sem sveinninn hafði haft en"
+    },
+    {
+     "work": "Bósa_saga_ok_Herrauðs.txt",
+     "word": "konunum",
+     "X": "nu",
+     "context": "stukku þá faldarnir af konunum ok léku þeir"
+    },
+    {
+     "work": "Bósa_saga_ok_Herrauðs.txt",
+     "word": "menninir",
+     "X": "ni",
+     "context": "upp konurnar ok allir menninir ok engi hlutr"
+    },
+    {
+     "work": "Bósa_saga_ok_Herrauðs.txt",
+     "word": "vakrara",
+     "X": "ra",
+     "context": "ok léku nú engir vakrara en þau ok"
+    },
+    {
+     "work": "Bósa_saga_ok_Herrauðs.txt",
+     "word": "tönnunum",
+     "X": "nu",
+     "context": "greip til herrauðar með tönnunum ok reif af"
+    },
+    {
+     "work": "Bósa_saga_ok_Herrauðs.txt",
+     "word": "bitit",
+     "X": "it",
+     "context": "sér en gat eigi bitit er af var"
+    },
+    {
+     "work": "Egils_saga_einhenda_ok_Ásmundar_berserkjabana.txt",
+     "word": "heitit",
+     "X": "it",
+     "context": "kapítuli hertryggur hefir konungr heitit hann réð fyrir"
+    },
+    {
+     "work": "Egils_saga_einhenda_ok_Ásmundar_berserkjabana.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "þín sé óhefnt ásmundr svarar svá mætta ek"
+    },
+    {
+     "work": "Egils_saga_einhenda_ok_Ásmundar_berserkjabana.txt",
+     "word": "slitit",
+     "X": "it",
+     "context": "egill fellr hafði hvárr slitit hjálminn af öðrum"
+    },
+    {
+     "work": "Egils_saga_einhenda_ok_Ásmundar_berserkjabana.txt",
+     "word": "fararblóma",
+     "X": "ar",
+     "context": "sér ok sjá sinn fararblóma en með því"
+    },
+    {
+     "work": "Egils_saga_einhenda_ok_Ásmundar_berserkjabana.txt",
+     "word": "litit",
+     "X": "it",
+     "context": "þessu næst varð þeim litit til hafs ok"
+    },
+    {
+     "work": "Egils_saga_einhenda_ok_Ásmundar_berserkjabana.txt",
+     "word": "útgangan",
+     "X": "gan",
+     "context": "ok varð þeim ógreið útgangan því at tjaldit"
+    },
+    {
+     "work": "Egils_saga_einhenda_ok_Ásmundar_berserkjabana.txt",
+     "word": "kinnarbeinunum",
+     "X": "nu",
+     "context": "þau liggja út á kinnarbeinunum við þat varð"
+    },
+    {
+     "work": "Egils_saga_einhenda_ok_Ásmundar_berserkjabana.txt",
+     "word": "tönnunum",
+     "X": "nu",
+     "context": "af hendi sér með tönnunum ok lét reka"
+    },
+    {
+     "work": "Egils_saga_einhenda_ok_Ásmundar_berserkjabana.txt",
+     "word": "steininn",
+     "X": "in",
+     "context": "þat hljóp inn í steininn litlu síðar kom"
+    },
+    {
+     "work": "Egils_saga_einhenda_ok_Ásmundar_berserkjabana.txt",
+     "word": "steininn",
+     "X": "in",
+     "context": "með mér inn í steininn egill gerði svá"
+    },
+    {
+     "work": "Egils_saga_einhenda_ok_Ásmundar_berserkjabana.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "á várar náðir hún svarar þat stendr eigi"
+    },
+    {
+     "work": "Egils_saga_einhenda_ok_Ásmundar_berserkjabana.txt",
+     "word": "jötnunum",
+     "X": "nu",
+     "context": "illt til ráðahagsins en jötnunum þótti mikit batna"
+    },
+    {
+     "work": "Eireks_saga_víðförla.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "hverr er sá konungr svarar guð almáttigr sá"
+    },
+    {
+     "work": "Eireks_saga_víðförla.txt",
+     "word": "greiningu",
+     "X": "in",
+     "context": "guðdómi en þrennr í greiningu eirekr mælti hverjar"
+    },
+    {
+     "work": "Eireks_saga_víðförla.txt",
+     "word": "greiningar",
+     "X": "in",
+     "context": "hverjar eru þær þrjár greiningar konungr segir líttu"
+    },
+    {
+     "work": "Eireks_saga_víðförla.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "yfir þeim himni konungr svarar skilningarhiminn í þeim"
+    },
+    {
+     "work": "Eireks_saga_víðförla.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "himins ok jarðar konungr svarar forvitinn ertu þat"
+    },
+    {
+     "work": "Eireks_saga_víðförla.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "í suðrhálfu heimsins konungr svarar indíaland segjum vér"
+    },
+    {
+     "work": "Eireks_saga_víðförla.txt",
+     "word": "purpuri",
+     "X": "pur",
+     "context": "land grösin hvít sem purpuri við sætum ilm"
+    },
+    {
+     "work": "Eireks_saga_víðförla.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "til þinna áttjarða eirekr svarar aptr vil ek"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "heitit",
+     "X": "it",
+     "context": "kapítuli beli hefir konungr heitit er réð fyrir"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "sómamaðr",
+     "X": "ma",
+     "context": "friðþjófr þótti eigi minni sómamaðr fyrir utan konungstign"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "áttu segir hún hann svarar ekki á ek"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "hefi eigi aflat hún svarar þat er mál"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "ekki dauðir menn hann svarar kostr mun þér"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "at eiga hann hún svarar þú skalt hafa"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "manni gefin verða hann svarar þá er skjótt"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "slitit",
+     "X": "it",
+     "context": "synir bela konungs hafa slitit vinfengi við friðþjóf"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "þú várt mál friðþjófr svarar þeim hann kveðst"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "fjórtánmenning í baldrshaga hann svarar ekki hirði ek"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "einhvern hátt en konungsdóttir svarar ekki gerir þú"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "heitit",
+     "X": "it",
+     "context": "frið ok því var heitit honum síðan bjuggust"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "tárfelldar eptir þik hann svarar kemr mér þat"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "í orðum þínum friðþjófr svarar eigi er þat"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "menninir",
+     "X": "ni",
+     "context": "borðin ok fórust fjórir menninir þá mælti friðþjófr"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "fararbann",
+     "X": "ar",
+     "context": "baki hvalnum gera oss fararbann nú munu vér"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "litit",
+     "X": "it",
+     "context": "skipa ok varð friðþjófi litit aptr ok kvað"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "vitit",
+     "X": "it",
+     "context": "hitta hring konung ok vitit mín þó aptr"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "inn í höllina drottning svarar þat er lítil"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "sveinninn",
+     "X": "inn",
+     "context": "hvar hann á kyn sveinninn kom fyrir hann"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "vartu í nótt hann svarar tíðum berr þú"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "sveinninn",
+     "X": "inn",
+     "context": "var ek upp fæddr sveinninn segir þetta konunginum"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "drottning fagna honum hún svarar svá sem öðrum"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "oss þjófr já herra svarar hann síðan fóru"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "fyrir þik leggjast hann svarar vel hafi þér"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "frægr fjörsótt tekit konungr svarar eigi mundi ek"
+    },
+    {
+     "work": "Friðþjófs_saga_ins_frækna.txt",
+     "word": "svarar",
+     "X": "ar",
+     "context": "þér mislíkaði eigi hún svarar nú er þar"
+    }
+   ]
+  }
+ }
+}
