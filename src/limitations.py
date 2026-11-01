@@ -173,7 +173,9 @@ LIMITATIONS = [
              "har fyllt dem där en vanlig formel passar. Där modellen var säkrast på öppna luckor höll förslagen inte vid "
              "granskning: på U Fv1971;212B lånade den runor från namnet Ragnví (Víseti 97 procent), och på Sö 280 "
              "föreslog den genitiven þæiRa (98 procent) där meningen kräver ackusativ. Modellen kan inte kasusböjning och "
-             "väljer själv ordgränser i text utan skiljetecken.",
+             "väljer själv ordgränser i text utan skiljetecken. Ordförrådet är runinskrifternas och Eddans; ett lexikon "
+             "ur sagor, lagar och Zoëga prövades 2026-11-01 och gav inga fler rätta ord, så det som saknas är böjning och "
+             "sammansättningar snarare än fler ord.",
      "short": "Procenten gäller luckor av det slag som utgivarna redan har fyllt; på öppna luckor kan modellen vara säker "
               "och ändå ha fel.",
      "needed": "Grammatisk kontroll (kasus och kongruens) och prövning mot luckor som fyllts i senare utgåvor eller "

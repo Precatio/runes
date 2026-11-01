@@ -5,6 +5,12 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Sannolikhetsmodellen: litteraturlexikon prövat, negativt (textmodel-22)
+- Ett ordförråd ur Heimskringla, fornaldar-, samtids- och islänningasagorna, fornsvenska lagar och Zoëga, med
+  Petersons namnled, prövades under låst plan (`analysplaner/2026-10-30-litteraturlexikon.md`): på maskerade luckor
+  0 vunna och 1 förlorat ord i båda slagen, så lexikonet förblir av. Maltstenen läses då *titull titull* på en följd,
+  Rökstenen ändras inte (`utdata/runlm_forfining/tm22_resultat.md`). Bristlistan säger det i `textmodel_open`.
+
 ### Webbplatsen på mobilen
 - Meny under 1024 px (`web/src/components/MobileMenu.tsx`): knapp med tre streck, panel med artiklarna,
   forskningsrapporterna, nyheterna och kontakt överst, startsidans avsnitt och nedladdningen; stängs med länk, Escape

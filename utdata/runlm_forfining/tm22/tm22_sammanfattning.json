@@ -246,5 +246,45 @@
  "val": {
   "lit": 0.01,
   "lex": 0.003
- }
+ },
+ "steg2": {
+  "words": {
+   "inne i ord": {
+    "won": 0,
+    "lost": 1,
+    "n": 559,
+    "acc_base": 0.7513,
+    "acc_new": 0.7496
+   },
+   "helt ord": {
+    "won": 0,
+    "lost": 1,
+    "n": 559,
+    "acc_base": 0.576,
+    "acc_new": 0.5742
+   }
+  },
+  "rune_top1": [
+   0,
+   1
+  ],
+  "short": {
+   "won": 0,
+   "lost": 1,
+   "new_errors": 1
+  },
+  "sure": {
+   "base": [
+    262,
+    12
+   ],
+   "new": [
+    257,
+    12
+   ]
+  },
+  "net": -2,
+  "ok": false
+ },
+ "steg2_haller": false
 }
