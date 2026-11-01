@@ -74,3 +74,33 @@ if "--resultat" not in sys.argv:
     sha = hashlib.sha256(data.encode("utf-8")).hexdigest()
     open(os.path.join(OUT, "handprov_nyckel.sha256"), "w").write(f"{sha}  {KEY}\n")
     print("formulär:", FORM, "| par:", len(items), "| nyckelns SHA-256:", sha[:16])
+
+if "--resultat" in sys.argv:
+    from scipy.stats import fisher_exact
+    data = open(KEY, encoding="utf-8").read()
+    sha = hashlib.sha256(data.encode("utf-8")).hexdigest()
+    assert open(os.path.join(OUT, "handprov_nyckel.sha256")).read().split()[0] == sha, "nyckeln har ändrats"
+    key = {x["par"]: x for x in json.loads(data)["items"]}
+    svar = {x["par"]: x for x in json.load(open(os.path.join(OUT, "handprov_svar.json"), encoding="utf-8"))["svar"]}
+    assert sorted(key) == sorted(svar) == list(range(1, 26))
+    grp = {g: [svar[p]["bedomning"] for p in key if key[p]["grupp"] == g] for g in ("ny", "känd", "namn")}
+    assert [len(grp[g]) for g in ("ny", "känd", "namn")] == [5, 5, 15]
+
+    def stats(yes):
+        k = {g: sum(1 for v in grp[g] if v in yes) for g in grp}
+        n = {g: len(grp[g]) for g in grp}
+        p = fisher_exact([[k["ny"], n["ny"] - k["ny"]], [k["namn"], n["namn"] - k["namn"]]], alternative="greater").pvalue
+        return {"k": k, "n": n, "share": {g: round(k[g] / n[g], 3) for g in grp}, "fisher_p": float(p)}
+    main, sens = stats({"J"}), stats({"J", "?"})
+    crit = {"ny_minst_halften": main["k"]["ny"] >= 3, "fisher": main["fisher_p"] < 0.05, "kand_minst_70": main["k"]["känd"] >= 4}
+    verdict = "håller" if all(crit.values()) else ("inte avgörande" if not crit["kand_minst_70"] else "håller inte")
+    res = {"plan": PLAN, "key_sha256": sha, "per_group": {g: dict(__import__("collections").Counter(v)) for g, v in grp.items()},
+           "primary": main, "sensitivity_J_or_unsure": sens, "criteria": crit, "verdict": verdict,
+           "items": [{"par": p, **{k: key[p][k] for k in ("a", "b", "grupp")}, "bedomning": svar[p]["bedomning"], "kommentar": svar[p]["kommentar"]} for p in sorted(key)]}
+    json.dump(res, open(os.path.join(OUT, "handprov_resultat.json"), "w"), ensure_ascii=False, indent=1)
+    import shutil
+    shutil.copy(KEY, os.path.join(OUT, "handprov_nyckel.json"))   # nyckeln öppnas först nu, efter att svaren frysts
+    print("per grupp:", res["per_group"])
+    print("primärt (J):", main["k"], "Fisher p", round(main["fisher_p"], 4))
+    print("känslighet (J eller ?):", sens["k"], "Fisher p", round(sens["fisher_p"], 4))
+    print("villkor:", crit, "→", verdict)
