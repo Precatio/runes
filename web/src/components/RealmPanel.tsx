@@ -54,8 +54,8 @@ export default function RealmPanel({ value, onChange }: { value: string; onChang
                   </li>
                 ))}
               </ul>
-              <p className="text-slate-500">{REALM_UNKNOWN}</p>
-              <p className="text-slate-500"><span className="font-semibold">Källor:</span> {REALM_SOURCES.join(" ")}</p>
+              {!epoch.sources && <p className="text-slate-500">{REALM_UNKNOWN}</p>}
+              <p className="text-slate-500"><span className="font-semibold">Källor:</span> {(epoch.sources ?? REALM_SOURCES).join(" ")}</p>
             </div>
           </details>
         </div>

@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "sma-land-karta",
+   "date": "2026-11-01",
+   "status": "nytt",
+   "title": "Smålands små land och Upplands folkland på kartan",
+   "text": "Kartans gränslager har fått ett fjärde läge, Små land: Smålands små land (Värend, Finnveden, Njudung, Möre och de andra) och Upplands folkland (Tiundaland, Attundaland, Fjädrundaland och Roden), som de var ordnade innan landskapen tog över. Varje land är en sammanslagning av härader, och gränserna är ungefärliga: varje socken har fått området närmast sin kyrka. Vad varje land bygger på och källorna står under kartan."
+  },
+  {
    "id": "slaktlankar-avstand",
    "date": "2026-11-01",
    "status": "nytt",

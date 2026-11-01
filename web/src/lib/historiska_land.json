@@ -1,0 +1,40 @@
+{
+  "about": "Smålands små land och Upplands folkland som ett läge i kartans gränslager. Varje land är en sammanslagning av härader (i Roden skeppslag); socknarnas härader kommer ur Wikidata (data/geo/socknar_harader.json) med rättelser i scripts/assign_historiska_land.py, och gränserna ritas ungefärligt av scripts/build_historiska_land.R (varje socken får området närmast sin kyrkpunkt). Indelningen följer svenska Wikipedia (hämtad 2026-11-01), sidorna i källistan.",
+  "realms": {
+    "smaland": { "label": "Smålands små land", "color": "#0f766e" },
+    "folkland": { "label": "Upplands folkland", "color": "#a16207" }
+  },
+  "epoch": {
+    "key": "land",
+    "label": "Små land",
+    "title": "Små land och folkland",
+    "text": "Före landskapen fanns mindre land. Småland har fått sitt namn efter de små landen, och Uppland bestod av tre folkland och kustlandet Roden tills de slogs ihop i Upplandslagen 1296. Indelningen är känd först ur medeltida källor och häradsindelningen, så den visar hur bygderna var ordnade när de första lagarna skrevs, inte säkert hur det såg ut på 1000-talet. Gränserna är ungefärliga: varje socken har fått området närmast sin kyrka, och socknarna är de som fanns på 1900-talet.",
+    "regions": [
+      { "id": "varend", "name": "Värend", "realm": "smaland", "certainty": "karna", "label": "Värend", "harad": ["Allbo härad", "Kinnevalds härad", "Konga härad", "Norrvidinge härad", "Uppvidinge härad"], "note": "Fem härader senast under 1200-talet. Växjö stift omfattade först bara Värend." },
+      { "id": "finnveden", "name": "Finnveden", "realm": "smaland", "certainty": "karna", "label": "Finnveden", "harad": ["Sunnerbo härad", "Västbo härad", "Östbo härad"], "note": "De tre häraderna söder, väster och öster om Bolmen." },
+      { "id": "njudung", "name": "Njudung", "realm": "smaland", "certainty": "karna", "label": "Njudung", "harad_id": ["Q10718434", "Q10728484"], "harad": ["Västra härad", "Östra härad"], "note": "Västra och Östra härad i Jönköpings län." },
+      { "id": "tjust", "name": "Tjust", "realm": "smaland", "certainty": "karna", "label": "Tjust", "harad": ["Norra Tjusts härad", "Södra Tjusts härad"], "note": "Två härader, oftast förenade i ett tingslag." },
+      { "id": "more", "name": "Möre", "realm": "smaland", "certainty": "karna", "label": "Möre", "harad": ["Norra Möre härad", "Södra Möre härad"], "note": "Hörde till Östgöta lagsaga till 1559." },
+      { "id": "handbord", "name": "Handbörd", "realm": "smaland", "certainty": "karna", "label": "Handbörd", "harad": ["Handbörds härad", "Stranda härad"], "note": "Delades under 1400-talet i Handbörds och Stranda härader; kusten (Stranda) hörde till Handbörd under sen järnålder." },
+      { "id": "aspeland", "name": "Aspeland", "realm": "smaland", "certainty": "los", "label": "Aspeland", "harad": ["Aspelands härad"], "note": "Källan anger landet men inte vilka härader det bestod av; här Aspelands härad." },
+      { "id": "sevede", "name": "Sevede", "realm": "smaland", "certainty": "los", "label": "Sevede", "harad": ["Sevede härad", "Tunaläns härad"], "note": "Senare delat i Sevede och Tunaläns härad; Tunalän bildades 1544 av delar av Sevede och Aspeland." },
+      { "id": "vedbo", "name": "Vedbo", "realm": "smaland", "certainty": "karna", "label": "Vedbo", "harad": ["Norra Vedbo härad", "Södra Vedbo härad"], "note": "Norra och Södra Vedbo härader (inte Vedbo härad i Dalsland)." },
+      { "id": "tveta", "name": "Tveta", "realm": "smaland", "certainty": "karna", "label": "Tveta", "harad": ["Tveta härad"], "note": "Ett av de små landen, ett härad." },
+      { "id": "vista", "name": "Vista", "realm": "smaland", "certainty": "karna", "label": "Vista", "harad": ["Vista härad"], "note": "Gränna, Skärstad, Visingsö och Ölmstad." },
+      { "id": "mo", "name": "Mo", "realm": "smaland", "certainty": "los", "label": "Mo", "harad": ["Mo härad"], "note": "Fördes senast 1568 från Västergötland till Smålands lagsaga; inte bland de tolv små landen i källan." },
+      { "id": "kinda", "name": "Kinda", "realm": "smaland", "certainty": "los", "label": "Kinda", "harad": ["Kinda härad", "Ydre härad"], "note": "Kinda och Ydre härader; ett av de små landen men kvar i Östgöta lagsaga 1559 och sedan i Östergötland." },
+      { "id": "tiundaland", "name": "Tiundaland", "realm": "folkland", "certainty": "los", "label": "Tiundaland", "harad": ["Bälinge härad", "Hagunda härad", "Håbo härad", "Norunda härad", "Närdinghundra härad", "Olands härad", "Rasbo härad", "Ulleråkers härad", "Vaksala härad", "Våla härad", "Örbyhus härad"], "note": "Tio hundaren enligt namnet, men vilka de ursprungliga var är oklart. Listan 1314 nämner också Gästrikland och delar av Roden." },
+      { "id": "attundaland", "name": "Attundaland", "realm": "folkland", "certainty": "los", "label": "Attundaland", "harad": ["Lyhundra härad", "Sjuhundra härad", "Långhundra härad", "Seminghundra härad", "Ärlinghundra härad", "Bro härad", "Vallentuna härad", "Sollentuna härad"], "note": "Åtta hundaren i början av 1300-talet; häraderna är de som i dag motsvarar området. Färentuna räknas ibland hit." },
+      { "id": "fjadrundaland", "name": "Fjädrundaland", "realm": "folkland", "certainty": "los", "label": "Fjädrundaland", "harad": ["Trögds härad", "Åsunda härad", "Lagunda härad", "Torstuna härad", "Simtuna härad"], "note": "Fyra hundaren, 1314 fem; häraderna är de som i dag motsvarar området." },
+      { "id": "roden", "name": "Roden", "realm": "folkland", "certainty": "omstridd", "label": "Roden", "harad": ["Bro och Vätö skeppslag", "Danderyds skeppslag", "Frösåkers härad", "Frötuna och Länna skeppslag", "Väddö och Häverö skeppslag", "Värmdö skeppslag", "Åkers skeppslag"], "note": "Kustlandet, indelat i skeppslag för ledungen. Om det stod utanför folklanden är högst osäkert, liksom hur långt det räckte." }
+    ],
+    "sources": [
+      "Svenska Wikipedia, hämtad 2026-11-01: Småland (de små landen), Värend, Finnveden, Tjust, Möre, Handbörd, Aspeland, Sevede, Vedbo, Kinda, Vista härad, Stranda härad, Tunaläns härad, Östra härad (Jönköpings län), Tiundaland, Attundaland, Fjädrundaland, Roden.",
+      "Socknarnas härader och lägen: Wikidata (CC0)."
+    ]
+  },
+  "parish_overrides": {
+    "Vista härad": ["Gränna socken", "Skärstads socken", "Visingsö socken", "Ölmstads socken"],
+    "Stranda härad": ["Döderhults socken", "Mönsterås socken", "Ålems socken"]
+  }
+}

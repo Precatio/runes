@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { divIcon, type PathOptions } from "leaflet";
 import { GeoJSON, Marker, Pane } from "react-leaflet";
 import type { Feature, FeatureCollection, Geometry } from "geojson";
-import { DASH, REALMS, REALMS_URL, type Certainty } from "@/lib/realms";
+import { DASH, REALMS, urlOf, type Certainty } from "@/lib/realms";
 
 // The realms' approximate borders at the chosen time (src/lib/realms.ts), drawn under the stones on the point map and as
 // outlines over the hexagons on the pattern map. Neither the areas nor the names take the mouse, so that the stones'
@@ -14,20 +14,25 @@ interface RealmProps {
 }
 type Realms = FeatureCollection<Geometry, RealmProps>;
 
-let loading: Promise<Realms> | null = null;
-const load = () => (loading ??= fetch(REALMS_URL)
-  .then(r => (r.ok ? r.json() : Promise.reject(new Error(`Fel ${r.status}`))))
-  .catch(e => { loading = null; throw e; }));
+// One request per file (the realms, the old lands), shared by every map on the page
+const loading = new Map<string, Promise<Realms>>();
+const load = (url: string) => {
+  if (!loading.has(url)) loading.set(url, fetch(url)
+    .then(r => (r.ok ? r.json() : Promise.reject(new Error(`Fel ${r.status}`))))
+    .catch(e => { loading.delete(url); throw e; }));
+  return loading.get(url)!;
+};
 
 const esc = (s: string) => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c] ?? c);
 
 export default function RealmLayer({ epoch, outline = false }: { epoch: string; outline?: boolean }) {
   const [data, setData] = useState<Realms | null>(null);
+  const url = urlOf(epoch);
   useEffect(() => {
     let cancelled = false;
-    load().then(d => { if (!cancelled) setData(d); }).catch(() => {});
+    load(url).then(d => { if (!cancelled) setData(d); }).catch(() => {});
     return () => { cancelled = true; };
-  }, []);
+  }, [url]);
   const shown = useMemo<Realms | null>(() => (data ? { ...data, features: data.features.filter(f => f.properties.epoch === epoch) } : null),
                                        [data, epoch]);
   if (!shown) return null;
