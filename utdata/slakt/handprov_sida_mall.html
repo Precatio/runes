@@ -1,0 +1,258 @@
+<title>Handprov: samma släkt?</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@1,8..60,400;1,8..60,500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column of numbered pairs; each pair sets two stones side by side and ends in a three-way verdict. */
+:root {
+  --bg: #f7f6f5; --surface: #ffffff; --fg: #1d1a18; --muted: #6b625c; --line: #e4dfdb;
+  --accent: #b7410e; --accent-soft: #f6e6dd;
+  --yes: #2f7a4d; --yes-soft: #e3f1e8; --maybe: #9a6a12; --maybe-soft: #f6ecd8; --no: #4f5a66; --no-soft: #e6e9ed;
+  --f-ui: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-text: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --f-data: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #151312; --surface: #1e1b19; --fg: #ede8e4; --muted: #a39a93; --line: #34302d;
+  --accent: #e0703f; --accent-soft: #3a2419;
+  --yes: #6cc48f; --yes-soft: #1d3326; --maybe: #e2b45a; --maybe-soft: #3a2f18; --no: #a9b4c0; --no-soft: #262b31; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #151312; --surface: #1e1b19; --fg: #ede8e4; --muted: #a39a93; --line: #34302d;
+  --accent: #e0703f; --accent-soft: #3a2419;
+  --yes: #6cc48f; --yes-soft: #1d3326; --maybe: #e2b45a; --maybe-soft: #3a2f18; --no: #a9b4c0; --no-soft: #262b31; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--fg); font-family: var(--f-ui); font-size: 15px; line-height: 1.5 }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface) }
+.wrap { max-width: 980px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line) }
+header.top .wrap { display: flex; align-items: center; gap: 16px; padding-block: 10px; flex-wrap: wrap }
+header.top h1 { font-size: 16px; font-weight: 700; margin: 0; letter-spacing: .01em }
+.progress { display: flex; align-items: center; gap: 10px; margin-left: auto; font-variant-numeric: tabular-nums; font-size: 13px; color: var(--muted) }
+.bar { width: 140px; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden }
+.bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .25s }
+.status { font-size: 12px; color: var(--muted) }
+.intro { padding-block: 28px 8px; max-width: 68ch }
+.intro h2 { font-size: 26px; line-height: 1.2; margin: 0 0 10px; text-wrap: balance }
+.intro p { margin: 0 0 10px; color: var(--fg) }
+.legend { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px }
+.legend span { font-size: 13px; color: var(--muted) }
+.guide { margin-top: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px }
+.guide summary { font-weight: 700; cursor: pointer }
+.guide p, .guide li { font-size: 14px }
+.guide ul { margin: 6px 0 10px; padding-left: 20px; display: grid; gap: 4px }
+.banner { margin-block: 12px; padding: 10px 14px; border-radius: 8px; background: var(--accent-soft); color: var(--fg); font-size: 14px }
+main { display: grid; gap: 18px; padding-block: 16px 48px }
+.pair { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 14px; scroll-margin-top: 70px }
+.pair.done { border-color: color-mix(in srgb, var(--line) 50%, var(--muted)) }
+.pair-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap }
+.pair-head h3 { margin: 0; font-size: 17px; font-weight: 700 }
+.dist { font-family: var(--f-data); font-size: 13px; color: var(--muted) }
+.chip { margin-left: auto; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; background: var(--line); color: var(--muted) }
+.chip[data-v="J"] { background: var(--yes-soft); color: var(--yes) }
+.chip[data-v="?"] { background: var(--maybe-soft); color: var(--maybe) }
+.chip[data-v="N"] { background: var(--no-soft); color: var(--no) }
+.stones { display: grid; grid-template-columns: 1fr 1fr; gap: 14px }
+@media (max-width: 720px) { .stones { grid-template-columns: 1fr } }
+.stone { min-width: 0; border-top: 2px solid var(--line); padding-top: 10px }
+.stone .meta { font-size: 12.5px; color: var(--muted); letter-spacing: .02em; margin-bottom: 6px }
+.stone .meta b { color: var(--fg); font-weight: 600 }
+.stone .meta .style { font-family: var(--f-data) }
+.on { font-family: var(--f-text); font-style: italic; font-size: 16.5px; line-height: 1.55; margin: 0 0 8px; overflow-wrap: anywhere }
+.en { font-size: 13.5px; color: var(--muted); margin: 0; overflow-wrap: anywhere }
+.verdict { display: grid; gap: 10px }
+.choices { display: flex; gap: 8px; flex-wrap: wrap }
+.choices button { font: inherit; font-size: 14px; font-weight: 600; padding: 9px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; display: inline-flex; gap: 8px; align-items: center }
+.choices button kbd { font-family: var(--f-data); font-size: 12px; font-weight: 500; opacity: .75 }
+.choices button:hover { border-color: var(--muted) }
+.choices button:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.choices button[aria-pressed="true"][data-v="J"] { background: var(--yes-soft); border-color: var(--yes); color: var(--yes) }
+.choices button[aria-pressed="true"][data-v="?"] { background: var(--maybe-soft); border-color: var(--maybe); color: var(--maybe) }
+.choices button[aria-pressed="true"][data-v="N"] { background: var(--no-soft); border-color: var(--no); color: var(--no) }
+textarea { font: inherit; font-size: 14px; width: 100%; min-height: 44px; resize: vertical; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg) }
+textarea::placeholder { color: var(--muted) }
+.done-box { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 10px }
+.done-box h3 { margin: 0; font-size: 17px }
+.done-box .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center }
+.done-box button { font: inherit; font-weight: 600; padding: 9px 14px; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent); color: var(--surface); cursor: pointer }
+pre.copy { font-family: var(--f-data); font-size: 12.5px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px; margin: 0; white-space: pre-wrap; overflow-x: auto; max-height: 220px }
+@media (prefers-reduced-motion: reduce) { .bar i { transition: none } }
+</style>
+
+<header class="top"><div class="wrap">
+  <h1>Handprov: samma släkt?</h1>
+  <span class="status" id="save-status">Ansluter …</span>
+  <div class="progress"><span id="count">0 av 25 bedömda</span><div class="bar" aria-hidden="true"><i id="bar"></i></div></div>
+</div></header>
+
+<div class="wrap">
+  <section class="intro">
+    <h2>Står de två runstenarna för samma släkt?</h2>
+    <p>Här är 25 par runstenar ur Samnordisk runtextdatabas. Några par är modellens nya länkar, några är kända släktlänkar och några är stenar som bara delar ett namn. Vilket som är vilket ser du inte. Bedöm varje par på texterna, platsen och avståndet.</p>
+    <p>Slå inte upp stenarna medan du bedömer. Signum visas inte med avsikt.</p>
+    <div class="legend"><span><b>J</b> samma släkt</span><span><b>?</b> kan inte avgöra</span><span><b>N</b> inte samma släkt</span><span>Tangenterna J, ? och N fungerar på det par du står i.</span></div>
+    <details class="guide" id="guide" open>
+      <summary>Så bedömer du ett par</summary>
+      <p>Fråga dig om samma människor kan stå på båda stenarna. Det här talar för samma släkt:</p>
+      <ul>
+        <li><b>Flera gemensamma namn</b>, inte bara ett. Två namn som återkommer tillsammans är starkare än ett.</li>
+        <li><b>Släktleden går ihop.</b> Samma person har samma roll eller en roll som passar: Gunnar reser efter sin far Torsten på den ena stenen, och Torsten står som far eller make på den andra.</li>
+        <li><b>Ovanliga namn.</b> Ett sällsynt namn väger tyngre än Sven, Björn, Torsten eller Ulf, som fanns i varje bygd.</li>
+        <li><b>Samma gård eller plats</b> nämns, eller stenarna står nära varandra (avståndet står överst i varje par).</li>
+        <li><b>Tiden går ihop.</b> Stilgrupperna går från RAK och Fp (tidigast) via Pr1–Pr2 till Pr3–Pr5 (senast). Mycket olika stilgrupper gör samma generation mindre trolig, men en sten kan vara rest en generation senare.</li>
+      </ul>
+      <p>Det här talar emot: samma namn med <b>olika fäder eller mödrar</b>, eller ett vanligt namn som enda gemensamma drag på stenar långt isär.</p>
+      <p>Välj <b>?</b> när texterna inte räcker. Det är ett giltigt svar och räknas inte som fel. Exemplen ovan är påhittade.</p>
+    </details>
+    <div class="banner" id="offline" hidden>Svaren sparas inte i den här vyn. Bedöm ändå; när du är klar kopierar du svaren längst ned och klistrar in dem till Claude.</div>
+  </section>
+  <main id="list"></main>
+  <section class="done-box" id="finish">
+    <h3 id="finish-title">När du är klar</h3>
+    <p id="finish-text" style="margin:0">Svaren sparas för varje par så fort du väljer. Säg till Claude att du är klar, så öppnas nyckeln och resultatet räknas.</p>
+    <div class="row"><button type="button" id="copy-btn">Kopiera svaren</button><span class="status" id="copy-status"></span></div>
+    <pre class="copy" id="copy-text" hidden></pre>
+  </section>
+</div>
+
+<script>
+const PAIRS = /*DATA*/[];
+const state = {};          // par -> {bedomning, kommentar}
+let db = null, saveTimer = {};
+const $ = (s, r = document) => r.querySelector(s);
+const pad = n => String(n).padStart(2, "0");
+const LABEL = { J: "Samma släkt", "?": "Kan inte avgöra", N: "Inte samma släkt" };
+
+function el(tag, attrs = {}, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) { if (k === "class") e.className = v; else if (k === "text") e.textContent = v; else e.setAttribute(k, v); }
+  for (const k of kids) if (k) e.append(k);
+  return e;
+}
+
+function render() {
+  const list = $("#list");
+  for (const p of PAIRS) {
+    const sec = el("section", { class: "pair", id: "par-" + pad(p.par), "data-par": p.par, tabindex: "-1" });
+    sec.append(el("div", { class: "pair-head" },
+      el("h3", { text: "Par " + p.par }), el("span", { class: "dist", text: "avstånd " + p.avstand }),
+      el("span", { class: "chip", id: "chip-" + p.par, text: "Inte bedömt" })));
+    const stones = el("div", { class: "stones" });
+    p.stenar.forEach((s, i) => {
+      const meta = el("div", { class: "meta" });
+      meta.append(el("b", { text: "Sten " + (i + 1) }), document.createTextNode(" · " + s.landskap + ", " + s.socken + " · "),
+        el("span", { class: "style", text: s.stil === "okänd" ? "stilgrupp okänd" : s.stil }));
+      stones.append(el("div", { class: "stone" }, meta, el("p", { class: "on", text: s.text }), el("p", { class: "en", text: s.en })));
+    });
+    sec.append(stones);
+    const choices = el("div", { class: "choices", role: "group", "aria-label": "Bedömning för par " + p.par });
+    for (const v of ["J", "?", "N"]) {
+      const b = el("button", { type: "button", "data-v": v, "aria-pressed": "false", id: "b-" + p.par + "-" + (v === "?" ? "q" : v) },
+        el("kbd", { text: v }), document.createTextNode(LABEL[v]));
+      b.addEventListener("click", () => choose(p.par, v));
+      choices.append(b);
+    }
+    const ta = el("textarea", { id: "k-" + p.par, placeholder: "Kommentar (frivillig)", rows: "1", "aria-label": "Kommentar för par " + p.par });
+    ta.addEventListener("input", () => { (state[p.par] ||= {}).kommentar = ta.value; queueSave(p.par, 900); });
+    ta.addEventListener("blur", () => queueSave(p.par, 0));
+    sec.append(el("div", { class: "verdict" }, choices, ta));
+    sec.addEventListener("focusin", () => current = p.par);
+    sec.addEventListener("pointerdown", () => current = p.par);
+    list.append(sec);
+  }
+  paintAll();
+}
+
+let current = 1;
+function choose(par, v) {
+  (state[par] ||= {}).bedomning = v;
+  paint(par);
+  queueSave(par, 0);
+}
+
+function paint(par) {
+  const s = state[par] || {};
+  for (const v of ["J", "?", "N"]) $("#b-" + par + "-" + (v === "?" ? "q" : v)).setAttribute("aria-pressed", String(s.bedomning === v));
+  const chip = $("#chip-" + par);
+  chip.textContent = s.bedomning ? LABEL[s.bedomning] : "Inte bedömt";
+  if (s.bedomning) chip.dataset.v = s.bedomning; else delete chip.dataset.v;
+  $("#par-" + pad(par)).classList.toggle("done", !!s.bedomning);
+  const ta = $("#k-" + par);
+  if (document.activeElement !== ta) ta.value = s.kommentar || "";
+}
+
+function paintAll() {
+  for (const p of PAIRS) paint(p.par);
+  const n = PAIRS.filter(p => state[p.par]?.bedomning).length;
+  $("#count").textContent = n + " av 25 bedömda";
+  $("#bar").style.width = (n / 25 * 100) + "%";
+  $("#finish-title").textContent = n === 25 ? "Alla 25 par är bedömda" : "När du är klar";
+  $("#finish-text").textContent = n === 25
+    ? "Säg till Claude att du är klar, så öppnas nyckeln och resultatet räknas. Du kan fortfarande ändra ett svar tills dess."
+    : "Svaren sparas för varje par så fort du väljer. Säg till Claude att du är klar, så öppnas nyckeln och resultatet räknas.";
+}
+
+function queueSave(par, ms) {
+  clearTimeout(saveTimer[par]);
+  saveTimer[par] = setTimeout(() => save(par), ms);
+}
+
+async function save(par) {
+  const s = state[par];
+  if (!s) return;
+  try { localStorage.setItem("handprov", JSON.stringify(state)); } catch (e) {}
+  paintAll();
+  if (!db) return;
+  setStatus("Sparar …");
+  try {
+    await db.doc("svar/par-" + pad(par)).set({ par, bedomning: s.bedomning || "", kommentar: s.kommentar || "", tid: Date.now() });
+    setStatus("Sparat");
+  } catch (e) {
+    setStatus("Kunde inte spara (" + (e && e.code || "fel") + ")");
+    if (e && e.code === "invalid_argument") { db = null; $("#offline").hidden = false; }
+  }
+}
+
+function setStatus(t) { $("#save-status").textContent = t; }
+
+document.addEventListener("keydown", e => {
+  if (e.target.tagName === "TEXTAREA" || e.metaKey || e.ctrlKey || e.altKey) return;
+  const k = e.key.toUpperCase();
+  if (k === "J" || k === "N" || e.key === "?") { e.preventDefault(); choose(current, e.key === "?" ? "?" : k); }
+});
+
+$("#copy-btn").addEventListener("click", async () => {
+  const lines = PAIRS.map(p => "Par " + p.par + ": " + (state[p.par]?.bedomning || "–") + (state[p.par]?.kommentar ? " – " + state[p.par].kommentar.replace(/\s+/g, " ") : ""));
+  const text = lines.join("\n");
+  const pre = $("#copy-text");
+  pre.textContent = text; pre.hidden = false;
+  try { await navigator.clipboard.writeText(text); $("#copy-status").textContent = "Kopierat"; }
+  catch (e) {
+    const r = document.createRange(); r.selectNodeContents(pre); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    $("#copy-status").textContent = "Markerat – kopiera med ⌘C eller Ctrl+C";
+  }
+});
+
+try { Object.assign(state, JSON.parse(localStorage.getItem("handprov") || "{}")); } catch (e) {}
+render();
+
+(async () => {
+  const timer = setTimeout(() => { if (!db) { setStatus("Sparas bara i webbläsaren"); $("#offline").hidden = false; } }, 10000);
+  try {
+    db = await window.claude?.use?.("db");
+  } catch (e) { db = null; }
+  if (!db) { clearTimeout(timer); setStatus("Sparas bara i webbläsaren"); $("#offline").hidden = false; return; }
+  db.collection("svar").onSnapshot(snap => {
+    clearTimeout(timer);
+    for (const d of snap.docs) {
+      const v = d.data() || {};
+      const par = v.par;
+      if (!par) continue;
+      const local = state[par];
+      if (!local || (local.tid || 0) <= (v.tid || 0)) state[par] = { bedomning: v.bedomning || undefined, kommentar: v.kommentar || "", tid: v.tid };
+    }
+    paintAll();
+    setStatus("Sparas automatiskt");
+  }, err => { clearTimeout(timer); setStatus("Sparas bara i webbläsaren"); $("#offline").hidden = false; db = null; });
+})();
+</script>
