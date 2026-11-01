@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "slaktlankar-avstand",
+   "date": "2026-11-01",
+   "status": "nytt",
+   "title": "Samma släkt på flera runstenar: länkarna prövas nu efter avstånd",
+   "text": "Runstenar som delar namn prövas nu mot slumpen på samma avstånd: ett namnpar 300 meter isär jämförs med de par slumpen ger på samma avstånd, inte med par över hela landskapet. Det ger 70 säkra länkar i stället för 28, varav 61 mellan svenska runstenar, och fyra av Jarlabankes stenar hänger nu ihop. Länkarna hittar 40 procent av de stenar som runologerna har knutit samman (Williams 1990), och 92 procent av länkarna står i hans grupper. Sättet att räkna valdes efter att ha sett den förteckningen. I ett blint handprov bedömdes alla fem länkar utanför den som samma släkt, men provet var inte avgörande, och det står vid länkarna."
+  },
+  {
    "id": "ordlista-rapporter",
    "date": "2026-10-31",
    "status": "nytt",

@@ -39,12 +39,18 @@ def main():
     sex = L.name_sex(st)
     obs = L.links(st, w)
     stats = {}
-    null = L.null_scores(st, w, a.null, seed=SEED, stats=stats)
-    qb = L.fdr(obs, null, seed=SEED)
+    # q per distance band against the province null (2026-11-01, M2 in utdata/slakt/; chosen after seeing Williams 1990,
+    # blind hand test inconclusive – see METHODS 1r); the old pooled q stays as q_pooled for comparison
+    null = L.null_scores_banded(st, w, a.null, seed=SEED, stats=stats)
+    pooled = [dict(x) for x in obs]
+    L.fdr(pooled, [np.array([sc for sc, _ in rep]) for rep in null], seed=SEED)
+    qb = L.fdr_banded(obs, st, null, seed=SEED)
+    for x, y in zip(obs, pooled):
+        x["q_pooled"] = y["q"]
     strict = [dict(x) for x in obs]
     stats_d = {}
-    null_d = L.null_scores(st, w, a.null, seed=SEED, level="district", stats=stats_d)
-    L.fdr(strict, null_d, seed=SEED)
+    null_d = L.null_scores_banded(st, w, a.null, seed=SEED, level="district", stats=stats_d)
+    L.fdr_banded(strict, st, null_d, seed=SEED)
     q_strict = {(x["a"], x["b"]): x for x in strict}
     display = {p["key"]: p["name"] for x in st.values() for p in x["persons"]}
     for x in obs:
@@ -85,8 +91,8 @@ def main():
     seeds = []
     for sd in [int(v) for v in a.seeds.split(",") if v.strip()]:
         other = [dict(x) for x in obs]
-        nl = L.null_scores(st, w, a.null, seed=sd)
-        L.fdr(other, nl, n_boot=1, seed=sd)
+        nl = L.null_scores_banded(st, w, a.null, seed=sd)
+        L.fdr_banded(other, st, nl, n_boot=1, seed=sd)
         seeds.append({"seed": sd, "null_mean": round(float(np.mean([len(z) for z in nl])), 2),
                       "n_sure": sum(1 for x in other if x["q"] < cut and not x["contradictions"]),
                       "jarlabanke_q_max": max((x["q"] for x in other if x["a"] in JARLABANKE and x["b"] in JARLABANKE),
@@ -94,8 +100,18 @@ def main():
     out = {
         "computed_at": datetime.now(timezone.utc).isoformat(), "n_stones": len(st), "n_null": a.null, "seed": SEED,
         "n_boot": L.N_BOOT, "fdr_cut": cut, "common_max": L.COMMON, "time_gap": L.TIME_GAP,
+        "model": {"q": "per avståndsband (A ≤ 2 km, B ≤ 10 km, C > 10 km), nollmodell inom landskapet",
+                  "bands_km": list(L.BANDS_KM), "since": "2026-11-01",
+                  "note": "Vald efter att ha sett Williams 1990 (analysplaner/2026-11-01-slaktnatverket-steg1.md); i ett blint "
+                          "handprov bedömdes alla 5 nya svenska länkar som samma släkt, men provet var inte avgörande "
+                          "(utdata/slakt/handprov_resultat.md). q_pooled är den tidigare modellens q."},
+        "n_sure_pooled": sum(1 for x in consistent if x["q_pooled"] < cut),
+        "n_sure_by_band": {bd: sum(1 for x in sure if x["band"] == bd) for bd in ("A", "B", "C", "utan koordinater")},
         "n_links": len(obs), "n_pairs_all": L.all_pairs(st),
         "null_mean": round(float(np.mean([len(z) for z in null])), 2),
+        "null_mean_by_band": {bd: round(float(np.mean([sum(1 for _, b in z if b == bd) for z in null])), 2)
+                              for bd in ("A", "B", "C", "utan koordinater")},
+        "obs_by_band": {bd: sum(1 for x in obs if x["band"] == bd) for bd in ("A", "B", "C", "utan koordinater")},
         "null_mean_district": round(float(np.mean([len(z) for z in null_d])), 2),
         "null_unrepaired": stats.get("unrepaired", 0) + stats_d.get("unrepaired", 0),
         "n_sure": len(sure), "n_sure_district": sum(1 for x in consistent if x["q_district"] < cut),

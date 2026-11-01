@@ -557,7 +557,7 @@ motsäger, med belägg, nyhet och relevans):
   andra föremål redovisas för sig i `utdata/runor/jamforelse.json`). Runor matchas mot Rundata på exakt signum – i
   jämförelsen, i fynden och på inskriftssidan (`src/runor.py`) – så att Närkes Nä 11 inte blandas ihop med Norges N A11.
   Uppgifterna är en nyare källa, inte appens upptäckter, och får därför lågt nyhetsvärde (0,3) och en fast bedömning.
-* **Samma familj (namnlänk):** länkarna ur avsnitt 1r utan motsägelser i släktskap eller tid (28 länkar). Varje länk
+* **Samma familj (namnlänk):** länkarna ur avsnitt 1r utan motsägelser i släktskap eller tid (70 länkar sedan 2026-11-01, tidigare 28). Varje länk
   står på båda stenarna, så de ger ett fynd på varje svensk runsten i länken (danska och norska stenar ingår i
   länkmodellen men får inga egna fynd; och fem av länkarna knyter Rundata redan ihop); i rubriktalet "sannolikt ny kunskap" räknas varje länk en gång. Länkar som Rundata redan gör – parstenar och stenar som Rundatas
   anmärkningar knyter ihop på annat sätt ("Utgör ett monument tillsammans med …") – räknas som *stämmer* (5 länkar).
@@ -627,6 +627,27 @@ för att länka stenar. Av Rundatas 14 parstenar hittas 2; av de 12 som missas d
 namn och 4 två eller fler utan att länken skiljer sig från slumpen. Två länkar mellan landskap som först såg starka ut
 avfärdas av motsägelser i släktskapen (U 759–Vg 59: olika fäder; Hs 14–Sö 11). Länkarna visas som fynd per sten på de
 svenska runstenarna och som mönstret i Statistik (R) under Formler och släkt.
+
+**Avståndsband (2026-11-01).** Sedan 2026-11-01 räknas q för sig i tre avståndsband mellan stenarna: A upp till 2 km, B
+upp till 10 km och C längre bort (par utan koordinater för sig). En länk prövas alltså mot de namnpar slumpen ger på samma
+avstånd, inte mot par över hela landskapet, där nästan alla slumpens par ligger långt isär (i genomsnitt
+329 av 365 i band C). Nollmodellen blandar fortfarande namnen inom landskapet. Bakgrunden är
+släktnätverkets steg 1 och 1b (`analysplaner/2026-11-01-slaktnatverket-steg1.md`, `-steg1b.md`, `utdata/slakt/`).
+Länkningen prövades mot Henrik Williams förteckning över inskrifter med genealogiskt samband (Åsrunan, 1990, bilaga s.
+185–187, avskriven för hand: 144 grupper, 382 inskrifter). Den låsta planen prövade en variant med nollmodellen inom
+häradet. Den fördubblade täckningen mot Williams men föll på Jarlabanke: sju av hans nio stenar står i samma härad, så
+häradsmodellen räknar släktens eget avtryck som lokal namnsed. Varianten med nollmodellen inom landskapet, som används nu,
+valdes efter att ha sett Williams lista. Den prövades därför blint: Viktor Kvant bedömde 25 par utan signum, nämligen de 5
+nya länkarna utanför Williams, 5 av hans länkar och 15 namnpar som modellen inte länkar. Alla 5 nya bedömdes som samma
+släkt, mot 3 av 15 namnpar (Fisher p = 0,004), men bara 3 av 5 kända länkar kändes igen ur texterna, så provet var enligt
+planen inte avgörande (`utdata/slakt/handprov_resultat.md`). Petersons anmärkningar om samma person (2007) kunde inte
+användas som oberoende prövning, eftersom 110 av hennes 118 svenska släktpar redan står hos Williams.
+Resultat 2026-11-01 på alla nordiska runstenar: 70 länkar med q under 0,1 (lika många med alla fyra frön; tidigare
+modellens q gav 28), 42 i band A, 23 i B, 2 i C och 3 utan koordinater; 61 mellan svenska
+runstenar. Mot Williams hittas 80 av 202 svenska runstenar som han knyter samman (40 %), och 54 av 59 länkar i de
+landskap han tar upp (92 %) står i hans grupper. Fyra av Jarlabankes fem stenar hänger ihop (U 164, U 165, U 212,
+U 261); U 127 står 10–14 km bort, där slumpens par är för många för att en länk ska bli säker. Parstenarna: 6 av 14,
+Rundatas anmärkningar 9 av 80. Den tidigare modellens q finns kvar i `data/links.json` som `q_pooled`.
 
 ### 1s. Samlad datering av odaterade stenar: prövad och inte införd (2026-10-27)
 

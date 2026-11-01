@@ -47,6 +47,9 @@ N_BOOT = 500  # bootstrap draws over the null replicates for the Monte Carlo int
 # the same site or stones that Rundata's notes tie together
 TIME_GAP = 30
 SAME_SITE_KM = 1.0
+# Distance bands for q (2026-11-01, släktnätverket steg 1/1b): true links are local, so a pair 300 m apart is judged
+# against the null model's pairs at the same distance, not against pairs across the whole province
+BANDS_KM = (2.0, 10.0)
 RANGE = 10  # 'U 457-U 459' in a note ties the stones in the range together, when it spans at most this many numbers
 MALE = {"father", "son", "sons", "brother", "brothers", "husband", "husbandman", "grandfather", "grandson", "uncle",
         "nephew", "stepson", "stepfather", "foster-son", "foster-father", "foster-brother", "father-in-law",
@@ -233,6 +236,61 @@ def fdr(obs: list[dict], null: list[np.ndarray], n_boot: int = N_BOOT, seed: int
     lo, hi = np.percentile(qb, [2.5, 97.5], axis=0)
     for x, v, a, b in zip(obs, q, lo, hi):
         x["q"], x["q_lo"], x["q_hi"] = round(float(v), 4), round(float(a), 4), round(float(b), 4)
+    return qb
+
+
+def band(d: float | None, edges: tuple[float, float] = BANDS_KM) -> str:
+    """The distance band of a pair: A up to edges[0] km, B up to edges[1] km, C beyond, and pairs without coordinates."""
+    if d is None:
+        return "utan koordinater"
+    return "A" if d <= edges[0] else ("B" if d <= edges[1] else "C")
+
+
+def null_scores_banded(st: dict[str, dict], w: dict[str, float], n: int = N_NULL, seed: int = 2026,
+                       level: str = "province", stats: dict | None = None) -> list[list[tuple[float, str]]]:
+    """As null_scores, but every null link keeps its distance band (same draws for the same seed)."""
+    rng = np.random.default_rng(seed)
+    grp = defaultdict(list)
+    for sg, s in st.items():
+        grp[s["province"] if level == "province" else (s["province"], s.get("district") or s["parish"])].append(sg)
+    groups_ = [(sgs, [len(st[sg]["names"]) for sg in sgs], [k for sg in sgs for k in sorted(st[sg]["names"])]) for sgs in grp.values()]
+    dist: dict[tuple[str, str], str] = {}
+    out, left = [], 0
+    for _ in range(n):
+        ts = {}
+        for sgs, sizes, names in groups_:
+            lists, lo = _draw(sizes, list(names), rng)
+            left += lo
+            for sg, li in zip(sgs, lists):
+                ts[sg] = set(li) | {"plats:" + p for p in st[sg]["places"]}
+        rep = []
+        for x in links(st, w, ts):
+            k = (x["a"], x["b"])
+            if k not in dist:
+                dist[k] = band(km(st[x["a"]], st[x["b"]]))
+            rep.append((x["score"], dist[k]))
+        out.append(rep)
+    if stats is not None:
+        stats["unrepaired"] = left
+    return out
+
+
+def fdr_banded(obs: list[dict], st: dict[str, dict], null: list[list[tuple[float, str]]], n_boot: int = N_BOOT,
+               seed: int = 2026) -> np.ndarray:
+    """q per distance band (fdr on each band's links against the same band's null links); sets x["band"] and returns the
+    bootstrap q matrix (n_boot × links) in the order of obs."""
+    for x in obs:
+        x["band"] = band(km(st[x["a"]], st[x["b"]]))
+    qb = np.ones((n_boot, len(obs)))
+    for bd in ("A", "B", "C", "utan koordinater"):
+        idx = [i for i, x in enumerate(obs) if x["band"] == bd]
+        if not idx:
+            continue
+        sub = [obs[i] for i in idx]
+        z = [np.array([sc for sc, b in rep if b == bd]) for rep in null]
+        q = fdr(sub, z, n_boot=n_boot, seed=seed)
+        if q.size:
+            qb[:, idx] = q
     return qb
 
 
