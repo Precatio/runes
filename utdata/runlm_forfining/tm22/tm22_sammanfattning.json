@@ -6,5 +6,245 @@
   "rader_som_skiljer": 1,
   "seed0_gammal_lika_ny": true,
   "godkand": true
+ },
+ "steg1": {
+  "lit001": {
+   "words": {
+    "inne i ord": {
+     "won": 1,
+     "lost": 0,
+     "n": 139,
+     "acc_base": 0.8273,
+     "acc_new": 0.8345
+    },
+    "helt ord": {
+     "won": 0,
+     "lost": 0,
+     "n": 139,
+     "acc_base": 0.6547,
+     "acc_new": 0.6547
+    }
+   },
+   "rune_top1": [
+    0,
+    0
+   ],
+   "short": {
+    "won": 0,
+    "lost": 0,
+    "new_errors": 0
+   },
+   "sure": {
+    "base": [
+     80,
+     3
+    ],
+    "new": [
+     78,
+     3
+    ]
+   },
+   "net": 1,
+   "ok": false
+  },
+  "lit003": {
+   "words": {
+    "inne i ord": {
+     "won": 1,
+     "lost": 0,
+     "n": 139,
+     "acc_base": 0.8273,
+     "acc_new": 0.8345
+    },
+    "helt ord": {
+     "won": 0,
+     "lost": 0,
+     "n": 139,
+     "acc_base": 0.6547,
+     "acc_new": 0.6547
+    }
+   },
+   "rune_top1": [
+    0,
+    0
+   ],
+   "short": {
+    "won": 0,
+    "lost": 0,
+    "new_errors": 0
+   },
+   "sure": {
+    "base": [
+     80,
+     3
+    ],
+    "new": [
+     78,
+     3
+    ]
+   },
+   "net": 1,
+   "ok": false
+  },
+  "lit01": {
+   "words": {
+    "inne i ord": {
+     "won": 0,
+     "lost": 0,
+     "n": 139,
+     "acc_base": 0.8273,
+     "acc_new": 0.8273
+    },
+    "helt ord": {
+     "won": 0,
+     "lost": 0,
+     "n": 139,
+     "acc_base": 0.6547,
+     "acc_new": 0.6547
+    }
+   },
+   "rune_top1": [
+    0,
+    0
+   ],
+   "short": {
+    "won": 0,
+    "lost": 0,
+    "new_errors": 0
+   },
+   "sure": {
+    "base": [
+     80,
+     3
+    ],
+    "new": [
+     76,
+     3
+    ]
+   },
+   "net": 0,
+   "ok": false
+  },
+  "lex0003": {
+   "words": {
+    "inne i ord": {
+     "won": 1,
+     "lost": 0,
+     "n": 139,
+     "acc_base": 0.8273,
+     "acc_new": 0.8345
+    },
+    "helt ord": {
+     "won": 0,
+     "lost": 0,
+     "n": 139,
+     "acc_base": 0.6547,
+     "acc_new": 0.6547
+    }
+   },
+   "rune_top1": [
+    0,
+    0
+   ],
+   "short": {
+    "won": 0,
+    "lost": 0,
+    "new_errors": 0
+   },
+   "sure": {
+    "base": [
+     80,
+     3
+    ],
+    "new": [
+     80,
+     3
+    ]
+   },
+   "net": 1,
+   "ok": false
+  },
+  "lex001": {
+   "words": {
+    "inne i ord": {
+     "won": 1,
+     "lost": 0,
+     "n": 139,
+     "acc_base": 0.8273,
+     "acc_new": 0.8345
+    },
+    "helt ord": {
+     "won": 0,
+     "lost": 0,
+     "n": 139,
+     "acc_base": 0.6547,
+     "acc_new": 0.6547
+    }
+   },
+   "rune_top1": [
+    0,
+    0
+   ],
+   "short": {
+    "won": 0,
+    "lost": 0,
+    "new_errors": 0
+   },
+   "sure": {
+    "base": [
+     80,
+     3
+    ],
+    "new": [
+     80,
+     3
+    ]
+   },
+   "net": 1,
+   "ok": false
+  },
+  "namn": {
+   "words": {
+    "inne i ord": {
+     "won": 1,
+     "lost": 0,
+     "n": 139,
+     "acc_base": 0.8273,
+     "acc_new": 0.8345
+    },
+    "helt ord": {
+     "won": 0,
+     "lost": 0,
+     "n": 139,
+     "acc_base": 0.6547,
+     "acc_new": 0.6547
+    }
+   },
+   "rune_top1": [
+    0,
+    0
+   ],
+   "short": {
+    "won": 0,
+    "lost": 0,
+    "new_errors": 0
+   },
+   "sure": {
+    "base": [
+     80,
+     3
+    ],
+    "new": [
+     80,
+     3
+    ]
+   },
+   "net": 1,
+   "ok": false
+  }
+ },
+ "val": {
+  "lit": 0.01,
+  "lex": 0.003
  }
 }
