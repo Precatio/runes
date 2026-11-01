@@ -138,5 +138,12 @@
   "t22": "Ög 197",
   "t23": "U 327",
   "t24": "DR 239"
+ },
+ "blind_result": {
+  "agree_8": 8,
+  "agree_24": 24,
+  "agent_i_or_ii_of_8": 3,
+  "kappa_24": 1.0,
+  "stands": true
  }
 }
