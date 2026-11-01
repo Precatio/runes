@@ -1,0 +1,1440 @@
+{
+ "plan": "analysplaner/2026-11-01-slaktnatverket-steg1.md",
+ "n_stones": 2320,
+ "M0": {
+  "n_candidates": 383,
+  "n_sure": 23,
+  "W1": {
+   "n_stones": 202,
+   "hit": 34,
+   "share": 0.1683
+  },
+  "W2": {
+   "n_links": 21,
+   "hit": 19,
+   "share": 0.9048
+  },
+  "J": {
+   "pairs": 10,
+   "sure": 0,
+   "passed": false
+  },
+  "K": {
+   "candidates": 0.1854,
+   "below_cut": 25,
+   "below_cut_contradicted": 2,
+   "share": 0.08
+  },
+  "parsten": {
+   "n": 14,
+   "found": 2
+  },
+  "rundata_noted": {
+   "n": 73,
+   "found": 5
+  },
+  "per_band": {
+   "A": {
+    "n_sure": 12
+   },
+   "B": {
+    "n_sure": 8
+   },
+   "C": {
+    "n_sure": 3
+   },
+   "utan koordinater": {
+    "n_sure": 0
+   }
+  }
+ },
+ "M1": {
+  "n_candidates": 383,
+  "n_sure": 47,
+  "W1": {
+   "n_stones": 202,
+   "hit": 69,
+   "share": 0.3416
+  },
+  "W2": {
+   "n_links": 45,
+   "hit": 42,
+   "share": 0.9333
+  },
+  "J": {
+   "pairs": 10,
+   "sure": 1,
+   "passed": false
+  },
+  "K": {
+   "candidates": 0.1854,
+   "below_cut": 47,
+   "below_cut_contradicted": 0,
+   "share": 0.0
+  },
+  "parsten": {
+   "n": 14,
+   "found": 6
+  },
+  "rundata_noted": {
+   "n": 73,
+   "found": 9
+  },
+  "per_band": {
+   "A": {
+    "n_sure": 38
+   },
+   "B": {
+    "n_sure": 7
+   },
+   "C": {
+    "n_sure": 2
+   },
+   "utan koordinater": {
+    "n_sure": 0
+   }
+  },
+  "null_mean_per_band": {
+   "A": 4.13,
+   "B": 23.74,
+   "C": 297.45,
+   "utan koordinater": 0.0
+  },
+  "obs_per_band": {
+   "C": 307,
+   "A": 38,
+   "B": 38
+  }
+ },
+ "criteria": {
+  "W1_double": true,
+  "W1_floor": true,
+  "W2_not_worse": true,
+  "J": false,
+  "K": true
+ },
+ "M1_holds": false,
+ "describe_M1": {
+  "groups": 38,
+  "groups_3plus": 3,
+  "stones_in_groups": 81,
+  "persons_on_2plus": 94,
+  "longest_generations": 3,
+  "groups_by_province": {
+   "U": 28,
+   "Sö": 4,
+   "G": 2,
+   "Ög": 1,
+   "Hs": 1,
+   "Sm": 1,
+   "Vg": 1
+  },
+  "largest": [
+   {
+    "stones": [
+     "U 312",
+     "U 313",
+     "U 314",
+     "U 315"
+    ],
+    "n": 4,
+    "names": [
+     "holmdis",
+     "jofurfast",
+     "gunnarr",
+     "farulfr"
+    ],
+    "max_km": 0.3,
+    "provinces": [
+     "U"
+    ]
+   },
+   {
+    "stones": [
+     "U 937",
+     "U 990",
+     "U 991",
+     "U 999"
+    ],
+    "n": 4,
+    "names": [
+     "thegn",
+     "vedr",
+     "gunnarr",
+     "haursi"
+    ],
+    "max_km": 10.9,
+    "provinces": [
+     "U"
+    ]
+   },
+   {
+    "stones": [
+     "U 329",
+     "U 330",
+     "U 332"
+    ],
+    "n": 3,
+    "names": [
+     "inga",
+     "ragnfastr"
+    ],
+    "max_km": 0.7,
+    "provinces": [
+     "U"
+    ]
+   },
+   {
+    "stones": [
+     "U 136",
+     "U 137"
+    ],
+    "n": 2,
+    "names": [
+     "astridr",
+     "eysteinn"
+    ],
+    "max_km": 0.0,
+    "provinces": [
+     "U"
+    ]
+   },
+   {
+    "stones": [
+     "U 644",
+     "U 654"
+    ],
+    "n": 2,
+    "names": [
+     "djarfr",
+     "blesi",
+     "andvettr",
+     "gunnleifr",
+     "karr"
+    ],
+    "max_km": 2.4,
+    "provinces": [
+     "U"
+    ]
+   }
+  ]
+ },
+ "describe_M0": {
+  "groups": 20,
+  "groups_3plus": 2,
+  "stones_in_groups": 42,
+  "persons_on_2plus": 60,
+  "longest_generations": 3,
+  "groups_by_province": {
+   "U": 16,
+   "G": 2,
+   "Hs": 1,
+   "Sö": 1
+  },
+  "largest": [
+   {
+    "stones": [
+     "U 312",
+     "U 313",
+     "U 315"
+    ],
+    "n": 3,
+    "names": [
+     "holmdis",
+     "gunnarr",
+     "jofurfast",
+     "farulfr"
+    ],
+    "max_km": 0.3,
+    "provinces": [
+     "U"
+    ]
+   },
+   {
+    "stones": [
+     "U 937",
+     "U 990",
+     "U 991"
+    ],
+    "n": 3,
+    "names": [
+     "thegn",
+     "vedr",
+     "gunnarr"
+    ],
+    "max_km": 10.9,
+    "provinces": [
+     "U"
+    ]
+   },
+   {
+    "stones": [
+     "U 644",
+     "U 654"
+    ],
+    "n": 2,
+    "names": [
+     "djarfr",
+     "blesi",
+     "andvettr",
+     "gunnleifr",
+     "karr"
+    ],
+    "max_km": 2.4,
+    "provinces": [
+     "U"
+    ]
+   },
+   {
+    "stones": [
+     "G 111",
+     "G 112"
+    ],
+    "n": 2,
+    "names": [
+     "hrodthjod",
+     "sibba"
+    ],
+    "max_km": 0.0,
+    "provinces": [
+     "G"
+    ]
+   },
+   {
+    "stones": [
+     "Hs 14",
+     "Hs 15"
+    ],
+    "n": 2,
+    "names": [
+     "he-gylfir",
+     "hrodmundr",
+     "unn",
+     "brisi"
+    ],
+    "max_km": 2.5,
+    "provinces": [
+     "Hs"
+    ]
+   }
+  ]
+ },
+ "sure_links_M1": [
+  {
+   "a": "G 207",
+   "b": "G 208",
+   "shared": [
+    "botmundr",
+    "botreifr",
+    "gunnvarr"
+   ],
+   "score": 19.542,
+   "q": 0.0,
+   "q_lo": 0.0,
+   "q_hi": 0.0,
+   "band": "A",
+   "km": 0.0
+  },
+  {
+   "a": "U 644",
+   "b": "U 654",
+   "shared": [
+    "andvettr",
+    "blesi",
+    "djarfr",
+    "gunnleifr",
+    "karr"
+   ],
+   "score": 28.105,
+   "q": 0.0005,
+   "q_lo": 0.0,
+   "q_hi": 0.0015,
+   "band": "B",
+   "km": 2.4186457294680728
+  },
+  {
+   "a": "U 312",
+   "b": "U 315",
+   "shared": [
+    "farulfr",
+    "gunnarr",
+    "holmdis"
+   ],
+   "score": 14.824,
+   "q": 0.0008,
+   "q_lo": 0.0003,
+   "q_hi": 0.0012,
+   "band": "A",
+   "km": 0.3298667946438397
+  },
+  {
+   "a": "U 723",
+   "b": "U 724",
+   "shared": [
+    "eygeirr",
+    "freygeirr",
+    "goti"
+   ],
+   "score": 16.061,
+   "q": 0.0008,
+   "q_lo": 0.0,
+   "q_hi": 0.0011,
+   "band": "A",
+   "km": 0.011116199427434836
+  },
+  {
+   "a": "U 312",
+   "b": "U 313",
+   "shared": [
+    "gunnarr",
+    "holmdis",
+    "jofurfast"
+   ],
+   "score": 14.69,
+   "q": 0.0008,
+   "q_lo": 0.0003,
+   "q_hi": 0.0012,
+   "band": "A",
+   "km": 0.2924164392478476
+  },
+  {
+   "a": "U 763",
+   "b": "U 764",
+   "shared": [
+    "bruni",
+    "gunnbjorn",
+    "holmsteinn"
+   ],
+   "score": 14.307,
+   "q": 0.0008,
+   "q_lo": 0.0003,
+   "q_hi": 0.0012,
+   "band": "A",
+   "km": 0.0072470017306230945
+  },
+  {
+   "a": "U 901",
+   "b": "U 904",
+   "shared": [
+    "igulbjorn",
+    "jofurr",
+    "karl"
+   ],
+   "score": 14.174,
+   "q": 0.0008,
+   "q_lo": 0.0003,
+   "q_hi": 0.0012,
+   "band": "A",
+   "km": 0.01699647579283556
+  },
+  {
+   "a": "U 240",
+   "b": "U 241",
+   "shared": [
+    "danr",
+    "huskarl",
+    "sveinn"
+   ],
+   "score": 14.287,
+   "q": 0.0008,
+   "q_lo": 0.0003,
+   "q_hi": 0.0012,
+   "band": "A",
+   "km": 0.22386677239215447
+  },
+  {
+   "a": "U 990",
+   "b": "U 991",
+   "shared": [
+    "gunnarr",
+    "thegn",
+    "vedr"
+   ],
+   "score": 14.573,
+   "q": 0.0008,
+   "q_lo": 0.0003,
+   "q_hi": 0.0012,
+   "band": "A",
+   "km": 0.009235884152722421
+  },
+  {
+   "a": "Hs 14",
+   "b": "Hs 15",
+   "shared": [
+    "brisi",
+    "he-gylfir",
+    "hrodmundr",
+    "unn"
+   ],
+   "score": 25.816,
+   "q": 0.0013,
+   "q_lo": 0.0003,
+   "q_hi": 0.0025,
+   "band": "B",
+   "km": 2.459465586290885
+  },
+  {
+   "a": "U 641",
+   "b": "U 642",
+   "shared": [
+    "bjorn",
+    "gildi",
+    "hedingeirr"
+   ],
+   "score": 16.412,
+   "q": 0.0257,
+   "q_lo": 0.0229,
+   "q_hi": 0.0288,
+   "band": "B",
+   "km": 8.3277061167931
+  },
+  {
+   "a": "U 513",
+   "b": "U 540",
+   "shared": [
+    "eirikr",
+    "hakon",
+    "ingvarr"
+   ],
+   "score": 15.132,
+   "q": 0.0257,
+   "q_lo": 0.0229,
+   "q_hi": 0.0288,
+   "band": "B",
+   "km": 7.847003420544924
+  },
+  {
+   "a": "U 859",
+   "b": "U 860",
+   "shared": [
+    "fastbjorn",
+    "ingifastr",
+    "thorunnr"
+   ],
+   "score": 14.536,
+   "q": 0.0257,
+   "q_lo": 0.0229,
+   "q_hi": 0.0288,
+   "band": "B",
+   "km": 2.263128645379592
+  },
+  {
+   "a": "U 941",
+   "b": "U 986",
+   "shared": [
+    "ali",
+    "ingifast",
+    "sigvaldi"
+   ],
+   "score": 18.051,
+   "q": 0.0257,
+   "q_lo": 0.0229,
+   "q_hi": 0.0288,
+   "band": "B",
+   "km": 5.022707240723738
+  },
+  {
+   "a": "U 77",
+   "b": "U 78",
+   "shared": [
+    "holmsteinn",
+    "hosvi"
+   ],
+   "score": 11.004,
+   "q": 0.0302,
+   "q_lo": 0.0288,
+   "q_hi": 0.0317,
+   "band": "A",
+   "km": 1.6857635175214227
+  },
+  {
+   "a": "G 111",
+   "b": "G 112",
+   "shared": [
+    "hrodthjod",
+    "sibba"
+   ],
+   "score": 13.569,
+   "q": 0.0302,
+   "q_lo": 0.0288,
+   "q_hi": 0.0317,
+   "band": "A",
+   "km": 0.0
+  },
+  {
+   "a": "Sö 206",
+   "b": "Sö 208",
+   "shared": [
+    "gudlaug",
+    "hjalmlaug"
+   ],
+   "score": 11.372,
+   "q": 0.0302,
+   "q_lo": 0.0288,
+   "q_hi": 0.0317,
+   "band": "A",
+   "km": 0.012018360951131507
+  },
+  {
+   "a": "U 297",
+   "b": "U Fv1979;245",
+   "shared": [
+    "jobjorn",
+    "sigbjorn"
+   ],
+   "score": 10.513,
+   "q": 0.0302,
+   "q_lo": 0.0288,
+   "q_hi": 0.0317,
+   "band": "A",
+   "km": 0.04724527419367411
+  },
+  {
+   "a": "Sö 122",
+   "b": "Sö 123",
+   "shared": [
+    "asgautr",
+    "hasteinn"
+   ],
+   "score": 10.812,
+   "q": 0.0302,
+   "q_lo": 0.0288,
+   "q_hi": 0.0317,
+   "band": "A",
+   "km": 0.02140805718950437
+  },
+  {
+   "a": "U 844",
+   "b": "U 845",
+   "shared": [
+    "asgeirr",
+    "bjorn",
+    "gisl"
+   ],
+   "score": 12.423,
+   "q": 0.0302,
+   "q_lo": 0.0288,
+   "q_hi": 0.0317,
+   "band": "A",
+   "km": 0.1868849955017408
+  },
+  {
+   "a": "Sö 173",
+   "b": "Sö 374",
+   "shared": [
+    "manni",
+    "myskja"
+   ],
+   "score": 12.247,
+   "q": 0.0302,
+   "q_lo": 0.0288,
+   "q_hi": 0.0317,
+   "band": "A",
+   "km": 0.029136686777797273
+  },
+  {
+   "a": "U 313",
+   "b": "U 314",
+   "shared": [
+    "holmdis",
+    "jofurfast"
+   ],
+   "score": 11.084,
+   "q": 0.0302,
+   "q_lo": 0.0288,
+   "q_hi": 0.0317,
+   "band": "A",
+   "km": 0.16036571068200758
+  },
+  {
+   "a": "U 668",
+   "b": "U 669",
+   "shared": [
+    "hjorvardr",
+    "styrkarr"
+   ],
+   "score": 12.876,
+   "q": 0.0302,
+   "q_lo": 0.0288,
+   "q_hi": 0.0317,
+   "band": "A",
+   "km": 0.013619820625565998
+  },
+  {
+   "a": "U 312",
+   "b": "U 314",
+   "shared": [
+    "holmdis",
+    "jofurfast"
+   ],
+   "score": 11.084,
+   "q": 0.0302,
+   "q_lo": 0.0288,
+   "q_hi": 0.0317,
+   "band": "A",
+   "km": 0.3298667946438397
+  },
+  {
+   "a": "U 285",
+   "b": "U 286",
+   "shared": [
+    "holmlaugr",
+    "oleifr"
+   ],
+   "score": 10.638,
+   "q": 0.0302,
+   "q_lo": 0.0288,
+   "q_hi": 0.0317,
+   "band": "A",
+   "km": 0.43047284872647273
+  },
+  {
+   "a": "U 164",
+   "b": "U 165",
+   "shared": [
+    "jarlabanki",
+    "plats:tabyr"
+   ],
+   "score": 11.149,
+   "q": 0.0302,
+   "q_lo": 0.0288,
+   "q_hi": 0.0317,
+   "band": "A",
+   "km": 0.011337706610349682
+  },
+  {
+   "a": "U 990",
+   "b": "U 999",
+   "shared": [
+    "haursi",
+    "thegn"
+   ],
+   "score": 10.455,
+   "q": 0.0302,
+   "q_lo": 0.0288,
+   "q_hi": 0.0317,
+   "band": "A",
+   "km": 1.643385671224759
+  },
+  {
+   "a": "U 329",
+   "b": "U 332",
+   "shared": [
+    "inga",
+    "ragnfastr"
+   ],
+   "score": 9.931,
+   "q": 0.0306,
+   "q_lo": 0.0294,
+   "q_hi": 0.0321,
+   "band": "A",
+   "km": 0.7245161713848055
+  },
+  {
+   "a": "U 160",
+   "b": "U 161",
+   "shared": [
+    "plats:skolhamarr",
+    "ulfr"
+   ],
+   "score": 10.057,
+   "q": 0.0306,
+   "q_lo": 0.0294,
+   "q_hi": 0.0321,
+   "band": "A",
+   "km": 0.09362461783819763
+  },
+  {
+   "a": "U 330",
+   "b": "U 332",
+   "shared": [
+    "inga",
+    "ragnfastr"
+   ],
+   "score": 9.931,
+   "q": 0.0306,
+   "q_lo": 0.0294,
+   "q_hi": 0.0321,
+   "band": "A",
+   "km": 0.738968128844642
+  },
+  {
+   "a": "U 329",
+   "b": "U 330",
+   "shared": [
+    "inga",
+    "ragnfastr"
+   ],
+   "score": 9.931,
+   "q": 0.0306,
+   "q_lo": 0.0294,
+   "q_hi": 0.0321,
+   "band": "A",
+   "km": 0.02901135344035594
+  },
+  {
+   "a": "U 1050",
+   "b": "U 1060",
+   "shared": [
+    "eistr",
+    "holmgeirr"
+   ],
+   "score": 9.526,
+   "q": 0.0318,
+   "q_lo": 0.0306,
+   "q_hi": 0.0332,
+   "band": "A",
+   "km": 0.5079555688780915
+  },
+  {
+   "a": "U 133",
+   "b": "U 141",
+   "shared": [
+    "gudlaug",
+    "holmi"
+   ],
+   "score": 9.58,
+   "q": 0.0318,
+   "q_lo": 0.0306,
+   "q_hi": 0.0332,
+   "band": "A",
+   "km": 1.1704641805058908
+  },
+  {
+   "a": "U 700",
+   "b": "U 701",
+   "shared": [
+    "goti",
+    "ingjaldr"
+   ],
+   "score": 9.58,
+   "q": 0.0318,
+   "q_lo": 0.0306,
+   "q_hi": 0.0332,
+   "band": "A",
+   "km": 0.9738358923878219
+  },
+  {
+   "a": "U 313",
+   "b": "U 315",
+   "shared": [
+    "gunnarr",
+    "holmdis"
+   ],
+   "score": 9.292,
+   "q": 0.0334,
+   "q_lo": 0.0322,
+   "q_hi": 0.0346,
+   "band": "A",
+   "km": 0.16036571068200758
+  },
+  {
+   "a": "U 273",
+   "b": "U 276",
+   "shared": [
+    "djarfr",
+    "fullugi"
+   ],
+   "score": 9.41,
+   "q": 0.0334,
+   "q_lo": 0.0322,
+   "q_hi": 0.0346,
+   "band": "A",
+   "km": 0.46139179812951053
+  },
+  {
+   "a": "Sm 36",
+   "b": "Sm 37",
+   "shared": [
+    "eyndr",
+    "ozurr"
+   ],
+   "score": 9.132,
+   "q": 0.0344,
+   "q_lo": 0.0331,
+   "q_hi": 0.0356,
+   "band": "A",
+   "km": 1.526611442817896
+  },
+  {
+   "a": "U 712",
+   "b": "U 713",
+   "shared": [
+    "geirbjorn",
+    "oleifr"
+   ],
+   "score": 9.028,
+   "q": 0.0348,
+   "q_lo": 0.0335,
+   "q_hi": 0.036,
+   "band": "A",
+   "km": 0.062070149806982916
+  },
+  {
+   "a": "U 136",
+   "b": "U 137",
+   "shared": [
+    "astridr",
+    "eysteinn"
+   ],
+   "score": 8.729,
+   "q": 0.0362,
+   "q_lo": 0.0351,
+   "q_hi": 0.0376,
+   "band": "A",
+   "km": 0.018394588255744745
+  },
+  {
+   "a": "U 453",
+   "b": "U 454",
+   "shared": [
+    "gisl",
+    "thorkell"
+   ],
+   "score": 8.846,
+   "q": 0.0362,
+   "q_lo": 0.0351,
+   "q_hi": 0.0376,
+   "band": "A",
+   "km": 0.008588994762235888
+  },
+  {
+   "a": "U 346",
+   "b": "U 356",
+   "shared": [
+    "bjorn",
+    "ketilmundr",
+    "ragnfridr"
+   ],
+   "score": 13.441,
+   "q": 0.0394,
+   "q_lo": 0.0363,
+   "q_hi": 0.0427,
+   "band": "B",
+   "km": 7.72625700714221
+  },
+  {
+   "a": "Ög 162",
+   "b": "Ög Fv1970;310",
+   "shared": [
+    "gunnarr",
+    "hakon"
+   ],
+   "score": 8.14,
+   "q": 0.0426,
+   "q_lo": 0.0413,
+   "q_hi": 0.0439,
+   "band": "A",
+   "km": 0.4740430828325549
+  },
+  {
+   "a": "U 255",
+   "b": "U 269",
+   "shared": [
+    "bjorn",
+    "illugi"
+   ],
+   "score": 7.836,
+   "q": 0.0457,
+   "q_lo": 0.0443,
+   "q_hi": 0.0472,
+   "band": "A",
+   "km": 1.7606295628549629
+  },
+  {
+   "a": "Vg 11",
+   "b": "Vg 13",
+   "shared": [
+    "ketill",
+    "thorir"
+   ],
+   "score": 7.85,
+   "q": 0.0457,
+   "q_lo": 0.0443,
+   "q_hi": 0.0472,
+   "band": "A",
+   "km": 1.3348634528472378
+  },
+  {
+   "a": "U 937",
+   "b": "U 990",
+   "shared": [
+    "gunnarr",
+    "thegn",
+    "vedr"
+   ],
+   "score": 14.573,
+   "q": 0.0473,
+   "q_lo": 0.0404,
+   "q_hi": 0.0538,
+   "band": "C",
+   "km": 10.873790678202134
+  },
+  {
+   "a": "U 937",
+   "b": "U 991",
+   "shared": [
+    "gunnarr",
+    "thegn",
+    "vedr"
+   ],
+   "score": 14.573,
+   "q": 0.0473,
+   "q_lo": 0.0404,
+   "q_hi": 0.0538,
+   "band": "C",
+   "km": 10.868519743881855
+  },
+  {
+   "a": "Sö 290",
+   "b": "Sö 301",
+   "shared": [
+    "sveinn",
+    "thorir"
+   ],
+   "score": 6.473,
+   "q": 0.0814,
+   "q_lo": 0.0799,
+   "q_hi": 0.0831,
+   "band": "A",
+   "km": 1.2258514672898235
+  }
+ ],
+ "sensitivity": {
+  "band_1_5": {
+   "n_candidates": 383,
+   "n_sure": 44,
+   "W1": {
+    "n_stones": 202,
+    "hit": 62,
+    "share": 0.3069
+   },
+   "W2": {
+    "n_links": 42,
+    "hit": 39,
+    "share": 0.9286
+   },
+   "J": {
+    "pairs": 10,
+    "sure": 3,
+    "passed": false
+   },
+   "K": {
+    "candidates": 0.1854,
+    "below_cut": 45,
+    "below_cut_contradicted": 1,
+    "share": 0.0222
+   },
+   "parsten": {
+    "n": 14,
+    "found": 6
+   },
+   "rundata_noted": {
+    "n": 73,
+    "found": 9
+   },
+   "per_band": {
+    "A": {
+     "n_sure": 31
+    },
+    "B": {
+     "n_sure": 7
+    },
+    "C": {
+     "n_sure": 6
+    },
+    "utan koordinater": {
+     "n_sure": 0
+    }
+   }
+  },
+  "band_3_15": {
+   "n_candidates": 383,
+   "n_sure": 50,
+   "W1": {
+    "n_stones": 202,
+    "hit": 71,
+    "share": 0.3515
+   },
+   "W2": {
+    "n_links": 48,
+    "hit": 44,
+    "share": 0.9167
+   },
+   "J": {
+    "pairs": 10,
+    "sure": 1,
+    "passed": false
+   },
+   "K": {
+    "candidates": 0.1854,
+    "below_cut": 50,
+    "below_cut_contradicted": 0,
+    "share": 0.0
+   },
+   "parsten": {
+    "n": 14,
+    "found": 6
+   },
+   "rundata_noted": {
+    "n": 73,
+    "found": 9
+   },
+   "per_band": {
+    "A": {
+     "n_sure": 44
+    },
+    "B": {
+     "n_sure": 6
+    },
+    "C": {
+     "n_sure": 0
+    },
+    "utan koordinater": {
+     "n_sure": 0
+    }
+   }
+  },
+  "common_40": {
+   "n_candidates": 290,
+   "n_sure": 46,
+   "W1": {
+    "n_stones": 202,
+    "hit": 69,
+    "share": 0.3416
+   },
+   "W2": {
+    "n_links": 44,
+    "hit": 41,
+    "share": 0.9318
+   },
+   "J": {
+    "pairs": 10,
+    "sure": 1,
+    "passed": false
+   },
+   "K": {
+    "candidates": 0.1759,
+    "below_cut": 46,
+    "below_cut_contradicted": 0,
+    "share": 0.0
+   },
+   "parsten": {
+    "n": 14,
+    "found": 6
+   },
+   "rundata_noted": {
+    "n": 73,
+    "found": 9
+   },
+   "per_band": {
+    "A": {
+     "n_sure": 37
+    },
+    "B": {
+     "n_sure": 7
+    },
+    "C": {
+     "n_sure": 2
+    },
+    "utan koordinater": {
+     "n_sure": 0
+    }
+   }
+  },
+  "common_80": {
+   "n_candidates": 440,
+   "n_sure": 49,
+   "W1": {
+    "n_stones": 202,
+    "hit": 73,
+    "share": 0.3614
+   },
+   "W2": {
+    "n_links": 47,
+    "hit": 44,
+    "share": 0.9362
+   },
+   "J": {
+    "pairs": 10,
+    "sure": 1,
+    "passed": false
+   },
+   "K": {
+    "candidates": 0.1795,
+    "below_cut": 49,
+    "below_cut_contradicted": 0,
+    "share": 0.0
+   },
+   "parsten": {
+    "n": 14,
+    "found": 6
+   },
+   "rundata_noted": {
+    "n": 73,
+    "found": 9
+   },
+   "per_band": {
+    "A": {
+     "n_sure": 40
+    },
+    "B": {
+     "n_sure": 7
+    },
+    "C": {
+     "n_sure": 2
+    },
+    "utan koordinater": {
+     "n_sure": 0
+    }
+   }
+  },
+  "null_province_banded": {
+   "n_candidates": 383,
+   "n_sure": 59,
+   "W1": {
+    "n_stones": 202,
+    "hit": 80,
+    "share": 0.396
+   },
+   "W2": {
+    "n_links": 57,
+    "hit": 54,
+    "share": 0.9474
+   },
+   "J": {
+    "pairs": 10,
+    "sure": 6,
+    "passed": false
+   },
+   "K": {
+    "candidates": 0.1854,
+    "below_cut": 61,
+    "below_cut_contradicted": 2,
+    "share": 0.0328
+   },
+   "parsten": {
+    "n": 14,
+    "found": 6
+   },
+   "rundata_noted": {
+    "n": 73,
+    "found": 9
+   },
+   "per_band": {
+    "A": {
+     "n_sure": 38
+    },
+    "B": {
+     "n_sure": 19
+    },
+    "C": {
+     "n_sure": 2
+    },
+    "utan koordinater": {
+     "n_sure": 0
+    }
+   }
+  },
+  "without_moved": {
+   "n_candidates": 138,
+   "n_sure": 19,
+   "W1": {
+    "n_stones": 90,
+    "hit": 33,
+    "share": 0.3667
+   },
+   "W2": {
+    "n_links": 19,
+    "hit": 18,
+    "share": 0.9474
+   },
+   "J": {
+    "pairs": 1,
+    "sure": 1,
+    "passed": false
+   },
+   "K": {
+    "candidates": 0.2101,
+    "below_cut": 19,
+    "below_cut_contradicted": 0,
+    "share": 0.0
+   },
+   "parsten": {
+    "n": 4,
+    "found": 2
+   },
+   "rundata_noted": {
+    "n": 16,
+    "found": 4
+   },
+   "per_band": {
+    "A": {
+     "n_sure": 17
+    },
+    "B": {
+     "n_sure": 2
+    },
+    "C": {
+     "n_sure": 0
+    },
+    "utan koordinater": {
+     "n_sure": 0
+    }
+   },
+   "n_stones": 836
+  }
+ },
+ "M1b_exploratory": {
+  "n_candidates": 429,
+  "n_sure": 46,
+  "W1": {
+   "n_stones": 202,
+   "hit": 69,
+   "share": 0.3416
+  },
+  "W2": {
+   "n_links": 44,
+   "hit": 41,
+   "share": 0.9318
+  },
+  "J": {
+   "pairs": 10,
+   "sure": 1,
+   "passed": false
+  },
+  "K": {
+   "candidates": 0.1655,
+   "below_cut": 46,
+   "below_cut_contradicted": 0,
+   "share": 0.0
+  },
+  "parsten": {
+   "n": 14,
+   "found": 6
+  },
+  "rundata_noted": {
+   "n": 73,
+   "found": 9
+  },
+  "per_band": {
+   "A": {
+    "n_sure": 37
+   },
+   "B": {
+    "n_sure": 7
+   },
+   "C": {
+    "n_sure": 2
+   },
+   "utan koordinater": {
+    "n_sure": 0
+   }
+  },
+  "describe": {
+   "groups": 37,
+   "groups_3plus": 3,
+   "stones_in_groups": 79,
+   "persons_on_2plus": 92,
+   "longest_generations": 3,
+   "groups_by_province": {
+    "U": 28,
+    "Sö": 3,
+    "G": 2,
+    "Ög": 1,
+    "Hs": 1,
+    "Sm": 1,
+    "Vg": 1
+   },
+   "largest": [
+    {
+     "stones": [
+      "U 312",
+      "U 313",
+      "U 314",
+      "U 315"
+     ],
+     "n": 4,
+     "names": [
+      "holmdis",
+      "jofurfast",
+      "gunnarr",
+      "farulfr"
+     ],
+     "max_km": 0.3,
+     "provinces": [
+      "U"
+     ]
+    },
+    {
+     "stones": [
+      "U 937",
+      "U 990",
+      "U 991",
+      "U 999"
+     ],
+     "n": 4,
+     "names": [
+      "thegn",
+      "vedr",
+      "gunnarr",
+      "haursi"
+     ],
+     "max_km": 10.9,
+     "provinces": [
+      "U"
+     ]
+    },
+    {
+     "stones": [
+      "U 329",
+      "U 330",
+      "U 332"
+     ],
+     "n": 3,
+     "names": [
+      "inga",
+      "ragnfastr"
+     ],
+     "max_km": 0.7,
+     "provinces": [
+      "U"
+     ]
+    },
+    {
+     "stones": [
+      "U 136",
+      "U 137"
+     ],
+     "n": 2,
+     "names": [
+      "astridr",
+      "eysteinn"
+     ],
+     "max_km": 0.0,
+     "provinces": [
+      "U"
+     ]
+    },
+    {
+     "stones": [
+      "U 644",
+      "U 654"
+     ],
+     "n": 2,
+     "names": [
+      "djarfr",
+      "blesi",
+      "andvettr",
+      "gunnleifr",
+      "karr"
+     ],
+     "max_km": 2.4,
+     "provinces": [
+      "U"
+     ]
+    }
+   ]
+  }
+ }
+}
