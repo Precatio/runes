@@ -74,105 +74,110 @@ def futhark_spans(st):
     return out
 
 
-rows = rl.load_rundata()
-res = {"plan": "analysplaner/2026-11-01-malt-runrad-dubblering.md", "plan_sha": "0d9e7e19"}
+def main():
+    rows = rl.load_rundata()
+    res = {"plan": "analysplaner/2026-11-01-malt-runrad-dubblering.md", "plan_sha": "0d9e7e19"}
 
-# ---- A: futhark rows -------------------------------------------------------------------------------------------------
-A, med = [], Counter()
-for r in rows:
-    st = stretches(r.get("transliteration"))
-    sp = futhark_spans(st)
-    if not sp:
-        continue
-    kind = rl.object_kind(r)
-    if not rl.viking(r):
-        other = sum(len(g) for s in st for g in s) - sum(x[3] for x in sp)
-        med[(r.get("period") or "?")[:1], kind, "annan text" if other >= 6 else "bara raden"] += 1
-        continue
-    si, g0, g1, n = sp[0]
-    s = st[si]
-    rest = sum(len(g) for s_ in st for g in s_) - sum(x[3] for x in sp)
-    A.append({"signum": r["signum"], "kind": kind, "object": r.get("object"), "row_len": n,
-              "before": s[max(0, g0 - 2):g0], "after": s[g1 + 1:g1 + 3], "runes_besides_row": rest,
-              "tandem_any": [x for x, _ in tandems(st)],
-              "translit": (r.get("transliteration") or "")[:300], "normalization": (r.get("normalization") or "")[:300],
-              "translation_en": (r.get("translation_en") or "")[:300]})
-res["A"] = A
-res["A_counts"] = dict(Counter(a["kind"] for a in A))
-res["A_medieval"] = {" | ".join(k): v for k, v in sorted(med.items())}
+    # ---- A: futhark rows -------------------------------------------------------------------------------------------------
+    A, med = [], Counter()
+    for r in rows:
+        st = stretches(r.get("transliteration"))
+        sp = futhark_spans(st)
+        if not sp:
+            continue
+        kind = rl.object_kind(r)
+        if not rl.viking(r):
+            other = sum(len(g) for s in st for g in s) - sum(x[3] for x in sp)
+            med[(r.get("period") or "?")[:1], kind, "annan text" if other >= 6 else "bara raden"] += 1
+            continue
+        si, g0, g1, n = sp[0]
+        s = st[si]
+        rest = sum(len(g) for s_ in st for g in s_) - sum(x[3] for x in sp)
+        A.append({"signum": r["signum"], "kind": kind, "object": r.get("object"), "row_len": n,
+                  "before": s[max(0, g0 - 2):g0], "after": s[g1 + 1:g1 + 3], "runes_besides_row": rest,
+                  "tandem_any": [x for x, _ in tandems(st)],
+                  "translit": (r.get("transliteration") or "")[:300], "normalization": (r.get("normalization") or "")[:300],
+                  "translation_en": (r.get("translation_en") or "")[:300]})
+    res["A"] = A
+    res["A_counts"] = dict(Counter(a["kind"] for a in A))
+    res["A_medieval"] = {" | ".join(k): v for k, v in sorted(med.items())}
 
-# ---- B1: direct repeats in the runic corpus -------------------------------------------------------------------------
-B1, cnt = [], Counter()
-for r in rows:
-    st = stretches(r.get("transliteration"))
-    if sum(len(g) for s in st for g in s) < 10:
-        continue
-    per = "V" if rl.viking(r) else "M" if (r.get("period") or "").startswith("M") else "övr"
-    kind = rl.object_kind(r)
-    cnt[(per, kind, "n")] += 1
-    tz = tandems(st)
-    if tz:
-        cnt[(per, kind, "XX")] += 1
-        if per == "V" and r["signum"] != "DR NOR1988;5":
-            B1.append({"signum": r["signum"], "kind": kind, "X": [x for x, _ in tz], "group": [g for _, g in tz],
-                       "normalization": (r.get("normalization") or "")[:260], "translation_en": (r.get("translation_en") or "")[:200]})
-res["B1_counts"] = {" | ".join(k): v for k, v in sorted(cnt.items())}
-res["B1_viking"] = B1
+    # ---- B1: direct repeats in the runic corpus -------------------------------------------------------------------------
+    B1, cnt = [], Counter()
+    for r in rows:
+        st = stretches(r.get("transliteration"))
+        if sum(len(g) for s in st for g in s) < 10:
+            continue
+        per = "V" if rl.viking(r) else "M" if (r.get("period") or "").startswith("M") else "övr"
+        kind = rl.object_kind(r)
+        cnt[(per, kind, "n")] += 1
+        tz = tandems(st)
+        if tz:
+            cnt[(per, kind, "XX")] += 1
+            if per == "V" and r["signum"] != "DR NOR1988;5":
+                B1.append({"signum": r["signum"], "kind": kind, "X": [x for x, _ in tz], "group": [g for _, g in tz],
+                           "normalization": (r.get("normalization") or "")[:260], "translation_en": (r.get("translation_en") or "")[:200]})
+    res["B1_counts"] = {" | ".join(k): v for k, v in sorted(cnt.items())}
+    res["B1_viking"] = B1
 
-# ---- B2: Edda and sagas ---------------------------------------------------------------------------------------------
-WORD = r"[A-Za-zÀ-ÿĀ-žǫę]+"
-
-
-def edda_works():
-    for work, text in json.load(open(rl.EDDA)).items():          # same boilerplate cut as runlm.edda_tokens
-        i = text.find("prentunar")
-        text = text[i + 9:] if i >= 0 else " ".join(text.split()[60:])
-        yield work, [w.lower() for w in re.findall(WORD, text)]
+    # ---- B2: Edda and sagas ---------------------------------------------------------------------------------------------
+    WORD = r"[A-Za-zÀ-ÿĀ-žǫę]+"
 
 
-def saga_works():
-    for f in sorted(glob.glob(os.path.join(ROOT, "utdata", "varlden", "korpus", "*", "*.txt"))):
-        yield os.path.basename(f), [w.lower() for w in re.findall(WORD, open(f, encoding="utf-8").read())]
+    def edda_works():
+        for work, text in json.load(open(rl.EDDA)).items():          # same boilerplate cut as runlm.edda_tokens
+            i = text.find("prentunar")
+            text = text[i + 9:] if i >= 0 else " ".join(text.split()[60:])
+            yield work, [w.lower() for w in re.findall(WORD, text)]
 
 
-def redup(w):
-    for L in range(len(w) // 2, 1, -1):
-        for i in range(len(w) - 2 * L + 1):
-            if w[i:i + L] == w[i + L:i + 2 * L] and len(set(w[i:i + L])) > 1:
-                return w[i:i + L]
-    return None
+    def saga_works():
+        for f in sorted(glob.glob(os.path.join(ROOT, "utdata", "varlden", "korpus", "*", "*.txt"))):
+            yield os.path.basename(f), [w.lower() for w in re.findall(WORD, open(f, encoding="utf-8").read())]
 
 
-B2 = {}
-for name, works in (("edda", edda_works()), ("sagor", saga_works())):
-    n, ww, rd = 0, [], []
-    for work, toks in works:
-        n += len(toks)
-        for i in range(1, len(toks)):
-            if toks[i] == toks[i - 1] and len(toks[i]) > 1:
-                ww.append({"work": work, "word": toks[i], "context": " ".join(toks[max(0, i - 5):i + 4])})
-        for i, w in enumerate(toks):
-            x = redup(w)
-            if x:
-                rd.append({"work": work, "word": w, "X": x, "context": " ".join(toks[max(0, i - 4):i + 4])})
-    B2[name] = {"words": n, "ww": len(ww), "ww_per_10k": 1e4 * len(ww) / n, "ww_top": Counter(x["word"] for x in ww).most_common(25),
-                "redup": len(rd), "redup_top": Counter(x["word"] for x in rd).most_common(40),
-                "ww_list": ww if name == "edda" else ww[:40], "redup_list": rd if name == "edda" else rd[:60]}
-assert B2["edda"]["words"] == 90852
-res["B2"] = B2
-json.dump(res, open(os.path.join(HERE, "runrad_dubblering.json"), "w"), ensure_ascii=False, indent=1)
+    def redup(w):
+        for L in range(len(w) // 2, 1, -1):
+            for i in range(len(w) - 2 * L + 1):
+                if w[i:i + L] == w[i + L:i + 2 * L] and len(set(w[i:i + L])) > 1:
+                    return w[i:i + L]
+        return None
 
-print("A:", res["A_counts"], "| medeltid:", res["A_medieval"])
-for a in A:
-    print(f"\n{a['signum']} [{a['kind']}, {a['object']}] rad {a['row_len']}, övrigt {a['runes_besides_row']} runor; före {a['before']} efter {a['after']}; XX {a['tandem_any']}")
-    print("   T:", a["translit"][:200]); print("   N:", a["normalization"][:200]); print("   E:", a["translation_en"][:160])
-print("\nB1:", res["B1_counts"])
-for b in B1:
-    print(f"{b['signum']:18} {b['kind']:12} {b['X']} {b['group']} | {b['normalization'][:110]}")
-for k in ("edda", "sagor"):
-    v = B2[k]
-    print(f"\n{k}: {v['words']} ord; w w {v['ww']} ({v['ww_per_10k']:.2f}/10k) {v['ww_top'][:15]}; redup {v['redup']} {v['redup_top'][:30]}")
-for x in B2["edda"]["ww_list"]:
-    print("  EDDA ww:", x["work"][:30], "|", x["context"])
-for x in B2["edda"]["redup_list"]:
-    print("  EDDA redup:", x["work"][:30], "|", x["word"], "|", x["context"])
+
+    B2 = {}
+    for name, works in (("edda", edda_works()), ("sagor", saga_works())):
+        n, ww, rd = 0, [], []
+        for work, toks in works:
+            n += len(toks)
+            for i in range(1, len(toks)):
+                if toks[i] == toks[i - 1] and len(toks[i]) > 1:
+                    ww.append({"work": work, "word": toks[i], "context": " ".join(toks[max(0, i - 5):i + 4])})
+            for i, w in enumerate(toks):
+                x = redup(w)
+                if x:
+                    rd.append({"work": work, "word": w, "X": x, "context": " ".join(toks[max(0, i - 4):i + 4])})
+        B2[name] = {"words": n, "ww": len(ww), "ww_per_10k": 1e4 * len(ww) / n, "ww_top": Counter(x["word"] for x in ww).most_common(25),
+                    "redup": len(rd), "redup_top": Counter(x["word"] for x in rd).most_common(40),
+                    "ww_list": ww if name == "edda" else ww[:40], "redup_list": rd if name == "edda" else rd[:60]}
+    assert B2["edda"]["words"] == 90852
+    res["B2"] = B2
+    json.dump(res, open(os.path.join(HERE, "runrad_dubblering.json"), "w"), ensure_ascii=False, indent=1)
+
+    print("A:", res["A_counts"], "| medeltid:", res["A_medieval"])
+    for a in A:
+        print(f"\n{a['signum']} [{a['kind']}, {a['object']}] rad {a['row_len']}, övrigt {a['runes_besides_row']} runor; före {a['before']} efter {a['after']}; XX {a['tandem_any']}")
+        print("   T:", a["translit"][:200]); print("   N:", a["normalization"][:200]); print("   E:", a["translation_en"][:160])
+    print("\nB1:", res["B1_counts"])
+    for b in B1:
+        print(f"{b['signum']:18} {b['kind']:12} {b['X']} {b['group']} | {b['normalization'][:110]}")
+    for k in ("edda", "sagor"):
+        v = B2[k]
+        print(f"\n{k}: {v['words']} ord; w w {v['ww']} ({v['ww_per_10k']:.2f}/10k) {v['ww_top'][:15]}; redup {v['redup']} {v['redup_top'][:30]}")
+    for x in B2["edda"]["ww_list"]:
+        print("  EDDA ww:", x["work"][:30], "|", x["context"])
+    for x in B2["edda"]["redup_list"]:
+        print("  EDDA redup:", x["work"][:30], "|", x["word"], "|", x["context"])
+
+
+if __name__ == "__main__":
+    main()

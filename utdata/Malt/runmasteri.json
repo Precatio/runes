@@ -1,0 +1,142 @@
+{
+ "plan": "analysplaner/2026-11-01-malt-runmasteri.md",
+ "plan_sha": "8a137566",
+ "malt": {
+  "D1": true,
+  "D2": true,
+  "D3": true,
+  "D4": true,
+  "runes": 152,
+  "kind": "runsten",
+  "D2_source": "utgåvorna (tecknet ttt); Rundata har ?"
+ },
+ "profile_2plus": [
+  {
+   "signum": "DR NOR1988;5",
+   "n": 4,
+   "D1": true,
+   "D2": true,
+   "D3": true,
+   "D4": true,
+   "kind": "runsten"
+  },
+  {
+   "signum": "DR 239",
+   "n": 2,
+   "D1": true,
+   "D2": true,
+   "D3": false,
+   "D4": false,
+   "kind": "runsten"
+  },
+  {
+   "signum": "U 847",
+   "n": 2,
+   "D1": false,
+   "D2": false,
+   "D3": true,
+   "D4": true,
+   "kind": "runsten"
+  }
+ ],
+ "counts": {
+  "D1": 21,
+  "D2": 5,
+  "D3": 6,
+  "D4": 6
+ },
+ "test": {
+  "with_row": [
+   1,
+   21
+  ],
+  "without_row": [
+   15,
+   2698
+  ],
+  "share_with": 0.047619047619047616,
+  "share_without": 0.005559673832468495,
+  "p": 0.11697287524302676
+ },
+ "test_halves": [
+  {
+   "with_row": [
+    0,
+    9
+   ],
+   "without_row": [
+    6,
+    1351
+   ],
+   "share_with": 0.0,
+   "share_without": 0.0044411547002220575,
+   "p": 1.0
+  },
+  {
+   "with_row": [
+    1,
+    12
+   ],
+   "without_row": [
+    9,
+    1347
+   ],
+   "share_with": 0.08333333333333333,
+   "share_without": 0.0066815144766146995,
+   "p": 0.08514413907786865
+  }
+ ],
+ "test_runestones": {
+  "with_row": [
+   1,
+   5
+  ],
+  "without_row": [
+   11,
+   2184
+  ],
+  "share_with": 0.2,
+  "share_without": 0.005036630036630037,
+  "p": 0.027135432699822777
+ },
+ "test_other": {
+  "with_row": [
+   0,
+   16
+  ],
+  "without_row": [
+   4,
+   514
+  ],
+  "share_with": 0.0,
+  "share_without": 0.007782101167315175,
+  "p": 1.0
+ },
+ "holds": false,
+ "blind_key": {
+  "t01": "GR 76",
+  "t02": "Vg 161",
+  "t03": "U Fv1992;161C",
+  "t04": "U 983",
+  "t05": "G 110",
+  "t06": "U 1087",
+  "t07": "U 466",
+  "t08": "U 476",
+  "t09": "U 483",
+  "t10": "DR EM85;371A",
+  "t11": "Sm 2",
+  "t12": "U 1161",
+  "t13": "Sc 14",
+  "t14": "N 208",
+  "t15": "DR 114",
+  "t16": "Vg 114",
+  "t17": "Ög 84",
+  "t18": "Sm 76",
+  "t19": "Sm 125",
+  "t20": "U 522",
+  "t21": "Ög 27",
+  "t22": "Ög 197",
+  "t23": "U 327",
+  "t24": "DR 239"
+ }
+}
