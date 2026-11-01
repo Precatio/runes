@@ -1,0 +1,17 @@
+[
+  {
+    "from": "pm_signatur",
+    "to": "stungen_y",
+    "strength": 0.985
+  },
+  {
+    "from": "monoftong",
+    "to": "r_for_R",
+    "strength": 1
+  },
+  {
+    "from": "r_for_R",
+    "to": "prep_at",
+    "strength": 1
+  }
+]

@@ -1,0 +1,753 @@
+{
+  "plan": "analysplaner/2026-11-01-upptacktsmotorn-v4-natverk.md",
+  "n_stones": 1739,
+  "A": {
+    "n": 846,
+    "dropped": [],
+    "edges": {
+      "bakgrund": 3,
+      "familj": 74,
+      "kandidat": 3
+    },
+    "n_cand": 3,
+    "res": [
+      {
+        "a": "pm_signatur",
+        "b": "stungen_y",
+        "strength": 0.985,
+        "n_G": 5,
+        "beta_find": -18.6142306575949,
+        "beta_test": -16.6845490229817,
+        "n_test": 646,
+        "p1": 0.497705650194566,
+        "holm": 0.995240807427463,
+        "utslag": "höll inte"
+      },
+      {
+        "a": "monoftong",
+        "b": "r_for_R",
+        "strength": 1,
+        "n_G": 1,
+        "beta_find": 0.116998169618897,
+        "beta_test": 0.225373707965566,
+        "n_test": 374,
+        "p1": 0.262193738266155,
+        "holm": 0.786581214798465,
+        "utslag": "höll inte"
+      },
+      {
+        "a": "r_for_R",
+        "b": "prep_at",
+        "strength": 1,
+        "n_G": 2,
+        "beta_find": 1.00074259530599,
+        "beta_test": 40.8901340358934,
+        "n_test": 404,
+        "p1": 0.497620403713732,
+        "holm": 0.995240807427463,
+        "utslag": "höll inte"
+      }
+    ]
+  },
+  "swapped": {
+    "n": 893,
+    "edges": {
+      "bakgrund": 1,
+      "familj": 72,
+      "kandidat": 3
+    },
+    "n_cand": 3,
+    "res": [
+      {
+        "a": "monoftong",
+        "b": "au_monoftong",
+        "strength": 0.985,
+        "n_G": 1,
+        "beta_find": 0.982348490621264,
+        "beta_test": -0.00829001113128082,
+        "n_test": 243,
+        "p1": 0.510077985116483,
+        "holm": 0.609435976257264,
+        "utslag": "höll inte"
+      },
+      {
+        "a": "monoftong",
+        "b": "r_for_R",
+        "strength": 1,
+        "n_G": 2,
+        "beta_find": 0.304194327806148,
+        "beta_test": 0.162337906152675,
+        "n_test": 390,
+        "p1": 0.304717988128632,
+        "holm": 0.609435976257264,
+        "utslag": "höll inte"
+      },
+      {
+        "a": "r_for_R",
+        "b": "prep_at",
+        "strength": 1,
+        "n_G": 2,
+        "beta_find": 40.8901340358934,
+        "beta_test": 1.00074259530599,
+        "n_test": 416,
+        "p1": 0.146875370509073,
+        "holm": 0.44062611152722,
+        "utslag": "höll inte"
+      }
+    ]
+  },
+  "known": [
+    {
+      "a": "kvinna_ensam",
+      "b": "rel_make",
+      "status": "ingen direkt kant",
+      "via": ""
+    },
+    {
+      "a": "flera_resare",
+      "b": "rel_barn",
+      "status": "ingen direkt kant",
+      "via": ""
+    },
+    {
+      "a": "kvinna_resare",
+      "b": "rel_make",
+      "status": "ingen direkt kant",
+      "via": ""
+    },
+    {
+      "a": "flera_resare",
+      "b": "rel_foralder",
+      "status": "ingen direkt kant",
+      "via": ""
+    },
+    {
+      "a": "kvinna_resare",
+      "b": "rel_barn",
+      "status": "ingen direkt kant",
+      "via": ""
+    },
+    {
+      "a": "kvinna_ensam",
+      "b": "rel_barn",
+      "status": "ingen direkt kant",
+      "via": ""
+    },
+    {
+      "a": "o_runa",
+      "b": "rel_barn",
+      "status": "ingen direkt kant",
+      "via": "o_runa – ord_sun – rel_barn"
+    },
+    {
+      "a": "msg_dod_uppgift",
+      "b": "rel_foralder",
+      "status": "ingen direkt kant",
+      "via": ""
+    },
+    {
+      "a": "kvinna_resare",
+      "b": "rel_foralder",
+      "status": "ingen direkt kant",
+      "via": ""
+    },
+    {
+      "a": "msg_resa",
+      "b": "flera_resare",
+      "status": "ingen direkt kant",
+      "via": ""
+    },
+    {
+      "a": "kvinna_ensam",
+      "b": "rel_foralder",
+      "status": "ingen direkt kant",
+      "via": ""
+    },
+    {
+      "a": "pm_kors",
+      "b": "skilj_apostrof",
+      "status": "ingen direkt kant",
+      "via": ""
+    },
+    {
+      "a": "msg_dod_borta",
+      "b": "rel_foralder",
+      "status": "ingen direkt kant",
+      "via": ""
+    },
+    {
+      "a": "cat_fard",
+      "b": "flera_resare",
+      "status": "ingen direkt kant",
+      "via": ""
+    },
+    {
+      "a": "msg_resa",
+      "b": "rel_foralder",
+      "status": "ingen direkt kant",
+      "via": ""
+    }
+  ],
+  "edges_A": [
+    {
+      "from": "cat_sjalvminne",
+      "to": "ord_let",
+      "strength": 0.89,
+      "key": "cat_sjalvminne~ord_let",
+      "kind": "familj"
+    },
+    {
+      "from": "cat_bro_vag",
+      "to": "ord_bro",
+      "strength": 1,
+      "key": "cat_bro_vag~ord_bro",
+      "kind": "familj"
+    },
+    {
+      "from": "cat_kristen",
+      "to": "pm_bon",
+      "strength": 0.88,
+      "key": "cat_kristen~pm_bon",
+      "kind": "familj"
+    },
+    {
+      "from": "cat_kristen",
+      "to": "ord_hialpi",
+      "strength": 0.985,
+      "key": "cat_kristen~ord_hialpi",
+      "kind": "familj"
+    },
+    {
+      "from": "cat_fard",
+      "to": "msg_resa",
+      "strength": 1,
+      "key": "cat_fard~msg_resa",
+      "kind": "familj"
+    },
+    {
+      "from": "cat_fard",
+      "to": "ord_austr",
+      "strength": 0.995,
+      "key": "cat_fard~ord_austr",
+      "kind": "familj"
+    },
+    {
+      "from": "cat_fard",
+      "to": "ord_með",
+      "strength": 0.93,
+      "key": "cat_fard~ord_með",
+      "kind": "familj"
+    },
+    {
+      "from": "pm_bon",
+      "to": "pm_sjal",
+      "strength": 1,
+      "key": "pm_bon~pm_sjal",
+      "kind": "familj"
+    },
+    {
+      "from": "pm_bon",
+      "to": "ord_hialpi",
+      "strength": 0.865,
+      "key": "ord_hialpi~pm_bon",
+      "kind": "familj"
+    },
+    {
+      "from": "pm_sjal",
+      "to": "ord_and",
+      "strength": 0.995,
+      "key": "ord_and~pm_sjal",
+      "kind": "familj"
+    },
+    {
+      "from": "pm_sjal",
+      "to": "ord_salu",
+      "strength": 0.88,
+      "key": "ord_salu~pm_sjal",
+      "kind": "familj"
+    },
+    {
+      "from": "pm_stungna",
+      "to": "stungen_e",
+      "strength": 1,
+      "key": "pm_stungna~stungen_e",
+      "kind": "familj"
+    },
+    {
+      "from": "pm_stungna",
+      "to": "stungen_y",
+      "strength": 1,
+      "key": "pm_stungna~stungen_y",
+      "kind": "familj"
+    },
+    {
+      "from": "pm_stungna",
+      "to": "stungen_g",
+      "strength": 1,
+      "key": "pm_stungna~stungen_g",
+      "kind": "familj"
+    },
+    {
+      "from": "pm_signatur",
+      "to": "has_carver",
+      "strength": 0.99,
+      "key": "has_carver~pm_signatur",
+      "kind": "familj"
+    },
+    {
+      "from": "pm_signatur",
+      "to": "stungen_y",
+      "strength": 0.985,
+      "key": "pm_signatur~stungen_y",
+      "kind": "kandidat"
+    },
+    {
+      "from": "pm_signatur",
+      "to": "ord_risti",
+      "strength": 1,
+      "key": "ord_risti~pm_signatur",
+      "kind": "familj"
+    },
+    {
+      "from": "pm_signatur",
+      "to": "ord_runaR",
+      "strength": 1,
+      "key": "ord_runaR~pm_signatur",
+      "kind": "familj"
+    },
+    {
+      "from": "pm_signatur",
+      "to": "ord_hiogg",
+      "strength": 1,
+      "key": "ord_hiogg~pm_signatur",
+      "kind": "familj"
+    },
+    {
+      "from": "has_carver",
+      "to": "landskap",
+      "strength": 1,
+      "key": "has_carver~landskap",
+      "kind": "bakgrund"
+    },
+    {
+      "from": "monoftong",
+      "to": "r_for_R",
+      "strength": 1,
+      "key": "monoftong~r_for_R",
+      "kind": "kandidat"
+    },
+    {
+      "from": "au_monoftong",
+      "to": "flera_resare",
+      "strength": 0.975,
+      "key": "au_monoftong~flera_resare",
+      "kind": "familj"
+    },
+    {
+      "from": "o_runa",
+      "to": "ord_sun",
+      "strength": 0.935,
+      "key": "o_runa~ord_sun",
+      "kind": "familj"
+    },
+    {
+      "from": "o_runa",
+      "to": "ord_broður",
+      "strength": 0.98,
+      "key": "o_runa~ord_broður",
+      "kind": "familj"
+    },
+    {
+      "from": "r_for_R",
+      "to": "prep_at",
+      "strength": 1,
+      "key": "prep_at~r_for_R",
+      "kind": "kandidat"
+    },
+    {
+      "from": "nasal_utelamnad",
+      "to": "ord_bonda",
+      "strength": 1,
+      "key": "nasal_utelamnad~ord_bonda",
+      "kind": "familj"
+    },
+    {
+      "from": "nasal_utelamnad",
+      "to": "ord_kumbl",
+      "strength": 0.98,
+      "key": "nasal_utelamnad~ord_kumbl",
+      "kind": "familj"
+    },
+    {
+      "from": "prep_at",
+      "to": "ord_at",
+      "strength": 1,
+      "key": "ord_at~prep_at",
+      "kind": "familj"
+    },
+    {
+      "from": "skilj_punkt",
+      "to": "skilj_kryss",
+      "strength": 0.975,
+      "key": "skilj_kryss~skilj_punkt",
+      "kind": "familj"
+    },
+    {
+      "from": "skilj_punkt",
+      "to": "skilj_kolon",
+      "strength": 1,
+      "key": "skilj_kolon~skilj_punkt",
+      "kind": "familj"
+    },
+    {
+      "from": "skilj_punkt",
+      "to": "skilj_blandat",
+      "strength": 0.975,
+      "key": "skilj_blandat~skilj_punkt",
+      "kind": "familj"
+    },
+    {
+      "from": "skilj_kryss",
+      "to": "skilj_kolon",
+      "strength": 1,
+      "key": "skilj_kolon~skilj_kryss",
+      "kind": "familj"
+    },
+    {
+      "from": "skilj_kolon",
+      "to": "skilj_apostrof",
+      "strength": 1,
+      "key": "skilj_apostrof~skilj_kolon",
+      "kind": "familj"
+    },
+    {
+      "from": "skilj_kolon",
+      "to": "skilj_plus",
+      "strength": 1,
+      "key": "skilj_kolon~skilj_plus",
+      "kind": "familj"
+    },
+    {
+      "from": "skilj_kolon",
+      "to": "skilj_blandat",
+      "strength": 1,
+      "key": "skilj_blandat~skilj_kolon",
+      "kind": "familj"
+    },
+    {
+      "from": "msg_dod_uppgift",
+      "to": "msg_dod_borta",
+      "strength": 1,
+      "key": "msg_dod_borta~msg_dod_uppgift",
+      "kind": "familj"
+    },
+    {
+      "from": "msg_dod_borta",
+      "to": "msg_resa",
+      "strength": 0.93,
+      "key": "msg_dod_borta~msg_resa",
+      "kind": "familj"
+    },
+    {
+      "from": "msg_berom",
+      "to": "god",
+      "strength": 1,
+      "key": "god~msg_berom",
+      "kind": "familj"
+    },
+    {
+      "from": "kvinna_resare",
+      "to": "kvinna_ensam",
+      "strength": 1,
+      "key": "kvinna_ensam~kvinna_resare",
+      "kind": "familj"
+    },
+    {
+      "from": "kvinna_resare",
+      "to": "flera_resare",
+      "strength": 0.905,
+      "key": "flera_resare~kvinna_resare",
+      "kind": "familj"
+    },
+    {
+      "from": "kvinna_ensam",
+      "to": "flera_resare",
+      "strength": 0.98,
+      "key": "flera_resare~kvinna_ensam",
+      "kind": "familj"
+    },
+    {
+      "from": "flera_resare",
+      "to": "ord_letu",
+      "strength": 1,
+      "key": "flera_resare~ord_letu",
+      "kind": "familj"
+    },
+    {
+      "from": "flera_resare",
+      "to": "ord_ræistu",
+      "strength": 0.97,
+      "key": "flera_resare~ord_ræistu",
+      "kind": "familj"
+    },
+    {
+      "from": "rel_barn",
+      "to": "rel_foralder",
+      "strength": 1,
+      "key": "rel_barn~rel_foralder",
+      "kind": "familj"
+    },
+    {
+      "from": "rel_barn",
+      "to": "ord_sun",
+      "strength": 1,
+      "key": "ord_sun~rel_barn",
+      "kind": "familj"
+    },
+    {
+      "from": "rel_foralder",
+      "to": "rel_syskon",
+      "strength": 0.95,
+      "key": "rel_foralder~rel_syskon",
+      "kind": "familj"
+    },
+    {
+      "from": "rel_foralder",
+      "to": "ord_faður",
+      "strength": 1,
+      "key": "ord_faður~rel_foralder",
+      "kind": "familj"
+    },
+    {
+      "from": "rel_syskon",
+      "to": "ord_broður",
+      "strength": 1,
+      "key": "ord_broður~rel_syskon",
+      "kind": "familj"
+    },
+    {
+      "from": "rel_make",
+      "to": "ord_bonda",
+      "strength": 0.87,
+      "key": "ord_bonda~rel_make",
+      "kind": "familj"
+    },
+    {
+      "from": "rel_make",
+      "to": "ord_boanda",
+      "strength": 1,
+      "key": "ord_boanda~rel_make",
+      "kind": "familj"
+    },
+    {
+      "from": "drengr",
+      "to": "ord_dræng",
+      "strength": 1,
+      "key": "drengr~ord_dræng",
+      "kind": "familj"
+    },
+    {
+      "from": "god",
+      "to": "ord_goðan",
+      "strength": 1,
+      "key": "god~ord_goðan",
+      "kind": "familj"
+    },
+    {
+      "from": "nara_gravfalt",
+      "to": "nara_hog",
+      "strength": 0.905,
+      "key": "nara_gravfalt~nara_hog",
+      "kind": "familj"
+    },
+    {
+      "from": "nara_gravfalt",
+      "to": "nara_vag",
+      "strength": 0.985,
+      "key": "nara_gravfalt~nara_vag",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_ræisa",
+      "to": "ord_letu",
+      "strength": 0.995,
+      "key": "ord_letu~ord_ræisa",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_ræisa",
+      "to": "ord_let",
+      "strength": 1,
+      "key": "ord_let~ord_ræisa",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_ræisa",
+      "to": "ord_retta",
+      "strength": 1,
+      "key": "ord_ræisa~ord_retta",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_ræisa",
+      "to": "ord_haggva",
+      "strength": 1,
+      "key": "ord_haggva~ord_ræisa",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_letu",
+      "to": "ord_let",
+      "strength": 1,
+      "key": "ord_let~ord_letu",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_letu",
+      "to": "ord_ræistu",
+      "strength": 0.88,
+      "key": "ord_letu~ord_ræistu",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_let",
+      "to": "ord_retta",
+      "strength": 0.915,
+      "key": "ord_let~ord_retta",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_þenna",
+      "to": "ord_þennsa",
+      "strength": 1,
+      "key": "ord_þenna~ord_þennsa",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_þenna",
+      "to": "ord_þannsi",
+      "strength": 0.865,
+      "key": "ord_þannsi~ord_þenna",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_sun",
+      "to": "ord_sina",
+      "strength": 0.94,
+      "key": "ord_sina~ord_sun",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_broður",
+      "to": "ord_brøðr",
+      "strength": 0.975,
+      "key": "ord_brøðr~ord_broður",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_þæiR",
+      "to": "ord_brøðr",
+      "strength": 0.945,
+      "key": "ord_brøðr~ord_þæiR",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_hann",
+      "to": "ord_vaR",
+      "strength": 0.925,
+      "key": "ord_hann~ord_vaR",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_sina",
+      "to": "ord_brøðr",
+      "strength": 0.925,
+      "key": "ord_brøðr~ord_sina",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_risti",
+      "to": "ord_hiogg",
+      "strength": 1,
+      "key": "ord_hiogg~ord_risti",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_þannsi",
+      "to": "landskap",
+      "strength": 0.995,
+      "key": "landskap~ord_þannsi",
+      "kind": "bakgrund"
+    },
+    {
+      "from": "ord_bonda",
+      "to": "ord_boanda",
+      "strength": 0.97,
+      "key": "ord_boanda~ord_bonda",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_stæina",
+      "to": "ord_þessa",
+      "strength": 0.97,
+      "key": "ord_stæina~ord_þessa",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_mærki",
+      "to": "ord_gæra",
+      "strength": 0.93,
+      "key": "ord_gæra~ord_mærki",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_vaR",
+      "to": "ord_með",
+      "strength": 0.865,
+      "key": "ord_með~ord_vaR",
+      "kind": "familj"
+    },
+    {
+      "from": "ord_satti",
+      "to": "landskap",
+      "strength": 0.905,
+      "key": "landskap~ord_satti",
+      "kind": "bakgrund"
+    },
+    {
+      "from": "ord_dauðr",
+      "to": "ord_varð",
+      "strength": 0.875,
+      "key": "ord_dauðr~ord_varð",
+      "kind": "familj"
+    },
+    {
+      "from": "mat_granit",
+      "to": "mat_sandsten",
+      "strength": 1,
+      "key": "mat_granit~mat_sandsten",
+      "kind": "familj"
+    },
+    {
+      "from": "mat_granit",
+      "to": "mat_kalksten",
+      "strength": 1,
+      "key": "mat_granit~mat_kalksten",
+      "kind": "familj"
+    },
+    {
+      "from": "mat_granit",
+      "to": "mat_gnejs",
+      "strength": 1,
+      "key": "mat_gnejs~mat_granit",
+      "kind": "familj"
+    },
+    {
+      "from": "nara_gammalt_namn",
+      "to": "nara_kultnamn",
+      "strength": 0.935,
+      "key": "nara_gammalt_namn~nara_kultnamn",
+      "kind": "familj"
+    }
+  ]
+}
