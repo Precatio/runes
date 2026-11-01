@@ -1,0 +1,101 @@
+[
+  {
+    "y": "pm_kors",
+    "a": "has_carver",
+    "b": "skilj_punkt",
+    "n": 786,
+    "min_cell": 57,
+    "beta": -1.93028195966302,
+    "p": 8.36568481405565e-07,
+    "key": "pm_kors has_carver×skilj_punkt",
+    "tools": "pre"
+  },
+  {
+    "y": "has_carver",
+    "a": "skilj_punkt",
+    "b": "pm_kors",
+    "n": 786,
+    "min_cell": 84,
+    "beta": -1.60290462255768,
+    "p": 0.000192307718868853,
+    "key": "has_carver pm_kors×skilj_punkt",
+    "tools": "hstats+pre"
+  },
+  {
+    "y": "ord_broður",
+    "a": "hog_sten",
+    "b": "mat_granit",
+    "n": 413,
+    "min_cell": 60,
+    "beta": 2.1356570015024,
+    "p": 0.00186321292232459,
+    "key": "ord_broður hog_sten×mat_granit",
+    "tools": "hstats"
+  },
+  {
+    "y": "rel_syskon",
+    "a": "stungen_y",
+    "b": "hog_sten",
+    "n": 373,
+    "min_cell": 37,
+    "beta": 2.28276411107022,
+    "p": 0.00219212881652571,
+    "key": "rel_syskon hog_sten×stungen_y",
+    "tools": "hstats"
+  },
+  {
+    "y": "ord_ræisa",
+    "a": "skilj_kryss",
+    "b": "mat_gnejs",
+    "n": 561,
+    "min_cell": 15,
+    "beta": -1.99072905193193,
+    "p": 0.00446763476858914,
+    "key": "ord_ræisa mat_gnejs×skilj_kryss",
+    "tools": "pre"
+  },
+  {
+    "y": "skilj_punkt",
+    "a": "mat_gnejs",
+    "b": "nara_vatten",
+    "n": 305,
+    "min_cell": 15,
+    "beta": -2.43827846098413,
+    "p": 0.00483717496397538,
+    "key": "skilj_punkt mat_gnejs×nara_vatten",
+    "tools": "hstats+pre"
+  },
+  {
+    "y": "mat_gnejs",
+    "a": "skilj_punkt",
+    "b": "nara_vatten",
+    "n": 305,
+    "min_cell": 15,
+    "beta": -2.52418900158979,
+    "p": 0.00506190543835733,
+    "key": "mat_gnejs nara_vatten×skilj_punkt",
+    "tools": "hstats"
+  },
+  {
+    "y": "ord_þennsa",
+    "a": "skilj_kolon",
+    "b": "mat_granit",
+    "n": 561,
+    "min_cell": 63,
+    "beta": 1.96490856371673,
+    "p": 0.00519357357314761,
+    "key": "ord_þennsa mat_granit×skilj_kolon",
+    "tools": "hstats"
+  },
+  {
+    "y": "mat_granit",
+    "a": "nara_gammalt_namn",
+    "b": "pm_bon",
+    "n": 260,
+    "min_cell": 18,
+    "beta": -2.49791765190472,
+    "p": 0.00694282555065856,
+    "key": "mat_granit nara_gammalt_namn×pm_bon",
+    "tools": "pre"
+  }
+]
