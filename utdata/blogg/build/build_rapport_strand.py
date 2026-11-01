@@ -12,7 +12,7 @@ import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 sys.path.insert(0, ROOT)
-from src import blog_labels  # noqa: E402
+from src import blog_figures, blog_labels  # noqa: E402
 
 APP_VERSION = json.load(open(os.path.join(ROOT, "web", "package.json")))["version"]
 assert APP_VERSION == "3.0.0"
@@ -26,6 +26,8 @@ TL_EN = ("the analysis plan was locked 2026-10-23; the addendum for moved stones
 SD = os.path.join(ROOT, "utdata", "strand")
 R = json.load(open(os.path.join(SD, "resultat.json"), encoding="utf-8"))
 TR = json.load(open(os.path.join(SD, "trappan.json"), encoding="utf-8"))
+IL = json.load(open(os.path.join(SD, "illustration.json"), encoding="utf-8"))  # kartorna ur 06_illustration.R
+assert (IL["n_stones"], IL["n_random"], IL["median_stones_m"], IL["median_random_m"], IL["n_overview"]) == (40, 100, 214, 397, 891)
 SHA = {k: open(os.path.join(ROOT, "analysplaner", f"{k}.sha256")).read().split()[0][:16]
        for k in ("2026-10-23-strand-och-gravfalt", "2026-10-31-strand-tillagg", "2026-11-01-strand-trappan")}
 assert SHA["2026-10-23-strand-och-gravfalt"] == R["plan_sha256"][:16] == "4ddb7d6cecb470a1"
@@ -146,6 +148,19 @@ def chart(sv):
     return "\n".join(rows)
 
 
+def figure(name, lang, caption):
+    """En karta ur 06_illustration.R som bild i inlägget (blog_figures.freeze) med bildtexten under."""
+    with open(os.path.join(SD, f"{name}_{lang}.png"), "rb") as fh:
+        url = blog_figures.freeze(fh.read())
+    return f"![{caption.split('.')[0]}]({url})\n{caption}"
+
+
+FIG1_SV = figure("karta_oversikt", "sv", "Figur 1. Mälardalen år 1050 och i dag enligt SGU:s modell. Ljusblått är vatten då men land i dag. Rutan visar området i figur 2.")
+FIG1_EN = figure("karta_oversikt", "en", "Figure 1. The Lake Mälaren region in AD 1050 and today in SGU's model. Light blue is water then but land today. The box shows the area of figure 2.")
+FIG2_SV = figure("karta_detalj", "sv", f"Figur 2. Vad som mättes, kring Vassunda, Håtuna och Haga i Uppland: avståndet från varje sten (rött) och slumppunkt (grått) till närmaste vatten år 1050. Median här: stenarna {IL['median_stones_m']} meter, punkterna {IL['median_random_m']}.")
+FIG2_EN = figure("karta_detalj", "en", f"Figure 2. What was measured, around Vassunda, Håtuna and Haga in Uppland: the distance from each stone (red) and random point (grey) to the nearest water of AD 1050. Median here: stones {IL['median_stones_m']} metres, points {IL['median_random_m']}.")
+
+
 SLUG = "runstenarna-vid-sin-tids-vatten"
 title = "Runstenarna restes vid sin tids vatten – 64 procent inom 500 meter från vattnet år 1050, mot 46 procent av marken runt dem"
 title_en = "The runestones were raised by the water of their time – 64 per cent within 500 metres of the water of AD 1050, against 46 per cent of the land around them"
@@ -168,7 +183,7 @@ body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion
 
 **Bakgrund och syfte.** Var runstenarna restes har diskuterats länge: vid gravfält, vid vägar och broar, vid gårdar och gränser. Vattnet är svårare att mäta, eftersom landet har höjt sig sedan vikingatiden och dagens strand inte är stenarnas. Frågan här är om stenarna restes närmare sin egen tids vatten än marken runt omkring, och om det sambandet finns kvar när närheten till gravfälten hålls lika.
 **Material.** {m(PO['n'])} vikingatida runstenar som står kvar på sin plats, i Uppland, Södermanland, Östergötland, Småland, Västergötland och på Öland, och {m(PO['n_random'])} slumpvisa punkter på land inom fem kilometer från stenarna. Vattnet år 1050 enligt Sveriges geologiska undersöknings (SGU) strandförskjutningsmodell, gravfälten ur Riksantikvarieämbetets kulturmiljöregister.
-**Metod.** Förregistrerad studie. Avståndet till närmaste vatten jämförs mellan stenar och punkter med Wilcoxons rangsummetest och AUC, sannolikheten att en sten står närmare än en punkt. Intern replikering i två halvor, sju känslighetsprov i planen, bland dem en oberoende höjdmodell, och nio känslighetsanalyser enligt en låst tilläggsplan.
+**Metod.** Förregistrerad studie. Avståndet till närmaste vatten jämförs mellan stenar och punkter med Wilcoxons rangsummetest och AUC, sannolikheten att en sten står närmare än en punkt. Intern replikering i två halvor, sju känslighetsprov i planen och nio känslighetsanalyser enligt en låst tilläggsplan.
 **Resultat.** {pc(H1['within_500_stones'])} procent av stenarna står inom 500 meter från vattnet år 1050, mot {pc(H1['within_500_random'])} procent av punkterna; medianavståndet är {H1['median_stones_m']} mot {H1['median_random_m']} meter, AUC {num(H1['auc'])}, {pfmt(H1['p'])}. Det håller i båda halvorna, i fem av sex landskap, för andra årtal mellan 550 och 1550, med en oberoende höjdmodell och i alla känslighetsanalyser, också jämfört med marken i samma socken. Gravfälten drar starkare: {pc(H3['within_500_stones'])} mot {pc(H3['within_500_random'])} procent inom 500 meter, AUC {num(H3['auc'])}. Båda sambanden finns kvar när det andra hålls lika. Dåtidens vatten stämmer något bättre med stenarna än dagens, men skillnaden är liten.
 **Slutsats.** De som reste runstenarna valde platser nära vattnet, och ännu oftare nära gravfälten, inom bygder som redan låg vid vatten. Den största svagheten är att modellen för vattnet år 1050 är grov: {PO['stones_in_water_1050']} av stenarna hamnar i modellens vatten.
 
@@ -176,7 +191,7 @@ body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion
 
 Gunnar Ekholm (1950) frågade var runstenarna restes. Torun Zachrisson (1998) har satt dem i samband med gård, gräns och gravfält, Lydia Klos (2009) har hävdat att de flesta restes vid gravfält, och Shane McLeod (2014) har invänt att det överbetonar gravfälten på bekostnad av andra platser, som vägarna. Brostenarna, som berättar om broar och vägbyggen över vatten och sank mark, visar att vattnet hörde till stenarnas sammanhang.
 
-Att mäta stenarnas närhet till vatten är svårare än det verkar. Landet har höjt sig sedan vikingatiden, i Mälardalen med omkring fem meter, så en sten som stod vid en vik kan i dag stå på torr mark, och en sten vid dagens strand kan ha stått långt från vattnet. SGU:s strandförskjutningsmodell (SGU 2022, efter Påsse & Daniels 2015) ger en öppen modell över hela landet för var vattnet låg vid olika tider.
+Att mäta närheten till vatten är svårt. Landet har höjt sig sedan vikingatiden, i Mälardalen med omkring fem meter, så en sten som stod vid en vik kan i dag stå på torr mark, och en sten vid dagens strand kan ha stått långt från vattnet. SGU:s strandförskjutningsmodell (SGU 2022, efter Påsse & Daniels 2015) ger en öppen modell över hela landet för var vattnet låg vid olika tider.
 
 Vi känner inte till någon studie som har mätt avståndet till vattnet på stenarnas egen tid för hela det svenska materialet, med en modell för strandförskjutningen, bara stenar som står kvar och en jämförelse med marken i samma bygd. Syftet här är att göra det och att pröva om sambandet med vattnet finns kvar när närheten till gravfälten hålls lika.
 
@@ -199,13 +214,17 @@ Två tillägg låstes senare, båda innan de räknades. Den 31 oktober (SHA-256 
 - **Dateringen** efter stenens ornamentikstil (Gräslund 2006): {PO['n_dated']} av stenarna.
 - **Halvorna** är projektets fasta indelning socken för socken: {PO['halves']['A']} och {PO['halves']['B']} stenar.
 
+{FIG1_SV}
+
 ## 4. Metod
 
-**4.1 Måttet och jämförelsen.** För varje sten och varje punkt räknas avståndet till närmaste vatten år 1050, till dagens vatten och till närmaste gravfält; en punkt i vattnet får avståndet noll. Jämförelsen är en nollmodell: för varje landskap dras tio slumpvisa punkter per sten, likformigt inom fem kilometer från landskapets stenar, och bara punkter som är land både år 1050 och år 1949 behålls. Punkterna ligger alltså i de bygder där stenar restes, så provet gäller var i bygden stenen står, inte var bygderna ligger. Stenarna och punkterna jämförs med Wilcoxons rangsummetest (Wilcoxon 1945; Mann & Whitney 1947), ensidigt. Effekten anges som medianerna, andelen inom 500 meter och AUC, sannolikheten att en slumpvis vald sten står närmare än en slumpvis vald punkt (0,5 betyder ingen skillnad).
+**4.1 Måttet och jämförelsen.** För varje sten och varje punkt räknas avståndet till närmaste vatten år 1050, till dagens vatten och till närmaste gravfält; en punkt i vattnet får avståndet noll. Jämförelsen är en nollmodell: för varje landskap dras tio slumpvisa punkter per sten, likformigt inom fem kilometer från landskapets stenar, och bara punkter som är land både år 1050 och år 1949 behålls. Punkterna ligger alltså i de bygder där stenar restes, så provet gäller var i bygden stenen står, inte var bygderna ligger. Stenarna och punkterna jämförs med Wilcoxons rangsummetest (Wilcoxon 1945; Mann & Whitney 1947), ensidigt. Effekten anges som medianerna, andelen inom 500 meter och AUC, sannolikheten att en slumpvis vald sten står närmare än en slumpvis vald punkt (0,5 betyder ingen skillnad). Figur 2 visar mätningen i en bygd.
+
+{FIG2_SV}
 
 **4.2 Korrigering och replikering.** Varje hypotes prövas i var halva för sig. Landskapen prövas var för sig med Benjamini–Hochberg-korrigering (Benjamini & Hochberg 1995) över de sex, och de sekundära proven likaså över de fem. Skillnaden mellan dåtidens och dagens vatten (H2) får ett 95 %-intervall ur 2 000 bootstrapurval där stenarna dras plats för plats.
 
-**4.3 Känslighetsanalyserna.** Planens sju prov (andra årtal, bara havet, platser, utan stenarna i modellens vatten, en oberoende höjdmodell, andra radier för punkterna och de sekundära proven), tilläggets prov och tilläggsplanens nio steg står med sina resultat i 5.2 och 5.3. Socknen som slumpeffekt är en logistisk regression (Bates m.fl. 2015) där punkterna får den närmaste stenens socken. När stenar tas bort tas också de punkter bort som hör till dem. Ett steg håller när AUC är över 0,5 och p under 0,05; utan ett landskap i taget krävs signifikans bara där minst två tredjedelar av stenarna är kvar.
+**4.3 Känslighetsanalyserna.** Planens sju prov, tilläggets prov och tilläggsplanens nio steg står med sina resultat i 5.2 och 5.3. Socknen som slumpeffekt är en logistisk regression (Bates m.fl. 2015) där punkterna får den närmaste stenens socken. När stenar tas bort tas också de punkter bort som hör till dem. Ett steg håller när AUC är över 0,5 och p under 0,05; utan ett landskap i taget krävs signifikans bara där minst två tredjedelar av stenarna är kvar.
 
 **4.4 Avvikelser från planen.** Statistiken kördes åtta dagar efter att avstånden räknades, efter tillägget för flyttade stenar; planens prov är oförändrade. De {m(PO['distances_at_tile_margin'])} avstånd som nådde kanten av beräkningsrutorna, nästan alla för bara havet långt inne i landet, räknades om på ett rutnät med 100 meters celler över hela landskapet; planen anger ingen cellstorlek. Känslighetsanalyserna i tilläggsplanen lades till efter att planens resultat var kända (se 2). I övrigt inga.
 
@@ -231,7 +250,7 @@ Dagens vatten (H2): mot vattnet år 1949 står {pc(NOW['within_500_stones'])} pr
 
 Vatten och gravfält samtidigt, i en logistisk regression med landskapet konstant: när avståndet till vattnet halveras blir oddsen att platsen har en runsten {num(S['S1a']['or'], 2)} gånger så stora (95 %-intervall {num(S['S1a']['lo'], 2)}–{num(S['S1a']['hi'], 2)}), med avståndet till gravfälten lika; för gravfälten är oddskvoten {num(S['S1b']['or'], 2)} ({num(S['S1b']['lo'], 2)}–{num(S['S1b']['hi'], 2)}). Båda håller i båda halvorna och efter korrigering. I klartext: vattnet är inte bara ett tecken på att gravfälten ligger där, och tvärtom; gravfälten väger ungefär dubbelt så tungt.
 
-De övriga sekundära proven håller inte. Andelen stenar inom en kilometer från vattnet är densamma för tidiga och sena stenar ({pc(S['S2']['early'])} procent båda). Stenar med kristna markörer står inte närmare vatten än andra ({pfmt(S['S3']['p'])}). Bro- och vägstenarna står något närmare ({S['S4']['median_bridge_m']} mot {S['S4']['median_other_m']} meter i median), men inte säkert ({pfmt(S['S4']['p'])}, q = {num(S['S4']['q_bh'], 2)}).
+De övriga sekundära proven håller inte: andelen inom en kilometer från vattnet är densamma för tidiga och sena stenar ({pc(S['S2']['early'])} procent), kristna markörer gör ingen skillnad ({pfmt(S['S3']['p'])}), och bro- och vägstenarna står något närmare ({S['S4']['median_bridge_m']} mot {S['S4']['median_other_m']} meter i median) men inte säkert ({pfmt(S['S4']['p'])}, q = {num(S['S4']['q_bh'], 2)}).
 
 **5.3 Känslighetsanalyserna.** Bara stenar som står kvar enligt tre källor ({T1['n']} stenar): vattnet AUC {num(T1['water']['auc'], 3)}, gravfälten AUC {num(T1['grave']['auc'], 3)}, båda {pfmt(max(T1['water']['p'], T1['grave']['p']))}. I tilläggsplanens nio analyser håller alla steg för både vattnet och gravfälten. För vattnet:
 
@@ -247,13 +266,13 @@ De övriga sekundära proven håller inte. Andelen stenar inom en kilometer frå
 
 För gravfälten ligger AUC mellan {num(GA3[0])} och {num(GA3[1])} i alla steg, utan ett landskap i taget mellan {num(LA3[0])} och {num(LA3[1])}, och socknen som slumpeffekt ger oddskvoten {num(MM3['or'])} ({num(MM3['lo'])}–{num(MM3['hi'])}), {pfmt(MM3['p'])}.
 
-Fyndet är en fristående studie och ingår inte bland de samband projektet justerar gemensamt; korrigeringen gäller inom planen. Inga handkodade drag ingår, så det finns ingen kodningsfelsandel att redovisa; felkällan är modellen för vattnet (se 6).
+Studien är fristående, så korrigeringen gäller inom planen och inte bland de samband projektet justerar gemensamt. Inga handkodade drag ingår; felkällan är modellen för vattnet (se 6).
 
 ## 6. Diskussion
 
 **Vad fyndet säger.** De som reste runstenarna valde platser nära vattnet. Jämförelsen gäller marken i samma bygd, och sambandet finns kvar socken för socken, så det beror inte bara på att bygderna låg vid vatten. Det beror inte heller på några få landskap, platser eller ristare, inte på stenar som har flyttats eller rests upp på nytt, och inte på SGU:s höjdmodell. Det gällde både före och efter 1050. Gravfälten drar starkare, och de två sambanden är oberoende av varandra: de mest sannolika platserna för en runsten låg nära både vatten och gravfält.
 
-**Dåtidens och dagens vatten.** Att dåtidens vatten stämmer bara lite bättre än dagens betyder inte att landhöjningen saknar betydelse. I de flesta trakter har stranden flyttat sig mindre än de hundratals meter som skiljer stenarna från punkterna, och de små sjöarna ligger kvar. Skillnaden syns främst i Mälardalen, där landet har höjt sig mest, och i Östergötland och på Öland. Modellen för år 1050 behövs främst för att fyndet inte ska vara ett resultat av dagens kust.
+**Dåtidens och dagens vatten.** Att dåtidens vatten stämmer bara lite bättre än dagens betyder inte att landhöjningen saknar betydelse. I de flesta trakter har stranden flyttat sig mindre än de hundratals meter som skiljer stenarna från punkterna (figur 2), och sjöarna ligger kvar. Modellen för år 1050 behövs främst för att fyndet inte ska vara ett resultat av dagens kust.
 
 **Mot tidigare forskning.** Att två av tre stenar står inom 500 meter från ett gravfält stöder Klos (2009) och stämmer med att stenar i familjegrupper oftare står vid gravfält än ensamma stenar ([Kvant 2026b]({FAM})). Att vattnet finns kvar när gravfälten hålls lika ger samtidigt McLeod (2014) rätt i att gravfälten inte är hela svaret. Fyndet passar med att stenarnas text oftast vändes mot vägen ([Kvant 2026c]({VAG})): stenarna restes där människor färdades, till lands och till sjöss. Det är en tolkning; studien visar var stenarna står, inte varför.
 
@@ -262,7 +281,7 @@ Fyndet är en fristående studie och ingår inte bland de samband projektet just
 1. **Modellen för vattnet är grov.** SGU:s modell är regional, med en höjdmodell på 50 meter, tidsfel på upp till 500 år och ungefärliga sjöar; åar, bäckar och våtmarker saknas. {PO['stones_in_water_1050']} stenar hamnar i modellens vatten år 1050, där ingen sten kan ha rests. Utan dem är sambandet svagare men tydligt (AUC {num(R5['auc'], 2)}), och den oberoende höjdmodellen ger samma resultat.
 2. **Riktningen var väntad.** Projektets tidigare mått visade samma sak med grövre data. Studien bekräftar ett känt mönster; den upptäcker inget nytt.
 3. **Känslighetsanalyserna valdes efter huvudresultatet.** Stegen och gränserna låstes innan de räknades, men efter att planens resultat var kända.
-4. **Stenarnas plats.** En sten kan ha flyttats en bit utan att det har registrerats. Tre källor för flyttade stenar och en ordlista för återresta stenar ger samma resultat, men fångar inte allt.
+4. **Stenarnas plats.** En sten kan ha flyttats en bit utan att det har registrerats; tre källor för flyttade stenar och en ordlista för återresta stenar ger samma resultat men fångar inte allt.
 5. **Gravfälten** är olika väl inventerade i olika trakter och oftast odaterade; en del kan vara yngre eller äldre än stenarna.
 6. **Öland** har för få stenar för att visa något säkert.
 
@@ -280,6 +299,7 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 - Korpusen: fingeravtryck `d6cffd1578418f74` (låst i planen); dagens regel för flyttade stenar ur `e83202e01a5e6d27`.
 - Analysen, ett steg per R-process: `utdata/strand/01_avstand.R`, `01b_marginal.R`, `02_r6.R`, `03_statistik.R`, `04_figurer.R` och känslighetsanalyserna `05_trappa.R`. Resultat i `utdata/strand/resultat.json` och `trappan.json`, stenarna i `stenar.csv`, hela redovisningen i `resultat.md`.
 - SGU:s modell (`strandforskjutning_1_900.gpkg`, `strandforskjutning_1000_1900.gpkg`) och Copernicus DEM laddas ned till en cache och ingår inte i repot; kontrollsummorna står i planen.
+- Kartorna: `utdata/strand/06_illustration.R` (rutan i figur 2 valdes som den 12-kilometersruta i Mälardalen med flest stenar gånger andelen mark som var vatten år 1050 men är land i dag).
 - Rapporten byggs av `utdata/blogg/build/build_rapport_strand.py`, som läser alla tal ur resultatfilerna och stannar om något inte stämmer.
 
 ## Referenser
@@ -316,7 +336,7 @@ body_en = f"""*Viktor Kvant, independent researcher. Fully tested finding. Repor
 
 **Background and aim.** Where the runestones were raised has long been debated: by grave fields, by roads and bridges, by farms and boundaries. Water is harder to measure, because the land has risen since the Viking Age and today's shore is not the stones' shore. The question here is whether the stones were raised closer to the water of their own time than the land around them, and whether that association remains when nearness to the grave fields is held equal.
 **Material.** {m(PO['n'], True)} Viking-Age runestones that still stand in place, in Uppland, Södermanland, Östergötland, Småland, Västergötland and on Öland, and {m(PO['n_random'], True)} random points on land within five kilometres of the stones. The water of AD 1050 from the shore displacement model of the Geological Survey of Sweden (SGU), the grave fields from the Swedish National Heritage Board's register of ancient monuments.
-**Method.** Pre-registered study. The distance to the nearest water is compared between stones and points with Wilcoxon's rank-sum test and the AUC, the probability that a stone stands closer than a point. Internal replication in two halves, seven sensitivity tests in the plan, among them an independent elevation model, and nine sensitivity analyses under a locked addendum plan.
+**Method.** Pre-registered study. The distance to the nearest water is compared between stones and points with Wilcoxon's rank-sum test and the AUC, the probability that a stone stands closer than a point. Internal replication in two halves, seven sensitivity tests in the plan and nine sensitivity analyses under a locked addendum plan.
 **Results.** {pc(H1['within_500_stones'])} per cent of the stones stand within 500 metres of the water of AD 1050, against {pc(H1['within_500_random'])} per cent of the points; the median distance is {H1['median_stones_m']} against {H1['median_random_m']} metres, AUC {num(H1['auc'], 2, True)}, {pfmt(H1['p'], True)}. It holds in both halves, in five of six provinces, for other years between 550 and 1550, with an independent elevation model and in every sensitivity analysis, including against the land in the same parish. The grave fields draw more strongly: {pc(H3['within_500_stones'])} against {pc(H3['within_500_random'])} per cent within 500 metres, AUC {num(H3['auc'], 2, True)}. Both associations remain when the other is held equal. The water of the time fits the stones slightly better than today's, but the difference is small.
 **Conclusion.** Those who raised the runestones chose places near the water, and even more often near the grave fields, within districts that already lay by water. The main weakness is that the model of the water of AD 1050 is coarse: {PO['stones_in_water_1050']} of the stones fall in the model's water.
 
@@ -324,7 +344,7 @@ body_en = f"""*Viktor Kvant, independent researcher. Fully tested finding. Repor
 
 Gunnar Ekholm (1950) asked where the runestones were raised. Torun Zachrisson (1998) has linked them to farm, boundary and grave field, Lydia Klos (2009) has argued that most were raised at grave fields, and Shane McLeod (2014) has objected that this overstates the grave fields at the expense of other places, such as the roads. The bridge stones, which tell of bridges and causeways over water and wet ground, show that water belonged to the stones' setting.
 
-Measuring the stones' nearness to water is harder than it seems. The land has risen since the Viking Age, in the Mälaren valley by about five metres, so a stone that stood by a bay may now stand on dry land, and a stone by today's shore may have stood far from the water. SGU's shore displacement model (SGU 2022, after Påsse & Daniels 2015) gives an open model for the whole country of where the water lay at different times.
+Measuring the nearness to water is hard. The land has risen since the Viking Age, in the Mälaren valley by about five metres, so a stone that stood by a bay may now stand on dry land, and a stone by today's shore may have stood far from the water. SGU's shore displacement model (SGU 2022, after Påsse & Daniels 2015) gives an open model for the whole country of where the water lay at different times.
 
 We know of no study that has measured the distance to the water of the stones' own time for the whole Swedish material, with a model of shore displacement, only stones that still stand in place, and a comparison with the land in the same district. The aim here is to do so and to test whether the association with water remains when nearness to the grave fields is held equal.
 
@@ -347,13 +367,17 @@ Two addenda were locked later, both before they were computed. On 31 October (SH
 - **The dating** by the stone's ornamental style (Gräslund 2006): {PO['n_dated']} of the stones.
 - **The halves** are the project's fixed division parish by parish: {PO['halves']['A']} and {PO['halves']['B']} stones.
 
+{FIG1_EN}
+
 ## 4. Method
 
-**4.1 The measure and the comparison.** For every stone and every point the distance is computed to the nearest water of AD 1050, to today's water and to the nearest grave field; a point in the water gets the distance zero. The comparison is a null model: for each province ten random points per stone are drawn, uniformly within five kilometres of the province's stones, and only points that are land both in AD 1050 and in 1949 are kept. The points thus lie in the districts where stones were raised, so the test concerns where in the district the stone stands, not where the districts lie. Stones and points are compared with Wilcoxon's rank-sum test (Wilcoxon 1945; Mann & Whitney 1947), one-sided. The effect is given as the medians, the share within 500 metres and the AUC, the probability that a randomly chosen stone stands closer than a randomly chosen point (0.5 means no difference).
+**4.1 The measure and the comparison.** For every stone and every point the distance is computed to the nearest water of AD 1050, to today's water and to the nearest grave field; a point in the water gets the distance zero. The comparison is a null model: for each province ten random points per stone are drawn, uniformly within five kilometres of the province's stones, and only points that are land both in AD 1050 and in 1949 are kept. The points thus lie in the districts where stones were raised, so the test concerns where in the district the stone stands, not where the districts lie. Stones and points are compared with Wilcoxon's rank-sum test (Wilcoxon 1945; Mann & Whitney 1947), one-sided. The effect is given as the medians, the share within 500 metres and the AUC, the probability that a randomly chosen stone stands closer than a randomly chosen point (0.5 means no difference). Figure 2 shows the measurement in one district.
+
+{FIG2_EN}
 
 **4.2 Correction and replication.** Each hypothesis is tested in each half on its own. The provinces are tested separately with Benjamini–Hochberg correction (Benjamini & Hochberg 1995) over the six, and the secondary tests likewise over the five. The difference between the water of the time and today's (H2) gets a 95 % interval from 2,000 bootstrap samples in which the stones are drawn place by place.
 
-**4.3 The sensitivity analyses.** The plan's seven tests (other years, only the sea, places, without the stones in the model's water, an independent elevation model, other radii for the points and the secondary tests), the addendum's test and the nine steps of the addendum plan are given with their results in 5.2 and 5.3. The parish as a random effect is a logistic regression (Bates et al. 2015) in which the points get the parish of the nearest stone. When stones are removed, the points that belong to them are removed too. A step holds when the AUC is above 0.5 and p below 0.05; without one province at a time, significance is required only where at least two thirds of the stones remain.
+**4.3 The sensitivity analyses.** The plan's seven tests, the addendum's test and the nine steps of the addendum plan are given with their results in 5.2 and 5.3. The parish as a random effect is a logistic regression (Bates et al. 2015) in which the points get the parish of the nearest stone. When stones are removed, the points that belong to them are removed too. A step holds when the AUC is above 0.5 and p below 0.05; without one province at a time, significance is required only where at least two thirds of the stones remain.
 
 **4.4 Deviations from the plan.** The statistics were run eight days after the distances were computed, after the addendum for moved stones; the plan's tests are unchanged. The {m(PO['distances_at_tile_margin'], True)} distances that reached the edge of the computation tiles, nearly all for the sea alone far inland, were recomputed on a grid of 100-metre cells over the whole province; the plan gives no cell size. The sensitivity analyses of the addendum plan were added after the plan's results were known (see 2). Otherwise none.
 
@@ -379,7 +403,7 @@ Today's water (H2): relative to the water of 1949, {pc(NOW['within_500_stones'])
 
 Water and grave fields together, in a logistic regression with the province held constant: when the distance to the water halves, the odds that the place has a runestone become {num(S['S1a']['or'], 2, True)} times as large (95 % interval {num(S['S1a']['lo'], 2, True)}–{num(S['S1a']['hi'], 2, True)}), with the distance to the grave fields equal; for the grave fields the odds ratio is {num(S['S1b']['or'], 2, True)} ({num(S['S1b']['lo'], 2, True)}–{num(S['S1b']['hi'], 2, True)}). Both hold in both halves and after correction. In plain words: the water is not merely a sign that the grave fields lie there, nor the other way round; the grave fields weigh about twice as much.
 
-The other secondary tests do not hold. The share of stones within one kilometre of the water is the same for early and late stones ({pc(S['S2']['early'])} per cent both). Stones with Christian markers do not stand closer to water than others ({pfmt(S['S3']['p'], True)}). The bridge and road stones stand somewhat closer ({S['S4']['median_bridge_m']} against {S['S4']['median_other_m']} metres in median), but not reliably ({pfmt(S['S4']['p'], True)}, q = {num(S['S4']['q_bh'], 2, True)}).
+The other secondary tests do not hold: the share within one kilometre of the water is the same for early and late stones ({pc(S['S2']['early'])} per cent), Christian markers make no difference ({pfmt(S['S3']['p'], True)}), and the bridge and road stones stand somewhat closer ({S['S4']['median_bridge_m']} against {S['S4']['median_other_m']} metres in median) but not reliably ({pfmt(S['S4']['p'], True)}, q = {num(S['S4']['q_bh'], 2, True)}).
 
 **5.3 The sensitivity analyses.** Only stones that stand in place according to three sources ({T1['n']} stones): water AUC {num(T1['water']['auc'], 3, True)}, grave fields AUC {num(T1['grave']['auc'], 3, True)}, both {pfmt(max(T1['water']['p'], T1['grave']['p']), True)}. In the nine analyses of the addendum plan every step holds for both the water and the grave fields. For the water:
 
@@ -395,13 +419,13 @@ The other secondary tests do not hold. The share of stones within one kilometre 
 
 For the grave fields the AUC lies between {num(GA3[0], 2, True)} and {num(GA3[1], 2, True)} in every step, without one province at a time between {num(LA3[0], 2, True)} and {num(LA3[1], 2, True)}, and the parish as a random effect gives the odds ratio {num(MM3['or'], 2, True)} ({num(MM3['lo'], 2, True)}–{num(MM3['hi'], 2, True)}), {pfmt(MM3['p'], True)}.
 
-The finding is a stand-alone study and is not among the associations the project adjusts jointly; the correction applies within the plan. No hand-coded traits are involved, so there is no coding error rate to report; the source of error is the model of the water (see 6).
+The study stands alone, so the correction applies within the plan and not among the associations the project adjusts jointly. No hand-coded traits are involved; the source of error is the model of the water (see 6).
 
 ## 6. Discussion
 
 **What the finding says.** Those who raised the runestones chose places near the water. The comparison concerns the land in the same district, and the association remains parish by parish, so it is not only because the districts lay by water. Nor does it depend on a few provinces, places or carvers, on stones that have been moved or re-erected, or on SGU's elevation model. It held both before and after AD 1050. The grave fields draw more strongly, and the two associations are independent of each other: the most likely places for a runestone lay near both water and grave fields.
 
-**The water of the time and today's.** That the water of the time fits only slightly better than today's does not mean that the land uplift is unimportant. In most districts the shore has moved less than the hundreds of metres that separate the stones from the points, and the small lakes remain. The difference shows mainly in the Mälaren valley, where the land has risen most, and in Östergötland and on Öland. The model for AD 1050 is needed above all so that the finding is not an artefact of today's coast.
+**The water of the time and today's.** That the water of the time fits only slightly better than today's does not mean that the land uplift is unimportant. In most districts the shore has moved less than the hundreds of metres that separate the stones from the points (figure 2), and the lakes remain. The model for AD 1050 is needed above all so that the finding is not an artefact of today's coast.
 
 **Against earlier research.** That two in three stones stand within 500 metres of a grave field supports Klos (2009) and agrees with stones in family groups standing at grave fields more often than single stones ([Kvant 2026b]({FAM})). That the water remains when the grave fields are held equal at the same time bears out McLeod (2014) that the grave fields are not the whole answer. The finding fits with the stones' text being turned mostly towards the road ([Kvant 2026c]({VAG})): the stones were raised where people travelled, by land and by water. That is an interpretation; the study shows where the stones stand, not why.
 
@@ -428,6 +452,7 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 - The corpus: fingerprint `d6cffd1578418f74` (locked in the plan); today's rule for moved stones from `e83202e01a5e6d27`.
 - The analysis, one step per R process: `utdata/strand/01_avstand.R`, `01b_marginal.R`, `02_r6.R`, `03_statistik.R`, `04_figurer.R` and the sensitivity analyses `05_trappa.R`. Results in `utdata/strand/resultat.json` and `trappan.json`, the stones in `stenar.csv`, the full account in `resultat.md` (Swedish).
 - SGU's model (`strandforskjutning_1_900.gpkg`, `strandforskjutning_1000_1900.gpkg`) and Copernicus DEM are downloaded to a cache and are not in the repository; their checksums are in the plan.
+- The maps: `utdata/strand/06_illustration.R` (the window in figure 2 was chosen as the 12-kilometre window in the Mälaren region with the most stones times the share of land that was water in AD 1050 but is land today).
 - The report is built by `utdata/blogg/build/build_rapport_strand.py`, which reads every number from the result files and stops if anything disagrees.
 
 ## References
