@@ -1,0 +1,650 @@
+{
+ "plan": "analysplaner/2026-11-01-slaktnatverket-generationer.md",
+ "plan_sha": "5fc275f0",
+ "corpus": "e83202e01a5e6d27",
+ "n_pairs": {
+  "williams_sure": 270,
+  "williams_all": 420,
+  "app_sure": 61
+ },
+ "primary": {
+  "n": 30,
+  "later": 16,
+  "earlier": 4,
+  "ties": 10,
+  "p": 0.005908966064453125,
+  "holds": true
+ },
+ "steps": {
+  "1_halvor": {
+   "halves": [
+    {
+     "n": 14,
+     "later": 7,
+     "earlier": 2,
+     "ties": 5,
+     "p": 0.08984375,
+     "holds": false
+    },
+    {
+     "n": 16,
+     "later": 9,
+     "earlier": 2,
+     "ties": 5,
+     "p": 0.03271484375,
+     "holds": true
+    }
+   ],
+   "holds": false
+  },
+  "2_bara_williams": {
+   "n": 29,
+   "later": 16,
+   "earlier": 4,
+   "ties": 9,
+   "p": 0.005908966064453125,
+   "holds": true
+  },
+  "3_utan_jarlabanke": {
+   "n": 25,
+   "later": 14,
+   "earlier": 3,
+   "ties": 8,
+   "p": 0.0063629150390625,
+   "holds": true,
+   "family_stones": [
+    "U 127",
+    "U 135",
+    "U 136",
+    "U 137",
+    "U 140",
+    "U 142",
+    "U 147",
+    "U 149",
+    "U 150",
+    "U 164",
+    "U 165",
+    "U 212",
+    "U 261",
+    "U 287"
+   ]
+  },
+  "4_bara_fasta": {
+   "n": 29,
+   "later": 16,
+   "earlier": 4,
+   "ties": 9,
+   "p": 0.005908966064453125,
+   "holds": true
+  },
+  "5_med_osakra": {
+   "n": 41,
+   "later": 21,
+   "earlier": 5,
+   "ties": 15,
+   "p": 0.0012469589710235596,
+   "holds": true
+  },
+  "6_omblandning": {
+   "observed": 12,
+   "n_stones": 58,
+   "p": 0.0046,
+   "holds": true
+  }
+ },
+ "all_hold": false,
+ "level": "Delvis prövat",
+ "descriptive": {
+  "share_ties": 0.3333333333333333,
+  "years_median": 10.625,
+  "years_quartiles": [
+   0.0,
+   10.625,
+   41.875
+  ],
+  "by_province": {
+   "Sm": 2,
+   "Sö": 1,
+   "U": 26,
+   "Ög": 1
+  }
+ },
+ "earlier_cases": [
+  {
+   "person": "Sveinn",
+   "raised": [
+    {
+     "signum": "U 135",
+     "style": "Pr2",
+     "carvers": [],
+     "parish": "Täby sn"
+    }
+   ],
+   "remembered": [
+    {
+     "signum": "U 150",
+     "style": "Fp",
+     "carvers": [],
+     "parish": "Täby sn"
+    }
+   ]
+  },
+  {
+   "person": "Arnfastr",
+   "raised": [
+    {
+     "signum": "U 635",
+     "style": "Pr4",
+     "carvers": [],
+     "parish": "Kalmar sn"
+    }
+   ],
+   "remembered": [
+    {
+     "signum": "U 636",
+     "style": "Fp",
+     "carvers": [],
+     "parish": "Kalmar sn"
+    }
+   ]
+  },
+  {
+   "person": "Bjôrn",
+   "raised": [
+    {
+     "signum": "U 844",
+     "style": "Pr4",
+     "carvers": [
+      "Fot 2"
+     ],
+     "parish": "Dalby sn"
+    }
+   ],
+   "remembered": [
+    {
+     "signum": "U 845",
+     "style": "Pr2",
+     "carvers": [
+      "Arbjörn"
+     ],
+     "parish": "Dalby sn"
+    }
+   ]
+  },
+  {
+   "person": "Þegn",
+   "raised": [
+    {
+     "signum": "U 937",
+     "style": "Pr3",
+     "carvers": [
+      "Fot 2"
+     ],
+     "parish": "Uppsala"
+    },
+    {
+     "signum": "U 990",
+     "style": "Fp",
+     "carvers": [
+      "Alrik",
+      "Äskil 2"
+     ],
+     "parish": "Funbo sn"
+    },
+    {
+     "signum": "U 991",
+     "style": "Pr3 - Pr4",
+     "carvers": [
+      "Fot 2"
+     ],
+     "parish": "Funbo sn"
+    }
+   ],
+   "remembered": [
+    {
+     "signum": "U 999",
+     "style": "Fp",
+     "carvers": [],
+     "parish": "Funbo sn"
+    }
+   ]
+  }
+ ],
+ "votes": [
+  {
+   "person": [
+    "eyndr"
+   ],
+   "raised": [
+    "Sm 36"
+   ],
+   "remembered": [
+    "Sm 37"
+   ],
+   "diff": 0.0,
+   "years": 0.0,
+   "vote": "lika"
+  },
+  {
+   "person": [
+    "ozurr"
+   ],
+   "raised": [
+    "Sm 37"
+   ],
+   "remembered": [
+    "Sm 36"
+   ],
+   "diff": 0.0,
+   "years": 0.0,
+   "vote": "lika"
+  },
+  {
+   "person": [
+    "vigmarr"
+   ],
+   "raised": [
+    "Sö 292"
+   ],
+   "remembered": [
+    "Sö 298"
+   ],
+   "diff": 0.0,
+   "years": 0.0,
+   "vote": "lika"
+  },
+  {
+   "person": [
+    "holmsteinn"
+   ],
+   "raised": [
+    "U 77"
+   ],
+   "remembered": [
+    "U 78"
+   ],
+   "diff": 1.0,
+   "years": 30.0,
+   "vote": "senare"
+  },
+  {
+   "person": [
+    "jarlabanki"
+   ],
+   "raised": [
+    "U 127",
+    "U 150",
+    "U 164",
+    "U 165"
+   ],
+   "remembered": [
+    "U 142"
+   ],
+   "diff": 2.125,
+   "years": 47.5,
+   "vote": "senare"
+  },
+  {
+   "person": [
+    "ingifastr"
+   ],
+   "raised": [
+    "U 135",
+    "U 142"
+   ],
+   "remembered": [
+    "U 147",
+    "U 287"
+   ],
+   "diff": 1.0,
+   "years": 25.0,
+   "vote": "senare"
+  },
+  {
+   "person": [
+    "sveinn"
+   ],
+   "raised": [
+    "U 135"
+   ],
+   "remembered": [
+    "U 150"
+   ],
+   "diff": -1.0,
+   "years": -5.0,
+   "vote": "tidigare"
+  },
+  {
+   "person": [
+    "eysteinn"
+   ],
+   "raised": [
+    "U 137"
+   ],
+   "remembered": [
+    "U 136"
+   ],
+   "diff": 0.0,
+   "years": 0.0,
+   "vote": "lika"
+  },
+  {
+   "person": [
+    "gyi"
+   ],
+   "raised": [
+    "U 160",
+    "U 225"
+   ],
+   "remembered": [
+    "U 100"
+   ],
+   "diff": 3.5,
+   "years": 71.25,
+   "vote": "senare"
+  },
+  {
+   "person": [
+    "ulfkell"
+   ],
+   "raised": [
+    "U 161",
+    "U 225"
+   ],
+   "remembered": [
+    "U 100"
+   ],
+   "diff": 3.5,
+   "years": 71.25,
+   "vote": "senare"
+  },
+  {
+   "person": [
+    "halfdan"
+   ],
+   "raised": [
+    "U 229"
+   ],
+   "remembered": [
+    "U 231"
+   ],
+   "diff": 1.0,
+   "years": 30.0,
+   "vote": "senare"
+  },
+  {
+   "person": [
+    "tobbi"
+   ],
+   "raised": [
+    "U 229"
+   ],
+   "remembered": [
+    "U 232"
+   ],
+   "diff": 1.0,
+   "years": 30.0,
+   "vote": "senare"
+  },
+  {
+   "person": [
+    "ozurr"
+   ],
+   "raised": [
+    "U 273"
+   ],
+   "remembered": [
+    "U 277"
+   ],
+   "diff": 0.0,
+   "years": 0.0,
+   "vote": "lika"
+  },
+  {
+   "person": [
+    "djarfr"
+   ],
+   "raised": [
+    "U 276"
+   ],
+   "remembered": [
+    "U 273"
+   ],
+   "diff": 3.0,
+   "years": 55.0,
+   "vote": "senare"
+  },
+  {
+   "person": [
+    "ingvarr"
+   ],
+   "raised": [
+    "U 287"
+   ],
+   "remembered": [
+    "U 147"
+   ],
+   "diff": 0.0,
+   "years": 0.0,
+   "vote": "lika"
+  },
+  {
+   "person": [
+    "forkunnr"
+   ],
+   "raised": [
+    "U 293"
+   ],
+   "remembered": [
+    "U 294"
+   ],
+   "diff": 0.0,
+   "years": 0.0,
+   "vote": "lika"
+  },
+  {
+   "person": [
+    "ulfr"
+   ],
+   "raised": [
+    "U 336",
+    "U 344"
+   ],
+   "remembered": [
+    "U 160",
+    "U 343"
+   ],
+   "diff": 0.5,
+   "years": 16.25,
+   "vote": "senare"
+  },
+  {
+   "person": [
+    "borgulfr"
+   ],
+   "raised": [
+    "U 430"
+   ],
+   "remembered": [
+    "U 429"
+   ],
+   "diff": 1.0,
+   "years": 5.0,
+   "vote": "senare"
+  },
+  {
+   "person": [
+    "nesbjorn"
+   ],
+   "raised": [
+    "U 444"
+   ],
+   "remembered": [
+    "U 445"
+   ],
+   "diff": 3.0,
+   "years": 55.0,
+   "vote": "senare"
+  },
+  {
+   "person": [
+    "ketilfastr"
+   ],
+   "raised": [
+    "U 504"
+   ],
+   "remembered": [
+    "U 503"
+   ],
+   "diff": 4.0,
+   "years": 87.5,
+   "vote": "senare"
+  },
+  {
+   "person": [
+    "fasti"
+   ],
+   "raised": [
+    "U 510"
+   ],
+   "remembered": [
+    "U 511"
+   ],
+   "diff": 0.0,
+   "years": 0.0,
+   "vote": "lika"
+  },
+  {
+   "person": [
+    "arnfastr"
+   ],
+   "raised": [
+    "U 635"
+   ],
+   "remembered": [
+    "U 636"
+   ],
+   "diff": -3.0,
+   "years": -55.0,
+   "vote": "tidigare"
+  },
+  {
+   "person": [
+    "kuss"
+   ],
+   "raised": [
+    "U 640"
+   ],
+   "remembered": [
+    "U 648"
+   ],
+   "diff": 1.0,
+   "years": 20.0,
+   "vote": "senare"
+  },
+  {
+   "person": [
+    "andvettr"
+   ],
+   "raised": [
+    "U 644",
+    "U 654"
+   ],
+   "remembered": [
+    "U 643"
+   ],
+   "diff": 3.0,
+   "years": 55.0,
+   "vote": "senare"
+  },
+  {
+   "person": [
+    "goti"
+   ],
+   "raised": [
+    "U 700"
+   ],
+   "remembered": [
+    "U 723",
+    "U 724"
+   ],
+   "diff": 2.0,
+   "years": 35.0,
+   "vote": "senare"
+  },
+  {
+   "person": [
+    "bjorn"
+   ],
+   "raised": [
+    "U 844"
+   ],
+   "remembered": [
+    "U 845"
+   ],
+   "diff": -2.0,
+   "years": -50.0,
+   "vote": "tidigare"
+  },
+  {
+   "person": [
+    "thegn"
+   ],
+   "raised": [
+    "U 937",
+    "U 990",
+    "U 991"
+   ],
+   "remembered": [
+    "U 999"
+   ],
+   "diff": -1.5,
+   "years": -26.666666666666742,
+   "vote": "tidigare"
+  },
+  {
+   "person": [
+    "vedr"
+   ],
+   "raised": [
+    "U 990"
+   ],
+   "remembered": [
+    "U 937",
+    "U 991"
+   ],
+   "diff": 2.25,
+   "years": 40.0,
+   "vote": "senare"
+  },
+  {
+   "person": [
+    "haursi"
+   ],
+   "raised": [
+    "U 999"
+   ],
+   "remembered": [
+    "U 990"
+   ],
+   "diff": 0.0,
+   "years": 0.0,
+   "vote": "lika"
+  },
+  {
+   "person": [
+    "karl"
+   ],
+   "raised": [
+    "Ög 234",
+    "Ög 235"
+   ],
+   "remembered": [
+    "Ög 237"
+   ],
+   "diff": 0.0,
+   "years": 0.0,
+   "vote": "lika"
+  }
+ ]
+}
