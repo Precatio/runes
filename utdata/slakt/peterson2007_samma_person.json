@@ -1,0 +1,4598 @@
+{
+ "source": "Peterson, L. 2007. Nordiskt runnamnslexikon. 5 uppl. Uppsala: Institutet för språk och folkminnen.",
+ "note": "Peterson (s. 15): anmärkningar utan litteraturhänvisning bygger på Williams 1990, Axelson 1993, Lerche Nielsen 1997.",
+ "n_notes": [
+  213,
+  214
+ ],
+ "n_pairs_both_versions": 448,
+ "n_pairs_disagree": 24,
+ "disagree": [
+  [
+   "DR 1",
+   "DR 3"
+  ],
+  [
+   "DR 127",
+   "Vg 11"
+  ],
+  [
+   "DR 127",
+   "Vg 13"
+  ],
+  [
+   "DR 127",
+   "Ög 234"
+  ],
+  [
+   "DR 127",
+   "Ög 235"
+  ],
+  [
+   "DR 127",
+   "Ög 237"
+  ],
+  [
+   "DR 3",
+   "U 326"
+  ],
+  [
+   "DR 3",
+   "U 327"
+  ],
+  [
+   "Sö 210",
+   "U 718"
+  ],
+  [
+   "U 160",
+   "U 336"
+  ],
+  [
+   "U 160",
+   "U 343"
+  ],
+  [
+   "U 160",
+   "U 344"
+  ],
+  [
+   "U 225",
+   "U 336"
+  ],
+  [
+   "U 225",
+   "U 343"
+  ],
+  [
+   "U 225",
+   "U 344"
+  ],
+  [
+   "U 510",
+   "U 511"
+  ],
+  [
+   "Vg 11",
+   "Vg 112"
+  ],
+  [
+   "Vg 112",
+   "Vg 13"
+  ],
+  [
+   "Vg 112",
+   "Ög 234"
+  ],
+  [
+   "Vg 112",
+   "Ög 235"
+  ],
+  [
+   "Vg 112",
+   "Ög 237"
+  ],
+  [
+   "Ög 111",
+   "Ög 68"
+  ],
+  [
+   "Ög 234",
+   "Ög 235"
+  ],
+  [
+   "Ög 235",
+   "Ög 237"
+  ]
+ ],
+ "pairs": [
+  {
+   "a": "DR 127",
+   "b": "Vg 112",
+   "sure": false,
+   "head_isof": "Karl mn.",
+   "head_lex": "Karl mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 160",
+   "b": "DR 161",
+   "sure": true,
+   "head_isof": "Höft (el. Hofi?) mn.",
+   "head_lex": "Hofi (el. Hofi?) mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 189",
+   "b": "DR 190",
+   "sure": false,
+   "head_isof": "HröäulfR mn. (jfr Hr-4R)",
+   "head_lex": "Hröðulfr mn. (jfr Hrolfr)",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 189",
+   "b": "DR 192",
+   "sure": false,
+   "head_isof": "HröäulfR mn. (jfr Hr-4R)",
+   "head_lex": "Hröðulfr mn. (jfr Hrolfr)",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 189",
+   "b": "DR 193",
+   "sure": false,
+   "head_isof": "HröäulfR mn. (jfr Hr-4R)",
+   "head_lex": "Hröðulfr mn. (jfr Hrolfr)",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 190",
+   "b": "DR 192",
+   "sure": true,
+   "head_isof": "AVeiRR mn. (jfr ÅgreiRR)",
+   "head_lex": "Aveirr mn. (jfr Ageirr)",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 190",
+   "b": "DR 193",
+   "sure": true,
+   "head_isof": "HröäulfR mn. (jfr Hr-4R)",
+   "head_lex": "Hröðulfr mn. (jfr Hrolfr)",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 192",
+   "b": "DR 193",
+   "sure": true,
+   "head_isof": "HröäulfR mn. (jfr Hr-4R)",
+   "head_lex": "Hröðulfr mn. (jfr Hrolfr)",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 2",
+   "b": "DR 4",
+   "sure": true,
+   "head_isof": "Asfriår kvn. (jfr AstriörbEstriår)",
+   "head_lex": "Asfriðr kvn. (jfr Astraðr/Æstriðr)",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 202",
+   "b": "DR 209",
+   "sure": true,
+   "head_isof": "Söti mn.",
+   "head_lex": "Söti mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 209",
+   "b": "DR 230",
+   "sure": true,
+   "head_isof": "Ragnhildr kvn.",
+   "head_lex": "Ragnhildr kvn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 26",
+   "b": "DR 29",
+   "sure": true,
+   "head_isof": "Hrafnunga-Töfi mn.",
+   "head_lex": "Hrafnunga-Tofi mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 26",
+   "b": "DR 34",
+   "sure": true,
+   "head_isof": "Hrafnunga-Töfi mn.",
+   "head_lex": "Hrafnunga-Tofi mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 280",
+   "b": "DR 281",
+   "sure": true,
+   "head_isof": "AutiR mn.",
+   "head_lex": "Autik mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 282",
+   "b": "DR 283",
+   "sure": true,
+   "head_isof": "Kortform till mn. på -> Gunn-.",
+   "head_lex": "Gunni mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 29",
+   "b": "DR 34",
+   "sure": true,
+   "head_isof": "Hrafnunga-Töfi mn.",
+   "head_lex": "Hrafnunga-Tofi mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 295",
+   "b": "DR 296",
+   "sure": true,
+   "head_isof": "Töki/      Tyki mn.",
+   "head_lex": "Toki/ Tuki/ Tyki mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 314",
+   "b": "DR 91",
+   "sure": false,
+   "head_isof": "AsgaiRR/iEsgreiRR mn.",
+   "head_lex": "Asgæirr/Æsgæirr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 334",
+   "b": "DR 335",
+   "sure": true,
+   "head_isof": "FabiR mn.",
+   "head_lex": "Faðir mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 36",
+   "b": "DR 42",
+   "sure": false,
+   "head_isof": "Haraldr mn.",
+   "head_lex": "Haraldr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 36",
+   "b": "DR 55",
+   "sure": false,
+   "head_isof": "Haraldr mn.",
+   "head_lex": "Haraldr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 391",
+   "b": "DR 392",
+   "sure": true,
+   "head_isof": "Kortform till mn. på —> Biarn-, —> -biru eller sidoform (hypokorism) till —>",
+   "head_lex": "Biarni mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 41",
+   "b": "DR 42",
+   "sure": true,
+   "head_isof": "Görmn mn.",
+   "head_lex": "Gormr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 41",
+   "b": "DR 55",
+   "sure": true,
+   "head_isof": "Görmn mn.",
+   "head_lex": "Gormr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 42",
+   "b": "DR 55",
+   "sure": true,
+   "head_isof": "Görmn mn.",
+   "head_lex": "Gormr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 80",
+   "b": "DR 81",
+   "sure": true,
+   "head_isof": "AsbirnkEsbiorn mn.",
+   "head_lex": "Asbiorn/Æsbiorn mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "DR 96",
+   "b": "DR 97",
+   "sure": true,
+   "head_isof": "Vigautr mn.",
+   "head_lex": "Vigautr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "G 111",
+   "b": "G 112",
+   "sure": true,
+   "head_isof": "HröäPitiä kvn.",
+   "head_lex": "Hrodpiud kvn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "G 113",
+   "b": "G 114",
+   "sure": true,
+   "head_isof": "GeiRhvatr mn.",
+   "head_lex": "Geirhvatr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "G 207",
+   "b": "G 208",
+   "sure": true,
+   "head_isof": "Bötmundr mn.",
+   "head_lex": "Botmundr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Gs 11",
+   "b": "Gs 13",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Gs 11",
+   "b": "U 1142",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Gs 11",
+   "b": "U 1144",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Gs 11",
+   "b": "U 1149",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Gs 11",
+   "b": "U 932",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Gs 11",
+   "b": "U 956",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "Gs 11",
+   "b": "U 969",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Gs 11",
+   "b": "U 986",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Gs 11",
+   "b": "U 998",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Gs 11",
+   "b": "U Fv1988;241",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "Gs 13",
+   "b": "U 1142",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Gs 13",
+   "b": "U 1144",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Gs 13",
+   "b": "U 1149",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Gs 13",
+   "b": "U 932",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Gs 13",
+   "b": "U 956",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "Gs 13",
+   "b": "U 969",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Gs 13",
+   "b": "U 986",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Gs 13",
+   "b": "U 998",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Gs 13",
+   "b": "U Fv1988;241",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "Hs 14",
+   "b": "Hs 15",
+   "sure": true,
+   "head_isof": "Hröämundr mn.",
+   "head_lex": "Hrodmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "N 213",
+   "b": "Vg 11",
+   "sure": true,
+   "head_isof": "SkögR mn.",
+   "head_lex": "Skogr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "N 213",
+   "b": "Vg 13",
+   "sure": true,
+   "head_isof": "SkögR mn.",
+   "head_lex": "Skogr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "N 223",
+   "b": "N 237",
+   "sure": true,
+   "head_isof": "Ulfriku mn.",
+   "head_lex": "Ulfríkr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "Sm 36",
+   "b": "Sm 37",
+   "sure": true,
+   "head_isof": "Oy(v)ndr mn.",
+   "head_lex": "Oy(vi)ndr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Sm 76",
+   "b": "Sm 77",
+   "sure": true,
+   "head_isof": "Vröi mn.",
+   "head_lex": "Vrai mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Sm 93",
+   "b": "Sö 11",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sm 93",
+   "b": "Sö 137",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sm 93",
+   "b": "Sö 138",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sm 93",
+   "b": "Sö Fv1982;235",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sm 93",
+   "b": "U 10",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sm 93",
+   "b": "Vg 49",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 101",
+   "b": "Sö 106",
+   "sure": true,
+   "head_isof": "Alfan mn.",
+   "head_lex": "Alríkr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "Sö 101",
+   "b": "U 617",
+   "sure": true,
+   "head_isof": "HolmgaiRR mn.",
+   "head_lex": "Holmgæirr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "Sö 11",
+   "b": "Sö 137",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 11",
+   "b": "Sö 138",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 11",
+   "b": "Sö Fv1982;235",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 11",
+   "b": "U 10",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 11",
+   "b": "Vg 49",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 122",
+   "b": "Sö 123",
+   "sure": true,
+   "head_isof": "Asgautr mn.",
+   "head_lex": "Asgautr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 137",
+   "b": "Sö 138",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Sö 137",
+   "b": "Sö Fv1982;235",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Sö 137",
+   "b": "U 10",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 137",
+   "b": "Vg 49",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 138",
+   "b": "Sö Fv1982;235",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Sö 138",
+   "b": "U 10",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 138",
+   "b": "Vg 49",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 141",
+   "b": "Sö 2",
+   "sure": true,
+   "head_isof": "Ragnfriar kvn.",
+   "head_lex": "Igulbiorn mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "Sö 173",
+   "b": "Sö 374",
+   "sure": true,
+   "head_isof": "Måni mn. (se Manni)",
+   "head_lex": "Mani mn. (se Manni)",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Sö 190",
+   "b": "U 29",
+   "sure": true,
+   "head_isof": "körbigrn mn.",
+   "head_lex": "Þörbiorn mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 190",
+   "b": "U 37",
+   "sure": true,
+   "head_isof": "körbigrn mn.",
+   "head_lex": "Þörbiorn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 190",
+   "b": "U 405",
+   "sure": true,
+   "head_isof": "körbigrn mn.",
+   "head_lex": "Þörbiorn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 190",
+   "b": "U 532",
+   "sure": true,
+   "head_isof": "körbigrn mn.",
+   "head_lex": "Þörbiorn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 190",
+   "b": "U 70",
+   "sure": true,
+   "head_isof": "körbigrn mn.",
+   "head_lex": "Þörbiorn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 197",
+   "b": "Sö 203",
+   "sure": true,
+   "head_isof": "Biorn mn.",
+   "head_lex": "Biorn mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "Sö 205",
+   "b": "Sö 213",
+   "sure": true,
+   "head_isof": "AsbirnkEsbiorn mn.",
+   "head_lex": "Asbiorn/Æsbiorn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 205",
+   "b": "Sö 347",
+   "sure": true,
+   "head_isof": "AsbirnkEsbiorn mn.",
+   "head_lex": "Asbiorn/Æsbiorn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 205",
+   "b": "U 733",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 205",
+   "b": "U 742",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 205",
+   "b": "U 759",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 205",
+   "b": "U 771",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 205",
+   "b": "U 775",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 205",
+   "b": "U 828",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 206",
+   "b": "Sö 208",
+   "sure": true,
+   "head_isof": "Guälaug kvn. (jfr Gullaug)",
+   "head_lex": "Gudlaug kvn. (jfr Gullaug)",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Sö 213",
+   "b": "Sö 347",
+   "sure": true,
+   "head_isof": "AsbirnkEsbiorn mn.",
+   "head_lex": "Asbiorn/Æsbiorn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 215",
+   "b": "Sö 233",
+   "sure": true,
+   "head_isof": "Amundi mn. (jfr tjmundi)",
+   "head_lex": "Amundi mn. (jfr Omundi)",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 215",
+   "b": "Sö 268",
+   "sure": true,
+   "head_isof": "Amundi mn. (jfr tjmundi)",
+   "head_lex": "Amundi mn. (jfr Omundi)",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 215",
+   "b": "Sö 271",
+   "sure": true,
+   "head_isof": "Amundi mn. (jfr tjmundi)",
+   "head_lex": "Amundi mn. (jfr Omundi)",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 233",
+   "b": "Sö 268",
+   "sure": true,
+   "head_isof": "Amundi mn. (jfr tjmundi)",
+   "head_lex": "Amundi mn. (jfr Omundi)",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 233",
+   "b": "Sö 271",
+   "sure": true,
+   "head_isof": "Amundi mn. (jfr tjmundi)",
+   "head_lex": "Amundi mn. (jfr Omundi)",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 268",
+   "b": "Sö 271",
+   "sure": true,
+   "head_isof": "Amundi mn. (jfr tjmundi)",
+   "head_lex": "Amundi mn. (jfr Omundi)",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö 280",
+   "b": "Sö 328",
+   "sure": false,
+   "head_isof": "Undrlaug kvn.",
+   "head_lex": "Undrlaug kvn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "Sö 292",
+   "b": "Sö 298",
+   "sure": true,
+   "head_isof": "Vigmarr mn.",
+   "head_lex": "Vigmarr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Sö 292",
+   "b": "Sö Fv1971;208",
+   "sure": true,
+   "head_isof": "Vigmarr mn.",
+   "head_lex": "Vigmarr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Sö 298",
+   "b": "Sö Fv1971;208",
+   "sure": true,
+   "head_isof": "Käri mn.",
+   "head_lex": "Kari mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Sö 311",
+   "b": "Sö 312",
+   "sure": true,
+   "head_isof": "Holmfastr mn.",
+   "head_lex": "Holmfastr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "Sö 367",
+   "b": "Sö 45",
+   "sure": true,
+   "head_isof": "Froystainn mn.",
+   "head_lex": "Froysteinn mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Sö Fv1982;235",
+   "b": "U 10",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Sö Fv1982;235",
+   "b": "Vg 49",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 10",
+   "b": "Vg 49",
+   "sure": true,
+   "head_isof": "OPiR mn.",
+   "head_lex": "Opir mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 100",
+   "b": "U 160",
+   "sure": true,
+   "head_isof": "Etymologi oviss, möjl. en bildning till kvn. —> Gyöa eller --> Gyriår. (Det",
+   "head_lex": "Etymologi oviss, möjl. en bildning till kvn.       > Gyða eller   > Gyridr. (Det",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 100",
+   "b": "U 161",
+   "sure": true,
+   "head_isof": "Utfkx(ti)// mn.",
+   "head_lex": "Ulfkæ(ti)ll mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 100",
+   "b": "U 225",
+   "sure": true,
+   "head_isof": "Etymologi oviss, möjl. en bildning till kvn. —> Gyöa eller --> Gyriår. (Det",
+   "head_lex": "Etymologi oviss, möjl. en bildning till kvn.       > Gyða eller   > Gyridr. (Det",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 100",
+   "b": "U 226",
+   "sure": true,
+   "head_isof": "Gyriår kvn. (jfr Gunfrinr)",
+   "head_lex": "Gyridr kvn. (jfr Guðfriðr)",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 100",
+   "b": "U 328",
+   "sure": true,
+   "head_isof": "Gyriår kvn. (jfr Gunfrinr)",
+   "head_lex": "Gyridr kvn. (jfr Guðfriðr)",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 101",
+   "b": "U 135",
+   "sure": true,
+   "head_isof": "Ingzfastr mn.",
+   "head_lex": "Ingifastr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 101",
+   "b": "U 136",
+   "sure": true,
+   "head_isof": "AstgärkEstriär kvn. (jfr Asfriär)",
+   "head_lex": "Astriðr/Æstriðr kvn. (jfr Asfriðr)",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 101",
+   "b": "U 137",
+   "sure": true,
+   "head_isof": "AstgärkEstriär kvn. (jfr Asfriär)",
+   "head_lex": "Astriðr/Æstriðr kvn. (jfr Asfriðr)",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 101",
+   "b": "U 143",
+   "sure": true,
+   "head_isof": "AstgärkEstriär kvn. (jfr Asfriär)",
+   "head_lex": "Astriðr/Æstriðr kvn. (jfr Asfriðr)",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 101",
+   "b": "U 147",
+   "sure": true,
+   "head_isof": "Ingzfastr mn.",
+   "head_lex": "Ingifastr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 101",
+   "b": "U 148",
+   "sure": true,
+   "head_isof": "Hamingu mn.",
+   "head_lex": "Hemingr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 101",
+   "b": "U 310",
+   "sure": true,
+   "head_isof": "AstgärkEstriär kvn. (jfr Asfriär)",
+   "head_lex": "Astriðr/Æstriðr kvn. (jfr Asfriðr)",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 1011",
+   "b": "U 1012",
+   "sure": true,
+   "head_isof": "Afriår kvn.",
+   "head_lex": "Afastr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 1039",
+   "b": "U 1040",
+   "sure": true,
+   "head_isof": "Kiili mn.",
+   "head_lex": "Kiuli mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1039",
+   "b": "U 1042",
+   "sure": true,
+   "head_isof": "Kiili mn.",
+   "head_lex": "Kiuli mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1040",
+   "b": "U 1042",
+   "sure": true,
+   "head_isof": "Kiili mn.",
+   "head_lex": "Kiuli mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1041",
+   "b": "U 1052",
+   "sure": true,
+   "head_isof": "IngitYR mn.",
+   "head_lex": "Ingulfk mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1041",
+   "b": "U 1075",
+   "sure": true,
+   "head_isof": "IngitYR mn.",
+   "head_lex": "Ingulfk mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1041",
+   "b": "U 929",
+   "sure": true,
+   "head_isof": "IngitYR mn.",
+   "head_lex": "Ingulfk mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1050",
+   "b": "U 1060",
+   "sure": true,
+   "head_isof": "HolmgaiRR mn.",
+   "head_lex": "Holmgæirr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 1052",
+   "b": "U 1075",
+   "sure": true,
+   "head_isof": "IngitYR mn.",
+   "head_lex": "Ingulfk mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1052",
+   "b": "U 929",
+   "sure": true,
+   "head_isof": "IngitYR mn.",
+   "head_lex": "Ingulfk mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1054",
+   "b": "U 1116",
+   "sure": true,
+   "head_isof": "Gunfastr mn.",
+   "head_lex": "Gudfastr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1054",
+   "b": "U 918",
+   "sure": true,
+   "head_isof": "Gunfastr mn.",
+   "head_lex": "Gudfastr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1074",
+   "b": "U 1095",
+   "sure": true,
+   "head_isof": "Lik(n)bign mn.",
+   "head_lex": "Lik(n)bigrn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1074",
+   "b": "U Fv1976;104",
+   "sure": true,
+   "head_isof": "Lik(n)bign mn.",
+   "head_lex": "Lik(n)bigrn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1075",
+   "b": "U 929",
+   "sure": true,
+   "head_isof": "IngitYR mn.",
+   "head_lex": "Ingulfk mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1095",
+   "b": "U Fv1976;104",
+   "sure": true,
+   "head_isof": "Lik(n)bign mn.",
+   "head_lex": "Lik(n)bigrn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1116",
+   "b": "U 918",
+   "sure": true,
+   "head_isof": "Gunfastr mn.",
+   "head_lex": "Gudfastr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1132",
+   "b": "U 598",
+   "sure": true,
+   "head_isof": "Auåmundr mn.",
+   "head_lex": "Audmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 1133",
+   "b": "U 1134",
+   "sure": true,
+   "head_isof": "Agviår mn. (jfr Aviår)",
+   "head_lex": "Agviðr mn. (jfr Aviðr)",
+   "carver": false,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1142",
+   "b": "U 1144",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1142",
+   "b": "U 1149",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1142",
+   "b": "U 932",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1142",
+   "b": "U 956",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 1142",
+   "b": "U 969",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1142",
+   "b": "U 986",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1142",
+   "b": "U 998",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1142",
+   "b": "U Fv1988;241",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 1144",
+   "b": "U 1149",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1144",
+   "b": "U 932",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1144",
+   "b": "U 956",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 1144",
+   "b": "U 969",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1144",
+   "b": "U 986",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1144",
+   "b": "U 998",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1144",
+   "b": "U Fv1988;241",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 1149",
+   "b": "U 932",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1149",
+   "b": "U 956",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 1149",
+   "b": "U 969",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1149",
+   "b": "U 986",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1149",
+   "b": "U 998",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1149",
+   "b": "U Fv1988;241",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 1151",
+   "b": "U 770",
+   "sure": false,
+   "head_isof": "Heain-/ HiaindTs kvn.",
+   "head_lex": "Heðin-/Hidindis kvn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 1152",
+   "b": "U 1158",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1152",
+   "b": "U 1161",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1152",
+   "b": "U 1164",
+   "sure": true,
+   "head_isof": "Arn-bErnlaug kvn.",
+   "head_lex": "Arn-/Ærnlaug kvn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 1152",
+   "b": "U 767",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1152",
+   "b": "U 796",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1152",
+   "b": "Vs 29",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1158",
+   "b": "U 1161",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1158",
+   "b": "U 1164",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1158",
+   "b": "U 767",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1158",
+   "b": "U 796",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1158",
+   "b": "Vs 29",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1161",
+   "b": "U 1164",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1161",
+   "b": "U 767",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1161",
+   "b": "U 796",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1161",
+   "b": "Vs 29",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1164",
+   "b": "U 767",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1164",
+   "b": "U 796",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1164",
+   "b": "Vs 29",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 1165",
+   "b": "U 768",
+   "sure": true,
+   "head_isof": "Nukki/Xokki mn.",
+   "head_lex": "Nukki/ Nokki mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 123",
+   "b": "U 41",
+   "sure": true,
+   "head_isof": "Ar(i)n-/ yEr(Onfastr mn.",
+   "head_lex": "Ar(i)n-/ZEr(i)nfastr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 123",
+   "b": "U 43",
+   "sure": true,
+   "head_isof": "Ar(i)n-/ yEr(Onfastr mn.",
+   "head_lex": "Ar(i)n-/ZEr(i)nfastr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 123",
+   "b": "U 79",
+   "sure": true,
+   "head_isof": "Ar(i)n-/ yEr(Onfastr mn.",
+   "head_lex": "Ar(i)n-/ZEr(i)nfastr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 130",
+   "b": "U 433",
+   "sure": true,
+   "head_isof": "Biorn mn.",
+   "head_lex": "Biorn mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 133",
+   "b": "U 141",
+   "sure": true,
+   "head_isof": "Guälaug kvn. (jfr Gullaug)",
+   "head_lex": "Gudlaug kvn. (jfr Gullaug)",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 135",
+   "b": "U 136",
+   "sure": true,
+   "head_isof": "Oyskeinn mn.",
+   "head_lex": "Oysteinn mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 135",
+   "b": "U 137",
+   "sure": true,
+   "head_isof": "Oyskeinn mn.",
+   "head_lex": "Oysteinn mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 135",
+   "b": "U 143",
+   "sure": true,
+   "head_isof": "Ingzfastr mn.",
+   "head_lex": "Ingifastr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 135",
+   "b": "U 147",
+   "sure": true,
+   "head_isof": "Ingzfastr mn.",
+   "head_lex": "Ingifastr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 135",
+   "b": "U 148",
+   "sure": true,
+   "head_isof": "Ingzfastr mn.",
+   "head_lex": "Ingifastr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 136",
+   "b": "U 137",
+   "sure": true,
+   "head_isof": "AstgärkEstriär kvn. (jfr Asfriär)",
+   "head_lex": "Astriðr/Æstriðr kvn. (jfr Asfriðr)",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 136",
+   "b": "U 143",
+   "sure": true,
+   "head_isof": "AstgärkEstriär kvn. (jfr Asfriär)",
+   "head_lex": "Astriðr/Æstriðr kvn. (jfr Asfriðr)",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 136",
+   "b": "U 310",
+   "sure": true,
+   "head_isof": "AstgärkEstriär kvn. (jfr Asfriär)",
+   "head_lex": "Astriðr/Æstriðr kvn. (jfr Asfriðr)",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 137",
+   "b": "U 143",
+   "sure": true,
+   "head_isof": "AstgärkEstriär kvn. (jfr Asfriär)",
+   "head_lex": "Astriðr/Æstriðr kvn. (jfr Asfriðr)",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 137",
+   "b": "U 310",
+   "sure": true,
+   "head_isof": "AstgärkEstriär kvn. (jfr Asfriär)",
+   "head_lex": "Astriðr/Æstriðr kvn. (jfr Asfriðr)",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 142",
+   "b": "U 143",
+   "sure": true,
+   "head_isof": "lörunnr kvn.",
+   "head_lex": "Torunnr kvn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 142",
+   "b": "U 147",
+   "sure": true,
+   "head_isof": "lörunnr kvn.",
+   "head_lex": "Torunnr kvn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 143",
+   "b": "U 147",
+   "sure": true,
+   "head_isof": "Ingzfastr mn.",
+   "head_lex": "Ingifastr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 143",
+   "b": "U 148",
+   "sure": true,
+   "head_isof": "Hamingu mn.",
+   "head_lex": "Hemingr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 143",
+   "b": "U 310",
+   "sure": true,
+   "head_isof": "AstgärkEstriär kvn. (jfr Asfriär)",
+   "head_lex": "Astriðr/Æstriðr kvn. (jfr Asfriðr)",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 144",
+   "b": "U 152",
+   "sure": true,
+   "head_isof": "Biorn mn.",
+   "head_lex": "Biorn mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 145",
+   "b": "U 162",
+   "sure": true,
+   "head_isof": "6/teffR mn. (jfr ÅkeKR, OletfR)",
+   "head_lex": "Olæifr mn. (jfr Alæifr, Olafr)",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 147",
+   "b": "U 148",
+   "sure": true,
+   "head_isof": "Ingzfastr mn.",
+   "head_lex": "Ingifastr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 153",
+   "b": "U 155",
+   "sure": true,
+   "head_isof": "Svainn mn.",
+   "head_lex": "Sveinn mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 160",
+   "b": "U 161",
+   "sure": true,
+   "head_isof": "Utfkx(ti)// mn.",
+   "head_lex": "Ulfkæ(ti)ll mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 160",
+   "b": "U 225",
+   "sure": true,
+   "head_isof": "Etymologi oviss, möjl. en bildning till kvn. —> Gyöa eller --> Gyriår. (Det",
+   "head_lex": "Etymologi oviss, möjl. en bildning till kvn.       > Gyða eller   > Gyridr. (Det",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 161",
+   "b": "U 225",
+   "sure": true,
+   "head_isof": "Ulfriku mn.",
+   "head_lex": "UlfR mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 161",
+   "b": "U 336",
+   "sure": true,
+   "head_isof": "Ulfriku mn.",
+   "head_lex": "UlfR mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 161",
+   "b": "U 343",
+   "sure": true,
+   "head_isof": "Ulfriku mn.",
+   "head_lex": "UlfR mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 161",
+   "b": "U 344",
+   "sure": true,
+   "head_isof": "Ulfriku mn.",
+   "head_lex": "UlfR mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 167",
+   "b": "U 170",
+   "sure": true,
+   "head_isof": "Kortform till mn. på -> Gunn-.",
+   "head_lex": "Gunni mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 167",
+   "b": "U 171",
+   "sure": true,
+   "head_isof": "Kortform till mn. på -> Gunn-.",
+   "head_lex": "Gunni mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 167",
+   "b": "U 177",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 167",
+   "b": "U 257",
+   "sure": false,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 167",
+   "b": "U 268",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 167",
+   "b": "U 308",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 167",
+   "b": "U 464",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 167",
+   "b": "U 605",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 167",
+   "b": "U 678",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 167",
+   "b": "U 945",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 170",
+   "b": "U 171",
+   "sure": true,
+   "head_isof": "Kortform till mn. på -> Gunn-.",
+   "head_lex": "Gunni mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 177",
+   "b": "U 257",
+   "sure": false,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 177",
+   "b": "U 268",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 177",
+   "b": "U 308",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 177",
+   "b": "U 464",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 177",
+   "b": "U 605",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 177",
+   "b": "U 678",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 177",
+   "b": "U 945",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 186",
+   "b": "U 188",
+   "sure": true,
+   "head_isof": "largaiRR mn.",
+   "head_lex": "largæirr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 194",
+   "b": "U 203",
+   "sure": true,
+   "head_isof": "Å/i el. Alli mn. (jfr 010",
+   "head_lex": "Ali el. Alli mn. (jfr Oli)",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 20",
+   "b": "U 29",
+   "sure": true,
+   "head_isof": "GunrikR mn.",
+   "head_lex": "Guðrikr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 208",
+   "b": "U 236",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 208",
+   "b": "U 337",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 208",
+   "b": "U 454",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 208",
+   "b": "U 669",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 208",
+   "b": "U 74",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 208",
+   "b": "U 862",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 208",
+   "b": "U Fv1946;258",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 209",
+   "b": "U 360",
+   "sure": true,
+   "head_isof": "Ar(i)n-liEr(Onmundr mn.",
+   "head_lex": "Ar(i)n-//Er(i)nmundr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 226",
+   "b": "U 328",
+   "sure": true,
+   "head_isof": "Gyriår kvn. (jfr Gunfrinr)",
+   "head_lex": "Gyridr kvn. (jfr Guðfriðr)",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 229",
+   "b": "U 231",
+   "sure": true,
+   "head_isof": "Hagdan mn.",
+   "head_lex": "Halfdan mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 229",
+   "b": "U 232",
+   "sure": true,
+   "head_isof": "Tobbil Tubbi mn.",
+   "head_lex": "Tobbi/ Tubbi mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 236",
+   "b": "U 237",
+   "sure": true,
+   "head_isof": "Ulfriku mn.",
+   "head_lex": "UlfR mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 236",
+   "b": "U 238",
+   "sure": true,
+   "head_isof": "Ulfriku mn.",
+   "head_lex": "UlfR mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 236",
+   "b": "U 337",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 236",
+   "b": "U 454",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 236",
+   "b": "U 669",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 236",
+   "b": "U 74",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 236",
+   "b": "U 862",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 236",
+   "b": "U Fv1946;258",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 237",
+   "b": "U 238",
+   "sure": true,
+   "head_isof": "Svainn mn.",
+   "head_lex": "Sveinn mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 240",
+   "b": "U 241",
+   "sure": true,
+   "head_isof": "DanR mn.",
+   "head_lex": "Danr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 244",
+   "b": "U 251",
+   "sure": true,
+   "head_isof": "Fasti mn.",
+   "head_lex": "Fasti mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 255",
+   "b": "U 267",
+   "sure": true,
+   "head_isof": "Biorn mn.",
+   "head_lex": "Biorn mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 255",
+   "b": "U 269",
+   "sure": true,
+   "head_isof": "Biorn mn.",
+   "head_lex": "Biorn mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 257",
+   "b": "U 268",
+   "sure": false,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 257",
+   "b": "U 308",
+   "sure": false,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 257",
+   "b": "U 464",
+   "sure": false,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 257",
+   "b": "U 605",
+   "sure": false,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 257",
+   "b": "U 678",
+   "sure": false,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 257",
+   "b": "U 945",
+   "sure": false,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 265",
+   "b": "U Fv1959;188",
+   "sure": true,
+   "head_isof": "Ar(on-/ \"Er(i)nvi kvn.",
+   "head_lex": "Ar(i)n-//Er(i)nmundr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 266",
+   "b": "U Fv1959;188",
+   "sure": true,
+   "head_isof": "Sigsteeinn mn.",
+   "head_lex": "Sigsteinn mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 267",
+   "b": "U 269",
+   "sure": true,
+   "head_isof": "Biorn mn.",
+   "head_lex": "Biorn mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 268",
+   "b": "U 308",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 268",
+   "b": "U 464",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 268",
+   "b": "U 605",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 268",
+   "b": "U 678",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 268",
+   "b": "U 945",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 273",
+   "b": "U 276",
+   "sure": true,
+   "head_isof": "An(d)svarr/Ansurr/Assurr/ Qssurr mn.",
+   "head_lex": "An(d)svarr/Ansurr/Assurr/Qssurr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 273",
+   "b": "U 277",
+   "sure": true,
+   "head_isof": "An(d)svarr/Ansurr/Assurr/ Qssurr mn.",
+   "head_lex": "An(d)svarr/Ansurr/Assurr/Qssurr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 276",
+   "b": "U 277",
+   "sure": true,
+   "head_isof": "An(d)svarr/Ansurr/Assurr/ Qssurr mn.",
+   "head_lex": "An(d)svarr/Ansurr/Assurr/Qssurr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 280",
+   "b": "U 281",
+   "sure": true,
+   "head_isof": "Vibign mn.",
+   "head_lex": "Vibiorn mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 285",
+   "b": "U 286",
+   "sure": true,
+   "head_isof": "Holmlaug kvn.",
+   "head_lex": "Holmlaug kvn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 29",
+   "b": "U 329",
+   "sure": true,
+   "head_isof": "Ragnfastr mn.",
+   "head_lex": "Inga kvn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 29",
+   "b": "U 330",
+   "sure": true,
+   "head_isof": "Ragnfastr mn.",
+   "head_lex": "Inga kvn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 29",
+   "b": "U 331",
+   "sure": true,
+   "head_isof": "Ragnfastr mn.",
+   "head_lex": "Inga kvn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 29",
+   "b": "U 332",
+   "sure": true,
+   "head_isof": "Ragnfastr mn.",
+   "head_lex": "Inga kvn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 29",
+   "b": "U 37",
+   "sure": true,
+   "head_isof": "körbigrn mn.",
+   "head_lex": "Þörbiorn mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 29",
+   "b": "U 405",
+   "sure": true,
+   "head_isof": "körbigrn mn.",
+   "head_lex": "Þörbiorn mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 29",
+   "b": "U 532",
+   "sure": true,
+   "head_isof": "Skakli mn.",
+   "head_lex": "Skakli mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 29",
+   "b": "U 70",
+   "sure": true,
+   "head_isof": "körbigrn mn.",
+   "head_lex": "Þörbiorn mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 293",
+   "b": "U 294",
+   "sure": true,
+   "head_isof": "Forkunnr/ -kubr/ -kundr mn.",
+   "head_lex": "Forkunnr/-kuðr/-kundr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 294",
+   "b": "U Fv1972;172",
+   "sure": true,
+   "head_isof": "Guälaug kvn. (jfr Gullaug)",
+   "head_lex": "Gudlaug kvn. (jfr Gullaug)",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 306",
+   "b": "U 307",
+   "sure": true,
+   "head_isof": "Ingimarr mn.",
+   "head_lex": "Ingimarr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 306",
+   "b": "U 311",
+   "sure": true,
+   "head_isof": "Ingimarr mn.",
+   "head_lex": "Ingimarr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 307",
+   "b": "U 311",
+   "sure": true,
+   "head_isof": "Ingimarr mn.",
+   "head_lex": "Ingimarr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 308",
+   "b": "U 464",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 308",
+   "b": "U 605",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 308",
+   "b": "U 678",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 308",
+   "b": "U 746",
+   "sure": true,
+   "head_isof": "Pörgautr mn.",
+   "head_lex": "Porgautr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 308",
+   "b": "U 945",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 308",
+   "b": "U 958",
+   "sure": true,
+   "head_isof": "Pörgautr mn.",
+   "head_lex": "Porgautr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 309",
+   "b": "U 310",
+   "sure": true,
+   "head_isof": "Ragnvaldr mn.",
+   "head_lex": "Ragnvaldr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 312",
+   "b": "U 313",
+   "sure": true,
+   "head_isof": "Gunnarr mn.",
+   "head_lex": "Gunnarr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 312",
+   "b": "U 314",
+   "sure": true,
+   "head_isof": "Holmdi-s kvn.",
+   "head_lex": "Holmdis kvn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 312",
+   "b": "U 315",
+   "sure": true,
+   "head_isof": "Faruffn mn.",
+   "head_lex": "Farulfr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 313",
+   "b": "U 314",
+   "sure": true,
+   "head_isof": "Holmdi-s kvn.",
+   "head_lex": "Holmdis kvn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 313",
+   "b": "U 315",
+   "sure": true,
+   "head_isof": "Gunnarr mn.",
+   "head_lex": "Gunnarr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 314",
+   "b": "U 315",
+   "sure": true,
+   "head_isof": "Holmdi-s kvn.",
+   "head_lex": "Holmdis kvn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 315",
+   "b": "U 316",
+   "sure": true,
+   "head_isof": "kör& mn. (jfr Pörfreår)",
+   "head_lex": "Þörðr mn. (jfr Þorfreðr)",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 320",
+   "b": "U 419",
+   "sure": true,
+   "head_isof": "KyffingR mn.",
+   "head_lex": "Aylfingr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 320",
+   "b": "U 445",
+   "sure": true,
+   "head_isof": "KyffingR mn.",
+   "head_lex": "Aylfingr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 326",
+   "b": "U 327",
+   "sure": true,
+   "head_isof": "Svainn mn.",
+   "head_lex": "Sveinn mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 329",
+   "b": "U 330",
+   "sure": true,
+   "head_isof": "Ragnfastr mn.",
+   "head_lex": "Inga kvn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 329",
+   "b": "U 331",
+   "sure": true,
+   "head_isof": "Ragnfastr mn.",
+   "head_lex": "Inga kvn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 329",
+   "b": "U 332",
+   "sure": true,
+   "head_isof": "Ragnfastr mn.",
+   "head_lex": "Inga kvn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 330",
+   "b": "U 331",
+   "sure": true,
+   "head_isof": "Ragnfastr mn.",
+   "head_lex": "Inga kvn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 330",
+   "b": "U 332",
+   "sure": true,
+   "head_isof": "Ragnfastr mn.",
+   "head_lex": "Inga kvn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 331",
+   "b": "U 332",
+   "sure": true,
+   "head_isof": "Ragnfastr mn.",
+   "head_lex": "Inga kvn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 336",
+   "b": "U 343",
+   "sure": true,
+   "head_isof": "Ulfriku mn.",
+   "head_lex": "UlfR mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 336",
+   "b": "U 344",
+   "sure": true,
+   "head_isof": "Ulfriku mn.",
+   "head_lex": "UlfR mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 337",
+   "b": "U 338",
+   "sure": true,
+   "head_isof": "Ragnfriar kvn.",
+   "head_lex": "Ragnfriðr kvn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 337",
+   "b": "U 454",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 337",
+   "b": "U 669",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 337",
+   "b": "U 74",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 337",
+   "b": "U 862",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 337",
+   "b": "U Fv1946;258",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 343",
+   "b": "U 344",
+   "sure": true,
+   "head_isof": "Ulfriku mn.",
+   "head_lex": "UlfR mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 343",
+   "b": "U 364",
+   "sure": true,
+   "head_isof": "Karsi mn.",
+   "head_lex": "Karsi mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 346",
+   "b": "U 356",
+   "sure": true,
+   "head_isof": "Biorn mn.",
+   "head_lex": "Biorn mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 37",
+   "b": "U 405",
+   "sure": true,
+   "head_isof": "körbigrn mn.",
+   "head_lex": "Þörbiorn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 37",
+   "b": "U 532",
+   "sure": true,
+   "head_isof": "körbigrn mn.",
+   "head_lex": "Þörbiorn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 37",
+   "b": "U 70",
+   "sure": true,
+   "head_isof": "körbigrn mn.",
+   "head_lex": "Þörbiorn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 379",
+   "b": "U 391",
+   "sure": true,
+   "head_isof": "körbigrn mn.",
+   "head_lex": "Þörbiorn mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 379",
+   "b": "U 467",
+   "sure": true,
+   "head_isof": "körbigrn mn.",
+   "head_lex": "Þörbiorn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 380",
+   "b": "U 640",
+   "sure": false,
+   "head_isof": "Guss (?) mn. (se kiss)",
+   "head_lex": "Guss (2) mn. (se Kuss)",
+   "carver": false,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 380",
+   "b": "U 648",
+   "sure": false,
+   "head_isof": "Guss (?) mn. (se kiss)",
+   "head_lex": "Guss (2) mn. (se Kuss)",
+   "carver": false,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 391",
+   "b": "U 467",
+   "sure": true,
+   "head_isof": "körbigrn mn.",
+   "head_lex": "Þörbiorn mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 405",
+   "b": "U 532",
+   "sure": true,
+   "head_isof": "körbigrn mn.",
+   "head_lex": "Þörbiorn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 405",
+   "b": "U 70",
+   "sure": true,
+   "head_isof": "körbigrn mn.",
+   "head_lex": "Þörbiorn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 41",
+   "b": "U 43",
+   "sure": true,
+   "head_isof": "Ar(i)n-/ yEr(Onfastr mn.",
+   "head_lex": "Ar(i)n-/ZEr(i)nfastr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 41",
+   "b": "U 79",
+   "sure": true,
+   "head_isof": "Ar(i)n-/ yEr(Onfastr mn.",
+   "head_lex": "Ar(i)n-/ZEr(i)nfastr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 419",
+   "b": "U 445",
+   "sure": true,
+   "head_isof": "KyffingR mn.",
+   "head_lex": "Aylfingr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 423",
+   "b": "U Fv1988;241",
+   "sure": true,
+   "head_isof": "Katill mn.",
+   "head_lex": "Kætill mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 429",
+   "b": "U 430",
+   "sure": true,
+   "head_isof": "Borgulfu mn.",
+   "head_lex": "Borgulfr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 43",
+   "b": "U 79",
+   "sure": true,
+   "head_isof": "Ar(i)n-/ yEr(Onfastr mn.",
+   "head_lex": "Ar(i)n-/ZEr(i)nfastr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 44",
+   "b": "U Fv1953;266",
+   "sure": true,
+   "head_isof": "Snari mn.",
+   "head_lex": "Snari mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 444",
+   "b": "U 445",
+   "sure": true,
+   "head_isof": "Ntesbign mn.",
+   "head_lex": "urspr. Nes-Bigrn, dvs. mn. > Bigrn med binamnsprefix.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 453",
+   "b": "U 454",
+   "sure": true,
+   "head_isof": "Gisl mn.",
+   "head_lex": "Gisl mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 454",
+   "b": "U 669",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 454",
+   "b": "U 74",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 454",
+   "b": "U 862",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 454",
+   "b": "U Fv1946;258",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 457",
+   "b": "U 458",
+   "sure": true,
+   "head_isof": "Svarthdbi mn.",
+   "head_lex": "Svarthofði mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 458",
+   "b": "U 459",
+   "sure": true,
+   "head_isof": "Sistr mn.",
+   "head_lex": "Æistr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 464",
+   "b": "U 605",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 464",
+   "b": "U 678",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 464",
+   "b": "U 945",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 479",
+   "b": "U 480",
+   "sure": true,
+   "head_isof": "Söti mn.",
+   "head_lex": "Söti mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 496",
+   "b": "U 497",
+   "sure": true,
+   "head_isof": "Ingzfastr mn.",
+   "head_lex": "Ingifastr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 503",
+   "b": "U 504",
+   "sure": true,
+   "head_isof": "Katgfastr mn.",
+   "head_lex": "Kætilfastr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 513",
+   "b": "U 540",
+   "sure": true,
+   "head_isof": "Hdkon mn.",
+   "head_lex": "Hakon mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 517",
+   "b": "U 558",
+   "sure": false,
+   "head_isof": "HdrukR mn.",
+   "head_lex": "Harukr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 532",
+   "b": "U 533",
+   "sure": true,
+   "head_isof": "Sig(P)rriår kvn.",
+   "head_lex": "Stg(þ)raðr kvn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 532",
+   "b": "U 70",
+   "sure": true,
+   "head_isof": "körbigrn mn.",
+   "head_lex": "Þörbiorn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 57",
+   "b": "U 58",
+   "sure": true,
+   "head_isof": "Sinarr (?) mn.",
+   "head_lex": "Sínarr (?) mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 599",
+   "b": "U 629",
+   "sure": true,
+   "head_isof": "Pörfastr mn.",
+   "head_lex": "Porfastr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 605",
+   "b": "U 678",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 605",
+   "b": "U 945",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 631",
+   "b": "U 632",
+   "sure": true,
+   "head_isof": "Stksi mn.",
+   "head_lex": "Sagsi mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 640",
+   "b": "U 648",
+   "sure": true,
+   "head_isof": "Guss (?) mn. (se kiss)",
+   "head_lex": "Guss (2) mn. (se Kuss)",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 641",
+   "b": "U 642",
+   "sure": true,
+   "head_isof": "Biorn mn.",
+   "head_lex": "Biorn mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 643",
+   "b": "U 644",
+   "sure": true,
+   "head_isof": "Andvätr (?) mn.",
+   "head_lex": "Andvettr (?) mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 643",
+   "b": "U 654",
+   "sure": true,
+   "head_isof": "Andvätr (?) mn.",
+   "head_lex": "Andvettr (?) mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 644",
+   "b": "U 654",
+   "sure": true,
+   "head_isof": "Andvätr (?) mn.",
+   "head_lex": "Andvettr (?) mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 652",
+   "b": "U 682",
+   "sure": true,
+   "head_isof": "Ar(i)n-kEr(i)nbign mn.",
+   "head_lex": "Ar(i)n-/ZEr(i)nbiorn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 652",
+   "b": "U 688",
+   "sure": true,
+   "head_isof": "Ar(i)n-kEr(i)nbign mn.",
+   "head_lex": "Ar(i)n-/ZEr(i)nbiorn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 668",
+   "b": "U 669",
+   "sure": true,
+   "head_isof": "Hirvardr mn.",
+   "head_lex": "Hiorvarðr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 669",
+   "b": "U 74",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 669",
+   "b": "U 862",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 669",
+   "b": "U Fv1946;258",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 678",
+   "b": "U 945",
+   "sure": true,
+   "head_isof": "Fötr mn.",
+   "head_lex": "Fotr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 682",
+   "b": "U 688",
+   "sure": true,
+   "head_isof": "Ar(i)n-kEr(i)nbign mn.",
+   "head_lex": "Ar(i)n-/ZEr(i)nbiorn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 700",
+   "b": "U 701",
+   "sure": true,
+   "head_isof": "Guti mn.",
+   "head_lex": "Guti mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 700",
+   "b": "U 723",
+   "sure": true,
+   "head_isof": "Guti mn.",
+   "head_lex": "Guti mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 700",
+   "b": "U 724",
+   "sure": true,
+   "head_isof": "Guti mn.",
+   "head_lex": "Guti mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 701",
+   "b": "U 723",
+   "sure": true,
+   "head_isof": "Guti mn.",
+   "head_lex": "Guti mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 701",
+   "b": "U 724",
+   "sure": true,
+   "head_isof": "Guti mn.",
+   "head_lex": "Guti mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 705",
+   "b": "U 706",
+   "sure": true,
+   "head_isof": "Hialmfastr mn.",
+   "head_lex": "Hialmfastr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 712",
+   "b": "U 713",
+   "sure": true,
+   "head_isof": "GaiRbirn mn.",
+   "head_lex": "Geirbiorn mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 72",
+   "b": "U 73",
+   "sure": true,
+   "head_isof": "Geräarr/Giarbarr mn.",
+   "head_lex": "Gerðarr/Giarðarr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 723",
+   "b": "U 724",
+   "sure": true,
+   "head_isof": "FroygaiRR mn.",
+   "head_lex": "Froygæirr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 733",
+   "b": "U 742",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 733",
+   "b": "U 759",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 733",
+   "b": "U 771",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 733",
+   "b": "U 775",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 733",
+   "b": "U 828",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 74",
+   "b": "U 862",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 74",
+   "b": "U Fv1946;258",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 742",
+   "b": "U 759",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 742",
+   "b": "U 771",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 742",
+   "b": "U 775",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 742",
+   "b": "U 828",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 746",
+   "b": "U 958",
+   "sure": true,
+   "head_isof": "Pörgautr mn.",
+   "head_lex": "Porgautr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 759",
+   "b": "U 771",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 759",
+   "b": "U 775",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 759",
+   "b": "U 828",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 762",
+   "b": "U 779",
+   "sure": true,
+   "head_isof": "largaiRR mn.",
+   "head_lex": "Jarl mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 763",
+   "b": "U 764",
+   "sure": true,
+   "head_isof": "Bråni mn.",
+   "head_lex": "Briini mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 767",
+   "b": "U 796",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 767",
+   "b": "Vs 29",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 77",
+   "b": "U 78",
+   "sure": true,
+   "head_isof": "Holmstainn mn.",
+   "head_lex": "Holmsteinn mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 771",
+   "b": "U 775",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 771",
+   "b": "U 828",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 775",
+   "b": "U 828",
+   "sure": true,
+   "head_isof": "Tiökumi mn.",
+   "head_lex": "Tiðkumi mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 796",
+   "b": "Vs 29",
+   "sure": true,
+   "head_isof": "HlYskeinn mn.",
+   "head_lex": "Hlifsteinn mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 844",
+   "b": "U 845",
+   "sure": true,
+   "head_isof": "AsgaiRR/iEsgreiRR mn.",
+   "head_lex": "Asgæirr/Æsgæirr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 851",
+   "b": "U 854",
+   "sure": false,
+   "head_isof": "Vani (?) mn. (se Vini)",
+   "head_lex": "Vani (2?) mn. (se Væni)",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 859",
+   "b": "U 860",
+   "sure": true,
+   "head_isof": "Fastbign mn.",
+   "head_lex": "Fastbiorn mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 862",
+   "b": "U Fv1946;258",
+   "sure": true,
+   "head_isof": "Viseti mn.",
+   "head_lex": "Viseti mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 884",
+   "b": "U 885",
+   "sure": true,
+   "head_isof": "VigR mn.",
+   "head_lex": "Vígr mn.",
+   "carver": false,
+   "stones": false,
+   "in_williams": true
+  },
+  {
+   "a": "U 901",
+   "b": "U 904",
+   "sure": true,
+   "head_isof": "IgulbiQrn mn.",
+   "head_lex": "Igulbiorn mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 916",
+   "b": "U 951",
+   "sure": true,
+   "head_isof": "Skakli mn.",
+   "head_lex": "Skakli mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 932",
+   "b": "U 956",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 932",
+   "b": "U 969",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 932",
+   "b": "U 986",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 932",
+   "b": "U 998",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 932",
+   "b": "U Fv1988;241",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 937",
+   "b": "U 990",
+   "sure": true,
+   "head_isof": "Gunnarr mn.",
+   "head_lex": "Gunnarr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 937",
+   "b": "U 991",
+   "sure": true,
+   "head_isof": "Gunnarr mn.",
+   "head_lex": "Gunnarr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 956",
+   "b": "U 969",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 956",
+   "b": "U 986",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 956",
+   "b": "U 998",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 956",
+   "b": "U Fv1988;241",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 961",
+   "b": "U Fv1953;263",
+   "sure": true,
+   "head_isof": "Iguffastr mn.",
+   "head_lex": "Toulfastr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 969",
+   "b": "U 986",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 969",
+   "b": "U 998",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 969",
+   "b": "U Fv1988;241",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 986",
+   "b": "U 998",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "U 986",
+   "b": "U Fv1988;241",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "U 990",
+   "b": "U 991",
+   "sure": true,
+   "head_isof": "Gunnarr mn.",
+   "head_lex": "Gunnarr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 990",
+   "b": "U 999",
+   "sure": true,
+   "head_isof": "Haursi mn.",
+   "head_lex": "Haursi mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "U 998",
+   "b": "U Fv1988;241",
+   "sure": true,
+   "head_isof": "Asmundr mn.",
+   "head_lex": "Asmundr mn.",
+   "carver": true,
+   "stones": false,
+   "in_williams": false
+  },
+  {
+   "a": "Vg 11",
+   "b": "Vg 13",
+   "sure": true,
+   "head_isof": "Katill mn.",
+   "head_lex": "Kætill mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Vg 12",
+   "b": "Vg 9",
+   "sure": true,
+   "head_isof": "Äle0 mn. (jfr 61afR, Ol&KR)",
+   "head_lex": "Aleifr mn. (jfr Olafr, Olæifr)",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Vg 139",
+   "b": "Vg 149",
+   "sure": false,
+   "head_isof": "Rugga (?) mn.",
+   "head_lex": "Rugga (?) mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Vs 18",
+   "b": "Vs 19",
+   "sure": true,
+   "head_isof": "Gunnvaldr mn.",
+   "head_lex": "Gunnvaldr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Vs 20",
+   "b": "Vs 27",
+   "sure": true,
+   "head_isof": "Litli mn.",
+   "head_lex": "Litli mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": false
+  },
+  {
+   "a": "Ög 162",
+   "b": "Ög Fv1970;310",
+   "sure": true,
+   "head_isof": "Gunnarr mn.",
+   "head_lex": "Gunnarr mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Ög 165",
+   "b": "Ög 81",
+   "sure": true,
+   "head_isof": "Pörkze(t011 mn.",
+   "head_lex": "Þörkæ(ti)ll mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Ög 165",
+   "b": "Ög 82",
+   "sure": true,
+   "head_isof": "Tosti mn.",
+   "head_lex": "Tosti mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Ög 165",
+   "b": "Ög 84",
+   "sure": true,
+   "head_isof": "Pörkze(t011 mn.",
+   "head_lex": "Þörkæ(ti)ll mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Ög 234",
+   "b": "Ög 237",
+   "sure": false,
+   "head_isof": "Karl mn.",
+   "head_lex": "Karl mn.",
+   "carver": false,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Ög 81",
+   "b": "Ög 82",
+   "sure": true,
+   "head_isof": "Pörkze(t011 mn.",
+   "head_lex": "Þörkæ(ti)ll mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Ög 81",
+   "b": "Ög 84",
+   "sure": true,
+   "head_isof": "Pörkze(t011 mn.",
+   "head_lex": "Þörkæ(ti)ll mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": true
+  },
+  {
+   "a": "Ög 82",
+   "b": "Ög 84",
+   "sure": true,
+   "head_isof": "Pörkze(t011 mn.",
+   "head_lex": "Þörkæ(ti)ll mn.",
+   "carver": true,
+   "stones": true,
+   "in_williams": true
+  }
+ ],
+ "validation": {
+  "n_pairs": 118,
+  "n_sure": 111,
+  "n_in_williams": 110,
+  "n_not_in_williams": 8,
+  "n_sure_not_in_williams": 6,
+  "n_carver_pairs_excluded": 178
+ }
+}
