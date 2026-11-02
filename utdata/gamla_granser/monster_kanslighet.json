@@ -1,0 +1,40 @@
+{
+ "note": "utanför planen: steg 1 Uppland utan mat_granit",
+ "units": 32,
+ "sizes": {
+  "attundaland": 9,
+  "roden": 7,
+  "tiundaland": 11,
+  "fjadrundaland": 5
+ },
+ "stones": 841,
+ "features": 24,
+ "alla": {
+  "chi2_real": 317.77198822007506,
+  "chi2_median_random": 154.18738339181283,
+  "chi2_p95_random": 228.41749587255885,
+  "p": 0.001,
+  "k_real": 13,
+  "k_median_random": 7.0,
+  "p_k": 0.028
+ },
+ "A": {
+  "chi2_real": 202.15371153134305,
+  "chi2_median_random": 109.49437691733377,
+  "chi2_p95_random": 149.15528045192025,
+  "p": 0.001,
+  "k_real": 11,
+  "k_median_random": 4.0,
+  "p_k": 0.004
+ },
+ "B": {
+  "chi2_real": 201.09503983399927,
+  "chi2_median_random": 109.74305061480193,
+  "chi2_p95_random": 160.1529711591349,
+  "p": 0.002,
+  "k_real": 9,
+  "k_median_random": 4.0,
+  "p_k": 0.02
+ },
+ "holds": true
+}

@@ -41,3 +41,8 @@ därför inte som hållande, men att skannern hittar den på egen hand är ett g
 - Fickorna bygger på 13–47 stenar per härad; de är mönster att pröva, inte slutsatser. Inget blir "Nytt" i appen förrän
   robusthetstrappan bekräftat det.
 - Häradsindelningen är ISOF:s (sen medeltid/nyare tid); hundarena i Uppland kan ha sett annorlunda ut på 1000-talet.
+
+## Känslighetsprov utan granit (utanför planen, 2026-11-02)
+Steg 1 för Uppland utan draget mat_granit (24 drag, samma 999 slumpindelningar): folklanden 318 mot median 154 och 95:e
+percentil 228, p 0,001; halvorna 202 mot 109 (p 0,001) och 201 mot 110 (p 0,002). 13 drag skiljer mot median 7.
+Resultatet beror alltså inte på berggrunden. (monster_kanslighet.py, monster_kanslighet.json)
