@@ -99,10 +99,10 @@ def chart(lang):
     return "\n".join(rows) + "\n:::"
 
 
-title = "Korset utan bönen – i Sotholms härad bad runstenarna nästan aldrig för de döda"
+title = "De gamla landen: Sotholm – runstenarna som inte bad"
 summary = ("På Södertörn höggs kors på runstenarna som överallt annars, men bönen för den döda själen kom nästan aldrig "
            "med: en sten av 43 i Sotholms härad, mot en av fem i resten av Södermanland. Bygdens egna ristare skrev den "
-           "aldrig. Den första artikeln i en serie om de gamla gränserna.")
+           "aldrig. Första delen i serien De gamla landen.")
 
 body = f"""Mitt i Handen, söder om Stockholm, står en runsten som en gång stod ensam på en rullstensås där fyra vägar möttes. Den som kom upp från Haningebygden mötte den först. Ristningen är djupt huggen och stilren: en orm som slingrar sig runt stenen, och överst ett kors. Texten lyder:
 
@@ -165,7 +165,7 @@ Ingen ristare är känd för den. Att undantaget dök upp så sent är en påmin
 
 ## Vad det säger om de gamla gränserna
 
-Det här är den första artikeln i en serie om de gamla gränserna. I Uppland har vi sett att folklandens gränser skiljer runstenarnas sed åt mer än vilka grannbygder som helst gör. Sotholm visar samma sak i liten skala: ett härad var inte bara en rad i en medeltida skattelängd, utan en bygd där man gjorde på sitt eget sätt. På andra sidan häradsgränsen bad var femte sten för den döde. I Sotholm gjorde nästan ingen det.
+Det här är första delen i serien De gamla landen, om folkland, små land och härader. I Uppland har vi sett att folklandens gränser skiljer runstenarnas sed åt mer än vilka grannbygder som helst gör. Sotholm visar samma sak i liten skala: ett härad var inte bara en rad i en medeltida skattelängd, utan en bygd där man gjorde på sitt eget sätt. På andra sidan häradsgränsen bad var femte sten för den döde. I Sotholm gjorde nästan ingen det.
 
 Vi vet inte varför. Det kan ha varit ristarnas skola, där formeln aldrig lärdes ut. Det kan ha varit familjerna, som ville ha korset men inte bönen. Det kan ha varit en kyrka eller en missionär som undervisade annorlunda just här. Data kan inte avgöra det. Men den som står vid Sö 269 i Handen står vid en sten som valde bort bönen, och kan fundera på vad det betydde för dem som reste den.
 
@@ -184,11 +184,11 @@ Vi vet inte varför. Det kan ha varit ristarnas skola, där formeln aldrig lärd
 - Den låsta analysplanen, stenarna och Vitkis beräkningar finns öppet på [GitHub](https://github.com/Precatio/runes) (analysplaner/2026-11-02-sotholm.md och 2026-11-02-gamla-granser-nya-monster.md).
 - Bild: Wikimedia Commons, med fotografen i bildtexten."""
 
-title_en = "The cross without the prayer – in the hundred of Sotholm the runestones hardly ever prayed for the dead"
+title_en = "The old lands: Sotholm – the runestones that did not pray"
 summary_en = ("On Södertörn, crosses were carved on the runestones as everywhere else, but the prayer for the dead "
               "person's soul almost never came with them: one stone of 43 in the hundred of Sotholm, against one in five in "
-              "the rest of Södermanland. The district's own carvers never wrote it. The first article in a series on the "
-              "old borders.")
+              "the rest of Södermanland. The district's own carvers never wrote it. The first part of the series The old "
+              "lands.")
 
 body_en = f"""In the middle of Handen, south of Stockholm, stands a runestone that once stood alone on an esker where four roads met. Anyone coming up from the Haninge countryside met it first. The carving is deep and clean: a serpent winding round the stone, and at the top a cross. The text reads:
 
@@ -251,7 +251,7 @@ No carver is known for it. That the exception turned up so late is a reminder th
 
 ## What it says about the old borders
 
-This is the first article in a series on the old borders. In Uppland we have seen that the borders of the folklands separate the customs of the runestones more than any neighbouring districts do. Sotholm shows the same thing on a small scale: a hundred was not just a line in a medieval tax roll, but a community that did things its own way. Across the boundary, one stone in five prayed for the dead. In Sotholm almost none did.
+This is the first part of the series The old lands, on folklands, small lands and hundreds. In Uppland we have seen that the borders of the folklands separate the customs of the runestones more than any neighbouring districts do. Sotholm shows the same thing on a small scale: a hundred was not just a line in a medieval tax roll, but a community that did things its own way. Across the boundary, one stone in five prayed for the dead. In Sotholm almost none did.
 
 We do not know why. It may have been the carvers' school, where the formula was never taught. It may have been the families, who wanted the cross but not the prayer. It may have been a church or a missionary who taught differently just here. The data cannot decide. But whoever stands by Sö 269 in Handen stands by a stone that left out the prayer, and can wonder what that meant to those who raised it.
 
@@ -275,7 +275,7 @@ for b in (body, body_en):
     assert b.count(":::chart") + b.count(":::box") == len(re.findall(r"^:::$", b, re.M)), "varje ruta och diagram ska stängas"
     assert "/karta" not in b and "/statistik" not in b
 
-out = {"slug": "korset-utan-bonen-sotholm", "title": title, "summary": summary, "body": body,
+out = {"slug": "de-gamla-landen-sotholm", "title": title, "summary": summary, "body": body,
        "title_en": title_en, "summary_en": summary_en, "body_en": body_en,
        "labels": ["Forskning", "Geografi", "Tro och magi", "Ristare", "Formler och syfte"]}
 from src import blog_labels  # noqa: E402
