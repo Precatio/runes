@@ -519,7 +519,41 @@ def people(m: dict) -> dict | None:
         f"En kvinna finns bland resarna oftare i Svealand än i Götaland, och söner och bröder dog oftare utanför Norden än fäder och makar.")
 
 
-ORDER = ["attribution", "anonymous", "change", "chronology", "geography", "text", "words", "messages", "people", "clusters",
+def names(m: dict) -> dict | None:
+    """Namn och släkt (r/names.R): namnled i arv, grannar som delar namn, namnens geografi efter de gamla gränserna."""
+    if not m or not m.get("available"):
+        return None
+    inh, nb, geo = m.get("inheritance") or {}, m.get("neighbours") or {}, m.get("geography") or {}
+    pc, sib = inh.get("pc") or {}, inh.get("sib") or {}
+    if pc.get("share") is None:
+        return None
+    rows = [r for r in _list_rows(geo.get("rows")) if r.get("holds")]
+    top = ", ".join(f"{r['name'].capitalize()} i {place_name(r['region'])}" for r in rows[:4])
+    answer = (f"Förälder och barn delar ett namnled i {_pct(pc['share'])} av paren, mot {_pct(pc.get('expected', 0))} om namnen "
+              f"hade fördelats slumpvis inom samma gamla region; syskon i {_pct(sib.get('share', 0))} mot {_pct(sib.get('expected', 0))}. "
+              + (f"Stenar som står mindre än en kilometer från varandra nämner samma ovanliga namn {str(nb.get('ratio')).replace('.', ',')} "
+                 f"gånger så ofta som slumpen ger. " if nb.get("ratio") else "")
+              + (f"{geo.get('n_holds', 0)} namn hör till en viss region och håller i båda halvorna, till exempel {top}." if rows else
+                 "Inget namn hör tydligt till en viss region när halvorna krävs."))
+    firm = bool(pc.get("holds")) and bool(nb.get("holds"))
+    return _section(
+        "names", "Vad säger namnen om släkterna och bygderna?",
+        "Namnen bar släkten vidare: barn fick delar av föräldrarnas namn, och samma namn återkommer på stenar nära varandra. "
+        "Med de gamla gränserna kan vi se om bygderna också hade sina egna namn.",
+        {"value": f"{_pct(pc['share'])} mot {_pct(pc.get('expected', 0))}", "label": "av förälder–barn-paren delar namnled, mot slumpen"},
+        answer, "troligt" if firm else "osäkert",
+        ["Namnskicket – att låta barnen ärva ett namnled – var en sed för en minoritet, men den syns tydligt.",
+         "Att grannstenar delar ovanliga namn pekar på släkter som höll sig kvar på sina gårdar."],
+        ["Namnen läses ur Rundatas normalisering och översättning; namnled delas med en enkel regel, och några led blir fel.",
+         "Ett namn som är vanligt i en region kan spegla en enda stor släkt där, inte en bygdesed."],
+        "Barn ärvde namnled från föräldrarna, och grannstenar delar ovanliga namn – släkterna syns i namnen.")
+
+
+def _list_rows(v) -> list:
+    return [] if v is None else v if isinstance(v, list) else [v]
+
+
+ORDER = ["attribution", "anonymous", "change", "chronology", "geography", "text", "words", "messages", "people", "names", "clusters",
          "network"]
 
 
@@ -535,6 +569,7 @@ def sections(res: dict) -> list[dict]:
         "words": words(res.get("words") or {}),
         "messages": messages(res.get("messages") or {}),
         "people": people(res.get("people") or {}),
+        "names": names(res.get("names") or {}),
         "clusters": clusters(res.get("clusters") or {}),
         "network": network(res.get("network") or {}),
     }

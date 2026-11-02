@@ -36,14 +36,14 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 R_DIR = os.path.join(ROOT, "r")
 CACHE_DIR = os.environ.get("R_CACHE_DIR", os.path.join(ROOT, "data", "cache", "r"))
 MODULES = ("geography", "clusters", "text", "attribution", "anonymous", "chronology", "dialect", "network", "change",
-           "remains", "hotspots", "words", "messages", "people")
+           "remains", "hotspots", "words", "messages", "people", "names")
 STONE_MODULES = ("stone", "landscape")
 MODULE_LABELS = {"geography": "Geografi", "clusters": "Klustring och MCA", "text": "Text och formler",
                  "attribution": "Attribueringsmodell", "anonymous": "Skrivmiljöer",
                  "chronology": "Seriation och datering",
                  "dialect": "Stavning och dialekter", "network": "Formelnätverk", "change": "Förändring i tid och rum",
                  "remains": "Lämningar runt stenarna", "hotspots": "Hot spots och kluster", "words": "Ordförrådet",
-                 "messages": "Budskapen", "people": "Människorna"}
+                 "messages": "Budskapen", "people": "Människorna", "names": "Namn och släkt"}
 REQUIRED_PACKAGES = ("jsonlite", "dplyr", "tidyr", "stringr", "ggplot2", "sf", "leaflet", "htmlwidgets",
                      "tidytext", "cluster", "FactoMineR", "factoextra", "tidymodels", "ranger", "ragg",
                      "ca", "stringdist", "igraph", "tidygraph", "ggraph", "terra", "gdistance", "raster", "png", "mgcv",
@@ -60,7 +60,7 @@ WATER_LAYERS = {
     "land": "https://naciscdn.org/naturalearth/10m/physical/ne_10m_land.zip",
 }
 
-CSV_COLUMNS = (["signum", "province", "district", "place", "parish", "lat", "lon", "carver", "has_carver", "carvers_uncertain",
+CSV_COLUMNS = (["signum", "province", "region_old", "district", "place", "parish", "lat", "lon", "carver", "has_carver", "carvers_uncertain",
                 "style", "material", "cross", "short_twig", "lost", "moved", "pagan", "n_words", "n_words_core", "carvers_all",
                 "style_from", "style_to"]
                + [f"cat_{k}" for k in CATEGORIES] + [f"trait_{k}" for k in TRAITS]
@@ -289,7 +289,8 @@ MODULE_FILES = {"geography": ("geography*", "geografi_*", "ristare_karta*"), "cl
                 "chronology": ("chronology*", "seriation_*"), "dialect": ("dialect*", "dialekt_*"),
                 "network": ("network*", "natverk_*"), "change": ("change*", "forandring_*"),
                 "remains": ("remains*", "lamningar_*", "landskap_genomsokning*"), "hotspots": ("hotspots*", "hotspot_*"),
-                "messages": ("messages*", "budskap_*"), "people": ("people*", "manniskor_*")}
+                "messages": ("messages*", "budskap_*"), "people": ("people*", "manniskor_*"),
+                "names": ("names*",)}
 
 # Kulturmiljöregistret's remains (scripts/fetch_raa_remains.py) and the place names and medieval churches
 # (scripts/fetch_place_names.py), read by remains.R; not part of the repository
@@ -339,6 +340,20 @@ def _people_hash() -> str:
     return h.hexdigest()[:16]
 
 
+def _names_hash() -> str:
+    """The name rules (src/names_data.py, src/entities.py), the links and the families it summarises, and the stones'
+    Viking Age regions: the names module is recomputed when any of them changes."""
+    h = hashlib.sha256()
+    for path in [os.path.join(ROOT, "src", f) for f in ("names_data.py", "entities.py")] + [
+            os.path.join(ROOT, "data", "links.json"), os.path.join(ROOT, "utdata", "slakt", "steg2a.json"), STONE_LANDS]:
+        if os.path.exists(path):
+            with open(path, "rb") as fh:
+                h.update(fh.read())
+        else:
+            h.update(b"none")
+    return h.hexdigest()[:16]
+
+
 def write_people(path: str):
     """Who raised each runestone, for whom, in which relation and of which gender (src/people.py), for r/people.R."""
     from api.rundata import store
@@ -375,7 +390,7 @@ def module_hashes(csv_data: bytes) -> dict[str, str]:
     for m in MODULES:  # run order, so upstream versions exist
         key = (base + _scripts_hash([f"{m}.R"]) + "".join(out[u] for u in DEPENDS.get(m, ()))
                + (_remains_hash() if m == "remains" else "") + (_messages_hash() if m == "messages" else "")
-               + (_people_hash() if m == "people" else ""))
+               + (_people_hash() if m == "people" else "") + (_names_hash() if m == "names" else ""))
         out[m] = hashlib.sha256(key.encode()).hexdigest()[:16]
     return out
 
@@ -599,12 +614,15 @@ def run_corpus(fp: str):
         water = ensure_water()
         write_messages(os.path.join(d, "messages.csv"))
         write_people(os.path.join(d, "people.csv"))
+        from src import names_data
+        nfiles = names_data.write(d, os.path.join(d, "corpus.csv"))
         from src import pattern_map, places
         params = {"corpus": os.path.join(d, "corpus.csv"), "water_dir": water, "corpus_dir": d, "seed": 2026,
                   "messages": os.path.join(d, "messages.csv"), "people": os.path.join(d, "people.csv"),
                   "tile_dir": os.path.join(CACHE_DIR, "terrain"), "remains": _if_exists(REMAINS),
                   "cult_names": _if_exists(CULT_NAMES), "places": _if_exists(PLACES), "churches": _if_exists(CHURCHES),
                   "stone_lands": _if_exists(STONE_LANDS),
+                  "names_pairs": nfiles["pairs"], "names_stones": nfiles["stones"], "names_family": nfiles["family"],
                   # The names of the map's patterns and kinds of place, for the figures' labels (hotspots.R, remains.R)
                   "pattern_labels": {k: label for k, label, *_ in pattern_map.PATTERNS},
                   "kind_labels": {k: label for k, label, *_ in places.KINDS}}
