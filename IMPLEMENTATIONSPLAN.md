@@ -161,23 +161,23 @@ känd/okänd …) och *drag B* eller *plats/tid* (landskap, härad, epok), och f
 Bakgrund: Upplands folkland gav en skarp gräns för *at*/*æftiR* (utdata/folkland/, 0ff3c59) där dagens landskap inte
 visar något; Smålands små land (utdata/smalanden/). Kartlagret Små land och städerna finns (e3eeb9b, bbee707).
 
-### 5.1 En vikingatida region per sten  — PÅGÅR
+### 5.1 En vikingatida region per sten — KLAR 2026-11-02 (src/regions.py, ISOF primär källa, sexårsgärden 1314 stämmer)
 Uppland → folkland, Småland → små land (finns, scripts/assign_sten_land.py), Gotland → tredingar (Wikipedia), övriga →
 landskapet som eget land. Källa och osäkerhet per region. Kolumnen `region_old` i korpusen (src/r_bridge.corpus_rows).
 
-### 5.2 Statistiken efter de gamla gränserna (låst plan)
+### 5.2 Statistiken efter de gamla gränserna (låst plan) — KLAR 2026-11-02 (plan 13084e18; jämförelse 605ba7cc → 622e0506 i utdata/gamla_granser/resultat.md: 14 av 31 håller hela trappan, regionskillnaderna skarpare i folklanden)
 Regiontermen i R-modulerna (robusthetstrappan, genomsökningar, ord, förändring m.fl.) byts från landskap till gammal
 region; landskapet räknas som jämförelse. Planen redovisar vilka fynd som står sig och vilka som ändras.
 
-### 5.3 Appen visar de gamla gränserna först
+### 5.3 Appen visar de gamla gränserna först — KLAR 2026-11-02 (kartan öppnar med Små land, regionfilter i Punkter, andelstabell per vikingatida indelning)
 Kartan öppnar med gränslagret Små land; filtret Landskap blir Region; tabeller per landskap visar de gamla landen först.
 
-### 5.4 Namn och släkt (ny sektion i Statistik (R), r/names.R)
+### 5.4 Namn och släkt (ny sektion i Statistik (R), r/names.R) — KLAR 2026-11-02 (plan bf6e080a; körning 7b9061c9: förälder–barn 3,7 mot 2,1 %, syskon 4,6 mot 2,5 % – halva B bara p 0,046, grannar <1 km 4,2×, 5 regionnamn håller, namnskicket skiljer inte, p 0,48)
 1 namnled i arv (förälder–barn, syskon; utdata/namngivning), 2 släktnätverket (data/links.json, utdata/slakt/steg2a),
 3 grannar delar namn (spatial-spacing), 4 namnens geografi per gammalt land, 5 namnskicket per land, 6 släktmönster
 (socken och avstånd mellan generationerna). 4–6 under låst plan.
 
-### 5.5 Gränsskannern (låst plan)
+### 5.5 Gränsskannern (låst plan) — KLAR 2026-11-02 (plan 7d22ff40; 4 skarpa gränser håller, alla mellan Upplands folkland; utdata/granser/resultat.md)
 Varje par av angränsande gamla land × varje drag: skarp vid gränsen eller gradient (som *at* Tiundaland–Attundaland).
 
 ## Prioordning 2026-10-26: det som går att göra utan Viktor

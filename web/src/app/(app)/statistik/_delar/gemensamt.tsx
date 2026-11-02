@@ -73,7 +73,7 @@ export const patternsFor = (patterns: Pattern[], key: string) => patterns.filter
 export const TOPIC: Record<string, string> = {
   attribution: "Vem ristade?", anonymous: "Skrivmiljöer", change: "Förändring", chronology: "Datering",
   geography: "Geografi", text: "Stavning och dialekt", clusters: "Grupper av stenar", network: "Formler och släkt",
-  words: "Ordförrådet", messages: "Budskap", people: "Människorna", question: "Egen fråga",
+  words: "Ordförrådet", messages: "Budskap", people: "Människorna", names: "Namn och släkt", question: "Egen fråga",
 };
 
 // The answer first: question, why it matters, the key number, the answer, a suggested interpretation and its limits
