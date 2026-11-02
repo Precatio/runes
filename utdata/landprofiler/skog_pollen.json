@@ -1,0 +1,1378 @@
+[
+ {
+  "site": "Ageröds Mosse",
+  "datasetid": 12,
+  "lat": 55.933291999999994,
+  "lon": 13.425594,
+  "n_samples": 5,
+  "ap_mean": 0.943926051896295,
+  "samples": [
+   {
+    "age": 862,
+    "ap": 0.89207258834766
+   },
+   {
+    "age": 925,
+    "ap": 0.9484004127966976
+   },
+   {
+    "age": 990,
+    "ap": 0.9721254355400697
+   },
+   {
+    "age": 1058,
+    "ap": 0.9441117764471058
+   },
+   {
+    "age": 1127,
+    "ap": 0.9629200463499421
+   }
+  ],
+  "province": "Sk",
+  "region": "Sk",
+  "harad": "Frosta hd",
+  "parish": "Munkarps sn",
+  "county": 11
+ },
+ {
+  "site": "Kansjön",
+  "datasetid": 1438,
+  "lat": 57.64055,
+  "lon": 14.53458,
+  "n_samples": 1,
+  "ap_mean": 0.8951456310679612,
+  "samples": [
+   {
+    "age": 1005,
+    "ap": 0.8951456310679612
+   }
+  ],
+  "province": "Sm",
+  "region": "tveta",
+  "harad": "Tveta hd",
+  "parish": "Forserums sn",
+  "county": 5
+ },
+ {
+  "site": "Bjärsjöholmssjön",
+  "datasetid": 3931,
+  "lat": 55.453773999999996,
+  "lon": 13.7798,
+  "n_samples": 5,
+  "ap_mean": 0.6922672145434199,
+  "samples": [
+   {
+    "age": 871,
+    "ap": 0.7458893871449925
+   },
+   {
+    "age": 934,
+    "ap": 0.7170923379174853
+   },
+   {
+    "age": 996,
+    "ap": 0.6900584795321637
+   },
+   {
+    "age": 1058,
+    "ap": 0.6759259259259259
+   },
+   {
+    "age": 1120,
+    "ap": 0.6323699421965318
+   }
+  ],
+  "province": "Sk",
+  "region": "Sk",
+  "harad": "Herrestads hd",
+  "parish": "Hedeskoga sn",
+  "county": 11
+ },
+ {
+  "site": "Dags Mosse",
+  "datasetid": 4011,
+  "lat": 58.32288,
+  "lon": 14.70652,
+  "n_samples": 7,
+  "ap_mean": 0.9093390574358177,
+  "samples": [
+   {
+    "age": 860,
+    "ap": 0.9315831344470963
+   },
+   {
+    "age": 880,
+    "ap": 0.9397865853658537
+   },
+   {
+    "age": 905,
+    "ap": 0.956973293768546
+   },
+   {
+    "age": 938,
+    "ap": 0.9196141479099679
+   },
+   {
+    "age": 980,
+    "ap": 0.8972296693476318
+   },
+   {
+    "age": 1031,
+    "ap": 0.8344722854973424
+   },
+   {
+    "age": 1093,
+    "ap": 0.8857142857142857
+   }
+  ],
+  "province": "Ög",
+  "region": "Ög",
+  "harad": "Dals hd",
+  "parish": "Väversunda sn",
+  "county": 4
+ },
+ {
+  "site": "Färskesjön",
+  "datasetid": 4037,
+  "lat": 56.15907,
+  "lon": 15.86049,
+  "n_samples": 4,
+  "ap_mean": 0.9377074404553896,
+  "samples": [
+   {
+    "age": 864,
+    "ap": 0.9296786389413989
+   },
+   {
+    "age": 957,
+    "ap": 0.9367190648931882
+   },
+   {
+    "age": 1049,
+    "ap": 0.9364161849710982
+   },
+   {
+    "age": 1141,
+    "ap": 0.948015873015873
+   }
+  ],
+  "province": "Bl",
+  "region": "Bl",
+  "harad": "Östra hd",
+  "parish": "Jämjö sn",
+  "county": 9
+ },
+ {
+  "site": "Lake Flarken",
+  "datasetid": 4042,
+  "lat": 58.55679,
+  "lon": 13.67319,
+  "n_samples": 2,
+  "ap_mean": 0.9472781748610208,
+  "samples": [
+   {
+    "age": 865,
+    "ap": 0.9473684210526315
+   },
+   {
+    "age": 1066,
+    "ap": 0.9471879286694102
+   }
+  ],
+  "province": "Vg",
+  "region": "Vg",
+  "harad": "Vadsbo hd",
+  "parish": "Timmersdala sn",
+  "county": 15
+ },
+ {
+  "site": "Krageholmssjön",
+  "datasetid": 4162,
+  "lat": 55.50078,
+  "lon": 13.74492,
+  "n_samples": 4,
+  "ap_mean": 0.8609594945590269,
+  "samples": [
+   {
+    "age": 901,
+    "ap": 0.8594339622641509
+   },
+   {
+    "age": 972,
+    "ap": 0.8326885880077369
+   },
+   {
+    "age": 1045,
+    "ap": 0.8635514018691589
+   },
+   {
+    "age": 1120,
+    "ap": 0.8881640260950606
+   }
+  ],
+  "province": "Sk",
+  "region": "Sk",
+  "harad": "Ljunits hd",
+  "parish": "Skårby sn",
+  "county": 11
+ },
+ {
+  "site": "Krageholmssjön",
+  "datasetid": 23013,
+  "lat": 55.50078,
+  "lon": 13.74492,
+  "n_samples": 6,
+  "ap_mean": 0.7543825467578374,
+  "samples": [
+   {
+    "age": 887,
+    "ap": 0.7340425531914894
+   },
+   {
+    "age": 934,
+    "ap": 0.7329136690647482
+   },
+   {
+    "age": 984,
+    "ap": 0.771850170261067
+   },
+   {
+    "age": 1035,
+    "ap": 0.7614678899082569
+   },
+   {
+    "age": 1088,
+    "ap": 0.7630662020905923
+   },
+   {
+    "age": 1144,
+    "ap": 0.762954796030871
+   }
+  ],
+  "province": "Sk",
+  "region": "Sk",
+  "harad": "Ljunits hd",
+  "parish": "Skårby sn",
+  "county": 11
+ },
+ {
+  "site": "Lilla Gloppsjön",
+  "datasetid": 4200,
+  "lat": 59.80167,
+  "lon": 14.62333,
+  "n_samples": 2,
+  "ap_mean": 0.9853541416566627,
+  "samples": [
+   {
+    "age": 949,
+    "ap": 0.9849939975990396
+   },
+   {
+    "age": 1055,
+    "ap": 0.9857142857142858
+   }
+  ],
+  "province": "Vs",
+  "region": "Vs",
+  "harad": "Grythytte och Hällefors hd",
+  "parish": "Hällefors sn",
+  "county": 17
+ },
+ {
+  "site": "Ran Viken",
+  "datasetid": 4370,
+  "lat": 56.28145,
+  "lon": 14.29056,
+  "n_samples": 3,
+  "ap_mean": 0.9691099400159057,
+  "samples": [
+   {
+    "age": 908,
+    "ap": 0.9673375123721544
+   },
+   {
+    "age": 1012,
+    "ap": 0.9754580020739717
+   },
+   {
+    "age": 1115,
+    "ap": 0.964534305601591
+   }
+  ],
+  "province": "Sk",
+  "region": "Sk",
+  "harad": "Ö. Göinge hd",
+  "parish": "Glimåkra sn",
+  "county": 10
+ },
+ {
+  "site": "Lake Sämbosjön",
+  "datasetid": 4403,
+  "lat": 57.16313,
+  "lon": 12.41426,
+  "n_samples": 13,
+  "ap_mean": 0.7807992750057614,
+  "samples": [
+   {
+    "age": 964,
+    "ap": 0.7781705700397702
+   },
+   {
+    "age": 977,
+    "ap": 0.7706462212486309
+   },
+   {
+    "age": 990,
+    "ap": 0.7364100288440204
+   },
+   {
+    "age": 1003,
+    "ap": 0.7156238291494942
+   },
+   {
+    "age": 1016,
+    "ap": 0.6954513148542999
+   },
+   {
+    "age": 1029,
+    "ap": 0.7900800624877954
+   },
+   {
+    "age": 1042,
+    "ap": 0.7751968503937008
+   },
+   {
+    "age": 1056,
+    "ap": 0.7801057770545159
+   },
+   {
+    "age": 1070,
+    "ap": 0.8192229038854806
+   },
+   {
+    "age": 1086,
+    "ap": 0.8300503893724233
+   },
+   {
+    "age": 1102,
+    "ap": 0.8309440086556668
+   },
+   {
+    "age": 1121,
+    "ap": 0.8092050209205021
+   },
+   {
+    "age": 1142,
+    "ap": 0.8192835981685969
+   }
+  ],
+  "province": "Hl",
+  "region": "Hl",
+  "harad": "Himle hd",
+  "parish": "Valinge sn",
+  "county": 12
+ },
+ {
+  "site": "Holtjärnen",
+  "datasetid": 21790,
+  "lat": 60.651793999999995,
+  "lon": 14.926326,
+  "n_samples": 2,
+  "ap_mean": 0.9846210282747333,
+  "samples": [
+   {
+    "age": 984,
+    "ap": 0.9880636604774535
+   },
+   {
+    "age": 1130,
+    "ap": 0.9811783960720131
+   }
+  ],
+  "province": "D",
+  "region": "D",
+  "harad": "Nedansiljans d:a tg",
+  "parish": "Åls sn",
+  "county": 19
+ },
+ {
+  "site": "Mabo Moss",
+  "datasetid": 24110,
+  "lat": 58.02114,
+  "lon": 16.05602,
+  "n_samples": 7,
+  "ap_mean": 0.9892507047882798,
+  "samples": [
+   {
+    "age": 881,
+    "ap": 0.9935442220787605
+   },
+   {
+    "age": 924,
+    "ap": 0.9912600145666424
+   },
+   {
+    "age": 967,
+    "ap": 0.9910313901345291
+   },
+   {
+    "age": 1011,
+    "ap": 0.9940074906367041
+   },
+   {
+    "age": 1055,
+    "ap": 0.9842141386410432
+   },
+   {
+    "age": 1099,
+    "ap": 0.9866036249014972
+   },
+   {
+    "age": 1143,
+    "ap": 0.9840940525587828
+   }
+  ],
+  "province": "Sm",
+  "region": "tjust",
+  "harad": "N. Tjusts hd",
+  "parish": "Dalhems sn",
+  "county": 7
+ },
+ {
+  "site": "Rönneholms Mosse",
+  "datasetid": 44727,
+  "lat": 55.918814,
+  "lon": 13.415878000000001,
+  "n_samples": 1,
+  "ap_mean": 1.0,
+  "samples": [
+   {
+    "age": 933,
+    "ap": 1.0
+   }
+  ],
+  "province": "Sk",
+  "region": "Sk",
+  "harad": "Onsjö hd",
+  "parish": "Stehags sn",
+  "county": 11
+ },
+ {
+  "site": "Rönneholms Mosse",
+  "datasetid": 44763,
+  "lat": 55.918814,
+  "lon": 13.415878000000001,
+  "n_samples": 1,
+  "ap_mean": 1.0,
+  "samples": [
+   {
+    "age": 933,
+    "ap": 1.0
+   }
+  ],
+  "province": "Sk",
+  "region": "Sk",
+  "harad": "Onsjö hd",
+  "parish": "Stehags sn",
+  "county": 11
+ },
+ {
+  "site": "Morttjern",
+  "datasetid": 45329,
+  "lat": 59.05972,
+  "lon": 11.61778,
+  "n_samples": 1,
+  "ap_mean": 0.9284671532846716,
+  "samples": [
+   {
+    "age": 1020,
+    "ap": 0.9284671532846716
+   }
+  ],
+  "province": "Ds",
+  "region": "Ds",
+  "harad": "Vedbo hd",
+  "parish": "Nössemarks sn",
+  "county": 14
+ },
+ {
+  "site": "Bjärabygget",
+  "datasetid": 53768,
+  "lat": 56.35,
+  "lon": 13.46667,
+  "n_samples": 8,
+  "ap_mean": 0.946354041613706,
+  "samples": [
+   {
+    "age": 850,
+    "ap": 0.954183266932271
+   },
+   {
+    "age": 870,
+    "ap": 0.9275979557069847
+   },
+   {
+    "age": 900,
+    "ap": 0.9373246024321796
+   },
+   {
+    "age": 940,
+    "ap": 0.9588441330998249
+   },
+   {
+    "age": 985.8,
+    "ap": 0.9539406345957011
+   },
+   {
+    "age": 1033.5,
+    "ap": 0.9555555555555556
+   },
+   {
+    "age": 1081.2,
+    "ap": 0.9588910133843213
+   },
+   {
+    "age": 1128.9,
+    "ap": 0.9244951712028094
+   }
+  ],
+  "province": "Sk",
+  "region": "Sk",
+  "harad": "N. Åsbo hd",
+  "parish": "Fagerhults sn",
+  "county": 10
+ },
+ {
+  "site": "Grisavad",
+  "datasetid": 53770,
+  "lat": 56.28333,
+  "lon": 13.33333,
+  "n_samples": 4,
+  "ap_mean": 0.7963414058052609,
+  "samples": [
+   {
+    "age": 855.6,
+    "ap": 0.6674679487179487
+   },
+   {
+    "age": 958.8,
+    "ap": 0.8615888615888616
+   },
+   {
+    "age": 1037.4,
+    "ap": 0.8432475884244373
+   },
+   {
+    "age": 1099.8,
+    "ap": 0.8130612244897959
+   }
+  ],
+  "province": "Sk",
+  "region": "Sk",
+  "harad": "N. Åsbo hd",
+  "parish": "Örkelljunga sn",
+  "county": 10
+ },
+ {
+  "site": "Uddared",
+  "datasetid": 53771,
+  "lat": 56.51667,
+  "lon": 13.25,
+  "n_samples": 3,
+  "ap_mean": 0.948364739835328,
+  "samples": [
+   {
+    "age": 935.9,
+    "ap": 0.9527272727272728
+   },
+   {
+    "age": 1024.2,
+    "ap": 0.9745098039215686
+   },
+   {
+    "age": 1112.5,
+    "ap": 0.9178571428571428
+   }
+  ],
+  "province": "Hl",
+  "region": "Hl",
+  "harad": "Höks hd",
+  "parish": "Knäreds sn",
+  "county": 12
+ },
+ {
+  "site": "Västragylet",
+  "datasetid": 53964,
+  "lat": 56.35,
+  "lon": 14.88333,
+  "n_samples": 1,
+  "ap_mean": 0.9686684073107049,
+  "samples": [
+   {
+    "age": 1034.1,
+    "ap": 0.9686684073107049
+   }
+  ],
+  "province": "Bl",
+  "region": "Bl",
+  "harad": "Bräkne hd",
+  "parish": "Ringamåla sn",
+  "county": 9
+ },
+ {
+  "site": "Ljustjärnen",
+  "datasetid": 53966,
+  "lat": 59.76,
+  "lon": 14.48222,
+  "n_samples": 4,
+  "ap_mean": 0.9495192710130301,
+  "samples": [
+   {
+    "age": 859,
+    "ap": 0.9494007989347537
+   },
+   {
+    "age": 947,
+    "ap": 0.9500462534690102
+   },
+   {
+    "age": 1037,
+    "ap": 0.9545875810936052
+   },
+   {
+    "age": 1129,
+    "ap": 0.9440424505547516
+   }
+  ],
+  "province": "Vs",
+  "region": "Vs",
+  "harad": "Grythytte och Hällefors hd",
+  "parish": "Hällefors sn",
+  "county": 17
+ },
+ {
+  "site": "Trälhultet",
+  "datasetid": 53974,
+  "lat": 56.8,
+  "lon": 12.9,
+  "n_samples": 2,
+  "ap_mean": 0.9544753086419753,
+  "samples": [
+   {
+    "age": 986.2,
+    "ap": 0.9506172839506173
+   },
+   {
+    "age": 1149.7,
+    "ap": 0.9583333333333334
+   }
+  ],
+  "province": "Hl",
+  "region": "Hl",
+  "harad": "Halmstads hd",
+  "parish": "Slättåkra sn",
+  "county": 12
+ },
+ {
+  "site": "Rogberga",
+  "datasetid": 53976,
+  "lat": 57.73611,
+  "lon": 14.28861,
+  "n_samples": 4,
+  "ap_mean": 0.5544316439892633,
+  "samples": [
+   {
+    "age": 866.5,
+    "ap": 0.5584158415841585
+   },
+   {
+    "age": 934,
+    "ap": 0.49320388349514566
+   },
+   {
+    "age": 1001.5,
+    "ap": 0.5806451612903226
+   },
+   {
+    "age": 1079.4,
+    "ap": 0.5854616895874263
+   }
+  ],
+  "province": "Sm",
+  "region": "tveta",
+  "harad": "Tveta hd",
+  "parish": "Rogberga sn",
+  "county": 5
+ },
+ {
+  "site": "Kullaberg",
+  "datasetid": 53982,
+  "lat": 56.29111,
+  "lon": 12.50556,
+  "n_samples": 5,
+  "ap_mean": 0.7868906021036945,
+  "samples": [
+   {
+    "age": 866.7,
+    "ap": 0.7353497164461248
+   },
+   {
+    "age": 933.4,
+    "ap": 0.8021778584392014
+   },
+   {
+    "age": 1000,
+    "ap": 0.7858220211161387
+   },
+   {
+    "age": 1066.7,
+    "ap": 0.768270944741533
+   },
+   {
+    "age": 1133.4,
+    "ap": 0.842832469775475
+   }
+  ],
+  "province": "Sk",
+  "region": "Sk",
+  "harad": "Luggude hd",
+  "parish": "Brunnby sn",
+  "county": 11
+ },
+ {
+  "site": "Övre myren från Skallskog",
+  "datasetid": 53984,
+  "lat": 57.48333,
+  "lon": 14.78333,
+  "n_samples": 2,
+  "ap_mean": 0.9664151637835848,
+  "samples": [
+   {
+    "age": 862,
+    "ap": 0.9615384615384616
+   },
+   {
+    "age": 1078,
+    "ap": 0.9712918660287081
+   }
+  ],
+  "province": "Sm",
+  "region": "njudung",
+  "harad": "Västra hd",
+  "parish": "Norra Sandsjö sn",
+  "county": 5
+ },
+ {
+  "site": "Stor-flen",
+  "datasetid": 53988,
+  "lat": 60.3,
+  "lon": 14.58333,
+  "n_samples": 5,
+  "ap_mean": 0.9802854139466035,
+  "samples": [
+   {
+    "age": 871,
+    "ap": 0.9875886524822695
+   },
+   {
+    "age": 903,
+    "ap": 0.9872262773722628
+   },
+   {
+    "age": 949,
+    "ap": 0.980836236933798
+   },
+   {
+    "age": 1036,
+    "ap": 0.9764065335753176
+   },
+   {
+    "age": 1123,
+    "ap": 0.9693693693693693
+   }
+  ],
+  "province": "D",
+  "region": "D",
+  "harad": "Nås och Malungs d:a tg",
+  "parish": "Nås sn",
+  "county": 19
+ },
+ {
+  "site": "Gilltjärnen",
+  "datasetid": 53991,
+  "lat": 60.08333,
+  "lon": 15.83333,
+  "n_samples": 1,
+  "ap_mean": 0.9816053511705686,
+  "samples": [
+   {
+    "age": 978.3214,
+    "ap": 0.9816053511705686
+   }
+  ],
+  "province": "Vs",
+  "region": "Vs",
+  "harad": "Gamla Norbergs bg",
+  "parish": "Norbergs sn",
+  "county": 18
+ },
+ {
+  "site": "Flahult",
+  "datasetid": 53993,
+  "lat": 56.96667,
+  "lon": 13.83333,
+  "n_samples": 1,
+  "ap_mean": 0.9533394327538883,
+  "samples": [
+   {
+    "age": 1007,
+    "ap": 0.9533394327538883
+   }
+  ],
+  "province": "Sm",
+  "region": "finnveden",
+  "harad": "Västbo hd",
+  "parish": "Tannåkers sn",
+  "county": 5
+ },
+ {
+  "site": "Exhult",
+  "datasetid": 53994,
+  "lat": 56.48333,
+  "lon": 13.65,
+  "n_samples": 9,
+  "ap_mean": 0.977498734212279,
+  "samples": [
+   {
+    "age": 875.35,
+    "ap": 0.9902534113060428
+   },
+   {
+    "age": 908.85,
+    "ap": 0.9768451519536903
+   },
+   {
+    "age": 942.35,
+    "ap": 0.9706314243759178
+   },
+   {
+    "age": 975.85,
+    "ap": 0.9802731411229135
+   },
+   {
+    "age": 1009.35,
+    "ap": 0.9659763313609467
+   },
+   {
+    "age": 1042.85,
+    "ap": 0.990990990990991
+   },
+   {
+    "age": 1076.35,
+    "ap": 0.9804560260586319
+   },
+   {
+    "age": 1109.85,
+    "ap": 0.9622641509433962
+   },
+   {
+    "age": 1140.931,
+    "ap": 0.9797979797979798
+   }
+  ],
+  "province": "Sm",
+  "region": "finnveden",
+  "harad": "Sunnerbo hd",
+  "parish": "Markaryds sn",
+  "county": 6
+ },
+ {
+  "site": "Bussjösjön",
+  "datasetid": 53995,
+  "lat": 55.46667,
+  "lon": 13.81667,
+  "n_samples": 2,
+  "ap_mean": 0.44401513778100077,
+  "samples": [
+   {
+    "age": 941.5,
+    "ap": 0.41696428571428573
+   },
+   {
+    "age": 1073.6,
+    "ap": 0.47106598984771575
+   }
+  ],
+  "province": "Sk",
+  "region": "Sk",
+  "harad": "Herrestads hd",
+  "parish": "Bromma sn",
+  "county": 11
+ },
+ {
+  "site": "Fårarps Mosse",
+  "datasetid": 53997,
+  "lat": 55.48833,
+  "lon": 13.90889,
+  "n_samples": 4,
+  "ap_mean": 0.4668399758881392,
+  "samples": [
+   {
+    "age": 870.3,
+    "ap": 0.47130153597413094
+   },
+   {
+    "age": 948.1,
+    "ap": 0.42825848849945236
+   },
+   {
+    "age": 1030.5,
+    "ap": 0.36224899598393573
+   },
+   {
+    "age": 1117.8,
+    "ap": 0.6055508830950378
+   }
+  ],
+  "province": "Sk",
+  "region": "Sk",
+  "harad": "Herrestads hd",
+  "parish": "Stora Herrestads sn",
+  "county": 11
+ },
+ {
+  "site": "Bjäresjösjön",
+  "datasetid": 53999,
+  "lat": 55.45917,
+  "lon": 13.75194,
+  "n_samples": 6,
+  "ap_mean": 0.557505254084552,
+  "samples": [
+   {
+    "age": 877.8246,
+    "ap": 0.5598548972188634
+   },
+   {
+    "age": 926.124,
+    "ap": 0.5426356589147286
+   },
+   {
+    "age": 976.2453,
+    "ap": 0.5737211634904714
+   },
+   {
+    "age": 1028.226,
+    "ap": 0.5114942528735632
+   },
+   {
+    "age": 1082.105,
+    "ap": 0.603875968992248
+   },
+   {
+    "age": 1137.919,
+    "ap": 0.5534495830174374
+   }
+  ],
+  "province": "Sk",
+  "region": "Sk",
+  "harad": "Herrestads hd",
+  "parish": "Bjäresjö sn",
+  "county": 11
+ },
+ {
+  "site": "Bökesjön",
+  "datasetid": 54001,
+  "lat": 55.57556,
+  "lon": 13.4375,
+  "n_samples": 4,
+  "ap_mean": 0.8706231684633161,
+  "samples": [
+   {
+    "age": 902.3,
+    "ap": 0.8662674650698603
+   },
+   {
+    "age": 987.7,
+    "ap": 0.8527131782945736
+   },
+   {
+    "age": 1031.8,
+    "ap": 0.9029779058597502
+   },
+   {
+    "age": 1076.7,
+    "ap": 0.8605341246290801
+   }
+  ],
+  "province": "Sk",
+  "region": "Sk",
+  "harad": "Bara hd",
+  "parish": "Genarps sn",
+  "county": 11
+ },
+ {
+  "site": "Stavsåkra",
+  "datasetid": 54003,
+  "lat": 57.02417,
+  "lon": 14.81306,
+  "n_samples": 1,
+  "ap_mean": 0.9524214103653356,
+  "samples": [
+   {
+    "age": 985,
+    "ap": 0.9524214103653356
+   }
+  ],
+  "province": "Sm",
+  "region": "varend",
+  "harad": "Norrvidinge hd",
+  "parish": "Tjureda sn",
+  "county": 6
+ },
+ {
+  "site": "Stobydeltat",
+  "datasetid": 54016,
+  "lat": 56.16667,
+  "lon": 13.83333,
+  "n_samples": 3,
+  "ap_mean": 0.9248345977621213,
+  "samples": [
+   {
+    "age": 922,
+    "ap": 0.9134615384615384
+   },
+   {
+    "age": 1030,
+    "ap": 0.9151219512195122
+   },
+   {
+    "age": 1138,
+    "ap": 0.9459203036053131
+   }
+  ],
+  "province": "Sk",
+  "region": "Sk",
+  "harad": "V. Göinge hd",
+  "parish": "Stoby sn",
+  "county": 10
+ },
+ {
+  "site": "Östra Ringarp",
+  "datasetid": 54018,
+  "lat": 56.26417,
+  "lon": 13.31861,
+  "n_samples": 4,
+  "ap_mean": 0.9338749001964142,
+  "samples": [
+   {
+    "age": 875,
+    "ap": 0.8632162661737524
+   },
+   {
+    "age": 925,
+    "ap": 0.9408396946564885
+   },
+   {
+    "age": 1002.5,
+    "ap": 0.9636711281070746
+   },
+   {
+    "age": 1107.5,
+    "ap": 0.9677725118483412
+   }
+  ],
+  "province": "Sk",
+  "region": "Sk",
+  "harad": "N. Åsbo hd",
+  "parish": "Örkelljunga sn",
+  "county": 10
+ },
+ {
+  "site": "Lake Avegöl",
+  "datasetid": 54020,
+  "lat": 57.68889,
+  "lon": 14.49444,
+  "n_samples": 4,
+  "ap_mean": 0.9617357139395211,
+  "samples": [
+   {
+    "age": 882.3,
+    "ap": 0.9364613880742912
+   },
+   {
+    "age": 962.1,
+    "ap": 0.962457337883959
+   },
+   {
+    "age": 1043.1,
+    "ap": 0.9785447761194029
+   },
+   {
+    "age": 1125.5,
+    "ap": 0.9694793536804309
+   }
+  ],
+  "province": "Sm",
+  "region": "tveta",
+  "harad": "Tveta hd",
+  "parish": "Forserums sn",
+  "county": 5
+ },
+ {
+  "site": "Värsjö Utmark",
+  "datasetid": 54022,
+  "lat": 56.31667,
+  "lon": 13.43333,
+  "n_samples": 6,
+  "ap_mean": 0.9589536537892536,
+  "samples": [
+   {
+    "age": 896.7,
+    "ap": 0.9662921348314607
+   },
+   {
+    "age": 934,
+    "ap": 0.9640350877192982
+   },
+   {
+    "age": 990,
+    "ap": 0.9338709677419355
+   },
+   {
+    "age": 1036.7,
+    "ap": 0.9807524059492564
+   },
+   {
+    "age": 1081.4,
+    "ap": 0.9489539748953975
+   },
+   {
+    "age": 1092.1,
+    "ap": 0.9598173515981735
+   }
+  ],
+  "province": "Sk",
+  "region": "Sk",
+  "harad": "N. Åsbo hd",
+  "parish": "Fagerhults sn",
+  "county": 10
+ },
+ {
+  "site": "Flinkasjön",
+  "datasetid": 54024,
+  "lat": 56.25444,
+  "lon": 13.24333,
+  "n_samples": 3,
+  "ap_mean": 0.904072923811719,
+  "samples": [
+   {
+    "age": 868.9,
+    "ap": 0.8994464944649446
+   },
+   {
+    "age": 1001.7,
+    "ap": 0.9201485608170845
+   },
+   {
+    "age": 1134.6,
+    "ap": 0.892623716153128
+   }
+  ],
+  "province": "Sk",
+  "region": "Sk",
+  "harad": "N. Åsbo hd",
+  "parish": "Rya sn",
+  "county": 10
+ },
+ {
+  "site": "Siggaboda",
+  "datasetid": 54026,
+  "lat": 56.46667,
+  "lon": 14.56667,
+  "n_samples": 5,
+  "ap_mean": 0.9805293804120817,
+  "samples": [
+   {
+    "age": 857,
+    "ap": 0.97815362931642
+   },
+   {
+    "age": 894,
+    "ap": 0.9769291964996022
+   },
+   {
+    "age": 931,
+    "ap": 0.983719782930439
+   },
+   {
+    "age": 1020,
+    "ap": 0.9818054583624912
+   },
+   {
+    "age": 1117,
+    "ap": 0.9820388349514563
+   }
+  ],
+  "province": "Sm",
+  "region": "varend",
+  "harad": "Kinnevalds hd",
+  "parish": "Almundsryds sn",
+  "county": 6
+ },
+ {
+  "site": "Mattarp",
+  "datasetid": 54028,
+  "lat": 57.48333,
+  "lon": 14.61667,
+  "n_samples": 7,
+  "ap_mean": 0.7361947923328553,
+  "samples": [
+   {
+    "age": 864,
+    "ap": 0.9630184907546226
+   },
+   {
+    "age": 955,
+    "ap": 0.9474662947466295
+   },
+   {
+    "age": 978,
+    "ap": 0.9235459662288931
+   },
+   {
+    "age": 1000,
+    "ap": 0.903755868544601
+   },
+   {
+    "age": 1046,
+    "ap": 0.6384615384615384
+   },
+   {
+    "age": 1092,
+    "ap": 0.34051497635312666
+   },
+   {
+    "age": 1132,
+    "ap": 0.43660041124057575
+   }
+  ],
+  "province": "Sm",
+  "region": "njudung",
+  "harad": "Västra hd",
+  "parish": "Bringetofta sn",
+  "county": 5
+ },
+ {
+  "site": "Bocksten site A",
+  "datasetid": 54030,
+  "lat": 57.11667,
+  "lon": 12.56667,
+  "n_samples": 7,
+  "ap_mean": 0.9118074323202748,
+  "samples": [
+   {
+    "age": 857,
+    "ap": 0.9357884796978282
+   },
+   {
+    "age": 876,
+    "ap": 0.9306243805748265
+   },
+   {
+    "age": 924,
+    "ap": 0.9102803738317757
+   },
+   {
+    "age": 972,
+    "ap": 0.888560157790927
+   },
+   {
+    "age": 1024,
+    "ap": 0.9209209209209209
+   },
+   {
+    "age": 1077,
+    "ap": 0.9152215799614644
+   },
+   {
+    "age": 1115,
+    "ap": 0.8812561334641805
+   }
+  ],
+  "province": "Hl",
+  "region": "Hl",
+  "harad": "Faurås hd",
+  "parish": "Svartrå sn",
+  "county": 12
+ },
+ {
+  "site": "Lake Öagöl",
+  "datasetid": 57602,
+  "lat": 57.20944,
+  "lon": 14.80083,
+  "n_samples": 6,
+  "ap_mean": 0.9623570622174266,
+  "samples": [
+   {
+    "age": 892,
+    "ap": 0.9460500963391136
+   },
+   {
+    "age": 944,
+    "ap": 0.9747899159663865
+   },
+   {
+    "age": 997,
+    "ap": 0.9625668449197861
+   },
+   {
+    "age": 1050,
+    "ap": 0.9660697455230914
+   },
+   {
+    "age": 1106,
+    "ap": 0.9638047138047138
+   },
+   {
+    "age": 1150,
+    "ap": 0.9608610567514677
+   }
+  ],
+  "province": "Sm",
+  "region": "varend",
+  "harad": "Norrvidinge hd",
+  "parish": "Asa sn",
+  "county": 6
+ },
+ {
+  "site": "Lillsjön",
+  "datasetid": 59964,
+  "lat": 57.93223,
+  "lon": 16.38903,
+  "n_samples": 4,
+  "ap_mean": 0.9180453503546918,
+  "samples": [
+   {
+    "age": 915,
+    "ap": 0.9162640901771336
+   },
+   {
+    "age": 986,
+    "ap": 0.9431372549019608
+   },
+   {
+    "age": 1052,
+    "ap": 0.916030534351145
+   },
+   {
+    "age": 1122,
+    "ap": 0.8967495219885278
+   }
+  ],
+  "province": "Sm",
+  "region": "tjust",
+  "harad": "N. Tjusts hd",
+  "parish": "Lofta sn",
+  "county": 7
+ }
+]

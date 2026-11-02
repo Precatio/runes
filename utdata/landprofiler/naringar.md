@@ -1,0 +1,210 @@
+# Näringar och hantverk per land (beskrivande, fornlämningsregistret)
+
+Andel av alla registrerade lämningar i enheten; i parentes resten av landskapet. Kvot = enhetens andel delad med restens, inom samma län (registret är inventerat länsvis). Visar kategorier där kvoten inom länet är ≥ 2 eller ≤ 0,5 och enheten har minst 20 lämningar i kategorin. Beskrivande underlag, inte prövade fynd.
+
+- **nordertredingen** (land, G, 16394 lämningar): offer och kult 0.4 % (0.2 %), kvot inom län 2.2; hällristningar 3.3 % (8.2 %), kvot inom län 0.4; runristningar 0.4 % (1.0 %), kvot inom län 0.4; kolning (mest efter 1500) 0.2 % (0.3 %), kvot inom län 0.5
+- **sudertredingen** (land, G, 12110 lämningar): offer och kult 0.2 % (0.4 %), kvot inom län 0.5; hällristningar 8.2 % (3.3 %), kvot inom län 2.5; runristningar 1.0 % (0.4 %), kvot inom län 2.7; kolning (mest efter 1500) 0.3 % (0.2 %), kvot inom län 2.1
+- **aspeland** (land, Sm, 2036 lämningar): järnframställning 1.5 % (1.8 %), kvot inom län 0.5; gravar 3.1 % (17.1 %), kvot inom län 0.1; kolning (mest efter 1500) 11.7 % (7.2 %), kvot inom län 2.2
+- **finnveden** (land, Sm, 19059 lämningar): hägnader 0.6 % (0.9 %), kvot inom län 0.4; boplatser 3.6 % (2.2 %), kvot inom län 3.1; hällristningar 1.1 % (1.9 %), kvot inom län 4.2; runristningar 0.2 % (0.2 %), kvot inom län 0.5
+- **handbord** (land, Sm, 3986 lämningar): fångstgropar 1.8 % (0.5 %), kvot inom län 3.1; hällristningar 0.7 % (1.8 %), kvot inom län 0.2
+- **mo** (land, Sm, 3229 lämningar): kolning (mest efter 1500) 16.4 % (7.0 %), kvot inom län 2.3
+- **more** (land, Sm, 7151 lämningar): järnframställning 8.6 % (1.3 %), kvot inom län 7.0; boplatser 7.2 % (2.1 %), kvot inom län 2.6; hällristningar 1.3 % (1.8 %), kvot inom län 0.3; kolning (mest efter 1500) 2.8 % (7.6 %), kvot inom län 0.4
+- **njudung** (land, Sm, 9924 lämningar): järnframställning 0.5 % (1.9 %), kvot inom län 0.5; boplatser 0.5 % (2.7 %), kvot inom län 0.2; runristningar 0.5 % (0.2 %), kvot inom län 2.0; kolning (mest efter 1500) 4.2 % (7.6 %), kvot inom län 0.5
+- **sevede** (land, Sm, 9411 lämningar): järnframställning 0.7 % (1.9 %), kvot inom län 0.2; tomtningar 0.3 % (0.0 %), kvot inom län 2.7; hällristningar 1.2 % (1.8 %), kvot inom län 0.3; kolning (mest efter 1500) 9.2 % (7.1 %), kvot inom län 2.2
+- **tjust** (land, Sm, 9450 lämningar): fångstgropar 0.3 % (0.6 %), kvot inom län 0.3; hällristningar 9.4 % (1.0 %), kvot inom län 9.0; gravar 37.1 % (14.8 %), kvot inom län 2.3
+- **tveta** (land, Sm, 6247 lämningar): järnframställning 2.1 % (1.8 %), kvot inom län 3.1; hägnader 2.8 % (0.7 %), kvot inom län 2.6; kolning (mest efter 1500) 14.5 % (6.8 %), kvot inom län 2.2
+- **varend** (land, Sm, 23493 lämningar): boplatser 1.5 % (2.8 %), kvot inom län 0.3; runristningar 0.1 % (0.2 %), kvot inom län 0.2; kolning (mest efter 1500) 9.8 % (6.5 %), kvot inom län 8.0
+- **vedbo** (land, Sm, 6755 lämningar): järnframställning 0.4 % (1.9 %), kvot inom län 0.4; boplatser 0.4 % (2.6 %), kvot inom län 0.2
+- **attundaland** (land, U, 16234 lämningar): fångstgropar 0.2 % (0.7 %), kvot inom län 0.4; hägnader 8.3 % (2.8 %), kvot inom län 3.9; båtar och hamnar 0.3 % (0.3 %), kvot inom län 0.2; boplatser 2.6 % (3.1 %), kvot inom län 2.1; hällristningar 2.7 % (5.8 %), kvot inom län 3.6; runristningar 3.0 % (1.1 %), kvot inom län 3.1; kolning (mest efter 1500) 0.2 % (2.4 %), kvot inom län 0.1
+- **fjadrundaland** (land, U, 12734 lämningar): fångstgropar 0.5 % (0.6 %), kvot inom län 0.5; åker och röjning 0.9 % (3.4 %), kvot inom län 0.3; hällristningar 14.9 % (3.0 %), kvot inom län 7.9; kolning (mest efter 1500) 1.0 % (2.1 %), kvot inom län 0.0
+- **roden** (land, U, 10569 lämningar): fångstgropar 0.6 % (0.6 %), kvot inom län 2.2; hägnader 2.7 % (4.3 %), kvot inom län 0.4; båtar och hamnar 0.9 % (0.2 %), kvot inom län 4.4; hällristningar 0.5 % (5.9 %), kvot inom län 0.2; runristningar 1.0 % (1.7 %), kvot inom län 0.4; kolning (mest efter 1500) 1.7 % (2.0 %), kvot inom län 5.3
+- **tiundaland** (land, U, 29870 lämningar): järnframställning 0.2 % (0.0 %), kvot inom län 3.0; fångstgropar 0.8 % (0.4 %), kvot inom län 2.2; åker och röjning 2.9 % (3.0 %), kvot inom län 2.3; hällristningar 2.3 % (7.1 %), kvot inom län 0.1; kolning (mest efter 1500) 3.5 % (0.8 %), kvot inom län 28.2
+- **Bräkne hd** (härad, Bl, 4345 lämningar): järnframställning 0.5 % (0.2 %), kvot inom län 2.5; åker och röjning 2.9 % (6.8 %), kvot inom län 0.4; boplatser 1.4 % (3.6 %), kvot inom län 0.4
+- **Listers hd** (härad, Bl, 3997 lämningar): fångstgropar 1.0 % (0.4 %), kvot inom län 2.3; hägnader 2.1 % (0.7 %), kvot inom län 3.1; boplatser 5.9 % (2.2 %), kvot inom län 2.7; gravar 5.1 % (16.2 %), kvot inom län 0.3
+- **Medelstads hd** (härad, Bl, 5921 lämningar): kolning (mest efter 1500) 4.2 % (1.4 %), kvot inom län 2.9
+- **Bullarens hd** (härad, Bo, 1175 lämningar): åker och röjning 3.1 % (1.3 %), kvot inom län 2.4
+- **Inlands Fräkne hd** (härad, Bo, 1012 lämningar): åker och röjning 3.8 % (1.3 %), kvot inom län 2.9
+- **Inlands Nordre hd** (härad, Bo, 2601 lämningar): åker och röjning 3.2 % (1.2 %), kvot inom län 2.6; hällristningar 4.8 % (12.5 %), kvot inom län 0.4; kolning (mest efter 1500) 2.5 % (0.4 %), kvot inom län 6.0
+- **Inlands Södre hd** (härad, Bo, 1984 lämningar): åker och röjning 3.0 % (1.3 %), kvot inom län 2.3; hägnader 4.3 % (1.3 %), kvot inom län 3.4; hällristningar 5.4 % (12.4 %), kvot inom län 0.4
+- **Kville hd** (härad, Bo, 2818 lämningar): tomtningar 3.3 % (1.6 %), kvot inom län 2.1; hällristningar 31.3 % (10.4 %), kvot inom län 3.0
+- **Lane hd** (härad, Bo, 3127 lämningar): hällristningar 2.4 % (12.9 %), kvot inom län 0.2
+- **Orusts v. hd** (härad, Bo, 2032 lämningar): tomtningar 3.7 % (1.6 %), kvot inom län 2.3; hällristningar 5.1 % (12.4 %), kvot inom län 0.4
+- **Orusts ö. hd** (härad, Bo, 1194 lämningar): hägnader 2.9 % (1.4 %), kvot inom län 2.1; hällristningar 3.9 % (12.3 %), kvot inom län 0.3
+- **Sotenäs hd** (härad, Bo, 3227 lämningar): hägnader 4.0 % (1.2 %), kvot inom län 3.3; hällristningar 27.2 % (10.5 %), kvot inom län 2.6
+- **Sörbygdens hd** (härad, Bo, 1032 lämningar): boplatser 4.8 % (19.6 %), kvot inom län 0.2; hällristningar 1.9 % (12.3 %), kvot inom län 0.2
+- **Tanums hd** (härad, Bo, 4373 lämningar): tomtningar 0.8 % (1.9 %), kvot inom län 0.5; hällristningar 22.3 % (10.6 %), kvot inom län 2.1
+- **V. Hisings hd** (härad, Bo, 2481 lämningar): tomtningar 7.9 % (1.3 %), kvot inom län 6.0; offer och kult 0.8 % (0.2 %), kvot inom län 4.1; hällristningar 1.5 % (12.7 %), kvot inom län 0.1
+- **Falu d:a n. tg** (härad, D, 3492 lämningar): järnframställning 1.1 % (5.0 %), kvot inom län 0.2; hägnader 0.7 % (0.1 %), kvot inom län 4.6; boplatser 1.8 % (3.8 %), kvot inom län 0.5; kolning (mest efter 1500) 6.9 % (14.9 %), kvot inom län 0.5
+- **Falu d:a s. tg** (härad, D, 2477 lämningar): fångstgropar 1.5 % (5.3 %), kvot inom län 0.3; åker och röjning 1.4 % (5.6 %), kvot inom län 0.2
+- **Folkare hd** (härad, D, 1557 lämningar): åker och röjning 1.4 % (5.5 %), kvot inom län 0.3; gravar 4.0 % (1.6 %), kvot inom län 2.6; fäbodar (mest efter 1500) 1.3 % (4.6 %), kvot inom län 0.3
+- **Hedemora tg** (härad, D, 3270 lämningar): fångstgropar 1.2 % (5.4 %), kvot inom län 0.2
+- **Leksands och Gagnefs tg** (härad, D, 783 lämningar): åker och röjning 14.8 % (5.0 %), kvot inom län 3.0
+- **Mora och Orsa tg** (härad, D, 2946 lämningar): järnframställning 10.7 % (3.8 %), kvot inom län 2.8; fångstgropar 10.7 % (4.3 %), kvot inom län 2.5; åker och röjning 2.7 % (5.6 %), kvot inom län 0.5; kolning (mest efter 1500) 33.1 % (11.7 %), kvot inom län 2.8; fäbodar (mest efter 1500) 2.1 % (4.7 %), kvot inom län 0.4
+- **Nedansiljans d:a tg** (härad, D, 5435 lämningar): fångstgropar 2.6 % (5.5 %), kvot inom län 0.5; åker och röjning 10.6 % (4.0 %), kvot inom län 2.6; fäbodar (mest efter 1500) 7.6 % (3.7 %), kvot inom län 2.1
+- **Nås och Malungs d:a tg** (härad, D, 3553 lämningar): fångstgropar 16.0 % (3.4 %), kvot inom län 4.8
+- **Västerbergslags d:a tg** (härad, D, 3806 lämningar): fångstgropar 1.1 % (5.5 %), kvot inom län 0.2; åker och röjning 2.4 % (5.7 %), kvot inom län 0.4; boplatser 1.4 % (3.9 %), kvot inom län 0.4; gravar 0.6 % (1.9 %), kvot inom län 0.3
+- **Älvdals, Särna och Idre tg** (härad, D, 965 lämningar): järnframställning 12.5 % (4.3 %), kvot inom län 2.9; fångstgropar 11.1 % (4.7 %), kvot inom län 2.3
+- **Sundals hd** (härad, Ds, 1405 lämningar): hällristningar 1.7 % (4.1 %), kvot inom län 0.4
+- **Tössbo hd** (härad, Ds, 1152 lämningar): åker och röjning 1.8 % (4.6 %), kvot inom län 0.4; kolning (mest efter 1500) 1.7 % (0.6 %), kvot inom län 3.1
+- **Vedbo hd** (härad, Ds, 2801 lämningar): offer och kult 1.4 % (0.6 %), kvot inom län 2.4; kolning (mest efter 1500) 1.1 % (0.5 %), kvot inom län 2.1
+- **Gotlands län n. hd** (härad, G, 16394 lämningar): offer och kult 0.4 % (0.2 %), kvot inom län 2.2; hällristningar 3.3 % (8.2 %), kvot inom län 0.4; runristningar 0.4 % (1.0 %), kvot inom län 0.4; kolning (mest efter 1500) 0.2 % (0.3 %), kvot inom län 0.5
+- **Gotlands län s. hd** (härad, G, 12110 lämningar): offer och kult 0.2 % (0.4 %), kvot inom län 0.5; hällristningar 8.2 % (3.3 %), kvot inom län 2.5; runristningar 1.0 % (0.4 %), kvot inom län 2.7; kolning (mest efter 1500) 0.3 % (0.2 %), kvot inom län 2.1
+- **Gästriklands v. d:a tg** (härad, Gs, 5271 lämningar): åker och röjning 1.8 % (4.1 %), kvot inom län 0.4; gravar 1.2 % (4.7 %), kvot inom län 0.3
+- **Gästriklands ö. d:a tg** (härad, Gs, 8495 lämningar): åker och röjning 4.1 % (1.8 %), kvot inom län 2.3; båtar och hamnar 0.2 % (0.0 %), kvot inom län 13.0; gravar 4.7 % (1.2 %), kvot inom län 3.8
+- **Fjäre hd** (härad, Hl, 4082 lämningar): åker och röjning 3.0 % (9.9 %), kvot inom län 0.3; hägnader 0.5 % (1.1 %), kvot inom län 0.4; tomtningar 5.2 % (0.1 %), kvot inom län 41.4; offer och kult 0.6 % (0.3 %), kvot inom län 2.0; hällristningar 1.2 % (3.1 %), kvot inom län 0.4
+- **Halmstads hd** (härad, Hl, 2436 lämningar): åker och röjning 15.3 % (7.3 %), kvot inom län 2.1; hällristningar 4.8 % (2.4 %), kvot inom län 2.0
+- **Himle hd** (härad, Hl, 2277 lämningar): åker och röjning 4.1 % (8.9 %), kvot inom län 0.5
+- **Höks hd** (härad, Hl, 2216 lämningar): järnframställning 3.4 % (0.4 %), kvot inom län 9.5; hägnader 1.9 % (0.8 %), kvot inom län 2.3
+- **Viske hd** (härad, Hl, 1147 lämningar): åker och röjning 2.4 % (8.7 %), kvot inom län 0.3
+- **Årstads hd** (härad, Hl, 2224 lämningar): hällristningar 4.9 % (2.4 %), kvot inom län 2.0
+- **Glanshammars hd** (härad, Nä, 1523 lämningar): offer och kult 1.6 % (0.6 %), kvot inom län 2.5; kolning (mest efter 1500) 1.6 % (8.5 %), kvot inom län 0.2
+- **Grimstens hd** (härad, Nä, 1641 lämningar): kolning (mest efter 1500) 19.4 % (5.8 %), kvot inom län 3.3
+- **Hardemo hd** (härad, Nä, 459 lämningar): gravar 24.0 % (10.2 %), kvot inom län 2.4
+- **Kumla hd** (härad, Nä, 1969 lämningar): kolning (mest efter 1500) 15.0 % (6.2 %), kvot inom län 2.4
+- **Sköllersta hd** (härad, Nä, 2549 lämningar): boplatser 1.8 % (4.4 %), kvot inom län 0.4
+- **Sundbo hd** (härad, Nä, 1312 lämningar): gravar 5.0 % (11.4 %), kvot inom län 0.4
+- **Örebro län hd** (härad, Nä, 2624 lämningar): boplatser 7.1 % (2.9 %), kvot inom län 2.4; kolning (mest efter 1500) 3.1 % (8.9 %), kvot inom län 0.4
+- **Albo hd** (härad, Sk, 1323 lämningar): gravar 36.8 % (15.1 %), kvot inom län 2.3
+- **Bjäre hd** (härad, Sk, 3502 lämningar): åker och röjning 4.7 % (8.0 %), kvot inom län 0.4; hällristningar 13.9 % (2.9 %), kvot inom län 3.2
+- **Frosta hd** (härad, Sk, 3630 lämningar): åker och röjning 17.7 % (7.1 %), kvot inom län 7.8; hägnader 16.9 % (10.0 %), kvot inom län 2.5; boplatser 11.0 % (17.2 %), kvot inom län 0.4
+- **Färs hd** (härad, Sk, 1417 lämningar): gravar 5.9 % (15.9 %), kvot inom län 0.4
+- **Gärds hd** (härad, Sk, 3623 lämningar): hägnader 6.3 % (10.8 %), kvot inom län 0.5; boplatser 21.7 % (16.5 %), kvot inom län 2.1
+- **Harjagers hd** (härad, Sk, 975 lämningar): hällristningar 2.7 % (3.7 %), kvot inom län 2.3
+- **Ingelstads hd** (härad, Sk, 1643 lämningar): boplatser 28.5 % (16.4 %), kvot inom län 2.7; hällristningar 1.3 % (3.7 %), kvot inom län 0.2
+- **Ingår i Hälsingborgs stad** (härad, Sk, 225 lämningar): gravar 34.7 % (15.6 %), kvot inom län 2.6
+- **Järrestads hd** (härad, Sk, 935 lämningar): gravar 34.9 % (15.3 %), kvot inom län 2.1
+- **Luggude hd** (härad, Sk, 2878 lämningar): hällristningar 3.1 % (3.7 %), kvot inom län 3.3
+- **N. Åsbo hd** (härad, Sk, 5121 lämningar): järnframställning 4.5 % (0.6 %), kvot inom län 4.4; hägnader 26.2 % (8.8 %), kvot inom län 2.9; boplatser 4.9 % (18.1 %), kvot inom län 0.4; hällristningar 0.6 % (4.0 %), kvot inom län 0.1; gravar 7.7 % (16.5 %), kvot inom län 0.4
+- **Onsjö hd** (härad, Sk, 2109 lämningar): åker och röjning 9.4 % (7.7 %), kvot inom län 2.2; hägnader 19.3 % (10.2 %), kvot inom län 2.7
+- **Rönnebergs hd** (härad, Sk, 1152 lämningar): gravar 26.6 % (15.4 %), kvot inom län 2.1
+- **Torna hd** (härad, Sk, 1812 lämningar): åker och röjning 1.4 % (8.0 %), kvot inom län 0.3; runristningar 1.3 % (0.1 %), kvot inom län 5.1
+- **V. Göinge hd** (härad, Sk, 6148 lämningar): järnframställning 2.9 % (0.7 %), kvot inom län 2.3; åker och röjning 17.4 % (6.5 %), kvot inom län 2.2; boplatser 6.0 % (18.2 %), kvot inom län 0.5; kolning (mest efter 1500) 0.9 % (0.2 %), kvot inom län 2.8
+- **Ö. Göinge hd** (härad, Sk, 3665 lämningar): fångstgropar 0.8 % (0.1 %), kvot inom län 4.5; hägnader 1.7 % (11.2 %), kvot inom län 0.1; boplatser 5.0 % (17.7 %), kvot inom län 0.4; hällristningar 11.5 % (3.1 %), kvot inom län 2.5; kolning (mest efter 1500) 1.1 % (0.2 %), kvot inom län 3.4
+- **Allbo hd** (härad, Sm, 5812 lämningar): järnframställning 0.4 % (1.9 %), kvot inom län 0.2; boplatser 1.2 % (2.6 %), kvot inom län 0.5
+- **Aspelands hd** (härad, Sm, 2036 lämningar): järnframställning 1.5 % (1.8 %), kvot inom län 0.5; gravar 3.1 % (17.1 %), kvot inom län 0.1; kolning (mest efter 1500) 11.7 % (7.2 %), kvot inom län 2.2
+- **Handbörds hd** (härad, Sm, 2455 lämningar): järnframställning 7.6 % (1.6 %), kvot inom län 3.1; fångstgropar 2.1 % (0.6 %), kvot inom län 3.4; gravar 7.4 % (17.1 %), kvot inom län 0.3
+- **Kinnevalds hd** (härad, Sm, 4011 lämningar): hägnader 1.0 % (0.8 %), kvot inom län 2.4
+- **Konga hd** (härad, Sm, 6639 lämningar): hällristningar 0.8 % (1.9 %), kvot inom län 0.3; kolning (mest efter 1500) 17.8 % (6.5 %), kvot inom län 3.4
+- **Mo hd** (härad, Sm, 3229 lämningar): kolning (mest efter 1500) 16.4 % (7.0 %), kvot inom län 2.3
+- **N. Möre hd** (härad, Sm, 1952 lämningar): järnframställning 11.9 % (1.6 %), kvot inom län 5.2; hägnader 1.2 % (0.8 %), kvot inom län 2.1; boplatser 9.4 % (2.3 %), kvot inom län 2.7; kolning (mest efter 1500) 1.1 % (7.4 %), kvot inom län 0.2
+- **N. Tjusts hd** (härad, Sm, 4317 lämningar): åker och röjning 4.4 % (13.2 %), kvot inom län 0.5; boplatser 1.0 % (2.5 %), kvot inom län 0.2; hällristningar 7.7 % (1.5 %), kvot inom län 2.7
+- **N. Vedbo hd** (härad, Sm, 3618 lämningar): kolning (mest efter 1500) 3.1 % (7.4 %), kvot inom län 0.4
+- **Norrvidinge hd** (härad, Sm, 2552 lämningar): boplatser 0.9 % (2.5 %), kvot inom län 0.4; hällristningar 4.9 % (1.7 %), kvot inom län 2.7; kolning (mest efter 1500) 4.0 % (7.3 %), kvot inom län 0.5
+- **S. Möre hd** (härad, Sm, 5199 lämningar): järnframställning 7.4 % (1.5 %), kvot inom län 3.7; hällristningar 1.6 % (1.8 %), kvot inom län 0.4
+- **S. Tjusts hd** (härad, Sm, 5133 lämningar): hägnader 1.1 % (0.8 %), kvot inom län 2.0; hällristningar 10.8 % (1.3 %), kvot inom län 5.1; gravar 39.5 % (15.6 %), kvot inom län 2.1
+- **S. Vedbo hd** (härad, Sm, 3137 lämningar): runristningar 0.7 % (0.2 %), kvot inom län 2.8
+- **Sevede hd** (härad, Sm, 3974 lämningar): järnframställning 1.0 % (1.8 %), kvot inom län 0.3; boplatser 1.3 % (2.5 %), kvot inom län 0.3; gravar 9.4 % (17.1 %), kvot inom län 0.4; kolning (mest efter 1500) 18.7 % (6.8 %), kvot inom län 4.9
+- **Stranda hd** (härad, Sm, 1531 lämningar): hällristningar 1.5 % (1.8 %), kvot inom län 0.4
+- **Sunnerbo hd** (härad, Sm, 5969 lämningar): boplatser 5.1 % (2.3 %), kvot inom län 3.3; runristningar 0.4 % (0.2 %), kvot inom län 4.7; kolning (mest efter 1500) 1.2 % (7.6 %), kvot inom län 0.1
+- **Tunaläns hd** (härad, Sm, 5437 lämningar): järnframställning 0.5 % (1.9 %), kvot inom län 0.2; tomtningar 0.5 % (0.0 %), kvot inom län 5.5; hällristningar 1.9 % (1.8 %), kvot inom län 0.5; kolning (mest efter 1500) 2.2 % (7.5 %), kvot inom län 0.4
+- **Tveta hd** (härad, Sm, 6032 lämningar): järnframställning 2.2 % (1.8 %), kvot inom län 3.2; hägnader 2.9 % (0.7 %), kvot inom län 2.7; kolning (mest efter 1500) 15.0 % (6.8 %), kvot inom län 2.2
+- **Uppvidinge hd** (härad, Sm, 4479 lämningar): järnframställning 5.5 % (1.6 %), kvot inom län 4.8; boplatser 0.7 % (2.6 %), kvot inom län 0.3; hällristningar 0.6 % (1.8 %), kvot inom län 0.3; kolning (mest efter 1500) 4.2 % (7.4 %), kvot inom län 0.5
+- **Västbo hd** (härad, Sm, 7380 lämningar): hägnader 0.5 % (0.9 %), kvot inom län 0.4; boplatser 4.1 % (2.4 %), kvot inom län 3.9; kolning (mest efter 1500) 4.3 % (7.5 %), kvot inom län 0.5
+- **Västra hd** (härad, Sm, 5566 lämningar): boplatser 0.4 % (2.6 %), kvot inom län 0.3; kolning (mest efter 1500) 4.2 % (7.4 %), kvot inom län 0.5
+- **Östbo hd** (härad, Sm, 5710 lämningar): järnframställning 0.4 % (1.9 %), kvot inom län 0.4; hällristningar 0.6 % (1.9 %), kvot inom län 3.8
+- **Daga hd** (härad, Sö, 2350 lämningar): hällristningar 10.4 % (4.5 %), kvot inom län 3.8
+- **Färentuna hd** (härad, Sö, 1929 lämningar): hägnader 1.3 % (1.4 %), kvot inom län 2.8; boplatser 2.1 % (4.0 %), kvot inom län 0.3; hällristningar 3.3 % (4.9 %), kvot inom län 0.4; runristningar 2.9 % (0.9 %), kvot inom län 4.2
+- **Hölebo hd** (härad, Sö, 1707 lämningar): boplatser 6.7 % (3.9 %), kvot inom län 2.3
+- **Ingår i Stockholms stad** (härad, Sö, 1947 lämningar): hägnader 2.4 % (1.3 %), kvot inom län 8.2; boplatser 1.3 % (4.1 %), kvot inom län 0.2; hällristningar 2.8 % (4.9 %), kvot inom län 0.3; runristningar 2.0 % (0.9 %), kvot inom län 2.4
+- **Jönåkers hd** (härad, Sö, 4667 lämningar): runristningar 0.4 % (1.0 %), kvot inom län 0.4; kolning (mest efter 1500) 6.5 % (2.4 %), kvot inom län 2.8
+- **Oppunda hd** (härad, Sö, 4461 lämningar): hägnader 0.9 % (1.4 %), kvot inom län 0.5
+- **Rönö hd** (härad, Sö, 4912 lämningar): husgrunder (förhist./medeltid) 0.4 % (0.2 %), kvot inom län 2.1; hällristningar 6.1 % (4.7 %), kvot inom län 2.2; kolning (mest efter 1500) 1.1 % (3.0 %), kvot inom län 0.3
+- **Selebo hd** (härad, Sö, 2353 lämningar): hägnader 3.6 % (1.2 %), kvot inom län 2.3; boplatser 1.4 % (4.1 %), kvot inom län 0.4; runristningar 2.0 % (0.9 %), kvot inom län 2.3
+- **Sotholms hd** (härad, Sö, 5972 lämningar): tomtningar 0.4 % (0.0 %), kvot inom län 35.8; kolning (mest efter 1500) 0.7 % (3.1 %), kvot inom län 0.2
+- **Svartlösa hd** (härad, Sö, 3375 lämningar): kolning (mest efter 1500) 7.9 % (2.4 %), kvot inom län 8.1
+- **Villåttinge hd** (härad, Sö, 2505 lämningar): kolning (mest efter 1500) 10.9 % (2.3 %), kvot inom län 4.8
+- **Värmdö sg** (härad, Sö, 1485 lämningar): båtar och hamnar 1.8 % (0.1 %), kvot inom län 6.8; gravar 15.3 % (35.6 %), kvot inom län 0.5
+- **Åkers hd** (härad, Sö, 4264 lämningar): hägnader 3.2 % (1.2 %), kvot inom län 2.1
+- **Österrekarne hd** (härad, Sö, 2819 lämningar): fångstgropar 1.1 % (0.4 %), kvot inom län 2.0; hägnader 4.8 % (1.1 %), kvot inom län 3.4
+- **Bro hd** (härad, U, 1317 lämningar): båtar och hamnar 1.5 % (0.3 %), kvot inom län 10.3
+- **Bälinge hd** (härad, U, 946 lämningar): boplatser 9.8 % (2.9 %), kvot inom län 2.7; hällristningar 2.6 % (5.1 %), kvot inom län 0.4; runristningar 4.0 % (1.5 %), kvot inom län 3.1
+- **Frösåkers hd** (härad, U, 4194 lämningar): fångstgropar 1.1 % (0.5 %), kvot inom län 4.0; hägnader 2.0 % (4.2 %), kvot inom län 0.3; båtar och hamnar 1.6 % (0.2 %), kvot inom län 6.8; boplatser 0.5 % (3.2 %), kvot inom län 0.2; gravar 12.5 % (31.4 %), kvot inom län 0.3; kolning (mest efter 1500) 3.6 % (1.8 %), kvot inom län 10.7
+- **Lagunda hd** (härad, U, 1259 lämningar): hällristningar 20.8 % (4.8 %), kvot inom län 3.1; runristningar 2.9 % (1.5 %), kvot inom län 2.2
+- **Lyhundra hd** (härad, U, 1299 lämningar): åker och röjning 8.9 % (2.8 %), kvot inom län 2.2; hägnader 1.5 % (4.1 %), kvot inom län 0.3
+- **Långhundra hd** (härad, U, 1737 lämningar): hägnader 1.7 % (4.1 %), kvot inom län 0.3; hällristningar 4.3 % (5.1 %), kvot inom län 3.1
+- **Norunda hd** (härad, U, 3183 lämningar): hägnader 1.5 % (4.1 %), kvot inom län 0.5; hällristningar 2.8 % (5.2 %), kvot inom län 0.4; kolning (mest efter 1500) 1.2 % (2.0 %), kvot inom län 0.5
+- **Närdinghundra hd** (härad, U, 2596 lämningar): hägnader 1.1 % (4.1 %), kvot inom län 0.2
+- **Olands hd** (härad, U, 7037 lämningar): åker och röjning 5.0 % (2.7 %), kvot inom län 3.2; boplatser 0.6 % (3.3 %), kvot inom län 0.1; kolning (mest efter 1500) 5.2 % (1.6 %), kvot inom län 2.7
+- **Rasbo hd** (härad, U, 1880 lämningar): hällristningar 1.9 % (5.2 %), kvot inom län 0.3
+- **Seminghundra hd** (härad, U, 2079 lämningar): boplatser 1.0 % (3.1 %), kvot inom län 0.5; runristningar 4.3 % (1.5 %), kvot inom län 2.3
+- **Torstuna hd** (härad, U, 1568 lämningar): hällristningar 4.5 % (5.1 %), kvot inom län 0.4
+- **Trögds hd** (härad, U, 4590 lämningar): åker och röjning 1.1 % (3.1 %), kvot inom län 0.4; hällristningar 24.6 % (3.8 %), kvot inom län 5.4
+- **Ulleråkers hd** (härad, U, 2237 lämningar): åker och röjning 1.0 % (3.0 %), kvot inom län 0.4; hägnader 1.2 % (4.1 %), kvot inom län 0.4; boplatser 7.8 % (2.9 %), kvot inom län 2.2
+- **Vaksala hd** (härad, U, 1344 lämningar): boplatser 12.1 % (2.9 %), kvot inom län 3.4; runristningar 2.8 % (1.5 %), kvot inom län 2.1
+- **Vallentuna hd** (härad, U, 2604 lämningar): hägnader 18.7 % (3.5 %), kvot inom län 4.3
+- **Våla hd** (härad, U, 1678 lämningar): järnframställning 2.6 % (0.0 %), kvot inom län 19.8; gravar 7.9 % (30.9 %), kvot inom län 0.4; kolning (mest efter 1500) 7.6 % (1.8 %), kvot inom län 3.4; fäbodar (mest efter 1500) 5.0 % (0.1 %), kvot inom län 154.9
+- **Yttertjurbo hd** (härad, U, 1873 lämningar): hägnader 5.2 % (4.0 %), kvot inom län 3.3; hällristningar 32.4 % (4.4 %), kvot inom län 22.1
+- **Ärlinghundra hd** (härad, U, 3340 lämningar): hägnader 11.9 % (3.7 %), kvot inom län 2.5; boplatser 5.3 % (2.9 %), kvot inom län 3.6; husgrunder (förhist./medeltid) 0.7 % (0.3 %), kvot inom län 2.7; hällristningar 5.0 % (5.1 %), kvot inom län 4.4
+- **Åsunda hd** (härad, U, 2571 lämningar): åker och röjning 0.9 % (3.0 %), kvot inom län 0.4; hällristningar 16.2 % (4.7 %), kvot inom län 2.5
+- **Örbyhus hd** (härad, U, 4464 lämningar): fångstgropar 1.3 % (0.5 %), kvot inom län 2.0; hägnader 1.5 % (4.2 %), kvot inom län 0.5; gravar 12.6 % (31.5 %), kvot inom län 0.4; kolning (mest efter 1500) 10.7 % (1.4 %), kvot inom län 7.8; fäbodar (mest efter 1500) 0.8 % (0.2 %), kvot inom län 13.8
+- **Ale hd** (härad, Vg, 1854 lämningar): åker och röjning 7.0 % (10.8 %), kvot inom län 0.5; hägnader 3.6 % (1.3 %), kvot inom län 3.4; boplatser 14.7 % (4.4 %), kvot inom län 3.2
+- **Askims hd** (härad, Vg, 1926 lämningar): åker och röjning 1.5 % (11.0 %), kvot inom län 0.3
+- **Barne hd** (härad, Vg, 1088 lämningar): järnframställning 5.8 % (0.9 %), kvot inom län 4.2; åker och röjning 4.0 % (10.9 %), kvot inom län 0.5; boplatser 5.5 % (4.7 %), kvot inom län 2.1
+- **Bjärke hd** (härad, Vg, 639 lämningar): gravar 8.8 % (25.8 %), kvot inom län 0.4
+- **Bollebygds hd** (härad, Vg, 915 lämningar): gravar 2.4 % (26.0 %), kvot inom län 0.1; kolning (mest efter 1500) 7.8 % (2.7 %), kvot inom län 3.1
+- **Flundre hd** (härad, Vg, 1007 lämningar): hägnader 3.9 % (1.3 %), kvot inom län 3.5; boplatser 11.1 % (4.6 %), kvot inom län 2.2
+- **Gudhems hd** (härad, Vg, 3462 lämningar): gravar 52.5 % (24.1 %), kvot inom län 2.0
+- **Ingår i Göteborgs stad** (härad, Vg, 641 lämningar): hällristningar 3.4 % (3.0 %), kvot inom län 2.3
+- **Kinds hd** (härad, Vg, 6792 lämningar): järnframställning 1.6 % (0.9 %), kvot inom län 4.9; hägnader 0.6 % (1.5 %), kvot inom län 0.5; boplatser 2.3 % (5.0 %), kvot inom län 0.4; hällristningar 1.6 % (3.1 %), kvot inom län 0.5; kolning (mest efter 1500) 6.9 % (2.3 %), kvot inom län 4.7
+- **Kinne hd** (härad, Vg, 1572 lämningar): järnframställning 3.1 % (1.0 %), kvot inom län 2.2; kolning (mest efter 1500) 12.5 % (2.6 %), kvot inom län 4.9
+- **Kinnefjärdings hd** (härad, Vg, 752 lämningar): åker och röjning 3.2 % (10.8 %), kvot inom län 0.4; boplatser 11.4 % (4.6 %), kvot inom län 4.5
+- **Kullings hd** (härad, Vg, 3593 lämningar): kolning (mest efter 1500) 1.1 % (2.9 %), kvot inom län 0.4
+- **Kåkinds hd** (härad, Vg, 1419 lämningar): järnframställning 3.5 % (1.0 %), kvot inom län 2.4; offer och kult 1.4 % (0.4 %), kvot inom län 3.0
+- **Kållands hd** (härad, Vg, 2330 lämningar): båtar och hamnar 0.9 % (0.1 %), kvot inom län 18.3; runristningar 1.5 % (0.3 %), kvot inom län 3.8
+- **Laske hd** (härad, Vg, 957 lämningar): hällristningar 7.6 % (2.9 %), kvot inom län 2.8
+- **Marks hd** (härad, Vg, 3963 lämningar): hällristningar 0.9 % (3.1 %), kvot inom län 0.3; kolning (mest efter 1500) 0.8 % (2.9 %), kvot inom län 0.3
+- **Redvägs hd** (härad, Vg, 3012 lämningar): boplatser 1.6 % (4.8 %), kvot inom län 0.3; hällristningar 5.8 % (2.8 %), kvot inom län 2.0; runristningar 0.7 % (0.3 %), kvot inom län 5.3
+- **Sävedals hd** (härad, Vg, 580 lämningar): åker och röjning 9.8 % (10.7 %), kvot inom län 5.2; boplatser 4.5 % (4.7 %), kvot inom län 0.2; kolning (mest efter 1500) 6.6 % (2.8 %), kvot inom län 7.7
+- **Vadsbo hd** (härad, Vg, 5446 lämningar): fångstgropar 2.4 % (0.9 %), kvot inom län 2.2; hällristningar 0.7 % (3.2 %), kvot inom län 0.2; kolning (mest efter 1500) 6.2 % (2.5 %), kvot inom län 2.6
+- **Valle hd** (härad, Vg, 2065 lämningar): järnframställning 3.8 % (0.9 %), kvot inom län 2.8
+- **Vartofta hd** (härad, Vg, 5301 lämningar): järnframställning 0.6 % (1.1 %), kvot inom län 0.3
+- **Vilske hd** (härad, Vg, 1336 lämningar): hägnader 3.1 % (1.3 %), kvot inom län 2.1
+- **Väne hd** (härad, Vg, 2043 lämningar): hällristningar 11.3 % (2.7 %), kvot inom län 4.4; gravar 12.0 % (26.1 %), kvot inom län 0.5
+- **Vättle hd** (härad, Vg, 1196 lämningar): boplatser 10.5 % (4.6 %), kvot inom län 2.1; kolning (mest efter 1500) 5.2 % (2.8 %), kvot inom län 2.0
+- **Ås hd** (härad, Vg, 2612 lämningar): boplatser 1.5 % (4.8 %), kvot inom län 0.3; kolning (mest efter 1500) 1.2 % (2.9 %), kvot inom län 0.4
+- **Åse hd** (härad, Vg, 1153 lämningar): åker och röjning 3.3 % (10.9 %), kvot inom län 0.4; boplatser 6.7 % (4.6 %), kvot inom län 2.6; hällristningar 14.1 % (2.8 %), kvot inom län 5.7
+- **Ö. Hisings hd** (härad, Vg, 390 lämningar): boplatser 32.1 % (4.5 %), kvot inom län 2.3
+- **Fryksdals hd** (härad, Vr, 4091 lämningar): kolning (mest efter 1500) 7.5 % (15.7 %), kvot inom län 0.5; fäbodar (mest efter 1500) 4.0 % (1.3 %), kvot inom län 3.1
+- **Färnebo hd** (härad, Vr, 3023 lämningar): fångstgropar 1.8 % (6.5 %), kvot inom län 0.3; gravar 1.2 % (11.0 %), kvot inom län 0.1; kolning (mest efter 1500) 4.1 % (15.7 %), kvot inom län 0.3
+- **Gillbergs hd** (härad, Vr, 2214 lämningar): åker och röjning 3.1 % (1.3 %), kvot inom län 2.4; kolning (mest efter 1500) 0.9 % (15.7 %), kvot inom län 0.1
+- **Grums hd** (härad, Vr, 1330 lämningar): gravar 32.5 % (9.3 %), kvot inom län 3.5; kolning (mest efter 1500) 4.9 % (15.1 %), kvot inom län 0.3
+- **Jösse hd** (härad, Vr, 3786 lämningar): kolning (mest efter 1500) 2.2 % (16.2 %), kvot inom län 0.1
+- **Karlstads hd** (härad, Vr, 806 lämningar): gravar 27.3 % (9.8 %), kvot inom län 2.8
+- **Kils hd** (härad, Vr, 1685 lämningar): fångstgropar 2.9 % (6.3 %), kvot inom län 0.5; kolning (mest efter 1500) 4.0 % (15.3 %), kvot inom län 0.3
+- **Nordmarks hd** (härad, Vr, 3292 lämningar): boplatser 9.7 % (2.9 %), kvot inom län 3.4; offer och kult 0.9 % (0.3 %), kvot inom län 3.2; kolning (mest efter 1500) 1.8 % (16.1 %), kvot inom län 0.1; fäbodar (mest efter 1500) 3.8 % (1.4 %), kvot inom län 2.8
+- **Nyeds hd** (härad, Vr, 743 lämningar): gravar 5.1 % (10.3 %), kvot inom län 0.5
+- **Näs hd** (härad, Vr, 3382 lämningar): fångstgropar 0.8 % (6.7 %), kvot inom län 0.1; hällristningar 1.0 % (0.1 %), kvot inom län 9.2; gravar 29.7 % (8.1 %), kvot inom län 3.6
+- **Visnums hd** (härad, Vr, 1477 lämningar): fångstgropar 2.0 % (6.3 %), kvot inom län 0.3; åker och röjning 3.3 % (1.3 %), kvot inom län 2.5; kolning (mest efter 1500) 7.4 % (15.1 %), kvot inom län 0.5
+- **Väse hd** (härad, Vr, 988 lämningar): fångstgropar 2.5 % (6.2 %), kvot inom län 0.4; gravar 25.5 % (9.7 %), kvot inom län 2.6
+- **Älvdals hd** (härad, Vr, 8844 lämningar): järnframställning 1.6 % (0.1 %), kvot inom län 14.5; fångstgropar 14.3 % (3.5 %), kvot inom län 4.1; åker och röjning 0.3 % (1.8 %), kvot inom län 0.1; gravar 0.5 % (13.3 %), kvot inom län 0.0; kolning (mest efter 1500) 50.0 % (3.4 %), kvot inom län 14.7
+- **Fellingsbro hd** (härad, Vs, 1302 lämningar): gravar 10.8 % (17.3 %), kvot inom län 16.2
+- **Gamla Norbergs bg** (härad, Vs, 1878 lämningar): gravar 1.1 % (18.2 %), kvot inom län 0.0; kolning (mest efter 1500) 17.7 % (4.3 %), kvot inom län 4.2
+- **Grythytte och Hällefors hd** (härad, Vs, 731 lämningar): boplatser 3.4 % (3.4 %), kvot inom län 3.6
+- **Ingår i Västerås stad** (härad, Vs, 1026 lämningar): hägnader 11.9 % (3.7 %), kvot inom län 2.5
+- **Nora och Hjulsjö hd** (härad, Vs, 2290 lämningar): åker och röjning 5.4 % (2.5 %), kvot inom län 2.6
+- **Nya Kopparbergs län hd** (härad, Vs, 724 lämningar): boplatser 2.8 % (3.4 %), kvot inom län 2.7; kolning (mest efter 1500) 10.1 % (5.1 %), kvot inom län 2.6
+- **Siende hd** (härad, Vs, 3084 lämningar): hägnader 11.8 % (3.0 %), kvot inom län 3.0; kolning (mest efter 1500) 0.8 % (5.9 %), kvot inom län 0.1
+- **Skinnskattebergs hd** (härad, Vs, 1016 lämningar): järnframställning 2.6 % (0.5 %), kvot inom län 6.9; kolning (mest efter 1500) 10.7 % (5.1 %), kvot inom län 2.1
+- **Tuhundra hd** (härad, Vs, 1190 lämningar): hägnader 12.9 % (3.6 %), kvot inom län 2.8; boplatser 2.0 % (3.5 %), kvot inom län 0.5
+- **Vangsbro hd** (härad, Vs, 677 lämningar): järnframställning 4.3 % (0.5 %), kvot inom län 12.4; boplatser 11.4 % (3.2 %), kvot inom län 3.0; kolning (mest efter 1500) 25.0 % (4.7 %), kvot inom län 5.2
+- **Övertjurbo hd** (härad, Vs, 1442 lämningar): offer och kult 2.1 % (0.6 %), kvot inom län 4.1; gravar 4.3 % (17.7 %), kvot inom län 0.2
+- **Aska hd** (härad, Ög, 1477 lämningar): hägnader 1.8 % (7.1 %), kvot inom län 0.3; hällristningar 1.4 % (3.5 %), kvot inom län 0.4
+- **Bankekinds hd** (härad, Ög, 3610 lämningar): hällristningar 0.7 % (3.7 %), kvot inom län 0.2
+- **Björkekinds hd** (härad, Ög, 1501 lämningar): åker och röjning 1.8 % (4.4 %), kvot inom län 0.4; runristningar 1.4 % (0.6 %), kvot inom län 2.3
+- **Bobergs hd** (härad, Ög, 962 lämningar): hägnader 2.2 % (7.0 %), kvot inom län 0.3
+- **Bråbo hd** (härad, Ög, 615 lämningar): boplatser 8.3 % (3.9 %), kvot inom län 2.1; gravar 10.2 % (28.8 %), kvot inom län 0.4; kolning (mest efter 1500) 13.8 % (4.0 %), kvot inom län 3.4
+- **Dals hd** (härad, Ög, 698 lämningar): boplatser 11.3 % (3.9 %), kvot inom län 2.9
+- **Finspånga Läns hd** (härad, Ög, 2699 lämningar): hägnader 0.8 % (7.4 %), kvot inom län 0.1; boplatser 1.1 % (4.2 %), kvot inom län 0.3; gravar 6.9 % (30.1 %), kvot inom län 0.2; kolning (mest efter 1500) 13.9 % (3.5 %), kvot inom län 4.0
+- **Gullbergs hd** (härad, Ög, 1031 lämningar): hägnader 2.9 % (7.0 %), kvot inom län 0.4; kolning (mest efter 1500) 11.2 % (4.0 %), kvot inom län 2.8
+- **Göstrings hd** (härad, Ög, 3676 lämningar): runristningar 1.3 % (0.6 %), kvot inom län 2.4; kolning (mest efter 1500) 8.1 % (3.8 %), kvot inom län 2.1
+- **Hammarkinds hd** (härad, Ög, 2955 lämningar): åker och röjning 2.1 % (4.5 %), kvot inom län 0.5
+- **Ingår i Linköpings stad** (härad, Ög, 609 lämningar): boplatser 13.6 % (3.8 %), kvot inom län 3.5; hällristningar 14.8 % (3.3 %), kvot inom län 4.5
+- **Ingår i Norrköpings stad** (härad, Ög, 965 lämningar): boplatser 13.0 % (3.8 %), kvot inom län 3.4; hällristningar 30.3 % (2.8 %), kvot inom län 11.0
+- **Lysings hd** (härad, Ög, 1773 lämningar): åker och röjning 8.2 % (4.1 %), kvot inom län 2.0; hällristningar 8.9 % (3.2 %), kvot inom län 2.8
+- **Lösings hd** (härad, Ög, 1415 lämningar): boplatser 8.1 % (3.8 %), kvot inom län 2.1; kolning (mest efter 1500) 2.0 % (4.2 %), kvot inom län 0.5
+- **Skärkinds hd** (härad, Ög, 1992 lämningar): åker och röjning 1.3 % (4.5 %), kvot inom län 0.3; hägnader 21.0 % (6.2 %), kvot inom län 3.4; boplatser 1.5 % (4.1 %), kvot inom län 0.4
+- **Valkebo hd** (härad, Ög, 1992 lämningar): hällristningar 1.2 % (3.6 %), kvot inom län 0.3; kolning (mest efter 1500) 9.7 % (3.9 %), kvot inom län 2.5
+- **Ydre hd** (härad, Ög, 1504 lämningar): järnframställning 1.4 % (0.1 %), kvot inom län 9.5; åker och röjning 16.8 % (3.8 %), kvot inom län 4.4; gravar 9.4 % (29.3 %), kvot inom län 0.3; kolning (mest efter 1500) 1.6 % (4.3 %), kvot inom län 0.4
+- **Östkinds hd** (härad, Ög, 2357 lämningar): åker och röjning 1.4 % (4.5 %), kvot inom län 0.3; hällristningar 0.8 % (3.6 %), kvot inom län 0.2; gravar 58.9 % (26.6 %), kvot inom län 2.2
+- **Algutsrums hd** (härad, Öl, 1510 lämningar): hägnader 5.4 % (11.2 %), kvot inom län 0.5
+- **Gräsgårds hd** (härad, Öl, 1771 lämningar): hällristningar 3.0 % (1.1 %), kvot inom län 2.8
