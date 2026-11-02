@@ -19,3 +19,10 @@ korpusen. Enda stenen med bön: Sö ATA322-4237-2011 (Småhamra, Österhaninge, 
 Litteratur: Wikell 2011, Situne Dei (kors som "offensiva kristna markörer", Gudö som hednisk glänta).
 
 Artikel: utkast 04xMEvIJCiBPLwEDzFwB "Korset utan bönen" (utdata/blogg/build/build_sotholm.py), opublicerat.
+
+## Fel i planens T3 (upptäckt 2026-11-02, efter körningen)
+T3 slog ihop Svartlösa med Öknebo som "grannhärader på Södertörn". Öknebo hör inte till Tören (Södertörn = Övre Tör/Svartlösa
++ Yttre Tör/Sotholm, Janzon & Rahmqvist 2002, DMS 2:1). Svartlösa ensamt: 2/22 kristna formler (9 %), inget prov körs i
+efterhand. DMS 2002 noterar redan att Södertörns stenar är stereotypa och att bön bara finns i två fall (före fyndet 2011).
+Artikeln säger därför att bristen troligen gäller hela Tören, tydligast i Sotholm. Beskrivande, inte prövat: beröm Sotholm 2/43,
+Svartlösa 1/22 mot 22 % i resten av Sö; þennsa Svartlösa 6/22 mot Sotholm 2/43 (Fisher p 0,015 okorrigerat, 26 drag).
