@@ -120,6 +120,11 @@ for k in ("Tören är det gamla namnet på den halvö som nu kallas Södertörn"
           "några av landets tätaste järnåldersbygder växt fram i dalarna", "Tornberget (110,5 m ö h)",
           "Sorunda har 21 ristningar", "Kaj Janzon Sigurd Rahmqvist"):
     assert k in DMS, k
+for k in ("28 m lång skeppssättning", "skeppssättning av 50 resta stenar", "storhög, 35-40 m i diameter och 5 m hög",
+          "Helgö har rimligen haft stor betydelse som verkstads", "faktori", "I Utö gruvor i Västerhaninge har brutits järnmalm sedan medeltiden",
+          "ankringsplats och", "för flottor sedan medeltiden", "Danska itinerariet"):
+    assert k in DMS.replace("verkstadsverkstads", "verkstads"), k
+assert "Intill högen hittades ett depåfynd av spadformiga ämnesjärn, ett städ och en yxa" in WIK and "daterades till folkvandringstid" in WIK
 DR = {r["signum"]: r for r in csv.DictReader(open(os.path.join(ROOT, "utdata", "upptackt_v3", "drag.csv"), encoding="utf-8"))}
 def share(h, f, inv=False):
     g = [r["signum"] for r in ST if (r["harad"] in h) != inv and DR[r["signum"]].get(f, "") != ""]
@@ -140,6 +145,8 @@ Men följ en av de långa sprickdalarna inåt land, och skogen öppnar sig. I da
 
 Vägarna går på grusåsarna, torra stråk genom sankmarken, och Drevviken binder ihop bygderna sommar som vinter: med båt när sjön är öppen, över isen när den har lagt sig. Det här är ingen fattig ö. Vid Norrby har ett svärd hamnat i den gyttjiga stranden, ett frankiskt svärd med smedens namn, Ingelri, inlagt i klingan. På samma gårds mark har någon grävt ner sitt silver: nästan tvåhundra mynt och myntbitar, tyska och engelska, präglade för kungar som Ethelred och Knut den store, och som det yngsta ett mynt av Hardeknut, slaget i Lund mellan 1035 och 1042. Det silvret har varit med om något på andra sidan Nordsjön.
 
+Följ vägen söderut mot Sorunda, och landskapet blir större. Vid byn Torp ligger en storhög, trettiofem–fyrtio meter bred och fem meter hög, och strax norr om den en skeppssättning av femtio resta stenar, tjugoåtta meter lång – ett stenskepp på land, riktat mot ingenting annat än sin egen tid. Vid Söderbytorp, intill en hög från folkvandringstiden, har någon en gång lagt ner spadformiga järnämnen, ett städ och en yxa: en smeds förråd, kanske en offergåva. Och på andra sidan Hanveden, i Övre Tör, ligger Helgö, verkstad och handelsplats för trakterna kring hela Mälarviken.
+
 Och nu reser man stenar. Någonstans i bygden hörs järn mot sten. På krönet av en rullstensås, där fyra vägar möts, står en ny sten med en orm som slingrar sig runt kanten och ett kors överst. Den som kommer upp från bygden vid Haninge möter den först. Runorna lyder:
 
 > *{nz("Sö 269")}*
@@ -158,7 +165,7 @@ Tören var delad i två bygder, som i de medeltida breven kallas Övre och Yttre
 ![Karta över Tören omkring år 1000 med gränsen mellan Övre och Yttre Tör och runstenarna]({MAP['sv']})
 **Karta.** Tören omkring år 1000, då Södertörn var en ö. Den streckade linjen är gränsen mellan Övre Tör (Svartlösa härad) och Yttre Tör (Sotholms härad), ungefärlig, dragen efter sockenkyrkornas lägen. Rostfärgade punkter är de tre stenar på ön som ber för den dödes själ. Karta: Vitki, efter SGU:s modell för strandförskjutningen år 1000, Institutet för språk och folkminnens ortnamnsregister och Rundata.
 
-Det var Yttre Tör som reste flest runstenar på ön: Sorunda ensamt har 21 ristningar, sju av dem huggna direkt i berghällen. Längst i söder, vid Vansta i Ösmo, högg ristaren Amunde en av Ingvarsstenarna, efter Tosti som dog i Ingvars följe i öster. Det är folket här – Store och hans son Viking, Hjälmvid, Farbjörn, Hallsten – och deras stenar som resten av den här texten handlar om.
+Det var Yttre Tör som reste flest runstenar på ön: Sorunda ensamt har 21 ristningar, sju av dem huggna direkt i berghällen. Längst i söder, vid Vansta i Ösmo, högg ristaren Amunde en av Ingvarsstenarna, efter Tosti som dog i Ingvars följe i öster. Utanför kusten gick skeppen. När en dansk seglingsbeskrivning från medeltiden räknade upp lederna genom skärgården gick en av dem förbi Älvsnabben vid Muskö, där flottor ankrade, och på Utö bröts järnmalm från medeltiden. Det är folket här – Store och hans son Viking, Hjälmvid, Farbjörn, Hallsten – och deras stenar som resten av den här texten handlar om.
 
 ## Stenarna som inte bad
 
@@ -230,6 +237,8 @@ But follow one of the long fissure valleys inland, and the forest opens. In the 
 
 The roads run along the gravel ridges, dry paths through the wetland, and Drevviken ties the settlements together summer and winter: by boat when the lake is open, across the ice when it has frozen. This is no poor island. At Norrby a sword has ended up in the muddy shore, a Frankish sword with the smith's name, Ingelri, inlaid in the blade. On the same farm's land someone has buried their silver: nearly two hundred coins and coin fragments, German and English, struck for kings such as Æthelred and Cnut the Great, and as the youngest a coin of Harthacnut, struck in Lund between 1035 and 1042. That silver has seen things on the other side of the North Sea.
 
+Follow the road south towards Sorunda, and the landscape grows larger. At the village of Torp lies a great mound, thirty-five to forty metres across and five metres high, and just north of it a ship setting of fifty standing stones, twenty-eight metres long – a stone ship on land, aimed at nothing but its own time. At Söderbytorp, beside a mound from the Migration Period, someone once laid down spade-shaped iron bars, an anvil and an axe: a smith's store, perhaps an offering. And on the other side of Hanveden, in Upper Tör, lies Helgö, a workshop and trading place for the lands around the whole bay of Lake Mälaren.
+
 And now they are raising stones. Somewhere in the district iron rings against stone. On the crest of an esker, where four roads meet, stands a new stone with a serpent winding round its edge and a cross at the top. Anyone coming up from the Haninge countryside meets it first. The runes read:
 
 > *{nz("Sö 269")}*
@@ -248,7 +257,7 @@ Tören was divided into two districts, called Upper and Outer Tör in the mediev
 ![Map of Tören around AD 1000 with the border between Upper and Outer Tör and the runestones]({MAP['en']})
 **Map.** Tören around AD 1000, when Södertörn was an island. The dashed line is the border between Upper Tör (the hundred of Svartlösa) and Outer Tör (the hundred of Sotholm), approximate, drawn after the parish churches. Rust-coloured points are the three stones on the island that pray for the dead person's soul. Map: Vitki, after the Geological Survey of Sweden's shore-displacement model for AD 1000, the place-name register of the Institute for Language and Folklore, and Rundata.
 
-It was Outer Tör that raised the most runestones on the island: Sorunda alone has 21 inscriptions, seven of them cut straight into the bedrock. Furthest south, at Vansta in Ösmo, the carver Amunde cut one of the Ingvar stones, in memory of Tosti who died in Ingvar's retinue in the east. It is the people here – Store and his son Viking, Hjälmvid, Farbjörn, Hallsten – and their stones that the rest of this text is about.
+It was Outer Tör that raised the most runestones on the island: Sorunda alone has 21 inscriptions, seven of them cut straight into the bedrock. Furthest south, at Vansta in Ösmo, the carver Amunde cut one of the Ingvar stones, in memory of Tosti who died in Ingvar's retinue in the east. Off the coast the ships went by. When a medieval Danish sailing description listed the routes through the archipelago, one of them ran past Älvsnabben by Muskö, where fleets anchored, and on Utö iron ore was mined from the Middle Ages. It is the people here – Store and his son Viking, Hjälmvid, Farbjörn, Hallsten – and their stones that the rest of this text is about.
 
 ## The stones that did not pray
 

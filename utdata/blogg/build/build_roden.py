@@ -69,6 +69,16 @@ for k in ("Frågan om Rodens territoriella omfattning och kamerala och judiciell
           "Göran Dahlbäck", "Gunnar T W estin", "Stockholm i februari 1972"):
     assert k in DMS, k
 
+for k in ("1185 utfärdar påven skyddsbrev för Uppsala domkyrka och dess egendom, bl a flera fisken i Ä",
+          "skänker kung Knut Julita kloster en del i fisket i Ä"):
+    assert k in DMS, k
+D21 = open("/Volumes/2TB/Antigrvity/Runes/downloads/sotholm_lit/dms_dedup.txt", encoding="utf-8").read()
+assert "Vindö (i Värmdö skepps" in D21 and "till Runmarö (i Värmdö skeppslag)" in D21 and "Danska itinerariet" in D21
+LAR = " ".join(open("/Volumes/2TB/Antigrvity/Runes/geografi_kallor/litteratur/Larsson_1993.txt", encoding="utf-8").read().split())
+assert "Skeppslaget lever också kvar i det uppländska kustområdet Roden, men är där i de flesta fall sannolikt en yngre företeelse" in LAR
+BH = [t for t in json.load(open(os.path.join(ROOT, "utdata", "landprofiler", "naringar.json"))) if t["unit"] == "roden"][0]["profile"]["båtar och hamnar"]
+assert round(BH["share_in_county"] / BH["share_rest_county"]) == 4
+
 # ---- picture and map ----------------------------------------------------------------------------------------------------
 F136 = "U 136, Broby bro.jpg"
 INFO = commons.commons_info([F136])
@@ -83,9 +93,9 @@ summary = ("Upplands kust var på vikingatiden ett eget land, Roden, ordnat i sk
            "runstenarna kors på fyra av tio stenar mot sex av tio i resten av Uppland, och det beror inte på närheten "
            "till havet. Andra delen i serien De gamla landen.")
 
-body = f"""Föreställ dig att du ror norrut längs Upplands kust för tusen år sedan. Landet ser inte ut som i dag. Havet går långt in i det, vikarna skär djupt mellan bergen, och det som senare ska bli ådalar är ännu fjärdar där båten kan glida in mellan alarna. Överallt finns uddar och smala näs, holmar och skär. Längst i norr har landet nyss stigit ur havet; där är bygden ung, gårdarna nya, och strandängarna växer ut för varje generation.
+body = f"""Föreställ dig att du ror norrut längs Upplands kust för tusen år sedan. Landet ser inte ut som i dag. Havet går långt in i det, vikarna skär djupt mellan bergen, och det som senare ska bli ådalar är ännu fjärdar där båten kan glida in mellan alarna. Överallt finns uddar och smala näs, holmar och skär. Längst i norr har landet nyss stigit ur havet; där är bygden ung, gårdarna nya, och strandängarna växer ut för varje generation. Där Dalälven störtar ut i havet vid Älvkarleby fångar man lax – när breven börjar tala, på 1180-talet, skyddar påven domkyrkans fisken där och kungen ger bort en del av fisket till ett kloster.
 
-Föreställ dig lukten av tång och tjära, ljudet av åror mot tollarna, måsarna över grunden. Gårdarna ligger där en vik möter en dalgång, och deras namn talar om vattnet: något slutar på *-vik*, något på *-näs*. På gravfälten ovanför stränderna ligger högarna tätare än i inlandet, och här och där reser sig en sten ur gräset.
+Föreställ dig lukten av tång och tjära, ljudet av åror mot tollarna, måsarna över grunden. Gårdarna ligger där en vik möter en dalgång, och deras namn talar om vattnet: något slutar på *-vik*, något på *-näs*. På gravfälten ovanför stränderna ligger högarna tätare än i inlandet, och här och där reser sig en sten ur gräset. I söder, i Värmdös skärgård, går sjövägen mellan holmarna; ännu i medeltidens danska seglingsbeskrivning slutar lederna vid Runmarö och Vindö.
 
 Längre söderut, där kusten bryts upp mot Mälarens mynning, ligger Täby. Här bor en storman, Jarlabanke, som låter resa stenar vid en bro han har byggt och skriva att han ensam äger hela byn:
 
@@ -104,7 +114,7 @@ U 136 vid Broby bro i Täby, rest av Åstrid efter Östen som for till Jerusalem
 
 ## Ett land av skeppslag
 
-Det här är Roden, kustlandet. De tre folklanden – Tiundaland, Attundaland och Fjädrundaland – var indelade i hundaren. Roden var indelat i skeppslag, och det syns i lagen. När Upplandslagen skrevs ner kring år 1300 gick en tvist i folklanden från hundaresting till folklandsting och sist till kungen; i Roden gick den från ett skeppslags ting till två skeppslags ting, därifrån till sex skeppslags ting och sist till kung eller hertig. Också ledungen, skatten till kungens flotta, räknades i Roden efter skeppslagen och inte efter hundarena.
+Det här är Roden, kustlandet. De tre folklanden – Tiundaland, Attundaland och Fjädrundaland – var indelade i hundaren. Roden var indelat i skeppslag, och det syns i lagen. När Upplandslagen skrevs ner kring år 1300 gick en tvist i folklanden från hundaresting till folklandsting och sist till kungen; i Roden gick den från ett skeppslags ting till två skeppslags ting, därifrån till sex skeppslags ting och sist till kung eller hertig. Också ledungen, skatten till kungens flotta, räknades i Roden efter skeppslagen och inte efter hundarena. Hur gammal den ordningen är vet vi inte. Historikern Mats G. Larsson menar att skeppslagen i Roden ”i de flesta fall sannolikt [är] en yngre företeelse” – lagens Roden är medeltidens, och det land där stenarna restes kan ha varit ordnat på ett annat sätt.
 
 Hur stort Roden var, och om det var ett land för sig eller en del av folklanden, är omstritt. Göran Dahlbäck och Gunnar T. Westin skriver i *Det medeltida Sverige* att ”Frågan om Rodens territoriella omfattning och kamerala och judiciella indelning är omstridd”. I sexårsgärden 1314 står Roden som en rubrik under Tiundaland. Och Jarlabanke själv, vars Täby räknades till Danderyds skeppslag, skrev på en sten vid Vallentuna kyrka att han ”ensam ägde hela detta hundare” – Vallentuna, i Attundaland. Gränsen gick alltså mitt i hans värld.
 
@@ -117,7 +127,7 @@ Gå bland Rodens stenar, och en sak märks efter ett tag. Korset, som i folkland
 
 Det naturliga är att tänka att det är havet. Att folk vid stranden levde annorlunda än folk i inlandet, vad deras land än hette. Rodens stenar står också närmare vattnet: hälften av dem inom ett hundratal meter från strandlinjen år 1000. Men i resten av Uppland spelar det ingen roll om en sten står vid vattnet eller långt därifrån – korset är lika vanligt. Och när vi tar hänsyn till närheten till vattnet står skillnaden för Roden kvar, lika stor som förut. Det är landet, inte stranden.
 
-Namnen och gravarna berättar om samma land. Gårdar som heter något på *-vik* är drygt tre gånger så vanliga här som i resten av Uppland, och *-näs* mer än dubbelt så vanliga, medan inlandets *-sta* och *-by* är hälften så vanliga eller mindre. På gravfälten ovanför stränderna är högarna fler än stensättningarna oftare än i folklanden, och de resta stenarna färre. Det är inte bara olika sätt att inventera: skillnaderna finns kvar också när vi bara jämför med grannar inom samma län.
+Namnen och gravarna berättar om samma land. Gårdar som heter något på *-vik* är drygt tre gånger så vanliga här som i resten av Uppland, och *-näs* mer än dubbelt så vanliga, medan inlandets *-sta* och *-by* är hälften så vanliga eller mindre. På gravfälten ovanför stränderna är högarna fler än stensättningarna oftare än i folklanden, och de resta stenarna färre. Det är inte bara olika sätt att inventera: skillnaderna finns kvar också när vi bara jämför med grannar inom samma län. Och längs kusten har inventerarna registrerat fyra gånger så många båtlänningar och hamnlämningar, räknat mot allt annat, som i resten av Uppland – från alla tider, men de visar var båtarna drogs upp.
 
 ## Bygden som for långt bort
 
@@ -125,17 +135,19 @@ En sak såg ut att skilja Roden från resten av Uppland men gör det inte. Stena
 
 ## Ett land som vände sig mot havet
 
-Varför bar Rodens stenar färre kors? Vi vet inte. Men en ledtråd finns. Rodens stenar står sällan nära de gamla centralorterna, Husby och Tuna, där kungamakten hade sina gårdar – bara en av fem, mot hälften i folklanden. Roden var ordnat efter skeppen och inte efter hundarena, och det hade sin egen väg till kungen. Kanske nådde korset Uppland längs de vägar som gick genom kungens gårdar, och kustlandet, som vände sig mot havet och styrdes på sitt eget sätt, tog det till sig långsammare. Det är en tanke, inte ett resultat – men den går att pröva: står stenarna i Roden nära en Husby eller Tuna, bör de bära kors lika ofta som i folklanden.
+Varför bar Rodens stenar färre kors? Vi vet inte. Men en ledtråd finns. Rodens stenar står sällan nära de gamla centralorterna, Husby och Tuna, där kungamakten hade sina gårdar – bara en av fem, mot hälften i folklanden. Roden var, åtminstone på medeltiden, ordnat efter skeppen och inte efter hundarena, och det hade sin egen väg till kungen. Kanske nådde korset Uppland längs de vägar som gick genom kungens gårdar, och kustlandet, som vände sig mot havet och styrdes på sitt eget sätt, tog det till sig långsammare. Det är en tanke, inte ett resultat – men den går att pröva: står stenarna i Roden nära en Husby eller Tuna, bör de bära kors lika ofta som i folklanden.
 
 Det här är andra delen i serien De gamla landen. Den första handlade om [Sotholm på Södertörn]({SOTHOLM}), där stenarna bar kors men inte bad. I Roden bar de korset mer sällan. Två kuster, två sätt att vara kristen på en sten.
 
 ## Så vet vi det
 
-Bakom texten finns en jämförelse av Rodens runstenar med resten av Upplands, med tiden hållen konstant, och en prövning som låstes innan vi räknade: att närheten till havet inte förklarar skillnaden. Korsen står sig när stenarna delas i två grupper socken för socken och när de största ristarnas stenar tas bort, men inte när bara stenar på sin ursprungliga plats räknas. Bönerna är för få för att skilja bygdens vana från ristarnas. Två saker gör bilden osäkrare: en stor del av Rodens stenar står i Täby, och just Täbys plats i Roden är omstridd. Namnen och gravarna kommer ur fornlämningsregistret och dagens kartor. Planerna och beräkningarna finns öppna på GitHub, länkade nedan.
+Bakom texten finns en jämförelse av Rodens runstenar med resten av Upplands, med tiden hållen konstant, och en prövning som låstes innan vi räknade: att närheten till havet inte förklarar skillnaden. Korsen står sig när stenarna delas i två grupper socken för socken och när de största ristarnas stenar tas bort, men inte när bara stenar på sin ursprungliga plats räknas. Bönerna är för få för att skilja bygdens vana från ristarnas. Tre saker gör bilden osäkrare: en stor del av Rodens stenar står i Täby, Täbys plats i Roden är omstridd, och skeppslagen kan vara yngre än stenarna. Namnen och gravarna kommer ur fornlämningsregistret och dagens kartor. Planerna och beräkningarna finns öppna på GitHub, länkade nedan.
 
 ## Källor
 
 - Dahlbäck, Göran, Jansson, Bengt & Westin, Gunnar T. 1972. *Det medeltida Sverige* 1. Uppland 1. Norra Roden. Kungl. Vitterhets Historie och Antikvitets Akademien.
+- Janzon, Kaj & Rahmqvist, Sigurd 2002. *Det medeltida Sverige* 2. Södermanland 1. Tören: Svartlösa, Sotholm. Riksantikvarieämbetet (den danska seglingsbeskrivningen).
+- Larsson, Mats G. 1993. Kung Eriks nyordning. *Uppland* 1993, s. 105–134.
 - Riksantikvarieämbetet, fornlämningsregistret (Kulturmiljöregistret), uttag 2026.
 - Sveriges geologiska undersökning (SGU), strandförskjutningsmodell för år 1000.
 - Samnordisk runtextdatabas (Rundata), Institutionen för nordiska språk, Uppsala universitet. Open Database License.
@@ -148,9 +160,9 @@ summary_en = ("In the Viking Age the coast of Uppland was a land of its own, Rod
               "hundreds. There the runestones carry crosses on four stones in ten, against six in ten in the rest of "
               "Uppland, and it is not down to the closeness of the sea. The second part of the series The old lands.")
 
-body_en = f"""Imagine rowing north along the coast of Uppland a thousand years ago. The land does not look as it does today. The sea reaches far into it, the bays cut deep between the hills, and what will later become river valleys are still inlets where the boat can glide in among the alders. Everywhere there are points and narrow necks of land, islets and skerries. Furthest north the land has only just risen from the sea; there the settlement is young, the farms new, and the shore meadows grow outwards with every generation.
+body_en = f"""Imagine rowing north along the coast of Uppland a thousand years ago. The land does not look as it does today. The sea reaches far into it, the bays cut deep between the hills, and what will later become river valleys are still inlets where the boat can glide in among the alders. Everywhere there are points and narrow necks of land, islets and skerries. Furthest north the land has only just risen from the sea; there the settlement is young, the farms new, and the shore meadows grow outwards with every generation. Where the Dalälven river falls into the sea at Älvkarleby, people catch salmon – when the charters begin to speak, in the 1180s, the pope protects the cathedral's fisheries there and the king gives part of the fishery to a convent.
 
-Imagine the smell of seaweed and tar, the sound of oars against the thole-pins, the gulls over the shallows. The farms lie where a bay meets a valley, and their names speak of the water: some end in *-vik*, 'bay', some in *-näs*, 'point'. On the grave fields above the shores the mounds lie thicker than inland, and here and there a stone rises out of the grass.
+Imagine the smell of seaweed and tar, the sound of oars against the thole-pins, the gulls over the shallows. The farms lie where a bay meets a valley, and their names speak of the water: some end in *-vik*, 'bay', some in *-näs*, 'point'. On the grave fields above the shores the mounds lie thicker than inland, and here and there a stone rises out of the grass. In the south, in the archipelago of Värmdö, the sea road runs between the islets; still in the medieval Danish sailing description the routes end at Runmarö and Vindö.
 
 Further south, where the coast breaks up towards the mouth of Lake Mälaren, lies Täby. A great man lives here, Jarlabanke, who has stones raised at a bridge he has built and has it written that he alone owns the whole village:
 
@@ -169,7 +181,7 @@ U 136 at Broby bro in Täby, raised by Åstrid for Östen who went to Jerusalem.
 
 ## A land of ship districts
 
-This is Roden, the coastal land. The three folklands – Tiundaland, Attundaland and Fjädrundaland – were divided into hundreds. Roden was divided into ship districts, *skeppslag*, and it shows in the law. When the Law of Uppland was written down around 1300, a dispute in the folklands went from the hundred's assembly to the folkland's assembly and finally to the king; in Roden it went from the assembly of one ship district to that of two, then to that of six, and finally to king or duke. The levy for the king's fleet, too, was reckoned in Roden by ship districts and not by hundreds.
+This is Roden, the coastal land. The three folklands – Tiundaland, Attundaland and Fjädrundaland – were divided into hundreds. Roden was divided into ship districts, *skeppslag*, and it shows in the law. When the Law of Uppland was written down around 1300, a dispute in the folklands went from the hundred's assembly to the folkland's assembly and finally to the king; in Roden it went from the assembly of one ship district to that of two, then to that of six, and finally to king or duke. The levy for the king's fleet, too, was reckoned in Roden by ship districts and not by hundreds. How old that order is we do not know. The historian Mats G. Larsson argues that the ship districts in Roden are "in most cases probably a younger phenomenon" – the Roden of the law is the Middle Ages', and the land where the stones were raised may have been organised differently.
 
 How large Roden was, and whether it was a land of its own or part of the folklands, is disputed. Göran Dahlbäck and Gunnar T. Westin write in *Det medeltida Sverige* that "the question of Roden's territorial extent and its fiscal and judicial division is disputed". In the six-year tithe of 1314 Roden appears as a heading under Tiundaland. And Jarlabanke himself, whose Täby was counted in the ship district of Danderyd, wrote on a stone at Vallentuna church that he "alone owned all of this hundred" – Vallentuna, in Attundaland. The border ran through the middle of his world.
 
@@ -182,7 +194,7 @@ Walk among Roden's stones, and after a while one thing stands out. The cross, wh
 
 The natural thought is that it is the sea. That people by the shore lived differently from people inland, whatever their land was called. Roden's stones do stand closer to the water: half of them within a hundred metres or so of the shoreline of AD 1000. But in the rest of Uppland it makes no difference whether a stone stands by the water or far from it – the cross is just as common. And when we take the closeness of the water into account, the difference for Roden remains, as large as before. It is the land, not the shore.
 
-The names and the graves tell of the same land. Farms with names in *-vik*, 'bay', are more than three times as common here as in the rest of Uppland, and *-näs*, 'point', more than twice as common, while the inland *-sta* and *-by* are half as common or less. On the grave fields above the shores, mounds outnumber stone settings more often than in the folklands, and the standing stones are fewer. It is not just different ways of surveying: the differences remain when we compare only with neighbours in the same county.
+The names and the graves tell of the same land. Farms with names in *-vik*, 'bay', are more than three times as common here as in the rest of Uppland, and *-näs*, 'point', more than twice as common, while the inland *-sta* and *-by* are half as common or less. On the grave fields above the shores, mounds outnumber stone settings more often than in the folklands, and the standing stones are fewer. It is not just different ways of surveying: the differences remain when we compare only with neighbours in the same county. And along the coast the surveyors have registered four times as many boat landings and harbour remains, counted against everything else, as in the rest of Uppland – from all periods, but they show where the boats were hauled up.
 
 ## The district that travelled far
 
@@ -190,17 +202,19 @@ One thing looked as if it set Roden apart from the rest of Uppland but does not.
 
 ## A land that faced the sea
 
-Why did Roden's stones carry fewer crosses? We do not know. But there is a clue. Roden's stones seldom stand near the old central places, Husby and Tuna, where royal power had its estates – only one in five, against half in the folklands. Roden was organised by ships and not by hundreds, and it had its own road to the king. Perhaps the cross reached Uppland along the roads that ran through the king's estates, and the coastal land, which faced the sea and was governed in its own way, took it up more slowly. It is a thought, not a result – but it can be tested: if the stones in Roden that stand near a Husby or Tuna carry crosses as often as in the folklands, it holds.
+Why did Roden's stones carry fewer crosses? We do not know. But there is a clue. Roden's stones seldom stand near the old central places, Husby and Tuna, where royal power had its estates – only one in five, against half in the folklands. Roden was, at least in the Middle Ages, organised by ships and not by hundreds, and it had its own road to the king. Perhaps the cross reached Uppland along the roads that ran through the king's estates, and the coastal land, which faced the sea and was governed in its own way, took it up more slowly. It is a thought, not a result – but it can be tested: if the stones in Roden that stand near a Husby or Tuna carry crosses as often as in the folklands, it holds.
 
 This is the second part of the series The old lands. The first was about [Sotholm on Södertörn]({SOTHOLM}), where the stones carried crosses but did not pray. In Roden they carried the cross more rarely. Two coasts, two ways of being Christian on a stone.
 
 ## How we know
 
-Behind the text lies a comparison of Roden's runestones with the rest of Uppland's, with time held constant, and a test that was fixed before we counted: that the closeness of the sea does not explain the difference. The crosses hold when the stones are split into two groups parish by parish and when the stones of the main carvers are removed, but not when only stones in their original place are counted. The prayers are too few to tell the district's habit from the carvers'. Two things make the picture less certain: a large share of Roden's stones stand in Täby, and Täby's place in Roden is itself disputed. The names and graves come from the register of ancient monuments and today's maps. The plans and calculations are open on GitHub, linked below.
+Behind the text lies a comparison of Roden's runestones with the rest of Uppland's, with time held constant, and a test that was fixed before we counted: that the closeness of the sea does not explain the difference. The crosses hold when the stones are split into two groups parish by parish and when the stones of the main carvers are removed, but not when only stones in their original place are counted. The prayers are too few to tell the district's habit from the carvers'. Three things make the picture less certain: a large share of Roden's stones stand in Täby, Täby's place in Roden is itself disputed, and the ship districts may be younger than the stones. The names and graves come from the register of ancient monuments and today's maps. The plans and calculations are open on GitHub, linked below.
 
 ## Sources
 
 - Dahlbäck, Göran, Jansson, Bengt & Westin, Gunnar T. 1972. *Det medeltida Sverige* 1. Uppland 1. Norra Roden. Royal Swedish Academy of Letters, History and Antiquities. (Quotations translated by us.)
+- Janzon, Kaj & Rahmqvist, Sigurd 2002. *Det medeltida Sverige* 2. Södermanland 1. Tören: Svartlösa, Sotholm. Swedish National Heritage Board (the Danish sailing description).
+- Larsson, Mats G. 1993. Kung Eriks nyordning. *Uppland* 1993, pp. 105–134. (Quotation translated by us.)
 - Swedish National Heritage Board, register of ancient monuments (Kulturmiljöregistret), extract 2026.
 - Geological Survey of Sweden (SGU), shore-displacement model for AD 1000.
 - Scandinavian Runic-text Data Base (Rundata), Department of Scandinavian Languages, Uppsala University. Open Database License.
