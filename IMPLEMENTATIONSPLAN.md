@@ -156,6 +156,30 @@ känd/okänd …) och *drag B* eller *plats/tid* (landskap, härad, epok), och f
 
 ---
 
+## Fas 5 – De gamla gränserna (Viktor 2026-11-02: "jag vill att vi fokuserar appen mer på de gamla gränserna. Det är där skillnaderna låg, inte i våra landskap idag" … "gör allt detta plus släktleden")
+
+Bakgrund: Upplands folkland gav en skarp gräns för *at*/*æftiR* (utdata/folkland/, 0ff3c59) där dagens landskap inte
+visar något; Smålands små land (utdata/smalanden/). Kartlagret Små land och städerna finns (e3eeb9b, bbee707).
+
+### 5.1 En vikingatida region per sten  — PÅGÅR
+Uppland → folkland, Småland → små land (finns, scripts/assign_sten_land.py), Gotland → tredingar (Wikipedia), övriga →
+landskapet som eget land. Källa och osäkerhet per region. Kolumnen `region_old` i korpusen (src/r_bridge.corpus_rows).
+
+### 5.2 Statistiken efter de gamla gränserna (låst plan)
+Regiontermen i R-modulerna (robusthetstrappan, genomsökningar, ord, förändring m.fl.) byts från landskap till gammal
+region; landskapet räknas som jämförelse. Planen redovisar vilka fynd som står sig och vilka som ändras.
+
+### 5.3 Appen visar de gamla gränserna först
+Kartan öppnar med gränslagret Små land; filtret Landskap blir Region; tabeller per landskap visar de gamla landen först.
+
+### 5.4 Namn och släkt (ny sektion i Statistik (R), r/names.R)
+1 namnled i arv (förälder–barn, syskon; utdata/namngivning), 2 släktnätverket (data/links.json, utdata/slakt/steg2a),
+3 grannar delar namn (spatial-spacing), 4 namnens geografi per gammalt land, 5 namnskicket per land, 6 släktmönster
+(socken och avstånd mellan generationerna). 4–6 under låst plan.
+
+### 5.5 Gränsskannern (låst plan)
+Varje par av angränsande gamla land × varje drag: skarp vid gränsen eller gradient (som *at* Tiundaland–Attundaland).
+
 ## Prioordning 2026-10-26: det som går att göra utan Viktor
 1. **KLAR 2026-10-27 (20ef98b, 938dfa8).** **Stavlöst läge** i den automatiska huggspårsanalysen. Prövas mot Rundatas runantal på Hs 10, 12, 14, 15 och
    M 3, 4, 7, 8; vanliga stenar ska ge samma resultat som före. Metodversion i METHODS, CHANGELOG och news.json.
