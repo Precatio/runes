@@ -23,7 +23,7 @@ Det enda nya: **Finnveden** reser nästan aldrig stenar av granit (4 % mot 66 % 
 berggrunden och säger inget om sed.
 
 ## Steg 3 – Häradsfickor
-731 prov i 39 härader, 11 med q < 0,05, **6 håller**:
+731 prov i 35 härader, 11 med q < 0,05, **6 håller**:
 - **Redvägs härad (Vg): stungna runor på alla 13 stenar** där det kan avgöras, mot 36 % i resten av Västergötland.
   Ingen ristare har fler än fem stenar där. Starkaste nya fyndet.
 - **Sotholms härad (Sö, Södertörn): nästan inga kristna formler** – 1 av 43 stenar, mot 20 % i resten av Södermanland.
