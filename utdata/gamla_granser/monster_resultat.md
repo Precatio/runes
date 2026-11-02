@@ -46,3 +46,11 @@ därför inte som hållande, men att skannern hittar den på egen hand är ett g
 Steg 1 för Uppland utan draget mat_granit (24 drag, samma 999 slumpindelningar): folklanden 318 mot median 154 och 95:e
 percentil 228, p 0,001; halvorna 202 mot 109 (p 0,001) och 201 mot 110 (p 0,002). 13 drag skiljer mot median 7.
 Resultatet beror alltså inte på berggrunden. (monster_kanslighet.py, monster_kanslighet.json)
+
+## Robusthetssteg för folklandsprovet (tilläggsplan sha e31f2fd1, låst före körningen)
+Samma 999 slumpindelningar på fyra urval av Upplands stenar – alla håller (p < 0,05):
+- bara stenar på ursprunglig plats (497 stenar): 241 mot median 138, p 0,002
+- utan Öpir, Fot, Balle, Åsmund och Gunnar (534): 231 mot 136, p 0,003
+- bara daterade (512): 270 mot 145, p 0,002
+- utan förlorade (704): 308 mot 171, p 0,002
+Fyndet når därmed nivå 1, "Fullt prövat", i rapportmallen (MALL v2). (monster_trappa.py, monster_trappa.json)
