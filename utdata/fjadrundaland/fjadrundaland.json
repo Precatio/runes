@@ -1,0 +1,403 @@
+{
+  "plan": "analysplaner/2026-11-02-fjadrundaland.md",
+  "plan_sha": "6088f2af",
+  "fj_carvers": ["Äskil", "Balle", "Erik", "Livsten", "Tidkume", "Torbjörn"],
+  "T1": {
+    "pm_kors": {
+      "grund": {
+        "n": 880,
+        "k_in": 43,
+        "n_in": 122,
+        "share_in": 0.352459,
+        "share_out": 0.608179,
+        "or": 0.265701,
+        "p": 3.024528e-10,
+        "holds": true
+      },
+      "a_ristare_slump": {
+        "n": 880,
+        "k_in": 43,
+        "n_in": 122,
+        "share_in": 0.352459,
+        "share_out": 0.608179,
+        "or": 0.244427,
+        "p": 1.498533e-06,
+        "holds": true
+      },
+      "b_pa_plats": {
+        "n": 518,
+        "k_in": 29,
+        "n_in": 79,
+        "share_in": 0.367089,
+        "share_out": 0.628702,
+        "or": 0.226355,
+        "p": 3.014498e-08,
+        "holds": true
+      },
+      "c_daterade": {
+        "n": 533,
+        "k_in": 37,
+        "n_in": 87,
+        "share_in": 0.425287,
+        "share_out": 0.679372,
+        "or": 0.290532,
+        "p": 6.707694e-07,
+        "holds": true
+      },
+      "d_utan_forlorade": {
+        "n": 739,
+        "k_in": 38,
+        "n_in": 104,
+        "share_in": 0.365385,
+        "share_out": 0.634646,
+        "or": 0.257171,
+        "p": 2.046623e-09,
+        "holds": true
+      },
+      "e_utan_fjadrundalands_ristare": {
+        "n": 756,
+        "k_in": 7,
+        "n_in": 25,
+        "share_in": 0.28,
+        "share_out": 0.600547,
+        "or": 0.25392,
+        "p": 0.001477,
+        "holds": true
+      }
+    },
+    "r_for_R": {
+      "grund": {
+        "n": 438,
+        "k_in": 32,
+        "n_in": 62,
+        "share_in": 0.516129,
+        "share_out": 0.151596,
+        "or": 4.87725,
+        "p": 6.051294e-07,
+        "holds": true
+      },
+      "a_ristare_slump": {
+        "n": 438,
+        "k_in": 32,
+        "n_in": 62,
+        "share_in": 0.516129,
+        "share_out": 0.151596,
+        "or": 5.065978,
+        "p": 0.000724,
+        "holds": true
+      },
+      "b_pa_plats": {
+        "n": 272,
+        "k_in": 24,
+        "n_in": 45,
+        "share_in": 0.533333,
+        "share_out": 0.15859,
+        "or": 4.85136,
+        "p": 0.00006,
+        "holds": true
+      },
+      "c_daterade": {
+        "n": 295,
+        "k_in": 25,
+        "n_in": 49,
+        "share_in": 0.510204,
+        "share_out": 0.170732,
+        "or": 3.95113,
+        "p": 0.000153,
+        "holds": true
+      },
+      "d_utan_forlorade": {
+        "n": 391,
+        "k_in": 27,
+        "n_in": 54,
+        "share_in": 0.5,
+        "share_out": 0.151335,
+        "or": 4.6,
+        "p": 8.842416e-06,
+        "holds": true
+      },
+      "e_utan_fjadrundalands_ristare": {
+        "n": 372,
+        "k_in": 4,
+        "n_in": 12,
+        "share_in": 0.333333,
+        "share_out": 0.130556,
+        "or": 3.414577,
+        "p": 0.074831,
+        "holds": false
+      }
+    },
+    "skilj_plus": {
+      "grund": {
+        "n": 815,
+        "k_in": 20,
+        "n_in": 117,
+        "share_in": 0.17094,
+        "share_out": 0.044413,
+        "or": 4.634177,
+        "p": 4.840054e-06,
+        "holds": true
+      },
+      "a_ristare_slump": {
+        "n": 815,
+        "k_in": 20,
+        "n_in": 117,
+        "share_in": 0.17094,
+        "share_out": 0.044413,
+        "or": 0.361297,
+        "p": 0.401609,
+        "holds": false
+      },
+      "b_pa_plats": {
+        "n": 485,
+        "k_in": 14,
+        "n_in": 76,
+        "share_in": 0.184211,
+        "share_out": 0.03912,
+        "or": 5.423043,
+        "p": 0.000057,
+        "holds": true
+      },
+      "c_daterade": {
+        "n": 509,
+        "k_in": 19,
+        "n_in": 85,
+        "share_in": 0.223529,
+        "share_out": 0.035377,
+        "or": 8.928527,
+        "p": 2.466048e-08,
+        "holds": true
+      },
+      "d_utan_forlorade": {
+        "n": 691,
+        "k_in": 19,
+        "n_in": 101,
+        "share_in": 0.188119,
+        "share_out": 0.044068,
+        "or": 5.380644,
+        "p": 1.977335e-06,
+        "holds": true
+      },
+      "e_utan_fjadrundalands_ristare": {
+        "n": 693,
+        "k_in": 0,
+        "n_in": 21,
+        "share_in": 0,
+        "share_out": 0.041667,
+        "or": 5.34626e-07,
+        "p": 0.178727,
+        "holds": false
+      }
+    },
+    "ord_ræisti": {
+      "grund": {
+        "n": 880,
+        "k_in": 11,
+        "n_in": 122,
+        "share_in": 0.090164,
+        "share_out": 0.026385,
+        "or": 4.44174,
+        "p": 0.00086,
+        "holds": true
+      },
+      "a_ristare_slump": {
+        "n": 880,
+        "k_in": 11,
+        "n_in": 122,
+        "share_in": 0.090164,
+        "share_out": 0.026385,
+        "or": 2.241192,
+        "p": 0.484785,
+        "holds": false
+      },
+      "b_pa_plats": {
+        "n": 518,
+        "k_in": 8,
+        "n_in": 79,
+        "share_in": 0.101266,
+        "share_out": 0.025057,
+        "or": 6.603401,
+        "p": 0.000941,
+        "holds": true
+      },
+      "c_daterade": {
+        "n": 533,
+        "k_in": 10,
+        "n_in": 87,
+        "share_in": 0.114943,
+        "share_out": 0.024664,
+        "or": 8.042945,
+        "p": 0.000097,
+        "holds": true
+      },
+      "d_utan_forlorade": {
+        "n": 739,
+        "k_in": 9,
+        "n_in": 104,
+        "share_in": 0.086538,
+        "share_out": 0.023622,
+        "or": 5.464553,
+        "p": 0.000888,
+        "holds": true
+      },
+      "e_utan_fjadrundalands_ristare": {
+        "n": 756,
+        "k_in": 1,
+        "n_in": 25,
+        "share_in": 0.04,
+        "share_out": 0.024624,
+        "or": 1.877366,
+        "p": 0.583516,
+        "holds": false
+      }
+    },
+    "i_grupp": {
+      "grund": {
+        "n": 410,
+        "k_in": 10,
+        "n_in": 66,
+        "share_in": 0.151515,
+        "share_out": 0.340116,
+        "or": 0.321646,
+        "p": 0.000753,
+        "holds": true
+      },
+      "a_ristare_slump": {
+        "n": 410,
+        "k_in": 10,
+        "n_in": 66,
+        "share_in": 0.151515,
+        "share_out": 0.340116,
+        "or": 0.321646,
+        "p": 0.000753,
+        "holds": true
+      },
+      "b_pa_plats": {
+        "n": 410,
+        "k_in": 10,
+        "n_in": 66,
+        "share_in": 0.151515,
+        "share_out": 0.340116,
+        "or": 0.321646,
+        "p": 0.000753,
+        "holds": true
+      },
+      "c_daterade": {
+        "n": 303,
+        "k_in": 9,
+        "n_in": 56,
+        "share_in": 0.160714,
+        "share_out": 0.327935,
+        "or": 0.351812,
+        "p": 0.004296,
+        "holds": true
+      },
+      "d_utan_forlorade": {
+        "n": 410,
+        "k_in": 10,
+        "n_in": 66,
+        "share_in": 0.151515,
+        "share_out": 0.340116,
+        "or": 0.321646,
+        "p": 0.000753,
+        "holds": true
+      },
+      "e_utan_fjadrundalands_ristare": {
+        "n": 337,
+        "k_in": 1,
+        "n_in": 9,
+        "share_in": 0.111111,
+        "share_out": 0.332317,
+        "or": 0.294415,
+        "p": 0.18915,
+        "holds": false
+      }
+    },
+    "flera_resare": {
+      "grund": {
+        "n": 730,
+        "k_in": 48,
+        "n_in": 108,
+        "share_in": 0.444444,
+        "share_out": 0.635048,
+        "or": 0.415044,
+        "p": 0.000048,
+        "holds": true
+      },
+      "a_ristare_slump": {
+        "n": 730,
+        "k_in": 48,
+        "n_in": 108,
+        "share_in": 0.444444,
+        "share_out": 0.635048,
+        "or": 0.456374,
+        "p": 0.004486,
+        "holds": true
+      },
+      "b_pa_plats": {
+        "n": 449,
+        "k_in": 34,
+        "n_in": 72,
+        "share_in": 0.472222,
+        "share_out": 0.679045,
+        "or": 0.379673,
+        "p": 0.000336,
+        "holds": true
+      },
+      "c_daterade": {
+        "n": 469,
+        "k_in": 39,
+        "n_in": 81,
+        "share_in": 0.481481,
+        "share_out": 0.688144,
+        "or": 0.415386,
+        "p": 0.000516,
+        "holds": true
+      },
+      "d_utan_forlorade": {
+        "n": 625,
+        "k_in": 44,
+        "n_in": 95,
+        "share_in": 0.463158,
+        "share_out": 0.633962,
+        "or": 0.446758,
+        "p": 0.000491,
+        "holds": true
+      },
+      "e_utan_fjadrundalands_ristare": {
+        "n": 619,
+        "k_in": 10,
+        "n_in": 19,
+        "share_in": 0.526316,
+        "share_out": 0.64,
+        "or": 0.653502,
+        "p": 0.372257,
+        "holds": false
+      }
+    }
+  },
+  "T2": {
+    "Balle pm_kors": {
+      "carver": "Balle",
+      "trait": "pm_kors",
+      "in_k": 10,
+      "in_n": 37,
+      "out_k": 3,
+      "out_n": 6,
+      "p": 0.345494
+    },
+    "Torbjörn pm_kors": {
+      "carver": "Torbjörn",
+      "trait": "pm_kors",
+      "in_k": 2,
+      "in_n": 5,
+      "out_k": 9,
+      "out_n": 10,
+      "p": 0.076923
+    }
+  },
+  "holm": {
+    "Balle pm_kors": 0.345494,
+    "Torbjörn pm_kors": 0.153846
+  }
+}
