@@ -88,6 +88,9 @@ INFO = commons.commons_info([F269])
 assert INFO[F269]["licence"] == "Public domain"
 PAGE = "https://commons.wikimedia.org/wiki/File:" + F269
 
+from src import blog_figures  # noqa: E402
+MAP = {lang: blog_figures.freeze(open(os.path.join(ROOT, "utdata", "sotholm", f"karta_toren_{lang}.png"), "rb").read())
+       for lang in ("sv", "en")}  # utdata/sotholm/karta_toren.R
 BON = "/artiklar/2026-10-bonen-tystnade-korset-stod-kvar"
 HN = {"Daga hd": "Daga", "Selebo hd": "Selebo", "Hölebo hd": "Hölebo", "Västerrekarne hd": "Västerrekarne",
       "Österrekarne hd": "Österrekarne", "Oppunda hd": "Oppunda", "Öknebo hd": "Öknebo", "Rönö hd": "Rönö",
@@ -151,6 +154,9 @@ Sö 269 från Söderby malm. Korset sitter överst, texten ber inte. Foto: Kenny
 ## Två bygder på en ö
 
 Tören var delad i två bygder, som i de medeltida breven kallas Övre och Yttre Tör: Svartlösa härad i väster och norr, och Sotholms härad i öster och söder. Gränsen mellan dem behövde ingen människa dra. Den följde den höga, ödsliga Hanveden och dess utlöpare, gick genom Kaggfjärden i sydväst och genom Drevviken till Erstaviken i nordöst. Yttre Tör vände sig utåt, mot havet. Vid medeltidens slut samlades häradet till ting på en hög holme längst in i Landfjärden, på Häringes mark, och det är den platsen, Sotholm, som har gett häradet dess namn. Om tinget hölls där redan på vikingatiden vet vi inte.
+
+![Karta över Tören omkring år 1000 med gränsen mellan Övre och Yttre Tör och runstenarna]({MAP['sv']})
+**Karta.** Tören omkring år 1000, då Södertörn var en ö. Den streckade linjen är gränsen mellan Övre Tör (Svartlösa härad) och Yttre Tör (Sotholms härad), ungefärlig, dragen efter sockenkyrkornas lägen. Rostfärgade punkter är de tre stenar på ön som ber för den dödes själ. Karta: Vitki, efter SGU:s modell för strandförskjutningen år 1000, Institutet för språk och folkminnens ortnamnsregister och Rundata.
 
 Det var Yttre Tör som reste flest runstenar på ön: Sorunda ensamt har 21 ristningar, sju av dem huggna direkt i berghällen. Längst i söder, vid Vansta i Ösmo, högg ristaren Amunde en av Ingvarsstenarna, efter Tosti som dog i Ingvars följe i öster. Det är folket här – Store och hans son Viking, Hjälmvid, Farbjörn, Hallsten – och deras stenar som resten av den här texten handlar om.
 
@@ -226,6 +232,7 @@ Vi vet inte varför. Det kan ha varit ristarnas skola, där formeln aldrig lärd
 - Samnordisk runtextdatabas (Rundata), Institutionen för nordiska språk, Uppsala universitet. Open Database License.
 - Institutet för språk och folkminnen, ortnamnsregistret (PlaceNameService), socknar och härader. CC BY.
 - Den låsta analysplanen, stenarna och Vitkis beräkningar finns öppet på [GitHub](https://github.com/Precatio/runes) (analysplaner/2026-11-02-sotholm.md och 2026-11-02-gamla-granser-nya-monster.md).
+- Sveriges geologiska undersökning (SGU), strandförskjutningsmodell för år 1000 (kartan).
 - Bild: Wikimedia Commons, med fotografen i bildtexten."""
 
 title_en = "The old lands: Sotholm – the runestones that did not pray"
@@ -254,6 +261,9 @@ Sö 269 from Söderby malm. The cross sits at the top; the text does not pray. P
 ## Two districts on one island
 
 Tören was divided into two districts, called Upper and Outer Tör in the medieval charters: the hundred of Svartlösa in the west and north, and the hundred of Sotholm in the east and south. No one needed to draw the border between them. It followed the high, desolate Hanveden and its spurs, ran through Kaggfjärden in the south-west and through Drevviken to Erstaviken in the north-east. Outer Tör faced outwards, towards the sea. At the end of the Middle Ages the hundred gathered for its assembly on a high islet at the inner end of Landfjärden, on the land of Häringe, and it is that place, Sotholm, that gave the hundred its name. Whether the assembly met there already in the Viking Age we do not know.
+
+![Map of Tören around AD 1000 with the border between Upper and Outer Tör and the runestones]({MAP['en']})
+**Map.** Tören around AD 1000, when Södertörn was an island. The dashed line is the border between Upper Tör (the hundred of Svartlösa) and Outer Tör (the hundred of Sotholm), approximate, drawn after the parish churches. Rust-coloured points are the three stones on the island that pray for the dead person's soul. Map: Vitki, after the Geological Survey of Sweden's shore-displacement model for AD 1000, the place-name register of the Institute for Language and Folklore, and Rundata.
 
 It was Outer Tör that raised the most runestones on the island: Sorunda alone has 21 inscriptions, seven of them cut straight into the bedrock. Furthest south, at Vansta in Ösmo, the carver Amunde cut one of the Ingvar stones, in memory of Tosti who died in Ingvar's retinue in the east. It is the people here – Store and his son Viking, Hjälmvid, Farbjörn, Hallsten – and their stones that the rest of this text is about.
 
@@ -329,6 +339,7 @@ We do not know why. It may have been the carvers' school, where the formula was 
 - Scandinavian Runic-text Data Base (Rundata), Department of Scandinavian Languages, Uppsala University. Open Database License.
 - Institute for Language and Folklore, place-name register (PlaceNameService), parishes and hundreds. CC BY.
 - The locked analysis plan, the stones and Vitki's calculations are open on [GitHub](https://github.com/Precatio/runes) (analysplaner/2026-11-02-sotholm.md and 2026-11-02-gamla-granser-nya-monster.md).
+- Geological Survey of Sweden (SGU), shore-displacement model for AD 1000 (the map).
 - Image: Wikimedia Commons, with the photographer in the caption."""
 
 for b in (body, body_en):
