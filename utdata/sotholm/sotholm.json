@@ -1,0 +1,128 @@
+{
+  "plan": "analysplaner/2026-11-02-sotholm.md",
+  "plan_sha": "9fa481d3",
+  "so_carvers": ["Amunde", "Björn 2 eller -björn", "Halvdan"],
+  "T1": {
+    "grund": {
+      "n": 298,
+      "n_in": 43,
+      "k_in": 1,
+      "share_in": 0.023256,
+      "share_out": 0.196078,
+      "log_or": -2.5141,
+      "or": 0.080936,
+      "p": 0.000322,
+      "holds": true
+    },
+    "a_ristare_slump": {
+      "n": 298,
+      "n_in": 43,
+      "k_in": 1,
+      "share_in": 0.023256,
+      "share_out": 0.196078,
+      "log_or": -2.593487,
+      "or": 0.074759,
+      "p": 0.445459,
+      "holds": false
+    },
+    "b_pa_plats": {
+      "n": 188,
+      "n_in": 40,
+      "k_in": 1,
+      "share_in": 0.025,
+      "share_out": 0.202703,
+      "log_or": -2.493803,
+      "or": 0.082595,
+      "p": 0.000584,
+      "holds": true
+    },
+    "c_daterade": {
+      "n": 160,
+      "n_in": 27,
+      "k_in": 0,
+      "share_in": 0,
+      "share_out": 0.210526,
+      "log_or": -17.507722,
+      "or": 2.491684e-08,
+      "p": 0.000205,
+      "holds": true
+    },
+    "d_utan_forlorade": {
+      "n": 248,
+      "n_in": 34,
+      "k_in": 1,
+      "share_in": 0.029412,
+      "share_out": 0.196262,
+      "log_or": -2.248584,
+      "or": 0.105549,
+      "p": 0.002416,
+      "holds": true
+    },
+    "e_utan_sotholms_ristare": {
+      "n": 266,
+      "n_in": 18,
+      "k_in": 1,
+      "share_in": 0.055556,
+      "share_out": 0.201613,
+      "log_or": -1.701606,
+      "or": 0.18239,
+      "p": 0.041711,
+      "holds": true
+    }
+  },
+  "T1_all_hold": false,
+  "T2": {
+    "n": 298,
+    "n_in": 43,
+    "k_in": 25,
+    "share_in": 0.581395,
+    "share_out": 0.521569,
+    "log_or": 0.139435,
+    "or": 1.149625,
+    "p": 0.68377
+  },
+  "T3": {
+    "n": 255,
+    "n_in": 40,
+    "k_in": 5,
+    "share_in": 0.125,
+    "share_out": 0.209302,
+    "log_or": -0.755902,
+    "or": 0.469587,
+    "p": 0.132189
+  },
+  "T4": {
+    "median_so": 1030,
+    "median_rest": 1030,
+    "mean_so": 1037.037037,
+    "mean_rest": 1031.992481,
+    "p": 0.419173,
+    "per_period": {
+      "1010–1040": {
+        "so": [0, 22],
+        "rest": [23, 96]
+      },
+      "–1010": {
+        "so": [0, 0],
+        "rest": [1, 20]
+      },
+      "1040–1070": {
+        "so": [0, 5],
+        "rest": [3, 9]
+      },
+      "1070–": {
+        "so": [0, 0],
+        "rest": [1, 8]
+      },
+      "odaterad": {
+        "so": [1, 16],
+        "rest": [22, 122]
+      }
+    }
+  },
+  "holm": {
+    "T2": 0.838346,
+    "T3": 0.396566,
+    "T4": 0.838346
+  }
+}

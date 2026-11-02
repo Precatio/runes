@@ -1,0 +1,178 @@
+{
+ "n": 43,
+ "parishes": [
+  [
+   "Sorunda sn",
+   12
+  ],
+  [
+   "Österhaninge sn",
+   12
+  ],
+  [
+   "Ösmo sn",
+   10
+  ],
+  [
+   "Västerhaninge sn",
+   8
+  ],
+  [
+   "Tyresö sn",
+   1
+  ]
+ ],
+ "carvers": [
+  [
+   "–",
+   15
+  ],
+  [
+   "Amunde",
+   11
+  ],
+  [
+   "Halvdan",
+   9
+  ],
+  [
+   "Björn 2 eller -björn",
+   5
+  ],
+  [
+   "Åsbjörn",
+   2
+  ],
+  [
+   "Östen 2",
+   1
+  ]
+ ],
+ "periods": [
+  [
+   "1010–1040",
+   22
+  ],
+  [
+   "odaterad",
+   16
+  ],
+  [
+   "1040–1070",
+   5
+  ]
+ ],
+ "christian_stones": [
+  "Sö ATA322-4237-2011"
+ ],
+ "cross_stones": [
+  "Sö 215",
+  "Sö 217",
+  "Sö 229",
+  "Sö 232",
+  "Sö 233",
+  "Sö 238",
+  "Sö 240",
+  "Sö 241",
+  "Sö 242",
+  "Sö 244",
+  "Sö 250",
+  "Sö 251",
+  "Sö 253",
+  "Sö 254",
+  "Sö 256",
+  "Sö 258",
+  "Sö 260",
+  "Sö 262",
+  "Sö 263",
+  "Sö 265",
+  "Sö 266",
+  "Sö 269",
+  "Sö 271",
+  "Sö 273",
+  "Sö ATA322-4237-2011"
+ ],
+ "shares": {
+  "cat_kristen": [
+   1,
+   43
+  ],
+  "pm_kors": [
+   25,
+   43
+  ],
+  "msg_resa": [
+   3,
+   43
+  ],
+  "msg_berom": [
+   2,
+   43
+  ],
+  "cat_arv": [
+   0,
+   43
+  ],
+  "cat_bro_vag": [
+   1,
+   43
+  ],
+  "msg_dod_borta": [
+   2,
+   43
+  ],
+  "kvinna_resare": [
+   6,
+   39
+  ],
+  "flera_resare": [
+   21,
+   39
+  ]
+ },
+ "texts": {
+  "Sö 215": "Hrólfr and Sveinn raised the stone in memory of Freysteinn ... ... and in memory of Gunnulfr, their brother. Ámundi cut the runes.",
+  "Sö 216": "Óttarr and ... ... met his end in the east ...",
+  "Sö 217": "Svertingr and Kári and Guðmundr and Skári and Knútr raised this stone in memory of Ótryggr, their father, who fell in Guðvé's retinue.",
+  "Sö 223": "... father in memory of son, runes ...",
+  "Sö 224": "Raggi and Saxi and Dyntr(?) raised this stone in memory of Fasti, their father.",
+  "Sö 226": "Bjôrn and Vébjôrn and Hrafni and Ketilbjôrn raised the stone in memory of Geirbjôrn, their father.",
+  "Sö 228": "Fullugi had the stone raised ... ...-bjôrn and ...",
+  "Sö 229": "Ketilbjôrn and Þorbjôrn and Þorketill and Farmaðr and Sveinn raised the stone in memory of Ígulbjôrn, their father.",
+  "Sö 232": "Freysteinn and Ígull raised the stone in memory of Þorbjôrn, their father; and Þórir in memory of his brother.",
+  "Sö 233": "Gunni and Þorfastr raised the stone in memory of Þórir, their father. Ámundi cut.",
+  "Sö 234": "Ormgeirr and Jógeirr and Jôfursteinn(?), they raised (the stone) in memory of Gunni, their father.",
+  "Sö 235": "Guðbjôrn and ... had this stone raised in memory of Védjarfr, their father.",
+  "Sö 237": "Þórir and Þegn had this stone raised in memory of Fastbjôrn, Þegn's father, and Ônundr, their son.",
+  "Sö 238": "... and Bjôrn and Farulfr, they had the stone raised in memory of Áki, their father. He was ...",
+  "Sö 239": "Bjôrn had ... ... Ulfr, his brother.",
+  "Sö 240": "Sveinn had the stone raised in memory of Hróðgísl, his father.",
+  "Sö 241": "Végísl and Geirhjalmr had the stone raised in memory of their brother Guðbjôrn ...-bjôrn cut the stone.",
+  "Sö 242": "Auða raised the stone in memory of Haraldr, her husbandman; and Fastlaug in memory of her father.",
+  "Sö 244": "Guðbjôrn raised/carved .../in memory of(?) ... ... ... ... ...",
+  "Sö 246": "Þórir and Auðsteinn ... ... Ônundr raised the stone ... ... his.",
+  "Sö 250": "Gynna/Gunna raised this stone in memory of Saxi, Halfdan's son.",
+  "Sö 251": "Díselfr and Inga had this stone raised in memory of Slóði, their father.",
+  "Sö 252": "... had this bridge made and the stone raised in memory of Tóki, his good brother.",
+  "Sö 253": "Ketilfastr and Ragnfastr and Sigfastr had the landmark made in memory of Þork-.../Þorg-..., their father.",
+  "Sö 254": "Sveinn/Svanr and Steinn raised the stone in memory of Tosti, their father, who died in Ingvarr's retinue, and in memory of Þorsteinn, and in memory of Eysteinn, Alfhildr's son.",
+  "Sö 256": "Svarthôfði and Víðfari and Vébjôrn and Ônundr raised this stone (in memory of) Freygeirr(?), their father.",
+  "Sö 257": "Gunnvôr had ... ... in memory of Alfketill, (her) brother's son ...",
+  "Sö 258": "Ferð-Kári raised this stone in memory of Guðbjôrn(?)/Kolbeinn(?), to his son.",
+  "Sö 260": "... ... raise the stone in memory of Jôrundr, his son, who was in the west with Ulfr, Hákon's son.",
+  "Sö 262": "Sveinn had the stone raised ... ... his good father and in memory of Guðvôr/Guðmarr/Guðvarr.",
+  "Sö 263": "Gullaug and Guðlaug raised the stone in memory of Eyvindr, their father.",
+  "Sö 265": "Gási(?) raised the stone in memory of Ôzurr, his son, and in memory of Ulfr.",
+  "Sö 266": "Jórunnr had the stone raised in memory of Andvéttr, his son, and in memory of Ônundr's. Ásbjôrn.",
+  "Sö 268": "Hjalmviðr raised the stone in memory of Þorgautr, his son. Ámundi carved the runes.",
+  "Sö 269": "Ônundr(?)/Eyndr(?) ... ...-undr(?) raised this stone in memory of Víkingr, their father, Stóri's son.",
+  "Sö 271": "Hallsteinn raised the stone in memory of Þjalfi, his father. Ámundi cut.",
+  "Sö 272": "Þorfastr had this stone raised in memory of Halfdan, his son / Soni's son.",
+  "Sö 273": "Signjótr raised the stone in memory of Sigrøðr, his father, Sibbi's brother.",
+  "Sö ATA322-4237-2011": "Gunnarr and Ulfr and Sighjalmr had the stone raised in memory of Halfdan, their father. May God help his spirit.",
+  "Sö Fv1948;298": "Bjarni and Geirr had the stone raised in memory of Nesbjôrn(?)/Nefbjôrn(?), their father ... Guðfinnr's brother.",
+  "Sö Fv1959;262": "Auðgunnr(?) and Arngerðr/Arngeirr had raised ... ... ... ... their brother.",
+  "Sö Fv1971;207": "Gunnbjôrn had raised ... may help (his) spirit better than ...",
+  "Sö Fv1971;208": "Vígmarr raised this stone in memory of Kári, his father. And Þóra (did?)."
+ }
+}
