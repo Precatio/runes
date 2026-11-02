@@ -6,7 +6,7 @@ Q10401139,Adelövs socken,14.66861111,58.02777778,,ingen
 Q10403297,Agnetorps socken,13.96,58.1811,,wikidata
 Q10403626,Agunnaryds socken,14.14777778,56.74444444,finnveden,wikidata
 Q10403977,Akebäcks socken,18.39222222,57.54722222,,wikidata
-Q10404194,Ala socken,18.63527778,57.41888889,,wikidata
+Q10404194,Ala socken,18.63527778,57.41888889,medeltredingen,wikipedia
 Q10404224,Alanäs socken,15.69,64.16527778,,ingen
 Q10404380,Alboga socken,13.23166667,57.9725,,wikidata
 Q16496090,Alböke socken,16.78388889,56.9475,,wikidata
@@ -31,14 +31,14 @@ Q16496436,Alskogs socken,18.62694444,57.33138889,,wikidata
 Q10406820,Alsters socken,13.59333333,59.47833333,,wikidata
 Q10407037,Altuna socken,16.93138889,59.81916667,fjadrundaland,wikidata
 Q13883049,Alunda socken,18.06805556,60.05972222,tiundaland,wikidata
-Q10407079,Alva socken,18.37027778,57.20611111,,wikidata
+Q10407079,Alva socken,18.37027778,57.20611111,sudertredingen,wikipedia
 Q10407673,Ambjörnarps socken,13.29555556,57.42083333,,wikidata
 Q16496569,Amnehärads socken,14.08527778,58.99,,wikidata
 Q10411219,Anderslövs socken,13.31555556,55.4375,,wikidata
 Q10411242,Anderstorps socken,13.63833333,57.28361111,finnveden,wikidata
 Q10411448,Andrarums socken,13.96305556,55.7075,,wikidata
 Q10411538,Aneboda socken,14.56333333,57.12055556,varend,wikidata
-Q10411696,Anga socken,18.70638889,57.48027778,,wikidata
+Q10411696,Anga socken,18.70638889,57.48027778,medeltredingen,wikipedia
 Q10411712,Angarns socken,18.16861111,59.53638889,attundaland,wikidata
 Q10411769,Angelstads socken,13.77027778,56.8325,finnveden,wikidata
 Q10411775,Angerdshestra socken,13.90333333,57.66861111,mo,wikidata
@@ -50,7 +50,7 @@ Q10416213,Appuna socken,14.96111111,58.3425,,wikidata
 Q10417021,Arboga socken,15.83916667,59.39388889,,närmast
 Q10417112,Arbrå socken,16.38055556,61.49,,ingen
 Q10417122,Arby socken,16.1225,56.56666667,more,wikidata
-Q10417390,Ardre socken,18.69666667,57.37944444,,wikidata
+Q10417390,Ardre socken,18.69666667,57.37944444,medeltredingen,wikipedia
 Q10417904,Aringsås socken,14.56694444,56.90083333,varend,wikidata
 Q10417990,Arjeplogs socken,17.88472222,66.05166667,,ingen
 Q16497148,Arnäs socken,18.79333333,63.31777778,,ingen
@@ -77,7 +77,7 @@ Q10419898,Aspeboda socken,15.49388889,60.55888889,,närmast
 Q10420452,Aspås socken,14.48611111,63.36722222,,ingen
 Q10420465,Aspö socken,15.51777778,56.11388889,,wikidata
 Q10420466,Aspö socken,17.04583333,59.48305556,fjadrundaland,wikidata
-Q10421683,Atlingbo socken,18.39055556,57.47972222,,wikidata
+Q10421683,Atlingbo socken,18.39055556,57.47972222,medeltredingen,wikipedia
 Q10422201,Attmars socken,17.05472222,62.3125,,rundata
 Q10422365,Augerums socken,15.67527778,56.21638889,,wikidata
 Q10423375,Ausås socken,12.8875,56.16694444,,wikidata
@@ -92,11 +92,11 @@ Q10425327,Balkåkra socken,13.71083333,55.45611111,,wikidata
 Q10425705,Baltaks socken,13.93361111,58.14777778,,wikidata
 Q10426050,Bankekinds socken,15.82111111,58.37583333,,wikidata
 Q10426059,Bankeryds socken,14.11388889,57.85,tveta,wikidata
-Q10426247,Bara socken,18.61097222,57.58486111,,wikidata
+Q10426247,Bara socken,18.61097222,57.58486111,medeltredingen,wikipedia
 Q10426249,Bara socken,13.20111111,55.59083333,,wikidata
 Q10426413,Barkeryds socken,14.58472222,57.72111111,tveta,wikidata
 Q10426438,Barkåkra socken,12.835,56.295,,wikidata
-Q10426443,Barlingbo socken,18.46305556,57.56444444,,wikidata
+Q10426443,Barlingbo socken,18.46305556,57.56444444,nordertredingen,wikipedia
 Q10426480,Barnarps socken,14.17861111,57.70833333,tveta,wikidata
 Q10426500,Barne-Åsaka socken,12.83194444,58.14166667,,wikidata
 Q10426659,Barsebäcks socken,12.95666667,55.77083333,,wikidata
@@ -137,7 +137,7 @@ Q10430480,Bjärka socken,13.49038889,58.29561111,,wikidata
 Q10430501,Bjärshögs socken,13.15472222,55.59361111,,wikidata
 Q10430509,Bjärtrå socken,17.8667,62.9833,,ingen
 Q10430522,Björka socken,13.63472222,55.65638889,,wikidata
-Q10430540,Björke socken,18.42111111,57.50722222,,wikidata
+Q10430540,Björke socken,18.42111111,57.50722222,nordertredingen,wikipedia
 Q10430545,Björkebergs socken,15.39361111,58.45361111,,wikidata
 Q10430565,Björketorps socken,12.48916667,57.64972222,,wikidata
 Q10430588,Björklinge socken,17.55194444,60.02694444,tiundaland,wikidata
@@ -168,7 +168,7 @@ Q10431945,Boda socken,13.05388889,59.56888889,,wikidata
 Q10431959,Bodarps socken,13.06888889,55.43583333,,wikidata
 Q16503548,Bodsjö socken,14.94916667,62.83944444,,ingen
 Q10432006,Bodums socken,16.34027778,63.92027778,,ingen
-Q2535159,Boge socken,18.762889,57.686625,,wikidata
+Q2535159,Boge socken,18.762889,57.686625,nordertredingen,wikipedia
 Q10432070,Bogens socken,12.555,60.05888889,,wikidata
 Q10432088,Boglösa socken,17.1775,59.59611111,fjadrundaland,wikidata
 Q10432105,Bogsta socken,17.17361111,58.87694444,,wikidata
@@ -218,7 +218,7 @@ Q10435188,Breviks socken,14.41305556,58.43944444,,wikidata
 Q10435623,Bringetofta socken,14.61833333,57.44472222,njudung,wikidata
 Q16505457,Brismene socken,13.44916667,58.02055556,,wikidata
 Q10435877,Bro socken,11.48138889,58.425,,wikidata
-Q10435878,Bro socken,18.483,57.673,,wikidata
+Q10435878,Bro socken,18.483,57.673,nordertredingen,wikipedia
 Q10435879,Bro socken,17.62666702,59.50583267,attundaland,wikidata
 Q10435880,Bro socken,15.91166667,59.50833333,,wikidata
 Q10435881,Bro socken,13.00277805,59.18305588,,wikidata
@@ -242,14 +242,14 @@ Q10437019,Brålanda socken,12.38,58.56888889,,wikidata
 Q10437026,Bråttensby socken,12.89694444,58.055,,wikidata
 Q10437115,Brönnestads socken,13.69805556,56.08,,wikidata
 Q10437122,Brösarps socken,14.105,55.72416667,,wikidata
-Q10437751,Bunge socken,19.02333333,57.85361111,,wikidata
+Q10437751,Bunge socken,19.02333333,57.85361111,nordertredingen,wikipedia
 Q10437758,Bunkeflo socken,12.96416667,55.55555556,,wikidata
 Q10437824,Bureå socken,21.20305556,64.61805556,,ingen
 Q10437865,Burlövs socken,13.07805556,55.635,,wikidata
-Q10437944,Burs socken,18.50861111,57.24555556,,wikidata
+Q10437944,Burs socken,18.50861111,57.24555556,sudertredingen,wikipedia
 Q10437952,Burseryds socken,13.28583333,57.20805556,finnveden,wikidata
 Q10437985,Burträsks socken,20.66472222,64.51805556,,ingen
-Q10438089,Buttle socken,18.52972222,57.4025,,wikidata
+Q10438089,Buttle socken,18.52972222,57.4025,medeltredingen,wikipedia
 Q10438122,By socken,12.93805599,59.11277771,,wikidata
 Q10438123,By socken,16.47777778,60.20138889,,wikidata
 Q10438138,Byarums socken,14.14138889,57.53805556,finnveden,wikidata
@@ -345,9 +345,9 @@ Q10480210,Egby socken,16.82027778,56.87333333,,wikidata
 Q10480253,Eggby socken,13.65194444,58.42611111,,wikidata
 Q10480265,Eggvena socken,12.95194444,58.06277778,,wikidata
 Q10480488,Ekby socken,13.86666667,58.61305556,,wikidata
-Q10480494,Eke socken,18.37888889,57.16777778,,wikidata
+Q10480494,Eke socken,18.37888889,57.16777778,sudertredingen,wikipedia
 Q10480499,Ekeberga socken,15.39805603,56.83388901,varend,wikidata
-Q10480542,Ekeby socken,18.51444444,57.595,,wikidata
+Q10480542,Ekeby socken,18.51444444,57.595,nordertredingen,wikipedia
 Q10480543,Ekeby socken,15.27166653,59.16611099,,wikidata
 Q10480544,Ekeby socken,12.95,56.00944444,,wikidata
 Q10480545,Ekeby socken,18.22361111,60.085,tiundaland,wikidata
@@ -359,7 +359,7 @@ Q10480611,Ekeskogs socken,14.14638889,58.59944444,,wikidata
 Q10480759,Eks socken,13.81583333,58.61472222,,wikidata
 Q10480764,Ekshärads socken,13.4975,60.1725,,wikidata
 Q10480775,Eksjö socken,14.97166667,57.66722222,vedbo,wikidata
-Q10480790,Eksta socken,18.20638889,57.28638889,,wikidata
+Q10480790,Eksta socken,18.20638889,57.28638889,sudertredingen,wikipedia
 Q10481147,Eldsberga socken,12.99583333,56.59666667,,wikidata
 Q10481538,Elinghems socken,18.619239,57.811883,,wikidata
 Q10481542,Elings socken,12.89944444,58.16611111,,wikidata
@@ -367,7 +367,7 @@ Q10481545,Elins socken,13.451658333,58.119508333,,wikidata
 Q10481757,Eljaröds socken,14.03722222,55.69666667,,wikidata
 Q10481772,Elleholms socken,14.75055556,56.16277778,,wikidata
 Q10482300,Emmislövs socken,14.10833333,56.22305556,,wikidata
-Q10484052,Endre socken,18.46527778,57.61,,wikidata
+Q10484052,Endre socken,18.46527778,57.61,nordertredingen,wikipedia
 Q10484292,Enköpings-Näs socken,17.01,59.56027778,fjadrundaland,wikidata
 Q10484434,Enslövs socken,12.9625,56.74277778,,wikidata
 Q10485085,Envikens socken,15.7975,60.79583333,,ingen
@@ -402,7 +402,7 @@ Q18289739,Fasterna socken,18.24083333,59.76944444,attundaland,wikidata
 Q10494537,Felestads socken,13.09444444,55.90638889,,wikidata
 Q10494566,Fellingsbro socken,15.57583332,59.45888901,,wikidata
 Q10494616,Femsjö socken,13.32611111,56.89194444,finnveden,wikidata
-Q10494945,Fide socken,18.31611111,57.07361111,,wikidata
+Q10494945,Fide socken,18.31611111,57.07361111,sudertredingen,wikipedia
 Q10495205,Films socken,17.89583333,60.22916667,tiundaland,wikidata
 Q10495353,Finja socken,13.68333333,56.15833333,,wikidata
 Q10495517,Finnekumla socken,13.34722222,57.65527778,,wikidata
@@ -420,7 +420,7 @@ Q10496193,Flackarps socken,13.1675,55.68277778,,wikidata
 Q10496263,Flakebergs socken,12.76055556,58.3225,,wikidata
 Q10496651,Fleninge socken,12.79083333,56.11166667,,wikidata
 Q10496657,Flens socken,16.59472222,59.0475,,wikidata
-Q10496665,Fleringe socken,18.87696389,57.86962778,,wikidata
+Q10496665,Fleringe socken,18.87696389,57.86962778,nordertredingen,wikipedia
 Q10496832,Flisby socken,14.84194444,57.76083333,vedbo,wikidata
 Q10496837,Fliseryds socken,16.26472222,57.12222222,handbord,wikidata
 Q10496850,Flistads socken,13.95888889,58.55777778,,wikidata
@@ -432,9 +432,9 @@ Q18289834,Floda socken,16.30292,59.09743,,wikidata
 Q10497173,Fläckebo socken,16.34333333,59.87472222,,wikidata
 Q10497203,Flädie socken,13.07,55.72583333,,wikidata
 Q10497275,Fogdö socken,16.8975,59.42333333,,wikidata
-Q10497299,Fole socken,18.54472222,57.65055556,,wikidata
+Q10497299,Fole socken,18.54472222,57.65055556,nordertredingen,wikipedia
 Q10497512,Folkärna socken,16.31305556,60.15555556,,wikidata
-Q10497522,Follingbo socken,18.38333333,57.58222222,,wikidata
+Q10497522,Follingbo socken,18.38333333,57.58222222,nordertredingen,wikipedia
 Q10498030,Fornåsa socken,15.23222222,58.48027778,,wikidata
 Q10498058,Fors socken,16.65638924,63.01361084,,ingen
 Q10498060,Fors socken,16.51623333,59.36733333,,wikidata
@@ -506,7 +506,7 @@ Q10500923,Fågelfors socken,15.85444444,57.20722222,handbord,wikidata
 Q10500952,Fågeltofta socken,14.03194444,55.65055556,,wikidata
 Q10500962,Fågelås socken,14.262594444,58.263777777,,wikidata
 Q10500971,Fåglums socken,12.77527778,58.12222222,,wikidata
-Q10501029,Fårö socken,19.13303,57.91567,,wikidata
+Q10501029,Fårö socken,19.13303,57.91567,nordertredingen,wikipedia
 Q10501055,Fölene socken,12.97222222,58.085,,wikidata
 Q10501068,Föllinge socken,14.6083,63.6722,,ingen
 Q10501138,Föra socken,16.86694444,57.0125,,närmast
@@ -521,7 +521,7 @@ Q10502529,Gammalkils socken,15.39555556,58.3125,,wikidata
 Q10502539,Gammalstorps socken,14.63083333,56.10777778,,wikidata
 Q10502591,Gammelgarns socken,18.80444444,57.40444444,,wikidata
 Q10502836,Ganthems socken,18.58166667,57.51444444,,rundata
-Q10502871,Garde socken,18.58194444,57.31694444,,wikidata
+Q10502871,Garde socken,18.58194444,57.31694444,sudertredingen,wikipedia
 Q10503165,Garpenbergs socken,16.20416667,60.31527778,,ingen
 Q10503762,Genarps socken,13.39583333,55.60305556,,wikidata
 Q10504511,Gerums socken,18.32944444,57.29444444,,wikidata
@@ -584,12 +584,12 @@ Q10509913,Gråmanstorps socken,13.1,56.14972222,,wikidata
 Q10509950,Grödinge socken,17.78684,59.14351,,wikidata
 Q10510003,Grönahögs socken,13.59583333,57.66527778,,wikidata
 Q10510018,Grönby socken,13.35555556,55.44277778,,wikidata
-Q10510112,Grötlingbo socken,18.34638889,57.13361111,,wikidata
+Q10510112,Grötlingbo socken,18.34638889,57.13361111,sudertredingen,wikipedia
 Q10510144,Gualövs socken,14.40805556,56.04805556,,wikidata
 Q10510274,Gudhems socken,13.55472222,58.24,,wikidata
 Q10510283,Gudmundrå socken,17.78583333,62.91694444,,ingen
 Q10510292,Gudmuntorps socken,13.48333333,55.81777778,,wikidata
-Q10510575,Guldrupe socken,18.42638889,57.43027778,,wikidata
+Q10510575,Guldrupe socken,18.42638889,57.43027778,medeltredingen,wikipedia
 Q10510634,Gullabo socken,15.80777778,56.46361111,more,wikidata
 Q10510651,Gullereds socken,13.59444444,57.8,,wikidata
 Q10510660,Gullholmens socken,11.40222222,58.17916667,,wikidata
@@ -634,7 +634,7 @@ Q10512960,Göteryds socken,13.88527778,56.57111111,finnveden,wikidata
 Q10512964,Göteve socken,13.41305556,58.12361111,,wikidata
 Q10512990,Götlunda socken,15.66638889,59.35611111,,wikidata
 Q10512991,Götlunda socken,14.00138889,58.55111111,,wikidata
-Q10515389,Hablingbo socken,18.2625,57.18722222,,wikidata
+Q10515389,Hablingbo socken,18.2625,57.18722222,sudertredingen,wikipedia
 Q18290416,Habo socken,14.02083333,57.88527778,,wikidata
 Q10515481,Hacksta socken,17.37583333,59.5475,fjadrundaland,wikidata
 Q10515484,Hackvads socken,14.91333333,59.11083333,,wikidata
@@ -647,7 +647,7 @@ Q10515959,Hagelbergs socken,13.90305556,58.34138889,,wikidata
 Q10516028,Hagshults socken,14.19027778,57.33972222,finnveden,wikidata
 Q10516097,Hajoms socken,12.55083333,57.50388889,,wikidata
 Q16481744,Hakarps socken,14.31266667,57.79516667,tveta,wikidata
-Q10516307,Halla socken,18.49722222,57.51083333,,wikidata
+Q10516307,Halla socken,18.49722222,57.51083333,medeltredingen,wikipedia
 Q10516309,Halla socken,16.62555556,58.85805556,,wikidata
 Q10516351,Hallaryds socken,13.88555556,56.48555556,finnveden,wikidata
 Q10516356,Hallaröds socken,13.44777778,55.97722222,,wikidata
@@ -667,7 +667,7 @@ Q10516914,Hammarö socken,13.5205555,59.33555603,,wikidata
 Q10516922,Hammenhögs socken,14.14555556,55.50055556,,wikidata
 Q10516929,Hammerdals socken,15.36416667,63.595,,ingen
 Q10516945,Hamneda socken,13.8525,56.69944444,finnveden,wikidata
-Q18290490,Hamra socken,18.313333333,56.975833333,,wikidata
+Q18290490,Hamra socken,18.313333333,56.975833333,sudertredingen,wikipedia
 Q4164315,Hamrånge socken,17.03888889,60.92694444,,rundata
 Q10517199,Hanebo socken,16.55638889,61.24472222,,närmast
 Q10517210,Hangelösa socken,13.32888889,58.47305556,,wikidata
@@ -701,18 +701,18 @@ Q10519121,Hedemora socken,15.99166667,60.2775,,ingen
 Q10519157,Hedeskoga socken,13.79833333,55.45083333,,wikidata
 Q10519163,Hedesunda socken,17.01888889,60.37888889,,rundata
 Q10519244,Heds socken,15.76527778,59.68055556,,wikidata
-Q10519389,Hejde socken,18.34583333,57.4125,,wikidata
-Q10519394,Hejdeby socken,18.4425,57.63027778,,wikidata
+Q10519389,Hejde socken,18.34583333,57.4125,medeltredingen,wikipedia
+Q10519394,Hejdeby socken,18.4425,57.63027778,nordertredingen,wikipedia
 Q10519397,Hejnums socken,18.63194444,57.68,,wikidata
 Q10519513,Helgarö socken,16.80277778,59.4325,,wikidata
 Q10519543,Helgesta socken,16.79,59.03083333,,wikidata
 Q10519552,Helgona socken,16.99038887,58.79138947,,wikidata
 Q10519560,Helgums socken,16.82944444,63.21944444,,ingen
-Q10520363,Hellvi socken,18.895,57.775,,wikidata
+Q10520363,Hellvi socken,18.895,57.775,nordertredingen,wikipedia
 Q10520558,Helsingborgs socken,12.70195,56.0484,,wikidata
 Q10521804,Hemmesdynge socken,13.355,55.37027778,,wikidata
 Q10521811,Hemmesjö socken,14.93666667,56.85222222,varend,wikidata
-Q10521836,Hemse socken,18.37277778,57.23277778,,wikidata
+Q10521836,Hemse socken,18.37277778,57.23277778,sudertredingen,wikipedia
 Q10521842,Hemsjö socken,12.47861111,57.8475,,wikidata
 Q10521857,Hemsö socken,18.10361111,62.72833333,,ingen
 Q10522612,Herrberga socken,15.19777778,58.38416667,,wikidata
@@ -879,7 +879,7 @@ Q10532599,Höreda socken,15.02555556,57.61277778,vedbo,wikidata
 Q10532604,Hörja socken,13.58972222,56.20555556,,wikidata
 Q10532614,Hörnefors socken,19.9125,63.62027778,,ingen
 Q10532631,Hörröds socken,14.0375,55.77805556,,wikidata
-Q18290861,Hörsne socken,18.59722222,57.55833333,,wikidata
+Q18290861,Hörsne socken,18.59722222,57.55833333,medeltredingen,wikipedia
 Q10532647,Hörups socken,14.12222222,55.44472222,,wikidata
 Q18290863,Hössna socken,13.53722222,57.82527778,,wikidata
 Q10532693,Höörs socken,13.55,55.93083333,,wikidata
@@ -974,7 +974,7 @@ Q10545667,Kinne-Vedums socken,13.50611111,58.55861111,,wikidata
 Q10545685,Kinneveds socken,13.51527778,58.06805556,,wikidata
 Q10545822,Kisa socken,15.62888889,57.98972222,kinda,wikidata
 Q10545971,Kjula socken,16.67472222,59.39694444,,wikidata
-Q10546294,Klinte socken,18.23194444,57.37833333,,wikidata
+Q10546294,Klinte socken,18.23194444,57.37833333,medeltredingen,wikipedia
 Q10546401,Klockrike socken,15.33694444,58.50888889,,wikidata
 Q10546439,Klosters socken,16.525,59.372,,wikidata
 Q10546508,Kläckeberga socken,16.28722222,56.7075,more,wikidata
@@ -1005,7 +1005,7 @@ Q10549400,Krokstads socken,11.77361111,58.66083333,,wikidata
 Q10549546,Kroppa socken,14.30138889,59.61916667,,wikidata
 Q10549559,Kropps socken,12.7975,56.08583333,,wikidata
 Q18291431,Kräcklinge socken,14.98166667,59.17222222,,wikidata
-Q10549674,Kräklingbo socken,18.71111111,57.445,,wikidata
+Q10549674,Kräklingbo socken,18.71111111,57.445,medeltredingen,wikipedia
 Q10549709,Kråkshults socken,15.42916667,57.54722222,njudung,wikidata
 Q10549716,Kråksmåla socken,15.85333333,57.02194444,handbord,wikidata
 Q10549782,Kuddby socken,16.47444444,58.52805556,,wikidata
@@ -1051,7 +1051,7 @@ Q10551659,Källsjö socken,12.6575,57.21694444,,wikidata
 Q10551666,Källstads socken,14.77472222,58.37722222,,wikidata
 Q10551675,Källstorps socken,13.41583333,55.39833333,,wikidata
 Q10551683,Källunga socken,13.16833333,58.04666667,,wikidata
-Q10551686,Källunge socken,18.58444444,57.60777778,,wikidata
+Q10551686,Källunge socken,18.58444444,57.60777778,nordertredingen,wikipedia
 Q10551700,Kälvene socken,13.72194444,58.09861111,,wikidata
 Q10551756,Kärda socken,13.91861111,57.1725,finnveden,wikidata
 Q10551766,Käringöns socken,11.36361111,58.11055556,,wikidata
@@ -1087,7 +1087,7 @@ Q10554016,Lane-Ryrs socken,12.06027778,58.39416667,,wikidata
 Q10554076,Lannaskede socken,14.86611111,57.37722222,njudung,wikidata
 Q10554522,Larvs socken,13.11583333,58.18972222,,wikidata
 Q10554703,Laske-Vedums socken,12.99027778,58.17194444,,wikidata
-Q10554979,Lau socken,18.62,57.28277778,,wikidata
+Q10554979,Lau socken,18.62,57.28277778,sudertredingen,wikipedia
 Q10555208,Lavads socken,12.87944444,58.41666667,,wikidata
 Q10555272,Laxarby socken,12.32333333,59.03083333,,wikidata
 Q10555296,Laxsjö socken,14.8011,63.8117,,ingen
@@ -1111,7 +1111,7 @@ Q10559573,Lerdala socken,13.71666667,58.47777778,,wikidata
 Q10559578,Lerdals socken,11.89416667,58.75833333,,wikidata
 Q10559630,Lerums socken,12.28277778,57.77555556,,wikidata
 Q10560691,Levene socken,12.9025,58.32972222,,wikidata
-Q10560709,Levide socken,18.26638889,57.28194444,,wikidata
+Q10560709,Levide socken,18.26638889,57.28194444,sudertredingen,wikipedia
 Q10560846,Liareds socken,13.64722222,57.83916667,,wikidata
 Q10561342,Lidens socken,16.79027778,62.69861111,,ingen
 Q10561348,Lidhults socken,13.45055556,56.82944444,finnveden,wikidata
@@ -1130,7 +1130,7 @@ Q10561893,Lillkyrka socken,15.89833333,58.49305556,,wikidata
 Q10561942,Lima socken,13.36194444,60.93277778,,ingen
 Q10562466,Lindbergs socken,12.31166667,57.16,,wikidata
 Q10562482,Linde socken,15.2263,59.59146667,,wikidata
-Q18291813,Linde socken,18.379722222,57.279444444,,wikidata
+Q18291813,Linde socken,18.379722222,57.279444444,sudertredingen,wikipedia
 Q10562511,Linderås socken,14.80444444,57.97583333,vedbo,wikidata
 Q10562515,Linderöds socken,13.82333333,55.9375,,wikidata
 Q10562606,Lindome socken,12.10916667,57.5775,,wikidata
@@ -1163,8 +1163,8 @@ Q10568697,Locknevi socken,16.07944444,57.7975,tjust,wikidata
 Q10568828,Lofta socken,16.46333333,57.93638889,tjust,wikidata
 Q10568832,Loftahammars socken,16.69916667,57.9075,tjust,wikidata
 Q18292006,Lohärads socken,18.55944444,59.80694444,attundaland,wikidata
-Q1556137,Lojsta socken,18.36923,57.311,,wikidata
-Q10568959,Lokrume socken,18.53861111,57.68777778,,wikidata
+Q1556137,Lojsta socken,18.36923,57.311,sudertredingen,wikipedia
+Q10568959,Lokrume socken,18.53861111,57.68777778,nordertredingen,wikipedia
 Q10569028,Lomma socken,13.07916667,55.68777778,,wikidata
 Q10569035,Lommaryds socken,14.75277778,57.88777778,vedbo,wikidata
 Q10569039,Lommelands socken,11.32333333,59.06972222,,wikidata
@@ -1176,7 +1176,7 @@ Q10570027,Lovö socken,17.83972222,59.32111111,,wikidata
 Q10570457,Ludgo socken,17.13305556,58.91611111,,wikidata
 Q10570488,Ludvika socken,15.18805556,60.15277778,,ingen
 Q10570586,Lugnås socken,13.72,58.61361111,,wikidata
-Q10570685,Lummelunda socken,18.45527778,57.76972222,,wikidata
+Q10570685,Lummelunda socken,18.45527778,57.76972222,nordertredingen,wikipedia
 Q10570719,"Lunda socken, Södermanland",16.7375,58.74305556,,wikidata
 Q10570720,"Lunda socken, Uppsala",18.04611111,59.66666667,attundaland,wikidata
 Q10570773,Lundby socken,11.91527778,57.71277778,,wikidata
@@ -1189,7 +1189,7 @@ Q10571172,Lyby socken,13.62083333,55.83583333,,wikidata
 Q10571211,Lycke socken,11.72055556,57.87527778,,wikidata
 Q10571215,Lyckeby socken,15.656952777,56.197022222,,wikidata
 Q10571248,Lycksele socken,18.67583333,64.59833333,,ingen
-Q10571404,Lye socken,18.52611111,57.29777778,,wikidata
+Q10571404,Lye socken,18.52611111,57.29777778,sudertredingen,wikipedia
 Q10571563,Lyngby socken,13.34083333,55.59611111,,wikidata
 Q10571569,Lyngsjö socken,14.07111111,55.93527778,,wikidata
 Q10571637,Lyrestads socken,14.05638889,58.80083333,,wikidata
@@ -1205,7 +1205,7 @@ Q10571888,Längnums socken,12.74888889,58.27666667,,wikidata
 Q10571915,Länna socken,16.98416667,59.28166667,,wikidata
 Q18292111,Länna socken,18.608488888,59.68345,roden,wikidata
 Q10571926,Lännäs socken,15.57944444,59.14694444,,wikidata
-Q10572371,Lärbro socken,18.79361111,57.78694444,,wikidata
+Q10572371,Lärbro socken,18.79361111,57.78694444,nordertredingen,wikipedia
 Q10572410,Lästringe socken,17.31166667,58.90222222,,wikidata
 Q10572518,Långareds socken,12.51977778,58.04438889,,wikidata
 Q10572524,Långaryds socken,13.35333333,57.04194444,finnveden,wikidata
@@ -1250,7 +1250,7 @@ Q10577305,Marieby socken,14.73083333,63.11,,närmast
 Q10577524,Marka socken,13.48,58.15861111,,wikidata
 Q10577532,Markaryds socken,13.57222222,56.47027778,finnveden,wikidata
 Q10577558,Markims socken,18.05,59.60611111,attundaland,wikidata
-Q10577795,Martebo socken,18.49194444,57.74861111,,wikidata
+Q10577795,Martebo socken,18.49194444,57.74861111,nordertredingen,wikipedia
 Q10577888,Marums socken,13.36777778,58.35666667,,wikidata
 Q10578513,Matteröds socken,13.62638889,56.11305556,,wikidata
 Q10578545,Mattmars socken,13.89555556,63.30416667,,ingen
@@ -1298,7 +1298,7 @@ Q10590790,Mussla socken,13.504,58.011502777,,wikidata
 Q18292428,Myckleby socken,11.7835,58.21725,,wikidata
 Q10592052,Myresjö socken,14.95888889,57.38333333,njudung,wikidata
 Q10592833,Myssjö socken,14.36861111,62.925,,närmast
-Q10593273,Mästerby socken,18.30388889,57.46972222,,wikidata
+Q10593273,Mästerby socken,18.30388889,57.46972222,medeltredingen,wikipedia
 Q10593319,Målilla socken,15.79555556,57.38611111,aspeland,wikidata
 Q10593401,Månsarps socken,14.07722222,57.66194444,tveta,wikidata
 Q10593413,Månstads socken,13.34666667,57.60277778,,wikidata
@@ -1374,7 +1374,7 @@ Q10602744,Norrby socken,16.62722222,59.91472222,fjadrundaland,wikidata
 Q10602753,Norrbyås socken,15.38944444,59.19472222,,wikidata
 Q10602760,Norrbärke socken,15.42388889,60.14138889,,ingen
 Q10602773,Norrfjärdens socken,21.49138889,65.42222222,,ingen
-Q18292628,Norrlanda socken,18.65944444,57.50138889,,wikidata
+Q18292628,Norrlanda socken,18.65944444,57.50138889,medeltredingen,wikipedia
 Q10602947,Norrsunda socken,17.8925,59.59388889,attundaland,wikidata
 Q10602980,Norrvidinge socken,13.0975,55.83833333,,wikidata
 Q10603001,Nors socken,13.23527778,59.40666667,,wikidata
@@ -1399,7 +1399,7 @@ Q10604987,Nysätra socken,21.03944444,64.28138889,,ingen
 Q10605052,Nämdö socken,18.69444444,59.18416667,,wikidata
 Q10605258,Närs socken,18.625,57.25722222,,wikidata
 Q19978299,Närtuna socken,18.15138889,59.69305556,attundaland,wikidata
-Q10605293,Näs socken,18.26222222,57.11,,wikidata
+Q10605293,Näs socken,18.26222222,57.11,sudertredingen,wikipedia
 Q10605294,Näs socken,14.57416667,62.97388889,,närmast
 Q10605295,Näs socken,13.73833333,58.08527778,,wikidata
 Q10605317,Näsby socken,15.00944424,57.43583298,njudung,närmast
@@ -1514,11 +1514,11 @@ Q10656368,Rogberga socken,14.28222222,57.73305556,tveta,wikidata
 Q10656392,Rogslösa socken,14.74333286,58.38277817,,wikidata
 Q10656398,Rogsta socken,17.19444444,61.76527778,,rundata
 Q10656472,Rolfstorps socken,12.4675,57.14388889,,wikidata
-Q10656502,Roma socken,18.44194444,57.52833333,,wikidata
+Q10656502,Roma socken,18.44194444,57.52833333,nordertredingen,wikipedia
 Q10656545,Romelanda socken,12.02333333,57.92322222,,wikidata
 Q10656560,Romfartuna socken,16.55833333,59.73055556,,wikidata
 Q10656569,Rommele socken,12.24083333,58.17888889,,wikidata
-Q10656760,Rone socken,18.44111111,57.20888889,,wikidata
+Q10656760,Rone socken,18.44111111,57.20888889,sudertredingen,wikipedia
 Q10656784,Ronneby socken,15.29,56.2425,,wikidata
 Q10657092,Roslags-Bro socken,18.73694444,59.82972222,roden,wikidata
 Q10657097,Roslags-Kulla socken,18.56083333,59.55888889,roden,wikidata
@@ -1526,7 +1526,7 @@ Q10657631,Rudskoga socken,14.26638889,59.0525,,wikidata
 Q10657752,Rumskulla socken,15.59111111,57.67555556,sevede,wikidata
 Q10657843,Runstens socken,16.69944444,56.69888889,,wikidata
 Q10657852,Runtuna socken,17.04388889,58.89083333,,wikidata
-Q10658109,Rute socken,18.92333333,57.83361111,,wikidata
+Q10658109,Rute socken,18.92333333,57.83361111,nordertredingen,wikipedia
 Q10658176,Rya socken,13.19361111,56.24583333,,wikidata
 Q10658199,Ryda socken,12.88388889,58.28666667,,wikidata
 Q10658203,Rydaholms socken,14.27805556,56.99055556,njudung,wikidata
@@ -1571,7 +1571,7 @@ Q10660406,Saleby socken,13.14583302,58.38083267,,wikidata
 Q10660408,Saleby övra socken,13.612008333,58.129183333,,wikidata
 Q10660419,Salems socken,17.77,59.22,,wikidata
 Q10660703,Sals socken,12.63027778,58.36055556,,wikidata
-Q10661114,Sanda socken,18.22305556,57.42916667,,wikidata
+Q10661114,Sanda socken,18.22305556,57.42916667,medeltredingen,wikipedia
 Q10661142,Sandby socken,16.64111111,56.58055556,,wikidata
 Q10661180,Sandhems socken,13.78583333,57.99416667,,wikidata
 Q10661186,Sandhults socken,12.74611111,57.80861111,,wikidata
@@ -1609,7 +1609,7 @@ Q10667800,Siljansnäs socken,14.86083333,60.77638889,,närmast
 Q10667821,Silleruds socken,12.31027778,59.30944444,,wikidata
 Q10667826,Sillhövda socken,15.54277778,56.41027778,,wikidata
 Q10667865,Sils socken,13.44776111,58.53147222,,wikidata
-Q10667868,Silte socken,18.23666667,57.22083333,,wikidata
+Q10667868,Silte socken,18.23666667,57.22083333,sudertredingen,wikipedia
 Q10667884,Silvbergs socken,15.50055556,60.36055556,,närmast
 Q10667986,Silvåkra socken,13.49527778,55.68416667,,wikidata
 Q10668032,Simlinge socken,13.28666667,55.39055556,,wikidata
@@ -1719,7 +1719,7 @@ Q10674476,Sparrsätra socken,16.97583333,59.69416667,fjadrundaland,wikidata
 Q2517188,Spekeröds socken,11.86750031,58.03194427,,wikidata
 Q10674764,Spelviks socken,17.11166667,58.90888889,,wikidata
 Q10676093,Spjutstorps socken,14.01694444,55.57944444,,wikidata
-Q10676615,Sproge socken,18.21083333,57.25361111,,wikidata
+Q10676615,Sproge socken,18.21083333,57.25361111,sudertredingen,wikipedia
 Q7581833,Spånga socken,17.89333333,59.38027778,attundaland,wikidata
 Q10677267,Stafsinge socken,12.48638889,56.91944444,,wikidata
 Q10677396,Stala socken,11.66250038,58.13888931,,wikidata
@@ -1735,9 +1735,9 @@ Q10678420,Steneby socken,12.20694444,58.93361111,,wikidata
 Q10678459,Stenestads socken,13.09611111,56.05305556,,wikidata
 Q10678489,Stengårdshults socken,13.82166667,57.5525,mo,wikidata
 Q10678519,Steninge socken,12.67722222,56.7825,,wikidata
-Q10678558,Stenkumla socken,18.26833333,57.5475,,wikidata
+Q10678558,Stenkumla socken,18.26833333,57.5475,medeltredingen,wikipedia
 Q10678564,Stenkvista socken,16.53194444,59.31444444,,wikidata
-Q7607588,Stenkyrka socken,18.53,57.79,,wikidata
+Q7607588,Stenkyrka socken,18.53,57.79,nordertredingen,wikipedia
 Q10678573,Stenkyrka socken,11.62333333,58.01166667,,wikidata
 Q10679255,Stens socken,15.049444444,58.484722222,,wikidata
 Q10679263,Stensele socken,17.16416667,65.06527778,,ingen
@@ -1781,13 +1781,13 @@ Q10682807,Styrnäs socken,17.77277778,63.0875,,ingen
 Q10682816,Styrstads socken,16.26916667,58.56166667,,wikidata
 Q10682822,Styrsö socken,11.78333333,57.61638889,,wikidata
 Q10682895,Stävie socken,13.07111111,55.76138889,,wikidata
-Q10682933,Stånga socken,18.46555556,57.28305556,,wikidata
+Q10682933,Stånga socken,18.46555556,57.28305556,sudertredingen,wikipedia
 Q10682938,Stångby socken,13.17194444,55.765,,wikidata
 Q10682965,Stöde socken,16.58027778,62.41555556,,ingen
 Q10683683,Sundals-Ryrs socken,12.23472222,58.57388889,,wikidata
 Q10683738,Sundborns socken,15.78055556,60.65666667,,ingen
 Q10683751,Sundby socken,16.63583333,59.43333333,,wikidata
-Q10683799,Sundre socken,18.183333333,56.936388888,,wikidata
+Q10683799,Sundre socken,18.183333333,56.936388888,sudertredingen,wikipedia
 Q10683804,Sunds socken,15.24611111,57.86277778,kinda,wikidata
 Q18333090,Sundsjö socken,15.16444444,62.9725,,ingen
 Q10683928,Sunne socken,13.15444444,59.8375,,wikidata
@@ -1908,7 +1908,7 @@ Q10698170,Timmele socken,13.43611111,57.85277778,,wikidata
 Q10698185,Timmersdala socken,13.76444444,58.52638889,,wikidata
 Q10698216,Timrå socken,17.31536111,62.47627778,,rundata
 Q10698275,Tingstads socken,16.29138889,58.52916667,,wikidata
-Q10698281,Tingstäde socken,18.61472222,57.73611111,,wikidata
+Q10698281,Tingstäde socken,18.61472222,57.73611111,nordertredingen,wikipedia
 Q10698285,Tingsås socken,14.97333333,56.5275,varend,wikidata
 Q10698642,Tirups socken,13.04666667,55.91055556,,wikidata
 Q10698689,Tisselskogs socken,12.39611111,58.90805556,,wikidata
@@ -1921,7 +1921,7 @@ Q10699046,Tjärnö socken,11.15361111,58.87444444,,wikidata
 Q10699049,Tjärstads socken,15.71805556,58.11694444,kinda,wikidata
 Q10699062,Tjörnarps socken,13.61722183,56.00138855,,wikidata
 Q10699141,Toarps socken,13.1,57.71,,wikidata
-Q10699230,Tofta socken,18.1686,57.5211,,wikidata
+Q10699230,Tofta socken,18.1686,57.5211,medeltredingen,wikipedia
 Q10699231,Tofta socken,12.92527771,55.86722183,,wikidata
 Q10699240,Tofteryds socken,14.19,57.40472222,finnveden,wikidata
 Q10699346,Tolfta socken,17.5494442,60.375,tiundaland,wikidata
@@ -1979,7 +1979,7 @@ Q10705192,Trosa socken,17.51515,58.93876667,,wikidata
 Q18334126,Trosa-Vagnhärads socken,17.515,58.938611111,,wikidata
 Q10705436,Tryde socken,13.92861111,55.57027778,,wikidata
 Q10705517,Tryserums socken,16.60333333,58.14611111,tjust,wikidata
-Q10705576,Träkumla socken,18.31277778,57.56027778,,wikidata
+Q10705576,Träkumla socken,18.31277778,57.56027778,medeltredingen,wikipedia
 Q10705588,Träne socken,13.99111111,55.98861111,,wikidata
 Q10705619,Träslövs socken,12.29861111,57.10777778,,wikidata
 Q10705624,Trässbergs socken,13.06999969,58.41444397,,wikidata
@@ -2086,11 +2086,11 @@ Q10712353,Vallerstads socken,15.14166667,58.42333333,,wikidata
 Q10712369,Vallkärra socken,13.17111111,55.74083333,,wikidata
 Q10712383,Valls socken,18.345,57.52055556,,wikidata
 Q10712388,Vallsjö socken,14.76138889,57.39305556,njudung,wikidata
-Q10712395,Vallstena socken,18.63666667,57.60972222,,wikidata
+Q10712395,Vallstena socken,18.63666667,57.60972222,nordertredingen,wikipedia
 Q10712472,Valstads socken,13.81416667,58.12361111,,wikidata
 Q10712486,Valtorps socken,13.65083333,58.22861111,,wikidata
 Q10712511,Valö socken,18.11888889,60.29055556,roden,wikidata
-Q10712518,Vamlingbo socken,18.23027778,56.96944444,,wikidata
+Q10712518,Vamlingbo socken,18.23027778,56.96944444,sudertredingen,wikipedia
 Q10712665,Vankiva socken,13.74555556,56.19083333,,wikidata
 Q10712692,Vanstads socken,13.85916667,55.62111111,,wikidata
 Q10712696,Vansö socken,16.93972222,59.40611111,,wikidata
@@ -2134,7 +2134,7 @@ Q10715208,Vika socken,15.71333333,60.51333333,,närmast
 Q10715232,Vikens socken,12.57166667,56.14583333,,wikidata
 Q7929417,Vikers socken,14.89138889,59.45694351,,wikidata
 Q10715267,Vikingstads socken,15.44944444,58.36277778,,wikidata
-Q10715271,Viklau socken,18.45638889,57.46555556,,wikidata
+Q10715271,Viklau socken,18.45638889,57.46555556,medeltredingen,wikipedia
 Q10715292,Viksjö socken,17.41888889,62.76861111,,ingen
 Q10715300,Viksta socken,17.63888889,60.07805556,tiundaland,wikidata
 Q10715403,Vilhelmina socken,16.64555556,64.62944444,,ingen
@@ -2189,7 +2189,7 @@ Q10717335,Väne-Ryrs socken,12.13722222,58.33222222,,wikidata
 Q10717338,Väne-Åsaka socken,12.41777778,58.24583333,,wikidata
 Q10717365,Vänersnäs socken,12.56583333,58.3975,,wikidata
 Q10717373,Vänga socken,12.93138889,57.85861111,,wikidata
-Q10717384,Vänge socken,18.51138889,57.45194444,,wikidata
+Q10717384,Vänge socken,18.51138889,57.45194444,medeltredingen,wikipedia
 Q10717385,Vänge socken,17.435,59.85611111,tiundaland,wikidata
 Q10717402,Vännäs socken,19.80361111,63.91555556,,ingen
 Q10717470,Värings socken,13.96722222,58.51055556,,wikidata
@@ -2201,13 +2201,13 @@ Q10717743,Värsås socken,14.05083333,58.35083333,,wikidata
 Q3563941,Värö socken,12.12611111,57.23444444,,wikidata
 Q10717790,Väsby socken,12.59527778,56.20722222,,wikidata
 Q10717801,Väse socken,13.83583333,59.41138889,,wikidata
-Q10717810,Väskinde socken,18.42277778,57.69055556,,wikidata
+Q10717810,Väskinde socken,18.42277778,57.69055556,nordertredingen,wikipedia
 Q10717830,Västanfors socken,15.80611134,59.98777771,,wikidata
 Q10717870,Västerbitterna socken,12.98472222,58.14194444,,wikidata
 Q10717912,Västerfärnebo socken,16.27888889,59.94472222,,wikidata
 Q10717917,Västergarns socken,18.15083333,57.44055556,,wikidata
 Q10717938,Västerhaninge socken,18.10888889,59.12138889,,wikidata
-Q10717944,Västerhejde socken,18.24805556,57.58055556,,wikidata
+Q10717944,Västerhejde socken,18.24805556,57.58055556,medeltredingen,wikipedia
 Q10717961,Västerlanda socken,12.12,58.09055556,,wikidata
 Q10717973,Västerljungs socken,17.44861111,58.92194444,,wikidata
 Q10717980,Västerlösa socken,15.34694444,58.42111111,,wikidata
@@ -2257,7 +2257,7 @@ Q10718418,Västra Vingåkers socken,15.87833333,59.05305556,,wikidata
 Q10718423,Västra Vrams socken,13.96666667,55.92777778,,wikidata
 Q10718449,Västra Ämterviks socken,13.14083333,59.72916667,,wikidata
 Q10718456,Västrums socken,16.57388889,57.65888889,tjust,wikidata
-Q10718483,Väte socken,18.36388889,57.44888889,,wikidata
+Q10718483,Väte socken,18.36388889,57.44888889,medeltredingen,wikipedia
 Q10718492,Vättaks socken,13.86361111,58.0875,,wikidata
 Q10718513,Vättlösa socken,13.49166667,58.51222222,,wikidata
 Q10718518,Vätö socken,18.91722222,59.81666667,roden,wikidata
@@ -2354,7 +2354,7 @@ Q10727118,Ödskölts socken,12.16111111,58.85194444,,wikidata
 Q10727124,Ödsmåls socken,11.84638889,58.10444444,,wikidata
 Q10727137,Öggestorps socken,14.38416667,57.725,tveta,wikidata
 Q10727144,Öglunda socken,13.69055556,58.43333333,,wikidata
-Q10727176,Öja socken,18.3,57.03527778,,wikidata
+Q10727176,Öja socken,18.3,57.03527778,sudertredingen,wikipedia
 Q10727177,Öja socken,14.615,56.85,varend,wikidata
 Q10727178,Öja socken,13.84333324,55.45277786,,wikidata
 Q10727179,Öja socken,16.15916667,59.28638889,,wikidata

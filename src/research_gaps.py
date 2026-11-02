@@ -17,6 +17,16 @@ PROVINCE_NAMES = {
     "Hs": "Hälsingland", "M": "Medelpad", "Ån": "Ångermanland", "J": "Jämtland", "D": "Dalarna",
     "Bo": "Bohuslän", "Ds": "Dalsland", "Vr": "Värmland", "Hr": "Härjedalen", "Lp": "Lappland", "SE": "Okänt landskap",
 }
+def place_name(code: str | None) -> str | None:
+    """A province's or a Viking Age region's name (src/regions.py: folkland, small land, treding) for its code."""
+    if code is None:
+        return None
+    if code in PROVINCE_NAMES:
+        return PROVINCE_NAMES[code]
+    from src import regions
+    return regions.names().get(code, code)
+
+
 AXELSON_PROVINCES = {"Sö", "U", "Vs", "Gs"}
 
 # Rundata's carver names that are groups or debated identities rather than one person; shown with every

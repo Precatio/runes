@@ -112,6 +112,9 @@ coding_sim <- function(dd, adjust, cd, direction) {
 
 ladder <- function(sp) {
   dd <- D[D$pattern == sp$id, ]
+  # The region is the Viking Age one (folkland, small land, treding, else the province; plan 13084e18, 2026-11-02):
+  # it is what the adjusted model holds constant and what the leave-one-out rung leaves out
+  if (!is.null(dd$region_old)) dd$province <- ifelse(is.na(dd$region_old) | dd$region_old == "", dd$province, dd$region_old)
   dd$province <- factor(dd$province); dd$epoch <- factor(dd$epoch)
   dd$hand <- factor(dd$hand); dd$parish <- factor(dd$parish)
   adjust <- sp$adjust

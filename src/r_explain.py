@@ -11,7 +11,7 @@ Säkerhet:
 """
 from __future__ import annotations
 
-from src.research_gaps import PROVINCE_NAMES
+from src.research_gaps import place_name
 
 CONFIDENCE_TEXT = {
     "säkert": "Säkert resultat",
@@ -38,7 +38,7 @@ def _sig(q) -> bool:
 
 
 def _names(codes) -> str:
-    names = [PROVINCE_NAMES.get(c, c) for c in codes]
+    names = [place_name(c) for c in codes]
     return names[0] if len(names) == 1 else ", ".join(names[:-1]) + " och " + names[-1] if names else ""
 
 
@@ -190,7 +190,7 @@ def chronology(ch: dict) -> dict | None:
     v = ch.get("validation") or {}
     if not v:
         return None
-    region = PROVINCE_NAMES.get(ch.get("region"), ch.get("region"))
+    region = place_name(ch.get("region"))
     unexplained = [d for d in ch.get("corpus_dimensions") or [] if d.get("unexplained")]
     return _section(
         "chronology", "Kan språk och innehåll datera stenarna?",
@@ -255,8 +255,8 @@ def change(c: dict) -> dict | None:
         rows = ((feats.get("stungen_e") or {}).get("provinces") or {}).get("rows") or []
         cross = sorted([r for r in rows if r.get("cross_year")], key=lambda r: r["cross_year"])
         if len(cross) >= 2:
-            interp.append(f"Stungen i blir vanlig tidigare i {PROVINCE_NAMES.get(cross[0]['province'], cross[0]['province'])} "
-                          f"(omkring {cross[0]['cross_year']}) än i {PROVINCE_NAMES.get(cross[-1]['province'], cross[-1]['province'])} "
+            interp.append(f"Stungen i blir vanlig tidigare i {place_name(cross[0]['province'])} "
+                          f"(omkring {cross[0]['cross_year']}) än i {place_name(cross[-1]['province'])} "
                           f"(omkring {cross[-1]['cross_year']}). Förändringen kan ha spridits därifrån – eller så hade "
                           "ristarskolorna där andra vanor.")
     o = t("o_runa")
@@ -362,7 +362,7 @@ def words(w: dict) -> dict | None:
     ex = holds[0] if holds else None
     ex_text = ""
     if ex:
-        ex_text = (f" Tydligast är '{ex['word']}' i {PROVINCE_NAMES.get(ex['province'], ex['province'])}: "
+        ex_text = (f" Tydligast är '{ex['word']}' i {place_name(ex['province'])}: "
                    f"{_pct(ex['rate_in'])} av stenarna där mot {_pct(ex['rate_out'])} i resten av landet.")
     return _section(
         "words", "Vilka ord skiljer landskapen och tiden åt?",
@@ -603,8 +603,8 @@ def overview(res: dict) -> dict:
     cross = sorted([r for r in rows if r.get("cross_year")], key=lambda r: r["cross_year"])
     if len(cross) >= 2:
         time_bits.append(f"Stungen i blir vanlig omkring {cross[0]['cross_year']} i "
-                         f"{PROVINCE_NAMES.get(cross[0]['province'], cross[0]['province'])} men först omkring "
-                         f"{cross[-1]['cross_year']} i {PROVINCE_NAMES.get(cross[-1]['province'], cross[-1]['province'])} – "
+                         f"{place_name(cross[0]['province'])} men först omkring "
+                         f"{cross[-1]['cross_year']} i {place_name(cross[-1]['province'])} – "
                          "kanske en spridning in mot Mälardalen.")
     if ai and ai["shape"] == "falls":
         time_bits.append("Den diftongiska stavningen (stain) breder ut sig, vilket ser ut som en skrivnorm som sprids.")

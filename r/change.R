@@ -206,7 +206,13 @@ time_part <- function(dd) {
 }
 
 # ---- provinces ----------------------------------------------------------------------------------------------------
+# Per Viking Age region since 2026-11-02 (plan 13084e18): the column province is the region inside these two functions
+as_region <- function(dd) {
+  if (!is.null(dd$region_old)) dd$province <- ifelse(is.na(dd$region_old) | dd$region_old == "", dd$province, dd$region_old)
+  dd
+}
 province_part <- function(dd, monotone) {
+  dd <- as_region(dd)
   dd <- dd[!is.na(dd$year), ]
   tab <- dd %>% group_by(province) %>% summarise(n = n(), k = sum(y)) %>%
     filter(n >= MIN_PROV, k >= MIN_PROV_EACH, n - k >= MIN_PROV_EACH) %>% arrange(-n)
@@ -371,6 +377,7 @@ half_time <- function(dd, tp) {
   c(halves, list(replicated = same(halves$A) && same(halves$B)))
 }
 half_provinces <- function(dd, provs) {
+  dd <- as_region(dd)
   lapply(c(A = "A", B = "B"), function(h) {
     x <- dd[dd$half == h & !is.na(dd$year) & dd$province %in% provs, ]
     tb <- table(x$province); keep <- names(tb)[tb >= 10]

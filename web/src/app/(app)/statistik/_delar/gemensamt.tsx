@@ -1,3 +1,4 @@
+import landDefs from "@/lib/historiska_land.json";
 import { type ReactNode } from "react";
 import { Confidence, Figure, SigBadge, Tip } from "@/components/Explain";
 import { PatternBadges, PatternBody, type Pattern, HideWrittenToggle } from "@/components/PatternCard";
@@ -179,5 +180,8 @@ export function Stones({ list }: { list: string[] }) {
   );
 }
 
+// The provinces' names, and the Viking Age regions' (folkland, small land, treding; historiska_land.json), which the R
+// analyses use as their regional unit since 2026-11-02; a stone whose region is unknown keeps its province's code
 export const PROVINCE_NAMES: Record<string, string> = { U: "Uppland", "Sö": "Södermanland", "Ög": "Östergötland", Sm: "Småland", Vg: "Västergötland",
-  M: "Medelpad", Vs: "Västmanland", G: "Gotland", "Öl": "Öland", Gs: "Gästrikland", Hs: "Hälsingland", Nä: "Närke", Dr: "Dalarna" };
+  M: "Medelpad", Vs: "Västmanland", G: "Gotland", "Öl": "Öland", Gs: "Gästrikland", Hs: "Hälsingland", Nä: "Närke", Dr: "Dalarna",
+  ...Object.fromEntries(landDefs.epoch.regions.map(r => [r.id, r.name])) };

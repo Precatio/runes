@@ -23,6 +23,7 @@ import time
 import zipfile
 from datetime import datetime, timezone
 
+from src import regions
 from src import research_gaps as gaps
 from src import spawn
 from src.inscription_types import CATEGORIES, categories
@@ -214,6 +215,8 @@ def corpus_rows(inscriptions: list[dict], names=frozenset()) -> list[dict]:
         rt = (r.get("rune_types") or "").lower()
         row = {
             "signum": r["signum"], "province": gaps.province(r), "place": r.get("place") or "",
+            # The Viking Age region (src/regions.py): folkland, small land or treding, else the province's code
+            "region_old": regions.old_region(r["signum"], gaps.province(r)),
             "district": r.get("district") or "", "parish": r.get("parish") or "", "lat": r.get("lat"), "lon": r.get("lon"),
             "carver": carvers[0] if len(carvers) == 1 else "",
             "has_carver": int(gaps.has_carver(r)),

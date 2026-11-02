@@ -55,6 +55,11 @@ words <- head(words, MAX_WORDS)
 has <- sapply(words, function(w) vapply(tokens, function(ts) w %in% ts, logical(1)))
 
 # ---- modellens underlag -------------------------------------------------------------------------
+# The words are compared between Viking Age regions, not today's provinces (plan 13084e18, 2026-11-02)
+if ("region_old" %in% names(d)) {
+  d$province_today <- d$province
+  d$province <- ifelse(is.na(d$region_old) | d$region_old == "", d$province, d$region_old)
+}
 d$year <- ifelse(!is.na(d$style_from), (d$style_from + d$style_to) / 2, NA)
 d$t50 <- (d$year - 1050) / 50
 d$log_words <- log(d$n_words_core)

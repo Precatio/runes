@@ -197,7 +197,9 @@ def _base(rows: list[dict], runor: set[str]) -> dict[str, dict]:
 def _line(b: dict, y, x) -> dict:
     return {"signum": b["signum"], "y": y, "x": x, "province": b["province"], "epoch": b["epoch"], "half": b["half"],
             "hand": b["hand"], "parish": b["parish"], "xk": b["xk"], "yk": b["yk"], "moved": b["moved"],
-            "moved_runor": b["moved_runor"]}
+            "moved_runor": b["moved_runor"],
+            # The Viking Age region (src/regions.py), the ladder's regional term since 2026-11-02 (plan 13084e18)
+            "region_old": b["row"].get("region_old") or b["province"]}
 
 
 def _region(province: str) -> str:
@@ -321,7 +323,7 @@ def build(rows: list[dict], patterns: list[dict], hotspots: dict | None, msg_row
 
 
 def _csv(lines: list[dict]) -> bytes:
-    cols = ["pattern", "signum", "y", "x", "province", "epoch", "half", "hand", "parish", "xk", "yk", "moved",
+    cols = ["pattern", "signum", "y", "x", "province", "region_old", "epoch", "half", "hand", "parish", "xk", "yk", "moved",
             "moved_runor"]
     buf = io.StringIO()
     w = csv.DictWriter(buf, fieldnames=cols, lineterminator="\n")

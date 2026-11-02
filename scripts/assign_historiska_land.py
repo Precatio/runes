@@ -34,8 +34,12 @@ def rd_harad(s):
         if 111.2 * math.hypot(la - s["lat"], (lo - s["lon"]) * math.cos(math.radians(s["lat"]))) <= 25:
             return dist
     return None
-by_name, by_id = {}, {}
+by_name, by_id, gotland = {}, {}, {}
 for reg in defs["epoch"]["regions"]:
+    if "socknar" in reg:                # Gotland's tredingar: listed by parish (Wikipedia), only on Gotland
+        for p in reg["socknar"]:
+            gotland[p + " socken"] = reg["id"]
+        continue
     if "harad_id" in reg:
         for q in reg["harad_id"]:
             by_id[q] = reg["id"]
@@ -54,9 +58,12 @@ def land_of(harads):
     return None
 
 
+ON_GOTLAND = lambda s: 56.85 <= s["lat"] <= 58.0 and 18.0 <= s["lon"] <= 19.4  # noqa: E731
 rows = []
 for s in soc:
-    if s["namn"] in override:
+    if s["namn"] in gotland and ON_GOTLAND(s):
+        rows.append({**s, "land": gotland[s["namn"]], "how": "wikipedia"})
+    elif s["namn"] in override:
         rows.append({**s, "land": by_name[override[s["namn"]]], "how": "wikipedia"})
     elif s["harad"]:
         rows.append({**s, "land": land_of(s["harad"]), "how": "wikidata"})

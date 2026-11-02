@@ -31,7 +31,9 @@ if ("moved" %in% names(d)) d <- d %>% filter(is.na(moved) | moved == 0)
 # The Viking Age division for the scan's regional term (2026-11-01): Uppland's folklands and Småland's small lands
 # (web/public/geo/sten_land.json, scripts/assign_sten_land.py), the other provinces as today
 d$region <- d$province
-if (!is.null(P$stone_lands) && file.exists(P$stone_lands)) {
+if ("region_old" %in% names(d)) {
+  d$region <- ifelse(is.na(d$region_old) | d$region_old == "", d$province, d$region_old)
+} else if (!is.null(P$stone_lands) && file.exists(P$stone_lands)) {
   sl <- jsonlite::fromJSON(P$stone_lands)
   hit <- d$signum %in% names(sl)
   d$region[hit] <- unlist(sl[d$signum[hit]])
