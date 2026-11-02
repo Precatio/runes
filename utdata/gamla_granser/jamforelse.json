@@ -1,0 +1,386 @@
+{
+ "plan": "analysplaner/2026-11-02-gamla-granser-statistik.md",
+ "before": "605ba7cc0f4e355f",
+ "after": "622e050601f3efc2",
+ "ladder": {
+  "n": 31,
+  "every_rung_before": 15,
+  "every_rung_after": 14,
+  "changed": [
+   {
+    "pattern": "Förändring|ai_alla",
+    "before": {
+     "every_rung": true,
+     "failing": [],
+     "adjusted_or": 0.547802332920228,
+     "adjusted_p": 0.000343380965150648,
+     "lopo_without": "U"
+    },
+    "after": {
+     "every_rung": false,
+     "failing": [
+      "lopo"
+     ],
+     "adjusted_or": 0.500889863761389,
+     "adjusted_p": 9.62929009087014e-05,
+     "lopo_without": "attundaland"
+    }
+   },
+   {
+    "pattern": "Förändring|bon",
+    "before": {
+     "every_rung": false,
+     "failing": [
+      "lopo"
+     ],
+     "adjusted_or": 0.368629168906802,
+     "adjusted_p": 5.21833456989294e-09,
+     "lopo_without": "U"
+    },
+    "after": {
+     "every_rung": true,
+     "failing": [],
+     "adjusted_or": 0.349875370041176,
+     "adjusted_p": 3.25418994254331e-09,
+     "lopo_without": "attundaland"
+    }
+   },
+   {
+    "pattern": "Förändring|cross",
+    "before": {
+     "every_rung": false,
+     "failing": [
+      "adjusted",
+      "half_A",
+      "half_B",
+      "lopo",
+      "place",
+      "raw"
+     ],
+     "adjusted_or": 0.757043503389732,
+     "adjusted_p": 0.0633687436548819,
+     "lopo_without": "Sö"
+    },
+    "after": {
+     "every_rung": false,
+     "failing": [
+      "half_A",
+      "half_B",
+      "lopo",
+      "place",
+      "raw"
+     ],
+     "adjusted_or": 0.707624743529187,
+     "adjusted_p": 0.0312453921939719,
+     "lopo_without": "fjadrundaland"
+    }
+   },
+   {
+    "pattern": "Förändring|r_for_R",
+    "before": {
+     "every_rung": false,
+     "failing": [
+      "carver",
+      "half_A",
+      "half_B",
+      "lopo",
+      "raw"
+     ],
+     "adjusted_or": 0.601253544906683,
+     "adjusted_p": 0.0113425551466481,
+     "lopo_without": "U"
+    },
+    "after": {
+     "every_rung": false,
+     "failing": [
+      "carver",
+      "lopo",
+      "raw"
+     ],
+     "adjusted_or": 0.545054828326708,
+     "adjusted_p": 0.00744274851777277,
+     "lopo_without": "fjadrundaland"
+    }
+   },
+   {
+    "pattern": "Förändring|sjal",
+    "before": {
+     "every_rung": false,
+     "failing": [
+      "lopo",
+      "raw"
+     ],
+     "adjusted_or": 0.353589056261284,
+     "adjusted_p": 2.37333775179606e-09,
+     "lopo_without": "U"
+    },
+    "after": {
+     "every_rung": false,
+     "failing": [
+      "raw"
+     ],
+     "adjusted_or": 0.350061520878486,
+     "adjusted_p": 4.90814235387859e-09,
+     "lopo_without": "attundaland"
+    }
+   },
+   {
+    "pattern": "Regional skillnad|bon",
+    "before": {
+     "every_rung": true,
+     "failing": [],
+     "adjusted_or": 12.0110939181154,
+     "adjusted_p": 1.40460855526506e-06,
+     "lopo_without": null
+    },
+    "after": null
+   },
+   {
+    "pattern": "Regional skillnad|bro",
+    "before": null,
+    "after": {
+     "every_rung": false,
+     "failing": [
+      "half_A"
+     ],
+     "adjusted_or": 5.73854439161406,
+     "adjusted_p": 0.00594701460830381,
+     "lopo_without": null
+    }
+   },
+   {
+    "pattern": "Regional skillnad|cross",
+    "before": {
+     "every_rung": true,
+     "failing": [],
+     "adjusted_or": 3.11772916660094,
+     "adjusted_p": 4.12447590143627e-05,
+     "lopo_without": null
+    },
+    "after": {
+     "every_rung": false,
+     "failing": [
+      "half_B",
+      "moved_rundata",
+      "moved_runor"
+     ],
+     "adjusted_or": 2.8879143213343,
+     "adjusted_p": 0.00249331137187202,
+     "lopo_without": null
+    }
+   },
+   {
+    "pattern": "Regional skillnad|r_for_R",
+    "before": {
+     "every_rung": false,
+     "failing": [
+      "half_A"
+     ],
+     "adjusted_or": 4.37094544429416,
+     "adjusted_p": 4.25604694184806e-05,
+     "lopo_without": null
+    },
+    "after": {
+     "every_rung": true,
+     "failing": [],
+     "adjusted_or": 38.3696412941901,
+     "adjusted_p": 2.21567453903709e-10,
+     "lopo_without": null
+    }
+   },
+   {
+    "pattern": "Regional skillnad|stungen_e",
+    "before": {
+     "every_rung": false,
+     "failing": [
+      "adjusted",
+      "carver",
+      "half_A",
+      "moved_rundata",
+      "moved_runor",
+      "parish",
+      "raw"
+     ],
+     "adjusted_or": 1.37379552710231,
+     "adjusted_p": 0.138500738432032,
+     "lopo_without": null
+    },
+    "after": null
+   },
+   {
+    "pattern": "Regional skillnad|stungna",
+    "before": {
+     "every_rung": false,
+     "failing": [
+      "adjusted",
+      "carver",
+      "half_A",
+      "half_B",
+      "moved_rundata",
+      "moved_runor",
+      "parish",
+      "raw"
+     ],
+     "adjusted_or": 1.11229980700124,
+     "adjusted_p": 0.615564506216414,
+     "lopo_without": null
+    },
+    "after": null
+   },
+   {
+    "pattern": "Samband|bro_sjal",
+    "before": {
+     "every_rung": false,
+     "failing": [
+      "half_A"
+     ],
+     "adjusted_or": 1.79212737668691,
+     "adjusted_p": 0.0147160153712902,
+     "lopo_without": "U"
+    },
+    "after": {
+     "every_rung": false,
+     "failing": [
+      "half_A",
+      "lopo"
+     ],
+     "adjusted_or": 1.83616577522375,
+     "adjusted_p": 0.013296006114934,
+     "lopo_without": "roden"
+    }
+   }
+  ]
+ },
+ "words": {
+  "before": {
+   "n_region_tests": 375,
+   "units": [
+    "Ög",
+    "Sö",
+    "U",
+    "Vg"
+   ],
+   "holds": [
+    [
+     "at",
+     "Sö"
+    ],
+    [
+     "æftiR",
+     "Sö"
+    ],
+    [
+     "ræisti",
+     "Vg"
+    ],
+    [
+     "and",
+     "U"
+    ],
+    [
+     "goðan",
+     "Vg"
+    ],
+    [
+     "ræisa",
+     "U"
+    ],
+    [
+     "ræisti",
+     "U"
+    ],
+    [
+     "dræng",
+     "Vg"
+    ],
+    [
+     "ok",
+     "U"
+    ],
+    [
+     "æftiR",
+     "Vg"
+    ],
+    [
+     "sina",
+     "U"
+    ],
+    [
+     "æftiR",
+     "Ög"
+    ],
+    [
+     "hialpi",
+     "U"
+    ],
+    [
+     "þannsi",
+     "Sö"
+    ]
+   ]
+  },
+  "after": {
+   "n_region_tests": 525,
+   "units": [
+    "attundaland",
+    "fjadrundaland",
+    "Ög",
+    "Sö",
+    "tiundaland",
+    "Vg"
+   ],
+   "holds": [
+    [
+     "at",
+     "Sö"
+    ],
+    [
+     "æftiR",
+     "Sö"
+    ],
+    [
+     "ræisti",
+     "Vg"
+    ],
+    [
+     "goðan",
+     "Vg"
+    ],
+    [
+     "ok",
+     "attundaland"
+    ],
+    [
+     "and",
+     "attundaland"
+    ],
+    [
+     "æftiR",
+     "Vg"
+    ],
+    [
+     "æftiR",
+     "Ög"
+    ],
+    [
+     "hans",
+     "attundaland"
+    ]
+   ]
+  }
+ },
+ "scan": {
+  "before": {
+   "n_tests": 117,
+   "n_sig": 0,
+   "n_replicated": 0,
+   "strata": "vikingatida indelning"
+  },
+  "after": {
+   "n_tests": 117,
+   "n_sig": 0,
+   "n_replicated": 0,
+   "strata": "vikingatida indelning"
+  }
+ }
+}
