@@ -41,11 +41,14 @@ def write(directory: str, corpus_csv: str) -> dict[str, str]:
     rows = list(csv.DictReader(open(corpus_csv, encoding="utf-8")))
     recs = {r["signum"]: r for r in store().inscriptions}
     half = _halves(rows)
-    pairs, stones, keys_all = [], [], Counter()
+    pairs, stones, keys_all, shown = [], [], Counter(), defaultdict(list)
     for r in rows:
         x = entities.extract(recs[r["signum"]])
         meta = {"signum": r["signum"], "region": r.get("region_old") or r["province"], "half": half[r["signum"]]}
         names = sorted({p["key"] for p in x["persons"] if p["role"] != "ristare" and p["key"] and not p["key"].endswith("-")})
+        for p in x["persons"]:
+            if p["key"] in names and p.get("name"):
+                shown[p["key"]].append(p["name"])
         for k in names:
             keys_all[k] += 1
         stones.append({**meta, "lat": r.get("lat") or "", "lon": r.get("lon") or "", "names": "|".join(names)})
@@ -88,7 +91,9 @@ def write(directory: str, corpus_csv: str) -> dict[str, str]:
                 cache[k] = "|".join(parts(k))
             p[f"{side}_parts"] = cache[k]
     out = {"pairs": os.path.join(directory, "names_pairs.csv"), "stones": os.path.join(directory, "names_stones.csv"),
-           "family": os.path.join(directory, "names_family.json")}
+           "family": os.path.join(directory, "names_family.json"), "display": os.path.join(directory, "names_display.json")}
+    json.dump({k: Counter(v).most_common(1)[0][0] for k, v in shown.items()}, open(out["display"], "w", encoding="utf-8"),
+              ensure_ascii=False)
     for path, data in ((out["pairs"], uniq), (out["stones"], stones)):
         with open(path, "w", newline="", encoding="utf-8") as fh:
             w = csv.DictWriter(fh, fieldnames=list(data[0]))

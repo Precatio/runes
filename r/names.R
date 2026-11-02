@@ -25,6 +25,9 @@ if (is.null(P$names_pairs) || !file.exists(P$names_pairs)) {
 pr <- read.csv(P$names_pairs, encoding = "UTF-8", stringsAsFactors = FALSE, na.strings = "")
 st <- read.csv(P$names_stones, encoding = "UTF-8", stringsAsFactors = FALSE, na.strings = "")
 fam <- if (!is.null(P$names_family) && file.exists(P$names_family)) jsonlite::fromJSON(P$names_family, simplifyVector = FALSE) else NULL
+# the names as Rundata writes them (Þóra, Jôfurr), for the tables; the analysis uses the keys
+disp <- if (!is.null(P$names_display) && file.exists(P$names_display)) jsonlite::fromJSON(P$names_display) else list()
+show <- function(k) if (!is.null(disp[[k]])) disp[[k]] else k
 
 # ---- 1 namnled i arv ----------------------------------------------------------------------------------------------
 # every name in a pair as an index; a name × name matrix of "shares an element or is the same name"
@@ -129,7 +132,7 @@ if (nrow(sig)) {
 s3 <- list(n_tests = nrow(geo), n_names = length(cand), regions = regs, n_sig = nrow(sig),
            n_holds = if (nrow(sig)) sum(sig$holds) else 0,
            rows = if (nrow(sig)) lapply(seq_len(nrow(sig)), function(i) list(
-             name = sig$name[i], region = sig$region[i], k_in = sig$k_in[i], n_in = sig$n_in[i], k_out = sig$k_out[i],
+             name = sig$name[i], display = show(sig$name[i]), region = sig$region[i], k_in = sig$k_in[i], n_in = sig$n_in[i], k_out = sig$k_out[i],
              n_out = sig$n_out[i], or = r3(sig$or[i]), q = signif(sig$q[i], 3), holds = isTRUE(sig$holds[i]))) else list())
 
 write_result(list(available = TRUE, plan = "analysplaner/2026-11-02-namn-och-slakt.md", n_pairs = nrow(pr),

@@ -623,6 +623,7 @@ def run_corpus(fp: str):
                   "cult_names": _if_exists(CULT_NAMES), "places": _if_exists(PLACES), "churches": _if_exists(CHURCHES),
                   "stone_lands": _if_exists(STONE_LANDS),
                   "names_pairs": nfiles["pairs"], "names_stones": nfiles["stones"], "names_family": nfiles["family"],
+                  "names_display": nfiles["display"],
                   # The names of the map's patterns and kinds of place, for the figures' labels (hotspots.R, remains.R)
                   "pattern_labels": {k: label for k, label, *_ in pattern_map.PATTERNS},
                   "kind_labels": {k: label for k, label, *_ in places.KINDS}}

@@ -186,7 +186,7 @@ export interface NamesResult {
   neighbours: NamesTest & { holds: boolean; halves: Record<"A" | "B", NamesTest>;
     bands: { band: string; pairs: number; share: number; ratio: number }[] };
   geography: { n_tests: number; n_names: number; regions: string[]; n_sig: number; n_holds: number;
-    rows: { name: string; region: string; k_in: number; n_in: number; k_out: number; n_out: number; or: number; q: number; holds: boolean }[] };
+    rows: { name: string; display?: string; region: string; k_in: number; n_in: number; k_out: number; n_out: number; or: number; q: number; holds: boolean }[] };
   custom: { regions: { region: string; pairs: number; share: number; excess: number }[]; var: number; p: number };
   family?: { n_links: number; same_parish: number; same_region: number; km_median: number | null; km_q1: number | null;
     km_q3: number | null; families_by_region: Record<string, number>; n_families: number } | null;

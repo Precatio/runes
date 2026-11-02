@@ -6,8 +6,9 @@ import { sectionOf } from "./oversikt";
 
 const region = (c: string) => PROVINCE_NAMES[c] ?? c;
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+const p1 = (v?: number) => (v == null ? "–" : `${d2(v * 100, 1)} %`);
 const test = (t?: NamesTest) => (!t || t.share == null ? "–"
-  : `${pc(t.share)} mot ${pc(t.expected)} väntat (${d2(t.ratio, 1)} gånger, p ${pText(t.p)}, ${t.pairs} par)`);
+  : `${p1(t.share)} mot ${p1(t.expected)} väntat (${d2(t.ratio, 1)} gånger, p ${pText(t.p)}, ${t.pairs} par)`);
 
 /** Namn och släkt (r/names.R): namnled i arv, grannar som delar namn, namnens geografi och namnskicket per gammal region. */
 export function Names({ data }: { data: Corpus }) {
@@ -60,7 +61,7 @@ export function Names({ data }: { data: Corpus }) {
             <thead><tr><Th>Namn</Th><Th>Region</Th><Th>I regionen</Th><Th>Utanför</Th><Th>Oddskvot</Th><Th>q</Th><Th>Båda halvorna</Th></tr></thead>
             <tbody>{m.geography.rows.map(r => (
               <tr key={r.name + r.region} className="border-t border-slate-900/5">
-                <td className="p-2 font-semibold">{cap(r.name)}</td><td className="p-2">{region(r.region)}</td>
+                <td className="p-2 font-semibold">{r.display ?? cap(r.name)}</td><td className="p-2">{region(r.region)}</td>
                 <td className="p-2">{r.k_in} av {r.n_in}</td><td className="p-2">{r.k_out} av {r.n_out}</td>
                 <td className="p-2">{d2(r.or, 1)}</td><td className="p-2">{pText(r.q)}</td><td className="p-2">{r.holds ? "ja" : "nej"}</td></tr>))}</tbody>
           </table></ExportTable></div>)}

@@ -528,10 +528,12 @@ def names(m: dict) -> dict | None:
     if pc.get("share") is None:
         return None
     rows = [r for r in _list_rows(geo.get("rows")) if r.get("holds")]
-    top = ", ".join(f"{r['name'].capitalize()} i {place_name(r['region'])}" for r in rows[:4])
-    answer = (f"Förälder och barn delar ett namnled i {_pct(pc['share'])} av paren, mot {_pct(pc.get('expected', 0))} om namnen "
-              f"hade fördelats slumpvis inom samma gamla region; syskon i {_pct(sib.get('share', 0))} mot {_pct(sib.get('expected', 0))}. "
-              + (f"Stenar som står mindre än en kilometer från varandra nämner samma ovanliga namn {str(nb.get('ratio')).replace('.', ',')} "
+    top = ", ".join(f"{r.get('display') or r['name'].capitalize()} i {place_name(r['region'])}" for r in rows[:4])
+    p1 = lambda v: f"{100 * (v or 0):.1f} %".replace(".", ",")  # noqa: E731
+    rt = f"{nb.get('ratio') or 0:.1f}".replace(".", ",")
+    answer = (f"Förälder och barn delar ett namnled i {p1(pc['share'])} av paren, mot {p1(pc.get('expected', 0))} om namnen "
+              f"hade fördelats slumpvis inom samma gamla region; syskon i {p1(sib.get('share', 0))} mot {p1(sib.get('expected', 0))}. "
+              + (f"Stenar som står mindre än en kilometer från varandra nämner samma ovanliga namn {rt} "
                  f"gånger så ofta som slumpen ger. " if nb.get("ratio") else "")
               + (f"{geo.get('n_holds', 0)} namn hör till en viss region och håller i båda halvorna, till exempel {top}." if rows else
                  "Inget namn hör tydligt till en viss region när halvorna krävs."))
@@ -540,7 +542,7 @@ def names(m: dict) -> dict | None:
         "names", "Vad säger namnen om släkterna och bygderna?",
         "Namnen bar släkten vidare: barn fick delar av föräldrarnas namn, och samma namn återkommer på stenar nära varandra. "
         "Med de gamla gränserna kan vi se om bygderna också hade sina egna namn.",
-        {"value": f"{_pct(pc['share'])} mot {_pct(pc.get('expected', 0))}", "label": "av förälder–barn-paren delar namnled, mot slumpen"},
+        {"value": f"{p1(pc['share'])} mot {p1(pc.get('expected', 0))}", "label": "av förälder–barn-paren delar namnled, mot slumpen"},
         answer, "troligt" if firm else "osäkert",
         ["Namnskicket – att låta barnen ärva ett namnled – var en sed för en minoritet, men den syns tydligt.",
          "Att grannstenar delar ovanliga namn pekar på släkter som höll sig kvar på sina gårdar."],
