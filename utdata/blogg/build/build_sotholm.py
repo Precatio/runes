@@ -72,6 +72,14 @@ WIK = open("/Volumes/2TB/Antigrvity/Runes/downloads/sotholm_lit/rw2011_plain.txt
 assert "Runstenar är därför offensiva kristna markörer" in WIK
 assert "Amundes stenar i FP har ofta stora kors" in WIK
 assert "en hednisk glänta i en skog av kristna runstenar" in WIK
+WK = WIK.replace("-  ", "").replace("- ", "")
+for k in ("likt gläntor ligger insprängda i skogshavet Hanveden", "Tornberget 111 möh", "Tyresta nationalpark",
+          "inskriften Ingelri", "Svärdet dateras till ca år 1000", "Ethelred II och Knut den store",
+          "Slutmynt (1035–1042) är för Hardeknut i Lund", "plötslig kolonisation kring 500–600",
+          "Amunde har gjort Ingvarsstenen Sö 254, Vansta, Ösmo sn"):
+    assert k in WK or k in WIK, k
+assert 1 + 1 + 29 + 6 + 142 + 11 + 3 + 2 == 195  # Norrby hoard, coins and fragments per Wikell: "nästan tvåhundra"
+assert "i liði Ingvars" in nz("Sö 254") and "at Tosta" in nz("Sö 254") and recs["Sö 254"]["place"] == "Vansta"
 
 # ---- picture ----------------------------------------------------------------------------------------------------------
 F269 = "Sö269.jpg"
@@ -114,6 +122,14 @@ Det är allt. Korset talar, men orden ber inte. Ingen *Guð hialpi and hans*, �
 
 ![Runstenen Sö 269 med korset överst]({INFO[F269]['thumb']})
 Sö 269 från Söderby malm, i dag i Handen. Korset sitter överst, texten ber inte. Foto: Kenny Lex. Fri från upphovsrätt, via [Wikimedia Commons]({PAGE}).
+
+## En bygd av gläntor
+
+Sotholms härad låg på Södertörn, halvön söder om Mälarens utlopp, och den som i dag tar pendeltåget mot Nynäshamn åker rakt igenom det: Haninge, Västerhaninge, Ösmo. På vikingatiden var det en bygd av öppningar i skogen. I norr ligger Hanveden, ett högt och kuperat skogsland av hällmark, myrar och skogssjöar, där Tyresta nationalpark i dag skyddar urskogen och Tornberget når 111 meter över havet, östra Mälardalens högsta punkt. Gårdarna låg nere i dalarna, i det Roger Wikell kallar ”närmare tjugotalet småbygder som likt gläntor ligger insprängda i skogshavet Hanveden”. Gravfälten i bygderna kring Drevviken visar att de togs upp nästan på en gång, kring år 500–600.
+
+Det var ingen fattig skogsbygd. I Drevvikens gyttjiga strand vid Norrby har man hittat ett frankiskt svärd med smedens namn, Ingelri, inlagt i klingan, från omkring år 1000. På samma gårds mark låg en silverskatt med nästan tvåhundra mynt och myntbitar, de flesta tyska, några engelska präglade för Ethelred II och Knut den store, och som det yngsta ett mynt av Hardeknut, slaget i Lund 1035–1042. Silvret kom från de stora händelserna kring Nordsjön, samma årtionden som stenarna restes. Längre söderut, mot havet, ligger Sorunda och Ösmo, där Amunde högg en av Ingvarsstenarna, Sö 254 vid Vansta, efter Tosti som dog i Ingvars följe.
+
+Det är folket i den här bygden – Store och hans son Viking, Hjälmvid, Farbjörn, Hallsten – som reste stenarna den här artikeln handlar om.
 
 ## Hur vi hittade det
 
@@ -200,6 +216,14 @@ That is all. The cross speaks, but the words do not pray. There is no *Guð hial
 
 ![The runestone Sö 269 with the cross at the top]({INFO[F269]['thumb']})
 Sö 269 from Söderby malm, now in Handen. The cross sits at the top; the text does not pray. Photo: Kenny Lex. Public domain, via [Wikimedia Commons]({PAGE}).
+
+## A district of clearings
+
+The hundred of Sotholm lay on Södertörn, the peninsula south of the outlet of Lake Mälaren, and anyone who takes the commuter train towards Nynäshamn today goes straight through it: Haninge, Västerhaninge, Ösmo. In the Viking Age it was a district of openings in the forest. In the north lies Hanveden, a high, broken forest land of bare rock, bogs and forest lakes, where Tyresta National Park now protects the old-growth forest and Tornberget rises 111 metres above sea level, the highest point of the eastern Mälaren valley. The farms lay down in the valleys, in what Roger Wikell calls "nearly twenty small settlements set like clearings into the sea of forest of Hanveden". The grave fields in the settlements around Lake Drevviken show that they were taken up almost at once, around the years 500–600.
+
+It was no poor forest district. In the muddy shore of Lake Drevviken at Norrby a Frankish sword has been found with the smith's name, Ingelri, inlaid in the blade, from around the year 1000. On the same farm's land lay a silver hoard of nearly two hundred coins and coin fragments, most of them German, some English struck for Æthelred II and Cnut the Great, and as the youngest a coin of Harthacnut, struck in Lund in 1035–1042. The silver came from the great events around the North Sea, in the same decades as the stones were raised. Further south, towards the sea, lie Sorunda and Ösmo, where Amunde cut one of the Ingvar stones, Sö 254 at Vansta, in memory of Tosti who died in Ingvar's retinue.
+
+It is the people of this district – Store and his son Viking, Hjälmvid, Farbjörn, Hallsten – who raised the stones this article is about.
 
 ## How we found it
 
