@@ -59,12 +59,37 @@ def land_of(harads):
 
 
 ON_GOTLAND = lambda s: 56.85 <= s["lat"] <= 58.0 and 18.0 <= s["lon"] <= 19.4  # noqa: E731
+# ISOF's register (PlaceNameService, CC BY; downloaded to geografi_kallor/isof/) is the first source for a parish's
+# härad since 2026-11-02: it agreed with Wikidata for 2 232 parishes and corrected four (Adelöv, Aspö, Håcksvik, Rydaholm)
+ISOF = "/Volumes/2TB/Antigrvity/Runes/geografi_kallor/isof/"
+isof = {}
+if os.path.exists(ISOF + "parishes.json"):
+    dist = {d["id"]: d["name"] for d in json.load(open(ISOF + "districts.json"))}
+    for p in json.load(open(ISOF + "parishes.json")):
+        h = (dist.get(p["district_id"]) or "").replace("N. ", "Norra ").replace("S. ", "Södra ").replace(" hd", " härad") \
+            .replace(" sg", " skeppslag").replace(" tg", " tingslag")
+        isof.setdefault(p["name"].replace(" sn", " socken"), []).append((p["latitude"], p["longitude"], h))
+
+
+def isof_land(s):
+    """The land by ISOF's härad for a parish at (about) the same place; None when ISOF has no parish there."""
+    for la, lo, h in isof.get(s["namn"], []):
+        if abs(la - s["lat"]) < 0.2 and abs(lo - s["lon"]) < 0.3:
+            if h in ("Östra härad", "Västra härad"):        # Njudung's, not Blekinge's
+                return ("njudung", h) if la > 56.6 else (None, h)
+            return by_name.get(h), h
+    return None
+
+
 rows = []
 for s in soc:
+    il = isof_land(s) if not (s["namn"] in gotland and ON_GOTLAND(s)) else None
     if s["namn"] in gotland and ON_GOTLAND(s):
         rows.append({**s, "land": gotland[s["namn"]], "how": "wikipedia"})
     elif s["namn"] in override:
         rows.append({**s, "land": by_name[override[s["namn"]]], "how": "wikipedia"})
+    elif il is not None and il[1] and "Ingår i" not in il[1] and "stad" not in il[1]:
+        rows.append({**s, "land": il[0], "how": "isof"})
     elif s["harad"]:
         rows.append({**s, "land": land_of(s["harad"]), "how": "wikidata"})
     elif rd_harad(s):
