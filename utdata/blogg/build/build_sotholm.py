@@ -76,7 +76,8 @@ WK = WIK.replace("-  ", "").replace("- ", "")
 for k in ("likt gläntor ligger insprängda i skogshavet Hanveden", "Tornberget 111 möh", "Tyresta nationalpark",
           "inskriften Ingelri", "Svärdet dateras till ca år 1000", "Ethelred II och Knut den store",
           "Slutmynt (1035–1042) är för Hardeknut i Lund", "plötslig kolonisation kring 500–600",
-          "Amunde har gjort Ingvarsstenen Sö 254, Vansta, Ösmo sn"):
+          "Amunde har gjort Ingvarsstenen Sö 254, Vansta, Ösmo sn", "ca 75 gravkullar", "den största högen är 16 m bred",
+          "björnklor", "sätra och boda", "Såväl sommar som vinter har sjön Drevviken också"):
     assert k in WK or k in WIK, k
 assert 1 + 1 + 29 + 6 + 142 + 11 + 3 + 2 == 195  # Norrby hoard, coins and fragments per Wikell: "nästan tvåhundra"
 assert "i liði Ingvars" in nz("Sö 254") and "at Tosta" in nz("Sö 254") and recs["Sö 254"]["place"] == "Vansta"
@@ -130,32 +131,32 @@ summary = ("På vikingatiden var Södertörn en ö som hette Tören, och dess yt
            "än någon annan bygd på ön. Korsen höggs som överallt annars, men bönen för den döda själen kom nästan aldrig "
            "med: en sten av 43, mot en av fem i resten av Södermanland. Första delen i serien De gamla landen.")
 
-body = f"""På krönet av en rullstensås, där fyra vägar möttes, stod en runsten. Den som kom upp från bygden vid Haninge mötte den först, innan vägen gick vidare in mellan bergen mot gårdarna vid Drevviken. Ristningen var djupt huggen: en orm som slingrade sig runt stenen och överst ett kors. Texten löd:
+body = f"""Föreställ dig att du kommer till Tören från havet, för tusen år sedan. Det är ingen halvö ännu. Vattnet går runt hela landet, och sundet vid Tälje i väster är fortfarande öppet. Från båten ser du först berget: kala, rundslipade hällar som stiger ur vattnet, tallar som håller sig fast i skrevorna, och bakom dem skogen som reser sig mot Hanveden, öns höga mitt. Där inne ligger myrar och mörka skogssjöar mellan bergsryggarna, och det är långt mellan människorna. Ännu på medeltiden kallades den skogen ödslig.
+
+Men följ en av de långa sprickdalarna inåt land, och skogen öppnar sig. I dalbottnen ligger lera, och på leran ligger gårdarna, var och en i sin glänta, med namn som slutar på -sta och -by. I de mindre dalarna går boskapen på bete; där kommer ställena att heta -sätra och -boda. Föreställ dig röken från husen, lukten av gödsel och hö, hundarna som skäller när någon kommer längs stigen. Över gårdarna, på backarna, ligger gravfälten där de gamla vilar under runda kullar. Vid Kumla, på en udde i sjön Drevviken, ligger ett sjuttiotal högar, den största sexton meter bred, väl synliga för den som ror förbi. I en hög vid Vendelsö har man hittat klorna efter en björn – kanske en björnfäll som följde den döde på bålet.
+
+Vägarna går på grusåsarna, torra stråk genom sankmarken, och Drevviken binder ihop bygderna sommar som vinter: med båt när sjön är öppen, över isen när den har lagt sig. Det här är ingen fattig ö. Vid Norrby har ett svärd hamnat i den gyttjiga stranden, ett frankiskt svärd med smedens namn, Ingelri, inlagt i klingan. På samma gårds mark har någon grävt ner sitt silver: nästan tvåhundra mynt och myntbitar, tyska och engelska, präglade för kungar som Ethelred och Knut den store, och som det yngsta ett mynt av Hardeknut, slaget i Lund mellan 1035 och 1042. Det silvret har varit med om något på andra sidan Nordsjön.
+
+Och nu reser man stenar. Någonstans i bygden hörs järn mot sten. På krönet av en rullstensås, där fyra vägar möts, står en ny sten med en orm som slingrar sig runt kanten och ett kors överst. Den som kommer upp från bygden vid Haninge möter den först. Runorna lyder:
 
 > *{nz("Sö 269")}*
 
 Anund (?) och … reste denna sten efter Viking, sin fader, Stores son.
 
-Det var allt. Korset talade, men orden bad inte. Ingen *Guð hialpi and hans*, ”Gud hjälpe hans själ”, som så många stenar runt Mälaren slutar med. Och det gällde nästan varje sten i den här bygden.
+Det är allt. Korset talar, men orden ber inte. Ingen *Guð hialpi and hans*, ”Gud hjälpe hans själ”, som så många stenar runt Mälaren slutar med. Och så är det med nästan varje sten på den här sidan ön.
 
 ![Runstenen Sö 269 med korset överst]({INFO[F269]['thumb']})
 Sö 269 från Söderby malm. Korset sitter överst, texten ber inte. Foto: Kenny Lex. Fri från upphovsrätt, via [Wikimedia Commons]({PAGE}).
 
-## Ön som hette Tören
+## Två bygder på en ö
 
-På vikingatiden var Södertörn en ö. Sundet vid Tälje var ännu öppet, och först när det grundades upp vid medeltidens början blev landet en halvö. Ön hette Tören. Den var delad i två bygder, som i de medeltida breven kallas Övre och Yttre Tör: Svartlösa härad i väster och norr, och Sotholms härad i öster och söder.
+Tören var delad i två bygder, som i de medeltida breven kallas Övre och Yttre Tör: Svartlösa härad i väster och norr, och Sotholms härad i öster och söder. Gränsen mellan dem behövde ingen människa dra. Den följde den höga, ödsliga Hanveden och dess utlöpare, gick genom Kaggfjärden i sydväst och genom Drevviken till Erstaviken i nordöst. Yttre Tör vände sig utåt, mot havet. Vid medeltidens slut samlades häradet till ting på en hög holme längst in i Landfjärden, på Häringes mark, och det är den platsen, Sotholm, som har gett häradet dess namn. Om tinget hölls där redan på vikingatiden vet vi inte.
 
-Det var ett brutet land. Långa sprickdalar skar genom berget, och mellan dem reste sig höga skogsplatåer av kal häll, med myrar och skogssjöar i sänkorna. Högst låg Hanveden, ett skogsland som ännu på medeltiden var delvis ödsligt, där Tornberget når drygt 110 meter över havet. Nere i dalarna låg leran, och där låg gårdarna, i det Roger Wikell kallar ”närmare tjugotalet småbygder som likt gläntor ligger insprängda i skogshavet Hanveden”. Gravfälten vid Drevviken visar att bygderna där togs upp nästan på en gång, kring år 500–600, och när vikingatiden tog slut hade några av landets tätaste järnåldersbygder vuxit fram i dalarna.
+Det var Yttre Tör som reste flest runstenar på ön: Sorunda ensamt har 21 ristningar, sju av dem huggna direkt i berghällen. Längst i söder, vid Vansta i Ösmo, högg ristaren Amunde en av Ingvarsstenarna, efter Tosti som dog i Ingvars följe i öster. Det är folket här – Store och hans son Viking, Hjälmvid, Farbjörn, Hallsten – och deras stenar som resten av den här texten handlar om.
 
-Gränsen mellan Övre och Yttre Tör behövde ingen människa dra. Den följde den höga, ödsliga Hanveden och dess utlöpare, gick genom Kaggfjärden i sydväst och genom sjön Drevviken till Erstaviken i nordöst. Yttre Tör vände sig utåt, mot havet i öster och söder. Vid medeltidens slut samlades häradet till ting på en hög holme längst in i Landfjärden, på Häringes mark, och det är den platsen, Sotholm, som har gett häradet dess namn. Om tinget hölls där redan på vikingatiden vet vi inte.
+## Det vi har räknat
 
-Det var ingen fattig skogsbygd. I Drevvikens gyttjiga strand vid Norrby har man hittat ett frankiskt svärd med smedens namn, Ingelri, inlagt i klingan, från omkring år 1000. På samma gårds mark låg en silverskatt med nästan tvåhundra mynt och myntbitar, de flesta tyska, några engelska präglade för Ethelred II och Knut den store, och som det yngsta ett mynt av Hardeknut, slaget i Lund 1035–1042. Silvret kom från de stora händelserna kring Nordsjön, samma årtionden som stenarna restes. Längre söderut, mot havet, ligger Sorunda och Ösmo, där Amunde högg en av Ingvarsstenarna, Sö 254 vid Vansta, efter Tosti som dog i Ingvars följe.
-
-Yttre Tör var också den del av ön som reste flest runstenar: Sorunda ensamt har 21 ristningar, sju av dem huggna direkt i berghällen. Det är folket här – Store och hans son Viking, Hjälmvid, Farbjörn, Hallsten – som reste stenarna den här artikeln handlar om.
-
-## Hur vi hittade det
-
-Vi började inte med Tören. Vi började med en fråga om gränser. Dagens landskap fanns inte på vikingatiden; då levde man i härader, hundaren och folkland, och vi ville veta om de gamla bygderna skilde sig åt i hur de reste sina stenar. Därför lät vi datorn jämföra varje härad med minst femton runstenar med resten av sitt land, för 27 drag på stenarna: kors, böner, resor, ordval, stavning, vem som reste stenen. Det blev 731 jämförelser i 35 härader.
+Här lämnar vi ön för siffrorna. Vi började inte med Tören, utan med en fråga om gränser. Dagens landskap fanns inte på vikingatiden; då levde man i härader, hundaren och folkland, och vi ville veta om de gamla bygderna skilde sig åt i hur de reste sina stenar. Därför lät vi datorn jämföra varje härad med minst femton runstenar med resten av sitt land, för 27 drag på stenarna: kors, böner, resor, ordval, stavning, vem som reste stenen. Det blev 731 jämförelser i 35 härader.
 
 Med så många jämförelser dyker det upp skillnader av ren slump, och därför räknade vi om alla resultat med en korrektion för antalet prov. Bara sex skillnader klarade den och höll dessutom när vi delade stenarna i två grupper, socken för socken, och gjorde om provet i var och en – syns ett mönster i båda grupperna beror det inte på några enskilda socknar – och när vi tog bort häradets flitigaste ristare. Två av de sex handlade bara om bergarten. En av de andra var Sotholm.
 
@@ -233,32 +234,32 @@ summary_en = ("In the Viking Age Södertörn was an island called Tören, and it
               "the dead person's soul almost never came with them: one stone of 43, against one in five in the rest of "
               "Södermanland. The first part of the series The old lands.")
 
-body_en = f"""On the crest of an esker, where four roads met, stood a runestone. Anyone coming up from the Haninge countryside met it first, before the road went on between the hills to the farms by Lake Drevviken. The carving was deep: a serpent winding round the stone, and at the top a cross. The text read:
+body_en = f"""Imagine coming to Tören from the sea, a thousand years ago. It is not a peninsula yet. The water runs all the way round the land, and the strait at Tälje in the west is still open. From the boat you see the rock first: bare, ice-smoothed slabs rising out of the water, pines holding on in the cracks, and behind them the forest climbing towards Hanveden, the high middle of the island. In there lie bogs and dark forest lakes between the ridges, and people are few and far between. Even in the Middle Ages that forest was called desolate.
+
+But follow one of the long fissure valleys inland, and the forest opens. In the valley floor lies clay, and on the clay lie the farms, each in its own clearing, with names ending in -sta and -by. In the smaller valleys the cattle graze; those places will be called -sätra and -boda. Imagine the smoke from the houses, the smell of dung and hay, the dogs barking when someone comes along the path. Above the farms, on the slopes, lie the grave fields where the old ones rest under round mounds. At Kumla, on a point in Lake Drevviken, lie some seventy mounds, the largest sixteen metres across, plain to see for anyone rowing past. In a mound at Vendelsö the claws of a bear have been found – perhaps a bearskin that went with the dead on the pyre.
+
+The roads run along the gravel ridges, dry paths through the wetland, and Drevviken ties the settlements together summer and winter: by boat when the lake is open, across the ice when it has frozen. This is no poor island. At Norrby a sword has ended up in the muddy shore, a Frankish sword with the smith's name, Ingelri, inlaid in the blade. On the same farm's land someone has buried their silver: nearly two hundred coins and coin fragments, German and English, struck for kings such as Æthelred and Cnut the Great, and as the youngest a coin of Harthacnut, struck in Lund between 1035 and 1042. That silver has seen things on the other side of the North Sea.
+
+And now they are raising stones. Somewhere in the district iron rings against stone. On the crest of an esker, where four roads meet, stands a new stone with a serpent winding round its edge and a cross at the top. Anyone coming up from the Haninge countryside meets it first. The runes read:
 
 > *{nz("Sö 269")}*
 
 Anund (?) and … raised this stone in memory of Viking, their father, Store's son.
 
-That was all. The cross spoke, but the words did not pray. There was no *Guð hialpi and hans*, "may God help his soul", with which so many stones around Lake Mälaren end. And it was true of almost every stone in this district.
+That is all. The cross speaks, but the words do not pray. There is no *Guð hialpi and hans*, "may God help his soul", with which so many stones around Lake Mälaren end. And so it is with almost every stone on this side of the island.
 
 ![The runestone Sö 269 with the cross at the top]({INFO[F269]['thumb']})
 Sö 269 from Söderby malm. The cross sits at the top; the text does not pray. Photo: Kenny Lex. Public domain, via [Wikimedia Commons]({PAGE}).
 
-## The island called Tören
+## Two districts on one island
 
-In the Viking Age Södertörn was an island. The strait at Tälje was still open, and only when it silted up at the beginning of the Middle Ages did the land become a peninsula. The island was called Tören. It was divided into two districts, called Upper and Outer Tör in the medieval charters: the hundred of Svartlösa in the west and north, and the hundred of Sotholm in the east and south.
+Tören was divided into two districts, called Upper and Outer Tör in the medieval charters: the hundred of Svartlösa in the west and north, and the hundred of Sotholm in the east and south. No one needed to draw the border between them. It followed the high, desolate Hanveden and its spurs, ran through Kaggfjärden in the south-west and through Drevviken to Erstaviken in the north-east. Outer Tör faced outwards, towards the sea. At the end of the Middle Ages the hundred gathered for its assembly on a high islet at the inner end of Landfjärden, on the land of Häringe, and it is that place, Sotholm, that gave the hundred its name. Whether the assembly met there already in the Viking Age we do not know.
 
-It was a broken land. Long fissure valleys cut through the bedrock, and between them rose high forest plateaus of bare rock, with bogs and forest lakes in the hollows. Highest lay Hanveden, a forest land that was still partly desolate in the Middle Ages, where Tornberget rises just over 110 metres above the sea. Down in the valleys lay the clay, and there lay the farms, in what Roger Wikell calls "nearly twenty small settlements set like clearings into the sea of forest of Hanveden". The grave fields by Lake Drevviken show that the settlements there were taken up almost at once, around the years 500–600, and by the end of the Viking Age some of the densest Iron Age settlements in the country had grown up in the valleys.
+It was Outer Tör that raised the most runestones on the island: Sorunda alone has 21 inscriptions, seven of them cut straight into the bedrock. Furthest south, at Vansta in Ösmo, the carver Amunde cut one of the Ingvar stones, in memory of Tosti who died in Ingvar's retinue in the east. It is the people here – Store and his son Viking, Hjälmvid, Farbjörn, Hallsten – and their stones that the rest of this text is about.
 
-No one needed to draw the border between Upper and Outer Tör. It followed the high, desolate Hanveden and its spurs, ran through Kaggfjärden in the south-west and through Lake Drevviken to Erstaviken in the north-east. Outer Tör faced outwards, towards the sea in the east and south. At the end of the Middle Ages the hundred gathered for its assembly on a high islet at the inner end of Landfjärden, on the land of Häringe, and it is that place, Sotholm, that gave the hundred its name. Whether the assembly met there already in the Viking Age we do not know.
+## What we have counted
 
-It was no poor forest district. In the muddy shore of Lake Drevviken at Norrby a Frankish sword has been found with the smith's name, Ingelri, inlaid in the blade, from around the year 1000. On the same farm's land lay a silver hoard of nearly two hundred coins and coin fragments, most of them German, some English struck for Æthelred II and Cnut the Great, and as the youngest a coin of Harthacnut, struck in Lund in 1035–1042. The silver came from the great events around the North Sea, in the same decades as the stones were raised. Further south, towards the sea, lie Sorunda and Ösmo, where Amunde cut one of the Ingvar stones, Sö 254 at Vansta, in memory of Tosti who died in Ingvar's retinue.
-
-Outer Tör was also the part of the island that raised the most runestones: Sorunda alone has 21 inscriptions, seven of them cut straight into the bedrock. It is the people here – Store and his son Viking, Hjälmvid, Farbjörn, Hallsten – who raised the stones this article is about.
-
-## How we found it
-
-We did not start with Tören. We started with a question about borders. Today's provinces did not exist in the Viking Age; people lived in hundreds and folklands, and we wanted to know whether the old districts differed in how they raised their stones. So we had the computer compare every hundred with at least fifteen runestones with the rest of its land, for 27 features of the stones: crosses, prayers, journeys, choice of words, spelling, who raised the stone. That came to 731 comparisons in 35 hundreds.
+Here we leave the island for the numbers. We did not start with Tören but with a question about borders. Today's provinces did not exist in the Viking Age; people lived in hundreds and folklands, and we wanted to know whether the old districts differed in how they raised their stones. So we had the computer compare every hundred with at least fifteen runestones with the rest of its land, for 27 features of the stones: crosses, prayers, journeys, choice of words, spelling, who raised the stone. That came to 731 comparisons in 35 hundreds.
 
 With that many comparisons, differences turn up by pure chance, so we recalculated every result with a correction for the number of tests. Only six differences survived it and also held when we split the stones into two groups, parish by parish, and repeated the test in each – a pattern that shows in both groups is not down to a few particular parishes – and when we removed the hundred's most prolific carver. Two of the six were only about the type of rock. One of the others was Sotholm.
 
