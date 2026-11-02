@@ -111,36 +111,27 @@ Hur stort Roden var, och om det var ett land för sig eller en del av folklanden
 ![Karta över Roden och folklanden omkring år 1000 med runstenarna med och utan kors]({MAP['sv']})
 **Karta.** Upplands kust omkring år 1000, då havet gick mycket längre in i landet än i dag. Rostfärgat är Roden, ljust de tre folklanden; gränserna är ungefärliga, dragna efter häradernas socknar. Varje punkt är en runsten där det går att avgöra om den har ett kors. Karta: Vitki, efter SGU:s modell för strandförskjutningen år 1000, Institutet för språk och folkminnens ortnamnsregister och Rundata.
 
-## Det vi har räknat
+## Färre kors
 
-Här lämnar vi kusten för siffrorna. Roden har {R['desc']['n_roden']} runstenar där vi kan avgöra drag som kors och böner, och {R['desc']['n_tby']} av dem står i Täby. Vi jämförde dem med Upplands övriga stenar, med tiden hållen konstant, för alla drag vi har – och dessutom gravarna i fornlämningsregistret och gårdarnas namn.
+Gå bland Rodens stenar, och en sak märks efter ett tag. Korset, som i folklanden inåt land sitter på sex stenar av tio, sitter här bara på fyra. Böner för de döda är ännu ovanligare: i resten av Uppland ber ungefär var femte sten, här knappt en av tolv. Det beror inte på några enskilda ristare – också när Fot och Öpir, Rodens flitigaste, räknas bort är korsen färre.
 
-Det tydligaste är korset. Fyra av tio stenar i Roden bär ett kors, {pc(K['grund']['share_in'])} procent, mot sex av tio i resten av Uppland, {pc(K['grund']['share_out'])} procent. En bön eller kristen formel står på {C['grund']['k_in']} av {C['grund']['n_in']} stenar, {pc(C['grund']['share_in'])} procent, mot {pc(C['grund']['share_out'])}. Skillnaden håller när vi delar stenarna i två grupper socken för socken och prövar var för sig – syns den i båda grupperna beror den inte på enskilda socknar – och när vi tar bort stenarna av Rodens två flitigaste ristare, Fot och Öpir.
+Det naturliga är att tänka att det är havet. Att folk vid stranden levde annorlunda än folk i inlandet, vad deras land än hette. Rodens stenar står också närmare vattnet: hälften av dem inom ett hundratal meter från strandlinjen år 1000. Men i resten av Uppland spelar det ingen roll om en sten står vid vattnet eller långt därifrån – korset är lika vanligt. Och när vi tar hänsyn till närheten till vattnet står skillnaden för Roden kvar, lika stor som förut. Det är landet, inte stranden.
 
-Namnen säger samma sak som landskapet. Gårdsnamn på *-vik* är drygt tre gånger så vanliga i Roden som i resten av Uppland ({str(round(100 * V['n_vik']['share_in'], 1)).replace('.', ',')} mot {str(round(100 * V['n_vik']['share_out'], 1)).replace('.', ',')} procent av namnen), namn på *-näs* mer än dubbelt så vanliga, medan inlandets *-sta* och *-by* är hälften så vanliga eller mindre. På gravfälten är högarna fler än stensättningarna på {pc(G1['share_in'])} procent av dem där båda räknats, mot {pc(G1['share_out'])} procent i resten av Uppland, och resta stenar står på {pc(G2['share_in'])} procent av gravfälten mot {pc(G2['share_out'])}. Allt detta håller också när vi bara jämför inom samma län, så det är inte olika sätt att inventera.
+Namnen och gravarna berättar om samma land. Gårdar som heter något på *-vik* är drygt tre gånger så vanliga här som i resten av Uppland, och *-näs* mer än dubbelt så vanliga, medan inlandets *-sta* och *-by* är hälften så vanliga eller mindre. På gravfälten ovanför stränderna är högarna fler än stensättningarna oftare än i folklanden, och de resta stenarna färre. Det är inte bara olika sätt att inventera: skillnaderna finns kvar också när vi bara jämför med grannar inom samma län.
 
-## Var det havet?
+## Bygden som for långt bort
 
-Den naturliga invändningen är att det inte är Roden utan kusten: att folk vid vattnet levde annorlunda, oavsett vad deras land hette. Vi prövade det innan vi såg svaret. Med SGU:s modell för strandlinjen år 1000 mätte vi hur långt varje sten stod från vattnet. Rodens stenar står närmare – hälften inom drygt hundra meter från strandlinjen, mot omkring tvåhundrafemtio meter i resten av Uppland. Men i resten av Uppland spelar avståndet till vattnet ingen roll för om en sten har kors. Och när avståndet räknas in i samma modell står skillnaden för Roden kvar, lika stor som förut. Det är landet, inte stranden.
-
-## Det vi inte kan säga
-
-Fyndet håller inte överallt, och vi säger det rakt ut. När vi bara räknar stenar som står kvar på sin ursprungliga plats blir skillnaden i kors för liten för att skilja från slumpen. När vi låter varje ristare ha sin egen vana i modellen gäller samma sak för bönerna. Och när vi prövar Roden mot alla drag på en gång, i den breda jämförelse där vi letade efter allt som skiljer landen åt, räcker korsen inte riktigt till efter korrektionen för det stora antalet prov. I vår smalare plan, där korset var ett av färre drag, håller det. Fyndet är alltså starkt men inte ett av de allra säkraste.
-
-Det finns också något som såg ut som ett fynd men inte är det. Rodens stenar berättar om färder och död långt borta oftare än resten av Upplands: sju av sextio stenar säger att någon dog i fjärran, mot tre procent. Men sex av de sju står i Täby, i Jarlabankes krets. Det är en bygds historia, inte ett lands.
+En sak såg ut att skilja Roden från resten av Uppland men gör det inte. Stenar som berättar om död långt borta – i Lombardiet, i Grekland, i öster – är fler här. Men nästan alla står i Täby, i Jarlabankes krets. Det är en bygds historia: en släkt och dess grannar som for ut i världen och reste stenar när de inte kom hem. Det säger något om Täby, men inte om hela kusten.
 
 ## Ett land som vände sig mot havet
 
-Varför bar Rodens stenar färre kors? Vi vet inte. Men landprofilen ger en ledtråd. Rodens stenar står sällan nära de gamla centralorterna, Husby och Tuna, där kungamakten hade sina gårdar: {pc(CO['share_in'])} procent mot {pc(CO['share_out'])} procent i resten av Uppland. Roden var ordnat efter skeppen och inte efter hundarena, och det hade sin egen väg till kungen. Vår hypotes är att den kristna bildvärlden nådde Uppland längs de vägar som gick genom centralorterna, och att kustlandet, som vände sig mot havet och styrdes på sitt eget sätt, tog till sig den långsammare. Det är en hypotes, inte ett resultat. Den kan prövas: om den stämmer bör stenarna i Roden som står nära en Husby eller Tuna bära kors lika ofta som i folklanden.
+Varför bar Rodens stenar färre kors? Vi vet inte. Men en ledtråd finns. Rodens stenar står sällan nära de gamla centralorterna, Husby och Tuna, där kungamakten hade sina gårdar – bara en av fem, mot hälften i folklanden. Roden var ordnat efter skeppen och inte efter hundarena, och det hade sin egen väg till kungen. Kanske nådde korset Uppland längs de vägar som gick genom kungens gårdar, och kustlandet, som vände sig mot havet och styrdes på sitt eget sätt, tog det till sig långsammare. Det är en tanke, inte ett resultat – men den går att pröva: står stenarna i Roden nära en Husby eller Tuna, bör de bära kors lika ofta som i folklanden.
 
 Det här är andra delen i serien De gamla landen. Den första handlade om [Sotholm på Södertörn]({SOTHOLM}), där stenarna bar kors men inte bad. I Roden bar de korset mer sällan. Två kuster, två sätt att vara kristen på en sten.
 
-:::box Det viktigaste i korthet
-- Roden var Upplands kustland, ordnat i skeppslag i stället för hundaren, med egen väg genom tingen till kungen.
-- Där bär runstenarna kors mer sällan än i folklanden, fyra av tio mot sex av tio, och det förklaras inte av närheten till havet.
-- Gårdsnamnen på -vik och -näs och gravfälten med högar visar ett land som levde vid och av vattnet.
-- Fyndet är starkt men inte orubbligt, och Rodens gränser var omstridda redan på medeltiden.
-:::
+## Så vet vi det
+
+Bakom texten finns en jämförelse av Rodens runstenar med resten av Upplands, med tiden hållen konstant, och en prövning som låstes innan vi räknade: att närheten till havet inte förklarar skillnaden. Korsen står sig när stenarna delas i två grupper socken för socken och när de största ristarnas stenar tas bort, men inte när bara stenar på sin ursprungliga plats räknas. Bönerna är för få för att skilja bygdens vana från ristarnas. Två saker gör bilden osäkrare: en stor del av Rodens stenar står i Täby, och just Täbys plats i Roden är omstridd. Namnen och gravarna kommer ur fornlämningsregistret och dagens kartor. Planerna och beräkningarna finns öppna på GitHub, länkade nedan.
 
 ## Källor
 
@@ -185,36 +176,27 @@ How large Roden was, and whether it was a land of its own or part of the folklan
 ![Map of Roden and the folklands around AD 1000 with the runestones with and without a cross]({MAP['en']})
 **Map.** The coast of Uppland around AD 1000, when the sea reached much further into the land than today. Rust is Roden, light the three folklands; the borders are approximate, drawn after the parishes of the hundreds. Each point is a runestone where it can be told whether it carries a cross. Map: Vitki, after the Geological Survey of Sweden's shore-displacement model for AD 1000, the place-name register of the Institute for Language and Folklore, and Rundata.
 
-## What we have counted
+## Fewer crosses
 
-Here we leave the coast for the numbers. Roden has {R['desc']['n_roden']} runestones where we can decide features such as crosses and prayers, and {R['desc']['n_tby']} of them stand in Täby. We compared them with the other stones of Uppland, with time held constant, for every feature we have – and also the graves in the register of ancient monuments and the names of the farms.
+Walk among Roden's stones, and after a while one thing stands out. The cross, which in the folklands inland sits on six stones in ten, here sits on only four. Prayers for the dead are rarer still: in the rest of Uppland about one stone in five prays, here hardly one in twelve. It is not down to particular carvers – even when Fot and Öpir, Roden's most prolific, are left out, the crosses are fewer.
 
-The clearest is the cross. Four stones in ten in Roden carry a cross, {pc(K['grund']['share_in'])} percent, against six in ten in the rest of Uppland, {pc(K['grund']['share_out'])} percent. A prayer or Christian formula stands on {C['grund']['k_in']} of {C['grund']['n_in']} stones, {pc(C['grund']['share_in'])} percent, against {pc(C['grund']['share_out'])}. The difference holds when we split the stones into two groups parish by parish and test each – a difference that shows in both groups is not down to particular parishes – and when we remove the stones of Roden's two most prolific carvers, Fot and Öpir.
+The natural thought is that it is the sea. That people by the shore lived differently from people inland, whatever their land was called. Roden's stones do stand closer to the water: half of them within a hundred metres or so of the shoreline of AD 1000. But in the rest of Uppland it makes no difference whether a stone stands by the water or far from it – the cross is just as common. And when we take the closeness of the water into account, the difference for Roden remains, as large as before. It is the land, not the shore.
 
-The names say the same as the landscape. Farm names in *-vik* are more than three times as common in Roden as in the rest of Uppland ({round(100 * V['n_vik']['share_in'], 1)} against {round(100 * V['n_vik']['share_out'], 1)} percent of the names), names in *-näs* more than twice as common, while the inland *-sta* and *-by* are half as common or less. On the grave fields, mounds outnumber stone settings on {pc(G1['share_in'])} percent of those where both have been counted, against {pc(G1['share_out'])} percent in the rest of Uppland, and standing stones occur on {pc(G2['share_in'])} percent of the grave fields against {pc(G2['share_out'])}. All of this also holds when we compare only within the same county, so it is not different ways of surveying.
+The names and the graves tell of the same land. Farms with names in *-vik*, 'bay', are more than three times as common here as in the rest of Uppland, and *-näs*, 'point', more than twice as common, while the inland *-sta* and *-by* are half as common or less. On the grave fields above the shores, mounds outnumber stone settings more often than in the folklands, and the standing stones are fewer. It is not just different ways of surveying: the differences remain when we compare only with neighbours in the same county.
 
-## Was it the sea?
+## The district that travelled far
 
-The natural objection is that it is not Roden but the coast: that people by the water lived differently, whatever their land was called. We tested that before we saw the answer. Using the Geological Survey's model of the shoreline in AD 1000, we measured how far each stone stood from the water. Roden's stones stand closer – half of them within about a hundred metres of the shoreline, against about two hundred and fifty metres in the rest of Uppland. But in the rest of Uppland the distance to the water makes no difference to whether a stone has a cross. And when the distance is put into the same model, the difference for Roden remains, as large as before. It is the land, not the shore.
-
-## What we cannot say
-
-The finding does not hold everywhere, and we say so plainly. When we count only stones still standing in their original place, the difference in crosses becomes too small to tell apart from chance. When we let each carver have their own habit in the model, the same goes for the prayers. And when we test Roden against all features at once, in the broad comparison where we looked for everything that sets the lands apart, the crosses do not quite survive the correction for the large number of tests. In our narrower plan, where the cross was one of fewer features, it holds. The finding is strong, then, but not among the very surest.
-
-There is also something that looked like a finding but is not. Roden's stones tell of journeys and death far away more often than the rest of Uppland's: seven of sixty stones say someone died far off, against three percent. But six of the seven stand in Täby, in Jarlabanke's circle. That is the history of one district, not of a land.
+One thing looked as if it set Roden apart from the rest of Uppland but does not. Stones that tell of death far away – in Lombardy, in Greece, in the east – are more common here. But nearly all of them stand in Täby, in Jarlabanke's circle. That is the history of one district: a family and its neighbours who went out into the world and raised stones when they did not come home. It says something about Täby, but not about the whole coast.
 
 ## A land that faced the sea
 
-Why did Roden's stones carry fewer crosses? We do not know. But the land profile gives a clue. Roden's stones seldom stand near the old central places, Husby and Tuna, where royal power had its estates: {pc(CO['share_in'])} percent against {pc(CO['share_out'])} percent in the rest of Uppland. Roden was organised by ships and not by hundreds, and it had its own road to the king. Our hypothesis is that the Christian imagery reached Uppland along the roads that ran through the central places, and that the coastal land, which faced the sea and was governed in its own way, took it up more slowly. It is a hypothesis, not a result. It can be tested: if it is right, the stones in Roden that stand near a Husby or Tuna should carry crosses as often as in the folklands.
+Why did Roden's stones carry fewer crosses? We do not know. But there is a clue. Roden's stones seldom stand near the old central places, Husby and Tuna, where royal power had its estates – only one in five, against half in the folklands. Roden was organised by ships and not by hundreds, and it had its own road to the king. Perhaps the cross reached Uppland along the roads that ran through the king's estates, and the coastal land, which faced the sea and was governed in its own way, took it up more slowly. It is a thought, not a result – but it can be tested: if the stones in Roden that stand near a Husby or Tuna carry crosses as often as in the folklands, it holds.
 
 This is the second part of the series The old lands. The first was about [Sotholm on Södertörn]({SOTHOLM}), where the stones carried crosses but did not pray. In Roden they carried the cross more rarely. Two coasts, two ways of being Christian on a stone.
 
-:::box The essentials in brief
-- Roden was Uppland's coastal land, organised in ship districts instead of hundreds, with its own road through the assemblies to the king.
-- There the runestones carry crosses more rarely than in the folklands, four in ten against six in ten, and the closeness of the sea does not explain it.
-- The farm names in -vik and -näs and the grave fields with mounds show a land that lived by and from the water.
-- The finding is strong but not unshakeable, and Roden's borders were disputed already in the Middle Ages.
-:::
+## How we know
+
+Behind the text lies a comparison of Roden's runestones with the rest of Uppland's, with time held constant, and a test that was fixed before we counted: that the closeness of the sea does not explain the difference. The crosses hold when the stones are split into two groups parish by parish and when the stones of the main carvers are removed, but not when only stones in their original place are counted. The prayers are too few to tell the district's habit from the carvers'. Two things make the picture less certain: a large share of Roden's stones stand in Täby, and Täby's place in Roden is itself disputed. The names and graves come from the register of ancient monuments and today's maps. The plans and calculations are open on GitHub, linked below.
 
 ## Sources
 

@@ -17,7 +17,7 @@ new = json.load(open(os.path.join(ROOT, "utdata", "blogg", "sotholm.json"), enco
 ref = blog.firestore().collection(blog.COLLECTION).document("04xMEvIJCiBPLwEDzFwB")
 old = ref.get().to_dict()
 assert old and old.get("published") and old["slug"] == new["slug"] == "de-gamla-landen-sotholm"
-assert "Tören omkring år 1000, då Södertörn var en ö" in new["body"] and "Tören around AD 1000" in new["body_en"]
+assert "Tören omkring år 1000, då Södertörn var en ö" in new["body"] and "## Så vet vi det" in new["body"] and "## How we know" in new["body_en"] and ":::box" not in new["body"]
 blog._backup(ref.id, old)
 ref.set({k: new[k] for k in ("title", "summary", "body", "title_en", "summary_en", "body_en")}
         | {"updatedAt": dt.datetime.now(dt.timezone.utc)}, merge=True)

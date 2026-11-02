@@ -160,35 +160,25 @@ Tören var delad i två bygder, som i de medeltida breven kallas Övre och Yttre
 
 Det var Yttre Tör som reste flest runstenar på ön: Sorunda ensamt har 21 ristningar, sju av dem huggna direkt i berghällen. Längst i söder, vid Vansta i Ösmo, högg ristaren Amunde en av Ingvarsstenarna, efter Tosti som dog i Ingvars följe i öster. Det är folket här – Store och hans son Viking, Hjälmvid, Farbjörn, Hallsten – och deras stenar som resten av den här texten handlar om.
 
-## Det vi har räknat
+## Stenarna som inte bad
 
-Här lämnar vi ön för siffrorna. Vi började inte med Tören, utan med en fråga om gränser. Dagens landskap fanns inte på vikingatiden; då levde man i härader, hundaren och folkland, och vi ville veta om de gamla bygderna skilde sig åt i hur de reste sina stenar. Därför lät vi datorn jämföra varje härad med minst femton runstenar med resten av sitt land, för 27 drag på stenarna: kors, böner, resor, ordval, stavning, vem som reste stenen. Det blev 731 jämförelser i 35 härader.
+Gå runt bland stenarna på Yttre Tör, och mycket känns igen från resten av Mälardalen. Någon har låtit resa en sten efter sin far eller sin son, ristaren har huggit en orm runt kanten, och överst sitter ofta ett kors – på fler än hälften av stenarna, lika ofta som i resten av Södermanland. Folket här hade valt sida. Roger Wikell, som har studerat bygderna kring Drevviken, kallar runstenarna ”offensiva kristna markörer” och påpekar att Amundes stenar ”ofta [har] stora kors”. En gård utan stenar, Gudö, beskriver han som ”en hednisk glänta i en skog av kristna runstenar”.
 
-Med så många jämförelser dyker det upp skillnader av ren slump, och därför räknade vi om alla resultat med en korrektion för antalet prov. Bara sex skillnader klarade den och höll dessutom när vi delade stenarna i två grupper, socken för socken, och gjorde om provet i var och en – syns ett mönster i båda grupperna beror det inte på några enskilda socknar – och när vi tog bort häradets flitigaste ristare. Två av de sex handlade bara om bergarten. En av de andra var Sotholm.
+Men läs orden. I resten av Södermanland slutar ungefär var femte sten med en bön: *Guð hialpi and hans*, Gud hjälpe hans själ. Här gör nästan ingen det. Av de fyrtiotre stenar i häradet som går att läsa ber en enda. Det är inte för att stenarna är äldre än grannarnas – de restes under samma årtionden. Under de år i början av 1000-talet då de flesta höggs bad ungefär var fjärde sten i resten av landskapet. Här ingen.
 
-I resten av Södermanland har ungefär en sten av fem en bön eller en kristen formel, {pc(T['share_out'])} procent. I Sotholms härad gäller det en sten av 43. Med tiden hållen konstant är oddsen för en bön ungefär en tolftedel av vad de är i resten av landskapet. Bland mönster minst så här starka i hela genomsökningen väntas högst omkring tre procent vara slumpfynd.
+Bilden predikade. Orden bad inte. (Hur bönen senare tystnade också på andra håll har vi skrivit om i [Bönen tystnade – men korset stod kvar]({BON}).)
 
-{chart('sv')}
+## Det har setts förut
 
-## Korset stod där
+Vi var inte först att lägga märke till det. När Kaj Janzon och Sigurd Rahmqvist beskrev Tören i *Det medeltida Sverige* 2002 skrev de att ”Södertörns runstenar har mycket stereotypa texter” och att ”en bön för själen finns bara i två fall”. Det vi har kunnat göra är att räkna efter och se att skillnaden är för stor för att vara en tillfällighet.
 
-Det första man undrar är om folket i Yttre Tör helt enkelt inte var kristna ännu. Men korset finns där. {K['k_in']} av de {K['n_in']} stenarna har ett kors, {pc(K['share_in'])} procent, mot {pc(K['share_out'])} procent i resten av Södermanland – ingen skillnad att tala om. Roger Wikell, som har studerat bygderna kring Drevviken, skriver att ”Runstenar är därför offensiva kristna markörer” och att Amundes stenar ”ofta [har] stora kors”. Han beskriver till och med en gård utan runstenar, Gudö, som ”en hednisk glänta i en skog av kristna runstenar”.
+Och det gäller troligen hela ön. I Övre Tör, på andra sidan Hanveden, ber också nästan ingen sten: två av tjugotvå. Inte heller berömmer man de döda – ”en god bonde”, ”en dugande man” står på var femte sten i resten av Södermanland men på nästan ingen här. Törens stenar säger vem som reste stenen och efter vem, och sedan tiger de.
 
-Stenarna i Sotholm bekände alltså färg, men på ett annat sätt än grannarna. Bilden predikade, orden bad inte.
+Ett litet ord skilde ändå öns två halvor åt. I Övre Tör skrev man ofta ordet för ’denna’ på ett eget sätt, *þennsa*, som man gjorde på andra håll söder om Mälaren. På Yttre Tör nästan aldrig.
 
-Inte heller tiden förklarar det. Stenarna i Sotholm är lika gamla som de i resten av landskapet: av de daterade är hälften huggna före och hälften efter omkring år 1030, på båda hållen. Under årtiondena 1010–1040, då de flesta daterade stenarna i Sotholm höggs, har {PP['rest'][0]} av {PP['rest'][1]} stenar i resten av landskapet en bön, {pc(23 / 96)} procent – i Sotholm ingen av {PP['so'][1]}. (Hur bönen senare tystnade också på andra håll har vi skrivit om i [Bönen tystnade – men korset stod kvar]({BON}).)
+## Bygdens ristare
 
-## Det har setts förut – och det gäller troligen hela ön
-
-Vi är inte först med att se det. När Riksantikvarieämbetets verk *Det medeltida Sverige* beskrev Tören 2002 skrev Kaj Janzon och Sigurd Rahmqvist att ”Södertörns runstenar har mycket stereotypa texter” och att ”en bön för själen finns bara i två fall”. Det var innan stenen vid Småhamra hittades. Det vi lägger till är måttet: att skillnaden mot resten av landskapet är för stor för slumpen, att den står sig när tiden hålls konstant, och att det är bönen som saknas, inte korset.
-
-Övre Tör ber också sällan: Svartlösa har en bön på två av 22 stenar. Där är stenarna för få för att skillnaden ska gå att skilja från slumpen. I vår plan hade vi dessutom slagit ihop Svartlösa med grannhäradet Öknebo, som inte hör till Tören, och då försvann skillnaden helt. Det var ett misstag i planen, och vi redovisar det som det är. Troligast är bönens frånvaro ett drag hos hela ön, tydligast i Sotholm där stenarna är flest. Samma sak gäller berömmet av den döde, ”en god bonde”, ”en dugande man”: på resten av Södermanlands stenar står det på {pc(BR[0] / BR[1])} procent, i Sotholm på två av 43 och i Svartlösa på en av 22. Törens stenar säger vem som reste stenen och efter vem, och sedan tiger de.
-
-Något skilde ändå de två halvorna åt. Ordet för ’denna’ i formen *þennsa* står på sex av Svartlösas 22 stenar men bara på två av Sotholms 43. Det hör till en ficka av den formen söder om Mälaren som vi har sett förut. Det är en iakttagelse, inte ett prövat fynd – med så få stenar och så många drag att jämföra kan en sådan skillnad uppstå av en slump.
-
-## Det var bygdens ristare
-
-De flesta stenarna i Sotholm som har en känd ristare är gjorda av tre män: Amunde (elva stenar som tillskrivs honom), Halvdan (nio) och en ristare som Rundata kallar Björn (fem). Amunde och Halvdan signerade stenar här:
+De flesta stenarna här med en känd ristare är gjorda av tre män: Amunde, Halvdan och en ristare som brukar kallas Björn. Två av dem satte sina namn på stenarna:
 
 > *{nz("Sö 268")}*
 
@@ -198,9 +188,7 @@ Hjälmvid reste stenen efter Torgöt, sin son. Amunde ristade runorna.
 
 Farbjörn lät hugga stenen efter Håulv, sin son. Halvdan högg runorna.
 
-Ingen av dem skrev någonsin en bön, inte heller på de stenar de högg utanför häradet: Halvdan noll av sjutton, Amunde noll av tretton. Här finns svagheten i fyndet, och vi säger den rakt ut. När vi lät varje ristare ha sin egen vana i modellen gick skillnaden inte längre att skilja från slumpen. Vi kan alltså inte säga om det var platsen eller ristarna. Men när vi tog bort alla stenar som Amunde, Halvdan och Björn gjort fanns bara en bön på de arton som blev kvar, mot {pc(E['share_out'])} procent i resten av landskapet, och den skillnaden håller. Fyndet håller också med bara stenar på sin ursprungliga plats, bara daterade stenar och utan stenar som gått förlorade.
-
-Vår tolkning är att det inte går att skilja de två åt, och att det är själva poängen. Bygden hade sina ristare, och ristarna hade bygdens sätt att skriva. I Yttre Tör fanns en skrivtradition där stenen fick korset men inte bönen, och den höll i flera decennier.
+Ingen av dem skrev någonsin en bön, inte ens på de stenar de högg utanför häradet. Var det alltså ristarna och inte bygden? Svaret är inte så enkelt. Också bland de stenar som andra händer högg i Sotholm finns bara en enda bön. Bygden hade sina ristare, och ristarna hade bygdens sätt att skriva. Det går inte att skilja dem åt, och kanske är det samma sak: i Yttre Tör fick stenen korset men inte bönen, och så förblev det i flera decennier.
 
 ## Undantaget som kom ur jorden
 
@@ -210,20 +198,15 @@ Den enda stenen med en bön i Sotholm hittades 2011, vid Småhamra i Österhanin
 
 Gunnar och Ulv och Sighjälm lät resa stenen efter Halvdan, sin fader. Gud hjälpe hans själ.
 
-Ingen ristare är känd för den. Att undantaget dök upp så sent är en påminnelse om att bilden kan ändras, och det ger oss en förutsägelse att pröva: kommer det fram fler stenar i Sotholm, bör de som Amunde och Halvdan ristat sakna bön, medan stenar av andra händer kan ha den.
+Ingen vet vem som högg den. Att undantaget dök upp så sent är en påminnelse om att jorden fortfarande gömmer stenar, och att bilden kan ändras med nästa fynd.
 
 ## Ett land för sig
 
-Det här är första delen i serien De gamla landen, om folkland, små land och härader. I Uppland har vi sett att folklandens gränser skiljer runstenarnas sed åt mer än vilka grannbygder som helst gör. Tören visar samma sak på en ö. Havet runt den och skogen mitt i den drog gränserna, och folket i Yttre Tör hade sina egna ristare och sitt eget sätt att minnas de döda: korset på stenen, namnen på dem som reste den och den dödes namn – men ingen bön.
+Havet runt ön och skogen mitt i den drog gränserna. Folket i Yttre Tör hade sina ristare och sitt eget sätt att minnas de döda: korset på stenen, namnen på dem som reste den och den dödes namn – men ingen bön. Vi vet inte varför. Det kan ha varit ristarnas skola, där formeln aldrig lärdes ut. Det kan ha varit familjerna, som ville ha korset men inte bönen. Det kan ha varit en präst eller en missionär som undervisade annorlunda just här. Men den som står vid Sö 269 står vid en sten som lät bönen vara, i en bygd som var ett land för sig.
 
-Vi vet inte varför. Det kan ha varit ristarnas skola, där formeln aldrig lärdes ut. Det kan ha varit familjerna, som ville ha korset men inte bönen. Det kan ha varit en präst eller en missionär som undervisade annorlunda just här. Data kan inte avgöra det. Men den som står vid Sö 269 står vid en sten som valde bort bönen, i en bygd som var ett land för sig.
+## Så vet vi det
 
-:::box Det viktigaste i korthet
-- På vikingatiden var Södertörn en ö, Tören, och dess yttre halva, Sotholms härad, var den bygd på ön som reste flest runstenar.
-- Stenarna där bär kors lika ofta som andra sörmländska stenar, men nästan aldrig en bön för den döde – och de är inte äldre än andra.
-- Bygdens egna ristare skrev aldrig bönen, och vi kan inte skilja ristarnas vana från bygdens; troligen är det samma sak.
-- Tören hade naturliga gränser – havet runt ön, skogen mitt i den – och ett eget sätt att minnas de döda. De gamla landen syns i runstenarna.
-:::
+Bakom texten finns en jämförelse av alla härader med minst femton runstenar, där Sotholm var ett av få som skilde sig tydligt från sitt landskap. Skillnaden i böner står sig när stenarna delas i två grupper socken för socken, när bara stenar på sin ursprungliga plats räknas och när de största ristarnas stenar tas bort. Det vi inte kan avgöra är om vanan satt i bygden eller hos ristarna. Att den gällde hela Tören är troligt men inte säkert, eftersom stenarna i Övre Tör är för få. Planerna och beräkningarna finns öppna på GitHub, länkade nedan.
 
 ## Källor
 
@@ -267,35 +250,25 @@ Tören was divided into two districts, called Upper and Outer Tör in the mediev
 
 It was Outer Tör that raised the most runestones on the island: Sorunda alone has 21 inscriptions, seven of them cut straight into the bedrock. Furthest south, at Vansta in Ösmo, the carver Amunde cut one of the Ingvar stones, in memory of Tosti who died in Ingvar's retinue in the east. It is the people here – Store and his son Viking, Hjälmvid, Farbjörn, Hallsten – and their stones that the rest of this text is about.
 
-## What we have counted
+## The stones that did not pray
 
-Here we leave the island for the numbers. We did not start with Tören but with a question about borders. Today's provinces did not exist in the Viking Age; people lived in hundreds and folklands, and we wanted to know whether the old districts differed in how they raised their stones. So we had the computer compare every hundred with at least fifteen runestones with the rest of its land, for 27 features of the stones: crosses, prayers, journeys, choice of words, spelling, who raised the stone. That came to 731 comparisons in 35 hundreds.
+Walk among the stones of Outer Tör, and much is familiar from the rest of the Mälaren valley. Someone has had a stone raised for a father or a son, the carver has cut a serpent round the edge, and at the top there is often a cross – on more than half of the stones, as often as in the rest of Södermanland. The people here had chosen their side. Roger Wikell, who has studied the settlements around Lake Drevviken, calls the runestones "offensive Christian markers" and notes that Amunde's stones "often [have] large crosses". A farm without stones, Gudö, he describes as "a heathen glade in a forest of Christian runestones".
 
-With that many comparisons, differences turn up by pure chance, so we recalculated every result with a correction for the number of tests. Only six differences survived it and also held when we split the stones into two groups, parish by parish, and repeated the test in each – a pattern that shows in both groups is not down to a few particular parishes – and when we removed the hundred's most prolific carver. Two of the six were only about the type of rock. One of the others was Sotholm.
+But read the words. In the rest of Södermanland about one stone in five ends with a prayer: *Guð hialpi and hans*, may God help his soul. Here almost none does. Of the forty-three stones in the hundred that can be read, a single one prays. It is not because the stones are older than their neighbours' – they were raised in the same decades. In the years early in the eleventh century when most of them were carved, about one stone in four in the rest of the province prayed. Here none.
 
-In the rest of Södermanland about one stone in five carries a prayer or a Christian formula, {pc(T['share_out'])} percent. In the hundred of Sotholm it is one stone in 43. With time held constant, the odds of a prayer are about a twelfth of what they are in the rest of the province. Among patterns at least this strong in the whole scan, at most about three percent are expected to be chance findings.
+The image preached. The words did not pray.
 
-{chart('en')}
+## It has been seen before
 
-## The cross was there
+We were not the first to notice. When Kaj Janzon and Sigurd Rahmqvist described Tören in *Det medeltida Sverige* in 2002, they wrote that "the runestones of Södertörn have very stereotyped texts" and that "a prayer for the soul occurs in only two cases". What we have been able to do is count again and see that the difference is too large to be a coincidence.
 
-The first thing one wonders is whether the people of Outer Tör simply were not Christian yet. But the cross is there. {K['k_in']} of the {K['n_in']} stones carry a cross, {pc(K['share_in'])} percent, against {pc(K['share_out'])} percent in the rest of Södermanland – no difference worth the name. Roger Wikell, who has studied the settlements around Lake Drevviken, writes that runestones were "offensive Christian markers" and that Amunde's stones "often [have] large crosses". He even describes a farm without runestones, Gudö, as "a heathen glade in a forest of Christian runestones".
+And it probably holds for the whole island. In Upper Tör, on the other side of Hanveden, hardly any stone prays either: two of twenty-two. Nor do the stones praise the dead – "a good farmer", "a capable man" stands on one stone in five in the rest of Södermanland but on almost none here. The stones of Tören say who raised the stone and for whom, and then they fall silent.
 
-So the stones in Sotholm declared their side, but in a different way from their neighbours. The image preached; the words did not pray.
+One small word did set the island's two halves apart. In Upper Tör people often wrote the word for 'this' in a form of their own, *þennsa*, as they did elsewhere south of Lake Mälaren. In Outer Tör almost never.
 
-Time does not explain it either. The stones in Sotholm are as old as those in the rest of the province: of the dated stones, half were carved before and half after about the year 1030, in both places. In the decades 1010–1040, when most of the dated stones in Sotholm were carved, {PP['rest'][0]} of {PP['rest'][1]} stones in the rest of the province have a prayer, {pc(23 / 96)} percent – in Sotholm none of {PP['so'][1]}.
+## The district's carvers
 
-## It has been seen before – and it probably holds for the whole island
-
-We are not the first to see it. When the Swedish National Heritage Board's series *Det medeltida Sverige* described Tören in 2002, Kaj Janzon and Sigurd Rahmqvist wrote that "the runestones of Södertörn have very stereotyped texts" and that "a prayer for the soul occurs in only two cases". That was before the stone at Småhamra was found. What we add is the measurement: that the difference from the rest of the province is too large for chance, that it holds when time is held constant, and that it is the prayer that is missing, not the cross.
-
-Upper Tör prays rarely too: Svartlösa has a prayer on two of 22 stones. There the stones are too few for the difference to be told apart from chance. In our plan we had also grouped Svartlösa with the neighbouring hundred of Öknebo, which does not belong to Tören, and then the difference vanished altogether. That was a mistake in the plan, and we report it as it is. Most likely the absence of the prayer is a feature of the whole island, clearest in Sotholm where the stones are most numerous. The same goes for praise of the dead, "a good farmer", "a capable man": on the rest of Södermanland's stones it appears on {pc(BR[0] / BR[1])} percent, in Sotholm on two of 43 and in Svartlösa on one of 22. The stones of Tören say who raised the stone and for whom, and then they fall silent.
-
-Something did set the two halves apart. The word for 'this' in the form *þennsa* stands on six of Svartlösa's 22 stones but on only two of Sotholm's 43. It belongs to a pocket of that form south of Lake Mälaren that we have seen before. It is an observation, not a tested finding – with so few stones and so many features to compare, such a difference can arise by chance.
-
-## It was the district's carvers
-
-Most of the stones in Sotholm with a known carver were made by three men: Amunde (eleven stones attributed to him), Halvdan (nine) and a carver whom Rundata calls Björn (five). Amunde and Halvdan signed stones here:
+Most of the stones here with a known carver were made by three men: Amunde, Halvdan and a carver usually called Björn. Two of them put their names on the stones:
 
 > *{nz("Sö 268")}*
 
@@ -305,9 +278,7 @@ Hjälmvid raised the stone in memory of Torgöt, his son. Amunde carved the rune
 
 Farbjörn had the stone cut in memory of Håulv, his son. Halvdan cut the runes.
 
-None of them ever wrote a prayer, not even on the stones they cut outside the hundred: Halvdan none of seventeen, Amunde none of thirteen. Here lies the weakness of the finding, and we state it plainly. When we let each carver have their own habit in the model, the difference could no longer be told apart from chance. So we cannot say whether it was the place or the carvers. But when we removed every stone made by Amunde, Halvdan and Björn, there was only one prayer on the eighteen that remained, against {pc(E['share_out'])} percent in the rest of the province, and that difference holds. The finding also holds with only stones in their original place, only dated stones, and without stones that have been lost.
-
-Our reading is that the two cannot be told apart, and that this is the point. The district had its carvers, and the carvers had the district's way of writing. In Outer Tör there was a writing tradition in which the stone got the cross but not the prayer, and it lasted for several decades.
+None of them ever wrote a prayer, not even on the stones they cut outside the hundred. So was it the carvers and not the district? The answer is not so simple. Among the stones that other hands cut in Sotholm there is also only a single prayer. The district had its carvers, and the carvers had the district's way of writing. They cannot be told apart, and perhaps they are the same thing: in Outer Tör the stone got the cross but not the prayer, and so it stayed for several decades.
 
 ## The exception that came out of the ground
 
@@ -317,20 +288,15 @@ The only stone with a prayer in Sotholm was found in 2011, at Småhamra in Öste
 
 Gunnar and Ulv and Sighjälm had the stone raised in memory of Halvdan, their father. May God help his soul.
 
-No carver is known for it. That the exception turned up so late is a reminder that the picture can change, and it gives us a prediction to test: if more stones come to light in Sotholm, those carved by Amunde and Halvdan should lack the prayer, while stones by other hands may have it.
+No one knows who carved it. That the exception turned up so late is a reminder that the ground still hides stones, and that the picture can change with the next find.
 
 ## A land of its own
 
-This is the first part of the series The old lands, on folklands, small lands and hundreds. In Uppland we have seen that the borders of the folklands separate the customs of the runestones more than any neighbouring districts do. Tören shows the same thing on an island. The sea around it and the forest in its middle drew the borders; and the people of Outer Tör had their own carvers and their own way of remembering the dead: the cross on the stone, the names of those who raised it and the name of the dead – but no prayer.
+The sea around the island and the forest in its middle drew the borders. The people of Outer Tör had their carvers and their own way of remembering the dead: the cross on the stone, the names of those who raised it and the name of the dead – but no prayer. We do not know why. It may have been the carvers' school, where the formula was never taught. It may have been the families, who wanted the cross but not the prayer. It may have been a priest or a missionary who taught differently just here. But whoever stands by Sö 269 stands by a stone that left the prayer out, in a district that was a land of its own.
 
-We do not know why. It may have been the carvers' school, where the formula was never taught. It may have been the families, who wanted the cross but not the prayer. It may have been a priest or a missionary who taught differently just here. The data cannot decide. But whoever stands by Sö 269 stands by a stone that left out the prayer, in a district that was a land of its own.
+## How we know
 
-:::box The essentials in brief
-- In the Viking Age Södertörn was an island, Tören, and its outer half, the hundred of Sotholm, was the district on the island that raised the most runestones.
-- The stones there carry crosses as often as other stones in Södermanland, but almost never a prayer for the dead – and they are no older than others.
-- The district's own carvers never wrote the prayer, and we cannot separate the carvers' habit from the district's; most likely they are the same thing.
-- Tören had natural borders – the sea around the island, the forest in its middle – and its own way of remembering the dead. The old lands show in the runestones.
-:::
+Behind the text lies a comparison of every hundred with at least fifteen runestones, in which Sotholm was one of the few that differed clearly from its province. The difference in prayers holds when the stones are split into two groups parish by parish, when only stones in their original place are counted, and when the stones of the main carvers are removed. What we cannot decide is whether the habit belonged to the district or to the carvers. That it held for the whole of Tören is likely but not certain, since the stones of Upper Tör are too few. The plans and calculations are open on GitHub, linked below.
 
 ## Sources
 
