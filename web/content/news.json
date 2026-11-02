@@ -2,6 +2,27 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "gamla-granser-statistik",
+   "date": "2026-11-02",
+   "status": "nytt",
+   "title": "Statistiken räknar med de gamla gränserna",
+   "text": "Statistiken i R håller nu den vikingatida indelningen konstant i stället för dagens landskap: Upplands folkland, Smålands små land, Gotlands tredingar och övriga landskap som egna land. Med de gamla gränserna blir skillnaderna i språket skarpare och pekar ut folklanden – r för ʀ i Fjädrundaland, at mot Attundaland – medan korset och bönen blir mindre säkra när Uppland delas. Folklandens härader stämmer med sexårsgärden 1314, och sockens härad hämtas ur ISOF:s ortnamnsregister."
+  },
+  {
+   "id": "namn-och-slakt",
+   "date": "2026-11-02",
+   "status": "nytt",
+   "title": "Ny sektion: Namn och släkt",
+   "text": "Under Statistik (R) finns nu Namn och släkt: hur ofta barn ärvde ett namnled från föräldrarna, hur ofta grannstenar nämner samma ovanliga namn, vilka namn som hör till en viss gammal region – Jôfurr, Fastulfr och Igulfastr i Tiundaland, Þóra och Þórir i Västergötland – och hur släkterna fördelar sig över stenarna."
+  },
+  {
+   "id": "karta-gamla-land",
+   "date": "2026-11-02",
+   "status": "nytt",
+   "title": "Kartan öppnar med de gamla landen",
+   "text": "Kartans gränslager visar nu Upplands folkland, Smålands små land och Gotlands tredingar från början, och i punktvyn kan stenarna filtreras på vikingatida region. Gränsskannern har prövat alla grannregioner: fyra skarpa gränser håller, alla mellan Upplands folkland."
+  },
+  {
    "id": "andel-vikingatida-land",
    "date": "2026-11-01",
    "status": "nytt",

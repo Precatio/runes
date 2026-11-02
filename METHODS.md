@@ -910,6 +910,37 @@ ovanligare där B gäller? Ingen fri text och ingen AI; frågan byggs av två li
   bara om mönstret höll i båda halvorna och efter justeringen för besökets frågor – eftersom en fråga som valts under
   utforskandet inte kan bli starkare än så utan en analysplan. *Räkna om* ställer samma fråga på korpusen som den är
   nu, som enda fråga, och säger om korpusen har ändrats sedan.
+### 1z. De gamla gränserna (2026-11-02)
+
+Viktor 2026-11-02: analysera efter dåtidens geografi, inte dagens landskap. Varje svensk runsten har en **vikingatida
+region** (`src/regions.py`, korpuskolumnen `region_old`): Uppland i folkland (Tiundaland, Attundaland, Fjädrundaland,
+Roden), Småland i små land (Värend, Finnveden, Njudung, Möre, Tjust, Handbörd, Aspeland, Sevede, Vedbo, Tveta, Vista, Mo,
+Kinda), Gotland i tredingar (Nordertredingen, Medeltredingen, Sudertredingen); övriga landskap räknas som de land de var.
+Landen är sammanslagningar av härader (`web/src/lib/historiska_land.json`, med källa och säkerhet per land). Sockens
+härad kommer i första hand ur ISOF:s ortnamnsregister (PlaceNameService, CC BY), i andra hand ur Wikidata; stenen
+knyts till landet genom sin socken (`scripts/assign_historiska_land.py`, `scripts/assign_sten_land.py`). ISOF och
+Wikidata stämde för 2 232 socknar; fyra rättades. Folklandens härader stämmer med sexårsgärden 1314 (SDHK 2593,
+`utdata/geografi/sexarsgard_1314.json`): Attundaland och Fjädrundaland exakt, Tiundaland med Gästrikland och Roden.
+Gränserna på kartan är ungefärliga (varje socken får området närmast sin punkt).
+
+**Var regionen används** (låst plan `analysplaner/2026-11-02-gamla-granser-statistik.md`): robusthetstrappans
+justering och steg utan en region i taget (1v), genomsökningen av platserna (remains.R), ordförrådet per region
+(words.R) och förändringen per region (change.R). Jämförelsen med dagens landskap (`utdata/gamla_granser/resultat.md`):
+14 av 31 mönster håller i alla steg (15 av 33 förut); de regionala skillnaderna i språket blir skarpare och pekar ut
+folkland (r för ʀ i Fjädrundaland, *at* mot Attundaland), medan korset och bönen mot Västergötland blir mindre robusta när
+Uppland delas. Förändringarna över tid påverkas knappt.
+
+**Gränsskannern** (`analysplaner/2026-11-02-gransskannern.md`, `utdata/granser/resultat.md`): varje par av angränsande
+regioner och 27 drag; en skillnad är *skarp* när den finns kvar bland stenar inom 10 km från den andra regionen. Fyra
+skarpa gränser håller i båda halvorna, alla mellan Upplands folkland (*at*, flera resare, kors, r för ʀ). Gränsen för
+*at* mellan Tiundaland och Attundaland håller också med ristaren som slumpeffekt, och samma ristare skriver olika på var
+sida (`utdata/folkland/`); Palm 1992 har redan skillnaden mellan områdena, det nya är gränsens skärpa och ristarnas
+anpassning.
+
+**Namn och släkt** (`r/names.R`, `src/names_data.py`, låst plan `analysplaner/2026-11-02-namn-och-slakt.md`): namnled i
+arv med omblandning inom den gamla regionen, grannar som delar ovanliga namn per avståndsband, namnens geografi per region
+(Fisher, BH, båda halvorna), namnskicket per region och släktmönstren ur länkmodellen (1r).
+
 
 ## 2. Huggspårsmått (mätmetod `groove-6`)
 
