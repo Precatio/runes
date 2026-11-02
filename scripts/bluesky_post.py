@@ -159,12 +159,16 @@ def queue(post_due: bool):
     run (the earliest), so that a missed day does not send several at once; the post's address is written back."""
     q = json.load(open(KO, encoding="utf-8"))
     today = dt.date.today().isoformat()
+    bad = []
     for item in q["items"]:
-        text = compose(item["text"], item.get("tags", []))
-        url, title, _ = card(item["slug"], item.get("en", False))
-        state = item.get("posted") or ("väntar" if item["date"] > today else "ska ut")
-        print(f"{item['date']} {item['slug'][:40]:40} {len(text):3}/{LIMIT}  {state}")
-    due = [i for i in q["items"] if not i.get("posted") and i["date"] <= today]
+        n = len(item["text"].strip() + ("\n\n" + " ".join(f"#{t}" for t in item.get("tags", [])) if item.get("tags") else ""))
+        if n > LIMIT:   # one over-long post must not stop the whole queue (it did 2026-10-31 – 11-02)
+            bad.append(item["slug"])
+        state = item.get("posted") or ("FÖR LÅNG – hoppas över" if n > LIMIT else "väntar" if item["date"] > today else "ska ut")
+        print(f"{item['date']} {item['slug'][:40]:40} {n:3}/{LIMIT}  {state}")
+    if bad:
+        print("Varning: för långa inlägg i kön (kortas av grundaren eller Claude):", ", ".join(bad), file=sys.stderr)
+    due = [i for i in q["items"] if not i.get("posted") and i["date"] <= today and i["slug"] not in bad]
     if not post_due or not due:
         return
     item = due[0]
