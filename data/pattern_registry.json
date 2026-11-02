@@ -231,6 +231,12 @@
    "status": "indikation",
    "text": "Kristen bön: landskapen skiljer sig (q 0,011 för den samlade skillnaden, justerat för alla drag). Skattat för år 1050 och en typisk ristare: U 33 % (25 %–42 %, 208 stenar från mittperioden); Sö 20 % (13 %–30 %, 113 stenar från mittperioden); Ög 11 % (4 %–23 %, 31 stenar från mittperioden); Vg 10 % ("
   },
+  "Regional skillnad|bro": {
+   "first_seen": "2026-11-02",
+   "seeded": false,
+   "status": "indikation",
+   "text": "Bro- eller vägbygge: landskapen skiljer sig (q 0,029 för den samlade skillnaden, justerat för alla drag). Skattat för år 1050 och en typisk ristare: roden 18 % (7 %–37 %, 17 stenar från mittperioden); attundaland 10 % (6 %–18 %, 80 stenar från mittperioden); tiundaland 5 % (2 %–10 %, 50 stenar från "
+  },
   "Regional skillnad|cross": {
    "first_seen": "2026-10-21",
    "seeded": true,
