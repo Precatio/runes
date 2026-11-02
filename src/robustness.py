@@ -251,7 +251,9 @@ def build(rows: list[dict], patterns: list[dict], hotspots: dict | None, msg_row
         elif topic == "Regional skillnad" and key in FEATURES and len(p.get("pair") or []) == 2:
             hi, lo = p["pair"]
             f = _feature(key)
-            add(pid, [(b, f(b["row"]), int(b["province"] == hi)) for b in base.values() if b["province"] in (hi, lo)],
+            # the pair is two Viking Age regions since 2026-11-02 (change.R per region_old), else two provinces
+            reg = lambda b: b["row"].get("region_old") or b["province"]  # noqa: E731
+            add(pid, [(b, f(b["row"]), int(reg(b) == hi)) for b in base.values() if reg(b) in (hi, lo)],
                 ["epoch"], lopo=False, place=False, moved=True, selected=True,
                 note=f"{hi} mot {lo}, det par som skilde sig mest (paret är utvalt)")
         elif topic == "Samband" and key in ASSOC:
