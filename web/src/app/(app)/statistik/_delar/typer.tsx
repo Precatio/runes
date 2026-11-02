@@ -135,13 +135,14 @@ export interface Corpus {
     home: { n: number; cells: { region: string; n: number; k: number }[]; model: OddsRow | null };
     rule_check?: MessageRuleCheck | null };
   people?: Dict & { method: string; plan: string; n_stones: number; min_events: number; tests: PeopleTest[] };
+  names?: NamesResult;
   sections?: Section[];
   overview?: { paragraphs: string[]; next_steps: string[] };
   // The robustness ladder over all patterns (src/robustness.py); available false until it has been computed
   robustness?: { available: boolean; n_patterns?: number; n_ladder?: number; all_rungs?: number; confirmed?: number; n_fdr?: number; fdr_ok?: number };
 }
 
-export type Tab = "overview" | "question" | "geography" | "clusters" | "text" | "attribution" | "anonymous" | "chronology" | "change" | "network" | "words" | "messages" | "people";
+export type Tab = "overview" | "question" | "geography" | "clusters" | "text" | "attribution" | "anonymous" | "chronology" | "change" | "network" | "words" | "messages" | "people" | "names";
 
 export interface OddsRow { or: number; lo: number; hi: number | null; p: number }
 /** One test of the people module (r/people.R): the model's odds ratio, and the shares with x set to 0 and 1 for all stones. */
@@ -175,4 +176,18 @@ export interface MessageRuleCheck {
 export interface Section {
   key: Tab; question: string; why: string; headline: { value: string; label: string }; answer: string; short: string;
   confidence: Level; confidence_text: string; interpretation: string[]; not_saying: string[];
+}
+
+/** Namn och släkt (r/names.R, plan analysplaner/2026-11-02-namn-och-slakt.md). */
+export interface NamesTest { pairs: number; share?: number; expected?: number; ratio?: number; p?: number }
+export interface NamesResult {
+  available: boolean; plan: string; n_pairs: number; n_stones: number;
+  inheritance: Record<"pc" | "sib", NamesTest & { holds: boolean; halves: Record<"A" | "B", NamesTest> }>;
+  neighbours: NamesTest & { holds: boolean; halves: Record<"A" | "B", NamesTest>;
+    bands: { band: string; pairs: number; share: number; ratio: number }[] };
+  geography: { n_tests: number; n_names: number; regions: string[]; n_sig: number; n_holds: number;
+    rows: { name: string; region: string; k_in: number; n_in: number; k_out: number; n_out: number; or: number; q: number; holds: boolean }[] };
+  custom: { regions: { region: string; pairs: number; share: number; excess: number }[]; var: number; p: number };
+  family?: { n_links: number; same_parish: number; same_region: number; km_median: number | null; km_q1: number | null;
+    km_q3: number | null; families_by_region: Record<string, number>; n_families: number } | null;
 }

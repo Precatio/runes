@@ -11,6 +11,7 @@ import { InfoTip } from "@/components/Explain";
 import type { MapPoint } from "@/components/RuneMap";
 import PatternExplorer from "@/components/PatternExplorer";
 import RealmPanel from "@/components/RealmPanel";
+import landDefs from "@/lib/historiska_land.json";
 import NordicExplorer from "@/components/NordicExplorer";
 
 const RuneMap = dynamic(() => import("@/components/RuneMap"), {
@@ -43,18 +44,24 @@ interface Labels { provinces: Record<string, string>; categories: Record<string,
 interface Trait { key: string; label: string; definition: string; values: Record<string, number>; rows: Record<string, string> }
 
 // The filters, as they appear in the address bar (so a map view can be shared)
-const FILTER_KEYS = ["q", "province", "period", "style", "carver", "category", "material", "status", "cross", "trait", "value",
+const FILTER_KEYS = ["q", "region", "province", "period", "style", "carver", "category", "material", "status", "cross", "trait", "value",
   "overview", "runestones", "measured", "color", "view", "pattern", "split", "hex", "places", "near", "km", "nearonly",
   "mode", "year", "borders", "npattern", "grouping"] as const;
 type FilterKey = typeof FILTER_KEYS[number];
 type Filters = Record<FilterKey, string>;
 const EMPTY: Filters = Object.fromEntries(FILTER_KEYS.map(k => [k, ""])) as Filters;
+const LAND_NAMES: Record<string, string> = Object.fromEntries(landDefs.epoch.regions.map(r => [r.id, r.name]));
 
 function MapContent() {
   const params = useSearchParams();
   const selected = params.get("signum");
   const { user } = useAuth();
   const [points, setPoints] = useState<MapPoint[]>([]);
+  const [stoneLand, setStoneLand] = useState<Record<string, string>>({});
+  useEffect(() => {
+    fetch("/geo/sten_land.json").then(r => (r.ok ? r.json() : {})).then(setStoneLand).catch(() => {});
+  }, []);
+  const regionOf = (p: MapPoint) => stoneLand[p.signum] ?? p.province;
   const [labels, setLabels] = useState<Labels | null>(null);
   const [meta, setMeta] = useState<RundataMeta | null>(null);
   const [measured, setMeasured] = useState<Set<string>>(new Set());
@@ -66,6 +73,11 @@ function MapContent() {
   const [overview, setOverview] = useState<Map<string, string> | null>(null);
   const [copied, setCopied] = useState(false);
   const set = (k: FilterKey, v: string) => setF(x => ({ ...x, [k]: v, ...(k === "trait" ? { value: "" } : {}) }));
+  // The old divisions are the map's default border layer (IMPLEMENTATIONSPLAN 5.3): no setting in the address means the
+  // small lands and folklands; "Av" is stored as "av", so that turning the layer off is also a shareable view
+  const borders = f.borders === "" ? "land" : f.borders === "av" ? "" : f.borders;
+  const fView = { ...f, borders };
+  const setView = (k: FilterKey, v: string) => set(k, k === "borders" && v === "" ? "av" : v);
   const colorMode = (f.color || "style") as ColorMode;
   // The pattern map is the default view; a shared link with point filters (or a selected stone) opens the points
   const pointFilters = FILTER_KEYS.slice(0, 14).some(k => f[k]);
@@ -147,6 +159,8 @@ function MapContent() {
     return [...c.entries()].sort((a, b) => b[1] - a[1]);
   };
   const provinceOptions = useMemo(() => count(p => [p.province]), [points]); // eslint-disable-line react-hooks/exhaustive-deps
+  // The Viking Age region of each stone (folkland, small land, treding; scripts/assign_sten_land.py), else its province
+  const regionOptions = useMemo(() => count(p => [regionOf(p)]), [points, stoneLand]); // eslint-disable-line react-hooks/exhaustive-deps
   const materialOptions = useMemo(() => count(p => [p.material]), [points]); // eslint-disable-line react-hooks/exhaustive-deps
   const categoryOptions = useMemo(() => count(p => p.categories), [points]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -156,6 +170,7 @@ function MapContent() {
       && (!f.style || p.style === f.style)
       && (!f.carver || p.carvers.split("; ").includes(f.carver))
       && (!f.province || p.province === f.province)
+      && (!f.region || regionOf(p) === f.region)
       && (!f.category || p.categories.includes(f.category))
       && (!f.material || p.material === f.material)
       && (!f.status || (f.status === "none" ? p.carverStatus === "" : p.carverStatus === f.status))
@@ -166,7 +181,7 @@ function MapContent() {
       && (!f.trait || !trait || (f.value ? trait.rows[p.signum] === f.value : p.signum in trait.rows))
       && (!f.overview || !overview || overview.get(p.signum) === f.overview))
       || p.signum === selected),
-  [points, measured, f, matches, trait, overview, selected]);
+  [points, measured, f, matches, trait, overview, selected, stoneLand]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Colours for the modes whose values come from the data
   const dataColors = useMemo(() => {
@@ -209,7 +224,7 @@ function MapContent() {
 
   const name = (code: string) => labels?.provinces[code] ?? code;
   const chips: [FilterKey, string][] = [
-    ["q", f.q && `Text: "${f.q}"`], ["province", f.province && name(f.province)], ["period", f.period && PERIOD_LABEL[f.period]],
+    ["q", f.q && `Text: "${f.q}"`], ["region", f.region && (LAND_NAMES[f.region] ?? name(f.region))], ["province", f.province && name(f.province)], ["period", f.period && PERIOD_LABEL[f.period]],
     ["style", f.style && `Stil ${f.style}`], ["carver", f.carver && `Ristare: ${f.carver}`],
     ["category", f.category && (labels?.categories[f.category] ?? f.category)], ["material", f.material && `Material: ${f.material}`],
     ["status", f.status && (f.status === "none" ? "Ingen ristare" : STATUS_LABEL[f.status])], ["cross", f.cross && (f.cross === "ja" ? "Med kors" : "Utan kors")],
@@ -259,7 +274,7 @@ function MapContent() {
         {([["monster", "Mönsterkarta"], ["punkter", "Punkter"], ["norden", "Jämför länder"]] as const).map(([k, l]) => (
           <button key={k} role="tab" aria-selected={view === k}
             // The comparison of the countries opens with the realms about 1025 on the map
-            onClick={() => setF(x => ({ ...x, view: k, ...(k === "norden" && !x.borders ? { borders: "1025" } : {}) }))}
+            onClick={() => setF(x => ({ ...x, view: k, ...(k === "norden" && (!x.borders || x.borders === "land") ? { borders: "1025" } : {}) }))}
             className={`px-4 py-2 rounded-full text-sm font-bold border ${view === k ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50"}`}>
             {l}
           </button>
@@ -267,11 +282,11 @@ function MapContent() {
       </div>
 
       {view === "monster" && (
-        <PatternExplorer f={f} set={(k, v) => set(k as FilterKey, v)} patch={p => setF(x => ({ ...x, ...p }))}
+        <PatternExplorer f={fView} set={(k, v) => setView(k as FilterKey, v)} patch={p => setF(x => ({ ...x, ...p }))}
           onError={setError} provinceName={name} />
       )}
 
-      {view === "norden" && <NordicExplorer f={f} set={(k, v) => set(k as FilterKey, v)} onError={setError} />}
+      {view === "norden" && <NordicExplorer f={fView} set={(k, v) => setView(k as FilterKey, v)} onError={setError} />}
 
       {view === "punkter" && (
       <>
@@ -281,6 +296,12 @@ function MapContent() {
           <label className={`${label} col-span-2 sm:col-span-3 lg:col-span-2`}>Sök i texten
             <input value={qInput} onChange={e => setQInput(e.target.value)} placeholder="t.ex. grikk, bro, Ingvar"
               className={`${select} font-normal`} />
+          </label>
+          <label className={label}>Vikingatida region
+            <select value={f.region} onChange={e => set("region", e.target.value)} className={select}>
+              <option value="">Alla</option>
+              {regionOptions.map(([k, n]) => <option key={k} value={k}>{LAND_NAMES[k] ?? name(k)} ({n})</option>)}
+            </select>
           </label>
           <label className={label}>Landskap
             <select value={f.province} onChange={e => set("province", e.target.value)} className={select}>
@@ -402,7 +423,7 @@ function MapContent() {
         )}
         {trait && <p className="text-xs text-slate-600"><span className="font-semibold">{trait.label}:</span> {trait.definition}</p>}
         <div className="border-t border-slate-900/5 pt-3">
-          <RealmPanel value={f.borders} onChange={v => set("borders", v)} />
+          <RealmPanel value={borders} onChange={v => setView("borders", v)} />
         </div>
       </div>
 
@@ -410,7 +431,7 @@ function MapContent() {
 
       {/* A fixed height: the page is min-h-full, so a min-height here would leave the map (h-full) at zero height */}
       <div className="liquid-glass-island rounded-[24px] sm:rounded-[32px] p-1.5 sm:p-2 h-[70dvh] sm:h-[640px] relative">
-        <RuneMap points={visible} colorFor={colorFor} selected={selected} realm={f.borders || undefined}
+        <RuneMap points={visible} colorFor={colorFor} selected={selected} realm={borders || undefined}
           fitKey={nFilters ? JSON.stringify({ ...f, color: "", borders: "" }) + (matches ? matches.size : "") + (trait ? trait.key : "") + (overview ? "o" : "") : undefined} />
         <div className="absolute bottom-3 left-3 sm:bottom-6 sm:left-6 z-[500] bg-white/90 rounded-xl px-3 py-2 shadow text-[11px] sm:text-xs space-y-1 max-h-[40%] sm:max-h-[60%] max-w-[60%] overflow-y-auto">
           {legend.map(([l, color]) => (

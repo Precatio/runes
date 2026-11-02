@@ -8,6 +8,7 @@ import type { Corpus, Status, Tab } from "./_delar/typer";
 import { TOPIC, memo } from "./_delar/gemensamt";
 import { Messages } from "./_delar/budskap";
 import { People } from "./_delar/manniskor";
+import { Names } from "./_delar/namn";
 import { NewPatterns } from "./_delar/nya";
 import { GITHUB_URL } from "@/lib/site";
 import { Overview } from "./_delar/oversikt";
@@ -162,6 +163,7 @@ export default function StatistikPage() {
             {tab === "words" && <Words data={data} />}
             {tab === "messages" && <Messages data={data} />}
             {tab === "people" && <People data={data} />}
+            {tab === "names" && <Names data={data} />}
           </div>
           {status?.r.available && (
             <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 px-1">
