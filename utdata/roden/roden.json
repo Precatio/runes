@@ -1,0 +1,203 @@
+{
+  "plan": "analysplaner/2026-11-02-roden.md",
+  "plan_sha": "59ea6d58",
+  "T1": {
+    "pm_kors": {
+      "grund": {
+        "n": 880,
+        "k_in": 24,
+        "n_in": 60,
+        "share_in": 0.4,
+        "share_out": 0.585366,
+        "or": 0.431857,
+        "p": 0.002503,
+        "holds": true
+      },
+      "a_ristare_slump": {
+        "n": 880,
+        "k_in": 24,
+        "n_in": 60,
+        "share_in": 0.4,
+        "share_out": 0.585366,
+        "or": 0.345942,
+        "p": 0.000823,
+        "holds": true
+      },
+      "b_pa_plats": {
+        "n": 518,
+        "k_in": 19,
+        "n_in": 40,
+        "share_in": 0.475,
+        "share_out": 0.598326,
+        "or": 0.561167,
+        "p": 0.091483,
+        "holds": false
+      },
+      "c_daterade": {
+        "n": 533,
+        "k_in": 16,
+        "n_in": 36,
+        "share_in": 0.444444,
+        "share_out": 0.651911,
+        "or": 0.378632,
+        "p": 0.006352,
+        "holds": true
+      },
+      "d_utan_forlorade": {
+        "n": 739,
+        "k_in": 23,
+        "n_in": 48,
+        "share_in": 0.479167,
+        "share_out": 0.60492,
+        "or": 0.529247,
+        "p": 0.03879,
+        "holds": true
+      },
+      "e_utan_rodens_ristare": {
+        "n": 711,
+        "k_in": 17,
+        "n_in": 45,
+        "share_in": 0.377778,
+        "share_out": 0.561562,
+        "or": 0.428071,
+        "p": 0.00862,
+        "holds": true
+      }
+    },
+    "cat_kristen": {
+      "grund": {
+        "n": 880,
+        "k_in": 5,
+        "n_in": 60,
+        "share_in": 0.083333,
+        "share_out": 0.206098,
+        "or": 0.297726,
+        "p": 0.003982,
+        "holds": true
+      },
+      "a_ristare_slump": {
+        "n": 880,
+        "k_in": 5,
+        "n_in": 60,
+        "share_in": 0.083333,
+        "share_out": 0.206098,
+        "or": 0.231368,
+        "p": 0.063829,
+        "holds": false
+      },
+      "b_pa_plats": {
+        "n": 518,
+        "k_in": 3,
+        "n_in": 40,
+        "share_in": 0.075,
+        "share_out": 0.209205,
+        "or": 0.247606,
+        "p": 0.009123,
+        "holds": true
+      },
+      "c_daterade": {
+        "n": 533,
+        "k_in": 3,
+        "n_in": 36,
+        "share_in": 0.083333,
+        "share_out": 0.219316,
+        "or": 0.251145,
+        "p": 0.0101,
+        "holds": true
+      },
+      "d_utan_forlorade": {
+        "n": 739,
+        "k_in": 5,
+        "n_in": 48,
+        "share_in": 0.104167,
+        "share_out": 0.214182,
+        "or": 0.348065,
+        "p": 0.016901,
+        "holds": true
+      },
+      "e_utan_rodens_ristare": {
+        "n": 711,
+        "k_in": 4,
+        "n_in": 45,
+        "share_in": 0.088889,
+        "share_out": 0.231231,
+        "or": 0.286444,
+        "p": 0.007404,
+        "holds": true
+      }
+    }
+  },
+  "T2": {
+    "pm_kors": {
+      "n": 880,
+      "k_in": 24,
+      "n_in": 60,
+      "share_in": 0.4,
+      "share_out": 0.585366,
+      "or": 0.433123,
+      "p": 0.002919,
+      "holds": true,
+      "dist_only": {
+        "n": 820,
+        "k_in": 0,
+        "n_in": 0,
+        "share_in": "NaN",
+        "share_out": "NaN",
+        "or": 0.983087,
+        "p": 0.843321
+      }
+    },
+    "cat_kristen": {
+      "n": 880,
+      "k_in": 5,
+      "n_in": 60,
+      "share_in": 0.083333,
+      "share_out": 0.206098,
+      "or": 0.285756,
+      "p": 0.003006,
+      "holds": true,
+      "dist_only": {
+        "n": 820,
+        "k_in": 0,
+        "n_in": 0,
+        "share_in": "NaN",
+        "share_out": "NaN",
+        "or": 0.899717,
+        "p": 0.336866
+      }
+    }
+  },
+  "T3": {
+    "cat_fard": {
+      "n": 880,
+      "k_in": 8,
+      "n_in": 60,
+      "share_in": 0.133333,
+      "share_out": 0.059756,
+      "or": 2.243747,
+      "p": 0.073508
+    },
+    "msg_dod_borta": {
+      "n": 874,
+      "k_in": 7,
+      "n_in": 60,
+      "share_in": 0.116667,
+      "share_out": 0.031941,
+      "or": 3.766222,
+      "p": 0.009752
+    }
+  },
+  "holm": {
+    "T2_kors": 0.011675,
+    "T2_kristen": 0.011675,
+    "T3_fard": 0.073508,
+    "T3_borta": 0.019505
+  },
+  "desc": {
+    "km_median_roden": 0.107928,
+    "km_median_rest": 0.250475,
+    "ro_carvers": ["Fot", "Öpir"],
+    "n_roden": 60,
+    "n_tby": 25
+  }
+}
