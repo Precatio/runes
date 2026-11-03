@@ -615,7 +615,11 @@ def run_corpus(fp: str):
         write_messages(os.path.join(d, "messages.csv"))
         write_people(os.path.join(d, "people.csv"))
         from src import names_data
-        nfiles = names_data.write(d, os.path.join(d, "corpus.csv"))
+        try:  # the names module's own files; if they cannot be made, only that module fails
+            nfiles = names_data.write(d, os.path.join(d, "corpus.csv"))
+        except Exception as e:
+            errors["names"] = f"names: {e}"
+            nfiles = {"pairs": None, "stones": None, "family": None, "display": None}
         from src import pattern_map, places
         params = {"corpus": os.path.join(d, "corpus.csv"), "water_dir": water, "corpus_dir": d, "seed": 2026,
                   "messages": os.path.join(d, "messages.csv"), "people": os.path.join(d, "people.csv"),

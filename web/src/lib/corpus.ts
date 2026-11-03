@@ -12,7 +12,7 @@ import { METRICS, type FeatureType, type Metric, type SliceMetrics, type Summary
 import type { AnalysisProvenance, GrooveSummaryLite, PaleographicCrop } from "@/lib/db";
 
 export const CORPUS_LICENSE = "CC-BY-4.0";
-export const CURRENT_METHOD = "groove-6";
+export const CURRENT_METHOD = "groove-7";
 
 export interface ScanMetadata {
   device?: string;

@@ -1006,6 +1006,17 @@ upplösning (`harmonize_mm`); båda sparas bland parametrarna.
   `utdata/forskningsplan/resultat.md`, studie 1b). Själva tvärsnittsmätningen är oförändrad; vilka snitt som räknas
   som runor ändras, så automatiska analyser och korpusposter mätta med `groove-5` bör göras om.
 
+* `groove-7` (2026-11-03): **runorna delas upp längs slingan** för alla stenar med slingor (avsnitt 2c,
+  *Runslingorna*), inte bara i stavlöst läge. Med `groove-6` avgjorde slingorna vilka snitt som är runor, men vilken
+  runa ett snitt hör till kom fortfarande från den gamla streckklassningen, och bara streck som den själv kallade runor
+  fick ett runnummer. På de 34 skanningarna i Kitzler Åhfeldts serie från Södermanland med minst tio läsbara runor i
+  texten mätte analysen då i mitten 0,36 av textens runor (typisk avvikelse en faktor 2,8), med indelningen längs
+  slingan 0,98 (faktor 1,3); snitten och måtten är identiska i båda (`utdata/stavlosa/ka_tabell.py`,
+  `ka_tabell.json`). Indelningen kan dela en runa i två eller slå ihop två grannar; antalet runor med minst ett mätt
+  snitt ligger inom 25 % av textens antal på 13 av 34 stenar (mot 8). Själva tvärsnittsmätningen är oförändrad; det
+  som ändras är runnumret och därmed runan som enhet (medel per runa, gränsen 10/20 runor), så korpusposter mätta med
+  `groove-6` eller äldre bör göras om.
+
 *Andelar och modellkontroll (2026-10-27).* Båda kontrollerna i R ger också andelen med A när B finns och när det inte
 finns, med övrigt som i datan (marginaleffects; ristarmodellen för en typisk ristare), och en modellkontroll med
 simulerade residualer (DHARMa, 250 simuleringar): jämn fördelning, spridning och – för ristarmodellen, som inte har
@@ -1133,6 +1144,10 @@ missas ibland. Igenkänningen är regelbaserad och inte validerad mot en handmä
   stenar, som på stenens djupbild (2,4 mm per pixel) markerar var slingorna går. På 24 stenar som hölls utanför
   träningen överlappade modellens slingor de ritade med i mitten 59 % (IoU; bäst Sö 333 0,83, sämst stavlösa Hs 14
   0,10).
+* **Runorna:** snitten som är runor delas upp i runor efter var strecken står längs slingan (`src/staveless.py`,
+  `group_runes`; sedan `groove-7` för alla stenar): varje streck inne i slingan får sin plats längs den, och streck som
+  ligger nära varandra längs slingan förs till samma runa, så länge runan inte blir bredare än slingan är hög. Streck
+  som går längs slingan eller sträcker sig långt längs den räknas inte (slingkant, ornamentik).
 * **Klassningen:** slingans riktning i varje punkt skattas ur en strukturtensor av den utjämnade slingmasken (fönster
   12 mm). Ett snitt är **runa** om det ligger inne i en slinga och spåret går mer än 25° från slingans riktning;
   **slingkant** om spåret går längs slingan, inne i den eller högst 8 mm utanför; **gräns** om det ligger högst 8 mm

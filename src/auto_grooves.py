@@ -585,8 +585,9 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
     Med bands avgör runslingorna vad som är runor (src/rune_bands.py: ritade slingor för de öppna skanningarna,
     annars slingmodellens förslag); utan slingor används streckklassningen (classify_strokes) som förut.
     Övriga spår visas men mäts inte.
-    staveless (stavlöst läge, src/staveless.py): med slingor delas runorna efter var strecken står längs slingan i stället
-    för efter vilka streck som sitter ihop; utan slingor godtas kortare runstreck (STAVELESS_MIN_MM) med större grannavstånd."""
+    Med slingor delas runorna efter var strecken står längs slingan i stället för efter vilka streck som sitter ihop
+    (src/staveless.group_runes; för alla stenar sedan groove-7). staveless (stavlöst läge) gäller därför bara utan
+    slingor: då godtas kortare runstreck (STAVELESS_MIN_MM) med större grannavstånd."""
     measure = measure or ("runes" if runes_only else "all")
     if measure not in ("runes", "ornament", "all"):
         raise ValueError("measure ska vara runes, ornament eller all")
@@ -659,9 +660,12 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
     branch_labels = strokes["branch_labels"]
     branch_coords = np.argwhere(branch_labels > 0)
     branch_tree = cKDTree(branch_coords) if len(branch_coords) else None
-    # Staveless with bands: runes are split along the band (src/staveless.py) instead of by touching strokes
+    # With bands, runes are split along the band (src/staveless.py) instead of by touching strokes – for staveless and
+    # ordinary runes alike (groove-7, 2026-11-03): the old stroke classification gave rune numbers only to strokes it
+    # called runes itself, and on the 34 KÅ stones with readable text it measured a median 0.36 of the text's runes
+    # against 0.98 with the grouping along the band (utdata/stavlosa/ka_tabell.json)
     grouping = None
-    if staveless and use_band and measure == "runes":
+    if use_band and measure == "runes":
         from src.staveless import group_runes
         grouping = group_runes(branch_labels, band, res)
 
@@ -866,7 +870,8 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
             "measure": measure,
             "bands_source": band["source"] if use_band else None,
             "staveless": bool(staveless),
-            **({"staveless_gap_mm": round(grouping["gap_mm"], 2), "band_height_mm": round(grouping["band_height_mm"], 1)}
+            **({"rune_gap_mm": round(grouping["gap_mm"], 2), "staveless_gap_mm": round(grouping["gap_mm"], 2),
+                "band_height_mm": round(grouping["band_height_mm"], 1)}
                if grouping is not None else {}),
             "rune_min_mm": rune_min_mm,
             "rune_max_mm": rune_max_mm,

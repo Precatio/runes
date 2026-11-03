@@ -21,4 +21,6 @@ APP_VERSION = "3.0.0"
 #           spårmasken (slingband som stängs av stavar räknades förut som en enda bred yta) (2026-10-10).
 # groove-6: runslingorna avgör vad som är runor och ornamentik i den automatiska analysen (ritade slingor för de öppna
 #           skanningarna, annars slingmodellens förslag; src/rune_bands.py); streckklassningen är reserv (2026-10-26).
-METHOD_VERSION = "groove-6"
+# groove-7: med runslingor delas runorna upp längs slingan för alla stenar (src/staveless.group_runes), inte bara stavlösa;
+#           snitten och måtten är desamma, bara runindelningen (rune_id, runan som enhet) ändras (2026-11-03).
+METHOD_VERSION = "groove-7"

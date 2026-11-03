@@ -1,0 +1,398 @@
+{
+ "summary": {
+  "stenar": 37,
+  "med_minst_10_textrunor": 34,
+  "vanligt_hittade": {
+   "kvot_median": 0.7465212737489966,
+   "avvikelse_median_faktor": 1.5155444566227676,
+   "inom_25_procent": 11
+  },
+  "vanligt_matta": {
+   "kvot_median": 0.36038961038961037,
+   "avvikelse_median_faktor": 2.7748873851023217,
+   "inom_25_procent": 8
+  },
+  "slinga_hittade": {
+   "kvot_median": 1.524164724164724,
+   "avvikelse_median_faktor": 1.5898227045441444,
+   "inom_25_procent": 5
+  },
+  "slinga_matta": {
+   "kvot_median": 0.9771428571428571,
+   "avvikelse_median_faktor": 1.2974509532909102,
+   "inom_25_procent": 13
+  }
+ },
+ "stones": [
+  {
+   "signum": "Sö 112",
+   "stem": "So_112_1_4_thin_closed_holes",
+   "text": 55,
+   "snitt": 348,
+   "vanligt_hittade": 68,
+   "vanligt_matta": 20,
+   "slinga_hittade": 107,
+   "slinga_matta": 58
+  },
+  {
+   "signum": "Sö 113",
+   "stem": "So_113_1_4_thin_closed_holes",
+   "text": 69,
+   "snitt": 496,
+   "vanligt_hittade": 64,
+   "vanligt_matta": 49,
+   "slinga_hittade": 109,
+   "slinga_matta": 77
+  },
+  {
+   "signum": "Sö 128",
+   "stem": "So_128_1_4_thin_closed_holes",
+   "text": 62,
+   "snitt": 517,
+   "vanligt_hittade": 58,
+   "vanligt_matta": 39,
+   "slinga_hittade": 132,
+   "slinga_matta": 87
+  },
+  {
+   "signum": "Sö 129",
+   "stem": "So_129_1_4_thin03_closed_holes",
+   "text": 38,
+   "snitt": 316,
+   "vanligt_hittade": 45,
+   "vanligt_matta": 23,
+   "slinga_hittade": 66,
+   "slinga_matta": 48
+  },
+  {
+   "signum": "Sö 131",
+   "stem": "So_131_1_4_thin_closed_holes",
+   "text": 100,
+   "snitt": 371,
+   "vanligt_hittade": 29,
+   "vanligt_matta": 18,
+   "slinga_hittade": 157,
+   "slinga_matta": 99
+  },
+  {
+   "signum": "Sö 134",
+   "stem": "So_134_1_4_thin_closed_holes",
+   "text": 60,
+   "snitt": 710,
+   "vanligt_hittade": 65,
+   "vanligt_matta": 56,
+   "slinga_hittade": 117,
+   "slinga_matta": 80
+  },
+  {
+   "signum": "Sö 137A",
+   "stem": "So_137A_1_4_thin05_closed_holes",
+   "text": 0,
+   "snitt": 549,
+   "vanligt_hittade": 34,
+   "vanligt_matta": 23,
+   "slinga_hittade": 47,
+   "slinga_matta": 42
+  },
+  {
+   "signum": "Sö 137B",
+   "stem": "So_137B_1_4_thin05_hela",
+   "text": 0,
+   "snitt": 693,
+   "vanligt_hittade": 59,
+   "vanligt_matta": 34,
+   "slinga_hittade": 122,
+   "slinga_matta": 97
+  },
+  {
+   "signum": "Sö 143",
+   "stem": "So_143_1_4_thin_closed_holes",
+   "text": 56,
+   "snitt": 950,
+   "vanligt_hittade": 81,
+   "vanligt_matta": 64,
+   "slinga_hittade": 77,
+   "slinga_matta": 65
+  },
+  {
+   "signum": "Sö 149",
+   "stem": "So_149_1_4_thin_closed_holes",
+   "text": 71,
+   "snitt": 120,
+   "vanligt_hittade": 9,
+   "vanligt_matta": 1,
+   "slinga_hittade": 86,
+   "slinga_matta": 35
+  },
+  {
+   "signum": "Sö 160",
+   "stem": "So_160_1_4_thin05_closed_holes",
+   "text": 53,
+   "snitt": 373,
+   "vanligt_hittade": 19,
+   "vanligt_matta": 9,
+   "slinga_hittade": 79,
+   "slinga_matta": 64
+  },
+  {
+   "signum": "Sö 161",
+   "stem": "So_161_1_4_thin04_closed_holes",
+   "text": 35,
+   "snitt": 716,
+   "vanligt_hittade": 46,
+   "vanligt_matta": 36,
+   "slinga_hittade": 82,
+   "slinga_matta": 66
+  },
+  {
+   "signum": "Sö 162",
+   "stem": "So_162_1_4_closed_holes",
+   "text": 28,
+   "snitt": 154,
+   "vanligt_hittade": 8,
+   "vanligt_matta": 4,
+   "slinga_hittade": 32,
+   "slinga_matta": 26
+  },
+  {
+   "signum": "Sö 163",
+   "stem": "So_163_1_4_thin05_closed_holes",
+   "text": 59,
+   "snitt": 205,
+   "vanligt_hittade": 31,
+   "vanligt_matta": 13,
+   "slinga_hittade": 83,
+   "slinga_matta": 49
+  },
+  {
+   "signum": "Sö 164",
+   "stem": "So_164_1_4_thin_closed_holes",
+   "text": 176,
+   "snitt": 561,
+   "vanligt_hittade": 67,
+   "vanligt_matta": 34,
+   "slinga_hittade": 110,
+   "slinga_matta": 84
+  },
+  {
+   "signum": "Sö 165",
+   "stem": "So_165_1_4_thin07_closed_holes",
+   "text": 168,
+   "snitt": 382,
+   "vanligt_hittade": 26,
+   "vanligt_matta": 15,
+   "slinga_hittade": 167,
+   "slinga_matta": 102
+  },
+  {
+   "signum": "Sö 166",
+   "stem": "So_166_1_4_thin_closed_holes",
+   "text": 101,
+   "snitt": 503,
+   "vanligt_hittade": 73,
+   "vanligt_matta": 38,
+   "slinga_hittade": 235,
+   "slinga_matta": 131
+  },
+  {
+   "signum": "Sö 184",
+   "stem": "So_184_thin03_closed_holes",
+   "text": 60,
+   "snitt": 129,
+   "vanligt_hittade": 38,
+   "vanligt_matta": 16,
+   "slinga_hittade": 97,
+   "slinga_matta": 43
+  },
+  {
+   "signum": "Sö 205",
+   "stem": "So_205_thin03_closed_holes",
+   "text": 43,
+   "snitt": 73,
+   "vanligt_hittade": 27,
+   "vanligt_matta": 8,
+   "slinga_hittade": 56,
+   "slinga_matta": 28
+  },
+  {
+   "signum": "Sö 206",
+   "stem": "So_206_thin03_closed_holes",
+   "text": 77,
+   "snitt": 200,
+   "vanligt_hittade": 29,
+   "vanligt_matta": 11,
+   "slinga_hittade": 114,
+   "slinga_matta": 53
+  },
+  {
+   "signum": "Sö 207",
+   "stem": "So_207_thin03_closed_holes",
+   "text": 44,
+   "snitt": 571,
+   "vanligt_hittade": 52,
+   "vanligt_matta": 38,
+   "slinga_hittade": 81,
+   "slinga_matta": 63
+  },
+  {
+   "signum": "Sö 208",
+   "stem": "So_208_thin03_closed_holes",
+   "text": 99,
+   "snitt": 271,
+   "vanligt_hittade": 66,
+   "vanligt_matta": 16,
+   "slinga_hittade": 151,
+   "slinga_matta": 69
+  },
+  {
+   "signum": "Sö 211",
+   "stem": "So_211_thin03_closed_holes",
+   "text": 65,
+   "snitt": 854,
+   "vanligt_hittade": 69,
+   "vanligt_matta": 48,
+   "slinga_hittade": 99,
+   "slinga_matta": 83
+  },
+  {
+   "signum": "Sö 307",
+   "stem": "So_307_1_4_thin_closed_holes",
+   "text": 47,
+   "snitt": 344,
+   "vanligt_hittade": 21,
+   "vanligt_matta": 14,
+   "slinga_hittade": 88,
+   "slinga_matta": 61
+  },
+  {
+   "signum": "Sö 319",
+   "stem": "So_319_1_4_thin05_closed_holes",
+   "text": 60,
+   "snitt": 756,
+   "vanligt_hittade": 53,
+   "vanligt_matta": 31,
+   "slinga_hittade": 40,
+   "slinga_matta": 40
+  },
+  {
+   "signum": "Sö 333",
+   "stem": "So_333_thin05_closed_holes",
+   "text": 118,
+   "snitt": 720,
+   "vanligt_hittade": 72,
+   "vanligt_matta": 45,
+   "slinga_hittade": 116,
+   "slinga_matta": 103
+  },
+  {
+   "signum": "Sö 360",
+   "stem": "So_360_1_4_thin03_closed_holes",
+   "text": 61,
+   "snitt": 190,
+   "vanligt_hittade": 13,
+   "vanligt_matta": 5,
+   "slinga_hittade": 118,
+   "slinga_matta": 51
+  },
+  {
+   "signum": "Sö 367",
+   "stem": "So_367_1_4_thin_closed_holes",
+   "text": 104,
+   "snitt": 1935,
+   "vanligt_hittade": 133,
+   "vanligt_matta": 97,
+   "slinga_hittade": 54,
+   "slinga_matta": 49
+  },
+  {
+   "signum": "Sö 370",
+   "stem": "So_370_1_4_thin05_closed_holes",
+   "text": 14,
+   "snitt": 210,
+   "vanligt_hittade": 9,
+   "vanligt_matta": 4,
+   "slinga_hittade": 7,
+   "slinga_matta": 6
+  },
+  {
+   "signum": "Sö 371",
+   "stem": "So_371_1_4",
+   "text": 0,
+   "snitt": 2,
+   "vanligt_hittade": 6,
+   "vanligt_matta": 0,
+   "slinga_hittade": 2,
+   "slinga_matta": 0
+  },
+  {
+   "signum": "Sö 45",
+   "stem": "So_45_1_4_thin_closed_holes",
+   "text": 74,
+   "snitt": 454,
+   "vanligt_hittade": 57,
+   "vanligt_matta": 20,
+   "slinga_hittade": 85,
+   "slinga_matta": 65
+  },
+  {
+   "signum": "Sö 52",
+   "stem": "So_52_1_4_thin05_closed_holes",
+   "text": 37,
+   "snitt": 467,
+   "vanligt_hittade": 31,
+   "vanligt_matta": 20,
+   "slinga_hittade": 66,
+   "slinga_matta": 47
+  },
+  {
+   "signum": "Sö 75",
+   "stem": "So_75_1_4_thin05",
+   "text": 39,
+   "snitt": 749,
+   "vanligt_hittade": 61,
+   "vanligt_matta": 46,
+   "slinga_hittade": 54,
+   "slinga_matta": 44
+  },
+  {
+   "signum": "Sö Fv1948;282",
+   "stem": "So_Fv1948_282_1_4_thin03_closed_holes",
+   "text": 32,
+   "snitt": 726,
+   "vanligt_hittade": 49,
+   "vanligt_matta": 34,
+   "slinga_hittade": 54,
+   "slinga_matta": 45
+  },
+  {
+   "signum": "Sö Fv1954;19",
+   "stem": "So_Fv1954_19_1_4_thin05_closed_holes",
+   "text": 28,
+   "snitt": 161,
+   "vanligt_hittade": 32,
+   "vanligt_matta": 10,
+   "slinga_hittade": 39,
+   "slinga_matta": 27
+  },
+  {
+   "signum": "Sö Fv1954;20",
+   "stem": "So_Fv1954_20_1_4_thin03_closed_holes",
+   "text": 40,
+   "snitt": 84,
+   "vanligt_hittade": 9,
+   "vanligt_matta": 2,
+   "slinga_hittade": 82,
+   "slinga_matta": 33
+  },
+  {
+   "signum": "Sö Fv1973;189",
+   "stem": "So_Fv1973_189_1_4_thin_closed_holes",
+   "text": 37,
+   "snitt": 630,
+   "vanligt_hittade": 55,
+   "vanligt_matta": 31,
+   "slinga_hittade": 98,
+   "slinga_matta": 66
+  }
+ ]
+}

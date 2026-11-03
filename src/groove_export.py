@@ -39,7 +39,7 @@ from src.stats import METRICS, summarize_by_rune, summarize_slices
 
 APP_NAME = "Vitki"
 APP_VERSION = "3.0.0"
-METHOD_VERSION = "groove-6"
+METHOD_VERSION = "groove-7"
 try:  # the API's own constants when they are importable (they are the source of truth)
     from api.config import APP_NAME, APP_VERSION, METHOD_VERSION  # noqa: F811
 except Exception:  # pragma: no cover - src used without the api package
@@ -229,7 +229,7 @@ ITEMS = [
      "explanation": "Hela analysen i maskinläsbar form: alla snitt med profiler, sammanfattningar, inställningar och "
                     "kvalitetskontroll. För den automatiska analysen kommer också runor, streck, skälen till "
                     "bortsorterade snitt, dina etiketter och sammanfattningarna per grupp med. Proveniensen anger "
-                    "programversion, mätmetod (groove-6), skanningsfilens namn och SHA-256-fingeravtryck, datum och "
+                    "programversion, mätmetod (groove-7), skanningsfilens namn och SHA-256-fingeravtryck, datum och "
                     "metodens kända brister. Det är filen som behövs för att göra om eller granska analysen."},
 ]
 BY_ID = {x["id"]: x for x in ITEMS}

@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "huggspar-runor-langs-slingan",
+   "date": "2026-11-03",
+   "status": "nytt",
+   "title": "Huggspåren delar upp runorna längs slingan",
+   "text": "Den automatiska huggspårsanalysen delar nu upp runorna efter var strecken står längs runslingan, för alla stenar och inte bara stavlösa. Förut fick bara streck som den gamla klassningen kallade runor ett runnummer, så resultatet per runa byggde på en bråkdel av runorna: på 34 skanningar från Södermanland mättes i mitten en tredjedel av textens runor, nu i stort sett alla. Själva måtten i varje snitt är desamma. Mätmetoden heter nu groove-7."
+  },
+  {
    "id": "gamla-granser-statistik",
    "date": "2026-11-02",
    "status": "nytt",

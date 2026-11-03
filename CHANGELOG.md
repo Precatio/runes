@@ -5,6 +5,15 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Huggspår: runorna delas upp längs slingan (mätmetod groove-7)
+- Med runslingor delas runorna nu upp efter var strecken står längs slingan för alla stenar, inte bara i stavlöst läge
+  (`src/auto_grooves.py`, `src/staveless.group_runes`). Tidigare fick bara streck som den gamla streckklassningen kallade
+  runor ett runnummer: på 34 KÅ-skanningar mättes i mitten 0,36 av textens runor, nu 0,98 (`utdata/stavlosa/ka_tabell.json`).
+  Snitten och måtten är oförändrade; runnumret och sammanställningen per runa ändras. Mätmetoden heter `groove-7`
+  (`api/config.py`, `src/protocol.py`, `PROTOCOL.md`); parametern `rune_gap_mm` anger gränsen längs slingan.
+- Omätningen av de 37 referensskanningarna i mätkorpusen körs i egna processer utan uppladdningsgränsen
+  (`scripts/remeasure_g6.py --lokalt`).
+
 ### Sannolikhetsmodellen: litteraturlexikon prövat, negativt (textmodel-22)
 - Ett ordförråd ur Heimskringla, fornaldar-, samtids- och islänningasagorna, fornsvenska lagar och Zoëga, med
   Petersons namnled, prövades under låst plan (`analysplaner/2026-10-30-litteraturlexikon.md`): på maskerade luckor
