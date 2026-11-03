@@ -1,0 +1,586 @@
+{
+ "n_stones": 841,
+ "regions": {
+  "attundaland": 340,
+  "roden": 60,
+  "tiundaland": 319,
+  "fjadrundaland": 122
+ },
+ "features": [
+  {
+   "feature": "pm_kors",
+   "chi2": 58.956313864174035,
+   "p": 9.821816834300156e-13,
+   "shares": {
+    "attundaland": [
+     209,
+     340
+    ],
+    "tiundaland": [
+     207,
+     319
+    ],
+    "fjadrundaland": [
+     43,
+     122
+    ],
+    "roden": [
+     24,
+     60
+    ]
+   }
+  },
+  {
+   "feature": "mat_granit",
+   "chi2": 41.73420430123451,
+   "p": 4.568508382179452e-09,
+   "shares": {
+    "attundaland": [
+     209,
+     286
+    ],
+    "tiundaland": [
+     238,
+     264
+    ],
+    "fjadrundaland": [
+     95,
+     102
+    ],
+    "roden": [
+     33,
+     45
+    ]
+   }
+  },
+  {
+   "feature": "prep_at",
+   "chi2": 39.425284252754636,
+   "p": 1.4104573171921835e-08,
+   "shares": {
+    "attundaland": [
+     30,
+     250
+    ],
+    "tiundaland": [
+     80,
+     247
+    ],
+    "fjadrundaland": [
+     37,
+     93
+    ],
+    "roden": [
+     10,
+     44
+    ]
+   }
+  },
+  {
+   "feature": "monoftong",
+   "chi2": 31.320829154255193,
+   "p": 7.275800595029769e-07,
+   "shares": {
+    "attundaland": [
+     85,
+     199
+    ],
+    "tiundaland": [
+     97,
+     176
+    ],
+    "fjadrundaland": [
+     59,
+     88
+    ],
+    "roden": [
+     7,
+     29
+    ]
+   }
+  },
+  {
+   "feature": "r_for_R",
+   "chi2": 26.09483948705764,
+   "p": 9.111128087498905e-06,
+   "shares": {
+    "attundaland": [
+     24,
+     192
+    ],
+    "tiundaland": [
+     26,
+     136
+    ],
+    "fjadrundaland": [
+     32,
+     62
+    ],
+    "roden": [
+     4,
+     27
+    ]
+   }
+  },
+  {
+   "feature": "flera_resare",
+   "chi2": 17.68996784116507,
+   "p": 0.0005095878205097111,
+   "shares": {
+    "attundaland": [
+     171,
+     271
+    ],
+    "tiundaland": [
+     176,
+     267
+    ],
+    "fjadrundaland": [
+     48,
+     108
+    ],
+    "roden": [
+     28,
+     49
+    ]
+   }
+  },
+  {
+   "feature": "msg_berom",
+   "chi2": 17.133807782899282,
+   "p": 0.0006633404719168938,
+   "shares": {
+    "attundaland": [
+     22,
+     335
+    ],
+    "tiundaland": [
+     15,
+     319
+    ],
+    "fjadrundaland": [
+     22,
+     122
+    ],
+    "roden": [
+     6,
+     60
+    ]
+   }
+  },
+  {
+   "feature": "rel_foralder",
+   "chi2": 14.603363357765147,
+   "p": 0.0021889773913157692,
+   "shares": {
+    "attundaland": [
+     108,
+     235
+    ],
+    "tiundaland": [
+     146,
+     239
+    ],
+    "fjadrundaland": [
+     41,
+     95
+    ],
+    "roden": [
+     17,
+     41
+    ]
+   }
+  },
+  {
+   "feature": "pm_stungna",
+   "chi2": 12.749205072407676,
+   "p": 0.005211581688851013,
+   "shares": {
+    "attundaland": [
+     136,
+     248
+    ],
+    "tiundaland": [
+     149,
+     250
+    ],
+    "fjadrundaland": [
+     66,
+     100
+    ],
+    "roden": [
+     14,
+     44
+    ]
+   }
+  },
+  {
+   "feature": "rel_barn",
+   "chi2": 12.680339054650517,
+   "p": 0.00538144891683369,
+   "shares": {
+    "attundaland": [
+     65,
+     235
+    ],
+    "tiundaland": [
+     38,
+     239
+    ],
+    "fjadrundaland": [
+     24,
+     95
+    ],
+    "roden": [
+     10,
+     41
+    ]
+   }
+  },
+  {
+   "feature": "drengr",
+   "chi2": 10.99412885248907,
+   "p": 0.011757665493671412,
+   "shares": {
+    "attundaland": [
+     2,
+     340
+    ],
+    "tiundaland": [
+     1,
+     319
+    ],
+    "fjadrundaland": [
+     6,
+     122
+    ],
+    "roden": [
+     1,
+     60
+    ]
+   }
+  },
+  {
+   "feature": "msg_dod_borta",
+   "chi2": 10.019253848154705,
+   "p": 0.01840317771687423,
+   "shares": {
+    "attundaland": [
+     17,
+     335
+    ],
+    "tiundaland": [
+     6,
+     319
+    ],
+    "fjadrundaland": [
+     3,
+     122
+    ],
+    "roden": [
+     7,
+     60
+    ]
+   }
+  },
+  {
+   "feature": "cat_kristen",
+   "chi2": 9.297347600572607,
+   "p": 0.02558790105953721,
+   "shares": {
+    "attundaland": [
+     75,
+     340
+    ],
+    "tiundaland": [
+     49,
+     319
+    ],
+    "fjadrundaland": [
+     31,
+     122
+    ],
+    "roden": [
+     5,
+     60
+    ]
+   }
+  },
+  {
+   "feature": "kvinna_resare",
+   "chi2": 8.402579270370893,
+   "p": 0.03838462343286143,
+   "shares": {
+    "attundaland": [
+     110,
+     271
+    ],
+    "tiundaland": [
+     87,
+     267
+    ],
+    "fjadrundaland": [
+     30,
+     108
+    ],
+    "roden": [
+     20,
+     49
+    ]
+   }
+  },
+  {
+   "feature": "kvinna_ensam",
+   "chi2": 7.085005259224204,
+   "p": 0.06923715708903591,
+   "shares": {
+    "attundaland": [
+     45,
+     271
+    ],
+    "tiundaland": [
+     28,
+     267
+    ],
+    "fjadrundaland": [
+     17,
+     108
+    ],
+    "roden": [
+     10,
+     49
+    ]
+   }
+  },
+  {
+   "feature": "pm_bon",
+   "chi2": 7.007427745687664,
+   "p": 0.07166140142782615,
+   "shares": {
+    "attundaland": [
+     68,
+     248
+    ],
+    "tiundaland": [
+     44,
+     250
+    ],
+    "fjadrundaland": [
+     26,
+     100
+    ],
+    "roden": [
+     5,
+     44
+    ]
+   }
+  },
+  {
+   "feature": "cat_bro_vag",
+   "chi2": 5.749012473268351,
+   "p": 0.12448070484935052,
+   "shares": {
+    "attundaland": [
+     36,
+     340
+    ],
+    "tiundaland": [
+     23,
+     319
+    ],
+    "fjadrundaland": [
+     5,
+     122
+    ],
+    "roden": [
+     8,
+     60
+    ]
+   }
+  },
+  {
+   "feature": "cat_fard",
+   "chi2": 5.643526194199126,
+   "p": 0.13030178044848797,
+   "shares": {
+    "attundaland": [
+     28,
+     340
+    ],
+    "tiundaland": [
+     15,
+     319
+    ],
+    "fjadrundaland": [
+     6,
+     122
+    ],
+    "roden": [
+     8,
+     60
+    ]
+   }
+  },
+  {
+   "feature": "ord_þennsa",
+   "chi2": 4.917914971122968,
+   "p": 0.17790743996795297,
+   "shares": {
+    "attundaland": [
+     18,
+     340
+    ],
+    "tiundaland": [
+     14,
+     319
+    ],
+    "fjadrundaland": [
+     13,
+     122
+    ],
+    "roden": [
+     2,
+     60
+    ]
+   }
+  },
+  {
+   "feature": "thegn",
+   "chi2": 4.909366973487948,
+   "p": 0.17855531727977733,
+   "shares": {
+    "attundaland": [
+     5,
+     340
+    ],
+    "tiundaland": [
+     5,
+     319
+    ],
+    "fjadrundaland": [
+     0,
+     122
+    ],
+    "roden": [
+     1,
+     60
+    ]
+   }
+  },
+  {
+   "feature": "o_runa",
+   "chi2": 4.890704106263172,
+   "p": 0.17997751414162108,
+   "shares": {
+    "attundaland": [
+     48,
+     117
+    ],
+    "tiundaland": [
+     34,
+     74
+    ],
+    "fjadrundaland": [
+     10,
+     41
+    ],
+    "roden": [
+     6,
+     17
+    ]
+   }
+  },
+  {
+   "feature": "pm_signatur",
+   "chi2": 4.428154400396124,
+   "p": 0.21878897641645045,
+   "shares": {
+    "attundaland": [
+     41,
+     248
+    ],
+    "tiundaland": [
+     46,
+     250
+    ],
+    "fjadrundaland": [
+     27,
+     100
+    ],
+    "roden": [
+     9,
+     44
+    ]
+   }
+  },
+  {
+   "feature": "pm_sjal",
+   "chi2": 2.8090574892169116,
+   "p": 0.42201106268706245,
+   "shares": {
+    "attundaland": [
+     65,
+     248
+    ],
+    "tiundaland": [
+     40,
+     250
+    ],
+    "fjadrundaland": [
+     24,
+     100
+    ],
+    "roden": [
+     8,
+     44
+    ]
+   }
+  },
+  {
+   "feature": "rel_syskon",
+   "chi2": 2.329405689252326,
+   "p": 0.5069109760067851,
+   "shares": {
+    "attundaland": [
+     45,
+     235
+    ],
+    "tiundaland": [
+     39,
+     239
+    ],
+    "fjadrundaland": [
+     15,
+     95
+    ],
+    "roden": [
+     4,
+     41
+    ]
+   }
+  },
+  {
+   "feature": "rel_make",
+   "chi2": 1.6775099373757598,
+   "p": 0.6419453719240149,
+   "shares": {
+    "attundaland": [
+     31,
+     235
+    ],
+    "tiundaland": [
+     29,
+     239
+    ],
+    "fjadrundaland": [
+     12,
+     95
+    ],
+    "roden": [
+     8,
+     41
+    ]
+   }
+  }
+ ]
+}
