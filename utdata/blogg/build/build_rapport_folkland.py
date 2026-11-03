@@ -97,6 +97,26 @@ assert "Sexårsgärden 1314 (SDHK 2593) räknar hit de åtta hundarena" in regs[
 assert "Sexårsgärden 1314" in regs["tiundaland"]["note"] and "Gästrikland och Roden" in regs["tiundaland"]["note"]
 assert "Sexårsgärden 1314" in regs["fjadrundaland"]["note"] and regs["roden"]["certainty"] == "omstridd"
 
+
+# ---- runic examples: Rundata transliterations rendered with standard younger-futhark (long-branch) forms -------------
+RECS = {r["signum"]: r for r in json.load(open(os.path.join(ROOT, "data", "rundata.json"), encoding="utf-8"))["inscriptions"]}
+RMAP = {"a": "ᛅ", "b": "ᛒ", "e": "ᛂ", "f": "ᚠ", "g": "ᚵ", "h": "ᚼ", "i": "ᛁ", "k": "ᚴ", "l": "ᛚ", "m": "ᛘ", "n": "ᚾ",
+        "o": "ᚬ", "r": "ᚱ", "R": "ᛦ", "s": "ᛋ", "t": "ᛏ", "u": "ᚢ", "y": "ᚤ", "þ": "ᚦ", " ": "᛫"}
+
+
+def ex(signum, excerpt):
+    t = " ".join(RECS[signum]["transliteration"].replace("'", " ").replace("÷", " ").replace("·", " ").split())
+    assert excerpt in t, (signum, excerpt)
+    return "".join(RMAP[c] for c in excerpt)
+
+
+EX = {"u1177": ex("U 1177", "litu risa stin at tuba"), "u181": ex("U 181", "iftiR est faþur sin"),
+      "u749": ex("U 749", "þair litu rasa stan"), "u974": ex("U 974", "þaiR")}
+assert RECS["U 1177"]["carvers"][0]["name"] == RECS["U 181"]["carvers"][0]["name"] == RECS["U 974"]["carvers"][0]["name"] == "Öpir 1"
+assert RECS["U 749"]["carvers"][0]["name"] == "Balle"
+assert (RECS["U 1177"]["parish"], RECS["U 181"]["parish"], RECS["U 749"]["parish"], RECS["U 974"]["parish"]) == (
+    "Harbo sn", "Össeby-Garns sn", "Husby-Sjutolfts sn", "Vaksala sn")
+
 SLUG = "upplands-folkland-skiljer-runstenarna"
 title = "Upplands folkland skiljer runstenarna åt mer än alla 999 slumpvisa indelningar av samma härader"
 title_en = "Uppland's folklands separate the runestones more than all 999 random divisions of the same hundreds"
@@ -188,6 +208,12 @@ Smålands små land, det sekundära provet: {S['units']} härader, {S['stones']}
 {chart('sv')}
 
 **5.2 Vilka drag (beskrivande).** De fem drag som bidrar mest är korset, bergarten granit, prepositionen *at*, monoftongstavningen och r för ʀ. Korset står på sex av tio stenar i Attundaland och Tiundaland men på en av tre i Fjädrundaland och fyra av tio i Roden; *at* står på var åttonde sten i Attundaland mot fyra av tio i Fjädrundaland; r för ʀ på hälften av stenarna i Fjädrundaland mot en av åtta i Attundaland.
+
+Så ser skillnaden ut på stenarna. Samma ristare, Öpir, skrev *at* i Tiundaland men *æftiR* i Attundaland, och samma ord, *þæiR* ’de’, stavas med r-runan i Fjädrundaland men med yr-runan i Tiundaland (runorna återges med den yngre futharkens vanliga former efter Rundatas translitteration, inte med stenarnas exakta former):
+- Tiundaland, U 1177 i Harbo, ristad av Öpir: {EX['u1177']} – *litu risa stin at tuba*, ’lät resa stenen efter Tobbe’.
+- Attundaland, U 181 i Össeby-Garn, ristad av Öpir: {EX['u181']} – *iftiR est faþur sin*, ’efter Äst, sin fader’.
+- Fjädrundaland, U 749 i Husby-Sjutolft, attribuerad till Balle: {EX['u749']} – *þair litu rasa stan*, ’de lät resa stenen’, med ʀ i *þæiR* skrivet med r-runan ᚱ.
+- Tiundaland, U 974 i Vaksala, attribuerad till Öpir: {EX['u974']} – *þaiR*, samma ord med yr-runan ᛦ.
 
 **5.3 Känslighetsanalyserna steg för steg.**
 - Bara stenar på sin ursprungliga plats ({LAD['pa_plats'][0]} stenar): {LAD['pa_plats'][1]} mot median {LAD['pa_plats'][2]}, p = {pf(LAD['pa_plats'][3])} – håller.
@@ -299,6 +325,12 @@ Småland's small lands, the secondary test: {S['units']} hundreds, {S['stones']}
 {chart('en')}
 
 **5.2 Which features (descriptive).** The five features that contribute most are the cross, the rock type granite, the preposition *at*, monophthong spelling and r for ʀ. The cross is on six stones in ten in Attundaland and Tiundaland but on one in three in Fjädrundaland and four in ten in Roden; *at* is on one stone in eight in Attundaland against four in ten in Fjädrundaland; r for ʀ on half the stones in Fjädrundaland against one in eight in Attundaland.
+
+This is what the difference looks like on the stones. The same carver, Öpir, wrote *at* in Tiundaland but *æftiR* in Attundaland, and the same word, *þæiR* 'they', is spelled with the r-rune in Fjädrundaland but with the yr-rune in Tiundaland (the runes are rendered with the usual younger-futhark forms after Rundata's transliteration, not with the stones' exact forms):
+- Tiundaland, U 1177 at Harbo, carved by Öpir: {EX['u1177']} – *litu risa stin at tuba*, 'had the stone raised in memory of Tobbe'.
+- Attundaland, U 181 at Össeby-Garn, carved by Öpir: {EX['u181']} – *iftiR est faþur sin*, 'in memory of Äst, their father'.
+- Fjädrundaland, U 749 at Husby-Sjutolft, attributed to Balle: {EX['u749']} – *þair litu rasa stan*, 'they had the stone raised', with the ʀ of *þæiR* written with the r-rune ᚱ.
+- Tiundaland, U 974 at Vaksala, attributed to Öpir: {EX['u974']} – *þaiR*, the same word with the yr-rune ᛦ.
 
 **5.3 The sensitivity analyses step by step.**
 - Only stones in their original place ({LAD['pa_plats'][0]} stones): {LAD['pa_plats'][1]} against a median of {LAD['pa_plats'][2]}, p = {pf(LAD['pa_plats'][3], True)} – holds.

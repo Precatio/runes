@@ -50,6 +50,8 @@ assert "Hiær mun standa stæinn miðli byia" in nz("U 729") and "sum Balli rist
 assert "Hann varð dauðr a Danmarku i hvitavaðum. Balli rist[i]." in nz("U 699")
 assert "christening robes" in recs["U 699"]["translation_en"]
 assert "Es atti æinn seR skip ok austr styrði i Ingvars lið" in nz("U 778") and recs["U 778"]["parish"] == "Svinnegarns sn"
+assert "þaiR inkulfr" in recs["U 974"]["transliteration"] and recs["U 974"]["carvers"][0]["name"] == "Öpir 1" and recs["U 974"]["parish"] == "Vaksala sn"
+assert "· þair · litu ·" in recs["U 749"]["transliteration"] and recs["U 749"]["carvers"][0]["name"] == "Balle"
 # sources
 DMS9 = " ".join(open("/Volumes/2TB/Antigrvity/Runes/geografi_kallor/dms/dms_1_9_dedup.txt", encoding="utf-8").read().split())
 DMS8 = " ".join(open("/Volumes/2TB/Antigrvity/Runes/geografi_kallor/dms/dms_1_8_dedup.txt", encoding="utf-8").read().split())
@@ -113,7 +115,7 @@ Det betyder inte att folket var hedningar. Balle högg också en sten åt Ingile
 
 En ristare antyder att det var landet och inte handen. Torbjörn högg två kors på fem stenar i Fjädrundaland men nio på tio utanför. Det är för få stenar för att bevisa något, men det är vad man skulle vänta sig om ristaren anpassade sig till beställarnas land.
 
-Stenarna här är också ensammare. De står mer sällan i grupper om flera, en av sju mot en av tre i resten av Uppland, och de är oftare resta av en enda person än av flera syskon eller släktingar tillsammans. Och de skriver på sitt eget sätt: hälften av stenarna stavar ʀ med r-runan, mot en av sju i resten av Uppland, något vi har berättat om i [Erik skrev r – och bygden skrev efter]({ERIK}). Plustecknen mellan orden och formen *ræisti* hör däremot till ristarnas egna händer – de följer Balle och hans krets, inte landet.
+Stenarna här är också ensammare. De står mer sällan i grupper om flera, en av sju mot en av tre i resten av Uppland, och de är oftare resta av en enda person än av flera syskon eller släktingar tillsammans. Och de skriver på sitt eget sätt: hälften av stenarna stavar ʀ med r-runan, mot en av sju i resten av Uppland. Där Öpir i Tiundaland skrev ordet för ’de’ ᚦᛅᛁᛦ, med yr-runan, skrev Balle i Fjädrundaland ᚦᛅᛁᚱ. Det har vi berättat mer om i [Erik skrev r – och bygden skrev efter]({ERIK}). Plustecknen mellan orden och formen *ræisti* hör däremot till ristarnas egna händer – de följer Balle och hans krets, inte landet.
 
 ## Ett land som bar sina gamla tecken
 
@@ -171,7 +173,7 @@ That does not mean the people were heathens. Balle also cut a stone for Ingileif
 
 One carver hints that it was the land and not the hand. Torbjörn cut crosses on two of five stones in Fjädrundaland but on nine of ten outside it. That is too few stones to prove anything, but it is what one would expect if the carver adapted to the land of those who ordered the stones.
 
-The stones here are also lonelier. They stand less often in groups, one in seven against one in three in the rest of Uppland, and they are more often raised by a single person than by several siblings or kin together. And they write in their own way: half the stones spell ʀ with the r-rune, against one in seven in the rest of Uppland, something we have told in [Erik skrev r – och bygden skrev efter]({ERIK}). The plus signs between the words and the form *ræisti*, on the other hand, belong to the carvers' own hands – they follow Balle and his circle, not the land.
+The stones here are also lonelier. They stand less often in groups, one in seven against one in three in the rest of Uppland, and they are more often raised by a single person than by several siblings or kin together. And they write in their own way: half the stones spell ʀ with the r-rune, against one in seven in the rest of Uppland. Where Öpir in Tiundaland wrote the word for 'they' ᚦᛅᛁᛦ, with the yr-rune, Balle in Fjädrundaland wrote ᚦᛅᛁᚱ. We have told more about it in [Erik skrev r – och bygden skrev efter]({ERIK}). The plus signs between the words and the form *ræisti*, on the other hand, belong to the carvers' own hands – they follow Balle and his circle, not the land.
 
 ## A land that kept its old signs
 
