@@ -89,12 +89,15 @@ def run_all():
 
 def compare():
     from src.stats import METRICS
-    rows = []
+    rows, skipped = [], []
     for series, stem in held_out():
         f = {m: os.path.join(OUT, f"{series}__{stem}__{m}.json") for m in ("ritade", "modellen")}
         if not all(os.path.exists(p) for p in f.values()):
             continue
         a, b = (json.load(open(f[m], encoding="utf-8")) for m in ("ritade", "modellen"))
+        if (a.get("bands") or {}).get("source") != "ritade":  # the drawn bands were not found for this scan: no facit
+            skipped.append(a.get("signum"))
+            continue
         pa = np.array([s["point"] for s in a["slices"] if s.get("point")], float).reshape(-1, 3)
         pb = np.array([s["point"] for s in b["slices"] if s.get("point")], float).reshape(-1, 3)
 
@@ -111,7 +114,7 @@ def compare():
                      "means": {m: [mean(a, m), mean(b, m)] for m in METRICS}})
     ok = [r for r in rows if r["precision"] is not None and r["recall"] is not None]
     med = lambda xs: statistics.median(xs) if xs else None  # noqa: E731
-    summ = {"stones": len(rows), "scored": len(ok),
+    summ = {"stones": len(rows), "scored": len(ok), "no_drawn_bands": skipped,
             "precision_median": med([r["precision"] for r in ok]), "recall_median": med([r["recall"] for r in ok]),
             "precision_pooled": (sum(r["precision"] * r["model_slices"] for r in ok) / max(1, sum(r["model_slices"] for r in ok))) if ok else None,
             "recall_pooled": (sum(r["recall"] * r["drawn_slices"] for r in ok) / max(1, sum(r["drawn_slices"] for r in ok))) if ok else None,

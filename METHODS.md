@@ -1143,7 +1143,14 @@ missas ibland. Igenkänningen är regelbaserad och inte validerad mot en handmä
   **slingmodellen** dem: ett litet U-nät (`data/runmodell/slingmodell.pt`, `src/rune_bands.py`) tränat på 95 granskade
   stenar, som på stenens djupbild (2,4 mm per pixel) markerar var slingorna går. På 24 stenar som hölls utanför
   träningen överlappade modellens slingor de ritade med i mitten 59 % (IoU; bäst Sö 333 0,83, sämst stavlösa Hs 14
-  0,10).
+  0,10). Vad det betyder för mätningen prövades 2026-11-03 (`utdata/slingor_utvardering/utvardera.py`,
+  `resultat.json`): samma sten mättes med `groove-7` två gånger, med de ritade slingorna och med modellens. På de 18
+  av de 24 stenarna där de ritade slingorna fanns var i mitten 71 % av modellkörningens runsnitt också runsnitt med
+  de ritade slingorna (precision; 78 % räknat över alla snitt), och modellkörningen hittade 78 % av de ritade
+  slingornas runsnitt (täckning; 81 % över alla snitt). Stenens medelvärden flyttade sig i mitten 0,46° i V-vinkel,
+  0,07 mm i djup och 0,38 mm i bredd. Sämst gick det på stenar med få snitt (Hs 3, Hs 14, Ög 2, M 13: precision
+  0,11–0,44). Vinkel och djup tål alltså modellens slingor; bredden mindre, och korta eller stavlösa ristningar bör
+  få ritade slingor.
 * **Runorna:** snitten som är runor delas upp i runor efter var strecken står längs slingan (`src/staveless.py`,
   `group_runes`; sedan `groove-7` för alla stenar): varje streck inne i slingan får sin plats längs den, och streck som
   ligger nära varandra längs slingan förs till samma runa, så länge runan inte blir bredare än slingan är hög. Streck

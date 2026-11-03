@@ -72,23 +72,18 @@ LIMITATIONS = [
      "short": "Siffrorna kan inte direkt jämföras med tidigare forskares mätningar.",
      "needed": "Samma referensstenar mätta med båda metoderna."},
     {"key": "rune_detection", "contexts": {"auto"},
-     "title": "Runigenkänningen är inte utvärderad",
-     "text": "Vilka spår som räknas som runor avgörs av regler som justerats för hand på Sö 113 och Sö 128, inte "
-             "prövats mot handmärkta stenar, så träffsäkerheten (andel mätta streck som verkligen är runor, andel runor "
-             "som hittas) är okänd. Antalet igenkända runor på 19 skanningar var i median 0,9 gånger antalet runor i "
-             "Rundatas translitterering men varierade från 0,3 (grunda, vittrade runor som faller sönder, t.ex. Sö 160 "
-             "och Sö 206) till 1,5 (Sö 143, där korsarmar bitvis togs för runor); på Sö 371, utan läsbara runor i "
-             "Rundata, hittades sex. Slinglinjer som brutits av vittring kan räknas som runor, och runor kan delas eller "
-             "slås ihop. På Sö 164 (2026-10-14) låg 18 av 67 igenkända runor i bildfältets skepp och kors. Programmet fångar "
-             "mest huvudstavarna: på 37 skanningar i Södermanland fann det i median 1,2 runstreck per runa, fast runorna där "
-             "i genomsnitt har omkring två streck, eftersom bistavar som är korta, böjda eller bryts där de möter "
-             "huvudstaven sorteras bort. Det beror på programmet, inte på stenarna: på Sö 164, där 45 av 49 runor i "
-             "runbanden blev en ensam stav, syns bistavarna i strykljus (rättat 2026-10-16). Tre regeländringar "
-             "(längdgränsen för ramlinjer räknad på hela stavar, krav på parallella grannar i rad, båda tillsammans) "
-             "prövades på sju stenar: de minskade felen på vittrade stenar med stora figurfält (Sö 164, Sö 45) men "
-             "tappade runor på välbevarade och figurrika stenar (Sö 128, Sö 205), och infördes därför inte. Granska "
-             "alltid granskningsbilden och märk figurfältet som ornamentik där det behövs.",
-     "short": "Programmet som letar upp runorna kan missa runor och ibland ta fel; det är inte utvärderat.",
+     "title": "Runigenkänningen är bara delvis utvärderad",
+     "text": "Sedan groove-6 avgör runslingorna vilka spår som är runor, och sedan groove-7 (2026-11-03) delas de i "
+             "runor efter var strecken står längs slingan. På 34 skanningar i Södermanland med minst tio runor i "
+             "Rundatas text blev antalet mätta runor i median 0,98 gånger textens (med den gamla regeln 0,36), men på "
+             "enskilda stenar delas runor (Sö 166: 131 mot 101) eller slås ihop (Sö 367: 49 mot 104). Finns inga "
+             "ritade slingor föreslår slingmodellen dem: på 18 stenar den inte tränats på var i median 71 % av "
+             "runsnitten med modellens slingor också runsnitt med de ritade, och 78 % av de ritade slingornas runsnitt "
+             "hittades. Stenens medelvärden flyttade sig då i median 0,46° i V-vinkel och 0,38 mm i bredd; på korta "
+             "och stavlösa ristningar (Hs 3, Hs 14, Ög 2, M 13) gick det dåligt. Måttet är överensstämmelse med "
+             "Viktors ritade slingor, inte med ett oberoende facit för vilka streck som är runor. Granska alltid "
+             "granskningsbilden och rita slingorna själv på korta ristningar.",
+     "short": "Programmet som letar upp runorna kan missa runor och ibland ta fel; det är bara prövat mot ritade slingor.",
      "needed": "Handmärkta facit för 8–10 stenar som inte använts för att justera reglerna (facit-läget i 3D-vyn, "
                "scripts/evaluate_rune_detection.py), med låsta regler. En automatisk motkontroll ur djupbilden "
                "(src/trace_reader.rune_depth_check) prövades 2026-10-19 men hölls utanför driften: på två stenar gav "
