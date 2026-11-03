@@ -5,7 +5,7 @@ lutad 5° åt två håll, med känslighet 2,5 och 3,5 och med skanningen förenk
 trianglarna (som en glesare skanner). Sedan jämförs stenens medelvärden (runan som enhet), antalet runor, hur
 många mätpunkter som återkommer och måtten på samma ställe.
 
-    .venv/bin/python -m scripts.groove_robustness utdata/Rak/referenser_g4/Sö_128.json … --out utdata/groove_robustness
+    .venv/bin/python -m scripts.groove_robustness utdata/Rak/referenser_g7/Sö_128.json … --out utdata/groove_robustness
 
 Det här är inte ett test–omtest med oberoende skanningar av samma sten; det visar hur känsliga resultaten är för
 analysens egna val och för skanningens täthet.

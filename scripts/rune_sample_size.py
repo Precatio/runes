@@ -4,7 +4,7 @@ Kör den automatiska analysen (bara runor) på skanningar och delar upp spridnin
 inom en runa, mellan runor på samma sten och mellan stenar. Därur räknas hur tillförlitligt stenens
 medelvärde är med n runor, och empiriskt hur ofta en sten känns igen bland de andra utifrån n runor.
 
-    .venv/bin/python -m scripts.rune_sample_size utdata/Rak/referenser_g4/*.json --out utdata/rune_sample_size
+    .venv/bin/python -m scripts.rune_sample_size utdata/Rak/referenser_g7/*.json --out utdata/rune_sample_size
 
 Referensfilerna (från scripts.measure_stones) ger filnamn, ytnormal och upp-riktning för varje sten.
 """

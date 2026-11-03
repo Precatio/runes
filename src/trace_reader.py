@@ -26,7 +26,7 @@ import src.runlm as rl
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CACHE = os.path.join(ROOT, "data", "cache", "traces")
-REFS = os.path.join(ROOT, "utdata", "Rak", "referenser_g4")
+REFS = os.path.join(ROOT, "utdata", "Rak", "referenser_g7")
 # The other open scans (scripts/batch_scans.py): file path under skanningar/ and the normal of the protocol measurement
 REFS_AUTO = os.path.join(ROOT, "utdata", "automatisk_korning", "referenser")
 

@@ -1,6 +1,6 @@
 """Mäter om referensmätningarna av Kitzler Åhfeldts 37 öppna skanningar av Södermanlands runstenar med den aktuella
 mätmetoden (groove-7: runslingorna avgör vad som är runor och delar upp runorna), med exakt samma normal som referensmätningarna med groove-5
-(utdata/Rak/referenser_g5), så att bara metoden skiljer. Resultaten sparas i utdata/Rak/referenser_g<N>/ (N = metodens nummer) i samma form, och
+(den senaste tidigare utdata/Rak/referenser_g<N>), så att bara metoden skiljer. Resultaten sparas i utdata/Rak/referenser_g<N>/ (N = metodens nummer) i samma form, och
 en jämförelse sten för sten i jamforelse.json där.
 
 En sten i taget genom analysmotorn (minnet räcker inte till fler); körningen kan avbrytas och fortsätta.
@@ -21,16 +21,20 @@ from scripts import batch_scans  # noqa: E402
 from scripts.batch_scans import files, known_normals, measure  # noqa: E402
 from src.stats import METRICS  # noqa: E402
 
-REF_G5 = os.path.join(ROOT, "utdata", "Rak", "referenser_g5")
 from api.config import METHOD_VERSION as _MV  # noqa: E402
 OUT = os.path.join(ROOT, "utdata", "Rak", "referenser_g" + _MV.split("-")[1])  # referenser_g7 for groove-7
+# The base: the newest earlier reference measurement (its normals and up are reused, so that only the method differs)
+_RAK = os.path.join(ROOT, "utdata", "Rak")
+_older = sorted((int(d.split("_g")[1]), d) for d in os.listdir(_RAK)
+                if d.startswith("referenser_g") and d.split("_g")[1].isdigit() and os.path.join(_RAK, d) != OUT)
+REF_G5 = os.path.join(_RAK, _older[-1][1]) if _older else OUT
 API = os.environ.get("RUNFORSKNING_API", "http://localhost:8000")
 
 
 def g5_by_file() -> dict[str, tuple[str, dict]]:
     out = {}
     for f in sorted(os.listdir(REF_G5)):
-        if f.endswith(".json"):
+        if f.endswith(".json") and f != "jamforelse.json":
             d = json.load(open(os.path.join(REF_G5, f), encoding="utf-8"))
             out[d["file"]] = (f, d)
     return out
@@ -60,7 +64,7 @@ def run():
 def compare():
     rows = []
     for f in sorted(os.listdir(REF_G5)):
-        if not f.endswith(".json") or not os.path.exists(os.path.join(OUT, f)):
+        if not f.endswith(".json") or f == "jamforelse.json" or not os.path.exists(os.path.join(OUT, f)):
             continue
         a = json.load(open(os.path.join(REF_G5, f), encoding="utf-8"))
         b = json.load(open(os.path.join(OUT, f), encoding="utf-8"))
@@ -146,7 +150,7 @@ def run_local(again: bool = False):
     import subprocess
     os.makedirs(OUT, exist_ok=True)
     for f in sorted(os.listdir(REF_G5)):
-        if not f.endswith(".json") or (os.path.exists(os.path.join(OUT, f)) and not again):
+        if not f.endswith(".json") or f == "jamforelse.json" or (os.path.exists(os.path.join(OUT, f)) and not again):
             continue
         subprocess.run([sys.executable, "-m", "scripts.remeasure_g6", "--en", f], cwd=ROOT,
                        env={**os.environ, "PYTHONPATH": ROOT})

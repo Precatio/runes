@@ -32,7 +32,7 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
   motiverar det (`web/src/lib/mesh.ts`, `src/limitations.py`).
 
 ### 1.3 Fyll mätkorpusen  — KLAR 2026-10-20 (37 poster, scripts/corpus_seed_ka.py)
-- Mät de 36 KÅ-stenarna med protokollet (groove-5, `utdata/Rak/referenser_g5` finns) och lägg in dem i Firestore
+- Mät de 36 KÅ-stenarna med protokollet (gjort: groove-7, `utdata/Rak/referenser_g7`, i Firestore-korpusen sedan 2026-11-03; äldre referensmätningar borttagna) och lägg in dem i Firestore
   `corpus` som Riksantikvarieämbetets/KÅ:s data under CC BY, med scan-credit (DOI 10.5281/zenodo.11951255).
 - **Kod:** ett skript `scripts/corpus_seed_ka.py` som skriver posterna via adminklienten med `contributorUid` = ditt,
   `feature_type: rune`, `means`, `slices`, provenance. Idempotent (signum + method_version som nyckel).

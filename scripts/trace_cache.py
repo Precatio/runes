@@ -1,6 +1,6 @@
 """Beräknar spårläsarens cache (src/trace_reader.py) för skannade stenar: den tunga djupbildskörningen görs en
 gång per sten och sparas i data/cache/traces/. Utan argument tas alla stenar med skanningsreferens
-(utdata/Rak/referenser_g4); annars de angivna.
+(utdata/Rak/referenser_g7); annars de angivna.
     PYTHONPATH=. .venv/bin/python scripts/trace_cache.py ["Sö 206" ...] [--force]"""
 import os
 import sys
@@ -15,7 +15,7 @@ def main(argv=None):
     force = "--force" in args
     signa = [a for a in args if not a.startswith("--")]
     if not signa:
-        signa = sorted(f[:-5].replace("_", " ") for f in os.listdir(tr.REFS) if f.endswith(".json"))
+        signa = sorted(f[:-5].replace("_", " ") for f in os.listdir(tr.REFS) if f.endswith(".json") and f != "jamforelse.json")
     for s in signa:
         if not force and tr.features(s) is not None:
             print(f"{s}: cache finns", flush=True)

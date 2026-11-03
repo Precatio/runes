@@ -4,7 +4,7 @@ Samma arbetsgång som sidan Stenanalys (upplänkning, spåranalys med Vitki-prot
 mätkorpusen), men utan AI-text, utan rapport och utan R, en sten i taget (minnet räcker inte till fler samtidigt):
 
   1. mät   – varje fil i data/scan_files.json som finns på disken mäts en gång; resultatet sparas i
-             utdata/automatisk_korning/<serie>/<fil>.json (samma form som utdata/Rak/referenser_g5), och körningen
+             utdata/automatisk_korning/<serie>/<fil>.json (samma form som utdata/Rak/referenser_g7), och körningen
              kan avbrytas och fortsätta. Södermanlands stenar får samma normal som referensmätningarna i korpusen;
              övriga får stenens tunnaste riktning, som sidan använder när ingen normal anges.
   2. korpus – Medelpads runstenar läggs in i den delade mätkorpusen (Firestore `corpus`), med Henrik Zedigs
@@ -51,7 +51,7 @@ from src.scan_sources import DATASETS, file_credit_text, file_signa  # noqa: E40
 from src.stats import METRICS  # noqa: E402
 
 OUT = os.path.join(ROOT, "utdata", "automatisk_korning")
-REF_G5 = os.path.join(ROOT, "utdata", "Rak", "referenser_g5")
+REF_G5 = os.path.join(ROOT, "utdata", "Rak", "referenser_g7")
 ORDER = ["sodermanland", "medelpad", "gravmonument_og_sm", "asmund", "halsingland", "vastergotland"]
 CORPUS_SERIES = {"medelpad"}  # the series this run adds to the shared corpus (Viktor 2026-10-24)
 LABEL = "automatisk körning"
@@ -116,7 +116,7 @@ def measure(api: str, key: str, f: dict, path: str, normals: dict, all_grooves: 
         r = requests.post(f"{api}/api/3d/upload", files={"file": (f["name"], fh)}, timeout=3600)
     r.raise_for_status()
     mid = r.json()["mesh_id"]
-    normal, normal_source = normals.get(f["name"]), "referensmätningen i korpusen (utdata/Rak/referenser_g5)"
+    normal, normal_source = normals.get(f["name"]), "referensmätningen i korpusen (utdata/Rak/referenser_g7)"
     if not normal:
         rel = requests.post(f"{api}/api/3d/render_relief", data={"mesh_id": mid}, timeout=1800)
         rel.raise_for_status()
