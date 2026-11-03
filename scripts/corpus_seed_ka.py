@@ -1,5 +1,7 @@
 """Fyller den delade mätkorpusen (Firestore `corpus`, databasen vitki) med Kitzler Åhfeldts 36 öppna skanningar av
-Södermanlands runstenar, mätta med Vitki-protokollet (groove-5, utdata/Rak/referenser_g5/, METHODS.md 2 och 13).
+Södermanlands runstenar, mätta med Vitki-protokollet och den aktuella mätmetoden (utdata/Rak/referenser_g<N>/,
+scripts/remeasure_g6.py; METHODS.md 2 och 13). Med --ersatt tas samma stenars poster med äldre metodversion bort, eftersom
+jämförelserna mot korpusen inte skiljer på metodversion.
 
 Posterna får samma form som webbläsaren skriver (web/src/lib/corpus.ts, addEntry) och ett fast id per sten och
 metodversion, så att skriptet kan köras om utan dubbletter. Bidragsgivare är grundaren; skannern, institutionen,
@@ -7,6 +9,7 @@ DOI och licensen står i skanningens metadata och i noteringen, som regeln i MET
 post (säkerhetsreglernas gräns); fler snitt glesas ut jämnt, och det fulla antalet står i noteringen.
     .venv/bin/python scripts/corpus_seed_ka.py            # visar vad som skulle skrivas
     .venv/bin/python scripts/corpus_seed_ka.py --skriv    # skriver till Firestore
+    .venv/bin/python scripts/corpus_seed_ka.py --skriv --ersatt   # och tar bort samma stenars äldre poster
 """
 import datetime as dt
 import glob
@@ -28,8 +31,10 @@ for f in (".env", "api/.env"):
 from api.config import APP_VERSION  # noqa: E402
 from src.stats import METRICS  # noqa: E402
 
-REF = os.path.join(ROOT, "utdata", "Rak", "referenser_g5")
-METHOD = "groove-5"
+from api.config import METHOD_VERSION  # noqa: E402
+
+METHOD = METHOD_VERSION  # the current measurement method (groove-7 since 2026-11-03)
+REF = os.path.join(ROOT, "utdata", "Rak", "referenser_g" + METHOD.split("-")[1])
 MAX_SLICES = 200
 FOUNDER_EMAIL = "viktor.kvant@gmail.com"
 SCAN = {"scanned_by": "Laila Kitzler Åhfeldt, Riksantikvarieämbetet",
@@ -52,7 +57,7 @@ def entry(d: dict, uid: str, name: str, now: str) -> dict:
     n_runes = (d.get("rune_summary") or {}).get("n_runes")
     notes = (f"Skanning av Laila Kitzler Åhfeldt (RAÄ), Zenodo {SCAN['url']}, CC BY 4.0. Mätt i Vitki med protokollet "
              f"({METHOD}, bara runor): {len(slices_all)} snitt i {n_runes} igenkända runor"
-             + (f"; {MAX_SLICES} av snitten lagrade här, alla i utdata/Rak/referenser_g5" if len(slices_all) > MAX_SLICES else "")
+             + (f"; {MAX_SLICES} av snitten lagrade här, alla i {os.path.relpath(REF, ROOT)}" if len(slices_all) > MAX_SLICES else "")
              + ". Seedad av scripts/corpus_seed_ka.py.")
     return {
         "id": f"c_ka_{METHOD}_{re.sub(r'[^\w]+', '_', sig)}",
@@ -76,15 +81,26 @@ def main():
     from firebase_admin import auth
     user = auth.get_user_by_email(FOUNDER_EMAIL, app=firebase_app())
     now = dt.datetime.now(dt.timezone.utc).isoformat()
-    files = sorted(glob.glob(os.path.join(REF, "*.json")))
-    rows = [entry(json.load(open(f, encoding="utf-8")), user.uid, user.display_name or "Viktor Kvant", now) for f in files]
+    files = sorted(f for f in glob.glob(os.path.join(REF, "*.json")) if os.path.basename(f) != "jamforelse.json")
+    data = [json.load(open(f, encoding="utf-8")) for f in files]
+    bad = [d.get("signum") for d in data if "error" in d or not d.get("slices")]
+    if bad:
+        print("utan godkända snitt, skrivs inte:", ", ".join(map(str, bad)))
+    rows = [entry(d, user.uid, user.display_name or "Viktor Kvant", now) for d in data if "error" not in d and d.get("slices")]
     for e in rows:
         print(f"{'skriver' if write else 'skulle skriva'} {e['id']}: {e['signum']}, {len(e['slices'])} snitt, "
               f"V-vinkel {e['means']['apex_vinkel_deg']:.1f}°")
+    col = firestore().collection("corpus")
+    keep = {e["id"] for e in rows}
+    stale = [d.id for d in col.stream() if d.id.startswith("c_ka_") and d.id not in keep]
+    print(f"äldre KÅ-poster i korpusen: {len(stale)}" + (f" ({', '.join(stale[:3])} …)" if stale else ""))
     if write:
-        col = firestore().collection("corpus")
         for e in rows:
             col.document(e["id"]).set(e)
+        if "--ersatt" in sys.argv:
+            for i in stale:
+                col.document(i).delete()
+            print(f"{len(stale)} äldre poster borttagna")
         print(f"{len(rows)} poster skrivna; i korpusen nu:", sum(1 for _ in col.stream()))
 
 
