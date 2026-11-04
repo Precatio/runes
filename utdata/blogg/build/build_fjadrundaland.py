@@ -90,6 +90,12 @@ for k in ("De sankare områdena närmast åarna utnyttjades för slåtter",
 for k in ("Vid Husby finns även en storhög kallad ”Haralds kulle”", "Ett flertal runstenar finns utmed huvudvägen",
           "i miljön vid källan finns skålgropsförekomster"):
     assert k in C57, k
+DMS7 = open("/Volumes/2TB/Antigrvity/Runes/geografi_kallor/dms/dms_1_7_dedup.txt", encoding="utf-8").read()
+assert "Adelsö, Arnö, Boglösa" in DMS9 and "Adelsö socken, som hörde till Trögds härad i Fjädrundaland" in DMS7
+for k in ("Hovgården på Adelsö, där fem storhögar", "Skandinaviens största höggravfält", "Björkö"):
+    assert k in DMS7, k
+assert "ToliR bryti i roði kunungi" in nz("U 11") and recs["U 11"]["place"] == "Hovgården"
+ATT = "/artiklar/de-gamla-landen-attundaland"
 assert "Svinnegarns källa är länets mest välkända trefaldighetskälla" in C57 and "härbärgen för besökande pilgrimer" in C57
 assert "de allra flesta utgörs av runda stensättningar men 16 högar" in C63 and "Torsviviken" in C63
 for k in ("Dess rätta tingsstad låg vid byn Enhälja, Villberga sn", "tingsplatsens namn var 1299", "0bolund",
@@ -107,6 +113,8 @@ summary = ("Fjädrundaland var det västligaste av Upplands folkland: lerslätte
            "omkring år 1000. Tredje delen i serien De gamla landen.")
 
 body = f"""Föreställ dig att du seglar in i Mälaren för tusen år sedan. Den är ingen sjö ännu utan en vik av havet, och längst in i väster, där vattnet delar sig i fjärdar och sund, ligger Trögd: en halvö som vattnet omsluter i sydväst, söder och öster. Holmarna utanför – Oknö, Arnö, Grönsö – har haft folk sedan järnåldern. Härifrån for man också ut. I Svinnegarn har föräldrar rest stenar efter en son som ”ensam ägde ett skepp och styrde österut i Ingvars följe”.
+
+Längre österut, där fjärden vidgar sig, hör också Adelsö till Trögd. Där, vid Hovgården, ligger fem storhögar och en kungsgård, och en sten säger att Tole var kungens bryte, hans förvaltare. På grannön Björkö, i samma socken, låg staden Birka med Skandinaviens största gravfält med högar. Gränsen mot [Attundaland]({ATT}) gick strax öster om dem.
 
 Det här är Fjädrundaland, det västligaste av Upplands tre folkland. Det är ett gammalt land, bördigt och tätt bebott, och det vänder sig mot vattnet.
 
@@ -166,12 +174,13 @@ Det här är det andra landet i serien där korset var ovanligt; det första var
 
 ## Så vet vi det
 
-Landskapet, gravarna, vägarna och tingsplatserna bygger på *Det medeltida Sverige*, länsstyrelsens beskrivningar av bygderna och fornlämningsregistret. Tingsplatsen vid Enhälja, ängarnas lotter, hamnorna och brevet från 1512 är kända från medeltiden och 1500-talet, inte från vikingatiden. Korset har vi mätt: Fjädrundalands runstenar jämfördes med resten av Upplands, med tiden hållen konstant, och skillnaden står sig när stenarna delas i två grupper socken för socken, när varje ristare får ha sin egen vana, när bara stenar på sin ursprungliga plats räknas och när landets egna ristare tas bort. De ensammare stenarna och r för ʀ håller i allt utom det sista steget, där det blir för få stenar kvar. Planerna och beräkningarna finns öppna på GitHub, länkade nedan.
+Landskapet, gravarna, vägarna och tingsplatserna bygger på *Det medeltida Sverige*, länsstyrelsens beskrivningar av bygderna och fornlämningsregistret. Att Adelsö hörde till Trögd, tingsplatsen vid Enhälja, ängarnas lotter, hamnorna och brevet från 1512 är kända från medeltiden och 1500-talet, inte från vikingatiden. Korset har vi mätt: Fjädrundalands runstenar jämfördes med resten av Upplands, med tiden hållen konstant, och skillnaden står sig när stenarna delas i två grupper socken för socken, när varje ristare får ha sin egen vana, när bara stenar på sin ursprungliga plats räknas och när landets egna ristare tas bort. De ensammare stenarna och r för ʀ håller i allt utom det sista steget, där det blir för få stenar kvar. Planerna och beräkningarna finns öppna på GitHub, länkade nedan.
 
 ## Källor
 
 - Ferm, Olle, Johansson, Mats & Rahmqvist, Sigurd 1994. *Det medeltida Sverige* 1. Uppland 8. Fjädrundaland: Simtuna, Torstuna. Riksantikvarieämbetet.
 - Rahmqvist, Sigurd 2010. *Det medeltida Sverige* 1. Uppland 9. Fjädrundaland: Trögds härad. Upplandsmuseet.
+- Ferm, Olle, Johansson, Mats & Rahmqvist, Sigurd 1992. *Det medeltida Sverige* 1. Uppland 7. Attundaland: Bro, Färingö, Adelsö, Sollentuna. Riksantikvarieämbetet.
 - Länsstyrelsen i Uppsala län 2018. Riksintressen för kulturmiljövården: Fjärdhundrabygden (C48), Enköpings-Näs (C57), Torsvi (C63).
 - Stille, Per 1999. *Runstenar och runristare i det vikingatida Fjädrundaland. En studie i attribuering.* Runrön 13. Uppsala.
 - Riksantikvarieämbetet, fornlämningsregistret (Kulturmiljöregistret), uttag 2026. Sveriges geologiska undersökning (SGU), strandförskjutningsmodell för år 1000.
@@ -186,6 +195,8 @@ summary_en = ("Fjädrundaland was the westernmost of Uppland's folklands: clay p
               "the sea, around AD 1000. The third part of the series The old lands.")
 
 body_en = f"""Imagine sailing into Lake Mälaren a thousand years ago. It is not a lake yet but a bay of the sea, and furthest in to the west, where the water divides into inlets and sounds, lies Trögd: a peninsula that the water surrounds on the south-west, south and east. The islands off it – Oknö, Arnö, Grönsö – have been lived on since the Iron Age. From here people also went out. At Svinnegarn parents have raised stones for a son who "alone owned a ship and steered east in Ingvar's retinue".
+
+Further east, where the inlet widens, Adelsö belongs to Trögd too. There, at Hovgården, lie five great mounds and a royal estate, and a stone says that Toli was the king's bryti, his steward. On the neighbouring island of Björkö, in the same parish, lay the town of Birka with Scandinavia's largest cemetery of mounds. The border with [Attundaland]({ATT}) ran just east of them.
 
 This is Fjädrundaland, the westernmost of Uppland's three folklands. It is an old land, fertile and densely settled, and it faces the water.
 
@@ -245,12 +256,13 @@ This is the second land in the series where the cross was rare; the first was [R
 
 ## How we know
 
-The landscape, the graves, the roads and the assembly places rest on *Det medeltida Sverige*, the county board's descriptions of the districts and the register of ancient monuments. The assembly place at Enhälja, the meadow strips, the *hamnor* and the letter of 1512 are known from the Middle Ages and the sixteenth century, not from the Viking Age. The cross we have measured: Fjädrundaland's runestones were compared with the rest of Uppland's, with time held constant, and the difference holds when the stones are split into two groups parish by parish, when each carver is allowed a habit of their own, when only stones in their original place are counted, and when the land's own carvers are removed. The lonelier stones and r for ʀ hold in everything but the last step, where too few stones remain. The plans and calculations are open on GitHub, linked below.
+The landscape, the graves, the roads and the assembly places rest on *Det medeltida Sverige*, the county board's descriptions of the districts and the register of ancient monuments. That Adelsö belonged to Trögd, the assembly place at Enhälja, the meadow strips, the *hamnor* and the letter of 1512 are known from the Middle Ages and the sixteenth century, not from the Viking Age. The cross we have measured: Fjädrundaland's runestones were compared with the rest of Uppland's, with time held constant, and the difference holds when the stones are split into two groups parish by parish, when each carver is allowed a habit of their own, when only stones in their original place are counted, and when the land's own carvers are removed. The lonelier stones and r for ʀ hold in everything but the last step, where too few stones remain. The plans and calculations are open on GitHub, linked below.
 
 ## Sources
 
 - Ferm, Olle, Johansson, Mats & Rahmqvist, Sigurd 1994. *Det medeltida Sverige* 1. Uppland 8. Fjädrundaland: Simtuna, Torstuna. Swedish National Heritage Board.
 - Rahmqvist, Sigurd 2010. *Det medeltida Sverige* 1. Uppland 9. Fjädrundaland: Trögds härad. Upplandsmuseet.
+- Ferm, Olle, Johansson, Mats & Rahmqvist, Sigurd 1992. *Det medeltida Sverige* 1. Uppland 7. Attundaland: Bro, Färingö, Adelsö, Sollentuna. Swedish National Heritage Board.
 - County Administrative Board of Uppsala 2018. Areas of national interest for cultural heritage: Fjärdhundrabygden (C48), Enköpings-Näs (C57), Torsvi (C63).
 - Stille, Per 1999. *Runstenar och runristare i det vikingatida Fjädrundaland. En studie i attribuering.* Runrön 13. Uppsala.
 - Swedish National Heritage Board, register of ancient monuments (Kulturmiljöregistret), extract 2026. Geological Survey of Sweden (SGU), shore-displacement model for AD 1000.
