@@ -1,0 +1,112 @@
+<title>Ristarna en i taget</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: Vitki's own look (web/src/app/globals.css) – cool grey-blue ground, white glass cards with large radii, system
+   sans, serif headings, rust accent; one light theme like the site. Same markup ids and drawing code as the app page
+   (web/src/app/(app)/ristare/page.tsx, web/src/lib/ristare/draw.js). */
+:root { color-scheme: light; --bg: #e2e7ec; }
+body { margin: 0; color: #0f172a; background: var(--bg); font: 15px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background-image: radial-gradient(at 10% 10%, rgba(255, 255, 255, 0.95) 0px, transparent 40%),
+    radial-gradient(at 90% 15%, rgba(215, 222, 232, 0.9) 0px, transparent 50%),
+    radial-gradient(at 50% 95%, rgba(225, 230, 238, 0.95) 0px, transparent 50%);
+  background-attachment: fixed; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: #eef1f4; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 20px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.glass { background: linear-gradient(135deg, rgba(255, 255, 255, 0.82) 0%, rgba(245, 247, 250, 0.66) 100%);
+  backdrop-filter: blur(40px) saturate(210%); -webkit-backdrop-filter: blur(40px) saturate(210%);
+  border: 1px solid rgba(255, 255, 255, 0.9); border-radius: 32px; padding: 26px; min-width: 0;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.08), 0 10px 20px -5px rgba(0, 0, 0, 0.04), inset 0 1px 2px 0 #fff; }
+.bar { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 8px); z-index: 9; display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: center;
+  border-radius: 24px; padding: 12px 16px; background: rgba(255, 255, 255, 0.78); backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%); border: 1px solid rgba(255, 255, 255, 0.95); box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.08); }
+.kick { font: 700 12px/1 inherit; letter-spacing: .2em; text-transform: uppercase; color: #b7410e; }
+.btn { font: 600 14px inherit; font-family: inherit; color: #0f172a; border-radius: 14px; padding: 8px 14px; cursor: pointer;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(225, 230, 238, 0.75)); border: 1px solid #fff;
+  box-shadow: 0 6px 16px -2px rgba(0, 0, 0, 0.08), inset 0 1px 1px 0 #fff, inset 0 -2px 4px 0 rgba(0, 0, 0, 0.06); transition: transform .2s ease; }
+.btn:hover { transform: translateY(-1px); }
+select.btn { cursor: default; max-width: 100%; min-width: 0; }
+button:focus-visible, select:focus-visible { outline: 2px solid #b7410e; outline-offset: 2px; }
+h1 { font: 700 clamp(30px, 5vw, 48px)/1.08 ui-serif, Georgia, Cambria, serif; letter-spacing: -0.02em; margin: 12px 0 0; text-wrap: balance; }
+h2 { font: 700 23px/1.2 ui-serif, Georgia, Cambria, serif; letter-spacing: -0.01em; margin: 0 0 8px; text-wrap: balance; }
+.lede { max-width: 72ch; color: #475569; font-size: 18px; line-height: 1.6; margin: 14px 0 0; }
+.grid { display: grid; gap: 24px; margin-top: 30px; }
+.count { color: #64748b; font-size: 13px; font-variant-numeric: tabular-nums; }
+.credit { color: #64748b; font-size: 12.5px; margin: 10px 0 0; }
+/* ristare.css */
+__CSS__
+</style>
+
+<div class="wrap rp-root">
+  <div class="bar">
+    <label for="pick" class="kick">Ristare</label>
+    <select id="pick" class="btn"></select>
+    <button id="prev" type="button" class="btn">← Föregående</button>
+    <button id="next" type="button" class="btn">Nästa →</button>
+    <span class="count" id="count"></span>
+  </div>
+  <div style="margin-top:32px">
+    <div class="kick">Ristarna, en i taget</div>
+    <h1 id="rp-h1"></h1>
+    <p id="rp-lede" class="lede"></p>
+    <div id="rp-warn"></div>
+    <div id="rp-facts" class="rp-facts"></div>
+    <div id="rp-variants" class="rp-variants" role="group" aria-label="Vilka stenar profilen byggs av"></div>
+  </div>
+  <div class="grid">
+    <section class="glass" style="border-color:rgba(183,65,14,0.25)"><h2 id="rp-sg-h"></h2><p id="rp-sg-note" class="rp-note"></p><div id="rp-sg"></div></section>
+    <section class="glass"><h2>Fingeravtrycket</h2><p id="rp-fp-note" class="rp-note"></p><div class="rp-scroll"><svg id="rp-fp" role="img" aria-label="Andel per drag hos ristaren och hos grannarna"></svg></div></section>
+    <section class="glass"><h2>Sten för sten</h2>
+      <p class="rp-note">Varje rad är en sten, varje kolumn ett av fingeravtryckets drag. <b>Rost</b> betyder att stenen gör som ristaren, <b>grått</b> att den gör som grannarna, <b>tomt</b> att draget inte går att avläsa (kort eller skadad text). Stenarna står i ordning efter hur väl de följer profilen; stapeln längst till höger visar värdet och klassen.</p>
+      <div id="rp-hm-legend" class="rp-legend"></div><div class="rp-scroll"><svg id="rp-hm" role="img" aria-label="Heatmap: stenar mot drag"></svg></div></section>
+    <section class="glass"><h2>Kärna, spann och ytterkant</h2>
+      <p class="rp-note">Varje prick är en sten, placerad efter hur väl den följer profilen. Gränserna sätts av stenarna själva: <b>kärnan</b> börjar vid den mittersta stenen i profilen; <b>inom spannet</b> är en sten som liknar ristaren mer än nio av tio grannstenar gör; <b>ytterkanten</b> ligger inom profilstenarnas spridning men går inte att skilja från grannarna; <b>som grannarna</b> är en sten som följer profilen sämre än nio av tio profilstenar. Stenarna i profilen mäts med sig själva utelämnade.</p>
+      <div class="rp-scroll"><svg id="rp-dots" role="img" aria-label="Värde per sten i grupper"></svg></div></section>
+    <div class="rp-two">
+      <section class="glass"><h2>Var stenarna står</h2><p id="rp-map-note" class="rp-note"></p><div class="rp-scroll"><svg id="rp-map" role="img" aria-label="Karta över ristarens stenar"></svg></div><p class="credit">Karta: Vitki, efter Rundata och Vitkis gränser för de gamla landen.</p></section>
+      <section class="glass"><h2>Profilen mot attribueringsmodellen</h2>
+        <p class="rp-note">Vågrätt: hur väl stenen följer profilen här. Lodrätt: hur sannolikt Vitkis attribueringsmodell tycker att stenen är ristarens när den inte fått se stenen (korsvaliderad). Modellen väger också in plats, stil och runpar, så de två mätningarna är inte oberoende.</p>
+        <p id="rp-audit" class="rp-note"></p><div class="rp-scroll"><svg id="rp-sc" role="img" aria-label="Profilvärde mot modellens sannolikhet"></svg></div></section>
+    </div>
+    <section class="glass"><h2>Vilka stenar liknar varandra?</h2>
+      <p class="rp-note">Andelen av fingeravtryckets drag där två av ristarens stenar gör samma sak (bland dragen som går att avläsa på båda). Stenarna är ordnade så att de som liknar varandra hamnar bredvid varandra; mörka block är grupper av stenar som skrevs på samma sätt.</p>
+      <div id="rp-sim-legend" class="rp-legend"></div><div class="rp-scroll"><svg id="rp-sim" role="img" aria-label="Likhet mellan ristarens stenar"></svg></div></section>
+    <div class="rp-two">
+      <section class="glass"><h2>Ytterkanten och utanför</h2><div id="rp-edge"></div></section>
+      <section class="glass"><h2 id="rp-nb-h"></h2><p class="rp-note">Stenar inom 30 km som inte tillskrivs ristaren men följer profilen bäst. Inget förslag om att han ristade dem – bara de stenar som borde granskas först.</p><div id="rp-nb"></div></section>
+    </div>
+    <section class="glass"><h2>Så är det gjort, och vad det inte säger</h2><ul id="rp-method" class="rp-method"></ul>
+      <p class="credit">Diagram: Vitki, efter Rundata. Kod: r/carver_profile.R, r/attribution_audit.R, r/attribution_candidates.R, utdata/ristare/sida_data.py, web/src/lib/ristare/draw.js.</p></section>
+  </div>
+  <div class="rp-tip" hidden></div>
+</div>
+
+<script>
+__DRAW__
+const PAGE = preparePage(__DATA__);
+const root = document.querySelector(".rp-root"), pick = document.getElementById("pick");
+let C = 0, V = "med", state = {};
+pick.innerHTML = PAGE.carvers.map((c, i) => {
+  const m = c.variants.med, n = (m.n["signerad"] || 0) + (m.n["attribuerad"] || 0);
+  return `<option value="${i}">${c.name} · ${n} stenar${m.profil === "signerade" ? "" : " · profil av attribuerade"}</option>`;
+}).join("");
+function draw() {
+  pick.value = String(C);
+  document.getElementById("count").textContent = `${C + 1} av ${PAGE.carvers.length}`;
+  renderCarver(root, PAGE, PAGE.audit, C, V, v => { V = v; draw(); }, state);
+}
+function go(i) {
+  C = (i + PAGE.carvers.length) % PAGE.carvers.length; V = "med"; state = {};
+  const h = "#" + slug(PAGE.carvers[C].name);
+  if (location.hash !== h) history.replaceState(null, "", h);
+  draw();
+}
+pick.addEventListener("change", () => go(+pick.value));
+document.getElementById("prev").addEventListener("click", () => go(C - 1));
+document.getElementById("next").addEventListener("click", () => go(C + 1));
+const fromHash = () => Math.max(0, PAGE.carvers.findIndex(c => "#" + slug(c.name) === location.hash));
+addEventListener("hashchange", () => { const i = fromHash(); if (i !== C) { C = i; V = "med"; state = {}; draw(); } });
+let t; addEventListener("resize", () => { clearTimeout(t); t = setTimeout(draw, 150); });
+C = fromHash(); draw();
+</script>

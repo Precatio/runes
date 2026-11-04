@@ -13,6 +13,7 @@ export interface Translations {
     map: string;
     corpus: string;
     runeLibrary: string;
+    carvers: string;
     compare: string;
     gaps: string;
     overview: string;
@@ -73,6 +74,7 @@ export const translations: Record<Language, Translations> = {
       map: "Karta",
       corpus: "Mätkorpus",
       runeLibrary: "Runbibliotek",
+      carvers: "Ristarna",
       compare: "Jämför stenar",
       gaps: "Forskningsluckor",
       overview: "Stenöversikt",
@@ -131,6 +133,7 @@ export const translations: Record<Language, Translations> = {
       map: "Map",
       corpus: "Measurement corpus",
       runeLibrary: "Rune library",
+      carvers: "The carvers",
       compare: "Compare stones",
       gaps: "Research gaps",
       overview: "Stone overview",

@@ -1,0 +1,39 @@
+/* Ristarsidan (page.tsx, lib/ristare/draw.js). Allt under .rp-root: global CSS ligger kvar när man byter sida. */
+.rp-root {
+  --rp-ink: #0f172a; --rp-ink2: #475569; --rp-ink3: #64748b; --rp-rule: rgba(15, 23, 42, 0.1);
+  --rp-rust: #b7410e; --rp-rust2: #e9a27f; --rp-slate: #64748b; --rp-slate2: #cbd5e1; --rp-empty: #eef1f4;
+  --rp-sand: #c99a3c; --rp-sea: #dfe6ee; --rp-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--rp-ink);
+}
+.rp-root svg text { fill: var(--rp-ink); }
+.rp-root .rp-note { color: var(--rp-ink2); font-size: 14.5px; line-height: 1.6; max-width: 76ch; }
+.rp-root .rp-scroll { overflow-x: auto; margin-top: 12px; }
+.rp-root .rp-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--rp-ink2); margin-top: 10px; }
+.rp-root .rp-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -2px; margin-right: 6px; }
+.rp-root .rp-facts { display: flex; flex-wrap: wrap; gap: 12px 30px; margin-top: 22px; }
+.rp-root .rp-fact b { display: block; font: 700 28px/1.1 ui-serif, Georgia, Cambria, serif; font-variant-numeric: tabular-nums; }
+.rp-root .rp-fact span { color: var(--rp-ink2); font-size: 13px; }
+.rp-root .rp-warnbox { background: #fdf3e7; border: 1px solid rgba(201, 154, 60, 0.6); border-radius: 20px; padding: 14px 18px; margin-top: 18px; max-width: 76ch; font-size: 14.5px; }
+.rp-root .rp-variants { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+.rp-root .rp-variants button { font-weight: 600; font-size: 13.5px; color: var(--rp-ink2); border-radius: 999px; padding: 7px 14px; cursor: pointer;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(225, 230, 238, 0.75)); border: 1px solid #fff; box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08); }
+.rp-root .rp-variants button[aria-pressed="true"] { background: var(--rp-rust); border-color: var(--rp-rust); color: #fff; }
+.rp-root table.rp-list { border-collapse: collapse; font-size: 13.5px; width: 100%; }
+.rp-root table.rp-list th, .rp-root table.rp-list td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--rp-rule); font-variant-numeric: tabular-nums; vertical-align: top; }
+.rp-root table.rp-list th { font-weight: 600; color: var(--rp-ink3); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.rp-root table.rp-list caption { caption-side: bottom; text-align: left; color: var(--rp-ink3); font-size: 12.5px; padding-top: 8px; }
+.rp-root .rp-pill { display: inline-block; padding: 1px 9px; border-radius: 999px; font-size: 12px; white-space: nowrap; }
+.rp-root .rp-barp { display: inline-block; height: 8px; border-radius: 4px; background: var(--rp-rust); vertical-align: middle; margin-right: 8px; }
+.rp-root .rp-mono { font-family: var(--rp-mono); font-size: 13px; }
+.rp-root .rp-dim { color: var(--rp-ink3); }
+.rp-root .rp-small { font-size: 12.5px; }
+.rp-root .rp-empty { color: var(--rp-ink3); font-size: 14px; padding: 12px 0; }
+.rp-root .rp-more { margin-top: 10px; font-weight: 600; font-size: 13.5px; color: var(--rp-rust); background: none; border: 0; cursor: pointer; padding: 4px 0; }
+.rp-root ul.rp-method { margin: 6px 0 0; padding-left: 18px; max-width: 80ch; list-style: disc; color: #334155; font-size: 14.5px; line-height: 1.6; }
+.rp-root ul.rp-method li { margin-bottom: 6px; }
+.rp-root .rp-two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 24px; }
+.rp-root .rp-tip { position: fixed; pointer-events: none; z-index: 60; background: rgba(255, 255, 255, 0.97); color: var(--rp-ink); border: 1px solid #fff;
+  border-radius: 14px; padding: 9px 12px; font-size: 13px; line-height: 1.45; box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.16); max-width: 300px; }
+.rp-root .rp-tip b { font-family: var(--rp-mono); font-weight: 600; }
+.rp-root .rp-pick { font-weight: 600; font-size: 15px; color: var(--rp-ink); border-radius: 14px; padding: 8px 12px; max-width: 100%; }
+.rp-root .rp-btn { font-weight: 600; font-size: 14px; border-radius: 14px; padding: 8px 14px; }

@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "ristarna-en-i-taget",
+   "date": "2026-11-04",
+   "status": "nytt",
+   "title": "Ny sida: Ristarna, en i taget",
+   "text": "Under Korpus finns nu Ristarna: för 24 kända ristare visas deras fingeravtryck mot samtida grannstenar, en heatmap sten för sten, vilka av deras stenar som ligger i kärnan och vilka i ytterkanten, en karta och hur lika stenarna är varandra. En ruta visar de stenar utan ristare som attribueringsmodellen tror är hans. Modellen är nu prövad mot de signerade stenarna: den har rätt ristare först på 71 procent av dem."
+  },
+  {
    "id": "huggspar-runor-langs-slingan",
    "date": "2026-11-03",
    "status": "nytt",

@@ -1,6 +1,7 @@
 """Data för ristarsidan: alla ristarprofiler (r/carver_profile.R, utdata/ristare/kor_alla.sh) i en fil, med läsbara
 etiketter för dragen, likhet mellan varje ristares stenar (ordnad med hierarkisk klustring) och kartunderlag.
-    .venv/bin/python utdata/ristare/sida_data.py utdata/ristare/profiler OUT.json
+    .venv/bin/python utdata/ristare/sida_data.py utdata/ristare/profiler web/public/geo/ristare.json \
+        utdata/ristare/modellforslag.csv utdata/attribuering_provad/resultat.json
 """
 import glob
 import json
@@ -34,10 +35,10 @@ LABELS = {
     "pm_sjal": "Bön för själen", "cat_kristen": "Kristet innehåll", "cat_arv": "Arv eller ägande",
     "cat_bro_vag": "Bro eller väg", "cat_fard": "Färd", "cat_sjalvminne": "Rest åt sig själv",
     "msg_dod_borta": "Dog borta", "msg_dod_uppgift": "Berättar hur eller var han dog", "msg_resa": "Nämner en resa",
-    "mat_granit": "Granit", "mat_gnejs": "Gnejs", "mat_sandsten": "Sandsten",
+    "mat_granit": "Granit", "mat_gnejs": "Gnejs", "mat_sandsten": "Sandsten", "mat_kalksten": "Kalksten",
     "nara_bro": "Nära bro eller vad", "nara_vag": "Nära väg", "nara_vatten": "Nära vatten", "nara_hog": "Nära hög",
     "nara_gravfalt": "Nära gravfält", "nara_gammalt_namn": "Nära gammalt bebyggelsenamn",
-    "nara_centralort": "Nära centralortsnamn", "i_grupp": "Står i en grupp av stenar",
+    "nara_centralort": "Nära centralortsnamn", "nara_kultnamn": "Nära kultnamn", "i_grupp": "Står i en grupp av stenar",
     "skilj_punkt": "Punkt som skiljetecken", "skilj_kryss": "Kryss som skiljetecken", "skilj_kolon": "Kolon som skiljetecken",
     "skilj_apostrof": "Apostrof som skiljetecken", "skilj_plus": "Plus som skiljetecken",
     "skilj_blandat": "Blandade skiljetecken",
@@ -180,5 +181,7 @@ if __name__ == "__main__":
         carvers.append({"name": who, "variants": v, "forslag": sugg.get(who)})
         print(who, len(v["med"]["traits"]), len(v["med"]["stones"]), len(v["med"]["nb"]))
     page = {"carvers": carvers, "karta": basemap()}
+    if len(sys.argv) > 4:  # provningen av modellen (r/attribution_audit.R), som sidan visar per ristare
+        page["audit"] = json.load(open(sys.argv[4], encoding="utf-8"))
     json.dump(page, open(out, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     print(out, os.path.getsize(out) // 1024, "kB")
