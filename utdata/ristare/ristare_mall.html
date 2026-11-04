@@ -1,69 +1,79 @@
 <title>Ristarna en i taget</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: a sticky picker bar on top, one reading column for text, wide figure panels that scroll sideways on their own */
+/* Layout: Vitki's own look (vitkirunor.se, web/src/app/globals.css) – cool grey-blue ground, white glass cards with large
+   radii, system sans for text, serif headings, rust accent. The site has one light theme, so this page does too. */
 :root {
-  --bg: #f4f4f2; --panel: #ffffff; --ink: #1f2326; --ink2: #545b61; --ink3: #858c92; --rule: #dcdedd;
-  --rust: #b7410e; --rust2: #e9a27f; --rust3: #f6dccd; --slate: #5d6b78; --slate2: #c9d0d6; --empty: #eeefee;
-  --sand: #c99a3c; --warn: #fbf1e3;
-  --display: "Spectral", Georgia, serif; --body: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+  color-scheme: light;
+  --bg: #e2e7ec; --ink: #0f172a; --ink2: #475569; --ink3: #64748b; --rule: rgba(15, 23, 42, 0.1);
+  --panel: #ffffff; --glass: linear-gradient(135deg, rgba(255, 255, 255, 0.82) 0%, rgba(245, 247, 250, 0.66) 100%);
+  --rust: #b7410e; --rust2: #e9a27f; --rust3: #fbe7dc; --slate: #64748b; --slate2: #cbd5e1; --empty: #eef1f4;
+  --sand: #c99a3c; --warn: #fdf3e7;
+  --display: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  --body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #16191b; --panel: #1e2225; --ink: #e8e9e8; --ink2: #b0b6ba; --ink3: #80878c; --rule: #33393d;
-  --rust: #e2652e; --rust2: #a8532c; --rust3: #4a2a1c; --slate: #8fa1b0; --slate2: #3d4850; --empty: #262b2e; --sand: #d6aa52;
-  --warn: #2b241b; color-scheme: dark } }
-:root[data-theme="dark"] {
-  --bg: #16191b; --panel: #1e2225; --ink: #e8e9e8; --ink2: #b0b6ba; --ink3: #80878c; --rule: #33393d;
-  --rust: #e2652e; --rust2: #a8532c; --rust3: #4a2a1c; --slate: #8fa1b0; --slate2: #3d4850; --empty: #262b2e; --sand: #d6aa52;
-  --warn: #2b241b; color-scheme: dark }
-body { background: var(--bg); color: var(--ink); font: 15px/1.55 var(--body); }
-body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--panel); }
-.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: var(--panel); border-bottom: 1px solid var(--rule); }
+body { color: var(--ink); background: var(--bg); font: 15px/1.6 var(--body); -webkit-font-smoothing: antialiased;
+  background-image: radial-gradient(at 10% 10%, rgba(255, 255, 255, 0.95) 0px, transparent 40%),
+    radial-gradient(at 90% 15%, rgba(215, 222, 232, 0.9) 0px, transparent 50%),
+    radial-gradient(at 50% 95%, rgba(225, 230, 238, 0.95) 0px, transparent 50%);
+  background-attachment: fixed; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: #eef1f4; }
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: rgba(238, 241, 244, 0.86);
+  backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border-bottom: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.08); }
 .bar-in { max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; padding-block: 10px;
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-.bar label { font: 500 12px var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--ink2); }
-.bar select { font: 500 15px var(--body); color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: 7px 10px; min-width: 0; max-width: 100%; }
-.bar button { font: 500 14px var(--body); color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: 7px 12px; cursor: pointer; }
-.bar button:hover { border-color: var(--rust); }
+.bar label { font: 700 11px var(--body); letter-spacing: .2em; text-transform: uppercase; color: var(--rust); }
+.bar select, .bar button { font: 600 14px var(--body); color: var(--ink); border-radius: 14px; padding: 8px 12px; min-width: 0; max-width: 100%;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(225, 230, 238, 0.75)); border: 1px solid #fff;
+  box-shadow: 0 6px 16px -2px rgba(0, 0, 0, 0.08), inset 0 1px 1px 0 #fff, inset 0 -2px 4px 0 rgba(0, 0, 0, 0.06); }
+.bar button { cursor: pointer; transition: transform .2s ease; }
+.bar button:hover { transform: translateY(-1px); }
 .bar .count { color: var(--ink3); font-size: 13px; font-variant-numeric: tabular-nums; }
-.wrap { max-width: 1180px; margin: 0 auto; padding-block: 26px 64px;
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 40px 72px;
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-h1 { font: 600 clamp(28px, 4.4vw, 44px)/1.1 var(--display); margin: 0 0 6px; text-wrap: balance; }
-h2 { font: 600 24px/1.2 var(--display); margin: 0 0 6px; text-wrap: balance; }
-.kicker { font: 500 12px/1 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--rust); }
-.lede { max-width: 70ch; color: var(--ink2); font-size: 16.5px; margin: 10px 0 0; }
+h1 { font: 700 clamp(30px, 5vw, 48px)/1.08 var(--display); letter-spacing: -0.02em; margin: 10px 0 6px; text-wrap: balance; }
+h2 { font: 700 23px/1.2 var(--display); letter-spacing: -0.01em; margin: 0 0 8px; text-wrap: balance; }
+.kicker { font: 700 12px/1 var(--body); letter-spacing: .2em; text-transform: uppercase; color: var(--rust); }
+.lede { max-width: 70ch; color: var(--ink2); font-size: 18px; line-height: 1.6; margin: 14px 0 0; }
 p { max-width: 70ch; margin: 0 0 10px; }
-.grid { display: grid; gap: 22px; margin-top: 26px; }
-section.panel { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 20px; min-width: 0; }
-.note { color: var(--ink2); font-size: 14px; }
-.warnbox { background: var(--warn); border: 1px solid var(--sand); border-radius: 6px; padding: 12px 14px; margin-top: 16px; max-width: 76ch; font-size: 14.5px; }
-.facts { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 18px; }
-.fact b { display: block; font: 600 26px/1.1 var(--display); font-variant-numeric: tabular-nums; }
+.grid { display: grid; gap: 24px; margin-top: 30px; }
+section.panel { background: var(--glass); backdrop-filter: blur(40px) saturate(210%); -webkit-backdrop-filter: blur(40px) saturate(210%);
+  border: 1px solid rgba(255, 255, 255, 0.9); border-radius: 32px; padding: 26px; min-width: 0;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.08), 0 10px 20px -5px rgba(0, 0, 0, 0.04), inset 0 1px 2px 0 #fff; }
+section.panel.lift { border-color: rgba(183, 65, 14, 0.25); }
+.note { color: var(--ink2); font-size: 14.5px; }
+.warnbox { background: var(--warn); border: 1px solid rgba(201, 154, 60, 0.6); border-radius: 20px; padding: 14px 18px; margin-top: 18px; max-width: 76ch; font-size: 14.5px; }
+.facts { display: flex; flex-wrap: wrap; gap: 12px 30px; margin-top: 22px; }
+.fact b { display: block; font: 700 28px/1.1 var(--display); font-variant-numeric: tabular-nums; }
 .fact span { color: var(--ink2); font-size: 13px; }
-.toggle { display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; overflow: hidden; margin-top: 16px; background: var(--panel); flex-wrap: wrap; }
-.toggle button { font: 500 13.5px var(--body); color: var(--ink2); background: transparent; border: 0; padding: 8px 14px; cursor: pointer; }
-.toggle button[aria-pressed="true"] { background: var(--rust); color: #fff; }
+.toggle { display: inline-flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+.toggle button { font: 600 13.5px var(--body); color: var(--ink2); border-radius: 999px; padding: 7px 14px; cursor: pointer;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(225, 230, 238, 0.75)); border: 1px solid #fff;
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08); }
+.toggle button[aria-pressed="true"] { background: var(--rust); border-color: var(--rust); color: #fff; }
 button:focus-visible, select:focus-visible, a:focus-visible { outline: 2px solid var(--rust); outline-offset: 2px; }
 .scroll { overflow-x: auto; margin-top: 12px; }
 svg text { fill: var(--ink); font-family: var(--body); }
 .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--ink2); margin-top: 10px; }
-.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; vertical-align: -2px; margin-right: 6px; }
-.tip { position: fixed; pointer-events: none; z-index: 20; background: var(--panel); color: var(--ink); border: 1px solid var(--rule);
-  border-radius: 6px; padding: 8px 10px; font-size: 13px; line-height: 1.4; box-shadow: 0 4px 16px rgba(0,0,0,.14); max-width: 300px; }
-.tip b { font-family: var(--mono); font-weight: 500; }
-.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 22px; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -2px; margin-right: 6px; }
+.tip { position: fixed; pointer-events: none; z-index: 20; background: rgba(255, 255, 255, 0.97); color: var(--ink); border: 1px solid #fff;
+  border-radius: 14px; padding: 9px 12px; font-size: 13px; line-height: 1.45; box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.16); max-width: 300px; }
+.tip b { font-family: var(--mono); font-weight: 600; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 24px; }
 ul.plain { margin: 6px 0 0; padding-left: 18px; max-width: 72ch; }
-ul.plain li { margin-bottom: 4px; }
+ul.plain li { margin-bottom: 5px; }
 .mono { font-family: var(--mono); font-size: 13px; }
 table.list { border-collapse: collapse; font-size: 13.5px; width: 100%; }
-table.list th, table.list td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--rule); font-variant-numeric: tabular-nums; }
-table.list th { font-weight: 500; color: var(--ink2); font-size: 12.5px; }
-.pill { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; }
-caption { caption-side: bottom; text-align: left; color: var(--ink3); font-size: 12.5px; padding-top: 6px; }
-.credit { color: var(--ink3); font-size: 12.5px; margin-top: 8px; }
+table.list th, table.list td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--rule); font-variant-numeric: tabular-nums; vertical-align: top; }
+table.list th { font-weight: 600; color: var(--ink3); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.pill { display: inline-block; padding: 1px 9px; border-radius: 999px; font-size: 12px; white-space: nowrap; }
+.bar-p { display: inline-block; height: 8px; border-radius: 4px; background: var(--rust); vertical-align: middle; margin-right: 8px; }
+caption { caption-side: bottom; text-align: left; color: var(--ink3); font-size: 12.5px; padding-top: 8px; }
+.credit { color: var(--ink3); font-size: 12.5px; margin-top: 10px; }
 .empty { color: var(--ink3); font-size: 14px; padding: 12px 0; }
+.more { margin-top: 10px; font: 600 13.5px var(--body); color: var(--rust); background: none; border: 0; cursor: pointer; padding: 4px 0; }
 </style>
 
 <div class="bar"><div class="bar-in">
@@ -83,6 +93,12 @@ caption { caption-side: bottom; text-align: left; color: var(--ink3); font-size:
   <div class="toggle" id="variants" role="group" aria-label="Vilka stenar profilen byggs av"></div>
 
   <div class="grid">
+    <section class="panel lift">
+      <h2 id="sg-h"></h2>
+      <p class="note" id="sg-note"></p>
+      <div id="sg"></div>
+    </section>
+
     <section class="panel">
       <h2>Fingeravtrycket</h2>
       <p class="note" id="fp-note"></p>
@@ -151,7 +167,7 @@ caption { caption-side: bottom; text-align: left; color: var(--ink3); font-size:
     <section class="panel">
       <h2>Så är det gjort, och vad det inte säger</h2>
       <ul class="plain" id="method"></ul>
-      <p class="credit">Diagram: Vitki, efter Rundata (korpus 7b9061c9). Kod: r/carver_profile.R, utdata/ristare/sida_data.py; modellprovningen r/attribution_audit.R.</p>
+      <p class="credit">Diagram: Vitki, efter Rundata (korpus 7b9061c9). Kod: r/carver_profile.R, utdata/ristare/sida_data.py; modellprovningen r/attribution_audit.R; förslagen r/attribution_candidates.R.</p>
     </section>
   </div>
 </div>
@@ -230,7 +246,7 @@ function header() {
   box.innerHTML = vs.map(v => `<button type="button" data-v="${v}" aria-pressed="${v === V}">${VARIANTS[v] || v}</button>`).join("");
   box.querySelectorAll("button").forEach(b => b.addEventListener("click", () => { V = b.dataset.v; draw(); }));
   document.getElementById("fp-note").textContent = `De drag där ${D.profil === "signerade" ? WHO + "s signerade stenar" : "stenarna i " + WHO + "s grupp"} skiljer sig tydligast från grannarna: andelen hos ${WHO} (rost) mot andelen hos grannstenarna (grå). Överst det han gör oftare, nederst det han gör mer sällan.`;
-  document.getElementById("map-note").textContent = `${WHO}s stenar färgade efter klass; ring = signerad, romb = delad eller osäker; små grå prickar är grannstenarna inom ${D.km} km. Streckade linjer är de gamla landens gränser där Vitki har dem.`;
+  document.getElementById("map-note").textContent = `${WHO}s stenar färgade efter klass; ring = signerad, romb = delad eller osäker; streckad rostring = sten som appen föreslår; små grå prickar är grannstenarna inom ${D.km} km. Streckade linjer är de gamla landens gränser där Vitki har dem.`;
   document.getElementById("nb-h").textContent = `Grannar som liknar ${WHO}`;
 }
 
@@ -340,6 +356,12 @@ function map() {
   K.folk.filter(f => inBox(f.ring)).forEach(f => el("path", { d: "M" + f.ring.map(P).join("L") + "Z", fill: "none", stroke: "var(--ink3)", "stroke-dasharray": "4 3", "stroke-width": 1 }, g));
   K.labels.filter(l => l.lon > x0 && l.lon < x1 && l.lat > y0 && l.lat < y1).forEach(l => { const [x, y] = P([l.lon, l.lat]); txt(g, x, y, l.label, { "text-anchor": "middle", "font-size": 12, fill: "var(--ink3)", "font-style": "italic" }); });
   D.stones.filter(s => s.set === "granne" && s.lat != null).forEach(s => { const [x, y] = P([s.lon, s.lat]); el("circle", { cx: x, cy: y, r: 1.8, fill: "var(--ink3)", opacity: 0.5 }, g); });
+  const F = PAGE.carvers[C].forslag;
+  (F ? F.rows : []).filter(r => r.lat != null).forEach(r => {
+    const [x, y] = P([r.lon, r.lat]);
+    hover(el("circle", { cx: x, cy: y, r: 6, fill: "none", stroke: "var(--rust)", "stroke-width": 2, "stroke-dasharray": "2.5 2" }, g),
+      () => `<b>${esc(r.id)}</b> · ${esc(r.place)}<br>Modellen föreslår ${esc(WHO)}: ${pct(r.p)}<br><span style="color:var(--ink2)">ingen säker ristare i Rundata</span>`);
+  });
   own().filter(s => s.lat != null).sort((a, b) => KL.indexOf(b.klass) - KL.indexOf(a.klass)).forEach(s => {
     const [x, y] = P([s.lon, s.lat]), signed = s.set.startsWith("signerad");
     const m = s.set === "osäker"
@@ -420,6 +442,37 @@ function method() {
   document.getElementById("method").innerHTML = items.map(s => `<li>${s}</li>`).join("");
 }
 
+
+let SG_ALL = false;
+function suggestions() {
+  const F = PAGE.carvers[C].forslag, rows = F ? F.rows : [], box = document.getElementById("sg");
+  document.getElementById("sg-h").textContent = `Stenar som appen tror är ${WHO}s`;
+  const inModel = AUDIT.q2.per_carver.some(r => r.carver === WHO);
+  document.getElementById("sg-note").innerHTML = !inModel
+    ? `${esc(WHO)} har färre än åtta säkra stenar och finns inte i attribueringsmodellen, så appen kan inte föreslå stenar åt honom än.`
+    : `Runstenar utan säker ristare där Vitkis attribueringsmodell sätter ${esc(WHO)} främst. Procenten är omkalibrerade efter provningen mot de signerade stenarna, där modellen hade rätt först på ${pct(AUDIT.q1.top1[0])} av dem. ` +
+      `Stenar där modellen är så osäker att det lika gärna kan vara en ristare den inte känner är bortsorterade${F && F.n_blocked ? ` (${F.n_blocked} stenar)` : ""}. ` +
+      `Kolumnen <b>Profilen</b> visar hur stenen ligger mot ${esc(WHO)}s fingeravtryck här på sidan; den är en andra, delvis oberoende bedömning.`;
+  if (!inModel) { box.innerHTML = ""; return; }
+  if (!rows.length) { box.innerHTML = `<div class="empty">Modellen sätter inte ${esc(WHO)} främst på någon sten utan ristare, utom där den är för osäker.</div>`; return; }
+  const byId = Object.fromEntries(D.stones.map(s => [s.id, s]));
+  const show = SG_ALL ? rows : rows.slice(0, 15);
+  const strength = p => p >= 0.8 ? "stark" : p >= 0.6 ? "trolig" : "möjlig";
+  const tr = r => {
+    const st = byId[r.id];
+    const prof = st && st.score != null ? `<span class="pill" style="background:color-mix(in oklab, ${KCOL[st.klass]} 25%, white)">${st.klass}</span>` : `<span style="color:var(--ink3)">${st ? "för lite text" : "inte bland grannarna"}</span>`;
+    const note = r.rundata ? `Rundata: möjligen ${esc(r.rundata.split(";").join(" eller "))}` : "";
+    return `<tr><td class="mono">${esc(r.id)}</td><td>${esc(r.place)}${r.parish ? `<br><span style="color:var(--ink3);font-size:12.5px">${esc(r.parish)}</span>` : ""}</td>` +
+      `<td><span class="bar-p" style="width:${Math.round(r.p * 60)}px"></span>${pct(r.p)} <span style="color:var(--ink3);font-size:12.5px">${strength(r.p)}</span></td>` +
+      `<td>${esc(r.second)} <span style="color:var(--ink3)">${pct(r.p2)}</span></td><td>${prof}</td><td style="color:var(--ink2);font-size:12.5px">${note}</td></tr>`;
+  };
+  box.innerHTML = `<div class="scroll"><table class="list"><thead><tr><th>Sten</th><th>Plats</th><th>Modellen</th><th>Näst troligast</th><th>Profilen</th><th></th></tr></thead><tbody>${show.map(tr).join("")}</tbody>` +
+    `<caption>${rows.length} stenar. Ett förslag, inte en attribuering: ornamentik och runformer, forskarnas viktigaste belägg, saknas i modellen.</caption></table></div>` +
+    (rows.length > 15 ? `<button class="more" type="button" id="sg-more">${SG_ALL ? "Visa färre" : `Visa alla ${rows.length}`}</button>` : "");
+  const more = document.getElementById("sg-more");
+  if (more) more.addEventListener("click", () => { SG_ALL = !SG_ALL; suggestions(); });
+}
+
 const pick = document.getElementById("pick");
 pick.innerHTML = PAGE.carvers.map((c, i) => {
   const v = c.variants.med, n = (v.n["signerad"] || 0) + (v.n["attribuerad"] || 0);
@@ -431,10 +484,10 @@ function draw() {
   D = c.variants[V]; WHO = c.name;
   pick.value = String(C);
   document.getElementById("count").textContent = `${C + 1} av ${PAGE.carvers.length}`;
-  header(); fingerprint(); heatmap(); dots(); map(); scatter(); similarity(); lists(); method();
+  header(); suggestions(); fingerprint(); heatmap(); dots(); map(); scatter(); similarity(); lists(); method();
 }
 function go(i) {
-  C = (i + PAGE.carvers.length) % PAGE.carvers.length; V = "med";
+  C = (i + PAGE.carvers.length) % PAGE.carvers.length; V = "med"; SG_ALL = false;
   const h = "#" + slug(PAGE.carvers[C].name);
   if (location.hash !== h) history.replaceState(null, "", h);
   draw();

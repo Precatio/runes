@@ -145,8 +145,30 @@ def basemap():
     return {"folk": folk, "labels": labels, "coast": coast}
 
 
+def suggestions(path):
+    """Attribueringsmodellens förslag (r/attribution_candidates.R), per ristare: stenar utan säker ristare där modellen
+    sätter ristaren först och spärren ”någon annan” inte slår till; ordnade efter den omkalibrerade sannolikheten."""
+    import csv
+    by = {}
+    for row in csv.DictReader(open(path, encoding="utf-8")):
+        if row["someone_else"] == "TRUE":
+            by.setdefault(row["top"], {"n_blocked": 0, "rows": []})["n_blocked"] = by.get(row["top"], {"n_blocked": 0})["n_blocked"] + 1
+            by.setdefault(row["top"], {"n_blocked": 0, "rows": []})
+            continue
+        by.setdefault(row["top"], {"n_blocked": 0, "rows": []})["rows"].append(
+            {"id": row["signum"], "place": row["place"], "parish": row["parish"], "style": row["style"] or None,
+             "p": float(row["p_cal"]), "second": row["second"], "p2": float(row["p2_cal"]),
+             "rundata": row["rundata_uncertain"], "near_km": float(row["near_km"]),
+             "lat": float(row["lat"]) if row["lat"] not in ("", "NA") else None,
+             "lon": float(row["lon"]) if row["lon"] not in ("", "NA") else None})
+    for v in by.values():
+        v["rows"].sort(key=lambda r: -r["p"])
+    return by
+
+
 if __name__ == "__main__":
     src, out = sys.argv[1:3]
+    sugg = suggestions(sys.argv[3]) if len(sys.argv) > 3 else {}
     names = [ln.strip() for ln in open(os.path.join(src, "ristare.txt"), encoding="utf-8") if ln.strip()]
     carvers = []
     for who in names:
@@ -155,7 +177,7 @@ if __name__ == "__main__":
         alt = glob.glob(os.path.join(src, who.replace(" ", "_").replace("-", "") + "__*.json"))
         for a in alt:
             v[os.path.basename(a)[:-5].split("__", 1)[1]] = build(a)
-        carvers.append({"name": who, "variants": v})
+        carvers.append({"name": who, "variants": v, "forslag": sugg.get(who)})
         print(who, len(v["med"]["traits"]), len(v["med"]["stones"]), len(v["med"]["nb"]))
     page = {"carvers": carvers, "karta": basemap()}
     json.dump(page, open(out, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
