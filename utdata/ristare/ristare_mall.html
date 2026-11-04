@@ -1,0 +1,451 @@
+<title>Ristarna en i taget</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a sticky picker bar on top, one reading column for text, wide figure panels that scroll sideways on their own */
+:root {
+  --bg: #f4f4f2; --panel: #ffffff; --ink: #1f2326; --ink2: #545b61; --ink3: #858c92; --rule: #dcdedd;
+  --rust: #b7410e; --rust2: #e9a27f; --rust3: #f6dccd; --slate: #5d6b78; --slate2: #c9d0d6; --empty: #eeefee;
+  --sand: #c99a3c; --warn: #fbf1e3;
+  --display: "Spectral", Georgia, serif; --body: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #16191b; --panel: #1e2225; --ink: #e8e9e8; --ink2: #b0b6ba; --ink3: #80878c; --rule: #33393d;
+  --rust: #e2652e; --rust2: #a8532c; --rust3: #4a2a1c; --slate: #8fa1b0; --slate2: #3d4850; --empty: #262b2e; --sand: #d6aa52;
+  --warn: #2b241b; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #16191b; --panel: #1e2225; --ink: #e8e9e8; --ink2: #b0b6ba; --ink3: #80878c; --rule: #33393d;
+  --rust: #e2652e; --rust2: #a8532c; --rust3: #4a2a1c; --slate: #8fa1b0; --slate2: #3d4850; --empty: #262b2e; --sand: #d6aa52;
+  --warn: #2b241b; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font: 15px/1.55 var(--body); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--panel); }
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: var(--panel); border-bottom: 1px solid var(--rule); }
+.bar-in { max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; padding-block: 10px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.bar label { font: 500 12px var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--ink2); }
+.bar select { font: 500 15px var(--body); color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: 7px 10px; min-width: 0; max-width: 100%; }
+.bar button { font: 500 14px var(--body); color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: 7px 12px; cursor: pointer; }
+.bar button:hover { border-color: var(--rust); }
+.bar .count { color: var(--ink3); font-size: 13px; font-variant-numeric: tabular-nums; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 26px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1 { font: 600 clamp(28px, 4.4vw, 44px)/1.1 var(--display); margin: 0 0 6px; text-wrap: balance; }
+h2 { font: 600 24px/1.2 var(--display); margin: 0 0 6px; text-wrap: balance; }
+.kicker { font: 500 12px/1 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--rust); }
+.lede { max-width: 70ch; color: var(--ink2); font-size: 16.5px; margin: 10px 0 0; }
+p { max-width: 70ch; margin: 0 0 10px; }
+.grid { display: grid; gap: 22px; margin-top: 26px; }
+section.panel { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 20px; min-width: 0; }
+.note { color: var(--ink2); font-size: 14px; }
+.warnbox { background: var(--warn); border: 1px solid var(--sand); border-radius: 6px; padding: 12px 14px; margin-top: 16px; max-width: 76ch; font-size: 14.5px; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 18px; }
+.fact b { display: block; font: 600 26px/1.1 var(--display); font-variant-numeric: tabular-nums; }
+.fact span { color: var(--ink2); font-size: 13px; }
+.toggle { display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; overflow: hidden; margin-top: 16px; background: var(--panel); flex-wrap: wrap; }
+.toggle button { font: 500 13.5px var(--body); color: var(--ink2); background: transparent; border: 0; padding: 8px 14px; cursor: pointer; }
+.toggle button[aria-pressed="true"] { background: var(--rust); color: #fff; }
+button:focus-visible, select:focus-visible, a:focus-visible { outline: 2px solid var(--rust); outline-offset: 2px; }
+.scroll { overflow-x: auto; margin-top: 12px; }
+svg text { fill: var(--ink); font-family: var(--body); }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--ink2); margin-top: 10px; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; vertical-align: -2px; margin-right: 6px; }
+.tip { position: fixed; pointer-events: none; z-index: 20; background: var(--panel); color: var(--ink); border: 1px solid var(--rule);
+  border-radius: 6px; padding: 8px 10px; font-size: 13px; line-height: 1.4; box-shadow: 0 4px 16px rgba(0,0,0,.14); max-width: 300px; }
+.tip b { font-family: var(--mono); font-weight: 500; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 22px; }
+ul.plain { margin: 6px 0 0; padding-left: 18px; max-width: 72ch; }
+ul.plain li { margin-bottom: 4px; }
+.mono { font-family: var(--mono); font-size: 13px; }
+table.list { border-collapse: collapse; font-size: 13.5px; width: 100%; }
+table.list th, table.list td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--rule); font-variant-numeric: tabular-nums; }
+table.list th { font-weight: 500; color: var(--ink2); font-size: 12.5px; }
+.pill { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; }
+caption { caption-side: bottom; text-align: left; color: var(--ink3); font-size: 12.5px; padding-top: 6px; }
+.credit { color: var(--ink3); font-size: 12.5px; margin-top: 8px; }
+.empty { color: var(--ink3); font-size: 14px; padding: 12px 0; }
+</style>
+
+<div class="bar"><div class="bar-in">
+  <label for="pick">Ristare</label>
+  <select id="pick"></select>
+  <button id="prev" type="button" aria-label="Föregående ristare">← Föregående</button>
+  <button id="next" type="button" aria-label="Nästa ristare">Nästa →</button>
+  <span class="count" id="count"></span>
+</div></div>
+
+<div class="wrap">
+  <div class="kicker">Ristarna, en i taget</div>
+  <h1 id="h1"></h1>
+  <p class="lede" id="lede"></p>
+  <div id="warn"></div>
+  <div class="facts" id="facts"></div>
+  <div class="toggle" id="variants" role="group" aria-label="Vilka stenar profilen byggs av"></div>
+
+  <div class="grid">
+    <section class="panel">
+      <h2>Fingeravtrycket</h2>
+      <p class="note" id="fp-note"></p>
+      <div class="scroll"><svg id="fp" role="img" aria-label="Andel per drag hos ristaren och hos grannarna"></svg></div>
+    </section>
+
+    <section class="panel">
+      <h2>Sten för sten</h2>
+      <p class="note">Varje rad är en sten, varje kolumn ett av fingeravtryckets drag. <b>Rost</b> betyder att stenen
+        gör som ristaren, <b>grått</b> att den gör som grannarna, <b>tomt</b> att draget inte går att avläsa (kort eller
+        skadad text). Stenarna står i ordning efter hur väl de följer profilen; stapeln längst till höger visar värdet
+        och klassen.</p>
+      <div class="legend" id="hm-legend"></div>
+      <div class="scroll"><svg id="hm" role="img" aria-label="Heatmap: stenar mot drag"></svg></div>
+    </section>
+
+    <section class="panel">
+      <h2>Kärna, spann och ytterkant</h2>
+      <p class="note">Varje prick är en sten, placerad efter hur väl den följer profilen. Gränserna sätts av stenarna själva:
+        <b>kärnan</b> börjar vid den mittersta stenen i profilen; <b>inom spannet</b> är en sten som liknar ristaren mer än
+        nio av tio grannstenar gör; <b>ytterkanten</b> ligger inom profilstenarnas spridning men går inte att skilja från
+        grannarna; <b>som grannarna</b> är en sten som följer profilen sämre än nio av tio profilstenar. Stenarna i
+        profilen mäts med sig själva utelämnade.</p>
+      <div class="scroll"><svg id="dots" role="img" aria-label="Värde per sten i grupper"></svg></div>
+    </section>
+
+    <div class="two">
+      <section class="panel">
+        <h2>Var stenarna står</h2>
+        <p class="note" id="map-note"></p>
+        <div class="scroll"><svg id="map" role="img" aria-label="Karta över ristarens stenar"></svg></div>
+        <div class="credit">Karta: Vitki, efter Rundata och Vitkis gränser för de gamla landen.</div>
+      </section>
+      <section class="panel">
+        <h2>Profilen mot attribueringsmodellen</h2>
+        <p class="note">Vågrätt: hur väl stenen följer profilen här. Lodrätt: hur sannolikt Vitkis attribueringsmodell
+          tycker att stenen är ristarens när den inte fått se stenen (korsvaliderad). Modellen väger också in plats, stil och
+          runpar, så de två mätningarna är inte oberoende.</p>
+        <div id="audit" class="note"></div>
+        <div class="scroll"><svg id="sc" role="img" aria-label="Spridningsdiagram: profilvärde mot modellens sannolikhet"></svg></div>
+      </section>
+    </div>
+
+    <section class="panel">
+      <h2>Vilka stenar liknar varandra?</h2>
+      <p class="note">Andelen av fingeravtryckets drag där två av ristarens stenar gör samma sak (bland dragen som går att
+        avläsa på båda). Stenarna är ordnade så att de som liknar varandra hamnar bredvid varandra; mörka block är grupper
+        av stenar som skrevs på samma sätt.</p>
+      <div class="legend" id="sim-legend"></div>
+      <div class="scroll"><svg id="sim" role="img" aria-label="Likhet mellan ristarens stenar"></svg></div>
+    </section>
+
+    <div class="two">
+      <section class="panel">
+        <h2>Ytterkanten och utanför</h2>
+        <div id="edge"></div>
+      </section>
+      <section class="panel">
+        <h2 id="nb-h"></h2>
+        <p class="note">Stenar inom 30 km som inte tillskrivs ristaren men följer profilen bäst. Inget förslag om att han
+          ristade dem – bara de stenar som borde granskas först.</p>
+        <div id="nb"></div>
+      </section>
+    </div>
+
+    <section class="panel">
+      <h2>Så är det gjort, och vad det inte säger</h2>
+      <ul class="plain" id="method"></ul>
+      <p class="credit">Diagram: Vitki, efter Rundata (korpus 7b9061c9). Kod: r/carver_profile.R, utdata/ristare/sida_data.py; modellprovningen r/attribution_audit.R.</p>
+    </section>
+  </div>
+</div>
+<div class="tip" id="tip" hidden></div>
+
+<script>
+const PAGE = __DATA__;
+const AUDIT = __AUDIT__;
+const NS = "http://www.w3.org/2000/svg";
+const KL = ["kärna", "inom spannet", "ytterkant", "som grannarna", "kan inte avgöras"];
+const KCOL = { "kärna": "var(--rust)", "inom spannet": "var(--rust2)", "ytterkant": "var(--sand)", "som grannarna": "var(--slate)", "kan inte avgöras": "var(--empty)" };
+const SETS = ["signerad", "signerad utanför profilen", "attribuerad", "osäker"];
+const SETLABEL = { "signerad": "Signerade", "signerad utanför profilen": "Signerade, utanför profilen", "attribuerad": "Attribuerade", "osäker": "Delad eller osäker", "granne": "Grannstenar" };
+const VARIANTS = { med: "Standardprofil", utan_rodballe: "Utan Röd-Balles två (Vs 15, Vs 24)" };
+const fmt = (x, d = 2) => x == null ? "–" : x.toFixed(d).replace(".", ",").replace("-", "−");
+const pct = x => x == null ? "–" : Math.round(x * 100) + " %";
+const slug = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+let C = 0, V = "med", D = null, WHO = "";
+
+// Grannstenarna kommer kompakt: [id, plats, socken, lat, lon, stil, värde, antal drag, klass]
+PAGE.carvers.forEach(c => Object.values(c.variants).forEach(v => {
+  v.stones = v.stones.concat(v.nb.map(a => ({ id: a[0], place: a[1], parish: a[2], lat: a[3], lon: a[4], style: a[5], score: a[6], n: a[7], klass: a[8], set: "granne" })));
+}));
+
+function el(tag, attrs = {}, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function txt(parent, x, y, s, attrs = {}) { const t = el("text", { x, y, ...attrs }, parent); t.textContent = s; return t; }
+function size(svg, W, H) { svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("width", W); svg.setAttribute("height", H); }
+const tip = document.getElementById("tip");
+function moveTip(ev) {
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  let x = ev.clientX + 14, y = ev.clientY + 14;
+  if (x + w > innerWidth - 8) x = ev.clientX - w - 14;
+  if (y + h > innerHeight - 8) y = ev.clientY - h - 14;
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+function hover(node, html) {
+  node.addEventListener("mouseenter", ev => { tip.innerHTML = html(); tip.hidden = false; moveTip(ev); });
+  node.addEventListener("mousemove", moveTip);
+  node.addEventListener("mouseleave", () => { tip.hidden = true; });
+}
+const esc = s => String(s ?? "").replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+function stoneTip(s) {
+  return `<b>${esc(s.id)}</b> · ${esc(s.place)}${s.parish ? ", " + esc(s.parish) : ""}<br>${SETLABEL[s.set]} · ${esc(s.style || "ingen stilgrupp")}${s.material ? " · " + esc(s.material) : ""}<br>` +
+    `Värde ${fmt(s.score)}${s.follows != null ? " · följer " + pct(s.follows) : ""} · ${s.n} avläsbara drag<br><span style="color:var(--ink2)">${s.klass}</span>` +
+    (s.modell != null ? `<br>Modellen: ${pct(s.modell)} ${esc(WHO)}` : "");
+}
+const own = () => D.stones.filter(s => s.set !== "granne");
+const ordered = () => own().slice().sort((a, b) => SETS.indexOf(a.set) - SETS.indexOf(b.set) || (b.score ?? -9) - (a.score ?? -9));
+const inProfile = s => D.profil === "signerade" ? s.set === "signerad" : (s.set === "signerad" || s.set === "attribuerad");
+const flagged = s => inProfile(s) && (s.klass === "som grannarna") || (WHO === "Balle" && (s.id === "Vs 15" || s.id === "Vs 24"));
+
+function header() {
+  const n = D.n, sg = n["signerad"] || 0, at = n["attribuerad"] || 0, us = n["osäker"] || 0;
+  document.getElementById("h1").textContent = `${WHO} – vilka stenar följer hans drag?`;
+  const per = D.period && D.period[0] != null ? ` Hans stenar dateras efter stil till omkring ${D.period[0]}–${D.period[1]}.` : "";
+  const provs = [...new Set(own().map(s => s.prov))].join(", ");
+  document.getElementById("lede").textContent =
+    `${WHO} har ${sg + at} stenar med säker ristare i Rundata (${sg} signerade, ${at} attribuerade) och ${us} som han delar med någon annan eller som är osäkra, i ${provs}.${per} ` +
+    `Här jämförs hans stenar med samtida grannstenar inom ${D.km} km, och varje sten prövas: ligger den mitt i hans sätt att skriva, i ytterkanten eller bland grannarna?`;
+  document.getElementById("warn").innerHTML = D.profil === "signerade" ? "" :
+    `<div class="warnbox"><b>Profilen bygger på attribuerade stenar.</b> ${esc(WHO)} har ${sg === 0 ? "inga signerade stenar" : sg >= 5 ? sg + " signerade stenar, men de skiljer sig från grannarna i färre än åtta drag" : "bara " + sg + " signerade stenar, färre än fem"}. Profilen byggs därför av alla hans säkra stenar, också dem som forskningen tillskrivit honom efter stil och stavning. Sidan visar då hur samstämmig den gruppen är och vilka stenar som skiljer sig, men den prövar inte attribueringarna mot ett facit.</div>`;
+  const all = own(), meas = all.filter(s => s.klass !== "kan inte avgöras" && !inProfile(s) && s.set === "attribuerad");
+  const inner = meas.filter(s => s.klass === "kärna" || s.klass === "inom spannet").length;
+  const items = [[D.profil === "signerade" ? sg : sg + at, D.profil === "signerade" ? "signerade stenar bygger profilen" : "säkra stenar bygger profilen"],
+    [D.traits.length, "drag i fingeravtrycket"]];
+  if (D.profil === "signerade") items.push([at, "attribuerade stenar"], [inner + " av " + meas.length, "mätbara attribuerade i kärnan eller inom spannet"]);
+  items.push([n["granne"] || 0, "grannstenar att jämföra med"]);
+  document.getElementById("facts").innerHTML = items.map(([b, s]) => `<div class="fact"><b>${b}</b><span>${s}</span></div>`).join("");
+  const vs = Object.keys(PAGE.carvers[C].variants), box = document.getElementById("variants");
+  box.hidden = vs.length < 2;
+  box.innerHTML = vs.map(v => `<button type="button" data-v="${v}" aria-pressed="${v === V}">${VARIANTS[v] || v}</button>`).join("");
+  box.querySelectorAll("button").forEach(b => b.addEventListener("click", () => { V = b.dataset.v; draw(); }));
+  document.getElementById("fp-note").textContent = `De drag där ${D.profil === "signerade" ? WHO + "s signerade stenar" : "stenarna i " + WHO + "s grupp"} skiljer sig tydligast från grannarna: andelen hos ${WHO} (rost) mot andelen hos grannstenarna (grå). Överst det han gör oftare, nederst det han gör mer sällan.`;
+  document.getElementById("map-note").textContent = `${WHO}s stenar färgade efter klass; ring = signerad, romb = delad eller osäker; små grå prickar är grannstenarna inom ${D.km} km. Streckade linjer är de gamla landens gränser där Vitki har dem.`;
+  document.getElementById("nb-h").textContent = `Grannar som liknar ${WHO}`;
+}
+
+function fingerprint() {
+  const svg = document.getElementById("fp"); svg.innerHTML = "";
+  const T = D.traits;
+  if (!T.length) { size(svg, 600, 40); txt(svg, 0, 24, "Inga drag skiljer sig tillräckligt från grannarna.", { "font-size": 14, fill: "var(--ink2)" }); return; }
+  const L = 290, W = 820, R = 70, rowH = 24, top = 26, H = top + T.length * rowH + 30;
+  size(svg, W, H);
+  const x = v => L + v * (W - L - R);
+  for (let v = 0; v <= 1.001; v += 0.25) {
+    el("line", { x1: x(v), x2: x(v), y1: top - 8, y2: H - 26, stroke: "var(--rule)" }, svg);
+    txt(svg, x(v), H - 10, pct(v), { "text-anchor": "middle", "font-size": 12, fill: "var(--ink2)" });
+  }
+  const firstLess = T.findIndex(t => t.lor < 0);
+  T.forEach((t, i) => {
+    const y = top + i * rowH + rowH / 2;
+    if (i === firstLess && i > 0) el("line", { x1: 0, x2: W, y1: y - rowH / 2, y2: y - rowH / 2, stroke: "var(--ink3)", "stroke-dasharray": "3 3" }, svg);
+    txt(svg, L - 12, y + 4, t.label, { "text-anchor": "end", "font-size": 13 });
+    el("line", { x1: x(t.pn), x2: x(t.pc), y1: y, y2: y, stroke: "var(--rust2)", "stroke-width": 2 }, svg);
+    el("circle", { cx: x(t.pn), cy: y, r: 5, fill: "var(--slate)", stroke: "var(--panel)", "stroke-width": 2 }, svg);
+    el("circle", { cx: x(t.pc), cy: y, r: 6, fill: "var(--rust)", stroke: "var(--panel)", "stroke-width": 2 }, svg);
+    txt(svg, W - R + 10, y + 4, (t.lor > 0 ? "×" : "÷") + fmt(Math.exp(Math.abs(t.lor)), 1), { "font-size": 12, fill: "var(--ink2)" });
+    const hit = el("rect", { x: 0, y: y - rowH / 2, width: W, height: rowH, fill: "transparent" }, svg);
+    hover(hit, () => `<b>${esc(t.label)}</b><br>${esc(WHO)}: ${t.kc} av ${t.nc} (${pct(t.pc)})<br>Grannar: ${t.kn} av ${t.nn} (${pct(t.pn)})<br>Oddsen ${t.lor > 0 ? "gånger" : "delat med"} ${fmt(Math.exp(Math.abs(t.lor)), 1)}` + (t.dup.length ? `<br><span style="color:var(--ink2)">Räknas ihop med: ${esc(t.dup.join(", "))}</span>` : ""));
+  });
+  txt(svg, L - 12, 14, "Gör oftare än grannarna ↓", { "text-anchor": "end", "font-size": 12, fill: "var(--rust)" });
+  txt(svg, W - R + 10, 14, "odds", { "font-size": 12, fill: "var(--ink2)" });
+  el("circle", { cx: L + 6, cy: 10, r: 5, fill: "var(--rust)" }, svg); txt(svg, L + 16, 14, WHO, { "font-size": 12, fill: "var(--ink2)" });
+  el("circle", { cx: L + 30 + WHO.length * 7, cy: 10, r: 5, fill: "var(--slate)" }, svg); txt(svg, L + 40 + WHO.length * 7, 14, "grannar", { "font-size": 12, fill: "var(--ink2)" });
+}
+
+function heatmap() {
+  const svg = document.getElementById("hm"); svg.innerHTML = "";
+  const T = D.traits, S = ordered();
+  const cw = 22, ch = 15, L = 150, top = 210, barW = 150, gap = 12;
+  let y = top, last = null; const rows = [];
+  S.forEach(s => { if (s.set !== last) { y += last ? 20 : 0; rows.push({ head: s.set, y }); y += 18; last = s.set; } rows.push({ s, y }); y += ch; });
+  const W = L + T.length * cw + gap + barW + 60, H = y + 20;
+  size(svg, W, H);
+  T.forEach((t, j) => txt(svg, 0, 0, t.label, { "font-size": 12, transform: `translate(${L + j * cw + cw / 2 + 4},${top - 8}) rotate(-55)`, fill: t.lor > 0 ? "var(--ink)" : "var(--ink2)" }));
+  const x0 = L + T.length * cw + gap, sx = v => x0 + (v + 0.6) / 1.3 * barW;
+  rows.forEach(r => {
+    if (r.head) { txt(svg, 0, r.y + 12, SETLABEL[r.head] + " (" + S.filter(s => s.set === r.head).length + ")", { "font-size": 13, "font-weight": 600 }); return; }
+    const s = r.s;
+    txt(svg, L - 10, r.y + ch - 3.5, s.id, { "text-anchor": "end", "font-size": 12, "font-family": "var(--mono)" });
+    s.cells.forEach((v, j) => {
+      const t = T[j], follow = v == null ? null : (t.lor > 0 ? v === 1 : v === 0);
+      const c = el("rect", { x: L + j * cw + 1, y: r.y + 1, width: cw - 2, height: ch - 2, rx: 2, fill: follow == null ? "var(--empty)" : follow ? "var(--rust)" : "var(--slate2)" }, svg);
+      hover(c, () => `<b>${esc(s.id)}</b> · ${esc(t.label)}<br>${v == null ? "Går inte att avläsa" : (v === 1 ? "Ja" : "Nej") + " – " + (follow ? "som " + esc(WHO) : "som grannarna")}<br><span style="color:var(--ink2)">${esc(WHO)} ${pct(t.pc)}, grannar ${pct(t.pn)}</span>`);
+    });
+    const zero = sx(0);
+    if (s.score != null) {
+      const a = sx(Math.max(-0.6, Math.min(0.7, s.score)));
+      hover(el("rect", { x: Math.min(a, zero), y: r.y + 2, width: Math.max(1.5, Math.abs(a - zero)), height: ch - 4, rx: 2, fill: KCOL[s.klass] }, svg), () => stoneTip(s));
+    } else txt(svg, zero + 6, r.y + ch - 3.5, "för lite text", { "font-size": 11, fill: "var(--ink3)" });
+  });
+  el("line", { x1: sx(0), x2: sx(0), y1: top - 4, y2: H - 16, stroke: "var(--ink3)" }, svg);
+  txt(svg, sx(0), top - 8, "0", { "text-anchor": "middle", "font-size": 11, fill: "var(--ink2)" });
+  txt(svg, sx(0.6), top - 8, "mer lik →", { "text-anchor": "end", "font-size": 11, fill: "var(--ink2)" });
+  txt(svg, sx(-0.6), top - 8, "← grannar", { "font-size": 11, fill: "var(--ink2)" });
+  document.getElementById("hm-legend").innerHTML =
+    `<span><i style="background:var(--rust)"></i>gör som ${esc(WHO)}</span><span><i style="background:var(--slate2)"></i>gör som grannarna</span><span><i style="background:var(--empty);border:1px solid var(--rule)"></i>går inte att avläsa</span>` +
+    KL.slice(0, 4).map(k => `<span><i style="background:${KCOL[k]}"></i>${k}</span>`).join("");
+}
+
+function dots() {
+  const svg = document.getElementById("dots"); svg.innerHTML = "";
+  const groups = SETS.filter(g => D.stones.some(s => s.set === g)).concat(["granne"]);
+  const W = 900, L = 210, R = 30, rowH = 64, top = 40, H = top + groups.length * rowH + 34;
+  size(svg, W, H);
+  const all = D.stones.filter(s => s.score != null).map(s => s.score);
+  if (!all.length) return;
+  const lo = Math.min(-0.7, Math.min(...all)), hi = Math.max(0.8, Math.min(1.6, Math.max(...all)));
+  const x = v => L + (Math.max(lo, Math.min(hi, v)) - lo) / (hi - lo) * (W - L - R);
+  const g = D.granser;
+  [[lo, g.spann, "som grannarna"], [g.spann, g.grannar_p90, "ytterkant"], [g.grannar_p90, g.karna, "inom spannet"], [g.karna, hi, "kärna"]].forEach(([a, b, k]) => {
+    if (a == null || b == null || b <= a) return;
+    el("rect", { x: x(a), y: top - 18, width: x(b) - x(a), height: H - top - 16, fill: KCOL[k], opacity: 0.12 }, svg);
+    txt(svg, (x(a) + x(b)) / 2, top - 24, k, { "text-anchor": "middle", "font-size": 12, fill: "var(--ink2)" });
+  });
+  [g.spann, g.grannar_p90, g.karna].forEach(v => v != null && el("line", { x1: x(v), x2: x(v), y1: top - 18, y2: H - 34, stroke: "var(--ink3)", "stroke-dasharray": "3 3" }, svg));
+  for (let v = Math.ceil(lo * 2) / 2; v <= hi; v += 0.5) txt(svg, x(v), H - 12, fmt(v, 1), { "text-anchor": "middle", "font-size": 12, fill: "var(--ink2)" });
+  groups.forEach((gname, i) => {
+    const yc = top + i * rowH + rowH / 2, ss = D.stones.filter(s => s.set === gname && s.score != null);
+    txt(svg, L - 14, yc + 4, `${SETLABEL[gname]} (${ss.length})`, { "text-anchor": "end", "font-size": 13 });
+    ss.forEach((s, k) => {
+      const jit = ((k * 37) % 23) / 23 - 0.5, isN = gname === "granne", cy = yc + jit * (rowH - 22);
+      hover(el("circle", { cx: x(s.score), cy, r: isN ? 3 : 5.5, fill: isN ? "var(--ink3)" : KCOL[s.klass], opacity: isN ? 0.45 : 1, stroke: isN ? "none" : "var(--panel)", "stroke-width": 1.5 }, svg), () => stoneTip(s));
+      if (!isN && flagged(s)) txt(svg, x(s.score), cy - 9, s.id, { "text-anchor": "middle", "font-size": 11, "font-family": "var(--mono)" });
+    });
+  });
+}
+
+function map() {
+  const svg = document.getElementById("map"); svg.innerHTML = "";
+  const K = PAGE.karta, [x0, y0, x1, y1] = D.bbox, k = Math.cos((y0 + y1) / 2 * Math.PI / 180);
+  const W = 560, sc = W / ((x1 - x0) * k), H = Math.min(760, Math.round((y1 - y0) * sc));
+  size(svg, W, H);
+  const P = ([lon, lat]) => [((lon - x0) * k * sc).toFixed(1), ((y1 - lat) * sc).toFixed(1)];
+  const inBox = ring => ring.some(([a, b]) => a >= x0 - 1 && a <= x1 + 1 && b >= y0 - 1 && b <= y1 + 1);
+  el("rect", { x: 0, y: 0, width: W, height: H, fill: "var(--slate2)", opacity: 0.35 }, svg);
+  const id = "mclip" + C;
+  const clip = el("clipPath", { id }, el("defs", {}, svg)); el("rect", { x: 0, y: 0, width: W, height: H }, clip);
+  const g = el("g", { "clip-path": `url(#${id})` }, svg);
+  K.coast.filter(inBox).forEach(r => el("path", { d: "M" + r.map(P).join("L") + "Z", fill: "var(--panel)", stroke: "var(--rule)" }, g));
+  K.folk.filter(f => inBox(f.ring)).forEach(f => el("path", { d: "M" + f.ring.map(P).join("L") + "Z", fill: "none", stroke: "var(--ink3)", "stroke-dasharray": "4 3", "stroke-width": 1 }, g));
+  K.labels.filter(l => l.lon > x0 && l.lon < x1 && l.lat > y0 && l.lat < y1).forEach(l => { const [x, y] = P([l.lon, l.lat]); txt(g, x, y, l.label, { "text-anchor": "middle", "font-size": 12, fill: "var(--ink3)", "font-style": "italic" }); });
+  D.stones.filter(s => s.set === "granne" && s.lat != null).forEach(s => { const [x, y] = P([s.lon, s.lat]); el("circle", { cx: x, cy: y, r: 1.8, fill: "var(--ink3)", opacity: 0.5 }, g); });
+  own().filter(s => s.lat != null).sort((a, b) => KL.indexOf(b.klass) - KL.indexOf(a.klass)).forEach(s => {
+    const [x, y] = P([s.lon, s.lat]), signed = s.set.startsWith("signerad");
+    const m = s.set === "osäker"
+      ? el("rect", { x: x - 4.5, y: y - 4.5, width: 9, height: 9, transform: `rotate(45 ${x} ${y})`, fill: KCOL[s.klass], stroke: "var(--ink)", "stroke-width": 0.8 }, g)
+      : el("circle", { cx: x, cy: y, r: signed ? 6.5 : 5, fill: KCOL[s.klass], stroke: signed ? "var(--ink)" : "var(--panel)", "stroke-width": signed ? 1.6 : 1.2 }, g);
+    hover(m, () => stoneTip(s));
+    if (flagged(s)) txt(g, +x + 9, +y + 4, s.id, { "font-size": 11, "font-family": "var(--mono)" });
+  });
+}
+
+function scatter() {
+  const svg = document.getElementById("sc"); svg.innerHTML = "";
+  const S = own().filter(s => s.score != null && s.modell != null);
+  const a = AUDIT.q1.per_carver.find(r => r.carver === WHO), b = AUDIT.q2.per_carver.find(r => r.carver === WHO);
+  const box = document.getElementById("audit");
+  box.innerHTML = b ? `I provningen mot facit (hela socknar utelämnade) hade modellen rätt ristare först på ${a ? `<b>${pct(a.top1)}</b> av hans ${a.n} signerade stenar och ` : ""}<b>${pct(b.top1_attr)}</b> av hans ${b.n_attr} attribuerade. Över alla 117 signerade stenar: ${pct(AUDIT.q1.top1[0])}.` :
+    `${esc(WHO)} har färre än åtta säkra stenar och finns inte i attribueringsmodellen.`;
+  if (!S.length) { size(svg, 520, 10); return; }
+  const W = 520, H = 400, L = 54, B = 46, T = 14, R = 14;
+  size(svg, W, H);
+  const lo = -0.6, hi = 0.8;
+  const x = v => L + (Math.max(lo, Math.min(hi, v)) - lo) / (hi - lo) * (W - L - R), y = v => T + (1 - v) * (H - T - B);
+  for (let v = 0; v <= 1.001; v += 0.25) { el("line", { x1: L, x2: W - R, y1: y(v), y2: y(v), stroke: "var(--rule)" }, svg); txt(svg, L - 8, y(v) + 4, pct(v), { "text-anchor": "end", "font-size": 12, fill: "var(--ink2)" }); }
+  for (let v = -0.5; v <= hi; v += 0.25) txt(svg, x(v), H - B + 18, fmt(v, 2), { "text-anchor": "middle", "font-size": 12, fill: "var(--ink2)" });
+  el("line", { x1: x(0), x2: x(0), y1: T, y2: H - B, stroke: "var(--ink3)", "stroke-dasharray": "3 3" }, svg);
+  txt(svg, (L + W - R) / 2, H - 8, "följer profilen →", { "text-anchor": "middle", "font-size": 12, fill: "var(--ink2)" });
+  txt(svg, 14, (T + H - B) / 2, `modellen säger ${WHO}`, { "text-anchor": "middle", "font-size": 12, fill: "var(--ink2)", transform: `rotate(-90 14 ${(T + H - B) / 2})` });
+  S.forEach(s => {
+    const signed = s.set.startsWith("signerad");
+    hover(el("circle", { cx: x(s.score), cy: y(s.modell), r: signed ? 6.5 : 5, fill: KCOL[s.klass], stroke: signed ? "var(--ink)" : "var(--panel)", "stroke-width": signed ? 1.6 : 1.2 }, svg), () => stoneTip(s));
+    if (flagged(s)) txt(svg, x(s.score) + 9, y(s.modell) + 4, s.id, { "font-size": 11, "font-family": "var(--mono)" });
+  });
+}
+
+function similarity() {
+  const svg = document.getElementById("sim"); svg.innerHTML = "";
+  const ids = D.sim.ids, M = D.sim.m, n = ids.length;
+  if (n < 3) { size(svg, 600, 40); txt(svg, 0, 24, "För få stenar med tillräckligt många avläsbara drag.", { "font-size": 14, fill: "var(--ink2)" }); document.getElementById("sim-legend").innerHTML = ""; return; }
+  const c = n > 60 ? 10 : 14, L = 100, T = 100, W = L + n * c + 10, H = T + n * c + 10;
+  size(svg, W, H);
+  const byId = Object.fromEntries(own().map(s => [s.id, s]));
+  const ramp = v => v == null ? "var(--empty)" : `color-mix(in oklab, var(--rust) ${Math.round(Math.max(0, (v - 0.3) / 0.7) * 100)}%, var(--panel))`;
+  ids.forEach((id, i) => {
+    const s = byId[id], mark = s.set.startsWith("signerad") ? "●" : s.set === "osäker" ? "◆" : "";
+    txt(svg, L - 6, T + i * c + c - 2.5, id + (mark ? " " + mark : ""), { "text-anchor": "end", "font-size": Math.min(11, c - 1), "font-family": "var(--mono)", fill: s.set.startsWith("signerad") ? "var(--ink)" : "var(--ink2)" });
+    txt(svg, 0, 0, id, { "font-size": Math.min(11, c - 1), "font-family": "var(--mono)", transform: `translate(${L + i * c + c - 3},${T - 6}) rotate(-60)`, fill: "var(--ink2)" });
+    M[i].forEach((v, j) => {
+      const r = el("rect", { x: L + j * c, y: T + i * c, width: c - 1, height: c - 1, fill: ramp(v) }, svg);
+      if (i !== j) hover(r, () => `<b>${esc(id)}</b> och <b>${esc(ids[j])}</b><br>${v == null ? "för få gemensamma drag" : "gör lika i " + pct(v) + " av dragen"}`);
+    });
+  });
+  document.getElementById("sim-legend").innerHTML = [0.4, 0.6, 0.8, 1].map(v => `<span><i style="background:${ramp(v)};border:1px solid var(--rule)"></i>${pct(v)} lika</span>`).join("") + `<span>● signerad · ◆ delad eller osäker</span>`;
+}
+
+function lists() {
+  const edge = own().filter(s => s.klass === "ytterkant" || s.klass === "som grannarna").sort((a, b) => a.score - b.score);
+  const grp = s => ({ "signerad": "signerad", "signerad utanför profilen": "signerad, utanför profilen", "attribuerad": "attribuerad", "osäker": "delad/osäker" }[s.set]);
+  const row = s => `<tr><td class="mono">${esc(s.id)}</td><td>${esc(s.place)}</td><td>${grp(s)}</td><td>${esc(s.style || "–")}</td><td>${fmt(s.score)}</td><td><span class="pill" style="background:color-mix(in oklab, ${KCOL[s.klass]} 25%, var(--panel))">${s.klass}</span></td></tr>`;
+  document.getElementById("edge").innerHTML = edge.length ? `<table class="list"><thead><tr><th>Sten</th><th>Plats</th><th>Grupp</th><th>Stil</th><th>Värde</th><th>Klass</th></tr></thead><tbody>${edge.map(row).join("")}</tbody></table>` : `<div class="empty">Ingen av stenarna ligger i ytterkanten eller bland grannarna.</div>`;
+  const nb = D.stones.filter(s => s.set === "granne" && s.score != null && s.n >= 10).sort((a, b) => b.score - a.score).slice(0, 10);
+  document.getElementById("nb").innerHTML = nb.length ? `<table class="list"><thead><tr><th>Sten</th><th>Plats</th><th>Stil</th><th>Drag</th><th>Värde</th></tr></thead><tbody>${nb.map(s => `<tr><td class="mono">${esc(s.id)}</td><td>${esc(s.place)}</td><td>${esc(s.style || "–")}</td><td>${s.n}</td><td>${fmt(s.score)}</td></tr>`).join("")}</tbody><caption>Bara stenar med minst tio avläsbara drag.</caption></table>` : `<div class="empty">Inga grannstenar med minst tio avläsbara drag.</div>`;
+}
+
+function method() {
+  const dups = D.traits.filter(t => t.dup.length).map(t => `${t.label} med ${t.dup.join(", ")}`).join("; ");
+  const cant = own().filter(s => s.klass === "kan inte avgöras").length;
+  const items = [
+    D.profil === "signerade"
+      ? `<b>Profilen byggs bara av de signerade stenarna.</b> De attribuerade har runologerna tillskrivit ${esc(WHO)} efter drag som ornamentik och stavning; att använda dem i profilen vore att låta svaret bestämma frågan.`
+      : `<b>Profilen byggs av alla säkra stenar</b> (signerade och attribuerade), eftersom de signerade är för få (färre än fem, eller för få drag som skiljer dem från grannarna). Det är ett mått på hur samstämmig gruppen är, inte en oberoende prövning.`,
+    `<b>Grannarna</b> är alla andra stenar inom ${D.km} km från någon av ${esc(WHO)}s stenar${D.period && D.period[0] != null ? `, med en stildatering som överlappar hans (${D.period[0]}–${D.period[1]})` : ""}.`,
+    `<b>Ett drag kommer med</b> om det går att avläsa på tillräckligt många av profilens stenar, skiljer sig med minst dubbla eller halva oddsen från grannarna och inte är en ren slump (Fishers test, p &lt; 0,10). Drag som nästan alltid följs åt räknas en gång${dups ? ` (${esc(dups)})` : ""}.`,
+    `<b>Värdet per sten</b> är medelvärdet av hur mycket varje avläsbart drag talar för ${esc(WHO)} mot grannarna. Noll betyder att stenen inte lutar åt något håll.`,
+    `<b>Ornamentiken ingår inte</b> utöver stilgruppen, och runformerna inte alls: forskarnas viktigaste belägg för attribueringarna saknas alltså här. En attribuerad sten bland ”som grannarna” är ett skäl att titta igen, inte ett bevis för att attribueringen är fel.`,
+  ];
+  if (WHO === "Balle") items.push(`<b>Röd-Balle:</b> Vs 15 och Vs 24 är signerade <i>roþbaliʀ</i>, och en del runologer tvivlar på att han är samma person som Balle. Båda hamnar i ytterkanten med alla 20 i profilen, och bland grannarna när profilen byggs av de övriga 18. Men de står i Västmanland och tillhör den senare stilgruppen Pr4, så skillnaden kan också vara bygdens och tidens.`);
+  if (cant) items.push(`${cant} av stenarna har för lite läsbar text för att mätas (minst fem avläsbara drag krävs).`);
+  document.getElementById("method").innerHTML = items.map(s => `<li>${s}</li>`).join("");
+}
+
+const pick = document.getElementById("pick");
+pick.innerHTML = PAGE.carvers.map((c, i) => {
+  const v = c.variants.med, n = (v.n["signerad"] || 0) + (v.n["attribuerad"] || 0);
+  return `<option value="${i}">${esc(c.name)} · ${n} stenar${v.profil === "signerade" ? "" : " · profil av attribuerade"}</option>`;
+}).join("");
+function draw() {
+  const c = PAGE.carvers[C];
+  if (!c.variants[V]) V = "med";
+  D = c.variants[V]; WHO = c.name;
+  pick.value = String(C);
+  document.getElementById("count").textContent = `${C + 1} av ${PAGE.carvers.length}`;
+  header(); fingerprint(); heatmap(); dots(); map(); scatter(); similarity(); lists(); method();
+}
+function go(i) {
+  C = (i + PAGE.carvers.length) % PAGE.carvers.length; V = "med";
+  const h = "#" + slug(PAGE.carvers[C].name);
+  if (location.hash !== h) history.replaceState(null, "", h);
+  draw();
+}
+pick.addEventListener("change", () => go(+pick.value));
+document.getElementById("prev").addEventListener("click", () => go(C - 1));
+document.getElementById("next").addEventListener("click", () => go(C + 1));
+function fromHash() {
+  const i = PAGE.carvers.findIndex(c => "#" + slug(c.name) === location.hash);
+  return i >= 0 ? i : 0;
+}
+addEventListener("hashchange", () => { const i = fromHash(); if (i !== C) { C = i; V = "med"; draw(); } });
+C = fromHash(); draw();
+</script>

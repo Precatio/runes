@@ -1,110 +1,162 @@
-"""Data för ristarsidan (Balle först): de två profilerna (med och utan Röd-Balles stenar), dragens etiketter, likhet
-mellan ristarens stenar (ordnad med hierarkisk klustring), kartunderlag (folkland + kust inom ristarens område).
-    .venv/bin/python utdata/ristare/sida_data.py utdata/ristare/balle.json utdata/ristare/balle_utan_rodballe.json OUT.json
+"""Data för ristarsidan: alla ristarprofiler (r/carver_profile.R, utdata/ristare/kor_alla.sh) i en fil, med läsbara
+etiketter för dragen, likhet mellan varje ristares stenar (ordnad med hierarkisk klustring) och kartunderlag.
+    .venv/bin/python utdata/ristare/sida_data.py utdata/ristare/profiler OUT.json
 """
+import glob
 import json
+import os
 import sys
 
 import numpy as np
 from scipy.cluster.hierarchy import leaves_list, linkage
 from scipy.spatial.distance import squareform
 
-LABELS = {
-    "msg_gard": "Nämner gård eller bostad", "ord_goðan": "Lovordet góðan (god)", "god": "Lovordet god",
-    "msg_berom": "Berömmer den döde", "stil_Pr3": "Stilgrupp Pr3", "stil_Pr4": "Stilgrupp Pr4",
-    "rel_barn": "Den döde är resarens barn", "ord_sun": "Ordet sun (son)", "prep_at": "at (inte æftiR) för ”efter”",
-    "ord_at": "Ordet at", "ord_boanda": "Ordet bónda (make, bonde)", "skilj_punkt": "Punkt som skiljetecken",
-    "pm_stungna": "Stungna runor", "stungen_e": "Stungen e-runa", "stungen_y": "Stungen y-runa",
-    "skilj_apostrof": "Apostrof som skiljetecken", "skilj_kryss": "Kryss som skiljetecken",
-    "ord_and": "Ordet and (ande, själ)", "ord_let": "Ordet lét (lät)", "ord_ræistu": "Ordet ræistu (reste, plural)",
-    "o_runa": "o-runan ᚬ används", "ord_ræisa": "Ordet ræisa (resa)", "ord_hann": "Ordet hann (han)",
-    "flera_resare": "Flera resare", "ord_i": "Ordet í (i)", "r_for_R": "r-runa där ʀ väntas",
-    "pm_kors": "Kors på stenen", "kvinna_ensam": "En kvinna reser ensam", "monoftong": "Monoftong (stin för stæin)",
+WORDS = {
+    "faður": "fader", "broður": "bror", "brøðr": "bröder", "sun": "son", "sunn": "son", "moðiR": "moder",
+    "dauðr": "död", "dræng": "ung man, dräng", "gærði": "gjorde", "gæra": "göra", "haggva": "hugga",
+    "mærki": "minnesmärke", "satti": "satte", "salu": "själ", "stæina": "stenar", "þenna": "denna", "þennsa": "denna",
+    "þannsi": "denna", "þennsi": "denna", "þessa": "dessa", "þessi": "denna", "þæiR": "de", "þæiRa": "deras",
+    "þau": "de båda", "hans": "hans", "hann": "han", "eR": "som", "en": "men", "a": "på", "i": "i", "með": "med",
+    "austr": "österut", "bro": "bro", "vaR": "var", "varð": "blev", "boanda": "make, bonde", "at": "efter, vid",
+    "let": "lät", "letu": "läto", "ræisa": "resa", "ræisti": "reste", "ræistu": "reste (flera)", "ræisþi": "reste",
+    "and": "ande, själ", "goðan": "god", "hialpi": "hjälpe",
 }
-FAMILY = {"stil": "Stil", "stungna": "Stavning", "monoftong": "Stavning", "o_runa": "Stavning", "r": "Stavning",
-          "prep": "Formel", "ord": "Ord", "resare": "Resarna", "familj": "Resarna", "berom": "Beröm",
-          "arv": "Innehåll", "kristen": "Kristet", "skilj": "Skiljetecken"}
+LABELS = {
+    "msg_gard": "Nämner gård eller bostad", "god": "Lovordet god", "msg_berom": "Berömmer den döde",
+    "drengr": "Kallar den döde drengr", "thegn": "Kallar den döde þegn", "rel_barn": "Den döde är resarens barn",
+    "rel_foralder": "Den döde är resarens förälder", "rel_make": "Den döde är resarens make eller maka",
+    "rel_syskon": "Den döde är resarens syskon", "prep_at": "at (inte æftiR) för ”efter”",
+    "pm_stungna": "Stungna runor", "stungen_e": "Stungen e-runa", "stungen_y": "Stungen y-runa",
+    "stungen_g": "Stungen g-runa", "o_runa": "o-runan ᚬ används", "r_for_R": "r-runa där ʀ väntas",
+    "monoftong": "Monoftong (stin för stæin)", "au_monoftong": "Monoftong i ”och” (uk)", "h_saknas": "h saknas i uddljud",
+    "bindrunor": "Bindrunor", "flera_resare": "Flera resare", "kvinna_ensam": "En kvinna reser ensam",
+    "kvinna_resare": "En kvinna bland resarna", "pm_kors": "Kors på stenen", "pm_bon": "Bön för den döde",
+    "pm_sjal": "Bön för själen", "cat_kristen": "Kristet innehåll", "cat_arv": "Arv eller ägande",
+    "cat_bro_vag": "Bro eller väg", "cat_fard": "Färd", "cat_sjalvminne": "Rest åt sig själv",
+    "msg_dod_borta": "Dog borta", "msg_dod_uppgift": "Berättar hur eller var han dog", "msg_resa": "Nämner en resa",
+    "mat_granit": "Granit", "mat_gnejs": "Gnejs", "mat_sandsten": "Sandsten",
+    "nara_bro": "Nära bro eller vad", "nara_vag": "Nära väg", "nara_vatten": "Nära vatten", "nara_hog": "Nära hög",
+    "nara_gravfalt": "Nära gravfält", "nara_gammalt_namn": "Nära gammalt bebyggelsenamn",
+    "nara_centralort": "Nära centralortsnamn", "i_grupp": "Står i en grupp av stenar",
+    "skilj_punkt": "Punkt som skiljetecken", "skilj_kryss": "Kryss som skiljetecken", "skilj_kolon": "Kolon som skiljetecken",
+    "skilj_apostrof": "Apostrof som skiljetecken", "skilj_plus": "Plus som skiljetecken",
+    "skilj_blandat": "Blandade skiljetecken",
+}
+STYLES = {"Fp": "fågelperspektiv", "KB": "korsband", "RAK": "rak runslinga", "Pr1": "Pr1", "Pr2": "Pr2",
+          "Pr3": "Pr3", "Pr4": "Pr4", "Pr5": "Pr5"}
 
 
-def family(t, f):
+def label(t):
+    if t in LABELS:
+        return LABELS[t]
+    if t.startswith("ord_"):
+        w = t[4:]
+        return f"Ordet {w}" + (f" ({WORDS[w]})" if w in WORDS else "")
+    if t.startswith("stil_"):
+        return "Stilgrupp " + STYLES.get(t[5:], t[5:])
+    return t
+
+
+def family(t):
+    if t.startswith("stil_"):
+        return "Stil"
     if t.startswith("skilj_"):
         return "Skiljetecken"
-    return FAMILY.get(f, "Övrigt")
+    if t.startswith("ord_"):
+        return "Ord"
+    if t.startswith("mat_"):
+        return "Material"
+    if t.startswith("nara_") or t == "i_grupp":
+        return "Platsen"
+    if t in ("pm_stungna", "stungen_e", "stungen_y", "stungen_g", "o_runa", "r_for_R", "monoftong", "au_monoftong",
+             "h_saknas", "bindrunor", "prep_at"):
+        return "Stavning"
+    if t in ("pm_kors", "pm_bon", "pm_sjal", "cat_kristen"):
+        return "Kristet"
+    if t in ("flera_resare", "kvinna_ensam", "kvinna_resare") or t.startswith("rel_"):
+        return "Resarna"
+    return "Innehåll"
+
+
+def r(x, k=3):
+    return None if x is None else round(x, k)
 
 
 def build(path):
     d = json.load(open(path, encoding="utf-8"))
     sig = d["signatur"]
-    prof = {r["drag"]: r for r in d["drag"]}
-    traits = []
-    for t in sorted(sig, key=lambda t: -prof[t]["lor"]):
-        r = prof[t]
-        traits.append({"id": t, "label": LABELS.get(t, t), "family": family(t, r["familj"]),
-                       "lor": round(r["lor"], 3), "pc": round(r["k_ristare"] / r["n_ristare"], 3),
-                       "pn": round(r["k_grannar"] / r["n_grannar"], 3), "kc": r["k_ristare"], "nc": r["n_ristare"],
-                       "kn": r["k_grannar"], "nn": r["n_grannar"], "p": r["p"],
-                       "dup": [x["drag"] for x in d["drag"] if x.get("dubblett_av") == t]})
+    prof = {x["drag"]: x for x in d["drag"]}
+    traits = [{"id": t, "label": label(t), "family": family(t), "lor": r(prof[t]["lor"]),
+               "pc": r(prof[t]["k_ristare"] / prof[t]["n_ristare"]), "pn": r(prof[t]["k_grannar"] / prof[t]["n_grannar"]),
+               "kc": prof[t]["k_ristare"], "nc": prof[t]["n_ristare"], "kn": prof[t]["k_grannar"], "nn": prof[t]["n_grannar"],
+               "dup": [label(x["drag"]) for x in d["drag"] if x.get("dubblett_av") == t]}
+              for t in sorted(sig, key=lambda t: -prof[t]["lor"])]
     order = {t: i for i, t in enumerate(sig)}
-    stones = []
+    stones, nb = [], []
     for s, cells in zip(d["stenar"], d["celler"]):
-        row = {"id": s["signum"], "set": s["set"], "place": s.get("place"), "parish": s.get("parish"),
-               "prov": s["province"], "lat": s["lat"], "lon": s["lon"], "style": s.get("style"),
-               "material": s.get("material"), "score": None if s["score"] is None else round(s["score"], 3),
-               "n": int(s["n"]), "follows": None if s["follows"] is None else round(s["follows"], 3),
-               "klass": s["klass"], "modell": None if s.get("modell") is None else round(s["modell"], 3)}
-        if s["set"] != "granne":
-            row["cells"] = [cells[order[t["id"]]] for t in traits]
-        stones.append(row)
-    # Likhet mellan ristarens stenar: andel lika värden på signaturdragen som båda går att avläsa på (minst 5)
-    own = [s for s in stones if s["set"] != "granne" and s["n"] >= 5]
+        if s["set"] == "granne":  # kompakt: id, plats, socken, lat, lon, stil, värde, antal drag, klass
+            nb.append([s["signum"], s.get("place"), s.get("parish"), r(s["lat"], 4), r(s["lon"], 4), s.get("style"),
+                       r(s["score"]), int(s["n"]), s["klass"]])
+            continue
+        stones.append({"id": s["signum"], "set": s["set"], "place": s.get("place"), "parish": s.get("parish"),
+                       "prov": s["province"], "lat": s["lat"], "lon": s["lon"], "style": s.get("style"),
+                       "material": s.get("material"), "score": r(s["score"]), "n": int(s["n"]),
+                       "follows": r(s["follows"]), "klass": s["klass"], "modell": r(s.get("modell")),
+                       "cells": [cells[order[t["id"]]] for t in traits] if traits else []})
+    own = [s for s in stones if s["n"] >= 5 and s["lat"] is not None]
     m = len(own)
-    sim = np.full((m, m), np.nan)
-    for i in range(m):
-        for j in range(m):
-            a, b = own[i]["cells"], own[j]["cells"]
-            both = [(x, y) for x, y in zip(a, b) if x is not None and y is not None]
-            if len(both) >= 5:
-                sim[i, j] = sum(x == y for x, y in both) / len(both)
-    dist = 1 - np.nan_to_num(sim, nan=np.nanmean(sim))
-    np.fill_diagonal(dist, 0)
-    lv = leaves_list(linkage(squareform((dist + dist.T) / 2, checks=False), "average"))
-    simi = {"ids": [own[i]["id"] for i in lv],
-            "m": [[None if np.isnan(sim[i, j]) else round(float(sim[i, j]), 2) for j in lv] for i in lv]}
-    return {"ristare": d["ristare"], "km": d["grannar_km"], "n": d["n"], "granser": d["granser"],
-            "traits": traits, "stones": stones, "sim": simi}
+    simi = {"ids": [], "m": []}
+    if m >= 3 and traits:
+        sim = np.full((m, m), np.nan)
+        for i in range(m):
+            for j in range(m):
+                both = [(x, y) for x, y in zip(own[i]["cells"], own[j]["cells"]) if x is not None and y is not None]
+                if len(both) >= 5:
+                    sim[i, j] = sum(x == y for x, y in both) / len(both)
+        fill = np.nanmean(sim) if np.isfinite(sim).any() else 0.5
+        dist = 1 - np.nan_to_num(sim, nan=fill)
+        np.fill_diagonal(dist, 0)
+        lv = leaves_list(linkage(squareform((dist + dist.T) / 2, checks=False), "average"))
+        simi = {"ids": [own[i]["id"] for i in lv],
+                "m": [[None if np.isnan(sim[i, j]) else round(float(sim[i, j]), 2) for j in lv] for i in lv]}
+    pts = [(s["lon"], s["lat"]) for s in stones if s["lat"] is not None]
+    lon = [p[0] for p in pts]; lat = [p[1] for p in pts]
+    bbox = [min(lon) - 0.35, min(lat) - 0.22, max(lon) + 0.35, max(lat) + 0.22]
+    return {"ristare": d["ristare"], "profil": d["profil"], "n_signerade": d["n_signerade"], "km": d["grannar_km"],
+            "period": d["period"], "n": d["n"], "granser": d["granser"], "traits": traits, "stones": stones,
+            "nb": nb, "sim": simi, "bbox": bbox}
 
 
-def basemap(stones):
-    lat = [s["lat"] for s in stones]; lon = [s["lon"] for s in stones]
-    bb = (min(lon) - 0.3, min(lat) - 0.2, max(lon) + 0.3, max(lat) + 0.2)
-    inside = lambda ring: any(bb[0] <= x <= bb[2] and bb[1] <= y <= bb[3] for x, y in ring)  # noqa: E731
-
+def basemap():
     def rings(geom):
         polys = geom["coordinates"] if geom["type"] == "MultiPolygon" else [geom["coordinates"]]
-        return [r for p in polys for r in p]
+        return [ring for p in polys for ring in p]
     land = json.load(open("web/public/geo/land.geojson", encoding="utf-8"))
-    folk = []
-    for f in land["features"]:
-        if f["properties"]["id"] in ("tiundaland", "attundaland", "fjadrundaland", "roden"):
-            for r in rings(f["geometry"]):
-                folk.append({"id": f["properties"]["id"], "label": f["properties"]["label"],
-                             "ring": [[round(x, 3), round(y, 3)] for x, y in r]})
+    folk = [{"id": f["properties"]["id"], "ring": [[round(x, 3), round(y, 3)] for x, y in ring]}
+            for f in land["features"] for ring in rings(f["geometry"])]
+    labels = [{"label": f["properties"]["label"], "lat": f["properties"]["label_lat"], "lon": f["properties"]["label_lon"]}
+              for f in land["features"]]
     riken = json.load(open("web/public/geo/riken.geojson", encoding="utf-8"))
     coast = []
     for f in riken["features"]:
         if f["properties"].get("id") == "sverige":
-            for r in rings(f["geometry"]):
-                if len(r) > 3 and inside(r):
-                    coast.append([[round(x, 3), round(y, 3)] for x, y in r[::2]])
+            coast = [[[round(x, 3), round(y, 3)] for x, y in ring[::2]] for ring in rings(f["geometry"]) if len(ring) > 3]
             break
-    labels = [{"label": f["properties"]["label"], "lat": f["properties"]["label_lat"], "lon": f["properties"]["label_lon"]}
-              for f in land["features"] if f["properties"]["id"] in ("tiundaland", "attundaland", "fjadrundaland", "roden")]
-    return {"bbox": bb, "folk": folk, "coast": coast, "labels": labels}
+    return {"folk": folk, "labels": labels, "coast": coast}
 
 
 if __name__ == "__main__":
-    a, b, out = sys.argv[1:4]
-    A, B = build(a), build(b)
-    page = {"med": A, "utan": B, "karta": basemap(A["stones"])}
+    src, out = sys.argv[1:3]
+    names = [ln.strip() for ln in open(os.path.join(src, "ristare.txt"), encoding="utf-8") if ln.strip()]
+    carvers = []
+    for who in names:
+        f = os.path.join(src, who.replace(" ", "_").replace("-", "") + ".json")
+        v = {"med": build(f)}
+        alt = glob.glob(os.path.join(src, who.replace(" ", "_").replace("-", "") + "__*.json"))
+        for a in alt:
+            v[os.path.basename(a)[:-5].split("__", 1)[1]] = build(a)
+        carvers.append({"name": who, "variants": v})
+        print(who, len(v["med"]["traits"]), len(v["med"]["stones"]), len(v["med"]["nb"]))
+    page = {"carvers": carvers, "karta": basemap()}
     json.dump(page, open(out, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
-    print(out, len(json.dumps(page)) // 1024, "kB", len(A["traits"]), len(B["traits"]), len(page["karta"]["coast"]))
+    print(out, os.path.getsize(out) // 1024, "kB")
