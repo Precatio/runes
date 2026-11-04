@@ -245,15 +245,18 @@ cand$near_km <- nearest
 cand <- cand %>% filter(near_km <= NEAR_KM)
 for (col in nominal) cand[[col]] <- as.character(cand[[col]])
 cp <- predict(final, prep_frame(cand, SETS$Alla), type = "prob")
-cpm_raw <- as.matrix(cp[, pcols])
-cpm <- calibrate(cpm_raw)  # shown probabilities are calibrated; "någon annan" is judged on the raw ones
-top_k <- function(row, k = 3) { o <- order(-row)[1:k]; list(carvers = lv[o], p = r3(row[o])) }
+cpm <- as.matrix(cp[, pcols])
+# p, p2, p3 stay the forest's own probabilities: the stone overview's thresholds (src/stone_overview.py), the
+# reliability texts (src/r_findings.py) and "någon annan" were chosen and blind-tested on them. The calibrated ones
+# (p^A_CAL renormalised) are added as p_cal, p2_cal, p3_cal for display.
+cpm_cal <- calibrate(cpm)
+top_k <- function(row, k = 3) { o <- order(-row)[1:k]; list(carvers = lv[o], p = r3(row[o]), o = o) }
 predictions <- lapply(seq_len(nrow(cand)), function(i) {
   t <- top_k(cpm[i, ])
   rundata <- if (!is.na(cand$carvers_all[i])) cand$carvers_all[i] else ""
   list(signum = cand$signum[i], province = cand$province[i], place = cand$place[i], near_km = r1(cand$near_km[i]),
        top = t$carvers[1], p = t$p[1], second = t$carvers[2], p2 = t$p[2], third = t$carvers[3], p3 = t$p[3],
-       p_raw = r3(max(cpm_raw[i, ])),
+       p_cal = r3(cpm_cal[i, t$o[1]]), p2_cal = r3(cpm_cal[i, t$o[2]]), p3_cal = r3(cpm_cal[i, t$o[3]]),
        rundata_uncertain = rundata,
        agrees_rundata = if (nzchar(rundata)) t$carvers[1] %in% strsplit(rundata, ";")[[1]] else NA)
 })
@@ -287,7 +290,7 @@ correct_g <- apply(Eg$probs, 1, which.max) == Eg$truth
 grid <- seq(0.05, 0.6, by = 0.005)
 J <- sapply(grid, function(t) mean(loco$p < t) + mean(known_p >= t) - 1)
 threshold <- grid[which.max(J)]
-for (i in seq_along(predictions)) predictions[[i]]$someone_else <- predictions[[i]]$p_raw < threshold
+for (i in seq_along(predictions)) predictions[[i]]$someone_else <- predictions[[i]]$p < threshold
 
 small <- full %>% filter(!is.na(carver), !(carver %in% lv), !is.na(x))
 small$near_km <- sapply(seq_len(nrow(small)), function(i) min(sqrt((train_xy[, 1] - small$x[i])^2 + (train_xy[, 2] - small$y[i])^2)) / 1000)
@@ -411,8 +414,9 @@ result <- list(
     "fanns både i tränings- och testdata. Delmodeller med bara geografi,",
     "bara stil respektive bara språk och innehåll visar vad varje slags belägg bidrar med. Förslag ges bara för stenar",
     "inom", NEAR_KM, "km från en träningssten, och sannolikheterna gäller under antagandet att ristaren är en av de",
-    length(lv), "ristarna i modellen. De visade sannolikheterna är omkalibrerade (p upphöjt till", A_CAL,
-    "och omnormerat), eftersom skogens sannolikheter visade sig för försiktiga när de prövades mot de signerade stenarna."
+    length(lv), "ristarna i modellen. Omkalibrerade sannolikheter (p upphöjt till", A_CAL,
+    "och omnormerat) finns som p_cal, eftersom skogens egna visade sig för försiktiga när de prövades mot de signerade",
+    "stenarna; gränserna i stenöversikten gäller skogens egna."
   ),
   caveat = paste(
     "Rundatas attribueringar i Södermanland, Uppland, Västmanland och Gästrikland bygger till stor del på Axelson (1993),",

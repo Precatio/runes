@@ -331,8 +331,10 @@ procentenheter över geografin. Version 2 och 3 (`analysplaner/2026-11-04-attrib
 samma provbänk) behöll **korsets form enligt Lagers typologi** ur RAÄ:s Runor 2020 (`src/attribution_features.py`, 45
 aspekt+form-drag; delmodellen Stil 33 → 54 %). Stavningsavtryck, ristarens bygd och tid, en parvis ”samma hand”-modell och
 en blandning prövades men klarade inte de låsta reglerna på sockenhalva 2 (bygdsmodellerna höjde medel per ristare med
-omkring 12 procentenheter men gav sämre log-förlust). De visade sannolikheterna är omkalibrerade, p^1,8 omnormerat (ECE
-grupperat 0,30 → 0,05), och spärren ”någon annan” räknas på de grupperade, okalibrerade sannolikheterna (gräns 0,335).
+omkring 12 procentenheter men gav sämre log-förlust). Omkalibrerade sannolikheter, p^1,8 omnormerat (ECE
+grupperat 0,30 → 0,05), visas på sidan Ristarna och finns som `p_cal` i `attribution.json`; Stenöversiktens gränser och
+fyndtexternas träffsäkerhet bygger på skogens egna sannolikheter (`p`), som de valdes och blindprövades på, och spärren
+”någon annan” räknas på de grupperade, okalibrerade sannolikheterna (gräns 0,335).
 
 **Resultat i korpusen (beräkning 2026-10-05).** Attribueringsmodellen hittar rätt ristare i 72 % av fallen
 (87 % bland de tre främsta) mot 19 % om man alltid gissar på den vanligaste; språk och innehåll ensamt ger 60 %,
