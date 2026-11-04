@@ -14,6 +14,13 @@ geo <- read.csv(file.path(cdir, "geography_stones.csv"), encoding = "UTF-8", str
 txt <- read.csv(file.path(cdir, "text_features.csv"), encoding = "UTF-8", stringsAsFactors = FALSE, check.names = FALSE)
 full <- d %>% left_join(geo %>% select(signum, x, y, water_km), by = "signum") %>% left_join(txt, by = "signum") %>%
   mutate(x_km = x / 1000, y_km = y / 1000)
+v2_path <- file.path(cdir, "attribution_v2.csv")  # korsformen (src/attribution_features.py), om modellen har den
+if (file.exists(v2_path)) {
+  v2 <- read.csv(v2_path, encoding = "UTF-8", stringsAsFactors = FALSE, check.names = FALSE, na.strings = "")
+  full <- full %>% left_join(v2[, c("signum", grep("^kors_", names(v2), value = TRUE))], by = "signum")
+}
+if (!is.null(M$cal_a)) A_CAL <- M$cal_a
+if (!is.null(M$threshold)) THR <- M$threshold
 prep_frame <- function(df, cols) {
   df <- df[, cols, drop = FALSE]
   for (col in intersect(M$nominal, cols)) {

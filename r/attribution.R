@@ -24,6 +24,19 @@ geo <- read.csv(file.path(cdir, "geography_stones.csv"), encoding = "UTF-8", str
 txt <- read.csv(file.path(cdir, "text_features.csv"), encoding = "UTF-8", stringsAsFactors = FALSE, check.names = FALSE)
 full <- d %>% left_join(geo %>% select(signum, x, y, water_km), by = "signum") %>% left_join(txt, by = "signum") %>%
   mutate(x_km = x / 1000, y_km = y / 1000)
+# Korsformen enligt Lagers typologi ur RAÄ:s Runor 2020 (src/attribution_features.py, skrivs av korpusjobbet):
+# attribueringsmodellen version 2–3 (analysplaner/2026-11-04-attribuering-v2.md, -v3.md) behöll den
+v2_path <- file.path(cdir, "attribution_v2.csv")
+KORS <- character(0)
+if (file.exists(v2_path)) {
+  v2 <- read.csv(v2_path, encoding = "UTF-8", stringsAsFactors = FALSE, check.names = FALSE, na.strings = "")
+  KORS <- grep("^kors_", names(v2), value = TRUE)
+  full <- full %>% left_join(v2[, c("signum", KORS)], by = "signum")
+}
+# Sannolikheterna omkalibreras (p^a, omnormerat): skogens sannolikheter är för försiktiga. a valdes på sockenhalva 1 i
+# provningen mot de signerade stenarna (analysplaner/2026-11-04-attribuering-v3.md, K0) och sänkte ECE från 0,34 till 0,14
+A_CAL <- 1.8
+calibrate <- function(P) { Q <- P^A_CAL; Q / pmax(rowSums(Q), 1e-300) }
 
 tc <- trait_cols(d); cc <- cat_cols(d)
 # Rock family from Rundata's material text (the same keyword lists as src/geology.FAMILIES): carver and rock type go
@@ -51,12 +64,12 @@ fcols <- grep("^formula_", names(txt), value = TRUE)
 bcols <- grep("^bg_", names(txt), value = TRUE)
 SETS <- list(
   "Geografi" = c("x_km", "y_km", "province"),
-  "Stil" = c("style", "cross", "short_twig"),
+  "Stil" = c("style", "cross", "short_twig", KORS),
   "Språk och innehåll" = c(tc, fcols, bcols, cc),
   "Bergart" = c("material_family"),
-  "Alla" = c("x_km", "y_km", "province", "style", "cross", "short_twig", tc, fcols, bcols, cc)
+  "Alla" = c("x_km", "y_km", "province", "style", "cross", "short_twig", KORS, tc, fcols, bcols, cc)
 )
-GROUP <- c(setNames(rep("Geografi", 3), SETS$Geografi), setNames(rep("Stil", 3), SETS$Stil),
+GROUP <- c(setNames(rep("Geografi", 3), SETS$Geografi), setNames(rep("Stil", length(SETS$Stil)), SETS$Stil),
            setNames(rep("Språk och innehåll", length(SETS[[3]])), SETS[[3]]))
 nominal <- c("province", "style", "material_family", tc, fcols)
 
@@ -168,6 +181,18 @@ grouped <- lapply(GROUPINGS, function(level) {
                                               log_loss = r3(e$log_loss), brier = r3(e$brier))))
 })
 
+# The full model with whole parishes held out: the probabilities that "någon annan" and the calibration are judged on
+# (the stratified ones are too sure, analysplaner/2026-11-04-attribuering-provad.md, question 5)
+Eg <- evaluate("Alla", "parish")
+ece_of <- function(P, truth) {
+  pm <- apply(P, 1, max); ok <- apply(P, 1, which.max) == truth
+  b <- cut(pm, seq(0, 1, 0.1), include.lowest = TRUE)
+  t <- data.frame(b, pm, ok) %>% group_by(b) %>% summarise(n = n(), p = mean(pm), a = mean(ok), .groups = "drop")
+  sum(t$n * abs(t$p - t$a)) / sum(t$n)
+}
+calibration_grouped <- list(a = A_CAL, ece_before = r3(ece_of(Eg$probs, Eg$truth)), ece_after = r3(ece_of(calibrate(Eg$probs), Eg$truth)),
+                            accuracy = r3(Eg$accuracy))
+
 # Calibration of the full model (out-of-fold)
 pmax_ <- apply(E$probs, 1, max)
 pred_ <- apply(E$probs, 1, which.max)
@@ -201,6 +226,7 @@ label_feature <- function(f) {
   if (f %in% names(TRAIT_LABELS)) return(TRAIT_LABELS[[f]])
   if (f %in% names(CAT_LABELS)) return(CAT_LABELS[[f]])
   if (startsWith(f, "bg_")) { i <- as.integer(sub("bg_", "", f)); return(paste0("Runbigram ", bg_names[i])) }
+  if (startsWith(f, "kors_")) return(if (f == "kors_beskriven") "Korsform beskriven" else paste0("Korsform ", sub("kors_", "", f)))
   c(x_km = "Öst–väst (km)", y_km = "Nord–syd (km)", province = "Landskap", style = "Stilgrupp", cross = "Kors",
     short_twig = "Kortkvistrunor", formula_raising = "Resarformel", formula_monument = "Monument",
     formula_order = "Ordföljd", formula_signature = "Ristarsignatur", formula_prayer = "Bön")[[f]] %||% f
@@ -219,13 +245,15 @@ cand$near_km <- nearest
 cand <- cand %>% filter(near_km <= NEAR_KM)
 for (col in nominal) cand[[col]] <- as.character(cand[[col]])
 cp <- predict(final, prep_frame(cand, SETS$Alla), type = "prob")
-cpm <- as.matrix(cp[, pcols])
+cpm_raw <- as.matrix(cp[, pcols])
+cpm <- calibrate(cpm_raw)  # shown probabilities are calibrated; "någon annan" is judged on the raw ones
 top_k <- function(row, k = 3) { o <- order(-row)[1:k]; list(carvers = lv[o], p = r3(row[o])) }
 predictions <- lapply(seq_len(nrow(cand)), function(i) {
   t <- top_k(cpm[i, ])
   rundata <- if (!is.na(cand$carvers_all[i])) cand$carvers_all[i] else ""
   list(signum = cand$signum[i], province = cand$province[i], place = cand$place[i], near_km = r1(cand$near_km[i]),
        top = t$carvers[1], p = t$p[1], second = t$carvers[2], p2 = t$p[2], third = t$carvers[3], p3 = t$p[3],
+       p_raw = r3(max(cpm_raw[i, ])),
        rundata_uncertain = rundata,
        agrees_rundata = if (nzchar(rundata)) t$carvers[1] %in% strsplit(rundata, ";")[[1]] else NA)
 })
@@ -254,11 +282,12 @@ loco <- bind_rows(lapply(lv, function(cn) {
   m <- fit_on(train[train$carver != cn, ], SETS$Alla)
   data.frame(carver = cn, p = top_p(m, train[train$carver == cn, ]))
 }))
-known_p <- pmax_
+known_p <- apply(Eg$probs, 1, max)
+correct_g <- apply(Eg$probs, 1, which.max) == Eg$truth
 grid <- seq(0.05, 0.6, by = 0.005)
 J <- sapply(grid, function(t) mean(loco$p < t) + mean(known_p >= t) - 1)
 threshold <- grid[which.max(J)]
-for (i in seq_along(predictions)) predictions[[i]]$someone_else <- predictions[[i]]$p < threshold
+for (i in seq_along(predictions)) predictions[[i]]$someone_else <- predictions[[i]]$p_raw < threshold
 
 small <- full %>% filter(!is.na(carver), !(carver %in% lv), !is.na(x))
 small$near_km <- sapply(seq_len(nrow(small)), function(i) min(sqrt((train_xy[, 1] - small$x[i])^2 + (train_xy[, 2] - small$y[i])^2)) / 1000)
@@ -270,7 +299,7 @@ small_pred <- lv[apply(sp, 1, which.max)]
 open_set <- list(
   threshold = threshold, J = r3(max(J)),
   known = list(n = length(known_p), flagged = r3(mean(known_p < threshold)),
-               accuracy_kept = r3(mean(correct[known_p >= threshold])), accuracy_all = r3(mean(correct))),
+               accuracy_kept = r3(mean(correct_g[known_p >= threshold])), accuracy_all = r3(mean(correct_g))),
   left_out = list(n = nrow(loco), flagged = r3(mean(loco$p < threshold)),
                   per_carver = lapply(lv, function(cn) list(carver = cn, n = sum(loco$carver == cn),
                                                               flagged = r3(mean(loco$p[loco$carver == cn] < threshold))))),
@@ -328,6 +357,7 @@ label_en <- function(f) {
   if (f %in% names(CAT_LABELS_EN)) return(CAT_LABELS_EN[[f]])
   if (f %in% names(FORMULA_LABELS_EN)) return(FORMULA_LABELS_EN[[f]])
   if (startsWith(f, "bg_")) return(paste0("Rune bigram ", bg_names[as.integer(sub("bg_", "", f))]))
+  if (startsWith(f, "kors_")) return(if (f == "kors_beskriven") "Cross form described" else paste0("Cross form ", sub("kors_", "", f)))
   c(x_km = "East–west position (km)", y_km = "North–south position (km)", province = "Province", style = "Style group",
     cross = "Cross", short_twig = "Short-twig runes")[[f]] %||% f
 }
@@ -354,13 +384,14 @@ fig_conf <- save_fig(p, out, "modell_forvaxling.png", 8, 7)
 oof <- data.frame(signum = train$signum[E$preds$.row], carver = lv[E$truth], E$probs, check.names = FALSE)
 write.csv(oof, file.path(out, "attribution_oof.csv"), row.names = FALSE, fileEncoding = "UTF-8")
 saveRDS(list(final = final, levels = lv, cols = SETS$Alla, nominal = nominal, train_levels = train_levels, train_xy = train_xy,
-             near_km = NEAR_KM, threshold = threshold), file.path(out, "attribution_model.rds"))
+             near_km = NEAR_KM, threshold = threshold, cal_a = A_CAL), file.path(out, "attribution_model.rds"))
 
 result <- list(
   n_train = nrow(train), carvers = lv, min_inscriptions = MIN_CARVER, folds = FOLDS, repeats = REPEATS, trees = TREES,
   majority_baseline = r3(majority), ablation = unname(ablation), grouped_cv = grouped,
   material = list(per_family = per_family, n_without_family = sum(is.na(train$material_family))),
-  calibration = list(ece = r3(ece), bins = calib %>% mutate(across(c(mean_p, accuracy), r3)), reliability = reliab),
+  calibration = list(ece = r3(ece), bins = calib %>% mutate(across(c(mean_p, accuracy), r3)), reliability = reliab,
+                     grouped = calibration_grouped),
   per_carver = per_carver, confused = confused,
   importance = head(imp_df %>% mutate(importance = signif(importance, 3)), 30),
   group_importance = group_imp %>% mutate(across(c(importance, share), r3)),
@@ -372,14 +403,16 @@ result <- list(
   method = paste(
     "Random forest (Breiman 2001; ranger, tidymodels) med", TREES, "träd tränades på svenska vikingatida runstenar med en",
     "säker ristare i Rundata, för ristare med minst", MIN_CARVER, "stenar. Variablerna är koordinater och landskap,",
-    "stilgrupp, kors och kortkvistrunor, elva språkdrag, fem formler, de 100 vanligaste runbigrammen och nio",
+    "stilgrupp, kors och kortkvistrunor, korsets form enligt Lagers typologi (RAÄ:s Runor 2020), elva språkdrag, fem",
+    "formler, de 100 vanligaste runbigrammen och nio",
     "innehållskategorier. Modellen utvärderades med", FOLDS, "-faldig stratifierad korsvalidering upprepad", REPEATS,
     "gånger; sannolikheterna för varje sten kommer från de modeller som inte såg stenen. Samma utvärdering gjordes med",
     "hela socknar respektive härader utelämnade (grupperad korsvalidering), så att stenar från samma plats aldrig",
     "fanns både i tränings- och testdata. Delmodeller med bara geografi,",
     "bara stil respektive bara språk och innehåll visar vad varje slags belägg bidrar med. Förslag ges bara för stenar",
     "inom", NEAR_KM, "km från en träningssten, och sannolikheterna gäller under antagandet att ristaren är en av de",
-    length(lv), "ristarna i modellen."
+    length(lv), "ristarna i modellen. De visade sannolikheterna är omkalibrerade (p upphöjt till", A_CAL,
+    "och omnormerat), eftersom skogens sannolikheter visade sig för försiktiga när de prövades mot de signerade stenarna."
   ),
   caveat = paste(
     "Rundatas attribueringar i Södermanland, Uppland, Västmanland och Gästrikland bygger till stor del på Axelson (1993),",

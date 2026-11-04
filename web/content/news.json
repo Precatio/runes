@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "attribuering-korsform",
+   "date": "2026-11-04",
+   "status": "nytt",
+   "title": "Attribueringsmodellen ser korsets form",
+   "text": "Attribueringsmodellen väger nu in hur korset är format, enligt Lagers typologi i Riksantikvarieämbetets Runor. Med bara stil och kors hittar den rätt ristare på 54 procent av stenarna i stället för 33. Sannolikheterna är omkalibrerade efter en prövning mot de signerade stenarna, så att en sten som får 80 procent också har rätt ungefär så ofta."
+  },
+  {
    "id": "ristarna-en-i-taget",
    "date": "2026-11-04",
    "status": "nytt",

@@ -121,6 +121,8 @@ decide <- function(Rnew, Rbest, name) {
        proven = keep && d1[["lo"]] > 0)
 }
 
+# r/attribution_v3.R läser in allt ovan (V2_LIB_ONLY) och kör inte stegen
+if (!isTRUE(get0("V2_LIB_ONLY"))) {
 steps <- list(); summaries <- list()
 R0 <- run_rf(BASE, "A (dagens)"); summaries$A <- summ(R0, "A (dagens)"); best <- R0; best_cols <- BASE; best_name <- "A"
 saveRDS(R0, file.path(out, "oof_A.rds"))
@@ -237,3 +239,4 @@ res <- list(plan = "analysplaner/2026-11-04-attribuering-v2.md", korpus = basena
             n_signed = sum(train$signed), slutmodell = best_name, steg = steps, sammanfattning = summaries)
 write_json(res, file.path(out, "resultat.json"), auto_unbox = TRUE, digits = NA, pretty = TRUE)
 log_("klart; slutmodell", best_name)
+}

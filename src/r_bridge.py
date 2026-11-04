@@ -382,6 +382,19 @@ def _if_exists(path: str) -> str | None:
     return path if os.path.exists(path) else None
 
 
+def _attribution_hash() -> str:
+    """The extra attribution traits (src/attribution_features.py: cross forms from RAÄ's Runor 2020, spelling
+    fingerprint): the attribution model is recomputed when the code or the Runor file changes."""
+    h = hashlib.sha256()
+    for path in (os.path.join(ROOT, "src", "attribution_features.py"), os.path.join(ROOT, "data", "raa", "runor_2020.json")):
+        if os.path.exists(path):
+            with open(path, "rb") as fh:
+                h.update(fh.read())
+        else:
+            h.update(b"none")
+    return h.hexdigest()[:16]
+
+
 def module_hashes(csv_data: bytes) -> dict[str, str]:
     """En version per modul: korpusen, common.R, modulens skript och versionerna av de moduler den läser. En modul
     med samma version som i en tidigare körning behöver inte räknas om."""
@@ -390,7 +403,8 @@ def module_hashes(csv_data: bytes) -> dict[str, str]:
     for m in MODULES:  # run order, so upstream versions exist
         key = (base + _scripts_hash([f"{m}.R"]) + "".join(out[u] for u in DEPENDS.get(m, ()))
                + (_remains_hash() if m == "remains" else "") + (_messages_hash() if m == "messages" else "")
-               + (_people_hash() if m == "people" else "") + (_names_hash() if m == "names" else ""))
+               + (_people_hash() if m == "people" else "") + (_names_hash() if m == "names" else "")
+               + (_attribution_hash() if m == "attribution" else ""))
         out[m] = hashlib.sha256(key.encode()).hexdigest()[:16]
     return out
 
@@ -620,6 +634,11 @@ def run_corpus(fp: str):
         except Exception as e:
             errors["names"] = f"names: {e}"
             nfiles = {"pairs": None, "stones": None, "family": None, "display": None}
+        try:  # the attribution model's extra traits (cross forms, spelling); without them it runs on the old traits
+            from src import attribution_features
+            attribution_features.main(d, os.path.join(d, "attribution_v2.csv"))
+        except Exception as e:
+            errors["attribution_features"] = f"attribution_features: {e}"
         from src import pattern_map, places
         params = {"corpus": os.path.join(d, "corpus.csv"), "water_dir": water, "corpus_dir": d, "seed": 2026,
                   "messages": os.path.join(d, "messages.csv"), "people": os.path.join(d, "people.csv"),

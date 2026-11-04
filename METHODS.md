@@ -324,6 +324,16 @@ skilja en okänd ristare från en sten den bara är osäker på, och flaggan bet
 förslag för stenar utan säker ristare får flaggan; i Forskningsluckor visas bara förslag utan flagga, och stenrapporten
 säger till när förstavalet ligger under gränsen. Resultatet står i `attribution.json` (`open_set`).
 
+**Prövning mot de signerade stenarna och version 2 (2026-11-04).** Facit är bara de 117 signerade stenarna, med hela
+socknar utelämnade (`analysplaner/2026-11-04-attribuering-provad.md`, `r/attribution_audit.R`): 71 % rätt förstaval,
+86 % bland tre; i medel över ristarna 43 %; attribuerade stenar inte lättare än signerade (glmer p 0,85); 33
+procentenheter över geografin. Version 2 och 3 (`analysplaner/2026-11-04-attribuering-v2.md`, `-v3.md`, framåtval på
+samma provbänk) behöll **korsets form enligt Lagers typologi** ur RAÄ:s Runor 2020 (`src/attribution_features.py`, 45
+aspekt+form-drag; delmodellen Stil 33 → 54 %). Stavningsavtryck, ristarens bygd och tid, en parvis ”samma hand”-modell och
+en blandning prövades men klarade inte de låsta reglerna på sockenhalva 2 (bygdsmodellerna höjde medel per ristare med
+omkring 12 procentenheter men gav sämre log-förlust). De visade sannolikheterna är omkalibrerade, p^1,8 omnormerat (ECE
+grupperat 0,30 → 0,05), och spärren ”någon annan” räknas på de grupperade, okalibrerade sannolikheterna (gräns 0,335).
+
 **Resultat i korpusen (beräkning 2026-10-05).** Attribueringsmodellen hittar rätt ristare i 72 % av fallen
 (87 % bland de tre främsta) mot 19 % om man alltid gissar på den vanligaste; språk och innehåll ensamt ger 60 %,
 geografi ensamt 44 %. Sannolikheterna är försiktiga: vid minst 0,5 är förstavalet rätt i 93 % av fallen. 24 av 29
