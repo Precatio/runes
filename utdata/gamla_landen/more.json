@@ -1,0 +1,77 @@
+{
+ "id": "more",
+ "focus": [
+  "more"
+ ],
+ "bbox": [
+  15.45,
+  56.15,
+  16.75,
+  57.0
+ ],
+ "w": 7.0,
+ "h": 8.0,
+ "title_sv": "Möre omkring år 1000",
+ "title_en": "Möre around AD 1000",
+ "sub_sv": "Kusten enligt SGU:s modell för år 1000. Rostfärgat: Norra och Södra Möre härader; ljust: grannlanden.\nGränserna är ungefärliga. Grå punkter: runstenar. Ringar: platser i texten.",
+ "sub_en": "The coast after the Geological Survey of Sweden's model for AD 1000. Rust: the hundreds of North and South Möre;\nlight: the neighbouring lands. Borders approximate. Grey points: runestones. Rings: places in the text.",
+ "labels": [
+  {
+   "id": "m",
+   "lon": 15.85,
+   "lat": 56.5,
+   "sv": "Möre",
+   "en": "Möre"
+  },
+  {
+   "id": "v",
+   "lon": 15.6,
+   "lat": 56.9,
+   "sv": "Värend",
+   "en": "Värend"
+  }
+ ],
+ "places": [
+  {
+   "parish": "Hossmo sn",
+   "province": 5,
+   "sv": "Hossmo",
+   "en": "Hossmo",
+   "dx": -6000,
+   "dy": -1500
+  },
+  {
+   "parish": "Dörby sn",
+   "province": 5,
+   "sv": "Dörby",
+   "en": "Dörby",
+   "dx": -5000,
+   "dy": 1500
+  },
+  {
+   "parish": "Kalmar stad",
+   "province": 5,
+   "sv": "Kalmar",
+   "en": "Kalmar",
+   "dx": 5500,
+   "dy": 0
+  },
+  {
+   "parish": "Hagby sn",
+   "province": 5,
+   "sv": "Hagby",
+   "en": "Hagby",
+   "dx": -5000,
+   "dy": 0
+  }
+ ],
+ "stones": "utdata/gamla_landen/smaland_stenar.csv",
+ "harader": [
+  "S. Möre hd",
+  "N. Möre hd"
+ ],
+ "extra": [
+  "Kalmar stad",
+  "Nybro stad"
+ ]
+}

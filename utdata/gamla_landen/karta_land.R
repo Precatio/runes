@@ -21,17 +21,31 @@ edges <- if (length(edges)) st_intersection(st_union(st_collection_extract(st_sf
                                              st_buffer(st_union(land), -300)) else NULL
 fl <- st_intersection(fl, land)
 fl$here <- fl$id %in% cfg$focus
-if (!is.null(cfg$province)) {
+if (!is.null(cfg$province) || !is.null(cfg$harader)) {
   # the whole province as one land (e.g. Gotland): the area nearest each of its parish churches (ISOF), no inner borders
   P <- fromJSON("/Volumes/2TB/Antigrvity/Runes/geografi_kallor/isof/parishes.json")
   P <- P[!is.na(P$latitude), ]
   P <- P[P$longitude > cfg$bbox[1] - 1 & P$longitude < cfg$bbox[3] + 1 & P$latitude > cfg$bbox[2] - 1 & P$latitude < cfg$bbox[4] + 1, ]
   Pp <- st_transform(st_as_sf(P, coords = c("longitude", "latitude"), crs = 4326), 3006)
   V <- st_sf(geometry = st_collection_extract(st_voronoi(st_union(Pp), st_buffer(frame, 80000))))
-  V$prov <- Pp$province_id[sapply(st_intersects(V, Pp), function(i) if (length(i)) i[1] else NA_integer_)]
-  whole <- st_intersection(st_make_valid(st_union(V[V$prov %in% cfg$province, ])), land)
-  fl <- st_sf(id = "whole", here = TRUE, geometry = st_geometry(whole))
-  edges <- NULL
+  hit <- sapply(st_intersects(V, Pp), function(i) if (length(i)) i[1] else NA_integer_)
+  V$prov <- Pp$province_id[hit]
+  D <- fromJSON("/Volumes/2TB/Antigrvity/Runes/geografi_kallor/isof/districts.json")
+  V$harad <- D$name[match(Pp$district_id[hit], D$id)]
+  V$name <- Pp$name[hit]
+  keep <- if (!is.null(cfg$harader)) V$harad %in% cfg$harader | V$name %in% cfg$extra else V$prov %in% cfg$province
+  whole <- st_make_valid(st_union(V[keep, ]))
+  if (!is.null(cfg$harader)) {   # keep the neighbouring lands light, cut out the land itself, draw its outline dashed
+    edges <- st_intersection(st_boundary(whole), st_buffer(st_union(land), -300))
+    fl <- st_make_valid(fl[!fl$here, ])
+    fl <- st_difference(fl, whole)
+    whole <- st_intersection(whole, land)
+    fl <- rbind(fl[, c("id", "here")], st_sf(id = "whole", here = TRUE, geometry = st_geometry(whole)))
+  } else {
+    whole <- st_intersection(whole, land)
+    fl <- st_sf(id = "whole", here = TRUE, geometry = st_geometry(whole))
+    edges <- NULL
+  }
 }
 d <- read.csv(cfg$stones, stringsAsFactors = FALSE)
 p <- st_transform(st_as_sf(d, coords = c("lon", "lat"), crs = 4326), 3006)
