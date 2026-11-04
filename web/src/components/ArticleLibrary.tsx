@@ -90,10 +90,21 @@ const Heading = ({ children }: { children: ReactNode }) => (
   <div className="mb-1.5 px-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">{children}</div>
 );
 
+// ---- the series in reading order --------------------------------------------------------------------------------
+const dateOf = (p: BlogPost) => p.publishedAt ?? p.month ?? "";
+const partsOf = (posts: BlogPost[], key: string) =>
+  posts.filter(p => seriesOf(p)?.key === key).sort((a, b) => dateOf(a).localeCompare(dateOf(b)));
+function seriesLabel(p: BlogPost, en: boolean, parts: Map<string, number>) {
+  const s = seriesOf(p);
+  if (!s) return null;
+  const n = parts.get(p.slug);
+  return `${en ? s.en : s.sv}${n ? (en ? ` · part ${n}` : ` · del ${n}`) : ""}`;
+}
+
 // ---- the cards and the rows -----------------------------------------------------------------------------------------
-function Card({ p, en, big, eager }: { p: BlogPost; en: boolean; big?: boolean; eager?: boolean }) {
+function Card({ p, en, big, eager, parts }: { p: BlogPost; en: boolean; big?: boolean; eager?: boolean; parts: Map<string, number> }) {
   const title = en ? p.title_en || p.title : p.title, summary = en ? p.summary_en || p.summary : p.summary;
-  const kind = typeOf(p.labels), min = minutes(p, en), series = seriesOf(p);
+  const kind = typeOf(p.labels), min = minutes(p, en), series = seriesLabel(p, en, parts);
   return (
     <article className={big ? "md:col-span-2" : ""}>
       <Link href={readerPath(p, en ? "en" : "sv")} prefetch={false}
@@ -104,7 +115,7 @@ function Card({ p, en, big, eager }: { p: BlogPost; en: boolean; big?: boolean; 
             {p.featured && <span>{en ? "Article of the week" : "Veckans artikel"}</span>}
             {p.featured && kind && <span className="text-slate-300">·</span>}
             {kind && <span>{labelName(kind, en ? "en" : "sv")}</span>}
-            {series && <><span className="text-slate-300">·</span><span className="text-slate-500">{en ? series.en : series.sv}</span></>}
+            {series && <><span className="text-slate-300">·</span><span className="text-slate-500">{series}</span></>}
           </div>
           <h3 className={`mt-1.5 font-serif font-bold leading-snug text-slate-900 group-hover:text-[#b7410e] ${big ? "text-3xl" : "text-xl"}`} translate="no">{title}</h3>
           <p className={`mt-2 text-slate-600 leading-relaxed ${big ? "line-clamp-4 text-[16px]" : "line-clamp-3 text-[15px]"}`} translate="no">{summary}</p>
@@ -118,9 +129,9 @@ function Card({ p, en, big, eager }: { p: BlogPost; en: boolean; big?: boolean; 
   );
 }
 
-function Row({ p, en }: { p: BlogPost; en: boolean }) {
+function Row({ p, en, parts }: { p: BlogPost; en: boolean; parts: Map<string, number> }) {
   const title = en ? p.title_en || p.title : p.title;
-  const kind = typeOf(p.labels), min = minutes(p, en);
+  const kind = typeOf(p.labels), min = minutes(p, en), series = seriesLabel(p, en, parts);
   const subjects = (p.labels ?? []).filter(l => !isType(l));
   return (
     <li className="grid grid-cols-[4.5rem_1fr] gap-x-4 border-t border-slate-200 py-3 sm:grid-cols-[5rem_1fr_auto]">
@@ -130,6 +141,7 @@ function Row({ p, en }: { p: BlogPost; en: boolean }) {
         <div className="mt-0.5 text-[12.5px] text-slate-500">
           {kind && <span className="font-semibold text-[#b7410e]">{labelName(kind, en ? "en" : "sv")}</span>}
           {subjects.length > 0 && <>{kind && " · "}{subjects.map(s => labelName(s, en ? "en" : "sv")).join(", ")}</>}
+          {series && <> · <span className="font-semibold text-slate-600">{series}</span></>}
           {min && <span className="sm:hidden"> · {en ? `${min} min` : `${min} min`}</span>}
         </div>
       </div>
@@ -188,7 +200,10 @@ export default function ArticleLibrary({ posts, lang: pageLang = "sv", failed = 
   const base = hits ?? posts;
   const filtered = base.filter(p => (!kind || p.labels?.includes(kind)) && (!subject || p.labels?.includes(subject))
     && (!series || seriesOf(p)?.key === series));
-  const shown = inOrder(filtered, order);
+  const parts = useMemo(() => new Map(SERIES.flatMap(sr => partsOf(posts, sr.key).map((p, i) => [p.slug, i + 1] as [string, number]))), [posts]);
+  const inSeries = series ? SERIES.find(sr => sr.key === series) ?? null : null;
+  // A chosen series is read in order, part 1 first; otherwise the chosen order
+  const shown = inSeries ? [...filtered].sort((a, b) => dateOf(a).localeCompare(dateOf(b))) : inOrder(filtered, order);
   // Counts for the panel: what each choice would give together with the other choices
   const countWith = (k: string | null, s: string | null) => base.filter(p => (!k || p.labels?.includes(k)) && (!s || p.labels?.includes(s))
     && (!series || seriesOf(p)?.key === series)).length;
@@ -202,7 +217,7 @@ export default function ArticleLibrary({ posts, lang: pageLang = "sv", failed = 
 
   // Grouped by month in date order; "most read" is one list without months
   const groups: [string, BlogPost[]][] = [];
-  if (order === "senaste") {
+  if (order === "senaste" && !inSeries) {
     for (const p of rest) {
       const k = monthKey(p);
       const g = groups[groups.length - 1];
@@ -317,8 +332,41 @@ export default function ArticleLibrary({ posts, lang: pageLang = "sv", failed = 
           </p>
         )}
 
+        {plain && seriesShown.length > 0 && (
+          <section className="mt-8" aria-label={en ? "Series" : "Serier"}>
+            <div className="mb-3 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">{en ? "Series – read in order" : "Serier – läs i ordning"}</div>
+            <div className="grid gap-4 md:grid-cols-2">
+              {seriesShown.map(sr => (
+                <div key={sr.key} className="rounded-2xl border border-slate-200 bg-white/80 p-5">
+                  <button type="button" onClick={() => set({ serie: sr.key })} className="font-serif text-lg font-bold text-slate-900 hover:text-[#b7410e]">
+                    {en ? sr.en : sr.sv}
+                  </button>
+                  <p className="mt-1 text-[14px] text-slate-600">{en ? sr.aboutEn : sr.about}</p>
+                  <ol className="mt-3 space-y-1.5">
+                    {partsOf(posts, sr.key).map((p, i) => (
+                      <li key={p.slug} className="flex gap-2 text-[14.5px]">
+                        <span className="w-5 shrink-0 tabular-nums text-slate-400">{i + 1}.</span>
+                        <Link href={readerPath(p, en ? "en" : "sv")} prefetch={false} className="font-semibold text-slate-800 hover:text-[#b7410e]" translate="no">
+                          {en ? p.title_en || p.title : p.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {inSeries && (
+          <section className="mt-8">
+            <h2 className="font-serif text-2xl font-bold text-slate-900">{en ? inSeries.en : inSeries.sv}</h2>
+            <p className="mt-1 text-slate-600">{en ? inSeries.aboutEn : inSeries.about} {en ? "In reading order." : "I läsordning."}</p>
+          </section>
+        )}
+
         {featured && (
-          <div className="mt-8 grid gap-6 md:grid-cols-2"><Card p={featured} en={en} big eager /></div>
+          <div className="mt-8 grid gap-6 md:grid-cols-2"><Card p={featured} en={en} big eager parts={parts} /></div>
         )}
 
         {(() => {
@@ -336,12 +384,12 @@ export default function ArticleLibrary({ posts, lang: pageLang = "sv", failed = 
                 </h2>
               )}
               {view === "lista" ? (
-                <ul>{list.map(p => <Row key={p.slug} p={p} en={en} />)}</ul>
+                <ul>{list.map(p => <Row key={p.slug} p={p} en={en} parts={parts} />)}</ul>
               ) : (
                 <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
                   {list.map(p => {
                     const hide = n++ >= cardLimit;
-                    return <div key={p.slug} className={hide ? "hidden" : "contents"}><Card p={p} en={en} eager={!featured && n === 1} /></div>;
+                    return <div key={p.slug} className={hide ? "hidden" : "contents"}><Card p={p} en={en} eager={!featured && n === 1} parts={parts} /></div>;
                   })}
                 </div>
               )}
