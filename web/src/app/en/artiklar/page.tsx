@@ -2,11 +2,10 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import BlogShell from "@/components/BlogShell";
 import { SwedishEditionLink } from "@/components/LanguageToggle";
-import EnglishArticleList from "@/components/EnglishArticleList";
+import ArticleLibrary from "@/components/ArticleLibrary";
 import ContentVote from "@/components/ContentVote";
 import { listPosts } from "@/lib/articles";
 import { EN_REPORTS_PATH } from "@/lib/report";
-import { featuredFirst } from "@/lib/featured";
 import { ARTICLES_PATH, BLOG_DESCRIPTION_EN, BLOG_TITLE_EN, EN_ARTICLES_PATH, languageAlternates } from "@/lib/blogSeo";
 
 // The English index of the articles, rendered on the server; every article links its Swedish original via hreflang
@@ -24,10 +23,11 @@ export const metadata: Metadata = {
 
 export default async function EnglishBlogPage() {
   const { posts } = await listPosts();
-  const withEn = featuredFirst(posts.filter(p => p.title_en));
+  const withEn = posts.filter(p => p.title_en);
   return (
     <BlogShell lang="en">
-      <section className="max-w-3xl mx-auto px-6 pt-20 pb-24" lang="en">
+      <section className="max-w-6xl mx-auto px-6 pt-20 pb-24" lang="en">
+        <div className="max-w-3xl">
         <div className="flex items-center justify-between gap-4">
           <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e]">Articles</div>
           <SwedishEditionLink href={ARTICLES_PATH} className="tap text-sm text-[#b7410e] font-semibold hover:underline">Läs på svenska →</SwedishEditionLink>
@@ -41,8 +41,9 @@ export default async function EnglishBlogPage() {
           The tested findings are also written up in scholarly form, marked by how thoroughly they were tested, with version and citation, under{" "}
           <Link href={EN_REPORTS_PATH} prefetch={false} className="font-semibold text-[#b7410e] hover:underline">Research reports</Link>.
         </p>
-        <EnglishArticleList posts={withEn} />
-        <ContentVote />
+        </div>
+        <ArticleLibrary posts={withEn} lang="en" />
+        <div className="max-w-3xl"><ContentVote /></div>
       </section>
     </BlogShell>
   );

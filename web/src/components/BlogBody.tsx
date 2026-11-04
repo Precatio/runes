@@ -30,6 +30,9 @@ export interface BlogPost {
   labels?: string[];
   // The article's first photo (Wikimedia Commons), for the thumbnail in the list
   image?: string | null;
+  // The number of words in the Swedish and the English text, for the reading time in the list (the list has no texts)
+  words?: number;
+  words_en?: number;
   image_alt?: string | null;
   // Its original's pixel size, when Commons gave it as the page was rendered (lib/blogSeo.ts withImageSizes)
   image_width?: number | null;

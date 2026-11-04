@@ -140,7 +140,10 @@ def first_photo(body: str | None, alt: bool = False) -> str | None:
 def list_posts():
     """De publicerade inläggen, nyaste först (utan brödtext, men med första fotot som miniatyr)."""
     return {"posts": [{**{k: p.get(k) for k in PUBLIC}, "image": first_photo(p.get("body")),
-                       "image_alt": first_photo(p.get("body"), alt=True)} for p in _published()]}
+                       "image_alt": first_photo(p.get("body"), alt=True),
+                       # the length, for the reading time in the article list
+                       "words": len((p.get("body") or "").split()), "words_en": len((p.get("body_en") or "").split())}
+                      for p in _published()]}
 
 
 @router.get("/blog/search_index")

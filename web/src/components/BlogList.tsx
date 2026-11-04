@@ -11,7 +11,7 @@ import LabelChips from "@/components/LabelChips";
 
 // The article's first photo, or a rune on the page colour when it has none. The first card is in the first view, so its
 // photo is fetched at once (eager), the others when they come near. big: the article of the week's wide card
-function Picture({ post, big, className, eager = false }: { post: BlogPost; big: boolean; className: string; eager?: boolean }) {
+export function Picture({ post, big, className, eager = false }: { post: BlogPost; big: boolean; className: string; eager?: boolean }) {
   if (!post.image) {
     return (
       <div className={`${className} flex items-center justify-center bg-[#f3ede4]`} aria-hidden="true">

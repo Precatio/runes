@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import BlogShell from "@/components/BlogShell";
-import ArticleSearch from "@/components/ArticleSearch";
+import ArticleLibrary from "@/components/ArticleLibrary";
 import ContentVote from "@/components/ContentVote";
 import { listPosts } from "@/lib/articles";
 import { REPORTS_PATH } from "@/lib/report";
@@ -25,7 +25,8 @@ export default async function BlogPage() {
   const posts = await withImageSizes(list.posts), failed = list.failed;
   return (
     <BlogShell>
-      <section className="max-w-3xl mx-auto px-6 pt-20 pb-24">
+      <section className="max-w-6xl mx-auto px-6 pt-20 pb-24">
+        <div className="max-w-3xl">
         <div className="flex items-center justify-between gap-4 mb-3"><div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e]">Artiklar</div><Link href="/en/artiklar/" hrefLang="en" className="tap text-sm text-[#b7410e] font-semibold hover:underline">In English →</Link></div>
         <h1 className="text-4xl md:text-5xl font-serif font-bold tracking-tight">Mönster i runstenarna</h1>
         <p className="mt-4 text-lg text-slate-600 leading-relaxed">
@@ -36,8 +37,9 @@ export default async function BlogPage() {
           De prövade fynden finns också i vetenskaplig form, märkta efter hur hårt de prövats, med version och citering, under{" "}
           <Link href={REPORTS_PATH} prefetch={false} className="font-semibold text-[#b7410e] hover:underline">Forskningsrapporter</Link>.
         </p>
-        <div className="mt-10"><ArticleSearch posts={posts} failed={failed} /></div>
-        <ContentVote />
+        </div>
+        <ArticleLibrary posts={posts} failed={failed} />
+        <div className="max-w-3xl"><ContentVote /></div>
       </section>
       {posts.length > 0 && (
          

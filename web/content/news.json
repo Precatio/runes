@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "artikelbiblioteket",
+   "date": "2026-11-04",
+   "status": "nytt",
+   "title": "Artiklarna som ett bibliotek",
+   "text": "Artikelsidan är omgjord för att hålla överblicken när artiklarna blir många: typ och ämne går att välja tillsammans, artiklarna står månad för månad med lästid, och en listvy visar alla på en gång. Serier samlas, och allt du väljer står i adressen så att en länk öppnar samma vy."
+  },
+  {
    "id": "ristarna-pa-webbplatsen",
    "date": "2026-11-04",
    "status": "nytt",

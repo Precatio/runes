@@ -15,9 +15,10 @@ interface Snapshot { exported_at: string | null; posts: BlogPost[] }
 const isLive = (p: BlogPost, now = Date.now()) => !p.publishedAt || Date.parse(p.publishedAt) <= now;
 const exported = () => (snapshot as Snapshot).posts.filter(p => isLive(p));
 // The list carries no article texts, as from the analysis engine, but the first photo for the thumbnail
-const listed = ({ body, body_en: _e, ...p }: BlogPost) => { // eslint-disable-line @typescript-eslint/no-unused-vars
+const listed = ({ body, body_en: _e, ...p }: BlogPost) => {
   const photo = pictures(body ?? "").find(x => /wikimedia\.org/.test(x.src));
-  return { ...p, image: photo?.src ?? null, image_alt: photo?.alt || null } as BlogPost;
+  const words = (t?: string | null) => (t ?? "").split(/\s+/).filter(Boolean).length;  // for the reading time
+  return { ...p, image: photo?.src ?? null, image_alt: photo?.alt || null, words: words(body), words_en: words(_e) } as BlogPost;
 };
 
 /** Everything published (articles and research reports), newest first; failed when neither the analysis engine nor
