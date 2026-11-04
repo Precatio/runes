@@ -4,9 +4,9 @@ import LanguageToggle from "@/components/LanguageToggle";
 import MobileMenu from "@/components/MobileMenu";
 import { ARTICLES_PATH, EN_ARTICLES_PATH } from "@/lib/blogSeo";
 import { EN_REPORTS_PATH, REPORTS_PATH } from "@/lib/report";
-import { CONTACT_PATH, DOWNLOAD_URL, EN_CONTACT_PATH, NEWS_PATH } from "@/lib/site";
+import { CARVERS_PATH, CONTACT_PATH, DOWNLOAD_URL, EN_CONTACT_PATH, NEWS_PATH } from "@/lib/site";
 
-// The one header of the public website: the start page, the articles, the research reports, the news and the contact page all show it. The
+// The one header of the public website: the start page, the articles, the research reports, the carvers, the news and the contact page all show it. The
 // start page's sections are reached as /#… from every page. lang="en": the English editions (/en/…) get it in
 // English; the Swedish pages are translated in place like the rest of the page. Links are not prefetched (BlogShell).
 // The start page's sections; the last four only on very wide screens (1800 px), so that the header never wraps or
@@ -26,6 +26,7 @@ export default function SiteHeader({ lang = "sv" }: { lang?: "sv" | "en" }) {
   const primary = [
     { href: en ? EN_ARTICLES_PATH : ARTICLES_PATH, label: en ? "Articles" : "Artiklar" },
     { href: en ? EN_REPORTS_PATH : REPORTS_PATH, label: en ? "Research reports" : "Forskningsrapporter" },
+    { href: CARVERS_PATH, label: en ? "The carvers" : "Ristarna" },
     { href: NEWS_PATH, label: en ? "News" : "Nyheter" },
     { href: en ? EN_CONTACT_PATH : CONTACT_PATH, label: en ? "Contact" : "Kontakt" },
   ];
@@ -40,6 +41,7 @@ export default function SiteHeader({ lang = "sv" }: { lang?: "sv" | "en" }) {
         <nav className="hidden lg:flex items-center gap-4 2xl:gap-5 text-sm font-semibold text-slate-600 whitespace-nowrap">
           <Link href={en ? EN_ARTICLES_PATH : ARTICLES_PATH} prefetch={false} className="hover:text-slate-900">{en ? "Articles" : "Artiklar"}</Link>
           <Link href={en ? EN_REPORTS_PATH : REPORTS_PATH} prefetch={false} className="hover:text-slate-900">{en ? "Research reports" : "Forskningsrapporter"}</Link>
+          <Link href={CARVERS_PATH} prefetch={false} className="hover:text-slate-900">{en ? "The carvers" : "Ristarna"}</Link>
           {SECTIONS.map(([href, sv, e, wide]) => <a key={href} href={href} className={`hover:text-slate-900${wide ? " hidden min-[1800px]:inline" : ""}`}>{en ? e : sv}</a>)}
           <Link href={NEWS_PATH} prefetch={false} className="hover:text-slate-900">{en ? "News" : "Nyheter"}</Link>
           <Link href={en ? EN_CONTACT_PATH : CONTACT_PATH} prefetch={false} className="hover:text-slate-900">{en ? "Contact" : "Kontakt"}</Link>

@@ -1,16 +1,35 @@
-"""Data för ristarsidan: alla ristarprofiler (r/carver_profile.R, utdata/ristare/kor_alla.sh) i en fil, med läsbara
-etiketter för dragen, likhet mellan varje ristares stenar (ordnad med hierarkisk klustring) och kartunderlag.
-    .venv/bin/python utdata/ristare/sida_data.py utdata/ristare/profiler web/public/geo/ristare.json \
-        utdata/ristare/modellforslag.csv utdata/attribuering_provad/resultat.json
+"""Ristarsidan (appen: Korpus → Ristarna, /ristare; webbplatsen: /ristarna/): datan för alla ristare med minst MIN_STONES
+stenar med säker ristare. Byggs av korpusjobbet (src/r_bridge.run_corpus) efter R-modulerna och skrivs till
+<korpusmapp>/ristare.json; appen hämtar den via GET /api/r/ristare och webbplatsens export kopierar den till
+web/public/ristarna/ristare.json (src/site_export.py).
+
+Stegen: dragtabellen (src/discovery_v2.py), en ristarprofil per ristare (r/carver_profile.R: fingeravtryck ur de signerade
+stenarna mot samtida grannar; ger de signerade färre än MIN_TRAITS drag byggs profilen av alla säkra stenar),
+attribueringsmodellens förslag (r/attribution_candidates.R, omkalibrerade, med spärren för okända ristare),
+bygdsmodellens andra bedömning för små ristare (r/attribution_bygd.R), och sammanställningen med läsbara etiketter,
+likhet mellan stenarna och kartunderlag. Provningen av modellen (utdata/attribuering_provad/resultat.json) och
+bygdsmodellens provning (utdata/attribuering_v3/resultat.json) följer med som de är.
+    .venv/bin/python -m src.carver_pages KORPUSMAPP     (bygger <korpusmapp>/ristare.json)
 """
+import csv
 import glob
 import json
 import os
+import subprocess
 import sys
+from collections import Counter
 
 import numpy as np
 from scipy.cluster.hierarchy import leaves_list, linkage
 from scipy.spatial.distance import squareform
+
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+MIN_STONES = 6
+MIN_TRAITS = 8
+# Extra variants of a carver's profile: signed stones held out of it (Balle the Red's two, whose identity with Balle is
+# debated); shown with a button on the page
+VARIANTS = {"Balle": {"utan_rodballe": "Vs 15;Vs 24"}}
+
 
 WORDS = {
     "faður": "fader", "broður": "bror", "brøðr": "bröder", "sun": "son", "sunn": "son", "moðiR": "moder",
@@ -83,7 +102,7 @@ def r(x, k=3):
     return None if x is None else round(x, k)
 
 
-def build(path):
+def build_profile(path):
     d = json.load(open(path, encoding="utf-8"))
     sig = d["signatur"]
     prof = {x["drag"]: x for x in d["drag"]}
@@ -132,12 +151,12 @@ def basemap():
     def rings(geom):
         polys = geom["coordinates"] if geom["type"] == "MultiPolygon" else [geom["coordinates"]]
         return [ring for p in polys for ring in p]
-    land = json.load(open("web/public/geo/land.geojson", encoding="utf-8"))
+    land = json.load(open(os.path.join(ROOT, "web", "public", "geo", "land.geojson"), encoding="utf-8"))
     folk = [{"id": f["properties"]["id"], "ring": [[round(x, 3), round(y, 3)] for x, y in ring]}
             for f in land["features"] for ring in rings(f["geometry"])]
     labels = [{"label": f["properties"]["label"], "lat": f["properties"]["label_lat"], "lon": f["properties"]["label_lon"]}
               for f in land["features"]]
-    riken = json.load(open("web/public/geo/riken.geojson", encoding="utf-8"))
+    riken = json.load(open(os.path.join(ROOT, "web", "public", "geo", "riken.geojson"), encoding="utf-8"))
     coast = []
     for f in riken["features"]:
         if f["properties"].get("id") == "sverige":
@@ -192,33 +211,86 @@ def bygd_suggestions(path, main_path):
     return by
 
 
-if __name__ == "__main__":
-    src, out = sys.argv[1:3]
-    sugg = suggestions(sys.argv[3]) if len(sys.argv) > 3 else {}
-    bygd_path = os.path.join(os.path.dirname(sys.argv[3]), "bygdsforslag.csv") if len(sys.argv) > 3 else ""
-    bygd = bygd_suggestions(bygd_path, sys.argv[3]) if bygd_path and os.path.exists(bygd_path) else {}
-    names = [ln.strip() for ln in open(os.path.join(src, "ristare.txt"), encoding="utf-8") if ln.strip()]
+
+
+def _rscript():
+    from src.r_bridge import rscript
+    return rscript()
+
+
+def _run(args, env=None, timeout=1800):
+    r = subprocess.run([_rscript(), "--vanilla", *args], cwd=ROOT, capture_output=True, text=True, timeout=timeout,
+                       env={**os.environ, **(env or {})})
+    if r.returncode != 0:
+        raise RuntimeError(f"{os.path.basename(args[0])}: {(r.stderr or r.stdout).strip()[-600:]}")
+    return r.stdout
+
+
+def _fname(who):
+    return who.replace(" ", "_").replace("-", "")
+
+
+def build(corpus_dir: str, log=print) -> str:
+    """Bygger <korpusmapp>/ristare.json; ger sökvägen."""
+    from src import discovery_v2
+    work = os.path.join(corpus_dir, "ristare")
+    prof = os.path.join(work, "profiler")
+    os.makedirs(prof, exist_ok=True)
+    drag = os.path.join(work, "drag.csv")
+    discovery_v2.write(corpus_dir, drag)
+    csv.field_size_limit(10 ** 9)
+    rows = list(csv.DictReader(open(os.path.join(corpus_dir, "corpus.csv"), encoding="utf-8")))
+    counts = Counter(r["carver"] for r in rows if r.get("carver"))
+    names = [c for c, n in sorted(counts.items(), key=lambda x: (-x[1], x[0])) if n >= MIN_STONES]
+    for who in names:
+        out = os.path.join(prof, _fname(who) + ".json")
+        _run(["r/carver_profile.R", corpus_dir, drag, who, out])
+        d = json.load(open(out, encoding="utf-8"))
+        if d["profil"] == "signerade" and len(d["signatur"]) < MIN_TRAITS:
+            _run(["r/carver_profile.R", corpus_dir, drag, who, out], env={"MODE": "alla säkra"})
+        for key, skip in VARIANTS.get(who, {}).items():
+            _run(["r/carver_profile.R", corpus_dir, drag, who, os.path.join(prof, f"{_fname(who)}__{key}.json")],
+                 env={"SKIP": skip})
+        log(f"ristarprofil: {who}")
+    sugg_csv = os.path.join(work, "modellforslag.csv")
+    bygd_csv = os.path.join(work, "bygdsforslag.csv")
+    _run(["r/attribution_candidates.R", corpus_dir, sugg_csv])
+    _run(["r/attribution_bygd.R", corpus_dir, bygd_csv])
+    sugg = suggestions(sugg_csv)
+    bygd = bygd_suggestions(bygd_csv, sugg_csv)
     carvers = []
     for who in names:
-        f = os.path.join(src, who.replace(" ", "_").replace("-", "") + ".json")
-        v = {"med": build(f)}
-        alt = glob.glob(os.path.join(src, who.replace(" ", "_").replace("-", "") + "__*.json"))
-        for a in alt:
-            v[os.path.basename(a)[:-5].split("__", 1)[1]] = build(a)
+        v = {"med": build_profile(os.path.join(prof, _fname(who) + ".json"))}
+        for key in VARIANTS.get(who, {}):
+            v[key] = build_profile(os.path.join(prof, f"{_fname(who)}__{key}.json"))
         n_certain = sum(v["med"]["n"].get(k, 0) for k in ("signerad", "attribuerad"))
         carvers.append({"name": who, "variants": v, "forslag": sugg.get(who),
                         "bygd": bygd.get(who, []) if (n_certain < SMALL and who in sugg) else None})
-        print(who, len(v["med"]["traits"]), len(v["med"]["stones"]), len(v["med"]["nb"]))
-    page = {"carvers": carvers, "karta": basemap()}
-    v3 = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(sys.argv[3]))), "attribuering_v3", "resultat.json")
-    if os.path.exists(v3):  # bygdsmodellens (K3) och huvudmodellens (K0) träff i provningen, för rutan med andra bedömningen
+    page = {"corpus": os.path.basename(corpus_dir), "carvers": carvers, "karta": basemap()}
+    v3 = os.path.join(ROOT, "utdata", "attribuering_v3", "resultat.json")
+    if os.path.exists(v3):  # the area model's (K3) and the main model's (K0) hits in the test, for the second opinion
         r3 = json.load(open(v3, encoding="utf-8"))["varianter"]
         k0 = {x["carver"]: x for x in r3["K0"]["per_carver"]}
         page["bygd_test"] = {"half2_macro": [r3["K0"]["half2"]["macro"], r3["K3"]["half2"]["macro"]],
                              "half2_top1": [r3["K0"]["half2"]["top1"], r3["K3"]["half2"]["top1"]],
                              "per_carver": {x["carver"]: {"n": x["n"], "bygd": x["top1"], "main": k0.get(x["carver"], {}).get("top1")}
                                             for x in r3["K3"]["per_carver"]}}
-    if len(sys.argv) > 4:  # provningen av modellen (r/attribution_audit.R), som sidan visar per ristare
-        page["audit"] = json.load(open(sys.argv[4], encoding="utf-8"))
-    json.dump(page, open(out, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
-    print(out, os.path.getsize(out) // 1024, "kB")
+    page["audit"] = json.load(open(os.path.join(ROOT, "utdata", "attribuering_provad", "resultat.json"), encoding="utf-8"))
+    path = os.path.join(corpus_dir, "ristare.json")
+    tmp = path + ".tmp"
+    json.dump(page, open(tmp, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+    os.replace(tmp, path)
+    log(f"ristarsidan: {len(carvers)} ristare, {os.path.getsize(path) // 1024} kB")
+    return path
+
+
+def latest() -> str | None:
+    """Den senaste färdiga korpuskörningens ristare.json (för webbplatsens export och artefakten)."""
+    root = os.path.join(ROOT, "data", "cache", "r", "corpus")
+    found = [p for p in glob.glob(os.path.join(root, "*", "ristare.json"))
+             if os.path.exists(os.path.join(os.path.dirname(p), "done.json"))]
+    return max(found, key=os.path.getmtime) if found else None
+
+
+if __name__ == "__main__":
+    build(sys.argv[1])

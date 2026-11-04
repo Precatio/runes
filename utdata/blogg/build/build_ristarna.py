@@ -1,7 +1,7 @@
 """Artikeln "Vem höll i mejseln?" om sidan Ristarna i Vitki (web/src/app/(app)/ristare): vad sidan gör och hur – förslagen
 för stenar utan ristare, fingeravtrycket ur de signerade stenarna, heatmapen, kärna och ytterkant – med Balle, Åsmund och
 Visäte som exempel, och provningen av attribueringsmodellen mot de signerade stenarna. Varje siffra hämtas ur sidans data
-(web/public/geo/ristare.json), provningen (utdata/attribuering_provad/resultat.json), appens körning (attribution.json)
+(<korpusmapp>/ristare.json, src/carver_pages.py), provningen (utdata/attribuering_provad/resultat.json), appens körning (attribution.json)
 och Rundata, och låses med asserts. Skärmbilderna tas med ristarna_bilder.py.
     ../../../.venv/bin/python build_ristarna.py [--write | --update DOC]
 Skriver utdata/blogg/ristarna.json; --write sparar ett nytt opublicerat utkast i Firestore."""
@@ -24,7 +24,7 @@ FP = "82193667b35e54a7"
 RUN = os.path.join(ROOT, "data", "cache", "r", "corpus", FP)
 OLD = os.path.join(ROOT, "data", "cache", "r", "corpus", "7b9061c9a1c12c73")  # before the cross forms
 BILDER = os.path.join(ROOT, "utdata", "blogg", "ristarna")
-PAGE = json.load(open(os.path.join(ROOT, "web", "public", "geo", "ristare.json"), encoding="utf-8"))
+PAGE = json.load(open(os.path.join(RUN, "ristare.json"), encoding="utf-8"))  # the carver page as of this corpus run
 AUD = json.load(open(os.path.join(ROOT, "utdata", "attribuering_provad", "resultat.json"), encoding="utf-8"))
 ATT = json.load(open(os.path.join(RUN, "attribution.json"), encoding="utf-8"))
 ATT_OLD = json.load(open(os.path.join(OLD, "attribution.json"), encoding="utf-8"))
@@ -258,7 +258,7 @@ Forskarnas viktigaste belägg saknas fortfarande: ornamentiken utöver korset, a
 
 ## Pröva själv
 
-Öppna Vitki och välj Korpus → Ristarna. Välj en ristare i listan och bläddra med pilarna. Titta särskilt på rutan Ytterkanten och utanför: där står de stenar som inte följer ristarens drag. Har du en av dem nära dig, så gå dit och titta på slingan och korset. Det är där maskinen ännu inte ser, och där ett mänskligt öga fortfarande gör skillnad.
+Sidan finns på [vitkirunor.se/ristarna](/ristarna/) och i appen under Korpus → Ristarna. Välj en ristare i listan och bläddra med pilarna. Titta särskilt på rutan Ytterkanten och utanför: där står de stenar som inte följer ristarens drag. Har du en av dem nära dig, så gå dit och titta på slingan och korset. Det är där maskinen ännu inte ser, och där ett mänskligt öga fortfarande gör skillnad.
 
 Tidigare har vi skrivit om [stenar som söker sin ristare](/artiklar/fem-runstenar-soker-sin-ristare/) och om [ristarna som aldrig blev ihågkomna](/artiklar/ristarna-som-aldrig-blev-ihagkomna/).
 
@@ -362,7 +362,7 @@ The researchers' most important evidence is still missing: the ornament beyond t
 
 ## Try it yourself
 
-Open Vitki and choose Corpus → The carvers. Pick a carver from the list and step through with the arrows. Look especially at the box At the edge and outside: there are the stones that do not follow the carver's traits. If one of them is near you, go there and look at the band and the cross. That is where the machine does not yet see, and where a human eye still makes the difference.
+The page is at [vitkirunor.se/ristarna](/ristarna/) and in the app under Corpus → The carvers. Pick a carver from the list and step through with the arrows. Look especially at the box At the edge and outside: there are the stones that do not follow the carver's traits. If one of them is near you, go there and look at the band and the cross. That is where the machine does not yet see, and where a human eye still makes the difference.
 
 We have written before about [stones looking for their carver](/en/artiklar/fem-runstenar-soker-sin-ristare/) and about [the carvers no one remembered](/en/artiklar/ristarna-som-aldrig-blev-ihagkomna/).
 

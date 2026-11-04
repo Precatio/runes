@@ -221,6 +221,15 @@ def hotspots():
     return {"available": True, "computed_at": res.get("computed_at"), **h}
 
 
+@router.get("/ristare")
+def carver_page():
+    """The carver page's data (Korpus → Ristarna): built by the corpus job (src/carver_pages.py) for the current corpus."""
+    p = os.path.join(rb.JOB.directory(fingerprint()), "ristare.json")
+    if not os.path.exists(p):
+        raise HTTPException(status_code=409, detail="Ristarsidan är inte beräknad än: kör korpusanalyserna (Statistik).")
+    return FileResponse(p, media_type="application/json")
+
+
 @router.get("/corpus")
 def corpus_results(request: Request):
     """Resultaten av korpusanalyserna med figurernas adresser och de mönster appen ser."""

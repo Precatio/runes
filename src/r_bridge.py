@@ -690,6 +690,15 @@ def run_corpus(fp: str):
             robustness.run(fp, r_findings.corpus_patterns(JOB.result(fp) or {}))
         except Exception as e:
             errors["robustness"] = str(e)
+        # The carver page's data (src/carver_pages.py: profiles, the model's suggestions, the second opinion), after the
+        # attribution model; served by GET /api/r/ristare and exported to the website (src/site_export.py)
+        if "attribution" in done:
+            _write_state(d, module="ristare")
+            try:
+                from src import carver_pages
+                carver_pages.build(d, log=lambda *_: None)
+            except Exception as e:
+                errors["ristare"] = str(e)
         _write_state(d, running=False, module=None, error="; ".join(errors.values()) or None)
     except Exception as e:
         _write_state(d, running=False, module=None, error=str(e))
