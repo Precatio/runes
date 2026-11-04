@@ -47,5 +47,19 @@ with sync_playwright() as p:
     im = Image.open(path)
     im.crop((0, 0, im.width, min(im.height, round(2 * cut)))).save(path)
     print("sparade 02_heatmap.png")
+    # The page as a whole, for Åsmund: the picker, the heading and figures, and the top of the box with the app's
+    # suggestions (down to its eighth row)
+    pg = b.new_page(viewport={"width": 1400, "height": 2400}, device_scale_factor=2)  # fresh page, scrolled to the top
+    pg.goto("http://localhost:3000/ristare#asmund", wait_until="networkidle", timeout=300000)
+    pg.get_by_role("heading", name="Åsmund – vilka stenar följer hans drag?").wait_for(timeout=120000)
+    pg.wait_for_timeout(2500)
+    pg.add_style_tag(content=".rp-root .sticky { position: static !important; }")
+    pg.wait_for_timeout(500)
+    bar = pg.locator(".rp-root .sticky").bounding_box()
+    sg = pg.locator("#rp-sg table tbody tr").nth(7).bounding_box()
+    root = pg.locator(".rp-root").bounding_box()
+    pg.screenshot(path=os.path.join(OUT, "00_oversikt.png"),
+                  clip={"x": root["x"], "y": bar["y"] - 12, "width": root["width"], "height": sg["y"] + sg["height"] + 18 - (bar["y"] - 12)})
+    print("sparade 00_oversikt.png")
     print("fel:", errs)
     b.close()
