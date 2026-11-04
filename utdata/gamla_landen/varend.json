@@ -1,0 +1,12 @@
+{"id": "varend", "focus": ["varend"], "bbox": [13.75, 56.3, 15.95, 57.35], "w": 8.0, "h": 7.0,
+ "title_sv": "Värend omkring år 1000", "title_en": "Värend around AD 1000",
+ "sub_sv": "Rostfärgat: Värend; ljust: grannlanden. Gränserna är ungefärliga (varje socken har fått området närmast sin kyrka).\nSjöarna enligt SGU:s modell, ytterst ungefärliga. Grå punkter: runstenar. Ringar: platser i texten.",
+ "sub_en": "Rust: Värend; light: the neighbouring lands. Borders approximate (each parish given the area nearest its church).\nLakes after the Geological Survey of Sweden's model, very approximate. Grey points: runestones. Rings: places in the text.",
+ "labels": [{"id": "v", "lon": 15.35, "lat": 56.62, "sv": "Värend", "en": "Värend"},
+            {"id": "f", "lon": 13.95, "lat": 56.95, "sv": "Finnveden", "en": "Finnveden"},
+            {"id": "n", "lon": 14.95, "lat": 57.28, "sv": "Njudung", "en": "Njudung"}],
+ "places": [{"parish": "Östra Torsås sn ", "province": 5, "sv": "Ingelstad", "en": "Ingelstad", "dx": 0, "dy": -3000},
+            {"parish": "Växjö stad", "province": 5, "sv": "Växjö", "en": "Växjö", "dx": 5200, "dy": 0},
+            {"parish": "Skatelövs sn", "province": 5, "sv": "Huseby", "en": "Huseby", "dx": 0, "dy": -3000},
+            {"parish": "Aringsås sn", "province": 5, "sv": "Benestad", "en": "Benestad", "dx": -6200, "dy": 0}],
+ "stones": "utdata/gamla_landen/smaland_stenar.csv"}
