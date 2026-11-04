@@ -2740,7 +2740,7 @@ och landskapsresultaten då ändras.
 ## 18. Kända brister
 
 Källkod: `src/limitations.py`, `GET /api/limitations`. Metodens kända brister förs i en enda förteckning
-(version 2026-10-23) som följer med varje analys:
+(version 2026-11-04) som följer med varje analys:
 
 * **I appen** visas de brister som gäller sidan under varje analyssida (3D-analys, stenanalys, jämförelse,
   mätkorpus, syntes, statistik, forskningsluckor, inskrifter, karta, rapporter).
@@ -2759,9 +2759,9 @@ När en brist åtgärdas ändras förteckningen och versionen höjs. Bristerna i
 | Bottenradie och asymmetri är osäkra mått | comparison, grooves | Bättre bottenmodell och test på skanningar av samma sten med olika punkttäthet. |
 | Ingen sten är mätt i oberoende skanningar | comparison, grooves | Test–omtest med oberoende skanningar av samma stenar, och manuell mot automatisk mätning; samma rutnät och känslighet för alla stenar som jämförs. |
 | Inte jämförbart med tidigare 3D-studier utan kalibrering | comparison, grooves | Samma referensstenar mätta med båda metoderna. |
-| Runigenkänningen är inte utvärderad | auto | Handmärkta facit för 8–10 stenar som inte använts för att justera reglerna (facit-läget i 3D-vyn, scripts/evaluate_rune_detection.py), med låsta regler. |
+| Runigenkänningen är bara delvis utvärderad | auto | Handmärkta facit för 8–10 stenar som inte använts för att justera reglerna (facit-läget i 3D-vyn, scripts/evaluate_rune_detection.py), med låsta regler. |
 | Gränserna 10 och 20 runor är riktvärden | auto, comparison | Ny beräkning när test–omtest och stenar med känd ristare på samma bergart finns. |
-| Attribueringen riskerar att bli cirkulär | attribution, statistics | Prövning på signerade stenar som inte använts i träningen och med variabler som inte låg bakom attribueringarna. |
+| Attribueringen riskerar att bli cirkulär | attribution, statistics | Fler belägg som forskarna själva använder – ornamentiken utöver korset och runformerna ur skanningar – och fler signerade stenar för de små ristarna. |
 | Träffsäkerheten beror på om platsen är känd | attribution, r, statistics | Grupperad korsvalidering även för mätkorpusens attribuering, när korpusen är stor nog. |
 | Många utforskande test på samma data | attribution, research, statistics | Förregistrerade analysplaner för de hypoteser som ska publiceras. |
 | Mer än hälften av runstenarna saknar datering | r, statistics | Fler säkra dateringar – i dag har 1 008 av 2 321 runstenar en stilgrupp med datering, och de övriga 1 313 (57 procent) räknas inte i tidsfrågorna (avsnitt 1n) – eller en imputation med samspel mellan landskap och drag prövad enligt en ny plan. |

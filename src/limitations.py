@@ -18,7 +18,7 @@ sammanhang den gäller:
 """
 from __future__ import annotations
 
-VERSION = "2026-10-23"
+VERSION = "2026-11-04"
 
 # Riktvärden för antal mätta runor (avsnitt 3 i METHODS.md)
 MIN_RUNES_DESCRIBE = 10
@@ -102,10 +102,16 @@ LIMITATIONS = [
      "title": "Attribueringen riskerar att bli cirkulär",
      "text": "Rundatas ristaruppgifter är hypoteser i litteraturen, i Mälardalen främst Axelsons (1993), som själv vägde "
              "in stil, stavning och geografi – samma slags drag som modellerna använder. Korsvalideringen mäter därför "
-             "överensstämmelse med tidigare bedömningar, inte med en oberoende sanning.",
-     "short": "Datorn jämför med tidigare forskares gissningar om ristare, och de gissningarna kan vara fel.",
-     "needed": "Prövning på signerade stenar som inte använts i träningen och med variabler som inte låg bakom "
-               "attribueringarna."},
+             "överensstämmelse med tidigare bedömningar, inte med en oberoende sanning. Prövad mot de 117 signerade "
+             "stenarna med hela socknar utelämnade (2026-11-04) hade modellen rätt ristare först på 71 % av dem, och de "
+             "attribuerade stenarna var inte lättare än de signerade – modellen återskapar alltså inte bara "
+             "attribueringarna. Men den känner de stora ristarna (Öpir, Balle, Åsmund) och knappt de små: i medel över "
+             "ristarna 44 %. Korsets form (Lagers typologi ur RAÄ:s Runor 2020) ingår sedan dess; en modell som jämför "
+             "stenar parvis (”samma hand?”) och en som väger in ristarens bygd höjde träffen för de små ristarna men "
+             "klarade inte den låsta prövningen och används inte.",
+     "short": "Datorn jämför med tidigare forskares bedömningar; prövad mot signerade stenar har den rätt på 71 %.",
+     "needed": "Fler belägg som forskarna själva använder – ornamentiken utöver korset och runformerna ur skanningar – "
+               "och fler signerade stenar för de små ristarna."},
     {"key": "cv_leakage", "contexts": {"attribution", "statistics", "r"},
      "title": "Träffsäkerheten beror på om platsen är känd",
      "text": "Vid slumpvis korsvalidering hamnar stenar från samma plats både i tränings- och testdata. R-modellen "

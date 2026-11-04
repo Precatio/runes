@@ -4,7 +4,8 @@
 #   python3.13 -m venv .venv && .venv/bin/pip install --require-hashes -r requirements.lock
 #
 # The versions are those of the developer's own .venv (Python 3.13) when the lock was made, so CI runs the tests on
-# the same libraries; only opentelemetry-api was raised to 1.45.1 for CVE-2026-114603. The lock is
+# the same libraries; only opentelemetry-api was raised to 1.45.1 for CVE-2026-114603, and (2026-11-04) nltk to 3.10.4
+# (PYSEC-2026-3740) and pyasn1 to 0.6.5 (CVE-2026-119194–119197). The lock is
 # universal (environment markers for Linux, macOS and Windows) and was generated with
 #
 #   uv pip compile requirements.txt pytest.in --universal --python-version 3.13 --generate-hashes \
@@ -1360,9 +1361,9 @@ networkx==3.7 \
     --hash=sha256:e3fd2c13a7814cee3746340d8d7f8598a67f16a58bf47fb7f8793fab6efca1b0 \
     --hash=sha256:fd77a511bd90f39f3d016351345b52cf5319b813bdca01de3f755d3cca62e96a
     # via scikit-image
-nltk==3.10.3 \
-    --hash=sha256:bb9327a461c3811c2fa4900e03840401f2126adfb30c0072827c433bd2444ea4 \
-    --hash=sha256:ff9598a8e20518ee0d557745890cc4435b9578489e2dcbc69c4f81fa060caf7c
+nltk==3.10.4 \
+    --hash=sha256:44679f4e9220abfd496d2c8cdb22f8425ccbe557604f9aa5cacb1c44003dabc1 \
+    --hash=sha256:769ba5413f265b7d3e87cd163cc28efa01e29eeef8bb6080bc907949d9fcfb51
     # via -r requirements.txt
 numpy==2.5.3 \
     --hash=sha256:012e66aca395d795496446e52aeeb5866312a5d4d3f27da270e5a0b43f70dc5c \
@@ -1558,9 +1559,9 @@ protobuf==7.36.2 \
     --hash=sha256:e11e1f0180583a2af89db6a2ecd9e8dc40aa6d2988ca175bfd0e6d12ea72d74e \
     --hash=sha256:f4fee11ec330d238b34a05c9b675f693c20415d1c5bd7d5320cc2f8a798eb9cf
     # via google-api-core, google-cloud-firestore, googleapis-common-protos, grpcio-status, proto-plus
-pyasn1==0.6.4 \
-    --hash=sha256:9c447d8431c947fe4c8febc4ed9e760bc29011a5b01e5c74b67025bd9fb8ce81 \
-    --hash=sha256:deda9277cfd454080ec40b207fb6df82206a3a2688735233cdcd8d3d565f088b
+pyasn1==0.6.5 \
+    --hash=sha256:4017b0fce125096b8573b39c989fdb1a4b19cf761e683398184550fea0e66587 \
+    --hash=sha256:6b11616a6bcf3a40e635f082bb232fa57b5e0dd7f517bd7ddd69ec3794508a47
     # via pyasn1-modules
 pyasn1-modules==0.4.2 \
     --hash=sha256:29253a9207ce32b64c3ac6600edc75368f98473906e8fd1043bd6b5b1de2c14a \

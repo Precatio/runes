@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { expect, test, type Page } from "@playwright/test";
 
-type Post = { slug: string; title: string; title_en?: string; body_en?: string };
+type Post = { slug: string; title: string; body?: string; title_en?: string; body_en?: string };
 const posts: Post[] = JSON.parse(fs.readFileSync(path.join(process.cwd(), "content", "articles.json"), "utf-8")).posts;
 
 function watchErrors(page: Page): string[] {
@@ -30,7 +30,8 @@ test("artikellistan", async ({ page }) => {
 
 test("en artikel på svenska", async ({ page }) => {
   const errors = watchErrors(page);
-  const p = posts[0];
+  // The newest article with the summary box; the series De gamla landen ends with "Så vet vi det" instead
+  const p = posts.find((x) => x.body?.includes("Det viktigaste i korthet")) ?? posts[0];
   await page.goto(`/artiklar/${p.slug}/`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(p.title);
   await expect(page.getByText("Det viktigaste i korthet").first()).toBeVisible();
