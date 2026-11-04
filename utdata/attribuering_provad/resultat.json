@@ -1,0 +1,331 @@
+{
+  "plan": "analysplaner/2026-11-04-attribuering-provad.md",
+  "korpus": "7b9061c9a1c12c73",
+  "n_train": 497,
+  "n_signed": 117,
+  "carvers": ["Amunde", "Arbjörn", "Åsmund", "Balle", "Erik", "Fot 2", "Gunnar", "Halvdan", "Likbjörn", "Livsten", "Öpir 1", "Tidkume", "Torbjörn 2", "Torbjörn skald", "Tore 1", "Traen", "Vidbjörn", "Visäte"],
+  "q1": {
+    "n": 117,
+    "carvers": 16,
+    "top1": [0.712, 0.639, 0.786],
+    "top3": [0.855, 0.794, 0.915],
+    "log_loss": 1.372,
+    "per_carver": [
+      {
+        "carver": "Amunde",
+        "n": 4,
+        "top1": 0.75
+      },
+      {
+        "carver": "Arbjörn",
+        "n": 3,
+        "top1": 0.556
+      },
+      {
+        "carver": "Balle",
+        "n": 20,
+        "top1": 0.933
+      },
+      {
+        "carver": "Erik",
+        "n": 1,
+        "top1": 0.667
+      },
+      {
+        "carver": "Fot 2",
+        "n": 6,
+        "top1": 0.556
+      },
+      {
+        "carver": "Gunnar",
+        "n": 2,
+        "top1": 0.5
+      },
+      {
+        "carver": "Likbjörn",
+        "n": 4,
+        "top1": 0
+      },
+      {
+        "carver": "Livsten",
+        "n": 6,
+        "top1": 0.556
+      },
+      {
+        "carver": "Tidkume",
+        "n": 4,
+        "top1": 0
+      },
+      {
+        "carver": "Torbjörn 2",
+        "n": 1,
+        "top1": 0
+      },
+      {
+        "carver": "Torbjörn skald",
+        "n": 3,
+        "top1": 0
+      },
+      {
+        "carver": "Tore 1",
+        "n": 2,
+        "top1": 0
+      },
+      {
+        "carver": "Vidbjörn",
+        "n": 1,
+        "top1": 0
+      },
+      {
+        "carver": "Visäte",
+        "n": 6,
+        "top1": 0.611
+      },
+      {
+        "carver": "Åsmund",
+        "n": 16,
+        "top1": 0.729
+      },
+      {
+        "carver": "Öpir 1",
+        "n": 38,
+        "top1": 0.956
+      }
+    ]
+  },
+  "q2": {
+    "attributed": {
+      "n": 380,
+      "top1": [0.677, 0.63, 0.726]
+    },
+    "signed": {
+      "n": 117,
+      "top1": [0.712, 0.639, 0.786]
+    },
+    "glmer": {
+      "b_signed": -0.088,
+      "se": 0.453,
+      "p": 0.846
+    },
+    "per_carver": [
+      {
+        "carver": "Amunde",
+        "n_sign": 4,
+        "top1_sign": 0.75,
+        "n_attr": 8,
+        "top1_attr": 0.583
+      },
+      {
+        "carver": "Arbjörn",
+        "n_sign": 3,
+        "top1_sign": 0.556,
+        "n_attr": 15,
+        "top1_attr": 0.422
+      },
+      {
+        "carver": "Balle",
+        "n_sign": 20,
+        "top1_sign": 0.933,
+        "n_attr": 49,
+        "top1_attr": 0.925
+      },
+      {
+        "carver": "Erik",
+        "n_sign": 1,
+        "top1_sign": 0.667,
+        "n_attr": 19,
+        "top1_attr": 0.772
+      },
+      {
+        "carver": "Fot 2",
+        "n_sign": 6,
+        "top1_sign": 0.556,
+        "n_attr": 47,
+        "top1_attr": 0.816
+      },
+      {
+        "carver": "Gunnar",
+        "n_sign": 2,
+        "top1_sign": 0.5,
+        "n_attr": 32,
+        "top1_attr": 0.75
+      },
+      {
+        "carver": "Halvdan",
+        "n_sign": 0,
+        "n_attr": 17,
+        "top1_attr": 0.529
+      },
+      {
+        "carver": "Likbjörn",
+        "n_sign": 4,
+        "top1_sign": 0,
+        "n_attr": 7,
+        "top1_attr": 0
+      },
+      {
+        "carver": "Livsten",
+        "n_sign": 6,
+        "top1_sign": 0.556,
+        "n_attr": 7,
+        "top1_attr": 0.81
+      },
+      {
+        "carver": "Tidkume",
+        "n_sign": 4,
+        "top1_sign": 0,
+        "n_attr": 8,
+        "top1_attr": 0
+      },
+      {
+        "carver": "Torbjörn 2",
+        "n_sign": 1,
+        "top1_sign": 0,
+        "n_attr": 16,
+        "top1_attr": 0.146
+      },
+      {
+        "carver": "Torbjörn skald",
+        "n_sign": 3,
+        "top1_sign": 0,
+        "n_attr": 6,
+        "top1_attr": 0.167
+      },
+      {
+        "carver": "Tore 1",
+        "n_sign": 2,
+        "top1_sign": 0,
+        "n_attr": 7,
+        "top1_attr": 0
+      },
+      {
+        "carver": "Traen",
+        "n_sign": 0,
+        "n_attr": 22,
+        "top1_attr": 0.909
+      },
+      {
+        "carver": "Vidbjörn",
+        "n_sign": 1,
+        "top1_sign": 0,
+        "n_attr": 7,
+        "top1_attr": 0
+      },
+      {
+        "carver": "Visäte",
+        "n_sign": 6,
+        "top1_sign": 0.611,
+        "n_attr": 23,
+        "top1_attr": 0.536
+      },
+      {
+        "carver": "Åsmund",
+        "n_sign": 16,
+        "top1_sign": 0.729,
+        "n_attr": 33,
+        "top1_attr": 0.707
+      },
+      {
+        "carver": "Öpir 1",
+        "n_sign": 38,
+        "top1_sign": 0.956,
+        "n_attr": 57,
+        "top1_attr": 0.883
+      }
+    ]
+  },
+  "q3": {
+    "S": ["Åsmund", "Balle", "Fot 2", "Livsten", "Öpir 1", "Visäte"],
+    "n": 92,
+    "A": [0.837, 0.766, 0.905],
+    "B": [0.786, 0.7, 0.864],
+    "A_minus_B": [0.051, -0.007, 0.112],
+    "verdict": "ingen påvisad skillnad"
+  },
+  "q4": {
+    "geografi": [0.382, 0.292, 0.468],
+    "narmaste_sten": [0.325, 0.244, 0.405],
+    "best": "okG",
+    "A_minus_best": [0.33, 0.231, 0.428],
+    "verdict": "slår geografin"
+  },
+  "q5": {
+    "ece_signed": {
+      "ece": 0.312,
+      "bins": [
+        {
+          "b": "(0.1,0.2]",
+          "n": 12,
+          "p": 0.18,
+          "a": 0.333
+        },
+        {
+          "b": "(0.2,0.3]",
+          "n": 26,
+          "p": 0.253,
+          "a": 0.385
+        },
+        {
+          "b": "(0.3,0.4]",
+          "n": 24,
+          "p": 0.357,
+          "a": 0.833
+        },
+        {
+          "b": "(0.4,0.5]",
+          "n": 18,
+          "p": 0.443,
+          "a": 0.833
+        },
+        {
+          "b": "(0.5,0.6]",
+          "n": 15,
+          "p": 0.542,
+          "a": 0.933
+        },
+        {
+          "b": "(0.6,0.7]",
+          "n": 15,
+          "p": 0.655,
+          "a": 1
+        },
+        {
+          "b": "(0.7,0.8]",
+          "n": 5,
+          "p": 0.723,
+          "a": 1
+        },
+        {
+          "b": "(0.8,0.9]",
+          "n": 2,
+          "p": 0.826,
+          "a": 1
+        }
+      ]
+    },
+    "a": 1.7,
+    "half2_signed": {
+      "n": 50,
+      "before": {
+        "ece": 0.337,
+        "log_loss": 1.17
+      },
+      "after": {
+        "ece": 0.144,
+        "log_loss": 0.916
+      }
+    },
+    "someone_else": {
+      "threshold": 0.33,
+      "J": 0.396,
+      "known_signed_flagged": 0.35,
+      "left_out_flagged": 0.746,
+      "accuracy_kept_signed": 0.895,
+      "share_kept_signed": 0.65,
+      "old_threshold_0.35": {
+        "known_signed_flagged": 0.419,
+        "left_out_flagged": 0.797
+      }
+    }
+  }
+}
