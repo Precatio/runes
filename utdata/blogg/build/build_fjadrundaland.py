@@ -1,7 +1,8 @@
-"""Artikeln "De gamla landen: Fjädrundaland – hällristningarnas land, där korset sällan höggs" (sv + en), del 3 i serien
-De gamla landen, i seriens form v3 (atmosfär, berättad statistik, efterordet Så vet vi det). Siffrorna låses mot
-utdata/fjadrundaland/fjadrundaland.json (plan analysplaner/2026-11-02-fjadrundaland.md, sha 6088f2af),
-utdata/landprofiler/landprofiler.json och naringar.json.
+"""Artikeln "De gamla landen: Fjädrundaland – folklandet längst in i havsviken" (sv + en), del 3 i serien De gamla landen.
+Sedan 2026-11-04 i seriens atmosfäriska form (Viktor): leran och ängarna, hällarnas tecken, vägarna, tinget och hamnorna;
+stenarna utan kors står kvar som ett inslag. Siffrorna låses mot utdata/fjadrundaland/fjadrundaland.json (plan
+analysplaner/2026-11-02-fjadrundaland.md, sha 6088f2af), utdata/landprofiler/landprofiler.json och naringar.json; landskapet
+mot DMS 1:8, 1:9 och länsstyrelsens riksintressebeskrivningar C48/C57/C63.
     ../../../.venv/bin/python build_fjadrundaland.py [--write | --update DOC]"""
 import datetime as dt
 import json
@@ -80,18 +81,52 @@ MAP = {lang: blog_figures.freeze(open(os.path.join(ROOT, "utdata", "fjadrundalan
 SOTHOLM, RODEN = "/artiklar/de-gamla-landen-sotholm", "/artiklar/de-gamla-landen-roden"
 ERIK = "/artiklar/erik-skrev-r-och-bygden-skrev-efter"
 
-title = "De gamla landen: Fjädrundaland – hällristningarnas land, där korset sällan höggs"
-summary = ("Fjädrundaland var det västligaste av Upplands folkland, ett land av lerslätter och Mälarvikar där bronsålderns "
-           "hällristningar redan var gamla när runstenarna restes. Där bär bara en sten av tre ett kors, mot sex av tio i resten "
-           "av Uppland – vem som än högg den. Tredje delen i serien De gamla landen.")
+# ---- the land as it was lived in (rewrite 2026-11-04: the series is atmospheric, the runestones one part of the place) --
+for k in ("De sankare områdena närmast åarna utnyttjades för slåtter",
+          "Ängsmarkerna var sedan medeltiden uppdelade i ett flertal långsmala lotter som delvis tillhörde avlägset belägna byar och gårdar i omgivande socknar",
+          "I övergången mellan slätten och moränmarken finns betesmarker och där ligger fornlämningarna och bebyggelsen",
+          "Runstenarna markerar de äldre vägnätet", "Hålvägsystem finns utmed Enköpingsåsen", "Yngre järnåldersgravfält ligger intill flera av byarna"):
+    assert k in C48, k
+for k in ("Vid Husby finns även en storhög kallad ”Haralds kulle”", "Ett flertal runstenar finns utmed huvudvägen",
+          "i miljön vid källan finns skålgropsförekomster"):
+    assert k in C57, k
+assert "Svinnegarns källa är länets mest välkända trefaldighetskälla" in C57 and "härbärgen för besökande pilgrimer" in C57
+assert "de allra flesta utgörs av runda stensättningar men 16 högar" in C63 and "Torsviviken" in C63
+for k in ("Dess rätta tingsstad låg vid byn Enhälja, Villberga sn", "tingsplatsens namn var 1299", "0bolund",
+          "om åkeföret står sig eller annars med båt så fort isen går upp", "fastar och nämndemän regelmässigt"):
+    assert k in DMS9, k
+for k in ("Kungshögen, 35 m i diameter och 6 m hög", "endast 10-12", "närmare 250 skärvstenshögar", "skålgropsföre",
+          "markerar de bronsålderns bosättningsområden", "utgjorde fastland under hela forntiden"):
+    assert k in DMS8, k
+assert "ok byggi i Harvistaðum. Balli risti stæin" in nz("U 744") and nz("U 744").startswith("Gyða let ræisa stæin at Þordiarf, boanda sinn, sun GuðlaugaR")
+assert "Hann byggi i Agurstaðum" in nz("U 729")
 
-body = f"""Föreställ dig att du seglar in i Mälaren för tusen år sedan. Den är ingen sjö ännu utan en vik av havet, och längst in i väster, där vattnet delar sig i fjärdar och sund, ligger Trögd: en halvö som vattnet omsluter i sydväst, söder och öster. Holmarna utanför – Oknö, Arnö, Grönsö – har haft folk sedan järnåldern. Härifrån for man också ut: i Svinnegarn har föräldrar rest stenar efter en son som ”ensam ägde ett skepp och styrde österut i Ingvars följe”.
+title = "De gamla landen: Fjädrundaland – folklandet längst in i havsviken"
+summary = ("Fjädrundaland var det västligaste av Upplands folkland: lerslätter och sanka ängar, gårdar på kanten mot moränen, "
+           "vägar längs åsarna och bronsålderns tecken på hällarna. Följ med in i Mälaren, som ännu var en vik av havet, "
+           "omkring år 1000. Tredje delen i serien De gamla landen.")
 
-Gå i land och följ en dalgång norrut. Leran ligger tung och blank i fårorna, och längs åarna breder sanka ängar ut sig där höet slås – längs Örsundaån ligger det som senare ska kallas Upplands näst största våtäng. Gårdarna ligger inte ute på slätten utan på kanten, där leran möter moränen och marken är torr nog att bo på. Längst i norr, på Upplands högsta urbergsplatå, tar de små skogsbygderna vid.
+body = f"""Föreställ dig att du seglar in i Mälaren för tusen år sedan. Den är ingen sjö ännu utan en vik av havet, och längst in i väster, där vattnet delar sig i fjärdar och sund, ligger Trögd: en halvö som vattnet omsluter i sydväst, söder och öster. Holmarna utanför – Oknö, Arnö, Grönsö – har haft folk sedan järnåldern. Härifrån for man också ut. I Svinnegarn har föräldrar rest stenar efter en son som ”ensam ägde ett skepp och styrde österut i Ingvars följe”.
 
-Det här är ett gammalt land, och det syns. På hällarna hade människor huggit sina tecken mer än tusen år innan den första runstenen restes – i Fjädrundaland är ungefär var sjunde fornlämning en hällristning, i resten av Uppland var trettionde. Gravarna är enklare än på andra håll; i landets norra del är gravfälten få och små. Men vid Torsvi i Trögd, där själva namnet minns en hednisk kultplats, ligger hundraåttio gravar från yngre järnålder i ett och samma gravfält.
+Det här är Fjädrundaland, det västligaste av Upplands tre folkland. Det är ett gammalt land, bördigt och tätt bebott, och det vänder sig mot vattnet.
 
-Och så stenarna. Vid Ågersta står en sten som ristaren Balle har huggit, med en orm som slingrar sig över hela ytan – men inget kors. Den talar till den som går förbi:
+## Leran och ängarna
+
+Gå i land och följ en dalgång norrut. Leran ligger tung och blank i fårorna, och längs åarna breder sanka ängar ut sig. Där slås höet. Längs Örsundaån ligger det som senare ska kallas Upplands näst största våtäng, och redan på medeltiden var den delad i långa, smala lotter som hörde till byar långt bort. Föreställ dig slåttern i sensommaren: raderna av människor med liar i det våta gräset, höet som ska räcka åt djuren hela vintern.
+
+Gårdarna ligger inte ute på slätten utan på kanten, där leran möter moränen och marken är torr nog att bo på. Där går också djuren på bete, och där ligger gravarna, intill byarna. Längst i norr, på Upplands högsta urbergsplatå, tar de små skogsbygderna vid.
+
+Gravarna här är enklare än på andra håll i Uppland. I Simtuna och Torstuna rymmer ett gravfält i genomsnitt bara tio–tolv gravar, låga och oansenliga. Men här och där reser sig något större: Kungshögen vid Torstunaby, trettiofem meter bred och sex meter hög. Och vid Torsvi i Trögd, i en dalgång som sluttar ner mot Torsviviken, ligger hundraåttio gravar från yngre järnålder i ett och samma gravfält, nästan alla runda stensättningar men också sexton högar.
+
+## Tecknen på hällarna
+
+Det här är ett gammalt land, och det syns. På hällarna hade människor huggit sina tecken mer än tusen år innan den första runstenen restes. I Fjädrundaland är ungefär var sjunde fornlämning en hällristning, i resten av Uppland var trettionde. Kring Simtuna och Torstuna markerar närmare tvåhundrafemtio högar av skörbränd sten, några hällristningar och mängder av skålgropar var bronsålderns människor bodde. Vid källan i Svinnegarn, som senare blev länets mest kända trefaldighetskälla, dit pilgrimer vandrade, finns skålgropar i berget. Och själva namnet Torsvi minns en hednisk kultplats.
+
+Den som bodde här omkring år 1000 gick alltså bland tecken som redan var uråldriga. Vad de trodde om dem vet vi inte. Men de levde med dem. Föreställ dig barnen som leker på hällarna och djuren som betar mellan tecknen.
+
+## Vägarna mellan byarna
+
+Vägarna går på åsarna. Längs Enköpingsåsen finns hålvägar, vägar som trafiken har nött ner i marken, och runstenarna står längs de gamla vägarna; i Enköpings-Näs står flera av dem vid huvudvägen. Vid Ågersta står en sten som ristaren Balle har huggit, med en orm som slingrar sig över hela ytan. Den talar till den som går förbi:
 
 > *{nz("U 729")}*
 
@@ -100,30 +135,38 @@ Vidhugse lät resa denna sten efter Särev, sin gode fader. Han bodde i Ågersta
 ![Runstenen U 729 vid Ågersta, huggen av Balle, utan kors]({INFO[F729]['thumb']})
 U 729 vid Ågersta i Löts socken, huggen av Balle. Ormen täcker stenen; något kors finns inte. Foto: Bengt A. Lundberg, Riksantikvarieämbetet, CC BY 2.5 se, via [Wikimedia Commons]({PAGE}).
 
-## Ett folkland vid vattnet
+”Han bodde i Ågersta.” Stenarna här säger ofta var de döda bodde. Balle högg en sten åt Gyda efter hennes man:
 
-Fjädrundaland var det västligaste av Upplands tre folkland, med sina hundaren Trögd, Åsunda, Lagunda, Simtuna och Torstuna. Det hade sina centralorter: ett Husby i Svinnegarn, ett i Kungs-Husby, och Simtuna, vars namn på -tuna antyder en samlingsplats sedan förhistorien. När folklandet i början av 1300-talet var morgongåva åt kung Birgers drottning Märta låg dess centrum sannolikt vid Husby i Kungs-Husby. Och i Trögd var skattejorden ännu på 1500-talet delad i tre tredingar med tretton, elva och nio hamnor – de gamla enheterna för ledungen, när landet skulle rusta skepp åt kungen.
+> *{nz("U 744")}*
+
+Gyda lät resa stenen efter Tordjärv, sin make, Gudlögs son, och han bodde i Harvesta. Balle ristade stenen.
+
+På vintern blir isen väg. Ännu 1512 skrev länsmannen i Trögd att häradsmännen ville föra fram skatten med släde om vinterföret höll, och annars med båt så snart isen gick upp. Föreställ dig veckorna däremellan, när isen varken bar eller släppte.
+
+## Ting, hundaren och hamnor
+
+Fjädrundaland hade fem hundaren: Trögd, Åsunda, Lagunda, Simtuna och Torstuna. Varje hundare hade sitt ting. Trögds tingsplats låg vid byn Enhälja i Villberga och hette 1299 Öbolund; på medeltiden kom vittnen och nämndemän dit från byarna i alla fastlandssocknarna. Simtunas namn på -tuna antyder en samlingsplats sedan förhistorien.
+
+Landet hade också sina centrala gårdar. I Svinnegarn ligger ett Husby med en storhög som kallas Haralds kulle, och ett annat Husby ligger i Kungs-Husby. När folklandet i början av 1300-talet var morgongåva åt kung Birgers drottning Märta låg dess centrum sannolikt där. Och i Trögd var skattejorden ännu på 1500-talet delad i tre tredingar med tretton, elva och nio hamnor – de gamla enheterna för ledungen, när landet skulle rusta skepp åt kungen.
 
 ![Karta över Fjädrundaland omkring år 1000 med runstenarna med och utan kors]({MAP['sv']})
 **Karta.** Fjädrundaland omkring år 1000, då Mälaren var en vik av havet. Rostfärgat är Fjädrundaland, ljust grannlanden; gränserna är ungefärliga. Varje punkt är en runsten där det går att avgöra om den har ett kors – i Fjädrundaland är de grå punkterna många. Karta: Vitki, efter SGU:s modell för strandförskjutningen år 1000, Institutet för språk och folkminnens ortnamnsregister och Rundata.
 
-## Korsen som uteblev
+## Stenarna utan kors
 
-Gå bland Fjädrundalands runstenar, och korset saknas oftare än det finns. En sten av tre bär ett kors; i resten av Uppland bär sex av tio. Det är inte en ristares vana. Landets flitigaste ristare – Balle, Erik, Livsten, Tidkume och några till – högg visserligen många stenar utan kors, men också på de stenar som andra händer högg är korset lika ovanligt: sju av tjugofem. Och det är inte tiden, för skillnaden finns kvar när vi jämför stenar från samma årtionden.
+Stenen i Ågersta har inget kors, och det är inte ovanligt här. Bara en sten av tre i Fjädrundaland bär ett kors; i resten av Uppland bär sex av tio. Det är inte en ristares vana. Landets flitigaste ristare – Balle, Erik, Livsten, Tidkume och några till – högg många stenar utan kors, men också på de stenar som andra händer högg är korset lika ovanligt: sju av tjugofem. Och det är inte tiden, för skillnaden finns kvar när vi jämför stenar från samma årtionden.
 
-Det betyder inte att folket var hedningar. Balle högg också en sten åt Ingileif efter hennes man Brune, som ”dog i Danmark i dopkläder” – nydöpt, alltså. Inte heller den stenen bär något kors. I Fjädrundaland kunde man vara kristen utan att sätta korset på stenen.
+Det betyder inte att folket var hedningar. Balle högg också en sten åt Ingileif efter hennes man Brune, som ”dog i Danmark i dopkläder” – nydöpt, alltså. Inte heller den stenen bär något kors. I Fjädrundaland kunde man vara kristen utan att sätta korset på stenen. En ristare antyder att det var landet och inte handen: Torbjörn högg kors på två av fem stenar här men på nio av tio utanför. Det är för få stenar för att bevisa något, men det är vad man skulle vänta sig om ristaren rättade sig efter beställarnas land.
 
-En ristare antyder att det var landet och inte handen. Torbjörn högg två kors på fem stenar i Fjädrundaland men nio på tio utanför. Det är för få stenar för att bevisa något, men det är vad man skulle vänta sig om ristaren anpassade sig till beställarnas land.
-
-Stenarna här är också ensammare. De står mer sällan i grupper om flera, en av sju mot en av tre i resten av Uppland, och de är oftare resta av en enda person än av flera syskon eller släktingar tillsammans. Och de skriver på sitt eget sätt: hälften av stenarna stavar ʀ med r-runan, mot en av sju i resten av Uppland. Där Öpir i Tiundaland skrev ordet för ’de’ ᚦᛅᛁᛦ, med yr-runan, skrev Balle i Fjädrundaland ᚦᛅᛁᚱ. Det har vi berättat mer om i [Erik skrev r – och bygden skrev efter]({ERIK}). Plustecknen mellan orden och formen *ræisti* hör däremot till ristarnas egna händer – de följer Balle och hans krets, inte landet.
+Stenarna här är också ensammare. De står mer sällan i grupper, en av sju mot en av tre i resten av Uppland, och de är oftare resta av en enda person än av flera syskon eller släktingar tillsammans. Och de skriver på sitt eget sätt: hälften av stenarna stavar ʀ med r-runan, mot en av sju i resten av Uppland. Det har vi berättat mer om i [Erik skrev r – och bygden skrev efter]({ERIK}).
 
 ## Ett land som bar sina gamla tecken
 
-Varför höggs korset så sällan här? Vi vet inte. Det här är det andra landet i serien där korset var ovanligt; det första var [Roden]({RODEN}), kustlandet. Men Fjädrundaland är ingen kust och ingen utmark. Det är ett bördigt, tätt bebott land med egna kungsgårdar och tingsplatser, mitt i Mälardalen. Kanske är svaret det enkla: att man i det här landet hade sina egna sätt att forma en minnessten, och att korset aldrig blev en del av dem, på samma sätt som man i [Sotholm]({SOTHOLM}) lät bönen vara. Den som står vid stenen i Ågersta ser en orm som slingrar sig över hela ytan och en uppmaning till den ristkunnige att tyda runorna. Mer behövde stenen inte säga.
+Det här är det andra landet i serien där korset var ovanligt; det första var [Roden]({RODEN}), kustlandet. Men Fjädrundaland är ingen kust och ingen utmark. Det är ett bördigt, tätt bebott land med egna Husbygårdar och tingsplatser, mitt i Mälardalen, där människorna slog hö på de sanka ängarna, gick sina vägar längs åsarna och bodde bland tecken som var äldre än någon kunde minnas. Kanske hade man här helt enkelt sina egna sätt att forma en minnessten, och korset blev aldrig en del av dem, på samma sätt som man i [Sotholm]({SOTHOLM}) lät bönen vara. Den som står vid stenen i Ågersta ser en orm som slingrar sig över hela ytan och en uppmaning till den ristkunnige att tyda runorna. Mer behövde stenen inte säga.
 
 ## Så vet vi det
 
-Bakom texten finns en jämförelse av Fjädrundalands runstenar med resten av Upplands, med tiden hållen konstant. Korset är det säkraste: skillnaden står sig när stenarna delas i två grupper socken för socken, när varje ristare får ha sin egen vana, när bara stenar på sin ursprungliga plats räknas och när landets egna ristare tas bort. De ensammare stenarna och r för ʀ håller i allt utom det sista steget, där det blir för få stenar kvar. Att nio av tio stenar här har en känd ristare beror på att forskningen – främst Per Stilles avhandling från 1999 – har gått igenom just Fjädrundalands stenar noga; det säger mer om forskarna än om vikingarna. Hällristningarna och gravarna kommer ur fornlämningsregistret, landskapet ur *Det medeltida Sverige* och länsstyrelsens beskrivningar. Planerna och beräkningarna finns öppna på GitHub, länkade nedan.
+Landskapet, gravarna, vägarna och tingsplatserna bygger på *Det medeltida Sverige*, länsstyrelsens beskrivningar av bygderna och fornlämningsregistret. Tingsplatsen vid Enhälja, ängarnas lotter, hamnorna och brevet från 1512 är kända från medeltiden och 1500-talet, inte från vikingatiden. Korset har vi mätt: Fjädrundalands runstenar jämfördes med resten av Upplands, med tiden hållen konstant, och skillnaden står sig när stenarna delas i två grupper socken för socken, när varje ristare får ha sin egen vana, när bara stenar på sin ursprungliga plats räknas och när landets egna ristare tas bort. De ensammare stenarna och r för ʀ håller i allt utom det sista steget, där det blir för få stenar kvar. Planerna och beräkningarna finns öppna på GitHub, länkade nedan.
 
 ## Källor
 
@@ -137,19 +180,32 @@ Bakom texten finns en jämförelse av Fjädrundalands runstenar med resten av Up
 - Den låsta analysplanen och Vitkis beräkningar finns öppet på [GitHub](https://github.com/Precatio/runes) (analysplaner/2026-11-02-fjadrundaland.md).
 - Bild: Wikimedia Commons, med fotografen i bildtexten."""
 
-title_en = "The old lands: Fjädrundaland – land of the rock carvings, where the cross was seldom cut"
-summary_en = ("Fjädrundaland was the westernmost of Uppland's folklands, a land of clay plains and bays of Lake Mälaren where "
-              "the Bronze Age rock carvings were already old when the runestones were raised. There only one stone in three "
-              "carries a cross, against six in ten in the rest of Uppland – whoever carved it. The third part of the series "
-              "The old lands.")
+title_en = "The old lands: Fjädrundaland – the folkland at the far end of the bay"
+summary_en = ("Fjädrundaland was the westernmost of Uppland's folklands: clay plains and wet meadows, farms on the edge of the "
+              "moraine, roads along the ridges and the Bronze Age's signs on the rocks. Come into Lake Mälaren, still a bay of "
+              "the sea, around AD 1000. The third part of the series The old lands.")
 
-body_en = f"""Imagine sailing into Lake Mälaren a thousand years ago. It is not a lake yet but a bay of the sea, and furthest in to the west, where the water divides into inlets and sounds, lies Trögd: a peninsula that the water surrounds on the south-west, south and east. The islands off it – Oknö, Arnö, Grönsö – have been lived on since the Iron Age. From here people also went out: at Svinnegarn parents have raised stones for a son who "alone owned a ship and steered east in Ingvar's retinue".
+body_en = f"""Imagine sailing into Lake Mälaren a thousand years ago. It is not a lake yet but a bay of the sea, and furthest in to the west, where the water divides into inlets and sounds, lies Trögd: a peninsula that the water surrounds on the south-west, south and east. The islands off it – Oknö, Arnö, Grönsö – have been lived on since the Iron Age. From here people also went out. At Svinnegarn parents have raised stones for a son who "alone owned a ship and steered east in Ingvar's retinue".
 
-Go ashore and follow a valley north. The clay lies heavy and shining in the furrows, and along the streams wet meadows spread out where the hay is cut – along the Örsundaån lies what will later be called the second largest wet meadow in Uppland. The farms do not lie out on the plain but on its edge, where the clay meets the moraine and the ground is dry enough to live on. Furthest north, on Uppland's highest bedrock plateau, the small forest districts take over.
+This is Fjädrundaland, the westernmost of Uppland's three folklands. It is an old land, fertile and densely settled, and it faces the water.
 
-This is an old land, and it shows. On the rock outcrops people had cut their signs more than a thousand years before the first runestone was raised – in Fjädrundaland about one ancient monument in seven is a rock carving, in the rest of Uppland one in thirty. The graves are simpler than elsewhere; in the north of the land the grave fields are few and small. But at Torsvi in Trögd, where the very name remembers a heathen cult place, a hundred and eighty graves from the Late Iron Age lie in a single grave field.
+## The clay and the meadows
 
-And then the stones. At Ågersta stands a stone that the carver Balle cut, with a serpent winding across the whole face – but no cross. It speaks to whoever passes:
+Go ashore and follow a valley north. The clay lies heavy and shining in the furrows, and along the streams wet meadows spread out. That is where the hay is cut. Along the Örsundaån lies what will later be called the second largest wet meadow in Uppland, and already in the Middle Ages it was divided into long, narrow strips belonging to villages far away. Imagine the haymaking in late summer: the rows of people with scythes in the wet grass, the hay that must last the animals all winter.
+
+The farms do not lie out on the plain but on its edge, where the clay meets the moraine and the ground is dry enough to live on. There the animals graze too, and there lie the graves, beside the villages. Furthest north, on Uppland's highest bedrock plateau, the small forest districts take over.
+
+The graves here are simpler than elsewhere in Uppland. In Simtuna and Torstuna a grave field holds on average only ten to twelve graves, low and unassuming. But here and there something larger rises: the King's Mound at Torstunaby, thirty-five metres across and six metres high. And at Torsvi in Trögd, in a valley sloping down towards the bay of Torsviviken, a hundred and eighty graves from the Late Iron Age lie in a single grave field, nearly all round stone settings but also sixteen mounds.
+
+## The signs on the rocks
+
+This is an old land, and it shows. On the rock outcrops people had cut their signs more than a thousand years before the first runestone was raised. In Fjädrundaland about one ancient monument in seven is a rock carving, in the rest of Uppland one in thirty. Around Simtuna and Torstuna nearly two hundred and fifty mounds of fire-cracked stone, a few rock carvings and a great many cup marks show where the people of the Bronze Age lived. By the spring at Svinnegarn, which later became the county's best-known holy spring, visited by pilgrims, there are cup marks in the rock. And the very name Torsvi remembers a heathen cult place.
+
+Whoever lived here around AD 1000 walked, then, among signs that were already ancient. What they believed about them we do not know. But they lived with them. Imagine the children playing on the rocks and the animals grazing among the signs.
+
+## The roads between the villages
+
+The roads run along the ridges. Along the Enköping ridge there are hollow ways, roads that traffic has worn down into the ground, and the runestones stand along the old roads; in Enköpings-Näs several of them stand by the main road. At Ågersta stands a stone that the carver Balle cut, with a serpent winding across the whole face. It speaks to whoever passes:
 
 > *{nz("U 729")}*
 
@@ -158,30 +214,38 @@ Vidhugse had this stone raised in memory of Särev, his good father. He lived in
 ![The runestone U 729 at Ågersta, cut by Balle, without a cross]({INFO[F729]['thumb']})
 U 729 at Ågersta in Löt parish, cut by Balle. The serpent covers the stone; there is no cross. Photo: Bengt A. Lundberg, Swedish National Heritage Board, CC BY 2.5 se, via [Wikimedia Commons]({PAGE}).
 
-## A folkland by the water
+"He lived in Ågersta." The stones here often say where the dead lived. Balle cut a stone for Gyda for her husband:
 
-Fjädrundaland was the westernmost of Uppland's three folklands, with its hundreds Trögd, Åsunda, Lagunda, Simtuna and Torstuna. It had its central places: a Husby at Svinnegarn, another at Kungs-Husby, and Simtuna, whose name in -tuna suggests an assembly place since prehistory. When the folkland was, early in the fourteenth century, the morning gift of King Birger's queen Märta, its centre was probably at Husby in Kungs-Husby. And in Trögd the taxed land was still divided in the sixteenth century into three thirds with thirteen, eleven and nine *hamnor* – the old units of the levy, when the land had to fit out ships for the king.
+> *{nz("U 744")}*
+
+Gyda had the stone raised in memory of Tordjärv, her husband, Gudlög's son, and he lived in Harvesta. Balle carved the stone.
+
+In winter the ice becomes a road. As late as 1512 the bailiff in Trögd wrote that the men of the hundred wanted to bring in the tax by sledge if the winter road held, and otherwise by boat as soon as the ice broke up. Imagine the weeks in between, when the ice neither bore nor let go.
+
+## Assemblies, hundreds and *hamnor*
+
+Fjädrundaland had five hundreds: Trögd, Åsunda, Lagunda, Simtuna and Torstuna. Each hundred had its assembly. Trögd's assembly place lay by the village of Enhälja in Villberga and in 1299 was called Öbolund; in the Middle Ages witnesses and jurors came there from the villages of every mainland parish. Simtuna's name in -tuna suggests a gathering place since prehistory.
+
+The land had its central estates too. At Svinnegarn there is a Husby with a great mound called Haralds kulle, and another Husby lies at Kungs-Husby. When the folkland was, early in the fourteenth century, the morning gift of King Birger's queen Märta, its centre was probably there. And in Trögd the taxed land was still divided in the sixteenth century into three thirds with thirteen, eleven and nine *hamnor* – the old units of the levy, when the land had to fit out ships for the king.
 
 ![Map of Fjädrundaland around AD 1000 with the runestones with and without a cross]({MAP['en']})
 **Map.** Fjädrundaland around AD 1000, when Lake Mälaren was a bay of the sea. Rust is Fjädrundaland, light the neighbouring lands; the borders are approximate. Each point is a runestone where it can be told whether it carries a cross – in Fjädrundaland the grey points are many. Map: Vitki, after the Geological Survey of Sweden's shore-displacement model for AD 1000, the place-name register of the Institute for Language and Folklore, and Rundata.
 
-## The crosses that stayed away
+## The stones without crosses
 
-Walk among Fjädrundaland's runestones, and the cross is missing more often than it is there. One stone in three carries a cross; in the rest of Uppland six in ten. It is not one carver's habit. The land's most prolific carvers – Balle, Erik, Livsten, Tidkume and a few more – did cut many stones without a cross, but on the stones that other hands cut the cross is just as rare: seven of twenty-five. Nor is it time, for the difference remains when we compare stones from the same decades.
+The stone at Ågersta has no cross, and that is not unusual here. Only one stone in three in Fjädrundaland carries a cross; in the rest of Uppland six in ten. It is not one carver's habit. The land's most prolific carvers – Balle, Erik, Livsten, Tidkume and a few more – cut many stones without a cross, but on the stones that other hands cut the cross is just as rare: seven of twenty-five. Nor is it time, for the difference remains when we compare stones from the same decades.
 
-That does not mean the people were heathens. Balle also cut a stone for Ingileif for her husband Brune, who "died in christening robes in Denmark" – newly baptised, that is. That stone carries no cross either. In Fjädrundaland you could be a Christian without putting the cross on the stone.
+That does not mean the people were heathens. Balle also cut a stone for Ingileif for her husband Brune, who "died in christening robes in Denmark" – newly baptised, that is. That stone carries no cross either. In Fjädrundaland you could be a Christian without putting the cross on the stone. One carver hints that it was the land and not the hand: Torbjörn cut crosses on two of five stones here but on nine of ten outside. That is too few stones to prove anything, but it is what one would expect if the carver followed the land of those who ordered the stones.
 
-One carver hints that it was the land and not the hand. Torbjörn cut crosses on two of five stones in Fjädrundaland but on nine of ten outside it. That is too few stones to prove anything, but it is what one would expect if the carver adapted to the land of those who ordered the stones.
-
-The stones here are also lonelier. They stand less often in groups, one in seven against one in three in the rest of Uppland, and they are more often raised by a single person than by several siblings or kin together. And they write in their own way: half the stones spell ʀ with the r-rune, against one in seven in the rest of Uppland. Where Öpir in Tiundaland wrote the word for 'they' ᚦᛅᛁᛦ, with the yr-rune, Balle in Fjädrundaland wrote ᚦᛅᛁᚱ. We have told more about it in [Erik skrev r – och bygden skrev efter]({ERIK}). The plus signs between the words and the form *ræisti*, on the other hand, belong to the carvers' own hands – they follow Balle and his circle, not the land.
+The stones here are also lonelier. They stand less often in groups, one in seven against one in three in the rest of Uppland, and they are more often raised by a single person than by several siblings or kin together. And they write in their own way: half the stones spell ʀ with the r-rune, against one in seven in the rest of Uppland. We have told more about it in [Erik skrev r – och bygden skrev efter]({ERIK}).
 
 ## A land that kept its old signs
 
-Why was the cross so seldom cut here? We do not know. This is the second land in the series where the cross was rare; the first was [Roden]({RODEN}), the coastal land. But Fjädrundaland is no coast and no outland. It is a fertile, densely settled land with its own royal estates and assembly places, in the middle of the Mälaren valley. Perhaps the answer is the simple one: that in this land people had their own ways of shaping a memorial stone, and that the cross never became part of them, just as in [Sotholm]({SOTHOLM}) they left out the prayer. Whoever stands by the stone at Ågersta sees a serpent winding across the whole face and a call to the rune-skilled to interpret the runes. The stone needed to say no more.
+This is the second land in the series where the cross was rare; the first was [Roden]({RODEN}), the coastal land. But Fjädrundaland is no coast and no outland. It is a fertile, densely settled land with its own Husby estates and assembly places, in the middle of the Mälaren valley, where people cut hay on the wet meadows, walked their roads along the ridges and lived among signs older than anyone could remember. Perhaps people here simply had their own ways of shaping a memorial stone, and the cross never became part of them, just as in [Sotholm]({SOTHOLM}) they left out the prayer. Whoever stands by the stone at Ågersta sees a serpent winding across the whole face and a call to the rune-skilled to interpret the runes. The stone needed to say no more.
 
 ## How we know
 
-Behind the text lies a comparison of Fjädrundaland's runestones with the rest of Uppland's, with time held constant. The cross is the surest: the difference holds when the stones are split into two groups parish by parish, when each carver is allowed a habit of their own, when only stones in their original place are counted, and when the land's own carvers are removed. The lonelier stones and r for ʀ hold in everything but the last step, where too few stones remain. That nine in ten stones here have a known carver is because research – above all Per Stille's thesis of 1999 – has gone through Fjädrundaland's stones with particular care; it says more about the researchers than about the Vikings. The rock carvings and graves come from the register of ancient monuments, the landscape from *Det medeltida Sverige* and the county board's descriptions. The plans and calculations are open on GitHub, linked below.
+The landscape, the graves, the roads and the assembly places rest on *Det medeltida Sverige*, the county board's descriptions of the districts and the register of ancient monuments. The assembly place at Enhälja, the meadow strips, the *hamnor* and the letter of 1512 are known from the Middle Ages and the sixteenth century, not from the Viking Age. The cross we have measured: Fjädrundaland's runestones were compared with the rest of Uppland's, with time held constant, and the difference holds when the stones are split into two groups parish by parish, when each carver is allowed a habit of their own, when only stones in their original place are counted, and when the land's own carvers are removed. The lonelier stones and r for ʀ hold in everything but the last step, where too few stones remain. The plans and calculations are open on GitHub, linked below.
 
 ## Sources
 
