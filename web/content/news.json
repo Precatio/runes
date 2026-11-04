@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "ristare-bygdsmodell",
+   "date": "2026-11-04",
+   "status": "nytt",
+   "title": "Andra bedömning för de små ristarna",
+   "text": "På sidan Ristarna visas nu för de små ristarna också bygdsmodellens förslag: en modell som väger in var och när ristaren verkade. Den hittar oftare rätt ristare för små verkstäder men klarade inte den låsta prövningen, så den står som en tydligt märkt andra bedömning bredvid huvudmodellen."
+  },
+  {
    "id": "attribuering-korsform",
    "date": "2026-11-04",
    "status": "nytt",

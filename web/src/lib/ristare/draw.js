@@ -119,6 +119,27 @@ export function renderCarver(root, PAGE, AUDIT, C, V, setVariant, state = {}) {
     if (more) more.addEventListener("click", () => { state.allSuggestions = !state.allSuggestions; suggestions(); });
   }
 
+
+  function bygdBox() {
+    const box = $("rp-bygd");
+    if (!box) return;
+    const rows = carver.bygd;
+    if (rows == null) { box.innerHTML = ""; box.hidden = true; return; }
+    box.hidden = false;
+    const T = PAGE.bygd_test, t = T && T.per_carver[WHO];
+    const test = T ? `I provningen höjde den träffen i medel per ristare från ${pct(T.half2_macro[0])} till ${pct(T.half2_macro[1])}` +
+      (t ? `; för ${esc(WHO)} hade den rätt på ${pct(t.bygd)} av hans ${t.n} signerade stenar, huvudmodellen på ${pct(t.main)}.` : ".") : "";
+    const tr = r => `<tr><td class="rp-mono">${esc(r.id)}</td><td translate="no">${esc(r.place)}${r.parish ? `<br><span class="rp-dim rp-small">${esc(r.parish)}</span>` : ""}</td>` +
+      `<td><span class="rp-barp" style="width:${Math.round(r.p * 60)}px;background:var(--rp-sand)"></span>${pct(r.p)}</td>` +
+      `<td>${r.main_top ? `<span translate="no">${esc(r.main_top)}</span> <span class="rp-dim">${pct(r.main_p)}</span>${r.main_blocked ? ` <span class="rp-dim rp-small">(spärrad)</span>` : ""}` : "–"}</td>` +
+      `<td class="rp-dim rp-small">${r.rundata ? `Rundata nämner: <span translate="no">${esc(r.rundata.split(";").join(", "))}</span>` : ""}</td></tr>`;
+    box.innerHTML = `<h3 class="rp-h3">Andra bedömning: bygdsmodellen</h3>` +
+      `<p class="rp-note"><b>Den här modellen klarade inte den låsta prövningen och används inte som appens bedömning.</b> Den visas för de små ristarna, där huvudmodellen nästan aldrig träffar. Den väger in var ristaren verkade och när, och hittar därför oftare rätt ristare för små verkstäder, men dess procent är mindre pålitliga. ${test}</p>` +
+      (rows.length ? `<div class="rp-scroll"><table class="rp-list"><thead><tr><th>Sten</th><th>Plats</th><th>Bygdsmodellen</th><th>Huvudmodellen</th><th></th></tr></thead><tbody>${rows.map(tr).join("")}</tbody>` +
+        `<caption>${rows.length} stenar där bygdsmodellen sätter ristaren först med minst 50 %.</caption></table></div>`
+        : `<div class="rp-empty">Bygdsmodellen sätter inte ristaren först med minst 50 % på någon sten utan ristare.</div>`);
+  }
+
   function fingerprint() {
     const svg = $("rp-fp"); svg.innerHTML = "";
     const T = D.traits;
@@ -317,5 +338,5 @@ export function renderCarver(root, PAGE, AUDIT, C, V, setVariant, state = {}) {
     $("rp-method").innerHTML = items.map(s => `<li>${s}</li>`).join("");
   }
 
-  header(); suggestions(); fingerprint(); heatmap(); dots(); map(); scatter(); similarity(); lists(); method();
+  header(); suggestions(); bygdBox(); fingerprint(); heatmap(); dots(); map(); scatter(); similarity(); lists(); method();
 }

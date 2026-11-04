@@ -167,9 +167,36 @@ def suggestions(path):
     return by
 
 
+SMALL = 20        # ristare med färre säkra stenar får bygdsmodellens andra bedömning
+BYGD_MIN_P = 0.5  # bara stenar där bygdsmodellen sätter ristaren först med minst så hög sannolikhet
+
+
+def bygd_suggestions(path, main_path):
+    """Bygdsmodellens förslag (r/attribution_bygd.R) per ristare, med huvudmodellens förstaval bredvid."""
+    import csv
+    main = {r["signum"]: r for r in csv.DictReader(open(main_path, encoding="utf-8"))}
+    by = {}
+    for row in csv.DictReader(open(path, encoding="utf-8")):
+        if float(row["p_cal"]) < BYGD_MIN_P:
+            continue
+        m = main.get(row["signum"]) or {}
+        by.setdefault(row["top"], []).append(
+            {"id": row["signum"], "place": row["place"], "parish": row["parish"], "p": float(row["p_cal"]),
+             "second": row["second"], "p2": float(row["p2_cal"]), "rundata": row["rundata_uncertain"],
+             "lat": float(row["lat"]) if row["lat"] not in ("", "NA") else None,
+             "lon": float(row["lon"]) if row["lon"] not in ("", "NA") else None,
+             "main_top": m.get("top"), "main_p": float(m["p_cal"]) if m.get("p_cal") else None,
+             "main_blocked": m.get("someone_else") == "TRUE"})
+    for v in by.values():
+        v.sort(key=lambda r: -r["p"])
+    return by
+
+
 if __name__ == "__main__":
     src, out = sys.argv[1:3]
     sugg = suggestions(sys.argv[3]) if len(sys.argv) > 3 else {}
+    bygd_path = os.path.join(os.path.dirname(sys.argv[3]), "bygdsforslag.csv") if len(sys.argv) > 3 else ""
+    bygd = bygd_suggestions(bygd_path, sys.argv[3]) if bygd_path and os.path.exists(bygd_path) else {}
     names = [ln.strip() for ln in open(os.path.join(src, "ristare.txt"), encoding="utf-8") if ln.strip()]
     carvers = []
     for who in names:
@@ -178,9 +205,19 @@ if __name__ == "__main__":
         alt = glob.glob(os.path.join(src, who.replace(" ", "_").replace("-", "") + "__*.json"))
         for a in alt:
             v[os.path.basename(a)[:-5].split("__", 1)[1]] = build(a)
-        carvers.append({"name": who, "variants": v, "forslag": sugg.get(who)})
+        n_certain = sum(v["med"]["n"].get(k, 0) for k in ("signerad", "attribuerad"))
+        carvers.append({"name": who, "variants": v, "forslag": sugg.get(who),
+                        "bygd": bygd.get(who, []) if (n_certain < SMALL and who in sugg) else None})
         print(who, len(v["med"]["traits"]), len(v["med"]["stones"]), len(v["med"]["nb"]))
     page = {"carvers": carvers, "karta": basemap()}
+    v3 = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(sys.argv[3]))), "attribuering_v3", "resultat.json")
+    if os.path.exists(v3):  # bygdsmodellens (K3) och huvudmodellens (K0) träff i provningen, för rutan med andra bedömningen
+        r3 = json.load(open(v3, encoding="utf-8"))["varianter"]
+        k0 = {x["carver"]: x for x in r3["K0"]["per_carver"]}
+        page["bygd_test"] = {"half2_macro": [r3["K0"]["half2"]["macro"], r3["K3"]["half2"]["macro"]],
+                             "half2_top1": [r3["K0"]["half2"]["top1"], r3["K3"]["half2"]["top1"]],
+                             "per_carver": {x["carver"]: {"n": x["n"], "bygd": x["top1"], "main": k0.get(x["carver"], {}).get("top1")}
+                                            for x in r3["K3"]["per_carver"]}}
     if len(sys.argv) > 4:  # provningen av modellen (r/attribution_audit.R), som sidan visar per ristare
         page["audit"] = json.load(open(sys.argv[4], encoding="utf-8"))
     json.dump(page, open(out, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))

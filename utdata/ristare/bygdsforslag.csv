@@ -1,0 +1,924 @@
+"signum","place","parish","lat","lon","style","near_km","rundata_uncertain","top","p_cal","second","p2_cal"
+"Ög 225","Högtomta","Östra Husby sn",58.611003,16.571105,"Fp",23,"","Traen",1,"Tore 1",0
+"Ög 237","Ållonö","Östra Stenby sn",58.618112,16.503456,"RAK",23.9,"","Traen",0.997,"Tore 1",0.003
+"Sö 1","Björnlunda kyrka","Björnlunda sn",59.073167,17.146722,NA,3.9,"","Traen",0.472,"Tore 1",0.393
+"Sö 3","Vänga","Björnlunda sn",59.090201,17.119211,"Fp",5,"","Tore 1",0.738,"Traen",0.21
+"Sö 4","Vänga","Björnlunda sn",59.090201,17.119211,NA,5,"","Traen",0.967,"Balle",0.026
+"Sö 5","Vänga","Björnlunda sn",59.090201,17.119211,NA,5,"","Balle",0.984,"Tidkume",0.005
+"Sö 6","Vänga","Björnlunda sn",59.090201,17.119211,NA,5,"","Balle",0.984,"Tidkume",0.005
+"Sö 12","Gryts kyrka","Gryts sn",59.101881,16.994403,NA,12.3,"","Balle",0.757,"Traen",0.152
+"Sö 13","Gatstugan","Gryts sn",59.146054,16.910676,NA,17.6,"","Traen",0.877,"Balle",0.073
+"Sö 15","Gåsinge kyrkogård","Gåsinge sn (nu Gåsinge-Dillnäs)",59.088745,17.206925,NA,0,"","Tore 1",0.671,"Balle",0.195
+"Sö 16","Kattnäs kyrkogård","Kattnäs sn",59.080416,17.295366,NA,2.6,"","Tore 1",0.791,"Traen",0.184
+"Sö 17","Norrtuna","Kattnäs sn",59.08117,17.270177,NA,3.3,"","Traen",0.984,"Halvdan",0.013
+"Sö 18","Hölö kyrka","Hölö sn",59.013063,17.58948,"Pr4",4.7,"Gere;Öpir 1;Hakon","Halvdan",0.721,"Öpir 1",0.174
+"Sö 19","Lida","Hölö sn",59.012551,17.523683,"Pr3",4,"","Tore 1",0.965,"Traen",0.02
+"Sö 20","Smedsta","Hölö sn",59.039633,17.55514,NA,5.3,"","Halvdan",0.516,"Traen",0.289
+"Sö 21","Hörningsholm","Mörkö sn",59.050388,17.666216,NA,6.8,"","Halvdan",0.565,"Amunde",0.364
+"Sö 22","Håga","Mörkö sn",58.998389,17.664333,NA,7.2,"","Amunde",0.678,"Halvdan",0.139
+"Sö 23B","Tormesta","Mörkö sn",59.01565,17.654765,NA,7.6,"","Halvdan",0.548,"Tore 1",0.366
+"Sö 25","Långbro","Trosa sn (nu Trosa-Vagnhärad)",58.928768,17.477823,NA,1.6,"","Tore 1",0.712,"Traen",0.215
+"Sö 28","Nora","Vagnhärads sn (nu Trosa-Vagnhärad)",58.963429,17.527602,NA,1.9,"","Traen",0.75,"Tore 1",0.14
+"Sö 29","Nora","Vagnhärads sn (nu Trosa-Vagnhärad)",58.963429,17.527602,NA,1.9,"","Traen",0.622,"Tore 1",0.261
+"Sö 30","Nora","Vagnhärads sn (nu Trosa-Vagnhärad)",58.966219,17.541232,"Fp",1.3,"","Tore 1",0.932,"Amunde",0.028
+"Sö 31","Nora","Vagnhärads sn (nu Trosa-Vagnhärad)",58.962186,17.528635,NA,2,"","Tore 1",0.542,"Traen",0.339
+"Sö 33","Skåäng","Vagnhärads sn (nu Trosa-Vagnhärad)",58.964483,17.462689,"Fp",3.3,"","Tore 1",0.625,"Amunde",0.183
+"Sö 37","Vappersta","Vagnhärads sn (nu Trosa-Vagnhärad)",58.970133,17.425613,"Pr2",5.4,"","Tore 1",0.96,"Halvdan",0.021
+"Sö 38","Åby","Vagnhärads sn (nu Trosa-Vagnhärad)",58.944795,17.506137,NA,0.1,"","Tore 1",0.548,"Traen",0.417
+"Sö 42","Gillberga","Västerljungs sn",58.916229,17.450899,NA,2.4,"","Traen",0.456,"Tore 1",0.328
+"Sö 43","Skällberga","Västerljungs sn",58.918173,17.472936,NA,1.1,"","Tore 1",0.819,"Amunde",0.118
+"Sö 44","Bergshammars kyrka","Bergshammars sn",58.742102,16.903542,NA,5,"","Traen",0.999,"Tore 1",0.001
+"Sö 46","Hormesta","Nykyrka sn",58.831091,16.745581,"RAK",3.7,"Stack;Kättil 1","Traen",0.998,"Tore 1",0.002
+"Sö 47","Vålsta","Nykyrka sn",58.844088,16.750922,NA,5,"","Traen",0.977,"Tore 1",0.023
+"Sö 48","Stigtomta kyrka","Stigtomta sn",58.795544,16.791756,"Pr3",5.1,"","Traen",0.936,"Tore 1",0.064
+"Sö 50","Jogersta","Tuna sn",58.74065,16.85697,NA,7.4,"","Traen",0.805,"Tore 1",0.195
+"Sö 51","Allhelgonakyrkan","Nyköping",58.75148,17.016494,NA,3.4,"","Traen",0.84,"Tore 1",0.16
+"Sö 52","Märings spång","Bettna sn",58.904693,16.722643,"Fp",11.1,"","Traen",0.984,"Tore 1",0.016
+"Sö 53","Valstad","Bettna sn",58.900315,16.644194,NA,11.2,"","Traen",0.996,"Tore 1",0.004
+"Sö 55","Bjudby","Blacksta sn",58.959753,16.616334,"Pr2",18,"Slode;Brune","Traen",0.994,"Tore 1",0.006
+"Sö 57","Trinkesta","Blacksta sn",58.948435,16.652345,NA,16.2,"","Traen",0.77,"Tore 1",0.23
+"Sö 59","Flåsta","Husby-Oppunda sn",58.877281,16.787872,"Fp",9.3,"","Traen",0.803,"Tore 1",0.197
+"Sö 60","Ramsta","Husby-Oppunda sn",58.909848,16.814133,"KB",9.1,"","Traen",0.913,"Tore 1",0.087
+"Sö 61","Ösby","Husby-Oppunda sn",58.878305,16.821573,"Pr2",8.6,"","Traen",0.661,"Tore 1",0.339
+"Sö 62","Hässlö","Lerbo sn",58.987048,16.489607,"Pr1",23.8,"","Traen",0.991,"Tore 1",0.009
+"Sö 65","Djulefors","Stora Malms sn",58.93304,16.378477,"Pr1",23.7,"","Traen",0.999,"Tore 1",0.001
+"Sö 70","Hedenlunda","Vadsbro sn",58.992354,16.595285,NA,21.8,"","Traen",0.992,"Tore 1",0.008
+"Sö 75","Vrena kyrka","Vrena sn",58.860158,16.700445,"Fp",6.1,"","Traen",0.782,"Tore 1",0.218
+"Sö 76","Lista kyrka","Lista sn",59.315307,16.263355,"Fp",10.7,"","Balle",0.904,"Traen",0.096
+"Sö 84","Tumbo kyrka","Tumbo sn",59.425747,16.338781,"KB",14,"","Balle",0.628,"Traen",0.368
+"Sö 85","Västerby","Tumbo sn",59.434829,16.288667,"KB",16.3,"","Traen",0.574,"Balle",0.379
+"Sö 88","Valby","Öja sn",59.271814,16.128384,"Fp",19,"","Traen",0.723,"Balle",0.277
+"Sö 91","Tidö","Hammarby sn",59.401423,16.562136,"Fp",1.8,"","Traen",0.906,"Balle",0.07
+"Sö 93","Berga","Husby-Rekarne sn",59.282906,16.458282,NA,3.5,"","Balle",0.519,"Traen",0.44
+"Sö 94","Berga","Husby-Rekarne sn",59.282594,16.457749,NA,3.5,"","Balle",0.869,"Traen",0.126
+"Sö 95","Berga","Husby-Rekarne sn",59.282933,16.458124,NA,3.5,"","Balle",0.834,"Traen",0.143
+"Sö 96","Jäders kyrka","Jäders sn",59.40957,16.691339,"Fp",6.1,"","Balle",0.754,"Traen",0.214
+"Sö 97","Jäders kyrka","Jäders sn",59.409588,16.691304,NA,6.1,"","Traen",0.578,"Balle",0.261
+"Sö 98","Jäders kyrka","Jäders sn",59.409617,16.690953,NA,6.1,"","Balle",0.673,"Tidkume",0.145
+"Sö 100","Jäders kyrka","Jäders sn",59.409627,16.690883,NA,6.1,"","Balle",0.874,"Tidkume",0.077
+"Sö 102","Vävle","Jäders sn",59.441878,16.71871,"Pr2",8.3,"","Balle",0.878,"Erik",0.061
+"Sö 103","Vävle","Jäders sn",59.438239,16.713977,NA,7.9,"","Balle",0.736,"Tidkume",0.194
+"Sö 105","Högstena","Kjula sn",59.374451,16.679535,"Fp",6.9,"","Balle",0.71,"Traen",0.228
+"Sö 106","Kungshållet, Kjula ås","Kjula sn",59.383225,16.672212,"Pr1",6,"","Traen",0.624,"Balle",0.369
+"Sö 107","Balsta","Klosters sn (Eskilstuna)",59.375008,16.545716,NA,4.8,"","Traen",0.861,"Balle",0.12
+"Sö 108","Gredby","Klosters sn (Eskilstuna)",59.375008,16.545734,"Fp",4.8,"","Traen",0.914,"Balle",0.079
+"Sö 109","Gredby bro","Klosters sn (Eskilstuna)",59.375009,16.54554,"Pr2",4.8,"","Balle",0.664,"Traen",0.304
+"Sö 110","Grönsta","Klosters sn (Eskilstuna)",59.374978,16.575743,"Fp",4.3,"","Traen",0.956,"Balle",0.038
+"Sö 111","Stenkvista kyrkogård","Stenkvista sn",59.314389,16.532705,"Fp",0.8,"","Traen",0.561,"Balle",0.435
+"Sö 113","Kolunda","Stenkvista sn",59.307547,16.53291,"RAK",0,"","Traen",0.939,"Balle",0.058
+"Sö 114","Kolunda","Stenkvista sn",59.307327,16.533713,NA,0.1,"","Traen",0.938,"Balle",0.057
+"Sö 115","Kolunda","Stenkvista sn",59.311428,16.530816,"Fp",0.4,"","Traen",0.599,"Balle",0.398
+"Sö 121","Bönestad","Allhelgona sn (nu Helgona)",58.784387,16.965416,"RAK",1.6,"","Traen",0.977,"Tore 1",0.023
+"Sö 124","Bogsta kyrka","Bogsta sn",58.877193,17.173985,"Pr4",3.2,"","Tore 1",0.969,"Traen",0.031
+"Sö 125","Bogsta kyrka","Bogsta sn",58.877119,17.174104,NA,3.2,"","Tore 1",0.524,"Traen",0.476
+"Sö 127","Rossbäcks rännil","Bogsta sn",58.876243,17.173809,NA,3.1,"","Traen",0.782,"Tore 1",0.218
+"Sö 128","Lids kyrka","Lids sn",58.911932,16.990877,"Pr2",0,"","Traen",0.883,"Tore 1",0.117
+"Sö 131","Lundby","Lids sn",58.903125,16.96106,"RAK",1.3,"","Traen",0.992,"Tore 1",0.008
+"Sö 132","Sanda","Lids sn",58.91579,17.024041,"KB",1.2,"","Traen",0.879,"Tore 1",0.121
+"Sö 133","Väringe","Lids sn",58.906653,16.969074,NA,1.4,"Äsbjörn 3","Traen",0.906,"Tore 1",0.094
+"Sö 134","Ludgo kyrka","Ludgo sn",58.916561,17.132751,"RAK",3.6,"","Tore 1",0.763,"Traen",0.237
+"Sö 135","Ludgo prästgård","Ludgo sn",58.922586,17.113277,"RAK",2.8,"","Tore 1",0.588,"Traen",0.412
+"Sö 137","Aspa","Ludgo sn",58.925436,17.098608,"RAK",2.4,"","Traen",0.984,"Tore 1",0.016
+"Sö 138","Aspa","Ludgo sn",58.925409,17.098573,"Fp",2.4,"","Tore 1",0.767,"Traen",0.233
+"Sö 139","Korpbron, Jursta ägor","Ludgo sn",58.923636,17.054302,NA,0.6,"Finn;Kjul","Traen",0.919,"Tore 1",0.081
+"Sö 140","Korpbron, Jursta ägor","Ludgo sn",58.92361,17.054197,"Fp",0.6,"","Traen",0.936,"Tore 1",0.064
+"Sö 141","Löta","Ludgo sn",58.926712,17.099385,NA,2.5,"","Tore 1",0.823,"Traen",0.177
+"Sö 142","Kalkbron","Lästringe sn",58.875851,17.295339,NA,10.1,"","Tore 1",0.703,"Traen",0.293
+"Sö 145","Eneby","Runtuna sn",58.883016,17.091164,NA,0,"","Traen",0.968,"Tore 1",0.032
+"Sö 146","Eneby","Runtuna sn",58.883016,17.091164,NA,0,"","Tore 1",0.866,"Balle",0.087
+"Sö 147","Glåttra","Runtuna sn",58.888923,17.067621,"RAK",1.4,"","Traen",0.999,"Tore 1",0.001
+"Sö 150","Kungberga","Runtuna sn",58.890149,17.055974,NA,0.7,"","Traen",0.988,"Tore 1",0.011
+"Sö 152","Membro","Runtuna sn",58.89106,17.043449,NA,0,"","Traen",0.992,"Tore 1",0.008
+"Sö 155","Söderby","Runtuna sn",58.847895,17.031844,NA,2.6,"","Traen",0.932,"Tore 1",0.068
+"Sö 156","Söderby","Runtuna sn",58.847961,17.032505,NA,2.5,"","Tore 1",0.966,"Balle",0.021
+"Sö 157","Ärsta","Runtuna sn",58.868715,17.031921,NA,1.1,"","Traen",0.783,"Tore 1",0.217
+"Sö 158","Österberga","Runtuna sn",58.860904,17.029063,"Fp",1.5,"","Traen",0.972,"Tore 1",0.028
+"Sö 159","Österberga","Runtuna sn",58.867532,17.041136,NA,0.6,"Gunnlev 1;Rörik;Gudmund","Traen",0.989,"Tore 1",0.011
+"Sö 160","Råby kyrka","Råby-Rönö sn",58.826039,16.915075,NA,1.2,"Gunnlev 2;Sigmund","Traen",0.998,"Tore 1",0.002
+"Sö 161","Råby kyrka","Råby-Rönö sn",58.826237,16.915029,"RAK",1.2,"","Traen",0.99,"Tore 1",0.01
+"Sö 162","Råby kyrka","Råby-Rönö sn",58.826346,16.914859,"RAK",1.2,"Gunnlev 2;Sigmund","Traen",0.636,"Tore 1",0.364
+"Sö 163","Rycksta","Råby-Rönö sn",58.825689,16.91605,"Fp",1.2,"","Traen",0.956,"Tore 1",0.044
+"Sö 165","Grinda","Spelviks sn",58.902753,17.095471,NA,1.5,"","Traen",0.875,"Tore 1",0.125
+"Sö 166","Grinda","Spelviks sn",58.902644,17.095519,"RAK",1.5,"","Traen",0.984,"Tore 1",0.016
+"Sö 168","Landshammar","Spelviks sn",58.908867,17.071801,NA,0,"","Traen",0.992,"Tore 1",0.008
+"Sö 169","Ekeby","Svärta sn",58.793081,17.090243,NA,1.9,"","Traen",0.987,"Tore 1",0.013
+"Sö 172","Tystberga kyrka","Tystberga sn",58.867187,17.257437,NA,7.9,"","Tore 1",0.835,"Traen",0.163
+"Sö 173","Tystberga","Tystberga sn",58.865846,17.272808,NA,8.7,"","Traen",0.619,"Tore 1",0.381
+"Sö 174","Aspö kyrka","Aspö sn",59.483354,17.045578,"Pr1",6.7,"","Balle",0.977,"Torbjörn 2",0.01
+"Sö 176","Kärnbo ödekyrka","Kärnbo sn",59.261276,17.212738,NA,6,"","Balle",0.865,"Tidkume",0.07
+"Sö 181","Helanda","Kärnbo sn (nu Mariefred)",59.258371,17.224839,NA,6.4,"","Balle",0.876,"Torbjörn skald",0.097
+"Sö 182","Läggesta","Kärnbo sn",59.258557,17.224215,NA,6.3,"","Balle",0.725,"Tidkume",0.162
+"Sö 183","Viggeby","Kärnbo sn",59.274939,17.22858,"Fp",4.5,"","Balle",0.9,"Traen",0.064
+"Sö 184","Årby","Kärnbo sn",59.261525,17.167387,"KB",6.6,"","Balle",0.832,"Tore 1",0.112
+"Sö 185","Ärnäs","Kärnbo sn",59.281112,17.254189,"Pr2",4.4,"","Balle",0.943,"Traen",0.02
+"Sö 186","Ärnäs","Kärnbo sn",59.281112,17.254189,NA,4.4,"","Balle",0.978,"Tidkume",0.012
+"Sö 189","Åkerby","Toresunds sn",59.352266,17.186735,NA,2,"","Balle",0.931,"Tidkume",0.038
+"Sö 190","Ytterenhörna kyrka","Ytterenhörna sn",59.253224,17.491581,"Pr2",6.6,"Torbjörn 4;Torbjörn skald","Balle",0.581,"Torbjörn skald",0.306
+"Sö 202","Östa","Ytterselö sn",59.36973,17.195888,"Fp",0,"Äskil 1;Äsger","Balle",0.902,"Torbjörn 2",0.06
+"Sö 205","Överselö kyrka","Överselö sn",59.419083,17.13083,NA,0,"Tidkume;Äsbjörn 1;Orökja 1","Balle",0.971,"Tidkume",0.015
+"Sö 216","Aska","Sorunda sn",59.052521,17.802285,NA,3.6,"","Halvdan",0.646,"Amunde",0.351
+"Sö 223","Fullbro","Sorunda sn",59.043588,17.80743,"Fp",3.2,"","Amunde",0.812,"Halvdan",0.164
+"Sö 224","Grödby","Sorunda sn",59.050645,17.885123,"Fp",0.7,"","Amunde",0.892,"Halvdan",0.098
+"Sö 228","Nedre Söderby","Sorunda sn",59.035004,17.888377,"Pr3",1.2,"","Halvdan",0.55,"Amunde",0.438
+"Sö 232","Trollsta","Sorunda sn",59.045486,17.891015,"KB",0,"","Amunde",0.976,"Halvdan",0.022
+"Sö 234","Trollsta","Sorunda sn",59.045585,17.890951,NA,0,"","Amunde",0.878,"Halvdan",0.097
+"Sö 243","Stav","Västerhaninge sn",59.093688,18.073085,"Pr3",1.8,"","Halvdan",0.72,"Amunde",0.28
+"Sö 249","Fors","Ösmo sn",58.996266,17.952114,NA,4.9,"","Halvdan",0.921,"Amunde",0.079
+"Sö 250","Jursta","Ösmo sn",59.004469,17.95292,"Fp",5.3,"","Amunde",0.802,"Halvdan",0.19
+"Sö 253","Vansta","Ösmo sn",58.971476,17.874109,"Pr3",0.8,"","Halvdan",0.513,"Amunde",0.45
+"Sö 257","Älby","Ösmo sn",58.959431,17.889972,NA,0,"","Halvdan",0.968,"Amunde",0.015
+"Sö 259","Alby","Österhaninge sn",59.134705,18.176882,NA,0.9,"","Halvdan",0.849,"Amunde",0.14
+"Sö 263","Broby","Österhaninge sn",59.117135,18.168752,"Fp",1.8,"","Amunde",0.853,"Halvdan",0.147
+"Sö 264","Hässlingby","Österhaninge sn",59.133067,18.157356,NA,2,"","Halvdan",0.908,"Amunde",0.09
+"Sö 267","Småhamra","Österhaninge sn",59.151733,18.249478,NA,4,"","Halvdan",0.798,"Visäte",0.079
+"Sö 275","Nabbhagen","Strängnäs",59.375363,17.033421,NA,7.3,"","Balle",0.97,"Tidkume",0.023
+"Sö 276","Strängnäs domkyrka","Strängnäs",59.375401,17.034231,NA,7.3,"","Balle",0.902,"Tidkume",0.053
+"Sö 277","Strängnäs domkyrka","Strängnäs",59.375629,17.033765,"Pr2",7.3,"","Balle",0.979,"Tidkume",0.016
+"Sö 278","Strängnäs domkyrka","Strängnäs",59.375394,17.03402,NA,7.3,"","Balle",0.981,"Tidkume",0.014
+"Sö 279","Strängnäs domkyrka","Strängnäs",59.37528,17.033646,"Pr2",7.3,"","Balle",0.892,"Tidkume",0.101
+"Sö 281","Strängnäs domkyrka","Strängnäs",59.37554,17.033761,"Pr2",7.3,"","Balle",0.964,"Tidkume",0.018
+"Sö 282","Botkyrka kyrka","Botkyrka sn",59.239051,17.817996,NA,6.4,"","Halvdan",0.585,"Torbjörn skald",0.081
+"Sö 283","Botkyrka kyrka","Botkyrka sn",59.239045,17.817785,NA,6.4,"","Halvdan",0.772,"Fot 2",0.116
+"Sö 284","Botkyrka kyrka","Botkyrka sn",59.239241,17.818463,NA,6.4,"","Torbjörn skald",0.305,"Öpir 1",0.205
+"Sö 285","Botkyrka kyrka","Botkyrka sn",59.238968,17.818692,"Pr2",6.4,"","Halvdan",0.653,"Amunde",0.282
+"Sö 287","Hunhammar (nu Norsborg)","Botkyrka sn",59.252942,17.800493,NA,5.8,"","Visäte",0.323,"Halvdan",0.278
+"Sö 288","Hågelby","Botkyrka sn",59.221873,17.831874,"Pr2",7.3,"","Halvdan",0.478,"Torbjörn skald",0.314
+"Sö 289","Spåntorp, Hamra","Botkyrka sn",59.205812,17.850042,"Pr2",8.2,"","Amunde",0.46,"Halvdan",0.405
+"Sö 291","Grödinge kyrka","Grödinge sn",59.14326,17.786926,"Pr2",2.9,"","Halvdan",0.653,"Amunde",0.31
+"Sö 293","Eldtomta","Grödinge sn",59.143415,17.78683,NA,2.9,"","Amunde",0.779,"Halvdan",0.152
+"Sö 294","Hallsveden","Grödinge sn",59.136314,17.696332,"Pr3",3.5,"","Amunde",0.604,"Halvdan",0.355
+"Sö 295","Skälby (nu Lövstalund)","Grödinge sn",59.166253,17.742455,NA,6.4,"","Halvdan",0.788,"Öpir 1",0.064
+"Sö 296","Skälby (nu Lövstalund)","Grödinge sn",59.166253,17.742455,"Fp",6.4,"Åsgöt;Amunde","Amunde",0.615,"Halvdan",0.23
+"Sö 305","Söderby (nu Lindhov) el. Tumba","Botkyrka sn",59.197998,17.80163,"Pr3",6.7,"","Halvdan",0.757,"Fot 2",0.082
+"Sö 306","Söderby krog","Salems sn",59.217259,17.779829,NA,4.5,"","Halvdan",0.448,"Amunde",0.409
+"Sö 307","Igelsta kvarn","Södertälje",59.191731,17.616318,"RAK",0.6,"","Traen",0.812,"Amunde",0.131
+"Sö 309","Södertälje kyrkogård","Södertälje",59.198777,17.626143,NA,0.7,"","Halvdan",0.882,"Torbjörn skald",0.031
+"Sö 310","Södertälje","Södertälje",59.193059,17.589157,NA,2.1,"","Halvdan",0.613,"Torbjörn skald",0.112
+"Sö 314","Torshälla kyrka","Torshälla",59.421877,16.468544,"Pr2",6.6,"","Balle",0.763,"Traen",0.231
+"Sö 315","Sundby","Dunkers sn",59.161853,16.699547,NA,18.8,"","Balle",0.964,"Tidkume",0.021
+"Sö 316","Vadsbro","Dunkers sn",59.157485,16.79447,NA,22.4,"","Balle",0.96,"Tore 1",0.02
+"Sö 318","Sund","Helgesta sn",59.019,16.817516,"Pr2",15.5,"","Tore 1",0.528,"Traen",0.471
+"Sö 319","Sannerby (nu Stäringe)","Årdala sn",58.955717,16.748324,"RAK",14.5,"","Traen",0.98,"Tore 1",0.02
+"Sö 320","Stäringe","Årdala sn",58.955691,16.748202,"Fp",14.5,"","Traen",0.893,"Tore 1",0.107
+"Sö 325","Härads kyrka","Härads sn",59.359981,16.909213,"Pr2",7.4,"","Balle",0.725,"Torbjörn 2",0.222
+"Sö 326","Härads kyrka","Härads sn",59.359913,16.909808,NA,7.4,"","Balle",0.705,"Tidkume",0.206
+"Sö 328","Tynäs","Strängnäs landsförsamling (nu Aspö sn)",59.37746,17.058391,"Pr2",6,"","Balle",0.977,"Erik",0.007
+"Sö 329","Åkers kyrka","Åkers sn",59.277282,17.10304,"Pr2",7.7,"","Balle",0.986,"Tore 1",0.009
+"Sö 333","Ärja ödekyrka","Åkers sn",59.273858,17.131939,"Fp",6.6,"Äskil 1;Äsger","Balle",0.884,"Traen",0.068
+"Sö 334","Ärja ödekyrka","Åkers sn",59.258557,17.224215,NA,6.3,"","Balle",0.976,"Torbjörn skald",0.015
+"Sö 335","Ärja ödekyrka","Åkers sn",59.273859,17.131834,"Fp",6.7,"","Balle",0.762,"Traen",0.154
+"Sö 339","Turinge kyrka","Turinge sn",59.19612,17.441005,"RAK",2.6,"","Traen",0.803,"Balle",0.078
+"Sö 341","Stavsta(?)","Turinge sn",59.198865,17.415231,"Fp",1.6,"Fot 1;Äskil 1","Traen",0.723,"Amunde",0.19
+"Sö 342","Ströpsta","Turinge sn",59.170611,17.448881,NA,5.2,"","Amunde",0.497,"Traen",0.447
+"Sö 343","Tveta kyrka","Tveta sn",59.159145,17.601606,"KB",4,"","Amunde",0.502,"Traen",0.227
+"Sö 345","Ytterjärna kyrka","Ytterjärna sn",59.07586,17.617486,NA,3.2,"","Halvdan",0.846,"Traen",0.123
+"Sö 345B","Ytterjärna kyrka","Ytterjärna sn",59.075799,17.61736,NA,3.2,"","Amunde",0.55,"Halvdan",0.299
+"Sö 346","Gersta (nu Gerstaberg)","Ytterjärna sn",59.114861,17.597665,"Fp",3.6,"","Amunde",0.581,"Tore 1",0.231
+"Sö 347","Gersta (nu Gerstaberg)","Ytterjärna sn",59.114741,17.601186,"Pr3",3.4,"Ulv 4;Äsbjörn 1","Tore 1",0.718,"Amunde",0.145
+"Sö 348","Kjulsta","Ytterjärna sn",59.05888,17.590966,NA,3.5,"","Halvdan",0.696,"Tore 1",0.126
+"Sö 349","Lideby","Ytterjärna sn",59.063074,17.59936,NA,3.3,"","Tore 1",0.583,"Amunde",0.143
+"Sö 353","Tällby","Överjärna sn",59.090096,17.548984,"Fp",1,"","Amunde",0.628,"Halvdan",0.31
+"Sö 354","Dillnäs kyrka","Dillnäs sn (nu Gåsinge-Dillnäs)",59.11496,17.237484,NA,1.3,"","Balle",0.87,"Traen",0.104
+"Sö 357","Slottsskolan","Eskilstuna",59.37227,16.526554,NA,5.6,"","Balle",0.812,"Traen",0.176
+"Sö 358","Slottsskolan","Eskilstuna",59.37228,16.526343,NA,5.6,"","Balle",0.948,"Tidkume",0.03
+"Sö 360","Bjuddby","Blacksta sn",58.96455,16.605687,"RAK",18.6,"","Traen",1,"Tore 1",0
+"Sö 362","Tumbo kyrka","Tumbo sn",59.426203,16.339422,"KB",14,"","Traen",0.776,"Balle",0.182
+"Sö 363","Tumbo kyrka","Tumbo sn",59.426222,16.339159,"KB",14,"","Traen",0.804,"Balle",0.182
+"Sö 366","Yttervalla","Frustuna sn",59.061373,17.269369,NA,2.2,"","Balle",0.901,"Öpir 1",0.033
+"Sö 367","Släbro","Sankt Nicolai sn (nu Nyköping)",58.770481,16.971244,"RAK",0,"","Traen",0.986,"Tore 1",0.014
+"Sö 368","Vävelsta","Husby-Oppunda sn",58.906074,16.79943,NA,9.8,"","Tore 1",0.705,"Balle",0.294
+"Sö 370","Ludgo kyrka","Ludgo sn",58.916223,17.133277,"RAK",3.6,"","Traen",0.991,"Amunde",0.009
+"Sö 373","Landshammar","Spelviks sn",58.910469,17.067694,NA,0.3,"","Traen",0.996,"Tore 1",0.004
+"Sö 375","Lagnö","Aspö sn",59.47659,17.07778,NA,7.1,"","Balle",0.96,"Tidkume",0.027
+"Sö 376","Östa","Ytterselö sn",59.369294,17.194621,NA,0.1,"","Balle",0.955,"Tidkume",0.033
+"Sö 378","Lisma","Huddinge sn",59.178983,18.064718,NA,4.6,"","Halvdan",0.921,"Amunde",0.065
+"Sö 380","Bergaholm","Salems sn",59.233124,17.694607,NA,0.7,"","Balle",0.445,"Torbjörn 2",0.176
+"Sö 381","Ladvik","Salems sn",59.243908,17.678465,NA,2,"","Balle",0.431,"Öpir 1",0.224
+"Sö 382","Åkers kyrka","Åkers sn",59.277282,17.10304,"Pr1",7.7,"","Balle",0.946,"Traen",0.034
+"Sö 383","Linga","Överjärna sn",59.070214,17.573122,NA,1.9,"","Halvdan",0.387,"Tore 1",0.381
+"Sö ATA1918/43","Ramsundsbron","Sundby sn",59.441383,16.63397,NA,4.2,"","Balle",0.738,"Tidkume",0.136
+"Sö ATA5501/52","Vadsbro kyrka","Vadsbro sn",58.97638,16.568804,NA,20.6,"","Balle",0.987,"Tore 1",0.013
+"Sö ATA6058/54","Stäringe gamla smedja","Årdala sn",58.955663,16.74834,NA,14.5,"","Traen",0.95,"Tore 1",0.049
+"Sö ATA6491/60","Rällinge","Helgarö sn",59.448829,16.827515,NA,6.4,"","Balle",0.572,"Tidkume",0.36
+"Sö ATA6163/61","Sörby","Runtuna sn",58.847717,17.031751,NA,2.6,"","Traen",1,"Amunde",0
+"Sö ATA6447/61","Edeby (Vällinge)","Salems sn",59.250725,17.698158,NA,2,"","Balle",0.458,"Öpir 1",0.178
+"Sö ATA4202/63","Toresunds kyrkogård","Toresunds sn",59.34267,17.228423,NA,3.1,"","Balle",0.97,"Tidkume",0.02
+"Sö ATA4207/71","Tyttinge gård","Grödinge sn",59.159485,17.743541,NA,5.9,"","Halvdan",0.88,"Balle",0.049
+"Sö ATA7551/92","Örleds såg","Barva sn",59.372022,16.788706,NA,10,"","Balle",0.632,"Tidkume",0.331
+"Sö ATA323-3863-1999","Ludgo kyrka","Ludgo sn",58.916092,17.133862,NA,3.7,"","Tore 1",0.639,"Balle",0.258
+"Sö ATA322-4237-2011","Småhamra","Österhaninge sn",59.151202,18.24909,NA,3.9,"","Amunde",0.707,"Halvdan",0.278
+"Sö Fv1948;282","Ludgo kyrka","Ludgo sn",58.916632,17.132806,"KB",3.6,"","Tore 1",0.69,"Traen",0.309
+"Sö Fv1948;289","Aspa bro, Löten","Ludgo sn",58.926668,17.099314,"Fp",2.5,"","Traen",0.685,"Tore 1",0.314
+"Sö Fv1948;291","Giberga","Lunda sn",58.733058,16.732353,NA,8.2,"","Traen",0.887,"Tore 1",0.113
+"Sö Fv1948;293","Lunda kyrka","Lunda sn",58.743076,16.73882,NA,7.2,"","Traen",0.998,"Tore 1",0.002
+"Sö Fv1948;295","Prästgården","Lunda sn",58.743662,16.738421,"Fp",7.1,"","Traen",0.999,"Tore 1",0.001
+"Sö Fv1948;298","Ådala","Ösmo sn",59.030789,17.988443,"Pr1",1.8,"","Amunde",0.551,"Halvdan",0.434
+"Sö Fv1948;314","Toresunds kyrka","Toresunds sn",59.34307,17.227157,NA,3.2,"","Balle",0.897,"Livsten",0.061
+"Sö Fv1954;19","Vrena kyrka","Vrena sn",58.860237,16.700724,NA,6.1,"","Traen",0.817,"Tore 1",0.183
+"Sö Fv1954;22","Lagnö","Vansö sn",59.380014,16.958494,NA,5.3,"","Balle",0.901,"Tidkume",0.031
+"Sö Fv1958;242","Tumbo kyrka","Tumbo sn",59.425901,16.33866,"KB",14,"","Traen",0.805,"Balle",0.175
+"Sö Fv1959;262","Lövhagen","Österhaninge sn",59.128156,18.142851,"Pr2",2.1,"","Halvdan",0.616,"Amunde",0.381
+"Sö Fv1969;298","Kjula kyrka","Kjula sn",59.397112,16.67357,NA,5.4,"","Torbjörn 2",0.323,"Balle",0.289
+"Sö Fv1971;207","Tyresö","Tyresö sn",59.237141,18.29858,NA,9.8,"","Halvdan",0.953,"Amunde",0.015
+"Sö Fv1971;208","Säby","Ösmo sn",58.97065,17.867904,NA,0.6,"","Amunde",0.646,"Halvdan",0.33
+"Sö Fv1979;239","Hölö kyrkoruin","Hölö sn",59.034187,17.542112,NA,6.1,"","Amunde",0.624,"Halvdan",0.31
+"Sö Fv1979;240","Udden","Sorunda sn",59.004947,17.812827,NA,0.4,"","Halvdan",0.983,"Amunde",0.017
+"Sö Fv1982;235","Viby","Spelviks sn",58.911455,17.079775,"KB",0.5,"","Tore 1",0.682,"Traen",0.317
+"Sö Fv1984;253","Åkra gård","Bettna sn",58.899928,16.6539,NA,11,"","Traen",0.981,"Tore 1",0.019
+"Sö Fv1984;254","Södertälje, kv. Silen","Södertälje",59.198759,17.627455,NA,0.7,"","Balle",0.542,"Torbjörn 2",0.178
+"Sö Fv1986;218","Harby","Kjula sn",59.386349,16.70409,"Fp",7.4,"","Balle",0.645,"Traen",0.284
+"Sö Fv1986;220","Igelsta","Östertälje sn",59.191055,17.664232,NA,2.2,"","Halvdan",0.431,"Balle",0.219
+"Sö Fv1988;34","Ekensberg","Överenhörna sn",59.301476,17.403063,NA,9.8,"","Balle",0.955,"Torbjörn 2",0.02
+"Sö Fv1990;31","Kolunda","Stenkvista sn",59.306896,16.538514,NA,0.3,"","Balle",0.981,"Tidkume",0.013
+"Sö Fv1993;229","Årby","Klosters sn (Eskilstuna)",59.387324,16.526574,"KB",4.4,"","Traen",0.946,"Balle",0.036
+"Sö Fv1993;230","Jägarstugan","Vadsbro sn",59.007226,16.581042,NA,23.6,"","Balle",0.995,"Tore 1",0.004
+"Sö NOR1997;26","Edeby","Ludgo sn",58.921333,17.050035,NA,0.6,"","Traen",0.99,"Tore 1",0.009
+"Sö NOR1998;22","Kolunda","Stenkvista sn",59.307466,16.532979,NA,0,"","Balle",0.826,"Traen",0.144
+"Sö NOR2003;21","Snäckstavik","Grödinge sn",59.162478,17.798581,NA,3.8,"","Halvdan",0.513,"Torbjörn 2",0.129
+"Sö NOR2003;22","Sörby","Runtuna sn",58.847717,17.031751,NA,2.6,"","Tore 1",0.964,"Balle",0.021
+"Sö Sb1965;12","Tumbo kyrka","Tumbo sn",59.425729,16.339027,NA,14,"","Balle",0.943,"Traen",0.042
+"Sö Sb1965;20","Norrga","Grödinge sn",59.141554,17.840967,NA,1,"","Halvdan",0.623,"Torbjörn skald",0.209
+"U 1","Adelsö kyrka","Adelsö sn",59.360124,17.531823,NA,0,"","Balle",0.706,"Visäte",0.055
+"U 3","Alsnö hus","Adelsö sn",59.36068,17.535298,NA,0.2,"","Balle",0.859,"Torbjörn 2",0.056
+"U 4","Björkö","Adelsö sn",59.332665,17.546227,NA,3.2,"","Balle",0.261,"Visäte",0.251
+"U 5","Björkö","Adelsö sn",59.335658,17.547347,NA,2.9,"","Balle",0.805,"Visäte",0.086
+"U 9","Björkö","Adelsö sn",59.335445,17.546457,NA,2.9,"","Balle",0.844,"Torbjörn 2",0.059
+"U 10","Dalby","Adelsö sn",59.360097,17.531821,NA,0,"","Balle",0.625,"Visäte",0.084
+"U 13","Husby","Munsö sn",59.367102,17.628114,NA,2.7,"","Balle",0.763,"Fot 2",0.059
+"U 14","Österås, Munkudden","Munsö sn",59.356839,17.645378,"Pr1",2.5,"","Torbjörn skald",0.476,"Balle",0.306
+"U 16","Nibble","Ekerö sn",59.284459,17.724597,NA,0.7,"","Torbjörn skald",0.224,"Visäte",0.203
+"U 17","Skytteholm","Ekerö sn",59.313147,17.675755,"Pr2",3.6,"","Visäte",0.461,"Torbjörn skald",0.243
+"U 18","Stavsund","Ekerö sn",59.288546,17.670053,NA,2.6,"","Gunnar",0.25,"Torbjörn skald",0.237
+"U 22","Kungsberga","Färentuna sn",59.402121,17.626666,NA,2,"","Gunnar",0.497,"Balle",0.168
+"U 25","Hilleshögs kyrka","Hilleshögs sn",59.390994,17.702467,NA,0,"","Balle",0.444,"Torbjörn skald",0.132
+"U 26","Hilleshögs kyrka","Hilleshögs sn",59.390921,17.702586,NA,0,"","Öpir 1",0.453,"Balle",0.288
+"U 27","Hilleshögs kyrka","Hilleshögs sn",59.390903,17.702585,NA,0,"","Öpir 1",0.285,"Gunnar",0.279
+"U 28","Hilleshögs kyrka","Hilleshögs sn",59.390807,17.702368,NA,0,"","Balle",0.463,"Visäte",0.193
+"U 30","Kvarsta","Hilleshögs sn",59.386919,17.685025,"Pr2",1.1,"","Balle",0.598,"Torbjörn skald",0.205
+"U 31","Väntholmen","Hilleshögs sn",59.410004,17.709782,NA,2.2,"","Fot 2",0.88,"Balle",0.092
+"U 32","Stockby","Sånga sn",59.340215,17.694661,"Pr1",1.6,"","Balle",0.614,"Torbjörn skald",0.146
+"U 33","Stockby","Sånga sn",59.341056,17.691755,NA,1.7,"","Balle",0.51,"Visäte",0.172
+"U 35","Svartsjö","Sånga sn",59.363402,17.733115,"Pr2",1.8,"","Balle",0.483,"Fot 2",0.245
+"U 40","Eneby","Skå sn",59.317817,17.745746,"Pr3",3.8,"","Halvdan",0.314,"Balle",0.303
+"U 42","Troxhammar","Skå sn",59.321518,17.770183,"Pr4",4.2,"","Fot 2",0.721,"Öpir 1",0.219
+"U 46","Lovö kyrka","Lovö sn",59.321138,17.839465,NA,6.7,"","Halvdan",0.426,"Öpir 1",0.226
+"U 48","Lovö kyrka","Lovö sn",59.321166,17.839958,"Pr4",6.7,"","Öpir 1",0.449,"Fot 2",0.334
+"U 49","Lovö kyrka","Lovö sn",59.321227,17.839505,NA,6.7,"","Halvdan",0.8,"Torbjörn skald",0.042
+"U 50","Lovö kyrka","Lovö sn",59.32138,17.839462,NA,6.7,"","Öpir 1",0.367,"Torbjörn skald",0.194
+"U 53","Kåkbrinken","Stockholm",59.324723,18.070183,"Pr4",0.3,"","Fot 2",0.462,"Öpir 1",0.314
+"U 54","Riddarholmskyrkan","Stockholm",59.324601,18.064289,NA,0.5,"","Halvdan",0.321,"Fot 2",0.308
+"U 55","Ekeby, Bromma församling","Stockholm",59.357266,17.936453,NA,1.7,"","Torbjörn skald",0.323,"Öpir 1",0.314
+"U 56","Glia, Bromma församling","Stockholm",59.346379,17.951999,"Pr2",2.1,"","Visäte",0.345,"Halvdan",0.221
+"U 57","Riksby, Bromma församling","Stockholm",59.340033,17.945341,"Pr3",2.9,"","Visäte",0.639,"Fot 2",0.173
+"U 60","Ängby, Bromma församling","Stockholm",59.350433,17.900981,NA,2.4,"","Visäte",0.678,"Öpir 1",0.123
+"U 65","Spånga kyrka","Spånga sn",59.391591,17.911778,NA,0,"","Öpir 1",0.338,"Torbjörn skald",0.314
+"U 71","Granby","Spånga sn",59.399941,17.921294,NA,0.3,"","Öpir 1",0.553,"Åsmund",0.128
+"U 76","Kista","Spånga sn",59.407703,17.940906,"Pr4",0.1,"","Öpir 1",0.77,"Visäte",0.101
+"U 77","Råsta","Spånga sn (nu Sundbyberg)",59.378567,17.975045,"Pr4",1.7,"Torgöt Fotsarve;Olev","Fot 2",0.781,"Öpir 1",0.181
+"U 82","Järfälla kyrka","Järfälla sn",59.408744,17.871187,NA,2.2,"","Fot 2",0.856,"Öpir 1",0.045
+"U 83","Järfälla kyrka","Järfälla sn",59.408744,17.871169,NA,2.2,"","Visäte",0.387,"Öpir 1",0.324
+"U 84","Egglunda","Järfälla sn",59.401225,17.847397,"Pr4",3.8,"","Fot 2",0.577,"Öpir 1",0.274
+"U 85","Lövsta","Järfälla sn (nu Spånga sn)",59.377039,17.813635,NA,5.2,"","Öpir 1",0.355,"Fot 2",0.142
+"U 87","Skylsta","Järfälla sn",59.399147,17.819909,NA,5.2,"","Fot 2",0.857,"Balle",0.079
+"U 88","Skälby","Järfälla sn",59.401458,17.843431,NA,3.9,"","Fot 2",0.762,"Öpir 1",0.175
+"U 89","Skälby","Järfälla sn",59.401396,17.843374,"Pr2",3.9,"","Fot 2",0.442,"Visäte",0.203
+"U 91","Vible","Järfälla sn",59.425533,17.828859,"Pr3",4.1,"","Fot 2",0.634,"Visäte",0.18
+"U 92","Vible","Järfälla sn",59.425686,17.829432,"RAK",4,"","Gunnar",0.921,"Torbjörn 2",0.046
+"U 93","Väddesta (nu: Veddesta)","Järfälla sn",59.402571,17.853183,NA,3.4,"","Öpir 1",0.28,"Fot 2",0.263
+"U 94","Sollentuna kyrka","Sollentuna sn",59.466491,17.918818,NA,0.5,"","Gunnar",0.564,"Visäte",0.166
+"U 95","Sollentuna kyrka","Sollentuna sn",59.466534,17.918927,"RAK",0.4,"","Gunnar",0.97,"Torbjörn 2",0.021
+"U 96","Edsberg","Sollentuna sn",59.440913,17.951038,NA,3.2,"","Fot 2",0.429,"Torbjörn skald",0.318
+"U 98","Rotsunda","Sollentuna sn",59.486838,17.933789,NA,2.2,"","Fot 2",0.521,"Visäte",0.184
+"U 100","Skälby","Sollentuna sn",59.461211,17.960051,"Pr4",2,"","Fot 2",0.561,"Öpir 1",0.374
+"U 106","Prästgården","Eds sn",59.512652,17.886387,NA,0.8,"","Fot 2",0.98,"Åsmund",0.006
+"U 107","Antuna","Eds sn",59.494341,17.888845,NA,0,"","Öpir 1",0.331,"Visäte",0.24
+"U 108","Bisslinge","Eds sn",59.494096,17.881678,NA,0.4,"","Gunnar",0.691,"Öpir 1",0.12
+"U 109","Bisslinge","Eds sn",59.493953,17.882146,NA,0.4,"","Fot 2",0.441,"Öpir 1",0.282
+"U 110","Bisslinge","Eds sn",59.493995,17.881778,NA,0.4,"","Åsmund",0.241,"Öpir 1",0.228
+"U 113","Stenbron, Ed","Eds sn",59.507149,17.899297,NA,0.5,"","Öpir 1",0.371,"Gunnar",0.202
+"U 120","Solna kyrka","Solna sn",59.353028,18.024236,NA,3,"","Halvdan",0.427,"Öpir 1",0.221
+"U 121","Frösunda","Solna sn",59.366328,18.019404,"Pr4",1.5,"Fot 2;Ärnfast","Fot 2",0.845,"Öpir 1",0.079
+"U 124","Karlberg, Stenbrottet","Solna sn",59.341918,18.021665,"Pr3",3.6,"","Fot 2",0.816,"Visäte",0.108
+"U 125","Tomteboda","Solna sn",59.348757,18.019245,NA,3.4,"","Öpir 1",0.303,"Halvdan",0.207
+"U 126","Över-Järva","Solna sn",59.387038,17.991551,"Fp",1.5,"","Visäte",0.484,"Gunnar",0.252
+"U 129","Danderyds kyrka","Danderyds sn",59.4072,18.036478,NA,0,"","Öpir 1",0.546,"Visäte",0.166
+"U 132","Rinkeby","Danderyds sn",59.40895,18.040751,NA,0.3,"","Öpir 1",0.593,"Fot 2",0.258
+"U 134","Östra Arninge","Täby sn",59.468808,18.133849,NA,1.9,"","Åsmund",0.413,"Öpir 1",0.298
+"U 135","Broby","Täby sn",59.48086,18.044353,"Pr2",1.3,"","Fot 2",0.541,"Visäte",0.336
+"U 136","Broby","Täby sn",59.480558,18.043662,"Pr2",1.3,"","Fot 2",0.794,"Visäte",0.168
+"U 137","Broby","Täby sn",59.48068,18.043882,"Pr2",1.3,"","Fot 2",0.799,"Visäte",0.171
+"U 138","Broby","Täby sn",59.478726,18.043153,NA,1.5,"","Gunnar",0.9,"Fot 2",0.033
+"U 139","Broby","Täby sn",59.480998,18.045245,NA,1.3,"","Öpir 1",0.35,"Åsmund",0.288
+"U 140","Broby","Täby sn",59.480936,18.04517,"Pr2",1.3,"","Fot 2",0.405,"Visäte",0.298
+"U 147","Hagby, Sparingsberg","Täby sn",59.45528,17.998671,"Pr4",3.1,"","Fot 2",0.569,"Öpir 1",0.253
+"U 149","Hagby","Täby sn",59.46019,18.011056,NA,2.4,"","Fot 2",0.878,"Öpir 1",0.068
+"U 150","Karby","Täby sn",59.482284,18.048242,NA,1,"","Fot 2",0.852,"Öpir 1",0.11
+"U 151","Karby","Täby sn",59.481022,18.045423,NA,1.2,"","Gunnar",0.532,"Fot 2",0.327
+"U 152","Lissby","Täby sn",59.473604,18.020701,"Pr4",1,"","Fot 2",0.55,"Visäte",0.274
+"U 153","Lissby","Täby sn",59.473259,18.020908,"Pr3",1,"","Fot 2",0.929,"Visäte",0.06
+"U 154","Lissby","Täby sn",59.473889,18.020825,"Pr3",0.9,"","Fot 2",0.813,"Åsmund",0.105
+"U 155","Lissby","Täby sn",59.473228,18.021118,NA,1,"","Fot 2",0.594,"Öpir 1",0.202
+"U 156","Lissby","Täby sn",59.444369,18.068179,"Pr3",3.7,"","Halvdan",0.531,"Fot 2",0.391
+"U 157","Lissby","Täby sn",59.444369,18.068179,NA,3.7,"","Fot 2",0.429,"Gunnar",0.379
+"U 158","Löttinge","Täby sn",59.473296,18.101985,NA,0,"","Visäte",0.842,"Gunnar",0.107
+"U 160","Risbyle","Täby sn",59.507889,18.009451,"Pr1",1.4,"Ulv i Borresta;Gunnar","Gunnar",0.964,"Åsmund",0.016
+"U 161","Risbyle","Täby sn",59.507487,18.010909,"Pr1",1.5,"Ulv i Borresta;Gunnar","Gunnar",0.616,"Fot 2",0.251
+"U 166","Östra Ryds kyrka","Östra Ryds sn",59.448715,18.196292,"Pr4",0,"","Öpir 1",0.409,"Fot 2",0.373
+"U 172","Islinge","Lidingö",59.370825,18.129454,"Pr3",5.1,"","Halvdan",0.231,"Torbjörn skald",0.23
+"U 174","Österåkers kyrka","Österåkers sn",59.507546,18.283453,NA,3.2,"","Gunnar",0.64,"Öpir 1",0.186
+"U 175","Österåkers kyrka","Österåkers sn",59.505553,18.288642,NA,2.9,"","Gunnar",0.567,"Fot 2",0.197
+"U 177","Stav","Roslagskulla sn (Roslags-Kulla)",59.56337,18.623422,"Pr4",9.5,"Fot 2;Torgöt Fotsarve","Öpir 1",0.955,"Fot 2",0.027
+"U 178","Stav","Roslagskulla sn (Roslags-Kulla)",59.563862,18.622719,NA,9.4,"","Öpir 1",0.621,"Visäte",0.185
+"U 182","Össeby-Garns kyrka","Össeby-Garns sn",59.56259,18.254193,"Pr4",0,"","Fot 2",0.511,"Öpir 1",0.479
+"U 185","Össeby ödekyrka","Össeby-Garns sn",59.562486,18.253991,NA,0,"","Öpir 1",0.588,"Åsmund",0.358
+"U 186","Gillberga","Össeby-Garns sn",59.563045,18.266773,"Pr2",0.5,"Fot 2;Gunnar","Gunnar",0.549,"Visäte",0.184
+"U 192","Sjöberg","Össeby-Garns sn",59.523065,18.254791,NA,1,"","Åsmund",0.609,"Öpir 1",0.262
+"U 193","Svista","Össeby-Garns sn",59.530836,18.260888,"Pr4",1.4,"Åsmund;Torfast","Fot 2",0.382,"Öpir 1",0.375
+"U 194","Väsby","Össeby-Garns sn",59.521697,18.239562,"Pr3",0.4,"Åsmund;Frögärd","Åsmund",0.72,"Fot 2",0.171
+"U 196","Vada kyrka","Vada sn",59.577425,18.205666,NA,2.6,"","Visäte",0.357,"Öpir 1",0.305
+"U 197","Vada kyrka","Vada sn",59.577429,18.204993,NA,2.6,"","Visäte",0.357,"Öpir 1",0.305
+"U 198","Vada kyrka","Vada sn",59.577326,18.204703,"Pr5",2.6,"","Öpir 1",0.949,"Åsmund",0.04
+"U 203","Angarns kyrka","Angarns sn",59.536325,18.168599,"Pr3",0,"Åsmund;Frögärd","Åsmund",0.621,"Visäte",0.263
+"U 204","Angarns kyrka","Angarns sn",59.536336,18.168494,"Fp",0,"","Fot 2",0.921,"Visäte",0.039
+"U 206","Angarns kyrka","Angarns sn",59.536582,18.168759,NA,0,"","Öpir 1",0.435,"Fot 2",0.279
+"U 211","Örsta","Angarns sn",59.542586,18.166986,"Pr4",0.7,"","Visäte",0.404,"Öpir 1",0.368
+"U 213","Vallentuna kyrka","Vallentuna sn",59.531355,18.073953,NA,0,"","Visäte",0.381,"Öpir 1",0.308
+"U 215","Vallentuna kyrka","Vallentuna sn",59.531355,18.073953,NA,0,"","Gunnar",0.415,"Visäte",0.253
+"U 218","Vallentuna kyrka","Vallentuna sn",59.531355,18.073953,NA,0,"","Visäte",0.381,"Öpir 1",0.308
+"U 222","Vallentuna kyrka","Vallentuna sn",59.531355,18.073953,NA,0,"","Gunnar",0.572,"Visäte",0.186
+"U 227","Grana","Vallentuna sn",59.542698,17.993651,"Pr4",1.3,"","Fot 2",0.855,"Öpir 1",0.137
+"U 228","Grana","Vallentuna sn",59.538604,17.993633,"Pr4",1.1,"","Öpir 1",0.779,"Åsmund",0.105
+"U 235","Kusta","Vallentuna sn",59.577429,18.204993,"RAK",2.6,"","Gunnar",0.997,"Torbjörn 2",0.003
+"U 239","Lindö, Avunda","Vallentuna sn",59.543664,18.039623,NA,0.2,"","Öpir 1",0.562,"Fot 2",0.221
+"U 246","Mällösa","Vallentuna sn",59.552415,17.992495,NA,0.3,"","Gunnar",0.695,"Öpir 1",0.151
+"U 250","Rickeby","Vallentuna sn",59.534785,18.078073,NA,0.3,"","Visäte",0.378,"Öpir 1",0.307
+"U 253","Fresta kyrka","Fresta sn",59.5179,17.956632,NA,0,"","Öpir 1",0.342,"Fot 2",0.325
+"U 254","Fresta kyrka","Fresta sn",59.517762,17.956836,"Pr4",0,"","Åsmund",0.539,"Öpir 1",0.378
+"U 257","Fresta kyrka","Fresta sn",59.517844,17.956806,NA,0,"Fot 2;Torgöt Fotsarve","Öpir 1",0.531,"Åsmund",0.223
+"U 259","Fresta kyrka","Fresta sn",59.517882,17.956649,"Pr4",0,"","Fot 2",0.683,"Öpir 1",0.231
+"U 263","Fresta kyrka","Fresta sn",59.517741,17.957029,NA,0,"","Fot 2",0.649,"Öpir 1",0.246
+"U 270","Smedby","Fresta sn",59.514745,18.006488,NA,1.5,"","Öpir 1",0.54,"Gunnar",0.237
+"U 272","Hammarby kyrka","Hammarby sn",59.537559,17.923443,"Pr4",0.6,"","Fot 2",0.359,"Öpir 1",0.315
+"U 273","Hammarby kyrka","Hammarby sn",59.537778,17.924323,NA,0.5,"Fot 2;Visäte","Fot 2",0.675,"Öpir 1",0.186
+"U 274","Klockargården (Brunnby)","Hammarby sn",59.532817,17.949946,NA,1,"","Fot 2",0.789,"Arbjörn",0.056
+"U 275","Brunnby","Hammarby sn",59.528128,17.940757,"Pr4",0.5,"","Fot 2",0.857,"Öpir 1",0.13
+"U 276","Hammarby","Hammarby sn",59.539142,17.916593,"Pr1",1,"Gunnar;Ulv i Borresta","Gunnar",0.908,"Åsmund",0.053
+"U 278","Nibble","Hammarby sn",59.539991,17.966899,NA,1.9,"","Visäte",0.322,"Öpir 1",0.271
+"U 281","Smedby","Hammarby sn",59.507471,17.904369,"Pr4",0.6,"Fot 2;Torgöt Fotsarve","Fot 2",0.904,"Öpir 1",0.074
+"U 282","Torsåker","Hammarby sn",59.555111,17.931904,NA,0,"","Fot 2",0.402,"Öpir 1",0.215
+"U 289","Vik","Hammarby sn",59.531666,17.931894,"Pr3",0.2,"","Fot 2",0.682,"Visäte",0.231
+"U 290","Vik","Hammarby sn",59.533134,17.930519,NA,0.3,"","Åsmund",0.585,"Öpir 1",0.295
+"U 291","Vik","Hammarby sn",59.535068,17.938615,NA,0.4,"","Visäte",0.312,"Öpir 1",0.264
+"U 294","Lilla Vilunda","Hammarby sn",59.512218,17.906801,NA,0.1,"","Fot 2",0.757,"Öpir 1",0.149
+"U 295","Skånela kyrka","Skånela sn",59.581029,17.948711,"Pr4",0,"","Fot 2",0.463,"Öpir 1",0.273
+"U 296","Skånela kyrka","Skånela sn",59.581148,17.948577,NA,0,"","Fot 2",0.397,"Öpir 1",0.3
+"U 297","Skånela kyrka","Skånela sn",59.581351,17.948785,"Pr4",0,"","Fot 2",0.976,"Öpir 1",0.019
+"U 298","Skånela kyrka","Skånela sn",59.581597,17.949137,NA,0.1,"","Torbjörn 2",0.321,"Visäte",0.252
+"U 299","Skånela kyrka","Skånela sn",59.581253,17.948779,NA,0,"","Torbjörn 2",0.321,"Visäte",0.252
+"U 302","Skånela kyrka","Skånela sn",59.581184,17.948562,NA,0,"","Gunnar",0.545,"Åsmund",0.333
+"U 303","Skånela kyrka","Skånela sn",59.581162,17.948808,NA,0,"","Öpir 1",0.351,"Fot 2",0.136
+"U 304","Bensta","Skånela sn",59.612068,17.956553,NA,1,"","Fot 2",0.304,"Visäte",0.231
+"U 312","Harg","Skånela sn",59.568567,17.954113,"Pr4",0.3,"-fast;Öpir 1","Öpir 1",0.572,"Fot 2",0.317
+"U 316","Harg","Skånela sn",59.564795,17.952545,NA,0.7,"","Fot 2",0.531,"Åsmund",0.204
+"U 317","Harg","Skånela sn",59.570736,17.964746,NA,0.8,"","Fot 2",0.418,"Visäte",0.391
+"U 324","Tjusta","Skånela sn",59.609664,17.994318,"Pr1",0.1,"","Gunnar",0.96,"Visäte",0.016
+"U 328","Lundby","Markims sn",59.587798,18.035944,"Pr1",1.4,"Ulv i Borresta;Gunnar","Gunnar",0.952,"Visäte",0.02
+"U 332","Vreta","Markims sn",59.605503,18.031324,NA,0.7,"","Fot 2",0.787,"Öpir 1",0.06
+"U 335","Orkesta kyrka","Orkesta sn",59.604747,18.110398,"Pr1",0,"","Gunnar",0.949,"Visäte",0.028
+"U 336","Orkesta kyrka","Orkesta sn",59.604638,18.109948,"RAK",0,"Ulv i Borresta;Gunnar","Gunnar",0.998,"Torbjörn 2",0.002
+"U 339","Granby","Orkesta sn",59.598219,18.091387,NA,0.1,"","Gunnar",0.405,"Fot 2",0.374
+"U 340","Orkesta","Orkesta sn",59.605823,18.116106,NA,0.4,"","Fot 2",0.401,"Åsmund",0.27
+"U 342","Söderby","Orkesta sn",59.59487,18.105258,NA,0.3,"","Gunnar",0.648,"Åsmund",0.181
+"U 345","Yttergärde","Orkesta sn",59.599338,18.081313,NA,0.7,"","Gunnar",0.9,"Åsmund",0.065
+"U 354","Lunda kyrka","Lunda sn",59.666794,18.046763,"Pr2",0,"","Åsmund",0.442,"Visäte",0.297
+"U 359","Skepptuna kyrka","Skepptuna sn",59.708953,18.093069,"Pr4",0,"","Öpir 1",0.572,"Åsmund",0.376
+"U 361","Gådersta","Skepptuna sn",59.692857,18.106698,NA,1.5,"","Öpir 1",0.386,"Åsmund",0.357
+"U 362","Gådersta","Skepptuna sn",59.692884,18.1067,NA,1.5,"","Gunnar",0.548,"Öpir 1",0.177
+"U 364","Gådersta","Skepptuna sn",59.693012,18.107614,NA,1.4,"Torfast;Torsten","Åsmund",0.409,"Öpir 1",0.314
+"U 365","Gådersta","Skepptuna sn",59.692893,18.106718,NA,1.5,"","Gunnar",0.709,"Öpir 1",0.113
+"U 366","Gådersta","Skepptuna sn",59.692884,18.106717,NA,1.5,"","Öpir 1",0.308,"Gunnar",0.305
+"U 369","Helgåby","Skepptuna sn",59.710374,18.122137,NA,0,"","Åsmund",0.349,"Öpir 1",0.242
+"U 373","Örby","Skepptuna sn",59.68746,18.023261,"Pr3",0.2,"","Fot 2",0.369,"Visäte",0.25
+"U 375","Vidbo kyrka","Vidbo sn",59.710868,18.004655,"Pr2",3,"Torfast;Åsmund","Åsmund",0.847,"Visäte",0.063
+"U 376","Vidbo kyrka","Vidbo sn",59.711273,18.005144,"Pr4",3.1,"Sven 3;Sten","Öpir 1",0.493,"Fot 2",0.45
+"U 378","Åsby","Vidbo sn",59.700659,17.977637,"Pr4",3.1,"Sven 3;Sten","Öpir 1",0.639,"Fot 2",0.192
+"U 379","Kyrkogården","Sigtuna",59.618071,17.723033,"KB",0.1,"Torbjörn 2;Torbjörn skald","Torbjörn 2",0.845,"Visäte",0.06
+"U 380","Kyrkogården","Sigtuna",59.618361,17.722234,NA,0.1,"","Torbjörn 2",0.444,"Balle",0.236
+"U 381","Kyrkogården","Sigtuna",59.618218,17.722173,NA,0.1,"","Torbjörn 2",0.337,"Visäte",0.309
+"U 383","Sigtuna kyrka","Sigtuna",59.618416,17.722804,"Pr4",0.1,"","Öpir 1",0.487,"Tidkume",0.168
+"U 384","Klosterområdet","Sigtuna",59.615162,17.718738,NA,0,"","Öpir 1",0.439,"Fot 2",0.353
+"U 386","S:t Olovs ruin","Sigtuna",59.615162,17.718738,NA,0,"","Torbjörn 2",0.503,"Balle",0.218
+"U 387","S:t Olovs ruin","Sigtuna",59.618368,17.721171,NA,0,"","Öpir 1",0.318,"Torbjörn 2",0.26
+"U 388","Sigtuna","Sigtuna",59.615162,17.718738,"Pr4",0,"","Fot 2",0.421,"Öpir 1",0.22
+"U 389","Sigtuna","Sigtuna",59.615162,17.718738,"Pr4",0,"","Fot 2",0.896,"Öpir 1",0.039
+"U 395","S:t Pers ruin","Sigtuna",59.615162,17.718738,"Pr4",0,"Sven 1;Öpir 1","Fot 2",0.663,"Öpir 1",0.128
+"U 397","S:t Pers ruin","Sigtuna",59.615162,17.718738,NA,0,"","Gunnar",0.254,"Öpir 1",0.249
+"U 397B","S:t Pers ruin","Sigtuna",59.615162,17.718738,NA,0,"","Torbjörn 2",0.503,"Balle",0.218
+"U 397C","S:t Pers ruin","Sigtuna",59.61632,17.713824,NA,0,"","Torbjörn 2",0.502,"Balle",0.225
+"U 399","S:t Pers ruin","Sigtuna",59.615162,17.718738,NA,0,"","Balle",0.356,"Torbjörn 2",0.226
+"U 400","Prästgården","Sigtuna",59.615162,17.718738,NA,0,"","Torbjörn 2",0.503,"Balle",0.218
+"U 402","Kv. Kammakaren","Sigtuna",59.615162,17.718738,NA,0,"","Torbjörn 2",0.503,"Balle",0.218
+"U 403","Kv. Professorn","Sigtuna",59.615162,17.718738,NA,0,"","Fot 2",0.314,"Arbjörn",0.26
+"U 405","Ekerö kyrka","Ekerö sn",59.272455,17.74813,"Pr1",2.6,"Torbjörn 3;Torbjörn skald","Torbjörn skald",0.598,"Balle",0.18
+"U 406","Sigtuna","Sigtuna",59.616899,17.715346,NA,0,"","Torbjörn 2",0.503,"Balle",0.222
+"U 407","Bärmö","Sankt Pers sn",59.651006,17.642016,NA,0.6,"","Torbjörn 2",0.462,"Balle",0.324
+"U 408","Bärmö","Sankt Pers sn",59.651237,17.642153,NA,0.6,"","Balle",0.649,"Torbjörn 2",0.164
+"U 409","Lövstaholm","Sankt Olovs sn (Sankt Olof) (nu Odensala sn)",59.655258,17.74515,"Pr3",3.3,"Torfast;Åsmund","Åsmund",0.607,"Fot 2",0.246
+"U 411","Norra Til","Sankt Olovs sn (Sankt Olof)",59.624809,17.747772,"Pr4",1.7,"","Fot 2",0.821,"Visäte",0.076
+"U 414","Norrsunda kyrka","Norrsunda sn",59.593938,17.892771,NA,0,"","Gunnar",0.607,"Fot 2",0.099
+"U 415","Norrsunda kyrka","Norrsunda sn",59.5939,17.892857,NA,0,"","Torbjörn 2",0.409,"Visäte",0.2
+"U 416","Norrsunda kyrka","Norrsunda sn",59.5939,17.892857,NA,0,"","Fot 2",0.553,"Åsmund",0.252
+"U 418","Brista","Norrsunda sn",59.61202,17.865027,"Pr3",2.6,"Torfast;Åsmund","Åsmund",0.819,"Visäte",0.083
+"U 419","Norslunda","Norrsunda sn",59.326598,18.104661,"Pr2",0.1,"Åsmund;Torfast","Åsmund",0.494,"Visäte",0.257
+"U 421","Rosersberg","Norrsunda sn",59.572843,17.829447,NA,0.9,"","Fot 2",0.566,"Visäte",0.231
+"U 422","Rosersberg","Norrsunda sn",59.57473,17.844428,NA,0.3,"","Öpir 1",0.427,"Fot 2",0.239
+"U 424","Rosersberg","Norrsunda sn",59.572122,17.845828,NA,0,"","Fot 2",0.375,"Gunnar",0.267
+"U 425","Rosersberg","Norrsunda sn",59.573574,17.843686,NA,0.2,"","Fot 2",0.942,"Öpir 1",0.02
+"U 426","Vallstanäs (Linsunda)","Norrsunda sn",59.557765,17.896441,"Pr1",1.6,"","Fot 2",0.596,"Arbjörn",0.223
+"U 427","Vallstanäs (Linsunda)","Norrsunda sn",59.578088,17.898463,"Pr2",1.4,"","Åsmund",0.356,"Fot 2",0.203
+"U 429","Åshusby","Norrsunda sn",59.588376,17.918757,NA,1.5,"","Fot 2",0.535,"Arbjörn",0.195
+"U 430","Åshusby","Norrsunda sn",59.5939,17.892857,"Pr1",0,"Ulv i Borresta;Gunnar","Gunnar",0.824,"Visäte",0.057
+"U 432","Åshusby","Norrsunda sn",59.593494,17.904219,NA,0.6,"","Fot 2",0.411,"Visäte",0.178
+"U 433","Husby-Ärlinghundra kyrka","Husby-Ärlinghundra sn",59.640112,17.882301,NA,2.9,"","Fot 2",0.779,"Öpir 1",0.098
+"U 434","Husby-Ärlinghundra kyrka","Husby-Ärlinghundra sn",59.640107,17.880952,NA,2.8,"","Fot 2",0.329,"Öpir 1",0.246
+"U 435","Husby-Ärlinghundra kyrka","Husby-Ärlinghundra sn",59.640265,17.88231,"Pr2",2.9,"","Fot 2",0.323,"Visäte",0.22
+"U 436","Arnberga","Husby-Ärlinghundra sn",59.63043,17.849932,NA,2.5,"","Gunnar",0.332,"Torbjörn 2",0.182
+"U 437","Broby","Husby-Ärlinghundra sn",59.632905,17.881572,NA,3.3,"","Öpir 1",0.31,"Fot 2",0.262
+"U 441","Prästgården","Odensala sn",59.664582,17.851868,NA,0.2,"","Torbjörn 2",0.352,"Åsmund",0.23
+"U 443","Prästgården","Odensala sn",59.665294,17.848877,NA,0.1,"","Fot 2",0.332,"Gunnar",0.287
+"U 444","Bromsta","Odensala sn",59.657374,17.816918,"Fp",0,"","Fot 2",0.523,"Visäte",0.194
+"U 446","Droppsta","Odensala sn",59.635739,17.815535,NA,1,"","Fot 2",0.284,"Öpir 1",0.208
+"U 447","Fransåker","Odensala sn",59.635739,17.815535,NA,1,"","Gunnar",0.384,"Öpir 1",0.135
+"U 449","Harg","Odensala sn",59.680978,17.86393,NA,0.1,"","Öpir 1",0.297,"Torbjörn 2",0.168
+"U 451","Hova","Odensala sn",59.641909,17.822998,NA,1.3,"","Fot 2",0.594,"Gunnar",0.143
+"U 452","Hova","Odensala sn",59.641909,17.822998,NA,1.3,"","Fot 2",0.946,"Arbjörn",0.02
+"U 456","Tollsta","Odensala sn",59.64645,17.855004,NA,1.2,"","Fot 2",0.437,"Öpir 1",0.244
+"U 458","Skråmsta","Haga sn",59.683008,17.699876,NA,0.5,"","Balle",0.335,"Fot 2",0.281
+"U 460","Skråmsta","Haga sn",59.68269,17.719976,"Pr4",0.1,"Fot 2;Tjälve 1;Torgöt Fotsarve;Orökja 2","Fot 2",0.863,"Öpir 1",0.13
+"U 461","Torslunda","Haga sn",59.678811,17.694544,"Pr2",0,"","Arbjörn",0.335,"Åsmund",0.169
+"U 463","Ala","Vassunda sn",59.689976,17.717781,"Pr4",0.9,"Fot 2;Orökja 2;Tjälve 1","Fot 2",0.951,"Öpir 1",0.034
+"U 465","Smedby","Vassunda sn",59.688762,17.706825,NA,0.8,"","Fot 2",0.505,"Visäte",0.161
+"U 468","Tibble","Vassunda sn",59.687607,17.751281,"Fp",0.8,"","Torbjörn 2",0.267,"Åsmund",0.238
+"U 469","Tibble","Vassunda sn",59.687607,17.751281,NA,0.8,"","Torbjörn 2",0.549,"Öpir 1",0.159
+"U 476","Vickeby","Knivsta sn",59.708376,17.757871,NA,0.7,"","Arbjörn",0.386,"Torbjörn 2",0.226
+"U 477","Vickeby","Knivsta sn",59.695961,17.76674,"Pr2",0.4,"","Arbjörn",0.381,"Fot 2",0.286
+"U 482","Kasby","Lagga sn",59.801869,17.838497,NA,0,"","Fot 2",0.759,"Öpir 1",0.212
+"U 484","Kasby","Lagga sn",59.803081,17.836183,"Pr2",0.2,"","Fot 2",0.631,"Arbjörn",0.214
+"U 485","Marma","Lagga sn",59.7816,17.837051,"Pr5",0.9,"Ofeg;Öpir 1","Öpir 1",0.999,"Åsmund",0
+"U 486","Morby, Mora stenar","Lagga sn",59.797747,17.780802,"Pr4",3.3,"","Fot 2",0.544,"Öpir 1",0.437
+"U 487","Morby, Mora äng","Lagga sn",59.79808,17.782532,NA,3.1,"","Öpir 1",0.567,"Torbjörn 2",0.142
+"U 488","Morby, Mora stenar","Lagga sn",59.798644,17.77665,NA,3.2,"","Fot 2",0.467,"Öpir 1",0.303
+"U 491","Årby","Lagga sn",59.786007,17.860848,NA,1.4,"","Öpir 1",0.331,"Torbjörn 2",0.293
+"U 492","Örby","Lagga sn",59.790492,17.840281,"Pr4",0.7,"","Öpir 1",0.688,"Fot 2",0.218
+"U 493","Brunnby","Östuna sn",59.743827,17.822413,NA,2.6,"","Fot 2",0.585,"Öpir 1",0.267
+"U 494","Husby-Långhundra kyrka","Husby-Långhundra sn",59.750713,18.017807,NA,2.9,"","Åsmund",0.733,"Gunnar",0.137
+"U 495","Husby-Långhundra kyrka","Husby-Långhundra sn",59.750693,18.017361,"Pr3",2.9,"","Fot 2",0.756,"Åsmund",0.146
+"U 498","Åby","Husby-Långhundra sn",59.753055,18.069035,NA,1.8,"","Gunnar",0.606,"Öpir 1",0.225
+"U 505","Kårsta kyrka","Kårsta sn",59.652586,18.240825,NA,1.5,"Sven 3;Sten","Öpir 1",0.624,"Åsmund",0.183
+"U 506","Broby","Kårsta sn",59.644434,18.242646,NA,0.9,"","Gunnar",0.604,"Öpir 1",0.22
+"U 507","Broby","Kårsta sn",59.652722,18.24126,NA,1.6,"","Åsmund",0.335,"Öpir 1",0.298
+"U 510","Mälsta","Kårsta sn",59.637875,18.231263,"Pr4",0.3,"Fot 2;Ärnfast","Fot 2",0.93,"Öpir 1",0.04
+"U 514","Rimbo kyrka","Rimbo sn",59.74912,18.390402,"Pr4",0,"","Öpir 1",0.887,"Fot 2",0.06
+"U 516","Rimbo kyrka","Rimbo sn",59.750835,18.397707,NA,0.4,"","Öpir 1",0.325,"Torbjörn skald",0.287
+"U 520","Salmunge, Björkholmen","Skederids sn",59.733938,18.443927,NA,3.3,"","Vidbjörn",0.27,"Gunnar",0.238
+"U 521","Länna kyrka","Länna sn",59.683382,18.608257,NA,2.5,"","Vidbjörn",0.278,"Åsmund",0.259
+"U 522","Hammarby","Länna sn",59.662311,18.689468,NA,2,"","Öpir 1",0.783,"Åsmund",0.103
+"U 523","Hammarby","Länna sn",59.662311,18.689468,NA,2,"","Öpir 1",0.783,"Åsmund",0.103
+"U 526","Frötuna kyrka","Frötuna sn",59.74145,18.675022,NA,2.4,"","Vidbjörn",0.573,"Torbjörn skald",0.407
+"U 527","Frötuna kyrka","Frötuna sn",59.741444,18.675288,"Pr3",2.4,"Holmsten;Vidbjörn","Vidbjörn",0.891,"Torbjörn skald",0.07
+"U 528","Görla","Frötuna sn",59.739836,18.697035,NA,2.1,"","Torbjörn skald",0.968,"Öpir 1",0.026
+"U 534","Roslags-Bro kyrka","Roslags-Bro sn",59.829606,18.736841,NA,0,"","Vidbjörn",0.702,"Torbjörn skald",0.218
+"U 535","Roslags-Bro kyrka","Roslags-Bro sn",59.829606,18.736841,"Pr3",0,"","Öpir 1",0.394,"Vidbjörn",0.334
+"U 536","Roslags-Bro kyrka","Roslags-Bro sn",59.829606,18.736841,NA,0,"","Öpir 1",0.822,"Vidbjörn",0.08
+"U 537","Bredsätra","Roslags-Bro sn",59.87011,18.780241,"Pr2",5.1,"","Torbjörn skald",0.847,"Vidbjörn",0.148
+"U 538","Ösby","Roslags-Bro sn",59.855674,18.757168,NA,3.1,"","Torbjörn skald",0.533,"Vidbjörn",0.35
+"U 540","Husby-Lyhundra kyrka (nu: Husby-Sjuhundra)","Husby-Lyhundra sn (nu Husby-Sjuhundra)",59.740328,18.529936,"Pr4",0,"Åsmund;Torbjörn skald;Torfast","Öpir 1",0.519,"Åsmund",0.436
+"U 542","Husby-Lyhundra kyrka (nu: Husby-Sjuhundra)","Husby-Lyhundra sn (nu Husby-Sjuhundra)",59.740252,18.530143,NA,0,"","Vidbjörn",0.932,"Öpir 1",0.027
+"U 543","Husby-Lyhundra kyrka (nu: Husby-Sjuhundra)","Husby-Lyhundra sn (nu Husby-Sjuhundra)",59.74366,18.528161,"Pr4",0.4,"","Öpir 1",0.883,"Åsmund",0.051
+"U 546","Husby-Lyhundra kyrka (nu: Husby-Sjuhundra)","Husby-Lyhundra sn (nu Husby-Sjuhundra)",59.740171,18.530137,"Pr4",0,"","Öpir 1",0.949,"Åsmund",0.035
+"U 547","Husby-Lyhundra kyrka (nu: Husby-Sjuhundra)","Husby-Lyhundra sn (nu Husby-Sjuhundra)",59.740171,18.530137,NA,0,"","Vidbjörn",0.402,"Torbjörn skald",0.265
+"U 549","Husby-Lyhundra kyrka (nu: Husby-Sjuhundra)","Husby-Lyhundra sn (nu Husby-Sjuhundra)",59.740171,18.530137,NA,0,"","Vidbjörn",0.763,"Gunnar",0.092
+"U 550","Husby-Lyhundra kyrka (nu: Husby-Sjuhundra)","Husby-Lyhundra sn (nu Husby-Sjuhundra)",59.740171,18.530137,NA,0,"","Vidbjörn",0.451,"Öpir 1",0.317
+"U 551","Husby-Lyhundra kyrka (nu: Husby-Sjuhundra)","Husby-Lyhundra sn (nu Husby-Sjuhundra)",59.740171,18.530137,NA,0,"","Vidbjörn",0.752,"Öpir 1",0.146
+"U 552","Husby-Lyhundra kyrka (nu: Husby-Sjuhundra)","Husby-Lyhundra sn (nu Husby-Sjuhundra)",59.740171,18.530137,NA,0,"","Öpir 1",0.702,"Åsmund",0.164
+"U 553","Husby-Lyhundra kyrka (nu: Husby-Sjuhundra)","Husby-Lyhundra sn (nu Husby-Sjuhundra)",59.740171,18.530137,NA,0,"","Öpir 1",0.702,"Åsmund",0.164
+"U 554","Husby-Lyhundra kyrka (nu: Husby-Sjuhundra)","Husby-Lyhundra sn (nu Husby-Sjuhundra)",59.740171,18.530137,NA,0,"","Öpir 1",0.702,"Åsmund",0.164
+"U 555","Husby-Lyhundra kyrka (nu: Husby-Sjuhundra)","Husby-Lyhundra sn (nu Husby-Sjuhundra)",59.740171,18.530137,NA,0,"","Vidbjörn",0.444,"Öpir 1",0.428
+"U 556","Husby-Lyhundra kyrka (nu: Husby-Sjuhundra)","Husby-Lyhundra sn (nu Husby-Sjuhundra)",59.740252,18.530143,NA,0,"","Öpir 1",0.636,"Åsmund",0.203
+"U 557","Prästgården","Husby-Lyhundra sn (nu Husby-Sjuhundra)",59.742994,18.528267,NA,0.3,"","Åsmund",0.357,"Gunnar",0.261
+"U 562","Malsta kyrka","Malsta sn",59.770311,18.640101,"Pr5",0,"","Öpir 1",0.997,"Åsmund",0.002
+"U 563","Malsta kyrka","Malsta sn",59.770311,18.640101,"Pr5",0,"","Öpir 1",0.997,"Åsmund",0.002
+"U 568","Prästgården","Lohärads sn",59.890666,18.711567,NA,6.9,"","Vidbjörn",0.342,"Torbjörn skald",0.331
+"U 570","Hållsta","Lohärads sn",59.78686,18.563021,"Pr3",4,"Torfast;Åsmund","Vidbjörn",0.832,"Torbjörn skald",0.078
+"U 571","Hållsta","Lohärads sn",59.786851,18.563002,NA,4,"","Öpir 1",0.673,"Gunnar",0.173
+"U 572","Kragsta","Lohärads sn",59.783651,18.554579,"Pr4",4.6,"","Öpir 1",0.973,"Åsmund",0.008
+"U 573","Kragsta","Lohärads sn",59.782821,18.553459,"Pr3",4.6,"","Vidbjörn",0.582,"Öpir 1",0.183
+"U 577","Estuna kyrka","Estuna sn",59.818265,18.652485,NA,0.1,"","Vidbjörn",0.514,"Öpir 1",0.297
+"U 578","Eneby","Estuna sn",59.825116,18.678561,NA,1.7,"","Torbjörn skald",0.347,"Vidbjörn",0.294
+"U 582","Söderby-Karls kyrka","Söderby-Karls sn",59.884225,18.700193,NA,6.4,"","Vidbjörn",0.573,"Torbjörn skald",0.355
+"U 583","S:t Karls ruin","Söderby-Karls sn",59.859122,18.681368,NA,4.5,"","Gunnar",0.512,"Vidbjörn",0.179
+"U 585","Igelsta","Söderby-Karls sn",59.908289,18.704166,NA,9,"","Vidbjörn",0.646,"Gunnar",0.204
+"U 588","Gärsta","Edsbro sn",59.896837,18.471138,NA,0.5,"","Vidbjörn",0.609,"Torbjörn skald",0.216
+"U 589","Räkinde","Edsbro sn",59.898522,18.431946,NA,2.5,"","Vidbjörn",0.345,"Öpir 1",0.299
+"U 591","Burvik","Knutby sn",59.908951,18.269501,NA,11.6,"","Öpir 1",0.513,"Åsmund",0.385
+"U 592","Gränsta","Knutby sn",59.902788,18.244518,NA,12.9,"","Gunnar",0.418,"Öpir 1",0.326
+"U 594","Ortalalund","Väddö sn",59.976263,18.818704,NA,17,"","Torbjörn skald",0.735,"Vidbjörn",0.242
+"U 604","Stäket","Stockholms-Näs sn (nu Kungsängen)",59.469596,17.782935,"Pr4",6.4,"","Fot 2",0.455,"Öpir 1",0.427
+"U 606","Västra Ryds kyrka","Västra Ryds sn",59.533601,17.767201,"Pr2",4.5,"","Fot 2",0.75,"Balle",0.064
+"U 607","Västra Ryds kyrka","Västra Ryds sn",59.533601,17.767201,NA,4.5,"","Torbjörn 2",0.377,"Balle",0.198
+"U 608","Prästgården","Västra Ryds sn",59.533715,17.766748,NA,4.5,"","Fot 2",0.35,"Åsmund",0.33
+"U 609","Prästgården","Västra Ryds sn",59.534814,17.765327,NA,4.4,"","Torbjörn 2",0.38,"Balle",0.201
+"U 610","Granhammar","Västra Ryds sn",59.533601,17.767201,NA,4.5,"","Fot 2",0.345,"Torbjörn 2",0.207
+"U 611","Tibble (Granhammar)","Västra Ryds sn",59.52222,17.761486,"Pr1",5.8,"","Visäte",0.451,"Balle",0.189
+"U 615","Tranbygge kvarn","Västra Ryds sn",59.547742,17.741318,"KB",3.3,"","Torbjörn 2",0.233,"Visäte",0.2
+"U 616","Tång","Västra Ryds sn",59.52279,17.746126,"Pr1",5.9,"","Visäte",0.264,"Balle",0.242
+"U 619","Bro kyrka","Bro sn",59.506092,17.626736,"Pr5",0,"","Öpir 1",0.703,"Fot 2",0.24
+"U 620","Finnsta","Bro sn",59.515653,17.649884,NA,0.6,"","Balle",0.521,"Visäte",0.193
+"U 623","Jursta","Bro sn",59.523951,17.596738,"Pr2",2.2,"","Fot 2",0.75,"Visäte",0.171
+"U 624","Ullvi (Toresta)","Bro sn",59.527153,17.578474,"Pr4",2.2,"Ärnfast;Fot 2","Fot 2",0.982,"Öpir 1",0.015
+"U 626","Bälby","Håbo-Tibble sn",59.58894,17.652071,NA,0.7,"","Arbjörn",0.663,"Balle",0.08
+"U 627","Jädra tä","Håbo-Tibble sn",59.579509,17.655519,NA,0.9,"","Torbjörn 2",0.408,"Balle",0.163
+"U 631","Kalmar kyrka","Kalmar sn",59.540939,17.522973,NA,1.8,"","Balle",0.283,"Torbjörn 2",0.165
+"U 632","Kalmar kyrka","Kalmar sn",59.540631,17.521808,NA,1.9,"","Fot 2",0.621,"Öpir 1",0.153
+"U 633","Broby","Kalmar sn",59.555762,17.49953,NA,1.1,"","Fot 2",0.483,"Balle",0.24
+"U 635","Låddersta","Kalmar sn",59.554472,17.488163,"Pr4",1.7,"","Fot 2",0.97,"Balle",0.019
+"U 636","Låddersta","Kalmar sn",59.554474,17.488022,"Fp",1.7,"","Balle",0.837,"Arbjörn",0.101
+"U 637","Låddersta","Kalmar sn",59.553653,17.493198,"Pr2",1.5,"","Balle",0.443,"Arbjörn",0.29
+"U 638","Mansängen","Kalmar sn",59.564601,17.530848,NA,1.1,"Björn 1;Fulker;Fot 2","Balle",0.518,"Arbjörn",0.229
+"U 639","Skörby","Kalmar sn",59.572186,17.486711,NA,2.4,"","Balle",0.49,"Tidkume",0.171
+"U 643","Ekilla bro","Yttergrans sn",59.651469,17.376848,"Pr4",0,"Fot 2;Torgöt Fotsarve","Fot 2",0.905,"Öpir 1",0.04
+"U 644","Ekilla bro","Yttergrans sn",59.607701,17.500141,"Fp",0.9,"Alrik;Äskil 2","Balle",0.606,"Torbjörn 2",0.114
+"U 648","Övergrans kyrka","Övergrans sn",59.630187,17.485815,"Pr4",0,"","Fot 2",0.722,"Visäte",0.108
+"U 649","Övergrans kyrka","Övergrans sn",59.630156,17.48615,"Pr2",0,"","Arbjörn",0.919,"Fot 2",0.037
+"U 649B","Övergrans kyrka","Övergrans sn",59.630647,17.485661,NA,0,"","Balle",0.592,"Arbjörn",0.14
+"U 654","Varpsund, Vi ägor","Övergrans sn",59.629452,17.500403,"Fp",0.8,"Alrik;Äskil 2","Balle",0.655,"Erik",0.138
+"U 656","Bjursta (Markeby)","Håtuna sn",59.628617,17.59169,"Pr2",1.2,"","Arbjörn",0.896,"Torbjörn 2",0.033
+"U 657","Kålsta","Håtuna sn",59.630366,17.538315,"Pr2",3,"","Balle",0.519,"Arbjörn",0.442
+"U 658","Nibble","Håtuna sn",59.623188,17.609232,NA,0,"","Fot 2",0.602,"Arbjörn",0.266
+"U 659","Nibble","Håtuna sn",59.632434,17.569093,"Pr2",2.5,"","Arbjörn",0.463,"Fot 2",0.435
+"U 661","Råby","Håtuna sn",59.619856,17.606005,"Fp",0.4,"Alrik;Äskil 2","Balle",0.353,"Torbjörn 2",0.204
+"U 662","Signildsberg","Håtuna sn",59.623395,17.651728,"Pr2",0.1,"","Torbjörn 2",0.301,"Visäte",0.176
+"U 663","Signildsberg","Håtuna sn",59.621398,17.65075,NA,0.2,"","Öpir 1",0.631,"Fot 2",0.188
+"U 665","Finstaholm","Häggeby sn",59.65112,17.571528,"Pr2",2.4,"","Arbjörn",0.827,"Balle",0.148
+"U 666","Finsta","Häggeby sn",59.650225,17.573379,NA,2.5,"","Balle",0.476,"Torbjörn 2",0.364
+"U 668","Kålsta","Häggeby sn",59.647794,17.544943,"Pr3",1.4,"Visäte;Ofeg;Öpir 1","Balle",0.606,"Torbjörn 2",0.179
+"U 669","Kålsta","Häggeby sn",59.647912,17.544878,"Pr4",1.4,"Visäte;Ofeg;Öpir 1","Visäte",0.734,"Balle",0.141
+"U 670","Rölunda","Häggeby sn",59.645812,17.531911,NA,1.5,"","Arbjörn",0.391,"Öpir 1",0.198
+"U 671","Rölunda","Häggeby sn",59.630726,17.503251,"Fp",1,"","Arbjörn",0.76,"Balle",0.203
+"U 672","Rölunda","Häggeby sn",59.64566,17.533233,NA,1.5,"","Arbjörn",0.42,"Balle",0.384
+"U 673","Rölunda","Häggeby sn",59.64451,17.530514,NA,1.6,"","Balle",0.576,"Torbjörn 2",0.295
+"U 675","Skadevi","Häggeby sn",59.672242,17.538151,NA,0.1,"","Balle",0.525,"Fot 2",0.14
+"U 677","Viksjö","Häggeby sn",59.669431,17.546383,NA,0.1,"","Öpir 1",0.339,"Balle",0.254
+"U 679","Skoklosters kyrka","Skoklosters sn",59.70473,17.624081,"Pr2",0,"","Arbjörn",0.713,"Fot 2",0.118
+"U 680","Skoklosters kyrka","Skoklosters sn",59.704616,17.623861,NA,0,"","Torbjörn 2",0.445,"Balle",0.281
+"U 681","Skoklosters kyrka","Skoklosters sn",59.704547,17.623644,NA,0,"","Torbjörn 2",0.35,"Gunnar",0.198
+"U 683","Linda","Skoklosters sn",59.706556,17.581838,"Pr2",0.2,"","Arbjörn",0.547,"Balle",0.276
+"U 685","Sanda","Skoklosters sn",59.708048,17.561003,"Pr2",0.4,"","Arbjörn",0.737,"Fot 2",0.225
+"U 686","Sanda","Skoklosters sn",59.703656,17.561786,"Pr2",0.6,"","Arbjörn",0.805,"Balle",0.089
+"U 691","Söderby","Arnö sn (nu Aspö sn)",59.500935,17.115283,"Pr4",6,"Ödbjörn;Tidkume","Balle",0.645,"Tidkume",0.347
+"U 692","Väppeby","Arnö sn (nu Aspö sn)",59.493673,17.130414,"Pr4",4.9,"Ödbjörn;Tidkume","Tidkume",0.748,"Balle",0.233
+"U 698","Veckholms kyrka","Veckholms sn",59.521381,17.323493,NA,0,"","Balle",0.798,"Tidkume",0.126
+"U 715","Ännesta","Hacksta sn",59.54776,17.375855,NA,1.4,"","Balle",0.849,"Torbjörn 2",0.07
+"U 716","Viggby (nu: Viggeby)","Lillkyrka sn",59.56626,17.24156,"Pr4",1.8,"Ödbjörn;Tidkume","Balle",0.421,"Tidkume",0.38
+"U 719","Folsberga","Vallby sn",59.560559,17.17537,"Pr4",2.1,"Livsten;Ödbjörn","Balle",0.452,"Tidkume",0.351
+"U 732","Grillby, Sörskog","Villberga sn",59.610346,17.253272,"Fp",1.9,"Balle;Erik","Erik",0.918,"Balle",0.04
+"U 742","Myrby","Boglösa sn",59.600335,17.124051,"Pr4",1.1,"Tidkume;Livsten","Livsten",0.697,"Tidkume",0.158
+"U 745","Hammaren","Husby-Sjutolfts sn",59.66042,17.333495,"Fp",0.1,"","Balle",0.584,"Arbjörn",0.373
+"U 746","Hårby","Husby-Sjutolfts sn",59.671236,17.358871,"Pr4",1.9,"Torgöt 2;Torgöt Fotsarve","Balle",0.594,"Tidkume",0.202
+"U 752","Viggby (nu: Viggeby)","Husby-Sjutolfts sn",59.665277,17.344186,NA,0.9,"","Balle",0.704,"Öpir 1",0.132
+"U 754","Hällby","Litslena sn",59.654876,17.273319,NA,0.8,"","Balle",0.851,"Torbjörn 2",0.052
+"U 755","Kälsta","Litslena sn",59.667448,17.230674,"Fp",1.9,"Erik;Balle","Erik",0.99,"Arbjörn",0.004
+"U 761","Enköping","Enköping",59.648743,17.082,NA,1.1,"","Balle",0.794,"Livsten",0.134
+"U 773","Enköpings-Näs kyrka","Enköpings-Näs sn",59.56047,17.010875,"Pr3",0,"","Balle",0.375,"Tidkume",0.373
+"U 777","Teda prästgård","Teda sn",59.583563,16.928595,NA,2.5,"Tidkume;Livsten","Balle",0.499,"Livsten",0.364
+"U 783","Svinnegarns kyrkogård","Svinnegarns sn",59.588183,17.001014,NA,0,"","Balle",0.684,"Tidkume",0.301
+"U 785","Tillinge kyrka","Tillinge sn",59.633331,16.988932,"Pr1",0.6,"Torbjörn 2;Gunnar","Balle",0.893,"Torbjörn 2",0.047
+"U 801","Långtora prästgård","Långtora sn",59.720703,17.146112,NA,0.5,"","Balle",0.758,"Torbjörn 2",0.087
+"U 803","Långtora by","Långtora sn",59.724188,17.137044,"Pr4",0.9,"Tidkume;Balle","Livsten",0.311,"Balle",0.31
+"U 806","Fröslunda kyrka","Fröslunda sn",59.72095,17.268533,NA,0,"","Balle",0.751,"Torbjörn 2",0.111
+"U 813","Brunnsta","Hjälsta sn",59.685422,17.414678,NA,1.7,"Tidkume;Ödkume;Balle","Balle",0.871,"Arbjörn",0.042
+"U 816","Bälsunda","Hjälsta sn",59.66667,17.447799,NA,0,"","Balle",0.556,"Åsmund",0.244
+"U 825","Gymminge","Holms sn",59.722881,17.483279,"Pr4",1.3,"","Balle",0.398,"Öpir 1",0.37
+"U 826","Mysinge, Mosunda","Holms sn",59.707976,17.482693,NA,0.4,"","Öpir 1",0.368,"Fot 2",0.242
+"U 828","Bodarna, Fittja by","Fittja sn",59.715564,17.442018,"Pr4",2.6,"Tidkume;Ödkume;Livsten","Balle",0.421,"Åsmund",0.206
+"U 830","Furby","Giresta sn",59.705662,17.302688,NA,0.9,"","Balle",0.756,"Torbjörn 2",0.119
+"U 831","Giresta by","Giresta sn",59.723703,17.345765,NA,1.9,"","Livsten",0.535,"Balle",0.113
+"U 836","Alsta","Nysätra sn",59.749608,17.252956,"Pr4",1.8,"Torgöt Fotsarve;Öpir 1","Fot 2",0.414,"Öpir 1",0.302
+"U 843","Hässle","Dalby sn",59.752924,17.562057,NA,1,"","Fot 2",0.671,"Arbjörn",0.217
+"U 849","Balingsta kyrka","Balingsta sn",59.763928,17.425251,NA,0.3,"","Arbjörn",0.291,"Fot 2",0.285
+"U 850","Balingsta kyrka","Balingsta sn",59.763928,17.425251,NA,0.3,"","Balle",0.509,"Torbjörn 2",0.197
+"U 851","Balingsta kyrka","Balingsta sn",59.73655,17.461681,"Pr4",0.6,"","Öpir 1",0.469,"Balle",0.326
+"U 852","Balingsta kyrka","Balingsta sn",59.736156,17.461572,NA,0.6,"","Balle",0.439,"Torbjörn 2",0.203
+"U 853","Skolhuset","Balingsta sn",59.763153,17.426245,NA,0.2,"","Balle",0.517,"Öpir 1",0.153
+"U 854","Prästgården","Balingsta sn",59.763467,17.422612,"Pr4",0.4,"","Öpir 1",0.562,"Likbjörn",0.127
+"U 855","Prästgården","Balingsta sn",59.768917,17.41232,NA,1,"","Arbjörn",0.439,"Balle",0.311
+"U 858","Kumla","Balingsta sn",59.755031,17.453467,NA,0.7,"","Balle",0.487,"Torbjörn 2",0.225
+"U 863","Tibble","Balingsta sn",59.754531,17.421415,NA,0.9,"","Öpir 1",0.31,"Torbjörn 2",0.269
+"U 868","Ransta","Gryta sn",59.759729,17.389723,"Pr4",1,"","Tidkume",0.48,"Öpir 1",0.338
+"U 872","Ölsta","Gryta sn",59.740888,17.347907,NA,0.3,"","Balle",0.673,"Torbjörn 2",0.129
+"U 876","Focksta","Hagby sn",59.791882,17.368358,"Fp",0.1,"","Erik",0.432,"Balle",0.329
+"U 878","Möjbro","Hagby sn",59.801627,17.376261,"Pr3",0,"","Arbjörn",0.443,"Fot 2",0.363
+"U 881","Skogstibble kyrka","Skogstibble sn (nu Skogs-Tibble)",59.829705,17.316684,NA,0,"","Öpir 1",0.398,"Arbjörn",0.166
+"U 882","Skogstibble kyrka","Skogstibble sn (nu Skogs-Tibble)",59.829705,17.316684,NA,0,"","Balle",0.455,"Öpir 1",0.288
+"U 883","Prästgården","Skogstibble sn (nu Skogs-Tibble)",59.829705,17.316684,NA,0,"","Balle",0.455,"Öpir 1",0.288
+"U 886","Ingla","Skogstibble sn (nu Skogs-Tibble)",59.83715,17.305463,"Pr4",0.2,"","Öpir 1",0.406,"Åsmund",0.246
+"U 888","Ångelsta","Skogstibble sn (nu Skogs-Tibble)",59.808898,17.344382,NA,2,"","Balle",0.489,"Öpir 1",0.243
+"U 890","Österby","Ålands sn",59.874908,17.28811,"Pr4",1.2,"","Öpir 1",0.942,"Åsmund",0.022
+"U 892","Uppsala-Näs kyrka","Uppsala-Näs sn",59.787655,17.594428,NA,0,"","Öpir 1",0.372,"Torbjörn 2",0.298
+"U 894","Söderby","Uppsala-Näs sn",59.810664,17.477082,"Pr4",4.2,"","Öpir 1",0.988,"Åsmund",0.004
+"U 895","Flogsta","Bondkyrka sn (nu Uppsala)",59.839147,17.585594,"Pr4",3.3,"","Öpir 1",0.782,"Åsmund",0.118
+"U 900","Läby kyrka","Läby sn",59.848594,17.523217,NA,0.5,"","Öpir 1",0.581,"Åsmund",0.136
+"U 901","Håmö","Läby sn",59.844571,17.519192,NA,0.5,"Åsmund;Torfast","Åsmund",0.756,"Öpir 1",0.159
+"U 902","Kvarnbo","Läby sn",59.841089,17.55455,NA,2.4,"","Fot 2",0.563,"Öpir 1",0.361
+"U 904","Västerby, Läby vad","Läby sn",59.844495,17.519456,"Pr3",0.5,"Åsmund;Torfast","Åsmund",0.607,"Arbjörn",0.163
+"U 908","Fiby","Vänge sn",59.885011,17.376156,"Pr4",2.7,"","Likbjörn",0.728,"Öpir 1",0.229
+"U 910","Körlinge","Vänge sn",59.847052,17.439813,"Pr4",0.1,"","Öpir 1",0.908,"Likbjörn",0.042
+"U 911","Åltomta bro","Vänge sn",59.86178,17.366083,NA,2,"","Öpir 1",0.346,"Balle",0.233
+"U 916","Ängeby","Börje sn",59.926109,17.486193,"KB",1.4,"Grim skald;Käti","Öpir 1",0.914,"Åsmund",0.053
+"U 917","Jumkils kyrka","Jumkils sn",59.942074,17.42355,"Pr4",2.4,"Öpir 1;Disälv","Öpir 1",0.901,"Likbjörn",0.05
+"U 920","Broholm","Jumkils sn",59.94911,17.408251,"KB",3.5,"","Öpir 1",0.566,"Åsmund",0.26
+"U 924","Uppsala domkyrka","Uppsala",59.858158,17.633767,NA,0,"","Öpir 1",0.567,"Likbjörn",0.35
+"U 927","Uppsala domkyrka","Uppsala",59.858125,17.633551,NA,0,"","Öpir 1",0.645,"Åsmund",0.147
+"U 928","Uppsala domkyrka","Uppsala",59.858125,17.633551,NA,0,"","Öpir 1",0.645,"Åsmund",0.147
+"U 930","Uppsala domkyrka","Uppsala",59.858125,17.633551,NA,0,"","Öpir 1",0.645,"Åsmund",0.147
+"U 931","Uppsala domkyrka","Uppsala",59.857964,17.634809,NA,0,"","Öpir 1",0.529,"Likbjörn",0.21
+"U 932","Uppsala domkyrka","Uppsala",59.857731,17.631584,NA,0,"Ingjald;Åsmund","Åsmund",0.894,"Öpir 1",0.046
+"U 934","Uppsala domkyrka","Uppsala",59.857999,17.634865,"Pr4",0,"","Öpir 1",0.819,"Åsmund",0.097
+"U 935","Uppsala domkyrka","Uppsala",59.857947,17.634737,"Pr4",0,"","Öpir 1",0.799,"Likbjörn",0.137
+"U 940","Uppsala, kv. Torget","Uppsala",59.85783,17.631553,"Pr3",0,"Öpir 1;Åsmund","Öpir 1",0.349,"Åsmund",0.31
+"U 944","Uppsala","Uppsala",59.85858,17.634397,NA,0.1,"","Öpir 1",0.763,"Åsmund",0.102
+"U 948","Danmarks by, Fålebro","Danmarks sn",59.825237,17.736743,"Pr4",1,"Torgöt Fotsarve;Tjälve 1;Orökja 2;Fot 2","Öpir 1",0.851,"Fot 2",0.066
+"U 949","Lunda","Danmarks sn",59.863997,17.734294,NA,1.5,"","Öpir 1",0.404,"Gunnar",0.193
+"U 953","Sällinge","Danmarks sn",59.851741,17.742258,NA,0.3,"","Likbjörn",0.491,"Öpir 1",0.449
+"U 954","Söderby","Danmarks sn",59.810688,17.749858,NA,2.4,"","Öpir 1",0.286,"Torbjörn 2",0.191
+"U 957","Vedyxa (Viggby)","Danmarks sn",59.846289,17.767903,NA,0.8,"","Likbjörn",0.674,"Öpir 1",0.269
+"U 961","Vaksala kyrka","Vaksala sn",59.878433,17.682781,"Pr4",0.3,"Öpir 1;Igulfast;Öpir 1","Öpir 1",0.504,"Fot 2",0.45
+"U 962","Vaksala kyrka","Vaksala sn",59.876542,17.685675,"Pr5",0.1,"","Öpir 1",0.913,"Likbjörn",0.079
+"U 963","Vaksala kyrka","Vaksala sn",59.87647,17.685671,"RAK",0.1,"","Gunnar",0.807,"Torbjörn 2",0.068
+"U 964","Vaksala kyrka","Vaksala sn",59.87639,17.685666,"Pr1",0.1,"","Åsmund",0.287,"Arbjörn",0.245
+"U 965","Vaksala kyrka","Vaksala sn",59.876336,17.685663,NA,0,"","Öpir 1",0.694,"Åsmund",0.152
+"U 968","Bolsta","Vaksala sn (nu Uppsala)",59.872251,17.696307,NA,0.1,"","Öpir 1",0.527,"Fot 2",0.239
+"U 972","Gnista (Fyrislund)","Vaksala sn",59.845883,17.706856,NA,1.8,"","Öpir 1",0.856,"Likbjörn",0.052
+"U 975","Lunda","Vaksala sn",59.893201,17.723978,NA,0.6,"","Öpir 1",0.755,"Fot 2",0.167
+"U 977","Vittulsberg","Vaksala sn",59.907876,17.672412,NA,1.6,"","Öpir 1",0.651,"Likbjörn",0.306
+"U 982","Bredåker","Gamla Uppsala sn (nu Uppsala)",59.913193,17.645445,NA,1,"","Öpir 1",0.808,"Åsmund",0.122
+"U 983","Bärby","Gamla Uppsala sn (nu Uppsala)",59.887576,17.602654,NA,2.1,"","Öpir 1",0.452,"Fot 2",0.388
+"U 990","Broby","Funbo sn",59.86443,17.825799,"Fp",0,"Alrik;Äskil 2","Erik",0.629,"Fot 2",0.188
+"U 992","Broby","Funbo sn",59.862938,17.824173,"Fp",0.2,"Alrik;Äskil 2","Åsmund",0.341,"Fot 2",0.204
+"U 993","Brunnby","Funbo sn",59.857947,17.814071,"Pr4",1,"Öpir 1;Björn 4","Öpir 1",0.994,"Fot 2",0.004
+"U 995","Funbo bro","Funbo sn",59.857077,17.858322,"Pr4",2,"","Öpir 1",0.73,"Fot 2",0.15
+"U 996","Karberga (Sundby)","Funbo sn",59.857353,17.844594,"Pr4",1.3,"","Öpir 1",0.884,"Fot 2",0.087
+"U 997","Lövsta","Funbo sn",59.835766,17.803709,"Pr4",1.7,"","Öpir 1",0.511,"Fot 2",0.481
+"U 999","Åkerby","Funbo sn",59.871566,17.800017,"Fp",1.6,"","Erik",0.372,"Arbjörn",0.237
+"U 1000","Rasbo kyrka","Rasbo sn",59.949493,17.87957,NA,3.2,"","Öpir 1",0.546,"Likbjörn",0.343
+"U 1002","Rasbo kyrka","Rasbo sn",59.949375,17.87967,NA,3.2,"","Öpir 1",0.752,"Åsmund",0.196
+"U 1005","Hov","Rasbo sn",59.966118,17.930073,NA,4.9,"","Öpir 1",0.956,"Likbjörn",0.029
+"U 1006","Lejsta","Rasbo sn",59.947759,17.891042,"Pr4",3.8,"Vigmund;Manne;Önjut","Öpir 1",0.928,"Fot 2",0.042
+"U 1008","Västerberga","Rasbo sn",59.949383,17.879706,"Pr4",3.2,"Vigmund;Manne;Önjut","Öpir 1",0.638,"Likbjörn",0.232
+"U 1011","Örby","Rasbo sn",59.857664,17.631187,"Pr4",0,"Vigmund;Åfrid;Fot 2;Önjut","Öpir 1",0.448,"Likbjörn",0.309
+"U 1015","Ärentuna kyrka","Ärentuna sn",59.954758,17.605949,NA,0,"","Öpir 1",0.859,"Likbjörn",0.135
+"U 1016","Fjuckby","Ärentuna sn",59.981115,17.618577,NA,2.9,"","Likbjörn",0.404,"Öpir 1",0.316
+"U 1017","Fjuckby","Ärentuna sn",59.955418,17.605573,NA,0,"","Öpir 1",0.781,"Likbjörn",0.178
+"U 1018","Kolje","Ärentuna sn",59.952896,17.62126,"Pr4",0.9,"","Öpir 1",0.653,"Likbjörn",0.336
+"U 1019","Kyrsta","Ärentuna sn",59.982788,17.633951,"Pr4",3.4,"","Öpir 1",0.781,"Likbjörn",0.212
+"U 1020","Kyrsta","Ärentuna sn",59.977193,17.653401,"Pr4",2.6,"","Öpir 1",0.785,"Likbjörn",0.193
+"U 1021","Nederbacka (Rosta bro)","Ärentuna sn",59.948294,17.607925,NA,0.7,"","Likbjörn",0.586,"Öpir 1",0.379
+"U 1023","Vallby","Ärentuna sn",59.943389,17.636828,NA,2.1,"","Öpir 1",0.554,"Likbjörn",0.42
+"U 1024","Vaxmyra","Ärentuna sn",59.968473,17.63814,"Pr4",2.3,"","Öpir 1",0.698,"Likbjörn",0.255
+"U 1025","Vaxmyra","Ärentuna sn",59.971012,17.635666,NA,2.4,"","Öpir 1",0.868,"Likbjörn",0.108
+"U 1026","Lena kyrka","Lena sn",60.010905,17.720929,"Pr4",4.3,"","Öpir 1",0.982,"Likbjörn",0.017
+"U 1027","Lena kyrka","Lena sn",60.010905,17.720929,"Pr4",4.3,"","Öpir 1",0.986,"Åsmund",0.013
+"U 1028","Lena kyrka","Lena sn",60.011934,17.721742,NA,4.2,"","Öpir 1",0.648,"Åsmund",0.226
+"U 1029","Lena kyrka","Lena sn",60.011852,17.721845,NA,4.2,"","Öpir 1",0.863,"Åsmund",0.123
+"U 1030","Björnhammar","Lena sn",60.045689,17.734934,"Pr4",3.5,"","Öpir 1",0.657,"Likbjörn",0.339
+"U 1031","Hånsta","Lena sn",60.014436,17.687615,NA,3,"Åsmund;Vigmund","Åsmund",0.495,"Öpir 1",0.319
+"U 1032","Ånge","Lena sn",59.989454,17.717987,"Pr4",3.2,"","Öpir 1",0.954,"Likbjörn",0.025
+"U 1033","Årby","Lena sn",59.971682,17.71639,NA,1.5,"","Åsmund",0.253,"Likbjörn",0.227
+"U 1035","Tensta kyrka","Tensta sn",60.040276,17.67234,NA,0,"Tjälve 1;Orökja 2;Åsmund","Åsmund",0.435,"Öpir 1",0.287
+"U 1037","Tensta kyrka","Tensta sn",60.040759,17.671829,NA,0,"","Likbjörn",0.662,"Öpir 1",0.326
+"U 1039","Bräcksta","Tensta sn",60.037836,17.653036,"Pr4",1.1,"Kjule;Öpir 1","Öpir 1",0.94,"Åsmund",0.032
+"U 1040","Fasma","Tensta sn",60.055466,17.618846,"Pr4",3.4,"Kjule;Osniken;Kättilmund","Öpir 1",0.959,"Likbjörn",0.037
+"U 1042","Källbo, Lugnet","Tensta sn",60.040658,17.617765,"Pr4",2.9,"Kjule;Osniken","Öpir 1",0.97,"Likbjörn",0.027
+"U 1045","Björklinge kyrka","Björklinge sn",60.026978,17.552252,NA,4.6,"","Likbjörn",0.821,"Öpir 1",0.145
+"U 1046","Björklinge kyrka","Björklinge sn",60.026967,17.552395,"Pr4",4.6,"Öpir 1;Önjut","Öpir 1",0.877,"Likbjörn",0.093
+"U 1047","Björklinge kyrka","Björklinge sn",60.026938,17.552573,"Pr4",4.6,"Ingulv;Likbjörn","Öpir 1",0.816,"Likbjörn",0.16
+"U 1048","Björklinge kyrka","Björklinge sn",60.026917,17.552769,NA,4.6,"","Likbjörn",0.89,"Öpir 1",0.104
+"U 1049","Björklinge kyrka","Björklinge sn",60.026955,17.552592,NA,4.6,"","Öpir 1",0.547,"Likbjörn",0.386
+"U 1050","Björklinge kyrka","Björklinge sn",60.026961,17.55148,NA,4.7,"","Öpir 1",0.41,"Likbjörn",0.285
+"U 1051","Prästgården","Björklinge sn",60.026007,17.549618,NA,4.7,"Ingulv;Gudfast","Öpir 1",0.656,"Likbjörn",0.335
+"U 1052","Axlunda","Björklinge sn",60.042645,17.484984,"Pr4",8.7,"Ingulv;Tjälve 2","Likbjörn",0.504,"Öpir 1",0.482
+"U 1053","Hammarby","Björklinge sn",60.039265,17.479662,NA,8.9,"Nase;Kättil 4","Öpir 1",0.661,"Likbjörn",0.303
+"U 1056","Ramsjö","Björklinge sn",60.044892,17.541082,"Pr4",6,"","Öpir 1",0.946,"Fot 2",0.041
+"U 1058","Sandbro","Björklinge sn",60.013969,17.57791,NA,3,"Ingulv;kahu;Huge","Öpir 1",0.924,"Likbjörn",0.042
+"U 1059","Såpebo, Möboda","Björklinge sn",60.064167,17.530779,NA,7.8,"","Öpir 1",0.929,"Åsmund",0.066
+"U 1060","Tibble","Björklinge sn",60.023289,17.556919,NA,4.3,"","Öpir 1",0.49,"Likbjörn",0.485
+"U 1061","Viksta kyrka","Viksta sn",60.077158,17.639531,NA,4.4,"","Öpir 1",0.963,"Likbjörn",0.021
+"U 1064","Nyvalla","Viksta sn",60.070893,17.667692,NA,3.4,"","Öpir 1",0.802,"Likbjörn",0.127
+"U 1068","Åkerby kyrka","Åkerby sn",59.923407,17.496751,NA,1.6,"","Öpir 1",0.494,"Likbjörn",0.362
+"U 1069","Berga","Åkerby sn",59.926302,17.487973,"Pr4",1.4,"","Öpir 1",0.697,"Likbjörn",0.28
+"U 1071","Sylta, Söderby","Åkerby sn",59.931016,17.500519,"Pr3",0.8,"","Öpir 1",0.393,"Fot 2",0.278
+"U 1073","Bälinge kyrka","Bälinge sn",59.946045,17.529615,"Pr5",0,"","Öpir 1",0.992,"Likbjörn",0.006
+"U 1077","Bälinge kyrka","Bälinge sn",59.945953,17.528465,NA,0,"","Öpir 1",0.624,"Åsmund",0.131
+"U 1078","Bälinge kyrka","Bälinge sn",59.946045,17.529615,NA,0,"","Öpir 1",0.835,"Åsmund",0.111
+"U 1078B","Bälinge kyrka","Bälinge sn",59.946114,17.529189,NA,0,"","Öpir 1",0.635,"Åsmund",0.308
+"U 1082","Forkarby","Bälinge sn",59.933674,17.552122,NA,0,"","Öpir 1",0.819,"Åsmund",0.117
+"U 1083","Gysta","Bälinge sn",59.964378,17.545322,NA,1.4,"","Likbjörn",0.777,"Öpir 1",0.212
+"U 1087","Lövsta","Bälinge sn",59.96264,17.574774,"Pr4",0.6,"Öpir 1;Önjut","Öpir 1",0.857,"Likbjörn",0.123
+"U 1088","Lövsta","Bälinge sn",59.963998,17.573951,"Pr4",0.4,"","Öpir 1",0.793,"Likbjörn",0.197
+"U 1090","Marsta","Bälinge sn",59.930587,17.588272,NA,0.1,"","Öpir 1",0.933,"Likbjörn",0.042
+"U 1094","Rosta bro","Bälinge sn",59.949071,17.608862,"Pr4",0.7,"","Öpir 1",0.54,"Likbjörn",0.331
+"U 1097","Sundbro","Bälinge sn",59.927491,17.528688,"Pr4",0.1,"Gudfast;Ingulv","Öpir 1",0.97,"Likbjörn",0.013
+"U 1098","Sundbro","Bälinge sn",59.927448,17.528543,NA,0,"","Fot 2",0.65,"Öpir 1",0.181
+"U 1099","Sundbro","Bälinge sn",59.928046,17.52607,"Pr4",0.1,"","Öpir 1",0.957,"Åsmund",0.026
+"U 1101","Sundbro","Bälinge sn",59.927322,17.529967,NA,0.1,"","Öpir 1",0.7,"Åsmund",0.183
+"U 1104","Tuna","Bälinge sn",59.942863,17.481118,"Pr4",1,"Nase;Kättil 4","Öpir 1",0.863,"Likbjörn",0.091
+"U 1107","Äskelunda","Bälinge sn",59.938062,17.495046,"Pr4",0,"Tord;Gudfast","Öpir 1",0.764,"Likbjörn",0.222
+"U 1108","Skuttunge kyrka","Skuttunge sn",59.998523,17.514832,"Pr4",4.1,"","Öpir 1",0.948,"Likbjörn",0.039
+"U 1109","Skuttunge kyrka","Skuttunge sn",59.998583,17.515086,NA,4.1,"","Öpir 1",0.892,"Åsmund",0.085
+"U 1110","Broddbo","Skuttunge sn",60.013193,17.42722,"Pr4",7.9,"","Öpir 1",0.682,"Likbjörn",0.309
+"U 1113","Häggeby","Skuttunge sn",60.023996,17.539395,NA,5.2,"","Öpir 1",0.647,"Likbjörn",0.214
+"U 1114","Myrby","Skuttunge sn",60.017712,17.410027,NA,8.9,"","Öpir 1",0.747,"Likbjörn",0.191
+"U 1115","Norrby","Skuttunge sn",59.988434,17.525081,NA,2.9,"","Öpir 1",0.878,"Likbjörn",0.071
+"U 1118","Örke","Skuttunge sn",60.011468,17.53214,"Pr4",4.8,"","Likbjörn",0.822,"Öpir 1",0.174
+"U 1120","Örke","Skuttunge sn",60.007239,17.528782,NA,4.5,"","Öpir 1",0.753,"Likbjörn",0.154
+"U 1121","Örke","Skuttunge sn",60.011494,17.532249,NA,4.8,"","Öpir 1",0.891,"Åsmund",0.092
+"U 1122","Stavby kyrka","Stavby sn",60.010123,17.966591,"Pr4",5,"Öpir 1;Vigmund;Önjut","Öpir 1",0.841,"Åsmund",0.076
+"U 1126","Alunda kyrka","Alunda sn",60.060145,18.068481,NA,11.5,"","Öpir 1",0.825,"Åsmund",0.108
+"U 1127","Alunda kyrka","Alunda sn",60.059094,18.068481,"Pr3",11.4,"","Åsmund",0.79,"Öpir 1",0.137
+"U 1128","Alunda kyrka","Alunda sn",60.059142,18.068323,"Pr4",11.4,"","Öpir 1",0.893,"Fot 2",0.054
+"U 1129","Alunda kyrka","Alunda sn",60.06003,18.068402,NA,11.5,"","Öpir 1",0.691,"Likbjörn",0.161
+"U 1130","Klev","Alunda sn",60.05612,18.062818,NA,11,"","Fot 2",0.372,"Öpir 1",0.317
+"U 1133","Norrby","Morkarla sn",60.167359,17.993864,NA,17.7,"","Öpir 1",0.642,"Likbjörn",0.308
+"U 1134","Söderby","Morkarla sn",60.156206,17.995068,NA,16.6,"","Öpir 1",0.728,"Likbjörn",0.17
+"U 1135","Ackarby","Dannemora sn",60.16765,17.763467,NA,15,"","Öpir 1",0.515,"Likbjörn",0.396
+"U 1136","Gubbo, Kallviksmossen","Films sn",60.211129,17.98083,"Pr4",22.1,"","Öpir 1",0.925,"Åsmund",0.075
+"U 1137","Skärplinge, Sälvassen","Österlövsta sn",60.475325,17.74596,NA,17.1,"","Åsmund",0.998,"Öpir 1",0.002
+"U 1140","Burunge","Vendels sn",60.111911,17.606875,"Pr4",8,"Öpir 1;Önjut","Likbjörn",0.898,"Öpir 1",0.101
+"U 1141","Gryttby","Vendels sn",60.118962,17.566512,NA,5.8,"","Öpir 1",0.89,"Åsmund",0.107
+"U 1142","Åbyggeby","Vendels sn",60.098251,17.618409,NA,7.1,"Åsmund;Vigmar","Öpir 1",0.872,"Åsmund",0.102
+"U 1146","Gillberga","Tolfta sn",60.350659,17.544817,"Pr1",7.1,"","Åsmund",0.999,"Vidbjörn",0
+"U 1147","Västlands kyrka","Västlands sn",60.446501,17.613535,NA,18.2,"","Åsmund",0.973,"Öpir 1",0.027
+"U 1148","Älvkarleby kyrka","Älvkarleby sn",60.573076,17.454837,"Pr4",17.1,"","Åsmund",0.917,"Öpir 1",0.083
+"U 1149","Fleräng","Älvkarleby sn",60.633692,17.377574,"Pr2",10.7,"Sven 5;Åsmund","Åsmund",1,"Öpir 1",0
+"U 1150","Gårdskär, Västerboda","Älvkarleby sn",60.607639,17.566001,NA,21.4,"","Åsmund",0.999,"Öpir 1",0.001
+"U 1151","Brunnby","Frösthults sn",59.736265,16.998469,"Fp",1,"Erik;Äskil 2","Erik",0.968,"Balle",0.03
+"U 1158","Stora Salfors","Simtuna sn",59.782192,16.968235,NA,0.8,"Livsten;Torfast","Livsten",0.775,"Balle",0.096
+"U 1161","Altuna kyrka","Altuna sn",59.819467,16.93167,"Pr3",4.8,"Frösten;Balle;Livsten","Livsten",0.857,"Balle",0.068
+"U 1163","Drävle","Altuna sn",59.809849,16.97032,"Pr2",3.7,"Balle;Livsten","Erik",0.68,"Balle",0.24
+"U 1166","Prästgården","Torstuna sn",59.76724,17.082068,NA,3.5,"","Balle",0.701,"Tidkume",0.089
+"U 1167","Ekeby","Torstuna sn",59.810987,17.075328,"Pr4",6.8,"","Livsten",0.498,"Tidkume",0.201
+"U 1168","Österunda kyrka","Österunda sn",59.814279,17.109656,"Pr4",7,"","Balle",0.347,"Livsten",0.227
+"U 1169","Österunda kyrka","Österunda sn",59.81391,17.111531,NA,6.9,"","Balle",0.644,"Erik",0.089
+"U 1170","Vittinge kyrka","Vittinge sn",59.888391,16.999896,"Pr4",2.7,"","Tidkume",0.752,"Öpir 1",0.146
+"U 1174","Stora Ramsjö","Vittinge sn",59.929146,16.977805,"Pr4",0.4,"","Livsten",0.566,"Öpir 1",0.226
+"U 1175","Stora Ramsjö","Vittinge sn",59.929047,16.977855,"Pr2",0.4,"","Erik",0.947,"Balle",0.027
+"U 1178","Östervåla kyrka","Östervåla sn",60.178199,17.178887,"Fp",7.1,"","Åsmund",0.738,"Erik",0.235
+"U 1179","Svingbolsta","Östervåla sn",60.172177,17.185662,NA,6.4,"","Öpir 1",0.867,"Åsmund",0.121
+"U 1180","Åby","Östervåla sn",60.183982,17.192484,NA,7.6,"","Öpir 1",0.866,"Åsmund",0.097
+"U 1181","Lilla Runhällen, Råsbo","Nora sn",60.080626,16.880406,"Fp",7.1,"","Erik",0.784,"Livsten",0.118
+"U ATA3500/43","Stora Valla","Skepptuna sn",59.708963,18.093052,NA,0,"","Åsmund",0.479,"Öpir 1",0.313
+"U ATA4589/45","Ovike","Husby-Långhundra sn",59.73796,17.958997,NA,2.7,"","Torbjörn 2",0.429,"Åsmund",0.249
+"U ATA3916/47","Finsta","Skederids sn",59.733067,18.501828,"RAK",0,"","Gunnar",0.879,"Torbjörn skald",0.061
+"U ATA6263/56","Skånela kyrka","Skånela sn",59.581184,17.948562,NA,0,"","Torbjörn 2",0.321,"Visäte",0.252
+"U ATA5733/59","Skånela kyrka","Skånela sn",59.581108,17.948858,NA,0,"","Öpir 1",0.44,"Åsmund",0.236
+"U ATA5734/59","Skånela kyrka","Skånela sn",59.581594,17.949314,"RAK",0.1,"","Gunnar",0.588,"Torbjörn 2",0.377
+"U ATA5735/59","Eds kyrka","Eds sn",59.507904,17.868129,NA,0,"","Åsmund",0.303,"Öpir 1",0.246
+"U ATA7269/60A","Eds kyrka","Eds sn",59.518381,17.894868,NA,0,"","Fot 2",0.24,"Visäte",0.21
+"U ATA7269/60B","Klockargården","Eds sn",59.518381,17.894868,NA,0,"","Visäte",0.305,"Torbjörn 2",0.263
+"U ATA7269/60C","Eds kyrka","Eds sn",59.518381,17.894868,NA,0,"","Visäte",0.305,"Torbjörn 2",0.263
+"U ATA7269/60D","Eds kyrka","Eds sn",59.518381,17.894868,"Pr5",0,"","Öpir 1",0.976,"Visäte",0.013
+"U ATA7269/60E","Klockargården","Eds sn",59.518381,17.894868,NA,0,"","Visäte",0.305,"Torbjörn 2",0.263
+"U ATA7269/60F","Klockargården","Eds sn",59.518381,17.894868,NA,0,"","Visäte",0.305,"Torbjörn 2",0.263
+"U ATA7269/60G","Eds kyrka","Eds sn",59.518381,17.894868,NA,0,"","Visäte",0.305,"Torbjörn 2",0.263
+"U ATA7269/60H","Eds kyrka","Eds sn",59.518381,17.894868,NA,0,"","Visäte",0.305,"Torbjörn 2",0.263
+"U ATA365/61A","Svinnegarns kyrka","Svinnegarns sn",59.588183,17.001014,NA,0,"","Balle",0.785,"Tidkume",0.122
+"U ATA365/61B","Svinnegarns kyrka","Svinnegarns sn",59.588183,17.001014,NA,0,"","Balle",0.785,"Tidkume",0.122
+"U ATA365/61C","Svinnegarns kyrka","Svinnegarns sn",59.588183,17.001014,NA,0,"","Balle",0.785,"Tidkume",0.122
+"U ATA4822/64","Hacksta","Össeby-Garns sn",59.552239,18.192746,"RAK",2.2,"","Gunnar",0.649,"Torbjörn 2",0.34
+"U ATA3019/65","Fröby gravfält","Skepptuna sn",59.736715,18.055284,NA,0.4,"","Åsmund",0.647,"Öpir 1",0.149
+"U ATA3599/65","Bärmö","Sankt Pers sn",59.647334,17.638747,NA,0.5,"","Fot 2",0.804,"Balle",0.111
+"U ATA3600/65","Signhildsberg","Håtuna sn",59.623343,17.651619,NA,0.1,"","Torbjörn 2",0.386,"Balle",0.381
+"U ATA2336/69","Boo herrgård","Boo sn",59.308528,18.289683,NA,10.8,"","Visäte",0.473,"Öpir 1",0.357
+"U ATA5923/69","Ängby","Lunda sn",59.666875,18.046236,NA,0,"","Torbjörn 2",0.306,"Åsmund",0.276
+"U ATA2753/74","Bro kyrka","Bro sn",59.506092,17.626736,NA,0,"","Balle",0.574,"Torbjörn 2",0.241
+"U ATA4753/75","Sigtuna, klosterområdet","Sigtuna",59.617528,17.727609,NA,0.4,"","Torbjörn 2",0.51,"Balle",0.2
+"U ATA5856/75","Bona","Munsö sn",59.401098,17.569755,NA,5,"","Balle",0.796,"Torbjörn 2",0.084
+"U ATA1349/81","Åkerstorp","Österåkers sn",59.497619,18.277974,NA,2.5,"","Visäte",0.436,"Öpir 1",0.352
+"U ATA423-4018-1999","Valnäs","Österlövsta sn",60.474877,17.754518,NA,16.8,"","Åsmund",0.992,"Öpir 1",0.008
+"U ATA322-326-2000","Eds kyrka","Eds sn",59.518381,17.894868,NA,0,"","Visäte",0.305,"Torbjörn 2",0.263
+"U ATA323-3559-2003","Vada kyrka","Vada sn",59.577798,18.205427,NA,2.6,"","Visäte",0.357,"Öpir 1",0.305
+"U ATA322-3229-2005","Vallentuna kyrka","Vallentuna sn",59.534785,18.078073,NA,0.3,"","Åsmund",0.368,"Öpir 1",0.204
+"U ATA322-1086-2007","Gamla prästgården","Länna sn",59.68724,18.614335,NA,2.7,"","Öpir 1",0.742,"Åsmund",0.13
+"U ATA322-4042-2009","Vallentuna kyrka","Vallentuna sn",59.531394,18.073761,NA,0,"","Gunnar",0.376,"Visäte",0.35
+"U ATA322-4035-2010","Uppsala, Fyristorg","Uppsala",59.858331,17.636168,NA,0.1,"","Öpir 1",0.751,"Åsmund",0.125
+"U ATA322-4014-2011:1","Sigtuna, kv. Professorn 1","Sigtuna",59.615825,17.72131,NA,0.1,"","Torbjörn 2",0.505,"Balle",0.212
+"U ATA322-4014-2011:2","Sigtuna, kv. Professorn 1","Sigtuna",59.615825,17.72131,NA,0.1,"","Torbjörn 2",0.505,"Balle",0.212
+"U ATA322-4014-2011:3","Sigtuna, kv. Professorn 1","Sigtuna",59.615825,17.72131,NA,0.1,"","Torbjörn 2",0.505,"Balle",0.212
+"U ATA322-4034-2011","Sigtuna, kv. Humlegården","Sigtuna",59.615665,17.716871,NA,0.1,"","Torbjörn 2",0.503,"Balle",0.22
+"U ATA321-1786-2012","Sigtuna, kv. Trädgårdsmästaren 9-10","Sigtuna",59.615844,17.719982,NA,0.1,"","Fot 2",0.46,"Torbjörn 2",0.196
+"U Fv1953;268","Spånga kyrka","Spånga sn",59.391591,17.911778,NA,0,"","Fot 2",0.561,"Gunnar",0.17
+"U Fv1953;270","Skånela kyrka","Skånela sn",59.581162,17.948808,NA,0,"","Torbjörn 2",0.279,"Öpir 1",0.276
+"U Fv1953;272","Skånela kyrka","Skånela sn",59.581162,17.948808,NA,0,"","Torbjörn 2",0.321,"Visäte",0.252
+"U Fv1953;274","Skånela kyrka","Skånela sn",59.581249,17.948973,"Pr2",0,"","Fot 2",0.72,"Visäte",0.111
+"U Fv1954;4","Vallentuna prästgård","Vallentuna sn",59.531712,18.075073,NA,0.1,"","Åsmund",0.538,"Visäte",0.186
+"U Fv1955;216","Billby soldattorp","Sankt Pers sn",59.630612,17.666502,"Pr2",1.2,"","Fot 2",0.727,"Åsmund",0.063
+"U Fv1958;250","S:t Lars ruin","Sigtuna",59.617001,17.720668,"Pr3",0,"Fot 2;Torgöt Fotsarve","Fot 2",0.66,"Visäte",0.121
+"U Fv1959;188","Hammarby","Hammarby sn",59.539695,17.916805,"Pr4",1,"","Fot 2",0.402,"Visäte",0.358
+"U Fv1959;250","Sollentuna kyrka","Sollentuna sn",59.46712,17.918222,NA,0.5,"","Fot 2",0.923,"Öpir 1",0.041
+"U Fv1959;255","Fresta kyrka","Fresta sn",59.51778,17.956837,NA,0,"","Fot 2",0.5,"Åsmund",0.224
+"U Fv1959;256","Fresta kyrka","Fresta sn",59.517703,17.957203,NA,0,"","Gunnar",0.57,"Fot 2",0.326
+"U Fv1959;259","Ekerö prästgård","Ekerö sn",59.272667,17.749581,NA,2.6,"","Halvdan",0.411,"Balle",0.182
+"U Fv1967;262A","Klockargården","Eds sn",59.518381,17.894868,NA,0,"","Fot 2",0.514,"Gunnar",0.26
+"U Fv1967;265","Västra Libby","Husby-Sjuhundra sn",59.740171,18.530137,NA,0,"","Öpir 1",0.702,"Åsmund",0.164
+"U Fv1968;276","""Flasta mur"", kyrkoruin","Skoklosters sn",59.708496,17.608772,NA,1,"","Öpir 1",0.39,"Balle",0.198
+"U Fv1968;278A","""Flasta mur"", kyrkoruin","Skoklosters sn",59.708496,17.608772,NA,1,"","Torbjörn 2",0.426,"Balle",0.302
+"U Fv1968;278B","""Flasta mur"", kyrkoruin","Skoklosters sn",59.708496,17.608772,NA,1,"","Torbjörn 2",0.426,"Balle",0.302
+"U Fv1968;279A","""Flasta mur"", kyrkoruin","Skoklosters sn",59.708496,17.608772,NA,1,"","Torbjörn 2",0.426,"Balle",0.302
+"U Fv1968;279B","Sollentuna kyrka","Sollentuna sn",59.466762,17.918182,NA,0.5,"","Öpir 1",0.296,"Gunnar",0.294
+"U Fv1969;304A","Uppsala, kv. S:t Per","Uppsala",59.860017,17.638242,NA,0.1,"","Öpir 1",0.651,"Åsmund",0.147
+"U Fv1969;304B","Uppsala, kv. S:t Per","Uppsala",59.860017,17.638242,NA,0.1,"","Öpir 1",0.651,"Åsmund",0.147
+"U Fv1969;305","Yttergrans kyrka","Yttergrans sn",59.601469,17.505814,NA,0.5,"","Balle",0.69,"Torbjörn 2",0.219
+"U Fv1971;209","Lilla Söderby","Lunda sn",59.672213,18.050196,NA,0.6,"","Gunnar",0.749,"Åsmund",0.097
+"U Fv1971;211A","Vada kyrka","Vada sn",59.577799,18.205356,NA,2.6,"","Visäte",0.357,"Öpir 1",0.305
+"U Fv1971;211B","Vada kyrka","Vada sn",59.577527,18.205,NA,2.6,"","Visäte",0.357,"Öpir 1",0.305
+"U Fv1971;212A","Vada by","Vada sn",59.577622,18.205237,NA,2.6,"","Visäte",0.357,"Öpir 1",0.305
+"U Fv1971;212B","Vada kyrka","Vada sn",59.577582,18.205447,NA,2.6,"","Öpir 1",0.367,"Fot 2",0.285
+"U Fv1971;213A","Össeby ödekyrka","Össeby-Garns sn",59.558267,18.241848,"Pr5",0,"","Öpir 1",0.97,"Åsmund",0.014
+"U Fv1972;271","Uppsala, kv. Torget","Uppsala",59.859623,17.636275,NA,0,"","Öpir 1",0.456,"Fot 2",0.427
+"U Fv1972;272","Össeby ödekyrka","Össeby-Garns sn",59.558267,18.241848,"Pr5",0,"","Öpir 1",0.994,"Åsmund",0.003
+"U Fv1972;274A","Össeby ödekyrka","Össeby-Garns sn",59.558267,18.241848,NA,0,"","Visäte",0.381,"Öpir 1",0.323
+"U Fv1972;274B","Össeby ödekyrka","Össeby-Garns sn",59.558267,18.241848,NA,0,"","Visäte",0.381,"Öpir 1",0.323
+"U Fv1972;274C","Össeby ödekyrka","Össeby-Garns sn",59.558267,18.241848,NA,0,"","Visäte",0.381,"Öpir 1",0.323
+"U Fv1972;274D","Össeby ödekyrka","Össeby-Garns sn",59.558267,18.241848,NA,0,"","Visäte",0.381,"Öpir 1",0.323
+"U Fv1973;191","Bro kyrka","Bro sn",59.506139,17.627216,NA,0,"","Balle",0.523,"Torbjörn 2",0.216
+"U Fv1973;194","Uppsala domkyrka","Uppsala",59.858158,17.633767,"Pr4",0,"","Öpir 1",0.482,"Åsmund",0.427
+"U Fv1973;198D","Uppsala, kv. Torget","Uppsala",59.859866,17.636234,NA,0,"","Öpir 1",0.513,"Åsmund",0.372
+"U Fv1973;199","Heby","Västerlövsta sn",59.937027,16.843793,NA,7.4,"","Erik",0.512,"Balle",0.246
+"U Fv1974;203","Åby","Björklinge sn",60.000281,17.541829,NA,3.4,"","Öpir 1",0.892,"Likbjörn",0.055
+"U Fv1974;213","Össeby ödekyrka","Össeby-Garns sn",59.558267,18.241848,NA,0,"","Visäte",0.381,"Öpir 1",0.323
+"U Fv1975;168","Skolhuset","Balingsta sn",59.763153,17.426245,NA,0.2,"","Balle",0.509,"Torbjörn 2",0.198
+"U Fv1975;169","Borresta","Orkesta sn",59.610675,18.084649,"Pr4",1,"Visäte;Torsten","Öpir 1",0.4,"Fot 2",0.286
+"U Fv1975;172","Tagsta ?","Alsike sn ?",59.742199,17.73654,NA,0.7,"","Torbjörn 2",0.486,"Öpir 1",0.248
+"U Fv1976;108","Tibble","Vassunda sn",59.691459,17.762197,"RAK",0,"","Torbjörn 2",0.71,"Gunnar",0.201
+"U Fv1977;162B","S:t Ilians kyrka","Enköping",59.638419,17.080208,NA,0,"","Balle",0.789,"Tidkume",0.107
+"U Fv1977;163","Uppsala, kv. Torget","Uppsala",59.859674,17.63642,NA,0,"","Öpir 1",0.699,"Åsmund",0.143
+"U Fv1979;243A","Husby-Sjuhundra kyrka","Husby-Sjuhundra sn",59.740171,18.530137,NA,0,"","Gunnar",0.794,"Öpir 1",0.144
+"U Fv1979;243B","Husby-Sjuhundra kyrka","Husby-Sjuhundra sn",59.740171,18.530137,NA,0,"","Öpir 1",0.702,"Åsmund",0.164
+"U Fv1979;244A","Husby-Sjuhundra kyrka","Husby-Sjuhundra sn",59.740171,18.530137,NA,0,"","Öpir 1",0.792,"Åsmund",0.135
+"U Fv1979;245","Skånela kyrka","Skånela sn",59.580928,17.948864,NA,0,"","Fot 2",0.924,"Åsmund",0.03
+"U Fv1986;220A","Nibbla","Ekerö sn",59.285343,17.725524,NA,0.7,"","Torbjörn skald",0.965,"Balle",0.023
+"U Fv1990;32A","Ekerö kyrkogård","Ekerö sn",59.272455,17.74813,NA,2.6,"","Halvdan",0.673,"Torbjörn skald",0.071
+"U Fv1990;32B","Ärnevi","Funbo sn",59.856296,17.824592,NA,0.9,"","Öpir 1",0.487,"Likbjörn",0.26
+"U Fv1990;42","Sigtuna, kv. Trädgårdsmästaren 9-10","Sigtuna",59.615844,17.719982,NA,0.1,"","Torbjörn 2",0.505,"Balle",0.215
+"U Fv1992;156","Husby-Ärlinghundra kyrka","Husby-Ärlinghundra sn",59.640107,17.880952,NA,2.8,"","Visäte",0.391,"Gunnar",0.246
+"U Fv1992;157","Arlanda, Måby ägor","Husby-Ärlinghundra sn",59.644976,17.927388,"Fp",4.7,"","Gunnar",0.589,"Visäte",0.137
+"U Fv1992;159A","Mariakyrkan","Sigtuna",59.618357,17.721897,NA,0,"","Fot 2",0.768,"Balle",0.112
+"U Fv1992;164A","Sigtuna, kv. Trädgårdsmästaren 9-10","Sigtuna",59.615844,17.719982,NA,0.1,"","Torbjörn 2",0.505,"Balle",0.215
+"U Fv1992;167B","Sigtuna, kv. Urmakaren 1","Sigtuna",59.614941,17.720374,NA,0.1,"","Torbjörn 2",0.504,"Balle",0.215
+"U Fv1992;168A","Sigtuna, kv. Urmakaren 1","Sigtuna",59.614941,17.720374,NA,0.1,"","Torbjörn 2",0.504,"Balle",0.215
+"U Fv1992;169","Berga","Ununge sn",59.927205,18.590784,"RAK",7.5,"","Gunnar",0.793,"Vidbjörn",0.169
+"U Fv1993;231","Frösunda kyrkogård","Frösunda sn",59.621592,18.166947,NA,0,"","Gunnar",0.356,"Åsmund",0.241
+"U Fv1993;233","Hammarby kyrkogård","Hammarby sn",59.537498,17.924429,NA,0.5,"","Öpir 1",0.388,"Fot 2",0.285
+"U Fv2009;312","Näle, Mellangården","Vallentuna sn",59.544865,17.98166,NA,1.3,"","Öpir 1",0.335,"Gunnar",0.227
+"U Fv2012;59","Gamla Uppsala kyrka","Gamla Uppsala sn (nu Uppsala)",59.899398,17.632208,NA,0,"","Öpir 1",0.902,"Åsmund",0.067
+"U Fv2012;60","Vaksala kyrka","Vaksala sn",59.875962,17.686053,NA,0,"","Öpir 1",0.566,"Åsmund",0.218
+"U NOR1996;18F","Sigtuna, kv. Kyrkolunden 8","Sigtuna",59.617157,17.722272,NA,0.1,"","Torbjörn 2",0.507,"Balle",0.21
+"U NOR1997;27A","Ulva kvarn","Gamla Uppsala sn (nu Uppsala)",59.912586,17.576276,NA,2.1,"","Öpir 1",0.784,"Åsmund",0.126
+"U NOR1997;27B","Kalvshälla","Järfälla sn",59.41155,17.86063,NA,2.5,"","Visäte",0.377,"Öpir 1",0.317
+"U NOR1998;23A","Ekerö kyrka","Ekerö sn",59.272455,17.74813,NA,2.6,"","Balle",0.354,"Öpir 1",0.224
+"U NOR1998;23B","Ekerö kyrka","Ekerö sn",59.272455,17.74813,NA,2.6,"","Balle",0.354,"Öpir 1",0.224
+"U NOR1998;26","Tibble","Skogstibble sn (nu Skogs-Tibble)",59.828937,17.317131,NA,0.1,"","Balle",0.457,"Öpir 1",0.286
+"U NOR1998;27A","Spånga kyrka","Spånga sn",59.391505,17.911526,NA,0,"","Öpir 1",0.366,"Visäte",0.287
+"U NOR2002;33A","Spånga kyrka","Spånga sn",59.391942,17.911764,NA,0.1,"","Visäte",0.421,"Öpir 1",0.348
+"U NOR2002;33B","Spånga kyrka","Spånga sn",59.391942,17.911764,NA,0.1,"","Visäte",0.421,"Öpir 1",0.348
+"U NOR2002;33C","Spånga kyrka","Spånga sn",59.391942,17.911764,NA,0.1,"","Visäte",0.421,"Öpir 1",0.348
+"U NOR2002;33D","Spånga kyrka","Spånga sn",59.391942,17.911764,NA,0.1,"","Visäte",0.421,"Öpir 1",0.348
+"U NOR2002;33E","Spånga kyrka","Spånga sn",59.391942,17.911764,NA,0.1,"","Visäte",0.421,"Öpir 1",0.348
+"U NOR2002;33F","Spånga kyrka","Spånga sn",59.391942,17.911764,NA,0.1,"","Visäte",0.421,"Öpir 1",0.348
+"U Owe1996b;119","Össeby-Garns kyrka","Össeby-Garns sn",59.562486,18.253991,NA,0,"","Visäte",0.376,"Öpir 1",0.325
+"U SHM28883:54","""Flasta mur"", kyrkoruin","Skoklosters sn",59.7086,17.60844,NA,1,"","Torbjörn 2",0.425,"Balle",0.303
+"U SSM2009:2;34","Spånga kyrka","Spånga sn",59.391933,17.911764,NA,0,"","Visäte",0.421,"Öpir 1",0.348
+"U SSM2009:2;35","Spånga kyrka","Spånga sn",59.391933,17.911764,NA,0,"","Visäte",0.421,"Öpir 1",0.348
+"U SSM2009:2;38","Spånga kyrka","Spånga sn",59.391933,17.911764,NA,0,"","Visäte",0.421,"Öpir 1",0.348
+"U THS30;78","Åkerby","Täby sn",59.452501,18.07978,NA,2.6,"","Visäte",0.455,"Öpir 1",0.358
+"U THS30;83","Hagby skog","Täby sn",59.455008,17.998812,NA,3.1,"","Fot 2",0.431,"Gunnar",0.25
+"Vs 1","Stora Rytterns kyrkoruin","Rytterns sn (Rytterne)",59.512527,16.342409,"Pr1",17.6,"","Traen",0.857,"Erik",0.065
+"Vs 3","Kävlinge (Bysingsberg)","Dingtuna sn",59.596317,16.362882,NA,23.9,"","Balle",0.311,"Livsten",0.309
+"Vs 4","Vändle, Norrgården","Dingtuna sn",59.564257,16.353526,NA,21.3,"","Livsten",0.666,"Balle",0.188
+"Vs 9","Saltängsbron","Västerås (f.d. Lundby sn)",59.589925,16.493566,"Pr3",20.3,"","Erik",0.463,"Balle",0.312
+"Vs 11","Västerås, Smäcken","Västerås",59.610245,16.542021,NA,19.1,"","Tidkume",0.417,"Livsten",0.291
+"Vs 16","Tortuna kyrka","Tortuna sn",59.67771,16.731112,"Pr3",6.7,"","Livsten",0.899,"Balle",0.062
+"Vs 18","Berga","Skultuna sn",59.720043,16.418091,"Fp",17.6,"","Balle",0.49,"Erik",0.415
+"Vs 19","Berga","Skultuna sn",59.71998,16.418196,"Fp",17.6,"","Erik",0.491,"Balle",0.439
+"Vs 21","Äs","Romfartuna sn",59.701551,16.579938,"Fp",15.3,"","Erik",0.736,"Balle",0.219
+"Vs 23","Gussjö","Fläckebo sn",59.89122,16.375649,NA,2.8,"","Livsten",0.846,"Balle",0.116
+"Vs 25","Sätra","Fläckebo sn",59.861627,16.44762,"Fp",6.1,"","Balle",0.554,"Erik",0.428
+"Vs Fv1988;36","Jädra","Hubbo sn",59.658686,16.613064,"Fp",13.6,"","Balle",0.534,"Erik",0.384
+"Gs 2","Österfärnebo kyrka","Österfärnebo sn",60.302124,16.794426,"Pr2",15.1,"","Erik",0.969,"Åsmund",0.029
+"Gs 3","Kungsgården","Österfärnebo sn",60.304366,16.792395,NA,15,"","Öpir 1",0.842,"Livsten",0.114
+"Gs 6","Hade (Hadeholm)","Hedesunda sn",60.290347,17.041316,NA,10,"","Öpir 1",0.746,"Åsmund",0.211
+"Gs 9","Årsunda kyrka","Årsunda sn",60.522231,16.740283,"Pr2",22.1,"Balle;Livsten","Åsmund",0.992,"Erik",0.005
+"Gs 10","Alborga by","Valbo sn",60.651898,17.066778,NA,1.4,"","Åsmund",0.998,"Öpir 1",0.002
+"Gs 13","Söderby","Valbo sn (nu Gävle)",60.672715,17.138032,"Pr2",3.6,"Sven 5;Åsmund","Åsmund",1,"Öpir 1",0
+"Gs 22","Berg","Hamrånge sn",60.926053,17.025684,NA,13,"","Åsmund",1,"Öpir 1",0
+"D Fv1993;174","?","By sn",60.200607,16.508316,NA,12.6,"","Erik",0.897,"Öpir 1",0.074

@@ -92,6 +92,7 @@ export default function RistarePage() {
           <h2 id="rp-sg-h" className={h2} />
           <p id="rp-sg-note" className="rp-note" />
           <div id="rp-sg" />
+          <div id="rp-bygd" className="rp-bygd" hidden />
         </section>
 
         <section className={panel}>
