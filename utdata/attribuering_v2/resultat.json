@@ -1,0 +1,501 @@
+{
+  "plan": "analysplaner/2026-11-04-attribuering-v2.md",
+  "korpus": "7b9061c9a1c12c73",
+  "n_train": 497,
+  "n_signed": 117,
+  "slutmodell": "A+1",
+  "steg": {
+    "s1": {
+      "step": "1 korsform",
+      "d_top1": [0, -0.0205, 0.019],
+      "d_macro": [0.011, -0.0258, 0.0293],
+      "log_loss_not_worse": true,
+      "keep": true,
+      "proven": false
+    },
+    "s2": {
+      "step": "2 stavning",
+      "d_top1": [-0, -0.0196, 0.0224],
+      "d_macro": [-0.0015, -0.0305, 0.0251],
+      "log_loss_not_worse": true,
+      "keep": false,
+      "proven": false
+    },
+    "s3": {
+      "step": "3 bygd och tid, halva 2 (w = 1,75)",
+      "d_top1": [-0.0267, -0.1591, 0.0943],
+      "d_macro": [0.143, -0.0543, 0.2139],
+      "log_loss_not_worse": true,
+      "keep": false,
+      "proven": false,
+      "w": 1.75,
+      "w_logloss": [2.1252, 1.7295, 1.5345, 1.4253, 1.3626, 1.3281, 1.312, 1.309, 1.3158]
+    },
+    "s4": {
+      "step": "4 samma hand",
+      "d_top1": [0.057, 0.0083, 0.1139],
+      "d_macro": [0.1449, 0.0384, 0.2038],
+      "log_loss_not_worse": false,
+      "keep": false,
+      "proven": false
+    }
+  },
+  "sammanfattning": {
+    "A": {
+      "name": "A (dagens)",
+      "top1": 0.7123,
+      "macro": 0.4258,
+      "log_loss": 1.3721,
+      "attributed_top1": 0.6772,
+      "cal_a": 1.7,
+      "ece_half2_after": 0.1438,
+      "per_carver": [
+        {
+          "carver": "Amunde",
+          "n": 4,
+          "top1": 0.75
+        },
+        {
+          "carver": "Arbjörn",
+          "n": 3,
+          "top1": 0.556
+        },
+        {
+          "carver": "Balle",
+          "n": 20,
+          "top1": 0.933
+        },
+        {
+          "carver": "Erik",
+          "n": 1,
+          "top1": 0.667
+        },
+        {
+          "carver": "Fot 2",
+          "n": 6,
+          "top1": 0.556
+        },
+        {
+          "carver": "Gunnar",
+          "n": 2,
+          "top1": 0.5
+        },
+        {
+          "carver": "Likbjörn",
+          "n": 4,
+          "top1": 0
+        },
+        {
+          "carver": "Livsten",
+          "n": 6,
+          "top1": 0.556
+        },
+        {
+          "carver": "Tidkume",
+          "n": 4,
+          "top1": 0
+        },
+        {
+          "carver": "Torbjörn 2",
+          "n": 1,
+          "top1": 0
+        },
+        {
+          "carver": "Torbjörn skald",
+          "n": 3,
+          "top1": 0
+        },
+        {
+          "carver": "Tore 1",
+          "n": 2,
+          "top1": 0
+        },
+        {
+          "carver": "Vidbjörn",
+          "n": 1,
+          "top1": 0
+        },
+        {
+          "carver": "Visäte",
+          "n": 6,
+          "top1": 0.611
+        },
+        {
+          "carver": "Åsmund",
+          "n": 16,
+          "top1": 0.729
+        },
+        {
+          "carver": "Öpir 1",
+          "n": 38,
+          "top1": 0.956
+        }
+      ]
+    },
+    "s1": {
+      "name": "1 korsform",
+      "top1": 0.7123,
+      "macro": 0.4368,
+      "log_loss": 1.3239,
+      "attributed_top1": 0.6868,
+      "cal_a": 1.75,
+      "ece_half2_after": 0.1453,
+      "per_carver": [
+        {
+          "carver": "Amunde",
+          "n": 4,
+          "top1": 0.667
+        },
+        {
+          "carver": "Arbjörn",
+          "n": 3,
+          "top1": 0.556
+        },
+        {
+          "carver": "Balle",
+          "n": 20,
+          "top1": 0.95
+        },
+        {
+          "carver": "Erik",
+          "n": 1,
+          "top1": 1
+        },
+        {
+          "carver": "Fot 2",
+          "n": 6,
+          "top1": 0.389
+        },
+        {
+          "carver": "Gunnar",
+          "n": 2,
+          "top1": 0.5
+        },
+        {
+          "carver": "Likbjörn",
+          "n": 4,
+          "top1": 0
+        },
+        {
+          "carver": "Livsten",
+          "n": 6,
+          "top1": 0.611
+        },
+        {
+          "carver": "Tidkume",
+          "n": 4,
+          "top1": 0
+        },
+        {
+          "carver": "Torbjörn 2",
+          "n": 1,
+          "top1": 0
+        },
+        {
+          "carver": "Torbjörn skald",
+          "n": 3,
+          "top1": 0
+        },
+        {
+          "carver": "Tore 1",
+          "n": 2,
+          "top1": 0
+        },
+        {
+          "carver": "Vidbjörn",
+          "n": 1,
+          "top1": 0
+        },
+        {
+          "carver": "Visäte",
+          "n": 6,
+          "top1": 0.611
+        },
+        {
+          "carver": "Åsmund",
+          "n": 16,
+          "top1": 0.75
+        },
+        {
+          "carver": "Öpir 1",
+          "n": 38,
+          "top1": 0.956
+        }
+      ]
+    },
+    "s2": {
+      "name": "2 stavning",
+      "top1": 0.7123,
+      "macro": 0.4353,
+      "log_loss": 1.3212,
+      "attributed_top1": 0.6825,
+      "cal_a": 1.75,
+      "ece_half2_after": 0.1071,
+      "per_carver": [
+        {
+          "carver": "Amunde",
+          "n": 4,
+          "top1": 0.667
+        },
+        {
+          "carver": "Arbjörn",
+          "n": 3,
+          "top1": 0.556
+        },
+        {
+          "carver": "Balle",
+          "n": 20,
+          "top1": 0.95
+        },
+        {
+          "carver": "Erik",
+          "n": 1,
+          "top1": 1
+        },
+        {
+          "carver": "Fot 2",
+          "n": 6,
+          "top1": 0.5
+        },
+        {
+          "carver": "Gunnar",
+          "n": 2,
+          "top1": 0.5
+        },
+        {
+          "carver": "Likbjörn",
+          "n": 4,
+          "top1": 0
+        },
+        {
+          "carver": "Livsten",
+          "n": 6,
+          "top1": 0.556
+        },
+        {
+          "carver": "Tidkume",
+          "n": 4,
+          "top1": 0
+        },
+        {
+          "carver": "Torbjörn 2",
+          "n": 1,
+          "top1": 0
+        },
+        {
+          "carver": "Torbjörn skald",
+          "n": 3,
+          "top1": 0
+        },
+        {
+          "carver": "Tore 1",
+          "n": 2,
+          "top1": 0
+        },
+        {
+          "carver": "Vidbjörn",
+          "n": 1,
+          "top1": 0
+        },
+        {
+          "carver": "Visäte",
+          "n": 6,
+          "top1": 0.556
+        },
+        {
+          "carver": "Åsmund",
+          "n": 16,
+          "top1": 0.708
+        },
+        {
+          "carver": "Öpir 1",
+          "n": 38,
+          "top1": 0.974
+        }
+      ]
+    },
+    "s3": {
+      "name": "3 bygd och tid (w = 1,75)",
+      "top1": 0.7607,
+      "macro": 0.6717,
+      "log_loss": 0.8436,
+      "attributed_top1": 0.7518,
+      "cal_a": 1.35,
+      "ece_half2_after": 0.136,
+      "per_carver": [
+        {
+          "carver": "Amunde",
+          "n": 4,
+          "top1": 0.917
+        },
+        {
+          "carver": "Arbjörn",
+          "n": 3,
+          "top1": 0.889
+        },
+        {
+          "carver": "Balle",
+          "n": 20,
+          "top1": 0.867
+        },
+        {
+          "carver": "Erik",
+          "n": 1,
+          "top1": 1
+        },
+        {
+          "carver": "Fot 2",
+          "n": 6,
+          "top1": 0.556
+        },
+        {
+          "carver": "Gunnar",
+          "n": 2,
+          "top1": 1
+        },
+        {
+          "carver": "Likbjörn",
+          "n": 4,
+          "top1": 0.417
+        },
+        {
+          "carver": "Livsten",
+          "n": 6,
+          "top1": 0.944
+        },
+        {
+          "carver": "Tidkume",
+          "n": 4,
+          "top1": 0.333
+        },
+        {
+          "carver": "Torbjörn 2",
+          "n": 1,
+          "top1": 0
+        },
+        {
+          "carver": "Torbjörn skald",
+          "n": 3,
+          "top1": 0.222
+        },
+        {
+          "carver": "Tore 1",
+          "n": 2,
+          "top1": 0.667
+        },
+        {
+          "carver": "Vidbjörn",
+          "n": 1,
+          "top1": 0.667
+        },
+        {
+          "carver": "Visäte",
+          "n": 6,
+          "top1": 0.833
+        },
+        {
+          "carver": "Åsmund",
+          "n": 16,
+          "top1": 0.542
+        },
+        {
+          "carver": "Öpir 1",
+          "n": 38,
+          "top1": 0.895
+        }
+      ]
+    },
+    "s4": {
+      "name": "4 samma hand (bland de 18)",
+      "top1": 0.7692,
+      "macro": 0.5818,
+      "log_loss": 2.1459,
+      "attributed_top1": 0.7281,
+      "cal_a": 5,
+      "ece_half2_after": 0.2136,
+      "per_carver": [
+        {
+          "carver": "Amunde",
+          "n": 4,
+          "top1": 0.5
+        },
+        {
+          "carver": "Arbjörn",
+          "n": 3,
+          "top1": 0.667
+        },
+        {
+          "carver": "Balle",
+          "n": 20,
+          "top1": 0.933
+        },
+        {
+          "carver": "Erik",
+          "n": 1,
+          "top1": 1
+        },
+        {
+          "carver": "Fot 2",
+          "n": 6,
+          "top1": 0.5
+        },
+        {
+          "carver": "Gunnar",
+          "n": 2,
+          "top1": 0.5
+        },
+        {
+          "carver": "Likbjörn",
+          "n": 4,
+          "top1": 0
+        },
+        {
+          "carver": "Livsten",
+          "n": 6,
+          "top1": 0.833
+        },
+        {
+          "carver": "Tidkume",
+          "n": 4,
+          "top1": 0.5
+        },
+        {
+          "carver": "Torbjörn 2",
+          "n": 1,
+          "top1": 0.333
+        },
+        {
+          "carver": "Torbjörn skald",
+          "n": 3,
+          "top1": 0
+        },
+        {
+          "carver": "Tore 1",
+          "n": 2,
+          "top1": 0.5
+        },
+        {
+          "carver": "Vidbjörn",
+          "n": 1,
+          "top1": 0.667
+        },
+        {
+          "carver": "Visäte",
+          "n": 6,
+          "top1": 0.667
+        },
+        {
+          "carver": "Åsmund",
+          "n": 16,
+          "top1": 0.708
+        },
+        {
+          "carver": "Öpir 1",
+          "n": 38,
+          "top1": 1
+        }
+      ],
+      "all_carvers_top1_signed": 0.7635
+    }
+  }
+}
