@@ -1,0 +1,89 @@
+{
+ "id": "gotland",
+ "focus": [
+  "nordertredingen",
+  "medeltredingen",
+  "sudertredingen"
+ ],
+ "bbox": [
+  17.85,
+  56.88,
+  19.45,
+  58.0
+ ],
+ "w": 7.2,
+ "h": 8.6,
+ "title_sv": "Gotland omkring år 1000",
+ "title_en": "Gotland around AD 1000",
+ "sub_sv": "Kusten enligt SGU:s modell för år 1000. Ön var delad i tre tredingar, men gränserna mellan dem är osäkra\noch ritas inte ut. Grå punkter: runstenar. Ringar: platser i texten.",
+ "sub_en": "The coast after the Geological Survey of Sweden's model for AD 1000. The island was divided into three thirds, but the\nborders between them are uncertain and are not drawn. Grey points: runestones. Rings: places in the text.",
+ "labels": [
+  {
+   "id": "g",
+   "lon": 18.95,
+   "lat": 57.62,
+   "sv": "Gotland",
+   "en": "Gotland"
+  }
+ ],
+ "places": [
+  {
+   "parish": "Västergarns sn",
+   "province": 6,
+   "sv": "Paviken och Västergarn",
+   "en": "Paviken and Västergarn",
+   "dx": -1000,
+   "dy": 3200
+  },
+  {
+   "parish": "Fröjels sn",
+   "province": 6,
+   "sv": "Fröjel",
+   "en": "Fröjel",
+   "dx": -6000,
+   "dy": 0
+  },
+  {
+   "parish": "Roma sn",
+   "province": 6,
+   "sv": "Roma",
+   "en": "Roma",
+   "dx": 5000,
+   "dy": 0
+  },
+  {
+   "parish": "Burs sn",
+   "province": 6,
+   "sv": "Bandlunde (Burs)",
+   "en": "Bandlunde (Burs)",
+   "dx": 0,
+   "dy": -3200
+  },
+  {
+   "parish": "Kräklingbo sn",
+   "province": 6,
+   "sv": "Torsburgen",
+   "en": "Torsburgen",
+   "dx": 0,
+   "dy": 3200
+  },
+  {
+   "parish": "Bro sn",
+   "province": 6,
+   "sv": "Bro",
+   "en": "Bro",
+   "dx": 4000,
+   "dy": 0
+  },
+  {
+   "parish": "Visby stad",
+   "province": 6,
+   "sv": "Visby",
+   "en": "Visby",
+   "dx": -5000,
+   "dy": 0
+  }
+ ],
+ "stones": "utdata/gamla_landen/gotland_stenar.csv",
+ "province": 6
+}

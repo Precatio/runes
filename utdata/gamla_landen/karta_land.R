@@ -21,6 +21,18 @@ edges <- if (length(edges)) st_intersection(st_union(st_collection_extract(st_sf
                                              st_buffer(st_union(land), -300)) else NULL
 fl <- st_intersection(fl, land)
 fl$here <- fl$id %in% cfg$focus
+if (!is.null(cfg$province)) {
+  # the whole province as one land (e.g. Gotland): the area nearest each of its parish churches (ISOF), no inner borders
+  P <- fromJSON("/Volumes/2TB/Antigrvity/Runes/geografi_kallor/isof/parishes.json")
+  P <- P[!is.na(P$latitude), ]
+  P <- P[P$longitude > cfg$bbox[1] - 1 & P$longitude < cfg$bbox[3] + 1 & P$latitude > cfg$bbox[2] - 1 & P$latitude < cfg$bbox[4] + 1, ]
+  Pp <- st_transform(st_as_sf(P, coords = c("longitude", "latitude"), crs = 4326), 3006)
+  V <- st_sf(geometry = st_collection_extract(st_voronoi(st_union(Pp), st_buffer(frame, 80000))))
+  V$prov <- Pp$province_id[sapply(st_intersects(V, Pp), function(i) if (length(i)) i[1] else NA_integer_)]
+  whole <- st_intersection(st_make_valid(st_union(V[V$prov %in% cfg$province, ])), land)
+  fl <- st_sf(id = "whole", here = TRUE, geometry = st_geometry(whole))
+  edges <- NULL
+}
 d <- read.csv(cfg$stones, stringsAsFactors = FALSE)
 p <- st_transform(st_as_sf(d, coords = c("lon", "lat"), crs = 4326), 3006)
 ISOF <- "/Volumes/2TB/Antigrvity/Runes/geografi_kallor/isof/"
