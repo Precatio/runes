@@ -333,7 +333,7 @@ export function renderCarver(root, PAGE, AUDIT, C, V, setVariant, state = {}) {
       `<b>Appens förslag</b> kommer från attribueringsmodellen (random forest över plats, stil, stavning, formler och runpar), omkalibrerad efter provningen mot de signerade stenarna; spärren för okända ristare sorterar bort stenar där förstavalet är för svagt.`,
       `<b>Ornamentiken ingår inte</b> utöver stilgruppen, och runformerna inte alls: forskarnas viktigaste belägg för attribueringarna saknas alltså här. En attribuerad sten bland ”som grannarna” är ett skäl att titta igen, inte ett bevis för att attribueringen är fel.`,
     ];
-    if (WHO === "Balle") items.push(`<b>Röd-Balle:</b> Vs 15 och Vs 24 är signerade <i>roþbaliʀ</i>, och en del runologer tvivlar på att han är samma person som Balle. Båda hamnar i ytterkanten med alla 20 i profilen, och bland grannarna när profilen byggs av de övriga 18. Men de står i Västmanland och tillhör den senare stilgruppen Pr4, så skillnaden kan också vara bygdens och tidens.`);
+    if (WHO === "Balle") items.push(`<b>Röd-Balle:</b> Vs 15 och Vs 24 är signerade <i>roþbaliʀ</i>, och en del runologer tvivlar på att han är samma person som Balle. Vs 15 är den signerade sten som följer Balles drag sämst av alla och hamnar bland grannarna, med eller utan de två i profilen; Vs 24 ligger i ytterkanten, liksom tre signerade stenar i Uppland och Södermanland. Mätningen pekar alltså ut den ena, inte båda. De står i Västmanland och tillhör den senare stilgruppen Pr4, så skillnaden kan också vara bygdens och tidens.`);
     if (cant) items.push(`${cant} av stenarna har för lite läsbar text för att mätas.`);
     $("rp-method").innerHTML = items.map(s => `<li>${s}</li>`).join("");
   }

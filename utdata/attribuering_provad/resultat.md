@@ -6,7 +6,7 @@ Låst plan `analysplaner/2026-11-04-attribuering-provad.md` (daba3bc). Kod `r/at
 ## Svaren
 1. **Rätt ristare först på en signerad sten: 71,2 %** (95 % 63,9–78,6), bland tre främsta 85,5 % (79,4–91,5),
    log-förlust 1,37. Mycket ojämnt: Öpir 96 % (38 st.), Balle 93 % (20), Åsmund 73 % (16), Visäte 61 %, Fot,
-   Livsten 56 % (6 vardera); Likbjörn, Tidkume, Torbjörn skald, Tore, Vidbjörn 0 % (1–4 st.). Medel över ristarna
+   Livsten 56 % (6 vardera); Likbjörn, Tidkume, Torbjörn 2, Torbjörn skald, Tore, Vidbjörn 0 % (1–4 st.; Torbjörn 2 rättad 2026-11-04). Medel över ristarna
    (varje ristare lika tung): 43 %.
 2. **Attribueringarna återskapas inte mer än ristarna:** attribuerade stenar 67,7 % (63,0–72,6) mot signerade 71,2 %;
    inom ristare ingen skillnad (glmer, koefficient för signerad −0,09, se 0,45, p 0,85).
