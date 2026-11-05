@@ -13,13 +13,17 @@ rapporter hänvisar till exakt den versionen, och Zenodo arkiverar den med en pe
    - `api/config.py` (`APP_VERSION`)
    - `.zenodo.json` (`version`)
    - `CITATION.cff` (`version`, `date-released`)
+   - `web/package.json` (`version`) och rapportmallen i `web/src/components/BlogAdmin.tsx` ("Analysen är gjord i Vitki …")
      – startsidans versionsmärke och citeringsruta läser versionen härifrån (`web/src/lib/version.ts`)
 3. Flytta posterna under "Ej släppt" i `CHANGELOG.md` till den nya versionen med datum.
-4. Kontrollera att `src/limitations.py` (kända brister) och METHODS.md stämmer med koden.
-5. Committa, märk och pusha: `git tag -a v3.1.0 -m "Vitki 3.1.0"` och `git push --tags`.
-6. Skapa en release från märkningen på GitHub (Releases → Draft a new release). Zenodo arkiverar den och skapar
+4. Kontrollera vad release-arkivet lämnar utanför (`export-ignore` i `.gitattributes`, kommandot står där) och att
+   inget nytt material med oklar licens har tillkommit (README, avsnittet Data och innehåll från andra källor).
+   Bestäm om mätprotokollet ska låsas (`src/protocol.py`, PROTOCOL.md: låses först när alla delar är prövade).
+5. Kontrollera att `src/limitations.py` (kända brister) och METHODS.md stämmer med koden.
+6. Committa, märk och pusha: `git tag -a v3.1.0 -m "Vitki 3.1.0"` och `git push --tags`.
+7. Skapa en release från märkningen på GitHub (Releases → Draft a new release). Zenodo arkiverar den och skapar
    en DOI inom några minuter.
-7. Lägg in DOI:n i `README.md`, `CITATION.cff` (`doi`) och stenrapportens referens till Vitki
+8. Lägg in DOI:n i `README.md`, `CITATION.cff` (`doi`) och stenrapportens referens till Vitki
    (`src/stone_report.py`), och nämn den i `src/limitations.py` (bristen "Programvaran är under utveckling").
 
 Mätningar som ska publiceras görs med den släppta versionen; metodversionen (`groove-N`) står i varje analys.

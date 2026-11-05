@@ -5,6 +5,8 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+## [3.1.0] – 2026-11-05
+
 ### Huggspår: runorna delas upp längs slingan (mätmetod groove-7)
 - Med runslingor delas runorna nu upp efter var strecken står längs slingan för alla stenar, inte bara i stavlöst läge
   (`src/auto_grooves.py`, `src/staveless.group_runes`). Tidigare fick bara streck som den gamla streckklassningen kallade

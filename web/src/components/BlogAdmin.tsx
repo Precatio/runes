@@ -86,7 +86,7 @@ const empty = (author: string): Draft => ({ slug: "", title: "", summary: "", bo
 
 // A new research report: the locked form's headings (utdata/rapporter/MALL.md), with the header line the report page
 // reads its version, citation and keywords from (lib/report.ts). The builders in utdata/blogg/build write the real ones.
-const REPORT_TEMPLATE = (date: string) => `*Viktor Kvant, oberoende forskare. Rapportversion 1, ${date}. Analysen är gjord i Vitki 3.0.0. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: Kvant, V. (${date.slice(0, 4)}). TITLE. Research report, report version 1; analysis in Vitki 3.0.0. https://vitkirunor.se/en/forskningsrapporter/ADRESS. Nyckelord: runstenar, vikingatid. Konkurrerande intressen: inga. Finansiering: ingen.*
+const REPORT_TEMPLATE = (date: string) => `*Viktor Kvant, oberoende forskare. Rapportversion 1, ${date}. Analysen är gjord i Vitki 3.1.0. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: Kvant, V. (${date.slice(0, 4)}). TITLE. Research report, report version 1; analysis in Vitki 3.1.0. https://vitkirunor.se/en/forskningsrapporter/ADRESS. Nyckelord: runstenar, vikingatid. Konkurrerande intressen: inga. Finansiering: ingen.*
 
 ## Sammanfattning
 

@@ -1,12 +1,13 @@
 cff-version: 1.2.0
 message: "Om du använder programvaran i forskning, citera den enligt nedan. Licens: GPL-3.0 med tilläggsvillkor om upphovsangivelse (se NOTICE)."
-title: "Vitki: öppen plattform för analys av runinskrifter"
+title: "Vitki: an open platform for the analysis of runic inscriptions"
 type: software
 authors:
   - family-names: Kvant
     given-names: Viktor
-version: 3.0.0
-date-released: 2026-10-20
+    affiliation: "Independent researcher"
+version: 3.1.0
+date-released: 2026-11-05
 license: GPL-3.0-only
 repository-code: "https://github.com/Precatio/runes"
 url: "https://vitkirunor.se"

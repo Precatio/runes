@@ -1,26 +1,36 @@
 {
-  "title": "Vitki: öppen plattform för analys av runinskrifter",
+  "title": "Vitki: an open platform for the analysis of runic inscriptions",
   "upload_type": "software",
   "creators": [
     {
-      "name": "Kvant, Viktor"
+      "name": "Kvant, Viktor",
+      "affiliation": "Independent researcher"
     }
   ],
   "license": "GPL-3.0-only",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "keywords": [
     "runology",
     "runic inscriptions",
+    "runestones",
+    "Viking Age",
     "3D scanning",
     "groove analysis",
     "stylometry",
+    "carver attribution",
+    "pre-registration",
     "digital humanities"
   ],
-  "description": "Open research platform for runic inscriptions: automatic 3D groove measurement of recognised runes with uncertainty, provenance and a published list of known limitations; Rundata integration; orthographic stylometry with cross-validated accuracy; a shared measurement corpus; statistical comparison of stones; corpus statistics in R; reports in eleven publication formats; maps, style groups and an RTI (PTM) viewer. See METHODS.md.",
+  "description": "<p>Open research platform for runic inscriptions (Swedish title: <em>Vitki: öppen plattform för analys av runinskrifter</em>). It measures carving grooves automatically in 3D scans of recognised runes, with uncertainty, provenance and a published list of known limitations; integrates the Scandinavian Runic-text Data Base (Rundata); offers orthographic stylometry and a calibrated carver-attribution model tested on signed stones; keeps a shared measurement corpus; compares stones statistically; runs corpus statistics in R under pre-registered, checksum-locked analysis plans; and publishes research reports, carver pages, maps of the old lands, reports in eleven publication formats and an RTI (PTM) viewer. Methods are described in METHODS.md, the measurement protocol in PROTOCOL.md.</p><p>Code: GPL-3.0 with additional terms (see NOTICE). Data from other sources included in the archive keep their own licences (Rundata ODbL 1.0/DbCL 1.0, OpenStreetMap ODbL, 3D scans and SGU data CC BY 4.0, RuneS-DB and Wikipedia CC BY-SA 4.0, Wikidata and Swedish National Heritage Board data CC0); see README.md, section “Data och innehåll från andra källor”.</p>",
   "related_identifiers": [
     {
       "identifier": "https://github.com/Precatio/runes",
       "relation": "isSupplementTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://vitkirunor.se",
+      "relation": "isDocumentedBy",
       "scheme": "url"
     }
   ]
