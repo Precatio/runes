@@ -4,6 +4,7 @@ bilder. Körs i processen med TestClient; inget skickas till det lokala API:t.""
 import csv
 import io
 import json
+
 import os
 import zipfile
 
@@ -12,7 +13,7 @@ import pytest
 from fastapi.testclient import TestClient
 from PIL import Image
 
-from api.config import METHOD_VERSION
+from api.config import APP_VERSION, METHOD_VERSION
 from api.main import app
 from api.routers import threed
 from src import groove_export, stone_report
@@ -262,7 +263,7 @@ def test_export_every_item_from_an_automatic_analysis(client, stone, auto):
             assert text["Author"] == "Vitki (beräknad); skanning: okänd skannare", name
             assert "Bilden är beräknad i Vitki" in text["Description"], name
             assert groove_export.UNKNOWN_SCAN in text["Description"], name
-            assert text["Software"] == "Vitki 3.0.0" and json.loads(text["Comment"])["method_version"] == METHOD_VERSION
+            assert text["Software"] == f"Vitki {APP_VERSION}" and json.loads(text["Comment"])["method_version"] == METHOD_VERSION
     # the full JSON: the result without its images, plus labels, credit and export
     full = json.loads(files["So_370_analys.json"])
     assert full["type"] == "vitki-groove-export" and full["schema"] == 1 and full["mode"] == "auto"
