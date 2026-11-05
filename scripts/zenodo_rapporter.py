@@ -107,6 +107,19 @@ def main(argv=None) -> int:
     a.add_argument("--slug", help="bara en rapport")
     o = a.parse_args(argv)
     rs = [p for p in reports() if not o.slug or p["slug"] == o.slug]
+    # a report whose builder output (utdata/rapporter) has a higher version than the published one must be put live
+    # first (utdata/blogg/build/patch_rapporter_live.py), or the PDFs would archive the old text
+    local = {}
+    for f in os.listdir(os.path.join(ROOT, "utdata", "rapporter")):
+        if f.startswith("rapport") and f.endswith(".json"):
+            d = json.load(open(os.path.join(ROOT, "utdata", "rapporter", f), encoding="utf-8"))
+            local[d["slug"]] = (f, int(header(d["body_en"])["version"]))
+    stale = [f"{p['slug']} (publicerad v{header(p['body_en'])['version']}, {local[p['slug']][0]} v{local[p['slug']][1]})"
+             for p in rs if p["slug"] in local and local[p["slug"]][1] > int(header(p["body_en"])["version"])]
+    if stale:
+        print("Rättade versioner är inte publicerade än – kör först utdata/blogg/build/patch_rapporter_live.py:\n  "
+              + "\n  ".join(stale), file=sys.stderr)
+        return 1
     jobs = []
     for p in rs:
         folder = os.path.join(OUT, p["slug"])
