@@ -172,6 +172,7 @@ def repo(tmp_path, monkeypatch):
     monkeypatch.setattr(site_export, "CONTENT", str(work / "web" / "content" / "articles.json"))
     monkeypatch.setattr(site_export, "SEARCH", str(work / "web" / "public" / "artiklar-sok.json"))
     monkeypatch.setattr(site_export, "FIGURES", str(work / "web" / "public" / "figurer"))
+    monkeypatch.setattr(site_export, "CARVERS", str(work / "web" / "public" / "ristarna" / "ristare.json"))
     monkeypatch.setattr(site_export.time, "sleep", lambda s: None)
     yield types.SimpleNamespace(work=work, remote=remote)
 

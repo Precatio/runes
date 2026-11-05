@@ -290,7 +290,9 @@ def _paths() -> list[str]:
     """What the app commits for the website: the articles, the search index and the figures – but never a half-written
     temporary file in the figure folder (_half_written), even when an export was killed before it could remove it."""
     figures = os.path.relpath(FIGURES, ROOT)
-    return [os.path.relpath(CONTENT, ROOT), os.path.relpath(SEARCH, ROOT), os.path.relpath(CARVERS, ROOT), figures,
+    # the carver page's data only once it exists (a pathspec that matches nothing makes git add fail)
+    carvers = [os.path.relpath(CARVERS, ROOT)] if os.path.exists(CARVERS) else []
+    return [os.path.relpath(CONTENT, ROOT), os.path.relpath(SEARCH, ROOT), *carvers, figures,
             f":(exclude){figures}/*.tmp", f":(exclude){figures}/*.part", f":(exclude){figures}/.*"]
 
 

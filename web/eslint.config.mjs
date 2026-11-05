@@ -9,6 +9,7 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    ".next-staging/**", // the second build folder used for zero-downtime rebuilds of the local app
     "out/**",
     "build/**",
     "next-env.d.ts",
