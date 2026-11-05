@@ -332,32 +332,6 @@ export default function ArticleLibrary({ posts, lang: pageLang = "sv", failed = 
           </p>
         )}
 
-        {plain && seriesShown.length > 0 && (
-          <section className="mt-8" aria-label={en ? "Series" : "Serier"}>
-            <div className="mb-3 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">{en ? "Series – read in order" : "Serier – läs i ordning"}</div>
-            <div className="grid gap-4 md:grid-cols-2">
-              {seriesShown.map(sr => (
-                <div key={sr.key} className="rounded-2xl border border-slate-200 bg-white/80 p-5">
-                  <button type="button" onClick={() => set({ serie: sr.key })} className="font-serif text-lg font-bold text-slate-900 hover:text-[#b7410e]">
-                    {en ? sr.en : sr.sv}
-                  </button>
-                  <p className="mt-1 text-[14px] text-slate-600">{en ? sr.aboutEn : sr.about}</p>
-                  <ol className="mt-3 space-y-1.5">
-                    {partsOf(posts, sr.key).map((p, i) => (
-                      <li key={p.slug} className="flex gap-2 text-[14.5px]">
-                        <span className="w-5 shrink-0 tabular-nums text-slate-400">{i + 1}.</span>
-                        <Link href={readerPath(p, en ? "en" : "sv")} prefetch={false} className="font-semibold text-slate-800 hover:text-[#b7410e]" translate="no">
-                          {en ? p.title_en || p.title : p.title}
-                        </Link>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
         {inSeries && (
           <section className="mt-8">
             <h2 className="font-serif text-2xl font-bold text-slate-900">{en ? inSeries.en : inSeries.sv}</h2>
