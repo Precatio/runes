@@ -195,9 +195,10 @@ LIMITATIONS = [
      "title": "Programvaran är under utveckling",
      "text": "Mätmetoden har ändrats flera gånger (groove-1 till groove-7 under oktober och november 2026) efter att fel hittats. "
              "Resultat är bara jämförbara inom samma metodversion, som anges i varje analys. Koden är inte granskad av "
-             "utomstående, och ingen låst version med DOI finns ännu.",
+             "utomstående. Varje release arkiveras med DOI i Zenodo (CITATION.cff), och varje analys anger den version "
+             "den gjordes med; mätprotokollet är ännu ett utkast (PROTOCOL.md P7).",
      "short": "Verktyget är nytt och ändras fortfarande; versionen anges så att resultaten kan upprepas.",
-     "needed": "Låst version med DOI (Zenodo) och extern granskning av koden."},
+     "needed": "Extern granskning av koden och de valideringar av mätprotokollet som återstår (PROTOCOL.md P7)."},
 ]
 
 
