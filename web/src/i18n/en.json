@@ -4744,6 +4744,7 @@
 "Mätkorpusen innehåller ännu för få stenar med säker ristare för en jämförelse.":"The measurement corpus does not yet contain enough stones with a certain carver for a comparison.",
 "Mätkorpusens attribuering (lämna-en-ute) är inte grupperad.":"The attribution in the measurement corpus (leave-one-out) is not grouped.",
 "Mätmetoden har ändrats flera gånger (groove-{0} till groove-{1} under oktober {2}) efter att fel hittats.":"The measurement method has changed several times (groove-{0} to groove-{1} during October {2}) after errors were found.",
+"Mätmetoden har ändrats flera gånger (groove-{0} till groove-{1} under oktober och november {2}) efter att fel hittats.":"The measurement method has been changed several times (groove-{0} to groove-{1} in October and November {2}) after errors were found.",
 "Mätmetoden:":"The measurement method:",
 "Mätning av huggspår":"Measurement of carving grooves",
 "Mätningar från olika forskare samlas med licens och bidragsgivare, och ristare kopplas automatiskt via Rundata.":"Measurements from different researchers are collected with licence and contributor, and carvers are linked automatically through Rundata.",
