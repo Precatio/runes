@@ -504,18 +504,20 @@
    "text": "Research report: half of Swedish runestones turn their inscription within 45 degrees of the road, against a quarter by chance. Not towards the sun, not towards the farm. The carvers wrote for those passing by."
   },
   {
-   "date": "2026-11-21",
+   "date": "2026-11-05",
    "en": true,
    "slug": "skanningen-som-ledtrad",
    "tags": [
-    "runology",
-    "runestones",
     "DigitalHumanities",
-    "OpenScience",
-    "MedievalSky",
-    "VikingAge"
+    "DigitalPhilology",
+    "runes",
+    "epigraphy",
+    "3D"
    ],
-   "text": "Methods report: 3D-scan traces help a language model fill in hidden words on runestones, 60 % right against 54 % without, and shuffled traces make it worse. Scans by Laila Kitzler Åhfeldt, CC BY."
+   "text": "Can a 3D scan help read a damaged runestone? With scan traces our language model got 60% of hidden words right instead of 54%. But the pairing of scan and text saw the answer, so the real gain is unproven. The report spells it out.",
+   "posted": "https://bsky.app/profile/vitkirunor.bsky.social/post/3mzl7qf4m4l2d",
+   "posted_at": "2026-11-05T16:05:00+00:00",
+   "credit_reply": "https://bsky.app/profile/vitkirunor.bsky.social/post/3mzl7s2vz4l25"
   },
   {
    "date": "2026-11-22",
