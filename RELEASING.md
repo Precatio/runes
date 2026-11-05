@@ -18,7 +18,8 @@ rapporter hänvisar till exakt den versionen, och Zenodo arkiverar den med en pe
 3. Flytta posterna under "Ej släppt" i `CHANGELOG.md` till den nya versionen med datum.
 4. Kontrollera vad release-arkivet lämnar utanför (`export-ignore` i `.gitattributes`, kommandot står där) och att
    inget nytt material med oklar licens har tillkommit (README, avsnittet Data och innehåll från andra källor).
-   Bestäm om mätprotokollet ska låsas (`src/protocol.py`, PROTOCOL.md: låses först när alla delar är prövade).
+   Bestäm om mätprotokollet ska låsas (`src/protocol.py`, PROTOCOL.md: låses först när alla delar är prövade). För 3.1.0:
+   inte låst (2026-11-05), tre valideringar i P7 återstår.
 5. Kontrollera att `src/limitations.py` (kända brister) och METHODS.md stämmer med koden.
 6. Committa, märk och pusha: `git tag -a v3.1.0 -m "Vitki 3.1.0"` och `git push --tags`.
 7. Skapa en release från märkningen på GitHub (Releases → Draft a new release). Zenodo arkiverar den och skapar
