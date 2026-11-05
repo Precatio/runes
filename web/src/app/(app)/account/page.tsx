@@ -312,8 +312,8 @@ export default function AccountOverview() {
                 ))}
               </div>
               <p className="text-xs text-slate-500 mt-2">
-                Används för 2D-analys, läsning, syntesens och rapporternas texter och AI-assistenten. Oavsett modell
-                prövas läsningar mot Rundata, och AI anger aldrig sannolikheter.
+                Används för AI-assistenten Rune och, när det behövs, för att föreslå ett signum ur filnamnet och läsa
+                K-samsöks poster. Mätningar, statistik, syntes och rapporter räknas utan AI.
               </p>
             </div>
 

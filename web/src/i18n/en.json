@@ -8284,5 +8284,8 @@
 "ᛙ m (kortkvist)":"ᛙ m (short-twig)",
 "ᛚ l":"ᛚ l",
 "ᛦ R":"ᛦ R",
-"ᛧ R (kortkvist)":"ᛧ R (short-twig)"
+"ᛧ R (kortkvist)":"ᛧ R (short-twig)",
+"Inne i slingorna delas runorna efter var strecken står längs slingan: streck som står tätt hör till samma runa, och gränsen mellan två runor räknas fram ur stenens egna avstånd.":"Inside the bands, the runes are divided by where the strokes stand along the band: strokes that stand close together belong to the same rune, and the limit between two runes is worked out from the stone's own spacing.",
+"spelar bara roll när inga slingor hittas; då godtas kortare streck ({0} mm i stället för {1}) som runstreck.":"only matters when no bands are found; then shorter strokes ({0} mm instead of {1}) are accepted as rune strokes.",
+"Används för AI-assistenten Rune och, när det behövs, för att föreslå ett signum ur filnamnet och läsa K-samsöks poster. Mätningar, statistik, syntes och rapporter räknas utan AI.":"Used for the AI assistant Rune and, when needed, to suggest a signum from the file name and to read K-samsök records. Measurements, statistics, synthesis and reports are computed without AI."
 }

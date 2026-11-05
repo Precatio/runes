@@ -1,5 +1,11 @@
 # Sö 128, Lids kyrka: huggteknik dokumenterad med 3D-skanning
 
+> **Historiskt exempel.** Körningen gjordes 2026-10-20 med Vitki 2.0.0 och mätmetoden groove-5. Sedan dess avgör
+> runslingorna vad som är runa (groove-6) och runorna delas upp längs slingan (groove-7), så en ny körning med
+> dagens Vitki ger andra snitt och andra runor. Mätningarna och figurerna här är oförändrade, som dokumentation av
+> den versionen;
+> jämför bara med mätningar gjorda med samma mätmetod (PROTOCOL.md P6).
+
 Viktor Kvant, Vitki
 2026-10-20
 

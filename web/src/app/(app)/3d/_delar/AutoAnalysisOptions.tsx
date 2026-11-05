@@ -70,9 +70,9 @@ export default function AutoAnalysisOptions({
             blå, eller ornamentik inne i det, har slingorna blivit fel: vrid stenen så att den ristade sidan vetter
             rakt mot dig (knappen <em>Vänd ristade sidan mot mig</em> i 3D-vyn) och kör igen, eller mät runorna
             för hand med <em>Ett klick</em> eller <em>Manuellt</em>.</li>
-          <li>Med <strong>Stavlösa runor</strong> påslaget delas runorna efter var strecken står längs slingan: streck
-            som står tätt hör till samma runa, och gränsen mellan två runor räknas fram ur stenens egna avstånd.
-            Utan slingor godtas kortare streck (5 mm i stället för 12) som runstreck.</li>
+          <li>Inne i slingorna delas runorna efter var strecken står längs slingan: streck som står tätt hör till samma
+            runa, och gränsen mellan två runor räknas fram ur stenens egna avstånd. <strong>Stavlösa runor</strong>
+            spelar bara roll när inga slingor hittas; då godtas kortare streck (5 mm i stället för 12) som runstreck.</li>
           <li>Vill du att varje runa ska väga lika mycket, klicka på <strong>Markera runorna</strong> i granskningen och
             klicka en gång mitt på varje runa, i läsordning.</li>
         </ol>

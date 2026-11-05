@@ -1,5 +1,11 @@
 # Exempel: Sö 128 på tio minuter
 
+> **Historiskt exempel.** Körningen gjordes 2026-10-20 med Vitki 2.0.0 och mätmetoden groove-5. Sedan dess avgör
+> runslingorna vad som är runa (groove-6) och runorna delas upp längs slingan (groove-7), så en ny körning med
+> dagens Vitki ger andra snitt och andra runor. Mätningarna och figurerna här är oförändrade, som dokumentation av
+> den versionen;
+> jämför bara med mätningar gjorda med samma mätmetod (PROTOCOL.md P6).
+
 Ett helt genomfört exempel, från öppen skanning till färdig stenrapport, så att du kan pröva Vitki utan egen skanning
 och se vad resultatet ser ut som innan du läser METHODS.md.
 

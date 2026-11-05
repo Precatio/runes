@@ -1,14 +1,17 @@
 # Vitki – Användarmanual
 
-Välkommen till Vitki, ett modernt forskningsverktyg för kvantitativ analys av huggspår i 3D-skannade runstenar (och andra historiska inskriptioner). Verktyget låter dig ladda upp 3D-modeller direkt i webbläsaren, rita mätbanor längs runskåror, inspektera stenen topografiskt, extrahera matematiska tvärsnitt, och använda artificiell intelligens för stilistisk analys.
+Välkommen till Vitki, ett öppet forskningsverktyg för runstenar. Den här manualen beskriver huggspårsanalysen: du laddar
+upp en 3D-skanning i webbläsaren, låter Vitki mäta runornas huggspår automatiskt eller ritar egna mätbanor, granskar
+mätningen och exporterar bilder, tabeller och en stenrapport. Mätningen görs utan AI. Appens övriga delar beskrivs i
+avsnitt 5.
 
 ---
 
 ## 1. Kom igång
 
 ### Systemkrav
-- Node.js och npm installerat (för webb-klienten)
-- Python 3.9 eller senare (för beräknings-API:et)
+- Python 3.11 eller senare (för beräknings-API:et; Vitki utvecklas på 3.13)
+- Node.js 20 eller senare
 - En modern webbläsare med stöd för WebGL (Chrome, Firefox, Safari, Edge)
 
 ### Starta applikationen
@@ -32,16 +35,15 @@ Kommandot bygger appen och startar den. Öppna sedan `http://127.0.0.1:3000` i w
 
 ## 2. Navigering & 3D-vyn
 
-När du navigerar till **3D-Miljö** i sidomenyn möts du av en arbetsyta för att visualisera och mäta på din 3D-modell. 
+När du väljer **3D-Huggspårsanalys** i sidomenyn möts du av en arbetsyta för att visualisera och mäta på din 3D-modell. 
 Applikationen stödjer standardformaten för 3D-skanningar: `.stl` och `.obj`.
 
-- Fyll i din "Gemini API-nyckel" i inställningspanelen om du avser utföra AI-analys.
 - Klicka på "Ladda upp 3D-fil" och välj din stenmodell.
 
 ### Visualisering & Verktyg
 I 3D-vyn har du flera verktyg (knappar i övre vänstra hörnet):
 - **Ljussättning:** Klicka på kugghjulet för att justera kontrast (omgivningsljus) och ljusstyrka (direktljus) så skuggorna framträder tydligare.
-- **Topografi (Djupkarta):** Klicka på ikonen med skiktlinjer för att byta material till en "Topografisk Shader". Detta fägar modellen baserat på lokalt djup. Du kan justera känsligheten i ljus-menyn för att isolera huggspåren visuellt från stenens yta.
+- **Topografi (Djupkarta):** Klicka på ikonen med skiktlinjer för att byta material till en "Topografisk Shader". Detta färgar modellen baserat på lokalt djup. Du kan justera känsligheten i ljus-menyn för att isolera huggspåren visuellt från stenens yta.
 - **Rensa Snitt:** Raderar din utplacerade mätbana.
 - **Återställ Vy:** Återställer kameravinkeln till standardläget.
 
@@ -74,7 +76,7 @@ När din bana är perfekt placerad, klicka på knappen **Analysera spår / Extra
    - **Spårdjup & Spårbredd (mm).**
 3. En interaktiv 2D-graf visas till höger, som låter dig zooma in och inspektera ett av representant-snitten på mikrometernivå.
 
-Resultatet samt en uppskattning på vilket verktyg som använts presenteras omedelbart på skärmen!
+Resultatet visas direkt, med en tumregel för vilket verktyg som kan ha använts. Tumregeln är inte kalibrerad.
 
 ### Automatisk analys: runor eller ornamentik
 Under fliken för den automatiska analysen väljer du först **Vad ska mätas?**: **Runor** (förvalt) eller
@@ -89,13 +91,18 @@ slingmodellen. Under resultatet står vilken källa som användes, hur stor del 
 mättes. I granskningsbilden syns slingorna som ett ljusblått fält. Ligger en runa utanför det blå, eller ornamentik
 inne i det, har slingorna blivit fel: vrid stenen så att den ristade sidan vetter rakt mot dig och kör igen, eller
 mät runorna för hand med en mätbana. Hittas inga slingor alls visas en varning, och analysen faller tillbaka på den
-äldre igenkänningen, som kan blanda ihop runor och ornamentik. Mätformen är groove-6 (METHODS.md 2c).
+äldre igenkänningen, som kan blanda ihop runor och ornamentik.
+
+Inne i slingorna delas runorna upp efter var strecken står längs slingan: streck som står tätt hör till samma
+runa, och gränsen mellan två runor räknas fram ur stenens egna avstånd. Läget **Stavlösa runor** spelar bara roll
+när inga slingor hittas; då godtas kortare streck (5 mm i stället för 12) som runstreck. Mätmetoden är groove-7
+(METHODS.md 2c).
 
 **Vänd ristade sidan mot mig.** Knappen nere till vänster i 3D-vyn vrider stenen så att du ser rakt på dess bredaste
 sida. Tryck igen för den andra sidan. Analysen mäter det som vetter mot dig, så gör det innan du kör den: på M 15 gav
 en vy 15° snett 91 godkända snitt, en rak vy 449.
 
-**Markera runorna.** I granskningen kan du klicka en gång mitt på varje runa, i läsordning (knappen **Markera
+**Markera runorna.** Vill du bestämma runorna själv kan du i granskningen klicka en gång mitt på varje runa, i läsordning (knappen **Markera
 runorna**). Du behöver inte veta vilken runa det är. Varje snitt som är märkt som runa hör sedan till den närmaste
 markeringen, och måtten räknas med runan som enhet, så att en runa med många snitt inte väger tyngre än en med få.
 Snitt långt från alla markeringar visas bleka och hör inte till någon runa. När du sedan använder runorna som resultat
@@ -202,10 +209,23 @@ Finns både en automatisk analys och en mätning under resultaten, står det i m
 
 ## 4. Analyshistorik & Projekt
 
-Klicka på **Min Forskning** (eller "Projekt") i huvudmenyn.
+Dina sparade projekt står på sidan **Start** i sidomenyn.
 - Så fort du klickar på "Analysera" sparas ditt tvärsnitt ner till det aktiva projektet.
 - Här kan du bygga upp ett bibliotek av analyser (t.ex. spara Snitt 1 från en runa och Snitt 2 från en annan runa).
 - Mätningarna exporteras från 3D-sidan under **Exportera** (bilder, mättabeller och hela analysen, se *Exportera bilder och mätdata* ovan), och **Skapa stenrapport** samlar figurer, mättabeller, kvalitetskontroll och kända brister i ett dokument (Word, LaTeX eller Markdown).
 
 ---
-*Dokumentationen gäller Vitki (webbappen i Next.js och analysmotorn i FastAPI).*
+
+## 5. Appens övriga delar
+
+Sidomenyn har fyra grupper: *Analysera* (Stenanalys och 3D-Huggspårsanalys), *Inskriften* (Inskrifter ur Rundata,
+Syntes & Attribuering och Jämför stenar), *Korpusen* (Karta, Mätkorpus, Runbibliotek, Ristarna, Stenöversikt,
+Forskningsluckor och Statistik i R) och *Resurser* (Start, Dokumentation & Om och Rapporter). Varje del beskrivs i
+README.md under *Funktioner* och metoderna i METHODS.md.
+
+**AI-assistenten Rune** nere i högra hörnet är valfri. Den kräver en egen API-nyckel (Claude eller Gemini) under
+**Inställningar & API**. Samma nyckel används, om den finns, för att föreslå ett signum ur filnamnet och läsa
+K-samsöks poster. Mätningar, statistik, syntes och rapporter räknas utan AI.
+
+---
+*Dokumentationen gäller Vitki 3.1 (webbappen i Next.js och analysmotorn i FastAPI).*
