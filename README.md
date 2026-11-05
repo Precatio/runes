@@ -1,11 +1,11 @@
 # Vitki
 
-Ett modernt, modulärt och öppet forskningsverktyg för analys av runstenar. Appen består av en webbapp i Next.js och ett Python-API (FastAPI), och syftar till att samla spjutspetsen inom runforskning – från 3D-skannad huggspårsanalys till geografiska informationssystem (GIS) och AI-drivna expertmodeller – i en och samma plattform.
+Ett modernt, modulärt och öppet forskningsverktyg för analys av runstenar. Appen består av en webbapp i Next.js och ett Python-API (FastAPI), och syftar till att samla spjutspetsen inom runforskning – från 3D-skannad huggspårsanalys till geografiska informationssystem (GIS) och statistiska modeller som prövas mot kända fall – i en och samma plattform.
 
 ## Projektets Filosofi: Open Source & Runattribuering
 Det här projektet drivs av övertygelsen att **forskning och kunskap mår bäst av att vara fri**. Källkoden och verktygen här är helt öppna (Open Source) och släpps fria för forskningens bästa. Syftet är att demokratisera tillgången till avancerade metoder för att vi tillsammans ska kunna lösa arkeologiska och historiska mysterier. 
 
-Ett av appens huvudsakliga mål är **runristarattribuering** – att med hjälp av kvantitativ data (som spårdjup, huggvinklar i 3D-modeller och lingvistiska mönster) samt artificiell intelligens hitta tidigare okända samband mellan olika runstenar. Tänk om vi, tack vare öppen källkod och datadriven analys, kan bevisa att två stenar miltals från varandra faktiskt är huggna av samma obekanta mästare!
+Ett av appens huvudsakliga mål är **runristarattribuering** – att med hjälp av kvantitativ data (som spårdjup, huggvinklar i 3D-modeller och lingvistiska mönster) samt statistiska modeller som prövas i låsta, förregistrerade planer hitta tidigare okända samband mellan olika runstenar. Tänk om vi, tack vare öppen källkod och datadriven analys, kan bevisa att två stenar miltals från varandra faktiskt är huggna av samma obekanta mästare!
 
 ## Kör på tio minuter
 
@@ -38,10 +38,10 @@ skriver den bara text eller gör en uttalat okalibrerad bedömning; siffror, tab
 *   **Forskningsluckor** (14)**:** täckning per landskap med klickbara siffror, appens resultat mot befintlig forskning (stämmer, nytt, motsäger, med uppskattning av belägg, nyhet och relevans, och avstämning mot Runor 2020 och Wikidata), inskrifternas syfte per ristare, ortografiska hypoteser, attribueringar att ompröva och vilka ristare som mest behöver mätas. Alla tabeller kan sorteras.
 *   **Rapporter** (15)**:** stenrapport i artikelform (runologisk presentation enligt SRI/Futhark, 3D-paradata, figurer ur skanningen, läsning och attribuering) och korpusrapport för flera stenar. Export till Word, LaTeX och Markdown.
 *   **Jämför stenar** (4)**:** permutationstest per mått och samlat, effektstorlek och överlagrade profiler.
-*   **Karta och stilgrupper:** geografisk spridning per period, stilgrupp och ristare; Gräslunds kronologi med fördelningen i Rundata.
+*   **Karta:** geografisk spridning per period, stilgrupp och ristare, och de gamla landen (folkland, små land och tredingar) som kartlager.
 
 **Resurser**
-*   **AI-assistent** med tillgång till Rundata och den senaste analysen, **Runologiskt arkiv** och **dokumentation** i appen.
+*   **AI-assistent** med tillgång till Rundata och den senaste analysen, och **dokumentation** i appen.
 
 ## Arkitektur
 
@@ -68,7 +68,7 @@ Kräver Python 3.11+ (utvecklas på 3.13) och Node.js 20+.
    ANTHROPIC_API_KEY=sk-ant-...   # Claude (standard)
    GEMINI_API_KEY=AIza...         # valfritt alternativ
    ```
-4. Bygg Rundata-filen (laddar ner Samnordisk runtextdatabas, ca 2 MB):
+4. Rundata-filen `data/rundata.json` följer med i repot. Vill du bygga om den från Samnordisk runtextdatabas:
    ```bash
    .venv/bin/python -m scripts.build_rundata
    ```
@@ -148,6 +148,30 @@ cd web && npx firebase-tools deploy --only firestore   # bara regelfilen; "fires
 Citera enligt [CITATION.cff](CITATION.cff). För en citerbar DOI: koppla GitHub-repot till
 [Zenodo](https://zenodo.org/account/settings/github/) och skapa en release – metadata hämtas från `.zenodo.json`.
 Uppgifter ur Rundata ska citeras som Samnordisk runtextdatabas (se [data/README.md](data/README.md)).
+
+## Data och innehåll från andra källor
+
+Koden är licensierad under GPL-3.0 med tilläggsvillkoren i `NOTICE` (se Licens nedan). Data och bilder från andra
+källor som ligger i repot behåller sina egna licenser, och de ska anges när de används vidare:
+
+| Källa | Filer | Licens |
+|---|---|---|
+| Samnordisk runtextdatabas (Rundata), Uppsala universitet | `data/rundata.json` och tabeller härledda ur den | ODbL 1.0 / DbCL |
+| OpenStreetMap | `web/public/geo/riken.geojson`, `web/public/geo/land.geojson`, `data/dk/runesten_koordinater.csv` | ODbL 1.0 |
+| Wikidata och Institutet för språk och folkminnen (ortnamnsregistret) | `data/geo/socknar_harader.json`, `data/geo/socknar_land.csv` | CC0 (Wikidata), CC BY (ISOF) |
+| Riksantikvarieämbetet, Kulturmiljöregistret via K-samsök | `data/stone_dimensions.json`, `data/raa/` | Riksantikvarieämbetets öppna data (CC0) |
+| SCB, namnstatistik | `data/namn/scb_tilltalsnamn.json` | SCB:s öppna data (CC BY 4.0) |
+| Svenskt diplomatariums huvudkartotek (SDHK) via Språkbanken Korp | `utdata/namnarv/` | CC BY 4.0 |
+| 3D-skanningar från Zenodo (Kitzler Åhfeldt, Zedig m.fl.; Riksantikvarieämbetet) | `utdata/Rak/`, `data/runmodell/`, `data/runbibliotek/`, skanningsfigurer | CC BY 4.0, krediteras i `src/scan_sources.py` |
+| Sveriges geologiska undersökning, strandförskjutningsmodell och berggrund | figurer i `utdata/strand/` och kartor | CC BY 4.0 |
+| Neotoma pollendatabas | `utdata/landprofiler/skog_pollen.json` | CC BY 4.0 |
+| RuneS-DB (Göttingen) | `utdata/kallor/skane_runformer.json`, `utdata/kallor/blekinge.json` | CC BY-SA 4.0 |
+| Wikipedia och Wiktionary | `utdata/namn_utanfor/`, `utdata/overlevde/politik_underlag.json` | CC BY-SA 4.0 |
+
+Korta citat ur forskningslitteratur står med källhänvisning i analysfilerna (citaträtt). Text som inte är fri att sprida
+vidare, till exempel avskrifter av bilagor ur avhandlingar och normaliserade utgåvor av Eddan, hålls utanför
+release-arkivet (`.gitattributes`, `export-ignore`). Vitkis forskningsrapporter är licensierade CC BY 4.0, vilket står
+i varje rapport.
 
 ## Tester
 

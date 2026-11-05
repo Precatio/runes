@@ -3,7 +3,7 @@ tabell per sten: avdelning (1.A hela vikingatida runstenar med bilder, 1.A till�
 eftervikingatida), signum, stil, datering, ristare, bild (Sterns ord) och mått. Kolumnerna läses efter rubrikradens lägen
 (behålls över sidor utan rubrik); signum tas från postraden själv; fotnoter nederst på sidan hoppas över. Skriver
 data/cache/literature/stern2013_bilder.csv (utanför kodförrådet: katalogen är Sterns sammanställning, vi publicerar bara
-det vi räknar ur den) och stern_kontroll.txt här för granskning.
+det vi räknar ur den) och stern_kontroll.txt i data/cache/litteraturdata för granskning (utanför kodförrådet).
     .venv/bin/python utdata/litteraturdata/stern_katalog.py"""
 import csv
 import os
@@ -19,6 +19,9 @@ from src.signum import fold_signum  # noqa: E402
 PDF = os.environ.get("STERN_PDF", "/Volumes/2TB/litteratur/stern2013.pdf")
 OUT = os.path.join(ROOT, "data", "cache", "literature", "stern2013_bilder.csv")
 HERE = os.path.dirname(os.path.abspath(__file__))
+# the review files quote Stern\'s appendix and stay out of the repository (analysplaner/2026-10-30-bilderna-pa-runstenarna.md)
+CACHE = os.path.join(os.path.dirname(os.path.dirname(HERE)), "data", "cache", "litteraturdata")
+os.makedirs(CACHE, exist_ok=True)
 COLS = ["SIGLUM AND PLACE", "REGION", "STYLE", "PERIOD", "CARVER", "IMAGE", "STONE", "STATUS", "MONUMENT TYPE"]
 ENTRY = re.compile(r"^\s*(\d{1,3})\.\s+(.*)$")
 SIG = re.compile(r"^\[?(DR|N|U|Sö|Ög|Vg|Sm|Öl|G|Vs|Gs|Nä|Hs|M|Bo|D|J|Vr|Vå|IM|E|Sc|Or|Br|DK)\]?\s+([^\s฀]+)")
@@ -92,14 +95,14 @@ with open(OUT, "w", newline="", encoding="utf-8") as fh:
     w = csv.DictWriter(fh, fieldnames=list(out[0]))
     w.writeheader()
     w.writerows(out)
-with open(os.path.join(HERE, "stern_kontroll.txt"), "w", encoding="utf-8") as fh:
+with open(os.path.join(CACHE, "stern_kontroll.txt"), "w", encoding="utf-8") as fh:
     fh.write(f"{len(out)} poster: " + ", ".join(f"{k} {v}" for k, v in Counter(r['section'] for r in out).items()) + "\n")
     for r in out:
         fh.write(f"{r['section']:11} {r['nr']:4} {r['signum']:16} {r['style'][:12]:12} {r['period'][:20]:20} | {r['image']}\n")
 print(len(out), "poster;", dict(Counter(r["section"] for r in out)))
 import random  # noqa: E402
 random.seed(7)
-with open(os.path.join(HERE, "stern_granskning.txt"), "w", encoding="utf-8") as fh:
+with open(os.path.join(CACHE, "stern_granskning.txt"), "w", encoding="utf-8") as fh:
     fh.write("30 slumpade poster: Sterns bildcell → våra kategorier (granska att kategorierna stämmer)\n\n")
     for r in random.sample(out, 30):
         fh.write(f"{r['section']:11} {r['signum']:14} | {r['image']}\n    → {', '.join(k for k in CLASSES if r[k]) or '(ingen kategori)'}\n")

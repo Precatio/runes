@@ -36,7 +36,18 @@ from api.config import METHOD_VERSION  # noqa: E402
 METHOD = METHOD_VERSION  # the current measurement method (groove-7 since 2026-11-03)
 REF = os.path.join(ROOT, "utdata", "Rak", "referenser_g" + METHOD.split("-")[1])
 MAX_SLICES = 200
-FOUNDER_EMAIL = "viktor.kvant@gmail.com"
+def _founder_email() -> str:
+    """The founder's login e-mail, from the environment or the local .env (kept out of the code and the archive)."""
+    if os.environ.get("FOUNDER_EMAIL"):
+        return os.environ["FOUNDER_EMAIL"]
+    env = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env")
+    for line in open(env, encoding="utf-8") if os.path.exists(env) else []:
+        if line.startswith("FOUNDER_EMAIL="):
+            return line.split("=", 1)[1].strip().strip('"')
+    raise SystemExit("FOUNDER_EMAIL saknas i miljön och i .env")
+
+
+FOUNDER_EMAIL = _founder_email()
 SCAN = {"scanned_by": "Laila Kitzler Åhfeldt, Riksantikvarieämbetet",
         "url": "https://doi.org/10.5281/zenodo.11951255", "license": "CC BY 4.0"}
 
