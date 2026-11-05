@@ -1,0 +1,210 @@
+{
+ "stones": {
+  "Sö 112": {
+   "n_detected": 68,
+   "n_paired": 58,
+   "coverage": 0.9482758620689655,
+   "null": 0.9350683322260809,
+   "null_sd": 0.02429821971731005
+  },
+  "Sö 113": {
+   "n_detected": 64,
+   "n_paired": 62,
+   "coverage": 0.9516129032258065,
+   "null": 0.9477569187378814,
+   "null_sd": 0.02108265377705151
+  },
+  "Sö 128": {
+   "n_detected": 58,
+   "n_paired": 56,
+   "coverage": 0.875,
+   "null": 0.8976791310522397,
+   "null_sd": 0.03550108521359306
+  },
+  "Sö 129": {
+   "n_detected": 45,
+   "n_paired": 38,
+   "coverage": 0.9736842105263158,
+   "null": 0.9349472781051729,
+   "null_sd": 0.029031949406962927
+  },
+  "Sö 131": {
+   "n_detected": 29,
+   "n_paired": 29,
+   "coverage": 1.0,
+   "null": 1.0,
+   "null_sd": 0.0
+  },
+  "Sö 134": {
+   "n_detected": 65,
+   "n_paired": 54,
+   "coverage": 0.9814814814814815,
+   "null": 0.9034625610911183,
+   "null_sd": 0.02925279386124502
+  },
+  "Sö 143": {
+   "n_detected": 81,
+   "n_paired": 56,
+   "coverage": 1.0,
+   "null": 0.9785714285714286,
+   "null_sd": 0.018385053823191073
+  },
+  "Sö 149": {
+   "n_detected": 9,
+   "n_paired": 9,
+   "coverage": 1.0,
+   "null": 1.0,
+   "null_sd": 0.0
+  },
+  "Sö 160": {
+   "n_detected": 19,
+   "n_paired": 19,
+   "coverage": 0.9473684210526315,
+   "null": 0.9473684210526315,
+   "null_sd": 0.028827503026587688
+  },
+  "Sö 163": {
+   "n_detected": 31,
+   "n_paired": 31,
+   "coverage": 0.967741935483871,
+   "null": 0.9612903225806452,
+   "null_sd": 0.01935483870967744
+  },
+  "Sö 165": {
+   "n_detected": 26,
+   "n_paired": 26,
+   "coverage": 1.0,
+   "null": 1.0,
+   "null_sd": 0.0
+  },
+  "Sö 184": {
+   "n_detected": 38,
+   "n_paired": 38,
+   "coverage": 1.0,
+   "null": 0.9815789473684211,
+   "null_sd": 0.014652011481131634
+  },
+  "Sö 319": {
+   "n_detected": 53,
+   "n_paired": 50,
+   "coverage": 0.94,
+   "null": 0.9103829078801331,
+   "null_sd": 0.03149392584883455
+  },
+  "Sö 52": {
+   "n_detected": 31,
+   "n_paired": 31,
+   "coverage": 0.9354838709677419,
+   "null": 0.9205839822024471,
+   "null_sd": 0.030945532034888767
+  },
+  "Sö 75": {
+   "n_detected": 61,
+   "n_paired": 39,
+   "coverage": 1.0,
+   "null": 1.0,
+   "null_sd": 0.0
+  },
+  "Sö Fv1948;282": {
+   "n_detected": 49,
+   "n_paired": 32,
+   "coverage": 1.0,
+   "null": 0.975,
+   "null_sd": 0.021194781197266466
+  },
+  "Sö Fv1973;189": {
+   "n_detected": 55,
+   "n_paired": 38,
+   "coverage": 1.0,
+   "null": 0.9960526315789474,
+   "null_sd": 0.009396616353345846
+  }
+ },
+ "reliable": [
+  "Sö 134"
+ ],
+ "all": {
+  "n": 157,
+  "stones": 17,
+  "means": {
+   "utan": {
+    "word_ok": 0.535031847133758,
+    "right": 0.46496815286624205,
+    "p_truth": 0.37911286669112554
+   },
+   "skanner": {
+    "word_ok": 0.5987261146496815,
+    "right": 0.5095541401273885,
+    "p_truth": 0.41371665087376136
+   },
+   "omflyttad": {
+    "word_ok": 0.5286624203821656,
+    "right": 0.4713375796178344,
+    "p_truth": 0.36450700138944664
+   }
+  },
+  "skanner_vs_utan": {
+   "mean_diff": 0.0346037841826359,
+   "n_changed": 113,
+   "n_plus": 74,
+   "p": 3.7464413031048807e-06,
+   "alt": "greater"
+  },
+  "skanner_vs_omflyttad": {
+   "mean_diff": 0.049209649484314825,
+   "n_changed": 124,
+   "n_plus": 90,
+   "p": 2.0546598453838433e-08,
+   "alt": "greater"
+  },
+  "omflyttad_vs_utan": {
+   "mean_diff": -0.014605865301678931,
+   "n_changed": 110,
+   "n_plus": 39,
+   "p": 0.008794201480371444,
+   "alt": "two-sided"
+  }
+ },
+ "reliable_only": {
+  "n": 14,
+  "stones": 1,
+  "means": {
+   "utan": {
+    "word_ok": 0.7142857142857143,
+    "right": 0.6428571428571429,
+    "p_truth": 0.4479705272540846
+   },
+   "skanner": {
+    "word_ok": 0.7142857142857143,
+    "right": 0.6428571428571429,
+    "p_truth": 0.49799228246824595
+   },
+   "omflyttad": {
+    "word_ok": 0.7142857142857143,
+    "right": 0.6428571428571429,
+    "p_truth": 0.39930137188660647
+   }
+  },
+  "skanner_vs_utan": {
+   "mean_diff": 0.0500217552141614,
+   "n_changed": 11,
+   "n_plus": 8,
+   "p": 0.05078125,
+   "alt": "greater"
+  },
+  "skanner_vs_omflyttad": {
+   "mean_diff": 0.09869091058163938,
+   "n_changed": 12,
+   "n_plus": 10,
+   "p": 0.001220703125,
+   "alt": "greater"
+  },
+  "omflyttad_vs_utan": {
+   "mean_diff": -0.048669155367478,
+   "n_changed": 10,
+   "n_plus": 2,
+   "p": 0.16015625,
+   "alt": "two-sided"
+  }
+ }
+}

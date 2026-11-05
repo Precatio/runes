@@ -84,10 +84,10 @@ export const REPORT_TERMS: ReportTerm[] = [
   {
     id: "halvorna",
     sv: { term: "Halvorna",
-          what: "Materialet delas en gång för alla, socken för socken, i två halvor, och ett fynd ska hålla i var halva för sig.",
+          what: "Materialet delas socken för socken i två halvor. Ett fynd ska hålla i var halva för sig.",
           read: "Det är som att pröva fyndet på nytt material. Ett mönster som bara finns i en halva kan bero på några få socknar eller ristare." },
     en: { term: "The halves",
-          what: "The material is divided once and for all, parish by parish, into two halves, and a finding must hold in each half on its own.",
+          what: "The material is divided parish by parish into two halves. A finding must hold in each half on its own.",
           read: "It is like testing the finding on new material. A pattern found in only one half may depend on a few parishes or carvers." },
   },
   {

@@ -5,7 +5,8 @@ spårblobbar utanför stavarnas egen bredd och slinglinjerna, fästa vid närmas
 huggdjup mot sin stav, avlånghet och längd, och varje runmall betalar ett pris per bistavsplats; kostnaderna blir
 en sannolikhetsfördelning över de sexton runorna. Valideringen (utdata/sparlasare, led A–G): på 157 maskerade
 helord på 17 skannade stenar lyfte spåren andelen rätt ord från 53,5 till 59,9 procent (parat p = 3,7e-6), och
-slumpvis omflyttade spår raderade vinsten. Vid svårt vittrade partier kan blobbarna ändå vilseleda, och en
+slumpvis omflyttade spår raderade vinsten. Parningen mellan skanning och text såg dock svaret (rapporten om
+spårläsaren, version 3), så provet visar inte hur mycket spåren hjälper när svaret är okänt. Vid svårt vittrade partier kan blobbarna ändå vilseleda, och en
 bindruna ser ut som en runa med för många bistavar. Därför är allt här FÖRSLAG: panelen visar vad skannern ser,
 och spåren räknas först när användaren har bekräftat dem (de postas till det vanliga spår-API:t). En runa med
 fler djupa bistavar än den rikaste mallen rymmer föreslår ingenting ("möjlig bindruna").

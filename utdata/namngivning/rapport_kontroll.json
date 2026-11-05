@@ -1,0 +1,17 @@
+{
+ "korpus": "3f58e9339191761e",
+ "korpus_beraknad": "2026-10-28",
+ "n_runstenar": 2321,
+ "stilgrupper_ar": {
+  "tidig_fran": 980,
+  "tidig_till": 1050,
+  "sen_fran": 1050,
+  "sen_till": 1130
+ },
+ "personkontroll": {
+  "urval": "40 nya slumpvisa läsbara svenska runstenar utan urval 1, random.seed(20261029); kodade före jämförelsen",
+  "n": 40,
+  "relationsgrupp_ratt": 38,
+  "regel": "src/people.py (den dödes släktrelation till resaren, i grupper)"
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "beskrivning": "Attribueringsmodellen efter ändringen 2026-11-04 (korsform ur Runor 2020 som drag, kalibrerade fält p_cal, gränsen för 'någon annan' på sockengrupperade sannolikheter) och Stenöversiktens förslag med den.",
+ "commits": [
+  "fe616f4",
+  "7963a9d"
+ ],
+ "corpus": "3691a2c441dd03f4",
+ "computed_at": "2026-11-04T11:39:44.189863+00:00",
+ "r_version": "R version 4.6.1 (2026-06-24)",
+ "attribution_sha256": "e4737b2d5d0c43eb8e1f8e8a7aed89bdb4cf710b2eb9b87c517b15dbd9b8afb3",
+ "n_train": 497,
+ "n_carvers": 18,
+ "accuracy": 0.74,
+ "top3": 0.891,
+ "accuracy_socken": 0.692,
+ "accuracy_harad": 0.606,
+ "accuracy_stil": 0.539,
+ "someone_else_threshold": 0.335,
+ "cross_form_feature": true,
+ "calibrated_fields": true,
+ "overview": {
+  "key": "03105c9825cb9214",
+  "sha256": "91328d6b3b6637d3d30a425bd39727e2e94f83def6598935936354223defafc4",
+  "counts": {
+   "nytt förslag": 106,
+   "möjligt förslag": 313,
+   "inget förslag": 1131
+  },
+  "n_unattributed": 1550
+ }
+}

@@ -1,0 +1,202 @@
+{
+ "stones": {
+  "Sö 129": {
+   "n_detected": 45,
+   "n_paired": 38,
+   "coverage": 0.9736842105263158,
+   "null": 0.9349472781051729,
+   "null_sd": 0.029031949406962927
+  }
+ },
+ "rows": [
+  {
+   "sig": "Sö 129",
+   "truth": "biurn",
+   "word": "biorn",
+   "n": 5,
+   "utan": {
+    "top": "þuriR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.06193984331954832,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "þuriR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.05750403000146765,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "tusti",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0012191309796152907,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 129",
+   "truth": "raisþi",
+   "word": "ræisþi",
+   "n": 6,
+   "utan": {
+    "top": "raistu",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.02469990058560248,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "raistu",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.02547569113294308,
+    "traced": 6
+   },
+   "omflyttad": {
+    "top": "raistu",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.02435872618982197,
+    "traced": 6
+   }
+  },
+  {
+   "sig": "Sö 129",
+   "truth": "stain",
+   "word": "stæin",
+   "n": 5,
+   "utan": {
+    "top": "stain",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8780142303203999,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "stain",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8390407692218154,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "stain",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8769737250336547,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 129",
+   "truth": "þansi",
+   "word": "þannsi",
+   "n": 5,
+   "utan": {
+    "top": "þansi",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.3744354439381713,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "þansi",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.5211215097425204,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "þansi",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.3542339273943353,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 129",
+   "truth": "iftiR",
+   "word": "æftiR",
+   "n": 5,
+   "utan": {
+    "top": "eftiR",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.29649435460420503,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "eftiR",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.2849703613648594,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "aftiR",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.13893816246283267,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 129",
+   "truth": "hailka",
+   "word": "hælga",
+   "n": 6,
+   "utan": {
+    "top": "þurkut",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "ikialt",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 6
+   },
+   "omflyttad": {
+    "top": "inkuar",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 6
+   }
+  },
+  {
+   "sig": "Sö 129",
+   "truth": "bruþur",
+   "word": "broður",
+   "n": 6,
+   "utan": {
+    "top": "bruþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.20995839745701517,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "bruþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.5412925470349655,
+    "traced": 6
+   },
+   "omflyttad": {
+    "top": "bruþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.12465563312561095,
+    "traced": 6
+   }
+  }
+ ]
+}

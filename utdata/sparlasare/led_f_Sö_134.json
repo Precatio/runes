@@ -1,0 +1,391 @@
+{
+ "stones": {
+  "Sö 134": {
+   "n_detected": 65,
+   "n_paired": 54,
+   "coverage": 0.9814814814814815,
+   "null": 0.9034625610911183,
+   "null_sd": 0.02925279386124502
+  }
+ },
+ "rows": [
+  {
+   "sig": "Sö 134",
+   "truth": "auk",
+   "word": "ok",
+   "n": 3,
+   "utan": {
+    "top": "auk",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.3816696755280873,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "auk",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.6145378700081783,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "auk",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.28840803213553545,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö 134",
+   "truth": "staina",
+   "word": "stæina",
+   "n": 6,
+   "utan": {
+    "top": "fuluki",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.014289376774981944,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "brantr",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.015409157356320207,
+    "traced": 6
+   },
+   "omflyttad": {
+    "top": "fuluki",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.003188916400004193,
+    "traced": 6
+   }
+  },
+  {
+   "sig": "Sö 134",
+   "truth": "raisa",
+   "word": "ræisa",
+   "n": 5,
+   "utan": {
+    "top": "þansi",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0018220442942737116,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "þansi",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0028453048749419404,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "ristu",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0011743257627595148,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 134",
+   "truth": "eftiR",
+   "word": "æftiR",
+   "n": 5,
+   "utan": {
+    "top": "stain",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.06898743101259042,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "stain",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.07379552655925041,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "stain",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.06898743101259042,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 134",
+   "truth": "ofaih",
+   "word": "ofæig",
+   "n": 5,
+   "utan": {
+    "top": "kunar",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "suain",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "kunar",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö 134",
+   "truth": "sun",
+   "word": "sun",
+   "n": 3,
+   "utan": {
+    "top": "sun",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8926703487094072,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "sun",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9588643440660356,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "sun",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.6186754440291837,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö 134",
+   "truth": "sin",
+   "word": "sinn",
+   "n": 3,
+   "utan": {
+    "top": "sin",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.5464871611536499,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "sin",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.5457853368724345,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "sin",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.5464871611536499,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 134",
+   "truth": "hialbi",
+   "word": "hialpi",
+   "n": 6,
+   "utan": {
+    "top": "hialbi",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7969066162986804,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "hialbi",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7381106672440586,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "hialbi",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.34284094723780706,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 134",
+   "truth": "kristr",
+   "word": "kristr",
+   "n": 6,
+   "utan": {
+    "top": "kristr",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.5474637995760527,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "kristr",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9574156260352471,
+    "traced": 6
+   },
+   "omflyttad": {
+    "top": "kristr",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9564676490358616,
+    "traced": 6
+   }
+  },
+  {
+   "sig": "Sö 134",
+   "truth": "ant",
+   "word": "and",
+   "n": 3,
+   "utan": {
+    "top": "ant",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.699664006785154,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "ant",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.6841354768378223,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "ant",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.48260240318197933,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 134",
+   "truth": "hans",
+   "word": "hans",
+   "n": 4,
+   "utan": {
+    "top": "hans",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.796384357632089,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "hans",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8217431859913578,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "hans",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7914812568585509,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö 134",
+   "truth": "auk",
+   "word": "ok",
+   "n": 3,
+   "utan": {
+    "top": "auk",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7306261277183053,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "auk",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7646330226358847,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "auk",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.765365440696898,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö 134",
+   "truth": "selu",
+   "word": "selu",
+   "n": 4,
+   "utan": {
+    "top": "salu",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "salu",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.0,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "salu",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.0,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö 134",
+   "truth": "hans",
+   "word": "hans",
+   "n": 4,
+   "utan": {
+    "top": "hans",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7946164360739114,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "hans",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7946164360739114,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "hans",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7245401989076712,
+    "traced": 4
+   }
+  }
+ ]
+}

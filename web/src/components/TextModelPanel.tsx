@@ -71,7 +71,8 @@ function Boundary({ xs }: { xs: TextModelBoundary[] }) {
 
 // What the scan's trace reader sees at the gap: branch evidence and a proposed rune set per lost rune. Proposals
 // only – nothing counts until the user takes them into the trace picker and recomputes (led F: real scan traces
-// lifted whole-word filling 53.5 → 59.9 %, but weathered patches can mislead, so the user confirms).
+// lifted whole-word filling 53.5 → 59.9 %, but the scan–text pairing saw the answer, so the real gain on unknown gaps
+// is untested; weathered patches can mislead too, so the user confirms).
 function ScanProposal({ entries, n, onUse }: { entries: ScanTraceEntry[]; n: number; onUse: (v: string[]) => void }) {
   const blobText = (e: ScanTraceEntry) =>
     e.blobs.length === 0

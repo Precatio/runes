@@ -52,7 +52,7 @@ def header(body_en: str) -> dict:
     """Rubrikraden överst i den engelska texten: *Viktor Kvant, independent researcher. … Keywords: …*"""
     line = body_en.strip().splitlines()[0].strip("* ")
     m = re.search(r"Report version (\d+), (\d{4}-\d{2}-\d{2})", line)
-    v = re.search(r"made in Vitki ([\d.]+)", line)
+    v = re.search(r"(?:made|done) in Vitki (\d+(?:\.\d+)*)", line)
     k = re.search(r"Keywords: ([^.]+)\.", line)
     lvl = re.search(r"independent researcher\. ([^.]+)\.", line)
     assert m and v and k, line[:200]

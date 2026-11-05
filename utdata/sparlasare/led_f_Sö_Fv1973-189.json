@@ -1,0 +1,229 @@
+{
+ "stones": {
+  "Sö Fv1973;189": {
+   "n_detected": 55,
+   "n_paired": 38,
+   "coverage": 1.0,
+   "null": 0.9960526315789474,
+   "null_sd": 0.009396616353345846
+  }
+ },
+ "rows": [
+  {
+   "sig": "Sö Fv1973;189",
+   "truth": "urmar",
+   "word": "ormarr",
+   "n": 5,
+   "utan": {
+    "top": "þuriR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "þurþr",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "þuriR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö Fv1973;189",
+   "truth": "raisti",
+   "word": "ræisti",
+   "n": 6,
+   "utan": {
+    "top": "raisti",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8023392880182939,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "raisti",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8025207893424157,
+    "traced": 6
+   },
+   "omflyttad": {
+    "top": "raisti",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8023392880182939,
+    "traced": 6
+   }
+  },
+  {
+   "sig": "Sö Fv1973;189",
+   "truth": "stin",
+   "word": "stæin",
+   "n": 4,
+   "utan": {
+    "top": "stin",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7254123912511203,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "stin",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8091726323591366,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "stin",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.5889223091764471,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö Fv1973;189",
+   "truth": "þisa",
+   "word": "þessa",
+   "n": 4,
+   "utan": {
+    "top": "þina",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.03360451727624587,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "þina",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.03851021020777162,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "þina",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.11325689088169986,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö Fv1973;189",
+   "truth": "aftiR",
+   "word": "æftiR",
+   "n": 5,
+   "utan": {
+    "top": "eftiR",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.12825559910316958,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "eftiR",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.1260646778895843,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "aftiR",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.32699731107124413,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö Fv1973;189",
+   "truth": "þurkil",
+   "word": "þorkel",
+   "n": 6,
+   "utan": {
+    "top": "uifast",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.07054820754925363,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "þurkut",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0951911599034941,
+    "traced": 6
+   },
+   "omflyttad": {
+    "top": "þurkut",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.08158721118278568,
+    "traced": 6
+   }
+  },
+  {
+   "sig": "Sö Fv1973;189",
+   "truth": "faþur",
+   "word": "faður",
+   "n": 5,
+   "utan": {
+    "top": "faþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9597768889251476,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "faþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9437591854495825,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "faþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9474726083594267,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö Fv1973;189",
+   "truth": "sin",
+   "word": "sinn",
+   "n": 3,
+   "utan": {
+    "top": "sin",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9235257207533618,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "sin",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9235257207533618,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "sin",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.924926292143993,
+    "traced": 3
+   }
+  }
+ ]
+}

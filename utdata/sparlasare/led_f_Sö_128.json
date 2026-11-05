@@ -1,0 +1,364 @@
+{
+ "stones": {
+  "Sö 128": {
+   "n_detected": 58,
+   "n_paired": 56,
+   "coverage": 0.875,
+   "null": 0.8976791310522397,
+   "null_sd": 0.03550108521359306
+  }
+ },
+ "rows": [
+  {
+   "sig": "Sö 128",
+   "truth": "þoruþr",
+   "word": "þoruðr",
+   "n": 6,
+   "utan": {
+    "top": "þurkil",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "þurkil",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 6
+   },
+   "omflyttad": {
+    "top": "þurkil",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 6
+   }
+  },
+  {
+   "sig": "Sö 128",
+   "truth": "auk",
+   "word": "ok",
+   "n": 3,
+   "utan": {
+    "top": "auk",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.34777630312258667,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "auk",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.41672515394855386,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "lit",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.09237694132116368,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö 128",
+   "truth": "þaR",
+   "word": "þaR",
+   "n": 3,
+   "utan": {
+    "top": "lit",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.00010810445024966704,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "lit",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.00010710950260197577,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "lit",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.00010678531297022262,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 128",
+   "truth": "rasa",
+   "word": "ræisa",
+   "n": 4,
+   "utan": {
+    "top": "litu",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.001988047079277949,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "ritu",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.003635779125242343,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "ritu",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0008759094383715397,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 128",
+   "truth": "stan",
+   "word": "stæin",
+   "n": 4,
+   "utan": {
+    "top": "stin",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.08240525465350466,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "stin",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.08230376127764774,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "stin",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.06685031942052899,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö 128",
+   "truth": "at",
+   "word": "at",
+   "n": 2,
+   "utan": {
+    "top": "at",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8739195395491847,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "at",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8737729016709143,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "at",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8825149735311301,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 128",
+   "truth": "moþur",
+   "word": "moður",
+   "n": 5,
+   "utan": {
+    "top": "moþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.24236290560553073,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "moþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.23590741991313405,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "moþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.24107738126978484,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 128",
+   "truth": "sina",
+   "word": "sina",
+   "n": 4,
+   "utan": {
+    "top": "sina",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8408231804844825,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "sina",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8557572915380551,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "sina",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8408231804844825,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 128",
+   "truth": "ak",
+   "word": "ok",
+   "n": 2,
+   "utan": {
+    "top": "uk",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.03712189136282783,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "uk",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.03709544447767277,
+    "traced": 1
+   },
+   "omflyttad": {
+    "top": "Ru",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.020778899646329178,
+    "traced": 1
+   }
+  },
+  {
+   "sig": "Sö 128",
+   "truth": "kar",
+   "word": "karr",
+   "n": 3,
+   "utan": {
+    "top": "auk",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "bru",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "bru",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö 128",
+   "truth": "at",
+   "word": "at",
+   "n": 2,
+   "utan": {
+    "top": "uk",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.054375237122656406,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "uk",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.058606870251477636,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "uk",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.015856581536184185,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 128",
+   "truth": "kunu",
+   "word": "kunu",
+   "n": 4,
+   "utan": {
+    "top": "suni",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.13222753584376923,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "suni",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.3714402172424985,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "suni",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.12153879165157044,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö 128",
+   "truth": "sina",
+   "word": "sina",
+   "n": 4,
+   "utan": {
+    "top": "sina",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8245016548981478,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "sina",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8229652283137331,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "sina",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.5975927639666699,
+    "traced": 4
+   }
+  }
+ ]
+}

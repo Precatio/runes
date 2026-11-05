@@ -1,0 +1,479 @@
+{
+ "syfte": "kontroll efter granskningen 2026-11-05; den låsta analysen är oförändrad",
+ "enhet": "cg = gon (centesimalgrader, 400 per varv, 1 gon = 0,9 grader); grader och ° läses som grader",
+ "rattade_ristningar": [
+  {
+   "signum": "Sö 348",
+   "text": "vetter mot S 10cg V",
+   "last": 180.0,
+   "ratt": 189.0,
+   "fel_grader": 9.0
+  },
+  {
+   "signum": "U 34",
+   "text": "vetter mot Ö 20cg S",
+   "last": 90.0,
+   "ratt": 108.0,
+   "fel_grader": 18.0
+  },
+  {
+   "signum": "U 949",
+   "text": "vetter mot S 40cg Ö",
+   "last": 180.0,
+   "ratt": 144.0,
+   "fel_grader": 36.0
+  },
+  {
+   "signum": "U 30",
+   "text": "vetter mot S 20cg V",
+   "last": 180.0,
+   "ratt": 198.0,
+   "fel_grader": 18.0
+  },
+  {
+   "signum": "U 472",
+   "text": "vetter mot S 44cg V",
+   "last": 180.0,
+   "ratt": 219.6,
+   "fel_grader": 39.6
+  },
+  {
+   "signum": "U 474",
+   "text": "vetter mot N 25cg V",
+   "last": 0.0,
+   "ratt": 337.5,
+   "fel_grader": 22.5
+  }
+ ],
+ "rattade_vagar": [
+  {
+   "signum": "U 947",
+   "text": "V 40cg S om landsväg",
+   "last": 0.0,
+   "ratt": 54.0,
+   "fel_grader": 54.0
+  },
+  {
+   "signum": "U 949",
+   "text": "N 40cg V om väg",
+   "last": 90.0,
+   "ratt": 144.0,
+   "fel_grader": 54.0
+  },
+  {
+   "signum": "U 352",
+   "text": "Ö 30cg N om väg",
+   "last": 180.0,
+   "ratt": 243.0,
+   "fel_grader": 63.0
+  },
+  {
+   "signum": "U 1043",
+   "text": "N 45cg Ö om väg",
+   "last": 270.0,
+   "ratt": 220.5,
+   "fel_grader": 49.5
+  },
+  {
+   "signum": "U 1065",
+   "text": "Ö 10cg S om väg",
+   "last": 0.0,
+   "ratt": 279.0,
+   "fel_grader": 81.0
+  },
+  {
+   "signum": "U 859",
+   "text": "V 5cg S om väg",
+   "last": 0.0,
+   "ratt": 85.5,
+   "fel_grader": 85.5
+  },
+  {
+   "signum": "U 629",
+   "text": "N 40cg V om byväg",
+   "last": 90.0,
+   "ratt": 144.0,
+   "fel_grader": 54.0
+  },
+  {
+   "signum": "U 233",
+   "text": "S 10cg Ö om landsväg",
+   "last": 270.0,
+   "ratt": 351.0,
+   "fel_grader": 81.0
+  },
+  {
+   "signum": "Ög 176",
+   "text": "N 30cg V om väg",
+   "last": 90.0,
+   "ratt": 153.0,
+   "fel_grader": 63.0
+  }
+ ],
+ "dubbletter": {
+  "stenar": [
+   "Sö 158",
+   "U 31",
+   "U 537",
+   "U 968",
+   "U Fv1971;209"
+  ],
+  "n_stenar": 214,
+  "n_poster": 219,
+  "n_stenar_med_vag": 120,
+  "n_poster_med_vag": 123
+ },
+ "last": {
+  "alla": {
+   "n": 123,
+   "medel_cos": 0.3663941585922616,
+   "andel_inom_45": 0.4959349593495935
+  },
+  "bara_text": {
+   "n": 69,
+   "medel_cos": 0.48922418618986274,
+   "andel_inom_45": 0.6231884057971014
+  }
+ },
+ "rattad": {
+  "alla": {
+   "n": 123,
+   "medel_cos": 0.38722144121866686,
+   "andel_inom_45": 0.5203252032520326,
+   "vantat": 0.01613281617463496,
+   "p": 0.0001
+  },
+  "bara_text": {
+   "n": 69,
+   "medel_cos": 0.5342723417368992,
+   "andel_inom_45": 0.6666666666666666,
+   "vantat": 0.05962456033976763,
+   "p": 0.0001
+  },
+  "halva_A": {
+   "n": 71,
+   "medel_cos": 0.44104184054499934,
+   "andel_inom_45": 0.5633802816901409,
+   "vantat": 0.03845751662641044,
+   "p": 0.0001
+  },
+  "halva_B": {
+   "n": 52,
+   "medel_cos": 0.3137358959846361,
+   "andel_inom_45": 0.46153846153846156,
+   "vantat": 0.05854477771137762,
+   "p": 0.0038
+  },
+  "H1_rayleigh": {
+   "n": 219,
+   "R": 0.05931348968813837,
+   "p": 0.46329981582963764
+  },
+  "H3_gard": {
+   "n": 94,
+   "medel_cos": 0.010403928584933836,
+   "andel_inom_45": 0.2765957446808511,
+   "vantat": -0.027625536946686458,
+   "p": 0.2941
+  }
+ },
+ "rattad_en_per_sten": {
+  "alla": {
+   "n": 120,
+   "medel_cos": 0.373106893455725,
+   "andel_inom_45": 0.5083333333333333,
+   "vantat": 0.01655335174763656,
+   "p": 0.0001
+  },
+  "bara_text": {
+   "n": 68,
+   "medel_cos": 0.5274234055859712,
+   "andel_inom_45": 0.6617647058823529,
+   "vantat": 0.061021137935174496,
+   "p": 0.0001
+  },
+  "halva_A": {
+   "n": 69,
+   "medel_cos": 0.42500927343121486,
+   "andel_inom_45": 0.5507246376811594,
+   "vantat": 0.03982585316472534,
+   "p": 0.0001
+  },
+  "halva_B": {
+   "n": 51,
+   "medel_cos": 0.30288602643006224,
+   "andel_inom_45": 0.45098039215686275,
+   "vantat": 0.05709716998413069,
+   "p": 0.0056
+  },
+  "H1_rayleigh": {
+   "n": 214,
+   "R": 0.048494584178847215,
+   "p": 0.6050827031321627
+  }
+ },
+ "trappan_last_reproducerad": true,
+ "trappan_rattad": {
+  "rungs": {
+   "huvud": {
+    "n": 123,
+    "medel_cos": 0.38722144121866686,
+    "vantat": 0.01613281617463496,
+    "p": 0.0001,
+    "andel_inom_45": 0.5203252032520326,
+    "holds": true
+   },
+   "halva_A": {
+    "n": 71,
+    "medel_cos": 0.44104184054499934,
+    "vantat": 0.03913585130903769,
+    "p": 0.0001,
+    "andel_inom_45": 0.5633802816901409,
+    "holds": true
+   },
+   "halva_B": {
+    "n": 52,
+    "medel_cos": 0.3137358959846361,
+    "vantat": 0.056532549257759544,
+    "p": 0.0033,
+    "andel_inom_45": 0.46153846153846156,
+    "holds": true
+   },
+   "socken": {
+    "n": 123,
+    "medel_cos": 0.39277537638766696,
+    "vantat": 0.021256008333610993,
+    "p": 0.0001,
+    "andel_inom_45": 0.5203252032520326,
+    "holds": true
+   },
+   "en_per_ristare": {
+    "n": 93,
+    "medel_cos": 0.40879679843432043,
+    "vantat": 0.03391023005386974,
+    "p": 0.0001,
+    "andel_inom_45": 0.5268817204301075,
+    "holds": true
+   },
+   "utan_aterresta": {
+    "n": 109,
+    "medel_cos": 0.4306497035560586,
+    "vantat": 0.020531141720660243,
+    "p": 0.0001,
+    "andel_inom_45": 0.5412844036697247,
+    "holds": true
+   },
+   "utan_flyttade_runor": {
+    "n": 113,
+    "medel_cos": 0.36858424248465527,
+    "vantat": 0.009981204164405816,
+    "p": 0.0001,
+    "andel_inom_45": 0.5132743362831859,
+    "holds": true
+   },
+   "dagens_flyttregel": {
+    "n": 123,
+    "medel_cos": 0.38722144121866686,
+    "vantat": 0.015586924049032955,
+    "p": 0.0001,
+    "andel_inom_45": 0.5203252032520326,
+    "holds": true
+   },
+   "bara_text": {
+    "n": 69,
+    "medel_cos": 0.5342723417368992,
+    "vantat": 0.05939429472860294,
+    "p": 0.0001,
+    "andel_inom_45": 0.6666666666666666,
+    "holds": true
+   },
+   "bara_registrerad": {
+    "n": 80,
+    "medel_cos": 0.1557611819217799,
+    "vantat": 0.0040740609611748125,
+    "p": 0.0243,
+    "andel_inom_45": 0.275,
+    "holds": true
+   }
+  },
+  "lopo": {
+   "U": {
+    "n": 62,
+    "medel_cos": 0.48789976496114756,
+    "vantat": 0.05507820812138739,
+    "p": 0.0001,
+    "andel_inom_45": 0.5645161290322581,
+    "andel_kvar": 0.5040650406504065
+   },
+   "Sö": {
+    "n": 92,
+    "medel_cos": 0.3155812719925958,
+    "vantat": 0.019609321797954382,
+    "p": 0.0001,
+    "andel_inom_45": 0.45652173913043476,
+    "andel_kvar": 0.7479674796747967
+   },
+   "Ög": {
+    "n": 113,
+    "medel_cos": 0.3913859128244758,
+    "vantat": 0.018567033032254154,
+    "p": 0.0001,
+    "andel_inom_45": 0.5398230088495575,
+    "andel_kvar": 0.9186991869918699
+   }
+  },
+  "lopo_holds": true,
+  "all_hold": true
+ },
+ "trappan_rattad_en_per_sten": {
+  "rungs": {
+   "huvud": {
+    "n": 120,
+    "medel_cos": 0.373106893455725,
+    "vantat": 0.016190352749214418,
+    "p": 0.0001,
+    "andel_inom_45": 0.5083333333333333,
+    "holds": true
+   },
+   "halva_A": {
+    "n": 69,
+    "medel_cos": 0.42500927343121486,
+    "vantat": 0.04016502644064971,
+    "p": 0.0001,
+    "andel_inom_45": 0.5507246376811594,
+    "holds": true
+   },
+   "halva_B": {
+    "n": 51,
+    "medel_cos": 0.30288602643006224,
+    "vantat": 0.05783193936750023,
+    "p": 0.0075,
+    "andel_inom_45": 0.45098039215686275,
+    "holds": true
+   },
+   "socken": {
+    "n": 120,
+    "medel_cos": 0.38406207519251234,
+    "vantat": 0.020676106759182765,
+    "p": 0.0001,
+    "andel_inom_45": 0.5083333333333333,
+    "holds": true
+   },
+   "en_per_ristare": {
+    "n": 90,
+    "medel_cos": 0.3906965799909198,
+    "vantat": 0.031176568808955828,
+    "p": 0.0001,
+    "andel_inom_45": 0.5111111111111111,
+    "holds": true
+   },
+   "utan_aterresta": {
+    "n": 106,
+    "medel_cos": 0.41590007200378637,
+    "vantat": 0.0223766975933883,
+    "p": 0.0001,
+    "andel_inom_45": 0.5283018867924528,
+    "holds": true
+   },
+   "utan_flyttade_runor": {
+    "n": 110,
+    "medel_cos": 0.352678266777791,
+    "vantat": 0.011711002770481241,
+    "p": 0.0001,
+    "andel_inom_45": 0.5,
+    "holds": true
+   },
+   "dagens_flyttregel": {
+    "n": 120,
+    "medel_cos": 0.373106893455725,
+    "vantat": 0.017406330150078815,
+    "p": 0.0001,
+    "andel_inom_45": 0.5083333333333333,
+    "holds": true
+   },
+   "bara_text": {
+    "n": 68,
+    "medel_cos": 0.5274234055859712,
+    "vantat": 0.059764101494824654,
+    "p": 0.0001,
+    "andel_inom_45": 0.6617647058823529,
+    "holds": true
+   },
+   "bara_registrerad": {
+    "n": 78,
+    "medel_cos": 0.13596774998119698,
+    "vantat": 0.006371791120796659,
+    "p": 0.0471,
+    "andel_inom_45": 0.2564102564102564,
+    "holds": true
+   }
+  },
+  "lopo": {
+   "U": {
+    "n": 61,
+    "medel_cos": 0.4795046791408385,
+    "vantat": 0.05435590280241408,
+    "p": 0.0001,
+    "andel_inom_45": 0.5573770491803278,
+    "andel_kvar": 0.5083333333333333
+   },
+   "Sö": {
+    "n": 90,
+    "medel_cos": 0.30197852186788643,
+    "vantat": 0.021902594020097303,
+    "p": 0.0002,
+    "andel_inom_45": 0.4444444444444444,
+    "andel_kvar": 0.75
+   },
+   "Ög": {
+    "n": 110,
+    "medel_cos": 0.3761018008541522,
+    "vantat": 0.019067820198109556,
+    "p": 0.0001,
+    "andel_inom_45": 0.5272727272727272,
+    "andel_kvar": 0.9166666666666666
+   }
+  },
+  "lopo_holds": true,
+  "all_hold": true
+ },
+ "n_rattade_ristningar": 6,
+ "n_rattade_vagar": 9,
+ "n_rattade_vagar_bland_text": 9,
+ "indata": {
+  "kmr_runstenar": {
+   "kalla": "Kulturmiljöregistret, Riksantikvarieämbetet, via K-samsök (CC0). https://kulturarvsdata.se",
+   "hamtad": "2026-10-29",
+   "skript": "scripts/fetch_kmr_runstenar.py",
+   "sha256_16": "af468551e6579a68"
+  },
+  "lamningar_fardvagar": {
+   "hamtad_filtid": "2026-10-12",
+   "skript": "scripts/fetch_raa_remains.py",
+   "sha256_16": "bbbabb88d1a3c16c"
+  },
+  "lamningar_vagmarke": {
+   "hamtad_filtid": "2026-10-29",
+   "skript": "scripts/fetch_raa_extra.sh",
+   "sha256_16": "382d157b4a653731"
+  },
+  "lamningar_bytomt": {
+   "hamtad_filtid": "2026-10-29",
+   "skript": "scripts/fetch_raa_extra.sh",
+   "sha256_16": "08b52ef6b03a8b8d"
+  },
+  "runor_2020": {
+   "kalla": "Runor, Riksantikvarieämbetet (Samnordisk runtextdatabas, utgåva 2020). https://runor.raa.se",
+   "hamtad": "2026-10-16",
+   "skript": "scripts/fetch_runor.py"
+  },
+  "korpus": {
+   "huvud": "3f58e9339191761e",
+   "flyttregel_steget": "e83202e01a5e6d27",
+   "huvud_skapad": "2026-10-28",
+   "sha256_16_huvud": "6c6ab6e7e2f3c0b6",
+   "sha256_16_flyttregel_steget": "6c6ab6e7e2f3c0b6",
+   "identiska": true
+  }
+ }
+}

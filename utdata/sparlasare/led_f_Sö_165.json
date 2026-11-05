@@ -1,0 +1,337 @@
+{
+ "stones": {
+  "Sö 165": {
+   "n_detected": 26,
+   "n_paired": 26,
+   "coverage": 1.0,
+   "null": 1.0,
+   "null_sd": 0.0
+  }
+ },
+ "rows": [
+  {
+   "sig": "Sö 165",
+   "truth": "kuþrun",
+   "word": "guðrun",
+   "n": 6,
+   "utan": {
+    "top": "oskutr",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 165",
+   "truth": "raisti",
+   "word": "ræisti",
+   "n": 6,
+   "utan": {
+    "top": "raisti",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.3891262849321911,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 165",
+   "truth": "stain",
+   "word": "stæin",
+   "n": 5,
+   "utan": {
+    "top": "stain",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8658230513373192,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 165",
+   "truth": "at",
+   "word": "at",
+   "n": 2,
+   "utan": {
+    "top": "at",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9272920569652489,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 165",
+   "truth": "hiþin",
+   "word": "heðin",
+   "n": 5,
+   "utan": {
+    "top": "biarn",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 165",
+   "truth": "uaR",
+   "word": "vaR",
+   "n": 3,
+   "utan": {
+    "top": "sun",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.006655444736903205,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 165",
+   "truth": "nafi",
+   "word": "nefi",
+   "n": 4,
+   "utan": {
+    "top": "mana",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 165",
+   "truth": "suais",
+   "word": "svæins",
+   "n": 5,
+   "utan": {
+    "top": "suniR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "suniR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 1
+   },
+   "omflyttad": {
+    "top": "suniR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 1
+   }
+  },
+  {
+   "sig": "Sö 165",
+   "truth": "uaR",
+   "word": "vaR",
+   "n": 3,
+   "utan": {
+    "top": "sin",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.031461051387774115,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "þan",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.05340970965995627,
+    "traced": 1
+   },
+   "omflyttad": {
+    "top": "þan",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.05340970965995627,
+    "traced": 1
+   }
+  },
+  {
+   "sig": "Sö 165",
+   "truth": "han",
+   "word": "hann",
+   "n": 3,
+   "utan": {
+    "top": "sun",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.14331712274802502,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 165",
+   "truth": "krikum",
+   "word": "grikkium",
+   "n": 6,
+   "utan": {
+    "top": "markaþ",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.23757709035890645,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "krikum",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.4600584969984844,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "krikum",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.30709958066532406,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 165",
+   "truth": "iuli",
+   "word": "gulli",
+   "n": 4,
+   "utan": {
+    "top": "uarþ",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 165",
+   "truth": "skifti",
+   "word": "skifti",
+   "n": 6,
+   "utan": {
+    "top": "hialbi",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "hialbi",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.013667724139362842,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "hialbi",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö 165",
+   "truth": "kristr",
+   "word": "kristr",
+   "n": 6,
+   "utan": {
+    "top": "kristr",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7468314529252889,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "kristr",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7656072050074586,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "kristr",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8536064867254525,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 165",
+   "truth": "hialb",
+   "word": "hialp",
+   "n": 5,
+   "utan": {
+    "top": "ialbi",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "hilbi",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "ialbi",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö 165",
+   "truth": "ant",
+   "word": "and",
+   "n": 3,
+   "utan": {
+    "top": "ant",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.4149662438297282,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "ant",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.4149662438297282,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "auk",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.2117822764757584,
+    "traced": 2
+   }
+  }
+ ]
+}

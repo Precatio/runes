@@ -1,0 +1,175 @@
+{
+ "stones": {
+  "Sö Fv1948;282": {
+   "n_detected": 49,
+   "n_paired": 32,
+   "coverage": 1.0,
+   "null": 0.975,
+   "null_sd": 0.021194781197266466
+  }
+ },
+ "rows": [
+  {
+   "sig": "Sö Fv1948;282",
+   "truth": "auk",
+   "word": "ok",
+   "n": 3,
+   "utan": {
+    "top": "auk",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.4746887672080324,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "auk",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.626042960672819,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "auk",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.6111837754256839,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö Fv1948;282",
+   "truth": "kisla",
+   "word": "gisla",
+   "n": 5,
+   "utan": {
+    "top": "eftiR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "suain",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "kunar",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö Fv1948;282",
+   "truth": "þaun",
+   "word": "þaun",
+   "n": 4,
+   "utan": {
+    "top": "þaiR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.25530702578069414,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "þaun",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.4906417967171593,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "þaiR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.12867270096246144,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö Fv1948;282",
+   "truth": "litu",
+   "word": "letu",
+   "n": 4,
+   "utan": {
+    "top": "litu",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9281019528004072,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "litu",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9280742540547479,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "litu",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9273783160026343,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö Fv1948;282",
+   "truth": "kiara",
+   "word": "gæra",
+   "n": 5,
+   "utan": {
+    "top": "kiara",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9742716642167119,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "kiara",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9924135448050114,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "kiara",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9344791596969726,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö Fv1948;282",
+   "truth": "bro",
+   "word": "bro",
+   "n": 3,
+   "utan": {
+    "top": "bru",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.31126548182949826,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "bru",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.3785398598205859,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "bru",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.09880755723083448,
+    "traced": 3
+   }
+  }
+ ]
+}

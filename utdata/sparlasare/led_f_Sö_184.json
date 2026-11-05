@@ -1,0 +1,352 @@
+{
+ "stones": {
+  "Sö 184": {
+   "n_detected": 38,
+   "n_paired": 38,
+   "coverage": 1.0,
+   "null": 0.9815789473684211,
+   "null_sd": 0.014652011481131634
+  }
+ },
+ "rows": [
+  {
+   "sig": "Sö 184",
+   "truth": "lit",
+   "word": "let",
+   "n": 3,
+   "utan": {
+    "top": "lit",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8647782656671135,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "lit",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8583522365620337,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "lit",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.855868552173937,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö 184",
+   "truth": "raisa",
+   "word": "ræisa",
+   "n": 5,
+   "utan": {
+    "top": "raisa",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7786473456996647,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "raisa",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7786473456996647,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "raisa",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8389585477579686,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 184",
+   "truth": "stain",
+   "word": "stæin",
+   "n": 5,
+   "utan": {
+    "top": "stain",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8835713275429962,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "stain",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8805160897113709,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "stain",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8835713275429962,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 184",
+   "truth": "þinsa",
+   "word": "þennsa",
+   "n": 5,
+   "utan": {
+    "top": "þansi",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.35256920888097326,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "þansi",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.36445595508640743,
+    "traced": 1
+   },
+   "omflyttad": {
+    "top": "þansi",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.3290696321193645,
+    "traced": 1
+   }
+  },
+  {
+   "sig": "Sö 184",
+   "truth": "at",
+   "word": "at",
+   "n": 2,
+   "utan": {
+    "top": "at",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8938884772180585,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "at",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9185453431633687,
+    "traced": 1
+   },
+   "omflyttad": {
+    "top": "at",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9140913750526966,
+    "traced": 1
+   }
+  },
+  {
+   "sig": "Sö 184",
+   "truth": "al",
+   "word": "hall",
+   "n": 2,
+   "utan": {
+    "top": "at",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.003874119924192018,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "at",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0045623455336915005,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "at",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0012603561219260032,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 184",
+   "truth": "bruþur",
+   "word": "broður",
+   "n": 6,
+   "utan": {
+    "top": "bruþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.5990852313143733,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "bruþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.6597208894249025,
+    "traced": 6
+   },
+   "omflyttad": {
+    "top": "bruþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.597923926161106,
+    "traced": 6
+   }
+  },
+  {
+   "sig": "Sö 184",
+   "truth": "sin",
+   "word": "sinn",
+   "n": 3,
+   "utan": {
+    "top": "sin",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.941766145629785,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 184",
+   "truth": "kuþan",
+   "word": "goðan",
+   "n": 5,
+   "utan": {
+    "top": "kuþan",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7313953040991106,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "kuþan",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8628182220047979,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "kuþan",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.6841782049226793,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö 184",
+   "truth": "kuþ",
+   "word": "guð",
+   "n": 3,
+   "utan": {
+    "top": "kuþ",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9217381541087003,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "kuþ",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9436624211523207,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "kuþ",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9442122141717596,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö 184",
+   "truth": "hialbi",
+   "word": "hialpi",
+   "n": 6,
+   "utan": {
+    "top": "hialbi",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9407282862250365,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "hialbi",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8841855014333362,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "hialbi",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7651128847002275,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö 184",
+   "truth": "anta",
+   "word": "anda",
+   "n": 4,
+   "utan": {
+    "top": "salu",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "anta",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.6068872735814401,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "selu",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 184",
+   "truth": "hans",
+   "word": "hans",
+   "n": 4,
+   "utan": {
+    "top": "hans",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7639891962215097,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "hans",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7639891962215097,
+    "traced": 1
+   },
+   "omflyttad": {
+    "top": "hans",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7639891962215097,
+    "traced": 1
+   }
+  }
+ ]
+}

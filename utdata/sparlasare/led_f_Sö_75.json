@@ -1,0 +1,256 @@
+{
+ "stones": {
+  "Sö 75": {
+   "n_detected": 61,
+   "n_paired": 39,
+   "coverage": 1.0,
+   "null": 1.0,
+   "null_sd": 0.0
+  }
+ },
+ "rows": [
+  {
+   "sig": "Sö 75",
+   "truth": "niniR",
+   "word": "nænniR",
+   "n": 5,
+   "utan": {
+    "top": "kunar",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "suain",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "biurn",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 75",
+   "truth": "auk",
+   "word": "ok",
+   "n": 3,
+   "utan": {
+    "top": "auk",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.6526126124048223,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "auk",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7390843069678639,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "auk",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7222165351464623,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö 75",
+   "truth": "tiþkum",
+   "word": "tiðkumi",
+   "n": 6,
+   "utan": {
+    "top": "anuntr",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "sikfus",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 6
+   },
+   "omflyttad": {
+    "top": "sikfus",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 6
+   }
+  },
+  {
+   "sig": "Sö 75",
+   "truth": "raistu",
+   "word": "ræistu",
+   "n": 6,
+   "utan": {
+    "top": "raisti",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.363784071551337,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "raisti",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.363784071551337,
+    "traced": 6
+   },
+   "omflyttad": {
+    "top": "raisti",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.3637529411517875,
+    "traced": 6
+   }
+  },
+  {
+   "sig": "Sö 75",
+   "truth": "stain",
+   "word": "stæin",
+   "n": 5,
+   "utan": {
+    "top": "stain",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8459798807263517,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "stain",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8463006911886113,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "stain",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7875470680298563,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 75",
+   "truth": "at",
+   "word": "at",
+   "n": 2,
+   "utan": {
+    "top": "at",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9743707723292937,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "at",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9821639114489885,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "at",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9743603677559278,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 75",
+   "truth": "ulf",
+   "word": "ulf",
+   "n": 3,
+   "utan": {
+    "top": "ulf",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.6112588208326104,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "ulf",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.6112588208326104,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "ulf",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8306548829878048,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö 75",
+   "truth": "bruþur",
+   "word": "broður",
+   "n": 6,
+   "utan": {
+    "top": "bruþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.6906476689699215,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "bruþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.6917284043846544,
+    "traced": 6
+   },
+   "omflyttad": {
+    "top": "bruþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.69341717792793,
+    "traced": 6
+   }
+  },
+  {
+   "sig": "Sö 75",
+   "truth": "sin",
+   "word": "sinn",
+   "n": 3,
+   "utan": {
+    "top": "sin",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9172496301033286,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "sin",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9161286133463187,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "sin",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9192517145065237,
+    "traced": 3
+   }
+  }
+ ]
+}

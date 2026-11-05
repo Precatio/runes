@@ -14,8 +14,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..")
 sys.path.insert(0, ROOT)
 from src import blog_labels  # noqa: E402
 
-APP_VERSION = json.load(open(os.path.join(ROOT, "web", "package.json")))["version"]
-assert APP_VERSION == "3.0.0"
+APP_VERSION = "3.0.0"  # the Vitki version the analysis was made in (tag v3.0.0 + the commits named in Data och kod), not the current one
 assert open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().startswith("611a4d5f")  # mallens version 4
 REPORT_VERSION = 1
 TODAY = "2026-10-31"  # rapportversionens datum, fast i byggaren (mallen version 3)

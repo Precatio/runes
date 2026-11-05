@@ -2697,7 +2697,7 @@ Innan resultat jämförs direkt bör samma referensstenar mätas med båda metod
 
 ## 17. Datakällor och licenser
 
-**Runor 2020 bredvid Rundata 2018 (från 2026-10-20, `src/runor.py`).** Appens beräkningar bygger på Rundata 3.1 (2018).
+**Runor 2020 bredvid Rundata 2018 (från 2026-10-20, `src/runor.py`).** Appens beräkningar bygger på Rundata, version 2014 med RUNDATA.xls från 2018.
 Runor (RAÄ, utgåva 2020) är skördad i sin helhet (`scripts/fetch_runor.py` → `data/raa/runor_2020.json`, inte i git).
 När filen finns visar inskriftssidan Runors uppgifter bredvid Rundatas: ursprunglig plats eller flyttad, bevarad,
 datering, anteckningar och läsningen om den ändrats sedan 2018 (281 inskrifter, 77 av dem svenska vikingatida

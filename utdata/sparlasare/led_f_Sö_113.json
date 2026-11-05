@@ -1,0 +1,337 @@
+{
+ "stones": {
+  "Sö 113": {
+   "n_detected": 64,
+   "n_paired": 62,
+   "coverage": 0.9516129032258065,
+   "null": 0.9477569187378814,
+   "null_sd": 0.02108265377705151
+  }
+ },
+ "rows": [
+  {
+   "sig": "Sö 113",
+   "truth": "þaiR",
+   "word": "þæiR",
+   "n": 4,
+   "utan": {
+    "top": "tuki",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.03500789920834237,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "ulfr",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.007799686961326938,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "tuki",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.024771876220076202,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö 113",
+   "truth": "situ",
+   "word": "sattu",
+   "n": 4,
+   "utan": {
+    "top": "ritu",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "ritu",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "ritu",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö 113",
+   "truth": "stin",
+   "word": "stæin",
+   "n": 4,
+   "utan": {
+    "top": "lata",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.07632465164912523,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "ulfs",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.03048712993671229,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "litu",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.03657926283879259,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö 113",
+   "truth": "suniR",
+   "word": "syniR",
+   "n": 5,
+   "utan": {
+    "top": "eftiR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0001836056707747906,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "eftiR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0001830652036990017,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "eftiR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0002144115686406746,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 113",
+   "truth": "auk",
+   "word": "ok",
+   "n": 3,
+   "utan": {
+    "top": "auk",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.634715500117137,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "auk",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.634715500117137,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "auk",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.35078288360672827,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 113",
+   "truth": "fulku",
+   "word": "folku",
+   "n": 5,
+   "utan": {
+    "top": "eftiR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "eftiR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "faþur",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 113",
+   "truth": "hiar",
+   "word": "hiar",
+   "n": 4,
+   "utan": {
+    "top": "þana",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "kuna",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "fast",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö 113",
+   "truth": "faþur",
+   "word": "faður",
+   "n": 5,
+   "utan": {
+    "top": "risti",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.13041121158090593,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "faþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.24584990674903046,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "faþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.18565114796052823,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 113",
+   "truth": "auk",
+   "word": "ok",
+   "n": 3,
+   "utan": {
+    "top": "sin",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.05595653631831458,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "sin",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.21023674451142005,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "auk",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.4822701395237604,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 113",
+   "truth": "muþur",
+   "word": "moður",
+   "n": 5,
+   "utan": {
+    "top": "stain",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0011869183058524618,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "stain",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.005498043479000964,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "stain",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.004265467128954303,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö 113",
+   "truth": "iftiR",
+   "word": "æftiR",
+   "n": 5,
+   "utan": {
+    "top": "suniR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.012767055440403324,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "suniR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.03882169387658841,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "suniR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.007802259287834371,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 113",
+   "truth": "kiarþu",
+   "word": "gærðu",
+   "n": 6,
+   "utan": {
+    "top": "bruþur",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.007480679293656328,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "bruþur",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.016110768148949378,
+    "traced": 6
+   },
+   "omflyttad": {
+    "top": "bruþur",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.002131000402798995,
+    "traced": 6
+   }
+  }
+ ]
+}

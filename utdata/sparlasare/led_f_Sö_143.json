@@ -1,0 +1,364 @@
+{
+ "stones": {
+  "Sö 143": {
+   "n_detected": 81,
+   "n_paired": 56,
+   "coverage": 1.0,
+   "null": 0.9785714285714286,
+   "null_sd": 0.018385053823191073
+  }
+ },
+ "rows": [
+  {
+   "sig": "Sö 143",
+   "truth": "ayar",
+   "word": "øyarr",
+   "n": 4,
+   "utan": {
+    "top": "suin",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "kuni",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "bufi",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö 143",
+   "truth": "let",
+   "word": "let",
+   "n": 3,
+   "utan": {
+    "top": "lit",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.0897821071738503,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "lit",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.0897821071738503,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "lit",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.09306735953389664,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö 143",
+   "truth": "kiara",
+   "word": "giæra",
+   "n": 5,
+   "utan": {
+    "top": "kiara",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.6376804251229473,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "kiara",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.6376804251229473,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "raisa",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.29167592339041026,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 143",
+   "truth": "kumbl",
+   "word": "kumbl",
+   "n": 5,
+   "utan": {
+    "top": "merki",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.014048988313167381,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "eftiR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.029307292851719922,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "merki",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.014481744669330956,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 143",
+   "truth": "baþi",
+   "word": "baði",
+   "n": 4,
+   "utan": {
+    "top": "þisi",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "þisi",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 3.313279089924437e-05,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "þusi",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö 143",
+   "truth": "eftiR",
+   "word": "æftiR",
+   "n": 5,
+   "utan": {
+    "top": "eftiR",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.28437341622344636,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "eftiR",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.3366953332458739,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "eftiR",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.28811575020557023,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 143",
+   "truth": "inkulf",
+   "word": "ingulf",
+   "n": 6,
+   "utan": {
+    "top": "þialfa",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "antuit",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 6
+   },
+   "omflyttad": {
+    "top": "þialfa",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 6
+   }
+  },
+  {
+   "sig": "Sö 143",
+   "truth": "sun",
+   "word": "sun",
+   "n": 3,
+   "utan": {
+    "top": "sun",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8940111511366645,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "sun",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9490009105607667,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "sun",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7901216899667548,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö 143",
+   "truth": "sin",
+   "word": "sinn",
+   "n": 3,
+   "utan": {
+    "top": "sin",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.5509597023779331,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "sin",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.5509597023779331,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "kuþ",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.2040558507210936,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö 143",
+   "truth": "hialbi",
+   "word": "hialpi",
+   "n": 6,
+   "utan": {
+    "top": "bruþur",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.17415511266508774,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "hialbi",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.2514380446923134,
+    "traced": 6
+   },
+   "omflyttad": {
+    "top": "bruþur",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.013828846025546165,
+    "traced": 6
+   }
+  },
+  {
+   "sig": "Sö 143",
+   "truth": "krist",
+   "word": "krist",
+   "n": 5,
+   "utan": {
+    "top": "ialbi",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "truti",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0005247231602259624,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "truti",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 143",
+   "truth": "nat",
+   "word": "and",
+   "n": 3,
+   "utan": {
+    "top": "ant",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "ant",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.0,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "ant",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.0,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö 143",
+   "truth": "hans",
+   "word": "hans",
+   "n": 4,
+   "utan": {
+    "top": "auþr",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.00017599579457867813,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "otur",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 7.422880202189236e-05,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "auþr",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.00017599579457867813,
+    "traced": 4
+   }
+  }
+ ]
+}

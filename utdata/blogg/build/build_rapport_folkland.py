@@ -21,8 +21,7 @@ KS = json.load(open(os.path.join(GG, "monster_kanslighet.json"), encoding="utf-8
 DR = json.load(open(os.path.join(GG, "monster_drag.json"), encoding="utf-8"))
 GS = json.load(open(os.path.join(ROOT, "utdata", "granser", "gransskannern.json"), encoding="utf-8"))
 HL = json.load(open(os.path.join(ROOT, "web", "src", "lib", "historiska_land.json"), encoding="utf-8"))
-APP_VERSION = json.load(open(os.path.join(ROOT, "web", "package.json")))["version"]
-assert APP_VERSION == "3.0.0"
+APP_VERSION = "3.0.0"  # the Vitki version the analysis was made in (tag v3.0.0 + the commits named in Data och kod), not the current one
 MALL_SHA = open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().split()[0]
 assert MALL_SHA.startswith("611a4d5f")  # mallens version 4
 REPORT_VERSION = 1

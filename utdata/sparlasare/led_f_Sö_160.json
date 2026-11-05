@@ -1,0 +1,286 @@
+{
+ "stones": {
+  "Sö 160": {
+   "n_detected": 19,
+   "n_paired": 19,
+   "coverage": 0.9473684210526315,
+   "null": 0.9473684210526315,
+   "null_sd": 0.028827503026587688
+  }
+ },
+ "rows": [
+  {
+   "sig": "Sö 160",
+   "truth": "aybirn",
+   "word": "øybiorn",
+   "n": 6,
+   "utan": {
+    "top": "aystin",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "aystin",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 1
+   },
+   "omflyttad": {
+    "top": "aystin",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 1
+   }
+  },
+  {
+   "sig": "Sö 160",
+   "truth": "raisþi",
+   "word": "ræisþi",
+   "n": 6,
+   "utan": {
+    "top": "raisti",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.1387432235365446,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "raisti",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.13908536644211902,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "raisti",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.1358311376488643,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 160",
+   "truth": "stain",
+   "word": "stæin",
+   "n": 5,
+   "utan": {
+    "top": "stain",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8832289082505956,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "stain",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8740979552706872,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "stain",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8801870177607077,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 160",
+   "truth": "þansi",
+   "word": "þannsi",
+   "n": 5,
+   "utan": {
+    "top": "þinsa",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.33633090837507307,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "þinsa",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.35234941702605876,
+    "traced": 1
+   },
+   "omflyttad": {
+    "top": "þinsa",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.345107191596314,
+    "traced": 1
+   }
+  },
+  {
+   "sig": "Sö 160",
+   "truth": "at",
+   "word": "at",
+   "n": 2,
+   "utan": {
+    "top": "at",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8029370075393741,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "at",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9321121233966476,
+    "traced": 1
+   },
+   "omflyttad": {
+    "top": "at",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8594001094703889,
+    "traced": 1
+   }
+  },
+  {
+   "sig": "Sö 160",
+   "truth": "karþi",
+   "word": "skærði",
+   "n": 5,
+   "utan": {
+    "top": "kuþan",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.006995069824819736,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 160",
+   "truth": "han",
+   "word": "hann",
+   "n": 3,
+   "utan": {
+    "top": "han",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.43507361314847665,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 160",
+   "truth": "uarþ",
+   "word": "varð",
+   "n": 4,
+   "utan": {
+    "top": "uarþ",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9997888814530942,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "uarþ",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.999826645539006,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "uarþ",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9997508783663631,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 160",
+   "truth": "tauþr",
+   "word": "dauðr",
+   "n": 5,
+   "utan": {
+    "top": "tauþr",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9987944310937129,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "tauþr",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9992982075707529,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "tauþr",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9990389024010392,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö 160",
+   "truth": "oklati",
+   "word": "ænglandi",
+   "n": 6,
+   "utan": {
+    "top": "tribin",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "eklati",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.0,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "tribin",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 160",
+   "truth": "liþi",
+   "word": "liði",
+   "n": 4,
+   "utan": {
+    "top": "ftiR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "ftiR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.01651266520890068,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "ftiR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 3
+   }
+  }
+ ]
+}

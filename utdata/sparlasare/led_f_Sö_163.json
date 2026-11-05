@@ -1,0 +1,259 @@
+{
+ "stones": {
+  "Sö 163": {
+   "n_detected": 31,
+   "n_paired": 31,
+   "coverage": 0.967741935483871,
+   "null": 0.9612903225806452,
+   "null_sd": 0.01935483870967744
+  }
+ },
+ "rows": [
+  {
+   "sig": "Sö 163",
+   "truth": "stain",
+   "word": "stæin",
+   "n": 5,
+   "utan": {
+    "top": "stain",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.19489558123789322,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "stain",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.3500878683489676,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "stain",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.3291309187535674,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 163",
+   "truth": "at",
+   "word": "at",
+   "n": 2,
+   "utan": {
+    "top": "at",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9241490979255915,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "at",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9451495612236722,
+    "traced": 1
+   },
+   "omflyttad": {
+    "top": "at",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7376327821937647,
+    "traced": 1
+   }
+  },
+  {
+   "sig": "Sö 163",
+   "truth": "suni",
+   "word": "syni",
+   "n": 4,
+   "utan": {
+    "top": "suni",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7224429968483106,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "suni",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7198053954281589,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "suni",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7215194469683284,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 163",
+   "truth": "sina",
+   "word": "sina",
+   "n": 4,
+   "utan": {
+    "top": "sina",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8473644722824625,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 163",
+   "truth": "sniala",
+   "word": "snialla",
+   "n": 6,
+   "utan": {
+    "top": "þurlak",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 163",
+   "truth": "trakia",
+   "word": "drængia",
+   "n": 6,
+   "utan": {
+    "top": "bruþur",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "bruþur",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "bruþur",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 163",
+   "truth": "for",
+   "word": "for",
+   "n": 3,
+   "utan": {
+    "top": "auk",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "auk",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "auk",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0015687401435043231,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 163",
+   "truth": "ulaifr",
+   "word": "olæifR",
+   "n": 6,
+   "utan": {
+    "top": "tribin",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "kristr",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 6
+   },
+   "omflyttad": {
+    "top": "sturkr",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 6
+   }
+  },
+  {
+   "sig": "Sö 163",
+   "truth": "uli",
+   "word": "gulli",
+   "n": 3,
+   "utan": {
+    "top": "kuþ",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "kuþ",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "kuþ",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö 163",
+   "truth": "sifti",
+   "word": "skifti",
+   "n": 5,
+   "utan": {
+    "top": "faþur",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "faþur",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "faþur",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 3
+   }
+  }
+ ]
+}

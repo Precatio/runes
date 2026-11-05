@@ -1,0 +1,253 @@
+{
+ "made": "2026-11-05",
+ "main": {
+  "positions": 197,
+  "n": 157,
+  "stones": 17,
+  "right_words": {
+   "utan": 84,
+   "skanner": 94,
+   "omflyttad": 83
+  },
+  "utan_to_skanner": {
+   "wrong_to_right": 10,
+   "right_to_wrong": 0
+  },
+  "utan_to_omflyttad": {
+   "wrong_to_right": 4,
+   "right_to_wrong": 5
+  },
+  "omflyttad_to_skanner": {
+   "wrong_to_right": 12,
+   "right_to_wrong": 1
+  },
+  "row_keys": [
+   "p_truth",
+   "right",
+   "top",
+   "traced",
+   "word_ok"
+  ],
+  "so134": {
+   "n": 14,
+   "right_words": {
+    "utan": 10,
+    "skanner": 10,
+    "omflyttad": 10
+   },
+   "utan_to_skanner": {
+    "wrong_to_right": 0,
+    "right_to_wrong": 0
+   },
+   "words_changing": 0
+  }
+ },
+ "pairing": {
+  "stones": 17,
+  "reliable": [
+   "Sö 134"
+  ],
+  "z": {
+   "Sö 112": 0.5435595692418405,
+   "Sö 113": 0.1828984400494385,
+   "Sö 128": -0.6388292334104786,
+   "Sö 129": 1.3342863022437073,
+   "Sö 131": 0.0,
+   "Sö 134": 2.6670587691702496,
+   "Sö 143": 1.1655430348287128,
+   "Sö 149": 0.0,
+   "Sö 160": 0.0,
+   "Sö 163": 0.3333333333333338,
+   "Sö 165": 0.0,
+   "Sö 184": 1.2572371141874208,
+   "Sö 319": 0.9404064854290894,
+   "Sö 52": 0.48148756170991963,
+   "Sö 75": 0.0,
+   "Sö Fv1948;282": 1.179535649239178,
+   "Sö Fv1973;189": 0.42008402520839877
+  }
+ },
+ "leak": {
+  "pairs_with_full_text": true,
+  "masked_after_pairing": true,
+  "free_when_in_set": true,
+  "trace_eps": 0.2
+ },
+ "earlier_run": {
+  "words": 26,
+  "stones": [
+   "Sö 113",
+   "Sö 134"
+  ],
+  "utan": {
+   "top_differs": 0,
+   "word_ok_differs": 0,
+   "any_differs": 0,
+   "right_in_final_not_earlier": 0,
+   "stones_differing": []
+  },
+  "skanner": {
+   "top_differs": 0,
+   "word_ok_differs": 0,
+   "any_differs": 0,
+   "right_in_final_not_earlier": 0,
+   "stones_differing": []
+  },
+  "omflyttad": {
+   "top_differs": 3,
+   "word_ok_differs": 2,
+   "any_differs": 12,
+   "right_in_final_not_earlier": 2,
+   "stones_differing": [
+    "Sö 134"
+   ]
+  }
+ },
+ "real_gaps": {
+  "words": 7,
+  "utan": {
+   "code_agrees": 3,
+   "agrees": 3,
+   "words": [
+    [
+     "Sö 162",
+     "st[æin]",
+     "stæin",
+     0.4361,
+     true
+    ],
+    [
+     "Sö 206",
+     "ru[ð]niR",
+     "hrungnir",
+     0.6036,
+     false
+    ],
+    [
+     "Sö 206",
+     "G[uðl]aug",
+     "karl",
+     0.2883,
+     false
+    ],
+    [
+     "Sö 211",
+     "stæ[in]",
+     "stæin",
+     1.0,
+     true
+    ],
+    [
+     "Sö 360",
+     "Ruts",
+     "hrofts",
+     0.6336,
+     false
+    ],
+    [
+     "Sö 360",
+     "<far-nki>",
+     "farinn",
+     0.8152,
+     false
+    ],
+    [
+     "Sö 45",
+     "GæiRf[as]tr",
+     "gæiRfastr",
+     0.9986,
+     true
+    ]
+   ]
+  },
+  "skanner": {
+   "code_agrees": 3,
+   "agrees": 2,
+   "words": [
+    [
+     "Sö 162",
+     "st[æin]",
+     "staf",
+     0.3057,
+     true
+    ],
+    [
+     "Sö 206",
+     "ru[ð]niR",
+     "hrungnir",
+     0.6036,
+     false
+    ],
+    [
+     "Sö 206",
+     "G[uðl]aug",
+     "kumbl",
+     0.4214,
+     false
+    ],
+    [
+     "Sö 211",
+     "stæ[in]",
+     "stæin",
+     0.9986,
+     true
+    ],
+    [
+     "Sö 360",
+     "Ruts",
+     "hrofts",
+     0.6336,
+     false
+    ],
+    [
+     "Sö 360",
+     "<far-nki>",
+     "farinn",
+     0.2731,
+     false
+    ],
+    [
+     "Sö 45",
+     "GæiRf[as]tr",
+     "gæiRfastr",
+     0.9987,
+     true
+    ]
+   ]
+  },
+  "same_word_rule_at_g": true
+ },
+ "versions": {
+  "test": {
+   "commit_f": "a71c134",
+   "commit_g": "f3b8f01",
+   "date_f": "2026-10-17",
+   "date_g": "2026-10-17",
+   "method": "groove-5",
+   "textmodel_f": "textmodel-17",
+   "textmodel_g": "textmodel-17",
+   "trace_eps_g": 0.05,
+   "in_v3_0_0": true
+  },
+  "now": {
+   "head": "f893869",
+   "date": "2026-11-05",
+   "method": "groove-7",
+   "textmodel": "textmodel-19",
+   "trace_eps": 0.05,
+   "trace_reader_refs": "referenser_g7",
+   "traces_count_after_confirmation": true
+  },
+  "g7_switch": {
+   "commit": "add12ef",
+   "date": "2026-11-03",
+   "trace_reader_to_g7": true
+  }
+ },
+ "rundata": {
+  "blob_at_f": "ee37aec07f997123bd64699c3918121c600a6a1e",
+  "blob_now": "ee37aec07f997123bd64699c3918121c600a6a1e",
+  "version_note": true,
+  "last_change": "2026-10-04"
+ }
+}

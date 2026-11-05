@@ -1,0 +1,81 @@
+{
+ "script": "utdata/strand/kontroll_v2.py",
+ "computed_at": "2026-11-05 08:41",
+ "corpus": {
+  "locked_fingerprint": "d6cffd1578418f74",
+  "config_path": "data/cache/r/corpus/d6cffd1578418f74/corpus.csv",
+  "config_path_exists": false,
+  "locked_folder_exists": false,
+  "kept_fingerprint": "5fdfd1e095bfb6fb",
+  "kept_csv_sha256": "4fca4baf47867e5c294d4c97d7dd34496d7fcc07996f68efddec1261a2bcb5ba",
+  "plan_csv_sha256": "4fca4baf47867e5c294d4c97d7dd34496d7fcc07996f68efddec1261a2bcb5ba",
+  "now_fingerprint": "e83202e01a5e6d27",
+  "now_csv_sha256": "6c6ab6e7e2f3c0b651a59adc22fa110736e5aa024f71df2472a3abef9646ff1a",
+  "kept_csv_is_plan_csv": true
+ },
+ "stones": {
+  "n": 1099,
+  "same_as_stenar_csv": true,
+  "lost_locked": 253,
+  "lost_now": 253,
+  "lost_same_in_both": true,
+  "moved_corrected_rule": 43,
+  "lost_and_moved": [
+   "Sö 249"
+  ],
+  "missing_in_now": 0,
+  "lost_or_moved": 295,
+  "stays_corrected_rule": 804,
+  "t1_stays_and_not_runor": 657,
+  "moved_runor": 177
+ },
+ "maps": {
+  "overview": {
+   "n": 891,
+   "lost": 205,
+   "moved_corrected_rule": 36,
+   "lost_or_moved": 240
+  },
+  "detail": {
+   "n": 40,
+   "lost": 5,
+   "moved_corrected_rule": 2,
+   "lost_or_moved": 7
+  },
+  "legend_sv": {
+   "overview": "Runstenar som står kvar och ingår i studien (891)",
+   "detail": "Runsten som står kvar (40)"
+  }
+ },
+ "order": {
+  "plan_sha256_file": {
+   "created": "2026-10-23 17:23:01",
+   "modified": "2026-10-23 17:23:01"
+  },
+  "plan_commit_c0afbc8": "2026-10-23 19:30:55 +0200",
+  "trial_run_log": {
+   "created": "2026-10-23 17:28:24",
+   "modified": "2026-10-23 17:32:16"
+  },
+  "trial_run_done_lines": [
+   "H1 klart",
+   "H2 klart",
+   "H3 klart",
+   "sekundära prov klara"
+  ],
+  "trial_run_done_lines_have_numbers": false,
+  "trial_run_other_files_in_cache": [],
+  "distances_log": {
+   "created": "2026-10-23 19:39:28",
+   "modified": "2026-10-23 20:13:41"
+  },
+  "distances_files": [
+   "2026-10-23"
+  ],
+  "statistics_log": {
+   "created": "2026-10-31 22:17:30",
+   "modified": "2026-10-31 22:17:48"
+  },
+  "statistics_computed_at": "2026-10-31 22:17"
+ }
+}

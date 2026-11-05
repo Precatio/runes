@@ -1,0 +1,349 @@
+{
+ "stones": {
+  "Sö 131": {
+   "n_detected": 29,
+   "n_paired": 29,
+   "coverage": 1.0,
+   "null": 1.0,
+   "null_sd": 0.0
+  }
+ },
+ "rows": [
+  {
+   "sig": "Sö 131",
+   "truth": "sbiuti",
+   "word": "spiuti",
+   "n": 6,
+   "utan": {
+    "top": "aiftiR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 131",
+   "truth": "þaiR",
+   "word": "þæiR",
+   "n": 4,
+   "utan": {
+    "top": "þaiR",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7763753473289506,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 131",
+   "truth": "raisþu",
+   "word": "ræisþu",
+   "n": 6,
+   "utan": {
+    "top": "raistu",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.11329441544520788,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 131",
+   "truth": "stain",
+   "word": "stæin",
+   "n": 5,
+   "utan": {
+    "top": "stain",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8828588763665354,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 131",
+   "truth": "þansi",
+   "word": "þannsi",
+   "n": 5,
+   "utan": {
+    "top": "þansi",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.39503002414509336,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 131",
+   "truth": "eftiR",
+   "word": "æftiR",
+   "n": 5,
+   "utan": {
+    "top": "eftiR",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.36162178839610604,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 131",
+   "truth": "skarþa",
+   "word": "skarða",
+   "n": 6,
+   "utan": {
+    "top": "þurkut",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "ikialt",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "inkuar",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 131",
+   "truth": "bruþur",
+   "word": "broður",
+   "n": 6,
+   "utan": {
+    "top": "bruþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.5756358769219027,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "bruþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.6821417833823933,
+    "traced": 6
+   },
+   "omflyttad": {
+    "top": "bruþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8678769519022203,
+    "traced": 6
+   }
+  },
+  {
+   "sig": "Sö 131",
+   "truth": "sin",
+   "word": "sinn",
+   "n": 3,
+   "utan": {
+    "top": "sin",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8879553187711814,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "sin",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8879553187711814,
+    "traced": 1
+   },
+   "omflyttad": {
+    "top": "sin",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.866497192392462,
+    "traced": 1
+   }
+  },
+  {
+   "sig": "Sö 131",
+   "truth": "fur",
+   "word": "for",
+   "n": 3,
+   "utan": {
+    "top": "auk",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "fur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.4343491949382003,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "fur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.4235773580369334,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö 131",
+   "truth": "austr",
+   "word": "austr",
+   "n": 5,
+   "utan": {
+    "top": "austr",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.638840029150566,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "austr",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7347108975798287,
+    "traced": 1
+   },
+   "omflyttad": {
+    "top": "austr",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.6706530827557226,
+    "traced": 1
+   }
+  },
+  {
+   "sig": "Sö 131",
+   "truth": "hiþan",
+   "word": "heðan",
+   "n": 5,
+   "utan": {
+    "top": "tauþr",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 131",
+   "truth": "miþ",
+   "word": "með",
+   "n": 3,
+   "utan": {
+    "top": "miþ",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9881865575996807,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 131",
+   "truth": "ikuari",
+   "word": "ingvari",
+   "n": 6,
+   "utan": {
+    "top": "ikuari",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9971111976391981,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "ikuari",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9992678089982132,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "ikuari",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9958113220029401,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö 131",
+   "truth": "likR",
+   "word": "liggR",
+   "n": 4,
+   "utan": {
+    "top": "lata",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "uaRu",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 1
+   },
+   "omflyttad": {
+    "top": "uaRu",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 1
+   }
+  },
+  {
+   "sig": "Sö 131",
+   "truth": "sunR",
+   "word": "sunR",
+   "n": 4,
+   "utan": {
+    "top": "merk",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "merk",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "merk",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 2
+   }
+  }
+ ]
+}

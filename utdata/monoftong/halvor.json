@@ -1,0 +1,73 @@
+{
+  "corpus": "e83202e01a5e6d27",
+  "n": 649,
+  "main": {
+    "A": 343,
+    "B": 306
+  },
+  "ladder": {
+    "A": 340,
+    "B": 309
+  },
+  "switched": 9,
+  "a_to_b": 6,
+  "b_to_a": 3,
+  "parishes": ["Björklinge sn", "Långtora sn", "Lena sn", "Skuttunge sn"],
+  "stones": [
+    {
+      "signum": "U 1026",
+      "parish": "Lena sn",
+      "main": "A",
+      "ladder": "B"
+    },
+    {
+      "signum": "U 1032",
+      "parish": "Lena sn",
+      "main": "A",
+      "ladder": "B"
+    },
+    {
+      "signum": "U 1046",
+      "parish": "Björklinge sn",
+      "main": "A",
+      "ladder": "B"
+    },
+    {
+      "signum": "U 1047",
+      "parish": "Björklinge sn",
+      "main": "A",
+      "ladder": "B"
+    },
+    {
+      "signum": "U 1056",
+      "parish": "Björklinge sn",
+      "main": "A",
+      "ladder": "B"
+    },
+    {
+      "signum": "U 1057",
+      "parish": "Björklinge sn",
+      "main": "A",
+      "ladder": "B"
+    },
+    {
+      "signum": "U 1116",
+      "parish": "Skuttunge sn",
+      "main": "B",
+      "ladder": "A"
+    },
+    {
+      "signum": "U 1118",
+      "parish": "Skuttunge sn",
+      "main": "B",
+      "ladder": "A"
+    },
+    {
+      "signum": "U 803",
+      "parish": "Långtora sn",
+      "main": "B",
+      "ladder": "A"
+    }
+  ],
+  "note": "Samma regel, två implementationer: i känslighetsanalysernas halvor (src/question.py) får en socken (Viksta) medeldateringen 0,6999999999999998 i stället för 0,7 genom avrundning i flyttal och hamnar före de andra socknarna med samma medeldatering, så att några uppländska socknar byter halva."
+}

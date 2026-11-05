@@ -1,0 +1,298 @@
+{
+ "stones": {
+  "Sö 319": {
+   "n_detected": 53,
+   "n_paired": 50,
+   "coverage": 0.94,
+   "null": 0.9103829078801331,
+   "null_sd": 0.03149392584883455
+  }
+ },
+ "rows": [
+  {
+   "sig": "Sö 319",
+   "truth": "finiþr",
+   "word": "finnviðr",
+   "n": 6,
+   "utan": {
+    "top": "oskutr",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "oskutr",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 6
+   },
+   "omflyttad": {
+    "top": "biaurn",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 6
+   }
+  },
+  {
+   "sig": "Sö 319",
+   "truth": "kiarþi",
+   "word": "gærði",
+   "n": 6,
+   "utan": {
+    "top": "raisti",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.24641912863096166,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "raisti",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.22851030374948664,
+    "traced": 6
+   },
+   "omflyttad": {
+    "top": "raisti",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.2392342985638784,
+    "traced": 6
+   }
+  },
+  {
+   "sig": "Sö 319",
+   "truth": "kuml",
+   "word": "kuml",
+   "n": 4,
+   "utan": {
+    "top": "kubl",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.4845940645819339,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "kubl",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.4956623815159726,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "kubl",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.4835285258937197,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö 319",
+   "truth": "þaisi",
+   "word": "þessi",
+   "n": 5,
+   "utan": {
+    "top": "eftiR",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "þausi",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 2
+   },
+   "omflyttad": {
+    "top": "þausi",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 2
+   }
+  },
+  {
+   "sig": "Sö 319",
+   "truth": "eftiR",
+   "word": "æftiR",
+   "n": 5,
+   "utan": {
+    "top": "eftiR",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.36191993127469485,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "eftiR",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.35940629078870046,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "eftiR",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.3580895669511379,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö 319",
+   "truth": "faþur",
+   "word": "faður",
+   "n": 5,
+   "utan": {
+    "top": "faþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9533727277104674,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "faþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.8936085023614752,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "faþur",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9072252428379878,
+    "traced": 5
+   }
+  },
+  {
+   "sig": "Sö 319",
+   "truth": "sin",
+   "word": "sinn",
+   "n": 3,
+   "utan": {
+    "top": "sin",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9541068108299944,
+    "traced": 0
+   },
+   "skanner": null,
+   "omflyttad": null
+  },
+  {
+   "sig": "Sö 319",
+   "truth": "han",
+   "word": "hann",
+   "n": 3,
+   "utan": {
+    "top": "han",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.7445459779394087,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "han",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.4619643361116039,
+    "traced": 3
+   },
+   "omflyttad": {
+    "top": "han",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.4669502483985245,
+    "traced": 3
+   }
+  },
+  {
+   "sig": "Sö 319",
+   "truth": "uarþ",
+   "word": "varð",
+   "n": 4,
+   "utan": {
+    "top": "uarþ",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9998569579065483,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "uarþ",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9996479200204975,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "uarþ",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9998249532877455,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö 319",
+   "truth": "tauþr",
+   "word": "dauðr",
+   "n": 5,
+   "utan": {
+    "top": "tauþr",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9995164940864262,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "tauþr",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9998398228666703,
+    "traced": 4
+   },
+   "omflyttad": {
+    "top": "tauþr",
+    "right": true,
+    "word_ok": true,
+    "p_truth": 0.9998594467184657,
+    "traced": 4
+   }
+  },
+  {
+   "sig": "Sö 319",
+   "truth": "uestr",
+   "word": "vestr",
+   "n": 5,
+   "utan": {
+    "top": "faþur",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 0
+   },
+   "skanner": {
+    "top": "uastr",
+    "right": false,
+    "word_ok": true,
+    "p_truth": 0.2186613350625882,
+    "traced": 5
+   },
+   "omflyttad": {
+    "top": "kirþu",
+    "right": false,
+    "word_ok": false,
+    "p_truth": 0.0,
+    "traced": 5
+   }
+  }
+ ]
+}

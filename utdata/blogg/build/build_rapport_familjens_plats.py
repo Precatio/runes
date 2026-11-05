@@ -1,12 +1,14 @@
 """Forskningsrapport (låst mall utdata/rapporter/MALL.md): "Runstenarna samlas i familjegrupper vid gravfälten" (sv + en).
 Fyra förregistrerade studier (avståndet, grannstenarna, familjens plats, en generation; 2026-10-28/29) och den låsta
 tilläggsplanen för robusthetstrappan (analysplaner/2026-10-31-familjens-plats-trappan.md). Alla siffror asserteras mot
-resultatfilerna i utdata/avstand och utdata/familjens_plats.
+resultatfilerna i utdata/avstand och utdata/familjens_plats (rapportversion 3: också mot rapport_kontroll.json, som
+utdata/familjens_plats/rapport_kontroll.py skriver ur korpusen och Runor, och mot planerna och källkoden).
     ../../../.venv/bin/python build_rapport_familjens_plats.py [--write | --update DOC]"""
 import datetime as dt
 import json
 import os
 import re
+import subprocess
 import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
@@ -15,18 +17,45 @@ from src import blog_labels  # noqa: E402
 sys.path.insert(0, os.path.join(ROOT, "utdata", "rapporter", "figurer"))
 from figur import FIG, andringslogg, bild  # noqa: E402
 
-APP_VERSION = json.load(open(os.path.join(ROOT, "web", "package.json")))["version"]
-assert APP_VERSION == "3.0.0"
-REPORT_VERSION = 2  # version 1: 2026-10-31
-TODAY = "2026-11-01"  # rapportversionens datum, fast i byggaren (mallen version 3)
-TL_SV = "den första analysplanen låstes 2026-10-28; de följande planerna låstes 2026-10-29; materialet frystes 2026-10-29; tilläggsplanen och replikeringen låstes 2026-10-31"
-TL_EN = "the first analysis plan was locked 2026-10-28; the following plans were locked 2026-10-29; the material was frozen 2026-10-29; the addendum and the replication were locked 2026-10-31"
+APP_VERSION = "3.0.0"  # the Vitki version the analysis was made in (tag v3.0.0 + the commits named in Data och kod), not the current one
+REPORT_VERSION = 3  # version 1: 2026-10-31; version 2 (figur 1): 2026-11-01
+TODAY = "2026-11-05"  # rapportversionens datum, fast i byggaren (mallen version 3)
+V2_DATE = "2026-11-01"
+PUB_V1 = "2026-10-31"  # version 1 publicerades då; publiceringsdatumet behålls
+SLUG = "familjegrupper-vid-gravfalten"
+_pub = [a for a in json.load(open(os.path.join(ROOT, "web", "content", "articles.json"), encoding="utf-8"))["posts"]
+        if a.get("slug") == SLUG]
+assert len(_pub) == 1 and _pub[0]["publishedAt"][:10] == PUB_V1
+# the corpus was computed 2026-10-28 (21:17 UTC), three minutes after the first plan was committed (21:14 UTC)
+TL_SV = "den första analysplanen låstes 2026-10-28; materialet frystes 2026-10-28; de följande planerna låstes 2026-10-29; tilläggsplanen och replikeringen låstes 2026-10-31"
+TL_EN = "the first analysis plan was locked 2026-10-28; the material was frozen 2026-10-28; the following plans were locked 2026-10-29; the addendum and the replication were locked 2026-10-31"
 FP = "3f58e9339191761e"
 U = os.path.join(ROOT, "utdata")
 J = lambda *p: json.load(open(os.path.join(U, *p), encoding="utf-8"))  # noqa: E731
 AV, GR, GRT = J("avstand", "avstand.json"), J("avstand", "grannar.json"), J("avstand", "grannar_trappa.json")
 REP = J("avstand", "replikering.json")
 FPL, GEN, TRA = J("familjens_plats", "familjens_plats.json"), J("familjens_plats", "generation.json"), J("familjens_plats", "trappan.json")
+IG, KO = J("familjens_plats", "inom_grupper.json"), J("familjens_plats", "rapport_kontroll.json")
+assert KO["korpus"] == FP and KO["korpus_beraknad"] == "2026-10-28"
+RUNOR_FETCHED = KO["runor"]["hamtad"]
+assert KO["runor"]["utgava"] == "2020" and RUNOR_FETCHED.startswith("2026-10-") and "runor.raa.se" in KO["runor"]["kalla"]
+# the commits at which the result files were saved (the analysis was run on the code at these commits); in a copy of the
+# repository with its history the files must be byte for byte those commits' files, made in Vitki APP_VERSION
+COMMITS = {"avstand/avstand.json": ("6b0680c", "2026-10-29"), "avstand/grannar.json": ("56b95a7", "2026-10-29"),
+           "familjens_plats/familjens_plats.json": ("64f2c7f", "2026-10-29"),
+           "familjens_plats/inom_grupper.json": ("64f2c7f", "2026-10-29"),
+           "familjens_plats/generation.json": ("777ec0a", "2026-10-29"),
+           "avstand/grannar_trappa.json": ("cae41e0", "2026-10-31"), "familjens_plats/trappan.json": ("cae41e0", "2026-10-31"),
+           "avstand/replikering.json": ("34281c9", "2026-10-31")}
+if os.path.isdir(os.path.join(ROOT, ".git")):
+    for f_, (c_, day_) in COMMITS.items():
+        rel = f"utdata/{f_}"
+        assert subprocess.run(["git", "show", f"{c_}:{rel}"], cwd=ROOT, capture_output=True, check=True).stdout == \
+            open(os.path.join(ROOT, rel), "rb").read(), rel
+        assert json.loads(subprocess.run(["git", "show", f"{c_}:web/package.json"], cwd=ROOT, capture_output=True,
+                                         check=True).stdout)["version"] == APP_VERSION
+        assert subprocess.run(["git", "log", "-1", "--format=%h %ad", "--date=short", "--", rel], cwd=ROOT,
+                              capture_output=True, text=True, check=True).stdout.split() == [c_, day_], rel
 SHA = {k: open(os.path.join(ROOT, "analysplaner", f"{k}.sha256" if k != "trappan" else "2026-10-31-familjens-plats-trappan.md.sha256")).read().split()[0][:16]
        for k in ("2026-10-28-avstand-mellan-stenar", "2026-10-28-avstand-mellan-stenar-tillagg", "2026-10-29-grannstenarna",
                  "2026-10-29-familjens-plats", "2026-10-29-en-generation", "trappan")}
@@ -106,16 +135,67 @@ assert all(r["p"] < 0.05 for r in GR_.values())
 NOC = next(r for k, r in GR_.items() if "ristare" in k or "carver" in k)
 assert (NOC["groups"], d2(NOC["mean_styles"]), d2(NOC["expected"]), round(NOC["p"], 2)) == (28, "1,71", "1,96", 0.01)
 
-SLUG = "familjegrupper-vid-gravfalten"
-title = "Runstenarna samlas i familjegrupper vid gravfälten – grannstenar nämner samma personer åtta gånger oftare"
-title_en = "Runestones gather in family groups by the grave fields – neighbouring stones name the same people eight times as often"
+# ---- rapportversion 3: numbers that version 2 left out or stated loosely ---------------------------------------------
+# the pre-registered test of medieval churches, and the tests that were not reported
+K5 = OTHER["y5_kyrka"]
+assert (pc(K5["main"]["share_grupp"]), pc(K5["main"]["share_ensam"]), d2(K5["main"]["or"]), d2(K5["main"]["lo"]),
+        d2(K5["main"]["hi"]), pfmt(K5["main"]["p"]), d2(K5["p_holm"])) == (34, 17, "1,66", "1,06", "2,60", "p = 0,03", "0,34")
+assert K5["status"] == "antydan"
+NS = ("y6_gammalt_namn", "y7_ungt_namn", "y8_kultnamn", "y10_namnger_plats", "y11_arv_gard", "y12_hog_sten", "y13_signerad")
+assert all(OTHER[k]["status"] == "ingen skillnad påvisad" and OTHER[k]["p_holm"] > 0.8 for k in NS)
+assert len(FPL["tests"]) == 13 and {t["key"] for t in FPL["tests"]} == {"y1_gravfalt", "y2_hog", "y3_vag", "y4_grans", "y5_kyrka", "y9_centralort", *NS}
+T15 = IG["t15"]
+assert (T15["pairs"], pc(T15["share_mixed"]), pc(T15["expected"]), pfmt(T15["p"])) == (134, 23, 31, "p = 0,10")
+assert "Holm över de 15 testen" in open(os.path.join(ROOT, "analysplaner", "2026-10-29-familjens-plats.md"), encoding="utf-8").read()
+# roads and Husby/-tuna: the raw shares, the odds ratio with its interval, and the Holm p to three decimals
+V3 = OTHER["y3_vag"]["main"]
+assert (d2(V3["or"]), d2(V3["lo"]), d2(V3["hi"])) == ("1,32", "0,83", "2,11") and OTHER["y3_vag"]["status"] == "ingen skillnad påvisad"
+C9 = OTHER["y9_centralort"]
+assert f"{C9['p_holm']:.3f}" == "0.049" and C9["status"] == "antydan" and OTHER["y2_hog"]["status"] == "ingen skillnad påvisad"
+PLAN3 = open(os.path.join(ROOT, "analysplaner", "2026-10-29-familjens-plats.md"), encoding="utf-8").read()
+assert "Gränsmärken och färdvägar är oftast yngre än" in PLAN3.replace("\n", " ") and "OpenStreetMap" in PLAN3 and "före 1350" in PLAN3
+# the names: 13 of the 74 near pairs share a name
+N_SHARED = round(GN["share_near"] * GN["near_pairs"])
+assert N_SHARED == 13 and abs(N_SHARED / GN["near_pairs"] - GN["share_near"]) < 1e-12
+# the carver: one secure carver per Rundata, else none (src/r_bridge.py corpus_rows; trappa.R ll. 22–24; the plans)
+assert '"carver": carvers[0] if len(carvers) == 1 else ""' in open(os.path.join(ROOT, "src", "r_bridge.py"), encoding="utf-8").read()
+assert 'and not c["uncertain"]' in open(os.path.join(ROOT, "src", "research_gaps.py"), encoding="utf-8").read()
+assert "carvers_uncertain == 0" in open(os.path.join(U, "familjens_plats", "trappa.R"), encoding="utf-8").read()
+# step 1 has no check without the stones Runor lists as moved
+assert not any("runor" in k for k in list(AU["robustness"]) + list(AS["robustness"])) and "robustness" not in REP
+# the sources (web/src/lib/exportTable.ts) and Rundata (METHODS.md, data/README.md)
+LANDSCAPE_SV = "Fornlämningar: Kulturmiljöregistret, Riksantikvarieämbetet (via K-samsök). Ortnamn: © OpenStreetMap-bidragsgivare (ODbL). Medeltida kyrkor: Wikidata (CC0)."
+LANDSCAPE_EN = "Ancient monuments: Kulturmiljöregistret, Swedish National Heritage Board (via K-samsök). Place names: © OpenStreetMap contributors (ODbL). Medieval churches: Wikidata (CC0)."
+assert f'const LANDSCAPE = "{LANDSCAPE_SV}";' in open(os.path.join(ROOT, "web", "src", "lib", "exportTable.ts"), encoding="utf-8").read()
+_methods = open(os.path.join(ROOT, "METHODS.md"), encoding="utf-8").read()
+_readme = open(os.path.join(ROOT, "data", "README.md"), encoding="utf-8").read()
+assert "version 2014 med RUNDATA.xls från 2018" in _methods and "ODbL 1.0" in _readme and "DbCL 1.0" in _readme
+RUNDATA_SV = ("Samnordisk runtextdatabas (Rundata), version 2014 med RUNDATA.xls uppdaterad 2018. Institutionen för nordiska språk, Uppsala universitet. "
+              "Open Database License 1.0 / Database Contents License 1.0.")
+RUNDATA_EN = ("Scandinavian Runic-text Database (Rundata), 2014 version with RUNDATA.xls updated 2018. Department of Scandinavian Languages, Uppsala "
+              "University. Open Database License 1.0 / Database Contents License 1.0.")
+# the map draws each grave field as a filled grey disc at its point (rapportfigurer.py, familj)
+assert 'ax.scatter(gx[ing], gy[ing], s=900, marker="o", color="#94a3b8", alpha=0.35, linewidths=0' in \
+    open(os.path.join(ROOT, "utdata", "rapporter", "figurer", "rapportfigurer.py"), encoding="utf-8").read()
+GLOSS_SV = "[https://vitkirunor.se/forskningsrapporter/begrepp](https://vitkirunor.se/forskningsrapporter/begrepp)"
+GLOSS_EN = "[https://vitkirunor.se/en/forskningsrapporter/begrepp](https://vitkirunor.se/en/forskningsrapporter/begrepp)"
+for p_ in ("web/src/app/forskningsrapporter/begrepp/page.tsx", "web/src/app/en/forskningsrapporter/begrepp/page.tsx"):
+    assert os.path.exists(os.path.join(ROOT, p_)), p_
+GITHUB = "[https://github.com/Precatio/runes](https://github.com/Precatio/runes)"
+CM = {k.split("/")[1].split(".")[0]: v[0] for k, v in COMMITS.items()}
+assert AU["nearest_m"]["10%"] < 200
+
+title = "Runstenarna samlas i familjegrupper vid gravfälten – grannstenar nämner samma personnamn åtta gånger oftare"
+title_en = "Runestones gather in family groups by the grave fields – neighbouring stones name the same personal names eight times as often"
 summary = ("Förregistrerad studie i fyra steg. Runstenar som står kvar på sin plats ligger närmare varandra än slumpen ger. Stenar "
-           "inom 500 meter från varandra nämner samma personer åtta gånger så ofta som stenar längre bort, grupperna står vid "
-           "gravfält oftare än ensamma stenar, och en grupp restes oftast inom en generation. Runstenen var familjens monument vid familjens gravfält.")
+           "inom 500 meter från varandra delar ett personnamn åtta gånger så ofta som stenar längre bort, och grupperna står vid "
+           "gravfält oftare än ensamma stenar. En uppföljning, som inte har gått den fasta serien känslighetsanalyser, tyder på "
+           "att en grupp oftast restes inom en generation. Runstenen var familjens monument vid familjens gravfält.")
 summary_en = ("Pre-registered study in four steps. Runestones that stand in place lie closer to one another than chance would give. "
-              "Stones within 500 metres of each other name the same people eight times as often as stones further apart, the groups "
-              "stand by grave fields more often than lone stones, and a group was usually raised within one generation. The runestone "
-              "was the family's monument by the family's grave field.")
+              "Stones within 500 metres of each other share a personal name eight times as often as stones further apart, and "
+              "the groups stand by grave fields more often than lone stones. A follow-up, which has not passed the fixed series "
+              "of sensitivity analyses, suggests that a group was usually raised within one generation. The runestone was the "
+              "family's monument by the family's grave field.")
 CITE_EN = (f"Kvant, V. ({TODAY[:4]}). {title_en}. Research report, report version {REPORT_VERSION}; analysis in Vitki {APP_VERSION}. "
            f"https://vitkirunor.se/en/forskningsrapporter/{SLUG}")
 
@@ -127,9 +207,9 @@ def chart(sv):
             f"{'Ensam sten' if sv else 'Lone stone'} | {pc(M1['share_ensam'])} | {FPL['n_ensam']} {'stenar' if sv else 'stones'}",
             "# " + ("Samma personnamn" if sv else "The same personal name"),
             f"+{'Nära par, 25–500 m' if sv else 'Near pairs, 25–500 m'} | {d1(100 * GN['share_near']) if sv else f'{100 * GN['share_near']:.1f}'} | {GN['near_pairs']} {'par' if sv else 'pairs'}",
-            f"{'Jämförelsepar, 2–10 km' if sv else 'Comparison pairs, 2–10 km'} | {d1(100 * GN['share_far']) if sv else f'{100 * GN['share_far']:.1f}'} | {GN['far_pairs']} {'par' if sv else 'pairs'}",
-            ("Källa: Rundata; gravfält ur Riksantikvarieämbetets kulturmiljöregister. Råa andelar." if sv else
-             "Source: Rundata; grave fields from the Swedish National Heritage Board's register. Raw shares."),
+            f"{'Jämförelsepar, 2–10 km' if sv else 'Comparison pairs, 2–10 km'} | {d1(100 * GN['share_far']) if sv else f'{100 * GN['share_far']:.1f}'} | {f'{GN['far_pairs']:,}'.replace(',', ' ' if sv else ',')} {'par' if sv else 'pairs'}",
+            ("Källa: Rundata; gravfält ur Kulturmiljöregistret, Riksantikvarieämbetet. Råa andelar. Diagram: Vitki, efter Rundata och Kulturmiljöregistret." if sv else
+             "Source: Rundata; grave fields from Kulturmiljöregistret, Swedish National Heritage Board. Raw shares. Chart: Vitki, after Rundata and Kulturmiljöregistret."),
             ":::"]
     return "\n".join(rows)
 
@@ -137,66 +217,89 @@ def chart(sv):
 FA = FIG["familj"]
 assert (FA["n_pairs_total"], FA["group_pairs"], FA["stones"], FA["ties"]) == (13, 2, ["U 293", "U 294", "U Fv1972;172"], 1)
 assert FA["pairs"] == [["U 293", "U 294", ["Forkunnr"], 227], ["U 294", "U Fv1972;172", ["Guðlaug"], 138]]
-FIG_SV = bild("familj", "sv", "Figur 1. Ett exempel: stenarna i Hammarby socken i Uppland. Av de 13 stenpar 25–500 meter från varandra som nämner samma person bildar de här den enda gruppen med två par: U 293 och U 294 nämner båda Forkunnr, U 294 och U Fv1972;172 båda Guðlaug. Grå ringar är registrerade gravfält. Karta: Vitki, ur Rundata och Riksantikvarieämbetets kulturmiljöregister.")
-FIG_EN = bild("familj", "en", "Figure 1. An example: the stones in Hammarby parish in Uppland. Of the 13 pairs of stones 25–500 metres apart that name the same person, these form the only group with two pairs: U 293 and U 294 both name Forkunnr, U 294 and U Fv1972;172 both Guðlaug. Grey rings are registered grave fields. Map: Vitki, from Rundata and the Swedish register of ancient monuments.")
-LOG_SV = andringslogg("sv", 2, TODAY, "Figur 1 tillagd: en karta över en verklig familjegrupp vid gravfält, vald efter en regel som anges i bildtexten.", "Figure 1 added: a map of a real family group by grave fields, chosen by a rule given in the caption.")
-LOG_EN = andringslogg("en", 2, TODAY, "Figur 1 tillagd: en karta över en verklig familjegrupp vid gravfält, vald efter en regel som anges i bildtexten.", "Figure 1 added: a map of a real family group by grave fields, chosen by a rule given in the caption.")
+assert FA["n_pairs_total"] == N_SHARED  # the figure's 13 pairs are the 13 near pairs that share a name
+FIG_SV = bild("familj", "sv", "Figur 1. Hammarby socken, Uppland: av de 13 stenpar 25–500 meter från varandra som delar ett personnamn bildar de här den enda gruppen med två par (U 293 och U 294 nämner båda Forkunnr; U 294 och U Fv1972;172 båda Guðlaug). Grå cirklar: registrerade gravfält, vid sin punkt. Karta: Vitki, efter Rundata och Riksantikvarieämbetets kulturmiljöregister.")
+FIG_EN = bild("familj", "en", "Figure 1. Hammarby parish, Uppland: of the 13 pairs of stones 25–500 metres apart that share a personal name, these form the only group with two pairs (U 293 and U 294 both name Forkunnr; U 294 and U Fv1972;172 both Guðlaug). Grey discs: registered grave fields, at their point. Map: Vitki, after Rundata and Kulturmiljöregistret (Swedish National Heritage Board).")
+V2_SV, V2_EN = ("Figur 1 tillagd: en karta över en verklig familjegrupp vid gravfält, vald efter en regel som anges i bildtexten.",
+                "Figure 1 added: a map of a real family group by grave fields, chosen by a rule given in the caption.")
+LOG_SV = andringslogg("sv", 2, V2_DATE, V2_SV, V2_EN) + f"""
+- **Version 3, {TODAY}.** Rättelser före den permanenta arkiveringen i Zenodo, efter en granskning av rapporten mot resultatfilerna, planerna och källorna. Huvudresultaten och nivån är oförändrade.
+- *Förregistrerade test som inte redovisades.* Testet för medeltida kyrkor ({pc(K5['main']['share_grupp'])} mot {pc(K5['main']['share_ensam'])} procent, Holm-korrigerat p = {d2(K5['p_holm'])}, en antydan) och testen för bebyggelsenamn, kultnamn, plats i texten, arv eller gård, stenens höjd, signering och kristna och icke-kristna grannar saknades i resultaten. De står nu i 5.3, och avsnitt 2 räknar upp alla femton test.
+- *Vägar och gränser.* Sammanfattningen, diskussionen och korthetsrutan sade att vägar, gränsmärken och maktens ortnamn inte skiljer grupperna och att monumentet var familjens, ”inte vägens eller gränsens”. Färdvägar är vanligare vid grupperna rått ({pc(V3['share_grupp'])} mot {pc(V3['share_ensam'])} procent), men skillnaden är inte säker; Husby och -tuna är en antydan åt motsatt håll; och registrets vägar och gränsmärken är oftast yngre än stenarna, ett förbehåll i planen som saknades. Texten säger nu det.
+- *Samma personnamn, inte samma personer.* Måttet är ett delat personnamn, och bara {N_SHARED} av {GN['near_pairs']} nära par delar ett. Titeln och texten säger nu personnamn; adressen är oförändrad.
+- *Ristaren.* Material angav ristaren ”säker eller osäker”; analyserna räknar bara en ristare som Rundata anger som säker.
+- *Litteraturen.* Ekholm (1950) beskrivs nu efter hans text: stenarna stod främst vid vägar och vattenleder, och de ensamma stenarna är oftast vägmonument, inte rester av bortodlade gravfält. Att de ensamma stenarna mer sällan har ett gravfält nära kan inte skilja hans läsning från den han vände sig mot; diskussionen och svaghet 3 är rättade. Zachrissons (1998) stenar markerade gårdens gränser, ofta där vägen gick in på gårdens mark. Ekholm och McLeod har fått sidor, och Zachrissons titel är rättstavad.
+- *Steg 4.* En generation är en uppföljning som inte har gått den fasta serien känslighetsanalyser; det står nu där steget nämns, och en svaghet är tillagd: stilgruppen följer ofta ristaren eller verkstaden.
+- *Källor och form.* Ortnamnen (OpenStreetMap) och kyrkorna (Wikidata) har fått sina källor; Runor anges som utgåva 2020 med hämtdatum; materialet frystes 2026-10-28, inte 2026-10-29; svaghet 2 säger att steg 1 saknar en kontroll utan stenarna som Runor anger som flyttade; bildtexten säger cirklar i stället för ringar; tio procent av stenarna har en granne inom 200 meter, inte ”ungefär 200”; Data och kod anger commit och kommandon i stället för en framtida DOI; Rundata anges med version och licenser; ordlistan länkas och de rumsliga begreppen och ensidigt test förklaras; den engelska texten är kortad till högst 3 000 ord.
+"""
+LOG_EN = andringslogg("en", 2, V2_DATE, V2_SV, V2_EN) + f"""
+- **Version 3, {TODAY}.** Corrections before the permanent archiving in Zenodo, after a review of the report against the result files, the plans and the sources. The main results and the level are unchanged.
+- *Pre-registered tests that were not reported.* The test of medieval churches ({pc(K5['main']['share_grupp'])} against {pc(K5['main']['share_ensam'])} percent, Holm-corrected p = {K5['p_holm']:.2f}, an indication) and the tests of settlement names, cult names, a place in the text, inheritance or farm, the stone's height, signing and Christian and non-Christian neighbours were missing from the results. They are now in 5.3, and section 2 lists all fifteen tests.
+- *Roads and boundaries.* The abstract, the discussion and the essentials box said that roads, boundary markers and the place names of power do not set the groups apart and that the monument was the family's, "not the road's or the boundary's". Roads are more common by the groups in raw shares ({pc(V3['share_grupp'])} against {pc(V3['share_ensam'])} percent), but the difference is not clear; Husby and -tuna are an indication in the opposite direction; and the register's roads and boundary markers are mostly younger than the stones, a caveat in the plan that was missing. The text now says so.
+- *The same personal names, not the same people.* The measure is a shared personal name, and only {N_SHARED} of {GN['near_pairs']} near pairs share one. The title and the text now say personal names; the address is unchanged.
+- *The carver.* Material gave the carver as "secure or uncertain"; the analyses count only a carver that Rundata gives as secure.
+- *The literature.* Ekholm (1950) is now described from his text: the stones stood mainly by roads and waterways, and the lone stones are mostly road monuments, not remnants of ploughed-out grave fields. That lone stones less often have a grave field nearby cannot separate his reading from the one he argued against; the discussion and weakness 3 are corrected. Zachrisson's (1998) stones marked the farm's boundaries, often where the road entered the farm's land. Ekholm and McLeod now have pages, and Zachrisson's title is spelt correctly.
+- *Step 4.* One generation is a follow-up that has not passed the fixed series of sensitivity analyses; this is now said wherever the step is mentioned, and a weakness is added: the style group often follows the carver or the workshop.
+- *Sources and form.* The place names (OpenStreetMap) and the churches (Wikidata) now have their sources; Runor is cited as the 2020 edition with its retrieval date; the material was frozen on 2026-10-28, not 2026-10-29; weakness 2 says that step 1 has no check without the stones Runor records as moved; the caption says discs instead of rings; one stone in ten has a neighbour within 200 metres, not "about 200"; Data and code gives the commits and commands instead of a future DOI; Rundata is cited with version and licences; the glossary is linked and the spatial terms and one-sided test are explained; the English text is shortened to at most 3,000 words.
+"""
 
-body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion {REPORT_VERSION}, {TODAY}. Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, gravfält, familj, stengrupper, rumslig statistik, punktmönster, förregistrering. Konkurrerande intressen: inga. Finansiering: ingen.*
+body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion {REPORT_VERSION}, {TODAY} (version 1 publicerad {PUB_V1}; ändringarna står sist). Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, gravfält, familj, stengrupper, rumslig statistik, punktmönster, förregistrering. Konkurrerande intressen: inga. Finansiering: ingen.*
 
 ## Sammanfattning
 
-**Bakgrund och syfte.** Var runstenarna restes har diskuterats länge: vid gravfält, vid vägar och broar, vid gårdens gränser. Frågan här är om stenarna bildar grupper, vad stenarna i en grupp har gemensamt och var grupperna står – mätt på hela materialet, med tätheten i bygden konstant.
-**Material.** Runstenar som står kvar på sin plats i Rundata: {AU['n_stones']} i Uppland och {AS['n_stones']} i Södermanland för mönstret och namnen, {REP['main']['n_stones']} i Östergötland, Västergötland och Småland för en replikering av mönstret, och {TRA['n']} i de svenska landskapen för gravfälten, med gravfält ur Riksantikvarieämbetets kulturmiljöregister.
-**Metod.** Fyra förregistrerade studier: ett test av punktmönstret mot en bygd med varierande täthet (999 simuleringar), förregistrerat replikerat på nya stenar, en jämförelse av nära och avlägsna stenpar (9 999 omblandningar), en logistisk regression för gravfält i grupp mot ensam sten, och en omblandning av stilgrupper inom bygden. De två huvudtesten har gått en fast serie känslighetsanalyser enligt en låst tilläggsplan.
-**Resultat.** Stenarna ligger närmare varandra än slumpen ger på 100–1 000 meter i Uppland och Södermanland, och samma test ger samma utslag på stenarna i Götaland ({pfmt(REP['main']['p'])}). Stenar inom 500 meter från varandra nämner samma person i {d1(100 * GN['share_near'])} procent av paren mot {d1(100 * GN['share_far'])} procent på 2–10 kilometers avstånd: {d1(GN['ratio'])} gånger så ofta. {pc(M1['share_grupp'])} procent av stenarna i grupp har ett gravfält inom 500 meter mot {pc(M1['share_ensam'])} procent av de ensamma; oddskvot {d2(M1['or'])}. En grupp har i medel {d2(G['mean_styles'])} olika stilgrupper mot {d2(G['expected'])} för lika många stenar ur samma bygd. Vägar, gränsmärken och maktens ortnamn skiljer inte grupperna från de ensamma stenarna.
-**Slutsats.** Runstenarna står ofta i grupper som är familjens: samma människor, vid familjens gravfält, resta inom en generation. Fynden bärs i hög grad av Uppland.
+**Bakgrund och syfte.** Var runstenarna restes har diskuterats länge: vid gravfält, vid vägar och broar, vid gårdens gränser. Frågan är om stenarna bildar grupper, vad stenarna i en grupp har gemensamt och var grupperna står, med bygdens täthet konstant.
+**Material.** Runstenar på sin plats enligt Rundata: {AU['n_stones']} i Uppland och {AS['n_stones']} i Södermanland (mönstret och namnen), {REP['main']['n_stones']} i Östergötland, Västergötland och Småland (replikeringen) och {TRA['n']} i alla svenska landskap (gravfälten, ur Riksantikvarieämbetets kulturmiljöregister).
+**Metod.** Fyra förregistrerade studier: ett test av punktmönstret mot en bygd med varierande täthet, replikerat på nya stenar; nära mot avlägsna stenpar; en logistisk regression för gravfält, grupp mot ensam sten; och en omblandning av stilgrupper inom bygden. De två huvudtesten har gått en fast serie känslighetsanalyser enligt en låst tilläggsplan; den fjärde, en uppföljning, har inte gjort det.
+**Resultat.** Stenarna ligger närmare varandra än slumpen ger på 100–1 000 meter i Uppland och Södermanland, och i Götaland ({pfmt(REP['main']['p'])}). Av stenparen inom 500 meter från varandra delar {d1(100 * GN['share_near'])} procent ett personnamn, mot {d1(100 * GN['share_far'])} procent på 2–10 kilometers avstånd: {d1(GN['ratio'])} gånger så ofta. {pc(M1['share_grupp'])} procent av stenarna i grupp har ett gravfält inom 500 meter mot {pc(M1['share_ensam'])} procent av de ensamma; oddskvot {d2(M1['or'])}. En grupp har i medel {d2(G['mean_styles'])} olika stilgrupper mot {d2(G['expected'])} för lika många stenar ur samma bygd. För färdvägar, gravhögar och gränsmärken påvisas ingen skillnad; ortnamn på Husby och -tuna ligger med tätheten konstant något mer sällan nära grupperna och en medeltida kyrka något oftare (båda antydningar).
+**Slutsats.** Runstenarna står ofta i grupper som är familjens: samma personnamn, vid familjens gravfält och, enligt en uppföljning som ännu inte är känslighetsprövad, resta inom en generation. Uppland bär fynden i hög grad.
 
 ## 1. Inledning
 
-Gunnar Ekholm (1950) frågade var runstenarna restes och var skeptisk till tanken att ensamma stenar markerar bortodlade gravfält. Torun Zachrisson (1998) har i sin studie av Uppland och Gästrikland satt runstenarna i samband med gård, gräns och gravfält och föreslagit att stenar vid gårdens gränser skyddade gården. Lydia Klos (2009) har hävdat att de flesta runstenar ursprungligen restes vid gravfält, en slutsats som Shane McLeod (2014) menar överbetonar gravfälten på bekostnad av andra platser, som vägarna. Birgit Sawyer (2000) läste stenarna som uttryck för familj och arv, och grupper som Jarlabankes stenar i Täby och Vallentuna har länge setts som en släkts monument.
+Gunnar Ekholm (1950) hävdade, mot äldre forskning, att runstenarna främst stod vid vägar och vattenleder: många står vid gravfält därför att gravfälten låg vid vägarna, och de ensamma stenarna är oftast vägmonument, inte rester av bortodlade gravfält. Torun Zachrisson (1998) har i sin studie av Uppland och Gästrikland satt runstenarna i samband med gård, gräns och gravfält och föreslagit att stenar markerade gårdens gränser, ofta där vägen gick in på gårdens mark. Lydia Klos (2009) har hävdat att de flesta runstenar restes vid gravfält; Shane McLeod (2014) menar att det överbetonar gravfälten på bekostnad av andra platser, som vägarna. Birgit Sawyer (2000) läste stenarna som uttryck för familj och arv, och grupper som Jarlabankes i Täby och Vallentuna har länge setts som en släkts monument.
 
-Det som saknas är ett mått på hela materialet: om stenarna faktiskt bildar grupper mer än slumpen ger när bygdens täthet hålls konstant, om stenarna i en grupp hör ihop genom människor eller genom vägar och broar, och om grupperna står på andra platser än de ensamma stenarna. Syftet med studien är att mäta det, i fyra steg som vart och ett förregistrerades innan det kördes.
+Det som saknas är ett mått på hela materialet: bildar stenarna grupper mer än slumpen ger när bygdens täthet hålls konstant, hör stenarna i en grupp ihop genom människor eller genom vägar och broar, och står grupperna på andra platser än de ensamma stenarna? Studien mäter det i fyra förregistrerade steg.
 
 ## 2. Förregistrering: hypoteser och planer
 
-Studien består av fyra förregistrerade steg och en tilläggsplan. Varje plan skrevs ned och tidsstämplades i projektets versionshantering innan analysen kördes; kontrollsummorna (SHA-256) står nedan och filerna under Data och kod.
+Varje plan lades in i projektets versionshantering innan analysen kördes; kontrollsummor (SHA-256) nedan, filerna under Data och kod.
 
-1. **Avståndet** (28 oktober 2026, `{SHA['2026-10-28-avstand-mellan-stenar']}…`, tillägg `{SHA['2026-10-28-avstand-mellan-stenar-tillagg']}…`; replikering 31 oktober, `{SHA['replikering']}…`): står stenar som är kvar på sin plats närmare varandra än slumpen ger på 100–1 000 meter, med bygdens täthet konstant? Prövat i Uppland och Södermanland, och med samma metod på stenarna i Östergötland, Västergötland och Småland.
-2. **Grannstenarna** (29 oktober, `{SHA['2026-10-29-grannstenarna']}…`): har nära stenpar (25–500 meter) oftare samma personnamn, samma ristare, samma stilgrupp eller samma budskap än stenpar på 2–10 kilometers avstånd? Sex test, Holm-korrigerade.
-3. **Familjens plats** (29 oktober, `{SHA['2026-10-29-familjens-plats']}…`): står stenar i grupp (en annan sten 25–500 meter bort) oftare än ensamma stenar (närmaste sten över 1 kilometer bort) vid gravfält, gravhögar, vägar, gränsmärken, kyrkor och vissa ortnamn? Femton test, Holm-korrigerade.
-4. **En generation** (29 oktober, `{SHA['2026-10-29-en-generation']}…`): har grupperna färre olika stilgrupper än lika många stenar dragna ur samma bygd?
-5. **Tilläggsplanen** (31 oktober, `{SHA['trappan']}…`): samma fasta serie känslighetsanalyser som projektets alla andra samband går igenom, lagd på steg 2 (namnen) och steg 3 (gravfälten). Den skrevs efter att de fyra resultaten var kända men innan känslighetsanalyserna kördes, och den lägger inte till några nya utfall.
+1. **Avståndet** (28 oktober 2026, `{SHA['2026-10-28-avstand-mellan-stenar']}…`, tillägg `{SHA['2026-10-28-avstand-mellan-stenar-tillagg']}…`; replikering 31 oktober, `{SHA['replikering']}…`): står stenar på sin plats närmare varandra än slumpen ger på 100–1 000 meter, med bygdens täthet konstant? Prövat i Uppland och Södermanland, sedan i Östergötland, Västergötland och Småland.
+2. **Grannstenarna** (29 oktober, `{SHA['2026-10-29-grannstenarna']}…`): har nära stenpar (25–500 meter) oftare samma personnamn, ristare, stilgrupp eller budskap än stenpar 2–10 kilometer isär? Sex test, Holm-korrigerade.
+3. **Familjens plats** (29 oktober, `{SHA['2026-10-29-familjens-plats']}…`): står stenar i grupp (en annan sten 25–500 meter bort) oftare än ensamma stenar (närmaste sten över 1 kilometer bort) vid gravfält, gravhögar, färdvägar, gränsmärken, medeltida kyrkor och vissa ortnamn, och skiljer de sig i text, höjd och signering? Två test till gäller grupperna inbördes (tidsdjup; kristna bredvid icke-kristna stenar). Femton test, Holm-korrigerade.
+4. **En generation** (29 oktober, `{SHA['2026-10-29-en-generation']}…`): spänner grupperna över färre stilgrupper än lika många stenar dragna ur samma bygd?
+5. **Tilläggsplanen** (31 oktober, `{SHA['trappan']}…`): projektets fasta serie känslighetsanalyser för steg 2 och 3, skriven när de fyra resultaten var kända men innan känslighetsanalyserna kördes; den lägger inte till några utfall.
 
-Två saker ska sägas om ordningen. Steg 4 formulerades efter en iakttagelse i steg 3: där var ett ensidigt test av *fler* stilgrupper än slumpen ställt, och utfallet gick kraftigt åt motsatt håll. Den nya planen prövade det motsatta med en striktare jämförelse (omblandning inom bygden i stället för inom landskapet), men på samma stenar. Steg 4 är alltså förregistrerat, men inte prövat på oberoende data. I steg 1 fick metoden rättas efter den första körningen i Uppland och Södermanland (se 4.6). Därför prövades den rättade metoden oförändrad, enligt en ny låst plan, på stenarna i Östergötland, Västergötland och Småland, som inte hade ingått i någon avståndsanalys. Det är den prövningen som bär steg 1.
+Steg 4 växte ur steg 3, där ett ensidigt test bara frågade om grupperna har *fler* stilgrupper än slumpen ger; utfallet gick kraftigt åt motsatt håll. Den nya planen prövade det motsatta med en striktare jämförelse (inom bygden, inte landskapet) på samma stenar: en förregistrerad uppföljning, inte prövad på oberoende data. I steg 1 rättades metoden efter den första körningen (4.6), så den prövades oförändrad, enligt en ny låst plan, på stenar i Östergötland, Västergötland och Småland som ingen avståndsanalys hade använt; den prövningen bär steg 1.
 
 ## 3. Material
 
-- **Källa.** Samnordisk runtextdatabas (Rundata), Institutionen för nordiska språk vid Uppsala universitet, i den version som frystes för analyserna den 28–29 oktober 2026. Gravfält, gravhögar, färdvägar och gränsmärken ur Riksantikvarieämbetets kulturmiljöregister; ortnamn ur projektets ortnamnstabell.
-- **Stenarna.** Bara runstenar som enligt Rundata står kvar på sin ursprungliga plats och har känt läge; flyttade och försvunna stenar ingår inte, eftersom deras plats inte säger var de restes. Steg 1 och 2 gäller Uppland och Södermanland, där stenarna är flest ({AU['n_stones']} och {AS['n_stones']} stenar, {AU['n_sites']} och {AS['n_sites']} platser när stenar inom 25 meter räknas som en plats). Replikeringen av steg 1 gäller {REP['main']['n_stones']} stenar på plats i Östergötland ({RP['Ög']['n_stones']}), Västergötland ({RP['Vg']['n_stones']}) och Småland ({RP['Sm']['n_stones']}), de enda landskap utöver Uppland och Södermanland med tillräckligt många stenar kvar. Steg 3 gäller alla svenska landskap: {FPL['n_grupp']} stenar i grupp och {FPL['n_ensam']} ensamma.
-- **Personnamnen** är resarnas och de dödas namn, lästa ur inskriften med projektets namnmodell. De 20 vanligaste namnen i hela materialet räknas inte, så att ett par inte delar namn bara för att namnet var vanligt.
-- **Datering** efter stenens ornamentikstil (Gräslund 2006). En stilgrupp täcker 25–50 år.
-- **Ristaren.** Den ristare Rundata anger, säker eller osäker.
+- **Källor.** Samnordisk runtextdatabas (Rundata), version 2014 med RUNDATA.xls uppdaterad 2018, fryst för analyserna den 28 oktober 2026. Gravfält, gravhögar, färdvägar och gränsmärken ur Riksantikvarieämbetets kulturmiljöregister; ortnamn ur OpenStreetMap; medeltida kyrkor (uppförda före 1350) ur Wikidata; flyttade stenar också enligt Riksantikvarieämbetets register Runor (utgåva 2020).
+- **Stenarna.** Bara runstenar som enligt Rundata står kvar på sin ursprungliga plats med känt läge; flyttade och försvunna stenar ingår inte, eftersom deras plats inte visar var de restes. Steg 1 och 2: Uppland och Södermanland ({AU['n_stones']} och {AS['n_stones']} stenar; {AU['n_sites']} och {AS['n_sites']} platser, då stenar inom 25 meter räknas som en). Replikeringen: {REP['main']['n_stones']} stenar i Östergötland ({RP['Ög']['n_stones']}), Västergötland ({RP['Vg']['n_stones']}) och Småland ({RP['Sm']['n_stones']}), de enda andra landskap med tillräckligt många stenar på plats. Steg 3: alla svenska landskap, {FPL['n_grupp']} stenar i grupp och {FPL['n_ensam']} ensamma.
+- **Personnamnen** är resarnas och de dödas namn, lästa med regler. De 20 vanligaste namnen räknas inte, så att ett par inte delar namn bara för att det var vanligt.
+- **Datering** efter ornamentikstil (Gräslund 2006); en stilgrupp täcker 25–50 år.
+- **Ristaren.** Den ristare Rundata anger som säker; stenar med osäker eller flera ristare räknas som utan känd ristare.
 
 ## 4. Metod
 
-**4.1 Punktmönstret.** Ripleys L-funktion för stenarnas platser, jämförd med ett inhomogent Poisson-mönster vars täthet är bygdens (kärnutjämning med 10 kilometers bandbredd och ett golv på 5 procent av medeltätheten), med ett DCLF-test över 100–1 000 meter mot 999 simuleringar (Baddeley m.fl. 2015). Uppland och Södermanland var för sig, Holm-korrigerade. Replikeringen använder exakt samma metod, med de tre götaländska landskapen som ett mönster; den räknas som lyckad om p är under 0,05, mönstret är klumpat och samma riktning gäller i båda halvorna.
+Statistiska begrepp förklaras i ordlistan, {GLOSS_SV}.
 
-**4.2 Grannstenarna.** För varje egenskap: andelen nära par som delar den, genom andelen jämförelsepar som delar den. p-värdet kommer från 9 999 omblandningar av stenarnas egenskaper inom landskapet, med platserna fasta.
+**4.1 Punktmönstret.** Ripleys L-funktion räknar hur många grannar stenarna har inom ett visst avstånd. Den jämförs med ett inhomogent Poisson-mönster: punkter som läggs ut oberoende, men tätare där bygden har fler stenar. Tätheten skattas med kärnutjämning, ett glidande medelvärde över kartan vars bandbredd (10 kilometer) anger dess bredd, med ett golv på 5 procent av medeltätheten. Ett DCLF-test (Diggle–Cressie–Loosmore–Ford) sammanfattar avvikelsen från det mönstret över 100–1 000 meter i ett p-värde, mot 999 simuleringar (Baddeley m.fl. 2015). Uppland och Södermanland var för sig, Holm-korrigerade. Replikeringen använder exakt samma metod, med de tre götaländska landskapen som ett mönster; den lyckas om p är under 0,05, mönstret är klumpat och samma riktning gäller i båda halvorna.
 
-**4.3 Gravfälten.** Logistisk regression: gravfält inom 500 meter ~ i grupp + landskap + dateringsperiod + lokal täthet av stenar, så att en tät bygd inte i sig räknas som ett gravfältsmönster.
+**4.2 Grannstenarna.** För varje egenskap: andelen nära par som delar den genom andelen jämförelsepar som delar den, med p ur 9 999 omblandningar av stenarnas egenskaper inom landskapet, platserna fasta.
+
+**4.3 Gravfälten.** Logistisk regression: gravfält inom 500 meter ~ i grupp + landskap + dateringsperiod + lokal täthet av stenar, så att en tät bygd inte i sig räknas som ett mönster.
 
 **4.4 En generation.** För varje grupp med minst två stildaterade stenar: antalet olika stilgrupper, jämfört med lika många stenar dragna 9 999 gånger ur samma bygd (inom 10 kilometer, utom gruppens egen plats).
 
-**4.5 Känslighetsanalyser** (tilläggsplanen). Gravfälten: rå modell; planens modell; ristaren som slumpeffekt (Bates m.fl. 2015); socknen som slumpeffekt; stenens läge som rumslig yta (Wood 2017); var halva för sig; utan ett landskap i taget; utan stenar som Riksantikvarieämbetets register Runor (2020) anger som flyttade. Namnen: huvudmåttet; var halva för sig; varje landskap för sig; utan par med samma säkra ristare; utan flyttade stenar enligt Runor. Halvorna är projektets fasta: hela socknar växelvis inom varje landskap. Ett steg håller när effekten går åt samma håll och p är under 0,05; när ett landskap tas bort, eller ett landskap prövas ensamt, krävs signifikans bara där minst två tredjedelar av materialet finns kvar.
+**4.5 Känslighetsanalyser** (tilläggsplanen). Gravfälten: rå modell; planens modell; ristaren som slumpeffekt (Bates m.fl. 2015); socknen som slumpeffekt; läget som rumslig yta (Wood 2017); var halva för sig; utan ett landskap i taget; utan stenar som Runor anger som flyttade. Namnen: var halva för sig; varje landskap för sig; utan par med samma säkra ristare; utan flyttade stenar enligt Runor. Ett steg håller när effekten går åt samma håll med p under 0,05; när ett landskap tas bort eller prövas ensamt krävs signifikans bara där minst två tredjedelar av materialet finns kvar.
 
-**4.6 Avvikelser från planerna.** I steg 1 gav planens bandbredd på 2 kilometer stenar utan grannar en täthet nära noll, så att testet inte mätte något; en kalibrering på slumpmönster visade felet. Körningen redovisas som ogiltig, och ett tillägg med 10 kilometers bandbredd och ett golv låstes innan den nya körningen. Eftersom metoden rättades efter en körning på samma stenar prövades den sedan oförändrad på nya stenar (replikeringen); där gjordes bara en provkörning med 19 simuleringar för att hitta kodfel. I steg 3 slogs landskap med under tio stenar ihop. I övrigt inga avvikelser.
+**4.6 Avvikelser från planerna.** I steg 1 gav planens bandbredd på 2 kilometer stenar utan grannar en täthet nära noll, så att testet inte mätte något, vilket en kalibrering på slumpmönster visade. Körningen redovisas som ogiltig; ett tillägg med 10 kilometers bandbredd och ett golv låstes före den nya körningen, och den rättade metoden replikerades sedan på nya stenar (avsnitt 2), med bara en provkörning om 19 simuleringar för att hitta kodfel. I steg 3 slogs landskap med under tio stenar ihop. I övrigt inga.
 
 ## 5. Resultat
 
-**5.1 Stenarna bildar grupper.** Stenarna ligger närmare varandra än slumpen ger på 100–1 000 meter: Uppland {pfmt(AU['main']['p'])}, Södermanland {pfmt(AS['main']['p'])} (Holm-korrigerat 0,006 båda), i båda halvorna och med alla bandbredder och golv i robusthetsproven (p mellan 0,001 och 0,005). Medianavståndet till närmaste sten är {d1(NN_U / 1000)} kilometer i Uppland och {d1(NN_S / 1000)} i Södermanland, men var tionde sten har en granne inom ungefär 200 meter. Replikeringen på stenarna i Östergötland, Västergötland och Småland ger samma utslag: klumpat, {pfmt(REP['main']['p'])}, och i båda halvorna (väster {pfmt(RH['vast']['p'])}, öster {pfmt(RH['ost']['p'])}). Var för sig är Västergötland ({pfmt(RP['Vg']['p'])}) och Småland ({pfmt(RP['Sm']['p'])}) klumpade; Östergötland går åt samma håll men är för litet för att vara säkert ({pfmt(RP['Ög']['p'])}). En sten per gård, jämnt utspridda, får inget stöd.
+**5.1 Stenarna bildar grupper.** Stenarna ligger närmare varandra än slumpen ger på 100–1 000 meter: Uppland {pfmt(AU['main']['p'])}, Södermanland {pfmt(AS['main']['p'])} (Holm-korrigerat 0,006 båda), i båda halvorna och med alla bandbredder och golv som prövades (p 0,001–0,005). Medianavståndet till närmaste sten är {d1(NN_U / 1000)} kilometer i Uppland och {d1(NN_S / 1000)} i Södermanland, men var tionde sten har en granne inom 200 meter. I Götaland ger replikeringen samma utslag: klumpat, {pfmt(REP['main']['p'])}, i båda halvorna (väster {pfmt(RH['vast']['p'])}, öster {pfmt(RH['ost']['p'])}) och i Västergötland ({pfmt(RP['Vg']['p'])}) och Småland ({pfmt(RP['Sm']['p'])}) var för sig; Östergötland går åt samma håll men är för litet för att vara säkert ({pfmt(RP['Ög']['p'])}).
 
-**5.2 Grannstenarna nämner samma människor.** Av de nära paren där båda stenarna har namn delar {d1(100 * GN['share_near'])} procent ett personnamn ({GN['near_pairs']} par), mot {d1(100 * GN['share_far'])} procent av jämförelseparen ({GN['far_pairs']} par): {d1(GN['ratio'])} gånger så ofta, Holm-korrigerat {pfmt(GN['p_holm'])}. Samma ristare ({d1(GC['ratio'])} gånger) och samma stilgrupp ({d1(GS['ratio'])} gånger) är antydningar; broar, resor och kristna kännetecken gör grannarna inte mer lika. Känslighetsanalyserna håller alla:
+**5.2 Grannstenarna delar personnamn.** Av de {GN['near_pairs']} nära paren där båda stenarna har namn delar {N_SHARED} ({d1(100 * GN['share_near'])} procent) ett personnamn, mot {d1(100 * GN['share_far'])} procent av de {f"{GN['far_pairs']:,}".replace(",", " ")} jämförelseparen: {d1(GN['ratio'])} gånger så ofta, Holm-korrigerat {pfmt(GN['p_holm'])}. De flesta nära par delar alltså inget namn. Samma ristare ({d1(GC['ratio'])} gånger) och samma stilgrupp ({d1(GS['ratio'])} gånger) är antydningar; broar, resor och kristna kännetecken gör grannarna inte mer lika. Känslighetsanalyserna håller alla:
 
 - Halva A: kvot {d1(BR['half_A']['ratio'])} ({BR['half_A']['near_pairs']} nära par), {pfmt(BR['half_A']['p'])}. Halva B: {d1(BR['half_B']['ratio'])} ({BR['half_B']['near_pairs']}), {pfmt(BR['half_B']['p'])}.
 - Bara Uppland: {d1(BR['only_U']['ratio'])} ({BR['only_U']['near_pairs']} nära par, {pc(BR['only_U']['share_of_pairs'])} procent av paren), {pfmt(BR['only_U']['p'])}. Bara Södermanland: {d1(BR['only_Sö']['ratio'])} ({BR['only_Sö']['near_pairs']} nära par), {pfmt(BR['only_Sö']['p'])} – samma riktning, men för få par för att vara säkert.
@@ -208,205 +311,207 @@ Två saker ska sägas om ordningen. Steg 4 formulerades efter en iakttagelse i s
 - Rå modell: oddskvot {d2(RA['raw']['or'])}. Ristaren som slumpeffekt ({RA['carver']['groups']} grupper): {d2(RA['carver']['or'])}, {pfmt(RA['carver']['p'])}. Socknen som slumpeffekt ({RA['parish']['groups']} socknar): {d2(RA['parish']['or'])}, {pfmt(RA['parish']['p'])}. Läget som rumslig yta: {d2(RA['place']['or'])}, {pfmt(RA['place']['p'])}.
 - Halva A: {d2(RA['half_A']['or'])}, {pfmt(RA['half_A']['p'])}. Halva B: {d2(RA['half_B']['or'])}, {pfmt(RA['half_B']['p'])}.
 - Utan flyttade stenar enligt Runor ({RA['moved_runor']['n']} stenar): {d2(RA['moved_runor']['or'])}, {pfmt(RA['moved_runor']['p'])}.
-- Utan ett landskap i taget: oddskvoten ligger mellan {d2(min(LOP[p]['or'] for p in LOP if p != 'U'))} och {d2(max(LOP[p]['or'] for p in LOP if p != 'U'))} utan Östergötland, Småland, Södermanland och Västergötland. Utan Uppland, när bara {pc(LOP['U']['share_left'])} procent av stenarna är kvar, är den {d2(LOP['U']['or'])} och inte signifikant ({pfmt(LOP['U']['p'])}); riktningen håller, men skillnaden bärs i hög grad av Uppland.
+- Utan ett landskap i taget: {d2(min(LOP[p]['or'] for p in LOP if p != 'U'))}–{d2(max(LOP[p]['or'] for p in LOP if p != 'U'))} utan vart och ett av Östergötland, Småland, Södermanland och Västergötland; utan Uppland ({pc(LOP['U']['share_left'])} procent av stenarna kvar) {d2(LOP['U']['or'])}, inte signifikant ({pfmt(LOP['U']['p'])}): samma riktning, men skillnaden bärs i hög grad av Uppland.
 
-Gravhögar, färdvägar och gränsmärken skiljer inte grupperna från de ensamma stenarna: färdväg inom 500 meter {pc(OTHER['y3_vag']['main']['share_grupp'])} mot {pc(OTHER['y3_vag']['main']['share_ensam'])} procent, gränsmärke {pc(OTHER['y4_grans']['main']['share_grupp'])} mot {pc(OTHER['y4_grans']['main']['share_ensam'])} procent, båda utan påvisad skillnad. Ortnamn på Husby och -tuna ligger tvärtom något *mer sällan* nära grupperna när tätheten hålls konstant (oddskvot {d2(OTHER['y9_centralort']['main']['or'])}, Holm {d2(OTHER['y9_centralort']['p_holm'])}, en antydan).
+För gravhögar, färdvägar och gränsmärken påvisas ingen skillnad: färdväg inom 500 meter {pc(V3['share_grupp'])} mot {pc(V3['share_ensam'])} procent rått, oddskvot {d2(V3['or'])} ({d2(V3['lo'])}–{d2(V3['hi'])}); gränsmärke {pc(OTHER['y4_grans']['main']['share_grupp'])} mot {pc(OTHER['y4_grans']['main']['share_ensam'])} procent. Med tätheten konstant ligger ortnamn på Husby och -tuna något *mer sällan* nära grupperna (oddskvot {d2(C9['main']['or'])}, Holm-korrigerat p = {f"{C9['p_holm']:.3f}".replace(".", ",")}) och en medeltida kyrka inom 2 kilometer något oftare, {pc(K5['main']['share_grupp'])} mot {pc(K5['main']['share_ensam'])} procent (oddskvot {d2(K5['main']['or'])}, {d2(K5['main']['lo'])}–{d2(K5['main']['hi'])}, {pfmt(K5['main']['p'])}, Holm-korrigerat p = {d2(K5['p_holm'])}): båda antydningar. Gamla och unga bebyggelsenamn, kultnamn, plats i texten, arv eller gård, höjd och signering visar ingen påvisad skillnad, och andelen nära par där precis den ena stenen har kristna kännetecken skiljer sig inte säkert från slumpen ({pc(T15['share_mixed'])} mot {pc(T15['expected'])} procent, {pfmt(T15['p'])}).
 
 {chart(True)}
 
 {FIG_SV}
 
-**5.4 En grupp restes inom en generation.** {G['groups']} grupper med {G['stones']} stildaterade stenar ({G['provinces']['U']} i Uppland, {G['provinces']['Sö']} i Södermanland) har i medel {d2(G['mean_styles'])} olika stilgrupper, mot {d2(G['expected'])} för lika många stenar ur samma bygd, {pfmt(G['p'])}; halva A {pfmt(GH['A']['p'])}, halva B {pfmt(GH['B']['p'])}. {pc(G['share_all_same'])} procent av grupperna har alla stenar i samma stilgrupp mot {pc(G['share_all_same_expected'])} procent väntat, och spannet mellan gruppens tidigaste och senaste sten är i medel {round(G['span_years'])} år mot {round(G['span_expected'])} år. Utan grupper där en och samma ristare gjort alla stenar ({NOC['groups']} grupper kvar) är det {d2(NOC['mean_styles'])} mot {d2(NOC['expected'])}, {pfmt(NOC['p'])}: svagare, men kvar. Exempel är Täby (U 135, 136, 137 och 140, alla i stilgrupp Pr2) och Skokloster (U 685, 686 och 689, alla Pr2); motexempel med tidsdjup finns, som Vårfrukyrka (Fp och Pr4).
+**5.4 Uppföljning: en grupp restes inom en generation.** Steget har planens egna robusthetsprov, inte den fasta serien känslighetsanalyser. {G['groups']} grupper med {G['stones']} stildaterade stenar ({G['provinces']['U']} i Uppland, {G['provinces']['Sö']} i Södermanland) har i medel {d2(G['mean_styles'])} olika stilgrupper, mot {d2(G['expected'])} för lika många stenar ur samma bygd, {pfmt(G['p'])}; halva A {pfmt(GH['A']['p'])}, halva B {pfmt(GH['B']['p'])}. {pc(G['share_all_same'])} procent av grupperna har alla stenar i samma stilgrupp mot {pc(G['share_all_same_expected'])} procent väntat, och spannet mellan gruppens tidigaste och senaste sten är i medel {round(G['span_years'])} år mot {round(G['span_expected'])} år. Utan grupper där en ristare gjort alla stenar ({NOC['groups']} kvar): {d2(NOC['mean_styles'])} mot {d2(NOC['expected'])}, {pfmt(NOC['p'])}, svagare men kvar. Exempel: Täby (U 135–137, 140, alla Pr2); motexempel: Vårfrukyrka (Fp och Pr4).
 
-**I klartext.** Runstenarna står närmare varandra än slumpen ger. Två stenar inom 500 meter från varandra nämner samma person ungefär åtta gånger så ofta som två stenar som står 2–10 kilometer isär. Stenar i en sådan grupp står vid ett gravfält i fyra fall av fem, de ensamma i drygt hälften av fallen, och stenarna i en grupp ligger närmare varandra i tid än stenar ur samma bygd: i medel tjugo år mellan den tidigaste och den senaste.
+**I klartext.** Runstenarna står närmare varandra än slumpen ger. Två stenar inom 500 meter delar ett personnamn ungefär åtta gånger så ofta som två stenar 2–10 kilometer isär. Fyra av fem stenar i en sådan grupp står vid ett gravfält, drygt hälften av de ensamma gör det, och en grupps tidigaste och senaste sten ligger i medel tjugo år isär, närmare än stenar ur samma bygd.
 
 ## 6. Diskussion
 
-**Vad fynden säger.** Fyra mätningar pekar åt samma håll. Runstenar samlas i grupper på några hundra meter, stenarna i en grupp nämner samma människor, grupperna står vid gravfälten, och en grupp restes på kort tid. Den enklaste läsningen är att gruppen är familjens plats: en familj som under en generation reste flera stenar vid sitt gravfält, efter far, söner och bröder. Vägarna och broarna förklarar inte grupperna – grannstenar är inte oftare båda brostenar eller resestenar, och grupperna står inte oftare vid färdvägar än de ensamma stenarna.
+**Vad fynden säger.** Fyra mätningar pekar åt samma håll, och den enklaste läsningen är att gruppen är familjens plats, där en familj under en generation reste flera stenar efter far, söner och bröder. Grannstenar är inte oftare båda brostenar eller resestenar, och för färdvägar inom 500 meter är skillnaden ({pc(V3['share_grupp'])} mot {pc(V3['share_ensam'])} procent rått, oddskvot {d2(V3['or'])}, {d2(V3['lo'])}–{d2(V3['hi'])}) inte säker. Registrets färdvägar och gränsmärken är dessutom oftast yngre än stenarna.
 
-**Mot tidigare forskning.** Fynden ger stöd åt Klos (2009) i att gravfältet var en huvudplats för runstenar, men preciserar det: det är framför allt *grupperna* som står vid gravfälten, medan drygt hälften av de ensamma stenarna också gör det. Zachrissons (1998) gränsstenar och de vägstenar som McLeod (2014) framhåller får inget stöd i jämförelsen grupp mot ensam – vilket inte utesluter att enskilda stenar stod vid gränser och vägar, men säger att det inte är det som skiljer familjens samlade plats från den ensamma stenen. Ekholms (1950) skepsis mot att ensamma stenar markerar bortodlade gravfält stämmer med att de ensamma stenarna mer sällan har ett gravfält nära. Att grupperna restes inom en generation har, så vitt vi har kunnat se, inte prövats statistiskt tidigare.
+**Mot tidigare forskning.** Fynden ger stöd åt Klos (2009) i att gravfältet var en huvudplats för runstenar, men preciserar det: framför allt *grupperna* står vid gravfälten, medan drygt hälften av de ensamma stenarna också gör det. De vägstenar som Ekholm (1950) och McLeod (2014) framhåller och Zachrissons (1998) gränsstenar kan inte prövas väl med registrets yngre färdvägar och gränsmärken; jämförelsen ger dem inget stöd men utesluter dem inte. Att de ensamma stenarna mer sällan har ett gravfält nära kan inte skilja Ekholms läsning, att de aldrig stod vid något gravfält, från den han vände sig mot, att gravfälten har odlats bort (svaghet 3).
 
 **Svagheter, i ordning efter vikt.**
 
-1. **Uppland bär mycket.** {G['provinces']['U']} av {G['groups']} grupper i generationsprovet och {pc(BR['only_U']['share_of_pairs'])} procent av de nära paren i namnprovet ligger i Uppland, och utan Uppland är gravfältsskillnaden inte signifikant. Att stenarna klumpar sig gäller också i Götaland, men namnen, gravfälten och generationen gäller i första hand Uppland, där stenarna står kvar och är flest.
-2. **Bara stenar på plats.** Omkring en tredjedel av runstenarna står kvar där de restes. Om flyttade stenar oftare kom från grupper eller från ensamma platser, påverkar det jämförelserna.
-3. **Registret är inte fullständigt.** Ett gravfält som är bortodlat finns inte i registret. Det kan göra ensamma stenar ensamma i registret fast de en gång stod vid ett gravfält – Ekholms invändning åt andra hållet.
-4. **Steg 4 vilar på samma stenar som iakttagelsen bakom det,** och stilgrupperna är 25–50 år breda. ”En generation” betyder här: kortare tid än slumpen ger i samma bygd.
+1. **Uppland bär mycket.** {G['provinces']['U']} av {G['groups']} grupper i generationsprovet och {pc(BR['only_U']['share_of_pairs'])} procent av de nära paren i namnprovet ligger i Uppland, och utan Uppland är gravfältsskillnaden inte signifikant; bara klumpningen är visad också på andra håll.
+2. **Bara stenar på plats,** omkring en tredjedel av alla. Om flyttade stenar oftare kom från grupper eller från ensamma platser påverkas jämförelserna. Namnen och gravfälten håller utan de stenar som Runor anger som flyttade, men för steg 1, avståndet, finns ingen sådan kontroll.
+3. **Registren är ofullständiga och yngre.** Ett bortodlat gravfält finns inte i registret, så en sten kan vara ensam i registret fast den en gång stod vid ett gravfält – den förklaring som Ekholm vände sig mot. De yngre färdvägarna och gränsmärkena gör att vägar och gränser är dåligt prövade.
+4. **Steg 4 vilar på samma stenar som iakttagelsen bakom det,** och stilgrupperna är 25–50 år breda. Stilgruppen följer ofta ristaren eller verkstaden, så ”inom en generation” kan delvis betyda ”av samma okända ristare”.
 5. **Namnen är lästa med regler,** och ett namn kan bäras av olika personer. Att de vanligaste namnen räknas bort minskar men tar inte bort den risken.
 
-**Vad som skulle fälla fynden.** Att namnlikheten försvann när ristaren eller beställarens formel hölls konstant, att grupperna visade sig följa vägar när ett fullständigare vägregister användes, eller att generationsmönstret inte gick igen i ett annat landskap med många stenar på plats.
+**Vad som skulle fälla fynden.** Att de delade namnen försvann med ristaren eller beställarens formel konstant, att grupperna följde vägar i ett register över vägar från tiden, eller att generationsmönstret inte gick igen i ett annat landskap med många stenar på plats.
 
 ## 7. Slutsats
 
-Runstenarna står ofta i grupper – i Uppland och Södermanland, och enligt en förregistrerad replikering också i Götaland – och grupperna är familjens: stenar inom 500 meter från varandra nämner samma människor åtta gånger så ofta som stenar längre bort, grupperna står vid gravfält oftare än ensamma stenar, och en grupp restes oftast inom en generation. Det gäller i första hand Uppland. Nästa steg är att se om samma familjer återkommer på flera platser, och vad som skiljer de ensamma stenarnas platser.
+Runstenarna står ofta i grupper – i Uppland och Södermanland, och enligt en förregistrerad replikering i Götaland – som är familjernas: grannstenar delar personnamn åtta gånger så ofta som stenar längre bort, och grupperna står vid gravfält oftare än ensamma stenar. En uppföljning, som ännu inte är känslighetsprövad, tyder på att en grupp oftast restes inom en generation. Det gäller i första hand Uppland.
 
 ## Data och kod
 
-Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runstenar ([vitkirunor.se](https://vitkirunor.se)), med de ändringar som gjorts efter den versionen fram till den 31 oktober 2026. Någon release med DOI finns ännu inte; när den görs hänvisar rapporten till den. All kod, analysplanerna och resultatfilerna finns öppet på [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
+Analysen kördes i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runstenar ([https://vitkirunor.se](https://vitkirunor.se)). Resultatfilerna lades in i {GITHUB} vid commit `{CM['avstand']}` (avståndet), `{CM['grannar']}` (grannstenarna), `{CM['familjens_plats']}` (familjens plats) och `{CM['generation']}` (en generation), alla 2026-10-29, och `{CM['trappan']}` (känslighetsanalyserna) och `{CM['replikering']}` (replikeringen), båda 2026-10-31; analysen kördes på koden vid de commits. All kod, analysplanerna och resultatfilerna finns där öppet under GPL-3.0.
 
-- Analysplanerna: `analysplaner/2026-10-28-avstand-mellan-stenar.md` med tillägget, `analysplaner/2026-10-29-grannstenarna.md`, `analysplaner/2026-10-29-familjens-plats.md`, `analysplaner/2026-10-29-en-generation.md` och `analysplaner/2026-10-31-familjens-plats-trappan.md`, var och en med sin `.sha256`-fil.
-- Avståndet: `utdata/avstand/avstand.R`; replikeringen `utdata/avstand/replikering.R` med planen `analysplaner/2026-10-31-avstand-replikering.md`. Grannstenarna: `utdata/avstand/grannar.py` och `utdata/avstand/grannar_trappa.py`.
-- Familjens plats och generationen: `utdata/familjens_plats/data.py`, `utdata/familjens_plats/analys.R`, `utdata/familjens_plats/generation.py` och `utdata/familjens_plats/trappa.R`; resultat och avvikelser i `resultat.md`, `generation_resultat.md` och `trappan_resultat.md` i samma mappar.
-- Materialets version: korpus `{FP}`.
-- Rapporten byggs av `utdata/blogg/build/build_rapport_familjens_plats.py`, som läser varje siffra ur resultatfilerna och stannar om något inte stämmer.
+- Materialet: korpus `{FP}`, Rundatas svenska vikingatida runstenar som de frystes 2026-10-28 (`data/cache/r/corpus/{FP}/corpus.csv`).
+- Data från andra källor: {LANDSCAPE_SV} Flyttade stenar: Runor (utgåva 2020), hämtad {RUNOR_FETCHED} (`data/raa/runor_2020.json`).
+- Analysplanerna: `analysplaner/2026-10-28-avstand-mellan-stenar.md` med tillägget, `analysplaner/2026-10-29-grannstenarna.md`, `analysplaner/2026-10-29-familjens-plats.md`, `analysplaner/2026-10-29-en-generation.md`, `analysplaner/2026-10-31-familjens-plats-trappan.md` och `analysplaner/2026-10-31-avstand-replikering.md`, var och en med sin `.sha256`-fil.
+- Skripten: avståndet `utdata/avstand/avstand.R`, replikeringen `utdata/avstand/replikering.R`; grannstenarna `utdata/avstand/grannar.py` och `utdata/avstand/grannar_trappa.py`; familjens plats och generationen `utdata/familjens_plats/data.py`, `analys.R`, `generation.py` och `trappa.R`; resultat och avvikelser i `resultat.md`, `generation_resultat.md` och `trappan_resultat.md` i samma mappar.
+- Köra om analysen, från projektmappen: `Rscript utdata/avstand/avstand.R data/cache/r/corpus/{FP}/corpus.csv data/cache/r/naturalearth data/raa/lamningar.csv utdata/avstand`; `Rscript utdata/avstand/replikering.R data/cache/r/corpus/{FP}/corpus.csv data/cache/r/naturalearth utdata/avstand`; `.venv/bin/python utdata/avstand/grannar.py`; `.venv/bin/python utdata/avstand/grannar_trappa.py`; `.venv/bin/python utdata/familjens_plats/data.py`; `Rscript utdata/familjens_plats/analys.R`; `.venv/bin/python utdata/familjens_plats/generation.py`; `Rscript utdata/familjens_plats/trappa.R`.
+- Rapporten byggs av `utdata/blogg/build/build_rapport_familjens_plats.py`, som läser varje siffra ur resultatfilerna och stannar om något inte stämmer (frysdatum och Runors hämtdatum ur `utdata/familjens_plats/rapport_kontroll.json`).
 
 ## Referenser
 
 - Baddeley, A., Rubak, E. & Turner, R. 2015. *Spatial Point Patterns: Methodology and Applications with R*. Boca Raton: Chapman & Hall/CRC.
 - Bates, D., Mächler, M., Bolker, B. & Walker, S. 2015. Fitting linear mixed-effects models using lme4. *Journal of Statistical Software* 67 (1), s. 1–48.
-- Ekholm, G. 1950. Var restes runstenarna? *Fornvännen* 45, s. 137 ff.
+- Ekholm, G. 1950. Var restes runstenarna? *Fornvännen* 45, s. 137–147.
 - Gräslund, A.-S. 2006. Dating the Swedish Viking-Age rune stones on stylistic grounds. I: M. Stoklund m.fl. (red.), *Runes and their Secrets: Studies in Runology*. Köpenhamn: Museum Tusculanum Press, s. 117–139.
 - Holm, S. 1979. A simple sequentially rejective multiple test procedure. *Scandinavian Journal of Statistics* 6 (2), s. 65–70.
 - Klos, L. 2009. *Runensteine in Schweden. Studien zu Aufstellungsort und Funktion*. Ergänzungsbände zum Reallexikon der Germanischen Altertumskunde 64. Berlin: de Gruyter.
-- Kvant, V. 2026. *Vitki {APP_VERSION}: metodbeskrivning* (METHODS.md). https://github.com/Precatio/runes
-- McLeod, S. 2014. The rediscovery of U 170: runestones, churchyards, and burial grounds in Sweden. *Journal of the North Atlantic* 25. doi:10.3721/037.006.2503
-- Riksantikvarieämbetet. Kulturmiljöregistret (fornlämningar); *Runor* (runinskriftsregister), uttag 2020.
-- Samnordisk runtextdatabas (Rundata). Institutionen för nordiska språk, Uppsala universitet. Open Database License.
+- Kvant, V. 2026. *Vitki {APP_VERSION}: metodbeskrivning* (METHODS.md). [https://github.com/Precatio/runes](https://github.com/Precatio/runes)
+- McLeod, S. 2014. The rediscovery of U 170: runestones, churchyards, and burial grounds in Sweden. *Journal of the North Atlantic* 25, s. 1–8. [https://doi.org/10.3721/037.006.2503](https://doi.org/10.3721/037.006.2503)
+- Riksantikvarieämbetet. Kulturmiljöregistret (fornlämningar), via K-samsök. *Runor* (runinskriftsregister, utgåva 2020), runor.raa.se, hämtad oktober 2026.
+- {RUNDATA_SV}
 - Sawyer, B. 2000. *The Viking-Age Rune-Stones: Custom and Commemoration in Early Medieval Scandinavia*. Oxford: Oxford University Press.
 - Wood, S. N. 2017. *Generalized Additive Models: An Introduction with R*. 2 uppl. Boca Raton: Chapman & Hall/CRC.
-- Zachrisson, T. 1998. *Gård, gräns, gravfält. Sammanhang kring ädelmetalldepåer och runstenar från vikingatid och tidig medeltid i Uppland och Gästrikland*. Stockholm Studies in Archaeology 15. Stockholm: Stockholms universitet.
+- Zachrisson, T. 1998. *Gård, gräns, gravfält. Sammanhang kring ädelmetalldepåer och runstenar från vikingatid och tidigmedeltid i Uppland och Gästrikland*. Stockholm Studies in Archaeology 15. Stockholm: Stockholms universitet.
 
 :::box Det viktigaste i korthet
-- Runstenarna står ofta i grupper, och stenarna i en grupp nämner samma människor – åtta gånger oftare än stenar längre bort.
-- Grupperna står vid gravfälten och restes oftast inom en generation: familjens monument vid familjens gravplats, inte vägens eller gränsens.
+- Runstenarna står ofta i grupper, och stenarna i en grupp delar personnamn – åtta gånger oftare än stenar längre bort.
+- Grupperna står vid gravfälten: familjens monument vid familjens gravplats. Om de ensamma stenarna stod vid vägar eller gränser kan registren inte visa väl. En uppföljning, ännu inte känslighetsprövad, tyder på att en grupp restes inom en generation.
 - Mönstret är tydligast i Uppland, där stenarna står kvar; där är det också säkrast.
 :::
 
-{LOG_SV}
-"""
+{LOG_SV}"""
 
-body_en = f"""*Viktor Kvant, independent researcher. Fully tested finding. Report version {REPORT_VERSION}, {TODAY}. Timeline: {TL_EN}. The analysis was made in Vitki {APP_VERSION}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, grave fields, family, stone groups, spatial statistics, point patterns, pre-registration. Competing interests: none. Funding: none.*
+body_en = f"""*Viktor Kvant, independent researcher. Fully tested finding. Report version {REPORT_VERSION}, {TODAY} (version 1 published {PUB_V1}; changes at the end). Timeline: {TL_EN}. The analysis was made in Vitki {APP_VERSION}. Licence CC BY 4.0. This English version is the canonical one for citation: {CITE_EN}. Keywords: runestones, Viking Age, grave fields, family, stone groups, spatial statistics, point patterns, pre-registration. Competing interests: none. Funding: none.*
 
 ## Abstract
 
-**Background and aim.** Where runestones were raised has long been discussed: by grave fields, by roads and bridges, at the farm's boundaries. The question here is whether the stones form groups, what the stones in a group have in common and where the groups stand – measured on the whole material, with the density of the settled land held constant.
-**Material.** Runestones that stand in place according to Rundata: {AU['n_stones']} in Uppland and {AS['n_stones']} in Södermanland for the pattern and the names, {REP['main']['n_stones']} in Östergötland, Västergötland and Småland for a replication of the pattern, and {TRA['n']} in the Swedish provinces for the grave fields, with grave fields from the Swedish National Heritage Board's register.
-**Method.** Four pre-registered studies: a test of the point pattern against settled land of varying density (999 simulations), replicated in a pre-registered test on new stones, a comparison of near and distant pairs of stones (9,999 permutations), a logistic regression for grave fields in a group against a lone stone, and a permutation of style groups within the district. The two main tests have passed a fixed series of sensitivity analyses under a locked addendum plan.
-**Results.** The stones lie closer together than chance would give at 100–1,000 metres in Uppland and Södermanland, and the same test gives the same result on the stones of Götaland ({pfmt(REP['main']['p'], True)}). Stones within 500 metres of each other name the same person in {100 * GN['share_near']:.1f} percent of the pairs against {100 * GN['share_far']:.1f} percent at 2–10 kilometres: {GN['ratio']:.1f} times as often. {pc(M1['share_grupp'])} percent of the stones in a group have a grave field within 500 metres against {pc(M1['share_ensam'])} percent of the lone ones; odds ratio {M1['or']:.2f}. A group has on average {G['mean_styles']:.2f} different style groups against {G['expected']:.2f} for as many stones from the same district. Roads, boundary markers and the place names of power do not set the groups apart from the lone stones.
-**Conclusion.** Runestones often stand in groups that belong to a family: the same people, by the family's grave field, raised within one generation. The findings are carried to a large degree by Uppland.
+**Background and aim.** Where runestones were raised – by grave fields, roads and bridges, or farm boundaries – has long been discussed. The question is whether the stones form groups, what a group's stones share and where groups stand, with settlement density held constant.
+**Material.** Runestones in place according to Rundata: {AU['n_stones']} in Uppland and {AS['n_stones']} in Södermanland (pattern and names), {REP['main']['n_stones']} in Östergötland, Västergötland and Småland (replication) and {TRA['n']} in all Swedish provinces (grave fields, from the Swedish National Heritage Board's register).
+**Method.** Four pre-registered studies: a point-pattern test against settlement of varying density, replicated on new stones; near against distant pairs of stones; a logistic regression for grave fields, group against lone stone; and a permutation of style groups within the district. The two main tests passed a fixed series of sensitivity analyses under a locked addendum plan; the fourth, a follow-up, has not.
+**Results.** The stones lie closer together than chance gives at 100–1,000 metres in Uppland and Södermanland, and in Götaland ({pfmt(REP['main']['p'], True)}). Pairs of stones within 500 metres share a personal name in {100 * GN['share_near']:.1f} percent of cases, against {100 * GN['share_far']:.1f} percent at 2–10 kilometres: {GN['ratio']:.1f} times as often. {pc(M1['share_grupp'])} percent of grouped stones have a grave field within 500 metres against {pc(M1['share_ensam'])} percent of lone ones; odds ratio {M1['or']:.2f}. A group spans on average {G['mean_styles']:.2f} style groups against {G['expected']:.2f} for as many stones from the same district. For roads, burial mounds and boundary markers no difference is shown; with density held constant, place names in Husby and -tuna lie somewhat less often near the groups and a medieval church somewhat more often (both indications).
+**Conclusion.** Runestones often stand in groups that belong to a family: the same personal names, by the family's grave field and, by a follow-up not yet sensitivity-tested, raised within one generation. The findings rest largely on Uppland.
 
 ## 1. Introduction
 
-Gunnar Ekholm (1950) asked where the runestones were raised and was sceptical of the idea that lone stones mark grave fields that have been ploughed away. Torun Zachrisson (1998), in her study of Uppland and Gästrikland, set the runestones in relation to farm, boundary and grave field and proposed that stones at a farm's boundaries protected the farm. Lydia Klos (2009) argued that most runestones were originally raised at grave fields, a conclusion that Shane McLeod (2014) holds overstates the grave fields at the expense of other places, such as roads. Birgit Sawyer (2000) read the stones as expressions of family and inheritance, and groups such as Jarlabanke's stones at Täby and Vallentuna have long been seen as a lineage's monuments.
+Gunnar Ekholm (1950) argued, against earlier scholarship, that runestones stood mainly by roads and waterways: many stand by grave fields because the grave fields lay by the roads, and the lone stones are mostly road monuments, not remnants of ploughed-out grave fields. Torun Zachrisson (1998), studying Uppland and Gästrikland, related runestones to farm, boundary and grave field and proposed that stones marked the farm's boundaries, often where the road entered the farm's land. Lydia Klos (2009) argued that most runestones were raised at grave fields; Shane McLeod (2014) holds that this overstates the grave fields at the expense of other places, such as roads. Birgit Sawyer (2000) read the stones as expressions of family and inheritance, and groups such as Jarlabanke's at Täby and Vallentuna have long been seen as a lineage's monuments.
 
-What is missing is a measure on the whole material: whether the stones actually form groups beyond chance when the density of settlement is held constant, whether the stones of a group belong together through people or through roads and bridges, and whether the groups stand in other places than the lone stones. The aim of the study is to measure that, in four steps, each pre-registered before it was run.
+What is missing is a measure on the whole material: do the stones form groups beyond chance with settlement density held constant, do a group's stones belong together through people or through roads and bridges, and do groups stand elsewhere than lone stones? This study measures that in four pre-registered steps.
 
 ## 2. Pre-registration: hypotheses and plans
 
-The study consists of four pre-registered steps and an addendum plan. Each plan was written down and time-stamped in the project's version control before the analysis was run; the checksums (SHA-256) are given below and the files under Data and code.
+Each plan was committed to version control before its analysis was run; SHA-256 checksums below, files under Data and code.
 
-1. **The spacing** (28 October 2026, `{SHA['2026-10-28-avstand-mellan-stenar']}…`, addendum `{SHA['2026-10-28-avstand-mellan-stenar-tillagg']}…`; replication 31 October, `{SHA['replikering']}…`): do stones still in place stand closer together than chance would give at 100–1,000 metres, with the density of settlement constant? Tested in Uppland and Södermanland, and with the same method on the stones of Östergötland, Västergötland and Småland.
-2. **The neighbouring stones** (29 October, `{SHA['2026-10-29-grannstenarna']}…`): do near pairs of stones (25–500 metres) more often share a personal name, a carver, a style group or a message than pairs at 2–10 kilometres? Six tests, Holm-corrected.
-3. **The family's place** (29 October, `{SHA['2026-10-29-familjens-plats']}…`): do stones in a group (another stone 25–500 metres away) more often than lone stones (nearest stone over 1 kilometre away) stand by grave fields, burial mounds, roads, boundary markers, churches and certain place names? Fifteen tests, Holm-corrected.
-4. **One generation** (29 October, `{SHA['2026-10-29-en-generation']}…`): do the groups have fewer different style groups than as many stones drawn from the same district?
-5. **The addendum plan** (31 October, `{SHA['trappan']}…`): the same fixed series of sensitivity analyses that every other association in the project passes, applied to step 2 (the names) and step 3 (the grave fields). It was written after the four results were known but before the sensitivity analyses were run, and it adds no new outcomes.
+1. **The spacing** (28 October 2026, `{SHA['2026-10-28-avstand-mellan-stenar']}…`, addendum `{SHA['2026-10-28-avstand-mellan-stenar-tillagg']}…`; replication 31 October, `{SHA['replikering']}…`): do stones in place stand closer together than chance gives at 100–1,000 metres, with settlement density constant? Tested in Uppland and Södermanland, then in Östergötland, Västergötland and Småland.
+2. **The neighbouring stones** (29 October, `{SHA['2026-10-29-grannstenarna']}…`): do near pairs (25–500 metres) more often share a personal name, carver, style group or message than pairs 2–10 kilometres apart? Six tests, Holm-corrected.
+3. **The family's place** (29 October, `{SHA['2026-10-29-familjens-plats']}…`): do stones in a group (another stone 25–500 metres away) stand more often than lone stones (nearest stone over 1 kilometre away) by grave fields, burial mounds, roads, boundary markers, medieval churches and certain place names, and do they differ in text, height and signing? Two more tests look within the groups (time depth; Christian beside non-Christian stones). Fifteen tests, Holm-corrected.
+4. **One generation** (29 October, `{SHA['2026-10-29-en-generation']}…`): do groups span fewer style groups than as many stones drawn from the same district?
+5. **The addendum plan** (31 October, `{SHA['trappan']}…`): the project's fixed series of sensitivity analyses for steps 2 and 3, written after the four results were known but before the sensitivity analyses were run; it adds no outcomes.
 
-Two things must be said about the order. Step 4 was formulated after an observation in step 3: there a one-sided test of *more* style groups than chance had been set, and the result went strongly the other way. The new plan tested the opposite with a stricter comparison (permutation within the district instead of within the province), but on the same stones. Step 4 is thus pre-registered, but not tested on independent data. In step 1 the method had to be corrected after the first run in Uppland and Södermanland (see 4.6). The corrected method was therefore tested unchanged, under a new locked plan, on the stones of Östergötland, Västergötland and Småland, which had been in no spacing analysis. It is that test that carries step 1.
+Step 4 grew out of step 3, where a one-sided test asked only whether groups have *more* style groups than chance gives; the result went strongly the other way. The new plan tested the opposite with a stricter comparison (within the district, not the province) on the same stones: a pre-registered follow-up, not tested on independent data. In step 1 the method was corrected after the first run (4.6), so it was tested unchanged, under a new locked plan, on stones of Östergötland, Västergötland and Småland that no spacing analysis had used; that test carries step 1.
 
 ## 3. Material
 
-- **Source.** The Scandinavian Runic-text Database (Rundata), Department of Scandinavian Languages, Uppsala University, in the version frozen for the analyses on 28–29 October 2026. Grave fields, burial mounds, roads and boundary markers from the Swedish National Heritage Board's register; place names from the project's place-name table.
-- **The stones.** Only runestones that according to Rundata stand at their original place and have a known location; moved and lost stones are not included, since their place does not say where they were raised. Steps 1 and 2 concern Uppland and Södermanland, where the stones are most numerous ({AU['n_stones']} and {AS['n_stones']} stones, {AU['n_sites']} and {AS['n_sites']} sites when stones within 25 metres count as one site). The replication of step 1 concerns {REP['main']['n_stones']} stones in place in Östergötland ({RP['Ög']['n_stones']}), Västergötland ({RP['Vg']['n_stones']}) and Småland ({RP['Sm']['n_stones']}), the only provinces besides Uppland and Södermanland with enough stones still in place. Step 3 concerns all Swedish provinces: {FPL['n_grupp']} stones in a group and {FPL['n_ensam']} lone ones.
-- **The personal names** are the sponsors' and the dead's names, read from the inscription with the project's name model. The 20 most common names in the whole material are not counted, so that a pair does not share a name merely because the name was common.
-- **Dating** by the stone's ornamental style (Gräslund 2006). A style group covers 25–50 years.
-- **The carver.** The carver Rundata gives, secure or uncertain.
+- **Sources.** The Scandinavian Runic-text Database (Rundata), 2014 version with RUNDATA.xls updated 2018, frozen for the analyses on 28 October 2026. Grave fields, burial mounds, roads and boundary markers from the Swedish National Heritage Board's register of ancient monuments; place names from OpenStreetMap; medieval churches (built before 1350) from Wikidata; moved stones also from the Board's register Runor (2020 edition).
+- **The stones.** Only runestones that according to Rundata stand at their original place with a known location; moved and lost stones are excluded, since their place does not show where they were raised. Steps 1 and 2: Uppland and Södermanland ({AU['n_stones']} and {AS['n_stones']} stones; {AU['n_sites']} and {AS['n_sites']} sites, stones within 25 metres counting as one). Replication: {REP['main']['n_stones']} stones in Östergötland ({RP['Ög']['n_stones']}), Västergötland ({RP['Vg']['n_stones']}) and Småland ({RP['Sm']['n_stones']}), the only other provinces with enough stones in place. Step 3: all Swedish provinces, {FPL['n_grupp']} stones in a group and {FPL['n_ensam']} lone ones.
+- **The personal names** are the sponsors' and the dead's names, read by rules. The 20 most common names are not counted, so that a pair does not share a name merely because it was common.
+- **Dating** by ornamental style (Gräslund 2006); a style group covers 25–50 years.
+- **The carver.** The carver Rundata gives as secure; stones with an uncertain carver or several carvers count as without a known carver.
 
 ## 4. Method
 
-**4.1 The point pattern.** Ripley's L-function for the stones' sites, compared with an inhomogeneous Poisson pattern whose intensity is that of the settled land (kernel smoothing with a 10-kilometre bandwidth and a floor of 5 percent of the mean intensity), with a DCLF test over 100–1,000 metres against 999 simulations (Baddeley et al. 2015). Uppland and Södermanland separately, Holm-corrected. The replication uses exactly the same method, with the three provinces of Götaland as one pattern; it counts as successful if p is below 0.05, the pattern is clustered and the same direction holds in both halves.
+Statistical terms are explained in the glossary, {GLOSS_EN}.
 
-**4.2 The neighbouring stones.** For each trait: the share of near pairs that share it, divided by the share of comparison pairs that share it. The p-value comes from 9,999 permutations of the stones' traits within the province, with the sites fixed.
+**4.1 The point pattern.** Ripley's L-function counts how many neighbours the stones have within a given distance. It is compared with an inhomogeneous Poisson pattern: points placed independently, but more densely where the settled land has more stones. That density comes from kernel smoothing, a moving average over the map whose bandwidth (10 kilometres) sets its width, with a floor of 5 percent of the mean density. A DCLF test (Diggle–Cressie–Loosmore–Ford) sums the departure from that pattern over 100–1,000 metres into one p-value, against 999 simulations (Baddeley et al. 2015). Uppland and Södermanland separately, Holm-corrected. The replication applies the same method to Götaland's three provinces as one pattern and succeeds if p is below 0.05, the pattern is clustered and the direction holds in both halves.
 
-**4.3 The grave fields.** Logistic regression: grave field within 500 metres ~ in a group + province + dating period + local density of stones, so that a dense district does not in itself count as a grave-field pattern.
+**4.2 The neighbouring stones.** For each trait: the share of near pairs sharing it divided by the share of comparison pairs sharing it, with p from 9,999 permutations of the stones' traits within the province, sites fixed.
 
-**4.4 One generation.** For each group with at least two style-dated stones: the number of different style groups, compared with as many stones drawn 9,999 times from the same district (within 10 kilometres, except the group's own site).
+**4.3 The grave fields.** Logistic regression: grave field within 500 metres ~ in a group + province + dating period + local density of stones, so that a dense district does not itself count as a pattern.
 
-**4.5 Sensitivity analyses** (the addendum plan). Grave fields: raw model; the plan's model; the carver as a random effect (Bates et al. 2015); the parish as a random effect; the stone's location as a spatial surface (Wood 2017); each half on its own; without one province at a time; without stones that the National Heritage Board's register Runor (2020) records as moved. Names: the main measure; each half on its own; each province on its own; without pairs with the same secure carver; without stones moved according to Runor. The halves are the project's fixed ones: whole parishes dealt alternately within each province. A step holds when the effect goes the same way and p is below 0.05; when a province is removed, or a province is tested alone, significance is required only where at least two thirds of the material remains.
+**4.4 One generation.** For each group with at least two style-dated stones: the number of different style groups against as many stones drawn 9,999 times from the same district (within 10 kilometres, outside the group's own site).
 
-**4.6 Deviations from the plans.** In step 1 the plan's 2-kilometre bandwidth gave stones without neighbours an intensity near zero, so that the test measured nothing; a calibration on random patterns revealed the error. The run is reported as invalid, and an addendum with a 10-kilometre bandwidth and a floor was locked before the new run. Since the method was corrected after a run on the same stones, it was then tested unchanged on new stones (the replication); there only one test run with 19 simulations was made to find code errors. In step 3 provinces with fewer than ten stones were merged. Otherwise no deviations.
+**4.5 Sensitivity analyses** (the addendum plan). Grave fields: raw model; the plan's model; carver as a random effect (Bates et al. 2015); parish as a random effect; location as a spatial surface (Wood 2017); each half; without one province at a time; without stones Runor records as moved. Names: each half; each province alone; without pairs with the same secure carver; without stones moved according to Runor. A step holds when the effect goes the same way with p below 0.05; when a province is removed or tested alone, significance is required only where at least two thirds of the material remains.
+
+**4.6 Deviations from the plans.** In step 1 the plan's 2-kilometre bandwidth gave stones without neighbours a density near zero, so the test measured nothing, as a calibration on random patterns showed. That run is reported as invalid; an addendum with a 10-kilometre bandwidth and a floor was locked before the new run, and the corrected method was then replicated on new stones (section 2), with only one 19-simulation test run to find code errors. In step 3 provinces with fewer than ten stones were merged. Otherwise none.
 
 ## 5. Results
 
-**5.1 The stones form groups.** The stones lie closer together than chance would give at 100–1,000 metres: Uppland {pfmt(AU['main']['p'], True)}, Södermanland {pfmt(AS['main']['p'], True)} (Holm-corrected 0.006 both), in both halves and with every bandwidth and floor in the robustness checks (p between 0.001 and 0.005). The median distance to the nearest stone is {NN_U / 1000:.1f} kilometres in Uppland and {NN_S / 1000:.1f} in Södermanland, but one stone in ten has a neighbour within about 200 metres. The replication on the stones of Östergötland, Västergötland and Småland gives the same result: clustered, {pfmt(REP['main']['p'], True)}, and in both halves (west {pfmt(RH['vast']['p'], True)}, east {pfmt(RH['ost']['p'], True)}). On their own, Västergötland ({pfmt(RP['Vg']['p'], True)}) and Småland ({pfmt(RP['Sm']['p'], True)}) are clustered; Östergötland goes the same way but is too small to be sure ({pfmt(RP['Ög']['p'], True)}). One stone per farm, evenly spread, finds no support.
+**5.1 The stones form groups.** The stones lie closer together than chance would give at 100–1,000 metres: Uppland {pfmt(AU['main']['p'], True)}, Södermanland {pfmt(AS['main']['p'], True)} (Holm-corrected 0.006 both), in both halves and with every bandwidth and floor tried (p 0.001–0.005). The median distance to the nearest stone is {NN_U / 1000:.1f} kilometres in Uppland and {NN_S / 1000:.1f} in Södermanland, but one stone in ten has a neighbour within 200 metres. In Götaland the replication agrees: clustered, {pfmt(REP['main']['p'], True)}, in both halves (west {pfmt(RH['vast']['p'], True)}, east {pfmt(RH['ost']['p'], True)}), and in Västergötland ({pfmt(RP['Vg']['p'], True)}) and Småland ({pfmt(RP['Sm']['p'], True)}) alone; Östergötland goes the same way but is too small to be sure ({pfmt(RP['Ög']['p'], True)}).
 
-**5.2 Neighbouring stones name the same people.** Of the near pairs where both stones carry names, {100 * GN['share_near']:.1f} percent share a personal name ({GN['near_pairs']} pairs), against {100 * GN['share_far']:.1f} percent of the comparison pairs ({GN['far_pairs']} pairs): {GN['ratio']:.1f} times as often, Holm-corrected {pfmt(GN['p_holm'], True)}. The same carver ({GC['ratio']:.1f} times) and the same style group ({GS['ratio']:.1f} times) are indications; bridges, journeys and Christian features do not make neighbours more alike. The sensitivity analyses all hold:
+**5.2 Neighbouring stones share personal names.** Of the {GN['near_pairs']} near pairs where both stones carry names, {N_SHARED} ({100 * GN['share_near']:.1f} percent) share a personal name, against {100 * GN['share_far']:.1f} percent of the {GN['far_pairs']:,} comparison pairs: {GN['ratio']:.1f} times as often, Holm-corrected {pfmt(GN['p_holm'], True)}. Most near pairs thus share no name. Same carver ({GC['ratio']:.1f} times) and same style group ({GS['ratio']:.1f} times) are indications; bridges, journeys and Christian features make neighbours no more alike. All sensitivity analyses hold:
 
 - Half A: ratio {BR['half_A']['ratio']:.1f} ({BR['half_A']['near_pairs']} near pairs), {pfmt(BR['half_A']['p'], True)}. Half B: {BR['half_B']['ratio']:.1f} ({BR['half_B']['near_pairs']}), {pfmt(BR['half_B']['p'], True)}.
 - Uppland only: {BR['only_U']['ratio']:.1f} ({BR['only_U']['near_pairs']} near pairs, {pc(BR['only_U']['share_of_pairs'])} percent of the pairs), {pfmt(BR['only_U']['p'], True)}. Södermanland only: {BR['only_Sö']['ratio']:.1f} ({BR['only_Sö']['near_pairs']} near pairs), {pfmt(BR['only_Sö']['p'], True)} – the same direction, but too few pairs to be sure.
 - Without pairs in which both stones have the same secure carver: {BR['no_same_carver']['ratio']:.1f}, {pfmt(BR['no_same_carver']['p'], True)}.
 - Without stones that Runor records as moved: {BR['moved_runor']['ratio']:.1f}, {pfmt(BR['moved_runor']['p'], True)}.
 
-**5.3 The groups stand by the grave fields.** {pc(M1['share_grupp'])} percent of the stones in a group have a grave field within 500 metres, against {pc(M1['share_ensam'])} percent of the lone ones. With province, dating period and local density constant the odds ratio is {M1['or']:.2f} ({M1['lo']:.2f}–{M1['hi']:.2f}), {pfmt(M1['p'], True)}, Holm-corrected {pfmt(T1['p_holm'], True)}. The sensitivity analyses all hold:
+**5.3 The groups stand by the grave fields.** {pc(M1['share_grupp'])} percent of the stones in a group have a grave field within 500 metres, against {pc(M1['share_ensam'])} percent of the lone ones. With province, dating period and local density constant the odds ratio is {M1['or']:.2f} ({M1['lo']:.2f}–{M1['hi']:.2f}), {pfmt(M1['p'], True)}, Holm-corrected {pfmt(T1['p_holm'], True)}. All sensitivity analyses hold:
 
 - Raw model: odds ratio {RA['raw']['or']:.2f}. Carver as a random effect ({RA['carver']['groups']} groups): {RA['carver']['or']:.2f}, {pfmt(RA['carver']['p'], True)}. Parish as a random effect ({RA['parish']['groups']} parishes): {RA['parish']['or']:.2f}, {pfmt(RA['parish']['p'], True)}. Location as a spatial surface: {RA['place']['or']:.2f}, {pfmt(RA['place']['p'], True)}.
 - Half A: {RA['half_A']['or']:.2f}, {pfmt(RA['half_A']['p'], True)}. Half B: {RA['half_B']['or']:.2f}, {pfmt(RA['half_B']['p'], True)}.
 - Without stones moved according to Runor ({RA['moved_runor']['n']} stones): {RA['moved_runor']['or']:.2f}, {pfmt(RA['moved_runor']['p'], True)}.
-- Without one province at a time: the odds ratio lies between {min(LOP[p]['or'] for p in LOP if p != 'U'):.2f} and {max(LOP[p]['or'] for p in LOP if p != 'U'):.2f} without Östergötland, Småland, Södermanland and Västergötland. Without Uppland, when only {pc(LOP['U']['share_left'])} percent of the stones remain, it is {LOP['U']['or']:.2f} and not significant ({pfmt(LOP['U']['p'], True)}); the direction holds, but the difference is carried to a large degree by Uppland.
+- Without one province at a time: {min(LOP[p]['or'] for p in LOP if p != 'U'):.2f}–{max(LOP[p]['or'] for p in LOP if p != 'U'):.2f} without each of Östergötland, Småland, Södermanland and Västergötland; without Uppland ({pc(LOP['U']['share_left'])} percent of the stones left) {LOP['U']['or']:.2f}, not significant ({pfmt(LOP['U']['p'], True)}): the same direction, but the difference is carried largely by Uppland.
 
-Burial mounds, roads and boundary markers do not set the groups apart from the lone stones: road within 500 metres {pc(OTHER['y3_vag']['main']['share_grupp'])} against {pc(OTHER['y3_vag']['main']['share_ensam'])} percent, boundary marker {pc(OTHER['y4_grans']['main']['share_grupp'])} against {pc(OTHER['y4_grans']['main']['share_ensam'])} percent, both without a demonstrated difference. Place names in Husby and -tuna lie, on the contrary, somewhat *less often* near the groups when density is held constant (odds ratio {OTHER['y9_centralort']['main']['or']:.2f}, Holm {OTHER['y9_centralort']['p_holm']:.2f}, an indication).
+For burial mounds, roads and boundary markers no difference is shown: road within 500 metres {pc(V3['share_grupp'])} against {pc(V3['share_ensam'])} percent raw, odds ratio {V3['or']:.2f} ({V3['lo']:.2f}–{V3['hi']:.2f}); boundary marker {pc(OTHER['y4_grans']['main']['share_grupp'])} against {pc(OTHER['y4_grans']['main']['share_ensam'])} percent. With density held constant, place names in Husby and -tuna lie somewhat *less often* near the groups (odds ratio {C9['main']['or']:.2f}, Holm-corrected p = {C9['p_holm']:.3f}) and a medieval church within 2 kilometres somewhat more often, {pc(K5['main']['share_grupp'])} against {pc(K5['main']['share_ensam'])} percent (odds ratio {K5['main']['or']:.2f}, {K5['main']['lo']:.2f}–{K5['main']['hi']:.2f}, {pfmt(K5['main']['p'], True)}, Holm-corrected p = {K5['p_holm']:.2f}): both indications. Old and young settlement names, cult names, a place in the text, inheritance or farm, height and signing show no demonstrated difference, nor does the share of near pairs with exactly one Christian stone differ clearly from chance ({pc(T15['share_mixed'])} against {pc(T15['expected'])} percent, {pfmt(T15['p'], True)}).
 
 {chart(False)}
 
 {FIG_EN}
 
-**5.4 A group was raised within one generation.** {G['groups']} groups with {G['stones']} style-dated stones ({G['provinces']['U']} in Uppland, {G['provinces']['Sö']} in Södermanland) have on average {G['mean_styles']:.2f} different style groups, against {G['expected']:.2f} for as many stones from the same district, {pfmt(G['p'], True)}; half A {pfmt(GH['A']['p'], True)}, half B {pfmt(GH['B']['p'], True)}. {pc(G['share_all_same'])} percent of the groups have all their stones in the same style group against {pc(G['share_all_same_expected'])} percent expected, and the span between a group's earliest and latest stone is on average {round(G['span_years'])} years against {round(G['span_expected'])}. Without groups in which one and the same carver made every stone ({NOC['groups']} groups remain) it is {NOC['mean_styles']:.2f} against {NOC['expected']:.2f}, {pfmt(NOC['p'], True)}: weaker, but present. Examples are Täby (U 135, 136, 137 and 140, all in style group Pr2) and Skokloster (U 685, 686 and 689, all Pr2); counter-examples with time depth exist, such as Vårfrukyrka (Fp and Pr4).
+**5.4 Follow-up: a group was raised within one generation.** It has the plan's own robustness checks, not the fixed series of sensitivity analyses. {G['groups']} groups with {G['stones']} style-dated stones ({G['provinces']['U']} in Uppland, {G['provinces']['Sö']} in Södermanland) have on average {G['mean_styles']:.2f} different style groups, against {G['expected']:.2f} for as many stones from the same district, {pfmt(G['p'], True)}; half A {pfmt(GH['A']['p'], True)}, half B {pfmt(GH['B']['p'], True)}. {pc(G['share_all_same'])} percent of the groups have all stones in one style group against {pc(G['share_all_same_expected'])} percent expected; a group's earliest and latest stones are on average {round(G['span_years'])} years apart against {round(G['span_expected'])}. Without groups where one carver made every stone ({NOC['groups']} remain): {NOC['mean_styles']:.2f} against {NOC['expected']:.2f}, {pfmt(NOC['p'], True)}, weaker but present. Example: Täby (U 135–137, 140, all Pr2); counter-example: Vårfrukyrka (Fp and Pr4).
 
-**In plain words.** The runestones stand closer together than chance gives. Two stones within 500 metres of each other name the same person about eight times as often as two stones 2–10 kilometres apart. Stones in such a group stand by a grave field in four cases of five, lone stones in just over half, and the stones of a group lie closer together in time than stones from the same district: on average twenty years between the earliest and the latest.
+**In plain words.** Runestones stand closer together than chance gives. Stones within 500 metres share a personal name about eight times as often as stones 2–10 kilometres apart. Four in five grouped stones stand by a grave field, just over half of lone stones do, and a group's earliest and latest stones lie on average twenty years apart, closer than stones from the same district.
 
 ## 6. Discussion
 
-**What the findings say.** Four measurements point the same way. Runestones gather in groups of a few hundred metres, the stones of a group name the same people, the groups stand by the grave fields, and a group was raised within a short time. The simplest reading is that the group is the family's place: a family that within one generation raised several stones by its grave field, for a father, sons and brothers. The roads and bridges do not explain the groups – neighbouring stones are not more often both bridge stones or journey stones, and the groups do not stand by roads more often than the lone stones.
+**What the findings say.** Four measurements point the same way, and the simplest reading is that the group is the family's place, where a family raised several stones within one generation for a father, sons and brothers. Neighbouring stones are not more often both bridge or journey stones, and for roads within 500 metres the difference ({pc(V3['share_grupp'])} against {pc(V3['share_ensam'])} percent raw, odds ratio {V3['or']:.2f}, {V3['lo']:.2f}–{V3['hi']:.2f}) is not clear. The register's roads and boundary markers are moreover mostly younger than the stones.
 
-**Against earlier research.** The findings support Klos (2009) in that the grave field was a main place for runestones, but sharpen it: it is above all the *groups* that stand by the grave fields, while somewhat more than half of the lone stones do so too. Zachrisson's (1998) boundary stones and the road stones emphasised by McLeod (2014) find no support in the comparison of group against lone stone – which does not rule out that single stones stood at boundaries and roads, but says that this is not what sets the family's gathered place apart from the lone stone. Ekholm's (1950) scepticism that lone stones mark ploughed-out grave fields agrees with the lone stones less often having a grave field nearby. That the groups were raised within one generation has, as far as we have been able to see, not been tested statistically before.
+**Against earlier research.** The findings support Klos (2009) on the grave field as a main place for runestones, but sharpen it: above all the *groups* stand by grave fields, while just over half of the lone stones do too. Ekholm's (1950) and McLeod's (2014) road stones and Zachrisson's (1998) boundary stones cannot be tested well with the register's younger roads and boundary markers; the comparison gives them no support but does not rule them out. That lone stones less often have a grave field nearby cannot separate Ekholm's reading, that they never stood by one, from the one he argued against, that the grave fields were ploughed away (weakness 3).
 
 **Weaknesses, in order of weight.**
 
-1. **Uppland carries much.** {G['provinces']['U']} of {G['groups']} groups in the generation test and {pc(BR['only_U']['share_of_pairs'])} percent of the near pairs in the name test lie in Uppland, and without Uppland the grave-field difference is not significant. That the stones cluster holds also in Götaland, but the names, the grave fields and the generation apply first of all to Uppland, where the stones still stand and are most numerous.
-2. **Only stones in place.** About a third of the runestones stand where they were raised. If moved stones more often came from groups or from lone places, that affects the comparisons.
-3. **The register is not complete.** A grave field that has been ploughed away is not in the register. That can make lone stones lone in the register although they once stood by a grave field – Ekholm's objection the other way round.
-4. **Step 4 rests on the same stones as the observation behind it,** and the style groups are 25–50 years wide. ”One generation” means here: a shorter time than chance gives in the same district.
-5. **The names are read by rules,** and a name can be borne by different people. Removing the most common names reduces but does not remove that risk.
+1. **Uppland carries much.** {G['provinces']['U']} of {G['groups']} groups in the generation test and {pc(BR['only_U']['share_of_pairs'])} percent of the near pairs in the name test lie in Uppland, and without Uppland the grave-field difference is not significant; only the clustering is also shown elsewhere.
+2. **Only stones in place,** about a third of all. If moved stones came more often from groups or from lone places, comparisons are affected. Names and grave fields hold without the stones Runor records as moved, but step 1, the spacing, has no such check.
+3. **The registers are incomplete and younger.** A ploughed-out grave field is not in the register, so a stone may be lone in the register though it once stood by a grave field – the explanation Ekholm argued against. The younger roads and boundary markers leave both poorly tested.
+4. **Step 4 rests on the same stones as the observation behind it,** and style groups are 25–50 years wide. The style group often follows the carver or the workshop, so "within one generation" may partly mean "by the same unknown carver".
+5. **The names are read by rules,** and a name can be borne by different people; removing the most common names reduces but does not remove that risk.
 
-**What would overturn the findings.** That the name likeness disappeared when the carver or the sponsor's formula was held constant, that the groups turned out to follow roads when a more complete road register was used, or that the generation pattern did not recur in another province with many stones in place.
+**What would overturn the findings.** Shared names that vanished with the carver or the sponsor's formula held constant, groups that followed roads in a register of period roads, or a generation pattern that did not recur in another province with many stones in place.
 
 ## 7. Conclusion
 
-Runestones often stand in groups – in Uppland and Södermanland, and according to a pre-registered replication also in Götaland – and the groups belong to a family: stones within 500 metres of each other name the same people eight times as often as stones further apart, the groups stand by grave fields more often than lone stones, and a group was usually raised within one generation. It applies first of all to Uppland. The next step is to see whether the same families recur at several places, and what sets the lone stones' places apart.
+Runestones often stand in groups – in Uppland and Södermanland, and by a pre-registered replication in Götaland – that belong to families: neighbouring stones share personal names eight times as often as distant ones, and groups stand by grave fields more often than lone stones. A follow-up, not yet sensitivity-tested, suggests that a group was usually raised within one generation. This applies first of all to Uppland.
 
 ## Data and code
 
-The analysis was made in Vitki {APP_VERSION}, an open research tool for runestones ([vitkirunor.se](https://vitkirunor.se/en)), with the changes made after that version up to 31 October 2026. No release with a DOI exists yet; when one is made, the report will refer to it. All code, the analysis plans and the result files are openly available on [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
+The analysis was run in Vitki {APP_VERSION}, an open research tool for runestones ([https://vitkirunor.se/en](https://vitkirunor.se/en)). The result files were saved in {GITHUB} at commit `{CM['avstand']}` (the spacing), `{CM['grannar']}` (the neighbouring stones), `{CM['familjens_plats']}` (the family's place) and `{CM['generation']}` (one generation), all 2026-10-29, and `{CM['trappan']}` (the sensitivity analyses) and `{CM['replikering']}` (the replication), both 2026-10-31; the analysis was run on the code at those commits. All code, the analysis plans and the result files are openly available there under GPL-3.0.
 
-- The analysis plans: `analysplaner/2026-10-28-avstand-mellan-stenar.md` with its addendum, `analysplaner/2026-10-29-grannstenarna.md`, `analysplaner/2026-10-29-familjens-plats.md`, `analysplaner/2026-10-29-en-generation.md` and `analysplaner/2026-10-31-familjens-plats-trappan.md`, each with its `.sha256` file.
-- The spacing: `utdata/avstand/avstand.R`; the replication `utdata/avstand/replikering.R` with the plan `analysplaner/2026-10-31-avstand-replikering.md`. The neighbouring stones: `utdata/avstand/grannar.py` and `utdata/avstand/grannar_trappa.py`.
-- The family's place and the generation: `utdata/familjens_plats/data.py`, `utdata/familjens_plats/analys.R`, `utdata/familjens_plats/generation.py` and `utdata/familjens_plats/trappa.R`; results and deviations in `resultat.md`, `generation_resultat.md` and `trappan_resultat.md` in the same folders.
-- The material's version: corpus `{FP}`.
-- The report is built by `utdata/blogg/build/build_rapport_familjens_plats.py`, which reads every figure from the result files and stops if anything disagrees.
+- The material: corpus `{FP}`, Rundata's Swedish Viking-Age runestones as frozen on 2026-10-28 (`data/cache/r/corpus/{FP}/corpus.csv`).
+- Data from other sources: {LANDSCAPE_EN} Moved stones: Runor (2020 edition), retrieved {RUNOR_FETCHED} (`data/raa/runor_2020.json`).
+- The analysis plans: `analysplaner/2026-10-28-avstand-mellan-stenar.md` with its addendum, `analysplaner/2026-10-29-grannstenarna.md`, `analysplaner/2026-10-29-familjens-plats.md`, `analysplaner/2026-10-29-en-generation.md`, `analysplaner/2026-10-31-familjens-plats-trappan.md` and `analysplaner/2026-10-31-avstand-replikering.md`, each with its `.sha256` file.
+- The scripts: the spacing `utdata/avstand/avstand.R`, the replication `utdata/avstand/replikering.R`; the neighbouring stones `utdata/avstand/grannar.py` and `utdata/avstand/grannar_trappa.py`; the family's place and the generation `utdata/familjens_plats/data.py`, `analys.R`, `generation.py` and `trappa.R`; results and deviations in `resultat.md`, `generation_resultat.md` and `trappan_resultat.md` in the same folders.
+- To rerun the analysis, from the project folder: `Rscript utdata/avstand/avstand.R data/cache/r/corpus/{FP}/corpus.csv data/cache/r/naturalearth data/raa/lamningar.csv utdata/avstand`; `Rscript utdata/avstand/replikering.R data/cache/r/corpus/{FP}/corpus.csv data/cache/r/naturalearth utdata/avstand`; `.venv/bin/python utdata/avstand/grannar.py`; `.venv/bin/python utdata/avstand/grannar_trappa.py`; `.venv/bin/python utdata/familjens_plats/data.py`; `Rscript utdata/familjens_plats/analys.R`; `.venv/bin/python utdata/familjens_plats/generation.py`; `Rscript utdata/familjens_plats/trappa.R`.
+- The report is built by `utdata/blogg/build/build_rapport_familjens_plats.py`, which reads every figure from the result files and stops if anything disagrees (the freeze date and Runor's retrieval date from `utdata/familjens_plats/rapport_kontroll.json`).
 
 ## References
 
 - Baddeley, A., Rubak, E. & Turner, R. 2015. *Spatial Point Patterns: Methodology and Applications with R*. Boca Raton: Chapman & Hall/CRC.
 - Bates, D., Mächler, M., Bolker, B. & Walker, S. 2015. Fitting linear mixed-effects models using lme4. *Journal of Statistical Software* 67 (1), pp. 1–48.
-- Ekholm, G. 1950. Var restes runstenarna? *Fornvännen* 45, pp. 137 ff.
+- Ekholm, G. 1950. Var restes runstenarna? *Fornvännen* 45, pp. 137–147.
 - Gräslund, A.-S. 2006. Dating the Swedish Viking-Age rune stones on stylistic grounds. In: M. Stoklund et al. (eds), *Runes and their Secrets: Studies in Runology*. Copenhagen: Museum Tusculanum Press, pp. 117–139.
 - Holm, S. 1979. A simple sequentially rejective multiple test procedure. *Scandinavian Journal of Statistics* 6 (2), pp. 65–70.
 - Klos, L. 2009. *Runensteine in Schweden. Studien zu Aufstellungsort und Funktion*. Ergänzungsbände zum Reallexikon der Germanischen Altertumskunde 64. Berlin: de Gruyter.
-- Kvant, V. 2026. *Vitki {APP_VERSION}: method description* (METHODS.md). https://github.com/Precatio/runes
-- McLeod, S. 2014. The rediscovery of U 170: runestones, churchyards, and burial grounds in Sweden. *Journal of the North Atlantic* 25. doi:10.3721/037.006.2503
-- Swedish National Heritage Board (Riksantikvarieämbetet). The register of ancient monuments (Kulturmiljöregistret); *Runor* (register of runic inscriptions), 2020 extract.
-- Scandinavian Runic-text Database (Rundata). Department of Scandinavian Languages, Uppsala University. Open Database License.
+- Kvant, V. 2026. *Vitki {APP_VERSION}: method description* (METHODS.md). [https://github.com/Precatio/runes](https://github.com/Precatio/runes)
+- McLeod, S. 2014. The rediscovery of U 170: runestones, churchyards, and burial grounds in Sweden. *Journal of the North Atlantic* 25, pp. 1–8. [https://doi.org/10.3721/037.006.2503](https://doi.org/10.3721/037.006.2503)
 - Sawyer, B. 2000. *The Viking-Age Rune-Stones: Custom and Commemoration in Early Medieval Scandinavia*. Oxford: Oxford University Press.
+- {RUNDATA_EN}
+- Swedish National Heritage Board (Riksantikvarieämbetet). The register of ancient monuments (Kulturmiljöregistret), via K-samsök. *Runor* (register of runic inscriptions, 2020 edition), runor.raa.se, retrieved October 2026.
 - Wood, S. N. 2017. *Generalized Additive Models: An Introduction with R*. 2nd ed. Boca Raton: Chapman & Hall/CRC.
-- Zachrisson, T. 1998. *Gård, gräns, gravfält. Sammanhang kring ädelmetalldepåer och runstenar från vikingatid och tidig medeltid i Uppland och Gästrikland*. Stockholm Studies in Archaeology 15. Stockholm: Stockholm University.
+- Zachrisson, T. 1998. *Gård, gräns, gravfält. Sammanhang kring ädelmetalldepåer och runstenar från vikingatid och tidigmedeltid i Uppland och Gästrikland*. Stockholm Studies in Archaeology 15. Stockholm: Stockholm University.
 
 :::box The essentials
-- Runestones often stand in groups, and the stones in a group name the same people – eight times as often as stones further apart.
-- The groups stand by the grave fields and were usually raised within one generation: the family's monument by the family's burial place, not the road's or the boundary's.
+- Runestones often stand in groups, and the stones in a group share personal names – eight times as often as stones further apart.
+- The groups stand by the grave fields: the family's monument by the family's burial place. Whether the lone stones stood by roads or boundaries the registers cannot show well. A follow-up, not yet sensitivity-tested, suggests that a group was raised within one generation.
 - The pattern is clearest in Uppland, where the stones still stand; that is also where it is surest.
 :::
 
-{LOG_EN}
-"""
+{LOG_EN}"""
 
 # the plain-words sentence rests on these numbers (mallen version 4)
 assert "7,9 gånger så ofta" in body
@@ -421,14 +526,53 @@ for b in (body, body_en):
     assert "{" not in b and "}" not in b
     head = b.split("## Data")[0]
     assert not re.findall(JARGON, head), re.findall(JARGON, head)
+    # every text link is absolute (the figure itself is the site's own image store)
+    assert all(u.startswith("https://") for u in re.findall(r"(?<!!)\[[^\]]*\]\(([^)]+)\)", b)), b
+    # the chart's caption line starts with Källa:/Source: (components/BlogBody.tsx) and ends with the credit
+    cap = [ln for ln in b.split(":::chart")[1].split("\n:::")[0].split("\n") if re.match(r"(Källa|Source):", ln)]
+    assert len(cap) == 1 and cap[0].endswith(("Diagram: Vitki, efter Rundata och Kulturmiljöregistret.",
+                                              "Chart: Vitki, after Rundata and Kulturmiljöregistret."))
+    assert len(head.split()) <= 3000, len(head.split())  # mallen: 1 500–3 000 ord
 assert "Det viktigaste i korthet" in body and "## 2. Förregistrering" in body and "## 6. Diskussion" in body
+assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion 3, 2026-11-05 (version 1 publicerad 2026-10-31; ")
+assert body_en.split("\n", 1)[0].startswith("*Viktor Kvant, independent researcher. Fully tested finding. Report version 3, 2026-11-05 (version 1 published 2026-10-31; ")
+# rapportversion 3: the corrected statements, and none of the withdrawn ones (the change log quotes version 2)
+for b, ok, bad in ((body, ["samma personnamn", "delar 13 (17,6 procent)", "4 983 jämförelseparen", "Holm-korrigerat p = 0,34",
+                           "Holm-korrigerat p = 0,049", "oddskvot 1,32 (0,83–2,11)", "oftast yngre än stenarna", "som säker; stenar med osäker",
+                           "vägmonument", "markerade gårdens gränser, ofta där vägen gick in på gårdens mark", "tidigmedeltid",
+                           "s. 137–147", "s. 1–8", "Grå cirklar", "inte känslighetsprövad", "av samma okända ristare",
+                           "finns ingen sådan kontroll", "utgåva 2020", "frystes 2026-10-28", "forskningsrapporter/begrepp",
+                           "Ripleys L-funktion räknar", "ensidigt test bara frågade"],
+                    ["samma personer", "samma människor", "nämner samma person ", "säker eller osäker", "skyddade gården",
+                     "tidig medeltid", "137 ff", "Grå ringar", "inte vägens eller gränsens", "skiljer inte grupperna",
+                     "uttag 2020", "28–29 oktober", "Holm 0,05", "Någon release med DOI finns ännu inte",
+                     "projektets ortnamnstabell", "ungefär 200 meter", "så vitt vi"]),
+                   (body_en, ["the same personal names", "13 (17.6 percent)", "4,983 comparison pairs", "Holm-corrected p = 0.34",
+                              "Holm-corrected p = 0.049", "odds ratio 1.32 (0.83–2.11)", "mostly younger than the stones",
+                              "as secure; stones with an uncertain", "road monuments",
+                              "marked the farm's boundaries, often where the road entered the farm's land", "tidigmedeltid",
+                              "pp. 137–147", "pp. 1–8", "Grey discs", "not yet sensitivity-tested", "by the same unknown carver",
+                              "has no such check", "2020 edition", "frozen on 2026-10-28", "en/forskningsrapporter/begrepp",
+                              "Ripley's L-function counts", "one-sided test asked only"],
+                    ["the same people", "same person ", "secure or uncertain", "protected the farm", "tidig medeltid",
+                     "137 ff", "Grey rings", "not the road's or the boundary's", "do not set the groups apart from the lone stones",
+                     "2020 extract", "28–29 October", "Holm 0.05", "No release with a DOI exists yet", "place-name table",
+                     "about 200 metres", "as far as we"])):
+    for x in ok:
+        assert x in b, x
+    for x in bad:
+        assert x not in re.split(r"## (?:Ändringslogg|Change log)", b)[0], x
+for s_ in (title, summary):
+    assert "personer" not in s_ and "samma människor" not in s_
+assert "same people" not in title_en and "same people" not in summary_en
 
 out = {"slug": SLUG, "title": title, "summary": summary, "body": body, "title_en": title_en, "summary_en": summary_en,
        "body_en": body_en, "labels": ["Rapport", "Geografi", "Kvinnor och barn"]}
 assert blog_labels.check(out["labels"]) is None
 path = os.path.join(ROOT, "utdata", "rapporter", "rapport_familjens_plats.json")
 json.dump(out, open(path, "w"), ensure_ascii=False, indent=1)
-print(path, len(body.split()), "ord,", len(body_en.split()), "words")
+print(path, len(body.split()), "ord,", len(body.split("## Data")[0].split()), "före Data och kod;", len(body_en.split()), "words,",
+      len(body_en.split("## Data")[0].split()), "before Data and code")
 
 if "--update" in sys.argv or "--write" in sys.argv:
     from api.routers import blog
