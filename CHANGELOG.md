@@ -7,6 +7,16 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [3.1.0] – 2026-11-05
 
+### Forskningsrapporterna granskade inför arkiveringen
+- Alla elva publicerade rapporter lästes av oberoende granskare mot resultatfilerna, analysplanerna och litteraturen.
+  Felen rättas öppet i nya rapportversioner daterade 2026-11-05, var och en med en ändringslogg sist
+  (`utdata/blogg/build/build_rapport_*.py`, kontrollfilerna i `utdata/*/`); `utdata/blogg/build/patch_rapporter_live.py`
+  för in dem och behåller publiceringsdatumet. Rapporterna anger Rundata som källan själv gör (version 2014 med
+  RUNDATA.xls uppdaterad 2018), och analysversionen i rapporterna är fast (Vitki 3.0.0) i stället för programmets.
+- `scripts/zenodo_rapporter.py` gör en svensk och en engelsk PDF och Zenodos metadata per rapport och kan lägga upp dem
+  som utkast; den stannar om en rättad version inte är publicerad än. Granskningen av de fyra opublicerade utkasten står
+  i `utdata/rapporter/granskning_2026-11-05_utkast.md`.
+
 ### Huggspår: runorna delas upp längs slingan (mätmetod groove-7)
 - Med runslingor delas runorna nu upp efter var strecken står längs slingan för alla stenar, inte bara i stavlöst läge
   (`src/auto_grooves.py`, `src/staveless.group_runes`). Tidigare fick bara streck som den gamla streckklassningen kallade
