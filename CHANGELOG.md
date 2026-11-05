@@ -17,6 +17,15 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   som utkast; den stannar om en rättad version inte är publicerad än. Granskningen av de fyra opublicerade utkasten står
   i `utdata/rapporter/granskning_2026-11-05_utkast.md`.
 
+### Dokumentationen inför arkiveringen
+- `användarmanual.md` beskriver mätningen som den är: utan AI, med groove-7 och runorna uppdelade längs slingan, med
+  menyns namn och ett avsnitt om appens övriga delar. `examples/so128` är märkt som historiskt (Vitki 2.0.0, groove-5).
+- 3D-analysens hjälptext och inställningssidan rättade: Stavlösa runor spelar bara roll utan slingor, och AI-nyckeln
+  används bara för AI-assistenten, signumförslag ur filnamnet och K-samsöks poster.
+- Licenserna kontrollerade hos källorna: SCB:s öppna data är CC0, Kulturmiljöregistret via K-samsök CC0.
+- Mätprotokollet låses inte i 3.1.0 (PROTOCOL.md P7); bristlistan säger att releaser arkiveras med DOI.
+- Artikellistan visar inte längre blocket Serier – läs i ordning; serierna finns kvar som filter.
+
 ### Huggspår: runorna delas upp längs slingan (mätmetod groove-7)
 - Med runslingor delas runorna nu upp efter var strecken står längs slingan för alla stenar, inte bara i stavlöst läge
   (`src/auto_grooves.py`, `src/staveless.group_runes`). Tidigare fick bara streck som den gamla streckklassningen kallade
