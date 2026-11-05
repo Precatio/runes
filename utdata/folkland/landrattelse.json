@@ -1,0 +1,415 @@
+{
+ "before_commit": "461dca4",
+ "drag": {
+  "before": {
+   "tiundaland": 319,
+   "attundaland": 340,
+   "fjadrundaland": 122,
+   "roden": 60,
+   "inget": 39
+  },
+  "after": {
+   "tiundaland": 320,
+   "attundaland": 366,
+   "fjadrundaland": 128,
+   "roden": 59,
+   "inget": 7
+  }
+ },
+ "all_signa": {
+  "before": {
+   "tiundaland": 391,
+   "attundaland": 499,
+   "fjadrundaland": 155,
+   "roden": 80,
+   "inget": 53
+  },
+  "after": {
+   "tiundaland": 392,
+   "attundaland": 531,
+   "fjadrundaland": 163,
+   "roden": 79,
+   "inget": 13
+  }
+ },
+ "dropped_before": {
+  "n": 39,
+  "by_group": {
+   "adelso": 6,
+   "faringo": 24,
+   "ekero": 5,
+   "ovriga": 4
+  },
+  "faringo_by_parish": {
+   "Munsö sn": 2,
+   "Färentuna sn": 2,
+   "Hilleshögs sn": 4,
+   "Sånga sn": 6,
+   "Skå sn": 4,
+   "Lovö sn": 6
+  },
+  "ovriga": [
+   "U 419",
+   "U 53",
+   "U 54",
+   "U 871"
+  ],
+  "after": {
+   "U 1": "fjadrundaland",
+   "U 10": "fjadrundaland",
+   "U 13": "attundaland",
+   "U 14": "attundaland",
+   "U 16": null,
+   "U 17": null,
+   "U 18": null,
+   "U 19": null,
+   "U 2": "fjadrundaland",
+   "U 20": "attundaland",
+   "U 22": "attundaland",
+   "U 23": "attundaland",
+   "U 25": "attundaland",
+   "U 30": "attundaland",
+   "U 31": "attundaland",
+   "U 32": "attundaland",
+   "U 34": "attundaland",
+   "U 35": "attundaland",
+   "U 36": "attundaland",
+   "U 37": "attundaland",
+   "U 38": "attundaland",
+   "U 4": "fjadrundaland",
+   "U 40": "attundaland",
+   "U 405": null,
+   "U 419": "attundaland",
+   "U 42": "attundaland",
+   "U 43": "attundaland",
+   "U 44": "attundaland",
+   "U 46": "attundaland",
+   "U 47": "attundaland",
+   "U 48": "attundaland",
+   "U 49": "attundaland",
+   "U 50": "attundaland",
+   "U 51": "attundaland",
+   "U 53": null,
+   "U 54": null,
+   "U 6": "fjadrundaland",
+   "U 871": "tiundaland",
+   "U 9": "fjadrundaland"
+  }
+ },
+ "changed": [
+  {
+   "signum": "Sm 139",
+   "parish": "Höreda sn",
+   "before": "tveta",
+   "after": "vedbo",
+   "in_drag": true
+  },
+  {
+   "signum": "Sm 91",
+   "parish": "Alseda sn",
+   "before": "tveta",
+   "after": "njudung",
+   "in_drag": true
+  },
+  {
+   "signum": "U 1",
+   "parish": "Adelsö sn",
+   "before": null,
+   "after": "fjadrundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 10",
+   "parish": "Adelsö sn",
+   "before": null,
+   "after": "fjadrundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 13",
+   "parish": "Munsö sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 14",
+   "parish": "Munsö sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 2",
+   "parish": "Adelsö sn",
+   "before": null,
+   "after": "fjadrundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 20",
+   "parish": "Färentuna sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 22",
+   "parish": "Färentuna sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 23",
+   "parish": "Hilleshögs sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 24",
+   "parish": "Hilleshögs sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": false
+  },
+  {
+   "signum": "U 25",
+   "parish": "Hilleshögs sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 26",
+   "parish": "Hilleshögs sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": false
+  },
+  {
+   "signum": "U 27",
+   "parish": "Hilleshögs sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": false
+  },
+  {
+   "signum": "U 28",
+   "parish": "Hilleshögs sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": false
+  },
+  {
+   "signum": "U 3",
+   "parish": "Adelsö sn",
+   "before": null,
+   "after": "fjadrundaland",
+   "in_drag": false
+  },
+  {
+   "signum": "U 30",
+   "parish": "Hilleshögs sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 31",
+   "parish": "Hilleshögs sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 32",
+   "parish": "Sånga sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 33",
+   "parish": "Sånga sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": false
+  },
+  {
+   "signum": "U 34",
+   "parish": "Sånga sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 35",
+   "parish": "Sånga sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 36",
+   "parish": "Sånga sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 37",
+   "parish": "Sånga sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 38",
+   "parish": "Sånga sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 4",
+   "parish": "Adelsö sn",
+   "before": null,
+   "after": "fjadrundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 40",
+   "parish": "Skå sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 419",
+   "parish": "Norrsunda sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 42",
+   "parish": "Skå sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 43",
+   "parish": "Skå sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 44",
+   "parish": "Skå sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 46",
+   "parish": "Lovö sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 47",
+   "parish": "Lovö sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 48",
+   "parish": "Lovö sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 49",
+   "parish": "Lovö sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 5",
+   "parish": "Adelsö sn",
+   "before": null,
+   "after": "fjadrundaland",
+   "in_drag": false
+  },
+  {
+   "signum": "U 50",
+   "parish": "Lovö sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 51",
+   "parish": "Lovö sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 6",
+   "parish": "Adelsö sn",
+   "before": null,
+   "after": "fjadrundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 77",
+   "parish": "Spånga sn (nu Sundbyberg)",
+   "before": "roden",
+   "after": "attundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 871",
+   "parish": "Gryta sn",
+   "before": null,
+   "after": "tiundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U 9",
+   "parish": "Adelsö sn",
+   "before": null,
+   "after": "fjadrundaland",
+   "in_drag": true
+  },
+  {
+   "signum": "U ATA5856/75",
+   "parish": "Munsö sn",
+   "before": null,
+   "after": "attundaland",
+   "in_drag": false
+  }
+ ],
+ "parish_medieval": {
+  "Färentuna socken": "Bro härad",
+  "Hilleshögs socken": "Bro härad",
+  "Sånga socken": "Bro härad",
+  "Skå socken": "Bro härad",
+  "Munsö socken": "Bro härad",
+  "Lovö socken": "Bro härad",
+  "Adelsö socken": "Trögds härad",
+  "Ekerö socken": "Svartlösa härad",
+  "Bromma socken": "Sollentuna härad",
+  "Spånga socken": "Sollentuna härad",
+  "Brännkyrka socken": "Svartlösa härad"
+ }
+}

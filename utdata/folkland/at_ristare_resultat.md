@@ -33,3 +33,13 @@ knappt en femtedel i Attundaland under samma tid. Det tyder på att formeln var 
 - Litteratur: Peterson 1996 (*Aft/æft, at och æftir på de nordiska runstenarna – regional variation eller vad?*) behandlar
   just denna variation och är inte läst. Om hon redan har sett gränsen måste det sägas.
 - Robusthetstrappan (utan ett landskap i taget, socken som slumpeffekt) är inte körd för gränsprovet.
+
+## Omkörning 2026-11-05 med rättad landindelning (deklarerad avvikelse)
+Samma skript och regler på at_rader.csv från den rättade indelningen (se resultat.md): 517 stenar (v1 497), 108 i gränszonen
+(v1 109; U 899 föll ut, de 20 nya stenarna – 17 från Färingö tingslag, U 77, U 419, U 871 – ligger inte i zonen).
+1. Gränszonen med ristaren som slumpeffekt: OR 5,9, p 0,0014 ensidigt (v1 5,7, p 0,0016) – **håller**. Båda folklanden:
+   OR 3,1, p 0,0002 (v1 3,5, p < 0,0001).
+2. Samma ristare på båda sidor: fortfarande 3 mot 0 (Öpir 21/39 mot 4/23, Fot 5/14 mot 3/22, Åsmund 1/16 mot 0/12;
+   teckentest p 0,125, beskrivande).
+3. 6 av 43 namngivna ristare (v1 5) har stenar på båda sidor; de står för 168 av 274 namngivna stenar (v1 162 av 266).
+**Tolkning enligt planen oförändrad:** gränsen är beställarnas eller bygdens, inte verkstädernas. v1 i at_ristare_v1.json.

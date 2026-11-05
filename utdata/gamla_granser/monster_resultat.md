@@ -54,3 +54,31 @@ Samma 999 slumpindelningar på fyra urval av Upplands stenar – alla håller (p
 - bara daterade (512): 270 mot 145, p 0,002
 - utan förlorade (704): 308 mot 171, p 0,002
 Fyndet når därmed nivå 1, "Fullt prövat", i rapportmallen (MALL v2). (monster_trappa.py, monster_trappa.json)
+
+## Omkörning 2026-11-05 med rättad indelning (deklarerad avvikelse efter låsningen)
+Granskningen inför arkiveringen (utdata/rapporter/granskning_2026-11-05_utkast.md) fann att 39 uppländska stenar föll bort
+(socknar utan folkland: Färingö tingslag 24, Adelsö 6, Ekerö 5, U 53, U 54, U 419, U 871) och att ISOF:s "Ingår i Stockholms
+stad" (Spånga och Bromma, 13 stenar) räknades som ett nionde härad i Attundaland. Rättat efter Det medeltida Sverige 1:7
+(s. 19, 44, 114, 237; historiska_land.json → parish_medieval): Färingö tingslag → Bro härad (Attundaland), Adelsö → Trögds
+härad (Fjädrundaland), Bromma och Spånga → Sollentuna härad, Ekerö och Brännkyrka → Svartlösa härad (Södermanland, inget
+folkland). monster.py använder samma rättelser för häradet per sten och för häradernas punkter, stryker Rundatas "(nu …)"
+och knyter stenar som flyttats långt (Skansen, museum) till sin unika socken. Samma kod i övrigt och samma slumpfrö. v1 i
+monster_v1.json, monster_trappa_v1.json, monster_kanslighet_v1.json, monster_drag_v1.json.
+
+**Steg 1 Uppland: håller fortfarande.** 31 härader (Attundaland 8, inte 9), 873 stenar (v1 841), 25 drag. Folklanden 363 mot
+median 183 och 95:e percentil 256; **två** av 999 slumpindelningar når lika högt, p 0,003 (v1 360, 183, 259, p 0,001).
+Halvorna 245 mot 134 och 214 mot 124, båda p 0,001 (v1 237/129 och 217/125). Drag som skiljer: 15 mot median 8, p 0,017
+(v1 14, p 0,026). Holm över planens två prov: 0,006 (v1 0,002).
+**Steg 1 Småland:** 18 härader (v1 19; Sm 91 och Sm 139 i Jönköping knyts nu till sina socknar, och ISOF:s "Ingår i
+Jönköpings stad" försvinner), 103 stenar, 14 drag: 193 mot 184, p 0,27 (v1 199 mot 183, p 0,15). Fortfarande nej.
+**Steg 2:** 128 prov, 28 med q < 0,05, 13 håller (v1 114, 27, 12); nytt är beröm i Fjädrundaland (18 % mot 6 %).
+**Steg 3:** 734 prov i 35 härader, 11 med q < 0,05, 5 håller (v1 731, 11, 6); Hagunda (färre kors) håller inte längre
+(halva B p 0,053). Redväg, Sotholm, Håbo, Rönö och Lyhundra håller som förut.
+**Känslighetsprov utan granit (utanför planen):** 325 mot 153, p 0,004; halvorna 0,002 och 0,003 (v1 318 mot 154, 0,001).
+**Robusthetsstegen (tilläggsplan e31f2fd1): alla fyra håller** – på plats 513 stenar, 240 mot 137, p 0,006; utan de fem
+ristarna 559, 232 mot 135, p 0,002; daterade 529, 271 mot 145, p 0,004; utan förlorade 734, 311 mot 171, p 0,004 (v1 p
+0,002–0,003). Nivå 1 kvarstår.
+**Dragens bidrag (beskrivande, monster_drag.json):** korset, granit, monoftong, *at*, r för ʀ; *at* i Attundaland 39 av 269
+(14 %, v1 30 av 250, 12 %).
+OBS: utdata/blogg/build/build_sotholm.py (publicerad artikel) asserterar steg 3 = 731 prov och läser monster.json; den
+stannar nu (734 prov). Sotholms fynd är oförändrat (1 av 43, håller). Den första körningen ligger i monster_v1.json.

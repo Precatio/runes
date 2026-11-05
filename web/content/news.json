@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "malaroarna-folkland",
+   "date": "2026-11-05",
+   "status": "nytt",
+   "title": "Mälaröarna i rätt folkland",
+   "text": "Kartans gränslager med de gamla landen är rättat efter Det medeltida Sverige. Färingö tingslag, med Sånga, Lovö, Hilleshög, Skå, Munsö och Färentuna, räknas nu till Attundaland och Adelsö till Fjädrundaland; Ekerö hörde under medeltiden till Södermanland och står utanför folklanden. Spånga och Bromma räknas till Sollentuna härad, inte till staden Stockholm. Ett trettiotal runstenar som saknade folkland finns därmed med i kartans tabell per land och, när korpusanalyserna räknats om, i statistiken efter de gamla gränserna."
+  },
+  {
    "id": "artikelbiblioteket",
    "date": "2026-11-04",
    "status": "nytt",

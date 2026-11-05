@@ -1,11 +1,15 @@
 """Upplands folkland och deras runstenar (låst plan analysplaner/2026-11-01-upplands-folkland.md, sha 48346775).
 Steg 1: kvotprov drag ~ folkland + tidsskikt mot drag ~ tidsskikt, BH över 27 drag; steg 2: halvorna; steg 3: gränsprovet
 (stenar vars socken har en socken i grannlandet inom 10 km). Skriver folkland.json.
+Omkörd 2026-11-05 med den rättade landindelningen (Färingö tingslag i Attundaland, Adelsö i Fjädrundaland efter Det
+medeltida Sverige 1:7; web/src/lib/historiska_land.json → parish_medieval) – en deklarerad avvikelse efter låsningen;
+den första körningen ligger i folkland_v1.json.
     PYTHONPATH=. .venv/bin/python utdata/folkland/folkland.py"""
 import csv
 import json
 import math
 import os
+import re
 import sys
 from collections import defaultdict
 from itertools import combinations
@@ -85,9 +89,14 @@ def km(a_lat, a_lon, b_lat, b_lon):
 
 
 def parish_point(x):
-    """The stone's parish point (as scripts/assign_sten_land.py): its named parish within 25 km, else the nearest."""
-    near = [s for s in byname.get((x["parish"] or "").replace(" sn", "") + " socken", [])
-            if km(float(s["lat"]), float(s["lon"]), x["lat"], x["lon"]) <= 25]
+    """The stone's parish point (as scripts/assign_sten_land.py): its named parish within 25 km, else the nearest.
+    Rerun 2026-11-05 (declared deviation, a data correction): as in assign_sten_land.py, Rundata's "(nu …)" is dropped
+    from the parish name, and a stone moved far from its parish (Skansen) gets its named parish when the name is unique
+    in Sweden and within 100 km."""
+    named = byname.get(re.sub(r"\s*\(nu [^)]*\)", "", x["parish"] or "").strip().replace(" sn", "") + " socken", [])
+    near = [s for s in named if km(float(s["lat"]), float(s["lon"]), x["lat"], x["lon"]) <= 25]
+    if not near and len(named) == 1 and km(float(named[0]["lat"]), float(named[0]["lon"]), x["lat"], x["lon"]) <= 100:
+        near = named
     pool = near or soc
     s = min(pool, key=lambda s: km(float(s["lat"]), float(s["lon"]), x["lat"], x["lon"]))
     return float(s["lat"]), float(s["lon"])
@@ -106,6 +115,7 @@ for sg, x in st.items():
         rows.append({"signum": sg, "land": lnd, "parish": x["parish"] or sg, "year": yr, "period": per, "pp": pp,
                      **{k: (None if f.get(k, "") == "" else int(float(f[k]))) for k in FEATS}})
 res = {"plan": "analysplaner/2026-11-01-upplands-folkland.md", "plan_sha": "48346775",
+       "rerun": "2026-11-05: rättad landindelning (parish_medieval i historiska_land.json); v1 i folkland_v1.json",
        "n": {l: sum(r["land"] == l for r in rows) for l in LANDS}}
 
 # step 1

@@ -31,3 +31,13 @@ en gräns, inte bara två områden; (2) att samma ristare skriver olika på var 
 vilket talar för bygden eller beställaren och delvis emot Palms antagande att formord följer ristarens dialekt; (3) de
 formella kontrollerna (ristare och socken som slumpeffekter, tid, utrymme, ett härad i taget, flyttade stenar).
 Peterson 1996 (*Svenska landsmål* 118, 1995 / *Mål i sikte* 1996, s. 239–252) är fortfarande oläst.
+
+## Omkörning 2026-11-05 med rättad landindelning (deklarerad avvikelse)
+at_rader2.csv byggd om från de rättade raderna (517 stenar, 108 i gränszonen). Alla fyra steg **håller** igen:
+1. Utrymmet: gränszonen OR 5,3, p 0,0023 (v1 5,1, p 0,0027); fler namn ger fler *at* i hela materialet (OR 1,7 per namn),
+   längre texter inte.
+2. Socknen som slumpeffekt: OR 5,9, p 0,0011 (v1 5,7, p 0,0013).
+3. Ett härad i taget: 13 härader med minst 15 stenar (v1 12; nytt är Färentuna hd, Rundatas häradskolumn som planen
+   föreskriver), OR 2,9–3,5, alla p < 0,0011 (v1 3,3–4,0).
+4. Utan flyttade stenar: 79 stenar, OR 6,8, p 0,018 (v1 80, 6,9, p 0,020).
+Fyndet är fortfarande fullt prövat inom planerna. v1 i at_trappa_v1.json.

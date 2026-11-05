@@ -931,7 +931,12 @@ Kinda), Gotland i tredingar (Nordertredingen, Medeltredingen, Sudertredingen); �
 Landen är sammanslagningar av härader (`web/src/lib/historiska_land.json`, med källa och säkerhet per land). Sockens
 härad kommer i första hand ur ISOF:s ortnamnsregister (PlaceNameService, CC BY), i andra hand ur Wikidata; stenen
 knyts till landet genom sin socken (`scripts/assign_historiska_land.py`, `scripts/assign_sten_land.py`). ISOF och
-Wikidata stämde för 2 232 socknar; fyra rättades. Folklandens härader stämmer med sexårsgärden 1314 (SDHK 2593,
+Wikidata stämde för 2 232 socknar; fyra rättades. Elva socknar har ett annat medeltida härad än registren och rättas efter
+Det medeltida Sverige 1:7, s. 19, 44, 114, 237, 362 (`parish_medieval` i historiska_land.json, 2026-11-05): Färingö
+tingslag (Färentuna, Hilleshög, Lovö, Munsö, Skå, Sånga) i Bro härad, Adelsö i Trögds härad, Bromma och Spånga i
+Sollentuna härad i stället för ISOF:s "Ingår i Stockholms stad", Ekerö och Brännkyrka i Svartlösa härad (inget folkland).
+Rundatas "(nu …)" efter sockennamnet stryks, och en sten som flyttats långt från sin socken (Skansen, museum) knyts till
+den om namnet är unikt i Sverige och inom 100 km. Folklandens härader stämmer med sexårsgärden 1314 (SDHK 2593,
 `utdata/geografi/sexarsgard_1314.json`): Attundaland och Fjädrundaland exakt, Tiundaland med Gästrikland och Roden.
 Gränserna på kartan är ungefärliga (varje socken får området närmast sin punkt).
 

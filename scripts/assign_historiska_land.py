@@ -1,8 +1,11 @@
 """Knyter varje svensk socken till ett av de gamla landen i web/src/lib/historiska_land.json, för kartlagret
-(scripts/build_historiska_land.R). Häradet kommer ur Wikidata (data/geo/socknar_harader.json); rättelser: socknarna i
-parish_overrides (Vista och Stranda härad efter Wikipedia, eftersom Wikidata blandar ihop Vista härad med Viste i
-Västergötland och saknar Stranda), Rundatas härad för socknar som saknar härad i Wikidata, och för resten häradet hos
-närmaste socken med härad om den ligger inom 15 km (markerat 'närmast'), annars inget land. Skriver data/geo/socknar_land.csv.
+(scripts/build_historiska_land.R). Häradet kommer ur ISOF:s ortnamnsregister och Wikidata (data/geo/socknar_harader.json);
+rättelser: socknarna i parish_medieval (sockens medeltida härad efter Det medeltida Sverige, där det skiljer sig från
+registren – Färingö tingslag i Bro härad, Adelsö i Trögds, Ekerö och Brännkyrka i Svartlösa, Bromma och Spånga i Sollentuna;
+markerat 'medeltida', 2026-11-05), socknarna i parish_overrides (Vista och Stranda härad efter Wikipedia, eftersom Wikidata
+blandar ihop Vista härad med Viste i Västergötland och saknar Stranda), Rundatas härad för socknar som saknar härad i
+Wikidata, och för resten häradet hos närmaste socken med härad om den ligger inom 15 km (markerat 'närmast'), annars inget
+land. Skriver data/geo/socknar_land.csv.
     .venv/bin/python scripts/assign_historiska_land.py"""
 import csv
 import json
@@ -81,10 +84,20 @@ def isof_land(s):
     return None
 
 
+# The medieval härad where it differs from the registers (historiska_land.json → parish_medieval, keyed by Wikidata id, each
+# with its page in Det medeltida Sverige): Färingö tingslag was the other half of Bro härad (Attundaland), Adelsö belonged to
+# Trögd (Fjädrundaland) and Ekerö to Svartlösa in Södermanland until the 1540s; ISOF puts Bromma, Spånga and Brännkyrka in
+# "Ingår i Stockholms stad". A härad outside the lands (Svartlösa) gives no land.
+MEDIEVAL = defs.get("parish_medieval", {}).get("socknar", {})
+assert all(v["harad"] in by_name or v["harad"] == "Svartlösa härad" for v in MEDIEVAL.values())
+
 rows = []
 for s in soc:
     il = isof_land(s) if not (s["namn"] in gotland and ON_GOTLAND(s)) else None
-    if s["namn"] in gotland and ON_GOTLAND(s):
+    if s["id"] in MEDIEVAL:
+        assert MEDIEVAL[s["id"]]["namn"] == s["namn"], s
+        rows.append({**s, "land": by_name.get(MEDIEVAL[s["id"]]["harad"]), "how": "medeltida"})
+    elif s["namn"] in gotland and ON_GOTLAND(s):
         rows.append({**s, "land": gotland[s["namn"]], "how": "wikipedia"})
     elif s["namn"] in override:
         rows.append({**s, "land": by_name[override[s["namn"]]], "how": "wikipedia"})

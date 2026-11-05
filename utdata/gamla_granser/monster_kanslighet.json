@@ -1,40 +1,40 @@
 {
  "note": "utanför planen: steg 1 Uppland utan mat_granit",
- "units": 32,
+ "units": 31,
  "sizes": {
-  "attundaland": 9,
+  "attundaland": 8,
   "roden": 7,
   "tiundaland": 11,
   "fjadrundaland": 5
  },
- "stones": 841,
+ "stones": 873,
  "features": 24,
  "alla": {
-  "chi2_real": 317.77198822007506,
-  "chi2_median_random": 154.18738339181283,
-  "chi2_p95_random": 228.41749587255885,
-  "p": 0.001,
-  "k_real": 13,
+  "chi2_real": 325.0755683637764,
+  "chi2_median_random": 153.19965903131123,
+  "chi2_p95_random": 226.03335651824085,
+  "p": 0.004,
+  "k_real": 14,
   "k_median_random": 7.0,
-  "p_k": 0.028
+  "p_k": 0.018
  },
  "A": {
-  "chi2_real": 202.15371153134305,
-  "chi2_median_random": 109.49437691733377,
-  "chi2_p95_random": 149.15528045192025,
-  "p": 0.001,
+  "chi2_real": 206.93473042636128,
+  "chi2_median_random": 113.29141307719863,
+  "chi2_p95_random": 157.4329357999386,
+  "p": 0.002,
   "k_real": 11,
   "k_median_random": 4.0,
-  "p_k": 0.004
+  "p_k": 0.012
  },
  "B": {
-  "chi2_real": 201.09503983399927,
-  "chi2_median_random": 109.74305061480193,
-  "chi2_p95_random": 160.1529711591349,
-  "p": 0.002,
-  "k_real": 9,
+  "chi2_real": 198.0064391193087,
+  "chi2_median_random": 107.91625492191932,
+  "chi2_p95_random": 150.7738260522419,
+  "p": 0.003,
+  "k_real": 8,
   "k_median_random": 4.0,
-  "p_k": 0.02
+  "p_k": 0.056
  },
  "holds": true
 }

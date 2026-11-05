@@ -14,7 +14,9 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..")
 sys.path.insert(0, ROOT)
 from src import commons  # noqa: E402
 
-M = json.load(open(os.path.join(ROOT, "utdata", "gamla_granser", "monster.json"), encoding="utf-8"))
+# the published article rests on the run of 2 November (731 tests); the run with the Mälaren islands in their folkland
+# (2026-11-05, 734 tests) is in monster.json, the original is kept as monster_v1.json
+M = json.load(open(os.path.join(ROOT, "utdata", "gamla_granser", "monster_v1.json"), encoding="utf-8"))
 S = json.load(open(os.path.join(ROOT, "utdata", "sotholm", "sotholm.json"), encoding="utf-8"))
 D = json.load(open(os.path.join(ROOT, "utdata", "sotholm", "sotholm_beskrivning.json"), encoding="utf-8"))
 ST = list(csv.DictReader(open(os.path.join(ROOT, "utdata", "sotholm", "sotholm_stenar.csv"), encoding="utf-8")))

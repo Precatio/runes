@@ -37,3 +37,42 @@ ned. Det är det tydligaste tecknet hittills på att en vikingatida indelning sy
 - Att *at* är vanligare i norra Uppland kan vara känt i litteraturen; vi har inte kontrollerat om gränsen redan är
   beskriven.
 - Bara steg 1–3 är prövade; robusthetstrappan (ett landskap i taget, parish- och ristareffekter) är inte körd.
+
+## Omkörning 2026-11-05 med rättad landindelning (deklarerad avvikelse)
+
+Granskningen inför arkiveringen (utdata/rapporter/granskning_2026-11-05_utkast.md) fann att 39 uppländska stenar i
+dragtabellen tyst föll bort, eftersom deras socknar saknade folkland: Färingö tingslag 24 (Sånga 6, Lovö 6, Hilleshög 4,
+Skå 4, Munsö 2, Färentuna 2), Adelsö 6, Ekerö 5 och U 53, U 54, U 419, U 871. Rättelsen (web/src/lib/historiska_land.json
+→ parish_medieval, scripts/assign_sten_land.py; Det medeltida Sverige 1:7, s. 19, 44, 114, 237): Färingö tingslag var Bro
+härads andra halva → Attundaland; Adelsö hörde till Trögds härad till 1540 → Fjädrundaland; Ekerö hörde till Svartlösa
+härad i Södermanland → inget folkland; U 419 och U 871 står på Skansen och knyts till sina socknar (Norrsunda → Attundaland,
+Gryta → Tiundaland); U 53 och U 54 står i Stockholms stad (inget hundare, ursprunglig plats okänd) → inget folkland.
+Rundatas "(nu …)" stryks ur sockennamnet, vilket flyttar U 77 (Spånga) från Roden till Attundaland. Kvar utan folkland: 7.
+Stenar i dragtabellen: Tiundaland 319 → 320, Attundaland 340 → 366, Fjädrundaland 122 → 128, Roden 60 → 59
+(landrattelse.json). Samma kod och planens regler; bara indelningen och sockenpunkternas namnregel (parish_point) är ändrade.
+Den första körningen ligger i folkland_v1.json.
+
+Rättelse av v1-texten ovan: steg 1 hade **12** drag med q < 0,05, inte 13 – kristna markörer hade q 0,053 (folkland_v1.json).
+
+**Steg 1:** 14 av 27 drag skiljer (v1 12); nya är kristna markörer (q 0,035) och kvinna bland resarna (q 0,031).
+**Steg 2:** 5 håller i båda halvorna (v1 3): *at* (Fjädrundaland 39 %, Tiundaland 32 %, Roden 23 %, Attundaland 14 %, v1 12 %;
+halvorna p 0,003 och 0,0007), r för ʀ (Fjädrundaland 50 %; p 0,0005 och 0,02), monoftong (Fjädrundaland 67 %, Roden 25 %;
+p < 0,0001 och 0,0005), och nu också korset (Tiundaland 65 %, Attundaland 61 %, Fjädrundaland 35 %; samma land högst i båda
+halvorna) och beröm (Fjädrundaland 18 % mot 5–10 %; p 0,018 och 0,013).
+**Steg 3 (planens kod):** *at* skiljer fortfarande ända fram till gränsen Tiundaland–Attundaland: 23 av 59 mot 5 av 49
+(p 0,0005; v1 23/60 mot 5/49, p 0,0007). Längre in: 57 av 189 mot 34 av 220 (v1 25 av 201) – Färingöstenarna står inte i
+gränszonen mot Tiundaland men har ofta *at* (9 av 17 med prepositionen känd). Korset (Tiundaland mot Fjädrundaland, 45/74 mot
+13/34, p 0,024) och beröm (Fjädrundaland mot Tiundaland, 5/34 mot 2/74, p 0,031) finns vid gränsen; r för ʀ (p 0,18) och
+monoftong (Attundaland mot Roden, p 0,11) är gradienter. U 899 ("Bondkyrka sn (nu Uppsala)") hamnar nu i Bondkyrka och
+inte i Uppsala-Näs och ligger inte längre i gränszonen.
+
+**Grannregeln och gränsen Attundaland–Fjädrundaland.** folkland.py prövar grannskap på varannan sockenpunkt (land_pts[::2]);
+med den gallringen gränsar Attundaland och Fjädrundaland fortfarande inte, så planens steg 3 prövar *at* vid gränsen
+Tiundaland–Attundaland som förut. Med alla punkter gränsar de (Adelsö–Munsö), och då skulle planens regel välja
+Fjädrundaland–Attundaland för *at* och r för ʀ. Det är prövat EXPLORATIVT i folkland_grans_af.py / folkland_grans_af.json:
+*at* 1 av 4 på Fjädrundalands sida mot 4 av 7 på Attundalands (p 0,95), r för ʀ 0 av 2 mot 2 av 7 – ingen skillnad vid
+gränsen och för få stenar för att pröva den. Med alla punkter gränsar också Tiundaland och Roden; monoftongen prövas då där
+(1 sten per sida).
+
+**Planens dom:** oförändrad i sak – *at* är den skarpa gränsen mellan Tiundaland och Attundaland; i övrigt syns skillnaderna
+i stavningen (r för ʀ, monoftong) som gradienter.

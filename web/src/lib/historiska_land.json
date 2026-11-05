@@ -1,5 +1,5 @@
 {
-  "about": "Smålands små land, Upplands folkland och Gotlands tredingar som ett läge i kartans gränslager. Varje land är en sammanslagning av härader (i Roden skeppslag); socknarnas härader kommer ur Wikidata (data/geo/socknar_harader.json) med rättelser i scripts/assign_historiska_land.py, och gränserna ritas ungefärligt av scripts/build_historiska_land.R (varje socken får området närmast sin kyrkpunkt). Indelningen följer svenska Wikipedia (hämtad 2026-11-01), sidorna i källistan.",
+  "about": "Smålands små land, Upplands folkland och Gotlands tredingar som ett läge i kartans gränslager. Varje land är en sammanslagning av härader (i Roden skeppslag); socknarnas härader kommer ur ISOF:s ortnamnsregister och Wikidata (data/geo/socknar_harader.json) med rättelser i scripts/assign_historiska_land.py och, där sockens medeltida härad var ett annat, i parish_medieval (Det medeltida Sverige), och gränserna ritas ungefärligt av scripts/build_historiska_land.R (varje socken får området närmast sin kyrkpunkt). Indelningen följer svenska Wikipedia (hämtad 2026-11-01), sidorna i källistan.",
   "realms": {
     "smaland": {
       "label": "Smålands små land",
@@ -217,7 +217,7 @@
           "Vallentuna härad",
           "Sollentuna härad"
         ],
-        "note": "Sexårsgärden 1314 (SDHK 2593) räknar hit de åtta hundarena Bro, Sollentuna, Vallentuna, Seminghundra, Långhundra, Lyhundra, Ärlinghundra och Sjuhundra – samma härader som här."
+        "note": "Sexårsgärden 1314 (SDHK 2593) räknar hit de åtta hundarena Bro, Sollentuna, Vallentuna, Seminghundra, Långhundra, Lyhundra, Ärlinghundra och Sjuhundra – samma härader som här. Färingö tingslag (Färentuna, Hilleshög, Lovö, Munsö, Skå och Sånga) var Bro härads andra halva och räknas hit; Ekerö hörde till Svartlösa härad i Södermanland (Det medeltida Sverige 1:7, s. 19, 44, 114)."
       },
       {
         "id": "fjadrundaland",
@@ -232,7 +232,7 @@
           "Torstuna härad",
           "Simtuna härad"
         ],
-        "note": "Sexårsgärden 1314 (SDHK 2593) räknar hit Trögd, Åsunda, Simtuna, Torsåker (Torstuna) och Lagunda – samma härader som här."
+        "note": "Sexårsgärden 1314 (SDHK 2593) räknar hit Trögd, Åsunda, Simtuna, Torsåker (Torstuna) och Lagunda – samma härader som här. Adelsö socken hörde till Trögds härad till 1540 och räknas hit (Det medeltida Sverige 1:7, s. 19, 114)."
       },
       {
         "id": "roden",
@@ -377,7 +377,8 @@
     "sources": [
       "Svenska Wikipedia, hämtad 2026-11-01: Småland (de små landen), Värend, Finnveden, Tjust, Möre, Handbörd, Aspeland, Sevede, Vedbo, Kinda, Vista härad, Stranda härad, Tunaläns härad, Östra härad (Jönköpings län), Tiundaland, Attundaland, Fjädrundaland, Roden, Nordertredingen, Medeltredingen, Sudertredingen, Gotlands norra härad, Gotlands södra härad.",
       "Sexårsgärden 1314, SDHK nr 2593 (DS 1946), Riksarkivets SDHK (CC BY 4.0).",
-      "Socknarnas härader och lägen: Wikidata (CC0)."
+      "Socknarnas härader och lägen: Institutet för språk och folkminnen, ortnamnsregistret (PlaceNameService, CC BY), hämtat 2026-11-02, och Wikidata (CC0).",
+      "Det medeltida Sverige 1:7, Attundaland: Bro, Färingö, Adelsö, Sollentuna (O. Ferm, M. Johansson & S. Rahmqvist, Riksantikvarieämbetet 1992), s. 19, 44, 114, 237 och 362: socknarnas medeltida härad där de skiljer sig från registren."
     ]
   },
   "parish_overrides": {
@@ -392,5 +393,87 @@
       "Mönsterås socken",
       "Ålems socken"
     ]
+  },
+  "parish_medieval": {
+    "about": "Socknar vars medeltida härad inte är det som ISOF:s ortnamnsregister och Wikidata ger (1900-talets eller en stad). Häradet här gäller före registren, och landet följer häradet; ett härad som inte hör till något land ger inget land. Nyckeln är socknens Wikidata-id; namnet och punkten står med för skript som matchar ISOF:s socknar på namn och läge (utdata/gamla_granser/monster.py). Tillagt 2026-11-05 efter granskningen av folklandsrapporten (utdata/rapporter/granskning_2026-11-05_utkast.md).",
+    "socknar": {
+      "Q10500791": {
+        "namn": "Färentuna socken",
+        "lat": 59.39138889,
+        "lon": 17.655,
+        "harad": "Bro härad",
+        "source": "Det medeltida Sverige 1:7 (Ferm, Johansson & Rahmqvist 1992), s. 19 (”Bro härad, till vilket Färingö tingslag hörde, och Sollentuna härad ingick i Attundaland”), s. 44 (Bro härad är ”'Brohalvahundare'; den andra halvan är Färingö tingslag”) och s. 114 (”Färingö tingslag omfattar under medeltiden och fram till 1540 Färentuna, Hilleshögs, Sånga, Skå, Lovö och Munsö socknar”)"
+      },
+      "Q10524032": {
+        "namn": "Hilleshögs socken",
+        "lat": 59.39055556,
+        "lon": 17.7025,
+        "harad": "Bro härad",
+        "source": "Det medeltida Sverige 1:7 (Ferm, Johansson & Rahmqvist 1992), s. 19 (”Bro härad, till vilket Färingö tingslag hörde, och Sollentuna härad ingick i Attundaland”), s. 44 (Bro härad är ”'Brohalvahundare'; den andra halvan är Färingö tingslag”) och s. 114 (”Färingö tingslag omfattar under medeltiden och fram till 1540 Färentuna, Hilleshögs, Sånga, Skå, Lovö och Munsö socknar”)"
+      },
+      "Q10688384": {
+        "namn": "Sånga socken",
+        "lat": 59.35805556,
+        "lon": 17.7075,
+        "harad": "Bro härad",
+        "source": "Det medeltida Sverige 1:7 (Ferm, Johansson & Rahmqvist 1992), s. 19 (”Bro härad, till vilket Färingö tingslag hörde, och Sollentuna härad ingick i Attundaland”), s. 44 (Bro härad är ”'Brohalvahundare'; den andra halvan är Färingö tingslag”) och s. 114 (”Färingö tingslag omfattar under medeltiden och fram till 1540 Färentuna, Hilleshögs, Sånga, Skå, Lovö och Munsö socknar”)"
+      },
+      "Q10671055": {
+        "namn": "Skå socken",
+        "lat": 59.33166667,
+        "lon": 17.74472222,
+        "harad": "Bro härad",
+        "source": "Det medeltida Sverige 1:7 (Ferm, Johansson & Rahmqvist 1992), s. 19 (”Bro härad, till vilket Färingö tingslag hörde, och Sollentuna härad ingick i Attundaland”), s. 44 (Bro härad är ”'Brohalvahundare'; den andra halvan är Färingö tingslag”) och s. 114 (”Färingö tingslag omfattar under medeltiden och fram till 1540 Färentuna, Hilleshögs, Sånga, Skå, Lovö och Munsö socknar”)"
+      },
+      "Q10590355": {
+        "namn": "Munsö socken",
+        "lat": 59.40138889,
+        "lon": 17.56027778,
+        "harad": "Bro härad",
+        "source": "Det medeltida Sverige 1:7 (Ferm, Johansson & Rahmqvist 1992), s. 19 (”Bro härad, till vilket Färingö tingslag hörde, och Sollentuna härad ingick i Attundaland”), s. 44 (Bro härad är ”'Brohalvahundare'; den andra halvan är Färingö tingslag”) och s. 114 (”Färingö tingslag omfattar under medeltiden och fram till 1540 Färentuna, Hilleshögs, Sånga, Skå, Lovö och Munsö socknar”)"
+      },
+      "Q10570027": {
+        "namn": "Lovö socken",
+        "lat": 59.32111111,
+        "lon": 17.83972222,
+        "harad": "Bro härad",
+        "source": "Det medeltida Sverige 1:7 (Ferm, Johansson & Rahmqvist 1992), s. 19 (”Bro härad, till vilket Färingö tingslag hörde, och Sollentuna härad ingick i Attundaland”), s. 44 (Bro härad är ”'Brohalvahundare'; den andra halvan är Färingö tingslag”) och s. 114 (”Färingö tingslag omfattar under medeltiden och fram till 1540 Färentuna, Hilleshögs, Sånga, Skå, Lovö och Munsö socknar”); s. 28 och 30: Lovö var eget skeppslag 1409 och ingår ”senast från 1423” i Färingö tingslag/Bro härad"
+      },
+      "Q10401127": {
+        "namn": "Adelsö socken",
+        "lat": 59.36005556,
+        "lon": 17.53147222,
+        "harad": "Trögds härad",
+        "source": "Det medeltida Sverige 1:7 (Ferm, Johansson & Rahmqvist 1992), s. 19 (”Adelsö socken, som hörde till Trögds härad i Fjädrundaland”; överförd 1540), s. 28 och s. 114"
+      },
+      "Q10480602": {
+        "namn": "Ekerö socken",
+        "lat": 59.27222222,
+        "lon": 17.74805556,
+        "harad": "Svartlösa härad",
+        "source": "Det medeltida Sverige 1:7 (Ferm, Johansson & Rahmqvist 1992), s. 114 (”Ekerö till Svartlösa härad i Södermanland” till 1544) och s. 362 (ortregistret: Södermanland, Svartlösa härad); därför inget folkland"
+      },
+      "Q10436031": {
+        "namn": "Bromma socken",
+        "lat": 59.354444444,
+        "lon": 17.920833333,
+        "harad": "Sollentuna härad",
+        "source": "Det medeltida Sverige 1:7 (Ferm, Johansson & Rahmqvist 1992), s. 237 (”Sollentuna härad omfattar under medeltiden och 1500-talet Bromma, Eds, Järfälla, Sollentuna och Spånga socknar”); ISOF: ”Ingår i Stockholms stad”"
+      },
+      "Q7581833": {
+        "namn": "Spånga socken",
+        "lat": 59.38027778,
+        "lon": 17.89333333,
+        "harad": "Sollentuna härad",
+        "source": "Det medeltida Sverige 1:7 (Ferm, Johansson & Rahmqvist 1992), s. 237 (”Sollentuna härad omfattar under medeltiden och 1500-talet Bromma, Eds, Järfälla, Sollentuna och Spånga socknar”); ISOF: ”Ingår i Stockholms stad”"
+      },
+      "Q4981807": {
+        "namn": "Brännkyrka socken",
+        "lat": 59.28219,
+        "lon": 18.02314,
+        "harad": "Svartlösa härad",
+        "source": "Det medeltida Sverige 1:7 (Ferm, Johansson & Rahmqvist 1992), s. 362 (ortregistret: Södermanland, Svartlösa härad: ”Brännkyrka sn”); ISOF: ”Ingår i Stockholms stad”"
+      }
+    }
   }
 }

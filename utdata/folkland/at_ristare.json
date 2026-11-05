@@ -1,25 +1,25 @@
 {
   "plan": "analysplaner/2026-11-01-folkland-at-ristare.md",
-  "n": 497,
-  "n_border": 109,
+  "n": 517,
+  "n_border": 108,
   "step1": {
     "border": {
-      "n": 109,
-      "beta": 1.73298671626821,
-      "se": 0.589536590195581,
-      "or": 5.65752612493937,
-      "p": 0.00328663267663274,
-      "p1": 0.00164331633831637,
-      "ristare_sd": 0.461459653237865
+      "n": 108,
+      "beta": 1.774874067506,
+      "se": 0.595233259285007,
+      "or": 5.89953814598449,
+      "p": 0.00286547286382815,
+      "p1": 0.00143273643191407,
+      "ristare_sd": 0.485106655216123
     },
     "all": {
-      "n": 497,
-      "beta": 1.24104625499203,
-      "se": 0.306983851876298,
-      "or": 3.45923080960328,
-      "p": 5.28372720915963e-05,
-      "p1": 2.64186360457981e-05,
-      "ristare_sd": 1.04763492433549
+      "n": 517,
+      "beta": 1.12385797499492,
+      "se": 0.31860675143301,
+      "or": 3.07670117213299,
+      "p": 0.000419639762108298,
+      "p1": 0.000209819881054149,
+      "ristare_sd": 1.36873091966939
     }
   },
   "holds_with_carvers": true,
@@ -27,11 +27,11 @@
     "carvers": [
       {
         "carver": "Åsmund",
-        "n_t": 15,
+        "n_t": 16,
         "at_t": 1,
         "n_a": 12,
         "at_a": 0,
-        "share_t": 0.0666666666666667,
+        "share_t": 0.0625,
         "share_a": 0,
         "_row": "Åsmund"
       },
@@ -49,10 +49,10 @@
         "carver": "Öpir 1",
         "n_t": 39,
         "at_t": 21,
-        "n_a": 22,
+        "n_a": 23,
         "at_a": 4,
         "share_t": 0.538461538461538,
-        "share_a": 0.181818181818182,
+        "share_a": 0.173913043478261,
         "_row": "Öpir 1"
       }
     ],
@@ -62,17 +62,17 @@
     "sign_p": 0.125
   },
   "step3": {
-    "named_stones": 266,
+    "named_stones": 274,
     "carvers": 43,
-    "carvers_both_sides": 5,
-    "stones_by_both_side_carvers": 162
+    "carvers_both_sides": 6,
+    "stones_by_both_side_carvers": 168
   },
   "top_carvers": [
     {
       "carver": "Öpir 1",
       "n_t": 39,
       "at_t": 21,
-      "n_a": 22,
+      "n_a": 23,
       "at_a": 4,
       "_row": "Öpir 1"
     },
@@ -86,7 +86,7 @@
     },
     {
       "carver": "Åsmund",
-      "n_t": 15,
+      "n_t": 16,
       "at_t": 1,
       "n_a": 12,
       "at_a": 0,
@@ -149,6 +149,22 @@
       "_row": "Ingulv"
     },
     {
+      "carver": "Ärnfast",
+      "n_t": 0,
+      "at_t": 0,
+      "n_a": 4,
+      "at_a": 4,
+      "_row": "Ärnfast"
+    },
+    {
+      "carver": "Balle",
+      "n_t": 3,
+      "at_t": 3,
+      "n_a": 1,
+      "at_a": 1,
+      "_row": "Balle"
+    },
+    {
       "carver": "Grim skald",
       "n_t": 4,
       "at_t": 3,
@@ -157,36 +173,20 @@
       "_row": "Grim skald"
     },
     {
+      "carver": "Torbjörn skald",
+      "n_t": 0,
+      "at_t": 0,
+      "n_a": 4,
+      "at_a": 0,
+      "_row": "Torbjörn skald"
+    },
+    {
       "carver": "Torsten",
       "n_t": 0,
       "at_t": 0,
       "n_a": 4,
       "at_a": 0,
       "_row": "Torsten"
-    },
-    {
-      "carver": "Balle",
-      "n_t": 3,
-      "at_t": 3,
-      "n_a": 0,
-      "at_a": 0,
-      "_row": "Balle"
-    },
-    {
-      "carver": "Erik",
-      "n_t": 3,
-      "at_t": 0,
-      "n_a": 0,
-      "at_a": 0,
-      "_row": "Erik"
-    },
-    {
-      "carver": "Sven 1",
-      "n_t": 0,
-      "at_t": 0,
-      "n_a": 3,
-      "at_a": 0,
-      "_row": "Sven 1"
     }
   ]
 }

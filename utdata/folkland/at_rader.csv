@@ -1,4 +1,21 @@
 signum,land,period,border,parish,carver,prep_at
+U 14,attundaland,1010–1040,0,Munsö sn,,1
+U 22,attundaland,odaterad,0,Färentuna sn,,0
+U 31,attundaland,odaterad,0,Hilleshögs sn,,1
+U 32,attundaland,1010–1040,0,Sånga sn,,1
+U 34,attundaland,1010–1040,0,Sånga sn,Balle,1
+U 35,attundaland,1010–1040,0,Sånga sn,,1
+U 36,attundaland,1070–,0,Sånga sn,Öpir 1,0
+U 37,attundaland,1010–1040,0,Sånga sn,Torbjörn skald,0
+U 40,attundaland,1040–1070,0,Skå sn,,1
+U 42,attundaland,1070–,0,Skå sn,,0
+U 43,attundaland,1040–1070,0,Skå sn,Ärnfast,1
+U 44,attundaland,1070–,0,Skå sn,Snare,0
+U 46,attundaland,odaterad,0,Lovö sn,,0
+U 47,attundaland,1040–1070,0,Lovö sn,Ärnfast,1
+U 48,attundaland,1070–,0,Lovö sn,,0
+U 50,attundaland,odaterad,0,Lovö sn,,0
+U 51,attundaland,1040–1070,0,Lovö sn,Ärnfast,1
 U 57,attundaland,1040–1070,0,Stockholm,,0
 U 60,attundaland,odaterad,0,Stockholm,,0
 U 61,attundaland,–1010,0,Spånga sn,Gunnar,0
@@ -9,6 +26,7 @@ U 72,attundaland,1040–1070,0,Spånga sn,Visäte,0
 U 73,attundaland,1040–1070,0,Spånga sn,Visäte,0
 U 74,attundaland,1040–1070,0,Spånga sn,Visäte,0
 U 75,attundaland,1070–,0,Spånga sn,Visäte,0
+U 77,attundaland,1070–,0,Spånga sn (nu Sundbyberg),,0
 U 78,attundaland,1070–,0,Spånga sn (nu Sundbyberg),Öpir 1,0
 U 79,attundaland,1040–1070,0,Spånga sn,Ärnfast,1
 U 82,attundaland,odaterad,0,Järfälla sn,,0
@@ -143,6 +161,7 @@ U 403,attundaland,odaterad,1,Sigtuna,,0
 U 409,attundaland,1040–1070,1,Sankt Olovs sn (Sankt Olof) (nu Odensala sn),,0
 U 411,attundaland,1070–,1,Sankt Olovs sn (Sankt Olof),,0
 U 418,attundaland,1040–1070,0,Norrsunda sn,,0
+U 419,attundaland,1010–1040,0,Norrsunda sn,,0
 U 420,attundaland,odaterad,0,Norrsunda sn,Fot 2,0
 U 421,attundaland,odaterad,0,Norrsunda sn,,0
 U 422,attundaland,odaterad,0,Norrsunda sn,,0
@@ -297,6 +316,7 @@ U 864,tiundaland,odaterad,0,Balingsta sn,Arbjörn,0
 U 865,tiundaland,odaterad,0,Balingsta sn,Arbjörn,0
 U 866,tiundaland,odaterad,0,Gryta sn,Åsmund,0
 U 867,tiundaland,odaterad,0,Gryta sn,Likbjörn,1
+U 871,tiundaland,1070–,0,Gryta sn,Åsmund,0
 U 873,tiundaland,1040–1070,0,Gryta sn,Balle,1
 U 874,tiundaland,odaterad,0,Hagby sn,Fot 2,1
 U 875,tiundaland,1040–1070,0,Hagby sn,Åsmund,0
@@ -310,7 +330,7 @@ U 887,tiundaland,1070–,0,Skogstibble sn (nu Skogs-Tibble),Örik,0
 U 893,tiundaland,odaterad,1,Uppsala-Näs sn,Öpir 1,1
 U 894,tiundaland,1070–,1,Uppsala-Näs sn,,0
 U 895,tiundaland,1070–,0,Bondkyrka sn (nu Uppsala),,1
-U 899,tiundaland,1070–,1,Bondkyrka sn (nu Uppsala),Fot 2,0
+U 899,tiundaland,1070–,0,Bondkyrka sn (nu Uppsala),Fot 2,0
 U 901,tiundaland,odaterad,0,Läby sn,,1
 U 903,tiundaland,odaterad,0,Läby sn,Åsmund,0
 U 904,tiundaland,1040–1070,0,Läby sn,,0

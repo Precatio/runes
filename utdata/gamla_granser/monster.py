@@ -1,11 +1,18 @@
 """Nya mönster med den vikingatida indelningen (låst plan analysplaner/2026-11-02-gamla-granser-nya-monster.md,
 sha 054c87d5): 1 är folklanden (och Smålands små land) särskilda mot sammanhängande slumpindelningar av samma härader,
 2 vad utmärker varje del-region inom sitt landskap, 3 häradsfickor. Skriver monster.json.
+Omkörd 2026-11-05 med rättad indelning (deklarerad avvikelse efter låsningen, en datarättelse): stenarnas land ur den
+rättade web/public/geo/sten_land.json, och häradet per sten och per ISOF-socken rättat efter Det medeltida Sverige 1:7
+(historiska_land.json → parish_medieval: Färingö tingslag i Bro härad, Adelsö i Trögds, Bromma och Spånga i Sollentuna i
+stället för ISOF:s "Ingår i Stockholms stad", Ekerö och Brännkyrka i Svartlösa). Rundatas "(nu …)" stryks ur sockennamnet,
+och en sten som flyttats långt (Skansen, museum) får sin socken om namnet är unikt och inom 100 km, som i
+scripts/assign_sten_land.py. Den första körningen ligger i monster_v1.json.
     PYTHONPATH=. .venv/bin/python utdata/gamla_granser/monster.py"""
 import csv
 import json
 import math
 import os
+import re
 import sys
 from collections import Counter, defaultdict
 
@@ -72,18 +79,35 @@ isof = [p for p in json.load(open(ISOF + "parishes.json")) if p.get("latitude") 
 by_name = defaultdict(list)
 for p in isof:
     by_name[p["name"]].append(p)
+# rerun 2026-11-05: the medieval härad of the parishes where it differs from ISOF (historiska_land.json → parish_medieval,
+# Det medeltida Sverige 1:7), matched on name and place (within 10 km of the parish point); "Bro härad" → ISOF's "Bro hd"
+MEDIEVAL = json.load(open(os.path.join(ROOT, "web", "src", "lib", "historiska_land.json"), encoding="utf-8"))["parish_medieval"]["socknar"]
+
+
+def district(p):
+    for m in MEDIEVAL.values():
+        if m["namn"] == p["name"].replace(" sn", " socken") and km((m["lat"], m["lon"]), (p["latitude"], p["longitude"])) <= 10:
+            return m["harad"].replace(" härad", " hd")
+    return dist[p["district_id"]]
+
+
+assert {district(p) for p in isof if p["name"] in ("Färentuna sn", "Lovö sn", "Adelsö sn", "Spånga sn", "Ekerö sn")} == {
+    "Bro hd", "Trögds hd", "Sollentuna hd", "Svartlösa hd"}
 
 
 def harad_of(x):
     pt = (x["lat"], x["lon"])
-    cand = [p for p in by_name.get((x["parish"] or "").strip(), []) if km((p["latitude"], p["longitude"]), pt) <= 25]
+    named = by_name.get(re.sub(r"\s*\(nu [^)]*\)", "", x["parish"] or "").strip(), [])
+    cand = [p for p in named if km((p["latitude"], p["longitude"]), pt) <= 25]
+    if not cand and len(named) == 1 and km((named[0]["latitude"], named[0]["longitude"]), pt) <= 100:
+        cand = named    # moved far from its parish (Skansen, a museum); the name is unique (rerun 2026-11-05)
     if cand:
         p = min(cand, key=lambda p: km((p["latitude"], p["longitude"]), pt))
     else:
         p = min(isof, key=lambda p: km((p["latitude"], p["longitude"]), pt))
         if km((p["latitude"], p["longitude"]), pt) > 15:
             return None
-    return dist[p["district_id"]]
+    return district(p)
 
 
 rd = json.load(open(os.path.join(ROOT, "data", "rundata.json")))["inscriptions"]
@@ -132,7 +156,7 @@ def chi_group(z, f, group):
 def harad_points():
     pts = defaultdict(list)
     for p in isof:
-        pts[dist[p["district_id"]]].append((p["latitude"], p["longitude"]))
+        pts[district(p)].append((p["latitude"], p["longitude"]))
     return pts
 
 
@@ -284,7 +308,8 @@ for (h, g), n in sorted(hc.items()):
                           "known": f == "ord_þennsa" and g == "Sö"})
 judge(step3, groups3)
 
-out = {"plan": "analysplaner/2026-11-02-gamla-granser-nya-monster.md", "plan_sha": "054c87d5", "deviation": "analysplaner/2026-11-02-gamla-granser-nya-monster-avvikelse.md", "step1": step1,
+out = {"plan": "analysplaner/2026-11-02-gamla-granser-nya-monster.md", "plan_sha": "054c87d5", "deviation": "analysplaner/2026-11-02-gamla-granser-nya-monster-avvikelse.md",
+       "rerun": "2026-11-05: rättad landindelning och häradsindelning (parish_medieval i historiska_land.json); v1 i monster_v1.json", "step1": step1,
        "step2": {"n_tests": len(step2), "tests": step2}, "step3": {"n_tests": len(step3), "units": len(groups3), "tests": step3}}
 json.dump(out, open(os.path.join(HERE, "monster.json"), "w"), ensure_ascii=False, indent=1, default=float)
 for name, tests in (("steg 2", step2), ("steg 3", step3)):
