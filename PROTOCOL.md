@@ -1,8 +1,10 @@
 ## Vitki-protokollet
 
 **Protokoll för automatisk mätning av huggspår i 3D-skanningar av runstenar.**
-Version: `vitki-groove-1-utkast` · mätmetod `groove-7` · status: **utkast** – låses (`vitki-groove-1`) när Vitki
-släpps i en version med DOI. Maskinläsbar form: `src/protocol.py`. Metoderna beskrivs i detalj i METHODS.md.
+Version: `vitki-groove-1-utkast` · mätmetod `groove-7` · status: **utkast** – låses (`vitki-groove-1`) när delarna i
+P7 är prövade eller redovisade som brister, inte automatiskt vid en release. Vitki 3.1.0 släpps med protokollet som
+utkast (beslut 2026-11-05): releasen fryser koden och parametrarna, men mätmetoden ändrades sex gånger mellan början av
+oktober och 3 november 2026 (groove-1 till groove-7), och tre valideringar återstår. Maskinläsbar form: `src/protocol.py`. Metoderna beskrivs i detalj i METHODS.md.
 
 ### P1. Syfte
 

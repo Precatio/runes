@@ -159,8 +159,8 @@ källor som ligger i repot behåller sina egna licenser, och de ska anges när d
 | Samnordisk runtextdatabas (Rundata), Uppsala universitet | `data/rundata.json` och tabeller härledda ur den | ODbL 1.0 / DbCL |
 | OpenStreetMap | `web/public/geo/riken.geojson`, `web/public/geo/land.geojson`, `data/dk/runesten_koordinater.csv` | ODbL 1.0 |
 | Wikidata och Institutet för språk och folkminnen (ortnamnsregistret) | `data/geo/socknar_harader.json`, `data/geo/socknar_land.csv` | CC0 (Wikidata), CC BY (ISOF) |
-| Riksantikvarieämbetet, Kulturmiljöregistret via K-samsök | `data/stone_dimensions.json`, `data/raa/` | Riksantikvarieämbetets öppna data (CC0) |
-| SCB, namnstatistik | `data/namn/scb_tilltalsnamn.json` | SCB:s öppna data (CC BY 4.0) |
+| Riksantikvarieämbetet, Kulturmiljöregistret via K-samsök | `data/stone_dimensions.json`, `data/raa/` | CC0 (anges i varje post i K-samsök) |
+| SCB, namnstatistik ur Statistikdatabasen | `data/namn/scb_tilltalsnamn.json` | CC0 (SCB:s öppna data; SCB rekommenderar "Källa: SCB") |
 | Svenskt diplomatariums huvudkartotek (SDHK) via Språkbanken Korp | `utdata/namnarv/` | CC BY 4.0 |
 | 3D-skanningar från Zenodo (Kitzler Åhfeldt, Zedig m.fl.; Riksantikvarieämbetet) | `utdata/Rak/`, `data/runmodell/`, `data/runbibliotek/`, skanningsfigurer | CC BY 4.0, krediteras i `src/scan_sources.py` |
 | Sveriges geologiska undersökning, strandförskjutningsmodell och berggrund | figurer i `utdata/strand/` och kartor | CC BY 4.0 |
