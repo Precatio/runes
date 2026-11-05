@@ -18,14 +18,16 @@ from src import blog_figures, blog_labels  # noqa: E402
 
 APP_VERSION = "3.0.0"  # the Vitki version the analysis was made in (tag v3.0.0 + the commits named in Data och kod), not the current one
 assert open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().startswith("611a4d5f")  # mallens version 4
-REPORT_VERSION = 2  # version 1: 2026-11-01, publicerad samma dag
+REPORT_VERSION = 3  # version 1: 2026-11-01, publicerad samma dag; version 2: 2026-11-05 (granskningen); version 3: 2026-11-05
+# (den andra granskningen av det version 2 ändrade)
 TODAY = "2026-11-05"  # rapportversionens datum, fast i byggaren (mallen version 3)
 V1_PUBLISHED = "2026-11-01"  # första versionens publiceringsdatum (behålls; asserteras mot webbplatsens export nedan)
-TL_SV = ("analysplanen låstes 2026-10-23; avstånden räknades 2026-10-23; tillägget för flyttade stenar låstes 2026-10-31; "
-         "statistiken kördes 2026-10-31; tilläggsplanen för känslighetsanalyserna låstes och kördes 2026-11-01")
-TL_EN = ("the analysis plan was locked 2026-10-23; the distances were computed 2026-10-23; the addendum for moved stones was "
-         "locked 2026-10-31; the statistics were run 2026-10-31; the addendum plan for the sensitivity analyses was locked and "
-         "run 2026-11-01")
+TL_SV = ("analysplanen låstes 2026-10-23; en provkörning av skriptet utan sparade resultat 2026-10-23; avstånden räknades "
+         "2026-10-23; tillägget för flyttade stenar låstes 2026-10-31; statistiken kördes och lästes 2026-10-31; tilläggsplanen för "
+         "känslighetsanalyserna låstes och kördes 2026-11-01")
+TL_EN = ("the analysis plan was locked 2026-10-23; a test run of the script with no results kept 2026-10-23; the distances were "
+         "computed 2026-10-23; the addendum for moved stones was locked 2026-10-31; the statistics were run and read 2026-10-31; "
+         "the addendum plan for the sensitivity analyses was locked and run 2026-11-01")
 CODE_COMMIT = "4f80a63"  # kodläget för analysen, resultatfilerna och kartorna (2026-11-01); ingen release med DOI ännu
 SD = os.path.join(ROOT, "utdata", "strand")
 R = json.load(open(os.path.join(SD, "resultat.json"), encoding="utf-8"))
@@ -172,7 +174,34 @@ assert subprocess.run(["git", "merge-base", "--is-ancestor", CODE_COMMIT, "origi
 _site = json.load(open(os.path.join(ROOT, "web", "content", "articles.json"), encoding="utf-8"))["posts"]
 assert [p_["publishedAt"][:10] for p_ in _site if p_.get("slug") == "runstenarna-vid-sin-tids-vatten"] == [V1_PUBLISHED]
 # The register's licence, as the repository states it
-assert any("Kulturmiljöregistret via K-samsök" in ln and "(CC0)" in ln for ln in open(os.path.join(ROOT, "README.md"), encoding="utf-8"))
+assert any("Kulturmiljöregistret via K-samsök" in ln and "CC0" in ln for ln in open(os.path.join(ROOT, "README.md"), encoding="utf-8"))
+
+# ---- rapportversion 3: källställena (utdata/strand/kallcitat_v3.json, ordagranna citat lästa 2026-11-05) -----------------
+KQ = json.load(open(os.path.join(SD, "kallcitat_v3.json"), encoding="utf-8"))
+ST14, MC14, EK50 = KQ["stille_2014"], KQ["mcleod_2014"], KQ["ekholm_1950"]
+assert ST14["volym"] == 5 and ST14["sidor"] == [137, 149] and "Futhark: International Journal of Runic Studies 5 (2014, publ. 2015): 137–49." in ST14["referens"]
+assert [c["sida"] for c in ST14["citat"]] == [142, 142] and (ST14["vid_vatten"], ST14["med_bestämbar_plats"]) == (20, 53)
+assert f"Det är alltså {ST14['vid_vatten']} stenar av de {ST14['med_bestämbar_plats']} som med mer eller mindre säkerhet" in ST14["citat"][0]["text"]
+assert "har det också funnits en väg" in ST14["citat"][1]["text"]
+assert MC14["sidhuvud"] == "No. 25:1–8" and MC14["sidor"] == [1, 8]
+assert EK50["sidor"] == [137, 147] and EK50["invändningen"] == [min(c["sida"] for c in EK50["citat"]), max(c["sida"] for c in EK50["citat"])] == [138, 143]
+assert any(c["sida"] == 140 and "forntidens samfärdsled" in c["text"] for c in EK50["citat"])
+assert any(c["sida"] == 141 and "till lands och vatten" in c["text"] for c in EK50["citat"])
+MCP, EKO = f"{MC14['sidor'][0]}–{MC14['sidor'][1]}", f"{EK50['invändningen'][0]}–{EK50['invändningen'][1]}"
+# Figure 1: one stone in the map is both lost and moved (Sö 249), so the two counts overlap by one
+assert MO["lost"] + MO["moved_corrected_rule"] - MO["lost_or_moved"] == 1 and KS["lost_and_moved"] == ["Sö 249"]
+# The trial run printed its progress and the numbers of stones, points and grave fields, but no test result. The cache is not in
+# the repository (kontroll_v2.json is the record); where it is present, the log is read here too.
+RUNLOG = "/Volumes/2TB/cache/strand/run.log"
+if os.path.exists(RUNLOG):
+    _rl = open(RUNLOG, encoding="utf-8").read()
+    assert f"stenar: {PO['n']} icke flyttade" in _rl and f"slumppunkter: {PO['n_random']}" in _rl and f"gravfält: {PO['n_gravfalt']}" in _rl
+    assert not re.search(r"AUC|auc|median|\bp\s*[=<]|\bq\s*[=<]", _rl)
+# The check file and builder of version 2 are in commit 6eae0af
+assert subprocess.run(["git", "log", "-1", "--format=%ad", "--date=short", "6eae0af"], cwd=ROOT, capture_output=True, text=True,
+                      check=True).stdout.strip() == "2026-11-05"
+assert {"utdata/strand/kontroll_v2.py", "utdata/blogg/build/build_rapport_strand.py"} <= set(subprocess.run(
+    ["git", "show", "--name-only", "--format=", "6eae0af"], cwd=ROOT, capture_output=True, text=True, check=True).stdout.split("\n"))
 
 NAME = {"U": ("Uppland", "Uppland"), "Sö": ("Södermanland", "Södermanland"), "Ög": ("Östergötland", "Östergötland"),
         "Sm": ("Småland", "Småland"), "Vg": ("Västergötland", "Västergötland"), "Öl": ("Öland", "Öland")}
@@ -213,8 +242,8 @@ def figure(name, lang, caption):
 
 # The maps' legends say "står kvar" / "still in place", which is not true of every point (kontroll_v2.json); until the
 # maps are redrawn, the captions say what the points are.
-FIG1_SV = figure("karta_oversikt", "sv", f"Figur 1. Mälardalen år 1050 och i dag. Ljusblått är vatten då men land i dag. Rutan visar området i figur 2. Punkterna är de {MO['n']} stenar i studien som ligger inom kartan. Bildens förklaring kallar dem stenar som står kvar, men det gäller inte alla: {MO['lost']} av dem är försvunna och ritade på den plats där de är kända, och {MO['moved_corrected_rule']} räknas som flyttade med den rättade regeln från 27 oktober 2026 ({MO['lost_or_moved']} stenar sammanlagt). Karta: Vitki, efter SGU:s modell (CC BY 4.0) och Rundata.")
-FIG1_EN = figure("karta_oversikt", "en", f"Figure 1. The Lake Mälaren region in AD 1050 and today. Light blue is water then but land today. The box shows the area of figure 2. The points are the {MO['n']} stones of the study that lie within the map. The legend in the image calls them stones still in place, which is not true of all: {MO['lost']} of them are lost and drawn at their recorded place, and {MO['moved_corrected_rule']} count as moved under the corrected rule of 27 October 2026 ({MO['lost_or_moved']} stones in all). Map: Vitki, after SGU's model (CC BY 4.0) and Rundata.")
+FIG1_SV = figure("karta_oversikt", "sv", f"Figur 1. Mälardalen år 1050 och i dag. Ljusblått är vatten då men land i dag. Rutan visar området i figur 2. Punkterna är de {MO['n']} stenar i studien som ligger inom kartan. Bildens förklaring kallar dem stenar som står kvar, men det gäller inte alla: {MO['lost']} av dem är försvunna och ritade på den plats där de är kända, och {MO['moved_corrected_rule']} räknas som flyttade med den rättade regeln från 27 oktober 2026, en av dem både och ({MO['lost_or_moved']} stenar sammanlagt). Karta: Vitki, efter SGU:s modell (CC BY 4.0) och Rundata.")
+FIG1_EN = figure("karta_oversikt", "en", f"Figure 1. The Lake Mälaren region in AD 1050 and today. Light blue is water then but land today. The box shows the area of figure 2. The points are the {MO['n']} stones of the study that lie within the map. The legend in the image calls them stones still in place, which is not true of all: {MO['lost']} of them are lost and drawn at their recorded place, and {MO['moved_corrected_rule']} count as moved under the corrected rule of 27 October 2026, one of them both ({MO['lost_or_moved']} stones in all). Map: Vitki, after SGU's model (CC BY 4.0) and Rundata.")
 FIG2_SV = figure("karta_detalj", "sv", f"Figur 2. Vad som mättes, kring Vassunda, Håtuna och Haga i Uppland: avståndet från varje sten (rött) och slumppunkt (grått) till närmaste vatten år 1050. Median här: stenarna {IL['median_stones_m']} meter, punkterna {IL['median_random_m']}. Bildens förklaring kallar de {MD['n']} stenarna stenar som står kvar; {MD['lost']} av dem är försvunna och ritade på sin kända plats, och {MD['moved_corrected_rule']} räknas som flyttade med den rättade regeln. Karta: Vitki, efter SGU:s modell och Rundata.")
 FIG2_EN = figure("karta_detalj", "en", f"Figure 2. What was measured, around Vassunda, Håtuna and Haga in Uppland: the distance from each stone (red) and random point (grey) to the nearest water of AD 1050. Median here: stones {IL['median_stones_m']} metres, points {IL['median_random_m']}. The legend in the image calls all {MD['n']} stones still in place; {MD['lost']} of them are lost and drawn at their recorded place, and {MD['moved_corrected_rule']} count as moved under the corrected rule. Map: Vitki, after SGU's model and Rundata.")
 
@@ -244,26 +273,44 @@ LOG_SV = f"""## Ändringslogg
 
 **Version 1, {V1_PUBLISHED}.** Publicerad {V1_PUBLISHED}. Samma morgon, före publiceringen, ändrades utkastet (commit {CODE_COMMIT}, vars meddelande bara nämner kartorna): kartorna fick källraden ”Karta: Vitki, efter …”, syftesmeningen i inledningen kortades, och meningen om gravfälten i planens prov med andra radier för slumppunkterna ströks ur 5.2 utan att skälet skrevs ned. Den publicerade versionen saknade därför gravfältens resultat i det provet, och planens jämförelse med de flyttade stenarna hade aldrig kommit med; planen säger att båda ska redovisas.
 
-**Version 2, {TODAY}.** Rättelser efter en granskning inför arkiveringen i Zenodo. Analysen, resultatfilerna och slutsatsen är oförändrade; kartorna är inte omritade.
+**Version 2, 2026-11-05.** Rättelser efter en granskning inför arkiveringen i Zenodo. Analysen, resultatfilerna och slutsatsen är oförändrade; kartorna är inte omritade.
 
 - **Urvalet.** Version 1 beskrev de {m(PO['n'])} stenarna som stenar som står kvar på sin plats. Det var fel för {NOT_NOW} av dem: {LOST} är försvunna och mäts på den plats där de är kända, och {MOVED_NOW} räknas som flyttade med den regel som rättades den 27 oktober 2026, efter att planen låstes (en sten är både och). Sammanfattningen, inledningen, materialbeskrivningen, bildtexterna till figur 1 och 2, steget med den rättade regeln i 5.3 och svaghet 4 säger nu vad urvalet är, och Material beskriver den regel som användes. Slutsatsen står sig: utan de {NOT_NOW} stenarna är AUC {num(DR1['auc'], 3)} för vattnet och {num(DR3['auc'], 3)} för gravfälten, och av de {T1['n']} stenar som står kvar enligt tre källor står {pc(T1['water']['within_500_stones'])} procent inom 500 meter från vattnet år 1050.
 - **Provkörningen den 23 oktober** räknade igenom proven, vilket version 1 inte sade; den skrev bara ut förloppet. Tidslinjen har fått dagen då avstånden räknades.
 - **Två resultat som planen kräver** saknades: gravfälten med slumppunkter inom två och tio kilometer och jämförelsen med de flyttade stenarna. De står nu i 5.2.
 - **Tidigare forskning.** Invändningen mot Klos tillskrivs nu Mats G. Larsson (2010), som McLeod (2014) hänvisar till, och inledningen nämner tidigare arbeten om stenarna och vattnet (Ekholm 1950, Larsson 1990, Stille 2014) och Larssons kritik av hur Klos mätte vattnet.
 - **Vattnet och gravfälten.** Version 1 kallade sambanden oberoende, vilket säger mer än modellen visar; texten säger nu att vart och ett finns kvar när det andra hålls lika, och att oddskvoterna gäller en halvering av avståndet plus 250 meter.
-- **Källor och form.** Copernicus-attributionen följer licensens lydelse, kulturmiljöregistrets licens (CC0) anges, den ociterade referensen till projektets metodbeskrivning är struken (de två andra Kvant 2026 har fått bokstäverna a och b), de engelska länkarna går till de engelska sidorna, diagrammet anger att Vitki har gjort det, och Data och kod anger kodläget med en commit och att den låsta korpusens mapp saknas."""
+- **Källor och form.** Copernicus-attributionen följer licensens lydelse, kulturmiljöregistrets licens (CC0) anges, den ociterade referensen till projektets metodbeskrivning är struken (de två andra Kvant 2026 har fått bokstäverna a och b), de engelska länkarna går till de engelska sidorna, diagrammet anger att Vitki har gjort det, och Data och kod anger kodläget med en commit och att den låsta korpusens mapp saknas.
+
+**Version {REPORT_VERSION}, {TODAY}.** En andra granskning inför arkiveringen i Zenodo gick igenom det som version 2 ändrade. Analysen, resultatfilerna och kartorna är oförändrade.
+
+- **Källorna.** McLeod (2014) har sidorna {MCP}, inte 1–18. Ekholms (1950) invändning mot gravfälten börjar på s. {EK50['invändningen'][0]}, så sidorna anges nu som {EKO}. Stille (2014) återges nu med det som står på s. {ST14['citat'][0]['sida']}: {ST14['vid_vatten']} av de {ST14['med_bestämbar_plats']} stenar vars plats går att bestämma stod vid vatten; version 2 skrev ”en stor del”. Artikeln och referensen är kontrollerade mot tidskriften.
+- **Provkörningen den 23 oktober** skrev ut förloppet och antalet stenar, slumppunkter och gravfält, men inga provresultat; version 2 sade att den inte skrev ut några siffror. Tidslinjen har fått provkörningen.
+- **Figur 1.** Bildtexten säger att en av stenarna är både försvunnen och flyttad, så att {MO['lost']} och {MO['moved_corrected_rule']} blir {MO['lost_or_moved']}.
+- **Korthetsrutan** säger inte längre att en sten oftast restes där både vattnet och gravfälten fanns, vilket rapporten inte mäter; den säger det modellen visar, att de mest sannolika platserna för en runsten låg nära båda.
+- **Ändringar som version 2 gjorde men inte skrev in i loggen:** sidorna för Ekholm (1950, s. 137–147) och McLeod (2014) angavs, Rundatas licens (ODbL) lades till i diagrammets källrad, och diskussionen lade till att fyndet stämmer med det Ekholm (1950) menade utifrån enskilda stenar i Uppland.
+- **Data och kod** anger commit för kontrollfilen och byggskriptet för version 2 (6eae0af) och nämner filen med de citerade källställena."""
 LOG_EN = f"""## Change log
 
 **Version 1, {V1_PUBLISHED}.** Published {V1_PUBLISHED}. The same morning, before publication, the draft was changed (commit {CODE_COMMIT}, whose message mentions only the maps): the maps got the source line "Map: Vitki, after …", the sentence of aim in the introduction was shortened, and the sentence on the grave fields in the plan's test with other radii for the random points was removed from 5.2 without a reason being recorded. The published version therefore lacked the grave fields' result in that test, and the plan's comparison with the moved stones had never been included; the plan says that both are to be reported.
 
-**Version 2, {TODAY}.** Corrections after a review before archiving in Zenodo. The analysis, the result files and the conclusion are unchanged; the maps have not been redrawn.
+**Version 2, 2026-11-05.** Corrections after a review before archiving in Zenodo. The analysis, the result files and the conclusion are unchanged; the maps have not been redrawn.
 
 - **The selection.** Version 1 described the {m(PO['n'], True)} stones as stones that still stand in place. That was wrong for {NOT_NOW} of them: {LOST} are lost and measured at their recorded place, and {MOVED_NOW} count as moved under the rule that was corrected on 27 October 2026, after the plan was locked (one stone is both). The abstract, the introduction, the description of the material, the captions of figures 1 and 2, the step with the corrected rule in 5.3 and weakness 4 now say what the selection is, and the Material section describes the rule that was used. The conclusion stands: without the {NOT_NOW} stones the AUC is {num(DR1['auc'], 3, True)} for the water and {num(DR3['auc'], 3, True)} for the grave fields, and of the {T1['n']} stones that stand in place according to three sources, {pc(T1['water']['within_500_stones'])} per cent stand within 500 metres of the water of AD 1050.
 - **The test run of 23 October** ran through the tests, which version 1 did not say; it printed only its progress. The timeline now has the day the distances were computed.
 - **Two results required by the plan** were missing: the grave fields with random points within two and ten kilometres, and the comparison with the moved stones. They are now in 5.2.
 - **Earlier research.** The objection to Klos is now attributed to Mats G. Larsson (2010), whom McLeod (2014) cites, and the introduction names earlier work on the stones and the water (Ekholm 1950, Larsson 1990, Stille 2014) and Larsson's criticism of how Klos measured the water.
 - **Water and grave fields.** Version 1 called the associations independent, which says more than the model shows; the text now says that each remains when the other is held equal, and that the odds ratios are per halving of the distance plus 250 metres.
-- **Sources and form.** The Copernicus attribution follows the wording of the licence, the register's licence (CC0) is given, the uncited reference to the project's method description is removed (the two other Kvant 2026 are now a and b), the English links go to the English pages, the chart says that Vitki made it, and Data and code gives the code state as a commit and says that the locked corpus's folder is missing."""
+- **Sources and form.** The Copernicus attribution follows the wording of the licence, the register's licence (CC0) is given, the uncited reference to the project's method description is removed (the two other Kvant 2026 are now a and b), the English links go to the English pages, the chart says that Vitki made it, and Data and code gives the code state as a commit and says that the locked corpus's folder is missing.
+
+**Version {REPORT_VERSION}, {TODAY}.** A second review before archiving in Zenodo checked what version 2 changed. The analysis, the result files and the maps are unchanged.
+
+- **Sources.** McLeod (2014) has pages {MCP}, not 1–18. Ekholm's (1950) objection to the grave fields begins on p. {EK50['invändningen'][0]}, so the pages are now given as {EKO}. Stille (2014) is now given with what p. {ST14['citat'][0]['sida']} says: {ST14['vid_vatten']} of the {ST14['med_bestämbar_plats']} stones whose place can be determined stood by water; version 2 wrote "a large share". The article and the reference have been checked against the journal.
+- **The test run of 23 October** printed its progress and the numbers of stones, random points and grave fields, but no test results; version 2 said that it printed no figures. The timeline now has the test run.
+- **Figure 1.** The caption says that one of the stones is both lost and moved, so that the {MO['lost']} and the {MO['moved_corrected_rule']} make {MO['lost_or_moved']}.
+- **The essentials box** no longer says that a stone was most often raised where both the water and the grave fields were, which the report does not measure; it says what the model shows, that the places most likely to have a runestone lay near both.
+- **Changes that version 2 made but did not log:** the pages of Ekholm (1950, pp. 137–147) and McLeod (2014) were given, the licence of Rundata (ODbL) was added to the chart's source line, and the discussion added that the finding fits what Ekholm (1950) argued from single stones in Uppland.
+- **Data and code** gives the commit of the check file and builder of version 2 (6eae0af) and lists the file with the quoted source passages."""
 
 body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion {REPORT_VERSION}, {TODAY} (första versionen publicerad {V1_PUBLISHED}). Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, placering, strandförskjutning, landhöjning, gravfält, rumslig statistik, förregistrering. Konkurrerande intressen: inga. Finansiering: ingen.*
 
@@ -277,7 +324,7 @@ body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion
 
 ## 1. Inledning
 
-Var runstenarna restes har diskuterats länge. Gunnar Ekholm (1950, s. 140–143) invände mot bilden av stenarna som gravfältens monument: i Uppland följde de enligt honom i stor utsträckning de gamla färdvägarna till lands och vatten, och en sten på Ängby mark vid Knivsta restes för att synas från ån, ”forntidens samfärdsled”. Mats G. Larsson (1990) fann i en genomgång av stenarnas placering att gravar, vägar med broar och vadställen och troliga ägogränser var ungefär lika vanliga lägen (Larsson 2010, s. 249). Torun Zachrisson (1998) har satt stenarna i samband med gård, gräns och gravfält, och Lydia Klos (2009) har hävdat att de flesta restes vid gravfält. Mats G. Larsson (2010, s. 252) har invänt att Klos därmed överbetonar gravfälten på bekostnad av andra lägen, framför allt ägogränserna (se också McLeod 2014). Per Stille (2014, s. 142) fann i Tiohärad i Småland att en stor del av stenarna med känd plats stod vid vattendrag och broställen, där också en väg bör ha gått. Brostenarna, som berättar om broar och vägbyggen över vatten och sank mark, visar att vattnet hörde till stenarnas sammanhang.
+Var runstenarna restes har diskuterats länge. Gunnar Ekholm (1950, s. {EKO}) invände mot bilden av stenarna som gravfältens monument: i Uppland följde de enligt honom i stor utsträckning de gamla färdvägarna till lands och vatten, och en sten på Ängby mark vid Knivsta restes för att synas från ån, ”forntidens samfärdsled”. Mats G. Larsson (1990) fann i en genomgång av stenarnas placering att gravar, vägar med broar och vadställen och troliga ägogränser var ungefär lika vanliga lägen (Larsson 2010, s. 249). Torun Zachrisson (1998) har satt stenarna i samband med gård, gräns och gravfält, och Lydia Klos (2009) har hävdat att de flesta restes vid gravfält. Mats G. Larsson (2010, s. 252) har invänt att Klos därmed överbetonar gravfälten på bekostnad av andra lägen, framför allt ägogränserna (se också McLeod 2014). Per Stille (2014, s. {ST14['citat'][0]['sida']}) fann i Tiohärad i Småland att {ST14['vid_vatten']} av de {ST14['med_bestämbar_plats']} stenar vars plats går att bestämma med mer eller mindre säkerhet stod vid vatten, vid vattendrag eller broställen, där också en väg bör ha gått. Brostenarna, som berättar om broar och vägbyggen över vatten och sank mark, visar att vattnet hörde till stenarnas sammanhang.
 
 Att mäta närheten till vatten är svårt. Landet har höjt sig sedan vikingatiden, i Mälardalen med omkring fem meter, så en sten som stod vid en vik kan i dag stå på torr mark, och en sten vid dagens strand kan ha stått långt från vattnet. Klos (2009) mätte också avståndet till vatten, men i regel utan vikingatidens havsnivå, vilket Larsson (2010, s. 251) såg som den grundläggande bristen i den delen av hennes undersökning: Mälaren blev en insjö och inte den havsvik den var. SGU:s strandförskjutningsmodell (SGU 2022, efter Påsse & Daniels 2015) ger en öppen modell över hela landet för var vattnet låg vid olika tider.
 
@@ -285,7 +332,7 @@ Vi känner inte till någon studie som har mätt avståndet till vattnet på ste
 
 ## 2. Förregistrering: hypotes och plan
 
-Hypoteserna, måtten och tolkningsreglerna skrevs ned i en analysplan den 23 oktober 2026, innan något avstånd hade räknats. Planen har kontrollsumman SHA-256 `{SHA['2026-10-23-strand-och-gravfalt']}…` och lades in i versionshanteringen samma kväll. Före låsningen var bara datakällorna hämtade, lagren listade, antalet stenar per landskap räknat och stilgruppernas mittår sammanställda för att välja årtal (median 1035). En provkörning samma kväll, efter att planen hade fått sin kontrollsumma men före incheckningen, räknade igenom proven men skrev bara ut förloppet, inga siffror, och inga resultat från den finns kvar; statistiken lästes först den 31 oktober.
+Hypoteserna, måtten och tolkningsreglerna skrevs ned i en analysplan den 23 oktober 2026, innan något avstånd hade räknats. Planen har kontrollsumman SHA-256 `{SHA['2026-10-23-strand-och-gravfalt']}…` och lades in i versionshanteringen samma kväll. Före låsningen var bara datakällorna hämtade, lagren listade, antalet stenar per landskap räknat och stilgruppernas mittår sammanställda för att välja årtal (median 1035). En provkörning samma kväll, efter att planen hade fått sin kontrollsumma men före incheckningen, räknade igenom proven men skrev bara ut förloppet och antalet stenar, slumppunkter och gravfält, inga provresultat; inga resultat från den finns kvar, och statistiken lästes först den 31 oktober.
 
 Riktningen var väntad. Projektets tidigare mått, med en grov landhöjning och med flyttade stenar, hade redan visat att stenarna står närmare vatten och gravfält än marken runt dem. Studien prövar alltså om ett känt mönster håller med bättre data, inte ett nytt.
 
@@ -387,7 +434,8 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 
 - Analysplanerna: `analysplaner/2026-10-23-strand-och-gravfalt.md`, `analysplaner/2026-10-31-strand-tillagg.md` och `analysplaner/2026-11-01-strand-trappan.md`, med kontrollsummorna i `.sha256`-filerna bredvid.
 - Korpusen: fingeravtryck `{KC['locked_fingerprint']}` (låst i planen). Den mappen finns inte längre i cachen, så sökvägen i `utdata/strand/config.R` pekar på en fil som saknas; samma CSV finns kvar som `data/cache/r/corpus/{KC['kept_fingerprint']}/corpus.csv`, med den SHA-256 som planen anger, `{KC['kept_csv_sha256']}`. Den som kör om analysen pekar om sökvägen dit. Den rättade regeln för flyttade och försvunna stenar kommer ur `{KC['now_fingerprint']}`. Korpusfilerna byggs lokalt ur Rundata och ingår inte i repot.
-- Kontrollen för rapportversion 2: `utdata/strand/kontroll_v2.py` räknar de försvunna och flyttade stenarna i urvalet och i kartorna och läser provkörningens logg; resultatet står i `utdata/strand/kontroll_v2.json`.
+- Kontrollen för rapportversion 2: `utdata/strand/kontroll_v2.py` räknar de försvunna och flyttade stenarna i urvalet och i kartorna och läser provkörningens logg; resultatet står i `utdata/strand/kontroll_v2.json`. Filen och byggskriptet för version 2 finns i commit 6eae0af (2026-11-05).
+- Källställena för rapportversion 3: `utdata/strand/kallcitat_v3.json` har de ordagranna citaten ur Stille (2014), Ekholm (1950) och McLeod (2014) som sidorna och talen i inledningen och referenserna stäms av mot.
 - Analysen, ett steg per R-process: `utdata/strand/01_avstand.R`, `01b_marginal.R`, `02_r6.R`, `03_statistik.R`, `04_figurer.R` och känslighetsanalyserna `05_trappa.R`. Resultat i `utdata/strand/resultat.json` och `trappan.json`, stenarna i `stenar.csv`, hela redovisningen i `resultat.md`.
 - SGU:s modell (`strandforskjutning_1_900.gpkg`, `strandforskjutning_1000_1900.gpkg`) och Copernicus DEM laddas ned till en cache och ingår inte i repot; kontrollsummorna står i planen.
 - Kartorna: `utdata/strand/06_illustration.R` (rutan i figur 2 valdes som den 12-kilometersruta i Mälardalen med flest stenar gånger andelen mark som var vatten år 1050 men är land i dag). Kartornas förklaring säger ”står kvar” om alla punkter; kartorna är inte omritade, och bildtexterna säger vad punkterna är.
@@ -406,7 +454,7 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 - Larsson, M. G. 1990. *Runstenar och utlandsfärder. Aspekter på det senvikingatida samhället med utgångspunkt i de fasta fornlämningarna*. Acta Archaeologica Lundensia, Series in 8°, 18. Stockholm: Almqvist & Wiksell International.
 - Larsson, M. G. 2010. Recension av L. Klos, *Runensteine in Schweden. Studien zu Aufstellungsort und Funktion* (2009). *Futhark. International Journal of Runic Studies* 1, s. 249–253.
 - Mann, H. B. & Whitney, D. R. 1947. On a test of whether one of two random variables is stochastically larger than the other. *Annals of Mathematical Statistics* 18 (1), s. 50–60.
-- McLeod, S. 2014. The rediscovery of U 170: runestones, churchyards, and burial grounds in Sweden. *Journal of the North Atlantic* 25, s. 1–18. doi:10.3721/037.006.2503
+- McLeod, S. 2014. The rediscovery of U 170: runestones, churchyards, and burial grounds in Sweden. *Journal of the North Atlantic* 25, s. {MCP}. doi:10.3721/037.006.2503
 - Påsse, T. & Daniels, J. 2015. *Past shore-level and sea-level displacements*. Sveriges geologiska undersökning, Rapporter och meddelanden 137.
 - Riksantikvarieämbetet. Kulturmiljöregistret (fornlämningar), via K-samsök, öppna data (CC0), hämtat oktober 2026; *Runor* (runinskriftsregister), uttag 2020.
 - Samnordisk runtextdatabas (Rundata). Institutionen för nordiska språk, Uppsala universitet. Open Database License.
@@ -417,7 +465,7 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 
 :::box Det viktigaste i korthet
 - De som reste runstenarna valde platser nära sin tids vatten, inte bara för att bygden låg vid vattnet utan också inom bygden.
-- Gravfälten drog ännu starkare, och vart och ett av sambanden finns kvar när det andra hålls lika: en sten restes oftast där både vattnet och de döda fanns.
+- Gravfälten drog ännu starkare, och vart och ett av sambanden finns kvar när det andra hålls lika: de mest sannolika platserna för en runsten låg nära både vattnet och gravfälten.
 - Tillsammans med att texten vändes mot vägen pekar det mot stenar som restes för att ses av dem som färdades.
 - Svagheten är modellen för vattnet år 1050, som är grov nära stränderna; nästa prov är en finare höjdmodell.
 :::
@@ -437,7 +485,7 @@ body_en = f"""*Viktor Kvant, independent researcher. Fully tested finding. Repor
 
 ## 1. Introduction
 
-Where the runestones were raised has long been debated. Gunnar Ekholm (1950, pp. 140–143) objected to the view of the stones as monuments of the grave fields: in Uppland, he argued, they largely followed the old routes by land and water, and a stone on Ängby land near Knivsta was raised to be seen from the river, "the route of travel in ancient times" (*forntidens samfärdsled*). Mats G. Larsson (1990) found in a survey of the stones' placement that graves, roads with bridges and fords, and probable property boundaries were about equally common settings (Larsson 2010, p. 249). Torun Zachrisson (1998) has linked the stones to farm, boundary and grave field, and Lydia Klos (2009) has argued that most were raised at grave fields. Mats G. Larsson (2010, p. 252) has objected that Klos thereby overstates the grave fields at the expense of other settings, above all the property boundaries (see also McLeod 2014). Per Stille (2014, p. 142) found in Tiohärad in Småland that a large share of the stones with a known place stood by watercourses and bridge sites, where a road presumably also ran. The bridge stones, which tell of bridges and causeways over water and wet ground, show that water belonged to the stones' setting.
+Where the runestones were raised has long been debated. Gunnar Ekholm (1950, pp. {EKO}) objected to the view of the stones as monuments of the grave fields: in Uppland, he argued, they largely followed the old routes by land and water, and a stone on Ängby land near Knivsta was raised to be seen from the river, "the route of travel in ancient times" (*forntidens samfärdsled*). Mats G. Larsson (1990) found in a survey of the stones' placement that graves, roads with bridges and fords, and probable property boundaries were about equally common settings (Larsson 2010, p. 249). Torun Zachrisson (1998) has linked the stones to farm, boundary and grave field, and Lydia Klos (2009) has argued that most were raised at grave fields. Mats G. Larsson (2010, p. 252) has objected that Klos thereby overstates the grave fields at the expense of other settings, above all the property boundaries (see also McLeod 2014). Per Stille (2014, p. {ST14['citat'][0]['sida']}) found in Tiohärad in Småland that {ST14['vid_vatten']} of the {ST14['med_bestämbar_plats']} stones whose place can be determined with more or less certainty stood by water, at watercourses or bridge sites, where a road presumably also ran. The bridge stones, which tell of bridges and causeways over water and wet ground, show that water belonged to the stones' setting.
 
 Measuring the nearness to water is hard. The land has risen since the Viking Age, in the Mälaren valley by about five metres, so a stone that stood by a bay may now stand on dry land, and a stone by today's shore may have stood far from the water. Klos (2009) also measured the distance to water, but as a rule without the sea level of the Viking Age, which Larsson (2010, p. 251) saw as the basic flaw of that part of her study: Lake Mälaren became an inland lake instead of the inlet of the sea that it was. SGU's shore displacement model (SGU 2022, after Påsse & Daniels 2015) gives an open model for the whole country of where the water lay at different times.
 
@@ -445,7 +493,7 @@ We know of no study that has measured the distance to the water of the stones' o
 
 ## 2. Pre-registration: hypothesis and plan
 
-The hypotheses, measures and rules of interpretation were written down in an analysis plan on 23 October 2026, before any distance had been computed. The plan has the SHA-256 checksum `{SHA['2026-10-23-strand-och-gravfalt']}…` and was committed to version control the same evening. Before the lock, only the data sources had been fetched, the layers listed, the number of stones per province counted and the mid-years of the style groups compiled to choose the year (median 1035). A test run the same evening, after the plan had its checksum but before the commit, ran through the tests but printed only its progress, no figures, and no results from it survive; the statistics were first read on 31 October.
+The hypotheses, measures and rules of interpretation were written down in an analysis plan on 23 October 2026, before any distance had been computed. The plan has the SHA-256 checksum `{SHA['2026-10-23-strand-och-gravfalt']}…` and was committed to version control the same evening. Before the lock, only the data sources had been fetched, the layers listed, the number of stones per province counted and the mid-years of the style groups compiled to choose the year (median 1035). A test run the same evening, after the plan had its checksum but before the commit, ran through the tests but printed only its progress and the numbers of stones, random points and grave fields, no test results; no results from it survive, and the statistics were first read on 31 October.
 
 The direction was expected. The project's earlier measure, with a coarse land uplift and with moved stones, had already shown that the stones stand closer to water and grave fields than the land around them. The study therefore tests whether a known pattern holds with better data, not a new one.
 
@@ -547,7 +595,8 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 
 - The analysis plans: `analysplaner/2026-10-23-strand-och-gravfalt.md`, `analysplaner/2026-10-31-strand-tillagg.md` and `analysplaner/2026-11-01-strand-trappan.md`, with their checksums in the `.sha256` files beside them.
 - The corpus: fingerprint `{KC['locked_fingerprint']}` (locked in the plan). That folder is no longer in the cache, so the path in `utdata/strand/config.R` points to a missing file; the same CSV survives as `data/cache/r/corpus/{KC['kept_fingerprint']}/corpus.csv`, with the SHA-256 that the plan gives, `{KC['kept_csv_sha256']}`. Anyone rerunning the analysis points the path there. The corrected rule for moved and lost stones comes from `{KC['now_fingerprint']}`. The corpus files are built locally from Rundata and are not in the repository.
-- The check for report version 2: `utdata/strand/kontroll_v2.py` counts the lost and moved stones in the selection and in the maps and reads the log of the test run; the result is in `utdata/strand/kontroll_v2.json`.
+- The check for report version 2: `utdata/strand/kontroll_v2.py` counts the lost and moved stones in the selection and in the maps and reads the log of the test run; the result is in `utdata/strand/kontroll_v2.json`. The file and the builder of version 2 are in commit 6eae0af (2026-11-05).
+- The source passages for report version 3: `utdata/strand/kallcitat_v3.json` holds the verbatim quotations from Stille (2014), Ekholm (1950) and McLeod (2014) that the pages and numbers in the introduction and the references are checked against.
 - The analysis, one step per R process: `utdata/strand/01_avstand.R`, `01b_marginal.R`, `02_r6.R`, `03_statistik.R`, `04_figurer.R` and the sensitivity analyses `05_trappa.R`. Results in `utdata/strand/resultat.json` and `trappan.json`, the stones in `stenar.csv`, the full account in `resultat.md` (Swedish).
 - SGU's model (`strandforskjutning_1_900.gpkg`, `strandforskjutning_1000_1900.gpkg`) and Copernicus DEM are downloaded to a cache and are not in the repository; their checksums are in the plan.
 - The maps: `utdata/strand/06_illustration.R` (the window in figure 2 was chosen as the 12-kilometre window in the Mälaren region with the most stones times the share of land that was water in AD 1050 but is land today). The maps' legends say "still in place" of all points; the maps have not been redrawn, and the captions say what the points are.
@@ -566,7 +615,7 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 - Larsson, M. G. 1990. *Runstenar och utlandsfärder. Aspekter på det senvikingatida samhället med utgångspunkt i de fasta fornlämningarna*. Acta Archaeologica Lundensia, Series in 8°, 18. Stockholm: Almqvist & Wiksell International.
 - Larsson, M. G. 2010. Review of L. Klos, *Runensteine in Schweden. Studien zu Aufstellungsort und Funktion* (2009). *Futhark: International Journal of Runic Studies* 1, pp. 249–253.
 - Mann, H. B. & Whitney, D. R. 1947. On a test of whether one of two random variables is stochastically larger than the other. *Annals of Mathematical Statistics* 18 (1), pp. 50–60.
-- McLeod, S. 2014. The rediscovery of U 170: runestones, churchyards, and burial grounds in Sweden. *Journal of the North Atlantic* 25, pp. 1–18. doi:10.3721/037.006.2503
+- McLeod, S. 2014. The rediscovery of U 170: runestones, churchyards, and burial grounds in Sweden. *Journal of the North Atlantic* 25, pp. {MCP}. doi:10.3721/037.006.2503
 - Påsse, T. & Daniels, J. 2015. *Past shore-level and sea-level displacements*. Geological Survey of Sweden, Rapporter och meddelanden 137.
 - Scandinavian Runic-text Database (Rundata). Department of Scandinavian Languages, Uppsala University. Open Database License.
 - SGU 2022. *Strandförskjutningsmodell (öppna data)* [Shore displacement model, open data]. Product description, version 1.0. Uppsala: Geological Survey of Sweden. CC BY 4.0.
@@ -577,7 +626,7 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 
 :::box The essentials
 - Those who raised the runestones chose places near the water of their time, not only because the district lay by the water but also within the district.
-- The grave fields drew even more strongly, and each association remains when the other is held equal: a stone was most often raised where both the water and the dead were.
+- The grave fields drew even more strongly, and each association remains when the other is held equal: the places most likely to have a runestone lay near both the water and the grave fields.
 - Together with the text being turned towards the road, it points to stones raised to be seen by those who travelled.
 - The weakness is the model of the water of AD 1050, which is coarse near the shores; the next test is a finer elevation model.
 :::
@@ -594,11 +643,17 @@ for b in (body, body_en):
     assert not re.findall(JARGON, head), re.findall(JARGON, head)
 assert "Det viktigaste i korthet" in body and "## 2. Förregistrering" in body and "## 6. Diskussion" in body
 assert "I klartext" in body and "In plain words" in body_en  # mallen version 4
-assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion 2, 2026-11-05 (första versionen publicerad 2026-11-01). Tidslinje: ")
-assert body_en.split("\n", 1)[0].startswith("*Viktor Kvant, independent researcher. Fully tested finding. Report version 2, 2026-11-05 (first version published 2026-11-01). Timeline: ")
+assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion 3, 2026-11-05 (första versionen publicerad 2026-11-01). Tidslinje: ")
+assert body_en.split("\n", 1)[0].startswith("*Viktor Kvant, independent researcher. Fully tested finding. Report version 3, 2026-11-05 (first version published 2026-11-01). Timeline: ")
 # Rapportversion 2: header phrases the site parses (web/src/lib/report.ts) and the corrections of the review
 assert "Den engelska versionen är den kanoniska för citering: " in body and "This English version is the canonical one for citation: " in body_en
 assert re.search(r"(?:Tidslinje|Timeline):\s*(.+?)\.\s+(?:Analysen är gjord|The analysis was made)", body) and "avstånden räknades 2026-10-23" in body
+assert "en provkörning av skriptet utan sparade resultat 2026-10-23" in body and "a test run of the script with no results kept 2026-10-23" in body_en
+for b_, old in ((body, "restes oftast där både"), (body_en, "most often raised where both"), (body, "en stor del av stenarna med känd plats"),
+               (body_en, "a large share of the stones with a known place"), (body, "inga siffror,"), (body_en, "no figures,")):
+    assert old not in b_.split("## Data")[0], old
+assert "*Journal of the North Atlantic* 25, s. 1–8. doi:" in body and "*Journal of the North Atlantic* 25, pp. 1–8. doi:" in body_en
+assert "Ekholm (1950, s. 138–143)" in body and "Ekholm (1950, pp. 138–143)" in body_en
 for old in ("Av de runstenar som står kvar på sin plats", "runstenar som står kvar på sin plats, i", "bara stenar som står kvar och",
             "sambanden är oberoende", "Med dagens regel för flyttade stenar", "när den görs", "Kvant 2026c", "METHODS.md)",
             "skrev bara ut förloppet och inga siffror", "s. 137 ff", "Copernicusprogrammet", "\nDiagram:"):

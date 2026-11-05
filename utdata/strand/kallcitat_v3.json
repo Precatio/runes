@@ -1,0 +1,33 @@
+{
+ "syfte": "Källställen för rapportversion 3 av strandrapporten (granskningen 2026-11-05): sidor och tal i inledningen och referenserna stäms av mot dessa ordagranna citat i utdata/blogg/build/build_rapport_strand.py.",
+ "lästa": "2026-11-05",
+ "stille_2014": {
+  "referens": "Stille, Per. “Runstenarna i landskapet: En undersökning om placeringen av runstenarna i Tiohärad.” Futhark: International Journal of Runic Studies 5 (2014, publ. 2015): 137–49.",
+  "volym": 5,
+  "sidor": [137, 149],
+  "källa": "Futhark 5 (2014), hela volymen som pdf, urn:nbn:se:uu:diva-235576 (öppen tillgång, CC BY-NC-ND 3.0)",
+  "citat": [
+   {"sida": 142, "text": "Det är alltså 20 stenar av de 53 som med mer eller mindre säkerhet kan bestämmas till plats som har vattenläge."},
+   {"sida": 142, "text": "Man kan anta att vid alla de tillfällen där runstenen har stått vid ett vattendrag och ett möjligt broläge har det också funnits en väg."}
+  ],
+  "vid_vatten": 20,
+  "med_bestämbar_plats": 53
+ },
+ "mcleod_2014": {
+  "källa": "McLeod, S. 2014, Journal of the North Atlantic No. 25, artikelns pdf (sidhuvudet på s. 1)",
+  "sidhuvud": "No. 25:1–8",
+  "sidor": [1, 8]
+ },
+ "ekholm_1950": {
+  "källa": "Ekholm, G. 1950. Var restes runstenarna? Fornvännen 45, s. 137–147 (pdf i geografi_kallor/litteratur)",
+  "sidor": [137, 147],
+  "invändningen": [138, 143],
+  "citat": [
+   {"sida": 138, "text": "Det kan antagas, att det är gravfältets läge invid denna väg, som varit den verkliga orsaken till att runstenen restes här."},
+   {"sida": 139, "text": "Deras uppträdande i detta sammanhang torde ej sällan finna sin naturligaste förklaring i de forntida vägar, invid vilka gravfälten blivit anlagda."},
+   {"sida": 140, "text": "Motivet för stenens resande här har utan tvivel varit en önskan att göra den synlig från ån, forntidens samfärdsled."},
+   {"sida": 141, "text": "stenarna i stor utsträckning följa de gamla färdevägarna till lands och vatten."},
+   {"sida": 143, "text": "En närmare granskning av de uppländska runstenarnas placering leder sålunda till resultatet, att de nära ansluta sig till forntidens samfärdsvägar."}
+  ]
+ }
+}

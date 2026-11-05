@@ -3,6 +3,8 @@
 robusthetstrappan (src/robustness.py, METHODS 1v) och testen 3–4 (drengr, þegn) i samma plan. Alla siffror asserteras
 mot korpusjobbets filer (data/cache/r/corpus/<FP>/) och räknas om ur corpus.csv och people.csv.
 Rapportversion 2 (2026-11-05): rättelser före arkiveringen i Zenodo, se ändringsloggen sist i texten.
+Rapportversion 3 (2026-11-05): rättelser efter en andra, oberoende läsning av ändringarna i version 2 (korthetsrutan,
+släktplats i stället för ålder i 6, slumpurvalets ja-fall, granskningscommit 6eae0af, det som version 2 inte loggade).
     ../../../.venv/bin/python build_rapport_unga.py [--write | --update DOC]"""
 import datetime as dt
 import hashlib
@@ -26,7 +28,7 @@ C = os.path.join(ROOT, "data", "cache", "r", "corpus", FP)
 DONE = json.load(open(os.path.join(C, "done.json"), encoding="utf-8"))
 assert DONE["fingerprint"] == FP and DONE["r_version"].startswith("R version 4.6.1")
 APP_VERSION = "3.0.0"  # the Vitki version the analysis was made in (tag v3.0.0 + the commits named in Data och kod), not the current one
-REPORT_VERSION = 2  # version 1 was published 2026-10-31
+REPORT_VERSION = 3  # version 1 was published 2026-10-31, version 2 on 2026-11-05
 TODAY = "2026-11-05"  # rapportversionens datum, fast i byggaren (mallen version 3)
 V1_DATE = "2026-10-31"
 TL_SV = "analysplanen låstes 2026-10-28; materialet frystes 2026-10-29"
@@ -149,6 +151,17 @@ MCHK = json.load(open(os.path.join(ROOT, "data", "messages_check.json"), encodin
 assert MCHK["rules_md5"] == hashlib.md5(open(os.path.join(ROOT, "src", "messages.py"), "rb").read()).hexdigest()
 SLUMP = MCHK["east"]["samples"]["slump"]
 assert SLUMP["n"] == 33 and SLUMP["dod_borta"] == [33, 33]
+# version 3: how many of the 33 randomly drawn stones say the dead man died abroad (data/messages_facit_ost.csv, urval slump)
+_fac = pd.read_csv(os.path.join(ROOT, "data", "messages_facit_ost.csv"), dtype=str)
+_sl = _fac[_fac.urval == "slump"]
+SLUMP_POS = int((_sl.dod_borta == "1").sum())
+assert (len(_sl), SLUMP_POS, int((_sl.dod_borta == "0").sum())) == (SLUMP["n"], 2, 31), (len(_sl), SLUMP_POS)
+# the builder as reviewed before archiving (version 2) is in commit 6eae0af
+REVIEW_COMMIT = "6eae0af"
+if os.path.isdir(os.path.join(ROOT, ".git")):
+    _files = subprocess.run(["git", "-C", ROOT, "show", "--name-only", "--format=", REVIEW_COMMIT], capture_output=True,
+                            text=True, check=True).stdout.split()
+    assert "utdata/blogg/build/build_rapport_unga.py" in _files, _files
 _methods = open(os.path.join(ROOT, "METHODS.md"), encoding="utf-8").read()
 assert "Österurvalet kodades medan reglerna rättades och är därför inte ett oberoende prov" in _methods
 assert "version 2014 med RUNDATA.xls från 2018" in _methods
@@ -251,7 +264,13 @@ LOG_SV = f"""## Ändringslogg
 - *Vad modellen håller konstant.* Modellen håller landsdel konstant, inte landskap; diagrammets rubrik, sammanfattningen, 6 och 7 är rättade. ”I varje landskap” är ändrat till ”utan vilket landskap som helst”, eftersom provet tar bort ett landskap i taget.
 - *Vem som reste och vem som dog (sammanfattningen, 6, 7, korthetsrutan).* Version 1 sade att utlandsfärderna i första hand hörde till de unga männen. Stenarna mäter döden borta, inte vem som reste; texten säger nu att döden i öster och väster i första hand drabbade män som stenarna minns som söner och bröder.
 - *Handkodningen av utfallet (3).* Att den delvis gjordes medan reglerna rättades, och att regeln var rätt på alla 33 slumpvis dragna stenar, står nu med.
-- *Mindre ändringar.* Överspridningens p med tre decimaler också på svenska; *drengr* ”nämns på” stenen; Sukhino-Khomenkos fullständiga titel; ”som enligt Rundata står kvar”; landskapen bakom landsdelarna och Halland; halvornas regel; simulerade residualer och Fishers test förklaras; diagrammets källrad; Rundatas version och licens; absoluta länkar; commit för analysen och kommandon för att köra om den; länk till ordlistan; enhetlig röst."""
+- *Mindre ändringar.* Överspridningens p med tre decimaler också på svenska; *drengr* ”nämns på” stenen; Sukhino-Khomenkos fullständiga titel; ”som enligt Rundata står kvar”; landskapen bakom landsdelarna och Halland; halvornas regel; simulerade residualer och Fishers test förklaras; diagrammets källrad; Rundatas version och licens; absoluta länkar; commit för analysen och kommandon för att köra om den; länk till ordlistan; enhetlig röst.
+- **Version 3, {TODAY}.** Rättelser efter en andra, oberoende läsning av ändringarna i version 2. Huvudtestet, dess siffror och titeln är oförändrade.
+- *Korthetsrutan.* Version 2 skrev att resultatet ”passar med att färderna hörde till en livsfas före egen familj”. Det säger måttet inte, och jämförelsen av hustrurna (p = {d2(FISHER_P)}) ger det inget stöd; rutan säger nu, som avsnitt 6, att stenarna inte kan avgöra det.
+- *Mot tidigare forskning (6).* ”De yngre i släkten” är ändrat till ”män på en yngre plats i släkten, söner och bröder”, eftersom måttet är släktplatsen, inte åldern (svaghet 1).
+- *Handkodningen av utfallet (3).* Det står nu att {SLUMP_POS} av de {SLUMP['n']} slumpvis dragna stenarna säger att den döde dog borta; det provet visar alltså mest att regeln inte lägger till döda borta.
+- *Data och kod.* Byggaren i den form den granskades inför arkiveringen anges med commit `{REVIEW_COMMIT}`.
+- *Det som version 2 också ändrade utan att det stod i loggen.* I 5.4 tillkom att föräldrar eller syskon står bland resarna på {KIN['foraldrar_syskon']} av de {WIDOW['n']} stenarna och barn eller hustru på {KIN['barn_hustru']}. Under Data och kod tillkom appens senaste siffror (justerad oddskvot {d2(NOW['adjusted']['or'])}, med ristaren som slumpeffekt {d2(NOW['carver']['or'])}, svagast {d2(NOW['lopo']['or'])} utan Östergötland), och meningen om en framtida DOI ströks."""
 LOG_EN = f"""## Change log
 
 - **Version 1, {V1_DATE}.** First published version.
@@ -261,7 +280,13 @@ LOG_EN = f"""## Change log
 - *What the model holds constant.* The model holds region constant, not province; the chart's heading, the abstract, 6 and 7 are corrected. ”In every province” is changed to ”without any one province”, since the check removes one province at a time.
 - *Who travelled and who died (the abstract, 6, 7, the essentials box).* Version 1 said that the journeys abroad belonged chiefly to the young men. The stones measure death abroad, not who travelled; the text now says that death in the east and the west struck first of all men whom the stones remember as sons and brothers.
 - *The hand coding of the outcome (3).* That it was partly done while the rules were being corrected, and that the rule was right on all 33 randomly drawn stones, is now stated.
-- *Minor changes.* *drengr* ”appears on” the stone; Sukhino-Khomenko's full title; ”that according to Rundata stand in place”; the provinces behind the regions and Halland; the rule for the halves; simulated residuals and Fisher's test are explained; the chart's source line; Rundata's version and licence; absolute links; the commit of the analysis and the commands to rerun it; a link to the glossary; a consistent voice."""
+- *Minor changes.* *drengr* ”appears on” the stone; Sukhino-Khomenko's full title; ”that according to Rundata stand in place”; the provinces behind the regions and Halland; the rule for the halves; simulated residuals and Fisher's test are explained; the chart's source line; Rundata's version and licence; absolute links; the commit of the analysis and the commands to rerun it; a link to the glossary; a consistent voice.
+- **Version 3, {TODAY}.** Corrections after a second, independent reading of the changes in version 2. The main test, its figures and the title are unchanged.
+- *The essentials box.* Version 2 said that the result ”fits the journeys belonging to a stage of life before a family of one's own”. The measure does not say that, and the comparison of the wives (p = {FISHER_P:.2f}) gives it no support; the box now says, as section 6 does, that the stones cannot decide it.
+- *Against earlier research (6).* ”The younger men of the family” is changed to ”men in a younger place in the family, sons and brothers”, since the measure is the family place, not age (weakness 1).
+- *The hand coding of the outcome (3).* The text now says that {SLUMP_POS} of the {SLUMP['n']} randomly drawn stones say the dead man died abroad; that check thus mostly shows that the rule does not add deaths abroad.
+- *Data and code.* The builder as reviewed before archiving is named with commit `{REVIEW_COMMIT}`.
+- *What version 2 also changed without logging it.* Section 5.4 gained that parents or siblings stand among the sponsors on {KIN['foraldrar_syskon']} of the {WIDOW['n']} stones and children or a wife on {KIN['barn_hustru']}. Data and code gained the app's latest figures (adjusted odds ratio {NOW['adjusted']['or']:.2f}, with the carver as a random effect {NOW['carver']['or']:.2f}, weakest {NOW['lopo']['or']:.2f} without Östergötland), and the sentence on a future DOI was removed."""
 
 body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion {REPORT_VERSION}, {TODAY}. Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, utlandsfärder, släktskap, livsfas, drengr, þegn, logistisk regression, förregistrering. Konkurrerande intressen: inga. Finansiering: ingen.*
 
@@ -295,7 +320,7 @@ Avsnitt 5.1–5.3 är de analyser planen föreskriver för test 5. Avsnitt 5.4 �
 - **Stenarna.** Vikingatida runstenar i de svenska landskapen: {sp(PE['n_stones'])} stenar. Bara runstenar; andra föremål med runor ingår inte. Skåne, Blekinge och Halland, som var danska under vikingatiden, förs i Rundata till Danmark och ingår inte.
 - **Urval.** Stenar vars text är så bevarad att den döde och hans relation till resaren kan läsas, där alla döda är män och där den döde är antingen ung eller äldre i släkten enligt planen: {RAW['y_n']} stenar efter söner och bröder och {RAW['o_n']} efter fäder och makar, sammanlagt {sp(M['n'])}.
 - **Släktplatsen.** Relationen läses ur Rundatas engelska översättning med regler (son, bror, far, make och deras former). Reglerna kontrollerades mot handkodning på ett nytt urval om 40 stenar som de aldrig sett: relationen var rätt på 38 av 40.
-- **Utfallet** är att stenen säger att den döde dog utanför Norden: ett ord för död eller ett sätt att dö, nära en plats utanför Norden (öster, väster, Grekland, England, Serkland, Ingvars färd med flera). Att bara ha rest räcker inte, och inte heller att dö på en resa hemma. Regeln kontrollerades mot handkodning av {ROB['facit']['messages']['dod_borta']['n']} stenar: regelns ja var rätt {CO['ppv'][0]} gånger av {CO['ppv'][0]} och regelns nej {CO['npv'][0]} gånger av {CO['npv'][0]}. Handkodningen gjordes delvis medan reglerna rättades och är inget oberoende prov; av {SLUMP['n']} slumpvis dragna stenar var regeln rätt på alla {SLUMP['dod_borta'][0]}.
+- **Utfallet** är att stenen säger att den döde dog utanför Norden: ett ord för död eller ett sätt att dö, nära en plats utanför Norden (öster, väster, Grekland, England, Serkland, Ingvars färd med flera). Att bara ha rest räcker inte, och inte heller att dö på en resa hemma. Regeln kontrollerades mot handkodning av {ROB['facit']['messages']['dod_borta']['n']} stenar: regelns ja var rätt {CO['ppv'][0]} gånger av {CO['ppv'][0]} och regelns nej {CO['npv'][0]} gånger av {CO['npv'][0]}. Handkodningen gjordes delvis medan reglerna rättades och är inget oberoende prov; av {SLUMP['n']} slumpvis dragna stenar, varav {SLUMP_POS} säger att den döde dog borta, var regeln rätt på alla {SLUMP['dod_borta'][0]}.
 - **Landsdel** efter dagens landskap: Svealand (Uppland, Södermanland, Västmanland, Närke och Gästrikland), Götaland (Östergötland, Västergötland, Småland och Öland), Gotland och Norrland (Hälsingland och Medelpad), de landskap som har stenar i urvalet. **Dateringsperiod** efter stenens ornamentikstil (Gräslund 2006): före 1010, 1010–1040, 1040–1070, efter 1070, och odaterad som egen grupp.
 - **Ristaren.** Den ristare Rundata anger. Stenar utan känd ristare grupperas per socken.
 
@@ -346,7 +371,7 @@ De statistiska termerna förklaras i rapporternas ordlista: [{GLOSS}]({GLOSS}).
 
 **Vad fyndet säger.** De män vars runstenar säger att de dog i öster eller väster var oftare söner och bröder än fäder och makar. Skillnaden är stor, tre till fyra gånger, och den står kvar med tid, landsdel och ristare konstanta, i var halva för sig, utan vilket landskap som helst och när trakten hålls konstant. {DEATH_SV} Att få av stenarna efter dem är resta av en hustru skiljer sig däremot inte säkert från andra stenar efter män och kan vara slump. Om färderna själva hörde till en livsfas, tiden innan mannen hade en egen familj, säger måttet inte, eftersom det bara gäller dem som dog borta.
 
-**Mot tidigare forskning.** Resultatet ger ett mått åt den läsning av orden för de döda som Goetting (2006) har argumenterat för: *drengr* om unga män, *þegn* om äldre. Här följer båda orden släktplatsen åt samma håll som döden borta, men bara som mönster att pröva. Fyndet om döden borta vilar inte på orden utan på relationen och är därför ett eget, oberoende mått: döden i öster och väster drabbade i första hand de yngre i släkten (jfr Jesch 2001; Larsson 1990). Vilka som reste och kom hem säger det inget om.
+**Mot tidigare forskning.** Resultatet ger ett mått åt den läsning av orden för de döda som Goetting (2006) har argumenterat för: *drengr* om unga män, *þegn* om äldre. Här följer båda orden släktplatsen åt samma håll som döden borta, men bara som mönster att pröva. Fyndet om döden borta vilar inte på orden utan på relationen och är därför ett eget, oberoende mått: döden i öster och väster drabbade i första hand män på en yngre plats i släkten, söner och bröder (jfr Jesch 2001; Larsson 1990). Vilka som reste och kom hem säger det inget om.
 
 **Svagheter, i ordning efter vikt.**
 
@@ -370,7 +395,7 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 - Utfallet: `src/messages.py` (döden utanför Norden); handkodningen: `data/messages_facit_ost.csv` och `utdata/brittiska/hemma_kodning.csv`, överensstämmelsen per urval i `data/messages_check.json`.
 - Modellen: `r/people.R`. Känslighetsanalyserna: `r/robustness.R` och `src/robustness.py` (metodbeskrivning i `METHODS.md`, avsnitt 1u och 1v). Resultaten sparas under materialets version `{FP}`.
 - Att köra om analysen: checka ut commit `{COMMIT}`, starta analysmotorn med `scripts/dev_api.sh` och kör `curl -X POST http://localhost:8000/api/r/corpus/run`. Det räknar alla korpusanalyser och känslighetsanalyserna för den inlästa Rundata och sparar dem under `data/cache/r/corpus/<version>/` (varje R-modul körs som `Rscript --vanilla r/<modul>.R params.json utmapp`, se `METHODS.md`, avsnitt 1).
-- Rapporten byggs av `utdata/blogg/build/build_rapport_unga.py` (`.venv/bin/python utdata/blogg/build/build_rapport_unga.py`), som räknar de beskrivande talen, läser resten ur resultatfilerna och stannar om något inte stämmer.
+- Rapporten byggs av `utdata/blogg/build/build_rapport_unga.py` (`.venv/bin/python utdata/blogg/build/build_rapport_unga.py`), som räknar de beskrivande talen, läser resten ur resultatfilerna och stannar om något inte stämmer; byggaren i den form den granskades inför arkiveringen finns i commit `{REVIEW_COMMIT}`.
 - I Vitki visas sambandet under Statistik, Människorna, med känslighetsanalyserna steg för steg. {NOW_SV} Populär framställning: [Färderna var de ungas]({ART_URL}).
 
 ## Referenser
@@ -390,7 +415,7 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 :::box Det viktigaste i korthet
 - De som dog i öster och väster var oftare söner och bröder än fäder och makar – tre till fyra gånger så ofta, och skillnaden tål varje kontroll i studien.
 - På stenarna efter dem som dog borta är det oftast föräldrar och syskon som minns dem, mer sällan hustru och barn.
-- Det passar med att färderna hörde till en livsfas före egen familj, men måttet gäller bara dem som aldrig kom hem.
+- Om färderna själva hörde till en livsfas före egen familj kan stenarna inte säga: de gäller bara dem som aldrig kom hem.
 :::
 
 {LOG_SV}
@@ -428,7 +453,7 @@ Sections 5.1–5.3 are the analyses the plan prescribes for test 5. Section 5.4 
 - **The stones.** Viking-Age runestones in the Swedish provinces: {en_n(PE['n_stones'])} stones. Runestones only; other objects with runes are not included. Skåne, Blekinge and Halland, Danish in the Viking Age, are counted as Denmark in Rundata and are not included.
 - **Selection.** Stones whose text is preserved well enough for the dead man and his relation to the sponsor to be read, on which all the dead are men, and on which the dead man is either young or older in the family by the plan: {RAW['y_n']} stones for sons and brothers and {RAW['o_n']} for fathers and husbands, {en_n(M['n'])} in all.
 - **The family place.** The relation is read from Rundata's English translation by rules (son, brother, father, husband and their forms). The rules were checked against hand coding on a new sample of 40 stones they had never seen: the relation was right on 38 of 40.
-- **The outcome** is that the stone says the dead man died outside Scandinavia: a word for death or a manner of dying near a place outside Scandinavia (east, west, Greece, England, Serkland, Ingvar's expedition and others). Having merely travelled does not count, nor dying on a journey at home. The rule was checked against hand coding of {ROB['facit']['messages']['dod_borta']['n']} stones: the rule's yes was right {CO['ppv'][0]} times of {CO['ppv'][0]} and its no {CO['npv'][0]} times of {CO['npv'][0]}. The hand coding was partly done while the rules were being corrected and is not an independent test; of {SLUMP['n']} randomly drawn stones the rule was right on all {SLUMP['dod_borta'][0]}.
+- **The outcome** is that the stone says the dead man died outside Scandinavia: a word for death or a manner of dying near a place outside Scandinavia (east, west, Greece, England, Serkland, Ingvar's expedition and others). Having merely travelled does not count, nor dying on a journey at home. The rule was checked against hand coding of {ROB['facit']['messages']['dod_borta']['n']} stones: the rule's yes was right {CO['ppv'][0]} times of {CO['ppv'][0]} and its no {CO['npv'][0]} times of {CO['npv'][0]}. The hand coding was partly done while the rules were being corrected and is not an independent test; of {SLUMP['n']} randomly drawn stones, {SLUMP_POS} of which say the dead man died abroad, the rule was right on all {SLUMP['dod_borta'][0]}.
 - **Region** by today's provinces: Svealand (Uppland, Södermanland, Västmanland, Närke and Gästrikland), Götaland (Östergötland, Västergötland, Småland and Öland), Gotland and Norrland (Hälsingland and Medelpad), the provinces with stones in the selection. **Dating period** by the stone's ornamental style (Gräslund 2006): before 1010, 1010–1040, 1040–1070, after 1070, and undated as a group of its own.
 - **The carver.** The carver Rundata gives. Stones without a known carver are grouped by parish.
 
@@ -479,7 +504,7 @@ The statistical terms are explained in the reports' glossary: [{GLOSS_EN}]({GLOS
 
 **What the finding says.** The men whose runestones say they died in the east or the west were more often sons and brothers than fathers and husbands. The difference is large, three to four times, and it remains with time, region and carver constant, in each half, without any one province and with the district held constant. {DEATH_EN} That few of their stones were raised by a wife, on the other hand, does not differ clearly from other stones for men and may be chance. Whether the journeys themselves belonged to a stage of life, the time before the man had a family of his own, the measure does not say, since it concerns only those who died abroad.
 
-**Against earlier research.** The result gives a measure to the reading of the words for the dead that Goetting (2006) argued for: *drengr* for young men, *þegn* for older ones. Here both words follow the family place in the same direction as death abroad, but only as patterns to test. The finding on death abroad rests not on the words but on the relation and is therefore a measure of its own, independent of them: death in the east and the west struck first of all the younger men of the family (cf. Jesch 2001; Larsson 1990). It says nothing about who travelled and came home.
+**Against earlier research.** The result gives a measure to the reading of the words for the dead that Goetting (2006) argued for: *drengr* for young men, *þegn* for older ones. Here both words follow the family place in the same direction as death abroad, but only as patterns to test. The finding on death abroad rests not on the words but on the relation and is therefore a measure of its own, independent of them: death in the east and the west struck first of all men in a younger place in the family, sons and brothers (cf. Jesch 2001; Larsson 1990). It says nothing about who travelled and came home.
 
 **Weaknesses, in order of weight.**
 
@@ -503,7 +528,7 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 - The outcome: `src/messages.py` (death outside Scandinavia); the hand coding: `data/messages_facit_ost.csv` and `utdata/brittiska/hemma_kodning.csv`, the agreement per sample in `data/messages_check.json`.
 - The model: `r/people.R`. The sensitivity analyses: `r/robustness.R` and `src/robustness.py` (method description in `METHODS.md`, sections 1u and 1v). The results are saved under the material's version `{FP}`.
 - To rerun the analysis: check out commit `{COMMIT}`, start the analysis engine with `scripts/dev_api.sh` and run `curl -X POST http://localhost:8000/api/r/corpus/run`. That computes all the corpus analyses and the sensitivity analyses for the Rundata loaded and saves them under `data/cache/r/corpus/<version>/` (each R module is run as `Rscript --vanilla r/<module>.R params.json outdir`, see `METHODS.md`, section 1).
-- The report is built by `utdata/blogg/build/build_rapport_unga.py` (`.venv/bin/python utdata/blogg/build/build_rapport_unga.py`), which computes the descriptive counts, reads the rest from the result files and stops if anything disagrees.
+- The report is built by `utdata/blogg/build/build_rapport_unga.py` (`.venv/bin/python utdata/blogg/build/build_rapport_unga.py`), which computes the descriptive counts, reads the rest from the result files and stops if anything disagrees; the builder as reviewed before archiving is in commit `{REVIEW_COMMIT}`.
 - In Vitki the association is shown under Statistics, The people, with the sensitivity analyses step by step. {NOW_EN} Popular account: [The journeys belonged to the young]({ART_URL_EN}).
 
 ## References
@@ -523,7 +548,7 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 :::box The essentials
 - Those who died in the east and the west were more often sons and brothers than fathers and husbands – three to four times as often, and the difference withstands every check in the study.
 - On the stones for those who died abroad it is most often parents and siblings who remember them, more seldom a wife and children.
-- That fits the journeys belonging to a stage of life before a family of one's own, but the measure concerns only those who never came home.
+- Whether the journeys themselves belonged to a stage of life before a family of one's own the stones cannot say: they concern only those who never came home.
 :::
 
 {LOG_EN}
@@ -549,7 +574,8 @@ for b, lang in ((body, "sv"), (body_en, "en")):
     assert (HALVES_SV if lang == "sv" else HALVES_EN) in b and (GLOSS if lang == "sv" else GLOSS_EN) in b
     assert "DOI finns ännu inte" not in b and "No release with a DOI" not in b and f"commit `{COMMIT}`" in b
     assert "RUNDATA.xls" in b and "3.1 (2018)" not in b and "Database Contents License 1.0" in b and "Halland" in b
-    assert ("Rapportversion 2, 2026-11-05" if lang == "sv" else "Report version 2, 2026-11-05") in b
+    assert (f"Rapportversion {REPORT_VERSION}, {TODAY}." if lang == "sv" else f"Report version {REPORT_VERSION}, {TODAY}.") in b
+    assert f"commit `{REVIEW_COMMIT}`" in b.split("## Data")[1] and f"Version {REPORT_VERSION}, {TODAY}" in b
     assert ("## Ändringslogg" if lang == "sv" else "## Change log") in b and f"Version 1, {V1_DATE}" in b
     assert "Elite, Nobility, Aristocracy of the Late Viking Age" in b
     assert ".replace(" not in b and ("0.30" if lang == "sv" else "0,30") not in b  # decimals in the language's own form
@@ -561,7 +587,9 @@ for b in (body, summary, body_en, summary_en):
                  "26 av 230", "26 of 230", "hörde i första hand till", "belonged first of all to", "unga mäns sak",
                  "matter for young men", "belonged chiefly to", "Bara fyra av", "Only four of", "står om den döde",
                  "is said of the dead man", "varje kontroll vi har", "every check we have", "(bara stenar som står kvar)",
-                 "(only stones that stand in place)", "p = 0,03:", "p = 0,03)"):
+                 "(only stones that stand in place)", "p = 0,03:", "p = 0,03)",
+                 # version 3: the box's life-stage reading and "the younger" as age (version 2)
+                 "Det passar med att färderna", "That fits the journeys", "de yngre i släkten", "the younger men of the family"):
         assert gone not in b, gone
 
 out = {"slug": SLUG, "title": title, "summary": summary, "body": body, "title_en": title_en, "summary_en": summary_en,

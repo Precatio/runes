@@ -222,13 +222,13 @@ def familj():
         ax.plot([x0 + 0.05 * side, x0 + 0.05 * side + 500], [y0 + 0.05 * side] * 2, color=INK, linewidth=2)
         ax.text(x0 + 0.05 * side + 250, y0 + 0.05 * side + 0.015 * side, "500 m", ha="center", fontsize=8.5)
         ax.set_xlim(x0, x1); ax.set_ylim(y0, y1); ax.set_aspect("equal"); ax.set_xticks([]); ax.set_yticks([])
-        ax.plot([], [], color=INK, linewidth=1.3, label=T(lang, "stenarna nämner samma person (namnet står på strecket)",
-                                                           "the stones name the same person (the name is on the line)"))
+        ax.plot([], [], color=INK, linewidth=1.3, label=T(lang, "stenarna delar ett personnamn (namnet står på strecket)",
+                                                           "the stones share a personal name (the name is on the line)"))
         ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.01), ncol=2, fontsize=8, frameon=False)
         place = " och ".join(p.replace(" sn", "") for p, _ in parishes) if lang == "sv" else " and ".join(p.replace(" sn", "") for p, _ in parishes)
         fig.text(0.02, 0.965, T(lang, f"En familjegrupp: {place}", f"A family group: {place}"), fontsize=13, fontweight="bold", va="top")
-        fig.text(0.02, 0.925, T(lang, "Den grupp i Uppland och Södermanland där flest stenpar 25–500 meter från varandra nämner samma person\n(de 20 vanligaste namnen räknas inte).",
-                                "The group in Uppland and Södermanland where most pairs of stones 25–500 metres apart name the same person\n(the 20 most common names are not counted)."),
+        fig.text(0.02, 0.925, T(lang, "Den grupp i Uppland och Södermanland med flest stenpar 25–500 meter från varandra som delar ett personnamn\n(de 20 vanligaste namnen räknas inte).",
+                                "The group in Uppland and Södermanland with the most pairs of stones 25–500 metres apart\nthat share a personal name (the 20 most common names are not counted)."),
                  fontsize=9, color=MUTED, va="top")
         save(fig, "familj", lang, T(lang, "Karta: Vitki, ur Rundata och Riksantikvarieämbetets kulturmiljöregister (gravfälten som punkter).",
                                     "Map: Vitki, from Rundata and the Swedish register of ancient monuments (grave fields as points)."))

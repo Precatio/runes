@@ -3,6 +3,8 @@
 robusthetstrappan (src/robustness.py, METHODS 1v) och uppföljningen (analysplaner/2026-10-29-kvinnorna-i-svealand.md).
 Alla siffror asserteras mot korpusjobbets filer (data/cache/r/corpus/<FP>/) och utdata/kvinnor_landsdel/kvinnor_landsdel.json.
 Rapportversion 2 (2026-11-05): rättelser före arkiveringen i Zenodo, se ändringsloggen sist i texten.
+Rapportversion 3 (2026-11-05): rättelser efter en andra, oberoende läsning av ändringarna i version 2 (korthetsrutan,
+arvsläsningen i 6, rubriken för familjeseden, granskningscommit 6eae0af, det som version 2 ändrade utan att logga det).
     ../../../.venv/bin/python build_rapport_kvinnor.py [--write | --update DOC]"""
 import csv
 import datetime as dt
@@ -226,6 +228,21 @@ NOW = _now["patterns"]["Människorna|people_kvinna_landsdel"]["rungs"]
 assert all(r["holds"] for r in NOW.values()) and len(NOW) == N_RUNGS
 assert NOW["lopo"]["without"] == "attundaland" and d2(NOW["lopo"]["or"]) == "0,54" and NOW["lopo"]["all_hold"]
 
+# ---- version 3: the second reading of version 2's changes ------------------------------------------------------------
+# the family custom (B) is "not supported" by the follow-up plan's rule: less than half of the difference disappears
+assert FU["attenuation_B"] < 0.5 and "Familjeseden (B)** stöds om" in FU_PLAN and "mer än hälften av skillnaden" in FU_PLAN
+assert "**B. Seden att räkna upp familjen – stöds inte enligt regeln.**" in FU_RES
+# widows (t1) and lone women (t4): no difference shown, and the intervals include 1 (so neither is ruled out)
+assert all(FT[k]["utslag"] == "ingen skillnad påvisad" and FT[k]["main"]["lo"] < 1 < FT[k]["main"]["hi"] for k in ("t1_anka", "t4_ensam"))
+# no test in either plan sets inheritance against the journeys for the mothers (the reading came from resultat.md, Läsning)
+assert "arvsrätt" not in FU_PLAN and "Det pekar mot familjens sätt att minnas och mot arvsrätten" in " ".join(FU_RES.split())
+# the builder as reviewed before archiving (version 2) is in commit 6eae0af
+REVIEW_COMMIT = "6eae0af"
+if os.path.isdir(os.path.join(ROOT, ".git")):
+    _files = subprocess.run(["git", "-C", ROOT, "show", "--name-only", "--format=", REVIEW_COMMIT], capture_output=True,
+                            text=True, check=True).stdout.split()
+    assert "utdata/blogg/build/build_rapport_kvinnor.py" in _files, _files
+
 TODAY = "2026-11-05"  # rapportversionens datum, fast i byggaren (mallen version 3); version 1: 2026-10-31
 V1_DATE = "2026-10-31"
 TL_SV = ("mönstret iakttogs och publicerades 2026-10-13; analysplanen låstes 2026-10-28; uppföljningens plan låstes 2026-10-29; "
@@ -248,7 +265,7 @@ summary_en = ("Pre-registered re-test of a previously observed pattern. A woman 
               "is an indication, not a finding.")
 SLUG = "kvinnor-bland-resarna-svealand-gotaland"
 APP_VERSION = "3.0.0"  # the Vitki version the analysis was made in (tag v3.0.0 + the commits named in Data och kod), not the current one
-REPORT_VERSION = 2  # the report's own version; version 1 was published 2026-10-31
+REPORT_VERSION = 3  # the report's own version; version 1 was published 2026-10-31, version 2 on 2026-11-05
 CITE_EN = f"Kvant, V. ({TODAY[:4]}). {title_en}. Research report, report version {REPORT_VERSION}; analysis in Vitki {APP_VERSION}. https://vitkirunor.se/en/forskningsrapporter/{SLUG}"
 
 
@@ -301,7 +318,13 @@ LOG_SV = f"""## Ändringslogg
 - *Rollerna (5.4, 6, 7, sammanfattningen, korthetsrutan).* Version 1 sade att skillnaden sitter i rollerna och att modern stod med på sonens sten tillsammans med fadern och syskonen. Inget rolltest håller enligt uppföljningsplanens regel: stenarna efter barn och efter fäder är antydningar, och för stenarna efter bröder, som version 1 inte redovisade, påvisades ingen skillnad. Att modern stod med tillsammans med fadern och syskonen prövades aldrig. För änkor och ensamma kvinnor står nu att ingen skillnad påvisades, med intervallen, i stället för att de är uteslutna.
 - *Götalands landskap (3).* Version 1 räknade upp Halland och Dalsland. Urvalet har inga stenar därifrån; Hallands runstenar förs i Rundata till Danmark.
 - *Antalet känslighetsanalyser.* Sammanfattningen sade åtta; de är sju.
-- *Mindre ändringar.* Svagheten om Uppland säger nu ”när vilket landskap som helst tas bort”; de 80 handkodade stenarnas ursprung redovisas; simulerade residualer och logoddsskalan förklaras; halvornas regel; diagrammets källrad; Rundatas version och licens; absoluta länkar; commit för analysen och kommandon för att köra om den; länk till ordlistan; enhetlig röst."""
+- *Mindre ändringar.* Svagheten om Uppland säger nu ”när vilket landskap som helst tas bort”; de 80 handkodade stenarnas ursprung redovisas; simulerade residualer och logoddsskalan förklaras; halvornas regel; diagrammets källrad; Rundatas version och licens; absoluta länkar; commit för analysen och kommandon för att köra om den; länk till ordlistan; enhetlig röst.
+- **Version 3, {TODAY}.** Rättelser efter en andra, oberoende läsning av ändringarna i version 2. Huvudtestet, dess siffror och titeln är oförändrade.
+- *Korthetsrutan.* Version 2 skrev att änkor och ensamma kvinnor ”förklarar den inte”. Nu står, som i texten, att ingen skillnad påvisades för dem; intervallen utesluter dem inte.
+- *Mot tidigare forskning (6).* Version 2 skrev att mönstret med modern passar med en arvsregel ”bättre än med färderna eller kristnandet”. Inget test i planerna jämför de förklaringarna; nu står att det inte är prövat om mönstret speglar arv, färderna eller något annat.
+- *Seden att räkna upp familjen (5.4).* Rubriken anger nu planens utslag, stöds inte, som för de andra förklaringarna.
+- *Data och kod.* Byggaren i den form den granskades inför arkiveringen anges med commit `{REVIEW_COMMIT}`.
+- *Det som version 2 också ändrade utan att det stod i loggen.* Dalarna ströks ur uppräkningen av Svealands landskap (urvalet har inga stenar därifrån). Under Data och kod tillkom uppföljningens materialversion och appens senaste siffror (svagast {d2(NOW['lopo']['or'])} utan Attundaland), och meningen om en framtida DOI ströks. I den engelska texten blev ”raisers” ”sponsors” i ingressen och diagrammets rubrik."""
 LOG_EN = f"""## Change log
 
 - **Version 1, {V1_DATE}.** First published version.
@@ -310,7 +333,13 @@ LOG_EN = f"""## Change log
 - *The roles (5.4, 6, 7, the abstract, the essentials box).* Version 1 said that the difference lies in the roles and that the mother appeared on her son's stone together with the father and the siblings. No role test holds by the follow-up plan's rule: the stones for children and for fathers are indications, and for the stones for brothers, which version 1 did not report, no difference was shown. That the mother appeared together with the father and the siblings was never tested. For widows and lone women the text now says that no difference was shown, with the intervals, instead of that they are ruled out.
 - *Götaland's provinces (3).* Version 1 listed Halland and Dalsland. The selection has no stones from them; Halland's runestones are counted as Denmark in Rundata.
 - *The number of sensitivity analyses.* The abstract said eight; they are seven.
-- *Minor changes.* The weakness about Uppland now says ”when any one province is removed”; the origin of the 80 hand-coded stones is stated; simulated residuals and the log-odds scale are explained; the rule for the halves; the chart's source line; Rundata's version and licence; absolute links; the commit of the analysis and the commands to rerun it; a link to the glossary; a consistent voice."""
+- *Minor changes.* The weakness about Uppland now says ”when any one province is removed”; the origin of the 80 hand-coded stones is stated; simulated residuals and the log-odds scale are explained; the rule for the halves; the chart's source line; Rundata's version and licence; absolute links; the commit of the analysis and the commands to rerun it; a link to the glossary; a consistent voice.
+- **Version 3, {TODAY}.** Corrections after a second, independent reading of the changes in version 2. The main test, its figures and the title are unchanged.
+- *The essentials box.* Version 2 said that widows and lone women ”do not explain it”. It now says, as the text does, that no difference was shown for them; the intervals do not rule them out.
+- *Against earlier research (6).* Version 2 said that the mother pattern fits a rule of inheritance ”better than it fits the journeys or Christianisation”. No test in the plans compares those explanations; the text now says that whether the pattern reflects inheritance, the journeys or something else is not tested.
+- *The custom of listing the family (5.4).* The heading now gives the plan's verdict, not supported, as for the other explanations.
+- *Data and code.* The builder as reviewed before archiving is named with commit `{REVIEW_COMMIT}`.
+- *What version 2 also changed without logging it.* Dalarna was removed from the list of Svealand's provinces (the selection has no stones from it). Data and code gained the follow-up's material version and the app's latest figures (weakest {d2e(NOW['lopo']['or'])} without Attundaland), and the sentence on a future DOI was removed. In the English text ”raisers” became ”sponsors” in the lede and the chart's heading."""
 
 body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion {REPORT_VERSION}, {TODAY}. Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, kvinnor, resare, Svealand, Götaland, logistisk regression, förregistrering. Konkurrerande intressen: inga. Finansiering: ingen.*
 
@@ -393,7 +422,7 @@ Känslighetsanalyserna räknas på de {sp(P['n'])} stenarna i Svealand och Göta
 **5.4 Uppföljning (andra förregistrerade planen).** Fem förhandsbestämda förklaringar till vad skillnaden består i, prövade med samma modell och med uppföljningsplanens tolkningsregler: ett test *håller* när Holm-p är under 0,05 och p är under 0,05 åt samma håll i båda halvorna; en *antydan* har Holm-p under 0,05 men håller inte i båda halvorna, eller har bara okorrigerat p under 0,05; annars är ingen skillnad påvisad. Kvinnans roll läses ur relationen till den döde: på en sten efter ett barn är hon modern, på en sten efter en far dotter eller hustru, på en sten efter en bror syster eller mor.
 
 - **Änkor efter färderna – stöds inte enligt planens regel.** En kvinna reser stenen efter sin make: {96} av {sp(1013)} i Svealand mot {23} av {370} i Götaland, oddskvot {d2(T1['or'])} (95 %-intervall {d2(T1['lo'])}–{d2(T1['hi'])}): ingen skillnad påvisad, men intervallet utesluter inte en måttlig skillnad. Utan stenarna som nämner resor finns skillnaden mellan landsdelarna kvar och blir något större (oddskvot {d2(FT['t2_utan_resa']['main']['or'])}, håller i båda halvorna).
-- **Seden att räkna upp familjen – förklarar en femtedel.** Med antalet resare konstant: oddskvot {d2(FT['t3_antal']['main']['or'])}. {round(100 * FU['attenuation_B'])} procent av skillnaden försvinner, mätt på logoddsskalan, det vill säga i oddskvotens logaritm, där modellen är linjär: logaritmen går från {LOG0} till {LOG3}. Planens gräns var hälften.
+- **Seden att räkna upp familjen – stöds inte enligt planens regel; förklarar en femtedel.** Med antalet resare konstant: oddskvot {d2(FT['t3_antal']['main']['or'])}. {round(100 * FU['attenuation_B'])} procent av skillnaden försvinner, mätt på logoddsskalan, det vill säga i oddskvotens logaritm, där modellen är linjär: logaritmen går från {LOG0} till {LOG3}. Planens gräns var hälften.
 - **Egen ställning – stöds inte enligt planens regel.** En ensam kvinna reser stenen: {137} av {sp(1013)} mot {44} av {370}, oddskvot {d2(T4['or'])} (95 %-intervall {d2(T4['lo'])}–{d2(T4['hi'])}): ingen skillnad påvisad, men intervallet rymmer också en måttlig skillnad.
 - **Rollerna – en antydan, inte fastställt.** På stenar efter barn (där de dödas kön kan läsas nästan alltid söner, {CH_SONS} av {CH_KNOWN}) står modern med på {107} av {195} i Svealand ({SON_SV} procent) mot {13} av {70} i Götaland ({SON_GO} procent), oddskvot {d2(T5['main']['or'])}, Holm-korrigerat p = {p3(T5['main']['p_holm'])}, men i halvorna p = {p3(T5['halves']['A']['p'])} och {p3(T5['halves']['B']['p'])}: en antydan enligt uppföljningsplanens regel. Efter fäder står dotter eller hustru med på {66} av {415} mot {9} av {117}, oddskvot {d2(T6['main']['or'])}, Holm-korrigerat p = {p2(T6['main']['p_holm'])}: en antydan (okorrigerat p = {p2(T6['main']['p'])}). Efter bröder står syster eller mor med på {42} av {179} mot {10} av {88} ({BRO_M_SV} mot {BRO_M_GO} procent med tid och ristare konstanta), oddskvot {d2(T7['main']['or'])}, p = {p2(T7['main']['p'])}: ingen skillnad påvisad. Inget rolltest håller, så skillnaden kan enligt planen inte knytas till en roll.
 - **Kristnandet – inget samband.** Ett kristet kännetecken på stenen (kors eller bön) och en kvinna bland resarna: oddskvot {d2(FT['t8_kristen']['main']['or'])}, p = {p2(FT['t8_kristen']['main']['p'])}, och ingen skillnad mellan landsdelarna.
@@ -402,7 +431,7 @@ Känslighetsanalyserna räknas på de {sp(P['n'])} stenarna i Svealand och Göta
 
 **Vad fyndet säger.** Skillnaden mellan Svealand och Götaland beror inte på att Svealands stenar är yngre eller på att några ristare där ristade många stenar. Den står kvar när båda hålls konstanta, i var halva för sig och i varje känslighetsanalys. Det är en skillnad i sed, inte i befolkning: en kvinna *nämns* oftare bland dem som reste stenen i Svealand. Det säger inte att kvinnor där hade mer makt eller egendom.
 
-**Mot tidigare forskning.** Sawyers (2000) iakttagelse att kvinnornas andel skiftar mellan landskapen står sig alltså också när ålder och ristare hålls konstanta. Uppföljningen avgör inte hennes tolkning. Någon skillnad mellan landsdelarna i hur ofta änkor eller ensamma kvinnor reste stenen påvisades inte, men de är inte uteslutna (se intervallen i 5.4). Tydligast är skillnaden där modern står med på stenen efter sitt barn. Står det mönstret sig passar det med en arvsregel där en mor kunde ärva efter sitt barn, bättre än med färderna eller kristnandet (jfr Gräslund 1995). Men det är en antydan enligt uppföljningsplanens regel, och tolkningen är inte prövad här. Rapporten står på huvudfyndet.
+**Mot tidigare forskning.** Sawyers (2000) iakttagelse att kvinnornas andel skiftar mellan landskapen står sig alltså också när ålder och ristare hålls konstanta. Uppföljningen avgör inte hennes tolkning. Någon skillnad mellan landsdelarna i hur ofta änkor eller ensamma kvinnor reste stenen påvisades inte, men de är inte uteslutna (se intervallen i 5.4). Tydligast är skillnaden där modern står med på stenen efter sitt barn, men det är en antydan enligt uppföljningsplanens regel. Sawyer läste stenarna som uttryck för arv; om mönstret med modern speglar arv, färderna eller något annat är inte prövat här. Rapporten står på huvudfyndet.
 
 **Svagheter, i ordning efter vikt.**
 
@@ -426,7 +455,7 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 - Huvudmodellen: `r/people.R`. Känslighetsanalyserna: `r/robustness.R` och `src/robustness.py` (metodbeskrivning i `METHODS.md`, avsnitt 1u och 1v). Resultaten sparas under materialets version `{FP}`.
 - Uppföljningen: `utdata/kvinnor_landsdel/analys.R`, resultat och avvikelser i `utdata/kvinnor_landsdel/resultat.md`. Den kördes på materialets version `{FP_FU}`, som har samma stenar och samma kodning (identiska `corpus.csv`, `people.csv` och `messages.csv`).
 - Att köra om analysen: checka ut commit `{COMMIT}`, starta analysmotorn med `scripts/dev_api.sh` och kör `curl -X POST http://localhost:8000/api/r/corpus/run`. Det räknar alla korpusanalyser och känslighetsanalyserna för den inlästa Rundata och sparar dem under `data/cache/r/corpus/<version>/` (varje R-modul körs som `Rscript --vanilla r/<modul>.R params.json utmapp`, se `METHODS.md`, avsnitt 1). Uppföljningen: `Rscript utdata/kvinnor_landsdel/analys.R data/cache/r/corpus/{FP_FU} utmapp`.
-- Rapporten byggs av `utdata/blogg/build/build_rapport_kvinnor.py` (`.venv/bin/python utdata/blogg/build/build_rapport_kvinnor.py`), som läser varje siffra ur resultatfilerna och stannar om något inte stämmer.
+- Rapporten byggs av `utdata/blogg/build/build_rapport_kvinnor.py` (`.venv/bin/python utdata/blogg/build/build_rapport_kvinnor.py`), som läser varje siffra ur resultatfilerna och stannar om något inte stämmer; byggaren i den form den granskades inför arkiveringen finns i commit `{REVIEW_COMMIT}`.
 - I Vitki visas sambandet under Statistik, Människorna, med känslighetsanalyserna steg för steg. {NOW_SV} En populär framställning av kvinnorna på stenarna finns i [Döttrarna som runstenarna glömde]({DOT_URL}) och [Hon ärvde efter sitt barn]({HON_URL}).
 
 ## Referenser
@@ -444,7 +473,7 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 
 :::box Det viktigaste i korthet
 - I Svealand nämndes en kvinna bland dem som reste stenen nästan dubbelt så ofta som i Götaland, och skillnaden tål varje kontroll i studien.
-- Änkor och ensamma kvinnor förklarar den inte; den är tydligast där modern står med på stenen efter sitt barn – men det är en antydan, inte ett fynd.
+- För änkor och ensamma kvinnor påvisades ingen skillnad; tydligast är skillnaden där modern står med på stenen efter sitt barn – men det är en antydan, inte ett fynd.
 - Skillnaden gäller vem som nämns på minnesstenarna, inte kvinnors makt – och den bärs till stor del av Uppland.
 :::
 
@@ -532,7 +561,7 @@ The sensitivity analyses are computed on the {en_n(P['n'])} stones in Svealand a
 **5.4 Follow-up (second pre-registered plan).** Five pre-set explanations of what the difference consists of, tested with the same model and by the follow-up plan's rules of interpretation: a test *holds* when Holm p is below 0.05 and p is below 0.05 in the same direction in both halves; an *indication* has Holm p below 0.05 but does not hold in both halves, or has only uncorrected p below 0.05; otherwise no difference is shown. The woman's role is read from the relation to the dead: on a stone for a child she is the mother, on a stone for a father a daughter or wife, on a stone for a brother a sister or mother.
 
 - **Widows after the journeys – not supported by the plan's rule.** A woman raises the stone for her husband: {96} of {en_n(1013)} in Svealand against {23} of {370} in Götaland, odds ratio {d2e(T1['or'])} (95 % interval {d2e(T1['lo'])}–{d2e(T1['hi'])}): no difference shown, but the interval does not rule out a moderate difference. Without the stones that mention journeys the difference between the regions remains and grows slightly (odds ratio {d2e(FT['t2_utan_resa']['main']['or'])}, holds in both halves).
-- **The custom of listing the family – explains a fifth.** With the number of sponsors constant: odds ratio {d2e(FT['t3_antal']['main']['or'])}. {round(100 * FU['attenuation_B'])} percent of the difference disappears, measured on the log-odds scale, that is, in the logarithm of the odds ratio, where the model is linear: the logarithm goes from {LOG0E} to {LOG3E}. The plan's limit was half.
+- **The custom of listing the family – not supported by the plan's rule; explains a fifth.** With the number of sponsors constant: odds ratio {d2e(FT['t3_antal']['main']['or'])}. {round(100 * FU['attenuation_B'])} percent of the difference disappears, measured on the log-odds scale, that is, in the logarithm of the odds ratio, where the model is linear: the logarithm goes from {LOG0E} to {LOG3E}. The plan's limit was half.
 - **A position of her own – not supported by the plan's rule.** A lone woman raises the stone: {137} of {en_n(1013)} against {44} of {370}, odds ratio {d2e(T4['or'])} (95 % interval {d2e(T4['lo'])}–{d2e(T4['hi'])}): no difference shown, but the interval also allows a moderate difference.
 - **The roles – an indication, not established.** On stones for children (where the sex of the dead can be read nearly always sons, {CH_SONS} of {CH_KNOWN}) the mother appears on {107} of {195} in Svealand ({SON_SV} percent) against {13} of {70} in Götaland ({SON_GO} percent), odds ratio {d2e(T5['main']['or'])}, Holm-corrected p = {p3(T5['main']['p_holm'], True)}, but in the halves p = {p3(T5['halves']['A']['p'], True)} and {p3(T5['halves']['B']['p'], True)}: an indication by the follow-up plan's rule. On stones for fathers a daughter or wife appears on {66} of {415} against {9} of {117}, odds ratio {d2e(T6['main']['or'])}, Holm-corrected p = {p2(T6['main']['p_holm'], True)}: an indication (uncorrected p = {p2(T6['main']['p'], True)}). On stones for brothers a sister or mother appears on {42} of {179} against {10} of {88} ({BRO_M_SV} against {BRO_M_GO} percent with time and carver constant), odds ratio {d2e(T7['main']['or'])}, p = {p2(T7['main']['p'], True)}: no difference shown. No role test holds, so by the plan the difference cannot be tied to a role.
 - **Christianisation – no association.** A Christian feature on the stone (cross or prayer) and a woman among the sponsors: odds ratio {d2e(FT['t8_kristen']['main']['or'])}, p = {p2(FT['t8_kristen']['main']['p'], True)}, and no difference between the regions.
@@ -541,7 +570,7 @@ The sensitivity analyses are computed on the {en_n(P['n'])} stones in Svealand a
 
 **What the finding says.** The difference between Svealand and Götaland is not due to Svealand's stones being younger or to a few carvers there carving many stones. It remains when both are held constant, in each half and in every sensitivity analysis. It is a difference in custom, not in population: a woman is more often *named* among those who raised the stone in Svealand. It does not say that women there had more power or property.
 
-**Against earlier research.** Sawyer's (2000) observation that the share of women varies between provinces thus stands also when age and carver are held constant. The follow-up does not settle her interpretation. No difference between the regions in how often widows or lone women raised the stone was shown, but they are not ruled out (see the intervals in 5.4). The difference is clearest where the mother appears on the stone for her child. If that pattern holds, it fits a rule of inheritance under which a mother could inherit from her child better than it fits the journeys or Christianisation (cf. Gräslund 1995). But it is an indication by the follow-up plan's rule, and the interpretation is not tested here. The report rests on the main finding.
+**Against earlier research.** Sawyer's (2000) observation that the share of women varies between provinces thus stands also when age and carver are held constant. The follow-up does not settle her interpretation. No difference between the regions in how often widows or lone women raised the stone was shown, but they are not ruled out (see the intervals in 5.4). The difference is clearest where the mother appears on the stone for her child, but that is an indication by the follow-up plan's rule. Sawyer read the stones as statements of inheritance; whether the mother pattern reflects inheritance, the journeys or something else is not tested here. The report rests on the main finding.
 
 **Weaknesses, in order of weight.**
 
@@ -565,7 +594,7 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 - The main model: `r/people.R`. The sensitivity analyses: `r/robustness.R` and `src/robustness.py` (method description in `METHODS.md`, sections 1u and 1v). The results are saved under the material's version `{FP}`.
 - The follow-up: `utdata/kvinnor_landsdel/analys.R`, results and deviations in `utdata/kvinnor_landsdel/resultat.md`. It was run on the material's version `{FP_FU}`, which has the same stones and the same coding (identical `corpus.csv`, `people.csv` and `messages.csv`).
 - To rerun the analysis: check out commit `{COMMIT}`, start the analysis engine with `scripts/dev_api.sh` and run `curl -X POST http://localhost:8000/api/r/corpus/run`. That computes all the corpus analyses and the sensitivity analyses for the Rundata loaded and saves them under `data/cache/r/corpus/<version>/` (each R module is run as `Rscript --vanilla r/<module>.R params.json outdir`, see `METHODS.md`, section 1). The follow-up: `Rscript utdata/kvinnor_landsdel/analys.R data/cache/r/corpus/{FP_FU} outdir`.
-- The report is built by `utdata/blogg/build/build_rapport_kvinnor.py` (`.venv/bin/python utdata/blogg/build/build_rapport_kvinnor.py`), which reads every figure from the result files and stops if anything disagrees.
+- The report is built by `utdata/blogg/build/build_rapport_kvinnor.py` (`.venv/bin/python utdata/blogg/build/build_rapport_kvinnor.py`), which reads every figure from the result files and stops if anything disagrees; the builder as reviewed before archiving is in commit `{REVIEW_COMMIT}`.
 - In Vitki the association is shown under Statistics, The people, with the sensitivity analyses step by step. {NOW_EN} Popular accounts of the women on the stones are [The daughters the runestones forgot]({DOT_URL_EN}) and [She inherited from her child]({HON_URL_EN}).
 
 ## References
@@ -583,7 +612,7 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 
 :::box The essentials
 - In Svealand a woman was named among those who raised the stone nearly twice as often as in Götaland, and the difference withstands every check in the study.
-- Widows and lone women do not explain it; it is clearest where the mother appears on the stone for her child – but that is an indication, not a finding.
+- No difference was shown for widows or lone women; the difference is clearest where the mother appears on the stone for her child – but that is an indication, not a finding.
 - The difference concerns who is named on the memorial stones, not women's power – and it is carried to a large degree by Uppland.
 :::
 
@@ -611,7 +640,8 @@ for b, lang in ((body, "sv"), (body_en, "en")):
     assert (HALVES_SV if lang == "sv" else HALVES_EN) in b and (GLOSS if lang == "sv" else GLOSS_EN) in b
     assert "DOI finns ännu inte" not in b and "No release with a DOI" not in b and f"commit `{COMMIT}`" in b
     assert "RUNDATA.xls" in b and "3.1 (2018)" not in b and "Database Contents License 1.0" in b and "Halland" in b
-    assert ("Rapportversion 2, 2026-11-05" if lang == "sv" else "Report version 2, 2026-11-05") in b
+    assert (f"Rapportversion {REPORT_VERSION}, {TODAY}." if lang == "sv" else f"Report version {REPORT_VERSION}, {TODAY}.") in b
+    assert f"commit `{REVIEW_COMMIT}`" in b.split("## Data")[1] and (f"Version {REPORT_VERSION}, {TODAY}" in b)
     assert ("## Ändringslogg" if lang == "sv" else "## Change log") in b and f"Version 1, {V1_DATE}" in b
     assert "Hr" not in b and "Dalsland" in b
 assert "Det viktigaste i korthet" in body and "## 2. Förregistrering" in body and "## 6. Diskussion" in body
@@ -622,7 +652,10 @@ for b in (body, summary, body_en, summary_en):
                  "together with the father and the siblings", "Ingen jämförelse mellan landsdelar", "No comparison between regions",
                  "robusthetstrappans", "robustness ladder", "åtta känslighetsanalyser", "eight sensitivity analyses",
                  "Riktningen håller i alla landskap", "direction holds in every province", "finner att skillnaden sitter",
-                 "finds that the difference lies", "varje kontroll vi har", "every check we have"):
+                 "finds that the difference lies", "varje kontroll vi har", "every check we have",
+                 # version 3: the box and the inheritance reading of version 2
+                 "förklarar den inte", "do not explain it", "bättre än med färderna", "better than it fits the journeys",
+                 "familjen – förklarar en femtedel", "family – explains a fifth"):
         assert gone not in b, gone
 assert summary.startswith("Förregistrerad omprövning av ett tidigare iakttaget mönster.")
 assert summary_en.startswith("Pre-registered re-test of a previously observed pattern.")

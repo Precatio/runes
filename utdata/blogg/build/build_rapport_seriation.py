@@ -2,7 +2,8 @@
 Upplands runstenar i samma följd som stilkronologin – rangkorrelation 0,54 utan ornamentiken" (sv + en). Seriationen
 (r/chronology.R, inte förregistrerad) och den låsta planen för halvorna och Södermanland
 (analysplaner/2026-10-31-seriation-halvor-sodermanland.md). Alla siffror asserteras mot filerna. Rapportversion 3
-(2026-11-05): rättelser efter granskningen före arkiveringen i Zenodo.
+(2026-11-05): rättelser efter granskningen före arkiveringen i Zenodo. Rapportversion 4 (2026-11-05): rättelser efter
+en andra granskning (justeringen för alla samband är gjord; korrelationen inom ristare och hur lite tid den har att mäta).
     ../../../.venv/bin/python build_rapport_seriation.py [--write | --update DOC]"""
 import datetime as dt
 import json
@@ -11,9 +12,13 @@ import re
 import subprocess
 import sys
 
+import numpy as np
+import pandas as pd
+
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 sys.path.insert(0, ROOT)
-from src import blog_labels  # noqa: E402
+from src import blog_labels, r_findings, robustness  # noqa: E402
+from src import r_bridge as rb  # noqa: E402
 sys.path.insert(0, os.path.join(ROOT, "utdata", "rapporter", "figurer"))
 from figur import FIG, andringslogg, bild  # noqa: E402
 
@@ -23,14 +28,19 @@ DONE = json.load(open(os.path.join(C, "done.json"), encoding="utf-8"))
 assert DONE["fingerprint"] == FP and DONE["computed_at"].startswith("2026-10-29")  # härledd korpus beräknad 2026-10-29
 APP_VERSION = "3.0.0"  # the Vitki version the analysis was made in (tag v3.0.0 + the commits named in Data och kod), not the current one
 assert open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().startswith("611a4d5f")  # mallens version 4
-REPORT_VERSION = 3  # version 1: 2026-10-31, version 2: 2026-11-01
+REPORT_VERSION = 4  # version 1: 2026-10-31, version 2: 2026-11-01, version 3: 2026-11-05
 FIRST = "2026-10-31"  # version 1 publicerades
 V2 = "2026-11-01"
+V3 = "2026-11-05"
 TODAY = "2026-11-05"  # rapportversionens datum, fast i byggaren (mallen version 3)
 # Kodläget: den commit där seriationen, planens kod och resultat, figuren och byggaren för version 2 ligger
 CODE_COMMIT = "4f80a63"
+# Rapportens byggare för versionerna 2026-11-05 (version 3 och framåt) finns från denna commit
+BUILD_COMMIT = "6eae0af"
 if os.path.isdir(os.path.join(ROOT, ".git")):
     assert subprocess.run(["git", "-C", ROOT, "merge-base", "--is-ancestor", CODE_COMMIT, "HEAD"]).returncode == 0
+    assert subprocess.run(["git", "-C", ROOT, "merge-base", "--is-ancestor", BUILD_COMMIT, "HEAD"]).returncode == 0
+    assert subprocess.run(["git", "-C", ROOT, "cat-file", "-e", f"{BUILD_COMMIT}:utdata/blogg/build/build_rapport_seriation.py"]).returncode == 0
 RDM = json.load(open(os.path.join(ROOT, "data", "rundata.json"), encoding="utf-8"))["meta"]
 assert RDM["source"].startswith("Samnordisk runtextdatabas 2014 (RUNDATA.xls uppdaterad 2018)") and RDM["built"] == "2026-10-04"
 assert RDM["license"] == "ODbL-1.0 / DbCL-1.0" and "nordiska.uu.se/forskn/samnord.htm" in RDM["attribution"]
@@ -87,6 +97,38 @@ assert 6e-5 < SO["p_holm"] < 7e-5 and RP["sodermanland_status"] == "replikerat" 
 assert (d2(HA["within_district"]), d2(HB["within_district"]), HA["n_districts"], HB["n_districts"], SO["n_districts"]) == ("0,46", "0,52", 14, 16, 11)
 assert 0.5 < SO["rho"] / V["rho"] < 0.65  # "drygt hälften så stark" (0,32 / 0,54 = 0,59)
 
+# ---- the adjustment for all associations the project reports (src/robustness.py, version 4) ----------------------------
+# The seriation has no ladder of sensitivity analyses and enters the common Benjamini–Hochberg with its own p (the plan:
+# "justeringen för alla samband i projektet är redan q < 0,001")
+ANN = robustness.annotate(r_findings.corpus_patterns(rb.JOB.result(FP)), robustness.load(FP))
+SER = next(q for q in ANN if q.get("topic") == "Datering" and q.get("key") == "seriation")
+N_SHOWN = robustness.summary(ANN)["n_fdr"]
+assert N_SHOWN == 48 and not SER.get("ladder") and SER["significance"]["kind"] == "p"
+assert abs(SER["significance"]["value"] - V["p"]) / V["p"] < 0.01 and SER["q_global"] is not None and SER["q_global"] < 0.001
+assert "justeringen för alla samband i projektet är redan q < 0,001" in re.sub(r"\s+", " ", open(PLAN + ".md", encoding="utf-8").read())
+
+# ---- how little time there is to measure within a carver (version 4) ---------------------------------------------------
+# The correlation within carvers (r/chronology.R, within_rho) uses ranks centred within each carver with at least five
+# dated stones; recomputed here from the seriation's own scores, then the share of the spread in dating (ranks) that lies
+# within the carvers, and the carvers whose dated stones all fall in one style group
+CS = pd.read_csv(os.path.join(C, "chronology_stones.csv")).merge(
+    pd.read_csv(os.path.join(C, "corpus.csv"), low_memory=False, usecols=["signum", "style_from", "style_to", "carver"]),
+    on="signum", how="left")
+assert len(CS) == CH["n_stones"] and CS.signum.is_unique
+CS["mid"] = (CS.style_from + CS.style_to) / 2
+assert int(CS.mid.notna().sum()) == CH["n_dated"]
+W = CS[CS.mid.notna() & CS.carver.notna() & (CS.carver != "")]
+_vc = W.carver.value_counts()
+W = W[W.carver.isin(_vc[_vc >= 5].index)].copy()
+W["rs"], W["rt"] = W.score.rank(), W.mid.rank()
+_cs, _ct = W.rs - W.groupby("carver").rs.transform("mean"), W.rt - W.groupby("carver").rt.transform("mean")
+assert (len(W), W.carver.nunique()) == (VR["within_carver"]["n"], VR["within_carver"]["groups"]) == (251, 13)
+assert abs(float(np.corrcoef(_cs, _ct)[0, 1]) - VR["within_carver"]["rho"]) < 0.001  # the same number as r/chronology.R
+W_TIME = float((_ct ** 2).sum() / ((W.rt - W.rt.mean()) ** 2).sum())
+W_ONE = int((W.groupby("carver").mid.nunique() == 1).sum())
+pc = lambda x: int(100 * x + 0.5 + 1e-9)  # noqa: E731
+assert pc(W_TIME) == 18 and W_ONE == 2
+
 SITE = "https://vitkirunor.se"
 SLUG = "seriationen-foljer-stilkronologin"
 title = "Språk och innehåll ordnar Upplands runstenar i samma följd som stilkronologin – rangkorrelation 0,54 utan ornamentiken"
@@ -129,25 +171,46 @@ V3_EN = ("- **Version 3, 2026-11-05.** Corrections after the review before archi
          "the rank correlations showed them as percentages and is removed; the numbers are in the text. Code state, data "
          "versions, absolute links and a source in the caption were added. No analysis was redone and no earlier figure "
          "changed.")
-LOG_SV = andringslogg("sv", 2, V2, "Figur 1 tillagd: varje stildaterad sten i Uppland, ordnad efter språk och innehåll, mot stilgruppen.", "") + "\n" + V3_SV
-LOG_EN = andringslogg("en", 2, V2, "", "Figure 1 added: every style-dated stone in Uppland, ordered by language and content, against the style group.") + "\n" + V3_EN
+V4_SV = ("- **Version 4, 2026-11-05.** Rättelser efter en andra granskning före arkiveringen i Zenodo. Justeringen för alla "
+         f"{N_SHOWN} samband som projektet redovisar sades vara inte prövad; den är gjord, med seriationens eget p, och ger "
+         "q < 0,001 (sammanfattningen och 5.3). ”Till stor del via ristarna” sa mer än materialet bär: varje ristares stenar "
+         f"spänner över kort tid (bara {pc(W_TIME)} procent av spridningen i datering ligger inom ristarna, och {W_ONE} av "
+         f"{VR['within_carver']['groups']} ristare har stenar i en enda stilgrupp), så en svag korrelation inom ristare väntas "
+         "också om språket följer tiden; det står nu i sammanfattningen, diskussionen, svaghet 1, slutsatsen och korthetsrutan. "
+         "Version 3 lade utan att säga det till att det är nytt att ordna många drag på en gång; det står nu som att vi inte "
+         "har funnit någon sådan studie. Den engelska meningen om varför seriationen görs på Uppland var tvetydig om ristarna. "
+         "Kodläget anger nu också den commit där rapportens byggare finns. Inga analyser är omgjorda; andelen "
+         f"{pc(W_TIME)} procent är räknad ur seriationens egna resultat, och inga tidigare siffror är ändrade.")
+V4_EN = ("- **Version 4, 2026-11-05.** Corrections after a second review before archiving in Zenodo. The adjustment for all "
+         f"{N_SHOWN} associations the project reports was said not to be tested; it is done, with the seriation's own p, and "
+         "gives q < 0.001 (abstract and 5.3). ”Largely through the carvers” said more than the material bears: each carver's "
+         f"stones span a short time (only {pc(W_TIME)} percent of the spread in dating lies within the carvers, and {W_ONE} of "
+         f"{VR['within_carver']['groups']} carvers have stones in a single style group), so a weak correlation within carvers "
+         "is expected even if language follows time; this now stands in the abstract, the discussion, weakness 1, the "
+         "conclusion and the essentials box. Version 3 added, without saying so, that ordering many traits at once is new; it "
+         "now says that we have found no such study. The English sentence on why the seriation is made on Uppland was "
+         "ambiguous about the carvers. The code state now also names the commit holding the report's builder. No analysis was "
+         f"redone; the share of {pc(W_TIME)} percent is computed from the seriation's own results, and no earlier figure "
+         "changed.")
+LOG_SV = andringslogg("sv", 2, V2, "Figur 1 tillagd: varje stildaterad sten i Uppland, ordnad efter språk och innehåll, mot stilgruppen.", "") + "\n" + V3_SV + "\n" + V4_SV
+LOG_EN = andringslogg("en", 2, V2, "", "Figure 1 added: every style-dated stone in Uppland, ordered by language and content, against the style group.") + "\n" + V3_EN + "\n" + V4_EN
 
 body = f"""*Viktor Kvant, oberoende forskare. Delvis prövat fynd. Rapportversion {REPORT_VERSION}, {TODAY} (först publicerad {FIRST}). Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, seriation, korrespondensanalys, stilkronologi, datering, Uppland, Södermanland. Konkurrerande intressen: inga. Finansiering: ingen.*
 
 ## Sammanfattning
 
-**Vad som inte är prövat.** Seriationen i Uppland var inte förregistrerad. Av den fasta serien känslighetsanalyser är bara halvorna prövade, under en plan som låstes före körningen tillsammans med en replikering i Södermanland; ristaren och socknen som slumpeffekter, läget som rumslig yta, analysen utan flyttade stenar, modellkontrollen och justeringen för alla samband som projektet redovisar är inte prövade.
+**Vad som inte är prövat.** Seriationen i Uppland var inte förregistrerad. Av den fasta serien känslighetsanalyser är bara halvorna prövade, under en plan som låstes före körningen tillsammans med en replikering i Södermanland; ristaren och socknen som slumpeffekter, läget som rumslig yta, analysen utan flyttade stenar och modellkontrollen är inte prövade.
 **Bakgrund och syfte.** Upplands runstenar dateras relativt efter ornamentiken, enligt Anne-Sofie Gräslunds stilkronologi. Frågan här är om stenarna hamnar i samma följd när de ordnas efter något annat: språket, formlerna och innehållet.
 **Material.** {CH['n_stones']} runstenar i Uppland med minst fyra av {CH['n_attributes']} drag, varav {CH['n_dated']} med stilgrupp; för replikeringen {SO['n_stones']} stenar i Södermanland, varav {SO['n_dated']} med stilgrupp. Ur Samnordisk runtextdatabas (Rundata). Seriationen görs på Uppland, eftersom dess första axel i hela det svenska materialet främst följer regionala skillnader.
 **Metod.** Korrespondensanalys av en tabell över stenar och drag, utan stilgruppen; stenarnas läge på första axeln jämförs med stilgruppens mittår (Spearmans rangkorrelation). Halvorna och Södermanland med samma metod, Holm-korrigerat.
 **Resultat.** I Uppland rho = {d2(V['rho'])}, {d2(V['partial_rho'])} med latituden konstant. Halva A {d2(HA['rho'])}, halva B {d2(HB['rho'])}, båda Holm-korrigerat p under 10⁻¹⁷. Södermanland {d2(SO['rho'])}, Holm-korrigerat p = {pexp(SO['p_holm'])}, men {d2(SO['partial_rho'])} med latituden konstant. Inom härad {d2(VR['within_district']['rho'])}, inom samma ristare bara {d2(VR['within_carver']['rho'])}.
-**Slutsats.** Språk och innehåll bär samma tidsföljd som ornamentiken i Uppland. Det är ett stöd för stilkronologin som inte bygger på ornamentiken, men som till stor del går via ristarna, och det räcker inte för att datera enskilda stenar.
+**Slutsats.** Språk och innehåll bär samma tidsföljd som ornamentiken i Uppland. Det är ett stöd för stilkronologin som inte bygger på ornamentiken. Inom en och samma ristare är sambandet svagt, men varje ristares stenar spänner över kort tid, så materialet kan inte avgöra hur mycket av överensstämmelsen som går via ristarna. Det räcker inte för att datera enskilda stenar.
 
 ## 1. Inledning
 
 Upplands vikingatida runstenar dateras relativt efter ornamentiken, i Anne-Sofie Gräslunds stilgrupper från RAK och Fp till Pr1–Pr5 (Gräslund 2006). Kronologin bygger på hur runormen och djurhuvudena är formade, inte på språket eller vad texten säger. Om språk och innehåll förändrades under samma tid borde stenarna hamna i ungefär samma följd när de ordnas efter dem. Ger två slags iakttagelser samma ordning följer båda troligen tiden – om de inte båda följer något tredje, till exempel ristaren.
 
-Enskilda drag har tidigare ställts mot stilgrupperna, till exempel hur ʀ skrivs i Södermanland och Uppland stilgrupp för stilgrupp (Larsson 2002, tabell 6–9). Seriation med korrespondensanalys är en vanlig metod för relativ datering i arkeologin (Greenacre 2007). Det nya här är att många drag ordnas på en gång, utan ornamentiken, och att ordningen prövas i två halvor av materialet och i ett andra landskap, Södermanland, där kronologin inte byggdes.
+Enskilda drag har tidigare ställts mot stilgrupperna, till exempel hur ʀ skrivs i Södermanland och Uppland stilgrupp för stilgrupp (Larsson 2002, tabell 6–9). Seriation med korrespondensanalys är en vanlig metod för relativ datering i arkeologin (Greenacre 2007). Vi har inte funnit någon studie som ordnar många drag på en gång, utan ornamentiken, och prövar ordningen i två halvor av materialet och i ett andra landskap, Södermanland, där kronologin inte byggdes.
 
 ## 2. Förregistrering: vad som var bestämt i förväg och vad som är explorativt
 
@@ -160,7 +223,7 @@ Den 31 oktober 2026 låstes en plan för två prövningar innan de kördes (kont
 - **Källa.** Samnordisk runtextdatabas, Institutionen för nordiska språk, Uppsala universitet: Rundata (utgåvan 2014, uppdaterad 2018), hämtad 2026-10-04; härledd korpus beräknad 2026-10-29. Bara runstenar.
 - **Dragen.** Språkdrag (stavning av vissa ljud och ord), fem formler (resarformel, monument, ordföljd, ristarsignatur, bön), kors, kortkvistrunor och innehållskategorier, som närvaro eller frånvaro per sten. Drag som finns på färre än 15 stenar räknas inte, och stenar med färre än fyra drag räknas inte. Stilgruppen ingår inte.
 - **Tiden** är stilgruppens mittår enligt Gräslund (2006).
-- **Varför Uppland.** I hela det svenska materialet ({sp(CH['n_corpus'])} stenar med minst fyra drag) följer seriationens första axel främst regionala skillnader och ristarna och bara svagt tiden (rangkorrelation med stilgruppens mittår {d2(abs(CD1['rho_time']))}); den andra axeln följer tiden bättre ({d2(abs(CD2['rho_time']))}), men också landskap och ristare. Därför görs seriationen på Uppland, där stilkronologin byggdes.
+- **Varför Uppland.** I hela det svenska materialet ({sp(CH['n_corpus'])} stenar med minst fyra drag) följer seriationens första axel främst regionala skillnader och ristarna, och bara svagt tiden (rangkorrelation med stilgruppens mittår {d2(abs(CD1['rho_time']))}); den andra axeln följer tiden bättre ({d2(abs(CD2['rho_time']))}), men också landskap och ristare. Därför görs seriationen på Uppland, där stilkronologin byggdes.
 - **Uppland:** {CH['n_stones']} stenar och {CH['n_attributes']} drag, {CH['n_dated']} stenar med stilgrupp. **Södermanland:** {SO['n_stones']} stenar och {SO['n_attributes']} drag, {SO['n_dated']} med stilgrupp.
 - **Halvorna** är projektets fasta indelning socken för socken.
 
@@ -188,26 +251,26 @@ Den 31 oktober 2026 låstes en plan för två prövningar innan de kördes (kont
 
 - Halvorna: prövat (5.1); håller.
 - Justerat för landskapet: inte prövat; seriationen görs inom ett landskap, och Södermanland prövas för sig (5.2).
-- Ristaren som slumpeffekt: inte prövat. Närmast kommer korrelationen inom ristare: bara {d2(VR['within_carver']['rho'])} ({VR['within_carver']['groups']} ristare med minst fem daterade stenar, {VR['within_carver']['n']} stenar; explorativ).
+- Ristaren som slumpeffekt: inte prövat. Närmast kommer korrelationen inom ristare: bara {d2(VR['within_carver']['rho'])} ({VR['within_carver']['groups']} ristare med minst fem daterade stenar, {VR['within_carver']['n']} stenar; explorativ). Av spridningen i datering mellan dessa stenar ligger bara {pc(W_TIME)} procent inom ristarna (räknat på stenarnas rangordning i tid); resten skiljer ristarna åt, så inom en ristare finns lite tid att mäta.
 - Socknen som slumpeffekt: inte prövat. Närmast kommer korrelationen inom härad: {d2(VR['within_district']['rho'])} ({VR['within_district']['groups']} härader; explorativ).
 - Läget som rumslig yta: inte prövat. Närmast kommer den partiella korrelationen med latituden konstant: {d2(V['partial_rho'])}.
 - Utan ett landskap i taget: inte tillämpligt, eftersom seriationen gäller ett landskap; i stället replikeringen i Södermanland.
 - Utan flyttade stenar: inte prövat.
 - Modellkontroll: inte prövat; korrespondensanalysen har ingen motsvarande kontroll av residualerna.
-- Justering tillsammans med alla samband som projektet redovisar: inte prövat; Holm-korrigeringen gäller planens tre test.
+- Justering tillsammans med alla {N_SHOWN} samband som projektet redovisar: gjord, med seriationens eget p eftersom den saknar känslighetsanalyser av det slaget; q < 0,001. Holm-korrigeringen gäller planens tre test.
 - Varianterna av dragen (explorativa): utan kors {d2(VR['no_cross']['rho'])}, utan utlandsfärd {d2(VR['no_anchor']['rho'])}, utan de drag som förändras över tid {d2(VR['no_changing']['rho'])}, utan allt detta {d2(VR['strict']['rho'])}.
 
 **5.4 Dateringen av enskilda stenar.** Används axeln för att skatta årtal blir medelfelet {V['mae_loo_years']} år när varje sten skattas utan sig själv, mot {V['mae_naive_years']} år för att gissa medelåret: seriationen ordnar stenarna, men den daterar inte en enskild sten mycket bättre än en gissning.
 
 ## 6. Diskussion
 
-**Vad fyndet säger.** Språket, formlerna och innehållet förändrades i samma följd som ornamentiken i Uppland, och det håller lika starkt i två halvor av materialet. Eftersom ornamentiken inte ingår är det ett stöd för Gräslunds relativa kronologi som inte bygger på ornamentiken, men som till stor del går via ristarna (5.3). Det står sig också utan korsen, som är en del av bilden, utan draget utlandsfärd (som Ingvars- och Englandsstenarna bär och som annars kunde förankra tiden) och utan de stavningsdrag vars förändring mäts för sig.
+**Vad fyndet säger.** Språket, formlerna och innehållet förändrades i samma följd som ornamentiken i Uppland, och det håller lika starkt i två halvor av materialet. Eftersom ornamentiken inte ingår är det ett stöd för Gräslunds relativa kronologi som inte bygger på ornamentiken; hur mycket av det som går via ristarna kan materialet inte avgöra (5.3). Det står sig också utan korsen, som är en del av bilden, utan draget utlandsfärd (som Ingvars- och Englandsstenarna bär och som annars kunde förankra tiden) och utan de stavningsdrag vars förändring mäts för sig.
 
 **Mot tidigare forskning.** Stilkronologin är den grund de flesta dateringar av svenska runstenar vilar på (Gräslund 2006). Resultatet säger att den inte bara är en ordning av ornament: språk och innehåll följer samma tid. I Södermanland, där kronologin tillämpas men inte byggdes, finns samma följd men drygt hälften så stark.
 
 **Svagheter, i ordning efter vikt.**
 
-1. **Följden går mellan ristare.** Inom en och samma ristare är korrelationen bara {d2(VR['within_carver']['rho'])}. Ornament och språk följer båda ristaren, och ristarna verkade vid olika tider; en del av överensstämmelsen kan därför vara att seriationen ordnar ristare. Inom härad står den sig ({d2(VR['within_district']['rho'])}), så det är inte en ordning av bygder.
+1. **Följden är svag inom ristare.** Inom en och samma ristare är korrelationen bara {d2(VR['within_carver']['rho'])}. Ornament och språk följer båda ristaren, och ristarna verkade vid olika tider; en del av överensstämmelsen kan därför vara att seriationen ordnar ristare. Men varje ristares stenar spänner över kort tid ({pc(W_TIME)} procent av spridningen i datering ligger inom ristarna, och {W_ONE} av de {VR['within_carver']['groups']} ristarna har stenar i en enda stilgrupp), så en svag korrelation inom ristare väntas också om språket följer tiden. Inom härad står den sig ({d2(VR['within_district']['rho'])}), så det är inte en ordning av bygder.
 2. **Inte förregistrerad.** Seriationen i Uppland var känd när planen för halvorna och Södermanland låstes, och valet av Uppland gjordes efter att hela materialet visat en regional första axel. Halvorna och Södermanland är därför det egentliga provet.
 3. **Södermanland kan vara geografi.** Med latituden konstant är korrelationen {d2(SO['partial_rho'])}, under planens gräns.
 4. **Inte en datering.** Medelfelet för årtal är bara något bättre än att gissa medelåret.
@@ -216,11 +279,11 @@ Den 31 oktober 2026 låstes en plan för två prövningar innan de kördes (kont
 
 ## 7. Slutsats
 
-Ordnade efter språk, formler och innehåll hamnar Upplands runstenar i samma följd som i stilkronologin, rho {d2(V['rho'])}, och det håller i båda halvorna. Det är ett stöd för den relativa kronologin som inte bygger på ornamentiken, men som till stor del går via ristarna, och i Södermanland är det svagare och delvis geografiskt. Nästa steg är att pröva seriationen inom ristare som verkade under lång tid, och i Östergötland och Västergötland när dateringen där blir säkrare.
+Ordnade efter språk, formler och innehåll hamnar Upplands runstenar i samma följd som i stilkronologin, rho {d2(V['rho'])}, och det håller i båda halvorna. Det är ett stöd för den relativa kronologin som inte bygger på ornamentiken; hur mycket av det som går via ristarna kan materialet inte avgöra, och i Södermanland är sambandet svagare och delvis geografiskt. Nästa steg är att pröva seriationen inom ristare som verkade under lång tid, och i Östergötland och Västergötland när dateringen där blir säkrare.
 
 ## Data och kod
 
-Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runstenar ([vitkirunor.se]({SITE})). Kodläge: commit {CODE_COMMIT} i https://github.com/Precatio/runes (Vitki {APP_VERSION} med senare ändringar). Koden, analysplanen och resultatfilerna finns där under GPL-3.0.
+Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runstenar ([vitkirunor.se]({SITE})). Kodläge: commit {CODE_COMMIT} i https://github.com/Precatio/runes (Vitki {APP_VERSION} med senare ändringar); rapportens byggare för versionerna 2026-11-05 från commit {BUILD_COMMIT}. Koden, analysplanen och resultatfilerna finns där under GPL-3.0.
 
 - Seriationen: `r/chronology.R` (resultat `chronology.json` under materialets version `{FP}`).
 - Planen för halvorna och Södermanland: `analysplaner/2026-10-31-seriation-halvor-sodermanland.md`; koden `utdata/seriation/replikering.R`, resultaten `replikering.json` och `replikering_resultat.md`.
@@ -239,8 +302,8 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 
 :::box Det viktigaste i korthet
 - Det som står på stenarna förändrades i samma ordning som ornamentiken.
-- Det ger stilkronologin ett stöd som inte bygger på ornamenten själva, men som till stor del går via ristarna.
-- Ordningen går mest mellan ristarna, inte inom dem, och den räcker inte för att datera en enskild sten.
+- Det ger stilkronologin ett stöd som inte bygger på ornamenten själva.
+- Inom en och samma ristare är ordningen svag, men en ristares stenar spänner över kort tid, så det säger lite. Ordningen räcker inte för att datera en enskild sten.
 :::
 
 {LOG_SV}
@@ -250,18 +313,18 @@ body_en = f"""*Viktor Kvant, independent researcher. Partially tested finding. R
 
 ## Abstract
 
-**What has not been tested.** The seriation in Uppland was not pre-registered. Of the fixed series of sensitivity analyses only the halves are tested, under a plan locked before the run together with a replication in Södermanland; the carver and the parish as random effects, location as a spatial surface, the analysis without moved stones, the model check and the adjustment for all associations the project reports are not tested.
+**What has not been tested.** The seriation in Uppland was not pre-registered. Of the fixed series of sensitivity analyses only the halves are tested, under a plan locked before the run together with a replication in Södermanland; the carver and the parish as random effects, location as a spatial surface, the analysis without moved stones and the model check are not tested.
 **Background and aim.** The runestones of Uppland are dated relatively by their ornament, following Anne-Sofie Gräslund's stylistic chronology. The question here is whether the stones fall in the same sequence when ordered by something else: the language, the formulas and the content.
 **Material.** {CH['n_stones']} runestones in Uppland with at least four of {CH['n_attributes']} traits, {CH['n_dated']} of them with a style group; for the replication {SO['n_stones']} stones in Södermanland, {SO['n_dated']} with a style group. From the Scandinavian Runic-text Database (Rundata). The seriation is made on Uppland, since in the whole Swedish material its first axis mainly follows regional differences.
 **Method.** Correspondence analysis of a table of stones and traits, without the style group; the stones' position on the first axis is compared with the style group's midpoint (Spearman's rank correlation). The halves and Södermanland with the same method, Holm-corrected.
 **Results.** In Uppland rho = {V['rho']:.2f}, {V['partial_rho']:.2f} with latitude held constant. Half A {HA['rho']:.2f}, half B {HB['rho']:.2f}, both Holm-corrected p below 10⁻¹⁷. Södermanland {SO['rho']:.2f}, Holm-corrected p = {pexp(SO['p_holm'], True)}, but {SO['partial_rho']:.2f} with latitude held constant. Within hundreds {VR['within_district']['rho']:.2f}, within one and the same carver only {VR['within_carver']['rho']:.2f}.
-**Conclusion.** Language and content carry the same temporal sequence as the ornament in Uppland. That is support for the stylistic chronology that does not rest on the ornament, but runs largely through the carvers, and it is not enough to date individual stones.
+**Conclusion.** Language and content carry the same temporal sequence as the ornament in Uppland. That is support for the stylistic chronology that does not rest on the ornament. Within one and the same carver the association is weak, but each carver's stones span a short time, so the material cannot tell how much of the agreement runs through the carvers. It is not enough to date individual stones.
 
 ## 1. Introduction
 
 The Viking-Age runestones of Uppland are dated relatively by their ornament, in Anne-Sofie Gräslund's style groups from RAK and Fp to Pr1–Pr5 (Gräslund 2006). The chronology rests on how the rune animal and the animal heads are shaped, not on the language or on what the text says. If language and content changed over the same time, the stones should fall in roughly the same sequence when ordered by them. If two kinds of observation give the same order, both probably follow time – unless both follow something third, such as the carver.
 
-Single traits have earlier been set against the style groups, for instance how ʀ is written in Södermanland and Uppland style group by style group (Larsson 2002, tables 6–9). Seriation by correspondence analysis is a common method of relative dating in archaeology (Greenacre 2007). What is new here is that many traits are ordered at once, without the ornament, and that the order is tested in two halves of the material and in a second province, Södermanland, where the chronology was not built.
+Single traits have earlier been set against the style groups, for instance how ʀ is written in Södermanland and Uppland style group by style group (Larsson 2002, tables 6–9). Seriation by correspondence analysis is a common method of relative dating in archaeology (Greenacre 2007). We have found no study that orders many traits at once, without the ornament, and tests the order in two halves of the material and in a second province, Södermanland, where the chronology was not built.
 
 ## 2. Pre-registration: what was fixed in advance and what is exploratory
 
@@ -274,7 +337,7 @@ On 31 October 2026 a plan for two tests was locked before they were run (SHA-256
 - **Source.** The Scandinavian Runic-text Database, Department of Scandinavian Languages, Uppsala University: Rundata (2014 edition, updated 2018), retrieved 2026-10-04; derived corpus computed 2026-10-29. Runestones only.
 - **The traits.** Language traits (the spelling of certain sounds and words), five formulas (sponsor formula, monument, word order, carver's signature, prayer), cross, short-twig runes and content categories, as presence or absence per stone. Traits found on fewer than 15 stones are not counted, nor stones with fewer than four traits. The style group is not included.
 - **Time** is the style group's midpoint after Gräslund (2006).
-- **Why Uppland.** In the whole Swedish material ({CH['n_corpus']:,} stones with at least four traits) the seriation's first axis follows mainly regional differences and the carvers and time only weakly (rank correlation with the style-group midpoint {abs(CD1['rho_time']):.2f}); the second axis follows time better ({abs(CD2['rho_time']):.2f}), but also province and carver. The seriation is therefore made on Uppland, where the stylistic chronology was built.
+- **Why Uppland.** In the whole Swedish material ({CH['n_corpus']:,} stones with at least four traits) the seriation's first axis follows mainly regional differences and the carvers, and time only weakly (rank correlation with the style-group midpoint {abs(CD1['rho_time']):.2f}); the second axis follows time better ({abs(CD2['rho_time']):.2f}), but also province and carver. The seriation is therefore made on Uppland, where the stylistic chronology was built.
 - **Uppland:** {CH['n_stones']} stones and {CH['n_attributes']} traits, {CH['n_dated']} stones with a style group. **Södermanland:** {SO['n_stones']} stones and {SO['n_attributes']} traits, {SO['n_dated']} with a style group.
 - **The halves** are the project's fixed division parish by parish.
 
@@ -302,26 +365,26 @@ On 31 October 2026 a plan for two tests was locked before they were run (SHA-256
 
 - The halves: tested (5.1); they hold.
 - Adjusted for province: not tested; the seriation is made within one province, and Södermanland is tested on its own (5.2).
-- The carver as a random effect: not tested. Closest is the correlation within carvers: only {VR['within_carver']['rho']:.2f} ({VR['within_carver']['groups']} carvers with at least five dated stones, {VR['within_carver']['n']} stones; exploratory).
+- The carver as a random effect: not tested. Closest is the correlation within carvers: only {VR['within_carver']['rho']:.2f} ({VR['within_carver']['groups']} carvers with at least five dated stones, {VR['within_carver']['n']} stones; exploratory). Of the spread in dating among these stones only {pc(W_TIME)} percent lies within the carvers (computed on the stones' rank order in time); the rest separates the carvers, so within one carver there is little time to measure.
 - The parish as a random effect: not tested. Closest is the correlation within hundreds: {VR['within_district']['rho']:.2f} ({VR['within_district']['groups']} hundreds; exploratory).
 - Location as a spatial surface: not tested. Closest is the partial correlation with latitude held constant: {V['partial_rho']:.2f}.
 - Without one province at a time: not applicable, since the seriation concerns one province; instead the replication in Södermanland.
 - Without moved stones: not tested.
 - Model check: not tested; the correspondence analysis has no corresponding check of residuals.
-- Adjustment together with all associations the project reports: not tested; the Holm correction covers the plan's three tests.
+- Adjustment together with all {N_SHOWN} associations the project reports: done, with the seriation's own p since it has no sensitivity analyses of that kind; q < 0.001. The Holm correction covers the plan's three tests.
 - The variants of the traits (exploratory): without cross {VR['no_cross']['rho']:.2f}, without journey abroad {VR['no_anchor']['rho']:.2f}, without the traits that change over time {VR['no_changing']['rho']:.2f}, without all of these {VR['strict']['rho']:.2f}.
 
 **5.4 Dating individual stones.** If the axis is used to estimate years, the mean error is {V['mae_loo_years']} years when each stone is estimated without itself, against {V['mae_naive_years']} years for guessing the mean year: the seriation orders the stones, but it does not date a single stone much better than a guess.
 
 ## 6. Discussion
 
-**What the finding says.** Language, formulas and content changed in the same sequence as the ornament in Uppland, and it holds equally strongly in two halves of the material. Since the ornament is not included, it is support for Gräslund's relative chronology that does not rest on the ornament, but runs largely through the carvers (5.3). It also holds without the crosses, which are part of the picture, without the trait journey abroad (which the Ingvar and England stones carry and which could otherwise anchor the time) and without the spelling traits whose change is measured separately.
+**What the finding says.** Language, formulas and content changed in the same sequence as the ornament in Uppland, and it holds equally strongly in two halves of the material. Since the ornament is not included, it is support for Gräslund's relative chronology that does not rest on the ornament; how much of it runs through the carvers the material cannot tell (5.3). It also holds without the crosses, which are part of the picture, without the trait journey abroad (which the Ingvar and England stones carry and which could otherwise anchor the time) and without the spelling traits whose change is measured separately.
 
 **Against earlier research.** The stylistic chronology is the basis on which most datings of Swedish runestones rest (Gräslund 2006). The result says that it is not only an ordering of ornament: language and content follow the same time. In Södermanland, where the chronology is applied but was not built, the same sequence is found but a little over half as strong.
 
 **Weaknesses, in order of weight.**
 
-1. **The sequence runs between carvers.** Within one and the same carver the correlation is only {VR['within_carver']['rho']:.2f}. Ornament and language both follow the carver, and the carvers worked at different times; part of the agreement may therefore be that the seriation orders carvers. Within hundreds it holds ({VR['within_district']['rho']:.2f}), so it is not an ordering of districts.
+1. **The sequence is weak within carvers.** Within one and the same carver the correlation is only {VR['within_carver']['rho']:.2f}. Ornament and language both follow the carver, and the carvers worked at different times; part of the agreement may therefore be that the seriation orders carvers. But each carver's stones span a short time ({pc(W_TIME)} percent of the spread in dating lies within the carvers, and {W_ONE} of the {VR['within_carver']['groups']} carvers have stones in a single style group), so a weak correlation within carvers is expected even if language follows time. Within hundreds it holds ({VR['within_district']['rho']:.2f}), so it is not an ordering of districts.
 2. **Not pre-registered.** The seriation in Uppland was known when the plan for the halves and Södermanland was locked, and Uppland was chosen after the whole material had shown a regional first axis. The halves and Södermanland are therefore the actual test.
 3. **Södermanland may be geography.** With latitude held constant the correlation is {SO['partial_rho']:.2f}, below the plan's limit.
 4. **Not a dating.** The mean error for years is only somewhat better than guessing the mean year.
@@ -330,11 +393,11 @@ On 31 October 2026 a plan for two tests was locked before they were run (SHA-256
 
 ## 7. Conclusion
 
-Ordered by language, formulas and content, the runestones of Uppland fall in the same sequence as in the stylistic chronology, rho {V['rho']:.2f}, and it holds in both halves. That is support for the relative chronology that does not rest on the ornament, but runs largely through the carvers, and in Södermanland it is weaker and partly geographical. The next step is to test the seriation within carvers who worked over a long time, and in Östergötland and Västergötland when the dating there becomes more secure.
+Ordered by language, formulas and content, the runestones of Uppland fall in the same sequence as in the stylistic chronology, rho {V['rho']:.2f}, and it holds in both halves. That is support for the relative chronology that does not rest on the ornament; how much of it runs through the carvers the material cannot tell, and in Södermanland the association is weaker and partly geographical. The next step is to test the seriation within carvers who worked over a long time, and in Östergötland and Västergötland when the dating there becomes more secure.
 
 ## Data and code
 
-The analysis was made in Vitki {APP_VERSION}, an open research tool for runestones ([vitkirunor.se]({SITE}/en)). Code state: commit {CODE_COMMIT} in https://github.com/Precatio/runes (Vitki {APP_VERSION} plus later changes). The code, the analysis plan and the result files are there under GPL-3.0.
+The analysis was made in Vitki {APP_VERSION}, an open research tool for runestones ([vitkirunor.se]({SITE}/en)). Code state: commit {CODE_COMMIT} in https://github.com/Precatio/runes (Vitki {APP_VERSION} plus later changes); the report's builder for the versions of 2026-11-05 from commit {BUILD_COMMIT}. The code, the analysis plan and the result files are there under GPL-3.0.
 
 - The seriation: `r/chronology.R` (results `chronology.json` under the material's version `{FP}`).
 - The plan for the halves and Södermanland: `analysplaner/2026-10-31-seriation-halvor-sodermanland.md`; the code `utdata/seriation/replikering.R`, the results `replikering.json` and `replikering_resultat.md`.
@@ -353,8 +416,8 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 
 :::box The essentials
 - What is written on the stones changed in the same order as the ornament.
-- That gives the stylistic chronology support that does not rest on the ornaments themselves, but runs largely through the carvers.
-- The order runs mostly between the carvers, not within them, and it is not enough to date a single stone.
+- That gives the stylistic chronology support that does not rest on the ornaments themselves.
+- Within one and the same carver the order is weak, but a carver's stones span a short time, so that says little. The order is not enough to date a single stone.
 :::
 
 {LOG_EN}
@@ -374,19 +437,25 @@ for b in (body, body_en):
     assert "oberoende stöd" not in main and "oberoende klockor" not in main and "independent support" not in main and "independent clocks" not in main
     assert "ungefär hälften så stark" not in main and "about half as strong" not in main
     assert "Någon release med DOI" not in b and "No release with a DOI" not in b
+    # version 4: the claims that were corrected must not come back
+    assert "till stor del går via ristarna" not in main and "runs largely through the carvers" not in main
+    assert "Det nya här är" not in main and "What is new here" not in main
+    assert "justeringen för alla samband som projektet redovisar är inte prövade" not in main
+    assert "the adjustment for all associations the project reports are not tested" not in main
 assert "Det viktigaste i korthet" in body and "## 2. Förregistrering" in body and "## 6. Diskussion" in body
 assert "I klartext" in body and "In plain words" in body_en  # mallen version 4
 assert "## Sammanfattning\n\n**Vad som inte är prövat.**" in body and "## Abstract\n\n**What has not been tested.**" in body_en
-assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Delvis prövat fynd. Rapportversion 3, 2026-11-05 (först publicerad 2026-10-31). Tidslinje: ")
-assert body_en.split("\n", 1)[0].startswith("*Viktor Kvant, independent researcher. Partially tested finding. Report version 3, 2026-11-05 (first published 2026-10-31). Timeline: ")
-# Delvis prövat (mallen): every step that is missing is named "inte prövat" in 5.3
+assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Delvis prövat fynd. Rapportversion 4, 2026-11-05 (först publicerad 2026-10-31). Tidslinje: ")
+assert body_en.split("\n", 1)[0].startswith("*Viktor Kvant, independent researcher. Partially tested finding. Report version 4, 2026-11-05 (first published 2026-10-31). Timeline: ")
+# Delvis prövat (mallen): every step that is missing is named "inte prövat" in 5.3; the adjustment for all associations is done
 S53 = body[body.index("**5.3 Känslighetsanalyserna steg för steg.**"):body.index("**5.4 ")]
-assert S53.count("inte prövat") == 7 and "inte tillämpligt" in S53
+assert S53.count("inte prövat") == 6 and "inte tillämpligt" in S53 and "q < 0,001" in S53
 S53e = body_en[body_en.index("**5.3 The sensitivity analyses step by step.**"):body_en.index("**5.4 ")]
-assert S53e.count("not tested") == 7 and "not applicable" in S53e
+assert S53e.count("not tested") == 6 and "not applicable" in S53e and "q < 0.001" in S53e
+assert f"bara {pc(W_TIME)} procent inom ristarna" in body and f"only {pc(W_TIME)} percent lies within the carvers" in body_en
 assert "drygt hälften så stark" in body and "a little over half as strong" in body_en
 assert "(Larsson 2002, tabell 6–9)" in body and "(Larsson 2002, tables 6–9)" in body_en
-assert body.count("**Version ") == body_en.count("**Version ") == 2
+assert body.count("**Version ") == body_en.count("**Version ") == 3
 assert len(body.split()) <= 3000
 
 out = {"slug": SLUG, "title": title, "summary": summary, "body": body, "title_en": title_en, "summary_en": summary_en,

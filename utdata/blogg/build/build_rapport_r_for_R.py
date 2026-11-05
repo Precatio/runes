@@ -3,6 +3,8 @@ stor andel av runstenarna som i resten av landet" (sv + en). Klustret ur den rum
 känslighetsanalyserna (src/robustness.py, METHODS 1v) och de explorativa räkningarna om ristaren Erik och tiden, allt på
 korpusens version e83202e01a5e6d27. Figurerna ritas av utdata/rapporter/figurer/karta_r_for_R.R. Varje siffra
 asserteras mot filerna. Rapportversion 3 (2026-11-05): rättelser efter granskningen före arkiveringen i Zenodo.
+Rapportversion 4 (2026-11-05): rättelser efter en andra granskning (justeringen för alla samband, socknarna, Erik och
+Åsmund, Balle, Fjädrundaland, byggarens commit, det som version 3 strök utan att säga det).
     ../../../.venv/bin/python build_rapport_r_for_R.py [--write | --update DOC]"""
 import datetime as dt
 import json
@@ -30,15 +32,21 @@ assert DONE["fingerprint"] == FP and DONE["r_version"].startswith("R version 4.6
 assert DONE["computed_at"].startswith("2026-10-29")  # härledd korpus beräknad 2026-10-29
 APP_VERSION = "3.0.0"  # the Vitki version the analysis was made in (tag v3.0.0 + the commits named in Data och kod), not the current one
 assert open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().startswith("611a4d5f")  # mallens version 4
-REPORT_VERSION = 3  # version 1: 2026-10-31, version 2: 2026-11-01
+REPORT_VERSION = 4  # version 1: 2026-10-31, version 2: 2026-11-01, version 3: 2026-11-05
 FIRST = "2026-10-31"  # version 1 publicerades
 V2 = "2026-11-01"
+V3 = "2026-11-05"
 TODAY = "2026-11-05"  # rapportversionens datum, fast i byggaren (mallen version 3)
 # Kodläget: den commit där analyskoden, resultatfilernas skript, figurerna och byggaren för version 2 ligger (inget i r/ eller
 # i korpusjobbets kod som rör rapporten ändrades mellan körningen 2026-10-29 och den; efter den, 2026-11-02, ändrades trappan)
 CODE_COMMIT = "4f80a63"
+# Rapportens byggare för versionerna 2026-11-05 (version 3 och framåt) och Larsson-anteckningen finns från denna commit
+BUILD_COMMIT = "6eae0af"
 if os.path.isdir(os.path.join(ROOT, ".git")):
     assert subprocess.run(["git", "-C", ROOT, "merge-base", "--is-ancestor", CODE_COMMIT, "HEAD"]).returncode == 0
+    assert subprocess.run(["git", "-C", ROOT, "merge-base", "--is-ancestor", BUILD_COMMIT, "HEAD"]).returncode == 0
+    for _f in ("utdata/blogg/build/build_rapport_r_for_R.py", "utdata/gamla_granser/larsson_yrrunan.md"):
+        assert subprocess.run(["git", "-C", ROOT, "cat-file", "-e", f"{BUILD_COMMIT}:{_f}"]).returncode == 0, _f
 TL_SV = ("klustret upptäcktes 2026-10-12; den populära artikeln publicerades 2026-10-13; materialet frystes 2026-10-29; "
          "den populära artikeln räknades om 2026-10-31")
 TL_EN = ("the cluster was found 2026-10-12; the popular article was published 2026-10-13; the material was frozen 2026-10-29; "
@@ -93,6 +101,9 @@ RD = {r["signum"]: r for r in RDJ["inscriptions"]}
 assert RD["U 1172"]["place"].startswith("Holm") and RD["U 1172"]["parish"] == "Vittinge sn"
 PAR = pd.Series([RD[s]["parish"] for s in INSIDE]).value_counts()
 assert (PAR["Simtuna sn"], PAR["Vårfrukyrka sn"], PAR["Tillinge sn"]) == (5, 3, 3)
+# version 4: every parish with three stones is named, and the number of parishes
+assert len(PAR) == 20 and PAR.max() == 5 and int((PAR == 5).sum()) == 1 and int((PAR == 4).sum()) == 0
+assert set(PAR[PAR == 3].index) == {"Vårfrukyrka sn", "Tillinge sn", "Nysätra sn", "Fröslunda sn", "Jumkils sn"}
 
 # ---- the stones (corpus.csv): trait known, not moved according to Rundata (as in the scan) -------------------------------
 d = pd.read_csv(os.path.join(C, "corpus.csv"), low_memory=False)
@@ -158,6 +169,7 @@ BALL = k[k.carvers_all.fillna("").str.contains("Balle")]  # Balli with the uncer
 BA_IN, BA_OUT = frac(BALL[BALL.inside]), frac(BALL[~BALL.inside])
 P_BA = fisher(BA_IN, BA_OUT)[1]
 assert (BA_IN, BA_OUT) == ((5, 7), (6, 20)) and 0.08 < P_BA < 0.09
+assert P_B > 0.05 and P_BA > 0.05  # version 4: "för få stenar för att skiljas från slumpen"
 A = k[(k.carver == "Åsmund") & (k.carvers_uncertain == 0)]
 A_IN, A_OUT = frac(A[A.inside]), frac(A[~A.inside])
 assert (A_IN, A_OUT) == ((0, 3), (0, 10))
@@ -175,6 +187,14 @@ assert ATTR_IN == (33, 36) and (pc(ATTR_IN[0] / ATTR_IN[1]), pc(ATTR_OUT), pc(AT
 fj = [regions.old_region(s, p) == "fjadrundaland" for s, p in zip(k.signum, k.province)]
 FJ = (int(named[fj].sum()), int(sum(fj)))
 assert FJ == (45, 45)
+# version 4: how much of the cluster lies in Fjädrundaland ("till stor del", weakness 3), and the rest is still dense
+fj = pd.Series(fj, index=k.index)
+FJ_IN = int((fj & k.inside).sum())
+NFJ_IN = (int(named[k.inside & ~fj].sum()), int((k.inside & ~fj).sum()))
+NFJ_U_OUT = named[~k.inside & ~fj & (k.province == "U")].mean()
+assert FJ_IN == 22 and int(named[fj & k.inside].sum()) == 22 and NFJ_IN == (11, 14) and pc(NFJ_U_OUT) == 62  # "inte helt"
+# version 4: the later stones write r about four times as often as the rest of Uppland (named in the change log)
+assert round((LA_IN[0] / LA_IN[1]) / (LA_U_OUT[0] / LA_U_OUT[1])) == 4
 
 # ---- the popular article, recomputed 2026-10-31 (commit 491ceb1) ---------------------------------------------------------
 ART = json.load(open(os.path.join(ROOT, "utdata", "blogg", "erik-skrev-r.json"), encoding="utf-8"))
@@ -215,6 +235,11 @@ SUMM = robustness.summary(ANN)
 N_SHOWN, N_ALLRUNG = SUMM["n_fdr"], SUMM["all_rungs"]
 assert ME["confirmed"] is True and ME["ladder"]["passed"] == ME["ladder"]["tested"] == 8 and 0.015 < ME["q_global"] < 0.025
 assert (N_SHOWN, N_ALLRUNG) == (48, 15)
+# version 4 (4.3): the hotspot was selected from the data, so it enters the common Benjamini–Hochberg with the larger of
+# the adjusted model's p and its own value, the scan's q across the 13 traits (src/robustness.annotate); the halves' p is
+# not used there
+assert ME["ladder"]["selected"] and ME["significance"]["kind"] == "q" and ME["significance"]["value"] == CL["q_bh"] == 0.013
+assert ME["ladder"]["p"] == RU["adjusted"]["p"] < CL["q_bh"]
 QG = d2(ME["q_global"])
 QGe = f"{ME['q_global']:.2f}"
 
@@ -253,8 +278,34 @@ V3_EN = ("- **Version 3, 2026-11-05.** Corrections before archiving in Zenodo: t
          "outside the cluster, the density of attributions (Stille 1999), more of Larsson (2002), Peterson (1983), two unread "
          "works, code state, data versions, absolute links and sources in the captions. No analysis was "
          "redone and no earlier figure changed.")
-LOG_SV = andringslogg("sv", 2, V2, "Bildtexterna säger nu att kartorna är gjorda av Vitki.", "") + "\n" + V3_SV
-LOG_EN = andringslogg("en", 2, V2, "", "The captions now say that the maps were made by Vitki.") + "\n" + V3_EN
+V4_SV = (f"- **Version 4, {TODAY}.** Rättelser efter en andra granskning före arkiveringen i Zenodo. Metoden för justeringen "
+         f"för alla {N_SHOWN} samband var fel beskriven: den använder det större av den justerade modellens p och "
+         f"scanstatistikens q över de {N_TRAITS} dragen (0,013), inte halvornas p (4.3). Listan över socknarna med flest stenar "
+         "saknade Nysätra, Fröslunda och Jumkil, som också har 3 stenar var (5.1). Att stavningen följde ristaren gäller bara "
+         "Åsmund: Eriks stenar står alla i eller strax utanför bygden, så för honom går ristare och plats inte att skilja "
+         "(sammanfattningen, diskussionen, slutsatsen och korthetsrutan). Balles siffror sägs nu vara för få för att skiljas "
+         "från slumpen. De tätare attributionerna i klustret förklaras till stor del, inte helt, av Stilles attribueringar i "
+         f"Fjädrundaland ({FJ_IN} av klustrets {CL['n']} stenar ligger där). Kodläget anger nu också den commit där rapportens "
+         "byggare finns. Version 3 strök utan att säga det: att de senare stenarna i bygden skriver r fyra gånger så ofta som i "
+         "övriga Uppland (i sammanfattningen, diskussionen och slutsatsen; siffrorna står kvar i 5.4), att "
+         f"{FP_U_OUT[0]} av {FP_U_OUT[1]} Fp-stenar i Uppland utanför klustret har draget, andelarna i Södermanland "
+         f"({SO[0]} av {SO[1]}) och Västergötland ({VG[0]} av {VG[1]}) och referensen till metodbeskrivningen. Inga analyser är "
+         "omgjorda och inga tidigare siffror ändrade.")
+V4_EN = (f"- **Version 4, {TODAY}.** Corrections after a second review before archiving in Zenodo. The method of the adjustment "
+         f"for all {N_SHOWN} associations was described wrongly: it uses the larger of the adjusted model's p and the scan "
+         f"statistic's q across the {N_TRAITS} traits (0.013), not the halves' p (4.3). The list of the parishes with most stones "
+         "lacked Nysätra, Fröslunda and Jumkil, which also have 3 stones each (5.1). That the spelling followed the carver holds "
+         "only for Åsmund: Erik's stones all stand in or just outside the district, so for him carver and place cannot be told "
+         "apart (abstract, discussion, conclusion and essentials box). Balli's figures are now said to be too few to tell from "
+         "chance. The denser attributions in the cluster are explained largely, not wholly, by Stille's attributions in "
+         f"Fjädrundaland ({FJ_IN} of the cluster's {CL['n']} stones lie there). The code state now also names the commit holding "
+         "the report's builder. Version 3 removed without saying so: that the later stones of the district write r four times "
+         "as often as the rest of Uppland (in the abstract, discussion and conclusion; the figures remain in 5.4), that "
+         f"{FP_U_OUT[0]} of {FP_U_OUT[1]} Fp stones in Uppland outside the cluster have the trait, the shares in Södermanland "
+         f"({SO[0]} of {SO[1]}) and Västergötland ({VG[0]} of {VG[1]}) and the reference to the method description. No analysis "
+         "was redone and no earlier figure changed.")
+LOG_SV = andringslogg("sv", 2, V2, "Bildtexterna säger nu att kartorna är gjorda av Vitki.", "") + "\n" + V3_SV + "\n" + V4_SV
+LOG_EN = andringslogg("en", 2, V2, "", "The captions now say that the maps were made by Vitki.") + "\n" + V3_EN + "\n" + V4_EN
 
 body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion {REPORT_VERSION}, {TODAY} (först publicerad {FIRST}). Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, yr-runan, ʀ, r, Uppland, ristare, rumslig statistik. Konkurrerande intressen: inga. Finansiering: ingen.*
 
@@ -264,7 +315,7 @@ body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion
 **Material.** {sp(PAT['n'])} vikingatida runstenar i de svenska landskapen där det går att avgöra hur ʀ är skrivet och som inte är flyttade enligt Samnordisk runtextdatabas (Rundata); {LOST} av dem är försvunna och kända genom äldre uppteckningar.
 **Metod.** Morans I, Getis-Ord Gi∗ och Kulldorffs rumsliga scanstatistik (999 simuleringar), justerat för de {N_TRAITS} drag som skannades; replikering i två på förhand bestämda halvor; {N_DISTINCT} känslighetsanalyser; justering för alla {N_SHOWN} samband som projektet redovisar.
 **Resultat.** Inom {d1(CL['radius_km'])} kilometer från Holm i Vittinge socken har {CL['cases']} av {CL['n']} stenar minst ett r för ʀ ({pc(CL['rate_in'])} procent), mot {pc(CL['rate_out'])} procent i resten av landet; p = 0,001, justerat för dragen q = 0,013. Samma riktning i båda halvorna ({pc(HA['rate_in'])} mot {pc(HA['rate_out'])} och {pc(HB['rate_in'])} mot {pc(HB['rate_out'])} procent), alla känslighetsanalyser håller, och justerat för alla samband q = {QG}. Explorativt: ristaren Erik skrev r på alla sina {E_IN[1] + E_OUT[1]} säkert attribuerade stenar, men klustret står kvar utan dem ({NE_IN[0]} av {NE_IN[1]} stenar).
-**Slutsats.** Västra Uppland är det område i Sverige där ʀ oftast skrevs med r. Hos Erik och Åsmund följde stavningen ristaren, men klustret står kvar med ristaren konstant; för bygden i övrigt kan materialet inte skilja ristare från plats. Vi föreslår en skrivtradition som började med Erik; uttal, som tidigare forskning menar, är inte uteslutet.
+**Slutsats.** Västra Uppland är det område i Sverige där ʀ oftast skrevs med r. Hos Åsmund följde stavningen ristaren; Eriks stenar står alla i eller strax utanför bygden, så för honom, liksom för bygden i övrigt, kan materialet inte skilja ristare från plats. Klustret står kvar med ristaren konstant. Vi föreslår en skrivtradition som började med Erik; uttal, som tidigare forskning menar, är inte uteslutet.
 
 ## 1. Inledning
 
@@ -292,7 +343,7 @@ Ingen analysplan låstes innan resultaten var kända. Fyndet är upptäckt i en 
 
 **4.2 Halvorna.** Materialet delades en gång för alla analyser i två halvor, hela socknar växelvis inom varje landskap; klustret jämförs i var halva med Fishers exakta test.
 
-**4.3 Känslighetsanalyser.** Logistisk regression, inom mot utanför klustret: rå; justerad för dateringsperiod; ristaren som slumpeffekt, så att en flitig ristares vanor inte räknas som bygdens; socknen som slumpeffekt; var halva för sig; utan stenar som Runor 2020 anger som flyttade. Utan ett landskap i taget och läget som rumslig yta görs inte: klustret ligger nästan helt inom ett landskap ({CL['provinces']['U']} av {CL['n']} stenar), och jämförelsen är själv geografisk. Valet av klustret prövas av scanstatistiken och halvorna; vid justeringen för alla {N_SHOWN} samband används det största av deras p. Antagandena prövas med simulerade residualer (DHARMa; Hartig 2022).
+**4.3 Känslighetsanalyser.** Logistisk regression, inom mot utanför klustret: rå; justerad för dateringsperiod; ristaren som slumpeffekt, så att en flitig ristares vanor inte räknas som bygdens; socknen som slumpeffekt; var halva för sig; utan stenar som Runor 2020 anger som flyttade. Utan ett landskap i taget och läget som rumslig yta görs inte: klustret ligger nästan helt inom ett landskap ({CL['provinces']['U']} av {CL['n']} stenar), och jämförelsen är själv geografisk. Valet av klustret prövas av scanstatistiken och halvorna; vid justeringen för alla {N_SHOWN} samband används det större av den justerade modellens p och scanstatistikens q över de {N_TRAITS} dragen (0,013). Antagandena prövas med simulerade residualer (DHARMa; Hartig 2022).
 
 **4.4 Explorativt.** Andelar efter ristare och dateringsperiod, Fishers exakta test, ojusterat.
 
@@ -300,7 +351,7 @@ Ingen analysplan låstes innan resultaten var kända. Fyndet är upptäckt i en 
 
 ## 5. Resultat
 
-**5.1 Klustret.** Draget samlas geografiskt: Morans I = {d2(MO['i'])} (p < 0,001). Det mest extrema området har mitten i U 1172 vid Holm i Vittinge och radien {d1(CL['radius_km'])} kilometer. Där har {CL['cases']} av {CL['n']} stenar r för ʀ ({pc(CL['rate_in'])} procent), mot {pc(CL['rate_out'])} procent av stenarna i resten av landet: {d2(CL['rr'])} gånger så vanligt. p = 0,001, det lägsta möjliga; justerat för de {N_TRAITS} dragen q = 0,013, och inget annat drags kluster klarar justeringen. Flest stenar står i Simtuna ({PAR['Simtuna sn']}), Vårfrukyrka och Tillinge socknar (3 vardera). Halva A: {pc(HA['rate_in'])} mot {pc(HA['rate_out'])} procent (oddskvot {round(HA['or'])}, {pfmt(HA['p'])}); halva B: {pc(HB['rate_in'])} mot {pc(HB['rate_out'])} procent (oddskvot {d1(HB['or'])}, {pfmt(HB['p'])}).
+**5.1 Klustret.** Draget samlas geografiskt: Morans I = {d2(MO['i'])} (p < 0,001). Det mest extrema området har mitten i U 1172 vid Holm i Vittinge och radien {d1(CL['radius_km'])} kilometer. Där har {CL['cases']} av {CL['n']} stenar r för ʀ ({pc(CL['rate_in'])} procent), mot {pc(CL['rate_out'])} procent av stenarna i resten av landet: {d2(CL['rr'])} gånger så vanligt. p = 0,001, det lägsta möjliga; justerat för de {N_TRAITS} dragen q = 0,013, och inget annat drags kluster klarar justeringen. Klustrets stenar ligger i {len(PAR)} socknar, flest i Simtuna ({PAR['Simtuna sn']}) och i Vårfrukyrka, Tillinge, Nysätra, Fröslunda och Jumkil (3 vardera). Halva A: {pc(HA['rate_in'])} mot {pc(HA['rate_out'])} procent (oddskvot {round(HA['or'])}, {pfmt(HA['p'])}); halva B: {pc(HB['rate_in'])} mot {pc(HB['rate_out'])} procent (oddskvot {d1(HB['or'])}, {pfmt(HB['p'])}).
 
 ![Figur 1. ʀ skrivet med r-runan: stenarna och klustret]({FIGS['riket_sv']})
 **Figur 1.** Runstenar där draget kan avgöras; rost: r för ʀ minst en gång, grå: bara yr-runan. Ringen är klustret. {MAP_SV}
@@ -343,24 +394,24 @@ Ingen analysplan låstes innan resultaten var kända. Fyndet är upptäckt i en 
 2. Åsmund skrev yr-runa på alla sina tretton stenar, också de tre inom klustret; platsen avgjorde inte hans stavning, men det är bara tre stenar.
 3. Stavningen lever kvar i bygden efter Erik, och klustret står kvar med ristaren konstant.
 
-Hos Erik och Åsmund följde stavningen ristaren, men klustret står kvar med ristaren konstant; för bygden i övrigt kan materialet inte skilja ristare från plats. Talade ristarna ett mål där ljuden fallit samman, ger det samma mönster, och Balle pekar åt det hållet (5.4). Provet är om de senare r-stenarna står i Eriks tradition – ornamentik, formler, stavning i övrigt – eller bara i hans bygd.
+Hos Åsmund följde stavningen ristaren; Eriks stenar står alla i eller strax utanför bygden, så för honom, liksom för bygden i övrigt, kan materialet inte skilja ristare från plats. Klustret står kvar med ristaren konstant. Talade ristarna ett mål där ljuden fallit samman, ger det samma mönster. Balle skrev r oftare inom klustret än utanför, vilket passar båda förklaringarna, men på för få stenar för att skiljas från slumpen (5.4). Provet är om de senare r-stenarna står i Eriks tradition – ornamentik, formler, stavning i övrigt – eller bara i hans bygd.
 
 **Svagheter, i ordning efter vikt.**
 
 1. **Upptäckt, inte förregistrerat.** Gränsen är vald av datan; radie och centrum är ungefärliga.
 2. **Erik bär den tidiga delen.** {EA_IN[1] - 2} av {EA_IN[1]} tidiga stenar i klustret är attribuerade till honom efter stil, och flera attributioner har ifrågasatts (Larsson 2002, avsnitt 7.2.3); utan honom är marginalen mindre.
-3. **Ojämna attributioner.** Attributionerna är tätare i klustret ({ATTR_IN[0]} av {ATTR_IN[1]} mot {pc(ATTR_OUT)} procent), eftersom Stille (1999) attribuerade Fjädrundalands stenar systematiskt; jämförelserna av ristare vilar på ojämnt underlag.
+3. **Ojämna attributioner.** Attributionerna är tätare i klustret ({ATTR_IN[0]} av {ATTR_IN[1]} mot {pc(ATTR_OUT)} procent), till stor del eftersom Stille (1999) attribuerade Fjädrundalands stenar systematiskt ({FJ_IN} av klustrets {CL['n']} stenar ligger där); jämförelserna av ristare vilar på ojämnt underlag.
 4. **Få ord, ingen handkontroll.** Ofta en eller två ändelser per sten, mest *æftiʀ*, och ett r räcker; en felläst yr-runa eller en annan normalisering flyttar enskilda stenar.
 
 **Vad som skulle fälla fyndet.** En handläsning där r-formerna i klustret oftare är osäkra än utanför, eller nya fynd i bygden med yr-runa.
 
 ## 7. Slutsats
 
-Inom {d1(CL['radius_km'])} kilometer från Holm i Vittinge har {pc(CL['rate_in'])} procent av runstenarna minst ett r för ʀ, mot {pc(CL['rate_out'])} procent i resten av landet, och samlingen tål varje känslighetsanalys. Hos Erik och Åsmund följde stavningen ristaren, men klustret står kvar med ristaren konstant; för bygden i övrigt kan materialet inte skilja ristare från plats. Vi föreslår en skrivtradition som började med Erik; uttal, som Stille och Larsson menar, är ännu inte uteslutet.
+Inom {d1(CL['radius_km'])} kilometer från Holm i Vittinge har {pc(CL['rate_in'])} procent av runstenarna minst ett r för ʀ, mot {pc(CL['rate_out'])} procent i resten av landet, och samlingen tål varje känslighetsanalys. Hos Åsmund följde stavningen ristaren; Eriks stenar står alla i eller strax utanför bygden, så för honom, liksom för bygden i övrigt, kan materialet inte skilja ristare från plats. Klustret står kvar med ristaren konstant. Vi föreslår en skrivtradition som började med Erik; uttal, som Stille och Larsson menar, är ännu inte uteslutet.
 
 ## Data och kod
 
-Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runstenar ([vitkirunor.se]({SITE})). Kodläge: commit {CODE_COMMIT} i https://github.com/Precatio/runes (Vitki {APP_VERSION} med senare ändringar). Koden och resultatfilerna finns där under GPL-3.0.
+Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runstenar ([vitkirunor.se]({SITE})). Kodläge: commit {CODE_COMMIT} i https://github.com/Precatio/runes (Vitki {APP_VERSION} med senare ändringar); rapportens byggare för versionerna 2026-11-05 från commit {BUILD_COMMIT}. Koden och resultatfilerna finns där under GPL-3.0.
 
 - Draget: `src/language_profile.py`, `src/pattern_map.py`; genomsökningen: `r/hotspots.R`; känslighetsanalyserna: `r/robustness.R`, `src/robustness.py` (`METHODS.md`, 1f och 1v); resultaten under materialets version `{FP}`; figurerna: `utdata/rapporter/figurer/karta_r_for_R.R`. Rapporten byggs av `utdata/blogg/build/build_rapport_r_for_R.py`, som stannar om någon siffra inte stämmer.
 - I Vitki: Statistik, Geografi, och Karta, Mönster. Ordlista: {SITE}/forskningsrapporter/begrepp.
@@ -385,7 +436,7 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 
 :::box Det viktigaste i korthet
 - I västra Uppland, kring Simtuna, Vårfrukyrka och Tillinge, skrevs det gamla ljudet ʀ med vanlig r-runa på långt fler runstenar än någon annanstans i Sverige.
-- Erik och Åsmund stavade som de brukade var de än ristade, och bygden fortsatte efter Erik; om det var ristarnas vana eller bygdens tal kan stenarna inte avgöra.
+- Åsmund behöll yr-runan också inne i bygden, Erik skrev r på alla sina stenar, som står i eller nära den, och bygden fortsatte efter Erik; om det var ristarnas vana eller bygdens tal kan stenarna inte avgöra.
 - Vår hypotes är en skrivtradition. Tidigare forskning har läst det som uttal, och stenarna kan ännu inte avgöra vem som har rätt.
 :::
 
@@ -400,7 +451,7 @@ body_en = f"""*Viktor Kvant, independent researcher. Fully tested finding. Repor
 **Material.** {en_n(PAT['n'])} Viking-Age runestones in the Swedish provinces where it can be decided how ʀ is written and which are not moved according to the Scandinavian Runic-text Database (Rundata); {LOST} of them are lost and known from older records.
 **Method.** Moran's I, Getis-Ord Gi∗ and Kulldorff's spatial scan statistic (999 simulations), adjusted for the {N_TRAITS} traits scanned; replication in two pre-defined halves; {N_DISTINCT} sensitivity analyses; adjustment for all {N_SHOWN} associations the project reports.
 **Results.** Within {CL['radius_km']:.1f} kilometres of Holm in Vittinge parish, {CL['cases']} of {CL['n']} stones have at least one r for ʀ ({pc(CL['rate_in'])} percent), against {pc(CL['rate_out'])} percent in the rest of the country; p = 0.001, adjusted for the traits q = 0.013. Same direction in both halves ({pc(HA['rate_in'])} against {pc(HA['rate_out'])} and {pc(HB['rate_in'])} against {pc(HB['rate_out'])} percent), every sensitivity analysis holds, and adjusted for all associations q = {QGe}. Exploratory: the carver Erik wrote r on all his {E_IN[1] + E_OUT[1]} securely attributed stones, but the cluster remains without them ({NE_IN[0]} of {NE_IN[1]} stones).
-**Conclusion.** Western Uppland is the area of Sweden where ʀ was most often written with r. With Erik and Åsmund the spelling followed the carver, but the cluster remains with the carver held constant; for the rest of the district the material cannot separate carver from place. We propose a writing tradition that began with Erik; pronunciation, as earlier research holds, is not ruled out.
+**Conclusion.** Western Uppland is the area of Sweden where ʀ was most often written with r. With Åsmund the spelling followed the carver; Erik's stones all stand in or just outside the district, so for him, as for the rest of the district, the material cannot separate carver from place. The cluster remains with the carver held constant. We propose a writing tradition that began with Erik; pronunciation, as earlier research holds, is not ruled out.
 
 ## 1. Introduction
 
@@ -428,7 +479,7 @@ No analysis plan was locked before the results were known. The finding was disco
 
 **4.2 The halves.** The material was divided once for all analyses into two halves, whole parishes dealt alternately within each province; the cluster is compared in each half with Fisher's exact test.
 
-**4.3 Sensitivity analyses.** Logistic regression, within against outside the cluster: raw; adjusted for dating period; the carver as a random effect, so that a prolific carver's habits are not counted as the district's; the parish as a random effect; each half on its own; without stones that Runor 2020 records as moved. Without one province at a time and location as a spatial surface are not made: the cluster lies almost wholly within one province ({CL['provinces']['U']} of {CL['n']} stones), and the comparison is itself geographic. The choice of the cluster is tested by the scan statistic and the halves; the adjustment for all {N_SHOWN} associations uses the largest of their p-values. The assumptions are checked with simulated residuals (DHARMa; Hartig 2022).
+**4.3 Sensitivity analyses.** Logistic regression, within against outside the cluster: raw; adjusted for dating period; the carver as a random effect, so that a prolific carver's habits are not counted as the district's; the parish as a random effect; each half on its own; without stones that Runor 2020 records as moved. Without one province at a time and location as a spatial surface are not made: the cluster lies almost wholly within one province ({CL['provinces']['U']} of {CL['n']} stones), and the comparison is itself geographic. The choice of the cluster is tested by the scan statistic and the halves; in the adjustment for all {N_SHOWN} associations the larger of the adjusted model's p and the scan statistic's q across the {N_TRAITS} traits (0.013) is used. The assumptions are checked with simulated residuals (DHARMa; Hartig 2022).
 
 **4.4 Exploratory.** Shares by carver and dating period, Fisher's exact test, unadjusted.
 
@@ -436,7 +487,7 @@ No analysis plan was locked before the results were known. The finding was disco
 
 ## 5. Results
 
-**5.1 The cluster.** The trait clusters geographically: Moran's I = {MO['i']:.2f} (p < 0.001). The most extreme area has its centre at U 1172 at Holm in Vittinge parish and a radius of {CL['radius_km']:.1f} kilometres. There {CL['cases']} of {CL['n']} stones have r for ʀ ({pc(CL['rate_in'])} percent), against {pc(CL['rate_out'])} percent of the stones in the rest of the country: {CL['rr']:.2f} times as common. p = 0.001, the lowest possible; adjusted for the {N_TRAITS} traits q = 0.013, and no other trait's cluster passes the adjustment. Most stones stand in Simtuna ({PAR['Simtuna sn']}), Vårfrukyrka and Tillinge parishes (3 each). Half A: {pc(HA['rate_in'])} against {pc(HA['rate_out'])} percent (odds ratio {round(HA['or'])}, {pfmt(HA['p'], True)}); half B: {pc(HB['rate_in'])} against {pc(HB['rate_out'])} percent (odds ratio {HB['or']:.1f}, {pfmt(HB['p'], True)}).
+**5.1 The cluster.** The trait clusters geographically: Moran's I = {MO['i']:.2f} (p < 0.001). The most extreme area has its centre at U 1172 at Holm in Vittinge parish and a radius of {CL['radius_km']:.1f} kilometres. There {CL['cases']} of {CL['n']} stones have r for ʀ ({pc(CL['rate_in'])} percent), against {pc(CL['rate_out'])} percent of the stones in the rest of the country: {CL['rr']:.2f} times as common. p = 0.001, the lowest possible; adjusted for the {N_TRAITS} traits q = 0.013, and no other trait's cluster passes the adjustment. The cluster's stones lie in {len(PAR)} parishes, most in Simtuna ({PAR['Simtuna sn']}) and in Vårfrukyrka, Tillinge, Nysätra, Fröslunda and Jumkil (3 each). Half A: {pc(HA['rate_in'])} against {pc(HA['rate_out'])} percent (odds ratio {round(HA['or'])}, {pfmt(HA['p'], True)}); half B: {pc(HB['rate_in'])} against {pc(HB['rate_out'])} percent (odds ratio {HB['or']:.1f}, {pfmt(HB['p'], True)}).
 
 ![Figure 1. ʀ written with the r-rune: the stones and the cluster]({FIGS['riket_en']})
 **Figure 1.** Runestones where the trait can be decided; rust: r for ʀ at least once, grey: the yr-rune only. The ring is the cluster. {MAP_EN}
@@ -479,24 +530,24 @@ No analysis plan was locked before the results were known. The finding was disco
 2. Åsmund wrote the yr-rune on all his thirteen stones, including the three within the cluster; the place did not decide his spelling, but these are only three stones.
 3. The spelling lives on in the district after Erik, and the cluster remains with the carver held constant.
 
-With Erik and Åsmund the spelling followed the carver, but the cluster remains with the carver held constant; for the rest of the district the material cannot separate carver from place. If the carvers spoke a variety in which the sounds had merged, that gives the same pattern, and Balli points that way (5.4). The test is whether the later r-stones stand in Erik's tradition – ornament, formulas, spelling otherwise – or merely in his district.
+With Åsmund the spelling followed the carver; Erik's stones all stand in or just outside the district, so for him, as for the rest of the district, the material cannot separate carver from place. The cluster remains with the carver held constant. If the carvers spoke a variety in which the sounds had merged, that gives the same pattern. Balli wrote r more often within the cluster than outside it, which fits both explanations, but on too few stones to tell from chance (5.4). The test is whether the later r-stones stand in Erik's tradition – ornament, formulas, spelling otherwise – or merely in his district.
 
 **Weaknesses, in order of weight.**
 
 1. **Discovered, not pre-registered.** The boundary is chosen by the data; radius and centre are approximate.
 2. **Erik carries the early part.** {EA_IN[1] - 2} of {EA_IN[1]} early stones in the cluster are attributed to him by style, and several attributions have been questioned (Larsson 2002, section 7.2.3); without him the margin is smaller.
-3. **Uneven attributions.** The attributions are denser in the cluster ({ATTR_IN[0]} of {ATTR_IN[1]} against {pc(ATTR_OUT)} percent), since Stille (1999) attributed the stones of Fjädrundaland systematically; the comparisons of carvers rest on uneven ground.
+3. **Uneven attributions.** The attributions are denser in the cluster ({ATTR_IN[0]} of {ATTR_IN[1]} against {pc(ATTR_OUT)} percent), largely because Stille (1999) attributed the stones of Fjädrundaland systematically ({FJ_IN} of the cluster's {CL['n']} stones lie there); the comparisons of carvers rest on uneven ground.
 4. **Few words, no hand check.** Often one or two endings per stone, mostly *æftiʀ*, and a single r is enough; a misread yr-rune or a different normalisation moves individual stones.
 
 **What would overturn the finding.** A hand reading in which the r-forms in the cluster are more often uncertain than outside it, or new finds in the district with the yr-rune.
 
 ## 7. Conclusion
 
-Within {CL['radius_km']:.1f} kilometres of Holm in Vittinge, {pc(CL['rate_in'])} percent of the runestones have at least one r for ʀ, against {pc(CL['rate_out'])} percent in the rest of the country, and the cluster withstands every sensitivity analysis. With Erik and Åsmund the spelling followed the carver, but the cluster remains with the carver held constant; for the rest of the district the material cannot separate carver from place. We propose a writing tradition that began with Erik; pronunciation, as Stille and Larsson hold, is not yet ruled out.
+Within {CL['radius_km']:.1f} kilometres of Holm in Vittinge, {pc(CL['rate_in'])} percent of the runestones have at least one r for ʀ, against {pc(CL['rate_out'])} percent in the rest of the country, and the cluster withstands every sensitivity analysis. With Åsmund the spelling followed the carver; Erik's stones all stand in or just outside the district, so for him, as for the rest of the district, the material cannot separate carver from place. The cluster remains with the carver held constant. We propose a writing tradition that began with Erik; pronunciation, as Stille and Larsson hold, is not yet ruled out.
 
 ## Data and code
 
-The analysis was made in Vitki {APP_VERSION}, an open research tool for runestones ([vitkirunor.se]({SITE}/en)). Code state: commit {CODE_COMMIT} in https://github.com/Precatio/runes (Vitki {APP_VERSION} plus later changes). The code and result files are there under GPL-3.0.
+The analysis was made in Vitki {APP_VERSION}, an open research tool for runestones ([vitkirunor.se]({SITE}/en)). Code state: commit {CODE_COMMIT} in https://github.com/Precatio/runes (Vitki {APP_VERSION} plus later changes); the report's builder for the versions of 2026-11-05 from commit {BUILD_COMMIT}. The code and result files are there under GPL-3.0.
 
 - The trait: `src/language_profile.py`, `src/pattern_map.py`; the search: `r/hotspots.R`; the sensitivity analyses: `r/robustness.R`, `src/robustness.py` (`METHODS.md`, 1f and 1v); the results under the material's version `{FP}`; the figures: `utdata/rapporter/figurer/karta_r_for_R.R`. The report is built by `utdata/blogg/build/build_rapport_r_for_R.py`, which stops if any figure disagrees.
 - In Vitki: Statistics, Geography, and Map, Patterns. Glossary: {SITE}/en/forskningsrapporter/begrepp.
@@ -521,7 +572,7 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 
 :::box The essentials
 - In western Uppland, around Simtuna, Vårfrukyrka and Tillinge, the old sound ʀ was written with the ordinary r-rune on far more runestones than anywhere else in Sweden.
-- Erik and Åsmund spelled as they were used to wherever they carved, and the district carried on after Erik; whether that was the carvers' habit or the district's speech the stones cannot decide.
+- Åsmund kept the yr-rune even inside the district, Erik wrote r on all his stones, which stand in or near it, and the district carried on after Erik; whether that was the carvers' habit or the district's speech the stones cannot decide.
 - Our hypothesis is a writing tradition. Earlier research has read it as pronunciation, and the stones cannot yet decide who is right.
 :::
 
@@ -542,11 +593,20 @@ for b in (re.split(r"## (?:Ändringslogg|Change log)", x)[0] for x in (body, bod
     assert "med äldre siffror" not in b and "with older figures" not in b
     assert not re.search(r"(?<!!)\[[^\]]*\]\((?!https://)", b), "alla länkar absoluta (bilderna går via sajtens figurlager)"
     assert "Någon release med DOI" not in b and "No release with a DOI" not in b
-    assert "Rapportversion 3, 2026-11-05 (först publicerad 2026-10-31)." in b or "Report version 3, 2026-11-05 (first published 2026-10-31)." in b
+    assert "Rapportversion 4, 2026-11-05 (först publicerad 2026-10-31)." in b or "Report version 4, 2026-11-05 (first published 2026-10-31)." in b
+    # version 4: the claims that were corrected must not come back
+    assert "Hos Erik och Åsmund följde stavningen ristaren" not in b and "With Erik and Åsmund the spelling followed the carver" not in b
+    assert "var de än ristade" not in b and "wherever they carved" not in b
+    assert "Balle pekar åt det hållet" not in b and "Balli points that way" not in b
+    assert "det största av deras p" not in b and "the largest of their p-values" not in b
+    assert "Vårfrukyrka och Tillinge socknar (3 vardera)" not in b and "Vårfrukyrka and Tillinge parishes (3 each)" not in b
+assert "Nysätra, Fröslunda och Jumkil (3 vardera)" in body and "Nysätra, Fröslunda and Jumkil (3 each)" in body_en
+assert f"till stor del eftersom Stille (1999) attribuerade Fjädrundalands stenar systematiskt ({FJ_IN} av" in body
+assert f"largely because Stille (1999) attributed the stones of Fjädrundaland systematically ({FJ_IN} of" in body_en
 for b in (body, body_en):
     for cap in re.findall(r"^\*\*(?:Figur|Figure) \d\.\*\*.*$", b, re.M):
         assert cap.endswith(MAP_SV) or cap.endswith(MAP_EN), cap
-assert body.count("**Version ") == body_en.count("**Version ") == 2
+assert body.count("**Version ") == body_en.count("**Version ") == 3
 JARGON = r"modul\w*|trapp\w*|q_global|korpusjobb|fingeravtryck|fingerprint|facit|Vitkis|Vitki's|\bthe app\b|\bappen\b|`[^`]*/[^`]*`|METHODS"
 for b in (body, body_en):
     assert not re.search(r"^\|", b, re.M), "BlogBody har inga tabeller"
@@ -555,14 +615,17 @@ for b in (body, body_en):
     head = b.split("## Data")[0]
     assert not re.findall(JARGON, head), re.findall(JARGON, head)  # the locked template: no internal names before Data och kod
 assert "Det viktigaste i korthet" in body and "## 2. Förregistrering" in body and "## 6. Diskussion" in body
-assert len(body.split()) <= 3000, len(body.split())  # mallen: 1 500–3 000 ord
+# mallen: 1 500–3 000 ord, räknat före Data och kod som i de andra byggarna (referenserna och ändringsloggen räknas inte;
+# version 4:s ändringslogg förde hela texten över 3 000)
+for b in (body, body_en):
+    assert 1500 <= len(b.split("## Data")[0].split()) <= 3000, len(b.split("## Data")[0].split())
 
 out = {"slug": SLUG, "title": title, "summary": summary, "body": body, "title_en": title_en, "summary_en": summary_en,
        "body_en": body_en, "labels": ["Rapport", "Språk och stavning", "Geografi", "Ristare"]}
 assert blog_labels.check(out["labels"]) is None
 path = os.path.join(ROOT, "utdata", "rapporter", "rapport_r_for_R.json")
 json.dump(out, open(path, "w"), ensure_ascii=False, indent=1)
-print(path, len(body.split()), "ord,", len(body_en.split()), "words")
+print(path, len(body.split()), "ord,", len(body.split("## Data")[0].split()), "före Data och kod;", len(body_en.split()), "words")
 
 if "--update" in sys.argv or "--write" in sys.argv:
     from api.routers import blog

@@ -1,7 +1,8 @@
 """Forskningsrapport (låst mall utdata/rapporter/MALL.md, version 4; Fullt prövat fynd): "Monoftongstavningen blir
 ovanligare på runstenarna – från 69 till 22 procent mellan omkring år 1000 och 1115" (sv + en). Rapportversion 2
 (2026-11-05): rättelser efter granskningen före arkiveringen i Zenodo; halvornas avvikelse kontrolleras i
-utdata/monoftong/halvor.R (halvor.json). Mönstret
+utdata/monoftong/halvor.R (halvor.json). Rapportversion 3 (2026-11-05): svagheten om Rundatas normalisering tillbaka,
+halvornas filer med sin commit. Mönstret
 Förändring|ai_alla i projektets genomgång av hur 14 drag förändras över tid (r/change.R), robusthetsstegen
 (src/robustness.py, METHODS 1v), mätkontrollerna i r/change.R (ai_checks) och kodningskontrollen i utdata/monoftong/.
 Inte förregistrerat. Alla siffror asserteras mot korpusjobbets filer (data/cache/r/corpus/<FP>/) och räknas om ur
@@ -33,14 +34,22 @@ assert DONE["computed_at"].startswith("2026-10-29")  # härledd korpus beräknad
 APP_VERSION = "3.0.0"  # the Vitki version the analysis was made in (tag v3.0.0 + the commits named in Data och kod), not the current one
 MALL_SHA = open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().split()[0]
 assert MALL_SHA.startswith("611a4d5f")  # mallens version 4
-REPORT_VERSION = 2  # version 1: 2026-10-31
+REPORT_VERSION = 3  # version 1: 2026-10-31, version 2: 2026-11-05
 FIRST = "2026-10-31"  # version 1 publicerades
+V2 = "2026-11-05"
 TODAY = "2026-11-05"  # rapportversionens datum, fast i byggaren (mallen version 3)
 # Kodläget: den commit där analyskoden, kodningskontrollen och byggaren för version 1 ligger (inget som rör rapporten
 # ändrades mellan korpuskörningen 2026-10-29 och den; 2026-11-02 ändrades trappan)
 CODE_COMMIT = "4f80a63"
+# Halvornas kontroll (halvor.R, halvor.json) och rapportens byggare för versionerna 2026-11-05 finns från denna commit
+BUILD_COMMIT = "6eae0af"
 if os.path.isdir(os.path.join(ROOT, ".git")):
     assert subprocess.run(["git", "-C", ROOT, "merge-base", "--is-ancestor", CODE_COMMIT, "HEAD"]).returncode == 0
+    assert subprocess.run(["git", "-C", ROOT, "merge-base", "--is-ancestor", BUILD_COMMIT, "HEAD"]).returncode == 0
+    for _f in ("utdata/monoftong/halvor.R", "utdata/monoftong/halvor.json", "utdata/blogg/build/build_rapport_monoftong.py"):
+        assert subprocess.run(["git", "-C", ROOT, "cat-file", "-e", f"{BUILD_COMMIT}:{_f}"]).returncode == 0, _f
+        assert subprocess.run(["git", "-C", ROOT, "cat-file", "-e", f"{CODE_COMMIT}:{_f}"], capture_output=True).returncode != 0 \
+            or _f.endswith(".py"), _f  # halvornas filer finns inte i kodläget, därför nämns BUILD_COMMIT
 RDM = json.load(open(os.path.join(ROOT, "data", "rundata.json"), encoding="utf-8"))["meta"]
 assert RDM["source"].startswith("Samnordisk runtextdatabas 2014 (RUNDATA.xls uppdaterad 2018)") and RDM["built"] == "2026-10-04"
 assert RDM["license"] == "ODbL-1.0 / DbCL-1.0" and "nordiska.uu.se/forskn/samnord.htm" in RDM["attribution"]
@@ -230,8 +239,25 @@ V2_EN = ("Corrections before archiving in Zenodo: the abstract also gives the sm
          "three, fall in another half); the difference in percentage points is now given in both languages; Källström (2010) "
          "and Åhlén (1997) are named as unread. Added code state, data versions, the template's version (4), the glossary and "
          "a source in the chart; the text is shortened. No analysis was redone and no earlier figure changed.")
-LOG_SV = andringslogg("sv", 2, TODAY, V2_SV, "").replace(" Inga siffror, tolkningar eller slutsatser är ändrade.", "")
-LOG_EN = andringslogg("en", 2, TODAY, "", V2_EN).replace(" No numbers, interpretations or conclusions have changed.", "")
+V3_SV = (f"- **Version 3, {TODAY}.** Rättelser efter en andra granskning före arkiveringen i Zenodo. Svaghet 4 säger åter att "
+         "draget bygger på Rundatas normalisering och translittering, ord för ord, utan egen läsning; version 2 strök det utan "
+         "att säga det. Halvornas kontrollfiler (halvor.R och halvor.json) finns inte i det angivna kodläget utan i commit "
+         f"{BUILD_COMMIT}, tillsammans med rapportens byggare, och det står nu under Data och kod. Version 2 strök också, utan att "
+         "säga det, att andelen nästan står still mellan omkring 1030 och 1070 (i sammanfattningen; det står kvar i 5.1 och i "
+         "svaghet 1), att orden skrivna med bara a eller utan vokal inte visar någon monoftong, att förändringen inte bara gäller "
+         "ordet för sten (5.4; siffrorna står kvar) och att e-stavningen inte var möjlig överallt från början eftersom stungna "
+         "runor blir vanligare under perioden (5.5). Inga analyser är omgjorda och inga tidigare siffror ändrade.")
+V3_EN = (f"- **Version 3, {TODAY}.** Corrections after a second review before archiving in Zenodo. Weakness 4 again says that "
+         "the trait rests on Rundata's normalisation and transliteration, word by word, without a reading of our own; version 2 "
+         "removed this without saying so. The check files of the halves (halvor.R and halvor.json) are not in the stated code "
+         f"state but in commit {BUILD_COMMIT}, together with the report's builder, and Data and code now says so. Version 2 also "
+         "removed, without saying so, that the share hardly moves between about 1030 and 1070 (from the abstract; it remains in "
+         "5.1 and weakness 1), that the words spelled with a alone or without a vowel show no monophthong, that the change is not "
+         "confined to the word for stone (5.4; the figures remain) and that the e-spelling was not available everywhere from the "
+         "start because dotted runes become more common during the period (5.5). No analysis was redone and no earlier figure "
+         "changed.")
+LOG_SV = andringslogg("sv", 2, V2, V2_SV, "").replace(" Inga siffror, tolkningar eller slutsatser är ändrade.", "") + "\n" + V3_SV
+LOG_EN = andringslogg("en", 2, V2, "", V2_EN).replace(" No numbers, interpretations or conclusions have changed.", "") + "\n" + V3_EN
 
 body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion {REPORT_VERSION}, {TODAY} (först publicerad {FIRST}). Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, runsvenska, monoftongering, stavning, skriftnorm, ristare, stilkronologi, logistisk regression. Konkurrerande intressen: inga. Finansiering: ingen.*
 
@@ -319,7 +345,7 @@ Ingen analysplan låstes innan resultaten var kända; fyndet är upptäckt i en 
 1. **Ändarna bär nedgången.** Mellan omkring 1030 och 1070 står andelen nästan still, och utan den tidigaste och den senaste stilgruppen är trenden inte signifikant ({pfmt(K['trimmed']['p'])}). Pr5 har bara {BS['Pr5']['n']} stenar.
 2. **I Uppland är ändarna två ristare.** Gunnar står för {U_RAK_GUNNAR} av {U_ST['RAK'][1]} RAK-stenar och Öpir för {U_PR5_OPIR} av {U_ST['Pr5'][1]} Pr5-stenar. Inom samma ristare går trenden åt samma håll men är inte signifikant ({pfmt(K['within']['p'])}). Fyndet kan alltså läsas som en skillnad mellan ristartraditioner snarare än en gradvis förändring hos alla; det passar en skriftnorm, men resultatet vilar på få verkstäder.
 3. **Dateringen.** Stilgrupperna är en relativ kronologi med osäkra årtal. RAK är en bred, tidig grupp med stenar mest i Götaland; modellen håller läget konstant, och Uppland ensamt visar samma riktning, men där är RAK i hög grad Gunnar. Med dragna årtal blir förändringen {pc(-DR['change_max'])}–{pc(-DR['change_min'])} procentenheter i stället för {pc(-T['change'])}.
-4. **Mätningen.** Kodningskontrollen ändrar ingenting, men bara signerade stenar ger inget signifikant resultat ({K['signed']['n']} stenar).
+4. **Mätningen.** Draget bygger på Rundatas normalisering och translittering, ord för ord, utan egen läsning. Kodningskontrollen ändrar ingenting, men bara signerade stenar ger inget signifikant resultat ({K['signed']['n']} stenar).
 5. **Vad stavningen betyder.** Om *stin* betecknar en monoftong eller är ett förkortat sätt att skriva diftongen är just den fråga resultatet berör men inte kan avgöra.
 6. **Litteratur vi inte läst.** Källström (2010) om Åsmund, Öpir och Önjut och Åhléns (1997) monografi om Öpir rör läsningen av Öpirs stavning som norm.
 
@@ -331,10 +357,10 @@ Monoftongstavningen blir ovanligare på runstenarna, från {pc(T['first'])} till
 
 ## Data och kod
 
-Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runstenar ([vitkirunor.se]({SITE})). Kodläge: commit {CODE_COMMIT} i https://github.com/Precatio/runes (Vitki {APP_VERSION} med senare ändringar). Koden och resultatfilerna finns där under GPL-3.0.
+Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runstenar ([vitkirunor.se]({SITE})). Kodläge: commit {CODE_COMMIT} i https://github.com/Precatio/runes (Vitki {APP_VERSION} med senare ändringar); halvornas kontroll och rapportens byggare för versionerna 2026-11-05 från commit {BUILD_COMMIT}. Koden och resultatfilerna finns där under GPL-3.0.
 
 - Draget: `src/language_profile.py`; förändringen, halvorna och mätkontrollerna: `r/change.R`; känslighetsanalyserna: `r/robustness.R` och `src/robustness.py` (`METHODS.md`, 1v); resultaten under materialets version `{FP}`.
-- Kodningskontrollen: `utdata/monoftong/kodning.py` och `kodning.R`. Halvornas avvikelse: `utdata/monoftong/halvor.R` och `halvor.json` (tillagda 2026-11-05).
+- Kodningskontrollen: `utdata/monoftong/kodning.py` och `kodning.R`. Halvornas avvikelse: `utdata/monoftong/halvor.R` och `halvor.json` (tillagda 2026-11-05 i commit {BUILD_COMMIT}, tillsammans med byggaren för version 2).
 - Rapporten byggs av `utdata/blogg/build/build_rapport_monoftong.py`, som stannar om någon siffra inte stämmer. Mallen: `utdata/rapporter/MALL.md`, version 4.
 - I Vitki: Statistik, Förändring. Ordlista: {SITE}/forskningsrapporter/begrepp.
 
@@ -448,7 +474,7 @@ No analysis plan was locked before the results were known; the finding was disco
 1. **The ends carry the decline.** Between about 1030 and 1070 the share hardly moves, and without the earliest and the latest style group the trend is not significant ({pfmt(K['trimmed']['p'], True)}). Pr5 has only {BS['Pr5']['n']} stones.
 2. **In Uppland the ends are two carvers.** Gunnar accounts for {U_RAK_GUNNAR} of {U_ST['RAK'][1]} RAK stones and Öpir for {U_PR5_OPIR} of {U_ST['Pr5'][1]} Pr5 stones. Within the same carver the trend goes the same way but is not significant ({pfmt(K['within']['p'], True)}). The finding can therefore be read as a difference between carving traditions rather than a gradual change in everyone; that fits a written norm, but the result rests on few workshops.
 3. **The dating.** The style groups are a relative chronology with uncertain years. RAK is a broad, early group whose stones stand mostly in Götaland; the model holds location constant, and Uppland on its own shows the same direction, but there RAK is largely Gunnar. With drawn years the change becomes {pc(-DR['change_max'])}–{pc(-DR['change_min'])} percentage points instead of {pc(-T['change'])}.
-4. **The measurement.** The coding check changes nothing, but signed stones alone give no significant result ({K['signed']['n']} stones).
+4. **The measurement.** The trait rests on Rundata's normalisation and transliteration, word by word, without a reading of our own. The coding check changes nothing, but signed stones alone give no significant result ({K['signed']['n']} stones).
 5. **What the spelling means.** Whether *stin* denotes a monophthong or is a shortened way of writing the diphthong is the very question the result touches but cannot decide.
 6. **Literature we have not read.** Källström (2010) on Åsmund, Öpir and Önjut and Åhlén's (1997) monograph on Öpir bear on reading Öpir's spelling as a norm.
 
@@ -460,10 +486,10 @@ The monophthong spelling becomes rarer on the runestones, from {pc(T['first'])} 
 
 ## Data and code
 
-The analysis was made in Vitki {APP_VERSION}, an open research tool for runestones ([vitkirunor.se]({SITE}/en)). Code state: commit {CODE_COMMIT} in https://github.com/Precatio/runes (Vitki {APP_VERSION} plus later changes). The code and result files are there under GPL-3.0.
+The analysis was made in Vitki {APP_VERSION}, an open research tool for runestones ([vitkirunor.se]({SITE}/en)). Code state: commit {CODE_COMMIT} in https://github.com/Precatio/runes (Vitki {APP_VERSION} plus later changes); the check of the halves and the report's builder for the versions of 2026-11-05 from commit {BUILD_COMMIT}. The code and result files are there under GPL-3.0.
 
 - The trait: `src/language_profile.py`; the change, the halves and the checks of the measurement: `r/change.R`; the sensitivity analyses: `r/robustness.R` and `src/robustness.py` (`METHODS.md`, 1v); the results under the material's version `{FP}`.
-- The coding check: `utdata/monoftong/kodning.py` and `kodning.R`. The deviation of the halves: `utdata/monoftong/halvor.R` and `halvor.json` (added 2026-11-05).
+- The coding check: `utdata/monoftong/kodning.py` and `kodning.R`. The deviation of the halves: `utdata/monoftong/halvor.R` and `halvor.json` (added 2026-11-05 in commit {BUILD_COMMIT}, together with the builder of version 2).
 - The report is built by `utdata/blogg/build/build_rapport_monoftong.py`, which stops if any figure disagrees. The template: `utdata/rapporter/MALL.md`, version 4.
 - In Vitki: Statistics, Change. Glossary: {SITE}/en/forskningsrapporter/begrepp.
 
@@ -503,8 +529,13 @@ for b in (body, body_en):
     head = b.split("## Data")[0]
     assert not re.findall(JARGON, head), re.findall(JARGON, head)
 assert "Det viktigaste i korthet" in body and "## 2. Förregistrering" in body and "## 6. Diskussion" in body
-assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion 2, 2026-11-05 (först publicerad 2026-10-31). Tidslinje: ")
-assert body_en.split("\n", 1)[0].startswith("*Viktor Kvant, independent researcher. Fully tested finding. Report version 2, 2026-11-05 (first published 2026-10-31). Timeline: ")
+assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion 3, 2026-11-05 (först publicerad 2026-10-31). Tidslinje: ")
+assert body_en.split("\n", 1)[0].startswith("*Viktor Kvant, independent researcher. Fully tested finding. Report version 3, 2026-11-05 (first published 2026-10-31). Timeline: ")
+assert body.count("**Version ") == body_en.count("**Version ") == 2
+# version 3: the weakness about Rundata's normalisation is back, and the halves' files are named with their commit
+assert "4. **Mätningen.** Draget bygger på Rundatas normalisering och translittering, ord för ord, utan egen läsning." in body
+assert "4. **The measurement.** The trait rests on Rundata's normalisation and transliteration, word by word, without a reading of our own." in body_en
+assert f"`halvor.json` (tillagda 2026-11-05 i commit {BUILD_COMMIT}" in body and f"`halvor.json` (added 2026-11-05 in commit {BUILD_COMMIT}" in body_en
 # version 2: the corrections are in place in both languages
 assert (pc(-EF["diff"]), pc(-EF["diff_ci"][1]), pc(-EF["diff_ci"][0])) == (25, 12, 39)
 assert "en skillnad på omkring 25 procentenheter (troligen 12–39)" in body and "a difference of about 25 percentage points (probably 12–39)" in body_en
@@ -517,14 +548,17 @@ for b in (body, body_en):
     assert not re.search(r"(?<!!)\[[^\]]*\]\((?!https://)", b), "alla länkar absoluta"
     caps = [ln for ln in b.split("\n") if ln.startswith(("Källa:", "Source:"))]
     assert caps and all(c.endswith((CHART_SV, CHART_EN)) for c in caps), caps
-assert len(body.split()) <= 3000, len(body.split())  # mallen: 1 500–3 000 ord
+# mallen: 1 500–3 000 ord, räknat före Data och kod som i de andra byggarna (referenserna och ändringsloggen räknas inte;
+# version 3:s ändringslogg förde hela texten över 3 000)
+for b in (body, body_en):
+    assert 1500 <= len(b.split("## Data")[0].split()) <= 3000, len(b.split("## Data")[0].split())
 
 out = {"slug": SLUG, "title": title, "summary": summary, "body": body, "title_en": title_en, "summary_en": summary_en,
        "body_en": body_en, "labels": ["Rapport", "Språk och stavning", "Datering och stil"]}
 assert blog_labels.check(out["labels"]) is None
 path = os.path.join(ROOT, "utdata", "rapporter", "rapport_monoftong.json")
 json.dump(out, open(path, "w"), ensure_ascii=False, indent=1)
-print(path, len(body.split()), "ord,", len(body_en.split()), "words")
+print(path, len(body.split()), "ord,", len(body.split("## Data")[0].split()), "före Data och kod;", len(body_en.split()), "words")
 
 if "--update" in sys.argv or "--write" in sys.argv:
     from api.routers import blog

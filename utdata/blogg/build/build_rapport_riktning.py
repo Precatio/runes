@@ -5,6 +5,7 @@ analysplaner/2026-10-31-riktning-trappan.md. Alla siffror asserteras mot utdata/
 rättelserna i rapportversion 3 (granskningen 2026-11-05: gon-tilläggen och de dubbla posterna) mot gon_kontroll.json.
     ../../../.venv/bin/python build_rapport_riktning.py [--write | --update DOC]"""
 import datetime as dt
+from decimal import ROUND_HALF_EVEN, Decimal
 import json
 import os
 import re
@@ -21,7 +22,8 @@ from figur import FIG, bild  # noqa: E402
 
 APP_VERSION = "3.0.0"  # the Vitki version the analysis was made in (tag v3.0.0 + the commits named in Data och kod), not the current one
 assert open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().startswith("611a4d5f")  # mallens version 4
-REPORT_VERSION = 3  # version 1: 2026-10-31 (först publicerad); version 2: 2026-11-01 (Figur 1); version 3: rättelser
+REPORT_VERSION = 4  # version 1: 2026-10-31 (först publicerad); version 2: 2026-11-01 (Figur 1); version 3: rättelser;
+# version 4 (2026-11-05): den andra granskningen av det version 3 ändrade
 FIRST_PUBLISHED = "2026-10-31"
 TODAY = "2026-11-05"  # rapportversionens datum, fast i byggaren (mallen version 3)
 TL_SV = ("analysplanen låstes 2026-10-29; analysen kördes 2026-10-29; tilläggsplanen för känslighetsanalyserna låstes och "
@@ -45,12 +47,9 @@ e2 = lambda x: f"{x:.2f}".replace("-", "−")  # noqa: E731
 
 
 def pfmt(p, en=False):
-    if p < 0.001:
-        s = f"{p:.4f}"
-    elif p < 0.1:
-        s = f"{p:.3f}"
-    else:
-        s = f"{p:.2f}"
+    """p avrundat decimalt (inte binärt: 0.0075 = 75/10000 blir 0,008, inte 0,007 som f"{p:.3f}" ger)."""
+    q = Decimal("0.0001") if p < 0.001 else (Decimal("0.001") if p < 0.1 else Decimal("0.01"))
+    s = str(Decimal(repr(p)).quantize(q, rounding=ROUND_HALF_EVEN))
     return f"p = {s}" if en else f"p = {s.replace('.', ',')}"
 
 
@@ -69,11 +68,15 @@ assert (HA["H2"]["n"], HB["H2"]["n"], d2(HA["H2"]["medel_cos"]), d2(HB["H2"]["me
 assert HA["H2"]["p"] == 0.0001 and 0.018 < HB["H2"]["p"] < 0.019
 assert 0.48 < H1["p"] < 0.49 and 0.30 < H3["p"] < 0.31 and 0.86 < H4["p"] < 0.87 and H4["n_bro"] == 9
 assert (pfmt(HA["H1"]["p"]), pfmt(HB["H1"]["p"])) == ("p = 0,79", "p = 0,039")  # H1 i halvorna
+# version 4: halva B lutar för sig mot sydväst (sektorn SV, 213,75–236,25 grader), men inte halva A eller hela materialet
+assert 213.75 <= HB["H1"]["medelriktning"] < 236.25 and HA["H1"]["p"] > 0.05 and H1["p"] > 0.05 and HB["H1"]["p"] < 0.05
 assert (d2(H3["medel_cos"]), d2(H3["vantat"]), e2(H3["vantat"])) == ("0,01", "−0,02", "−0.02")
 DESC = R["beskrivning"]
 ST = DESC["streck"]
 assert (ST["V"], ST["N"], ST["Ö"], ST["S"], pc(DESC["andel_soder"])) == (37, 26, 25, 25, 32)
 assert sum(ST[k] for k in ("SÖ", "SSÖ", "S", "SSV", "SV")) == 70 and abs(DESC["andel_soder"] - 70 / 219) < 1e-12  # mellan SÖ och SV
+EVEN_SOUTH = 5 / 16  # fem av sexton väderstreck: andelen mellan SÖ och SV vid jämn spridning (version 4)
+assert sum(ST.values()) == 219 and pc(EVEN_SOUTH) == 31 and EVEN_SOUTH == 0.3125
 # the plan's robustness tests (analysplanen: "gården inom 500 m; bara Uppland och Södermanland")
 RB = R["robusthet"]
 G500, US = RB["gard_500"], RB["U_So"]["H2"]
@@ -114,7 +117,8 @@ assert LR["rungs"]["huvud"]["p"] == 0.0001 and LU["rungs"]["huvud"]["p"] == 0.00
 assert abs(LR["rungs"]["huvud"]["medel_cos"] - GR["alla"]["medel_cos"]) < 1e-12
 PB = (pfmt(LR["rungs"]["halva_B"]["p"]), pfmt(LU["rungs"]["halva_B"]["p"]))
 PR = (pfmt(LR["rungs"]["bara_registrerad"]["p"]), pfmt(LU["rungs"]["bara_registrerad"]["p"]))
-assert PB == ("p = 0,003", "p = 0,007") and PR == ("p = 0,024", "p = 0,047")
+assert PB == ("p = 0,003", "p = 0,008") and PR == ("p = 0,024", "p = 0,047")  # 0,0075 avrundat decimalt (version 4)
+assert LU["rungs"]["halva_B"]["p"] == 0.0075
 assert (pfmt(GR["H1_rayleigh"]["p"]), pfmt(GR["H3_gard"]["p"])) == ("p = 0,46", "p = 0,29")
 IN = G["indata"]
 assert IN["kmr_runstenar"]["hamtad"] == "2026-10-29" and "K-samsök (CC0)" in IN["kmr_runstenar"]["kalla"]
@@ -125,7 +129,9 @@ assert IN["korpus"]["identiska"] is True and IN["korpus"]["huvud_skapad"] == "20
 for f_ in ("scripts/fetch_kmr_runstenar.py", "scripts/fetch_raa_remains.py", "scripts/fetch_raa_extra.sh", "scripts/fetch_runor.py"):
     assert os.path.exists(os.path.join(ROOT, f_)), f_
 COMMITS = {"74ca1ef": ("2026-10-29", "utdata/riktning/analys.py"), "d0f5a6b": ("2026-10-31", "utdata/riktning/trappa.py"),
-           "4f80a63": ("2026-11-01", "utdata/blogg/build/build_rapport_riktning.py"), "07d2ec0": ("2026-10-27", "src/placement.py")}
+           "4f80a63": ("2026-11-01", "utdata/blogg/build/build_rapport_riktning.py"), "07d2ec0": ("2026-10-27", "src/placement.py"),
+           "6eae0af": ("2026-11-05", "utdata/riktning/gon_kontroll.py")}  # 6eae0af: kontrollen i 4.5 och byggskriptet för version 3
+assert "utdata/blogg/build/build_rapport_riktning.py" in git("show", "--name-only", "--format=", "6eae0af").split("\n")
 for h_, (day_, file_) in COMMITS.items():
     assert git("show", "-s", "--format=%ad", "--date=short", h_) == day_ and file_ in git("show", "--name-only", "--format=", h_).split("\n"), h_
 assert git("log", "-1", "--format=%ad", "--date=short", "v3.0.0") == "2026-10-20"
@@ -140,12 +146,12 @@ title_en = "The runestones turned their text towards the road – half of the in
 summary = ("Förregistrerad studie. Av de runstenar som står kvar på sin plats och där vi vet var vägen gick vänder hälften "
            "ristningen mot vägen, mot en fjärdedel om riktningen vore slumpvis. Fyndet håller i båda halvorna av "
            "materialet och i alla känslighetsanalyser, också när två kodningsfel rättas. Texten vändes mot den som gick "
-           "förbi; vi fann inget tecken på att den vändes mot ett visst väderstreck eller mot gården.")
+           "förbi; vi fann inget samstämmigt tecken på att den vändes mot ett visst väderstreck eller mot gården.")
 summary_en = ("Pre-registered study. Of the runestones that still stand in place and where we know where the road ran, half "
               "turn the inscription towards the road, against a quarter if the direction were random. The finding holds in "
               "both halves of the material and in every sensitivity analysis, also when two coding errors are corrected. The "
-              "text was turned towards those passing by; we found no sign that it was turned towards a particular point of "
-              "the compass or towards the farm.")
+              "text was turned towards those passing by; we found no consistent sign that it was turned towards a particular "
+              "point of the compass or towards the farm.")
 CITE_EN = (f"Kvant, V. ({TODAY[:4]}). {title_en}. Research report, report version {REPORT_VERSION}; analysis in Vitki {APP_VERSION}. "
            f"https://vitkirunor.se/en/forskningsrapporter/{SLUG}")
 
@@ -180,12 +186,14 @@ LOG_SV = f"""## Ändringslogg
 
 - **Version 1, {FIRST_PUBLISHED}.** Första publicerade versionen.
 - **Version 2, 2026-11-01.** Figur 1 tillagd: en skiss av måttet och ett rosdiagram över hur ristningarna vetter i förhållande till vägen. Inga siffror, tolkningar eller slutsatser är ändrade.
-- **Version {REPORT_VERSION}, {TODAY}.** Rättelser efter en granskning inför den permanenta arkiveringen i Zenodo; felen rättas öppet i en ny version, inte i tysthet. (1) Två kodningsfel i hur registrets text lästes redovisas i 4.5 med en kontroll i efterhand: gon-tillägg i nio vägriktningar och sex ristningsriktningar lästes som ett enda väderstreck, och fem stenar med två poster i registret räknades två gånger. Rättat blir sambandet något starkare och alla känslighetsanalyser håller; den låsta analysens siffror står kvar oförändrade, och sammanfattningen och materialavsnittet säger detta. (2) Nollresultaten för väderstrecket, gården och bro- och vägstenarna beskrivs som att ingen skillnad kunde påvisas, inte som fakta; svagheterna har fått en punkt om bytomternas ålder, och svagheten om vägens ålder säger nu att sambandet med registrerade äldre färdvägar är svagt. (3) Tidigare forskning: Ekholm (1950) har redan beskrivit stenar som är vända mot vägen och en återresning som vände en sten; invändningen mot Klos tillskrivs nu Mats G. Larsson (2010), som har lagts till bland referenserna; sidorna för Ekholm och McLeod är angivna; en referens som inte citerades i texten är struken. (4) Planens två robusthetsprov som inte redovisades (gården inom 500 meter, bara Uppland och Södermanland) står i 5.2. (5) Form: andelen som vetter mot söder beskrivs som det den räknar (mellan sydost och sydväst), 5.3 säger att känslighetsanalyserna drog nya omblandningar, Figur 1:s bildtext säger vad samma väderstreck betyder, minustecken, diagrammets upphov, och under Data och kod korpusversionerna, commits, hämtningsskripten och hämtningsdatumen för registret."""
+- **Version 3, 2026-11-05.** Rättelser efter en granskning inför den permanenta arkiveringen i Zenodo; felen rättas öppet i en ny version, inte i tysthet. (1) Två kodningsfel i hur registrets text lästes redovisas i 4.5 med en kontroll i efterhand: gon-tillägg i nio vägriktningar och sex ristningsriktningar lästes som ett enda väderstreck, och fem stenar med två poster i registret räknades två gånger. Rättat blir sambandet något starkare och alla känslighetsanalyser håller; den låsta analysens siffror står kvar oförändrade, och sammanfattningen och materialavsnittet säger detta. (2) Nollresultaten för väderstrecket, gården och bro- och vägstenarna beskrivs som att ingen skillnad kunde påvisas, inte som fakta; svagheterna har fått en punkt om bytomternas ålder, och svagheten om vägens ålder säger nu att sambandet med registrerade äldre färdvägar är svagt. (3) Tidigare forskning: Ekholm (1950) har redan beskrivit stenar som är vända mot vägen och en återresning som vände en sten; invändningen mot Klos tillskrivs nu Mats G. Larsson (2010), som har lagts till bland referenserna; sidorna för Ekholm och McLeod är angivna; en referens som inte citerades i texten är struken. (4) Planens två robusthetsprov som inte redovisades (gården inom 500 meter, bara Uppland och Södermanland) står i 5.2. (5) Form: andelen som vetter mot söder beskrivs som det den räknar (mellan sydost och sydväst), 5.3 säger att känslighetsanalyserna drog nya omblandningar, Figur 1:s bildtext säger vad samma väderstreck betyder, minustecken, diagrammets upphov, och under Data och kod korpusversionerna, commits, hämtningsskripten och hämtningsdatumen för registret.
+- **Version {REPORT_VERSION}, {TODAY}.** En andra granskning inför arkiveringen i Zenodo gick igenom det som version 3 ändrade; inga siffror i analysen är ändrade. (1) Invändningen mot Klos återges noggrannare: Larsson (2010) invänder på s. 252 att gravfälten överbetonas, och på s. 250 påpekar han att Klos kriterier för en forntida väg var mer restriktiva än i hans egen tidigare genomgång, inte än i tidigare forskning i allmänhet. (2) Nollresultatet för väderstrecket beskrivs som att vi inte fann något samstämmigt tecken: 5.2 förklarar nu att halva B för sig lutar mot sydväst ({pfmt(HB['H1']['p'])}) men inte halva A eller hela materialet, och diskussionen anger varför proven av väderstrecket och gården säger mindre (bytomternas ålder, och att Rayleighs test bara fångar ett enda föredraget håll) i stället för att kalla dem svagare utan att det är mätt; ingressen och korthetsrutan säger detsamma. (3) Andelen som vetter mellan sydost och sydväst ({pc(DESC['andel_soder'])} procent) jämförs med de {pc(EVEN_SOUTH)} procent som en jämn spridning ger. (4) 5.1 säger att de {H2['n']} med väg är poster för {DUP['n_stenar_med_vag']} stenar. (5) I 4.5 är halva B:s p-värde med varje sten räknad en gång 0,0075, som skrevs som 0,007 genom ett avrundningsfel; nu 0,008. (6) Data och kod anger commit för kontrollen i 4.5 och byggskriptet för version 3 (6eae0af). (7) Ändringar som version 3 gjorde men inte skrev in i loggen: svagheten om vägens ålder säger inte längre att en sentida väg bara kan försvaga sambandet, eftersom en väg som dragits förbi stenarna eller en sten som ställts upp mot en nyare väg också kan stärka det; 5.2 anger Rayleighs test i var halva; steget med den rättade regeln för flyttade stenar säger att huvudanalysen redan bygger på den regeln, och 4.4 och 5.3 anger regeln med datumet för rättelsen; meningen under Data och kod om en kommande release med DOI är struken."""
 LOG_EN = f"""## Change log
 
 - **Version 1, {FIRST_PUBLISHED}.** First published version.
 - **Version 2, 2026-11-01.** Figure 1 added: a sketch of the measure and a rose diagram of how the inscriptions face relative to the road. No numbers, interpretations or conclusions have changed.
-- **Version {REPORT_VERSION}, {TODAY}.** Corrections after a review before permanent archiving in Zenodo; errors are corrected openly in a new version, not silently. (1) Two coding errors in how the register text was read are reported in 4.5 with a check made afterwards: gon qualifiers in nine road bearings and six inscription bearings were read as a single compass point, and five stones with two records in the register were counted twice. Corrected, the association is slightly stronger and every sensitivity analysis holds; the locked analysis's numbers stand unchanged, and the abstract and the material section say so. (2) The null results for the compass, the farm and the bridge and road stones are described as no difference detected, not as facts; the weaknesses have a point on the age of the farm sites, and the weakness on the age of the road now says that the association with registered older routes is weak. (3) Earlier research: Ekholm (1950) had already described stones turned towards the road and a re-erection that turned a stone; the objection to Klos is now attributed to Mats G. Larsson (2010), added to the references; the pages for Ekholm and McLeod are given; a reference not cited in the text is removed. (4) The plan's two robustness tests that were not reported (the farm within 500 metres, only Uppland and Södermanland) are in 5.2. (5) Form: the share facing south is described as what it counts (between south-east and south-west), 5.3 says that the sensitivity analyses drew new shuffles, the caption of Figure 1 says what the same compass point means, minus signs, the chart's maker, and under Data and code the corpus versions, commits, fetch scripts and fetch dates for the register."""
+- **Version 3, 2026-11-05.** Corrections after a review before permanent archiving in Zenodo; errors are corrected openly in a new version, not silently. (1) Two coding errors in how the register text was read are reported in 4.5 with a check made afterwards: gon qualifiers in nine road bearings and six inscription bearings were read as a single compass point, and five stones with two records in the register were counted twice. Corrected, the association is slightly stronger and every sensitivity analysis holds; the locked analysis's numbers stand unchanged, and the abstract and the material section say so. (2) The null results for the compass, the farm and the bridge and road stones are described as no difference detected, not as facts; the weaknesses have a point on the age of the farm sites, and the weakness on the age of the road now says that the association with registered older routes is weak. (3) Earlier research: Ekholm (1950) had already described stones turned towards the road and a re-erection that turned a stone; the objection to Klos is now attributed to Mats G. Larsson (2010), added to the references; the pages for Ekholm and McLeod are given; a reference not cited in the text is removed. (4) The plan's two robustness tests that were not reported (the farm within 500 metres, only Uppland and Södermanland) are in 5.2. (5) Form: the share facing south is described as what it counts (between south-east and south-west), 5.3 says that the sensitivity analyses drew new shuffles, the caption of Figure 1 says what the same compass point means, minus signs, the chart's maker, and under Data and code the corpus versions, commits, fetch scripts and fetch dates for the register.
+- **Version {REPORT_VERSION}, {TODAY}.** A second review before archiving in Zenodo checked what version 3 changed; no numbers of the analysis have changed. (1) The objection to Klos is given more exactly: Larsson (2010) objects on p. 252 that the grave fields are overstated, and on p. 250 he notes that Klos's criteria for an ancient road were more restrictive than in his own earlier survey, not than in earlier research in general. (2) The null result for the compass is described as no consistent sign: 5.2 now explains that half B on its own leans towards the south-west ({pfmt(HB['H1']['p'], True)}) but neither half A nor the whole material does, and the discussion names why the tests of the compass and the farm say less (the age of the farm sites, and that Rayleigh's test detects only a single preferred direction) instead of calling them weaker without a measure; the opening summary and the essentials box say the same. (3) The share facing between south-east and south-west ({pc(DESC['andel_soder'])} percent) is compared with the {pc(EVEN_SOUTH)} percent an even spread gives. (4) 5.1 says that the {H2['n']} with a road are records for {DUP['n_stenar_med_vag']} stones. (5) In 4.5, half B's p value with each stone counted once is 0.0075, which was printed as 0.007 through a rounding error; it is now 0.008. (6) Data and code gives the commit of the check in 4.5 and the builder of version 3 (6eae0af). (7) Changes that version 3 made but did not log: the weakness on the age of the road no longer says that a later road can only weaken the association, since a road laid past the stones or a stone reset to face a newer road could also strengthen it; 5.2 gives Rayleigh's test in each half; the step with the corrected rule for moved stones says that the main analysis already uses that rule, and 4.4 and 5.3 name the rule by the date of its correction; the sentence under Data and code about a future release with a DOI is removed."""
 
 LR_B, LU_B = LR["rungs"]["halva_B"]["p"], LU["rungs"]["halva_B"]["p"]
 LR_R, LU_R = LR["rungs"]["bara_registrerad"]["p"], LU["rungs"]["bara_registrerad"]["p"]
@@ -202,7 +210,7 @@ body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion
 
 ## 1. Inledning
 
-Gunnar Ekholm (1950) frågade var runstenarna restes och svarade att de uppländska stenarna i stor utsträckning står vid forntidens vägar och vattenleder, och att också stenarna vid gravfälten ofta förklaras av den väg som gick förbi gravfältet. Han noterade att enskilda stenar är vända mot vägen, vid Bollsta i Vaksala (s. 138) och på Särsta mark i Knivsta (s. 139), och att en återresning kan vända en sten: en sten på Ängby mark vid Knivsta har framsidan mot järnvägen sedan den restes på nytt på 1860-talet (s. 140). Torun Zachrisson (1998) har satt stenarna i samband med gård, gräns och gravfält, och Lydia Klos (2009) har hävdat att de flesta restes vid gravfält. Mats G. Larsson (2010) har invänt att gravfälten därmed blir starkt överbetonade på andra lägens bekostnad, och att Klos ställer betydligt strängare krav än tidigare forskning på vad som räknas som en forntida väg (se också McLeod 2014). Johan Bollaert (2016) jämförde stenar längs tre vikingatida vägar med andra stenar i samma trakter och fann att stenarna vid vägarna oftare har påfallande ornamentik och oftare ingår i monument med flera stenar, vilket stöder att de restes för att synas.
+Gunnar Ekholm (1950) frågade var runstenarna restes och svarade att de uppländska stenarna i stor utsträckning står vid forntidens vägar och vattenleder, och att också stenarna vid gravfälten ofta förklaras av den väg som gick förbi gravfältet. Han noterade att enskilda stenar är vända mot vägen, vid Bollsta i Vaksala (s. 138) och på Särsta mark i Knivsta (s. 139), och att en återresning kan vända en sten: en sten på Ängby mark vid Knivsta har framsidan mot järnvägen sedan den restes på nytt på 1860-talet (s. 140). Torun Zachrisson (1998) har satt stenarna i samband med gård, gräns och gravfält, och Lydia Klos (2009) har hävdat att de flesta restes vid gravfält. Mats G. Larsson (2010, s. 252) har invänt att gravfälten därmed blir starkt överbetonade på andra lägens bekostnad; han påpekar också att Klos använde betydligt mer restriktiva kriterier än i hans egen tidigare genomgång för vad som räknas som en forntida väg (s. 250; se också McLeod 2014). Johan Bollaert (2016) jämförde stenar längs tre vikingatida vägar med andra stenar i samma trakter och fann att stenarna vid vägarna oftare har påfallande ornamentik och oftare ingår i monument med flera stenar, vilket stöder att de restes för att synas.
 
 Det som saknas är ett mått i hela materialet på hur själva ristningen vändes. Ekholms iakttagelser gäller enstaka stenar, och en sten kan stå vid en väg men vända texten åt ett annat håll. Syftet här är att pröva om ristningen vändes mot vägen, mot gården eller mot ett visst väderstreck, med de uppgifter om ristningens riktning som Kulturmiljöregistret har för en del stenar.
 
@@ -240,13 +248,13 @@ Planen innehöll inte projektets fasta känslighetsanalyser, som är byggda för
 
 ## 5. Resultat
 
-**5.1 Mot vägen (H2).** Av de {H2['n']} stenarna med väg vänder {pc(H2['andel_inom_45'])} procent ristningen inom 45 grader från vägen. Medel-cos är {d2(H2['medel_cos'])} mot {d2(H2['vantat'])} väntat, {pfmt(H2['p'])}, det lägsta värde 9 999 omblandningar kan ge, och Holm-korrigerat p = 0,0004. Halva A: {HA['H2']['n']} stenar, medel-cos {d2(HA['H2']['medel_cos'])}, {pfmt(HA['H2']['p'])}. Halva B: {HB['H2']['n']} stenar, medel-cos {d2(HB['H2']['medel_cos'])}, {pfmt(HB['H2']['p'])}. H2 *håller* enligt planens regel. I klartext: av de stenar där vi vet var vägen gick vänder hälften texten mot vägen, inom 45 grader åt vardera hållet; om riktningen vore slumpvis skulle en fjärdedel göra det.
+**5.1 Mot vägen (H2).** Av de {H2['n']} posterna med väg ({DUP['n_stenar_med_vag']} stenar; se 4.5) vänder {pc(H2['andel_inom_45'])} procent ristningen inom 45 grader från vägen. Medel-cos är {d2(H2['medel_cos'])} mot {d2(H2['vantat'])} väntat, {pfmt(H2['p'])}, det lägsta värde 9 999 omblandningar kan ge, och Holm-korrigerat p = 0,0004. Halva A: {HA['H2']['n']} stenar, medel-cos {d2(HA['H2']['medel_cos'])}, {pfmt(HA['H2']['p'])}. Halva B: {HB['H2']['n']} stenar, medel-cos {d2(HB['H2']['medel_cos'])}, {pfmt(HB['H2']['p'])}. H2 *håller* enligt planens regel. I klartext: av de stenar där vi vet var vägen gick vänder hälften texten mot vägen, inom 45 grader åt vardera hållet; om riktningen vore slumpvis skulle en fjärdedel göra det.
 
 {chart(True)}
 
 {FIG_SV}
 
-**5.2 Väderstrecket, gården och broarna (H1, H3, H4).** Riktningarna skiljer sig inte påvisbart från en jämn spridning över kompassen: Rayleighs test {pfmt(H1['p'])} (i halva A {pfmt(HA['H1']['p'])}, i halva B {pfmt(HB['H1']['p'])}). Väster är vanligast ({ST['V']} stenar), sedan norr ({ST['N']}), öster ({ST['Ö']}) och söder ({ST['S']}); {pc(DESC['andel_soder'])} procent vetter åt något håll mellan sydost och sydväst. Mot gården: medel-cos {d2(H3['medel_cos'])} mot {d2(H3['vantat'])}, {pfmt(H3['p'])}; vi fann alltså inget tecken på att ristningen vändes mot gården, men bytomterna är kända först från 1600- och 1700-talens kartor. Bro- och vägstenarna ({H4['n_bro']} med väg) skiljer sig inte påvisbart från andra stenar, {pfmt(H4['p'])}, men med nio stenar säger provet lite. Ingen av de tre hypoteserna håller.
+**5.2 Väderstrecket, gården och broarna (H1, H3, H4).** Riktningarna skiljer sig inte påvisbart från en jämn spridning över kompassen: Rayleighs test {pfmt(H1['p'])} (i halva A {pfmt(HA['H1']['p'])}, i halva B {pfmt(HB['H1']['p'])}: halva B lutar för sig mot sydväst, men varken halva A eller hela materialet gör det, så enligt planens regel räknas det inte). Väster är vanligast ({ST['V']} stenar), sedan norr ({ST['N']}), öster ({ST['Ö']}) och söder ({ST['S']}); {pc(DESC['andel_soder'])} procent vetter åt något håll mellan sydost och sydväst, ungefär vad en jämn spridning ger ({pc(EVEN_SOUTH)} procent, fem av de sexton väderstrecken). Mot gården: medel-cos {d2(H3['medel_cos'])} mot {d2(H3['vantat'])}, {pfmt(H3['p'])}; vi fann alltså inget tecken på att ristningen vändes mot gården, men bytomterna är kända först från 1600- och 1700-talens kartor. Bro- och vägstenarna ({H4['n_bro']} med väg) skiljer sig inte påvisbart från andra stenar, {pfmt(H4['p'])}, men med nio stenar säger provet lite. Ingen av de tre hypoteserna håller.
 
 **Planens robusthetsprov.** Med gården inom 500 meter i stället för en kilometer ({G500['n']} stenar): medel-cos {d2(G500['medel_cos'])} mot {d2(G500['vantat'])}, {pfmt(G500['p'])}. Med bara Uppland och Södermanland ({US['n']} stenar med väg): medel-cos {d2(US['medel_cos'])} mot {d2(US['vantat'])}, {pfmt(US['p'])}, {pc(US['andel_inom_45'])} procent inom 45 grader. Planens två andra prov, bara vägar ur registrets text och bara registrerade färdvägar och vägmärken, står bland känslighetsanalyserna i 5.3.
 
@@ -267,7 +275,7 @@ Känslighetsanalyserna drog nya omblandningar, så p-värdena skiljer sig något
 
 ## 6. Diskussion
 
-**Vad fyndet säger.** De som reste runstenarna vände texten mot vägen. Det gäller i hela materialet, i var halva, utan Uppland, socken för socken och med en sten per ristare, så det beror inte på några få platser eller verkstäder. Det gäller också utan de stenar som har rests upp på nytt, som annars kunde ha vänts mot dagens väg, och när kodningsfelen i 4.5 rättas. Vi fann inget tecken på att ristningen vändes mot ett visst väderstreck eller mot gården, men de proven är svagare än provet mot vägen, och att ett samband inte syns är inte detsamma som att det saknas.
+**Vad fyndet säger.** De som reste runstenarna vände texten mot vägen. Det gäller i hela materialet, i var halva, utan Uppland, socken för socken och med en sten per ristare, så det beror inte på några få platser eller verkstäder. Det gäller också utan de stenar som har rests upp på nytt, som annars kunde ha vänts mot dagens väg, och när kodningsfelen i 4.5 rättas. Vi fann inget samstämmigt tecken på att ristningen vändes mot ett visst väderstreck eller mot gården. Det betyder inte att ett sådant samband saknas: bytomterna är kända först från 1600- och 1700-talens kartor, och Rayleighs test fångar bara ett enda föredraget håll, inte till exempel två motsatta.
 
 **Mot tidigare forskning.** Resultatet ger ett mått i hela materialet åt det Ekholm (1950) såg vid enstaka stenar och åt tanken att stenarna vid vägarna restes för att synas (Bollaert 2016). Det står inte emot att många stenar restes vid gravfält (Klos 2009): en sten kan stå vid ett gravfält och vända texten mot vägen förbi det, så som Ekholm (1950, s. 138) beskrev stenen vid Bollsta. Vattenlederna mäts inte här; McLeod (2014) visar att U 170 vänder texten mot en forntida vik och har vägen bakom sig.
 
@@ -287,7 +295,7 @@ Runstenarna vände sin text mot vägen: hälften av ristningarna vetter inom 45 
 
 ## Data och kod
 
-Analysen är gjord i Vitki {APP_VERSION} (git-taggen v3.0.0, 2026-10-20), ett öppet forskningsverktyg för runstenar ([vitkirunor.se](https://vitkirunor.se)), med de ändringar som gjorts efter den versionen. Kodläget: huvudanalysen i commit 74ca1ef (2026-10-29), känslighetsanalyserna i d0f5a6b (2026-10-31) och rapportversion 2 i 4f80a63 (2026-11-01); kontrollen i 4.5 tillkom med rapportversion {REPORT_VERSION}. All kod, analysplanerna och resultatfilerna finns öppet på [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
+Analysen är gjord i Vitki {APP_VERSION} (git-taggen v3.0.0, 2026-10-20), ett öppet forskningsverktyg för runstenar ([vitkirunor.se](https://vitkirunor.se)), med de ändringar som gjorts efter den versionen. Kodläget: huvudanalysen i commit 74ca1ef (2026-10-29), känslighetsanalyserna i d0f5a6b (2026-10-31) och rapportversion 2 i 4f80a63 (2026-11-01); kontrollen i 4.5 tillkom med rapportversion 3 i commit 6eae0af (2026-11-05), tillsammans med byggskriptet för den versionen. All kod, analysplanerna och resultatfilerna finns öppet på [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
 
 - Korpusen: Rundata, fryst för analysen som korpus `{IN['korpus']['huvud']}` ({IN['korpus']['huvud_skapad']}), med regeln för flyttade stenar efter rättelsen den 27 oktober 2026 (commit 07d2ec0). Steget med den regeln i 5.3 läser korpus `{IN['korpus']['flyttregel_steget']}`, som har samma rader.
 - Analysplanerna: `analysplaner/2026-10-29-ristningens-riktning.md` och `analysplaner/2026-10-31-riktning-trappan.md`, med kontrollsummorna i `.sha256`-filerna bredvid.
@@ -311,7 +319,7 @@ Analysen är gjord i Vitki {APP_VERSION} (git-taggen v3.0.0, 2026-10-20), ett ö
 - Zachrisson, T. 1998. *Gård, gräns, gravfält. Sammanhang kring ädelmetalldepåer och runstenar från vikingatid och tidig medeltid i Uppland och Gästrikland*. Stockholm Studies in Archaeology 15. Stockholm: Stockholms universitet.
 
 :::box Det viktigaste i korthet
-- Runstenarna vände sin text mot vägen. Vi såg inget tecken på att väderstrecket eller gården styrde hur de vändes.
+- Runstenarna vände sin text mot vägen. Vi såg inget samstämmigt tecken på att väderstrecket eller gården styrde hur de vändes.
 - Ristarna skrev för den som gick förbi: stenen var ett budskap till vägfarande, inte bara ett minne vid hemmet.
 - Det tål varje kontroll vi har, men vägen i registret är ofta dagens väg, så nästa prov är de gamla kartorna.
 :::
@@ -331,7 +339,7 @@ body_en = f"""*Viktor Kvant, independent researcher. Fully tested finding. Repor
 
 ## 1. Introduction
 
-Gunnar Ekholm (1950) asked where the runestones were raised and answered that the stones of Uppland largely stand by the roads and waterways of the past, and that the stones at grave fields, too, are often explained by the road that passed the grave field. He noted that single stones are turned towards the road, at Bollsta in Vaksala (p. 138) and on Särsta land in Knivsta (p. 139), and that a re-erection can turn a stone: a stone on Ängby land near Knivsta has faced the railway since it was raised again in the 1860s (p. 140). Torun Zachrisson (1998) has related the stones to farm, boundary and grave field, and Lydia Klos (2009) has argued that most were raised at grave fields. Mats G. Larsson (2010) has objected that the grave fields are thereby strongly overstated at the expense of other locations, and that Klos sets far stricter requirements than earlier research for what counts as an ancient road (see also McLeod 2014). Johan Bollaert (2016) compared stones along three Viking-Age roads with other stones in the same districts and found that the stones by the roads more often have striking ornament and more often belong to monuments of several stones, which supports that they were raised to be seen.
+Gunnar Ekholm (1950) asked where the runestones were raised and answered that the stones of Uppland largely stand by the roads and waterways of the past, and that the stones at grave fields, too, are often explained by the road that passed the grave field. He noted that single stones are turned towards the road, at Bollsta in Vaksala (p. 138) and on Särsta land in Knivsta (p. 139), and that a re-erection can turn a stone: a stone on Ängby land near Knivsta has faced the railway since it was raised again in the 1860s (p. 140). Torun Zachrisson (1998) has related the stones to farm, boundary and grave field, and Lydia Klos (2009) has argued that most were raised at grave fields. Mats G. Larsson (2010, p. 252) has objected that the grave fields are thereby strongly overstated at the expense of other locations; he also notes that Klos used considerably more restrictive criteria than his own earlier survey for what counts as an ancient road (p. 250; see also McLeod 2014). Johan Bollaert (2016) compared stones along three Viking-Age roads with other stones in the same districts and found that the stones by the roads more often have striking ornament and more often belong to monuments of several stones, which supports that they were raised to be seen.
 
 What is missing is a measure across the whole material of how the inscription itself was turned. Ekholm's observations concern single stones, and a stone may stand by a road but turn its text another way. The aim here is to test whether the inscription was turned towards the road, towards the farm or towards a particular point of the compass, with the information on the inscription's direction that the register gives for some stones.
 
@@ -369,13 +377,13 @@ The plan did not contain the project's fixed sensitivity analyses, which are bui
 
 ## 5. Results
 
-**5.1 Towards the road (H2).** Of the {H2['n']} stones with a road, {pc(H2['andel_inom_45'])} percent turn the inscription within 45 degrees of the road. The mean cos is {e2(H2['medel_cos'])} against {e2(H2['vantat'])} expected, {pfmt(H2['p'], True)}, the lowest value 9,999 shuffles can give, and Holm-corrected p = 0.0004. Half A: {HA['H2']['n']} stones, mean cos {e2(HA['H2']['medel_cos'])}, {pfmt(HA['H2']['p'], True)}. Half B: {HB['H2']['n']} stones, mean cos {e2(HB['H2']['medel_cos'])}, {pfmt(HB['H2']['p'], True)}. H2 *holds* by the plan's rule. In plain words: of the stones where we know where the road ran, half turn their text towards the road, within 45 degrees either way; if the direction were random, a quarter would.
+**5.1 Towards the road (H2).** Of the {H2['n']} records with a road ({DUP['n_stenar_med_vag']} stones; see 4.5), {pc(H2['andel_inom_45'])} percent turn the inscription within 45 degrees of the road. The mean cos is {e2(H2['medel_cos'])} against {e2(H2['vantat'])} expected, {pfmt(H2['p'], True)}, the lowest value 9,999 shuffles can give, and Holm-corrected p = 0.0004. Half A: {HA['H2']['n']} stones, mean cos {e2(HA['H2']['medel_cos'])}, {pfmt(HA['H2']['p'], True)}. Half B: {HB['H2']['n']} stones, mean cos {e2(HB['H2']['medel_cos'])}, {pfmt(HB['H2']['p'], True)}. H2 *holds* by the plan's rule. In plain words: of the stones where we know where the road ran, half turn their text towards the road, within 45 degrees either way; if the direction were random, a quarter would.
 
 {chart(False)}
 
 {FIG_EN}
 
-**5.2 The compass, the farm and the bridges (H1, H3, H4).** The directions do not differ detectably from an even spread over the compass: Rayleigh's test {pfmt(H1['p'], True)} (in half A {pfmt(HA['H1']['p'], True)}, in half B {pfmt(HB['H1']['p'], True)}). West is the most common ({ST['V']} stones), then north ({ST['N']}), east ({ST['Ö']}) and south ({ST['S']}); {pc(DESC['andel_soder'])} percent face somewhere between south-east and south-west. Towards the farm: mean cos {e2(H3['medel_cos'])} against {e2(H3['vantat'])}, {pfmt(H3['p'], True)}; so we found no sign that the inscription was turned towards the farm, but the farm sites are known only from the maps of the seventeenth and eighteenth centuries. The bridge and road stones ({H4['n_bro']} with a road) do not differ detectably from other stones, {pfmt(H4['p'], True)}, but with nine stones the test says little. None of the three hypotheses holds.
+**5.2 The compass, the farm and the bridges (H1, H3, H4).** The directions do not differ detectably from an even spread over the compass: Rayleigh's test {pfmt(H1['p'], True)} (in half A {pfmt(HA['H1']['p'], True)}, in half B {pfmt(HB['H1']['p'], True)}: half B on its own leans towards the south-west, but neither half A nor the whole material does, so by the plan's rule it does not count). West is the most common ({ST['V']} stones), then north ({ST['N']}), east ({ST['Ö']}) and south ({ST['S']}); {pc(DESC['andel_soder'])} percent face somewhere between south-east and south-west, about what an even spread gives ({pc(EVEN_SOUTH)} percent, five of the sixteen points). Towards the farm: mean cos {e2(H3['medel_cos'])} against {e2(H3['vantat'])}, {pfmt(H3['p'], True)}; so we found no sign that the inscription was turned towards the farm, but the farm sites are known only from the maps of the seventeenth and eighteenth centuries. The bridge and road stones ({H4['n_bro']} with a road) do not differ detectably from other stones, {pfmt(H4['p'], True)}, but with nine stones the test says little. None of the three hypotheses holds.
 
 **The plan's robustness tests.** With the farm within 500 metres instead of one kilometre ({G500['n']} stones): mean cos {e2(G500['medel_cos'])} against {e2(G500['vantat'])}, {pfmt(G500['p'], True)}. With only Uppland and Södermanland ({US['n']} stones with a road): mean cos {e2(US['medel_cos'])} against {e2(US['vantat'])}, {pfmt(US['p'], True)}, {pc(US['andel_inom_45'])} percent within 45 degrees. The plan's two other tests, only roads from the register text and only registered routes and road markers, are among the sensitivity analyses in 5.3.
 
@@ -396,7 +404,7 @@ The sensitivity analyses drew new shuffles, so the p values differ slightly from
 
 ## 6. Discussion
 
-**What the finding says.** Those who raised the runestones turned the text towards the road. It holds in the whole material, in each half, without Uppland, parish by parish and with one stone per carver, so it does not depend on a few places or workshops. It also holds without the stones that have been re-erected, which could otherwise have been turned towards today's road, and when the coding errors in 4.5 are corrected. We found no sign that the inscription was turned towards a particular point of the compass or towards the farm, but those tests are weaker than the test against the road, and an association that is not seen is not the same as one that is absent.
+**What the finding says.** Those who raised the runestones turned the text towards the road. It holds in the whole material, in each half, without Uppland, parish by parish and with one stone per carver, so it does not depend on a few places or workshops. It also holds without the stones that have been re-erected, which could otherwise have been turned towards today's road, and when the coding errors in 4.5 are corrected. We found no consistent sign that the inscription was turned towards a particular point of the compass or towards the farm. That does not mean there was no such association: the farm sites are known only from the maps of the seventeenth and eighteenth centuries, and Rayleigh's test detects only a single preferred direction, not, for example, two opposite ones.
 
 **Against earlier research.** The result gives a measure across the whole material to what Ekholm (1950) saw at single stones and to the idea that the stones by the roads were raised to be seen (Bollaert 2016). It does not contradict that many stones were raised at grave fields (Klos 2009): a stone can stand at a grave field and turn its text towards the road past it, as Ekholm (1950, p. 138) described the stone at Bollsta. The waterways are not measured here; McLeod (2014) shows that U 170 turns its text towards a former bay and has the road behind it.
 
@@ -416,7 +424,7 @@ The runestones turned their text towards the road: half of the inscriptions face
 
 ## Data and code
 
-The analysis was made in Vitki {APP_VERSION} (git tag v3.0.0, 2026-10-20), an open research tool for runestones ([vitkirunor.se](https://vitkirunor.se/en)), with the changes made after that version. Code state: the main analysis in commit 74ca1ef (2026-10-29), the sensitivity analyses in d0f5a6b (2026-10-31) and report version 2 in 4f80a63 (2026-11-01); the check in 4.5 was added with report version {REPORT_VERSION}. All code, the analysis plans and the result files are openly available on [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
+The analysis was made in Vitki {APP_VERSION} (git tag v3.0.0, 2026-10-20), an open research tool for runestones ([vitkirunor.se](https://vitkirunor.se/en)), with the changes made after that version. Code state: the main analysis in commit 74ca1ef (2026-10-29), the sensitivity analyses in d0f5a6b (2026-10-31) and report version 2 in 4f80a63 (2026-11-01); the check in 4.5 was added with report version 3 in commit 6eae0af (2026-11-05), together with the builder of that version. All code, the analysis plans and the result files are openly available on [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
 
 - The corpus: Rundata, frozen for the analysis as corpus `{IN['korpus']['huvud']}` ({IN['korpus']['huvud_skapad']}), with the rule for moved stones after the correction of 27 October 2026 (commit 07d2ec0). The step with that rule in 5.3 reads corpus `{IN['korpus']['flyttregel_steget']}`, which has the same rows.
 - The analysis plans: `analysplaner/2026-10-29-ristningens-riktning.md` and `analysplaner/2026-10-31-riktning-trappan.md`, with their checksums in the `.sha256` files beside them.
@@ -440,7 +448,7 @@ The analysis was made in Vitki {APP_VERSION} (git tag v3.0.0, 2026-10-20), an op
 - Zachrisson, T. 1998. *Gård, gräns, gravfält. Sammanhang kring ädelmetalldepåer och runstenar från vikingatid och tidig medeltid i Uppland och Gästrikland*. Stockholm Studies in Archaeology 15. Stockholm: Stockholm University.
 
 :::box The essentials
-- The runestones turned their text towards the road. We saw no sign that the compass or the farm decided how they were turned.
+- The runestones turned their text towards the road. We saw no consistent sign that the compass or the farm decided how they were turned.
 - The carvers wrote for those who passed by: the stone was a message to travellers, not only a memorial by the home.
 - It withstands every check we have, but the road in the register is often today's road, so the next test is the old maps.
 :::
@@ -456,14 +464,14 @@ for b in (body, body_en):
     head = b.split("## Data")[0]
     assert not re.findall(JARGON, head), re.findall(JARGON, head)
     assert not re.search(r"(?<![\w-])-\d", head), "minustecken, inte bindestreck"
-    assert not re.search(r"\b(3f58e9339191761e|e83202e01a5e6d27|74ca1ef|d0f5a6b|4f80a63|07d2ec0)\b", head)  # versionsnycklar bara under Data och kod
+    assert not re.search(r"\b(3f58e9339191761e|e83202e01a5e6d27|74ca1ef|d0f5a6b|4f80a63|07d2ec0|6eae0af)\b", head)  # versionsnycklar bara under Data och kod
     for ref in ("Bollaert", "Ekholm", "Holm", "Klos", "Larsson", "Mardia", "McLeod", "Zachrisson"):
         assert f"{ref}," in b.split("## Referenser" if b is body else "## References")[1] and ref in head, ref  # citerad och listad
     assert "Kvant, V. 2026" not in b and "137 ff" not in b and "dagens regel" not in b and "today's rule" not in b
 assert "Det viktigaste i korthet" in body and "## 2. Förregistrering" in body and "## 6. Diskussion" in body
 assert "I klartext" in body and "In plain words" in body_en  # mallen version 4
-assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion 3, 2026-11-05 (först publicerad 2026-10-31). Tidslinje: ")
-assert body_en.split("\n", 1)[0].startswith("*Viktor Kvant, independent researcher. Fully tested finding. Report version 3, 2026-11-05 (first published 2026-10-31). Timeline: ")
+assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion 4, 2026-11-05 (först publicerad 2026-10-31). Tidslinje: ")
+assert body_en.split("\n", 1)[0].startswith("*Viktor Kvant, independent researcher. Fully tested finding. Report version 4, 2026-11-05 (first published 2026-10-31). Timeline: ")
 assert body.rstrip().endswith(LOG_SV) and body_en.rstrip().endswith(LOG_EN)  # ändringsloggen sist
 assert body.count("\n## ") == body_en.count("\n## ") and body.count("\n- ") == body_en.count("\n- ")  # sv och en i takt
 

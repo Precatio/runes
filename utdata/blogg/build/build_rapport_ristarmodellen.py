@@ -25,13 +25,16 @@ DONE = json.load(open(os.path.join(C, "done.json"), encoding="utf-8"))
 assert DONE["fingerprint"] == FP and DONE["r_version"].startswith("R version 4.6.1")
 APP_VERSION = "3.0.0"  # the Vitki version the analysis was made in (tag v3.0.0 + the commits named in Data och kod), not the current one
 assert open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().startswith("611a4d5f")  # mallens version 4
-REPORT_VERSION = 2
+REPORT_VERSION = 3
 V1_DATE = "2026-10-31"  # rapportversion 1 publicerades
+V2_DATE = "2026-11-05"  # rapportversion 2
 TODAY = "2026-11-05"  # rapportversionens datum, fast i byggaren (mallen version 3)
 TL_SV = "modellen byggdes 2026-10-05; blindprovets plan låstes 2026-10-21; blindprovet kördes 2026-10-21; provet kördes om på en senare version av materialet 2026-10-31"
 TL_EN = "the model was built 2026-10-05; the plan of the blind test was locked 2026-10-21; the blind test was run 2026-10-21; the test was rerun on a later version of the material 2026-10-31"
 # kodläget för rapportversion 1: 5095161 byggde rapporten; blindprovets kod och resultat ändrades senast i 06e5c47
 COMMIT_V1, COMMIT_ANALYSIS = "5095161", "06e5c47"
+# rapportversion 3: modell_2026_11_04.json/.py (avsnitt 8) och byggaren för versionerna 2026-11-05 finns från denna commit
+BUILD_COMMIT = "6eae0af"
 if os.path.isdir(os.path.join(ROOT, ".git")):
     git = lambda *a: subprocess.run(["git", "-C", ROOT, *a], capture_output=True, text=True)  # noqa: E731
     assert git("merge-base", "--is-ancestor", COMMIT_ANALYSIS, COMMIT_V1).returncode == 0
@@ -41,7 +44,20 @@ if os.path.isdir(os.path.join(ROOT, ".git")):
     assert git("diff", "--quiet", COMMIT_ANALYSIS, COMMIT_V1, "--", "r", "src", "utdata/forslag").returncode == 0
     assert git("diff", "--quiet", COMMIT_V1, "fe616f4~1", "--", "r/attribution.R", "src/stone_overview.py",
                "src/orthography.py", "utdata/forslag").returncode == 0
+    # rapportversion 3: avsnitt 8:s filer finns inte i de commits som texten annars nämner, utan från BUILD_COMMIT
+    assert git("merge-base", "--is-ancestor", BUILD_COMMIT, "HEAD").returncode == 0
+    for _f in ("utdata/attribuering_provad/modell_2026_11_04.json", "utdata/attribuering_provad/modell_2026_11_04.py",
+               "utdata/blogg/build/build_rapport_ristarmodellen.py"):
+        assert git("cat-file", "-e", f"{BUILD_COMMIT}:{_f}").returncode == 0, _f
+        assert git("cat-file", "-e", f"7963a9d:{_f}").returncode != 0 or "/build/" in _f, _f  # avsnitt 8:s filer kom efter modellbytet
 FD = os.path.join(ROOT, "utdata", "forslag")
+# rapportversion 3: Herschend (1998), Kitzler (1998) och seriens namn för Kitzler Åhfeldt (2002) kontrollerade mot
+# källtexterna (utdata/forslag/litteratur_kontroll.md)
+HN = re.sub(r"\s+", " ", open(os.path.join(FD, "litteratur_kontroll.md"), encoding="utf-8").read())
+assert all(x in HN for x in ("*Fornvännen* 93 (1998), s. 97–111", "yields the conclusion that ubiR is one person and ybiR/ybir another",
+                             "the two partly contemporary Öpirs", "the division of Öpir into at least two carvers is justified, ubiR can clearly be distinguished from ybiR/ybir",
+                             "Kitzler anför Herschend som 1997",
+                             "(Theses and Papers in Scientific Archaeology, Series B, 9). Stockholm: Stockholm University."))
 PLAN_SHA = open(os.path.join(FD, "analysis_plan_forslag.sha256")).read().split()[0]
 assert PLAN_SHA.startswith("5ed0b2f3")
 BP = json.load(open(os.path.join(FD, "blindprov.json"), encoding="utf-8"))
@@ -226,7 +242,7 @@ def carvers(sv):
 # ---- ändringsloggen (mallen: en rättelse ger en ny version med ändringslogg sist, aldrig tyst patch) -------------------
 LOG_SV = f"""## Ändringslogg
 
-**Version 2, {TODAY}.** Rättad efter en granskning inför den permanenta arkiveringen i Zenodo. Blindprovet, dess siffror och slutsatsen är oförändrade. Ändringarna och skälen:
+**Version 2, {V2_DATE}.** Rättad efter en granskning inför den permanenta arkiveringen i Zenodo. Blindprovet, dess siffror och slutsatsen är oförändrade. Ändringarna och skälen:
 
 - **Modellen har ändrats.** Version 1 beskrev modellen som om den fortfarande gällde. Modellen ändrades den 4 november 2026; det står nu först i sammanfattningen och i ett nytt avsnitt 8 med den ändrade modellens träffsäkerhet, prövningen mot de signerade stenarna och regelns nya antal förslag ({NOV['nytt förslag']} säkra och {NOV['möjligt förslag']} möjliga). Avsnitt 4.1 och 5.3 står i preteritum, och korthetsrutan har fått en rad om det.
 - **Förslagen dateras.** De {NF['counts']['nytt förslag']} säkra och {NF['counts']['möjligt förslag']} möjliga förslagen är de som regeln gav den 21 oktober 2026.
@@ -234,11 +250,18 @@ LOG_SV = f"""## Ändringslogg
 - **Öpir.** Version 1 nämnde bara Kitzler för tesen att Öpir är minst två ristare och kopplade den till att regeln träffar Öpir sämst. Tesen är Herschends (1998); Kitzler (1998) prövade den och fann stöd för den. Förväxlingarna förklaras enklare av att Öpir är modellens största klass. Inledningen och diskussionen säger nu det, och att Rundata för både ubiR och ybiR/ybir till samma ristare. Herschend (1998) har lagts till bland referenserna.
 - **Kitzler.** Kitzler Åhfeldt (2002) gäller framför allt Uppland, inte Uppland och Östergötland. Kitzler (1998) anges med tidskriftens namn när artikeln trycktes, *Laborativ arkeologi* 10–11.
 - **Form.** Mallens version är 4, inte 2. Appens flikar och en relativ länk har ersatts med fullständiga webbadresser. ”Dagens material” har ersatts med materialets datum och version. Kodläget anges med commit. Diagrammet har fått sitt upphov, och bergarten anges som en jämförelsenivå, inte en del av modellen.
-- **Ordval.** ”Prövbara attribueringsförslag” i stället för ”prövbara attribueringar”; ”modellen gav sannolikheter bara för stenar inom {AT['near_km']} km” i stället för ”förslag ges bara …”; ”för ristare med få signerade stenar” har lagts till under Var metoden inte ska användas."""
+- **Ordval.** ”Prövbara attribueringsförslag” i stället för ”prövbara attribueringar”; ”modellen gav sannolikheter bara för stenar inom {AT['near_km']} km” i stället för ”förslag ges bara …”; ”för ristare med få signerade stenar” har lagts till under Var metoden inte ska användas.
+
+**Version 3, {TODAY}.** Rättad efter en andra granskning inför arkiveringen i Zenodo. Blindprovet, dess siffror och slutsatsen är oförändrade. Ändringarna och skälen:
+
+- **Kitzler Åhfeldt (2002).** Serien heter *Theses and Papers in Scientific Archaeology* B:9, som hon själv anger den (Kitzler Åhfeldt 2020), inte *Theses and Papers in Archaeology*.
+- **Herschend (1998).** Hänvisningen är kontrollerad mot artikeln (Fornvännen 93, s. 97–111): han drar slutsatsen att ubiR är en ristare och ybiR/ybir en annan. Kitzler (1998) anför den som Herschend 1997. Texten är oförändrad.
+- **Kodläge.** Filerna för avsnitt 8 (modell_2026_11_04.json och .py) och rapportens byggare finns i commit {BUILD_COMMIT}, som nu nämns under Data och kod.
+- **Det som version 2 inte sa.** Också sammanfattningens metod och slutsats, 4.5, diskussionen och slutsatsen sattes i preteritum (”I provet var förslagen …”, ”Den fungerade i provet …”), inte bara 4.1 och 5.3."""
 
 LOG_EN = f"""## Change log
 
-**Version 2, {TODAY}.** Corrected after a review before the permanent archiving in Zenodo. The blind test, its figures and the conclusion are unchanged. The changes and the reasons for them:
+**Version 2, {V2_DATE}.** Corrected after a review before the permanent archiving in Zenodo. The blind test, its figures and the conclusion are unchanged. The changes and the reasons for them:
 
 - **The model has changed.** Version 1 described the model as if it were still current. The model was changed on 4 November 2026; this is now stated first in the abstract and in a new section 8 with the changed model's accuracy, the test against the signed stones and the rule's new number of suggestions ({NOV['nytt förslag']} confident and {NOV['möjligt förslag']} possible). Sections 4.1 and 5.3 are in the past tense, and the essentials box has a line about it.
 - **The suggestions are dated.** The {NF['counts']['nytt förslag']} confident and {NF['counts']['möjligt förslag']} possible suggestions are those the rule gave on 21 October 2026.
@@ -246,7 +269,14 @@ LOG_EN = f"""## Change log
 - **Öpir.** Version 1 cited only Kitzler for the thesis that Öpir is at least two carvers and linked it to the rule hitting Öpir least often. The thesis is Herschend's (1998); Kitzler (1998) tested it and found support for it. The confusions are more simply explained by Öpir being the largest class in the model. The introduction and the discussion now say so, and that Rundata assigns both ubiR and ybiR/ybir to the same carver. Herschend (1998) has been added to the references.
 - **Kitzler.** Kitzler Åhfeldt (2002) concerns above all Uppland, not Uppland and Östergötland. Kitzler (1998) is cited with the journal's name when the article was printed, *Laborativ arkeologi* 10–11.
 - **Form.** The template version is 4, not 2. The app's tabs and a relative link have been replaced with full web addresses. "Today's material" has been replaced with the material's date and version. The code state is given as a commit. The chart has its credit, and rock type is described as a comparison level, not part of the model.
-- **Wording.** "Testable attribution hypotheses" instead of "testable attributions"; "the model gave probabilities only for stones within {AT['near_km']} km" instead of "suggestions are given only …"; "the proportion correct" instead of "the share right"; "for carvers with few signed stones" has been added under Where the method should not be used."""
+- **Wording.** "Testable attribution hypotheses" instead of "testable attributions"; "the model gave probabilities only for stones within {AT['near_km']} km" instead of "suggestions are given only …"; "the proportion correct" instead of "the share right"; "for carvers with few signed stones" has been added under Where the method should not be used.
+
+**Version 3, {TODAY}.** Corrected after a second review before archiving in Zenodo. The blind test, its figures and the conclusion are unchanged. The changes and the reasons for them:
+
+- **Kitzler Åhfeldt (2002).** The series is *Theses and Papers in Scientific Archaeology* B:9, as she cites it herself (Kitzler Åhfeldt 2020), not *Theses and Papers in Archaeology*.
+- **Herschend (1998).** The reference has been checked against the article (Fornvännen 93, pp. 97–111): he concludes that ubiR is one carver and ybiR/ybir another. Kitzler (1998) cites it as Herschend 1997. The text is unchanged.
+- **Code state.** The files for section 8 (modell_2026_11_04.json and .py) and the report's builder are in commit {BUILD_COMMIT}, which Data and code now names.
+- **What version 2 did not say.** The abstract's method and conclusion, 4.5, the discussion and the conclusion were also put in the past tense ("In the test the suggestions were …", "In the test it worked …"), not only 4.1 and 5.3."""
 
 
 body = f"""*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapportversion {REPORT_VERSION}, {TODAY}; version 1 publicerades {V1_DATE}. Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, runristare, attribuering, random forest, blindprov, förregistrering, ortografi. Konkurrerande intressen: inga. Finansiering: ingen.*
@@ -355,7 +385,7 @@ Siffrorna i denna rapport gäller modellen så som den var 21–31 oktober 2026.
 
 ## Data och kod
 
-Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runstenar ([vitkirunor.se](https://vitkirunor.se)), med de ändringar som gjorts efter den versionen fram till den 31 oktober 2026 (commit `{COMMIT_V1}` i GitHub-arkivet; blindprovets kod och resultat ändrades senast i commit `{COMMIT_ANALYSIS}` samma dag). Modellen ändrades den 4 november 2026 i commit `fe616f4` och `7963a9d`. All kod, analysplanen och resultatfilerna finns öppet på [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
+Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runstenar ([vitkirunor.se](https://vitkirunor.se)), med de ändringar som gjorts efter den versionen fram till den 31 oktober 2026 (commit `{COMMIT_V1}` i GitHub-arkivet; blindprovets kod och resultat ändrades senast i commit `{COMMIT_ANALYSIS}` samma dag). Modellen ändrades den 4 november 2026 i commit `fe616f4` och `7963a9d`; filerna för avsnitt 8 och rapportens byggare för versionerna 2026-11-05 finns från commit `{BUILD_COMMIT}`. All kod, analysplanen och resultatfilerna finns öppet på [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
 
 - Blindprovets plan: `utdata/forslag/analysplan_forslag.md`, med kontrollsumman i `analysis_plan_forslag.sha256`.
 - Blindprovet: `utdata/forslag/blindprov.py` (resultat `blindprov.json`; omkörningen på materialet den 31 oktober 2026, version `{FP}`, i `blindprov_e83202.json`), den oberoende kontrollen `kontroll.py`, avvikelserna i `resultat.md`. Förslagen den 21 oktober 2026: `nya_forslag.json`.
@@ -370,7 +400,7 @@ Analysen är gjord i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runs
 - Breiman, L. 2001. Random forests. *Machine Learning* 45, s. 5–32.
 - Herschend, F. 1998. ubiR, ybiR, ybir – är det U 485 Ofeg Öpir? *Fornvännen* 93, s. 97–111.
 - Kitzler, L. 1998. Learning to know a rune carver and his cutting technique. A method study and some results. *Laborativ arkeologi* 10–11, s. 89–103. Digitaliserad som *Journal of Nordic Archaeological Science* (JONAS) 10. https://publicera.kb.se/jonas/article/view/64505
-- Kitzler Åhfeldt, L. 2002. *Work and Worship: Laser Scanner Analysis of Viking Age Rune Stones*. Theses and Papers in Archaeology B:9. Stockholm: Stockholms universitet.
+- Kitzler Åhfeldt, L. 2002. *Work and Worship: Laser Scanner Analysis of Viking Age Rune Stones*. Theses and Papers in Scientific Archaeology B:9. Stockholm: Stockholms universitet.
 - Kitzler Åhfeldt, L. 2020. Provenancing rune carvers on Bornholm through 3D-scanning and multivariate statistics of the carving technique. *European Journal of Archaeology* 23 (1), s. 82–104. https://doi.org/10.1017/eaa.2019.37
 - Kvant, V. 2026. *Vitki {APP_VERSION}: metodbeskrivning* (METHODS.md). https://github.com/Precatio/runes
 - Källström, M. 2007. *Mästare och minnesmärken. Studier kring vikingatida runristare och skriftmiljöer i Norden*. Stockholm Studies in Scandinavian Philology, New Series 43. Stockholm: Stockholms universitet.
@@ -495,7 +525,7 @@ The figures in this report apply to the model as it was 21–31 October 2026.
 
 ## Data and code
 
-The analysis was made in Vitki {APP_VERSION}, an open research tool for runestones ([vitkirunor.se](https://vitkirunor.se/en)), with the changes made after that version up to 31 October 2026 (commit `{COMMIT_V1}` in the GitHub repository; the code and results of the blind test last changed in commit `{COMMIT_ANALYSIS}` the same day). The model was changed on 4 November 2026 in commits `fe616f4` and `7963a9d`. All code, the analysis plan and the result files are openly available on [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
+The analysis was made in Vitki {APP_VERSION}, an open research tool for runestones ([vitkirunor.se](https://vitkirunor.se/en)), with the changes made after that version up to 31 October 2026 (commit `{COMMIT_V1}` in the GitHub repository; the code and results of the blind test last changed in commit `{COMMIT_ANALYSIS}` the same day). The model was changed on 4 November 2026 in commits `fe616f4` and `7963a9d`; the files for section 8 and the report's builder for the versions of 2026-11-05 are in commit `{BUILD_COMMIT}` onward. All code, the analysis plan and the result files are openly available on [GitHub](https://github.com/Precatio/runes) under GPL-3.0.
 
 - The plan of the blind test: `utdata/forslag/analysplan_forslag.md`, with its checksum in `analysis_plan_forslag.sha256`.
 - The blind test: `utdata/forslag/blindprov.py` (results `blindprov.json`; the rerun on the material of 31 October 2026, version `{FP}`, in `blindprov_e83202.json`), the independent check `kontroll.py`, the deviations in `resultat.md`. The suggestions of 21 October 2026: `nya_forslag.json`.
@@ -510,7 +540,7 @@ The analysis was made in Vitki {APP_VERSION}, an open research tool for runeston
 - Breiman, L. 2001. Random forests. *Machine Learning* 45, pp. 5–32.
 - Herschend, F. 1998. ubiR, ybiR, ybir – är det U 485 Ofeg Öpir? [ubiR, ybiR, ybir – is it U 485 Ofeg Öpir?] *Fornvännen* 93, pp. 97–111.
 - Kitzler, L. 1998. Learning to know a rune carver and his cutting technique. A method study and some results. *Laborativ arkeologi* 10–11, pp. 89–103. Digitised as *Journal of Nordic Archaeological Science* (JONAS) 10. https://publicera.kb.se/jonas/article/view/64505
-- Kitzler Åhfeldt, L. 2002. *Work and Worship: Laser Scanner Analysis of Viking Age Rune Stones*. Theses and Papers in Archaeology B:9. Stockholm: Stockholm University.
+- Kitzler Åhfeldt, L. 2002. *Work and Worship: Laser Scanner Analysis of Viking Age Rune Stones*. Theses and Papers in Scientific Archaeology B:9. Stockholm: Stockholm University.
 - Kitzler Åhfeldt, L. 2020. Provenancing rune carvers on Bornholm through 3D-scanning and multivariate statistics of the carving technique. *European Journal of Archaeology* 23 (1), pp. 82–104. https://doi.org/10.1017/eaa.2019.37
 - Kvant, V. 2026. *Vitki {APP_VERSION}: method description* (METHODS.md). https://github.com/Precatio/runes
 - Källström, M. 2007. *Mästare och minnesmärken. Studier kring vikingatida runristare och skriftmiljöer i Norden*. Stockholm Studies in Scandinavian Philology, New Series 43. Stockholm: Stockholm University.
@@ -547,9 +577,16 @@ assert "## Abstract\n\n**What has not been tested.** The model behind the sugges
 assert "**Vad som inte är prövat.** Modellen bakom förslagen ändrades den 4 november 2026" in body
 assert len(SA_ZERO) == 6 and "sex ristare med en till fyra" in body and "six carvers with one to four" in body_en
 # rapportversion 2: versionsraden, ändringsloggen sist, inga tidlösa ”dagens”, inga appflikar eller relativa länkar
-assert body.startswith(f"*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapportversion 2, 2026-11-05; version 1 publicerades {V1_DATE}. Tidslinje: ")
-assert body_en.startswith(f"*Viktor Kvant, independent researcher. Methods report, partially tested. Report version 2, 2026-11-05; version 1 was published {V1_DATE}. Timeline: ")
+assert body.startswith(f"*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapportversion 3, 2026-11-05; version 1 publicerades {V1_DATE}. Tidslinje: ")
+assert body_en.startswith(f"*Viktor Kvant, independent researcher. Methods report, partially tested. Report version 3, 2026-11-05; version 1 was published {V1_DATE}. Timeline: ")
 assert body.rstrip().split("\n## ")[-1].startswith("Ändringslogg") and body_en.rstrip().split("\n## ")[-1].startswith("Change log")
+# rapportversion 3: seriens namn, kodläget för avsnitt 8 och tre versioner i ändringsloggen
+for b in (body, body_en):
+    assert "Theses and Papers in Scientific Archaeology B:9" in b and "Theses and Papers in Archaeology B:9" not in b
+    assert f"`{BUILD_COMMIT}`" in b.split("## Data")[1].split("\n- ")[0]
+    assert b.count("**Version ") == 2 and f"**Version 3, {TODAY}.**" in b and f"**Version 2, {V2_DATE}.**" in b
+assert "Den fungerade i provet som ett sätt" in body and "In the test it worked as a way" in body_en
+assert "I provet var förslagen" in body and "In the test the suggestions were" in body_en
 SEC = lambda b: [re.match(r"[\d.]*", h).group(0) for h in re.findall(r"^## (.+)$", b, re.M)]  # noqa: E731
 assert SEC(body) == SEC(body_en) and len(SEC(body)) == 12, (SEC(body), SEC(body_en))  # sv och en har samma avsnitt
 assert len(re.findall(r"^- ", body, re.M)) == len(re.findall(r"^- ", body_en, re.M))  # och lika många punkter

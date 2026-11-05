@@ -3,6 +3,8 @@ föräldrarnas namn – förälder och barn delar ett namnled nästan dubbelt s�
 planen analysplaner/2026-10-29-namngivning-i-familjen.md (H1–H5), tilläggsplanen analysplaner/2026-10-31-namnled-trappan.md
 och den explorativa omblandningen inom härad. Alla siffror asserteras mot utdata/namngivning/*.json (rapportversion 2:
 också mot rapport_kontroll.json, som rapport_kontroll.py skriver ur korpusen och handkontrollen data/people_check.json).
+Rapportversion 3 (2026-11-05): rättelser efter en andra, oberoende läsning av ändringarna i version 2 (H4 som skattning,
+inte fynd; granskningscommit 6eae0af; det som version 2 inte loggade).
     ../../../.venv/bin/python build_rapport_namnled.py [--write | --update DOC]"""
 import datetime as dt
 import json
@@ -17,7 +19,7 @@ from src import blog_labels  # noqa: E402
 
 APP_VERSION = "3.0.0"  # the Vitki version the analysis was made in (tag v3.0.0 + the commits named in Data och kod), not the current one
 assert open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().startswith("611a4d5f")  # mallens version 4
-REPORT_VERSION = 2
+REPORT_VERSION = 3  # version 1: 2026-10-31; version 2: 2026-11-05
 TODAY = "2026-11-05"  # rapportversionens datum, fast i byggaren (mallen version 3)
 PUB_V1 = "2026-10-31"  # version 1 publicerades då; publiceringsdatumet behålls
 SLUG = "barnen-arvde-namnled"
@@ -49,6 +51,12 @@ if os.path.isdir(os.path.join(ROOT, ".git")):
                                          check=True).stdout)["version"] == APP_VERSION
         assert subprocess.run(["git", "log", "-1", "--format=%h %ad", "--date=short", "--", rel], cwd=ROOT,
                               capture_output=True, text=True, check=True).stdout.split() == [c_, COMMITS[f_][1]], rel
+# rapportversion 3: the builder and the check file as reviewed before archiving (version 2) are in commit 6eae0af
+REVIEW_COMMIT = "6eae0af"
+if os.path.isdir(os.path.join(ROOT, ".git")):
+    _files = subprocess.run(["git", "show", "--name-only", "--format=", REVIEW_COMMIT], cwd=ROOT, capture_output=True,
+                            text=True, check=True).stdout.split()
+    assert {"utdata/blogg/build/build_rapport_namnled.py", "utdata/namngivning/rapport_kontroll.json"} <= set(_files), _files
 SHA = {k: open(os.path.join(ROOT, "analysplaner", f"{k}.sha256")).read().split()[0][:16]
        for k in ("2026-10-29-namngivning-i-familjen", "2026-10-31-namnled-trappan")}
 assert SHA["2026-10-29-namngivning-i-familjen"].startswith("74eb5113") and SHA["2026-10-31-namnled-trappan"].startswith("9d0247a8")
@@ -86,6 +94,9 @@ assert (d1(H3["overskott_1"]), d1(H3["overskott_0"]), round(H3["p"], 2)) == ("3,
 assert (d1(H4["overskott_1"]), d1(H4["overskott_0"]), round(H4["p"], 2)) == ("1,1", "2,9", 0.22)
 # rapportversion 2: H4 is smaller on the Christian stones in both halves, but not clear in either
 assert (d1(RA["H4"]["skillnad"]), d1(RB["H4"]["skillnad"])) == ("-1,0", "-2,5") and RA["H4"]["p"] > 0.5 and RB["H4"]["p"] > 0.2
+# rapportversion 3: the lede and the box give H4 as a smaller excess that may be chance (the plan's verdict: no difference)
+assert (pfmt(H4["p"]), pfmt(H4["p"], True)) == ("p = 0,22", "p = 0.22") and H4["overskott_1"] < H4["overskott_0"]
+assert f"den explorativa omblandningen inom härad kördes {COMMITS['harad.json'][1]}" in TL_SV and "exploratory shuffle within hundreds was run 2026-10-31" in TL_EN
 for f_ in ("analys.py", "trappa.py", "harad.py"):
     assert f"NPERM = {NPERM}\n" in open(os.path.join(ND, f_), encoding="utf-8").read(), f_
 assert H1["p"] == H5["p"] == P_FLOOR and abs(R["holm"]["H1"] - 5 * P_FLOOR) < 1e-12 and abs(R["holm"]["H5"] - 5 * P_FLOOR) < 1e-12
@@ -124,13 +135,14 @@ title_en = "Children inherited parts of their parents' names – parent and chil
 summary = ("Förregistrerad studie. På runstenarna delar förälder och barn ett namnled, som Holm- i Holmger och Holmfast, i 5,3 "
            "procent av paren, mot 2,8 procent om namnen parades slumpvis. Det håller i båda halvorna av materialet och i "
            "alla känslighetsanalyser, och i en explorativ kontroll där bara namnen i samma härad blandas om. Någon försvagning "
-           "under runstenstiden kan inte påvisas; på de kristna stenarna är seden något svagare, men inte säkert. Seden gällde "
+           "under runstenstiden kan inte påvisas; på de kristna stenarna är överskottet mindre, men skillnaden kan vara slump "
+           f"({pfmt(H4['p'])}). Seden gällde "
            "en minoritet av familjerna.")
 summary_en = ("Pre-registered study. On the runestones parent and child share a name element, like Holm- in Holmger and Holmfast, "
               "in 5.3 percent of the pairs, against 2.8 percent if the names were paired at random. It holds in both halves of "
               "the material and in every sensitivity analysis, and in an exploratory check where only the names within the same hundred are shuffled. "
-              "No weakening during the runestone period can be shown; on the Christian stones the custom is somewhat weaker, "
-              "but not clearly so. The custom concerned a minority of families.")
+              "No weakening during the runestone period can be shown; on the Christian stones the excess is smaller, but the "
+              f"difference may be chance ({pfmt(H4['p'], True)}). The custom concerned a minority of families.")
 CITE_EN = (f"Kvant, V. ({TODAY[:4]}). {title_en}. Research report, report version {REPORT_VERSION}; analysis in Vitki {APP_VERSION}. "
            f"https://vitkirunor.se/en/forskningsrapporter/{SLUG}")
 GLOSS_SV = "[https://vitkirunor.se/forskningsrapporter/begrepp](https://vitkirunor.se/forskningsrapporter/begrepp)"
@@ -156,6 +168,10 @@ LOG_SV = f"""## Ändringslogg
 - *Syskonen inom härad.* Att omblandningen inom härad är skev uppåt för syskonen var ett antagande; det står nu som en möjlighet som inte har prövats.
 - *Namngivningens tid.* Tidsjämförelsen gäller namngivningen omkring 950–1100, inte omkring år 1000.
 - *Språk och form.* Korthetsrutan säger att barn *ibland*, inte ofta, fick ett led ur förälderns namn; meningen om resare med samma namn som den döde är förtydligad; antalet stenar står i Material; tidslinjen har frysdatumet; Data och kod anger commit och kommandon för att köra om analysen i stället för en framtida DOI; Rundata anges med version och licenser; länk till ordlistan, förklaring av ensidigt och tvåsidigt test och diagrammets källrad är tillagda.
+- **Version 3, {TODAY}.** Rättelser efter en andra, oberoende läsning av ändringarna i version 2. Huvudresultaten (förälder–barn och syskon) och nivån är oförändrade.
+- *Kristna kännetecken (H4).* Version 2 skrev att seden är ”något svagare” på de kristna stenarna, ”men inte säkert”. Det läste skattningen som en egenskap hos seden, fast testet enligt planen inte påvisade någon skillnad ({pfmt(H4['p'])}, och inte säkert i någon av halvorna). Ingressen, sammanfattningens slutsats och korthetsrutan säger nu att överskottet är mindre men att skillnaden kan vara slump.
+- *Data och kod.* Byggaren och kontrollfilen i den form de granskades inför arkiveringen anges med commit `{REVIEW_COMMIT}`.
+- *Det som version 2 också ändrade utan att det stod i loggen.* Tidslinjen fick också datumet för den explorativa omblandningen inom härad ({COMMITS['harad.json'][1]}).
 """
 LOG_EN = f"""## Change log
 
@@ -166,6 +182,10 @@ LOG_EN = f"""## Change log
 - *Siblings within the hundred.* That the shuffle within the hundred is biased upwards for siblings was an assumption; it now stands as a possibility that has not been tested.
 - *The time of the naming.* The comparison over time concerns name-giving around 950–1100, not around the year 1000.
 - *Language and form.* The essentials box says that children *sometimes*, not often, received an element of a parent's name; the sentence on sponsors with the same name as the dead is clarified; the number of stones is given in Material; the timeline has the freeze date; Data and code gives the commits and commands to rerun the analysis instead of a future DOI; Rundata is cited with version and licences; a link to the glossary, an explanation of one-sided and two-sided tests and the chart's source line are added.
+- **Version 3, {TODAY}.** Corrections after a second, independent reading of the changes in version 2. The main results (parent–child and siblings) and the level are unchanged.
+- *Christian markers (H4).* Version 2 said that the custom is "somewhat weaker" on the Christian stones, "but not clearly so". That read the estimate as a property of the custom, although the test by the plan showed no difference ({pfmt(H4['p'], True)}, and not clear in either half). The lede, the abstract's conclusion and the essentials box now say that the excess is smaller but that the difference may be chance.
+- *Data and code.* The builder and the check file as reviewed before archiving are named with commit `{REVIEW_COMMIT}`.
+- *What version 2 also changed without logging it.* The timeline also gained the date of the exploratory shuffle within hundreds ({COMMITS['harad.json'][1]}).
 """
 
 
@@ -198,7 +218,7 @@ body = f"""*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion
 **Material.** {n_sv(H1['par'])} förälder–barn-par från {N_ST_PC} stenar och {n_sv(H5['par'])} syskonpar från {N_ST_SIB} stenar, ur relationerna på de {n_sv(KO['n_runstenar'])} svenska vikingatida runstenarna i Samnordisk runtextdatabas (Rundata).
 **Metod.** Förregistrerad studie med fem test och Holm-korrigering. Namnen delas i förled och efterled ur materialet självt, och andelen par som delar ett led jämförs med 9 999 omblandningar av namnen inom landskapet. Intern replikering i två halvor och sex känslighetsanalyser enligt en låst tilläggsplan.
 **Resultat.** Förälder och barn delar ett namnled i {d1(H1['andel'])} procent av paren, mot {d1(H1['vantat'])} procent vid slumpvis parning, Holm-korrigerat p ≤ 0,0005. Det håller i båda halvorna och i alla känslighetsanalyser, också utan Uppland, med tiden konstant och med ett par per sten, och i en explorativ omblandning inom häradet ({d1(X1['vantat'])} procent väntat). Syskon delar namnled i {d1(H5['andel'])} procent mot {d1(H5['vantat'])}; det överskottet krymper när namnen bara blandas om inom häradet. Ingen skillnad påvisas över tid (överskott {d1(H3['overskott_1'])} mot {d1(H3['overskott_0'])} procentenheter, {pfmt(H3['p'])}). På stenar med kristna kännetecken är överskottet mindre ({d1(H4['overskott_1'])} mot {d1(H4['overskott_0'])} procentenheter), men skillnaden är inte säker ({pfmt(H4['p'])}).
-**Slutsats.** Barn fick led ur föräldrarnas namn, men det var en sed för en minoritet, ungefär ett par av tjugo. Någon försvagning under runstenstiden kan inte påvisas; på de kristna stenarna är seden något svagare, men inte säkert.
+**Slutsats.** Barn fick led ur föräldrarnas namn, men det var en sed för en minoritet, ungefär ett par av tjugo. Någon försvagning under runstenstiden kan inte påvisas; på de kristna stenarna är överskottet mindre, men skillnaden kan vara slump.
 
 ## 1. Inledning
 
@@ -282,7 +302,7 @@ Analysen kördes i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runste
 - Analysen: `utdata/namngivning/analys.py` (resultat `namngivning.json`, paren i `par.csv`); känslighetsanalyserna `trappa.py` (`trappan.json`); den explorativa omblandningen inom härad `harad.py` (`harad.json`).
 - Köra om analysen, från projektmappen: `.venv/bin/python utdata/namngivning/analys.py`, `.venv/bin/python utdata/namngivning/trappa.py` och `.venv/bin/python utdata/namngivning/harad.py`.
 - Namnen och relationerna: `src/entities.py`; kontrollen av den dödes släktrelation: `src/people.py` mot `data/people_check.json` (`utdata/namngivning/rapport_kontroll.py`).
-- Rapporten byggs av `utdata/blogg/build/build_rapport_namnled.py`, som läser alla tal ur resultatfilerna och stannar om något inte stämmer.
+- Rapporten byggs av `utdata/blogg/build/build_rapport_namnled.py`, som läser alla tal ur resultatfilerna och stannar om något inte stämmer; byggaren och kontrollfilen i den form de granskades inför arkiveringen finns i commit `{REVIEW_COMMIT}`.
 
 ## Referenser
 
@@ -297,7 +317,7 @@ Analysen kördes i Vitki {APP_VERSION}, ett öppet forskningsverktyg för runste
 :::box Det viktigaste i korthet
 - Barn fick ibland ett led ur förälderns namn, som Holmfast efter Holmger, och det syns på runstenarna mer än slumpen ger.
 - Det var en möjlighet för några familjer, inte en regel för alla: ungefär ett par av tjugo.
-- Någon försvagning av namnskicket under runstenstiden kan inte påvisas; på de kristna stenarna är det något svagare, men inte säkert.
+- Någon försvagning av namnskicket under runstenstiden kan inte påvisas; på de kristna stenarna är överskottet mindre, men det kan vara slump.
 :::
 
 {LOG_SV}
@@ -311,7 +331,7 @@ body_en = f"""*Viktor Kvant, independent researcher. Fully tested finding. Repor
 **Material.** {n_en(H1['par'])} parent–child pairs from {N_ST_PC} stones and {n_en(H5['par'])} sibling pairs from {N_ST_SIB} stones, from the relations on the {n_en(KO['n_runstenar'])} Swedish Viking-Age runestones in the Scandinavian Runic-text Database (Rundata).
 **Method.** A pre-registered study with five tests and Holm correction. The names are divided into first and second elements from the material itself, and the share of pairs sharing an element is compared with 9,999 shuffles of the names within the province. Internal replication in two halves and six sensitivity analyses under a locked addendum plan.
 **Results.** Parent and child share a name element in {e1(H1['andel'])} percent of the pairs, against {e1(H1['vantat'])} percent with random pairing, Holm-corrected p ≤ 0.0005. It holds in both halves and in every sensitivity analysis, also without Uppland, with time held constant and with one pair per stone, and in an exploratory shuffle within the hundred ({e1(X1['vantat'])} percent expected). Siblings share name elements in {e1(H5['andel'])} percent against {e1(H5['vantat'])}; that excess shrinks when the names are shuffled only within the hundred. No difference is shown over time (excess {e1(H3['overskott_1'])} against {e1(H3['overskott_0'])} percentage points, {pfmt(H3['p'], True)}). On stones with Christian markers the excess is smaller ({e1(H4['overskott_1'])} against {e1(H4['overskott_0'])} percentage points), but the difference is not clear ({pfmt(H4['p'], True)}).
-**Conclusion.** Children received elements of their parents' names, but it was a custom for a minority, about one pair in twenty. No weakening during the runestone period can be shown; on the Christian stones the custom is somewhat weaker, but not clearly so.
+**Conclusion.** Children received elements of their parents' names, but it was a custom for a minority, about one pair in twenty. No weakening during the runestone period can be shown; on the Christian stones the excess is smaller, but the difference may be chance.
 
 ## 1. Introduction
 
@@ -395,7 +415,7 @@ The analysis was run in Vitki {APP_VERSION}, an open research tool for runestone
 - The analysis: `utdata/namngivning/analys.py` (results `namngivning.json`, the pairs in `par.csv`); the sensitivity analyses `trappa.py` (`trappan.json`); the exploratory shuffle within hundreds `harad.py` (`harad.json`).
 - To rerun the analysis, from the project folder: `.venv/bin/python utdata/namngivning/analys.py`, `.venv/bin/python utdata/namngivning/trappa.py` and `.venv/bin/python utdata/namngivning/harad.py`.
 - The names and relations: `src/entities.py`; the check of the dead person's kin relation: `src/people.py` against `data/people_check.json` (`utdata/namngivning/rapport_kontroll.py`).
-- The report is built by `utdata/blogg/build/build_rapport_namnled.py`, which reads every number from the result files and stops if anything disagrees.
+- The report is built by `utdata/blogg/build/build_rapport_namnled.py`, which reads every number from the result files and stops if anything disagrees; the builder and the check file as reviewed before archiving are in commit `{REVIEW_COMMIT}`.
 
 ## References
 
@@ -410,7 +430,7 @@ The analysis was run in Vitki {APP_VERSION}, an open research tool for runestone
 :::box The essentials
 - Children sometimes received an element of a parent's name, like Holmfast after Holmger, and it shows on the runestones more than chance gives.
 - It was a possibility for some families, not a rule for all: about one pair in twenty.
-- No weakening of the naming custom during the runestone period can be shown; on the Christian stones it is somewhat weaker, but not clearly so.
+- No weakening of the naming custom during the runestone period can be shown; on the Christian stones the excess is smaller, but that may be chance.
 :::
 
 {LOG_EN}
@@ -425,21 +445,25 @@ for b in (body, body_en):
     assert not re.findall(JARGON, head), re.findall(JARGON, head)
 assert "Det viktigaste i korthet" in body and "## 2. Förregistrering" in body and "## 6. Diskussion" in body
 assert "I klartext" in body and "In plain words" in body_en  # mallen version 4
-assert body.split("\n", 1)[0].startswith("*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion 2, 2026-11-05 (version 1 publicerad 2026-10-31; ändringarna står sist). Tidslinje: materialet frystes 2026-10-28; ")
-assert body_en.split("\n", 1)[0].startswith("*Viktor Kvant, independent researcher. Fully tested finding. Report version 2, 2026-11-05 (version 1 published 2026-10-31; ")
+assert body.split("\n", 1)[0].startswith(f"*Viktor Kvant, oberoende forskare. Fullt prövat fynd. Rapportversion {REPORT_VERSION}, {TODAY} (version 1 publicerad {PUB_V1}; ändringarna står sist). Tidslinje: materialet frystes 2026-10-28; ")
+assert body_en.split("\n", 1)[0].startswith(f"*Viktor Kvant, independent researcher. Fully tested finding. Report version {REPORT_VERSION}, {TODAY} (version 1 published {PUB_V1}; ")
+assert REPORT_VERSION == 3 and f"Version {REPORT_VERSION}, {TODAY}" in body and f"Version {REPORT_VERSION}, {TODAY}" in body_en
+assert f"commit `{REVIEW_COMMIT}`" in body.split("## Data")[1] and f"commit `{REVIEW_COMMIT}`" in body_en.split("## Data")[1]
 # rapportversion 2: the corrected statements, and none of the withdrawn ones
-for b, ok, bad in ((body, ["kan inte påvisas", "men skillnaden är inte säker", "något svagare, men inte säkert", "omkring 950–1100",
+for b, ok, bad in ((body, ["kan inte påvisas", "men skillnaden är inte säker", "överskottet mindre, men skillnaden kan vara slump", "omkring 950–1100",
                            "har inte kontrollerats mot handkodning av namnpar", "rätt på 38 av 40 stenar", FLOOR_SV, "1 292", "1 066",
                            "Barn fick ibland", "det har inte prövats", "Diagram: Vitki, efter Rundata.", "ensidigt:", "tvåsidiga:",
                            "forskningsrapporter/begrepp", "## Ändringslogg"],
                     ["lika stark", "försvagades inte", "levde kvar oförändrat", "år 1000", "en på tjugo i kontrollen", "Barn fick ofta",
-                     "är dock skev", "Någon release med DOI finns ännu inte", "p = 0,0001", "Holm-korrigerat p = 0,0005"]),
-                   (body_en, ["cannot be shown", "but the difference is not clear", "somewhat weaker, but not clearly so", "around 950–1100",
+                     "är dock skev", "Någon release med DOI finns ännu inte", "p = 0,0001", "Holm-korrigerat p = 0,0005",
+                     "något svagare"]),
+                   (body_en, ["cannot be shown", "but the difference is not clear", "the excess is smaller, but the difference may be chance", "around 950–1100",
                               "has not been checked against hand coding of name pairs", "right on 38 of 40 stones", FLOOR_EN, "1,292", "1,066",
                               "Children sometimes", "this has not been tested", "Chart: Vitki, after Rundata.", "one-sided:", "two-sided:",
                               "en/forskningsrapporter/begrepp", "## Change log"],
                     ["as strong", "did not weaken", "unchanged through", "year 1000", "one in twenty in the check", "often received",
-                     "is however biased", "No release with a DOI exists yet", "p = 0.0001", "Holm-corrected p = 0.0005"])):
+                     "is however biased", "No release with a DOI exists yet", "p = 0.0001", "Holm-corrected p = 0.0005",
+                     "somewhat weaker"])):
     for x in ok:
         assert x in b, x
     for x in bad:  # the change log quotes version 1, so only the report itself is searched

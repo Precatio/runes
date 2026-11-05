@@ -20,7 +20,8 @@ from figur import FIG, andringslogg, bild  # noqa: E402
 
 APP_VERSION = "3.0.0"  # the Vitki version the analysis was made in (tag v3.0.0 + the commits named in Data och kod), not the current one
 assert open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().startswith("611a4d5f")  # mallens version 4
-REPORT_VERSION = 3  # version 1: 2026-10-31 (publicerad), version 2: 2026-11-01 (figur 1), version 3: rättelser
+REPORT_VERSION = 4  # version 1: 2026-10-31 (publicerad), version 2: 2026-11-01 (figur 1), version 3: rättelser,
+# version 4 (2026-11-05): den andra granskningen av det version 3 ändrade
 V1_DATE, V2_DATE = "2026-10-31", "2026-11-01"
 TODAY = "2026-11-05"  # rapportversionens datum, fast i byggaren (mallen version 3)
 TL_SV = ("spårläsaren byggdes och ställdes in på Sö 113 2026-10-17; en första körning på Sö 113 och Sö 134 gjordes "
@@ -109,6 +110,10 @@ assert KM["so134"] == {"n": 14, "right_words": {"utan": 10, "skanner": 10, "omfl
                        "utan_to_skanner": {"wrong_to_right": 0, "right_to_wrong": 0}, "words_changing": 0}
 RSU, RSO = R1["skanner_vs_utan"], R1["skanner_vs_omflyttad"]
 assert p2(RSU["p"]) == "p = 0,051" and p2(RSO["p"]) == "p = 0,0012" and RSU["mean_diff"] > 0
+# version 4: the plain-words meaning of p = 0,051 on Sö 134 (just above 0,05; the mean probability of the right word)
+d2 = lambda x, en=False: f"{x:.2f}" if en else f"{x:.2f}".replace(".", ",")  # noqa: E731
+assert 0.05 < RSU["p"] < 0.06 and (d2(R1["means"]["utan"]["p_truth"]), d2(R1["means"]["skanner"]["p_truth"])) == ("0,45", "0,50")
+assert abs(R1["means"]["skanner"]["p_truth"] - R1["means"]["utan"]["p_truth"] - RSU["mean_diff"]) < 1e-9
 
 # ---- the first run the same day (led_f.json, kontroll_v3.py) ----------------------------------------------------------
 ER = K["earlier_run"]
@@ -129,6 +134,13 @@ assert VS == {"commit": "add12ef", "date": "2026-11-03", "trace_reader_to_g7": T
 RD = K["rundata"]
 assert RD["blob_at_f"] == RD["blob_now"] and RD["blob_now"].startswith("ee37aec") and RD["version_note"]
 assert RD["last_change"] == "2026-10-04"
+# version 4: the abstract names Rundata's version as the rest of the report does, from the file's own metadata
+assert json.load(open(os.path.join(ROOT, "data", "rundata.json"), encoding="utf-8"))["meta"]["source"] == "Samnordisk runtextdatabas 2014 (RUNDATA.xls uppdaterad 2018)"
+# the check and the builder of version 3 are in commit 6eae0af
+assert subprocess.run(["git", "log", "-1", "--format=%ad", "--date=short", "6eae0af"], cwd=ROOT, capture_output=True, text=True,
+                      check=True).stdout.strip() == TODAY
+assert {"utdata/sparlasare/kontroll_v3.py", "utdata/blogg/build/build_rapport_sparlasare.py"} <= set(subprocess.run(
+    ["git", "show", "--name-only", "--format=", "6eae0af"], cwd=ROOT, capture_output=True, text=True, check=True).stdout.split("\n"))
 # the glossary the report links to (mallen version 4)
 assert all(os.path.exists(os.path.join(ROOT, "web", "src", "app", *p, "forskningsrapporter", "begrepp", "page.tsx")) for p in ((), ("en",)))
 
@@ -212,7 +224,7 @@ FIG_EN = bild("spar", "en", f"Figure 1. What the traces say about a hidden word.
 
 V2_SV = "Figur 1 tillagd: vad spåren säger om ett dolt ord, i två exempel valda efter en regel som anges i bildtexten."
 V2_EN = "Figure 1 added: what the traces say about a hidden word, in two examples chosen by a rule given in the caption."
-V3_SV = (f"- **Version 3, {TODAY}.** Rättelser efter en granskning inför arkiveringen i Zenodo; inga resultatfiler från provet är "
+V3_SV = ("- **Version 3, 2026-11-05.** Rättelser efter en granskning inför arkiveringen i Zenodo; inga resultatfiler från provet är "
          "ändrade och inget är omkört. Sammanfattningen börjar nu med att svaret inte var dolt för hela kedjan (parningen av "
          "skanningens runor mot texten såg det dolda ordet, och den var säkrare än slumpen bara på Sö 134, där andelen rätt "
          f"ord inte ändrades) och att provet gäller {VT['method']} och {VT['textmodel_f']}, inte de versioner Vitki använder; "
@@ -227,7 +239,7 @@ V3_SV = (f"- **Version 3, {TODAY}.** Rättelser efter en granskning inför arkiv
          "omnumrerade; det skarpa provet heter nu huvudprovet; figurtexten säger att runor utanför skanningens uppsättning "
          "blir mindre sannolika, inte uteslutna; en referens som inte citerades är borttagen; diagrammet anger Vitki som "
          "upphov; ordlistan länkas. De nya talen räknades i de sparade raderna med ett nytt kontrollskript.")
-V3_EN = (f"- **Version 3, {TODAY}.** Corrections after a review before archiving in Zenodo; no result file of the test has "
+V3_EN = ("- **Version 3, 2026-11-05.** Corrections after a review before archiving in Zenodo; no result file of the test has "
          "changed and nothing has been rerun. The abstract now begins by saying that the answer was not hidden from the "
          "whole chain (the pairing of the scan's runes with the text saw the hidden word, and it beat chance only on Sö 134, "
          f"where the share of right words did not change) and that the test concerns {VT['method']} and "
@@ -244,8 +256,34 @@ V3_EN = (f"- **Version 3, {TODAY}.** Corrections after a review before archiving
          "called the main test; the figure caption says that runes outside the scan's set become less probable, not ruled "
          "out; a reference that was not cited has been removed; the chart credits Vitki; the glossary is linked. The new "
          "numbers were counted in the saved rows with a new check script.")
-LOG_SV = andringslogg("sv", 2, V2_DATE, V2_SV, V2_EN) + "\n" + V3_SV
-LOG_EN = andringslogg("en", 2, V2_DATE, V2_SV, V2_EN) + "\n" + V3_EN
+V4_SV = (f"- **Version {REPORT_VERSION}, {TODAY}.** En andra granskning inför arkiveringen i Zenodo gick igenom det som version 3 "
+         "ändrade; inga resultatfiler är ändrade och inget är omkört. I 5.1 står nu att en del av vinsten, eller hela, kan komma "
+         "från parningen; version 3 skrev bara en del, fast provet inte kan visa att någon del kommer från skanningen. I 5.2 har "
+         f"{p2(RSU['p'])} på {F['reliable'][0]} fått en förklaring i klartext, med medelsannolikheterna "
+         f"{d2(R1['means']['utan']['p_truth'])} och {d2(R1['means']['skanner']['p_truth'])}. Sammanfattningen anger Rundatas "
+         "version på samma sätt som resten av rapporten (version 2014 med RUNDATA.xls uppdaterad 2018); version 3 angav där en "
+         "annan versionsbeteckning. Ändringsloggen har fått raden för version 1, och Data och kod anger commit för kontrollen och "
+         "byggskriptet för version 3 (6eae0af). Ändringar som version 3 gjorde men inte skrev in i loggen: Rundatas version "
+         "angavs i materialet, i Data och kod och bland referenserna; 5.4 säger inte längre att spåren säger mer tillsammans med "
+         "språket; diskussionen säger inte längre att skanningarna visar sig vara en källa för läsningen, bara att de kan bli "
+         "det; och diskussionen och Data och kod säger att spåren i Vitki räknas först när användaren har bekräftat dem, så som "
+         "Vitki var byggt när version 3 skrevs.")
+V4_EN = (f"- **Version {REPORT_VERSION}, {TODAY}.** A second review before archiving in Zenodo checked what version 3 changed; "
+         "no result file has changed and nothing has been rerun. 5.1 now says that some or all of the gain may come from the "
+         "pairing; version 3 said part of it, although the test cannot show that any part comes from the scan. In 5.2, "
+         f"{p2(RSU['p'], True)} on {F['reliable'][0]} is explained in plain words, with the mean probabilities "
+         f"{d2(R1['means']['utan']['p_truth'], True)} and {d2(R1['means']['skanner']['p_truth'], True)}. The abstract gives "
+         "Rundata's version in the same way as the rest of the report (2014 version with RUNDATA.xls updated 2018); version 3 "
+         "gave a different version designation there. The change log has the line for version 1, and Data and code gives the "
+         "commit of the check and the builder of version 3 (6eae0af). Changes that version 3 made but did not log: Rundata's "
+         "version was given in the material, in Data and code and in the references; 5.4 no longer says that the traces say "
+         "more together with the language; the discussion no longer says that the scans turn out to be a source for reading, "
+         "only that they may become one; and the discussion and Data and code say that the traces count in Vitki only once the "
+         "user has confirmed them, as Vitki was built when version 3 was written.")
+V1_SV, V1_EN = f"- **Version 1, {V1_DATE}.** Första publicerade versionen.\n", f"- **Version 1, {V1_DATE}.** First published version.\n"
+LOG_SV = andringslogg("sv", 2, V2_DATE, V2_SV, V2_EN).replace("## Ändringslogg\n\n", "## Ändringslogg\n\n" + V1_SV, 1) + "\n" + V3_SV + "\n" + V4_SV
+LOG_EN = andringslogg("en", 2, V2_DATE, V2_SV, V2_EN).replace("## Change log\n\n", "## Change log\n\n" + V1_EN, 1) + "\n" + V3_EN + "\n" + V4_EN
+assert LOG_SV.count("- **Version ") == LOG_EN.count("- **Version ") == 4
 
 body = f"""*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapportversion {REPORT_VERSION}, {TODAY} (version 1 publicerad {V1_DATE}, version 2 {V2_DATE}). Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}; provet kördes {VT['date_f']} med kod som ingår i den versionen (se Data och kod). Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, 3D-skanning, skadade runor, språkmodell, luckor, rekonstruktion, Södermanland. Konkurrerande intressen: inga. Finansiering: ingen.*
 
@@ -253,7 +291,7 @@ body = f"""*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapp
 
 **Vad som inte är prövat.** {FIRST_SV} Provet var inte heller låst i en plan, och spårläsarens inställningar togs fram på en av stenarna i provet. Provet döljer hela ord på hela runor; vid verkliga skador har spåren bara prövats på fem stenar, och där stämde färre förslag med utgivarnas läsning med spåren än utan dem.
 **Bakgrund och syfte.** När runor är skadade läser runologen vad som finns kvar på stenen, och en språkmodell kan föreslå vad som stod där. Frågan här är om det som en 3D-skanning visar av de skadade runorna gör språkmodellens förslag bättre.
-**Material.** 17 runstenar i Södermanland som Laila Kitzler Åhfeldt har skannat i 3D och publicerat öppet, med texten i Samnordisk runtextdatabas (Rundata, version 3.1 från 2018); {A['n']} ord som gick att pröva.
+**Material.** 17 runstenar i Södermanland som Laila Kitzler Åhfeldt har skannat i 3D och publicerat öppet, med texten i Samnordisk runtextdatabas (Rundata, version 2014 med RUNDATA.xls uppdaterad 2018); {A['n']} ord som gick att pröva.
 **Metod.** En spårläsare läser i skanningens djupbild vilka av de sexton runorna varje upptäckt runa kan vara, med en sannolikhet för var och en. Skanningens runor paras mot textens platser. Varje helt ord på två till sex runor döljs, och en språkmodell som är tränad utan stenen fyller i det: utan spår, med spåren och med samma spår slumpvis omflyttade mellan stenens platser. Jämförelsen är parad, ord för ord.
 **Resultat.** Med spåren blev {d1(MN['skanner']['word_ok'])} procent av orden rätt, mot {d1(MN['utan']['word_ok'])} procent utan dem ({KM['utan_to_skanner']['wrong_to_right']} ord blev rätt med spåren och inget blev fel; sannolikheten för rätt ord steg, {pexp(SU['p'])}). Med omflyttade spår försvann vinsten och sannolikheten sjönk ({p2(OU['p'])}). Utan stenen där inställningarna togs fram: {d1(XU['means']['skanner']['word_ok'])} mot {d1(XU['means']['utan']['word_ok'])} procent. På Sö 134, den enda sten där parningen var säkrare än slumpen, blev {d1(R1['means']['utan']['word_ok'])} procent av de {R1['n']} orden rätt i alla tre villkoren. På fem stenar med verkliga luckor stämde {GU} av {N_GAP_WORDS} förslag med utgivarnas läsning i Rundata utan spår och {GS} av {N_GAP_WORDS} med spåren.
 **Slutsats.** Spåren höjde sannolikheten för rätt ord i provet, men eftersom parningen såg svaret går det inte att skilja det skanningen läser från det parningen redan visste, och på den enda säkert parade stenen ändrades inte andelen rätt ord. Metoden behöver prövas på nytt med svaret dolt för hela kedjan och med de versioner Vitki använder. Vid svåra skador ska spåren visas för den som läser och vägas in först när den har bekräftat dem.
@@ -287,13 +325,13 @@ Provet var inte låst i en plan. Spårläsaren byggdes i steg den 17 oktober 202
 
 ## 5. Resultat
 
-**5.1 Huvudprovet.** {A['n']} ord på {A['stones']} stenar. Rätt ord: {d1(MN['utan']['word_ok'])} procent utan spår ({RW['utan']} ord), {d1(MN['skanner']['word_ok'])} procent med spåren ({RW['skanner']}) och {d1(MN['omflyttad']['word_ok'])} procent med spåren omflyttade ({RW['omflyttad']}). Med spåren blev {KM['utan_to_skanner']['wrong_to_right']} ord rätt som var fel utan dem, och inget ord som var rätt blev fel; med omflyttade spår blev {KM['utan_to_omflyttad']['wrong_to_right']} ord rätt och {KM['utan_to_omflyttad']['right_to_wrong']} fel. Sannolikheten för det rätta ordet: {d3(MN['utan']['p_truth'])} utan, {d3(MN['skanner']['p_truth'])} med och {d3(MN['omflyttad']['p_truth'])} med omflyttade spår. Spåren gav högre sannolikhet än inga spår, {pexp(SU['p'])}, och högre än omflyttade spår, {pexp(SO['p'])}. Omflyttade spår gav lägre sannolikhet än inga spår, {p2(OU['p'])}; i andelen rätt ord var skillnaden ett ord av {A['n']}. Alla p-värden gäller sannolikheten för det rätta ordet, inte andelen rätt ord. I klartext: med skanningens spår blev ungefär sex dolda ord av tio rätt i stället för drygt fem; {KM['utan_to_skanner']['wrong_to_right']} ord blev rätt och inget blev fel. När spåren kastades om försvann vinsten. Men parningen mellan skanning och text såg svaret (4.4), så en del av vinsten kan komma från parningen och inte från skanningen.
+**5.1 Huvudprovet.** {A['n']} ord på {A['stones']} stenar. Rätt ord: {d1(MN['utan']['word_ok'])} procent utan spår ({RW['utan']} ord), {d1(MN['skanner']['word_ok'])} procent med spåren ({RW['skanner']}) och {d1(MN['omflyttad']['word_ok'])} procent med spåren omflyttade ({RW['omflyttad']}). Med spåren blev {KM['utan_to_skanner']['wrong_to_right']} ord rätt som var fel utan dem, och inget ord som var rätt blev fel; med omflyttade spår blev {KM['utan_to_omflyttad']['wrong_to_right']} ord rätt och {KM['utan_to_omflyttad']['right_to_wrong']} fel. Sannolikheten för det rätta ordet: {d3(MN['utan']['p_truth'])} utan, {d3(MN['skanner']['p_truth'])} med och {d3(MN['omflyttad']['p_truth'])} med omflyttade spår. Spåren gav högre sannolikhet än inga spår, {pexp(SU['p'])}, och högre än omflyttade spår, {pexp(SO['p'])}. Omflyttade spår gav lägre sannolikhet än inga spår, {p2(OU['p'])}; i andelen rätt ord var skillnaden ett ord av {A['n']}. Alla p-värden gäller sannolikheten för det rätta ordet, inte andelen rätt ord. I klartext: med skanningens spår blev ungefär sex dolda ord av tio rätt i stället för drygt fem; {KM['utan_to_skanner']['wrong_to_right']} ord blev rätt och inget blev fel. När spåren kastades om försvann vinsten. Men parningen mellan skanning och text såg svaret (4.4), så en del av vinsten, eller hela, kan komma från parningen och inte från skanningen.
 
 {chart(True)}
 
 {FIG_SV}
 
-**5.2 Utan Sö 113, och den enda säkert parade stenen.** Utan stenen där inställningarna togs fram: {XU['n']} ord på {XU['stones']} stenar, {d1(XU['means']['utan']['word_ok'])} procent rätt utan spår, {d1(XU['means']['skanner']['word_ok'])} med och {d1(XU['means']['omflyttad']['word_ok'])} med omflyttade; sannolikheten för rätt ord med spåren mot inga spår {pexp(XU['skanner_vs_utan']['p'])}, mot omflyttade {pexp(XU['skanner_vs_omflyttad']['p'])}. Bara på Sö 134 var parningen säkrare än slumpen. Där blev {d1(R1['means']['utan']['word_ok'])} procent av de {R1['n']} orden rätt i alla tre villkoren, och inget ord ändrades; sannolikheten för rätt ord steg med spåren, {p2(RSU['p'])} mot inga spår och {p2(RSO['p'])} mot omflyttade.
+**5.2 Utan Sö 113, och den enda säkert parade stenen.** Utan stenen där inställningarna togs fram: {XU['n']} ord på {XU['stones']} stenar, {d1(XU['means']['utan']['word_ok'])} procent rätt utan spår, {d1(XU['means']['skanner']['word_ok'])} med och {d1(XU['means']['omflyttad']['word_ok'])} med omflyttade; sannolikheten för rätt ord med spåren mot inga spår {pexp(XU['skanner_vs_utan']['p'])}, mot omflyttade {pexp(XU['skanner_vs_omflyttad']['p'])}. Bara på Sö 134 var parningen säkrare än slumpen. Där blev {d1(R1['means']['utan']['word_ok'])} procent av de {R1['n']} orden rätt i alla tre villkoren, och inget ord ändrades; sannolikheten för rätt ord steg med spåren (i medel från {d2(R1['means']['utan']['p_truth'])} till {d2(R1['means']['skanner']['p_truth'])}), {p2(RSU['p'])} mot inga spår, strax över den vanliga gränsen 0,05 och med {R1['n']} ord ett svagt tecken, och {p2(RSO['p'])} mot omflyttade.
 
 **5.3 Kalibreringen.** Inte prövad. Provet sparade sannolikheten för det rätta ordet men inte för modellens förstaval, så det går inte att se om modellens sannolikheter stämmer med hur ofta förslagen blev rätt. De {N_GAP_WORDS} orden i verkliga luckor är för få för en sådan prövning.
 
@@ -326,7 +364,7 @@ Med 3D-skanningens spår fyllde språkmodellen i {d1(MN['skanner']['word_ok'])} 
 
 ## Data och kod
 
-Provet kördes {VT['date_f']} (commit {VT['commit_f']} och {VT['commit_g']}) med mätmetoden {VT['method']} och språkmodellen {VT['textmodel_f']}; omräkningen 2026-10-31 räknade bara om de sparade raderna. När denna rapportversion skrevs ({TODAY}) använde Vitki mätmetoden {VN['method']} (spårläsaren läser {VN['method']}-mätningarna sedan commit {VS['commit']}, {VS['date']}) och språkmodellen {VN['textmodel']} med faktorn {fac(VN['trace_eps'])} för spåren; ingen av dem är prövad på det här sättet. Kodläget anges med commit i [Precatio/runes](https://github.com/Precatio/runes), eftersom det inte fanns någon release av Vitki med DOI när denna rapportversion skrevs. Koden och resultatfilerna nedan finns öppet på GitHub under GPL-3.0.
+Provet kördes {VT['date_f']} (commit {VT['commit_f']} och {VT['commit_g']}) med mätmetoden {VT['method']} och språkmodellen {VT['textmodel_f']}; omräkningen 2026-10-31 räknade bara om de sparade raderna. När denna rapportversion skrevs ({TODAY}) använde Vitki mätmetoden {VN['method']} (spårläsaren läser {VN['method']}-mätningarna sedan commit {VS['commit']}, {VS['date']}) och språkmodellen {VN['textmodel']} med faktorn {fac(VN['trace_eps'])} för spåren; ingen av dem är prövad på det här sättet. Kodläget anges med commit i [Precatio/runes](https://github.com/Precatio/runes), eftersom det inte fanns någon release av Vitki med DOI när denna rapportversion skrevs. Kontrollen för rapportversion 3 (`kontroll_v3.py`) och byggskriptet för den versionen finns i commit 6eae0af ({TODAY}). Koden och resultatfilerna nedan finns öppet på GitHub under GPL-3.0.
 
 - Spårläsaren och proven: `utdata/sparlasare/` (stegen `led_a.py`–`led_g.py`; huvudprovet `led_f.py` med raderna per sten `led_f_Sö_*.json`, skanningens mätta drag `*_feats_e.json` och sammanställningen `led_f_summering.py` → `led_f_summering.json`; den första körningen `led_f.json`; det tidigare steget `led_e.py` → `led_e_perm.json`; omräkningen utan Sö 113 `utan_so113.py` → `utan_so113.json`; verkliga luckor `led_g.py` → `led_g.json`; kontrollen för rapportversion 3 `kontroll_v3.py` → `kontroll_v3.json`).
 - Huggspåren: `src/auto_grooves.py` ({VT['method']} vid commit {VT['commit_f']}). Språkmodellen: `src/runlm.py` och `src/textmodel.py` ({VT['textmodel_f']} vid commit {VT['commit_f']} och {VT['commit_g']}). Spårläsaren i Vitki: `src/trace_reader.py`.
@@ -359,7 +397,7 @@ body_en = f"""*Viktor Kvant, independent researcher. Methods report, partially t
 
 **What has not been tested.** {FIRST_EN} Nor was the test locked in a plan, and the trace reader's settings were derived on one of the stones in the test. The test hides whole words of whole runes; at real damage the traces have been tested on only five stones, and there fewer suggestions agreed with the editors' reading with the traces than without them.
 **Background and aim.** When runes are damaged the runologist reads what remains on the stone, and a language model can suggest what stood there. The question here is whether what a 3D scan shows of the damaged runes makes the language model's suggestions better.
-**Material.** 17 runestones in Södermanland that Laila Kitzler Åhfeldt has scanned in 3D and published openly, with their text in the Scandinavian Runic-text Database (Rundata, version 3.1 from 2018); {A['n']} words that could be tested.
+**Material.** 17 runestones in Södermanland that Laila Kitzler Åhfeldt has scanned in 3D and published openly, with their text in the Scandinavian Runic-text Database (Rundata, 2014 version with RUNDATA.xls updated 2018); {A['n']} words that could be tested.
 **Method.** A trace reader reads in the scan's depth image which of the sixteen runes each detected rune can be, with a probability for each. The scan's runes are paired with the positions of the text. Every whole word of two to six runes is hidden, and a language model trained without the stone fills it in: without traces, with the traces and with the same traces shuffled at random among the stone's positions. The comparison is paired, word by word.
 **Results.** With the traces {e1(MN['skanner']['word_ok'])} percent of the words came out right, against {e1(MN['utan']['word_ok'])} percent without them ({KM['utan_to_skanner']['wrong_to_right']} words became right with the traces and none became wrong; the probability of the right word rose, {pexp(SU['p'], True)}). With shuffled traces the gain vanished and the probability fell ({p2(OU['p'], True)}). Without the stone on which the settings were derived: {e1(XU['means']['skanner']['word_ok'])} against {e1(XU['means']['utan']['word_ok'])} percent. On Sö 134, the only stone where the pairing beat chance, {e1(R1['means']['utan']['word_ok'])} percent of the {R1['n']} words came out right in all three conditions. On five stones with real lacunae {GU} of {N_GAP_WORDS} suggestions agreed with the editors' reading in Rundata without traces and {GS} of {N_GAP_WORDS} with them.
 **Conclusion.** The traces raised the probability of the right word in the test, but since the pairing saw the answer, what the scan reads cannot be told apart from what the pairing already knew, and on the only reliably paired stone the share of right words did not change. The method needs to be tested again with the answer hidden from the whole chain and with the versions Vitki uses. At severe damage the traces should be shown to the reader and weighed in only once the reader has confirmed them.
@@ -393,13 +431,13 @@ The test was not locked in a plan. The trace reader was built in steps on 17 Oct
 
 ## 5. Results
 
-**5.1 The main test.** {A['n']} words on {A['stones']} stones. Right word: {e1(MN['utan']['word_ok'])} percent without traces ({RW['utan']} words), {e1(MN['skanner']['word_ok'])} percent with the traces ({RW['skanner']}) and {e1(MN['omflyttad']['word_ok'])} percent with the traces shuffled ({RW['omflyttad']}). With the traces {KM['utan_to_skanner']['wrong_to_right']} words came out right that were wrong without them, and no word that was right became wrong; with shuffled traces {KM['utan_to_omflyttad']['wrong_to_right']} words became right and {KM['utan_to_omflyttad']['right_to_wrong']} wrong. The probability of the right word: {MN['utan']['p_truth']:.3f} without, {MN['skanner']['p_truth']:.3f} with and {MN['omflyttad']['p_truth']:.3f} with shuffled traces. The traces gave a higher probability than no traces, {pexp(SU['p'], True)}, and higher than shuffled traces, {pexp(SO['p'], True)}. Shuffled traces gave a lower probability than no traces, {p2(OU['p'], True)}; in the share of right words the difference was one word of {A['n']}. All p-values concern the probability of the right word, not the share of right words. In plain words: with the scan's traces about six hidden words in ten came out right instead of just over five; {KM['utan_to_skanner']['wrong_to_right']} words became right and none became wrong. When the traces were shuffled the gain vanished. But the pairing between scan and text saw the answer (4.4), so part of the gain may come from the pairing rather than from the scan.
+**5.1 The main test.** {A['n']} words on {A['stones']} stones. Right word: {e1(MN['utan']['word_ok'])} percent without traces ({RW['utan']} words), {e1(MN['skanner']['word_ok'])} percent with the traces ({RW['skanner']}) and {e1(MN['omflyttad']['word_ok'])} percent with the traces shuffled ({RW['omflyttad']}). With the traces {KM['utan_to_skanner']['wrong_to_right']} words came out right that were wrong without them, and no word that was right became wrong; with shuffled traces {KM['utan_to_omflyttad']['wrong_to_right']} words became right and {KM['utan_to_omflyttad']['right_to_wrong']} wrong. The probability of the right word: {MN['utan']['p_truth']:.3f} without, {MN['skanner']['p_truth']:.3f} with and {MN['omflyttad']['p_truth']:.3f} with shuffled traces. The traces gave a higher probability than no traces, {pexp(SU['p'], True)}, and higher than shuffled traces, {pexp(SO['p'], True)}. Shuffled traces gave a lower probability than no traces, {p2(OU['p'], True)}; in the share of right words the difference was one word of {A['n']}. All p-values concern the probability of the right word, not the share of right words. In plain words: with the scan's traces about six hidden words in ten came out right instead of just over five; {KM['utan_to_skanner']['wrong_to_right']} words became right and none became wrong. When the traces were shuffled the gain vanished. But the pairing between scan and text saw the answer (4.4), so some or all of the gain may come from the pairing rather than from the scan.
 
 {chart(False)}
 
 {FIG_EN}
 
-**5.2 Without Sö 113, and the only reliably paired stone.** Without the stone on which the settings were derived: {XU['n']} words on {XU['stones']} stones, {e1(XU['means']['utan']['word_ok'])} percent right without traces, {e1(XU['means']['skanner']['word_ok'])} with and {e1(XU['means']['omflyttad']['word_ok'])} with shuffled; the probability of the right word with the traces against no traces {pexp(XU['skanner_vs_utan']['p'], True)}, against shuffled {pexp(XU['skanner_vs_omflyttad']['p'], True)}. Only on Sö 134 did the pairing beat chance. There {e1(R1['means']['utan']['word_ok'])} percent of the {R1['n']} words came out right in all three conditions, and no word changed; the probability of the right word rose with the traces, {p2(RSU['p'], True)} against no traces and {p2(RSO['p'], True)} against shuffled.
+**5.2 Without Sö 113, and the only reliably paired stone.** Without the stone on which the settings were derived: {XU['n']} words on {XU['stones']} stones, {e1(XU['means']['utan']['word_ok'])} percent right without traces, {e1(XU['means']['skanner']['word_ok'])} with and {e1(XU['means']['omflyttad']['word_ok'])} with shuffled; the probability of the right word with the traces against no traces {pexp(XU['skanner_vs_utan']['p'], True)}, against shuffled {pexp(XU['skanner_vs_omflyttad']['p'], True)}. Only on Sö 134 did the pairing beat chance. There {e1(R1['means']['utan']['word_ok'])} percent of the {R1['n']} words came out right in all three conditions, and no word changed; the probability of the right word rose with the traces (on average from {d2(R1['means']['utan']['p_truth'], True)} to {d2(R1['means']['skanner']['p_truth'], True)}), {p2(RSU['p'], True)} against no traces, just above the usual 0.05 limit and with {R1['n']} words a weak sign, and {p2(RSO['p'], True)} against shuffled.
 
 **5.3 Calibration.** Not tested. The test saved the probability of the right word but not that of the model's first choice, so it cannot show whether the model's probabilities match how often the suggestions came out right. The {N_GAP_WORDS} words in real lacunae are too few for such a test.
 
@@ -432,7 +470,7 @@ With the 3D scan's traces the language model filled in {e1(MN['skanner']['word_o
 
 ## Data and code
 
-The test was run on {en_date(VT['date_f'])} (commits {VT['commit_f']} and {VT['commit_g']}) with the {VT['method']} measurement method and the {VT['textmodel_f']} language model; the 31 October recomputation only re-aggregated the saved rows. When this report version was written ({en_date(TODAY)}), Vitki used the {VN['method']} measurement method (the trace reader has read the {VN['method']} measurements since commit {VS['commit']}, {en_date(VS['date'])}) and the {VN['textmodel']} language model with a factor of {fac(VN['trace_eps'], True)} for the traces; neither has been tested in this way. The code state is given by commit in [Precatio/runes](https://github.com/Precatio/runes), since no release of Vitki with a DOI existed when this report version was written. The code and the result files below are openly available on GitHub under GPL-3.0.
+The test was run on {en_date(VT['date_f'])} (commits {VT['commit_f']} and {VT['commit_g']}) with the {VT['method']} measurement method and the {VT['textmodel_f']} language model; the 31 October recomputation only re-aggregated the saved rows. When this report version was written ({en_date(TODAY)}), Vitki used the {VN['method']} measurement method (the trace reader has read the {VN['method']} measurements since commit {VS['commit']}, {en_date(VS['date'])}) and the {VN['textmodel']} language model with a factor of {fac(VN['trace_eps'], True)} for the traces; neither has been tested in this way. The code state is given by commit in [Precatio/runes](https://github.com/Precatio/runes), since no release of Vitki with a DOI existed when this report version was written. The check for report version 3 (`kontroll_v3.py`) and the builder of that version are in commit 6eae0af ({en_date(TODAY)}). The code and the result files below are openly available on GitHub under GPL-3.0.
 
 - The trace reader and the tests: `utdata/sparlasare/` (the steps `led_a.py`–`led_g.py`; the main test `led_f.py` with the rows per stone `led_f_Sö_*.json`, the scan's measured features `*_feats_e.json` and the summary `led_f_summering.py` → `led_f_summering.json`; the first run `led_f.json`; the earlier step `led_e.py` → `led_e_perm.json`; the recomputation without Sö 113 `utan_so113.py` → `utan_so113.json`; real lacunae `led_g.py` → `led_g.json`; the check for report version 3 `kontroll_v3.py` → `kontroll_v3.json`).
 - The grooves: `src/auto_grooves.py` ({VT['method']} at commit {VT['commit_f']}). The language model: `src/runlm.py` and `src/textmodel.py` ({VT['textmodel_f']} at commits {VT['commit_f']} and {VT['commit_g']}). The trace reader in Vitki: `src/trace_reader.py`.
@@ -480,12 +518,14 @@ assert "I klartext" in body and "In plain words" in body_en  # mallen version 4
 assert f"## Sammanfattning\n\n**Vad som inte är prövat.** {FIRST_SV}" in body  # mallen: nivå 2, äldre version först
 assert f"## Abstract\n\n**What has not been tested.** {FIRST_EN}" in body_en
 assert "**5.3 Kalibreringen.** Inte prövad." in body and "**5.3 Calibration.** Not tested." in body_en
-assert body.split("\n", 1)[0].startswith(f"*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapportversion 3, {TODAY} (version 1 publicerad 2026-10-31, version 2 2026-11-01). Tidslinje: ")
-assert body_en.split("\n", 1)[0].startswith(f"*Viktor Kvant, independent researcher. Methods report, partially tested. Report version 3, {TODAY} (")
-assert "## Ändringslogg" in body and body.rstrip().endswith("ett nytt kontrollskript.") and body_en.rstrip().endswith("a new check script.")
+assert body.split("\n", 1)[0].startswith(f"*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapportversion 4, {TODAY} (version 1 publicerad 2026-10-31, version 2 2026-11-01). Tidslinje: ")
+assert body_en.split("\n", 1)[0].startswith(f"*Viktor Kvant, independent researcher. Methods report, partially tested. Report version 4, {TODAY} (")
+assert "## Ändringslogg" in body and body.rstrip().endswith(V4_SV) and body_en.rstrip().endswith(V4_EN)
+for b_, old in ((body, "version 3.1"), (body_en, "version 3.1"), (body, "så en del av vinsten kan"), (body_en, "so part of the gain")):
+    assert old not in b_, old
 # the header line as the site and the Zenodo script read it (web/src/lib/report.ts, scripts/zenodo_rapporter.py)
 H_EN = body_en.split("\n", 1)[0]
-assert re.search(r"Report version (\d+), (\d{4}-\d{2}-\d{2})", H_EN).groups() == ("3", TODAY)
+assert re.search(r"Report version (\d+), (\d{4}-\d{2}-\d{2})", H_EN).groups() == ("4", TODAY)
 assert re.search(r"made in Vitki ([\d.]+)", H_EN).group(1) == APP_VERSION
 assert re.search(r"independent researcher\. ([^.]+)\.", H_EN).group(1) == "Methods report, partially tested"
 for line, lab in ((body.split("\n", 1)[0], "Analysen är gjord"), (H_EN, "The analysis was made")):
