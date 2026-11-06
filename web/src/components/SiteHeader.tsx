@@ -9,11 +9,11 @@ import { CONTACT_PATH, DOWNLOAD_URL, EN_CONTACT_PATH, NEWS_PATH } from "@/lib/si
 // The one header of the public website: the start page, the articles, the research reports, the carvers, the news and the contact page all show it. The
 // start page's sections are reached as /#… from every page. lang="en": the English editions (/en/…) get it in
 // English; the Swedish pages are translated in place like the rest of the page. Links are not prefetched (BlogShell).
-// The start page's sections; the last four only on very wide screens (1800 px), so that the header never wraps or
-// overlaps (from lg it shows the articles, the research reports, the first two sections, the news and the contact page)
+// The content comes first (articles, research reports, news), then the start page's sections about the platform; the
+// last four only on very wide screens (1800 px), so that the header never wraps or overlaps
 const SECTIONS: [string, string, string, boolean][] = [
-  ["/#forskning", "För forskningen", "For research", false],
   ["/#appen", "Appen", "The app", false],
+  ["/#forskning", "För forskningen", "For research", false],
   ["/#nytt", "Vad Vitki tillför", "What Vitki adds", true],
   ["/#landskap", "Nya källor", "New sources", true],
   ["/#kallor", "Källor", "Sources", true],
@@ -40,8 +40,9 @@ export default function SiteHeader({ lang = "sv" }: { lang?: "sv" | "en" }) {
         <nav className="hidden lg:flex items-center gap-4 2xl:gap-5 text-sm font-semibold text-slate-600 whitespace-nowrap">
           <Link href={en ? EN_ARTICLES_PATH : ARTICLES_PATH} prefetch={false} className="hover:text-slate-900">{en ? "Articles" : "Artiklar"}</Link>
           <Link href={en ? EN_REPORTS_PATH : REPORTS_PATH} prefetch={false} className="hover:text-slate-900">{en ? "Research reports" : "Forskningsrapporter"}</Link>
-          {SECTIONS.map(([href, sv, e, wide]) => <a key={href} href={href} className={`hover:text-slate-900${wide ? " hidden min-[1800px]:inline" : ""}`}>{en ? e : sv}</a>)}
           <Link href={NEWS_PATH} prefetch={false} className="hover:text-slate-900">{en ? "News" : "Nyheter"}</Link>
+          <span aria-hidden="true" className="h-4 w-px bg-slate-300" />
+          {SECTIONS.map(([href, sv, e, wide]) => <a key={href} href={href} className={`hover:text-slate-900${wide ? " hidden min-[1800px]:inline" : ""}`}>{en ? e : sv}</a>)}
           <Link href={en ? EN_CONTACT_PATH : CONTACT_PATH} prefetch={false} className="hover:text-slate-900">{en ? "Contact" : "Kontakt"}</Link>
         </nav>
         <div className="flex items-center gap-2 sm:gap-3">

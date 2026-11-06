@@ -6,7 +6,7 @@ import LocalAppLink from "@/components/LocalAppLink";
 import StatsNote from "@/components/StatsNote";
 import SiteVote from "@/components/SiteVote";
 import ZoomImage from "@/components/ZoomImage";
-import { VERSION } from "@/lib/version";
+import { CONCEPT_DOI, VERSION, VERSION_DOI } from "@/lib/version";
 import ArticleTeasers from "@/components/ArticleTeasers";
 import LandingArticleSearch from "@/components/LandingArticleSearch";
 import type { BlogPost } from "@/components/BlogBody";
@@ -733,12 +733,13 @@ andel <- tapply(stenar$bon,
               <h3 className="text-lg font-bold">Citera</h3>
               <p className="mt-3 text-slate-300">Använder du plattformen i forskning, citera programvaran och de datakällor du använt:</p>
               <pre className="mt-3 whitespace-pre-wrap rounded-xl bg-black/30 border border-white/10 p-4 text-sm text-slate-200 font-mono">
-{`Kvant, V. (2026). Vitki:
-öppen plattform för analys av runinskrifter
-(version ${VERSION}). https://vitkirunor.se
+{`Kvant, V. (2026). Vitki: an open platform for the
+analysis of runic inscriptions (version ${VERSION}).
+Zenodo. ${VERSION_DOI ? `https://doi.org/${VERSION_DOI}` : "https://vitkirunor.se"}
 
-Samnordisk runtextdatabas. Institutionen för nordiska
-språk, Uppsala universitet.`}
+Samnordisk runtextdatabas, version 2014 (RUNDATA.xls
+uppdaterad 2018). Institutionen för nordiska språk,
+Uppsala universitet.`}
               </pre>
             </div>
           </div>
@@ -816,6 +817,7 @@ språk, Uppsala universitet.`}
             <a href={DOCS_URL} target="_blank" rel="noopener noreferrer" className="tap hover:text-slate-900">Dokumentation</a>
             <a href={GITHUB} target="_blank" rel="noopener noreferrer" className="tap hover:text-slate-900">GitHub</a>
             <a href={BLUESKY_URL} target="_blank" rel="noopener noreferrer me" className="tap hover:text-slate-900">Bluesky</a>
+            {CONCEPT_DOI && <a href={`https://doi.org/${CONCEPT_DOI}`} target="_blank" rel="noopener noreferrer" className="tap hover:text-slate-900">Zenodo (DOI)</a>}
             <span>GPL-3.0</span>
             <StatsNote />
           </div>
