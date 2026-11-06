@@ -5,7 +5,7 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
-## [3.1.0] – 2026-11-05
+## [3.1.0] – 2026-11-06
 
 ### Forskningsrapporterna granskade inför arkiveringen
 - Alla elva publicerade rapporter lästes av oberoende granskare mot resultatfilerna, analysplanerna och litteraturen.
