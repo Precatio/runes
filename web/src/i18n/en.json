@@ -3900,6 +3900,7 @@
 "Koden är inte granskad av utomstående, och ingen låst version med DOI finns ännu.":"The code has not been reviewed by outsiders, and no locked version with a DOI exists yet.",
 "Koden är inte granskad av utomstående.":"The code has not been reviewed by outsiders.",
 "Varje release arkiveras med DOI i Zenodo (CITATION.cff), och varje analys anger den version den gjordes med; mätprotokollet är ännu ett utkast (PROTOCOL.md P{0}).":"Every release is archived with a DOI on Zenodo (CITATION.cff), and every analysis states the version it was made with; the measurement protocol is still a draft (PROTOCOL.md P{0}).",
+"Varje release arkiveras med DOI i Zenodo (alla versioner: doi:{0}.{1}/zenodo.{2}), och varje analys anger den version den gjordes med; mätprotokollet är ännu ett utkast (PROTOCOL.md P{3}).":"Every release is archived with a DOI on Zenodo (all versions: doi:{0}.{1}/zenodo.{2}), and every analysis states the version it was made with; the measurement protocol is still a draft (PROTOCOL.md P{3}).",
 "Extern granskning av koden och de valideringar av mätprotokollet som återstår (PROTOCOL.md P{0}).":"External review of the code and the validations of the measurement protocol that remain (PROTOCOL.md P{0}).",
 "Kodningsfel:":"Coding errors:",
 "kohorn":"cow horn",
@@ -8297,5 +8298,10 @@
 "ᛙ m (kortkvist)":"ᛙ m (short-twig)",
 "ᛚ l":"ᛚ l",
 "ᛦ R":"ᛦ R",
-"ᛧ R (kortkvist)":"ᛧ R (short-twig)"
+"ᛧ R (kortkvist)":"ᛧ R (short-twig)",
+"Vitki {0}.{1}.{2} arkiverad med DOI":"Vitki {0}.{1}.{2} archived with a DOI",
+"Vitki finns nu permanent arkiverat i Zenodo, det öppna forskningsarkivet vid CERN.":"Vitki is now permanently archived on Zenodo, the open research repository at CERN.",
+"Version {0}.{1}.{2} har DOI {3}.{4}/zenodo.{5} och kan citeras med den; varje kommande version får en egen DOI under samma post (alla versioner: {6}.{7}/zenodo.{8}).":"Version {0}.{1}.{2} has the DOI {3}.{4}/zenodo.{5} and can be cited with it; every future version gets its own DOI under the same record (all versions: {6}.{7}/zenodo.{8}).",
+"Arkivet innehåller koden, metodbeskrivningen och analysplanerna.":"The archive holds the code, the method description and the analysis plans.",
+"Före arkiveringen granskades alla publicerade forskningsrapporter av fristående läsare och rättades öppet i nya versioner med ändringslogg.":"Before archiving, every published research report was reviewed by independent readers and corrected openly in new versions with a change log."
 }

@@ -145,8 +145,11 @@ cd web && npx firebase-tools deploy --only firestore   # bara regelfilen; "fires
 
 ## Citering och DOI
 
-Citera enligt [CITATION.cff](CITATION.cff). För en citerbar DOI: koppla GitHub-repot till
-[Zenodo](https://zenodo.org/account/settings/github/) och skapa en release – metadata hämtas från `.zenodo.json`.
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24004431.svg)](https://doi.org/10.5281/zenodo.24004431)
+
+Varje release arkiveras i Zenodo med en egen DOI. Vitki 3.1.0: [doi:10.5281/zenodo.24004432](https://doi.org/10.5281/zenodo.24004432); alla versioner, där
+den senaste alltid ligger först: [doi:10.5281/zenodo.24004431](https://doi.org/10.5281/zenodo.24004431). Citera enligt [CITATION.cff](CITATION.cff) och ange
+versionen som analysen gjordes med; den står i varje analys. Hur en release görs står i [RELEASING.md](RELEASING.md).
 Uppgifter ur Rundata ska citeras som Samnordisk runtextdatabas (se [data/README.md](data/README.md)).
 
 ## Data och innehåll från andra källor

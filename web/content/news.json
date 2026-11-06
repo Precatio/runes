@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "vitki-3-1-0-doi",
+   "date": "2026-11-06",
+   "status": "nytt",
+   "title": "Vitki 3.1.0 arkiverad med DOI",
+   "text": "Vitki finns nu permanent arkiverat i Zenodo, det öppna forskningsarkivet vid CERN. Version 3.1.0 har DOI 10.5281/zenodo.24004432 och kan citeras med den; varje kommande version får en egen DOI under samma post (alla versioner: 10.5281/zenodo.24004431). Arkivet innehåller koden, metodbeskrivningen och analysplanerna. Före arkiveringen granskades alla publicerade forskningsrapporter av fristående läsare och rättades öppet i nya versioner med ändringslogg."
+  },
+  {
    "id": "malaroarna-folkland",
    "date": "2026-11-05",
    "status": "nytt",
