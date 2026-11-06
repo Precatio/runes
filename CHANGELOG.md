@@ -17,6 +17,15 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   som utkast; den stannar om en rättad version inte är publicerad än. Granskningen av de fyra opublicerade utkasten står
   i `utdata/rapporter/granskning_2026-11-05_utkast.md`.
 
+### Landindelningen: Mälaröarna i rätt folkland
+- Färingö tingslag (Färentuna, Hilleshög, Sånga, Skå, Munsö, Lovö) hör till Bro härad i Attundaland och Adelsö till
+  Trögd i Fjädrundaland enligt *Det medeltida Sverige* 1:7; Ekerö hörde till Svartlösa härad i Södermanland. Bromma
+  och Spånga till Sollentuna härad. Tabellen `parish_medieval` i `web/src/lib/historiska_land.json` har citat och sida
+  per socken. 39 uppländska stenar som saknade folkland har nu ett (7 kvar utan); 43 signa byter land, kartlagret är
+  omritat och korpusens fingeravtryck ändras. Folklandsanalysen är omkörd (huvudtestet håller, p = 0,003), och
+  rapporten om Upplands folkland är färdig som utkast.
+- En andra fristående genomläsning av rättelserna gav alla elva publicerade rapporter ännu en version samma dag.
+
 ### Dokumentationen inför arkiveringen
 - `användarmanual.md` beskriver mätningen som den är: utan AI, med groove-7 och runorna uppdelade längs slingan, med
   menyns namn och ett avsnitt om appens övriga delar. `examples/so128` är märkt som historiskt (Vitki 2.0.0, groove-5).
