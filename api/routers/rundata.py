@@ -29,6 +29,25 @@ def inscription(signum: str):
     return {**rec, "dimensions": dims, "runor": runor.for_inscription(rec)}
 
 
+@router.get("/tokens")
+def transliteration_tokens(signum: str = Query(..., min_length=1, max_length=100)):
+    """Translittereringen som token för Runa för runa (src/rune_links.tokenize): index, tecken, sort (runa, osäker,
+    förlorad, skiljetecken, lucka, övrigt), ordnummer, sektion och plats i textmodellens text. En delsten (Sö 137A)
+    får bara sin sektion, när posten har den. 404 när signumet saknas eller inte har någon translitterering."""
+    import re as _re_tok
+    from src import rune_links
+    s = signum.strip()
+    rec, part = store().get(s), None
+    if rec is None:
+        m = _re_tok.match(r"^(.*\d)\s*([A-Da-d])$", s)
+        if m:
+            rec, part = store().get(m.group(1)), m.group(2).upper()
+    out = rune_links.transliteration_for(rec, part)
+    if out is None:
+        raise HTTPException(status_code=404, detail=f"{s} har ingen translitterering i Rundata.")
+    return out
+
+
 @router.get("/search")
 def search(
     q: str = "",

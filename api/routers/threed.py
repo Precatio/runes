@@ -412,6 +412,63 @@ def auto_analyze(
     return result
 
 
+MAX_ANCHOR_FIELD = 900_000  # under Starlette's 1 MB per form field
+
+
+@router.post("/rune_anchors")
+def rune_anchors(
+    marks_json: str = Form(...),
+    mesh_id: str = Form(None),
+    frame_json: str = Form(None),
+    parameters_json: str = Form(None),
+    slices_json: str = Form(None),
+    sha256: str = Form(None),
+):
+    """Runa för runa: varje markering i granskningsbilden (pixlar) som en punkt i 3D-modellen (mm, centrerad) med
+    normal och kameravy (src/rune_links.anchors). Ramen är analysens image_frame, annars anpassad ur snitten
+    (slices_json: [[img_x, img_y, x, y, z, spårdjup_mm], …], parameters_json: {normal, up}). Höjden tas ur modellen
+    när mesh_id anges (404 om den lämnat minnet, så att sidan laddar upp den igen), annars ur de närmaste snitten."""
+    from src import rune_links
+    for name, raw in (("marks_json", marks_json), ("frame_json", frame_json), ("parameters_json", parameters_json),
+                      ("slices_json", slices_json)):
+        if raw is not None and len(raw) > MAX_ANCHOR_FIELD:
+            raise HTTPException(status_code=413, detail=f"{name} är för stort.")
+    try:
+        marks = rune_links.check_marks(json.loads(marks_json))
+        frame = json.loads(frame_json) if frame_json else None
+        params = json.loads(parameters_json) if parameters_json else {}
+        rows = json.loads(slices_json) if slices_json else []
+        if not isinstance(rows, list) or not all(isinstance(r, list) and len(r) == 6 and all(_is_num(v) for v in r)
+                                                 for r in rows):
+            raise ValueError("slices_json ska vara [[img_x, img_y, x, y, z, spårdjup_mm], …].")
+        slices = [{"accepted": True, "img_x": r[0], "img_y": r[1], "point": r[2:5], "spårdjup_mm": r[5]} for r in rows]
+        result = {"image_frame": frame, "parameters": params if isinstance(params, dict) else {}, "slices": slices}
+        if isinstance(frame, dict):
+            for k in ("u", "v", "n"):
+                if groove_export.unit_vector(frame.get(k)) is None:
+                    raise ValueError(f"frame_json.{k} måste vara [x, y, z].")
+        fr = rune_links.frame_from_result(result)
+    except (ValueError, TypeError, KeyError, RecursionError) as e:
+        raise HTTPException(status_code=400, detail=str(e) if isinstance(e, ValueError) else
+                            "Ogiltiga uppgifter för 3D-ankarna.") from None
+    if fr is None:
+        raise HTTPException(status_code=422, detail="Granskningsbildens läge på modellen kunde inte bestämmas.")
+    vertices = None
+    if mesh_id:
+        if not _MESH_ID.match(mesh_id):
+            raise HTTPException(status_code=400, detail="Ogiltigt mesh_id.")
+        entry = mesh_cache.get(mesh_id)
+        if sha256 and entry.info.get("sha256") and sha256 != entry.info["sha256"]:
+            raise HTTPException(status_code=400, detail="Analysen hör till en annan skanning än den inlästa 3D-modellen.")
+        vertices = entry.mesh.vertices
+    return {"anchors": rune_links.anchors(fr, marks, mesh_vertices=vertices, slices=slices),
+            "frame_source": fr.get("source"), "coords": rune_links.COORDS}
+
+
+def _is_num(v) -> bool:
+    return isinstance(v, (int, float)) and not isinstance(v, bool) and np.isfinite(v)
+
+
 @router.post("/auto_snap_path")
 def auto_snap_path(
     file: UploadFile = File(None),

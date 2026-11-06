@@ -275,3 +275,11 @@ def test_runes_are_split_along_the_band(monkeypatch):
     key = lambda r: sorted((round(s["apex_vinkel_deg"], 6), s["position_mm"]) for s in r["slices"] if s["accepted"])  # noqa: E731
     assert key(plain) == key(sl)
     assert [s.get("rune_id") for s in plain["slices"]] == [s.get("rune_id") for s in sl["slices"]]
+
+
+def test_rune_detection_rules_are_locked_for_the_facit_evaluation():
+    """IMPLEMENTATIONSPLAN 1.1: the rules are not tuned on the facit stones. A change to the rune-detection rules
+    changes the fingerprint; then RULES_SHA256 in scripts/evaluate_rune_detection.py is re-locked with date and reason,
+    and facits already evaluated count as development stones for the new rules."""
+    from scripts.evaluate_rune_detection import RULES_SHA256, rules_fingerprint
+    assert rules_fingerprint() == RULES_SHA256

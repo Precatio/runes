@@ -37,7 +37,7 @@ data/cache/
 # The files that ARE tracked under them were added on purpose with `git add -f` (git keeps tracking a file once it is
 # added, whatever .gitignore says) and belong to the published record:
 #   utdata/  the scripts, inputs and results behind published or drafted articles and the model checks:
-#            Edda (+ Edda/kallor), Malt, blindtest, blogg (+ blogg/build, blogg/forslag), forslag, huggspar, kallor,
+#            Edda (+ Edda/kallor), Malt, blindtest, blogg (+ blogg/build, blogg/forslag), facit, forslag, huggspar, kallor,
 #            landning, lda_kategorier, luckartikel, material, mi, modellartikel, ordpar, ristare (+ ristare/ut),
 #            runlm_forfining (+ runlm_forfining/tm19), skane, sparlasare, sprakprov, stilgrupp_ai
 #   data/blog/figures/  two article figures that article scripts and saved article versions in utdata/blogg refer to

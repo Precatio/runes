@@ -16,6 +16,7 @@ import { InfoTip } from "@/components/Explain";
 import { ApiError, MIN_RUNES_COMPARE, MIN_RUNES_DESCRIBE, type AutoAnalysisResult, type AutoLabel, type MeshInfo, type MeshSession } from "@/lib/mesh";
 import type { AnalysisProvenance, ThreeDAnalysisResult } from "@/lib/db";
 import type { ViewDirection } from "@/components/ThreeDViewer";
+import type { RuneEdition } from "@/lib/runeLinks";
 
 interface ExportItem {
   id: string;
@@ -71,6 +72,8 @@ interface Props {
   result: ThreeDAnalysisResult | null;
   autoResult: AutoAnalysisResult | null;
   autoLabels: AutoLabel[];
+  // The review's clicks tied to the transliteration (Runa för runa): sent with the automatic analysis for the TEI export
+  runeEdition?: RuneEdition | null;
   onCreateReport?: () => void;
 }
 
@@ -204,7 +207,7 @@ export function scrollToExport() {
 
 export default function GrooveExportMenu({
   session, meshInfo, getView, signum, featureType, preferAuto, onChooseAnalysis, result, autoResult, autoLabels,
-  onCreateReport,
+  runeEdition, onCreateReport,
 }: Props) {
   const [catalogue, setCatalogue] = useState<ExportCatalogue | null>(null);
   const items = catalogue?.items ?? null;
@@ -283,6 +286,7 @@ export default function GrooveExportMenu({
       case "depth_profile": return (depthProfile?.distances.length ?? 0) > 0;
       case "groove_map": return isAuto && !!autoResult?.groove_map_base64;
       case "review_image": return isAuto && !!autoResult?.image_base64;
+      case "rune_links": return isAuto && (runeEdition?.rune_links.length ?? 0) > 0;
       default: return false;
     }
   };
@@ -323,7 +327,7 @@ export default function GrooveExportMenu({
         signum: signum.trim(),
         feature_type: analysisFeature,
         ...(analysisMode ? { mode: analysisMode } : {}),
-        ...(exported ? { result_json: JSON.stringify(exported) } : {}),
+        ...(exported ? { result_json: JSON.stringify(isAuto && runeEdition ? { ...exported, rune_edition: runeEdition } : exported) } : {}),
         ...(isAuto ? { labels_json: JSON.stringify(autoLabels) } : {}),
         ...(!credit?.known && note ? { scan_note: note } : {}),
         ...(view ? {

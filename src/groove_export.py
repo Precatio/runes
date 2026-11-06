@@ -223,6 +223,17 @@ ITEMS = [
      "explanation": "Spårdjupet längs banan du ritade, snitt för snitt. Där syns var ett streck börjar och slutar och "
                     "spår av omhuggning eller vittring. Banans snitt sorteras inte lika strängt som den automatiska "
                     "analysens; alla snitt med en giltig vinkel kommer med."},
+    {"id": "tei_edition", "group": "data", "formats": ["XML"], "needs": ["auto", "rune_links"],
+     "label": "Utgåva (TEI/EpiDoc) med 3D-ankare",
+     "file": "{sig}_utgava_tei.xml",
+     "explanation": "Inskriftens translitterering ur Rundata som en digital utgåva i TEI/EpiDoc, med varje runa som "
+                    "ett eget element med xml:id. Runor du har kopplat med Runa för runa pekar (@facs) på en zon i "
+                    "granskningsbilden och på en punkt i 3D-modellen: läget i mm, ytans normal och en kameravy rakt mot "
+                    "den ristade ytan, i modellens koordinater (centrerad, som tabellerna) och i skanningsfilens egna. "
+                    "Osäkra runor står i <unclear>, förlorade som <gap>, skiljetecken som <g type=\"divider\">, och hur "
+                    "3D-punkterna är kodade står i filens editorialDecl. Filen kan läsas av TEI-verktyg och visas i "
+                    "utgåvevisare som EVT. Den är kontrollerad som välformad XML med giltiga hänvisningar, men inte "
+                    "validerad mot TEI-schemat. Translittereringen omfattas av Rundatas licens (ODbL)."},
     {"id": "full_json", "group": "data", "formats": ["JSON"], "needs": ["slices"],
      "label": "Hela analysen (JSON med proveniens)",
      "file": "{sig}_analys.json",
@@ -656,7 +667,7 @@ def validate_result(result) -> dict:
                 if not all(_finite(v) for v in p["x"]) or not all(_finite(v) for v in p["z"]):
                     raise BadInput(f"Snitt {i + 1}: profilen får bara innehålla tal.")
     for k in ("summary", "rune_summary", "tool_heuristic", "counts", "provenance", "depth_profile",
-              "groove_map_scale"):
+              "groove_map_scale", "image_frame", "rune_edition"):
         if result.get(k) is not None and not isinstance(result[k], dict):
             raise BadInput(f"{k} måste vara ett objekt.")
     rs = result.get("rune_summary")
@@ -1215,6 +1226,55 @@ def _length_profile_csv(ctx):
              "text/csv; charset=utf-8")]
 
 
+MAX_EDITION_TOKENS = 5000
+
+
+def rune_edition(ctx) -> dict | None:
+    """The review's links (Runa för runa) sent with the analysis as result.rune_edition, or None: {signum, labeller,
+    transliteration {text, source}, tokens, rune_links [{mark, token_index, tokens, char, image_xy}], skipped_tokens}."""
+    ed = ctx.result.get("rune_edition")
+    if not isinstance(ed, dict) or not isinstance(ed.get("rune_links"), list) or not ed["rune_links"]:
+        return None
+    return ed
+
+
+def _tei_edition(ctx):
+    from src import rune_links, tei_export
+    ed = dict(rune_edition(ctx))
+    tokens = ed.get("tokens")
+    if not isinstance(tokens, list) or not tokens or len(tokens) > MAX_EDITION_TOKENS:
+        raise BadInput("Runa för runa: translittereringens token saknas eller är för många.")
+    links = ed["rune_links"]
+    try:
+        rune_links.check_tokens(tokens)
+        if not all(isinstance(ln, dict) for ln in links):
+            raise ValueError("rune_links ska vara en lista av objekt.")
+        marks = rune_links.check_marks([ln.get("image_xy") for ln in links])
+        fr = rune_links.frame_from_result(ctx.result)
+        if fr is None:
+            raise _Skip("granskningsbildens läge på modellen kunde inte bestämmas")
+        entry = ctx.mesh_entry
+        verts = entry.mesh.vertices if entry is not None and not (entry.info or {}).get("mock") else None
+        anc = rune_links.anchors(fr, marks, mesh_vertices=verts, slices=ctx.slices)
+        ed["rune_links"] = [{**ln, "point_mm": a["point_mm"], "height_from": a["height_from"],
+                             "normal_or_view": a["normal_or_view"]} for ln, a in zip(links, anc, strict=True)]
+        ed["mesh"] = {**(ed.get("mesh") or {}), **{k: v for k, v in ctx.mesh.items() if v is not None}}
+        ed.setdefault("image_width", ctx.result.get("image_width"))
+        ed.setdefault("image_height", ctx.result.get("image_height"))
+        ed = rune_links.read_facit({"type": rune_links.FACIT_TYPE, "version": 2, **ed})
+    except (ValueError, KeyError, TypeError) as e:
+        raise BadInput(f"Runa för runa: {e}") from e
+    record, _ = rune_links.rundata_record(ctx.signum or (ed.get("signum") if isinstance(ed.get("signum"), str) else None))
+    try:
+        xml = tei_export.build(ed, record, ctx.credit, now=ctx.now)
+    except (ValueError, KeyError, TypeError) as e:
+        raise BadInput(f"Runa för runa: utgåvan kunde inte byggas ({e}).") from e
+    problems = tei_export.check(xml)
+    if problems:
+        raise RuntimeError("TEI-filen blev inte giltig: " + "; ".join(problems[:5]))
+    return [(f"{ctx.sig}_utgava_tei.xml", xml, "application/tei+xml; charset=utf-8")]
+
+
 def _credit_block(ctx) -> dict:
     c = ctx.credit
     return {"known": bool(c.get("known")), "match": c.get("match"), "file": c.get("file"),
@@ -1285,6 +1345,8 @@ def _why_not(ctx: _Context, item: str) -> str | None:
                 else "ingen sammanfattning (inga godkända snitt)")
     if item == "runes_csv" and not (ctx.auto and r.get("runes")):
         return "inga runor (bara automatisk analys)"
+    if item == "tei_edition" and not (ctx.auto and rune_edition(ctx)):
+        return "inga runor kopplade till translitterationen (Runa för runa)"
     if item == "length_profile_csv" and not (isinstance(r.get("depth_profile"), dict)
                                              and r["depth_profile"].get("distances")):
         return "ingen längdprofil (bara mätning längs en ritad bana)"
@@ -1296,7 +1358,7 @@ BUILDERS: dict[str, Callable] = {
     "groove_map": _groove_map, "review_image": _review_image, "positions_figure": _positions_figure,
     "spatial_figure": _spatial_figure, "profiles_figure": _profiles_figure, "slices_csv": _slices_csv,
     "summary_csv": _summary_csv, "runes_csv": _runes_csv, "profiles_csv": _profiles_csv,
-    "length_profile_csv": _length_profile_csv,
+    "length_profile_csv": _length_profile_csv, "tei_edition": _tei_edition,
 }
 
 

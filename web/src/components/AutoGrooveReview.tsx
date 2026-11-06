@@ -9,6 +9,8 @@ import { METRICS, METRIC_DIGITS, METRIC_LABELS, type FeatureType, type Metric, t
 import { angleColor, runeSampleNote, type AutoAnalysisResult, type AutoLabel, type AutoSlice } from "@/lib/mesh";
 import { useSettings } from "@/components/SettingsContext";
 import ExportTable from "@/components/ExportTable";
+import RuneLinkPanel, { type MarkMode } from "@/components/RuneLinkPanel";
+import { buildEdition, followingToken, linksOf, marksOf, markOfToken, nextToken, type MarkStep, type RuneAnchor, type TransliterationState } from "@/lib/runeLinks";
 
 const LABELS: Record<AutoLabel, { name: string; color: string }> = {
   rune: { name: "Runa", color: "#b7410e" },
@@ -28,8 +30,12 @@ interface Props {
   onSendToTwoD?: () => void;
   onExport?: () => void; // scrolls to the export menu on the page
   facitMode?: boolean;
-  runeMarks?: [number, number][]; // runes marked by hand, image pixels, reading order (withMarkedRunes)
-  onRuneMarksChange?: (marks: [number, number][]) => void;
+  // Runes marked by hand, in the order the clicks were made: image pixels, reading order (withMarkedRunes), each
+  // click tied to its rune(s) of the transliteration when marked Runa för runa (lib/runeLinks.ts)
+  markSteps?: MarkStep[];
+  onMarkStepsChange?: (steps: MarkStep[]) => void;
+  translit?: TransliterationState;
+  getAnchors?: (marks: [number, number][]) => Promise<RuneAnchor[]>; // the marks' 3D points (facit version 2)
 }
 
 function quickStats(values: number[]) {
@@ -39,11 +45,20 @@ function quickStats(values: number[]) {
   return { mean, sd };
 }
 
-export default function AutoGrooveReview({ result, signum, metaStone, metaWeathering, labels, onLabelsChange, onUse, onSendToTwoD, onExport, facitMode, runeMarks = [], onRuneMarksChange }: Props) {
+export default function AutoGrooveReview({ result, signum, metaStone, metaWeathering, labels, onLabelsChange, onUse, onSendToTwoD, onExport, facitMode, markSteps = [], onMarkStepsChange, translit = { status: "none" }, getAnchors }: Props) {
   const { userName } = useSettings();
   const svgRef = useRef<SVGSVGElement>(null);
   const [tool, setTool] = useState<AutoLabel>("rune");
-  const [marking, setMarking] = useState(false); // one click = one rune, instead of boxes and picking slices
+  // One click = one rune, instead of boxes and picking slices: plain marks, or each click tied to the next rune
+  const [markMode, setMarkMode] = useState<MarkMode | null>(null);
+  const marking = markMode !== null;
+  const [bindNext, setBindNext] = useState(false);
+  const [section, setSection] = useState<string | null>(null);
+  const [hoverMark, setHoverMark] = useState<number | null>(null);
+  const [savingFacit, setSavingFacit] = useState(false);
+  const runeMarks = marksOf(markSteps);
+  const tr = translit.status === "ok" ? translit.data : null;
+  const tokenMark = markOfToken(markSteps);
   const [drag, setDrag] = useState<{ x0: number; y0: number; x1: number; y1: number } | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
   const [using, setUsing] = useState(false);
@@ -62,7 +77,17 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
     const [ya, yb] = [Math.min(drag.y0, drag.y1), Math.max(drag.y0, drag.y1)];
     const isClick = xb - xa < 4 && yb - ya < 4;
     if (marking) {
-      if (isClick && onRuneMarksChange) onRuneMarksChange([...runeMarks, [Math.round(drag.x0), Math.round(drag.y0)]]);
+      if (isClick && onMarkStepsChange) {
+        const xy: [number, number] = [Math.round(drag.x0), Math.round(drag.y0)];
+        if (markMode === "plain" || !tr) {
+          onMarkStepsChange([...markSteps, { kind: "mark", xy, tokens: [] }]);
+        } else {
+          const next = nextToken(tr.tokens, markSteps, section);
+          const second = bindNext && next !== null ? followingToken(tr.tokens, next, section) : null;
+          if (next !== null) onMarkStepsChange([...markSteps, { kind: "mark", xy, tokens: second !== null ? [next, second] : [next] }]);
+          setBindNext(false);
+        }
+      }
     } else if (isClick) {
       // Select the nearest accepted point
       let best = -1;
@@ -139,17 +164,39 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
     }
   };
 
-  // Facit for evaluating the rune detection (scripts/evaluate_rune_detection.py): positions and the researcher's labels
-  const saveFacit = () => {
+  // Facit for evaluating the rune detection (scripts/evaluate_rune_detection.py): positions and the researcher's
+  // labels, and (version 2) each click tied to its rune of the transliteration with the click's 3D point
+  const saveFacit = async () => {
     const marked = result.slices.flatMap((s, i) => (s.accepted && s.point && labels[i] !== "unknown"
       ? [{ point: s.point, direction: s.direction, label: labels[i] }] : []));
+    const edition = buildEdition(tr, markSteps, userName, signum, { width: W, height: H });
+    let anchors: RuneAnchor[] | null = null;
+    let anchorsError: string | null = null;
+    if (edition && getAnchors) {
+      setSavingFacit(true);
+      try {
+        anchors = await getAnchors(runeMarks);
+      } catch (e) {
+        anchorsError = e instanceof Error ? e.message : "3D-punkterna kunde inte räknas fram.";
+      } finally {
+        setSavingFacit(false);
+      }
+    }
     const facit = {
-      type: "vitki-rune-facit", version: 1, signum, labeller: userName, created: new Date().toISOString(),
+      type: "vitki-rune-facit", version: 2, signum, labeller: userName, created: new Date().toISOString(),
       mesh: result.provenance.mesh, method_version: result.provenance.method_version, parameters: result.parameters,
       legend: { rune: "runa", ornament: "slinglinje eller ornamentik", excluded: "spricka, vittring eller annat som inte är huggning" },
       labels: marked,
       // one click per rune in reading order, image pixels of the review image (image_width × image_height)
-      rune_marks: runeMarks, image_width: W, image_height: H,
+      rune_marks: runeMarks, image_width: W, image_height: H, image_frame: result.image_frame ?? null,
+      transliteration: edition ? edition.transliteration : null,
+      tokens: edition ? edition.tokens : null,
+      rune_links: (edition?.rune_links ?? []).map(l => {
+        const a = anchors?.[l.mark];
+        return { ...l, point_mm: a?.point_mm ?? null, height_from: a?.height_from ?? null, normal_or_view: a?.normal_or_view ?? null };
+      }),
+      skipped_tokens: edition ? edition.skipped_tokens : [],
+      ...(anchorsError ? { anchors_error: anchorsError } : {}),
     };
     downloadFile(`${safeFilename(signum || "sten")}_facit.json`, JSON.stringify(facit, null, 1), "application/json");
   };
@@ -174,7 +221,8 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
             Orange = hittade spår, grått = för brett för ett huggspår (mäts inte).
             {runesOnly && " Bara spår som känns igen som runor mäts; ornamentik, slingkanter och möjliga sprickor visas som små grå punkter."}
             {" "}Dra en ruta för att märka punkter, klicka på en punkt för att se dess profil.
-            {!facitMode && onRuneMarksChange && " Med Markera runorna klickar du en gång på varje runa, så räknas måtten per runa."}
+            {!facitMode && onMarkStepsChange && " Med Markera runorna klickar du en gång på varje runa, så räknas måtten per runa."}
+            {onMarkStepsChange && tr && " Med Runa för runa kopplas varje klick dessutom till runan i Rundatas translitterering."}
           </p>
           {result.provenance.protocol && (
             <p className={`text-xs mt-2 ${result.provenance.protocol.compliant ? "text-emerald-800" : "text-amber-900"}`}>
@@ -209,7 +257,7 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
       <div className="flex flex-wrap items-center gap-2">
         <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mr-1">Märk med ruta:</span>
         {(Object.keys(LABELS) as AutoLabel[]).map(l => (
-          <button key={l} type="button" onClick={() => { setTool(l); setMarking(false); }}
+          <button key={l} type="button" onClick={() => { setTool(l); setMarkMode(null); }}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold border ${tool === l && !marking ? "bg-slate-900 text-white border-slate-900" : "bg-white text-slate-700 border-slate-300"}`}>
             <span className="inline-block w-2.5 h-2.5 rounded-full mr-1.5 align-middle" style={{ background: LABELS[l].color }} />
             {LABELS[l].name}
@@ -217,35 +265,30 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
         ))}
         <button type="button" onClick={() => onLabelsChange(result.slices.map(s => (!s.accepted ? "excluded" : !facitMode && s.feature === "rune" ? "rune" : "unknown")))}
           className="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-500 hover:text-slate-900">Återställ</button>
-        {onRuneMarksChange && !facitMode && (
-          <button type="button" onClick={() => setMarking(m => !m)} disabled={!runeSlices.length}
-            title="Ett klick mitt på varje runa, i läsordning"
-            className={`ml-auto px-3 py-1.5 rounded-lg text-xs font-bold border disabled:opacity-40 ${marking ? "bg-[#b7410e] text-white border-[#b7410e]" : "bg-white text-[#b7410e] border-[#b7410e]"}`}>
-            {marking ? "Klar med runorna" : "Markera runorna"}
-          </button>
+        {onMarkStepsChange && (
+          <span className="ml-auto flex flex-wrap gap-2">
+            {tr && (
+              <button type="button" onClick={() => setMarkMode(m => (m === "linked" ? null : "linked"))}
+                title="Ett klick mitt på varje runa, i läsordning, kopplat till runan i translittereringen"
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold border ${markMode === "linked" ? "bg-[#b7410e] text-white border-[#b7410e]" : "bg-white text-[#b7410e] border-[#b7410e]"}`}>
+                {markMode === "linked" ? "Klar med runorna" : "Runa för runa"}
+              </button>
+            )}
+            {!facitMode && (
+              <button type="button" onClick={() => setMarkMode(m => (m === "plain" ? null : "plain"))} disabled={!runeSlices.length}
+                title="Ett klick mitt på varje runa, i läsordning"
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold border disabled:opacity-40 ${markMode === "plain" ? "bg-[#b7410e] text-white border-[#b7410e]" : "bg-white text-[#b7410e] border-[#b7410e]"}`}>
+                {markMode === "plain" ? "Klar med runorna" : "Markera runorna"}
+              </button>
+            )}
+          </span>
         )}
       </div>
 
-      {onRuneMarksChange && !facitMode && (marking || runeMarks.length > 0) && (
-        <div className="rounded-xl border border-orange-200 bg-orange-50 px-4 py-3 text-xs text-slate-700 space-y-2">
-          <p><strong>Markera runorna.</strong> Klicka en gång mitt på varje runa, i läsordning. Du behöver inte veta
-            vilken runa det är. Varje snitt som är märkt som runa hör sedan till den närmaste markeringen, så att
-            måtten räknas med runan som enhet: varje runa väger lika mycket, hur många snitt den än har. Snitt långt
-            från alla markeringar, till exempel i en runa du hoppat över, hör inte till någon runa och visas bleka.</p>
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="font-semibold">
-              {runeMarks.length} runor markerade · {assigned} av {runeSlices.length} runsnitt fördelade
-              {emptyMarks > 0 ? ` · ${emptyMarks} markeringar utan snitt` : ""}
-            </span>
-            <button type="button" disabled={!runeMarks.length} onClick={() => onRuneMarksChange(runeMarks.slice(0, -1))}
-              className="px-2.5 py-1 rounded-lg border border-slate-300 bg-white font-bold disabled:opacity-40">Ångra senaste</button>
-            <button type="button" disabled={!runeMarks.length} onClick={() => onRuneMarksChange([])}
-              className="px-2.5 py-1 rounded-lg border border-slate-300 bg-white font-bold disabled:opacity-40">Ta bort alla</button>
-          </div>
-          {runeMarks.length > 0 && runeMarks.length < 10 && (
-            <p className="text-amber-900">Riktvärdet är minst 10 mätta runor för att beskriva en sten och 20 för att jämföra den med andra.</p>
-          )}
-        </div>
+      {onMarkStepsChange && (marking || markSteps.length > 0) && (
+        <RuneLinkPanel mode={markMode} steps={markSteps} onStepsChange={onMarkStepsChange} translit={translit}
+          section={section} onSectionChange={setSection} bindNext={bindNext} onBindNextChange={setBindNext}
+          hoverMark={hoverMark} onHoverMark={setHoverMark} assigned={assigned} runeSlices={runeSlices.length} emptyMarks={emptyMarks} />
       )}
 
       {facitMode && (
@@ -255,8 +298,9 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
             huggning. Omärkta punkter räknas inte. Märk efter reliefen, inte efter färgerna.</p>
           <div className="flex flex-wrap items-center gap-2">
             <span>{nUnmarked} omärkta punkter.</span>
-            <button type="button" onClick={saveFacit} className="px-3 py-1.5 bg-sky-700 hover:bg-sky-800 text-white font-bold rounded-lg">
-              Spara facit (JSON)
+            {tr && <span>{linksOf(markSteps).length} klick kopplade till runor (Runa för runa).</span>}
+            <button type="button" onClick={saveFacit} disabled={savingFacit} className="px-3 py-1.5 bg-sky-700 hover:bg-sky-800 text-white font-bold rounded-lg disabled:opacity-40">
+              {savingFacit ? "Räknar fram 3D-punkterna …" : "Spara facit (JSON)"}
             </button>
           </div>
         </div>
@@ -275,12 +319,17 @@ export default function AutoGrooveReview({ result, signum, metaStone, metaWeathe
               stroke={LABELS[labels[i]].color} strokeWidth={labels[i] === "unknown" ? 1 : 2.5}
               opacity={runeMarks.length && labels[i] === "rune" && s.rune_id == null ? 0.3 : 1} />
           ))}
-          {runeMarks.map(([x, y], k) => (
-            <g key={`m${k}`} pointerEvents="none">
-              <circle cx={x} cy={y} r={11} fill="#fff" stroke="#b7410e" strokeWidth={3} />
-              <text x={x} y={y} textAnchor="middle" dominantBaseline="central" fontSize={k < 9 ? 12 : 10} fontWeight={700} fill="#b7410e">{k + 1}</text>
-            </g>
-          ))}
+          {runeMarks.map(([x, y], k) => {
+            const hot = hoverMark === k;
+            const label = tr ? [...tokenMark].filter(([, m]) => m === k).map(([t]) => tr.tokens.find(o => o.i === t)?.char ?? "").join("") : "";
+            return (
+              <g key={`m${k}`} onPointerEnter={() => setHoverMark(k)} onPointerLeave={() => setHoverMark(null)}>
+                <circle cx={x} cy={y} r={hot ? 14 : 11} fill={hot ? "#b7410e" : "#fff"} stroke="#b7410e" strokeWidth={3} />
+                <text x={x} y={y} textAnchor="middle" dominantBaseline="central" fontSize={k < 9 ? 12 : 10} fontWeight={700}
+                  fill={hot ? "#fff" : "#b7410e"} pointerEvents="none">{label || k + 1}</text>
+              </g>
+            );
+          })}
           {drag && !marking && (
             <rect x={Math.min(drag.x0, drag.x1)} y={Math.min(drag.y0, drag.y1)} width={Math.abs(drag.x1 - drag.x0)} height={Math.abs(drag.y1 - drag.y0)}
               fill={`${LABELS[tool].color}22`} stroke={LABELS[tool].color} strokeWidth={2} strokeDasharray="6 4" />

@@ -523,6 +523,18 @@ def _overlay_png(hf: Heightfield, mask: np.ndarray, wide: np.ndarray, slices: li
     return base64.b64encode(buf.getvalue()).decode("ascii"), img.width, img.height, scale
 
 
+def image_frame(hf: Heightfield, scale: float, width: int, height: int) -> dict:
+    """Where the review image lies on the model (src/rune_links.py): pixel (x, y) is the grid cell
+    ix = x / image_scale, iy = rows − 1 − y / image_scale (the image is flipped, _overlay_png), so it lies at
+    a = a0_mm + ix · grid_mm along u and b = b0_mm + iy · grid_mm along v in the stone plane; the model point is
+    a·u + b·v + h·n with h the height along n. Written with the result; nothing in the analysis reads it."""
+    ny, nx = hf.H.shape
+    return {"version": 1, "u": [float(x) for x in hf.u], "v": [float(x) for x in hf.v], "n": [float(x) for x in hf.n],
+            "a0_mm": float(hf.a0), "b0_mm": float(hf.b0), "grid_mm": float(hf.res), "rows": int(ny), "cols": int(nx),
+            "image_scale": float(scale), "image_width": int(width), "image_height": int(height),
+            "coords": "mm i 3D-modellen centrerad på sin omslutande lådas mitt (centered_by)"}
+
+
 def _rune_box(extent, shape, res: float, margin_mm: float = 4.0) -> list[float]:
     """The rune's box as fractions of the groove map, [x0, y0, x1, y1] with y downwards (the map is flipped). The
     extent is the groove centre lines, so a margin is added for the groove width and the ends of the strokes."""
@@ -831,6 +843,8 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
                         "slingorna användes inte")}),
         "image_width": width,
         "image_height": height,
+        # pixel ↔ model mm for marks in the review image (Runa för runa, src/rune_links.py)
+        "image_frame": image_frame(hf, scale, width, height),
         "angle_color_range": list(ANGLE_COLOR_RANGE),
         "counts": {
             "candidates": len(slices),

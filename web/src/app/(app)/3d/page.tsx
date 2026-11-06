@@ -17,6 +17,7 @@ import { allStaveless } from "@/lib/staveless";
 import ProfileGraphs from "./_delar/ProfileGraphs";
 import StoneMetaFields from "./_delar/StoneMetaFields";
 import { MeshSession, withMarkedRunes, type AutoAnalysisResult, type AutoLabel, type MeshInfo } from "@/lib/mesh";
+import { buildEdition, marksOf, useTransliteration, type MarkStep, type RuneAnchor } from "@/lib/runeLinks";
 import type { ThreeDAnalysisResult } from "@/lib/db";
 import { METRICS, type SliceMetrics } from "@/lib/metrics";
 import { FEATURE_TYPES, type FeatureType } from "@/lib/metrics";
@@ -173,10 +174,12 @@ function ThreeDPageContent() {
   const [autoLabels, setAutoLabels] = useState<AutoLabel[]>([]);
   // Runes marked by hand in the review image (one click per rune, reading order); they replace the automatic rune
   // grouping in everything that uses the analysis
-  const [runeMarks, setRuneMarks] = useState<[number, number][]>([]);
+  // The clicks as steps (lib/runeLinks.ts): with Runa för runa each is tied to its rune(s) of the transliteration
+  const [markSteps, setMarkSteps] = useState<MarkStep[]>([]);
+  const runeMarks = marksOf(markSteps);
   // (no useMemo: the React Compiler memoizes this on its inputs)
   const autoResult = autoRaw ? withMarkedRunes(autoRaw, autoLabels, runeMarks) : null;
-  const setAutoResult = (r: AutoAnalysisResult | null) => { setAutoRaw(r); setRuneMarks([]); };
+  const setAutoResult = (r: AutoAnalysisResult | null) => { setAutoRaw(r); setMarkSteps([]); };
   const [autoBusy, setAutoBusy] = useState(false);
   const [autoError, setAutoError] = useState<string | null>(null);
   const [autoSpacing, setAutoSpacing] = useState(3);
@@ -191,7 +194,30 @@ function ThreeDPageContent() {
   const [autoStaveless, setAutoStaveless] = useState(false);
   const [runeTypes, setRuneTypes] = useState<string | null>(null);
   const { t } = useLanguage();
-  const { aiHeaders } = useSettings();
+  const { aiHeaders, userName } = useSettings();
+  // The stone's transliteration in Rundata, for Runa för runa and the TEI/EpiDoc export
+  const translit = useTransliteration(metaText);
+  const runeEdition = autoRaw ? buildEdition(translit.status === "ok" ? translit.data : null, markSteps, userName, metaText,
+    { width: autoRaw.image_width, height: autoRaw.image_height }) : null;
+  // The marks' 3D points (POST /api/3d/rune_anchors): the review image's frame, the model's surface, and the nearest
+  // slices where the model has a hole
+  const getAnchors = async (marks: [number, number][]): Promise<RuneAnchor[]> => {
+    const session = sessionRef.current;
+    if (!session || !autoRaw) throw new Error("3D-modellen är inte inläst.");
+    const r3 = (v: number) => Math.round(v * 1000) / 1000;
+    const acc = autoRaw.slices.filter(sl => sl.accepted && sl.point);
+    const every = Math.max(1, Math.ceil(acc.length / 4000));
+    const rows = acc.filter((_, i) => i % every === 0)
+      .map(sl => [r3(sl.img_x), r3(sl.img_y), ...sl.point!.map(r3), r3(sl.spårdjup_mm ?? 0)]);
+    const body = await session.postJSON<{ anchors: RuneAnchor[] }>("/api/3d/rune_anchors", {
+      marks_json: JSON.stringify(marks),
+      frame_json: JSON.stringify(autoRaw.image_frame ?? null),
+      parameters_json: JSON.stringify({ normal: autoRaw.parameters.normal, up: autoRaw.parameters.up }),
+      slices_json: JSON.stringify(rows),
+      sha256: autoRaw.provenance.mesh.sha256 ?? "",
+    });
+    return body.anchors;
+  };
 
   // Load project on mount
   useEffect(() => {
@@ -930,8 +956,10 @@ function ThreeDPageContent() {
               metaWeathering={metaWeathering}
               labels={autoLabels}
               onLabelsChange={setAutoLabels}
-              runeMarks={runeMarks}
-              onRuneMarksChange={setRuneMarks}
+              markSteps={markSteps}
+              onMarkStepsChange={setMarkSteps}
+              translit={translit}
+              getAnchors={getAnchors}
               onUse={(r, ft) => { setFeatureType(ft); setResults(r); }}
               onSendToTwoD={() => sendGrooveMapToTwoD(autoLabels)}
               onExport={showExport ? exportFrom("auto") : undefined}
@@ -951,6 +979,7 @@ function ThreeDPageContent() {
               result={results}
               autoResult={autoResult}
               autoLabels={autoLabels}
+              runeEdition={runeEdition}
               onCreateReport={canReport ? createStoneReport : undefined}
             />
           )}

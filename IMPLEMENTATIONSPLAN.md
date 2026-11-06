@@ -22,6 +22,14 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
   ("runigenkänningen träffar X % av runorna, Y % av det mätta är runor").
 - **Klart när:** evaluate-skriptet ger ett tal på ≥ 8 stenar och testet `tests/test_auto_grooves.py` låser att
   reglerna inte ändrats sedan facit (hash av `classify_strokes`-parametrarna).
+- **Kod klar 2026-11-06 (Runa för runa):** facit version 2 kopplar varje klick till en runa i Rundatas
+  translitterering med 3D-punkt (`src/rune_links.py`, `utdata/facit/README.md`); evaluate-skriptet redovisar runor
+  hittade, mätt som är runor och en-till-en per sten, samlat och per bergart; regellåset är `RULES_SHA256`
+  (fingeravtryck av classify_strokes, slingklassningen och uppdelningen längs slingan), testat. Märk med *Runa för
+  runa* i facit-läget. Spårläsarens blinda prov (`analysplaner/2026-11-06-sparlasare-blind.md`, utkast) kräver
+  dessutom stenar som klarar led F:s ordkontroll: av förslagen ovan bara Sö 134, 143 och 319 (samt Fv1948;282 och
+  Fv1973;189); Sö 137, 161, 207, 211 och 367 har förlorade eller osäkra runor. Fler som klarar den: Sö 112, 129,
+  131, 149, 160, 163, 165, 184, 52, 75.
 
 ### 1.2 Test–omtest av huggspårsmåtten  (Viktor: skanning; halv session)
 - **Viktor:** hitta eller gör två oberoende skanningar av samma sten (olika tillfälle, helst olika utrustning).

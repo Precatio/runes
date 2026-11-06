@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "runa-for-runa",
+   "date": "2026-11-06",
+   "status": "nytt",
+   "title": "Runa för runa: klicken kopplade till inskriften",
+   "text": "I granskningen av den automatiska spåranalysen visas nu stenens translitterering ur Rundata som en remsa. Med Runa för runa kopplas varje klick på en runa i bilden till rätt runa i texten, och klicket blir en punkt på 3D-modellen. Kopplingarna blir facit för att pröva hur väl runigenkänningen träffar, och de kan exporteras som en digital utgåva i TEI/EpiDoc där varje runa pekar på sin plats i skanningen."
+  },
+  {
    "id": "vitki-3-1-0-doi",
    "date": "2026-11-06",
    "status": "nytt",

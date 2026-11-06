@@ -127,6 +127,12 @@ export interface AutoAnalysisResult {
   groove_map_base64: string;
   image_width: number;
   image_height: number;
+  // Where the review image lies on the model (src/auto_grooves.image_frame): pixel (x, y) is the grid cell
+  // (x / image_scale, rows − 1 − y / image_scale) in the stone plane spanned by u and v; missing in older analyses
+  image_frame?: {
+    version: number; u: number[]; v: number[]; n: number[]; a0_mm: number; b0_mm: number; grid_mm: number;
+    rows: number; cols: number; image_scale: number; image_width: number; image_height: number; coords: string;
+  };
   angle_color_range: [number, number];
   counts: {
     candidates: number;

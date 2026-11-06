@@ -5,6 +5,25 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Runa för runa: varje klick kopplat till en runa i translittereringen
+- Granskningen av den automatiska analysen visar stenens translittering ur Rundata som en remsa när signumet är känt
+  (`GET /api/rundata/tokens`, `src/rune_links.tokenize`; positionerna stämmer med textmodellens i alla 6 753
+  translittereringar). Med *Runa för runa* kopplas varje klick till nästa runa; skiljetecken hoppas över av sig själva,
+  och *Hoppa över (syns inte)*, *Bindruna* och *Ångra senaste* finns. Musen över en runa i remsan visar dess klick i
+  bilden och tvärtom (`web/src/components/RuneLinkPanel.tsx`, `web/src/lib/runeLinks.ts`). *Markera runorna* finns
+  kvar för stenar utan translitterering.
+- Analysen skriver granskningsbildens ram (`image_frame`), så att ett klick blir en punkt i modellen i mm med normal och
+  kameravy (`POST /api/3d/rune_anchors`). På Sö 134 landade klick på snittens bildpunkter i median 0,37 mm från
+  snitten (största 2,7 mm). Runigenkänningen är oförändrad.
+- Facit sparas som version 2 med `rune_links`, `skipped_tokens`, translittereringen med källa och tokenlistan;
+  version 1 läses som förut. Mappen `utdata/facit/` med README. `scripts/evaluate_rune_detection.py` redovisar runor
+  hittade, andel mätt som är runor och en-till-en per sten, samlat och per bergart, och kör analysen med skanningens
+  SHA-256 som appen. Runigenkänningens regler är låsta med ett fingeravtryck (`RULES_SHA256`, testat).
+- Ny export: *Utgåva (TEI/EpiDoc) med 3D-ankare* (`src/tei_export.py`), en XML-fil med xml:id per tecken och @facs mot
+  zoner i granskningsbilden och på 3D-modellen; går också att göra ur ett facit.
+- Utkast till analysplan för spårläsarens blinda prov (`analysplaner/2026-11-06-sparlasare-blind.md`, inte låst) och
+  en stubbe som vägrar köra med färre än åtta facit (`scripts/sparlasare_blind.py`).
+
 ## [3.1.0] – 2026-11-06
 
 ### Forskningsrapporterna granskade inför arkiveringen

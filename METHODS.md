@@ -1233,6 +1233,50 @@ och i proveniensen står antalet markeringar (`rune_marks`). Resultatpanelen vis
 (`rune_summary` från `/api/stats/summarize`, när snitten bär minst två runnummer). Gränsen mellan två runor blir mittlinjen mellan deras
 markeringar, så tätt ristade runor och bindrunor kan få snitt från grannen; markera då mitt i runans stav.
 
+**Runa för runa: klicken kopplade till translittereringen (2026-11-06, `src/rune_links.py`).** När stenens signum
+finns i Rundata med en translitterering visas den i granskningen som en remsa av tecken (`GET /api/rundata/tokens`).
+Tokeniseringen följer textmodellens (`textmodel.text_groups`): varje runa, osäker runa (inom parentes), förlorad runa
+(`-`, och `?` för en runa som syns men inte kan läsas), skiljetecken, lucka av okänd längd (`...`) och övrigt tecken
+får ett index, ett ordnummer och – för runorna – sin plats i textmodellens text, samma positioner som spårläsaren
+använder; det är kontrollerat mot alla 6 753 translittereringar. Alternativa läsningar (§…Q) är inte med, och en
+delsten (Sö 137A) får bara sin sektion. Varje klick kopplas till nästa runa som inte är kopplad eller överhoppad;
+skiljetecken hoppas över av sig själva, *Hoppa över (syns inte)* lämnar en runa utan klick, *Bindruna* låter nästa
+klick gälla två runor, och allt kan ångras. Klicken räknas för måtten som vanliga markeringar (ovan).
+Klicket blir en punkt i modellen genom granskningsbildens ram, som analysen sedan 2026-11-06 skriver ut
+(`image_frame`): pixel (x, y) ligger i stenytans plan på a = a0 + x / s · r längs u och b = b0 + (rader − 1 − y / s) · r
+längs v (r rutnätet, s bildens skala), och höjden längs normalen är modellens högsta punkt inom 1 mm i planet (som
+höjdfältet), annars de närmaste snittens botten plus spårdjup. Äldre analyser får ramen anpassad ur snittens lägen.
+På Sö 134 (protokollinställningar, 710 godkända snitt) hamnade ett klick på ett snitts bildpunkt i median 0,37 mm
+från snittets punkt i planet (95:e percentilen 1,1 mm, största 2,7 mm; snittets punkt är spårbotten nära provpunkten),
+och den anpassade ramen avvek högst 0,3 mm från analysens egen. Varje klick får också en kameravy rakt mot den
+ristade ytan (analysens normal, bildens uppåt). Det ändrar ingenting i runigenkänningen.
+
+*Facit version 2.* Facit-läget sparar nu version 2 (version 1 läses som förut): utöver märkningen `rune_links`
+(klickets nummer, de en eller två runornas tokenindex, tecknet, pixeln, 3D-punkten och normal/vy), `skipped_tokens`,
+`transliteration` (Rundatas sträng ordagrant med källa: Samnordisk runtextdatabas, version 2014 med RUNDATA.xls
+uppdaterad 2018, ODbL) och tokenlistan. Facit läggs i `utdata/facit/` (README där). `scripts/evaluate_rune_detection.py`
+redovisar då per sten, samlat och per bergart andelen kopplade runor som har minst ett godkänt runsnitt som hör till
+dem (snittet ligger närmare runans klick än något annat och inom 1,5 gånger mediandistansen mellan två på varandra
+följande klick, samma räckvidd som Markera runorna), andelen godkända runsnitt som hör till någon kopplad runa, och
+andelen runor vars snitt kommer från en och samma av analysens runor som inte delas med något annat klick (en till en).
+Reglerna är låsta innan några facit finns: fingeravtrycket `RULES_SHA256` av runigenkänningens funktioner och
+konstanter prövas i `tests/test_auto_grooves.py`. Utvärderingen kör analysen med skanningens SHA-256, som appen, så
+att de ritade slingorna används. Spårläsarens blinda prov – parningen skanning ↔ text ur klicken i stället för ur
+`_gap_align` – är en analysplan som ännu inte är låst (`analysplaner/2026-11-06-sparlasare-blind.md`); den kräver minst
+åtta facit på stenar utöver Sö 113 och Sö 128 som klarar led F:s ordkontroll.
+
+*Utgåva i TEI/EpiDoc* (`src/tei_export.py`, exportvalet *Utgåva (TEI/EpiDoc) med 3D-ankare*). Translittereringen
+blir en XML-fil med ett element per tecken och `xml:id` på varje: runor `<c>`, osäkra `<unclear>`, runor kända ur äldre
+dokumentation `<supplied reason="lost" evidence="previouseditor">`, förlorade `<gap reason="lost" quantity="1"
+unit="character"/>` (oläsliga `reason="illegible"`), skiljetecken `<g type="divider">`, ord `<w>`. teiHeader anger
+Rundata som källa med version och licens, skanningens kreditering när filen känns igen som en öppen skanning, och vem
+som kopplade runorna. En kopplad runa pekar med `@facs` på en zon i granskningsbilden (pixlar) och en zon på
+3D-modellens yta; eftersom TEI:s koordinater är tvådimensionella pekar 3D-zonen med `@ana` på ett element i Vitkis
+namnrymd i `teiHeader/xenoData` med punkten (i den centrerade modellen och i skanningsfilens egna koordinater),
+normalen och kameravyn. Valet står i filens `editorialDecl`. Filen kontrolleras som välformad med unika `xml:id` och
+giltiga hänvisningar, men valideras inte mot TEI-schemat, som inte finns lokalt. Ur ett facit:
+`python -m src.tei_export utdata/facit/<fil>.json --out <mapp>`.
+
 ### 2d. Bilder ur skanningen
 
 Källkod: `api/routers/threed.py` (`render_relief`), `src/stone_report.py` (`Surface`). Bilder för egen läsning,

@@ -163,10 +163,10 @@ def test_export_items_catalogue(client):
     ids = [x["id"] for x in body["items"]]
     assert ids == ALL and len(set(ids)) == len(ids)
     needs = {"mesh", "auto", "slices", "point>=1", "point>=3", "profile", "summary", "runes", "depth_profile",
-             "groove_map", "review_image"}
+             "groove_map", "review_image", "rune_links"}
     for x in body["items"]:
         assert x["group"] in ("skanning", "matning", "data") and x["label"] and len(x["explanation"]) > 80
-        assert set(x["needs"]) <= needs and set(x["formats"]) <= {"PNG", "CSV", "ASC", "JSON"}
+        assert set(x["needs"]) <= needs and set(x["formats"]) <= {"PNG", "CSV", "ASC", "JSON", "XML"}
     # every item has a builder
     assert set(ALL) == set(groove_export.BUILDERS) | {"full_json"}
     assert body["readme_intro"]
@@ -221,10 +221,26 @@ def test_slug():
 
 # ---- the export ------------------------------------------------------------------------------------------------------
 
+def _rune_edition(result, signum="Sö 370", n=5):
+    """Runa för runa as the page sends it: the first n runes of the transliteration tied to the first accepted slices."""
+    from src import rune_links
+    rec, _ = rune_links.rundata_record(signum)
+    tr = rune_links.transliteration_for(rec)
+    runes = [t["i"] for t in tr["tokens"] if t["kind"] in rune_links.LINKABLE][:n]
+    acc = [s for s in result["slices"] if s["accepted"]][:n]
+    return {"signum": signum, "labeller": "Testaren", "created": "2026-11-06T12:00:00Z",
+            "transliteration": {"text": tr["transliteration"], "source": tr["source"], "part": None},
+            "tokens": tr["tokens"], "skipped_tokens": [],
+            "rune_links": [{"mark": k, "token_index": t, "tokens": [t], "char": tr["tokens"][t]["char"],
+                            "image_xy": [s["img_x"], s["img_y"]]} for k, (t, s) in enumerate(zip(runes, acc))],
+            "image_width": result["image_width"], "image_height": result["image_height"]}
+
+
 def test_export_every_item_from_an_automatic_analysis(client, stone, auto):
     mid = _upload(client, stone[1])
     # the synthetic stone is not Sö 370's published scan: typing the signum gives no third-party credit
-    r = _export(client, mid, ALL, auto, labels_json=json.dumps(_labels(auto)), mode="auto", signum="Sö 370")
+    r = _export(client, mid, ALL, {**auto, "rune_edition": _rune_edition(auto)}, labels_json=json.dumps(_labels(auto)),
+                mode="auto", signum="Sö 370")
     assert r.status_code == 200, r.text
     assert r.headers["content-type"] == "application/zip"
     assert 'filename="So_370_vitki_export_' in r.headers["content-disposition"]
@@ -237,8 +253,14 @@ def test_export_every_item_from_an_automatic_analysis(client, stone, auto):
                 "So_370_strykljus_nordost.png", "So_370_strykljus_sydost.png", "So_370_strykljus_sydvast.png",
                 "So_370_ristningskarta.png", "So_370_granskningsbild.png", "So_370_snittpositioner_v_vinkel.png",
                 "So_370_djup_bredd_ytrahet.png", "So_370_tvarsnittsprofiler.png", "So_370_snitt.csv",
-                "So_370_sammanfattning.csv", "So_370_runor.csv", "So_370_profiler.csv", "So_370_analys.json"}
+                "So_370_sammanfattning.csv", "So_370_runor.csv", "So_370_profiler.csv", "So_370_analys.json",
+                "So_370_utgava_tei.xml"}
     assert expected <= files.keys()
+    # Runa för runa: the TEI edition with the five links anchored on the model itself
+    from src import tei_export
+    tei = files["So_370_utgava_tei.xml"]
+    assert tei_export.check(tei) == [] and tei.count(b'facs="#zon-bild-m') == 5
+    assert tei.count(b'height_from="modellen"') == 5 and b"Samnordisk runtextdatabas" in tei
     assert r.headers["x-export-files"].split(",") == [n for n in r.headers["x-export-files"].split(",")]
     assert set(r.headers["x-export-files"].split(",")) == expected
     # a path-only item is skipped with a reason, not an error
@@ -817,3 +839,22 @@ def test_profile_letters_follow_the_picks():
     finally:
         matplotlib.axes.Axes.set_title = orig
     assert [t.split()[0] for t in titles] == ["B"]
+
+
+def test_tei_edition_needs_links_and_refuses_bad_ones(client, stone, auto):
+    """Runa för runa: the TEI file needs links (otherwise skipped with a reason) and refuses malformed ones (400). As
+    data it needs no model: without one the points' heights come from the slices."""
+    labels = json.dumps(_labels(auto))
+    r = _export(client, None, ["tei_edition"], auto, labels_json=labels, mode="auto", signum="Sö 370")
+    assert r.status_code == 422
+    ed = _rune_edition(auto)
+    r = _export(client, None, ["tei_edition"], {**auto, "rune_edition": ed}, labels_json=labels, mode="auto",
+                signum="Sö 370")
+    assert r.status_code == 200, r.text
+    assert r.headers["content-type"].startswith("application/tei+xml") and b'height_from="snitten"' in r.content
+    bad = {**ed, "tokens": [{"i": "x"}]}
+    r = _export(client, None, ["tei_edition"], {**auto, "rune_edition": bad}, labels_json=labels, mode="auto")
+    assert r.status_code == 400 and "Runa för runa" in r.json()["detail"]
+    bad = {**ed, "rune_links": [{**ed["rune_links"][0], "image_xy": ["a", 1]}]}
+    r = _export(client, None, ["tei_edition"], {**auto, "rune_edition": bad}, labels_json=labels, mode="auto")
+    assert r.status_code == 400
