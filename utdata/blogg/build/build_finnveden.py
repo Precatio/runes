@@ -96,7 +96,7 @@ summary = ("Finnveden var det västligaste av Smålands små land: dalgångar l�
            "sin stora ö, och gravfält där nästan varje grav var en hög. Längs Lagan gick vägen mellan Mälardalen och kontinenten. "
            "Följ med dit omkring år 1000. En del i serien De gamla landen.")
 
-body = f"""Föreställ dig att du färdas söderut längs Lagan för tusen år sedan. Ån har kanske det äldsta namnet i hela trakten, och den har varit en väg sedan forntiden, både på vattnet och på landsvägen som följer dess lopp. Rullstensåsarna bär stigen. Runt omkring dig ligger Finnveden, det västligaste av Smålands små land.
+body = f"""Lagan har kanske det äldsta namnet i hela trakten. Ån har varit en väg sedan forntiden, både på vattnet och på landsvägen som följer dess lopp, och den som för tusen år sedan färdas söderut längs den går på rullstensåsarna, som bär stigen. Runt omkring ligger Finnveden, det västligaste av Smålands små land.
 
 Bygden ligger i dalgångarna, längs Lagan och Nissan och kring sjöarna Bolmen och Vidöstern. Mellan dem breder ljunghedar ut sig, öppna och karga, och ortnamnen visar att de har funnits länge. Mitt i landet, nästan exakt i dess geografiska centrum, ligger Bolmsö, Smålands största ö, i sjön Bolmen.
 
@@ -167,7 +167,7 @@ summary_en = ("Finnveden was the westernmost of Småland's small lands: valleys 
               "with its great island, and grave fields where nearly every grave was a mound. Along the Lagan ran the road between "
               "the Mälaren valley and the continent. Come along around AD 1000. A part of the series The old lands.")
 
-body_en = f"""Imagine travelling south along the Lagan a thousand years ago. The river has perhaps the oldest name in the whole district, and it has been a road since prehistoric times, both on the water and on the highway that follows its course. The gravel ridges carry the path. All around you lies Finnveden, the westernmost of Småland's small lands.
+body_en = f"""The Lagan has perhaps the oldest name in the whole district. The river has been a road since prehistoric times, both on the water and on the highway that follows its course, and whoever travels south along it a thousand years ago walks on the gravel ridges that carry the path. All around lies Finnveden, the westernmost of Småland's small lands.
 
 The settlement lies in the valleys, along the Lagan and the Nissan and round the lakes Bolmen and Vidöstern. Between them heaths spread out, open and barren, and the place-names show that they have been there a long time. In the middle of the land, almost exactly at its geographical centre, lies Bolmsö, Småland's largest island, in Lake Bolmen.
 

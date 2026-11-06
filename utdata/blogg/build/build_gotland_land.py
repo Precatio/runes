@@ -136,7 +136,7 @@ summary = ("Gotland var på vikingatiden ett land för sig: gårdar som flyttade
            "silver i jorden än någon annanstans och ett eget ting för hela ön. Följ med till Paviken och Roma omkring år 1000. "
            "En del i serien De gamla landen.")
 
-body = f"""Föreställ dig att du seglar mot Gotlands västkust för tusen år sedan. Ön ligger mitt i Östersjön, och alla som seglar mellan öst och väst har den i sikte. Längs stranden letar du efter en öppning, och där är den: ett smalt sund, och innanför en lagun, skyddad från havet. Det är Paviken, en naturlig hamn. Här har man haft en hamn sedan 700-talet. Vid Idåns utlopp, längst in, hörs hammarslag från verkstäder och från skepp som byggs.
+body = f"""Hammarslag hörs från verkstäder och från skepp som byggs, längst in i en lagun på Gotlands västkust där Idån rinner ut. Lagunen heter Paviken, och den är en naturlig hamn: ett smalt sund leder in från havet, och innanför ligger vattnet skyddat. Här har man haft en hamn sedan 700-talet. Ön ligger mitt i Östersjön, och alla som seglar mellan öst och väst har den i sikte.
 
 Men om du kommer omkring år 1000 håller hamnen på att flytta. I början av 1000-talet stängs inloppet till Paviken med en spärr av pålar, och söderut, vid Västergarn, byggs nytt. I ån där ligger bryggor av trä, och virket till dem höggs år 1008. Omkring år 1000 får Västergarn en vall runt hela platsen, den enda i sitt slag på Gotland. Den närmaste motsvarigheten är vallen kring Birka.
 
@@ -228,7 +228,7 @@ summary_en = ("In the Viking Age Gotland was a land of its own: farms that moved
               "more silver in the ground than anywhere else and its own assembly for the whole island. Come to Paviken and Roma "
               "around AD 1000. A part of the series The old lands.")
 
-body_en = f"""Imagine sailing towards the west coast of Gotland a thousand years ago. The island lies in the middle of the Baltic, and everyone sailing between east and west has it in sight. Along the shore you look for an opening, and there it is: a narrow sound, and inside it a lagoon, sheltered from the sea. This is Paviken, a natural harbour. There has been a harbour here since the eighth century. At the mouth of the Idån, at the far end, hammering is heard from workshops and from ships being built.
+body_en = f"""Hammering is heard from workshops and from ships being built at the far end of a lagoon on the west coast of Gotland, where the Idån flows out. The lagoon is Paviken, a natural harbour: a narrow sound leads in from the sea, and inside it the water lies sheltered. There has been a harbour here since the eighth century. The island lies in the middle of the Baltic, and everyone sailing between east and west has it in sight.
 
 But if you come around AD 1000, the harbour is moving. Early in the eleventh century the entrance to Paviken is closed with a barrier of stakes, and to the south, at Västergarn, something new is being built. In the river there lie wooden jetties, and the timber for them was felled in 1008. Around AD 1000 Västergarn gets a rampart round the whole place, the only one of its kind on Gotland. The nearest parallel is the rampart round Birka.
 

@@ -96,7 +96,7 @@ summary = ("Värend var det största av Smålands små land: en bygd kring sjöa
            "alla håll. Där låg stora byar, en storhög vid Ingelstad och kanske ett ting vid Helgasjön. Följ med dit omkring år "
            "1000. En del i serien De gamla landen.")
 
-body = f"""Föreställ dig att du kommer till Värend för tusen år sedan. Du kommer genom skogen, för det finns ingen annan väg hit. Skogen står tät, marken är stenig, och det är långt mellan människorna. Men så öppnar sig landskapet. Mellan låga moränhöjder blänker sjöarna – Helgasjön, Salen, Åsnen, Örken, Rottnen – och på höjderna kring dem ligger åkrar, ängar och gårdar. Det är här folk har bott, i de mittersta delarna av landet, under hela järnåldern, och så länge att forskarna kallar bygden ovanligt kontinuerlig. Den östra och södra delen av Värend ligger nästan tom. Där tar skogen över.
+body = f"""Till Värend kommer man för tusen år sedan genom skogen, för det finns ingen annan väg. Skogen står tät, marken är stenig, och det är långt mellan människorna. Men så öppnar sig landskapet. Mellan låga moränhöjder blänker sjöarna – Helgasjön, Salen, Åsnen, Örken, Rottnen – och på höjderna kring dem ligger åkrar, ängar och gårdar. Det är här folk har bott, i de mittersta delarna av landet, under hela järnåldern, och så länge att forskarna kallar bygden ovanligt kontinuerlig. Den östra och södra delen av Värend ligger nästan tom. Där tar skogen över.
 
 Namnet Värend kan vara mycket gammalt, kanske lika gammalt som bronsåldern. Det är ett land som har haft tid att bli sig självt.
 
@@ -161,7 +161,7 @@ summary_en = ("Värend was the largest of Småland's small lands: a district rou
               "forest on every side. There lay large villages, a great mound at Ingelstad and perhaps an assembly by Helgasjön. "
               "Come along around AD 1000. A part of the series The old lands.")
 
-body_en = f"""Imagine coming to Värend a thousand years ago. You come through the forest, for there is no other way here. The forest stands close, the ground is stony, and people are few and far between. But then the landscape opens. Between low moraine heights the lakes gleam – Helgasjön, Salen, Åsnen, Örken, Rottnen – and on the heights around them lie fields, meadows and farms. This is where people have lived, in the middle of the land, throughout the Iron Age, and for so long that researchers call the settlement unusually continuous. The eastern and southern parts of Värend lie almost empty. There the forest takes over.
+body_en = f"""A thousand years ago the only way into Värend is through the forest. The forest stands close, the ground is stony, and people are few and far between. But then the landscape opens. Between low moraine heights the lakes gleam – Helgasjön, Salen, Åsnen, Örken, Rottnen – and on the heights around them lie fields, meadows and farms. This is where people have lived, in the middle of the land, throughout the Iron Age, and for so long that researchers call the settlement unusually continuous. The eastern and southern parts of Värend lie almost empty. There the forest takes over.
 
 The name Värend may be very old, perhaps as old as the Bronze Age. It is a land that has had time to become itself.
 

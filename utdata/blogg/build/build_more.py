@@ -95,7 +95,7 @@ summary = ("Möre var kustlandet vid Kalmarsund: en smal slätt av bördig lera 
            "och skeppen gick förbi utanför. Det hörde inte till Smålands små land utan till Östergötlands lag. Följ med dit "
            "omkring år 1000. En del i serien De gamla landen.")
 
-body = f"""Föreställ dig att du seglar norrut genom Kalmarsund för tusen år sedan. Till höger ligger Öland, långt och lågt, och till vänster fastlandet. Den gamla segelleden går nära kusten, och här passerar en stor del av alla som färdas mellan Västeuropa och de norra delarna av Östersjön. Kusten har gott om skyddade lägen att lägga till vid. Där sundet är som smalast, vid Ryssby, är det bara en kort färd över till Öland.
+body = f"""Öland ligger långt och lågt på andra sidan Kalmarsund. Genom sundet går för tusen år sedan den gamla segelleden, nära kusten, och här passerar en stor del av alla som färdas mellan Västeuropa och de norra delarna av Östersjön. Kusten har gott om skyddade lägen att lägga till vid. Där sundet är som smalast, vid Ryssby, är det bara en kort färd över till Öland.
 
 Landet du ser till vänster heter Möre. Namnet finns redan i en reseberättelse från omkring år 900, där sjöfararen Wulfstan kallar det *Meore*. Det betyder sankmark. Kärren och de låga våtmarkerna, mörarna, präglade landet.
 
@@ -164,7 +164,7 @@ summary_en = ("Möre was the coastal land by the Kalmar Sound: a narrow plain of
               "villages lay by the rivers and the ships went by offshore. It did not belong to Småland's small lands but to the law "
               "of Östergötland. Come along around AD 1000. A part of the series The old lands.")
 
-body_en = f"""Imagine sailing north through the Kalmar Sound a thousand years ago. To the right lies Öland, long and low, and to the left the mainland. The old sailing route runs close to the coast, and much of all the traffic between Western Europe and the northern Baltic passes here. The coast has plenty of sheltered places to put in. Where the sound is narrowest, at Ryssby, it is only a short crossing to Öland.
+body_en = f"""Öland lies long and low on the far side of the Kalmar Sound. A thousand years ago the old sailing route runs through the sound, close to the coast, and much of all the traffic between Western Europe and the northern Baltic passes here. The coast has plenty of sheltered places to put in. Where the sound is narrowest, at Ryssby, it is only a short crossing to Öland.
 
 The land you see to the left is called Möre. The name occurs already in a travel account from around 900, where the seafarer Wulfstan calls it *Meore*. It means marshland. The fens and the low wetlands, the *mörar*, marked the land.
 

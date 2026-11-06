@@ -112,7 +112,7 @@ summary = ("Fjädrundaland var det västligaste av Upplands folkland: lerslätte
            "vägar längs åsarna och bronsålderns tecken på hällarna. Följ med in i Mälaren, som ännu var en vik av havet, "
            "omkring år 1000. Tredje delen i serien De gamla landen.")
 
-body = f"""Föreställ dig att du seglar in i Mälaren för tusen år sedan. Den är ingen sjö ännu utan en vik av havet, och längst in i väster, där vattnet delar sig i fjärdar och sund, ligger Trögd: en halvö som vattnet omsluter i sydväst, söder och öster. Holmarna utanför – Oknö, Arnö, Grönsö – har haft folk sedan järnåldern. Härifrån for man också ut. I Svinnegarn har föräldrar rest stenar efter en son som ”ensam ägde ett skepp och styrde österut i Ingvars följe”.
+body = f"""Mälaren är för tusen år sedan ingen sjö utan en vik av havet. Längst in i väster, där vattnet delar sig i fjärdar och sund, ligger Trögd: en halvö som vattnet omsluter i sydväst, söder och öster. Holmarna utanför – Oknö, Arnö, Grönsö – har haft folk sedan järnåldern. Härifrån for man också ut. I Svinnegarn har föräldrar rest stenar efter en son som ”ensam ägde ett skepp och styrde österut i Ingvars följe”.
 
 Längre österut, där fjärden vidgar sig, hör också Adelsö till Trögd. Där, vid Hovgården, ligger fem storhögar och en kungsgård, och en sten säger att Tole var kungens bryte, hans förvaltare. På grannön Björkö, i samma socken, låg staden Birka med Skandinaviens största gravfält med högar. Gränsen mot [Attundaland]({ATT}) gick strax öster om dem.
 
@@ -120,7 +120,7 @@ Det här är Fjädrundaland, det västligaste av Upplands tre folkland. Det är 
 
 ## Leran och ängarna
 
-Gå i land och följ en dalgång norrut. Leran ligger tung och blank i fårorna, och längs åarna breder sanka ängar ut sig. Där slås höet. Längs Örsundaån ligger det som senare ska kallas Upplands näst största våtäng, och redan på medeltiden var den delad i långa, smala lotter som hörde till byar långt bort. Föreställ dig slåttern i sensommaren: raderna av människor med liar i det våta gräset, höet som ska räcka åt djuren hela vintern.
+Gå i land och följ en dalgång norrut. Leran ligger tung och blank i fårorna, och längs åarna breder sanka ängar ut sig. Där slås höet. Längs Örsundaån ligger det som senare ska kallas Upplands näst största våtäng, och redan på medeltiden var den delad i långa, smala lotter som hörde till byar långt bort. I sensommaren står raderna av människor med liar i det våta gräset, och höet ska räcka åt djuren hela vintern.
 
 Gårdarna ligger inte ute på slätten utan på kanten, där leran möter moränen och marken är torr nog att bo på. Där går också djuren på bete, och där ligger gravarna, intill byarna. Längst i norr, på Upplands högsta urbergsplatå, tar de små skogsbygderna vid.
 
@@ -194,7 +194,7 @@ summary_en = ("Fjädrundaland was the westernmost of Uppland's folklands: clay p
               "moraine, roads along the ridges and the Bronze Age's signs on the rocks. Come into Lake Mälaren, still a bay of "
               "the sea, around AD 1000. The third part of the series The old lands.")
 
-body_en = f"""Imagine sailing into Lake Mälaren a thousand years ago. It is not a lake yet but a bay of the sea, and furthest in to the west, where the water divides into inlets and sounds, lies Trögd: a peninsula that the water surrounds on the south-west, south and east. The islands off it – Oknö, Arnö, Grönsö – have been lived on since the Iron Age. From here people also went out. At Svinnegarn parents have raised stones for a son who "alone owned a ship and steered east in Ingvar's retinue".
+body_en = f"""A thousand years ago Lake Mälaren is not a lake but a bay of the sea. Furthest in to the west, where the water divides into inlets and sounds, lies Trögd: a peninsula that the water surrounds on the south-west, south and east. The islands off it – Oknö, Arnö, Grönsö – have been lived on since the Iron Age. From here people also went out. At Svinnegarn parents have raised stones for a son who "alone owned a ship and steered east in Ingvar's retinue".
 
 Further east, where the inlet widens, Adelsö belongs to Trögd too. There, at Hovgården, lie five great mounds and a royal estate, and a stone says that Toli was the king's bryti, his steward. On the neighbouring island of Björkö, in the same parish, lay the town of Birka with Scandinavia's largest cemetery of mounds. The border with [Attundaland]({ATT}) ran just east of them.
 
@@ -202,7 +202,7 @@ This is Fjädrundaland, the westernmost of Uppland's three folklands. It is an o
 
 ## The clay and the meadows
 
-Go ashore and follow a valley north. The clay lies heavy and shining in the furrows, and along the streams wet meadows spread out. That is where the hay is cut. Along the Örsundaån lies what will later be called the second largest wet meadow in Uppland, and already in the Middle Ages it was divided into long, narrow strips belonging to villages far away. Imagine the haymaking in late summer: the rows of people with scythes in the wet grass, the hay that must last the animals all winter.
+Go ashore and follow a valley north. The clay lies heavy and shining in the furrows, and along the streams wet meadows spread out. That is where the hay is cut. Along the Örsundaån lies what will later be called the second largest wet meadow in Uppland, and already in the Middle Ages it was divided into long, narrow strips belonging to villages far away. In late summer the rows of people with scythes stand in the wet grass, and the hay must last the animals all winter.
 
 The farms do not lie out on the plain but on its edge, where the clay meets the moraine and the ground is dry enough to live on. There the animals graze too, and there lie the graves, beside the villages. Furthest north, on Uppland's highest bedrock plateau, the small forest districts take over.
 

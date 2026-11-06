@@ -80,7 +80,7 @@ summary = ("Attundaland var folklandet närmast Mälarens mynning: en innerskär
            "gravfält och stormän som högg in i sten att de hade gjort tingsplatsen. Följ med till de åtta hundarena omkring "
            "år 1000. En del i serien De gamla landen.")
 
-body = f"""Föreställ dig att du ror in mellan öarna i östra Mälaren för tusen år sedan. Det är ingen sjö du ror på utan en vik av havet, och landet runt dig är lågt. Holmar och skär ligger tätt, sunden är smala, och det som senare ska bli en enda stor ö, Färingö, är ännu flera mindre öar. Från Saltsjön i öster skär djupa vikar in i landet, och längre norrut ligger sjöar som nyss har varit havsvikar och fjärdar som fortfarande går att segla genom. Det här är Attundaland, det folkland som ligger närmast Mälarens mynning. Det har alltid varit en innerskärgård.
+body = f"""Holmar och skär ligger tätt i östra Mälaren, och sunden är smala. Den som ror in mellan öarna för tusen år sedan ror inte på en sjö utan på en vik av havet, och landet runt omkring är lågt. Det som senare ska bli en enda stor ö, Färingö, är ännu flera mindre öar. Från Saltsjön i öster skär djupa vikar in i landet, och längre norrut ligger sjöar som nyss har varit havsvikar och fjärdar som fortfarande går att segla genom. Det här är Attundaland, det folkland som ligger närmast Mälarens mynning. Det har alltid varit en innerskärgård.
 
 ## Byarna och de döda
 
@@ -158,7 +158,7 @@ summary_en = ("Attundaland was the folkland nearest the mouth of Lake Mälaren: 
               "villages with their grave fields, and great men who cut into stone that they had made the assembly place. Come "
               "to the eight hundreds around AD 1000. A part of the series The old lands.")
 
-body_en = f"""Imagine rowing in among the islands of eastern Lake Mälaren a thousand years ago. It is no lake you are rowing on but a bay of the sea, and the land around you is low. Islets and skerries lie close together, the sounds are narrow, and what will later become one large island, Färingö, is still several smaller ones. From the Baltic in the east deep bays cut into the land, and further north lie lakes that were bays of the sea not long ago and inlets that can still be sailed through. This is Attundaland, the folkland nearest the mouth of Lake Mälaren. It has always been an inner archipelago.
+body_en = f"""Islets and skerries lie close together in eastern Lake Mälaren, and the sounds are narrow. Whoever rows in among the islands a thousand years ago is rowing not on a lake but on a bay of the sea, and the land all around is low. What will later become one large island, Färingö, is still several smaller ones. From the Baltic in the east deep bays cut into the land, and further north lie lakes that were bays of the sea not long ago and inlets that can still be sailed through. This is Attundaland, the folkland nearest the mouth of Lake Mälaren. It has always been an inner archipelago.
 
 ## The villages and the dead
 
