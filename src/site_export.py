@@ -34,8 +34,6 @@ CONTENT = os.path.join(ROOT, "web", "content", "articles.json")
 FIGURES = os.path.join(ROOT, "web", "public", "figurer")
 # The search box's index (src/blog_search.py), the same format as GET /api/blog/search_index serves locally
 SEARCH = os.path.join(ROOT, "web", "public", "artiklar-sok.json")
-# The carver page (/ristarna/): the latest corpus run's data (src/carver_pages.py), copied when it has changed
-CARVERS = os.path.join(ROOT, "web", "public", "ristarna", "ristare.json")
 FIELDS = ("id", "slug", "title", "summary", "body", "title_en", "summary_en", "body_en", "month", "author", "topic",
           "publishedAt", "updatedAt", "featured", "labels")
 FIGURE = re.compile(r"/api/blog/figures/([0-9a-f]{16}\.png)")
@@ -137,21 +135,6 @@ def _lighter(published: list[dict], files: dict[str, str]) -> None:
                 p[f] = PHOTO.sub(lambda m: m.group(1) + commons.site_photo(m.group(2), sizes) + m.group(3), t)
 
 
-def _carvers() -> None:
-    """The carver page's data for the website: the latest finished corpus run's ristare.json, when it differs."""
-    from src import carver_pages
-    src = carver_pages.latest()
-    if not src:
-        return
-    data = open(src, "rb").read()
-    if os.path.exists(CARVERS) and open(CARVERS, "rb").read() == data:
-        return
-    os.makedirs(os.path.dirname(CARVERS), exist_ok=True)
-    tmp = CARVERS + ".tmp"
-    with open(tmp, "wb") as fh:
-        fh.write(data)
-    os.replace(tmp, CARVERS)
-
 
 def export(posts: list[dict], now_iso: str, force: bool = False) -> dict:
     """Skriver de artiklar som har gått live, sökindexet och figurerna; returnerar en sammanfattning. Ser exporten fel
@@ -181,7 +164,6 @@ def export(posts: list[dict], now_iso: str, force: bool = False) -> dict:
     _write_json(CONTENT, {"exported_at": now_iso, "posts": published}, indent=1)
     from src.blog_search import build_index
     _write_json(SEARCH, {"posts": build_index(published)})
-    _carvers()
     keep = set(files.values())
     for old in os.listdir(FIGURES):  # figures no published article uses any more, and copies in an older format
         if (old.endswith((".png", ".webp")) and old not in keep) or _half_written(old):
@@ -290,9 +272,7 @@ def _paths() -> list[str]:
     """What the app commits for the website: the articles, the search index and the figures – but never a half-written
     temporary file in the figure folder (_half_written), even when an export was killed before it could remove it."""
     figures = os.path.relpath(FIGURES, ROOT)
-    # the carver page's data only once it exists (a pathspec that matches nothing makes git add fail)
-    carvers = [os.path.relpath(CARVERS, ROOT)] if os.path.exists(CARVERS) else []
-    return [os.path.relpath(CONTENT, ROOT), os.path.relpath(SEARCH, ROOT), *carvers, figures,
+    return [os.path.relpath(CONTENT, ROOT), os.path.relpath(SEARCH, ROOT), figures,
             f":(exclude){figures}/*.tmp", f":(exclude){figures}/*.part", f":(exclude){figures}/.*"]
 
 

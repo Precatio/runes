@@ -31,8 +31,6 @@ export const isPublicPath = (href: string) => /^\/(?:$|[#?]|artiklar(?:[/?#]|$)|
 export const CONTACT_PATH = PUBLIC_SITE ? "/kontakt/" : "/kontakt";
 export const EN_CONTACT_PATH = PUBLIC_SITE ? "/en/kontakt/" : "/en/kontakt";
 export const NEWS_PATH = PUBLIC_SITE ? "/nyheter/" : "/nyheter";
-// The carver page on the website (app/ristarna; the app has its own at /ristare, inside the app's frame)
-export const CARVERS_PATH = PUBLIC_SITE ? "/ristarna/" : "/ristarna";
 
 // The contact form's receiver. The website is static, so FormSubmit (no account) emails the message on. The form is
 // activated, and FormSubmit's random alias stands in for the founder's email address, so the address is not in the page.

@@ -2,9 +2,9 @@
 
 // Ristarna, en i taget: varje känd ristares fingeravtryck mot samtida grannstenar, stenarna från kärna till ytterkant,
 // och de stenar utan ristare som attribueringsmodellen tror är ristarens. Samma komponent i appen (/ristare, datan från
-// GET /api/r/ristare) och på webbplatsen (/ristarna/, web/public/ristarna/ristare.json ur webbplatsens export). Datan
+// GET /api/r/ristare). Sidan finns bara i appen sedan 2026-11-06. Datan
 // byggs av korpusjobbet (src/carver_pages.py), ritningen av lib/ristare/draw.js. Ristaren står i adressen (#balle …).
-// Stilarna: app/ristarna/ristare.css, som sidorna importerar.
+// Stilarna: components/ristare.css, som sidan importerar.
 import { useCallback, useEffect, useRef, useState } from "react";
 import { preparePage, renderCarver, slug } from "@/lib/ristare/draw";
 

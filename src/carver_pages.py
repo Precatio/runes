@@ -1,7 +1,6 @@
-"""Ristarsidan (appen: Korpus → Ristarna, /ristare; webbplatsen: /ristarna/): datan för alla ristare med minst MIN_STONES
+"""Ristarsidan (appen: Korpus → Ristarna, /ristare; bara i appen sedan 2026-11-06): datan för alla ristare med minst MIN_STONES
 stenar med säker ristare. Byggs av korpusjobbet (src/r_bridge.run_corpus) efter R-modulerna och skrivs till
-<korpusmapp>/ristare.json; appen hämtar den via GET /api/r/ristare och webbplatsens export kopierar den till
-web/public/ristarna/ristare.json (src/site_export.py).
+<korpusmapp>/ristare.json; appen hämtar den via GET /api/r/ristare.
 
 Stegen: dragtabellen (src/discovery_v2.py), en ristarprofil per ristare (r/carver_profile.R: fingeravtryck ur de signerade
 stenarna mot samtida grannar; ger de signerade färre än MIN_TRAITS drag byggs profilen av alla säkra stenar),

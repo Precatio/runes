@@ -76,7 +76,6 @@ const content = join(WEB, "content");
 const data = [
   ...(existsSync(content) ? readdirSync(content).filter(n => n.endsWith(".json")).map(n => join(content, n)) : []),
   join(WEB, "public", "artiklar-sok.json"),
-  join(WEB, "public", "ristarna", "ristare.json"),  // the carver page's data (app/ristarna, src/site_export.py)
 ].filter(existsSync);
 
 const strings = [];
