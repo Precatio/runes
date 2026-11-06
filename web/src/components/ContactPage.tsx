@@ -32,7 +32,7 @@ export default async function ContactPage({ lang }: { lang: "sv" | "en" }) {
     name: CONTACT_TITLE[lang],
     inLanguage: en ? "en" : "sv",
     mainEntity: {
-      "@type": "Person", "@id": `${SITE_URL}/#founder`, name: AUTHOR.name, url: AUTHOR.url, sameAs: [AUTHOR.linkedin, GITHUB_URL],
+      "@type": "Person", "@id": `${SITE_URL}/#founder`, name: AUTHOR.name, url: AUTHOR.url, sameAs: [AUTHOR.linkedin, ...(AUTHOR.orcid ? [AUTHOR.orcid] : []), GITHUB_URL],
       jobTitle: en ? AUTHOR.role_en : AUTHOR.role, description: en ? AUTHOR.bio_en : AUTHOR.bio,
       worksFor: { "@id": `${SITE_URL}/#organization` },
       knowsAbout: en ? ["Runestones", "Runic inscriptions", "Data analysis", "Statistics", "3D scanning"]
@@ -79,6 +79,7 @@ export default async function ContactPage({ lang }: { lang: "sv" | "en" }) {
       )}
       <div className="mt-5 flex flex-wrap gap-4 text-sm font-bold text-[#b7410e]">
         <a href={AUTHOR.linkedin} target="_blank" rel="noopener noreferrer me" className="tap hover:underline">LinkedIn ↗</a>
+        {AUTHOR.orcid && <a href={AUTHOR.orcid} target="_blank" rel="noopener noreferrer me" className="tap hover:underline">ORCID ↗</a>}
         <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="tap hover:underline">{en ? "Vitki on GitHub ↗" : "Vitki på GitHub ↗"}</a>
         <a href={BLUESKY_URL} target="_blank" rel="noopener noreferrer me" className="tap hover:underline">{en ? "Vitki on Bluesky ↗" : "Vitki på Bluesky ↗"}</a>
       </div>

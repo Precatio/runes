@@ -207,6 +207,7 @@ export function scholarMeta(post: BlogPost, lang: "sv" | "en"): Record<string, s
   const meta: Record<string, string | string[]> = {
     citation_title: (en && post.title_en) || post.title,
     citation_author: "Kvant, Viktor",
+    citation_author_orcid: "https://orcid.org/0009-0005-3886-6007",
     citation_language: en ? "en" : "sv",
     citation_publisher: SITE_NAME,
     citation_technical_report_institution: SITE_NAME,
@@ -264,7 +265,7 @@ export function reportJsonLd(post: BlogPost, lang: "sv" | "en" = "sv") {
       ...(post.title_en && !en ? { alternativeHeadline: post.title_en } : {}),
       abstract: parts.abstract ? plainText(parts.abstract) : plainText((en ? post.summary_en : post.summary) ?? ""),
       description: plainText((en ? post.summary_en : post.summary) ?? ""),
-      author: { "@type": "Person", "@id": `${SITE_URL}/#founder`, name: h?.author ?? "Viktor Kvant",
+      author: { "@type": "Person", "@id": `${SITE_URL}/#founder`, name: h?.author ?? "Viktor Kvant", sameAs: "https://orcid.org/0009-0005-3886-6007",
                 ...(h?.affiliation ? { affiliation: h.affiliation } : {}) },
       publisher: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: SITE_NAME, url: SITE_URL },
       ...(h?.timeline.length ? { dateCreated: h.timeline[0].date } : {}),

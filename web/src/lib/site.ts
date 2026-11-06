@@ -40,7 +40,7 @@ export const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT || "htt
 export const CONTACT_SERVICE_URL = "https://formsubmit.co/";
 
 // The articles' authors: the byline links to the author's page, and search engines get the same link (schema.org)
-export interface Author { name: string; url: string; page: string; linkedin: string; role: string; role_en: string; bio: string; bio_en: string }
+export interface Author { name: string; url: string; page: string; linkedin: string; orcid?: string; role: string; role_en: string; bio: string; bio_en: string }
 export const AUTHORS: Record<string, Author> = {
   "Viktor Kvant": {
     name: "Viktor Kvant",
@@ -48,6 +48,7 @@ export const AUTHORS: Record<string, Author> = {
     url: `${SITE_URL}/kontakt/`,
     page: "/kontakt",
     linkedin: "https://www.linkedin.com/in/viktor-kvant-555180108/",
+    orcid: "https://orcid.org/0009-0005-3886-6007",
     role: "Digital analytiker och grundare av Vitki",
     role_en: "Digital analyst and founder of Vitki",
     bio: "Viktor Kvant arbetar till vardags som digital analytiker och ser dataanalys som ett övergripande yrkesfält, där samma analytiska metoder kan driva gränserna framåt även inom humaniora och arkeologi. Han grundade Vitki.",

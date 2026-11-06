@@ -75,7 +75,7 @@ def metadata(p: dict, vitki_doi: str | None) -> dict:
         rel.append({"identifier": vitki_doi, "relation": "isSupplementedBy", "scheme": "doi", "resource_type": "software"})
     return {"metadata": {
         "upload_type": "publication", "publication_type": "report",
-        "title": p["title_en"], "creators": [{"name": "Kvant, Viktor", "affiliation": "Independent researcher"}],
+        "title": p["title_en"], "creators": [{"name": "Kvant, Viktor", "affiliation": "Independent researcher", "orcid": "0009-0005-3886-6007"}],
         "description": desc, "publication_date": h["date"], "version": f"Report version {h['version']}",
         "language": "eng", "keywords": h["keywords"], "license": "cc-by-4.0", "access_right": "open",
         "related_identifiers": rel,
