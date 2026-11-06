@@ -6,6 +6,7 @@ authors:
   - family-names: Kvant
     given-names: Viktor
     affiliation: "Independent researcher"
+    orcid: "https://orcid.org/0009-0005-3886-6007"
 version: 3.1.0
 date-released: 2026-11-05
 license: GPL-3.0-only
