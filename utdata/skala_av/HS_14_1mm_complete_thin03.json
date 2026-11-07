@@ -3,7 +3,7 @@
  "stem": "HS_14_1mm_complete_thin03",
  "signum": "Hs 14",
  "file": "HS_14_1mm_complete thin03.stl",
- "credit": "Skanning: Laila Kitzler Åhfeldt och Henrik Zedig, Länsstyrelsen Västra Götalands län, CC BY 4.0, doi:10.5281/zenodo.15638873",
+ "credit": "Skanning: Henrik Zedig, Länsstyrelsen Västra Götalands län, CC BY 4.0, doi:10.5281/zenodo.15638873",
  "resolution_mm": 1.468,
  "grid": [
   1154,
@@ -41,8 +41,8 @@
   }
  },
  "seconds": {
-  "load": 16.5,
+  "load": 17.1,
   "peel": 0.3,
-  "total": 22.9
+  "total": 24.0
  }
 }
