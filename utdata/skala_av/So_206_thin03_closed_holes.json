@@ -1,0 +1,48 @@
+{
+ "series": "sodermanland",
+ "stem": "So_206_thin03_closed_holes",
+ "signum": "Sö 206",
+ "file": "So 206_thin03_closed holes.stl",
+ "credit": "Skanning: Laila Kitzler Åhfeldt, Riksantikvarieämbetet, CC BY 4.0, doi:10.5281/zenodo.11951255",
+ "resolution_mm": 0.672,
+ "grid": [
+  1179,
+  1811
+ ],
+ "level_mm": {
+  "min": 0.56,
+  "median": 0.95,
+  "max": 1.18
+ },
+ "layers": {
+  "-0.5": {
+   "spar": 41,
+   "grop": 1012,
+   "spar_area_mm2": 350331,
+   "left_share": 0.5472
+  },
+  "0.0": {
+   "spar": 123,
+   "grop": 866,
+   "spar_area_mm2": 174579,
+   "left_share": 0.2892
+  },
+  "0.5": {
+   "spar": 150,
+   "grop": 733,
+   "spar_area_mm2": 76050,
+   "left_share": 0.1456
+  },
+  "1.0": {
+   "spar": 94,
+   "grop": 616,
+   "spar_area_mm2": 25208,
+   "left_share": 0.0635
+  }
+ },
+ "seconds": {
+  "load": 18.5,
+  "peel": 0.4,
+  "total": 25.8
+ }
+}

@@ -1,0 +1,48 @@
+{
+ "series": "asmund",
+ "stem": "Gs_11_1_4_thin05",
+ "signum": "Gs 11",
+ "file": "Gs 11_1_4 thin05.stl",
+ "credit": "Skanning: Laila Kitzler Åhfeldt, Riksantikvarieämbetet, CC BY 4.0, doi:10.5281/zenodo.13347851",
+ "resolution_mm": 0.991,
+ "grid": [
+  1428,
+  2092
+ ],
+ "level_mm": {
+  "min": 0.37,
+  "median": 0.6,
+  "max": 0.91
+ },
+ "layers": {
+  "-0.5": {
+   "spar": 24,
+   "grop": 914,
+   "spar_area_mm2": 1714813,
+   "left_share": 0.7931
+  },
+  "0.0": {
+   "spar": 302,
+   "grop": 2350,
+   "spar_area_mm2": 515870,
+   "left_share": 0.2635
+  },
+  "0.5": {
+   "spar": 50,
+   "grop": 334,
+   "spar_area_mm2": 284752,
+   "left_share": 0.1341
+  },
+  "1.0": {
+   "spar": 100,
+   "grop": 231,
+   "spar_area_mm2": 170840,
+   "left_share": 0.0811
+  }
+ },
+ "seconds": {
+  "load": 76.0,
+  "peel": 0.6,
+  "total": 95.2
+ }
+}

@@ -1,0 +1,48 @@
+{
+ "series": "asmund",
+ "stem": "U_1144_thin05_closed_holes",
+ "signum": "U 1144",
+ "file": "U 1144 thin05 closed holes.stl",
+ "credit": "Skanning: Laila Kitzler Åhfeldt, Riksantikvarieämbetet, CC BY 4.0, doi:10.5281/zenodo.13347851",
+ "resolution_mm": 0.984,
+ "grid": [
+  1887,
+  1583
+ ],
+ "level_mm": {
+  "min": 0.11,
+  "median": 0.51,
+  "max": 0.94
+ },
+ "layers": {
+  "-0.5": {
+   "spar": 17,
+   "grop": 1290,
+   "spar_area_mm2": 1668328,
+   "left_share": 0.8117
+  },
+  "0.0": {
+   "spar": 336,
+   "grop": 2729,
+   "spar_area_mm2": 502771,
+   "left_share": 0.2772
+  },
+  "0.5": {
+   "spar": 343,
+   "grop": 1797,
+   "spar_area_mm2": 197256,
+   "left_share": 0.1242
+  },
+  "1.0": {
+   "spar": 192,
+   "grop": 1269,
+   "spar_area_mm2": 75639,
+   "left_share": 0.0544
+  }
+ },
+ "seconds": {
+  "load": 99.1,
+  "peel": 0.6,
+  "total": 122.2
+ }
+}

@@ -1,0 +1,48 @@
+{
+ "series": "halsingland",
+ "stem": "HS_14_1mm_complete_thin03",
+ "signum": "Hs 14",
+ "file": "HS_14_1mm_complete thin03.stl",
+ "credit": "Skanning: Laila Kitzler Åhfeldt och Henrik Zedig, Länsstyrelsen Västra Götalands län, CC BY 4.0, doi:10.5281/zenodo.15638873",
+ "resolution_mm": 1.468,
+ "grid": [
+  1154,
+  1362
+ ],
+ "level_mm": {
+  "min": 0.08,
+  "median": 0.34,
+  "max": 1.11
+ },
+ "layers": {
+  "-0.5": {
+   "spar": 90,
+   "grop": 801,
+   "spar_area_mm2": 948198,
+   "left_share": 0.8921
+  },
+  "0.0": {
+   "spar": 134,
+   "grop": 5116,
+   "spar_area_mm2": 143612,
+   "left_share": 0.2574
+  },
+  "0.5": {
+   "spar": 128,
+   "grop": 957,
+   "spar_area_mm2": 56131,
+   "left_share": 0.1189
+  },
+  "1.0": {
+   "spar": 108,
+   "grop": 805,
+   "spar_area_mm2": 45011,
+   "left_share": 0.0691
+  }
+ },
+ "seconds": {
+  "load": 16.5,
+  "peel": 0.3,
+  "total": 22.9
+ }
+}

@@ -1,0 +1,48 @@
+{
+ "series": "medelpad",
+ "stem": "M_3_Berga_thin02",
+ "signum": "M 3",
+ "file": "M 3 Berga thin02.stl",
+ "credit": "Skanning: Laila Kitzler Åhfeldt och Henrik Zedig, Länsstyrelsen Västra Götalands län, CC BY 4.0, doi:10.5281/zenodo.14141222",
+ "resolution_mm": 0.859,
+ "grid": [
+  1474,
+  2024
+ ],
+ "level_mm": {
+  "min": 0.46,
+  "median": 1.15,
+  "max": 1.6
+ },
+ "layers": {
+  "-0.5": {
+   "spar": 94,
+   "grop": 1189,
+   "spar_area_mm2": 546566,
+   "left_share": 0.4862
+  },
+  "0.0": {
+   "spar": 311,
+   "grop": 1553,
+   "spar_area_mm2": 308129,
+   "left_share": 0.2979
+  },
+  "0.5": {
+   "spar": 273,
+   "grop": 1511,
+   "spar_area_mm2": 154759,
+   "left_share": 0.1668
+  },
+  "1.0": {
+   "spar": 162,
+   "grop": 1071,
+   "spar_area_mm2": 73144,
+   "left_share": 0.0856
+  }
+ },
+ "seconds": {
+  "load": 35.5,
+  "peel": 0.5,
+  "total": 47.3
+ }
+}

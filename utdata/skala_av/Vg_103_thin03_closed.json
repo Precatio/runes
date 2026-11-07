@@ -1,0 +1,48 @@
+{
+ "series": "vastergotland",
+ "stem": "Vg_103_thin03_closed",
+ "signum": "Vg 103",
+ "file": "Vg 103 thin03 closed.stl",
+ "credit": "Skanning: Laila Kitzler Åhfeldt, Riksantikvarieämbetet, CC BY 4.0, doi:10.5281/zenodo.14046713",
+ "resolution_mm": 0.856,
+ "grid": [
+  673,
+  1706
+ ],
+ "level_mm": {
+  "min": 0.14,
+  "median": 0.44,
+  "max": 0.81
+ },
+ "layers": {
+  "-0.5": {
+   "spar": 14,
+   "grop": 260,
+   "spar_area_mm2": 20138,
+   "left_share": 0.894
+  },
+  "0.0": {
+   "spar": 153,
+   "grop": 1605,
+   "spar_area_mm2": 114572,
+   "left_share": 0.2567
+  },
+  "0.5": {
+   "spar": 114,
+   "grop": 473,
+   "spar_area_mm2": 57677,
+   "left_share": 0.1284
+  },
+  "1.0": {
+   "spar": 88,
+   "grop": 329,
+   "spar_area_mm2": 32596,
+   "left_share": 0.0793
+  }
+ },
+ "seconds": {
+  "load": 10.9,
+  "peel": 0.2,
+  "total": 15.3
+ }
+}
