@@ -1,0 +1,34 @@
+{
+ "series": "gravmonument_og_sm",
+ "stem": "Og_Hov_15_22_thin03",
+ "signum": "Ög Hov15;22",
+ "plan_sha": "380fccf4",
+ "resolution_mm": 0.719,
+ "band_share": 0.20617234605015225,
+ "threshold_a_mm": 0.951,
+ "A": {
+  "shown_share": 0.2903360715569911,
+  "precision": 0.22545100832385429,
+  "lift": 1.09350750788378,
+  "coverage": 0.31748467405705216
+ },
+ "B": {
+  "shown_share": 0.2903360715569911,
+  "precision": 0.22013033263524934,
+  "lift": 1.0677005760108185,
+  "coverage": 0.3099919908381176
+ },
+ "C": {
+  "shown_share": 0.2709329045181462,
+  "precision": 0.2151161134876197,
+  "lift": 1.043380053672629,
+  "coverage": 0.28268598845782467
+ },
+ "A_at_C": {
+  "shown_share": 0.2709329045181462,
+  "precision": 0.22856443059677264,
+  "lift": 1.108608574212826,
+  "coverage": 0.30035854098520176
+ },
+ "seconds": 10.0
+}

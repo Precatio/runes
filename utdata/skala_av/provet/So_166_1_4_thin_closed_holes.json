@@ -1,0 +1,34 @@
+{
+ "series": "sodermanland",
+ "stem": "So_166_1_4_thin_closed_holes",
+ "signum": "Sö 166",
+ "plan_sha": "380fccf4",
+ "resolution_mm": 0.796,
+ "band_share": 0.3165712025910326,
+ "threshold_a_mm": 0.827,
+ "A": {
+  "shown_share": 0.2895994353628718,
+  "precision": 0.38534582358026703,
+  "lift": 1.2172485065803094,
+  "coverage": 0.3525144802019565
+ },
+ "B": {
+  "shown_share": 0.2895994353628718,
+  "precision": 0.36020306397748086,
+  "lift": 1.1378263753283167,
+  "coverage": 0.32951387583606356
+ },
+ "C": {
+  "shown_share": 0.24994301449216988,
+  "precision": 0.3845297371934213,
+  "lift": 1.2146706145289594,
+  "coverage": 0.3035984350104246
+ },
+ "A_at_C": {
+  "shown_share": 0.24994301449216988,
+  "precision": 0.39900964533656125,
+  "lift": 1.2604104292203357,
+  "coverage": 0.3150307821767004
+ },
+ "seconds": 311.0
+}

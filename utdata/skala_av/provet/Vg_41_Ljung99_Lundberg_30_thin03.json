@@ -1,0 +1,34 @@
+{
+ "series": "vastergotland",
+ "stem": "Vg_41_Ljung99_Lundberg_30_thin03",
+ "signum": "Vg 41",
+ "plan_sha": "380fccf4",
+ "resolution_mm": 0.99,
+ "band_share": 0.23535365516150714,
+ "threshold_a_mm": 1.105,
+ "A": {
+  "shown_share": 0.29092238959395883,
+  "precision": 0.28662870499979615,
+  "lift": 1.2178638347600867,
+  "coverage": 0.3543038570084666
+ },
+ "B": {
+  "shown_share": 0.29092238959395883,
+  "precision": 0.2895233953494693,
+  "lift": 1.230163156594229,
+  "coverage": 0.3578820051068405
+ },
+ "C": {
+  "shown_share": 0.2658245364330052,
+  "precision": 0.3107756376887038,
+  "lift": 1.3204623377335682,
+  "coverage": 0.3510112888052681
+ },
+ "A_at_C": {
+  "shown_share": 0.2658245364330052,
+  "precision": 0.28892689819290546,
+  "lift": 1.2276286849874274,
+  "coverage": 0.32633382609864264
+ },
+ "seconds": 3.1
+}

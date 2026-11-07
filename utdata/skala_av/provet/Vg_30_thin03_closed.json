@@ -1,0 +1,34 @@
+{
+ "series": "vastergotland",
+ "stem": "Vg_30_thin03_closed",
+ "signum": "Vg 30",
+ "plan_sha": "380fccf4",
+ "resolution_mm": 0.51,
+ "band_share": 0.6342497092240351,
+ "threshold_a_mm": 1.379,
+ "A": {
+  "shown_share": 0.2904474546374697,
+  "precision": 0.667023303681513,
+  "lift": 1.0516730145569546,
+  "coverage": 0.30545575018898213
+ },
+ "B": {
+  "shown_share": 0.2904474546374697,
+  "precision": 0.6615209040238845,
+  "lift": 1.0429975676823156,
+  "coverage": 0.30293598872640054
+ },
+ "C": {
+  "shown_share": 0.2851060555389492,
+  "precision": 0.6684894876378275,
+  "lift": 1.0539846970614817,
+  "coverage": 0.30049741957761333
+ },
+ "A_at_C": {
+  "shown_share": 0.2851060555389492,
+  "precision": 0.6682777248370776,
+  "lift": 1.0536508178374628,
+  "coverage": 0.30040222858902693
+ },
+ "seconds": 26.1
+}
