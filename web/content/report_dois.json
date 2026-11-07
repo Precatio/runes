@@ -1,5 +1,5 @@
 {
- "_om": "Forskningsrapporterna arkiverade på Zenodo (publicerade 2026-11-07). doi = den arkiverade rapportversionen, concept_doi = alla versioner. Används av web/src/lib/report.ts.",
+ "_om": "Forskningsrapporterna arkiverade på Zenodo (de elva första publicerade 2026-11-07, folklandsrapporten samma kväll). doi = den arkiverade rapportversionen, concept_doi = alla versioner. Används av web/src/lib/report.ts.",
  "rapporter": {
   "barnen-arvde-namnled": {
    "doi": "10.5281/zenodo.24004776",
@@ -77,6 +77,13 @@
    "version": 3,
    "record": "https://zenodo.org/records/24004802",
    "published": "2026-11-05"
+  },
+  "upplands-folkland-skiljer-runstenarna": {
+   "doi": "10.5281/zenodo.24043534",
+   "concept_doi": "10.5281/zenodo.24043533",
+   "version": 1,
+   "record": "https://zenodo.org/records/24043534",
+   "published": "2026-11-07"
   }
  }
 }
