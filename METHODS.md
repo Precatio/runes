@@ -1921,14 +1921,25 @@ att translitterationen paras ord för ord med normaliseringen:
 | Ljud | ʀ skrivet med r | ord som slutar på ʀ (æftiR, þæiR, syniR) skrivna med ʀ-runan, med r-runan eller båda |
 | Ljud | o-runan för o-ljud | o-ljudet i broður, bóndi, móður, sun, kona skrivet med o-runan (ᚬ), u-runan eller båda |
 | Ljud | Stungen i, u, k | e, y respektive g var för sig (stungen t, d, finns på för få stenar) |
-| Bruk | æftiR eller at | minnesformelns preposition (at räknas bara före ett namn) |
+| Bruk | æftiR eller at | minnesformelns preposition framför den ihågkomne: namn, släktord (faður, bonda …) eller sik/sinn, för båda orden; aft/æft för sig |
 | Skrift | Skiljetecken | vanligaste tecknet mellan orden (punkt, kolon, kryss, apostrof, plus), minst tre tecken |
 | Skrift | Bindrunor | om inskriften har bindrunor (^ i translittereringen) |
 
 De nio sista dragen lades till 2026-10-11. ai i alla ord bygger på 1 091 runstenar mot 663 för *sten* ensamt; ʀ
-med r finns på 147 av 938 stenar där det kan avgöras, o-runan för o-ljud på 141 av 618, at på 322 av 1 352.
+med r finns på 147 av 938 stenar där det kan avgöras, o-runan för o-ljud på 141 av 618, at på 435 av 1 532 (sedan rättningen 2026-11-07, se nedan).
 Dubbelskrivna konsonanter prövades också men förekommer nästan aldrig och togs inte med. Kristen bön känns sedan
 samma datum igen även i osäkra läsningar och som Kristr hjalpi, Guð biargi, Guð lætti och Guðs móðir.
+
+**Rättning av prepositionsdraget 2026-11-07.** Fram till dess räknades *at* bara när ett namn följde direkt efter, medan
+varje ord på *æft-/aft-* räknades som *æftiR*, också den äldre korta formen *aft/æft* och *aftr* 'tillbaka'. Ord inom
+hakparentes (runor kända från äldre avbildningar) hoppades över. Därmed missades *at* som andra preposition, framför ett
+släktord: "æftiR "Æist, faður sinn, ok "Fastlaug **at** bonda sinn" (U 461), det mönster Palm (1992 s. 232) och
+Peterson (1996 s. 246) beskriver. Nu räknas båda orden lika: framför ett namn eller ett av de ord som följer på *æftiR*
+minst två gånger i Rundata (släktord, *sik*, *sinn*); *aft/æft* utan *æftiR* blir en egen kategori som inte ingår i
+jämförelsen *at* mot *æftiR*. Kontroll mot litteraturen: med den nya regeln har 77 svenska inskrifter både *at* och
+*æftiR*, varav 10 med *at* först; Peterson räknade 70 och 8, den gamla regeln fann 38. I korpusen ändrades draget på
+237 av 2 321 runstenar (fingeravtryck 7b01d347 → 510ebfb3), inget annat drag. Upptäckten och kontrollen redovisas i
+`utdata/folkland/peterson1996_lasning.md`.
 
 Ett drag räknas bara där inskriften har ordet. Ristarens profil är fördelningen över dennes säkra
 inskrifter (stenen själv utesluten). Stenen stämmer i ett drag när värdet är ristarens vanligaste eller

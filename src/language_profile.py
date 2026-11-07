@@ -59,7 +59,9 @@ TRAITS: dict[str, tuple[str, str, str]] = {
     "stungen_y": ("ljud", "Stungen u (y)", "Om inskriften har stungen u-runa (y), som skiljer y från u."),
     "stungen_g": ("ljud", "Stungen k (g)", "Om inskriften har stungen k-runa (g), som skiljer g från k."),
     "preposition": ("bruk", "æftiR eller at",
-                    "Om minnesformeln använder prepositionen æftiR eller at (före namnet), eller båda."),
+                    "Om minnesformeln använder prepositionen æftiR eller at framför den ihågkomne (ett namn, ett "
+                    "släktord som faður eller bonda, eller sik/sinn), eller båda. Den äldre korta formen aft/æft "
+                    "räknas för sig."),
     "skiljetecken": ("skrift", "Skiljetecken",
                      "Det vanligaste skiljetecknet mellan orden: punkt (·), kolon (:), kryss (×), apostrof (') eller "
                      "plus (+), eller blandat när det vanligaste står för mindre än tre fjärdedelar; minst tre tecken."),
@@ -98,6 +100,37 @@ def _pair_value(trait: str, pairs: list[tuple[str, str]]) -> str | None:
 _SOUL = r"\b(and|ǫnd|ônd|salu|sálu|sál|sal|sial|sialu|sel)\b"
 
 
+# The words that stand after the preposition in the memorial formula when it is not a name: every word that follows æftiR
+# at least twice in Rundata's normalisations (kinship words, sik/sinn and their spellings). The same list is used for at,
+# so that both prepositions are counted the same way. (Until 2026-11-07 at counted only before a name, while every æft-
+# word counted as æftiR; that missed at as the second preposition – "æftiR "Æist, faður sinn, ok "Fastlaug at bonda sinn"
+# – which Palm 1992 s. 232 and Peterson 1996 s. 246 describe, and words inside brackets.)
+_PREP_OBJECTS = frozenset({
+    "boanda", "bonda", "broður", "brøðr", "broþur", "brøþr", "dottur", "faður", "faþur", "faðursbroður", "frænda", "mag",
+    "mann", "moður", "moþur", "sialfan", "sik", "sin", "sinn", "svær", "syni", "sun", "sunu", "systur"})
+
+
+def _preposition(norm: str) -> str | None:
+    """æftiR, at, båda, aft/æft (only the older short form) or None. Brackets (runes known from older sources, uncertain
+    readings) are read through; at counts when a name or one of _PREP_OBJECTS follows, so that at 'that, to' does not."""
+    toks = [t for t in norm.split() if not t.startswith("§")]
+    words = [re.sub(r"[\[\]()?<>]", "", t.strip(".,;:!?")).lower() for t in toks]
+
+    def person_follows(i: int) -> bool:
+        return i + 1 < len(toks) and (toks[i + 1].lstrip("[(").startswith('"') or words[i + 1] in _PREP_OBJECTS)
+
+    long_ = any(w.startswith(("æft", "aft")) and w not in ("æft", "aft", "aftr") for w in words)  # aftr = aptr 'back'
+    short = any(w in ("æft", "aft") for w in words)
+    at = any(w == "at" and person_follows(i) for i, w in enumerate(words))
+    if long_ and at:
+        return "båda"
+    if long_:
+        return "æftiR"
+    if at:
+        return "at"
+    return "aft/æft" if short else None
+
+
 def _value(trait: str, variants: dict, norm: str, translit_words: list[str]) -> str | None:
     if trait == "ai_sten":
         w = variants.get("stæin") or variants.get("stæina")
@@ -127,12 +160,7 @@ def _value(trait: str, variants: dict, norm: str, translit_words: list[str]) -> 
     if trait in ("stungen_e", "stungen_y", "stungen_g"):
         return "ja" if trait[-1] in set("".join(translit_words)) else "nej"
     if trait == "preposition":
-        toks = [t.strip(".,;:!?") for t in norm.split()]
-        ae = any(t.lower().startswith(("æft", "aft")) for t in toks)
-        at = any(t.lower() == "at" and i + 1 < len(toks) and toks[i + 1].startswith('"') for i, t in enumerate(toks))
-        if not (ae or at):
-            return None
-        return "båda" if ae and at else "æftiR" if ae else "at"
+        return _preposition(norm)
     if trait == "efter":
         w = variants.get("æftir")
         if not w:

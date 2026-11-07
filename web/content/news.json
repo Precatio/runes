@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "rattelse-preposition-at",
+   "date": "2026-11-07",
+   "status": "nytt",
+   "title": "Rättat: prepositionen at räknades för sällan",
+   "text": "Språkdraget æftiR eller at räknade at bara när ett namn följde direkt efter, medan varje æft-ord räknades som æftiR. Det missade at som andra preposition, till exempel ”… ok Fastlaug at bonda sinn”, och slog olika i olika bygder. Nu räknas båda orden lika, och den äldre korta formen aft/æft räknas för sig. Draget ändrades på 237 runstenar, och statistiken är omräknad. Felet upptäcktes när vi läste Lena Petersons artikel från 1996 om just dessa ord."
+  },
+  {
    "id": "rapporter-doi",
    "date": "2026-11-07",
    "status": "nytt",

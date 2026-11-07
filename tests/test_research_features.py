@@ -238,6 +238,19 @@ def test_geology_compares_material_with_bedrock(monkeypatch, tmp_path):
 
 
 @needs_rundata
+def test_preposition_counts_at_and_aeftir_the_same_way():
+    # at as the second preposition (Palm 1992 s. 232, Peterson 1996 s. 246) stands before a kinship word, not a name
+    from src.language_profile import _preposition as prep
+    assert prep('Holmlaug letu ræisa stæin þenna æftiR "Æist, faður sinn, ok "Fastlaug at bonda sinn.') == "båda"  # U 461
+    assert prep('"Iarlabanki let ræisa stæina þessa at sik kvikvan') == "at"
+    assert prep('ræisþi stæin þannsi at "Gunnar') == "at"
+    assert prep('let ræisa stæin [æftiR "Ulf]') == "æftiR"  # runes known from older sources (brackets) count
+    assert prep('sattu stæin þannsi æft "Fot, faður sinn') == "aft/æft"  # the older short form on its own
+    assert prep('"Guð hialpi at hann komi') is None  # at 'that' before a pronoun is not the preposition
+    assert prep('kom aftr til "Gautlands') is None  # aftr = aptr 'back'
+    assert prep("") is None
+
+
 def test_language_traits_and_synthesis_checks(client, monkeypatch):
     from api.rundata import store
     from api.routers.orthography import model

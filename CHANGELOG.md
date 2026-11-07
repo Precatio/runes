@@ -5,6 +5,15 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Rättat: prepositionen at räknas också framför släktord
+- Språkdraget *æftiR eller at* (`src/language_profile.py`) räknade *at* bara framför ett namn men varje *æft-/aft-*ord som
+  *æftiR*, och hoppade över ord inom hakparentes. Därmed missades *at* som andra preposition ("… ok Fastlaug at bonda
+  sinn"). Båda orden räknas nu lika, framför ett namn, ett släktord eller *sik*/*sinn*; den äldre korta formen *aft/æft*
+  är en egen kategori, och *aftr* 'tillbaka' räknas inte. Upptäckt vid läsningen av Peterson 1996; med den nya regeln
+  stämmer antalet inskrifter med båda orden med hennes räkning (77 mot 70, den gamla regeln 38). Draget ändrades på 237
+  av 2 321 runstenar; korpusen och R-modulerna är omkörda (fingeravtryck 510ebfb3). Test:
+  `test_preposition_counts_at_and_aeftir_the_same_way`.
+
 ### Runa för runa: varje klick kopplat till en runa i translittereringen
 - Granskningen av den automatiska analysen visar stenens translittering ur Rundata som en remsa när signumet är känt
   (`GET /api/rundata/tokens`, `src/rune_links.tokenize`; positionerna stämmer med textmodellens i alla 6 753
