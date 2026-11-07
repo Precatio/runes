@@ -55,3 +55,14 @@ test("3D-sidan", async ({ page }) => {
   await expect(page.locator('input[type="file"]').first()).toBeAttached();
   expect(errors).toEqual([]);
 });
+
+test("stenanalysen", async ({ page }) => {
+  // The page draws on a canvas; it used to take the test browser down with it (see playwright.config.ts)
+  const errors = watchErrors(page);
+  await page.goto("/stenanalys");
+  await expect(page.getByRole("heading", { name: "Fullständig stenanalys" })).toBeVisible();
+  await expect(page.locator('input[type="file"]').first()).toBeAttached();
+  await page.waitForTimeout(4000);
+  expect(page.isClosed()).toBe(false);
+  expect(errors).toEqual([]);
+});

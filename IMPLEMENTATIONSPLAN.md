@@ -2,7 +2,8 @@
 
 Planen bygger på läget efter 2026-10-20 (AI-läsningen borttagen, 2D som flik, huggteknik mot bergart, etiketter,
 första Så gör du-artikeln). Varje punkt har: vad, var i koden, hur den prövas, och vad som bara Viktor kan göra.
-Ordningen är vald så att varje steg gör nästa mer värt. Inget här är påbörjat.
+Ordningen är vald så att varje steg gör nästa mer värt. Läget uppdaterat 2026-11-07: varje rubrik säger om punkten
+är klar, pausad, struken eller väntar.
 
 Regler som gäller alla punkter: data före tolkning (ingen egen läsning), bara runstenar i beräkningarna, justera för
 period och region, varje statistiskt tal förklaras i klartext, bristlistan (`src/limitations.py`) och METHODS.md
@@ -48,7 +49,12 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
   (som i dag) – det är rätt resultat och ska stå så.
 - **Klart när:** Statistik/mätkorpus visar 36 poster och syntesen för en KÅ-sten väger in huggteknik med redovisad nivå.
 
-### 1.4 Textmodell 19 – toleranslagret  — PÅGÅR 2026-10-20: lagret byggt (avstängt), analysplan låst, λ-val på veck 0 kör
+### 1.4 Textmodell 19 – toleranslagret  — KLAR 2026-10-20 (textmodel-19, 03d1176)
+- **Utfall:** λ = 0,02 valdes på veck 0 och klarade den låsta planen på veck 1–4: dok5 252 av 361 (textmodel-18: 249),
+  2 säkra fel (förut 4), hårda masker oförändrade. Lagret är på i appen.
+- **Försöken att bygga vidare, alla under egna låsta planer och alla negativa (avstängda):** variantkvoten (tm20,
+  2026-10-27, noll vunna och noll förlorade ord), trigram (tm21, 2026-10-30, hela ord +16 vunna mot −22 förlorade) och
+  litteraturlexikonet (tm22, 2026-11-01, netto −2). Se `utdata/runlm_forfining/`.
 - Underlag: `utdata/runlm_forfining/tolerans_diagnos.md` (rank-null-missar = obelagda stavningsvarianter).
 - **Kod:** `src/runlm.py`: ett toleranslager som vid rankning accepterar belagda stavningsalternativ per lemma
   (ur ordförrådet, inte påhittade), med vikt som kalibreras.
@@ -115,7 +121,12 @@ uppdateras i samma commit som koden, publicerade artiklar patchas bara via Fires
 - Mall `utdata/<spår>/analysplan.md` + `analysis_plan.sha256` (som Rak-studien). Krav i METHODS 1x: varje artikel
   som gör ett nytt anspråk hänvisar till sin plan och dess hash. Började med toleranslagret (1.4).
 
-### 3.5 Okända ristare: litteraturkontroll  (Viktor)
+### 3.5 Okända ristare: litteraturkontroll  — DELVIS KLAR 2026-10-29
+- **Gjort:** SRI II, IV och V samt Källström 2007 lästa; litteraturen visas i appen (`data/carver_literature.json`,
+  kolumnen Litteraturen). Slutsats: grupperna är skrivmiljöer, inte bevisade ristare. Artikeln publicerades
+  2026-10-30 som "Ristarna som aldrig blev ihågkomna" (utkastet dDmQwPlDWG7r8rDluslo).
+- **Oläst:** Varenius, Gustavson & Agertz 2002 (Jönköpings län, viktig för Vetlanda) och Kitzler Åhfeldt 2002.
+- Ursprunglig punkt:
 - De fem robusta grupperna (Konungsund, Vetlanda, Leksberg, Husaby, Kölaby) mot Sveriges runinskrifter och
   Östergötlands/Västergötlands runinskrifter. Resultatet in i artikelutkastet `zHgKo0HEjEJPmpooUXpq` innan publicering.
 
@@ -144,7 +155,11 @@ känd/okänd …) och *drag B* eller *plats/tid* (landskap, härad, epok), och f
 
 ## Fas 4 – Användbar för andra
 
-### 4.1 Så gör du-serien  — PÅGÅR: huggspår (nUU578Mmm1BIuq3dZBUv) och inskrifter/luckor (3Uc5chZvfRUCViMpqTwt) forskningsluckor (Y25XTQKplbCbg69mf2ze) och statistik i R som utkast 2026-10-20; kvar: Stenrapport, Syntes (kräver inloggat projekt)
+### 4.1 Så gör du-serien  — PAUSAD 2026-10-22
+- De fyra utkasten (huggspår, inskrifter, forskningsluckor, statistik i R) raderades ur Firestore på Viktors begäran
+  ("inte riktigt nöjd med dem än"). Säkerhetskopior i `/Volumes/2TB/cache/raderade_utkast/`; byggskripten och
+  skärmbilderna finns kvar. Byggs om (på svenska och engelska) först när Viktor ber om det. Stenrapport och Syntes
+  är inte påbörjade (kräver inloggat projekt).
 - Ordning: Inskrifter (sök, filter, stenöversikt) → Forskningsluckor → Statistik i R (läsa en modul) →
   Stenrapport (från mätning till Word) → Syntes.
 - Varje: `utdata/blogg/build/howto_<namn>_bilder.py` (Playwright, dev-servrar igång) +
@@ -154,12 +169,19 @@ känd/okänd …) och *drag B* eller *plats/tid* (landskap, härad, epok), och f
 - `examples/so128/`: skanningen (länk till Zenodo, inte filen), signum, kommandot till
   `scripts/full_stone_analysis.py`, den färdiga rapporten som Markdown. README-avsnitt "Kör på tio minuter".
 
-### 4.3 Citera Vitki och DOI  (när Viktor säger att utvecklingen är klar)
+### 4.3 Citera Vitki och DOI  — KLAR 2026-11-06 (Vitki 3.1.0)
+- DOI 10.5281/zenodo.24004432 (alla versioner: 10.5281/zenodo.24004431) i README, CITATION.cff, `src/about.py`,
+  bristlistan och citeringen på startsidan. Zenodo arkiverar nu varje GitHub-release automatiskt, så ingen release
+  skapas utan Viktors klartecken.
+- **Avvikelse från punkten:** protokollet låstes inte. Det heter fortfarande `vitki-groove-1-utkast` tills
+  valideringarna i PROTOCOL.md P7 är gjorda.
+- **Kvar för Viktor:** de elva forskningsrapporterna ligger som opublicerade utkast på Zenodo och väntar på Publish.
+- Ursprunglig punkt:
 - `RELEASING.md` följs: låst protokollversion (`src/protocol.py` → `vitki-groove-1`), CITATION.cff, Zenodo-DOI.
   Lägg DOI i bristposten `software` och på startsidan.
 
 ### 4.4 Löpande
-- Bing Webmaster (Viktor), IndexNow-ping vid publicering (finns, kontrollera att den körs).
+- Bing Webmaster (Viktor). IndexNow-pingen körs från site.yml efter varje publicering sedan 2026-10-26 (2d5e93d, cbebfc0).
 - Statistikrutorna: kontrollera i Admin efter en vecka att sökningar, delningar och utgående länkar kommer in.
 
 ---
@@ -202,19 +224,28 @@ Varje par av angränsande gamla land × varje drag: skarp vid gränsen eller gra
 
 Tillkommet 2026-10-27: Alla samband i landskapet förklaras i ord (82f292f), stenanalysens signum (69c26d0),
 runutsnitt vrids och jämförs med ristare och mellan två stenar (e555a67), referensbiblioteket för runformer
-(2d92592, byggs av Viktor), CI grönt på Node 24 (8af49d8). Öppet: stenanalyssidan stänger sig själv i Playwrights
-testverktyg (inte i ett vanligt skript), orsak inte hittad.
+(2d92592, byggs av Viktor), CI grönt på Node 24 (8af49d8).
+
+Löst 2026-11-07: stenanalyssidan "stängde sig själv" i Playwrights testverktyg. Det var webbläsaren som avslutades.
+Sidan ritar på en canvas, vilket startar Chromiums GPU-process. Under `playwright test` på macOS dör den direkt
+("Invalid file descriptor to ICU data", exit code 5). Efter sex försök avslutar Chromium hela webbläsaren ("GPU
+process isn't usable. Goodbye."). Även en tom sida med en 2D-canvas fäller den. Vanliga skript i Python och Node
+med samma webbläsarbygge drabbas inte; varför bara testverktyget gör det är inte utrett. Åtgärd: `--in-process-gpu` i
+`web/playwright.config.ts`, och ett rökprov för /stenanalys som faller utan flaggan.
 
 Kräver Viktor och står därför inte i listan: granskning av fler slingor, facit (1.1), test–omtest (1.2),
-litteraturkontroll (3.5), DOI (4.3), beslut om runläsaren och om K-samsöks AI-tolkning, Så gör du för Stenrapport
+litteraturkontroll (3.5, det olästa), publicering av rapporterna på Zenodo (4.3), beslut om runläsaren och om K-samsöks AI-tolkning, Så gör du för Stenrapport
 och Syntes (inloggat projekt) och all publicering.
 
 ## Väntande beslut som planen behöver från Viktor
 1. ~~Stilbedömningen~~ – beslutat 2026-10-20: bort.
 2. ~~Egen läsning~~ – beslutat: fält i Syntes (A).
 3. ~~AI-text~~ – beslutat: tillval.
-4. Vilka utkast som publiceras först: Hávamál, Möjliga ristare utan namn (efter 3.5), Så gör du: huggspår,
-   Runorna som fattas → därefter Malt.
+4. ~~Publiceringsordningen~~ – avgjord: Malt (14/10), Runorna som fattas (18/10), Hávamál (21/10) och ristarartikeln
+   (30/10) är publicerade; Så gör du-utkasten raderades (4.1).
+5. Bygdsmodellen (K3) för små ristare trots att den föll på regeln i attribueringsplanen v3.
+6. Typetikett för de atmosfäriska artiklarna (De gamla landen).
+7. Ornamentkodningen (Gräslunds huvud- och svanstyper) – pausad tills Viktor tar upp den igen.
 
 ## Vad som INTE ska göras
 - Inga nya AI-funktioner. Ingen funktion utan ett test den kan misslyckas på.
