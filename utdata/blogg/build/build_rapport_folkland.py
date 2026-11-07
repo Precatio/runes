@@ -1,5 +1,6 @@
-"""Forskningsrapport (låst mall utdata/rapporter/MALL.md, version 4; Fullt prövat fynd): "Upplands folkland skiljer
-runstenarna åt mer än 997 av 999 slumpvisa indelningar av samma härader" (sv + en). Siffrorna låses mot
+"""Forskningsrapport (låst mall utdata/rapporter/MALL.md, version 4; Fullt prövat fynd): "Runstenarna skiljer sig över
+Upplands folklandsgränser – dubbelt så mycket som över slumpvisa gränser genom samma bygder" (sv + en; rubriken bytt
+2026-11-07 från "… mer än 997 av 999 slumpvisa indelningar av samma härader", samma rapportversion). Siffrorna låses mot
 utdata/gamla_granser/monster.json (plan analysplaner/2026-11-02-gamla-granser-nya-monster.md, sha 054c87d5, avvikelse 1
 f0a42169), monster_trappa.json (tilläggsplan e31f2fd1), monster_kanslighet.json, monster_drag.json,
 utdata/granser/gransskannern.json (plan 7d22ff40), utdata/folkland/at_ristare.json (plan c4c4f5ba) och
@@ -307,8 +308,10 @@ assert (RECS["U 1177"]["parish"], RECS["U 181"]["parish"], RECS["U 749"]["parish
 assert (SL["U 1177"], SL["U 181"], SL["U 749"], SL["U 974"]) == ("tiundaland", "attundaland", "fjadrundaland", "tiundaland")
 
 SLUG = "upplands-folkland-skiljer-runstenarna"
-title = f"Upplands folkland skiljer runstenarna åt mer än {999 - N_GE} av 999 slumpvisa indelningar av samma härader"
-title_en = f"Uppland's folklands separate the runestones more than {999 - N_GE} of 999 random divisions of the same hundreds"
+# "dubbelt så mycket": the real sum against the median of the random divisions (RATIO, asserted to round to 2)
+title = "Runstenarna skiljer sig över Upplands folklandsgränser – dubbelt så mycket som över slumpvisa gränser genom samma bygder"
+title_en = "Uppland's runestones differ across the old folkland borders – twice as much as across random borders through the same districts"
+assert round(RATIO) == 2
 CITE_EN = (f"Kvant, V. ({TODAY[:4]}). {title_en}. Research report, report version {REPORT_VERSION}; analysis in Vitki "
            f"{APP_VERSION}. {SITE}/en/forskningsrapporter/{SLUG}")
 summary = ("Gränserna mellan Upplands gamla folkland – Tiundaland, Attundaland, Fjädrundaland och kustlandet Roden – "
