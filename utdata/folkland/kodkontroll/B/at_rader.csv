@@ -1,0 +1,511 @@
+signum,land,period,border,parish,carver,prep_at
+U 14,attundaland,1010–1040,0,Munsö sn,,1
+U 22,attundaland,odaterad,0,Färentuna sn,,0
+U 31,attundaland,odaterad,0,Hilleshögs sn,,1
+U 32,attundaland,1010–1040,0,Sånga sn,,1
+U 34,attundaland,1010–1040,0,Sånga sn,Balle,1
+U 35,attundaland,1010–1040,0,Sånga sn,,1
+U 36,attundaland,1070–,0,Sånga sn,Öpir 1,0
+U 37,attundaland,1010–1040,0,Sånga sn,Torbjörn skald,0
+U 40,attundaland,1040–1070,0,Skå sn,,1
+U 42,attundaland,1070–,0,Skå sn,,0
+U 43,attundaland,1040–1070,0,Skå sn,Ärnfast,1
+U 44,attundaland,1070–,0,Skå sn,Snare,0
+U 46,attundaland,odaterad,0,Lovö sn,,0
+U 47,attundaland,1040–1070,0,Lovö sn,Ärnfast,1
+U 48,attundaland,1070–,0,Lovö sn,,1
+U 50,attundaland,odaterad,0,Lovö sn,,0
+U 51,attundaland,1040–1070,0,Lovö sn,Ärnfast,1
+U 57,attundaland,1040–1070,0,Stockholm,,0
+U 60,attundaland,odaterad,0,Stockholm,,0
+U 61,attundaland,–1010,0,Spånga sn,Gunnar,0
+U 62,attundaland,1040–1070,0,Spånga sn,Fot 2,0
+U 69,attundaland,–1010,0,Spånga sn,Gunnar,0
+U 70,attundaland,1010–1040,0,Spånga sn,Torbjörn skald,0
+U 72,attundaland,1040–1070,0,Spånga sn,Visäte,0
+U 73,attundaland,1040–1070,0,Spånga sn,Visäte,0
+U 74,attundaland,1040–1070,0,Spånga sn,Visäte,0
+U 75,attundaland,1070–,0,Spånga sn,Visäte,0
+U 77,attundaland,1070–,0,Spånga sn (nu Sundbyberg),,0
+U 78,attundaland,1070–,0,Spånga sn (nu Sundbyberg),Öpir 1,0
+U 79,attundaland,1040–1070,0,Spånga sn,Ärnfast,1
+U 82,attundaland,odaterad,0,Järfälla sn,,0
+U 87,attundaland,odaterad,0,Järfälla sn,,1
+U 88,attundaland,odaterad,0,Järfälla sn,,1
+U 89,attundaland,1010–1040,0,Järfälla sn,,0
+U 92,attundaland,–1010,0,Järfälla sn,,0
+U 94,attundaland,odaterad,0,Sollentuna sn,,0
+U 95,attundaland,–1010,0,Sollentuna sn,,0
+U 97,attundaland,odaterad,0,Sollentuna sn,Kättil 2,0
+U 98,attundaland,odaterad,0,Sollentuna sn,,0
+U 100,attundaland,1070–,0,Sollentuna sn,,1
+U 103,attundaland,1010–1040,0,Sollentuna sn,Gunnar,0
+U 104,attundaland,1070–,0,Eds sn,Öpir 1,0
+U 106,attundaland,odaterad,0,Eds sn,,1
+U 107,attundaland,odaterad,0,Eds sn,,0
+U 108,attundaland,odaterad,0,Eds sn,,0
+U 109,attundaland,odaterad,0,Eds sn,,0
+U 117,attundaland,1070–,0,Eds sn,Öpir 1,0
+U 118,attundaland,1070–,0,Eds sn,Öpir 1,0
+U 180,attundaland,odaterad,0,Össeby-Garns sn,Visäte,0
+U 181,attundaland,1070–,0,Össeby-Garns sn,Öpir 1,0
+U 182,attundaland,1070–,0,Össeby-Garns sn,,0
+U 183,attundaland,odaterad,0,Össeby-Garns sn,Öpir 1,0
+U 186,attundaland,1010–1040,0,Össeby-Garns sn,,0
+U 188,attundaland,1010–1040,0,Össeby-Garns sn,Gunnar,1
+U 189,attundaland,odaterad,0,Össeby-Garns sn,Gunnar,0
+U 190,attundaland,1070–,0,Össeby-Garns sn,Samma som gjort U 509. Torsten,0
+U 194,attundaland,1040–1070,0,Össeby-Garns sn,,0
+U 195,attundaland,1070–,0,Össeby-Garns sn,Öpir 1,0
+U 200,attundaland,–1010,0,Vada sn,Gunnar,1
+U 201,attundaland,1010–1040,0,Angarns sn,Gunnar,0
+U 203,attundaland,1040–1070,0,Angarns sn,,0
+U 204,attundaland,1010–1040,0,Angarns sn,,0
+U 207,attundaland,1040–1070,0,Angarns sn,Visäte,0
+U 211,attundaland,1070–,0,Angarns sn,,0
+U 214,attundaland,–1010,0,Vallentuna sn,Drosboe,0
+U 215,attundaland,odaterad,0,Vallentuna sn,,0
+U 225,attundaland,–1010,0,Vallentuna sn,Gunnar,1
+U 227,attundaland,1070–,0,Vallentuna sn,,0
+U 229,attundaland,1070–,0,Vallentuna sn,Öpir 1,1
+U 231,attundaland,1070–,0,Vallentuna sn,Öpir 1,0
+U 232,attundaland,1070–,0,Vallentuna sn,Öpir 1,0
+U 233,attundaland,1070–,0,Vallentuna sn,Öpir 1,1
+U 235,attundaland,–1010,0,Vallentuna sn,,0
+U 236,attundaland,1040–1070,0,Vallentuna sn,Visäte,0
+U 238,attundaland,1040–1070,0,Vallentuna sn,Visäte,0
+U 240,attundaland,1040–1070,0,Vallentuna sn,Åsmund,0
+U 241,attundaland,1040–1070,0,Vallentuna sn,Åsmund,0
+U 243,attundaland,1040–1070,0,Vallentuna sn,Visäte,0
+U 245,attundaland,1040–1070,0,Vallentuna sn,Visäte,0
+U 247,attundaland,odaterad,0,Vallentuna sn,Sven 1,0
+U 252,attundaland,1070–,0,Fresta sn,Öpir 1,0
+U 253,attundaland,odaterad,0,Fresta sn,,0
+U 256,attundaland,1040–1070,0,Fresta sn,Fot 2,0
+U 258,attundaland,–1010,0,Fresta sn,Gunnar,0
+U 259,attundaland,1070–,0,Fresta sn,,1
+U 263,attundaland,odaterad,0,Fresta sn,,1
+U 267,attundaland,1070–,0,Fresta sn,Fot 2,0
+U 269,attundaland,1070–,0,Fresta sn,Fot 2,0
+U 270,attundaland,odaterad,0,Fresta sn,,1
+U 274,attundaland,odaterad,0,Hammarby sn,,0
+U 275,attundaland,1070–,0,Hammarby sn,,0
+U 276,attundaland,1010–1040,0,Hammarby sn,,0
+U 277,attundaland,odaterad,0,Hammarby sn,Öpir 1,0
+U 279,attundaland,1070–,0,Hammarby sn,Öpir 1,1
+U 281,attundaland,1070–,0,Hammarby sn,,0
+U 283,attundaland,odaterad,0,Hammarby sn,Fot 2,0
+U 285,attundaland,1070–,0,Hammarby sn,Fot 2,0
+U 286,attundaland,1070–,0,Hammarby sn,Fot 2,0
+U 287,attundaland,1070–,0,Hammarby sn,Öpir 1,1
+U 288,attundaland,1070–,0,Hammarby sn,Öpir 1,0
+U 289,attundaland,1040–1070,0,Hammarby sn,,0
+U 293,attundaland,odaterad,0,Hammarby sn,Visäte,0
+U 294,attundaland,odaterad,0,Hammarby sn,,0
+U 295,attundaland,1070–,0,Skånela sn,,0
+U 296,attundaland,odaterad,0,Skånela sn,,0
+U 297,attundaland,1070–,0,Skånela sn,,0
+U 300,attundaland,odaterad,0,Skånela sn,Fot 2,0
+U 304,attundaland,odaterad,0,Skånela sn,,0
+U 313,attundaland,1040–1070,0,Skånela sn,-fast,0
+U 314,attundaland,odaterad,0,Skånela sn,-fast,1
+U 315,attundaland,1070–,0,Skånela sn,Öpir 1,0
+U 317,attundaland,odaterad,0,Skånela sn,,0
+U 319,attundaland,–1010,0,Skånela sn,Gunnar,0
+U 321,attundaland,1070–,0,Skånela sn,Sven 1,0
+U 322,attundaland,odaterad,0,Skånela sn,Åsmund,0
+U 323,attundaland,–1010,0,Skånela sn,Gunnar,1
+U 324,attundaland,1010–1040,0,Skånela sn,,0
+U 325,attundaland,1070–,0,Markims sn,Torsten,0
+U 326,attundaland,1010–1040,0,Markims sn,Gunnar,0
+U 327,attundaland,–1010,0,Markims sn,Gunnar,0
+U 328,attundaland,1010–1040,0,Markims sn,,0
+U 329,attundaland,1040–1070,0,Markims sn,Fot 2,0
+U 330,attundaland,1040–1070,0,Markims sn,Fot 2,0
+U 332,attundaland,odaterad,0,Markims sn,,1
+U 333,attundaland,1040–1070,0,Orkesta sn,Visäte,0
+U 334,attundaland,1070–,0,Orkesta sn,Kättil 3,0
+U 335,attundaland,1010–1040,0,Orkesta sn,,0
+U 336,attundaland,–1010,0,Orkesta sn,,0
+U 338,attundaland,–1010,0,Orkesta sn,Gunnar,1
+U 341,attundaland,–1010,0,Orkesta sn,Gunnar,0
+U 342,attundaland,odaterad,0,Orkesta sn,,0
+U 343,attundaland,odaterad,0,Orkesta sn,Åsmund,0
+U 345,attundaland,odaterad,0,Orkesta sn,,0
+U 346,attundaland,odaterad,0,Frösunda sn,Åsmund,0
+U 349,attundaland,–1010,0,Frösunda sn,Gunnar,0
+U 352,attundaland,1070–,0,Frösunda sn,Torsten,0
+U 353,attundaland,odaterad,0,Lunda sn,Sune,0
+U 354,attundaland,1010–1040,0,Lunda sn,,0
+U 356,attundaland,1040–1070,0,Lunda sn,Åsmund,0
+U 357,attundaland,1070–,0,Skepptuna sn,Åsmund,0
+U 358,attundaland,–1010,0,Skepptuna sn,Gunnar,0
+U 361,attundaland,odaterad,0,Skepptuna sn,,1
+U 362,attundaland,odaterad,0,Skepptuna sn,,0
+U 367,attundaland,odaterad,0,Skepptuna sn,Åsmund,0
+U 373,attundaland,1040–1070,0,Skepptuna sn,,0
+U 374,attundaland,odaterad,0,Skepptuna sn,Åsmund,0
+U 375,attundaland,1010–1040,0,Vidbo sn,,0
+U 376,attundaland,1070–,0,Vidbo sn,,0
+U 377,attundaland,1070–,0,Vidbo sn,Sven 1,0
+U 379,attundaland,odaterad,1,Sigtuna,,0
+U 384,attundaland,odaterad,1,Sigtuna,,0
+U 385,attundaland,odaterad,1,Sigtuna,Torbjörn 2,0
+U 390,attundaland,1010–1040,1,Sigtuna,Fot 2,1
+U 393,attundaland,odaterad,1,Sigtuna,Visäte,0
+U 394,attundaland,odaterad,1,Sigtuna,Torbjörn 2,0
+U 403,attundaland,odaterad,1,Sigtuna,,0
+U 409,attundaland,1040–1070,1,Sankt Olovs sn (Sankt Olof) (nu Odensala sn),,0
+U 411,attundaland,1070–,1,Sankt Olovs sn (Sankt Olof),,0
+U 418,attundaland,1040–1070,0,Norrsunda sn,,0
+U 419,attundaland,1010–1040,0,Norrsunda sn,,0
+U 420,attundaland,odaterad,0,Norrsunda sn,Fot 2,0
+U 421,attundaland,odaterad,0,Norrsunda sn,,0
+U 422,attundaland,odaterad,0,Norrsunda sn,,0
+U 423,attundaland,1040–1070,0,Norrsunda sn,Åsmund,0
+U 424,attundaland,odaterad,0,Norrsunda sn,,0
+U 425,attundaland,odaterad,0,Norrsunda sn,,0
+U 426,attundaland,1010–1040,0,Norrsunda sn,,0
+U 428,attundaland,1040–1070,0,Norrsunda sn,Fot 2,0
+U 429,attundaland,odaterad,0,Norrsunda sn,,0
+U 430,attundaland,1010–1040,0,Norrsunda sn,,0
+U 431,attundaland,1010–1040,0,Norrsunda sn,Åsmund,0
+U 433,attundaland,odaterad,0,Husby-Ärlinghundra sn,,0
+U 436,attundaland,odaterad,0,Husby-Ärlinghundra sn,,0
+U 437,attundaland,odaterad,0,Husby-Ärlinghundra sn,,0
+U 438,attundaland,odaterad,0,Husby-Ärlinghundra sn,Åsmund,0
+U 439,attundaland,1010–1040,0,Husby-Ärlinghundra sn,Äskil 2,1
+U 443,attundaland,odaterad,0,Odensala sn,,0
+U 444,attundaland,1010–1040,0,Odensala sn,,1
+U 445,attundaland,1070–,0,Odensala sn,Fot 2,1
+U 447,attundaland,odaterad,0,Odensala sn,,0
+U 448,attundaland,odaterad,0,Odensala sn,Fot 2,0
+U 453,attundaland,1040–1070,0,Odensala sn,Visäte,0
+U 454,attundaland,1040–1070,0,Odensala sn,Visäte,0
+U 455,attundaland,1070–,0,Odensala sn,Fot 2,1
+U 456,attundaland,odaterad,0,Odensala sn,,1
+U 457,attundaland,1010–1040,1,Haga sn,Torbjörn 2,0
+U 459,attundaland,1010–1040,1,Haga sn,Arbjörn,0
+U 460,attundaland,1070–,1,Haga sn,,0
+U 461,attundaland,1010–1040,1,Haga sn,,1
+U 462,attundaland,odaterad,1,Vassunda sn,Öpir 1,1
+U 463,attundaland,1070–,1,Vassunda sn,,1
+U 464,attundaland,odaterad,1,Vassunda sn,Fot 2,0
+U 465,attundaland,odaterad,1,Vassunda sn,,0
+U 470,attundaland,odaterad,1,Knivsta sn,Torbjörn 2,0
+U 471,attundaland,1040–1070,1,Knivsta sn,Fot 2,0
+U 472,attundaland,odaterad,1,Knivsta sn,Fot 2,0
+U 474,attundaland,1010–1040,1,Knivsta sn,Torbjörn 2,0
+U 476,attundaland,odaterad,1,Knivsta sn,,0
+U 478,attundaland,1010–1040,1,Knivsta sn,Torbjörn 2,0
+U 479,attundaland,1010–1040,1,Alsike sn,Ulvkell,0
+U 480,attundaland,1040–1070,1,Alsike sn,Fot 2,0
+U 481,attundaland,1070–,1,Lagga sn,Fot 2,0
+U 482,attundaland,odaterad,1,Lagga sn,,1
+U 484,attundaland,1010–1040,1,Lagga sn,,1
+U 485,attundaland,1070–,1,Lagga sn,,1
+U 490,attundaland,–1010,1,Lagga sn,Gunnar,0
+U 492,attundaland,1070–,1,Lagga sn,,0
+U 494,attundaland,odaterad,0,Husby-Långhundra sn,,0
+U 498,attundaland,odaterad,0,Husby-Långhundra sn,,0
+U 500,attundaland,1070–,0,Gottröra sn,Öpir 1,0
+U 503,attundaland,odaterad,0,Närtuna sn,Visäte,0
+U 504,attundaland,–1010,0,Närtuna sn,Gunnar,0
+U 505,attundaland,odaterad,0,Kårsta sn,,0
+U 506,attundaland,odaterad,0,Kårsta sn,,0
+U 508,attundaland,–1010,0,Kårsta sn,Gunnar,0
+U 510,attundaland,1070–,0,Kårsta sn,,1
+U 511,attundaland,1070–,0,Kårsta sn,Visäte,0
+U 512,attundaland,–1010,0,Fasterna sn,Gunnar,1
+U 513,attundaland,1010–1040,0,Rimbo sn,Torbjörn skald,0
+U 514,attundaland,1070–,0,Rimbo sn,,0
+U 515,attundaland,1070–,0,Rimbo sn,Torsten,0
+U 517,attundaland,1010–1040,0,Skederids sn,Torbjörn skald,0
+U 518,attundaland,–1010,0,Skederids sn,Gunnar,0
+U 519,attundaland,1010–1040,0,Skederids sn,þuliR,0
+U 539,attundaland,–1010,0,Husby-Lyhundra sn (nu Husby-Sjuhundra),Gunnar,0
+U 565,attundaland,odaterad,0,Malsta sn,Öpir 1,1
+U 568,attundaland,odaterad,0,Lohärads sn,,0
+U 570,attundaland,1040–1070,0,Lohärads sn,,0
+U 572,attundaland,1070–,0,Lohärads sn,,0
+U 578,attundaland,odaterad,0,Estuna sn,,1
+U 579,attundaland,1010–1040,0,Estuna sn,Vidbjörn,0
+U 580,attundaland,odaterad,0,Estuna sn,Vidbjörn,0
+U 582,attundaland,odaterad,1,Söderby-Karls sn,,0
+U 585,attundaland,odaterad,1,Söderby-Karls sn,,1
+U 586,tiundaland,–1010,0,Edsbro sn,Gunnar,0
+U 590,tiundaland,odaterad,0,Knutby sn,Östen 2,0
+U 592,tiundaland,odaterad,0,Knutby sn,,0
+U 604,attundaland,1070–,0,Stockholms-Näs sn (nu Kungsängen),,0
+U 611,attundaland,1010–1040,1,Västra Ryds sn,,0
+U 613,attundaland,odaterad,1,Västra Ryds sn,Visäte,0
+U 614,attundaland,1040–1070,1,Västra Ryds sn,Visäte,0
+U 616,attundaland,1010–1040,1,Västra Ryds sn,,0
+U 617,attundaland,–1010,1,Bro sn,Gunnar,0
+U 618,attundaland,1070–,1,Bro sn,Öpir 1,0
+U 619,attundaland,1070–,1,Bro sn,,0
+U 621,attundaland,1010–1040,1,Bro sn,Visäte,0
+U 622,attundaland,odaterad,1,Bro sn,Visäte,0
+U 623,attundaland,1010–1040,1,Bro sn,,0
+U 624,attundaland,1070–,1,Bro sn,,0
+U 627,tiundaland,odaterad,1,Håbo-Tibble sn,,0
+U 628,tiundaland,odaterad,1,Håbo-Tibble sn,Fot 2,1
+U 629,tiundaland,1040–1070,1,Håbo-Tibble sn,Torfast,0
+U 630,tiundaland,1010–1040,1,Håbo-Tibble sn,Arbjörn,0
+U 631,tiundaland,odaterad,1,Kalmar sn,,0
+U 633,tiundaland,odaterad,1,Kalmar sn,,0
+U 635,tiundaland,1070–,1,Kalmar sn,,1
+U 636,tiundaland,1010–1040,1,Kalmar sn,,1
+U 637,tiundaland,1010–1040,1,Kalmar sn,,0
+U 640,tiundaland,1040–1070,1,Kalmar sn,Fot 2,0
+U 641,tiundaland,1040–1070,0,Yttergrans sn (nu Övergrans sn),Fot 2,0
+U 642,tiundaland,1070–,0,Yttergrans sn,Fot 2,0
+U 643,tiundaland,1070–,0,Yttergrans sn,,0
+U 644,tiundaland,1010–1040,0,Yttergrans sn,,0
+U 646,tiundaland,odaterad,0,Yttergrans sn,Arbjörn,0
+U 647,tiundaland,odaterad,0,Övergrans sn,Balle,1
+U 648,tiundaland,1070–,0,Övergrans sn,,0
+U 649,tiundaland,1010–1040,0,Övergrans sn,,0
+U 650,tiundaland,odaterad,0,Övergrans sn,Balle,1
+U 651,tiundaland,1010–1040,0,Övergrans sn,Arbjörn,1
+U 652,tiundaland,1010–1040,0,Övergrans sn,Arbjörn,1
+U 653,tiundaland,odaterad,0,Övergrans sn,Arbjörn,1
+U 654,tiundaland,1010–1040,0,Övergrans sn,,0
+U 656,tiundaland,1010–1040,1,Håtuna sn,,0
+U 657,tiundaland,1010–1040,1,Håtuna sn,,1
+U 658,tiundaland,odaterad,1,Håtuna sn,,1
+U 659,tiundaland,1010–1040,1,Håtuna sn,,0
+U 661,tiundaland,1010–1040,1,Håtuna sn,,0
+U 662,tiundaland,1010–1040,1,Håtuna sn,,0
+U 663,tiundaland,odaterad,1,Håtuna sn,,0
+U 665,tiundaland,1010–1040,1,Häggeby sn,,1
+U 669,tiundaland,1070–,1,Häggeby sn,,0
+U 670,tiundaland,odaterad,1,Häggeby sn,,0
+U 671,tiundaland,1010–1040,1,Häggeby sn,,1
+U 674,tiundaland,odaterad,1,Häggeby sn,Fot 2,0
+U 676,tiundaland,1010–1040,1,Häggeby sn,Arbjörn,0
+U 678,tiundaland,–1010,1,Skoklosters sn,Fot 2,1
+U 679,tiundaland,1010–1040,1,Skoklosters sn,,0
+U 681,tiundaland,odaterad,1,Skoklosters sn,,0
+U 682,tiundaland,odaterad,1,Skoklosters sn,Arbjörn,1
+U 684,tiundaland,1070–,1,Skoklosters sn,Öpir 1,1
+U 685,tiundaland,1010–1040,1,Skoklosters sn,,0
+U 686,tiundaland,1010–1040,1,Skoklosters sn,,1
+U 688,tiundaland,odaterad,1,Skoklosters sn,Arbjörn,1
+U 689,tiundaland,1010–1040,1,Skoklosters sn,Arbjörn,0
+U 840,tiundaland,1070–,1,Dalby sn,Öpir 1,0
+U 842,tiundaland,1070–,1,Dalby sn,Öpir 1,1
+U 843,tiundaland,odaterad,1,Dalby sn,,0
+U 844,tiundaland,1070–,1,Dalby sn,Fot 2,1
+U 845,tiundaland,1010–1040,1,Dalby sn,Arbjörn,0
+U 846,tiundaland,odaterad,1,Västeråkers sn,Åsmund,0
+U 851,tiundaland,1070–,0,Balingsta sn,,0
+U 854,tiundaland,1070–,0,Balingsta sn,,0
+U 855,tiundaland,odaterad,0,Balingsta sn,,1
+U 857,tiundaland,1010–1040,0,Balingsta sn,Erik,0
+U 859,tiundaland,1040–1070,0,Balingsta sn,Åsmund,0
+U 860,tiundaland,1040–1070,0,Balingsta sn,Åsmund,0
+U 861,tiundaland,odaterad,0,Balingsta sn,Öpir 1,1
+U 864,tiundaland,odaterad,0,Balingsta sn,Arbjörn,0
+U 865,tiundaland,odaterad,0,Balingsta sn,Arbjörn,0
+U 866,tiundaland,odaterad,0,Gryta sn,Åsmund,0
+U 867,tiundaland,odaterad,0,Gryta sn,Likbjörn,1
+U 871,tiundaland,1070–,0,Gryta sn,Åsmund,0
+U 873,tiundaland,1040–1070,0,Gryta sn,Balle,1
+U 874,tiundaland,odaterad,0,Hagby sn,Fot 2,1
+U 875,tiundaland,1040–1070,0,Hagby sn,Åsmund,0
+U 876,tiundaland,1010–1040,0,Hagby sn,,1
+U 878,tiundaland,1040–1070,0,Hagby sn,,0
+U 880,tiundaland,1070–,0,Skogstibble sn (nu Skogs-Tibble),Öpir 1,0
+U 881,tiundaland,odaterad,0,Skogstibble sn (nu Skogs-Tibble),,0
+U 885,tiundaland,1070–,0,Skogstibble sn (nu Skogs-Tibble),Åsmund,1
+U 886,tiundaland,1070–,0,Skogstibble sn (nu Skogs-Tibble),,0
+U 887,tiundaland,1070–,0,Skogstibble sn (nu Skogs-Tibble),Örik,0
+U 893,tiundaland,odaterad,1,Uppsala-Näs sn,Öpir 1,1
+U 894,tiundaland,1070–,1,Uppsala-Näs sn,,0
+U 895,tiundaland,1070–,0,Bondkyrka sn (nu Uppsala),,1
+U 899,tiundaland,1070–,0,Bondkyrka sn (nu Uppsala),Fot 2,0
+U 901,tiundaland,odaterad,0,Läby sn,,1
+U 903,tiundaland,odaterad,0,Läby sn,Åsmund,0
+U 904,tiundaland,1040–1070,0,Läby sn,,0
+U 905,tiundaland,odaterad,0,Vänge sn,Likbjörn,0
+U 906,tiundaland,1070–,0,Vänge sn,Öpir 1,1
+U 907,tiundaland,1070–,0,Vänge sn,Öpir 1,1
+U 908,tiundaland,1070–,0,Vänge sn,,1
+U 910,tiundaland,1070–,0,Vänge sn,,0
+U 911,tiundaland,odaterad,0,Vänge sn,,1
+U 912,tiundaland,odaterad,0,Börje sn,Grim skald,1
+U 913,tiundaland,1070–,0,Börje sn,Sven 4,0
+U 914,tiundaland,1070–,0,Börje sn,Öpir 1,1
+U 915,tiundaland,odaterad,0,Börje sn,Öpir 1,1
+U 917,tiundaland,1070–,0,Jumkils sn,,1
+U 918,tiundaland,1070–,0,Jumkils sn,Gudfast,0
+U 919,tiundaland,1070–,0,Jumkils sn,Tord,0
+U 920,tiundaland,odaterad,0,Jumkils sn,,0
+U 921,tiundaland,odaterad,0,Jumkils sn,Likbjörn,1
+U 922,tiundaland,1070–,0,Uppsala,Öpir 1,1
+U 923,tiundaland,odaterad,0,Uppsala,Likbjörn,0
+U 925,tiundaland,1070–,0,Uppsala,Öpir 1,1
+U 926,tiundaland,odaterad,0,Uppsala,Öpir 1,0
+U 929,tiundaland,odaterad,0,Uppsala,Ingulv,0
+U 931,tiundaland,odaterad,0,Uppsala,,0
+U 932,tiundaland,odaterad,0,Uppsala,,0
+U 933,tiundaland,1070–,0,Uppsala,Öpir 1,0
+U 937,tiundaland,1040–1070,0,Uppsala,Fot 2,0
+U 938,tiundaland,1070–,0,Uppsala,Öpir 1,1
+U 939,tiundaland,1070–,0,Uppsala,Öpir 1,1
+U 940,tiundaland,1040–1070,0,Uppsala,,0
+U 942,tiundaland,odaterad,0,Uppsala,Äsbjörn 2,0
+U 943,tiundaland,1010–1040,0,Uppsala,Erik,0
+U 944,tiundaland,odaterad,0,Uppsala,,0
+U 945,tiundaland,1040–1070,1,Danmarks sn,Fot 2,1
+U 946,tiundaland,odaterad,1,Danmarks sn,Grim skald,1
+U 948,tiundaland,1070–,1,Danmarks sn,,0
+U 949,tiundaland,odaterad,1,Danmarks sn,,0
+U 950,tiundaland,1070–,1,Danmarks sn,Öpir 1,1
+U 951,tiundaland,odaterad,1,Danmarks sn,Grim skald,1
+U 952,tiundaland,1070–,1,Danmarks sn,Öpir 1,1
+U 954,tiundaland,odaterad,1,Danmarks sn,,0
+U 955,tiundaland,odaterad,1,Danmarks sn,Fot 2,0
+U 957,tiundaland,odaterad,1,Danmarks sn,,1
+U 959,tiundaland,1070–,0,Vaksala sn,Öpir 1,1
+U 961,tiundaland,1070–,0,Vaksala sn,,1
+U 963,tiundaland,–1010,0,Vaksala sn,,0
+U 968,tiundaland,odaterad,0,Vaksala sn (nu Uppsala),,1
+U 970,tiundaland,1070–,0,Vaksala sn (nu Uppsala),Öpir 1,0
+U 971,tiundaland,1010–1040,0,Vaksala sn,Öpir 1,0
+U 974,tiundaland,1070–,0,Vaksala sn,Öpir 1,0
+U 977,tiundaland,odaterad,0,Vaksala sn,,1
+U 978,tiundaland,1010–1040,0,Gamla Uppsala sn (nu Uppsala),Erik,0
+U 980,tiundaland,odaterad,0,Gamla Uppsala sn (nu Uppsala),Fot 2,0
+U 982,tiundaland,odaterad,0,Gamla Uppsala sn (nu Uppsala),,0
+U 984,tiundaland,odaterad,0,Gamla Uppsala sn (nu Uppsala),Öpir 1,1
+U 985,tiundaland,odaterad,0,Gamla Uppsala sn (nu Uppsala),Öpir 1,0
+U 986,tiundaland,odaterad,0,Gamla Uppsala sn (nu Uppsala),Åsmund,0
+U 987,tiundaland,1040–1070,1,Funbo sn,Torfast,0
+U 990,tiundaland,1010–1040,1,Funbo sn,,1
+U 991,tiundaland,odaterad,1,Funbo sn,Fot 2,0
+U 992,tiundaland,1010–1040,1,Funbo sn,,1
+U 993,tiundaland,1070–,1,Funbo sn,,0
+U 996,tiundaland,1070–,1,Funbo sn,,0
+U 997,tiundaland,1070–,1,Funbo sn,,0
+U 999,tiundaland,1010–1040,1,Funbo sn,,1
+U 1003,tiundaland,odaterad,0,Rasbo sn,Åsmund,0
+U 1005,tiundaland,odaterad,0,Rasbo sn,,1
+U 1006,tiundaland,1070–,0,Rasbo sn,,0
+U 1007,tiundaland,1070–,0,Rasbo sn,Manne,0
+U 1008,tiundaland,1070–,0,Rasbo sn,,0
+U 1009,tiundaland,1040–1070,0,Rasbo sn,Åsmund,0
+U 1010,tiundaland,1070–,0,Rasbo sn,Manne,0
+U 1012,tiundaland,odaterad,0,Rasbokils sn,Åsmund,0
+U 1014,tiundaland,1070–,0,Ärentuna sn,Öpir 1,0
+U 1015,tiundaland,odaterad,0,Ärentuna sn,,0
+U 1016,tiundaland,odaterad,0,Ärentuna sn,,0
+U 1017,tiundaland,odaterad,0,Ärentuna sn,,0
+U 1018,tiundaland,1070–,0,Ärentuna sn,,0
+U 1019,tiundaland,1070–,0,Ärentuna sn,,0
+U 1022,tiundaland,1070–,0,Ärentuna sn,Öpir 1,0
+U 1023,tiundaland,odaterad,0,Ärentuna sn,,0
+U 1024,tiundaland,1070–,0,Ärentuna sn,,0
+U 1025,tiundaland,odaterad,0,Ärentuna sn,,0
+U 1026,tiundaland,1070–,0,Lena sn,,1
+U 1030,tiundaland,1070–,0,Lena sn,,1
+U 1031,tiundaland,odaterad,0,Lena sn,,1
+U 1032,tiundaland,1070–,0,Lena sn,,0
+U 1033,tiundaland,odaterad,0,Lena sn,,0
+U 1034,tiundaland,1070–,0,Tensta sn,Öpir 1,0
+U 1035,tiundaland,odaterad,0,Tensta sn,,0
+U 1036,tiundaland,1070–,0,Tensta sn,Öpir 1,0
+U 1038,tiundaland,odaterad,0,Tensta sn,Likbjörn,1
+U 1039,tiundaland,1070–,0,Tensta sn,,0
+U 1040,tiundaland,1070–,0,Tensta sn,,0
+U 1041,tiundaland,odaterad,0,Tensta sn,Ingulv,0
+U 1042,tiundaland,1070–,0,Tensta sn,,0
+U 1043,tiundaland,odaterad,0,Tensta sn,Åsmund,0
+U 1045,tiundaland,odaterad,0,Björklinge sn,,1
+U 1046,tiundaland,1070–,0,Björklinge sn,,0
+U 1047,tiundaland,1070–,0,Björklinge sn,,0
+U 1048,tiundaland,odaterad,0,Björklinge sn,,1
+U 1050,tiundaland,odaterad,0,Björklinge sn,,1
+U 1051,tiundaland,odaterad,0,Björklinge sn,,0
+U 1052,tiundaland,1070–,0,Björklinge sn,,0
+U 1053,tiundaland,odaterad,0,Björklinge sn,,0
+U 1056,tiundaland,1070–,0,Björklinge sn,,0
+U 1057,tiundaland,1070–,0,Björklinge sn,kahu,0
+U 1062,tiundaland,1070–,0,Viksta sn,Ingulv,0
+U 1063,tiundaland,1070–,0,Viksta sn,Öpir 1,0
+U 1065,tiundaland,1070–,0,Viksta sn,Ingulv,0
+U 1068,tiundaland,odaterad,0,Åkerby sn,,1
+U 1069,tiundaland,1070–,0,Åkerby sn,,0
+U 1070,tiundaland,1070–,0,Åkerby sn,Gudfast,0
+U 1074,tiundaland,odaterad,0,Bälinge sn,Likbjörn,1
+U 1075,tiundaland,odaterad,0,Bälinge sn,Ingulv,0
+U 1076,tiundaland,odaterad,0,Bälinge sn,Likbjörn,1
+U 1079,tiundaland,odaterad,0,Bälinge sn,Gudfast,0
+U 1080,tiundaland,odaterad,0,Bälinge sn,Öpir 1,0
+U 1081,tiundaland,odaterad,0,Bälinge sn,Likbjörn,1
+U 1084,tiundaland,1070–,0,Bälinge sn,Öpir 1,0
+U 1085,tiundaland,1070–,0,Bälinge sn,Öpir 1,0
+U 1086,tiundaland,1070–,0,Bälinge sn,Öpir 1,1
+U 1087,tiundaland,1070–,0,Bälinge sn,,0
+U 1089,tiundaland,1070–,0,Bälinge sn,Öpir 1,0
+U 1091,tiundaland,odaterad,0,Bälinge sn,Kjule,1
+U 1092,tiundaland,1070–,0,Bälinge sn,Kjule,1
+U 1094,tiundaland,1070–,0,Bälinge sn,,0
+U 1095,tiundaland,1070–,0,Bälinge sn,Likbjörn,1
+U 1096,tiundaland,1070–,0,Bälinge sn,Öpir 1,1
+U 1097,tiundaland,1070–,0,Bälinge sn,,0
+U 1098,tiundaland,odaterad,0,Bälinge sn,,0
+U 1102,tiundaland,1070–,0,Bälinge sn,Otvagen,0
+U 1104,tiundaland,1070–,0,Bälinge sn,,0
+U 1106,tiundaland,1070–,0,Bälinge sn,Öpir 1,1
+U 1107,tiundaland,1070–,0,Bälinge sn,,0
+U 1108,tiundaland,1070–,0,Skuttunge sn,,1
+U 1110,tiundaland,1070–,0,Skuttunge sn,,0
+U 1111,tiundaland,1070–,0,Skuttunge sn,Gudfast,0
+U 1114,tiundaland,odaterad,0,Skuttunge sn,,0
+U 1116,tiundaland,1070–,0,Skuttunge sn,Gudfast,0
+U 1118,tiundaland,1070–,0,Skuttunge sn,,1
+U 1119,tiundaland,1070–,0,Skuttunge sn,Gudfast,0
+U 1120,tiundaland,odaterad,0,Skuttunge sn,,0
+U 1122,tiundaland,1070–,0,Stavby sn,,1
+U 1123,tiundaland,odaterad,0,Tuna sn,Ödmund,0
+U 1127,tiundaland,1040–1070,0,Alunda sn,,0
+U 1129,tiundaland,odaterad,0,Alunda sn,,1
+U 1131,tiundaland,1070–,0,Alunda sn,Önjut,0
+U 1132,tiundaland,1070–,0,Skäfthammars sn,Ödmund,0
+U 1133,tiundaland,odaterad,0,Morkarla sn,,0
+U 1138,tiundaland,odaterad,0,Hållnäs sn,Åsmund,0
+U 1139,tiundaland,odaterad,0,Hållnäs sn,Fasttegn,0
+U 1140,tiundaland,1070–,0,Vendels sn,,1
+U 1142,tiundaland,odaterad,0,Vendels sn,,0
+U 1143,tiundaland,odaterad,0,Tierps sn,Tore,0
+U 1144,tiundaland,1040–1070,0,Tierps sn,Åsmund,0
+U 1145,tiundaland,odaterad,0,Tierps sn,Åsmund,0
+U 1146,tiundaland,1010–1040,0,Tolfta sn,,0
+U 1149,tiundaland,1010–1040,0,Älvkarleby sn,,0
+U 1176,tiundaland,1070–,0,Huddunge sn,Öpir 1,1
+U 1177,tiundaland,1070–,0,Harbo sn,Öpir 1,1
+U ATA322-4042-2009,attundaland,odaterad,0,Vallentuna sn,,0
+U Fv1948;168,attundaland,1070–,1,Alsike sn,Öpir 1,1
+U Fv1953;263,attundaland,1070–,0,Sollentuna sn,Igulfast,1
+U Fv1953;266,attundaland,1040–1070,0,Spånga sn,Snare,0
+U Fv1955;216,attundaland,1010–1040,1,Sankt Pers sn,,0
+U Fv1959;188,attundaland,1070–,0,Hammarby sn,,0
+U Fv1968;279B,attundaland,odaterad,0,Sollentuna sn,,0
+U Fv1972;172,attundaland,1070–,0,Hammarby sn,Visäte,0
+U Fv1972;271,tiundaland,odaterad,0,Uppsala,,0
+U Fv1974;203,tiundaland,odaterad,0,Björklinge sn,,0
+U Fv1975;169,attundaland,1070–,0,Orkesta sn,,0
+U Fv1976;104,tiundaland,odaterad,0,Uppsala,Likbjörn,1
+U Fv1976;107,tiundaland,1070–,0,Uppsala,Öpir 1,1
+U Fv1977;163,tiundaland,odaterad,0,Uppsala,,0
+U Fv1978;226,attundaland,1010–1040,0,Lunda sn,Sune,0
+U Fv1983;228,attundaland,1040–1070,1,Sankt Pers sn,Torbjörn 2,0
+U Fv1992;156,attundaland,odaterad,0,Husby-Ärlinghundra sn,,0
+U Fv1992;157,attundaland,1010–1040,0,Husby-Ärlinghundra sn,,1
+U Fv1992;169,tiundaland,–1010,1,Ununge sn,,0
+U Fv1993;231,attundaland,odaterad,0,Frösunda sn,,0
+U Fv1993;233,attundaland,odaterad,0,Hammarby sn,,0
+U Fv2009;312,attundaland,odaterad,0,Vallentuna sn,,1
+U NOR2003;23,attundaland,odaterad,0,Vada sn,Torsten,0

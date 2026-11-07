@@ -246,6 +246,11 @@ och Syntes (inloggat projekt) och all publicering.
 5. Bygdsmodellen (K3) för små ristare trots att den föll på regeln i attribueringsplanen v3.
 6. Typetikett för de atmosfäriska artiklarna (De gamla landen).
 7. Ornamentkodningen (Gräslunds huvud- och svanstyper) – pausad tills Viktor tar upp den igen.
+8. Prepositionsdraget (2026-11-07): regeln i `src/language_profile.py` räknar *at* bara framför ett namn och missar
+   minnesformelns *at* framför släktord ("… ok Fastlaug at bonda sinn"); aft/æft räknas som æftiR. Rättningen ändrar
+   korpusens fingeravtryck och kräver omkörning av folklandsprovet, gränsskannern och robusthetstrappan. Med rättad
+   kodning är *at*-gränsen OR 3,4 (p 0,017) i stället för 5,9 och klarar inte hela trappan
+   (`utdata/folkland/peterson1996_lasning.md`). Folklandsrapporten publiceras inte förrän detta är avgjort.
 
 ## Vad som INTE ska göras
 - Inga nya AI-funktioner. Ingen funktion utan ett test den kan misslyckas på.

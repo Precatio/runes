@@ -16,7 +16,9 @@ Låst tilläggsplan 2 `analysplaner/2026-11-01-folkland-at-trappa.md` (sha 1ffcb
 Valet mellan *at* och *æftiR* följer gränsen mellan Tiundaland och Attundaland ända fram till gränsen, med ristare, tid,
 utrymme, socken och flyttade stenar konstanta eller uteslutna, och utan att vila på något enskilt härad. Fyndet är fullt
 prövat inom de låsta planerna (folklandsplanen 48346775 och tilläggsplanerna c4c4f5ba och 1ffcb5c6). Kvar: att läsa
-Peterson 1996 innan vi säger att det är nytt.
+Peterson 1996 innan vi säger att det är nytt. **Läst 2026-11-07, se peterson1996_lasning.md: gränsen är inte
+beskriven där, men läsningen avslöjade att draget prep_at missar *at* framför släktord (15 stenar, 12 i Attundaland).
+Med rättad kodning: OR 3,4, p 0,017, och trappan håller inte längre helt (oflyttade p 0,053).**
 
 ## Litteratur (läst 2026-11-01): Palm 1992 har det regionala mönstret
 Palm, R. 1992. *Runor och regionalitet. Studier av variation i de nordiska minnesinskrifterna* (Runrön 7), avsnitt 6.2.5,
