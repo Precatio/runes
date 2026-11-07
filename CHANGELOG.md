@@ -11,6 +11,8 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   gropar grått; ett klick tar bort en fläck som inte är runa och ett nytt klick tar tillbaka den. Det bortklickade
   sparas i webbläsaren som punkter på modellen och följer med när reglaget flyttas. Ångra, ta tillbaka allt och
   nedladdning av bilden.
+- Ett andra klickläge (*Klick gör till spår*, eller Skift-klick) gör en grå fläck till spår när den hör till en runa;
+  den visas mörkt roströd. API:t tar emot punkterna som `added_json` bredvid `removed_json`.
 - `src/peel.py`, POST /api/3d/peel: samma referensyta som huggspårsmätningen (stängning 20 mm, som följer en välvd
   sten), djup vinkelrätt mot ytan, vittringsnivå per 60 mm-ruta, fläckar med etikettkarta. METHODS 2d2,
   `tests/test_peel.py`.

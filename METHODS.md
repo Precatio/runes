@@ -1320,8 +1320,11 @@ Det som blir kvar delas i sammanhängande fläckar (minst 3 mm²). Varje fläcks
 djupa som fläckens djupaste, under nivån) tunnas ut till ett skelett: en fläck vars kärna har minst 12 mm skelett
 (huggspårsanalysens kortaste runa) och en medelbredd högst en tredjedel av skelettets längd räknas som **spår** och
 färgas rostrött – den kan vara runa, ornament eller spricka. Resten är **gropar** (grå). Regeln avgör inte vad som är
-runa; det gör läsaren genom att klicka bort fläckar. Bortklickade fläckar sparas som punkter på 3D-modellen i
-webbläsaren (per skanning, efter SHA-256) och märker samma fläckar när reglaget flyttas. Ytan räknas med 0,67 mm per
+runa; det gör läsaren genom att klicka bort fläckar och, i det andra klickläget (eller med Skift-klick), göra en grå
+fläck till spår när den hör till en runa (mörkt rostrött; till exempel en ramslinga som vittringen har gjort till ett
+nätverk av gropar, som på Sö 128). Klicken sparas som punkter på 3D-modellen i webbläsaren (per skanning, efter SHA-256),
+i två listor (`removed_json`, `added_json`), och märker samma fläckar när reglaget flyttas; träffar båda listorna samma
+fläck gäller bortklickningen. Ytan räknas med 0,67 mm per
 cell på Sö 206 (högst 2 400 bildpunkter); första beräkningen tar några sekunder (ytan ur skanningen), varje ny reglageinställning några tiondels
 sekunder.
 

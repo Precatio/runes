@@ -111,3 +111,12 @@ def test_peel_endpoint(client):
     gone = [c for c in r2["components"] if c["removed"]]
     assert [c["id"] for c in gone] == [spar["id"]] and gone[0]["removed_by"] == [0]
     assert client.post("/api/3d/peel", data={**base, "removed_json": "[[1, 2]]"}).status_code == 422
+    assert client.post("/api/3d/peel", data={**base, "added_json": "{}"}).status_code == 422
+    # Making a speck a groove by hand: its point marks it as added; if the same speck is also clicked away, away wins
+    other = next(c for c in body["components"] if c["id"] != spar["id"])
+    r3 = client.post("/api/3d/peel", data={**base, "added_json": f"[{other['point']}]"}).json()
+    made = [c for c in r3["components"] if c["added"]]
+    assert [c["id"] for c in made] == [other["id"]] and made[0]["added_by"] == [0] and r3["counts"]["added"] == 1
+    r4 = client.post("/api/3d/peel", data={**base, "added_json": f"[{other['point']}]",
+                                            "removed_json": f"[{other['point']}]"}).json()
+    assert not any(c["added"] for c in r4["components"]) and r4["counts"]["removed"] == 1

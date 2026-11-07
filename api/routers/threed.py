@@ -707,9 +707,21 @@ def _cell_point(surf, r: int, c: int) -> list[float]:
     return [round(float(x), 3) for x in p]
 
 
+def _points(text: str, name: str) -> list[list[float]]:
+    """A list of at most MAX_REMOVED finite 3D points from a form field, or 422."""
+    try:
+        pts = json.loads(text or "[]")
+        assert isinstance(pts, list) and len(pts) <= MAX_REMOVED
+        pts = [[float(v) for v in p] for p in pts]
+        assert all(len(p) == 3 and all(math.isfinite(v) for v in p) for p in pts)
+    except (ValueError, TypeError, AssertionError):
+        raise HTTPException(status_code=422, detail=f"{name} ska vara en lista med högst 5 000 punkter [x, y, z].")
+    return pts
+
+
 def _removed_ids(surf, labels: np.ndarray, points: list) -> dict[int, list[int]]:
-    """The specks that contain one of the clicked-away 3D points (or have a cell within 2 mm of it), each with the
-    indices of the points that hit it, so that the page can click a speck back by dropping those points."""
+    """The specks that contain one of the clicked 3D points (or have a cell within 2 mm of it), each with the indices
+    of the points that hit it, so that the page can undo a click on a speck by dropping those points."""
     ids: dict[int, list[int]] = {}
     h, w = labels.shape
     reach = max(1, int(round(2.0 / surf.res)))
@@ -743,10 +755,12 @@ def peel(
     up_z: float = Form(None),
     offset_mm: float = Form(0.0),
     removed_json: str = Form("[]"),
+    added_json: str = Form("[]"),
 ):
     """Skala av vittringen: det som ligger djupare än vittringen runt omkring (plus offset_mm), med de djupa fläckarna
     märkta som spår eller gropar och en etikettkarta (RGB-PNG) så att sidan kan veta vilken fläck man klickar på.
-    removed_json är punkter på modellen ([[x, y, z], …]) som man klickat bort; fläckarna som innehåller dem märks."""
+    removed_json är punkter på modellen ([[x, y, z], …]) som man klickat bort och added_json punkter på fläckar som man
+    gjort till spår för hand; fläckarna som innehåller dem märks (bortklickad går före tillagd om båda träffar)."""
     from src import peel as peel_mod
 
     entry = resolve_mesh(file, mesh_id)
@@ -754,13 +768,7 @@ def peel(
         raise HTTPException(status_code=400, detail=NO_MESH)
     if not math.isfinite(offset_mm):
         raise HTTPException(status_code=422, detail="offset_mm måste vara ett tal.")
-    try:
-        removed = json.loads(removed_json or "[]")
-        assert isinstance(removed, list) and len(removed) <= MAX_REMOVED
-        removed = [[float(v) for v in p] for p in removed]
-        assert all(len(p) == 3 and all(math.isfinite(v) for v in p) for p in removed)
-    except (ValueError, TypeError, AssertionError):
-        raise HTTPException(status_code=422, detail="removed_json ska vara en lista med högst 5 000 punkter [x, y, z].")
+    removed, added = _points(removed_json, "removed_json"), _points(added_json, "added_json")
     normal = [normal_x, normal_y, normal_z] if normal_x is not None else _estimated_normal(entry.mesh)
     up = [up_x, up_y, up_z] if up_x is not None else None
     try:
@@ -769,12 +777,14 @@ def peel(
     except Exception as e:
         raise server_error(e, "Ytan kunde inte skalas av.", status_code=500) from e
     gone = _removed_ids(surf, layer["labels"], removed)
+    made = {k: v for k, v in _removed_ids(surf, layer["labels"], added).items() if k not in gone}
     comps = []
     for comp in layer["components"]:
         r, c = comp.pop("cell")
         comps.append({**{k: (round(v, 2) if isinstance(v, float) else v) for k, v in comp.items()},
                       "point": _cell_point(surf, r, c), "removed": comp["id"] in gone,
-                      "removed_by": gone.get(comp["id"], [])})
+                      "removed_by": gone.get(comp["id"], []), "added": comp["id"] in made,
+                      "added_by": made.get(comp["id"], [])})
 
     def uri(data: bytes) -> str:
         return "data:image/png;base64," + base64.b64encode(data).decode("ascii")
@@ -790,7 +800,7 @@ def peel(
         "level_mm": {"min": round(lo, 2), "median": round(med, 2), "max": round(hi, 2)},
         "components": comps,
         "counts": {"spar": sum(1 for x in comps if x["kind"] == "spar"), "grop": sum(1 for x in comps if x["kind"] == "grop"),
-                   "removed": sum(1 for x in comps if x["removed"])},
+                   "removed": sum(1 for x in comps if x["removed"]), "added": sum(1 for x in comps if x["added"])},
         "normal": [float(v) for v in surf.hf.n],
     }
 
