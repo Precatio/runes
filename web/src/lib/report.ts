@@ -5,6 +5,7 @@
 import type { BlogPost } from "@/components/BlogBody";
 import { plainText } from "@/lib/blogSeo";
 import { PUBLIC_SITE, SITE_NAME, SITE_URL } from "@/lib/site";
+import archive from "../../content/report_dois.json";
 
 export const REPORT_LABEL = "Rapport";
 /** Whether a post is a research report. */
@@ -195,6 +196,28 @@ export function reportParts(md: string): ReportParts {
   return { header, headerRaw, abstract, abstractTitle, highlights, sections: out };
 }
 
+export interface ReportArchive {
+  /** The DOI to cite: the archived version's own DOI while the page shows that version, otherwise the DOI of all versions */
+  doi: string;
+  /** The DOI of the version archived on Zenodo, and that version's number */
+  versionDoi: string;
+  version: number;
+  /** The DOI that always resolves to the newest archived version */
+  conceptDoi: string;
+  record: string;
+  /** Whether the page shows the same report version as the one archived */
+  current: boolean;
+}
+
+/** The report's archived copy on Zenodo (content/report_dois.json, written when the reports were published there), or null. */
+export function reportArchive(slug: string, pageVersion?: string | null): ReportArchive | null {
+  const a = (archive.rapporter as Record<string, { doi: string; concept_doi: string; version: number; record: string }>)[slug];
+  if (!a) return null;
+  const current = !pageVersion || Number(pageVersion) === a.version;
+  return { doi: current ? a.doi : a.concept_doi, versionDoi: a.doi, version: a.version, conceptDoi: a.concept_doi, record: a.record, current };
+}
+export const doiUrl = (doi: string) => `https://doi.org/${doi}`;
+
 /** "2026-10-31" → "2026/10/31", the date form the Highwire Press tags (Google Scholar) ask for. */
 const scholarDate = (iso: string | null | undefined) => (iso ? iso.slice(0, 10).replace(/-/g, "/") : undefined);
 
@@ -220,6 +243,8 @@ export function scholarMeta(post: BlogPost, lang: "sv" | "en"): Record<string, s
   if (h?.version) meta.citation_technical_report_number = `${en ? "Report version" : "Rapportversion"} ${h.version}`;
   const refs = references(parts);
   if (refs.length) meta.citation_reference = refs;
+  const arc = reportArchive(post.slug, h?.version);
+  if (arc) meta.citation_doi = arc.doi;
   return meta;
 }
 
@@ -234,6 +259,7 @@ export function bibtex(post: BlogPost, h: ReportHeader | null): string {
   const year = (h?.date ?? post.publishedAt ?? "").slice(0, 4) || new Date().getFullYear().toString();
   const key = `kvant${year}${post.slug.split("-").slice(0, 3).join("")}`.replace(/[^a-z0-9]/gi, "");
   const title = post.title_en || post.title;
+  const arc = reportArchive(post.slug, h?.version);
   return [
     `@techreport{${key},`,
     `  author      = {Kvant, Viktor},`,
@@ -243,6 +269,7 @@ export function bibtex(post: BlogPost, h: ReportHeader | null): string {
     `  number      = {Report version ${h?.version ?? "1"}},`,
     `  year        = {${year}},`,
     `  url         = {${enReportUrl(post.slug)}},`,
+    ...(arc ? [`  doi         = {${arc.doi}},`] : []),
     `  note        = {Analysis in Vitki ${h?.appVersion ?? ""}. Swedish edition: ${reportUrl(post.slug)}}`,
     `}`,
   ].join("\n");
@@ -256,10 +283,13 @@ export function reportJsonLd(post: BlogPost, lang: "sv" | "en" = "sv") {
   const h = parts.header;
   const published = post.publishedAt ?? h?.date ?? undefined;
   const title = (en && post.title_en) || post.title;
+  const arc = reportArchive(post.slug, h?.version);
   return [
     {
       "@context": "https://schema.org",
       "@type": ["ScholarlyArticle", "Report"],
+      ...(arc ? { identifier: { "@type": "PropertyValue", propertyID: "DOI", value: arc.doi, url: doiUrl(arc.doi) },
+                  sameAs: [doiUrl(arc.doi), arc.record] } : {}),
       headline: title.slice(0, 110),
       name: title,
       ...(post.title_en && !en ? { alternativeHeadline: post.title_en } : {}),

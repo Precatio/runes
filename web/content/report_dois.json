@@ -1,0 +1,82 @@
+{
+ "_om": "Forskningsrapporterna arkiverade på Zenodo (publicerade 2026-11-07). doi = den arkiverade rapportversionen, concept_doi = alla versioner. Används av web/src/lib/report.ts.",
+ "rapporter": {
+  "barnen-arvde-namnled": {
+   "doi": "10.5281/zenodo.24004776",
+   "concept_doi": "10.5281/zenodo.24004775",
+   "version": 3,
+   "record": "https://zenodo.org/records/24004776",
+   "published": "2026-11-05"
+  },
+  "familjegrupper-vid-gravfalten": {
+   "doi": "10.5281/zenodo.24004794",
+   "concept_doi": "10.5281/zenodo.24004793",
+   "version": 4,
+   "record": "https://zenodo.org/records/24004794",
+   "published": "2026-11-05"
+  },
+  "kvinnor-bland-resarna-svealand-gotaland": {
+   "doi": "10.5281/zenodo.24004806",
+   "concept_doi": "10.5281/zenodo.24004805",
+   "version": 3,
+   "record": "https://zenodo.org/records/24004806",
+   "published": "2026-11-05"
+  },
+  "monoftongstavningen-blir-ovanligare": {
+   "doi": "10.5281/zenodo.24004784",
+   "concept_doi": "10.5281/zenodo.24004783",
+   "version": 3,
+   "record": "https://zenodo.org/records/24004784",
+   "published": "2026-11-05"
+  },
+  "r-for-yr-runan-vastra-uppland": {
+   "doi": "10.5281/zenodo.24004810",
+   "concept_doi": "10.5281/zenodo.24004809",
+   "version": 4,
+   "record": "https://zenodo.org/records/24004810",
+   "published": "2026-11-05"
+  },
+  "ristarforslag-blindprov": {
+   "doi": "10.5281/zenodo.24004780",
+   "concept_doi": "10.5281/zenodo.24004779",
+   "version": 3,
+   "record": "https://zenodo.org/records/24004780",
+   "published": "2026-11-05"
+  },
+  "ristningen-vand-mot-vagen": {
+   "doi": "10.5281/zenodo.24004764",
+   "concept_doi": "10.5281/zenodo.24004763",
+   "version": 4,
+   "record": "https://zenodo.org/records/24004764",
+   "published": "2026-11-05"
+  },
+  "runstenarna-vid-sin-tids-vatten": {
+   "doi": "10.5281/zenodo.24004754",
+   "concept_doi": "10.5281/zenodo.24004753",
+   "version": 3,
+   "record": "https://zenodo.org/records/24004754",
+   "published": "2026-11-05"
+  },
+  "seriationen-foljer-stilkronologin": {
+   "doi": "10.5281/zenodo.24004768",
+   "concept_doi": "10.5281/zenodo.24004767",
+   "version": 4,
+   "record": "https://zenodo.org/records/24004768",
+   "published": "2026-11-05"
+  },
+  "skanningen-som-ledtrad": {
+   "doi": "10.5281/zenodo.24004760",
+   "concept_doi": "10.5281/zenodo.24004759",
+   "version": 4,
+   "record": "https://zenodo.org/records/24004760",
+   "published": "2026-11-05"
+  },
+  "soner-och-broder-dog-utanfor-norden": {
+   "doi": "10.5281/zenodo.24004802",
+   "concept_doi": "10.5281/zenodo.24004801",
+   "version": 3,
+   "record": "https://zenodo.org/records/24004802",
+   "published": "2026-11-05"
+  }
+ }
+}

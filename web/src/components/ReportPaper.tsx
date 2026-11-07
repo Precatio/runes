@@ -3,7 +3,7 @@ import BlogBody, { dateLabel, type BlogPost } from "@/components/BlogBody";
 import ReportCite from "@/components/ReportCite";
 import EnglishEdition from "@/components/EnglishEdition";
 import type { ImageSizes } from "@/lib/blogSeo";
-import { bibtex, EN_REPORTS_PATH, EN_TERMS_PATH, REPORT_FORMS, REPORTS_PATH, reportParts, TERMS_PATH } from "@/lib/report";
+import { bibtex, doiUrl, EN_REPORTS_PATH, EN_TERMS_PATH, REPORT_FORMS, REPORTS_PATH, reportArchive, reportParts, TERMS_PATH } from "@/lib/report";
 import { CONTACT_PATH, EN_CONTACT_PATH } from "@/lib/site";
 import { paperFace } from "@/lib/paperFont";
 
@@ -16,11 +16,13 @@ const T = {
   sv: { kind: "Forskningsrapport", back: "← Forskningsrapporter", other: "Read in English →", version: "Rapportversion", published: "Publicerad",
         analysis: "Analys i Vitki", licence: "Licens", keywords: "Nyckelord", highlights: "Huvudpunkter", contents: "Innehåll",
         competing: "Konkurrerande intressen", funding: "Finansiering", cite: "Citera som", abstract: "Sammanfattning",
-        updated: "Senast ändrad", series: "Vitki – forskningsrapporter", timeline: "Studiens tidslinje" },
+        updated: "Senast ändrad", series: "Vitki – forskningsrapporter", timeline: "Studiens tidslinje",
+        archived: "Arkiverad på Zenodo", archivedVersion: (v: number) => `Rapportversion ${v} arkiverad på Zenodo`, allVersions: "alla versioner" },
   en: { kind: "Research report", back: "← Research reports", other: "Läs på svenska →", version: "Report version", published: "Published",
         analysis: "Analysis in Vitki", licence: "Licence", keywords: "Keywords", highlights: "Highlights", contents: "Contents",
         competing: "Competing interests", funding: "Funding", cite: "Cite as", abstract: "Abstract",
-        updated: "Last changed", series: "Vitki – research reports", timeline: "Timeline of the study" },
+        updated: "Last changed", series: "Vitki – research reports", timeline: "Timeline of the study",
+        archived: "Archived on Zenodo", archivedVersion: (v: number) => `Report version ${v} archived on Zenodo`, allVersions: "all versions" },
 };
 
 export default function ReportPaper({ post, lang, sizes, otherHref }: { post: BlogPost; lang: "sv" | "en"; sizes?: ImageSizes; otherHref?: string | null }) {
@@ -32,7 +34,9 @@ export default function ReportPaper({ post, lang, sizes, otherHref }: { post: Bl
   const form = h?.form ?? REPORT_FORMS[0];
   const published = post.publishedAt ?? h?.date ?? null;
   const changed = post.updatedAt && published && post.updatedAt.slice(0, 10) !== published.slice(0, 10) ? post.updatedAt : null;
-  const citation = h?.citation ?? `Kvant, V. ${title}.`;
+  const arc = reportArchive(post.slug, h?.version);
+  const cited = h?.citation ?? `Kvant, V. ${title}.`;
+  const citation = arc && !cited.includes("doi.org") ? `${cited} ${doiUrl(arc.doi)}` : cited;
   const meta = [
     h?.version && `${t.version} ${h.version}`,
     published && `${t.published} ${dateLabel(published, lang)}`,
@@ -58,6 +62,13 @@ export default function ReportPaper({ post, lang, sizes, otherHref }: { post: Bl
           {h?.affiliation && <p className="mt-1 text-sm italic text-slate-600">{h.affiliation[0].toUpperCase() + h.affiliation.slice(1)} · Vitki</p>}
           {meta.length > 0 && <p className="mt-4 text-[13px] text-slate-500">{meta.join("  ·  ")}</p>}
           {changed && <p className="mt-1 text-[13px] text-slate-500">{t.updated} {dateLabel(changed, lang)}</p>}
+          {arc && (
+            <p className="mt-1 text-[13px] text-slate-500">
+              {arc.current ? t.archived : t.archivedVersion(arc.version)}:{" "}
+              <a href={doiUrl(arc.versionDoi)} className="font-semibold text-[#b7410e] hover:underline">DOI {arc.versionDoi}</a>
+              {!arc.current && <>{" "}({t.allVersions}: <a href={doiUrl(arc.conceptDoi)} className="font-semibold text-[#b7410e] hover:underline">{arc.conceptDoi}</a>)</>}
+            </p>
+          )}
           {h && h.timeline.length > 0 && (
             <p className="mt-2 text-[13px] text-slate-500">
               <span className="font-semibold">{t.timeline}:</span>{" "}

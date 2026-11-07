@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "rapporter-doi",
+   "date": "2026-11-07",
+   "status": "nytt",
+   "title": "Forskningsrapporterna har DOI på Zenodo",
+   "text": "De elva publicerade forskningsrapporterna är nu arkiverade på Zenodo, var och en med svensk och engelsk PDF och en egen DOI. Varje rapportsida visar sin DOI under rubriken, och DOI:n finns med i citeringen, i BibTeX och i uppgifterna som Google Scholar läser. Får en rapport en ny version på webbplatsen pekar sidan också på DOI:n för alla versioner."
+  },
+  {
    "id": "runa-for-runa",
    "date": "2026-11-06",
    "status": "nytt",
