@@ -98,11 +98,11 @@ CODE_EN = (f"the first run in commit {V1_COMMIT} (2–3 November 2026), the reru
            f"the first run in commit {V1_COMMIT} (2–3 November 2026), the rerun after the land correction in commit "
            f"{LAND_COMMIT} (5 November 2026); the rerun after the preposition was corrected (7 November 2026) is not yet committed")
 
-TL_SV = ("kartlagret med de gamla landen byggdes och folklandsgränsen för *at* prövades under en låst plan 2026-11-01; "
+TL_SV = ("kartlagret med de gamla landen byggdes och folklandsgränsen för at prövades under en låst plan 2026-11-01; "
          "häradernas folkland kontrollerades mot sexårsgärden 1314, gränsskannern kördes, och slumpindelningsprovet och "
          "tilläggsplanen för känslighetsanalyserna låstes och kördes 2026-11-02; landindelningen rättades och alla prov "
          "kördes om 2026-11-05; prepositionsdraget rättades och alla prov kördes om 2026-11-07")
-TL_EN = ("the map layer of the old lands was built and the folkland border for *at* was tested under a locked plan "
+TL_EN = ("the map layer of the old lands was built and the folkland border for at was tested under a locked plan "
          "2026-11-01; the hundreds' folklands were checked against the six-year tithe of 1314, the border scan was run, and "
          "the random-partition test and the addendum plan for the sensitivity analyses were locked and run 2026-11-02; the "
          "land assignment was corrected and every test was rerun 2026-11-05; the preposition feature was corrected and every "
@@ -636,6 +636,7 @@ assert body_en.split("\n", 1)[0].startswith("*Viktor Kvant, independent research
 _h = body_en.splitlines()[0].strip("* ")
 assert re.search(r"Report version (\d+), (\d{4}-\d{2}-\d{2})", _h) and re.search(r"(?:made|done) in Vitki (\d+(?:\.\d+)*)", _h)
 assert re.search(r"Keywords: ([^.]+)\.", _h) and "CC BY 4.0" in _h
+assert "*" not in TL_SV + TL_EN  # the header line is not rendered as markdown (the timeline shows it as text)
 # the length (mallen: 1 500–3 000 ord på svenska före Data och kod)
 WORDS_SV, WORDS_EN = len(body.split("## Data")[0].split()), len(body_en.split("## Data")[0].split())
 assert 1500 <= WORDS_SV <= 3000, WORDS_SV
