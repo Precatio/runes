@@ -64,7 +64,7 @@ export interface ReportEvent { label: string; date: string }
 
 /** The timeline sentence of a header line: events separated by semicolons, each ending in an ISO date. */
 export function parseTimeline(line: string): ReportEvent[] {
-  const m = /(?:Tidslinje|Timeline):\s*(.+?)\.\s+(?:Analysen är gjord|The analysis was made|Licens|Licence)/.exec(line);
+  const m = /(?:Tidslinje|Timeline):\s*(.+?)\.\s+(?:Analysen är gjord|The analysis was (?:made|done)|Licens|Licence)/.exec(line);
   if (!m) return [];
   return m[1].split(/;\s*/).map(x => /^(.*?)\s+(\d{4}-\d{2}-\d{2})$/.exec(x.trim()))
     .filter((x): x is RegExpExecArray => !!x).map(x => ({ label: x[1], date: x[2] }));
