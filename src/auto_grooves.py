@@ -90,13 +90,53 @@ class Heightfield:
         return ndimage.map_coordinates(self.H, [ys, xs], order=1, mode="nearest")
 
 
-def reference_surface(hf: Heightfield, scale_mm: float = 20.0, smooth_mm: float = 1.0) -> np.ndarray:
+# The reference surface (METHODS 2c; analysplaner/2026-11-07-referensyta-paraboloid.md): "square" is the morphological
+# closing with a square window (groove-7 and older), "paraboloid" a closing with a rolling paraboloid, round and so the
+# same in every direction (candidate groove-8). REFERENCE is the default; a measurement records which one it used.
+REFERENCE = "square"
+PARABOLOID_RADIUS_MM = 50.0
+
+
+def _parabolic_pass(a: np.ndarray, res: float, dilate: bool, radius_mm: float, reach_mm: float) -> np.ndarray:
+    """Dilation (max of a − t²/2r) or erosion (min of a + t²/2r) with a paraboloid, separably along both axes (exact,
+    since the paraboloid's height is the sum of one term per axis). The border value is repeated outside the grid."""
+    reach = max(1, int(round(reach_mm / res)))
+    out = a
+    for axis in (0, 1):
+        n = out.shape[axis]
+        cur = out.copy()
+        for k in range(1, reach + 1):
+            pen = (k * res) ** 2 / (2 * radius_mm)
+            for s in (k, -k):
+                sh = np.take(out, np.clip(np.arange(n) - s, 0, n - 1), axis=axis)
+                cur = np.maximum(cur, sh - pen) if dilate else np.minimum(cur, sh + pen)
+        out = cur
+    return out
+
+
+def paraboloid_closing(H: np.ndarray, res: float, radius_mm: float = PARABOLOID_RADIUS_MM,
+                       reach_mm: float = 30.0) -> np.ndarray:
+    """Closing (dilation, then erosion) with a rolling paraboloid: fills furrows narrower than the paraboloid can enter
+    and follows a curved stone in every direction, without the steps a square window leaves."""
+    return _parabolic_pass(_parabolic_pass(H, res, True, radius_mm, reach_mm), res, False, radius_mm, reach_mm)
+
+
+def reference_surface(hf: Heightfield, scale_mm: float = 20.0, smooth_mm: float = 1.0,
+                      kind: str | None = None) -> np.ndarray:
     """Stenytan utan ristningar, via morfologisk stängning (dilatation följd av erosion).
 
     Fördjupningar smalare än scale_mm fylls igen, medan plana, lutande och svagt välvda ytor
-    bevaras. En lätt gaussisk utjämning (smooth_mm) dämpar mätbruset i referensen."""
-    size = max(3, int(round(scale_mm / hf.res)) | 1)
-    closed = ndimage.minimum_filter(ndimage.maximum_filter(hf.H, size=size), size=size)
+    bevaras. En lätt gaussisk utjämning (smooth_mm) dämpar mätbruset i referensen. kind = "square"
+    (fyrkantigt fönster om scale_mm) eller "paraboloid" (rullande paraboloid med radien
+    PARABOLOID_RADIUS_MM och räckvidden 1,5 × scale_mm); utan kind gäller REFERENCE."""
+    kind = kind or REFERENCE
+    if kind == "paraboloid":
+        closed = paraboloid_closing(hf.H, hf.res, PARABOLOID_RADIUS_MM, 1.5 * scale_mm)
+    elif kind == "square":
+        size = max(3, int(round(scale_mm / hf.res)) | 1)
+        closed = ndimage.minimum_filter(ndimage.maximum_filter(hf.H, size=size), size=size)
+    else:
+        raise ValueError(f"okänd referensyta: {kind}")
     return ndimage.gaussian_filter(closed, smooth_mm / hf.res)
 
 
@@ -608,7 +648,8 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
     mesh_spacing = float(np.median(edges)) if len(edges) else float("nan")
     face_tree = face_tree or cKDTree(mesh.triangles_center)
     res = hf.res
-    ref = reference_surface(hf, scale_mm=scale_mm)
+    reference = REFERENCE  # the module default (a comparison sets it; not a parameter, so the locked rules stay)
+    ref = reference_surface(hf, scale_mm=scale_mm, kind=reference)
     residual = hf.H - ref
 
     # Pad with background so that the grid's own border also counts as an edge of the scan. The reference
@@ -872,6 +913,7 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
             "harmonize_mm": harmonize_mm,
             "fixed_resolution": resolution_mm is not None,
             "reference_scale_mm": scale_mm,
+            "reference": reference,
             "noise_mm": noise,
             "threshold_mm": threshold,
             "sensitivity": sensitivity,

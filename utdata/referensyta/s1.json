@@ -1,0 +1,66 @@
+{
+ "plan_sha": "5f64ffe4",
+ "angles": [
+  0,
+  22.5,
+  45,
+  67.5
+ ],
+ "true_depth_mm": 2.0,
+ "true_width_at_threshold_mm": 6.8,
+ "square": {
+  "rows": [
+   {
+    "angle": 0,
+    "depth_mm": 2.078,
+    "width_mm": 7.27
+   },
+   {
+    "angle": 22.5,
+    "depth_mm": 1.957,
+    "width_mm": 7.12
+   },
+   {
+    "angle": 45,
+    "depth_mm": 1.927,
+    "width_mm": 7.2
+   },
+   {
+    "angle": 67.5,
+    "depth_mm": 1.96,
+    "width_mm": 7.13
+   }
+  ],
+  "depth_spread_mm": 0.151,
+  "width_spread_mm": 0.15,
+  "max_depth_error_mm": 0.078
+ },
+ "paraboloid": {
+  "rows": [
+   {
+    "angle": 0,
+    "depth_mm": 1.882,
+    "width_mm": 6.49
+   },
+   {
+    "angle": 22.5,
+    "depth_mm": 1.746,
+    "width_mm": 6.67
+   },
+   {
+    "angle": 45,
+    "depth_mm": 1.709,
+    "width_mm": 6.72
+   },
+   {
+    "angle": 67.5,
+    "depth_mm": 1.753,
+    "width_mm": 6.71
+   }
+  ],
+  "depth_spread_mm": 0.173,
+  "width_spread_mm": 0.23,
+  "max_depth_error_mm": 0.291
+ },
+ "holds": false
+}

@@ -11,9 +11,12 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
   gropar grått; ett klick tar bort en fläck som inte är runa och ett nytt klick tar tillbaka den. Det bortklickade
   sparas i webbläsaren som punkter på modellen och följer med när reglaget flyttas. Ångra, ta tillbaka allt och
   nedladdning av bilden.
-- `src/peel.py`, POST /api/3d/peel: referensyta med rullande paraboloid (följer en välvd sten), djup vinkelrätt mot
-  ytan, vittringsnivå per 60 mm-ruta, fläckar med etikettkarta. Huggspårsmätningen är oförändrad. METHODS 2d2,
+- `src/peel.py`, POST /api/3d/peel: samma referensyta som huggspårsmätningen (stängning 20 mm, som följer en välvd
+  sten), djup vinkelrätt mot ytan, vittringsnivå per 60 mm-ruta, fläckar med etikettkarta. METHODS 2d2,
   `tests/test_peel.py`.
+- Prövat och underkänt under låst plan: en rullande paraboloid som referensyta i huggspårsanalysen (kandidat `groove-8`).
+  Den underskattade djupet på konstgjorda spår (upp till 0,29 mm mot 0,08) utan att minska riktningsberoendet; mätmetoden
+  förblir `groove-7`. Paraboloiden finns kvar som val i `auto_grooves.reference_surface(kind="paraboloid")`.
 
 ### Rättat: prepositionen at räknas också framför släktord
 - Språkdraget *æftiR eller at* (`src/language_profile.py`) räknade *at* bara framför ett namn men varje *æft-/aft-*ord som

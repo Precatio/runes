@@ -1301,18 +1301,19 @@ Källkod: `src/peel.py`, `api/routers/threed.py` (`peel`, POST /api/3d/peel), `w
 test `tests/test_peel.py`. En bild att läsa själv, öppnad från *Bilder ur skanningen* på 3D-sidan: bara det som ligger
 djupare än vittringen runt omkring syns, och de djupa fläckarna är märkta. Den skiljer sig från *Djup* i 2d på tre sätt:
 
-* **Ytan följer stenens välvning.** Referensytan räknas med en rullande paraboloid (krökningsradie 50 mm, räckvidd
-  30 mm åt varje håll) i stället för den fyrkantiga stängningen: en rund form som fyller smala fåror men följer en välvd
-  sten åt alla håll, utan de trappsteg ett fyrkantigt filter ger. Paraboloiden är separerbar, så stängningen görs
-  exakt som endimensionella steg längs rader och kolumner. Huggspårsmätningen (2c) är oförändrad och använder
-  fortfarande den fyrkantiga stängningen; att byta där ändrar uppmätta djup och vinklar och görs i så fall som en ny
-  metodversion.
+* **Ytan följer stenens välvning.** Referensytan är densamma som i huggspårsmätningen (2c): stängning med ett
+  fönster om 20 mm, utjämnad 1 mm. En stängning bevarar en kupig yta exakt och fyller bara fåror smalare än fönstret,
+  så den följer en välvd sten. En rullande paraboloid (krökningsradie 50 mm) prövades 2026-11-07 under en låst plan
+  (`analysplaner/2026-11-07-referensyta-paraboloid.md`, `utdata/referensyta/`) och underkändes: på konstgjorda spår
+  (8 mm breda, 2 mm djupa, fyra riktningar) underskattade den djupet med upp till 0,29 mm mot 0,08 mm för fönstret, och
+  skillnaden mellan riktningarna var inte mindre (0,17 mot 0,15 mm). Huggspårsmätningen och bilderna är därför
+  oförändrade.
 * **Djupet mäts vinkelrätt mot ytan**: djupet längs projektionen gånger cos(ytans lutning). På en sluttning om 30° är
   skillnaden 13 %, vid 45° 29 %. Partier brantare än 60° (stenens sidor) och kantzonen (10 mm) utelämnas.
 * **Gränsen följer vittringen där den står.** I rutor om 60 mm är den 70:e percentilen av djupet rutans
   vittringsnivå; nivåerna jämnas ut mellan rutorna. Reglaget lägger till eller drar av 1–3 mm från nivån. På Sö 206
   (skanning Laila Kitzler Åhfeldt, Riksantikvarieämbetet, projektet Runristandets dynamik, CC BY 4.0,
-  doi:10.5281/zenodo.11951255) går nivån från 0,6 till 3,4 mm, median 0,9 mm: en gemensam gräns för hela stenen skulle
+  doi:10.5281/zenodo.11951255) går nivån från 0,6 till 1,2 mm, median 1,0 mm: en gemensam gräns för hela stenen skulle
   skala av för mycket på ett ställe och för lite på ett annat.
 
 Det som blir kvar delas i sammanhängande fläckar (minst 3 mm²). Varje fläcks djupa kärna (cellerna minst hälften så
@@ -1321,7 +1322,7 @@ djupa som fläckens djupaste, under nivån) tunnas ut till ett skelett: en fläc
 färgas rostrött – den kan vara runa, ornament eller spricka. Resten är **gropar** (grå). Regeln avgör inte vad som är
 runa; det gör läsaren genom att klicka bort fläckar. Bortklickade fläckar sparas som punkter på 3D-modellen i
 webbläsaren (per skanning, efter SHA-256) och märker samma fläckar när reglaget flyttas. Ytan räknas med 0,67 mm per
-cell på Sö 206 (högst 2 400 bildpunkter); första beräkningen tar några sekunder, varje ny reglagestavning några tiondels
+cell på Sö 206 (högst 2 400 bildpunkter); första beräkningen tar några sekunder (ytan ur skanningen), varje ny reglageinställning några tiondels
 sekunder.
 
 **Vad bilden inte gör.** Den skapar ingen information som inte finns i skanningen: ett streck som är grundare än

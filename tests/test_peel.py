@@ -26,7 +26,7 @@ def _v(dist, half_width, depth):
     return np.clip(1 - np.abs(dist) / half_width, 0, None) * depth
 
 
-def test_rolling_reference_follows_a_domed_stone():
+def test_reference_follows_a_domed_stone():
     x, y = _grid()
     H = _dome(x, y)
     pe = peel.Peel(H, np.ones_like(H, bool), RES)

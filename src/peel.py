@@ -3,10 +3,10 @@ de djupa spåren markerade och möjliga att klicka bort (POST /api/3d/peel, dial
 METHODS.md 2h.
 
 Tre steg skiljer bilden från "djup under stenytan" i reliefbilderna:
-1. **Ytan följer stenens välvning.** Referensytan räknas med en rullande paraboloid (krökningsradie 50 mm) i stället för
-   den fyrkantiga stängningen: en rund form som rullas över stenen fyller smala fåror men följer en välvd sten åt alla
-   håll, utan de trappsteg ett fyrkantigt filter ger. Paraboloiden är separerbar, så stängningen görs exakt som
-   endimensionella steg längs raderna och kolumnerna.
+1. **Ytan följer stenens välvning.** Referensytan är densamma som huggspårsmätningens (stängning med ett fönster om
+   20 mm): en stängning bevarar en kupig yta exakt och fyller bara fåror smalare än fönstret. (En rullande paraboloid
+   prövades och underkändes 2026-11-07: den doppar ner i spåren och underskattar djupet, analysplaner/
+   2026-11-07-referensyta-paraboloid.md.)
 2. **Djupet mäts vinkelrätt mot ytan,** inte längs stenens huvudnormal: djupet längs projektionen gånger cos(lutningen).
    På en sluttning om 30° är skillnaden 13 %, vid 45° 29 %.
 3. **Gränsen följer vittringen där den står.** I rutor om 60 mm tas den 70:e percentilen av djupet som rutans
@@ -28,8 +28,6 @@ import math
 import numpy as np
 from scipy import ndimage
 
-BALL_RADIUS_MM = 50.0   # the paraboloid's radius of curvature
-REACH_MM = 30.0         # how far the paraboloid reaches on each side (the drop beyond is 9 mm: no influence)
 BLOCK_MM = 60.0         # the squares for the local weathering level
 LEVEL_Q = 70            # the percentile of the depth that counts as weathering
 EDGE_MM = 10.0          # the reference surface is unreliable this close to the scan's edge
@@ -40,38 +38,18 @@ GROOVE_ELONGATION = 3.0  # ... and at least this many times its mean width
 OFFSET_RANGE = (-1.0, 3.0)
 
 
-def _shift(a: np.ndarray, k: int, axis: int) -> np.ndarray:
-    """a shifted k cells along axis, the border value repeated (no wrap-around)."""
-    if k == 0:
-        return a
-    n = a.shape[axis]
-    idx = np.clip(np.arange(n) - k, 0, n - 1)
-    return np.take(a, idx, axis=axis)
+def surface_reference(H: np.ndarray, region: np.ndarray, res: float) -> np.ndarray:
+    """The stone surface without the carving, the same as the groove measurement uses (auto_grooves.reference_surface,
+    the closing with a 20 mm window): a closing keeps a domed surface exactly and fills only furrows narrower than the
+    window. Outside the scan the nearest surface value is used, so that the edge does not pull the surface down."""
+    from types import SimpleNamespace
 
-
-def _parabolic(a: np.ndarray, res: float, dilate: bool) -> np.ndarray:
-    """Dilation (max of a − t²/2r) or erosion (min of a + t²/2r) with the paraboloid, separably along both axes."""
-    reach = max(1, int(round(REACH_MM / res)))
-    out = a
-    for axis in (0, 1):
-        cur = out.copy()
-        for k in range(1, reach + 1):
-            pen = (k * res) ** 2 / (2 * BALL_RADIUS_MM)
-            for s in (k, -k):
-                sh = _shift(out, s, axis)
-                cur = np.maximum(cur, sh - pen) if dilate else np.minimum(cur, sh + pen)
-        out = cur
-    return out
-
-
-def rolling_reference(H: np.ndarray, region: np.ndarray, res: float) -> np.ndarray:
-    """The stone surface without the carving: closing (dilation, then erosion) with a paraboloid of radius 50 mm.
-    Outside the scan the nearest surface value is used, so that the edge does not pull the surface down."""
+    from src.auto_grooves import reference_surface
     filled = H.copy()
     if (~region).any():
         idx = ndimage.distance_transform_edt(~region, return_distances=False, return_indices=True)
         filled = H[tuple(idx)]
-    return _parabolic(_parabolic(filled, res, True), res, False)
+    return reference_surface(SimpleNamespace(H=filled, res=res), scale_mm=20.0)
 
 
 class Peel:
@@ -80,7 +58,7 @@ class Peel:
 
     def __init__(self, H: np.ndarray, region: np.ndarray, res: float):
         self.res = float(res)
-        self.ref = rolling_reference(H, region, res)
+        self.ref = surface_reference(H, region, res)
         gy, gx = np.gradient(self.ref, res)
         self.slope = np.degrees(np.arctan(np.hypot(gx, gy)))
         edge = ndimage.distance_transform_edt(np.pad(region, 1))[1:-1, 1:-1] * res > EDGE_MM
