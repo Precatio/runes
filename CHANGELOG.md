@@ -5,6 +5,16 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Skala av vittringen: de djupa spåren ur skanningen
+- Ny dialog på 3D-sidan (*Bilder ur skanningen* → *Skala av vittringen*): bilden visar bara det som ligger djupare än
+  vittringen runt omkring, med ett reglage för hur mycket som skalas av. Långa, smala spår färgas rostrött, korta
+  gropar grått; ett klick tar bort en fläck som inte är runa och ett nytt klick tar tillbaka den. Det bortklickade
+  sparas i webbläsaren som punkter på modellen och följer med när reglaget flyttas. Ångra, ta tillbaka allt och
+  nedladdning av bilden.
+- `src/peel.py`, POST /api/3d/peel: referensyta med rullande paraboloid (följer en välvd sten), djup vinkelrätt mot
+  ytan, vittringsnivå per 60 mm-ruta, fläckar med etikettkarta. Huggspårsmätningen är oförändrad. METHODS 2d2,
+  `tests/test_peel.py`.
+
 ### Rättat: prepositionen at räknas också framför släktord
 - Språkdraget *æftiR eller at* (`src/language_profile.py`) räknade *at* bara framför ett namn men varje *æft-/aft-*ord som
   *æftiR*, och hoppade över ord inom hakparentes. Därmed missades *at* som andra preposition ("… ok Fastlaug at bonda

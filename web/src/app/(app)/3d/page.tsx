@@ -27,6 +27,8 @@ import { API_URL } from "@/lib/api";
 // The RTI and image tabs are opened on few visits (the mesh tab is the default), so their code loads with the tab
 const tabLoading = () => <div className="w-full py-12 text-center text-slate-500"><span>Laddar</span> …</div>;
 const RTIViewer = dynamic(() => import("@/components/RTIViewer"), { ssr: false, loading: tabLoading });
+// Skala av vittringen (src/peel.py): opened from "Bilder ur skanningen", loads with the dialog
+const PeelDialog = dynamic(() => import("@/components/threeD/PeelDialog"), { ssr: false });
 const TwoDAnalysis = dynamic(() => import("@/components/TwoDAnalysis"), { ssr: false, loading: tabLoading });
 
 // Disable SSR for ThreeDViewer since it uses browser APIs (window, DOM)
@@ -476,6 +478,8 @@ function ThreeDPageContent() {
   // Images computed from the scan itself (raking light from four directions, combined relief, depth below the
   // stone surface), seen from the carved side that faces the camera. Independent of zoom and screen lighting.
   const [reliefBusy, setReliefBusy] = useState<"" | "2d" | "phonetics">("");
+  // The view is taken when the dialog opens, so that turning the model behind it does not recompute the surface
+  const [peel, setPeel] = useState<{ session: MeshSession; view: { toward: number[]; up: number[] } | null } | null>(null);
   const fetchRelief = async () => {
     const session = sessionRef.current;
     if (!session) throw new Error("Ladda upp en 3D-fil först.");
@@ -892,6 +896,21 @@ function ThreeDPageContent() {
               >
                 {reliefBusy === "2d" ? "Räknar fram reliefbild …" : "Öppna reliefbilden under Bilder och runformer"}
               </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const v = viewDirRef.current, session = sessionRef.current;
+                  if (session) setPeel({ session, view: v ? { toward: [...v.toward], up: [...v.up] } : null });
+                }}
+                disabled={!meshInfo}
+                className="w-full py-2.5 bg-white border border-[#b7410e] text-[#b7410e] hover:bg-[#b7410e] hover:text-white disabled:opacity-40 font-semibold text-sm rounded-xl transition-all"
+              >
+                Skala av vittringen – se de djupa spåren
+              </button>
+              {peel && meshInfo && (
+                <PeelDialog session={peel.session} sha256={meshInfo.sha256} filename={meshInfo.filename}
+                  view={peel.view} onClose={() => setPeel(null)} />
+              )}
               {meshInfo && (
                 <button type="button" onClick={scrollToExport} className="text-[11px] font-semibold text-[#b7410e] hover:underline">
                   Ladda ned bilderna (värmekarta, relief, strykljus) →

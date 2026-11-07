@@ -3,6 +3,7 @@ import datetime
 import hashlib
 import io
 import json
+import math
 import os
 import re
 import threading
@@ -672,6 +673,125 @@ def render_relief(
         # the depth that is black in "depth" (99th percentile outside the 10 mm edge zone); the export's heat map
         # uses the 99.5th
         "depth_ref_mm": imgs["depth_ref_mm"],
+    }
+
+
+# ---- peel: the surface below the weathering --------------------------------------------------------------------------
+# src/peel.py, METHODS.md 2h. The expensive part (surface, rolling reference, perpendicular depth, local level) is kept
+# on the mesh entry for the latest view only, so that moving the slider recomputes just the threshold and the specks,
+# and the memory goes with the model when the mesh cache evicts it.
+_PEEL_LOCK = threading.Lock()
+MAX_REMOVED = 5000
+
+
+def _peel_state(entry: MeshEntry, normal, up):
+    from src.peel import Peel
+    from src.stone_report import Surface
+    key = (tuple(round(float(v), 4) for v in normal), tuple(round(float(v), 4) for v in up) if up is not None else None)
+    with _PEEL_LOCK:
+        cached = getattr(entry, "peel", None)
+        if cached and cached[0] == key:
+            return cached[1], cached[2]
+        # finer than the relief images (1 600 px): faint staves are a few cells wide
+        surf = Surface(entry.mesh, normal, up, max_px=2400)
+        pe = Peel(surf.H, surf.region, surf.res)
+        entry.peel = (key, surf, pe)
+        return surf, pe
+
+
+def _cell_point(surf, r: int, c: int) -> list[float]:
+    """The 3D point of a cell on the surface's grid: a along u, b along v, the height along the normal."""
+    hf = surf.hf
+    a, b = surf.origin[0] + c * surf.res, surf.origin[1] + r * surf.res
+    p = a * hf.u + b * hf.v + float(surf.H[r, c]) * hf.n
+    return [round(float(x), 3) for x in p]
+
+
+def _removed_ids(surf, labels: np.ndarray, points: list) -> dict[int, list[int]]:
+    """The specks that contain one of the clicked-away 3D points (or have a cell within 2 mm of it), each with the
+    indices of the points that hit it, so that the page can click a speck back by dropping those points."""
+    ids: dict[int, list[int]] = {}
+    h, w = labels.shape
+    reach = max(1, int(round(2.0 / surf.res)))
+    for i, p in enumerate(points):
+        x, y = surf.xy(p)
+        c, r = int(round(x / surf.res)), int(round(y / surf.res))
+        if not (0 <= r < h and 0 <= c < w):
+            continue
+        win = labels[max(0, r - reach):r + reach + 1, max(0, c - reach):c + reach + 1]
+        hit = 0
+        if labels[r, c]:
+            hit = int(labels[r, c])
+        elif win.any():
+            rr, cc = np.nonzero(win)
+            k = int(np.argmin((rr + max(0, r - reach) - r) ** 2 + (cc + max(0, c - reach) - c) ** 2))
+            hit = int(win[rr[k], cc[k]])
+        if hit:
+            ids.setdefault(hit, []).append(i)
+    return ids
+
+
+@router.post("/peel")
+def peel(
+    file: UploadFile = File(None),
+    mesh_id: str = Form(None),
+    normal_x: float = Form(None),
+    normal_y: float = Form(None),
+    normal_z: float = Form(None),
+    up_x: float = Form(None),
+    up_y: float = Form(None),
+    up_z: float = Form(None),
+    offset_mm: float = Form(0.0),
+    removed_json: str = Form("[]"),
+):
+    """Skala av vittringen: det som ligger djupare än vittringen runt omkring (plus offset_mm), med de djupa fläckarna
+    märkta som spår eller gropar och en etikettkarta (RGB-PNG) så att sidan kan veta vilken fläck man klickar på.
+    removed_json är punkter på modellen ([[x, y, z], …]) som man klickat bort; fläckarna som innehåller dem märks."""
+    from src import peel as peel_mod
+
+    entry = resolve_mesh(file, mesh_id)
+    if entry.info.get("mock"):
+        raise HTTPException(status_code=400, detail=NO_MESH)
+    if not math.isfinite(offset_mm):
+        raise HTTPException(status_code=422, detail="offset_mm måste vara ett tal.")
+    try:
+        removed = json.loads(removed_json or "[]")
+        assert isinstance(removed, list) and len(removed) <= MAX_REMOVED
+        removed = [[float(v) for v in p] for p in removed]
+        assert all(len(p) == 3 and all(math.isfinite(v) for v in p) for p in removed)
+    except (ValueError, TypeError, AssertionError):
+        raise HTTPException(status_code=422, detail="removed_json ska vara en lista med högst 5 000 punkter [x, y, z].")
+    normal = [normal_x, normal_y, normal_z] if normal_x is not None else _estimated_normal(entry.mesh)
+    up = [up_x, up_y, up_z] if up_x is not None else None
+    try:
+        surf, pe = _peel_state(entry, normal, up)
+        layer = pe.layer(offset_mm)
+    except Exception as e:
+        raise server_error(e, "Ytan kunde inte skalas av.", status_code=500) from e
+    gone = _removed_ids(surf, layer["labels"], removed)
+    comps = []
+    for comp in layer["components"]:
+        r, c = comp.pop("cell")
+        comps.append({**{k: (round(v, 2) if isinstance(v, float) else v) for k, v in comp.items()},
+                      "point": _cell_point(surf, r, c), "removed": comp["id"] in gone,
+                      "removed_by": gone.get(comp["id"], [])})
+
+    def uri(data: bytes) -> str:
+        return "data:image/png;base64," + base64.b64encode(data).decode("ascii")
+
+    buf = io.BytesIO()
+    gray_image(peel_mod.background(layer, surf.region)).save(buf, format="PNG", optimize=True)
+    lo, med, hi = pe.level_range()
+    return {
+        "background": uri(buf.getvalue()),
+        "labels": uri(peel_mod.labels_png(layer["labels"])),
+        "width": int(layer["labels"].shape[1]), "height": int(layer["labels"].shape[0]),
+        "resolution_mm": float(surf.res), "offset_mm": layer["offset_mm"], "offset_range": list(peel_mod.OFFSET_RANGE),
+        "level_mm": {"min": round(lo, 2), "median": round(med, 2), "max": round(hi, 2)},
+        "components": comps,
+        "counts": {"spar": sum(1 for x in comps if x["kind"] == "spar"), "grop": sum(1 for x in comps if x["kind"] == "grop"),
+                   "removed": sum(1 for x in comps if x["removed"])},
+        "normal": [float(v) for v in surf.hf.n],
     }
 
 
