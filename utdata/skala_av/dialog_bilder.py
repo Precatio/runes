@@ -49,27 +49,31 @@ with sync_playwright() as p:
     time.sleep(1.5)
     panel = dlg.locator("xpath=./div")
     panel.screenshot(path=os.path.join(OUT, "so128_fore.png"))
-    print("före:", dlg.inner_text().replace("\n", " ")[:400])
+    t = dlg.inner_text().replace("\n", " ")
+    print("före:", t[t.find("Ladda ned bilden"):][:120])
 
     # the largest grey speck, and a pixel of it near its middle
     lab = labels_of(body)
     pits = sorted((c for c in body["components"] if c["kind"] == "grop"), key=lambda c: -c["area_mm2"])
     big = pits[0]
     rr, cc = np.nonzero(lab == big["id"])
-    k = int(np.argmin((rr - np.median(rr)) ** 2 + (cc - np.median(cc)) ** 2))
+    k = len(rr) // 2
     y, x = int(rr[k]), int(cc[k])
     print("största gropen:", big["area_mm2"], "mm², längd", big["length_mm"], "mm, bildpunkt", x, y)
     box = canvas.bounding_box()
-    pos = (box["x"] + (x + 0.5) * box["width"] / body["width"], box["y"] + (y + 0.5) * box["height"] / body["height"])
+    at = {"x": (x + 0.5) * box["width"] / body["width"], "y": (y + 0.5) * box["height"] / body["height"]}
     dlg.get_by_role("radio", name="Klick gör till spår").click()
-    pg.mouse.move(*pos)
     time.sleep(0.3)
-    pg.mouse.click(*pos)
+    canvas.hover(position=at)
+    time.sleep(0.5)
+    t = dlg.inner_text().replace("\n", " ")
+    print("under pekaren:", t[t.find("bortklickade"):][:120])
+    canvas.click(position=at)
     time.sleep(1.0)
-    pg.mouse.move(box["x"] + 2, box["y"] + 2)
+    pg.mouse.move(3, 3)
     time.sleep(0.5)
     txt = dlg.inner_text().replace("\n", " ")
-    print("efter:", txt[:400])
+    print("efter:", txt[txt.find("spår ("):][:200] if "spår (" in txt else txt[400:800])
     assert "för hand" in txt, "fläcken blev inte spår"
     panel.screenshot(path=os.path.join(OUT, "so128_efter.png"))
     # and it stays a groove when the slider moves
@@ -77,6 +81,8 @@ with sync_playwright() as p:
     slider.focus()
     pg.keyboard.press("ArrowRight")
     time.sleep(5)
-    print("reglaget +0,1 mm:", dlg.inner_text().replace("\n", " ")[:300])
+    t = dlg.inner_text().replace("\n", " ")
+    print("reglaget +0,1 mm:", t[t.find("Ladda ned bilden"):][:120])
+    assert "för hand" in t, "markeringen följde inte med reglaget"
     print("sidfel:", errs)
     b.close()

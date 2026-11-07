@@ -1,7 +1,7 @@
 """Figur till artikeln: vad provet (analysplaner/2026-11-07-skala-av-provet.md) räknar, på en sten. Tre paneler – A
 dagens djupbild, B avskalat och C bara spår – där det visade färgas rostrött inne i Viktors granskade slingor och
 grått utanför; slingornas kant är svart. Samma beräkning som provet.py.
-    PYTHONPATH=. .venv/bin/python utdata/skala_av/provet_figur.py sodermanland So_113_1_4_thin_closed_holes"""
+    PYTHONPATH=. .venv/bin/python utdata/skala_av/provet_figur.py sodermanland So_128_1_4_thin_closed_holes [--en]"""
 import json
 import math
 import os
@@ -19,7 +19,7 @@ FONT = "/System/Library/Fonts/Supplemental/Arial.ttf"
 RUST, GREY, EDGE = (183, 65, 14), (160, 170, 185), (20, 20, 20)
 
 
-def main(series, stem):
+def main(series, stem, en=False):
     import trimesh
 
     from scripts.download_open_scans import local_path
@@ -53,7 +53,9 @@ def main(series, stem):
     edge = band & ~ndimage.binary_erosion(band, iterations=2)
 
     panels = []
-    for name, shown in (("A  Dagens djupbild", A), ("B  Avskalat, allt som är kvar", B), ("C  Avskalat, bara spår", C)):
+    names = (("A  Today's depth image", "B  Peeled, everything left", "C  Peeled, grooves only") if en else
+             ("A  Dagens djupbild", "B  Avskalat, allt som är kvar", "C  Avskalat, bara spår"))
+    for name, shown in zip(names, (A, B, C)):
         s = shown & use
         prec = (s & band).sum() / s.sum()
         img = np.full(surf.H.shape + (3,), 255, np.uint8)
@@ -73,19 +75,22 @@ def main(series, stem):
     y = 10
     for (name, prec, lift, _), im in zip(panels, ims):
         d.text((20, y), name, fill=(15, 23, 42), font=f)
-        d.text((20, y + 34), f"{100 * prec:.0f} % av det visade ligger i slingorna (slumpen: {100 * base:.0f} %), "
-               f"lyft {lift:.2f}".replace(".", ","), fill=(71, 85, 105), font=fs)
+        line = (f"{100 * prec:.0f} % of what is shown lies in the text bands (chance: {100 * base:.0f} %), lift {lift:.2f}"
+                if en else f"{100 * prec:.0f} % av det visade ligger i slingorna (slumpen: {100 * base:.0f} %), "
+                f"lyft {lift:.2f}".replace(".", ","))
+        d.text((20, y + 34), line, fill=(71, 85, 105), font=fs)
         y += head
         out.paste(im, (20, y))
         y += im.height
     ds = next(x for x in scan_sources.DATASETS if x["key"] == series)
-    credit = (f"Skanning: {ds['scanner']}, {ds['institution']}, {ds['license']}, doi:{ds['doi']}. Slingor: Viktor Kvant. "
-              "Bild: Vitki.")
+    credit = (f"Scan: {ds['scanner']}, {ds['institution']}, {ds['license']}, doi:{ds['doi']}. Text bands: Viktor Kvant. "
+              "Image: Vitki." if en else f"Skanning: {ds['scanner']}, {ds['institution']}, {ds['license']}, doi:{ds['doi']}. "
+              "Slingor: Viktor Kvant. Bild: Vitki.")
     d.text((20, H - 40), credit, fill=(100, 116, 139), font=ImageFont.truetype(FONT, 16))
-    path = os.path.join(HERE, f"provet_figur_{stem}.png")
+    path = os.path.join(HERE, f"provet_figur_{stem}{'_en' if en else ''}.png")
     out.save(path, optimize=True)
     print(path, [(n, round(float(p), 3), round(float(l), 2)) for n, p, l, _ in panels], "slump", round(float(base), 3))
 
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1], sys.argv[2], "--en" in sys.argv)

@@ -1332,7 +1332,15 @@ sekunder.
 vittringen runt omkring, eller finare än skanningens upplösning, kommer inte tillbaka, och ett för högt reglagevärde
 tar bort svaga stavar. På grovkorniga stenar, där kornen är lika djupa som strecken (som Hs 14), hjälper den inte.
 Bilden är en hjälp att se, inte en läsning; den som använder den bör ange reglagets värde och vad som klickats bort.
-Hur mycket den hjälper är ännu inte mätt (ett prov på KÅ-skanningarna med kända runor är planerat).
+**Provat 2026-11-07** under låst plan (`analysplaner/2026-11-07-skala-av-provet.md`, `utdata/skala_av/provet.md`) mot
+Viktors granskade runslingor på 95 skanningsfiler i sex serier: hur stor del av det bilden visar som ligger inne i
+textslingorna, jämfört med dagens djupbild avskuren med en gemensam gräns som visar lika stor del av ytan. Avskalningen
+med lokal vittringsnivå samlar sig **inte** bättre i texten: lyftet över slumpen är i median 1,23 mot 1,30 för den
+gemensamma gränsen, och den lokala nivån var bättre på 16 % av filerna. Bara spåren (rostrött) ger i median 1,33 mot 1,34
+vid samma visade yta (bättre på 40 %). Den lokala nivån visar per konstruktion ungefär lika stor del av varje ruta, också
+rutor utan text (ornamentik, sprickor, tomma fält); en gemensam gräns samlar sig där det är djupast, som oftast är
+runorna. Bildens värde ligger alltså i snittet, sorteringen i spår och gropar och läsarens klick, inte i att den lokala
+nivån hittar mer text.
 
 ### 2e. Robusthet
 
