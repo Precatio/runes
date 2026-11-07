@@ -1,0 +1,1497 @@
+{
+ "plan": "analysplaner/2026-11-01-upplands-folkland.md",
+ "plan_sha": "48346775",
+ "rerun": "2026-11-05: rättad landindelning (parish_medieval i historiska_land.json); v1 i folkland_v1.json",
+ "n": {
+  "tiundaland": 320,
+  "attundaland": 366,
+  "fjadrundaland": 128,
+  "roden": 59
+ },
+ "step1": {
+  "cat_kristen": {
+   "lr": 10.224093000228095,
+   "df": 3,
+   "p": 0.01675423266645093,
+   "shares": {
+    "attundaland": [
+     85,
+     366
+    ],
+    "fjadrundaland": [
+     32,
+     128
+    ],
+    "roden": [
+     5,
+     59
+    ],
+    "tiundaland": [
+     49,
+     320
+    ]
+   },
+   "q": 0.034797252461090396
+  },
+  "pm_kors": {
+   "lr": 56.94197364185152,
+   "df": 3,
+   "p": 2.6442307955364393e-12,
+   "shares": {
+    "attundaland": [
+     223,
+     366
+    ],
+    "fjadrundaland": [
+     45,
+     128
+    ],
+    "roden": [
+     24,
+     59
+    ],
+    "tiundaland": [
+     208,
+     320
+    ]
+   },
+   "q": 7.139423147948387e-11
+  },
+  "pm_bon": {
+   "lr": 8.211872985757736,
+   "df": 3,
+   "p": 0.04182998161254081,
+   "shares": {
+    "attundaland": [
+     75,
+     264
+    ],
+    "fjadrundaland": [
+     27,
+     104
+    ],
+    "roden": [
+     5,
+     43
+    ],
+    "tiundaland": [
+     44,
+     251
+    ]
+   },
+   "q": 0.07529396690257345
+  },
+  "pm_sjal": {
+   "lr": 4.019187782493759,
+   "df": 3,
+   "p": 0.2593996364160344,
+   "shares": {
+    "attundaland": [
+     72,
+     264
+    ],
+    "fjadrundaland": [
+     25,
+     104
+    ],
+    "roden": [
+     8,
+     43
+    ],
+    "tiundaland": [
+     40,
+     251
+    ]
+   },
+   "q": 0.31835409923786046
+  },
+  "pm_hednisk": {
+   "lr": 2.7054587949214017,
+   "df": 3,
+   "p": 0.43930042630937916,
+   "shares": {
+    "attundaland": [
+     0,
+     366
+    ],
+    "fjadrundaland": [
+     1,
+     128
+    ],
+    "roden": [
+     0,
+     59
+    ],
+    "tiundaland": [
+     0,
+     320
+    ]
+   },
+   "q": 0.47444446041412947
+  },
+  "cat_fard": {
+   "lr": 5.27499490943967,
+   "df": 3,
+   "p": 0.15273318754665824,
+   "shares": {
+    "attundaland": [
+     28,
+     366
+    ],
+    "fjadrundaland": [
+     6,
+     128
+    ],
+    "roden": [
+     8,
+     59
+    ],
+    "tiundaland": [
+     15,
+     320
+    ]
+   },
+   "q": 0.21032266285037898
+  },
+  "msg_dod_borta": {
+   "lr": 9.690875022011085,
+   "df": 3,
+   "p": 0.02138511573350482,
+   "shares": {
+    "attundaland": [
+     17,
+     361
+    ],
+    "fjadrundaland": [
+     3,
+     127
+    ],
+    "roden": [
+     7,
+     59
+    ],
+    "tiundaland": [
+     6,
+     320
+    ]
+   },
+   "q": 0.041242723200330726
+  },
+  "msg_berom": {
+   "lr": 19.2618186894843,
+   "df": 3,
+   "p": 0.00024134865816097188,
+   "shares": {
+    "attundaland": [
+     23,
+     361
+    ],
+    "fjadrundaland": [
+     23,
+     127
+    ],
+    "roden": [
+     6,
+     59
+    ],
+    "tiundaland": [
+     15,
+     320
+    ]
+   },
+   "q": 0.0009309162529066059
+  },
+  "cat_bro_vag": {
+   "lr": 6.139776859918868,
+   "df": 3,
+   "p": 0.10500430926740613,
+   "shares": {
+    "attundaland": [
+     37,
+     366
+    ],
+    "fjadrundaland": [
+     5,
+     128
+    ],
+    "roden": [
+     8,
+     59
+    ],
+    "tiundaland": [
+     23,
+     320
+    ]
+   },
+   "q": 0.16677155001293917
+  },
+  "kvinna_resare": {
+   "lr": 10.67131315987126,
+   "df": 3,
+   "p": 0.013642695659569562,
+   "shares": {
+    "attundaland": [
+     122,
+     295
+    ],
+    "fjadrundaland": [
+     30,
+     113
+    ],
+    "roden": [
+     19,
+     48
+    ],
+    "tiundaland": [
+     88,
+     268
+    ]
+   },
+   "q": 0.030696065234031514
+  },
+  "kvinna_ensam": {
+   "lr": 7.090181452607112,
+   "df": 3,
+   "p": 0.06907825899146168,
+   "shares": {
+    "attundaland": [
+     48,
+     295
+    ],
+    "fjadrundaland": [
+     17,
+     113
+    ],
+    "roden": [
+     10,
+     48
+    ],
+    "tiundaland": [
+     28,
+     268
+    ]
+   },
+   "q": 0.11656956204809159
+  },
+  "flera_resare": {
+   "lr": 22.66918240778614,
+   "df": 3,
+   "p": 4.732970219015791e-05,
+   "shares": {
+    "attundaland": [
+     187,
+     295
+    ],
+    "fjadrundaland": [
+     48,
+     113
+    ],
+    "roden": [
+     27,
+     48
+    ],
+    "tiundaland": [
+     177,
+     268
+    ]
+   },
+   "q": 0.00021298365985571058
+  },
+  "rel_barn": {
+   "lr": 12.045086010582509,
+   "df": 3,
+   "p": 0.007230299889925709,
+   "shares": {
+    "attundaland": [
+     68,
+     253
+    ],
+    "fjadrundaland": [
+     24,
+     99
+    ],
+    "roden": [
+     10,
+     40
+    ],
+    "tiundaland": [
+     38,
+     240
+    ]
+   },
+   "q": 0.019521809702799413
+  },
+  "rel_foralder": {
+   "lr": 15.452497886841911,
+   "df": 3,
+   "p": 0.0014680826309316822,
+   "shares": {
+    "attundaland": [
+     119,
+     253
+    ],
+    "fjadrundaland": [
+     42,
+     99
+    ],
+    "roden": [
+     16,
+     40
+    ],
+    "tiundaland": [
+     146,
+     240
+    ]
+   },
+   "q": 0.004954778879394428
+  },
+  "rel_syskon": {
+   "lr": 2.5161636650165065,
+   "df": 3,
+   "p": 0.47237702823931516,
+   "shares": {
+    "attundaland": [
+     49,
+     253
+    ],
+    "fjadrundaland": [
+     15,
+     99
+    ],
+    "roden": [
+     4,
+     40
+    ],
+    "tiundaland": [
+     39,
+     240
+    ]
+   },
+   "q": 0.49054537547928884
+  },
+  "rel_make": {
+   "lr": 2.396377806730129,
+   "df": 3,
+   "p": 0.4943092490235722,
+   "shares": {
+    "attundaland": [
+     36,
+     253
+    ],
+    "fjadrundaland": [
+     12,
+     99
+    ],
+    "roden": [
+     8,
+     40
+    ],
+    "tiundaland": [
+     29,
+     240
+    ]
+   },
+   "q": 0.49430924902357226
+  },
+  "drengr": {
+   "lr": 10.98275345947809,
+   "df": 3,
+   "p": 0.011819500628769979,
+   "shares": {
+    "attundaland": [
+     2,
+     366
+    ],
+    "fjadrundaland": [
+     6,
+     128
+    ],
+    "roden": [
+     1,
+     59
+    ],
+    "tiundaland": [
+     1,
+     320
+    ]
+   },
+   "q": 0.029011501543344496
+  },
+  "thegn": {
+   "lr": 5.2287278645701605,
+   "df": 3,
+   "p": 0.1557945650743548,
+   "shares": {
+    "attundaland": [
+     6,
+     366
+    ],
+    "fjadrundaland": [
+     0,
+     128
+    ],
+    "roden": [
+     1,
+     59
+    ],
+    "tiundaland": [
+     5,
+     320
+    ]
+   },
+   "q": 0.21032266285037898
+  },
+  "pm_signatur": {
+   "lr": 3.444068219590008,
+   "df": 3,
+   "p": 0.3280890652723557,
+   "shares": {
+    "attundaland": [
+     45,
+     264
+    ],
+    "fjadrundaland": [
+     27,
+     104
+    ],
+    "roden": [
+     9,
+     43
+    ],
+    "tiundaland": [
+     46,
+     251
+    ]
+   },
+   "q": 0.38514803314580887
+  },
+  "ord_kumbl": {
+   "lr": 2.7826594511045784,
+   "df": 3,
+   "p": 0.4263624410720478,
+   "shares": {
+    "attundaland": [
+     1,
+     366
+    ],
+    "fjadrundaland": [
+     2,
+     128
+    ],
+    "roden": [
+     0,
+     59
+    ],
+    "tiundaland": [
+     2,
+     320
+    ]
+   },
+   "q": 0.47444446041412947
+  },
+  "mat_granit": {
+   "lr": 38.18946291058023,
+   "df": 3,
+   "p": 2.5770988893617148e-08,
+   "shares": {
+    "attundaland": [
+     222,
+     307
+    ],
+    "fjadrundaland": [
+     95,
+     108
+    ],
+    "roden": [
+     33,
+     44
+    ],
+    "tiundaland": [
+     239,
+     265
+    ]
+   },
+   "q": 3.479083500638315e-07
+  },
+  "pm_stungna": {
+   "lr": 13.156418378807075,
+   "df": 3,
+   "p": 0.004310267135111804,
+   "shares": {
+    "attundaland": [
+     146,
+     264
+    ],
+    "fjadrundaland": [
+     68,
+     104
+    ],
+    "roden": [
+     13,
+     43
+    ],
+    "tiundaland": [
+     149,
+     251
+    ]
+   },
+   "q": 0.012930801405335413
+  },
+  "monoftong": {
+   "lr": 33.71065342618738,
+   "df": 3,
+   "p": 2.280350134598175e-07,
+   "shares": {
+    "attundaland": [
+     89,
+     215
+    ],
+    "fjadrundaland": [
+     60,
+     90
+    ],
+    "roden": [
+     7,
+     28
+    ],
+    "tiundaland": [
+     98,
+     177
+    ]
+   },
+   "q": 2.0523151211383577e-06
+  },
+  "r_for_R": {
+   "lr": 25.61593025730599,
+   "df": 3,
+   "p": 1.1476876844909342e-05,
+   "shares": {
+    "attundaland": [
+     28,
+     207
+    ],
+    "fjadrundaland": [
+     32,
+     64
+    ],
+    "roden": [
+     3,
+     26
+    ],
+    "tiundaland": [
+     26,
+     137
+    ]
+   },
+   "q": 6.197513496251045e-05
+  },
+  "o_runa": {
+   "lr": 5.290857832790948,
+   "df": 3,
+   "p": 0.1516967136916847,
+   "shares": {
+    "attundaland": [
+     53,
+     130
+    ],
+    "fjadrundaland": [
+     10,
+     41
+    ],
+    "roden": [
+     6,
+     17
+    ],
+    "tiundaland": [
+     34,
+     75
+    ]
+   },
+   "q": 0.21032266285037898
+  },
+  "prep_at": {
+   "lr": 31.007575086432098,
+   "df": 3,
+   "p": 8.469319162043424e-07,
+   "shares": {
+    "attundaland": [
+     39,
+     269
+    ],
+    "fjadrundaland": [
+     38,
+     97
+    ],
+    "roden": [
+     10,
+     43
+    ],
+    "tiundaland": [
+     80,
+     248
+    ]
+   },
+   "q": 5.716790434379311e-06
+  },
+  "ord_þennsa": {
+   "lr": 4.0331885579940945,
+   "df": 3,
+   "p": 0.25790259460234993,
+   "shares": {
+    "attundaland": [
+     22,
+     366
+    ],
+    "fjadrundaland": [
+     13,
+     128
+    ],
+    "roden": [
+     2,
+     59
+    ],
+    "tiundaland": [
+     14,
+     320
+    ]
+   },
+   "q": 0.31835409923786046
+  }
+ },
+ "step2": {
+  "cat_kristen": {
+   "halves": [
+    {
+     "lr": 7.840365668527795,
+     "df": 3,
+     "p": 0.049428685763616205,
+     "shares": {
+      "attundaland": [
+       42,
+       197
+      ],
+      "fjadrundaland": [
+       12,
+       48
+      ],
+      "roden": [
+       2,
+       38
+      ],
+      "tiundaland": [
+       28,
+       198
+      ]
+     }
+    },
+    {
+     "lr": 1.9407426067947426,
+     "df": 3,
+     "p": 0.5847964281754294,
+     "shares": {
+      "attundaland": [
+       43,
+       169
+      ],
+      "fjadrundaland": [
+       20,
+       80
+      ],
+      "roden": [
+       3,
+       21
+      ],
+      "tiundaland": [
+       21,
+       122
+      ]
+     }
+    }
+   ],
+   "holds": false
+  },
+  "pm_kors": {
+   "halves": [
+    {
+     "lr": 32.29058323724246,
+     "df": 3,
+     "p": 4.545074597977412e-07,
+     "shares": {
+      "attundaland": [
+       116,
+       197
+      ],
+      "fjadrundaland": [
+       15,
+       48
+      ],
+      "roden": [
+       14,
+       38
+      ],
+      "tiundaland": [
+       129,
+       198
+      ]
+     }
+    },
+    {
+     "lr": 27.133264911274523,
+     "df": 3,
+     "p": 5.520518926620516e-06,
+     "shares": {
+      "attundaland": [
+       107,
+       169
+      ],
+      "fjadrundaland": [
+       30,
+       80
+      ],
+      "roden": [
+       10,
+       21
+      ],
+      "tiundaland": [
+       79,
+       122
+      ]
+     }
+    }
+   ],
+   "holds": true
+  },
+  "msg_dod_borta": {
+   "halves": [
+    {
+     "lr": 9.395648985396207,
+     "df": 3,
+     "p": 0.024467788388323548,
+     "shares": {
+      "attundaland": [
+       8,
+       194
+      ],
+      "fjadrundaland": [
+       1,
+       47
+      ],
+      "roden": [
+       6,
+       38
+      ],
+      "tiundaland": [
+       4,
+       198
+      ]
+     }
+    },
+    {
+     "lr": 2.305685354889178,
+     "df": 3,
+     "p": 0.5114326189840974,
+     "shares": {
+      "attundaland": [
+       9,
+       167
+      ],
+      "fjadrundaland": [
+       2,
+       80
+      ],
+      "roden": [
+       1,
+       21
+      ],
+      "tiundaland": [
+       2,
+       122
+      ]
+     }
+    }
+   ],
+   "holds": false
+  },
+  "msg_berom": {
+   "halves": [
+    {
+     "lr": 10.108648776919608,
+     "df": 3,
+     "p": 0.017664803434144578,
+     "shares": {
+      "attundaland": [
+       12,
+       194
+      ],
+      "fjadrundaland": [
+       8,
+       47
+      ],
+      "roden": [
+       5,
+       38
+      ],
+      "tiundaland": [
+       9,
+       198
+      ]
+     }
+    },
+    {
+     "lr": 10.848095015407182,
+     "df": 3,
+     "p": 0.01257629173716378,
+     "shares": {
+      "attundaland": [
+       11,
+       167
+      ],
+      "fjadrundaland": [
+       15,
+       80
+      ],
+      "roden": [
+       1,
+       21
+      ],
+      "tiundaland": [
+       6,
+       122
+      ]
+     }
+    }
+   ],
+   "holds": true
+  },
+  "kvinna_resare": {
+   "halves": [
+    {
+     "lr": 15.61635785716453,
+     "df": 3,
+     "p": 0.0013589693193308487,
+     "shares": {
+      "attundaland": [
+       67,
+       159
+      ],
+      "fjadrundaland": [
+       6,
+       44
+      ],
+      "roden": [
+       12,
+       31
+      ],
+      "tiundaland": [
+       54,
+       163
+      ]
+     }
+    },
+    {
+     "lr": 2.077769573900696,
+     "df": 3,
+     "p": 0.5564232054270968,
+     "shares": {
+      "attundaland": [
+       55,
+       136
+      ],
+      "fjadrundaland": [
+       24,
+       69
+      ],
+      "roden": [
+       7,
+       17
+      ],
+      "tiundaland": [
+       34,
+       105
+      ]
+     }
+    }
+   ],
+   "holds": false
+  },
+  "flera_resare": {
+   "halves": [
+    {
+     "lr": 8.963024284888888,
+     "df": 3,
+     "p": 0.029786559837801378,
+     "shares": {
+      "attundaland": [
+       93,
+       159
+      ],
+      "fjadrundaland": [
+       18,
+       44
+      ],
+      "roden": [
+       18,
+       31
+      ],
+      "tiundaland": [
+       106,
+       163
+      ]
+     }
+    },
+    {
+     "lr": 17.41319639129148,
+     "df": 3,
+     "p": 0.0005810732847497192,
+     "shares": {
+      "attundaland": [
+       94,
+       136
+      ],
+      "fjadrundaland": [
+       30,
+       69
+      ],
+      "roden": [
+       9,
+       17
+      ],
+      "tiundaland": [
+       71,
+       105
+      ]
+     }
+    }
+   ],
+   "holds": false
+  },
+  "rel_barn": {
+   "halves": [
+    {
+     "lr": 4.019571172698932,
+     "df": 3,
+     "p": 0.25935853721105984,
+     "shares": {
+      "attundaland": [
+       32,
+       130
+      ],
+      "fjadrundaland": [
+       6,
+       37
+      ],
+      "roden": [
+       5,
+       26
+      ],
+      "tiundaland": [
+       24,
+       150
+      ]
+     }
+    },
+    {
+     "lr": 10.363754779497754,
+     "df": 3,
+     "p": 0.015714189888888154,
+     "shares": {
+      "attundaland": [
+       36,
+       123
+      ],
+      "fjadrundaland": [
+       18,
+       62
+      ],
+      "roden": [
+       5,
+       14
+      ],
+      "tiundaland": [
+       14,
+       90
+      ]
+     }
+    }
+   ],
+   "holds": false
+  },
+  "rel_foralder": {
+   "halves": [
+    {
+     "lr": 2.8292994917987357,
+     "df": 3,
+     "p": 0.4186993831637108,
+     "shares": {
+      "attundaland": [
+       62,
+       130
+      ],
+      "fjadrundaland": [
+       18,
+       37
+      ],
+      "roden": [
+       13,
+       26
+      ],
+      "tiundaland": [
+       89,
+       150
+      ]
+     }
+    },
+    {
+     "lr": 20.23699114862262,
+     "df": 3,
+     "p": 0.00015158760043145747,
+     "shares": {
+      "attundaland": [
+       57,
+       123
+      ],
+      "fjadrundaland": [
+       24,
+       62
+      ],
+      "roden": [
+       3,
+       14
+      ],
+      "tiundaland": [
+       57,
+       90
+      ]
+     }
+    }
+   ],
+   "holds": false
+  },
+  "drengr": {
+   "halves": [
+    {
+     "lr": 6.914021389246379,
+     "df": 3,
+     "p": 0.07468928311386211,
+     "shares": {
+      "attundaland": [
+       1,
+       197
+      ],
+      "fjadrundaland": [
+       2,
+       48
+      ],
+      "roden": [
+       0,
+       38
+      ],
+      "tiundaland": [
+       0,
+       198
+      ]
+     }
+    },
+    {
+     "lr": 5.564860379660843,
+     "df": 3,
+     "p": 0.1348103073485218,
+     "shares": {
+      "attundaland": [
+       1,
+       169
+      ],
+      "fjadrundaland": [
+       4,
+       80
+      ],
+      "roden": [
+       1,
+       21
+      ],
+      "tiundaland": [
+       1,
+       122
+      ]
+     }
+    }
+   ],
+   "holds": false
+  },
+  "mat_granit": {
+   "halves": [
+    {
+     "lr": 15.631357626021327,
+     "df": 3,
+     "p": 0.001349392703799962,
+     "shares": {
+      "attundaland": [
+       125,
+       164
+      ],
+      "fjadrundaland": [
+       33,
+       41
+      ],
+      "roden": [
+       23,
+       26
+      ],
+      "tiundaland": [
+       145,
+       160
+      ]
+     }
+    },
+    {
+     "lr": 33.0458079320166,
+     "df": 3,
+     "p": 3.1498072159878146e-07,
+     "shares": {
+      "attundaland": [
+       97,
+       143
+      ],
+      "fjadrundaland": [
+       62,
+       67
+      ],
+      "roden": [
+       10,
+       18
+      ],
+      "tiundaland": [
+       94,
+       105
+      ]
+     }
+    }
+   ],
+   "holds": false
+  },
+  "pm_stungna": {
+   "halves": [
+    {
+     "lr": 12.22567235411384,
+     "df": 3,
+     "p": 0.0066487596844646245,
+     "shares": {
+      "attundaland": [
+       76,
+       144
+      ],
+      "fjadrundaland": [
+       26,
+       39
+      ],
+      "roden": [
+       7,
+       28
+      ],
+      "tiundaland": [
+       96,
+       150
+      ]
+     }
+    },
+    {
+     "lr": 5.882971809302262,
+     "df": 3,
+     "p": 0.11744481270877667,
+     "shares": {
+      "attundaland": [
+       70,
+       120
+      ],
+      "fjadrundaland": [
+       42,
+       65
+      ],
+      "roden": [
+       6,
+       15
+      ],
+      "tiundaland": [
+       53,
+       101
+      ]
+     }
+    }
+   ],
+   "holds": false
+  },
+  "monoftong": {
+   "halves": [
+    {
+     "lr": 25.4893297287922,
+     "df": 3,
+     "p": 1.219872691842909e-05,
+     "shares": {
+      "attundaland": [
+       58,
+       120
+      ],
+      "fjadrundaland": [
+       28,
+       32
+      ],
+      "roden": [
+       6,
+       20
+      ],
+      "tiundaland": [
+       64,
+       113
+      ]
+     }
+    },
+    {
+     "lr": 17.803786674051707,
+     "df": 3,
+     "p": 0.00048279295704005073,
+     "shares": {
+      "attundaland": [
+       31,
+       95
+      ],
+      "fjadrundaland": [
+       32,
+       58
+      ],
+      "roden": [
+       1,
+       8
+      ],
+      "tiundaland": [
+       34,
+       64
+      ]
+     }
+    }
+   ],
+   "holds": true
+  },
+  "r_for_R": {
+   "halves": [
+    {
+     "lr": 17.812642121486334,
+     "df": 3,
+     "p": 0.0004807679503882955,
+     "shares": {
+      "attundaland": [
+       11,
+       114
+      ],
+      "fjadrundaland": [
+       12,
+       22
+      ],
+      "roden": [
+       2,
+       18
+      ],
+      "tiundaland": [
+       17,
+       82
+      ]
+     }
+    },
+    {
+     "lr": 9.821931841390608,
+     "df": 3,
+     "p": 0.020142034720106068,
+     "shares": {
+      "attundaland": [
+       17,
+       93
+      ],
+      "fjadrundaland": [
+       20,
+       42
+      ],
+      "roden": [
+       1,
+       8
+      ],
+      "tiundaland": [
+       9,
+       55
+      ]
+     }
+    }
+   ],
+   "holds": true
+  },
+  "prep_at": {
+   "halves": [
+    {
+     "lr": 14.233188997750688,
+     "df": 3,
+     "p": 0.0026043281157988557,
+     "shares": {
+      "attundaland": [
+       20,
+       142
+      ],
+      "fjadrundaland": [
+       15,
+       35
+      ],
+      "roden": [
+       7,
+       28
+      ],
+      "tiundaland": [
+       45,
+       151
+      ]
+     }
+    },
+    {
+     "lr": 16.97863764159274,
+     "df": 3,
+     "p": 0.0007139280306427554,
+     "shares": {
+      "attundaland": [
+       19,
+       127
+      ],
+      "fjadrundaland": [
+       23,
+       62
+      ],
+      "roden": [
+       3,
+       15
+      ],
+      "tiundaland": [
+       35,
+       97
+      ]
+     }
+    }
+   ],
+   "holds": true
+  }
+ },
+ "neighbours": {
+  "tiundaland-attundaland": true,
+  "tiundaland-fjadrundaland": true,
+  "tiundaland-roden": false,
+  "attundaland-fjadrundaland": false,
+  "attundaland-roden": true,
+  "fjadrundaland-roden": false
+ },
+ "step3": {
+  "pm_kors": {
+   "high": "tiundaland",
+   "low": "fjadrundaland",
+   "border_high": [
+    45,
+    74
+   ],
+   "border_low": [
+    13,
+    34
+   ],
+   "inner_high": [
+    163,
+    246
+   ],
+   "inner_low": [
+    32,
+    94
+   ],
+   "p": 0.02389896979682951,
+   "at_border": true
+  },
+  "msg_berom": {
+   "high": "fjadrundaland",
+   "low": "tiundaland",
+   "border_high": [
+    5,
+    34
+   ],
+   "border_low": [
+    2,
+    74
+   ],
+   "inner_high": [
+    18,
+    93
+   ],
+   "inner_low": [
+    13,
+    246
+   ],
+   "p": 0.030716395892312197,
+   "at_border": true
+  },
+  "monoftong": {
+   "high": "attundaland",
+   "low": "roden",
+   "border_high": [
+    35,
+    85
+   ],
+   "border_low": [
+    6,
+    24
+   ],
+   "inner_high": [
+    54,
+    130
+   ],
+   "inner_low": [
+    1,
+    4
+   ],
+   "p": 0.11265906334300806,
+   "at_border": false
+  },
+  "r_for_R": {
+   "high": "fjadrundaland",
+   "low": "tiundaland",
+   "border_high": [
+    7,
+    18
+   ],
+   "border_low": [
+    8,
+    35
+   ],
+   "inner_high": [
+    25,
+    46
+   ],
+   "inner_low": [
+    18,
+    102
+   ],
+   "p": 0.18209735287520137,
+   "at_border": false
+  },
+  "prep_at": {
+   "high": "tiundaland",
+   "low": "attundaland",
+   "border_high": [
+    23,
+    59
+   ],
+   "border_low": [
+    5,
+    49
+   ],
+   "inner_high": [
+    57,
+    189
+   ],
+   "inner_low": [
+    34,
+    220
+   ],
+   "p": 0.0005384863018492808,
+   "at_border": true
+  }
+ }
+}

@@ -1,0 +1,131 @@
+{
+ "note": "explorativt, utanför planen: steg 3 med grannskap på alla sockenpunkter",
+ "neighbours_all_points": {
+  "tiundaland-attundaland": true,
+  "tiundaland-fjadrundaland": true,
+  "tiundaland-roden": true,
+  "attundaland-fjadrundaland": true,
+  "attundaland-roden": true,
+  "fjadrundaland-roden": false
+ },
+ "neighbours_script": {
+  "tiundaland-attundaland": true,
+  "tiundaland-fjadrundaland": true,
+  "tiundaland-roden": false,
+  "attundaland-fjadrundaland": false,
+  "attundaland-roden": true,
+  "fjadrundaland-roden": false
+ },
+ "tests": {
+  "pm_kors": {
+   "high": "tiundaland",
+   "low": "fjadrundaland",
+   "border_high": [
+    45,
+    74
+   ],
+   "border_low": [
+    13,
+    34
+   ],
+   "inner_high": [
+    163,
+    246
+   ],
+   "inner_low": [
+    32,
+    94
+   ],
+   "p": 0.02389896979682951,
+   "at_border": true
+  },
+  "msg_berom": {
+   "high": "fjadrundaland",
+   "low": "tiundaland",
+   "border_high": [
+    5,
+    34
+   ],
+   "border_low": [
+    2,
+    74
+   ],
+   "inner_high": [
+    18,
+    93
+   ],
+   "inner_low": [
+    13,
+    246
+   ],
+   "p": 0.030716395892312197,
+   "at_border": true
+  },
+  "monoftong": {
+   "high": "tiundaland",
+   "low": "roden",
+   "border_high": [
+    0,
+    1
+   ],
+   "border_low": [
+    1,
+    1
+   ],
+   "inner_high": [
+    98,
+    176
+   ],
+   "inner_low": [
+    6,
+    27
+   ],
+   "p": 1.0,
+   "at_border": false
+  },
+  "r_for_R": {
+   "high": "fjadrundaland",
+   "low": "attundaland",
+   "border_high": [
+    0,
+    2
+   ],
+   "border_low": [
+    2,
+    7
+   ],
+   "inner_high": [
+    32,
+    62
+   ],
+   "inner_low": [
+    26,
+    200
+   ],
+   "p": 1.0,
+   "at_border": false
+  },
+  "prep_at": {
+   "high": "fjadrundaland",
+   "low": "attundaland",
+   "border_high": [
+    1,
+    4
+   ],
+   "border_low": [
+    4,
+    7
+   ],
+   "inner_high": [
+    37,
+    93
+   ],
+   "inner_low": [
+    35,
+    262
+   ],
+   "p": 0.9545454545454546,
+   "at_border": false
+  }
+ }
+}

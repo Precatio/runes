@@ -10,31 +10,31 @@
  "stones": 873,
  "features": 24,
  "alla": {
-  "chi2_real": 325.0755683637764,
-  "chi2_median_random": 153.19965903131123,
-  "chi2_p95_random": 226.03335651824085,
-  "p": 0.004,
+  "chi2_real": 308.49234846616486,
+  "chi2_median_random": 146.77527614324794,
+  "chi2_p95_random": 215.45426580082753,
+  "p": 0.005,
   "k_real": 14,
-  "k_median_random": 7.0,
-  "p_k": 0.018
+  "k_median_random": 6.0,
+  "p_k": 0.014
  },
  "A": {
-  "chi2_real": 206.93473042636128,
-  "chi2_median_random": 113.29141307719863,
-  "chi2_p95_random": 157.4329357999386,
+  "chi2_real": 200.0674192029711,
+  "chi2_median_random": 111.03301961874342,
+  "chi2_p95_random": 152.4021571004331,
   "p": 0.002,
   "k_real": 11,
   "k_median_random": 4.0,
-  "p_k": 0.012
+  "p_k": 0.009
  },
  "B": {
-  "chi2_real": 198.0064391193087,
-  "chi2_median_random": 107.91625492191932,
-  "chi2_p95_random": 150.7738260522419,
+  "chi2_real": 190.26039024008918,
+  "chi2_median_random": 105.03831541197755,
+  "chi2_p95_random": 147.73615642386818,
   "p": 0.003,
   "k_real": 8,
   "k_median_random": 4.0,
-  "p_k": 0.056
+  "p_k": 0.044
  },
  "holds": true
 }

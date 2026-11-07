@@ -1,25 +1,25 @@
 {
   "plan": "analysplaner/2026-11-01-folkland-at-ristare.md",
-  "n": 517,
-  "n_border": 108,
+  "n": 572,
+  "n_border": 124,
   "step1": {
     "border": {
-      "n": 108,
-      "beta": 1.774874067506,
-      "se": 0.595233259285007,
-      "or": 5.89953814598449,
-      "p": 0.00286547286382815,
-      "p1": 0.00143273643191407,
-      "ristare_sd": 0.485106655216123
+      "n": 124,
+      "beta": 1.00003269071472,
+      "se": 0.530051419352052,
+      "or": 2.71837069248734,
+      "p": 0.0592045780408936,
+      "p1": 0.0296022890204468,
+      "ristare_sd": 0.87179102156351
     },
     "all": {
-      "n": 517,
-      "beta": 1.12385797499492,
-      "se": 0.31860675143301,
-      "or": 3.07670117213299,
-      "p": 0.000419639762108298,
-      "p1": 0.000209819881054149,
-      "ristare_sd": 1.36873091966939
+      "n": 572,
+      "beta": 0.504813846109851,
+      "se": 0.23355301792254,
+      "or": 1.6566770948685,
+      "p": 0.0306603721164139,
+      "p1": 0.015330186058207,
+      "ristare_sd": 0.830902529113941
     }
   },
   "holds_with_carvers": true,
@@ -27,32 +27,32 @@
     "carvers": [
       {
         "carver": "Åsmund",
-        "n_t": 16,
-        "at_t": 1,
-        "n_a": 12,
-        "at_a": 0,
-        "share_t": 0.0625,
-        "share_a": 0,
+        "n_t": 18,
+        "at_t": 4,
+        "n_a": 13,
+        "at_a": 1,
+        "share_t": 0.222222222222222,
+        "share_a": 0.0769230769230769,
         "_row": "Åsmund"
       },
       {
         "carver": "Fot 2",
-        "n_t": 14,
+        "n_t": 16,
         "at_t": 5,
-        "n_a": 22,
-        "at_a": 3,
-        "share_t": 0.357142857142857,
-        "share_a": 0.136363636363636,
+        "n_a": 25,
+        "at_a": 6,
+        "share_t": 0.3125,
+        "share_a": 0.24,
         "_row": "Fot 2"
       },
       {
         "carver": "Öpir 1",
-        "n_t": 39,
-        "at_t": 21,
-        "n_a": 23,
-        "at_a": 4,
-        "share_t": 0.538461538461538,
-        "share_a": 0.173913043478261,
+        "n_t": 40,
+        "at_t": 23,
+        "n_a": 25,
+        "at_a": 9,
+        "share_t": 0.575,
+        "share_a": 0.36,
         "_row": "Öpir 1"
       }
     ],
@@ -62,55 +62,55 @@
     "sign_p": 0.125
   },
   "step3": {
-    "named_stones": 274,
-    "carvers": 43,
-    "carvers_both_sides": 6,
-    "stones_by_both_side_carvers": 168
+    "named_stones": 296,
+    "carvers": 45,
+    "carvers_both_sides": 8,
+    "stones_by_both_side_carvers": 211
   },
   "top_carvers": [
     {
       "carver": "Öpir 1",
-      "n_t": 39,
-      "at_t": 21,
-      "n_a": 23,
-      "at_a": 4,
+      "n_t": 40,
+      "at_t": 23,
+      "n_a": 25,
+      "at_a": 9,
       "_row": "Öpir 1"
     },
     {
       "carver": "Fot 2",
-      "n_t": 14,
+      "n_t": 16,
       "at_t": 5,
-      "n_a": 22,
-      "at_a": 3,
+      "n_a": 25,
+      "at_a": 6,
       "_row": "Fot 2"
     },
     {
       "carver": "Åsmund",
-      "n_t": 16,
-      "at_t": 1,
-      "n_a": 12,
-      "at_a": 0,
+      "n_t": 18,
+      "at_t": 4,
+      "n_a": 13,
+      "at_a": 1,
       "_row": "Åsmund"
     },
     {
       "carver": "Gunnar",
       "n_t": 1,
       "at_t": 0,
-      "n_a": 24,
-      "at_a": 2,
+      "n_a": 26,
+      "at_a": 7,
       "_row": "Gunnar"
     },
     {
       "carver": "Visäte",
-      "n_t": 0,
+      "n_t": 1,
       "at_t": 0,
-      "n_a": 22,
-      "at_a": 0,
+      "n_a": 25,
+      "at_a": 3,
       "_row": "Visäte"
     },
     {
       "carver": "Arbjörn",
-      "n_t": 12,
+      "n_t": 13,
       "at_t": 5,
       "n_a": 1,
       "at_a": 0,
@@ -165,19 +165,19 @@
       "_row": "Balle"
     },
     {
-      "carver": "Grim skald",
-      "n_t": 4,
-      "at_t": 3,
-      "n_a": 0,
+      "carver": "Sven 1",
+      "n_t": 0,
+      "at_t": 0,
+      "n_a": 4,
       "at_a": 0,
-      "_row": "Grim skald"
+      "_row": "Sven 1"
     },
     {
       "carver": "Torbjörn skald",
       "n_t": 0,
       "at_t": 0,
       "n_a": 4,
-      "at_a": 0,
+      "at_a": 2,
       "_row": "Torbjörn skald"
     },
     {
@@ -185,7 +185,7 @@
       "n_t": 0,
       "at_t": 0,
       "n_a": 4,
-      "at_a": 0,
+      "at_a": 1,
       "_row": "Torsten"
     }
   ]

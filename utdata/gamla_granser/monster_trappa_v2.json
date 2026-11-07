@@ -1,0 +1,162 @@
+{
+ "plan": "analysplaner/2026-11-02-folkland-slumpindelning-trappa.md",
+ "steps": {
+  "pa_plats": {
+   "units": 31,
+   "sizes": {
+    "attundaland": 8,
+    "roden": 7,
+    "tiundaland": 11,
+    "fjadrundaland": 5
+   },
+   "stones": 513,
+   "features": 23,
+   "alla": {
+    "chi2_real": 240.18716492367253,
+    "chi2_median_random": 137.4655716572819,
+    "chi2_p95_random": 197.54613698786602,
+    "p": 0.006,
+    "k_real": 14,
+    "k_median_random": 6.0,
+    "p_k": 0.005
+   },
+   "A": {
+    "chi2_real": 180.5959935661685,
+    "chi2_median_random": 119.19598867376558,
+    "chi2_p95_random": 157.96850572183914,
+    "p": 0.004,
+    "k_real": 10,
+    "k_median_random": 5.0,
+    "p_k": 0.021
+   },
+   "B": {
+    "chi2_real": 155.88337907973704,
+    "chi2_median_random": 109.28306954627334,
+    "chi2_p95_random": 141.3664566244653,
+    "p": 0.009,
+    "k_real": 5,
+    "k_median_random": 4.0,
+    "p_k": 0.406
+   },
+   "holds": true
+  },
+  "utan_fem_ristare": {
+   "units": 30,
+   "sizes": {
+    "attundaland": 8,
+    "roden": 6,
+    "tiundaland": 11,
+    "fjadrundaland": 5
+   },
+   "stones": 559,
+   "features": 23,
+   "alla": {
+    "chi2_real": 231.62850547174517,
+    "chi2_median_random": 135.17830020302443,
+    "chi2_p95_random": 182.08488080430567,
+    "p": 0.002,
+    "k_real": 13,
+    "k_median_random": 6.0,
+    "p_k": 0.002
+   },
+   "A": {
+    "chi2_real": 179.6913342040723,
+    "chi2_median_random": 111.36941830003369,
+    "chi2_p95_random": 142.47818523761333,
+    "p": 0.001,
+    "k_real": 9,
+    "k_median_random": 4.0,
+    "p_k": 0.022
+   },
+   "B": {
+    "chi2_real": 153.63067067967322,
+    "chi2_median_random": 108.40814503560146,
+    "chi2_p95_random": 141.8535381044681,
+    "p": 0.021,
+    "k_real": 7,
+    "k_median_random": 4.0,
+    "p_k": 0.089
+   },
+   "holds": true
+  },
+  "daterade": {
+   "units": 31,
+   "sizes": {
+    "attundaland": 8,
+    "roden": 7,
+    "tiundaland": 11,
+    "fjadrundaland": 5
+   },
+   "stones": 529,
+   "features": 23,
+   "alla": {
+    "chi2_real": 271.1350362278706,
+    "chi2_median_random": 145.1165774437297,
+    "chi2_p95_random": 203.62766935652758,
+    "p": 0.004,
+    "k_real": 12,
+    "k_median_random": 6.0,
+    "p_k": 0.017
+   },
+   "A": {
+    "chi2_real": 205.8362038252188,
+    "chi2_median_random": 116.97594136204661,
+    "chi2_p95_random": 159.99921798512085,
+    "p": 0.001,
+    "k_real": 9,
+    "k_median_random": 4.0,
+    "p_k": 0.035
+   },
+   "B": {
+    "chi2_real": 152.45634263906177,
+    "chi2_median_random": 109.95541918102398,
+    "chi2_p95_random": 147.64176715996695,
+    "p": 0.033,
+    "k_real": 9,
+    "k_median_random": 4.0,
+    "p_k": 0.015
+   },
+   "holds": true
+  },
+  "utan_forlorade": {
+   "units": 31,
+   "sizes": {
+    "attundaland": 8,
+    "roden": 7,
+    "tiundaland": 11,
+    "fjadrundaland": 5
+   },
+   "stones": 734,
+   "features": 24,
+   "alla": {
+    "chi2_real": 310.64974420104306,
+    "chi2_median_random": 170.8543342529324,
+    "chi2_p95_random": 237.62309171421398,
+    "p": 0.004,
+    "k_real": 11,
+    "k_median_random": 7.0,
+    "p_k": 0.064
+   },
+   "A": {
+    "chi2_real": 230.2178642355296,
+    "chi2_median_random": 127.24622807225454,
+    "chi2_p95_random": 172.1466835308528,
+    "p": 0.001,
+    "k_real": 11,
+    "k_median_random": 5.0,
+    "p_k": 0.009
+   },
+   "B": {
+    "chi2_real": 178.5942467214591,
+    "chi2_median_random": 120.19736662112577,
+    "chi2_p95_random": 158.0711535097777,
+    "p": 0.006,
+    "k_real": 8,
+    "k_median_random": 4.0,
+    "p_k": 0.079
+   },
+   "holds": true
+  }
+ },
+ "all_hold": true
+}

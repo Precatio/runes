@@ -58,3 +58,9 @@ men har litet underlag. *At* är inte skarpt där: 1 av 5 på Fjädrundalands si
 riktningen är snarare omvänd. r för ʀ 0 av 3 mot 2 av 8, monoftong 1 av 3 mot 1 av 8: gradienter. v1 i gransskannern_v1.json.
 Not: v1 kördes 2026-11-02 kl. 07.29, före ISOF-rättelsen samma morgon (5e78157), då Aspö ännu räknades till Fjädrundaland;
 skillnaden v1 → v2 i Fjädrundaland (123 → 128) är därför +6 Adelsöstenar och −1 Aspösten.
+
+## Omkörning 2026-11-07 med rättat prepositionsdrag (deklarerad avvikelse)
+Fortfarande 7 kombinationer av 6 drag som är skarpa och håller i båda halvorna, men *at* byter gräns: mellan Tiundaland och
+Attundaland är *at* fortfarande skarp (49/131 mot 15/78, p 0,004) men håller inte i båda halvorna (p 0,009 och 0,22); i
+stället håller *at* mellan Södermanland och Fjädrundaland (13/13 mot 3/10 i gränszonen, p 0,0005; halvorna 0,015 och 0,001).
+Körningen före rättningen i gransskannern_v2.json.

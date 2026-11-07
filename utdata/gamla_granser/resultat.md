@@ -40,3 +40,9 @@ Med de gamla gränserna blir de regionala skillnaderna i språket både skarpare
 skriver r för ʀ och Attundaland som skiljer sig i *at*, inte "Uppland". Två uppländska mönster (korset, bönen mot
 Västergötland) var mindre robusta än de såg ut när hela Uppland räknades som ett. Förändringarna över tid påverkas
 knappt.
+
+## Omkörning 2026-11-07 med rättat prepositionsdrag (deklarerad avvikelse)
+Samma kod och slumpfrö på drag.csv med rättad prep_at (utdata/folkland/resultat.md). Uppland: summan 347 mot median 178,
+p 0,003 (förut 363 mot 183, p 0,003); halvorna 238 och 207, p 0,001 i båda; alla fyra känslighetssteg håller (p 0,002–0,007);
+utan granit 308 mot 147, p 0,005. Småland oförändrat (p 0,267). Dragen som bidrar mest: korset, granit, monoftongen, r för ʀ
+och flera resare; *at* på åttonde plats. Körningen före rättningen i *_v2.json.

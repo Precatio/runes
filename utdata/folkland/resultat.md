@@ -76,3 +76,16 @@ gränsen och för få stenar för att pröva den. Med alla punkter gränsar ocks
 
 **Planens dom:** oförändrad i sak – *at* är den skarpa gränsen mellan Tiundaland och Attundaland; i övrigt syns skillnaderna
 i stavningen (r för ʀ, monoftong) som gradienter.
+
+## Omkörning 2026-11-07 med rättat prepositionsdrag (deklarerad avvikelse)
+Draget prep_at räknade *at* bara framför ett namn och missade *at* som andra preposition framför släktord (se
+peterson1996_lasning.md och METHODS, rättningen 2026-11-07). `utdata/upptackt_v3/drag.csv` fick kolumnen prep_at omräknad
+ur korpus 510ebfb3 (206 av 1 739 rader ändrade; den gamla i drag_v1.csv); folkland.py, at_rader.py, at_rader2.py,
+at_ristare.R, at_trappa.R och folkland_grans_af.py körda om oförändrade. Körningen före rättningen ligger i *_v2.
+- Steg 1: *at* skiljer fortfarande folklanden (q 0,008; Attundaland 72/300, Tiundaland 96/272, Fjädrundaland 46/109,
+  Roden 17/51), men **steg 2 håller inte längre**: halvorna p 0,19 och 0,009. Fyra drag håller i båda halvorna: korset,
+  beröm, monoftongen och r för ʀ. Gränsprovet (steg 3) görs därför inte för *at* enligt planen.
+- Tilläggsplanerna, beskrivande eftersom steg 2 föll: gränszonen med ristaren som slumpeffekt OR 2,7, p 0,030 ensidigt
+  (förut 5,9, p 0,0014); Öpir 23/40 mot 9/25; trappan håller inte helt (utan Seminghundra härad p 0,06).
+- **Slutsats: *at*-gränsen mellan Tiundaland och Attundaland är inte längre ett prövat fynd.** Skillnaden finns men är
+  svagare och håller inte planens halvregel.
