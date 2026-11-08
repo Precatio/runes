@@ -675,6 +675,68 @@ def render_relief(
     }
 
 
+# ---- band image: the carving coloured by the text bands ----------------------------------------------------------------
+# src/band_image.py, METHODS.md 2d3. The surface, its depth and the bands (drawn, or the band model's) are kept on the
+# mesh entry for the latest view only, so that moving the slider recomputes just the cut.
+_BAND_LOCK = threading.Lock()
+
+
+def _band_state(entry: MeshEntry, normal, up):
+    from src.band_image import BandImage, bands_on_surface
+    from src.stone_report import Surface
+    key = (tuple(round(float(v), 4) for v in normal), tuple(round(float(v), 4) for v in up) if up is not None else None)
+    with _BAND_LOCK:
+        cached = entry.band_image
+        if cached and cached[0] == key:
+            return cached[1]
+        # finer than the relief images (1 600 px): faint staves are a few cells wide
+        surf = Surface(entry.mesh, normal, up, max_px=2400)
+        bands, source = bands_on_surface(surf, entry.info.get("sha256"))
+        bi = BandImage(-surf.residual, surf.region, surf.inner, surf.res, bands, source)
+        entry.band_image = (key, bi)
+        return bi
+
+
+@router.post("/band_image")
+def band_image(
+    file: UploadFile = File(None),
+    mesh_id: str = Form(None),
+    normal_x: float = Form(None),
+    normal_y: float = Form(None),
+    normal_z: float = Form(None),
+    up_x: float = Form(None),
+    up_y: float = Form(None),
+    up_z: float = Form(None),
+    offset_mm: float = Form(0.0),
+):
+    """Runor och ornamentik: det som ligger djupare än en gemensam nivå för hela stenen (plus offset_mm), rostrött inne i
+    textslingorna och grått utanför, slingornas kant svart. Slingorna är de ritade för den här filen, annars
+    slingmodellens; source säger vilka (null när det inte finns några)."""
+    from src import band_image as bi_mod
+
+    entry = resolve_mesh(file, mesh_id)
+    if entry.info.get("mock"):
+        raise HTTPException(status_code=400, detail=NO_MESH)
+    if not np.isfinite(offset_mm):
+        raise HTTPException(status_code=422, detail="offset_mm måste vara ett tal.")
+    normal = [normal_x, normal_y, normal_z] if normal_x is not None else _estimated_normal(entry.mesh)
+    up = [up_x, up_y, up_z] if up_x is not None else None
+    try:
+        bi = _band_state(entry, normal, up)
+        layer = bi.layer(offset_mm)
+    except Exception as e:
+        raise server_error(e, "Bilden kunde inte räknas fram.", status_code=500) from e
+    rgb = layer.pop("rgb")
+    r3 = lambda v: None if v is None else round(v, 4)  # noqa: E731
+    return {
+        "image": "data:image/png;base64," + base64.b64encode(bi_mod.png(rgb)).decode("ascii"),
+        "width": int(rgb.shape[1]), "height": int(rgb.shape[0]), "resolution_mm": bi.res,
+        "offset_mm": layer["offset_mm"], "offset_range": list(bi_mod.OFFSET_RANGE), "level_mm": layer["level_mm"],
+        "source": layer["source"], "shown_share": r3(layer["shown_share"]), "band_share": r3(layer["band_share"]),
+        "in_bands": r3(layer["in_bands"]),
+    }
+
+
 # ---- export ----------------------------------------------------------------------------------------------------------
 # What the groove analysis can be exported as (src/groove_export.py, METHODS.md 2f): images computed from the scan,
 # the analysis' own images and the measurements as tables, with the scan's credit and provenance in every file.

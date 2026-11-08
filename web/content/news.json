@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "runor-och-ornamentik",
+   "date": "2026-11-08",
+   "status": "nytt",
+   "title": "Runor och ornamentik: se var analysen tror att texten står",
+   "text": "På 3D-sidan finns nu bilden Runor och ornamentik. Den visar det som ligger djupast i skanningen, färgat efter textslingorna: rostrött inne i slingorna och grått utanför, där ornamentik, sprickor och gropar ligger. Slingorna är desamma som huggspårsanalysen använder för att avgöra vad som är runor – ritade och granskade för de öppna skanningarna, annars slingmodellens förslag – så bilden visar vad analysen räknar som text och var den kan ha fel."
+  },
+  {
    "id": "rattelse-preposition-at",
    "date": "2026-11-07",
    "status": "nytt",

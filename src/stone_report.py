@@ -151,6 +151,7 @@ class Surface:
         step = max(1, int(np.ceil(max(r1 - r0, c1 - c0) / max_px)))
         sl = (slice(r0, r1, step), slice(c0, c1, step))
         self.hf, self.H, self.residual, self.region = hf, hf.H[sl], residual[sl], hf.region[sl]
+        self.sl = sl  # the crop of hf's grid, so that other layers on hf (drawn bands) can be cut the same way
         self.inner = inner[sl]
         self.res = hf.res * step
         self.origin = (hf.a0 + c0 * hf.res, hf.b0 + r0 * hf.res)

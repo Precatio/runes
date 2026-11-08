@@ -5,6 +5,12 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Runor och ornamentik: se var analysen tror att texten står
+- Ny bild på 3D-sidan (*Bilder ur skanningen* → *Runor och ornamentik*): dagens djupbild avskuren med en gemensam nivå
+  för hela stenen (reglage −1 till +3 mm), rostrött inne i textslingorna, grått utanför och slingornas kant svart.
+  Slingorna är analysens egna – ritade och granskade för de öppna skanningarna, annars slingmodellens – och dialogen
+  säger vilka. `src/band_image.py`, POST /api/3d/band_image, METHODS 2d3, `tests/test_band_image.py`.
+
 ### Skala av vittringen: prövad och borttagen
 - En dialog på 3D-sidan som visade bara det som låg djupare än vittringen runt omkring (lokal vittringsnivå, spår och
   gropar, klick som tog bort eller gjorde till spår) byggdes 2026-11-07 och togs bort 2026-11-08. Ett låst prov mot

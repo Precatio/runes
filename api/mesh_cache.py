@@ -30,6 +30,8 @@ class MeshEntry:
         # lock so that two requests for it decimate once
         self.view = None
         self.view_lock = threading.Lock()
+        # Runor och ornamentik (api/routers/threed.band_image): (view key, src.band_image.BandImage) for the latest view
+        self.band_image = None
 
     @property
     def vertex_tree(self) -> cKDTree:

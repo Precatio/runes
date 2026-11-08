@@ -1317,6 +1317,24 @@ fyrkantiga stängningen, och skillnaden mellan riktningarna var inte mindre (0,1
 kupig yta exakt, så huggspårsmätningen är oförändrad (`groove-7`); paraboloiden finns kvar som val i
 `auto_grooves.reference_surface(kind="paraboloid")`.
 
+### 2d3. Runor och ornamentik (från 2026-11-08)
+
+Källkod: `src/band_image.py`, `api/routers/threed.py` (`band_image`, POST /api/3d/band_image),
+`web/src/components/threeD/BandImageDialog.tsx`; test `tests/test_band_image.py`. En bild på 3D-sidan, öppnad från
+*Bilder ur skanningen*, som visar vad huggspårsanalysen räknar som text. Djupet är detsamma som i dagens djupbild (2d):
+under referensytan (2c), längs projektionen, innanför kantzonen på 10 mm. Det som ligger djupare än en **gemensam nivå
+för hela stenen** visas – utgångsläget är den 70:e percentilen av djupet, så att ungefär 30 % av ytan visas, och ett
+reglage flyttar gränsen från 1 mm grundare till 3 mm djupare. Det som visas färgas efter textslingorna: rostrött inne i
+slingorna, grått utanför (ornamentik, sprickor, gropar), slingornas kant svart. Slingorna är desamma som analysen
+använder för att avgöra vad som är runor (`rune_bands`): de ritade och granskade för de öppna skanningarna, förda till
+ytans rutnät genom stenens yta, annars slingmodellens förslag på bildens djup (sannolikhet minst 0,5). Dialogen säger
+vilka det är och hur stor del av det visade som ligger i slingorna jämfört med slingornas andel av ytan.
+
+Den gemensamma nivån valdes efter provet i 2d2: vid samma visade yta samlade en gemensam gräns sig bättre i
+textslingorna än en lokal vittringsnivå. Bilden är inte prövad som läshjälp; den visar var analysens slingor ligger, så
+att läsaren kan se när modellens slingor missar text (på Sö 128 överlappar modellens och de ritade slingorna till 60 %,
+mätt som gemensam yta delat med sammanlagd yta).
+
 ### 2e. Robusthet
 
 Källkod: `scripts/groove_robustness.py`, resultat i `utdata/groove_robustness/`. Åtta skanningar ur Kitzler Åhfeldts
