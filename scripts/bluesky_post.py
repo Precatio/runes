@@ -6,6 +6,8 @@ vanliga lösenordet. Det ligger i .env som BLUESKY_HANDLE och BLUESKY_APP_PASSWO
     .venv/bin/python -m scripts.bluesky_post SLUG --text "…" [--en] [--tagg runor --tagg vikingatid]
     .venv/bin/python -m scripts.bluesky_post SLUG --text "…" --posta     # skickar inlägget
     .venv/bin/python -m scripts.bluesky_post --ko [--posta]             # kön: godkända inlägg med datum, ett per körning
+Ett inlägg i kön kan ha "credit": en text som postas som svar direkt under inlägget (t.ex. de öppna skanningarnas
+skannare, institution, projekt, licens och DOI); svarets adress skrivs i "credit_reply".
 Kön körs dagligen kl. 18 av analysmotorn (api/main.py, tråden bluesky; BLUESKY_AUTOPOST=0 stänger av).
 """
 from __future__ import annotations
@@ -119,8 +121,10 @@ def compose(text: str, tags: list[str]) -> str:
     return out
 
 
-def send(text: str, url: str, title: str, desc: str, en: bool, images: list[dict] | None = None) -> str:
-    """Posts and returns the post's address on bsky.app."""
+def send(text: str, url: str, title: str, desc: str, en: bool, images: list[dict] | None = None,
+         credit: str | None = None) -> tuple[str, str | None]:
+    """Posts and returns the post's address on bsky.app, and the address of the reply with the credit (credit: e.g. the
+    open scans' scanner, institution, project, licence and DOI) when there is one."""
     handle, pw = os.environ.get("BLUESKY_HANDLE"), os.environ.get("BLUESKY_APP_PASSWORD")
     if not handle or not pw:
         sys.exit("BLUESKY_HANDLE och BLUESKY_APP_PASSWORD saknas i .env")
@@ -151,7 +155,21 @@ def send(text: str, url: str, title: str, desc: str, en: bool, images: list[dict
     r = requests.post(f"{PDS}/com.atproto.repo.createRecord", headers=auth, timeout=30,
                       json={"repo": sess["did"], "collection": "app.bsky.feed.post", "record": record})
     r.raise_for_status()
-    return f"https://bsky.app/profile/{handle}/post/{r.json()['uri'].rsplit('/', 1)[-1]}"
+    post = r.json()
+    at = lambda uri: f"https://bsky.app/profile/{handle}/post/{uri.rsplit('/', 1)[-1]}"  # noqa: E731
+    reply_at = None
+    if credit:
+        ref = {"uri": post["uri"], "cid": post["cid"]}
+        rec = {"$type": "app.bsky.feed.post", "text": credit, "langs": ["en" if en else "sv"],
+               "createdAt": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z"),
+               "reply": {"root": ref, "parent": ref}}
+        if (f := facets(credit)):
+            rec["facets"] = f
+        c = requests.post(f"{PDS}/com.atproto.repo.createRecord", headers=auth, timeout=30,
+                          json={"repo": sess["did"], "collection": "app.bsky.feed.post", "record": rec})
+        c.raise_for_status()
+        reply_at = at(c.json()["uri"])
+    return at(post["uri"]), reply_at
 
 
 def queue(post_due: bool):
@@ -173,8 +191,10 @@ def queue(post_due: bool):
         return
     item = due[0]
     url, title, desc = card(item["slug"], item.get("en", False))
-    item["posted"] = send(compose(item["text"], item.get("tags", [])), url, title, desc, item.get("en", False),
-                          item.get("images"))
+    item["posted"], reply_at = send(compose(item["text"], item.get("tags", [])), url, title, desc, item.get("en", False),
+                                    item.get("images"), item.get("credit"))
+    if reply_at:
+        item["credit_reply"] = reply_at
     item["posted_at"] = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
     json.dump(q, open(KO, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print("Postat:", item["posted"])
@@ -200,7 +220,7 @@ def main(argv=None):
     if not a.posta:
         print("\n(visas bara; lägg till --posta för att skicka)")
         return
-    print("\nPostat:", send(text, url, title, desc, a.en))
+    print("\nPostat:", *[x for x in send(text, url, title, desc, a.en) if x])
 
 
 if __name__ == "__main__":
