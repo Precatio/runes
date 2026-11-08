@@ -1,0 +1,1010 @@
+{
+ "standardised_A": {
+  "Sö": 0.6290640318511413,
+  "Vg": 0.5655706486308512,
+  "attundaland": 0.5339943904870583,
+  "fjadrundaland": 0.4500281493933465,
+  "tiundaland": 0.4603893477561517,
+  "Ög": 0.5101084825335163
+ },
+ "per_word": [
+  {
+   "word": "sinn",
+   "pairs": 25054.0,
+   "Sö": 0.885,
+   "Vg": 0.898,
+   "attundaland": 0.827,
+   "fjadrundaland": 0.629,
+   "tiundaland": 0.759,
+   "Ög": 0.926
+  },
+  {
+   "word": "stæin",
+   "pairs": 24838.0,
+   "Sö": 0.476,
+   "Vg": 0.56,
+   "attundaland": 0.365,
+   "fjadrundaland": 0.167,
+   "tiundaland": 0.276,
+   "Ög": 0.283
+  },
+  {
+   "word": "æftir",
+   "pairs": 19854.0,
+   "Sö": 0.155,
+   "Vg": 0.154,
+   "attundaland": 0.167,
+   "fjadrundaland": 0.038,
+   "tiundaland": 0.076,
+   "Ög": 0.181
+  },
+  {
+   "word": "ok",
+   "pairs": 19457.0,
+   "Sö": 0.767,
+   "Vg": 0.534,
+   "attundaland": 0.431,
+   "fjadrundaland": 0.524,
+   "tiundaland": 0.292,
+   "Ög": 0.645
+  },
+  {
+   "word": "faður",
+   "pairs": 8644.0,
+   "Sö": 0.938,
+   "Vg": 0.669,
+   "attundaland": 0.825,
+   "fjadrundaland": 0.928,
+   "tiundaland": 0.752,
+   "Ög": 0.831
+  },
+  {
+   "word": "at",
+   "pairs": 6245.0,
+   "Sö": 0.936,
+   "Vg": null,
+   "attundaland": 1.0,
+   "fjadrundaland": 1.0,
+   "tiundaland": 0.956,
+   "Ög": 0.5
+  },
+  {
+   "word": "ræisa",
+   "pairs": 6192.0,
+   "Sö": 0.648,
+   "Vg": null,
+   "attundaland": 0.344,
+   "fjadrundaland": 0.204,
+   "tiundaland": 0.355,
+   "Ög": 0.048
+  },
+  {
+   "word": "letu",
+   "pairs": 4281.0,
+   "Sö": 0.743,
+   "Vg": null,
+   "attundaland": 0.899,
+   "fjadrundaland": 0.628,
+   "tiundaland": 0.742,
+   "Ög": null
+  },
+  {
+   "word": "let",
+   "pairs": 3240.0,
+   "Sö": 0.477,
+   "Vg": null,
+   "attundaland": 0.823,
+   "fjadrundaland": 0.793,
+   "tiundaland": 0.895,
+   "Ög": 0.467
+  },
+  {
+   "word": "þenna",
+   "pairs": 1870.0,
+   "Sö": 0.461,
+   "Vg": 0.124,
+   "attundaland": 0.51,
+   "fjadrundaland": 0.592,
+   "tiundaland": 0.223,
+   "Ög": 0.192
+  },
+  {
+   "word": "sun",
+   "pairs": 1730.0,
+   "Sö": 0.936,
+   "Vg": 0.9,
+   "attundaland": 1.0,
+   "fjadrundaland": 1.0,
+   "tiundaland": 0.887,
+   "Ög": 0.814
+  },
+  {
+   "word": "ræisti",
+   "pairs": 1683.0,
+   "Sö": 0.522,
+   "Vg": 0.306,
+   "attundaland": 0.0,
+   "fjadrundaland": 0.421,
+   "tiundaland": null,
+   "Ög": 0.297
+  },
+  {
+   "word": "broður",
+   "pairs": 1619.0,
+   "Sö": 0.42,
+   "Vg": 0.657,
+   "attundaland": 0.321,
+   "fjadrundaland": 0.31,
+   "tiundaland": 0.213,
+   "Ög": 0.553
+  },
+  {
+   "word": "guð",
+   "pairs": 1320.0,
+   "Sö": 0.906,
+   "Vg": 1.0,
+   "attundaland": 0.899,
+   "fjadrundaland": 1.0,
+   "tiundaland": 0.824,
+   "Ög": 0.75
+  },
+  {
+   "word": "hialpi",
+   "pairs": 1196.0,
+   "Sö": 0.336,
+   "Vg": null,
+   "attundaland": 0.499,
+   "fjadrundaland": 0.08,
+   "tiundaland": 0.443,
+   "Ög": 0.19
+  },
+  {
+   "word": "hans",
+   "pairs": 831.0,
+   "Sö": 0.398,
+   "Vg": null,
+   "attundaland": 0.234,
+   "fjadrundaland": 0.682,
+   "tiundaland": 0.242,
+   "Ög": 0.4
+  },
+  {
+   "word": "ræistu",
+   "pairs": 820.0,
+   "Sö": 0.644,
+   "Vg": 0.417,
+   "attundaland": 0.335,
+   "fjadrundaland": 0.286,
+   "tiundaland": 0.537,
+   "Ög": 0.164
+  },
+  {
+   "word": "þæir",
+   "pairs": 793.0,
+   "Sö": 0.554,
+   "Vg": 0.5,
+   "attundaland": 0.378,
+   "fjadrundaland": 0.19,
+   "tiundaland": 0.16,
+   "Ög": 0.311
+  },
+  {
+   "word": "retta",
+   "pairs": 756.0,
+   "Sö": 1.0,
+   "Vg": null,
+   "attundaland": 0.838,
+   "fjadrundaland": null,
+   "tiundaland": 0.877,
+   "Ög": null
+  },
+  {
+   "word": "and",
+   "pairs": 624.0,
+   "Sö": 0.646,
+   "Vg": null,
+   "attundaland": 0.291,
+   "fjadrundaland": 0.6,
+   "tiundaland": 0.205,
+   "Ög": null
+  },
+  {
+   "word": "goðan",
+   "pairs": 563.0,
+   "Sö": 0.429,
+   "Vg": 0.517,
+   "attundaland": 0.4,
+   "fjadrundaland": 0.12,
+   "tiundaland": 0.333,
+   "Ög": 0.667
+  },
+  {
+   "word": "þannsi",
+   "pairs": 516.0,
+   "Sö": 0.88,
+   "Vg": 0.264,
+   "attundaland": null,
+   "fjadrundaland": null,
+   "tiundaland": null,
+   "Ög": 0.311
+  },
+  {
+   "word": "ræisþi",
+   "pairs": 436.0,
+   "Sö": 0.5,
+   "Vg": null,
+   "attundaland": null,
+   "fjadrundaland": null,
+   "tiundaland": null,
+   "Ög": 0.234
+  },
+  {
+   "word": "hann",
+   "pairs": 415.0,
+   "Sö": 0.818,
+   "Vg": null,
+   "attundaland": 0.135,
+   "fjadrundaland": 0.714,
+   "tiundaland": 0.4,
+   "Ög": 0.571
+  },
+  {
+   "word": "þennsa",
+   "pairs": 370.0,
+   "Sö": 0.529,
+   "Vg": null,
+   "attundaland": 0.432,
+   "fjadrundaland": 0.118,
+   "tiundaland": 0.333,
+   "Ög": 0.181
+  }
+ ],
+ "spellings_top_words": {
+  "sinn": {
+   "Sö": [
+    [
+     "sin",
+     94
+    ],
+    [
+     "san",
+     2
+    ],
+    [
+     "sit",
+     1
+    ],
+    [
+     "sia",
+     1
+    ]
+   ],
+   "Vg": [
+    [
+     "sin",
+     54
+    ],
+    [
+     "si",
+     3
+    ]
+   ],
+   "attundaland": [
+    [
+     "sin",
+     120
+    ],
+    [
+     "sn",
+     4
+    ],
+    [
+     "sen",
+     2
+    ],
+    [
+     "sino",
+     1
+    ]
+   ],
+   "fjadrundaland": [
+    [
+     "sin",
+     42
+    ],
+    [
+     "sen",
+     9
+    ],
+    [
+     "sii",
+     2
+    ],
+    [
+     "se",
+     1
+    ]
+   ],
+   "tiundaland": [
+    [
+     "sin",
+     96
+    ],
+    [
+     "sen",
+     5
+    ],
+    [
+     "sn",
+     4
+    ],
+    [
+     "san",
+     1
+    ]
+   ],
+   "Ög": [
+    [
+     "sin",
+     77
+    ],
+    [
+     "sia",
+     2
+    ],
+    [
+     "sa",
+     1
+    ]
+   ]
+  },
+  "stæin": {
+   "Sö": [
+    [
+     "stain",
+     73
+    ],
+    [
+     "stin",
+     15
+    ],
+    [
+     "stan",
+     9
+    ],
+    [
+     "stein",
+     2
+    ]
+   ],
+   "Vg": [
+    [
+     "stin",
+     47
+    ],
+    [
+     "stein",
+     4
+    ],
+    [
+     "stain",
+     3
+    ],
+    [
+     "stn",
+     3
+    ]
+   ],
+   "attundaland": [
+    [
+     "stain",
+     66
+    ],
+    [
+     "stin",
+     38
+    ],
+    [
+     "stein",
+     12
+    ],
+    [
+     "istain",
+     3
+    ]
+   ],
+   "fjadrundaland": [
+    [
+     "stain",
+     22
+    ],
+    [
+     "stin",
+     13
+    ],
+    [
+     "sten",
+     7
+    ],
+    [
+     "stan",
+     6
+    ]
+   ],
+   "tiundaland": [
+    [
+     "stain",
+     46
+    ],
+    [
+     "stin",
+     28
+    ],
+    [
+     "sten",
+     11
+    ],
+    [
+     "stan",
+     5
+    ]
+   ],
+   "Ög": [
+    [
+     "stin",
+     38
+    ],
+    [
+     "stain",
+     13
+    ],
+    [
+     "sten",
+     10
+    ],
+    [
+     "stein",
+     7
+    ]
+   ]
+  },
+  "æftir": {
+   "Sö": [
+    [
+     "eftiR",
+     19
+    ],
+    [
+     "iftiR",
+     10
+    ],
+    [
+     "aftiR",
+     7
+    ],
+    [
+     "abtiR",
+     2
+    ]
+   ],
+   "Vg": [
+    [
+     "eftiR",
+     22
+    ],
+    [
+     "iftiR",
+     14
+    ],
+    [
+     "aftiR",
+     7
+    ],
+    [
+     "efti",
+     3
+    ]
+   ],
+   "attundaland": [
+    [
+     "iftiR",
+     39
+    ],
+    [
+     "eftiR",
+     37
+    ],
+    [
+     "aftiR",
+     11
+    ],
+    [
+     "eftR",
+     9
+    ]
+   ],
+   "fjadrundaland": [
+    [
+     "aftir",
+     13
+    ],
+    [
+     "iftiR",
+     4
+    ],
+    [
+     "eftR",
+     3
+    ],
+    [
+     "yfti",
+     3
+    ]
+   ],
+   "tiundaland": [
+    [
+     "eftiR",
+     13
+    ],
+    [
+     "aftiR",
+     12
+    ],
+    [
+     "iftiR",
+     11
+    ],
+    [
+     "eftR",
+     5
+    ]
+   ],
+   "Ög": [
+    [
+     "eftiR",
+     29
+    ],
+    [
+     "iftiR",
+     19
+    ],
+    [
+     "aftiR",
+     11
+    ],
+    [
+     "iftR",
+     4
+    ]
+   ]
+  },
+  "ok": {
+   "Sö": [
+    [
+     "auk",
+     77
+    ],
+    [
+     "ak",
+     5
+    ],
+    [
+     "uk",
+     3
+    ],
+    [
+     "ur",
+     1
+    ]
+   ],
+   "Vg": [
+    [
+     "auk",
+     16
+    ],
+    [
+     "uk",
+     6
+    ],
+    [
+     "ok",
+     1
+    ]
+   ],
+   "attundaland": [
+    [
+     "auk",
+     79
+    ],
+    [
+     "uk",
+     42
+    ],
+    [
+     "ok",
+     9
+    ],
+    [
+     "ak",
+     1
+    ]
+   ],
+   "fjadrundaland": [
+    [
+     "auk",
+     31
+    ],
+    [
+     "ak",
+     6
+    ],
+    [
+     "ayk",
+     1
+    ],
+    [
+     "yg",
+     1
+    ]
+   ],
+   "tiundaland": [
+    [
+     "auk",
+     49
+    ],
+    [
+     "uk",
+     30
+    ],
+    [
+     "ok",
+     19
+    ],
+    [
+     "ouk",
+     3
+    ]
+   ],
+   "Ög": [
+    [
+     "auk",
+     26
+    ],
+    [
+     "uk",
+     6
+    ],
+    [
+     "aouk",
+     1
+    ]
+   ]
+  },
+  "faður": {
+   "Sö": [
+    [
+     "faþur",
+     59
+    ],
+    [
+     "faþr",
+     2
+    ]
+   ],
+   "Vg": [
+    [
+     "faþur",
+     14
+    ],
+    [
+     "fauþr",
+     1
+    ],
+    [
+     "foþur",
+     1
+    ],
+    [
+     "fiþur",
+     1
+    ]
+   ],
+   "attundaland": [
+    [
+     "faþur",
+     71
+    ],
+    [
+     "foþur",
+     3
+    ],
+    [
+     "faþr",
+     1
+    ],
+    [
+     "faþurR",
+     1
+    ]
+   ],
+   "fjadrundaland": [
+    [
+     "faþur",
+     28
+    ],
+    [
+     "faþ",
+     1
+    ]
+   ],
+   "tiundaland": [
+    [
+     "faþur",
+     68
+    ],
+    [
+     "foþur",
+     5
+    ],
+    [
+     "faþu",
+     2
+    ],
+    [
+     "fiþur",
+     1
+    ]
+   ],
+   "Ög": [
+    [
+     "faþur",
+     31
+    ],
+    [
+     "faþu",
+     2
+    ],
+    [
+     "faur",
+     1
+    ]
+   ]
+  },
+  "at": {
+   "Sö": [
+    [
+     "at",
+     90
+    ],
+    [
+     "a",
+     1
+    ],
+    [
+     "kt",
+     1
+    ],
+    [
+     "atn",
+     1
+    ]
+   ],
+   "Vg": [
+    [
+     "at",
+     1
+    ],
+    [
+     "it",
+     1
+    ]
+   ],
+   "attundaland": [
+    [
+     "at",
+     39
+    ]
+   ],
+   "fjadrundaland": [
+    [
+     "at",
+     24
+    ]
+   ],
+   "tiundaland": [
+    [
+     "at",
+     50
+    ],
+    [
+     "aistulf",
+     1
+    ]
+   ],
+   "Ög": [
+    [
+     "at",
+     3
+    ],
+    [
+     "ai",
+     1
+    ]
+   ]
+  },
+  "ræisa": {
+   "Sö": [
+    [
+     "raisa",
+     28
+    ],
+    [
+     "rasa",
+     4
+    ],
+    [
+     "raiisa",
+     1
+    ],
+    [
+     "raiso",
+     1
+    ]
+   ],
+   "Vg": [],
+   "attundaland": [
+    [
+     "raisa",
+     50
+    ],
+    [
+     "risa",
+     17
+    ],
+    [
+     "reisa",
+     15
+    ],
+    [
+     "rasa",
+     3
+    ]
+   ],
+   "fjadrundaland": [
+    [
+     "raisa",
+     15
+    ],
+    [
+     "risa",
+     12
+    ],
+    [
+     "resa",
+     4
+    ],
+    [
+     "rasa",
+     3
+    ]
+   ],
+   "tiundaland": [
+    [
+     "raisa",
+     30
+    ],
+    [
+     "risa",
+     12
+    ],
+    [
+     "resa",
+     3
+    ],
+    [
+     "reisa",
+     2
+    ]
+   ],
+   "Ög": [
+    [
+     "risa",
+     2
+    ],
+    [
+     "rasti",
+     1
+    ],
+    [
+     "resa",
+     1
+    ],
+    [
+     "reisa",
+     1
+    ]
+   ]
+  },
+  "letu": {
+   "Sö": [
+    [
+     "litu",
+     23
+    ],
+    [
+     "letu",
+     4
+    ]
+   ],
+   "Vg": [],
+   "attundaland": [
+    [
+     "litu",
+     55
+    ],
+    [
+     "letu",
+     1
+    ],
+    [
+     "lRtu",
+     1
+    ],
+    [
+     "lito",
+     1
+    ]
+   ],
+   "fjadrundaland": [
+    [
+     "litu",
+     19
+    ],
+    [
+     "letu",
+     2
+    ],
+    [
+     "latu",
+     1
+    ],
+    [
+     "utu",
+     1
+    ]
+   ],
+   "tiundaland": [
+    [
+     "litu",
+     58
+    ],
+    [
+     "letu",
+     4
+    ],
+    [
+     "lit",
+     1
+    ],
+    [
+     "rista",
+     1
+    ]
+   ],
+   "Ög": [
+    [
+     "litu",
+     2
+    ]
+   ]
+  }
+ },
+ "A_without_monophthongisation": {
+  "Sö": 0.7581663363429494,
+  "Vg": 0.5050538709319116,
+  "attundaland": 0.6487103760582792,
+  "fjadrundaland": 0.488152307903027,
+  "tiundaland": 0.5931507748883635,
+  "Ög": 0.5292622824580318
+ }
+}
