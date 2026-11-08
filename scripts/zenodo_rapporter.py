@@ -12,6 +12,12 @@ kanoniska för citering) ger rapportversion, datum, Vitkis version och nyckelord
 --ladda-upp skapar ett UTKAST per rapport på Zenodo (filer och metadata) men publicerar inget: Viktor granskar och trycker
 Publish själv. Token skapas på zenodo.org under Applications → Personal access tokens (deposit:write och deposit:actions).
 --sandlada använder sandbox.zenodo.org för en provomgång. --vitki-doi knyter rapporterna till programvarans DOI.
+
+Ny version av en arkiverad rapport (posten står i web/content/report_dois.json):
+    .venv/bin/python scripts/zenodo_rapporter.py --slug S --ny-version            # 1. utkast till ny version, DOI reserveras
+    (för in DOI:t i report_dois.json, bygg om appen så att sidan visar det, skriv PDF:erna med --slug S)
+    .venv/bin/python scripts/zenodo_rapporter.py --slug S --ny-version --ladda-upp  # 2. byt filerna och metadata i utkastet
+Utkastet publiceras inte av skriptet. Token läses ur miljön eller .env och skrivs aldrig ut.
 """
 from __future__ import annotations
 
@@ -98,6 +104,56 @@ def upload(slug: str, md: dict, folder: str, sandbox: bool) -> str:
     return d["links"]["html"]
 
 
+def _session(sandbox: bool):
+    import requests
+    token = os.environ.get("ZENODO_TOKEN")
+    if not token:
+        from dotenv import dotenv_values
+        token = dotenv_values(os.path.join(ROOT, ".env")).get("ZENODO_TOKEN")
+    assert token, "ZENODO_TOKEN saknas"
+    s = requests.Session()
+    s.headers["Authorization"] = f"Bearer {token}"
+    return s, ("https://sandbox.zenodo.org/api" if sandbox else "https://zenodo.org/api")
+
+
+def new_version_draft(slug: str, sandbox: bool) -> dict:
+    """A draft for a new version of the archived report (or the open draft if one exists); the version DOI is reserved."""
+    rec = json.load(open(os.path.join(ROOT, "web", "content", "report_dois.json"), encoding="utf-8"))["rapporter"][slug]
+    s, base = _session(sandbox)
+    r = s.post(f"{base}/deposit/depositions/{rec['record'].rstrip('/').rsplit('/', 1)[1]}/actions/newversion")
+    r.raise_for_status()
+    d = s.get(r.json()["links"]["latest_draft"]).json()
+    assert d.get("state") != "done" and not d.get("submitted"), f"utkastet {d.get('id')} är redan publicerat"
+    doi = (d["metadata"].get("prereserve_doi") or {}).get("doi") or f"10.5281/zenodo.{d['id']}"
+    out = {"slug": slug, "draft_id": d["id"], "doi": doi, "concept_doi": rec["concept_doi"], "previous": rec["doi"],
+           "html": d["links"].get("html"), "files": [f["filename"] for f in d.get("files", [])]}
+    json.dump(out, open(os.path.join(OUT, slug, "ny_version.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    return out
+
+
+def fill_new_version(slug: str, sandbox: bool) -> dict:
+    """Replaces the files carried over from the previous version with the new PDFs and sets the new metadata."""
+    folder = os.path.join(OUT, slug)
+    nv = json.load(open(os.path.join(folder, "ny_version.json"), encoding="utf-8"))
+    md = json.load(open(os.path.join(folder, "metadata.json"), encoding="utf-8"))
+    s, base = _session(sandbox)
+    url = f"{base}/deposit/depositions/{nv['draft_id']}"
+    d = s.get(url).json()
+    for f in d.get("files", []):
+        s.delete(f"{url}/files/{f['id']}").raise_for_status()
+    pdfs = sorted(f for f in os.listdir(folder) if f.endswith(".pdf"))
+    for f in pdfs:
+        with open(os.path.join(folder, f), "rb") as fh:
+            s.put(f"{d['links']['bucket']}/{f}", data=fh).raise_for_status()
+    md["metadata"]["prereserve_doi"] = d["metadata"].get("prereserve_doi")
+    md["metadata"] = {k: v for k, v in md["metadata"].items() if v is not None}
+    s.put(url, json=md).raise_for_status()
+    d = s.get(url).json()
+    return {"draft_id": nv["draft_id"], "doi": nv["doi"], "files": [f["filename"] for f in d.get("files", [])],
+            "version": d["metadata"].get("version"), "publication_date": d["metadata"].get("publication_date"),
+            "html": d["links"].get("html")}
+
+
 def main(argv=None) -> int:
     a = argparse.ArgumentParser()
     a.add_argument("--bara-metadata", action="store_true")
@@ -105,7 +161,14 @@ def main(argv=None) -> int:
     a.add_argument("--sandlada", action="store_true")
     a.add_argument("--vitki-doi")
     a.add_argument("--slug", help="bara en rapport")
+    a.add_argument("--ny-version", action="store_true", help="ny version av en arkiverad rapport (kräver --slug)")
     o = a.parse_args(argv)
+    if o.ny_version:
+        assert o.slug, "--ny-version kräver --slug"
+        os.makedirs(os.path.join(OUT, o.slug), exist_ok=True)
+        print(json.dumps(fill_new_version(o.slug, o.sandlada) if o.ladda_upp else new_version_draft(o.slug, o.sandlada),
+                         ensure_ascii=False, indent=1))
+        return 0
     rs = [p for p in reports() if not o.slug or p["slug"] == o.slug]
     # a report whose builder output (utdata/rapporter) has a higher version than the published one must be put live
     # first (utdata/blogg/build/patch_rapporter_live.py), or the PDFs would archive the old text

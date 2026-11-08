@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "rapport-ristarforslag-v4",
+   "date": "2026-11-08",
+   "status": "nytt",
+   "title": "Metodrapporten om ristarförslagen i version 4",
+   "text": "Metodrapporten Statistiska ristarförslag ur runtexterna har en ny version på webbplatsen och på Zenodo, med en egen DOI (10.5281/zenodo.24054744). Den berättar nu också att modellen inte klarade provet mot runologernas egna grupper av samma hand i Runor 2020, och vad det betyder: andelen rätt i blindprovet mäter hur väl förslagen stämmer med Rundatas tillskrivningar, inte att modellen känner igen en hand. Blindprovet och dess siffror är oförändrade. Artikeln Fem runstenar söker sin ristare har fått ett tillägg om samma sak."
+  },
+  {
    "id": "ristarforslag-arligare",
    "date": "2026-11-08",
    "status": "nytt",
