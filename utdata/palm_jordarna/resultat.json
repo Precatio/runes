@@ -1,0 +1,485 @@
+{
+  "plan": "analysplaner/2026-11-08-palm-jordarna.md",
+  "plan_sha": "85a70fa3",
+  "cells": 6190,
+  "stones": 707,
+  "gravefields": 17781,
+  "lands": 36,
+  "theta": 0.470693,
+  "clay_quartiles": [0.0225, 0.379883],
+  "ratio_q75_vs_q25": 1.449506,
+  "P0": {
+    "estimate": 1.382664,
+    "se": 0.273434,
+    "z": 5.056674,
+    "p_one_sided": 2.133159e-07,
+    "rate_ratio": 3.985507
+  },
+  "P1": {
+    "estimate": 1.038725,
+    "se": 0.294577,
+    "z": 3.526154,
+    "p_one_sided": 0.000211,
+    "rate_ratio": 2.825611,
+    "holds": true
+  },
+  "P2": {
+    "adjusted": {
+      "estimate": 0.893941,
+      "se": 0.188215,
+      "p_one_sided": 1.019301e-06,
+      "ratio": 2.444745
+    },
+    "unadjusted": {
+      "estimate": 1.870765,
+      "se": 0.182483,
+      "p_one_sided": 0,
+      "ratio": 6.493264
+    },
+    "explained_share": 0.522152,
+    "holds": true
+  },
+  "P3": {
+    "estimate": -0.317956,
+    "se": 0.111943,
+    "z": -2.840328,
+    "p_one_sided": 0.002253,
+    "rate_ratio": 0.727635,
+    "holds": true
+  },
+  "robustness": {
+    "cells_1000_m": {
+      "estimate": 0.75174,
+      "se": 0.218879,
+      "z": 3.4345,
+      "p_one_sided": 0.000297,
+      "rate_ratio": 2.120686
+    },
+    "cells_5000_m": {
+      "estimate": 1.428935,
+      "se": 0.380009,
+      "z": 3.760263,
+      "p_one_sided": 0.000085,
+      "rate_ratio": 4.174253
+    },
+    "malar_only": {
+      "estimate": 0.708755,
+      "se": 0.377014,
+      "z": 1.879916,
+      "p_one_sided": 0.03006,
+      "rate_ratio": 2.03146
+    },
+    "gotaland_only": {
+      "estimate": 1.707347,
+      "se": 0.710584,
+      "z": 2.402738,
+      "p_one_sided": 0.008136,
+      "rate_ratio": 5.514314
+    },
+    "without_water": {
+      "estimate": 0.998441,
+      "se": 0.293682,
+      "z": 3.399735,
+      "p_one_sided": 0.000337,
+      "rate_ratio": 2.714048
+    }
+  },
+  "per_land": [
+    {
+      "region": "attundaland",
+      "cells": 374,
+      "stones": 161,
+      "gravefields": 1960,
+      "land_km2": 1249.35,
+      "clay": 0.302101,
+      "stones_per_100km2": 12.886701,
+      "stones_per_gravefield": 0.082143,
+      "_row": "attundaland"
+    },
+    {
+      "region": "Sö",
+      "cells": 900,
+      "stones": 154,
+      "gravefields": 3532,
+      "land_km2": 2765.13,
+      "clay": 0.323211,
+      "stones_per_100km2": 5.569358,
+      "stones_per_gravefield": 0.043601,
+      "_row": "Sö"
+    },
+    {
+      "region": "tiundaland",
+      "cells": 466,
+      "stones": 148,
+      "gravefields": 2029,
+      "land_km2": 1618.85,
+      "clay": 0.377577,
+      "stones_per_100km2": 9.142292,
+      "stones_per_gravefield": 0.072942,
+      "_row": "tiundaland"
+    },
+    {
+      "region": "fjadrundaland",
+      "cells": 211,
+      "stones": 68,
+      "gravefields": 700,
+      "land_km2": 716.34,
+      "clay": 0.52168,
+      "stones_per_100km2": 9.492699,
+      "stones_per_gravefield": 0.097143,
+      "_row": "fjadrundaland"
+    },
+    {
+      "region": "Ög",
+      "cells": 539,
+      "stones": 48,
+      "gravefields": 1782,
+      "land_km2": 1853.87,
+      "clay": 0.318825,
+      "stones_per_100km2": 2.589178,
+      "stones_per_gravefield": 0.026936,
+      "_row": "Ög"
+    },
+    {
+      "region": "Vg",
+      "cells": 704,
+      "stones": 38,
+      "gravefields": 1169,
+      "land_km2": 2537.9,
+      "clay": 0.169617,
+      "stones_per_100km2": 1.497301,
+      "stones_per_gravefield": 0.032506,
+      "_row": "Vg"
+    },
+    {
+      "region": "roden",
+      "cells": 232,
+      "stones": 30,
+      "gravefields": 819,
+      "land_km2": 757.41,
+      "clay": 0.244874,
+      "stones_per_100km2": 3.960867,
+      "stones_per_gravefield": 0.03663,
+      "_row": "roden"
+    },
+    {
+      "region": "finnveden",
+      "cells": 258,
+      "stones": 12,
+      "gravefields": 466,
+      "land_km2": 894.38,
+      "clay": 0.05018,
+      "stones_per_100km2": 1.341712,
+      "stones_per_gravefield": 0.025751,
+      "_row": "finnveden"
+    },
+    {
+      "region": "njudung",
+      "cells": 112,
+      "stones": 7,
+      "gravefields": 177,
+      "land_km2": 411.09,
+      "clay": 0.007492,
+      "stones_per_100km2": 1.70279,
+      "stones_per_gravefield": 0.039548,
+      "_row": "njudung"
+    },
+    {
+      "region": "Nä",
+      "cells": 153,
+      "stones": 6,
+      "gravefields": 237,
+      "land_km2": 513.97,
+      "clay": 0.346635,
+      "stones_per_100km2": 1.167383,
+      "stones_per_gravefield": 0.025316,
+      "_row": "Nä"
+    },
+    {
+      "region": "varend",
+      "cells": 168,
+      "stones": 6,
+      "gravefields": 256,
+      "land_km2": 568.42,
+      "clay": 0.047746,
+      "stones_per_100km2": 1.055558,
+      "stones_per_gravefield": 0.023438,
+      "_row": "varend"
+    },
+    {
+      "region": "M",
+      "cells": 64,
+      "stones": 5,
+      "gravefields": 165,
+      "land_km2": 204.3,
+      "clay": 0.246598,
+      "stones_per_100km2": 2.447381,
+      "stones_per_gravefield": 0.030303,
+      "_row": "M"
+    },
+    {
+      "region": "Öl",
+      "cells": 191,
+      "stones": 5,
+      "gravefields": 437,
+      "land_km2": 669.95,
+      "clay": 0.049213,
+      "stones_per_100km2": 0.746324,
+      "stones_per_gravefield": 0.011442,
+      "_row": "Öl"
+    },
+    {
+      "region": "Vs",
+      "cells": 229,
+      "stones": 5,
+      "gravefields": 876,
+      "land_km2": 810.76,
+      "clay": 0.45815,
+      "stones_per_100km2": 0.616705,
+      "stones_per_gravefield": 0.005708,
+      "_row": "Vs"
+    },
+    {
+      "region": "vedbo",
+      "cells": 77,
+      "stones": 4,
+      "gravefields": 129,
+      "land_km2": 259.64,
+      "clay": 0.027153,
+      "stones_per_100km2": 1.540595,
+      "stones_per_gravefield": 0.031008,
+      "_row": "vedbo"
+    },
+    {
+      "region": "U",
+      "cells": 45,
+      "stones": 3,
+      "gravefields": 157,
+      "land_km2": 132.59,
+      "clay": 0.380798,
+      "stones_per_100km2": 2.262614,
+      "stones_per_gravefield": 0.019108,
+      "_row": "U"
+    },
+    {
+      "region": "Gs",
+      "cells": 48,
+      "stones": 2,
+      "gravefields": 104,
+      "land_km2": 139.04,
+      "clay": 0.283372,
+      "stones_per_100km2": 1.438435,
+      "stones_per_gravefield": 0.019231,
+      "_row": "Gs"
+    },
+    {
+      "region": "Vr",
+      "cells": 145,
+      "stones": 2,
+      "gravefields": 227,
+      "land_km2": 460.73,
+      "clay": 0.349597,
+      "stones_per_100km2": 0.434094,
+      "stones_per_gravefield": 0.008811,
+      "_row": "Vr"
+    },
+    {
+      "region": "Hs",
+      "cells": 101,
+      "stones": 1,
+      "gravefields": 195,
+      "land_km2": 328.59,
+      "clay": 0.277245,
+      "stones_per_100km2": 0.304331,
+      "stones_per_gravefield": 0.005128,
+      "_row": "Hs"
+    },
+    {
+      "region": "kinda",
+      "cells": 53,
+      "stones": 1,
+      "gravefields": 106,
+      "land_km2": 162.02,
+      "clay": 0.135662,
+      "stones_per_100km2": 0.617208,
+      "stones_per_gravefield": 0.009434,
+      "_row": "kinda"
+    },
+    {
+      "region": "vista",
+      "cells": 16,
+      "stones": 1,
+      "gravefields": 33,
+      "land_km2": 49.69,
+      "clay": 0.142685,
+      "stones_per_100km2": 2.012477,
+      "stones_per_gravefield": 0.030303,
+      "_row": "vista"
+    },
+    {
+      "region": "Ån",
+      "cells": 66,
+      "stones": 0,
+      "gravefields": 106,
+      "land_km2": 195.89,
+      "clay": 0.234468,
+      "stones_per_100km2": 0,
+      "stones_per_gravefield": 0,
+      "_row": "Ån"
+    },
+    {
+      "region": "aspeland",
+      "cells": 7,
+      "stones": 0,
+      "gravefields": 9,
+      "land_km2": 21.93,
+      "clay": 0.000912,
+      "stones_per_100km2": 0,
+      "stones_per_gravefield": 0,
+      "_row": "aspeland"
+    },
+    {
+      "region": "D",
+      "cells": 42,
+      "stones": 0,
+      "gravefields": 52,
+      "land_km2": 119.67,
+      "clay": 0.351049,
+      "stones_per_100km2": 0,
+      "stones_per_gravefield": 0,
+      "_row": "D"
+    },
+    {
+      "region": "Dsl",
+      "cells": 137,
+      "stones": 0,
+      "gravefields": 208,
+      "land_km2": 465.33,
+      "clay": 0.30357,
+      "stones_per_100km2": 0,
+      "stones_per_gravefield": 0,
+      "_row": "Dsl"
+    },
+    {
+      "region": "G",
+      "cells": 147,
+      "stones": 0,
+      "gravefields": 374,
+      "land_km2": 498.2,
+      "clay": 0.007808,
+      "stones_per_100km2": 0,
+      "stones_per_gravefield": 0,
+      "_row": "G"
+    },
+    {
+      "region": "handbord",
+      "cells": 28,
+      "stones": 0,
+      "gravefields": 41,
+      "land_km2": 95.72,
+      "clay": 0.184392,
+      "stones_per_100km2": 0,
+      "stones_per_gravefield": 0,
+      "_row": "handbord"
+    },
+    {
+      "region": "medeltredingen",
+      "cells": 122,
+      "stones": 0,
+      "gravefields": 271,
+      "land_km2": 425.76,
+      "clay": 0.008479,
+      "stones_per_100km2": 0,
+      "stones_per_gravefield": 0,
+      "_row": "medeltredingen"
+    },
+    {
+      "region": "mo",
+      "cells": 23,
+      "stones": 0,
+      "gravefields": 31,
+      "land_km2": 84.65,
+      "clay": 0.006734,
+      "stones_per_100km2": 0,
+      "stones_per_gravefield": 0,
+      "_row": "mo"
+    },
+    {
+      "region": "more",
+      "cells": 47,
+      "stones": 0,
+      "gravefields": 114,
+      "land_km2": 169.17,
+      "clay": 0.275226,
+      "stones_per_100km2": 0,
+      "stones_per_gravefield": 0,
+      "_row": "more"
+    },
+    {
+      "region": "nordertredingen",
+      "cells": 109,
+      "stones": 0,
+      "gravefields": 270,
+      "land_km2": 372.29,
+      "clay": 0.026324,
+      "stones_per_100km2": 0,
+      "stones_per_gravefield": 0,
+      "_row": "nordertredingen"
+    },
+    {
+      "region": "sevede",
+      "cells": 67,
+      "stones": 0,
+      "gravefields": 103,
+      "land_km2": 225.34,
+      "clay": 0.0663,
+      "stones_per_100km2": 0,
+      "stones_per_gravefield": 0,
+      "_row": "sevede"
+    },
+    {
+      "region": "Sm",
+      "cells": 22,
+      "stones": 0,
+      "gravefields": 51,
+      "land_km2": 62.7,
+      "clay": 0.156778,
+      "stones_per_100km2": 0,
+      "stones_per_gravefield": 0,
+      "_row": "Sm"
+    },
+    {
+      "region": "sudertredingen",
+      "cells": 79,
+      "stones": 0,
+      "gravefields": 215,
+      "land_km2": 281.99,
+      "clay": 0.002908,
+      "stones_per_100km2": 0,
+      "stones_per_gravefield": 0,
+      "_row": "sudertredingen"
+    },
+    {
+      "region": "tjust",
+      "cells": 153,
+      "stones": 0,
+      "gravefields": 289,
+      "land_km2": 513.63,
+      "clay": 0.276288,
+      "stones_per_100km2": 0,
+      "stones_per_gravefield": 0,
+      "_row": "tjust"
+    },
+    {
+      "region": "tveta",
+      "cells": 55,
+      "stones": 0,
+      "gravefields": 91,
+      "land_km2": 190.23,
+      "clay": 0.038585,
+      "stones_per_100km2": 0,
+      "stones_per_gravefield": 0,
+      "_row": "tveta"
+    }
+  ]
+}

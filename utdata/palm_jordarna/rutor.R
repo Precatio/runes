@@ -19,7 +19,7 @@ wfile <- "/Volumes/2TB/cache/terra/vatten1050_100m.tif"
 if (!file.exists(wfile)) {
   w <- st_read(file.path(GEO, "sgu/strandforskjutning_1_900.gpkg"), layer = "issjohav_900", quiet = TRUE)
   w <- st_transform(st_make_valid(w), 3006)
-  wr <- rasterize(vect(w), r, field = 1, background = 0, filename = wfile, overwrite = TRUE, datatype = "INT1U")
+  wr <- rasterize(vect(w), r, field = 1, background = 0, filename = wfile, overwrite = TRUE)
 }
 wr <- rast(wfile)
 mapped <- (r >= 1) & (r <= 7) & (r != 6)        # soil-mapped land (not water, not unmapped)

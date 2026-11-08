@@ -1,0 +1,20 @@
+{
+ "crs": "EPSG:3006",
+ "xmin": 250000.0,
+ "xmax": 930000.0,
+ "ymin": 6120000.0,
+ "ymax": 7700000.0,
+ "res": 100.0,
+ "width": 6800,
+ "height": 15800,
+ "classes": {
+  "1": "lera_silt",
+  "2": "sand_grus",
+  "3": "moran",
+  "4": "torv_gyttja",
+  "5": "berg",
+  "6": "vatten",
+  "7": "ovrigt"
+ },
+ "source": "SGU, Jordarter 1:25 000–1:100 000 (INSPIRE), CC BY 4.0"
+}
