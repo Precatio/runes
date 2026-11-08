@@ -1,0 +1,553 @@
+{
+ "plan": "analysplaner/2026-11-08-samma-hand-runor.md",
+ "plan_sha": "32257107",
+ "corpus": "510ebfb3",
+ "runor_notes": 129,
+ "links": 230,
+ "H1": {
+  "groups": 14,
+  "median_diff": -0.07407407407407407,
+  "mean_obs": 0.5,
+  "mean_ctrl": 0.4384480634480635,
+  "better": 5,
+  "worse": 7,
+  "p": 0.56640625,
+  "holds": false
+ },
+ "sensitivity": {
+  "all_groups": {
+   "groups": 18,
+   "median_diff": 0.0,
+   "mean_obs": 0.6111111111111112,
+   "mean_ctrl": 0.4365021884629728,
+   "better": 8,
+   "worse": 7,
+   "p": 0.16708969152998654
+  },
+  "certain_notes_only": {
+   "groups": 13,
+   "median_diff": 0.013680347013680316,
+   "mean_obs": 0.5897435897435896,
+   "mean_ctrl": 0.4123799725651578,
+   "better": 6,
+   "worse": 5,
+   "p": 0.224609375
+  },
+  "control_10pct": {
+   "groups": 14,
+   "median_diff": -0.08408408408408408,
+   "mean_obs": 0.5,
+   "mean_ctrl": 0.4328238494905162,
+   "better": 5,
+   "worse": 7,
+   "p": 0.56640625
+  }
+ },
+ "opir_share_in_groups": 0.4473684210526316,
+ "groups": [
+  {
+   "stones": [
+    "U 1048",
+    "U 1050",
+    "U 1060"
+   ],
+   "obs": 0.3333333333333333,
+   "ctrl": 0.6141141141141141,
+   "pairs": 3,
+   "no_control": 0,
+   "unnamed": true,
+   "model": {
+    "U 1048": "Likbjörn",
+    "U 1050": "Öpir 1",
+    "U 1060": "Öpir 1"
+   },
+   "p_cal": {
+    "U 1048": 0.614,
+    "U 1050": 0.409,
+    "U 1060": 0.607
+   },
+   "rundata": {
+    "U 1048": null,
+    "U 1050": null,
+    "U 1060": null
+   },
+   "runor": {
+    "U 1048": [
+     "Samma som gjort U 1050 och 1060"
+    ],
+    "U 1050": [
+     "Samma som gjort U 1048 och 1060."
+    ],
+    "U 1060": [
+     "Samma som gjort U 1048 och 1050."
+    ]
+   }
+  },
+  {
+   "stones": [
+    "U 201",
+    "U 276"
+   ],
+   "obs": 1.0,
+   "ctrl": 0.0990990990990991,
+   "pairs": 1,
+   "no_control": 0,
+   "unnamed": true,
+   "model": {
+    "U 201": "Gunnar",
+    "U 276": "Gunnar"
+   },
+   "p_cal": {
+    "U 201": null,
+    "U 276": 0.805
+   },
+   "rundata": {
+    "U 201": "Gunnar",
+    "U 276": null
+   },
+   "runor": {
+    "U 201": [
+     "Samma som gjort U 276"
+    ],
+    "U 276": [
+     "Samma som gjort U 201"
+    ]
+   }
+  },
+  {
+   "stones": [
+    "U 1016",
+    "U 1146",
+    "U 1147"
+   ],
+   "obs": 0.3333333333333333,
+   "ctrl": 0.4074074074074074,
+   "pairs": 3,
+   "no_control": 1,
+   "unnamed": true,
+   "model": {
+    "U 1016": "Åsmund",
+    "U 1146": "Åsmund",
+    "U 1147": "Öpir 1"
+   },
+   "p_cal": {
+    "U 1016": 0.374,
+    "U 1146": 0.323,
+    "U 1147": 0.811
+   },
+   "rundata": {
+    "U 1016": null,
+    "U 1146": null,
+    "U 1147": null
+   },
+   "runor": {
+    "U 1016": [
+     "Samma som gjort U 1146."
+    ],
+    "U 1146": [
+     "Samma som gjort U 1016."
+    ],
+    "U 1147": [
+     "Eventuellt samma som gjort U 1146."
+    ]
+   }
+  },
+  {
+   "stones": [
+    "U 1015",
+    "U 1017",
+    "U 1018",
+    "U 1019",
+    "U 1020",
+    "U 1021",
+    "U 1022",
+    "U 1023",
+    "U 1024"
+   ],
+   "obs": 1.0,
+   "ctrl": 0.8469719719719719,
+   "pairs": 36,
+   "no_control": 0,
+   "unnamed": true,
+   "model": {
+    "U 1015": "Öpir 1",
+    "U 1017": "Öpir 1",
+    "U 1018": "Öpir 1",
+    "U 1019": "Öpir 1",
+    "U 1020": "Öpir 1",
+    "U 1021": "Öpir 1",
+    "U 1022": "Öpir 1",
+    "U 1023": "Öpir 1",
+    "U 1024": "Öpir 1"
+   },
+   "p_cal": {
+    "U 1015": 0.865,
+    "U 1017": 0.792,
+    "U 1018": 0.626,
+    "U 1019": 0.836,
+    "U 1020": 0.814,
+    "U 1021": 0.602,
+    "U 1022": null,
+    "U 1023": 0.718,
+    "U 1024": 0.655
+   },
+   "rundata": {
+    "U 1015": null,
+    "U 1017": null,
+    "U 1018": null,
+    "U 1019": null,
+    "U 1020": null,
+    "U 1021": null,
+    "U 1022": "Öpir 1",
+    "U 1023": null,
+    "U 1024": null
+   },
+   "runor": {
+    "U 1015": [
+     "Troligen samma som gjort U 1017-1024."
+    ],
+    "U 1017": [
+     "Samma som gjort U 1015 och 1018-1024."
+    ],
+    "U 1018": [
+     "Samma som gjort U 1015, 1017, 1019-1024"
+    ],
+    "U 1019": [
+     "Samma som gjort U 1015, 1017-1018, 1020-1024."
+    ],
+    "U 1020": [
+     "Samma som gjort U 1015, 1017-1019, 1021-1024."
+    ],
+    "U 1021": [
+     "Samma som gjort U 1015, 1017-1020, 1022-1024."
+    ],
+    "U 1022": [
+     "Samma som gjort U 1015, 1017-1021, 1023-1024"
+    ],
+    "U 1023": [
+     "Samma som gjort U 1015, 1017-1022, 1024."
+    ],
+    "U 1024": [
+     "Samma som gjort U 1015, 1017-1023."
+    ]
+   }
+  },
+  {
+   "stones": [
+    "U 135",
+    "U 136"
+   ],
+   "obs": 1.0,
+   "ctrl": 0.34684684684684686,
+   "pairs": 1,
+   "no_control": 0,
+   "unnamed": true,
+   "model": {
+    "U 135": "Fot 2",
+    "U 136": "Fot 2"
+   },
+   "p_cal": {
+    "U 135": 0.535,
+    "U 136": 0.75
+   },
+   "rundata": {
+    "U 135": null,
+    "U 136": null
+   },
+   "runor": {
+    "U 135": [
+     "Samma som gjort U 136."
+    ],
+    "U 136": [
+     "Samma som gjort U 135."
+    ]
+   }
+  },
+  {
+   "stones": [
+    "U 665",
+    "U 672"
+   ],
+   "obs": 0.0,
+   "ctrl": 0.21771771771771772,
+   "pairs": 1,
+   "no_control": 0,
+   "unnamed": true,
+   "model": {
+    "U 665": "Arbjörn",
+    "U 672": "Fot 2"
+   },
+   "p_cal": {
+    "U 665": 0.503,
+    "U 672": 0.255
+   },
+   "rundata": {
+    "U 665": null,
+    "U 672": null
+   },
+   "runor": {
+    "U 665": [
+     "Samma som gjort U 672."
+    ],
+    "U 672": [
+     "Samma som gjort U 665."
+    ]
+   }
+  },
+  {
+   "stones": [
+    "U 1026",
+    "U 1027"
+   ],
+   "obs": 1.0,
+   "ctrl": 1.0,
+   "pairs": 1,
+   "no_control": 0,
+   "unnamed": true,
+   "model": {
+    "U 1026": "Öpir 1",
+    "U 1027": "Öpir 1"
+   },
+   "p_cal": {
+    "U 1026": 0.993,
+    "U 1027": 0.958
+   },
+   "rundata": {
+    "U 1026": null,
+    "U 1027": null
+   },
+   "runor": {
+    "U 1026": [
+     "Samma som gjort U 1027."
+    ],
+    "U 1027": [
+     "Samma som gjort U 1026."
+    ]
+   }
+  },
+  {
+   "stones": [
+    "U 297",
+    "U Fv1953;270",
+    "U Fv1979;245"
+   ],
+   "obs": 0.3333333333333333,
+   "ctrl": 0.3098098098098098,
+   "pairs": 3,
+   "no_control": 0,
+   "unnamed": true,
+   "model": {
+    "U 297": "Fot 2",
+    "U Fv1953;270": "Öpir 1",
+    "U Fv1979;245": "Fot 2"
+   },
+   "p_cal": {
+    "U 297": 0.958,
+    "U Fv1953;270": 0.469,
+    "U Fv1979;245": 0.894
+   },
+   "rundata": {
+    "U 297": null,
+    "U Fv1953;270": null,
+    "U Fv1979;245": null
+   },
+   "runor": {
+    "U 297": [
+     "Samma som gjort U Fv1953;270 och U Fv1979;245."
+    ],
+    "U Fv1953;270": [
+     "Samma som gjort U 297 och U Fv1979;245."
+    ],
+    "U Fv1979;245": [
+     "Samma som gjort U 297 och Fv1953;270."
+    ]
+   }
+  },
+  {
+   "stones": [
+    "U 124",
+    "U 60"
+   ],
+   "obs": 0.0,
+   "ctrl": 0.15415415415415415,
+   "pairs": 1,
+   "no_control": 0,
+   "unnamed": true,
+   "model": {
+    "U 124": "Fot 2",
+    "U 60": "Visäte"
+   },
+   "p_cal": {
+    "U 124": 0.679,
+    "U 60": 0.388
+   },
+   "rundata": {
+    "U 124": null,
+    "U 60": null
+   },
+   "runor": {
+    "U 124": [
+     "Samma som gjort U 60."
+    ],
+    "U 60": [
+     "Samma som gjort U 124."
+    ]
+   }
+  },
+  {
+   "stones": [
+    "U 800",
+    "U 803"
+   ],
+   "obs": 0.0,
+   "ctrl": 0.5,
+   "pairs": 1,
+   "no_control": 0,
+   "unnamed": true,
+   "model": {
+    "U 800": "Balle",
+    "U 803": "Öpir 1"
+   },
+   "p_cal": {
+    "U 800": null,
+    "U 803": 0.401
+   },
+   "rundata": {
+    "U 800": "Tidkume",
+    "U 803": null
+   },
+   "runor": {
+    "U 800": [
+     "Samma som gjort U 803"
+    ],
+    "U 803": [
+     "Samma som gjort U 800"
+    ]
+   }
+  },
+  {
+   "stones": [
+    "U 49",
+    "U 50"
+   ],
+   "obs": 0.0,
+   "ctrl": 0.5,
+   "pairs": 1,
+   "no_control": 0,
+   "unnamed": true,
+   "model": {
+    "U 49": "Halvdan",
+    "U 50": "Öpir 1"
+   },
+   "p_cal": {
+    "U 49": 0.318,
+    "U 50": 0.616
+   },
+   "rundata": {
+    "U 49": null,
+    "U 50": null
+   },
+   "runor": {
+    "U 49": [
+     "Samma som gjort U 50."
+    ],
+    "U 50": [
+     "Samma som gjort U 49."
+    ]
+   }
+  },
+  {
+   "stones": [
+    "Vs 18",
+    "Vs 19"
+   ],
+   "obs": 1.0,
+   "ctrl": NaN,
+   "pairs": 1,
+   "no_control": 2,
+   "unnamed": true,
+   "model": {
+    "Vs 18": "Balle",
+    "Vs 19": "Balle"
+   },
+   "p_cal": {
+    "Vs 18": 0.597,
+    "Vs 19": 0.516
+   },
+   "rundata": {
+    "Vs 18": null,
+    "Vs 19": null
+   },
+   "runor": {
+    "Vs 18": [
+     "Samma som gjort Vs 19."
+    ],
+    "Vs 19": [
+     "Samma som gjort Vs 18."
+    ]
+   }
+  },
+  {
+   "stones": [
+    "U 685",
+    "U 686"
+   ],
+   "obs": 1.0,
+   "ctrl": 0.2947947947947948,
+   "pairs": 1,
+   "no_control": 0,
+   "unnamed": true,
+   "model": {
+    "U 685": "Fot 2",
+    "U 686": "Fot 2"
+   },
+   "p_cal": {
+    "U 685": 0.649,
+    "U 686": 0.311
+   },
+   "rundata": {
+    "U 685": null,
+    "U 686": null
+   },
+   "runor": {
+    "U 685": [
+     "Samma som gjort U 686."
+    ],
+    "U 686": [
+     "Samma som gjort U 685."
+    ]
+   }
+  },
+  {
+   "stones": [
+    "Sö 91",
+    "Sö Fv1986;218"
+   ],
+   "obs": 0.0,
+   "ctrl": 0.4089089089089089,
+   "pairs": 1,
+   "no_control": 0,
+   "unnamed": true,
+   "model": {
+    "Sö 91": "Traen",
+    "Sö Fv1986;218": "Balle"
+   },
+   "p_cal": {
+    "Sö 91": 0.365,
+    "Sö Fv1986;218": 0.421
+   },
+   "rundata": {
+    "Sö 91": null,
+    "Sö Fv1986;218": null
+   },
+   "runor": {
+    "Sö 91": [
+     "Troligen samma ristare som gjort Sö Fv1986;218."
+    ],
+    "Sö Fv1986;218": [
+     "Troligen samma ristare som gjort Sö 91."
+    ]
+   }
+  }
+ ]
+}
