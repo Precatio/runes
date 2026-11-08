@@ -1,0 +1,48 @@
+{
+ "series": "sodermanland",
+ "stem": "So_45_1_4_thin_closed_holes",
+ "signum": "Sö 45",
+ "rune_types": "",
+ "staveless": true,
+ "bands_used": true,
+ "text_runor": 74,
+ "runor_matta": 70,
+ "runsnitt": 374,
+ "godkanda": 374,
+ "runor_hittade": 105,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.1686
+ },
+ "counts": {
+  "candidates": 3600,
+  "accepted": 374,
+  "rejected": 3226,
+  "rejection_reasons": {
+   "utanför runslingorna": 2431,
+   "vid slingans kant": 154,
+   "slingkant, inte runa": 175,
+   "spårkant hittades inte": 236,
+   "dålig väggpassning": 75,
+   "för få punkter i snittet": 22,
+   "för smalt för upplösningen": 28,
+   "för grunt": 105
+  },
+  "groove_area_mm2": 121788.71999999999,
+  "wide_area_mm2": 2845.08,
+  "strokes": {
+   "irregular": 1120,
+   "isolated": 151,
+   "ornament": 76,
+   "rune": 69
+  },
+  "runes_identified": 105,
+  "runes_measured": 70
+ },
+ "parametrar": {
+  "staveless": true,
+  "staveless_gap_mm": 9.24,
+  "band_height_mm": 61.6
+ },
+ "seconds": 76
+}

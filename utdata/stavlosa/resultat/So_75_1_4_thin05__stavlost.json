@@ -1,0 +1,49 @@
+{
+ "series": "sodermanland",
+ "stem": "So_75_1_4_thin05",
+ "signum": "Sö 75",
+ "rune_types": "",
+ "staveless": true,
+ "bands_used": true,
+ "text_runor": 39,
+ "runor_matta": 58,
+ "runsnitt": 641,
+ "godkanda": 641,
+ "runor_hittade": 80,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.4352
+ },
+ "counts": {
+  "candidates": 2100,
+  "accepted": 641,
+  "rejected": 1459,
+  "rejection_reasons": {
+   "slingkant, inte runa": 338,
+   "spårkant hittades inte": 157,
+   "vid slingans kant": 144,
+   "utanför runslingorna": 761,
+   "för grunt": 11,
+   "dålig väggpassning": 19,
+   "för smalt för upplösningen": 15,
+   "för få punkter i snittet": 13,
+   "orimlig vinkel": 1
+  },
+  "groove_area_mm2": 72368.27999999998,
+  "wide_area_mm2": 6544.8,
+  "strokes": {
+   "ornament": 41,
+   "irregular": 225,
+   "rune": 75,
+   "isolated": 6
+  },
+  "runes_identified": 80,
+  "runes_measured": 58
+ },
+ "parametrar": {
+  "staveless": true,
+  "staveless_gap_mm": 9.43,
+  "band_height_mm": 62.9
+ },
+ "seconds": 55
+}

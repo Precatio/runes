@@ -1,0 +1,50 @@
+{
+ "series": "sodermanland",
+ "stem": "So_131_1_4_thin_closed_holes",
+ "signum": "Sö 131",
+ "rune_types": "",
+ "staveless": true,
+ "bands_used": true,
+ "text_runor": 100,
+ "runor_matta": 99,
+ "runsnitt": 371,
+ "godkanda": 371,
+ "runor_hittade": 157,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.3204
+ },
+ "counts": {
+  "candidates": 1835,
+  "accepted": 371,
+  "rejected": 1464,
+  "rejection_reasons": {
+   "utanför runslingorna": 696,
+   "vid slingans kant": 67,
+   "slingkant, inte runa": 262,
+   "dålig väggpassning": 54,
+   "spårkant hittades inte": 236,
+   "för få punkter i snittet": 23,
+   "för smalt för upplösningen": 46,
+   "orimlig vinkel": 1,
+   "för grunt": 78,
+   "botten utanför mittlinjen": 1
+  },
+  "groove_area_mm2": 74494.07999999999,
+  "wide_area_mm2": 729.0,
+  "strokes": {
+   "irregular": 955,
+   "isolated": 95,
+   "rune": 35,
+   "ornament": 40
+  },
+  "runes_identified": 157,
+  "runes_measured": 99
+ },
+ "parametrar": {
+  "staveless": true,
+  "staveless_gap_mm": 9.05,
+  "band_height_mm": 60.3
+ },
+ "seconds": 69
+}

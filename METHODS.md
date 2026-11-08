@@ -1027,10 +1027,13 @@ upplösning (`harmonize_mm`); båda sparas bland parametrarna.
   *Runslingorna*), inte bara i stavlöst läge. Med `groove-6` avgjorde slingorna vilka snitt som är runor, men vilken
   runa ett snitt hör till kom fortfarande från den gamla streckklassningen, och bara streck som den själv kallade runor
   fick ett runnummer. På de 34 skanningarna i Kitzler Åhfeldts serie från Södermanland med minst tio läsbara runor i
-  texten mätte analysen då i mitten 0,36 av textens runor (typisk avvikelse en faktor 2,8), med indelningen längs
-  slingan 0,98 (faktor 1,3); snitten och måtten är identiska i båda (`utdata/stavlosa/ka_tabell.py`,
-  `ka_tabell.json`). Indelningen kan dela en runa i två eller slå ihop två grannar; antalet runor med minst ett mätt
-  snitt ligger inom 25 % av textens antal på 13 av 34 stenar (mot 8). Själva tvärsnittsmätningen är oförändrad; det
+  texten mätte analysen då i mitten 0,37 av textens runor (typisk avvikelse en faktor 2,7), med indelningen längs
+  slingan 1,15 (faktor 1,3); snitten och måtten är identiska i båda (`utdata/stavlosa/ka_tabell.py`,
+  `ka_tabell.json`). Indelningen kan dela en runa i två eller slå ihop två grannar och räknar i mitten 15 % för många
+  runor; antalet runor med minst ett mätt snitt ligger inom 25 % av textens antal på 14 av 34 stenar (mot 8).
+  (Rättat 2026-11-08: 17 av de 34 stenarna mättes först med slingmodellens slingor i stället för de ritade, eftersom
+  djupbildernas origo saknades; då blev det 0,36 och 0,98 och 13 av 34. Det vanliga läget kördes om med koden från
+  tabellens tillkomst, bdf58a1^, eftersom dagens kod delar upp längs slingan i båda lägena.) Själva tvärsnittsmätningen är oförändrad; det
   som ändras är runnumret och därmed runan som enhet (medel per runa, gränsen 10/20 runor), så korpusposter mätta med
   `groove-6` eller äldre bör göras om.
 
@@ -1161,13 +1164,14 @@ missas ibland. Igenkänningen är regelbaserad och inte validerad mot en handmä
   stenar, som på stenens djupbild (2,4 mm per pixel) markerar var slingorna går. På 24 stenar som hölls utanför
   träningen överlappade modellens slingor de ritade med i mitten 59 % (IoU; bäst Sö 333 0,83, sämst stavlösa Hs 14
   0,10). Vad det betyder för mätningen prövades 2026-11-03 (`utdata/slingor_utvardering/utvardera.py`,
-  `resultat.json`): samma sten mättes med `groove-7` två gånger, med de ritade slingorna och med modellens. På de 18
-  av de 24 stenarna där de ritade slingorna fanns var i mitten 71 % av modellkörningens runsnitt också runsnitt med
-  de ritade slingorna (precision; 78 % räknat över alla snitt), och modellkörningen hittade 78 % av de ritade
-  slingornas runsnitt (täckning; 81 % över alla snitt). Stenens medelvärden flyttade sig i mitten 0,46° i V-vinkel,
-  0,07 mm i djup och 0,38 mm i bredd. Sämst gick det på stenar med få snitt (Hs 3, Hs 14, Ög 2, M 13: precision
-  0,11–0,44). Vinkel och djup tål alltså modellens slingor; bredden mindre, och korta eller stavlösa ristningar bör
-  få ritade slingor.
+  `resultat.json`): samma sten mättes med `groove-7` två gånger, med de ritade slingorna och med modellens. På alla
+  24 stenarna var i mitten 71 % av modellkörningens runsnitt också runsnitt med de ritade slingorna (precision; 76 %
+  räknat över alla snitt), och modellkörningen hittade 82 % av de ritade slingornas runsnitt (täckning; 82 % över
+  alla snitt). Stenens medelvärden flyttade sig i mitten 0,46° i V-vinkel, 0,05 mm i djup och 0,22 mm i bredd. Sämst
+  gick det på stenar med få snitt (Hs 3, Ög 2, Hs 14, M 13: precision 0,11–0,44). Vinkel och djup tål alltså
+  modellens slingor, bredden något mindre, och korta eller stavlösa ristningar bör få ritade slingor. (Första
+  utvärderingen 2026-11-03 fick med bara 18 av de 24, eftersom sex djupbilder saknade origo och de ritade slingorna
+  inte kunde föras över – se *Ritade slingor som inte kan användas sägs* nedan; omgjord 2026-11-08.)
 * **Runorna:** snitten som är runor delas upp i runor efter var strecken står längs slingan (`src/staveless.py`,
   `group_runes`; sedan `groove-7` för alla stenar): varje streck inne i slingan får sin plats längs den, och streck som
   ligger nära varandra längs slingan förs till samma runa, så länge runan inte blir bredare än slingan är hög. Streck
@@ -1182,6 +1186,12 @@ missas ibland. Igenkänningen är regelbaserad och inte validerad mot en handmä
   *Allt* (facit-läget) mäter alla spår.
 * **Reserv:** finns inga slingor (ingen modell, ingen PyTorch eller inga slingor på stenen) används
   streckklassningen som förut, och analysen säger det. Granskningsbilden visar slingorna som ett ljusblått fält.
+* **Ritade slingor som inte kan användas sägs (från 2026-11-08).** Finns granskade slingor för filen men kan de inte
+  föras över – djupbildens origo saknas, eller vyn ligger mer än 20° från djupbildens – faller analysen tillbaka på
+  slingmodellen och skriver varför (`bands.note`, `rune_bands.drawn_problem`; visas i analysrutan på 3D-sidan).
+  Förut skedde det tyst: 47 djupbilder gjorda före 2026-11-08 saknade origo, bland dem 29 av de 95 med granskade
+  slingor, så analysen använde modellens slingor för dem. `scripts/depth_dataset.py` skriver nu origo, och de 47 är
+  ifyllda (`--origin`, som kontrollerar att rutnätet blir djupbildens).
 * **Begränsningar:** slingmodellen är tränad på öppna skanningar från två skannertyper och sex serier; stavlösa runor
   och små fragment hittar den dåligt. Slingorna är förslag som användaren ska granska i granskningsbilden.
 
@@ -1331,7 +1341,23 @@ ytans rutnät genom stenens yta, annars slingmodellens förslag på bildens djup
 vilka det är och hur stor del av det visade som ligger i slingorna jämfört med slingornas andel av ytan.
 
 Den gemensamma nivån valdes efter provet i 2d2: vid samma visade yta samlade en gemensam gräns sig bättre i
-textslingorna än en lokal vittringsnivå. Bilden är inte prövad som läshjälp; den visar var analysens slingor ligger, så
+textslingorna än en lokal vittringsnivå.
+
+*Samma vy varje gång (från 2026-11-08).* Bilderna ur skanningen (strykljus, relief, djup och *Runor och ornamentik*)
+räknas som standard från en fast vy i stället för där kameran råkar stå (kryssrutan *Samma vy varje gång* på 3D-sidan,
+sparad i webbläsaren): för de öppna skanningarna protokollmätningens vy, som slingorna är ritade i; för en uppladdning
+som gjorts ritbar dess djupbilds vy; annars rakt mot den ristade sidan (stenens tunnaste riktning, som i 2c) med
+stenens längsta riktning i ytan uppåt (`api/routers/threed._default_view`). Två bilder av samma skanning blir då
+jämförbara. Utan kryssrutan används vyn i 3D-fönstret, som förut. Svaret anger vilken vy som användes.
+
+*Rätta slingorna (från 2026-11-08).* Dialogen leder till ritsidan (Runmodell) för stenen, där slingorna ritas om och
+märks granskade; *Räkna om* hämtar bilden igen, och sparade slingor ger en ny bild (filens ändringstid ingår i
+cachenyckeln). En uppladdad skanning som inte är en av de öppna kan göras ritbar (POST /api/3d/make_drawable, `src/depth_image.py`):
+en djupbild i samma vy som bilden läggs i djupcachen under `uppladdade/`, med rutnätets origo, så att slingor som ritas
+gäller för skanningen i bandbilden och i huggspårsanalysen. Granskade slingor blir också träningsdata för slingmodellen.
+Om nya slingor gör modellen bättre prövas under låst plan (`analysplaner/2026-11-08-slingmodell-v2.md`): de 24
+prövstenarna är frysta (`data/runmodell/slingmodell_provstenar.json`, v1 median IoU 0,59), och provet körs vid minst
+10 nya granskade stenar. Bilden är inte prövad som läshjälp; den visar var analysens slingor ligger, så
 att läsaren kan se när modellens slingor missar text (på Sö 128 överlappar modellens och de ritade slingorna till 60 %,
 mätt som gemensam yta delat med sammanlagd yta).
 

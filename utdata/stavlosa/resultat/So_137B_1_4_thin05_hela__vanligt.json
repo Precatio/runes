@@ -1,0 +1,49 @@
+{
+ "series": "sodermanland",
+ "stem": "So_137B_1_4_thin05_hela",
+ "signum": "Sö 137B",
+ "rune_types": null,
+ "staveless": false,
+ "bands_used": true,
+ "text_runor": 0,
+ "runor_matta": 34,
+ "runsnitt": 693,
+ "godkanda": 693,
+ "runor_hittade": 59,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.6479
+ },
+ "counts": {
+  "candidates": 2519,
+  "accepted": 693,
+  "rejected": 1826,
+  "rejection_reasons": {
+   "utanför runslingorna": 280,
+   "vid slingans kant": 106,
+   "slingkant, inte runa": 531,
+   "för få punkter i snittet": 14,
+   "för smalt för upplösningen": 43,
+   "för grunt": 315,
+   "spårkant hittades inte": 474,
+   "dålig väggpassning": 62,
+   "orimlig vinkel": 1
+  },
+  "groove_area_mm2": 88690.68,
+  "wide_area_mm2": 160.55999999999997,
+  "strokes": {
+   "irregular": 390,
+   "ornament": 48,
+   "isolated": 83,
+   "rune": 67
+  },
+  "runes_identified": 59,
+  "runes_measured": 34
+ },
+ "parametrar": {
+  "staveless": false,
+  "staveless_gap_mm": null,
+  "band_height_mm": null
+ },
+ "seconds": 35
+}

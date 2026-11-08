@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "ratta-slingorna",
+   "date": "2026-11-08",
+   "status": "nytt",
+   "title": "Rätta slingorna direkt från bilden – och samma vy varje gång",
+   "text": "Från bilden Runor och ornamentik går du nu direkt till ritsidan och rättar textslingorna, och en egen uppladdad skanning kan göras ritbar. Granskade slingor används av huggspårsanalysen och blir träningsdata för slingmodellen. Bilderna ur skanningen räknas nu som standard från samma vy varje gång, så att två bilder av samma sten går att jämföra. Samtidigt rättades ett fel: för 29 av de granskade skanningarna användes slingmodellens slingor i stället för de ritade, utan att analysen sa det."
+  },
+  {
    "id": "runor-och-ornamentik",
    "date": "2026-11-08",
    "status": "nytt",

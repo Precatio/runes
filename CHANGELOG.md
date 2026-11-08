@@ -5,6 +5,20 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Rätta slingorna och samma vy varje gång
+- *Runor och ornamentik* leder till ritsidan för stenen (*Rita eller rätta slingorna*, *Räkna om*), och en uppladdad
+  skanning kan göras ritbar (POST /api/3d/make_drawable, `src/depth_image.py`). Ritsidan öppnar stenen från adressen
+  (`?serie=…&fil=…`). Låst plan för slingmodell v2 (`analysplaner/2026-11-08-slingmodell-v2.md`), frysta prövstenar,
+  `--provstenar`/`--bara-v1` i träningen och `scripts/runmodell_slingor_jamfor.py`.
+- *Samma vy varje gång* (standard): bilderna ur skanningen räknas från protokollmätningens vy för de öppna
+  skanningarna, annars rakt mot den ristade sidan med stenens längsta riktning uppåt. Svaren anger vyn.
+
+### Rättat: ritade slingor föll tyst bort
+- 47 djupbilder saknade rutnätets origo, bland dem 29 av de 95 med granskade slingor, så att huggspårsanalysen och
+  bilderna använde slingmodellens slingor i stället för de ritade utan att säga det. Origo skrivs nu av
+  `scripts/depth_dataset.py` och är ifyllt för de 47; analysen säger till när ritade slingor finns men inte kan
+  användas (`bands.note`). Referenskörningarna som påverkades är omgjorda (METHODS 2, `groove-7`; 2c, *Runslingorna*).
+
 ### Runor och ornamentik: se var analysen tror att texten står
 - Ny bild på 3D-sidan (*Bilder ur skanningen* → *Runor och ornamentik*): dagens djupbild avskuren med en gemensam nivå
   för hela stenen (reglage −1 till +3 mm), rostrött inne i textslingorna, grått utanför och slingornas kant svart.

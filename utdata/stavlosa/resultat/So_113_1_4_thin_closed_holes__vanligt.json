@@ -1,0 +1,50 @@
+{
+ "series": "sodermanland",
+ "stem": "So_113_1_4_thin_closed_holes",
+ "signum": "Sö 113",
+ "rune_types": "s och R är kortkvistrunor",
+ "staveless": false,
+ "bands_used": true,
+ "text_runor": 69,
+ "runor_matta": 49,
+ "runsnitt": 496,
+ "godkanda": 496,
+ "runor_hittade": 64,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.517
+ },
+ "counts": {
+  "candidates": 1522,
+  "accepted": 496,
+  "rejected": 1026,
+  "rejection_reasons": {
+   "utanför runslingorna": 305,
+   "slingkant, inte runa": 295,
+   "vid slingans kant": 104,
+   "spårkant hittades inte": 263,
+   "dålig väggpassning": 19,
+   "för grunt": 19,
+   "för smalt för upplösningen": 13,
+   "för få punkter i snittet": 6,
+   "botten utanför mittlinjen": 1,
+   "orimlig vinkel": 1
+  },
+  "groove_area_mm2": 55179.719999999994,
+  "wide_area_mm2": 1901.1599999999999,
+  "strokes": {
+   "irregular": 207,
+   "rune": 87,
+   "ornament": 41,
+   "isolated": 6
+  },
+  "runes_identified": 64,
+  "runes_measured": 49
+ },
+ "parametrar": {
+  "staveless": false,
+  "staveless_gap_mm": null,
+  "band_height_mm": null
+ },
+ "seconds": 48
+}

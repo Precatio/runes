@@ -1,0 +1,48 @@
+{
+ "series": "sodermanland",
+ "stem": "So_370_1_4_thin05_closed_holes",
+ "signum": "Sö 370",
+ "rune_types": "",
+ "staveless": false,
+ "bands_used": true,
+ "text_runor": 14,
+ "runor_matta": 3,
+ "runsnitt": 173,
+ "godkanda": 173,
+ "runor_hittade": 9,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.4237
+ },
+ "counts": {
+  "candidates": 587,
+  "accepted": 173,
+  "rejected": 414,
+  "rejection_reasons": {
+   "utanför runslingorna": 216,
+   "vid slingans kant": 46,
+   "spårkant hittades inte": 12,
+   "slingkant, inte runa": 129,
+   "för grunt": 2,
+   "för smalt för upplösningen": 2,
+   "för få punkter i snittet": 1,
+   "dålig väggpassning": 6
+  },
+  "groove_area_mm2": 26708.76,
+  "wide_area_mm2": 1632.24,
+  "strokes": {
+   "irregular": 59,
+   "isolated": 7,
+   "ornament": 9,
+   "rune": 25
+  },
+  "runes_identified": 9,
+  "runes_measured": 3
+ },
+ "parametrar": {
+  "staveless": false,
+  "staveless_gap_mm": null,
+  "band_height_mm": null
+ },
+ "seconds": 4
+}

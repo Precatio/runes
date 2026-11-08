@@ -1,0 +1,51 @@
+{
+ "series": "sodermanland",
+ "stem": "So_208_thin03_closed_holes",
+ "signum": "Sö 208",
+ "rune_types": "",
+ "staveless": false,
+ "bands_used": true,
+ "text_runor": 99,
+ "runor_matta": 13,
+ "runsnitt": 250,
+ "godkanda": 250,
+ "runor_hittade": 66,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.223
+ },
+ "counts": {
+  "candidates": 3153,
+  "accepted": 250,
+  "rejected": 2903,
+  "rejection_reasons": {
+   "utanför runslingorna": 1681,
+   "vid slingans kant": 170,
+   "spårkant hittades inte": 224,
+   "slingkant, inte runa": 442,
+   "för få punkter i snittet": 313,
+   "för smalt för upplösningen": 31,
+   "dålig väggpassning": 30,
+   "för grunt": 7,
+   "botten utanför mittlinjen": 3,
+   "orimlig vinkel": 1,
+   "anpassningen misslyckades": 1
+  },
+  "groove_area_mm2": 101946.23999999999,
+  "wide_area_mm2": 728.6399999999999,
+  "strokes": {
+   "irregular": 1035,
+   "isolated": 126,
+   "ornament": 71,
+   "rune": 84
+  },
+  "runes_identified": 66,
+  "runes_measured": 13
+ },
+ "parametrar": {
+  "staveless": false,
+  "staveless_gap_mm": null,
+  "band_height_mm": null
+ },
+ "seconds": 36
+}

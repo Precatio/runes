@@ -1,0 +1,49 @@
+{
+ "series": "sodermanland",
+ "stem": "So_112_1_4_thin_closed_holes",
+ "signum": "Sö 112",
+ "rune_types": "långkvist och lönnrunor (kvistrunor)",
+ "staveless": true,
+ "bands_used": true,
+ "text_runor": 55,
+ "runor_matta": 58,
+ "runsnitt": 348,
+ "godkanda": 348,
+ "runor_hittade": 107,
+ "slingor": {
+  "source": "ritade",
+  "coverage": 0.1679
+ },
+ "counts": {
+  "candidates": 3332,
+  "accepted": 348,
+  "rejected": 2984,
+  "rejection_reasons": {
+   "utanför runslingorna": 2210,
+   "spårkant hittades inte": 193,
+   "slingkant, inte runa": 306,
+   "för smalt för upplösningen": 15,
+   "för grunt": 82,
+   "för få punkter i snittet": 15,
+   "vid slingans kant": 136,
+   "dålig väggpassning": 25,
+   "orimlig vinkel": 2
+  },
+  "groove_area_mm2": 123685.2,
+  "wide_area_mm2": 2998.7999999999997,
+  "strokes": {
+   "irregular": 933,
+   "ornament": 82,
+   "rune": 83,
+   "isolated": 114
+  },
+  "runes_identified": 107,
+  "runes_measured": 58
+ },
+ "parametrar": {
+  "staveless": true,
+  "staveless_gap_mm": 9.43,
+  "band_height_mm": 62.9
+ },
+ "seconds": 79
+}
