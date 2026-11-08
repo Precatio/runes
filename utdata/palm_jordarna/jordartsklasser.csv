@@ -1,0 +1,73 @@
+jordartsnamn,klass,klassnamn
+Berg,5,berg
+Bleke och kalkgyttja,4,torv_gyttja
+Blockmark,2,sand_grus
+Fanerozoisk diabas,7,ovrigt
+Flygsand,2,sand_grus
+Fyllning,7,ovrigt
+"Fyllning, rödfyr",7,ovrigt
+Glacial finlera,1,lera_silt
+Glacial grovlera,1,lera_silt
+Glacial grovsilt--finsand,1,lera_silt
+Glacial lera,1,lera_silt
+Glacial silt,1,lera_silt
+Grusig morän,3,moran
+Gyttja,4,torv_gyttja
+Gyttjelera (eller lergyttja),1,lera_silt
+Isälvssediment,2,sand_grus
+"Isälvssediment, grus",2,sand_grus
+"Isälvssediment, sand",2,sand_grus
+"Isälvssediment, sten--block",2,sand_grus
+Kalktuff,7,ovrigt
+Kiselgur,7,ovrigt
+Klapper,2,sand_grus
+Kärrtorv,4,torv_gyttja
+Lera,1,lera_silt
+Lera--silt,1,lera_silt
+"Lera--silt, tidvis under vatten",1,lera_silt
+Lerig morän,3,moran
+Morän,3,moran
+Morän omväxlande med sorterade sediment,3,moran
+"Morän, sten--block",3,moran
+Morängrovlera,3,moran
+Moränlera,3,moran
+Moränlera eller lerig morän,3,moran
+Mossetorv,4,torv_gyttja
+Oklassat område,7,ovrigt
+"Oklassat område, tidvis under vatten",7,ovrigt
+Postglacial finlera,1,lera_silt
+Postglacial finsand,2,sand_grus
+Postglacial grovlera,1,lera_silt
+Postglacial grovsilt-finsand,1,lera_silt
+Postglacial lera,1,lera_silt
+Postglacial sand,2,sand_grus
+Postglacial silt,1,lera_silt
+Rösberg,5,berg
+Sandig morän,3,moran
+Sandig-siltig morän,3,moran
+Sedimentärt berg,5,berg
+Silt,1,lera_silt
+Skaljord,7,ovrigt
+Skålla av sedimentärt berg,5,berg
+"Slamströmssediment, ler--block",2,sand_grus
+Sten--block,2,sand_grus
+"Svallsediment, grus",2,sand_grus
+Svämsediment,7,ovrigt
+"Svämsediment, grovsilt--finsand",1,lera_silt
+"Svämsediment, grus",2,sand_grus
+"Svämsediment, ler--silt",1,lera_silt
+"Svämsediment, sand",2,sand_grus
+Talus (rasmassor),7,ovrigt
+Torv,4,torv_gyttja
+"Torv, tidvis under vatten",4,torv_gyttja
+Urberg,5,berg
+Vatten,6,vatten
+Vittringsjord,7,ovrigt
+"Vittringsjord, ler--silt",7,ovrigt
+"Vittringsjord, sand--grus",2,sand_grus
+Älvsediment,2,sand_grus
+"Älvsediment, grovsilt--finsand",1,lera_silt
+"Älvsediment, grus",2,sand_grus
+"Älvsediment, ler--silt",1,lera_silt
+"Älvsediment, sand",2,sand_grus
+"Älvsediment, sten--block",2,sand_grus
