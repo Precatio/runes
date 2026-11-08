@@ -13,7 +13,7 @@ import { Answer, InfoTip, PageIntro, Tip } from "@/components/Explain";
 import { GLOSSARY } from "@/lib/glossary";
 import ExportTable from "@/components/ExportTable";
 
-type Status = "kan vara felbedömd" | "omstridd" | "stöds" | "svagt underlag" | "signerad" | "nytt förslag" | "möjligt förslag" | "inget förslag";
+type Status = "kan vara felbedömd" | "omstridd" | "stöds" | "svagt underlag" | "signerad" | "förslag bland kända" | "svagt förslag" | "möjlig onämnd hand" | "inget förslag";
 
 interface StoneRow {
   signum: string; province: string; place: string; carver: string | null; carvers?: string[]; carver_kind: "S" | "A" | "?" | null;
@@ -24,11 +24,18 @@ interface OverviewData {
   control: { n_signed: number; flagged: number; would_be_misjudged: number };
 }
 interface Source { value: number; points_to: string | null; text: string }
+// Similarity beyond the neighbours (src/hand_links.py, METHODS 14i): share = of named stone pairs this alike, the share with the same carver
+interface HandPartner { signum: string; excess: number; km: number; carver: string | null; share: number | null }
+interface HandEvidence {
+  partners: HandPartner[]; carvers: Record<string, { carver: string; excess: number; n: number; share: number | null } | null>;
+  unnamed: string[]; best_share: number | null; base_share: number | null; t_hand: number | null; hand_share?: number | null;
+}
 interface Profile extends StoneRow {
   sources: Record<string, Source>;
   alternatives: { carver: string; strength: number; model: number; orthography: number; checks: Record<string, boolean | null>; check_texts?: Record<string, string> }[];
   model: { kind: string; probabilities: Record<string, number> } | null;
   orthography: { ranking: { carver: string; similarity: number; reliability: number }[]; n_words: number } | null;
+  hand?: HandEvidence;
   variables: {
     height_m?: number; height_pct?: number | null; rune_height_cm?: number; fragment: boolean; kmr_url?: string;
     n_words: number; n_words_pct: number | null; n_names: number; n_names_pct: number | null;
@@ -46,12 +53,13 @@ const STATUS: Record<Status, { color: string; symbol: string; icon: string; text
   "kan vara felbedömd": { color: "#d03b3b", symbol: "x", icon: "✕", text: "Beläggen talar emot Rundatas ristare och pekar mot en annan." },
   "svagt underlag": { color: "#8f8e8a", symbol: "circle-open", icon: "○", text: "För få metoder kan uttala sig, eller beläggen är svaga." },
   "signerad": { color: "#334155", symbol: "square-open", icon: "□", text: "Signerad sten – kontroll: här är ristaren känd." },
-  "nytt förslag": { color: "#1c5cab", symbol: "circle", icon: "●", text: "Stenen saknar ristare i Rundata; beläggen pekar starkt mot en." },
-  "möjligt förslag": { color: "#86b6ef", symbol: "circle", icon: "●", text: "Stenen saknar ristare i Rundata; beläggen pekar svagt mot en." },
-  "inget förslag": { color: "#c9c8c3", symbol: "circle", icon: "·", text: "Stenen saknar ristare och inget förslag är starkt nog." },
+  "förslag bland kända": { color: "#1c5cab", symbol: "circle", icon: "●", text: "Stenen saknar ristare i Rundata; modellen och stavningen pekar mot en av de namngivna ristarna. Prövat mot Rundatas tillskrivningar – inte som samma hand." },
+  "svagt förslag": { color: "#86b6ef", symbol: "circle", icon: "●", text: "Stenen saknar ristare i Rundata; beläggen pekar svagt mot en av de namngivna ristarna." },
+  "möjlig onämnd hand": { color: "#0f766e", symbol: "triangle-up", icon: "▲", text: "Ingen namngiven ristare passar, men texten liknar en annan sten utan ristare mer än grannarna gör – kanske en hand utan namn." },
+  "inget förslag": { color: "#c9c8c3", symbol: "circle", icon: "·", text: "Stenen saknar ristare och inget förslag bland de namngivna ristarna är tydligt nog." },
 };
 const ATTRIBUTED: Status[] = ["kan vara felbedömd", "omstridd", "stöds", "svagt underlag", "signerad"];
-const UNATTRIBUTED: Status[] = ["nytt förslag", "möjligt förslag", "inget förslag"];
+const UNATTRIBUTED: Status[] = ["förslag bland kända", "svagt förslag", "möjlig onämnd hand", "inget förslag"];
 const SOURCE_LABELS: Record<string, string> = {
   modell: "Statistisk modell (R)", ortografi: "Ortografi", "område": "Område", stil: "Stilgrupp", "språkdrag": "Språkdrag", bergart: "Bergart",
 };
@@ -145,7 +153,7 @@ function Overview() {
     { type: "line", x0: 0.6, x1: 0.6, y0: -0.02, y1: 0.4, line: { color: "rgba(15,23,42,0.25)", width: 1, dash: "dot" } },
   ];
 
-  const unattributed = rows.filter(s => UNATTRIBUTED.includes(s.status) && (s.alternative?.strength ?? 0) > 0);
+  const unattributed = rows.filter(s => UNATTRIBUTED.includes(s.status) && ((s.alternative?.strength ?? 0) > 0 || s.status === "möjlig onämnd hand"));
   const provOrder = [...new Set(unattributed.map(s => s.province))].sort((a, b) =>
     unattributed.filter(s => s.province === b).length - unattributed.filter(s => s.province === a).length);
   const unTraces = UNATTRIBUTED.map(st => {
@@ -192,20 +200,22 @@ function Overview() {
               </p>
             )}
             <Answer topic="Översikt" question="Hur väl stöder metoderna Rundatas ristare – och var finns nya förslag?"
-              why="Att se alla stenar samtidigt visar var forskningen och appens metoder är överens, var de inte är det och var nya ristare kan föreslås."
+              why="Att se alla stenar samtidigt visar var forskningen och appens metoder är överens, var de inte är det och var ristare – namngivna eller onämnda – kan föreslås."
               headline={headline}
               answer={<>Av stenarna med ristare i Rundata stöds {data.counts["stöds"] ?? 0} av beläggen, {data.counts["omstridd"] ?? 0} är omstridda,{" "}
                 {data.counts["kan vara felbedömd"] ?? 0} kan vara felbedömda och {data.counts["svagt underlag"] ?? 0} har för svagt underlag. Bland stenarna
-                utan ristare får {data.counts["nytt förslag"] ?? 0} ett nytt och {data.counts["möjligt förslag"] ?? 0} ett möjligt förslag.</>}
+                utan ristare får {data.counts["förslag bland kända"] ?? 0} ett förslag bland de namngivna ristarna och {data.counts["svagt förslag"] ?? 0} ett svagt förslag,
+                och {data.counts["möjlig onämnd hand"] ?? 0} liknar en annan sten utan ristare – en möjlig onämnd hand.</>}
               interpretation={[
                 <>De stenar som <strong>kan vara felbedömda</strong> är mest värda att granska: flera metoder pekar mot en annan ristare än Rundata.</>,
                 "Omstridda stenar kan vara samarbeten, verkstäder eller osäkra attribueringar – men kategorin larmar ofta i onödan.",
-                "Förslagen för stenar utan ristare är hypoteser att pröva; öppna en sten för att samla argumenten i ett attribueringsförslag.",
+                "Förslagen för stenar utan ristare är hypoteser att pröva och kan bara gälla de namngivna ristarna. En möjlig onämnd hand är en sten som liknar en annan sten utan ristare mer än grannarna gör; öppna en sten för att samla argumenten i ett attribueringsförslag.",
               ]}
               notSaying={[
-                <>Kontroll: av {ctl.n_signed} signerade stenar, där ristaren är känd, fick {ctl.flagged} ({falseShare} %) ett starkt alternativ och {ctl.would_be_misjudged} hamnade
+                <>Kontroll: av {ctl.n_signed} signerade stenar, där ristaren är känd, fick {ctl.flagged} ({falseShare} %) ett alternativ med styrka minst 0,4 och {ctl.would_be_misjudged} hamnade
                   som &quot;kan vara felbedömd&quot;. &quot;Omstridd&quot; larmar alltså ofta i onödan, &quot;kan vara felbedömd&quot; sällan.</>,
                 "Metoderna bygger delvis på samma drag som forskarnas attribueringar (plats, stil, stavning) och är inte helt oberoende av Rundata.",
+                "Förslagen bland kända ristare är prövade mot Rundatas tillskrivningar, inte som samma hand: i runologernas egna grupper i Runor 2020 (”samma som gjort …”) gav modellen inte oftare samma ristare än grannstenar på samma avstånd gör (METHODS 14i).",
               ]} />
           </div>
         );
@@ -257,7 +267,7 @@ function Overview() {
         <div className="space-y-5 min-w-0">
           <section className="liquid-glass-island rounded-[24px] p-4">
             <h3 className="font-bold text-slate-900">Stenar med ristare i Rundata</h3>
-            <p className="text-xs text-slate-500 mb-1">Längre åt höger: beläggen stöder Rundatas ristare. Högre upp: en annan ristare får starkt stöd.</p>
+            <p className="text-xs text-slate-500 mb-1">Längre åt höger: beläggen stöder Rundatas ristare. Högre upp: beläggen pekar mer mot en annan ristare.</p>
             <div className="h-[460px]">
               <PlotlyGraph data={attributedTraces} onClick={pick} layout={{
                 autosize: true, margin: { l: 56, r: 16, t: 10, b: 50 }, paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)",
@@ -270,15 +280,15 @@ function Overview() {
               }} />
             </div>
             <p className="text-[11px] text-slate-500 mt-1">
-              Kontroll: av {data.control.n_signed} signerade stenar (där ristaren är känd) hade {data.control.flagged} fått ett starkt
-              alternativ ({Math.round((100 * data.control.flagged) / Math.max(1, data.control.n_signed))} %) och {data.control.would_be_misjudged} hamnat
+              Kontroll: av {data.control.n_signed} signerade stenar (där ristaren är känd) hade {data.control.flagged} fått ett alternativ
+              med styrka minst 0,4 ({Math.round((100 * data.control.flagged) / Math.max(1, data.control.n_signed))} %) och {data.control.would_be_misjudged} hamnat
               som &quot;kan vara felbedömd&quot;. &quot;Omstridd&quot; larmar alltså ofta i onödan; &quot;kan vara felbedömd&quot; sällan.
             </p>
           </section>
 
           <section className="liquid-glass-island rounded-[24px] p-4">
             <h3 className="font-bold text-slate-900">Stenar utan ristare i Rundata</h3>
-            <p className="text-xs text-slate-500 mb-1">Längre åt höger: beläggen pekar starkare mot en ristare. {shows("inget förslag")
+            <p className="text-xs text-slate-500 mb-1">Längre åt höger: beläggen pekar mer mot en av de namngivna ristarna. {shows("inget förslag")
               ? `Stenar utan något förslag visas här när de har något belägg (${unattributed.filter(s => s.status === "inget förslag").length} av ${rows.filter(s => s.status === "inget förslag").length}).`
               : `Stenar utan något förslag visas inte här (${data.counts["inget förslag"]}).`}</p>
             <div style={{ height: Math.max(220, 34 * provOrder.length + 90) }}>
@@ -388,7 +398,7 @@ function StoneProfile({ signum, onClose }: { signum: string; onClose: () => void
           Rundata: <strong>{p.carver ?? "ingen ristare"}</strong>{p.carver_kind === "S" ? " (signerad)" : p.carver_kind === "?" ? " (osäker)" : p.carver_kind === "A" ? " (attribuerad)" : ""}
           {(p.carvers?.length ?? 0) > 1 && <> – Rundata anger också {p.carvers!.filter(c => c !== p.carver).join(", ")}</>}.
           {p.support != null && <> Stöd {d2(p.support)} från {p.n_sources} metoder.</>}
-          {p.alternative && <> Starkaste {p.carver ? "alternativ" : "förslag"}: <strong>{p.alternative.carver}</strong> ({d2(p.alternative.strength)}).</>}
+          {p.alternative && <> Främsta {p.carver ? "alternativ" : "förslag bland kända"}: <strong>{p.alternative.carver}</strong> ({d2(p.alternative.strength)}).</>}
         </p>
         {p.crosscheck && <p className="text-xs text-slate-600 mt-1">Runor 2020 / Wikidata: {p.crosscheck.status}{p.crosscheck.text ? ` – ${p.crosscheck.text}` : ""}</p>}
       </div>
@@ -430,6 +440,8 @@ function StoneProfile({ signum, onClose }: { signum: string; onClose: () => void
         </div>
       )}
 
+      {p.hand && <HandSection hand={p.hand} carvers={[p.carver, p.alternative?.carver].filter((c): c is string => !!c)} />}
+
       <div>
         <p className="font-bold text-slate-900 mb-1">Stenen jämförd med {v.n_province} runstenar i {v.province}</p>
         <div className="space-y-1">
@@ -461,6 +473,49 @@ function StoneProfile({ signum, onClose }: { signum: string; onClose: () => void
 }
 
 // GET /api/research/landscape/{signum}: the nearest place of each kind (src/places.py)
+const pct = (v: number | null | undefined) => (v == null ? "–" : `${Math.round(100 * v)} %`);
+
+// The stone's text against the stones nearby: alike beyond the neighbours, with the calibrated share (METHODS 14i)
+function HandSection({ hand, carvers }: { hand: HandEvidence; carvers: string[] }) {
+  return (
+    <div>
+      <p className="font-bold text-slate-900 mb-1">Likhet utöver grannarna</p>
+      <p className="text-xs text-slate-600 mb-1.5">
+        Hur lika texten är andra stenar inom 30 km – stavning, skiljetecken, bindrunor, formler – utöver vad grannar på samma
+        avstånd brukar vara. Andelen säger hur många av stenparen med kända ristare och minst så stor likhet som har samma
+        ristare (i genomsnitt {pct(hand.base_share)}). Måttet känner igen runologernas egna grupper av samma hand mycket oftare
+        än grannar gör, men för ett enskilt par är det ett måttligt belägg.
+      </p>
+      {carvers.map(c => {
+        const x = hand.carvers[c];
+        return (
+          <p key={c} className="text-xs text-slate-700">
+            Med stenar av <strong>{c}</strong>: {x ? <>likhet {d2(x.excess)} ({x.n} {x.n === 1 ? "sten" : "stenar"} inom 30 km) – {pct(x.share)} av så lika par har samma ristare.</> : "ingen av ristarens stenar med läsbar text ligger inom 30 km."}
+          </p>
+        );
+      })}
+      {hand.partners.length > 0 ? (
+        <ExportTable><table className="w-full text-xs mt-1.5">
+          <thead><tr className="text-left text-slate-500"><th className="py-1">Mest lika sten</th><th>Avstånd</th><th>Ristare i Rundata</th><th>Likhet</th><th>Samma ristare</th></tr></thead>
+          <tbody>{hand.partners.map(x => (
+            <tr key={x.signum} className="border-t border-slate-900/5">
+              <td className="py-1 font-semibold">{x.signum}</td><td>{d2(x.km)} km</td><td>{x.carver ?? "ingen"}</td>
+              <td>{d2(x.excess)}</td><td>{pct(x.share)}</td>
+            </tr>
+          ))}</tbody>
+        </table></ExportTable>
+      ) : <p className="text-xs text-slate-500">Ingen sten inom 30 km är tydligt mer lik än grannarna.</p>}
+      {hand.unnamed.length > 0 && (
+        <p className="text-xs text-slate-700 mt-1.5">
+          <strong>Möjlig onämnd hand:</strong> stenens mest lika sten saknar också ristare ({hand.unnamed.join(", ")}), och likheten är
+          så stor att sju av tio stenar med känd ristare delar ristare med sin mest lika sten. En hypotes att pröva med
+          ornamentik, runformer och huggteknik.
+        </p>
+      )}
+    </div>
+  );
+}
+
 interface LandscapeRow { key: string; label: string; group: string; help: string; km: number; name: string; info: string; url: string | null }
 interface LandscapeData { signum: string; moved: boolean; placement: string | null; rows: LandscapeRow[] }
 

@@ -438,8 +438,12 @@ def _overview_key(fp: str) -> str:
         p = os.path.join(root, rel)
         parts.append(str(os.path.getmtime(p)) if os.path.exists(p) else "-")
     for rel in ("src/stone_overview.py", "src/synthesis.py", "src/orthography.py", "src/language_profile.py",
-                "src/geology.py", "src/research_gaps.py"):
+                "src/geology.py", "src/research_gaps.py", "src/hand_links.py"):
         parts.append(hashlib.sha256(open(os.path.join(root, rel), "rb").read()).hexdigest()[:12])
+    # the similarity beyond the neighbours (hands.json) can be rebuilt for the same corpus
+    from src import r_bridge
+    hp = os.path.join(r_bridge.JOB.directory(fp), "hands.json")
+    parts.append(str(os.path.getmtime(hp)) if os.path.exists(hp) else "-")
     return hashlib.sha256("|".join(parts).encode()).hexdigest()[:16]
 
 
@@ -530,7 +534,7 @@ def _archive(fp: str) -> dict:
                         "span": [min(y[0] for y in years), max(y[1] for y in years)] if years else None,
                         "examples": signed[:6]})
     ov = _overview(fp)
-    proposals = sorted((x for x in ov["stones"] if x["status"] == "nytt förslag"),
+    proposals = sorted((x for x in ov["stones"] if x["status"] == "förslag bland kända"),
                        key=lambda x: -(x["alternative"] or {}).get("strength", 0))[:12]
     famous = []
     for sg, name in (("Ög 136", "Rökstenen"), ("Öl 1", "Karlevistenen"), ("Vg 119", "Sparlösastenen"),

@@ -25,7 +25,11 @@ Två mått räknas fram, båda mellan 0 och 1:
 
 Status för stenar med ristare i Rundata: *kan vara felbedömd* (alternativ ≥ 0,4 och stöd < 0,4), *omstridd*
 (alternativ ≥ 0,4), *stöds* (stöd ≥ 0,6), annars *svagt underlag* – liksom när färre än två metoder kan uttala
-sig. För stenar utan ristare: *nytt förslag* (≥ 0,5), *möjligt förslag* (≥ 0,3), annars *inget förslag*.
+sig. För stenar utan ristare: *förslag bland kända* (≥ 0,5), *svagt förslag* (≥ 0,3), annars *inget förslag* – och
+*möjlig onämnd hand* när ingen känd ristare får ett förslag (under 0,5) men stenens mest lika sten utöver grannarna
+saknar ristare och är minst lika lik som gränsen där sju av tio stenar med känd ristare har samma ristare som sin mest
+lika sten (src/hand_links.py, METHODS 14i). Förslagen kan bara gälla namngivna ristare och är prövade mot Rundatas
+tillskrivningar, inte som samma hand (runologernas grupper i Runor 2020: inte bättre än grannstenar, 2026-11-08).
 
 Måtten är index för att sortera och prioritera, inte sannolikheter: bara modellens sannolikhet är kalibrerad.
 Signerade stenar används som kontroll – hur ofta de hamnar som "kan vara felbedömd" visar hur ofta indexet
@@ -43,7 +47,7 @@ WEIGHTS = {"modell": 2.0, "ortografi": 1.5, "område": 1.0, "stil": 1.0, "språk
 CHECKS = ("område", "stil", "språkdrag", "bergart")
 MIN_WORDS = 8
 STATUS_ORDER = ("kan vara felbedömd", "omstridd", "stöds", "svagt underlag", "signerad",
-                "nytt förslag", "möjligt förslag", "inget förslag")
+                "förslag bland kända", "svagt förslag", "möjlig onämnd hand", "inget förslag")
 
 
 def r_probabilities(directory: str | None) -> tuple[dict, dict]:
@@ -177,7 +181,12 @@ def stone(rec, ctx: dict, detail: bool = False) -> dict:
         else:
             status = "svagt underlag"
     else:
-        status = "nytt förslag" if strength >= 0.5 else ("möjligt förslag" if strength >= 0.3 else "inget förslag")
+        # The model and the orthography can only choose among named carvers: a suggestion is one "among the known", tested
+        # against Rundata's attributions but not as a hand (METHODS 14i). A stone that no known carver fits but whose text
+        # is clearly alike another carverless stone, beyond the neighbours, is a possible unnamed hand.
+        status = "förslag bland kända" if strength >= 0.5 else ("svagt förslag" if strength >= 0.3 else "inget förslag")
+        if status != "förslag bland kända" and _unnamed_partners(signum, ctx):
+            status = "möjlig onämnd hand"
 
     out = {"signum": signum, "province": province(rec), "place": rec.get("place") or "", "carver": current,
            "carvers": listed,
@@ -185,6 +194,9 @@ def stone(rec, ctx: dict, detail: bool = False) -> dict:
            "status": status, "support": round(support, 3) if support is not None else None,
            "alternative": {"carver": best["carver"], "strength": best["strength"]} if best else None,
            "n_sources": n_sources, "lat": rec.get("lat"), "lon": rec.get("lon")}
+    hand = hand_evidence(signum, ctx, [c for c in (current, best["carver"] if best else None) if c])
+    if hand:
+        out["hand"] = hand if detail else {k: hand[k] for k in ("best_share", "unnamed")}
     if detail:
         out["sources"] = sources
         out["alternatives"] = alts[:3]
@@ -193,10 +205,47 @@ def stone(rec, ctx: dict, detail: bool = False) -> dict:
     return out
 
 
+def _unnamed_partners(signum: str, ctx: dict) -> list[dict]:
+    """A possible unnamed hand: the stone's most alike stone beyond the neighbours has no carver either, and is at least
+    as alike as the hand threshold – where seven in ten named stones share the carver of their most alike stone
+    (src/hand_links.py). The other carverless stones above the threshold are named with it."""
+    hands = ctx.get("hands") or {}
+    t = (hands.get("calibration") or {}).get("t_hand")
+    st = (hands.get("stones") or {}).get(signum)
+    if t is None or not st or not st["partners"]:
+        return []
+    top = st["partners"][0]
+    if top["carver"] is not None or top["excess"] < t:
+        return []
+    return [p for p in st["partners"] if p["carver"] is None and p["excess"] >= t]
+
+
+def hand_evidence(signum: str, ctx: dict, carvers: list[str]) -> dict | None:
+    """Similarity beyond the neighbours for a stone (src/hand_links.py): its most alike stones, its likeness with the
+    named carvers in question, each with the calibrated share of named pairs that alike which share their carver."""
+    from src import hand_links
+    hands = ctx.get("hands") or {}
+    cal = hands.get("calibration") or {}
+    st = (hands.get("stones") or {}).get(signum)
+    if not st:
+        return None
+    partners = [{**p, "share": hand_links.share_at(cal, p["excess"])} for p in st["partners"]]
+    likeness = {c["carver"]: {**c, "share": hand_links.share_at(cal, c["excess"])} for c in st["carvers"]}
+    for c in carvers:
+        if c not in likeness:
+            likeness[c] = None  # no stone of the carver within 30 km with readable text
+    unnamed = _unnamed_partners(signum, ctx)
+    return {"partners": partners, "carvers": likeness, "unnamed": [p["signum"] for p in unnamed],
+            "best_share": hand_links.share_at(cal, st["partners"][0]["excess"], best=True) if st["partners"] else None,
+            "base_share": cal.get("base_share"), "t_hand": cal.get("t_hand"), "hand_share": cal.get("hand_share")}
+
+
 def context(inscriptions, model, r_directory: str | None) -> dict:
+    from src import hand_links
     oof, pred = r_probabilities(r_directory)
     return {"inscriptions": inscriptions, "model": model, "names": model.names, "home": carver_home(inscriptions),
-            "evaluation": model.evaluate() or {}, "oof": oof, "pred": pred, "known": model_carvers(model)}
+            "evaluation": model.evaluate() or {}, "oof": oof, "pred": pred, "known": model_carvers(model),
+            "hands": hand_links.load(r_directory)}
 
 
 def overview(inscriptions, model, r_directory: str | None) -> dict:

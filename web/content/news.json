@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "ristarforslag-arligare",
+   "date": "2026-11-08",
+   "status": "nytt",
+   "title": "Ristarförslagen: ärligare ord och en ny sorts belägg",
+   "text": "Vi prövade ristarmodellen mot runologernas egna bedömningar i Runor 2020 av vilka stenar som är gjorda av samma hand. Den gav inte oftare samma ristare än grannstenar gör, och den kan bara välja bland namngivna ristare. Därför heter förslagen i Stenöversikten nu förslag bland kända ristare, och inget förslag kallas längre starkt utan ett oberoende belägg. Det nya belägget, likhet utöver grannarna, jämför stenens text med stenarna runt omkring och känner igen runologernas egna grupper mycket oftare än grannar gör. Det visas för varje sten, och stenar som liknar en annan sten utan ristare märks som en möjlig onämnd hand."
+  },
+  {
    "id": "ratta-slingorna",
    "date": "2026-11-08",
    "status": "nytt",

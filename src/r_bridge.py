@@ -690,6 +690,14 @@ def run_corpus(fp: str):
             robustness.run(fp, r_findings.corpus_patterns(JOB.result(fp) or {}))
         except Exception as e:
             errors["robustness"] = str(e)
+        # Similarity beyond the neighbours (src/hand_links.py, METHODS 14i): from the corpus alone, for Stenöversikt and
+        # Forskningsluckor (the carver suggestions' evidence and the possible unnamed hands)
+        _write_state(d, module="händer")
+        try:
+            from src import hand_links
+            hand_links.build(d, log=lambda *_: None)
+        except Exception as e:
+            errors["händer"] = str(e)
         # The carver page's data (src/carver_pages.py: profiles, the model's suggestions, the second opinion), after the
         # attribution model; served by GET /api/r/ristare and exported to the website (src/site_export.py)
         if "attribution" in done:

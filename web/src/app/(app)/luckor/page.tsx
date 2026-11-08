@@ -92,7 +92,8 @@ export default function GapsPage() {
       notSaying: [
         "Rundata (2018) är inte hela forskningen – ett 'nytt' fynd kan finnas i litteratur som appen inte har.",
         "Uppskattningen (belägg × nyhet × relevans) är en tumregel för att prioritera, inte en sannolikhet.",
-        "Statistiskt signifikant betyder att en så stor likhet sällan uppstår utan ett verkligt samband (justerat p under 0,05) – inte att attribueringen är rätt.",
+        "Statistiskt signifikant betyder att en så stor likhet sällan uppstår utan ett verkligt samband (justerat p under 0,05) – inte att attribueringen är rätt. För ristarförslagen jämför testet med andra ristare, inte med grannstenar.",
+        "Ristarförslagen kan bara gälla namngivna ristare och är prövade mot Rundatas tillskrivningar, inte som samma hand; ingen av dem når nivån ”starkt” utan ett oberoende belägg som huggteknik.",
       ],
     },
     coverage: {
@@ -107,24 +108,24 @@ export default function GapsPage() {
       notSaying: ["Att en uppgift saknas i Rundata betyder inte att den saknas i all forskning."],
     },
     hypotheses: {
-      topic: "Nya ristare", question: "Vilka stenar utan ristare liknar en känd ristare i stavningen?",
+      topic: "Förslag bland kända ristare", question: "Vilka stenar utan ristare liknar en namngiven ristare i stavningen?",
       why: "Ristare hade egna stavningsvanor. En sten utan ristare som stavar som en känd ristare kan vara hans eller hennes.",
-      headline: { value: String(data.hypotheses.new.length), label: `stenar utan ristare med tydlig stavningslikhet, varav ${nSig(data.hypotheses.new)} statistiskt signifikanta` },
-      answer: <>Ortografin pekar ut en trolig ristare för {data.hypotheses.new.length} stenar utan ristare i Rundata; {nSig(data.hypotheses.new)} av likheterna är statistiskt signifikanta (justerat p under 0,05). Prövad på stenar med känd ristare hamnar rätt ristare först i {Math.round(ev.top1_accuracy * 100)} % av fallen, mot {Math.round(ev.chance_top1 * 100)} % med slumpen.</>,
+      headline: { value: String(data.hypotheses.new.length), label: `stenar utan ristare där stavningen pekar mot en namngiven ristare, varav ${nSig(data.hypotheses.new)} med en likhet som är större än de flesta andra ristares` },
+      answer: <>Ortografin pekar ut en namngiven ristare för {data.hypotheses.new.length} stenar utan ristare i Rundata; för {nSig(data.hypotheses.new)} är likheten större än med de flesta andra ristarna (justerat p under 0,05). Testet jämför med andra ristare, inte med grannstenar, så en del av likheten kan vara bygdens stavning, och det säger inte att det är samma hand. Prövad på stenar med känd ristare hamnar rätt ristare först i {Math.round(ev.top1_accuracy * 100)} % av fallen, mot {Math.round(ev.chance_top1 * 100)} % med slumpen.</>,
       interpretation: [
-        "Signifikanta likheter inom ristarens område är de bästa kandidaterna att pröva vidare.",
+        "De bästa kandidaterna att pröva vidare är de där stenen också liknar ristarens stenar mer än grannarna gör (Likhet utöver grannarna i Stenöversikt).",
         "Väger tyngre när flera oberoende metoder – t.ex. den statistiska modellen eller huggtekniken – pekar mot samma ristare.",
       ],
       notSaying: [
         "Stavning är bara ett av flera drag; ornamentik, runformer och huggteknik vägs inte in här.",
-        "Produktiva ristare som Öpir och Fot drar till sig förslag.",
+        "Produktiva ristare som Öpir och Fot drar till sig förslag, och metoden kan bara föreslå namngivna ristare – en hand utan namn hamnar hos någon av dem.",
       ],
     },
     reconsider: {
       topic: "Ompröva", question: "Vilka attribueringar kan behöva omprövas?",
       why: "En attribuerad sten som stavar som en annan ristare kan vara felbedömd – eller visa samarbete.",
-      headline: { value: String(data.hypotheses.reconsider.length), label: `attribuerade stenar där stavningen pekar mot någon annan, varav ${nSig(data.hypotheses.reconsider)} signifikanta` },
-      answer: <>För {data.hypotheses.reconsider.length} stenar som Rundata attribuerar pekar ortografin mot en annan ristare; {nSig(data.hypotheses.reconsider)} av likheterna är statistiskt signifikanta.</>,
+      headline: { value: String(data.hypotheses.reconsider.length), label: `attribuerade stenar där stavningen pekar mot någon annan, varav ${nSig(data.hypotheses.reconsider)} med en likhet större än de flesta andra ristares` },
+      answer: <>För {data.hypotheses.reconsider.length} stenar som Rundata attribuerar pekar ortografin mot en annan ristare; för {nSig(data.hypotheses.reconsider)} är likheten större än med de flesta andra ristarna (justerat p under 0,05, jämfört med andra ristare – inte med grannstenar).</>,
       interpretation: [
         "Det kan vara en felaktig attribuering, men också samarbete, en verkstad eller en ristare som skrev olika vid olika tillfällen.",
         "Signerade stenar ingår inte – där är det metoden som har fel, inte ristaren.",

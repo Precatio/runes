@@ -144,6 +144,25 @@ def _model_agrees(rec: dict, sug: str, ctx: dict) -> bool:
 NOT_APPLICABLE = "ej tillämplig"
 
 
+def _hand_line(rec: dict, sug: str | None, ctx: dict) -> str | None:
+    """The suggested carver's likeness beyond the neighbours (src/hand_links.py, METHODS 14i), with its calibrated share."""
+    from src.stone_overview import hand_evidence
+    if not sug:
+        return None
+    h = hand_evidence(rec["signum"], ctx, [sug])
+    if not h:
+        return None
+    x = (h.get("carvers") or {}).get(sug)
+    base = round(100 * (h.get("base_share") or 0))
+    if not x:
+        return (f"Likhet utöver grannarna: ingen sten av {sug} med läsbar text ligger inom 30 km, så texten kan inte "
+                "jämföras med ristarens stenar på det sättet.")
+    return (f"Likhet utöver grannarna med stenar av {sug} inom 30 km: {_num(x['excess'])} ({x['n']} "
+            f"{'sten' if x['n'] == 1 else 'stenar'}) – bland stenpar med kända ristare och så stor likhet har "
+            f"{round(100 * (x['share'] or 0))} % samma ristare, mot {base} % i genomsnitt. Måttet känner igen runologernas "
+            "egna grupper av samma hand, men för ett enskilt par är det ett måttligt belägg.")
+
+
 def is_stone_finding(f: dict) -> bool:
     """Ett fynd om en sten utan ristarförslag (src/stone_findings.py)."""
     from src import stone_findings
@@ -320,6 +339,9 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
         if verdict == "motsäger" and profile and profile.get("support") is not None:
             lines.append(f"Stödet för Rundatas ristare {profile.get('carver')} är {_num(profile['support'])} från "
                          f"{profile.get('n_sources')} metoder (Stenöversikt).")
+    hand = _hand_line(rec, sug, ctx)
+    if hand:
+        lines.append(hand)
     paragraphs.append({"title": f"Andra belägg för {sug}" if sug else "Andra belägg",
                        "text": " ".join(lines) if lines else "Inga andra metoder kan uttala sig om förslaget."})
 
@@ -377,25 +399,35 @@ def interpret(f: dict, rec: dict, ctx: dict, profile: dict | None) -> dict:
                 f"Frågan är alltså om den namnlösa ristaren är {sug} – det behöver prövas med ornamentik, runformer och "
                 "huggteknik på alla stenarna, inte bara med modellen.")
     elif model_method and ev >= 0.5 and against == 0 and (st.get("acc_lo") or 0) >= 0.8 and model_sig_ok:
-        level = "starkt"
-        text = (f"Ett välgrundat förslag: vid den här sannolikheten har modellen haft rätt i {st.get('bin_correct')} av "
-                f"{st.get('bin_n')} prövade fall, och inget av de andra beläggen talar emot. Plats, stil och språkdrag ingår "
-                "redan i modellen och räknas inte som oberoende stöd; ett oberoende belägg, t.ex. huggteknik, skulle stärka "
-                "förslaget. " + ("Attribueringen i Rundata kan behöva omprövas." if verdict == "motsäger" else "Värt att pröva runologiskt."))
+        # Not "starkt" (2026-11-08, METHODS 14i): the model is tested against Rundata's attributions, not as a hand – in the
+        # runologists' own groups in Runor 2020 it did not give the same carver more often than neighbouring stones do
+        level = "måttligt"
+        text = (f"Ett förslag bland de namngivna ristarna: vid den här sannolikheten har modellen stämt med Rundatas ristare i "
+                f"{st.get('bin_correct')} av {st.get('bin_n')} prövade fall, och inget av de andra beläggen talar emot. Det är "
+                "en överensstämmelse med hur forskarna har attribuerat, inte ett prov på att det är samma hand: i "
+                "runologernas egna grupper i Runor 2020 gav modellen inte oftare samma ristare än grannstenar gör, och den kan "
+                "bara välja bland namngivna ristare. Ett oberoende belägg – huggteknik, runformer, ornamentik – behövs för mer. "
+                + ("Attribueringen i Rundata kan behöva omprövas." if verdict == "motsäger" else "Värt att pröva runologiskt."))
     elif (method == "samlade belägg" and against == 0 and p_ok and st.get("p_adjusted") is not None
           and _model_agrees(rec, sug, ctx)):
-        level = "starkt"
-        text = (f"Ett välgrundat förslag: både den statistiska modellen och ortografin pekar på {sug}, stavningslikheten är "
-                "statistiskt signifikant och inget av de andra beläggen talar emot. Metoderna delar stavningen och modellen "
-                "använder också plats och stil, så ett belägg som ligger utanför dem – huggteknik, runformer eller "
-                "ornamentik – skulle stärka förslaget. "
+        level = "måttligt"
+        text = (f"Ett förslag bland de namngivna ristarna: både den statistiska modellen och ortografin pekar på {sug}, och "
+                "stavningen liknar ristarens stenar mer än de flesta andra ristares (justerat p under 0,05 – jämfört med "
+                "andra ristare, inte med grannstenar, så en del av likheten kan vara bygdens stavning). Inget av de andra "
+                "beläggen talar emot. Metoderna delar stavningen och modellen använder också plats och stil, så det är "
+                "inte två oberoende belägg; huggteknik, runformer eller ornamentik behövs för mer. "
                 + ("Attribueringen i Rundata kan behöva omprövas." if verdict == "motsäger" else "Värt att pröva runologiskt."))
     # Two independent pieces of evidence: with the language traits dependent on the spelling and a common rock neutral,
     # area and style are often all that can support a suggestion; a spelling similarity must then also be significant
     elif ev >= 0.5 and support >= 2 and against == 0 and p_ok and not model_method:
-        level = "starkt"
-        text = (f"Ett välgrundat förslag: belägget är starkt och {support} andra belägg stämmer med {sug} utan att något talar emot. "
-                + ("Attribueringen i Rundata kan behöva omprövas." if verdict == "motsäger" else "Värt att pröva runologiskt."))
+        # Only the carving technique is independent of the spelling, the place and the style the attributions rest on
+        independent = method == "huggteknik"
+        level = "starkt" if independent else "måttligt"
+        text = ((f"Ett välgrundat förslag: huggtekniken, som är oberoende av stavning, plats och stil, pekar på {sug}, och "
+                 f"{support} andra belägg stämmer utan att något talar emot. ") if independent else
+                (f"Ett förslag bland de namngivna ristarna: belägget är tydligt och {support} andra belägg stämmer med {sug} "
+                 "utan att något talar emot, men inget av dem är oberoende av stavning, plats och stil. ")) + (
+                "Attribueringen i Rundata kan behöva omprövas." if verdict == "motsäger" else "Värt att pröva runologiskt.")
     elif ev >= 0.35 and support >= against:
         level = "måttligt"
         text = (f"Ett rimligt men osäkert förslag: {support} andra belägg stämmer med {sug}"

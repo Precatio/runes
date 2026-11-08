@@ -121,16 +121,16 @@ def _verdict(reading: dict, signed_by_other: bool, reattribution: bool, carver: 
                 "svaghet i metoderna eller ett möjligt samarbete, inte att signaturen är fel.")
     if level == "starkt":
         return ("Förslag till omprövning av attribuering" if reattribution else "Attribueringsförslag",
-                f"Underlaget är starkt: både den statistiska modellen och ortografin pekar på {carver}, stavningslikheten är "
-                "statistiskt signifikant och inget av de andra beläggen talar emot. Något belägg utanför modellen och "
-                "ortografin (huggteknik, runformer, ornamentik) finns ännu inte.",
+                f"Underlaget är starkt: huggtekniken, som är oberoende av stavning, plats och stil, pekar på {carver}, och "
+                "inget av de andra beläggen talar emot.",
                 (f"Vi föreslår att attribueringen omprövas till {carver}" if reattribution else
                  f"Vi föreslår att stenen attribueras till {carver}")
                 + ", efter en runologisk granskning av ornamentik och runformer (avsnitt 7).")
     if level == "måttligt":
         return ("Underlag för granskning av attribuering",
                 "Underlaget är måttligt: det finns belägg för ristaren, men inte tillräckligt många oberoende belägg för "
-                "ett förslag.",
+                "ett förslag. Modellen och ortografin kan bara välja bland namngivna ristare och är prövade mot Rundatas "
+                "tillskrivningar, inte som samma hand.",
                 ("Vi föreslår ingen ändring i dag" if reattribution else "Vi föreslår ingen attribuering i dag")
                 + ", men att stenen granskas runologiskt med de kontroller som anges i avsnitt 7. Förslaget är en prövbar "
                 "hypotes.")
@@ -154,7 +154,12 @@ GLOSSARY = [
     "Likhet (ortografi): hur lik stenens stavning, skiljetecken och bindrunor är en ristares övriga inskrifter, 0–1.",
     "p-värde: hur ofta en minst lika stor likhet skulle uppstå om stenen inte hade något särskilt samband med ristaren. "
     "Justerat p tar hänsyn till att den mest lika av många ristare valts ut (max-statistik); under 0,05 kallas "
-    "statistiskt signifikant. Ett lågt p-värde är inte sannolikheten att ristaren är rätt.",
+    "statistiskt signifikant. Ett lågt p-värde är inte sannolikheten att ristaren är rätt, och testet jämför med andra "
+    "ristare, inte med grannstenar – en del av likheten kan vara bygdens stavning.",
+    "Likhet utöver grannarna: hur lik stenens text är andra stenar inom 30 km utöver vad grannar på samma avstånd brukar "
+    "vara (METHODS 14i). Den redovisas med andelen stenpar med kända ristare och minst så stor likhet som har samma "
+    "ristare; grundnivån är omkring 13 %. Måttet känner igen runologernas egna grupper av samma hand i Runor 2020 långt "
+    "oftare än grannar gör, men för ett enskilt par är det ett måttligt belägg.",
     "Ristare utan frågetecken: en ristare som Rundata anger som signerad eller attribuerad utan frågetecken. Det är "
     "databasens bedömning, i Mälardalen ofta Axelsons (1993), inte ett facit; bara signaturer är direkta belägg.",
     "Typikalitet: hur stor del av ristarens egna inskrifter som liknar ristarens profil mindre än stenen gör. Låg "
@@ -282,6 +287,19 @@ def build(rec: dict, carver: str, ctx: dict, crosscheck: dict | None, dims: dict
                          (f"neutral (nästan lika för {ranking[1]['carver']}: {_n(ranking[0]['similarity'])} mot "
                           f"{_n(ranking[1]['similarity'])}, inte signifikant)" if ortho_tied else
                           "svagt för (likheten inte signifikant)" if pos.get(carver) == 1 else f"pekar på {ranking[0]['carver']}")])
+    # Similarity beyond the neighbours (METHODS 14i): the text against the carver's stones within 30 km, with the
+    # calibrated share of named pairs that alike which share their carver – shown, not counted as independent support
+    from src.stone_overview import hand_evidence
+    hev = hand_evidence(rec["signum"], ctx, [c for c in (carver, current) if c])
+    if hev:
+        hx = (hev.get("carvers") or {}).get(carver)
+        base = hev.get("base_share") or 0
+        key_rows.append(["Likhet utöver grannarna",
+                         (f"{carver}: {_n(hx['excess'])} ({hx['n']} {'sten' if hx['n'] == 1 else 'stenar'} inom 30 km); "
+                          f"{round(100 * (hx['share'] or 0))} % av så lika par har samma ristare (grundnivå {round(100 * base)} %)")
+                         if hx else f"ingen sten av {carver} ligger inom 30 km",
+                         ("talar för" if hx and (hx["share"] or 0) >= 2 * base else "svagt för" if hx and (hx["share"] or 0) > base
+                          else "avgör inte")])
     # Place and style are inputs to the model: when the model contributes they agree but are not independent support
     inside_model = {"område", "stil"} if probs else set()
     for k, (v, _) in checks.items():
@@ -321,10 +339,10 @@ def build(rec: dict, carver: str, ctx: dict, crosscheck: dict | None, dims: dict
     share_wrong_car = (sum(w >= p_car for w in wrong) / len(wrong)) if (wrong and p_car is not None) else None
     if (top_model == carver and (p_car or 0) >= 0.5 and share_wrong_car is not None and share_wrong_car < 0.05
             and reading["level"] in ("måttligt", "svagt") and not signed_by_other and not for_current):
-        summary += (f" Statistiska modellen ensam ger ett starkt belägg (en felaktig ristare når sällan {_n(p_car)}), och "
-                    "Forskningsluckor bedömer därför modellens förslag som starkt. Ett beslut om attribuering kräver också "
-                    "oberoende stöd – en statistiskt signifikant stavningslikhet, huggteknik eller en runologisk granskning – "
-                    "och det saknas här, så den samlade bedömningen blir lägre.")
+        summary += (f" Statistiska modellen ensam pekar tydligt på {carver} (en felaktig ristare når sällan {_n(p_car)}), men "
+                    "modellen är prövad mot Rundatas tillskrivningar, inte som samma hand: i runologernas egna grupper i "
+                    "Runor 2020 gav den inte oftare samma ristare än grannstenar gör. Ett beslut om attribuering kräver "
+                    "oberoende stöd – huggteknik, runformer eller en runologisk granskning – och det saknas här.")
     blocks += [h(1, "Sammanfattning och rekommendation"), p(summary), p(f"Rekommendation: {recommendation}"),
                table(["Belägg", "Resultat", "För förslaget"], key_rows,
                      "Beläggen i korthet; varje rad förklaras i avsnitt 4. Beläggen är inte oberoende av varandra: modellen "
@@ -451,7 +469,8 @@ def build(rec: dict, carver: str, ctx: dict, crosscheck: dict | None, dims: dict
                         + (f"Stavningen ligger närmast {ranking[0]['carver']}"
                            + (", Rundatas ristare." if ranking[0]["carver"] == current else
                               ", den prövade ristaren." if ranking[0]["carver"] == carver else ".")
-                           + (" Likheten är statistiskt signifikant." if ((ranking[0].get("significance") or {}).get("p_adjusted") or 1) < 0.05
+                           + (" Likheten är större än med de flesta andra ristarna (statistiskt signifikant, jämfört med "
+                              "andra ristare – inte med grannstenar)." if ((ranking[0].get("significance") or {}).get("p_adjusted") or 1) < 0.05
                               else " Likheten är inte statistiskt signifikant.")
                            + (f" Förstavalet leder bara med {_n(margin)} i likhet, så ortografin skiljer inte {ranking[0]['carver']} "
                               f"från {ranking[1]['carver']}; den räknas som neutral." if ortho_tied else ""))))

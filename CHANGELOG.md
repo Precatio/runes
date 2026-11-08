@@ -5,6 +5,16 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
+### Ristarförslagen: ärligare ord och en ny sorts belägg
+- Stenöversikt: *nytt förslag* heter *förslag bland kända* och *möjligt förslag* *svagt förslag* – förslagen kan bara
+  gälla namngivna ristare och är prövade mot Rundatas tillskrivningar, inte som samma hand (de gav inte oftare samma
+  ristare än grannstenar i runologernas grupper i Runor 2020). Ny kategori *möjlig onämnd hand*.
+- Ny belägg: *likhet utöver grannarna* (`src/hand_links.py`, METHODS 14i) – textlikheten minus grannarnas på samma
+  avstånd, kalibrerad mot namngivna ristare (andelen så lika par med samma ristare) och prövad mot runologernas grupper
+  (89 mot 33 %). Visas per sten i Stenöversikt och i tolkningen och attribueringsförslaget.
+- Forskningsluckor: ristarförslag får inte längre nivån *starkt* utan ett oberoende belägg (huggteknik); texterna om
+  "statistiskt signifikant" stavningslikhet säger att testet jämför med andra ristare, inte med grannstenar.
+
 ### Rätta slingorna och samma vy varje gång
 - *Runor och ornamentik* leder till ritsidan för stenen (*Rita eller rätta slingorna*, *Räkna om*), och en uppladdad
   skanning kan göras ritbar (POST /api/3d/make_drawable, `src/depth_image.py`). Ritsidan öppnar stenen från adressen

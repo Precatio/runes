@@ -2350,8 +2350,12 @@ en ristare är kärnans. Ett glapp på minst 25 år gör förslaget kronologiskt
   marginalen (sedan 2026-10-11; U 735: Öpir 1 0,66 mot Balle 0,64 gav tidigare styrkan 0,70 och status *omstridd*).
 * **Status** för stenar med ristare: *kan vara felbedömd* (alternativ ≥ 0,4 och stöd < 0,4), *omstridd*
   (alternativ ≥ 0,4), *stöds* (stöd ≥ 0,6), annars *svagt underlag* – också när färre än två metoder kan uttala
-  sig. Signerade stenar redovisas för sig. För stenar utan ristare: *nytt förslag* (alternativ ≥ 0,5), *möjligt
-  förslag* (≥ 0,3), annars *inget förslag*.
+  sig. Signerade stenar redovisas för sig. För stenar utan ristare (namnen sedan 2026-11-08, avsnitt 14i): *förslag
+  bland kända* (alternativ ≥ 0,5; tidigare *nytt förslag*), *svagt förslag* (≥ 0,3; tidigare *möjligt förslag*), annars
+  *inget förslag* – och *möjlig onämnd hand* när ingen känd ristare når 0,5 men stenens mest lika sten utöver grannarna
+  saknar ristare och är minst så lik att sju av tio stenar med känd ristare delar ristare med sin mest lika sten.
+  Förslagen kan bara gälla namngivna ristare och är prövade mot Rundatas tillskrivningar (blindprovet nedan), inte som
+  samma hand: i runologernas egna grupper i Runor 2020 gav modellen inte oftare samma ristare än grannstenar gör.
 
 Har Rundata flera ristare för stenen (två som signerat tillsammans, eller en signatur och en attribuering; 113
 runstenar) räknas stödet för var och en, den bäst stödda redovisas och de övriga räknas inte som alternativ.
@@ -2414,6 +2418,14 @@ Nivåerna gäller ristarförslag. Fynd om en sten utan ristarförslag (luckor i 
 fynd, avsnitt 1q) får ett eget kort resonemang i tre steg: vad fyndet säger, var uppgiften kommer ifrån och vad som
 skulle kunna avgöra frågan. Deras nivå är *ej tillämplig*. De får ingen nivå i fyndlistan och sorteras inte efter nivå,
 och regeln om metodfel vid en signerad sten gäller aldrig dem.
+
+**Inget *starkt* utan oberoende belägg** (från 2026-11-08, avsnitt 14i). Ett ristarförslag som vilar på modellen,
+ortografin eller båda bedöms högst *måttligt*: modellen är prövad mot Rundatas tillskrivningar och kan bara välja bland
+namngivna ristare, och i runologernas egna grupper av samma hand i Runor 2020 gav den inte oftare samma ristare än
+grannstenar på samma avstånd (`analysplaner/2026-11-08-samma-hand-runor.md`); ortografins justerade p jämför med andra
+ristare, inte med grannstenar. *Starkt* kräver ett belägg som är oberoende av stavning, plats och stil, i dag
+huggtekniken. Reglerna nedan (Wilson-gränsen, q under 0,05) gäller fortfarande för vad som kan bli *måttligt*, och
+tolkningen visar likheten utöver grannarna med den föreslagna ristarens stenar.
 
 **Efter granskningen av U 1026** (2026-10-11). Attribueringsmodellen använder själv plats, stil och språkdrag, så när
 den föreslår en ristare räknas område, stilgrupp och språkdrag inte som oberoende stöd; de visas, och de kan tala
@@ -2598,6 +2610,44 @@ resultat och avvikelser i `utdata/kallor/resultat.md`.
   Planens hypotes (död och förstörelse i minst 80 % på Björketorp och Stentoften) föll: 9 av 12 (75 %) och 9 av 19
   (47 %); förutsägelsen 5 av 12. Inga egna läsningar; tolkningarna är data om oenighet.
 * **K-samsök**: prövat, ingen fyndplats i indexet för SHM:s vikingatida föremål (avsnitt 17).
+
+### 14i. Likhet utöver grannarna och onämnda händer (2026-11-08)
+
+Källkod: `src/hand_links.py` (körs i korpusjobbet efter R-modulerna, `<korpus>/hands.json`), `src/stone_overview.py`
+(`hand_evidence`, kategorin *möjlig onämnd hand*), `src/interpretation.py`, `src/attribution_report.py`; test
+`tests/test_hand_links.py`. Skälet: ristarmodellen kan bara välja bland namngivna ristare, och när den prövades mot ett
+facit som den aldrig tränats på – runologernas egna bedömningar i Runor 2020 av formen "samma som gjort X" – gav den inte
+oftare samma ristare inom en sådan grupp än för grannstenar på samma avstånd (14 grupper med onämnda händer, 50 mot 44 %
+av paren, bättre i 5 och sämre i 7, p 0,57; `analysplaner/2026-11-08-samma-hand-runor.md`, `utdata/samma_hand/`).
+U 1015–1024, som runologerna håller för en onämnd ristare, fick alla Öpir – men det fick grannarna också.
+
+**Måttet.** Likheten mellan två stenar är medelvärdet av cosinuslikheten i ortografisk stilometri (TF-IDF över
+tecken-n-gram i läsbara ord utan egennamn, skiljetecken, bindrunor; avsnitt 13) och i korpusens språkdrag, formler och
+innehållskategorier (standardiserade) – utan koordinater eller landskap. *Likhet utöver grannarna* för paret (A, B) på
+avståndet d är likheten minus A:s medellikhet med korpusens stenar på avståndet d ± 25 % (minst ± 1 km), medelvärdet
+åt båda hållen; par inom 30 km. Stenar med minst tre läsbara ord ingår (1 564 i korpus 510ebfb3).
+
+**Prövat** under låsta planer innan något räknades: stenar av samma säkra ristare är mer lika än grannar på samma
+avstånd för 30 av 37 ristare (p 1·10⁻⁵), och runologernas grupper i Runor 2020 är mer lika än grannarna i 16 av 18
+(p 0,0002; bara onämnda händer 15 grupper, p 0,001; `analysplaner/2026-11-08-textdrag-hand.md`, `utdata/textdrag_hand/`).
+En länkregel (likhet utöver grannarna minst −0,01, vald med Youdens J på par med namngivna ristare) länkar 89 % av paren i
+runologernas grupper mot 33 % för grannar på samma avstånd (15 av 16 grupper, p 0,0004;
+`analysplaner/2026-11-08-nya-handerna.md`, `utdata/nya_hander/`). Att bilda grupper genom sammanhängande länkar
+fungerade inte – länkarna kedjar ihop landskapsstora grupper – så appen visar par, inte grupper.
+
+**Kalibreringen.** Bland de 38 592 stenparen inom 30 km där båda stenarna har en säker ristare har 13 % samma ristare.
+Vid likhet utöver grannarna minst 0,4 är andelen 37 %, vid 0,5 56 %, vid 0,6 68 %. För ett enskilt par är belägget alltså
+verkligt men måttligt, och appen redovisar det så: varje likhet visas med andelen så lika namngivna par som har samma
+ristare, och med grundnivån. För en stens *mest lika* sten (som väljs bland många) räknas en egen kalibrering: bland
+stenar med känd ristare har 70 % samma ristare som sin mest lika sten vid likhet minst 0,64 och 82 % vid 0,7.
+
+**I appen.** Stenöversikten visar för varje sten de mest lika stenarna utöver grannarna (ristare, avstånd, likhet,
+andelen samma ristare) och likheten med Rundatas och den föreslagna ristarens stenar inom 30 km. En sten utan ristare,
+där ingen namngiven ristare når 0,5, kallas *möjlig onämnd hand* när dess mest lika sten saknar ristare och likheten når
+gränsen där sju av tio namngivna stenar delar ristare med sin mest lika sten (0,64 i korpus 510ebfb3; 43 stenar). Gränsen
+väljs på de namngivna ristarna, inte på Runor 2020. Kategorin är en hypotes att pröva med ornamentik, runformer och
+huggteknik, inte en tillskrivning. Förslagen bland kända ristare får inte längre nivån *starkt* utan ett oberoende
+belägg (avsnitt 14d), och texterna säger att ortografins signifikanstest jämför med andra ristare, inte med grannstenar.
 
 ## 15. Rapporter
 

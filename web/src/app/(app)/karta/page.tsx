@@ -28,7 +28,7 @@ const STATUS_COLORS: Record<string, string> = { S: "#b7410e", A: "#0369a1", "?":
 const STATUS_LABEL: Record<string, string> = { S: "Signerad", A: "Attribuerad", "?": "Osäker attribuering", "": "Ingen ristare" };
 const OVERVIEW_COLORS: Record<string, string> = {
   "kan vara felbedömd": "#dc2626", "omstridd": "#d97706", "stöds": "#16a34a", "svagt underlag": "#a3a3a3",
-  "signerad": "#b7410e", "nytt förslag": "#0369a1", "möjligt förslag": "#7dd3fc", "inget förslag": "#cbd5e1",
+  "signerad": "#b7410e", "förslag bland kända": "#0369a1", "svagt förslag": "#7dd3fc", "möjlig onämnd hand": "#0f766e", "inget förslag": "#cbd5e1",
 };
 // Categorical colours for the modes whose values come from the data (material, content, language trait)
 const PALETTE = ["#0891b2", "#b7410e", "#16a34a", "#7c3aed", "#d97706", "#db2777", "#0369a1", "#65a30d", "#a16207", "#475569"];
