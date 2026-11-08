@@ -322,7 +322,9 @@
     "runestones",
     "VikingAge"
    ],
-   "repost": true
+   "repost": true,
+   "posted": "https://bsky.app/profile/vitkirunor.bsky.social/post/3mzss44qcni2u",
+   "posted_at": "2026-11-08T16:05:38+00:00"
   },
   {
    "date": "2026-11-09",
@@ -339,7 +341,7 @@
    ]
   },
   {
-   "date": "2026-11-10",
+   "date": "2026-11-08",
    "slug": "vem-talar-i-havamal",
    "en": true,
    "text": "Hávamál was composed about a thousand years ago and reached us in a single manuscript. We read it as it asks to be read: as advice to a person. On arriving as a guest, on friendship, sleepless nights – and what is left of a life.",
@@ -354,7 +356,7 @@
    "repost": true
   },
   {
-   "date": "2026-11-11",
+   "date": "2026-11-10",
    "slug": "reste-sjalv-eller-lat-resa",
    "en": true,
    "text": "Västergötland raised its runestones with its own hands; Uppland had others do the work. We counted the commonest words on the runestones province by province – and the words stayed at home.",
@@ -368,7 +370,7 @@
    ]
   },
   {
-   "date": "2026-11-12",
+   "date": "2026-11-08",
    "slug": "nar-askan-hade-ett-namn",
    "en": true,
    "repost": true,
@@ -384,7 +386,7 @@
    "note": "postat direkt 2026-11-04 (3mzi6a2winy2z); 2026-11-08: borttaget på Bluesky av Viktor (bilden hade svensk text); ompubliceras med den engelska bilden"
   },
   {
-   "date": "2026-11-13",
+   "date": "2026-11-11",
    "slug": "stenar-och-stavar",
    "en": true,
    "text": "The word stav means at least six things when it comes to runes. Five runestones mention staffs raised beside the stone. None survives, but the statistics show where they stood.",
@@ -398,7 +400,7 @@
    ]
   },
   {
-   "date": "2026-11-14",
+   "date": "2026-11-12",
    "slug": "hemma-mellan-rikena-skanes-runstenar",
    "en": true,
    "text": "Fifty-nine runestones in Skåne, and not one names a king or a realm. Where did people belong in Skåne when the stones were raised, between Denmark and what would become Sweden?",
@@ -413,7 +415,7 @@
    "repost": true
   },
   {
-   "date": "2026-11-15",
+   "date": "2026-11-13",
    "slug": "2026-10-ristarsignatur-breder-ut-sig",
    "en": true,
    "text": "Around 1035 more than one runestone in four ended with a prayer. Fifty years later more ended with the carver's own name. But the signature didn't follow demand – it followed the carvers, from master to apprentice.",
@@ -427,7 +429,7 @@
    ]
   },
   {
-   "date": "2026-11-16",
+   "date": "2026-11-14",
    "slug": "vastgotarna-skrev-som-danskarna",
    "en": true,
    "text": "Raising runestones came from the Danish realm and took root first in Götaland – and Västergötland wrote most like the Danes. At the border there is a silent belt where almost no stones were raised.",
@@ -442,7 +444,7 @@
    "repost": true
   },
   {
-   "date": "2026-11-17",
+   "date": "2026-11-15",
    "slug": "runorna-som-fattas",
    "en": true,
    "text": "Many runestones have places where runes have been lost. We are building a model that suggests what stood there and how sure it is. Here is how it is tested: six trials with known answers and calibrated percentages.",
@@ -456,7 +458,7 @@
    ]
   },
   {
-   "date": "2026-11-18",
+   "date": "2026-11-16",
    "slug": "maltstenen-raknad-i-stallet-for-tolkad",
    "en": true,
    "text": "Seven scholars have given the Malt stone seven meanings. We let a model trained on thousands of runic inscriptions read it instead. It confirms the core, chooses between disputed runes – and shows why a full text is out of reach.",
@@ -470,7 +472,7 @@
    "repost": true
   },
   {
-   "date": "2026-11-19",
+   "date": "2026-11-17",
    "slug": "korpen-som-heter-minne",
    "en": true,
    "text": "A personal piece by Vitki's founder Viktor Kvant: a book in the family magazine rack, the raven above the treetops, and why Vitki came to be – with three stanzas of Hávamál.",
@@ -484,7 +486,7 @@
    ]
   },
   {
-   "date": "2026-11-20",
+   "date": "2026-11-18",
    "slug": "undantaget-vid-randers",
    "en": true,
    "text": "Denmark had been Christian since Harald Bluetooth, yet Danish runestones almost never prayed for the dead. Two of the five that do before 1050 stand six kilometres apart near Randers.",
@@ -499,7 +501,7 @@
    "repost": true
   },
   {
-   "date": "2026-11-21",
+   "date": "2026-11-19",
    "slug": "tre-punkter-i-texten",
    "en": true,
    "text": "Where the editors wrote three dots, they chose not to guess. Two models check each other: one proposes the word in the gap, the other tests whether the text is language at all – and the edition has the last word. Part II of Interpret, he who can.",
@@ -512,7 +514,7 @@
    ]
   },
   {
-   "date": "2026-11-22",
+   "date": "2026-11-20",
    "slug": "erik-skrev-r-och-bygden-skrev-efter",
    "en": true,
    "text": "Around Enköping, æftiᛦ is written with an ordinary r five times as often as in the rest of Sweden. Was it the local pronunciation? The trail leads to one carver, Erik, and to those who carved after him.",
@@ -527,7 +529,7 @@
    "repost": true
   },
   {
-   "date": "2026-11-23",
+   "date": "2026-11-21",
    "slug": "vikingarnas-varld",
    "en": true,
    "text": "Miklagarðr, Serkland, Orkney, Greenland: we counted every place outside Scandinavia on runestones and in sagas. Swedish stones look east, sagas about the Icelanders' ancestors west – and sagas about the ancient past east again.",
@@ -541,7 +543,7 @@
    ]
   },
   {
-   "date": "2026-11-24",
+   "date": "2026-11-22",
    "slug": "skanningen-som-ledtrad",
    "en": true,
    "text": "Can a 3D scan help read a damaged runestone? With scan traces our language model got 60% of hidden words right instead of 54%. But the pairing of scan and text saw the answer, so the real gain is unproven.",
@@ -557,7 +559,7 @@
    "credit": "Scans: Laila Kitzler Åhfeldt, Swedish National Heritage Board, project Runristandets dynamik, open on Zenodo under CC BY 4.0: https://doi.org/10.5281/zenodo.11951255"
   },
   {
-   "date": "2026-11-25",
+   "date": "2026-11-23",
    "en": true,
    "slug": "fardena-var-de-ungas",
    "tags": [
@@ -571,7 +573,7 @@
    "text": "Who died in the east and the west? On Swedish runestones, sons and brothers died abroad three to four times as often as fathers and husbands – and mothers and siblings raised the stones. The journeys belonged to the young."
   },
   {
-   "date": "2026-11-26",
+   "date": "2026-11-24",
    "slug": "hur-bra-ar-var-modell-egentligen",
    "en": true,
    "text": "How good is our runic text model, really? A day behind the scenes: five processes computing, a reading of the Rök stone that fails honestly, a comparison with DeepMind's Ithaca, and the sources we plan to feed the model next.",
@@ -584,7 +586,7 @@
    ]
   },
   {
-   "date": "2026-11-27",
+   "date": "2026-11-25",
    "en": true,
    "slug": "kvinnor-bland-resarna-svealand-gotaland",
    "tags": [
@@ -598,7 +600,7 @@
    "text": "Research report: a woman is among the raisers on 31 % of Swedish runestones in Svealand, 17 % in Götaland. Pre-registered, with age, region and carver held constant, and in both halves of the material."
   },
   {
-   "date": "2026-11-28",
+   "date": "2026-11-26",
    "en": true,
    "slug": "soner-och-broder-dog-utanfor-norden",
    "tags": [
@@ -612,7 +614,7 @@
    "text": "Research report: sons and brothers died abroad on 10 % of their runestones, fathers and husbands on 3 %. Pre-registered and robust to every check. The journeys east and west belonged to the young."
   },
   {
-   "date": "2026-11-29",
+   "date": "2026-11-27",
    "en": true,
    "slug": "familjegrupper-vid-gravfalten",
    "tags": [
@@ -626,7 +628,7 @@
    "text": "Research report: runestones gather in family groups. Stones within 500 m name the same person eight times as often as stones 2–10 km apart, and groups stand by grave fields in four cases of five."
   },
   {
-   "date": "2026-11-30",
+   "date": "2026-11-28",
    "en": true,
    "slug": "r-for-yr-runan-vastra-uppland",
    "tags": [
@@ -640,7 +642,7 @@
    "text": "Research report: in western Uppland ʀ was written with the ordinary r-rune five times as often as elsewhere in Sweden, around Holm in Vittinge, where the carver Erik never wavered. A writing tradition?"
   },
   {
-   "date": "2026-12-01",
+   "date": "2026-11-29",
    "en": true,
    "slug": "monoftongstavningen-blir-ovanligare",
    "tags": [
@@ -654,7 +656,7 @@
    "text": "Research report: stin for stain has been used to date the monophthong in Sweden. On the runestones it grows rarer, from 69 to 22 %. The late Upplandic spelling looks like a written norm, not speech."
   },
   {
-   "date": "2026-12-02",
+   "date": "2026-11-30",
    "en": true,
    "slug": "ristarforslag-blindprov",
    "tags": [
@@ -667,7 +669,7 @@
    "text": "Methods report v4: in a locked blind test, carver suggestions from runic texts matched Rundata's carver on 82 % of the confident ones (nearest stone: 44 %). Against runologists' same-hand groups: no better than neighbours."
   },
   {
-   "date": "2026-12-03",
+   "date": "2026-12-01",
    "en": true,
    "slug": "ristningen-vand-mot-vagen",
    "tags": [
@@ -681,7 +683,7 @@
    "text": "Research report: half of Swedish runestones turn their inscription within 45 degrees of the road, against a quarter by chance. Not towards the sun, not towards the farm. The carvers wrote for those passing by."
   },
   {
-   "date": "2026-12-04",
+   "date": "2026-12-02",
    "en": true,
    "slug": "barnen-arvde-namnled",
    "tags": [
@@ -695,7 +697,7 @@
    "text": "Research report: on Swedish runestones parent and child share a name element, like Holmger and Holmfast, in 5.3 % of pairs, against 2.8 % by chance. A custom for some families, alive through the whole runestone era."
   },
   {
-   "date": "2026-12-05",
+   "date": "2026-12-03",
    "en": true,
    "slug": "seriationen-foljer-stilkronologin",
    "tags": [
@@ -709,7 +711,7 @@
    "text": "Research report: ordered only by language and content, Uppland's runestones fall in the same sequence as the stylistic chronology built on their ornament. Two independent clocks, showing roughly the same time."
   },
   {
-   "date": "2026-12-06",
+   "date": "2026-12-04",
    "en": true,
    "slug": "runstenarna-vid-sin-tids-vatten",
    "tags": [
@@ -723,7 +725,7 @@
    "text": "Research report: Viking-age runestones were raised by the water of their own time. 64 % stand within 500 m of the shore of AD 1050, against 46 % of the land around them. Grave fields draw more strongly. Holds in all checks."
   },
   {
-   "date": "2026-12-07",
+   "date": "2026-12-05",
    "slug": "de-gamla-landen-sotholm",
    "en": true,
    "tags": [
@@ -737,7 +739,7 @@
    "text": "New series, The old lands. In the Viking Age Södertörn was an island, Tören. Its outer half around AD 1000: farms in forest clearings, a grave field by every village, hillforts on the heights, an assembly site by the sea."
   },
   {
-   "date": "2026-12-08",
+   "date": "2026-12-06",
    "slug": "upplands-folkland-skiljer-runstenarna",
    "en": true,
    "text": "Were Uppland's old folklands real borders in the Viking Age? Of 999 random divisions of the same hundreds, only 2 separate the runestones as much as the folklands do. One border we had to give up on the way: at vs æftiR.",

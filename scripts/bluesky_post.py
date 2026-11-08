@@ -6,6 +6,7 @@ vanliga lösenordet. Det ligger i .env som BLUESKY_HANDLE och BLUESKY_APP_PASSWO
     .venv/bin/python -m scripts.bluesky_post SLUG --text "…" [--en] [--tagg runor --tagg vikingatid]
     .venv/bin/python -m scripts.bluesky_post SLUG --text "…" --posta     # skickar inlägget
     .venv/bin/python -m scripts.bluesky_post --ko [--posta]             # kön: godkända inlägg med datum, ett per körning
+    .venv/bin/python -m scripts.bluesky_post --nu SLUG [--posta]        # ett visst inlägg ur kön nu, före sitt datum
 Ett inlägg i kön kan ha "credit": en text som postas som svar direkt under inlägget (t.ex. de öppna skanningarnas
 skannare, institution, projekt, licens och DOI); svarets adress skrivs i "credit_reply".
 Kön körs dagligen kl. 18 av analysmotorn (api/main.py, tråden bluesky; BLUESKY_AUTOPOST=0 stänger av).
@@ -172,6 +173,33 @@ def send(text: str, url: str, title: str, desc: str, en: bool, images: list[dict
     return at(post["uri"]), reply_at
 
 
+def post_item(q: dict, item: dict) -> None:
+    """Sends one queue item (with its credit reply, if any) and writes the addresses back to the queue file."""
+    url, title, desc = card(item["slug"], item.get("en", False))
+    item["posted"], reply_at = send(compose(item["text"], item.get("tags", [])), url, title, desc, item.get("en", False),
+                                    item.get("images"), item.get("credit"))
+    if reply_at:
+        item["credit_reply"] = reply_at
+    item["posted_at"] = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
+    json.dump(q, open(KO, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print("Postat:", item["posted"], *([reply_at] if reply_at else []))
+
+
+def now(slug: str, post: bool) -> None:
+    """A given queued post now, before its date (the founder's call); the daily queue then skips it."""
+    q = json.load(open(KO, encoding="utf-8"))
+    hits = [i for i in q["items"] if i["slug"] == slug and not i.get("posted")]
+    if not hits:
+        sys.exit(f"Inget opostat inlägg i kön med adressen {slug}")
+    item = hits[0]
+    text = compose(item["text"], item.get("tags", []))
+    url, title, _ = card(item["slug"], item.get("en", False))
+    print(f"--- {slug} ({len(text)}/{LIMIT}) ---\n{text}\n--- länkkort ---\n{title}\n{url}"
+          + (f"\n--- svar ---\n{item['credit']}" if item.get("credit") else ""))
+    if post:
+        post_item(q, item)
+
+
 def queue(post_due: bool):
     """data/bluesky/ko.json: posts the founder has approved, each with a planned date. At most ONE due post is sent per
     run (the earliest), so that a missed day does not send several at once; the post's address is written back."""
@@ -189,15 +217,7 @@ def queue(post_due: bool):
     due = [i for i in q["items"] if not i.get("posted") and i["date"] <= today and i["slug"] not in bad]
     if not post_due or not due:
         return
-    item = due[0]
-    url, title, desc = card(item["slug"], item.get("en", False))
-    item["posted"], reply_at = send(compose(item["text"], item.get("tags", [])), url, title, desc, item.get("en", False),
-                                    item.get("images"), item.get("credit"))
-    if reply_at:
-        item["credit_reply"] = reply_at
-    item["posted_at"] = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
-    json.dump(q, open(KO, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    print("Postat:", item["posted"])
+    post_item(q, due[0])
 
 
 def main(argv=None):
@@ -208,7 +228,10 @@ def main(argv=None):
     ap.add_argument("--tagg", action="append", default=[], help="hashtagg utan #, kan upprepas")
     ap.add_argument("--posta", action="store_true", help="skicka inlägget (annars visas det bara)")
     ap.add_argument("--ko", action="store_true", help="visa kön i data/bluesky/ko.json; med --posta skickas nästa inlägg som är dags")
+    ap.add_argument("--nu", metavar="SLUG", help="ett visst inlägg ur kön nu (med --posta), före sitt datum")
     a = ap.parse_args(argv)
+    if a.nu:
+        return now(a.nu, a.posta)
     if a.ko:
         return queue(a.posta)
     if not a.slug or not a.text:
