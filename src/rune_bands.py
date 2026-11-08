@@ -158,6 +158,63 @@ def drawn_labels(sha256: str | None, hf) -> np.ndarray | None:
     return None
 
 
+def depth_image_entry(sha256: str | None) -> tuple[str, str, dict] | None:
+    """Series, stem and metadata of the depth image for this exact file (an open scan, or an upload made drawable), or
+    None. Its normal and up are the view the bands are drawn in."""
+    if not sha256 or not os.path.isdir(DEPTH_DIR):
+        return None
+    for mp in glob.glob(os.path.join(DEPTH_DIR, "*", "*.json")):
+        meta = json.load(open(mp, encoding="utf-8"))
+        if meta.get("sha256") == sha256:
+            return mp.split(os.sep)[-2], os.path.basename(mp)[:-5], meta
+    return None
+
+
+def depth_image_meta(sha256: str | None) -> dict | None:
+    e = depth_image_entry(sha256)
+    return e[2] if e else None
+
+
+def band_state(series: str, stem: str) -> dict:
+    """The drawn bands' status for a depth image ("granskad", "utkast" or None), how many, and the file's mtime (so
+    that a picture can tell when they were saved again)."""
+    bp = os.path.join(BAND_DIR, series, stem + ".json")
+    if not os.path.exists(bp):
+        return {"status": None, "bands": 0, "mtime": None}
+    b = json.load(open(bp, encoding="utf-8"))
+    return {"status": b.get("status"), "bands": len(b.get("bands") or []), "mtime": os.path.getmtime(bp)}
+
+
+def drawn_problem(sha256: str | None, hf) -> str | None:
+    """Why Viktor's checked bands for this exact file are NOT used, in plain words (None when there are none, or when
+    drawn_labels carries them over): the depth image lacks its grid origin (a0, b0; scripts/depth_dataset.py --origin
+    fills it in), or the analysis looks at the stone too far from the depth image's normal. Without this the analysis
+    would fall back on the band model without saying so (found 2026-11-08: 29 of the 95 checked files)."""
+    if not sha256 or not os.path.isdir(DEPTH_DIR):
+        return None
+    for mp in glob.glob(os.path.join(DEPTH_DIR, "*", "*.json")):
+        meta = json.load(open(mp, encoding="utf-8"))
+        if meta.get("sha256") != sha256:
+            continue
+        series, stem = mp.split(os.sep)[-2], os.path.basename(mp)[:-5]
+        bp = os.path.join(BAND_DIR, series, stem + ".json")
+        if not os.path.exists(bp):
+            return None
+        b = json.load(open(bp, encoding="utf-8"))
+        if b.get("status") != "granskad" or not b.get("bands"):
+            return None
+        if "a0" not in meta:
+            return "de ritade slingorna kunde inte föras över: djupbildens origo saknas"
+        from src.auto_grooves import basis
+        _, _, n0 = basis(meta["normal"], meta.get("up"))
+        tilt = float(np.degrees(np.arccos(np.clip(abs(n0 @ hf.n), -1, 1))))
+        if tilt > MAX_TILT_DEG:
+            return (f"de ritade slingorna gäller en vy {tilt:.0f}° från den här (högst {MAX_TILT_DEG:.0f}°); "
+                    "vrid stenen så att den ristade sidan vetter rakt mot dig")
+        return None
+    return None
+
+
 def band_field(mask: np.ndarray, res: float) -> dict:
     """The band's direction at every cell (a structure tensor of the smoothed mask: the band runs across its
     strongest change), the distance outside the band in mm, and the mask itself."""

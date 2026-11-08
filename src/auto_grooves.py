@@ -672,6 +672,13 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
         except Exception as e:  # the old stroke classification is the fallback
             band = {"source": None, "empty": True, "error": repr(e)}
     use_band = bool(band) and not band.get("empty")
+    # checked bands that exist but could not be carried over: say so instead of falling back on the model silently
+    drawn_note = None
+    if band and band.get("source") != "ritade" and sha256:
+        try:
+            drawn_note = rune_bands.drawn_problem(sha256, hf)
+        except Exception:  # the note must never stop an analysis
+            drawn_note = None
 
     mask = (residual < -threshold) & inner
     mask = ndimage.binary_opening(mask)
@@ -838,7 +845,7 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
 
     accepted = [s for s in slices if s["accepted"]]
     arrays = ({"mask": mask, "wide_area": wide_area, "half_width": half_width, "branch_labels": strokes["branch_labels"],
-               "depth": -residual, "res": res, "region": hf.region, "inner": inner,
+               "depth": -residual, "res": res, "region": hf.region, "inner": inner, "a0": hf.a0, "b0": hf.b0,
                "bands": band["mask"] if use_band else None} if keep_arrays else None)
     measured_runes = sorted({s["rune_id"] for s in accepted if "rune_id" in s})
     kinds = {}
@@ -879,7 +886,8 @@ def analyze_grooves(mesh, normal, spacing_mm: float = 3.0, sensitivity: float = 
                              "edge_zone_contrast": round(EDGE_ZONE_CONTRAST, 4)},
         # Where the runic bands came from (ritade, modellen) and how much of the scan they cover; None when the
         # stroke classification decided (measure all, no bands, or no band model)
-        "bands": ({"source": band["source"], "coverage": round(band["coverage"], 4)} if use_band
+        "bands": ({"source": band["source"], "coverage": round(band["coverage"], 4),
+                   **({"note": drawn_note} if drawn_note else {})} if use_band
                   else {"source": None, "note": (band or {}).get("error") or ("inga slingor hittades" if band else
                         "slingorna användes inte")}),
         "image_width": width,

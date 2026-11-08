@@ -53,6 +53,18 @@ export default function RunmodellPage() {
     setActive(0);
   };
 
+  // Opened from the 3D page's band picture (?serie=…&fil=…): show that stone once the list is loaded
+  const linked = useRef(false);
+  useEffect(() => {
+    if (linked.current || !stones.length) return;
+    const q = new URLSearchParams(window.location.search);
+    const hit = stones.find(x => x.series === q.get("serie") && x.stem === q.get("fil"));
+    if (!hit) return;
+    linked.current = true;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void open(hit);
+  }, [stones]);
+
   // The shown (turned) picture's size, and a click taken back to the image's own pixels
   const W = cur?.width ?? 1, H = cur?.height ?? 1;
   const viewW = rot % 180 === 0 ? W : H, viewH = rot % 180 === 0 ? H : W;

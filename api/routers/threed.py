@@ -626,6 +626,48 @@ def _estimated_normal(mesh) -> np.ndarray:
     return n
 
 
+def _long_axis_up(mesh, normal) -> np.ndarray:
+    """The stone's longest direction within the carved face (largest variance, projected on the face), pointing to
+    positive z (else y) so that the same scan always gets the same up."""
+    n = np.asarray(normal, float) / np.linalg.norm(normal)
+    pts = mesh.vertices - mesh.vertices.mean(axis=0)
+    _, vecs = np.linalg.eigh(pts.T @ pts)
+    for k in (2, 1, 0):
+        e = vecs[:, k] - (vecs[:, k] @ n) * n
+        if np.linalg.norm(e) > 1e-6:
+            e = e / np.linalg.norm(e)
+            axis = 2 if abs(e[2]) > 1e-6 else 1
+            return -e if e[axis] < 0 else e
+    return np.array([0.0, 1.0, 0.0])
+
+
+def _default_view(entry: MeshEntry):
+    """The view when the page asks for the same view every time (no normal sent): for an open scan in the depth cache
+    the protocol measurement's view (the one its bands were drawn in), else straight at the carved face with the
+    stone's longest direction up; an upload made drawable keeps its depth image's view. Returns normal, up and which it
+    is ("protokoll", "ritbild" or "stenens")."""
+    from src import rune_bands
+    e = rune_bands.depth_image_entry(entry.info.get("sha256"))
+    if e and e[2].get("normal"):
+        meta = e[2]
+        return (np.asarray(meta["normal"], float), np.asarray(meta["up"], float) if meta.get("up") else None,
+                "ritbild" if e[0] == UPLOAD_SERIES else "protokoll")
+    n = _estimated_normal(entry.mesh)
+    return n, _long_axis_up(entry.mesh, n), "stenens"
+
+
+def _view_of(entry: MeshEntry, normal_x, normal_y, normal_z, up_x, up_y, up_z):
+    """The view the page sent ("vy"), or the fixed default view."""
+    if normal_x is not None:
+        return [normal_x, normal_y, normal_z], ([up_x, up_y, up_z] if up_x is not None else None), "vy"
+    return _default_view(entry)
+
+
+def _view_json(normal, up, kind) -> dict:
+    return {"kind": kind, "normal": [round(float(v), 5) for v in normal],
+            "up": None if up is None else [round(float(v), 5) for v in up]}
+
+
 @router.post("/render_relief")
 def render_relief(
     file: UploadFile = File(None),
@@ -638,15 +680,15 @@ def render_relief(
     up_z: float = Form(None),
 ):
     """Bilder av den ristade ytan för läsning: strykljus från fyra håll, ett kombinerat relief och djup
-    under stenytan. Utan normal används stenens tunnaste riktning."""
+    under stenytan. Utan normal används samma vy varje gång (_default_view): protokollmätningens för de öppna
+    skanningarna, annars rakt mot den ristade sidan med stenens längsta riktning uppåt."""
     from PIL import Image
     from src.stone_report import Surface
 
     entry = resolve_mesh(file, mesh_id)
     if entry.info.get("mock"):
         raise HTTPException(status_code=400, detail=NO_MESH)
-    normal = [normal_x, normal_y, normal_z] if normal_x is not None else _estimated_normal(entry.mesh)
-    up = [up_x, up_y, up_z] if up_x is not None else None
+    normal, up, kind = _view_of(entry, normal_x, normal_y, normal_z, up_x, up_y, up_z)
     try:
         surf = Surface(entry.mesh, normal, up, max_px=1600)
     except Exception as e:
@@ -669,6 +711,7 @@ def render_relief(
         "raking": {name: png(v) for name, v in imgs["raking"].items()},
         "resolution_mm": surf.res,
         "normal": [float(v) for v in surf.hf.n],
+        "view": _view_json(surf.hf.n, surf.hf.v, kind),
         # the depth that is black in "depth" (99th percentile outside the 10 mm edge zone); the export's heat map
         # uses the 99.5th
         "depth_ref_mm": imgs["depth_ref_mm"],
@@ -681,10 +724,24 @@ def render_relief(
 _BAND_LOCK = threading.Lock()
 
 
+def _drawable(entry: MeshEntry) -> dict | None:
+    """Where this scan can be drawn on the drawing page (Runmodell), and its drawn bands' state; None when it has no
+    depth image yet (POST /api/3d/make_drawable makes one)."""
+    from src import rune_bands
+    e = rune_bands.depth_image_entry(entry.info.get("sha256"))
+    if not e:
+        return None
+    series, stem, _ = e
+    return {"series": series, "stem": stem, **rune_bands.band_state(series, stem)}
+
+
 def _band_state(entry: MeshEntry, normal, up):
     from src.band_image import BandImage, bands_on_surface
     from src.stone_report import Surface
-    key = (tuple(round(float(v), 4) for v in normal), tuple(round(float(v), 4) for v in up) if up is not None else None)
+    d = _drawable(entry)
+    # the bands saved again on the drawing page give a new picture
+    key = (tuple(round(float(v), 4) for v in normal), tuple(round(float(v), 4) for v in up) if up is not None else None,
+           d and d["mtime"])
     with _BAND_LOCK:
         cached = entry.band_image
         if cached and cached[0] == key:
@@ -719,8 +776,7 @@ def band_image(
         raise HTTPException(status_code=400, detail=NO_MESH)
     if not np.isfinite(offset_mm):
         raise HTTPException(status_code=422, detail="offset_mm måste vara ett tal.")
-    normal = [normal_x, normal_y, normal_z] if normal_x is not None else _estimated_normal(entry.mesh)
-    up = [up_x, up_y, up_z] if up_x is not None else None
+    normal, up, kind = _view_of(entry, normal_x, normal_y, normal_z, up_x, up_y, up_z)
     try:
         bi = _band_state(entry, normal, up)
         layer = bi.layer(offset_mm)
@@ -733,8 +789,51 @@ def band_image(
         "width": int(rgb.shape[1]), "height": int(rgb.shape[0]), "resolution_mm": bi.res,
         "offset_mm": layer["offset_mm"], "offset_range": list(bi_mod.OFFSET_RANGE), "level_mm": layer["level_mm"],
         "source": layer["source"], "shown_share": r3(layer["shown_share"]), "band_share": r3(layer["band_share"]),
-        "in_bands": r3(layer["in_bands"]),
+        "in_bands": r3(layer["in_bands"]), "view": _view_json(normal, up, kind), "drawable": _drawable(entry),
     }
+
+
+UPLOAD_SERIES = "uppladdade"  # the depth cache's folder for uploads made drawable
+_DRAWABLE_LOCK = threading.Lock()  # one depth image at a time (an analysis of the whole scan)
+
+
+@router.post("/make_drawable")
+def make_drawable(
+    file: UploadFile = File(None),
+    mesh_id: str = Form(None),
+    normal_x: float = Form(None),
+    normal_y: float = Form(None),
+    normal_z: float = Form(None),
+    up_x: float = Form(None),
+    up_y: float = Form(None),
+    up_z: float = Form(None),
+):
+    """Gör en uppladdad skanning ritbar på ritsidan (Runmodell): en djupbild i samma vy som bilden (samma vy varje gång,
+    eller den vy sidan skickar), så att slingor som ritas och märks granskade gäller för skanningen och blir träningsdata
+    för slingmodellen. Skanningar som redan har en djupbild får den de har."""
+    from src import depth_image, rune_bands
+
+    entry = resolve_mesh(file, mesh_id)
+    if entry.info.get("mock"):
+        raise HTTPException(status_code=400, detail=NO_MESH)
+    sha = entry.info.get("sha256")
+    if not sha:
+        raise HTTPException(status_code=400, detail="Skanningen saknar fingeravtryck (SHA-256).")
+    normal, up, kind = _view_of(entry, normal_x, normal_y, normal_z, up_x, up_y, up_z)
+    name = os.path.splitext(os.path.basename(entry.info.get("filename") or "skanning"))[0]
+    stem = (re.sub(r"[^A-Za-z0-9_]+", "_", name).strip("_")[:60] or "skanning") + "_" + sha[:8]
+    try:
+        with _DRAWABLE_LOCK:
+            existing = _drawable(entry)
+            if existing:
+                return {**existing, "created": False}
+            depth_image.write(entry.mesh, normal, up, os.path.join(rune_bands.DEPTH_DIR, UPLOAD_SERIES, stem),
+                              {"series": UPLOAD_SERIES, "file": entry.info.get("filename"), "sha256": sha,
+                               "signum": None, "signa": None, "transliteration": None, "rune_types": None,
+                               "object": None, "material": None, "view": kind, "made": datetime.date.today().isoformat()})
+    except Exception as e:
+        raise server_error(e, "Djupbilden kunde inte göras.", status_code=500) from e
+    return {**_drawable(entry), "created": True}
 
 
 # ---- export ----------------------------------------------------------------------------------------------------------

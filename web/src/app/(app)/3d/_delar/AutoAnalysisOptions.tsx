@@ -116,6 +116,7 @@ export default function AutoAnalysisOptions({
             <strong>Runslingor:</strong>{" "}
             {autoResult.bands.source === "ritade" ? "ritade och granskade för hand" : "föreslagna av slingmodellen – kontrollera dem i granskningsbilden"}
             {autoResult.bands.coverage != null ? ` (täcker ${Math.round(autoResult.bands.coverage * 100)} % av ytan)` : ""}.
+            {autoResult.bands.note ? <> <strong className="text-amber-800">Obs:</strong> <span className="text-amber-800">{autoResult.bands.note}.</span></> : null}
             {" "}Mätt: {autoResult.parameters.measure === "ornament" ? "ornamentiken utanför slingorna" : "runorna i slingorna"}.
             {autoResult.parameters.staveless ? " Stavlöst läge: runorna delade efter var de står längs slingan." : ""}
           </p>

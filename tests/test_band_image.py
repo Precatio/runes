@@ -78,3 +78,51 @@ def test_band_image_endpoint(client):
     deeper = client.post("/api/3d/band_image", data={**base, "offset_mm": 1.0}).json()
     assert deeper["shown_share"] < body["shown_share"] and deeper["level_mm"] == body["level_mm"]
     assert client.post("/api/3d/band_image", data={**base, "offset_mm": "nan"}).status_code == 422
+
+
+def test_the_default_view_is_the_same_every_time(client):
+    from src.synthetic import rune_stone
+    stl = rune_stone(opening_angle_deg=70, depth_mm=4, tilt_deg=20).export(file_type="stl")
+    mid = client.post("/api/3d/upload", files={"file": ("stone.stl", stl)}).json()["mesh_id"]
+    a = client.post("/api/3d/band_image", data={"mesh_id": mid}).json()
+    b = client.post("/api/3d/band_image", data={"mesh_id": mid, "offset_mm": 0.5}).json()
+    assert a["view"]["kind"] == "stenens" and a["view"] == b["view"] and a["view"]["up"] is not None
+    r = client.post("/api/3d/render_relief", data={"mesh_id": mid}).json()
+    assert r["view"]["kind"] == "stenens"
+    import numpy as np
+    assert np.allclose(r["view"]["normal"], a["view"]["normal"], atol=1e-4)
+    assert abs(float(np.dot(a["view"]["normal"], a["view"]["up"]))) < 1e-4  # up lies in the carved face (5 decimals)
+    # a view sent by the page is used as it is
+    v = client.post("/api/3d/band_image", data={"mesh_id": mid, "normal_x": 0, "normal_y": 0, "normal_z": 1}).json()
+    assert v["view"]["kind"] == "vy"
+
+
+def test_an_upload_made_drawable_gets_its_drawn_bands(client, tmp_path, monkeypatch):
+    """Upload → make_drawable (a depth image in the cache) → bands drawn and marked checked on the drawing page → the
+    band picture uses them, in the same view, without a restart."""
+    import json
+    import os
+    from src import rune_bands
+    from src.synthetic import rune_stone
+    monkeypatch.setattr(rune_bands, "DEPTH_DIR", str(tmp_path / "djup"))
+    monkeypatch.setattr(rune_bands, "BAND_DIR", str(tmp_path / "band"))
+    # a stone of its own: the mesh cache knows a file it has seen by its content, with the first name it had
+    stl = rune_stone(opening_angle_deg=60, depth_mm=3, tilt_deg=10).export(file_type="stl")
+    mid = client.post("/api/3d/upload", files={"file": ("min sten.stl", stl)}).json()["mesh_id"]
+    before = client.post("/api/3d/band_image", data={"mesh_id": mid}).json()
+    assert before["drawable"] is None and before["source"] is None
+    r = client.post("/api/3d/make_drawable", data={"mesh_id": mid})
+    assert r.status_code == 200, r.text
+    d = r.json()
+    assert d["created"] and d["series"] == "uppladdade" and d["stem"].startswith("min_sten_") and d["status"] is None
+    meta = json.load(open(tmp_path / "djup" / "uppladdade" / (d["stem"] + ".json")))
+    assert "a0" in meta and "b0" in meta and meta["view"] == "stenens"
+    assert client.post("/api/3d/make_drawable", data={"mesh_id": mid}).json()["created"] is False
+    # a band across the middle of the depth image (drawing-page pixels, half resolution), marked checked
+    h, w = meta["shape"][0] // 2, meta["shape"][1] // 2
+    os.makedirs(tmp_path / "band" / "uppladdade")
+    (tmp_path / "band" / "uppladdade" / (d["stem"] + ".json")).write_text(json.dumps(
+        {"status": "granskad", "scale": 2, "bands": [{"points": [[w * 0.1, h * 0.5], [w * 0.9, h * 0.5]], "height": h * 0.3}]}))
+    after = client.post("/api/3d/band_image", data={"mesh_id": mid}).json()
+    assert after["view"]["kind"] == "ritbild" and after["source"] == "ritade"
+    assert after["drawable"]["status"] == "granskad" and 0.05 < after["band_share"] < 0.6

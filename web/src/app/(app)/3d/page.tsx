@@ -480,10 +480,24 @@ function ThreeDPageContent() {
   const [reliefBusy, setReliefBusy] = useState<"" | "2d" | "phonetics">("");
   // The view is taken when the dialog opens, so that turning the model behind it does not recompute the surface
   const [bandImage, setBandImage] = useState<{ session: MeshSession; view: { toward: number[]; up: number[] } | null } | null>(null);
+  // Same view every time (default): the pictures are computed from a fixed view (the protocol measurement's for the
+  // open scans, else straight at the carved face, longest direction up) instead of where the camera happens to be,
+  // so that two pictures of the same scan are comparable. Remembered in this browser.
+  const [fixedView, setFixedView] = useState(true);
+  useEffect(() => {
+    // read after mounting (the server renders the default); the stored choice is a per-browser convenience
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    try { if (localStorage.getItem("vitki-samma-vy") === "0") setFixedView(false); } catch { /* storage blocked: default */ }
+  }, []);
+  const changeFixedView = (on: boolean) => {
+    setFixedView(on);
+    try { localStorage.setItem("vitki-samma-vy", on ? "1" : "0"); } catch { /* the choice lasts for this visit */ }
+  };
+  const pictureView = () => (fixedView ? null : viewDirRef.current);
   const fetchRelief = async () => {
     const session = sessionRef.current;
     if (!session) throw new Error("Ladda upp en 3D-fil först.");
-    const view = viewDirRef.current;
+    const view = pictureView();
     const fields: Record<string, number> = view ? {
       normal_x: view.toward[0], normal_y: view.toward[1], normal_z: view.toward[2],
       up_x: view.up[0], up_y: view.up[1], up_z: view.up[2],
@@ -885,9 +899,15 @@ function ThreeDPageContent() {
             <div className="pt-4 border-t border-slate-900/10 space-y-2">
               <div className="text-xs font-bold uppercase tracking-wider text-slate-500">Bilder ur skanningen</div>
               <p className="text-[11px] text-slate-500">
-                Strykljus, relief och djup räknas direkt ur 3D-modellen, sett från den ristade sidan som vetter mot dig –
-                oberoende av zoom och skärmens belysning.
+                Strykljus, relief och djup räknas direkt ur 3D-modellen – oberoende av zoom och skärmens belysning.
               </p>
+              <label className="flex items-start gap-2 text-[11px] text-slate-600">
+                <input type="checkbox" checked={fixedView} onChange={e => changeFixedView(e.target.checked)} className="mt-0.5 accent-[#b7410e]" />
+                <span>
+                  <strong>Samma vy varje gång:</strong> rakt mot den ristade sidan (för de öppna skanningarna samma vy som
+                  protokollmätningen), inte där kameran råkar stå. Utan bocken räknas bilderna från din vy i 3D-fönstret.
+                </span>
+              </label>
               <button
                 type="button"
                 onClick={sendReliefToTwoD}
@@ -899,7 +919,7 @@ function ThreeDPageContent() {
               <button
                 type="button"
                 onClick={() => {
-                  const v = viewDirRef.current, session = sessionRef.current;
+                  const v = pictureView(), session = sessionRef.current;
                   if (session) setBandImage({ session, view: v ? { toward: [...v.toward], up: [...v.up] } : null });
                 }}
                 disabled={!meshInfo}

@@ -12,6 +12,8 @@ interface BandResult {
   image: string; width: number; height: number; resolution_mm: number; offset_mm: number;
   offset_range: [number, number]; level_mm: number; source: "ritade" | "modellen" | null;
   shown_share: number; band_share: number | null; in_bands: number | null;
+  view: { kind: "protokoll" | "ritbild" | "stenens" | "vy"; normal: number[]; up: number[] | null };
+  drawable: { series: string; stem: string; status: string | null; bands: number; mtime: number | null } | null;
 }
 interface View { toward: number[]; up: number[] }
 
@@ -26,6 +28,12 @@ export default function BandImageDialog({ session, filename, view, onClose }: {
   const [result, setResult] = useState<BandResult | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [refresh, setRefresh] = useState(0); // fetch again (after the bands were saved on the drawing page)
+  const [making, setMaking] = useState(false);
+
+  const viewFields = (): Record<string, number> => (view ? {
+    normal_x: view.toward[0], normal_y: view.toward[1], normal_z: view.toward[2], up_x: view.up[0], up_y: view.up[1], up_z: view.up[2],
+  } : {});
 
   // A new picture when the slider stops moving
   useEffect(() => {
@@ -34,11 +42,9 @@ export default function BandImageDialog({ session, filename, view, onClose }: {
       setBusy(true);
       setError(null);
       try {
-        const fields: Record<string, string | number> = { offset_mm: offset };
-        if (view) {
-          Object.assign(fields, { normal_x: view.toward[0], normal_y: view.toward[1], normal_z: view.toward[2],
-            up_x: view.up[0], up_y: view.up[1], up_z: view.up[2] });
-        }
+        const fields: Record<string, string | number> = { offset_mm: offset, ...(view ? {
+          normal_x: view.toward[0], normal_y: view.toward[1], normal_z: view.toward[2], up_x: view.up[0], up_y: view.up[1], up_z: view.up[2],
+        } : {}) };
         const data = await session.postJSON<BandResult>("/api/3d/band_image", fields);
         if (!cancelled) setResult(data);
       } catch (e) {
@@ -48,7 +54,21 @@ export default function BandImageDialog({ session, filename, view, onClose }: {
       }
     }, 300);
     return () => { cancelled = true; clearTimeout(t); };
-  }, [offset, session, view]);
+  }, [offset, session, view, refresh]);
+
+  // A depth image of an uploaded scan, so that its bands can be drawn on the drawing page (POST /api/3d/make_drawable)
+  const makeDrawable = async () => {
+    setMaking(true);
+    setError(null);
+    try {
+      await session.postJSON("/api/3d/make_drawable", viewFields());
+      setRefresh(n => n + 1);
+    } catch (e) {
+      setError(errorText(e, "Djupbilden kunde inte göras."));
+    } finally {
+      setMaking(false);
+    }
+  };
 
   const download = () => {
     if (!result) return;
@@ -115,8 +135,49 @@ export default function BandImageDialog({ session, filename, view, onClose }: {
             )}
             {result.source === null && (
               <span>Inga textslingor kunde tas fram för den här skanningen; bilden visar bara det som ligger djupast.</span>
-            )}
+            )}{" "}
+            {result.view.kind === "protokoll" && <span>Vy: samma som protokollmätningen, den vy slingorna är ritade i.</span>}
+            {result.view.kind === "ritbild" && <span>Vy: samma som djupbilden på ritsidan.</span>}
+            {result.view.kind === "stenens" && <span>Vy: rakt mot den ristade sidan, med stenens längsta riktning uppåt.</span>}
+            {result.view.kind === "vy" && <span>Vy: din vy i 3D-fönstret.</span>}
           </p>
+        )}
+
+        {result && (
+          <div className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-700 space-y-1.5">
+            <div className="font-bold uppercase tracking-wider text-slate-500">Rätta slingorna</div>
+            {result.drawable ? (
+              <>
+                <p>
+                  <span>Slingorna ritas på ritsidan, på stenens djupbild.</span>{" "}
+                  {result.drawable.bands > 0 ? (
+                    <>
+                      <span>{`Där finns ${result.drawable.bands} ${result.drawable.bands === 1 ? "slinga" : "slingor"}.`}</span>{" "}
+                      <span>{result.drawable.status === "granskad" ? "De är granskade." : "De är inte granskade än och används först när de är märkta som granskade."}</span>
+                    </>
+                  ) : <span>Där finns inga ritade slingor än.</span>}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <a href={`/runmodell?serie=${encodeURIComponent(result.drawable.series)}&fil=${encodeURIComponent(result.drawable.stem)}`}
+                    target="_blank" rel="noopener" className="px-3 py-1.5 font-semibold rounded-lg border border-[#b7410e] text-[#b7410e] hover:bg-[#b7410e] hover:text-white">
+                    Rita eller rätta slingorna
+                  </a>
+                  <button type="button" onClick={() => setRefresh(n => n + 1)} disabled={busy} className="px-3 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 disabled:opacity-40">Räkna om</button>
+                </div>
+                <p className="text-slate-500">
+                  <span>Spara slingorna som granskade på ritsidan och klicka sedan Räkna om.</span>{" "}
+                  <span>Granskade slingor används också av huggspårsanalysen och blir träningsdata för slingmodellen.</span>
+                </p>
+              </>
+            ) : (
+              <>
+                <p>Den här skanningen har ingen djupbild på ritsidan än. Gör den ritbar för att kunna rita slingorna själv, i samma vy som bilden.</p>
+                <button type="button" onClick={makeDrawable} disabled={making} className="px-3 py-1.5 font-semibold rounded-lg border border-[#b7410e] text-[#b7410e] hover:bg-[#b7410e] hover:text-white disabled:opacity-40">
+                  {making ? "Gör en djupbild av skanningen – det kan ta någon minut …" : "Gör skanningen ritbar"}
+                </button>
+              </>
+            )}
+          </div>
         )}
 
         {error && <p className="text-sm text-red-700">{error}</p>}
