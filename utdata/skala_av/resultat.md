@@ -1,5 +1,7 @@
 # Skala av vittringen provad på skanningar (utdata/skala_av/prova.py)
 
+*Funktionen togs bort ur appen 2026-11-08 efter det låsta provet (provet.md, METHODS 2d2); `src/peel.py` finns i git-historiken till och med commit 903cc4a.*
+
 Samma inställningar som dialogen på 3D-sidan (src/peel.py): mätningens referensyta (stängning 20 mm), djup vinkelrätt mot ytan, vittringsnivå = 70:e percentilen per 60 mm-ruta. Antal spår (rostrött) och gropar (grått) vid fyra reglagelägen; *kvar* = andel av ytan som ligger djupare än nivån plus reglaget. Bilderna: <stem>.png (dagens djupbild överst, den avskalade under).
 
 | Sten | Serie | mm/cell | Vittringsnivå mm (min–median–max) | −0,5 mm | 0 mm | +0,5 mm | +1 mm | Kvar vid 0 mm | Tid s |

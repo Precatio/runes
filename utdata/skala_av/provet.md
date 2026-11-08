@@ -2,6 +2,8 @@
 
 Låst plan `analysplaner/2026-11-07-skala-av-provet.md` (sha 380fccf4). Facit: Viktors granskade runslingor. 95 av 95 filer mätta.
 
+**Utfall:** funktionen var inte bättre än dagens djupbild i någon jämförelse och togs bort ur appen 2026-11-08 (METHODS 2d2). `src/peel.py`, som skripten här behöver, finns i git-historiken till och med commit 903cc4a.
+
 Teknisk rättelse under körningen: 29 filer saknade djupbildens origo (a0, b0) i djupbildscachens metadata, så att `rune_bands.drawn_labels` inte kunde föra över slingorna och filen hoppades över. Origo fylldes i med samma funktion som studie 1b (`utdata/forskningsplan/s1b_klassning.grid_origin`, som kontrollerar att rutnätet blir djupbildens; `provet_a0.py`) och filerna kördes om. Den sista filen i listan föll först bort för att raden saknade radslut (rättat i `provet_kor.sh`). Inget i jämförelsen ändrades.
 
 **Lyft** = andelen av det visade som ligger inne i slingorna, delat med slingornas andel av ytan (1 = som slumpen). A = dagens djupbild med en gemensam gräns som visar lika stor del av ytan som B; B = avskalat (reglaget 0 mm), alla fläckar; C = avskalat, bara spår.

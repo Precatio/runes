@@ -1295,52 +1295,27 @@ fliken Bilder och runformer och rapporterna räknas direkt ur skanningen i stäl
   normalen väljs som i stenrapporten (analysens normal eller snittens riktning), så vyn används där bara när ingen
   analys finns.
 
-### 2d2. Skala av vittringen (från 2026-11-07)
+### 2d2. Skala av vittringen (prövad 2026-11-07, borttagen 2026-11-08)
 
-Källkod: `src/peel.py`, `api/routers/threed.py` (`peel`, POST /api/3d/peel), `web/src/components/threeD/PeelDialog.tsx`;
-test `tests/test_peel.py`. En bild att läsa själv, öppnad från *Bilder ur skanningen* på 3D-sidan: bara det som ligger
-djupare än vittringen runt omkring syns, och de djupa fläckarna är märkta. Den skiljer sig från *Djup* i 2d på tre sätt:
-
-* **Ytan följer stenens välvning.** Referensytan är densamma som i huggspårsmätningen (2c): stängning med ett
-  fönster om 20 mm, utjämnad 1 mm. En stängning bevarar en kupig yta exakt och fyller bara fåror smalare än fönstret,
-  så den följer en välvd sten. En rullande paraboloid (krökningsradie 50 mm) prövades 2026-11-07 under en låst plan
-  (`analysplaner/2026-11-07-referensyta-paraboloid.md`, `utdata/referensyta/`) och underkändes: på konstgjorda spår
-  (8 mm breda, 2 mm djupa, fyra riktningar) underskattade den djupet med upp till 0,29 mm mot 0,08 mm för fönstret, och
-  skillnaden mellan riktningarna var inte mindre (0,17 mot 0,15 mm). Huggspårsmätningen och bilderna är därför
-  oförändrade.
-* **Djupet mäts vinkelrätt mot ytan**: djupet längs projektionen gånger cos(ytans lutning). På en sluttning om 30° är
-  skillnaden 13 %, vid 45° 29 %. Partier brantare än 60° (stenens sidor) och kantzonen (10 mm) utelämnas.
-* **Gränsen följer vittringen där den står.** I rutor om 60 mm är den 70:e percentilen av djupet rutans
-  vittringsnivå; nivåerna jämnas ut mellan rutorna. Reglaget lägger till eller drar av 1–3 mm från nivån. På Sö 206
-  (skanning Laila Kitzler Åhfeldt, Riksantikvarieämbetet, projektet Runristandets dynamik, CC BY 4.0,
-  doi:10.5281/zenodo.11951255) går nivån från 0,6 till 1,2 mm, median 1,0 mm: en gemensam gräns för hela stenen skulle
-  skala av för mycket på ett ställe och för lite på ett annat.
-
-Det som blir kvar delas i sammanhängande fläckar (minst 3 mm²). Varje fläcks djupa kärna (cellerna minst hälften så
-djupa som fläckens djupaste, under nivån) tunnas ut till ett skelett: en fläck vars kärna har minst 12 mm skelett
-(huggspårsanalysens kortaste runa) och en medelbredd högst en tredjedel av skelettets längd räknas som **spår** och
-färgas rostrött – den kan vara runa, ornament eller spricka. Resten är **gropar** (grå). Regeln avgör inte vad som är
-runa; det gör läsaren genom att klicka bort fläckar och, i det andra klickläget (eller med Skift-klick), göra en grå
-fläck till spår när den hör till en runa (mörkt rostrött; till exempel en ramslinga som vittringen har gjort till ett
-nätverk av gropar, som på Sö 128). Klicken sparas som punkter på 3D-modellen i webbläsaren (per skanning, efter SHA-256),
-i två listor (`removed_json`, `added_json`), och märker samma fläckar när reglaget flyttas; träffar båda listorna samma
-fläck gäller bortklickningen. Ytan räknas med 0,67 mm per
-cell på Sö 206 (högst 2 400 bildpunkter); första beräkningen tar några sekunder (ytan ur skanningen), varje ny reglageinställning några tiondels
-sekunder.
-
-**Vad bilden inte gör.** Den skapar ingen information som inte finns i skanningen: ett streck som är grundare än
-vittringen runt omkring, eller finare än skanningens upplösning, kommer inte tillbaka, och ett för högt reglagevärde
-tar bort svaga stavar. På grovkorniga stenar, där kornen är lika djupa som strecken (som Hs 14), hjälper den inte.
-Bilden är en hjälp att se, inte en läsning; den som använder den bör ange reglagets värde och vad som klickats bort.
-**Provat 2026-11-07** under låst plan (`analysplaner/2026-11-07-skala-av-provet.md`, `utdata/skala_av/provet.md`) mot
-Viktors granskade runslingor på 95 skanningsfiler i sex serier: hur stor del av det bilden visar som ligger inne i
+En bild på 3D-sidan som bara visade det som låg djupare än vittringen runt omkring: djup vinkelrätt mot ytan under
+huggspårsmätningens referensyta (2c), en lokal vittringsnivå (70:e percentilen per 60 mm-ruta) med ett reglage, och
+fläckar märkta som spår (långa och smala) eller gropar som läsaren kunde klicka bort eller göra till spår. Den prövades
+under låst plan (`analysplaner/2026-11-07-skala-av-provet.md`, resultat i `utdata/skala_av/provet.md`) mot Viktors
+granskade runslingor på 95 skanningsfiler i sex serier: hur stor del av det bilden visar som ligger inne i
 textslingorna, jämfört med dagens djupbild avskuren med en gemensam gräns som visar lika stor del av ytan. Avskalningen
-med lokal vittringsnivå samlar sig **inte** bättre i texten: lyftet över slumpen är i median 1,23 mot 1,30 för den
-gemensamma gränsen, och den lokala nivån var bättre på 16 % av filerna. Bara spåren (rostrött) ger i median 1,33 mot 1,34
-vid samma visade yta (bättre på 40 %). Den lokala nivån visar per konstruktion ungefär lika stor del av varje ruta, också
-rutor utan text (ornamentik, sprickor, tomma fält); en gemensam gräns samlar sig där det är djupast, som oftast är
-runorna. Bildens värde ligger alltså i snittet, sorteringen i spår och gropar och läsarens klick, inte i att den lokala
-nivån hittar mer text.
+samlade sig **sämre** i texten (lyft över slumpen i median 1,23 mot 1,30; bättre på 15 och sämre på 80 av 95 filer), och
+bara spåren var inte bättre än den gemensamma gränsen vid samma visade yta (1,33 mot 1,34; bättre på 38 av 95). Den
+lokala nivån visar per konstruktion ungefär lika stor del av varje ruta, också rutor utan text. Eftersom bilden inte
+var bättre än det som redan fanns i någon jämförelse togs funktionen bort ur appen 2026-11-08 (Viktor: "if it only is
+worse, then we should remove the feature and article"). Koden (`src/peel.py`, POST /api/3d/peel, `PeelDialog.tsx`,
+`tests/test_peel.py`) finns i git-historiken till och med commit 903cc4a; skripten i `utdata/skala_av/` behöver den.
+
+Under arbetet prövades också en rullande paraboloid (krökningsradie 50 mm) som referensyta i huggspårsmätningen, under
+låst plan (`analysplaner/2026-11-07-referensyta-paraboloid.md`, `utdata/referensyta/`), och underkändes: på konstgjorda
+spår (8 mm breda, 2 mm djupa, fyra riktningar) underskattade den djupet med upp till 0,29 mm mot 0,08 mm för den
+fyrkantiga stängningen, och skillnaden mellan riktningarna var inte mindre (0,17 mot 0,15 mm). En stängning bevarar en
+kupig yta exakt, så huggspårsmätningen är oförändrad (`groove-7`); paraboloiden finns kvar som val i
+`auto_grooves.reference_surface(kind="paraboloid")`.
 
 ### 2e. Robusthet
 

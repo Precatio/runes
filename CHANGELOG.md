@@ -5,17 +5,11 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 
 ## [Ej släppt]
 
-### Skala av vittringen: de djupa spåren ur skanningen
-- Ny dialog på 3D-sidan (*Bilder ur skanningen* → *Skala av vittringen*): bilden visar bara det som ligger djupare än
-  vittringen runt omkring, med ett reglage för hur mycket som skalas av. Långa, smala spår färgas rostrött, korta
-  gropar grått; ett klick tar bort en fläck som inte är runa och ett nytt klick tar tillbaka den. Det bortklickade
-  sparas i webbläsaren som punkter på modellen och följer med när reglaget flyttas. Ångra, ta tillbaka allt och
-  nedladdning av bilden.
-- Ett andra klickläge (*Klick gör till spår*, eller Skift-klick) gör en grå fläck till spår när den hör till en runa;
-  den visas mörkt roströd. API:t tar emot punkterna som `added_json` bredvid `removed_json`.
-- `src/peel.py`, POST /api/3d/peel: samma referensyta som huggspårsmätningen (stängning 20 mm, som följer en välvd
-  sten), djup vinkelrätt mot ytan, vittringsnivå per 60 mm-ruta, fläckar med etikettkarta. METHODS 2d2,
-  `tests/test_peel.py`.
+### Skala av vittringen: prövad och borttagen
+- En dialog på 3D-sidan som visade bara det som låg djupare än vittringen runt omkring (lokal vittringsnivå, spår och
+  gropar, klick som tog bort eller gjorde till spår) byggdes 2026-11-07 och togs bort 2026-11-08. Ett låst prov mot
+  granskade runslingor på 95 skanningsfiler visade att den inte var bättre än dagens djupbild med en gemensam gräns i
+  någon jämförelse (METHODS 2d2, `utdata/skala_av/provet.md`). Koden finns i git-historiken till och med 903cc4a.
 - Prövat och underkänt under låst plan: en rullande paraboloid som referensyta i huggspårsanalysen (kandidat `groove-8`).
   Den underskattade djupet på konstgjorda spår (upp till 0,29 mm mot 0,08) utan att minska riktningsberoendet; mätmetoden
   förblir `groove-7`. Paraboloiden finns kvar som val i `auto_grooves.reference_surface(kind="paraboloid")`.
