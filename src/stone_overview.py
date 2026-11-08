@@ -163,7 +163,7 @@ def stone(rec, ctx: dict, detail: bool = False) -> dict:
         alts.append({"carver": c, "strength": round(raw * (0.5 + 0.5 * _plausibility(chk)), 3), "model": round(mp, 3),
                      "orthography": round(op, 3), "checks": {k: v for k, (v, _) in chk.items()},
                      **({"check_texts": {k: t for k, (_, t) in chk.items()}} if detail else {})})
-    alts.sort(key=lambda a: -a["strength"])
+    alts.sort(key=lambda a: (-a["strength"], a["carver"]))  # ties by name: the candidates come from a set
     best = alts[0] if alts else None
     strength = best["strength"] if best else 0.0
 

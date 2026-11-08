@@ -284,7 +284,12 @@ def material_check(rec: dict, carver: str, inscriptions: list[dict]) -> dict | N
         text += " Bergarten förekommer sällan eller aldrig hos ristaren."
     elif fits:
         base, n_base = _province_families(province(rec), inscriptions)
-        fam = max(fams & used, key=lambda f: prof["families"].get(f, 0))
+        # The family the carver uses most; an ambiguous name (gråsten: granitoid or gneiss) can tie, and then the reading
+        # under which the rock is least distinctive decides – before 2026-11-08 the order of a set did, so the same stone
+        # counted for its carver in some server processes and not in others
+        top = max(prof["families"].get(f, 0) for f in fams & used)
+        tied = sorted(f for f in fams & used if prof["families"].get(f, 0) == top)
+        fam = min(tied, key=lambda f: (prof["families"][f] / base[f]) if base.get(f) else float("inf"))
         share_c, share_p = prof["families"].get(fam, 0), base.get(fam, 0)
         label = geology.FAMILY_LABEL.get(fam, fam)
         if n_base >= 20 and share_p and share_c / share_p < 1.5:

@@ -15,6 +15,12 @@ anges separat, eftersom den avgör vilka mätningar som är jämförbara (METHOD
 - Forskningsluckor: ristarförslag får inte längre nivån *starkt* utan ett oberoende belägg (huggteknik); texterna om
   "statistiskt signifikant" stavningslikhet säger att testet jämför med andra ristare, inte med grannstenar.
 
+### Rättat: Stenöversikten gav olika svar i olika processer
+- Bergartskontrollen valde bland lika vanliga bergartsfamiljer (gråsten = granitoid eller gnejs) i en mängds ordning,
+  som Python slumpar per process: Sö 245 och Sö 262 blev *stöds* eller *svagt underlag* beroende på serverstarten
+  (336 eller 338 *stöds*). Nu avgör den familj där bergarten skiljer minst, och alternativa ristare med samma styrka
+  sorteras på namn. Samma resultat med tre olika hashfrön: 336 *stöds*.
+
 ### Rätta slingorna och samma vy varje gång
 - *Runor och ornamentik* leder till ritsidan för stenen (*Rita eller rätta slingorna*, *Räkna om*), och en uppladdad
   skanning kan göras ritbar (POST /api/3d/make_drawable, `src/depth_image.py`). Ritsidan öppnar stenen från adressen

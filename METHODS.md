@@ -2450,7 +2450,7 @@ kopplade stenarna visas (samma förslag stöder hypotesen, ett annat talar emot)
 hur stor del av ristarens egna stenar som liknar ristarens stavningsprofil mindre än stenen gör (under 10 % räknas som
 emot – förslaget kan vara det minst dåliga valet bland modellens ristare). Bergarten räknas som neutral när
 bergartsfamiljen är minst nästan lika vanlig på landskapets runstenar som hos ristaren (kvot under 1,5; granit finns
-på 74 % av Upplands runstenar). Språkdragens "X av Y" räknar bara oberoende drag, och drag som avviker från ristarens
+på 74 % av Upplands runstenar). En tvetydig benämning (*gråsten*: granitoid eller gnejs) som ristaren använder lika ofta i båda familjerna avgörs av den familj där den skiljer minst; före 2026-11-08 avgjorde ordningen i en mängd, så att Sö 245 och Sö 262 (Halvdan) räknades som *stöds* i vissa serverprocesser och som *svagt underlag* i andra (336 eller 338 *stöds*). Språkdragens "X av Y" räknar bara oberoende drag, och drag som avviker från ristarens
 vanligaste form redovisas med både ristarens och landskapets andel – för U 1026 är monoftongen, avsaknaden av stungen i
 och *at* inte ovanligare hos Öpir än i Uppland, medan apostrofen som skiljetecken är nästan fem gånger vanligare hos
 honom. Länken "öppna i 3D-analysen" startar en mätning och betyder inte att stenen är mätt; tolkningen säger uttryckligen
