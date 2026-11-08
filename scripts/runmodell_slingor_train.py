@@ -1,11 +1,14 @@
 """Steg B: slingmodellen – ett litet U-nät som på en djupbild markerar var runslingorna går (Viktors 95 granskade stenar
 som facit, scripts/runmodell_slingdata.py). Tränas på slumpvisa utsnitt med vridning, spegling och djupskalning;
 prövas på stenar som hålls utanför (en fjärdedel per serie), med överlappet (IoU) mellan modellens och Viktors slingor.
-    .venv/bin/python -m scripts.runmodell_slingor_train [--epoker 150] [--ut FIL]"""
+    .venv/bin/python -m scripts.runmodell_slingor_train [--epoker 150] [--ut FIL] [--provstenar data/runmodell/slingmodell_provstenar.json [--bara-v1]]
+Med --provstenar hålls de frysta prövstenarna utanför (analysplaner/2026-11-08-slingmodell-v2.md), och alla andra
+granskade stenar tränas på; med --bara-v1 bara slingmodell v1:s träningsstenar (kontrollen)."""
 from __future__ import annotations
 
 import argparse
 import glob
+import json
 import os
 import random
 import sys
@@ -92,10 +95,20 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--epoker", type=int, default=150)
     ap.add_argument("--ut", default="/Volumes/2TB/cache/runmodell/slingmodell.pt")
+    ap.add_argument("--provstenar")
+    ap.add_argument("--bara-v1", action="store_true")
     a = ap.parse_args(argv)
     torch.manual_seed(1); rng = np.random.default_rng(1)
     dev = "mps" if torch.backends.mps.is_available() else "cpu"
-    data = load(); train, test = split(data)
+    data = load()
+    if a.provstenar:
+        frozen = json.load(open(a.provstenar, encoding="utf-8"))
+        test = [d for d in data if d["name"] in set(frozen["test_stones"])]
+        assert len(test) == len(frozen["test_stones"]), "en fryst prövsten saknas i underlaget"
+        train = [d for d in data if d["name"] not in set(frozen["test_stones"])
+                 and (not a.bara_v1 or d["name"] in set(frozen["training_stones_v1"]))]
+    else:
+        train, test = split(data)
     print(f"{len(train)} stenar i träningen, {len(test)} prövas; {dev}", flush=True)
     model = UNet().to(dev)
     opt = torch.optim.AdamW(model.parameters(), lr=2e-3, weight_decay=1e-4)
