@@ -25,10 +25,18 @@ DONE = json.load(open(os.path.join(C, "done.json"), encoding="utf-8"))
 assert DONE["fingerprint"] == FP and DONE["r_version"].startswith("R version 4.6.1")
 APP_VERSION = "3.0.0"  # the Vitki version the analysis was made in (tag v3.0.0 + the commits named in Data och kod), not the current one
 assert open(os.path.join(ROOT, "utdata", "rapporter", "MALL.md.sha256")).read().startswith("611a4d5f")  # mallens version 4
-REPORT_VERSION = 3
+REPORT_VERSION = 4
 V1_DATE = "2026-10-31"  # rapportversion 1 publicerades
 V2_DATE = "2026-11-05"  # rapportversion 2
-TODAY = "2026-11-05"  # rapportversionens datum, fast i byggaren (mallen version 3)
+V3_DATE = "2026-11-05"  # rapportversion 3 (arkiverad i Zenodo)
+TODAY = "2026-11-08"  # rapportversionens datum, fast i byggaren (mallen version 3)
+# rapportversion 4: det externa provet mot Runor 2020:s "samma som gjort X" (låst plan 32257107) och textdragsprovet
+SAMMA_HAND = json.load(open(os.path.join(ROOT, "utdata", "samma_hand", "resultat.json"), encoding="utf-8"))["H1"]
+TEXTDRAG = json.load(open(os.path.join(ROOT, "utdata", "textdrag_hand", "resultat.json"), encoding="utf-8"))["T"]
+assert (SAMMA_HAND["groups"], SAMMA_HAND["better"], SAMMA_HAND["worse"], round(SAMMA_HAND["p"], 2)) == (14, 5, 7, 0.57)
+assert (round(100 * SAMMA_HAND["mean_obs"]), round(100 * SAMMA_HAND["mean_ctrl"])) == (50, 44) and not SAMMA_HAND["holds"]
+assert (TEXTDRAG["better"], TEXTDRAG["groups"]) == (16, 18) and TEXTDRAG["p"] < 0.001 and TEXTDRAG["holds"]
+RUNOR_COMMIT = "285b204"  # provet mot Runor 2020 och dess resultat
 TL_SV = "modellen byggdes 2026-10-05; blindprovets plan låstes 2026-10-21; blindprovet kördes 2026-10-21; provet kördes om på en senare version av materialet 2026-10-31"
 TL_EN = "the model was built 2026-10-05; the plan of the blind test was locked 2026-10-21; the blind test was run 2026-10-21; the test was rerun on a later version of the material 2026-10-31"
 # kodläget för rapportversion 1: 5095161 byggde rapporten; blindprovets kod och resultat ändrades senast i 06e5c47
@@ -178,7 +186,8 @@ if os.path.exists(_nm_cache):  # filen i repot stämmer med körningen den bygge
 # förslagsregeln läser fortfarande skogens egen sannolikhet p, med gränserna 0,5 och 0,3
 SO_SRC = open(os.path.join(ROOT, "src", "stone_overview.py"), encoding="utf-8").read()
 assert '(x.get("top"), "p")' in SO_SRC and "p_cal" not in SO_SRC
-assert 'status = "nytt förslag" if strength >= 0.5 else ("möjligt förslag" if strength >= 0.3' in SO_SRC
+# (sedan 2026-11-08 heter kategorierna förslag bland kända och svagt förslag; regeln och gränserna är desamma)
+assert 'status = "förslag bland kända" if strength >= 0.5 else ("svagt förslag" if strength >= 0.3' in SO_SRC
 # blindprovet är inte omkört på den nya modellen
 assert sorted(os.path.basename(p) for p in glob.glob(os.path.join(FD, "blindprov*.json"))) == \
     ["blindprov.json", "blindprov_e83202.json"], "blindprovet har körts om: skriv en ny rapportversion"
@@ -252,12 +261,17 @@ LOG_SV = f"""## Ändringslogg
 - **Form.** Mallens version är 4, inte 2. Appens flikar och en relativ länk har ersatts med fullständiga webbadresser. ”Dagens material” har ersatts med materialets datum och version. Kodläget anges med commit. Diagrammet har fått sitt upphov, och bergarten anges som en jämförelsenivå, inte en del av modellen.
 - **Ordval.** ”Prövbara attribueringsförslag” i stället för ”prövbara attribueringar”; ”modellen gav sannolikheter bara för stenar inom {AT['near_km']} km” i stället för ”förslag ges bara …”; ”för ristare med få signerade stenar” har lagts till under Var metoden inte ska användas.
 
-**Version 3, {TODAY}.** Rättad efter en andra granskning inför arkiveringen i Zenodo. Blindprovet, dess siffror och slutsatsen är oförändrade. Ändringarna och skälen:
+**Version 3, {V3_DATE}.** Rättad efter en andra granskning inför arkiveringen i Zenodo. Blindprovet, dess siffror och slutsatsen är oförändrade. Ändringarna och skälen:
 
 - **Kitzler Åhfeldt (2002).** Serien heter *Theses and Papers in Scientific Archaeology* B:9, som hon själv anger den (Kitzler Åhfeldt 2020), inte *Theses and Papers in Archaeology*.
 - **Herschend (1998).** Hänvisningen är kontrollerad mot artikeln (Fornvännen 93, s. 97–111): han drar slutsatsen att ubiR är en ristare och ybiR/ybir en annan. Kitzler (1998) anför den som Herschend 1997. Texten är oförändrad.
 - **Kodläge.** Filerna för avsnitt 8 (modell_2026_11_04.json och .py) och rapportens byggare finns i commit {BUILD_COMMIT}, som nu nämns under Data och kod.
-- **Det som version 2 inte sa.** Också sammanfattningens metod och slutsats, 4.5, diskussionen och slutsatsen sattes i preteritum (”I provet var förslagen …”, ”Den fungerade i provet …”), inte bara 4.1 och 5.3."""
+- **Det som version 2 inte sa.** Också sammanfattningens metod och slutsats, 4.5, diskussionen och slutsatsen sattes i preteritum (”I provet var förslagen …”, ”Den fungerade i provet …”), inte bara 4.1 och 5.3.
+
+**Version 4, {TODAY}.** Ett nytt prov efter arkiveringen av version 3. Blindprovet, dess siffror och slutsatsen är oförändrade. Ändringarna och skälen:
+
+- **Samma hand (svaghet 1).** Modellen prövades mot ett facit den aldrig har sett, runologernas ”samma som gjort X” i Runor 2020, med grannstenar på samma avstånd som jämförelse (analysplaner/2026-11-08-samma-hand-runor.md, resultatet i commit {RUNOR_COMMIT}). Den låsta planen bestämde att utfallet skulle stå bland metodrapportens begränsningar; det står nu i svaghet 1.
+- **Appen.** I Vitki heter regelns säkra förslag sedan 8 november *förslag bland kända* och de möjliga *svagt förslag*, och inget förslag kallas starkt utan ett belägg som är oberoende av stavning, plats och stil. Rapportens termer är oförändrade."""
 
 LOG_EN = f"""## Change log
 
@@ -271,12 +285,17 @@ LOG_EN = f"""## Change log
 - **Form.** The template version is 4, not 2. The app's tabs and a relative link have been replaced with full web addresses. "Today's material" has been replaced with the material's date and version. The code state is given as a commit. The chart has its credit, and rock type is described as a comparison level, not part of the model.
 - **Wording.** "Testable attribution hypotheses" instead of "testable attributions"; "the model gave probabilities only for stones within {AT['near_km']} km" instead of "suggestions are given only …"; "the proportion correct" instead of "the share right"; "for carvers with few signed stones" has been added under Where the method should not be used.
 
-**Version 3, {TODAY}.** Corrected after a second review before archiving in Zenodo. The blind test, its figures and the conclusion are unchanged. The changes and the reasons for them:
+**Version 3, {V3_DATE}.** Corrected after a second review before archiving in Zenodo. The blind test, its figures and the conclusion are unchanged. The changes and the reasons for them:
 
 - **Kitzler Åhfeldt (2002).** The series is *Theses and Papers in Scientific Archaeology* B:9, as she cites it herself (Kitzler Åhfeldt 2020), not *Theses and Papers in Archaeology*.
 - **Herschend (1998).** The reference has been checked against the article (Fornvännen 93, pp. 97–111): he concludes that ubiR is one carver and ybiR/ybir another. Kitzler (1998) cites it as Herschend 1997. The text is unchanged.
 - **Code state.** The files for section 8 (modell_2026_11_04.json and .py) and the report's builder are in commit {BUILD_COMMIT}, which Data and code now names.
-- **What version 2 did not say.** The abstract's method and conclusion, 4.5, the discussion and the conclusion were also put in the past tense ("In the test the suggestions were …", "In the test it worked …"), not only 4.1 and 5.3."""
+- **What version 2 did not say.** The abstract's method and conclusion, 4.5, the discussion and the conclusion were also put in the past tense ("In the test the suggestions were …", "In the test it worked …"), not only 4.1 and 5.3.
+
+**Version 4, {TODAY}.** A new test after the archiving of version 3. The blind test, its figures and the conclusion are unchanged. The changes and the reasons for them:
+
+- **Same hand (weakness 1).** The model was tested against a key it has never seen, the runologists' "same as made X" in Runor 2020, with neighbouring stones at the same distance as the comparison (analysplaner/2026-11-08-samma-hand-runor.md, the result in commit {RUNOR_COMMIT}). The locked plan decided that the outcome should stand among the methods report's limitations; it now stands in weakness 1.
+- **The app.** In Vitki the rule's confident suggestions have since 8 November been called *suggestions among known carvers* and the possible ones *weak suggestions*, and no suggestion is called strong without evidence independent of spelling, place and style. The report's terms are unchanged."""
 
 
 body = f"""*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapportversion {REPORT_VERSION}, {TODAY}; version 1 publicerades {V1_DATE}. Tidslinje: {TL_SV}. Analysen är gjord i Vitki {APP_VERSION}. Licens CC BY 4.0. Den engelska versionen är den kanoniska för citering: {CITE_EN}. Nyckelord: runstenar, vikingatid, runristare, attribuering, random forest, blindprov, förregistrering, ortografi. Konkurrerande intressen: inga. Finansiering: ingen.*
@@ -359,7 +378,7 @@ I klartext: när regeln ger ett säkert förslag har den rätt ungefär fyra gå
 
 **Svagheter, i ordning efter vikt.**
 
-1. **Jämförelsen är till stor del bedömningar av samma slag.** Av de {BP['n_attributed']} stenarna är {N_ATTR} attribuerade, inte signerade, och attribueringarna bygger på stil, stavning och plats, i Mellansverige till stor del via Axelson (1993). Provet mäter därför delvis hur väl regeln återger runologernas bedömningar. De signerade stenarna är det oberoende provet, och där är andelen rätt lägre: {pc(SI['precision'])} procent.
+1. **Jämförelsen är till stor del bedömningar av samma slag.** Av de {BP['n_attributed']} stenarna är {N_ATTR} attribuerade, inte signerade, och attribueringarna bygger på stil, stavning och plats, i Mellansverige till stor del via Axelson (1993). Provet mäter därför delvis hur väl regeln återger runologernas bedömningar. Ett prov efter rapportversion 3 bekräftar det: mot runologernas egna bedömningar i Runor 2020 av vilka stenar som är gjorda av samma hand, också när handen saknar namn, gav modellen inte oftare samma ristare inom en sådan grupp än grannstenar på samma avstånd får ({round(100 * SAMMA_HAND['mean_obs'])} mot {round(100 * SAMMA_HAND['mean_ctrl'])} % av stenparen i {SAMMA_HAND['groups']} grupper, bättre i {SAMMA_HAND['better']} och sämre i {SAMMA_HAND['worse']}; låst plan 2026-11-08). Andelen rätt mäter alltså överensstämmelse med Rundatas tillskrivningar, inte förmågan att känna igen en hand. Textdragen själva bär däremot en hand utöver geografin (mot samma bedömningar: {TEXTDRAG['better']} av {TEXTDRAG['groups']} grupper mer lika än grannarna), vilket tyder på att felet sitter i att regeln bara kan välja bland namngivna ristare. De signerade stenarna är det oberoende provet, och där är andelen rätt lägre: {pc(SI['precision'])} procent.
 2. **Regeln sattes på samma material.** Vikter och gränser låstes före provet men valdes med materialet synligt (avsnitt 2). Det ger troligen en något för hög träffsäkerhet. Ett prov på stenar vars ristare regeln inte har sett skulle undanröja det, men ett sådant prov (attribuerade i Runor 2020 men inte i Rundata) är för litet: {EX['in_universe']} stenar.
 3. **Bara 28 ristare.** En sten av en annan ristare kan bara få fel förslag. {BP['outside_universe']['nytt']} sådana stenar fick ett säkert förslag. Bland stenarna utan ristare finns säkert många av ristare som regeln inte känner.
 4. **Södermanland.** Fördelen är inte säker där ({PS['right']} av {PS['n']} mot {PS['nearest_right']}), och nästan alla säkra förslag gäller Uppland.
@@ -499,7 +518,7 @@ In plain words: when the rule gives a confident suggestion it is right about fou
 
 **Weaknesses, in order of weight.**
 
-1. **The answer key is largely judgements of the same kind.** Of the {BP['n_attributed']} stones, {N_ATTR} are attributed, not signed, and the attributions rest on style, spelling and place, in central Sweden largely via Axelson (1993). The test therefore partly measures how well the rule reproduces the runologists' judgements. The signed stones are the independent test, and there the proportion correct is lower: {pc(SI['precision'])} percent.
+1. **The answer key is largely judgements of the same kind.** Of the {BP['n_attributed']} stones, {N_ATTR} are attributed, not signed, and the attributions rest on style, spelling and place, in central Sweden largely via Axelson (1993). The test therefore partly measures how well the rule reproduces the runologists' judgements. A test after report version 3 confirms this: against the runologists' own judgements in Runor 2020 of which stones were made by the same hand, also when the hand has no name, the model did not give the same carver within such a group more often than neighbouring stones at the same distance get ({round(100 * SAMMA_HAND['mean_obs'])} against {round(100 * SAMMA_HAND['mean_ctrl'])} per cent of the stone pairs in {SAMMA_HAND['groups']} groups, better in {SAMMA_HAND['better']} and worse in {SAMMA_HAND['worse']}; plan locked 8 November 2026). The proportion correct thus measures agreement with Rundata's attributions, not the ability to recognise a hand. The text features themselves do carry a hand beyond geography (against the same judgements: {TEXTDRAG['better']} of {TEXTDRAG['groups']} groups more alike than the neighbours), which suggests that the fault is that the rule can only choose among named carvers. The signed stones are the independent test, and there the proportion correct is lower: {pc(SI['precision'])} percent.
 2. **The rule was set on the same material.** Weights and limits were locked before the test but chosen with the material in view (section 2). That probably gives a somewhat too high accuracy. A test on stones whose carver the rule has not seen would remove this, but such a test (attributed in Runor 2020 but not in Rundata) is too small: {EX['in_universe']} stones.
 3. **Only 28 carvers.** A stone by another carver can only receive a wrong suggestion. {BP['outside_universe']['nytt']} such stones received a confident suggestion. Among the stones without a carver there are surely many by carvers the rule does not know.
 4. **Södermanland.** The advantage is not clear there ({PS['right']} of {PS['n']} against {PS['nearest_right']}), and almost all confident suggestions concern Uppland.
@@ -577,14 +596,16 @@ assert "## Abstract\n\n**What has not been tested.** The model behind the sugges
 assert "**Vad som inte är prövat.** Modellen bakom förslagen ändrades den 4 november 2026" in body
 assert len(SA_ZERO) == 6 and "sex ristare med en till fyra" in body and "six carvers with one to four" in body_en
 # rapportversion 2: versionsraden, ändringsloggen sist, inga tidlösa ”dagens”, inga appflikar eller relativa länkar
-assert body.startswith(f"*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapportversion 3, 2026-11-05; version 1 publicerades {V1_DATE}. Tidslinje: ")
-assert body_en.startswith(f"*Viktor Kvant, independent researcher. Methods report, partially tested. Report version 3, 2026-11-05; version 1 was published {V1_DATE}. Timeline: ")
+assert body.startswith(f"*Viktor Kvant, oberoende forskare. Metodrapport, delvis prövad. Rapportversion 4, 2026-11-08; version 1 publicerades {V1_DATE}. Tidslinje: ")
+assert body_en.startswith(f"*Viktor Kvant, independent researcher. Methods report, partially tested. Report version 4, 2026-11-08; version 1 was published {V1_DATE}. Timeline: ")
 assert body.rstrip().split("\n## ")[-1].startswith("Ändringslogg") and body_en.rstrip().split("\n## ")[-1].startswith("Change log")
 # rapportversion 3: seriens namn, kodläget för avsnitt 8 och tre versioner i ändringsloggen
 for b in (body, body_en):
     assert "Theses and Papers in Scientific Archaeology B:9" in b and "Theses and Papers in Archaeology B:9" not in b
     assert f"`{BUILD_COMMIT}`" in b.split("## Data")[1].split("\n- ")[0]
-    assert b.count("**Version ") == 2 and f"**Version 3, {TODAY}.**" in b and f"**Version 2, {V2_DATE}.**" in b
+    assert b.count("**Version ") == 3 and f"**Version 4, {TODAY}.**" in b and f"**Version 3, {V3_DATE}.**" in b
+    assert f"**Version 2, {V2_DATE}.**" in b
+    assert "Runor 2020" in b.split("Svagheter")[-1].split("Weaknesses")[-1][:4000]
 assert "Den fungerade i provet som ett sätt" in body and "In the test it worked as a way" in body_en
 assert "I provet var förslagen" in body and "In the test the suggestions were" in body_en
 SEC = lambda b: [re.match(r"[\d.]*", h).group(0) for h in re.findall(r"^## (.+)$", b, re.M)]  # noqa: E731
