@@ -1,0 +1,901 @@
+{
+ "plan": "analysplaner/2026-11-08-tata-karnor.md",
+ "plan_sha": "15c2f757",
+ "corpus": "510ebfb3",
+ "stones": 1564,
+ "cstar": 0.58,
+ "precision_at_cstar": {
+  "c": 0.58,
+  "precision": 0.7039473684210527,
+  "pairs": 152
+ },
+ "table": [
+  {
+   "c": 0.0,
+   "precision": 0.2459016393442623,
+   "pairs": 4880
+  },
+  {
+   "c": 0.01,
+   "precision": 0.2554585152838428,
+   "pairs": 4580
+  },
+  {
+   "c": 0.02,
+   "precision": 0.2591939546599496,
+   "pairs": 3970
+  },
+  {
+   "c": 0.03,
+   "precision": 0.2592686642965973,
+   "pairs": 3938
+  },
+  {
+   "c": 0.04,
+   "precision": 0.266754270696452,
+   "pairs": 3805
+  },
+  {
+   "c": 0.05,
+   "precision": 0.27458100558659215,
+   "pairs": 3580
+  },
+  {
+   "c": 0.06,
+   "precision": 0.2759295499021526,
+   "pairs": 3066
+  },
+  {
+   "c": 0.07,
+   "precision": 0.2749254720105995,
+   "pairs": 3019
+  },
+  {
+   "c": 0.08,
+   "precision": 0.276184122748499,
+   "pairs": 2998
+  },
+  {
+   "c": 0.09,
+   "precision": 0.2862978091347939,
+   "pairs": 2693
+  },
+  {
+   "c": 0.1,
+   "precision": 0.28253968253968254,
+   "pairs": 2520
+  },
+  {
+   "c": 0.11,
+   "precision": 0.2900289615225486,
+   "pairs": 2417
+  },
+  {
+   "c": 0.12,
+   "precision": 0.2960069444444444,
+   "pairs": 2304
+  },
+  {
+   "c": 0.13,
+   "precision": 0.29814487632508835,
+   "pairs": 2264
+  },
+  {
+   "c": 0.14,
+   "precision": 0.29322638146167557,
+   "pairs": 2244
+  },
+  {
+   "c": 0.15,
+   "precision": 0.2946188340807175,
+   "pairs": 2230
+  },
+  {
+   "c": 0.16,
+   "precision": 0.31981981981981983,
+   "pairs": 1998
+  },
+  {
+   "c": 0.17,
+   "precision": 0.3244420250408274,
+   "pairs": 1837
+  },
+  {
+   "c": 0.18,
+   "precision": 0.343202416918429,
+   "pairs": 1655
+  },
+  {
+   "c": 0.19,
+   "precision": 0.34958834705509817,
+   "pairs": 1579
+  },
+  {
+   "c": 0.2,
+   "precision": 0.3560105680317041,
+   "pairs": 1514
+  },
+  {
+   "c": 0.21,
+   "precision": 0.3389238294898672,
+   "pairs": 1431
+  },
+  {
+   "c": 0.22,
+   "precision": 0.3459614010007148,
+   "pairs": 1399
+  },
+  {
+   "c": 0.23,
+   "precision": 0.3423076923076923,
+   "pairs": 1300
+  },
+  {
+   "c": 0.24,
+   "precision": 0.3497907949790795,
+   "pairs": 1195
+  },
+  {
+   "c": 0.25,
+   "precision": 0.357080035180299,
+   "pairs": 1137
+  },
+  {
+   "c": 0.26,
+   "precision": 0.3816287878787879,
+   "pairs": 1056
+  },
+  {
+   "c": 0.27,
+   "precision": 0.3834443387250238,
+   "pairs": 1051
+  },
+  {
+   "c": 0.28,
+   "precision": 0.4077976817702845,
+   "pairs": 949
+  },
+  {
+   "c": 0.29,
+   "precision": 0.4164835164835165,
+   "pairs": 910
+  },
+  {
+   "c": 0.3,
+   "precision": 0.4284077892325315,
+   "pairs": 873
+  },
+  {
+   "c": 0.31,
+   "precision": 0.43950617283950616,
+   "pairs": 810
+  },
+  {
+   "c": 0.32,
+   "precision": 0.4583333333333333,
+   "pairs": 768
+  },
+  {
+   "c": 0.33,
+   "precision": 0.4778393351800554,
+   "pairs": 722
+  },
+  {
+   "c": 0.34,
+   "precision": 0.47075606276747506,
+   "pairs": 701
+  },
+  {
+   "c": 0.35,
+   "precision": 0.4791666666666667,
+   "pairs": 672
+  },
+  {
+   "c": 0.36,
+   "precision": 0.49149922720247297,
+   "pairs": 647
+  },
+  {
+   "c": 0.37,
+   "precision": 0.5212947189097104,
+   "pairs": 587
+  },
+  {
+   "c": 0.38,
+   "precision": 0.5275310834813499,
+   "pairs": 563
+  },
+  {
+   "c": 0.39,
+   "precision": 0.5397727272727273,
+   "pairs": 528
+  },
+  {
+   "c": 0.4,
+   "precision": 0.5584158415841585,
+   "pairs": 505
+  },
+  {
+   "c": 0.41,
+   "precision": 0.5480984340044742,
+   "pairs": 447
+  },
+  {
+   "c": 0.42,
+   "precision": 0.5619047619047619,
+   "pairs": 420
+  },
+  {
+   "c": 0.43,
+   "precision": 0.5703517587939698,
+   "pairs": 398
+  },
+  {
+   "c": 0.44,
+   "precision": 0.5769230769230769,
+   "pairs": 364
+  },
+  {
+   "c": 0.45,
+   "precision": 0.584045584045584,
+   "pairs": 351
+  },
+  {
+   "c": 0.46,
+   "precision": 0.600609756097561,
+   "pairs": 328
+  },
+  {
+   "c": 0.47,
+   "precision": 0.6025236593059937,
+   "pairs": 317
+  },
+  {
+   "c": 0.48,
+   "precision": 0.6012658227848101,
+   "pairs": 316
+  },
+  {
+   "c": 0.49,
+   "precision": 0.6172413793103448,
+   "pairs": 290
+  },
+  {
+   "c": 0.5,
+   "precision": 0.6272401433691757,
+   "pairs": 279
+  },
+  {
+   "c": 0.51,
+   "precision": 0.6390977443609023,
+   "pairs": 266
+  },
+  {
+   "c": 0.52,
+   "precision": 0.6666666666666666,
+   "pairs": 252
+  },
+  {
+   "c": 0.53,
+   "precision": 0.6724137931034483,
+   "pairs": 232
+  },
+  {
+   "c": 0.54,
+   "precision": 0.6744186046511628,
+   "pairs": 215
+  },
+  {
+   "c": 0.55,
+   "precision": 0.6735751295336787,
+   "pairs": 193
+  },
+  {
+   "c": 0.56,
+   "precision": 0.6797752808988764,
+   "pairs": 178
+  },
+  {
+   "c": 0.57,
+   "precision": 0.69375,
+   "pairs": 160
+  },
+  {
+   "c": 0.58,
+   "precision": 0.7039473684210527,
+   "pairs": 152
+  },
+  {
+   "c": 0.59,
+   "precision": 0.7094594594594594,
+   "pairs": 148
+  },
+  {
+   "c": 0.6,
+   "precision": 0.7194244604316546,
+   "pairs": 139
+  },
+  {
+   "c": 0.61,
+   "precision": 0.7142857142857143,
+   "pairs": 119
+  },
+  {
+   "c": 0.62,
+   "precision": 0.7169811320754716,
+   "pairs": 106
+  },
+  {
+   "c": 0.63,
+   "precision": 0.7311827956989247,
+   "pairs": 93
+  },
+  {
+   "c": 0.64,
+   "precision": 0.7415730337078652,
+   "pairs": 89
+  },
+  {
+   "c": 0.65,
+   "precision": 0.7397260273972602,
+   "pairs": 73
+  },
+  {
+   "c": 0.66,
+   "precision": 0.7704918032786885,
+   "pairs": 61
+  },
+  {
+   "c": 0.67,
+   "precision": 0.8076923076923077,
+   "pairs": 52
+  },
+  {
+   "c": 0.68,
+   "precision": 0.7674418604651163,
+   "pairs": 43
+  },
+  {
+   "c": 0.69,
+   "precision": 0.7777777777777778,
+   "pairs": 36
+  },
+  {
+   "c": 0.7,
+   "precision": 0.8125,
+   "pairs": 32
+  },
+  {
+   "c": 0.71,
+   "precision": 0.8846153846153846,
+   "pairs": 26
+  },
+  {
+   "c": 0.72,
+   "precision": 0.8947368421052632,
+   "pairs": 19
+  },
+  {
+   "c": 0.73,
+   "precision": 0.8823529411764706,
+   "pairs": 17
+  },
+  {
+   "c": 0.74,
+   "precision": 1.0,
+   "pairs": 9
+  },
+  {
+   "c": 0.75,
+   "precision": 1.0,
+   "pairs": 5
+  },
+  {
+   "c": 0.76,
+   "precision": 1.0,
+   "pairs": 3
+  },
+  {
+   "c": 0.77,
+   "precision": 1.0,
+   "pairs": 3
+  },
+  {
+   "c": 0.78,
+   "precision": 1.0,
+   "pairs": 2
+  },
+  {
+   "c": 0.79,
+   "precision": 1.0,
+   "pairs": 2
+  },
+  {
+   "c": 0.8,
+   "precision": 1.0,
+   "pairs": 2
+  }
+ ],
+ "C1": {
+  "groups": 16,
+  "mean_together": 0.1267361111111111,
+  "mean_control": 0.0002655433210988767,
+  "median_diff": 0.0,
+  "better": 3,
+  "worse": 1,
+  "zero": 12,
+  "p": 0.125,
+  "holds": false
+ },
+ "C1_groups": [
+  {
+   "stones": [
+    "Nä 12",
+    "Nä 9"
+   ],
+   "pairs": 1,
+   "together": 0.0,
+   "control": 0.0,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "Nä 23",
+    "Nä 26",
+    "Nä 32"
+   ],
+   "pairs": 3,
+   "together": 0.0,
+   "control": 0.0,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "Sm 143",
+    "Sm SvS1973;4"
+   ],
+   "pairs": 1,
+   "together": 0.0,
+   "control": 0.0,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "Sö 198",
+    "Sö 200",
+    "Sö 207",
+    "U 792"
+   ],
+   "pairs": 5,
+   "together": 0.0,
+   "control": 0.0013013013013013013,
+   "unnamed": false
+  },
+  {
+   "stones": [
+    "Sö 82",
+    "Vs 4"
+   ],
+   "pairs": 1,
+   "together": 0.0,
+   "control": 0.0,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "Sö 91",
+    "Sö Fv1986;218"
+   ],
+   "pairs": 1,
+   "together": 0.0,
+   "control": 0.0,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "U 1015",
+    "U 1017",
+    "U 1018",
+    "U 1019",
+    "U 1020",
+    "U 1021",
+    "U 1022",
+    "U 1023",
+    "U 1024"
+   ],
+   "pairs": 36,
+   "together": 0.027777777777777776,
+   "control": 0.0029473918362807254,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "U 1026",
+    "U 1027"
+   ],
+   "pairs": 1,
+   "together": 0.0,
+   "control": 0.0,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "U 124",
+    "U 60"
+   ],
+   "pairs": 1,
+   "together": 0.0,
+   "control": 0.0,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "U 135",
+    "U 136"
+   ],
+   "pairs": 1,
+   "together": 0.0,
+   "control": 0.0,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "U 201",
+    "U 276"
+   ],
+   "pairs": 1,
+   "together": 0.0,
+   "control": 0.0,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "U 323",
+    "U 518",
+    "U 539"
+   ],
+   "pairs": 1,
+   "together": 1.0,
+   "control": 0.0,
+   "unnamed": false
+  },
+  {
+   "stones": [
+    "U 685",
+    "U 686"
+   ],
+   "pairs": 1,
+   "together": 0.0,
+   "control": 0.0,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "U 700",
+    "U 701"
+   ],
+   "pairs": 1,
+   "together": 1.0,
+   "control": 0.0,
+   "unnamed": false
+  },
+  {
+   "stones": [
+    "U 800",
+    "U 803"
+   ],
+   "pairs": 1,
+   "together": 0.0,
+   "control": 0.0,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "Ög 234",
+    "Ög 235"
+   ],
+   "pairs": 1,
+   "together": 0.0,
+   "control": 0.0,
+   "unnamed": true
+  }
+ ],
+ "C2": {
+  "carvers_A": 24,
+  "carvers_B": 24,
+  "c_A": 0.38,
+  "precision_B": 0.7407407407407407,
+  "pairs_B": 135,
+  "precision_A": 0.7060931899641577,
+  "holds": true
+ },
+ "cores": 59,
+ "core_sizes": {
+  "3": 40,
+  "4": 13,
+  "5": 5,
+  "6": 1
+ },
+ "core_kinds": {
+  "utan namngiven ristare": 7,
+  "flera namngivna ristare": 15,
+  "namngiven ristare och stenar utan": 25,
+  "en namngiven ristare": 12
+ },
+ "stones_in_cores": 203,
+ "C3": [
+  {
+   "stones": [
+    "U 166",
+    "U 253",
+    "U 429",
+    "U 89"
+   ],
+   "size": 4,
+   "mean_excess": 0.6641800509135827,
+   "pairs_within_30km": 1.0,
+   "span_km": 22.110526785752675,
+   "parishes": [
+    "Fresta sn",
+    "Järfälla sn",
+    "Norrsunda sn",
+    "Östra Ryds sn"
+   ],
+   "styles": {
+    "Pr4": 1,
+    "–": 2,
+    "Pr2": 1
+   },
+   "runor": {},
+   "uncertain_carvers": {},
+   "model": {
+    "U 166": [
+     "Öpir 1",
+     0.376
+    ],
+    "U 253": [
+     "Öpir 1",
+     0.562
+    ],
+    "U 429": [
+     "Fot 2",
+     0.391
+    ],
+    "U 89": [
+     "Fot 2",
+     0.404
+    ]
+   },
+   "model_opir": 0
+  },
+  {
+   "stones": [
+    "U 108",
+    "U 160",
+    "U 276"
+   ],
+   "size": 3,
+   "mean_excess": 0.6819513587506169,
+   "pairs_within_30km": 1.0,
+   "span_km": 7.397723335331736,
+   "parishes": [
+    "Eds sn",
+    "Hammarby sn",
+    "Täby sn"
+   ],
+   "styles": {
+    "–": 1,
+    "Pr1": 2
+   },
+   "runor": {
+    "U 160": "Gunnar (attributed); Ulv i Borresta (attributed)",
+    "U 276": "Samma som gjort U 201 (attributed); Gunnar (attributed); Ulv i Borresta (attributed)"
+   },
+   "uncertain_carvers": {},
+   "model": {
+    "U 108": [
+     "Gunnar",
+     0.535
+    ],
+    "U 160": [
+     "Gunnar",
+     0.901
+    ],
+    "U 276": [
+     "Gunnar",
+     0.805
+    ]
+   },
+   "model_opir": 0
+  },
+  {
+   "stones": [
+    "U 373",
+    "U Fv1959;188",
+    "U Fv1993;233"
+   ],
+   "size": 3,
+   "mean_excess": 0.6586090847652625,
+   "pairs_within_30km": 1.0,
+   "span_km": 17.612614015018977,
+   "parishes": [
+    "Hammarby sn",
+    "Skepptuna sn"
+   ],
+   "styles": {
+    "Pr3": 1,
+    "Pr4": 1,
+    "–": 1
+   },
+   "runor": {},
+   "uncertain_carvers": {},
+   "model": {
+    "U 373": [
+     "Öpir 1",
+     0.668
+    ],
+    "U Fv1959;188": [
+     "Öpir 1",
+     0.5
+    ],
+    "U Fv1993;233": [
+     "Öpir 1",
+     0.695
+    ]
+   },
+   "model_opir": 0
+  },
+  {
+   "stones": [
+    "U 17",
+    "U 25",
+    "U 615"
+   ],
+   "size": 3,
+   "mean_excess": 0.6486109845347313,
+   "pairs_within_30km": 1.0,
+   "span_km": 26.39513901725621,
+   "parishes": [
+    "Ekerö sn",
+    "Hilleshögs sn",
+    "Västra Ryds sn"
+   ],
+   "styles": {
+    "Pr2": 1,
+    "–": 1,
+    "KB": 1
+   },
+   "runor": {},
+   "uncertain_carvers": {},
+   "model": {
+    "U 17": [
+     "Visäte",
+     0.272
+    ],
+    "U 25": [
+     "Balle",
+     0.326
+    ],
+    "U 615": [
+     "Balle",
+     0.414
+    ]
+   },
+   "model_opir": 0
+  },
+  {
+   "stones": [
+    "Sö 51",
+    "Sö 75",
+    "Sö Fv1948;289"
+   ],
+   "size": 3,
+   "mean_excess": 0.6388682468350059,
+   "pairs_within_30km": 1.0,
+   "span_km": 24.153788152284687,
+   "parishes": [
+    "Ludgo sn",
+    "Nyköping",
+    "Vrena sn"
+   ],
+   "styles": {
+    "–": 1,
+    "Fp": 2
+   },
+   "runor": {},
+   "uncertain_carvers": {},
+   "model": {
+    "Sö 51": [
+     "Traen",
+     0.495
+    ],
+    "Sö 75": [
+     "Amunde",
+     0.317
+    ],
+    "Sö Fv1948;289": [
+     "Balle",
+     0.313
+    ]
+   },
+   "model_opir": 0
+  },
+  {
+   "stones": [
+    "U 14",
+    "U 637",
+    "U 88"
+   ],
+   "size": 3,
+   "mean_excess": 0.6080340105552927,
+   "pairs_within_30km": 1.0,
+   "span_km": 26.102526865388803,
+   "parishes": [
+    "Järfälla sn",
+    "Kalmar sn",
+    "Munsö sn"
+   ],
+   "styles": {
+    "Pr1": 1,
+    "Pr2": 1,
+    "–": 1
+   },
+   "runor": {},
+   "uncertain_carvers": {},
+   "model": {
+    "U 14": [
+     "Öpir 1",
+     0.278
+    ],
+    "U 637": [
+     "Öpir 1",
+     0.227
+    ],
+    "U 88": [
+     "Fot 2",
+     0.583
+    ]
+   },
+   "model_opir": 0
+  },
+  {
+   "stones": [
+    "Ög 230",
+    "Ög 34",
+    "Ög Fv1966;102"
+   ],
+   "size": 3,
+   "mean_excess": 0.5980164918978831,
+   "pairs_within_30km": 1.0,
+   "span_km": 19.589369513998594,
+   "parishes": [
+    "Häradshammars sn",
+    "Söderköping",
+    "Å sn"
+   ],
+   "styles": {
+    "–": 1,
+    "RAK": 1,
+    "Fp": 1
+   },
+   "runor": {},
+   "uncertain_carvers": {},
+   "model": {
+    "Ög 230": null,
+    "Ög 34": null,
+    "Ög Fv1966;102": null
+   },
+   "model_opir": 0
+  }
+ ],
+ "post_hoc": {
+  "note": "räknat efter provet, beskrivande",
+  "runor_pairs": 57,
+  "runor_median_excess": 0.066,
+  "runor_share_at_cstar": 0.07017543859649122,
+  "runor_unnamed_median": 0.065,
+  "named_same_pairs": 5141,
+  "named_same_median": 0.08422282684373758,
+  "named_same_share_at_cstar": 0.033651040653569345
+ }
+}
