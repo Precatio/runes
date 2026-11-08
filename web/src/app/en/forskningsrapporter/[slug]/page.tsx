@@ -4,7 +4,7 @@ import BlogShell from "@/components/BlogShell";
 import ReportPaper from "@/components/ReportPaper";
 import { getPost, reportSlugs } from "@/lib/articles";
 import { commonsSizes, keywords, metaDescription, pictures, SHARE_SIZE } from "@/lib/blogSeo";
-import { enReportPath, isReport, reportAlternates, reportJsonLd, reportParts, reportPath, reportSharePath, scholarMeta } from "@/lib/report";
+import { enReportPath, isReport, reportAlternates, reportJsonLd, reportParts, reportPath, enReportSharePath, scholarMeta } from "@/lib/report";
 
 // The English version of a research report as a paper; the canonical version for citation
 export const revalidate = 60;
@@ -28,9 +28,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       type: "article", url: path, title, description, siteName: "Vitki", locale: "en_GB",
       publishedTime: post.publishedAt ?? undefined, modifiedTime: post.updatedAt ?? post.publishedAt ?? undefined,
       authors: [post.author || "Viktor Kvant"], section: "Research reports", tags: parts.header?.keywords,
-      images: [{ url: reportSharePath(post.slug), ...SHARE_SIZE, alt: title }],
+      images: [{ url: enReportSharePath(post.slug), ...SHARE_SIZE, alt: title }],
     },
-    twitter: { card: "summary_large_image", title, description, images: [reportSharePath(post.slug)] },
+    twitter: { card: "summary_large_image", title, description, images: [enReportSharePath(post.slug)] },
     robots: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
     other: scholarMeta(post, "en"),
   };

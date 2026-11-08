@@ -11,7 +11,7 @@ import { getPost, listPosts, postSlugs } from "@/lib/articles";
 import { isReport, enReportPath } from "@/lib/report";
 import { featuredFirst } from "@/lib/featured";
 import { authorOf } from "@/lib/site";
-import { articleJsonLd, commonsSizes, enPostPath, EN_ARTICLES_PATH, postPath, keywords, languageAlternates, metaDescription, pictures, SHARE_SIZE, sharePath } from "@/lib/blogSeo";
+import { articleJsonLd, commonsSizes, enPostPath, EN_ARTICLES_PATH, postPath, keywords, languageAlternates, metaDescription, pictures, SHARE_SIZE, enSharePath } from "@/lib/blogSeo";
 
 // The English edition of a published article, rendered on the server so that search engines see English text and
 // the hreflang pair ties it to the Swedish original. The content is the article's own English version from the
@@ -37,9 +37,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       type: "article", url: path, title: post.title_en || post.title, description, siteName: "Vitki", locale: "en_GB",
       publishedTime: post.publishedAt ?? undefined, modifiedTime: post.updatedAt ?? post.publishedAt ?? undefined,
       authors: [post.author || "Viktor Kvant"], section: "Articles", tags: keywords(post),
-      images: [{ url: sharePath(post.slug), ...SHARE_SIZE, alt: post.title_en || post.title }],
+      images: [{ url: enSharePath(post.slug), ...SHARE_SIZE, alt: post.title_en || post.title }],
     },
-    twitter: { card: "summary_large_image", title: post.title_en || post.title, description, images: [sharePath(post.slug)] },
+    twitter: { card: "summary_large_image", title: post.title_en || post.title, description, images: [enSharePath(post.slug)] },
     robots: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   };
 }

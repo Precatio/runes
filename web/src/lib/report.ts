@@ -22,6 +22,7 @@ export const enReportUrl = (slug: string) => `${SITE_URL}${enReportPath(slug)}`;
 export const TERMS_PATH = `/forskningsrapporter/begrepp${SLASH}`;
 export const EN_TERMS_PATH = `/en/forskningsrapporter/begrepp${SLASH}`;
 export const reportSharePath = (slug: string) => `/forskningsrapporter/${encodeURIComponent(slug)}/delningsbild.png`;
+export const enReportSharePath = (slug: string) => `/en/forskningsrapporter/${encodeURIComponent(slug)}/delningsbild.png`;
 export const reportAlternates = (slug?: string) => ({
   sv: slug ? reportPath(slug) : REPORTS_PATH,
   en: slug ? enReportPath(slug) : EN_REPORTS_PATH,

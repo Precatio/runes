@@ -4,6 +4,7 @@
 import { API_URL } from "@/lib/api";
 import { authorOf, isPublicPath, PUBLIC_SITE, SITE_NAME, SITE_URL } from "@/lib/site";
 import type { BlogPost } from "@/components/BlogBody";
+import { enReportSharePath, reportSharePath } from "@/lib/report";
 
 export const BLOG_TITLE = "Artiklar – mönster i runstenarna";
 export const BLOG_DESCRIPTION = "Populärvetenskapliga artiklar om mönster i Sveriges runstenar: vad vi ser, vad det kan "
@@ -35,6 +36,7 @@ export const BLOG_DESCRIPTION_EN = ("Popular-science articles on patterns in Swe
 export const postUrl = (slug: string) => `${SITE_URL}${postPath(slug)}`;
 /** The article's share picture (app/artiklar/[slug]/delningsbild.png). */
 export const sharePath = (slug: string) => `/artiklar/${encodeURIComponent(slug)}/delningsbild.png`;
+export const enSharePath = (slug: string) => `/en/artiklar/${encodeURIComponent(slug)}/delningsbild.png`;
 export const SHARE_SIZE = { width: 1200, height: 630 };
 
 /** A picture's address as a search engine or another site can fetch it. */
@@ -235,7 +237,8 @@ export function articleJsonLd(post: BlogPost, lang: "sv" | "en" = "sv") {
       author: { "@type": "Person", ...(post.author === "Viktor Kvant" || !post.author ? { "@id": `${SITE_URL}/#founder` } : {}), name: post.author || "Viktor Kvant",
                 ...(authorOf(post.author) ? { url: authorOf(post.author)!.url, sameAs: [authorOf(post.author)!.linkedin, ...(authorOf(post.author)!.orcid ? [authorOf(post.author)!.orcid!] : [])], jobTitle: authorOf(post.author)!.role } : {}) },
       publisher: { "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: SITE_NAME, url: SITE_URL, logo: { "@type": "ImageObject", url: `${SITE_URL}/vitki_logo.png` } },
-      image: [`${SITE_URL}${sharePath(post.slug)}`, ...pictures(body).map(p => absolute(p.src))].slice(0, 5),
+      image: [`${SITE_URL}${report ? (en ? enReportSharePath : reportSharePath)(post.slug) : (en ? enSharePath : sharePath)(post.slug)}`,
+              ...pictures(body).map(p => absolute(p.src))].slice(0, 5),
       inLanguage: en ? "en" : "sv-SE",
       articleSection: report ? (en ? "Research reports" : "Forskningsrapporter") : en ? "Articles" : "Artiklar",
       keywords: keywords(post).join(", "),
