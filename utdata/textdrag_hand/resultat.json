@@ -1,0 +1,371 @@
+{
+ "plan": "analysplaner/2026-11-08-textdrag-hand.md",
+ "plan_sha": "add8ff31",
+ "stones": 1564,
+ "features": 3578,
+ "traits": 43,
+ "K": {
+  "carvers": 37,
+  "median_diff": 0.1076142658581257,
+  "better": 30,
+  "p": 1.015686575556174e-05,
+  "holds": true
+ },
+ "K_per_carver": {
+  "Brand": {
+   "stones": 3,
+   "pairs": 1,
+   "diff": -0.004516619574156087
+  },
+  "Torkel": {
+   "stones": 6,
+   "pairs": 15,
+   "diff": 0.0036840832509305935
+  },
+  "Tore 1": {
+   "stones": 9,
+   "pairs": 32,
+   "diff": 0.12549579419084997
+  },
+  "Traen": {
+   "stones": 21,
+   "pairs": 103,
+   "diff": 0.13754435819791475
+  },
+  "þuliR": {
+   "stones": 3,
+   "pairs": 1,
+   "diff": -0.12884930954248258
+  },
+  "Balle": {
+   "stones": 58,
+   "pairs": 1281,
+   "diff": 0.08802995750447352
+  },
+  "Äskil 2": {
+   "stones": 5,
+   "pairs": 4,
+   "diff": -0.022074184555603556
+  },
+  "Äsbjörn": {
+   "stones": 3,
+   "pairs": 3,
+   "diff": 0.2394181912452804
+  },
+  "Amunde": {
+   "stones": 10,
+   "pairs": 45,
+   "diff": 0.12914198720758246
+  },
+  "Halvdan": {
+   "stones": 13,
+   "pairs": 74,
+   "diff": 0.07434643265502688
+  },
+  "Björn 2 eller -björn": {
+   "stones": 5,
+   "pairs": 10,
+   "diff": 0.10374924503424973
+  },
+  "Östen 2": {
+   "stones": 4,
+   "pairs": 3,
+   "diff": 0.02477056654151472
+  },
+  "Åsgöt": {
+   "stones": 4,
+   "pairs": 3,
+   "diff": -0.04801377712995224
+  },
+  "Åsmund": {
+   "stones": 39,
+   "pairs": 299,
+   "diff": 0.1848023941996618
+  },
+  "Öpir 1": {
+   "stones": 82,
+   "pairs": 1297,
+   "diff": 0.10897901488985184
+  },
+  "Torbjörn 2": {
+   "stones": 12,
+   "pairs": 38,
+   "diff": 0.2498498932502176
+  },
+  "Torbjörn skald": {
+   "stones": 7,
+   "pairs": 11,
+   "diff": 0.14692774164394667
+  },
+  "Ärnfast": {
+   "stones": 4,
+   "pairs": 6,
+   "diff": 0.22051920834580566
+  },
+  "Gunnar": {
+   "stones": 31,
+   "pairs": 363,
+   "diff": 0.14542363230424102
+  },
+  "Fot 2": {
+   "stones": 48,
+   "pairs": 799,
+   "diff": 0.18938539354139539
+  },
+  "Visäte": {
+   "stones": 27,
+   "pairs": 302,
+   "diff": 0.09745301849979746
+  },
+  "Drosboe": {
+   "stones": 3,
+   "pairs": 3,
+   "diff": -0.08637655143709416
+  },
+  "Sven 1": {
+   "stones": 4,
+   "pairs": 6,
+   "diff": 0.0023666844368563935
+  },
+  "Torsten": {
+   "stones": 4,
+   "pairs": 6,
+   "diff": 0.08531100421628952
+  },
+  "Arbjörn": {
+   "stones": 16,
+   "pairs": 120,
+   "diff": 0.17913386708810156
+  },
+  "Önjut": {
+   "stones": 4,
+   "pairs": 1,
+   "diff": -0.14609672117767045
+  },
+  "Vidbjörn": {
+   "stones": 6,
+   "pairs": 10,
+   "diff": 0.11374445493077055
+  },
+  "Torfast": {
+   "stones": 3,
+   "pairs": 1,
+   "diff": 0.3279839997352951
+  },
+  "Tidkume": {
+   "stones": 9,
+   "pairs": 36,
+   "diff": 0.13162483435898173
+  },
+  "Erik": {
+   "stones": 18,
+   "pairs": 125,
+   "diff": 0.476792387867353
+  },
+  "Grim skald": {
+   "stones": 5,
+   "pairs": 6,
+   "diff": 0.3032823556493833
+  },
+  "Livsten": {
+   "stones": 12,
+   "pairs": 48,
+   "diff": 0.4523457317035313
+  },
+  "Torgöt Fotsarve": {
+   "stones": 5,
+   "pairs": 8,
+   "diff": -0.09359597616907829
+  },
+  "Likbjörn": {
+   "stones": 10,
+   "pairs": 43,
+   "diff": 0.1076142658581257
+  },
+  "Gudfast": {
+   "stones": 6,
+   "pairs": 15,
+   "diff": 0.001174132796964363
+  },
+  "Ingulv": {
+   "stones": 4,
+   "pairs": 6,
+   "diff": 0.06036324160293036
+  },
+  "Litle": {
+   "stones": 4,
+   "pairs": 6,
+   "diff": 0.09920241741521511
+  }
+ },
+ "T": {
+  "groups": 18,
+  "median_diff": 0.21707795616761513,
+  "better": 16,
+  "worse": 2,
+  "p": 0.000209808349609375,
+  "holds": true,
+  "unnamed_only": {
+   "groups": 15,
+   "median_diff": 0.20439789999209856,
+   "p": 0.001312255859375
+  }
+ },
+ "T_groups": [
+  {
+   "stones": [
+    "Ög 234",
+    "Ög 235"
+   ],
+   "diff": 0.3860753277964851,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "U 201",
+    "U 276"
+   ],
+   "diff": 0.603564067639782,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "U 1016",
+    "U 1146"
+   ],
+   "diff": 0.2790256792502407,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "Nä 12",
+    "Nä 9"
+   ],
+   "diff": 0.2297580123431317,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "U 1015",
+    "U 1017",
+    "U 1018",
+    "U 1019",
+    "U 1020",
+    "U 1021",
+    "U 1022",
+    "U 1023",
+    "U 1024"
+   ],
+   "diff": 0.07658444568290834,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "U 135",
+    "U 136"
+   ],
+   "diff": 0.10156978036649572,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "Sö 198",
+    "Sö 200",
+    "Sö 207",
+    "U 792"
+   ],
+   "diff": 0.11239860755684401,
+   "unnamed": false
+  },
+  {
+   "stones": [
+    "U 700",
+    "U 701"
+   ],
+   "diff": 0.7046900811290768,
+   "unnamed": false
+  },
+  {
+   "stones": [
+    "U 323",
+    "U 518",
+    "U 539"
+   ],
+   "diff": 0.5360390109291521,
+   "unnamed": false
+  },
+  {
+   "stones": [
+    "U 1026",
+    "U 1027"
+   ],
+   "diff": 0.1643906150083481,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "Gs 19",
+    "Gs 2"
+   ],
+   "diff": -0.07183287034017585,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "U 124",
+    "U 60"
+   ],
+   "diff": 0.08910944657588739,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "U 800",
+    "U 803"
+   ],
+   "diff": 0.20439789999209856,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "Sm 143",
+    "Sm SvS1973;4"
+   ],
+   "diff": 0.7652407163029464,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "Nä 23",
+    "Nä 26",
+    "Nä 32"
+   ],
+   "diff": 0.24853829126993676,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "U 685",
+    "U 686"
+   ],
+   "diff": 0.48828732844708844,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "Sö 82",
+    "Vs 4"
+   ],
+   "diff": 0.07075870831749377,
+   "unnamed": true
+  },
+  {
+   "stones": [
+    "Sö 91",
+    "Sö Fv1986;218"
+   ],
+   "diff": -0.21169193889767063,
+   "unnamed": true
+  }
+ ]
+}
