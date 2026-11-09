@@ -1,6 +1,6 @@
 # Forskningsidéer ur litteraturgenomgången
 
-Ur 894 lästa texter i Fornvännen och Futhark: 1493 idéer till artiklar och rapporter. Filen skrivs om av `ideer.py` efter varje läsfönster; huvudspåren överst skrivs för hand i `IDEER_HUVUDSPAR.md`.
+Ur 943 lästa texter i Fornvännen och Futhark: 1565 idéer till artiklar och rapporter. Filen skrivs om av `ideer.py` efter varje läsfönster; huvudspåren överst skrivs för hand i `IDEER_HUVUDSPAR.md`.
 
 ## Huvudspåren (handskrivna, 9 november 2026)
 
@@ -106,24 +106,24 @@ runstenar i Sverige, och jämförelser görs inom period och region.
 
 Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; en text räknas en gång per tema.
 
-- **Datering och fasta punkter**: 548 texter, 265 idéer
-- **Placering i landskapet**: 458 texter, 207 idéer
-- **Bevarande, fynd och flyttning**: 370 texter, 140 idéer
-- **Mark, geologi och strandlinje**: 361 texter, 177 idéer
-- **Människorna: kvinnor, barn, ofria, släkt**: 352 texter, 103 idéer
-- **Kristnande, kult och religion**: 347 texter, 156 idéer
-- **Språk, stavning och runformer**: 279 texter, 97 idéer
-- **Andra föremål och senare runor**: 267 texter, 28 idéer
-- **Rikedom, handel och silver**: 244 texter, 79 idéer
-- **Resor och kontakter utåt**: 204 texter, 40 idéer
-- **Ristare och verkstäder**: 190 texter, 88 idéer
-- **Övrigt**: 181 texter, 5 idéer
-- **Makt, politik och territorier**: 176 texter, 49 idéer
-- **Ornamentik och bild**: 164 texter, 26 idéer
-- **Forskningens egna vanor och metoder**: 114 texter, 11 idéer
-- **Jämförelser i Norden och utanför**: 73 texter, 22 idéer
+- **Datering och fasta punkter**: 573 texter, 276 idéer
+- **Placering i landskapet**: 480 texter, 219 idéer
+- **Bevarande, fynd och flyttning**: 387 texter, 145 idéer
+- **Mark, geologi och strandlinje**: 382 texter, 188 idéer
+- **Människorna: kvinnor, barn, ofria, släkt**: 370 texter, 108 idéer
+- **Kristnande, kult och religion**: 366 texter, 169 idéer
+- **Språk, stavning och runformer**: 284 texter, 97 idéer
+- **Andra föremål och senare runor**: 279 texter, 28 idéer
+- **Rikedom, handel och silver**: 255 texter, 80 idéer
+- **Resor och kontakter utåt**: 219 texter, 46 idéer
+- **Ristare och verkstäder**: 195 texter, 92 idéer
+- **Övrigt**: 189 texter, 5 idéer
+- **Makt, politik och territorier**: 188 texter, 50 idéer
+- **Ornamentik och bild**: 171 texter, 28 idéer
+- **Forskningens egna vanor och metoder**: 116 texter, 12 idéer
+- **Jämförelser i Norden och utanför**: 76 texter, 22 idéer
 
-## Datering och fasta punkter (265 idéer)
+## Datering och fasta punkter (276 idéer)
 
 - [artikel] **Ankarstenarna: kan historien kalibrera runornas klocka?** – Stämmer språkliga dateringskurvor med stenar vars datering är känd utifrån andra källor (danegäld, Ingvars färd, daterade gravar)?  
   Data: Runor 2020 termini och datering i text, Rundata text, Fornsök/KMR, historiska källor.. Varför: Första oberoende kalibreringen av de språkliga tidsserier som all runologisk datering vilar på. – efter Þorgeirsson, Haukur 2020 (futhark_9-10_159_1385974)
@@ -249,6 +249,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata (platser som nämns, ristare, datering), skatt- och myntdata från SHM/K-samsök, Sylloge-databasen; permutationstest inom samma bygd.. Varför: Numismatiken ger en datering oberoende av stilgrupperna och har inte vägts mot runstenarnas geografi. – efter Okänd 1913 (1913_245)
 - [artikel] **Sjöng man för de döda som aldrig fick någon grav?** – Är stenar över män som dog utomlands mer poetiska än andra inom samma stilgrupp?  
   Data: Flaggor död utomlands/resa, allitterationsmått, stilgrupp, landskap. Varför: Mänsklig vinkel med mätbar hypotes (saknad grav kräver berättelse). – efter Herschend, Frands 2001 (2001_023)
+- [artikel] **Skrev norrlänningarna som uppsvearna eller som trönderna?** – Är Medelpads, Ångermanlands, Hälsinglands och Jämtlands runstenar närmare Upplands eller Trøndelags stenar i språk, stil och formler?  
+  Data: Rundata (språkdrag, stilgrupp, namn), Runor 2020 ristarnoteringar, norska stenar via Rundata.. Varför: Nytt sätt att mäta Ramqvists 'söderut ekonomiskt, västerut politiskt' på vikingatidens text. – efter Ramqvist, Per H. 2001 (2001_001)
 - [artikel] **Skrev staden annorlunda? Runstenarna kring Sigtuna och Birka** – Ökar skriftlig modernitet och kristna drag mot Sigtuna och Birka mer än slumpen, när tiden hålls konstant?  
   Data: Rundata (språkdrag, formler, stilgrupp, datering), koordinater för Sigtuna/Birka, KMR, ISOF.. Varför: Hagland diskuterar urbanisering och skriftkunnighet i Norge; ingen har prövat det för Sveriges runstenar. – efter Hagland, Jan Ragnar 2010 (futhark_1_177_381127)
 - [artikel] **Slutade Pr 5-stenarna där man slutade resa dem?** – Är Pr 5 en tidsgräns eller en regional stil, och när upphör runstenstraditionen söder om Mälaren egentligen?  
@@ -267,6 +269,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Stentäthet inom radie från koordinaterna, arkaiska drag (ʀ, kort/lång æftiʀ, monoftong, stungna runor), datering/stilgrupp, Vitkis stavningsuniformitet, läge vid kyrkplatser och sandsten.. Varför: Källströms hypotes om att runstensresandet självt verkade konserverande är aldrig prövad; ett dos-responssamband över hela korpusen vore ett nytt och begripligt resultat. – efter Källström, Magnus 2013 (futhark_4_102_682693)
 - [artikel] **Stenen i kyrkväggen: vad en återanvänd runsten kan datera** – Vilken sluttid ger kyrkans byggår för runstenar i dess murverk, och stämmer den med stilgruppsdateringen?  
   Data: Runor 2020 nuvarande läge/fyndomständigheter, Rundata stilgrupp och datering, RAÄ Bebyggelseregistret byggår, Gotlands och Upplands kyrkor.. Varför: Det är första oberoende tidstestet av stilgruppsdateringen med kyrkorna som fasta punkter. – efter Eckhoff, Emil 1913 (1913_028)
+- [artikel] **Stenen som ingen kunde datera** – Vad lär debatten om liljestenarna om hur säkert runstenar kan dateras?  
+  Data: Rundatas datering (stil, text, historiska personer), Runor 2020 termini.. Varför: Gör en konsthistorisk strid till en läsbar frågeställning om hur fältet daterar. – efter Dahlberg, Markus 2001 (2001_102)
 - [artikel] **Stenen vid gårdskyrkan** – Står de kors-märkta runstenarna vid de första kyrkplatserna mer än slumpen, och bildar de spåret efter stormännens gårdskyrkor?  
   Data: KMR kyrkor/kyrkplatser (ISOF), Rundata flyttflagga/korsform, SGU, dendrodaterade kyrkor.. Varför: Knyter Liepes Värendsfall till hela korpusen; Vitkis flyttfilter finns redan, kyrkformens ålder saknas. – efter Okänd 1987 (1987_litt)
 - [artikel] **Stilen som kom sent till landet – hur långt släpar runstenarnas stilgrupper efter i periferin?** – Är Pr-grupperna senare i Småland, Västergötland och Norrland än i Uppland, mätt mot språkklockan?  
@@ -301,6 +305,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Runor 2020: föremålstyp, termini, plats; Rundata period och föremål; Danska runinskrifter.. Varför: Förbinder järnålderns elitskrift med vikingatidens monument och visar var sten blev den dominerande bäraren. – efter Troeng, John 2003 (2003_289)
 - [artikel] **Var uppfanns stilarna?** – Börjar de nya dragen i runstenarnas stilgrupper, språk och kors i Uppland, som Arwidsson gör för spännen, eller någon annanstans?  
   Data: Runor 2020 termini, stilgrupper, Rundata, landskap.. Varför: Prövar om Uppland alltid varit inspirationen; om inte, påverkar det varje jämförelse som tar Uppland som norm. – efter Arwidsson, Greta 1940 (1940_121)
+- [artikel] **Vardag eller prestige: vilket bär regionen i runstenarna?** – Är runstenarnas regionalitet starkare i stavning och formler än i stil och signerade ristare?  
+  Data: Korpusens 43 härledda drag per sten, stilgrupp, koordinater, datering. Varför: Prövar en arkeologisk hypotes i runologin; kopplar till 'västgötarna skrev som danskarna'. – efter Nicklasson, Påvel 1998 (1998_153)
 - [artikel] **Varför fick just de runorna prickar? Tvetydighet som förklaring** – Förutsäger antalet tvetydiga ordpar (funktionsbelastning) vilka runor som får punkter, och när?  
   Data: Rundata translitterering och normalisering, datering, stungna runor, ristare.. Varför: Knyter Robertsons markedness-idé till Vitkis stungna runor över tid. – efter Robertson, John S. 2012 (futhark_2_7_512974)
 - [artikel] **Vem nämns först?** – Hur ofta nämns resaren före den döde, och när ändras ordningen?  
@@ -387,6 +393,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata runtyper, datering, stilgrupp, landskap, Vitkis 43 härledda drag.. Varför: Ger en rankning av tecken som kan användas för datering av korta inskrifter. – efter Barnes, Michael P. 2022 (futhark_12_99_1722793)
 - [rapport] **Hur fast är året 1000? Ankarstenar för runstenarnas stilgrupper** – Täcker stilgruppernas intervall alla stenar som kan dateras oberoende av stilen (kända personer, myntskatter, Ingvars-tåget)?  
   Data: Rundata stilgrupp och datering, Runor 2020 termini och profilstil, myntskatter per socken (CNS/SHM), historiska personer i texterna.. Varför: Prövar den mest grundläggande tidsantagandet för runstenarna och är nytt som kvantitativ test. – efter Åberg, Nils 1921 (1921_063)
+- [rapport] **Hur fasta är stilgruppernas dateringar? En ankarrevision** – Hur stor del av dateringarna i Rundata och Runor 2020 vilar på något annat än stilgruppen?  
+  Data: Runor 2020 termini (7 155) och datering i text (2 609), stenar med namngivna historiska personer, Rundata period.. Varför: Bygger på Williams påpekande att kronologier är spekulativa abstraktioner och är den största kvarstående osäkerheten under alla tidsjämförelser. – efter Okänd 2001 (2001_litt)
 - [rapport] **Hur gamla är gravfälten där runstenarna står?** – Reser vikingatidens runstenar sig på gravfält som brukats sedan järnåldern (kontinuitet), mer än slumpgravfält i samma bygd?  
   Data: Rundata-koordinater, KMR-gravfält, RAÄ Fornsök/utgrävningsrapporter med dateringar. Varför: Flyttar 'familjens plats' från närhet till tidsdjup; nytt eftersom ingen mätt gravfältens ålder vid stenarna. – efter Ambrosiani, Björn 1955 (1955_260)
 - [rapport] **Hur gamla är gravfälten som runstenarna står vid?** – Är runstenarna rest vid gravfält som var i bruk under vikingatiden eller vid mycket äldre (Vendeltida och äldre järnåldern) gravplatser?  
@@ -399,6 +407,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata stilgrupp, Runor 2020 profilstil och termini.. Varför: Stilgrupperna används som kalender utan att deras felmarginal mätts. – efter Lindqvist, Sune 1950 (1950_265)
 - [rapport] **Hur mycket av korpusen har oberoende datering?** – Vilken andel av stenarna dateras av annat än stilgrupp och text, och vad händer med våra tidsresultat om bara dessa används?  
   Data: Runor 2020 termini, datering i text, fyndomständigheter; Rundata datering/stilgrupp.. Varför: Fastställer hur säker tidsaxeln är; Fischer och recensionerna pekar båda på svagheten. – efter Okänd 2008 (2008_litt_c)
+- [rapport] **Hur mycket av runstenarnas tid är oberoende av stilen?** – Hur stor del av runstenarnas dateringar vilar på stil jämfört med text, historisk person och mynt?  
+  Data: Rundata datering, Runor 2020 'datering i text' och termini.. Varför: Gör cirkelresonemang-frågan mätbar och visar hur stort 'mörkertalet' i stilgruppsdateringen är. – efter Gren, Leif 2001 (2001_267)
 - [rapport] **Hur många Ingvarsstenar finns det egentligen?** – Vilka stenar uppfyller en explicit definition av 'Ingvarsstenar', hur stor är gruppen och hur väl håller den som dateringsankare?  
   Data: Normaliserade texter (Yngvarr, Serkland), 'död utomlands', österut-innehåll, stilgrupp, datering.. Varför: Fischer ifrågasätter siffran 26; en reproducerbar definition ger fast bas för kronologi. – efter Okänd 2003 (2003_litt_a)
 - [rapport] **Hur många ankare bär stilgruppernas kronologi?** – Hur många stenar i varje stilgrupp har en datering som är oberoende av stilen, och hur känslig är seriationen för att ta bort dem?  
@@ -453,6 +463,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Särkland-formeln, namnet Ingvar, stilgrupp, ristare, datering, termini i Runor 2020.. Varför: En historiskt daterad händelse (1041) ger ett oberoende ankare för stilkronologin. – efter Braun, F. 1910 (1910_099)
 - [rapport] **Ingvarstenarna som kalibrering av stilkronologin** – Stämmer stilgrupperna med de historiskt förankrade stenarna (1041, före 1018)?  
   Data: Rundata Ingvarsten och danegäldsstenar, stilgrupp, region, datering.. Varför: Oberoende test av tidens viktigaste dateringsantagande. – efter Nordén, Arthur 1961 (1961_256)
+- [rapport] **Inmurade runstenar som tidsgräns** – Hur ofta är en inmurad runsten daterad yngre än kyrkans äldsta byggnadsskede, och vad säger det om stilgruppsdatering?  
+  Data: Runor 2020 proveniens och läge, Rundatas stilgrupp/datering, kyrkornas byggnadsår (Bebyggelseregistret/Sveriges kyrkor), Kulturmiljöregistrets kyrkor.. Varför: Ett oberoende test av stildateringarnas hållbarhet som debatten om liljestenar visar saknas. – efter Dahlberg, Markus 2001 (2001_102)
 - [rapport] **Kan huggspåren daterades? Spårmått mot tid och bergart i 100 skannade stenar** – Bär groove-mått (djup, bredd, vinkel) en kronologisk eller verkstadssignal som överlever kontroll för bergart?  
   Data: Vitkis 3D-skanningar, Rundata datering/stilgrupp/bergart, Runor 2020 termini.. Varför: Utvidgar Kitzler Åhfeldts tre-stensstudie till ett corpus och prövar om verktygsspår kan fungera som kronologisk källa. – efter Gustavson, Helmer; Swantesson, Jan O.H. 2011 (2011_306)
 - [rapport] **Kan korsets form datera en runsten?** – Hur väl förutsäger korstyp (Runor 2020 typologi) stenens termini, och finns det en 'korsklocka'?  
@@ -501,6 +513,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Vitkis drag 'at mot æftiʀ', stilgrupp, termini, landskap, flyttfilter.. Varför: Peterson 1996 frågade 'regional variation eller vad?'; ett korpusövergripande svar med dateringen frikopplad från språket har inte gjorts och kan ge oberoende dateringsstöd. – efter Barnes, Michael P. 2013 (futhark_3_59_616873)
 - [rapport] **När slutade svenska stenar skilja ʀ från r?** – Hur snabbt och var gick sammanfallet av ʀ och r i stavningen mellan 950 och 1150?  
   Data: Rundata: translitterering/normalisering, datering, stilgrupp, landskap; ʀ-position i normaliseringen mot r-runan i translitteringen.. Varför: Larsson ger en kvalitativ bild; vi kan ge en tidskarta över hela Sverige och koppla till stungna runor och monoftongering. – efter Thöny, Luzius 2016 (futhark_7_47_1087621)
+- [rapport] **När tystnade de rika gravarna och när började stenarna?** – Börjar runstensresandet där och när de rika gravarna upphör, bygd för bygd?  
+  Data: Daterade rika gravar (Valsgärde, Vendel, Birka m.fl.) mot Runor 2020 termini och Rundata dateringar för närmaste stenar.. Varför: Substitutionshypotesen (display flyttar från gravgåvor till inskrift) har aldrig prövats på korpus. – efter Schönbäck, Bengt; Thunmark-Nylén, Lena 2002 (2002_001)
 - [rapport] **Ordföljden som klocka: nominalfraser över tid** – Är ordföljden substantiv–possessiv–adjektiv en tidsmarkör, och följer den språkdragen och stilgrupperna?  
   Data: Rundata normalisering, termini, stilgrupper, monoftongstavning.. Varför: Ett syntaxdrag som är oberoende av stil och stavning och därför kan kontrollera dateringen. – efter Ulla Stroh-Wollin 2012 (futhark_2_193_512981)
 - [rapport] **Ornamentik mot språk: vilken datering har rätt när de säger olika?** – Hur väl stämmer stilgruppernas dateringar överens med språkdragens (æftiʀ, stungna runor, åsrunan som /o/, monoftong, ʀ) hos 2 047 stenar, och finns det systematiska avvikelser per bygd?  
@@ -509,6 +523,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata plats/socken, ISOF ortnamn, KMR gravfält/boplatser, Runor 2020 termini.. Varför: Ger ett oberoende mått på bebyggelsens ålder mot vilket runstenarnas datering kan prövas. – efter Granlund, Erik 1929 (1929_037)
 - [rapport] **Planerade ristaren? Runornas storlek och avstånd längs bandet** – Trängs runorna mot bandets slut oftare än slumpen, och skiljer det sig mellan stilgrupper och ristare?  
   Data: 3D-skanningar med runband, runhöjd och runavstånd längs bandet, ristare, stilgrupp.. Varför: Gör Nordéns och Åkerströms ögonmått till ett mått på planering och ger ett nytt drag för ristarmodellen. – efter Åkerström, Hanna 2020 (futhark_9-10_39_1385978)
+- [rapport] **Rika gravar och runstenar: samma landskap?** – Följer runstenarna de rika gravfältens landskap (storhögar, båtgravar) mer än slumpen?  
+  Data: Rundata-koordinater, KMR gravfält och högar, SGU-jord. Varför: Prövar kontinuitet i statusdemonstration från järnålderns gravar till kristen tids stenar. – efter Nordenstorm, Leif 1994 (1994_265)
 - [rapport] **Rim före handskrifterna: ändrim och allitteration på runstenar 1000-1150** – När dyker ändrim och regelbunden allitteration upp på stenar, och i vilka bygder?  
   Data: Normaliserad text, datering, stilgrupp, Eddukvæði som jämförelsemateriel. Varför: Oberoende tidsserie för diktformernas utveckling från dateringar som inte beror på handskrifter. – efter Krüger, Jana 2016 (futhark_7_111_1087620)
 - [rapport] **Ristades stenen efter plan? Utrymmeskompression på skannade stenar** – Visar runorna krympande storlek mot slutet av bandet, och hör det samman med längd, stilgrupp och material?  
@@ -573,6 +589,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata ristare/stilgrupp, Runor 2020 ristarnoteringar, profilstil.. Varför: Kärnan i 'antaganden som aldrig prövats': stilgrupp som datering. – efter Gunnar Andersson; Magnus Källström; Kerstin O. Näv 2016 (2016_102)
 - [rapport] **Stilgrupperna går olika fort: regional eftersläpning i runstenarnas datering** – Får samma stilgrupp olika ankartid i olika landskap när man använder historiska händelser i texterna som ankare?  
   Data: Rundata datering/stilgrupp, Runor 2020 termini, text-ankare (Ingvar, Danegeld, kungar).. Varför: Pröver ett grundantagande i all datering och påverkar alla tidstrender. – efter Hjärne, Erland 1917 (1917_147)
+- [rapport] **Stilgrupperna mot termini: hur väl daterar stilen?** – Hur ofta ligger en stilgrupps datering utanför Runor 2020:s oberoende dateringsgränser, och skiljer det sig mellan landskap?  
+  Data: Runor 2020 (termini tidigast/senast, datering i text), Rundata (stilgrupp), landskap. Varför: Prövar det antagande som hela tidsserien vilar på, med ett fält Vitki inte använt. – efter Okänd 1997 (1997_litt)
 - [rapport] **Stilgruppernas tid: oberoende datering mot Gräslund** – Håller Gräslunds stilgrupper som tidsmått när de prövas mot språkdrag, termini och myntdaterade skatter, och skiljer sig regionerna?  
   Data: Runor 2020 termini (7 155), datering i text (2 609), profilstil (1 984), Vitkis 43 språkdrag, CNS-skattfynd per socken, KMR gravfält.. Varför: Alla Vitki-resultat om tid (bönens tystnad, monoftongeringen, stungna runor) vilar på stilgrupper; en oberoende kalibrering skulle antingen stärka eller flytta dem. – efter Okänd 1979 (1979_litt)
 - [rapport] **Stilgruppsdatering mot yttre ankarpunkter** – Hur väl stämmer stilgruppernas dateringar med stenar som nämner daterbara personer eller händelser?  
@@ -581,6 +599,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata translitterering (y), koordinater, stilgrupp, ristare; Vitkis skrivmiljö-modul.. Varför: Ett litet drag som kan avslöja en lokal skola och som Fridell använder som kontinuitetsbevis utan test. – efter Fridell, Staffan 2025 (futhark_14-15_217_2024377)
 - [rapport] **Stämmer typologisk ordning med oberoende datering?** – Hur väl följer stilgrupperna de oberoende dateringsgränserna (termini) i Runor 2020?  
   Data: Runor 2020 termini (7 155), Rundata stilgrupp och datering.. Varför: Fält som Vitki inte har använt; prövar ett grundantagande. – efter Okänd 1964 (1964_litt)
+- [rapport] **Står runstenarna vid gränser?** – Ligger runstenar närmare socken- och häradsgränser än slumpvisa platser i samma bygd, och ändras det med stilgrupp och tid?  
+  Data: Rundata-koordinater, ISOF socken/härad, KMR gravfält, SGU-jordarter. Varför: Prövar Ambrosianis regel och gränsernas ålder med runstenar som tidsankare; kopplar till Björketorp-analysen om gränsfunktion. – efter Roeck Hansen, Birgitta 1993 (1993_251)
 - [rapport] **Terminus ante quem: kyrkor som tidsankare för stilgrupperna** – Stämmer stilgruppernas dateringar med de kyrkor i vars murar stenarna sitter?  
   Data: Runor 2020 termini + proveniens, Rundata stilgrupp, kyrkdateringar.. Varför: Oberoende kontroll av en kronologi som annars bara kontrolleras mot sig själv. – efter Lundberg, Erik 1929 (1929_221)
 - [rapport] **Tid, plats eller hand?** – Hur mycket av stilgruppernas variation är tid, hur mycket region och hur mycket ristare (variansuppdelning)?  
@@ -625,6 +645,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Normalisering och översättning för alla svenska runstenar; stilgrupp; landskap.. Varför: Ingen har räknat riktningsorden över hela korpusen; de kan avslöja regionala orienteringssystem. – efter Ekblom, R. 1938 (1938_049)
 - [rapport] **Växer stenarna med gravfältet?** – Följer stenarnas ålder gravfältens tillväxtriktning?  
   Data: KMR gravfält (läge, utbredning), Rundata datering/stilgrupp, SGU. Varför: Prövar horisontell stratigrafi på runstenar med öppna data. – efter Stenberger, Mårten 1943 (1943_058)
+- [rapport] **Äldre bygder och runstenarnas bygder** – Följer runstenarnas bygder äldre järnålderns fyndrika regioner, eller flyttade tyngdpunkten?  
+  Data: K-samsök/SHM fynd per period, Kulturmiljöregistret gravfält, Rundata koordinater, Palm 1992.. Varför: Regional kontinuitet över folkvandringstid–vikingatid har aldrig mätts mot runstenarna. – efter Rundkvist, Martin 1996 (1996_013)
 - [rapport] **Äldsta exemplar eller typisk tid? Hur stilgruppers startår sätts** – Hur mycket tidigare dateras stilgrupperna av sina äldsta stenar än av hela fördelningen?  
   Data: Runor 2020 termini (tidigast/senast), Rundata datering och stilgrupp, historiskt förankrade stenar.. Varför: Samma metodfel som Lindqvist påpekar hos Wadstein, men på hela runstenskorpusen. – efter Lindqvist, Sune 1926 (1926_245)
 - [rapport] **Ändrar nya stenar bilden?** – Skiljer sig stenar funna efter de tryckta volymerna från de äldre i stilgrupp, region, material och språk, och hur stabila är Vitkis fynd när korpusen delas?  
@@ -656,7 +678,7 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
 - [rapport] **ʀ efter tandljud – ett tidigt drag eller ett landskapsdrag?** – Är bevarad yr-runa efter dental konsonant ett kronologiskt eller regionalt drag?  
   Data: Translitteration/normalisering för alla stenar, datering, stilgrupp, landskap.. Varför: Går att pröva direkt och bygger på Vitkis redan funna r-för-ʀ-mönster i västra Uppland. – efter Källström, Magnus 2013 (futhark_3_135_616880)
 
-## Placering i landskapet (207 idéer)
+## Placering i landskapet (219 idéer)
 
 - [artikel] **Broarna som aldrig var nya: var stod de som lät bygga bro?** – Klustrar brostenar vid överfarter, ligger de vid våtmarker och äldre vägar, och är de fler i vissa tider och landskap än slumpen?  
   Data: Rundata brofomel, KMR (broar, vadställen, hålvägar), SGU jordarter, strandförskjutning.. Varför: Gör en mening i en inskrift till ett landskapsmönster och knyter ihop texten med infrastruktur. – efter Magnus Källström 2012 (futhark_2_177_512980)
@@ -676,6 +698,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Härledda drag död utomlands, gravfältsavstånd (KMR), avstånd till väg och vatten, stilgrupp.. Varför: Förenar färdestenarna (söner och bröder dog utomlands) med platsfynden i en ny tolkning av vad stenen var. – efter Almgren, Oscar 1916 (1916_076)
 - [artikel] **Där inga stenar stod: Tuna, Husby och de tysta centralgårdarna** – Saknar gamla centralplatser runstenar, och vad säger det om vem som reste dem?  
   Data: ISOF ortnamn (-tuna, husby, karleby), KMR gravfält, Rundata, SGU jordarter, strandförskjutning.. Varför: Vänder på antagandet att runstenar är elitens monument och prövar det mot slumpen. – efter Herschend, Frands 2017 (2017_010)
+- [artikel] **Där runstenarna tar slut** – Var går gränsen för runstenarnas land i Norrland, och vilka jakt- och fångstsamhällen lämnar inga runstenar?  
+  Data: Rundata-koordinater, SGU jordarter, KMR fångstgropar/fjällgravar, vägar. Varför: Visar vem runstenskulturen inte omfattar och varför synliga monument hör ihop med jordbruk och markrätt. – efter Hansson, Anders 1994 (1994_001)
 - [artikel] **Där stenarna tar slut** – Var går stenbrukets norrgräns och vad fanns norr om den?  
   Data: Rundata koordinater, Kulturmiljöregistret, Neotoma-pollen, SGU.. Varför: Skevt urval: "Sverige" i runforskningen är Svealand och södra Götaland. – efter Christiansson, Hans 1980 (1980_153)
 - [artikel] **Där stormännen låg och där stenarna stod** – Står runstenar vid de största gravhögarna och vid farledernas trånga sund?  
@@ -700,6 +724,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata (Jämtland, Medelpad), KMR gravfält, CNS myntfynd, Kjellmarks gravplaner.. Varför: Norrland är den största tomma fläcken i Vitkis korpus; gravfynd är den källa som finns när runstenarna tar slut. – efter Kjellmark, Knut 1939 (1939_035)
 - [artikel] **Gränsen som aldrig nämndes – vad runstenarna faktiskt säger om gräns, bro och väg** – Hur ofta nämner texterna gräns, mark, bro, vad eller väg, och står de stenarna där de säger?  
   Data: Normaliseringsfältet för alla stenar, KMR broar/vadställen, Rundata placering. Varför: Gör en tvist med 'jag anar' till en räkning; lättläst popularisering av ett metodfel. – efter Okänd 1999 (1999_litt)
+- [artikel] **Gårdarna under byn: stod stenen vid den vikingatida gården?** – Står runstenarna vid den historiska bytomten eller vid äldre, flyttade gårdslägen, och hur påverkar det vår tolkning av 'vid gården'?  
+  Data: Lantmäterikartornas namn, Kulturmiljöregistret boplatser/gravfält, Rundata koordinater, flyttfilter.. Varför: Bebyggelsearkeologin varnar för att vikingatida gårdar kan ha legat annorlunda än byarna; runstensforskningen har tagit byläget för givet. – efter Lundqvist, Lars 1996 (1996_027)
 - [artikel] **Göticismens runor** – Hur påverkade göticismen vilka runstenar som ritades och hur de lästes?  
   Data: 1600-talsavritningar jämförda med moderna läsningar, resvägar, landskap.. Varför: Mänskligt perspektiv på källornas ursprung; knyter an till mörkertalsartikeln. – efter Okänd 1935 (1935_litt)
 - [artikel] **Hade runstensgårdarna gamla namn?** – Är runstensplatser överrepresenterade vid gårdar med äldre namntyper (-inge, -hem, -sta, -by, -tuna) jämfört med slumpgårdar i samma härad?  
@@ -708,6 +734,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Placering och anmärkningar i Rundata och Runor 2020 (kodas manuellt).. Varför: Mottagandet under medeltiden är ett perspektiv som saknas i forskningen. – efter Jansson, Sven B. F. 1946 (1946_257)
 - [artikel] **Hov och husaby: stod runstenarna vid kungsgårdarna och kultplatserna?** – Ligger runstenar närmare hov-, husby- och husaby-namn (kung- och kultcentra) än slumppunkter i samma bygd, och är det samma platser som vendeltidens båtgravsmiljöer?  
   Data: ISOF ortnamn (hov, husby, husaby), KMR gravfält/båtgravar/kyrkor, Rundata koordinater, 1050-års vattennivå. Varför: Vitki har testat Tor-/Frö-/Ull-namn men inte hov/husby; frågan tar kultcentrum och kungsgårdar från arkeologin in i runstensfördelningen. – efter Arne, Ture J. 1932 (1932_001)
+- [artikel] **Hur dog österfararna?** – Var dog män som reste österut och vad säger platsen om etappen?  
+  Data: Rundata innehåll, platsnamn i texterna, geografi.. Varför: Kopplar experimentens svårigheter till stenarnas texter. – efter Edberg, Rune 1996 (1996_037)
 - [artikel] **Jerusalem på runstenarna: vem gick och vem kom aldrig hem?** – Vilka resor till det heliga landet och Rom omtalas, av vem, var, och hur stämmer de med kända pilgrimsvägar och mynt?  
   Data: Rundata (platsnamn, formler), människodata, mynt och pilgrimsvägar. Varför: Sammanför runstenar med Reichenau- och Durhamböckerna och visar mänskliga öden. – efter Edberg, Rune 2006 (2006_342)
 - [artikel] **Kom kristendomen med handelsmännen? Tidigaste korsen på runstenarna** – Uppträder kors och böner först nära handelsplatser och farleder, nära kungsgårdar eller nära storbönders gravfält?  
@@ -778,6 +806,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Korpusdrag 'död utomlands', KMR gravfält, släktnätverk.. Varför: Kopplar färderna till landskapets minnesplatser. – efter Gren, Leif 1991 (1991_265)
 - [artikel] **Stenar för vägen: byggdes bron för själens skull?** – Ligger stenar med broformel vid verkliga bro- och vadställen, och står de parvis på var sida om passet?  
   Data: Broformel (härledd), Kulturmiljöregistrets broar/vägar/vadställen, SGU jordarter, strandförskjutning.. Varför: Tar Friesens Lingsbergsobservation till hela landet och ger ett rumsligt test av brobyggeformeln. – efter Friesen, Otto von 1911 (1911_105)
+- [artikel] **Stenar i kyrkväggen** – Valde man stenar att bygga in av bekvämlighet eller av symbolik – och vilka runstenar fick ligga kvar?  
+  Data: Runor 2020 proveniens, Rundata placering/flyttad, SGU berggrund, stilgrupp. Varför: En enkel fråga med oväntat tydliga svar om vad som minns och tystas; bra mänsklig vinkel. – efter Wienberg, Jes 1997 (1997_195)
 - [artikel] **Stenar på gamla gravar?** – Hur ofta står en vikingatida runsten i eller vid en forntida grav, och hur skiljer det sig från att stå vid samtida gravfält?  
   Data: Rundata (koordinater, placering, ristare, datering); Kulturmiljöregistret (röse, hög, gravfält, fornlämningstyp); slumppunkter inom samma bygd och jordart.. Varför: Man har antagit 'vid gravfältet' utan att skilja forntida från samtida gravar; ett test mot slumpen skulle ge en första siffra för hur vanligt Sö 47-fallet är. – efter Burström, Mats 1994 (1994_077)
 - [artikel] **Stenar som berättar var de står – stämmer det?** – Ligger stenar som själva säger 'nära vägen', 'på höjden' eller 'mellan gårdar' verkligen där, och är släktstenarna vid vägarna som Hávamál säger?  
@@ -816,6 +846,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata (brobygge-formel, koordinater), KMR (broar, vadställen, hålvägar), SGU jordarter, strandförskjutning.. Varför: Nytt: Vitki visar att texten är vänd mot vägen, men inte var längs vägen stenarna står. Tar upp Nordéns broteori och prövar den mot hela korpusen. – efter Nordén, Arthur 1933 (1933_263)
 - [artikel] **Stenarna vid vägen 1792: vad resenärerna såg** – Vilka stenar syntes från vägarna och hur påverkar det vilka som blev kända först?  
   Data: KMR vägar, historiska resebeskrivningar, Rundata första belägg.. Varför: Visar att urvalet av kända stenar följer resvägarna, vilket påverkar alla geografiska mätningar. – efter Skutil, Jos. 1962 (1962_239)
+- [artikel] **Stenarna vid älvmynningarna** – Står Norrlands (och hela Sveriges) runstenar vid flodmynningar och sammanflöden oftare än slumpen, och är det knutpunkterna eller bara vattnet?  
+  Data: Rundata-koordinater, vattendragsnät (SMHI/Lantmäteriet), SGU strandförskjutning 1050, Kulturmiljöregistrets vägar/broar/vadställen, storhögar och fornborgar.. Varför: Prövar Ramqvists elitmodell mot hela korpusen och skiljer knutpunktseffekt från vatteneffekt (som Vitki redan visat). – efter Ramqvist, Per H. 2001 (2001_001)
 - [artikel] **Stenen för den levande** – Hur många runstenar reste någon åt sig själv i livet, och vad säger det om motivet?  
   Data: Rundata översättning och normalisering, kön, landskap, tid.. Varför: Arsundas förbyggda högar pekar på planerade minnesmärken, ett perspektiv runforskningen sällan prövar. – efter Okänd 1958 (1958_aktuellt)
 - [artikel] **Stenen som började tidigt** – Hur många svenska runstenar före 600 finns, hur dateras de, och ligger vikingatidens stenar vid samma platser?  
@@ -914,6 +946,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: ISOF-ortnamn, SGU-strandmodell (flera år), Rundata brobyggeformler, Kulturmiljöregistret, hydrografi.. Varför: Första rumsliga nollmodelltestet av en populär namntolkning; kopplar namn, strand, bro och runstenar. – efter Schneider, Michael 2011 (2011_290)
 - [rapport] **Det osynliga gravfältet: hur registrets täthet styr våra närhetsmått** – Hur varierar Kulturmiljöregistrets täckning per landskap, och förändrar det resultaten om stenar vid gravfält, väg och lerkant?  
   Data: Kulturmiljöregistret, inventeringsår per landskap, Rundata koordinater, Vitkis närhetsmått.. Varför: Eckhoff gjorde Bohuslän 'bäst känt' redan 1880-talet; skillnaden mellan landskap är sannolikt en kontrollvariabel i alla Vitkis rumsliga resultat. – efter Hallström, Gustaf 1923 (1923_243)
+- [rapport] **Där båtarna bars: runstenarna vid dragställena** – Ligger runstenar vid ortnamn med -ed, -drag och -bor oftare än slumpen, och bär de österfärder eller vägformler?  
+  Data: ISOF ortnamn, Kulturmiljöregistret, SGU, strandförskjutning, Rundata innehåll.. Varför: Om 'Ed' och 'Drag' är kommunikationspunkter bör stenarna avslöja det; ingen har prövat. – efter Edberg, Rune 1996 (1996_037)
 - [rapport] **Efter 1932: restaurerade stenar och våra mätningar** – Påverkar RAÄ:s restaurering 1932-41 (resning, konststen, uppmålning) mätningar av orientering, läge och huggspår?  
   Data: Lista över restaurerade stenar (RAÄ/ATA), Rundata övrigt/placering, Runor 2020 proveniens, 3D-skanningar, KMR.. Varför: Kontrollerar om Vitkis 'text mot vägen'-fynd och ristarmätningar är artefakter av 1930-talets resning. – efter Gustawsson, Karl Alfred 1941 (1941_243)
 - [rapport] **Ett statusindex för runstenar och vad det förklarar** – Går monumentens storlek, textlängd, ornamentik, signatur och material att samla i ett gemensamt statusindex, och vilka av Williams hypoteser (bro/väg, singularverb, allitterationsnamn, kortkvist) följer indexet?  
@@ -930,6 +964,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Runor 2020 (fynd, proveniens, ursprunglig plats), Fornvännens Runfynd-serie.. Varför: Gör bortfallet synligt och styr var man bör leta. – efter Källström, Magnus 1996 (1996_211)
 - [rapport] **Färg på runstenar** – Hur utbredd var målningen och vad säger pigmentet om handel?  
   Data: Pigmentanalyser från litteraturen, Vitkis anmärkningar. Varför: Färg är osynlig i alla databaser och därmed i all statistik. – efter Jansson, Sven B. F. 1954 (1954_083)
+- [rapport] **Gravfält eller röjningsrösen?** – Håller 'runstenar vid gravfält' om man separerar gravfält från röjningsröseområden och kontrollerar för inventeringsomgång?  
+  Data: KMR med typkategorier, Rundata. Varför: Känslighetsanalys av ett publicerat Vitki-resultat. – efter Okänd 2002 (2002_litt_b)
 - [rapport] **Gravfält som slutat användas: vad står runstenarna egentligen vid?** – Står stenar vid gravfält som var i bruk eller vid sådana som övergivits flera generationer tidigare?  
   Data: KMR gravfält (period), Rundata datering, familjegrupper.. Varför: Preciserar tolkningen av ”vid gravfältet”. – efter Atterman, Ingemar 1935 (1935_137)
 - [rapport] **Gravfält, väg eller vatten? – 2 300 runstenar mot slumpen** – Vilken variabel förklarar stenens läge bäst när man jämför mot slumpplatser i samma bygd: gravfält, väg, vatten, ting?  
@@ -1008,6 +1044,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Kulturmiljöregistret, ISOF ortnamn, Rundata.. Varför: Kopplar stenarna till rättslivet, en källa som inte vägts in. – efter Okänd 1958 (1958_aktuellt)
 - [rapport] **Runstenar ur gravar: vad finns det för belägg?** – Hur många av de svenska runstenarna har dokumenterad gravkontext (inuti, över eller bredvid en grav), och hur många står bara nära en fornlämning?  
   Data: Runor 2020 fyndomständigheter/ursprunglig plats/anmärkningar, Rundata placering/övrigt, Kulturmiljöregistret gravfält, SGU jordarter, slumpade platser i samma bygd.. Varför: Ett påstående som cirkulerat i internationell litteratur och redan 1959 delvis var fel; korpusvid kvantifiering saknas. Prövar också Vitkis egna 'vid gravfältet'-resultat. – efter Okänd 1959 (1959_litt)
+- [rapport] **Runstenar, storhögar och ädelmetalldepåer** – Ligger stenar och stora gravfält/storhögar tätare tillsammans, och hur förhåller sig stenarna till skattfynd (Zachrisson 1998)?  
+  Data: KMR gravhögar/gravfält, Rundata koordinater, skattfyndskatalog (Zachrisson, SHM). Varför: Zachrisson kopplar depåer och runstenar i Uppland/Gästrikland; Vitki kan testa det över hela landet. – efter Ringstedt, Nils 1998 (1998_167)
 - [rapport] **Runstenarna och de oinskrivna stenarna** – Hur stor andel av de resta stenarna i en bygd bär runor, och vad avgör det?  
   Data: Kulturmiljöregistret (resta stenar, gravfält), Rundata koordinater, SGU jordarter.. Varför: Frågar om runstenar är ett urval som aldrig prövats mot sin monumentkontext. – efter Wicker, Nancy L.; Williams, Henrik 2013 (futhark_3_151_616881)
 - [rapport] **Rättens stenar: runstenar vid domarringar och tingsplatser** – Står runstenarna närmare domarringar, tingshögar och rättarplatser än slumpen i samma bygd?  
@@ -1016,12 +1054,16 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Kulturmiljöregistret (gravfält och dateringsfält), Rundata och Runor 2020 koordinater, ursprunglig plats. Varför: Kopplar Vitki:s fynd om familjegrupper vid gravfält till gårdens kontinuitet, en fråga arkeologerna ställer men aldrig kopplar till stenarna. – efter Modin, Monica 1966 (1966_154)
 - [rapport] **Silver före sten: finns rika 900-talsgravar där runstenarna senare reses?** – Ersätter runstenarna de rika gravarna som statusmarkör på samma gårdar?  
   Data: Georefererade SHM/Fornsök-gravfynd 900-talet (att skaffa), Rundata-koordinater, slumppunkter per bygd.. Varför: Binder samman gravskickets förändring med minnesstenarnas uppkomst, en lucka mellan arkeologi och runologi. – efter Odencrants, Reinhold 1934 (1934_144)
+- [rapport] **Skeppssättningarna och runstenarna** – Står runstenar nära stora skeppssättningar och tingsplatser oftare än slumpen säger?  
+  Data: Kulturmiljöregistret (skeppssättning, gravfält), Rundata koordinater, SGU vatten. Varför: Prövar maktcentra-förklaringen med öppen data; ingen har jämfört runstenar med skeppssättningar i hela landet. – efter Helander, Annika 1997 (1997_049)
 - [rapport] **Skiljetecknet som komma: sätter ristarna tecknen där satserna slutar?** – Följer skiljeteckens placering syntaktiska gränser (före ’ok’, efter namn, före bön) mer än slumpen, och skiljer sig det mellan ristare och landskap?  
   Data: Rundata translitterering och normalisering (skiljetecken, ordgränser), Vitkis ord- och satsmodell, ristare, stilgrupp.. Varför: Skiljetecken är ett härlett drag som Vitki redan har men aldrig prövat som syntaktisk markör. – efter Lander, Eric T. 2025 (futhark_14-15_207_2024380)
 - [rapport] **Stenar vid trånga passager** – Står runstenar oftare vid drag, sund och landtungor än slumpen?  
   Data: Strandpolygoner 1050, runstenar, ISOF-ortnamn (ed/eid/tälje), KMR vägar och broar. Varför: Knyter ihop 'texten vänd mot vägen' och 'vid sin tids vatten' till en test av var resenärerna faktiskt passerade. – efter Damell, David 1972 (1972_123)
 - [rapport] **Stenarna vid de gamla gårdarna** – Står runstenarna vid primära förhistoriska gårdar oftare än slumpen, och hur skiljer sig sekundärenheterna?  
   Data: Rundata, Kulturmiljöregistret gravfält, ISOF ortnamn, 1600-talskartor.. Varför: Gårdens ålder och rang som förklaring har aldrig mätts. – efter Gustavsson, John; Lidén, Hans A. 1980 (1980_073)
+- [rapport] **Stenarna vid vadet** – Står stenar över män av hög rang vid vadställen och vägkorsningar oftare än andra stenar?  
+  Data: Kulturmiljöregistret vadställen/broar/vägar, Rundata titlar, SGU lera.. Varför: Kopplar Slöinges exponeringsplats till runstenarnas platsval. – efter Lundqvist, Lars 1996 (1996_027)
 - [rapport] **Stenarna vid vadet: vänder runstenarna sig mot passagerna eller mot vägen?** – Är riktningseffekten (hälften inom 45° mot vägen) starkare vid fasta punkter som bro, vad och kavelbro än mot andra vägar?  
   Data: KMR vägar, broar, vadställen; stenarnas ristningsriktning; Rundata brobygge-formel.. Varför: Förfinar ett tidigare resultat med en källkritisk observation om vad en vikingatida 'väg' är. – efter Lundberg, Erik 1942 (1942_390)
 - [rapport] **Stenen vid bron: pröva strandmodellen mot runstenar som nämner broar** – Stämmer SGU:s strandförskjutningsmodell vid de platser där en runinskrift berättar om en bro, och låg bron över vatten som saknas i dag?  
@@ -1036,6 +1078,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: ISOF polygoner, Rundata koordinater, 1600-talskartor. Varför: Gränsmarkering är en gammal hypotes som aldrig mätts. – efter Svärdström, Elisabeth; Gustavson, Helmer 1975 (1975_166)
 - [rapport] **Storgårdens läge och stenens läge** – Står runstenarna på samma lägen som storgårdarna: vid väg, vadställe och högre terräng, och närmare än slumpen till boplats och torpnamn?  
   Data: Kulturmiljöregistret (vägar, vadställen, boplatser), SGU, ISOF, Lantmäteriets höjdmodell, runstenarnas koordinater.. Varför: Binder ihop runforskningens och bebyggelsearkeologins läge och prövar teorin om stenar vid gårdens ingång. – efter Schmidt Sabo, Katalin 2018 (b12b05f9-a29b-48a4-b0e0-a43e3dfb2044)
+- [rapport] **Stämmer texten med platsen? Runstenens formler mot landskapet** – Hamnar stenar med formeln ”gjorde bro”, ”hér liggr” eller kristna markörer vid bro, vadställe, gravfält eller kyrka oftare än slumpen i samma bygd?  
+  Data: Rundata (formler, plats), Kulturmiljöregistret (broar, vadställen, hålvägar, gravfält, kyrkor), slumpplatser i bygden. Varför: Andréns ting-och-text-spänning prövad över hela korpusen. Gör text och plats till två vittnen som kan stämma eller skilja sig. – efter Okänd 1997 (1997_litt)
 - [rapport] **Svea-götagränsen i runtexten** – Hoppar språkdragen vid gränsen Södermanland-Östergötland mer än avståndet förklarar?  
   Data: Rundata språkdrag, gamla gränser (ISOF), avstånd.. Varför: En av landets äldsta gränser; Vitki har redan gjort Upplands folkland och Småland. – efter Nordén, Arthur 1933 (1933_263)
 - [rapport] **Synliga stenar? Synlighetsanalys av runstenar** – Placerades runstenar för att synas från väg och vatten, eller bara att stå nära dem?  
@@ -1072,8 +1116,10 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Kulturmiljöregistret (hålvägar, gravfält, boplatser), Rundata-koordinater, slumppunkter i samma bygd, SGU jordarter.. Varför: Tar upp två av Vitkis resultat (vägen, gravfälten) och prövar om de är ett eller två; vägens ålder lyfts som okänd variabel. – efter Okänd 1958 (1958_litt)
 - [rapport] **Vägen över ån: stenar som vägmärken och själabot** – Är stenarna med bro-formel vid vadställen/broar och kristna markörer?  
   Data: KMR broar/vägar, jordarter, formler. Varför: Kopplar religion till infrastruktur. – efter Wessén, Elias 1952 (1952_193)
+- [rapport] **Österfararnas stenar och vattenvägen** – Ligger stenar över resare österut närmare farleder, utlopp och skärgårdsleder än slumpen, justerat för bygd och tid?  
+  Data: Rundata innehåll, strandförskjutning 1050, SGU, Kulturmiljöregistret (vägar, broar), ISOF ortnamn.. Varför: Experimentell båtarkeologi och runstenar har aldrig lagts mot varandra i geografin. – efter Edberg, Rune 1995 (1995_147)
 
-## Bevarande, fynd och flyttning (140 idéer)
+## Bevarande, fynd och flyttning (145 idéer)
 
 - [artikel] **Bildstenen som gravhäll** – Hur ofta återanvändes äldre monument redan under vikingatid och tidig medeltid, och vad betyder det för 'in situ'?  
   Data: Runor 2020: gravhällar, fyndomständigheter, termini; Rundata: flyttad.. Varför: Skiljer gammal från ny flyttning och visar tidiga lager av respekt eller bruk. – efter Okänd 1967 (1967_aktuellt)
@@ -1129,6 +1175,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata (text med 'ock/också', förlorad/fragment), Runor 2020 fyndomständigheter, SGU jordarter, KMR kyrkor. Varför: Gör bortfallet synligt och prövar om fördelningen av bevarade stenar speglar vikingatiden eller senare odling och kyrkobyggen. – efter Gustavson, Helmer; Snaedal, Thorgunn 1979 (1979_228)
 - [artikel] **Runorna som aldrig fick någon sten: Dalarna** – Var skrev man runor där man inte reste runstenar, och vad säger det om runstenskartan som mått på runkunnighet?  
   Data: Runor 2020 (träinskrifter, bleck, fragment), Rundata, KMR, SGU, 1900-talets Dalarna (Gustavson & Hallonquist).. Varför: Vänder på perspektivet: Dalarna som det landskap där runorna fanns men stenarna saknades; skyddar mot att tolka bortfall som frånvaro. – efter Magnus Källström 2013 (2013_282)
+- [artikel] **Runstenarna efter vikingatiden: skrapade, offrade, inmurade** – Vilka spår av medeltida och senare bruk (skålgropar, skrap, offer, inmurning) bär runstenarna och vilka stenar drabbades?  
+  Data: 3D-skanningar, Runor 2020 anmärkningar och läge, flyttfilter, kyrknära.. Varför: Mottagandet efter vikingatiden saknas i runforskningen; Carelli visar att magi kan skriva spår i sten. – efter Carelli, Peter 1996 (1996_153)
 - [artikel] **Runstenarna i kyrkans mur: hur mycket av Uppland är bevarande** – Hur stor del av stentätheten i runstensrika socknar förklaras av att stenar återbrukats och bevarats i kyrkmurar?  
   Data: Runor 2020 fyndomständigheter och nuvarande läge, Rundata fragmentflagga, KMR kyrkor.. Varför: Ger en tidigare saknad korrektion för alla jämförelser mellan landskap. – efter Jansson, Sven B. F. 1959 (1959_241)
 - [artikel] **Skolpojkarna och soptippen: hur många runstenar är bara kända av en slump** – Hur stor del av stenarna hittades vid bygge, restaurering eller plöjning och hur skiljer sig de nyfunna från de gamla i region och typ?  
@@ -1139,6 +1187,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata flaggor förlorad, text- och positionslikhet, Runor 2020, Bureus-källor. Varför: Rör alla korpusbreda siffror (förlustandel, flyttat) och visar källkritik som metod; stark berättelse. – efter Lerche Nielsen, Michael 2003 (2003_195)
 - [artikel] **Stenar man inte skulle röra: folktro och bevarande** – Överlevde stenar med sägner bättre?  
   Data: Ransakningar om antikviteter, ISOF sägenarkiv, Runor 2020 anmärkningar. Varför: Mottagandet efter vikingatiden är ett perspektiv som saknas i runforskningen. – efter Schnell, Ivar 1926 (1926_344)
+- [artikel] **Stenar som folktron räddade** – Står stenar som har sägner oftare kvar på sin plats än andra?  
+  Data: ISOF sägenarkiv (geokodat), Rundata flyttad/försvunnen, bergart. Varför: Mottagandet efter vikingatiden och en möjlig bortfallsmekanism som ingen mätt; passar den mänskliga vinkeln. – efter Okänd 1997 (1997_litt)
 - [artikel] **Stenar som försvann två gånger: hur säkert är 'försvunnen'?** – Hur stor andel av de stenar som Rundata kallar förlorade eller flyttade är det i Runor 2020 eller i arkiven, och vad betyder det för 'in situ'-analyser?  
   Data: Rundata flaggor, Runor 2020 proveniens och ursprunglig plats, kulturmiljöregistret.. Varför: Bygger på Källströms U 158-exempel och på Vitkis egen rättelse av 'flyttad'-regeln (420 kyrkstenar). – efter Källström, Magnus 2012 (futhark_2_223_512990)
 - [artikel] **Stenar som ingen räknade – vad arkiven gömmer** – Hur många okända runstenar och fragment finns i arkiven (ATA, ritningar, handskrifter), och vad skulle de ändra i statistiken?  
@@ -1247,6 +1297,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata (flaggor förlorad/försvunnen), Runor 2020 (äldsta kända läge, källa), 43 härledda drag.. Varför: En källkritisk kontroll som gäller alla Vitkis mått och som ingen har gjort över hela korpusen. – efter Mees, Bernard 2013 (futhark_3_111_616877)
 - [rapport] **Hur mycket har försvunnit? Bortfallet av gravfält och dess effekt på runstensmätningar** – Hur stor del av de vikingatida gravfälten kring runstenarna är borta, och påverkar det måtten på stenar vid gravfält?  
   Data: Kulturmiljöregistret (inklusive avförda), ATA, SGU jordarter, Runor 2020 provenienser.. Varför: Gör fyndet om familjegrupper vid gravfälten robust mot källkritik av bortfall. – efter Okänd 1919 (1919_berattelse)
+- [rapport] **Hur mycket har plogen tagit av runstenarna?** – Är bortfallet av runstenar skevt mot odlad lerslätt, och förklarar det delar av 'stenar vid lerans kant'?  
+  Data: Rundata/Runor 2020 flaggor förlorad/flyttad, ursprunglig plats, SGU jordarter, KMR åkrar. Varför: Granskar ett av Vitkis tydligaste resultat med en bortfallsmodell och löser en genuin källkritisk fråga. – efter Okänd 2002 (2002_litt_b)
 - [rapport] **Hur mycket runstensskatt hann antikvarierna rädda?** – Vilka stenar kände 1600-talets antikvarier till, och var försvann stenar innan någon hann skriva av dem?  
   Data: Runor 2020 äldsta kända läge, Rundata förlorad/flyttad, Hadorphs och Bureus register, landskap och resvägar.. Varför: Ger en uppskattning av korpusens bortfall (mörkertal) som idag bara kan gissas. – efter Okänd 1935 (1935_litt)
 - [rapport] **Hur många runstenar finns egentligen? Fragment och monumentgrupper i Rundata** – Hur många av 2 321 svenska runstensnummer är delar av samma fysiska sten, och hur ändras vår täthet, klustring och släktgrupper när de slås ihop?  
@@ -1281,6 +1333,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: 1600-talskartornas namn, ISOF ortnamn, Rundata (förlorade/flyttade), Runor 2020 ursprunglig plats (606).. Varför: Ger en oberoende väg att hitta den ursprungliga platsen, utan antaganden om vägar. – efter Cnattingius, Bengt 1930 (1930_116)
 - [rapport] **Redaktörseffekten: läser Brate, Wessén och Jansson olika?** – Skiljer sig utgivare systematiskt i hur de behandlar fragmentariska runor och ornament?  
   Data: Rundata och Runor 2020 läsningar, SRI-volym och utgivare, osäkra runor, 3D. Varför: Landskapsjämförelser är sammanblandade med utgivarbyte (Östergötland Brate 1911-18, Södermanland Brate/Wessén 1924-36, Uppland Wessén/Jansson 1940-58). – efter Owe, Jan 2016 (futhark_7_137_1087631)
+- [rapport] **Restaureringens fingeravtryck: flyttade och uppsatta stenar inom fornminnesområden** – Hur ofta är stenar vid skyddade fornminnesområden flyttade eller omplacerade jämfört med övriga stenar?  
+  Data: Runor 2020 ursprunglig plats/nuvarande läge, KMR bevarandeområden. Varför: Kopplar kulturmiljövårdens historia till 'in situ'-frågan. – efter Trotzig, Gustaf 1998 (1998_191)
 - [rapport] **Runstenar i folktron: sägner efter medeltiden** – Vilka stenar har sägner, och är det de flyttade, de stora, de vid vägar?  
   Data: ISOF sägenarkiv, Rundata koordinater, flyttflaggor. Varför: Mottagandet efter medeltiden saknas i runforskningen. – efter Okänd 2021 (15d84dff-7d9c-4cde-b515-c4e4876c6afc)
 - [rapport] **Runstenar som byggmaterial: hur stor del av korpusen är känd bara genom kyrkorna?** – Hur stor andel av runstenarna (och fragmenten) hittades i kyrkomurar, golv, valv eller kyrkogårdsmurar, och hur skiljer sig det mellan landskap och tidsperioder?  
@@ -1339,6 +1393,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata, Runor 2020 fyndomständigheter och litteraturhänvisningar, SGU, KMR, Palm-testet. Varför: Prövar myten om det centraliserade Sverige med samma urvalsfelsresonemang som Callmer men över hela korpusen. – efter Callmer, Johan 1976 (1976_175)
 - [rapport] **Är runstenarna fortfarande en växande korpus?** – Hur snabbt hittas nya stenar, och vilka landskap är minst genomsökta?  
   Data: Runor 2020 fyndomständigheter, Rundata, KMR kyrkor, SGU. Varför: Tillfälliga fyndår kan ge en skattning av dolda stenar och styra framtida inventering. – efter Jansson, Sven B. F. 1966 (1966_102)
+- [rapport] **Är runstenarnas upptäcktskurva mättad?** – Hur många nya stenar och fragment har tillkommit per decennium sedan 1900, och planar kurvan ut?  
+  Data: Runor 2020 litteraturhänvisningar och fyndomständigheter, Rundata fragment/fynd. Varför: Skattfyndens detektorexempel visar att mättnad kan vara en synvilla; samma test på runkorpusen. – efter Okänd 1997 (1997_litt)
 - [rapport] **Är runstenskartan en bevarandekarta?** – Hur mycket av skillnaden i stentäthet mellan landskap beror på att stenar förlorats, flyttats eller aldrig hittats, enligt samma logik som Carlsson tillämpar på depåerna?  
   Data: Rundata (förlorad/flyttad/fragment), Runor 2020 (ursprunglig plats, proveniens, nuvarande och äldsta kända läge), äldre antikvariska uppteckningar, SDHK 1314 sexårsgärd per hundare som nämnare.. Varför: Alla regionala förklaringar (Uppland, Götaland, Norge) vilar på råa antal; en bortfallsmodell visar vad som är bevarande och vad som är verklighet. – efter Okänd 1983 (1983_litt)
 - [rapport] **Är stenarna vid gravfälten bara dem som överlevde?** – Håller fyndet att runstenar står vid gravfält när man tar hänsyn till att gravfält bara överlever på vissa jordarter?  
@@ -1356,7 +1412,7 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
 - [rapport] **Överlevnadsskevhet i runstenskorpusen** – Hur stor del av ”stenar vid lerans kant” förklaras av att stenar på brukad lera flyttats eller gått förlorade?  
   Data: Rundatas flaggor (förlorad, flyttad, fragment), Runor 2020 (ursprunglig/nuvarande plats), SGU jordarter, markanvändning.. Varför: Kontrollerar ett av Vitkis huvudfynd mot en tydlig bortfallsmekanism. – efter Söderberg, Bengt; Lagerås, Per; Björk, Tony 2021 (8ec5443b-49ad-4672-93a9-f57450e7a7c7)
 
-## Mark, geologi och strandlinje (177 idéer)
+## Mark, geologi och strandlinje (188 idéer)
 
 - [artikel] **Berget bestämmer verbet: fast häll, hagg(v)a och Södertörn** – Är det geologin som gör Södertörn 'konsekvent', eller en lokal språkvana?  
   Data: SGU jordart/berg, Rundata ristarterm, monumenttyp, koordinater.. Varför: Förenar geologi och språk; Södertörn mot Uppsalaslätten som naturligt experiment. – efter Laila Kitzler Åhfeldt 2014 (2014_243)
@@ -1398,6 +1454,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Neotoma-pollen, Rundata dateringar.. Varför: Förklarar tidpunkten för resningsvågen med öppen naturvetenskaplig data. – efter Okänd 1982 (1982_litt)
 - [artikel] **Kom kristendomen med vågen från Jelling?** – Följer de tidigaste kristna minnesstenarna ett avstånd från Jelling eller uppstår de på flera ställen?  
   Data: Rundata koordinater, stilgrupp, kristna markörer, Runor 2020 termini, avstånd till Jelling och Skåne.. Varför: Prövar den traditionella spridningsbilden som Åkerström återger utan test. – efter Åkerström, Hanna 2019 (futhark_8_7_1333693)
+- [artikel] **Kungens män och stenarna: runstenar kring maktcentra i västra Skåne** – Ligger Skånes runstenar tätare kring Borgeby, Löddeköpinge, Uppåkra, Lund och Gårdstånga än slumpen ger, och skiljer sig stenarna nära centrum (språk, formler, kors) från dem längre bort?  
+  Data: Rundata Skåne, KMR lägen, SGU jordarter, Anglert 1995 (gruppindelning). Varför: Knyter ihop Vitkis Skåne-artikel med kungamaktens topografi och testar om runstenarna var elitmonument eller bondemonument. – efter Svanberg, Fredrik 1998 (1998_113)
 - [artikel] **Kustens nya land: reste Roden stenarna senare än inlandet?** – Är stenarna på mark som steg ur havet senare yngre, och reste kustzonen Roden stenar vid en annan tid än folklanden?  
   Data: SGU strandförskjutningsmodell vid flera år, Runor 2020 termini, Rundata stilgrupp, Upplands folkland, skeppslagsgränser.. Varför: Ger landhöjningen en roll i runstenarnas kronologi och prövar ett hundra år gammalt bebyggelsehistoriskt antagande. – efter Tunberg, Sven 1920 (1920_146)
 - [artikel] **Landet utan runstenar? Dalarna räknat mot Mälardalens bebyggelse** – Hur många runstenar borde Dalarna ha haft med samma regler som Uppland och Götaland, och hur många finns?  
@@ -1532,6 +1590,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata material/bergart (1 638), SGU berggrundskarta, Runor 2020 proveniens.. Varför: Prövar direkt det antagande som alla placeringsanalyser vilar på. – efter Lindqvist, Sune 1920 (1920_056)
 - [rapport] **Fosfat och runstenar i Södermanland** – Står stenarna vid gårdens fosfatkärna eller vid utkanten av gammal odlingsmark?  
   Data: Fosfatkarteringar, jordarter, stenarnas läge, slumppunkter i samma bygd. Varför: Ger oberoende mått på gårdens läge och kopplar till Palm och Ekholm (lerans kant). – efter Okänd 1950 (1950_litt)
+- [rapport] **Fyndens skugga** – Hur mycket av vikingatidens bebyggelse missar Kulturmiljöregistret, och ändrar det våra slutsatser om var runstenarna står?  
+  Data: KMR-täthet, SGU jordarter, Rundata, detektorfynd (K-samsök). Varför: Direkt metodkontroll av tidigare Vitki-analyser (gravfält, lera) mot registreringsskevhet. – efter Larsson, Lars; Hårdh, Birgitta 1997 (1997_139)
 - [rapport] **Gamla stenar, nya runor: ligger runstenarna vid äldre resta stenar?** – Är runstenar oftare belägna vid äldre bautastenar och stenmonument än slumpen, och skiljer det sig från gravfält utan sådana?  
   Data: Kulturmiljöregistret (resta stenar, stensättningar, gravfält), Rundata koordinater, SGU jordart.. Varför: Prövar kontinuiteten från bautastenstraditionen och Klos' 22 % 'vid andra stenar'. – efter Spurkland, Terje 2010 (futhark_1_65_381133)
 - [rapport] **Gravfält, väg eller vatten? Tre klassiska teser om runstenens plats prövade mot slumpen** – Står runstenar närmare gravfält, vägar och vatten än slumpplatser i samma bygd, jord och tid, och vilken tes (von Friesen, Ekholm, Klos) klarar sig bäst när man kontrollerar för inventeringsintensitet?  
@@ -1540,6 +1600,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Runor 2020 föremålstyp, profilstil, korstypologi, termini, Rundata material.. Varför: En hel föremålsgrupp som Vitki hittills sorterat bort från runstensanalyserna. – efter Hallström, Gustaf 1931 (1931_171)
 - [rapport] **Gårdarna flyttade till leran – eller stenarna?** – Följer runstenarna vikingatidens spannmålsgårdar (nybildade by-/sta-namn) snarare än lerkanten som sådan?  
   Data: SGU jordarter, KMR (äldre järnålders fornlämningar), ISOF ortnamn (-by, -sta, -inge), runstenar. Varför: Prövar en alternativ förklaring till Ekholm/Palm-resultatet och till Mälar–Göta-gapet. – efter Okänd 1971 (1971_litt)
+- [rapport] **Hamn eller åker? Vad runstenarna följer** – Följer runstenarna hamnar och farleder mer än lera och odlingsjord?  
+  Data: Runstenarnas koordinater, strandlinje 1050, SGU jordarter, hamnar och vägar i Kulturmiljöregistret. Varför: Vitki visar redan stenar vid vatten och lerans kant; hamnen som separat faktor är otestad. – efter Pitkänen, Mika 2000 (2000_237)
 - [rapport] **Hur fort vittrar en runsten?** – Hur mycket har läsbarheten förändrats mellan foton från 1870-talet och i dag, och vad förklarar skillnaden (bergart, läge)?  
   Data: Historiska foton (ATA, SHM), K-samsök, Vitkis 3D-skanningar, SGU berggrund. Varför: Ger ett mått på vittring över 150 år och på hur säkra äldre läsningar är. – efter Lundberg, Bengt A. 1988 (1988_098)
 - [rapport] **Hur fort vittrar en runsten? Mandelgren mot 3D-skanning** – Hur mycket har runorna slitits på 180 år, och beror det på bergart?  
@@ -1584,6 +1646,10 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: ISOF-ortnamn, Kulturmiljöregistret, SGU-jordarter, Rundatas koordinater.. Varför: Ger en mätning av påståendet att kyrkor efterträdde kultplatser, med de stenar som redan visat sig stå vid lerkanten. – efter Nordén, Arthur 1931 (1931_330)
 - [rapport] **Kungsgård eller kult? Vad runstenarna står vid** – Är runstenarna oftare vid Husby, Tuna och Åker (administrativa namn) än vid kultnamn?  
   Data: ISOF-ortnamn, Kulturmiljöregistret, Rundata; kontroll för bygd, lera och vatten.. Varför: Vitki har prövat kultnamn men inte de administrativa; Lindqvist varnar för att religionsperspektivet är för ensidigt. – efter Lindqvist, Sune 1921 (1921_083)
+- [rapport] **Kyrkplatserna med och utan sten** – Står runstenar vid samma kyrkplatser som de förromanska gravmonumenten i Västergötland, och skiljer de sig från slumpkyrkor?  
+  Data: Rundata, Runor 2020, KMR kyrkor, SGU jordarter, de åtta namngivna platserna. Varför: Wienberg efterfrågar kontrollen; ingen har gjort den med hela korpusen. – efter Wienberg, Jes 1997 (1997_195)
+- [rapport] **Landhöjningen som runstenarnas klocka** – Kan stenar som rests vid vattenlinjen i höglandhöjningsområden få ett äldsta möjligt datum av strandförskjutningen, och stämmer det med stilgruppsdateringen?  
+  Data: Strandförskjutningsmodell (SGU), höjdmodell, Rundatas stilgrupp och datering, Runor 2020 termini.. Varför: Oberoende naturvetenskaplig datering av runstenar, där stilgruppsdateringen annars bär hela bevisbördan. – efter Ramqvist, Per H. 2001 (2001_001)
 - [rapport] **Landskap eller vattensystem? Så mycket beror våra slutsatser på hur Sverige delas** – Håller de regionala slutsatserna (kvinnor som resare, västgötarna och danskarna, Upplands folkland, stilgrupper) om vi byter landskapsindelningen mot avrinningsområden, farleder och jordartsregioner?  
   Data: Landskaps- och häradsgränser, SGU jordarter, strandförskjutningsmodellen, hela korpusens 43 drag.. Varför: Prövar det modifierbara arealenhetsproblemet i runforskningen, något Mandt påpekar för hällristningar men som aldrig gjorts för runstenar. – efter Okänd 1983 (1983_litt)
 - [rapport] **Ledung och stenar: förklarar ledungsorganisationen resten av Mälardalens försprång?** – Har ledungsskyldiga socknar fler stenar än jämförbara socknar utan skyldighet, efter kontroll för jordart och vatten?  
@@ -1642,12 +1708,16 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata (koordinater), SGU jordarter, Kulturmiljöregistret (depåfynd), Kungl. Myntkabinettets/Historiska museets myntskattsregister. Varför: Gotland har Sveriges största silverskatter men få runstenar; ingen har prövat om silver och runstenar ligger i samma bygder eller utesluter varandra. – efter Linder Welin, Ulla S. 1976 (1976_186)
 - [rapport] **Silver och sten: skatter och runstenar per socken** – Följer runstenarna silvret? Samvarierar runstenar per socken med skattfynd, kontrollerat för jordart, tid och avstånd till vatten, och skiljer sig Gotland, Mälardalen och Götaland?  
   Data: SHM/K-samsök skattfynd med koordinater, Rundata (koordinater, datering), SGU, KMR.. Varför: Direkt test av om runstenar är rikedomsmarkörer; ingen sådan mätning över hela landet har gjorts. – efter Schnittger, Bror 1915 (1915_053)
+- [rapport] **Sjösänkningarna och runstenarna: robusthet för 'vid sin tids vatten'** – Håller resultatet att stenarna står vid sin tids vatten när historiska sjösänkningar och regleringar tas med?  
+  Data: SGU strandförskjutning, lista över sjösänkningar, Rundata koordinater. Varför: Kopplas till Palm-jordartsarbetets ouppklarade kontroll av sjösänkning; stärker eller sänker en central Vitki-slutsats. – efter Edberg, Rune 1999 (1999_001)
 - [rapport] **Sjösänkningarna och vattnet år 1050** – Hur ändras ”avstånd till vatten år 1050” när 1800-talets sjösänkningar räknas bort för alla reglerade sjöar?  
   Data: Historiska kartor (Lantmäteriet), uppgifter om sjösänkningar, SGU strandförskjutning, runstenar.. Varför: Kontroll av ett centralt Vitki-mått mot en känd källa till fel. – efter Lovén, Christian 2021 (41958e9a-bdf6-4d3c-ad0c-cb87bf3bab82)
 - [rapport] **Släktdjup i Vendelbygden** – Har runstenarna i Vendel, Valsgärde och Gamla Uppsala djupare släktkedjor än slumpsocknar?  
   Data: Rundata släktrelationer, KMR gravfält, SGU jordarter.. Varför: Prövar en vendeltida elitkontinuitet som ingen mätt. – efter Lindqvist, Sune 1950 (1950_001)
 - [rapport] **Stenar under vatten: dateras stenarna av strandlinjen?** – Står stenar på mark som blev land efter att de enligt stilen reste, och vad avslöjar de?  
   Data: SGU strandförskjutning (flera år), Rundata (stilgrupp, datering), flyttflaggor.. Varför: Oberoende dateringsgrund för runstenar; prövar både stilkronologin och strandmodellen. – efter Christiansson, Hans 1980 (1980_153)
+- [rapport] **Stenarna och köttmarknaden** – Ligger runstenarna tätare i städernas försörjningsområden och där boskapsöverskottet fanns?  
+  Data: Rundata, Runor 2020, SEAD benfynd (stadskoordinater), SGU jordarter. Varför: Ekonomisk förklaring av runstensbommen som saknas; bygger på öppna benfynd. – efter Myrdal, Janken 1997 (1997_209)
 - [rapport] **Stenarna vid nyodlingens kant: -torp, -röd och runstensseden** – Följer runstenarna kolonisationens yngre ortnamnstyper (-torp, -röd) mot slumpen?  
   Data: ISOF ortnamn, Rundata datering och stilgrupp, SGU jordarter, KMR.. Varför: Binder stenarna till 1000-talets odlingsutvidgning och prövar Sahlgrens äldre/yngre indelning mot korpusen. – efter Okänd 1926 (1926_litt)
 - [rapport] **Stenarna vid skogsgränsen: följer den nordligaste runstenen bygdens gräns?** – Ligger stenarna i Dalarna, Hälsingland och Jämtland inom pollenseriernas jordbruksbygd, och hur långt utanför ligger de?  
@@ -1662,6 +1732,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Kulturmiljöregistrets vägar/hålvägar, SGU strandförskjutning 1050, 2 321 runstenar, socknar (ISOF), permutationstest med kontroll för landskap/stilgrupp. Varför: Carlssons hamnindikatorer (vägar som möts vid stranden) har aldrig använts på runstenar; knyter ihop läget vid vatten och texten mot vägen till en tredje förklaring: landningsplatsen. – efter Carlsson, Dan 1987 (1987_006)
 - [rapport] **Stod sandstensstenarna alltid vid kyrkan?** – Står uppländska sandstensrunstenar närmare medeltida kyrkor än granitstenar, och finns skillnaden kvar när flyttade stenar tas bort?  
   Data: Rundata material och plats, Runor 2020 flyttuppgifter, Kulturmiljöregistrets kyrkor, ISOF kyrkplatser, slumppunkter i samma socken.. Varför: Binder Vitkis flyttfilter till frågan om träkyrkor och sen vikingatid; ger siffra på ett påstående som hittills bara bygger på iakttagelse. – efter Källström, Magnus 2019 (futhark_8_172_1333702)
+- [rapport] **Stod stenarna på leran? Åkerboplatser, plogens bortfall och runstenarnas lägen** – Speglar 'lerans kant' gårdslägen eller bara var fornlämningar överlevt plogen, när uppdragsarkeologin visat att boplatser ligger under dagens lerjordsåkrar?  
+  Data: SGU jordarter, Kulturmiljöregistret (boplatser, undersökta gravfält), Runor 2020 koordinater, slumpplatser per bygd.. Varför: Prövar Palm och Ekholm mot ny bebyggelsearkeologi och är en ofrånkomlig kontroll innan lerartikeln publiceras. – efter Okänd 2001 (2001_litt)
 - [rapport] **Storhälsingland: ett runstensland vid Bottenhavet?** – Bildar Hälsingland, Medelpad och Ångermanland en enhet i runstenarna, och skiljer de gamla landen Ala och Sundet sig?  
   Data: Rundata Hs/M/Ång, SDHK, ISOF socknar, strandmodell (landhöjning), Riken omkring år 1000.. Varför: Norrlands runstenar har inte prövats mot tidens egna enheter. – efter Ekholm, Gunnar 1942 (1942_060)
 - [rapport] **Strandlinjens ortnamn: när fick bygden sina namn?** – Stämmer vattenleden i namnen vid runstenarna med strandlinjen år 1050 eller med en äldre strand, och är namnen vid stenarna äldre än slumpens?  
@@ -1672,8 +1744,12 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: 3D-skanningar, SGU:s bergart, Runor 2020:s anmärkningar.. Varför: Prövar Wimmers och Braunmüllers argument om att ytan styrde layouten och därmed hur mycket 'visuell läsordning' är ytans egenskap. – efter Åkerström, Hanna 2020 (futhark_9-10_39_1385978)
 - [rapport] **Stämmer ortnamnet med marken?** – Ligger stenar med terrängord (myr, holm, vik, sund) på mark och vid vatten som ordet säger, justerat för landhöjningen sedan 1050?  
   Data: Rundata ortnamn, SGU jordarter, strandförskjutning, ISOF. Varför: Binder språkforskning och geologi; hela korpusen kan testas. – efter Fridell, Staffan 2013 (futhark_4_177_682698)
+- [rapport] **Står Hälsingestenarna vid vattnet?** – Följer runstenarna i Hälsingland och övriga Norrland vattnet år 1050 lika tätt som i Svealand, med hänsyn till landhöjningens osäkerhet?  
+  Data: Rundata-koordinater för Hs och Norrland, SGU strandförskjutning (1050 plus ±100 år), SGU jordarter. Varför: Norrlands snabba landhöjning ger det hårdaste testet av 'vid sin tids vatten'; positivt eller negativt resultat är nytt. – efter Huggert, Anders 1998 (1998_089)
 - [rapport] **Står runstenar på gravar eller bara i närheten?** – Hur stor andel av runstenarna ligger inom 20, 50 och 200 m från en känd grav, mot slumpen?  
   Data: KMR gravhögar/gravfält, Rundata koordinater, SGU jordarter. Varför: Skiljer "på graven" från "vid gravfältet" och prövar ett antagande som Järsbergsutgrävningen visade var fel i ett fall. – efter Jansson, Sven B. F. 1976 (1976_089)
+- [rapport] **Står stenen på rätt berg? Lokal eller importerad bergart** – Är stenens bergart lokal (SGU berggrund) eller transporterad, och är de rikaste stenarna de som hämtats längst bort?  
+  Data: Rundata material/bergart, SGU berggrund, koordinater. Varför: Prövar 'varför sten' med geologisk proveniens och transportarbete, i likhet med keramikens tunnslipsanalys. – efter Brorsson, Torbjörn 1998 (1998_225)
 - [rapport] **Sven Mällösa: går Stilles 35 stenar att pröva?** – Är de 35 uppländska stenar som Stille tillskriver Sven mer lika varandra (stavning, formler, plats) än slumpade uppländska grannstenar, och hänger de ihop rumsligt?  
   Data: Rundata, signumlistan i artikelns fotnot 1, stavningsmodell och textdrag, Runor 2020 ristarnoteringar, koordinater, jordarter/vatten/vägar för platsmönstret.. Varför: Prövar en färdig, opublicerad hypotesgrupp mot vår ristarmodell; resultatet blir ett stöd eller ett skäl att vara försiktig med attribueringar. – efter Larsson, Patrik 2020 (futhark_9-10_193_1385968)
 - [rapport] **Syns år 536 i pollen och i runstenarnas landskap?** – Faller odlingsindikatorerna omkring 536–550 i svenska pollenserier, hur snabbt återhämtar sig olika bygder, och fick bygder med djup kris och snabb återhämtning fler runstenar per odlad yta under 900- och 1000-talet?  
@@ -1696,6 +1772,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata material (1 638), SGU berggrund, flyttfilter.. Varför: Ger för första gången ett mätbart geologiskt resursmått i stället för enstaka exempel. – efter Henrik Williams 2013 (futhark_4_61_682691)
 - [rapport] **Var kommer stenen ifrån? Bergart mot berggrund** – Är runstenens bergart lokal i bygden, eller transporterades den, och hur långt?  
   Data: Rundata material/bergart (1 638), SGU berggrund (öppna data), koordinater, 3D-skanningar för ytstruktur.. Varför: Första korpusomfattande prövningen av 'långa transporter' och av arbetsinsatsen bakom en runsten; kopplar geologi och runologi. – efter Okänd 1943 (1943_litt)
+- [rapport] **Var stod runstenarna – vid ny eller gammal bebyggelse?** – Står stenarna vid de byar som växer fram omkring 1000 eller vid de övergivna vikingatida boplatserna?  
+  Data: KMR boplats, bytomt, kyrkor; Rundata koordinater; SGU jordarter. Varför: Prövar en arkeologisk omvandlingsmodell (byomläggning omkring 1000) mot hela korpusen. – efter Svanberg, Fredrik 1998 (1998_113)
 - [rapport] **Varför har Västmanland så få runstenar?** – Hur mycket av Västmanlands glesa runstensbestånd förklaras av jordart, bebyggelse och bortfall?  
   Data: Rundata (Vs), SGU jordarter, Kulturmiljöregistret (gravfält, kyrkor), SDHK 1314, strandlinje år 1050. Varför: Vitki har visat att jord förklarar ungefär hälften av Mälar-Göta-skillnaden; Västmanland är ett oprövat test. – efter Jansson, Sven B. F. 1963 (1963_316)
 - [rapport] **Vattnet som daterade stenarna** – Kan landhöjningen ge en naturvetenskaplig undre gräns för när stenarna restes, och håller den med stilgruppernas ordning?  
@@ -1713,7 +1791,7 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
 - [rapport] **Öland mellan vendeltid och vikingatid: bebyggelse och stenar** – Fanns ett glapp i bebyggelsen på södra Öland, och hur förhåller sig Ölands runstenar i tid och rum till det?  
   Data: Rundata och Runor 2020 (Öl, termini), KMR gravfält och boplatser, pollen (Neotoma), SGU jordarter (alvarkanten). Varför: Kopplar en preliminär utgrävningsrapport till en fråga om kontinuitet över runornas 'tysta' århundraden, som saknas i fältet. – efter Stenberger, Mårten 1965 (1965_154)
 
-## Människorna: kvinnor, barn, ofria, släkt (103 idéer)
+## Människorna: kvinnor, barn, ofria, släkt (108 idéer)
 
 - [artikel] **Alliterar namnparen på runstenarna av en slump?** – Är alliteration mellan namnen i samma inskrift vanligare än slumpen, och går den att skilja från släktnamnskick och vers?  
   Data: Rundata (personnamn, relation, landskap, datering), slumppar.. Varför: Alliteration brukar tas som tecken på poetisk formgivning; ingen har prövat det mot slumpen. – efter Beck, Wolfgang 2016 (futhark_7_29_1087634)
@@ -1733,10 +1811,14 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Människorna, släktnätverket, färdriktning (öst/väst) per sten, Runor 2020 ristarnoteringar. Varför: Går från ett belysande fall (Berga) till ett mått för hela landet. – efter Jansson, Sven B. F. 1963 (1963_303)
 - [artikel] **De ofria på runstenarna** – Nämns ofria och tjänare på runstenarna, och i så fall var och av vem?  
   Data: Rundata normalisering och översättning, släktrelationer ur Människorna-modulen, Runor 2020.. Varför: Arbmans slav i graven saknar motsvarighet på stenarna; fyller perspektivet 'kvinnor, barn och ofria'. – efter Arbman, Holger 1936 (1936_089)
+- [artikel] **De ofria på runstenarna** – Hur syns de ofria och släktlösa i texterna, och vem representerar stenarna egentligen?  
+  Data: Rundata normalisering, personnamn av utländsk typ, lagtexter (kodad arvsordning).. Varför: Perspektivet 'ofria' saknas i runforskningen; stenarna används som bild av hela samhället. – efter Snaedal, Thorgunn 1996 (1996_045)
 - [artikel] **De ofria som aldrig nämns** – Hur ofta nämns ofria, trälar eller låg status på runstenarna, och hur ska frånvaron läsas mot gravar med människooffer?  
   Data: Rundata normalisering, Vitkis personmodul, gravlitteratur. Varför: Perspektiv som saknas i runforskningen (ofria); nytt för Vitki. – efter Holmquist, Lena 1990 (1990_175)
 - [artikel] **De ofria som runstenarna glömde** – Hur ofta syns trälar och andra ofria i texterna, och hör det ihop med var arkeologin visar att träldomen var stor?  
   Data: Rundata normalisering/översättning (status- och släktord), regional träldomsarkeologi, landskapslagarnas trälbestämmelser.. Varför: Perspektivet ofria och vardagsarbete saknas i runforskningen; arkeologin ger nu en oberoende bild av arbetskraften. – efter Larsson, Fredrik 2022 (f21c310a-53a0-4daa-87c3-59e9249d933e)
+- [artikel] **De som aldrig fick en sten – de ofria på runstenarna** – Hur ofta och hur nämns trälar, ambátter och andra ofria på runstenarna, och var?  
+  Data: Rundata (normalisering, översättning), Runor 2020, personmodul, KMR gravfält. Varför: Fyller ett perspektiv som UNDERLAG pekar ut som saknat (barn, kvinnor, ofria) med en direkt räkning. – efter Nordenstorm, Leif 1994 (1994_265)
 - [artikel] **De som kom hem – vem reste sten efter Greklandsfararna?** – Hur stor andel av österutstenarna nämner en hemvändare, och vilka reste stenen (mor, hustru, son, bror, han själv)?  
   Data: Rundata translitterering/översättning (-fari, 'kom hem'), Vitkis människomodul, släktnätverk.. Varför: Den gängse bilden är att runstenarna är dödsminnen; hemvändarna är det osynliga underlaget och aldrig mätta. – efter Montelius, Oscar 1914 (1914_081)
 - [artikel] **Dottern som ärvde: kvinnors arvsrätt på de vikingatida runstenarna** – Hur ofta står en kvinna som ensam eller huvudsaklig arvtagare på stenen, och varierar det med landskapslagarnas arvsregler och med tiden?  
@@ -1747,6 +1829,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Människorna (resare, döda, släktrelationer), ordsökning māʀ/dōttiʀ, släktnätverket, landskapslagarna. Varför: Knyter an till Vitkis döttrar-artikel men prövar en ny juridisk hypotes över hela korpusen och lägger rättshistoria till. – efter Owe, Jan 2016 (futhark_7_137_1087631)
 - [artikel] **En by, flera stenar, flera släkter?** – Delar grannstenar inom samma by personnamn och släktband, eller representerar de olika gårdar?  
   Data: Rundata personnamn, släktrelationer, People-modulen, ISOF ortnamn, kulturmiljöregistrets gravfält.. Varför: Förenar Selinges byteori med Vitkis fynd att grannstenar delar namn vid gravfälten. – efter Källström, Magnus 2012 (futhark_2_242_512988)
+- [artikel] **En gård, en sten? Hur många gårdar delade ett gravfält** – Hur stor andel av stengrupperna vid gravfält har namn från flera gårdar?  
+  Data: Familjegrupper, Kulturmiljöregistrets gravfält och boplatser, ISOF gårdsnamn. Varför: Ändrar tolkningen av 'familjegrupp' och släktnätverken. – efter Ljungkvist, John 2000 (2000_145)
 - [artikel] **Falken på stenen** – Hur vanliga är jakt- och rovfågelsbilder och rovfågelsnamn på runstenarna, och ligger de där rovfågelsgravarna ligger?  
   Data: U 855 m.fl., Rundata bildlänk (544), 3D-skanningar, personnamn (Hauk-), gravkoordinater från Sten & Vretemark.. Varför: Ger en förklaring (kontinental elitsport) i en bildkategori Vitki saknar. – efter Sten, Sabine; Vretemark, Maria 1988 (1988_145)
 - [artikel] **Fanns det friser på runstenarna? De främmande namnen och folken** – Hur många runstenar nämner främmande folk, gillen eller namn av främmande ursprung, var står de och när, och sticker Sigtunas ”frisa kikar” ut?  
@@ -1803,6 +1887,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata personnamn, SDHK, 1314 års sexårsgärd per härad.. Varför: Namnforskningens egna påståenden (Bot- = engelskt lån) har inte mätts mot hela korpusen. – efter Snaedal, Thorgunn 1986 (1986_080)
 - [artikel] **Namnen rimmar, men är det dikt? Släktskick eller stavrim** – Hur mycket av stavrimmet i runinskrifterna är släktingars alliterande namn, och hur mycket är poetiskt?  
   Data: Vitkis släkt- och namndata, Rundata normalisering, ristare.. Varför: Ingen har skilt namnalliteration från poesi; kan minska antalet 'runvers' kraftigt. – efter Marold, Edith 2012 (futhark_2_63_512971)
+- [artikel] **Odens folk och Tors folk: vilka bar gudens namn?** – Följer Oden-, Tor- och Frö-namn olika sociala miljöer (borgar, handelsplatser, gravfält) i runmaterialet?  
+  Data: Rundata personnamn och ristare, Kulturmiljöregistret (borgar, gravfält, handelsplatser), ISOF kultnamn. Varför: Fyndarkeologin pekar mot Oden i hirdmiljö och Tor hos enskilda; runnamnen kan pröva det över hela landet. – efter Kitzler Åhfeldt, Laila 2000 (2000_013)
 - [artikel] **Ofria på runstenarna: syns de alls?** – Hur ofta nämns ofria, tjänare, brytar och hirdmän på runstenarna?  
   Data: Rundata normalisering, Människorna. Varför: Perspektiv som saknas helt i runforskningen: de många och ofria. – efter Edberg, Rune; Heimer, Olof 2019 (9a93ea41-2e8c-404b-a021-65ae70e25e1e)
 - [artikel] **Orkesta och djuren: ett namnmode i en socken?** – Är djurnamn koncentrerade till vissa socknar mer än slumpen tillåter, och bärs de av en släkt?  
@@ -1885,6 +1971,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: K-samsök föremål (ovala spännbucklor) per socken, Vitkis kvinnodata (Människorna).. Varför: Ger oberoende data för frågan varför Svealand har fler kvinnor som resare än Götaland. – efter Lindqvist, Sune 1922 (1922_166)
 - [rapport] **Kvinnornas väv och kvinnornas stenar** – Reste kvinnor oftare stenar i socknar där textilarbetets spår (vävtyngder, sländtrissor) är talrika, efter kontroll för landskap och tid?  
   Data: Människorna (kvinnliga resare), K-samsök/SHM föremålsdata per socken, SDHK 1314, Kulturmiljöregistret. Varför: Prövar en ekonomisk förklaring till att kvinnor reste stenar oftare i Svealand än Götaland (31 mot 17 %), en fråga som tidigare bara förklarats med arvsrätt. – efter Geijer, Agnes 1965 (1965_112)
+- [rapport] **Lagen mot stenarna** – Följer släktskapen på stenarna landskapslagarnas arvsordning, eller visar den en annan praxis?  
+  Data: Rundata relationer, kodade lagtexter, Människorna-modulen.. Varför: Lagen som källa mot samtida praxis har inte prövats. – efter Snaedal, Thorgunn 1996 (1996_045)
 - [rapport] **Namn som 'rättats': hur många ovanliga namn har tolkningen suddat ut?** – Hur stor del av personnamnen i Rundata bygger på emenderade former, och förändras namnstatistiken och könsfördelningen om de markeras?  
   Data: Rundata translitterering mot normalisering, namnlistor, kvinnomodulen, Vitkis namnanalyser.. Varför: Direkt robusthetstest av namn- och kvinnoresultaten och ett svar på Williams anspråk att sällsynta namn gömmer sig bakom 'fel'. – efter Williams, Henrik 2010 (futhark_1_27_381123)
 - [rapport] **Namn som visar stånd och bygd** – Har vanliga namn en egen region- och ståndsprofil som består från runstenarna till medeltidsbreven?  
@@ -1922,12 +2010,14 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
 - [rapport] **Östfararnas namn: finns de i de ryska ortnamnen?** – Stämmer runstensnamnen för män som dog i öster med de skandinaviska personnamn Vasmer finner i ryska ortnamn, och ligger deras hemsocknar vid samma vattenvägar?  
   Data: Rundata östfarare (platser österut, Människor), Vasmer 1931 ortnamnslista, ryska ortnamnsregister. Varför: Knyter runstensresenärerna till spår på mottagarsidan med öppen ortnamnsdata, och mäter mot slumpen. – efter Nerman, Birger 1932 (1932_119)
 
-## Kristnande, kult och religion (156 idéer)
+## Kristnande, kult och religion (169 idéer)
 
 - [artikel] **Ande eller själ – vem valde ordet?** – Följer valet av ǫnd mot sál bygden, ristaren eller tiden, och pekar kartan på olika missionsvägar?  
   Data: Rundata normalisering, ristare, stilgrupp, landskap; Runor 2020 profilstil. Varför: Författaren säger att regionala moden och ristarpreferenser finns men visar dem inte; en kartläggning med kontroll vore nytt. – efter Zilmer, Kristel 2013 (futhark_4_129_682695)
 - [artikel] **Anglosaxarna vid Mälarkusten?** – Syns den västliga missionen i runstenarnas kors och bön i Roslagen?  
   Data: Rundata, Runor 2020 korstypologi, SGU strandförskjutning, ISOF.. Varför: Knyter kristningens riktning till mätbara drag. – efter Stenberg, Ragnar 1948 (1948_133)
+- [artikel] **Asarna som försvann** – Försvinner gudanamnen ur runtexterna lika tvärt kring år 1000 som i skaldediktningen?  
+  Data: Rundata Tor/Odin-namn och formler per datering, Vitkis Tor-artikel. Varför: Binder samman skaldeforskning och runstensdata. – efter Lönnroth, Lars 1994 (1994_198)
 - [artikel] **Bindrunornas kyrkliga sällskap?** – Hör bindrunor ihop med kristna stenar och kyrkplatser i Sverige, eller bara med vissa ristare?  
   Data: Korpusdraget bindrunor, kristna markörer, korsform, KMR kyrkor, ursprungsläge, ristare, stilgrupp, datering.. Varför: En engelsk hypotes testad på en korpus som är hundra gånger större; kan ge ett överraskande nej eller en ny koppling mellan skrift och kristnande. – efter Waldispühl, Michelle 2020 (futhark_9-10_135_1385972)
 - [artikel] **Bönen som flyttade till gravhällen** – Tystnade bönen på 1000-talets runstenar (omkring 1035), eller flyttade den till gravhällar och kistor som Fornåsahällen?  
@@ -1964,6 +2054,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata normalisering och översättning; Korpusdrag österut/västerut; People-modulen.. Varför: Recensionerna visar att arkeologin främst förklarar spridning genom handel; texterna kan visa vilka former som människorna själva nämnde. – efter Okänd 1986 (1986_litt)
 - [artikel] **Hednatemplet som inte fanns – och runstenarna kring Gamla Uppsala** – Var kristna markörer på stenar sällsynta nära Gamla Uppsala medan hedendomen höll i?  
   Data: Rundata korsform och bönformler, koordinater, dateringsklass, avstånd till Gamla Uppsala och Sigtuna, kontroll för stilgrupp.. Varför: Ett kristnandetest underifrån mot det skriftliga facit; nytt för Uppland. – efter Rausing, Gad 1968 (1968_229)
+- [artikel] **Hemvändarna: de som kom tillbaka från Garðar** – Hur stor andel av östresenärerna kom hem? Jämför runstenarnas döda i öster med östliga föremål i svenska fynd.  
+  Data: Rundata/Runor 2020 (död utomlands, österut), SHM/K-samsök (östliga fynd), Kulturmiljöregistret. Varför: Runstenarna ger bara de döda; fynden ger de levande. Ingen har mätt de två mot varandra över hela landet. – efter Edberg, Rune 1999 (1999_245)
 - [artikel] **Hur kristet var Gotland egentligen? Runstenarna mot fastlandet** – Skiljer sig andelen kristna markörer (kors, bön, kristna namn) mellan Gotland och Mälardalen per period, när man håller stilgrupp och material konstanta?  
   Data: Rundata (G-inskrifter, cross_form, bön, kristna namn), Runor 2020 korstypologi och termini, flyttad-filtret.. Varför: Jungner läser Sanda som hednisk trots kristen omgivning; ingen har mätt Gotland mot slumpen och fastlandet. – efter Jungner, Hugo 1930 (1930_065)
 - [artikel] **Hur många runstenar saknas?** – Uppskatta dolda stenar i stående kyrkor och i städer med fångst-återfångst över fyndår.  
@@ -1998,6 +2090,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata korsform, bönformler, kristna namn, stilgrupp/datering, region; Adam av Bremen som tidsram. Varför: Prövar den skriftliga bilden mot stenarna; kopplar till Vitkis fynd att bönen tystnade omkring 1035. – efter Schück, Adolf 1957 (1957_197)
 - [artikel] **Kristna före kyrkan: runstenarna i Askeby-trakten** – Visar kors och böner på runstenarna i Linköpings- och Askebyområdet att kristendomen var på plats före de stora stentornen, och i så fall vilken väg kom den?  
   Data: Rundata korsform och bönformler, Runor 2020 korstypologi, KMR kyrkor, ISOF, jämförelse med Västergötland.. Varför: Lindblom har kyrkorna men inga fakta om kristnandet; runstenarna är det vittnesbörd han saknar. – efter Lindblom, Andreas 1908 (1908_178)
+- [artikel] **Kristnades Gotland från två håll? Spåren i korsen** – Följer korsformer, böner och östliga resmål en öst–västaxel i runmaterialet, som Liljeholm anar i gravarna?  
+  Data: Runor 2020 korstypologi, Rundata korsform och bön, innehåll österut, G-signa, Kulturmiljöregistrets kyrkor och gravfält. Varför: Kristna markörer har bara mätts som en enda variabel; en östlig/västlig delning vore nytt och går att pröva mot slumpen. – efter Liljeholm, Nora 1999 (1999_145)
 - [artikel] **Kristnades Sverige på 1000-talet utan att någon byggde en kyrka?** – Runstenarna är ofta det enda dateringsbara kristna materialet från 1000-talet; när blev kyrkor det i stället?  
   Data: Rundata korsform och bön, ISOF/KMR kyrkplatser, Sveriges kyrkors dateringar.. Varför: Konsthistorien daterar kyrkor efter runstensornamentik; ingen har lagt dem i en gemensam tidsserie. – efter Okänd 1970 (1970_litt)
 - [artikel] **Kristnades Uppland på stenarna? Korsen, bönerna och den sena missionen** – Hur snabbt sprids kristna markörer i Uppland, och är de ett mått på omvändelse eller på modet hos dem som reste sten?  
@@ -2016,6 +2110,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata normalisering, allitterationsdetektion, termini, landskap.. Varför: Första korpusövergripande kartan över vers på runstenar. – efter Wessén, Elias 1927 (1927_001)
 - [artikel] **Kyrkan före sockenkyrkan: stenarna som berättar om kyrkbyggen** – Står runstenar och runtexter om kyrkobyggen oftare vid senare sockenkyrkor än slumpen i samma bygd, och vilka stenar visar att kyrkan grundats av enskilda?  
   Data: Rundata (texter, plats), Kulturmiljöregistret kyrkor, ISOF kyrkplatser, SDHK 1314, flyttfilter.. Varför: Binder kanonisk rätts krav på kyrkogrundande till stenarna; nytt perspektiv på kristnandet. – efter Yrwing, Hugo 1980 (1980_044)
+- [artikel] **Kyrkan kom på lånord: den språkliga vägen till svenskt kristnande** – Vilka kristna lånord hämtades från engelska, lågtyska eller latin i vilka landskap?  
+  Data: Rundata normaliseringar, etymologi, landskap, stilgrupp.. Varför: Tarvels lånordsmetod i Estland använd på korpus med tusentals kristna texter. – efter Okänd 2001 (2001_litt)
 - [artikel] **Kyrkan kom till stenen – eller stenen till kyrkan?** – Är stenar vid kyrkor äldre eller yngre än närliggande kyrkor, och vad säger det om kristnandet?  
   Data: KMR kyrkor, Runor 2020 ursprunglig plats och termini, Rundata korsform. Varför: Svarar på recensentens invändning mot Palms binära dikotomi. – efter Okänd 1998 (1998_litt)
 - [artikel] **Lagen på stenarna: hur ofta talar runstenarna rätt?** – Finns det rättsliga ord och handlingar på runstenarna, eller är de nästan alltid minnesmärken?  
@@ -2028,6 +2124,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Formelfält (Guðs móðir, Maria) per stilgrupp och tid i Rundata; Vitkis bönemått.. Varför: Jämför runbrukets kristna språk med skriftligt daterade bevis från kyrkan. – efter Okänd 1912 (1912_233)
 - [artikel] **Missionens kungar: spred kungamakten tron?** – Kommer kristna markörer i runtexterna tidigare och tätare nära kungliga centralplatser än i periferin?  
   Data: Rundata formler och kors, datering och stilgrupp, KMR/ISOF kungsgårdar och kyrkplatser, Upplands folkland-gränser.. Varför: Prövar den klassiska historiska tesen att kristnandet följde kungamakten med hela korpusen och slumpen. – efter Lindqvist, Sune 1926 (1926_245)
+- [artikel] **Nyomvändas stenar – eller bara stolta släkter?** – Är runstenarnas kristna markörer tätast tidigt och nära missionscentra, som Sawyers påstår, eller följer de status och släkt?  
+  Data: Rundata (korsform, bön, datering, ristare), KMR kyrkor, ISOF, Vitkis 43 drag, Runor 2020 korstypologi. Varför: Första mätningen mot hela korpusen av en etablerad uppfattning om 'nyomvända'. – efter Lönnroth, Lars 1994 (1994_198)
 - [artikel] **När blev Sverige kristet enligt stenarna?** – Visar runstenarnas kors och böner en kristnande i vågor från olika håll, och stämmer vågorna med de tre missionsvägarna (England, Bremen, Polen/Rus)?  
   Data: Rundata korsform och kristna formler per härad, Runor 2020 korstypologi, myntdatering av Olofs mynt, ISOF kyrkplatser, tidiga kyrkor (KMR).. Varför: Gör debatten om missionsursprung prövbar mot hela korpusen, vilket inga av de debattörer som nämns har gjort. – efter Duczko, Wladyslaw 2008 (2008_283)
 - [artikel] **När blev stenarna kristna? Kors och böner över tid** – Hur snabbt tar kristna markörer över i runtexterna, och skiljer sig Gotland från fastlandet?  
@@ -2072,6 +2170,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata och Runor 2020 (datering, termini, socken), Kulturmiljöregistrets kyrkor, byggnadsår ur Bebyggelseregistret via K-samsök och Sveriges kyrkor, avstånd till närmaste kyrka.. Varför: Kopplar kyrkans etablering direkt till runstenarnas slut regionvis, i stället för att bara anta att kyrkogården ersatte stenen; kan jämföras med att bönen tystnade omkring 1035. – efter Lundberg, Erik 1935 (1935_219)
 - [artikel] **Stod brostenarna vid broarna?** – Står stenar med brobygge- och vägformler närmare registrerade broar, vadställen och hålvägar än andra stenar i samma bygd, och när börjar vägbygge räknas som själens gärning?  
   Data: Rundata (formel, datering, stilgrupp, objekttyp), Kulturmiljöregistret (broar, vadställen, hålvägar, vägar), SGU strandförskjutning år 1050, slumpplatser i samma bygd.. Varför: Texten vänds mot vägen (50 % inom 45°) men ingen har mätt om just brostenarna följer själva övergångarna; kopplar arkeologi (vägar, broar) till kristnandets uttryck. – efter Larsson, Patrik 2016 (futhark_7_170_1087636)
+- [artikel] **Stormännens tro? Vem bar korset på runstenarna** – Är kors och böner vanligare hos titulerade än hos övriga resare, och sprids de uppifrån och ned?  
+  Data: Kristna markörer, statusord (thegn, dreng, landman), kvinnor och barn, period och bygd.. Varför: Prövar eliten som driver av kristnandet mot de många namngivna. – efter Okänd 2001 (2001_litt)
 - [artikel] **Tor vid hammaren, Tor på stenen** – Följer runstenarnas Tor (böner, Tor-namn, hammarbilder) samma karta och tid som hammarringarna i gravar och hoards?  
   Data: Rundata, Runor 2020 (anmärkningar, bildlänk), K-samsök/SHM hammarringar, Ström 1984. Varför: Bygger vidare på Tor-artikeln med en andra, oberoende källa (föremål) och prövar kultkontinuitet mot slumpen. – efter Novikova, Galina L. 1992 (1992_073)
 - [artikel] **Tor viger: formelns geografi** – Var finns formeln 'Tor viger' och hur hänger den ihop med Tor-ortnamn, gravfält och kyrkor?  
@@ -2090,6 +2190,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Runor 2020 placering/nuvarande läge för gravhällar och kors, Kulturmiljöregistrets kyrkor.. Varför: Ett mänskligt och rumsligt perspektiv på kristnandets gränsfall. – efter Jungner, Hugo 1936 (1936_278)
 - [artikel] **Var började kristnandet på runstenarna? En karta över kors och böner** – Sprider sig kristna markörer på runstenarna från politiska centra (Sigtuna, Birka, Uppsala) eller bygdevis oberoende, och skiljer sig kvinnligt rest från manligt rest?  
   Data: Rundata kors/bön/Guðs móðir, datering/stilgrupp, region; KMR gravfält/kyrkor/borgar; Människorna (kön).. Varför: Winroths hövdingastyrda kristnande kan prövas på tusentals stenar i stället för några krönikor; kvinnors roll saknas hos Winroth. – efter Okänd 2012 (2012_litt_d)
+- [artikel] **Var korset bara prydnad?** – Hur ofta saknar korsstenar all kristen text, och sjunker andelen över tid?  
+  Data: Korsform, textmarkörer, stilgrupp, landskap. Varför: Utmanar antagandet att kors visar kristen tro; en tydlig mätbar fråga för en bred läsekrets. – efter Okänd 2002 (2002_litt_b)
 - [artikel] **Var korset en amulett? Kristna tecken på runstenar mot hedniska namn och bön** – Följer korsen på runstenarna tron, eller används de som skyddstecken?  
   Data: Korsform (Rundata, Runor 2020), bön/kristna formler, Tor-namn, tid och landskap. Varför: Prövar ett grundantagande om kristnandet med hela korpusen. – efter Kyhlberg, Ola 1973 (1973_026)
 - [artikel] **Var slutade runstenarna? Norrlands stenar längs älvarna** – Hur skiljer sig runstenarna i Medelpad, Ångermanland och Jämtland från Svealand i språk, läge (älv/kust) och kristna markörer, och vad säger det om kontakter och tro i det hedniska inlandet?  
@@ -2106,12 +2208,16 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata bön-flagga och normalisering, Runor 2020 (medeltida inskrifter), kyrkopatrocinier, Kulturmiljöregistret kyrkor. Varför: Kopplar texterna till kultgeografin och visar kristnandets vägar (engelsk mot dansk-lundensisk); nytt eftersom helgonåkallan aldrig mätts över hela korpusen. – efter Svärdström, Elisabeth 1963 (1963_246)
 - [artikel] **Vem talade stenen till? Böner till Gud och uppmaningar till läsaren** – Riktar sig bönen på runstenarna till Gud eller till den förbipasserande, och står uppmaningarna där läsare gick?  
   Data: Rundatas normalisering (bönens form), Kulturmiljöregistrets vägar och hålvägar, Vitkis väg-vinkelmått, flyttfilter, tid och landskap.. Varför: Förenar Vitkis fynd om bönens tystnad omkring 1035 med mottagarperspektivet och med att texten är vänd mot vägen. – efter Waldispühl, Michelle 2020 (futhark_9-10_275_1385979)
+- [artikel] **Vilka gudar fanns i namnen?** – Följer gudanamnens frekvens i runstenarnas personnamn den litterära rangordningen (Oden, Tor, Frö, Tyr), eller en annan?  
+  Data: Rundata personnamn, ISOF kultnamn, stilgrupp/datering, landskap.. Varför: Nollresultat som 'Oden saknas men Tor är allmän' kan skriva om bilden av vikingatida tro. – efter Rausing, Gad 1995 (1995_229)
 - [artikel] **Äldre än Oden? Gudanamnen på runstenarna** – Hur ofta bär vikingatida personnamn Tor-, Frö-, Ull- och Oden-led, var, och när?  
   Data: Rundata personnamn, ISOF ortnamn med kultled, KMR gravfält.. Varför: Gamla antaganden om gudars ålder (Salin) kan mätas mot ett par tusen namn. Fortsätter Vitkis Tor-spår men breddar det. – efter Almgren, Oscar 1933 (1933_001_kompr)
 - [artikel] **Är ett kors alltid ett kors? Kors och bön på de svenska runstenarna** – När står ett kors utan några kristna ord, och hur förändras det över tid och landskap?  
   Data: Rundata korsform, Runor 2020 kors-typologi, 43 härledda drag (bön, Guðs móðir, kristna namn), datering, stilgrupp.. Varför: Korset används som kristen markör i alla kristnandekronologier utan test. – efter Wicker, Nancy L.; Williams, Henrik 2013 (futhark_3_151_616881)
 - [artikel] **Öland och Möre: de utelämnade hedningarna?** – Var kristnandet senare i kustlandskapen Öland och Möre?  
   Data: Kristna markörer, datering, landskap. Varför: Prövar en fråga som ställdes 1952 utan svar. – efter Okänd 1952 (1952_litt)
+- [artikel] **Östra eller västra kristendomen på runstenarna?** – Samvarierar östliga drag (korsformer, formler) på runstenarna med resor österut, och går det att skilja en östlig från en västlig kristningsväg i Sverige?  
+  Data: Rundata korsform och kristna markörer, Runor 2020 korstypologi, Vitkis resor österut/västerut, stilgrupp och landskap.. Varför: Prövar Grens obelagda påstående om ortodox influens över hela korpusen och knyter till Vitkis resultat om bönens tystnad och de ungas färder. – efter Gren, Leif 2001 (2001_267)
 - [artikel] **Överklassens kvinnor på bildstenarna** – Reser kvinnor oftare stenar med bilder och kristna motiv?  
   Data: Vitkis resare (kön), motivkatalog, kors, stilgrupp. Varför: Humanistisk vinkel med mätning av Herschends/Lerche Nielsens påstående. – efter Okänd 2006 (2006_litt_c)
 - [rapport] **Biskopssätet och stenarna: Sigtunagradienten** – Har runstenar nära Sigtuna fler kristna markörer än längre bort, och förändras det efter 1130?  
@@ -2170,6 +2276,10 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Koordinater, kristna markörer, korsform, datering, landskap. Varför: Mäter kristnandets rumsliga profil mot ett konkret kultcentrum (Adam av Bremens Uppsala). – efter Hauck, Karl 1987 (1987_161)
 - [rapport] **Kristnandet ur graven och ur stenen** – Hur förhåller sig 14C-daterade tidigkristna gravplatser till stenarnas kristna markörer och till bönens tystnad 1035?  
   Data: 14C-förteckning över tidigkristna gravplatser, Rundata (kors, bön), KMR.. Varför: Oberoende tidslinje för kristnandet. – efter Ahlström Arcini, Caroline; Mills, Ryan; Konsmar, A 2022 (440d5a05-8176-48f3-8044-83bca7409b0f)
+- [rapport] **Kristnandets nav** – Finns det en gradient av kristna markörer i runtexterna runt Lund, Sigtuna, Skara och Linköping som överlever kontroll för tid och landskap?  
+  Data: Rundata (kors, bön, Guðs móðir), Runor 2020 korstypologi, KMR kyrkor, centrumkoordinater. Varför: Prövar hur centra spred kristendomen med hela korpusen; ingen har gjort det mot slumpen. – efter Larsson, Lars; Hårdh, Birgitta 1997 (1997_139)
+- [rapport] **Kungsgods och runstenar** – Står runstenarna tätare där jorden ägdes av självägande bönder än på kungens och kyrkans gods?  
+  Data: Rundata/Runor 2020 koordinater, SDHK 1314 sexårsgärd per hundare, Rosenbergs lexikon, 1600-talskartornas namn, Kulturmiljöregistret. Varför: Bondemonument eller elitmonument? Gamla Uppsala är ett kontrollfall där ägandet är känt. – efter Ljungkvist, John 2000 (2000_145)
 - [rapport] **Kyrkorna på de gamla gravplatserna** – Hur ofta ligger kyrkor och kyrkflyttade runstenar på äldre gravfält än på slumpvisa platser?  
   Data: Kulturmiljöregistret kyrkor och gravfält, Runor 2020 ursprunglig plats, gravhällar.. Varför: Kopplar kristnandets platser till äldre kult och prövar Vitkis flyttnings­filter. – efter Serning, Inga 1963 (1963_213)
 - [rapport] **Latin i runor: hur utbredd var kunskapen?** – Hur stor del av de medeltida runinskrifterna är på latin, var finns de och vilka föremål?  
@@ -2208,6 +2318,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Vitkis stavningsmått, kulturmiljöregistrets kyrkor, ISOF kyrkplatser, datering.. Varför: Prövar en engelsk hypotes på svenska data; Vitki fann tidigare ingen tidstrend. – efter Robertson, John S. 2012 (futhark_2_7_512974)
 - [rapport] **Skämtet i Sigtuna: skriftlek och gåtor som stadsfenomen** – Är gåtor, chiffer och 'tyd detta' vanligare i städer än på landsbygden?  
   Data: Runor 2020 föremålstyp och plats, Rundata normalisering, Källströms och Nordbys listor.. Varför: Kopplar Vitkis kryptologi till arkeologi och stadsutveckling. – efter Pereswetoff-Morath, Sofia 2024 (futhark_13_55_1847932)
+- [rapport] **Sockennamn och tidigt kristnande** – Har socknar med by-/gårdsnamn tidigare kristna formler på runstenarna än socknar med kyrknamn?  
+  Data: ISOF socknar och ortnamn, Rundata datering och formler. Varför: Överför Brinks privatkyrkohypotes från historikernas urval till hela korpusen. – efter Liljeholm, Nora 1999 (1999_145)
 - [rapport] **Stenarna och de tidiga kyrkogårdarna som aldrig blev kyrkor** – Står runstenar oftare vid kända tidigmedeltida landsbygdskyrkogårdar utan bevarad kyrka än slumpen ger?  
   Data: Kulturmiljöregistret (kyrkor, gravfält, kyrkogårdar), ISOF kyrkplatser, Rundata flyttflagga. Varför: Utökar kyrkornas roll i Vitkis flytt- och bönetester och visar om stenar redan står vid kyrkogårdar innan kyrkan fanns. – efter Ahlström Arcini, Caroline, Evanni, Louise 2020 (b65f9381-1708-4326-b59c-860651fe7d4b)
 - [rapport] **Stenkyrkan eller runstenen? Elitens byte av monument** – Ersattes runstenarna av stenkyrkor, socken för socken, och i så fall av samma ägarskikt?  
@@ -2234,6 +2346,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata epitet, mått, profilstil, titlar, KMR. Varför: Mäter överklassen mot de många inom monumentbruk. – efter Düwel, Klaus 2013 (futhark_4_31_682690)
 - [rapport] **Vilken rad ristades först?** – Kan huggspårens korsningar visa ristningsordning på skannade stenar?  
   Data: Vitkis 3D-skanningar (huggspårens djup och vinkel). Varför: Objektiv metod för läsordning på stenar med oregelbunden uppställning. – efter Moltke, Erik 1981 (1981_081)
+- [rapport] **Östern eller västern? Kristna formler på de österresandes stenar** – Skiljer sig formler och korsformer mellan stenar som nämner resor österut och övriga?  
+  Data: Rundata, Vitkis innehållsdrag, Runor 2020 korstypologi. Varför: Prövar Beskows slutsats om västlig liturgi på hela korpusen. – efter Lönnroth, Lars 1994 (1994_198)
 - [rapport] **Östliga föremål och östliga stenar** – Sammanfaller runstenarnas östliga färdmål med fyndplatserna för baltiska och östliga föremål?  
   Data: Rundata platser/innehåll, K-samsök (SHM), Kulturmiljöregistret. Varför: Knyter 68 %-fyndet till materiell kultur från grannämnet arkeologi. – efter Okänd 1953 (1953_litt)
 
@@ -2493,7 +2607,7 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
 - [rapport] **Vem är namnet på stenen?** – Hur fördelas roller (resare, död, ristare) för namn på stenar, och skiljer sig det mot lösföremål?  
   Data: Människomodulen, Runor 2020 föremålstyp, ristare i Rundata.. Varför: Ger ett mått på vad namn på runföremål betyder i hela korpusen. – efter Beck, Wolfgang 2019 (futhark_8_157_1333699)
 
-## Rikedom, handel och silver (79 idéer)
+## Rikedom, handel och silver (80 idéer)
 
 - [artikel] **Betalade man med ord? Gjald, mark och silver på runstenarna** – När och var nämns betalning och handel i stentexterna, och följer det pengaekonomins tidslinje?  
   Data: Rundata normalisering och översättning, depådata. Varför: Gör pengaekonomin synlig i en källa som inte används i penninghistorien. – efter Okänd 1977 (1977_litt)
@@ -2563,6 +2677,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: CNS/SHM skattfynd, K-samsök, Runor 2020 termini, Rundata plats, KMR bebyggelsetäthet.. Varför: Brita Malmer lämnade Uppland som nästa jämförelse; en oprövad ekonomisk förklaring av runstenskartans skillnader. – efter Okänd 1987 (1987_litt)
 - [artikel] **Silvret väger lätt – när myntet tog över och stenarna tystnade** – Följer slutet på vägd silverekonomi per landskap slutet på runstensrestandet?  
   Data: Skattfynd med terminus post quem (CNS/SHM), vikt- och våg-fynd, runstenarnas datering per landskap (Rundata/Runor 2020 termini). Varför: Knyter runstenarnas storhetstid till pengarnas historia; ingen har jämfört deras kurvor. – efter Steuer, Heiko 1987 (1987_066)
+- [artikel] **Skatten och stenen** – Ligger vikingatidens silverskatter där runstenarna står, och dateras stenarna av slutmynten?  
+  Data: CNS/SHM skatter med slutmyntsår, Rundata, KMR. Varför: Mynt är ett oberoende dateringsunderlag som runforskningen nästan inte använt. – efter Okänd 2002 (2002_litt_a)
 - [artikel] **Skrift utan språk: vikingatidens kopierade bokstäver** – Hur ser pseudo-inskrifter ut statistiskt (på mynt och brakteater) och liknar de Maltstenens oläsliga sekvenser?  
   Data: Pseudo-legender från myntkataloger; Vitkis sekvensmått.. Varför: Ger en känd kontrollgrupp för de oläsliga ristningarna. – efter Stenberger, Mårten 1951 (1951_066)
 - [artikel] **Spelade vikingarna? Det runstenarna aldrig säger** – Vilka delar av vikingatidens vardag och elitkultur syns i runtexterna, och vilka syns bara i gravar och lösfynd?  
@@ -2654,7 +2770,7 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
 - [rapport] **Östvägens stenar nära Birka** – Är runstenar med österresor och död utomlands mer koncentrerade kring Birka/Adelsö/Sigtuna än landskap och datering förklarar?  
   Data: Rundata (innehåll österut, platser, koordinater), Runor 2020 (termini), SGU strandmodell 1050, KMR gravfält, ISOF.. Varför: Prövar om Birkas elitnätverk lever vidare i runstenskulturen; ingen har mätt östorienteringen som funktion av avstånd till Birka. – efter Hägg, Inga 1983 (1983_204)
 
-## Resor och kontakter utåt (40 idéer)
+## Resor och kontakter utåt (46 idéer)
 
 - [artikel] **De som blev kvar: svenskarna i Jaroslavl och stenarna som aldrig nämner dem** – Vad vet vi om svenskar som slog sig ner i öster, och varför berättar runstenarna bara om dem som dog?  
   Data: Rundata (österfärder, döda utomlands), Människorna, plus extern arkeologi (Gnezdovo, Ladoga, Jaroslavl).. Varför: Mänsklig vinkel, kopplar till Vitkis 'utvandrarna' och till runstenarnas skeva urval. – efter Okänd 1918 (1918_241)
@@ -2674,6 +2790,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata, Kulturmiljöregistret, SGU jordarter, inventeringsår. Varför: Testar Larssons socialtolkning över hela landet och avslöjar hur mycket av mönstret som är registreringsbias. – efter Okänd 1991 (1991_litt)
 - [artikel] **Hur länge levde runskriften? Från runstenar till dalrunor** – När slutade man rista runor på olika föremålstyper, och hur såg övergången från monumental till vardaglig runskrift ut?  
   Data: Runor 2020: termini (tidigast/senast), föremålstyp, plats; om fältet täcker yngre inskrifter. Rundata för stenarna.. Varför: Tidsserien över föremålstyper är ny och lägger vikingatidens stenar i en lång runhistoria; fältet tittar mest på stenarna. – efter Noreen, Adolf; Levander, Lars; Boëthius, Johannes 1906 (1906_063)
+- [artikel] **Kors utan Konstantinopel? Var runstenarnas korsformer hämtade sina förebilder** – Bär stenar med östfärd andra korsformer än stenar med västfärd, och följer korstyperna England, Tyskland eller Rus?  
+  Data: Rundata korsform (964), Runor 2020 korstypologi (1 119), innehållsdrag östresa/västresa, region, stilgrupp.. Varför: Fuglesangs dekonstruktion av 'bysantinskt' har aldrig prövats mot hela korsmaterialet. – efter Okänd 2001 (2001_litt)
 - [artikel] **Männen borta, stenarna hemma?** – Är kvinnliga stenresare vanligare där många män dog på färd, och stämmer bilden av hemmavarande hustrur som gårdsföreståndare?  
   Data: Rundata, Människorna-modulen (resare/döda), socknar och landskap, Runor 2020.. Varför: Kopplar kvinnors roll i runstensmaterialet till färdernas ekonomi; passar Vitkis mänskliga vinkel (Människorna). – efter Schnittger, Bror 1915 (1915_053)
 - [artikel] **När tystnade engelskan på runstenarna?** – Toppar västkontakterna omkring 1000 och faller de efter 1050, och skiljer sig Sigtunas omland från resten av Uppland?  
@@ -2682,12 +2800,20 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata normalisering (titelord), Människorna, Kulturmiljöregistret; SDHK 1314 per hundare.. Varför: Debatten om aristokrati bygger på gårdstyp och jordnatur, men runtexternas egna rangbeteckningar är aldrig använda som oberoende mått. – efter Herschend, Frands 1999 (1999_193)
 - [artikel] **Reste kvinnorna österut?** – Nämns kvinnor som resare eller åminda i stenarna om östfärder lika ofta som i övriga stenar, och stämmer det med arkeologins könsfördelning i Rus?  
   Data: Rundata (platser österut, kvinnor, släktskap), Stalsberg 1979 som utomstående test.. Varför: Mänsklig vinkel som drar läsare; korsar arkeologi och runtext. – efter Okänd 1980 (1980_litt)
+- [artikel] **Reste österfararna på släde? Vad runstenarna säger om färdsätt och färdväg** – Vilka färdsätt och platser längs österleden nämns i runtexterna, och stämmer det med att vägen norr om Smolensk var svårframkomlig?  
+  Data: Rundata normalisering/översättning (platsnamn och transportord), geografiskt galler för platser. Varför: Prövar en arkeologisk-experimentell hypotes mot runtexterna; blir en ny vinkel på 'färderna var de ungas'. – efter Edberg, Rune 1999 (1999_001)
 - [artikel] **Runor i Grekland: vem ristade på Piraeuslejonet?** – Vad säger de bevarade inskrifterna, runformerna och slingstilen om ristarna, och passar de med svenska stenar?  
   Data: Rundata, Runor 2020, Vitki-modellen för stil och stavning.. Varför: Ett av de mest berömda runföremålen i Medelhavet, aldrig prövat med korpusstatistik. – efter Shetelig, Haakon 1923 (1923_201)
+- [artikel] **Skeppet på stenen: bild eller berättelse?** – Vilka runstenar bär skeppsbilder och hör de ihop med texter om resor, död utomlands eller med gravkontexten?  
+  Data: Bildlänkar (544), 3D-skanningar, Rundata innehåll, stilgrupp.. Varför: Westerdahls tes om skeppet som gravsymbol har aldrig prövats på runstenar. – efter Westerdahl, Christer 1996 (1996_220)
 - [artikel] **Stenen talar om här, resan skedde där** – Hur ofta nämner runstenarna handlingar som skett på andra platser än stenens egen, och blir de då alltid 'han föll' i stället för 'han vann'?  
   Data: Rundatas normaliserade texter, flaggor för resa österut/västerut och död utomlands, landskap, period; verbklassificering.. Varför: Gör Holmbergs 'lokala agens' till ett mätt tal över hela korpusen och undersöker om Sö 166 är ett undantag eller del av ett mönster. – efter Holmberg, Per 2015 (futhark_6_65_922588)
 - [artikel] **Uthark på prov** – Finns numeriska mönster i runtexterna (talvärden i futhark) utöver slumpen?  
   Data: Translittereringar för alla stenar, permutationstest. Varför: Agrells teori avfärdades men prövades aldrig statistiskt på hela korpusen; passar Vitkis kryptologiserie. – efter Okänd 1998 (1998_litt)
+- [artikel] **Vad kostade en runsten? Ett monumentindex** – Vilka stenar kostade mest att resa och var finns de rikaste stenarna?  
+  Data: Rundata ordantal, namn, kors, ristarsignatur, material, stenmått, 3D-skannade huggspår. Varför: Överför arkeologins gravvärdesindex till runstenarna och prövar 'de rika och namngivna i stället för de många'. – efter Ringstedt, Nils 1998 (1998_167)
+- [artikel] **Var tittar runforskningen? Uppmärksamhet per sten** – Vilka runstenar har fått mest forskningsuppmärksamhet och förklaras det av stenens egenskaper eller av platsens symboliska kapital?  
+  Data: Runor 2020 litteraturhänvisningar (4 141), Rundata litteratur (1 001), stenens drag, landskap. Varför: Sätter siffror på Mälardalen-centrism i runforskningen; svar på huvudfrågan om skevt urval. – efter Trotzig, Gustaf 1998 (1998_191)
 - [artikel] **Var östresorna äldre än vikingatiden?** – Följer runstenarnas östriktning de vendeltida kontakterna?  
   Data: Rundata (platsuppgifter), KMR, finska/lettiska fornminnesregister.. Varför: Knyter runstenarna till ett äldre kontaktnät. – efter Åberg, Nils 1948 (1948_034)
 - [artikel] **Varför tiger runstenarna om norr?** – Pälsen och jakten som Birka levde av kom från norr och skärgården – varför nämner runstenarna nästan bara öst och väst?  
@@ -2730,6 +2856,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Kulturmiljöregistret (gravhögar, skeppssättningar, gravfält), runstenar med koordinater, rumslig slumpjämförelse inom bygd.. Varför: Larssons mest citerade resultat bygger på 29 utvalda enheter i två landskap och en referensgrupp; det har aldrig prövats på hela landet med rumslig statistik. – efter Herschend, Frands 1999 (1999_193)
 - [rapport] **Spektakulära stenar och osäkra stenar: är färdestenarna överrepresenterade bland de förlorade?** – Är innehåll som utlandsresor och mytiska namn vanligare på förlorade än på bevarade stenar, och hur mycket av '68 % österut' beror på det?  
   Data: Rundata innehållsdrag × †-flagga × landskap × dokumentationstid.. Varför: Direkt prövning av om ett av Vitkis mest citerbara resultat påverkas av antikvarisk önskan. – efter Michael Lerche Nielsen 2010 (futhark_1_225_381129)
+- [rapport] **Vem åt vad vid runstenarna?** – Skiljer sig isotopvärden (kost, ursprung via strontium) mellan gravar nära runstensrika och runstensfattiga bygder, och mellan 'resare' och lokala?  
+  Data: Öppna isotopdata (IsoArcH, strontiumstudier av Birka/Sigtuna) + Rundata-koordinater. Varför: Kopplar naturvetenskaplig dateringsdata och rörlighetsdata till runstenarnas påståenden om färder österut. – efter Lidén, Kerstin, Nelson, Erle D. 1994 (1994_013)
 - [rapport] **Västerut eller söderut? Konstens riktning och resmålen** – Hör England-resor ihop med Ringerike/Urnes-stilar mer än slumpen?  
   Data: Rundata resmål + stilgrupp, region, tid.. Varför: Förenar konsthistoria och textdata; ingen har gjort det kvantitativt. – efter Holmqvist, Wilhelm 1960 (1960_135)
 - [rapport] **Österlandsfärderna och Roden** – Kommer männen som dog i österled oftare från Rodens socknar än från inlandet i Uppland?  
@@ -2737,7 +2865,7 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
 - [rapport] **Östliga korsformer och Rysslandsfarare** – Har stenar efter österfarare oftare bysantinsk korsform än stenar efter västfarare?  
   Data: Rundata (resor), Runor 2020 (korsformer), KMR (Sigtuna), jämförelsedata för Kiev och Konstantinopel.. Varför: Kopplar religionshistoria till färdernas karta; nytt eftersom kors och färd sällan sammanställts. – efter Floderus, Erik 1940 (1940_129)
 
-## Ristare och verkstäder (88 idéer)
+## Ristare och verkstäder (92 idéer)
 
 - [artikel] **Bokstaven som vandrade: h för g på runstenarna** – Var och när skrev ristarna h där vi hör ett frikativt g, och spred det sig från Norrland, från Åsmund Kåresson eller från Mälardalen?  
   Data: Rundatas translitterering mot normalisering för alla svenska runstenar, dateringar och stilgrupper, ristarattribut (Åsmund Kåresson), koordinater, stungna runor; permutationstest mot slumpplatser i samma bygd.. Varför: Källström lämnar spridningen som en öppen gåta; ett korpusövergripande mått med karta och tidskurva ger nytt underlag och en bra berättelse om ett skrivtecken som blir en succé. – efter Källström, Magnus 2013 (futhark_4_102_682693)
@@ -2761,6 +2889,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata, Runor 2020 ristarnoteringar, Vitkis ristarmodell. Varför: Prövar ett typiskt runologiskt attribueringsresonemang mot basfrekvensen. – efter Snaedal, Thorgunn; Stoklund, Marie; Åhlén, Marit 1988 (1988_234)
 - [artikel] **Kan man se ristaren utan signaturen?** – Hur väl stämmer runologernas 'typiska X-sten' med en mätning av signerade stenar?  
   Data: Rundata ristarfält (778), Runor 2020 ristarnoteringar (1 082), profilstil, textdrag, 3D-skanningar.. Varför: Testar den äldsta metoden (kännarskap) mot data och bygger på Vitkis blindprov. – efter Jansson, Sven B. F. 1948 (1948_168)
+- [artikel] **Kunde en kvinna rista en runsten?** – Vilket kön har de namngivna ristarna, och skiljer sig ristarna på kvinnoresta stenar från dem på mansresta?  
+  Data: Rundata ristare, Runor 2020 ristarnoteringar, Människorna-modulen (resare, kön), stilgrupp, landskap.. Varför: Ett utbrett antagande (kvinnor reste, män ristade) har aldrig mätts över hela korpusen; svaret, även ett nollresultat, är nytt. – efter Göransson, Eva-Marie 1995 (1995_129)
 - [artikel] **Kvinnorna som fick en sten** – Vilka kvinnor fick minnesstenar, hur ofta, och skiljer de sig i status och läge från de män som fick det?  
   Data: Människorna-modulen, stilgrupp, signerade ristare, Kulturmiljöregistrets gravfält och skeppssättningar, stenmått.. Varför: Vi har visat att kvinnor reste stenar oftare i Svealand; vem som minns kvinnorna är den spegelvända frågan. – efter Gräslund, Anne-Sofie 2016 (futhark_7_181_1087624)
 - [artikel] **Lärde sig ristarna under arbetet? Fel, rättelser och erfarenhet på runstenarna** – Faller felfrekvensen när en ristare gör fler stenar, och är böner mer felaktiga än andra formler?  
@@ -2801,10 +2931,14 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Vitkis 3D-skanningar och bandindelning (groove-6/7), 'Runor och ornamentik'-vyn.. Varför: Prövar ett vanligt antagande om att runristaren och bildhuggaren är samma person och påverkar attribution. – efter Gustavson, Helmer; Swantesson, Jan O.H. 2011 (2011_306)
 - [artikel] **Samma uppdragsgivare, samma ristare?** – Hur ofta ger en och samma person (en änka, en fader) två stenar till samme ristare, och hur säker är då regeln att ornamentiken avslöjar handen?  
   Data: Människorna (resare på flera stenar), Rundata ristare, Runor 2020 ristarnoteringar, stilgrupp, härad; permutationstest mot slumpparning.. Varför: Prövar den vanligaste tysta metoden i runforskningen (tillskriva ristare efter uppdragsgivare) och anknyter till ristarmodellen: resultatet säger hur långt man kan gå utan signatur. – efter Jansson, Sven B. F. 1943 (1943_309)
+- [artikel] **Smeden som ristade?** – Förekommer smeder som stenresare, ristare eller nämnda på runstenarna, och följer de regioner med järnframställning?  
+  Data: Rundata, Runor 2020 ristarnoteringar, KMR järnframställningsplatser. Varför: Prövar hantverkets sociala ställning med runstensdata i stället för sagor och etnografi. – efter Englund, Lars-Erik 1994 (1994_281)
 - [artikel] **Sällsynta stavningar som fingeravtryck** – Vilka ovanliga stavningar (ihlbi, hialb-, -ie-) följer ristare eller plats starkare än slumpen?  
   Data: Rundata translitterering, ristare, koordinater, härad.. Varför: Ett första direkt test av vad stavning kan säga om händer, med runologins egna exempel. – efter Jesch, Judith 2020 (futhark_9-10_201_1385969)
 - [artikel] **Var det samma hand före och efter kristnandet?** – Byter attribuerade ristare symboler (kors, bön) inom sin livstid, eller ersätts hedniska ristare av kristna?  
   Data: Rundata ristare, Runor 2020 ristarnoteringar, korsform, bönformel, datering. Varför: Visar kontinuitet eller brott i hantverket vid kristnandet. – efter Floderus, Erik 1928 (1928_089)
+- [artikel] **Vem bär runforskningens dateringar?** – Hur få forskare står bakom ristarattribueringarna och dateringarna – och hur ofta håller ett annat öga med?  
+  Data: Runor 2020 ristarnoteringar och litteraturhänvisningar. Varför: Metodkritik som speglar Myrdals poäng om osteologins koncentration på ett par personer. – efter Myrdal, Janken 1997 (1997_209)
 - [artikel] **Vem lärde Öpir? Ett mätt svar på runologins lärare–elev-gåta** – Vilken annan ristare ligger närmast Öpir i stavning, runformer och formler, och stämmer det med Viseti, Igulfast eller någon annan?  
   Data: Ristarmodellen, Rundata ristare, Runor 2020 ristarnoteringar, stilgrupper, 3D-skanningar.. Varför: Gör den kända teorin om lärare och elev prövbar och kan i bästa fall bekräfta eller förkasta ett halvt sekels spekulationer. – efter Thompson, Claiborne W 1972 (1972_016)
 - [artikel] **Vem skrev sist? Var ristaren nämner sig i texten** – Nämner ristare sig oftast sist, och hjälper det att avgöra vem som ristade?  
@@ -2889,6 +3023,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata (icke-språk, koordinater, ristare), Vitkis språkmodell, Runor 2020 ristarnoteringar.. Varför: Prövar Bianchis tes om visuellt förankrad skrift och bygger på Vitkis egen icke-språkstudie. – efter Spurkland, Terje 2012 (futhark_2_227_512986)
 - [rapport] **Skrivare eller huggare? Verben i ristarsignaturerna** – Hur ofta skiljer runtexterna mellan den som gjorde monumentet, den som skrev texten och den som högg, och följer ristarnas grupper text eller ornamentstil?  
   Data: Rundata (ristare, normalisering), Runor 2020 ristarnoteringar, medeltida inskrifter från Runor 2020.. Varför: Ger en förklaring till att textmodellen känner igen händer men ornamentmodellen inte gör det. – efter Okänd 1961 (1961_litt)
+- [rapport] **Skånes stenmästare och runristarna: samma sten, samma verkstad?** – Går de stenmästare som konsthistorien (Rydbeck 1936, Anglert 1995) har namngivit före 1200 att koppla till runstenar och gravhällar, och går de att särskilja från runristarna med Vitkis ristarmodell?  
+  Data: Runor 2020 (ristarnoteringar, gravhällar 260, profilstil), Rundata ristare i Skåne, konsthistorisk litteratur om namnmästare. Varför: Brygga mellan konsthistorisk mästarattribuering och runologisk ristarattribuering; ger en oberoende kontroll av ristarmodellen. – efter Nyman, Sten; Tegnér, Göran 1998 (1998_135)
 - [rapport] **Solitärerna och de många** – Vilka runstenar har forskningen skrivit mest om, och är de representativa för korpusen?  
   Data: Runor 2020 och Rundata litteraturhänvisningar, stenmått, ornamentik, ristare, landskap, 3D-skanning.. Varför: Visar fältets urvalsskevhet med siffror och ger en viktning för alla andra Vitki-resultat. – efter Nylén, Erik 1968 (1968_190)
 - [rapport] **Spegelbilder och samma hand: pröva Brates grupper** – Är stenpar med liknande slinga oftare samma ristare än slumpen, och håller Brates grupper för stavningen?  
@@ -2929,7 +3065,7 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
 - [rapport] **Vem skriver om runor? Författare och ämnen i Fornvännen och Futhark** – Hur har könsfördelning, affiliation och ämnen utvecklats i runlitteraturen?  
   Data: Journalarkivet (Fornvännen 1906–2023, Futhark 1–15). Varför: Fältets egen sammansättning, ett perspektiv som sällan mäts. – efter Okänd 2021 (15d84dff-7d9c-4cde-b515-c4e4876c6afc)
 
-## Makt, politik och territorier (49 idéer)
+## Makt, politik och territorier (50 idéer)
 
 - [artikel] **Bautastenar stode ej vid väg: gäller Hávamál på runstenarna?** – Står släkting-rest-för-släkting-stenar närmare vägar än stenar rest av andra, som Hávamál 72 säger?  
   Data: Människor-modulen (relationer), Kulturmiljöregistrets vägar/hålvägar, slumpplatser i bygden.. Varför: Gör ett litterärt citat till ett mätbart påstående och kopplar vägstudien till släktstudien. – efter Floderus, Erik 1945 (1945_122)
@@ -2953,6 +3089,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: DR/Rundata Skåne, Lunds inskrifter, mynt.. Varför: Skåne mellan rikena får en kunglig stadsgrundning som ram. – efter Lundberg, Erik 1942 (1942_390)
 - [artikel] **Stod runstenarna vid tinget?** – Ligger runstenar nära ting- och gravplatser mer än slumpen?  
   Data: ISOF ortnamn (Ting-), KMR gravhögar, Rundata. Varför: Ting och runstenar har ofta nämnts tillsammans men aldrig prövats. – efter Nordlander, Johan 1927 (1927_182)
+- [artikel] **Svearikets runor: fanns det ett enhetligt Sverige?** – Följer runstenarnas språk- och formeldrag ett enhetligt rike eller äldre bygder och landskap?  
+  Data: Rundata härledda drag, riken omkring år 1000 (polygoner), Upplands folkland, Smålands små land. Varför: Vänder forskningshistorien (Nerman 1941: ett rike i obruten kontinuitet) mot de faktiska stenarna. – efter Baudou, Evert 2000 (2000_035)
 - [artikel] **Thegnarna vid Fyrkat – var stenarna visar hövdingarnas män** – Klustrar stenar med titlar som þegn, drængʀ och hirðmaðr mer än slumpen, och faller klustren ihop med Fyrkat, Vänern eller Tegneby-namn?  
   Data: Rundata (titlar i normalisering), ISOF ortnamn (Tegneby), KMR, riksgränspolygoner. Varför: Löfvings tanke om en kortvarig maktkoncentration har aldrig mätts över hela korpusen. – efter Löfving, Carl 1984 (1984_093)
 - [artikel] **Tinget och stenen** – Reste man runstenar nära tingsplatserna?  
@@ -3030,7 +3168,7 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
 - [rapport] **Är periodsystemet samtidigt överallt?** – Skiljer sig stilgruppernas tid mellan landskap och riksdelar?  
   Data: Rundata stilgrupp och datering, Runor 2020 termini och profilstil, landskap och riken omkring år 1000.. Varför: Prövar om en enda tidsskala fungerar eller om utvecklingen är regional, vilket påverkar varje tidsberoende resultat. – efter Okänd 1941 (1941_litt)
 
-## Ornamentik och bild (26 idéer)
+## Ornamentik och bild (28 idéer)
 
 - [artikel] **Djuren på stenarna** – Vilka djur ristas, och förekommer samma djur i texten (häst, orm, hund)?  
   Data: Rundata bildlänk (544), Runor 2020 ornamentik och motiv.. Varför: Utgår från Vitkis tidigare snabbtitt (texterna nämner nästan aldrig djur). – efter Lundberg, Oskar 1949 (1949_023)
@@ -3044,6 +3182,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Runor 2020 (termini och datering efter 1500), Rundata.. Varför: Visar runstenarnas eftermäle och hur kön och klass formade nyttjandet. – efter Wessén, Elias 1933 (1933_309)
 - [artikel] **Runstenarna och de osynliga: var stod slaverna och slavarna?** – Hur ofta nämns ofria, slaver och främlingar på runstenar, och stämmer det med arkeologins bild av inflyttade i Skåne och Lund?  
   Data: Rundata (texter, normaliseringar), strontiumdata (Ahlström Arcini 2018), skattfynd, Fornsök. Varför: Visar urvalet i runstenarnas värld mot den arkeologiska befolkningen – efter Garde?a, Leszek, Kajkowski, Kamil, Söderberg, Beng 2019 (68491700-8cd0-471a-978a-c66c89185261)
+- [artikel] **Runstenen i tidningen** – Hur har pressen berättat om runstenar – vilka stenar och landskap får bli kända, och stämmer bilden med korpusen?  
+  Data: Svenska dagstidningar (KB), Rundata, Vitki Statistik. Varför: Allmänhetens runstenar mot de verkliga; mänsklig vinkel som brukar nå läsare. – efter Welinder, Stig 1997 (1997_019)
 - [artikel] **Runstenens stil och svärdets: vem lånade av vem?** – Korrelerar runstensstilgrupper med svärdstyper och Ringerike-/Urnes-stil i metallarbeten regionalt?  
   Data: Rundata stilgrupp, Runor 2020 profilstil, svärdskatalog (Androshchuk), K-samsök. Varför: Binder runstensornamentik till övrig vikingatida materiell kultur. – efter Androshchuk, Fedir 2003 (2003_035)
 - [artikel] **Ryttaren och hjorten – vad bilderna på runstenarna fortsätter** – Följer gravsymboliken från förvikingatidens stenar (ryttare, hjort) in på runstenarna, och var?  
@@ -3072,6 +3212,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata korsform och stilgrupp, Runor 2020 profilstil och korstypologi, 43 härledda drag, 3D-skanningar för ett hundratal stenar, permutationstester och regression.. Varför: Bianchis iakttagelse att bilden bär mening har aldrig prövats över hela korpusen. – efter Waldispühl, Michelle 2015 (futhark_5_65_799765)
 - [rapport] **Krigarna före stenarna: bildmotiv på runstenar mätta mot äldre järnålder** – Vilka figurala motiv (hornhjälm, varg, svärd, ormar) finns på runstenarna, hur vanliga är de per stilgrupp och landskap, och följer de samma geografi som äldre bildföremål?  
   Data: Runor 2020 ornamentik/anmärkningar/bildlänkar, Rundata Övrigt, K-samsök-bilder; Birka- och vendelmaterialet (Arbman 1940). Varför: Bildspråket är aldrig mätt över hela korpusen; det binder ihop runologi och gravarkeologi. – efter Ringquist, Per-Olof 1969 (1969_287)
+- [rapport] **Människorna på stenarna: bildmotiv och budskap** – Hur fördelar sig människobilder, skepp och ryttare över stilgrupper, landskap och resarens kön?  
+  Data: Motivkodning av bildlänkar (544) och 3D-skanningar; Rundata stilgrupp, resare.. Varför: Bilden behandlas som ornament; ingen databas har motiv som fält. – efter Göransson, Eva-Marie 1995 (1995_129)
 - [rapport] **Ornamentet räknat: motivfrekvens på 2 000 runstenar** – Vilka formelement (flikar, fot, bandslut, djurpar) förekommer när, var och tillsammans med vilka stilgrupper?  
   Data: Rundatas bildlänkar, Runor 2020:s bilder, 3D-skanningar; bildanalys eller manuell kodning. Varför: Svarar på Karlssons egen uppmaning om en systematisk frekvensundersökning och ger en oberoende dateringsaxel. – efter Karlsson, Lennart 1978 (1978_242)
 - [rapport] **Ornamentik och budskap: vad stilen säger om texten** – Förutsäger profilstil och slingstruktur textens formler utöver dateringen?  
@@ -3085,7 +3227,7 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
 - [rapport] **Vilka stenar har bilder? Dokumentationens skevhet i Rundata** – Hur ojämnt är bildmaterial och ornamentsinformation fördelat mellan landskap och tider?  
   Data: Rundata bildlänk (544), Runor 2020 profilstil (1 984), korsform (964), material (1 638). Varför: Ingen har redovisat täckningen; den avgör hur mycket av text-mot-material-analyser som är representativa. – efter MacLeod, Mindy 2016 (futhark_7_155_1087627)
 
-## Forskningens egna vanor och metoder (11 idéer)
+## Forskningens egna vanor och metoder (12 idéer)
 
 - [artikel] **Där runstenarna tog slut** – Var upphör runstenarna i norr och inland, och vad finns i stället enligt fornlämningar och pollen?  
   Data: Rundata koordinater, KMR boplatser/härdar/fångstgropar, Neotoma pollen, ISOF ortnamn (samiska namn). Varför: Sweden-fokus och urvalsskevhet: Uppland som norm; här visas de områden som korpusen inte täcker. – efter Bergman, Ingela 1990 (1990_273)
@@ -3099,6 +3241,8 @@ Räknat på idéer, fältblindfläckar och det läsarna såg att Vitki saknar; e
   Data: Rundata normaliseringar, permutation, ordfrekvens.. Varför: Gör vers till ett mätbart begrepp med osäkerhet. – efter Källström, Magnus 2021 (futhark_11_183_1543736)
 - [rapport] **Hur stor är urvalsbiasen? Vad ett RuneS-urval skulle ha missat** – Hur mycket skiljer sig resultaten för tid, formler och kvinnor om man bara analyserar ett urval av de svenska stenarna?  
   Data: Hela Rundata-korpusen, upprepade slumpurval, Vitkis fynd.. Varför: Visar värdet av korpusvid analys och varnar för slutsatser ur urval. – efter Christiane Zimmermann 2012 (futhark_2_219_512984)
+- [rapport] **Prövar runstenarna Krafts kultförbund?** – Följer runstenarnas språkdrag och formler Krafts rekonstruerade kultförbund (Södermanland, Uppland, Östergötland) mer än slumpade gränser?  
+  Data: Rundata, ISOF kultortnamn, digitaliserade förbundsgränser, permutation inom bygd. Varför: Första kvantitativa test av en populär men hårt kritiserad hypotes; metod redan använd på Upplands folkland. – efter Okänd 2002 (2002_litt_a)
 - [rapport] **Ritaren som vittne: hur väl stämmer antikvariska teckningar mot 3D?** – Hur ofta avviker 1600- och 1700-talets teckningar från dagens läsning?  
   Data: ATA-ritningar (Peringskiöld, Bautil), 3D-skanningar, Rundata. Varför: Källkritik med mätning: första kvantitativa bedömningen av ritningarnas tillförlitlighet. – efter Boje Andersen, Charlotte 2016 (futhark_7_131_1087626)
 - [rapport] **Stod stenarna där man såg dem?** – Står runstenar på platser med större synbarhet än slumpplatser i samma bygd (kullar, hålvägar, vadställen)?  
