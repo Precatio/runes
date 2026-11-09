@@ -35,3 +35,10 @@ forska; hitta nya artiklar och rapporter. "Låt allt köra på."
 - Användningsgränsen nåddes 10:30–12:30; avbrutna läsare återupptogs med SendMessage.
 - Kön: `python3 nasta.py N --starta` ger de N nästa omgångarna och markerar dem i `startade.txt`; läsaren startas med en kort prompt: läs `LASARE_RUN.md` (fva/fvb/fvc) eller `LASARE_GRANN.md` (fvga/fvgb/fvgc) och utför den för omgången.
 - Om en session dör: omgångar i startade.txt utan fynd2-fil har inte blivit klara – ta bort dem ur startade.txt och starta om.
+
+## Idéerna
+- `FORSKNINGSIDEER.md` = alla idéer ur läsningarna per tema (skrivs om av `ideer.py` efter varje läsfönster; huvudspåren för hand i `IDEER_HUVUDSPAR.md`).
+- Kör `python3 sammanstall.py && python3 ideer.py` efter varje fönster.
+
+## Nästa fönster
+Viktor 2026-11-09: fortsätt när användningen återställs (22:00). 88 grannomgångar kvar, från fvgc_007.
