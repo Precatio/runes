@@ -86,18 +86,32 @@ def fornvannen(max_n=None):
         os.makedirs(os.path.join(base, sub), exist_ok=True)
     index = os.path.join(base, "index.jsonl")
     have = done_ids(index)
-    # the list: Arkivsök's search over the collection, 100 a page
-    hits, page = [], 0
-    while True:
-        r = S.post("https://arkivsok.raa.se/api/dokumentation/search/advanced", timeout=120,
-                   json={"criterias": [{"key": "arkiv_samling", "values": ["Fornvännen"]}], "page": page, "pagesize": 100})
-        r.raise_for_status()
-        d = r.json()
-        hits += [h for h in d["indexResults"] if h.get("genreFormStrikt") != "Arkiv/Samling"]
-        time.sleep(PAUSE)
-        page += 1
-        if page >= d["totalPages"]:
-            break
+    # the list: Arkivsök's search over the collection, 100 a page, with retries; kept in lista.json so that a restart
+    # does not ask for it again (the search timed out once, 2026-11-09)
+    lista = os.path.join(base, "lista.json")
+    if os.path.exists(lista):
+        hits = json.load(open(lista, encoding="utf-8"))
+    else:
+        hits, page, total = [], 0, 1
+        while page < total:
+            for attempt in range(6):
+                try:
+                    r = S.post("https://arkivsok.raa.se/api/dokumentation/search/advanced", timeout=300,
+                               json={"criterias": [{"key": "arkiv_samling", "values": ["Fornvännen"]}], "page": page,
+                                     "pagesize": 100})
+                    r.raise_for_status()
+                    d = r.json()
+                    break
+                except (requests.RequestException, ValueError) as e:
+                    log("listan, sida", page, "fel", e, "– försöker igen")
+                    time.sleep(30 * (attempt + 1))
+            else:
+                raise RuntimeError(f"listan: gav upp på sida {page}")
+            hits += [h for h in d["indexResults"] if h.get("genreFormStrikt") != "Arkiv/Samling"]
+            total = d["totalPages"]
+            page += 1
+            time.sleep(PAUSE)
+        json.dump(hits, open(lista, "w", encoding="utf-8"), ensure_ascii=False)
     log("Fornvännen:", len(hits), "poster i Arkivsök,", len(have), "redan hämtade")
     n = 0
     with open(index, "a", encoding="utf-8") as fh:
