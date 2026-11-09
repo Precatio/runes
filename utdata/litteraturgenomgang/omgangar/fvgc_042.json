@@ -1,0 +1,65 @@
+[
+ {
+  "journal": "fornvannen",
+  "key": "1976_186",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/1976_186.txt",
+  "title": "Reply",
+  "year": "1976",
+  "authors": [
+   "Linder Welin, Ulla S."
+  ],
+  "words": 3246,
+  "signa_top": []
+ },
+ {
+  "journal": "fornvannen",
+  "key": "1976_litt",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/1976_litt.txt",
+  "title": "Recensioner",
+  "year": "1976",
+  "authors": [
+   "Okänd"
+  ],
+  "words": 17212,
+  "signa_top": []
+ },
+ {
+  "journal": "fornvannen",
+  "key": "1977_061",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/1977_061.txt",
+  "title": "Labyrint och ryttarlek",
+  "year": "1977",
+  "authors": [
+   "Kraft, John"
+  ],
+  "words": 11276,
+  "signa_top": [
+   "U 5436",
+   "U 6847"
+  ]
+ },
+ {
+  "journal": "fornvannen",
+  "key": "1977_135",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/1977_135.txt",
+  "title": "Senvendeltida och vikingatida djurhuvudformiga spännen från Gotland, en kvantitativ bearbetning",
+  "year": "1977",
+  "authors": [
+   "Carlsson, Anders Wilhelm"
+  ],
+  "words": 8305,
+  "signa_top": []
+ },
+ {
+  "journal": "fornvannen",
+  "key": "1977_213",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/1977_213.txt",
+  "title": "Forntid - medeltid",
+  "year": "1977",
+  "authors": [
+   "Holmqvist, Wilhelm"
+  ],
+  "words": 6852,
+  "signa_top": []
+ }
+]

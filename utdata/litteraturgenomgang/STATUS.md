@@ -29,3 +29,9 @@ forska; hitta nya artiklar och rapporter. "Låt allt köra på."
 ## Drift
 - Datorn somnade 09–10 den 9 november och stoppade körningarna; `caffeinate -dims -t 43200` håller den vaken (startad 10:05). Omgång 012 (andra läsningen) startades om.
 - Fornvännens första urval (de ~620 hämtade): `fva_001–007` (runtexter) och `fvga_001–006` (närliggande); resten tas med `--prefix fvb`/`fvgb` när hämtningen är klar.
+
+## Läget 9 november kväll
+- Viktor 17:05: **allt i Fornvännen läses fullt**, också de närliggande disciplinerna (valt framför sortering).
+- Användningsgränsen nåddes 10:30–12:30; avbrutna läsare återupptogs med SendMessage.
+- Kön: `python3 nasta.py N --starta` ger de N nästa omgångarna och markerar dem i `startade.txt`; läsaren startas med en kort prompt: läs `LASARE_RUN.md` (fva/fvb/fvc) eller `LASARE_GRANN.md` (fvga/fvgb/fvgc) och utför den för omgången.
+- Om en session dör: omgångar i startade.txt utan fynd2-fil har inte blivit klara – ta bort dem ur startade.txt och starta om.

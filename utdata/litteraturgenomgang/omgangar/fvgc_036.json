@@ -1,0 +1,64 @@
+[
+ {
+  "journal": "fornvannen",
+  "key": "1965_aktuellt",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/1965_aktuellt.txt",
+  "title": "Aktuellt",
+  "year": "1965",
+  "authors": [
+   "Okänd"
+  ],
+  "words": 5542,
+  "signa_top": []
+ },
+ {
+  "journal": "fornvannen",
+  "key": "1965_litt",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/1965_litt.txt",
+  "title": "Litteratur och kritik m.m.",
+  "year": "1965",
+  "authors": [
+   "Okänd"
+  ],
+  "words": 16235,
+  "signa_top": [
+   "Sm 39"
+  ]
+ },
+ {
+  "journal": "fornvannen",
+  "key": "1966_aktuellt",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/1966_aktuellt.txt",
+  "title": "Aktuellt",
+  "year": "1966",
+  "authors": [
+   "Okänd"
+  ],
+  "words": 5785,
+  "signa_top": []
+ },
+ {
+  "journal": "fornvannen",
+  "key": "1966_litt",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/1966_litt.txt",
+  "title": "Recensioner",
+  "year": "1966",
+  "authors": [
+   "Okänd"
+  ],
+  "words": 21557,
+  "signa_top": []
+ },
+ {
+  "journal": "fornvannen",
+  "key": "1967_aktuellt",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/1967_aktuellt.txt",
+  "title": "Aktuellt",
+  "year": "1967",
+  "authors": [
+   "Okänd"
+  ],
+  "words": 7009,
+  "signa_top": []
+ }
+]

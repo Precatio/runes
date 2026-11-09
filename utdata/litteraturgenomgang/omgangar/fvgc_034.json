@@ -1,0 +1,40 @@
+[
+ {
+  "journal": "fornvannen",
+  "key": "1960_litt",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/1960_litt.txt",
+  "title": "Litteratur och kritik m.m.",
+  "year": "1960",
+  "authors": [
+   "Okänd"
+  ],
+  "words": 30073,
+  "signa_top": [
+   "U 7"
+  ]
+ },
+ {
+  "journal": "fornvannen",
+  "key": "1961_aktuellt",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/1961_aktuellt.txt",
+  "title": "Aktuellt",
+  "year": "1961",
+  "authors": [
+   "Okänd"
+  ],
+  "words": 8006,
+  "signa_top": []
+ },
+ {
+  "journal": "fornvannen",
+  "key": "1962_aktuellt",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/1962_aktuellt.txt",
+  "title": "Aktuellt",
+  "year": "1962",
+  "authors": [
+   "Okänd"
+  ],
+  "words": 6942,
+  "signa_top": []
+ }
+]

@@ -1,0 +1,28 @@
+[
+ {
+  "journal": "fornvannen",
+  "key": "1958_litt",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/1958_litt.txt",
+  "title": "Litteratur och kritik m.m.",
+  "year": "1958",
+  "authors": [
+   "Okänd"
+  ],
+  "words": 33540,
+  "signa_top": []
+ },
+ {
+  "journal": "fornvannen",
+  "key": "1959_aktuellt",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/1959_aktuellt.txt",
+  "title": "Aktuellt",
+  "year": "1959",
+  "authors": [
+   "Okänd"
+  ],
+  "words": 8985,
+  "signa_top": [
+   "Sö 155"
+  ]
+ }
+]

@@ -1,0 +1,40 @@
+[
+ {
+  "journal": "fornvannen",
+  "key": "1915_001",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/1915_001.txt",
+  "title": "Studier över ortnamnen på -lösa",
+  "year": "1915",
+  "authors": [
+   "Lindroth, Hjalmar"
+  ],
+  "words": 18456,
+  "signa_top": []
+ },
+ {
+  "journal": "fornvannen",
+  "key": "1915_053",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/1915_053.txt",
+  "title": "Silverskatten från Stora Sojdeby",
+  "year": "1915",
+  "authors": [
+   "Schnittger, Bror"
+  ],
+  "words": 29060,
+  "signa_top": [
+   "U 1"
+  ]
+ },
+ {
+  "journal": "fornvannen",
+  "key": "1915_247",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/1915_247.txt",
+  "title": "Inhaltsangabe 1915 m.m.",
+  "year": "1915",
+  "authors": [
+   "Okänd"
+  ],
+  "words": 6093,
+  "signa_top": []
+ }
+]

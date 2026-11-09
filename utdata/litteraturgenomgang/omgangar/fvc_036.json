@@ -1,0 +1,40 @@
+[
+ {
+  "journal": "fornvannen",
+  "key": "2003_289",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/2003_289.txt",
+  "title": "A Semitic origin of some runes",
+  "year": "2003",
+  "authors": [
+   "Troeng, John"
+  ],
+  "words": 12329,
+  "signa_top": []
+ },
+ {
+  "journal": "fornvannen",
+  "key": "2003_litt_a",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/2003_litt_a.txt",
+  "title": "Recensioner",
+  "year": "2003",
+  "authors": [
+   "Okänd"
+  ],
+  "words": 21030,
+  "signa_top": [
+   "Vg 216"
+  ]
+ },
+ {
+  "journal": "fornvannen",
+  "key": "2003_litt_d",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/fornvannen/text/2003_litt_d.txt",
+  "title": "Recensioner",
+  "year": "2003",
+  "authors": [
+   "Okänd"
+  ],
+  "words": 15303,
+  "signa_top": []
+ }
+]
