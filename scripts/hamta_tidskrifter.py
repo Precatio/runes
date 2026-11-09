@@ -80,7 +80,7 @@ def attr(d, name):
     return []
 
 
-def fornvannen(max_n=None):
+def fornvannen(max_n=None, reverse=False):
     base = os.path.join(OUT, "fornvannen")
     for sub in ("pdf", "text"):
         os.makedirs(os.path.join(base, sub), exist_ok=True)
@@ -112,13 +112,17 @@ def fornvannen(max_n=None):
             page += 1
             time.sleep(PAUSE)
         json.dump(hits, open(lista, "w", encoding="utf-8"), ensure_ascii=False)
-    log("Fornvännen:", len(hits), "poster i Arkivsök,", len(have), "redan hämtade")
+    log("Fornvännen:", len(hits), "poster i Arkivsök,", len(have), "redan hämtade", "(bakifrån)" if reverse else "")
+    if reverse:  # a second downloader can take the list from the end; it skips what the other has saved
+        hits = hits[::-1]
     n = 0
     with open(index, "a", encoding="utf-8") as fh:
         for h in hits:
             pid = h["uri"].rsplit("/", 1)[1]
             if pid in have:
                 continue
+            if reverse and pid in done_ids(index):  # the other downloader got here first
+                break
             md = get(h["uri"]).json()
             alt = next((v for v in attr(md, "alternativt_id") if "fornvannen/" in v), "")
             key = alt.rsplit("/", 1)[1] if alt else pid  # e.g. 1950_137 = year and first page
@@ -181,12 +185,13 @@ def main():
     ap.add_argument("vad", choices=["fornvannen", "futhark", "alla"])
     ap.add_argument("--paus", type=float, default=1.0)
     ap.add_argument("--max", type=int, default=None)
+    ap.add_argument("--bakifran", action="store_true", help="Fornvännens lista bakifrån (en andra, samtidig hämtare)")
     a = ap.parse_args()
     PAUSE = a.paus
     if a.vad in ("futhark", "alla"):
         futhark(a.max)
     if a.vad in ("fornvannen", "alla"):
-        fornvannen(a.max)
+        fornvannen(a.max, a.bakifran)
 
 
 if __name__ == "__main__":
