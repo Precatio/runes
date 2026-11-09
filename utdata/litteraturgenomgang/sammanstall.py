@@ -20,7 +20,8 @@ def short_authors(a):
 
 def main():
     arts = []
-    for f in sorted(glob.glob(os.path.join(HERE, "fynd", "*.jsonl"))):
+    files = sorted(glob.glob(os.path.join(HERE, "fynd2", "*.jsonl"))) + sorted(glob.glob(os.path.join(HERE, "fynd", "*.jsonl")))
+    for f in files:  # the second reading (broad brief, fynd2/) comes first and wins
         for line in open(f, encoding="utf-8"):
             if line.strip():
                 r = json.loads(line)
@@ -47,7 +48,11 @@ def main():
             claims.append({"id": cid, "key": r["key"], "journal": r.get("journal"), "year": r.get("year"),
                            "authors": short_authors(r.get("authors")), "title": r.get("title"), "priority": c.get("priority", 3),
                            "claim": c.get("claim"), "quote": c.get("quote"), "how": c.get("how"),
-                           "beyond_author": c.get("beyond_author"), "status": old.get(cid, "ej prövat")})
+                           "beyond_author": c.get("beyond_author"), "discipline": c.get("discipline"),
+                           "consequence": c.get("consequence"), "status": old.get(cid, "ej prövat")})
+    needs = [{"key": r["key"], "authors": short_authors(r.get("authors")), "year": r.get("year"), "claim": c.get("claim"),
+              "data_needed": c.get("data_needed"), "discipline": c.get("discipline")}
+             for r in arts for c in (r.get("claims") or []) if not c.get("measurable") and c.get("data_needed")]
     claims.sort(key=lambda c: (c["priority"], str(c["year"]), c["id"]))
     with open(p, "w", encoding="utf-8") as fh:
         for c in claims:
@@ -74,6 +79,13 @@ def main():
     for r in arts:
         for o in r.get("overlap_vitki") or []:
             L.append(f"- {o} – {short_authors(r.get('authors'))} {r.get('year')} ({r['key']})")
+    L.append("\n## Där Vitki har missat att forska\n")
+    for r in arts:
+        for m in r.get("vitki_missing") or []:
+            L.append(f"- {m} – {short_authors(r.get('authors'))} {r.get('year')} ({r['key']})")
+    L.append("\n## Data Vitki borde skaffa (påståenden som påverkar runforskningen men inte går att mäta än)\n")
+    for x in needs:
+        L.append(f"- {x['data_needed']} – för: {x['claim']} ({x['discipline']}; {x['authors']} {x['year']}, {x['key']})")
     L.append("\n## Prioritet 2\n")
     for c in [c for c in claims if c["priority"] == 2]:
         L.append(f"- {c['authors']} {c['year']} ({c['key']}): {c['claim']} – {c['how']}")

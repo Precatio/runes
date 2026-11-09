@@ -5,6 +5,11 @@ leta påståenden i forskningen som vi kan pröva mot hela korpusen, brister vi 
 Det som gör Vitki annorlunda: vi mäter gamla iakttagelser över **alla** runstenar på en gång, mot slumpen, med öppen
 geodata och låsta analysplaner. Enskilda stenar är inte målet (Viktors stående riktning).
 
+Viktor, samma dag: *”ditt fokus är inte bara geologi och geografi, det är fokus på hela runforskningen, där du väger in
+fler näraliggande [discipliner] som påverkar”*. Läs alltså varje artikel som en del av **hela runforskningen** och väg in
+de närliggande disciplinerna (se nästa avsnitt): vad säger artikeln som påverkar hur runstenarna ska dateras, läsas,
+tolkas eller förklaras – och hur kan det prövas, med vår data eller med öppen data vi kan skaffa?
+
 ## Data vi har (det som går att mäta)
 
 **Runstenarna**
@@ -34,6 +39,39 @@ geodata och låsta analysplaner. Enskilda stenar är inte målet (Viktors ståen
 **Metoder**: rumslig statistik (avstånd till slumpvisa platser i samma bygd, klustring), regression med kontroll för
 landskap/stilgrupp/datering, permutationstester, seriation, språk- och stavningsmodeller, låsta analysplaner.
 
+## Rundatabaserna – alla fält (jämför varje påstående mot dem)
+Viktor: *”läsa igen allt material, jämföra mot all data i rundatabaserna, se var vi missat att forska kring”*.
+- **Samnordisk runtextdatabas (Rundata)**, 6 753 inskrifter (3 725 svenska, 2 348 svenska runstenar). Ifyllt för de
+  svenska runstenarna: translitterering, normalisering och översättning (alla), datering/period (alla), koordinater (alla),
+  stilgrupp (2 047), material/bergart (1 638), korsform (964), ristare (778), litteraturhänvisningar (1 001), placering
+  (863), övrigt/anmärkningar (693), bildlänk (544). Också runtyper (långkvist, kortkvist, stavlösa), flaggor (förlorad,
+  flyttad, fragment).
+- **Runor 2020 (Riksantikvarieämbetet)**, 7 189 inskrifter i Sverige, alla perioder och föremål (runstenar 1 963,
+  fragment 696, gravhällar 260, träinskrifter, pinnar, mynt 139, märklappar, ben, putsinskrifter …). Fält:
+  daterings­gränser tidigast/senast (termini, 7 155), datering i text (2 609), ristarnoteringar (1 082, t.ex. ”samma som
+  gjort X”), ornamentikens profilstil (1 984), kors med typologi i flera aspekter (1 119), föremålstyp (6 984),
+  ursprunglig plats (606), nuvarande och äldsta kända läge, fyndomständigheter (proveniens), anmärkningar (2 113),
+  **litteraturhänvisningar per inskrift (4 141)**, koppling till Kulturmiljöregistret (4 960), läsningar och tolkningar.
+- **Danska runinskrifter** (runer.ku.dk, med koordinater) och **brittiska öarnas** runinskrifter; Norge via Rundata.
+Fråga för varje påstående: vilka av dessa fält kan pröva det, och vilka fält har Vitki **inte** använt än (t.ex.
+termini, profilstil, korstypologin, föremålstyperna, gravhällarna, de medeltida inskrifterna, litteraturhänvisningarna)?
+
+## Närliggande discipliner som påverkar runforskningen
+- **Arkeologi:** gravskick och gravfält, bebyggelse och gårdar, skattfynd och silver, kyrkor och kyrkogårdar, kristnandet,
+  bildstenar, hantverk, städer (Birka, Sigtuna), borgar, vägar och broar.
+- **Historia:** rikssamling och kungamakt, lagar (landskapslagarna, arv, odal), kyrkans organisation, handel och
+  vikingafärder, skriftliga källor (Adam av Bremen, Rimbert, annaler).
+- **Språkvetenskap:** ljudhistoria, dialekter, ortografi, syntax, metrik och poetik.
+- **Namnforskning:** personnamn (namnled, namnskick), ortnamn (-by, -sta, -tuna, -vi, -lund), kultnamn.
+- **Konsthistoria:** ornamentik och stilgrupper, djur- och bildmotiv, korsformer, Urnes och Ringerike.
+- **Religionshistoria:** förkristen kult, mission, böner och formler, gravskick som tro.
+- **Litteratur:** eddadikter, skaldediktning, sagor, Hávamál.
+- **Numismatik och naturvetenskap:** myntdatering, dendrokronologi, kol-14, strontium- och DNA-analyser, pollen och klimat,
+  landhöjning.
+Ett påstående från en närliggande disciplin är värt att ta med när det påverkar runforskningen: dateringen (t.ex. myntfynd
+mot stilgrupper), tolkningen (t.ex. lagarnas arvsregler mot vem som reser stenen), eller förklaringen (t.ex. kristnandets
+förlopp mot böner och kors).
+
 ## Vad Vitki redan har visat (flagga överlapp och motsägelser)
 - Runstenarna står vid lerans kant, inte på leran (som Ekholm 1950); följer bygd, lera och vatten; halva Mälardalens
   försprång oförklarat (Palm 1992 prövad).
@@ -59,15 +97,22 @@ det går med data i listan ovan. Hitta inte på sidor eller citat; citat ska var
 {"key": "...", "journal": "futhark|fornvannen", "title": "...", "year": "...", "authors": "...",
  "summary_sv": "2–3 meningar: vad artikeln säger och på vilket underlag",
  "claims": [{"claim": "påståendet med egna ord", "quote": "ordagrant ur texten, högst 40 ord, eller tomt",
+             "discipline": "runologi|arkeologi|historia|språk|namn|konsthistoria|religion|litteratur|naturvetenskap|…",
              "measurable": true, "how": "vilken Vitki-data och vilket mått/jämförelse",
+             "data_needed": "om det inte går med vår data: vilken öppen data som skulle behövas (namnge källan om du vet den), annars tomt",
+             "consequence": "vad det betyder för runforskningen: datering, läsning, tolkning eller förklaring av runstenarna",
              "beyond_author": "vad vi kan göra som författaren inte kunde (hela korpusen, slumpjämförelse, geodata)",
              "priority": 1}],
  "gaps": ["brister vi kan mäta: litet urval, en enda bygd, ingen jämförelse med slumpen, äldre data, motsäger kända
            korpusfakta …"],
  "ideas": [{"kind": "artikel|rapport", "title_sv": "arbetsrubrik", "question": "frågan", "data": "vilka data",
             "why": "varför det är nytt eller intressant"}],
- "overlap_vitki": ["där artikeln redan gör eller säger något Vitki har visat eller planerar – för nyhetskontroll"]}
+ "overlap_vitki": ["där artikeln redan gör eller säger något Vitki har visat eller planerar – för nyhetskontroll"],
+ "vitki_missing": ["frågor som artikeln väcker och som Vitki inte har forskat kring alls, med vilka databasfält eller
+                   vilken data som skulle besvara dem"]}
 ```
 priority: 1 = stark kandidat (tydligt påstående, hela korpusen kan pröva det, nytt), 2 = möjlig, 3 = svag.
+Ta också med påståenden som inte går att mäta med vår data men som påverkar runforskningen, med measurable false och
+data_needed ifyllt; de visar vilken data Vitki borde skaffa.
 Artiklar utan mätbart innehåll (t.ex. en enskild nyfunnen sten utan generella påståenden) får tomma listor och en
 kort sammanfattning.
