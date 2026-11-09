@@ -1,0 +1,54 @@
+{
+  "note": "Efter provet, beskrivande (inte i den låsta planen 85a70fa3); samma rutor och modell som analys.R",
+  "cells": 6190,
+  "steps": {
+    "clay": {
+      "ratio": 1.449506,
+      "lo95": 1.179251,
+      "hi95": 1.781695,
+      "from": 0.0225,
+      "to": 0.379883
+    },
+    "gravefields": {
+      "ratio": 2.39293,
+      "lo95": 2.027422,
+      "hi95": 2.824333,
+      "from": 1,
+      "to": 4
+    },
+    "water_near": {
+      "ratio": 1.41809,
+      "lo95": 1.114343,
+      "hi95": 1.804631,
+      "from_km": 1,
+      "to_km": 0
+    }
+  },
+  "overlap": {
+    "cor_clay_logdist": -0.097885,
+    "clay_all_or_nothing_with_water": 2.825611,
+    "clay_all_or_nothing_without_water": 2.714048,
+    "water_per_doubling_with_clay": 0.802206,
+    "water_per_doubling_without_clay": 0.81263
+  },
+  "gap": {
+    "unadjusted_ratio": 6.493264,
+    "adjusted_ratio": 2.444745,
+    "explained_share_total": 0.522152,
+    "shapley_share": {
+      "clay": 0.146925,
+      "lgrave": 0.327038,
+      "ldist": 0.04819
+    },
+    "models": {
+      "ingen": 6.493264,
+      "clay": 4.764011,
+      "lgrave": 3.369988,
+      "ldist": 5.963059,
+      "clay+lgrave": 2.685568,
+      "clay+ldist": 4.308269,
+      "ldist+lgrave": 3.104393,
+      "clay+ldist+lgrave": 2.444745
+    }
+  }
+}

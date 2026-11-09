@@ -35,3 +35,13 @@ Kontrasten i P2 är kvoten mellan gruppernas rutvägda medeltäthet vid samma jo
 - Riksantikvarieämbetet, Kulturmiljöregistret (gravfält). ISOF:s ortnamnsregister (socknar och landskap), CC BY.
 - Samnordisk runtextdatabas (Rundata), ODbL, via Vitkis korpus (510ebfb3).
 - Palm, R. 1992. *Runor och regionalitet*. Uppsala: Institutionen för nordiska språk (Runrön 7), s. 107–108, 255.
+
+## Efter provet (beskrivande, inte i planen) – 2026-11-09
+
+Viktors frågor efter läsningen: är det leran, vattnet eller bygden? Står stenarna på leran? Gäller det hela landet?
+
+- **Jämförbara steg** (`bidrag.R`, samma modell, 25:e → 75:e percentilen, klusterrobusta 95 %-intervall): fler gravfält (1 → 4) 2,39 [2,03–2,82] gånger så många runstenar; mer lera och silt (2 → 38 %) 1,45 [1,18–1,78]; vid stranden mot 1 km bort 1,42 [1,11–1,80]. Lera och vatten hänger knappt ihop (r = −0,10 mot log-avståndet); lerans kvot ingen → bara lera 2,83 med vattnet i modellen, 2,71 utan; vattnets 20 respektive 19 % färre stenar per fördubbling med och utan leran.
+- **Skillnaden Mälardalen–Götalands inland** (6,5 → 2,4 gånger, 52 % förklarat) fördelad med Shapley över alla ordningar: bygden (gravfälten) 33 %, leran 15 %, vattnet 5 %.
+- **På leran eller vid kanten** (`platsen.py`, jordarten i 100 m-rutnätet under 707 runstenar och 17 781 gravfält, mot 50 respektive 5 slumpvisa landplatser i samma 2 km-ruta): runstenar på lera 28 % mot 37 %, inom 200 m utan att stå på den 52 % mot 40 %; gravfält 16 mot 29 % och 50 mot 36 %. Skillnaden med 20 km-block dragna på nytt (95 %): runstenar 4–13 procentenheter mer sällan på lera och 8–16 oftare vid kanten; gravfält 11–15 och 13–16. Per landsdel: gravfälten i alla tre (Mälardalen, Götalands inland, övriga); runstenarna i Mälardalen (569) och övriga landskap (69, mest Östergötland), i Götalands inland (69) åt samma håll men intervallen täcker noll.
+- **Det är en gammal iakttagelse som nu är mätt:** Ekholm 1950 (Fornvännen 45, s. 140, efter von Friesen 1913): gårdarna och byarna ”äro aldrig uppförda på lermarkerna utan på de moräner, som omge dessa eller ligga som öar på slätten”; Nygren Wåhlin 2018 (kandidatuppsats, Uppsala) med GIS för Uppland.
+- Kartor: `karta.R` (översikt med ram, inzoomning Täby–Vallentuna ur `zoom_jord.py` i 10 m).
