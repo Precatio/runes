@@ -67,3 +67,33 @@ runstenar i Sverige, och jämförelser görs inom period och region.
     - de återkommande blindfläckarna med antal texter;
     - första omgången prövade påståenden;
     - påståendedatabasen öppen på Zenodo.
+
+### Nya spår under läsningen (natten 9–10 november)
+
+15. **Centralortsnamnen.**
+    - Står stenarna närmare Husby-, Tuna-, Hov-, Åker- och Kungs-namn och hundaretingen än slumpen ger, inom samma bygd?
+    - Källor: ISOF och KMR.
+    - Hittills prövade: kultnamnen men inte centralortsnamnen (Lindqvist 1917, 1918).
+16. **KMR:s täckning som felkälla.**
+    - Kulturmiljöregistret är olika fullständigt i olika landskap; Bohuslän är till exempel särskilt väl karterat.
+    - Gravfält har tagits bort med tillstånd (Riksantikvariens årsberättelser).
+    - Alla närhetsmått mot KMR bör prövas för täckningen.
+17. **Stilgruppernas eftersläpning.**
+    - Kommer en stilgrupp senare till periferin och längre ner på samhällsstegen?
+    - Mått: stilgrupp, fasta punkter, region och titlar.
+    - Lindqvist 1928, Hjärne, Åberg 1922. Hör till spår 1.
+18. **Ristarnas hantverksbakgrund.**
+    - Samma verkstäder göt både kors och torshammare (Sigtuna 1928).
+    - Uppträder varje ny stilgrupp först hos en namngiven ristare? (Lindqvist 1922.)
+19. **Dubbelstenar.**
+    - Stenar med samma resare och döde antas ha stått tillsammans (Lindqvist 1926).
+    - Pröva par i Rundata mot flyttfiltret och Runor 2020:s ursprungsplats.
+20. **Roden mot de inre folklanden.**
+    - Kustbygden koloniserades senare och var utgångspunkt för österfärderna (Tunberg 1920).
+    - Mät österledsandel och landets ålder per sten.
+    - Hör till spår 5 och till de gamla gränserna.
+21. **Runstenarna som ortnamnsbelägg.**
+    - Runstenarna är 200–300 år äldre än diplomen.
+    - Pröva namnlagren (-lösa, -vin, -hem, -arn/-garn) mot stenarna, strandlinjen och jordarterna (Lindroth 1914–15).
+22. **Kristnandet som våg från Danmark.**
+    - Mät när kors och böner först dyker upp, mot avståndet till Jelling och Hedeby, inom stilgrupp (Lindqvist 1926).
