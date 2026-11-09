@@ -4,6 +4,8 @@ Viktor 2026-11-09: gå igenom all Fornvännen och Futhark; hela runforskningen o
 data i rundatabaserna (Rundata, Runor 2020, danska, brittiska) och all geologi och geografi; se var Vitki har missat att
 forska; hitta nya artiklar och rapporter. "Låt allt köra på."
 
+**Huvudfrågan (Viktor, samma dag): vad har den svenska runforskningen missat – vilka perspektiv, antaganden, urval, metoder och källor?** Fältet `field_blindspots` i varje läsning; avsnittet ”Vad den svenska runforskningen har missat” i sammanställningen. Futhark 017–020 och andra läsningen av 001–002 fick tillägget medan de kördes; allt som startas därefter har det från början.
+
 ## Steg
 1. **Hämtning** – `scripts/hamta_tidskrifter.py` → `/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/`.
    Futhark klar (180 poster, vol. 1–15). Fornvännen pågår (3 499 poster i Arkivsök, 1906 – april 2023; logg

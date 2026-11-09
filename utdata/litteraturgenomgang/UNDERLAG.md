@@ -39,6 +39,20 @@ tolkas eller förklaras – och hur kan det prövas, med vår data eller med öp
 **Metoder**: rumslig statistik (avstånd till slumpvisa platser i samma bygd, klustring), regression med kontroll för
 landskap/stilgrupp/datering, permutationstester, seriation, språk- och stavningsmodeller, låsta analysplaner.
 
+## Vad har den svenska runforskningen missat? (huvudfrågan)
+Viktor: *”i läsningen, fokusera på vad den svenska runforskningen har missat, om de missar något perspektiv”*. Läs varje
+artikel också som ett vittne om forskningsfältet: vilka perspektiv saknas, i artikeln och i fältet? Exempel att pröva mot:
+- **Antaganden som aldrig prövats** (t.ex. att en stilgrupp daterar, att en stavning är dialekt, att en placering är
+  ”vid gravfältet”, att en ristare gjort en grupp stenar) – sagda som fakta utan mätning eller jämförelse med slumpen.
+- **Skevt urval**: Uppland som norm för hela landet; de bevarade och kända stenarna som om de vore alla (bortfall,
+  flyttade, förlorade); de rika och namngivna i stället för de många; runstenar utan de lösa föremålen eller tvärtom.
+- **Metoder som inte används**: kvantifiering, jämförelse med slumpen, rumslig statistik, kontroll för tid och region,
+  öppen data, reproducerbarhet.
+- **Källor och discipliner som inte vägs in**: geologi, landskap och landhöjning, naturvetenskaplig datering, genetik,
+  bebyggelsearkeologi, lagar, ortnamn, internationell jämförelse.
+- **Perspektiv som saknas**: kvinnor, barn och ofria; vardag och ekonomi; läsarna och de förbipasserande; stenens
+  materialitet och arbete; mottagandet under medeltiden och senare.
+
 ## Rundatabaserna – alla fält (jämför varje påstående mot dem)
 Viktor: *”läsa igen allt material, jämföra mot all data i rundatabaserna, se var vi missat att forska kring”*.
 - **Samnordisk runtextdatabas (Rundata)**, 6 753 inskrifter (3 725 svenska, 2 348 svenska runstenar). Ifyllt för de
@@ -108,6 +122,9 @@ det går med data i listan ovan. Hitta inte på sidor eller citat; citat ska var
  "ideas": [{"kind": "artikel|rapport", "title_sv": "arbetsrubrik", "question": "frågan", "data": "vilka data",
             "why": "varför det är nytt eller intressant"}],
  "overlap_vitki": ["där artikeln redan gör eller säger något Vitki har visat eller planerar – för nyhetskontroll"],
+ "field_blindspots": [{"blindspot": "vilket perspektiv, antagande, urval, metod eller källa som artikeln – och
+                       fältet – missar", "evidence": "vad i texten som visar det (gärna ordagrant citat)",
+                       "test": "hur Vitki kan pröva eller fylla det"}],
  "vitki_missing": ["frågor som artikeln väcker och som Vitki inte har forskat kring alls, med vilka databasfält eller
                    vilken data som skulle besvara dem"]}
 ```

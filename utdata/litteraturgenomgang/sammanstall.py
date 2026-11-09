@@ -79,6 +79,14 @@ def main():
     for r in arts:
         for o in r.get("overlap_vitki") or []:
             L.append(f"- {o} – {short_authors(r.get('authors'))} {r.get('year')} ({r['key']})")
+    L.append("\n## Vad den svenska runforskningen har missat (perspektiv, antaganden, urval, metoder, källor)\n")
+    for r in arts:
+        for b in r.get("field_blindspots") or []:
+            if isinstance(b, dict):
+                L.append(f"- **{b.get('blindspot')}** – {b.get('evidence')} – prövning: {b.get('test')} – "
+                         f"{short_authors(r.get('authors'))} {r.get('year')} ({r['key']})")
+            else:
+                L.append(f"- {b} – {short_authors(r.get('authors'))} {r.get('year')} ({r['key']})")
     L.append("\n## Där Vitki har missat att forska\n")
     for r in arts:
         for m in r.get("vitki_missing") or []:
