@@ -1,0 +1,104 @@
+[
+ {
+  "journal": "futhark",
+  "key": "futhark_8_111_1333696",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/futhark/text/futhark_8_111_1333696.txt",
+  "title": "Manuscript Runes from the North of England: The Byland Bede",
+  "year": "2019",
+  "authors": "Van Renterghem, Aya M. S. [0000-0002-3644-4426] (Leiden University)",
+  "words": 5917,
+  "signa_top": []
+ },
+ {
+  "journal": "futhark",
+  "key": "futhark_8_127_1333697",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/futhark/text/futhark_8_127_1333697.txt",
+  "title": "Modern Rune Carving in Northern Scotland",
+  "year": "2019",
+  "authors": "Freund, Andrea [0000-0001-8658-3160] (University of the Highlands and Islands, Scotland, UK);Ljosland, Ragnhild [0000-0002-7783-173X] (University of the Highlands and Islands, Scotland, UK)",
+  "words": 9161,
+  "signa_top": []
+ },
+ {
+  "journal": "futhark",
+  "key": "futhark_8_151_1333698",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/futhark/text/futhark_8_151_1333698.txt",
+  "title": "Egill and Ǫlrún in Early High German",
+  "year": "2019",
+  "authors": "Mees, Bernard [0000-0001-5710-2540] (University of Tasmania)",
+  "words": 2399,
+  "signa_top": []
+ },
+ {
+  "journal": "futhark",
+  "key": "futhark_8_157_1333699",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/futhark/text/futhark_8_157_1333699.txt",
+  "title": "Entgegnung zu Bernard Mees’ „Egill and Ǫlrún in Early High German“",
+  "year": "2019",
+  "authors": "Beck, Wolfgang (Friedrich Schiller University Jena)",
+  "words": 1500,
+  "signa_top": []
+ },
+ {
+  "journal": "futhark",
+  "key": "futhark_8_163_1333700",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/futhark/text/futhark_8_163_1333700.txt",
+  "title": "The Dialect of the Kensington Stone",
+  "year": "2019",
+  "authors": "Fridell, Staffan [staffrid] (Uppsala universitet [978], Humanistisk-samhällsvetenskapliga vetenskapsområdet [1174], Språkvetenskapliga fakulteten [1203], Institutionen för nordiska språk [1211]);Larsson, Mats G.",
+  "words": 1560,
+  "signa_top": []
+ },
+ {
+  "journal": "futhark",
+  "key": "futhark_8_172_1333702",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/futhark/text/futhark_8_172_1333702.txt",
+  "title": "Review of Cecilia Ljung. <em>Under runristad häll. Vol. 1, Tidigkristna grav­monu­ment i 1000-talets Sverige; vol. 2, Katalog över tidigkristna gravmonument</em>. Stockholm Studies in Ar­chae­ol­ogy, 67.1–2. Stockholm: Explicare, 2016. 285 pp.; 350 pp. ISBN 978-91-983206-0-2; ISBN 978-91-983206-1-9.",
+  "year": "2019",
+  "authors": "Källström, Magnus (Riksantikvarieämbetet)",
+  "words": 4336,
+  "signa_top": [
+   "Sm 150",
+   "Öl 36",
+   "U 170",
+   "Öl 57",
+   "Ög 79",
+   "Ög 80",
+   "Sm 151",
+   "Sö 368"
+  ]
+ },
+ {
+  "journal": "futhark",
+  "key": "futhark_8_181_1333703",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/futhark/text/futhark_8_181_1333703.txt",
+  "title": "Review of Victoria Symons. <em>Runes and Roman Letters in Anglo-Saxon Manuscripts</em>. Ergänzungsbände zum Reallexikon der Germanischen Altertumskunde, 99. Berlin and Boston: De Gruyter, 2016. x + 266 pp. ISBN: 978-3-11-049474-7. E-ISBN: 978-3-11-049192-0. ISSN 1866-7678.",
+  "year": "2019",
+  "authors": "Van Renterghem, Aya M. S. [0000-0002-3644-4426] (Leiden University)",
+  "words": 1628,
+  "signa_top": []
+ },
+ {
+  "journal": "futhark",
+  "key": "futhark_8_7_1333693",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/futhark/text/futhark_8_7_1333693.txt",
+  "title": "Det tidigvikingatida runmaterialet : En inventering",
+  "year": "2019",
+  "authors": "Åkerström, Hanna [hanak276] [0000-0002-4203-0115] (Uppsala universitet [978], Humanistisk-samhällsvetenskapliga vetenskapsområdet [1174], Språkvetenskapliga fakulteten [1203], Institutionen för nordiska språk [1211])",
+  "words": 29095,
+  "signa_top": [
+   "DR 42",
+   "DR 41",
+   "Ög 136",
+   "U 9",
+   "DR 26",
+   "DR 2",
+   "DR 4",
+   "DR 34",
+   "DR 29",
+   "DR 263",
+   "DR 356",
+   "DR 30"
+  ]
+ }
+]

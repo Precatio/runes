@@ -1,0 +1,63 @@
+[
+ {
+  "journal": "futhark",
+  "key": "futhark_9-10_261_1385973",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/futhark/text/futhark_9-10_261_1385973.txt",
+  "title": "A Runic Calendar in the Vatican Library",
+  "year": "2020",
+  "authors": "Cucina, Carla (University of Macerata)",
+  "words": 5644,
+  "signa_top": []
+ },
+ {
+  "journal": "futhark",
+  "key": "futhark_9-10_275_1385979",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/futhark/text/futhark_9-10_275_1385979.txt",
+  "title": "Review of <em>Epigraphy in an Intermedial Context.</em> Eds. Alessia Bauer, Elise Kleivane, and Terje Spurkland. Dublin: Four Courts Press, 2018. 216 pp. ISBN 978-1-84682-716-7",
+  "year": "2020",
+  "authors": "Waldispühl, Michelle [0000-0002-5603-6083] (Göteborgs universitet)",
+  "words": 5079,
+  "signa_top": [
+   "Vg 95",
+   "Vg 146",
+   "Vg 165",
+   "U 69"
+  ]
+ },
+ {
+  "journal": "futhark",
+  "key": "futhark_9-10_287_1385980",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/futhark/text/futhark_9-10_287_1385980.txt",
+  "title": "Review of Lisbeth M. Imer. <em>Peasants and Prayers: The Inscriptions of Norse Greenland</em>. Copenhagen: University Press of Southern Denmark, 2017. 349 pp. ISBN 978-87-7602-345-4.",
+  "year": "2020",
+  "authors": "Palumbo, Alessandro [0000-0002-1891-4922] (University of Oslo)",
+  "words": 4429,
+  "signa_top": [
+   "U 77",
+   "Ög 231"
+  ]
+ },
+ {
+  "journal": "futhark",
+  "key": "futhark_9-10_39_1385978",
+  "path": "/Volumes/2TB/Antigrvity/Runes/downloads/tidskrifter/futhark/text/futhark_9-10_39_1385978.txt",
+  "title": "Läsordning i tidigvikingatida runristningar",
+  "year": "2020",
+  "authors": "Åkerström, Hanna [hanak276] [0000-0002-4203-0115] (Uppsala universitet [978], Humanistisk-samhällsvetenskapliga vetenskapsområdet [1174], Språkvetenskapliga fakulteten [1203], Institutionen för nordiska språk [1211])",
+  "words": 37062,
+  "signa_top": [
+   "DR 209",
+   "Ög 136",
+   "DR 143",
+   "DR 4",
+   "DR 230",
+   "DR 2",
+   "Sm 144",
+   "DR 41",
+   "Ög 8",
+   "DR 29",
+   "DR 248",
+   "DR 189"
+  ]
+ }
+]
