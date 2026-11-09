@@ -18,6 +18,13 @@ SIG = re.compile(r"\b(U|Sö|Ög|Vg|Sm|Öl|Vs|Nä|Gs|Hs|Vr|Ån|DR|Bo|Hs|M|D|J|G|N
 KW = re.compile(r"runsten|runinskrift|runristar|ristare|runolog|runor\b|runorna|futhark|futhork|fuþark|fuþork|runic|"
                 r"rune-?stone|runestone|runolog|inscription", re.I)
 RUNE_SUBJ = re.compile(r"run", re.I)
+# second level (Viktor: the whole of runic research and the neighbouring disciplines): texts on the runestones' period and
+# its archaeology, history, place names and art – at least five period words and five topic words
+PER = re.compile(r"vikinga|vikingatid|yngre järnålder|vendeltid|vendel|missionstid|kristnande|tidig medeltid|tidigmedeltid|"
+                 r"1000-tal|1100-tal|11:e århundrade|12:e århundrade|viking age|late iron age", re.I)
+TOP = re.compile(r"gravfält|silverskatt|skattfynd|myntfynd|ortnamn|bebyggelse|kyrkogård|kungsgård|husaby|Birka|Sigtuna|"
+                 r"Helgö|Uppsala|ornamentik|Urnes|Ringerike|bildsten|runsten|runinskrift|landskapslag|härad|hundare|bygd|"
+                 r"grave field|hoard|place-name|settlement", re.I)
 
 
 def load_index(journal):
@@ -30,6 +37,7 @@ def main():
     ap.add_argument("--storlek", type=int, default=10)
     ap.add_argument("--prefix", default="omgang", help="namn på de nya omgångarna, t.ex. fv för Fornvännen")
     ap.add_argument("--tidskrift", default=None, help="bara fornvannen eller futhark")
+    ap.add_argument("--niva", default="run", choices=["run", "grann"], help="runtexterna eller närliggande discipliner")
     a = ap.parse_args()
     rows = []
     for journal in ("futhark", "fornvannen"):
@@ -45,11 +53,19 @@ def main():
             kw = len(KW.findall(t))
             subj = " ".join(meta.get("subjects") or []) + " " + (meta.get("keywords") or "")
             whole = "hel" in key and journal == "futhark"
-            relevant = (not whole) and words > 300 and (len(strong) >= 3 or kw >= 10 or bool(RUNE_SUBJ.search(subj)))
+            # Fornvännen is mostly archaeology: a few chance "U 12"-like strings or loose words do not make a runic text –
+            # there it takes at least five signa or fifteen runic words, or the journal's own subject words (first
+            # selection 2026-11-09 had 3 false hits in 10)
+            if journal == "fornvannen":
+                relevant = (not whole) and words > 300 and (len(strong) >= 5 or kw >= 15 or bool(RUNE_SUBJ.search(subj)))
+            else:
+                relevant = (not whole) and words > 300 and (len(strong) >= 3 or kw >= 10 or bool(RUNE_SUBJ.search(subj)))
+            neighbour = (not whole and not relevant and words > 300 and journal == "fornvannen"
+                         and len(PER.findall(t)) >= 5 and len(TOP.findall(t)) >= 5)
             rows.append({"journal": journal, "key": key, "path": path, "title": meta.get("title"), "year": meta.get("year"),
                          "authors": meta.get("authors"), "type": meta.get("type"), "words": words,
                          "signa_distinct": len(strong), "signa_top": [s for s, _ in Counter(strong).most_common(12)],
-                         "runic_words": kw, "whole_volume": whole, "relevant": relevant})
+                         "runic_words": kw, "whole_volume": whole, "relevant": relevant, "neighbour": neighbour})
     with open(os.path.join(HERE, "relevans.jsonl"), "w", encoding="utf-8") as fh:
         for r in rows:
             fh.write(json.dumps(r, ensure_ascii=False) + "\n")
@@ -57,7 +73,8 @@ def main():
     read = set()
     for f in glob.glob(os.path.join(HERE, "fynd", "*.jsonl")):
         read |= {json.loads(line)["key"] for line in open(f, encoding="utf-8") if line.strip()}
-    rel = [r for r in rows if r["relevant"] and r["key"] not in read and (not a.tidskrift or r["journal"] == a.tidskrift)]
+    want = (lambda r: r["neighbour"]) if a.niva == "grann" else (lambda r: r["relevant"])
+    rel = [r for r in rows if want(r) and r["key"] not in read and (not a.tidskrift or r["journal"] == a.tidskrift)]
     # batches by journal and year, about the same number of words each (long texts get their own batch share)
     os.makedirs(os.path.join(HERE, "omgangar"), exist_ok=True)
     for f in glob.glob(os.path.join(HERE, "omgangar", f"{a.prefix}_*.json")):
@@ -74,8 +91,8 @@ def main():
         batches.append(cur)
     for i, b in enumerate(batches, 1):
         json.dump(b, open(os.path.join(HERE, "omgangar", f"{a.prefix}_{i:03d}.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    by = Counter((r["journal"], r["relevant"]) for r in rows)
-    print({f"{j} {'relevant' if v else 'övrigt'}": n for (j, v), n in sorted(by.items())}, "; redan lästa", len(read),
+    by = Counter((r["journal"], "run" if r["relevant"] else ("grann" if r.get("neighbour") else "övrigt")) for r in rows)
+    print({f"{j} {v}": n for (j, v), n in sorted(by.items())}, "; redan lästa", len(read),
           "→", len(batches), f"nya omgångar ({a.prefix}_NNN)")
 
 

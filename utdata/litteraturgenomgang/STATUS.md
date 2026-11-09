@@ -11,8 +11,9 @@ forska; hitta nya artiklar och rapporter. "Låt allt köra på."
    Futhark klar (180 poster, vol. 1–15). Fornvännen pågår (3 499 poster i Arkivsök, 1906 – april 2023; logg
    `/Volumes/2TB/Antigrvity/Runes/logs/tidskrifter.log`; återupptas med samma kommando om den avbryts).
 2. **Urval** – `urval.py` (runsignum och runord; `--prefix fv --tidskrift fornvannen` för Fornvännen; hoppar över lästa).
-   TODO: bredda Fornvännens urval till närliggande discipliner (vikingatid, yngre järnålder, gravfält, kristnande, kyrkor,
-   skattfynd, ortnamn, ornamentik, Birka, Sigtuna …) – en andra nivå efter runtexterna.
+   Fornvännen i två nivåer: `--niva run --prefix fv` (runtexterna) och `--niva grann --prefix fvg` (närliggande
+   discipliner: minst fem periodord och fem ämnesord – vikingatid, yngre järnålder, gravfält, kristnande, skattfynd,
+   ortnamn, ornamentik, Birka, Sigtuna …; ~12 % av texterna i ett prov på 620, uppskattat ~400 texter).
 3. **Läsning** – en läsare (Sonnet) per omgång om ~10 texter mot `UNDERLAG.md`; resultat per omgång som JSON Lines.
    - `fynd/` = första läsningen (smalare underlag): Futhark omgång 001–016.
    - `fynd2/` = läsning med det breda underlaget (hela runforskningen, närliggande discipliner, alla databasfält,
@@ -24,3 +25,7 @@ forska; hitta nya artiklar och rapporter. "Låt allt köra på."
 5. **Sökindex** – `sokindex.py bygg` (byggs om när Fornvännen är klar): fulltext per sida + signum per text.
 6. **Därefter** – rangordna, gruppera per tema, välj de starkaste för låsta analysplaner; litteraturkontroll per tema;
    förslag på artiklar och rapporter till Viktor.
+
+## Drift
+- Datorn somnade 09–10 den 9 november och stoppade körningarna; `caffeinate -dims -t 43200` håller den vaken (startad 10:05). Omgång 012 (andra läsningen) startades om.
+- Fornvännens första urval (de ~620 hämtade): `fva_001–007` (runtexter) och `fvga_001–006` (närliggande); resten tas med `--prefix fvb`/`fvgb` när hämtningen är klar.
