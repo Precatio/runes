@@ -73,6 +73,10 @@ def main():
     read = set()
     for f in glob.glob(os.path.join(HERE, "fynd", "*.jsonl")):
         read |= {json.loads(line)["key"] for line in open(f, encoding="utf-8") if line.strip()}
+    # texts already handed out in another batch (being read now) are not handed out again either
+    for f in glob.glob(os.path.join(HERE, "omgangar", "*.json")):
+        if not os.path.basename(f).startswith(a.prefix + "_"):
+            read |= {x["key"] for x in json.load(open(f, encoding="utf-8"))}
     want = (lambda r: r["neighbour"]) if a.niva == "grann" else (lambda r: r["relevant"])
     rel = [r for r in rows if want(r) and r["key"] not in read and (not a.tidskrift or r["journal"] == a.tidskrift)]
     # batches by journal and year, about the same number of words each (long texts get their own batch share)
