@@ -6,10 +6,10 @@
       "date": "2026-11-10",
       "label_sv": "Nr 1 · November 2026",
       "label_en": "No. 1 · November 2026",
-      "pages": 16,
+      "pages": 17,
       "pdf_sv": "/korpus/korpus-nr1-sv.pdf",
       "pdf_en": "/korpus/korpus-nr1-en.pdf",
-      "size_sv": "8,3 MB",
+      "size_sv": "8,4 MB",
       "size_en": "6.9 MB",
       "cover_sv": "/korpus/korpus-nr1-sv.jpg",
       "cover_en": "/korpus/korpus-nr1-en.jpg",
@@ -20,11 +20,45 @@
       "lead_sv": "Döttrarna som nästan aldrig fick en sten, de unga männen som inte kom hem från färderna och namnen som svenskar fortfarande bär. Och hundra års runforskning, lästa på en gång.",
       "lead_en": "The daughters who almost never got a stone, the young men who did not come home from their journeys and the names Swedes still carry. And a century of runic research, read at once.",
       "contents": [
-        { "theme_sv": "Människorna", "theme_en": "People", "title_sv": "Döttrarna som runstenarna glömde", "title_en": "The daughters the runestones forgot", "slug": "dottrarna-som-runstenarna-glomde" },
-        { "theme_sv": "Resorna", "theme_en": "Journeys", "title_sv": "Färderna var de ungas", "title_en": "The journeys belonged to the young", "slug": "fardena-var-de-ungas" },
-        { "theme_sv": "Språket", "theme_en": "Language", "title_sv": "Tor föll, hjälten blev dräng – vilka vikinganamn lever kvar?", "title_en": "Thor fell, the hero became a farmhand – which Viking names live on?", "slug": "tor-foll-hjalten-blev-drang" },
-        { "theme_sv": "Verkstaden", "theme_en": "Workshop", "title_sv": "Hundra års runforskning – lästa på en gång", "title_en": "A century of runic research – read at once" },
-        { "theme_sv": "Metodhörnan", "theme_en": "Method corner", "title_sv": "Vad betyder p = 0,003?", "title_en": "What does p = 0.003 mean?" }
+        {
+          "theme_sv": "Människorna",
+          "theme_en": "People",
+          "title_sv": "Döttrarna som runstenarna glömde",
+          "title_en": "The daughters the runestones forgot",
+          "slug": "dottrarna-som-runstenarna-glomde"
+        },
+        {
+          "theme_sv": "Resorna",
+          "theme_en": "Journeys",
+          "title_sv": "Färderna var de ungas",
+          "title_en": "The journeys belonged to the young",
+          "slug": "fardena-var-de-ungas"
+        },
+        {
+          "theme_sv": "Språket",
+          "theme_en": "Language",
+          "title_sv": "Tor föll, hjälten blev dräng – vilka vikinganamn lever kvar?",
+          "title_en": "Thor fell, the hero became a farmhand – which Viking names live on?",
+          "slug": "tor-foll-hjalten-blev-drang"
+        },
+        {
+          "theme_sv": "Verkstaden",
+          "theme_en": "Workshop",
+          "title_sv": "Hundra års runforskning – lästa på en gång",
+          "title_en": "A century of runic research – read at once"
+        },
+        {
+          "theme_sv": "Metodhörnan",
+          "theme_en": "Method corner",
+          "title_sv": "Vad betyder p = 0,003?",
+          "title_en": "What does p = 0.003 mean?"
+        },
+        {
+          "theme_sv": "I appen",
+          "theme_en": "In the app",
+          "title_sv": "Människorna: vem reste stenen, och efter vem?",
+          "title_en": "People: who raised the stone, and for whom?"
+        }
       ]
     }
   ]

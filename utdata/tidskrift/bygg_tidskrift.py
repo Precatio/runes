@@ -223,6 +223,9 @@ def body_html(body, skip_img, citat, max_images=2):
             if kort is None and head.lower().startswith(("kort", "in short")):
                 kort = items or text
             elif not re.search(r"viktigaste|essentials", head, re.I):
+                # rubriken står redan i rutan: en mellanrubrik med samma ord direkt ovanför tas bort (Viktor 2026-11-10)
+                if parts and parts[-1] == f"<h3>{inline(head)}</h3>":
+                    parts.pop()
                 ul = "<ul>" + "".join(f"<li>{i}</li>" for i in items) + "</ul>" if items else ""
                 parts.append(f'<aside class="box"><div class="boxh">{inline(head)}</div>'
                              + "".join(f"<p>{t}</p>" for t in text) + ul + "</aside>")
