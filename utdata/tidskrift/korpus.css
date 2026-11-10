@@ -206,3 +206,14 @@ blockquote.pull { hyphens: none; }
 .appchart { margin-top: 5mm; } .appchart .crow { grid-template-columns: 34mm 1fr 12mm 0; }
 .appbox { margin-top: 4mm; } .appbox p { font: 400 8.8pt/1.45 var(--sans); }
 .appfot { margin-top: 8mm; padding-top: 3mm; border-top: 1.4pt solid var(--rust); font: 400 8.5pt var(--sans) !important; color: var(--mute); }
+.appbild { margin: 6mm 0 0; break-inside: avoid; }
+.appbild img { width: 100%; display: block; border: .6pt solid var(--line); border-radius: 1.5mm; }
+.appbild figcaption { font: 400 7.2pt/1.4 var(--sans); color: var(--mute); margin-top: 1.5mm; }
+.appfot { margin-top: 4mm; }
+.appbild img { max-height: 70mm; object-fit: cover; object-position: left top; }
+.appsida .deck { margin-bottom: 2mm; }
+.appsida h3 { margin-top: 4mm; }
+.appbild img { max-height: 54mm; }
+.appsida p { margin-bottom: 2.4mm; }
+.appfot { margin-top: 3mm; padding-top: 2mm; }
+.appbild img { max-height: 60mm; object-fit: contain; object-position: left top; }

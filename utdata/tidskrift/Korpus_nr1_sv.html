@@ -207,6 +207,17 @@ blockquote.pull { hyphens: none; }
 .appchart { margin-top: 5mm; } .appchart .crow { grid-template-columns: 34mm 1fr 12mm 0; }
 .appbox { margin-top: 4mm; } .appbox p { font: 400 8.8pt/1.45 var(--sans); }
 .appfot { margin-top: 8mm; padding-top: 3mm; border-top: 1.4pt solid var(--rust); font: 400 8.5pt var(--sans) !important; color: var(--mute); }
+.appbild { margin: 6mm 0 0; break-inside: avoid; }
+.appbild img { width: 100%; display: block; border: .6pt solid var(--line); border-radius: 1.5mm; }
+.appbild figcaption { font: 400 7.2pt/1.4 var(--sans); color: var(--mute); margin-top: 1.5mm; }
+.appfot { margin-top: 4mm; }
+.appbild img { max-height: 70mm; object-fit: cover; object-position: left top; }
+.appsida .deck { margin-bottom: 2mm; }
+.appsida h3 { margin-top: 4mm; }
+.appbild img { max-height: 54mm; }
+.appsida p { margin-bottom: 2.4mm; }
+.appfot { margin-top: 3mm; padding-top: 2mm; }
+.appbild img { max-height: 60mm; object-fit: contain; object-position: left top; }
 
 @page { @bottom-right { content: "Korpus nr 1 · 2026"; } }
 @page b1 { @top-left { content: "Korpus · Människorna"; font: 700 7pt var(--sans); color: #b7410e; letter-spacing: .14em; text-transform: uppercase; } }
@@ -494,6 +505,7 @@ window.addEventListener('load', () => {
       <aside class="box appbox"><div class="boxh">Vad den inte kan</div><p>Modulen ser bara de personer som texten nämner, och den kan missa namn där stenen är skadad. I en kontroll mot handkodning av 40 stenar som reglerna aldrig sett hade den rätt om kvinnor bland resarna på 39 och om relationen på 38. Den säger hur ofta något står på stenarna – inte hur ofta det hände.</p></aside>
     </div>
   </div>
+  <figure class="appbild"><img src="bilder/app_manniskorna_sv.jpg" alt=""><figcaption><b>Så ser det ut i appen:</b> Statistik (R) med de nya mönstren filtrerade på Människorna. De två första korten är fynden i diagrammet ovan. Skärmbild: Vitki.</figcaption></figure>
   <p class="appfot">Vitki är fri programvara och körs på din egen dator: github.com/Precatio/runes. Metoden: METHODS.md, avsnitt 1u.</p>
 </section>
 <section class="vanlig baksida">

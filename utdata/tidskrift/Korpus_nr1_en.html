@@ -207,6 +207,17 @@ blockquote.pull { hyphens: none; }
 .appchart { margin-top: 5mm; } .appchart .crow { grid-template-columns: 34mm 1fr 12mm 0; }
 .appbox { margin-top: 4mm; } .appbox p { font: 400 8.8pt/1.45 var(--sans); }
 .appfot { margin-top: 8mm; padding-top: 3mm; border-top: 1.4pt solid var(--rust); font: 400 8.5pt var(--sans) !important; color: var(--mute); }
+.appbild { margin: 6mm 0 0; break-inside: avoid; }
+.appbild img { width: 100%; display: block; border: .6pt solid var(--line); border-radius: 1.5mm; }
+.appbild figcaption { font: 400 7.2pt/1.4 var(--sans); color: var(--mute); margin-top: 1.5mm; }
+.appfot { margin-top: 4mm; }
+.appbild img { max-height: 70mm; object-fit: cover; object-position: left top; }
+.appsida .deck { margin-bottom: 2mm; }
+.appsida h3 { margin-top: 4mm; }
+.appbild img { max-height: 54mm; }
+.appsida p { margin-bottom: 2.4mm; }
+.appfot { margin-top: 3mm; padding-top: 2mm; }
+.appbild img { max-height: 60mm; object-fit: contain; object-position: left top; }
 
 @page { @bottom-right { content: "Korpus No. 1 · 2026"; } }
 @page b1 { @top-left { content: "Korpus · People"; font: 700 7pt var(--sans); color: #b7410e; letter-spacing: .14em; text-transform: uppercase; } }
@@ -492,6 +503,7 @@ window.addEventListener('load', () => {
       <aside class="box appbox"><div class="boxh">What it cannot do</div><p>The module sees only the people the text names, and it can miss names where the stone is damaged. Checked against hand-coding of 40 stones the rules had never seen, it was right about women among the raisers on 39 and about the relation on 38. It tells how often something is said on the stones – not how often it happened.</p></aside>
     </div>
   </div>
+  <figure class="appbild"><img src="bilder/app_manniskorna_en.jpg" alt=""><figcaption><b>What it looks like in the app:</b> Statistics (R) with the new patterns filtered on People. The first two cards are the findings in the chart above. Screenshot: Vitki.</figcaption></figure>
   <p class="appfot">Vitki is free software and runs on your own computer: github.com/Precatio/runes. The method: METHODS.md, section 1u.</p>
 </section>
 <section class="vanlig baksida">

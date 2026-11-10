@@ -125,7 +125,9 @@ APP = {
                ("Den döde dog utanför Norden", [("Söner och bröder", 10, True), ("Fäder och makar", 3, False)])],
         kalla="Källa: Vitkis analys av Samnordisk runtextdatabas, vikingatida svenska runstenar; låst plan 2026-10-28.",
         fot="Vitki är fri programvara och körs på din egen dator: github.com/Precatio/runes. Metoden: METHODS.md, avsnitt 1u.",
-        kan_inte_rubrik="Vad den inte kan", steg_rubrik="Så gör du", gor_rubrik="Vad den gör", innehall=("I appen", "Människorna: vem reste stenen, och efter vem?")),
+        kan_inte_rubrik="Vad den inte kan", steg_rubrik="Så gör du", gor_rubrik="Vad den gör", innehall=("I appen", "Människorna: vem reste stenen, och efter vem?"),
+        bild="bilder/app_manniskorna_sv.jpg",
+        bildtext="<b>Så ser det ut i appen:</b> Statistik (R) med de nya mönstren filtrerade på Människorna. De två första korten är fynden i diagrammet ovan. Skärmbild: Vitki."),
     "en": dict(
         flik="06 · In the app", rubrik="People: who raised the stone, and for whom?",
         deck="The people module reads every runestone as a small family story: who raised the stone, who the dead person was to them and what they said about him or her. It lies behind two of the articles in this issue.",
@@ -140,7 +142,9 @@ APP = {
                ("The dead man died outside the Nordic lands", [("Sons and brothers", 10, True), ("Fathers and husbands", 3, False)])],
         kalla="Source: Vitki's analysis of the Scandinavian Runic-text Database, Swedish Viking-age runestones; locked plan 2026-10-28.",
         fot="Vitki is free software and runs on your own computer: github.com/Precatio/runes. The method: METHODS.md, section 1u.",
-        kan_inte_rubrik="What it cannot do", steg_rubrik="How to use it", gor_rubrik="What it does", innehall=("In the app", "People: who raised the stone, and for whom?")),
+        kan_inte_rubrik="What it cannot do", steg_rubrik="How to use it", gor_rubrik="What it does", innehall=("In the app", "People: who raised the stone, and for whom?"),
+        bild="bilder/app_manniskorna_en.jpg",
+        bildtext="<b>What it looks like in the app:</b> Statistics (R) with the new patterns filtered on People. The first two cards are the findings in the chart above. Screenshot: Vitki."),
 }
 
 
@@ -164,6 +168,7 @@ def appsida(A):
       <aside class="box appbox"><div class="boxh">{A["kan_inte_rubrik"]}</div><p>{A["kan_inte"]}</p></aside>
     </div>
   </div>
+  {f'<figure class="appbild"><img src="{A["bild"]}" alt=""><figcaption>{A["bildtext"]}</figcaption></figure>' if A.get("bild") else ""}
   <p class="appfot">{A["fot"]}</p>
 </section>"""
 
