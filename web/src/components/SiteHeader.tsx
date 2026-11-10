@@ -5,6 +5,7 @@ import MobileMenu from "@/components/MobileMenu";
 import { ARTICLES_PATH, EN_ARTICLES_PATH } from "@/lib/blogSeo";
 import { EN_REPORTS_PATH, REPORTS_PATH } from "@/lib/report";
 import { CONTACT_PATH, DOWNLOAD_URL, EN_CONTACT_PATH, NEWS_PATH } from "@/lib/site";
+import { EN_KORPUS_PATH, KORPUS_PATH } from "@/lib/korpus";
 
 // The one header of the public website: the start page, the articles, the research reports, the carvers, the news and the contact page all show it. The
 // start page's sections are reached as /#… from every page. lang="en": the English editions (/en/…) get it in
@@ -26,6 +27,7 @@ export default function SiteHeader({ lang = "sv" }: { lang?: "sv" | "en" }) {
   const primary = [
     { href: en ? EN_ARTICLES_PATH : ARTICLES_PATH, label: en ? "Articles" : "Artiklar" },
     { href: en ? EN_REPORTS_PATH : REPORTS_PATH, label: en ? "Research reports" : "Forskningsrapporter" },
+    { href: en ? EN_KORPUS_PATH : KORPUS_PATH, label: "Korpus" },
     { href: NEWS_PATH, label: en ? "News" : "Nyheter" },
     { href: en ? EN_CONTACT_PATH : CONTACT_PATH, label: en ? "Contact" : "Kontakt" },
   ];
@@ -40,6 +42,7 @@ export default function SiteHeader({ lang = "sv" }: { lang?: "sv" | "en" }) {
         <nav className="hidden lg:flex items-center gap-4 2xl:gap-5 text-sm font-semibold text-slate-600 whitespace-nowrap">
           <Link href={en ? EN_ARTICLES_PATH : ARTICLES_PATH} prefetch={false} className="hover:text-slate-900">{en ? "Articles" : "Artiklar"}</Link>
           <Link href={en ? EN_REPORTS_PATH : REPORTS_PATH} prefetch={false} className="hover:text-slate-900">{en ? "Research reports" : "Forskningsrapporter"}</Link>
+          <Link href={en ? EN_KORPUS_PATH : KORPUS_PATH} prefetch={false} className="hover:text-slate-900">Korpus</Link>
           <Link href={NEWS_PATH} prefetch={false} className="hover:text-slate-900">{en ? "News" : "Nyheter"}</Link>
           <span aria-hidden="true" className="h-4 w-px bg-slate-300" />
           {SECTIONS.map(([href, sv, e, wide]) => <a key={href} href={href} className={`hover:text-slate-900${wide ? " hidden min-[1800px]:inline" : ""}`}>{en ? e : sv}</a>)}

@@ -2,6 +2,13 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
  "items": [
   {
+   "id": "korpus-sida",
+   "date": "2026-11-10",
+   "status": "nytt",
+   "title": "Korpus har fått en egen sida",
+   "text": "Vitkis tidskrift Korpus – Ristat & räknat har nu en egen sida på webbplatsen, under Korpus i menyn. Där finns det senaste numret med omslag, innehåll och PDF på svenska och engelska, hur man läser tidskriften och alla nummer."
+  },
+  {
    "id": "korpus-nr1",
    "date": "2026-11-10",
    "status": "nytt",

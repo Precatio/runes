@@ -7,6 +7,7 @@ import StatsNote from "@/components/StatsNote";
 import { BLUESKY_URL, CONTACT_PATH, DOCS_URL, EN_CONTACT_PATH, GITHUB_URL, NEWS_PATH } from "@/lib/site";
 import { ARTICLES_PATH, EN_ARTICLES_PATH } from "@/lib/blogSeo";
 import { EN_REPORTS_PATH, REPORTS_PATH } from "@/lib/report";
+import { EN_KORPUS_PATH, KORPUS_PATH } from "@/lib/korpus";
 
 // The articles' frame: the landing page's header and footer. The public website has no app, so the frame links to the
 // articles and to GitHub, where the app is downloaded. Its links are not prefetched: every page has them, and the start
@@ -25,6 +26,7 @@ export default function BlogShell({ children, lang = "sv" }: { children: ReactNo
           <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
             <Link href={en ? EN_ARTICLES_PATH : ARTICLES_PATH} prefetch={false} className="tap hover:text-slate-900">{en ? "Articles" : "Artiklar"}</Link>
             <Link href={en ? EN_REPORTS_PATH : REPORTS_PATH} prefetch={false} className="tap hover:text-slate-900">{en ? "Research reports" : "Forskningsrapporter"}</Link>
+            <Link href={en ? EN_KORPUS_PATH : KORPUS_PATH} prefetch={false} className="tap hover:text-slate-900">Korpus</Link>
             <Link href={NEWS_PATH} prefetch={false} className="tap hover:text-slate-900">{en ? "News" : "Nyheter"}</Link>
             <Link href={en ? EN_CONTACT_PATH : CONTACT_PATH} prefetch={false} className="tap hover:text-slate-900">{en ? "Contact" : "Kontakt"}</Link>
             <a href={DOCS_URL} target="_blank" rel="noopener noreferrer" className="tap hover:text-slate-900">{en ? "Documentation" : "Dokumentation"}</a>
