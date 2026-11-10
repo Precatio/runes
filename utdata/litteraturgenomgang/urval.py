@@ -37,7 +37,8 @@ def main():
     ap.add_argument("--storlek", type=int, default=10)
     ap.add_argument("--prefix", default="omgang", help="namn på de nya omgångarna, t.ex. fv för Fornvännen")
     ap.add_argument("--tidskrift", default=None, help="bara fornvannen eller futhark")
-    ap.add_argument("--niva", default="run", choices=["run", "grann"], help="runtexterna eller närliggande discipliner")
+    ap.add_argument("--niva", default="run", choices=["run", "grann", "nara"],
+                    help="runtexterna, närliggande discipliner, eller (nara) resten av Fornvännen med minst två periodord och två ämnesord")
     a = ap.parse_args()
     rows = []
     for journal in ("futhark", "fornvannen"):
@@ -60,12 +61,16 @@ def main():
                 relevant = (not whole) and words > 300 and (len(strong) >= 5 or kw >= 15 or bool(RUNE_SUBJ.search(subj)))
             else:
                 relevant = (not whole) and words > 300 and (len(strong) >= 3 or kw >= 10 or bool(RUNE_SUBJ.search(subj)))
-            neighbour = (not whole and not relevant and words > 300 and journal == "fornvannen"
-                         and len(PER.findall(t)) >= 5 and len(TOP.findall(t)) >= 5)
+            nper, ntop = len(PER.findall(t)), len(TOP.findall(t))
+            neighbour = (not whole and not relevant and words > 300 and journal == "fornvannen" and nper >= 5 and ntop >= 5)
+            # tredje nivån (Viktor 2026-11-10: läs alla nedladdade tidskrifter): resten av Fornvännen, i relevansordning
+            near = (not whole and not relevant and not neighbour and words > 300 and journal == "fornvannen"
+                    and nper >= 2 and ntop >= 2)
             rows.append({"journal": journal, "key": key, "path": path, "title": meta.get("title"), "year": meta.get("year"),
                          "authors": meta.get("authors"), "type": meta.get("type"), "words": words,
                          "signa_distinct": len(strong), "signa_top": [s for s, _ in Counter(strong).most_common(12)],
-                         "runic_words": kw, "whole_volume": whole, "relevant": relevant, "neighbour": neighbour})
+                         "runic_words": kw, "whole_volume": whole, "relevant": relevant, "neighbour": neighbour,
+                         "near": near})
     with open(os.path.join(HERE, "relevans.jsonl"), "w", encoding="utf-8") as fh:
         for r in rows:
             fh.write(json.dumps(r, ensure_ascii=False) + "\n")
@@ -77,7 +82,7 @@ def main():
     for f in glob.glob(os.path.join(HERE, "omgangar", "*.json")):
         if not os.path.basename(f).startswith(a.prefix + "_"):
             read |= {x["key"] for x in json.load(open(f, encoding="utf-8"))}
-    want = (lambda r: r["neighbour"]) if a.niva == "grann" else (lambda r: r["relevant"])
+    want = {"grann": lambda r: r["neighbour"], "nara": lambda r: r["near"]}.get(a.niva, lambda r: r["relevant"])
     rel = [r for r in rows if want(r) and r["key"] not in read and (not a.tidskrift or r["journal"] == a.tidskrift)]
     # batches by journal and year, about the same number of words each (long texts get their own batch share)
     os.makedirs(os.path.join(HERE, "omgangar"), exist_ok=True)

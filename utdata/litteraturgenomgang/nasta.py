@@ -17,7 +17,7 @@ n = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 0
 print(f"klara {len(done)} · pågår {len([b for b in todo if b in started])} · väntar {len(waiting)}")
 pick = waiting[:n]
 for b in pick:
-    print(b, "LASARE_GRANN.md" if b.startswith("fvg") else "LASARE_RUN.md")
+    print(b, "LASARE_GRANN.md" if b.startswith(("fvg", "fvn")) else "LASARE_RUN.md")
 if "--starta" in sys.argv and pick:
     with open(started_f, "a") as fh:
         fh.write("\n".join(pick) + "\n")
