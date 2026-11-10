@@ -22,6 +22,13 @@ R = json.load(open(os.path.join(PJ, "resultat.json"), encoding="utf-8"))
 D = json.load(open(os.path.join(PJ, "diagram.json"), encoding="utf-8"))
 NO = json.load(open(os.path.join(ROOT, "utdata", "norge", "resultat.json"), encoding="utf-8"))["stones"]
 assert R["plan_sha"] == "85a70fa3"
+# the checks against the literature's objections (locked plan analysplaner/2026-11-10-lerkanten-kontroller.md, f88ff01f)
+KC = json.load(open(os.path.join(PJ, "kontroller.json"), encoding="utf-8"))
+KR = json.load(open(os.path.join(PJ, "kontroller_R.json"), encoding="utf-8"))
+assert KC["sha256"].startswith("f88ff01f") and KC["K1"]["holds"] and KC["K4"]["holds"] and KC["K5"]["holds"]
+assert KR["K2_holds"] and KR["K3_holds"]
+LOST = {k: round(100 * v["forsvunna"]) for k, v in KC["K1"]["per_jordart"].items()}
+K5N = KC["K5"]["borttagna"]
 
 # ---- the numbers ------------------------------------------------------------------------------------------------------
 assert (NO["norge"], NO["sverige"]) == (66, 2321)
@@ -331,6 +338,7 @@ Nästa gång du står vid en runsten i Uppland, se dig om. Ofta står den på en
 - **Gravfälten är från hela järnåldern**, inte bara vikingatiden, och inventeringen är ojämn mellan landskapen.
 - **Lera i rutan är inte gårdens jord.** Måttet i rutan säger att det finns lera i närheten, inte vilken jord gården brukade. Mätningen vid kanten säger var stenen står, men den är gjord i ett rutnät om 100 meter, så ”inom 200 meter” är ungefärligt.
 - **Två jämförelser gjordes efter provet.** Hur bygd, lera och vatten väger mot varandra, och om stenarna står på leran eller vid dess kant, bestämde vi inte i analysplanen. De beskriver; de är inte prövade på samma sätt som huvudresultaten.
+- **Prövat mot invändningarna.** Efter att vi läst hundra år av Fornvännen prövade vi kanten mot det som andra forskare invänt, enligt en ny analysplan som låstes innan vi räknade. Stenarna har inte försvunnit oftare på leran än på andra jordar ({LOST["lera och silt"]} % på lera, {LOST["morän"]} % på morän, {LOST["sand och grus"]} % på sand och grus), och kanten står kvar när de försvunna stenarna räknas med på sina uppgivna platser. Den står också kvar när åsarnas sand och grus och den våta marken räknas in – stenarna undviker tvärtom våtmarken – med vattnet år 950 i stället för 1050, och utan de {K5N} stenar som Riksantikvarieämbetets Runor anger som flyttade. Om gårdarna själva flyttade under yngre järnåldern kan vi inte pröva med de data vi har.
 - **Jordartskartan är dagens**, och dess kvalitet varierar mellan områden enligt SGU själv.
 
 :::box Det viktigaste i korthet
@@ -450,6 +458,7 @@ Next time you stand by a runestone in Uppland, look around. Often it stands on a
 - **The grave fields are from the whole Iron Age**, not only the Viking Age, and the survey is uneven between provinces.
 - **Clay in the square is not the farm's soil.** The measure in the square says that there is clay nearby, not which soil the farm worked. The measurement at the edge says where the stone stands, but it is made on a 100-metre grid, so "within 200 metres" is approximate.
 - **Two comparisons were made after the test.** How settlement, clay and water weigh against each other, and whether the stones stand on the clay or at its edge, we did not set out in the analysis plan. They describe; they are not tested in the same way as the main results.
+- **Tested against the objections.** After reading a century of Fornvännen, we tested the edge against what other researchers have objected, under a new analysis plan locked before we counted. Stones have not disappeared more often on clay than on other soils ({LOST["lera och silt"]} % on clay, {LOST["morän"]} % on moraine, {LOST["sand och grus"]} % on sand and gravel), and the edge holds when the lost stones are counted at their recorded places. It also holds when the sand and gravel of the eskers and the wet ground are taken into account – the stones, if anything, avoid wet ground – with the water of 950 instead of 1050, and without the {K5N} stones that the Swedish National Heritage Board's Runor records as moved. Whether the farms themselves moved during the Late Iron Age we cannot test with the data we have.
 - **The soil map is today's**, and its quality varies between areas, according to SGU itself.
 
 :::box The essentials in brief
