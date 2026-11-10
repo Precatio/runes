@@ -26,8 +26,38 @@ Varje citat är maskinellt kontrollerat mot källtexten. Om läsningen i övrigt
 
 ## 2. Hur säkra är läsningarna?
 
-*(Stickprovskontrollen pågår: 30 slumpvis valda läsningar, 12 runtexter, 9 grannämnen och 9 ur tredje nivån, granskas
-mot originaltexten av en oberoende kontrollant. Resultatet förs in här.)*
+**Stickprovskontrollen** (`kontroll/`, 10 november). Två oberoende kontrollanter granskade 30 slumpvis valda läsningar
+mot originaltexten: 12 runtexter, 9 grannämnen och 9 ur tredje nivån.
+
+- **Helhetsbetyg:**
+  - 9 läsningar *goda*, 30 %;
+  - 21 *användbara med förbehåll*, 70 %;
+  - ingen *opålitlig*.
+- **Sammanfattningarna:** pålitliga, med inga allvarliga fel.
+- **Påståendena:** i del A bedömdes alla 118.
+  - 90 är rätt, 76 %;
+  - 18 är överdrivna, 15 %;
+  - 6 har sakfel i detaljer, 5 %, till exempel fel signum eller fel fyndort;
+  - 4 är läsarens egna slutsatser utan märkning, 3 %.
+- **Mätförslagen med prioritet 1:** i del B höll 4 helt och 3 delvis. I del A överskattade några underlaget eller hur
+  oberoende testet var.
+
+**De systematiska felen:**
+1. Blinda fläckar som är läsarens egna presenteras som textens, med ett citat om något annat som skenbart belägg. Det
+   finns i nästan alla läsningar, och ibland säger texten emot. Wessén 1952 använder till exempel just de oberoende fasta
+   punkter som läsaren påstår saknas.
+2. Försiktiga formuleringar försvinner: ”låt oss anta”, ”perhaps”, ”övervägande sannolik”.
+3. Enstaka fall generaliseras.
+4. Enstaka påhittade uppgifter finns i fritextfälten (”hur”, ”följd”, ”utöver författaren”): verk, namn och tillskrivningar
+   som inte står i texten. Citatkontrollen fångar inte dessa.
+
+**Vad det betyder för användningen:**
+- Påståendena och citaten är en god karta: tre av fyra stämmer, och resten pekar åt rätt håll.
+- Inget påstående används i en studie eller artikel utan att det har kontrollerats mot originaltexten. Det är lätt, eftersom
+  varje påstående har nyckel och ordagrant citat.
+- De blinda fläckarna och fritextfälten är läsarnas bedömningar, inte författarnas ståndpunkter, och redovisas så.
+- För de påståenden som går in i planerna A–F märks varje blind fläck ”text”, ”läsare” eller ”båda”, och egennamn, verk och
+  siffror i fritextfälten kontrolleras maskinellt mot källtexten.
 
 **Viktigt för hur siffrorna nedan ska läsas.** Läsarna hade samma underlag, med en lista över Vitkis data och frågor.
 Räkningen mäter därför hur ofta en läsare fann en blind fläck relevant för en text. Det är inte detsamma som hur ofta
