@@ -1,0 +1,159 @@
+<!doctype html><html lang="sv"><head><meta charset="utf-8"><title>Namnförslag</title><style>/* Runmått – provnummer, version 2: tidskrift i stil med populärhistoriska magasin men mer återhållsam.
+   Ljust papper, rost som enda accentfärg (Vitkis regel: ingen lila), Charter (rubriker i Black) + Avenir Next. */
+:root {
+  --ink: #1d2226; --mute: #5f6a73; --line: #d8dcdf; --paper: #ffffff;
+  --rust: #b7410e; --rust-dark: #8f3209; --rust-soft: #f8ece4; --stone: #f1f2f0;
+  --serif: "Charter", "Iowan Old Style", Georgia, serif;
+  --sans: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+}
+@page { size: A4; margin: 17mm 15mm 18mm 15mm;
+  @bottom-left { content: counter(page); font: 700 8pt var(--sans); color: #1d2226; }
+  @bottom-right { content: "Runmått nr 1 · 2026"; font: 600 7pt var(--sans); color: #8a949b; letter-spacing: .12em; text-transform: uppercase; }
+}
+@page omslag { margin: 0; @bottom-left { content: none } @bottom-right { content: none } }
+@page opener { margin: 0; @bottom-left { content: none } @bottom-right { content: none } }
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; color: var(--ink); background: var(--paper); font: 9.4pt/1.43 var(--serif); hyphens: auto; }
+a { color: inherit; text-decoration: none; }
+.slab { font: 700 7.2pt var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--rust); margin-bottom: 2.5mm; }
+.flik { display: inline-block; background: var(--rust); color: #fff; font: 700 7.5pt var(--sans); letter-spacing: .16em; text-transform: uppercase; padding: 1.4mm 3mm 1.2mm; }
+.tvaspalt { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+.forsta::first-letter { initial-letter: 3; -webkit-initial-letter: 3; font-family: var(--serif); font-weight: 900; color: var(--rust); margin-right: 1.6mm; }
+
+/* ---------- Omslag ---------- */
+.omslag { page: omslag; position: relative; width: 210mm; height: 297mm; overflow: hidden; break-after: page; background: #e9ece7; }
+.omslag img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 55% 45%; }
+.omtopp { position: absolute; top: 0; left: 0; right: 0; padding: 11mm 14mm 34mm;
+  background: linear-gradient(180deg, rgba(255,255,255,.97) 0%, rgba(255,255,255,.93) 62%, rgba(255,255,255,0) 100%); }
+.mastrad { display: flex; justify-content: space-between; font: 700 7.5pt var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--mute); }
+.mastrad span:last-child { color: var(--rust); }
+.omslag h1 { font: 900 92pt/0.9 var(--serif); letter-spacing: -.035em; margin: 4mm 0 0 -1.5mm; color: var(--ink); }
+.undertitel { font: 600 10.5pt var(--sans); color: var(--ink); margin-top: 3mm; letter-spacing: .02em; border-top: 1.4pt solid var(--rust); display: inline-block; padding-top: 2mm; }
+.ompuff { position: absolute; left: 14mm; right: 70mm; bottom: 83mm; color: #fff; text-shadow: 0 1px 10px rgba(0,0,0,.45); }
+.ompuff .ptema { color: #fff; background: var(--rust); display: inline-block; padding: 1.2mm 2.6mm; text-shadow: none; }
+.pnum { font: 700 64pt/0.95 var(--sans); letter-spacing: -.03em; margin-top: 3mm; }
+.pnum i { font: italic 400 24pt var(--serif); }
+.ompuff .ptitel { font: 900 25pt/1.05 var(--serif); margin-top: 2mm; }
+.omslag::after { content: ""; position: absolute; left: 0; right: 0; bottom: 64mm; height: 90mm; background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.42)); }
+.ompuff { z-index: 2; }
+.omband { position: absolute; left: 0; right: 0; bottom: 0; height: 64mm; background: #fff; padding: 8mm 14mm 0; display: grid; grid-template-columns: 1fr 1fr 1fr 32mm; gap: 7mm; z-index: 3; }
+.ptema { font: 700 7pt var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--rust); margin-bottom: 1.5mm; }
+.omband .pt { font: 900 13pt/1.12 var(--serif); }
+.omband p { font: 400 8.8pt/1.4 var(--sans); color: var(--mute); margin: 1.6mm 0 0; }
+.omruna { color: var(--rust); border-left: .6pt solid var(--line); padding-left: 5mm; }
+.omruna span { display: block; margin-top: 3mm; font: 700 6.8pt/1.6 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.omkredit { position: absolute; left: 14mm; right: 14mm; bottom: 4.5mm; z-index: 4; font: 400 6pt var(--sans); color: #9aa2a8; }
+
+/* ---------- Ledare + innehåll ---------- */
+.vanlig { break-before: page; }
+.ledsida { display: flex; flex-direction: column; min-height: 258mm; }
+.ledgrid { display: grid; grid-template-columns: 1fr 76mm; gap: 10mm; }
+.ledare h2 { font: 900 30pt/1.02 var(--serif); letter-spacing: -.015em; margin: 0 0 4mm; }
+.ingress { font: 600 11.5pt/1.45 var(--sans); color: var(--ink); }
+.ledare p { font-size: 10.2pt; line-height: 1.5; }
+.sign { font-style: italic; margin-top: 6mm; }
+.sign span { font: 700 7.5pt var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); font-style: normal; }
+.innehallsspalt { border-left: .6pt solid var(--line); padding-left: 7mm; }
+.innehall { list-style: none; padding: 0; margin: 0; }
+.innehall li { display: grid; grid-template-columns: 24mm 1fr 9mm; gap: 3.5mm; align-items: start; padding: 3.5mm 0; border-bottom: .6pt solid var(--line); }
+.innehall li.kort { grid-template-columns: 1fr 9mm; }
+.innehall img { width: 24mm; height: 19mm; object-fit: cover; border-radius: .8mm; }
+.ttema { display: block; font: 700 6.6pt var(--sans); letter-spacing: .15em; text-transform: uppercase; color: var(--rust); }
+.ttitle { display: block; font: 900 10.5pt/1.18 var(--serif); margin-top: .8mm; }
+.tdeck { display: block; font: 400 7.6pt/1.35 var(--sans); color: var(--mute); margin-top: 1mm; }
+.tsida { font: 900 15pt var(--serif); color: var(--rust); text-align: right; }
+.lasband { margin-top: auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; background: var(--rust-soft); padding: 5mm 6mm; }
+.lasband b { display: block; font: 900 15pt var(--serif); color: var(--rust); margin-bottom: 1mm; }
+.lasband span { font: 400 8.4pt/1.4 var(--sans); }
+
+/* ---------- Artikelns öppningssida ---------- */
+.opener { page: opener; height: 297mm; display: flex; flex-direction: column; break-before: page; break-after: page; }
+.hero { margin: 0; position: relative; height: 148mm; flex: none; }
+.hero img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; }
+.hero figcaption { position: absolute; left: 15mm; right: 15mm; bottom: 0; transform: translateY(100%); padding-top: 1.5mm; font: 400 6.5pt/1.35 var(--sans); color: var(--mute); }
+.opentext { padding: 12mm 15mm 14mm; flex: 1; display: flex; flex-direction: column; }
+.opener h2 { font: 900 34pt/1.0 var(--serif); letter-spacing: -.02em; margin: 4mm 0 3.5mm; hyphens: none; }
+.deck { font: 400 12.3pt/1.42 var(--serif); color: #2d3439; margin: 0 0 2.5mm; }
+.byline { font: 700 7.4pt var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); margin: 0; }
+.snabb { margin-top: auto; display: grid; grid-template-columns: 50mm 1fr; }
+.siffran { background: var(--rust); color: #fff; padding: 4.5mm 5mm; }
+.siffran .slab { color: #ffd9c6; }
+.snum { font: 700 30pt/1 var(--sans); letter-spacing: -.02em; margin: .5mm 0 2.5mm; }
+.siffran p { font: 500 8.6pt/1.4 var(--sans); margin: 0; }
+.trettio { background: var(--rust-soft); padding: 4.5mm 6mm; }
+.trettio ul { margin: 0; padding-left: 4mm; font: 400 8.5pt/1.42 var(--sans); }
+.trettio li { margin-bottom: 1.3mm; }
+.trettio li::marker { color: var(--rust); }
+
+/* ---------- Brödtext ---------- */
+.brodtext.b1 { page: b1; } .brodtext.b2 { page: b2; } .brodtext.b3 { page: b3; }
+.text { column-count: 3; column-gap: 5.5mm; column-rule: .4pt solid #e6e8e6; }
+.text p { margin: 0 0 2.2mm; text-align: justify; text-justify: inter-word; orphans: 3; widows: 3; }
+.text p.runcitat { font-style: italic; text-align: left; color: #2d3439; }
+.text h3 { font: 700 9.6pt/1.25 var(--sans); margin: 4.5mm 0 1.6mm; break-after: avoid; color: var(--rust-dark); }
+.text ul { padding-left: 4mm; margin: 0 0 2.5mm; }
+.text li { margin-bottom: 1mm; }
+.text li::marker { color: var(--rust); }
+.slut { color: var(--rust); font-size: 8pt; }
+blockquote { margin: 3mm 0; padding: 0 0 0 3.5mm; border-left: 1.6pt solid var(--rust); font-style: italic; color: #2d3439; }
+blockquote.pull { border: none; border-top: 2pt solid var(--rust); border-bottom: .6pt solid var(--line); padding: 3mm 0 3.5mm; margin: 3mm 0 4mm;
+  font: italic 700 14pt/1.22 var(--serif); color: var(--rust-dark); break-inside: avoid; text-align: left; }
+blockquote.pull::before { content: "”"; display: block; font: 900 30pt/0.6 var(--serif); color: var(--rust); margin: 2mm 0 1mm; }
+figure.img { margin: 1mm 0 3.5mm; break-inside: avoid; }
+figure.img img { width: 100%; max-height: 92mm; object-fit: cover; display: block; }
+figure.img figcaption, .omslag figcaption { font: 400 6.9pt/1.38 var(--sans); color: var(--mute); margin-top: 1.4mm; }
+figcaption b { color: var(--ink); }
+.box { background: var(--rust-soft); padding: 3.5mm 3.8mm; margin: 2mm 0 3.5mm; font: 400 8pt/1.42 var(--sans); }
+.box p { text-align: left !important; }
+.box ul { padding-left: 3.5mm; }
+.boxh { font: 900 11pt var(--serif); color: var(--rust-dark); margin-bottom: 1.8mm; padding-bottom: 1.6mm; border-bottom: .6pt solid #e3c9b8; }
+.chart { column-span: all; margin: 2mm 0 5mm; padding: 4mm 5mm 3.5mm; background: var(--stone); break-inside: avoid; }
+.ctitle { font: 900 11pt var(--serif); margin-bottom: 2.5mm; }
+.cgroup { font: 700 7pt var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); margin: 2.2mm 0 .8mm; }
+.crow { display: grid; grid-template-columns: 42mm 1fr 13mm 58mm; align-items: center; column-gap: 3mm; font: 500 8.3pt var(--sans); padding: .9mm 0; }
+.cbar { height: 4.4mm; background: #fff; }
+.cbar span { display: block; height: 100%; background: #a9b0b5; }
+.crow.hi .cbar span { background: var(--rust); }
+.crow.hi .clab, .crow.hi .cval { font-weight: 700; color: var(--rust-dark); }
+.cval { text-align: right; font-weight: 700; }
+.cnote { color: var(--mute); font-size: 7.6pt; }
+.csrc { font: 400 6.8pt/1.4 var(--sans); color: var(--mute); margin-top: 2.2mm; }
+.sources { font: 400 7.1pt/1.38 var(--sans); color: var(--mute); }
+.sources p { text-align: left !important; margin-bottom: 1.3mm; }
+.sources h3 { font-size: 8pt; color: var(--mute); }
+.webb { margin-top: 4mm; padding: 2.6mm 4mm; border-top: 1.4pt solid var(--rust); font: 400 8pt var(--sans); color: var(--mute); break-inside: avoid; }
+
+/* ---------- Verkstaden, metod, baksida ---------- */
+.verkstad h2, .namnsida h2 { font: 900 30pt/1.02 var(--serif); letter-spacing: -.015em; margin: 5mm 0 3mm; }
+.verkstad h3 { font: 700 10pt var(--sans); color: var(--rust-dark); margin: 0 0 2mm; }
+.verkstad p { font-size: 10pt; line-height: 1.5; }
+.tal { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; margin: 6mm 0 8mm; }
+.tal div { border-top: 2pt solid var(--rust); padding-top: 3mm; }
+.tal b { display: block; font: 900 30pt/1 var(--serif); color: var(--rust); }
+.tal span { font: 500 8.8pt/1.4 var(--sans); color: var(--mute); }
+.metod { margin-top: 10mm; background: var(--rust-soft); padding: 6mm 7mm; }
+.metod h3 { font: 900 17pt var(--serif); color: var(--ink); margin: 3mm 0 2mm; }
+.baksida { display: flex; flex-direction: column; min-height: 258mm; padding-top: 6mm; }
+.baksida p { font: 400 9.4pt/1.5 var(--sans); color: #3a4249; margin: 0 0 6mm; }
+.bakmast { margin-top: auto; border-top: 1.4pt solid var(--rust); padding-top: 6mm; display: flex; align-items: center; gap: 6mm; font: 900 30pt var(--serif); }
+.bakmast svg { color: var(--rust); }
+.bakmast span { margin-left: auto; font: 700 7.5pt var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+
+/* ---------- Namnförslag ---------- */
+.namngrid { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; margin-top: 6mm; }
+.namnkort { border-top: 2pt solid var(--rust); background: #fbfaf8; padding: 6mm 6mm 5mm; }
+.nkmast { font: 900 34pt/1 var(--serif); letter-spacing: -.03em; }
+.nksub { font: 600 7.6pt var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--rust); margin: 2.5mm 0 3mm; }
+.namnkort p { font: 400 9pt/1.45 var(--sans); color: var(--mute); margin: 0; }
+/* v2.1: öppningssidan får plats på en sida */
+.hero { height: 108mm; }
+.opentext { padding: 11mm 15mm 12mm; }
+.opener h2 { font-size: 30pt; }
+.deck { font-size: 11.6pt; }
+.opener { overflow: hidden; }
+.trettio ul { font-size: 8.2pt; }
+.ompuff .ptitel, .omband .pt, .ttitle { hyphens: none; }
+.opentext .flik { align-self: flex-start; }
+blockquote.pull { hyphens: none; }
+</style></head><body><section class="vanlig namnsida"><div class="flik">Namnförslag</div><h2>Sex namn på tidskriften</h2><p class="deck">Samma typsnitt och färg som provnumret, så att namnen går att jämföra som de skulle se ut på omslaget.</p><div class="namngrid"><div class="namnkort"><div class="nkmast">Runmått</div><div class="nksub">Digital runforskning · en tidskrift från Vitki</div><p>Kort och stramt som Futhark och Fornvännen. Säger vad som är nytt: vi mäter runorna.</p></div><div class="namnkort"><div class="nkmast">Stenarnas tal</div><div class="nksub">Digital runforskning · en tidskrift från Vitki</div><p>Dubbel betydelse: siffrorna i stenarna och det stenarna säger. Varmast för en bred publik.</p></div><div class="namnkort"><div class="nkmast">Mätstav</div><div class="nksub">Digital runforskning · en tidskrift från Vitki</div><p>Runstav och måttstock i ett ord – ristningen och mätningen.</p></div><div class="namnkort"><div class="nkmast">Ristat &amp; räknat</div><div class="nksub">Digital runforskning · en tidskrift från Vitki</div><p>Från ristning till siffra. Lätt att minnas, lite lekfullt.</p></div><div class="namnkort"><div class="nkmast">Korpus</div><div class="nksub">Digital runforskning · en tidskrift från Vitki</div><p>Fackordet för hela samlingen. Akademiskt och sakligt, minst populärt.</p></div><div class="namnkort"><div class="nkmast">Hela stenen</div><div class="nksub">Digital runforskning · en tidskrift från Vitki</div><p>Folkligt och tydligt: hela korpusen, inte bara de berömda stenarna.</p></div></div></section></body></html>
