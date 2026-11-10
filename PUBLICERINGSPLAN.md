@@ -1,6 +1,10 @@
 # Publicerings- och forskningsplan, november 2026 – december 2027
 
-Byggd på litteraturgenomgången (`utdata/litteraturgenomgang/SYNTES.md`, `FORSKNINGSIDEER.md`, `pastaenden.jsonl`).
+Byggd på litteraturgenomgången (`utdata/litteraturgenomgang/SYNTES.md`, `FORSKNINGSIDEER.md`, `pastaenden.jsonl`) och,
+sedan 10 november 2026, på **frågelistan** `utdata/litteraturgenomgang/Forskningsfrågor_Fornvännen_Futhark.xlsx`: alla
+4 555 påståenden samlade till 301 frågor, bedömda efter hur relevant Vitkis bidrag skulle vara för forskningen (22
+avgörande, 65 betydande, 193 användbara, 21 begränsade). **Regel: 2027 ägnas åt alla avgörande frågor, samlade i låsta
+studier; de betydande kommer 2028; de användbara är reservlistan.** Viktor 2026-11-10: ”gör som du föreslår”.
 Datumen är förslag. Viktor publicerar artiklarna; allt annat följer Vitkis regler:
 - planen låses (sha256 + commit) innan något räknas;
 - varje låst test skrivs upp, också nollresultat (rapport);
@@ -36,33 +40,41 @@ Status per rad: planerad → plan låst → körd → rapport → artikel → pu
 |---|---|---|---|---|---|---|
 | **Nov 2026** | Kontrollerna för lerartikeln: bortfall åt båda hållen, åsvägar, sjösänkning, flyttade gårdar, hävd, Malmers dos–respons | Har allt (SGU jord, strandlinje, KMR) | – | **24 nov:** ”Varför står runstenarna vid lerans kant?” (om kontrollerna håller; annars skrivs den om) | – | Körd 10 nov: K1–K5 håller (utdata/palm_jordarna/kontroller.md); artikelutkastet uppdaterat – väntar på Viktors publicering |
 | **Dec 2026** | **B. Självkontroller:** 68 % österut utan Ingvar; vattnet mot äldre fornlämningar och strandlinjen ±1–3 m; gravfälten bara daterade; vägen bara gamla vägar | Har; kontroll av SDHK 1314-listan (D12) | **15 dec:** ”Vitki prövar sina egna resultat I” | **8 dec:** ”Var det bara Ingvar?” · **17 dec:** Norge-artikeln (efter myntkontrollen) | – | Pågår: Ingvar-kontrollen körd 10 nov – försvagat (58 % utan Ingvar, 49–67); tillägget i den publicerade artikeln gjort 10 nov (Viktor GO). Vägen körd 10 nov: håller inom län och utan flyttade, faller mot gamla vägar (28 %, p 0,16) → ändring i rapport + Zenodo v5 väntar på Viktor. Gravfälten körda 10 nov: står sig (alla fyra prov, OR 2,3–2,6). Väglinjerna: plan skriven, historiska kartor inventeras |
-| **Jan 2027** | **A. Bevarande och bortfall:** förluster per jordart (lera och sand/ås); upptäcktskurva per landskap; fångst–återfångst över inventeringarna; fältfyllnad per landskap | Har; KMR:s inventeringsår (D4) | **19 jan:** ”Hundra års runforskning – metod, läsarkontroll och påståendedatabas” (rapport 0, med databasen öppen) · **26 jan:** ”Stenarna vi känner – bortfall och upptäckt” | **12 jan:** ”Stenarna som plogen och grustaget tog” · **26 jan:** ett utkast ur avsnitt 4 | – | Planerad |
-| **Feb 2027** | **C. Dateringens fasta punkter:** historiskt daterade stenar som ankare (Ingvar, Knut, danagäld, kända personer); Ingvar ±10 år; monoftongering som oberoende klocka; regional eftersläpning; stilgrupp mot profilstil (kappa) | Har; lista över ankarstenar (sammanställs ur Rundata); Runor 2020:s termini är oftast schablon och kan inte användas som oberoende datering | **23 feb:** ”Hur mycket bär stilgrupperna?” | **9 feb:** ”Hur gamla är runstenarna – egentligen?” · **23 feb:** ”Prickarna, åsrunan och tiden” (utkast, med utgivarkontroll) | – | Planerad |
-| **Mar 2027** | **D1. Tinget och centralorterna:** stenarnas avstånd till tingsplatser, domarringar, Husby, Tuna, Hov och Sala jämfört med slumpen inom bygden, med KMR:s inventeringsår som kontroll | ISOF:s namn (D3); KMR:s tingsplatser (har) | **30 mar** | **16 mar:** ”Stod runstenarna vid tinget?” | **Nr 2, 25 mar:** *Det vi inte ser* (bortfall, datering, Ingvar) | Planerad |
-| **Apr 2027** | **E. Korset och bönen:** kors utan kristen text; korstyp öst mot väst mot färdriktning; konsekvens inom släkten; signatur och bön; kristnande som våg (Danmark, Sigtuna, biskopssätena) | Har (Runor 2020:s korstypologi, Rundata) | **27 apr** | **13 apr:** ”Var korset en bekännelse?” · **27 apr:** ”Tegnar i söder, böner i norr” (utkast, efter referenskontroll) | – | Planerad |
-| **Maj 2027** | **F. Människorna:** hushållet (personer och relationer per sten, ord för personer utanför familjen: félagi, drengr, gildi, träl); kvinnors rörlighet genom namn; döttrar och arv | Har | **25 maj** | **11 maj:** ”Hushållet som stenarna glömde” · **25 maj:** ”Kvinnorna som flyttade?” | – | Planerad |
-| **Jun 2027** | **D2. Högar, hällristningar och gravfält:** ersatte stenarna högarna; stenar vid äldre monument; gravfältens ålder | Har (KMR); gravfältens datering ur KMR:s fritext | **29 jun** | **15 jun:** ”Högarna och stenarna” | **Nr 3, 24 jun:** *Människorna och tron* | Planerad |
-| **Jul 2027** | **Gränserna:** svear och götar som gradient 1000–1150; Kolmården; Sagån och Fjädrundaland; Kossinnatestet (sammanfaller gränserna för olika drag?) | Har (histmaps, folklandspolygoner) | – (sommar) | **13 jul:** ”När blev götarna svear?” · **27 jul:** De gamla landen (två delar ur utkasten) | – | Planerad |
-| **Aug 2027** | **Silvret och stenarna:** skattfynd per socken mot stenar; Gotland mot Uppland; dirhamflödets slut omkring 950 mot österledsstenarna; skatter efter dem som dog borta (Sawyers hypotes) | **Skattfynd (D5)**, hämtas mars–juni | **31 aug** | **17 aug:** ”Silvret och stenarna” | – | Planerad (väntar på D5) |
-| **Sep 2027** | **Stenen själv:** bergart mot berggrund (lokal eller transporterad); vad en sten kostade (landskapslagarnas öre, huggvolym i 3D, monumentindex); Malmers dos–respons över hela landet | **Berggrund (D1)**, lagarnas priser (D11), 3D (har) | **28 sep** | **14 sep:** ”Vad kostade en runsten?” · **28 sep:** ”Varför sten?” (utkast) | **Nr 4, 23 sep:** *Landskapet och ekonomin* | Planerad (väntar på D1) |
-| **Okt 2027** | **Kyrkorna som daterar stenarna:** inmurade stenar får terminus ante quem från kyrkans byggår eller dendrodatering; Gotland med Wases tabell; träkyrkor | **Kyrkornas byggår och dendro (D6)**; Wase 1995 (finns i vår Fornvännen-text) | **26 okt** | **12 okt:** ”Kyrkorna som daterar stenarna” | – | Planerad (väntar på D6) |
-| **Nov 2027** | **Huvudrapporten:** *Vad svensk runforskning har missat* v1 – genomgången, kontrollerna och studierna A–F med vad som höll och inte | – | **23 nov:** huvudrapporten (Zenodo, ny DOI) | **9 nov:** ”Hundra år av antaganden – vad höll?” | – | Planerad |
-| **Dec 2027** | **Vägarna och vattnet:** strandlinje per sten och period; vad och vintervägar; texten mot vägen med bara gamla vägar | **Höjdmodell och vattendrag (D2)** | **14 dec** | **7 dec:** ”Vintervägen” | **Nr 5, 14 dec:** årsnummer, *Ett år av prövade påståenden* | Planerad (väntar på D2) |
+| **Jan 2027** | **A1. Flyttade och försvunna stenar** (4 avgörande): hur långt stenarna flyttades (Runor 2020:s 606 ursprungliga platser) och hur många som står där de restes; förluster per jordart (lera och sand/ås); hur många stenar som restes (upptäcktskurva, fångst–återfångst över inventeringarna); kyrkstenarna; spökstenar och dubbletter | Har; KMR:s inventeringsår (D4) | **19 jan:** rapport 0 ”Hundra års runforskning – metod, läsarkontroll, påståendedatabas och frågelistan” (öppen forskningsagenda) · **26 jan:** ”Stenarna som flyttades och försvann” | **12 jan:** ”Stenarna som plogen och grustaget tog” · **26 jan:** ”Hur långt flyttades runstenarna?” | – | Planerad |
+| **Feb 2027** | **A2. Registret och nämnaren** (4 avgörande): fornminnesregistrets ojämna täckning och inventeringsår; tomma platser – inga stenar eller ingen som letade (Dalarna, Sevede, ”Uppland bara mest letat”); stenar per gård, by, socken och hundare i stället för per ruta (SDHK 1314); var databasen är tom; befolkning eller minne | D4 (måste vara klar i januari); SDHK 1314 (har); ISOF (D3) | **23 feb:** ”Stenarna vi känner – registret, nämnaren och kartan” | **9 feb:** ”Fanns det inga stenar – eller letade ingen?” · **23 feb:** ett utkast ur avsnitt 4 | – | Planerad |
+| **Mar 2027** | **C. Dateringen** (4 avgörande): dateringens kedja av ankare (hur många stenar har en datering som inte bygger på stilen); Ingvars år, 1020 eller 1040; stil mot språk som två klockor; prickarna och åsrunan som klocka; stilgrupp som tid, trakt eller hand | Har; ankarstenar sammanställs ur Rundata; Runor 2020:s termini är oftast schablon | **30 mar:** ”Hur mycket bär stilgrupperna?” | **9 mar:** ”Hur gamla är runstenarna – egentligen?” · **23 mar:** ”Prickarna, åsrunan och tiden” (utkast, med utgivarkontroll) | **Nr 2, 25 mar:** *Det vi inte ser* | Planerad |
+| **Apr 2027** | **D. Platserna mot slumpen** (4 avgörande + 5 betydande), ett gemensamt slumptest inom bygd med KMR:s inventeringsår som kontroll: gravar, vägar eller gränser (debatten Klos 2009 – Larsson 2010); bron och vadet; gudarnas platser (kultnamn, kyrkor); tinget; Husby, Tuna och Hov; gränser och råmärken; äldre monument; handelsplatser eller spannmålsbygder. Vägen med väglinjerna och Häradsekonomiska kartan (D13) | Har (KMR); ISOF:s namn (D3); D13 | **27 apr** | **13 apr:** ”Gravar, vägar eller gränser?” · **27 apr:** ”Stod runstenarna vid tinget?” | – | Planerad |
+| **Maj 2027** | **E. Korset och bönen** (1 avgörande + 6 betydande): var korset en bekännelse eller en prydnad; när korset nådde varje bygd; österifrån, västerifrån eller söderifrån; uppifrån eller underifrån; hedniskt och kristet på samma sten; tog kvinnorna kristendomen först | Har (Runor 2020:s korstypologi, Rundata) | **25 maj** | **11 maj:** ”Var korset en bekännelse?” · **25 maj:** ”Tegnar i söder, böner i norr” (utkast, efter referenskontroll) | – | Planerad |
+| **Jun 2027** | **F. Människorna** (3 avgörande + 8 betydande): reste man sten för arvets skull (lagarna som facit); hur stor del av de döda och gårdarna som fick en sten; var det de rika som reste stenar (Malmers regel); hur många stenar kvinnor reste; trälarna; kvinnorna som flyttade; svearnas lag; stenar över tomma gravar | Har | **29 jun** | **15 jun:** ”Var det de rika som reste stenar?” · **29 jun:** ”Hur många av runstenarna reste kvinnor?” | **Nr 3, 24 jun:** *Människorna och tron* | Planerad |
+| **Jul 2027** | **Gränserna** (betydande): götar och svear; Kolmården; folkland och hundare; samma karta eller olika (Kossinnatestet) | Har (histmaps, folklandspolygoner) | – (sommar) | **13 jul:** ”När blev götarna svear?” · **27 jul:** De gamla landen (två delar ur utkasten) | – | Planerad |
+| **Aug 2027** | **R. Ristarna** (1 avgörande + 6 betydande): kännarskap mot slumpen – hur ofta har ristarforskarna rätt; ristarens fingeravtryck; Åsmund och Öpir – en man eller en skola; hur långt ristarna reste; samma man på två stenar | Har (attributionsspåret, Runor 2020:s samma-hand-grupper) | **31 aug** | **17 aug:** ”Kännarskap mot slumpen” · **31 aug:** ”Åsmund Kåreson – en man eller en skola?” | – | Planerad |
+| **Sep 2027** | **V. Vattnet och landhöjningen** (1 avgörande + 3 betydande): vilket vatten stenarna stod vid (strandlinjen ±1–3 m, vattentyp, 64-procentsfyndet); landhöjningen som klocka; gårdsnamnens ålder; lera, ås eller kärr | **Höjdmodell och vattendrag (D2)** | **28 sep** | **14 sep:** ”Vilket vatten stod stenarna vid?” · **28 sep:** ”Hur högt över vattnet stod stenen? Landhöjningen som klocka” | **Nr 4, 23 sep:** *Platserna* | Planerad (väntar på D2) |
+| **Okt 2027** | **S. Stenen och silvret** (betydande): vad en sten kostade och var den kom ifrån (berggrund, 3D-volym, lagarnas öre); silvret och stenarna; följer stenvågorna odlingen (pollen) | **Berggrund (D1)**, lagarnas priser (D11), **skattfynd (D5)**, pollen (D7) | **26 okt** | **12 okt:** ”Vad kostade en runsten?” · **26 okt:** ”Varför sten?” (utkast) – eller ”Silvret och stenarna” om D5 är klar | – | Planerad (väntar på D1, D5) |
+| **Nov 2027** | **Huvudrapporten:** *Vad svensk runforskning har missat* v1 – genomgången, frågelistan och studierna 2027 med vad som höll och inte | – | **23 nov:** huvudrapporten (Zenodo, ny DOI) | **9 nov:** ”Hundra år av antaganden – vad höll?” | – | Planerad |
+| **Dec 2027** | **K. Kyrkorna** (betydande): inmurade stenar får terminus ante quem från kyrkans byggår eller dendro; gravhällarna som bönernas nya hem; träkyrkorna vi inte ser | **Kyrkornas byggår och dendro (D6)** | **14 dec** | **7 dec:** ”Kyrkorna som daterar stenarna” | **Nr 5, 14 dec:** årsnummer, *Ett år av prövade påståenden* | Planerad (väntar på D6) |
+
+**2028 (betydande frågor, i den ordningen):** språkets klockor (ʀ och r, monoftongeringen, epentesen, stavningen –
+bygdens, tidens eller ristarens –, skiljetecknen, vers); när runstenarna tystnade och gravhällarna tog över; städernas
+stenar; ortnamnens åldersskikt; Gotland; resten av de betydande frågorna i Excel-filen. Vintervägen (begränsad) och
+silvret, om D5 dröjer, flyttas hit.
+
+**Hur studierna väljs:** frågelistan (kolumnen ”Studie i planen”) visar vilken studie varje fråga hör till. En låst studie
+besvarar flera frågor samtidigt. En fråga som flyttas uppdateras både här och i `bygg_fragelista.py`.
 
 **Om en studie inte håller:** rapporten skrivs ändå. Artikeln byts mot ett utkast ur avsnitt 4. Ordningen kan flyttas om data dröjer (D5, D6).
 
 ## 2. Korpus
 
-- **Nr 2, mars 2027 – *Det vi inte ser*.** Stenarna som plogen och grustaget tog; Hur gamla är runstenarna – egentligen?;
-  Var det bara Ingvar? Verkstaden: genomgången som öppen databas. Metodhörnan: vad är fångst–återfångst?
-  **I appen:** Luckor i texten – modellen som föreslår förlorade runor, och hur säker den är.
-- **Nr 3, juni 2027 – *Människorna och tron*.** Hushållet som stenarna glömde; Kvinnorna som flyttade?; Var korset en
-  bekännelse? Verkstaden: läsarkontrollen. Metodhörnan: slumpen inom bygden.
+- **Nr 2, mars 2027 – *Det vi inte ser*.** Stenarna som plogen och grustaget tog; Hur långt flyttades runstenarna?;
+  Hur gamla är runstenarna – egentligen? Verkstaden: genomgången och frågelistan som öppen databas. Metodhörnan: vad är
+  fångst–återfångst? **I appen:** Luckor i texten – modellen som föreslår förlorade runor, och hur säker den är.
+- **Nr 3, juni 2027 – *Människorna och tron*.** Var det de rika som reste stenar?; Hur många av runstenarna reste
+  kvinnor?; Var korset en bekännelse? Verkstaden: läsarkontrollen. Metodhörnan: slumpen inom bygden.
   **I appen:** Ristarna, en i taget – varje känd ristares fingeravtryck och modellens förslag (Människorna förklarades redan i nr 1).
-- **Nr 4, september 2027 – *Landskapet och ekonomin*.** Stod runstenarna vid tinget?; Silvret och stenarna; Vad kostade
-  en runsten? Verkstaden: nya data (skatter, berggrund). Metodhörnan: odds och oddskvoter.
+- **Nr 4, september 2027 – *Platserna*.** Gravar, vägar eller gränser?; Stod runstenarna vid tinget?; Vilket vatten stod
+  stenarna vid? Verkstaden: nya data (höjdmodell, historiska kartor). Metodhörnan: odds och oddskvoter.
   **I appen:** Kartan med de gamla landen, strandlinjen och jordarterna.
-- **Nr 5, december 2027 – *Ett år av prövade påståenden*.** Kyrkorna som daterar stenarna; När blev götarna svear?;
+- **Nr 5, december 2027 – *Ett år av prövade påståenden*.** Kännarskap mot slumpen; Kyrkorna som daterar stenarna;
   Hundra år av antaganden – vad höll? Verkstaden: huvudrapporten. Metodhörnan: varför vi låser planen.
   **I appen:** Pröva en egen fråga – så testar läsaren själv ett påstående mot hela korpusen, med kontrollerna i R.
 
@@ -78,7 +90,7 @@ Varje nummer byggs med `utdata/tidskrift/bygg_tidskrift.py` (sv + en) och läggs
 | D1 | Berggrundskarta | SGU, öppna data (vektor) | Stenens proveniens (sep) | jan 2027 | Litet |
 | D2 | Höjdmodell och vattendrag | Lantmäteriet markhöjdmodell (öppna data); SMHI:s vattendragsregister | Strandlinje per sten, vadställen, vintervägar (dec), Tunaplatsernas vatten | feb 2027 | Medel (stora filer, bara för bygder med runstenar) |
 | D3 | Centralorts- och tingsnamn | ISOF:s ortnamnsregister (CC BY) och vår platser.csv: Husby/Husaby, Tuna, Hov, Sala, Ting-, -vi, Galg-, Kungs- | D1 tinget (mar) | feb 2027 | Litet |
-| D4 | Fornminnesregistrets inventeringsår | KMR-fälten först; annars en tabell över fornminnesinventeringen per län och period ur RAÄ:s dokumentation | A (jan) och alla KMR-test | dec 2026 | Litet till medel |
+| D4 | Fornminnesregistrets inventeringsår | KMR-fälten först; annars en tabell över fornminnesinventeringen per län och period ur RAÄ:s dokumentation | A1–A2 (jan–feb, avgörande) och alla KMR-test | dec 2026 | Litet till medel |
 | D5 | **Skattfynd med fyndplats** | SHM och Myntkabinettet via K-samsök (öppet API); CNS och Hårdhs katalog som kontroll; kodning per socken | Silvret (aug), Norge-artikeln, flera påståenden | mar–jun 2027 | **Stort.** TLS-fel mot K-samsök betyder Viktors VPN: pausa den |
 | D6 | Kyrkornas byggår och dendrodateringar | RAÄ:s bebyggelseregister; *Sveriges kyrkor* (Arkivsök); dendrolistor (Lunds dendrolaboratorium); Wase 1995 för Gotland | Kyrkorna (okt), kyrkotester | jun–sep 2027 | Stort |
 | D7 | Pollenserier | Neotoma (finns i geografi_kallor/neotoma) | Odlingsexpansion mot stenarna (valfri studie) | har | Litet |
@@ -86,6 +98,7 @@ Varje nummer byggs med `utdata/tidskrift/bygg_tidskrift.py` (sv + en) och läggs
 | D9 | Isotoper och aDNA | Publicerade tabeller (Birka, Sigtuna) | Rörlighet (valfritt) | 2028 | Medel |
 | D10 | Runor 2020:s fält | Har (runor_2020.json). Kontrollera korstypologi, profilstil, fyndomständigheter, litteraturhänvisningar och första dokumentation; tpq är oftast schablon | A, C, E | dec 2026 | Litet |
 | D11 | Landskapslagarnas priser | Utgåvor av landskapslagarna (öre för sten och arbete) | Vad kostade en runsten (sep) | aug 2027 | Litet |
+| D13 | Häradsekonomiska kartan och äldre kartor runt stenarna | Lantmäteriets Historiska kartor (historiskakartor.lantmateriet.se): TIFF-blad laddas ned utan inloggning men är inte georefererade; geometriska kartor 1640-tal per by. Inventering per sten: `scripts/historiska_kartor_inventera.py` | Vägen (dec–apr), D | dec 2026 – feb 2027 | Medel (blad + georeferering + blind ritning) |
 | D12 | 1314 års sexårsgärd | **Kontrollerad 10 nov 2026:** SDHK 2593 är daterad 1314 i själva brevet och gäller Uppsala ärkestift (Tiunda, Attunda …). Ljungs omdatering till 1279–82 gäller Strängnäs stifts lista, som vi inte använder. Inget publicerat påverkas. | – | klar | – |
 
 ## 4. Utkast som väntar
@@ -97,9 +110,9 @@ kalendern, eller fri lucka.
 |---|---|---|
 | Varför står runstenarna vid lerans kant? (Palm, jordarna) | Lerkontrollerna (nov) | nov 2026 |
 | Varför har Norge bara 66 runstenar? | Myntkvoten ur D5 eller utan den; Palm 1992 krediterad | dec 2026 |
-| Prickarna, åsrunan och tiden | Utgivareffekt per SRI-band | feb 2027 |
-| Tegnar i söder, böner i norr | Gräslund 2001-referensen; studie E | apr 2027 |
-| Varför sten? | Studien om bergart och berggrund | sep 2027 |
+| Prickarna, åsrunan och tiden | Utgivareffekt per SRI-band; studie C | mar 2027 |
+| Tegnar i söder, böner i norr | Gräslund 2001-referensen; studie E | maj 2027 |
+| Varför sten? | Studien om bergart och berggrund (S) | okt 2027 |
 | Den som bryter denna sten (magi, Blekinge del 1) | Santessons påpekande att förbannelseformeln inte är arkaiserande | jul 2027 |
 | De gamla landen (Skåne, Attundaland, Gotland, Värend, Möre, Finnveden) | Gränsresultaten (jul) | sommarluckor |
 | Ingen på runstenarna hette Freja; Orden höll sig hemma | – | fria luckor |
