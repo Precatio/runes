@@ -108,6 +108,66 @@ T = {
 }
 
 
+# "I appen" (Viktor 2026-11-10): varje nummer förklarar en funktion i Vitki på en sida. Texten bygger på
+# metoddokumentationen (METHODS.md) för funktionen; siffrorna är de publicerade.
+APP = {
+    "sv": dict(
+        flik="06 · I appen", rubrik="Människorna: vem reste stenen, och efter vem?",
+        deck="Människomodulen läser varje runsten som en liten släktberättelse: vilka som reste stenen, vem den döde var för dem och vad de sa om honom eller henne. Den ligger bakom två av artiklarna i det här numret.",
+        gor=["För varje vikingatida runsten tar modulen fram hur många som reste stenen och deras kön, hur många döda och deras kön, och den dödes relation till resaren: barn, förälder, syskon, make eller maka, annan släkt. Den läser också berömmet – drengr, þegn, god och bäst – och om den döde dog utanför Norden.",
+             "Könet bestäms i en fast ordning: först relationsordet (mor, dotter, hustru, son), sedan formeln (hennes son, hans son), sedan ett namnlexikon och sist namnets ändelse. Därefter prövar R sex frågor enligt en låst plan, med landsdel, tid och ristaren i modellen, och varje mönster prövas i två halvor av landet var för sig."],
+        steg=["Öppna Statistik (R) i appen och välj Människorna.",
+              "Läs frågan, nyckeltalet och svaret överst. Under dem står hur säkert mönstret är: bekräftar, mönster att pröva eller indikation.",
+              "Pröva samma sak på din egen avgränsning under Egen fråga – till exempel bara Uppland eller bara 1000-talet."],
+        kan_inte="Modulen ser bara de personer som texten nämner, och den kan missa namn där stenen är skadad. I en kontroll mot handkodning av 40 stenar som reglerna aldrig sett hade den rätt om kvinnor bland resarna på 39 och om relationen på 38. Den säger hur ofta något står på stenarna – inte hur ofta det hände.",
+        panel="Två fynd ur modulen",
+        rader=[("Kvinna bland resarna", [("Svealand", 31, True), ("Götaland", 17, False)]),
+               ("Den döde dog utanför Norden", [("Söner och bröder", 10, True), ("Fäder och makar", 3, False)])],
+        kalla="Källa: Vitkis analys av Samnordisk runtextdatabas, vikingatida svenska runstenar; låst plan 2026-10-28.",
+        fot="Vitki är fri programvara och körs på din egen dator: github.com/Precatio/runes. Metoden: METHODS.md, avsnitt 1u.",
+        kan_inte_rubrik="Vad den inte kan", steg_rubrik="Så gör du", gor_rubrik="Vad den gör", innehall=("I appen", "Människorna: vem reste stenen, och efter vem?")),
+    "en": dict(
+        flik="06 · In the app", rubrik="People: who raised the stone, and for whom?",
+        deck="The people module reads every runestone as a small family story: who raised the stone, who the dead person was to them and what they said about him or her. It lies behind two of the articles in this issue.",
+        gor=["For every Viking-age runestone the module finds how many raised the stone and their sex, how many dead and their sex, and the dead person's relation to the raiser: child, parent, sibling, spouse, other kin. It also reads the praise – drengr, þegn, good and best – and whether the dead person died outside the Nordic lands.",
+             "Sex is decided in a fixed order: first the kin word (mother, daughter, wife, son), then the formula (her son, his son), then a name lexicon and last the name's ending. R then tests six questions under a locked plan, with region, period and the carver in the model, and every pattern is tested in two halves of the country separately."],
+        steg=["Open Statistics (R) in the app and choose People.",
+              "Read the question, the key number and the answer at the top. Below them it says how sure the pattern is: confirmed, pattern to test or indication.",
+              "Try the same thing on your own selection under Your own question – only Uppland, for example, or only the 11th century."],
+        kan_inte="The module sees only the people the text names, and it can miss names where the stone is damaged. Checked against hand-coding of 40 stones the rules had never seen, it was right about women among the raisers on 39 and about the relation on 38. It tells how often something is said on the stones – not how often it happened.",
+        panel="Two findings from the module",
+        rader=[("A woman among the raisers", [("Svealand", 31, True), ("Götaland", 17, False)]),
+               ("The dead man died outside the Nordic lands", [("Sons and brothers", 10, True), ("Fathers and husbands", 3, False)])],
+        kalla="Source: Vitki's analysis of the Scandinavian Runic-text Database, Swedish Viking-age runestones; locked plan 2026-10-28.",
+        fot="Vitki is free software and runs on your own computer: github.com/Precatio/runes. The method: METHODS.md, section 1u.",
+        kan_inte_rubrik="What it cannot do", steg_rubrik="How to use it", gor_rubrik="What it does", innehall=("In the app", "People: who raised the stone, and for whom?")),
+}
+
+
+def appsida(A):
+    rader = "".join(f'<div class="cgroup">{g}</div>' + "".join(
+        f'<div class="crow{" hi" if hi else ""}"><div class="clab">{lab}</div><div class="cbar"><span style="width:{v}%"></span></div>'
+        f'<div class="cval">{v} %</div><div class="cnote"></div></div>' for lab, v, hi in rows) for g, rows in A["rader"])
+    steg = "".join(f"<li>{x}</li>" for x in A["steg"])
+    return f"""
+<section class="vanlig appsida">
+  <div class="flik">{A["flik"]}</div>
+  <h2>{A["rubrik"]}</h2>
+  <p class="deck">{A["deck"]}</p>
+  <div class="tvaspalt">
+    <div>
+      <h3>{A["gor_rubrik"]}</h3>{"".join(f"<p>{x}</p>" for x in A["gor"])}
+      <h3>{A["steg_rubrik"]}</h3><ol class="appsteg">{steg}</ol>
+    </div>
+    <div>
+      <figure class="chart appchart"><figcaption class="ctitle">{A["panel"]}</figcaption>{rader}<div class="csrc">{A["kalla"]}</div></figure>
+      <aside class="box appbox"><div class="boxh">{A["kan_inte_rubrik"]}</div><p>{A["kan_inte"]}</p></aside>
+    </div>
+  </div>
+  <p class="appfot">{A["fot"]}</p>
+</section>"""
+
+
 def inline(s):
     s = html.escape(s, quote=False)
     s = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', s)
@@ -283,6 +343,9 @@ def bygg(L, namn, arts, sidor):
         f'<span class="tsida">{sidor.get(a["title"], "")}</span></li>' for a in arts)
     innehall += "".join(f'<li class="kort"><div><span class="ttema">{t}</span><span class="ttitle">{html.escape(r)}</span></div>'
                         f'<span class="tsida">{sidor.get("verkstad", "")}</span></li>' for t, r in L["extra"])
+    A = APP[L["lang"]]
+    innehall += (f'<li class="kort"><div><span class="ttema">{A["innehall"][0]}</span><span class="ttitle">{html.escape(A["innehall"][1])}</span></div>'
+                 f'<span class="tsida">{sidor.get("app", "")}</span></li>')
     art_html = []
     for n, a in enumerate(arts, 1):
         kort = "".join(f"<li>{k}</li>" for k in a["kort"])
@@ -334,6 +397,7 @@ def bygg(L, namn, arts, sidor):
   </div>
   <div class="metod"><div class="flik">{L["mflik"]}</div><h3>{L["mrubrik"]}</h3><p>{L["mtext"]}</p></div>
 </section>
+{appsida(APP[L["lang"]])}
 <section class="vanlig baksida">
   <div class="baktext">{bak}</div>
   <div class="bakmast">{html.escape(namn)} <img class="bindruna" src="{LOGO}" alt="Vitki"><span>{L["bakrad"]}</span></div>
@@ -372,9 +436,9 @@ def utgava(sprak, namn="Korpus"):
     pdf = skriv_pdf(bygg(L, namn, arts, {}), fil)  # varv 1: utan sidnummer
     sidtext = subprocess.run(["pdftotext", pdf, "-"], capture_output=True, text=True).stdout.split("\f")
     sidor = {}
-    for key, needle in [(a["title"], " ".join(a["title"].split()[:2])) for a in arts] + [("verkstad", L["vflik"])]:
+    for key, needle in [(a["title"], " ".join(a["title"].split()[:2])) for a in arts] + [("verkstad", L["vflik"]), ("app", APP[sprak]["flik"])]:
         for p, t in enumerate(sidtext[2:], 3):
-            if needle in t.replace("\n", " "):
+            if re.sub(r"\s", "", needle).upper() in re.sub(r"\s", "", t).upper():  # flikarna spärras och sätts i versaler
                 sidor[key] = p
                 break
     print(sprak, "sidor:", sidor)

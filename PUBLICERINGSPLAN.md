@@ -24,7 +24,9 @@ Datumen är förslag. Viktor publicerar artiklarna; allt annat följer Vitkis re
   - tre artiklar ur kvartalets studier;
   - Verkstaden, som visar hur långt vi kommit i planen;
   - Metodhörnan;
-  - ”Ett påstående från förr, prövat”.
+  - ”Ett påstående från förr, prövat”;
+  - **I appen** (Viktor 2026-11-10): en funktion i Vitki förklarad på en sida. Den visar vad funktionen gör med en
+    skärmbild, hur man använder den i tre steg, vad den inte kan, och var man laddar ned appen och läser dokumentationen.
 
 ## 1. Kalender
 
@@ -51,12 +53,19 @@ Datumen är förslag. Viktor publicerar artiklarna; allt annat följer Vitkis re
 
 - **Nr 2, mars 2027 – *Det vi inte ser*.** Stenarna som plogen och grustaget tog; Hur gamla är runstenarna – egentligen?;
   Var det bara Ingvar? Verkstaden: genomgången som öppen databas. Metodhörnan: vad är fångst–återfångst?
+  **I appen:** Luckor i texten – modellen som föreslår förlorade runor, och hur säker den är.
 - **Nr 3, juni 2027 – *Människorna och tron*.** Hushållet som stenarna glömde; Kvinnorna som flyttade?; Var korset en
   bekännelse? Verkstaden: läsarkontrollen. Metodhörnan: slumpen inom bygden.
+  **I appen:** Människorna och Namn och släkt – släktnätverket över stenarna.
 - **Nr 4, september 2027 – *Landskapet och ekonomin*.** Stod runstenarna vid tinget?; Silvret och stenarna; Vad kostade
   en runsten? Verkstaden: nya data (skatter, berggrund). Metodhörnan: odds och oddskvoter.
+  **I appen:** Kartan med de gamla landen, strandlinjen och jordarterna.
 - **Nr 5, december 2027 – *Ett år av prövade påståenden*.** Kyrkorna som daterar stenarna; När blev götarna svear?;
   Hundra år av antaganden – vad höll? Verkstaden: huvudrapporten. Metodhörnan: varför vi låser planen.
+  **I appen:** Pröva en egen fråga – så testar läsaren själv ett påstående mot hela korpusen, med kontrollerna i R.
+
+Fler funktioner att förklara i senare nummer: 3D-huggspårsanalysen, Ristarna, Runbiblioteket, Stenanalys (allt i ett),
+Jämför stenar och Forskningsrapporterna.
 
 Varje nummer byggs med `utdata/tidskrift/bygg_tidskrift.py` (sv + en) och läggs upp på /tidskrift.
 
