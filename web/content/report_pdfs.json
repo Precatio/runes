@@ -1,0 +1,137 @@
+{
+ "_om": "Rapporternas PDF:er på webbplatsen (scripts/rapport_pdf_webb.py), samma version som på Zenodo. Används av web/src/lib/report.ts för citation_pdf_url och nedladdningslänken.",
+ "rapporter": {
+  "barnen-arvde-namnled": {
+   "version": 3,
+   "sv": {
+    "url": "/forskningsrapporter-pdf/barnen-arvde-namnled-v3-sv.pdf",
+    "bytes": 551318
+   },
+   "en": {
+    "url": "/forskningsrapporter-pdf/barnen-arvde-namnled-v3-en.pdf",
+    "bytes": 540716
+   }
+  },
+  "familjegrupper-vid-gravfalten": {
+   "version": 4,
+   "sv": {
+    "url": "/forskningsrapporter-pdf/familjegrupper-vid-gravfalten-v4-sv.pdf",
+    "bytes": 703690
+   },
+   "en": {
+    "url": "/forskningsrapporter-pdf/familjegrupper-vid-gravfalten-v4-en.pdf",
+    "bytes": 697483
+   }
+  },
+  "kvinnor-bland-resarna-svealand-gotaland": {
+   "version": 3,
+   "sv": {
+    "url": "/forskningsrapporter-pdf/kvinnor-bland-resarna-svealand-gotaland-v3-sv.pdf",
+    "bytes": 583139
+   },
+   "en": {
+    "url": "/forskningsrapporter-pdf/kvinnor-bland-resarna-svealand-gotaland-v3-en.pdf",
+    "bytes": 580138
+   }
+  },
+  "monoftongstavningen-blir-ovanligare": {
+   "version": 3,
+   "sv": {
+    "url": "/forskningsrapporter-pdf/monoftongstavningen-blir-ovanligare-v3-sv.pdf",
+    "bytes": 581025
+   },
+   "en": {
+    "url": "/forskningsrapporter-pdf/monoftongstavningen-blir-ovanligare-v3-en.pdf",
+    "bytes": 574476
+   }
+  },
+  "r-for-yr-runan-vastra-uppland": {
+   "version": 4,
+   "sv": {
+    "url": "/forskningsrapporter-pdf/r-for-yr-runan-vastra-uppland-v4-sv.pdf",
+    "bytes": 1075745
+   },
+   "en": {
+    "url": "/forskningsrapporter-pdf/r-for-yr-runan-vastra-uppland-v4-en.pdf",
+    "bytes": 1063457
+   }
+  },
+  "ristarforslag-blindprov": {
+   "version": 4,
+   "sv": {
+    "url": "/forskningsrapporter-pdf/ristarforslag-blindprov-v4-sv.pdf",
+    "bytes": 605931
+   },
+   "en": {
+    "url": "/forskningsrapporter-pdf/ristarforslag-blindprov-v4-en.pdf",
+    "bytes": 594622
+   }
+  },
+  "ristningen-vand-mot-vagen": {
+   "version": 4,
+   "sv": {
+    "url": "/forskningsrapporter-pdf/ristningen-vand-mot-vagen-v4-sv.pdf",
+    "bytes": 713146
+   },
+   "en": {
+    "url": "/forskningsrapporter-pdf/ristningen-vand-mot-vagen-v4-en.pdf",
+    "bytes": 696632
+   }
+  },
+  "runstenarna-vid-sin-tids-vatten": {
+   "version": 3,
+   "sv": {
+    "url": "/forskningsrapporter-pdf/runstenarna-vid-sin-tids-vatten-v3-sv.pdf",
+    "bytes": 1110622
+   },
+   "en": {
+    "url": "/forskningsrapporter-pdf/runstenarna-vid-sin-tids-vatten-v3-en.pdf",
+    "bytes": 1123773
+   }
+  },
+  "seriationen-foljer-stilkronologin": {
+   "version": 4,
+   "sv": {
+    "url": "/forskningsrapporter-pdf/seriationen-foljer-stilkronologin-v4-sv.pdf",
+    "bytes": 652708
+   },
+   "en": {
+    "url": "/forskningsrapporter-pdf/seriationen-foljer-stilkronologin-v4-en.pdf",
+    "bytes": 639783
+   }
+  },
+  "skanningen-som-ledtrad": {
+   "version": 4,
+   "sv": {
+    "url": "/forskningsrapporter-pdf/skanningen-som-ledtrad-v4-sv.pdf",
+    "bytes": 717596
+   },
+   "en": {
+    "url": "/forskningsrapporter-pdf/skanningen-som-ledtrad-v4-en.pdf",
+    "bytes": 702229
+   }
+  },
+  "soner-och-broder-dog-utanfor-norden": {
+   "version": 3,
+   "sv": {
+    "url": "/forskningsrapporter-pdf/soner-och-broder-dog-utanfor-norden-v3-sv.pdf",
+    "bytes": 584015
+   },
+   "en": {
+    "url": "/forskningsrapporter-pdf/soner-och-broder-dog-utanfor-norden-v3-en.pdf",
+    "bytes": 576657
+   }
+  },
+  "upplands-folkland-skiljer-runstenarna": {
+   "version": 1,
+   "sv": {
+    "url": "/forskningsrapporter-pdf/upplands-folkland-skiljer-runstenarna-v1-sv.pdf",
+    "bytes": 593667
+   },
+   "en": {
+    "url": "/forskningsrapporter-pdf/upplands-folkland-skiljer-runstenarna-v1-en.pdf",
+    "bytes": 580882
+   }
+  }
+ }
+}

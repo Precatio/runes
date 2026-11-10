@@ -3,7 +3,7 @@ import BlogBody, { dateLabel, type BlogPost } from "@/components/BlogBody";
 import ReportCite from "@/components/ReportCite";
 import EnglishEdition from "@/components/EnglishEdition";
 import type { ImageSizes } from "@/lib/blogSeo";
-import { bibtex, doiUrl, EN_REPORTS_PATH, EN_TERMS_PATH, REPORT_FORMS, REPORTS_PATH, reportArchive, reportParts, TERMS_PATH } from "@/lib/report";
+import { bibtex, doiUrl, EN_REPORTS_PATH, EN_TERMS_PATH, REPORT_FORMS, REPORTS_PATH, reportArchive, reportParts, reportPdf, TERMS_PATH } from "@/lib/report";
 import { CONTACT_PATH, EN_CONTACT_PATH } from "@/lib/site";
 import { paperFace } from "@/lib/paperFont";
 
@@ -17,12 +17,12 @@ const T = {
         analysis: "Analys i Vitki", licence: "Licens", keywords: "Nyckelord", highlights: "Huvudpunkter", contents: "Innehåll",
         competing: "Konkurrerande intressen", funding: "Finansiering", cite: "Citera som", abstract: "Sammanfattning",
         updated: "Senast ändrad", series: "Vitki – forskningsrapporter", timeline: "Studiens tidslinje",
-        archived: "Arkiverad på Zenodo", archivedVersion: (v: number) => `Rapportversion ${v} arkiverad på Zenodo`, allVersions: "alla versioner" },
+        archived: "Arkiverad på Zenodo", pdf: "Ladda ned rapporten som PDF", archivedVersion: (v: number) => `Rapportversion ${v} arkiverad på Zenodo`, allVersions: "alla versioner" },
   en: { kind: "Research report", back: "← Research reports", other: "Läs på svenska →", version: "Report version", published: "Published",
         analysis: "Analysis in Vitki", licence: "Licence", keywords: "Keywords", highlights: "Highlights", contents: "Contents",
         competing: "Competing interests", funding: "Funding", cite: "Cite as", abstract: "Abstract",
         updated: "Last changed", series: "Vitki – research reports", timeline: "Timeline of the study",
-        archived: "Archived on Zenodo", archivedVersion: (v: number) => `Report version ${v} archived on Zenodo`, allVersions: "all versions" },
+        archived: "Archived on Zenodo", pdf: "Download the report as PDF", archivedVersion: (v: number) => `Report version ${v} archived on Zenodo`, allVersions: "all versions" },
 };
 
 export default function ReportPaper({ post, lang, sizes, otherHref }: { post: BlogPost; lang: "sv" | "en"; sizes?: ImageSizes; otherHref?: string | null }) {
@@ -35,6 +35,7 @@ export default function ReportPaper({ post, lang, sizes, otherHref }: { post: Bl
   const published = post.publishedAt ?? h?.date ?? null;
   const changed = post.updatedAt && published && post.updatedAt.slice(0, 10) !== published.slice(0, 10) ? post.updatedAt : null;
   const arc = reportArchive(post.slug, h?.version);
+  const pdf = reportPdf(post.slug, lang, h?.version);
   const cited = h?.citation ?? `Kvant, V. ${title}.`;
   const citation = arc && !cited.includes("doi.org") ? `${cited} ${doiUrl(arc.doi)}` : cited;
   const meta = [
@@ -67,6 +68,12 @@ export default function ReportPaper({ post, lang, sizes, otherHref }: { post: Bl
               {arc.current ? t.archived : t.archivedVersion(arc.version)}:{" "}
               <a href={doiUrl(arc.versionDoi)} className="font-semibold text-[#b7410e] hover:underline">DOI {arc.versionDoi}</a>
               {!arc.current && <>{" "}({t.allVersions}: <a href={doiUrl(arc.conceptDoi)} className="font-semibold text-[#b7410e] hover:underline">{arc.conceptDoi}</a>)</>}
+            </p>
+          )}
+          {pdf && (
+            <p className="no-print mt-1 text-[13px] text-slate-500">
+              <a href={pdf.url} download className="font-semibold text-[#b7410e] hover:underline">{t.pdf}</a>
+              {" "}({(pdf.bytes / 1e6).toFixed(1).replace(".", en ? "." : ",")} MB)
             </p>
           )}
           {h && h.timeline.length > 0 && (

@@ -18,6 +18,8 @@ Ny version av en arkiverad rapport (posten står i web/content/report_dois.json)
     (för in DOI:t i report_dois.json, bygg om appen så att sidan visar det, skriv PDF:erna med --slug S)
     .venv/bin/python scripts/zenodo_rapporter.py --slug S --ny-version --ladda-upp  # 2. byt filerna och metadata i utkastet
 Utkastet publiceras inte av skriptet. Token läses ur miljön eller .env och skrivs aldrig ut.
+När versionen är publicerad på Zenodo: kör scripts/rapport_pdf_webb.py, som lägger PDF:erna på webbplatsen
+(/forskningsrapporter-pdf/, citation_pdf_url för Google Scholar och nedladdningslänken på rapportsidan).
 """
 from __future__ import annotations
 

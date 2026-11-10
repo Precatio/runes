@@ -6,6 +6,7 @@ import type { BlogPost } from "@/components/BlogBody";
 import { plainText } from "@/lib/blogSeo";
 import { PUBLIC_SITE, SITE_NAME, SITE_URL } from "@/lib/site";
 import archive from "../../content/report_dois.json";
+import pdfs from "../../content/report_pdfs.json";
 
 export const REPORT_LABEL = "Rapport";
 /** Whether a post is a research report. */
@@ -219,6 +220,15 @@ export function reportArchive(slug: string, pageVersion?: string | null): Report
 }
 export const doiUrl = (doi: string) => `https://doi.org/${doi}`;
 
+/** The archived version's PDF on this site (scripts/rapport_pdf_webb.py, content/report_pdfs.json), when the page shows
+ *  that version: Google Scholar wants a PDF on the same site (citation_pdf_url), and readers can download it. */
+export function reportPdf(slug: string, lang: "sv" | "en", pageVersion?: string | null): { url: string; bytes: number; version: number } | null {
+  const e = (pdfs.rapporter as Record<string, { version: number; sv?: { url: string; bytes: number }; en?: { url: string; bytes: number } }>)[slug];
+  const f = e?.[lang];
+  if (!e || !f || (pageVersion && Number(pageVersion) !== e.version)) return null;
+  return { url: f.url, bytes: f.bytes, version: e.version };
+}
+
 /** "2026-10-31" → "2026/10/31", the date form the Highwire Press tags (Google Scholar) ask for. */
 const scholarDate = (iso: string | null | undefined) => (iso ? iso.slice(0, 10).replace(/-/g, "/") : undefined);
 
@@ -246,6 +256,8 @@ export function scholarMeta(post: BlogPost, lang: "sv" | "en"): Record<string, s
   if (refs.length) meta.citation_reference = refs;
   const arc = reportArchive(post.slug, h?.version);
   if (arc) meta.citation_doi = arc.doi;
+  const pdf = reportPdf(post.slug, lang, h?.version);
+  if (pdf) meta.citation_pdf_url = `${SITE_URL}${pdf.url}`;
   return meta;
 }
 
