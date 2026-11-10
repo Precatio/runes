@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import BlogShell from "@/components/BlogShell";
-import NewsList from "@/components/NewsList";
+import NewsCatalog from "@/components/NewsCatalog";
 import { NEWS } from "@/lib/news";
 import { NEWS_PATH } from "@/lib/site";
 
@@ -19,14 +19,15 @@ export const metadata: Metadata = {
 export default function NewsPage() {
   return (
     <BlogShell>
-      <section className="max-w-3xl mx-auto px-6 pt-20 pb-24">
+      <section className="max-w-6xl mx-auto px-6 pt-20 pb-24">
         <div className="text-xs font-bold uppercase tracking-[0.2em] text-[#b7410e] mb-3">Nyheter</div>
         <h1 className="text-4xl md:text-5xl font-serif font-bold tracking-tight">Nytt i Vitki</h1>
-        <p className="mt-4 text-lg text-slate-600 leading-relaxed">
-          Korta notiser om nya funktioner i appen och om det som är på gång. Hur varje funktion räknar står i
+        <p className="mt-4 max-w-3xl text-lg text-slate-600 leading-relaxed">
+          Korta notiser om nya funktioner i appen och om det som är på gång. Notiserna ligger som ett kartotek: en låda per
+          månad och ett kort per nyhet. Sök, välj ett ämne eller öppna en äldre låda. Hur varje funktion räknar står i
           metoddokumentationen, och ändringarna i sin helhet i ändringsloggen på GitHub.
         </p>
-        <div className="mt-10"><NewsList items={NEWS} /></div>
+        <div className="mt-10"><NewsCatalog items={NEWS} /></div>
       </section>
     </BlogShell>
   );

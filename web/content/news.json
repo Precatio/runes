@@ -1,369 +1,421 @@
 {
- "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den).",
+ "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den). Varje notis har en kategori (fältet kategori): huggspar, ristarna, landskap, manniskor, metod eller publicerat – den styr filtret i kartoteket på /nyheter.",
  "items": [
   {
    "id": "korpus-sida",
    "date": "2026-11-10",
    "status": "nytt",
    "title": "Korpus har fått en egen sida",
-   "text": "Vitkis tidskrift Korpus – Ristat & räknat har nu en egen sida på webbplatsen, under Korpus i menyn. Där finns det senaste numret med omslag, innehåll och PDF på svenska och engelska, hur man läser tidskriften och alla nummer."
+   "text": "Vitkis tidskrift Korpus – Ristat & räknat har nu en egen sida på webbplatsen, under Korpus i menyn. Där finns det senaste numret med omslag, innehåll och PDF på svenska och engelska, hur man läser tidskriften och alla nummer.",
+   "kategori": "publicerat"
   },
   {
    "id": "korpus-nr1",
    "date": "2026-11-10",
    "status": "nytt",
    "title": "Korpus nr 1 – Vitkis tidskrift, på svenska och engelska",
-   "text": "Korpus – Ristat & räknat är Vitkis nya tidskrift för digital runforskning, skriven för den som är nyfiken men har ont om tid: varje artikel går att läsa på trettio sekunder, på fem minuter eller på djupet. Första numret har tre artiklar – döttrarna som runstenarna glömde, de unga som dog på färderna och vikinganamnen som lever kvar – och en notis om genomgången av hundra års runforskning i Fornvännen och Futhark. Läs det som PDF på svenska (vitkirunor.se/korpus/korpus-nr1-sv.pdf) eller engelska (vitkirunor.se/korpus/korpus-nr1-en.pdf)."
+   "text": "Korpus – Ristat & räknat är Vitkis nya tidskrift för digital runforskning, skriven för den som är nyfiken men har ont om tid: varje artikel går att läsa på trettio sekunder, på fem minuter eller på djupet. Första numret har tre artiklar – döttrarna som runstenarna glömde, de unga som dog på färderna och vikinganamnen som lever kvar – och en notis om genomgången av hundra års runforskning i Fornvännen och Futhark. Läs det som PDF på svenska (vitkirunor.se/korpus/korpus-nr1-sv.pdf) eller engelska (vitkirunor.se/korpus/korpus-nr1-en.pdf).",
+   "kategori": "publicerat"
   },
   {
    "id": "rapport-ristarforslag-v4",
    "date": "2026-11-08",
    "status": "nytt",
    "title": "Metodrapporten om ristarförslagen i version 4",
-   "text": "Metodrapporten Statistiska ristarförslag ur runtexterna har en ny version på webbplatsen och på Zenodo, med en egen DOI (10.5281/zenodo.24054744). Den berättar nu också att modellen inte klarade provet mot runologernas egna grupper av samma hand i Runor 2020, och vad det betyder: andelen rätt i blindprovet mäter hur väl förslagen stämmer med Rundatas tillskrivningar, inte att modellen känner igen en hand. Blindprovet och dess siffror är oförändrade. Artikeln Fem runstenar söker sin ristare har fått ett tillägg om samma sak."
+   "text": "Metodrapporten Statistiska ristarförslag ur runtexterna har en ny version på webbplatsen och på Zenodo, med en egen DOI (10.5281/zenodo.24054744). Den berättar nu också att modellen inte klarade provet mot runologernas egna grupper av samma hand i Runor 2020, och vad det betyder: andelen rätt i blindprovet mäter hur väl förslagen stämmer med Rundatas tillskrivningar, inte att modellen känner igen en hand. Blindprovet och dess siffror är oförändrade. Artikeln Fem runstenar söker sin ristare har fått ett tillägg om samma sak.",
+   "kategori": "publicerat"
   },
   {
    "id": "ristarforslag-arligare",
    "date": "2026-11-08",
    "status": "nytt",
    "title": "Ristarförslagen: ärligare ord och en ny sorts belägg",
-   "text": "Vi prövade ristarmodellen mot runologernas egna bedömningar i Runor 2020 av vilka stenar som är gjorda av samma hand. Den gav inte oftare samma ristare än grannstenar gör, och den kan bara välja bland namngivna ristare. Därför heter förslagen i Stenöversikten nu förslag bland kända ristare, och inget förslag kallas längre starkt utan ett oberoende belägg. Det nya belägget, likhet utöver grannarna, jämför stenens text med stenarna runt omkring och känner igen runologernas egna grupper mycket oftare än grannar gör. Det visas för varje sten, och stenar som liknar en annan sten utan ristare märks som en möjlig onämnd hand."
+   "text": "Vi prövade ristarmodellen mot runologernas egna bedömningar i Runor 2020 av vilka stenar som är gjorda av samma hand. Den gav inte oftare samma ristare än grannstenar gör, och den kan bara välja bland namngivna ristare. Därför heter förslagen i Stenöversikten nu förslag bland kända ristare, och inget förslag kallas längre starkt utan ett oberoende belägg. Det nya belägget, likhet utöver grannarna, jämför stenens text med stenarna runt omkring och känner igen runologernas egna grupper mycket oftare än grannar gör. Det visas för varje sten, och stenar som liknar en annan sten utan ristare märks som en möjlig onämnd hand.",
+   "kategori": "ristarna"
   },
   {
    "id": "ratta-slingorna",
    "date": "2026-11-08",
    "status": "nytt",
    "title": "Rätta slingorna direkt från bilden – och samma vy varje gång",
-   "text": "Från bilden Runor och ornamentik går du nu direkt till ritsidan och rättar textslingorna, och en egen uppladdad skanning kan göras ritbar. Granskade slingor används av huggspårsanalysen och blir träningsdata för slingmodellen. Bilderna ur skanningen räknas nu som standard från samma vy varje gång, så att två bilder av samma sten går att jämföra. Samtidigt rättades ett fel: för 29 av de granskade skanningarna användes slingmodellens slingor i stället för de ritade, utan att analysen sa det."
+   "text": "Från bilden Runor och ornamentik går du nu direkt till ritsidan och rättar textslingorna, och en egen uppladdad skanning kan göras ritbar. Granskade slingor används av huggspårsanalysen och blir träningsdata för slingmodellen. Bilderna ur skanningen räknas nu som standard från samma vy varje gång, så att två bilder av samma sten går att jämföra. Samtidigt rättades ett fel: för 29 av de granskade skanningarna användes slingmodellens slingor i stället för de ritade, utan att analysen sa det.",
+   "kategori": "huggspar"
   },
   {
    "id": "runor-och-ornamentik",
    "date": "2026-11-08",
    "status": "nytt",
    "title": "Runor och ornamentik: se var analysen tror att texten står",
-   "text": "På 3D-sidan finns nu bilden Runor och ornamentik. Den visar det som ligger djupast i skanningen, färgat efter textslingorna: rostrött inne i slingorna och grått utanför, där ornamentik, sprickor och gropar ligger. Slingorna är desamma som huggspårsanalysen använder för att avgöra vad som är runor – ritade och granskade för de öppna skanningarna, annars slingmodellens förslag – så bilden visar vad analysen räknar som text och var den kan ha fel."
+   "text": "På 3D-sidan finns nu bilden Runor och ornamentik. Den visar det som ligger djupast i skanningen, färgat efter textslingorna: rostrött inne i slingorna och grått utanför, där ornamentik, sprickor och gropar ligger. Slingorna är desamma som huggspårsanalysen använder för att avgöra vad som är runor – ritade och granskade för de öppna skanningarna, annars slingmodellens förslag – så bilden visar vad analysen räknar som text och var den kan ha fel.",
+   "kategori": "huggspar"
   },
   {
    "id": "rattelse-preposition-at",
    "date": "2026-11-07",
    "status": "nytt",
    "title": "Rättat: prepositionen at räknades för sällan",
-   "text": "Språkdraget æftiR eller at räknade at bara när ett namn följde direkt efter, medan varje æft-ord räknades som æftiR. Det missade at som andra preposition, till exempel ”… ok Fastlaug at bonda sinn”, och slog olika i olika bygder. Nu räknas båda orden lika, och den äldre korta formen aft/æft räknas för sig. Draget ändrades på 237 runstenar, och statistiken är omräknad. Felet upptäcktes när vi läste Lena Petersons artikel från 1996 om just dessa ord."
+   "text": "Språkdraget æftiR eller at räknade at bara när ett namn följde direkt efter, medan varje æft-ord räknades som æftiR. Det missade at som andra preposition, till exempel ”… ok Fastlaug at bonda sinn”, och slog olika i olika bygder. Nu räknas båda orden lika, och den äldre korta formen aft/æft räknas för sig. Draget ändrades på 237 runstenar, och statistiken är omräknad. Felet upptäcktes när vi läste Lena Petersons artikel från 1996 om just dessa ord.",
+   "kategori": "metod"
   },
   {
    "id": "rapporter-doi",
    "date": "2026-11-07",
    "status": "nytt",
    "title": "Forskningsrapporterna har DOI på Zenodo",
-   "text": "De elva publicerade forskningsrapporterna är nu arkiverade på Zenodo, var och en med svensk och engelsk PDF och en egen DOI. Varje rapportsida visar sin DOI under rubriken, och DOI:n finns med i citeringen, i BibTeX och i uppgifterna som Google Scholar läser. Får en rapport en ny version på webbplatsen pekar sidan också på DOI:n för alla versioner."
+   "text": "De elva publicerade forskningsrapporterna är nu arkiverade på Zenodo, var och en med svensk och engelsk PDF och en egen DOI. Varje rapportsida visar sin DOI under rubriken, och DOI:n finns med i citeringen, i BibTeX och i uppgifterna som Google Scholar läser. Får en rapport en ny version på webbplatsen pekar sidan också på DOI:n för alla versioner.",
+   "kategori": "publicerat"
   },
   {
    "id": "runa-for-runa",
    "date": "2026-11-06",
    "status": "nytt",
    "title": "Runa för runa: klicken kopplade till inskriften",
-   "text": "I granskningen av den automatiska spåranalysen visas nu stenens translitterering ur Rundata som en remsa. Med Runa för runa kopplas varje klick på en runa i bilden till rätt runa i texten, och klicket blir en punkt på 3D-modellen. Kopplingarna blir facit för att pröva hur väl runigenkänningen träffar, och de kan exporteras som en digital utgåva i TEI/EpiDoc där varje runa pekar på sin plats i skanningen."
+   "text": "I granskningen av den automatiska spåranalysen visas nu stenens translitterering ur Rundata som en remsa. Med Runa för runa kopplas varje klick på en runa i bilden till rätt runa i texten, och klicket blir en punkt på 3D-modellen. Kopplingarna blir facit för att pröva hur väl runigenkänningen träffar, och de kan exporteras som en digital utgåva i TEI/EpiDoc där varje runa pekar på sin plats i skanningen.",
+   "kategori": "huggspar"
   },
   {
    "id": "vitki-3-1-0-doi",
    "date": "2026-11-06",
    "status": "nytt",
    "title": "Vitki 3.1.0 arkiverad med DOI",
-   "text": "Vitki finns nu permanent arkiverat i Zenodo, det öppna forskningsarkivet vid CERN. Version 3.1.0 har DOI 10.5281/zenodo.24004432 och kan citeras med den; varje kommande version får en egen DOI under samma post (alla versioner: 10.5281/zenodo.24004431). Arkivet innehåller koden, metodbeskrivningen och analysplanerna. Före arkiveringen granskades alla publicerade forskningsrapporter av fristående läsare och rättades öppet i nya versioner med ändringslogg."
+   "text": "Vitki finns nu permanent arkiverat i Zenodo, det öppna forskningsarkivet vid CERN. Version 3.1.0 har DOI 10.5281/zenodo.24004432 och kan citeras med den; varje kommande version får en egen DOI under samma post (alla versioner: 10.5281/zenodo.24004431). Arkivet innehåller koden, metodbeskrivningen och analysplanerna. Före arkiveringen granskades alla publicerade forskningsrapporter av fristående läsare och rättades öppet i nya versioner med ändringslogg.",
+   "kategori": "publicerat"
   },
   {
    "id": "malaroarna-folkland",
    "date": "2026-11-05",
    "status": "nytt",
    "title": "Mälaröarna i rätt folkland",
-   "text": "Kartans gränslager med de gamla landen är rättat efter Det medeltida Sverige. Färingö tingslag, med Sånga, Lovö, Hilleshög, Skå, Munsö och Färentuna, räknas nu till Attundaland och Adelsö till Fjädrundaland; Ekerö hörde under medeltiden till Södermanland och står utanför folklanden. Spånga och Bromma räknas till Sollentuna härad, inte till staden Stockholm. Ett trettiotal runstenar som saknade folkland finns därmed med i kartans tabell per land och, när korpusanalyserna räknats om, i statistiken efter de gamla gränserna."
+   "text": "Kartans gränslager med de gamla landen är rättat efter Det medeltida Sverige. Färingö tingslag, med Sånga, Lovö, Hilleshög, Skå, Munsö och Färentuna, räknas nu till Attundaland och Adelsö till Fjädrundaland; Ekerö hörde under medeltiden till Södermanland och står utanför folklanden. Spånga och Bromma räknas till Sollentuna härad, inte till staden Stockholm. Ett trettiotal runstenar som saknade folkland finns därmed med i kartans tabell per land och, när korpusanalyserna räknats om, i statistiken efter de gamla gränserna.",
+   "kategori": "landskap"
   },
   {
    "id": "artikelbiblioteket",
    "date": "2026-11-04",
    "status": "nytt",
    "title": "Artiklarna som ett bibliotek",
-   "text": "Artikelsidan är omgjord för att hålla överblicken när artiklarna blir många: typ och ämne går att välja tillsammans, artiklarna står månad för månad med lästid, och en listvy visar alla på en gång. Serier samlas, och allt du väljer står i adressen så att en länk öppnar samma vy."
+   "text": "Artikelsidan är omgjord för att hålla överblicken när artiklarna blir många: typ och ämne går att välja tillsammans, artiklarna står månad för månad med lästid, och en listvy visar alla på en gång. Serier samlas, och allt du väljer står i adressen så att en länk öppnar samma vy.",
+   "kategori": "publicerat"
   },
   {
    "id": "ristarna-pa-webbplatsen",
    "date": "2026-11-04",
    "status": "nytt",
    "title": "Ristarna finns nu på webbplatsen",
-   "text": "Sidan Ristarna, med varje känd ristares fingeravtryck, stenarna från kärna till ytterkant och modellens förslag för stenar utan ristare, finns nu också på vitkirunor.se under Ristarna. Den räknas om av appens korpusanalyser och följer med när webbplatsen uppdateras."
+   "text": "Sidan Ristarna, med varje känd ristares fingeravtryck, stenarna från kärna till ytterkant och modellens förslag för stenar utan ristare, finns nu också på vitkirunor.se under Ristarna. Den räknas om av appens korpusanalyser och följer med när webbplatsen uppdateras.",
+   "kategori": "ristarna"
   },
   {
    "id": "ristare-bygdsmodell",
    "date": "2026-11-04",
    "status": "nytt",
    "title": "Andra bedömning för de små ristarna",
-   "text": "På sidan Ristarna visas nu för de små ristarna också bygdsmodellens förslag: en modell som väger in var och när ristaren verkade. Den hittar oftare rätt ristare för små verkstäder men klarade inte den låsta prövningen, så den står som en tydligt märkt andra bedömning bredvid huvudmodellen."
+   "text": "På sidan Ristarna visas nu för de små ristarna också bygdsmodellens förslag: en modell som väger in var och när ristaren verkade. Den hittar oftare rätt ristare för små verkstäder men klarade inte den låsta prövningen, så den står som en tydligt märkt andra bedömning bredvid huvudmodellen.",
+   "kategori": "ristarna"
   },
   {
    "id": "attribuering-korsform",
    "date": "2026-11-04",
    "status": "nytt",
    "title": "Attribueringsmodellen ser korsets form",
-   "text": "Attribueringsmodellen väger nu in hur korset är format, enligt Lagers typologi i Riksantikvarieämbetets Runor. Med bara stil och kors hittar den rätt ristare på 54 procent av stenarna i stället för 33. Sannolikheterna är omkalibrerade efter en prövning mot de signerade stenarna, så att en sten som får 80 procent också har rätt ungefär så ofta."
+   "text": "Attribueringsmodellen väger nu in hur korset är format, enligt Lagers typologi i Riksantikvarieämbetets Runor. Med bara stil och kors hittar den rätt ristare på 54 procent av stenarna i stället för 33. Sannolikheterna är omkalibrerade efter en prövning mot de signerade stenarna, så att en sten som får 80 procent också har rätt ungefär så ofta.",
+   "kategori": "ristarna"
   },
   {
    "id": "ristarna-en-i-taget",
    "date": "2026-11-04",
    "status": "nytt",
    "title": "Ny sida: Ristarna, en i taget",
-   "text": "Under Korpus finns nu Ristarna: för 24 kända ristare visas deras fingeravtryck mot samtida grannstenar, en heatmap sten för sten, vilka av deras stenar som ligger i kärnan och vilka i ytterkanten, en karta och hur lika stenarna är varandra. En ruta visar de stenar utan ristare som attribueringsmodellen tror är hans. Modellen är nu prövad mot de signerade stenarna: den har rätt ristare först på 71 procent av dem."
+   "text": "Under Korpus finns nu Ristarna: för 24 kända ristare visas deras fingeravtryck mot samtida grannstenar, en heatmap sten för sten, vilka av deras stenar som ligger i kärnan och vilka i ytterkanten, en karta och hur lika stenarna är varandra. En ruta visar de stenar utan ristare som attribueringsmodellen tror är hans. Modellen är nu prövad mot de signerade stenarna: den har rätt ristare först på 71 procent av dem.",
+   "kategori": "ristarna"
   },
   {
    "id": "huggspar-runor-langs-slingan",
    "date": "2026-11-03",
    "status": "nytt",
    "title": "Huggspåren delar upp runorna längs slingan",
-   "text": "Den automatiska huggspårsanalysen delar nu upp runorna efter var strecken står längs runslingan, för alla stenar och inte bara stavlösa. Förut fick bara streck som den gamla klassningen kallade runor ett runnummer, så resultatet per runa byggde på en bråkdel av runorna: på 34 skanningar från Södermanland mättes i mitten en tredjedel av textens runor, nu i stort sett alla. Själva måtten i varje snitt är desamma. Mätmetoden heter nu groove-7."
+   "text": "Den automatiska huggspårsanalysen delar nu upp runorna efter var strecken står längs runslingan, för alla stenar och inte bara stavlösa. Förut fick bara streck som den gamla klassningen kallade runor ett runnummer, så resultatet per runa byggde på en bråkdel av runorna: på 34 skanningar från Södermanland mättes i mitten en tredjedel av textens runor, nu i stort sett alla. Själva måtten i varje snitt är desamma. Mätmetoden heter nu groove-7.",
+   "kategori": "huggspar"
   },
   {
    "id": "gamla-granser-statistik",
    "date": "2026-11-02",
    "status": "nytt",
    "title": "Statistiken räknar med de gamla gränserna",
-   "text": "Statistiken i R håller nu den vikingatida indelningen konstant i stället för dagens landskap: Upplands folkland, Smålands små land, Gotlands tredingar och övriga landskap som egna land. Med de gamla gränserna blir skillnaderna i språket skarpare och pekar ut folklanden – r för ʀ i Fjädrundaland, at mot Attundaland – medan korset och bönen blir mindre säkra när Uppland delas. Folklandens härader stämmer med sexårsgärden 1314, och sockens härad hämtas ur ISOF:s ortnamnsregister."
+   "text": "Statistiken i R håller nu den vikingatida indelningen konstant i stället för dagens landskap: Upplands folkland, Smålands små land, Gotlands tredingar och övriga landskap som egna land. Med de gamla gränserna blir skillnaderna i språket skarpare och pekar ut folklanden – r för ʀ i Fjädrundaland, at mot Attundaland – medan korset och bönen blir mindre säkra när Uppland delas. Folklandens härader stämmer med sexårsgärden 1314, och sockens härad hämtas ur ISOF:s ortnamnsregister.",
+   "kategori": "landskap"
   },
   {
    "id": "namn-och-slakt",
    "date": "2026-11-02",
    "status": "nytt",
    "title": "Ny sektion: Namn och släkt",
-   "text": "Under Statistik (R) finns nu Namn och släkt: hur ofta barn ärvde ett namnled från föräldrarna, hur ofta grannstenar nämner samma ovanliga namn, vilka namn som hör till en viss gammal region – Jôfurr, Fastulfr och Igulfastr i Tiundaland, Þóra och Þórir i Västergötland – och hur släkterna fördelar sig över stenarna."
+   "text": "Under Statistik (R) finns nu Namn och släkt: hur ofta barn ärvde ett namnled från föräldrarna, hur ofta grannstenar nämner samma ovanliga namn, vilka namn som hör till en viss gammal region – Jôfurr, Fastulfr och Igulfastr i Tiundaland, Þóra och Þórir i Västergötland – och hur släkterna fördelar sig över stenarna.",
+   "kategori": "manniskor"
   },
   {
    "id": "karta-gamla-land",
    "date": "2026-11-02",
    "status": "nytt",
    "title": "Kartan öppnar med de gamla landen",
-   "text": "Kartans gränslager visar nu Upplands folkland, Smålands små land och Gotlands tredingar från början, och i punktvyn kan stenarna filtreras på vikingatida region. Gränsskannern har prövat alla grannregioner: fyra skarpa gränser håller, alla mellan Upplands folkland."
+   "text": "Kartans gränslager visar nu Upplands folkland, Smålands små land och Gotlands tredingar från början, och i punktvyn kan stenarna filtreras på vikingatida region. Gränsskannern har prövat alla grannregioner: fyra skarpa gränser håller, alla mellan Upplands folkland.",
+   "kategori": "landskap"
   },
   {
    "id": "andel-vikingatida-land",
    "date": "2026-11-01",
    "status": "nytt",
    "title": "Andelen per vikingatida land på kartsidan",
-   "text": "Tabellen Andel per landskap under mönsterkartan kan nu också visa den vikingatida indelningen: Uppland delat i Tiundaland, Attundaland, Fjädrundaland och Roden, Småland i sina små land. Varje sten hör till landet genom sin socken."
+   "text": "Tabellen Andel per landskap under mönsterkartan kan nu också visa den vikingatida indelningen: Uppland delat i Tiundaland, Attundaland, Fjädrundaland och Roden, Småland i sina små land. Varje sten hör till landet genom sin socken.",
+   "kategori": "landskap"
   },
   {
    "id": "vikingastader-karta",
    "date": "2026-11-01",
    "status": "nytt",
    "title": "Vikingatidens handelsplatser och första städer på kartan",
-   "text": "När rikenas gränser visas på kartan står nu också handelsplatserna, centralplatserna och de första städerna som fanns vid den tiden: omkring 890 Ribe, Hedeby, Kaupang, Birka, Uppåkra, Gamla Uppsala och de andra, omkring 1025 även Sigtuna, Lund och Skara. I läget Små land visas alla. Vad källan säger om varje plats och källorna står under kartan."
+   "text": "När rikenas gränser visas på kartan står nu också handelsplatserna, centralplatserna och de första städerna som fanns vid den tiden: omkring 890 Ribe, Hedeby, Kaupang, Birka, Uppåkra, Gamla Uppsala och de andra, omkring 1025 även Sigtuna, Lund och Skara. I läget Små land visas alla. Vad källan säger om varje plats och källorna står under kartan.",
+   "kategori": "landskap"
   },
   {
    "id": "sma-land-karta",
    "date": "2026-11-01",
    "status": "nytt",
    "title": "Smålands små land och Upplands folkland på kartan",
-   "text": "Kartans gränslager har fått ett fjärde läge, Små land: Smålands små land (Värend, Finnveden, Njudung, Möre och de andra) och Upplands folkland (Tiundaland, Attundaland, Fjädrundaland och Roden), som de var ordnade innan landskapen tog över. Varje land är en sammanslagning av härader, och gränserna är ungefärliga: varje socken har fått området närmast sin kyrka. Vad varje land bygger på och källorna står under kartan."
+   "text": "Kartans gränslager har fått ett fjärde läge, Små land: Smålands små land (Värend, Finnveden, Njudung, Möre och de andra) och Upplands folkland (Tiundaland, Attundaland, Fjädrundaland och Roden), som de var ordnade innan landskapen tog över. Varje land är en sammanslagning av härader, och gränserna är ungefärliga: varje socken har fått området närmast sin kyrka. Vad varje land bygger på och källorna står under kartan.",
+   "kategori": "landskap"
   },
   {
    "id": "slaktlankar-avstand",
    "date": "2026-11-01",
    "status": "nytt",
    "title": "Samma släkt på flera runstenar: länkarna prövas nu efter avstånd",
-   "text": "Runstenar som delar namn prövas nu mot slumpen på samma avstånd: ett namnpar 300 meter isär jämförs med de par slumpen ger på samma avstånd, inte med par över hela landskapet. Det ger 70 säkra länkar i stället för 28, varav 61 mellan svenska runstenar, och fyra av Jarlabankes stenar hänger nu ihop. Länkarna hittar 40 procent av de stenar som runologerna har knutit samman (Williams 1990), och 92 procent av länkarna står i hans grupper. Sättet att räkna valdes efter att ha sett den förteckningen. I ett blint handprov bedömdes alla fem länkar utanför den som samma släkt, men provet var inte avgörande, och det står vid länkarna."
+   "text": "Runstenar som delar namn prövas nu mot slumpen på samma avstånd: ett namnpar 300 meter isär jämförs med de par slumpen ger på samma avstånd, inte med par över hela landskapet. Det ger 70 säkra länkar i stället för 28, varav 61 mellan svenska runstenar, och fyra av Jarlabankes stenar hänger nu ihop. Länkarna hittar 40 procent av de stenar som runologerna har knutit samman (Williams 1990), och 92 procent av länkarna står i hans grupper. Sättet att räkna valdes efter att ha sett den förteckningen. I ett blint handprov bedömdes alla fem länkar utanför den som samma släkt, men provet var inte avgörande, och det står vid länkarna.",
+   "kategori": "manniskor"
   },
   {
    "id": "ordlista-rapporter",
    "date": "2026-10-31",
    "status": "nytt",
    "title": "Ordlista för forskningsrapporterna",
-   "text": "De statistiska begreppen i forskningsrapporterna förklaras nu i vanliga ord i en egen ordlista: vad p-värde, oddskvot, 95 %-intervall, slumpeffekt, halvorna, känslighetsanalyser, förregistrering, korsvalidering och blindprov betyder och hur siffrorna ska läsas. Varje rapport länkar dit, och varje rapport säger dessutom sitt huvudresultat i klartext."
+   "text": "De statistiska begreppen i forskningsrapporterna förklaras nu i vanliga ord i en egen ordlista: vad p-värde, oddskvot, 95 %-intervall, slumpeffekt, halvorna, känslighetsanalyser, förregistrering, korsvalidering och blindprov betyder och hur siffrorna ska läsas. Varje rapport länkar dit, och varje rapport säger dessutom sitt huvudresultat i klartext.",
+   "kategori": "publicerat"
   },
   {
    "id": "rapporternas-nivaer",
    "date": "2026-10-31",
    "status": "nytt",
    "title": "Forskningsrapporterna märks efter hur hårt de prövats",
-   "text": "Varje forskningsrapport bär nu ett märke som säger hur hårt fyndet har prövats: fullt prövat fynd, delvis prövat fynd, metodrapport eller datanotis. Ett delvis prövat fynd håller i båda halvorna av materialet och efter justeringen för alla samband, men inte i alla känslighetsanalyser, och vad som saknas står först i sammanfattningen. Listan över rapporterna grupperas efter märket, med de fullt prövade först."
+   "text": "Varje forskningsrapport bär nu ett märke som säger hur hårt fyndet har prövats: fullt prövat fynd, delvis prövat fynd, metodrapport eller datanotis. Ett delvis prövat fynd håller i båda halvorna av materialet och efter justeringen för alla samband, men inte i alla känslighetsanalyser, och vad som saknas står först i sammanfattningen. Listan över rapporterna grupperas efter märket, med de fullt prövade först.",
+   "kategori": "publicerat"
   },
   {
    "id": "meny-pa-mobilen",
    "date": "2026-10-31",
    "status": "nytt",
    "title": "Menyn på mobilen",
-   "text": "Webbplatsen har nu en meny på mobil och surfplatta: knappen med tre streck öppnar artiklarna, forskningsrapporterna, nyheterna, kontakt och startsidans avsnitt. Länkarna har fått större tryckytor, och sidfoten leder också till artiklarna och forskningsrapporterna."
+   "text": "Webbplatsen har nu en meny på mobil och surfplatta: knappen med tre streck öppnar artiklarna, forskningsrapporterna, nyheterna, kontakt och startsidans avsnitt. Länkarna har fått större tryckytor, och sidfoten leder också till artiklarna och forskningsrapporterna.",
+   "kategori": "publicerat"
   },
   {
    "id": "forskningsrapporter",
    "date": "2026-10-31",
    "status": "nytt",
    "title": "Forskningsrapporter",
-   "text": "De fynd som har klarat alla kontroller får en egen sektion, Forskningsrapporter, skild från artiklarna. Varje rapport visas som ett vetenskapligt paper: förregistrering, material, metod, resultat, diskussion och referenser, med sammanfattning, nyckelord, version, citering och BibTeX, och den kan skrivas ut eller sparas som PDF."
+   "text": "De fynd som har klarat alla kontroller får en egen sektion, Forskningsrapporter, skild från artiklarna. Varje rapport visas som ett vetenskapligt paper: förregistrering, material, metod, resultat, diskussion och referenser, med sammanfattning, nyckelord, version, citering och BibTeX, och den kan skrivas ut eller sparas som PDF.",
+   "kategori": "publicerat"
   },
   {
    "id": "kallstrom-i-ristarforslagen",
    "date": "2026-10-30",
    "status": "nytt",
    "title": "Källström i ristarförslagen",
-   "text": "När Forskningsluckor föreslår en ristare till en sten som saknar ristare står det nu också om Källström (Mästare och minnesmärken, 2007) tar upp stenen – med sidorna att läsa – eller inte, bredvid Axelson och Runor 2020."
+   "text": "När Forskningsluckor föreslår en ristare till en sten som saknar ristare står det nu också om Källström (Mästare och minnesmärken, 2007) tar upp stenen – med sidorna att läsa – eller inte, bredvid Axelson och Runor 2020.",
+   "kategori": "ristarna"
   },
   {
    "id": "skrivmiljoer-och-litteraturens-ristare",
    "date": "2026-10-29",
    "status": "nytt",
    "title": "Skrivmiljöer och ristarna i litteraturen",
-   "text": "Fliken Okända ristare heter nu Skrivmiljöer: prövade mot Sveriges runinskrifter och Källström visar grupperna en verkstads eller en bygds sätt att skriva, inte enskilda ristare, och fliken redovisar provet öppet. Stenar som Källström tar upp som signerade men som saknar ristare i databasen visar nu ristaren enligt litteraturen, med sida. Egna frågor prövas också utan ett landskap i taget och med socknen som slumpeffekt, och nollresultat märks inte längre som nya mönster."
+   "text": "Fliken Okända ristare heter nu Skrivmiljöer: prövade mot Sveriges runinskrifter och Källström visar grupperna en verkstads eller en bygds sätt att skriva, inte enskilda ristare, och fliken redovisar provet öppet. Stenar som Källström tar upp som signerade men som saknar ristare i databasen visar nu ristaren enligt litteraturen, med sida. Egna frågor prövas också utan ett landskap i taget och med socknen som slumpeffekt, och nollresultat märks inte längre som nya mönster.",
+   "kategori": "ristarna"
   },
   {
    "id": "litteraturregistret",
    "date": "2026-10-29",
    "status": "nytt",
    "title": "Litteraturen om stenen",
-   "text": "Varje stens sida visar nu var avhandlingar och utgåvor nämner den, med tryckt sida och ett kort utdrag. Registret börjar med Sveriges runinskrifter för Östergötland, Småland och Västergötland, Källströms Mästare och minnesmärken, Zilmers avhandling om resorna österut och Sterns om runstenarnas bilder – sammanlagt 1 888 stenar – och växer när fler avhandlingar läggs till. Fynden i Forskningsluckor visar också var litteraturen diskuterar stenen, så att inget fynd kallas nytt utan att sidorna lästs."
+   "text": "Varje stens sida visar nu var avhandlingar och utgåvor nämner den, med tryckt sida och ett kort utdrag. Registret börjar med Sveriges runinskrifter för Östergötland, Småland och Västergötland, Källströms Mästare och minnesmärken, Zilmers avhandling om resorna österut och Sterns om runstenarnas bilder – sammanlagt 1 888 stenar – och växer när fler avhandlingar läggs till. Fynden i Forskningsluckor visar också var litteraturen diskuterar stenen, så att inget fynd kallas nytt utan att sidorna lästs.",
+   "kategori": "metod"
   },
   {
    "id": "okanda-ristare-litteratur",
    "date": "2026-10-29",
    "status": "nytt",
    "title": "Okända ristare jämförda med litteraturen",
-   "text": "Tabellen över möjliga okända ristare i Statistik har fått en kolumn för vad litteraturen redan säger om gruppernas stenar, ur Sveriges runinskrifter och Källströms Mästare och minnesmärken. Två av de västgötska grupperna innehåller stenar som utgivarna redan knutit till samme ristare – med signaturer som Rundatas ristarfält saknar. Grupperna rymmer dock ofta flera ristare och motsvarar snarare en bygds skrivmiljö än en enskild hand. Konungsund, Vetlanda och Husaby är inte beskrivna som ristargrupper."
+   "text": "Tabellen över möjliga okända ristare i Statistik har fått en kolumn för vad litteraturen redan säger om gruppernas stenar, ur Sveriges runinskrifter och Källströms Mästare och minnesmärken. Två av de västgötska grupperna innehåller stenar som utgivarna redan knutit till samme ristare – med signaturer som Rundatas ristarfält saknar. Grupperna rymmer dock ofta flera ristare och motsvarar snarare en bygds skrivmiljö än en enskild hand. Konungsund, Vetlanda och Husaby är inte beskrivna som ristargrupper.",
+   "kategori": "ristarna"
   },
   {
    "id": "robusthetstrappan",
    "date": "2026-10-29",
    "status": "nytt",
    "title": "Robusthetstrappan: samma kontroller för alla mönster",
-   "text": "Varje mönster i Statistik (R) som kan räknas om sten för sten går nu igenom samma trappa av kontroller: ristaren och socknen som slumpeffekter, platsen som yta, båda halvorna av materialet, utan ett landskap i taget och utan flyttade stenar enligt både Rundata och Runor 2020. Skillnaden visas i procentenheter, och där en regel kodar budskapet förs kodningsfelen ur handkodningen vidare in i resultatet. Alla mönster justeras dessutom tillsammans, och ett nytt mönster märks Nytt först när det är bekräftat. 15 av 33 mönster håller i varje steg."
+   "text": "Varje mönster i Statistik (R) som kan räknas om sten för sten går nu igenom samma trappa av kontroller: ristaren och socknen som slumpeffekter, platsen som yta, båda halvorna av materialet, utan ett landskap i taget och utan flyttade stenar enligt både Rundata och Runor 2020. Skillnaden visas i procentenheter, och där en regel kodar budskapet förs kodningsfelen ur handkodningen vidare in i resultatet. Alla mönster justeras dessutom tillsammans, och ett nytt mönster märks Nytt först när det är bekräftat. 15 av 33 mönster håller i varje steg.",
+   "kategori": "metod"
   },
   {
    "id": "manniskorna",
    "date": "2026-10-28",
    "status": "nytt",
    "title": "Människorna på runstenarna",
-   "text": "Statistiken har en ny del, Människorna: vem som reste stenen, efter vem och i vilken relation, och om resarna var kvinnor eller män. Sex frågor prövas med landsdel, tid och ristare konstanta, enligt en plan som låstes före testen. Två håller i båda halvorna av materialet: en kvinna står bland resarna på 31 % av stenarna i Svealand mot 17 % i Götaland, och söner och bröder dog oftare utanför Norden än fäder och makar."
+   "text": "Statistiken har en ny del, Människorna: vem som reste stenen, efter vem och i vilken relation, och om resarna var kvinnor eller män. Sex frågor prövas med landsdel, tid och ristare konstanta, enligt en plan som låstes före testen. Två håller i båda halvorna av materialet: en kvinna står bland resarna på 31 % av stenarna i Svealand mot 17 % i Götaland, och söner och bröder dog oftare utanför Norden än fäder och makar.",
+   "kategori": "manniskor"
   },
   {
    "id": "flyttade-stenar-placering",
    "date": "2026-10-27",
    "status": "nytt",
    "title": "Flyttade stenar enligt Rundatas placeringstext",
-   "text": "Appens regel för flyttade stenar läser nu också Rundatas placeringstext: en sten räknas som flyttad när texten säger att den flyttats eller står vid en annan plats än fyndplatsen. 47 runstenar till räknas som flyttade, och analyserna av stenarnas omgivning – vatten, lämningar, ortnamn och hot spots – räknas om utan dem."
+   "text": "Appens regel för flyttade stenar läser nu också Rundatas placeringstext: en sten räknas som flyttad när texten säger att den flyttats eller står vid en annan plats än fyndplatsen. 47 runstenar till räknas som flyttade, och analyserna av stenarnas omgivning – vatten, lämningar, ortnamn och hot spots – räknas om utan dem.",
+   "kategori": "landskap"
   },
   {
    "id": "lankmodellen",
    "date": "2026-10-27",
    "status": "nytt",
    "title": "Samma familjer på flera runstenar",
-   "text": "En ny modell läser personer, släktskap, gårdar och resmål ur inskrifterna och länkar stenar som delar namn mer än slumpen ger. 28 länkar håller, och familjerna som går att följa höll sig i stort sett på samma plats: stenarna står i median några hundra meter isär. Ingen länk mellan landskap håller. Länkarna visas som fynd per sten och som ett nytt mönster i Statistik (R)."
+   "text": "En ny modell läser personer, släktskap, gårdar och resmål ur inskrifterna och länkar stenar som delar namn mer än slumpen ger. 28 länkar håller, och familjerna som går att följa höll sig i stort sett på samma plats: stenarna står i median några hundra meter isär. Ingen länk mellan landskap håller. Länkarna visas som fynd per sten och som ett nytt mönster i Statistik (R).",
+   "kategori": "manniskor"
   },
   {
    "id": "budskap-och-nya-monster",
    "date": "2026-10-27",
    "status": "nytt",
    "title": "Vad stenarna berättar om den döde – och nya mönster märks",
-   "text": "Statistik (R) har fått en ny fråga, Budskap: vad runstenarna berättar om den döde – hur han dog, resor, gäld, arv, gård och beröm – och hur det skiljer mellan landsdelarna. Det första fyndet: när en sten i Götaland nämner en resa utanför Norden säger den nästan alltid att mannen dog där, oftare än i Svealand. Om det speglar hur man berättade eller hur många som dog går inte att avgöra med stenarna. Nya mönster i datan märks nu Nytt och samlas överst i Statistik (R). I Stenöversikten visar ett klick på en status nu bara den, och fler kan läggas till. Fynd per sten visar nu också förlorade runor som textmodellen fyller i, stenar som Runor 2020 anger som flyttade och nyare läsningar, utöver ristarförslagen."
+   "text": "Statistik (R) har fått en ny fråga, Budskap: vad runstenarna berättar om den döde – hur han dog, resor, gäld, arv, gård och beröm – och hur det skiljer mellan landsdelarna. Det första fyndet: när en sten i Götaland nämner en resa utanför Norden säger den nästan alltid att mannen dog där, oftare än i Svealand. Om det speglar hur man berättade eller hur många som dog går inte att avgöra med stenarna. Nya mönster i datan märks nu Nytt och samlas överst i Statistik (R). I Stenöversikten visar ett klick på en status nu bara den, och fler kan läggas till. Fynd per sten visar nu också förlorade runor som textmodellen fyller i, stenar som Runor 2020 anger som flyttade och nyare läsningar, utöver ristarförslagen.",
+   "kategori": "manniskor"
   },
   {
    "id": "runbibliotek",
    "date": "2026-10-27",
    "status": "nytt",
    "title": "Ett referensbibliotek för runformer",
-   "text": "På den nya sidan Runbibliotek byggs ett bibliotek med runor från de öppna 3D-skanningarna. Man klickar på runorna i läsordning, och varje runa märks med sin bokstav ur Rundatas text och med stenens ristare. Biblioteket visas per ristare och runa, och dina egna runutsnitt kan jämföras med det. Att formerna pekar ut rätt ristare är ännu inte prövat; det görs på signerade stenar när biblioteket har vuxit."
+   "text": "På den nya sidan Runbibliotek byggs ett bibliotek med runor från de öppna 3D-skanningarna. Man klickar på runorna i läsordning, och varje runa märks med sin bokstav ur Rundatas text och med stenens ristare. Biblioteket visas per ristare och runa, och dina egna runutsnitt kan jämföras med det. Att formerna pekar ut rätt ristare är ännu inte prövat; det görs på signerade stenar när biblioteket har vuxit.",
+   "kategori": "huggspar"
   },
   {
    "id": "runutsnitt-vrid-jamfor",
    "date": "2026-10-27",
    "status": "nytt",
    "title": "Runutsnitt: vrid, jämför med ristare och mellan två stenar",
-   "text": "Ett sparat runutsnitt kan nu vridas så att runan står upprätt, till exempel när texten löper i en slinga som lutar 45 grader. Formjämförelsen tar hänsyn till riktningen, så först då jämförs runan rätt. Runan kan också ändras i efterhand, och utsnittet kan jämföras med samma runa på stenar som Rundata tillskriver olika ristare. På Jämför två stenar visas nu stenarnas runutsnitt sida vid sida, med hur lika formerna är mellan stenarna jämfört med på samma sten."
+   "text": "Ett sparat runutsnitt kan nu vridas så att runan står upprätt, till exempel när texten löper i en slinga som lutar 45 grader. Formjämförelsen tar hänsyn till riktningen, så först då jämförs runan rätt. Runan kan också ändras i efterhand, och utsnittet kan jämföras med samma runa på stenar som Rundata tillskriver olika ristare. På Jämför två stenar visas nu stenarnas runutsnitt sida vid sida, med hur lika formerna är mellan stenarna jämfört med på samma sten.",
+   "kategori": "huggspar"
   },
   {
    "id": "samband-i-landskapet",
    "date": "2026-10-27",
    "status": "nytt",
    "title": "Sambanden i landskapet förklaras i ord",
-   "text": "Genomsökningen av landskapet på kartsidan börjar nu med en sammanfattning: hur många av sambanden mellan mönster och platser som håller, hur många som bara antyder något, och de starkaste av dem med andelar, med och utan tiden konstant. Just nu klarar inget av de 117 sambanden justeringen för de många proven, och det står nu rakt ut. Svaga antydningar syns som bleka rutor i rutnätet."
+   "text": "Genomsökningen av landskapet på kartsidan börjar nu med en sammanfattning: hur många av sambanden mellan mönster och platser som håller, hur många som bara antyder något, och de starkaste av dem med andelar, med och utan tiden konstant. Just nu klarar inget av de 117 sambanden justeringen för de många proven, och det står nu rakt ut. Svaga antydningar syns som bleka rutor i rutnätet.",
+   "kategori": "landskap"
   },
   {
    "id": "stavlosa-runor",
    "date": "2026-10-26",
    "status": "nytt",
    "title": "Stavlösa runor delas upp i runor",
-   "text": "Hälsingerunor och andra stavlösa runor saknar huvudstav, så den automatiska analysen kunde mäta deras spår men inte säga vilken runa ett snitt hörde till. Med det nya valet Stavlösa runor delas strecken upp i runor efter var de står längs slingan. Valet slås på av sig självt när Rundata anger att alla stenens runor är stavlösa. Indelningen är ett ungefärligt förslag; vill du ha den exakt markerar du runorna för hand."
+   "text": "Hälsingerunor och andra stavlösa runor saknar huvudstav, så den automatiska analysen kunde mäta deras spår men inte säga vilken runa ett snitt hörde till. Med det nya valet Stavlösa runor delas strecken upp i runor efter var de står längs slingan. Valet slås på av sig självt när Rundata anger att alla stenens runor är stavlösa. Indelningen är ett ungefärligt förslag; vill du ha den exakt markerar du runorna för hand.",
+   "kategori": "huggspar"
   },
   {
    "id": "markera-runorna",
    "date": "2026-10-26",
    "status": "nytt",
    "title": "Ett klick per runa",
-   "text": "I granskningen av den automatiska analysen kan du nu klicka en gång mitt på varje runa. Du behöver inte veta vilken runa det är. Vitki fördelar mätpunkterna på dina runor, så att varje runa väger lika mycket i stenens medelvärden och i jämförelser med andra stenar."
+   "text": "I granskningen av den automatiska analysen kan du nu klicka en gång mitt på varje runa. Du behöver inte veta vilken runa det är. Vitki fördelar mätpunkterna på dina runor, så att varje runa väger lika mycket i stenens medelvärden och i jämförelser med andra stenar.",
+   "kategori": "huggspar"
   },
   {
    "id": "runor-eller-ornamentik",
    "date": "2026-10-26",
    "status": "nytt",
    "title": "Huggspårsanalysen mäter bara runorna",
-   "text": "Den automatiska analysen letar nu upp runslingorna och mäter bara spåren inne i dem, så att ornamentik och slingornas kanter inte blandas in i runornas mått. Vill du hellre mäta ornamentiken väljer du det. Slingorna syns som ett ljusblått fält i granskningsbilden, så att du kan se om de hamnade rätt."
+   "text": "Den automatiska analysen letar nu upp runslingorna och mäter bara spåren inne i dem, så att ornamentik och slingornas kanter inte blandas in i runornas mått. Vill du hellre mäta ornamentiken väljer du det. Slingorna syns som ett ljusblått fält i granskningsbilden, så att du kan se om de hamnade rätt.",
+   "kategori": "huggspar"
   },
   {
    "id": "ristningskartans-kant",
    "date": "2026-10-24",
    "status": "nytt",
    "title": "Ristningskartan skiljer kanten från ristningen",
-   "text": "Den automatiska analysens ristningskarta lät förut skanningens kanter avgöra vad som blev svart, så runorna kunde bli blekt grå. Nu räknas svärtan bara där analysen mäter, och kantzonen nära skanningens kant ritas blekt. Runorna syns tydligt, och mätningarna är desamma."
+   "text": "Den automatiska analysens ristningskarta lät förut skanningens kanter avgöra vad som blev svart, så runorna kunde bli blekt grå. Nu räknas svärtan bara där analysen mäter, och kantzonen nära skanningens kant ritas blekt. Runorna syns tydligt, och mätningarna är desamma.",
+   "kategori": "huggspar"
   },
   {
    "id": "medelpad-i-korpusen",
    "date": "2026-10-24",
    "status": "nytt",
    "title": "Medelpads runstenar i mätkorpusen",
-   "text": "Den delade mätkorpusen har fått 13 runstenar från Medelpad, skannade av Henrik Zedig (Länsstyrelsen Västra Götalands län) och mätta med Vitki-protokollet. Korpusen har nu 50 stenar som en ny mätning jämförs mot i syntesen."
+   "text": "Den delade mätkorpusen har fått 13 runstenar från Medelpad, skannade av Henrik Zedig (Länsstyrelsen Västra Götalands län) och mätta med Vitki-protokollet. Korpusen har nu 50 stenar som en ny mätning jämförs mot i syntesen.",
+   "kategori": "huggspar"
   },
   {
    "id": "spara-syntesen",
    "date": "2026-10-24",
    "status": "nytt",
    "title": "Syntesen sparas i projektet",
-   "text": "För stenar där geologin listar bergarterna i närheten gick syntesen inte att spara i projektet, utan att något felmeddelande visades. Det fungerar nu."
+   "text": "För stenar där geologin listar bergarterna i närheten gick syntesen inte att spara i projektet, utan att något felmeddelande visades. Det fungerar nu.",
+   "kategori": "metod"
   },
   {
    "id": "valj-export",
    "date": "2026-10-23",
    "status": "nytt",
    "title": "Välj vad du laddar ned ur huggspårsanalysen",
-   "text": "På 3D-sidan finns nu rutan Exportera: kryssa i vilka filer du vill ha, till exempel spårdjupet som värmekarta eller som rådata i millimeter, relief, strykljus eller ristningskartan. Varje val förklarar vad filen visar och hur den ska läsas, och skanningens kreditering följer med i varje fil."
+   "text": "På 3D-sidan finns nu rutan Exportera: kryssa i vilka filer du vill ha, till exempel spårdjupet som värmekarta eller som rådata i millimeter, relief, strykljus eller ristningskartan. Varje val förklarar vad filen visar och hur den ska läsas, och skanningens kreditering följer med i varje fil.",
+   "kategori": "huggspar"
   },
   {
    "id": "luckor-kalibrerade",
    "date": "2026-10-22",
    "status": "nytt",
    "title": "Forskningsluckorna med kalibrerade procent och översättning",
-   "text": "Listan över de luckor i texten som sannolikhetsmodellen fyller visar nu den kalibrerade procenten och en översättning till nutida svenska av modellens läsning, ett utkast ur Rundatas egna översättningar. Runstenar visas som standard, och andra föremål kan visas för sig."
+   "text": "Listan över de luckor i texten som sannolikhetsmodellen fyller visar nu den kalibrerade procenten och en översättning till nutida svenska av modellens läsning, ett utkast ur Rundatas egna översättningar. Runstenar visas som standard, och andra föremål kan visas för sig.",
+   "kategori": "metod"
   },
   {
    "id": "kanske-nagon-annan",
    "date": "2026-10-20",
    "status": "nytt",
    "title": "Kanske någon annan",
-   "text": "Statistikens modell för vem som ristade en sten känner bara 18 ristare, men gav förut alltid ett av deras namn. Nu kan den svara kanske någon annan när den är för osäker. Prövad på 139 stenar av ristare den aldrig hade sett sade den det i 71 procent av fallen, och där den vågar ge ett namn har den rätt i 87 procent."
+   "text": "Statistikens modell för vem som ristade en sten känner bara 18 ristare, men gav förut alltid ett av deras namn. Nu kan den svara kanske någon annan när den är för osäker. Prövad på 139 stenar av ristare den aldrig hade sett sade den det i 71 procent av fallen, och där den vågar ge ett namn har den rätt i 87 procent.",
+   "kategori": "metod"
   },
   {
    "id": "kontroller-i-r",
    "date": "2026-10-20",
    "status": "nytt",
    "title": "Två kontroller i R för egna frågor",
-   "text": "Varje svar i Pröva en egen fråga prövas nu också i R. Med ristaren som slumpeffekt syns det om ett mönster bara bärs av några flitiga ristares vanor, och med platsen som en yta över kartan om det är trakten som gör skillnaden. Kors är till exempel ovanligare på sandsten – men det försvinner när platsen får forma sin egen yta. Dessutom finns nu 46 drag att välja mellan i stället för 22."
+   "text": "Varje svar i Pröva en egen fråga prövas nu också i R. Med ristaren som slumpeffekt syns det om ett mönster bara bärs av några flitiga ristares vanor, och med platsen som en yta över kartan om det är trakten som gör skillnaden. Kors är till exempel ovanligare på sandsten – men det försvinner när platsen får forma sin egen yta. Dessutom finns nu 46 drag att välja mellan i stället för 22.",
+   "kategori": "metod"
   },
   {
    "id": "prova-en-egen-fraga",
    "date": "2026-10-20",
    "status": "nytt",
    "title": "Pröva en egen fråga",
-   "text": "Under Statistik kan du nu ställa en egen fråga till Sveriges 2 321 vikingatida runstenar: är ett drag – en bön, en stavning, ett kors – vanligare i ett visst landskap, efter en viss tid, på en viss bergart eller tillsammans med ett annat drag? Svaret räknas med samma krav som appens övriga statistik. Landskap och tid hålls konstanta, ett mönster räknas bara om det syns i båda halvorna av socknarna, och den som ställer många frågor får se vad det kostar. Ingen fri text och ingen AI."
+   "text": "Under Statistik kan du nu ställa en egen fråga till Sveriges 2 321 vikingatida runstenar: är ett drag – en bön, en stavning, ett kors – vanligare i ett visst landskap, efter en viss tid, på en viss bergart eller tillsammans med ett annat drag? Svaret räknas med samma krav som appens övriga statistik. Landskap och tid hålls konstanta, ett mönster räknas bara om det syns i båda halvorna av socknarna, och den som ställer många frågor får se vad det kostar. Ingen fri text och ingen AI.",
+   "kategori": "metod"
   },
   {
    "id": "spara-som-fynd",
    "date": "2026-10-20",
    "status": "nytt",
    "title": "Spara som fynd",
-   "text": "Ett svar som du vill komma ihåg kan sparas med en anteckning om vilken hypotes du prövade. De sparade frågorna samlas under Forskningsluckor, med siffrorna som de var när du sparade dem och en knapp som räknar om dem på databasen som den är nu. Ett svar på en egen fråga är en hypotes, och appen säger det: beläggen räknas som högst måttliga tills frågan har prövats enligt en analysplan."
+   "text": "Ett svar som du vill komma ihåg kan sparas med en anteckning om vilken hypotes du prövade. De sparade frågorna samlas under Forskningsluckor, med siffrorna som de var när du sparade dem och en knapp som räknar om dem på databasen som den är nu. Ett svar på en egen fråga är en hypotes, och appen säger det: beläggen räknas som högst måttliga tills frågan har prövats enligt en analysplan.",
+   "kategori": "metod"
   }
  ]
 }
