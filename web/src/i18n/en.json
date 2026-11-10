@@ -1,4 +1,6 @@
 {
+"Nyheterna som ett kartotek":"The news as a card index",
+"Nyhetssidan är omgjord för att hålla när notiserna blir många: en låda per månad, ett kort per nyhet, sökning och ämnesfilter. De två senaste månaderna står öppna, äldre lådor öppnas med ett klick.":"The news page is rebuilt to cope with many notices: one drawer per month, one card per notice, search and subject filters. The two latest months stand open; older drawers open with a click.",
 "Korta notiser om nya funktioner i appen och om det som är på gång. Notiserna ligger som ett kartotek: en låda per månad och ett kort per nyhet. Sök, välj ett ämne eller öppna en äldre låda. Hur varje funktion räknar står i metoddokumentationen, och ändringarna i sin helhet i ändringsloggen på GitHub.":"Short notices about new features in the app and what is under way. The notices are kept as a card index: one drawer per month and one card per notice. Search, pick a subject or open an older drawer. How each feature computes is in the method documentation, and the full changes are in the changelog on GitHub.",
 "Sök bland nyheterna":"Search the news",
 "Huggspår och 3D":"Carving traces and 3D",

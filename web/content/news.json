@@ -2,6 +2,14 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den). Varje notis har en kategori (fältet kategori): huggspar, ristarna, landskap, manniskor, metod eller publicerat – den styr filtret i kartoteket på /nyheter.",
  "items": [
   {
+   "id": "nyheter-kartotek",
+   "date": "2026-11-10",
+   "status": "nytt",
+   "title": "Nyheterna som ett kartotek",
+   "text": "Nyhetssidan är omgjord för att hålla när notiserna blir många: en låda per månad, ett kort per nyhet, sökning och ämnesfilter. De två senaste månaderna står öppna, äldre lådor öppnas med ett klick.",
+   "kategori": "publicerat"
+  },
+  {
    "id": "korpus-sida",
    "date": "2026-11-10",
    "status": "nytt",
