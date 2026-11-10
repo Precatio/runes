@@ -145,7 +145,7 @@ frågor som har dykt upp; det är gamla frågor som aldrig har prövats på hela
 
 | Resultat | Kontroll | Varifrån |
 |---|---|---|
-| 68 % av utlandsfärderna österut | Räkna om utan Ingvarsstenarna (över 25 av omkring 96); kurva över tid | Sindbæk 2003, Westin 1941 |
+| 66 % av platserna österut (publicerat; 68 % var det äldre träffmåttet) | **Körd 2026-11-10:** utan de 25 Ingvarsstenarna 58 % (49–67) = försvagat; ingen förskjutning mot väster över tid (för få sena stenar för en dom). `utdata/varlden/sjalvkontroll/` | Sindbæk 2003, Westin 1941 |
 | 64 % inom 500 m från vattnet 1050 | Mot äldre fornlämningar vid sin tids strand; strandlinjen ±1–3 m; stenens egen datering; sjösänkningar | Stenberger 1942, Calissendorff 1991, Lindqvist 1928, Edberg |
 | Stenar och gravfält vid lerans kant | Bortfall åt båda hållen (lera/sand, åsar); åsvägar; hävd och äng; flyttade gårdar; Malmers dos–respons (dyrare stenar på bättre jord) | Söderberg, Lovén, Myrdal 1982, Göransson, Malmer 1988, Arrhenius 1950 |
 | Gravfält 82 mot 55 % | Bara daterade och verifierade gravar; gravfältets ålder; KMR:s inventeringsår per län; boplatser i stället för gravar | Häggström 2002, Ambrosiani 1968, Holmqvist 1957 |

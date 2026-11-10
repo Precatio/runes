@@ -1,0 +1,178 @@
+{
+  "huvud_med_ingvar": {
+    "stenar": 92,
+    "platser": {
+      "tidig": 89,
+      "sen": 18
+    },
+    "enough": false,
+    "term": "sen_",
+    "or": 0.87969,
+    "ci": [0.248768, 3.110743],
+    "p_ensidig_lagre": 0.420303,
+    "p_tvasidig": 0.840606,
+    "dispersion": 1.173038,
+    "landskap": {
+      "Uppland": 34,
+      "Södermanland": 30,
+      "Östergötland": 7,
+      "övriga": 21
+    },
+    "dom": "för få träffar",
+    "not": "spärren (20 platser i varje grupp) nås inte: endast beskrivande"
+  },
+  "huvud_utan_ingvar": {
+    "stenar": 74,
+    "platser": {
+      "tidig": 66,
+      "sen": 18
+    },
+    "enough": false,
+    "term": "sen_",
+    "or": 1.448457,
+    "ci": [0.40383, 5.195328],
+    "p_ensidig_lagre": 0.717655,
+    "p_tvasidig": 0.56469,
+    "dispersion": 1.158813,
+    "landskap": {
+      "Uppland": 28,
+      "Södermanland": 20,
+      "Östergötland": 6,
+      "övriga": 20
+    },
+    "dom": "för få träffar",
+    "not": "spärren (20 platser i varje grupp) nås inte: endast beskrivande"
+  },
+  "rob_utan_landskap": {
+    "stenar": 92,
+    "platser": {
+      "tidig": 89,
+      "sen": 18
+    },
+    "enough": false,
+    "term": "sen_",
+    "or": 1.068966,
+    "ci": [0.334831, 3.412733],
+    "p_ensidig_lagre": 0.545309,
+    "p_tvasidig": 0.909383,
+    "dispersion": 1.13994,
+    "landskap": {
+      "Uppland": 34,
+      "Södermanland": 30,
+      "Östergötland": 7,
+      "övriga": 21
+    },
+    "dom": null,
+    "not": "spärren (20 platser i varje grupp) nås inte: endast beskrivande"
+  },
+  "rob_trend_mittar": {
+    "stenar": 92,
+    "platser": {
+      "tidig": 89,
+      "sen": 18
+    },
+    "enough": false,
+    "term": "mitt50",
+    "or": 2.725458,
+    "ci": [0.975238, 7.616728],
+    "p_ensidig_lagre": 0.972136,
+    "p_tvasidig": 0.055728,
+    "dispersion": 1.185304,
+    "landskap": {
+      "Uppland": 34,
+      "Södermanland": 30,
+      "Östergötland": 7,
+      "övriga": 21
+    },
+    "dom": null,
+    "not": "spärren (20 platser i varje grupp) nås inte: endast beskrivande"
+  },
+  "rob_trend_mittar_utan_ingvar": {
+    "stenar": 74,
+    "platser": {
+      "tidig": 66,
+      "sen": 18
+    },
+    "enough": false,
+    "term": "mitt50",
+    "or": 2.677099,
+    "ci": [1.019565, 7.029334],
+    "p_ensidig_lagre": 0.977152,
+    "p_tvasidig": 0.045696,
+    "dispersion": 1.151693,
+    "landskap": {
+      "Uppland": 28,
+      "Södermanland": 20,
+      "Östergötland": 6,
+      "övriga": 20
+    },
+    "dom": null,
+    "not": "spärren (20 platser i varje grupp) nås inte: endast beskrivande"
+  },
+  "rob_vida_stilgrupper": {
+    "stenar": 116,
+    "platser": {
+      "tidig": 109,
+      "sen": 24
+    },
+    "enough": true,
+    "term": "sen_",
+    "or": 0.90246,
+    "ci": [0.288449, 2.823492],
+    "p_ensidig_lagre": 0.429406,
+    "p_tvasidig": 0.858812,
+    "dispersion": 1.112764,
+    "landskap": {
+      "Uppland": 42,
+      "Södermanland": 39,
+      "Östergötland": 9,
+      "övriga": 26
+    },
+    "dom": null,
+    "not": ""
+  },
+  "rob_vida_stilgrupper_utan_ingvar": {
+    "stenar": 94,
+    "platser": {
+      "tidig": 81,
+      "sen": 24
+    },
+    "enough": true,
+    "term": "sen_",
+    "or": 1.428622,
+    "ci": [0.450105, 4.534404],
+    "p_ensidig_lagre": 0.7295,
+    "p_tvasidig": 0.541001,
+    "dispersion": 1.107966,
+    "landskap": {
+      "Uppland": 35,
+      "Södermanland": 27,
+      "Östergötland": 7,
+      "övriga": 25
+    },
+    "dom": null,
+    "not": ""
+  },
+  "rob_utan_knut": {
+    "stenar": 90,
+    "platser": {
+      "tidig": 89,
+      "sen": 16
+    },
+    "enough": false,
+    "term": "sen_",
+    "or": 1.331071,
+    "ci": [0.325901, 5.436469],
+    "p_ensidig_lagre": 0.656419,
+    "p_tvasidig": 0.687162,
+    "dispersion": 1.174709,
+    "landskap": {
+      "Uppland": 32,
+      "Södermanland": 30,
+      "Östergötland": 7,
+      "övriga": 21
+    },
+    "dom": null,
+    "not": "spärren (20 platser i varje grupp) nås inte: endast beskrivande"
+  }
+}
