@@ -8,7 +8,10 @@ import csv
 import json
 import os
 import time
+import ssl
 import urllib.request
+
+import certifi
 
 from pyproj import Transformer
 
@@ -16,14 +19,16 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = "/Volumes/2TB/Antigrvity/Runes/geografi_kallor/historiska_kartor/inventering.json"
 B = "https://historiskakartor.lantmateriet.se/data/search-service/"
 HALF = 1000
+# Pythons egen certifikatkontroll fungerar inte på den här datorn (certifi behövs), och tjänsten svarar tomt utan Accept
+CTX = ssl.create_default_context(cafile=certifi.where())
 
 
 def post(url, body=None):
     data = json.dumps(body).encode() if body is not None else b""
-    req = urllib.request.Request(url, data=data, method="POST", headers={"Content-Type": "application/json", "User-Agent": "Vitki research inventory"})
+    req = urllib.request.Request(url, data=data, method="POST", headers={"Content-Type": "application/json", "Accept": "application/json, text/plain, */*", "User-Agent": "Vitki research inventory"})
     for i in range(4):
         try:
-            with urllib.request.urlopen(req, timeout=90) as r:
+            with urllib.request.urlopen(req, timeout=90, context=CTX) as r:
                 return json.load(r)
         except Exception:
             time.sleep(5 * (i + 1))
@@ -49,6 +54,7 @@ def main():
         q = f"xmin={round(x - HALF)}&ymin={round(y - HALF)}&xmax={round(x + HALF)}&ymax={round(y + HALF)}"
         g = post(B + "metadata/geosearch?" + q)
         if g is None:
+            print("inget svar för", sig, flush=True)
             continue
         rec = {"x": round(x), "y": round(y), "rak": [d | {"serie": grp["name"]} for grp in g.get("documentgroups", []) for d in grp["documents"]], "lms": [], "reg": []}
         body = {"counties": [{"name": c["name"], "parishs": [{"name": p["name"], "settlements": [{"name": s["name"]} for s in p["settlements"]]} for p in c["parishs"]]} for c in g.get("counties", [])]}
