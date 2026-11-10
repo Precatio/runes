@@ -42,3 +42,4 @@ forska; hitta nya artiklar och rapporter. "Låt allt köra på."
 
 ## Nästa fönster
 Viktor 2026-11-09: fortsätt när användningen återställs (22:00). 88 grannomgångar kvar, från fvgc_007.
+- Kontroll efteråt: korta runnotiser som ligger i samma OCR-fil som en annan text (t.ex. 'Nyfunnen runsten vid Alsike kyrka', Jansson 1948 s. 168, i filen 1948_166) kan ha fallit mellan stolarna – sök i sok.sqlite efter signum/runord per sida i texter som inte lästs som runtexter.
