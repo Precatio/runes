@@ -2,6 +2,14 @@
  "_om": "Nyheterna på webbplatsen (/nyheter och rutan Nytt i Vitki på startsidan): korta notiser om nya funktioner och sådant som är på gång. status är 'nytt' (finns i appen) eller 'på gång' (under arbete). Nyast först sorteras automatiskt efter datum. Lägg den engelska texten i web/src/i18n/en.json (scripts/i18n_crawl.mjs hittar den). Varje notis har en kategori (fältet kategori): huggspar, ristarna, landskap, manniskor, metod eller publicerat – den styr filtret i kartoteket på /nyheter.",
  "items": [
   {
+   "id": "tidskrifter-per-sten",
+   "date": "2026-11-10",
+   "status": "nytt",
+   "title": "Fornvännen och Futhark på varje stens sida",
+   "text": "Under Litteratur på en stens sida står nu de artiklar i Fornvännen (1906–2023) och Futhark som nämner stenen: författare, år, titel, pdf-sida, ett kort utdrag och en länk till den fria fulltexten. 2 043 stenar nämns i 920 artiklar. Ett signum kan stå i förbigående, så läs sidan innan något citeras.",
+   "kategori": "metod"
+  },
+  {
    "id": "nyheter-kartotek",
    "date": "2026-11-10",
    "status": "nytt",

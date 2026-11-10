@@ -828,6 +828,13 @@ IV, V) räknas också artikelrubriker som "179. Kölaby sn" som stenens egen art
 visar per verk sidorna (den egna artikeln i fetstil) och utdragen. Ett signum kan nämnas i förbigående eller i en lista,
 och OCR-fel gör att enstaka omnämnanden missas; registret visar var en sten nämns, inte vad som sägs om den. Sidor där antalet signum per ord är över 0,3 (register, kataloglistor) räknas som listor och visas utan utdrag; sidor utan läsbart nummer får numret mellan grannarnas. Fynden per sten (Forskningsluckor, Statistik) får verken och sidorna där stenen diskuteras (`literature.annotate_findings`); domen ändras inte, men ett fynd märkt "nytt" får en anmärkning att läsa sidorna först, och listan kan filtreras på fynd vars sten inte diskuteras i registret.
 
+**Tidskrifterna (2026-11-10).** Fornvännen 1906–2023 och Futhark 1–15 (fria, CC BY 4.0) indexeras på samma sätt av
+`scripts/build_journal_index.py` ur litteraturgenomgångens sökindex (`sok.sqlite`, text sida för sida) till
+`data/cache/literature/journals.json`: per sten artiklarna, pdf-sidorna och korta utdrag, per artikel tidskrift, år,
+författare, titel och länk. Futharks helvolymer och Fornvännens årsregister räknas inte, eftersom de dubblerar artiklarna.
+Sidnumren är pdf-sidor, inte tryckta sidor. Samma signumregler och listgräns som ovan; 2 043 stenar nämns i 920 artiklar.
+Stenens sida visar listan under Litteratur ("I Fornvännen och Futhark"), öppen när en till fem artiklar nämner stenen.
+
 ### 1x. Försiktighet i påståendena, djärvhet i hypoteserna
 
 **Förregistrerade analysplaner (från 2026-10-20).** En artikel som gör ett nytt anspråk hänvisar till en analysplan som

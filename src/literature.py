@@ -17,6 +17,8 @@ from src.signum import fold_signum
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CATALOG = os.path.join(ROOT, "data", "literature", "catalog.json")
 INDEX = os.path.join(ROOT, "data", "cache", "literature", "index.json")
+# Fornvännen och Futhark, sida för sida (scripts/build_journal_index.py, ur litteraturgenomgångens sökindex)
+JOURNALS = os.path.join(ROOT, "data", "cache", "literature", "journals.json")
 DIR = os.environ.get("LITERATURE_DIR", "/Volumes/2TB/litteratur")
 SNIPPET = 110  # characters on each side of a mention
 LIST_RATIO = 0.3  # distinct signa per word above which a page is a register or list (measured: text ≤ 0.22, registers ≥ 0.47)
@@ -78,9 +80,34 @@ def for_stone(signum: str) -> dict:
                     "entry_pages": [h["page"] for h in text if h.get("entry")]})
     out.sort(key=lambda x: (x["n"] == 0, x["work"]["kind"] != "avhandling", -x["n"]))
     from src import carver_literature  # the carver according to the literature, where Rundata has none
+    journals = journals_for(signum)
     return {"signum": signum, "works": out, "n_indexed": len(idx.get("works") or {}),
-            "carver": carver_literature.carver_for(signum),
+            "carver": carver_literature.carver_for(signum), "journals": journals["articles"],
+            "n_journal_articles": journals["n_articles"],
             "built": idx.get("built"), "source_note": "Utdrag ur verken i appens litteraturregister (data/literature/catalog.json)."}
+
+
+def journals_for(signum: str) -> dict:
+    """Artiklarna i Fornvännen och Futhark som nämner stenen, nyast först, med pdf-sidor och utdrag."""
+    jx = _load(JOURNALS)
+    arts = jx.get("articles") or {}
+    by: dict[str, list[dict]] = {}
+    for h in (jx.get("stones") or {}).get(fold_signum(signum)) or []:
+        by.setdefault(h["article"], []).append(h)
+    order = lambda p: int(str(p).split()[-1]) if str(p).split()[-1].isdigit() else 0  # noqa: E731
+    out = []
+    for key, hs in by.items():
+        a = arts.get(key)
+        if not a:
+            continue
+        text = [h for h in hs if not h.get("list")]
+        out.append({"key": key, "journal": a["journal"], "year": a["year"], "title": a["title"],
+                    "author": "; ".join(x.split(",")[0] for x in a["authors"][:3]) + (" m.fl." if len(a["authors"]) > 3 else ""),
+                    "url": a.get("url"), "pages": sorted({h["page"] for h in text}, key=order),
+                    "list_pages": sorted({h["page"] for h in hs if h.get("list")}, key=order),
+                    "n": len(text), "snippets": text[:3]})
+    out.sort(key=lambda x: (x["n"] == 0, -int(x["year"] or 0)))
+    return {"articles": out, "n_articles": jx.get("n_articles", 0)}
 
 
 def annotate_findings(items: list[dict]) -> list[dict]:

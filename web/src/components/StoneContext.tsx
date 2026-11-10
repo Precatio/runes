@@ -152,13 +152,15 @@ interface LitWork {
   work: { id: string; author: string; year: number; title: string; kind: string; series?: string; url?: string; access: string };
   pages: string[]; n: number; snippets: LitSnippet[]; entry_pages: string[]; list_pages: string[];
 }
+interface JournalArticle { key: string; journal: string; year: string; title: string; author: string; url?: string;
+  pages: string[]; list_pages: string[]; n: number; snippets: LitSnippet[] }
 interface LitCatalogWork { id: string; author: string; year: number; title: string; access: string; indexed: boolean; n_stones: number; url?: string }
 
 const ACCESS: Record<string, string> = { "öppen": "fri fulltext", "sverige": "fulltext inom Sverige", "tryck": "bara tryckt" };
 
 /** Where the dissertations and editions in the register mention the stone, with printed page and a short excerpt. */
 export function LiteratureBox({ signum }: { signum: string }) {
-  const [data, setData] = useState<{ works: LitWork[]; n_indexed: number;
+  const [data, setData] = useState<{ works: LitWork[]; n_indexed: number; journals?: JournalArticle[]; n_journal_articles?: number;
     carver?: { carver: string | null; kind: string; same_as: string[]; reference: string; text?: string } | null } | null>(null);
   const [catalog, setCatalog] = useState<LitCatalogWork[] | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -220,6 +222,40 @@ export function LiteratureBox({ signum }: { signum: string }) {
             </li>
           ))}
         </ul>
+      )}
+      {/* Fornvännen 1906–2023 and Futhark, page by page (scripts/build_journal_index.py): open journals, CC BY */}
+      {(data.n_journal_articles ?? 0) > 0 && (
+        <details open={(data.journals?.length ?? 0) > 0 && (data.journals?.length ?? 0) <= 5} className="rounded-xl border border-slate-200 bg-white/80 px-3 py-2">
+          <summary className="cursor-pointer text-sm font-semibold text-slate-900">
+            <span>I Fornvännen och Futhark:</span>{" "}
+            {(data.journals?.length ?? 0) === 0
+              ? <span className="font-normal text-slate-600">ingen av de {data.n_journal_articles} artiklarna nämner stenen</span>
+              : <span className="font-normal text-slate-600"><span>{data.journals!.length}</span> <span>{data.journals!.length === 1 ? "artikel nämner stenen" : "artiklar nämner stenen"}</span></span>}
+          </summary>
+          {(data.journals?.length ?? 0) > 0 && (
+            <ul className="mt-2 space-y-2">
+              {data.journals!.map(a => (
+                <li key={a.key} className="text-xs">
+                  <div className="flex flex-wrap items-baseline gap-x-2">
+                    <span className="font-semibold text-slate-900" translate="no">{a.author || a.journal} {a.year}</span>
+                    <span className="italic text-slate-600" translate="no">{a.title}</span>
+                    <span className="text-[11px] text-slate-500" translate="no">{a.journal}</span>
+                  </div>
+                  <div className="text-slate-700">
+                    {a.pages.length > 0 && <span>pdf-sida</span>}{a.pages.length > 0 && <span translate="no">{" " + a.pages.map(p => p.slice(4)).join(", ")}</span>}
+                    {a.list_pages.length > 0 && <span className="text-slate-500">{a.pages.length ? "; " : ""}<span>i register eller listor</span><span translate="no">{" " + a.list_pages.map(p => p.slice(4)).join(", ")}</span></span>}
+                    {a.url && <> · <a href={a.url} target="_blank" rel="noreferrer" className="text-[#b7410e] underline">fri fulltext</a></>}
+                  </div>
+                  {a.snippets.length > 0 && (
+                    <ul className="mt-0.5 space-y-0.5">
+                      {a.snippets.map((sn, i) => <li key={i} className="text-slate-600 leading-relaxed" translate="no">{sn.text}</li>)}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+        </details>
       )}
       <details onToggle={e => { if ((e.target as HTMLDetailsElement).open) loadCatalog(); }} className="text-xs text-slate-500">
         <summary className="cursor-pointer font-semibold text-slate-600 hover:text-slate-900">Vilka verk finns i registret?</summary>
